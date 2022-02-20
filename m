@@ -1,66 +1,82 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 97A904BD4F1
-	for <lists+openbmc@lfdr.de>; Mon, 21 Feb 2022 06:11:35 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4314E4BD4FA
+	for <lists+openbmc@lfdr.de>; Mon, 21 Feb 2022 06:12:46 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K29Pw6p6Dz3bZg
-	for <lists+openbmc@lfdr.de>; Mon, 21 Feb 2022 16:11:32 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K29RH52cRz3cCt
+	for <lists+openbmc@lfdr.de>; Mon, 21 Feb 2022 16:12:43 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=BgKxH2bL;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=P9X9sMyI;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::1131;
- helo=mail-yw1-x1131.google.com; envelope-from=gauravgandhi@google.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62d;
+ helo=mail-pl1-x62d.google.com; envelope-from=warp5tw@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20210112 header.b=BgKxH2bL; dkim-atps=neutral
-Received: from mail-yw1-x1131.google.com (mail-yw1-x1131.google.com
- [IPv6:2607:f8b0:4864:20::1131])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=P9X9sMyI; dkim-atps=neutral
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com
+ [IPv6:2607:f8b0:4864:20::62d])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K0pVr1r5Wz3Wtt
- for <openbmc@lists.ozlabs.org>; Sat, 19 Feb 2022 10:56:01 +1100 (AEDT)
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-2d641c31776so82605167b3.12
- for <openbmc@lists.ozlabs.org>; Fri, 18 Feb 2022 15:56:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=CkVOQCvDoCUfHGuUBl433hZT6KHa5BvCo97zPR5CdTM=;
- b=BgKxH2bLWIeTRwXwe0fN1yD089ytgxt0FsbfDiUrqSbnhyP+nPRxU46OxlVzBc9uNH
- K2ZjOWYgLDCSAX0g7IPLTVyiTJDQqeRS0OlHoF7nCZBwVVkpOJSDq4dytE6BhUkMsorz
- gXB5S0tbp/kgDvPi2Y+LhGQ/eIwBdhJzP2iGJpMFrIxad2wBZzn3Ye5mHVkos26fmkVq
- zlWX+2W88Tsb7P75ZZFAARr4ES1XqP6+e4vq0FUSROL8x1nigZ4HId8koTgyA0Dp8mvr
- lhYgKg1S0o6QA0gmC9A9ytSebekCJJ+v5HRz4inQAjIFRXnk8e6ROIgBd6Xyjq+P8/5B
- IzJw==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K1WpR5xHgz30Dy
+ for <openbmc@lists.ozlabs.org>; Sun, 20 Feb 2022 14:57:02 +1100 (AEDT)
+Received: by mail-pl1-x62d.google.com with SMTP id w20so10223089plq.12
+ for <openbmc@lists.ozlabs.org>; Sat, 19 Feb 2022 19:57:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=VGpYslQLZPwISm1nPTwx+q6e8M94h8NxJolstJ+8zQM=;
+ b=P9X9sMyI7X93Ba8SNlRossbnpsMILrGKyaJrgVRXG/RSlV5ONnsyZsco/sXQbmZwhG
+ wBJMF2PpkVn7aWFaQygvPLr/IXjyIkh42fd5ziaE5LnsJw0jSAYN29LPgk5vJpN+S2mo
+ D8Png8rM+rMH4zh6IBRe2SUnYwVgSqAm/xplXvGxpFtLlZ7xhTK2N7LuKso+LCAdboqv
+ pRcj+jups7UYUp1RSCTNmAN4F2LxmVDtHnTSWeg5L7sxpuTWY0B1cDaoHCKWHbJZosqO
+ f4Gn8r7SvybllTAObt8VHoEMpB/AbsHjr+jMNse9EQR6eqaaA8P9lWI7rFTJoM7y+1rD
+ BfCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=CkVOQCvDoCUfHGuUBl433hZT6KHa5BvCo97zPR5CdTM=;
- b=xMG927D4MoeC7Izn3oH70EtJ7tbo/VnFc8tClxRCwmqDnZWwHhFeEtQ0159PRj4ZH4
- 5BzMJlWWwTRjlLx0N7koCnvTE2a9pTRM65LDIvuQCxHQYgXJ+ECiNiBY1Uopg9mFigvU
- 282N5lB3TjukwuHcVEdO5RLQoVCzlY+czSek2Hk7kXel9c0/w83WfgeiAbmjI1K2ZC0T
- itTVqTvV7PfA/SrcijLxVXgQqf0lXjO8apl2scalDH4Xbn2Pbk9cdTG78w2B/zD6pbRN
- uc+tR+8bo9TlGbPYh1eo0gkGtOhx4hEahKw82BFVO7KOiy3qxdihFW5kWKvJVbu/bKLH
- NZbg==
-X-Gm-Message-State: AOAM532tRPNdZtF28doiEQdsjeMzJ0417qt52hzWnva4b1izhxqGEH3m
- xfThGHxkpvWqVyKEm7c9f2NHJTX0vy67IVb7ndQhcSaf9ZmGQQ==
-X-Google-Smtp-Source: ABdhPJzoBQl/vvG3V3VN4Hj2DgAWvqbnhWW4QbXLW33Hxrm0JwtiR+vmiAp93hTEGpxT+CrcjD8HmocLdh5cM+W0El8=
-X-Received: by 2002:a81:9157:0:b0:2d1:3460:a359 with SMTP id
- i84-20020a819157000000b002d13460a359mr9921845ywg.20.1645228556824; Fri, 18
- Feb 2022 15:55:56 -0800 (PST)
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=VGpYslQLZPwISm1nPTwx+q6e8M94h8NxJolstJ+8zQM=;
+ b=Fwj1dCniWtm6qg3pb0TGNAOyLHq/mDqy3GYW6Kdxr70XrW4YffBtv4wDJVPJxTviSE
+ KkEwdpS7G4nWTlPS7loxsdyPjETXtbqEWR00C0G8Y5ycVXmfy0D1sa+uU3cv76CQrjLN
+ M+eQq8xvVu/sltsVEtA/Xon7uVwIHR0cxt9y2qTVsdPPbt0nPYmjx0gs/DdC8osGavhy
+ KDC6/5iUpTUhEgwFnUCAZfI5YML0IPKszvhAS8X9vW0fPeeMF0MDo5Key7xXZg52l1Z5
+ ZOQryE/I6+1qQ4kSjREVYMS415A+KcyA5J77eJwzPPtsAVNni09jr07dbKw0EqBEe1ZE
+ F9ew==
+X-Gm-Message-State: AOAM531kKYYjr1MOUVhjHGPO70xDoGmoSRTv9RdbRQ1dfm1KPao6H1yG
+ f9AQpoeknaboDEgXfrWZpQ==
+X-Google-Smtp-Source: ABdhPJwGgQQH415hnEbc4rho2GZhnPF17sXaRpaHqfTkpT+EBgslDBF0FKkp3zbIQ+e3Wj/O715rfw==
+X-Received: by 2002:a17:903:24d:b0:14f:84dd:babb with SMTP id
+ j13-20020a170903024d00b0014f84ddbabbmr6823923plh.47.1645329418805; 
+ Sat, 19 Feb 2022 19:56:58 -0800 (PST)
+Received: from localhost ([2401:e180:8842:e799:9593:a6f2:788b:a48c])
+ by smtp.gmail.com with ESMTPSA id k21sm2687921pff.25.2022.02.19.19.56.57
+ (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+ Sat, 19 Feb 2022 19:56:58 -0800 (PST)
+From: Tyrone Ting <warp5tw@gmail.com>
+To: avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
+ venture@google.com, yuenn@google.com, benjaminfair@google.com,
+ robh+dt@kernel.org, krzysztof.kozlowski@canonical.com,
+ semen.protsenko@linaro.org, yangyicong@hisilicon.com, wsa@kernel.org,
+ jie.deng@intel.com, sven@svenpeter.dev, bence98@sch.bme.hu,
+ christophe.leroy@csgroup.eu, lukas.bulwahn@gmail.com, olof@lixom.net,
+ arnd@arndb.de, digetx@gmail.com, andriy.shevchenko@linux.intel.com,
+ warp5tw@gmail.com, tali.perry@nuvoton.com, Avi.Fishman@nuvoton.com,
+ tomer.maimon@nuvoton.com, KWLIU@nuvoton.com, JJLIU0@nuvoton.com,
+ kfting@nuvoton.com
+Subject: [PATCH v2 00/11] i2c: npcm: Bug fixes timeout, spurious interrupts
+Date: Sun, 20 Feb 2022 11:53:10 +0800
+Message-Id: <20220220035321.3870-1-warp5tw@gmail.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-From: Gaurav Gandhi <gauravgandhi@google.com>
-Date: Fri, 18 Feb 2022 15:55:46 -0800
-Message-ID: <CACxmPJM0b_rxoRfx5qBXSsjOXL2tZtLJSZ8+64ekwXEs9q01DQ@mail.gmail.com>
-Subject: Supporting removing interfaces from settings daemon
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000b4945505d8539f88"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Mon, 21 Feb 2022 16:10:35 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -73,80 +89,73 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: anoo@us.ibm.com, deepak.kodihalli.83@gmail.com,
- Ed Tanous <edtanous@google.com>, geissonator@yahoo.com,
- Jason Ling <jasonling@google.com>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
+ linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000b4945505d8539f88
-Content-Type: text/plain; charset="UTF-8"
+From: Tyrone Ting <kfting@nuvoton.com>
 
-Hi All,
+This patchset includes the following fixes:
 
-Currently DcmiHandler
-<https://github.com/openbmc/phosphor-host-ipmid/blob/05d17c036facc0e9125959abe3c816aa631333e1/dcmihandler.cpp#L25>
-in
-phoshor-host-ipmid only supports the power_cap interface exported by
-Settings <https://github.com/openbmc/phosphor-settingsd> daemon. To make it
-generic we can use objectmapper here
-<https://github.com/openbmc/phosphor-host-ipmid/blob/05d17c036facc0e9125959abe3c816aa631333e1/dcmihandler.cpp#L116>
-to get all objects implementing power_cap interface.
-But it poses a problem: which object to call when setting/getting the power
-cap if multiple services are exporting objects implementing the power_cap
-interface.
-Also I think dcmi commands are supposed to set the power of the system and
-it's not safe to set the system power using multiple services.
-To avoid this we can make sure only 1 service exports this power_cap path
-<https://github.com/openbmc/phosphor-host-ipmid/blob/05d17c036facc0e9125959abe3c816aa631333e1/dcmihandler.cpp#L25>
-used by dcmi handler. But the settings daemon
-<https://github.com/openbmc/phosphor-settingsd> always exports the power
-cap interface by default. Currently there is provision to override default
-settings using .override files. But I am not aware about any way to remove
-a certain interface from settings daemon.
-I am planning to add support for .remove.yml files in merge_settings
-<https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-phosphor/settings/phosphor-settings/merge_settings.py>
-script
-to remove interfaces along with overriding them.
+- Add dt-bindings description for NPCM845.
+- Bug fix for timeout calculation.
+- Better handling of spurious interrupts.
+- Fix for event type in slave mode.
+- Removal of own slave addresses [2:10].
+- Support for next gen BMC (NPCM845).
 
-Please share your thoughts on this. I have created this review
-<https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/51394> for reference
--
-Thanks,
-Gaurav
+The NPCM I2C driver is tested on NPCM750 and NPCM845 evaluation boards.
 
---000000000000b4945505d8539f88
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Addressed comments from:
+ - Jonathan Neuschäfer : https://lkml.org/lkml/2022/2/7/670
+ - Krzysztof Kozlowski : https://lkml.org/lkml/2022/2/7/760
+ - Rob Herring : https://lkml.org/lkml/2022/2/7/1166
+                 https://lkml.org/lkml/2022/2/11/711
+ - Krzysztof Kozlowski : https://lkml.org/lkml/2022/2/7/742
+ - Jonathan Neuschäfer : https://lkml.org/lkml/2022/2/7/934
+ - Jonathan Neuschäfer : https://lkml.org/lkml/2022/2/7/947
+ - Jonathan Neuschäfer : https://lkml.org/lkml/2022/2/7/1057
+ - Krzysztof Kozlowski : https://lkml.org/lkml/2022/2/7/1192
+ - kernel test robot : https://lore.kernel.org/all/
+                       202202072020.toQ349pg-lkp@intel.com/
+ 
+Changes since version 1:
+ - Add nuvoton,sys-mgr property in NPCM devicetree.
+ - Describe the commit message in imperative mood.
+ - Modify the description in i2c binding document to cover NPCM series.
+ - Add new property in i2c binding document.
+ - Create a new patch for client address calculation.
+ - Create a new patch for updating gcr property name.
+ - Create a new patch for removing unused clock node.
+ - Explain EOB in the commit description.
+ - Create a new patch for correcting NPCM register access width.
+ - Remove some comment since the corresponding logic no longer exists.
+ - Remove fixes tag while the patch adds an additional feature.
+ - Use devicetree data field to support NPCM845.
 
-<div dir=3D"ltr"><div><br></div><div>Hi All,</div><div><br></div><div>Curre=
-ntly <a href=3D"https://github.com/openbmc/phosphor-host-ipmid/blob/05d17c0=
-36facc0e9125959abe3c816aa631333e1/dcmihandler.cpp#L25">DcmiHandler</a>=C2=
-=A0in phoshor-host-ipmid only supports the power_cap interface exported by =
-<a href=3D"https://github.com/openbmc/phosphor-settingsd">Settings</a> daem=
-on. To make it generic we can use objectmapper <a href=3D"https://github.co=
-m/openbmc/phosphor-host-ipmid/blob/05d17c036facc0e9125959abe3c816aa631333e1=
-/dcmihandler.cpp#L116">here</a> to get all objects implementing=C2=A0power_=
-cap interface.=C2=A0</div><div>But it poses a problem: which object to call=
- when setting/getting the power cap if multiple services are exporting obje=
-cts implementing the power_cap interface. <br>Also I think dcmi commands ar=
-e supposed to set the power of the system and it&#39;s not safe to set the =
-system power using multiple services.=C2=A0<br></div><div>To avoid this we =
-can make sure only 1 service exports this power_cap <a href=3D"https://gith=
-ub.com/openbmc/phosphor-host-ipmid/blob/05d17c036facc0e9125959abe3c816aa631=
-333e1/dcmihandler.cpp#L25">path</a> used by dcmi handler. But the settings =
-<a href=3D"https://github.com/openbmc/phosphor-settingsd">daemon</a> always=
- exports the power cap interface by default. Currently there is provision t=
-o override default settings using .override files. But I am=C2=A0not aware =
-about any way to remove a certain interface from=C2=A0settings daemon.</div=
->I am planning to add support for .remove.yml files in <a href=3D"https://g=
-ithub.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-phosphor/settin=
-gs/phosphor-settings/merge_settings.py">merge_settings</a>=C2=A0script to r=
-emove interfaces along with overriding them.<div><br>Please share your thou=
-ghts on this. I have created this <a href=3D"https://gerrit.openbmc-project=
-.xyz/c/openbmc/openbmc/+/51394">review</a> for reference<br><div>-<br></div=
-><div><div dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_si=
-gnature"><div dir=3D"ltr"><div>Thanks,<div>Gaurav</div></div></div></div></=
-div></div></div>
+Tali Perry (7):
+  i2c: npcm: Fix client address calculation
+  i2c: npcm: Update gcr property name
+  i2c: npcm: Remove unused clock node
+  i2c: npcm: Fix timeout calculation
+  i2c: npcm: Add tx complete counter
+  i2c: npcm: Handle spurious interrupts
+  i2c: npcm: Remove own slave addresses 2:10
 
---000000000000b4945505d8539f88--
+Tyrone Ting (4):
+  arm: dts: add new property for NPCM i2c module
+  dt-bindings: i2c: npcm: support NPCM845
+  i2c: npcm: Correct register access width
+  i2c: npcm: Support NPCM845
+
+ .../bindings/i2c/nuvoton,npcm7xx-i2c.yaml     |  17 +-
+ arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi |  16 ++
+ drivers/i2c/busses/Kconfig                    |   8 +-
+ drivers/i2c/busses/Makefile                   |   2 +-
+ drivers/i2c/busses/i2c-npcm7xx.c              | 251 +++++++++++-------
+ 5 files changed, 193 insertions(+), 101 deletions(-)
+
+-- 
+2.17.1
+
