@@ -2,62 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 256F54BD4FD
-	for <lists+openbmc@lfdr.de>; Mon, 21 Feb 2022 06:14:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BB3F94BD4FE
+	for <lists+openbmc@lfdr.de>; Mon, 21 Feb 2022 06:15:08 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K29TM40w0z3cDN
-	for <lists+openbmc@lfdr.de>; Mon, 21 Feb 2022 16:14:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K29V21HZMz3cDS
+	for <lists+openbmc@lfdr.de>; Mon, 21 Feb 2022 16:15:06 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=K/girzw3;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=bGb9MWeN;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102c;
- helo=mail-pj1-x102c.google.com; envelope-from=warp5tw@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1031;
+ helo=mail-pj1-x1031.google.com; envelope-from=warp5tw@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=K/girzw3; dkim-atps=neutral
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com
- [IPv6:2607:f8b0:4864:20::102c])
+ header.s=20210112 header.b=bGb9MWeN; dkim-atps=neutral
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com
+ [IPv6:2607:f8b0:4864:20::1031])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K1WpZ57Fxz3bdC
- for <openbmc@lists.ozlabs.org>; Sun, 20 Feb 2022 14:57:10 +1100 (AEDT)
-Received: by mail-pj1-x102c.google.com with SMTP id qe15so11940479pjb.3
- for <openbmc@lists.ozlabs.org>; Sat, 19 Feb 2022 19:57:11 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K1Wpd3ZwDz30H3
+ for <openbmc@lists.ozlabs.org>; Sun, 20 Feb 2022 14:57:13 +1100 (AEDT)
+Received: by mail-pj1-x1031.google.com with SMTP id
+ t14-20020a17090a3e4e00b001b8f6032d96so12163350pjm.2
+ for <openbmc@lists.ozlabs.org>; Sat, 19 Feb 2022 19:57:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=from:to:cc:subject:date:message-id:in-reply-to:references;
- bh=6OWdv0iTU9zwpkJfCRiYIgMFcDrBo3I6CJI4Ww7QsUU=;
- b=K/girzw3/yJMxUsozqmoYanuTJpQeOLAarIMpENGa3TVJmspQTSdWJfAFIfMqDJQ33
- q07/ypJChfXtpEuUamGO30kq21ct45CY7Z0RRjIRUD3pP0O5DhqWZpqCqUVjJ1iP8RQE
- YUp4K/QCUzyRp80XNdVd2z3OQ869bogSSPoPlW26nBtrdmQauzcTeRw5Zm3FbsrgGVyg
- OemJDfnGtkNS5G98DygmQZo9e+SQhrp8C7a7Xn5kYvgPI5MQfiNvNEqHhw1vsyqnAPEP
- DHw5Q4TZ+qx6asZl3PCpiGz7c7/9WAB/HSnSBUsQn1aO9AvZfpZebl0+CAjQ5cmTtzJi
- MZHQ==
+ bh=krxrJMNBibw4X2UMTZ790HAtT7R38NRGiHkdwGL9/6g=;
+ b=bGb9MWeN7FHpDg495KS7+TlI5vXRFpbTrMLEJgSZe4PPIM6j6SzmKanme//Ljiyz9b
+ eBxJeuJS9danM9QTLRgdIO3Cs1HY+BZoQbZNLP/MCn3iEf4j1vatNsFUIQEa4ez5yvnm
+ a3CB3ivcTQFmYVpy9Ndd+cRsC7MrlraShax+mznAT8iukN6jsyLuLMNmGeuecRITXO81
+ GmzG6T2WhbYpmEmqgm30w4qYdsj82u46mwgS2lk9HLpxtFZvz4iQKFjNa3LiVHm9Y1ou
+ Xwh4OWVP9FLoBjCSSwv06q+Bmfk72EFCHTv6/Tg/RWd2E2lbNQfoc9uegkfpNPvx5RZX
+ uCyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references;
- bh=6OWdv0iTU9zwpkJfCRiYIgMFcDrBo3I6CJI4Ww7QsUU=;
- b=1iK7pW+xKkXWvrL8XDRiTXUwYjNOjwolyWF7hRrV6mdfLs112JALI2DblfCMzzrlRk
- Rg951lQoV7Hfo9/t6eMGBU344tXAe9EZVa9TOwH9KiJ8bBgu3fJrw9HBhdvCwPt1FnI3
- YJtxP8ExDb5VMQNQB5/KxlOyAv+i2sp+GuR9H2Y4ridW6Utc8zlnCL41lRqM+nSH3+kv
- dYa7vsC9382sSUHkSKz8W+9BoKCY5JhsFL+jX5Jn+73uWHd3SNWjSHtbZrKIh339EufC
- ddCeybvAX925gawDplT5+1c0yI8lqd1vtxDdslwdNv+yL6/a9ui1R1B/qKAYAaWpzb5O
- RVwg==
-X-Gm-Message-State: AOAM531YsO1S4kjiqj6lKjQSEeoUKganJQylcfP9edEprnra6jUNz89y
- HU0nFz8o4WdCoIXSIKsj1A==
-X-Google-Smtp-Source: ABdhPJx2Ff4tkjFNCMcVV7FssfPSCfrNVPNVZ3brD9/O5YmQhAVy1rFfIs2tCTMqjIoUXL/Gsf+mpQ==
-X-Received: by 2002:a17:902:ead1:b0:14f:95e1:86fe with SMTP id
- p17-20020a170902ead100b0014f95e186femr4073071pld.21.1645329429028; 
- Sat, 19 Feb 2022 19:57:09 -0800 (PST)
+ bh=krxrJMNBibw4X2UMTZ790HAtT7R38NRGiHkdwGL9/6g=;
+ b=lP1uRJMJPmLV07bXhrZ1WFwskY0TUBKgRI6F2BmxG75ulxagWWJhNXc9/hDcK7E+rc
+ 1GngnRGYoVJq7qe17hKkpx0QJpNosl3T4QiFR8XeOBu6vsYC2W332f/2jCKAFWRTLPTC
+ 441cPmCaClWv0MMMWme0Nlu0EkGwSoELoxAGdB9EIgQ0rgnSmDI5lfdIDo+W0BaXoqcq
+ 5o6eBPt7gAO1CLPt/k5oGFAnQqvJmehMluyZTG4Fqz056bxEWuko9dTQI4zVIN6zYiCn
+ r59/DylMaZm/6ITYR88WWzjEpMmaXI4bXOkNhTK8b4Jbod+pRQwbULIr0KXEN+rzrWUa
+ 4s9A==
+X-Gm-Message-State: AOAM530LfrcQ0+6VdBZNFGQPo1WfvQ+vD0s+0v32kLnpCVefSgkbDgBm
+ B+jSJKNMZ7VWLv/mVVGCsg==
+X-Google-Smtp-Source: ABdhPJz0iTAw94T1v7Qcn6hNjEMYPSkdyjVPAD0/ep2NaSYe4xQQG1d7d7cAsfdLf/buXrOQuLownA==
+X-Received: by 2002:a17:902:8509:b0:14e:f9b7:6cab with SMTP id
+ bj9-20020a170902850900b0014ef9b76cabmr13964607plb.162.1645329431733; 
+ Sat, 19 Feb 2022 19:57:11 -0800 (PST)
 Received: from localhost ([2401:e180:8842:e799:9593:a6f2:788b:a48c])
- by smtp.gmail.com with ESMTPSA id g5sm7862590pfv.22.2022.02.19.19.57.08
+ by smtp.gmail.com with ESMTPSA id
+ m17-20020a17090a859100b001bc20ddcc67sm753354pjn.34.2022.02.19.19.57.11
  (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Sat, 19 Feb 2022 19:57:08 -0800 (PST)
+ Sat, 19 Feb 2022 19:57:11 -0800 (PST)
 From: Tyrone Ting <warp5tw@gmail.com>
 To: avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
  venture@google.com, yuenn@google.com, benjaminfair@google.com,
@@ -69,9 +71,9 @@ To: avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
  warp5tw@gmail.com, tali.perry@nuvoton.com, Avi.Fishman@nuvoton.com,
  tomer.maimon@nuvoton.com, KWLIU@nuvoton.com, JJLIU0@nuvoton.com,
  kfting@nuvoton.com
-Subject: [PATCH v2 04/11] i2c: npcm: Update gcr property name
-Date: Sun, 20 Feb 2022 11:53:14 +0800
-Message-Id: <20220220035321.3870-5-warp5tw@gmail.com>
+Subject: [PATCH v2 05/11] i2c: npcm: Remove unused clock node
+Date: Sun, 20 Feb 2022 11:53:15 +0800
+Message-Id: <20220220035321.3870-6-warp5tw@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20220220035321.3870-1-warp5tw@gmail.com>
 References: <20220220035321.3870-1-warp5tw@gmail.com>
@@ -94,36 +96,38 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Tali Perry <tali.perry1@gmail.com>
 
-Use a generic name for NPCM system manager reigster.
+Remove unused npcm750-clk node.
 
 Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
 Signed-off-by: Tali Perry <tali.perry1@gmail.com>
 Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
 ---
- drivers/i2c/busses/i2c-npcm7xx.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-npcm7xx.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
 diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index 4c225e1a058f..a51db3f50274 100644
+index a51db3f50274..9ccb9958945e 100644
 --- a/drivers/i2c/busses/i2c-npcm7xx.c
 +++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -2236,6 +2236,7 @@ static int npcm_i2c_probe_bus(struct platform_device *pdev)
- 	static struct regmap *clk_regmap;
+@@ -2233,7 +2233,6 @@ static int npcm_i2c_probe_bus(struct platform_device *pdev)
+ 	struct i2c_adapter *adap;
+ 	struct clk *i2c_clk;
+ 	static struct regmap *gcr_regmap;
+-	static struct regmap *clk_regmap;
  	int irq;
  	int ret;
-+	struct device_node *np = pdev->dev.of_node;
- 
- 	bus = devm_kzalloc(&pdev->dev, sizeof(*bus), GFP_KERNEL);
- 	if (!bus)
-@@ -2250,7 +2251,7 @@ static int npcm_i2c_probe_bus(struct platform_device *pdev)
- 		return PTR_ERR(i2c_clk);
- 	bus->apb_clk = clk_get_rate(i2c_clk);
- 
--	gcr_regmap = syscon_regmap_lookup_by_compatible("nuvoton,npcm750-gcr");
-+	gcr_regmap = syscon_regmap_lookup_by_phandle(np, "nuvoton,sys-mgr");
- 	if (IS_ERR(gcr_regmap))
+ 	struct device_node *np = pdev->dev.of_node;
+@@ -2256,10 +2255,6 @@ static int npcm_i2c_probe_bus(struct platform_device *pdev)
  		return PTR_ERR(gcr_regmap);
  	regmap_write(gcr_regmap, NPCM_I2CSEGCTL, NPCM_I2CSEGCTL_INIT_VAL);
+ 
+-	clk_regmap = syscon_regmap_lookup_by_compatible("nuvoton,npcm750-clk");
+-	if (IS_ERR(clk_regmap))
+-		return PTR_ERR(clk_regmap);
+-
+ 	bus->reg = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(bus->reg))
+ 		return PTR_ERR(bus->reg);
 -- 
 2.17.1
 
