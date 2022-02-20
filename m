@@ -2,62 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3A9E4BD508
-	for <lists+openbmc@lfdr.de>; Mon, 21 Feb 2022 06:18:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0472F4BD509
+	for <lists+openbmc@lfdr.de>; Mon, 21 Feb 2022 06:18:46 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K29YW0g3Yz3bdG
-	for <lists+openbmc@lfdr.de>; Mon, 21 Feb 2022 16:18:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K29ZC29Npz3bZR
+	for <lists+openbmc@lfdr.de>; Mon, 21 Feb 2022 16:18:43 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=PlvOcPC+;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=ZwNtu53T;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62d;
- helo=mail-pl1-x62d.google.com; envelope-from=warp5tw@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1034;
+ helo=mail-pj1-x1034.google.com; envelope-from=warp5tw@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=PlvOcPC+; dkim-atps=neutral
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com
- [IPv6:2607:f8b0:4864:20::62d])
+ header.s=20210112 header.b=ZwNtu53T; dkim-atps=neutral
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com
+ [IPv6:2607:f8b0:4864:20::1034])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K1Wpr3cVRz3bcl
- for <openbmc@lists.ozlabs.org>; Sun, 20 Feb 2022 14:57:24 +1100 (AEDT)
-Received: by mail-pl1-x62d.google.com with SMTP id w20so10223461plq.12
- for <openbmc@lists.ozlabs.org>; Sat, 19 Feb 2022 19:57:24 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K1Wpv5MxWz30Dy
+ for <openbmc@lists.ozlabs.org>; Sun, 20 Feb 2022 14:57:27 +1100 (AEDT)
+Received: by mail-pj1-x1034.google.com with SMTP id
+ gl14-20020a17090b120e00b001bc2182c3d5so455542pjb.1
+ for <openbmc@lists.ozlabs.org>; Sat, 19 Feb 2022 19:57:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=from:to:cc:subject:date:message-id:in-reply-to:references;
- bh=KMD0lMN6Iu67hNkeNrnkvAGmKOGIQFWemImlvh6Aswg=;
- b=PlvOcPC+Mk93GKAv++G+XpBRb883wEo+I8mxKRxKGUNBXzMCuZfVE5MYroZ5cVxMoX
- lPbGmJzqFYW5hiOGrKJKEdI6aodAtTPY52hyQT4HUtXHUSfSm5J5nWIol7D4sG4zRk6Y
- 6FlxVY2KKj1CnLiJl/JJls+eTUb6CA6wOsSa+gRTFZgeXWiEgduw0QevdcImfLTa+UhJ
- z/edHoHWQWA5d6ks4XBJIkPAQwMwHyQBoJpzaBtOr92TuDUrr14Dvqk24yF3NEG+PS8M
- AB9FCpXt2n5hVOv93xUQu9a6oLKMIMolbaXmIhtxXpwBHI2hU6IUriYnqaufNl9BPPOT
- azlw==
+ bh=sDnvnOGDEBsHucmnzCTIoEwmgetObKwR2kGgru15NFw=;
+ b=ZwNtu53TvI1ayF2X2M8bwn57WiNwhwRmYjytEa4kIidJvH6PADPw2AHjdZrhTjLbvs
+ qsNbwtoZj7FbfGVIJY1PfmPTxkMKgBe2H5aC4/cx3PZl5N9zxxNSTV9CkECaak34P1KT
+ kgOp5TdJPM1oW35GYdFAoBuDcch6TLJAiicRKBGmUv/tUsPvFsGhT6uvqgz1F8YH8W8n
+ Q2JigcbfGnnh0G3NOKspAGuu9IqGKj5aCVEPRnEH93b7i1wT7bKqbcY39o5jDrCulYI5
+ zqBXOpT30W2C4/PR5NjYKwSBK0kXyeWMKuBO8GuyX8RaP7Oep78uOqc0F7+5WCFdUpxq
+ qMxQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references;
- bh=KMD0lMN6Iu67hNkeNrnkvAGmKOGIQFWemImlvh6Aswg=;
- b=vHVif0Q67jvxWRwjx36eAo/DAM6GP/cK/PngWnG1JDFsReQeBBtPIzSyEQxkK6/09G
- FkQ24GhI0xyupJdZay9w2ulMxrrxlIHMMurXRpTvB4+AQaqM4TvgWX4fRnJic03K13Th
- 3TCdnvOQ958P+df5dHsUnt3IuWBtD857dXH07lcjMxkvXkdTUMF86VfWRcNYLtlM0tWl
- c2NwKQT80i0eFJdSNqt3LP1zugZuFQAfydsnbb4hJ8B/h/HhNEvC0MymG4kX8MBRllRh
- 2irZZU6Pcwp52EJarlIojY3E8ZF56/0jPHmO/vmdV6d8Lw7dzmmT5iFj/6BPypzoPL0r
- YrLA==
-X-Gm-Message-State: AOAM532/DdlXzwGgazIYk20BTqcfHNsd/BsCvnkzK39E1xr45Et6qXry
- sU0OSXx1qHoeXkGdEzucCg==
-X-Google-Smtp-Source: ABdhPJwwo5jbAb9oLdoLb6HDMQOuHrD2RUa/XN0xNskLK8TcRSv5XtOPJMvIalW2ZhMb5la0xesRMg==
-X-Received: by 2002:a17:90a:f482:b0:1bb:8504:864c with SMTP id
- bx2-20020a17090af48200b001bb8504864cmr19869296pjb.161.1645329443291; 
- Sat, 19 Feb 2022 19:57:23 -0800 (PST)
+ bh=sDnvnOGDEBsHucmnzCTIoEwmgetObKwR2kGgru15NFw=;
+ b=flYMLpbj+xyDGiIA0RdXbsk9Ujc2bTwV/COyTcpottToDULot4175E/CNXc4D9rDjo
+ BhzjDhEgovCCHJYmH0lnoTjL6GJHs4ggvxDDI5A6uCic2YsBDIn0sWpkglncVhQsSRmg
+ +GjKMI2R0X+8SyqJIJWhYVPCHPYRmLUs+1BSKmXO0OT5srQ72GGMHQVS0lQ2XmPOqI+8
+ BoyFZFaVnVPV0nhC5o8B2+QPz0dxAlM5e5vnNkSThQEGbH1CzR3P3Y324stJkGoSxZcX
+ fP1h7LjrxLCWEMEZ17xFpo8rBvURF6dFiiXrHnhFqKKNutF18d14YpjzBfC+B+GAmYnr
+ ba/A==
+X-Gm-Message-State: AOAM533Un91uWv0X3wtdvC5cP5WpNHBbwG9jOGDbxEyF6A4u1zsrc7kg
+ qBIF0AG9qNgJHNExW4IyLQ==
+X-Google-Smtp-Source: ABdhPJw9ivBPW9Yo6ArQ72rcRNrdDn+c8Me8KFIO/JdLyMIXx4K9ltU17VEmNVEN9gqJVvTrUns2Ew==
+X-Received: by 2002:a17:90b:3ec2:b0:1b9:f17d:4452 with SMTP id
+ rm2-20020a17090b3ec200b001b9f17d4452mr19344572pjb.71.1645329445991; 
+ Sat, 19 Feb 2022 19:57:25 -0800 (PST)
 Received: from localhost ([2401:e180:8842:e799:9593:a6f2:788b:a48c])
- by smtp.gmail.com with ESMTPSA id lb18sm3479878pjb.42.2022.02.19.19.57.22
+ by smtp.gmail.com with ESMTPSA id gk15sm10029648pjb.3.2022.02.19.19.57.25
  (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Sat, 19 Feb 2022 19:57:22 -0800 (PST)
+ Sat, 19 Feb 2022 19:57:25 -0800 (PST)
 From: Tyrone Ting <warp5tw@gmail.com>
 To: avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
  venture@google.com, yuenn@google.com, benjaminfair@google.com,
@@ -69,9 +70,9 @@ To: avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
  warp5tw@gmail.com, tali.perry@nuvoton.com, Avi.Fishman@nuvoton.com,
  tomer.maimon@nuvoton.com, KWLIU@nuvoton.com, JJLIU0@nuvoton.com,
  kfting@nuvoton.com
-Subject: [PATCH v2 10/11] i2c: npcm: Remove own slave addresses 2:10
-Date: Sun, 20 Feb 2022 11:53:20 +0800
-Message-Id: <20220220035321.3870-11-warp5tw@gmail.com>
+Subject: [PATCH v2 11/11] i2c: npcm: Support NPCM845
+Date: Sun, 20 Feb 2022 11:53:21 +0800
+Message-Id: <20220220035321.3870-12-warp5tw@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20220220035321.3870-1-warp5tw@gmail.com>
 References: <20220220035321.3870-1-warp5tw@gmail.com>
@@ -92,152 +93,269 @@ Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Tali Perry <tali.perry1@gmail.com>
+From: Tyrone Ting <kfting@nuvoton.com>
 
-NPCM can support up to 10 own slave addresses.
-In practice, only one address is actually being used.
-In order to access addresses 2 and above, need to switch
-register banks. The switch needs spinlock.
-To avoid using spinlock for this useless feature
-removed support of SA >= 2.
+Add NPCM8XX I2C support.
+The NPCM8XX uses a similar i2c module as NPCM7XX.
+The internal HW FIFO is larger in NPCM8XX.
 
-Also fix returned slave event enum.
-
-Remove some comment since the bank selection is not
-required. The bank selection is not required since
-the supported slave addresses are reduced.
-
-Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
-Signed-off-by: Tali Perry <tali.perry1@gmail.com>
 Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
+Signed-off-by: Tali Perry <tali.perry1@gmail.com>
 ---
- drivers/i2c/busses/i2c-npcm7xx.c | 46 ++++++++++++++++----------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+ drivers/i2c/busses/Kconfig       |  8 +--
+ drivers/i2c/busses/Makefile      |  2 +-
+ drivers/i2c/busses/i2c-npcm7xx.c | 87 ++++++++++++++++++++++----------
+ 3 files changed, 66 insertions(+), 31 deletions(-)
 
+diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
+index 42da31c1ab70..ab9ee2de5e00 100644
+--- a/drivers/i2c/busses/Kconfig
++++ b/drivers/i2c/busses/Kconfig
+@@ -817,13 +817,13 @@ config I2C_NOMADIK
+ 	  I2C interface from ST-Ericsson's Nomadik and Ux500 architectures,
+ 	  as well as the STA2X11 PCIe I/O HUB.
+ 
+-config I2C_NPCM7XX
++config I2C_NPCM
+ 	tristate "Nuvoton I2C Controller"
+-	depends on ARCH_NPCM7XX || COMPILE_TEST
++	depends on ARCH_NPCM || COMPILE_TEST
+ 	help
+ 	  If you say yes to this option, support will be included for the
+-	  Nuvoton I2C controller, which is available on the NPCM7xx BMC
+-	  controller.
++	  Nuvoton I2C controller, which is available on the NPCM BMC
++	  controllers.
+ 	  Driver can also support slave mode (select I2C_SLAVE).
+ 
+ config I2C_OCORES
+diff --git a/drivers/i2c/busses/Makefile b/drivers/i2c/busses/Makefile
+index 1d00dce77098..01fdf74a5565 100644
+--- a/drivers/i2c/busses/Makefile
++++ b/drivers/i2c/busses/Makefile
+@@ -80,7 +80,7 @@ obj-$(CONFIG_I2C_MT7621)	+= i2c-mt7621.o
+ obj-$(CONFIG_I2C_MV64XXX)	+= i2c-mv64xxx.o
+ obj-$(CONFIG_I2C_MXS)		+= i2c-mxs.o
+ obj-$(CONFIG_I2C_NOMADIK)	+= i2c-nomadik.o
+-obj-$(CONFIG_I2C_NPCM7XX)	+= i2c-npcm7xx.o
++obj-$(CONFIG_I2C_NPCM)		+= i2c-npcm7xx.o
+ obj-$(CONFIG_I2C_OCORES)	+= i2c-ocores.o
+ obj-$(CONFIG_I2C_OMAP)		+= i2c-omap.o
+ obj-$(CONFIG_I2C_OWL)		+= i2c-owl.o
 diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index a265f6fdbf5c..2cbf9c679aed 100644
+index 2cbf9c679aed..b281e0424e3e 100644
 --- a/drivers/i2c/busses/i2c-npcm7xx.c
 +++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -124,6 +124,8 @@ enum i2c_addr {
-  * use this array to get the address or each register.
-  */
- #define I2C_NUM_OWN_ADDR 10
-+#define I2C_NUM_OWN_ADDR_SUPPORTED 2
-+
- static const int npcm_i2caddr[I2C_NUM_OWN_ADDR] = {
- 	NPCM_I2CADDR1, NPCM_I2CADDR2, NPCM_I2CADDR3, NPCM_I2CADDR4,
- 	NPCM_I2CADDR5, NPCM_I2CADDR6, NPCM_I2CADDR7, NPCM_I2CADDR8,
-@@ -392,14 +394,10 @@ static void npcm_i2c_disable(struct npcm_i2c *bus)
- #if IS_ENABLED(CONFIG_I2C_SLAVE)
- 	int i;
+@@ -17,6 +17,7 @@
+ #include <linux/mfd/syscon.h>
+ #include <linux/module.h>
+ #include <linux/of.h>
++#include <linux/of_device.h>
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
  
--	/* select bank 0 for I2C addresses */
--	npcm_i2c_select_bank(bus, I2C_BANK_0);
--
- 	/* Slave addresses removal */
--	for (i = I2C_SLAVE_ADDR1; i < I2C_NUM_OWN_ADDR; i++)
-+	for (i = I2C_SLAVE_ADDR1; i < I2C_NUM_OWN_ADDR_SUPPORTED; i++)
- 		iowrite8(0, bus->reg + npcm_i2caddr[i]);
+@@ -91,7 +92,7 @@ enum i2c_addr {
  
--	npcm_i2c_select_bank(bus, I2C_BANK_1);
- #endif
- 	/* Disable module */
- 	i2cctl2 = ioread8(bus->reg + NPCM_I2CCTL2);
-@@ -604,8 +602,7 @@ static int npcm_i2c_slave_enable(struct npcm_i2c *bus, enum i2c_addr addr_type,
- 			i2cctl1 &= ~NPCM_I2CCTL1_GCMEN;
- 		iowrite8(i2cctl1, bus->reg + NPCM_I2CCTL1);
- 		return 0;
--	}
--	if (addr_type == I2C_ARP_ADDR) {
-+	} else if (addr_type == I2C_ARP_ADDR) {
- 		i2cctl3 = ioread8(bus->reg + NPCM_I2CCTL3);
- 		if (enable)
- 			i2cctl3 |= I2CCTL3_ARPMEN;
-@@ -614,16 +611,18 @@ static int npcm_i2c_slave_enable(struct npcm_i2c *bus, enum i2c_addr addr_type,
- 		iowrite8(i2cctl3, bus->reg + NPCM_I2CCTL3);
- 		return 0;
- 	}
-+	if (addr_type > I2C_SLAVE_ADDR2 && addr_type <= I2C_SLAVE_ADDR10) {
-+		dev_err(bus->dev,
-+			"try to enable more then 2 SA not supported\n");
-+	}
- 	if (addr_type >= I2C_ARP_ADDR)
- 		return -EFAULT;
- 	/* select bank 0 for address 3 to 10 */
--	if (addr_type > I2C_SLAVE_ADDR2)
--		npcm_i2c_select_bank(bus, I2C_BANK_0);
+ /* init register and default value required to enable module */
+ #define NPCM_I2CSEGCTL			0xE4
+-#define NPCM_I2CSEGCTL_INIT_VAL		0x0333F000
++#define NPCM_I2CSEGCTL_INIT_VAL		bus->data->segctl_init_val
+ 
+ /* Common regs */
+ #define NPCM_I2CSDA			0x00
+@@ -228,8 +229,7 @@ static const int npcm_i2caddr[I2C_NUM_OWN_ADDR] = {
+ #define NPCM_I2CFIF_CTS_CLR_FIFO	BIT(6)
+ #define NPCM_I2CFIF_CTS_SLVRSTR		BIT(7)
+ 
+-/* NPCM_I2CTXF_CTL reg fields */
+-#define NPCM_I2CTXF_CTL_TX_THR		GENMASK(4, 0)
++/* NPCM_I2CTXF_CTL reg field */
+ #define NPCM_I2CTXF_CTL_THR_TXIE	BIT(6)
+ 
+ /* NPCM_I2CT_OUT reg fields */
+@@ -238,22 +238,22 @@ static const int npcm_i2caddr[I2C_NUM_OWN_ADDR] = {
+ #define NPCM_I2CT_OUT_T_OUTST		BIT(7)
+ 
+ /* NPCM_I2CTXF_STS reg fields */
+-#define NPCM_I2CTXF_STS_TX_BYTES	GENMASK(4, 0)
++#define NPCM_I2CTXF_STS_TX_BYTES	bus->data->txf_sts_tx_bytes
+ #define NPCM_I2CTXF_STS_TX_THST		BIT(6)
+ 
+ /* NPCM_I2CRXF_STS reg fields */
+-#define NPCM_I2CRXF_STS_RX_BYTES	GENMASK(4, 0)
++#define NPCM_I2CRXF_STS_RX_BYTES	bus->data->rxf_sts_rx_bytes
+ #define NPCM_I2CRXF_STS_RX_THST		BIT(6)
+ 
+ /* NPCM_I2CFIF_CTL reg fields */
+ #define NPCM_I2CFIF_CTL_FIFO_EN		BIT(4)
+ 
+ /* NPCM_I2CRXF_CTL reg fields */
+-#define NPCM_I2CRXF_CTL_RX_THR		GENMASK(4, 0)
+-#define NPCM_I2CRXF_CTL_LAST_PEC	BIT(5)
++#define NPCM_I2CRXF_CTL_LAST_PEC	bus->data->rxf_ctl_last_pec
+ #define NPCM_I2CRXF_CTL_THR_RXIE	BIT(6)
+ 
+-#define I2C_HW_FIFO_SIZE		16
++#define MAX_I2C_HW_FIFO_SIZE		32
++#define I2C_HW_FIFO_SIZE		bus->data->fifo_size
+ 
+ /* I2C_VER reg fields */
+ #define I2C_VER_VERSION			GENMASK(6, 0)
+@@ -270,11 +270,36 @@ static const int npcm_i2caddr[I2C_NUM_OWN_ADDR] = {
+ #define I2C_FREQ_MIN_HZ			10000
+ #define I2C_FREQ_MAX_HZ			I2C_MAX_FAST_MODE_PLUS_FREQ
+ 
++struct npcm_i2c_data {
++	u8 fifo_size;
++	u32 segctl_init_val;
++	u8 txf_sts_tx_bytes;
++	u8 rxf_sts_rx_bytes;
++	u8 rxf_ctl_last_pec;
++};
 +
- 	/* Set and enable the address */
- 	iowrite8(sa_reg, bus->reg + npcm_i2caddr[addr_type]);
- 	npcm_i2c_slave_int_enable(bus, enable);
--	if (addr_type > I2C_SLAVE_ADDR2)
--		npcm_i2c_select_bank(bus, I2C_BANK_1);
++static const struct npcm_i2c_data npxm7xx_i2c_data = {
++	.fifo_size = 16,
++	.segctl_init_val = 0x0333F000,
++	.txf_sts_tx_bytes = GENMASK(4, 0),
++	.rxf_sts_rx_bytes = GENMASK(4, 0),
++	.rxf_ctl_last_pec = BIT(5)
++};
 +
- 	return 0;
- }
++static const struct npcm_i2c_data npxm8xx_i2c_data = {
++	.fifo_size = 32,
++	.segctl_init_val = 0x9333F000,
++	.txf_sts_tx_bytes = GENMASK(5, 0),
++	.rxf_sts_rx_bytes = GENMASK(5, 0),
++	.rxf_ctl_last_pec = BIT(7)
++};
++
+ /* Status of one I2C module */
+ struct npcm_i2c {
+ 	struct i2c_adapter adap;
+ 	struct device *dev;
+ 	unsigned char __iomem *reg;
++	const struct npcm_i2c_data *data;
+ 	spinlock_t lock;   /* IRQ synchronization */
+ 	struct completion cmd_complete;
+ 	int cmd_err;
+@@ -307,8 +332,8 @@ struct npcm_i2c {
+ 	int slv_rd_ind;
+ 	int slv_wr_size;
+ 	int slv_wr_ind;
+-	u8 slv_rd_buf[I2C_HW_FIFO_SIZE];
+-	u8 slv_wr_buf[I2C_HW_FIFO_SIZE];
++	u8 slv_rd_buf[MAX_I2C_HW_FIFO_SIZE];
++	u8 slv_wr_buf[MAX_I2C_HW_FIFO_SIZE];
  #endif
-@@ -846,15 +845,13 @@ static u8 npcm_i2c_get_slave_addr(struct npcm_i2c *bus, enum i2c_addr addr_type)
+ 	struct dentry *debugfs; /* debugfs device directory */
+ 	u64 ber_cnt;
+@@ -743,11 +768,11 @@ static void npcm_i2c_callback(struct npcm_i2c *bus,
+ static u8 npcm_i2c_fifo_usage(struct npcm_i2c *bus)
  {
- 	u8 slave_add;
- 
--	/* select bank 0 for address 3 to 10 */
--	if (addr_type > I2C_SLAVE_ADDR2)
--		npcm_i2c_select_bank(bus, I2C_BANK_0);
-+	if (addr_type > I2C_SLAVE_ADDR2 && addr_type <= I2C_SLAVE_ADDR10) {
-+		dev_err(bus->dev,
-+			"get slave: try to use more then 2 slave addresses not supported\n");
-+	}
- 
- 	slave_add = ioread8(bus->reg + npcm_i2caddr[(int)addr_type]);
- 
--	if (addr_type > I2C_SLAVE_ADDR2)
--		npcm_i2c_select_bank(bus, I2C_BANK_1);
--
- 	return slave_add;
- }
- 
-@@ -864,12 +861,12 @@ static int npcm_i2c_remove_slave_addr(struct npcm_i2c *bus, u8 slave_add)
- 
- 	/* Set the enable bit */
- 	slave_add |= 0x80;
--	npcm_i2c_select_bank(bus, I2C_BANK_0);
--	for (i = I2C_SLAVE_ADDR1; i < I2C_NUM_OWN_ADDR; i++) {
-+
-+	for (i = I2C_SLAVE_ADDR1; i < I2C_NUM_OWN_ADDR_SUPPORTED; i++) {
- 		if (ioread8(bus->reg + npcm_i2caddr[i]) == slave_add)
- 			iowrite8(0, bus->reg + npcm_i2caddr[i]);
- 	}
--	npcm_i2c_select_bank(bus, I2C_BANK_1);
-+
+ 	if (bus->operation == I2C_WRITE_OPER)
+-		return FIELD_GET(NPCM_I2CTXF_STS_TX_BYTES,
+-				 ioread8(bus->reg + NPCM_I2CTXF_STS));
++		return (NPCM_I2CTXF_STS_TX_BYTES &
++			ioread8(bus->reg + NPCM_I2CTXF_STS));
+ 	if (bus->operation == I2C_READ_OPER)
+-		return FIELD_GET(NPCM_I2CRXF_STS_RX_BYTES,
+-				 ioread8(bus->reg + NPCM_I2CRXF_STS));
++		return (NPCM_I2CRXF_STS_RX_BYTES &
++			ioread8(bus->reg + NPCM_I2CRXF_STS));
  	return 0;
  }
  
-@@ -924,11 +921,15 @@ static int npcm_i2c_slave_get_wr_buf(struct npcm_i2c *bus)
- 	for (i = 0; i < I2C_HW_FIFO_SIZE; i++) {
- 		if (bus->slv_wr_size >= I2C_HW_FIFO_SIZE)
+@@ -882,10 +907,10 @@ static void npcm_i2c_write_fifo_slave(struct npcm_i2c *bus, u16 max_bytes)
+ 	while (max_bytes-- && I2C_HW_FIFO_SIZE != npcm_i2c_fifo_usage(bus)) {
+ 		if (bus->slv_wr_size <= 0)
  			break;
--		i2c_slave_event(bus->slave, I2C_SLAVE_READ_REQUESTED, &value);
-+		if (bus->state == I2C_SLAVE_MATCH) {
-+			i2c_slave_event(bus->slave, I2C_SLAVE_READ_REQUESTED, &value);
-+			bus->state = I2C_OPER_STARTED;
-+		} else {
-+			i2c_slave_event(bus->slave, I2C_SLAVE_READ_PROCESSED, &value);
-+		}
- 		ind = (bus->slv_wr_ind + bus->slv_wr_size) % I2C_HW_FIFO_SIZE;
+-		bus->slv_wr_ind = bus->slv_wr_ind % I2C_HW_FIFO_SIZE;
++		bus->slv_wr_ind = bus->slv_wr_ind & (I2C_HW_FIFO_SIZE - 1);
+ 		npcm_i2c_wr_byte(bus, bus->slv_wr_buf[bus->slv_wr_ind]);
+ 		bus->slv_wr_ind++;
+-		bus->slv_wr_ind = bus->slv_wr_ind % I2C_HW_FIFO_SIZE;
++		bus->slv_wr_ind = bus->slv_wr_ind & (I2C_HW_FIFO_SIZE - 1);
+ 		bus->slv_wr_size--;
+ 	}
+ }
+@@ -900,7 +925,7 @@ static void npcm_i2c_read_fifo_slave(struct npcm_i2c *bus, u8 bytes_in_fifo)
+ 	while (bytes_in_fifo--) {
+ 		data = npcm_i2c_rd_byte(bus);
+ 
+-		bus->slv_rd_ind = bus->slv_rd_ind % I2C_HW_FIFO_SIZE;
++		bus->slv_rd_ind = bus->slv_rd_ind & (I2C_HW_FIFO_SIZE - 1);
+ 		bus->slv_rd_buf[bus->slv_rd_ind] = data;
+ 		bus->slv_rd_ind++;
+ 
+@@ -927,7 +952,7 @@ static int npcm_i2c_slave_get_wr_buf(struct npcm_i2c *bus)
+ 		} else {
+ 			i2c_slave_event(bus->slave, I2C_SLAVE_READ_PROCESSED, &value);
+ 		}
+-		ind = (bus->slv_wr_ind + bus->slv_wr_size) % I2C_HW_FIFO_SIZE;
++		ind = (bus->slv_wr_ind + bus->slv_wr_size) & (I2C_HW_FIFO_SIZE - 1);
  		bus->slv_wr_buf[ind] = value;
  		bus->slv_wr_size++;
--		i2c_slave_event(bus->slave, I2C_SLAVE_READ_PROCESSED, &value);
  	}
- 	return I2C_HW_FIFO_SIZE - ret;
+@@ -999,8 +1024,8 @@ static void npcm_i2c_slave_wr_buf_sync(struct npcm_i2c *bus)
+ {
+ 	int left_in_fifo;
+ 
+-	left_in_fifo = FIELD_GET(NPCM_I2CTXF_STS_TX_BYTES,
+-				 ioread8(bus->reg + NPCM_I2CTXF_STS));
++	left_in_fifo = (NPCM_I2CTXF_STS_TX_BYTES &
++			ioread8(bus->reg + NPCM_I2CTXF_STS));
+ 
+ 	/* fifo already full: */
+ 	if (left_in_fifo >= I2C_HW_FIFO_SIZE ||
+@@ -2265,12 +2290,21 @@ static void npcm_i2c_init_debugfs(struct platform_device *pdev,
+ 	bus->debugfs = d;
  }
-@@ -976,7 +977,6 @@ static void npcm_i2c_slave_xmit(struct npcm_i2c *bus, u16 nwrite,
- 	if (nwrite == 0)
- 		return;
  
--	bus->state = I2C_OPER_STARTED;
- 	bus->operation = I2C_WRITE_OPER;
++static const struct of_device_id npcm_i2c_bus_of_table[] = {
++	{ .compatible = "nuvoton,npcm750-i2c", .data = &npxm7xx_i2c_data },
++	{ .compatible = "nuvoton,npcm845-i2c", .data = &npxm8xx_i2c_data },
++	{}
++};
++MODULE_DEVICE_TABLE(of, npcm_i2c_bus_of_table);
++
+ static int npcm_i2c_probe_bus(struct platform_device *pdev)
+ {
+ 	struct npcm_i2c *bus;
+ 	struct i2c_adapter *adap;
+ 	struct clk *i2c_clk;
+ 	static struct regmap *gcr_regmap;
++	struct device *dev = &pdev->dev;
++	const struct of_device_id *match;
+ 	int irq;
+ 	int ret;
+ 	struct device_node *np = pdev->dev.of_node;
+@@ -2281,6 +2315,13 @@ static int npcm_i2c_probe_bus(struct platform_device *pdev)
  
- 	/* get the next buffer */
+ 	bus->dev = &pdev->dev;
+ 
++	match = of_match_device(npcm_i2c_bus_of_table, dev);
++	if (!match) {
++		dev_err(dev, "OF data missing\n");
++		return -EINVAL;
++	}
++	bus->data = match->data;
++
+ 	bus->num = of_alias_get_id(pdev->dev.of_node, "i2c");
+ 	/* core clk must be acquired to calculate module timing settings */
+ 	i2c_clk = devm_clk_get(&pdev->dev, NULL);
+@@ -2352,12 +2393,6 @@ static int npcm_i2c_remove_bus(struct platform_device *pdev)
+ 	return 0;
+ }
+ 
+-static const struct of_device_id npcm_i2c_bus_of_table[] = {
+-	{ .compatible = "nuvoton,npcm750-i2c", },
+-	{}
+-};
+-MODULE_DEVICE_TABLE(of, npcm_i2c_bus_of_table);
+-
+ static struct platform_driver npcm_i2c_bus_driver = {
+ 	.probe = npcm_i2c_probe_bus,
+ 	.remove = npcm_i2c_remove_bus,
 -- 
 2.17.1
 
