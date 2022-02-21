@@ -2,69 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39D5C4BEF46
-	for <lists+openbmc@lfdr.de>; Tue, 22 Feb 2022 03:22:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 082F34BEF66
+	for <lists+openbmc@lfdr.de>; Tue, 22 Feb 2022 03:22:43 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K2jbx4M1Kz2yJw
-	for <lists+openbmc@lfdr.de>; Tue, 22 Feb 2022 13:22:05 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K2jcc3Fxhz3bV6
+	for <lists+openbmc@lfdr.de>; Tue, 22 Feb 2022 13:22:40 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=YAe/FOh3;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=ZmRctxBT;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e2c;
- helo=mail-vs1-xe2c.google.com; envelope-from=warp5tw@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::a31;
+ helo=mail-vk1-xa31.google.com; envelope-from=warp5tw@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=YAe/FOh3; dkim-atps=neutral
-Received: from mail-vs1-xe2c.google.com (mail-vs1-xe2c.google.com
- [IPv6:2607:f8b0:4864:20::e2c])
+ header.s=20210112 header.b=ZmRctxBT; dkim-atps=neutral
+Received: from mail-vk1-xa31.google.com (mail-vk1-xa31.google.com
+ [IPv6:2607:f8b0:4864:20::a31])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K2FpG3Zpxz2yJR
- for <openbmc@lists.ozlabs.org>; Mon, 21 Feb 2022 19:29:25 +1100 (AEDT)
-Received: by mail-vs1-xe2c.google.com with SMTP id g20so16680940vsb.9
- for <openbmc@lists.ozlabs.org>; Mon, 21 Feb 2022 00:29:25 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K2Fs50R3rz2yLX
+ for <openbmc@lists.ozlabs.org>; Mon, 21 Feb 2022 19:31:52 +1100 (AEDT)
+Received: by mail-vk1-xa31.google.com with SMTP id j17so7851736vkd.12
+ for <openbmc@lists.ozlabs.org>; Mon, 21 Feb 2022 00:31:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :cc:content-transfer-encoding;
- bh=z7GbsHFki7BHmmijQLgu4jj0JzXWxy6jSKULjvaUMy8=;
- b=YAe/FOh3YSDtYtbR4PnOKeb4K5dDoW+FBsI8qeLiL3vGVsklbxiZNspPuYQ7qJDmrQ
- VMY/g5C96ioabxZxaqBJxV9ZwxOwHHk//+aLa4GlP1zEnq4ao/ojIBoqmpTINNqJyz63
- kxl1dPlUHvkcaxDaQt2g7NyFo/afKAAWQ4A7+h2WoU2SMyTTXhb9885eyU5v22W7+JiV
- 6P32BHphxsl7ac4qJ2dXLKTu8EAnJc6K1qxfDr8MeAl2oPzF2Qi7i5PeZb39PbUuByTq
- PC8rPkA4b1xX+5G7RL4wxAxYfNB47mUHsNYZGvs4TNx2pdpEEHNHRcA4/8CbCHqTv6zq
- Lgyg==
+ bh=tHxyOUfMHqTikNQZhmqKh+kXdtIHhN+LVh74A17t+GY=;
+ b=ZmRctxBTa88LrYcPKv48Jo2DOkCPg3J8+BJGa5YAf4qOWj4lDPQyaGBnoh5LK07bSl
+ GuQkwjUEljvrWqMVuobUqaDSiNGYe+hM4PAXzMX0AWUkzf3BLa89jzcu+lGYqfr3xev/
+ jYZ2jaurO3ZKelDzIG+mbyK1S6C2u8hbxw8cd85rRcKq5RqK4laMNsQ+3j0IVgE99Tgn
+ H1P+umePLXCVFT+WjUMEjkZn6ysW3T2YbFaE1mR4PeaygwaJSX0pxUGx7LWWr32xnNGM
+ vCr3y9faUhyqQ+zxyJrFPgICPPI5FYG6b5XT1TgCEIjSYPIqbVEUkfJefYNqUTix8Ec1
+ pzqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc:content-transfer-encoding;
- bh=z7GbsHFki7BHmmijQLgu4jj0JzXWxy6jSKULjvaUMy8=;
- b=rgEo3JnpdkgTPSmMdUjnQhWyFcCEVDYDSmHXpY9WdbOBvljkuvcLrdtdMg/bThfZc/
- 7vahSMLR8LNjh5EM8lxu0yDHbry14AA/XV3yK0sorx6FZI1x0wQb+sN981ne7MAAVEh4
- Vlq7B4juGhAE1VXy8uVUaQYT616I7VxOM6SFCGfg743Qi/aW3miG8gx3XT/Y9mpeU+qN
- u4tXQ9xpE5ZY4IrtIZIoVYdgTs5naIPQr7J9VIiOPoeAsmdFP/GgI+bg4MZJKqSjcmXH
- +JHWmx5BokDeixFo7/iWsznBspeLajPImoP7Uz7m2b2eH/g4EmA06SjLJlcFfG2Fc4l1
- m/ig==
-X-Gm-Message-State: AOAM531RRZ9tyYXgN+wstZYKzm16DM0UFlX7O88WOvGESe/HRm67NzvM
- 9rWBXwW44kSwPeZIA/J87uY3mQ25poRUwo1OwQ==
-X-Google-Smtp-Source: ABdhPJxrwy07YYidAlOGzW8ZJV9eYQ1bjoVO5usicU/jUamQDPj0Kh2S1a/A8IpLOP9uhc2ftnW2l1cER8DZgG31qNU=
-X-Received: by 2002:a67:b807:0:b0:31b:b306:a5c with SMTP id
- i7-20020a67b807000000b0031bb3060a5cmr7001993vsf.50.1645432162605; Mon, 21 Feb
- 2022 00:29:22 -0800 (PST)
+ bh=tHxyOUfMHqTikNQZhmqKh+kXdtIHhN+LVh74A17t+GY=;
+ b=NRYMYsczkCD0CMH0lGhZZzdH0fupBRkvxy12rU7TMUW3o9tDB5/Edc9VsV/Uebjb9S
+ Iv8mTwIwdygUVqxkMwmZdh5woT+WGlTZybfjh3bjCSJzdDFCMOEzj+7m4UKZ0eyupOM6
+ dm/ya1gfW5QnuW2BhLoBhAM9GAcbehQMWVF93rOZLmlJmOzcgplNHbevPD8aiVQbdT6i
+ Gq99fl2OIllHJGUU90wOUCD1N7plVlMn3QmmT7AnyJ3VQVHugyweTmIn+53bw6cleKmS
+ EYbk962Lftek7KfGQYsVu2nDFzQu8YlSU8xgtPb0GipPuH8ZZSVNemldBzyOizY+fEJ/
+ 96ZA==
+X-Gm-Message-State: AOAM5316RAEMQFhmWD5Srvjk324Tmc6s2O+a5hwHYXgRk2zSn4pqygWm
+ 7aDDTPNi3OawJnQwuiB7dYhBNDQwl1JAgU3imw==
+X-Google-Smtp-Source: ABdhPJyO2ShXUpYzMd0qiTi2EndkIjvRyGYXHcDdCeZDikC/rlrNM+t7NrbqGV6Pcl/kj/FJx2GB9JU1jI5j/1eJS7o=
+X-Received: by 2002:a05:6122:180b:b0:330:ee39:966e with SMTP id
+ ay11-20020a056122180b00b00330ee39966emr7269125vkb.5.1645432309857; Mon, 21
+ Feb 2022 00:31:49 -0800 (PST)
 MIME-Version: 1.0
 References: <20220220035321.3870-1-warp5tw@gmail.com>
- <20220220035321.3870-5-warp5tw@gmail.com>
- <ae927203-794b-06c6-3bcc-d67f13ab841d@canonical.com>
-In-Reply-To: <ae927203-794b-06c6-3bcc-d67f13ab841d@canonical.com>
+ <20220220035321.3870-3-warp5tw@gmail.com>
+ <1645410969.402841.2041548.nullmailer@robh.at.kernel.org>
+In-Reply-To: <1645410969.402841.2041548.nullmailer@robh.at.kernel.org>
 From: Tyrone Ting <warp5tw@gmail.com>
-Date: Mon, 21 Feb 2022 16:29:10 +0800
-Message-ID: <CACD3sJbn7EK71+3yjok8Qg3DRrRNgEVne0mNs8vRBiJu3mpxbQ@mail.gmail.com>
-Subject: Re: [PATCH v2 04/11] i2c: npcm: Update gcr property name
-To: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Date: Mon, 21 Feb 2022 16:31:37 +0800
+Message-ID: <CACD3sJaC-8BO9TkunmAfFQOow1rmWxEjhSRE-kekFRM1wmKq2Q@mail.gmail.com>
+Subject: Re: [PATCH v2 02/11] dt-bindings: i2c: npcm: support NPCM845
+To: Rob Herring <robh@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-Mailman-Approved-At: Tue, 22 Feb 2022 13:21:12 +1100
@@ -79,46 +79,65 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: tmaimon77@gmail.com, devicetree@vger.kernel.org, tali.perry1@gmail.com,
+Cc: tmaimon77@gmail.com, KWLIU@nuvoton.com, tali.perry1@gmail.com,
  linux-i2c@vger.kernel.org, digetx@gmail.com, benjaminfair@google.com,
- openbmc@lists.ozlabs.org, JJLIU0@nuvoton.com, christophe.leroy@csgroup.eu,
- lukas.bulwahn@gmail.com, tomer.maimon@nuvoton.com, KWLIU@nuvoton.com,
- bence98@sch.bme.hu, arnd@arndb.de, sven@svenpeter.dev, robh+dt@kernel.org,
- Avi.Fishman@nuvoton.com, andriy.shevchenko@linux.intel.com,
- semen.protsenko@linaro.org, jie.deng@intel.com, avifishman70@gmail.com,
- venture@google.com, yangyicong@hisilicon.com, linux-kernel@vger.kernel.org,
- wsa@kernel.org, kfting@nuvoton.com, tali.perry@nuvoton.com, olof@lixom.net
+ krzysztof.kozlowski@canonical.com, openbmc@lists.ozlabs.org,
+ JJLIU0@nuvoton.com, christophe.leroy@csgroup.eu, lukas.bulwahn@gmail.com,
+ tomer.maimon@nuvoton.com, devicetree@vger.kernel.org, bence98@sch.bme.hu,
+ arnd@arndb.de, sven@svenpeter.dev, robh+dt@kernel.org, Avi.Fishman@nuvoton.com,
+ andriy.shevchenko@linux.intel.com, semen.protsenko@linaro.org,
+ jie.deng@intel.com, avifishman70@gmail.com, venture@google.com,
+ yangyicong@hisilicon.com, linux-kernel@vger.kernel.org, wsa@kernel.org,
+ kfting@nuvoton.com, tali.perry@nuvoton.com, olof@lixom.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Krzysztof:
+Hi Rob:
 
-Thank you for your comments and please find my reply next to your comments.
+Thank you for your comments and they will be addressed.
 
-Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com> =E6=96=BC 2022=E5=
-=B9=B42=E6=9C=8820=E6=97=A5
-=E9=80=B1=E6=97=A5 =E4=B8=8B=E5=8D=885:32=E5=AF=AB=E9=81=93=EF=BC=9A
+Rob Herring <robh@kernel.org> =E6=96=BC 2022=E5=B9=B42=E6=9C=8821=E6=97=A5 =
+=E9=80=B1=E4=B8=80 =E4=B8=8A=E5=8D=8810:36=E5=AF=AB=E9=81=93=EF=BC=9A
+
 >
-> On 20/02/2022 04:53, Tyrone Ting wrote:
-> > From: Tali Perry <tali.perry1@gmail.com>
+> On Sun, 20 Feb 2022 11:53:12 +0800, Tyrone Ting wrote:
+> > From: Tyrone Ting <kfting@nuvoton.com>
 > >
-> > Use a generic name for NPCM system manager reigster.
+> > Add compatible and nuvoton,sys-mgr description for NPCM i2c module.
+> >
+> > Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
+> > Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+> > ---
+> >  .../bindings/i2c/nuvoton,npcm7xx-i2c.yaml       | 17 ++++++++++++-----
+> >  1 file changed, 12 insertions(+), 5 deletions(-)
+> >
 >
-> The subject is not accurate and you entirely skipped in commit msg the
-> fact of an ABI break.
+> My bot found errors running 'make DT_CHECKER_FLAGS=3D-m dt_binding_check'
+> on your patch (DT_CHECKER_FLAGS is new in v5.13):
 >
-> You do not update a property name but you change the way of getting GCR
-> regmap.
+> yamllint warnings/errors:
+> ./Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml:19:6: [w=
+arning] wrong indentation: expected 4 but found 5 (indentation)
+> ./Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml:20:7: [w=
+arning] wrong indentation: expected 7 but found 6 (indentation)
 >
-
-I'll change the subject since the patch is to change the way to getting GCR
-regmap as you indicated.
-
-About the ABI break, I responded in the discussion thread of
-[PATCH v2 00/11] i2c: npcm: Bug fixes timeout, spurious interrupts.
-
-> Best regards,
-> Krzysztof
+> dtschema/dtc warnings/errors:
+>
+> doc reference errors (make refcheckdocs):
+>
+> See https://patchwork.ozlabs.org/patch/1595125
+>
+> This check can fail if there are any dependencies. The base for a patch
+> series is generally the most recent rc1.
+>
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> date:
+>
+> pip3 install dtschema --upgrade
+>
+> Please check and re-submit.
+>
 
 Best regards,
 Tyrone
