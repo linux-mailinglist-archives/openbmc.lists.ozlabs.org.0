@@ -1,69 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2EB44BEF7F
-	for <lists+openbmc@lfdr.de>; Tue, 22 Feb 2022 03:23:57 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A0AA4BEF80
+	for <lists+openbmc@lfdr.de>; Tue, 22 Feb 2022 03:24:34 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K2jf30g6Jz3bSx
-	for <lists+openbmc@lfdr.de>; Tue, 22 Feb 2022 13:23:55 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K2jfl3rslz3bY0
+	for <lists+openbmc@lfdr.de>; Tue, 22 Feb 2022 13:24:31 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=anYGhEvX;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=FrtcLlrS;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e2a;
- helo=mail-vs1-xe2a.google.com; envelope-from=warp5tw@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e34;
+ helo=mail-vs1-xe34.google.com; envelope-from=warp5tw@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=anYGhEvX; dkim-atps=neutral
-Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com
- [IPv6:2607:f8b0:4864:20::e2a])
+ header.s=20210112 header.b=FrtcLlrS; dkim-atps=neutral
+Received: from mail-vs1-xe34.google.com (mail-vs1-xe34.google.com
+ [IPv6:2607:f8b0:4864:20::e34])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K2FvT4K4pz30Mn
- for <openbmc@lists.ozlabs.org>; Mon, 21 Feb 2022 19:33:56 +1100 (AEDT)
-Received: by mail-vs1-xe2a.google.com with SMTP id g20so16692187vsb.9
- for <openbmc@lists.ozlabs.org>; Mon, 21 Feb 2022 00:33:56 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K2GC163fBz3cXv
+ for <openbmc@lists.ozlabs.org>; Mon, 21 Feb 2022 19:47:24 +1100 (AEDT)
+Received: by mail-vs1-xe34.google.com with SMTP id u10so16730554vsu.13
+ for <openbmc@lists.ozlabs.org>; Mon, 21 Feb 2022 00:47:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :cc:content-transfer-encoding;
- bh=Ufcy944rkWYKZObvy1+rpFgMmzS5p+LaqMauq+MUEW4=;
- b=anYGhEvXvHwbxgxsHz489ymn/gP/REFDdoRerZAfwz/vbB8aDXxPvY1rUSUcibANRy
- UiFK1mpVtXQkCnUA5LUyQAiADQ7yL5YRAqWx9vQ+scj0ycQhWh4C18/iHALNSp13W8mS
- QuSJQCILZqTa1iQnnkzdfA/kPDD5KIdgsPfcH5aE6AcT4oXc6itDcF5CtpVPL1k03v4K
- 4S4eZbvsFeIbAApBbzqRP8jgwV3CAokSxhHciEaM0n/gQG8mh0h8GXMtCsSRtd2whx0h
- KUXz0TbrQtYWGUbbEJ0EuY3Xx5LD8yn53kyCgntIqelnYkvh4/PWmHdUOkPM9ZYUh+tT
- Fquw==
+ bh=7bU+t7iJxXJ0OaoM2yVGvL7go0S1hioO91rPjZv/0z0=;
+ b=FrtcLlrS/mN+1ArTCSqQJP7OwWJSKnAIJoEa5iarc+OoEiID9eblolED3MW+RpC4iI
+ Uj30iVniCj9z114z9iXB5YPM3o8zMMxdE/XyclQUnkTJmjc7xdNvdEXqtX9zBX7B5P9x
+ 8NOmjkfVirVkz4mkkYwkCObwJee276QceLrN8lO1ulssWB7HaA27T4BlB8YKaB9Hee+1
+ 3g8lLGE+rXQ3gmr7VTsZS9PcV6ZDbMeTWrnyk0fQditLy3NT4JaZ+8/DHH8cgYeg96jp
+ H7kmCh40l0g5eZp7iDk2YhKhCTCI3douvetEz6cRvpjYB4vUamQT9Hk8fKmX9GUj79nr
+ XTyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc:content-transfer-encoding;
- bh=Ufcy944rkWYKZObvy1+rpFgMmzS5p+LaqMauq+MUEW4=;
- b=WOe3W934pc+ZqBqaAizrEwsV1MOfmSb3GTmVuSEB267WR84hxY4PNq1DONi996PKIj
- Y6W+1cjWyIsniugQIdJsD1c3idc9kZY9zFMIhIo0Ev6P6M37aeYGLN6EWSvUIcJQfVVi
- jXkh+jdfs0BNzlJ/xw/AZxErBUQIYWyjDm7ccRszr1CYHgQITbuGCQh8qid0dSzHuPkQ
- DNshWwRWOjMyKX17a4GP/82i6a+k4htUjeMrvB1BIUgZic/rQX0SAXIiANDHlOVp1Tls
- ujU+tJowM5fxT0YshkyJuB83+ONiwfnyw8MzbEwAENS1vEEFyknTnI29Pta/+PRazitF
- wTRA==
-X-Gm-Message-State: AOAM532KLuTN1luwxXjhqSXquAO55wsOCXEbtrhtoRikWLtm0huky+/m
- QJuRYjjY1S6VYCD6az4bHKnMG49Dz0tecI5/eg==
-X-Google-Smtp-Source: ABdhPJwJNio1dad1aaWQl70fBp62eHOCefzP0BnnUismdjIt1635Ofbsf+YmMSai31L2tPhyjh5ESBxdt/6SyOFXsCM=
-X-Received: by 2002:a67:db0c:0:b0:31c:2859:2ff2 with SMTP id
- z12-20020a67db0c000000b0031c28592ff2mr2541361vsj.29.1645432433446; Mon, 21
- Feb 2022 00:33:53 -0800 (PST)
+ bh=7bU+t7iJxXJ0OaoM2yVGvL7go0S1hioO91rPjZv/0z0=;
+ b=QOpgUr5JU8dQnbaZP3KktqbrPln9clyaTU28R9yPZOfpOdNjN8Zn1KuR1FjSzNUCiz
+ rmMxjT3yQkA03DCvHOENxh+NHBYdsnipqbp1Qrh0ExE4B4ptmNf8WHs01C60CSxqoaB/
+ p/8izvAaL7ZFTBy/ItIJ8AwmFnN8SU4qo/lrYXSreXwaxQ/uyAOKiQN2NDdrm3OvZc1Z
+ Gg0DcurW5h+POYZt+M1AdOZ2Xqa9eqsd/P91TKuVIGozgSbf1g4x3aYh9VHwINjDTKx/
+ xG23y8XGDzOeXy5zRtip9S4AuiNHu1kxN427biyHwhlC/sS7jMimCw1r/tuFeJxOs8RT
+ WDcw==
+X-Gm-Message-State: AOAM532lc6vuO8DgY3GtVA/hF626TckDC27EMbQbmA4wF4JfCIUOFKEe
+ eiAoj9wpC4KH/jj5fy1phdXolm/xQYi0o16vJA==
+X-Google-Smtp-Source: ABdhPJz87q7UEAPD90zMY5JUvmglimvP7o+lLeN7nmUzh3gNThbLp0iMMhFUe/WQABY4n4qBW73VqlU3+BeJKoEH4IM=
+X-Received: by 2002:a05:6102:370f:b0:31b:60dc:4f76 with SMTP id
+ s15-20020a056102370f00b0031b60dc4f76mr7914160vst.2.1645433240460; Mon, 21 Feb
+ 2022 00:47:20 -0800 (PST)
 MIME-Version: 1.0
 References: <20220220035321.3870-1-warp5tw@gmail.com>
- <20220220035321.3870-12-warp5tw@gmail.com>
- <888977e0-03bb-3a6b-eca3-7fbf35f53ffc@canonical.com>
-In-Reply-To: <888977e0-03bb-3a6b-eca3-7fbf35f53ffc@canonical.com>
+ <5d507fda-525e-4064-3add-0bb0cc23d016@canonical.com>
+ <CACD3sJaXeWLu6=oLgxJcU9R+A1J+jB7xKaGcDFwYxof33yj17Q@mail.gmail.com>
+ <5ce0f6a6-4a5f-4f25-3cc6-ab0f24bf15cf@canonical.com>
+In-Reply-To: <5ce0f6a6-4a5f-4f25-3cc6-ab0f24bf15cf@canonical.com>
 From: Tyrone Ting <warp5tw@gmail.com>
-Date: Mon, 21 Feb 2022 16:33:41 +0800
-Message-ID: <CACD3sJaFFC2Fe_EyzM3t1_DCkYPRe-mXQdqpe4=Y27vuRajKoA@mail.gmail.com>
-Subject: Re: [PATCH v2 11/11] i2c: npcm: Support NPCM845
+Date: Mon, 21 Feb 2022 16:47:08 +0800
+Message-ID: <CACD3sJaWJMFgwzQgrHFV0KkkbJXzhgFx=umywxSrLszwP+hO2w@mail.gmail.com>
+Subject: Re: [PATCH v2 00/11] i2c: npcm: Bug fixes timeout, spurious interrupts
 To: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
@@ -93,112 +94,65 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 Hi Krzysztof:
 
-Thank you for your comments and they'll be addressed.
+Got it and thank you for your comments.
+
+I'll keep old code as fallback, if getting nuvoton,sys-mgr fails as
+you point out.
 
 Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com> =E6=96=BC 2022=E5=
-=B9=B42=E6=9C=8820=E6=97=A5
-=E9=80=B1=E6=97=A5 =E4=B8=8B=E5=8D=885:36=E5=AF=AB=E9=81=93=EF=BC=9A
+=B9=B42=E6=9C=8821=E6=97=A5
+=E9=80=B1=E4=B8=80 =E4=B8=8B=E5=8D=884:32=E5=AF=AB=E9=81=93=EF=BC=9A
 >
-> On 20/02/2022 04:53, Tyrone Ting wrote:
-> > From: Tyrone Ting <kfting@nuvoton.com>
+> On 21/02/2022 09:16, Tyrone Ting wrote:
+> > Hi Krzysztof:
 > >
-> > Add NPCM8XX I2C support.
-> > The NPCM8XX uses a similar i2c module as NPCM7XX.
-> > The internal HW FIFO is larger in NPCM8XX.
+> > Thank you for your comments and please find my reply next to your comme=
+nts.
 > >
-> > Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
-> > Signed-off-by: Tali Perry <tali.perry1@gmail.com>
-> > ---
-> >  drivers/i2c/busses/Kconfig       |  8 +--
-> >  drivers/i2c/busses/Makefile      |  2 +-
-> >  drivers/i2c/busses/i2c-npcm7xx.c | 87 ++++++++++++++++++++++----------
-> >  3 files changed, 66 insertions(+), 31 deletions(-)
+> > Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com> =E6=96=BC 2022=
+=E5=B9=B42=E6=9C=8820=E6=97=A5
+> > =E9=80=B1=E6=97=A5 =E4=B8=8B=E5=8D=885:30=E5=AF=AB=E9=81=93=EF=BC=9A
+> >>
+> >> On 20/02/2022 04:53, Tyrone Ting wrote:
+> >>> From: Tyrone Ting <kfting@nuvoton.com>
+> >>>
+> >>> This patchset includes the following fixes:
+> >>>
+> >>> - Add dt-bindings description for NPCM845.
+> >>> - Bug fix for timeout calculation.
+> >>> - Better handling of spurious interrupts.
+> >>> - Fix for event type in slave mode.
+> >>> - Removal of own slave addresses [2:10].
+> >>> - Support for next gen BMC (NPCM845).
+> >>>
+> >>> The NPCM I2C driver is tested on NPCM750 and NPCM845 evaluation board=
+s.
+> >>>
+> >>> Addressed comments from:
+> >>>  - Jonathan Neusch=C3=A4fer : https://lkml.org/lkml/2022/2/7/670
+> >>>  - Krzysztof Kozlowski : https://lkml.org/lkml/2022/2/7/760
+> >>
+> >> How did you address the ABI change comment? I still see you break the
+> >> ABI with the introduction of a new, required property.
+> >>
 > >
-> > diff --git a/drivers/i2c/busses/Kconfig b/drivers/i2c/busses/Kconfig
-> > index 42da31c1ab70..ab9ee2de5e00 100644
-> > --- a/drivers/i2c/busses/Kconfig
-> > +++ b/drivers/i2c/busses/Kconfig
-> > @@ -817,13 +817,13 @@ config I2C_NOMADIK
-> >         I2C interface from ST-Ericsson's Nomadik and Ux500 architecture=
-s,
-> >         as well as the STA2X11 PCIe I/O HUB.
-> >
-> > -config I2C_NPCM7XX
-> > +config I2C_NPCM
-> >       tristate "Nuvoton I2C Controller"
-> > -     depends on ARCH_NPCM7XX || COMPILE_TEST
-> > +     depends on ARCH_NPCM || COMPILE_TEST
-> >       help
-> >         If you say yes to this option, support will be included for the
-> > -       Nuvoton I2C controller, which is available on the NPCM7xx BMC
-> > -       controller.
-> > +       Nuvoton I2C controller, which is available on the NPCM BMC
-> > +       controllers.
-> >         Driver can also support slave mode (select I2C_SLAVE).
-> >
-> >  config I2C_OCORES
-> > diff --git a/drivers/i2c/busses/Makefile b/drivers/i2c/busses/Makefile
-> > index 1d00dce77098..01fdf74a5565 100644
-> > --- a/drivers/i2c/busses/Makefile
-> > +++ b/drivers/i2c/busses/Makefile
-> > @@ -80,7 +80,7 @@ obj-$(CONFIG_I2C_MT7621)    +=3D i2c-mt7621.o
-> >  obj-$(CONFIG_I2C_MV64XXX)    +=3D i2c-mv64xxx.o
-> >  obj-$(CONFIG_I2C_MXS)                +=3D i2c-mxs.o
-> >  obj-$(CONFIG_I2C_NOMADIK)    +=3D i2c-nomadik.o
-> > -obj-$(CONFIG_I2C_NPCM7XX)    +=3D i2c-npcm7xx.o
-> > +obj-$(CONFIG_I2C_NPCM)               +=3D i2c-npcm7xx.o
-> >  obj-$(CONFIG_I2C_OCORES)     +=3D i2c-ocores.o
-> >  obj-$(CONFIG_I2C_OMAP)               +=3D i2c-omap.o
-> >  obj-$(CONFIG_I2C_OWL)                +=3D i2c-owl.o
-> > diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-=
-npcm7xx.c
-> > index 2cbf9c679aed..b281e0424e3e 100644
-> > --- a/drivers/i2c/busses/i2c-npcm7xx.c
-> > +++ b/drivers/i2c/busses/i2c-npcm7xx.c
-> > @@ -17,6 +17,7 @@
-> >  #include <linux/mfd/syscon.h>
-> >  #include <linux/module.h>
-> >  #include <linux/of.h>
-> > +#include <linux/of_device.h>
-> >  #include <linux/platform_device.h>
-> >  #include <linux/regmap.h>
-> >
-> > @@ -91,7 +92,7 @@ enum i2c_addr {
-> >
-> >  /* init register and default value required to enable module */
-> >  #define NPCM_I2CSEGCTL                       0xE4
-> > -#define NPCM_I2CSEGCTL_INIT_VAL              0x0333F000
-> > +#define NPCM_I2CSEGCTL_INIT_VAL              bus->data->segctl_init_va=
-l
-> >
-> >  /* Common regs */
-> >  #define NPCM_I2CSDA                  0x00
-> > @@ -228,8 +229,7 @@ static const int npcm_i2caddr[I2C_NUM_OWN_ADDR] =3D=
- {
-> >  #define NPCM_I2CFIF_CTS_CLR_FIFO     BIT(6)
-> >  #define NPCM_I2CFIF_CTS_SLVRSTR              BIT(7)
-> >
-> > -/* NPCM_I2CTXF_CTL reg fields */
-> > -#define NPCM_I2CTXF_CTL_TX_THR               GENMASK(4, 0)
-> > +/* NPCM_I2CTXF_CTL reg field */
-> >  #define NPCM_I2CTXF_CTL_THR_TXIE     BIT(6)
-> >
-> >  /* NPCM_I2CT_OUT reg fields */
-> > @@ -238,22 +238,22 @@ static const int npcm_i2caddr[I2C_NUM_OWN_ADDR] =
-=3D {
-> >  #define NPCM_I2CT_OUT_T_OUTST                BIT(7)
-> >
-> >  /* NPCM_I2CTXF_STS reg fields */
-> > -#define NPCM_I2CTXF_STS_TX_BYTES     GENMASK(4, 0)
-> > +#define NPCM_I2CTXF_STS_TX_BYTES     bus->data->txf_sts_tx_bytes
+> > I add the new, required property "nuvoton,sys-mgr" in the file
+> > nuvoton-common-npcm7xx.dtsi.
+> > The file nuvoton-common-npcm7xx.dtsi is required by the existing
+> > upstream NPCM devicetree files.
+> > It is also updated and committed in this patch set [PATCH v2 01/11]
+> > arm: dts: add new property for NPCM i2c module.
+> > Please let me know if I misunderstand the meaning of "breaking the ABI"=
+.
+> > Thank you again.
 >
-> It's not a clean code to use defines for complex types. It's not a
-> constant anymore, so just use bus->data->txf_sts_tx_bytes directly.
+> Breaking the ABI means that old DTS stop working with new kernel. Your
+> change breaks old (and out-of-tree) DTS.
 >
-> The same in other places.
+> What is more, your change is not bisectable because DTS goes via
+> separate branch or tree than driver change.
 >
-> >  #define NPCM_I2CTXF_STS_TX_THST              BIT(6)
-> >
+> You need to keep old code as fallback, if getting nuvoton,sys-mgr fails.
 >
 > Best regards,
 > Krzysztof
