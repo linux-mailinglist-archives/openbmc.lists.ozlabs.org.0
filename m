@@ -2,79 +2,60 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 223BA4BD98F
-	for <lists+openbmc@lfdr.de>; Mon, 21 Feb 2022 13:09:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EAE44BD9BD
+	for <lists+openbmc@lfdr.de>; Mon, 21 Feb 2022 13:43:36 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K2Lh430qnz3cG3
-	for <lists+openbmc@lfdr.de>; Mon, 21 Feb 2022 23:09:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K2MRT3mrSz3cKK
+	for <lists+openbmc@lfdr.de>; Mon, 21 Feb 2022 23:43:33 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=WdORsHAc;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=G/9AFprn;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.126; helo=mga18.intel.com;
- envelope-from=zbigniew.lukwinski@linux.intel.com; receiver=<UNKNOWN>)
+ (client-ip=192.55.52.93; helo=mga11.intel.com;
+ envelope-from=jiaqing.zhao@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=WdORsHAc; dkim-atps=neutral
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+ header.s=Intel header.b=G/9AFprn; dkim-atps=neutral
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K2Lgb6YfXz3Wtt
- for <openbmc@lists.ozlabs.org>; Mon, 21 Feb 2022 23:08:58 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K2MR44kgYz30Dv
+ for <openbmc@lists.ozlabs.org>; Mon, 21 Feb 2022 23:43:11 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1645445340; x=1676981340;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=udiT9kyDge4jwNdiIHSVS1TJ7uOYTJCX2mu4kKhajtQ=;
- b=WdORsHAcIvfRMVryuT+q6Q9xKCkuKa/6ED6+cLC9Fx2cx7SZqfmpApDe
- NT/jkTYDPrE+azHAjH0UynXqMm7SQD949O17B25AGqGk3Iz7fmoZsFXg4
- AqgR0KkTerhP/6q02LrOV3rnsj/60GHsI9/hXHD76IToGSC8r/WAJHCX8
- rGcjMdu0icR07kpSCUUi6mkJAYM+DTPUo01WR7uj7EtLtLmuB4MxiMZHf
- 01kOzRl8hp9Yn/IdWB1Inc7cemzmFT/7jHzSsGoY4Jfahydj63c2TVX9p
- yV+bfJLUC1gh3hBi9ryuSjUbFnbb0Ksm5b4fWQkbXk87q7rL9RjlvEtPB g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10264"; a="235037626"
-X-IronPort-AV: E=Sophos;i="5.88,385,1635231600"; d="scan'208";a="235037626"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
- by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Feb 2022 04:07:54 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.88,385,1635231600"; d="scan'208";a="627354923"
-Received: from linux.intel.com ([10.54.29.200])
- by FMSMGA003.fm.intel.com with ESMTP; 21 Feb 2022 04:07:54 -0800
-Received: from [10.252.63.169] (zlukwins-mobl.ger.corp.intel.com
- [10.252.63.169])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id C8085580C7E;
- Mon, 21 Feb 2022 04:07:52 -0800 (PST)
-Message-ID: <27225647-6411-23e2-6332-3da79256047d@linux.intel.com>
-Date: Mon, 21 Feb 2022 13:07:50 +0100
+ t=1645447393; x=1676983393;
+ h=message-id:date:mime-version:to:cc:from:subject:
+ content-transfer-encoding;
+ bh=suWVJCw7hFCdS+GT46HYL2mV6gMFCFDQnpu/cZV8Y1g=;
+ b=G/9AFprnNL7lkof8pzF4qFm22h/Fmqnr8f7JLnx5AuigH/kFDX+x9Fud
+ 86VknAHMbT8IsWkfkJIQWCVo0d/GgoCZuHO8wUAcBrbLe2bAkH2+KrdSW
+ +9NIG8vIeWHpkqgDcdJc8JRaUiLfSjRVyow0AMh6RltyvTS0kR24F/Pyg
+ C1mE3A8mur6gPqyA3nGNrLK/dbIKrrfa7mq0olG3Fcr9CgUmlHk/9Dpvn
+ jiX1cLVf3rD8kD/RfdhE6LTvrumESBBz5IH1vDmD7BGc7+FzY/9abOk5w
+ WKNs+z0Uh4ok0i/vj1uNvXMrV8PP/QST8mc9XFzZZ+t5gGlq1J1d/Vjns w==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10264"; a="249080659"
+X-IronPort-AV: E=Sophos;i="5.88,385,1635231600"; d="scan'208";a="249080659"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Feb 2022 04:42:08 -0800
+X-IronPort-AV: E=Sophos;i="5.88,385,1635231600"; d="scan'208";a="547322196"
+Received: from jiaqingz-mobl.ccr.corp.intel.com (HELO [10.255.29.200])
+ ([10.255.29.200])
+ by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Feb 2022 04:42:06 -0800
+Message-ID: <a9db0239-a53a-9a6f-e167-335dc8e56872@linux.intel.com>
+Date: Mon, 21 Feb 2022 20:41:52 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.0
-Subject: Re: Propose a new application for reading DIMM SPD directly
+ Thunderbird/91.6.1
 Content-Language: en-US
-To: Michael Shen <gpgpgp@google.com>
-References: <CAD1rtg8sa2OG4jUL8x7Gr9ExzH-tEswhHwSDaZtWhcAN4sAvuw@mail.gmail.com>
- <YgIXodbEP9hmae6Q@heinlein>
- <CAD1rtg-tTrbjiL76NRDGnAfx36JBM4Rcb2gyUYjROR-2=H+Uqg@mail.gmail.com>
- <YgQcaInEBq8ZBlIm@heinlein>
- <CAH2-KxAyXn3YndZY_aWAMt4M6eTMrkPA91vCPeOj0tZOgPv-vA@mail.gmail.com>
- <YgQuzD9AkrqstygH@heinlein>
- <CAH2-KxA6MhNXUs+KXAjHTcJe1gWyGwfL+OUQBuCfQnPMSX7GZQ@mail.gmail.com>
- <CAD1rtg8vM-2PckG1Cct7m5tyFJ-axvKQ_ky2z=rzV4O9mZjoWA@mail.gmail.com>
- <5892de79-ea79-8922-d809-1dd5622a84ad@linux.intel.com>
- <CADKL2t7Jrn5LqTu8Yy9CbCaH2VHHe_Ub=gPaH78Hx2-ZHj2g1w@mail.gmail.com>
- <CAD1rtg8Ja4_XMu3O4KBrhJv4kRwezEPYi4J1698uW1_4ff=TiQ@mail.gmail.com>
- <54fa7998-223c-f8fe-2fb5-124822a0b06f@linux.intel.com>
- <CAD1rtg_=EPWU-4B3o4Cyuf9EU7sZtSLSuL5PSG7FvSRp62D9Sw@mail.gmail.com>
-From: "Zbigniew, Lukwinski" <zbigniew.lukwinski@linux.intel.com>
-In-Reply-To: <CAD1rtg_=EPWU-4B3o4Cyuf9EU7sZtSLSuL5PSG7FvSRp62D9Sw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: openbmc@lists.ozlabs.org
+From: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
+Subject: service-config-manager performance issue
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -87,102 +68,19 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ed Tanous <edtanous@google.com>, Benjamin Fair <benjaminfair@google.com>,
- openbmc@lists.ozlabs.org
+Cc: apparao.puli@linux.intel.com, richard.marian.thomaiyar@linux.intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2/17/2022 4:59 AM, Michael Shen wrote:
->> I see. So the app will just read SPD non-volatile content and provide it
->> for user, e.g. over DBus, right?
-> Yes, the plan is over DBus.
-Ok. Thanks.
->> Are you going to access DIMM periodically? It seems that it shall be
->> enough to access DIMMs once per ac cycle/dc cycle. And just return SPD
->> ownership to the CPU for the rest of time.
-> I think reading the SPD once per ac/dc cycle is enough like you said.
-> But if we want BMC to monitor the DIMM temp instead of CPU, then BMC
-> can't return the SPD ownership since the temp needs to be read
-> periodically.
+Hi, all
 
-Got it!
+When updating service status with service-config-manager, it always takes ~15s for the new status to be applied, which is much longer than it should be.
 
->
-> On Wed, Feb 16, 2022 at 4:39 AM Zbigniew, Lukwinski
->
-> <zbigniew.lukwinski@linux.intel.com> wrote:
->> On 2/15/2022 2:50 AM, Michael Shen wrote:
->>>> What about CLTT? Switching MUX to the BMC makes CPU not able to get DIMM
->>>> temperature. Are you assuming here this feature is enabled in BMC FW?
->>> CPU can still monitor the DIMM temp by reading the MR4 register and
->>> trigger the DIMM throttling if needed. So I think the CLTT will not be
->>> affected.
->>> If CPU needs something more than MR4 register provided, BMC can assist
->>> it in another separate daemon like Benjamin mentioned.
->> Got it.
->>
->>> On Tue, Feb 15, 2022 at 6:17 AM Benjamin Fair <benjaminfair@google.com> wrote:
->>>> On Fri, 11 Feb 2022 at 13:21, Zbigniew, Lukwinski
->>>> <zbigniew.lukwinski@linux.intel.com> wrote:
->>>>> On 2/11/2022 1:40 AM, Michael Shen wrote:
->>>>>> On Thu, Feb 10, 2022 at 6:45 AM Ed Tanous <edtanous@google.com> wrote:
->>>>>>> On Wed, Feb 9, 2022 at 1:14 PM Patrick Williams <patrick@stwcx.xyz> wrote:
->>>>>>>> On Wed, Feb 09, 2022 at 12:20:00PM -0800, Ed Tanous wrote:
->>>>>>>>> On Wed, Feb 9, 2022 at 11:56 AM Patrick Williams <patrick@stwcx.xyz> wrote:
->>>>>>>>>> On Tue, Feb 08, 2022 at 04:23:12PM +0800, Michael Shen wrote:
->>>>>>>>>>> On Tue, Feb 8, 2022 at 3:11 PM Patrick Williams <patrick@stwcx.xyz> wrote:
->>>>>>>>>>>> On Tue, Feb 08, 2022 at 01:10:37PM +0800, Michael Shen wrote:
->>>>>>>>>>> BIOS owns the MUX select pin and it can decide who owns the SPD(I2C/I3C) bus.
->>>>>>>>>>>    From my understanding, BIOS only needs to read SPD during the POST stage.
->>>>>>>>>>> For the rest of time, BIOS will hand over the SPD bus to BMC.
->>>>>>>>>> That seems like it might work.  You'll have to deal with the time when the BIOS
->>>>>>>>>> has the mux in the BMC code somehow.  Ideally I'd ask for the mux select to also
->>>>>>>>>> be fed to the BMC as an input GPIO so that you can differentiate between "we
->>>>>>>>>> don't own the mux" and "all the devices are NAKing us".
->>>>>>>>> This seems like a nitty gritty design detail that's best handled in
->>>>>>>>> code when we review it.  I think the important bit here is that there
->>>>>>>>> are paths where this could work without a significant design issue.
->>>>>>>> Just one subtlety.  I wouldn't expect this, necessarily, to be in _our_ design
->>>>>>>> and/or code, except that we'd want to document the GPIO line like we do all
->>>>>>>> others.  I was trying to hint that "if I were involved in this hardware design,
->>>>>>>> I'd ask for...".  If you leave it out, I'm sure it'll work _most_ of the time
->>>>>>>> just fine and it'll be your problem to debug it when it doesn't.
->>>>>>> Understood.
->>>>>> Thanks for all your suggestions. I will keep them in mind during implementation.
->>>>> What about CLTT? Switching MUX to the BMC makes CPU not able to get DIMM
->>>>> temperature. Are you assuming here this feature is enabled in BMC FW?
->>>> BMC could assist with CLTT, but since this is CPU-specific it would
->>>> belong in a separate daemon. That daemon could get the relevant
->>>> temperatures over D-Bus using the standard sensor interface, so I
->>>> don't think it should affect the design for this component.
->>>>
->>>>> Are you going to support DCPMM as well? If so, there is another problem
->>>>> since switching MUX to BMC you brakes NVDIMM related FW/SW running on
->>>>> Host OS.
->>>> There are no plans currently for supporting NVDIMMs, just DDR5 at
->>>> first as Michael mentioned, and possibly other DDR versions in the
->>>> future.
->> I see. So the app will just read SPD non-volatile content and provide it
->> for user, e.g. over DBus, right?
->>
->> Are you going to access DIMM periodically? It seems that it shall be
->> enough to access DIMMs once per ac cycle/dc cycle. And just return SPD
->> ownership to the CPU for the rest of time.
->>
->>>>>>>>>> You should take a look at what is already existing in fru-device (part of
->>>>>>>>>> entity-manager repository).  This is already doing this for IPMI-format EEPROM
->>>>>>>>>> data.  We should be able to replicate/enhance this code, in the same repository,
->>>>>>>>>> to handle SPD format.
->>>>>>>>> I am not sure if it's a good idea to put it into the entity-manager
->>>>>>>>> repo. As you said EM
->>>>>>>>> is designed for IPMI-format EEPROM. Adding another parser into that
->>>>>>>>> repo may violate
->>>>>>>>> EM's design.
->>>>>>>> I'm not sure why it would be an issue.  Hopefully one of the maintainers of that
->>>>>>>> repo can weigh in.  I wouldn't expect "parsing only IPMI-format EEPROMs" is a
->>>>>>>> design but just the current state of implementation.
->>>>>>> So long as it can function properly in its current design, i have no
->>>>>>> problem with FruDevice adding more parsing types.  In fact, there's
->>>>>>> already patchsets out to add Linkedins proprietary fru type to
->>>>>>> FruDevice, so in terms of design, Patricks request seems reasonable.
->>>>>> Got it. Then I will push the code to EM.
+By inspecting the code, I found there is a 15s wait before updating service status in ServiceConfig::startServiceRestartTimer(). (https://github.com/openbmc/service-config-manager/blob/f2744893b77b9dd8903bb13113f4c3ef62c18f04/src/srvcfg_manager.cpp#L382)
+
+The 15s-wait is added at first in commit 0084047 (https://github.com/openbmc/service-config-manager/commit/0084047d008fd0ac36f09a232f67ff2fc5314b53).
+
+I've tested service-config-manager works as expected with the wait removed, and it only takes ~1s for the settings being applied, shall we remove it? And I'd like to ask what is the purpose of this wait to double confirm if removing it will bring any side effect.
+
+Thanks,
+Jiaqing
