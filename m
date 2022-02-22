@@ -2,74 +2,92 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 42D184BF0DA
-	for <lists+openbmc@lfdr.de>; Tue, 22 Feb 2022 05:17:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 10FE74C0117
+	for <lists+openbmc@lfdr.de>; Tue, 22 Feb 2022 19:17:28 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K2m9R45Krz2ynt
-	for <lists+openbmc@lfdr.de>; Tue, 22 Feb 2022 15:17:47 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K36pD1Rxjz3bb9
+	for <lists+openbmc@lfdr.de>; Wed, 23 Feb 2022 05:17:24 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=hWZJhKT9;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=inlck0W+;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=gD7pnm3W;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::430;
- helo=mail-pf1-x430.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.21;
+ helo=wout5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=hWZJhKT9; dkim-atps=neutral
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com
- [IPv6:2607:f8b0:4864:20::430])
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm1 header.b=inlck0W+; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=gD7pnm3W; 
+ dkim-atps=neutral
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
+ [64.147.123.21])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K2m7q35Crz3bZP
- for <openbmc@lists.ozlabs.org>; Tue, 22 Feb 2022 15:16:22 +1100 (AEDT)
-Received: by mail-pf1-x430.google.com with SMTP id z15so4953812pfe.7
- for <openbmc@lists.ozlabs.org>; Mon, 21 Feb 2022 20:16:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=sender:from:to:subject:date:message-id:in-reply-to:references
- :mime-version:content-transfer-encoding;
- bh=9y7F/bHnqXkW0oPkMs+ZHTotblfOd4M60KSXaKT3heo=;
- b=hWZJhKT92r2aFMCYB6i0MD7BDsUnO77pDZC5relUS8F6bzVYxfdSMgNaZYsBcK+b/T
- n/vASbDfIhAstud9Q095WeH7PV8urKuWCrOgH78K5GDLqa/MLVJzbCb95kQCVzxnI847
- I5YloiTNnS7oF8MWy6Z/acI1H/xLBRLYzM9GHiCUXpzj0GLlxyyXL2PeVk9foVrOQmPd
- 3h5PUr2exvTEbcJz0PNb0rwjuTNBHW/Avd7NPMy7pJ5ycUCHZS1FM828zH2I+/K6QcPw
- 1lwZuA7PZ+Lqitw10u6k/jGUuJZ2ENFvLbk9cMkXz42dhMa0nJixdVIFCViQjsif+O7Z
- zzXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:sender:from:to:subject:date:message-id
- :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=9y7F/bHnqXkW0oPkMs+ZHTotblfOd4M60KSXaKT3heo=;
- b=wX/JIjJw9e9uE3YJMt/7Y4Pjjc03IaskTn3Ppa69JKfm4B79MJ9HhK6+4IYkyHCHcv
- 29VPm5hMeflhBodO39YFJtDr5EdKDWCW45LRuS/qJNhALtdCgutbhtVuqFAYm8k292KU
- Z1rzxfiLJwjdhZmPj3J+4yodyJZi6+IrA9CVJcZepGL+c/lXVSDGNTOYT7kXOFc8uVAO
- bj8Ht0a0yAG9o0YpLpHzTUKC1CYqlzS4rUILpbN6rNXvFU8dAZInf4HV11FNYnkS2nu2
- Ygzimp1pd7WXuIrLezDQ8tT+xKVSRlF6vYMxfYQ5aJ5KguqijQa/od1KWvibSZ/lMEs7
- YxpQ==
-X-Gm-Message-State: AOAM533fruNnEXa2RWh/9Ax1Y0IAtz4K+iKVxUCSpYY/smeDlieFWJUC
- OHaLGS+jPBO9ftNSkqN/4QNKkOyEaBXTHQ==
-X-Google-Smtp-Source: ABdhPJzHyeNKGP+EkoBWGasneTNGYW1cJmJJv6In1HchamHUPk1C5Jju2+z2FGL/3OLnQGjvh2GxZg==
-X-Received: by 2002:a65:52cc:0:b0:374:3ee6:c632 with SMTP id
- z12-20020a6552cc000000b003743ee6c632mr6767614pgp.91.1645503380463; 
- Mon, 21 Feb 2022 20:16:20 -0800 (PST)
-Received: from localhost.localdomain ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id p1sm14457281pfo.212.2022.02.21.20.16.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Feb 2022 20:16:19 -0800 (PST)
-From: Joel Stanley <joel@jms.id.au>
-To: openbmc@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>,
- Eddie James <eajames@linux.ibm.com>, Andrew Geissler <geisonator@yahoo.com>
-Subject: [PATCH 2/2] ARM: dts: aspeed: everest: Add RTC battery gpio name
-Date: Tue, 22 Feb 2022 14:45:59 +1030
-Message-Id: <20220222041559.68651-3-joel@jms.id.au>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220222041559.68651-1-joel@jms.id.au>
-References: <20220222041559.68651-1-joel@jms.id.au>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K36nk1Szjz3bPK
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Feb 2022 05:16:57 +1100 (AEDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+ by mailout.west.internal (Postfix) with ESMTP id A5E683200495;
+ Tue, 22 Feb 2022 13:16:53 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute2.internal (MEProxy); Tue, 22 Feb 2022 13:16:54 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+ :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:sender:subject
+ :subject:to:to; s=fm1; bh=Dj/EnBj7nvDtkLaAh1EeRTpwaQvYXZYZejJJ05
+ I/7TI=; b=inlck0W+Dii24dV4rpxocqa+FEEoHC2QqBLphnkNpGMf9iad2CqG7S
+ v5EOLuF90Rrym5xw+CDmvUrEIBc6d0A9VpB30Ixx9IxmzzjSGQKlVm+qt0ZFC3GU
+ /ZJ+u3A+Sl2yTR1nYIVbnf5XjprerrGE48e/7q/ffTDBf2QZ3HYb3mf57FN7TlAU
+ SIz02rtMNte9sknpXlIHH/ZL+Psy1T/NYQR+tt96WGKrvY3R/im/Wgp6GJoq7VHe
+ gJvwdhs2eB6BygoCaCL5YE/wZ+d271MWi6IyS/9/XtJTTQv5JSdFw2kvR2ZwisyQ
+ v/0F+WRe+FN+TxcnHywwWLZr0xi/Ua7w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=Dj/EnBj7nvDtkLaAh
+ 1EeRTpwaQvYXZYZejJJ05I/7TI=; b=gD7pnm3WQLsWyBeE8f7OmUvSoGbxzp/CG
+ /k++o71dR+wAWLEC9M+o92YsPGZ/A17VDnyNd3wlOmR05njdPkv4ZrFIev4YumLO
+ KMbM73ghVlS5jv7oGRq9DTbeGKJboCM91NdAQkwVbIwy8TkPpEb0PKnQDt96D3GJ
+ lHjNlY2Iw4bLW2br35y9U8byo0YArZVwN/TEdgd4L4/VaiWg+HRm5gsJHw62cmoV
+ n1i1bAAPY3AHaPgiCxtREsqC7t5pshdHtb7NxxnEmhM1xiuCc+ovE52VJmPju3Pz
+ fproP/WH2GVZHlP9Y/eGSvBkniaf2buapmmzeTndKPZhCYyWBYxwA==
+X-ME-Sender: <xms:lCgVYvoz-WdSAn5pE4RTRhVkxNrLfKk35UhhaAP3u4apiRB-6DZrOA>
+ <xme:lCgVYprZOyjQ5vEaVINafNMbPtlZoZefHQBOwLCLBLvpC39gNQkhL7tYM3StP27Sh
+ 3zZHnubv3xmd9gkyXI>
+X-ME-Received: <xmr:lCgVYsNaVAS31jv36dAIovIKseupAYFWmy7Mo0De62WYcWbAbP5WH87VBvJjtbmxMb6bTEem52PTMwySNGgE0UTKP2W14OolTw4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrkeekgddutdelucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtroertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepvdduveeitdetvdefueeljeelgfff
+ vddufeetteeggedutdegteegkeetieevjeetnecuffhomhgrihhnpehgihhthhhusgdrtg
+ homhdpohhpvghnsghmtgdqphhrohhjvggtthdrgiihiienucevlhhushhtvghrufhiiigv
+ pedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighi
+ ii
+X-ME-Proxy: <xmx:lCgVYi5DHay8_MLb4RwIPqydgfBOgc5vEDUnS3-AEA27R10jLGWzSQ>
+ <xmx:lCgVYu6yfKEJNpewGsFU2lUM7d6R66fLrK8DCjjKj5wAgi21KOT7hQ>
+ <xmx:lCgVYqifKKNoe88UhW7KgpMXawuswWVa2e8kGVNKZnfI3IdFDQFnHg>
+ <xmx:lSgVYruLY1GKxuCUxld3OaT60BGq-1wr735zlWDKVQn4B3uzicGxnA>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 22 Feb 2022 13:16:52 -0500 (EST)
+Date: Tue, 22 Feb 2022 12:16:50 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Gaurav Gandhi <gauravgandhi@google.com>
+Subject: Re: Supporting removing interfaces from settings daemon
+Message-ID: <YhUokhiQYSXiwQFr@heinlein>
+References: <CACxmPJM0b_rxoRfx5qBXSsjOXL2tZtLJSZ8+64ekwXEs9q01DQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="UeWkCNdaCPNdBog6"
+Content-Disposition: inline
+In-Reply-To: <CACxmPJM0b_rxoRfx5qBXSsjOXL2tZtLJSZ8+64ekwXEs9q01DQ@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,33 +99,100 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org, anoo@us.ibm.com, deepak.kodihalli.83@gmail.com,
+ Ed Tanous <edtanous@google.com>, geissonator@yahoo.com,
+ Jason Ling <jasonling@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is the documented name used for OpenBMC systems:
 
- https://github.com/openbmc/docs/blob/master/designs/device-tree-gpio-naming.md#rtc-battery-voltage-read-enable
+--UeWkCNdaCPNdBog6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+Hi Gaurav,
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-index 547c71bfdfa7..64bc5b674288 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-@@ -269,9 +269,7 @@ &gpio0 {
- 	/*C0-C7*/	"","","","","","","","",
- 	/*D0-D7*/	"","","","","","","","",
- 	/*E0-E7*/	"","","","","","","","",
--	/*F0-F7*/	"PIN_HOLE_RESET_IN_N","","",
--				"reset-cause-pinhole","","",
--				"factory-reset-toggle","",
-+	/*F0-F7*/	"","","rtc-battery-voltage-read-enable","reset-cause-pinhole","","","factory-reset-toggle","",
- 	/*G0-G7*/	"","","","","","","","",
- 	/*H0-H7*/	"led-rtc-battery","led-bmc","led-rear-enc-id0","led-rear-enc-fault0","","","","",
- 	/*I0-I7*/	"","","","","","","bmc-secure-boot","",
--- 
-2.34.1
+On Fri, Feb 18, 2022 at 03:55:46PM -0800, Gaurav Gandhi wrote:
+> Hi All,
+>=20
+> Currently DcmiHandler
+> <https://github.com/openbmc/phosphor-host-ipmid/blob/05d17c036facc0e91259=
+59abe3c816aa631333e1/dcmihandler.cpp#L25>
+> in
+> phoshor-host-ipmid only supports the power_cap interface exported by
+> Settings <https://github.com/openbmc/phosphor-settingsd> daemon. To make =
+it
+> generic we can use objectmapper here
+> <https://github.com/openbmc/phosphor-host-ipmid/blob/05d17c036facc0e91259=
+59abe3c816aa631333e1/dcmihandler.cpp#L116>
+> to get all objects implementing power_cap interface.
+> But it poses a problem: which object to call when setting/getting the pow=
+er
+> cap if multiple services are exporting objects implementing the power_cap
+> interface.
 
+Why does it matter if multiple services are exporting the object?  It sounds
+like your concern is if multiple objects exist anywhere?
+
+> Also I think dcmi commands are supposed to set the power of the system and
+> it's not safe to set the system power using multiple services.
+
+Why or why not?
+
+> To avoid this we can make sure only 1 service exports this power_cap path
+> <https://github.com/openbmc/phosphor-host-ipmid/blob/05d17c036facc0e91259=
+59abe3c816aa631333e1/dcmihandler.cpp#L25>
+> used by dcmi handler. But the settings daemon
+> <https://github.com/openbmc/phosphor-settingsd> always exports the power
+> cap interface by default. Currently there is provision to override default
+> settings using .override files. But I am not aware about any way to remove
+> a certain interface from settings daemon.
+
+I don't think expecting just a single instance of the object is workable be=
+cause
+it completely omits handling of multi-host designs (like Yosemite v2).  The=
+re
+should be a different power_cap object per host instance and the DCMI handl=
+er
+should know, based on which IPMB channel the request came from, which host =
+the
+request is for.
+
+> I am planning to add support for .remove.yml files in merge_settings
+> <https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-pho=
+sphor/settings/phosphor-settings/merge_settings.py>
+> script
+> to remove interfaces along with overriding them.
+
+I don't see anything wrong with this, but I don't think it really solves
+whatever your underlying issue is.
+
+> Please share your thoughts on this. I have created this review
+> <https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/51394> for refere=
+nce
+
+--=20
+Patrick Williams
+
+--UeWkCNdaCPNdBog6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmIVKJAACgkQqwNHzC0A
+wRm0CRAApw9Bv0XuKXm3QL7ylcguPDf2g2pSWrqdwxdPehAtHG+Oplo1j9ZuAyGv
+Iy15JR2UYfmnaEVQHjat1+Q8FziLWd3M/XUnbebm4mjtO9T/mAT6PQVtH+ZPoaTd
+2V1EAoDYydMw55eX0XmJVMtFevDvpkkEh/HJBAy5vDWfAukTIhUypF576Y6zDPHB
+gVRlKw0L0IlRP8eEhgwb+2/ZVf+rGfdM+XWiqV0r9e7wiDoH4wd84Z7Dv6jkQEKm
+K57tTpjmUYvgDyn0mdJnxPapMdbgpmNTd633V8DkRnKIPwr4Go6B3JgZ2WsZ3hHz
+oxMa04SkVpgucEmS3H4Os9H6txUPIt7eNYg7jBwtnUsIttyKse5sn/1wK4zFrnio
+wAb/h+DYHB3O1yWq7vmjVhQj2l2GKGiBUV8dDKi0lvZfikEtxDvRHJcXaQnN2fGP
+QulQf/fMcTHrk6qspN1DDry2DCbzVdAUQNLQ8FJ2pUSUNdOc5lgIqE9vKlBV9M4o
+dKeNKwBBAktUgv7JApsKhIH3/W0TF64sNJyiD+WiyCp7opLTRmjRGRsUG2259PGM
+YTCpWbMazRN1DL1ckssDzb1WDJUiMGqMsDopJ85J5/oLF9P6nE0TdOtIMu4QzT4x
+TjqFn6zcNS8aCV0M0WhbQDyu0Jjq4iR0Rk0p7xa17DrHFvzP9pI=
+=S5eY
+-----END PGP SIGNATURE-----
+
+--UeWkCNdaCPNdBog6--
