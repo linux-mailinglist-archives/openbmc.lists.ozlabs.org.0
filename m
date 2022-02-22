@@ -2,63 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B6D94BF01F
-	for <lists+openbmc@lfdr.de>; Tue, 22 Feb 2022 05:08:07 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A0C5F4BF0D7
+	for <lists+openbmc@lfdr.de>; Tue, 22 Feb 2022 05:16:38 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K2lyD2cBCz3bSv
-	for <lists+openbmc@lfdr.de>; Tue, 22 Feb 2022 15:08:04 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K2m83684wz3bVy
+	for <lists+openbmc@lfdr.de>; Tue, 22 Feb 2022 15:16:35 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=OPybWhTe;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=ervmXxEH;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=jiaqing.zhao@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1034;
+ helo=mail-pj1-x1034.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=OPybWhTe; dkim-atps=neutral
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=ervmXxEH; dkim-atps=neutral
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com
+ [IPv6:2607:f8b0:4864:20::1034])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K2lxm5bmlz2yfh
- for <openbmc@lists.ozlabs.org>; Tue, 22 Feb 2022 15:07:39 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1645502861; x=1677038861;
- h=message-id:date:mime-version:from:subject:to:cc:
- references:in-reply-to:content-transfer-encoding;
- bh=viLTejMYH6z1CKZCw3NsVI6f4zILoDp2r0ITy4avKHY=;
- b=OPybWhTe+02HcfaK60O+8PZv/ek0xYHMqusw3OmJlmkH9UG04tk426rJ
- kwpSB2fsCaW8hr19S0cantOQHsSBZc+wLk+LYh/fFT7iDwd9Mo+36yr5H
- tPtEEjNsmHainT3sWD+HDo3V9BtU8FRUwwo0XdKoOhH2bXgQz+dRycDvz
- tQgIT693zR0+qwibtModvXzL5dYHCKITon1f72jTwO5+hSLW8Ih0k50A0
- wAvwLD+pjguC+YEVwzGGzwn7XuEJ8MAIufLLBfySwBSV8u4i/9dkUsfg3
- 6yBZXMWxh+Aqcnk5HKZKJpIo25ngbNu/xP73s2cDzIBkVwzB/nH51n6s+ A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10265"; a="251790903"
-X-IronPort-AV: E=Sophos;i="5.88,387,1635231600"; d="scan'208";a="251790903"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
- by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Feb 2022 20:06:36 -0800
-X-IronPort-AV: E=Sophos;i="5.88,387,1635231600"; d="scan'208";a="638762380"
-Received: from jiaqingz-mobl.ccr.corp.intel.com (HELO [10.249.168.87])
- ([10.249.168.87])
- by orsmga004-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 21 Feb 2022 20:06:34 -0800
-Message-ID: <72521bb0-7a92-e80a-adf9-72edd1271e50@linux.intel.com>
-Date: Tue, 22 Feb 2022 12:06:32 +0800
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K2m7j4pYlz2xrG
+ for <openbmc@lists.ozlabs.org>; Tue, 22 Feb 2022 15:16:16 +1100 (AEDT)
+Received: by mail-pj1-x1034.google.com with SMTP id
+ ci24-20020a17090afc9800b001bc3071f921so1119786pjb.5
+ for <openbmc@lists.ozlabs.org>; Mon, 21 Feb 2022 20:16:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=sender:from:to:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=ut1vIkQDMis2BRekryzzIqdRNkbNBKAe0TOZAEo0tGA=;
+ b=ervmXxEHqWkiK3K265AJue1ovjYqfjb3u/TdRnV7nyF6O2DSg1htDPJWjJECYowrbC
+ +SOvXa10Fa/IngyDYe9IwJzlHB9LDw7UK02kPO6OfTidPR6/HfzOw8ueJ1DgUnoh2ycu
+ 9iuIhek6Y+Ny/T4XJhPS0XoQSaCG7IuKig7qaqVIAxjwHUXv/HXKFwsX2ZLa5j/4S3SZ
+ MzF2IU5By7RzyZM8kglsaHGvdO/wsTTMMWvbD7fyEw4zctxN6iKPj/xvp4ZD+SEp8Alf
+ BwDz3PuHm301q7jxKOh0WuMRTmLLUARJHus9YrcoeXPzWiq4tSupfdFB7+nOuk0ZfHB0
+ KUcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:sender:from:to:subject:date:message-id
+ :mime-version:content-transfer-encoding;
+ bh=ut1vIkQDMis2BRekryzzIqdRNkbNBKAe0TOZAEo0tGA=;
+ b=mWO2JhmHzGjjnWR91xe9gv4TrddxPI35PGLoOaJ60twD2vCzphR5SmXC38k+G7uUH5
+ xFAGcSaYBO80R8rFVvquBaVB1Phr1WZWDcAmKR9tziojz3Mad3vGNiES5UqQec0cOAIk
+ ROVITYOPLn7JK68nFZE/BdUnZH7ft3iYtYrWtlj28UMZJhUt9B8X6kE35PMqD9GAA5+b
+ w0Juvoi31HYbllkGOh540Ohx0bB+9WnZsVfJGM67EaXX+pI8GnHCQvJ7H3z13ycLwbBm
+ 3nuEH+OA88isoSQDC3JMzJxtQdC4X0hqRVdSf7/0PVwHvJokC1hxQpu2XhfKXiHou+DO
+ nA6w==
+X-Gm-Message-State: AOAM530/LH/DCqe165vHKZKRvUy+LKIWH+65gpe0GIixZCGImrsdCNQu
+ Xg6YrXlNNXRyCRXkw0qoQbtiqcinaki7uQ==
+X-Google-Smtp-Source: ABdhPJwI2GnbiyWp6C5BjyUIaCXWWlcDUSyD90vY19z9rNLdFA/VfP9jhND8t58eMJ9NfA7ZW1TFQg==
+X-Received: by 2002:a17:903:228b:b0:14e:d9ac:8281 with SMTP id
+ b11-20020a170903228b00b0014ed9ac8281mr22073761plh.112.1645503373155; 
+ Mon, 21 Feb 2022 20:16:13 -0800 (PST)
+Received: from localhost.localdomain ([45.124.203.14])
+ by smtp.gmail.com with ESMTPSA id p1sm14457281pfo.212.2022.02.21.20.16.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 21 Feb 2022 20:16:12 -0800 (PST)
+From: Joel Stanley <joel@jms.id.au>
+To: openbmc@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>,
+ Eddie James <eajames@linux.ibm.com>, Andrew Geissler <geisonator@yahoo.com>
+Subject: [PATCH 0/2] ARM: dts: aspeed: Add p10bmc rtc gpio battery gpio names
+Date: Tue, 22 Feb 2022 14:45:57 +1030
+Message-Id: <20220222041559.68651-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-From: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
-Subject: Re: service-config-manager performance issue
-To: Joseph Reynolds <jrey@linux.ibm.com>, openbmc@lists.ozlabs.org
-References: <a9db0239-a53a-9a6f-e167-335dc8e56872@linux.intel.com>
- <762e2959-ddb1-c075-a581-756cc4c9d791@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <762e2959-ddb1-c075-a581-756cc4c9d791@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -71,33 +80,21 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: apparao.puli@linux.intel.com, richard.marian.thomaiyar@linux.intel.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2022-02-22 04:00, Joseph Reynolds wrote:
-> On 2/21/22 6:41 AM, Jiaqing Zhao wrote:
->> Hi, all
->>
->> When updating service status with service-config-manager, it always takes ~15s for the new status to be applied, which is much longer than it should be.
->>
->> By inspecting the code, I found there is a 15s wait before updating service status in ServiceConfig::startServiceRestartTimer(). (https://github.com/openbmc/service-config-manager/blob/f2744893b77b9dd8903bb13113f4c3ef62c18f04/src/srvcfg_manager.cpp#L382)
->>
->> The 15s-wait is added at first in commit 0084047 (https://github.com/openbmc/service-config-manager/commit/0084047d008fd0ac36f09a232f67ff2fc5314b53).
-> 
-> Here at IBM we are seeing the same thing.  It looks like that code (https://github.com/openbmc/service-config-manager/blob/master/src/srvcfg_manager.cpp - ServiceConfig::startServiceRestartTimer) was part of the initial commit.  I wonder if the problem is caused by a bug in that code.  (But I am not familiar with the code, and I don't have time to look at it now.)  Is the intention to reload the systemd units but give up after 15 seconds?
-> 
-> Joseph
->
+This is the upstreaming of these changes. The version in GHE used the
+old name, so I have sent a change to our fork of entity manager to fix
+this up.
 
-I think the author intends to execute systemd operations with a 15s timeout. But seems he misused boost::asio::steady_timer. The boost doc (https://www.boost.org/doc/libs/1_78_0/doc/html/boost_asio/reference/steady_timer.html) says the function in async_wait() is called when the timer has expired. So the code in service-config-manager actually calls the apply config function after asynchronously waited for 15s.
+Joel Stanley (2):
+  ARM: dts: aspeed: rainer: Add RTC battery gpio name
+  ARM: dts: aspeed: everest: Add RTC battery gpio name
 
-I cannot find out the proper a way to set a 15s time limit for the operation. Maybe we can set a max wait rounds of executing a systemd job in systemdUnitAction()? Currently it waits infinitely in ~20ms interval.
+ arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 4 +---
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 2 +-
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-Jiaqing
+-- 
+2.34.1
 
->> I've tested service-config-manager works as expected with the wait removed, and it only takes ~1s for the settings being applied, shall we remove it? And I'd like to ask what is the purpose of this wait to double confirm if removing it will bring any side effect.
->>
->> Thanks,
->> Jiaqing
-> 
