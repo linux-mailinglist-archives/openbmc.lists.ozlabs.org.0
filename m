@@ -1,70 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 559974BF0D9
-	for <lists+openbmc@lfdr.de>; Tue, 22 Feb 2022 05:17:15 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42D184BF0DA
+	for <lists+openbmc@lfdr.de>; Tue, 22 Feb 2022 05:17:50 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K2m8m4vsXz30Dg
-	for <lists+openbmc@lfdr.de>; Tue, 22 Feb 2022 15:17:12 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K2m9R45Krz2ynt
+	for <lists+openbmc@lfdr.de>; Tue, 22 Feb 2022 15:17:47 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=KMIv4VV2;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=hWZJhKT9;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::536;
- helo=mail-pg1-x536.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::430;
+ helo=mail-pf1-x430.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=KMIv4VV2; dkim-atps=neutral
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com
- [IPv6:2607:f8b0:4864:20::536])
+ header.s=20210112 header.b=hWZJhKT9; dkim-atps=neutral
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com
+ [IPv6:2607:f8b0:4864:20::430])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K2m7k6shBz2xrG
- for <openbmc@lists.ozlabs.org>; Tue, 22 Feb 2022 15:16:18 +1100 (AEDT)
-Received: by mail-pg1-x536.google.com with SMTP id s16so15972193pgs.13
- for <openbmc@lists.ozlabs.org>; Mon, 21 Feb 2022 20:16:19 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K2m7q35Crz3bZP
+ for <openbmc@lists.ozlabs.org>; Tue, 22 Feb 2022 15:16:22 +1100 (AEDT)
+Received: by mail-pf1-x430.google.com with SMTP id z15so4953812pfe.7
+ for <openbmc@lists.ozlabs.org>; Mon, 21 Feb 2022 20:16:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=sender:from:to:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=h677NkeS4XHi30yB2hiymA05ngHNnkQkYNLwLq4l+9c=;
- b=KMIv4VV2bGVa3kavmYxtBz8YPxusPoQGlQl2+FFkm4ONajLtc0X9pf5PI7C/+JjNhQ
- Dvr3V3Lr2DOv7JPHJR1AYtjIP5JpcDnob9ULXYAb/qdD7mdFtvPYcWYew9Mwy9z9MP66
- 2mae4WhJ7aDxYqwEJxeSC1bn/u3YwJydJTIzjKLhsNTykUaTkiVn4WzVy7lnZvaxNm5J
- 0/QFMJYUn+D6AzpxTvrXPCXMYdJMFF1QGkxByVerCy+OQSuNT9Peufxae8K9W6D+NspK
- CZrrYGDuhkbJCP3xX4cITi3lqNyld67g0a+G+3jb7jCAKqcM36PujXtoOVRSXjXaXkbq
- 3G2w==
+ bh=9y7F/bHnqXkW0oPkMs+ZHTotblfOd4M60KSXaKT3heo=;
+ b=hWZJhKT92r2aFMCYB6i0MD7BDsUnO77pDZC5relUS8F6bzVYxfdSMgNaZYsBcK+b/T
+ n/vASbDfIhAstud9Q095WeH7PV8urKuWCrOgH78K5GDLqa/MLVJzbCb95kQCVzxnI847
+ I5YloiTNnS7oF8MWy6Z/acI1H/xLBRLYzM9GHiCUXpzj0GLlxyyXL2PeVk9foVrOQmPd
+ 3h5PUr2exvTEbcJz0PNb0rwjuTNBHW/Avd7NPMy7pJ5ycUCHZS1FM828zH2I+/K6QcPw
+ 1lwZuA7PZ+Lqitw10u6k/jGUuJZ2ENFvLbk9cMkXz42dhMa0nJixdVIFCViQjsif+O7Z
+ zzXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:sender:from:to:subject:date:message-id
  :in-reply-to:references:mime-version:content-transfer-encoding;
- bh=h677NkeS4XHi30yB2hiymA05ngHNnkQkYNLwLq4l+9c=;
- b=WwdkngGFRrenkiL8/+Wh0cpjuwL9X+zogS6Qj3CSWHan2kuQP4B0XQ9q4pkic0hkkr
- qZ9BzJkh2m5Zh27DhnHKQ5L3n89OjixidS1mEHM+c895byi56yhIq9Za4h3M9MBr3V7P
- +XEFB/l+N7CR4/0S545CMhkoe9ludYvroj60h1y/4nd6R2PT2BX/Y9OUJhZZM3qE4NyJ
- iQXsmv6kIfEGSsC0GKd9lfiQ6rBq6OWd0J2/xmPhIc7U176Nh71W3GUB4vkHjcHMcUwX
- 3WPEabjCiueZoqXlYJo7EbrSbIrDLbTUurg3Hf3O7ZUwOaldHK9WFSjRjoAoZvDdkVVi
- Fi8A==
-X-Gm-Message-State: AOAM530iA70VpKAwcO3lFm8Jy5JInYWe4HnFfQsHo0ZOwis4yLtyF5UW
- ZYz+PVVnHVox+XGkOdcRWExut1fGKnUGoQ==
-X-Google-Smtp-Source: ABdhPJyk4EzFkfF07oGThOncGqWyH9XGd6sm/K1sxaY64Z/YXUBMsC2Q7G5SjDceHhuZL1j2uj52Gw==
-X-Received: by 2002:a63:e215:0:b0:373:9dd6:4b99 with SMTP id
- q21-20020a63e215000000b003739dd64b99mr18232981pgh.561.1645503376350; 
- Mon, 21 Feb 2022 20:16:16 -0800 (PST)
+ bh=9y7F/bHnqXkW0oPkMs+ZHTotblfOd4M60KSXaKT3heo=;
+ b=wX/JIjJw9e9uE3YJMt/7Y4Pjjc03IaskTn3Ppa69JKfm4B79MJ9HhK6+4IYkyHCHcv
+ 29VPm5hMeflhBodO39YFJtDr5EdKDWCW45LRuS/qJNhALtdCgutbhtVuqFAYm8k292KU
+ Z1rzxfiLJwjdhZmPj3J+4yodyJZi6+IrA9CVJcZepGL+c/lXVSDGNTOYT7kXOFc8uVAO
+ bj8Ht0a0yAG9o0YpLpHzTUKC1CYqlzS4rUILpbN6rNXvFU8dAZInf4HV11FNYnkS2nu2
+ Ygzimp1pd7WXuIrLezDQ8tT+xKVSRlF6vYMxfYQ5aJ5KguqijQa/od1KWvibSZ/lMEs7
+ YxpQ==
+X-Gm-Message-State: AOAM533fruNnEXa2RWh/9Ax1Y0IAtz4K+iKVxUCSpYY/smeDlieFWJUC
+ OHaLGS+jPBO9ftNSkqN/4QNKkOyEaBXTHQ==
+X-Google-Smtp-Source: ABdhPJzHyeNKGP+EkoBWGasneTNGYW1cJmJJv6In1HchamHUPk1C5Jju2+z2FGL/3OLnQGjvh2GxZg==
+X-Received: by 2002:a65:52cc:0:b0:374:3ee6:c632 with SMTP id
+ z12-20020a6552cc000000b003743ee6c632mr6767614pgp.91.1645503380463; 
+ Mon, 21 Feb 2022 20:16:20 -0800 (PST)
 Received: from localhost.localdomain ([45.124.203.14])
- by smtp.gmail.com with ESMTPSA id p1sm14457281pfo.212.2022.02.21.20.16.13
+ by smtp.gmail.com with ESMTPSA id p1sm14457281pfo.212.2022.02.21.20.16.16
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 21 Feb 2022 20:16:15 -0800 (PST)
+ Mon, 21 Feb 2022 20:16:19 -0800 (PST)
 From: Joel Stanley <joel@jms.id.au>
 To: openbmc@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>,
  Eddie James <eajames@linux.ibm.com>, Andrew Geissler <geisonator@yahoo.com>
-Subject: [PATCH 1/2] ARM: dts: aspeed: rainer: Add RTC battery gpio name
-Date: Tue, 22 Feb 2022 14:45:58 +1030
-Message-Id: <20220222041559.68651-2-joel@jms.id.au>
+Subject: [PATCH 2/2] ARM: dts: aspeed: everest: Add RTC battery gpio name
+Date: Tue, 22 Feb 2022 14:45:59 +1030
+Message-Id: <20220222041559.68651-3-joel@jms.id.au>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220222041559.68651-1-joel@jms.id.au>
 References: <20220222041559.68651-1-joel@jms.id.au>
@@ -90,21 +90,23 @@ This is the documented name used for OpenBMC systems:
 
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-index b0fad1153e76..d250fe8b59b4 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-@@ -250,7 +250,7 @@ &gpio0 {
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
+index 547c71bfdfa7..64bc5b674288 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
+@@ -269,9 +269,7 @@ &gpio0 {
  	/*C0-C7*/	"","","","","","","","",
  	/*D0-D7*/	"","","","","","","","",
  	/*E0-E7*/	"","","","","","","","",
--	/*F0-F7*/	"","","","reset-cause-pinhole","","","factory-reset-toggle","",
+-	/*F0-F7*/	"PIN_HOLE_RESET_IN_N","","",
+-				"reset-cause-pinhole","","",
+-				"factory-reset-toggle","",
 +	/*F0-F7*/	"","","rtc-battery-voltage-read-enable","reset-cause-pinhole","","","factory-reset-toggle","",
  	/*G0-G7*/	"","","","","","","","",
- 	/*H0-H7*/	"","bmc-ingraham0","rear-enc-id0","rear-enc-fault0","","","","",
+ 	/*H0-H7*/	"led-rtc-battery","led-bmc","led-rear-enc-id0","led-rear-enc-fault0","","","","",
  	/*I0-I7*/	"","","","","","","bmc-secure-boot","",
 -- 
 2.34.1
