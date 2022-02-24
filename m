@@ -1,98 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C0134C3693
-	for <lists+openbmc@lfdr.de>; Thu, 24 Feb 2022 21:09:51 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A87034C3756
+	for <lists+openbmc@lfdr.de>; Thu, 24 Feb 2022 22:05:19 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K4PC05k5Kz3bZY
-	for <lists+openbmc@lfdr.de>; Fri, 25 Feb 2022 07:09:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K4QR054xsz2yQ9
+	for <lists+openbmc@lfdr.de>; Fri, 25 Feb 2022 08:05:16 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=eQtVCrbm;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=Zv0QTw8b;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=lDbL2k2f;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.21;
- helo=wout5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.115; helo=mga14.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=eQtVCrbm; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=Zv0QTw8b; 
- dkim-atps=neutral
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
- [64.147.123.21])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
+ header.s=Intel header.b=lDbL2k2f; dkim-atps=neutral
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K4PBV0XDSz30DX
- for <openbmc@lists.ozlabs.org>; Fri, 25 Feb 2022 07:09:20 +1100 (AEDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
- by mailout.west.internal (Postfix) with ESMTP id 78DEB3200B23;
- Thu, 24 Feb 2022 15:09:15 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute2.internal (MEProxy); Thu, 24 Feb 2022 15:09:15 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
- :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to; s=fm1; bh=JdJazFggtXA0w3cUXm97VFOSZdklElguwNdpb/
- 174KY=; b=eQtVCrbm6mmcIp91jw6qX3QMy5WdpfWGIBYQQt0XXF8BbcP/Q8bs5J
- YwNcTFQVOC1V07RuGHXmUW/MwoQdf2FUi123EY/wRMJqLL8plAdqdyw2QVSDVIIE
- LTANYU1ctsAZBNq/8i/xnGRKwHBAHY2s8ly8fH0QC3mdFE/nyqNMqr3lZLWwRJYv
- WjXGSr3OryNK2nFhZn8DA1ImLaWL/SvPQgs8jh2Lvr8GzTX7MT5c6mtKXefJtPm3
- VkzSv28XrV/mkPDkyQ+nzfG2GgVHj2G7AP2w9v0bhoo2Y5eHmbVMzV2QV/ohl3o3
- vWWNdr3f0CrTZtcB2tMzADznuAJRZV6g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=JdJazFggtXA0w3cUX
- m97VFOSZdklElguwNdpb/174KY=; b=Zv0QTw8bPxkQAat1BUTX3pw9OD5Y1pt6u
- GjU/V4xvhj67V/hsOeUrVSwgPdKuSDjv1TNfCk6K/b5Q6Ieqvb2CiLBP0bB1eXOT
- crm/dtMmsdWO20D70ywUxD3hj+i6xI1fv9sBGamqKrJYYUmPlFBnLGB5pkq5Bh1q
- Ee7T2nIMukVPhlJB+e0P7vCeIi5YHHMYladkWajHvWSpxfek+E6zld7xwyr0cd3J
- TjLnHZAdSI0dxjHtdWyij8KZGR6did7VxzAQO+1r8xo3p6ztJaLX4G3sKOl2TwuG
- lHJEJzAImqrRqTnbdo48PnyybEojTcH+aofLrdz6rUGUUNbGvabkg==
-X-ME-Sender: <xms:6eUXYgwZrzHDkjN4b6R1DVtQVdpDdBxtpThFZIyz0qU_oMBVqqNV2g>
- <xme:6eUXYkSOFD-WND5JxiDCuF31jT9Cb4vr1IW5bw5psJQv15qwgsqWoilMKnCGAWzgC
- MJEmP4y9s-XrqvNUOY>
-X-ME-Received: <xmr:6eUXYiUDomnKTKgPRAo1bYL7G0k4Nfg4UVHAXcPiioOWh0ExnaKprcbnuVPkTDIOZIpbUsxgeDLUt68fXoEikpd_ZJ8o2EAwQU8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrledvgddufeefucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
- geefgfdthefhkedtleffveekgfeuffehtdeinecuvehluhhsthgvrhfuihiivgeptdenuc
- frrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:6eUXYugAzsmYtZ1hlxqUpSVXsMN9OzyE5zCPRO72VYhfniWfXyIPSw>
- <xmx:6eUXYiCXqkPc61rbORvuut394Iurluy-ieox-FyOtpDPYTzV4ivuYQ>
- <xmx:6eUXYvK0z6XXgJ-ldleDWgHItkpOvQaGyMo_W_YSztZ_TUqCiptzow>
- <xmx:6-UXYtMGy7tv0qcpBGKLRhmbe2jrPJaAeFtvzUOYzAoqP-V2SrOrBQ>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Feb 2022 15:09:13 -0500 (EST)
-Date: Thu, 24 Feb 2022 14:09:11 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Johnathan Mantey <johnathanx.mantey@intel.com>
-Subject: Re: Checking for network online
-Message-ID: <Yhfl589tw2oeLJ9C@heinlein>
-References: <af9a0274-2fb3-8195-a02b-c1d5ecf4848e@intel.com>
- <bb39999e8f9638da3d29b865d85fb54d51da9797.camel@codeconstruct.com.au>
- <CAGm54UE1bFeLF9PHUuj__E0m_+CxLRtA4Htrjm4y5M3SnbOhLA@mail.gmail.com>
- <37a29642-788c-b966-3b58-214c3d44c8f4@intel.com>
- <64727f8e-cca3-b04d-e4cf-709ceb60f37f@linux.intel.com>
- <YhY7Kxgg6ew0HdUR@heinlein>
- <112c8819-24bc-2a24-45a3-9c919088f43a@linux.intel.com>
- <3f4f0cc0-7967-66f9-a085-a6b2ae978a01@intel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K4QQZ5nYxz2xsd
+ for <openbmc@lists.ozlabs.org>; Fri, 25 Feb 2022 08:04:53 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1645736695; x=1677272695;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=IFBeUUR0XrsIjHq7Xv1aFtUp8B8jK38k7MgDsDsIj4A=;
+ b=lDbL2k2fLdArrcbYWBClA/rIt3q4thvMBXZZpInqZGS7R9bAdkgxQPL9
+ nsv5JuZUZw0tvhd5+3OdIBgKthTUJmmq6wenS2cPCr2/obnhue/aBtYnb
+ QYTQZDnZ8WVNW1rWxN85/cTXtXBtQEJrsoMIEeY0OfeQ5GV/vy4BTNMdC
+ MCR2gUOaq3GR1Iy2jTuMqA913GlMNjOZUvQ4/wU7gDOvJOOsRRoVffaNj
+ fnQKlEmJAecBrErs/EtaC/pRGCDCcmf+01iiHGki2PgPWrpTEIlzS2rYE
+ eqT9B++4bhBe4DQ7k+PAq2G3pDg1pRUQLfkBmgnPEHXUvsGVxhu5XKidX w==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10268"; a="252546787"
+X-IronPort-AV: E=Sophos;i="5.90,134,1643702400"; d="scan'208";a="252546787"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+ by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 Feb 2022 13:03:50 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,134,1643702400"; d="scan'208";a="788171189"
+Received: from linux.intel.com ([10.54.29.200])
+ by fmsmga005.fm.intel.com with ESMTP; 24 Feb 2022 13:03:49 -0800
+Received: from [10.255.229.197] (jmbills-MOBL.amr.corp.intel.com
+ [10.255.229.197])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id 9B2D2580BDB;
+ Thu, 24 Feb 2022 13:03:49 -0800 (PST)
+Message-ID: <7d792cb4-9eaf-cbdc-d39c-72217d5ebcf8@linux.intel.com>
+Date: Thu, 24 Feb 2022 14:03:48 -0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="LPSpJvftoYwhB0R+"
-Content-Disposition: inline
-In-Reply-To: <3f4f0cc0-7967-66f9-a085-a6b2ae978a01@intel.com>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH 1/2] pinctrl: aspeed: Enable pass-through on GPIOE1 and
+ GPIOE3 free
+Content-Language: en-US
+To: Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>
+References: <5c24d89c-4e58-4d1c-ffe2-d1586c6eceeb@linux.intel.com>
+ <70fda031-ea0a-4155-81d4-74f398134bf8@www.fastmail.com>
+ <CACPK8Xf+6cLOWNYpMH21KDxRX3w5W=EwheTwL-ZktJvbG_pGeg@mail.gmail.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+In-Reply-To: <CACPK8Xf+6cLOWNYpMH21KDxRX3w5W=EwheTwL-ZktJvbG_pGeg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,63 +78,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>,
- Jeremy Kerr <jk@codeconstruct.com.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Lei Yu <yulei.sh@bytedance.com>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---LPSpJvftoYwhB0R+
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 23, 2022 at 12:04:12PM -0800, Johnathan Mantey wrote:
-> On 2/23/22 09:44, Jiaqing Zhao wrote:
-> > On 2022-02-23 21:48, Patrick Williams wrote:
-> >> On Wed, Feb 23, 2022 at 10:09:19AM +0800, Jiaqing Zhao wrote:
+On 2/6/2022 11:45 PM, Joel Stanley wrote:
+> On Wed, 2 Feb 2022 at 22:49, Andrew Jeffery <andrew@aj.id.au> wrote:
+>>
+>>
+>>
+>> On Thu, 3 Feb 2022, at 06:29, Bills, Jason M wrote:
+>>> This change adds a gpio_disable_free() implementation that checks
+>>> if the GPIO being freed is GPIOE1 (33) or GPIOE3 (35) and will
+>>> re-enable the pass-through mux.
+>>
+>> Okay. So trying to pull back from the implementation for a moment:
+>>
+>> Perhaps we can view pass-through as a property on a pair of GPIOs, rather than a mux state? I think it would be better if we could, for instance, annotate this in the devicetree?
+>>
+>> If we did that I don't think we're require this awkward and pin-specific implementation of the free callback for GPIOs.
+>>
+>> If pass-through is enabled it puts constraints on how the pins are used if they're requested as GPIOs, but we can add those dynamic checks in the GPIO driver.
+>>
+>> Let me think about it some more.
+>>
+>> Thanks for surfacing the patch.
+> 
+> This is for the kernel, I assume.
+> 
+> Jason, you should send the patch to the upstream lists (use
+> get_maintainers.pl) for review.
+Sorry for the delay.  I found the right lists with get_maintainers.pl. 
+Should I send these patches to the upstream lists as they are, or do 
+they need to be tweaked?
 
-> There may be openbmc powered servers that do use the distributed logging=
-=20
-> provided by rsyslogd. If there are then globally removing network-online=
-=20
-> from the rsyslog service file is undesirable. I consider the same to be=
-=20
-> true of assigning a default RequiredForOnline=3Dfalse.
->=20
-> Based on the above, it's my opinion this is a vendor based decision for=
-=20
-> how to configure rsyslog/systemd-networkd-wait-online.
+Thanks!
+-Jason
 
-I agree we shouldn't enable this globally, but that doesn't mean we can't a=
-dd
-a simple PKGCONFIG that allows it to be enabled/disabled as needed.  That w=
-ay
-we only have the single `PKGCONFIG:append` line in vendor layers and vendors
-that have a problem with it can leave it same as upstream.
-
---=20
-Patrick Williams
-
---LPSpJvftoYwhB0R+
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmIX5eYACgkQqwNHzC0A
-wRlWWBAAo2/PX07wC7jihoQzmB9ywRvRwPRncFPC4ZP78GbEXzBgwycXh+ADkdIu
-gtwqI44zVlxfvda6mANBPbFQ8w3t3BFMDaekzthv59U6a7TfccwLrs48JREwqxTk
-uR8Tr/lwDKOON1qVb/4l+96//txQN5VWwCpsm6yUTvuMOt/qnvWSqW/yoJr0Hz2n
-8cbdxXQbPkvrNJCx/w3U634S5g6sZFpTOw1RLXm9aPJ57Aju+wC/yaFkX6gCYBzu
-4ERo1xYTq+Kv2zO46MFIR/7sna1v2Vch/9q+pihZ1ex4s7BZlv7w0hhAbWeTIXHx
-gic270TTWft8T0CRiRHCaYFVanzLasN0HOm/VpLonWUmE4i2JgOFS8DyBfsoc1us
-fqYOf7Q5/BuX9FiWU/m8KuQgXTw5xnpYWE478tiOgWVQbIx/ZIusDd6Uppim516P
-UkzQF0p+6ZcDYYKK8xhqZ5nrllMLvGOPOAf9hnpca3frl9aPsQ+tsl7XBob4XSWN
-pTXw7XXKeeXuSxhEeZ/LdwJomQA5mSKSteIqmr6USQ08/UF7xsrgBE7g9T1z+xk0
-9pkCzoiH84f7uyTWgIXswS2XwtLZivTNABsO6PDZIpaNbE8LijoiAUyxyiKJXwNs
-ieL/iKDiTtpp9Ic0wcBAhkAmiM7xslxsQ3osiGSboS64bFLWQ60=
-=SCFS
------END PGP SIGNATURE-----
-
---LPSpJvftoYwhB0R+--
+> 
+> Cheers,
+> 
+> Joel
