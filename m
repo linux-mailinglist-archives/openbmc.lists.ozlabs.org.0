@@ -2,71 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A87034C3756
-	for <lists+openbmc@lfdr.de>; Thu, 24 Feb 2022 22:05:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A80D4C39C9
+	for <lists+openbmc@lfdr.de>; Fri, 25 Feb 2022 00:41:32 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K4QR054xsz2yQ9
-	for <lists+openbmc@lfdr.de>; Fri, 25 Feb 2022 08:05:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K4TvF5nlXz3bTl
+	for <lists+openbmc@lfdr.de>; Fri, 25 Feb 2022 10:41:29 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=lDbL2k2f;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=R0M4j5wp;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.115; helo=mga14.intel.com;
- envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1036;
+ helo=mail-pj1-x1036.google.com; envelope-from=medadyoung@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=lDbL2k2f; dkim-atps=neutral
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=R0M4j5wp; dkim-atps=neutral
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com
+ [IPv6:2607:f8b0:4864:20::1036])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K4QQZ5nYxz2xsd
- for <openbmc@lists.ozlabs.org>; Fri, 25 Feb 2022 08:04:53 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1645736695; x=1677272695;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=IFBeUUR0XrsIjHq7Xv1aFtUp8B8jK38k7MgDsDsIj4A=;
- b=lDbL2k2fLdArrcbYWBClA/rIt3q4thvMBXZZpInqZGS7R9bAdkgxQPL9
- nsv5JuZUZw0tvhd5+3OdIBgKthTUJmmq6wenS2cPCr2/obnhue/aBtYnb
- QYTQZDnZ8WVNW1rWxN85/cTXtXBtQEJrsoMIEeY0OfeQ5GV/vy4BTNMdC
- MCR2gUOaq3GR1Iy2jTuMqA913GlMNjOZUvQ4/wU7gDOvJOOsRRoVffaNj
- fnQKlEmJAecBrErs/EtaC/pRGCDCcmf+01iiHGki2PgPWrpTEIlzS2rYE
- eqT9B++4bhBe4DQ7k+PAq2G3pDg1pRUQLfkBmgnPEHXUvsGVxhu5XKidX w==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10268"; a="252546787"
-X-IronPort-AV: E=Sophos;i="5.90,134,1643702400"; d="scan'208";a="252546787"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
- by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 24 Feb 2022 13:03:50 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,134,1643702400"; d="scan'208";a="788171189"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga005.fm.intel.com with ESMTP; 24 Feb 2022 13:03:49 -0800
-Received: from [10.255.229.197] (jmbills-MOBL.amr.corp.intel.com
- [10.255.229.197])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by linux.intel.com (Postfix) with ESMTPS id 9B2D2580BDB;
- Thu, 24 Feb 2022 13:03:49 -0800 (PST)
-Message-ID: <7d792cb4-9eaf-cbdc-d39c-72217d5ebcf8@linux.intel.com>
-Date: Thu, 24 Feb 2022 14:03:48 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH 1/2] pinctrl: aspeed: Enable pass-through on GPIOE1 and
- GPIOE3 free
-Content-Language: en-US
-To: Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>
-References: <5c24d89c-4e58-4d1c-ffe2-d1586c6eceeb@linux.intel.com>
- <70fda031-ea0a-4155-81d4-74f398134bf8@www.fastmail.com>
- <CACPK8Xf+6cLOWNYpMH21KDxRX3w5W=EwheTwL-ZktJvbG_pGeg@mail.gmail.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-In-Reply-To: <CACPK8Xf+6cLOWNYpMH21KDxRX3w5W=EwheTwL-ZktJvbG_pGeg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K45Lt1f39z2xrm
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Feb 2022 19:15:34 +1100 (AEDT)
+Received: by mail-pj1-x1036.google.com with SMTP id
+ q8-20020a17090a178800b001bc299b8de1so1398196pja.1
+ for <openbmc@lists.ozlabs.org>; Thu, 24 Feb 2022 00:15:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:to:cc:subject:date:message-id;
+ bh=W7sYQJpV/1TTOPCMlo79NSJ3PxinSPdjztCu/wR0/MI=;
+ b=R0M4j5wpt3ujVcwAnddRhDbMtF74+yF4/g/MBaN4IdXRFF8nOHK3927oVp+cCdtyYh
+ fEp2XRupymP01e/dVmrq7q2LEKgxx4m/HTNFVtPwqJw2EDYs0uo/Yp5RpP3+jKLqLE5e
+ KRmoCEc/mxqNY0yvU82/4EFe2zO+Ku7Ug/nIu+iqt5P8A1mGDyFqFGftsdKNsycTu/8m
+ UCDgjcNXlh95iD78UEd8QyChw8/evalUahwl2g+GzA15HPGNwHztT2JtAIt7jvvsOVyI
+ V2QAfHK2CsrrIUdU+iEUCvRaJZnC1ImvjHsCmHgsgr1PQI+wee5dWZG5L5s6XrzvWOjW
+ HvXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id;
+ bh=W7sYQJpV/1TTOPCMlo79NSJ3PxinSPdjztCu/wR0/MI=;
+ b=Q3Ev9Dz2nQnf5z4VGFmmAvK/Of+zAMmPC4RxAXDQt+6wl89ajhHs7geO7zPfsBuMAa
+ veK91PMjMKF9No63XC27N60/Zx09dBEaGeKFm50aLLuOOvSAFvusEtRutxEy+yMJGCVD
+ Hrm65FNKC0Fdq8fm+5FOQxlygTYj621Mis0+iJTkj7g2zWhZEo+RqIPU4dW3i9w9iV3r
+ sUrM0xLdGhvbRtOjbGGjzRf15Edwd1UV8oIXum1vjCaT/HG6SgG3kdyYDaxzHN6wqfhh
+ ro5JxxG7xxalZtczNPmy1uFBVmVbcMk+zFLkIVWHyPShetyuddbAP9nBigoPWnfFuoLx
+ cEVg==
+X-Gm-Message-State: AOAM532iMVr+ddyPL6iv3t4xBAI2m3YJ9jVihmOF9nIPKq24+znzlqT6
+ oqbM8jwNjnUbqbQmenBuI4J3vnOC1a3Gmw==
+X-Google-Smtp-Source: ABdhPJyJKUvcPSohgtvBJEQZQ6vW0pFCFCCUl76l5yrCsGIs1jk6IyIUOMdNVwojivXlJzO/h5cIGQ==
+X-Received: by 2002:a17:902:f68b:b0:14f:c84c:ad6d with SMTP id
+ l11-20020a170902f68b00b0014fc84cad6dmr1345785plg.155.1645688860171; 
+ Wed, 23 Feb 2022 23:47:40 -0800 (PST)
+Received: from localhost.localdomain ([112.78.94.140])
+ by smtp.gmail.com with ESMTPSA id z21sm1616839pgv.21.2022.02.23.23.47.35
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 23 Feb 2022 23:47:39 -0800 (PST)
+From: Medad CChien <medadyoung@gmail.com>
+X-Google-Original-From: Medad CChien <ctcchien@nuvoton.com>
+To: rric@kernel.org, james.morse@arm.com, tony.luck@intel.com,
+ mchehab@kernel.org, bp@alien8.de, robh+dt@kernel.org,
+ benjaminfair@google.com, yuenn@google.com, venture@google.com,
+ KWLIU@nuvoton.com, YSCHU@nuvoton.com, JJLIU0@nuvoton.com,
+ KFTING@nuvoton.com, avifishman70@gmail.com, tmaimon77@gmail.com,
+ tali.perry1@gmail.com
+Subject: [PATCH v1 0/3] edac: npcm: Add driver for Nuvoton NPCM SoCs
+Date: Thu, 24 Feb 2022 15:47:26 +0800
+Message-Id: <20220224074729.5206-1-ctcchien@nuvoton.com>
+X-Mailer: git-send-email 2.17.1
+X-Mailman-Approved-At: Fri, 25 Feb 2022 10:40:00 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,46 +82,29 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
+ Medad CChien <ctcchien@nuvoton.com>, linux-kernel@vger.kernel.org,
+ linux-edac@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+The patch series add EDAC supoort for Nuvoton BMC.
+Add driver to support EDAC for NPCM SoC.
 
+Medad CChien (3):
+  ARM: dts: nuvoton: Add new device node
+  dt-bindings: edac: npcm-edac.yaml
+  EDAC: nuvoton: Add nuvoton NPCM EDAC driver
 
-On 2/6/2022 11:45 PM, Joel Stanley wrote:
-> On Wed, 2 Feb 2022 at 22:49, Andrew Jeffery <andrew@aj.id.au> wrote:
->>
->>
->>
->> On Thu, 3 Feb 2022, at 06:29, Bills, Jason M wrote:
->>> This change adds a gpio_disable_free() implementation that checks
->>> if the GPIO being freed is GPIOE1 (33) or GPIOE3 (35) and will
->>> re-enable the pass-through mux.
->>
->> Okay. So trying to pull back from the implementation for a moment:
->>
->> Perhaps we can view pass-through as a property on a pair of GPIOs, rather than a mux state? I think it would be better if we could, for instance, annotate this in the devicetree?
->>
->> If we did that I don't think we're require this awkward and pin-specific implementation of the free callback for GPIOs.
->>
->> If pass-through is enabled it puts constraints on how the pins are used if they're requested as GPIOs, but we can add those dynamic checks in the GPIO driver.
->>
->> Let me think about it some more.
->>
->> Thanks for surfacing the patch.
-> 
-> This is for the kernel, I assume.
-> 
-> Jason, you should send the patch to the upstream lists (use
-> get_maintainers.pl) for review.
-Sorry for the delay.  I found the right lists with get_maintainers.pl. 
-Should I send these patches to the upstream lists as they are, or do 
-they need to be tweaked?
+ .../devicetree/bindings/edac/npcm-edac.yaml   |  64 ++
+ arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi |   7 +
+ drivers/edac/Kconfig                          |   9 +
+ drivers/edac/Makefile                         |   1 +
+ drivers/edac/npcm_edac.c                      | 712 ++++++++++++++++++
+ 5 files changed, 793 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/edac/npcm-edac.yaml
+ create mode 100644 drivers/edac/npcm_edac.c
 
-Thanks!
--Jason
+-- 
+2.17.1
 
-> 
-> Cheers,
-> 
-> Joel
