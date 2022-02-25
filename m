@@ -1,48 +1,48 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF3104C3BE3
-	for <lists+openbmc@lfdr.de>; Fri, 25 Feb 2022 03:45:18 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B44F34C3BE4
+	for <lists+openbmc@lfdr.de>; Fri, 25 Feb 2022 03:45:58 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K4YzH6y4bz3bT3
-	for <lists+openbmc@lfdr.de>; Fri, 25 Feb 2022 13:45:15 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K4Z036wRvz3bSq
+	for <lists+openbmc@lfdr.de>; Fri, 25 Feb 2022 13:45:55 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=e9pRCENa;
+	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=RwBc+Zcw;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=2a01:111:f400:feab::729;
+ smtp.mailfrom=quantatw.com (client-ip=2a01:111:f400:feab::707;
  helo=apc01-sg2-obe.outbound.protection.outlook.com;
  envelope-from=potin.lai@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=quantacorp.onmicrosoft.com
  header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
- header.s=selector2-quantacorp-onmicrosoft-com header.b=e9pRCENa; 
+ header.s=selector2-quantacorp-onmicrosoft-com header.b=RwBc+Zcw; 
  dkim-atps=neutral
 Received: from APC01-SG2-obe.outbound.protection.outlook.com
- (mail-sgaapc01on20729.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:feab::729])
+ (mail-sgaapc01on20707.outbound.protection.outlook.com
+ [IPv6:2a01:111:f400:feab::707])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K4Ywf4Xmfz2y7M
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K4Ywg0cmZz2y7M
  for <openbmc@lists.ozlabs.org>; Fri, 25 Feb 2022 13:42:58 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=X6zWdngX6V8kK18tZQRl6AVgGnZTThNNZVJwF7DHrH45WUM1EaO2MSy9cq1g64UTW0UrU2I309fZLdhrzrZvE6Gm7ctmFYB8i2jhePV09znvOnWaDnMP8nrH4j8rdju6ApRIefQUWPcb9SifLslPJPNkn8vfwjW/FqmA2VJMZ3k0rPyLm2M0UEq9vXv49u7jFVEJgHp4cl8nC+EFi87/Gkjd61ggMjv36qn5rQaLP7gqH78zBaZ9+E8Q5pu2df1RoLoKM9RiKE0BvPz1o+1rxMSQAj24FDgc4c3Qy2SkdGGX45T+UBah4RUbJ2VNS/53aSsasz3sEKzX2uaqtQ4akw==
+ b=A4PZrxkbCjBfVysDuA69QSiEBKW7Eea9XafcBDmPmnn1hQ3RYjlOZ/MwLvyrD+AR321eTVABi3XRwr1DgZzXGPv1AvlFZxltNC9CVyOaTBAG3dVK1zUQWl+zikTGKZ/0A1mRJoezCGMCo4ED34/+Jtir+cYfhw5DM4N7tojMea1mitHDuu1/l9DYkPafhJdM1Z7lm0RZyztTZrOUA7e8tqme/X7n5y4W4opmNlv+cc0eMK3ZC61VffdFT02HMJqzs/eGNWzuC03RmViotDweQh9TUO7TAkiAR6lqcaEftscM8oLQbPhojKp297ct5BSa7laFpaeygleJXi3neiWCYg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=uQGUG9Co/zOO3hnnGx1qLLWyw2Xb0Fe0Vj2zoFpDzMo=;
- b=k5uKZ6Hj6MRuxtDqewDwZB5WFOdPtywbdNdbiV1GBWX2hQM99fdrqFXjGDN80URLl56dx+EHevkIIrD972UBw1H9oIisF3JsD3e/osoHyncZeHWVi1Mu9w0Hq5Ht0e7KA6A1XVCFkrABnRaaQLEH6YxrLgTwhKt6BLTtJXaGCfv0fhydqdW2He2wQN9Hc8O/kNuC5uO6zv22XwIsX8/Fa0zRyt2MlRvb9ll+PBog8RDi/EGejsEk58Vz5Yf9jWcH0ppkwS703fvrO52+i5dSbOIySkJnGpx4iAxHgLLtd0Ww+rEX+sVDGEZztG26q5NsrIKaqsQV7gpyL8nga67G+Q==
+ bh=MHVe6EXGDgmc4K3kakz6mUHbv0BqGglHiE6jLV3ADe8=;
+ b=PekMlvbpwF+V+p1tCNJlsdm0gGkCi96SmObh7Ii2bafYDEoInfoUZ7XvxqMC0NrAPH8MhFK9uyYglEspR+HsZl5Lz5wP3TQ9MkT0JHAl2hgO25L/omkXNtVDOoyrWNH1nAd+EWCvr6Yta1UHAnRu3beVk/RBQOswUZo2fh/z3gBTDy7Nz2T81Ovz/hj6F9BV2j8om40v1WyEdO3GyzjW/QuQBtzW9WFqtqVHUkiilr/oouxMxqFxiKzt4GS+1/eKz0qrFR7m439apnVJ1dlBPSuGvLAM7Ey+r+vmUchw/OHTVyrrrKmIUwweete40rZKZXkWiwdddkHAcit4yJQsXw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=quantatw.com; dmarc=pass action=none header.from=quantatw.com;
  dkim=pass header.d=quantatw.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=uQGUG9Co/zOO3hnnGx1qLLWyw2Xb0Fe0Vj2zoFpDzMo=;
- b=e9pRCENaDEUCpEl0Vsb3yZkVflqg+EGz7yLcflWlLWxCxOKbR2LyP+ygV7jz0jnmYI1p+ZJnR6eogymqIEkLlrwvtadAeuJjyhRaeHO/kszxoalNsJa5m9bqn8nik5yUUJBtTBk13Pg87yUAqzxzK8WwrGSGJfeLjaPd61GRreU=
+ bh=MHVe6EXGDgmc4K3kakz6mUHbv0BqGglHiE6jLV3ADe8=;
+ b=RwBc+ZcwMjOLagtMa/hG6eoZMfgx9cRmhs28xkKml1W4iFq5P3f5s4syTAONwsQr23z7EjoB7JXd0Wfj8wT7qX7nwBnoqAcFhvqNY0t8hwyKOko+ljPHVr6LbWbfs0v++TNyUcx0vkKXrwoCQgCLm7NMXuJWa6iZRYTMWjJyZa8=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=quantatw.com;
 Received: from HK0PR04MB3282.apcprd04.prod.outlook.com (2603:1096:203:89::17)
@@ -57,9 +57,10 @@ Received: from HK0PR04MB3282.apcprd04.prod.outlook.com
 From: Potin Lai <potin.lai@quantatw.com>
 To: openbmc@lists.ozlabs.org,
 	joel@jms.id.au
-Subject: [PATCH linux dev-5.15 04/26] mtd: spi-nor: Get rid of nor->page_size
-Date: Fri, 25 Feb 2022 10:41:59 +0800
-Message-Id: <20220225024221.19422-5-potin.lai@quantatw.com>
+Subject: [PATCH linux dev-5.15 05/26] mtd: spi-nor: core: Introduce the
+ late_init() hook
+Date: Fri, 25 Feb 2022 10:42:00 +0800
+Message-Id: <20220225024221.19422-6-potin.lai@quantatw.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20220225024221.19422-1-potin.lai@quantatw.com>
 References: <20220225024221.19422-1-potin.lai@quantatw.com>
@@ -69,55 +70,55 @@ X-ClientProxiedBy: HK2PR02CA0135.apcprd02.prod.outlook.com
  (2603:1096:203:89::17)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 85b3a8a7-38f2-484d-2894-08d9f8087bda
+X-MS-Office365-Filtering-Correlation-Id: 0015fbe0-aa97-4f1d-c22c-08d9f8087c15
 X-MS-TrafficTypeDiagnostic: SI2PR04MB4507:EE_
-X-Microsoft-Antispam-PRVS: <SI2PR04MB4507FE654B4EBAC7ABFFDB6F8E3E9@SI2PR04MB4507.apcprd04.prod.outlook.com>
+X-Microsoft-Antispam-PRVS: <SI2PR04MB4507492778E9DBDEC3A112518E3E9@SI2PR04MB4507.apcprd04.prod.outlook.com>
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: p96hZUvPVwzicqqGylYQp9FREgz/nNZk69X15GpsrRqSGuPs8qBmRPpAj4swWCcmdiqgD/HOw3QTTH+6PbhxXJ7tOnIEWe97D4BYpOnni9Pr3WH/88JTQHy7YEqSF5TGUbfDoQ+OPppniDxCJFqL97XAD99T78L9cK8+gGxSIftB6XXFaif0e+GHJNm+qHizAe1GdpuHhyJo7THpTr3VsKAfcDklkUq5vSUXQj97JPsGR9ytwLbuW+arGuMQlMNSPtjNuj3nj9OqbmUUfzWtgBewzhRG1hOoIcd5m6LkI13Uq3lfMQHjTTj2/wRdx2vrWBzb55gpV/XIytMRVGDbQMBtFFLdq+LfapumohBNF2ZcWntITRyUnDt3awpY0itTe/zkLLiffeJD04qxw8RCsmWOExOerdxCHjOooXD9OM9wysk26snDYxL8dBhRbTCdmCFXv0icncJws8Yi5t28flslUPzPtU+vPmpaMN31vcBCL/vWuj2XDSi97EmUB3iN0GcGRhaGZbgocyn/tA6PwS8Z9uv+mX1W64d3FWZWSHMelkfOt8cefDCZ1dfpqYzBHGBjumdHcuUkyd1bMSOqTEcVMppz3ONNhqqq6ZdS2HxBKFSU6ytqhIxJnhoO1dSEchmGsowCZ5i8gTvZupFIQDrvv24exh/qN7uIpT4b35utmUj9P3c1uLicAHl/o/WbfU0AYlH+y5kPKdUmNb7I613BTfVS7l7e8bPF2FXVjImQ+lX64uA9QBegrqkkjgBUkp8kGJ+mkedLILkjnWmjI/dqkGH0dPzknTlJTBIWFsUcwsseZlt1C+++WNHDbQC3
+X-Microsoft-Antispam-Message-Info: ESSNEbXVtr1Tuhr3SY0G+2hslaCp3n5x4DH6uvOoCdAeJI3Mz++I6HnOoiq9tFhqg3JQroXiWklwUZ3m7+vQ4BG3w7jLwbgZ204gnRpDo8KMRkvc2n51e2SXWKCmKPWvOroNLbFOScy2ux86lVbq6eDZgmRqRNAhDGDmCvCruB9khNBvqrL5ea4zvFLOjgq0R2zdPE3afPLBM6OqJYlHhb5bjOrUH+MfJ1Xu71wVmDvfuA+5TmOBKpYlG8aRVImyOfynl4AZXsz5Yj+CAE5jz+7nHDtFtkQOFMzYjsFtqLBmLo1lJvQuOn1+eCtBA5Ia0/INXx+jcx2E4jSc6DMkyvVW2oZaix4l9NtUKMdD8id9//jrQdEXIz5sorc30O0c6hEob5gJSI+Z6o/SYZjgObA6NIVgOfZh46Oj0APKIMu4qBzBYm1MO9sGyFxfwxuWC74QWrwF64qk2mDKFTv5C9H6IKIuntR26BYcjdFScTFqDkmvL6KhVW8UFwDras8f3xfWd8WfuUzp0hRngOo1ev2dc7YTHjz1hI44LDJQ0fwPSuPTQPyPS2CkGwQ8XZb/8lQD1LEvBas8bfGoEH8pPpMxkDEVaHd4STWcbbE23jdh6IpvKSKPu/fvAaGpAsnIcWmIq5S6bAeefZIxRE0IkQ7wv/WSeOljNNwtLinnyYCADJi2nxUg9D817JTmoVrOnADpJ3BadbY6JsVY23Tu493U5h+Sv+Vszn8ZoxrLykXJhqF9SrV6IaaZ2Up7V+bTNTqQn9OCECt6LUODXcHNWNRWOhc8h0tMt2H7otD0fW8=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:HK0PR04MB3282.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230001)(4636009)(366004)(2906002)(26005)(186003)(36756003)(1076003)(6512007)(38100700002)(38350700002)(86362001)(83380400001)(8936002)(4326008)(6486002)(966005)(508600001)(8676002)(54906003)(66476007)(66946007)(66556008)(5660300002)(6506007)(6666004)(52116002)(44832011)(316002)(2616005)(26583001);
+ SFS:(13230001)(4636009)(366004)(2906002)(26005)(186003)(36756003)(1076003)(6512007)(38100700002)(38350700002)(86362001)(83380400001)(8936002)(4326008)(6486002)(966005)(508600001)(8676002)(54906003)(66476007)(66946007)(66556008)(5660300002)(6506007)(6666004)(52116002)(44832011)(316002)(2616005);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?nkvpNanb7Iv4jFr1tROudNgYe8+JmCy+1UPsCnMeS781/7IE86FHRiWVN+VZ?=
- =?us-ascii?Q?cd9w9KTgE4OJBTdFdLiy3EnrZslV2pOkN5g8muEcRnQqyp9dwYk77BqtV6gs?=
- =?us-ascii?Q?onWdAc6FOcUu08bJXRZEzeOpy7gMs8HsqUEY3seCU0aOMsFPuuE4mXr4Bvg0?=
- =?us-ascii?Q?GDdbS/7j5MZ+ECdCcgopYvEdgQdYmuHvZ3CHe9r6rmdmQd5NOvN7i/FAT9+9?=
- =?us-ascii?Q?kiaV/FvPjycpYhGvy5PTUJPGxsF/L1adpMrXLz2A9FPDgfmuDdkHUqWQSy4x?=
- =?us-ascii?Q?s8gyYCITlsiFPrhzCltytllxU2+/pvsbIH/a//m/R5b8/p5Tsid8z8ZtP2lA?=
- =?us-ascii?Q?lZDWay4jfhppFZ9mrqdDh2YZgy7fRzTAY80bFBVmIcsPBdR9XG7d/SojVwjU?=
- =?us-ascii?Q?q/yivN9fNbZLlbrgXXuVVmaPcW1nw5H2VRs7cRRMwRvVBBFQTocMviRV1R1K?=
- =?us-ascii?Q?f+j4nDPPMacVq68gFmXieVAquB7QGXD7/UBxifZDiciOW3q1nUrwS23Oiafc?=
- =?us-ascii?Q?sFLNawqYvw3HmhnCYB4HGMqwecRWhvjaJnTlg4Uw7eJAekEwAQYnEB2OUs1U?=
- =?us-ascii?Q?7YSHfDKhCskag2OK1yBvO7ozmwzPqxIW06mXT/hbYhFfgilfBFqWEK+rCML8?=
- =?us-ascii?Q?pCKsLixJ3+ldyySw//jXpC1zLDCLJbH+x9u/6uJPBY6a6ML/TFDyCHJu4wO4?=
- =?us-ascii?Q?SZumhCA5OLyX9CoKZ8DSpGY/4nrrdDmoh+nxtikuzqwrDFVPaS5tdVFa3ls+?=
- =?us-ascii?Q?rhlG0Ts0kWecelgZOEKljXR2LVylZK6I1cKGhVbL3ziR9fZ9FQbSUQKCIgcg?=
- =?us-ascii?Q?X/E0D43+kemJ/0fcQ/V6eeJKzg2RU93hPICqdsn/ZpbgUDkHJmVuRP4c/8KM?=
- =?us-ascii?Q?p4huIEb/EukYa58jt3BKoFvEN+MLNr0MqBCk3+85M8GO9d2DIiM/9QAKAREE?=
- =?us-ascii?Q?fZ2319aO2WfGp6WndVN6gsbrul2u1gfuvexIR2iG3XIZ1OOx7rPS5swI/54r?=
- =?us-ascii?Q?6KYFawfhtlj8fxwRrLHhtXCqB2ydPsR04H+T50XeDk5+F4AvFwmp6yZj3/+M?=
- =?us-ascii?Q?L6+wgB0Doy18mmUaJadh6Pt7wK2/gizW9u6KYgAP6JBOsnY7MVjcflwYgL2y?=
- =?us-ascii?Q?SL/+9QgISov7JyZktDxhEiazOXL3WGj2LivH3gEZHYcwz0AoPHdqKv5I2pot?=
- =?us-ascii?Q?b1r00xvmnU3Bk1YKvlRkwBxNTbbeZqEzdgeFYnAS+xjqi6t/wZljxyy72tYd?=
- =?us-ascii?Q?YzJGjrvgBFy08+8YGa+z21bK/GcUb4+yTtQzdMF53jjvqn4Gi5MA2n2M5fz4?=
- =?us-ascii?Q?kO2/yrwSu2sw3sCE6aJaqidmUF9uchjlQe7BKsjDKOjotQvI6UROmsGbNVIj?=
- =?us-ascii?Q?Kl0PT6i3iBRKjMDshOFO/1eRxg+FH9dOtIeyXru5Dm9J853NJCqFL5LjXjo+?=
- =?us-ascii?Q?K3w0aIghjrHB/P8EOgijB6MFYE6VdkGFsZp49OV0GWd8Zm8o039P8vYSJJJn?=
- =?us-ascii?Q?3uVxqxiNOMsALoaphM/BqFqffMxxrX7bPZFWS2fQU/3T6+/fiz8xMUFmdKrG?=
- =?us-ascii?Q?FKByxdVJTszKhF4fBzBG+OQgrvbSU8kNEK2vuFRBsrtjiq9RF9EkWkkog+Qo?=
- =?us-ascii?Q?7ho0guP6D5jFgmBll7rsxDY=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?HgSo583odcCtju290JXhFvtkrt3mF5HcDtk7K0m3FiPbbV+e4W1VrIwjCrMj?=
+ =?us-ascii?Q?SY3AuED+57ANQ1mgubA1yw/Edec6imM16ad6bYwi85LIdIs5/a5YegKmNdKw?=
+ =?us-ascii?Q?hA5StKhRrA+3FHyT+UeuDMx4Sahht0Krb5A+/op8Hzsg/ZDrxOPzPfUdKsmR?=
+ =?us-ascii?Q?Apo+sNf26W2nOj+3+eYsRN/vQgzqxOoHbZUSemSp2rfN/vTWzlK78vmZjfRK?=
+ =?us-ascii?Q?4lDogpi0LOwylQAWTpQZcUdxG+zT7dswzi15ySSOiKYWBT2AI5S0oh0T9LPo?=
+ =?us-ascii?Q?gzLuZMBcw7kJ8PTLV1d9V75A5p7lD6oe83m7CVv6F8vxeTmTVYG6d3EZG8z4?=
+ =?us-ascii?Q?LZuvdd6R3wrwUUEHR+BADXnPMVpOjp40JrN82vlfJnnGQj+NK5pKxf4/Y/kB?=
+ =?us-ascii?Q?5exFWDeD1GQpAlM+eomo/eIXvFLE2m6K4hLgnhrfGP29W23B+AZHXFNBRmcT?=
+ =?us-ascii?Q?WZ2mhOCeKiWs/ajxaipXciR8RTdN51qyNMA4bP6P1ZU5zcqxomtnBmWzA0HE?=
+ =?us-ascii?Q?EiroRoWBHHECjir02u8Bue81wZd+KxJBI7V/nVR/J/j9cpyxdCIwT9y5XKpg?=
+ =?us-ascii?Q?MMrvyBTB0P4pzO2/53S6FMJdhtOSsomB9drf4CiFYX/6ihtI3k6c7/iGyWFa?=
+ =?us-ascii?Q?iLoLzxmjKaaAF7SGkCoTsXjkz73j4cpNO3Fa2Qj4kCeAc/wga9SGujpaO6Dw?=
+ =?us-ascii?Q?adCoHWRgcpCnHkupS2SR3Mn3XLGbLeMFMjqKN98kprAhLTaTnZGJEkj62Zir?=
+ =?us-ascii?Q?WwzGely2K2wnWna0ul22DvQKEE0ngk1USCnz/UtAkZ/btwlDtXcYfgXDX/QB?=
+ =?us-ascii?Q?8Yjo/EoDKxZtrLY8Cr1c4Pe6X0Wr+GkB50K1fByjm3Cshjir+FFGwk1UvwSh?=
+ =?us-ascii?Q?06IHQcjks37r6q4H8aQL1dqG1eixB7vYg/FUyKXvpEUOsuyndq516X3ROb5Z?=
+ =?us-ascii?Q?aVNCWYTBPaGiVLDil8lkxsetflDq5fg7geyczPrGJk2M0fJc02ia+KNYq3d/?=
+ =?us-ascii?Q?02DXMrQcdyj1k/SXvgCieRFei9VRgbEn5z4ELbvYFW9flY3pZTlnpqhxZDWp?=
+ =?us-ascii?Q?9SJvvHG14Lu6a+VGwe2TDGGvmTFGlf1RLUGP8pdF6JFL/ojKHFKf/HCXWTyS?=
+ =?us-ascii?Q?D7+xlwSvmPxQ4LEsTLLJBcmYTWBHEd74s3K7QKcLac+yJHOM7nwXPedfrvpN?=
+ =?us-ascii?Q?j0IsB0f7rbt50m+Te9O/9SmNU8O1SPp3r527ST5exZeLMJF4XqQUIwbZDAcU?=
+ =?us-ascii?Q?Zh4XyNYhPnNwLComqE+JmHIszPkMCwAkfZNIHJTI00/3yX2j3bgEeL0vGUIz?=
+ =?us-ascii?Q?+5AiESLEQa8+gRyjyJiyaYuxamIZzNctuYHIexas6s5naaE8kJ3eAsHbZ/Zr?=
+ =?us-ascii?Q?Wb2glf0Xv/Hy0OXzNEJ2Vl5P4hL6fEVF3a9h31c/dqtF/j6j6hTZ/O1Hw9VF?=
+ =?us-ascii?Q?GTOEH2Og2i7/B5qUkyxBPTkTLebI91mV3KTWvFFledA5ECI2TxTfbMVniBDj?=
+ =?us-ascii?Q?9e5+Uia7nRC6BPuljI2Yi008HrO4TNd8LF5iRelQS3KGDoUu3AgkrkZf7mpR?=
+ =?us-ascii?Q?DaMMzUSINCsUFCXQNfK4ULGAS8wu2ZGWAvIT1EjrClri7iHuW2vGQ0rca0xA?=
+ =?us-ascii?Q?py33scwXxmwUDXeY4qAUhaQ=3D?=
 X-OriginatorOrg: quantatw.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 85b3a8a7-38f2-484d-2894-08d9f8087bda
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0015fbe0-aa97-4f1d-c22c-08d9f8087c15
 X-MS-Exchange-CrossTenant-AuthSource: HK0PR04MB3282.apcprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Feb 2022 02:42:37.2207 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Feb 2022 02:42:37.5957 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 179b0327-07fc-4973-ac73-8de7313561b2
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 3d7iCIxzYoTEeqWz/+EEa9TKumZ1K7G1kGFzoL1c/zwzaWVYh+p0pTP4SbMdqU4rQ7cFgGWbdAtggMhPU1769g==
+X-MS-Exchange-CrossTenant-UserPrincipalName: DLjRhnJbz0Om4W6w5Lqv6xlmesEqG5NA5GPyorqd0iEBirpZVMTc2IXFd9MpscaZrOiIYkd8aNeIYoRbThV/dg==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI2PR04MB4507
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -136,147 +137,89 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Tudor Ambarus <tudor.ambarus@microchip.com>
 
-nor->page_size duplicated what nor->params->page_size indicates
-for no good reason. page_size is a flash parameter of fixed value
-and it is better suited to be found in nor->params->page_size.
+Flash parameters init is done in a spaghetti way right now.
+There is the init based on the flash_info data, then there is the
+default_init() hook, then SFDP init, an intermediary post_bft(),
+then post_sfdp() and a spi_nor_late_init_params(). Each method can
+overwrite previuosly initialized parameters.
+
+We want to separate what is SFDP and non-SFDP specific. late_init()
+will replace the default_init() hook and will be used only to initialize
+flash parameters that are not declared in the JESD216 SFDP standard, or
+where SFDP tables are not defined at all.
+We cut a member in the chain of initializing parameters by getting rid
+of the default_init() hook, and we make it clear that everything that is
+in late_init() is not covered by the SFDP tables defined by the flash.
 
 Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
-Reviewed-by: Pratyush Yadav <p.yadav@ti.com>
 Reviewed-by: Michael Walle <michael@walle.cc>
-Link: https://lore.kernel.org/r/20211029172633.886453-5-tudor.ambarus@microchip.com
+Reviewed-by: Pratyush Yadav <p.yadav@ti.com>
+Link: https://lore.kernel.org/r/20211029172633.886453-6-tudor.ambarus@microchip.com
 ---
- drivers/mtd/spi-nor/core.c   | 19 +++++++++----------
- drivers/mtd/spi-nor/xilinx.c | 17 ++++++++++-------
- include/linux/mtd/spi-nor.h  |  2 --
- 3 files changed, 19 insertions(+), 19 deletions(-)
+ drivers/mtd/spi-nor/core.c | 17 +++++++++++++----
+ drivers/mtd/spi-nor/core.h |  4 ++++
+ 2 files changed, 17 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
-index 277d1fde84c8..3ec0959ffc20 100644
+index 3ec0959ffc20..88dd0908d172 100644
 --- a/drivers/mtd/spi-nor/core.c
 +++ b/drivers/mtd/spi-nor/core.c
-@@ -1952,6 +1952,7 @@ static int spi_nor_write(struct mtd_info *mtd, loff_t to, size_t len,
- 	struct spi_nor *nor = mtd_to_spi_nor(mtd);
- 	size_t page_offset, page_remain, i;
- 	ssize_t ret;
-+	u32 page_size = nor->params->page_size;
- 
- 	dev_dbg(nor->dev, "to 0x%08x, len %zd\n", (u32)to, len);
- 
-@@ -1968,16 +1969,15 @@ static int spi_nor_write(struct mtd_info *mtd, loff_t to, size_t len,
- 		 * calculated with an AND operation. On the other cases we
- 		 * need to do a modulus operation (more expensive).
- 		 */
--		if (is_power_of_2(nor->page_size)) {
--			page_offset = addr & (nor->page_size - 1);
-+		if (is_power_of_2(page_size)) {
-+			page_offset = addr & (page_size - 1);
- 		} else {
- 			uint64_t aux = addr;
- 
--			page_offset = do_div(aux, nor->page_size);
-+			page_offset = do_div(aux, page_size);
- 		}
- 		/* the size of data remaining on the first page */
--		page_remain = min_t(size_t,
--				    nor->page_size - page_offset, len - i);
-+		page_remain = min_t(size_t, page_size - page_offset, len - i);
- 
- 		addr = spi_nor_convert_addr(nor, addr);
- 
-@@ -3094,7 +3094,7 @@ int spi_nor_scan(struct spi_nor *nor, const char *name,
- 	 * We need the bounce buffer early to read/write registers when going
- 	 * through the spi-mem layer (buffers have to be DMA-able).
- 	 * For spi-mem drivers, we'll reallocate a new buffer if
--	 * nor->page_size turns out to be greater than PAGE_SIZE (which
-+	 * nor->params->page_size turns out to be greater than PAGE_SIZE (which
- 	 * shouldn't happen before long since NOR pages are usually less
- 	 * than 1KB) after spi_nor_scan() returns.
- 	 */
-@@ -3170,8 +3170,7 @@ int spi_nor_scan(struct spi_nor *nor, const char *name,
- 		mtd->flags |= MTD_NO_ERASE;
- 
- 	mtd->dev.parent = dev;
--	nor->page_size = nor->params->page_size;
--	mtd->writebufsize = nor->page_size;
-+	mtd->writebufsize = nor->params->page_size;
- 
- 	if (of_property_read_bool(np, "broken-flash-reset"))
- 		nor->flags |= SNOR_F_BROKEN_RESET;
-@@ -3340,8 +3339,8 @@ static int spi_nor_probe(struct spi_mem *spimem)
- 	 * and add this logic so that if anyone ever adds support for such
- 	 * a NOR we don't end up with buffer overflows.
- 	 */
--	if (nor->page_size > PAGE_SIZE) {
--		nor->bouncebuf_size = nor->page_size;
-+	if (nor->params->page_size > PAGE_SIZE) {
-+		nor->bouncebuf_size = nor->params->page_size;
- 		devm_kfree(nor->dev, nor->bouncebuf);
- 		nor->bouncebuf = devm_kmalloc(nor->dev,
- 					      nor->bouncebuf_size,
-diff --git a/drivers/mtd/spi-nor/xilinx.c b/drivers/mtd/spi-nor/xilinx.c
-index 1138bdbf4199..0658e47564ba 100644
---- a/drivers/mtd/spi-nor/xilinx.c
-+++ b/drivers/mtd/spi-nor/xilinx.c
-@@ -28,11 +28,12 @@ static const struct flash_info xilinx_parts[] = {
+@@ -2666,11 +2666,19 @@ static void spi_nor_post_sfdp_fixups(struct spi_nor *nor)
+  * spi_nor_late_init_params() - Late initialization of default flash parameters.
+  * @nor:	pointer to a 'struct spi_nor'
+  *
+- * Used to set default flash parameters and settings when the ->default_init()
+- * hook or the SFDP parser let voids.
++ * Used to initialize flash parameters that are not declared in the JESD216
++ * SFDP standard, or where SFDP tables are not defined at all.
++ * Will replace the spi_nor_manufacturer_init_params() method.
   */
- static u32 s3an_convert_addr(struct spi_nor *nor, u32 addr)
+ static void spi_nor_late_init_params(struct spi_nor *nor)
  {
-+	u32 page_size = nor->params->page_size;
- 	u32 offset, page;
++	if (nor->manufacturer && nor->manufacturer->fixups &&
++	    nor->manufacturer->fixups->late_init)
++		nor->manufacturer->fixups->late_init(nor);
++
++	if (nor->info->fixups && nor->info->fixups->late_init)
++		nor->info->fixups->late_init(nor);
++
+ 	/*
+ 	 * NOR protection support. When locking_ops are not provided, we pick
+ 	 * the default ones.
+@@ -2712,8 +2720,9 @@ static void spi_nor_late_init_params(struct spi_nor *nor)
+  *    wrong).
+  *		spi_nor_post_sfdp_fixups()
+  *
+- * 5/ Late default flash parameters initialization, used when the
+- * ->default_init() hook or the SFDP parser do not set specific params.
++ * 5/ Late flash parameters initialization, used to initialize flash
++ * parameters that are not declared in the JESD216 SFDP standard, or where SFDP
++ * tables are not defined at all.
+  *		spi_nor_late_init_params()
+  */
+ static int spi_nor_init_params(struct spi_nor *nor)
+diff --git a/drivers/mtd/spi-nor/core.h b/drivers/mtd/spi-nor/core.h
+index 223a03769950..50bae06bc024 100644
+--- a/drivers/mtd/spi-nor/core.h
++++ b/drivers/mtd/spi-nor/core.h
+@@ -297,6 +297,9 @@ struct spi_nor_flash_parameter {
+  *             parameters that could not be extracted by other means (i.e.
+  *             when information provided by the SFDP/flash_info tables are
+  *             incomplete or wrong).
++ * @late_init: used to initialize flash parameters that are not declared in the
++ *             JESD216 SFDP standard, or where SFDP tables not defined at all.
++ *             Will replace the default_init() hook.
+  *
+  * Those hooks can be used to tweak the SPI NOR configuration when the SFDP
+  * table is broken or not available.
+@@ -307,6 +310,7 @@ struct spi_nor_fixups {
+ 			 const struct sfdp_parameter_header *bfpt_header,
+ 			 const struct sfdp_bfpt *bfpt);
+ 	void (*post_sfdp)(struct spi_nor *nor);
++	void (*late_init)(struct spi_nor *nor);
+ };
  
--	offset = addr % nor->page_size;
--	page = addr / nor->page_size;
--	page <<= (nor->page_size > 512) ? 10 : 9;
-+	offset = addr % page_size;
-+	page = addr / page_size;
-+	page <<= (page_size > 512) ? 10 : 9;
- 
- 	return page | offset;
- }
-@@ -40,6 +41,7 @@ static u32 s3an_convert_addr(struct spi_nor *nor, u32 addr)
- static int xilinx_nor_setup(struct spi_nor *nor,
- 			    const struct spi_nor_hwcaps *hwcaps)
- {
-+	u32 page_size;
- 	int ret;
- 
- 	ret = spi_nor_xread_sr(nor, nor->bouncebuf);
-@@ -64,10 +66,11 @@ static int xilinx_nor_setup(struct spi_nor *nor,
- 	 */
- 	if (nor->bouncebuf[0] & XSR_PAGESIZE) {
- 		/* Flash in Power of 2 mode */
--		nor->page_size = (nor->page_size == 264) ? 256 : 512;
--		nor->mtd.writebufsize = nor->page_size;
--		nor->mtd.size = 8 * nor->page_size * nor->info->n_sectors;
--		nor->mtd.erasesize = 8 * nor->page_size;
-+		page_size = (nor->params->page_size == 264) ? 256 : 512;
-+		nor->params->page_size = page_size;
-+		nor->mtd.writebufsize = page_size;
-+		nor->mtd.size = 8 * page_size * nor->info->n_sectors;
-+		nor->mtd.erasesize = 8 * page_size;
- 	} else {
- 		/* Flash in Default addressing mode */
- 		nor->params->convert_addr = s3an_convert_addr;
-diff --git a/include/linux/mtd/spi-nor.h b/include/linux/mtd/spi-nor.h
-index f67457748ed8..fc90fce26e33 100644
---- a/include/linux/mtd/spi-nor.h
-+++ b/include/linux/mtd/spi-nor.h
-@@ -371,7 +371,6 @@ struct spi_nor_flash_parameter;
-  * @bouncebuf_size:	size of the bounce buffer
-  * @info:		SPI NOR part JEDEC MFR ID and other info
-  * @manufacturer:	SPI NOR manufacturer
-- * @page_size:		the page size of the SPI NOR
-  * @addr_width:		number of address bytes
-  * @erase_opcode:	the opcode for erasing a sector
-  * @read_opcode:	the read opcode
-@@ -401,7 +400,6 @@ struct spi_nor {
- 	size_t			bouncebuf_size;
- 	const struct flash_info	*info;
- 	const struct spi_nor_manufacturer *manufacturer;
--	u32			page_size;
- 	u8			addr_width;
- 	u8			erase_opcode;
- 	u8			read_opcode;
+ struct flash_info {
 -- 
 2.17.1
 
