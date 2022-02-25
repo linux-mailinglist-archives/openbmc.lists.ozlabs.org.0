@@ -2,47 +2,47 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6DD0D4C3C13
-	for <lists+openbmc@lfdr.de>; Fri, 25 Feb 2022 03:59:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EE5A4C3C15
+	for <lists+openbmc@lfdr.de>; Fri, 25 Feb 2022 04:00:29 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K4ZJ14t0rz3bVt
-	for <lists+openbmc@lfdr.de>; Fri, 25 Feb 2022 13:59:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K4ZJp3whmz3bPX
+	for <lists+openbmc@lfdr.de>; Fri, 25 Feb 2022 14:00:26 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=HnXRrnRx;
+	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=WONBLuTK;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=quantatw.com (client-ip=2a01:111:f400:feae::708;
+ smtp.mailfrom=quantatw.com (client-ip=2a01:111:f400:feae::717;
  helo=apc01-psa-obe.outbound.protection.outlook.com;
  envelope-from=potin.lai@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=quantacorp.onmicrosoft.com
  header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
- header.s=selector2-quantacorp-onmicrosoft-com header.b=HnXRrnRx; 
+ header.s=selector2-quantacorp-onmicrosoft-com header.b=WONBLuTK; 
  dkim-atps=neutral
 Received: from APC01-PSA-obe.outbound.protection.outlook.com
- (mail-psaapc01on20708.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:feae::708])
+ (mail-psaapc01on20717.outbound.protection.outlook.com
+ [IPv6:2a01:111:f400:feae::717])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K4Ywq1jNnz3bcW
- for <openbmc@lists.ozlabs.org>; Fri, 25 Feb 2022 13:43:06 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K4Ywq5kTmz3bVW
+ for <openbmc@lists.ozlabs.org>; Fri, 25 Feb 2022 13:43:07 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=adtW2Vxn4QurVWrf4J/MRK5C4gGI1VPvUS22RrF/KxdjT1rcHsCL7Q/V4JLkZ9WOxlJIf5anlO1OiO+KQq4chzgCOcRdra0q4JpQMkax+7KuYSs8911dLCMQqAQjDdPhhCiMRyJ+hte/rW5vIAsY3bUmgQ/Io5CixRamcbymfDZk2GR03v9VTfH2Lu447HT4vFzkKFg+0OpIx/bXVsMiaZn2DiwBq7f1fmGKtHrE9tda6I1s9EL+oSlNs0JY/X2hNaHSegKflahB85bN62jJm+z8NrL3WxzM9hjKHWp0lASqVdRPYxyeRLCA+b6L6BGaA/4mxYUk170A8xyeLgrq0A==
+ b=mcsJlp+95GyVDyGrsjOrJjCdx22Wk40QLNBZq7m/jA7aF3RH8b2Dr4CK8SabHLcPWQobQDGdwXx8GKa11OM+s8GB2bHk6BCVJPUMf4FOPwih//Qu+KhkLv1nxkMOrauePiRWI8vLYDZIIQDa0bIi90jXulit5yJ9Hpn3Y3SZ4+QTRgugrQMsLY1dUZ+VWcWPU3QFa0MqLzbTtuptwIqXxisLsa2Ve9Vi4lyycT4iWMWjnWrRfGQOG4ml46LWPhGIE7mU9RWnMVDqEQUk9i+Y1XU+VTKljnKf61LIiTyyeqjGtM/nyU3oCIQl5lSGQZfwCaK2Ei4XsIO4Awj8f+dJGg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3Eema2smL0aEXNIZ5dV1w9kJv161qYlcyqrk56TALLM=;
- b=hEcML00OmGxAJIzh/fdmyR02q0noQapLqkSZBVuv0+X7p71RUVZupUTqUAL7DiuqcPTsXKltsMSxncYX1jEhtJ/XShMG6EaBi3WUzE3TiuInNZoAZbrcsodVPJqsCZIoWpJYIXIWLOJAFZGiw2hDg9jx7jwJhsMS4UzRuWIJBeiplztxcvj24AujQSpGCD8DEn0kbheIG9eFjMHuTOxQPxXrleJ6f2+gNSrz5ISKXmE3YptOsxpR1blvy7uUdEoz0PkXR/UhMHp9v+LSBmDD2cqYn6GMg6nEYC/UCwdphIU3HWBo/AqKSwLezSVH8Qye2l0fqlK/Uk9I+8lSsgpCjQ==
+ bh=y+lDA+cwKAwLni6JaBf4DM3e7hoEXBiygRE8wtArx4s=;
+ b=C6o3aaKbrgqCO5GWT5jk4NAspqQ2ctGM/S6VdjxfcvhRRAUh3MafGQek9MIwg2mfOFmojIGcu8lS3R6y4sk2zwc6+zCc7RGyI69EuoE2JaOHoEZWyIqP03wYnBWNk0kUGJUY6aMUlEC6Q0w2Yoy5KAddeIiwfzZaxpKxz0A9s8/yzJ+HVlxcT3QyBdRBUuJZ7tRsUaonqZt87PjUdFs+w5xYt4ebjydNCJTs1doBs+xB5jP/QNeJ9G37GCsND5J8FNDTyLnH/ZxUItHjm/AIvpYimyiPwjV+M7pi45e9PhIK837QrFFtWd6PwAjuu1wsbQ3UkP8+zJ5yA3bF1Y52jw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=quantatw.com; dmarc=pass action=none header.from=quantatw.com;
  dkim=pass header.d=quantatw.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3Eema2smL0aEXNIZ5dV1w9kJv161qYlcyqrk56TALLM=;
- b=HnXRrnRxy8y7165U1pzgaLj2DLCe7odYD2fzmY8BdbMltmp4gKo8w6xcRyUDsnoP1bdJRcRmll9ZJCI3FjFhHFb5YpACqTsn2IQpXynGNKX/WCjUKhmjTCEKw3XC0MhCl3Hktkte2zulC86fUDtlbog8i8bzKsegGP52L5oX68E=
+ bh=y+lDA+cwKAwLni6JaBf4DM3e7hoEXBiygRE8wtArx4s=;
+ b=WONBLuTKIIngmJqM7yEV5ofXDNHTn2Tg9cSOzu+gv2RfCEEpTgimA3CTdLuJvdGOd86z3xr2QQrmj5UlwXHI2Ai71QwySohh49GHmLTKzVJWwGLJV4X8+xUVwNHp9ovvqbmXC0Y1wqwYOZziXRXGJUgQWF6tAJRU+JSDbhkr6rc=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=quantatw.com;
 Received: from HK0PR04MB3282.apcprd04.prod.outlook.com (2603:1096:203:89::17)
@@ -57,10 +57,10 @@ Received: from HK0PR04MB3282.apcprd04.prod.outlook.com
 From: Potin Lai <potin.lai@quantatw.com>
 To: openbmc@lists.ozlabs.org,
 	joel@jms.id.au
-Subject: [PATCH linux dev-5.15 23/26] mtd: spi-nor: spansion: s25fl256s0: Skip
- SFDP parsing
-Date: Fri, 25 Feb 2022 10:42:18 +0800
-Message-Id: <20220225024221.19422-24-potin.lai@quantatw.com>
+Subject: [PATCH linux dev-5.15 24/26] mtd: spi-nor: gigadevice: gd25q256: Init
+ flash based on SFDP
+Date: Fri, 25 Feb 2022 10:42:19 +0800
+Message-Id: <20220225024221.19422-25-potin.lai@quantatw.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20220225024221.19422-1-potin.lai@quantatw.com>
 References: <20220225024221.19422-1-potin.lai@quantatw.com>
@@ -70,55 +70,55 @@ X-ClientProxiedBy: HK2PR02CA0135.apcprd02.prod.outlook.com
  (2603:1096:203:89::17)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 5917da02-26a6-4342-c23f-08d9f80880bd
+X-MS-Office365-Filtering-Correlation-Id: 711a161d-1770-4d43-0bfb-08d9f808810a
 X-MS-TrafficTypeDiagnostic: SEYPR04MB5644:EE_
-X-Microsoft-Antispam-PRVS: <SEYPR04MB5644A81A793F234773ACFC4E8E3E9@SEYPR04MB5644.apcprd04.prod.outlook.com>
+X-Microsoft-Antispam-PRVS: <SEYPR04MB5644DC24BB1D0279C767C5FC8E3E9@SEYPR04MB5644.apcprd04.prod.outlook.com>
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: DeHh+iVVJQxGXk7sebAy46L7Mr1pkLXt+IQ7RSqb8KFuW12D6d5Q14qbHBd9RWQZU/h5JoO/qCrDezNibLtozGyOty1ao31Lee2p/U3UJQhTH3om81Ad7zNqQlmS8IcOgtXjebE30nwJoHILt0/8tKP79/NAVAV/C9Rx2z3Adu8duQQb8DhyYtjLNfRGSoH5Yr7Uzt08hQyaqAkTG5st2BuGnRtEw3HhNGnVS62gHuLzXgQvK8/ImNZBmcsC8G6mFwkdn0Z5egtVrxFfIOU1RJqZcRThiG7/kFXuimHO2RPxj1g8ZPCR1daZyxX0A74i+xUlIe8tK9eP/3B74d+aGDBhTJT3FGm5XLbimyGS1qsG2hgXwnakfxON+AFbhsqdsx7dr0Zv1o8QZVmIZovPSLTSViTdL8DZpe3+jUNctRrLfI0uVeuKXujn8M/hdW/zsby1RA40e5WgqwGCSZKOCfvXn9VxkRfzRA8Z/8iqDVodcsFuEe34aeu71VpmmlqqO06hFIX9gCwpHI1U25smzpbDTv4UP9iWxwZtAiPNOqME9lq0bVxtFV/1Rv4PE7XRia7TMx+hMSkB2dcD68di3HeImBvag1DTP1vmvk+jh8lJCvVj/91PQHXAUtsKM/1i5yhA+7dVK8WjkKWOEgBSgFYNSP5U+R3aucdltHi8obDu6xLACmAwnc8BiEPxrLeBPc++eG27fsXwt1CTehOHrxjuHeGeS9PySy2Eij1VzIbjg1e0YAREuOM7/lhM6DL7p7guSuS2rIGAD3jsshH+atk2sHvHLGOWFO1QeLFeux8=
+X-Microsoft-Antispam-Message-Info: KXdvi1PXtxWvNqTSlViyKIh0JsZL9brzqtn1ZBPkTcZjCT/+3CHjb+jK+r+4J86iptzohfAzC4Myfyx8LiDCyvpf7LSt0u/h3VCscnneREqSN5msMzSbGokjlpqWIiRMsjYV+hk4MAMidY344N33YjBfvVOhP1fgraQlytx06/O4xnZw89VTTL05DBJBZS9nB0htE9LfkKkCn2f1ZxRJhnL7Dc+K9zWY6zcf9QPsYlGkXS2rJyUA3t5bZagj53hjO/yrXbS7WFYh1NujCYWfgml1CHH9DaZ2ZJQAKr5YfMbPDnt6VJzXHfJ7DYLN6AIhAVa/7mDW9Z0AECjBTsmplq1V8Vj+0bOxoqHuRXfIF08wsF6e7CCVUgaE9zZ5ePzC568kDoaG7TjxmzjFo+dxFZ68HJMi+IylOJuV9U7iJc+uNq1oXRO2XzlWtQtHce3eD8qhZTUZ4I6OMnN8HnRx4b1EqwOy1cO6v5AjYaSrKSasQfkPg3cdE6NZdNDJbJKqN3BFUiUuwNRzHzYfoGN+pmZm+oQH28mv8C+kVY58xnDgA3jaVKLggkfNvFHECG158qrFDmFm4OpDNAalX5NotwwetI6w5AiUEJnP1bRs0d/v+TdLguwS2W2/zk9bDORo+EUqnYZhXdYObi0VN1cXZptsvdf0UGjal5d4eeUg526f9F5sUUaPFyp0/P4ORAkWicRqkMIexSUJT8oylatW9hwobph+HV/yJ9MYHf/1G03IkfXdyZff4UePtiazZ6iMZupo/zhTtKSID7yg7ygZUgNqoHu4St/tHHvoS5K/a6E=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:HK0PR04MB3282.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230001)(4636009)(366004)(83380400001)(44832011)(36756003)(54906003)(2906002)(6512007)(316002)(86362001)(6506007)(6666004)(6486002)(966005)(186003)(38350700002)(52116002)(5660300002)(8936002)(2616005)(8676002)(66476007)(66946007)(66556008)(26005)(38100700002)(508600001)(1076003)(4326008);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?reu4XIsvZEiJimaPl/SsEbSdzYj0mqvido+VhjgYk7/wC5cdcxGV6M0ERUKF?=
- =?us-ascii?Q?4Iy02g/NCl28When6UR7YVOTr/LaRlHCeviFFQ0XxihCndM2Mcq8HYAvML+I?=
- =?us-ascii?Q?T76sGpYuLKXXJ5De3Ogf/ABFc4bG9K3Zwd0rnTlbd0+fZBPEWyhtnXN+I5Uj?=
- =?us-ascii?Q?8ZE/h36L2u0moLZZwhSNNFHZ63Yl+SNIRuWW74SbgO3lkj7z8b6jRqMR/GAh?=
- =?us-ascii?Q?nrpFwjVvaEtv74GhPrICw4G1AfgeujfWLD5X299HUOJobw+KLaeidjZtpODn?=
- =?us-ascii?Q?+kYQTOeYw7/4vp3zVjY2W07PjjO6hbwGLB1i98bMQM65CwatYSp8HDcX0FT/?=
- =?us-ascii?Q?2Dk4Ga+/V4sH2U20WxWInNgXLZPSkvQnpevGKAOX1nQCCNpdyoXxtquTPN0d?=
- =?us-ascii?Q?SSrujj9DK8fU0pRhIdEm585kU7AFnLmiJeMyzSDBicdHySQdawB/vZs2Y734?=
- =?us-ascii?Q?8gOcY9AmzcN4Tt/3ezXIZHF53vtgttaXtg1hxUzGzGWKAOtip2rE9THFSoTg?=
- =?us-ascii?Q?SBp4KLWPF6GnDTJl/O1U8HEiAM+1JlPShPeRNS7rvj46SAPhz0f6vv8SIwkY?=
- =?us-ascii?Q?ryQ6JexT2WZ75fTidD3o9NKoR3Apoj/rqX7samB1w84q9WFYwsAk4i95LzP6?=
- =?us-ascii?Q?3Am0pmHYRSrLMJ4WBlrH1FS1k8aO7b7xXS9ZfPznbHYOXVNhuI1sgLqxHPoX?=
- =?us-ascii?Q?18U7dYzN8fNwhrR/FJL28MAQA1fYs4NECC6GIyhmwsDkbn4AOf1KwHgkY3Wo?=
- =?us-ascii?Q?VuTSH8nzAW9wUXfPaWmtRCUvguAZpzFSk0Rd4GtA7I/VeOEazIvM7ueW8xA+?=
- =?us-ascii?Q?2VDOeWW02WbL57gfux+coBSyM3c58BH0wPbsmIsc6ZWD7vkEBO6rO5c+PVo0?=
- =?us-ascii?Q?46AucCOXoB7lU9Ur4AymMBhdYFH+pO8lQZLZ61XY8w1oVK99ts94i2ufRyQA?=
- =?us-ascii?Q?ekQoV8bdoJbfAvRbPSF+ktcOv3vX6vmIG6XmSp7AfEv9D3w3PMM3sPBpD2Ty?=
- =?us-ascii?Q?iSIh1cAzqVb8c86ogpG0EKumTPm90qzpBESASfnrIgVarjn41B+XNPaIkYNr?=
- =?us-ascii?Q?AIulb+tNDFkmLdUoXidZKDFJ5EugmbiVrECG+K1ph0N6WaZJo5Uk7TrdsqWa?=
- =?us-ascii?Q?mESqp8FjS2xNu6o0CMEfxrvR4bTisXvhLgEGgmGQd8yahx3vh5v5ZKU2cBQW?=
- =?us-ascii?Q?cP168xcFF7bIld7CmupC9zqVN0Fh1iXgEOvFwMp/TfT2kvFgSPtp/Muup+ya?=
- =?us-ascii?Q?Z5a6+ZkmLeMdTb5HMmOIDjG/+rivkrz3TNvM7n9C4MljO1jUUNamXpBlxdXU?=
- =?us-ascii?Q?BVSuDKdMjxci69rQKSIjTUxlmQz1iA+AooG6AMdusTJeJZKVvwWqgZMeVQtl?=
- =?us-ascii?Q?GJPBLI7+gPsjg3PYMH3fkI1YlRaeJhh/kZuOII6wV8YFZRcIV2wus4zucwjD?=
- =?us-ascii?Q?tfGiPa0Fdp6U0u1nVvXCXWLjMA3VeQzvjG6MYrI8lxxaCFVL8PaeQDuEjUGz?=
- =?us-ascii?Q?rOSjeUZcOT/mjbt9t4ENAaQUfYoqlY4ADcsenjETpQVYg49qLvj/sVKdD9WY?=
- =?us-ascii?Q?skFfzhnylFzLF3QTh7ST1zo396SahYymRxMLP2GxZYnpCSIqAdeMREIWdtEG?=
- =?us-ascii?Q?y5dxLLgSr1jgry6/C2Bu4ow=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?/eGlxyyqJDdpS6Qi+QfK5PX/m0dMkYHyXEUSvgXJ2Lwr8g3AKQ1dGso5N5+3?=
+ =?us-ascii?Q?oammgkIOVGjpFhRawRMZanT344ROIJ6zr+Elfj5RDMdoZugxIK2Xz2vgJX0w?=
+ =?us-ascii?Q?JYZNRfz9nLKWO7e3uILWLtkIDtj7kzKKZVOSxOiCcCl4oRQ/c0hehfYD86yM?=
+ =?us-ascii?Q?qLitPDDV8QGWiPFYWrPbIUlarLq6K2h+kA9oFTfnxyBpELlpbE+j46sMV+1J?=
+ =?us-ascii?Q?VNTd7B8xhpVcEcbq+rbTvGAV9E/4yXpcii+mogPc5+YoZRwH4/Oywv27L3u7?=
+ =?us-ascii?Q?yrNa6zp+qlVrwpVWX2uvObyvKXjfb80+cHsNMAWwQTp++ALvACXMfCxw0TGg?=
+ =?us-ascii?Q?zYfkugn+yvQyd2Ts8Z8KMd0SlqYQx1ybdah0DVcMKI0NCobdsihcaIdAdoWE?=
+ =?us-ascii?Q?EwFlPhOFAf77XIazYqhh9gVc0BHNXDoXNASV00Qi/IlQdfz9HiQK92gmwMfB?=
+ =?us-ascii?Q?MivgI1MHOHgIjxERKqtBQve9HB/5cBxZcltfasBA39xepSC5AW7O+jeRu8S0?=
+ =?us-ascii?Q?N0702X8A/d15Sc9XH3K0Oi7LqmAxVPpmn6zlofdqHjmEgXGZhpcXKBtPvu0l?=
+ =?us-ascii?Q?wHHPjYpoPq7xzVefyBvO8ZqCg8KcpZfUbyn4oNKZtQgkKsUTj4SO++cNSBTH?=
+ =?us-ascii?Q?HvGzYM9diOeMAn23ibBoRsthYSxDeWSWJCB3Bs/TPjIflW63N0z1ZclcayVy?=
+ =?us-ascii?Q?NiRFgGcF4SvVIGa+5mx0H+OvI93HtpvJ2ltWaMGE4rpXav7RiAFOPc/PZt6q?=
+ =?us-ascii?Q?35E5UjjN4hF3CvS8wEec2ff2CINLI0caoWtxoA2RJ4TZQygRZJUNdN/5F3H1?=
+ =?us-ascii?Q?tM6bdObyb7sJa1+HFr4BKOzrko0C7gIcgMrZY6hq+RYsG7BmKcAVxxkamcgR?=
+ =?us-ascii?Q?yxMYDI3m9YhVHVIr7VV+7J7potFpm4Ub18hB6bPQLqEXx/kt+jYrHH0zlOuV?=
+ =?us-ascii?Q?xia6o4umRCZiQ7MCchtPCs5/7MGBi8C81sadKwWtW1dj+ddmRUIUd+hq2SJs?=
+ =?us-ascii?Q?OzvK40eiATjGaAgd700hUkP/Cx9S9agNjG/L6lWaNmKPF8WcPZn88Yamf/p6?=
+ =?us-ascii?Q?OBod+4V2TCUB/Tjb1eJk1yQQHAtDH4OXSu/ZupeZBQUsCTuy//GxHp55FTmx?=
+ =?us-ascii?Q?GVCpruRY0HM8ADdvNhgNm+WQGtHvgFuwqn4KCm34jiTS2osGjfIRBZ7uG4b5?=
+ =?us-ascii?Q?i3fH7ttGo6546ezFQTEbvDcU+CzvSxKaMNlJqfpxr6atADofdhE02UzVRzW4?=
+ =?us-ascii?Q?V73+mfxbMaf5oLIIdKexcvV/O6K8NVib5yhggZDZw95N62eV8shlHm6k4+o3?=
+ =?us-ascii?Q?59462oJgLWwZ2W+rERqUQocHGlnUiw9L+xHOFtVBfjyM2naT7+/SVpCVWJ3U?=
+ =?us-ascii?Q?FF0WuZ1s1SQwsjjzXQ6aJCKEa3L6FQWABB+QgOsJcQ2ExfECYK8ywJAwGywL?=
+ =?us-ascii?Q?52qYnyZTNW5zNfdgHvFECZCXcmffOwQRF8HsuIQZ7/0GYOrZ79K+0F4V+b+o?=
+ =?us-ascii?Q?F681WrPuoj51XBlJ0japBT2+RG8dboJNsYFAZ/KWzOiR7rNh1oftFYk5bKbG?=
+ =?us-ascii?Q?woG0Dx+5PVLjCqkehSu28StFw+iM5wwHrDY1hpneQof0U74nGlp8DaTS8BY2?=
+ =?us-ascii?Q?ZZ97GapmA/i83t9SHPYigYY=3D?=
 X-OriginatorOrg: quantatw.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5917da02-26a6-4342-c23f-08d9f80880bd
+X-MS-Exchange-CrossTenant-Network-Message-Id: 711a161d-1770-4d43-0bfb-08d9f808810a
 X-MS-Exchange-CrossTenant-AuthSource: HK0PR04MB3282.apcprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Feb 2022 02:42:45.5013 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Feb 2022 02:42:45.8919 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 179b0327-07fc-4973-ac73-8de7313561b2
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: CDzauhMCvQ3sId8uN6un8PXkzDBZX2py6ZKoRgrz7cj9f5xboQxoxL9s89A//CNoR9Fi+t5DnPTxTNsqzFXpJA==
+X-MS-Exchange-CrossTenant-UserPrincipalName: T3xcv1uK5wjpPqkowHWgb/9znB+U5cxFQtfnLBlOXUUG724zCFFlJPITMDlQngipT+vS9FkzXxeApFuUBIADdg==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR04MB5644
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -137,30 +137,33 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Tudor Ambarus <tudor.ambarus@microchip.com>
 
-s25fl256s0 does not define the SFDP tables nor implements the
-RDSFDP 0x5a command. Skip the SFDP parsing in order to avoid
-issuing an unsupported command to the flash.
+Get rid of the static initialization of the flash parameters and
+init them when parsing SFDP.
+Generated a 256 Kbyte random data and did an erase, write, read back
+and compare test. The flash uses for reads SPINOR_OP_READ_1_4_4_4B 0xec,
+for erases SPINOR_OP_BE_4K_4B 0x21, and for writes SPINOR_OP_PP_1_1_4_4B
+0x34.
 
 Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
-Link: https://lore.kernel.org/r/20211207140254.87681-13-tudor.ambarus@microchip.com
+Link: https://lore.kernel.org/r/20211207140254.87681-14-tudor.ambarus@microchip.com
 ---
- drivers/mtd/spi-nor/spansion.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/mtd/spi-nor/gigadevice.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/spi-nor/spansion.c b/drivers/mtd/spi-nor/spansion.c
-index f2a2995a7718..f44401287811 100644
---- a/drivers/mtd/spi-nor/spansion.c
-+++ b/drivers/mtd/spi-nor/spansion.c
-@@ -210,7 +210,8 @@ static const struct flash_info spansion_parts[] = {
- 		NO_SFDP_FLAGS(SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ) },
- 	{ "s25fl256s0", INFO6(0x010219, 0x4d0080, 256 * 1024, 128)
- 		FLAGS(USE_CLSR)
--		NO_SFDP_FLAGS(SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ) },
-+		NO_SFDP_FLAGS(SPI_NOR_SKIP_SFDP | SPI_NOR_DUAL_READ |
-+			      SPI_NOR_QUAD_READ) },
- 	{ "s25fl256s1", INFO6(0x010219, 0x4d0180, 64 * 1024, 512)
- 		FLAGS(USE_CLSR)
- 		NO_SFDP_FLAGS(SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ) },
+diff --git a/drivers/mtd/spi-nor/gigadevice.c b/drivers/mtd/spi-nor/gigadevice.c
+index 0c32e029b975..e9817233c51f 100644
+--- a/drivers/mtd/spi-nor/gigadevice.c
++++ b/drivers/mtd/spi-nor/gigadevice.c
+@@ -53,8 +53,8 @@ static const struct flash_info gigadevice_parts[] = {
+ 		NO_SFDP_FLAGS(SECT_4K | SPI_NOR_DUAL_READ |
+ 			      SPI_NOR_QUAD_READ) },
+ 	{ "gd25q256", INFO(0xc84019, 0, 64 * 1024, 512)
++		PARSE_SFDP
+ 		FLAGS(SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB | SPI_NOR_TB_SR_BIT6)
+-		NO_SFDP_FLAGS(SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ)
+ 		FIXUP_FLAGS(SPI_NOR_4B_OPCODES)
+ 		.fixups = &gd25q256_fixups },
+ };
 -- 
 2.17.1
 
