@@ -2,74 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 127E84C4664
-	for <lists+openbmc@lfdr.de>; Fri, 25 Feb 2022 14:31:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 28E094C48BA
+	for <lists+openbmc@lfdr.de>; Fri, 25 Feb 2022 16:24:03 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K4rKJ2Ftyz3bb4
-	for <lists+openbmc@lfdr.de>; Sat, 26 Feb 2022 00:31:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K4tpm39ncz3bTr
+	for <lists+openbmc@lfdr.de>; Sat, 26 Feb 2022 02:24:00 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=pDSkUulU;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=D7UBQnIH;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::235;
- helo=mail-oi1-x235.google.com; envelope-from=proclivis@gmail.com;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.126; helo=mga18.intel.com;
+ envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=pDSkUulU; dkim-atps=neutral
-Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com
- [IPv6:2607:f8b0:4864:20::235])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
+ header.s=Intel header.b=D7UBQnIH; dkim-atps=neutral
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K4rJv0YjXz3Wtt
- for <openbmc@lists.ozlabs.org>; Sat, 26 Feb 2022 00:31:24 +1100 (AEDT)
-Received: by mail-oi1-x235.google.com with SMTP id 12so7359616oix.12
- for <openbmc@lists.ozlabs.org>; Fri, 25 Feb 2022 05:31:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=from:message-id:mime-version:subject:date:in-reply-to:cc:to
- :references; bh=gamoD5zGf2Sz6aH2pBOLq2eOpyruz09Owb+Q2uTS6Mk=;
- b=pDSkUulUmism7TrDuV6MDKNlr+1TD0E2I9pAmuwRrRUvgJVJhoCuP8nWjGVefQAm2l
- sTUNLPaRaqf8wtVNxgF8EVDr62kBNixCeoZPSdKyuJ3yzCUiHBoaCK0BuDIDWFZVnn09
- 0P+jzELFbQw1kQ4KL34E2H8yUVqlNnbs8/zExiDoduYLVwWsWaz7UbrbAXXUCoEx4ZS+
- 8AV4b1J46q2ps5hYu3U9qlCH/5mP+g1stl/qqL7P9ulMXjitBTmoYh0JCPsuGKTKfiHV
- 7IgqWIFxYzDCCxvTQPc1iZapzMZ6EVRAYCxn4ElxaaKppC3savsTmodEHRaN0AiZq6Ab
- 0Klg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:from:message-id:mime-version:subject:date
- :in-reply-to:cc:to:references;
- bh=gamoD5zGf2Sz6aH2pBOLq2eOpyruz09Owb+Q2uTS6Mk=;
- b=I7qL3pgCXqknDoHfEv6x9XTE01gCF6T/97rbXnmoYLMCsb9TOHR90ZGsIt3RJo3Fo8
- ejfeOe4zForKJnxF3LphVnVBDi7bKehy5H0mauiY7N5nVzzlP2M0+Y5CgPiq+aHvkett
- /WqIsZ7bnF4iMxc3HiyF0E22pKGk8lC5tm35+qQmQtR5bIPAIwx5pFfbTAW5R9GjufDy
- dxkk4w0pbYz5pj+bqthj9L52y1x4jYYSrDyoBUdnVJT0qYZUkr5GeaFg+sZknXj3bhUD
- +lEdEfJsu3vrBi6M8lQV2kM03R4ISkrOgy9cgzP4/do49dm0I/bsLEM5JeKdaSsoaXsN
- TdCw==
-X-Gm-Message-State: AOAM531jvi1b5v7MoyW5ARc7FUBQrUDrlHDE8saAsJPWzUyzmQ+gAUIl
- 7NtVDRxnLQIjGjmiEXFdxeJTLgq7l8yyNw==
-X-Google-Smtp-Source: ABdhPJxz70pNdzHOftsV655sDxOQGsCiNd48iq178KzoiZjjVkXcaZpHWY3+P13D+2XJbosC9ilZ6g==
-X-Received: by 2002:a05:6808:23c1:b0:2d7:390e:5c2a with SMTP id
- bq1-20020a05680823c100b002d7390e5c2amr1576974oib.108.1645795882364; 
- Fri, 25 Feb 2022 05:31:22 -0800 (PST)
-Received: from smtpclient.apple ([37.19.210.176])
- by smtp.gmail.com with ESMTPSA id
- 7-20020a4a1e07000000b002fcc8003c36sm1058062ooq.14.2022.02.25.05.31.21
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 25 Feb 2022 05:31:21 -0800 (PST)
-From: Mike Jones <proclivis@gmail.com>
-Message-Id: <CE613404-79EA-4D39-816D-B16E757CB64A@gmail.com>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_E23F14A2-3F59-4EA9-B7B8-2C9DB72A50C3"
-Mime-Version: 1.0 (Mac OS X Mail 15.0 \(3693.60.0.1.1\))
-Subject: Re: openBmc Code Structure
-Date: Fri, 25 Feb 2022 06:31:20 -0700
-In-Reply-To: <MA1PR01MB41290C4B84DDFB7ABD101CB7873E9@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
-To: Sandeep Kumar <sandeep.pkumar@tcs.com>
-References: <MA1PR01MB41290C4B84DDFB7ABD101CB7873E9@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
-X-Mailer: Apple Mail (2.3693.60.0.1.1)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K4tpM6Vt0z30Dv
+ for <openbmc@lists.ozlabs.org>; Sat, 26 Feb 2022 02:23:38 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1645802620; x=1677338620;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=Z/5M7QiXuofQ+KJbba92sRiTgp55YDyOlLX+xNeQKl8=;
+ b=D7UBQnIHWU0RmmPg8j41ugbVbasNDbCojFaAOzQFcJYIpPk++XMazRyP
+ AMOBuksaNGlit5DEQjPacvfxJpoxE6gKvoyjsfMPy8z0DcMPsmU9gWVq0
+ k8rbZxUJQeSDxQFFMn1r6ZYQrba7VKkidjVtaFyaT3R0RDMmpZwSpQW44
+ OlhGhKa9+u9OOsem/Q/i3fTq4Kwkc9SKq6v27l32sG8e4rViYqbatwqXA
+ F5DAj40OtTvuZSG6fAprKifOKWd9oOr5vrpjTfr0Nty3yC0b0lrHDFGem
+ Pyer155NtZy/UnOpGdlpqATJ9rq3Tk9J/7dsRmyNkUKYP+ZK8DsaX71Hx Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10268"; a="236021697"
+X-IronPort-AV: E=Sophos;i="5.90,136,1643702400"; d="scan'208";a="236021697"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+ by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 Feb 2022 07:22:35 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,136,1643702400"; d="scan'208";a="607789654"
+Received: from linux.intel.com ([10.54.29.200])
+ by fmsmga004.fm.intel.com with ESMTP; 25 Feb 2022 07:22:35 -0800
+Received: from [10.251.8.175] (jmbills-MOBL.amr.corp.intel.com [10.251.8.175])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128
+ bits)) (No client certificate requested)
+ by linux.intel.com (Postfix) with ESMTPS id A49EE5808DB;
+ Fri, 25 Feb 2022 07:22:34 -0800 (PST)
+Message-ID: <d00832b5-e5af-5818-2634-a05bbb22852c@linux.intel.com>
+Date: Fri, 25 Feb 2022 08:22:33 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH 1/2] pinctrl: aspeed: Enable pass-through on GPIOE1 and
+ GPIOE3 free
+Content-Language: en-US
+To: Joel Stanley <joel@jms.id.au>
+References: <5c24d89c-4e58-4d1c-ffe2-d1586c6eceeb@linux.intel.com>
+ <70fda031-ea0a-4155-81d4-74f398134bf8@www.fastmail.com>
+ <CACPK8Xf+6cLOWNYpMH21KDxRX3w5W=EwheTwL-ZktJvbG_pGeg@mail.gmail.com>
+ <7d792cb4-9eaf-cbdc-d39c-72217d5ebcf8@linux.intel.com>
+ <CACPK8XdsoL9_aTJL2KV9KD-djtiLRsJnHqWzL6gTWOMKRkjKOw@mail.gmail.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+In-Reply-To: <CACPK8XdsoL9_aTJL2KV9KD-djtiLRsJnHqWzL6gTWOMKRkjKOw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,121 +79,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Zev Weiss <zweiss@equinix.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---Apple-Mail=_E23F14A2-3F59-4EA9-B7B8-2C9DB72A50C3
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
 
-Sandeep,
+On 2/24/2022 9:49 PM, Joel Stanley wrote:
+> On Thu, 24 Feb 2022 at 21:03, Bills, Jason M
+> <jason.m.bills@linux.intel.com> wrote:
+>>
+>>>
+>>> Jason, you should send the patch to the upstream lists (use
+>>> get_maintainers.pl) for review.
+>> Sorry for the delay.  I found the right lists with get_maintainers.pl.
+>> Should I send these patches to the upstream lists as they are, or do
+>> they need to be tweaked?
+> 
+> You've got some review comments from Andrew and Zev that you should
+> address. I suggest replying to them, and adding the pinctrl list on
+> cc. Then when you post v2 you can send them to the upstream lists.
+> 
+> If you'd prefer to just send a v2 to the upstream lists to restart the
+> discussion you could do that too. Your call.
+Thanks! Unless I missed something, I didn't see any specific feedback 
+that would require a v2, yet.
 
-I think that is like asking what the source code structure of a linux =
-distribution is. Obmc is built from a linux kernel and many application, =
-each with it=E2=80=99s own structure.
+It sounded like Andrew was theorizing a better implementation and was 
+going think on it some more.  So, would it be better to wait for a 
+cleaner implementation of this before we send it upstream?
 
-I=E2=80=99m still learning OBMC myself, but I would look at the obmc =
-design docs and learn its architecture, which is basically a dbus system =
-with services, and to the outside world, Redfish. Yocto is the glue that =
-makes a complete image.
-
-Mike
-
-> On Feb 24, 2022, at 11:42 PM, Sandeep Kumar <sandeep.pkumar@tcs.com> =
-wrote:
->=20
-> Hi,
-> =20
-> I have just started looking into the openBmc source code. Could anyone =
-explain the source code structure for openBMC?
-> =20
-> Thanks,
-> Sandeep.
-> =3D=3D=3D=3D=3D-----=3D=3D=3D=3D=3D-----=3D=3D=3D=3D=3D
-> Notice: The information contained in this e-mail
-> message and/or attachments to it may contain=20
-> confidential or privileged information. If you are=20
-> not the intended recipient, any dissemination, use,=20
-> review, distribution, printing or copying of the=20
-> information contained in this e-mail message=20
-> and/or attachments to it are strictly prohibited. If=20
-> you have received this communication in error,=20
-> please notify us by reply e-mail or telephone and=20
-> immediately and permanently delete the message=20
-> and any attachments. Thank you
->=20
+Thanks,
+-Jason
 
 
---Apple-Mail=_E23F14A2-3F59-4EA9-B7B8-2C9DB72A50C3
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
-
-<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
-charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
--webkit-nbsp-mode: space; line-break: after-white-space;" =
-class=3D"">Sandeep,<div class=3D""><br class=3D""></div><div class=3D"">I =
-think that is like asking what the source code structure of a linux =
-distribution is. Obmc is built from a linux kernel and many application, =
-each with it=E2=80=99s own structure.</div><div class=3D""><br =
-class=3D""></div><div class=3D"">I=E2=80=99m still learning OBMC myself, =
-but I would look at the obmc design docs and learn its architecture, =
-which is basically a dbus system with services, and to the outside =
-world, Redfish. Yocto is the glue that makes a complete image.</div><div =
-class=3D""><br class=3D""></div><div class=3D"">Mike<br =
-class=3D""><div><br class=3D""><blockquote type=3D"cite" class=3D""><div =
-class=3D"">On Feb 24, 2022, at 11:42 PM, Sandeep Kumar &lt;<a =
-href=3D"mailto:sandeep.pkumar@tcs.com" =
-class=3D"">sandeep.pkumar@tcs.com</a>&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div class=3D""><meta =
-charset=3D"UTF-8" class=3D""><div class=3D"WordSection1" style=3D"page: =
-WordSection1; caret-color: rgb(0, 0, 0); font-family: Helvetica; =
-font-size: 12px; font-style: normal; font-variant-caps: normal; =
-font-weight: normal; letter-spacing: normal; text-align: start; =
-text-indent: 0px; text-transform: none; white-space: normal; =
-word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration: =
-none;"><div style=3D"margin: 0in; font-size: 11pt; font-family: Calibri, =
-sans-serif;" class=3D"">Hi,<o:p class=3D""></o:p></div><div =
-style=3D"margin: 0in; font-size: 11pt; font-family: Calibri, =
-sans-serif;" class=3D""><o:p class=3D"">&nbsp;</o:p></div><div =
-style=3D"margin: 0in; font-size: 11pt; font-family: Calibri, =
-sans-serif;" class=3D"">I have just started looking into the openBmc =
-source code. Could anyone explain the source code structure for =
-openBMC?<o:p class=3D""></o:p></div><div style=3D"margin: 0in; =
-font-size: 11pt; font-family: Calibri, sans-serif;" class=3D""><o:p =
-class=3D"">&nbsp;</o:p></div><div style=3D"margin: 0in; font-size: 11pt; =
-font-family: Calibri, sans-serif;" class=3D"">Thanks,<o:p =
-class=3D""></o:p></div><div style=3D"margin: 0in; font-size: 11pt; =
-font-family: Calibri, sans-serif;" class=3D"">Sandeep.<o:p =
-class=3D""></o:p></div></div><p style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: normal; letter-spacing: normal; =
-text-align: start; text-indent: 0px; text-transform: none; white-space: =
-normal; word-spacing: 0px; -webkit-text-stroke-width: 0px; =
-text-decoration: none;" class=3D"">=3D=3D=3D=3D=3D-----=3D=3D=3D=3D=3D----=
--=3D=3D=3D=3D=3D<br class=3D"">Notice: The information contained in this =
-e-mail<br class=3D"">message and/or attachments to it may contain<span =
-class=3D"Apple-converted-space">&nbsp;</span><br class=3D"">confidential =
-or privileged information. If you are<span =
-class=3D"Apple-converted-space">&nbsp;</span><br class=3D"">not the =
-intended recipient, any dissemination, use,<span =
-class=3D"Apple-converted-space">&nbsp;</span><br class=3D"">review, =
-distribution, printing or copying of the<span =
-class=3D"Apple-converted-space">&nbsp;</span><br class=3D"">information =
-contained in this e-mail message<span =
-class=3D"Apple-converted-space">&nbsp;</span><br class=3D"">and/or =
-attachments to it are strictly prohibited. If<span =
-class=3D"Apple-converted-space">&nbsp;</span><br class=3D"">you have =
-received this communication in error,<span =
-class=3D"Apple-converted-space">&nbsp;</span><br class=3D"">please =
-notify us by reply e-mail or telephone and<span =
-class=3D"Apple-converted-space">&nbsp;</span><br class=3D"">immediately =
-and permanently delete the message<span =
-class=3D"Apple-converted-space">&nbsp;</span><br class=3D"">and any =
-attachments. Thank you</p></div></blockquote></div><br =
-class=3D""></div></body></html>=
-
---Apple-Mail=_E23F14A2-3F59-4EA9-B7B8-2C9DB72A50C3--
+> 
+> Cheers,
+> 
+> Joel
