@@ -2,61 +2,54 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 454264C4F42
-	for <lists+openbmc@lfdr.de>; Fri, 25 Feb 2022 21:06:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F7494C5626
+	for <lists+openbmc@lfdr.de>; Sat, 26 Feb 2022 14:32:00 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K51463B7vz3cGq
-	for <lists+openbmc@lfdr.de>; Sat, 26 Feb 2022 07:05:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K5SH11YwNz3bcX
+	for <lists+openbmc@lfdr.de>; Sun, 27 Feb 2022 00:31:57 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=V6j6ZnaF;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.161.49; helo=mail-oo1-f49.google.com;
- envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
-Received: from mail-oo1-f49.google.com (mail-oo1-f49.google.com
- [209.85.161.49])
+ smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=V6j6ZnaF; 
+ dkim-atps=neutral
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [71.19.156.171])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K513q0LMdz30DX
- for <openbmc@lists.ozlabs.org>; Sat, 26 Feb 2022 07:05:42 +1100 (AEDT)
-Received: by mail-oo1-f49.google.com with SMTP id
- i6-20020a4ac506000000b0031c5ac6c078so7817876ooq.6
- for <openbmc@lists.ozlabs.org>; Fri, 25 Feb 2022 12:05:42 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=pt2v58DVMNtnJGowbH5EvHKVW32wfgY0vO3q80Iq09k=;
- b=HmONk49hnzEiOebd56sRNtFZth1oUynJUwqar2lmwW/0jAY6yN+EfgjmRPNszxLe7Q
- XkMV0vxYjpC3QPlPXTd1FwpyH7L2cjIsHE855Sw436moMV+ai9ZuPyCB19O45JKlsbsq
- H3qGDdaChtejU2Uyjuphij/k3K6OjFGYNl81jVVOKgbQGHvxhrE4oM7LVnjj8YUldRhX
- aa8BpKxvuwi3yDYpqJjGKN0UXy+RA1TEwca0oQ2XBUFymjF4LiLngr6Q7n0H15tN2Upe
- EJBAOpe/ZUKdkrnGESSa8r8Yoe0JnG3Qtq5AIpDkKI4swDRS4ZvAW4U071mygw9fo0+J
- +K4g==
-X-Gm-Message-State: AOAM530dV5zIaRoJkmwwjq1s/juHhH34NvZABQaNwWgTblOJ4RZq2GyH
- uejiBsisAfjLTKOg456Ymg==
-X-Google-Smtp-Source: ABdhPJxzyw7Udfv93wJdvGYw+MZTCJWRad+6vfmdFDmh3pGrt6GAHmmrW577IEiWdVkLZmqZp1fFlg==
-X-Received: by 2002:a05:6870:c6a2:b0:d1:60cf:2d66 with SMTP id
- cv34-20020a056870c6a200b000d160cf2d66mr2137886oab.54.1645819539381; 
- Fri, 25 Feb 2022 12:05:39 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net.
- [66.90.148.213]) by smtp.gmail.com with ESMTPSA id
- p16-20020a05680811d000b002d72ec3a921sm1906781oiv.21.2022.02.25.12.05.37
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 25 Feb 2022 12:05:38 -0800 (PST)
-Received: (nullmailer pid 1344550 invoked by uid 1000);
- Fri, 25 Feb 2022 20:05:36 -0000
-Date: Fri, 25 Feb 2022 14:05:36 -0600
-From: Rob Herring <robh@kernel.org>
-To: Medad CChien <medadyoung@gmail.com>
-Subject: Re: [PATCH v1 2/3] dt-bindings: edac: npcm-edac.yaml
-Message-ID: <Yhk2kF1G74ndY60b@robh.at.kernel.org>
-References: <20220224074729.5206-1-ctcchien@nuvoton.com>
- <20220224074729.5206-3-ctcchien@nuvoton.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K5SFz0mLTz30L1
+ for <openbmc@lists.ozlabs.org>; Sun, 27 Feb 2022 00:31:02 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (174-21-187-98.tukw.qwest.net
+ [174.21.187.98])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 1338A3BA;
+ Sat, 26 Feb 2022 05:30:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1645882259;
+ bh=C+88ICGJ2CM+8gAdRSkBM1aU4I+DeyuU0rJ/rCPlNqc=;
+ h=From:To:Cc:Subject:Date:From;
+ b=V6j6ZnaFOcJ1CDozfbaYJuIP3pOk3KpXKvAWZcBj16w+zNxWxR4vuRzlFWl+q1FPY
+ 3W+8pXrCWGHz2MsfEfgDKxnZ0RsKu37V9nv2ebcrOOVdHjyaP0eOeSw+63Zd7G9dVG
+ PRlvnqAslV6hMBkwfbpJGm/EwJaZtIDdfdBh0plI=
+From: Zev Weiss <zev@bewilderbeest.net>
+To: linux-hwmon@vger.kernel.org, Guenter Roeck <linux@roeck-us.net>,
+ Jean Delvare <jdelvare@suse.com>
+Subject: [PATCH 0/5] hwmon: (nct6775) Add i2c support
+Date: Sat, 26 Feb 2022 05:30:42 -0800
+Message-Id: <20220226133047.6226-1-zev@bewilderbeest.net>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220224074729.5206-3-ctcchien@nuvoton.com>
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,107 +61,88 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: KWLIU@nuvoton.com, tony.luck@intel.com, rric@kernel.org,
- benjaminfair@google.com, linux-edac@vger.kernel.org, KFTING@nuvoton.com,
- avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org,
- JJLIU0@nuvoton.com, linux-kernel@vger.kernel.org, tali.perry1@gmail.com,
- devicetree@vger.kernel.org, YSCHU@nuvoton.com, bp@alien8.de,
- Medad CChien <ctcchien@nuvoton.com>, james.morse@arm.com, mchehab@kernel.org,
- tmaimon77@gmail.com
+Cc: devicetree@vger.kernel.org, Zev Weiss <zev@bewilderbeest.net>,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ Renze Nicolai <renze@rnplus.nl>, Rob Herring <robh+dt@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Feb 24, 2022 at 03:47:28PM +0800, Medad CChien wrote:
-> Add the device tree bindings for the EDAC driver npcm-edac.
-> 
-> Signed-off-by: Medad CChien <ctcchien@nuvoton.com>
-> ---
->  .../devicetree/bindings/edac/npcm-edac.yaml   | 64 +++++++++++++++++++
->  1 file changed, 64 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/edac/npcm-edac.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/edac/npcm-edac.yaml b/Documentation/devicetree/bindings/edac/npcm-edac.yaml
-> new file mode 100644
-> index 000000000000..228ace1025dc
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/edac/npcm-edac.yaml
-> @@ -0,0 +1,64 @@
-> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/edac/npcm-edac.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Nuvoton NPCM Memory Controller EDAC
-> +
-> +maintainers:
-> +  - Medad CChien <ctcchien@nuvoton.com>
-> +
-> +description: |
-> +  EDAC node is defined to describe on-chip error detection and correction for
-> +  Nuvoton NPCM Memory Controller.
+Hello,
 
-The h/w unit is the memory controller. Describe that in your binding. 
-EDAC is a Linuxism.
+This patch series augments the existing nct6775 driver with support
+for the hardware's i2c interface.
 
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - nuvoton,npcm8xx-edac
-> +      - nuvoton,npcm7xx-edac
+Thus far the nct6775 driver has only supported the LPC interface,
+which is the main interface by which the Super-I/O chip is typically
+connected to the host (x86) processor.
 
-The h/w manual calls this block 'edac'?
+However, these chips also provide an i2c interface, which can provide
+a way for a BMC to also monitor sensor readings from them.  On some
+systems (such as the ASRock Rack ROMED8HM3 and X570-D4U) this may be
+the only way for the BMC to monitor host CPU temperatures (e.g. to
+indirectly access a TSI interface); this functionality is thus an
+important component of enabling OpenBMC to support such systems.
 
-> +
-> +  reg:
-> +    maxItems: 1
-> +
+In such an arrangement the Super-I/O chip is simultaneously controlled
+by two independent processors (the host and the BMC) which typically
+do not coordinate their accesses with each other.  In order to avoid
+conflicts between the two, the i2c driver avoids all writes to the
+device, since the BMC's needs with the hardware are merely that it be
+able to retrieve sensor readings.  This allows the host processor to
+remain ultimately in control of the chip and unaware of the BMC's use
+of it at all.
 
-> +  "#address-cells":
-> +    const: 2
-> +
-> +  "#size-cells":
-> +    const: 2
+The sole exception to the "no writes" rule for the i2c driver is for
+the bank-select register -- while I haven't been able to find any
+explicit statement in the Nuvoton datasheets guaranteeing this, all
+experiments I've done have indicated that, as one might hope, the i2c
+interface has its own bank-select register independent of the one used
+by the LPC interface.
 
-You don't need these 2. You don't have a child node with an address.
+In terms of code structure, the approach taken in this series is to
+split the LPC-specific parts of the driver out into a separate module
+(called nct6775-platform), leaving the interface-independent parts in
+a generic driver (called nct6775-core).  The nct6775-i2c driver is
+then added as an additional consumer of the nct6775-core module's
+functionality.
 
-> +
-> +  interrupts:
-> +    minItems: 1
-> +    items:
-> +      - description: uncorrectable error interrupt
-> +      - description: correctable error interrupt
-> +
-> +  interrupt-names:
-> +    minItems: 1
-> +    items:
-> +      - const: ue
-> +      - const: ce
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    ahb {
-> +        #address-cells = <2>;
-> +        #size-cells = <2>;
-> +        mc: memory-controller@f0824000 {
-> +            #address-cells = <2>;
-> +            #size-cells = <2>;
-> +            reg = <0x0 0xf0824000 0x0 0x1000>;
-> +            interrupts = <GIC_SPI 25 IRQ_TYPE_LEVEL_HIGH>;
-> +            compatible = "nuvoton,npcm7xx-edac";
-> +        };
-> +    };
-> +
-> -- 
-> 2.17.1
-> 
-> 
+The first two patches make some relatively small infrastructural
+changes to the nct6775 driver; the bulk of the core/platform driver
+split is in the third patch.  The final two patches add DT bindings
+and the i2c driver itself.
+
+I've tested the nct6775-platform and nct6775-i2c drivers with the
+NCT6779D in an ASRock ROMED8HM3 system (the latter driver on its
+AST2500 BMC); both seem to work as expected.  Broader testing would of
+course be welcome though, as is review feedback.
+
+
+Thanks,
+Zev
+
+
+Zev Weiss (5):
+  hwmon: (nct6775) Rearrange attr-group initialization
+  hwmon: (nct6775) Add read-only mode
+  hwmon: (nct6775) Split core and platform driver
+  dt-bindings: hwmon: Add nuvoton,nct6775
+  hwmon: (nct6775) Add i2c driver
+
+ .../bindings/hwmon/nuvoton,nct6775.yaml       |   48 +
+ MAINTAINERS                                   |   12 +-
+ drivers/hwmon/Kconfig                         |   32 +-
+ drivers/hwmon/Makefile                        |    4 +-
+ drivers/hwmon/{nct6775.c => nct6775-core.c}   | 1464 +----------------
+ drivers/hwmon/nct6775-i2c.c                   |  191 +++
+ drivers/hwmon/nct6775-platform.c              | 1185 +++++++++++++
+ drivers/hwmon/nct6775.h                       |  233 +++
+ 8 files changed, 1763 insertions(+), 1406 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/hwmon/nuvoton,nct6775.yaml
+ rename drivers/hwmon/{nct6775.c => nct6775-core.c} (75%)
+ create mode 100644 drivers/hwmon/nct6775-i2c.c
+ create mode 100644 drivers/hwmon/nct6775-platform.c
+ create mode 100644 drivers/hwmon/nct6775.h
+
+-- 
+2.35.1
+
