@@ -1,57 +1,101 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6471C4C7D89
-	for <lists+openbmc@lfdr.de>; Mon, 28 Feb 2022 23:39:14 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1C5B24C7DA5
+	for <lists+openbmc@lfdr.de>; Mon, 28 Feb 2022 23:43:15 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K6wKW3k4nz3bgR
-	for <lists+openbmc@lfdr.de>; Tue,  1 Mar 2022 09:39:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K6wQ81Y7Wz3bmW
+	for <lists+openbmc@lfdr.de>; Tue,  1 Mar 2022 09:43:12 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=FZ7rnZFk;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=N1tfI6Iv;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=nLqzwZ8+;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
- helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.28;
+ helo=out4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=FZ7rnZFk; 
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm2 header.b=N1tfI6Iv; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm2 header.b=nLqzwZ8+; 
  dkim-atps=neutral
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
- [71.19.156.171])
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
+ [66.111.4.28])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K6wK440FJz3bYF
- for <openbmc@lists.ozlabs.org>; Tue,  1 Mar 2022 09:38:41 +1100 (AEDT)
-Received: from hatter.bewilderbeest.net (174-21-187-98.tukw.qwest.net
- [174.21.187.98])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 5FF0B139;
- Mon, 28 Feb 2022 14:38:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
- s=thorn; t=1646087919;
- bh=2uC6078oH3Bjn5+qeOcOt6vnpU3SmGke5RIrxVw/quI=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=FZ7rnZFkjZ8C/yuOSSKaqEbPCDZXUV/GQa0MjtB27Dr1dNJRSo44erX1FbORiDDHH
- M2T5cFeytDEiGq/iGlDIz+GqRaEYEAov/DlIjaT6kSpeXExGWf/qh4q498F/dacnzM
- DjaFNUtTTolR8HupEEgwlSmelIK28uy0Es+fUGLU=
-Date: Mon, 28 Feb 2022 14:38:35 -0800
-From: Zev Weiss <zev@bewilderbeest.net>
-To: Peter Rosin <peda@axentia.se>
-Subject: Re: [PATCH v2 0/2] ic2: mux: pca9541: add delayed-release support
-Message-ID: <Yh1O6w56zsNtNRbb@hatter.bewilderbeest.net>
-References: <20220201001810.19516-1-zev@bewilderbeest.net>
- <ae14fd3c-2f50-b982-c61c-9db3bb28c809@axentia.se>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <ae14fd3c-2f50-b982-c61c-9db3bb28c809@axentia.se>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K6wPd6PYcz3bYF
+ for <openbmc@lists.ozlabs.org>; Tue,  1 Mar 2022 09:42:45 +1100 (AEDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id 7ED285C00F2;
+ Mon, 28 Feb 2022 17:42:42 -0500 (EST)
+Received: from imap49 ([10.202.2.99])
+ by compute3.internal (MEProxy); Mon, 28 Feb 2022 17:42:42 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
+ :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:sender:subject
+ :subject:to:to; s=fm2; bh=QViDf3z30mujntdg1/FwKoG/0YZmwGW/qvst0X
+ vgBoM=; b=N1tfI6IvTL/2r8JGRYHAN5W5znpAPBw1mEN3EUJ/ObmU9yAaDqGVV2
+ 66QlnfK7qYtrz0iurVXp1dPQrPNakN1D61SIeKdGdfaXtAO0p7H5GiNUMxxDlhDU
+ f6I+OXRkFta+zQgmH/i7tvu7HyUMrfETjS/aayyEQF8DoWwk5Hro/gcE4e5F04gK
+ X0P4qdyRmTxuq7B08uzuCOtE+BK5P7tzGQGtFOAeqvutrMV33Gl331ZtxZIYg7BA
+ DgJdGCycrT46pbKDrl1GptpPvGcEvXcUb2nE68bMBZgFwbncfBJdqQd8KLzN4OEb
+ hSmcbxLrYp3lTNe+QzRYNc73WTvGHYZg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=QViDf3z30mujntdg1
+ /FwKoG/0YZmwGW/qvst0XvgBoM=; b=nLqzwZ8+0nBXSaT1OdRFtHbTTDpZnw9J9
+ ZAcl+i2uCyGVjIQK12jH5kATHA/RlNp6wQmMJcB1NI8GKGqclS4yd6mY8nnayjni
+ 6kJ9dW3FmDKj8bwsT9oBQVE1lCj2nWfKC2vDtKQmXETzy7ZE2FlZBa3Z6ZKj+1h6
+ 0ckXCLBGRdXTwkvBXC4JruqiOHFx/ECC18cOQvQdyRGzSdtjgK9DpHR9DFvYu+Em
+ ADmfmx8BsOc+Oso2mMzjqJ/0LsHhY+q6X0+0BCs8jBKG639Bl6thJ822zqcpznOw
+ wIxym0WYzL2c4R7pxGOnKDD3ZMiPBAPnWBEdGhk23fzapnn5NS2dg==
+X-ME-Sender: <xms:4U8dYm6Eiu2Zs67LOv-Hukkykr0l7_IMKbHlKMgDX392EDV6GUzIDw>
+ <xme:4U8dYv5SU1iHhd64dfEE3ej686LtnAxR_6O1DodTtoiU5p7WkSixbLsoU-a2SBc70
+ Q7wvqIltwFEoLO6gg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddruddttddgudeifecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+ enucfjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehn
+ ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtf
+ frrghtthgvrhhnpeduffdtvdevkeffgfetffffueevgeejleeghfffjedthedthfelgfek
+ fefhfeekieenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuih
+ iivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgr
+ uh
+X-ME-Proxy: <xmx:4U8dYlfikjWo_IuPjMm0pBnRNM8FN2C-ymB8CVEb6Zue3Lm_kQsMiQ>
+ <xmx:4U8dYjL1-yW1vHCoKK_4wVPLjQZlSDAD8vPCrPPBRUl1kadfCuo-pg>
+ <xmx:4U8dYqIW7izmf0jDPLK3Q5HyXSOlnpmp6YGSr7K0KSz_Z2Pn7ABicQ>
+ <xmx:4k8dYsj_-Yi2uzPCYvZPdoaE6PaqEImqrZmHzL0BJ_gUYuPIKle4BQ>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id DB7E8F6007E; Mon, 28 Feb 2022 17:42:41 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-4778-g14fba9972e-fm-20220217.001-g14fba997
+Mime-Version: 1.0
+Message-Id: <f55a6b27-00a9-45eb-8162-639370fc6902@www.fastmail.com>
+In-Reply-To: <e3e8d6a8-43ee-d0f5-d5dc-babcad5147ef@gmail.com>
+References: <20220131034147.106415-1-andrew@aj.id.au>
+ <97430094-7d2a-432b-a121-96812fac87f9@gmail.com>
+ <cf36daed-852b-4c72-b2f3-febf7fd3f802@www.fastmail.com>
+ <e44df5b3-a338-3cd5-5399-6b5cbf55f5c9@linux.microsoft.com>
+ <YgriLTCF5hvtPCMm@heinlein>
+ <06616971-2f88-740d-e805-d229aa86d985@linux.microsoft.com>
+ <e4b7fc2b-511a-46f0-8a6f-001c16ebe712@www.fastmail.com>
+ <483b87d6-a9aa-4f64-9bb5-04874312a97b@www.fastmail.com>
+ <e3e8d6a8-43ee-d0f5-d5dc-babcad5147ef@gmail.com>
+Date: Tue, 01 Mar 2022 09:12:21 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Alex G." <mr.nuke.me@gmail.com>,
+ "Dhananjay Phadke" <dphadke@linux.microsoft.com>,
+ "Patrick Williams" <patrick@stwcx.xyz>
+Subject: Re: [PATCH] image: Control FIT signature verification at runtime
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,86 +107,68 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
- linux-i2c@vger.kernel.org, Guenter Roeck <linux@roeck-us.net>
+Cc: U-Boot-Denx <u-boot@lists.denx.de>, openbmc@lists.ozlabs.org, "Chia-Wei,
+ Wang" <chiawei_wang@aspeedtech.com>, Simon Glass <sjg@chromium.org>,
+ Christopher J Engel <cjengel@us.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Peter,
 
-Thanks for the reply!  (More below.)
 
-On Mon, Feb 28, 2022 at 01:54:09PM PST, Peter Rosin wrote:
->On 2022-02-01 01:18, Zev Weiss wrote:
->> Hello,
->>
->> This series adds support for a new pca9541 device-tree property
->> ("release-delay-us"), which delays releasing ownership of the bus
->> after a transaction for a configurable duration, anticipating that
->> another transaction may follow shortly.  By avoiding a
->> release/reacquisition between transactions, this can provide a
->> substantial performance improvement for back-to-back operations -- on
->> a Delta AHE-50DC (ASPEED AST1250) system running OpenBMC with dozens
->> of LM25066 PMICs on PCA9541-arbitrated busses, a setting of 10000 (10
->> ms) reduces the median latency the psusensor daemon's hwmon sysfs file
->> reads from 2.28 ms to 0.99 ms (a 57% improvement).
+On Tue, 1 Mar 2022, at 08:42, Alex G. wrote:
+> On 2/27/22 19:29, Andrew Jeffery wrote:
+>> 
+>> 
+>> On Tue, 15 Feb 2022, at 13:55, Andrew Jeffery wrote:
+>>> On Tue, 15 Feb 2022, at 13:42, Dhananjay Phadke wrote:
+>>>> On 2/14/2022 3:13 PM, Patrick Williams wrote:
+>>>>> On Mon, Feb 14, 2022 at 11:14:53AM -0800, Dhananjay Phadke wrote:
+>>>>>> There's a key-requirement policy already implemented [1].
+>>>>>>
+>>>>>> [1]
+>>>>>> https://lore.kernel.org/u-boot/cover.1597643014.git.thiruan@linux.microsoft.com/
+>>>>>>
+>>>>>> Board code can patch "required-policy" = none at runtime based
+>>>>>> appropriate logic.
+>>>>>>
+>>>>
+>>>> [...]
+>>>>
+>>>>>
+>>>>> Isn't this jumper proposal just like the TCG Physical Presence requirements?
+>>>>> This is a software implementation and requires a particular hardware design for
+>>>>> it to be done right, but it seems to be along the same lines.
+>>>>
+>>>> I'm supporting idea of having control on FIT verification, just pointed
+>>>> that it maybe done by board code by just patching U-Boot control FDT,
+>>>> either the "required-policy" property at /signature or "required"
+>>>> property in individual key nodes.
+>>>
+>>> This might separate the logic out in a way that's acceptable to Alex.
+>>>
+>>> Let me poke at it.
+>> 
+>> I've thought about this some more and adding support for
+>> `required-mode = "none";` or similar seems like a massive footgun given
+>> that (as I understand it) the FIT image as a whole isn't verified. Only
+>> supporting "all" or "any" seems okay because some verification must
+>> succeed in the context of the keys available in the current stage.
+>> 
+>> After some internal discussion this effort has been set aside so I'm not
+>> going to pursue it further for the moment. I don't think it's easy to
+>> proceed anyway without feedback from Alex.
 >
->Hi!
+> Don't let my thoughts stop you. I don't think there is a perfect way to 
+> address this situation, and we don't have to. Code can be changed later.
 >
->Sorry for the late reply. It seems I'm forever swamped...
->
->There is a risk with this scheme. If you have two (or more) of these
->chips on the same bus, and there are clients behind these two chips
->that have the same address, accesses to one of the clients might
->"leak through" the other arb to an unexpected client when its arb
->is in it's release-delay state.
->
->In other words, it is no coincidence that the segment lock is held
->over the whole acquire-access-release cycle.
+> As a general preference, I would like to see a single decision point on 
+> whether to verify/skip. It can be changing `required-mode = "none", or 
+> any other similar solution. Keep in mind that the FIT is the image 
+> you're trying to authenticate. It is completely different from 
+> "required-mode", which is part of u-boot's or SPL's embedded dtb.
 
-That's not a scenario I had considered, but I think I see what you're 
-saying.  Just to make sure I'm understanding correctly, the problematic 
-situation you're describing would involve multiple (sibling, not 
-parent/child cascaded) arbiters at distinct addresses on the same 
-(master-side) bus, in effect acting as a sort of "distributed mux" in 
-addition to arbitrating between multiple attached masters?  (So kind of 
-an M-to-N arrangement between M masters and N busses.)
+Ah yes, I wasn't thinking of it that way, so maybe it could work. I'll 
+consider it all again, but we also determined that we could get away 
+without this functionality for now anyway.
 
-In which case if more than one of the arbiters had their downstream 
-busses simultaneously connected to the same master (as could result if 
-one were still connected due to a delayed release while the master had 
-already started a subsequent transaction via another arbiter), the 
-resulting "combined" bus could end up with address collisions between 
-devices downstream of the arbiters if there are common addresses in use 
-between the downstream busses.
-
->
->Sure, you can always say "don't add a release-delay when ...", but I
->see no such documentation.
->
-
-Assuming I haven't misunderstood the above, would expanding the 
-description of the property in the DT binding like so be sufficient?
-
-  - release-delay-us: the number of microseconds to delay before
-    releasing the bus after a transaction.  If unspecified the default
-    is zero (the bus is released immediately).  Non-zero values can
-    reduce arbitration overhead for back-to-back transactions, at the
-    cost of delaying the other master's access to the bus.
-
-    If this property is employed on hardware with multiple parallel
-    (not cascaded) arbiters selecting between multiple downstream
-    busses, address conflicts can occur if a device on one of the
-    downstream busses uses the same address as a device on another
-    downstream bus.  This property should thus only be used if either
-    (a) there is only one arbiter on the bus, (b) multiple arbiters are
-    strictly cascaded to a single downstream bus, or (c) all of the
-    devices on all downstream busses use addresses that are unique
-    across all of those busses.
-
-If so I'll send a v3 with that change shortly.
-
-Thanks,
-Zev
-
+Andrew
