@@ -1,65 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11D414C7268
-	for <lists+openbmc@lfdr.de>; Mon, 28 Feb 2022 18:20:29 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0A0144C7711
+	for <lists+openbmc@lfdr.de>; Mon, 28 Feb 2022 19:10:59 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K6nFk0nGWz3bZf
-	for <lists+openbmc@lfdr.de>; Tue,  1 Mar 2022 04:20:26 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K6pN01SG5z3bZR
+	for <lists+openbmc@lfdr.de>; Tue,  1 Mar 2022 05:10:56 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=aEHA3YO7;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=hO9hm+T3;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=145.40.68.75; helo=ams.source.kernel.org;
- envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22b;
+ helo=mail-oi1-x22b.google.com; envelope-from=groeck7@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=k20201202 header.b=aEHA3YO7; 
- dkim-atps=neutral
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=hO9hm+T3; dkim-atps=neutral
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com
+ [IPv6:2607:f8b0:4864:20::22b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K6nFN39lYz30L7
- for <openbmc@lists.ozlabs.org>; Tue,  1 Mar 2022 04:20:08 +1100 (AEDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 54FF2B81370;
- Mon, 28 Feb 2022 17:20:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 426B3C340E7;
- Mon, 28 Feb 2022 17:20:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1646068803;
- bh=QeFrGCNc89SJdYUWHflD+YlxmOKGYrXkXFoTkBy4vjc=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=aEHA3YO7T7ppz8EA4Eg7vscmAqI4yRmd/InzGzmCabLUpkbUMrs9pdWaapb0rKi/F
- fSrD7fZtKSIkvlHjTSGIdcBu1MJU/TPER80troBGK/eS0GPARCA34461tSbpvPyu6r
- pvmvvqCpfiJ55nRUyJnfmqRqdb6vV8GTQ+Uhm8/NAm5cZBn+dO637KZHoo8WoVErFz
- nTChyG+BVqwJlsTSZqXn5NngNw/8N6eqhCGiUqo3smXkvZEf0kgxSI219EJWkpyGG3
- w0qKO2itn47FK3RDebOcWD73VRMjV8DHLUDRyuZGb//oCW5IetaNp0gDtTCYLF6PcH
- A3c/A+99NSsew==
-Date: Mon, 28 Feb 2022 18:19:57 +0100
-From: Wolfram Sang <wsa@kernel.org>
-To: Zev Weiss <zev@bewilderbeest.net>, Peter Rosin <peda@axentia.se>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K6pMX2Blfz30QX
+ for <openbmc@lists.ozlabs.org>; Tue,  1 Mar 2022 05:10:30 +1100 (AEDT)
+Received: by mail-oi1-x22b.google.com with SMTP id j2so13943642oie.7
+ for <openbmc@lists.ozlabs.org>; Mon, 28 Feb 2022 10:10:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=sender:message-id:date:mime-version:user-agent:subject
+ :content-language:to:cc:references:from:in-reply-to
+ :content-transfer-encoding;
+ bh=7wQWrntmzj+Iyb2AkW1h0mbOWmxT1sYGcUG1qHtruzA=;
+ b=hO9hm+T3VPBeUPH7RQD/Y0rI1IKC/jJ2dA97Y/k0Edaujb0hG+dz7Suf8AtSqBJdzN
+ N0wpwz906k2hpLIL5b5sVa2R2MhQOh0tUIgjHy0JwiLPevs2xVo4LSbHZlnxVKeEqYGe
+ DYKGhs05u+MNlJD+T9pLdl696AxwN9ArskJ/BOuw5GpObFdJaNd9ujzVRVvRu+KuOIwE
+ WMk/0F+oZeBhyvAC/cgxTum/6Nu9+SMFHLfUxW/v5j8dDrIGrZfksvHdwp73OFlW917l
+ 59wqgfvaPTX79smzDIyXotarX6JpDcXANBPNxruKstDgzV8PcNW6EgU9A+T3PEuuB6lj
+ W/Nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:sender:message-id:date:mime-version:user-agent
+ :subject:content-language:to:cc:references:from:in-reply-to
+ :content-transfer-encoding;
+ bh=7wQWrntmzj+Iyb2AkW1h0mbOWmxT1sYGcUG1qHtruzA=;
+ b=mjUl1xVRP4Zj/N+dY/wqzZvmW2fYb4+39Mpu6rhiAwccMux+5GeHp8GsR2KdnnKt+N
+ s5ctOdfCHKreAUlG0SGcSWrglysPrKpNjXx1fODADK+OeY4v0UGN/cOFI3+4CCXyA/qi
+ g8MQlv58qllqQkBDAXmHG4cDGpiSgFr89eGykpArum+WV3Z6h+Grpd3zrI7xRP15nzFG
+ 2/fUhmCs5lqxaRl8edW8M9Y/auzbrWOFHUvMRzxhvbEcfa9Da/b7e7GNeFS9HkiOdR7Z
+ TlVC84nua/lrjxWz6Hi0mnmgOCZ74Qt15Ee0pCJjcHZ3i9FHwccbHILSGGwsS5ruJglf
+ 7WAQ==
+X-Gm-Message-State: AOAM530ezJgr/HiaYlMgD4LArQtBpMeF9Fp6sHZQNI2f2110l9bO5BMA
+ +SJa8wsSR+8AjkDCqpkbWtU=
+X-Google-Smtp-Source: ABdhPJyiXkfCIS04W7ZFPsOkY+JzUPJmnYpp09LkpTS7tVVjk6qnJNOcCg/oLMt6gMfJG0uAnknBKA==
+X-Received: by 2002:a54:4f1c:0:b0:2d0:6df2:808e with SMTP id
+ e28-20020a544f1c000000b002d06df2808emr11795057oiy.67.1646071826308; 
+ Mon, 28 Feb 2022 10:10:26 -0800 (PST)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c?
+ ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ m17-20020a0568080f1100b002d71e151e51sm6553576oiw.0.2022.02.28.10.10.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 28 Feb 2022 10:10:25 -0800 (PST)
+Message-ID: <9edce888-8e7c-9c97-dc70-17df7f348832@roeck-us.net>
+Date: Mon, 28 Feb 2022 10:10:23 -0800
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
 Subject: Re: [PATCH v2 0/2] ic2: mux: pca9541: add delayed-release support
-Message-ID: <Yh0EPY/DXtBdScB+@shikoro>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
- Zev Weiss <zev@bewilderbeest.net>, Peter Rosin <peda@axentia.se>,
- Guenter Roeck <linux@roeck-us.net>, linux-i2c@vger.kernel.org,
- Rob Herring <robh+dt@kernel.org>, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Content-Language: en-US
+To: Zev Weiss <zev@bewilderbeest.net>
 References: <20220201001810.19516-1-zev@bewilderbeest.net>
  <YhyLIRFbs226KTwA@hatter.bewilderbeest.net>
  <fbb305e3-73b3-7a2d-99cf-a7205b7344ff@roeck-us.net>
  <Yh0CUzBzGJc4zyTR@hatter.bewilderbeest.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="PcOsCAVfvNqPfZDu"
-Content-Disposition: inline
+From: Guenter Roeck <linux@roeck-us.net>
 In-Reply-To: <Yh0CUzBzGJc4zyTR@hatter.bewilderbeest.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,42 +91,41 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
- linux-i2c@vger.kernel.org, Guenter Roeck <linux@roeck-us.net>
+ linux-kernel@vger.kernel.org, Wolfram Sang <wsa@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
+ Peter Rosin <peda@axentia.se>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 2/28/22 09:11, Zev Weiss wrote:
+> On Mon, Feb 28, 2022 at 05:57:27AM PST, Guenter Roeck wrote:
+>> On 2/28/22 00:43, Zev Weiss wrote:
+>>> On Mon, Jan 31, 2022 at 04:18:08PM PST, Zev Weiss wrote:
+>>>> Hello,
+>>>>
+>>>> This series adds support for a new pca9541 device-tree property
+>>>> ("release-delay-us"), which delays releasing ownership of the bus
+>>>> after a transaction for a configurable duration, anticipating that
+>>>> another transaction may follow shortly.  By avoiding a
+>>>> release/reacquisition between transactions, this can provide a
+>>>> substantial performance improvement for back-to-back operations -- on
+>>>> a Delta AHE-50DC (ASPEED AST1250) system running OpenBMC with dozens
+>>>> of LM25066 PMICs on PCA9541-arbitrated busses, a setting of 10000 (10
+>>>> ms) reduces the median latency the psusensor daemon's hwmon sysfs file
+>>>> reads from 2.28 ms to 0.99 ms (a 57% improvement).
+>>>>
+>>>
+>>> Ping...Guenter, any thoughts on this?
+>>>
+>>
+>> It sounds reasonable to me, but I don't have access to hardware anymore
+>> to test it, so I have no means to confirm that it actually works.
+>>
+> 
+> Ack, thanks.  In that case, what's the path forward on getting changes to this driver merged?  I see sign-offs from Wolfram and Peter on the last few commits that touched it -- any input from the i2c/i2c-mux maintainers?
+> 
 
---PcOsCAVfvNqPfZDu
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+The i2c/i2c-mux maintainers will need to accept it, and you'll need
+approval for the DT changes from a DT maintainer (presumably Rob).
 
-
-> Ack, thanks.  In that case, what's the path forward on getting changes to
-> this driver merged?  I see sign-offs from Wolfram and Peter on the last few
-> commits that touched it -- any input from the i2c/i2c-mux maintainers?
-
-For the i2c mux subsystem, I usually wait for Peter's review.
-
-
---PcOsCAVfvNqPfZDu
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmIdBD0ACgkQFA3kzBSg
-KbZqPBAAirMQ2+kLUEJHshiQxx+oqoXe3l4b+oevdW4j7PQZyoM71DBl0dkG9FDn
-vBYWm74HGKKbS0iB2IM8Z24YU1tO0bKphsc9rzZmsS9r49GYWeLTtoM07X0a2NsA
-hPRfxU8RJdzJL62T1NuxZcT8nrZPDXyYy7JFO9sR7O6ZE4tm3Yl4U4ywZwO0ukZ6
-lalIt7EQPSBTWR0gOOvOtikN7cZnTGAaFvKFN+UW/BgV7E00xrwddtC8rN71kPGw
-o/uljkVFZNy8DQYwSlbG6DAvk2TocSocKuWsUT8dpxsICA+9T7avF59AWf091axI
-DBtqJBwqxaLEAzTJTw9ZotuLN0GRPBIcIW5NQNa+PS1ii8PhuUY8vqQNLXBtHjsw
-KcLdCM1GrhnoUtyoshu6TiSirZ5Bdqk2tC7nXZ1XIvlzaGzml7uYg+DFExRdQ6wB
-6F2Ze1Gj35tNHxCwYnOxkkh3ZJ1vl8gsSxwVLBnCiODcR/jPFiJ44dp90VdH/Ud3
-gw1/gz0/rlsRo6n7ZIkRPtOWXtc+s8RCvpsG83qLN/LRDTLLPcDV6HiuYAik3rj+
-+Xugrks9xFw/a8RPrSZM/5kQnD9RJxYKP8V3mR98CMbhmbx3F6FI738eFZf1hKxf
-sRvnXYOOZZsgbzIPojr+OSja1/z+Xj+c2+MFZZXb+2Rx/Pliknw=
-=AoPe
------END PGP SIGNATURE-----
-
---PcOsCAVfvNqPfZDu--
+Guenter
