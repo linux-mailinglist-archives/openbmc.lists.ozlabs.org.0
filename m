@@ -2,93 +2,58 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37B7D4C71FC
-	for <lists+openbmc@lfdr.de>; Mon, 28 Feb 2022 17:53:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C39C4C723C
+	for <lists+openbmc@lfdr.de>; Mon, 28 Feb 2022 18:12:23 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K6mfg1s9Hz3bbT
-	for <lists+openbmc@lfdr.de>; Tue,  1 Mar 2022 03:53:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K6n4N0lBCz3bZR
+	for <lists+openbmc@lfdr.de>; Tue,  1 Mar 2022 04:12:20 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm1 header.b=uD+06iZA;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=VyWV7PEs;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=g36pWvHr;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=64.147.123.21;
- helo=wout5-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
- header.a=rsa-sha256 header.s=fm1 header.b=uD+06iZA; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=VyWV7PEs; 
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=g36pWvHr; 
  dkim-atps=neutral
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
- [64.147.123.21])
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [71.19.156.171])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K6mf9222Jz30QD
- for <openbmc@lists.ozlabs.org>; Tue,  1 Mar 2022 03:53:03 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.west.internal (Postfix) with ESMTP id 38DE732007F9;
- Mon, 28 Feb 2022 11:53:01 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute3.internal (MEProxy); Mon, 28 Feb 2022 11:53:01 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- fuzziesquirrel.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to; s=fm1; bh=Bj3pnXyWQLgHHTfkJJJfXTEFBerHbkcc1GqvsM
- RZby8=; b=uD+06iZAjPsifIIT96Vos7jFQxUV/mtzfq3+MQpOvm7L3mADfpKOvy
- sxj13txWlw6Z7d4SrqaagufT2TeF/bqfcvP3q/baIWhO4d1n1lGoDWKj+L51sVBr
- y6DqV1XOktLzUS04g/44Sk5WuAoFz6G6qPKmaVXL8bCt0WZNKD6dr4kD45zqCJB5
- 3OyYuE37pNTN2ICGyvyGJoUGUldpncT74z96ewBdjYapsQ6ju0+km1NVF91dpfKX
- kN7dSfpz7AXIrAXFO/C0HtTIzxTHrq+bKs1bdl+w6ylL0jIiqpVzhw41DyFgEgeq
- HexGzvY9qQ3rhU156iwVOkytClffg+5Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:date:date:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm2; bh=Bj3pnXyWQLgHHTfkJJJfXTEFBerHbkcc1GqvsMRZb
- y8=; b=VyWV7PEstGoC4MvuiajN8crKg52dY4ya3PuW2+q/mYih1QPBARTuPkPqg
- v1QMy54IVp2Rytj3EmqHE8atB/iqydva94WQm65XS/3JEZZkU5/Q/u/G3W1YLBUX
- miJNHbGbbeW6gsx4hR1i5y7k+TRFlfyIpSazjz2Vmk3pV2cx/ODzhjJMsF0HlNk+
- sZNnwSCbedTmDbGL+veWOSm9iYUMrnhddVs+Pi+jTspeEz9ZTWWwO5tqqaM3/yZa
- KWikVJ9fKaXLwUFndg2toyYvJb6LkktMqr/eYuyFRtu6nh0khV6nMoXuoz+Q0iGK
- lVA/BCZI43FvhN+Fq6jfOC58Um+QA==
-X-ME-Sender: <xms:7P0cYpMdKF4im_W0ygbitJvVNJ5V6KbZm1cDpw8yRBVTMb2IBDg7Bg>
- <xme:7P0cYr_FICeIZbEmtk70mJJ4tS14oCCNuFvBszSeEjXIdQbzOR0ULMQDWZ7jjAl1J
- uanh8ZjuDG2q1Eg_u4>
-X-ME-Received: <xmr:7P0cYoQkEgAZ5G6h1_GmkR0pXESRI2SnX3ekVZSCfryu9NevnUmJd9JBqZbfWRiKq7V-JQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddruddttddgleefucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucenucfjughrpegtggfuhfgjfffgkfhfvffosehtqh
- hmtdhhtdejnecuhfhrohhmpeeurhgrugcuuehishhhohhpuceosghrrggulhgvhigssehf
- uhiiiihivghsqhhuihhrrhgvlhdrtghomheqnecuggftrfgrthhtvghrnhepudffkeehff
- efveffvedufedtvdejveelkeehgfekfeetheektdefudelvddtffeknecuvehluhhsthgv
- rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghrrggulhgvhigssehfuh
- iiiihivghsqhhuihhrrhgvlhdrtghomh
-X-ME-Proxy: <xmx:7P0cYluQG7u9mSMtk8UA9MOg-lr-s1gVHaPox3llTZnH-IgDq-heOA>
- <xmx:7P0cYhf9lajYHLht7QGScTghA1jyQrvYEGQ0p8pyCGB0-UrwM4_5aA>
- <xmx:7P0cYh0JWk3vrTnKhZ3wssYld9LtWRTBPixwIQjIONYmdYJfI5KCUw>
- <xmx:7P0cYhnOZbIAEQyo8GsyKEtacDmT0YzlWJVPKqLxxJT06CUceiBgJQ>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Feb 2022 11:52:59 -0500 (EST)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
-Subject: Re: Bytedance's CCLA Schedule A update 2022-02
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-In-Reply-To: <CAGm54UEQEiMCre5BZSbN8-cY+BQSCnWb0XCeisVQroTWLKuJFw@mail.gmail.com>
-Date: Mon, 28 Feb 2022 11:52:59 -0500
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <7B882470-1567-49C9-8289-36AA84148102@fuzziesquirrel.com>
-References: <CAGm54UEQEiMCre5BZSbN8-cY+BQSCnWb0XCeisVQroTWLKuJFw@mail.gmail.com>
-To: Lei Yu <yulei.sh@bytedance.com>
-X-Mailer: Apple Mail (2.3654.120.0.1.13)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K6n3x63Gdz30Hp
+ for <openbmc@lists.ozlabs.org>; Tue,  1 Mar 2022 04:11:54 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (174-21-187-98.tukw.qwest.net
+ [174.21.187.98])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 0B674516;
+ Mon, 28 Feb 2022 09:11:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1646068311;
+ bh=ka9wDIve8AgVIvxtisCTwLpRAivhzRXy0fQgcqAecRY=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=g36pWvHrGTrqS2i2n5dld7CiuaGG1E3swlqbG5LA7YqJvrFR1AhzA8KOXZr8cXndQ
+ xEYXORTroqutdHZWHhTDCvAy2lbviWmdk++/UAa9MpUJgI2XZZyWQcHj6ZwQO+75Hz
+ 695lsE/Vv2AG9KsvfNpRlzqucWeawOfVf2JSZ3DI=
+Date: Mon, 28 Feb 2022 09:11:47 -0800
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Guenter Roeck <linux@roeck-us.net>
+Subject: Re: [PATCH v2 0/2] ic2: mux: pca9541: add delayed-release support
+Message-ID: <Yh0CUzBzGJc4zyTR@hatter.bewilderbeest.net>
+References: <20220201001810.19516-1-zev@bewilderbeest.net>
+ <YhyLIRFbs226KTwA@hatter.bewilderbeest.net>
+ <fbb305e3-73b3-7a2d-99cf-a7205b7344ff@roeck-us.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <fbb305e3-73b3-7a2d-99cf-a7205b7344ff@roeck-us.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,24 +65,42 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, Wolfram Sang <wsa@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
+ Peter Rosin <peda@axentia.se>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Mon, Feb 28, 2022 at 05:57:27AM PST, Guenter Roeck wrote:
+>On 2/28/22 00:43, Zev Weiss wrote:
+>>On Mon, Jan 31, 2022 at 04:18:08PM PST, Zev Weiss wrote:
+>>>Hello,
+>>>
+>>>This series adds support for a new pca9541 device-tree property
+>>>("release-delay-us"), which delays releasing ownership of the bus
+>>>after a transaction for a configurable duration, anticipating that
+>>>another transaction may follow shortly.  By avoiding a
+>>>release/reacquisition between transactions, this can provide a
+>>>substantial performance improvement for back-to-back operations -- on
+>>>a Delta AHE-50DC (ASPEED AST1250) system running OpenBMC with dozens
+>>>of LM25066 PMICs on PCA9541-arbitrated busses, a setting of 10000 (10
+>>>ms) reduces the median latency the psusensor daemon's hwmon sysfs file
+>>>reads from 2.28 ms to 0.99 ms (a 57% improvement).
+>>>
+>>
+>>Ping...Guenter, any thoughts on this?
+>>
+>
+>It sounds reasonable to me, but I don't have access to hardware anymore
+>to test it, so I have no means to confirm that it actually works.
+>
 
-> On Feb 28, 2022, at 12:51 AM, Lei Yu <yulei.sh@bytedance.com> wrote:
->=20
-> This is an update of Schedule A from Bytedance.
-> Please help to review and update it.
+Ack, thanks.  In that case, what's the path forward on getting changes 
+to this driver merged?  I see sign-offs from Wolfram and Peter on the 
+last few commits that touched it -- any input from the i2c/i2c-mux 
+maintainers?
 
-We can only take Schedule A updates from CLA managers.
 
->=20
-> @Brad Could you please also grant the permission for Bytedance CCLA
-> folder to me?
+Zev
 
-I=E2=80=99d be happy to but first can you please get Peng Liang to send =
-an updated Schedule A with =E2=80=9CCLA Manager=E2=80=9D listed next to =
-your name?
-
-thx - brad=
