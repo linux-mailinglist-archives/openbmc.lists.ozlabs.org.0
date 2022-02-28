@@ -2,64 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F36F4C6225
-	for <lists+openbmc@lfdr.de>; Mon, 28 Feb 2022 05:22:02 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E9154C624F
+	for <lists+openbmc@lfdr.de>; Mon, 28 Feb 2022 06:01:04 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K6RzW3NDRz2yKQ
-	for <lists+openbmc@lfdr.de>; Mon, 28 Feb 2022 15:21:59 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K6SrY1rpKz3bVZ
+	for <lists+openbmc@lfdr.de>; Mon, 28 Feb 2022 16:01:01 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=bV7ogvkP;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=AEGH3S6n;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::730;
- helo=mail-qk1-x730.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::733;
+ helo=mail-qk1-x733.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=bV7ogvkP; dkim-atps=neutral
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com
- [IPv6:2607:f8b0:4864:20::730])
+ header.s=google header.b=AEGH3S6n; dkim-atps=neutral
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com
+ [IPv6:2607:f8b0:4864:20::733])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K6Rz05myKz2xt0;
- Mon, 28 Feb 2022 15:21:30 +1100 (AEDT)
-Received: by mail-qk1-x730.google.com with SMTP id f21so9438308qke.13;
- Sun, 27 Feb 2022 20:21:31 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K6Sr25PvWz30C2;
+ Mon, 28 Feb 2022 16:00:32 +1100 (AEDT)
+Received: by mail-qk1-x733.google.com with SMTP id z66so9500877qke.10;
+ Sun, 27 Feb 2022 21:00:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=Xu7L991BbclWOd1sSCiHVHwv23FKEvTPahHlqfmOUAI=;
- b=bV7ogvkPtbvPpHCldXcuINpGbSUEnOvppBm9rqxRGEL0gSVsOIN7FP+EWjQxNeiEsc
- JgwZi3P4vducm62191kOMrTwIUyg04bMbbQsGZkYXbl4R47UxWcXjDyhD8IlXv1F0vVG
- hwPyiZ9kiuRnyw2IZmvef12q6Zfo6Y5tmFEAI=
+ :cc; bh=dl5bImTp8P/vXmU2+b7NmzpeCyOGUJ3zCffquEOpd18=;
+ b=AEGH3S6nmgJiVduVsFiCTpBweUwAf7F44ifshZVPRWwe4Qv6YFIYoFJbINshT644jX
+ oYCZ9rXlkl7Z+fa4VZFs1j46PDj8ZYQlGehSOH7UuIfpnHf/Mabqno5Y/s3aOw5YzvIo
+ q4X3Zd0Yl5/tylayQOeuPJDtyFSxIzToeJA3o=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=Xu7L991BbclWOd1sSCiHVHwv23FKEvTPahHlqfmOUAI=;
- b=xog5kmjEiOm7r+B3JHr9KB6qn1csc/ByC2FGvDHPmwN5ScdEysS/sDyWHO4nIryuBJ
- ecZjx0uNXaDDq98tvyZUjOMW4AW5iDKnMy1jxpLTLNkzS0z9cHiKDl9XL32WtsvYqPHo
- 3rNyiJP/fgvX4Lf0EOsdgnYBy82LukjepkiaIuwPbzq0yEvU0rBmd8APaiQuYRdyrvpt
- tFdDKY2595+JiLreJqLanJltQOBmfb5hyIAoJLnwPD108Zt+tWFiq9xR3stG36ikJDON
- OqxZyfKxjLGM9+iYS0rRm7u0M+jMYNk308oyK2euIY1GWvy5uiS6tsVEsEmuMv71FNw7
- /p9Q==
-X-Gm-Message-State: AOAM5325zPNZbBtAfimEjzONxGXynAUVQG0UztbxOxlbEYPOe3Gk2RJd
- h6UeEBDapI/tPO73JNnBMKdRSF6ZCOI1luRhAwA=
-X-Google-Smtp-Source: ABdhPJzjZJ2sb6YqyKtiQJ8UdreFdmA+9mR4ZseA6RQbUE7DGqgL+UfI5GuUZ5+PkfNbadU7W9b6EdllKdHYwz/lzsY=
+ bh=dl5bImTp8P/vXmU2+b7NmzpeCyOGUJ3zCffquEOpd18=;
+ b=QJIIapSHoQbxcY9IPmlrzzXW08v/rnuPvpdBx1Er7ENTitFeQNI5PgpqBwSlGXLfsV
+ WatQIsfphqdTMxzSqvDood1hHMl4I/sYg/CK9x3zMwCGjP8bmx9uyT8T/thiRZb+um4i
+ Hl1+5zLTIhYy0A6ZCjLct9FpPVh3zsk1S66MMc/vRCVJk4U8gjowToDCQiXewdn1xWEr
+ kc2y81jdlpmon9HwQKQ41/h5K1vkVx4/9sTqcN11JwwiFaWcj1iFxVBjCKQCI2ayujiu
+ ecE+fO6oewIz37U7GEsOQAiipyni2ptFbk6NpXMvm74X897A2+8v65/lW68HCWFiJwRV
+ hiPA==
+X-Gm-Message-State: AOAM530itnnObCVf+9hrlo9ldSqltnwmNfPCJQM7gd6Tsiqb6gNjkhFi
+ KFRbkJWKVSXzlFScdCzMsIrr3p8KSLvnhbYzYWU=
+X-Google-Smtp-Source: ABdhPJzD+ossvHaHQAKihwxTjH9fBc3NI+O+eeyw7Gb76LJbM2mhqZQ5/unoVcahDCD9C38J+XgCe0KCu1NuXULkWUg=
 X-Received: by 2002:a37:f903:0:b0:648:ca74:b7dc with SMTP id
- l3-20020a37f903000000b00648ca74b7dcmr10116556qkj.666.1646022083557; Sun, 27
- Feb 2022 20:21:23 -0800 (PST)
+ l3-20020a37f903000000b00648ca74b7dcmr10150792qkj.666.1646024429883; Sun, 27
+ Feb 2022 21:00:29 -0800 (PST)
 MIME-Version: 1.0
-References: <20220228000242.1884-1-quan@os.amperecomputing.com>
-In-Reply-To: <20220228000242.1884-1-quan@os.amperecomputing.com>
+References: <20220105101719.7093-1-zev@bewilderbeest.net>
+ <CACPK8XeHyoo0D1vQm=L8m284kC5n-O+FEMp1HN+ROWJfx7qjhQ@mail.gmail.com>
+ <Yd4rfi/iICQ5EjGh@hatter.bewilderbeest.net>
+In-Reply-To: <Yd4rfi/iICQ5EjGh@hatter.bewilderbeest.net>
 From: Joel Stanley <joel@jms.id.au>
-Date: Mon, 28 Feb 2022 04:21:11 +0000
-Message-ID: <CACPK8XfCskh7KPhXJqOR9ZLnoBdd64SL9D1z5HoDC+_VVs4LCg@mail.gmail.com>
-Subject: Re: [PATCH v1 0/5] Enable second flash, update gpios pin and merge
- adc channels
-To: Quan Nguyen <quan@os.amperecomputing.com>
+Date: Mon, 28 Feb 2022 05:00:17 +0000
+Message-ID: <CACPK8XfGdTvznj90C7XFJ04QVU96NdwfXQX_Rj+bkCnov1Urpg@mail.gmail.com>
+Subject: Re: [PATCH] ARM: dts: aspeed: Add ASRock ROMED8HM3 BMC
+To: Zev Weiss <zev@bewilderbeest.net>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -73,41 +74,60 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: devicetree <devicetree@vger.kernel.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+ linux-aspeed <linux-aspeed@lists.ozlabs.org>, Arnd Bergmann <arnd@arndb.de>,
  Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
  Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Phong Vo <phong@os.amperecomputing.com>, Rob Herring <robh+dt@kernel.org>,
- Open Source Submission <patches@amperecomputing.com>,
+ Rob Herring <robh+dt@kernel.org>, Neil Horman <neil.horman@privafy.com>,
+ Olof Johansson <olof@lixom.net>, Anthony Jenkins <anthony.jenkins@privafy.com>,
  Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 28 Feb 2022 at 00:03, Quan Nguyen <quan@os.amperecomputing.com> wrote:
+On Wed, 12 Jan 2022 at 01:14, Zev Weiss <zev@bewilderbeest.net> wrote:
 >
-> This patchset adds the second flash support, merge all ADC channels to
-> single iio-hwmon node and update various gpios pin name.
+> On Tue, Jan 11, 2022 at 02:59:28AM PST, Joel Stanley wrote:
+> >On Wed, 5 Jan 2022 at 23:10, Zev Weiss <zev@bewilderbeest.net> wrote:
+> >>
+> >> This is a half-width, single-socket Epyc server board with an AST2500
+> >> BMC.  This device tree is sufficient for basic OpenBMC functionality,
+> >> but we'll need to add a few more devices (as driver support becomes
+> >> available) before it's fully usable.
+> >>
+> >> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+> >
+> >Reviewed-by: Joel Stanley <joel@jms.id.au>
+> >
 >
-> Link:https://github.com/openbmc/docs/blob/master/designs/device-tree-gpio-naming.md
->
-> Quan Nguyen (5):
->   ARM: dts: aspeed: mtjade: Enable secondary flash
->   ARM: dts: aspeed: mtjade: Update rtc-battery-voltage-read-enable pin
->   ARM: dts: aspeed: mtjade: Update host0-ready pin
->   ARM: dts: aspeed: mtjade: Rename GPIO hog nodes to match schema.
->   ARM: dts: aspeed: mtjade: Move all adc sensors into iio-hwmon node
+> Thanks!
 
-These look good.
-
-Reviewed-by: Joel Stanley <joel@jms.id.au>
-
-I'll apply them for v5.18.
+I've merged this for v5.18.
 
 >
->  .../arm/boot/dts/aspeed-bmc-ampere-mtjade.dts | 26 +++++++++----------
->  1 file changed, 12 insertions(+), 14 deletions(-)
+> >Have you considered using the openbmc gpio naming scheme for the
+> >gpio-line-names?
+> >
 >
-> --
-> 2.28.0
+> I looked at it, but decided not to for a few reasons:
+>
+>   - For systems that are in the early stages of a porting effort (like
+>     this one currently is), I'm still referring to hardware schematics
+>     fairly often, and using the same identifiers in software that are
+>     used in the schematics simplifies things by avoiding an extra
+>     translation step between the two.
+>
+>   - Most of the GPIO-related userspace components (that I'm dealing with
+>     anyway, e.g. x86-power-control and host-error-monitor) already have
+>     their own GPIO line-name configuration/remapping mechanisms that need
+>     to be set up anyway.
+>
+>   - There's a solid mix of GPIOs that would be covered by the naming
+>     guidelines and others that aren't; having a mix of the two styles
+>     seems a bit awkward to me.
+>
+> That said, I sympathize with the motivation behind it and I'm not
+> vehemently opposed on the whole, so if there's a strong preference to
+> follow that scheme I could probably be talked into changing it.
+>
+>
+> Zev
 >
