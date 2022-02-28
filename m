@@ -1,97 +1,60 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9AEED4C60A2
-	for <lists+openbmc@lfdr.de>; Mon, 28 Feb 2022 02:29:56 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A15C54C6169
+	for <lists+openbmc@lfdr.de>; Mon, 28 Feb 2022 03:48:36 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K6N8x5skcz3bZf
-	for <lists+openbmc@lfdr.de>; Mon, 28 Feb 2022 12:29:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K6Pvj570Xz3bXg
+	for <lists+openbmc@lfdr.de>; Mon, 28 Feb 2022 13:48:33 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=lc4RuxK/;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=MgU9YW7Y;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=DJjeBa0P;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.26;
- helo=out2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm2 header.b=lc4RuxK/; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=MgU9YW7Y; 
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=DJjeBa0P; 
  dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [71.19.156.171])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K6N8R2Hddz3bT4
- for <openbmc@lists.ozlabs.org>; Mon, 28 Feb 2022 12:29:27 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 51F805C01AD;
- Sun, 27 Feb 2022 20:29:24 -0500 (EST)
-Received: from imap49 ([10.202.2.99])
- by compute3.internal (MEProxy); Sun, 27 Feb 2022 20:29:24 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
- :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to; s=fm2; bh=faGk0Okip9geS/9xPpFTifPHbVVsIJiSajVYyj
- HYX8I=; b=lc4RuxK/OwTmsdYaYhByAxpmq5d/qR2R0qZ/e/33X/Gue9etd4ad0o
- 5LiZCOMcYSeqUK67RWQoorg761DhRRN2iMR8G3/7Ji3WnoQAi/GsdBt7vF+hCa8V
- OTY6lxrDqiwIeeWrw46YLbANieVOV28TJdB4SNTzICjrr5DzQaZ2gxZM9eJgeGoV
- J6jIWRbdifH1gXG6yeZUB+r9eg8+YbqsmN5/KCc8WORZyaN2TTNZaRaI/z/F4+B9
- iEhCXMS5h6ZwFXz9QcD24vip+UaShquN2pTmIjnP1rK4c0UOgIyQs3/UzjrS04Lh
- QDAP9HdsoRUAc+YIsrU7pnhlrhaeBBww==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=faGk0Okip9geS/9xP
- pFTifPHbVVsIJiSajVYyjHYX8I=; b=MgU9YW7Y351h3r8hzaJ+wJbUrdoL3TeRB
- tZL/qYAbF+s9miMRSV06ZNh2kXRWVT+fRUEki+AZd6q/xgWgLz1zXYVobgeZbWmT
- HraPCjjnmNwf/ZgxBgbmLIZkS+HvHIl3cduWnCEbQzPHF5Rvs0ALFzTcttQEFl9m
- H2cdQpb5PcqiIbJCizghO5YYQTng5xYwjyO772vfux+EJFGHGbwmTB+VKbEF14YP
- nJw2qbpJ4+7h423FcHqYwbxUDBX49VyoydgBE8Y0TiveRGzHb3oIVZPYczi+3fkE
- 1dMb5b+XlIYPtfmDr1OJ2xFKX+cudoIKHc/EeTUUvGAVZqQnartnw==
-X-ME-Sender: <xms:cyUcYin1WFqLgOfGs2rUYQku7jcMHAHOcEqz0Z7LDCPQdSyYVrqB-g>
- <xme:cyUcYp1U5TvsgxAWkZOmbegy1Y-Pqlkg6KnaPwu0l5O9Z35He4-QzGe93UItouedN
- R-Gym5MGeAFmMryng>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrleelgdefhecutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
- vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
- htthgvrhhnpeduffdtvdevkeffgfetffffueevgeejleeghfffjedthedthfelgfekfefh
- feekieenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivg
- eptdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:cyUcYgptxqiyv8BqQ_ZpOEyh_IESif5yqsSQxPEaXXepJTvYFWFQfg>
- <xmx:cyUcYmnVjpguBnZ8AtyIoeDx0_0otgC1s2JK85dn__q3R5uG4bYBDA>
- <xmx:cyUcYg34nE_3Zq7fC359lfShyg1FqJogeVZghTuCLemxI7GwkvxHOw>
- <xmx:dCUcYk-aS-HcRzDu7nFRDAt6WHDEEXmbwgCtVDDE3kiwR5t37YcKPw>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 34C3FF6007E; Sun, 27 Feb 2022 20:29:23 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-4778-g14fba9972e-fm-20220217.001-g14fba997
-Mime-Version: 1.0
-Message-Id: <483b87d6-a9aa-4f64-9bb5-04874312a97b@www.fastmail.com>
-In-Reply-To: <e4b7fc2b-511a-46f0-8a6f-001c16ebe712@www.fastmail.com>
-References: <20220131034147.106415-1-andrew@aj.id.au>
- <97430094-7d2a-432b-a121-96812fac87f9@gmail.com>
- <cf36daed-852b-4c72-b2f3-febf7fd3f802@www.fastmail.com>
- <e44df5b3-a338-3cd5-5399-6b5cbf55f5c9@linux.microsoft.com>
- <YgriLTCF5hvtPCMm@heinlein>
- <06616971-2f88-740d-e805-d229aa86d985@linux.microsoft.com>
- <e4b7fc2b-511a-46f0-8a6f-001c16ebe712@www.fastmail.com>
-Date: Mon, 28 Feb 2022 11:59:02 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Dhananjay Phadke" <dphadke@linux.microsoft.com>,
- "Patrick Williams" <patrick@stwcx.xyz>
-Subject: Re: [PATCH] image: Control FIT signature verification at runtime
-Content-Type: text/plain
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K6PvJ1PV1z30H5
+ for <openbmc@lists.ozlabs.org>; Mon, 28 Feb 2022 13:48:11 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (174-21-187-98.tukw.qwest.net
+ [174.21.187.98])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 7B336516;
+ Sun, 27 Feb 2022 18:48:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1646016488;
+ bh=/iervmZzRL0Mt5kpC3j8ZiRbpDgGTMM0VaPpylf5tJA=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=DJjeBa0PqiIPgHj9xQr4Sl7aIEu8ufRb7o8PjRh9Zgo3XBWsk2SDHUB0UarokWdO1
+ dO0u2xCPJ76B3QJc8ropLkDBqt/9Xvkq98/Mr+tB5BgfydrmeQpumdUkI/RiTtiIxL
+ fkelbIxetoTFB86c5AF1TbWuRHDbIFJT3lHBXcRE=
+Date: Sun, 27 Feb 2022 18:48:05 -0800
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Oleksandr Natalenko <oleksandr@natalenko.name>
+Subject: Re: [PATCH 0/5] hwmon: (nct6775) Add i2c support
+Message-ID: <Yhw35Wq5r5KiNWyM@hatter.bewilderbeest.net>
+References: <20220226133047.6226-1-zev@bewilderbeest.net>
+ <2620147.mvXUDI8C0e@natalenko.name>
+ <YhrFizhgOpZbi3dE@hatter.bewilderbeest.net>
+ <4719747.31r3eYUQgx@natalenko.name>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4719747.31r3eYUQgx@natalenko.name>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,51 +66,67 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Christopher J Engel <cjengel@us.ibm.com>, openbmc@lists.ozlabs.org,
- U-Boot-Denx <u-boot@lists.denx.de>, "Alex G." <mr.nuke.me@gmail.com>,
- Simon Glass <sjg@chromium.org>, "Chia-Wei, Wang" <chiawei_wang@aspeedtech.com>
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
+ Jean Delvare <jdelvare@suse.com>, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, Renze Nicolai <renze@rnplus.nl>,
+ Rob Herring <robh+dt@kernel.org>, Guenter Roeck <linux@roeck-us.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-
-On Tue, 15 Feb 2022, at 13:55, Andrew Jeffery wrote:
-> On Tue, 15 Feb 2022, at 13:42, Dhananjay Phadke wrote:
->> On 2/14/2022 3:13 PM, Patrick Williams wrote:
->>> On Mon, Feb 14, 2022 at 11:14:53AM -0800, Dhananjay Phadke wrote:
->>>> There's a key-requirement policy already implemented [1].
->>>>
->>>> [1]
->>>> https://lore.kernel.org/u-boot/cover.1597643014.git.thiruan@linux.microsoft.com/
->>>>
->>>> Board code can patch "required-policy" = none at runtime based
->>>> appropriate logic.
->>>>
->>
->> [...]
->>
->>> 
->>> Isn't this jumper proposal just like the TCG Physical Presence requirements?
->>> This is a software implementation and requires a particular hardware design for
->>> it to be done right, but it seems to be along the same lines.
->>
->> I'm supporting idea of having control on FIT verification, just pointed
->> that it maybe done by board code by just patching U-Boot control FDT,
->> either the "required-policy" property at /signature or "required"
->> property in individual key nodes.
+On Sun, Feb 27, 2022 at 01:38:31PM PST, Oleksandr Natalenko wrote:
+>Hello.
 >
-> This might separate the logic out in a way that's acceptable to Alex.
+>On neděle 27. února 2022 1:27:55 CET Zev Weiss wrote:
+>> On Sat, Feb 26, 2022 at 04:14:12PM PST, Oleksandr Natalenko wrote:
+>> >Hello.
+>> >
+>> >On sobota 26. února 2022 14:30:42 CET Zev Weiss wrote:
+>> >> Hello,
+>> >>
+>> >> This patch series augments the existing nct6775 driver with support
+>> >> for the hardware's i2c interface.
+>> >
+>> >Is it something I can test on my ASUS Pro WS X570-ACE board as an ordinary user, and if so, how?
+>> >
+>>
+>> You could certainly test that the nct6775-platform driver still works as
+>> it did previously, which would be good to confirm -- you'll need to
+>> enable CONFIG_SENSORS_NCT6775_PLATFORM now to build it.
 >
-> Let me poke at it.
+>Ack.
+>
+>>  From what I've been able to find about that board though it looks like
+>> it doesn't have a BMC, so testing the i2c driver on it probably isn't
+>> going to be possible.  (Even if it does in fact have a BMC, it would
+>> require at least a partial port of OpenBMC or similar, and re-flashing
+>> your BMC firmware with that, and is hence a non-trivial undertaking.)
+>
+>It should have, the BMC is based on RTL8117, although I have no idea if it is something that can be called true IPMI as I've never enabled/used it.
+>
 
-I've thought about this some more and adding support for
-`required-mode = "none";` or similar seems like a massive footgun given
-that (as I understand it) the FIT image as a whole isn't verified. Only
-supporting "all" or "any" seems okay because some verification must
-succeed in the context of the keys available in the current stage.
+Ah, interesting -- I hadn't heard of that chip before, and web searches 
+mostly seem to turn up discussions of that particular board (and sibling 
+models), so I guess it's probably not very widely used elsewhere.  It 
+does appear to run an OpenWRT-based firmware with source available 
+(https://gitlab.com/gplmirror/rtl8117), though apparently with a rather 
+old (4.4) kernel (and with added fun goodies like what looks to be a 
+partial implementation of an in-kernel VNC server??).
 
-After some internal discussion this effort has been set aside so I'm not
-going to pursue it further for the moment. I don't think it's easy to
-proceed anyway without feedback from Alex.
+So I guess in theory if you were feeling adventurous and wanted to 
+backport these patches to that kernel, recompile the firmware, and flash 
+the result onto your hardware you could *maybe* test out the i2c driver, 
+though it's probably a much deeper rabbit hole than is likely to be 
+worthwhile, and with significant risk of leaving your hardware in an 
+awkward (potentially bricked) state if things go awry, so it's not 
+something I'd recommend taking on casually.  There would also still be 
+the process of figuring out at what i2c bus/address the Super-I/O chip 
+lives for the rtl8117, if its i2c interface is even attached at all, 
+which I don't think is guaranteed -- the rtl8117 might not need it if 
+it's not in charge of thermal monitoring/fan control on that board, and 
+even if it is handling that it might have a direct connection to the TSI 
+interface instead of going through the Super-I/O chip as is done on the 
+ASRock boards I'm familiar with.
 
-Andrew
+
+Zev
+
