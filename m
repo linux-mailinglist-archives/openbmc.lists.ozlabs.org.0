@@ -2,49 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C90C24C7FE1
-	for <lists+openbmc@lfdr.de>; Tue,  1 Mar 2022 01:58:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A0394C8050
+	for <lists+openbmc@lfdr.de>; Tue,  1 Mar 2022 02:24:06 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K6zQ96k85z3brl
-	for <lists+openbmc@lfdr.de>; Tue,  1 Mar 2022 11:58:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K6zzl1r8tz3bfH
+	for <lists+openbmc@lfdr.de>; Tue,  1 Mar 2022 12:24:03 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=M5DW0QmW;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
- helo=twspam01.aspeedtech.com; envelope-from=jamin_lin@aspeedtech.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1034;
+ helo=mail-pj1-x1034.google.com; envelope-from=ghung.quanta@gmail.com;
  receiver=<UNKNOWN>)
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
- [211.20.114.71])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=M5DW0QmW; dkim-atps=neutral
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com
+ [IPv6:2607:f8b0:4864:20::1034])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K6zPx3Qshz2yQG
- for <openbmc@lists.ozlabs.org>; Tue,  1 Mar 2022 11:58:11 +1100 (AEDT)
-Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 2210mVH7057262;
- Tue, 1 Mar 2022 08:48:31 +0800 (GMT-8)
- (envelope-from jamin_lin@aspeedtech.com)
-Received: from aspeedtech.com (192.168.70.87) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Tue, 1 Mar
- 2022 08:57:48 +0800
-Date: Tue, 1 Mar 2022 08:57:41 +0800
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K6zzK63HRz30F8
+ for <openbmc@lists.ozlabs.org>; Tue,  1 Mar 2022 12:23:41 +1100 (AEDT)
+Received: by mail-pj1-x1034.google.com with SMTP id bx5so12734026pjb.3
+ for <openbmc@lists.ozlabs.org>; Mon, 28 Feb 2022 17:23:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=HvXpDEbh1ugkb629xMq+QGg2TZYpGacc5U1VS2tnjak=;
+ b=M5DW0QmWiTN2GeFbwOGt4Mlx1SahxmmHAe2ZoLnoUmoMob8kEVZnYxwkcF6nhWIsDw
+ kXdBb++4UbNl9YaN0vOUL32nw18G91ympPtj8scMn/QzvtfruXtqN6vMfj3aKjde+L7O
+ MKgQ8Jeyqug6y7SQN3rzNUUZLtAfn9i4L/efOajd8Ilum3ep7l7xQendeGf0mADrGARX
+ /c/2VWyWXdeW+dwANkXMWPT0+Bad4E1LU4wGOZA71YrOP95yUmDkyLLwbnwW4/zLGwSS
+ +MGBRZr1qJAZ6d0HYXAs2gUrSDEDkDsohnZ1binkz+B9Cl+OrOJU4lxCN4ESHjNnYpJ9
+ nqhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=HvXpDEbh1ugkb629xMq+QGg2TZYpGacc5U1VS2tnjak=;
+ b=q9wEHo81ND5m/bhwl1pfTpG5gzFBL53hZq2VDSa63CqHNiQGvd5VYqZdN0Qby3Pkuf
+ YU8IVf9R+WeaBaxUfG4ban8GPsJa1/qsWFx9ZrQmiii/4yKgH24tL/GNHTyX+KFdUwri
+ 6o7LtvcHa9r3EhyXUXFkQdkEiAfKL3Ib44q45SEMaHAxS7IkH+oe8LWH8Y/qKXxC7oFH
+ ehWxB4rpTL0ql/+KWC/i1YzWe0Mb6HkUY9rUwO44EzerHr5y0HnFtqixt0wGjJgY1yeS
+ s6Z52eg2NYpXLOXtnnZlog6sRsGh5I+mMletZsIJkCbAnvyoONTDZelNVWcc5dHhMZ1c
+ 6vYQ==
+X-Gm-Message-State: AOAM53316sCwhZMaXQAUtj+XbMjwikR0bHahy13zZhJhaxgcp6uePNAm
+ uJ7nqQc/8y5Bjvf3e5fIhNY=
+X-Google-Smtp-Source: ABdhPJyqU5qdC3PluX4Biik5wBapEEVmsj2xmIh09jp5o3YAY4UqVcmZx9fKe/35/FoX/wGA1fkczg==
+X-Received: by 2002:a17:90a:8582:b0:1b9:b0da:9ca9 with SMTP id
+ m2-20020a17090a858200b001b9b0da9ca9mr19296915pjn.146.1646097817863; 
+ Mon, 28 Feb 2022 17:23:37 -0800 (PST)
+Received: from george-Quanta.com.com (125-228-123-29.hinet-ip.hinet.net.
+ [125.228.123.29]) by smtp.gmail.com with ESMTPSA id
+ k12-20020a056a00168c00b004e15818cda3sm15958534pfc.114.2022.02.28.17.23.35
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 28 Feb 2022 17:23:36 -0800 (PST)
+From: George Hung <ghung.quanta@gmail.com>
+X-Google-Original-From: George Hung <george.hung@quantatw.com>
 To: Joel Stanley <joel@jms.id.au>
-Subject: Re: [u-boot,v2019.04-aspeed-openbmc 1/1] fix compiling warnings for
- AST2600 A1 SPL
-Message-ID: <20220301005739.GA2086@aspeedtech.com>
-References: <20220224081121.10389-1-jamin_lin@aspeedtech.com>
- <20220224081121.10389-2-jamin_lin@aspeedtech.com>
- <CACPK8XeXhRwp6PrNoGnFedBwh7MqR6Qu++AOOGDbOmDF2xq-pA@mail.gmail.com>
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc 1/1] ARM: dts: aspeed: add
+ Quanta S6Q machine dts
+Date: Tue,  1 Mar 2022 09:11:35 +0800
+Message-Id: <20220301011135.14066-1-george.hung@quantatw.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Disposition: inline
-In-Reply-To: <CACPK8XeXhRwp6PrNoGnFedBwh7MqR6Qu++AOOGDbOmDF2xq-pA@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
-X-Originating-IP: [192.168.70.87]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 2210mVH7057262
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,50 +81,256 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Troy Lee <troy_lee@aspeedtech.com>, Steven Lee <steven_lee@aspeedtech.com>
+Cc: Alan_Kuo@quantatw.com, openbmc@lists.ozlabs.org, p.k.lee@quantatw.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The 02/24/2022 11:43, Joel Stanley wrote:
-> On Thu, 24 Feb 2022 at 08:11, Jamin Lin <jamin_lin@aspeedtech.com> wrote:
-> >
-> > remove duplicated define
-> >
-> > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-> > ---
-> >  include/configs/evb_ast2600a1_spl.h | 7 -------
-> >  1 file changed, 7 deletions(-)
-> >
-> > diff --git a/include/configs/evb_ast2600a1_spl.h b/include/configs/evb_ast2600a1_spl.h
-> > index 655896b237..006cc4345b 100644
-> > --- a/include/configs/evb_ast2600a1_spl.h
-> > +++ b/include/configs/evb_ast2600a1_spl.h
-> > @@ -42,13 +42,6 @@
-> >  #endif
-> >  #endif
-> >
-> > -/* SPL */
-> > -#define CONFIG_SPL_TEXT_BASE           0x00000000
-> > -#define CONFIG_SPL_MAX_SIZE            0x0000E800
-> > -#define CONFIG_SPL_STACK               0x10010000
-> > -#define CONFIG_SPL_BSS_START_ADDR      0x90000000
-> > -#define CONFIG_SPL_BSS_MAX_SIZE                0x00100000
-> 
-> A good cleanup. While we're here, can we clean up the various ast2600
-> config headers?
->
-We do not have a plan to merge them.
-> There is a large diff between the a0 and the a1 spl header. I know the
-> A0 has a smaller SRAM. Are there any other differences required?
-> 
-A0 did not support "boot from emmc", "secure boot image size",  please refer to our
-Errata for detail.
-> > -
-> >  #define CONFIG_SUPPORT_EMMC_BOOT
-> >
-> >  #endif /* __CONFIG_H */
-> > --
-> > 2.17.1
-> >
+Add build support for Quanta S6Q board equipped with
+AST2600 BMC SoC
+
+Signed-off-by: George Hung <george.hung@quantatw.com>
+---
+ arch/arm/dts/Makefile        |   1 +
+ arch/arm/dts/ast2600-s6q.dts | 218 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 219 insertions(+)
+ create mode 100644 arch/arm/dts/ast2600-s6q.dts
+
+diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+index e5a73697c5..a79f885f54 100755
+--- a/arch/arm/dts/Makefile
++++ b/arch/arm/dts/Makefile
+@@ -686,6 +686,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+ 	ast2600-ncsi.dtb \
+ 	ast2600-pfr.dtb \
+ 	ast2600-rainier.dtb \
++	ast2600-s6q.dtb \
+ 	ast2600-slt.dtb \
+ 	ast2600-tacoma.dtb
+ 
+diff --git a/arch/arm/dts/ast2600-s6q.dts b/arch/arm/dts/ast2600-s6q.dts
+new file mode 100644
+index 0000000000..52b620d3b4
+--- /dev/null
++++ b/arch/arm/dts/ast2600-s6q.dts
+@@ -0,0 +1,218 @@
++// SPDX-License-Identifier: GPL-2.0+
++// Copyright 2022 Quanta Corp.
++/dts-v1/;
++
++#include "ast2600-u-boot.dtsi"
++
++/ {
++	model = "Quanta S6Q BMC";
++	compatible = "quanta,s6q-bmc", "aspeed,ast2600";
++
++	memory {
++		device_type = "memory";
++		reg = <0x80000000 0x40000000>;
++	};
++
++	chosen {
++		stdout-path = &uart5;
++	};
++
++	aliases {
++		spi0 = &fmc;
++		spi2 = &spi2;
++		ethernet0 = &mac2;
++		ethernet1 = &mac3;
++	};
++
++	cpus {
++		cpu@0 {
++			clock-frequency = <800000000>;
++		};
++		cpu@1 {
++			clock-frequency = <800000000>;
++		};
++	};
++};
++
++&uart5 {
++	u-boot,dm-pre-reloc;
++	status = "okay";
++};
++
++&sdrammc {
++	clock-frequency = <400000000>;
++};
++
++&wdt1 {
++	u-boot,dm-pre-reloc;
++	status = "okay";
++};
++
++&wdt2 {
++	u-boot,dm-pre-reloc;
++	status = "okay";
++};
++
++&wdt3 {
++	u-boot,dm-pre-reloc;
++	status = "okay";
++};
++
++&mdio {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_mdio3_default>;
++	#address-cells = <1>;
++	#size-cells = <0>;
++
++	ethphy2: ethernet-phy@2 {
++		reg = <0>;
++	};
++};
++
++&mac2 {
++	status = "okay";
++	phy-mode = "rgmii";
++	phy-handle = <&ethphy2>;
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rgmii3_default>;
++};
++
++&mac3 {
++	status = "okay";
++	phy-mode = "rmii";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rmii4_default>;
++};
++
++&fmc {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_fmcquad_default>;
++
++	flash@0 {
++		compatible = "spi-flash", "sst,w25q256";
++		status = "okay";
++		spi-max-frequency = <50000000>;
++		spi-tx-bus-width = <4>;
++		spi-rx-bus-width = <4>;
++	};
++};
++
++&spi2 {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_spi2_default &pinctrl_spi2cs1_default
++			&pinctrl_spi2cs2_default &pinctrl_spi2quad_default>;
++
++	flash@0 {
++		compatible = "spi-flash", "sst,w25q256";
++		status = "okay";
++		spi-max-frequency = <50000000>;
++		spi-tx-bus-width = <4>;
++		spi-rx-bus-width = <4>;
++	};
++};
++
++&i2c0 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_i2c1_default>;
++};
++
++&i2c1 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_i2c2_default>;
++};
++
++&i2c2 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_i2c3_default>;
++};
++
++&i2c3 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_i2c4_default>;
++};
++
++&i2c4 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_i2c5_default>;
++};
++
++&i2c5 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_i2c6_default>;
++};
++
++&i2c6 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_i2c7_default>;
++};
++
++&i2c7 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_i2c8_default>;
++};
++
++&i2c8 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_i2c9_default>;
++};
++
++&i2c9 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_i2c10_default>;
++};
++
++&i2c11 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_i2c12_default>;
++};
++
++&i2c14 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_i2c15_default>;
++};
++
++&i2c15 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_i2c16_default>;
++};
++
++&display_port {
++	status = "okay";
++};
++
++&scu {
++	mac2-clk-delay = <0x08 0x04
++			  0x08 0x04
++			  0x08 0x04>;
++	mac3-clk-delay = <0x08 0x04
++			  0x08 0x04
++			  0x08 0x04>;
++};
++
++&hace {
++	u-boot,dm-pre-reloc;
++	status = "okay";
++};
++
++&acry {
++	u-boot,dm-pre-reloc;
++	status = "okay";
++};
+-- 
+2.32.0
+
