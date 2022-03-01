@@ -1,74 +1,50 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C54ED4C7F58
-	for <lists+openbmc@lfdr.de>; Tue,  1 Mar 2022 01:35:39 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C90C24C7FE1
+	for <lists+openbmc@lfdr.de>; Tue,  1 Mar 2022 01:58:28 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K6yvr65yyz3bcg
-	for <lists+openbmc@lfdr.de>; Tue,  1 Mar 2022 11:35:36 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kbOPECi0;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K6zQ96k85z3brl
+	for <lists+openbmc@lfdr.de>; Tue,  1 Mar 2022 11:58:25 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.88; helo=mga01.intel.com;
- envelope-from=yong.b.li@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=kbOPECi0; dkim-atps=neutral
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
+ helo=twspam01.aspeedtech.com; envelope-from=jamin_lin@aspeedtech.com;
+ receiver=<UNKNOWN>)
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
+ [211.20.114.71])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K6yvN0B6yz30RR;
- Tue,  1 Mar 2022 11:35:10 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1646094913; x=1677630913;
- h=from:to:cc:references:in-reply-to:subject:date:
- message-id:mime-version:content-transfer-encoding;
- bh=YuZO4OlaL+j1Hz0MmUZERoJwsTLfUDX//Mg77p/cZZw=;
- b=kbOPECi0fcHaC4YNsrRQEJYgW3uFaLtJSuhT4Dn0R926e0/v9IwZr+8u
- 5fDrsJiCJ3Hk9kGdnjv1B1yry4F0MPDwamHjcucz6MaMap1fZQaeNfcal
- T9O7A8GAlcFvM0ffQZnhoLLuZhb/lcFq0oIQS4/59f/ZGxMvKAX6QPPUF
- UOSUCsZshwmaAc3eQB3jM2z1XUZgR0wqhbuL/swsBqRNjGdDZazrsbJOR
- XqndBeBQMaPFydd31Nt0tJveE5S8y6Nw0Xq0hj5T4ziu6/fuYxt16LwoK
- rhSzBrMdzjaabbqGLv5KV/A7AQpUKbLKmXsNPhmtzIc74q0HZjn4SUpny Q==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10272"; a="277684310"
-X-IronPort-AV: E=Sophos;i="5.90,144,1643702400"; d="scan'208";a="277684310"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
- by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 28 Feb 2022 16:34:09 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.90,144,1643702400"; d="scan'208";a="608636851"
-Received: from linux.intel.com ([10.54.29.200])
- by fmsmga004.fm.intel.com with ESMTP; 28 Feb 2022 16:34:08 -0800
-Received: from yongli3MOBL1 (yongli3-MOBL1.ccr.corp.intel.com [10.255.30.72])
- by linux.intel.com (Postfix) with ESMTP id 58EB65807D2;
- Mon, 28 Feb 2022 16:34:05 -0800 (PST)
-From: "Yong Li" <yong.b.li@linux.intel.com>
-To: "'Chia-Wei Wang'" <chiawei_wang@aspeedtech.com>, <robh+dt@kernel.org>,
- <joel@jms.id.au>, <andrew@aj.id.au>, <cyrilbur@gmail.com>,
- <devicetree@vger.kernel.org>, <linux-arm-kernel@lists.infradead.org>,
- <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
- <openbmc@lists.ozlabs.org>
-References: <20210817025848.19914-1-chiawei_wang@aspeedtech.com>
-In-Reply-To: <20210817025848.19914-1-chiawei_wang@aspeedtech.com>
-Subject: RE: [PATCH v2 0/2] aspeed: Add LPC mailbox support
-Date: Tue, 1 Mar 2022 08:34:04 +0800
-Message-ID: <000501d82d04$0ffa9870$2fefc950$@linux.intel.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K6zPx3Qshz2yQG
+ for <openbmc@lists.ozlabs.org>; Tue,  1 Mar 2022 11:58:11 +1100 (AEDT)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+ by twspam01.aspeedtech.com with ESMTP id 2210mVH7057262;
+ Tue, 1 Mar 2022 08:48:31 +0800 (GMT-8)
+ (envelope-from jamin_lin@aspeedtech.com)
+Received: from aspeedtech.com (192.168.70.87) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Tue, 1 Mar
+ 2022 08:57:48 +0800
+Date: Tue, 1 Mar 2022 08:57:41 +0800
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: Joel Stanley <joel@jms.id.au>
+Subject: Re: [u-boot,v2019.04-aspeed-openbmc 1/1] fix compiling warnings for
+ AST2600 A1 SPL
+Message-ID: <20220301005739.GA2086@aspeedtech.com>
+References: <20220224081121.10389-1-jamin_lin@aspeedtech.com>
+ <20220224081121.10389-2-jamin_lin@aspeedtech.com>
+ <CACPK8XeXhRwp6PrNoGnFedBwh7MqR6Qu++AOOGDbOmDF2xq-pA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQFpITV8ohJziVpZHKVTEr+hR1WqCK2HxEiw
-Content-Language: en-us
-dlp-product: dlpe-windows
-dlp-version: 11.6.401.20
-dlp-reaction: request-justification,no-action
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+In-Reply-To: <CACPK8XeXhRwp6PrNoGnFedBwh7MqR6Qu++AOOGDbOmDF2xq-pA@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-Originating-IP: [192.168.70.87]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 2210mVH7057262
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,47 +56,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Li, Yong B" <yong.b.li@intel.com>
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Troy Lee <troy_lee@aspeedtech.com>, Steven Lee <steven_lee@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-@andrew@aj.id.au @Chia-Wei Wang @joel@jms.id.au
-
-Just want to check the latest status about this mailbox driver. I would like
-to get this driver upstreamed too. 
-
-Thanks,
-Yong
-
------Original Message-----
-From: openbmc <openbmc-bounces+yong.b.li=linux.intel.com@lists.ozlabs.org>
-On Behalf Of Chia-Wei Wang
-Sent: Tuesday, August 17, 2021 10:59 AM
-To: robh+dt@kernel.org; joel@jms.id.au; andrew@aj.id.au; cyrilbur@gmail.com;
-devicetree@vger.kernel.org; linux-arm-kernel@lists.infradead.org;
-linux-aspeed@lists.ozlabs.org; linux-kernel@vger.kernel.org;
-openbmc@lists.ozlabs.org
-Subject: [PATCH v2 0/2] aspeed: Add LPC mailbox support
-
-Add driver support for the LPC mailbox controller of ASPEED SoCs.
-
-v2:
- - Fix error handling for copy_to_user
- - Fix incorrect type in the .poll initializer
-
-Chia-Wei Wang (2):
-  soc: aspeed: Add LPC mailbox support
-  ARM: dts: aspeed: Add mailbox to device tree
-
- arch/arm/boot/dts/aspeed-g4.dtsi     |   7 +
- arch/arm/boot/dts/aspeed-g5.dtsi     |   8 +-
- arch/arm/boot/dts/aspeed-g6.dtsi     |   7 +
- drivers/soc/aspeed/Kconfig           |  10 +
- drivers/soc/aspeed/Makefile          |   9 +-
- drivers/soc/aspeed/aspeed-lpc-mbox.c | 418 +++++++++++++++++++++++++++
- 6 files changed, 454 insertions(+), 5 deletions(-)  create mode 100644
-drivers/soc/aspeed/aspeed-lpc-mbox.c
-
---
-2.17.1
-
+The 02/24/2022 11:43, Joel Stanley wrote:
+> On Thu, 24 Feb 2022 at 08:11, Jamin Lin <jamin_lin@aspeedtech.com> wrote:
+> >
+> > remove duplicated define
+> >
+> > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> > ---
+> >  include/configs/evb_ast2600a1_spl.h | 7 -------
+> >  1 file changed, 7 deletions(-)
+> >
+> > diff --git a/include/configs/evb_ast2600a1_spl.h b/include/configs/evb_ast2600a1_spl.h
+> > index 655896b237..006cc4345b 100644
+> > --- a/include/configs/evb_ast2600a1_spl.h
+> > +++ b/include/configs/evb_ast2600a1_spl.h
+> > @@ -42,13 +42,6 @@
+> >  #endif
+> >  #endif
+> >
+> > -/* SPL */
+> > -#define CONFIG_SPL_TEXT_BASE           0x00000000
+> > -#define CONFIG_SPL_MAX_SIZE            0x0000E800
+> > -#define CONFIG_SPL_STACK               0x10010000
+> > -#define CONFIG_SPL_BSS_START_ADDR      0x90000000
+> > -#define CONFIG_SPL_BSS_MAX_SIZE                0x00100000
+> 
+> A good cleanup. While we're here, can we clean up the various ast2600
+> config headers?
+>
+We do not have a plan to merge them.
+> There is a large diff between the a0 and the a1 spl header. I know the
+> A0 has a smaller SRAM. Are there any other differences required?
+> 
+A0 did not support "boot from emmc", "secure boot image size",  please refer to our
+Errata for detail.
+> > -
+> >  #define CONFIG_SUPPORT_EMMC_BOOT
+> >
+> >  #endif /* __CONFIG_H */
+> > --
+> > 2.17.1
+> >
