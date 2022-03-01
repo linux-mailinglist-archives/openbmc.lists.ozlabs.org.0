@@ -1,69 +1,108 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A4FA34C8B6E
-	for <lists+openbmc@lfdr.de>; Tue,  1 Mar 2022 13:21:29 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13DD94C9549
+	for <lists+openbmc@lfdr.de>; Tue,  1 Mar 2022 20:58:27 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K7GZG5nxvz3bfH
-	for <lists+openbmc@lfdr.de>; Tue,  1 Mar 2022 23:21:26 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K7SjX0QNNz3bvX
+	for <lists+openbmc@lfdr.de>; Wed,  2 Mar 2022 06:58:24 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=MkjvDPPI;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=DW0QKe7/;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::730;
- helo=mail-qk1-x730.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=us.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=miltonm@us.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=MkjvDPPI; dkim-atps=neutral
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com
- [IPv6:2607:f8b0:4864:20::730])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=DW0QKe7/; dkim-atps=neutral
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K7GYq0Xlpz30Dt
- for <openbmc@lists.ozlabs.org>; Tue,  1 Mar 2022 23:21:02 +1100 (AEDT)
-Received: by mail-qk1-x730.google.com with SMTP id z66so12731013qke.10
- for <openbmc@lists.ozlabs.org>; Tue, 01 Mar 2022 04:21:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=NTUly6sO/kMVdryNkvIr4dc9C/wUsVCfF8el98e9UaA=;
- b=MkjvDPPI8Xp47nkq9MA4Cne+8Wrg9GKCQXAp2GYWKHejT/wAWrvqVs3asUoun6B6MM
- S/zXY4IuWrzXH/BPMcUnnWgzsEYSknKUmOSNJYCNif2+UKvybUM0Sdd/jo+bkTSj/CIl
- KggDVQfu/6DTFXdhP5/551OaQxw7+DhhcbwOU=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=NTUly6sO/kMVdryNkvIr4dc9C/wUsVCfF8el98e9UaA=;
- b=PseUgOA3znNUviVvVvEgLH1h6ss8w1cO2Tcx0rxZToVeprQUlGdYZwQZiQ3wGRJf5U
- eeMTsRtnszwfkS6S9IvHvwkXkiY0FofZqKM4sjO+DewoKfL2O7mlW5Z4hTSqZwT2xzjF
- MtxtoaUdiG+AU/D6TW5iu4UTPGv+Xt0Mbuv9LzE0bgeyD7SpmEuMRTRO7uPQjA3jl193
- Jn0e8PRdoQiLQVRL4Llom+eQYIcvH8qqSGnOLjiMB30JTzT2IkUzzJoy3xq2suPg2qws
- QH8g253392uXWscHulEpqIlenjqhc016O8VWq36rhnWEhgEMWR1zOFrELFDfRGdfG2lz
- uKsQ==
-X-Gm-Message-State: AOAM530jSF75pqGHHW5lUujn8+bXF1S8ZyaVnCSbN0UKbOnvEV2vo1Jk
- 3diFyIO9QO4BcYWMutbDbLXLb5xlfdxtRb81hfM=
-X-Google-Smtp-Source: ABdhPJzTlGQ7JZVuTCZLQ2S+gssMrXRWgiquud6s6YrB8sxQ+awAHuMkFNfMxN9wMjOJ18Tj5eNJlR0w5t6145MfHhk=
-X-Received: by 2002:a05:620a:2fc:b0:649:a4e:c430 with SMTP id
- a28-20020a05620a02fc00b006490a4ec430mr13735179qko.347.1646137259343; Tue, 01
- Mar 2022 04:20:59 -0800 (PST)
-MIME-Version: 1.0
-References: <20220214094231.3753686-1-clg@kaod.org>
- <CACPK8XdG=ok4P7Rd-SZ3htPsaXdy76rtMdqgcM6_QM2+fgoeJg@mail.gmail.com>
- <CAHwNHZUMhPeYmev=6Zn+Ay_Le7UBmPurBMokLOB623i0eu2ZOw@mail.gmail.com>
-In-Reply-To: <CAHwNHZUMhPeYmev=6Zn+Ay_Le7UBmPurBMokLOB623i0eu2ZOw@mail.gmail.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 1 Mar 2022 12:20:46 +0000
-Message-ID: <CACPK8Xf6Zp7Zeu3wrRFHsctEKXfoYkJhbV+PSby0CmP72LC7aQ@mail.gmail.com>
-Subject: Re: Call for testing: spi-mem driver for Aspeed SMC controllers
-To: John Wang <wangzq.jn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K7SgT1WJBz30KP
+ for <openbmc@lists.ozlabs.org>; Wed,  2 Mar 2022 06:56:36 +1100 (AEDT)
+Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 221IBxFI031843; 
+ Tue, 1 Mar 2022 19:56:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=in-reply-to : from : to
+ : cc : date : message-id : content-type : references :
+ content-transfer-encoding : mime-version : subject; s=pp1;
+ bh=djUSDiVtUlVaZ4QRckXjZ04HwW8QPaOaAooS2LqjKDA=;
+ b=DW0QKe7/hQai/SpgA8/AnOGT45guPmwP9Y/2lJyYx42iPCdrWN/GGzG2IXol+7COwaxk
+ RElETS/XLUbgceYbdcv92k4o8d+VOAEi6BLWZ5sZ0WMjlEmpXBQrMgeRFaHrwHHwimKL
+ OD6yzvKBT/wNasEvwaYmP9gAsrbZCKtM9yvgGflhw0uIOyo5tDvXWFQEFXw8ojSgvm2U
+ T9FhGQ4CJp6Kwld3ZTTFZo2MehJ68/B4C2rhezlArJylpd5IH+1zmoGoh7pgbPLnyVwo
+ knGZrien9jlWVGboTqC7qXLpdZn3Ig3wMpVDUah5tbiQQWzsTUYJHoc5OLBWkG0eAqqJ 0A== 
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3ehrj2t7vc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 01 Mar 2022 19:56:27 +0000
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 221JlRqi025588;
+ Tue, 1 Mar 2022 19:56:26 GMT
+Received: from b03cxnp08026.gho.boulder.ibm.com
+ (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
+ by ppma01dal.us.ibm.com with ESMTP id 3efbuaes8d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 01 Mar 2022 19:56:26 +0000
+Received: from b03ledav005.gho.boulder.ibm.com
+ (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
+ by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 221JuPwF32047456
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 1 Mar 2022 19:56:25 GMT
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5196BBE054;
+ Tue,  1 Mar 2022 19:56:25 +0000 (GMT)
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 37CCABE053;
+ Tue,  1 Mar 2022 19:56:25 +0000 (GMT)
+Received: from mww0332.dal12m.mail.ibm.com (unknown [9.208.69.80])
+ by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTPS;
+ Tue,  1 Mar 2022 19:56:25 +0000 (GMT)
+In-Reply-To: <3f4f0cc0-7967-66f9-a085-a6b2ae978a01@intel.com>
+From: "Milton Miller II" <miltonm@us.ibm.com>
+To: "Johnathan Mantey" <johnathanx.mantey@intel.com>
+Date: Tue, 1 Mar 2022 19:56:23 +0000
+Message-ID: <OF3DD93C9E.F4964E74-ON002587F8.006D8847-002587F8.006D8849@ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Sensitivity: 
+Importance: Normal
+X-Priority: 3 (Normal)
+References: <3f4f0cc0-7967-66f9-a085-a6b2ae978a01@intel.com>,
+ <af9a0274-2fb3-8195-a02b-c1d5ecf4848e@intel.com>
+ <bb39999e8f9638da3d29b865d85fb54d51da9797.camel@codeconstruct.com.au>
+ <CAGm54UE1bFeLF9PHUuj__E0m_+CxLRtA4Htrjm4y5M3SnbOhLA@mail.gmail.com>
+ <37a29642-788c-b966-3b58-214c3d44c8f4@intel.com>
+ <64727f8e-cca3-b04d-e4cf-709ceb60f37f@linux.intel.com>
+ <YhY7Kxgg6ew0HdUR@heinlein>
+ <112c8819-24bc-2a24-45a3-9c919088f43a@linux.intel.com>
+X-Mailer: Lotus Domino Web Server Release 11.0.1FP2HF127   December 20, 2021
+X-MIMETrack: Serialize by http on MWW0332/03/M/IBM at 03/01/2022 19:56:23,
+ Serialize complete at 03/01/2022 19:56:23
+X-Disclaimed: 55899
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 1-1q3blGmO7KfLT3USopcRojq2UR_t2Q
+X-Proofpoint-ORIG-GUID: 1-1q3blGmO7KfLT3USopcRojq2UR_t2Q
 Content-Transfer-Encoding: quoted-printable
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+Subject: RE: Checking for network online
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.816,Hydra:6.0.425,FMLib:17.11.64.514
+ definitions=2022-03-01_07,2022-02-26_01,2022-02-23_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 spamscore=0
+ clxscore=1011 adultscore=0 suspectscore=0 impostorscore=0 malwarescore=0
+ bulkscore=0 mlxlogscore=999 lowpriorityscore=0 priorityscore=1501
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2201110000 definitions=main-2203010097
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,284 +114,162 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Lei Yu <yulei.sh@bytedance.com>, Ryan Chen <ryan_chen@aspeedtech.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Cc: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>, OpenBMC
+ Maillist <openbmc@lists.ozlabs.org>, Lei Yu <yulei.sh@bytedance.com>,
+ Jeremy Kerr <jk@codeconstruct.com.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 1 Mar 2022 at 09:57, John Wang <wangzq.jn@gmail.com> wrote:
+On Feb 23, 2022,  Johnathan Mantey wrote:
+>On 2/23/22 09:44, Jiaqing Zhao wrote:
+>> On 2022-02-23 21:48, Patrick Williams wrote:
+>>> On Wed, Feb 23, 2022 at 10:09:19AM +0800, Jiaqing Zhao wrote:
+>>>> I think a solution is to set RequiredForOnline=3Dno
+>>>> (https://www.freedesktop.org/software/systemd/man/systemd.network.htm
+>>>> l#RequiredForOnline=3D) in all network interface config. This option
+>>>> skips the interface when running
+>>>> systemd-networkd-wait-online.service. Canonical netplan (used in
+>>>> ubuntu server) also uses this option to skip the online check for
+>>>> given interface
+>>>> (https://github.com/canonical/netplan/blob/main/src/networkd.c#L636-L
+>>>> 639).
+>>>>
+>>>> I'll submit a patch to phosphor-networkd later.
+>>>
+>>> I really don't think this is appropriate for all systems.
+>>> Services have
+>>> dependencies on network-online.target for a reason. If the
+>>> side-effect of
+>>> having the BMC network cable unplugged is that the host doesn't
+>>> boot, that might
+>>> be entirely reasonable behavior in some environments.
+>>>
+>>> We use rsyslog as the mechanism to offload our BMC logging data to
+>>> an
+>>> aggregation point. When you have a very large scale deployment,
+>>> it is actually
+>>> better for the system to not come online than for us to lose out
+>>> on that data,
+>>> since we have spare capacity to take its place.
+>>
+>> My understanding is that in OpenBMC, the propose to use rsyslog is
+>> to format the Redfish and IPMI SEL logs from system journal. The "r"
+>> of rsyslogd is not used in most cases. I think the "network not
+>> available" can be handled same as "server misconfigured" in rsyslogd,
+>> as in both cases it fails to connect to the server, and may exit or
+>> print some error messages? (not tried yet)
+>>
+>> Jonathan mentions that the 120s wait blocks multi-user.target in
+>> his initial email. Considering that there is no BMC serial port in
+>> most production hardware, when BMC has no network connection, the
+>> only way to interact with BMC is to use IPMI in host. However, IPMI
+>> services are started in multi-user.target, if BMC infinitely waits
+>> network online, there would be no way to debug the issue.
+>>
+>>> Note that the Canonical netplan only applies this option if the
+>>> configuration
+>>> indicates that the interface is optional, which is entirely
+>>> appropriate. The
+>>> way you wrote it could have been interpreted that they set this on
+>>> *every*
+>>> interface, which is what it seems like you're proposing to do to
+>>> phosphor-networkd
+>>>
+>>> If this is desired behavior for someone, can't you supply a
+>>> wildcard .network
+>>> file that adds this option, rather than modifying
+>>> phosphor-networkd to manually
+>>> add it to each network interface that it is managing?
+>>
+>> Maybe we can add a similar DBus property like how netplan does?
+>> Reading/writing systemd-networkd config files is feasible in
+>> phosphor-networkd. Default value can be assigned via build option.
+>>
+>>> I believe some designs use a USB network device to connect two
+>>> internal pieces
+>>> of the system and those interfaces are not necessarily managed by
+>>> phosphor-networkd (interfaces that, for example connect BMC-to-BMC
+>>> or
+>>> BMC-to-Host). While it is obviously up to the system designer to
+>>> work through
+>>> this bug, by applying this configuration as you proposed you are
+>>> causing
+>>> unusual default behavior in that networkd is going to start
+>>> waiting for these
+>>> internal connections to come online instead of the external
+>>> interface.
+>>
+>> I think this is a extremely rare case, internal interfaces should
+>> be configurable. For example, host OS can change the IP of its
+>> BMC-Host virtual interface, BMC should also be able to change its,
+>> and for BMC-to-BMC interfaces, it is impossible to assign a fixed LAN
+>> IP without conflicts in manufacturing. The easiest way to configure
+>> it is to utilize the phosphor-networkd.
+>>
+>> Even it is not managed by phosphor-networkd, keeping default
+>> RequiredForOnline=3Dyes will cause the 120s wait on BMC boot.
+>> Developers can simply search it and find out the solution. I remember
+>> it will show a timer with message on BMC serial console, that's how I
+>>found I should set the "optional" on my ubuntu server.
 >
-> Joel Stanley <joel@jms.id.au> =E4=BA=8E2022=E5=B9=B42=E6=9C=8825=E6=97=A5=
-=E5=91=A8=E4=BA=94 13:30=E5=86=99=E9=81=93=EF=BC=9A
-> >
-> > Cedric has authored a new drive for the SPI NOR devices on the ASPEED
-> > SoCs. It supports 2400, 2500 and 2600. It is written using the spi-mem
-> > subsystem, which should mean it can go upstream.
-> >
-> > This is great news, as our current driver is half upstream, half in
-> > the openbmc tree, due to some issues getting it merged as part of the
-> > spi-nor subsystem.
-> >
-> > It would be great to have testing. I've created a commit that patches
-> > in support to whatever kernel tree you're using. Hopefully this makes
-> > it easier to test atop your internal branches:
-> >
-> > https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/51551
+>FWIW, my experimentation with systemd-networkd-wait-online was not
+>successful in doing much to change the 120 second timeout.
 >
-> tested on a fp5280g2 (ast2500), it looks okay.
+>Setting the RequiredForOnline entry to false in systemd.network did
+>not
+>prevent the 120 second timeout from elapsing.
 >
-> root@fp5280g2:~# dmesg |grep spi
-> [    1.594677] spi-nor spi0.0: mx66l51235f (65536 Kbytes)
-> [    1.728194] spi-aspeed-smc 1e620000.spi: CE0 read buswidth:2 [0x203c06=
-41]
-> [    1.992733] spi-nor spi1.0: mx66l51235f (65536 Kbytes)
-> [    2.211741] spi-aspeed-smc 1e630000.spi: CE0 read buswidth:2 [0x203c07=
-41]
-> [    3.175017] SPI driver bmp280 has no spi_device_id for bosch,bmp085
-
-
-I've also done some testing, this time on an AST2600A3 EVB.
-
-I tried to enable quad spi by adjust the device tree:
-
---- a/arch/arm/boot/dts/aspeed-ast2600-evb.dts
-+++ b/arch/arm/boot/dts/aspeed-ast2600-evb.dts
-@@ -157,10 +157,13 @@ &rtc {
- };
-
- &fmc {
-+     pinctrl-names =3D "default";
-+     pinctrl-0 =3D <&pinctrl_fwqspid_default>;
-        status =3D "okay";
-        flash@0 {
-                status =3D "okay";
-                m25p,fast-read;
-+               spi-rx-bus-width =3D <4>;
-                label =3D "bmc";
-                spi-max-frequency =3D <50000000>;
-
-
-But the pinctrl setting failed with this error:
-
-[    0.742963] aspeed-g6-pinctrl 1e6e2000.syscon:pinctrl: invalid
-function FWQSPID in map table
-
-So I removed the quad spi settings and re-tested:
-
-[    0.746796] spi-nor spi0.0: w25q512jv (65536 Kbytes)
-[    0.808104] spi-aspeed-smc 1e620000.spi: CE0 read buswidth:2 [0x203c0641=
-]
-[    0.862687] spi-nor spi0.1: w25q512jv (65536 Kbytes)
-[    0.923991] spi-aspeed-smc 1e620000.spi: CE1 read buswidth:2 [0x203c0641=
-]
-[    0.937639] spi-nor spi1.0: w25q256 (32768 Kbytes)
-[    1.062246] spi-aspeed-smc 1e630000.spi: CE0 read buswidth:2 [0x203c0741=
-]
-[    1.076507] spi-nor spi2.0: gd25q256 (32768 Kbytes)
-[    1.173951] spi-aspeed-smc 1e631000.spi: CE0 read buswidth:2 [0x203c0741=
-]
-
-./mtd-stress.sh mtd5 mtd6 mtd7 mtd8
-
-
-22+0 records in
-22+0 records out
-23068672 bytes (23 MB, 22 MiB) copied, 2.40148 s, 9.6 MB/s
-14d980eb27e1b5d6554f22a71fc93de6  /tmp/tmp.CWpblJtRYl
-Erasing blocks: 352/352 (100%)
-Writing data: 22528k/22528k (100%)
-Verifying data: 22528k/22528k (100%)
-
-real    2m47.896s
-user    0m0.080s
-sys    2m46.984s
-14d980eb27e1b5d6554f22a71fc93de6  /dev/mtd5
-
-real    0m3.344s
-user    0m0.166s
-sys    0m3.101s
-
-
-64+0 records in
-64+0 records out
-67108864 bytes (67 MB, 64 MiB) copied, 5.38035 s, 12.5 MB/s
-5b2a21e51a39f6c4e01c92b3c1b8825c  /tmp/tmp.BnJmqVrHHa
-Erasing blocks: 1024/1024 (100%)
-Writing data: 65536k/65536k (100%)
-Verifying data: 65536k/65536k (100%)
-
-real    7m40.625s
-user    0m0.230s
-sys    7m39.931s
-5b2a21e51a39f6c4e01c92b3c1b8825c  /dev/mtd6
-
-real    0m9.723s
-user    0m0.484s
-sys    0m9.110s
-
-
-32+0 records in
-32+0 records out
-33554432 bytes (34 MB, 32 MiB) copied, 2.4457 s, 13.7 MB/s
-a3a343b1d4233e364d332a9b466a0a40  /tmp/tmp.4NsXyq09Km
-Erasing blocks: 512/512 (100%)
-Writing data: 32768k/32768k (100%)
-Verifying data: 32768k/32768k (100%)
-
-real    2m17.560s
-user    0m0.100s
-sys    2m17.346s
-a3a343b1d4233e364d332a9b466a0a40  /dev/mtd7
-
-real    0m3.598s
-user    0m0.247s
-sys    0m3.313s
-
-
-32+0 records in
-32+0 records out
-33554432 bytes (34 MB, 32 MiB) copied, 3.49483 s, 9.6 MB/s
-fc65634b925e4655dd9db70972c1ed46  /tmp/tmp.MaXhJaz10l
-Erasing blocks: 512/512 (100%)
-Writing data: 32768k/32768k (100%)
-Verifying data: 32768k/32768k (100%)
-
-real    1m46.311s
-user    0m0.130s
-sys    1m46.064s
-fc65634b925e4655dd9db70972c1ed46  /dev/mtd8
-
-real    0m3.513s
-user    0m0.246s
-sys    0m3.219s
-
-
-
+>Setting any of the following switches in the service file failed to
+>eliminate the timeout:
+>--ignore=3Deth0
+>--interface=3Deth0:no-carrier # overrides RequiredForOnline
+>--interface=3Deth0:no-carrier:no-carrier # <- probably a bad setting in
+> # hindsight
 >
+>It appears systemd-networkd-wait-online expects some state greater
+>than
+>no-carrier to consider the link online, thus allowing it to exit with
+>a
+>SUCCESS error code. This even when explicitly instructed no-carrier
+>is
+>defined as "online".
 >
+>The only switch that seemed to perform as expected in this instance
+>was
+>--timeout. Assigning a value less than 120 to the --timeout control
+>did
+>reduce the wait period. It does assign a SUCCESS error code upon
+>timing
+>out, which is expected behavior.
 >
-> >
-> > Cherry pick this commit into your tree, and see how it goes, and report=
- back.
-> >
-> > I plan to switch the openbmc tree to this driver when we next rebase
-> > the kernel. We could also backport it to dev-5.15 as an option.
-> >
-> > You can direct testing results to this thread, or reply directly to
-> > the upstream thread:
-> >
-> > https://lore.kernel.org/all/20220214094231.3753686-1-clg@kaod.org/
-> >
-> > Cheers,
-> >
-> > Joel
-> >
-> > ---------- Forwarded message ---------
-> > From: C=C3=A9dric Le Goater <clg@kaod.org>
-> > Date: Mon, 14 Feb 2022 at 09:42
-> > Subject: [PATCH 00/10] spi: spi-mem: Add driver for Aspeed SMC controll=
-ers
-> > To: <linux-spi@vger.kernel.org>, <linux-mtd@lists.infradead.org>
-> > Cc: Mark Brown <broonie@kernel.org>, Tudor Ambarus
-> > <tudor.ambarus@microchip.com>, Pratyush Yadav <p.yadav@ti.com>, Miquel
-> > Raynal <miquel.raynal@bootlin.com>, Richard Weinberger
-> > <richard@nod.at>, Vignesh Raghavendra <vigneshr@ti.com>,
-> > <linux-aspeed@lists.ozlabs.org>, Joel Stanley <joel@jms.id.au>, Andrew
-> > Jeffery <andrew@aj.id.au>, Chin-Ting Kuo
-> > <chin-ting_kuo@aspeedtech.com>, <devicetree@vger.kernel.org>, Rob
-> > Herring <robh+dt@kernel.org>, <linux-arm-kernel@lists.infradead.org>,
-> > <linux-kernel@vger.kernel.org>, C=C3=A9dric Le Goater <clg@kaod.org>
-> >
-> >
-> > Hi,
-> >
-> > This series adds a new SPI driver using the spi-mem interface for the
-> > Aspeed static memory controllers of the AST2600, AST2500 and AST2400
-> > SoCs.
-> >
-> >  * AST2600 Firmware SPI Memory Controller (FMC)
-> >  * AST2600 SPI Flash Controller (SPI1 and SPI2)
-> >  * AST2500 Firmware SPI Memory Controller (FMC)
-> >  * AST2500 SPI Flash Controller (SPI1 and SPI2)
-> >  * AST2400 New Static Memory Controller (also referred as FMC)
-> >  * AST2400 SPI Flash Controller (SPI)
-> >
-> > It is based on the current OpenBMC kernel driver [1], using directly
-> > the MTD SPI-NOR interface and on a patchset [2] previously proposed
-> > adding support for the AST2600 only. This driver takes a slightly
-> > different approach to cover all 6 controllers.
-> >
-> > It does not make use of the controller register disabling Address and
-> > Data byte lanes because is not available on the AST2400 SoC. We could
-> > introduce a specific handler for new features available on recent SoCs
-> > if needed. As there is not much difference on performance, the driver
-> > chooses the common denominator: "User mode" which has been heavily
-> > tested in [1]. "User mode" is also used as a fall back method when
-> > flash device mapping window is too small.
-> >
-> > Problems to address with spi-mem were the configuration of the mapping
-> > windows and the calibration of the read timings. The driver handles
-> > them in the direct mapping handler when some knowledge on the size of
-> > the flash device is know. It is not perfect but not incorrect either.
-> > The algorithm is one from [1] because it doesn't require the DMA
-> > registers which are not available on all controllers.
-> >
-> > Direct mapping for writes is not supported (yet). I have seen some
-> > corruption with writes and I preferred to use the safer and proven
-> > method of the initial driver [1]. We can improve that later.
-> >
-> > The driver supports Quad SPI RX transfers on the AST2600 SoC but it
-> > didn't have the expected results. Therefore it is not activated yet.
-> > This needs more tests.
-> >
-> > The series does not remove the current Aspeed SMC driver but prepares
-> > ground for its removal by changing its CONFIG option. This last step
-> > can be addressed as a followup when the new driver using the spi-mem
-> > interface has been sufficiently exposed.
-> >
-> > Tested on:
-> >
-> >  * OpenPOWER Palmetto (AST2400)
-> >  * Evaluation board (AST2500)
-> >  * OpenPOWER Witherspoon (AST2500)
-> >  * Evaluation board (AST2600 A0)
-> >  * Rainier board (AST2600)
-> >
-> > [1] https://github.com/openbmc/linux/blob/dev-5.15/drivers/mtd/spi-nor/=
-controllers/aspeed-smc.c
-> > [2] https://patchwork.ozlabs.org/project/linux-aspeed/list/?series=3D21=
-2394
-> >
-> > Thanks,
-> >
-> > C.
-> >
-> > C=C3=A9dric Le Goater (10):
-> >   mtd: spi-nor: aspeed: Rename Kconfig option
-> >   dt-bindings: spi: Add Aspeed SMC controllers device tree binding
-> >   spi: spi-mem: Add driver for Aspeed SMC controllers
-> >   spi: aspeed: Add support for direct mapping
-> >   spi: aspeed: Adjust direct mapping to device size
-> >   spi: aspeed: Workaround AST2500 limitations
-> >   spi: aspeed: Add support for the AST2400 SPI controller
-> >   spi: aspeed: Calibrate read timings
-> >   ARM: dts: aspeed: Enable Dual SPI RX transfers
-> >   spi: aspeed: Activate new spi-mem driver
-> >
-> >  drivers/spi/spi-aspeed-smc.c                  | 1241 +++++++++++++++++
-> >  .../bindings/spi/aspeed,ast2600-fmc.yaml      |   92 ++
-> >  arch/arm/boot/dts/aspeed-g4.dtsi              |    6 +
-> >  arch/arm/boot/dts/aspeed-g5.dtsi              |    7 +
-> >  arch/arm/boot/dts/aspeed-g6.dtsi              |    8 +
-> >  drivers/mtd/spi-nor/controllers/Kconfig       |    4 +-
-> >  drivers/mtd/spi-nor/controllers/Makefile      |    2 +-
-> >  drivers/spi/Kconfig                           |   11 +
-> >  drivers/spi/Makefile                          |    1 +
-> >  9 files changed, 1369 insertions(+), 3 deletions(-)
-> >  create mode 100644 drivers/spi/spi-aspeed-smc.c
-> >  create mode 100644
-> > Documentation/devicetree/bindings/spi/aspeed,ast2600-fmc.yaml
-> >
-> > --
-> > 2.34.1
+>systemd-networkd-wait-online appears to have logic preventing
+>no-carrier
+>state from being assigned as the "network online" value.
+>
+>rsyslogd has both a network and network-online target. If the
+>network-online target is removed then systemd-networkd-wait-online
+>doesn't run, and any configuation of that service appears to be
+>pointless. The conclusion I have from that is that
+>network-online.target
+>is a valid configuration option for a service to assign.
+>
+>There may be openbmc powered servers that do use the distributed
+>logging
+>provided by rsyslogd. If there are then globally removing
+>network-online
+>from the rsyslog service file is undesirable. I consider the same to
+>be
+>true of assigning a default RequiredForOnline=3Dfalse.
+>
+>Based on the above, it's my opinion this is a vendor based decision
+>for
+>how to configure rsyslog/systemd-networkd-wait-online.
+>
+
+
+I just wanted to point out that for those using the kernel NCSI stack,=20
+the networks are always showing on line and link up because of how=20
+the stack was created.  My reading is it would take a new slave=20
+interface to overcome this limitation.
+
+Milton
