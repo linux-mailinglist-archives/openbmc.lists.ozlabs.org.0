@@ -2,73 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E0624C9B36
-	for <lists+openbmc@lfdr.de>; Wed,  2 Mar 2022 03:29:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EDC494C9B5F
+	for <lists+openbmc@lfdr.de>; Wed,  2 Mar 2022 03:47:56 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K7dNW3T64z3bd9
-	for <lists+openbmc@lfdr.de>; Wed,  2 Mar 2022 13:29:15 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K7dp16qYJz3bdY
+	for <lists+openbmc@lfdr.de>; Wed,  2 Mar 2022 13:47:53 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=Twci9X1s;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=VPBU/mmZ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::230;
- helo=mail-oi1-x230.google.com; envelope-from=yulei.sh@bytedance.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::a43;
+ helo=mail-vk1-xa43.google.com; envelope-from=wangzq.jn@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20210112.gappssmtp.com
- header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256
- header.s=20210112 header.b=Twci9X1s; dkim-atps=neutral
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com
- [IPv6:2607:f8b0:4864:20::230])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=VPBU/mmZ; dkim-atps=neutral
+Received: from mail-vk1-xa43.google.com (mail-vk1-xa43.google.com
+ [IPv6:2607:f8b0:4864:20::a43])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K7dN25LPHz30L1
- for <openbmc@lists.ozlabs.org>; Wed,  2 Mar 2022 13:28:46 +1100 (AEDT)
-Received: by mail-oi1-x230.google.com with SMTP id s5so519344oic.10
- for <openbmc@lists.ozlabs.org>; Tue, 01 Mar 2022 18:28:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20210112.gappssmtp.com; s=20210112;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K7dnc225Kz3bY4
+ for <openbmc@lists.ozlabs.org>; Wed,  2 Mar 2022 13:47:30 +1100 (AEDT)
+Received: by mail-vk1-xa43.google.com with SMTP id k9so200215vki.4
+ for <openbmc@lists.ozlabs.org>; Tue, 01 Mar 2022 18:47:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=1TPsb1Z6EjjOdmQqJxeYbGliQj5C8yQIP9zwfos0lVI=;
- b=Twci9X1sOca5bmoSUmGbGl0su7Ca6RB4al1dbsOdQcNsSvxjUx/hkXkuPurSa06DOL
- +J20kPQyOGjFXKuimn/E3tIYZ6WKPNVGNCikVFSSIepOFv+ZFA7eLiWuqBL6Sj+USKd1
- uWwtKYSMRv2hsnxCc+vjCKq/c6hTLH8Qa+dcXmFj2kuphjeUF23raRnXHQxuOtcVlkof
- XMv19sECqiIymV15yvJ+x9TtPZLNQ4sGdUUxEoqy1Efsg6qFjh0W+v1EZdiQ3YfS4eYS
- njrfw3jlpGZ18wKtI0ME7hCitLURXmu5/zfKpwuqi43PTv+MRnyO9Iq8FEv5rgIeQsC0
- swCw==
+ :cc:content-transfer-encoding;
+ bh=TRHFTk1EfN4gb8ce2TXomKcYOknFn5p1wjhdSmcMQpA=;
+ b=VPBU/mmZGjES2P+dww+qkfb5vMXqqXdokGvU8xmGAkefVaKX0RmFk35u8IpJtAvxwR
+ FeAF0VUOdKmWRX6ESENFHE7v+91pynxp4RPf3fj3kP/idWkO/yXAqDiJE03zDYAXbigY
+ qtXgnHQTTOROfl9agJWcROusv39L9TRmLJrfim988QWMGtZWYFTp6zdc1u0trtabzNwt
+ cmv/pme5a2Y3qxyQXoGx05L4n5mBzYYgd255AG175EGZCPbjZkAGk1v0RRRPYSrS6fN7
+ LuVaS3cnu4nSJWaWNg8FeA2JIAZFwyp5l4mdm3fzEr6ukZ7gccPhLt4ULvZyBH60CRRD
+ 4fPw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=1TPsb1Z6EjjOdmQqJxeYbGliQj5C8yQIP9zwfos0lVI=;
- b=DSr6ySWrj4HqT9Z6rdx3eZoEOD71HjNN8yRsEVdIT6tjT5dGe9QA1GxqFfJGUfYIb9
- cTHIJR/SHxtNZIISqcp3nYs2NTxo8H2GHJJHR+i0ct9QTy0EztqJspTlNA+L35IX8rqf
- zKHbQs6tfoPDBLhdv67Om68X1WNJ+KHhRXV2hnBdZDGD+3quc4VQDGYpgcPCh/Vbc1U0
- v///PinQwfNKNzTE7dTB80cH4iibsHN3Ae2pME8XMepyfL9D/3uaGjBjGFCyO0wcPYjZ
- sZZcEZ8mIlOsgBPQBulWNxsewE0ChNQGjN+6en8NLCtkgUVS8MI43U0eMMSjLmNKcRwb
- 1ycg==
-X-Gm-Message-State: AOAM530b/MwvQGfvro3wc3L3UsIR0MrDWQeT2EnltG3EvypWxrYaNfDB
- AOsMRogYYcWmPAtBnjPeXUw4yLvZgXrdubC+PAmfok5vjJwMmW1f
-X-Google-Smtp-Source: ABdhPJy9SMKAIDbTw7QRV9of2nDr5fcfKWYegTb5bEn8OmOp1BXEfJKuZRenor14H1cfzpdt3AggLE79COM2ZBPx1xg=
-X-Received: by 2002:a05:6808:211a:b0:2d7:940f:3ee1 with SMTP id
- r26-20020a056808211a00b002d7940f3ee1mr10148072oiw.57.1646188123460; Tue, 01
- Mar 2022 18:28:43 -0800 (PST)
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=TRHFTk1EfN4gb8ce2TXomKcYOknFn5p1wjhdSmcMQpA=;
+ b=Ch5FzYVuoDHcpYOih74eCjGW6FrgN3HfTt+k8zcWK6qODx+d4cPBI68Gs+1LcdnEW4
+ 9akXQKt8kDtKDXZu5pYtzjn2qbX40VUpRv5Wdq69uctmbfvVpn/opcAeUX3b6h9jxTTn
+ ZtEDfgDZL017tkhvSPW+F40JcjkbohTnJ+bpQTjqohhE3RRyVZg3ka/1mtxR1VJjawLR
+ VheLB/f0j9u73sZUs1p2i+Jv90snzwffJMll+oFxl1i+0WmOSwa7oUToCEJkEsCWywoq
+ wSU2I0iccYgDbZVPCrrwBWkFiS66nC/inMfNuEXnARwLxmc+tnhbOZcTw2lUfEiPOn5r
+ OFXQ==
+X-Gm-Message-State: AOAM532uKtD0sx1QQaIcPzcXE6rm5W7zm8GgFwvdsLh0zZ07n382ep8+
+ XxGK2LyL5el5kMgc+hXVCW3oOLdd9DZEslx5cOc=
+X-Google-Smtp-Source: ABdhPJzuLzZ0MS6sJz09wdZu/qm8AJicw5+NCB27lxvuey2/JGgnYU5jU0bQTKzVBL7opCcdelpNBCyQ0hGTAl0zDrg=
+X-Received: by 2002:a1f:430d:0:b0:332:5cc4:af75 with SMTP id
+ q13-20020a1f430d000000b003325cc4af75mr11522766vka.17.1646189247637; Tue, 01
+ Mar 2022 18:47:27 -0800 (PST)
 MIME-Version: 1.0
 References: <20220214094231.3753686-1-clg@kaod.org>
  <CACPK8XdG=ok4P7Rd-SZ3htPsaXdy76rtMdqgcM6_QM2+fgoeJg@mail.gmail.com>
  <CAHwNHZUMhPeYmev=6Zn+Ay_Le7UBmPurBMokLOB623i0eu2ZOw@mail.gmail.com>
- <CACPK8Xf6Zp7Zeu3wrRFHsctEKXfoYkJhbV+PSby0CmP72LC7aQ@mail.gmail.com>
-In-Reply-To: <CACPK8Xf6Zp7Zeu3wrRFHsctEKXfoYkJhbV+PSby0CmP72LC7aQ@mail.gmail.com>
-From: Lei Yu <yulei.sh@bytedance.com>
-Date: Wed, 2 Mar 2022 10:28:32 +0800
-Message-ID: <CAGm54UGabB9Ji9HBm_d=FnLB5DxMKgvtdnP=2Mc-TJdPo5Ld8Q@mail.gmail.com>
-Subject: Re: [External] Re: Call for testing: spi-mem driver for Aspeed SMC
- controllers
-To: Joel Stanley <joel@jms.id.au>
+ <b99ecbd2-caa4-c7b3-518c-45477e062d53@kaod.org>
+In-Reply-To: <b99ecbd2-caa4-c7b3-518c-45477e062d53@kaod.org>
+From: John Wang <wangzq.jn@gmail.com>
+Date: Wed, 2 Mar 2022 10:47:16 +0800
+Message-ID: <CAHwNHZWFZj+Bg6VLKpdp0PuwO2-gR46vzs28dm0HZmCEyTNuyA@mail.gmail.com>
+Subject: Re: Call for testing: spi-mem driver for Aspeed SMC controllers
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,29 +79,86 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ryan Chen <ryan_chen@aspeedtech.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, John Wang <wangzq.jn@gmail.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Lei Yu <yulei.sh@bytedance.com>, Ryan Chen <ryan_chen@aspeedtech.com>,
+ Joel Stanley <joel@jms.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-> I tried to enable quad spi by adjust the device tree:
+C=C3=A9dric Le Goater <clg@kaod.org> =E4=BA=8E2022=E5=B9=B43=E6=9C=881=E6=
+=97=A5=E5=91=A8=E4=BA=8C 18:25=E5=86=99=E9=81=93=EF=BC=9A
 >
-> --- a/arch/arm/boot/dts/aspeed-ast2600-evb.dts
-> +++ b/arch/arm/boot/dts/aspeed-ast2600-evb.dts
-> @@ -157,10 +157,13 @@ &rtc {
->  };
+> On 3/1/22 10:57, John Wang wrote:
+> > Joel Stanley <joel@jms.id.au> =E4=BA=8E2022=E5=B9=B42=E6=9C=8825=E6=97=
+=A5=E5=91=A8=E4=BA=94 13:30=E5=86=99=E9=81=93=EF=BC=9A
+> >>
+> >> Cedric has authored a new drive for the SPI NOR devices on the ASPEED
+> >> SoCs. It supports 2400, 2500 and 2600. It is written using the spi-mem
+> >> subsystem, which should mean it can go upstream.
+> >>
+> >> This is great news, as our current driver is half upstream, half in
+> >> the openbmc tree, due to some issues getting it merged as part of the
+> >> spi-nor subsystem.
+> >>
+> >> It would be great to have testing. I've created a commit that patches
+> >> in support to whatever kernel tree you're using. Hopefully this makes
+> >> it easier to test atop your internal branches:
+> >>
+> >> https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/51551
+> >
+> > tested on a fp5280g2 (ast2500), it looks okay.
 >
->  &fmc {
-> +     pinctrl-names = "default";
-> +     pinctrl-0 = <&pinctrl_fwqspid_default>;
+> Thanks !
+>
+> > root@fp5280g2:~# dmesg |grep spi
+> > [    1.594677] spi-nor spi0.0: mx66l51235f (65536 Kbytes)
+> > [    1.728194] spi-aspeed-smc 1e620000.spi: CE0 read buswidth:2 [0x203c=
+0641]
+> > [    1.992733] spi-nor spi1.0: mx66l51235f (65536 Kbytes)
+> > [    2.211741] spi-aspeed-smc 1e630000.spi: CE0 read buswidth:2 [0x203c=
+0741]
+>
+> Training was done on both controllers. It's a little faster on SPI1 becau=
+se
+> the clock is set at KCLK/2 whereas FMC uses HCLK/4. Dual IO 4B read comma=
+nd
+> is the default setting for both.
+>
+> I test writing with :
+>
+>      dd if=3D/dev/random of=3D$tmp bs=3D1M count=3D$count
+>      md5sum $tmp
+>
+>      time flashcp -v $tmp $mtd  # ~3min for 32MB
+>      time md5sum $mtd # ~3s for 32MB
+>
+> but not on /dev/mtd0 !
+>
 
-We had similar issue, for QSPI it needs to pick FWQSPI related changes
-from aspeed-sdk's tree:
-https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v5.15/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c#L1322
+test writing on a 2500 :)
 
-And with the updated dtsi:
-https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v5.15/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi#L120
+root@fp5280g2:/tmp# time dd if=3D/dev/random of=3D/tmp/test bs=3D1M count=
+=3D32
+32+0 records in
+32+0 records out
 
-And with the machine dts:
-    pinctrl-0 = <&pinctrl_fwqspi_default>;
+real 0m3.144s
+user 0m0.002s
+sys 0m2.278s
+root@fp5280g2:/tmp# md5sum /tmp/test
+bed6912a0b257cb7acb79f1c7f99cf6e  /tmp/test
+
+root@fp5280g2:/tmp# time flashcp -v /tmp/test /dev/mtd4  # 32M
+Erasing block: 512/512 (100%)
+Writing kb: 32768/32768 (100%)
+Verifying kb: 32768/32768 (100%)
+
+real 4m12.713s
+user 0m1.878s
+sys 2m42.690s
+root@fp5280g2:/tmp# time md5sum /dev/mtd4
+bed6912a0b257cb7acb79f1c7f99cf6e  /dev/mtd4
+
+real 0m7.668s
+user 0m0.832s
+sys 0m3.524s
