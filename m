@@ -2,76 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 94A064C99AA
-	for <lists+openbmc@lfdr.de>; Wed,  2 Mar 2022 01:04:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E0624C9B36
+	for <lists+openbmc@lfdr.de>; Wed,  2 Mar 2022 03:29:18 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K7Z9R4HCcz3btl
-	for <lists+openbmc@lfdr.de>; Wed,  2 Mar 2022 11:04:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K7dNW3T64z3bd9
+	for <lists+openbmc@lfdr.de>; Wed,  2 Mar 2022 13:29:15 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=FNr+IE5S;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=Twci9X1s;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org;
- envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
+ smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::230;
+ helo=mail-oi1-x230.google.com; envelope-from=yulei.sh@bytedance.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=k20201202 header.b=FNr+IE5S; 
- dkim-atps=neutral
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
- bits)) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K7SR427CYz30Mj
- for <openbmc@lists.ozlabs.org>; Wed,  2 Mar 2022 06:45:52 +1100 (AEDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=bytedance-com.20210112.gappssmtp.com
+ header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256
+ header.s=20210112 header.b=Twci9X1s; dkim-atps=neutral
+Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com
+ [IPv6:2607:f8b0:4864:20::230])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 466AD6164F;
- Tue,  1 Mar 2022 19:45:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0303C340EE;
- Tue,  1 Mar 2022 19:45:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1646163949;
- bh=TFMpz0Cc6VsyzxJzd5ZFpb3OuNzOkVyn05Sx0dNcIGw=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=FNr+IE5SdDf1bVYHRNpW2iGCJwTS6U3t1T/Cv+jDQdJzR+IPaauMFsRRf3dhMADh9
- DC/Uj5WTJsPUMXmTvZC3EDLttaXsfz3ScmITAV068+6AC2DmnKaVPzg/TquS4u0m9R
- nzK6CpUe/uPUPsiwytzl1Da+4vEmDtxJFRh/e5LiBHASSxfOd4lmFlL/CKcMQWs6sf
- sarU/6MgR5i62e63aj38JxPVdwhVGCWDs1P5zDvLaz1IBUPBSD5i1V9jXJoANV0Syx
- XifgWSYRrEsN058FteO2k7Oz8V6hhbuhFXbPjgXNFLe5BjJCabxIBOWVoJVh/as34b
- 1DZZyF/cXEdQg==
-Date: Tue, 1 Mar 2022 20:45:46 +0100
-From: Wolfram Sang <wsa@kernel.org>
-To: Tyrone Ting <warp5tw@gmail.com>
-Subject: Re: [PATCH v2 00/11] i2c: npcm: Bug fixes timeout, spurious interrupts
-Message-ID: <Yh536s/7bm6Xt6o3@ninjato>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
- Tyrone Ting <warp5tw@gmail.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
- avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
- venture@google.com, yuenn@google.com, benjaminfair@google.com,
- robh+dt@kernel.org, semen.protsenko@linaro.org,
- yangyicong@hisilicon.com, jie.deng@intel.com, sven@svenpeter.dev,
- bence98@sch.bme.hu, christophe.leroy@csgroup.eu,
- lukas.bulwahn@gmail.com, olof@lixom.net, arnd@arndb.de,
- digetx@gmail.com, andriy.shevchenko@linux.intel.com,
- tali.perry@nuvoton.com, Avi.Fishman@nuvoton.com,
- tomer.maimon@nuvoton.com, KWLIU@nuvoton.com, JJLIU0@nuvoton.com,
- kfting@nuvoton.com, openbmc@lists.ozlabs.org,
- linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org
-References: <20220220035321.3870-1-warp5tw@gmail.com>
- <5d507fda-525e-4064-3add-0bb0cc23d016@canonical.com>
- <CACD3sJaXeWLu6=oLgxJcU9R+A1J+jB7xKaGcDFwYxof33yj17Q@mail.gmail.com>
- <5ce0f6a6-4a5f-4f25-3cc6-ab0f24bf15cf@canonical.com>
- <CACD3sJaWJMFgwzQgrHFV0KkkbJXzhgFx=umywxSrLszwP+hO2w@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K7dN25LPHz30L1
+ for <openbmc@lists.ozlabs.org>; Wed,  2 Mar 2022 13:28:46 +1100 (AEDT)
+Received: by mail-oi1-x230.google.com with SMTP id s5so519344oic.10
+ for <openbmc@lists.ozlabs.org>; Tue, 01 Mar 2022 18:28:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance-com.20210112.gappssmtp.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=1TPsb1Z6EjjOdmQqJxeYbGliQj5C8yQIP9zwfos0lVI=;
+ b=Twci9X1sOca5bmoSUmGbGl0su7Ca6RB4al1dbsOdQcNsSvxjUx/hkXkuPurSa06DOL
+ +J20kPQyOGjFXKuimn/E3tIYZ6WKPNVGNCikVFSSIepOFv+ZFA7eLiWuqBL6Sj+USKd1
+ uWwtKYSMRv2hsnxCc+vjCKq/c6hTLH8Qa+dcXmFj2kuphjeUF23raRnXHQxuOtcVlkof
+ XMv19sECqiIymV15yvJ+x9TtPZLNQ4sGdUUxEoqy1Efsg6qFjh0W+v1EZdiQ3YfS4eYS
+ njrfw3jlpGZ18wKtI0ME7hCitLURXmu5/zfKpwuqi43PTv+MRnyO9Iq8FEv5rgIeQsC0
+ swCw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=1TPsb1Z6EjjOdmQqJxeYbGliQj5C8yQIP9zwfos0lVI=;
+ b=DSr6ySWrj4HqT9Z6rdx3eZoEOD71HjNN8yRsEVdIT6tjT5dGe9QA1GxqFfJGUfYIb9
+ cTHIJR/SHxtNZIISqcp3nYs2NTxo8H2GHJJHR+i0ct9QTy0EztqJspTlNA+L35IX8rqf
+ zKHbQs6tfoPDBLhdv67Om68X1WNJ+KHhRXV2hnBdZDGD+3quc4VQDGYpgcPCh/Vbc1U0
+ v///PinQwfNKNzTE7dTB80cH4iibsHN3Ae2pME8XMepyfL9D/3uaGjBjGFCyO0wcPYjZ
+ sZZcEZ8mIlOsgBPQBulWNxsewE0ChNQGjN+6en8NLCtkgUVS8MI43U0eMMSjLmNKcRwb
+ 1ycg==
+X-Gm-Message-State: AOAM530b/MwvQGfvro3wc3L3UsIR0MrDWQeT2EnltG3EvypWxrYaNfDB
+ AOsMRogYYcWmPAtBnjPeXUw4yLvZgXrdubC+PAmfok5vjJwMmW1f
+X-Google-Smtp-Source: ABdhPJy9SMKAIDbTw7QRV9of2nDr5fcfKWYegTb5bEn8OmOp1BXEfJKuZRenor14H1cfzpdt3AggLE79COM2ZBPx1xg=
+X-Received: by 2002:a05:6808:211a:b0:2d7:940f:3ee1 with SMTP id
+ r26-20020a056808211a00b002d7940f3ee1mr10148072oiw.57.1646188123460; Tue, 01
+ Mar 2022 18:28:43 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="ZzqmmcLTueXK0WfW"
-Content-Disposition: inline
-In-Reply-To: <CACD3sJaWJMFgwzQgrHFV0KkkbJXzhgFx=umywxSrLszwP+hO2w@mail.gmail.com>
-X-Mailman-Approved-At: Wed, 02 Mar 2022 11:03:24 +1100
+References: <20220214094231.3753686-1-clg@kaod.org>
+ <CACPK8XdG=ok4P7Rd-SZ3htPsaXdy76rtMdqgcM6_QM2+fgoeJg@mail.gmail.com>
+ <CAHwNHZUMhPeYmev=6Zn+Ay_Le7UBmPurBMokLOB623i0eu2ZOw@mail.gmail.com>
+ <CACPK8Xf6Zp7Zeu3wrRFHsctEKXfoYkJhbV+PSby0CmP72LC7aQ@mail.gmail.com>
+In-Reply-To: <CACPK8Xf6Zp7Zeu3wrRFHsctEKXfoYkJhbV+PSby0CmP72LC7aQ@mail.gmail.com>
+From: Lei Yu <yulei.sh@bytedance.com>
+Date: Wed, 2 Mar 2022 10:28:32 +0800
+Message-ID: <CAGm54UGabB9Ji9HBm_d=FnLB5DxMKgvtdnP=2Mc-TJdPo5Ld8Q@mail.gmail.com>
+Subject: Re: [External] Re: Call for testing: spi-mem driver for Aspeed SMC
+ controllers
+To: Joel Stanley <joel@jms.id.au>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,51 +80,29 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: tmaimon77@gmail.com, devicetree@vger.kernel.org, tali.perry1@gmail.com,
- linux-i2c@vger.kernel.org, digetx@gmail.com, benjaminfair@google.com,
- Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
- openbmc@lists.ozlabs.org, JJLIU0@nuvoton.com, christophe.leroy@csgroup.eu,
- lukas.bulwahn@gmail.com, tomer.maimon@nuvoton.com, KWLIU@nuvoton.com,
- bence98@sch.bme.hu, arnd@arndb.de, sven@svenpeter.dev, robh+dt@kernel.org,
- Avi.Fishman@nuvoton.com, andriy.shevchenko@linux.intel.com,
- semen.protsenko@linaro.org, jie.deng@intel.com, avifishman70@gmail.com,
- venture@google.com, yangyicong@hisilicon.com, linux-kernel@vger.kernel.org,
- kfting@nuvoton.com, tali.perry@nuvoton.com, olof@lixom.net
+Cc: Ryan Chen <ryan_chen@aspeedtech.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, John Wang <wangzq.jn@gmail.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+> I tried to enable quad spi by adjust the device tree:
+>
+> --- a/arch/arm/boot/dts/aspeed-ast2600-evb.dts
+> +++ b/arch/arm/boot/dts/aspeed-ast2600-evb.dts
+> @@ -157,10 +157,13 @@ &rtc {
+>  };
+>
+>  &fmc {
+> +     pinctrl-names = "default";
+> +     pinctrl-0 = <&pinctrl_fwqspid_default>;
 
---ZzqmmcLTueXK0WfW
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+We had similar issue, for QSPI it needs to pick FWQSPI related changes
+from aspeed-sdk's tree:
+https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v5.15/drivers/pinctrl/aspeed/pinctrl-aspeed-g6.c#L1322
 
+And with the updated dtsi:
+https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v5.15/arch/arm/boot/dts/aspeed-g6-pinctrl.dtsi#L120
 
-> I'll keep old code as fallback, if getting nuvoton,sys-mgr fails as
-> you point out.
-
-Yeah, fallback is much needed. And if you implement it, then you can
-also split the series into two. One for the DTS changes and one for the
-I2C changes. That would make upstreaming a lot easier.
-
-
---ZzqmmcLTueXK0WfW
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmIed+oACgkQFA3kzBSg
-KbYcjRAAstcatZMriO8WYTkR7iql0Ykgsnc04dKlPRr6iwYtoyRTgOApX1Jp31Jr
-CbI0tKJgBjEwGrrXzkkVP02QIM9ojCZPXIrdV/ZmQ9dgAB3c0xfZ2uEeHAC+iv2p
-bx63ccy6tbX6UfFu2FeuS5qmYctOTNu4G0OghUErbqA3JlqSQHXaNIQEkFoL1iiw
-anPSYCvvBFJk0DELigsYqEMMuXVtfA+RrmfkMwmTjM1FDh9Q4EsiwEJTdu9Dajjt
-EYsNX0CTIZt/54jiBsgw1Y+9YYPOzk8vCsEn4dWYLYkb5aivX/jiuUupVwOI9Dsm
-FPQJB8CMf9kyD4awOGCzmjtUDDIlftz7+egbVr/P7ra1vkWiUWLuVtwLjIOmQ02N
-sekEy/RBJpmbPCY+1sMqWVkiz2Jzh0ZVNraPw84W9A/vImdz5eUO9zUiKYAmc5dk
-UqH4DNFXSUz1HXiQV0MFvMErR3BvnHo0aW2Yex0g41iEVVbt3NegzgVmCnQbvxWO
-8aqTaho3IMK6R9qprp+2m/F81hFYJmaLYG6axoMB6dRfYN0VJf7VY1fqOs4jxZVV
-poVwHHWgBvFFi27Oh3H/RZ+IaYwY52BOW+4953toW5pRMpXLj289svrTCIzToyGh
-f9P2fQeuCBeyiaplAlyxPbk2TdSjl8q2pcGcXzJdISRO8u4/In4=
-=ueuY
------END PGP SIGNATURE-----
-
---ZzqmmcLTueXK0WfW--
+And with the machine dts:
+    pinctrl-0 = <&pinctrl_fwqspi_default>;
