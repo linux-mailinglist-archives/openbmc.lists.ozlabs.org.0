@@ -2,135 +2,167 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0782A4CA861
-	for <lists+openbmc@lfdr.de>; Wed,  2 Mar 2022 15:44:30 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 603224CA9A6
+	for <lists+openbmc@lfdr.de>; Wed,  2 Mar 2022 16:51:52 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K7xhq01gfz3bsy
-	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 01:44:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K7zBY2qh1z3bsy
+	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 02:51:49 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=axentia.se header.i=@axentia.se header.a=rsa-sha256 header.s=selector2 header.b=gq5tRMBP;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=BEBEGqKt;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=axentia.se (client-ip=2a01:111:f400:7e1b::70a;
- helo=eur05-am6-obe.outbound.protection.outlook.com;
- envelope-from=peda@axentia.se; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
- dkim=fail reason="key not found in DNS" header.d=axentia.se
- header.i=@axentia.se header.a=rsa-sha256 header.s=selector2 header.b=gq5tRMBP;
- dkim-atps=neutral
-Received: from EUR05-AM6-obe.outbound.protection.outlook.com
- (mail-am6eur05on2070a.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:7e1b::70a])
+ smtp.mailfrom=intel.com (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=johnathanx.mantey@intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
+ header.s=Intel header.b=BEBEGqKt; dkim-atps=neutral
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K7xhH6SsTz3bpY
- for <openbmc@lists.ozlabs.org>; Thu,  3 Mar 2022 01:43:56 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K7zB15FwZz3bpF
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Mar 2022 02:51:20 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1646236282; x=1677772282;
+ h=message-id:date:to:cc:references:from:subject:
+ in-reply-to:mime-version;
+ bh=y09zm9dm4neHXRZ8STqeceZPfE3SEm6D8tPVA2lk2xo=;
+ b=BEBEGqKtWndVdqa325l4EGcGIzajIQoWYbrCp6qp24YfglC3H60SNqDv
+ omrSjFN16r6StFoO6u2bebVuRaV6Ji2PPSnZJfGRUOxB7fqJ4Q4NQMrac
+ MQQzA+xmE5VhlhmLIBMtBRGIGIhVqohX3YDt610gcQ0yX7ZFTaeeMQeMm
+ b9tyULX+smnH/OiyNXBnn+aBanXIRGtN6w5FglEvQ2/0IzSEJv4HT24d1
+ zabfU1ufWOpKrSj7hMef2HUtbCKNNMyzGkTQrKzGY9mYPIEkBvaaBFszr
+ 7kANJzHzlHZmDNM8Sqb59ewu8Jc5aRgSnlzbuK7agylGGdvZfF+ruUgJH w==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10274"; a="253161215"
+X-IronPort-AV: E=Sophos;i="5.90,149,1643702400"; 
+ d="scan'208,217";a="253161215"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Mar 2022 07:50:13 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,149,1643702400"; 
+ d="scan'208,217";a="551301501"
+Received: from orsmsx604.amr.corp.intel.com ([10.22.229.17])
+ by orsmga008.jf.intel.com with ESMTP; 02 Mar 2022 07:50:12 -0800
+Received: from orsmsx609.amr.corp.intel.com (10.22.229.22) by
+ ORSMSX604.amr.corp.intel.com (10.22.229.17) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.21; Wed, 2 Mar 2022 07:50:12 -0800
+Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX609.amr.corp.intel.com (10.22.229.22) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.21; Wed, 2 Mar 2022 07:50:11 -0800
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ orsmsx611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2308.21 via Frontend Transport; Wed, 2 Mar 2022 07:50:11 -0800
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.169)
+ by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2308.20; Wed, 2 Mar 2022 07:50:11 -0800
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=QqVUaGSXPTQyZ1BiBoeR7eoNfwQM5YMfc/qvAxr1N6E7EJQlK3msa2Yi6gn5TPYLTKdI43dzXiyiM46iJ8KLkn92+dNcEY3Xr1GwoYOXgz+WBetpDFVqbrRm8/iy8RyD205l/H4WhWophAvF+C+RCvyg6Xu40WYTzCmi5sZtO1iLHnq5/fyhlVsUPrO/uHmlLT3wyXT8xZhSNhiWfaTaGCKFq8/hEraYw04o7XBRAIN0us1ul508dFJnLiK3XquMeq3i0w95ovVtiq/y6dekVKwUYdRpG81Hd2DRzrFjJQ8anMxQzLEdboHL4l9JjCr/MGDwxqWkFZtmtktN+oe+yg==
+ b=Oxu/GQoHj7DcZMfv2JRKdBz5/DOGf2wVopVdVejPJn3FEno8jHnAKzTzSYITH9bTM17gAsT0ydgyXsFFp+bQuZBK+2lMN4Q1vmAmhR2j5PIPZq6ODWYMaONuDW/4iJt3riI2tjNFOgot3R5QGFN1IT1MSFbJ/OmisgwyfzaJN2G1Yt0MHNRbj3hOZOYmGHxbNyO4S65WAPP7k0euXj7GWiIklhV9ZHCOTvTGIhiM/0KfDCnD8C/aGvKSVQQUJVzZZtwKwMrj+0bcpbr8dAynSgI+pLBIyAVFi5XtfkIvLxrUBLshQJpUNzFVAmIGO33yul4qQ6ZKw4iW+0M78gRR0w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0ryRP+1wwdVEryrpzuUVqZ+2leT8VFdl2b5cr60+Dqo=;
- b=WUDgSSqIv/g8iEUL+RmEC8Ymi47al85yY3FSGHah3AUJ7Wp+oOPsfUKWywF02clAKT+3zaAvI6b5ZKEnzT4jhIpMYp9ktHEc0071ClkptkXV0S/8syiv2aOo3MuV6oi3aQYtU8GywikG+3J9In36yah77slGNiRuyI5+otyAwDXiDRvPieTKosCIw3i1qI1nHY7/8mL0bIMBnDhN7cFuM+vVT8yVfZNiP4RITiMp6W1voIc1qQXqmaJdA0s0u0zhQJ8HFURjdWKuwD3tzVB28HqntLAYImL86pB4P2DUzHtwQgAiXrHIBHYhESL086OHWElgpbqUjaLz6YpQlBdcRg==
+ bh=lB5iQyzwtQLAat6ijzqj5P+2niRzh/HZuWthFohqsPk=;
+ b=CF7dhanfFgECvDvPruom6xslHqVdwqPOM4NTe1/WR3tIGSr4TZsp+fxMro0KrNmh0hTTm664/yWAueA+0wGQR4FrFgknwI65wP58dOKab5xAzC01jaNPJwMnt00FNAUmdH1rGYgEepdzb3yh4yLsiscOyHlb04oEp8xzAkRP7vomEzxZtXkV84vcJxp7oaDOX6DSM0yvElYieVOUqDw+rUSGUbkGI0OifvtQXobOrjVNsJcaff6W1Frxn2XjbBv1wilKPYLmkfyfnGhSgg/ffbUG8FdhYm/XcTGVXWtRd8QHT0IVErxnK6d+47g14WEU6vX1EqP4fx993JbvsTKMQQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=axentia.se; dmarc=pass action=none header.from=axentia.se;
- dkim=pass header.d=axentia.se; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=axentia.se;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=0ryRP+1wwdVEryrpzuUVqZ+2leT8VFdl2b5cr60+Dqo=;
- b=gq5tRMBPKBSCjZLDsXzM41fHPERYnf7a1xtF07gPdGmAy5MGgrzUSEopOXPYIuByEgLDFy7znbeji03Dpuy8R3brnvOqqEVv6CqnCNSTRj6ZsKjKOtFMprekX9hiBFQMkBXBuV6qsU9VHDHa96lnHMray3bftP57EviLNxGRWIc=
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=axentia.se;
-Received: from AM0PR02MB4436.eurprd02.prod.outlook.com (2603:10a6:208:ed::15)
- by PA4PR02MB6510.eurprd02.prod.outlook.com (2603:10a6:102:d5::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5017.26; Wed, 2 Mar
- 2022 14:43:33 +0000
-Received: from AM0PR02MB4436.eurprd02.prod.outlook.com
- ([fe80::7d29:dd84:d2bf:a1a0]) by AM0PR02MB4436.eurprd02.prod.outlook.com
- ([fe80::7d29:dd84:d2bf:a1a0%4]) with mapi id 15.20.5017.027; Wed, 2 Mar 2022
- 14:43:33 +0000
-Message-ID: <f3c56f5a-6a6b-039c-9fdf-a994d054645d@axentia.se>
-Date: Wed, 2 Mar 2022 15:43:31 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.6.1
-Subject: Re: [PATCH v2 0/2] ic2: mux: pca9541: add delayed-release support
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from SA2PR11MB5177.namprd11.prod.outlook.com (2603:10b6:806:11c::10)
+ by DM5PR11MB1353.namprd11.prod.outlook.com (2603:10b6:3:a::23) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5017.26; Wed, 2 Mar 2022 15:50:08 +0000
+Received: from SA2PR11MB5177.namprd11.prod.outlook.com
+ ([fe80::78bc:db7e:2581:4c92]) by SA2PR11MB5177.namprd11.prod.outlook.com
+ ([fe80::78bc:db7e:2581:4c92%6]) with mapi id 15.20.5017.026; Wed, 2 Mar 2022
+ 15:50:08 +0000
+Message-ID: <f392c47a-76d2-c9f5-44f4-07f127f8e928@intel.com>
+Date: Wed, 2 Mar 2022 07:50:05 -0800
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Firefox/91.0 Thunderbird/91.5.0
 Content-Language: en-US
-To: Zev Weiss <zev@bewilderbeest.net>
-References: <20220201001810.19516-1-zev@bewilderbeest.net>
- <ae14fd3c-2f50-b982-c61c-9db3bb28c809@axentia.se>
- <Yh1O6w56zsNtNRbb@hatter.bewilderbeest.net>
-From: Peter Rosin <peda@axentia.se>
-Organization: Axentia Technologies AB
-In-Reply-To: <Yh1O6w56zsNtNRbb@hatter.bewilderbeest.net>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: GV3P280CA0074.SWEP280.PROD.OUTLOOK.COM
- (2603:10a6:150:a::34) To AM0PR02MB4436.eurprd02.prod.outlook.com
- (2603:10a6:208:ed::15)
+To: Heyi Guo <guoheyi@linux.alibaba.com>, openbmc <openbmc@lists.ozlabs.org>
+References: <13769f21-e6c3-5550-909a-fa0893c1c32a@linux.alibaba.com>
+From: Johnathan Mantey <johnathanx.mantey@intel.com>
+Subject: Re: phosphor-network: does it make sense to disable systemd-networkd
+ sending DHCP release?
+In-Reply-To: <13769f21-e6c3-5550-909a-fa0893c1c32a@linux.alibaba.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------z72GMXNx23lknvipwjUfvLoi"
+X-ClientProxiedBy: MW4PR04CA0371.namprd04.prod.outlook.com
+ (2603:10b6:303:81::16) To SA2PR11MB5177.namprd11.prod.outlook.com
+ (2603:10b6:806:11c::10)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: b1bdbb7d-39a6-46e7-7052-08d9fc5b0682
-X-MS-TrafficTypeDiagnostic: PA4PR02MB6510:EE_
-X-Microsoft-Antispam-PRVS: <PA4PR02MB65100FA2BAD1829BFB4BC5A4BC039@PA4PR02MB6510.eurprd02.prod.outlook.com>
+X-MS-Office365-Filtering-Correlation-Id: 80b37dee-21a7-463d-a8b4-08d9fc6453af
+X-MS-TrafficTypeDiagnostic: DM5PR11MB1353:EE_
+X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+X-Microsoft-Antispam-PRVS: <DM5PR11MB13538CF27D53828B0798CEABE2039@DM5PR11MB1353.namprd11.prod.outlook.com>
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: S7Pt6WM2Hm7v8gOnmRb1aldn18QplWoH3/WLhJ17lX5YSn2lO9QmrSkOdP9x9Q23HTECOdhLXEeXda5j88i4ryg9vdpuJaSC+Gf6AUCwIRcHynBO09C1tr3Sb9rlcV+nWkO9J8kJzupn/56rP5ThSHzDLhFP4l6c5vwEuye8S/wX+5uMOdmYNT6PCVYu8KaKwrUoFojz0ZtH8XA7TjH8i8g9+4TeKjbcx5oe7WRpQJ9qOKzmIHHhzt9aoonBPJlzmP6Fxiuij3mqXSQXAGmIWPffKaNOtaJYaJsYENrcar5NuiHyDhn3o0r/yZ3rMp7s09an+0dP10I8quIMlPhmHKe+9inQ7LwLA2oOv72WPm8SAbdE+f3oVc+yCHrfNtT2N8D/3QMOvKZ/mWAHcIJ4yeYnx0SOMEFs2bFEg3Syd8Kv8KdI8j5ulF/AQYA9WNgZjRpT5Bchraax31EfDNLxFzxTQ7sVo25TBwt7OrbYgRV0K1HDBx5YmUsnLNb5YbEDo0buawqQ41M6tv3sHtb2r/gAFcRrwhmyZ/O+MqUgA22nn1KhQMSy/EpLNaK/wAvmHmlI98TcqZrrKFPD9Kl5TXqIo1EYX88QE8RGAwp7L1+hOBBqvv9st3SGUUmIy/KBmnixTfGVyVGU0Z+fdGnhPLrZ5mVczvBQhThN9zNALnJ90LaIvvB69t6rwGVsQS68ypgNAuV2w89y2hpFu2/tNg2NabCNWmmgQPNgAgSiZ1uN6TkPuuBmzkeOVVSYVngV
+X-Microsoft-Antispam-Message-Info: w2B5TZ6sC+hmSd0oNL3CYfbMyf+43g46aKMbeyf4QWxI1P7PUJKhsc352Tv6Mhrs9leJeeD+7QzSCSl+P001NtEHWgKug6pb8XTNXh5zbpVIe0sYPK/KkoDMYjsyfiqlpsnguaotJG3z8PumbW+oBBu7DksJQ942oOeXFKzFK10G13TW5uT6LXy8uf/hB+pV6UXpfC7lbZ6UhYZbOaZ0WNDGtqs+SSIXZO6OcAYdWgqKTB+04CPbZu9MwSgOSVvHwWsYAzy92/PR4GmikUXeMv63WqMJEZD4YD0LBBUUZ6YQzz/uQ/CmD0h15ZHDjyuAEbJIC24Q5sIaXCGACWlhayvwDaQobv2oNBjyd99VRReeOsVZcTIFPSwxYp96hZO/mDkZgmlhQ7z9Qr0BLGQyors7kQzWjMjekjgMAK+X8OoYogVA6gymT8fH0OEAuDSnRaWeRJICRWTNL8GmB3r1p2mR19T9JGIulaIi7WkpLAHYsGkrS/+ThjSeehXVJOV2Rv98MaisN2NZ6Jia/aP6VTtk3aGC90fYR0pSrTipPfxiQmVGJWsSbYJMBdhBbCmuGXZwSHOnIpKzR8n8ergDa3pZLndWgkVGGNl9R3jcfmSXmT+MHLAEmYZVUMjgB8hSmMjiFgHXnqDOr9l/femQnvAufYXcfhjTU36qD6exn1+nbYkPy1uJ7AmSKQC9CFHHNKK8F2P5/2MV6EBoqmzcf+J9jyxWIE9bo+k/6SeEHOU=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM0PR02MB4436.eurprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230001)(346002)(376002)(366004)(396003)(136003)(39830400003)(26005)(36756003)(53546011)(6486002)(2616005)(508600001)(186003)(83380400001)(54906003)(31686004)(31696002)(6506007)(86362001)(6512007)(36916002)(2906002)(66476007)(66556008)(66946007)(316002)(6916009)(4326008)(8676002)(8936002)(38100700002)(5660300002)(43740500002)(45980500001);
+ IPV:NLI; SFV:NSPM; H:SA2PR11MB5177.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230001)(366004)(21480400003)(6486002)(6666004)(2616005)(8936002)(36756003)(53546011)(82960400001)(6506007)(33964004)(83380400001)(38100700002)(31686004)(508600001)(110136005)(54906003)(316002)(40140700001)(6512007)(86362001)(235185007)(31696002)(5660300002)(186003)(26005)(66476007)(66946007)(66556008)(8676002)(2906002)(4326008)(43740500002)(45980500001);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WmVlazErNElyZGhQTUZxcDlQN29ITnlJQ2NzQUN4MFVZT2xVMzR5VzkvUjB1?=
- =?utf-8?B?eFRaSTQ0M25DM3VZK05WeC81UWxLRmNLNjNMblVQaHhMa3ZGUXdNVCt3VlNE?=
- =?utf-8?B?V2QrUk5GSlUvVUVDOEI1YWxGVjFkREFud2dzNndmN0g4OG56QkxFUmhEREs2?=
- =?utf-8?B?SytXeXNNREp2Ym1zaDliYTlsV2ZuM0NHU0hKZkpUV2pZc3RiOWpsMEYzblVS?=
- =?utf-8?B?SjBKM1pmWUphdjRVU2dhZk80dm5JNEJWdEpwaVRrZHRCV3B4S09QK3pPb2RL?=
- =?utf-8?B?L3FFWW1JcytyajNFM3BBTU11aUM1ZlhqWEdpeTBxZUx2WmhGa2dTdzAvQmwr?=
- =?utf-8?B?SGYrR0VuU1BNanZ6WUtyODlrTm5raURlc2VhUFNZdWVaMVoybURidWNVdHRy?=
- =?utf-8?B?Z1YzRHNrVlJoeEdwbnl1elp2RTNtYmNVWm9VMkVFVjBWSTIvS0x2TnN5OXlZ?=
- =?utf-8?B?MjQvWXFaaytmRjBhNU4rM3MxWDNpTmMrc1BSTmFjbU1tNHFCeXF1T0EwRGNu?=
- =?utf-8?B?dVNRZTB2QUJnMTF2Y2JxOUEwMVU0MkNibTJDTGUraXhEZWlBWE1tMmxDZTdT?=
- =?utf-8?B?TExvWXlweE51Z3F1Zk5rRHhVRHl5VXdTOE15SFc3bllmSEFXZ3ZSK0hCVVlv?=
- =?utf-8?B?T0FDbEt6aDNGZ1JVQVRHa1I0UjQ2TVFKTmRPbzhJeEM5ZUJ4Y3pXNkF5Q1NR?=
- =?utf-8?B?c3pJZWhRandMYWtFWTJuQWZlaTZVeE4zd1dXenRDV2oxSW82UnN5UjVDQzd2?=
- =?utf-8?B?RE12K1FvRFd0OHFpNUJqZ0Y5VkVDc01NQUhkSU9Rc1ZQRFpvZC9zWm1ESFNy?=
- =?utf-8?B?eGF0c1NYcTAyNGRnQ2JyS0phUzRkTC9jOVRsN2ltTWpVTURMSllITGU0Nnhl?=
- =?utf-8?B?c2JuNExOK0hsODhSVTRPeFQwU2RVd3pJd1Y1UFVwVGcyaFI1TGtvQ1d6VWRi?=
- =?utf-8?B?RWw5YzNuVXFGTlF2WWVlUVR1M3p2aGJleld0SkxBdVBySVR0YytrejIrclFr?=
- =?utf-8?B?ZEkwNTdxa2dBYmlnNU5QNyttUDJsbjROWDFRQkxVdDB0bVVaUFNtRFNJbkZ5?=
- =?utf-8?B?ejY5NVV0ZllXZ1dXeXVXNjNPUVpGMFFtczB4MjNVdGh4c0IzMHowQUtoS1oy?=
- =?utf-8?B?MTNqZVNobUw2eDZhK2pBN2tlc0RDZGp6OTkzbC9oR3NBQTh5b2tjQndoMFpB?=
- =?utf-8?B?czhHUG1HOHFrVXFpcXJNUnc3VDhmY29pRWFCdVc0bmFYSWZNSlpTU0VYdHZm?=
- =?utf-8?B?RFFFRmlkMDhTS1NveHgxaFJ6ODY2TGR3QktnU1BnUlY3WWhuTWNqdFJURE1q?=
- =?utf-8?B?WTVIeWNMZ2pDalRZeVJBTVRFZ0pZTTlCN3M2SU13aGdQUDBDQXJoNEZzc2Uv?=
- =?utf-8?B?VDl0MStFNmkramZiem9XS1BINzdzZDBDdEJWWmE4L0NzSW9EeklwbDN5Q2Z3?=
- =?utf-8?B?Y2ZVQ292YzVlWHRvU2VhUDdVaXIzUytvK0xoVlZ5N2c4MXFHUXEvS1RoTytv?=
- =?utf-8?B?NDNZYnVVZ0dPRFZYcXZoNHVod2NsU012KzV0SnlCcWJRN2tHSkVJQk1MZjdw?=
- =?utf-8?B?Q0tvdFordEVpeEVPYlUrbnhPdmNWdU9BRmFyeWxzWm1RajF6VnVERnNLdGJY?=
- =?utf-8?B?NnNnNFVFVnk2R0l1NkVVNUhBY1YyMjFKYXlCWDRwZHhvSjdLeGx3UVdBMzI1?=
- =?utf-8?B?YnduSGd3NWdaTmUzWEo1UlN5WmxNanRFYVFlQkwwcE5sNTBwTGp0ZUJnVXpC?=
- =?utf-8?B?dXN1Y0Q2b2NLMXMrVXZ2WnY0dVY3T2pZSk14TDJQbGlLSjdQcWs2UzRMNkxV?=
- =?utf-8?B?SWVWQlFUc3lpWm9Jd1hEY3dTa05IM3lBYjFXRUxGWWV4UERXMGJBVm5mcHdu?=
- =?utf-8?B?TnNPMTMzUXNMS1dmVUxCdEgxbUplM0h6Z1pna2lvOVY0SHQwaVd4Z1NHM1Mr?=
- =?utf-8?B?M1ZKalA0ODBKWmh4ZXZzY1FqdjVycEFBWndLMW5zZGpxS2dXdXF4RDI3OTlv?=
- =?utf-8?B?aGxJM0lyV1Z1Q3Y1SWx1N283UVVRTE00R1dSWThvR2tydk5xR2tuaHpIeG90?=
- =?utf-8?B?Tm9aOUx6VzBScGF1dVRZbjhNQzhOMW54ajRhbWpQK2M1b0UwQWw4a2pZeWp6?=
- =?utf-8?Q?qvhs=3D?=
-X-OriginatorOrg: axentia.se
-X-MS-Exchange-CrossTenant-Network-Message-Id: b1bdbb7d-39a6-46e7-7052-08d9fc5b0682
-X-MS-Exchange-CrossTenant-AuthSource: AM0PR02MB4436.eurprd02.prod.outlook.com
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZGwyb0pvTXNKZE0wRVpINjhpMTFTRllESVYvVHVDWFh4eWpYNG94ZXdlSEdB?=
+ =?utf-8?B?U0xsZHNyeE5aOEdzemZjcnNwUFNnUFRqVE9sc1l3N0ROeEViZVJMM2JGK3U0?=
+ =?utf-8?B?VlV2alJiM1RWTjVVY1VHZmxiTFllTWhOc3FLdWxSU2xuQi9qWnEzODMxWHNs?=
+ =?utf-8?B?R2V4MVNPSlFnVFJPbGYyei9lYUFCZnN5MU5jMUNtK2R6R3drTVVQdVErOUE4?=
+ =?utf-8?B?VVMvK1Z0WlM1Y3hBVFBIWHdsdUtvU2J6UTdOMTlIZDRrT2RJNHoxc0Y0MXJN?=
+ =?utf-8?B?cG1XVmhwSGM3MXVmWkVMRU1tT2Zac0NBTlFZYUtoSUkweVE2WFZES1ZESEcx?=
+ =?utf-8?B?enVBOHFiUlVjMkhsTmdDcmd4VzlUcUx6ZVFRaVBqNHJvK0lqbEpyZFdLM2N4?=
+ =?utf-8?B?cG4rZm1sQThSMEYvdEVURURwVVFybDVPYSt2aGhZWTh4S3VFMTl4ck5uWEly?=
+ =?utf-8?B?dnBZRnNZMENOYWRPekN1ZDI4UDFKUHo0c1V6cXFIazJtZVVaZHdiMWJkSUpa?=
+ =?utf-8?B?VitnUldEODdNb0ZCanlGQ0dvTTJWY2N2YThmQ2NFd1kwTHVvajhqV2ZPdThv?=
+ =?utf-8?B?elUwdTh2a1lvcXRMcHpmNDFMbGtOcktNak9qWHNBQ1FubnhseWxCSm5xaFNi?=
+ =?utf-8?B?NzdnVFIzTVZjRklEYkorTFN2TCs0R2NiWXVHdkZ2a0ZYYmVzN3hITmVGdmNz?=
+ =?utf-8?B?WWMvR2hIb2ttT3FPcnBiZ1MrWldMNHVtd3ZTREt6VE9yaWpEbzViQUhwcmhW?=
+ =?utf-8?B?UFdDRWxGU1NYLzFHZmdyWXpYMU41N0R5QlptL0dtbWZsS3V5RWxCU1VQVkx1?=
+ =?utf-8?B?UjVMWDFqN3BxQnI4NnpsZkhTc1dzUlNjeG9xQVhjZjhobzVWVnBFT0lWK3pC?=
+ =?utf-8?B?TkRXN2FGdUlHSE1VQVBnY2hRem1KbTRSN1lZRUVIeXludURzdjZNVXgwQjR1?=
+ =?utf-8?B?cjhVSEgwMkNHTUJBT01SNGoxSG5ISFRJNVVucmxYYlI2WG05YjJieG10aWEy?=
+ =?utf-8?B?TGUrTUJEQ3hONnljNkdaWUlZTkVpSEFYb29ucWhSU2txS0ZuUzQ2ZXNQcElR?=
+ =?utf-8?B?WkNkZlplS0E2VGxDUXhZZnJ4aS9vd2NHWm5DanFkclNTVXdma2g0YmxJVExR?=
+ =?utf-8?B?QjFmQjZ1WGlJOFhybFJIaEMwbmQ2YmdUK2dxeHVyR2tuRDhlTndOZWtzQ3Az?=
+ =?utf-8?B?R2JBTHJxVUFUaTkvNTRUb0NpWExJVTl1SGh5RlVSN0NkbkxKOVp1NVphYWY2?=
+ =?utf-8?B?ZTJkOWlkcVB4MjVQVVVZWlZ2RWNpTCtzcDlWa2lFRkZObkFQL2FVWjdmNWJ4?=
+ =?utf-8?B?eC9DUmVCdXJiWVo4U1NGRU1tbUVmQW8zV01HaDBSajY2VkhXSnVaZ0xhbmRx?=
+ =?utf-8?B?VFRYNlVpczNSa1ZUbTk5bkRSOXgzR3dLc09aTWlERko0TUlHTWVYZnZrR2tD?=
+ =?utf-8?B?UG4zVHo5UisyS1k0WTZZdHNtamRLZkw0aWdVd3BNYjkvS3MzNnFaWS9sUlFm?=
+ =?utf-8?B?bkc0WnBmR3V0TkZkSXpPQ3ZPcy9zZ3BsODJnaHRyY1JmT2lFM1JqeGZLak93?=
+ =?utf-8?B?ZnBnb1lOa1FFKzJMM3hFdkZiOVNMcnYvbUE5T3BMams1VVVDMDFPWkxuNVV4?=
+ =?utf-8?B?N3MvRVhUdWYxMXZ4VkRiMTZHbzJ3dHVha3NHV3BNMU9ZeURNcE5Za0J0NHhn?=
+ =?utf-8?B?aHRFZ3BFYlBpenJOR2Y4VStHS3daaFNSNXYyUkVPWHg3dDlud1J3TjdQcTcx?=
+ =?utf-8?B?NEtvcXdrcVhDRitMNi9JUURSQlVEUllWYndCQnA1YzhJYmdVNDBaVExZeWgx?=
+ =?utf-8?B?dDVIbU80b1c5VlRnOVBjYWFJSGRURW9JUmo5NHNxWW5reGNxMzc2OEV1ZnZE?=
+ =?utf-8?B?N0VPbWE1djhHMXp4TWtkSDB2UlZ4MUhkOXI4QWo2NjV5Mkh6Q2hiSUJjZGMv?=
+ =?utf-8?B?ZEJuWjMxTlJnZmlxbWhQdnJnVTRvd1B5V3VaYmFad1VNREJqbmxIUW9aazRr?=
+ =?utf-8?B?YTgxa3BDcFRRckNJcW1RbmlFM1NoK1JVUUxFV0dqVjNubWYwQUNlWWprb25D?=
+ =?utf-8?B?eXliMVg0MDNteno2bENXMVF2STRoZDloL25hbUh4WURiQ3AyeFZlcFZsTmQy?=
+ =?utf-8?B?NWJaZFZtQmM2VlpsVlliSFpkQlUyQy9IMHlNM0JHbjdFclNtU2xjWjFtQmNj?=
+ =?utf-8?B?Y3ZKeFZOVlN0c3dmSWZmTG5ONGdzc2VOZDFRLzdUMm40VFNVWUVYeE5mbGV2?=
+ =?utf-8?B?S2JOWUJDWGZmMWN5WENCMXRzTUZ3PT0=?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 80b37dee-21a7-463d-a8b4-08d9fc6453af
+X-MS-Exchange-CrossTenant-AuthSource: SA2PR11MB5177.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2022 14:43:33.3102 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2022 15:50:08.3085 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4ee68585-03e1-4785-942a-df9c1871a234
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: rSWx25negef6J2ukk9qKibjUzxpC7AR3fa1YrJXqF+GFSGZgfxxuoCfOXz1+nDlg
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PA4PR02MB6510
+X-MS-Exchange-CrossTenant-UserPrincipalName: KLlCVSguiPUMGjAFmqrFY0vfFKXPmM/mH++pq1QdNmKArjAr5uMA40HIiHMLmeYDjQRHbZAXihvjzqnXvfoaWQqc8PX6laHd2JNTvGL54iw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR11MB1353
+X-OriginatorOrg: intel.com
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -142,106 +174,147 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
- linux-i2c@vger.kernel.org, Guenter Roeck <linux@roeck-us.net>
+Cc: Ratan Gupta <ratankgupta31@gmail.com>,
+ Nagaraju Goruganti <ngorugan@in.ibm.com>, Adriana Kobylak <anoo@us.ibm.com>,
+ William Kennington <wak@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2022-02-28 23:38, Zev Weiss wrote:
-> Hi Peter,
-> 
-> Thanks for the reply!  (More below.)
-> 
-> On Mon, Feb 28, 2022 at 01:54:09PM PST, Peter Rosin wrote:
->> On 2022-02-01 01:18, Zev Weiss wrote:
->>> Hello,
->>>
->>> This series adds support for a new pca9541 device-tree property
->>> ("release-delay-us"), which delays releasing ownership of the bus
->>> after a transaction for a configurable duration, anticipating that
->>> another transaction may follow shortly.  By avoiding a
->>> release/reacquisition between transactions, this can provide a
->>> substantial performance improvement for back-to-back operations -- on
->>> a Delta AHE-50DC (ASPEED AST1250) system running OpenBMC with dozens
->>> of LM25066 PMICs on PCA9541-arbitrated busses, a setting of 10000 (10
->>> ms) reduces the median latency the psusensor daemon's hwmon sysfs file
->>> reads from 2.28 ms to 0.99 ms (a 57% improvement).
->>
->> Hi!
->>
->> Sorry for the late reply. It seems I'm forever swamped...
->>
->> There is a risk with this scheme. If you have two (or more) of these
->> chips on the same bus, and there are clients behind these two chips
->> that have the same address, accesses to one of the clients might
->> "leak through" the other arb to an unexpected client when its arb
->> is in it's release-delay state.
->>
->> In other words, it is no coincidence that the segment lock is held
->> over the whole acquire-access-release cycle.
-> 
-> That's not a scenario I had considered, but I think I see what you're 
-> saying.  Just to make sure I'm understanding correctly, the problematic 
-> situation you're describing would involve multiple (sibling, not 
-> parent/child cascaded) arbiters at distinct addresses on the same 
-> (master-side) bus, in effect acting as a sort of "distributed mux" in 
-> addition to arbitrating between multiple attached masters?  (So kind of 
-> an M-to-N arrangement between M masters and N busses.)
-> 
-> In which case if more than one of the arbiters had their downstream 
-> busses simultaneously connected to the same master (as could result if 
-> one were still connected due to a delayed release while the master had 
-> already started a subsequent transaction via another arbiter), the 
-> resulting "combined" bus could end up with address collisions between 
-> devices downstream of the arbiters if there are common addresses in use 
-> between the downstream busses.
+--------------z72GMXNx23lknvipwjUfvLoi
+Content-Type: multipart/mixed; boundary="------------GUHe2KH0hXFgvhHsnjkIJSd0";
+ protected-headers="v1"
+From: Johnathan Mantey <johnathanx.mantey@intel.com>
+To: Heyi Guo <guoheyi@linux.alibaba.com>, openbmc <openbmc@lists.ozlabs.org>
+Cc: Ratan Gupta <ratankgupta31@gmail.com>,
+ Nagaraju Goruganti <ngorugan@in.ibm.com>, Adriana Kobylak <anoo@us.ibm.com>,
+ William Kennington <wak@google.com>
+Message-ID: <f392c47a-76d2-c9f5-44f4-07f127f8e928@intel.com>
+Subject: Re: phosphor-network: does it make sense to disable systemd-networkd
+ sending DHCP release?
+References: <13769f21-e6c3-5550-909a-fa0893c1c32a@linux.alibaba.com>
+In-Reply-To: <13769f21-e6c3-5550-909a-fa0893c1c32a@linux.alibaba.com>
 
-Yes, you understood me correctly. That is, if I understood you
-correctly :-)
+--------------GUHe2KH0hXFgvhHsnjkIJSd0
+Content-Type: multipart/alternative;
+ boundary="------------YEgqcsj0K8rQQ0r5j7jaxKh3"
 
->>
->> Sure, you can always say "don't add a release-delay when ...", but I
->> see no such documentation.
->>
-> 
-> Assuming I haven't misunderstood the above, would expanding the 
-> description of the property in the DT binding like so be sufficient?
-> 
->   - release-delay-us: the number of microseconds to delay before
->     releasing the bus after a transaction.  If unspecified the default
->     is zero (the bus is released immediately).  Non-zero values can
->     reduce arbitration overhead for back-to-back transactions, at the
->     cost of delaying the other master's access to the bus.
-> 
->     If this property is employed on hardware with multiple parallel
->     (not cascaded) arbiters selecting between multiple downstream
->     busses, address conflicts can occur if a device on one of the
->     downstream busses uses the same address as a device on another
->     downstream bus.  This property should thus only be used if either
->     (a) there is only one arbiter on the bus, (b) multiple arbiters are
->     strictly cascaded to a single downstream bus, or (c) all of the
->     devices on all downstream busses use addresses that are unique
->     across all of those busses.
-> 
-> If so I'll send a v3 with that change shortly.
+--------------YEgqcsj0K8rQQ0r5j7jaxKh3
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-I'm not sure this is a bindings thing or a quality of implementation
-issue. You could imagine an implementation where the arb is
-opportunistically left connected for the release-delay, but that the
-arb is disconnected immediately if/when there is a change of the bus
-topology, possibly only if the topology change in turn cause address
-conflicts. The implication is that I'm not sure if this caveat should
-be described in the bindings documentation or elsewhere. It sure would
-be convenient to see it with the bindings, because if it is elsewhere
-I'm sure more people will fail to take notice.
+DQpPbiAyLzIxLzIyIDAxOjA1LCBIZXlpIEd1byB3cm90ZToNCj4gSGkgYWxsLA0KPg0KPiBO
+b3cgc3lzdGVtZC1uZXR3b3JrZCB3aWxsIHNlbmQgREhDUCByZWxlYXNlIHBhY2tldCB3aGVu
+IEJNQyByZWJvb3RzLiANCj4gVGhpcyBtYXkgY2F1c2UgQk1DIHRvIGxvc2UgaXRzIG9yaWdp
+bmFsIGFxdWlyZWQgSVAgYWZ0ZXIgbmV4dCBib290IHVwLiANCj4gSSBzZWUgdGhpcyBmZWF0
+dXJlIGNhbiBiZSBkaXNhYmxlZCBieSBhZGRpbmcgYmVsb3cgbGluZXMgdG8gdGhlIA0KPiBj
+b25maWd1cmF0aW9uIGZpbGUgb2Ygc3lzdGVtZC1uZXR3b3JrZDoNCj4NCj4gW0RIQ1B2NF0N
+Cj4gU2VuZFJlbGVhc2U9ZmFsc2UNCj4NCj4gRG9lcyBpdCBtYWtlIHNlbnNlIHRvIGRpc2Fi
+bGUgREhDUCByZWxlYXNlPyBPciBpcyB0aGVyZSBhbnkgcmVhc29uIGZvciANCj4gdGhlIGN1
+cnJlbnQgZGVmYXVsdCBjb25maWd1cmF0aW9uIGluIHBob3NwaG9yLW5ldHdvcms/DQo+DQo+
+IFRoYW5rcywNCj4NCj4gSGV5aQ0KPg0KDQpGV0lXLCB1c2VycyB3aXRoaW4gSW50ZWwgZ2V0
+IHZlcnkgY3Jhbmt5IHdoZW4gdGhlaXIgSVB2NCBhZGRyZXNzZXMgDQpjaGFuZ2UuIEknbSBw
+cmVzZW50bHkgd29ya2luZyBvbiBhIGRlZmVjdCByZWxhdGVkIHRvIHRoZSBJUCBhZGRyZXNz
+IA0KYmVpbmcgYWx0ZXJlZC4NCg0KQXMgaXQgaXMgdW5jbGVhciB0aGVyZSBpcyBhIHJ1bi10
+aW1lIG1lY2hhbmlzbSBmb3IgY2hhbmdpbmcgdGhpcyB2YWx1ZSwgDQpJJ2QgYXQgbGVhc3Qg
+bGlrZSB0byBzZWUgYSBjb21waWxlIHRpbWUgY29udHJvbC4gSSBleHBlY3QgSW50ZWwgd2ls
+bCANCmNob29zZSB0byBibG9jayBzZW5kaW5nIGEgREhDUCByZWxlYXNlIHJlcXVlc3QgZm9y
+IHdoZW4gdGhlIEJNQyByZWJvb3RzLg0KDQoNCi0tIA0KSm9obmF0aGFuIE1hbnRleQ0KU2Vu
+aW9yIFNvZnR3YXJlIEVuZ2luZWVyDQoqYXphZCB0ZSoqY2hub2xvZ3kgcGFydG5lcnMqDQpD
+b250cmlidXRpbmcgdG8gVGVjaG5vbG9neSBJbm5vdmF0aW9uIHNpbmNlIDE5OTINClBob25l
+OiAoNTAzKSA3MTItNjc2NA0KRW1haWw6IGpvaG5hdGhhbngubWFudGV5QGludGVsLmNvbQ0K
+DQo=
+--------------YEgqcsj0K8rQQ0r5j7jaxKh3
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Another risk with the scheme is that you possibly lock out the other
-master for so long time that you trigger it to force its way in, thus
-possible wrecking some transaction. Or is the PCA9541 defending against
-such wreckage on "hostile" takeovers? (I too lack the HW and time to
-tinker with this.) If so, that might of course happen anyway, but it
-might be so much more common if the bus is left connected.
+<html>
+  <head>
+    <meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3DUTF=
+-8">
+  </head>
+  <body>
+    <br>
+    <div class=3D"moz-cite-prefix">On 2/21/22 01:05, Heyi Guo wrote:<br>
+    </div>
+    <blockquote type=3D"cite"
+      cite=3D"mid:13769f21-e6c3-5550-909a-fa0893c1c32a@linux.alibaba.com"=
+>Hi
+      all,
+      <br>
+      <br>
+      Now systemd-networkd will send DHCP release packet when BMC
+      reboots. This may cause BMC to lose its original aquired IP after
+      next boot up. I see this feature can be disabled by adding below
+      lines to the configuration file of systemd-networkd:
+      <br>
+      <br>
+      [DHCPv4]
+      <br>
+      SendRelease=3Dfalse
+      <br>
+      <br>
+      Does it make sense to disable DHCP release? Or is there any reason
+      for the current default configuration in phosphor-network?
+      <br>
+      <br>
+      Thanks,
+      <br>
+      <br>
+      Heyi
+      <br>
+      <br>
+    </blockquote>
+    <br>
+    FWIW, users within Intel get very cranky when their IPv4 addresses
+    change. I'm presently working on a defect related to the IP address
+    being altered.<br>
+    <br>
+    As it is unclear there is a run-time mechanism for changing this
+    value, I'd at least like to see a compile time control. I expect
+    Intel will choose to block sending a DHCP release request for when
+    the BMC reboots.<br>
+    <br>
+    <br>
+    <div class=3D"moz-signature">-- <br>
+      <meta http-equiv=3D"content-type" content=3D"text/html; charset=3DU=
+TF-8">
+      <title></title>
+      <font color=3D"#1F497D"><font face=3D"Century Gothic">Johnathan Man=
+tey<br>
+          <small>Senior Software Engineer</small><br>
+          <big><font color=3D"#555555"><small><b>azad te</b><b>chnology
+                  partners</b></small><br>
+              <small><font color=3D"#1F497D"><small>Contributing to
+                    Technology Innovation since 1992</small></font><small=
+><br>
+                  <font color=3D"#1F497D">Phone: (503) 712-6764<br>
+                    Email: <a href=3D"mailto:johnathanx.mantey@intel.com"=
 
-Cheers,
-Peter
+                      class=3D"moz-txt-link-freetext">johnathanx.mantey@i=
+ntel.com</a></font></small><br>
+                <br>
+              </small></font></big></font></font> </div>
+  </body>
+</html>
+
+--------------YEgqcsj0K8rQQ0r5j7jaxKh3--
+
+--------------GUHe2KH0hXFgvhHsnjkIJSd0--
+
+--------------z72GMXNx23lknvipwjUfvLoi
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsB5BAABCAAjFiEEEynmy4K0ckuoyjA+Ocg9x5uaKcAFAmIfki0FAwAAAAAACgkQOcg9x5uaKcAa
+2AgAjq7HPwGNgDs8ttH+cn2W9KAmlqSWwccHnPZ2HIBHIaCyoDazQmZCO+nOB0nGu/rRNTiBnP2O
+x7HXq3zZdIYUdU+Xharr5UrrbN4LZBzHlcvMcdxEx6t37S49oHZ+T9yX279E5rQHyl9R6L+hhHyg
+K4ejXLafpl3+Ck+KsTQT+7Z+SSNFOhyyYuzFhPxj1sVlVWg1/v1Sq7BoJRuhRaJ75cvRyjFOF7QF
+vQKbPb0Qsibib/9j6+gRkYgzqggvLjUmurd3UqOWnT/1YnGgd7qv5fBM7tLPweNbzy+Mq6Hls/B4
+zpqUjucpHQfUXCZzSgPSfn2Lhzxn1+wGdMNWQ4l6bA==
+=9HS9
+-----END PGP SIGNATURE-----
+
+--------------z72GMXNx23lknvipwjUfvLoi--
