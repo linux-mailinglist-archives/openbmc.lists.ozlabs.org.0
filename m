@@ -2,62 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B2A964CBB56
-	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 11:28:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 645544CBB6F
+	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 11:32:35 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K8Rz360SSz3c20
-	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 21:28:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K8S3h3Ts8z3c1d
+	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 21:32:32 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=ZRLh3xaB;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=bDrwnLO1;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.120; helo=mga04.intel.com;
+ (client-ip=134.134.136.24; helo=mga09.intel.com;
  envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=ZRLh3xaB; dkim-atps=neutral
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+ header.s=Intel header.b=bDrwnLO1; dkim-atps=neutral
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K8Ryb121jz3bYY
- for <openbmc@lists.ozlabs.org>; Thu,  3 Mar 2022 21:28:05 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K8S3F2XQYz3bYY
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Mar 2022 21:32:08 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1646303288; x=1677839288;
+ t=1646303530; x=1677839530;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=drBwYn/yyUl+7kN4zTzBxFwNu33eBH11loDnD/f27gM=;
- b=ZRLh3xaBlF6sw4Us6A2yin5P0zb+hyrX9r7a6FG/5Qe2ts8H9e/JgtyI
- X7hjG8k3WIHaFl8wbSgbWF5uRfJVOTirMunksNcWQE5Hn9qI8LOZo9qhH
- BwscYz81ecu45m+L0PNK8gDUdsA5o9YnvbsmSeCfcaFlt68OqUqFAyGPJ
- ZwbUywjz2+9QB8q6gEp/c73bb6pPMZt07Vsbzc96K+suJEiU/plE8bQXk
- lmesLLh34XKdq+G9IkwvSgz7JLlJx1ZfsgmwPsE+bo9I4hn8UQdDPZg4H
- gsxEBp5PATztwvyfonRRWbwJMn4h8vDwfs9DjJ6iuBHamBOzIZljKpPN4 A==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10274"; a="252463974"
-X-IronPort-AV: E=Sophos;i="5.90,151,1643702400"; d="scan'208";a="252463974"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
- by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Mar 2022 02:26:58 -0800
-X-IronPort-AV: E=Sophos;i="5.90,151,1643702400"; d="scan'208";a="640131042"
+ bh=wDq06r9kddhLaN6b+ChI1ivL51pnJ9aOuIAEFgqn6mo=;
+ b=bDrwnLO1s6ymNp4pwy/oCGBbGdzd7vTeCoALNZYbtmox2T0aMvk5WQzX
+ nwRBiGLxe4IFsFBZgA0q8bLhZn5M/kjkfR3g1R0VdNlq4/Q/GceXwECqJ
+ YtXlCf3Xe87xyfyeFgceUCbhHrbnYjL5JwiLpt4RW2/RTYs+x6OmbphfG
+ Uv+7Tt0wv81nH+b0DRM+yIEtH8Ybk33EZqeoh+67VBZYwvzC0POK2JdNk
+ od1FDGntnYAwix0LQ0MvEs9KgRqNmH/TgxmXT4S9LZ+mwR4pWw9/Ug9jB
+ cC+1awDcl8IsL2h6jbpYmAwLmjfhijUKrgXOR8H6ccBcUrib9mB8nMe3+ Q==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10274"; a="253370223"
+X-IronPort-AV: E=Sophos;i="5.90,151,1643702400"; d="scan'208";a="253370223"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+ by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Mar 2022 02:31:04 -0800
+X-IronPort-AV: E=Sophos;i="5.90,151,1643702400"; d="scan'208";a="545817308"
 Received: from smile.fi.intel.com ([10.237.72.59])
- by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Mar 2022 02:26:50 -0800
+ by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Mar 2022 02:30:58 -0800
 Received: from andy by smile.fi.intel.com with local (Exim 4.95)
  (envelope-from <andriy.shevchenko@linux.intel.com>)
- id 1nPiep-00AjrX-4e; Thu, 03 Mar 2022 12:26:03 +0200
-Date: Thu, 3 Mar 2022 12:26:02 +0200
+ id 1nPiio-00AjxS-JE; Thu, 03 Mar 2022 12:30:10 +0200
+Date: Thu, 3 Mar 2022 12:30:10 +0200
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Tyrone Ting <warp5tw@gmail.com>
-Subject: Re: [PATCH v3 00/11] i2c: npcm: Bug fixes timeout, spurious interrupts
-Message-ID: <YiCXujUOUum+CAU9@smile.fi.intel.com>
+Subject: Re: [PATCH v3 03/11] i2c: npcm: Fix client address calculation
+Message-ID: <YiCYshb354S9T5ev@smile.fi.intel.com>
 References: <20220303083141.8742-1-warp5tw@gmail.com>
+ <20220303083141.8742-4-warp5tw@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220303083141.8742-1-warp5tw@gmail.com>
+In-Reply-To: <20220303083141.8742-4-warp5tw@gmail.com>
 Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -82,24 +83,22 @@ Cc: tmaimon77@gmail.com, devicetree@vger.kernel.org, tali.perry1@gmail.com,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Mar 03, 2022 at 04:31:30PM +0800, Tyrone Ting wrote:
-> From: Tyrone Ting <kfting@nuvoton.com>
+On Thu, Mar 03, 2022 at 04:31:33PM +0800, Tyrone Ting wrote:
+> From: Tali Perry <tali.perry1@gmail.com>
 > 
-> This patchset includes the following fixes:
-> 
-> - Add dt-bindings description for NPCM845.
-> - Bug fix for timeout calculation.
-> - Better handling of spurious interrupts.
-> - Fix for event type in slave mode.
-> - Removal of own slave addresses [2:10].
-> - Support for next gen BMC (NPCM845).
-> 
-> The NPCM I2C driver is tested on NPCM750 and NPCM845 evaluation boards.
+> Fix i2c client address by left-shifting 1 bit before
+> applying it to the data register.
 
-Overall my impression that the code was never tested for this driver and
-somehow appears in the upstream and hence this series.
+...
 
-Anyway, I'm going to review the changes here.
+> -	bus->dest_addr = slave_addr;
+> +	bus->dest_addr = slave_addr << 1;
+
+1. Why this is not using i2c_8bit_addr_from_msg() helper?
+2. This is duplication of what npcm_i2c_master_start_xmit() does.
+
+Taking 2 into account, what is this exactly fixing?
+Sounds like a red herring.
 
 -- 
 With Best Regards,
