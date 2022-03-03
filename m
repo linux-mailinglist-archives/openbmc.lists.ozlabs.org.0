@@ -1,66 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E4CA4CBFC3
-	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 15:15:54 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CDB704CBFD4
+	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 15:17:38 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K8Y1M3CNsz3bvP
-	for <lists+openbmc@lfdr.de>; Fri,  4 Mar 2022 01:15:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K8Y3M68g8z3c1P
+	for <lists+openbmc@lfdr.de>; Fri,  4 Mar 2022 01:17:35 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Rs2I15/4;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=cxY9RDR0;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.65; helo=mga03.intel.com;
+ (client-ip=192.55.52.115; helo=mga14.intel.com;
  envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=Rs2I15/4; dkim-atps=neutral
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+ header.s=Intel header.b=cxY9RDR0; dkim-atps=neutral
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K8Y0z1XFNz3byZ
- for <openbmc@lists.ozlabs.org>; Fri,  4 Mar 2022 01:15:30 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K8Y2x1cLdz3bvP
+ for <openbmc@lists.ozlabs.org>; Fri,  4 Mar 2022 01:17:12 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1646316932; x=1677852932;
+ t=1646317034; x=1677853034;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=5QG9h5lx2anIO5uIyhVHkmCiySJytsOAX/CGcMce8NM=;
- b=Rs2I15/4SDjrHXUQs+XC1HB6qA864oqaRZelXuAf314Jn099QtKrWvGG
- BGoi1UeuCxXNnt0cuyVUtfOeUCGGOiRI+qyirR16Wz2iovS1/nRx47beN
- fx3ieo4vC3AjymIBkvOFxPR6jVY+3xDsrFvKmEcNa/WsnMX8894wD/2hv
- SVbSfHFDMAbM79Eoo4Ddj/+oXetq3zS/PLVDmAMWGaZxNEnZDqvwwvQ+9
- NwYU9AY96mQltA06Gnisibh79v88HtoCix7uSbtd8GGyC7EkCu4fLhx1F
- JyA1Iz9i14XHbeJSNxqzMRrH8Misene87YYtH/mtRkctASFwEMh+eK0sD g==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10274"; a="253614377"
-X-IronPort-AV: E=Sophos;i="5.90,151,1643702400"; d="scan'208";a="253614377"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
- by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Mar 2022 06:14:29 -0800
-X-IronPort-AV: E=Sophos;i="5.90,151,1643702400"; d="scan'208";a="511442309"
+ bh=ynRuusHJD/05mmCsacrrHzXmY4ZK7oPmKnF+sWwUGc0=;
+ b=cxY9RDR0wdYc3Is4aSRDGhXaQfrBC1tFB/q28h6v0gYHtSjdEQAUmUy5
+ uEvHb1IfpXGkHTJaBS6ZUIub1hheAgq6n7DCv+5kCCSeZZZ/k8V0ik5BV
+ 7TOgp5my7rOku3u3gQNK6zZWjuS5BBIGE3w0Xia5CjyktmPk5lft4AsFm
+ FFKFvOGYdTJr2KYkBYN1Jqsyth0bbAdiKbpEEJ9BJJcXMZaHkhV6rUiNo
+ K4FFRWtk6V8c96N4nPnaQSN4wLdkxC0hFvKGk2SGYduvmF5IGNDm2qm33
+ xIcc5q9bxB39Md4gAljak0JSW6Ao+/Zd/4LnwR6Px00L+6en/PG/h0IJd w==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10274"; a="253878175"
+X-IronPort-AV: E=Sophos;i="5.90,151,1643702400"; d="scan'208";a="253878175"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+ by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Mar 2022 06:16:11 -0800
+X-IronPort-AV: E=Sophos;i="5.90,151,1643702400"; d="scan'208";a="545876842"
 Received: from smile.fi.intel.com ([10.237.72.59])
- by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Mar 2022 06:14:22 -0800
+ by fmsmga007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Mar 2022 06:16:05 -0800
 Received: from andy by smile.fi.intel.com with local (Exim 4.95)
  (envelope-from <andriy.shevchenko@linux.intel.com>)
- id 1nPmD0-00ApIt-Ho; Thu, 03 Mar 2022 16:13:34 +0200
-Date: Thu, 3 Mar 2022 16:13:34 +0200
+ id 1nPmEg-00ApL3-8j; Thu, 03 Mar 2022 16:15:18 +0200
+Date: Thu, 3 Mar 2022 16:15:18 +0200
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Tali Perry <tali.perry1@gmail.com>
-Subject: Re: [PATCH v3 09/11] i2c: npcm: Handle spurious interrupts
-Message-ID: <YiDNDsPWKyaIUlQR@smile.fi.intel.com>
+Subject: Re: [PATCH v3 08/11] i2c: npcm: Correct register access width
+Message-ID: <YiDNdlEKqorDFkZB@smile.fi.intel.com>
 References: <20220303083141.8742-1-warp5tw@gmail.com>
- <20220303083141.8742-10-warp5tw@gmail.com>
- <YiCaSSbbszm3qYIQ@smile.fi.intel.com>
- <CAHb3i=sStqdSpLKtF_UGmTsOssR_swssTd3pv6c2-z_kiUPTTA@mail.gmail.com>
+ <20220303083141.8742-9-warp5tw@gmail.com>
+ <YiCZlhJoXPLpQ6/D@smile.fi.intel.com>
+ <CAHb3i=t+Ai3w5mMhmZxxMsD7Zv0xpM4ZicMCmdDMtVn_OMbWYA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAHb3i=sStqdSpLKtF_UGmTsOssR_swssTd3pv6c2-z_kiUPTTA@mail.gmail.com>
+In-Reply-To: <CAHb3i=t+Ai3w5mMhmZxxMsD7Zv0xpM4ZicMCmdDMtVn_OMbWYA@mail.gmail.com>
 Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -90,57 +90,30 @@ Cc: Tomer Maimon <tmaimon77@gmail.com>, devicetree <devicetree@vger.kernel.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Mar 03, 2022 at 02:48:20PM +0200, Tali Perry wrote:
-> > On Thu, Mar 3, 2022 at 12:37 PM Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
+On Thu, Mar 03, 2022 at 02:54:27PM +0200, Tali Perry wrote:
+> > On Thu, Mar 03, 2022 at 04:31:38PM +0800, Tyrone Ting wrote:
+> > > From: Tyrone Ting <kfting@nuvoton.com>
 > > >
-> > > On Thu, Mar 03, 2022 at 04:31:39PM +0800, Tyrone Ting wrote:
-> > > > From: Tali Perry <tali.perry1@gmail.com>
-> > > >
-> > > > In order to better handle spurious interrupts:
-> > > > 1. Disable incoming interrupts in master only mode.
-> > > > 2. Clear end of busy (EOB) after every interrupt.
-> > > > 3. Return correct status during interrupt.
-> > >
-> > > This is bad commit message, it doesn't explain "why" you are doing these.
-
-...
-
-> BMC users connect a huge tree of i2c devices and muxes.
-> This tree suffers from spikes, noise and double clocks.
-> All these may cause spurious interrupts to the BMC.
+> > > Use ioread8 instead of ioread32 to access the SMBnCTL3 register since
+> > > the register is only 8-bit wide.
+> >
+> > > Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
+> >
+> > No, this is bad commit message, since you have bitwise masks and there is
+> > nothing to fix from functional point of view. So, why is this a fix?
+> >
 > 
-> If the driver gets an IRQ which was not expected and was not handled
-> by the IRQ handler,
-> there is nothing left to do but to clear the interrupt and move on.
-
-Yes, the problem is what "move on" means in your case.
-If you get a spurious interrupts there are possibilities what's wrong:
-1) HW bug(s)
-2) FW bug(s)
-3) Missed IRQ mask in the driver
-4) Improper IRQ mask in the driver
-
-The below approach seems incorrect to me.
-
-> If the transaction failed, driver has a recovery function.
-> After that, user may retry to send the message.
+> The next gen of this device is a 64 bit cpu.
+> The module is and was 8 bit.
 > 
-> Indeed the commit message doesn't explain all this.
-> We will fix and add to the next patchset.
-> 
-> > > > +     /*
-> > > > +      * if irq is not one of the above, make sure EOB is disabled and all
-> > > > +      * status bits are cleared.
-> > >
-> > > This does not explain why you hide the spurious interrupt.
-> > >
-> > > > +      */
-> > > > +     if (ret == IRQ_NONE) {
-> > > > +             npcm_i2c_eob_int(bus, false);
-> > > > +             npcm_i2c_clear_master_status(bus);
-> > > > +     }
-> > > > +
-> > > > +     return IRQ_HANDLED;
+> The ioread32 that seemed to work smoothly on a 32 bit machine
+> was causing a panic on a 64 bit machine.
+> since the module is 8 bit we changed to ioread8.
+> This is working both for the 32 and 64 CPUs with no issue.
+
+Then the commit message is completely wrong here.
+And provide necessary (no need to have noisy commit messages)
+bits of the oops to show what's going on
 
 -- 
 With Best Regards,
