@@ -2,64 +2,101 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id F1D264CBB92
-	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 11:39:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C02A34CBB8D
+	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 11:38:37 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K8SD50gjPz3c1w
-	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 21:39:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K8SBf5mCyz3c2c
+	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 21:38:34 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=U1ELLz7f;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=canonical.com header.i=@canonical.com header.a=rsa-sha256 header.s=20210705 header.b=ooKEqFUG;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.43; helo=mga05.intel.com;
- envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=canonical.com (client-ip=185.125.188.123;
+ helo=smtp-relay-internal-1.canonical.com;
+ envelope-from=krzysztof.kozlowski@canonical.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=U1ELLz7f; dkim-atps=neutral
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=canonical.com header.i=@canonical.com
+ header.a=rsa-sha256 header.s=20210705 header.b=ooKEqFUG; 
+ dkim-atps=neutral
+Received: from smtp-relay-internal-1.canonical.com
+ (smtp-relay-internal-1.canonical.com [185.125.188.123])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K8SC22cG3z3bx8
- for <openbmc@lists.ozlabs.org>; Thu,  3 Mar 2022 21:38:54 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1646303935; x=1677839935;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=hLseLd0tY6z76yWC4tPRUyQCqqYU1QPw+fPC2+urnM4=;
- b=U1ELLz7fFIrhOtrI4RAttpPIJlf/NFSlBZ/e/vvylNdtT0746Ak8gsHV
- xPwcVCc7SZ+MFALgM3OL3Th4B+Cbt2f3Fy/JkAWZazReWpOV0C0ttjp5B
- eOINvrrmP+kq5tZ54yAYURGrRF5nHPwd/mGReDak3cuccM8aZuC/4UPhu
- CkC3j5p8xzT8x+kMWpYAX1wcA6U9jE1s4dNuq9F8oTk8EJsnP+TYVkYVZ
- LsSWRmo28WH5SUqDIkaH3QfrPNXmkg2HiSRO12TOgwo8uvpaYhPx2QaAr
- 0DQOrjzqv7vIXA0Tf49U9jm61jpaMdgLj7qWJg1ru5zMr2C0B1TfxVRH2 w==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10274"; a="340071816"
-X-IronPort-AV: E=Sophos;i="5.90,151,1643702400"; d="scan'208";a="340071816"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
- by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Mar 2022 02:37:53 -0800
-X-IronPort-AV: E=Sophos;i="5.90,151,1643702400"; d="scan'208";a="576445523"
-Received: from smile.fi.intel.com ([10.237.72.59])
- by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Mar 2022 02:37:46 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.95)
- (envelope-from <andriy.shevchenko@linux.intel.com>)
- id 1nPipO-00Ak4g-5d; Thu, 03 Mar 2022 12:36:58 +0200
-Date: Thu, 3 Mar 2022 12:36:57 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Tyrone Ting <warp5tw@gmail.com>
-Subject: Re: [PATCH v3 09/11] i2c: npcm: Handle spurious interrupts
-Message-ID: <YiCaSSbbszm3qYIQ@smile.fi.intel.com>
-References: <20220303083141.8742-1-warp5tw@gmail.com>
- <20220303083141.8742-10-warp5tw@gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K8SBD1fKdz3bt8
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Mar 2022 21:38:11 +1100 (AEDT)
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id BABF33F5F1
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Mar 2022 10:38:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20210705; t=1646303885;
+ bh=xOhToe4x9f97Ns7B9xh5lureiPwRVmCdE7nXxruX5Ts=;
+ h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+ In-Reply-To:Content-Type;
+ b=ooKEqFUGOYfqprRWuxNZJg3ymUIdePcCluVxYca0fXK/vHIAsLYYoFlNOODAzncR+
+ Hfwmr1rho+t/ji9nm2g+ig3qW6bOpT3JBbej1oLRjuNRuSKpr2RrTip7Xbts8+AAAM
+ MEqPwvqFzmsETDgdaZdWMnLvVXXRiYeKkDbM5kkdCGFF5IjxG53wZEigeGfbSpt1Yu
+ Agz+xFqwTdMRiT37FrHnSfklcllM4vUZdl1lcIBzzf/eu/SaHiNFDxSvWK3JBLNp9D
+ phzfTFVQ8hZ2MCOzZaZDV9M4XqEU7m0dZZXkzit+R4EDo3T6ZOkcUhIxTpYJ6Eq78h
+ TXXmCB1VqhPqQ==
+Received: by mail-wm1-f69.google.com with SMTP id
+ 7-20020a1c1907000000b003471d9bbe8dso1701420wmz.0
+ for <openbmc@lists.ozlabs.org>; Thu, 03 Mar 2022 02:38:05 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+ :content-language:to:cc:references:from:in-reply-to
+ :content-transfer-encoding;
+ bh=xOhToe4x9f97Ns7B9xh5lureiPwRVmCdE7nXxruX5Ts=;
+ b=eOTH9AI2l0CgYC+tvPojhmoWZeY/lm3QHgMG8rsWC9ZB5IQUxTfx7pgh8WwwVVq4hQ
+ ZU2w4da5I8A+yGzaqCadTC4lIlmI9gnH2rLL0B0uC13cfT6CpKbgWobfXqsrNNW1hJPm
+ 0q8Y/LCaet6i+nL9eh6WKbf1mNac8K5082CeAOk4+j3AbDX9gny1XHUQjhktkban9+4b
+ WKu7ZIuXvyuzGa1DLUCF2F3yVLnaSbIxjdogmob0+bD/SvZVrhGYnQWCRXFT2Jcxu4oC
+ 17ih3NfUozbcWviPYVTQzbEIhgFUzsTXLtI1UjiKcDi2gMiyS/Bc/Vf0xq2Ki9h8AFEZ
+ l7Lw==
+X-Gm-Message-State: AOAM530eVX1TJRMZekI33PYrVleg8h8M8Pu9SCPsZL4QqqiXXPj0oSon
+ 6w7/+1M+q0jJpQqf9DiZg3m1yCQbhOV5B1W2AwsVc8qWGSUAucu7260scQ6xapODRpamR1QOcIL
+ MBpj97Ou2S4+yVV2Iow6AZVcV5yiFDP2vsUaZ
+X-Received: by 2002:a17:906:e04:b0:6ce:e210:4fe1 with SMTP id
+ l4-20020a1709060e0400b006cee2104fe1mr27319542eji.402.1646303874424; 
+ Thu, 03 Mar 2022 02:37:54 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJyDYZj81Rphl4dYoYk1zvBPAtcEQQ07HvJC+n5Qx67PuSrOxEweiOj+yiH/LR8TWEP9H/K4/Q==
+X-Received: by 2002:a17:906:e04:b0:6ce:e210:4fe1 with SMTP id
+ l4-20020a1709060e0400b006cee2104fe1mr27319499eji.402.1646303874194; 
+ Thu, 03 Mar 2022 02:37:54 -0800 (PST)
+Received: from [192.168.0.137] (xdsl-188-155-181-108.adslplus.ch.
+ [188.155.181.108]) by smtp.gmail.com with ESMTPSA id
+ d23-20020a1709067a1700b006d0ebe4af89sm558554ejo.20.2022.03.03.02.37.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 03 Mar 2022 02:37:53 -0800 (PST)
+Message-ID: <cb77935e-64e0-c8b6-9fba-9835a3be432f@canonical.com>
+Date: Thu, 3 Mar 2022 11:37:52 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220303083141.8742-10-warp5tw@gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v3 02/11] dt-bindings: i2c: npcm: support NPCM845
+Content-Language: en-US
+To: Tyrone Ting <warp5tw@gmail.com>, avifishman70@gmail.com,
+ tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com,
+ yuenn@google.com, benjaminfair@google.com, robh+dt@kernel.org,
+ yangyicong@hisilicon.com, semen.protsenko@linaro.org, wsa@kernel.org,
+ jie.deng@intel.com, sven@svenpeter.dev, bence98@sch.bme.hu,
+ lukas.bulwahn@gmail.com, arnd@arndb.de, olof@lixom.net,
+ andriy.shevchenko@linux.intel.com, tali.perry@nuvoton.com,
+ Avi.Fishman@nuvoton.com, tomer.maimon@nuvoton.com, KWLIU@nuvoton.com,
+ JJLIU0@nuvoton.com, kfting@nuvoton.com
+References: <20220303083141.8742-1-warp5tw@gmail.com>
+ <20220303083141.8742-3-warp5tw@gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+In-Reply-To: <20220303083141.8742-3-warp5tw@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,46 +108,75 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: tmaimon77@gmail.com, devicetree@vger.kernel.org, tali.perry1@gmail.com,
- linux-i2c@vger.kernel.org, benjaminfair@google.com,
- krzysztof.kozlowski@canonical.com, openbmc@lists.ozlabs.org,
- JJLIU0@nuvoton.com, lukas.bulwahn@gmail.com, tomer.maimon@nuvoton.com,
- KWLIU@nuvoton.com, bence98@sch.bme.hu, arnd@arndb.de, sven@svenpeter.dev,
- robh+dt@kernel.org, Avi.Fishman@nuvoton.com, yangyicong@hisilicon.com,
- semen.protsenko@linaro.org, jie.deng@intel.com, avifishman70@gmail.com,
- venture@google.com, linux-kernel@vger.kernel.org, wsa@kernel.org,
- kfting@nuvoton.com, tali.perry@nuvoton.com, olof@lixom.net
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
+ linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Mar 03, 2022 at 04:31:39PM +0800, Tyrone Ting wrote:
-> From: Tali Perry <tali.perry1@gmail.com>
+On 03/03/2022 09:31, Tyrone Ting wrote:
+> From: Tyrone Ting <kfting@nuvoton.com>
 > 
-> In order to better handle spurious interrupts:
-> 1. Disable incoming interrupts in master only mode.
-> 2. Clear end of busy (EOB) after every interrupt.
-> 3. Return correct status during interrupt.
-
-This is bad commit message, it doesn't explain "why" you are doing these.
-
-...
-
-> +	/*
-> +	 * if irq is not one of the above, make sure EOB is disabled and all
-> +	 * status bits are cleared.
-
-This does not explain why you hide the spurious interrupt.
-
-> +	 */
-> +	if (ret == IRQ_NONE) {
-> +		npcm_i2c_eob_int(bus, false);
-> +		npcm_i2c_clear_master_status(bus);
-> +	}
+> Add compatible and nuvoton,sys-mgr description for NPCM i2c module.
+> 
+> Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
+> Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+> ---
+>  .../bindings/i2c/nuvoton,npcm7xx-i2c.yaml     | 26 +++++++++++++++----
+>  1 file changed, 21 insertions(+), 5 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml b/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
+> index 128444942aec..37976ddcf406 100644
+> --- a/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
+> +++ b/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
+> @@ -7,17 +7,18 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+>  title: nuvoton NPCM7XX I2C Controller Device Tree Bindings
+>  
+>  description: |
+> -  The NPCM750x includes sixteen I2C bus controllers. All Controllers support
+> -  both master and slave mode. Each controller can switch between master and slave
+> -  at run time (i.e. IPMB mode). Each controller has two 16 byte HW FIFO for TX and
+> -  RX.
+> +  I2C bus controllers of the NPCM series support both master and
+> +  slave mode. Each controller can switch between master and slave at run time
+> +  (i.e. IPMB mode). HW FIFO for TX and RX are supported.
+>  
+>  maintainers:
+>    - Tali Perry <tali.perry1@gmail.com>
+>  
+>  properties:
+>    compatible:
+> -    const: nuvoton,npcm750-i2c
+> +    enum:
+> +      - nuvoton,npcm750-i2c
+> +      - nuvoton,npcm845-i2c
+>  
+>    reg:
+>      maxItems: 1
+> @@ -36,6 +37,10 @@ properties:
+>      default: 100000
+>      enum: [100000, 400000, 1000000]
+>  
+> +  nuvoton,sys-mgr:
+> +    $ref: "/schemas/types.yaml#/definitions/phandle"
+> +    description: The phandle of system manager register node.
 > +
-> +	return IRQ_HANDLED;
+>  required:
+>    - compatible
+>    - reg
+> @@ -44,6 +49,16 @@ required:
+>  
+>  allOf:
+>    - $ref: /schemas/i2c/i2c-controller.yaml#
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            const:
+> +              - nuvoton,npcm845-i2c
 
--- 
-With Best Regards,
-Andy Shevchenko
+This should be one line in const (not an enum).
 
+Rest looks good to me.
 
+Best regards,
+Krzysztof
