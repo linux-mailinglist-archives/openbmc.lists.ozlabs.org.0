@@ -1,64 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B4E1B4CB906
-	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 09:32:47 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11D2D4CB90F
+	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 09:33:24 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K8PPS5WJRz3bvM
-	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 19:32:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K8PQ90QDWz3bpf
+	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 19:33:21 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=EvqlPZpK;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=PYzW0wLj;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::52a;
- helo=mail-pg1-x52a.google.com; envelope-from=warp5tw@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::534;
+ helo=mail-pg1-x534.google.com; envelope-from=warp5tw@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=EvqlPZpK; dkim-atps=neutral
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com
- [IPv6:2607:f8b0:4864:20::52a])
+ header.s=20210112 header.b=PYzW0wLj; dkim-atps=neutral
+Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com
+ [IPv6:2607:f8b0:4864:20::534])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K8PNQ4hG9z3bg2
- for <openbmc@lists.ozlabs.org>; Thu,  3 Mar 2022 19:31:50 +1100 (AEDT)
-Received: by mail-pg1-x52a.google.com with SMTP id t14so3914562pgr.3
- for <openbmc@lists.ozlabs.org>; Thu, 03 Mar 2022 00:31:51 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K8PNT4BGhz3by6
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Mar 2022 19:31:53 +1100 (AEDT)
+Received: by mail-pg1-x534.google.com with SMTP id 132so3906540pga.5
+ for <openbmc@lists.ozlabs.org>; Thu, 03 Mar 2022 00:31:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=from:to:cc:subject:date:message-id:in-reply-to:references;
- bh=erxXp3pM+vmnwt5dCKBDd+mcnjI272utGNSkJjQm9os=;
- b=EvqlPZpK/FhAwCgU46yyCn1/DR/GXNUx31r/geQajYQZTgcBCPj3+oQpGb8LYKaM6I
- Py+oh9eglshOwAen03eu88uDeJwzHpkqPCWBqwRQ6y86lcBdJyZIFcam/xjN5tSRcxlA
- guwfdWsbUJ6OzswbSqjRbXrkbta9iwYbpg+67TkSKMRT5Wm5EuN6jyLj470foW/rhWyO
- llRlA1twHALDUgWHBaFfas/dFJmTjhXcOUXHgKpUw1ymgfzYhjAopf9f2X1qJkAOm4Tu
- O3md6TN6r3DwWnyD0Nb1GgxLZjWTbKcZYKFZqnJyCXAYw8UHhC2ZaohEUrgN0KN0AFIC
- p/0A==
+ bh=fQpyb1xRORaJV/DufaNl+38HQWPZYtiWclCn3fUkzf4=;
+ b=PYzW0wLj9FixipL/QF2CIOANDUyFs1yK5UAbx00qEvtO2rBrWp1uzz3GssZ1ZW/KZ9
+ slOoZQHUscZKFf+N1UPTrIcs2vSX5g6qyqADdu/OfTIuDDLFEpE+DQYsyC46goMGF1k9
+ 5hMdJdlHiTEdzTeaUJ9La9VOrSDATRSKhuJ6OD+vu/Y8jYpgytLosvEiYBhwIvNt7ZtZ
+ aADob6EGXUPD3/txGdZX6LHssopScZvNtG1XZJW05eV1RL03wavRjRdzlCx8w5mckHi0
+ WpGs3vtFMYQhqojtVsiidGgKCbBDHUW1+1AAZk75z/gV/NKk/lepLJ1h+RVfbmcgTRaY
+ PqZg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references;
- bh=erxXp3pM+vmnwt5dCKBDd+mcnjI272utGNSkJjQm9os=;
- b=DcOp08hH/tD3tg22g/1Tqkkk+TsF48Zupfvy1dLZL8YqfpXh317v3gTZI/DUt1iUU8
- XSS5BoW7+F7GZZOm552tiqwOmE+89IhOLoymj5l8McMOacjkUgCtDG5vdDkBnTL04Yq7
- G/ZjlOALCCAkvghaZI4wMvg5zzQ5kddineSe+pi1NxuZYd+uCqiG74rjsSuxSsMS5eo2
- JqBYBRjhaWxHUiiViKF9zzMoTrgWGw5xH/Yb4bLFVzEks7vRwmoZMHblwO4dw7QDNE+N
- /DvqXtTkC+HrT/BpB+XH9YFTf+jv8oRnTPYwkTS0WC3YDKWqa0I74rjZkox0EPc8aYtT
- J6eQ==
-X-Gm-Message-State: AOAM530u1KQMbMReY1RCAU4nTjsu1tbzBRTiM0N3Y1vCD/0YNBFY220u
- gq8W5OPLhh9VwGdNrHQjNg==
-X-Google-Smtp-Source: ABdhPJy8KAmbOkAKBXDhMrCYCXH9ke2KfmkfkubbXteCqA2YKtEYeJYD8An3dI4IqGRzwTxSefziOw==
-X-Received: by 2002:a63:481b:0:b0:378:9b24:5163 with SMTP id
- v27-20020a63481b000000b003789b245163mr16830752pga.224.1646296309300; 
- Thu, 03 Mar 2022 00:31:49 -0800 (PST)
+ bh=fQpyb1xRORaJV/DufaNl+38HQWPZYtiWclCn3fUkzf4=;
+ b=zN0Xfmt+TA7mVPzRJR4Y5KuDS7HuJTsQByPgtyqwGtUBojEevfmE5WYeEFzff8snHn
+ BsCGM+eTKJWgZKGGanF6gPbORxqKDNimCm15DrWO8Tv4ZK50c+Y1TITwgetwhjwXpZD8
+ rVcKy7jt9QIDWMq3iD0OeIu77dIiRSWxeN4YTR9P/Ev5TIffw0l90WDdes4ZfZ6CpVPO
+ D+VZEXZDQ6DKIS7/m8WwuTdTgQUZ9KTO/Q2o0P10TZWC7IWBdxCSkH3a027btuI2Sx1a
+ GTai6iKxm+RET4AIXHESDzp4yXrnB5bC+Z5ixS3HAMnVjNQPOoiaCqXgNE3t8uL5HrP8
+ GX/A==
+X-Gm-Message-State: AOAM533y3HeMz4lTCkaps2kiYrt/G3S4JlOLDhTIqQAnU9pjw0SSrAIQ
+ ni/X7z6NTy5unXFngFrhYw==
+X-Google-Smtp-Source: ABdhPJze89CGaMasQnOXZQIxTN/3aDGe/s8xXpxmQ391InTv4sf4WsJq91pwoniorPop+SUBVbaMaQ==
+X-Received: by 2002:aa7:909a:0:b0:4e1:6d4:5905 with SMTP id
+ i26-20020aa7909a000000b004e106d45905mr37141907pfa.34.1646296312106; 
+ Thu, 03 Mar 2022 00:31:52 -0800 (PST)
 Received: from localhost ([2401:e180:8860:3b30:e4a0:392a:996e:c525])
  by smtp.gmail.com with ESMTPSA id
- h17-20020a63df51000000b0036b9776ae5bsm1406174pgj.85.2022.03.03.00.31.48
+ k7-20020a63ff07000000b00372dc67e854sm1392521pgi.14.2022.03.03.00.31.51
  (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Thu, 03 Mar 2022 00:31:48 -0800 (PST)
+ Thu, 03 Mar 2022 00:31:51 -0800 (PST)
 From: Tyrone Ting <warp5tw@gmail.com>
 To: avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
  venture@google.com, yuenn@google.com, benjaminfair@google.com,
@@ -69,9 +69,9 @@ To: avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
  andriy.shevchenko@linux.intel.com, warp5tw@gmail.com,
  tali.perry@nuvoton.com, Avi.Fishman@nuvoton.com, tomer.maimon@nuvoton.com,
  KWLIU@nuvoton.com, JJLIU0@nuvoton.com, kfting@nuvoton.com
-Subject: [PATCH v3 01/11] arm: dts: add new property for NPCM i2c module
-Date: Thu,  3 Mar 2022 16:31:31 +0800
-Message-Id: <20220303083141.8742-2-warp5tw@gmail.com>
+Subject: [PATCH v3 02/11] dt-bindings: i2c: npcm: support NPCM845
+Date: Thu,  3 Mar 2022 16:31:32 +0800
+Message-Id: <20220303083141.8742-3-warp5tw@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20220303083141.8742-1-warp5tw@gmail.com>
 References: <20220303083141.8742-1-warp5tw@gmail.com>
@@ -93,146 +93,78 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 From: Tyrone Ting <kfting@nuvoton.com>
 
-Add nuvoton,sys-mgr property for controlling NPCM gcr register.
+Add compatible and nuvoton,sys-mgr description for NPCM i2c module.
 
 Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
 Signed-off-by: Tali Perry <tali.perry1@gmail.com>
 ---
- arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ .../bindings/i2c/nuvoton,npcm7xx-i2c.yaml     | 26 +++++++++++++++----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
-index 3696980a3da1..0fee5fc67e02 100644
---- a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
-+++ b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
-@@ -371,6 +371,7 @@
- 				interrupts = <GIC_SPI 64 IRQ_TYPE_LEVEL_HIGH>;
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&smb0_pins>;
-+				nuvoton,sys-mgr = <&gcr>;
- 				status = "disabled";
- 			};
+diff --git a/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml b/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
+index 128444942aec..37976ddcf406 100644
+--- a/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
++++ b/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
+@@ -7,17 +7,18 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
+ title: nuvoton NPCM7XX I2C Controller Device Tree Bindings
  
-@@ -383,6 +384,7 @@
- 				interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>;
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&smb1_pins>;
-+				nuvoton,sys-mgr = <&gcr>;
- 				status = "disabled";
- 			};
+ description: |
+-  The NPCM750x includes sixteen I2C bus controllers. All Controllers support
+-  both master and slave mode. Each controller can switch between master and slave
+-  at run time (i.e. IPMB mode). Each controller has two 16 byte HW FIFO for TX and
+-  RX.
++  I2C bus controllers of the NPCM series support both master and
++  slave mode. Each controller can switch between master and slave at run time
++  (i.e. IPMB mode). HW FIFO for TX and RX are supported.
  
-@@ -395,6 +397,7 @@
- 				interrupts = <GIC_SPI 66 IRQ_TYPE_LEVEL_HIGH>;
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&smb2_pins>;
-+				nuvoton,sys-mgr = <&gcr>;
- 				status = "disabled";
- 			};
+ maintainers:
+   - Tali Perry <tali.perry1@gmail.com>
  
-@@ -407,6 +410,7 @@
- 				interrupts = <GIC_SPI 67 IRQ_TYPE_LEVEL_HIGH>;
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&smb3_pins>;
-+				nuvoton,sys-mgr = <&gcr>;
- 				status = "disabled";
- 			};
+ properties:
+   compatible:
+-    const: nuvoton,npcm750-i2c
++    enum:
++      - nuvoton,npcm750-i2c
++      - nuvoton,npcm845-i2c
  
-@@ -419,6 +423,7 @@
- 				interrupts = <GIC_SPI 68 IRQ_TYPE_LEVEL_HIGH>;
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&smb4_pins>;
-+				nuvoton,sys-mgr = <&gcr>;
- 				status = "disabled";
- 			};
+   reg:
+     maxItems: 1
+@@ -36,6 +37,10 @@ properties:
+     default: 100000
+     enum: [100000, 400000, 1000000]
  
-@@ -431,6 +436,7 @@
- 				interrupts = <GIC_SPI 69 IRQ_TYPE_LEVEL_HIGH>;
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&smb5_pins>;
-+				nuvoton,sys-mgr = <&gcr>;
- 				status = "disabled";
- 			};
++  nuvoton,sys-mgr:
++    $ref: "/schemas/types.yaml#/definitions/phandle"
++    description: The phandle of system manager register node.
++
+ required:
+   - compatible
+   - reg
+@@ -44,6 +49,16 @@ required:
  
-@@ -443,6 +449,7 @@
- 				interrupts = <GIC_SPI 70 IRQ_TYPE_LEVEL_HIGH>;
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&smb6_pins>;
-+				nuvoton,sys-mgr = <&gcr>;
- 				status = "disabled";
- 			};
+ allOf:
+   - $ref: /schemas/i2c/i2c-controller.yaml#
++  - if:
++      properties:
++        compatible:
++          contains:
++            const:
++              - nuvoton,npcm845-i2c
++
++    then:
++      required:
++        - nuvoton,sys-mgr
  
-@@ -455,6 +462,7 @@
- 				interrupts = <GIC_SPI 71 IRQ_TYPE_LEVEL_HIGH>;
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&smb7_pins>;
-+				nuvoton,sys-mgr = <&gcr>;
- 				status = "disabled";
- 			};
+ unevaluatedProperties: false
  
-@@ -467,6 +475,7 @@
- 				interrupts = <GIC_SPI 72 IRQ_TYPE_LEVEL_HIGH>;
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&smb8_pins>;
-+				nuvoton,sys-mgr = <&gcr>;
- 				status = "disabled";
- 			};
+@@ -57,6 +72,7 @@ examples:
+         clock-frequency = <100000>;
+         interrupts = <GIC_SPI 64 IRQ_TYPE_LEVEL_HIGH>;
+         compatible = "nuvoton,npcm750-i2c";
++        nuvoton,sys-mgr = <&gcr>;
+     };
  
-@@ -479,6 +488,7 @@
- 				interrupts = <GIC_SPI 73 IRQ_TYPE_LEVEL_HIGH>;
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&smb9_pins>;
-+				nuvoton,sys-mgr = <&gcr>;
- 				status = "disabled";
- 			};
- 
-@@ -491,6 +501,7 @@
- 				interrupts = <GIC_SPI 74 IRQ_TYPE_LEVEL_HIGH>;
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&smb10_pins>;
-+				nuvoton,sys-mgr = <&gcr>;
- 				status = "disabled";
- 			};
- 
-@@ -503,6 +514,7 @@
- 				interrupts = <GIC_SPI 75 IRQ_TYPE_LEVEL_HIGH>;
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&smb11_pins>;
-+				nuvoton,sys-mgr = <&gcr>;
- 				status = "disabled";
- 			};
- 
-@@ -515,6 +527,7 @@
- 				interrupts = <GIC_SPI 76 IRQ_TYPE_LEVEL_HIGH>;
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&smb12_pins>;
-+				nuvoton,sys-mgr = <&gcr>;
- 				status = "disabled";
- 			};
- 
-@@ -527,6 +540,7 @@
- 				interrupts = <GIC_SPI 77 IRQ_TYPE_LEVEL_HIGH>;
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&smb13_pins>;
-+				nuvoton,sys-mgr = <&gcr>;
- 				status = "disabled";
- 			};
- 
-@@ -539,6 +553,7 @@
- 				interrupts = <GIC_SPI 78 IRQ_TYPE_LEVEL_HIGH>;
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&smb14_pins>;
-+				nuvoton,sys-mgr = <&gcr>;
- 				status = "disabled";
- 			};
- 
-@@ -551,6 +566,7 @@
- 				interrupts = <GIC_SPI 79 IRQ_TYPE_LEVEL_HIGH>;
- 				pinctrl-names = "default";
- 				pinctrl-0 = <&smb15_pins>;
-+				nuvoton,sys-mgr = <&gcr>;
- 				status = "disabled";
- 			};
- 		};
+ ...
 -- 
 2.17.1
 
