@@ -1,64 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11D2D4CB90F
-	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 09:33:24 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 839C84CB919
+	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 09:34:00 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K8PQ90QDWz3bpf
-	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 19:33:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K8PQs3xl3z3byL
+	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 19:33:57 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=PYzW0wLj;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=AJBqM8KI;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::534;
- helo=mail-pg1-x534.google.com; envelope-from=warp5tw@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::634;
+ helo=mail-pl1-x634.google.com; envelope-from=warp5tw@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=PYzW0wLj; dkim-atps=neutral
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com
- [IPv6:2607:f8b0:4864:20::534])
+ header.s=20210112 header.b=AJBqM8KI; dkim-atps=neutral
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com
+ [IPv6:2607:f8b0:4864:20::634])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K8PNT4BGhz3by6
- for <openbmc@lists.ozlabs.org>; Thu,  3 Mar 2022 19:31:53 +1100 (AEDT)
-Received: by mail-pg1-x534.google.com with SMTP id 132so3906540pga.5
- for <openbmc@lists.ozlabs.org>; Thu, 03 Mar 2022 00:31:54 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K8PNX0pzpz3byP
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Mar 2022 19:31:55 +1100 (AEDT)
+Received: by mail-pl1-x634.google.com with SMTP id c9so3925305pll.0
+ for <openbmc@lists.ozlabs.org>; Thu, 03 Mar 2022 00:31:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=from:to:cc:subject:date:message-id:in-reply-to:references;
- bh=fQpyb1xRORaJV/DufaNl+38HQWPZYtiWclCn3fUkzf4=;
- b=PYzW0wLj9FixipL/QF2CIOANDUyFs1yK5UAbx00qEvtO2rBrWp1uzz3GssZ1ZW/KZ9
- slOoZQHUscZKFf+N1UPTrIcs2vSX5g6qyqADdu/OfTIuDDLFEpE+DQYsyC46goMGF1k9
- 5hMdJdlHiTEdzTeaUJ9La9VOrSDATRSKhuJ6OD+vu/Y8jYpgytLosvEiYBhwIvNt7ZtZ
- aADob6EGXUPD3/txGdZX6LHssopScZvNtG1XZJW05eV1RL03wavRjRdzlCx8w5mckHi0
- WpGs3vtFMYQhqojtVsiidGgKCbBDHUW1+1AAZk75z/gV/NKk/lepLJ1h+RVfbmcgTRaY
- PqZg==
+ bh=VHaRDl/NeA/sk1ew9ZkQ6wgAVfjZxhVj9/cWGyaZpno=;
+ b=AJBqM8KINeoSRfWd9e1yx+VHrQVOEYrRFBl3cJiRuwIUKEbKVendgOQ7Xy46sdKU3k
+ glEwJj3KfpKi4Qm2qhlqxhpUjd5S5v/Dy1R3NBpp3YS0QBY6+cuKJcFcMgZaRQSkhs+B
+ 1fONo7ec+hBHBOMcreST8AMQeepSlkLBe5XAgpIGa62HQECMIDO8gzkwiDvDmlUGNOUU
+ QZND0Vv/NyOhr/Rq3dQObQ0poDmRxzIXO+xzOyr4Mk0NS8QLXeCwhm+dZIcXgq8PJnLh
+ kccjPPScsJCao6pDfscVLkAg2Mgk+b0VmqdnPVdO5vqApQrDdvuC0Yc+dvcs9zp2Ff6D
+ 8IIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references;
- bh=fQpyb1xRORaJV/DufaNl+38HQWPZYtiWclCn3fUkzf4=;
- b=zN0Xfmt+TA7mVPzRJR4Y5KuDS7HuJTsQByPgtyqwGtUBojEevfmE5WYeEFzff8snHn
- BsCGM+eTKJWgZKGGanF6gPbORxqKDNimCm15DrWO8Tv4ZK50c+Y1TITwgetwhjwXpZD8
- rVcKy7jt9QIDWMq3iD0OeIu77dIiRSWxeN4YTR9P/Ev5TIffw0l90WDdes4ZfZ6CpVPO
- D+VZEXZDQ6DKIS7/m8WwuTdTgQUZ9KTO/Q2o0P10TZWC7IWBdxCSkH3a027btuI2Sx1a
- GTai6iKxm+RET4AIXHESDzp4yXrnB5bC+Z5ixS3HAMnVjNQPOoiaCqXgNE3t8uL5HrP8
- GX/A==
-X-Gm-Message-State: AOAM533y3HeMz4lTCkaps2kiYrt/G3S4JlOLDhTIqQAnU9pjw0SSrAIQ
- ni/X7z6NTy5unXFngFrhYw==
-X-Google-Smtp-Source: ABdhPJze89CGaMasQnOXZQIxTN/3aDGe/s8xXpxmQ391InTv4sf4WsJq91pwoniorPop+SUBVbaMaQ==
-X-Received: by 2002:aa7:909a:0:b0:4e1:6d4:5905 with SMTP id
- i26-20020aa7909a000000b004e106d45905mr37141907pfa.34.1646296312106; 
- Thu, 03 Mar 2022 00:31:52 -0800 (PST)
+ bh=VHaRDl/NeA/sk1ew9ZkQ6wgAVfjZxhVj9/cWGyaZpno=;
+ b=OvxF8Xuo1nrQIUF6/JmSQxqVtTXPj8yn1NY5mP9UIn5syhE9xlNN1enu4gBfPf9kyk
+ TBRc4HcNral048x/zPXRgGD0qj2VIuLku0rwwNec1mR0oEFtgPjFJ6E5fbfLENHwyrF5
+ nUcvJTFThgLyRm+fxpRTdu5Rjp8W4BMmT1o2TVHGpiR6HxNMBBd2WVfG/6197T8DWpc4
+ Jhxp+FO6/Wv33sFxjJ6uZuAVzh+JgVfZi8NrZiml//V6R2cEfZPmqsBUFw0YbFk3nohb
+ QY/7msXmhYRT7NqNlxxDIFRr6m3LlCYtWW4cl3AxIjZBQjuvBqeuNWd63DlIgUUjyqZS
+ yFLA==
+X-Gm-Message-State: AOAM533j6oE8N5qn4L85gH3IONiGFk++os8dmaRcM0wvFuPEbJuuzWqO
+ Y7O8usBxHSaUcGixAN9NoQ==
+X-Google-Smtp-Source: ABdhPJzZrSthr04PXHtErJjKuzAkidzKO32y5t0cJZbCPeiqz0iaSN6WVOgZ7Iqc0ZrnKM+EKsrtIA==
+X-Received: by 2002:a17:902:d643:b0:151:6f2c:cfb4 with SMTP id
+ y3-20020a170902d64300b001516f2ccfb4mr17463091plh.120.1646296314590; 
+ Thu, 03 Mar 2022 00:31:54 -0800 (PST)
 Received: from localhost ([2401:e180:8860:3b30:e4a0:392a:996e:c525])
  by smtp.gmail.com with ESMTPSA id
- k7-20020a63ff07000000b00372dc67e854sm1392521pgi.14.2022.03.03.00.31.51
+ ng11-20020a17090b1a8b00b001beefe9a1cbsm1488852pjb.31.2022.03.03.00.31.53
  (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Thu, 03 Mar 2022 00:31:51 -0800 (PST)
+ Thu, 03 Mar 2022 00:31:54 -0800 (PST)
 From: Tyrone Ting <warp5tw@gmail.com>
 To: avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
  venture@google.com, yuenn@google.com, benjaminfair@google.com,
@@ -69,9 +69,9 @@ To: avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
  andriy.shevchenko@linux.intel.com, warp5tw@gmail.com,
  tali.perry@nuvoton.com, Avi.Fishman@nuvoton.com, tomer.maimon@nuvoton.com,
  KWLIU@nuvoton.com, JJLIU0@nuvoton.com, kfting@nuvoton.com
-Subject: [PATCH v3 02/11] dt-bindings: i2c: npcm: support NPCM845
-Date: Thu,  3 Mar 2022 16:31:32 +0800
-Message-Id: <20220303083141.8742-3-warp5tw@gmail.com>
+Subject: [PATCH v3 03/11] i2c: npcm: Fix client address calculation
+Date: Thu,  3 Mar 2022 16:31:33 +0800
+Message-Id: <20220303083141.8742-4-warp5tw@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20220303083141.8742-1-warp5tw@gmail.com>
 References: <20220303083141.8742-1-warp5tw@gmail.com>
@@ -91,80 +91,31 @@ Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Tyrone Ting <kfting@nuvoton.com>
+From: Tali Perry <tali.perry1@gmail.com>
 
-Add compatible and nuvoton,sys-mgr description for NPCM i2c module.
+Fix i2c client address by left-shifting 1 bit before
+applying it to the data register.
 
-Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
+Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
 Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
 ---
- .../bindings/i2c/nuvoton,npcm7xx-i2c.yaml     | 26 +++++++++++++++----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ drivers/i2c/busses/i2c-npcm7xx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml b/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
-index 128444942aec..37976ddcf406 100644
---- a/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
-+++ b/Documentation/devicetree/bindings/i2c/nuvoton,npcm7xx-i2c.yaml
-@@ -7,17 +7,18 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: nuvoton NPCM7XX I2C Controller Device Tree Bindings
+diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
+index 2ad166355ec9..4c225e1a058f 100644
+--- a/drivers/i2c/busses/i2c-npcm7xx.c
++++ b/drivers/i2c/busses/i2c-npcm7xx.c
+@@ -2131,7 +2131,7 @@ static int npcm_i2c_master_xfer(struct i2c_adapter *adap, struct i2c_msg *msgs,
+ 	}
  
- description: |
--  The NPCM750x includes sixteen I2C bus controllers. All Controllers support
--  both master and slave mode. Each controller can switch between master and slave
--  at run time (i.e. IPMB mode). Each controller has two 16 byte HW FIFO for TX and
--  RX.
-+  I2C bus controllers of the NPCM series support both master and
-+  slave mode. Each controller can switch between master and slave at run time
-+  (i.e. IPMB mode). HW FIFO for TX and RX are supported.
- 
- maintainers:
-   - Tali Perry <tali.perry1@gmail.com>
- 
- properties:
-   compatible:
--    const: nuvoton,npcm750-i2c
-+    enum:
-+      - nuvoton,npcm750-i2c
-+      - nuvoton,npcm845-i2c
- 
-   reg:
-     maxItems: 1
-@@ -36,6 +37,10 @@ properties:
-     default: 100000
-     enum: [100000, 400000, 1000000]
- 
-+  nuvoton,sys-mgr:
-+    $ref: "/schemas/types.yaml#/definitions/phandle"
-+    description: The phandle of system manager register node.
-+
- required:
-   - compatible
-   - reg
-@@ -44,6 +49,16 @@ required:
- 
- allOf:
-   - $ref: /schemas/i2c/i2c-controller.yaml#
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            const:
-+              - nuvoton,npcm845-i2c
-+
-+    then:
-+      required:
-+        - nuvoton,sys-mgr
- 
- unevaluatedProperties: false
- 
-@@ -57,6 +72,7 @@ examples:
-         clock-frequency = <100000>;
-         interrupts = <GIC_SPI 64 IRQ_TYPE_LEVEL_HIGH>;
-         compatible = "nuvoton,npcm750-i2c";
-+        nuvoton,sys-mgr = <&gcr>;
-     };
- 
- ...
+ 	npcm_i2c_init_params(bus);
+-	bus->dest_addr = slave_addr;
++	bus->dest_addr = slave_addr << 1;
+ 	bus->msgs = msgs;
+ 	bus->msgs_num = num;
+ 	bus->cmd_err = 0;
 -- 
 2.17.1
 
