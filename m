@@ -1,102 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1B9E4CBB91
-	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 11:39:14 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 896944CBBA7
+	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 11:46:19 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K8SCM5TlRz3c2N
-	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 21:39:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K8SMX4xZHz3by9
+	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 21:46:16 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=canonical.com header.i=@canonical.com header.a=rsa-sha256 header.s=20210705 header.b=WSVknr8T;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=I4aroOM2;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=canonical.com (client-ip=185.125.188.123;
- helo=smtp-relay-internal-1.canonical.com;
- envelope-from=krzysztof.kozlowski@canonical.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.115; helo=mga14.intel.com;
+ envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=canonical.com header.i=@canonical.com
- header.a=rsa-sha256 header.s=20210705 header.b=WSVknr8T; 
- dkim-atps=neutral
-Received: from smtp-relay-internal-1.canonical.com
- (smtp-relay-internal-1.canonical.com [185.125.188.123])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
+ header.s=Intel header.b=I4aroOM2; dkim-atps=neutral
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K8SBl4z2Vz3c2F
- for <openbmc@lists.ozlabs.org>; Thu,  3 Mar 2022 21:38:39 +1100 (AEDT)
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id E41C93F5FE
- for <openbmc@lists.ozlabs.org>; Thu,  3 Mar 2022 10:38:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1646303914;
- bh=oUgxYlRh1Rc86CInB1MrO8TopcdQbjgGLLfiUWjhGQU=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
- In-Reply-To:Content-Type;
- b=WSVknr8T5SuZQdjE024UDzLzyYoFbgyGizW5sFUoOT+KI505pKc1s6PxlxD4HElVF
- a/rPYDaTdyZ6KPoMJbtaRRpQIDCW3EYlcgIXR96S+twwcTOYXiWfN6JWK3faFeE0tL
- 4/k/BvTEO1EkrTbjhcPJ3/UHiAUKqdfkbN62hdB/NBIxgapblVTT1VLYEabfPxryar
- cjDQQYbChTLIS9akNn98+QbxifLwkXgCb39LH6dZmB43ssDr/pTHFYtmYBrflsjSo0
- gtPfQo1IELQzLJIVsiiwJ2hfJpoNwltlzSozMIq9OLt6OVxSlYg+v/4dtM6IhzP9uR
- rn25i1gVbcjFQ==
-Received: by mail-ed1-f72.google.com with SMTP id
- y26-20020a50ce1a000000b00415e9b35c81so384176edi.9
- for <openbmc@lists.ozlabs.org>; Thu, 03 Mar 2022 02:38:34 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
- :content-language:to:cc:references:from:in-reply-to
- :content-transfer-encoding;
- bh=oUgxYlRh1Rc86CInB1MrO8TopcdQbjgGLLfiUWjhGQU=;
- b=13bZgW+WZDkf7Uj1dPXMwJwJIKUrh4hUmL/sAvv+1y0DlbsNLeUfcmJu6pbcN3IojE
- UbuznSQkVXMZOUw1jhF2p8RKH7zfqFKCYeCkQL1Tr5VbxMFK3/1j7t8sLF3WsisYxZ5W
- bVRLR4axesYf162WQA/NhW3ChrkpPMjck5DOoBweWMdSrBZ5PrPNRR1pxHH/4iX0vJ0s
- ePzC4w7QP7UrZaWf54FPXHk11yzALoX1ybNFMxNyjWTs+jAKtgRZO9JjQvnSWQ6uMmnL
- syRBpNCdFQwrE3ozAYtpR/fnDryPLXAnTVvrRbTKK9SPVdXjJbPcBS/uOVJj2jTintUv
- 2Xpg==
-X-Gm-Message-State: AOAM530Fvj2ZyEpxun+aeyKiOC2uZDPXJ5KXI8pMSgSxTR+co4wAZUwT
- QTKoIOB0jxkjwEZAJHLse68xeICFqFwy1gJpOW4tweY1GGKdmwYVxKQqRy0DB+jHUlhu/LNcm+X
- UTSm98ItpJgi7Hxsui093D7hV1GWxRbthzAoW
-X-Received: by 2002:a17:907:96ac:b0:6d3:4554:598b with SMTP id
- hd44-20020a17090796ac00b006d34554598bmr26295415ejc.424.1646303911146; 
- Thu, 03 Mar 2022 02:38:31 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJye4d98ukofTvzQtJabYxzo+G/VGXZ0sIYUyS+Fa9bVBgV0PS+X9Wcsjj3cNKZfPz17muBx8A==
-X-Received: by 2002:a17:907:96ac:b0:6d3:4554:598b with SMTP id
- hd44-20020a17090796ac00b006d34554598bmr26295394ejc.424.1646303910960; 
- Thu, 03 Mar 2022 02:38:30 -0800 (PST)
-Received: from [192.168.0.137] (xdsl-188-155-181-108.adslplus.ch.
- [188.155.181.108]) by smtp.gmail.com with ESMTPSA id
- co19-20020a0564020c1300b00412879e4645sm671037edb.55.2022.03.03.02.38.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 03 Mar 2022 02:38:30 -0800 (PST)
-Message-ID: <d4f6fc91-ad07-7d4b-9c87-ec556ef26ff7@canonical.com>
-Date: Thu, 3 Mar 2022 11:38:29 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v3 04/11] i2c: npcm: Change the way of getting GCR regmap
-Content-Language: en-US
-To: Tyrone Ting <warp5tw@gmail.com>, avifishman70@gmail.com,
- tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com,
- yuenn@google.com, benjaminfair@google.com, robh+dt@kernel.org,
- yangyicong@hisilicon.com, semen.protsenko@linaro.org, wsa@kernel.org,
- jie.deng@intel.com, sven@svenpeter.dev, bence98@sch.bme.hu,
- lukas.bulwahn@gmail.com, arnd@arndb.de, olof@lixom.net,
- andriy.shevchenko@linux.intel.com, tali.perry@nuvoton.com,
- Avi.Fishman@nuvoton.com, tomer.maimon@nuvoton.com, KWLIU@nuvoton.com,
- JJLIU0@nuvoton.com, kfting@nuvoton.com
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K8SM60yjMz3bnd
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Mar 2022 21:45:52 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1646304355; x=1677840355;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=dVD9z92VH43KxwwjXiWGXRu7osivdsQyI2JqeG5AhT4=;
+ b=I4aroOM2awpuglJPPS6aedTdbzSblQ1Kfnvv/OU/R29dpYkHekahYnkG
+ qv5+UWeMNVsFdu3yU/+LsGct0UrvYPd4sIE6B+QD9fcp6xZppw0F21Fy1
+ 4ACsn85UYALmlkBdeCgXNqBVqeW+i+iD6XWK+iusjDj0ZAmkUiEV/OukJ
+ r7NVUJqbwa/qwlEqm6mldPZxmTWqMFH9Tjj0Oy+VnYa5bVKziVHiejodm
+ nT6sauaBN29z1JsJuJbr54tQBwplQi4uQSDh4Yc+hpxGEPejUDusPN+IG
+ 53caBK4kt4079gRR2NHoEAR+vuk00fsOhYq+vEuBGy6aORkS26/v+xkPr g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10274"; a="253834376"
+X-IronPort-AV: E=Sophos;i="5.90,151,1643702400"; d="scan'208";a="253834376"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+ by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Mar 2022 02:44:50 -0800
+X-IronPort-AV: E=Sophos;i="5.90,151,1643702400"; d="scan'208";a="576447018"
+Received: from smile.fi.intel.com ([10.237.72.59])
+ by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Mar 2022 02:44:44 -0800
+Received: from andy by smile.fi.intel.com with local (Exim 4.95)
+ (envelope-from <andriy.shevchenko@linux.intel.com>)
+ id 1nPiw8-00AkCJ-VT; Thu, 03 Mar 2022 12:43:56 +0200
+Date: Thu, 3 Mar 2022 12:43:56 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Tyrone Ting <warp5tw@gmail.com>
+Subject: Re: [PATCH v3 11/11] i2c: npcm: Support NPCM845
+Message-ID: <YiCb7LNY9tmMCZx7@smile.fi.intel.com>
 References: <20220303083141.8742-1-warp5tw@gmail.com>
- <20220303083141.8742-5-warp5tw@gmail.com>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <20220303083141.8742-5-warp5tw@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+ <20220303083141.8742-12-warp5tw@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220303083141.8742-12-warp5tw@gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,30 +71,90 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: tmaimon77@gmail.com, devicetree@vger.kernel.org, tali.perry1@gmail.com,
+ linux-i2c@vger.kernel.org, benjaminfair@google.com,
+ krzysztof.kozlowski@canonical.com, openbmc@lists.ozlabs.org,
+ JJLIU0@nuvoton.com, lukas.bulwahn@gmail.com, tomer.maimon@nuvoton.com,
+ KWLIU@nuvoton.com, bence98@sch.bme.hu, arnd@arndb.de, sven@svenpeter.dev,
+ robh+dt@kernel.org, Avi.Fishman@nuvoton.com, yangyicong@hisilicon.com,
+ semen.protsenko@linaro.org, jie.deng@intel.com, avifishman70@gmail.com,
+ venture@google.com, linux-kernel@vger.kernel.org, wsa@kernel.org,
+ kfting@nuvoton.com, tali.perry@nuvoton.com, olof@lixom.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 03/03/2022 09:31, Tyrone Ting wrote:
-> From: Tali Perry <tali.perry1@gmail.com>
+On Thu, Mar 03, 2022 at 04:31:41PM +0800, Tyrone Ting wrote:
+> From: Tyrone Ting <kfting@nuvoton.com>
 > 
-> Change the way of getting NPCM system manager reigster (GCR)
-> and still maintain the old mechanism as a fallback if getting
-> nuvoton,sys-mgr fails while working with the legacy devicetree
-> file.
+> Add NPCM8XX I2C support.
+> The NPCM8XX uses a similar i2c module as NPCM7XX.
+> The internal HW FIFO is larger in NPCM8XX.
 > 
-> Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
-> Signed-off-by: Tali Perry <tali.perry1@gmail.com>
 > Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
-> ---
->  drivers/i2c/busses/i2c-npcm7xx.c | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
-> 
+> Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+
+Wrong SoB chain.
+
+...
+
+> +static const struct npcm_i2c_data npxm7xx_i2c_data = {
+> +	.fifo_size = 16,
+> +	.segctl_init_val = 0x0333F000,
+> +	.txf_sts_tx_bytes = GENMASK(4, 0),
+> +	.rxf_sts_rx_bytes = GENMASK(4, 0),
+> +	.rxf_ctl_last_pec = BIT(5)
+
++ Comma.
+
+> +};
+> +
+> +static const struct npcm_i2c_data npxm8xx_i2c_data = {
+> +	.fifo_size = 32,
+> +	.segctl_init_val = 0x9333F000,
+> +	.txf_sts_tx_bytes = GENMASK(5, 0),
+> +	.rxf_sts_rx_bytes = GENMASK(5, 0),
+> +	.rxf_ctl_last_pec = BIT(7)
+
+Ditto.
+
+> +};
+
+...
+
+> -	left_in_fifo = FIELD_GET(NPCM_I2CTXF_STS_TX_BYTES,
+> -				 ioread8(bus->reg + NPCM_I2CTXF_STS));
+> +	left_in_fifo = (bus->data->txf_sts_tx_bytes &
+> +			ioread8(bus->reg + NPCM_I2CTXF_STS));
+
+Besides too many parentheses, this is an interesting change. So, in different
+versions of IP the field is on different bits? Perhaps it means that you need
+something like internal ops structure for all these, where you will have been
+using the statically defined masks?
+
+...
+
+> +	match = of_match_device(npcm_i2c_bus_of_table, dev);
+> +	if (!match) {
+> +		dev_err(dev, "OF data missing\n");
+> +		return -EINVAL;
+> +	}
+> +	bus->data = match->data;
+
+This is NIH of_device_get_match_data().
+
+...
+
+> -static const struct of_device_id npcm_i2c_bus_of_table[] = {
+> -	{ .compatible = "nuvoton,npcm750-i2c", },
+> -	{}
+> -};
+> -MODULE_DEVICE_TABLE(of, npcm_i2c_bus_of_table);
+> -
+
+Redundant change, leave this as is.
+
+-- 
+With Best Regards,
+Andy Shevchenko
 
 
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-
-
-Best regards,
-Krzysztof
