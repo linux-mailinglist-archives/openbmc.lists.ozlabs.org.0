@@ -2,67 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 427F04CBE25
-	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 13:49:01 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 71BBF4CBE37
+	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 13:55:06 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K8W562pRMz3c1T
-	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 23:48:58 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K8WD73rptz3c31
+	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 23:55:03 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=TUnpu7WL;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=IKexSrjm;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::831;
- helo=mail-qt1-x831.google.com; envelope-from=tali.perry1@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72b;
+ helo=mail-qk1-x72b.google.com; envelope-from=tali.perry1@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=TUnpu7WL; dkim-atps=neutral
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com
- [IPv6:2607:f8b0:4864:20::831])
+ header.s=20210112 header.b=IKexSrjm; dkim-atps=neutral
+Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com
+ [IPv6:2607:f8b0:4864:20::72b])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K8W4g2LpXz3bsc
- for <openbmc@lists.ozlabs.org>; Thu,  3 Mar 2022 23:48:33 +1100 (AEDT)
-Received: by mail-qt1-x831.google.com with SMTP id e2so4400263qte.12
- for <openbmc@lists.ozlabs.org>; Thu, 03 Mar 2022 04:48:33 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K8WCj31Mfz2x9R
+ for <openbmc@lists.ozlabs.org>; Thu,  3 Mar 2022 23:54:40 +1100 (AEDT)
+Received: by mail-qk1-x72b.google.com with SMTP id c7so3751338qka.7
+ for <openbmc@lists.ozlabs.org>; Thu, 03 Mar 2022 04:54:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=TlJoiS/nwF7TWolI2yLIZqV/64cBek/sdtvX3O8gnwU=;
- b=TUnpu7WLjU0tQQwSJK9oBU77zJbZ8kxUQwgULEofTStglq/4J9iYmAAQ63xWuGyBkF
- sinXZNw//WadLaI0pAYmUNYoD701mqqyHgHzhVVwv7DTK9Z0Cxk1YyMhfFQ+jiR8KkIk
- Dsvko6U4gEvyoX4qzfx3bt+shpotKuqOdfH0AnowvwevgmXLp+h2HOAgBn9A6sc84fsC
- mFBKeTo48bzzpq+rlotxKuMS4bi5cVQ4xcKCKJR1iWsgKaCoJJjE02RpqTUXPEtkNF2C
- p4WOvYvDb7B86Zyfo2D75Z+HQuUn8FyGBzyNce7WUv0AQrCZJttjee3yayRVidoTPuLD
- NNbw==
+ :cc; bh=Gpvc/JncUD6k2jJA3rPe/Gzgk+Fq4UJfHnGecuBxreA=;
+ b=IKexSrjmgJhU/WoXJKfWByEwrcXXCaNVPlDjEbMiSg0nxBodoBSBq20+tAwigK6+pC
+ 9Dp6cFBNY+QNtcPfFvnwju/gHjuFP+6ukcCnooqujSXxGAkBpnouqN1b+TQXjs+Yfi36
+ WUWSGgNTjHRQiqueElBcOjkFqfNubmTwkDuIPRDKk65BJVYxujTBTUB/R9Yj71lu8EmR
+ 1Dh4K2vfrjlXP5q1NTc264erP0AEzWAhFK8isbrZAlyXsw11MyCLEOS2Xu/38VYki9dP
+ VCdIcInwZgLBQFuPC8S/9sVzCg7bShQNrudP7qD0LkThcDgEkk0geVGMx22W9GCSObdd
+ eVoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=TlJoiS/nwF7TWolI2yLIZqV/64cBek/sdtvX3O8gnwU=;
- b=GTPM6IbLdapustJesRm7c0E6dcb3blHYY9OvGofDEjCuScnCliqERK+EoDbMZKCXvA
- S/8Kn6QVGtCakuuNNo2lf2/X2rt4XAG+IVoVjhjEAChn07kU5IL0zJL2deWUzDmhYd58
- 10hlS45uE/w8sAbuBVEp87XZHPlJFvlXFaLv1dsRwa7QCuWFE8p/L6y2VlbtxZ/l3klo
- NZLqP0ek5J9apjMTgSRvdvtWO1IYObGUSqwmhSmKwWQUg37hunuAyNmHWbgEXRSgWgis
- ucpOywFsMxNzcxI1GIQcgbYvdET2dCCHK2FzUl+dC2IjIisnmuX2mToYTn29QjDLPido
- Arxg==
-X-Gm-Message-State: AOAM533oIjJR4sBBKgBDL1PSuJOisXd56NeopspSxg7fUmE060x4iWx2
- CA8hJSgBWcw2CEsbFPqS08/qzSswOvRXGHY45MQ=
-X-Google-Smtp-Source: ABdhPJwmy0Lxq3dOOuPailZC57EbGc10MJu5b4Wb9g6YTokZrF5CoH2wT8ZMYziIglwOWdfPszhyNoPKPMzGFVf2phs=
-X-Received: by 2002:a05:622a:1985:b0:2de:b88:4673 with SMTP id
- u5-20020a05622a198500b002de0b884673mr27451315qtc.230.1646311711557; Thu, 03
- Mar 2022 04:48:31 -0800 (PST)
+ bh=Gpvc/JncUD6k2jJA3rPe/Gzgk+Fq4UJfHnGecuBxreA=;
+ b=lWHwnIJq116SoNbliyUm4Llxo4EjEWeKuKDpWrk2PrklHdpPjuLe5R/UE927224jri
+ 3dTgyC7CBkrstHWouKJqykzDiD+JqtzuhMTQn+ws9XOEq36oDTm300Skk3itX0SeqOeA
+ o6S2ZYRCBoN7XxoTURgsLjnLl0VP6pXYmIw/4RLPq66txgGGJqAlY7o66jJWO/MQPKf6
+ cWY8RUVXcJoYOO24Msawr//4BQhhAnsKMDlqpj5syJYZK3VMCrdbFvbiWob4TmiwOxRC
+ meWHfrnxg4CWz2ONJMTNgcn7sPVXVZJ0S41I7mD7NFJkzbLywQ2JBWi9IyrdtO+nCnFg
+ 9j+A==
+X-Gm-Message-State: AOAM532rYuiONDH/0AlGmzBydVCB2TEhmOkdoO7la/2HbfajsooHxute
+ 6wzTXRPd94r4jn8GZiXNN4WFlKEVRg9qh6lcKyE=
+X-Google-Smtp-Source: ABdhPJya62aW6zfOJJA50kUityeXdjHGZGgzkLm44Teu6/f9/Pp5GGbIVsrZWAIDPZCmqYoXqiTzVJWyoZq7y7zgu3A=
+X-Received: by 2002:a05:620a:11:b0:508:7199:40ef with SMTP id
+ j17-20020a05620a001100b00508719940efmr18483948qki.62.1646312078413; Thu, 03
+ Mar 2022 04:54:38 -0800 (PST)
 MIME-Version: 1.0
 References: <20220303083141.8742-1-warp5tw@gmail.com>
- <20220303083141.8742-10-warp5tw@gmail.com>
- <YiCaSSbbszm3qYIQ@smile.fi.intel.com>
-In-Reply-To: <YiCaSSbbszm3qYIQ@smile.fi.intel.com>
+ <20220303083141.8742-9-warp5tw@gmail.com>
+ <YiCZlhJoXPLpQ6/D@smile.fi.intel.com>
+In-Reply-To: <YiCZlhJoXPLpQ6/D@smile.fi.intel.com>
 From: Tali Perry <tali.perry1@gmail.com>
-Date: Thu, 3 Mar 2022 14:48:20 +0200
-Message-ID: <CAHb3i=sStqdSpLKtF_UGmTsOssR_swssTd3pv6c2-z_kiUPTTA@mail.gmail.com>
-Subject: Re: [PATCH v3 09/11] i2c: npcm: Handle spurious interrupts
+Date: Thu, 3 Mar 2022 14:54:27 +0200
+Message-ID: <CAHb3i=t+Ai3w5mMhmZxxMsD7Zv0xpM4ZicMCmdDMtVn_OMbWYA@mail.gmail.com>
+Subject: Re: [PATCH v3 08/11] i2c: npcm: Correct register access width
 To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -93,55 +93,45 @@ Cc: Tomer Maimon <tmaimon77@gmail.com>, devicetree <devicetree@vger.kernel.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-> On Thu, Mar 3, 2022 at 12:37 PM Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
+> On Thu, Mar 03, 2022 at 04:31:38PM +0800, Tyrone Ting wrote:
+> > From: Tyrone Ting <kfting@nuvoton.com>
 > >
-> > On Thu, Mar 03, 2022 at 04:31:39PM +0800, Tyrone Ting wrote:
-> > > From: Tali Perry <tali.perry1@gmail.com>
-> > >
-> > > In order to better handle spurious interrupts:
-> > > 1. Disable incoming interrupts in master only mode.
-> > > 2. Clear end of busy (EOB) after every interrupt.
-> > > 3. Return correct status during interrupt.
-> >
-> > This is bad commit message, it doesn't explain "why" you are doing these.
-> >
-> > ...
+> > Use ioread8 instead of ioread32 to access the SMBnCTL3 register since
+> > the register is only 8-bit wide.
+>
+> > Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
+>
+> No, this is bad commit message, since you have bitwise masks and there is
+> nothing to fix from functional point of view. So, why is this a fix?
+>
+
+The next gen of this device is a 64 bit cpu.
+The module is and was 8 bit.
+
+The ioread32 that seemed to work smoothly on a 32 bit machine
+was causing a panic on a 64 bit machine.
+since the module is 8 bit we changed to ioread8.
+This is working both for the 32 and 64 CPUs with no issue.
 
 
-BMC users connect a huge tree of i2c devices and muxes.
-This tree suffers from spikes, noise and double clocks.
-All these may cause spurious interrupts to the BMC.
-
-If the driver gets an IRQ which was not expected and was not handled
-by the IRQ handler,
-there is nothing left to do but to clear the interrupt and move on.
-If the transaction failed, driver has a recovery function.
-After that, user may retry to send the message.
-
-Indeed the commit message doesn't explain all this.
-We will fix and add to the next patchset.
-
-
-> >
-> > > +     /*
-> > > +      * if irq is not one of the above, make sure EOB is disabled and all
-> > > +      * status bits are cleared.
-> >
-> > This does not explain why you hide the spurious interrupt.
-> >
-> > > +      */
-> > > +     if (ret == IRQ_NONE) {
-> > > +             npcm_i2c_eob_int(bus, false);
-> > > +             npcm_i2c_clear_master_status(bus);
-> > > +     }
-> > > +
-> > > +     return IRQ_HANDLED;
-> >
-> > --
-> > With Best Regards,
-> > Andy Shevchenko
-> >
-> >
+> > Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
+> > Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+>
+> This is wrong SoB chain.
+>
+> ...
+>
+> > -     return !!(I2CCTL3_SCL_LVL & ioread32(bus->reg + NPCM_I2CCTL3));
+> > +     return !!(I2CCTL3_SCL_LVL & ioread8(bus->reg + NPCM_I2CCTL3));
+>
+> ...
+>
+> > -     return !!(I2CCTL3_SDA_LVL & ioread32(bus->reg + NPCM_I2CCTL3));
+> > +     return !!(I2CCTL3_SDA_LVL & ioread8(bus->reg + NPCM_I2CCTL3));
+>
+> --
+> With Best Regards,
+> Andy Shevchenko
 
 Thanks Andy,
 
