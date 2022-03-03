@@ -2,65 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C88534CBFA7
-	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 15:13:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6E4CA4CBFC3
+	for <lists+openbmc@lfdr.de>; Thu,  3 Mar 2022 15:15:54 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K8Xy46MNGz3c1d
-	for <lists+openbmc@lfdr.de>; Fri,  4 Mar 2022 01:13:00 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K8Y1M3CNsz3bvP
+	for <lists+openbmc@lfdr.de>; Fri,  4 Mar 2022 01:15:51 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=PMg0LN2R;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Rs2I15/4;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.151; helo=mga17.intel.com;
+ (client-ip=134.134.136.65; helo=mga03.intel.com;
  envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=PMg0LN2R; dkim-atps=neutral
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+ header.s=Intel header.b=Rs2I15/4; dkim-atps=neutral
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K8Xxf3vM4z30NW
- for <openbmc@lists.ozlabs.org>; Fri,  4 Mar 2022 01:12:37 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K8Y0z1XFNz3byZ
+ for <openbmc@lists.ozlabs.org>; Fri,  4 Mar 2022 01:15:30 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1646316759; x=1677852759;
+ t=1646316932; x=1677852932;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:in-reply-to;
- bh=8UFSNQlM9WPEp6bci8a0Zs4QbDnKrGrES/unqzgEs3s=;
- b=PMg0LN2R8uRqmu3eFVbHx1d8jrpHCRPMmGEaFW0l9Aezp7qogW2UHN7+
- jVWaqbD0gqc6OPk6ODLUJvXNdwHIn4rLE6+R/mkT7CepJAamWIgb9kzTN
- a+bwM3sOD3VAjU6TG2Dxy134EXfIsRRdFGTBNhoxxHTpOrSSKwhHc5cEw
- 79yO4BbLViFdNw3+Q/z7YLnXUA00xlcKPXxN9gteV4PnLCJDbVZeURWkv
- tS3pn4gS4nTlpqAeS3pZMUdWYeCP+pi92kuoWyri+whWRKQll+NHUKXzv
- m0uGnolPu7fHSr9rE+tSC9rEcZ4yzXFzfU0j4TXaZ+EMN24T0Edm2SWtD w==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10274"; a="234295452"
-X-IronPort-AV: E=Sophos;i="5.90,151,1643702400"; d="scan'208";a="234295452"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
- by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Mar 2022 06:11:34 -0800
-X-IronPort-AV: E=Sophos;i="5.90,151,1643702400"; d="scan'208";a="576497839"
+ bh=5QG9h5lx2anIO5uIyhVHkmCiySJytsOAX/CGcMce8NM=;
+ b=Rs2I15/4SDjrHXUQs+XC1HB6qA864oqaRZelXuAf314Jn099QtKrWvGG
+ BGoi1UeuCxXNnt0cuyVUtfOeUCGGOiRI+qyirR16Wz2iovS1/nRx47beN
+ fx3ieo4vC3AjymIBkvOFxPR6jVY+3xDsrFvKmEcNa/WsnMX8894wD/2hv
+ SVbSfHFDMAbM79Eoo4Ddj/+oXetq3zS/PLVDmAMWGaZxNEnZDqvwwvQ+9
+ NwYU9AY96mQltA06Gnisibh79v88HtoCix7uSbtd8GGyC7EkCu4fLhx1F
+ JyA1Iz9i14XHbeJSNxqzMRrH8Misene87YYtH/mtRkctASFwEMh+eK0sD g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10274"; a="253614377"
+X-IronPort-AV: E=Sophos;i="5.90,151,1643702400"; d="scan'208";a="253614377"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+ by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Mar 2022 06:14:29 -0800
+X-IronPort-AV: E=Sophos;i="5.90,151,1643702400"; d="scan'208";a="511442309"
 Received: from smile.fi.intel.com ([10.237.72.59])
- by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Mar 2022 06:11:27 -0800
+ by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Mar 2022 06:14:22 -0800
 Received: from andy by smile.fi.intel.com with local (Exim 4.95)
  (envelope-from <andriy.shevchenko@linux.intel.com>)
- id 1nPmAC-00ApFi-B4; Thu, 03 Mar 2022 16:10:40 +0200
-Date: Thu, 3 Mar 2022 16:10:39 +0200
+ id 1nPmD0-00ApIt-Ho; Thu, 03 Mar 2022 16:13:34 +0200
+Date: Thu, 3 Mar 2022 16:13:34 +0200
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Tali Perry <tali.perry1@gmail.com>
-Subject: Re: [PATCH v3 11/11] i2c: npcm: Support NPCM845
-Message-ID: <YiDMX7pUqs/rLJUU@smile.fi.intel.com>
+Subject: Re: [PATCH v3 09/11] i2c: npcm: Handle spurious interrupts
+Message-ID: <YiDNDsPWKyaIUlQR@smile.fi.intel.com>
 References: <20220303083141.8742-1-warp5tw@gmail.com>
- <20220303083141.8742-12-warp5tw@gmail.com>
- <YiCb7LNY9tmMCZx7@smile.fi.intel.com>
- <CAHb3i=tWhtXK+c5GGbp6m23AHoyy=4woT_+n3a_N-6CqKUYb=g@mail.gmail.com>
+ <20220303083141.8742-10-warp5tw@gmail.com>
+ <YiCaSSbbszm3qYIQ@smile.fi.intel.com>
+ <CAHb3i=sStqdSpLKtF_UGmTsOssR_swssTd3pv6c2-z_kiUPTTA@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAHb3i=tWhtXK+c5GGbp6m23AHoyy=4woT_+n3a_N-6CqKUYb=g@mail.gmail.com>
+In-Reply-To: <CAHb3i=sStqdSpLKtF_UGmTsOssR_swssTd3pv6c2-z_kiUPTTA@mail.gmail.com>
 Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -90,44 +90,57 @@ Cc: Tomer Maimon <tmaimon77@gmail.com>, devicetree <devicetree@vger.kernel.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Mar 03, 2022 at 02:35:58PM +0200, Tali Perry wrote:
-> > On Thu, Mar 3, 2022 at 12:45 PM Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
-> > > On Thu, Mar 03, 2022 at 04:31:41PM +0800, Tyrone Ting wrote:
+On Thu, Mar 03, 2022 at 02:48:20PM +0200, Tali Perry wrote:
+> > On Thu, Mar 3, 2022 at 12:37 PM Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
+> > >
+> > > On Thu, Mar 03, 2022 at 04:31:39PM +0800, Tyrone Ting wrote:
+> > > > From: Tali Perry <tali.perry1@gmail.com>
+> > > >
+> > > > In order to better handle spurious interrupts:
+> > > > 1. Disable incoming interrupts in master only mode.
+> > > > 2. Clear end of busy (EOB) after every interrupt.
+> > > > 3. Return correct status during interrupt.
+> > >
+> > > This is bad commit message, it doesn't explain "why" you are doing these.
 
 ...
 
-> > > > -     left_in_fifo = FIELD_GET(NPCM_I2CTXF_STS_TX_BYTES,
-> > > > -                              ioread8(bus->reg + NPCM_I2CTXF_STS));
-> > > > +     left_in_fifo = (bus->data->txf_sts_tx_bytes &
-> > > > +                     ioread8(bus->reg + NPCM_I2CTXF_STS));
+> BMC users connect a huge tree of i2c devices and muxes.
+> This tree suffers from spikes, noise and double clocks.
+> All these may cause spurious interrupts to the BMC.
+> 
+> If the driver gets an IRQ which was not expected and was not handled
+> by the IRQ handler,
+> there is nothing left to do but to clear the interrupt and move on.
+
+Yes, the problem is what "move on" means in your case.
+If you get a spurious interrupts there are possibilities what's wrong:
+1) HW bug(s)
+2) FW bug(s)
+3) Missed IRQ mask in the driver
+4) Improper IRQ mask in the driver
+
+The below approach seems incorrect to me.
+
+> If the transaction failed, driver has a recovery function.
+> After that, user may retry to send the message.
+> 
+> Indeed the commit message doesn't explain all this.
+> We will fix and add to the next patchset.
+> 
+> > > > +     /*
+> > > > +      * if irq is not one of the above, make sure EOB is disabled and all
+> > > > +      * status bits are cleared.
 > > >
-> > > Besides too many parentheses, this is an interesting change. So, in different
-> > > versions of IP the field is on different bits? Perhaps it means that you need
-> > > something like internal ops structure for all these, where you will have been
-> > > using the statically defined masks?
+> > > This does not explain why you hide the spurious interrupt.
 > > >
-> 
-> Those are two very similar modules. The first generation had a 16 bytes HW FIFO
-> and the second generation has 32 bytes.
-> In V1 of this patchset the masks were defined under
-> CONFIG but we were asked to change the approach:
-> 
-> the entire discussion can be found here:
-> 
-> https://www.spinics.net/lists/linux-i2c/msg55566.html
-> 
-> Did we understand the request change right?
-
-Not really. If you have not simply "one (MSB) bit more" for FIFO size, then
-I proposed to create a specific operations structure and use callbacks (see
-drivers/dma/dw/ case for iDMA 32-bit vs. DesignWare).
-
-But hold on and read set of questions below.
-
-Previously it was a fixed field with the NPCM_I2CTXF_STS_TX_BYTES mask applied,
-right? From above I have got that FIFO is growing twice. Is it correct?
-Does the LSB stay at the same offset? What is the meaning of the MSB in 32 byte
-case? If it's reserved then why not to always use 32 byte approach?
+> > > > +      */
+> > > > +     if (ret == IRQ_NONE) {
+> > > > +             npcm_i2c_eob_int(bus, false);
+> > > > +             npcm_i2c_clear_master_status(bus);
+> > > > +     }
+> > > > +
+> > > > +     return IRQ_HANDLED;
 
 -- 
 With Best Regards,
