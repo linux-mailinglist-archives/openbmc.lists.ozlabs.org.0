@@ -2,59 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6CD54CDBCC
-	for <lists+openbmc@lfdr.de>; Fri,  4 Mar 2022 19:08:20 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 82A7D4CDEDE
+	for <lists+openbmc@lfdr.de>; Fri,  4 Mar 2022 21:43:48 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4K9G756Gp5z30KV
-	for <lists+openbmc@lfdr.de>; Sat,  5 Mar 2022 05:08:17 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4K9KZT3WfDz30MH
+	for <lists+openbmc@lfdr.de>; Sat,  5 Mar 2022 07:43:45 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=bR/J+w2e;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kaod.org (client-ip=46.105.54.81;
- helo=smtpout3.mo529.mail-out.ovh.net; envelope-from=clg@kaod.org;
- receiver=<UNKNOWN>)
-Received: from smtpout3.mo529.mail-out.ovh.net
- (smtpout3.mo529.mail-out.ovh.net [46.105.54.81])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4K9G6g0Kjlz30BP;
- Sat,  5 Mar 2022 05:07:52 +1100 (AEDT)
-Received: from mxplan5.mail.ovh.net (unknown [10.109.143.174])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id BF24EE63D09A;
- Fri,  4 Mar 2022 19:00:27 +0100 (CET)
-Received: from kaod.org (37.59.142.106) by DAG4EX1.mxp5.local (172.16.2.31)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.18; Fri, 4 Mar
- 2022 19:00:26 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-106R006139e8d0e-d66f-4ecb-8c8a-e17875113513,
- 454269BBD7D092EADEDBDC9145CF0558877B405D) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 90.1.230.64
-Message-ID: <6ed257f7-ae87-e2fe-26ed-9db300f5ebcc@kaod.org>
-Date: Fri, 4 Mar 2022 19:00:25 +0100
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
+ (client-ip=212.227.15.18; helo=mout.gmx.net;
+ envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
+ header.s=badeba3b8450 header.b=bR/J+w2e; 
+ dkim-atps=neutral
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4K9KYz34nTz306m
+ for <openbmc@lists.ozlabs.org>; Sat,  5 Mar 2022 07:43:17 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=badeba3b8450; t=1646426558;
+ bh=avVKest8nf1VF3/YI54jobn1lGq5BmcOz47RyPALIck=;
+ h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=bR/J+w2eKA8Fr4ZmFuRBiXjAoZ7sAMdRaBkCKpkBfWQ8J6UxXubHPBQ9v0cSPFWxV
+ GFVWZCzFaIx2SA8k40/4dhgnSugqBmJPVkr04LrX+yaNNdvwUS7lhNN6AlnXrar/t2
+ OZjYZ+UcGJ+c3fG0K/tk9imAgQd6Zswn5ZB0oAc4=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1N0G1d-1oMJaM35Fv-00xIgu; Fri, 04
+ Mar 2022 21:42:37 +0100
+Date: Fri, 4 Mar 2022 21:42:34 +0100
+From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: Re: [PATCH v3 08/11] i2c: npcm: Correct register access width
+Message-ID: <YiJ5unrCb82ZMV4Z@latitude>
+References: <20220303083141.8742-1-warp5tw@gmail.com>
+ <20220303083141.8742-9-warp5tw@gmail.com>
+ <YiCZlhJoXPLpQ6/D@smile.fi.intel.com>
+ <CAHb3i=t+Ai3w5mMhmZxxMsD7Zv0xpM4ZicMCmdDMtVn_OMbWYA@mail.gmail.com>
+ <YiDNdlEKqorDFkZB@smile.fi.intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [SPAM] [PATCH 1/1] mtd: spi-nor: aspeed: set the decoding size to
- at least 2MB for AST2600
-Content-Language: en-US
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-To: Potin Lai <potin.lai@quantatw.com>, Joel Stanley <joel@jms.id.au>,
- <linux-aspeed@lists.ozlabs.org>, <openbmc@lists.ozlabs.org>, Patrick Williams
- <patrick@stwcx.xyz>
-References: <20220304170757.16924-1-potin.lai@quantatw.com>
- <67004879-96ab-33b5-f389-bbe0005d78ef@kaod.org>
-In-Reply-To: <67004879-96ab-33b5-f389-bbe0005d78ef@kaod.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.106]
-X-ClientProxiedBy: DAG7EX2.mxp5.local (172.16.2.62) To DAG4EX1.mxp5.local
- (172.16.2.31)
-X-Ovh-Tracer-GUID: bf6ce367-fa20-4368-8790-6e7d991b6005
-X-Ovh-Tracer-Id: 6033416128464915363
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvvddruddtkedguddtkecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkffggfgfuhffvfhgjtgfgihesthekredttdefjeenucfhrhhomhepveorughrihgtpgfnvggpifhorghtvghruceotghlgheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpefgvefhudektedtueefieeujeekveegheetgfdvvdeguddvjeegtefghedvuedvudenucffohhmrghinhepghhithhhuhgsrdgtohhmnecukfhppedtrddtrddtrddtpdefjedrheelrddugedvrddutdeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmohguvgepshhmthhpohhuthdphhgvlhhopehmgihplhgrnhehrdhmrghilhdrohhvhhdrnhgvthdpihhnvghtpedtrddtrddtrddtpdhmrghilhhfrhhomheptghlgheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopedupdhrtghpthhtohepphgrthhrihgtkhesshhtfigtgidrgiihii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="PXMPnXsV2kwhaoxF"
+Content-Disposition: inline
+In-Reply-To: <YiDNdlEKqorDFkZB@smile.fi.intel.com>
+X-Provags-ID: V03:K1:Zli3HN5UeRh8y7YdfY7dSXaXcoTBQJonefjHcxXAcSPHHiLbEUo
+ COUWcmB3iv+h63RKwjP8auhxTimzHpMO0E7dpg6Nddpx678VDmNrR+vzqUTX5EKaP/7WloY
+ FD3ANPuTqADzACb/t6LPyyBxCrFN/iviQlJ+JGqH87km+zF4Y0NJOr5TpCvOZr930esCkgO
+ F4gxdgS4iye97RMJaEapw==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:iR6a6/NuSJw=:B5Me0AONULYMpmO5CvccFi
+ W62cBkOpnOmnYttFnp7/QWj4u/EJ0b/3/RzF1TlxnFgYKYTNTlLNx3N4aCAa7hqqD2vBjIPKm
+ 5M4uSiMDGg/KcMkxKvB19vkq1RuV/48YEwT0OzbeJd3DwhnP0ZunakUeVmVMLuT+z9UQ6Wn+3
+ CsXWz05DRX33fSaXEWjW5BAdbtn33OP5MdXM8BBDtZgFluNWbfiwxmrn3FKxB2yM89BVO2P3O
+ OJq4CKZcm1S1GwqBhmRBj0KUpoP/0xa2XNpGpu9Yc6Ix540mflHFCUecqRxSUvssVp6Ap/viB
+ FeVax6wYjhtQljYbVwcZhIk90iTATJaLNIkJy8GpsCegkIwLoO7Tu4u0p415uMhIZ8NLfKQVO
+ oN5c8l6quAP6RkuB2sCymtyjml+Aq1KnXCxRSBvgLYaVJwzOTJH0mn7XiAbm5mn78OYxLtWFl
+ Pinb4pbKIoCFIT4I6KxidMdl9NpTwHMkNkxh6xCbThbqSxEEmf0ZdI0CHDmW82Sb7M80jCgeV
+ w/50LQuyc23GCINlR96eCEtLMznApSe2qTLknHzlL5Kwgbh6c4MvigbWWyTV+S+sFtl4DCa5G
+ LxmoAl3Gg36JX+SDNOniD0PyBqrpMq183zDOxvQcoPbsRP7oDfHPz2U3iLgQH7LXgmHVIcsS4
+ U++MyObQCgJQu+WKvY0pmAco9p9S7UGTYvnwfl14uFUXLo0vUF1PNupLaAHT+cHNDGNjqrz8U
+ iyEb77N7yarc31zw7ICTyrCElY/k/HmHQVLwyvSixAIxPZW4bM1EvnwutZTB+UoZnNNJO+i1X
+ g6rEX74oJ/1FCn1EubPV1lDAEKRmXYT1CqZKNYIuQdZrimFnSdmX8CpvqWJwqNb5FbEOu9I5u
+ wij/YIRZJU9FGx3tWxuAee8iI9ZCcgdu/3eP9L2pmC6JFOP/S0md3d+pEyc3qiFISlKdX+kTU
+ k13nO/rgbCdfhox6VDp4BWZYM4/ZZSNNqiOjGSEXAOIZJq57tXjekjTpCkbx4+BFLTcPeSjf5
+ /3eK9fpB+J2Fc/33uBe0og/VlvwMdgNLzUYzbBALMLsqal/NamVU/KFnGk/hPjxGDCmQq3s8X
+ K3RsRYLAviA8Ak=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,87 +85,94 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Tomer Maimon <tmaimon77@gmail.com>, KWLIU@nuvoton.com,
+ yangyicong@hisilicon.com, Linux I2C <linux-i2c@vger.kernel.org>,
+ Benjamin Fair <benjaminfair@google.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, JJLIU0@nuvoton.com,
+ lukas.bulwahn@gmail.com, tomer.maimon@nuvoton.com,
+ devicetree <devicetree@vger.kernel.org>, bence98@sch.bme.hu, arnd@arndb.de,
+ sven@svenpeter.dev, Rob Herring <robh+dt@kernel.org>,
+ Avi Fishman <Avi.Fishman@nuvoton.com>, Tyrone Ting <warp5tw@gmail.com>,
+ Tali Perry <tali.perry1@gmail.com>, semen.protsenko@linaro.org,
+ jie.deng@intel.com, avifishman70@gmail.com,
+ Patrick Venture <venture@google.com>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Wolfram Sang <wsa@kernel.org>, kfting@nuvoton.com,
+ Tali Perry <tali.perry@nuvoton.com>, olof@lixom.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 3/4/22 18:29, Cédric Le Goater wrote:
-> Hello Potin,
-> 
-> On 3/4/22 18:07, Potin Lai wrote:
->> In AST2600, the unit of SPI CEx decoding range register is 1MB, and end
->> address offset is set to the acctual offset - 1MB. If the flash only has
->> 1MB, the end address will has same value as start address, which will
->> causing unexpected errors.
-> 
-> Yes. That's probably true.
-> 
->> This patch set the decoding size to at least 2MB to avoid decoding errors.
->>
->> Tested:
->> root@bletchley:~# dmesg | grep "aspeed-smc 1e631000.spi: CE0 window"
-> 
-> Could you send all the "aspeed-smc" logs please ? I would like to
-> reproduce on QEMU. You can use these machine options :
-> 
->    fmc-model=<string>     - Change the FMC Flash model
->    spi-model=<string>     - Change the SPI Flash model
-> 
-> to change the default flash device models and see how the driver reacts.
-> Add -trace aspeed_smc_flash_set_segment to see how the QEMU model is
-> configured.
-> 
->> [   59.328134] aspeed-smc 1e631000.spi: CE0 window resized to 2MB (AST2600 Decoding)
->> [   59.343001] aspeed-smc 1e631000.spi: CE0 window [ 0x50000000 - 0x50200000 ] 2MB
->> root@bletchley:~# devmem 0x1e631030
->> 0x00100000
-> 
-> I thought devmem was banned :)
-> 
-> We could expose the main FMC/SPI registers under sysfs or debugfs.
-> The segment registers and the timing registers would be nice to
-> have. I can revive some experimental patch I did a few years ago.
-> 
-> If you have some time, could you please try the new driver based
-> on spi-mem ?
-> 
-> v3 is pushed here :
-> 
->    https://github.com/legoater/linux/commits/openbmc-5.15
-> 
-> The patch looks correct but we also want to fix the new driver and
-> I have reworked the window setting part. It should be less fragile.
-> aspeed_spi_chip_adjust_window() still needs to handle HW quirks
-> though.
 
-Using a mx25l1606e on SPI1, here is what we get :
+--PXMPnXsV2kwhaoxF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-$ qemu-system-arm -M ast2600-evb,spi-model=mx25l1606e ....
+Hello,
 
-[    1.069297] spi-aspeed-smc 1e630000.spi: registered master spi1
-[    1.069863] spi-aspeed-smc 1e630000.spi: CE0 default window [ 0x30000000 - 0x37ffffff ] 128MB
-[    1.070161] spi-aspeed-smc 1e630000.spi: CE0 setup done
-[    1.070359] spi spi1.0: setup mode 0, 8 bits/w, 100000000 Hz max --> 0
-[    1.071245] spi-aspeed-smc 1e630000.spi: CE0 read OP 0x9f mode:1.0.0.1 naddr:0x0 ndummies:0x0 len:0x6
-[    1.071747] spi-nor spi1.0: mx25l1606e (2048 Kbytes)
-aspeed_smc_flash_set_segment CS0 segreg=0x100000 [ 0x30000000 - 0x30200000 ]
-[    1.072253] spi-aspeed-smc 1e630000.spi: CE0 new window [ 0x30000000 - 0x301fffff ] 2MB
-aspeed_smc_flash_set_segment CS1 segreg=0x7f00020 [ 0x30200000 - 0x38000000 ]
-[    1.072833] spi-aspeed-smc 1e630000.spi: CE1 new window [ 0x30200000 - 0x37ffffff ] 126MB
-[    1.073162] spi-aspeed-smc 1e630000.spi: calculate timing compensation - AHB freq: 200 MHz
-[    1.079692] spi-aspeed-smc 1e630000.spi: Trying HCLK/5 [000b0d41] ...
-[    1.143327] spi-aspeed-smc 1e630000.spi:   * [00000000] 0 HCLK delay, DI delay none : PASS
-[    1.143642] spi-aspeed-smc 1e630000.spi: Trying HCLK/4 [000b0641] ...
-[    1.207062] spi-aspeed-smc 1e630000.spi:   * [00000000] 0 HCLK delay, DI delay none : PASS
-[    1.207404] spi-aspeed-smc 1e630000.spi: Trying HCLK/3 [000b0e41] ...
-[    1.273171] spi-aspeed-smc 1e630000.spi:   * [00000000] 0 HCLK delay, DI delay none : PASS
-[    1.273512] spi-aspeed-smc 1e630000.spi: Trying HCLK/2 [000b0741] ...
-[    1.341648] spi-aspeed-smc 1e630000.spi:   * [00000000] 0 HCLK delay, DI delay none : PASS
-[    1.341942] spi-aspeed-smc 1e630000.spi: Found good read timings at HCLK/2
-[    1.342190] spi-aspeed-smc 1e630000.spi: CE0 read buswidth:1 [0x000b0741]
-[    1.363662] spi-aspeed-smc 1e630000.spi: registered child spi1.0
+On Thu, Mar 03, 2022 at 04:15:18PM +0200, Andy Shevchenko wrote:
+> On Thu, Mar 03, 2022 at 02:54:27PM +0200, Tali Perry wrote:
+> > > On Thu, Mar 03, 2022 at 04:31:38PM +0800, Tyrone Ting wrote:
+> > > > From: Tyrone Ting <kfting@nuvoton.com>
+> > > >
+> > > > Use ioread8 instead of ioread32 to access the SMBnCTL3 register sin=
+ce
+> > > > the register is only 8-bit wide.
+> > >
+> > > > Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller=
+ driver")
+> > >
+> > > No, this is bad commit message, since you have bitwise masks and ther=
+e is
+> > > nothing to fix from functional point of view. So, why is this a fix?
+> > >
+> >=20
+> > The next gen of this device is a 64 bit cpu.
+> > The module is and was 8 bit.
+> >=20
+> > The ioread32 that seemed to work smoothly on a 32 bit machine
+> > was causing a panic on a 64 bit machine.
+> > since the module is 8 bit we changed to ioread8.
+> > This is working both for the 32 and 64 CPUs with no issue.
+>=20
+> Then the commit message is completely wrong here.
 
-The new spi-mem driver behaves better (on QEMU).
+I disagree: The commit message is perhaps incomplete, but not wrong.
+The SMBnCTL3 register was specified as 8 bits wide in the datasheets of
+multiple chip generations, as far as I can tell, but the driver wrongly
+made a 32-bit access, which just happened not to blow up.
 
-Thanks,
+So, indeed, "since the register is only 8-bit wide" seems to be a
+correct claim.
 
-C.
+> And provide necessary (no need to have noisy commit messages)
+> bits of the oops to show what's going on
+
+I guess it's blowing up now because SMBnCTL3 isn't 32-bit aligned
+(being at offset 0x0e in the controller).
+
+
+Jonathan
+
+--PXMPnXsV2kwhaoxF
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmIieZgACgkQCDBEmo7z
+X9vLSg//fITuy/ADChnXLOLttsuqN0fnIxt64hs6/pBiL3cnl2CIy2UYqmqWn/cJ
+EldCmMStePptCzalodvcviUUuEzLdFbIhRhCf+3KiMvsiHAxpb1btCpO/tSWO7KZ
+XERAbEgWgfMsl8cTnX6FQzbjDCGRZ7GdYHL8duoQwa0UcR1UY5n83S2SkhrBCEF5
+Ls0ooLJ1A/bjK16EdLai2g6U5IF+/n6reWCXXTQz8i20BLVtPznqgaXXeskTnCwr
+PMwOogzXEB9/5zsbEDY9pTH4WT1k+/sISONAI5R31A5NCqZ9ITkVKb+kHjom9HtT
+HoxHRra/i33qmiOsBXF8TF8H5UuMGmucItead9upr9NCOXmqwyks5lcdphPPsysS
+s518aMEDTqcJxNQJ7Ko4veKKgy7bXr6Lct7GO/tbV3zeEdJayIVkdxroFeV1mrFj
+PhOhl6/kd4JUluD4BSJXWU6BVp2CrwoGRAPSB9q+KyLZt0Zlx6jJ/AX86x+jn3em
+tbqlADio6jbSUvOgN2HGuj9ey6XFemQCnxPdVZFRYYSjUKZP70p3Td9GXkNVmgOs
+Oa/YO829ME+h6WelCPi6n6jHquf7AZM2ounhk4timphHvMvRjHSuJdBetSImnWq8
+acxQRLbfZgB/xdBBLTTPyPOgYr79+44fh2GjFWsMVY0DPMFVZx0=
+=ay5W
+-----END PGP SIGNATURE-----
+
+--PXMPnXsV2kwhaoxF--
