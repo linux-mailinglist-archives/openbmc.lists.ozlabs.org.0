@@ -1,72 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6B8F24CEBBE
-	for <lists+openbmc@lfdr.de>; Sun,  6 Mar 2022 14:34:03 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A54884CEBE6
+	for <lists+openbmc@lfdr.de>; Sun,  6 Mar 2022 15:24:01 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KBMxg1Qq5z3bPT
-	for <lists+openbmc@lfdr.de>; Mon,  7 Mar 2022 00:33:59 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KBP3L4xMMz3bPJ
+	for <lists+openbmc@lfdr.de>; Mon,  7 Mar 2022 01:23:58 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=NohmSWC4;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=gFuohdMi;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22a;
- helo=mail-oi1-x22a.google.com; envelope-from=tmaimon77@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=NohmSWC4; dkim-atps=neutral
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com
- [IPv6:2607:f8b0:4864:20::22a])
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
+ (client-ip=212.227.17.22; helo=mout.gmx.net;
+ envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
+ header.s=badeba3b8450 header.b=gFuohdMi; 
+ dkim-atps=neutral
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KBMxH2l2Bz2yLT
- for <openbmc@lists.ozlabs.org>; Mon,  7 Mar 2022 00:33:38 +1100 (AEDT)
-Received: by mail-oi1-x22a.google.com with SMTP id i5so12661410oih.1
- for <openbmc@lists.ozlabs.org>; Sun, 06 Mar 2022 05:33:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=84zYVdhVEYz/DpeTLBUQG62T/uOGmyKpKhrO1Fbvg7I=;
- b=NohmSWC4OEjiHkhDF6Lcv/x25mQGt907ddg07Bs1DnNkysr88Slp9jUQl3pM/Kyxgs
- 9SQvkqBjvArdOAKWuF7pLILHebLgKTAfr2DUopl/yXhJnuQNmHTL47lqmzpG85otKJfh
- ulNd+36Y7+zBWk06U8ayPUNjIEJw+yXoO+xDBuWauiA5x/qz1RSRB4vL1gM4swAGlK8v
- nZXgFCZBAMhPCdhcwmkcpTeqm7wrPGSWmAGpq1Rt1d6K6WtJ9Yx7hGz8OabyGUhGNgLo
- KnlWxfwgl4ZUW8giIZSz9W4189dpDploGxbFuSg3fjSGFNtmpS+lZ0i3doLysd1He2wo
- bkZg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=84zYVdhVEYz/DpeTLBUQG62T/uOGmyKpKhrO1Fbvg7I=;
- b=R5MPfISuKmMsE1B/uf0lWQ5mSV+wL/jIWqKshxA/xaiQhdt2oVb46W196QAGcIt9Dw
- H33jmQNh+GaX7tVpORyOLNAZc0AgBWGu99uSGdbRl8HCp1dFu9k+/mqjTS9a5kjRkp8K
- YhR9BaHQV+nLlm2lyz3bfkM4Cs70tZJRwXZIq/FvLVlu0EHe57m9TNvl4XErW9UdMqDW
- Ug1hhZ9wZUA8yhyXsZWXo0eJpp0e1SfrQ4afShnacvrCztX7JotgblYBHQGzaxf56UO9
- Sgcn7ZG319ysrasryahzue4xHLzyAxpFn537pZB0vYjDWlyloPDPFCuGNKDsuHnmI2j2
- U2Fg==
-X-Gm-Message-State: AOAM533CJuhxQGKfgRfquXt98FIJPxZJ1JREjv1/RUem0hjaElHRY1DG
- g5IvuboCyuQsFVAK7M5tlN9J3fba4MSCUR/qG0c=
-X-Google-Smtp-Source: ABdhPJwJ4pGGcmxr1HHkVozxBMueJw+utiTjjluv8Sszw9/3eZpx1jduFX2Wk5tyzKESbCVz7/HZk6gSIDkdIs3kPic=
-X-Received: by 2002:a05:6808:18a0:b0:2d9:bde3:5776 with SMTP id
- bi32-20020a05680818a000b002d9bde35776mr2190452oib.29.1646573611363; Sun, 06
- Mar 2022 05:33:31 -0800 (PST)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KBP2s38NVz2ymt
+ for <openbmc@lists.ozlabs.org>; Mon,  7 Mar 2022 01:23:31 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=badeba3b8450; t=1646576597;
+ bh=fviFSK5y5Aaq+IIWP/+WE3VsHMV+uByyn72NZHtxZGo=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+ b=gFuohdMiQxK092zL861CnVC6HhvUDaFQXDoPR5uoy4b2ltLTxiCWQ8D8CqB0b3D/k
+ bhk5v6/IL1S13BeBo3jA5DMR6z1dQ1YO+K2aiTgWa54qRuke3D830VRCnXUe7X/7Xa
+ nba8RO7xfwWICGkrxRCqVJVP/uFKnrlgbmgswJpo=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from longitude ([89.0.78.102]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N2mBQ-1o9nuj1CJg-0139Ak; Sun, 06
+ Mar 2022 15:23:17 +0100
+From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: linux-spi@vger.kernel.org
+Subject: [PATCH] spi: npcm-fiu: Fix typo ("npxm")
+Date: Sun,  6 Mar 2022 15:23:12 +0100
+Message-Id: <20220306142312.109017-1-j.neuschaefer@gmx.net>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-References: <20220303083141.8742-1-warp5tw@gmail.com>
- <20220303083141.8742-12-warp5tw@gmail.com>
- <YiCb7LNY9tmMCZx7@smile.fi.intel.com>
- <CAHb3i=tWhtXK+c5GGbp6m23AHoyy=4woT_+n3a_N-6CqKUYb=g@mail.gmail.com>
- <YiDMX7pUqs/rLJUU@smile.fi.intel.com>
-In-Reply-To: <YiDMX7pUqs/rLJUU@smile.fi.intel.com>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Sun, 6 Mar 2022 15:33:20 +0200
-Message-ID: <CAP6Zq1iy0yNMemqDjrLu1F0rrRSDFhZ+SqdoOa9FyJDNL0ENXA@mail.gmail.com>
-Subject: Re: [PATCH v3 11/11] i2c: npcm: Support NPCM845
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Content-Type: multipart/alternative; boundary="00000000000033b23605d98ccbbc"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:zRDIEOS8jqLfAJl4QOpA4SuB/spvp9/RlpdN88YIsCOrFgmGdrb
+ ZbySwwkT42wTut3PNqASXXlG5Yq07czXCjm2JNUN1tYf1EUIgHL70Lh67dZLphRkmNRupa5
+ xijxWZRxen9Tv/OLMfZ95QrsgE+r2V78K35aOA99tIrltg7sOdQhgpN5TOF25kswQm3tVaf
+ RynjU6K172AYYubLOAZEg==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:oD/RSu1sJY4=:mI9NtcgMTu+ubTueJ7hMFF
+ uoyUXKzGDJzDdKfeQI9rRKfpD1LE8ntAX7+t+XQmGgYz8wlN41Z+aId+Kjilf/G7M+pz4D7Er
+ 3SAyoa8RN8NSU4ndxJhYd7SacLsqBUoK98kfoh5icQjvtk3lW5eVkWE1uwLd1jRBR6f8SCw0a
+ pLYQsSlhYgevKtk7zmqyHbAtKbqo6NJATTHqffYe5Oz0sLZ+BoL+TN9+DJCRMAHSCAfVWX/R5
+ dWC+CrtU5IxqZTxToJ7xVRRXOjspx9/SZ6zibOgbfrD0XWWPzmhe+y+tFAOD21cErStMckOUA
+ 3OP384m9Z0rG5eh6DggWT7f/zr5BGDgn7OxJNB2hmdyrZaNW+jfm3vsDKw1lrKi8/Y4YSKCuB
+ 3gpkj6f/RhbMhvgz5wBbAujsXLEJut/2Mh3JWjIlQChqovV2BDj/xmhtDTDgTNvjtttlM079E
+ 4+/At1HKSvpm5PCMmpBR8H9/PDEmlXy4s+K4nb0W0TNl36KgZouyqatw9FUB7X6DafoJ+MdIA
+ hkCEK92qh+X4i/+CbZrM2RU6oXt3AK5WHRD4Y16DPubBDadcKGu8d8GphNXIyjVLYJEuGerYM
+ u/3TnIpIcQJRkCmz5yFSIJPjX/lmhojoc/PRgvx/rB/wU5yPKHCtvJfVPoTzyn9NARAQ4sSGq
+ v0yLfZWvxgbvv7TWMIxuS/nTXjbWo0ChyZsyjibc8HrhmmopNL1U+uEt1gCbFWrIZyTshc9AD
+ xmzbQJGnNru6Jra4TpEjXZjc+dl2wMNm+bFpOS558DIx+1frX2CBEA7hinRjMtmmuGPdMxpnN
+ NIndXSuFbTNTGPVrR+f75b8h5l8HIYrL2K1CeTAf+T8J2DAvF06HM5F0oCGYpb241rx766Ch2
+ 6jQf7jv2TjmHz4BiWvkpiGOwGFYoRDxYVZx0YCPrXuqnngqeBH2o1R8enQE+leSHwNLStOrLh
+ NxZt4oTY74hSQeER9Mlq1LcCxpT9AKfgX9Gs0tIpIdEnJ6MQsKoui2ILJa+lw840M6Pir60yU
+ ASsSrFV142sv+TJuZvqRhz+RNbymJRXqTSr7kwWVLP3PWEV8kZpePEdOxZ4KqPEWc2SWE1Tpv
+ U9KncsdR7BOtbU=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,195 +79,56 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>, Tali Perry <tali.perry1@gmail.com>,
- Linux I2C <linux-i2c@vger.kernel.org>, Benjamin Fair <benjaminfair@google.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, JJLIU0@nuvoton.com,
- lukas.bulwahn@gmail.com, Tomer Maimon <tomer.maimon@nuvoton.com>,
- KWLIU@nuvoton.com, bence98@sch.bme.hu, Arnd Bergmann <arnd@arndb.de>,
- sven@svenpeter.dev, Rob Herring <robh+dt@kernel.org>,
- Avi Fishman <Avi.Fishman@nuvoton.com>, Tyrone Ting <warp5tw@gmail.com>,
- yangyicong@hisilicon.com, semen.protsenko@linaro.org, jie.deng@intel.com,
- Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Wolfram Sang <wsa@kernel.org>, kfting@nuvoton.com,
- Tali Perry <tali.perry@nuvoton.com>, Olof Johansson <olof@lixom.net>
+Cc: Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>,
+ Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org,
+ =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+ Tali Perry <tali.perry1@gmail.com>, Mark Brown <broonie@kernel.org>,
+ linux-kernel@vger.kernel.org, Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000033b23605d98ccbbc
-Content-Type: text/plain; charset="UTF-8"
+The platform is called NPCM, not NPXM.
 
-Hi Andy,
+Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+=2D--
+ drivers/spi/spi-npcm-fiu.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-Thanks for your review,
+diff --git a/drivers/spi/spi-npcm-fiu.c b/drivers/spi/spi-npcm-fiu.c
+index b62471ab6d7f2..f11246884df82 100644
+=2D-- a/drivers/spi/spi-npcm-fiu.c
++++ b/drivers/spi/spi-npcm-fiu.c
+@@ -201,7 +201,7 @@ struct fiu_data {
+ 	int fiu_max;
+ };
 
-On Thu, 3 Mar 2022 at 16:11, Andy Shevchenko <
-andriy.shevchenko@linux.intel.com> wrote:
+-static const struct npcm_fiu_info npxm7xx_fiu_info[] =3D {
++static const struct npcm_fiu_info npcm7xx_fiu_info[] =3D {
+ 	{.name =3D "FIU0", .fiu_id =3D FIU0,
+ 		.max_map_size =3D MAP_SIZE_128MB, .max_cs =3D 2},
+ 	{.name =3D "FIU3", .fiu_id =3D FIU3,
+@@ -209,8 +209,8 @@ static const struct npcm_fiu_info npxm7xx_fiu_info[] =
+=3D {
+ 	{.name =3D "FIUX", .fiu_id =3D FIUX,
+ 		.max_map_size =3D MAP_SIZE_16MB, .max_cs =3D 2} };
 
-> On Thu, Mar 03, 2022 at 02:35:58PM +0200, Tali Perry wrote:
-> > > On Thu, Mar 3, 2022 at 12:45 PM Andy Shevchenko <
-> andriy.shevchenko@linux.intel.com> wrote:
-> > > > On Thu, Mar 03, 2022 at 04:31:41PM +0800, Tyrone Ting wrote:
->
-> ...
->
-> > > > > -     left_in_fifo = FIELD_GET(NPCM_I2CTXF_STS_TX_BYTES,
-> > > > > -                              ioread8(bus->reg +
-> NPCM_I2CTXF_STS));
-> > > > > +     left_in_fifo = (bus->data->txf_sts_tx_bytes &
-> > > > > +                     ioread8(bus->reg + NPCM_I2CTXF_STS));
-> > > >
-> > > > Besides too many parentheses, this is an interesting change. So, in
-> different
-> > > > versions of IP the field is on different bits? Perhaps it means that
-> you need
-> > > > something like internal ops structure for all these, where you will
-> have been
-> > > > using the statically defined masks?
-> > > >
-> >
-> > Those are two very similar modules. The first generation had a 16 bytes
-> HW FIFO
-> > and the second generation has 32 bytes.
-> > In V1 of this patchset the masks were defined under
-> > CONFIG but we were asked to change the approach:
-> >
-> > the entire discussion can be found here:
-> >
-> > https://www.spinics.net/lists/linux-i2c/msg55566.html
-> >
-> > Did we understand the request change right?
->
-> Not really. If you have not simply "one (MSB) bit more" for FIFO size, then
-> I proposed to create a specific operations structure and use callbacks (see
-> drivers/dma/dw/ case for iDMA 32-bit vs. DesignWare).
->
-> But hold on and read set of questions below.
->
-> Previously it was a fixed field with the NPCM_I2CTXF_STS_TX_BYTES mask
-> applied,
-> right? From above I have got that FIFO is growing twice. Is it correct?
->
+-static const struct fiu_data npxm7xx_fiu_data =3D {
+-	.npcm_fiu_data_info =3D npxm7xx_fiu_info,
++static const struct fiu_data npcm7xx_fiu_data =3D {
++	.npcm_fiu_data_info =3D npcm7xx_fiu_info,
+ 	.fiu_max =3D 3,
+ };
 
-What do you mean by growing twice? TX and RX?
+@@ -664,7 +664,7 @@ static const struct spi_controller_mem_ops npcm_fiu_me=
+m_ops =3D {
+ };
 
+ static const struct of_device_id npcm_fiu_dt_ids[] =3D {
+-	{ .compatible =3D "nuvoton,npcm750-fiu", .data =3D &npxm7xx_fiu_data  },
++	{ .compatible =3D "nuvoton,npcm750-fiu", .data =3D &npcm7xx_fiu_data  },
+ 	{ /* sentinel */ }
+ };
 
-> Does the LSB stay at the same offset? What is the meaning of the MSB in 32
-> byte
-> case? If it's reserved then why not to always use 32 byte approach?
->
+=2D-
+2.34.1
 
-Yes, the LSB stays in the same place, and bit 5 is reserved in the NPCM7XX
-SoC.
-Unfortunately, the I2C test failed when we tried to use the 32 bytes
-approach at NPCM7XX Soc, this is why we added NPCM_I2CTXF_STS_TX_BYTES and
-NPCM_I2C_STSRXF_RX_BYTES to the data structure.
-
-The device tree data structure pass data for each specific device, so I
-don't understand why not use device tree data for supporting the I2C
-specific device? this is not the case here?
-
-
-> --
-> With Best Regards,
-> Andy Shevchenko
->
->
->
-Best Regards,
-
-Tomer Maimon
-
---00000000000033b23605d98ccbbc
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi Andy,</div><div><br></div><div>Thanks for your rev=
-iew,</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_at=
-tr">On Thu, 3 Mar 2022 at 16:11, Andy Shevchenko &lt;<a href=3D"mailto:andr=
-iy.shevchenko@linux.intel.com" target=3D"_blank">andriy.shevchenko@linux.in=
-tel.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
-margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-lef=
-t:1ex">On Thu, Mar 03, 2022 at 02:35:58PM +0200, Tali Perry wrote:<br>
-&gt; &gt; On Thu, Mar 3, 2022 at 12:45 PM Andy Shevchenko &lt;<a href=3D"ma=
-ilto:andriy.shevchenko@linux.intel.com" target=3D"_blank">andriy.shevchenko=
-@linux.intel.com</a>&gt; wrote:<br>
-&gt; &gt; &gt; On Thu, Mar 03, 2022 at 04:31:41PM +0800, Tyrone Ting wrote:=
-<br>
-<br>
-...<br>
-<br>
-&gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0left_in_fifo =3D FIELD_GET(NPCM_I2=
-CTXF_STS_TX_BYTES,<br>
-&gt; &gt; &gt; &gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ioread8(bus-&gt;reg + =
-NPCM_I2CTXF_STS));<br>
-&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0left_in_fifo =3D (bus-&gt;data-&gt=
-;txf_sts_tx_bytes &amp;<br>
-&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0ioread8(bus-&gt;reg + NPCM_I2CTXF_STS));<br>
-&gt; &gt; &gt;<br>
-&gt; &gt; &gt; Besides too many parentheses, this is an interesting change.=
- So, in different<br>
-&gt; &gt; &gt; versions of IP the field is on different bits? Perhaps it me=
-ans that you need<br>
-&gt; &gt; &gt; something like internal ops structure for all these, where y=
-ou will have been<br>
-&gt; &gt; &gt; using the statically defined masks?<br>
-&gt; &gt; &gt;<br>
-&gt; <br>
-&gt; Those are two very similar modules. The first generation had a 16 byte=
-s HW FIFO<br>
-&gt; and the second generation has 32 bytes.<br>
-&gt; In V1 of this patchset the masks were defined under<br>
-&gt; CONFIG but we were asked to change the approach:<br>
-&gt; <br>
-&gt; the entire discussion can be found here:<br>
-&gt; <br>
-&gt; <a href=3D"https://www.spinics.net/lists/linux-i2c/msg55566.html" rel=
-=3D"noreferrer" target=3D"_blank">https://www.spinics.net/lists/linux-i2c/m=
-sg55566.html</a><br>
-&gt; <br>
-&gt; Did we understand the request change right?<br>
-<br>
-Not really. If you have not simply &quot;one (MSB) bit more&quot; for FIFO =
-size, then<br>
-I proposed to create a specific operations structure and use callbacks (see=
-<br>
-drivers/dma/dw/ case for iDMA 32-bit vs. DesignWare).<br>
-<br>
-But hold on and read set of questions below.<br>
-<br>
-Previously it was a fixed field with the NPCM_I2CTXF_STS_TX_BYTES mask appl=
-ied,<br>
-right? From above I have got that FIFO is growing twice. Is it correct?<br>=
-</blockquote><div>=C2=A0</div><div>What do you mean by growing twice? TX an=
-d RX?</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"marg=
-in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
-x">
-Does the LSB stay at the same offset? What is the meaning of the MSB in 32 =
-byte<br>
-case? If it&#39;s reserved then why not to always use 32 byte approach?<br>=
-</blockquote><div>=C2=A0</div><div>Yes, the LSB stays in the same place, an=
-d bit 5 is reserved=C2=A0in the NPCM7XX SoC.</div><div>Unfortunately, the I=
-2C test failed when we tried to use the 32 bytes approach at NPCM7XX Soc, t=
-his is why we added NPCM_I2CTXF_STS_TX_BYTES and NPCM_I2C_STSRXF_RX_BYTES t=
-o the data structure.</div><div><br></div><div>The device tree data struct<=
-font face=3D"arial, sans-serif">ure=C2=A0<span style=3D"color:rgb(51,51,51)=
-;font-variant-ligatures:none">pass=C2=A0data for each specific device, so=
-=C2=A0</span></font>I don&#39;t understand=C2=A0why not use device tree dat=
-a for supporting the I2C specific device?<font face=3D"arial, sans-serif"><=
-span style=3D"color:rgb(51,51,51);font-variant-ligatures:none">=C2=A0this i=
-s=C2=A0not the case here?</span></font></div><div><br></div><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex">
-<br>
--- <br>
-With Best Regards,<br>
-Andy Shevchenko<br>
-<br>
-<br></blockquote><div><br></div><div>Best Regards,</div><div><br></div><div=
->Tomer Maimon=C2=A0</div></div></div>
-
---00000000000033b23605d98ccbbc--
