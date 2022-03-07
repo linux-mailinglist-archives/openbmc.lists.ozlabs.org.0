@@ -1,66 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 963EA4D06D4
-	for <lists+openbmc@lfdr.de>; Mon,  7 Mar 2022 19:47:43 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 288B84D07EA
+	for <lists+openbmc@lfdr.de>; Mon,  7 Mar 2022 20:48:37 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KC6s841Zqz3bZq
-	for <lists+openbmc@lfdr.de>; Tue,  8 Mar 2022 05:47:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KC8CP6hgtz3bTL
+	for <lists+openbmc@lfdr.de>; Tue,  8 Mar 2022 06:48:33 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=lyEI4eFF;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kaod.org (client-ip=188.165.42.229;
- helo=4.mo548.mail-out.ovh.net; envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
-X-Greylist: delayed 600 seconds by postgrey-1.36 at boromir;
- Tue, 08 Mar 2022 05:47:22 AEDT
-Received: from 4.mo548.mail-out.ovh.net (4.mo548.mail-out.ovh.net
- [188.165.42.229])
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c35;
+ helo=mail-oo1-xc35.google.com; envelope-from=tmaimon77@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=lyEI4eFF; dkim-atps=neutral
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com
+ [IPv6:2607:f8b0:4864:20::c35])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KC6rp683wz30KV
- for <openbmc@lists.ozlabs.org>; Tue,  8 Mar 2022 05:47:20 +1100 (AEDT)
-Received: from mxplan5.mail.ovh.net (unknown [10.109.143.183])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 11A64217D3;
- Mon,  7 Mar 2022 18:28:49 +0000 (UTC)
-Received: from kaod.org (37.59.142.103) by DAG4EX1.mxp5.local (172.16.2.31)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.18; Mon, 7 Mar
- 2022 19:28:49 +0100
-Authentication-Results: garm.ovh; auth=pass
- (GARM-103G0055f7d1677-8527-48a0-9168-d0ebb8b77603,
- 2E53EE1553C3E30B03D111E4FD0BE5C715152E82) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <e10877f9-57f7-7019-b9ca-0812a60cdea9@kaod.org>
-Date: Mon, 7 Mar 2022 19:28:48 +0100
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KC8Bz3PZ1z2xDM
+ for <openbmc@lists.ozlabs.org>; Tue,  8 Mar 2022 06:48:09 +1100 (AEDT)
+Received: by mail-oo1-xc35.google.com with SMTP id
+ k13-20020a4a948d000000b003172f2f6bdfso19189228ooi.1
+ for <openbmc@lists.ozlabs.org>; Mon, 07 Mar 2022 11:48:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=vhRo0brwogVCRu+VQGQ+254ZKo6uOsXDV93NbH7cxRs=;
+ b=lyEI4eFF/cgOepyL0gQmTpH0gR19hH+lkFhsIY8IfOTogiBgFHC1PF/eRMG0mDYUnM
+ LtuZZPq3WucgXCJiB6lKNyvN9Dg6VWsvupNviCXwNhriWam4C8qv4FPJVE3Z4GAI2OdS
+ ssE89YQ3GayFDCQYUAN3bRMoKCFGGnJqul+8vW4RSjLAfH3C2ogCy85b2n2xDJ+0wKm7
+ KAxSZARvPkuVHMdP7gSdqdU6/ubWmVZWfJBP08AHUF8hxccUBu0XOw6oVoNU7XQQJ20d
+ wqiCX/UaUQpFi4ia2aefl833rWAyzFiZVxyuYQszyW0ax8mxQzJryaCdNmprlber4CpF
+ 1IUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=vhRo0brwogVCRu+VQGQ+254ZKo6uOsXDV93NbH7cxRs=;
+ b=lUWBEKV54l+mG9gyNGL6G9jV64Epwk6Hcpn+mTR8/XSQdVMXlzuYPuBMPLdw59AYcT
+ cQiptPpA6iaU5Yb1rLVXzuEU4wjMOwsB5Me+/J78mdXHArxxg5SzbplnS3rLcBAvHKod
+ 3ZBXJOBJkYYn68vaibYigGfHln4Lh0bKIYKtl5GPR7UW83T3TubSZrH4r0fBVCietJzI
+ fG4Mz7b4f5ONsp6C89V2moiPFHZk+uB+eNQClQux95IohUrCICKDLROwoTsug0vtloxB
+ 5tdrsrrnsHEyO2gHl7IzDoIEO2kZc7d95Y/Hal7xqTSdrUtPDgzrlwECO8GWgShkVgXM
+ gVLw==
+X-Gm-Message-State: AOAM533ZgcZgIMi6lVhJ5zwGbG3j/xH7HBBe561CPCT2nyWgnu4jEq6f
+ C5kE5sJosOsgyoG3fsN0X+mrfnX6oeoCFkJ8JHA=
+X-Google-Smtp-Source: ABdhPJwgEOVu2ifH6xNfUbg+v5eS3Hkc8HPpuyzWeFSFcO7W4XCYVysWkd0x3lAcgeskTCURqazPw8oVMW0KpsbtBMA=
+X-Received: by 2002:a05:6870:a116:b0:d7:54ba:99f0 with SMTP id
+ m22-20020a056870a11600b000d754ba99f0mr350984oae.29.1646682486901; Mon, 07 Mar
+ 2022 11:48:06 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [SPAM] [PATCH 1/1] mtd: spi-nor: aspeed: set the decoding size to
- at least 2MB for AST2600
-Content-Language: en-US
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-To: =?UTF-8?B?UG90aW4gTGFpICjos7Tmn4/lu7cp?= <Potin.Lai@quantatw.com>, Joel
- Stanley <joel@jms.id.au>, "linux-aspeed@lists.ozlabs.org"
- <linux-aspeed@lists.ozlabs.org>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>, Patrick Williams <patrick@stwcx.xyz>
-References: <20220304170757.16924-1-potin.lai@quantatw.com>
- <67004879-96ab-33b5-f389-bbe0005d78ef@kaod.org>
- <6ed257f7-ae87-e2fe-26ed-9db300f5ebcc@kaod.org>
- <efeac1dc-0762-b6d3-e03b-dffc2c76d756@quantatw.com>
- <4d072c43-a766-9ce4-a629-a3ed095663a4@kaod.org>
-In-Reply-To: <4d072c43-a766-9ce4-a629-a3ed095663a4@kaod.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.103]
-X-ClientProxiedBy: DAG9EX2.mxp5.local (172.16.2.82) To DAG4EX1.mxp5.local
- (172.16.2.31)
-X-Ovh-Tracer-GUID: 85409c2e-412a-4a5e-ba56-42412e0de9ca
-X-Ovh-Tracer-Id: 5683824205710789539
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvvddruddugedguddufecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkffggfgfuhffvfhgjtgfgihesthekredttdefjeenucfhrhhomhepveorughrihgtpgfnvggpifhorghtvghruceotghlgheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpefgvefhudektedtueefieeujeekveegheetgfdvvdeguddvjeegtefghedvuedvudenucffohhmrghinhepghhithhhuhgsrdgtohhmnecukfhppedtrddtrddtrddtpdefjedrheelrddugedvrddutdefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmohguvgepshhmthhpohhuthdphhgvlhhopehmgihplhgrnhehrdhmrghilhdrohhvhhdrnhgvthdpihhnvghtpedtrddtrddtrddtpdhmrghilhhfrhhomheptghlgheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopedupdhrtghpthhtohepphgrthhrihgtkhesshhtfigtgidrgiihii
+References: <20220303083141.8742-1-warp5tw@gmail.com>
+ <20220303083141.8742-12-warp5tw@gmail.com>
+ <YiCb7LNY9tmMCZx7@smile.fi.intel.com>
+ <CAHb3i=tWhtXK+c5GGbp6m23AHoyy=4woT_+n3a_N-6CqKUYb=g@mail.gmail.com>
+ <YiDMX7pUqs/rLJUU@smile.fi.intel.com>
+ <CAP6Zq1iy0yNMemqDjrLu1F0rrRSDFhZ+SqdoOa9FyJDNL0ENXA@mail.gmail.com>
+ <YiXT1JX5A7Ez7C6G@smile.fi.intel.com>
+In-Reply-To: <YiXT1JX5A7Ez7C6G@smile.fi.intel.com>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Mon, 7 Mar 2022 21:47:56 +0200
+Message-ID: <CAP6Zq1gLQ6BaDgrE8vq1p5CHQ3WDbCp59e_=zghmU_6J0FB-mQ@mail.gmail.com>
+Subject: Re: [PATCH v3 11/11] i2c: npcm: Support NPCM845
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Content-Type: multipart/alternative; boundary="000000000000b0912a05d9a6243c"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,29 +81,164 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree <devicetree@vger.kernel.org>, Tali Perry <tali.perry1@gmail.com>,
+ Linux I2C <linux-i2c@vger.kernel.org>, Benjamin Fair <benjaminfair@google.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, JJLIU0@nuvoton.com,
+ lukas.bulwahn@gmail.com, Tomer Maimon <tomer.maimon@nuvoton.com>,
+ KWLIU@nuvoton.com, bence98@sch.bme.hu, Arnd Bergmann <arnd@arndb.de>,
+ sven@svenpeter.dev, Rob Herring <robh+dt@kernel.org>,
+ Avi Fishman <Avi.Fishman@nuvoton.com>, Tyrone Ting <warp5tw@gmail.com>,
+ yangyicong@hisilicon.com, semen.protsenko@linaro.org, jie.deng@intel.com,
+ Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Wolfram Sang <wsa@kernel.org>, kfting@nuvoton.com,
+ Tali Perry <tali.perry@nuvoton.com>, Olof Johansson <olof@lixom.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 3/7/22 08:57, Cédric Le Goater wrote:
-> 
->> I tested with spi-mem v3 patch, it looks same issue appeared. (spi-model=mx25l800)
->>
->>
->> [    0.541050] spi-nor spi1.0: mx25l8005 (1024 Kbytes)
->> aspeed_smc_flash_set_segment CS0 segreg=0x0 [ 0x30000000 - 0x30000000 ]
->> aspeed_smc_flash_set_segment CS1 segreg=0x7f00010 [ 0x30100000 - 0x38000000 ]
->> [    0.541976] spi-aspeed-smc 1e630000.spi: Calibration area too uniform, using low speed
->> [    0.542267] spi-aspeed-smc 1e630000.spi: CE0 read buswidth:1 [0x000b0041]
->>
->> I think the model mx25l1606e you tested is 2MB flash.
-> 
-> Indeed. Thanks for the test of v3. We should send a followup patch
-> for this 2MB restriction on the minimum size of the flash when the
-> patchset is merged or I will if a v4 is asked for.
+--000000000000b0912a05d9a6243c
+Content-Type: text/plain; charset="UTF-8"
 
-Here is an updated version for the spi-mem driver :
+Hi Andy,
 
-   https://github.com/legoater/linux/commit/418126725d11863b7b51b70ff507d1da6db192c3
-Thanks,
+On Mon, 7 Mar 2022 at 11:44, Andy Shevchenko <
+andriy.shevchenko@linux.intel.com> wrote:
 
-C.
+> On Sun, Mar 06, 2022 at 03:33:20PM +0200, Tomer Maimon wrote:
+> > On Thu, 3 Mar 2022 at 16:11, Andy Shevchenko <
+> > andriy.shevchenko@linux.intel.com> wrote:
+> > > On Thu, Mar 03, 2022 at 02:35:58PM +0200, Tali Perry wrote:
+> > > > > On Thu, Mar 3, 2022 at 12:45 PM Andy Shevchenko <
+> > > andriy.shevchenko@linux.intel.com> wrote:
+>
+> ...
+>
+> > > But hold on and read set of questions below.
+> > >
+> > > Previously it was a fixed field with the NPCM_I2CTXF_STS_TX_BYTES mask
+> > > applied,
+> > > right? From above I have got that FIFO is growing twice. Is it correct?
+> >
+> > What do you mean by growing twice? TX and RX?
+>
+> I meant from 16 bytes to 32 bytes.
+>
+Yes, the FIFO grow to 32 byte
+
+>
+> > > Does the LSB stay at the same offset? What is the meaning of the MSB
+> in 32
+> > > byte
+> > > case? If it's reserved then why not to always use 32 byte approach?
+> >
+> > Yes, the LSB stays in the same place, and bit 5 is reserved in the
+> NPCM7XX
+> > SoC.
+> > Unfortunately, the I2C test failed when we tried to use the 32 bytes
+> > approach at NPCM7XX Soc, this is why we added NPCM_I2CTXF_STS_TX_BYTES
+> and
+> > NPCM_I2C_STSRXF_RX_BYTES to the data structure.
+> >
+> > The device tree data structure pass data for each specific device, so I
+> > don't understand why not use device tree data for supporting the I2C
+> > specific device? this is not the case here?
+>
+> Basically we use compatible strings for that, but in any case if something
+> can be autodetected from hardware, it's better to use autodetection.
+
+Thanks for the clarification, in our case we don't autodetect from the
+hardware...
+
+>
+
+
+>
+> --
+> With Best Regards,
+> Andy Shevchenko
+>
+>
+> We will send a new version soon, highly appreciate your help!
+
+Best regards,
+
+Tomer
+
+--000000000000b0912a05d9a6243c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi Andy,</div><br><div class=3D"gmail_quo=
+te"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, 7 Mar 2022 at 11:44, Andy=
+ Shevchenko &lt;<a href=3D"mailto:andriy.shevchenko@linux.intel.com">andriy=
+.shevchenko@linux.intel.com</a>&gt; wrote:<br></div><blockquote class=3D"gm=
+ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
+204,204);padding-left:1ex">On Sun, Mar 06, 2022 at 03:33:20PM +0200, Tomer =
+Maimon wrote:<br>
+&gt; On Thu, 3 Mar 2022 at 16:11, Andy Shevchenko &lt;<br>
+&gt; <a href=3D"mailto:andriy.shevchenko@linux.intel.com" target=3D"_blank"=
+>andriy.shevchenko@linux.intel.com</a>&gt; wrote:<br>
+&gt; &gt; On Thu, Mar 03, 2022 at 02:35:58PM +0200, Tali Perry wrote:<br>
+&gt; &gt; &gt; &gt; On Thu, Mar 3, 2022 at 12:45 PM Andy Shevchenko &lt;<br=
+>
+&gt; &gt; <a href=3D"mailto:andriy.shevchenko@linux.intel.com" target=3D"_b=
+lank">andriy.shevchenko@linux.intel.com</a>&gt; wrote:<br>
+<br>
+...<br>
+<br>
+&gt; &gt; But hold on and read set of questions below.<br>
+&gt; &gt;<br>
+&gt; &gt; Previously it was a fixed field with the NPCM_I2CTXF_STS_TX_BYTES=
+ mask<br>
+&gt; &gt; applied,<br>
+&gt; &gt; right? From above I have got that FIFO is growing twice. Is it co=
+rrect?<br>
+&gt; <br>
+&gt; What do you mean by growing twice? TX and RX?<br>
+<br>
+I meant from 16 bytes to 32 bytes.<br></blockquote><div>Yes, the FIFO grow =
+to 32 byte=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
+ 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<br>
+&gt; &gt; Does the LSB stay at the same offset? What is the meaning of the =
+MSB in 32<br>
+&gt; &gt; byte<br>
+&gt; &gt; case? If it&#39;s reserved then why not to always use 32 byte app=
+roach?<br>
+&gt; <br>
+&gt; Yes, the LSB stays in the same place, and bit 5 is reserved in the NPC=
+M7XX<br>
+&gt; SoC.<br>
+&gt; Unfortunately, the I2C test failed when we tried to use the 32 bytes<b=
+r>
+&gt; approach at NPCM7XX Soc, this is why we added NPCM_I2CTXF_STS_TX_BYTES=
+ and<br>
+&gt; NPCM_I2C_STSRXF_RX_BYTES to the data structure.<br>
+&gt; <br>
+&gt; The device tree data structure pass data for each specific device, so =
+I<br>
+&gt; don&#39;t understand why not use device tree data for supporting the I=
+2C<br>
+&gt; specific device? this is not the case here?<br>
+<br>
+Basically we use compatible strings for that, but in any case if something<=
+br>
+can be autodetected from hardware, it&#39;s better to use autodetection.</b=
+lockquote><div>Thanks for the clarification, in our case we don&#39;t=C2=A0=
+autodetect from the hardware...</div><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
+g-left:1ex">=C2=A0</blockquote><blockquote class=3D"gmail_quote" style=3D"m=
+argin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left=
+:1ex">
+<br>
+<br>
+-- <br>
+With Best Regards,<br>
+Andy Shevchenko<br>
+<br>
+<br></blockquote><div>We will send a new version soon, highly appreciate=C2=
+=A0your help!</div><div><br></div><div>Best regards,</div><div><br></div><d=
+iv>Tomer</div><div><br></div><div>=C2=A0</div></div></div>
+
+--000000000000b0912a05d9a6243c--
