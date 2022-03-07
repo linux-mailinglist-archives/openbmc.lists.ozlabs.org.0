@@ -1,75 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B93754CF6A5
-	for <lists+openbmc@lfdr.de>; Mon,  7 Mar 2022 10:42:38 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 856664CF797
+	for <lists+openbmc@lfdr.de>; Mon,  7 Mar 2022 10:46:10 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KBtmC4Wcwz30Fn
-	for <lists+openbmc@lfdr.de>; Mon,  7 Mar 2022 20:42:35 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KBtrH2tfsz3bPK
+	for <lists+openbmc@lfdr.de>; Mon,  7 Mar 2022 20:46:07 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=ykjkIuiG;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=FFeztctr;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::c31;
- helo=mail-oo1-xc31.google.com; envelope-from=yulei.sh@bytedance.com;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=134.134.136.20; helo=mga02.intel.com;
+ envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20210112.gappssmtp.com
- header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256
- header.s=20210112 header.b=ykjkIuiG; dkim-atps=neutral
-Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com
- [IPv6:2607:f8b0:4864:20::c31])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
+ header.s=Intel header.b=FFeztctr; dkim-atps=neutral
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KBtln5HXWz30Fn
- for <openbmc@lists.ozlabs.org>; Mon,  7 Mar 2022 20:42:12 +1100 (AEDT)
-Received: by mail-oo1-xc31.google.com with SMTP id
- u30-20020a4a6c5e000000b00320d8dc2438so3677882oof.12
- for <openbmc@lists.ozlabs.org>; Mon, 07 Mar 2022 01:42:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20210112.gappssmtp.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=0OTxG8o37507+hmHonW+XnH8Ljb1vXS0syc3pGcK1e8=;
- b=ykjkIuiGPCHf9QtL14iK8HyyHtVyXUn2aRfaN/WhKG+iY5NhK5m1EMjslVQgPkg5sB
- hxK5JXmkOE6ElVuICDKq5C7f9JiQd0Axpz5/fwAGEXJtI1NblUAehxtD5Z2F2aCi2Zr/
- usDL/G8OCHwXJjVLq5Bnf6ZmLRh8a9+wgHEkiapQPpeHk8A2XZNTFCVZwMXztw59fU6+
- pxvyzXYc50HY1obpHuT+Wtsxq0xaQImdy2uZfOwTHj+LmIDk9twBHyqKzqGH9XcIrZ3B
- sSUXf4WuXFbgslH/yT4FfvB6WHU1qDMS9uFwcsPAI77s3UWivjViTasETy3s+iTgENFN
- guow==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=0OTxG8o37507+hmHonW+XnH8Ljb1vXS0syc3pGcK1e8=;
- b=EAMO5CSugQQsI0QDyg/7kpr0eyZ4Opk1xg+HN4P/48s/biKUCCsGJ741hjCrjrKBC5
- MeUs0S1ZZRyuXrjS5VyQnYaC0084blk+s39UQg/BtmgNZYDZjVN2UcTvpbcgAMpgLU5o
- FHJdYU4EfOixqE7ApeFI3VPpy5eiW1mP5EvqxHOTjinD2AQw1lPUqWr9n/RcPKWTMOhS
- JKN8YlWxCWsYG6EPiD6O++g4xBnGc5GdU/OiKH/6Gz2OFfZI3VmfZtiLHtpp78sbztQn
- AqpG3BieAC94jN4DNAYUhLhB8LgH6ZFpCBjX0k6ZlJSd3V7URGGgKdcd6SMCHalZ6G7X
- XCNQ==
-X-Gm-Message-State: AOAM531ceYTbGnl4lA8tBBAZ0wTy8savn7rl3N7rUCn68Gz0gphjt9W/
- EAFcrk/Q5BBl38L4GYnfL69Om1cPWfXxtZh99GHujtc91SEO6Q==
-X-Google-Smtp-Source: ABdhPJz1Ll/kx58yEov2/7Wx8rCFprZT8+J8oek03501dGJs7+xLkZu3waljLVM9UxGVNdqZNL0/YQcJd7mSsNjz1UQ=
-X-Received: by 2002:a05:6870:a102:b0:d9:bcaf:7181 with SMTP id
- m2-20020a056870a10200b000d9bcaf7181mr11026446oae.8.1646646130526; Mon, 07 Mar
- 2022 01:42:10 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KBtqq5MCVz30Kq
+ for <openbmc@lists.ozlabs.org>; Mon,  7 Mar 2022 20:45:43 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1646646344; x=1678182344;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=iYmh9KvmrAN/9n49jwIZ1qbV8GdSrmGWQVFa5C6rxI4=;
+ b=FFeztctrsXVjWEnjAorV7rOgX6SMlTKdrv5Uafx1Jm27Aoc80vKMOe5A
+ zjGEPpBje2RVKmc5vg9sC1z9XsFVGr11au/VFKTbnLrDV6VTD1t+Q3Su1
+ 6EywN1hl7lfamdmFueS1kMKYPJXB3A/VVivVGf/Al7JZ6BGQcViIW9WWr
+ thc3ZkaO5bR0qCfFdwsodXNdmGl/TzpyVVRpxlGXkvEEM7N4apa4clxaU
+ 2DEpuIEkZfXK9ofBoqNMkUIACncQjPsLXyICnrfZCvnvPLpBfbayB0FzF
+ 59qlEf+SdpJl8LF56t4xKA32+xDWi689WR+p67WBho2iyY50vZtMQHdUE w==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10278"; a="241781871"
+X-IronPort-AV: E=Sophos;i="5.90,161,1643702400"; d="scan'208";a="241781871"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+ by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Mar 2022 01:44:41 -0800
+X-IronPort-AV: E=Sophos;i="5.90,161,1643702400"; d="scan'208";a="495003939"
+Received: from smile.fi.intel.com ([10.237.72.59])
+ by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 07 Mar 2022 01:44:34 -0800
+Received: from andy by smile.fi.intel.com with local (Exim 4.95)
+ (envelope-from <andriy.shevchenko@linux.intel.com>)
+ id 1nR9u8-00Ch1M-IP; Mon, 07 Mar 2022 11:43:48 +0200
+Date: Mon, 7 Mar 2022 11:43:48 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Tomer Maimon <tmaimon77@gmail.com>
+Subject: Re: [PATCH v3 11/11] i2c: npcm: Support NPCM845
+Message-ID: <YiXT1JX5A7Ez7C6G@smile.fi.intel.com>
+References: <20220303083141.8742-1-warp5tw@gmail.com>
+ <20220303083141.8742-12-warp5tw@gmail.com>
+ <YiCb7LNY9tmMCZx7@smile.fi.intel.com>
+ <CAHb3i=tWhtXK+c5GGbp6m23AHoyy=4woT_+n3a_N-6CqKUYb=g@mail.gmail.com>
+ <YiDMX7pUqs/rLJUU@smile.fi.intel.com>
+ <CAP6Zq1iy0yNMemqDjrLu1F0rrRSDFhZ+SqdoOa9FyJDNL0ENXA@mail.gmail.com>
 MIME-Version: 1.0
-References: <20220214094231.3753686-1-clg@kaod.org>
- <CACPK8XdG=ok4P7Rd-SZ3htPsaXdy76rtMdqgcM6_QM2+fgoeJg@mail.gmail.com>
- <CAHwNHZUMhPeYmev=6Zn+Ay_Le7UBmPurBMokLOB623i0eu2ZOw@mail.gmail.com>
- <CACPK8Xf6Zp7Zeu3wrRFHsctEKXfoYkJhbV+PSby0CmP72LC7aQ@mail.gmail.com>
- <CAGm54UGabB9Ji9HBm_d=FnLB5DxMKgvtdnP=2Mc-TJdPo5Ld8Q@mail.gmail.com>
-In-Reply-To: <CAGm54UGabB9Ji9HBm_d=FnLB5DxMKgvtdnP=2Mc-TJdPo5Ld8Q@mail.gmail.com>
-From: Lei Yu <yulei.sh@bytedance.com>
-Date: Mon, 7 Mar 2022 17:41:59 +0800
-Message-ID: <CAGm54UGnjxhX4wsbZGJZJUWaiWXO1VONkxww=XnpyyyWeuF_hw@mail.gmail.com>
-Subject: Re: Call for testing: spi-mem driver for Aspeed SMC controllers
-To: Joel Stanley <joel@jms.id.au>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAP6Zq1iy0yNMemqDjrLu1F0rrRSDFhZ+SqdoOa9FyJDNL0ENXA@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,71 +75,61 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ryan Chen <ryan_chen@aspeedtech.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, John Wang <wangzq.jn@gmail.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Cc: devicetree <devicetree@vger.kernel.org>, Tali Perry <tali.perry1@gmail.com>,
+ Linux I2C <linux-i2c@vger.kernel.org>, Benjamin Fair <benjaminfair@google.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, JJLIU0@nuvoton.com,
+ lukas.bulwahn@gmail.com, Tomer Maimon <tomer.maimon@nuvoton.com>,
+ KWLIU@nuvoton.com, bence98@sch.bme.hu, Arnd Bergmann <arnd@arndb.de>,
+ sven@svenpeter.dev, Rob Herring <robh+dt@kernel.org>,
+ Avi Fishman <Avi.Fishman@nuvoton.com>, Tyrone Ting <warp5tw@gmail.com>,
+ yangyicong@hisilicon.com, semen.protsenko@linaro.org, jie.deng@intel.com,
+ Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Wolfram Sang <wsa@kernel.org>, kfting@nuvoton.com,
+ Tali Perry <tali.perry@nuvoton.com>, Olof Johansson <olof@lixom.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-We hit some issues with the new driver, and here is some detailed info.
+On Sun, Mar 06, 2022 at 03:33:20PM +0200, Tomer Maimon wrote:
+> On Thu, 3 Mar 2022 at 16:11, Andy Shevchenko <
+> andriy.shevchenko@linux.intel.com> wrote:
+> > On Thu, Mar 03, 2022 at 02:35:58PM +0200, Tali Perry wrote:
+> > > > On Thu, Mar 3, 2022 at 12:45 PM Andy Shevchenko <
+> > andriy.shevchenko@linux.intel.com> wrote:
 
-* Our system (not yet upstreamed) uses `mx66l51235f` as the FMC SPI
-flash, and we created a QEMU model.
+...
 
-* When the dts is like "default":
- &fmc {
-        pinctrl-names = "default";
-        status = "okay";
-        flash@0 {
-                status = "okay";
-                m25p,fast-read;
-                label = "bmc";
-                spi-max-frequency = <50000000>;
- #include "openbmc-flash-layout-64.dtsi"
-        };
- };
-1. Run the image in ast2600-evb QEMU, it boots fine;
-2. We have a model (g220b) in QEMU that uses mx66l51235f as the fmc
-SPI (`amc->fmc_model = "mx66l51235f";`), it boots with below error:
- [    1.848286] vmap allocation for size 268439552 failed: use
-vmalloc=<size> to increase size
- [    1.848774] spi-aspeed-smc 1e620000.spi: ioremap failed for
-resource [mem 0x20000000-0x2fffffff]
- [    1.849898] spi-aspeed-smc: probe of 1e620000.spi failed with error -12
-3. If I manually add vmalloc to the kernel command line (setenv
-bootargs 'console=ttyS4,115200n8 root=/dev/ram rw vmalloc=400M'), the
-above QEMU model boots fine.
-4. On the real system, it behaves the same as QEMU, that I need to add
-`vmalloc=400M` to make it boot OK.
+> > But hold on and read set of questions below.
+> >
+> > Previously it was a fixed field with the NPCM_I2CTXF_STS_TX_BYTES mask
+> > applied,
+> > right? From above I have got that FIFO is growing twice. Is it correct?
+> 
+> What do you mean by growing twice? TX and RX?
 
+I meant from 16 bytes to 32 bytes.
 
-* When the dts set `spi-tx-bus-width/spi-rx-bus-width = <4>`, and uses
-pinctrl_fwqspid_default from @Joel Stanley's pinctrl patch:
- &fmc {
-        pinctrl-names = "default";
-        pinctrl-0 = <&pinctrl_fwqspid_default>;
-        status = "okay";
-        flash@0 {
-                status = "okay";
-                m25p,fast-read;
-                label = "bmc";
-                spi-max-frequency = <50000000>;
-                spi-tx-bus-width = <4>;
-                spi-rx-bus-width = <4>;
- #include "openbmc-flash-layout-64.dtsi"
-        };
- };
-1. It fails to boot in ast2600-evb QEMU:
- [    0.586654] spi-nor: probe of spi0.0 failed with error -5
- [    0.587654] spi-nor spi0.1: unrecognized JEDEC id bytes: 00 00 00 00 00 00
-2. It fails to boot in the g220b model with the same vmalloc failure issue.
-2. With `vmalloc=400M`, the g220b model boots fine in QEMU.
-3. On the real system, it still fails to boot with `vmalloc=400M` due
-to the below error:
- [    0.970091] spi-nor spi0.0: unrecognized JEDEC id bytes: ff ff ff ff ff ff
- [    0.977902] spi-nor: probe of spi0.0 failed with error -2
+> > Does the LSB stay at the same offset? What is the meaning of the MSB in 32
+> > byte
+> > case? If it's reserved then why not to always use 32 byte approach?
+> 
+> Yes, the LSB stays in the same place, and bit 5 is reserved in the NPCM7XX
+> SoC.
+> Unfortunately, the I2C test failed when we tried to use the 32 bytes
+> approach at NPCM7XX Soc, this is why we added NPCM_I2CTXF_STS_TX_BYTES and
+> NPCM_I2C_STSRXF_RX_BYTES to the data structure.
+> 
+> The device tree data structure pass data for each specific device, so I
+> don't understand why not use device tree data for supporting the I2C
+> specific device? this is not the case here?
+
+Basically we use compatible strings for that, but in any case if something
+can be autodetected from hardware, it's better to use autodetection.
 
 
 -- 
-BRs,
-Lei YU
+With Best Regards,
+Andy Shevchenko
+
+
