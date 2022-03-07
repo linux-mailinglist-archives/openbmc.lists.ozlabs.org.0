@@ -2,57 +2,34 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F3E24D0898
-	for <lists+openbmc@lfdr.de>; Mon,  7 Mar 2022 21:40:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9AB964D0C72
+	for <lists+openbmc@lfdr.de>; Tue,  8 Mar 2022 01:09:25 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KC9Ly6W1Lz30jZ
-	for <lists+openbmc@lfdr.de>; Tue,  8 Mar 2022 07:40:10 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=fli1cHh/;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KCG0L460Sz3bVC
+	for <lists+openbmc@lfdr.de>; Tue,  8 Mar 2022 11:09:22 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1;
- helo=dfw.source.kernel.org; envelope-from=broonie@kernel.org;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=k20201202 header.b=fli1cHh/; 
- dkim-atps=neutral
-Received: from dfw.source.kernel.org (dfw.source.kernel.org
- [IPv6:2604:1380:4641:c500::1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KC9LZ0b0Dz2ymb
- for <openbmc@lists.ozlabs.org>; Tue,  8 Mar 2022 07:39:50 +1100 (AEDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 170556151A;
- Mon,  7 Mar 2022 20:39:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDB51C340F4;
- Mon,  7 Mar 2022 20:39:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1646685586;
- bh=6Lv7X6cEyhJiRnzqWJw0WxCSP6g9ZNGOQU0y2bDaPZQ=;
- h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
- b=fli1cHh/Ygj19UNnJtXYT4hwxr8Z/MXW+tBDlY/0D0fFdR4+WsIaHQQEVDK9tnOEM
- /ffMhKriHcFK0DQF45hdjCEIA64aW0FBmPFWwQCJ7jpW56t8NFZxX13X66GZ6LZsS5
- HaTxrStzvRQFqiufcoaF85q1/KSHEJmdldIXv8T5ij4uMjH/BZY0/GeoOZd5ex+qpf
- BjDpDcbZQzz7WV0XMHQ7/RMYoYtxmGowRqpUg/OhcdDkO4I0sI7sBDJ9rBz3r5W0Jv
- +yOXdqiOn6bqH/461DAD9bwPeACbNDTYlu+QGen74/by3DZuAyGbxT2vSQ46XCwkNv
- v9SfXCGESyN7Q==
-From: Mark Brown <broonie@kernel.org>
-To: Jonathan Neuschäfer <j.neuschaefer@gmx.net>, linux-spi@vger.kernel.org
-In-Reply-To: <20220306142312.109017-1-j.neuschaefer@gmx.net>
-References: <20220306142312.109017-1-j.neuschaefer@gmx.net>
-Subject: Re: [PATCH] spi: npcm-fiu: Fix typo ("npxm")
-Message-Id: <164668558469.3137564.11739196623813186789.b4-ty@kernel.org>
-Date: Mon, 07 Mar 2022 20:39:44 +0000
+ smtp.mailfrom=sysmate.com (client-ip=58.224.160.96; helo=sysmate.com;
+ envelope-from=pooky@sysmate.com; receiver=<UNKNOWN>)
+X-Greylist: delayed 301 seconds by postgrey-1.36 at boromir;
+ Mon, 07 Mar 2022 14:05:50 AEDT
+Received: from sysmate.com (mail.sysmate.com [58.224.160.96])
+ by lists.ozlabs.org (Postfix) with ESMTP id 4KBjyQ3QYyz30KB
+ for <openbmc@lists.ozlabs.org>; Mon,  7 Mar 2022 14:05:50 +1100 (AEDT)
+From: <pooky@sysmate.com>
+To: <openbmc@lists.ozlabs.org>
+Subject: [Help] I want to know how to make an image for w25q256JV flash memory.
+Date: Mon, 7 Mar 2022 12:00:42 +0900
+Organization: SYSMATE
+Message-ID: <000001d831cf$88c2f8e0$9a48eaa0$@sysmate.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/alternative;
+ boundary="----=_NextPart_000_0001_01D8321A.F8AB3D20"
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: Adgxz3MwFPDdaL3/Qb6Ug6m483fshQ==
+Content-Language: ko
+X-Mailman-Approved-At: Tue, 08 Mar 2022 11:09:12 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,42 +41,112 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>,
- Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Tali Perry <tali.perry1@gmail.com>,
- Benjamin Fair <benjaminfair@google.com>
+Reply-To: pooky@sysmate.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sun, 6 Mar 2022 15:23:12 +0100, Jonathan Neuschäfer wrote:
-> The platform is called NPCM, not NPXM.
-> 
-> 
+This is a multipart message in MIME format.
 
-Applied to
+------=_NextPart_000_0001_01D8321A.F8AB3D20
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+To whom it may concern,
 
-Thanks!
+My name is Hounjoung, Software engineer for Sysmate in South Korea.
 
-[1/1] spi: npcm-fiu: Fix typo ("npxm")
-      commit: b15e3bc76925eb1366348483fca89f115c8cde31
+I found your email address on website.
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
+ 
 
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
+I am a complete beginner to openbmc.
 
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
+I am developing a motherboard using AST2500 chip using openbmc. 
 
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
+It is booting with w25q256JV flash memory attached to the AST2500 chip.
 
-Thanks,
-Mark
+I want to know how to make an image for w25q256JV flash memory.
+
+ 
+
+Best regards, 
+
+Houn-Joung
+
+
+------=_NextPart_000_0001_01D8321A.F8AB3D20
+Content-Type: text/html;
+	charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
+xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
+xmlns=3D"http://www.w3.org/TR/REC-html40"><head><META =
+HTTP-EQUIV=3D"Content-Type" CONTENT=3D"text/html; =
+charset=3Dus-ascii"><meta name=3DGenerator content=3D"Microsoft Word 15 =
+(filtered medium)"><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:"\B9D1\C740 \ACE0\B515";
+	panose-1:2 11 5 3 2 0 0 2 0 4;}
+@font-face
+	{font-family:"\@\B9D1\C740 \ACE0\B515";
+	panose-1:2 11 5 3 2 0 0 2 0 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	text-autospace:none;
+	word-break:break-hangul;
+	font-size:10.0pt;
+	font-family:"\B9D1\C740 \ACE0\B515";}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"\B9D1\C740 \ACE0\B515";
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"\B9D1\C740 \ACE0\B515";}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:3.0cm 72.0pt 72.0pt 72.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]--></head><body lang=3DKO =
+link=3D"#0563C1" vlink=3D"#954F72" style=3D'word-wrap:break-word'><div =
+class=3DWordSection1><p class=3DMsoNormal><span lang=3DEN-US>To whom it =
+may concern,<o:p></o:p></span></p><p class=3DMsoNormal><span =
+lang=3DEN-US> <o:p></o:p></span></p><p class=3DMsoNormal><span =
+lang=3DEN-US>My name is Hounjoung, Software engineer for Sysmate in =
+South Korea.<o:p></o:p></span></p><p class=3DMsoNormal><span =
+lang=3DEN-US>I found your email address on =
+website.<o:p></o:p></span></p><p class=3DMsoNormal><span =
+lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
+lang=3DEN-US>I am a complete beginner to =
+openbmc.<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-US>I =
+am developing a motherboard using AST2500 chip using openbmc. =
+<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-US>It is =
+booting with w25q256JV flash memory attached to the AST2500 =
+chip.<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-US>I =
+want to know how to make an image for w25q256JV flash =
+memory.<o:p></o:p></span></p><p class=3DMsoNormal><span =
+lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
+lang=3DEN-US> <o:p></o:p></span></p><p class=3DMsoNormal><span =
+lang=3DEN-US>Best regards, <o:p></o:p></span></p><p =
+class=3DMsoNormal><span =
+lang=3DEN-US>Houn-Joung<o:p></o:p></span></p></div></body></html>
+------=_NextPart_000_0001_01D8321A.F8AB3D20--
+
