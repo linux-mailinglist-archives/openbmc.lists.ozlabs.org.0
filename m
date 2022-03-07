@@ -1,69 +1,61 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 856664CF797
-	for <lists+openbmc@lfdr.de>; Mon,  7 Mar 2022 10:46:10 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79E774CFF95
+	for <lists+openbmc@lfdr.de>; Mon,  7 Mar 2022 14:07:17 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KBtrH2tfsz3bPK
-	for <lists+openbmc@lfdr.de>; Mon,  7 Mar 2022 20:46:07 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=FFeztctr;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KBzJL2rdmz3bVW
+	for <lists+openbmc@lfdr.de>; Tue,  8 Mar 2022 00:07:14 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.20; helo=mga02.intel.com;
- envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=FFeztctr; dkim-atps=neutral
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=kaod.org (client-ip=178.32.125.2;
+ helo=smtpout1.mo529.mail-out.ovh.net; envelope-from=clg@kaod.org;
+ receiver=<UNKNOWN>)
+Received: from smtpout1.mo529.mail-out.ovh.net
+ (smtpout1.mo529.mail-out.ovh.net [178.32.125.2])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KBtqq5MCVz30Kq
- for <openbmc@lists.ozlabs.org>; Mon,  7 Mar 2022 20:45:43 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1646646344; x=1678182344;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=iYmh9KvmrAN/9n49jwIZ1qbV8GdSrmGWQVFa5C6rxI4=;
- b=FFeztctrsXVjWEnjAorV7rOgX6SMlTKdrv5Uafx1Jm27Aoc80vKMOe5A
- zjGEPpBje2RVKmc5vg9sC1z9XsFVGr11au/VFKTbnLrDV6VTD1t+Q3Su1
- 6EywN1hl7lfamdmFueS1kMKYPJXB3A/VVivVGf/Al7JZ6BGQcViIW9WWr
- thc3ZkaO5bR0qCfFdwsodXNdmGl/TzpyVVRpxlGXkvEEM7N4apa4clxaU
- 2DEpuIEkZfXK9ofBoqNMkUIACncQjPsLXyICnrfZCvnvPLpBfbayB0FzF
- 59qlEf+SdpJl8LF56t4xKA32+xDWi689WR+p67WBho2iyY50vZtMQHdUE w==;
-X-IronPort-AV: E=McAfee;i="6200,9189,10278"; a="241781871"
-X-IronPort-AV: E=Sophos;i="5.90,161,1643702400"; d="scan'208";a="241781871"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Mar 2022 01:44:41 -0800
-X-IronPort-AV: E=Sophos;i="5.90,161,1643702400"; d="scan'208";a="495003939"
-Received: from smile.fi.intel.com ([10.237.72.59])
- by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 07 Mar 2022 01:44:34 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.95)
- (envelope-from <andriy.shevchenko@linux.intel.com>)
- id 1nR9u8-00Ch1M-IP; Mon, 07 Mar 2022 11:43:48 +0200
-Date: Mon, 7 Mar 2022 11:43:48 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH v3 11/11] i2c: npcm: Support NPCM845
-Message-ID: <YiXT1JX5A7Ez7C6G@smile.fi.intel.com>
-References: <20220303083141.8742-1-warp5tw@gmail.com>
- <20220303083141.8742-12-warp5tw@gmail.com>
- <YiCb7LNY9tmMCZx7@smile.fi.intel.com>
- <CAHb3i=tWhtXK+c5GGbp6m23AHoyy=4woT_+n3a_N-6CqKUYb=g@mail.gmail.com>
- <YiDMX7pUqs/rLJUU@smile.fi.intel.com>
- <CAP6Zq1iy0yNMemqDjrLu1F0rrRSDFhZ+SqdoOa9FyJDNL0ENXA@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KBzJ23Dxcz2xrj
+ for <openbmc@lists.ozlabs.org>; Tue,  8 Mar 2022 00:06:55 +1100 (AEDT)
+Received: from mxplan5.mail.ovh.net (unknown [10.108.4.132])
+ by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 70A61E709D2F;
+ Mon,  7 Mar 2022 14:06:52 +0100 (CET)
+Received: from kaod.org (37.59.142.104) by DAG4EX1.mxp5.local (172.16.2.31)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.18; Mon, 7 Mar
+ 2022 14:06:51 +0100
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-104R005770ace9c-1c0c-49a9-be00-3d02bfcb209a,
+ 2E53EE1553C3E30B03D111E4FD0BE5C715152E82) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 129.41.46.1
+Message-ID: <39cb3c3b-f07d-de60-7208-106be9485034@kaod.org>
+Date: Mon, 7 Mar 2022 14:06:50 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAP6Zq1iy0yNMemqDjrLu1F0rrRSDFhZ+SqdoOa9FyJDNL0ENXA@mail.gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: Call for testing: spi-mem driver for Aspeed SMC controllers
+Content-Language: en-US
+To: Lei Yu <yulei.sh@bytedance.com>, Joel Stanley <joel@jms.id.au>
+References: <20220214094231.3753686-1-clg@kaod.org>
+ <CACPK8XdG=ok4P7Rd-SZ3htPsaXdy76rtMdqgcM6_QM2+fgoeJg@mail.gmail.com>
+ <CAHwNHZUMhPeYmev=6Zn+Ay_Le7UBmPurBMokLOB623i0eu2ZOw@mail.gmail.com>
+ <CACPK8Xf6Zp7Zeu3wrRFHsctEKXfoYkJhbV+PSby0CmP72LC7aQ@mail.gmail.com>
+ <CAGm54UGabB9Ji9HBm_d=FnLB5DxMKgvtdnP=2Mc-TJdPo5Ld8Q@mail.gmail.com>
+ <CAGm54UGnjxhX4wsbZGJZJUWaiWXO1VONkxww=XnpyyyWeuF_hw@mail.gmail.com>
+From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <CAGm54UGnjxhX4wsbZGJZJUWaiWXO1VONkxww=XnpyyyWeuF_hw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [37.59.142.104]
+X-ClientProxiedBy: DAG3EX1.mxp5.local (172.16.2.21) To DAG4EX1.mxp5.local
+ (172.16.2.31)
+X-Ovh-Tracer-GUID: c7460112-4e16-4bbb-8c1b-e6c42ff86db2
+X-Ovh-Tracer-Id: 246572080605924259
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvvddruddugedggeejucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepkfffgggfuffvfhfhjggtgfhisehtjeertddtfeejnecuhfhrohhmpeevrogurhhitggpnfgvpgfiohgrthgvrhcuoegtlhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhephffhleegueektdetffdvffeuieeugfekkeelheelteeftdfgtefffeehueegleehnecukfhppedtrddtrddtrddtpdefjedrheelrddugedvrddutdegnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmohguvgepshhmthhpohhuthdphhgvlhhopehmgihplhgrnhehrdhmrghilhdrohhvhhdrnhgvthdpihhnvghtpedtrddtrddtrddtpdhmrghilhhfrhhomheptghlgheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopedupdhrtghpthhtoheprhihrghnpggthhgvnhesrghsphgvvgguthgvtghhrdgtohhm
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,61 +67,83 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>, Tali Perry <tali.perry1@gmail.com>,
- Linux I2C <linux-i2c@vger.kernel.org>, Benjamin Fair <benjaminfair@google.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, JJLIU0@nuvoton.com,
- lukas.bulwahn@gmail.com, Tomer Maimon <tomer.maimon@nuvoton.com>,
- KWLIU@nuvoton.com, bence98@sch.bme.hu, Arnd Bergmann <arnd@arndb.de>,
- sven@svenpeter.dev, Rob Herring <robh+dt@kernel.org>,
- Avi Fishman <Avi.Fishman@nuvoton.com>, Tyrone Ting <warp5tw@gmail.com>,
- yangyicong@hisilicon.com, semen.protsenko@linaro.org, jie.deng@intel.com,
- Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Wolfram Sang <wsa@kernel.org>, kfting@nuvoton.com,
- Tali Perry <tali.perry@nuvoton.com>, Olof Johansson <olof@lixom.net>
+Cc: Ryan Chen <ryan_chen@aspeedtech.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, John Wang <wangzq.jn@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sun, Mar 06, 2022 at 03:33:20PM +0200, Tomer Maimon wrote:
-> On Thu, 3 Mar 2022 at 16:11, Andy Shevchenko <
-> andriy.shevchenko@linux.intel.com> wrote:
-> > On Thu, Mar 03, 2022 at 02:35:58PM +0200, Tali Perry wrote:
-> > > > On Thu, Mar 3, 2022 at 12:45 PM Andy Shevchenko <
-> > andriy.shevchenko@linux.intel.com> wrote:
+Hello,
 
-...
-
-> > But hold on and read set of questions below.
-> >
-> > Previously it was a fixed field with the NPCM_I2CTXF_STS_TX_BYTES mask
-> > applied,
-> > right? From above I have got that FIFO is growing twice. Is it correct?
+  On 3/7/22 10:41, Lei Yu wrote:
+> We hit some issues with the new driver, and here is some detailed info.
 > 
-> What do you mean by growing twice? TX and RX?
+> * Our system (not yet upstreamed) uses `mx66l51235f` as the FMC SPI
+> flash, and we created a QEMU model.
+>
+> * When the dts is like "default":
+>   &fmc {
+>          pinctrl-names = "default";
+>          status = "okay";
+>          flash@0 {
+>                  status = "okay";
+>                  m25p,fast-read;
+>                  label = "bmc";
+>                  spi-max-frequency = <50000000>;
+>   #include "openbmc-flash-layout-64.dtsi"
+>          };
+>   };
+> 1. Run the image in ast2600-evb QEMU, it boots fine;
+> 2. We have a model (g220b) in QEMU that uses mx66l51235f as the fmc
+> SPI (`amc->fmc_model = "mx66l51235f";`), it boots with below error:
+>   [    1.848286] vmap allocation for size 268439552 failed: use
+> vmalloc=<size> to increase size
+>   [    1.848774] spi-aspeed-smc 1e620000.spi: ioremap failed for
+> resource [mem 0x20000000-0x2fffffff]
+>   [    1.849898] spi-aspeed-smc: probe of 1e620000.spi failed with error -12
+> 3. If I manually add vmalloc to the kernel command line (setenv
+> bootargs 'console=ttyS4,115200n8 root=/dev/ram rw vmalloc=400M'), the
+> above QEMU model boots fine.
+> 4. On the real system, it behaves the same as QEMU, that I need to add
+> `vmalloc=400M` to make it boot OK.
 
-I meant from 16 bytes to 32 bytes.
+I don't see why. Is that the same kernel version and config ?
 
-> > Does the LSB stay at the same offset? What is the meaning of the MSB in 32
-> > byte
-> > case? If it's reserved then why not to always use 32 byte approach?
-> 
-> Yes, the LSB stays in the same place, and bit 5 is reserved in the NPCM7XX
-> SoC.
-> Unfortunately, the I2C test failed when we tried to use the 32 bytes
-> approach at NPCM7XX Soc, this is why we added NPCM_I2CTXF_STS_TX_BYTES and
-> NPCM_I2C_STSRXF_RX_BYTES to the data structure.
-> 
-> The device tree data structure pass data for each specific device, so I
-> don't understand why not use device tree data for supporting the I2C
-> specific device? this is not the case here?
+May be check the allocations in
 
-Basically we use compatible strings for that, but in any case if something
-can be autodetected from hardware, it's better to use autodetection.
+   /proc/vmallocinfo
 
 
--- 
-With Best Regards,
-Andy Shevchenko
+> * When the dts set `spi-tx-bus-width/spi-rx-bus-width = <4>`, and uses
+> pinctrl_fwqspid_default from @Joel Stanley's pinctrl patch:
+>   &fmc {
+>          pinctrl-names = "default";
+>          pinctrl-0 = <&pinctrl_fwqspid_default>;
+>          status = "okay";
+>          flash@0 {
+>                  status = "okay";
+>                  m25p,fast-read;
+>                  label = "bmc";
+>                  spi-max-frequency = <50000000>;
+>                  spi-tx-bus-width = <4>;
+>                  spi-rx-bus-width = <4>;
+>   #include "openbmc-flash-layout-64.dtsi"
+>          };
+>   };
+> 1. It fails to boot in ast2600-evb QEMU:
+>   [    0.586654] spi-nor: probe of spi0.0 failed with error -5
+>   [    0.587654] spi-nor spi0.1: unrecognized JEDEC id bytes: 00 00 00 00 00 00
+> 2. It fails to boot in the g220b model with the same vmalloc failure issue.
+> 2. With `vmalloc=400M`, the g220b model boots fine in QEMU.
+> 3. On the real system, it still fails to boot with `vmalloc=400M` due
+> to the below error:
+>   [    0.970091] spi-nor spi0.0: unrecognized JEDEC id bytes: ff ff ff ff ff ff
+>   [    0.977902] spi-nor: probe of spi0.0 failed with error -2
 
+
+I could not make Quad work reliably on HW. This is the next step after the
+new driver is merged.
+
+Thanks for tests !
+
+C.
 
