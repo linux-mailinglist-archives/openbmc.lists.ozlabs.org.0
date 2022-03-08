@@ -1,55 +1,58 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 928D14D10B7
-	for <lists+openbmc@lfdr.de>; Tue,  8 Mar 2022 08:08:27 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C0F54D1141
+	for <lists+openbmc@lfdr.de>; Tue,  8 Mar 2022 08:46:27 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KCRHr35s7z3bVK
-	for <lists+openbmc@lfdr.de>; Tue,  8 Mar 2022 18:08:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KCS7h0Q8zz3bTH
+	for <lists+openbmc@lfdr.de>; Tue,  8 Mar 2022 18:46:24 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=jbWkLbJN;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=kTjwDSVG;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linuxfoundation.org (client-ip=139.178.84.217;
- helo=dfw.source.kernel.org; envelope-from=gregkh@linuxfoundation.org;
+ smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org
- header.a=rsa-sha256 header.s=korg header.b=jbWkLbJN; 
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=kTjwDSVG; 
  dkim-atps=neutral
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
- bits)) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KCRHR6YHnz2xDD
- for <openbmc@lists.ozlabs.org>; Tue,  8 Mar 2022 18:08:03 +1100 (AEDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [IPv6:2605:2700:0:5::4713:9cab])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id 1E13661607;
- Tue,  8 Mar 2022 07:08:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD64EC340EB;
- Tue,  8 Mar 2022 07:08:00 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1646723281;
- bh=806RbM3GSl0lCzZ1Vh8RXqDEQY0njqRzw1M3TDJbdJA=;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KCS7G04R8z2x9b
+ for <openbmc@lists.ozlabs.org>; Tue,  8 Mar 2022 18:46:01 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (174-21-187-98.tukw.qwest.net
+ [174.21.187.98])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id BA823D7;
+ Mon,  7 Mar 2022 23:46:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1646725560;
+ bh=HXpXa9hrjYoPMQUYirJanMV84faarG7+Ko1HRfUY6j4=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=jbWkLbJN5YaU+/wzIwi1t8uEr+9F0Ep/q+qp10uSiees/swR2uXzT1RVnhI5Q00Ud
- H0ay5vpHFYZ8ixwlmVo32nvmbRPMZnECjiyXkS2m6Jn50/q8XPhkJX+IwjR6xqiltU
- eHImxUp4yKsOHqFZ0CxpUhz2pii0e5HVGcm37hEQ=
-Date: Tue, 8 Mar 2022 08:07:57 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Zev Weiss <zev@bewilderbeest.net>
+ b=kTjwDSVGY2weTNLpafdlH+jLwLqhKbWrUql8kHzXgqB3xfvm5vZnR+3PmlIKgm56m
+ iGySOKgao2fUuCtRRA1JA5a8CFT7JqOKmfwAPbOqzCwiHF5UorobuUdolqO86p6Ck1
+ cy5RIrfcitrlzkUqEjO0sy4mpR8kFej7koDgPNxw=
+Date: Mon, 7 Mar 2022 23:45:57 -0800
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Subject: Re: [PATCH v2 2/2] misc: Add power-efuse driver
-Message-ID: <YicAzSara5Sr3LQ7@kroah.com>
+Message-ID: <YicJtee4LrShiUC9@hatter.bewilderbeest.net>
 References: <20220308011811.10353-1-zev@bewilderbeest.net>
  <20220308011811.10353-3-zev@bewilderbeest.net>
+ <YicAWbGN74F6SSNs@kroah.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <20220308011811.10353-3-zev@bewilderbeest.net>
+In-Reply-To: <YicAWbGN74F6SSNs@kroah.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,56 +70,29 @@ Cc: openbmc@lists.ozlabs.org, Mark Brown <broonie@kernel.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Mar 07, 2022 at 05:18:10PM -0800, Zev Weiss wrote:
-> +static DEVICE_ATTR(operstate, 0644, efuse_show_operstate, efuse_set_operstate);
+On Mon, Mar 07, 2022 at 11:06:01PM PST, Greg Kroah-Hartman wrote:
+>On Mon, Mar 07, 2022 at 05:18:10PM -0800, Zev Weiss wrote:
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -7058,6 +7058,11 @@ S:	Orphan
+>>  W:	http://aeschi.ch.eu.org/efs/
+>>  F:	fs/efs/
+>>
+>> +POWER EFUSE DRIVER
+>> +M:	Zev Weiss <zev@bewilderbeest.net>
+>> +S:	Maintained
+>> +F:	drivers/misc/power-efuse.c
+>> +
+>>  EHEA (IBM pSeries eHEA 10Gb ethernet adapter) DRIVER
+>>  M:	Douglas Miller <dougmill@linux.ibm.com>
+>>  L:	netdev@vger.kernel.org
+>
+>Entries need to be in sorted order :(
+>
 
-DEVICE_ATTR_RW()?
+Ack, forgot to move it when I renamed an earlier incarnation from 
+"efuse" to "power-efuse"...will fix.
 
-> +
-> +#define EFUSE_ERROR_ATTR(name, bit)							    \
-> +	static ssize_t efuse_show_##name(struct device *dev, struct device_attribute *attr, \
-> +					 char *buf)                                         \
-> +	{                                                                                   \
-> +		struct efuse *efuse = dev_get_drvdata(dev);                                 \
-> +		int status = efuse_update_error_flags(efuse);                               \
-> +		if (status)                                                                 \
-> +			return status;                                                      \
-> +		return sysfs_emit(buf, "%d\n", !!(efuse->error_flags.cache & bit));         \
-> +	}                                                                                   \
-> +	static DEVICE_ATTR(name, 0444, efuse_show_##name, NULL)
 
-DEVICE_ATTR_RO()?
+Zev
 
-> +EFUSE_ERROR_ATTR(under_voltage, REGULATOR_ERROR_UNDER_VOLTAGE);
-> +EFUSE_ERROR_ATTR(over_current, REGULATOR_ERROR_OVER_CURRENT);
-> +EFUSE_ERROR_ATTR(regulation_out, REGULATOR_ERROR_REGULATION_OUT);
-> +EFUSE_ERROR_ATTR(fail, REGULATOR_ERROR_FAIL);
-> +EFUSE_ERROR_ATTR(over_temp, REGULATOR_ERROR_OVER_TEMP);
-> +EFUSE_ERROR_ATTR(under_voltage_warn, REGULATOR_ERROR_UNDER_VOLTAGE_WARN);
-> +EFUSE_ERROR_ATTR(over_current_warn, REGULATOR_ERROR_OVER_CURRENT_WARN);
-> +EFUSE_ERROR_ATTR(over_voltage_warn, REGULATOR_ERROR_OVER_VOLTAGE_WARN);
-> +EFUSE_ERROR_ATTR(over_temp_warn, REGULATOR_ERROR_OVER_TEMP_WARN);
-> +
-> +static struct attribute *efuse_attrs[] = {
-> +	&dev_attr_operstate.attr,
-> +	&dev_attr_under_voltage.attr,
-> +	&dev_attr_over_current.attr,
-> +	&dev_attr_regulation_out.attr,
-> +	&dev_attr_fail.attr,
-> +	&dev_attr_over_temp.attr,
-> +	&dev_attr_under_voltage_warn.attr,
-> +	&dev_attr_over_current_warn.attr,
-> +	&dev_attr_over_voltage_warn.attr,
-> +	&dev_attr_over_temp_warn.attr,
-> +	NULL,
-> +};
-> +ATTRIBUTE_GROUPS(efuse);
-
-Shouldn't these all just be what all regulator drivers report?  Or power
-drivers?  I find it odd that this would be the first driver that would
-need to export these types of attributes.  Surely there's already a
-class for this?
-
-thanks,
-
-greg k-h
