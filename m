@@ -1,70 +1,124 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B0D44D129B
-	for <lists+openbmc@lfdr.de>; Tue,  8 Mar 2022 09:47:04 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id D24A34D1342
+	for <lists+openbmc@lfdr.de>; Tue,  8 Mar 2022 10:23:48 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KCTTd13Hdz3bTH
-	for <lists+openbmc@lfdr.de>; Tue,  8 Mar 2022 19:47:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KCVJ14ryWz3bTQ
+	for <lists+openbmc@lfdr.de>; Tue,  8 Mar 2022 20:23:45 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=wistron.com header.i=@wistron.com header.a=rsa-sha256 header.s=security header.b=RVSQ0DJ3;
+	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=CgEOdWxW;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=wistron.com (client-ip=103.200.3.18; helo=segapp01.wistron.com;
- envelope-from=bob_king@wistron.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=quantatw.com (client-ip=2a01:111:f400:feae::715;
+ helo=apc01-psa-obe.outbound.protection.outlook.com;
+ envelope-from=potin.lai@quantatw.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=wistron.com header.i=@wistron.com header.a=rsa-sha256
- header.s=security header.b=RVSQ0DJ3; dkim-atps=neutral
-X-Greylist: delayed 351 seconds by postgrey-1.36 at boromir;
- Tue, 08 Mar 2022 19:46:39 AEDT
-Received: from segapp01.wistron.com (segapp01.wistron.com [103.200.3.18])
+ unprotected) header.d=quantacorp.onmicrosoft.com
+ header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
+ header.s=selector2-quantacorp-onmicrosoft-com header.b=CgEOdWxW; 
+ dkim-atps=neutral
+Received: from APC01-PSA-obe.outbound.protection.outlook.com
+ (mail-psaapc01on20715.outbound.protection.outlook.com
+ [IPv6:2a01:111:f400:feae::715])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KCTTC4vbJz30FC
- for <openbmc@lists.ozlabs.org>; Tue,  8 Mar 2022 19:46:38 +1100 (AEDT)
-Received: from EXCHAPP04.whq.wistron (unknown [10.37.38.27])
- (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
- (No client certificate requested)
- by segapp01.wistron.com (MTA) with ESMTPS id 4KCTL74sXnzMqYRM;
- Tue,  8 Mar 2022 16:40:31 +0800 (CST)
-Received: from EXCHAPP03.whq.wistron (10.37.38.26) by EXCHAPP04.whq.wistron
- (10.37.38.27) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.18; Tue, 8 Mar
- 2022 16:40:31 +0800
-Received: from EXCHAPP03.whq.wistron ([fe80::ec42:e9a3:109d:b7bd]) by
- EXCHAPP03.whq.wistron ([fe80::ec42:e9a3:109d:b7bd%2]) with mapi id
- 15.01.2375.018; Tue, 8 Mar 2022 16:40:31 +0800
-From: <Bob_King@wistron.com>
-To: <openbmc@lists.ozlabs.org>, <bradleyb@fuzziesquirrel.com>
-Subject: Openbmc commit question.
-Thread-Topic: Openbmc commit question.
-Thread-Index: AdgOZulKkJHbvTf1Reukph+5Ln+twgeqBOKwAWyUB1A=
-Date: Tue, 8 Mar 2022 08:40:31 +0000
-Message-ID: <77316d044b8c415fb07e751662869f30@wistron.com>
-References: <916794d657af450baccf0122cca5ea73@wistron.com>
- <9f9e145363cd4022ab7e5f72d12d77d1@wistron.com>
-In-Reply-To: <9f9e145363cd4022ab7e5f72d12d77d1@wistron.com>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.37.38.237]
-x-tm-snts-smtp: 2B042BEF21E46041A5F86370D1B6CAE4110C616968799DA8D1C6059DBF6CAB3A2000:8
-Content-Type: multipart/alternative;
- boundary="_000_77316d044b8c415fb07e751662869f30wistroncom_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KCVHR1Jp1z2ymb;
+ Tue,  8 Mar 2022 20:23:13 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=iKzFGQrApDlpLkl/WyAIVc9F5OCr7vzSI6Dt1OTgTgRyotXGU21e2CMrZOcaCqHvMxoxCx/GO6wpmNBqhjYoApO4Nks3o0caCAcErqESa4hw4aqlXUjQNCFDtyHJ4onTtY2kmEqSySTbYFZ1fsISRVKnoEpYDMHSIQ282mczA4CQoZuuIc6hifTixVzs9/f7EoNhiE/w23yt5AlQr6NS+/BrJW2olv5jYHB4N0rOK0MqkvIGg2HNeZ0Y/yMK0eigE7/QYd4R3vKSX/Yg3JyiMlbJhl6Nt1AAiP9fiSXrVr5QzZK6ZCsOL8xpiBk9Pj4wUFHE7RetICf8VHkOwedvYA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=XC2w7DMnS86RxCpDlb8R4qIxlLyZBo2ymKFWoAh4NCc=;
+ b=DfNENECuhkHqBSGElUu4cTfnQ06MOkkJiEre/Mo7cCAnY0oMXfcfDxvdP4pDQkzDDLC/fZqL7G95zyZ6E9/eviip0StY1oWdRIDStX+9KAcep8GRMnaHLI7BxbjX+Tq2sftheXTqPbRXqa26nDpsGN24loPPXTyLTu8/z4m5SZg3FKzEAQ1zsOXqJayc6qTVJ8lvjC3mVNGQx1+UpPB7ws2cEAYVyYsZ1uFKkJJ/Fu7gCLwrubK56W4EK/H7ZBqwVP3uDCT/S88zJxXDT6h6RlVNB+M8YcD3Ksv24xOOOvu8bsAd7vfRf5glaAGuIoXUJdnamNqJTI8j2w/u7xL+7Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=quantatw.com; dmarc=pass action=none header.from=quantatw.com;
+ dkim=pass header.d=quantatw.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=XC2w7DMnS86RxCpDlb8R4qIxlLyZBo2ymKFWoAh4NCc=;
+ b=CgEOdWxWHeT3H91vfdTkI4Z/Y9XbU/MWKQkhoICLrDzAsMFfcXh1fYInAWGTcKKQZh/Of/TMF5AbLY5E+t38KrKZps0CTt1Yu1OuGGpigdsLCcNAVtWh0z99kqD5jXM4tYNbWAcxxz7hjlb0tAcp10WU1rFEjB5Bfpf46S93rD8=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=quantatw.com;
+Received: from HK0PR04MB3282.apcprd04.prod.outlook.com (2603:1096:203:89::17)
+ by HK2PR04MB3620.apcprd04.prod.outlook.com (2603:1096:202:3c::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5038.14; Tue, 8 Mar
+ 2022 09:22:53 +0000
+Received: from HK0PR04MB3282.apcprd04.prod.outlook.com
+ ([fe80::78b6:1b99:df59:4982]) by HK0PR04MB3282.apcprd04.prod.outlook.com
+ ([fe80::78b6:1b99:df59:4982%5]) with mapi id 15.20.5038.027; Tue, 8 Mar 2022
+ 09:22:53 +0000
+From: Potin Lai <potin.lai@quantatw.com>
+To: Joel Stanley <joel@jms.id.au>, Cedric Le Goater <clg@kaod.org>,
+ linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org,
+ Patrick Williams <patrick@stwcx.xyz>
+Subject: [PATCH v2 1/1] mtd: spi-nor: aspeed: set the decoding size to at
+ least 2MB for AST2600
+Date: Tue,  8 Mar 2022 17:22:34 +0800
+Message-Id: <20220308092234.5186-1-potin.lai@quantatw.com>
+X-Mailer: git-send-email 2.17.1
+Content-Type: text/plain
+X-ClientProxiedBy: HK2PR02CA0147.apcprd02.prod.outlook.com
+ (2603:1096:202:16::31) To HK0PR04MB3282.apcprd04.prod.outlook.com
+ (2603:1096:203:89::17)
 MIME-Version: 1.0
-x-msw-jemd-newsletter: false
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wistron.com; s=security;
- t=1646728840; bh=OgLYl3P6RVlZBl9t/CKzis8BVxl0xmKrlTtTF19Gwfs=;
- h=From:To:CC:Subject:Thread-Topic:Thread-Index:Date:Message-ID:
- References:In-Reply-To:Accept-Language:Content-Language:
- Content-Type:MIME-Version;
- b=RVSQ0DJ3J01PUlw0ZvNvHqxnzmFT23cfdWXJ0BGMNJmlCetYDGj2R0cp2tdPx8KTk
- dwFMT3FMpAWWJ4mWD9oTfF+s271c1yKFgYtTBKewzvedb5534U93smj/gbswox9yAm
- fySzfzoxt4q6aj7mMG2O+1Ik6ED8z8jQMFlDvvx4=
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: e882cf04-275e-4d74-d202-08da00e53944
+X-MS-TrafficTypeDiagnostic: HK2PR04MB3620:EE_
+X-Microsoft-Antispam-PRVS: <HK2PR04MB3620C5CD1F669C8C95310ACF8E099@HK2PR04MB3620.apcprd04.prod.outlook.com>
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: +Fn7WO1Ag8R8GmsirFEcukXBJK5P3rRLkRpNjObvIqRdNmgAED7dkzgztKkdl5PTMQW+bDBrnM3UdP1QQ95+SVMGbr+FzLqbxNUfFcWNr42ucgXHAOggqheXFH47aLBZ94tHL/A0rSHVspXdQNwb9hyc66/AWC9DQBKlSZFaBsLiBguaNMy3RDVcQf9gH1wvQjebjREX/Wxwi+khqmkeSWzyqyJCBRYgHW4riv2nizDruoZ01H+FrCG7eFh+We1FNknXCacY3+O7kqfurvmgmxuJtqZhgAFYcBEzBrioOCEuaEUymO7RxMnJOCi8OAiwUpxys7qKSUHsuzyeZttsXHUgtKW2ZaO/gY5qJ9Ydfbr5Xh/zHuTSvw++Lvlkl6Is6ZS/GS5YM60PU+Oz0LwG+X02ysrZIZ+UMnI2V2aInkllEGgCUuJ04LtJP88t/LiLPdQc3ix5JZkGLz1hVber2KKIQtD9BTpOiZ5plN/L2YxTkcOK3woUtl7eBPtPnA6ajguO40bQITHhDYk2+JRHoiviPEOS2dKfoXxZjVYJKv7niBQSu6trMryKcWf4N6iZLSg6XKFwdUTfX/ECo2J31UhmqP1iODMUVN5egGKno04HjQuVmw2lzTcdlVVekyY8IA8wwLiOeRcB4IpRxrs7AngXrIPJXSHMJYT5ViIo36jsbH4zJsYyYFf1h9QFB7+xvH8DkRh5auA0C8A502HuR0Rpysa74EG673R8ZUCB1oT4zhcxMwxbcEBKWsvElaTKbB3LpB3gDtLtm/TQybRqRu00oK4Ne4qzNQ1sOZZ7oik=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:HK0PR04MB3282.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230001)(4636009)(366004)(6666004)(66556008)(66946007)(8676002)(110136005)(508600001)(86362001)(966005)(6486002)(5660300002)(316002)(66476007)(4326008)(38100700002)(6512007)(38350700002)(52116002)(6506007)(186003)(26005)(2616005)(1076003)(107886003)(8936002)(36756003)(2906002)(44832011);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ZJe+SWTA4i3CCEac66bI5ukSSyDxa2eM9+1lxMugi1UvwzuTJ1xye3I5gRLt?=
+ =?us-ascii?Q?xqAQePB9lO9kXg8CLQsgpLZJd8Y/RPVVR2b5XaKMPmKjoJ09MbjSJsN/RIOu?=
+ =?us-ascii?Q?/qdRayx11h+tYxqlEvj+KiLHTcsvxV6vDA5Bs2SzxTmeVgD1xf1088tSIQvE?=
+ =?us-ascii?Q?BiNVnTz30AptdvGyWCPRB8QsEVcc5poY5X+YzePvYyWp/LJjw3Szwef5Eyaz?=
+ =?us-ascii?Q?7v+IK14f/jcqxgpyPFFbmQFuXeoZHA8RWcFEFVHct+Nv3Kaar37nA5SAzV7Q?=
+ =?us-ascii?Q?XLq6LgMW6QV5t23UhYXqF1w2eUidG8uljb6sjfiKvqJ95cOmLXxv+pbP+5Px?=
+ =?us-ascii?Q?7m2SQgnSKZJRzFcE+pRtluwox0s8ghxJjyu0Y9jOTereCzgzJasbyHzlAohZ?=
+ =?us-ascii?Q?K7hMPk0P4fmVH5HyZfZG6QmhNldgN2OqjQg+N8ikoZI7rhdFZ5TdrsFfGZWh?=
+ =?us-ascii?Q?6cseOeVhqKNbz0pWi3M08gIv57T10xYYVuvtlQkzZIOyHpXVGNDIJuka38Ub?=
+ =?us-ascii?Q?CEgi13naxQ3zu2irN7GwJALT4J+wlTFd5n1EI9mAzbL7kVF4j6//CwWfIx2+?=
+ =?us-ascii?Q?0XmDhd0hfSzImwb8s/08hQncLyYPKVC7tBzbcg7+4g1fRUtoa1dqxlkwFALR?=
+ =?us-ascii?Q?VmjNHfr4Bsvmy2xg7Qatigk5Z/Fqcws453BWPJWb6gEJ8jesrw+DdySgse7+?=
+ =?us-ascii?Q?TJBC1bfLWACvlYroFMNWWHkbRncarPpHDVYHC9tv3pT/0/wp1C2H7BRth1BP?=
+ =?us-ascii?Q?eVsGibIBl9ENpwAumHKboMazs6zC9rsSZ+ycK4NCP2LeV6PrgofldXHjMqcj?=
+ =?us-ascii?Q?GxNwHJ6f+AWmtY4X9itxLEOxpRG4ICThcNKCJ9MKCUB9AShpUYZzx5pI08MQ?=
+ =?us-ascii?Q?fWRb+7koXS56HrtbB2UH976tVIPdpKE+71tl3WQdxPb+lkvkM0jkr51IaqGz?=
+ =?us-ascii?Q?UQLh5F+5aYp+n4P8kgLjpGwN3YEUtnZ96k0geUg+i64zDmXrwC+ZV95XaJKu?=
+ =?us-ascii?Q?E0aX7dFm4yhhkFwtIBMH5EpSE4e6YHk93avP861yoj8yw1Q7t10vo5rM3awE?=
+ =?us-ascii?Q?ALbEDURkS42bknJo7FRiM1BVjQlypiR+RxJe2mE0C96FC4Yy6auW3amSvolj?=
+ =?us-ascii?Q?1Mg1iZWkUFQFbRK9sG3GNO+VrRdKeahK8cTAZFo1wy0mLdn+kh9l0RvkFhEP?=
+ =?us-ascii?Q?hfMqzuHrkX/KWGLoFNNOushCaoXzDSsi3qUDJ//qQ+gyeHrX8JitK0msWQZh?=
+ =?us-ascii?Q?qI5Vl1qCoXBQ3QZzIoK2Ee54cERM/+7zOtPm9SMwe7M8MqDeaZgfyBqz+Zt+?=
+ =?us-ascii?Q?ASNdKJObWRCKwFVHuoPjexcUyhWin8QBPQLutY13cVHTUgIX07bKAHrZq4w2?=
+ =?us-ascii?Q?xHu/B1K1d9jmrLiSHATE437m8Yjn0Xd3tEx/lFxEujKwBRGaQQAOBJvnLak4?=
+ =?us-ascii?Q?BA2qann+Ms6u7ytNDhToYlZapSvbPhICMyjdJV4RdR2/o4ngm1xSvFhJ4rgw?=
+ =?us-ascii?Q?RiktWI2gvaPcE0Fr+wIzdL0x/5ipz/oHY4bmXkDanIYE6BttIN5MuONCgqjj?=
+ =?us-ascii?Q?KTP4gwXYlidQRreGo/VUd5em5jhL8zVxdCln4rWmaKFjLQCo+abC4gb+SxBl?=
+ =?us-ascii?Q?w0pZ9Ent6E+8D6+78zmnqN8=3D?=
+X-OriginatorOrg: quantatw.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e882cf04-275e-4d74-d202-08da00e53944
+X-MS-Exchange-CrossTenant-AuthSource: HK0PR04MB3282.apcprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Mar 2022 09:22:53.6699 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 179b0327-07fc-4973-ac73-8de7313561b2
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: t2pKLUe8Mf/xe6c/fUW9yxJRX9x7BPLxuwz+yYCRunZ1hKEUQgyscRRQ0K695AzoK8H+GpnlxehxAQg2SHC7Dg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK2PR04MB3620
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,149 +130,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jet_JC_Lee@wistron.com, geissonator@yahoo.com, Claire_Ku@wistron.com,
- Lulu_Su@wistron.com
+Cc: Potin Lai <potin.lai@quantatw.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+In AST2600, the unit of SPI CEx decoding range register is 1MB, and end
+address offset is set to the acctual offset - 1MB. If the flash only has
+1MB, the end address will has same value as start address, which will
+causing unexpected errors.
 
---_000_77316d044b8c415fb07e751662869f30wistroncom_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+This patch set the decoding size to at least 2MB to avoid decoding errors.
 
-Hi Brad,
+Tested:
+root@bletchley:~# dmesg | grep "aspeed-smc 1e631000.spi: CE0 window"
+[   59.328134] aspeed-smc 1e631000.spi: CE0 window resized to 2MB (AST2600 Decoding)
+[   59.343001] aspeed-smc 1e631000.spi: CE0 window [ 0x50000000 - 0x50200000 ] 2MB
+root@bletchley:~# devmem 0x1e631030
+0x00100000
 
-We have a problem that the members in OWNERS list can not +2 and merge.
-Could you help for this?
-https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/49786
+Signed-off-by: Potin Lai <potin.lai@quantatw.com>
 
-Thanks a lot!
+---
+[v1]: https://lore.kernel.org/all/20220304170757.16924-1-potin.lai@quantatw.com/
 
-Best Regards,
-Bob.
+Changes v1 --> v2:
+- add fmc controller into decoding range resize checking
+---
+ drivers/mtd/spi-nor/controllers/aspeed-smc.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------
-This email contains confidential or legally privileged information and is f=
-or the sole use of its intended recipient.=20
-Any unauthorized review, use, copying or distribution of this email or the =
-content of this email is strictly prohibited.
-If you are not the intended recipient, you may reply to the sender and shou=
-ld delete this e-mail immediately.
----------------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------
+diff --git a/drivers/mtd/spi-nor/controllers/aspeed-smc.c b/drivers/mtd/spi-nor/controllers/aspeed-smc.c
+index 416ea247f843..74fa46439246 100644
+--- a/drivers/mtd/spi-nor/controllers/aspeed-smc.c
++++ b/drivers/mtd/spi-nor/controllers/aspeed-smc.c
+@@ -781,6 +781,18 @@ static u32 aspeed_smc_chip_set_segment(struct aspeed_smc_chip *chip)
+ 			 chip->cs, size >> 20);
+ 	}
+ 
++	/*
++	 * The decoding size of AST2600 SPI controller should set at
++	 * least 2MB.
++	 */
++	if ((controller->info == &spi_2600_info ||
++	     controller->info == &fmc_2600_info) && size < SZ_2M) {
++		size = SZ_2M;
++		dev_info(chip->nor.dev,
++			 "CE%d window resized to %dMB (AST2600 Decoding)",
++			 chip->cs, size >> 20);
++	}
++
+ 	ahb_base_phy = controller->ahb_base_phy;
+ 
+ 	/*
+-- 
+2.17.1
 
-
---_000_77316d044b8c415fb07e751662869f30wistroncom_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii">
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-p.msonormal0, li.msonormal0, div.msonormal0
-	{mso-style-name:msonormal;
-	mso-margin-top-alt:auto;
-	margin-right:0cm;
-	mso-margin-bottom-alt:auto;
-	margin-left:0cm;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-span.EmailStyle18
-	{mso-style-type:personal;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-span.EmailStyle19
-	{mso-style-type:personal;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-span.EmailStyle21
-	{mso-style-type:personal;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-span.EmailStyle22
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-size:10.0pt;}
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
-fy-trim:punctuation">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi Brad,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">We have a problem that the memb=
-ers in OWNERS list can not &#43;2 and merge.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Could you help for this?<o:p></=
-o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><a href=3D"https://gerrit.openb=
-mc-project.xyz/c/openbmc/openbmc/&#43;/49786">https://gerrit.openbmc-projec=
-t.xyz/c/openbmc/openbmc/&#43;/49786</a><o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Thanks a lot!<o:p></o:p></span>=
-</p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Best Regards,<o:p></o:p></span>=
-</p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Bob.<o:p></o:p></span></p>
-</div>
-=0A=0A---------------------------------------------------------------------=
----------------------------------------------------------------------------=
----------------<br />This email contains confidential or legally privileged=
- information and is for the sole use of its intended recipient. <br />Any u=
-nauthorized review, use, copying or distribution of this email or the conte=
-nt of this email is strictly prohibited.<br />If you are not the intended r=
-ecipient, you may reply to the sender and should delete this e-mail immedia=
-tely.<br />----------------------------------------------------------------=
----------------------------------------------------------------------------=
---------------------<br />=0A</body>
-</html>
-
---_000_77316d044b8c415fb07e751662869f30wistroncom_--
