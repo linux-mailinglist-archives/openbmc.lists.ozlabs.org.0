@@ -2,79 +2,103 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A7C64D261B
-	for <lists+openbmc@lfdr.de>; Wed,  9 Mar 2022 02:59:40 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EBBD24D2626
+	for <lists+openbmc@lfdr.de>; Wed,  9 Mar 2022 03:32:23 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KCwP505xYz3bVC
-	for <lists+openbmc@lfdr.de>; Wed,  9 Mar 2022 12:59:37 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KCx6r5HKNz30K0
+	for <lists+openbmc@lfdr.de>; Wed,  9 Mar 2022 13:32:20 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=4NxnHUyQ;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=kfWg8t2T;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::236;
- helo=mail-oi1-x236.google.com; envelope-from=yulei.sh@bytedance.com;
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record)
+ smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.158.5;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=gmills@linux.vnet.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20210112.gappssmtp.com
- header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256
- header.s=20210112 header.b=4NxnHUyQ; dkim-atps=neutral
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com
- [IPv6:2607:f8b0:4864:20::236])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=kfWg8t2T; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KCwNc5tnMz2yLg
- for <openbmc@lists.ozlabs.org>; Wed,  9 Mar 2022 12:59:09 +1100 (AEDT)
-Received: by mail-oi1-x236.google.com with SMTP id k2so1258696oia.2
- for <openbmc@lists.ozlabs.org>; Tue, 08 Mar 2022 17:59:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20210112.gappssmtp.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=qgbeCWvvhDFNSJz7pSOa/xx4S5sRsVJG1ttrlmomaGc=;
- b=4NxnHUyQT8i87q54boMbER6fBeFJ4Jd2Wm5YqFYYJpCTrCEUiBHNgmEAH76vWheq7I
- /hNpZxuudKM7OAHpG+RS9u6+kDkfF+kQz/eDuRhnFyT6hlFtCOKbqSL09sI8p2f5dqUj
- DTp5Jix5rVwcz9+VDfxqo91sZHm61gYbr8oWDUstXN4MAS2m6Zgzl7Woozz6FnLesKxA
- L7upFiHSATiHZPpFnXX6w0pIYLvwzOyg+3uQIiALMafjpwd6J0dm0XhE8We721m59XSn
- TxgaEqciHU1Z+83YGLnoYWkAKGUdMadkB/DofQbTEkOte5fsvA4AmxujHY8dy/A5K6A9
- /eOg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=qgbeCWvvhDFNSJz7pSOa/xx4S5sRsVJG1ttrlmomaGc=;
- b=mMXrUoXyGyEgyKUcWbb6TQ+fUbgYcirwXlCDRyk1X/sWH4Ybjv21LqdwYZH6r8/ICI
- V1gy9wR/E1Spr8vdjPXU8RaxNrAaknTdQvdKEemiQ+MUr3bwDf8fjEGbNfo/EEwcs+4p
- kl0UTqxuK883xFHzG4AvLoA05m9tLFd9bt2EF0Yi2FZ2xRBSburXzW2jI85Idjh8ymgX
- jXnDSGJZ/7vlACXfnWkVihZPfaspnXWjJ/tNfU7p3pYOF3c5bslFtiKrEXR2Uxw+6eRf
- Hiw5L89ZddUufMg/3ww5RcMwWcEo9jRv3dheZ3EXUBoESGVzcjJs9AwWXxNNcqf8NYuj
- GewQ==
-X-Gm-Message-State: AOAM533rVTL0RkmAtKWZp8xiPpGoiC2KnL7ua9xVaA3bMzPRHRnyzyAp
- 6HpY6TyqWBYYTfxjfm1QFTGPA8NqzxQJHiEMEtfJZw==
-X-Google-Smtp-Source: ABdhPJxknC0cijyK49gYVSXJBOedwn228zdxt898cMP5YawCxmO3O/E405Nm70xZmiYJJu9hR0BJPLYf9r4GubVEVuo=
-X-Received: by 2002:a05:6808:19a3:b0:2d4:522a:3188 with SMTP id
- bj35-20020a05680819a300b002d4522a3188mr4576179oib.8.1646791148621; Tue, 08
- Mar 2022 17:59:08 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KCx6K6sDkz30H3
+ for <openbmc@lists.ozlabs.org>; Wed,  9 Mar 2022 13:31:53 +1100 (AEDT)
+Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 229109jZ016449
+ for <openbmc@lists.ozlabs.org>; Wed, 9 Mar 2022 02:31:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ mime-version : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=YSB4yIvm4LvMVZG1ZYmvi4vTvYCrWm3PMJgkfjMnuXE=;
+ b=kfWg8t2Te70jF+LcpZMAwmdPzdodOBG4+GQurVLCkD0boKz1qCEucyT+5fU5xFcXOrVH
+ y6EOwVgEF1edqjuu1/EVx3O7KZ6AHBx4nqu2qCgMnRP0Te8R/XT7EogP7PnWZ/k+QoOW
+ GzAO1aHIKZs1MQAEfCcVVO83zxboEgjNXYdFH0WI8Uor7AjU8AXU7uxSztzOXzj+5JuR
+ HHxBUxBDfVPkbFugpJWatHBXSQC89Ak6aBDrbXRlfBLpfZB5mIGB9vpTuHeYreSTSBsH
+ WvkzKQcJo4rf8OFiMCQ8p8lMgIqs52X9LFdZymP4WXpFMRiy1IeMStTyQUB8WMo+knFs xQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3ep106pkgp-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <openbmc@lists.ozlabs.org>; Wed, 09 Mar 2022 02:31:50 +0000
+Received: from m0098419.ppops.net (m0098419.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 2292KS8t020215
+ for <openbmc@lists.ozlabs.org>; Wed, 9 Mar 2022 02:31:49 GMT
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
+ [169.63.214.131])
+ by mx0b-001b2d01.pphosted.com with ESMTP id 3ep106pkgc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 09 Mar 2022 02:31:49 +0000
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+ by ppma01dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 2292CSNT016940;
+ Wed, 9 Mar 2022 02:31:48 GMT
+Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
+ [9.57.198.27]) by ppma01dal.us.ibm.com with ESMTP id 3emgakt8kx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 09 Mar 2022 02:31:48 +0000
+Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com
+ [9.57.199.109])
+ by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 2292Vl3947514036
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 9 Mar 2022 02:31:47 GMT
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D2A79112062;
+ Wed,  9 Mar 2022 02:31:47 +0000 (GMT)
+Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 90FA5112064;
+ Wed,  9 Mar 2022 02:31:47 +0000 (GMT)
+Received: from [9.211.71.222] (unknown [9.211.71.222])
+ by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP;
+ Wed,  9 Mar 2022 02:31:47 +0000 (GMT)
+Message-ID: <7534667b-ba7c-135f-2589-bbdde00b4c64@linux.vnet.ibm.com>
+Date: Tue, 8 Mar 2022 19:31:45 -0700
 MIME-Version: 1.0
-References: <20220214094231.3753686-1-clg@kaod.org>
- <CACPK8XdG=ok4P7Rd-SZ3htPsaXdy76rtMdqgcM6_QM2+fgoeJg@mail.gmail.com>
- <CAHwNHZUMhPeYmev=6Zn+Ay_Le7UBmPurBMokLOB623i0eu2ZOw@mail.gmail.com>
- <CACPK8Xf6Zp7Zeu3wrRFHsctEKXfoYkJhbV+PSby0CmP72LC7aQ@mail.gmail.com>
- <CAGm54UGabB9Ji9HBm_d=FnLB5DxMKgvtdnP=2Mc-TJdPo5Ld8Q@mail.gmail.com>
- <CAGm54UGnjxhX4wsbZGJZJUWaiWXO1VONkxww=XnpyyyWeuF_hw@mail.gmail.com>
- <39cb3c3b-f07d-de60-7208-106be9485034@kaod.org>
- <CAGm54UHUC_7W9xGT49Ge3oO8Xf4-gDiq3Buvm-_D9K+3QX8M3w@mail.gmail.com>
- <b6fb257d-0fdd-bdf0-a18b-cb8f1db25195@kaod.org>
- <CAGm54UHZGhaBYqpaquaqGMFH16d1JqSt=PGnXhsd8TCD8-B92w@mail.gmail.com>
- <6be0165e-2a1a-4399-4c7a-b2c15b02681f@kaod.org>
-In-Reply-To: <6be0165e-2a1a-4399-4c7a-b2c15b02681f@kaod.org>
-From: Lei Yu <yulei.sh@bytedance.com>
-Date: Wed, 9 Mar 2022 09:58:57 +0800
-Message-ID: <CAGm54UHibLN2H01+d39R=cw7q-7KtgFwp6Ebud-52LfF+Uez6g@mail.gmail.com>
-Subject: Re: Call for testing: spi-mem driver for Aspeed SMC controllers
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.6.2
+Subject: Re: cant see page with sensors and hardware status in webui
+Content-Language: en-US
+To: Nikita Pavlov <niikita@yahoo.com>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <112372010.885280.1646309860262.ref@mail.yahoo.com>
+ <112372010.885280.1646309860262@mail.yahoo.com>
+From: Gunnar Mills <gmills@linux.vnet.ibm.com>
+In-Reply-To: <112372010.885280.1646309860262@mail.yahoo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: yNtnzroCqqUweEFyUoF_PirtbzzzhMks
+X-Proofpoint-GUID: 2jbd3Zq421r1O8XtXT4Dah5XmmtqJ0KX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.816,Hydra:6.0.425,FMLib:17.11.64.514
+ definitions=2022-03-08_09,2022-03-04_01,2022-02-23_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxscore=0 lowpriorityscore=0
+ suspectscore=0 phishscore=0 mlxlogscore=823 malwarescore=0 impostorscore=0
+ clxscore=1011 spamscore=0 adultscore=0 priorityscore=1501 bulkscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2202240000
+ definitions=main-2203090011
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,78 +110,18 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ryan Chen <ryan_chen@aspeedtech.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, John Wang <wangzq.jn@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-> >>>>
-> >>>> I don't see why. Is that the same kernel version and config ?
-> >>>>
-> >>>> May be check the allocations in
-> >>>>
-> >>>>      /proc/vmallocinfo
-> >>>
-> >>> It shows a large area as below:
-> >>>
-> >>>    0xc1d30472-0x406b4a0c 268439552 __devm_ioremap_resource+0x178/0x1f0
-> >>> phys=0x20000000 ioremap
-> >>
-> >> Is CONFIG_VMSPLIT_2G set ?
-> >
-> > Yes, it's enabled in aspeed-g6/defconfig
->
-> The OpenBMC tree only has a aspeed_g5_defconfig.
+On 3/3/2022 5:17 AM, Nikita Pavlov wrote:
+> Hello, I am beginner in openbmc. I download from jenkins romulus image 
+> and emulate this in qemu. And I cant to see page with sensors and 
+> hardware in webui. How I can resolve this ? ‍ ‍ ‍ ‍ ‍ ‍ ‍ ‍ ‍ ‍ ‍ ‍ ‍ ‍ 
 
-It does have aspeed-g6/defconfig and CONFIG_VMSPLIT_2G is enabled:
-https://github.com/openbmc/openbmc/blob/master/meta-aspeed/recipes-kernel/linux/linux-aspeed/aspeed-g6/defconfig#L33
+I would suggest looking at the browser debug tools. Tools like the Web 
+Console and the Network Monitor are useful to debug what is going wrong. 
+Are there errors in the Web Console? Are there network requests failing? 
+Do the same requests succeed with tools like cURL?
 
->
-> How much RAM do you have ? Could check the totals in meminfo ?
+- Gunnar
 
-Our system (and QEMU model) has 2GiB.
-
-Boot with `vmalloc=500M`:
-# cat /proc/meminfo
-MemTotal:        1984880 kB
-MemFree:         1860700 kB
-MemAvailable:    1882116 kB
-Buffers:               0 kB
-Cached:            63796 kB
-SwapCached:            0 kB
-Active:            13728 kB
-Inactive:          71988 kB
-Active(anon):        340 kB
-Inactive(anon):    37012 kB
-Active(file):      13388 kB
-Inactive(file):    34976 kB
-Unevictable:        3624 kB
-Mlocked:               0 kB
-HighTotal:        446464 kB
-HighFree:         353148 kB
-LowTotal:        1538416 kB
-LowFree:         1507552 kB
-SwapTotal:             0 kB
-SwapFree:              0 kB
-Dirty:                 0 kB
-Writeback:             0 kB
-AnonPages:         25600 kB
-Mapped:            40356 kB
-Shmem:             11804 kB
-KReclaimable:       7712 kB
-Slab:              17944 kB
-SReclaimable:       7712 kB
-SUnreclaim:        10232 kB
-KernelStack:         872 kB
-PageTables:         2080 kB
-NFS_Unstable:          0 kB
-Bounce:                0 kB
-WritebackTmp:          0 kB
-CommitLimit:      992440 kB
-Committed_AS:     105768 kB
-VmallocTotal:     516096 kB
-VmallocUsed:        2436 kB
-VmallocChunk:          0 kB
-Percpu:              232 kB
-CmaTotal:          65536 kB
-CmaFree:           65052 kB
