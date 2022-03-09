@@ -2,91 +2,54 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 383C24D1F2B
-	for <lists+openbmc@lfdr.de>; Tue,  8 Mar 2022 18:34:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9EFBA4D2503
+	for <lists+openbmc@lfdr.de>; Wed,  9 Mar 2022 01:51:56 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KCj9z6mczz3bVP
-	for <lists+openbmc@lfdr.de>; Wed,  9 Mar 2022 04:34:15 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KCttx2lRqz30R0
+	for <lists+openbmc@lfdr.de>; Wed,  9 Mar 2022 11:51:53 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=tvcV+Ls+;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=DSVm+VHX;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=m5U+UlFP;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25;
- helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm1 header.b=tvcV+Ls+; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=DSVm+VHX; 
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=m5U+UlFP; 
  dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [71.19.156.171])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KCj9V1yfZz3bNx
- for <openbmc@lists.ozlabs.org>; Wed,  9 Mar 2022 04:33:49 +1100 (AEDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailout.nyi.internal (Postfix) with ESMTP id 74E295C01A0;
- Tue,  8 Mar 2022 12:33:46 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute5.internal (MEProxy); Tue, 08 Mar 2022 12:33:46 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
- :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to; s=fm1; bh=efrL4j7e+o7VKBATbgagA/L8Ar/jNKUi6ovHiV
- MNEl0=; b=tvcV+Ls+VQSfYm/Q5/IBN5aDWJ5aafx+2y9ZXckaC4xX/ToBuRr5KO
- mJasAjMvEhoMWJ93jjmP7At/8zlsZWsNv097RX+10ssm7l3mYJM9Y3ONqDd1EN5V
- UAe/wHaFmIOuXq9GWkTLOe0jumnZpj16ofZe/OLL3K9udbN31fL5cZBWgD3QKu4M
- Nzwj4CGO0UCUUnwHBGr5BdSjVReVoUkJ/+n12Soi4DHL8z34GtJnebuZMjM04y+W
- 5sx0EVgLCmNiyVan9b8itlABFjcZk3to87SHZphWOknOmVHmUbxOFKnLCvTJCjy7
- c3iasiofWBg0ELE4uLW4nVebC9879ncg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=efrL4j7e+o7VKBATb
- gagA/L8Ar/jNKUi6ovHiVMNEl0=; b=DSVm+VHXf3bHGoHvoLF6ELXXycDNfsya4
- EIDADYSpnK14Ikoj/WwG+4lZVFsbgEAsckTWEsB/1qp2sHOApiJVgo/PyO9Zy76B
- jDxX2piS7cn9kIVZ9H1ab7gvvHQ2jd/gr+jZS4AuHs4Y9aG1GVmClOt+a2MI2oVC
- Dr1yci2yf3c3/20LpwKIn4t0T1B8HW6VcGyXjiUP3Y+a6XFyGpQWjeCL3vDvE1LX
- 2/23r/GBLFkss973SUZBbQBgEQ+4ce3ahQPvyO288tkiBIYC7m62LJvYiJA9c1mY
- flq++ZWZmh1FZ0XbO8/VZ8penF/0fsx6uYWODjO52U09Y13ncqjEw==
-X-ME-Sender: <xms:eZMnYmcbSpm7PbE6N1mNwkKzepzaen2ZuvvXN54Xl47YNaKT20KRNg>
- <xme:eZMnYgNRFrYn-coDGR4I8GNurbYbC4vlxtFcCmxTwjYGbdDo2MeJerJYeDc9gkJ-E
- nbo9_zrdFX6wKtf3PQ>
-X-ME-Received: <xmr:eZMnYniIbdQgYqNEWf8JW8Ty5lXijQE6BhwRgAknrrKz_Nl4bdfmLIepHM8ATzeBuUcb5QQ5KcPC8f44YpPdisKnYm5kN7FV>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudduiedguddttdcutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
- necuuegrihhlohhuthemuceftddtnecufghrlhcuvffnffculdefhedmnecujfgurhepff
- fhvffukfhfgggtuggjsehgtdorredttddvnecuhfhrohhmpefrrghtrhhitghkucghihhl
- lhhirghmshcuoehprghtrhhitghksehsthiftgigrdighiiiqeenucggtffrrghtthgvrh
- hnpeefieekvdejjeehteeggeegfeegffetuefggedtvddugefguefgfeejvdeuvdevveen
- ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrh
- hitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:eZMnYj9Xwv7mK8DPeO50i_QCnV7FvJ012-NVDQbYVysL6jyEJM9wpg>
- <xmx:eZMnYiuEeV-rgP1dl1NBw7BZqWLSQh4FnVlXfGm2qp0wf76wKBANsQ>
- <xmx:eZMnYqGEBnZniJhjSflpt1VJyliRvnHz9BzCo9eRNteYB0q8CUga3Q>
- <xmx:epMnYo08htO7oHsXlKA-YxVvTaUrzlKHvjvQRvBfL3xvzvoX-TNOAQ>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 8 Mar 2022 12:33:45 -0500 (EST)
-Date: Tue, 8 Mar 2022 11:33:44 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: pooky@sysmate.com
-Subject: Re: [Help] I want to know how to make an image for w25q256JV flash
- memory.
-Message-ID: <YieTeLalmiLBiRnB@heinlein>
-References: <000001d831cf$88c2f8e0$9a48eaa0$@sysmate.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KCtsx1RQ2z30HZ
+ for <openbmc@lists.ozlabs.org>; Wed,  9 Mar 2022 11:51:00 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (174-21-187-98.tukw.qwest.net
+ [174.21.187.98])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id A4D0AD7;
+ Tue,  8 Mar 2022 16:50:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1646787058;
+ bh=88A/q9YoQ5WMTxMFERK2y7lEn0PdOr7oN0oRctbP9po=;
+ h=From:To:Cc:Subject:Date:From;
+ b=m5U+UlFPrDcM7YDWRANnkU94pp3HPe4AX4k3fn925CdUVwXX/nXP6A8aK/dByWFfW
+ EWmGNeqmlF0gmyxWZxpS6HmDcXSUqns9QDxG1BTkFZ+GtdEOjgEY0tPdRdDfa6vfFo
+ l6+UTp+Im9PiXbUxzO20gO1M7za8+oJoAPvYbVn4=
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Guenter Roeck <linux@roeck-us.net>, Jean Delvare <jdelvare@suse.com>,
+ linux-hwmon@vger.kernel.org
+Subject: [PATCH v2 0/6] hwmon: (nct6775) Convert to regmap, add i2c support
+Date: Tue,  8 Mar 2022 16:50:41 -0800
+Message-Id: <20220309005047.5107-1-zev@bewilderbeest.net>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="k/ZdMR1+ai5fnNbT"
-Content-Disposition: inline
-In-Reply-To: <000001d831cf$88c2f8e0$9a48eaa0$@sysmate.com>
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,96 +61,117 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: devicetree@vger.kernel.org, Zev Weiss <zev@bewilderbeest.net>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ Oleksandr Natalenko <oleksandr@natalenko.name>,
+ Rob Herring <robh+dt@kernel.org>, Renze Nicolai <renze@rnplus.nl>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hello,
 
---k/ZdMR1+ai5fnNbT
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This is v2 of my patches to add i2c support to the nct6775 driver.
 
-On Mon, Mar 07, 2022 at 12:00:42PM +0900, pooky@sysmate.com wrote:
-=20
-> I am developing a motherboard using AST2500 chip using openbmc.=20
-> It is booting with w25q256JV flash memory attached to the AST2500 chip.
-> I want to know how to make an image for w25q256JV flash memory.
+Changes since v1 [0]:
+ - Added preparatory patch converting driver to regmap API [Guenter]
+ - Replaced ENOSPC with ENOBUFS and removed WARN_ON() in
+   nct6775_add_attr_group() [Guenter]
+ - Added dedicated symbol namespace [Guenter]
+ - Removed nct6775_write_temp() and nct6775_update_device() symbol
+   exports [Guenter]
+ - Reordered patches to put dt-bindings patch first [Krzysztof]
 
-That chip is relatively small for our codebase (32MB).  We still have some
-machines running that size but we typically have to reduce the features in =
-order
-to make it fit.
+The nct6775-platform and nct6775-i2c drivers have both been tested on
+the NCT6779D in an ASRock ROMED8HM3 system and the NCT6798 [1] in an
+ASRock X570-D4U (the latter thanks to Renze, CCed); both seem to work
+as expected on both systems.  I don't have access to any asuswmi
+hardware, so testing of the nct6775-platform driver on that to ensure
+it doesn't break there would be appreciated (Oleksandr, perhaps?).
 
-Building an image doesn't really concern itself with the particular model of
-chip but the size.  The more important thing for your system is all the
-configuration information you need to provide about your motherboard so tha=
-t the
-software knows how to operate the hardware.
+[0] https://lore.kernel.org/linux-hwmon/20220226133047.6226-1-zev@bewilderbeest.net/
+[1] Though it's physically labeled (mislabeled?) as an NCT6796, for
+    what that's worth.
 
-In our repository you'll see a lot of 'meta-*' subdirectories.  Most of the=
-se
-are the Yocto layers for machines designed by various companies.  These are=
- the
-configuration data on those machines.  You may want to take one that looks
-similar in design and start with that.
+A slightly edited version of the previous cover letter follows:
 
-Specifically on your question regarding this chip, the only thing we really=
- need
-configured is the FLASH_SIZE variable.  This will build the 32MB image that=
- can
-fit into your chip.  Nothing else should care about the specific model beca=
-use
-u-boot and Linux should use the JEDEC model information to determine the si=
-ze of
-that chip when they access it.  Here are a number of machines configured wi=
-th a
-32MB flash layout:
 
-```
-$ git grep 'FLASH_SIZE =3D "32768"'
-meta-amd/meta-ethanolx/conf/machine/ethanolx.conf:FLASH_SIZE =3D "32768"
-meta-asrock/meta-e3c246d4i/conf/machine/e3c246d4i.conf:FLASH_SIZE =3D "3276=
-8"
-meta-facebook/meta-tiogapass/conf/machine/tiogapass.conf:FLASH_SIZE =3D "32=
-768"
-meta-facebook/meta-yosemitev2/conf/machine/yosemitev2.conf:FLASH_SIZE =3D "=
-32768"
-meta-ibm/meta-palmetto/conf/machine/palmetto.conf:FLASH_SIZE =3D "32768"
-meta-inspur/meta-on5263m5/conf/machine/on5263m5.conf:FLASH_SIZE =3D "32768"
-meta-intel-openbmc/meta-s2600wf/conf/machine/s2600wf.conf:FLASH_SIZE =3D "3=
-2768"
-meta-nuvoton/conf/machine/evb-npcm750.conf:FLASH_SIZE =3D "32768"
-meta-quanta/meta-gsj/conf/machine/gsj.conf:FLASH_SIZE =3D "32768"
-meta-quanta/meta-olympus-nuvoton/conf/machine/olympus-nuvoton.conf:FLASH_SI=
-ZE =3D "32768"
-meta-quanta/meta-q71l/conf/machine/quanta-q71l.conf:FLASH_SIZE =3D "32768"
-meta-supermicro/meta-x11spi/conf/machine/x11spi.conf:FLASH_SIZE =3D "32768"
-meta-tyan/meta-s7106/conf/machine/s7106.conf:FLASH_SIZE =3D "32768"
-meta-tyan/meta-s8036/conf/machine/s8036.conf:FLASH_SIZE =3D "32768"
-```
+This patch series augments the existing nct6775 driver with support
+for the hardware's i2c interface; along the way it converts the driver
+to use the regmap API, and splits the LPC-specific platform driver
+into a separate module from the interface-independent core.
 
---=20
-Patrick Williams
+Thus far the nct6775 driver has only supported the LPC interface,
+which is the main interface by which the Super-I/O chip is typically
+connected to the host (x86) processor.
 
---k/ZdMR1+ai5fnNbT
-Content-Type: application/pgp-signature; name="signature.asc"
+However, these chips also provide an i2c interface, which can provide
+a way for a BMC to also monitor sensor readings from them.  On some
+systems (such as the ASRock Rack ROMED8HM3 and X570-D4U) this may be
+the only way for the BMC to monitor host CPU temperatures (e.g. to
+indirectly access a TSI interface); this functionality is thus an
+important component of enabling OpenBMC to support such systems.
 
------BEGIN PGP SIGNATURE-----
+In such an arrangement the Super-I/O chip is simultaneously controlled
+by two independent processors (the host and the BMC) which typically
+do not coordinate their accesses with each other.  In order to avoid
+conflicts between the two, the i2c driver avoids all writes to the
+device, since the BMC's needs with the hardware are merely that it be
+able to retrieve sensor readings.  This allows the host processor to
+remain ultimately in control of the chip and unaware of the BMC's use
+of it at all.
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmInk3cACgkQqwNHzC0A
-wRmyPA//XYh8jnbGDBYL5SOQt1PSMZ4tYc1mBjJlVoWlC8intxhvsfSm7Ft22rAy
-g0yHA9BekThFKEf+kWo+gEGHo/X4FD0hjhpWp3j7CIVtm86gb1t4SNd6IER/rYvj
-McDWZj1BXZhePN23IRsj+8f6Knu8Bmyxma2BvroMzloLZclXmG1SAfFFKbCiqe18
-QKgnb/TrK0hlcd0RtD4ZPw05Yk0lApLE4kt51aDbrC81rNH5ddAI1p541y48F7Fl
-k9KwUuLyJ6uI+nm9wf2qVdf5LspjMtCSsGTRnk4ZFl6ivUxyLbvKfqHVuiiBqSAd
-m9RKq5xy0Rf2duhUdeyavXSCaa+HvTJ/rerifRkz64AUQtRrRw9QnSqcIhbc2iM9
-grOjPBznSJmptwz+Fqkwly2AxeR/z9zORK7A/8hRefInb4aZhSS02H10yk7i0KPm
-O/BM7Sa0fABISrs9kPQPfdjT+5U8+0JBxXl77MlyhzHdFO2omyjPxUijM5sbsjxM
-Z1HEDkmAQasKd/bAH1AhnmYFaXwuZ+8VYqJARgary1cxjKIBwRuDYKj62Fv6zYY4
-g4GSYc9c2olpuQ+L4EHe3tsBMoklQeYECoElmyapAsAkk43KtOVUmAwlAbflMYzp
-sHgNrJ94/zO8Yd0dIw8KMeG7ItyXMqJoFc1fmKsV5PFDOT+RbxA=
-=JuRJ
------END PGP SIGNATURE-----
+The sole exception to the "no writes" rule for the i2c driver is for
+the bank-select register -- while I haven't been able to find any
+explicit statement in the Nuvoton datasheets guaranteeing this,
+testing via manual register accesses (as detailed in [2]) has
+indicated that, as one might hope, the i2c interface has its own
+bank-select register independent of the one used by the LPC interface.
 
---k/ZdMR1+ai5fnNbT--
+In terms of code structure, the approach taken in this series is to
+first convert the driver's register accesses to the regmap API, and
+then split the LPC-specific parts of it out into a separate module
+(called nct6775-platform), leaving the interface-independent parts in
+a generic driver (called nct6775-core).  The nct6775-i2c driver is
+then added as an additional consumer of the nct6775-core module's
+functionality (essentially just providing its own set of regmap
+read/write callback functions).
+
+The first patch provides DT bindings for the nct6775, the second
+contains the change to convert all register accesses to use a regmap.
+The third and fourth patches make some relatively small
+infrastructural changes to the driver.  The core/platform driver split
+is in the fifth patch, and the final patch adds the i2c driver itself.
+
+
+Thanks,
+Zev
+
+[2] https://lore.kernel.org/linux-hwmon/YhttzgDtGpcTniyw@hatter.bewilderbeest.net/
+
+Zev Weiss (6):
+  dt-bindings: hwmon: Add nuvoton,nct6775
+  hwmon: (nct6775) Convert register access to regmap API
+  hwmon: (nct6775) Rearrange attr-group initialization
+  hwmon: (nct6775) Add read-only mode
+  hwmon: (nct6775) Split core and platform driver
+  hwmon: (nct6775) Add i2c driver
+
+ .../bindings/hwmon/nuvoton,nct6775.yaml       |   48 +
+ MAINTAINERS                                   |   12 +-
+ drivers/hwmon/Kconfig                         |   32 +-
+ drivers/hwmon/Makefile                        |    4 +-
+ drivers/hwmon/{nct6775.c => nct6775-core.c}   | 2310 +++++------------
+ drivers/hwmon/nct6775-i2c.c                   |  179 ++
+ drivers/hwmon/nct6775-platform.c              | 1232 +++++++++
+ drivers/hwmon/nct6775.h                       |  252 ++
+ 8 files changed, 2382 insertions(+), 1687 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/hwmon/nuvoton,nct6775.yaml
+ rename drivers/hwmon/{nct6775.c => nct6775-core.c} (69%)
+ create mode 100644 drivers/hwmon/nct6775-i2c.c
+ create mode 100644 drivers/hwmon/nct6775-platform.c
+ create mode 100644 drivers/hwmon/nct6775.h
+
+-- 
+2.35.1
+
