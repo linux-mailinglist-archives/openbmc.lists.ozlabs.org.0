@@ -1,72 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D84EF4D3EA8
-	for <lists+openbmc@lfdr.de>; Thu, 10 Mar 2022 02:17:52 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id AAF714D3EED
+	for <lists+openbmc@lfdr.de>; Thu, 10 Mar 2022 02:47:57 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KDWQP6F3Rz306R
-	for <lists+openbmc@lfdr.de>; Thu, 10 Mar 2022 12:17:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KDX574YZzz3000
+	for <lists+openbmc@lfdr.de>; Thu, 10 Mar 2022 12:47:55 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=y2R9Ex0G;
+	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=yaR92LAn;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::52d;
- helo=mail-pg1-x52d.google.com; envelope-from=wangxiaohua.1217@bytedance.com;
+ smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::1032;
+ helo=mail-pj1-x1032.google.com; envelope-from=wangxiaohua.1217@bytedance.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=bytedance-com.20210112.gappssmtp.com
  header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256
- header.s=20210112 header.b=y2R9Ex0G; dkim-atps=neutral
-Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com
- [IPv6:2607:f8b0:4864:20::52d])
+ header.s=20210112 header.b=yaR92LAn; dkim-atps=neutral
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com
+ [IPv6:2607:f8b0:4864:20::1032])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KDWPz35C3z2yP9
- for <openbmc@lists.ozlabs.org>; Thu, 10 Mar 2022 12:17:25 +1100 (AEDT)
-Received: by mail-pg1-x52d.google.com with SMTP id z4so3390328pgh.12
- for <openbmc@lists.ozlabs.org>; Wed, 09 Mar 2022 17:17:25 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KDX4h2jH6z2xXZ
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Mar 2022 12:47:29 +1100 (AEDT)
+Received: by mail-pj1-x1032.google.com with SMTP id
+ z12-20020a17090ad78c00b001bf022b69d6so3908371pju.2
+ for <openbmc@lists.ozlabs.org>; Wed, 09 Mar 2022 17:47:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=bytedance-com.20210112.gappssmtp.com; s=20210112;
  h=from:to:subject:date:message-id:mime-version
  :content-transfer-encoding;
- bh=ThvEe0f78Sd0BofX2grOe9zx+iQy6pAjyWGJ3RNuqNg=;
- b=y2R9Ex0GmE3vCzDK8reYs9cZc2D0qzHtSIlgcK7CiuBdzDHGm35uAYgCAVTPRS/3Zy
- dAFV7RV2AkYvPO1zWcG9FtiR/u5uRMyNPl2yqcDJF19+FZVCmdUOHDapcKwJMmY0Ky1K
- RbF2jfWbtznsA0NEiL3qdaBFSvxHe8PBvFL4rxpEMLkINUshpyIXJeOBGOFXeFa2kBrO
- zK1a4JU1ZLU9TbJPz1JdjOPkXHoLhJ/DgQLSxbf0oSbukZARcH5lerkFV+WWJbq6Segg
- AQqCycd5Qp2Tqx2ZgoOsdMR38BEuTutpK6qZAA+i/T8ukpRlUjKOY9bGgvxWfcQVu/Tv
- CAgw==
+ bh=9fOEKS38RMgszYvyOabpDPGI2pvf3G+fc2gEmGxJcZs=;
+ b=yaR92LAnDTMv08DZtWaXt25mPC2ddld9nCnTjsQ1eewyBpJBCEllGRWNgUtEhq8UlN
+ 7HBBRxzQkcnyDDlEP5/pchFAZM0fjIR0kUJ3WAWr0KpdDnH1x66b7SyC4RXqLxim4TBh
+ t3mJDwe+/vYq+xRXwoaU6fFhX6UfxkYUFyYNQbJZ+Zq0TvhngKFSycueVZIh87NFrKnB
+ HsZ2eMx/u+3+G3odbUCuFRTu9ZA9ohNilbEkT13mX0IkqMrriLccvkTQqlwh9nwlP3gJ
+ RhnGp+DKj6hs25QXhgFS50J/0x8onmoOugDs0qrl3SQCTwhjkoNkp0WLKaHcPJUPVK3F
+ tq9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:from:to:subject:date:message-id:mime-version
  :content-transfer-encoding;
- bh=ThvEe0f78Sd0BofX2grOe9zx+iQy6pAjyWGJ3RNuqNg=;
- b=VHkF66OnwwDRwhWW9sRv2D7AwsQrMjM9SSTvYTllNqqydpdWf0f+3UE33mGSEkcKIp
- zU5W2b7yLARpPj/Ssr5/jPc5K1BjezymvKrqOUvhhHUdfYCMRHgilIaSubziO6J152np
- GScMmqCKeT+GI1y1vBPuSiDW+w8PwzTNA/N80BbBh11Dw2C28+JePX3ceuQj2yAkjEaB
- 4llAVuiJN5WOitp3GdT8VO1I1zLVjwc94JVGQTqBbVoz0+rdWVmWpwPDE19Zqkftkq0L
- 1Z5ygu+K4v65FXc87qIY7+qOyakIx9/XM01ZVds3Qoz9QeehvWlH/mfigwjGOByQE2ng
- 9NFg==
-X-Gm-Message-State: AOAM530c+pENerFqEK/svEG3Xdc9Y5kHxkGkG+s2ZyCso57t7bkZLf2J
- FH22gkTuH8GNsD6OWY1q5GvbeVD1DFVRcw==
-X-Google-Smtp-Source: ABdhPJxoJY3hz+X/kBl+CCKm02OXHKA61D7VD2fz7gt2XrHiYX+RQSOZas+QQUQrpaClprxnT/EhZA==
-X-Received: by 2002:a63:81c1:0:b0:37f:fa5a:7383 with SMTP id
- t184-20020a6381c1000000b0037ffa5a7383mr2019782pgd.596.1646875040396; 
- Wed, 09 Mar 2022 17:17:20 -0800 (PST)
-Received: from localhost ([49.7.44.136]) by smtp.gmail.com with ESMTPSA id
- d10-20020a63360a000000b0037947abe4bbsm3470859pga.34.2022.03.09.17.17.19
+ bh=9fOEKS38RMgszYvyOabpDPGI2pvf3G+fc2gEmGxJcZs=;
+ b=KAgvfVeo+UgJtHoICgqz4DECYT+E/+Xf22VEhigVTfqi439rFZbMaeW10Q+YWzGjB7
+ Lt5gVynUlOSGOww0YF6hfFIgEE9EG7xQ1eEqKf7GRh6gHTS+l9XtCAeXCr/HicIMcCai
+ ebmYOWxgRCi4lUgW3iET1soHKeXZPO6jqTogi6hQTIpaS1Viq5RB2u9RczKB9cf/FylS
+ 2i5puk15dAdP3d3JavmBUdmEuZAIsLv412+3EBY5D0lVaaDJSWc5QpqS/IfyOrJHo+r8
+ kWmLsSBPAO1lfVKyggz1ax0kYJ9FdeIat/zWBY/1SgjQVJA5xEatJIzyiCI1g1ALVTKc
+ oGog==
+X-Gm-Message-State: AOAM531ZMDpIx5ANaOtcQgwayBakN5XB3wvTt7YiQrBE2g9QPshftpy6
+ khieAF+PIebMyL1HuwP0sLNfe1L5HydDRA==
+X-Google-Smtp-Source: ABdhPJwgV8eNh3hbKIwUat7JO61tlg6ENR482bsXQlzoO5dnk3DCc8a5AvTO3orRO/kACksjnVbssw==
+X-Received: by 2002:a17:902:ba8c:b0:14f:d9b7:ab4 with SMTP id
+ k12-20020a170902ba8c00b0014fd9b70ab4mr2419269pls.23.1646876845047; 
+ Wed, 09 Mar 2022 17:47:25 -0800 (PST)
+Received: from localhost ([49.7.44.166]) by smtp.gmail.com with ESMTPSA id
+ d16-20020a056a00245000b004f7728a4346sm517186pfj.79.2022.03.09.17.47.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 09 Mar 2022 17:17:20 -0800 (PST)
-From: "wangxiaohua.1217" <wangxiaohua.1217@bytedance.com>
+ Wed, 09 Mar 2022 17:47:24 -0800 (PST)
+From: Wang Xiaohua <wangxiaohua.1217@bytedance.com>
 To: openbmc@lists.ozlabs.org,
 	joel@jms.id.au
 Subject: [PATCH linux dev-5.15] ARM: dts: aspeed-g6: Add VIDEO node
-Date: Thu, 10 Mar 2022 09:16:09 +0800
-Message-Id: <20220310011609.439022-1-wangxiaohua.1217@bytedance.com>
+Date: Thu, 10 Mar 2022 09:47:20 +0800
+Message-Id: <20220310014720.439813-1-wangxiaohua.1217@bytedance.com>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -89,7 +90,7 @@ Add the VIDEO node back
 Deleted by commit 645afe73f9512ee2
 ("ARM: dts: aspeed: ast2600: Update XDMA engine node")
 
-Signed-off-by: wangxiaohua.1217 <wangxiaohua.1217@bytedance.com>
+Signed-off-by: Wang Xiaohua <wangxiaohua.1217@bytedance.com>
 ---
  arch/arm/boot/dts/aspeed-g6.dtsi | 10 ++++++++++
  1 file changed, 10 insertions(+)
