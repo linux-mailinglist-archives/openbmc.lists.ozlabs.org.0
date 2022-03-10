@@ -2,129 +2,127 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 989494D42B0
-	for <lists+openbmc@lfdr.de>; Thu, 10 Mar 2022 09:36:52 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 71D694D4603
+	for <lists+openbmc@lfdr.de>; Thu, 10 Mar 2022 12:42:36 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KDj8y2tlqz30Bl
-	for <lists+openbmc@lfdr.de>; Thu, 10 Mar 2022 19:36:50 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KDnHG214kz3064
+	for <lists+openbmc@lfdr.de>; Thu, 10 Mar 2022 22:42:34 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=ami.com header.i=@ami.com header.a=rsa-sha256 header.s=selector1 header.b=D7VuJwqP;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=frRlcky3;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=permerror (SPF Permanent Error: Void lookup limit
- of 2 exceeded) smtp.mailfrom=ami.com (client-ip=2a01:111:f400:fe59::620;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:fe59::714;
  helo=nam12-dm6-obe.outbound.protection.outlook.com;
- envelope-from=dhineskumare@ami.com; receiver=<UNKNOWN>)
+ envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=ami.com header.i=@ami.com header.a=rsa-sha256
- header.s=selector1 header.b=D7VuJwqP; 
+ unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
+ header.a=rsa-sha256 header.s=selector2 header.b=frRlcky3; 
  dkim-atps=neutral
 Received: from NAM12-DM6-obe.outbound.protection.outlook.com
- (mail-dm6nam12on20620.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:fe59::620])
+ (mail-dm6nam12on20714.outbound.protection.outlook.com
+ [IPv6:2a01:111:f400:fe59::714])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KDj8S0lNRz2yQG
- for <openbmc@lists.ozlabs.org>; Thu, 10 Mar 2022 19:36:22 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KDnGp27fWz2xrc;
+ Thu, 10 Mar 2022 22:42:08 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=nalGXzLOpRcWNCMvI+AKygzCy31MWYDevCnzRhUkV4ZET3OO2ZeL0g3lghSwFEbgNItlmMXcWJCnkvtTmYgvAHb//6OQXUa9Q0NYP0CfwnjXekuEVE9S3cOkdA+QgNdt+L1+k+Qk383GJve9Zz/iKPALWg6MXhXxHU9cgTqqqd9CnMOIIV4ZmfDPzYmQbOLKFZpQ5mMIVQILRdFHng858u+D7oduiiqeq4foHqXyE4mg7TTfi7vbPnENYvccIYAc3pH+LiVybQIHRrkv90IwP5RllZp5C2foo773xjePMklWiW/nq3crihJka2Fk69ad6lCMTzGuqTrmq10p7s94pA==
+ b=YQl4BLY6w9o0U9hr1rseWdbh9rJ0v2+fxf9Fh/avgcwiBsxGH0zhowhdw3zWgFe80Sov76VZoz21B8dJeWJ0FUBGIvChVcFUaGl2YCBatT8jYS0/LJo0H0hPjTUXVMfZ2W8tGmFcSkLj1Ax56Ig1ABFODPYJJgr/LQnfbmwUUk5zICSRohBOEuf1xTl6r63JLPqpNCQvWFDTZIroY8NtnjiATnYU9N/NLt4NO2msICZCVkUlbPkaGUkcHyYaWnHTYlvkFtHDYGiQXr4BVvOv4Uae9ZHpabgASpyv4Q5rVGh7IPQhOqllGOIwSIhRxem5mJaKHQx1k0Y8J2kGfNnWlw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=d3otEItYVkcLxu+SCTudgazmv63BR8zm4fAyb/e5RwA=;
- b=RMGD/elKSGVPu27fpAQetfm2GkGfbzomPyCReWR29peTj0RVJa5vK6e2QRevIZHh+DbsikSLvD0NGDc6Lec2+2LorB2+G33FESX2b9gqtoIBmehQYdvv0eQ+/LDqMyMw6EjZ9F6zyAdVGOMxLgZOaKrNQGllnbd1zXhP9FgePMW90BjDTGRiDnMuLA241xJjOeAKHXZzUv+lhnSqnazteWWZpWqZw1Bj7YLGPiXj0e8P1AvgV5fpduyZ1uwItGD1m7TfFsySKsds2Ysww4jlzhXm53dEIlhJR1LVh6aBcB8inRb+iim3xAC7N65aj6eCFw2ykUDFDMvSkbfa21AHfA==
+ bh=AcXyPO1Uz98fuoGSTH6S1bkbX95D4KrDYZ5T1HchXOo=;
+ b=LbmEs4Uu+Tw8QW9heDdobDS6B6PZI0c27JoS3/D6RjqYitmUFCR8K5rQnf7KKuqqP/c0U+YpOz0PJPM370U7i8O6iYsdUW9+w5kvNTDavwyK23FOQ46+FDsUke5jw6y1pqr1uMgq9IT4oKAN0CYfnE/FLYH39zmdFVFa/kgLget46nP8kkk/9Db7wkl5V6/cXzGo4wPx2jU9Apc04igN5aWSs+fHC6P/nI7kF1froV+0ns4NKkqgp0DKtirWX+aOAdd+lZlbPVGUX/Flhs33N6AUSMmXiofwYePnA7C2Kx1AzFBeZj7S1uXIHLKpxs//DlGf5uCDyMrplaMCnyOUkQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=ami.com; dmarc=pass action=none header.from=ami.com; dkim=pass
- header.d=ami.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ami.com; s=selector1; 
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=os.amperecomputing.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=d3otEItYVkcLxu+SCTudgazmv63BR8zm4fAyb/e5RwA=;
- b=D7VuJwqP13LrHD/1ZCJ8IDRhoOTjtNC/yZlZvr5yCL2y+1aJIuYgHK06lw5z/oeXsvEOTiuYmaaReV+67+Gz/Ojj+d/8tlI0r0o630bMuXfQovIsWxwm1QU8ewiBi5XxEil2/z9tkW4D8JPywD6r4U+J+K86ac032vw3U2q7YQ0=
-Received: from CO1PR10MB4804.namprd10.prod.outlook.com (2603:10b6:303:90::5)
- by CH0PR10MB5100.namprd10.prod.outlook.com (2603:10b6:610:df::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5038.14; Thu, 10 Mar
- 2022 08:36:00 +0000
-Received: from CO1PR10MB4804.namprd10.prod.outlook.com
- ([fe80::2194:579c:5c88:6a60]) by CO1PR10MB4804.namprd10.prod.outlook.com
- ([fe80::2194:579c:5c88:6a60%3]) with mapi id 15.20.5061.021; Thu, 10 Mar 2022
- 08:36:00 +0000
-From: Dhines Kumar Eswaran <dhineskumare@ami.com>
-To: i.kononenko <i.kononenko@yadro.com>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>, "ed@tanous.net" <ed@tanous.net>, "jk@ozlabs.org"
- <jk@ozlabs.org>, "geissonator@yahoo.com" <geissonator@yahoo.com>,
- "raviteja28031990@gmail.com" <raviteja28031990@gmail.com>,
- "gmills@us.ibm.com" <gmills@us.ibm.com>
-Subject: RE: [EXTERNAL] Re: Feature Enhancement - Virtual Media over HTML5
-Thread-Topic: [EXTERNAL] Re: Feature Enhancement - Virtual Media over HTML5
-Thread-Index: AdgGDFAwS0aFeOwxRmGCV5dweAX3mQABR34AC5IUssA=
-Date: Thu, 10 Mar 2022 08:35:59 +0000
-Message-ID: <CO1PR10MB4804EDDEF23C5C0DCF5BBC8FC80B9@CO1PR10MB4804.namprd10.prod.outlook.com>
-References: <CO1PR10MB4804435C69CA969461FCCF61C8509@CO1PR10MB4804.namprd10.prod.outlook.com>
- <dddccb48-51aa-b63a-5f7a-9ed16b14fa82@yadro.com>
-In-Reply-To: <dddccb48-51aa-b63a-5f7a-9ed16b14fa82@yadro.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=ami.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 35636fcc-727f-419f-2fa6-08da02710145
-x-ms-traffictypediagnostic: CH0PR10MB5100:EE_
-x-microsoft-antispam-prvs: <CH0PR10MB5100964D239036AE04C9B2CDC80B9@CH0PR10MB5100.namprd10.prod.outlook.com>
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: Ll0/BpIjuXIRebeSWi4aZkSA+32DWY325/OtQc4jCI48382nnwPRD8CY3Ie9MlKweWu6yEpOKmRFgwABXGtlkq8PJKYdelPKws58r7GoeizTcKkHZ1lNRuhIw5viakdsxumLpFP15UVrAvN7aq1N/gh7fTTEzsfilg55iGCXAUBumbd5pg+MFT+8+jI/qFzC57F08eo4Qo8aYkQce9JPFIaPgIOqhry2bnyerbpED8fn/IGfyHIsDFjJ/c0jhb0Xl7BhS9sL9kXgDWn9cWT8sZXDmrhadNTMXL9isb0xq/SWjVA3kY7Nu3lNDF5XnUIIIwiPwSRBoW+OokDdLm9Qh5OlJyelMmhzurIrOCQ77LoJHptJ8lFqBvKiMiK7ci1Pvg2bw4uE8aR2rMTYvmpcLNYqn4V7FJt84y2jEFp+b27WS3FSGfWCiISSivDyzo7DZJ7IHm8IgdUrYrmtDu3vUSi/Z3a270L7qhIYXyqyNrxneRdKAwvu11WY7DQE2pa+/psrBPIKsFzZ2YJKDB0el87KprNSgyF2oW2ReXdKQ4+A8rGVX6vgaFsSXp0DzfMpn9BKoZHdd2rIu5/6Flsku2cPIkdq2eCGXosHj7if4d4xU7XVuUIfz0YJOoe7N3ds2nLLn7rYY+qT65ORYWQS4zxXqOm+uD7aQzE0ZfW+8Q220gPzqV1AyoJTlBM/vxj3lf8n1kseuqyCue2al9wTW2M4E5/fr5Erk5b/U7ZkUd1mBCy77//9JqDvOQfrmBSoqIwnXQ0htbTdeVL5OExUuEnulDgAgzWf7M2udewdUgU=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CO1PR10MB4804.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230001)(4636009)(366004)(83380400001)(66946007)(76116006)(4326008)(66556008)(508600001)(38070700005)(66446008)(66476007)(64756008)(8676002)(55016003)(122000001)(966005)(52536014)(55236004)(5660300002)(8936002)(6506007)(7696005)(53546011)(71200400001)(26005)(86362001)(186003)(316002)(2906002)(38100700002)(9686003)(40140700001)(110136005)(33656002)(54906003)(45080400002);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?9P4BTaJq7IfpA7YBOwNPQxbN1/huKd761Uxkfl5o/ObS6KQfecqV4vZ9qgY+?=
- =?us-ascii?Q?zF83OpWBpW8IX+dCmo6Ij63zbhIQJgLmqnUTDWOhCMJrViUbB9qSElp7AZj+?=
- =?us-ascii?Q?Mz00hPM5aojayMIEbNoXHSq1+AIBqza0vhuLajGQeEUqorYj/nPNaBh0/QMQ?=
- =?us-ascii?Q?ZbN6k553ScfB3rnsgEOInpbpi5/iI0NNJiATWAY0iyThdnx1Ej6PU6rkvoVA?=
- =?us-ascii?Q?n1CUl1ZkdTj2OCwR3Ge8CxzqhsDEpXtofaOq/IyRswOGKy98DUfQTWiq4MMA?=
- =?us-ascii?Q?uDaxqQ5ZgR7yiBQKqrnaoOV819ezMtr6EvR6ugulAthxutSJ59BF7LjIx+HL?=
- =?us-ascii?Q?rSq2E14Fyu0+1HbBcS5q7yuk8Ryi/eUebJsDZ1wy59E6ShVWIZzwd2ptW9cL?=
- =?us-ascii?Q?N3i/TnOW8M9XkwS51QhJ8n4oZ4Ip2U/wKHzUjUZCn0Hpd1ZAiEpYHspQNllj?=
- =?us-ascii?Q?hCKmf5sMCXSCI8NZPov6fkpiMrKdVJHTQk9yoLF00B+0L/BTFQjSMv1O9vW3?=
- =?us-ascii?Q?qnO6Hqhotbc7CHJ1f8uVsvg5LQvYe63Y8LmeTVUpODzC24beyiHKqamK+29H?=
- =?us-ascii?Q?BJvDzXL59AsWQvpSp10eQDS+h8BiflhS6OxMfhoXftzdbNQx9z9IhTWpILtW?=
- =?us-ascii?Q?W8jAqHJpTyaL8xc2Z4i8t04DUY/eH/6WQFTtb8XoKazYqHlkrSQQiEMrnG9D?=
- =?us-ascii?Q?ZQf39cSAf3fUMtSvC+ux1sLHVFrI6V2VdbZe5Q8MTRQommU/pPb0grig+ZIA?=
- =?us-ascii?Q?SeZRUS1+8ZwqGoxmbx/XNXbcvjZiH6Wm8HqX0Ce9Qyq2uNk0K6Wh/XzxyPio?=
- =?us-ascii?Q?beJ9HqFA1ZbLahYlviQqdPT8iGrdZ3o2mWTgmpJr50GDacwApcNuNAvnGtDN?=
- =?us-ascii?Q?N8Afwhxc2SXZWjKalUAxq9yy4DnXflYYIt+1mG6h9k1enBQ3DXEbp9fP6K8V?=
- =?us-ascii?Q?+lMpYz7fZ8p0euUvUF+NJmlb/7nPPlow47qSBLaYw8DHVPevMUephrq6s7cD?=
- =?us-ascii?Q?M/Y8ckem/94lfRHgIa1I49DvzLMus8hlvC6DHvT/Yw92NFLHlFLrG5Cqjaa7?=
- =?us-ascii?Q?QGBBNW4dxx79sDaBceLKS4IHH5v06PCJE+/VzEDZDbnF5wPtmWsLJzh5C30I?=
- =?us-ascii?Q?WDx9cVkJ02Lb2LdBAFADHb4q+gKwDkl9C9BYAuv1RkaNSWkCYVXO8ryHIoFR?=
- =?us-ascii?Q?T7UN6KgSMghNGsI0Kpzr83bPrjZqq4tJcB6PPrxHYVj7IX/BfWEqDMTh+pA5?=
- =?us-ascii?Q?9Pm4EBOe/aeQpTCpWQnWBHR1QHJ+HaPzfubCV5gehG46UuCA/sYlWMwylPqp?=
- =?us-ascii?Q?XcySQtPjX2khBgOtLsNvuWtKClRu+oV/FeJMMuBZG6nbWJhVamYhkO2DweTZ?=
- =?us-ascii?Q?5iXIv4LSvYGVq1uudDmKa+6bLEpPsOSkCMJ1cu1eh2CeQS5E/apFJx3jnrXU?=
- =?us-ascii?Q?d8U3XeDvVvCR9IgqbHOX9dFqGnv/5EX2foBxHzu208NhB68WAWrqUvKIFZtA?=
- =?us-ascii?Q?8ZvDZXNrWlX1Hbg4UMo7+fibYav7SW4NVjCJfmkpkujf2tOfRg6/37pSuN67?=
- =?us-ascii?Q?6q8g20Bw92kkKxiSC75wqaR39IyEJ8wUX6MRfAUWmqW+NoP60J3Vff4Jrd90?=
- =?us-ascii?Q?Bg=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ bh=AcXyPO1Uz98fuoGSTH6S1bkbX95D4KrDYZ5T1HchXOo=;
+ b=frRlcky3s4xc9yAwLrKseub1Xf3eYgDpTspai3hmUEsrVa7n5Vyk606LVs510T8/ceggNTgdvj66V3bfQaxMxINj6O75w6ZN2BT7HV+E9abxIbdbrqWLRpNuZKlVmWO7XCBPrft6I3+uXE6erQpaN6gLe33cOOjNDcJmR9F977U=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
+Received: from SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24) by
+ BL0PR01MB4305.prod.exchangelabs.com (2603:10b6:208:4d::23) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5061.22; Thu, 10 Mar 2022 11:41:48 +0000
+Received: from SJ0PR01MB7282.prod.exchangelabs.com
+ ([fe80::cd24:39ed:7042:46d6]) by SJ0PR01MB7282.prod.exchangelabs.com
+ ([fe80::cd24:39ed:7042:46d6%6]) with mapi id 15.20.5038.027; Thu, 10 Mar 2022
+ 11:41:48 +0000
+From: Quan Nguyen <quan@os.amperecomputing.com>
+To: Corey Minyard <minyard@acm.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+ Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+ Brendan Higgins <brendanhiggins@google.com>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Wolfram Sang <wsa@kernel.org>, openipmi-developer@lists.sourceforge.net,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ linux-i2c@vger.kernel.org, openbmc@lists.ozlabs.org
+Subject: [PATCH v6 0/4] Add SSIF BMC driver
+Date: Thu, 10 Mar 2022 18:41:15 +0700
+Message-Id: <20220310114119.13736-1-quan@os.amperecomputing.com>
+X-Mailer: git-send-email 2.35.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: SG2PR02CA0125.apcprd02.prod.outlook.com
+ (2603:1096:4:188::13) To SJ0PR01MB7282.prod.exchangelabs.com
+ (2603:10b6:a03:3f2::24)
 MIME-Version: 1.0
-X-OriginatorOrg: ami.com
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 49ac4a4c-2da5-4473-611a-08da028af5e3
+X-MS-TrafficTypeDiagnostic: BL0PR01MB4305:EE_
+X-Microsoft-Antispam-PRVS: <BL0PR01MB4305B9DCD554C1DFBEC94E36F20B9@BL0PR01MB4305.prod.exchangelabs.com>
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 5+1WnDvA5i44nFiQSwDPa0IRUWhoFkE6Rw0FF0ou98xI+D7UilEEwoZBUUABVM1cVT7XaGphI2KXQuBeLQLRYI+ylynnHxxn/a8EAhztOnaiZRBc2cC203FwReOyYu62HJB5ZKH0fQBP4BTkpJ0yun8pbOZdbyo8dBaDHir0cLKW3G+wGlvNF6g7e1nzlpZjyocZaWqWGVpaMpjC1YkTkVPL1gAArIE/mItQz9Lrwu0BlrSOcI75mBVymIkLBhU89/TDDiwrXNAdCeRIhvLT7AouAQdYCuiP/81R8lG4O1QMpDSxya2KtfhfY3h3ts1kQSOj/eEUPT0l/mdER3eUg3dmlVX9gw41O1UvJgzurDdRPDrWkKaUMc4aZ4ImfCVCEyp6XueAyg0b0Vch2KROSxI/eUCCEeTugZzgAQ0ib+bs6A4FbbabO/EA1bMHzcCcbj0xDVHd5Lpw8F98q2DH6BXgfkAA5bZ3AyN7m08mi3KofjkZsgknIv7VZx2h/siOy7/URXCBNLapf0qCatsWW/pSr1COA604bFrZjQNgREb4sS2+tcT5JpaOAu1ImNgNlrYFWy7OJOHoTBAr/gQFo+zqsqTHExfBEMy8RGuwxL6SgE+FNczqZenpaZETO5Y707EaiUKrbONobviqaF6AZYAAyuwWo6laHCWWbfJTTpJ8l8FAOPot2r7RyiFr8rCK6fMXPKFROXwdkhhJccRSvPScVEBRlGhfB8OgNtdmpKJ9G+ukbnExuUtp3iHUQxjjxmO4k89jGL49Wd8wWnj0vQU9F7hVaI4V0U3+KD7OzdJXR11o6+sT7ZdayYmcITOO
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR01MB7282.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(13230001)(4636009)(366004)(107886003)(6666004)(66556008)(66476007)(66946007)(1076003)(5660300002)(2616005)(7416002)(316002)(38350700002)(38100700002)(86362001)(4326008)(8676002)(8936002)(83380400001)(26005)(186003)(921005)(2906002)(52116002)(6512007)(508600001)(110136005)(6506007)(6486002)(966005)(54906003);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?5CGCWEzuqjvXZspVdaxmMYOt0khNlWYVhsfR1gLdx+aMdZCcvIb7X6wSWeP6?=
+ =?us-ascii?Q?QG8rZx3BEbVRyOnulCPOmiJy1lh7XxjrApUeUDdX9EzEljRON/SC8+0/ZcTA?=
+ =?us-ascii?Q?YgOfVbT8PyqRAUpVR5mPSrbvGHPPXKQ970pdE2cA0eCAqFihboY31KHFhMsL?=
+ =?us-ascii?Q?+HzHTlBcBbMRCkcs/1zy3M/eWETfl81apF8NI2WCFU/G1Ci5BlZ24A+1Zvvo?=
+ =?us-ascii?Q?0P3GtKURPgAJW6vmu/+XaRmWZ6Q9GAXI63eMR14/2g3qgUvwDlou2pQsCkWc?=
+ =?us-ascii?Q?5r4Z1KwypfygBR2EuNUb1Mn4b5YJtKnmBncE3AeFKFn/SNdycAqx5ztiM8lW?=
+ =?us-ascii?Q?duDvY5pnp05s6HTSp04hJjhjASOW+bIcAlV9zRPRt0EEpCOlY9QTn5lt3o+G?=
+ =?us-ascii?Q?T4wCeWPApPO0hw/2mc6QGaRmZl3EL6Dwh/hEkMsIGbZG4bx5ranM73qNvq3A?=
+ =?us-ascii?Q?aDaAnYVT7LLYXr4DxhX8eCIJk5Ypx7xnWiNny59J+y8UzkSzHs3prXGQRPmc?=
+ =?us-ascii?Q?V3JP8HLl7ZW/zdYz/Anzp8pvij0cSTxwL82FRYe/QkDbRjObUqOvm9ICmriU?=
+ =?us-ascii?Q?fJjh08qhPyt806OiTc7Ew8Wd2EHki00Q6JdMhrnq4owt/CjCvsvKMZV2Q3No?=
+ =?us-ascii?Q?ZMxJMg2KtWcK8OBJdbh70xdRbQnoLgVLJI08xh7jwZ2OCszbb8cnpFdHl9cn?=
+ =?us-ascii?Q?cJsottLVb7OtBJ5fdYIb7WLGafo3+sQ1eK+KAvd+G+jPuhI+UqN57OiWqD40?=
+ =?us-ascii?Q?Xl5ums+TdwBlFQhL6tUpF8hiCgPaXjI+CTbgpeTE5mWAhC61lj7wFa3LJ3B0?=
+ =?us-ascii?Q?Gm+yh6YDjMCrlYWErU6yM+AqODwxfUJAYGyQK94F0jgcRs/oqBix1UASSUAe?=
+ =?us-ascii?Q?44owzpaVoWldsYdNi3LLWnh6i3xvXlK40DZgHqQD2R8s3+K7RWrY1RvDYaz+?=
+ =?us-ascii?Q?0yFhdITy4QxqLHvOMUwtxagnOjpxuES16juzqrTdnC4FcnJb0i2FbYaGcxD2?=
+ =?us-ascii?Q?Id7hqGhou/jAJaNzdfuMqfgqV51HLEU7BVBHHsG6GdCDdFo2wPsZrhWkndAG?=
+ =?us-ascii?Q?Y+4MhXorwIF1wzxKFgE+oScE8p336JB2hXSrYyVUWA3jFEkbGXjrq0tySVZE?=
+ =?us-ascii?Q?5J3VWixXFeejGvFo1YDHcbcUJbrQoD7+EQBS+Lp78w9JxkJruqBqfLih7qQb?=
+ =?us-ascii?Q?W/6kv3mUUsq290YwSpOot7ppsC/RxsSXiDOUzsHneNsyJRMjh3J9Plgy+Yhm?=
+ =?us-ascii?Q?KirKqBpqQjm+am+SBahEb9pQO/WDJNQV3RcmUmiqcrbbOme1lT55c26g8q+0?=
+ =?us-ascii?Q?YHTYBtNsJ9+TzY7LGbTUSWWp2T/bEB/xhcIL8RO4mlkg9p0UvO2USxvqfyGN?=
+ =?us-ascii?Q?rVi7JC0rnzcikmWNomZUTwleU0XXog/yeQUbzPb5L4TeKLX0ufAb0pzcdGYU?=
+ =?us-ascii?Q?PCpQRLHhpuWm4IooqJ7y79kgCxbWqWhfBmY+Jzl7u6xcOPeTrvv9lYjFrWVW?=
+ =?us-ascii?Q?oKDE/3HBWgy7Zh4=3D?=
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 49ac4a4c-2da5-4473-611a-08da028af5e3
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR01MB7282.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CO1PR10MB4804.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 35636fcc-727f-419f-2fa6-08da02710145
-X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Mar 2022 08:36:00.0343 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 27e97857-e15f-486c-b58e-86c2b3040f93
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: GJWvpQOafk9BXIz5QhVnHGobgm+Sq3pRGRDTUYA8ypzPfcFypS6yayYVJKnH+XSmv+mYPO/xE7hAN0LuvIv2kQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR10MB5100
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Mar 2022 11:41:48.4938 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: hqE5GNkY0MbP54b4ZIn9hWTKEYPrbsUSXycB90nhRNiLK9lsepcp4QE4VejSs30RqL7OzHQcNW1/0wno6WLU24Ixu2LW3gechQB1KuX2uxk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR01MB4305
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -136,133 +134,108 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Gayatri  L <gayathril@ami.com>, Pravinash Jeyapaul <pravinashj@ami.com>,
- Sanjay Ahuja <SanjayA@ami.com>
+Cc: Open Source Submission <patches@amperecomputing.com>,
+ "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
+ Phong Vo <phong@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi All,
+This series add support the SSIF BMC driver which is to perform in-band
+IPMI communication with their host in management (BMC) side.
 
-We wanted to know the status of this new design of jsnbd, please let us kno=
-w if the community is going with this new design or the existing implementa=
-tion of virtual media.
+SSIF BMC driver in this series is tested with Aspeed AST2500.
 
-We are planning to add support for multiple instances of vmedia redirection=
- concurrently from a single client , based on the response for above we wou=
-ld wait for the merge for new design or proceed with our design in the exis=
-ting implementation.
+Discussion for v5: https://lkml.org/lkml/2021/7/13/868
 
-Thanks.
-Dinesh E
+v6:
+  + Drop the use of slave_enable()                             [Wolfram]
+  + Make i2c-aspeed to issue RxCmdLast command on all
+  I2C_SLAVE_WRITE_REQUESTED event to assert NAK when slave busy   [Quan]
+  + Make i2c slave to return -EBUSY when it's busy                [Quan]
+  + Drop the aborting feature as return Completion Code 0xFF may stop
+  host to retry and make ipmi_ssif.so fails to load               [Quan]
+  + Add timer to recover slave from busy state when no response   [Quan]
+  + Clean request/response buffer appropriately                   [Quan]
+  + Add some minor change on error and warning messages           [Quan]
 
------Original Message-----
-From: i.kononenko <i.kononenko@yadro.com>
-Sent: 10 January 2022 16:32
-To: Dhines Kumar Eswaran <dhineskumare@ami.com>; openbmc@lists.ozlabs.org; =
-ed@tanous.net; jk@ozlabs.org; geissonator@yahoo.com; raviteja28031990@gmail=
-.com; gmills@us.ibm.com
-Cc: Gayatri L <gayathril@ami.com>; Pravinash Jeyapaul <pravinashj@ami.com>;=
- Sanjay Ahuja <SanjayA@ami.com>
-Subject: [EXTERNAL] Re: Feature Enhancement - Virtual Media over HTML5
+v5:
+  + Correct the patches order to fix the bisect issue found by
+  kernel build robot
 
+v4:
+  + Fix recursive spinlock                                      [Graeme]
+  + Send response with Completion code 0xFF when aborting         [Quan]
+  + Fix warning with dt_binding_check                              [Rob]
+  + Change aspeed-ssif-bmc.yaml to ssif-bmc.yaml                  [Quan]
+  + Added bounding check on SMBus writes and the whole request     [Dan]
+  + Moved buffer to end of struct ssif_bmc_ctx to avoid context
+    corruption if somehow buffer is written past the end           [Dan]
+  + Return -EINVAL if userspace buffer too small, dont
+    silence truncate                                       [Corey, Joel]
+  + Not necessary to check NONBLOCK in lock                      [Corey]
+  + Enforce one user at a time                                    [Joel]
+  + Reject write with invalid response length from userspace     [Corey]
+  + Add state machines for better ssif bmc state handling         [Quan]
+  + Drop ssif_bmc_aspeed.c and make ssif_bmc.c is generic
+    SSIF BMC driver                                               [Quan]
+  + Change compatible string "aspeed,ast2500-ssif-bmc" to
+    "ampere,ssif-bmc"                                             [Quan]
+  + Toggle Slave enable in i2c-aspeed to turn on/off slave mode   [Ryan]
+  + Added slave_enable() to struct i2c_algorithm to control
+    slave mode and to address the recursive spinlock      [Graeme, Ryan]
+  + Abort current request with invalid SMBus write or
+    invalid command                                               [Quan]
+  + Abort all request if there is pending response                [Quan]
+  + Changed validate_pec() to validate_request()                  [Quan]
+  + Add unsupported_smbus_cmd() to handle unknown SMBus command   [Quan]
+  + Print internal state string for ease investigating issue      [Quan]
+  + Move to READY state on SLAVE_STOP event                       [Quan]
+  + Change initilize_transfer() to process_smbus_cmd()            [Quan]
+  + Introduce functions for each slave event                      [Quan]
 
-**CAUTION: The e-mail below is from an external source. Please exercise cau=
-tion before opening attachments, clicking links, or following guidance.**
+v3:
+  + Switched binding doc to use DT schema format                   [Rob]
+  + Splited into generic ssif_bmc and aspeed-specific      [Corey, Joel]
+  + Removed redundant license info                                [Joel]
+  + Switched to use traditional if-else                           [Joel]
+  + Removed unused ssif_bmc_ioctl()                               [Joel]
+  + Made handle_request()/complete_response() to return void      [Joel]
+  + Refactored send_ssif_bmc_response() and
+  receive_ssif_bmc_request()                                     [Corey]
+  + Remove mutex                                                 [Corey]
+  + Use spin_lock/unlock_irqsave/restore in callback             [Corey]
+  + Removed the unnecessary memset                               [Corey]
+  + Switch to use dev_err()                                      [Corey]
+  + Combine mask/unmask two interrupts together                  [Corey]
+  + Fixed unhandled Tx done with NAK                              [Quan]
+  + Late ack'ed Tx done w/wo Ack irq                              [Quan]
+  + Use aspeed-specific exported aspeed_set_slave_busy() when
+  slave busy to fix the deadlock                 [Graeme, Philipp, Quan]
+  + Clean buffer for last multipart read                          [Quan]
+  + Handle unknown incoming command                               [Quan]
 
-On 10.01.2022 13:25, Dhines Kumar Eswaran wrote:
-> Hi All,
->
-> We are planning to support multiple Virtual media redirection support sim=
-ultaneously.
-> The below is the proposed design.
->
+v2:
+  + Fixed compiling error with COMPILE_TEST for arc
 
-Do you already saw the current work upon redesigning the jsnbd? What backen=
-d you are want to use?
-The current progress of the nbd-proxy(jsnbd) might conflict with your desig=
-n if it is based on the current nbd-proxy.
-Please, refer to the appropriate gerrit change (1).
+Dan Carpenter (1):
+  ipmi: ssif_bmc: Return -EFAULT if copy_from_user() fails
 
-> Existing Virtual media implementation:
->
-> WebUI is having single browse slot. It is used to redirect any kind of me=
-dia, which can be either CD or HDD media instance.
-> It is mapped with "/vm/0/0" API endpoint, and media endpoint is hardcoded=
- to 0(Zero).
->
-> Virtual media is using "/dev/nbd0" device, and Dump offload is using "/de=
-v/nbd1" device. It is parsing from the jsnbd configuration file.
->
-> Enhancement: Multiple simultaneous media redirections feature in single W=
-ebUI session.
->
-> WebUI will have two different browse slots to select the file, (i.e., ) V=
-irtual media device - HDD and Virtual media device - CD. Both slots will su=
-pport media redirection concurrently.
->
+Quan Nguyen (3):
+  ipmi: ssif_bmc: Add SSIF BMC driver
+  bindings: ipmi: Add binding for SSIF BMC driver
+  i2c: aspeed: Assert NAK when slave is busy
 
-We already have worked in the past to make able configure virtual-media dev=
-ice type by client request. E.g. in the usb-ctrl, we have a flag to specify=
- whether USB, USB-RO, HDD, CD(DVD) VM-type.
-Is it really required to have separate VM-endpoints for the CD and HDD type=
-s?
+ .../devicetree/bindings/ipmi/ssif-bmc.yaml    |  38 +
+ drivers/char/ipmi/Kconfig                     |  11 +
+ drivers/char/ipmi/Makefile                    |   1 +
+ drivers/char/ipmi/ssif_bmc.c                  | 790 ++++++++++++++++++
+ drivers/char/ipmi/ssif_bmc.h                  | 102 +++
+ drivers/i2c/busses/i2c-aspeed.c               |   5 +-
+ 6 files changed, 946 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/ipmi/ssif-bmc.yaml
+ create mode 100644 drivers/char/ipmi/ssif_bmc.c
+ create mode 100644 drivers/char/ipmi/ssif_bmc.h
 
-> Virtual media device - HDD slot is mapped through "/vm/0/0" API endpoint =
-and media endpoint is 0(zero) which is used for initiating the proxy handle=
-r, which is present in bmcweb package.
-> HDD slot will use "/dev/nbd0" device for HDD media instance redirection.
->
-> Virtual media device - CD slot is mapped through "/vm/0/1" API endpoint a=
-nd media endpoint is 1(one) which is used for initiating the proxy handler,=
- which is present in bmcweb package.
-> CD slot will use "/dev/nbd1" device for CD media instance redirection.
->
-> Dump offload will use "/dev/nbd2" device. It is also parsing the nbd devi=
-ce from jsnbd configuration file.
->
-> Configuration file looks like,
-> [cid:image001.jpg@01D80639.FCBD3330]
->
-> This is an extension with what the community has implemented and I hope, =
-it does not have any regression or conflict with others who are using virtu=
-al media and nbd devices.
-> Please help to review the proposed implementation, so that, I can go ahea=
-d with implementing the enhancement.
->
-> Thanks,
-> Dinesh E
->
->
->
-> -The information contained in this message may be confidential and propri=
-etary to American Megatrends (AMI). This communication is intended to be re=
-ad only by the individual or entity to whom it is addressed or by their des=
-ignee. If the reader of this message is not the intended recipient, you are=
- on notice that any distribution of this message, in any form, is strictly =
-prohibited. Please promptly notify the sender by reply e-mail or by telepho=
-ne at 770-246-8600, and then delete or destroy all copies of the transmissi=
-on.
->
+-- 
+2.35.1
 
-
-Links:
-[1] - https://nam12.safelinks.protection.outlook.com/?url=3Dhttps%3A%2F%2Fg=
-errit.openbmc-project.xyz%2Fc%2Fopenbmc%2Fjsnbd%2F%2B%2F49944&amp;data=3D04=
-%7C01%7Cdhineskumare%40ami.com%7C94792fcf27594faf5ab908d9d428921a%7C27e9785=
-7e15f486cb58e86c2b3040f93%7C1%7C0%7C637774093002801627%7CUnknown%7CTWFpbGZs=
-b3d8eyJWIjoiMC4wLjAwMDAiLCJQIjoiV2luMzIiLCJBTiI6Ik1haWwiLCJXVCI6Mn0%3D%7C30=
-00&amp;sdata=3DzZ0xayUmcqKc1fTeD6FhCq%2FJ1l9h%2Bps3sE6rDRKIC5M%3D&amp;reser=
-ved=3D0
-
---
-Best regards,
-
-Igor Kononenko
--The information contained in this message may be confidential and propriet=
-ary to American Megatrends (AMI). This communication is intended to be read=
- only by the individual or entity to whom it is addressed or by their desig=
-nee. If the reader of this message is not the intended recipient, you are o=
-n notice that any distribution of this message, in any form, is strictly pr=
-ohibited. Please promptly notify the sender by reply e-mail or by telephone=
- at 770-246-8600, and then delete or destroy all copies of the transmission=
-.
