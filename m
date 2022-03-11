@@ -1,63 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2275C4D5775
-	for <lists+openbmc@lfdr.de>; Fri, 11 Mar 2022 02:43:31 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6264A4D577F
+	for <lists+openbmc@lfdr.de>; Fri, 11 Mar 2022 02:44:05 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KF7xX704Jz30FR
-	for <lists+openbmc@lfdr.de>; Fri, 11 Mar 2022 12:43:28 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KF7yC2FVxz30H5
+	for <lists+openbmc@lfdr.de>; Fri, 11 Mar 2022 12:44:03 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=hgM8E+RB;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=EAl/7Cig;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::431;
- helo=mail-pf1-x431.google.com; envelope-from=medadyoung@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::530;
+ helo=mail-pg1-x530.google.com; envelope-from=medadyoung@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=hgM8E+RB; dkim-atps=neutral
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com
- [IPv6:2607:f8b0:4864:20::431])
+ header.s=20210112 header.b=EAl/7Cig; dkim-atps=neutral
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com
+ [IPv6:2607:f8b0:4864:20::530])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KF7x53Kbxz2xgb
- for <openbmc@lists.ozlabs.org>; Fri, 11 Mar 2022 12:43:03 +1100 (AEDT)
-Received: by mail-pf1-x431.google.com with SMTP id g1so6673755pfv.1
- for <openbmc@lists.ozlabs.org>; Thu, 10 Mar 2022 17:43:03 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KF7x770lJz2xgb
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Mar 2022 12:43:07 +1100 (AEDT)
+Received: by mail-pg1-x530.google.com with SMTP id bc27so6216916pgb.4
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Mar 2022 17:43:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=from:to:cc:subject:date:message-id;
- bh=BP+86L+lIuRy6uRjMkCZyF2DvJ6c3trp41j9uZ3sVxs=;
- b=hgM8E+RBZ0dTNuJknt6CD2fx09iOVPsZUQOoCi6PwmLUGtVGN3RgqG96s0iVGH7iB1
- PH9jpN6UfH2GFamJQhWRogKeTgW4lZuDx45yvMMPWKv5WrEIz1RvJ71pj1kiqmygmZzU
- qJyVi0bP6jd3Ve7c6d7VhrECwmEtHyc6klMW+mWvtlkxEVVD5snRHAiNOILiQQUmy5o3
- G0Wi2ZgBtaXUwwh+Vrr67VWhCaWZD8gVVVLlyas8K5QS+f1NsHT7Wt8MJqHifrrMMf+F
- DpAqwyx4NdEqlY4MJwewIvzkktkvOg88oS4iwFYqRZfsGZh/W8SFHaZL/ehrgxX52k3A
- yUaQ==
+ h=from:to:cc:subject:date:message-id:in-reply-to:references;
+ bh=GbrYLRy1W5aZewqUJiPpLaSO2PAR7xFlm0KF8fm8mKo=;
+ b=EAl/7CigB5SVHJkwiwGkbitrg96A+cEiCSMckdj+NJiAGpCLvf664aUf1rcrLlH3L3
+ DnDi7ddD/afc5MvPshGOGYdjCq+lG/xonM/1zH9eSa9ANdfmQ9Ui1BMzRCEclgwkD5Os
+ yunus6AH+YVGHAhdZlsqDRh13OHFGRvxE3Zr7YVYbf/cYXsBNLL+M/HCov0/Ez0yo/LP
+ S1s5gNKxpSl58YbFpXw6ZJr8aF6MmuOEhDi8a64FCCGznALoxPCdGY2U0faUxqws2Kdl
+ pgqWCJid7aQR4+rYNJWTmsMdJlq7S4cak2QDikta7rVBXohwzKlDo9sEFLlNGeW0qVyd
+ ijbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:from:to:cc:subject:date:message-id;
- bh=BP+86L+lIuRy6uRjMkCZyF2DvJ6c3trp41j9uZ3sVxs=;
- b=wuPmxMtIeDsbVv91DewiNJEb/ruvS9Tnkhi5lYzqub2aJGgiPiI3A4Q9ZD00j1T4D/
- 2QQGy7QAotWbjfmuS2W3phcwTh88jfbsVtwWaWkVs0gjov3fQWyjfBAhZhUT19Xh7Tvc
- ekpmvzcpB0910ilXhdmlfDbJQ+ZxA5BDQ0QMqfAhI5HnfhqVo627OkiOxc34o4SeHYbX
- oHpQjdUOTzNBCKCXGWN8x9OyxaMg2zVcIi+IIHxKc33dpuke+yTz2T3sScfVjWH+mzgD
- N8mFZzPNeU+n+djf+VvqNqEql6llmI1A2OygJA3kt0E4tEWkeDaHm4VCSQWyXZJY7Vmw
- cprw==
-X-Gm-Message-State: AOAM5300oF8gR2EJ4zO9+CbOO9+sxUzI6cWdtTTxBWVxqJlOgUl4r4+I
- uDXsLZS9oH3X2UqjuswHNJQ=
-X-Google-Smtp-Source: ABdhPJw4s8hxwtZjigPSX7XWokxaMTRbW0JF0Zac/tcWjw05dE0QhbsCicmgkB9Yqd+SzzZLuwA+fw==
-X-Received: by 2002:a62:55c4:0:b0:4f6:b396:9caa with SMTP id
- j187-20020a6255c4000000b004f6b3969caamr7728287pfb.19.1646962975583; 
- Thu, 10 Mar 2022 17:42:55 -0800 (PST)
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+ :references;
+ bh=GbrYLRy1W5aZewqUJiPpLaSO2PAR7xFlm0KF8fm8mKo=;
+ b=3A5JH2zfV4EUk7pwWOpZjtpyNJ23IlvMC1gxurb0zaogSvvf4USGlVnT0FtYVBL5TA
+ PxL1C95gXBEWBUKpiuinBPBRnAnBftI1uYd/ll8uo4PNFu9Sd+OEoClANJSiQksid8G6
+ r2znYgY6jAvdPEs8XRLhafix1hAP5yuIkxf8IwOFNlZp5nzrNc6nB+diDkIA3+yfgigV
+ M/uYgfVysB3Cg5T1rYt+SkxcoB9BFGdhi3p59bZOl68pzP1cMYsp1Xf1TmSkImAYOGCz
+ kH3qHY+oBIk48k7P5kIIAuTyrz0DYhtA6R1ieTHqa3OKrdDMzjYy7r8r4p2j5Vx8qFp5
+ VEuA==
+X-Gm-Message-State: AOAM5316qTRlxp2OtjqzAvjtXI9Z67sFEqZNcq8AsazdWX1LsHIFOx6L
+ pIrqiY9FB6K3DWnaSl8AmqI=
+X-Google-Smtp-Source: ABdhPJy0EmTMhPr3didLwQHpRflLIwW2lJsX4eanCr6kAJCQf4vaV84UdpC9oN/i/vbCkPKHn3t0Kg==
+X-Received: by 2002:a63:4560:0:b0:370:1f21:36b8 with SMTP id
+ u32-20020a634560000000b003701f2136b8mr6293000pgk.181.1646962982193; 
+ Thu, 10 Mar 2022 17:43:02 -0800 (PST)
 Received: from localhost.localdomain ([116.89.135.255])
  by smtp.gmail.com with ESMTPSA id
- w5-20020a17090a6b8500b001bf564e624esm7194383pjj.39.2022.03.10.17.42.51
+ w5-20020a17090a6b8500b001bf564e624esm7194383pjj.39.2022.03.10.17.42.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 10 Mar 2022 17:42:54 -0800 (PST)
+ Thu, 10 Mar 2022 17:43:01 -0800 (PST)
 From: Medad CChien <medadyoung@gmail.com>
 X-Google-Original-From: Medad CChien <ctcchien@nuvoton.com>
 To: rric@kernel.org, james.morse@arm.com, tony.luck@intel.com,
@@ -66,11 +67,12 @@ To: rric@kernel.org, james.morse@arm.com, tony.luck@intel.com,
  KWLIU@nuvoton.com, YSCHU@nuvoton.com, JJLIU0@nuvoton.com,
  KFTING@nuvoton.com, avifishman70@gmail.com, tmaimon77@gmail.com,
  tali.perry1@gmail.com, ctcchien@nuvoton.com
-Subject: [PATCH v3 0/3] EDAC: nuvoton: Add nuvoton NPCM memory controller
- driver
-Date: Fri, 11 Mar 2022 09:42:42 +0800
-Message-Id: <20220311014245.4612-1-ctcchien@nuvoton.com>
+Subject: [PATCH v3 1/3] ARM: dts: nuvoton: Add new device node
+Date: Fri, 11 Mar 2022 09:42:43 +0800
+Message-Id: <20220311014245.4612-2-ctcchien@nuvoton.com>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20220311014245.4612-1-ctcchien@nuvoton.com>
+References: <20220311014245.4612-1-ctcchien@nuvoton.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,43 +89,31 @@ Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add support for Nuvoton NPCM SoC.
+ Add NPCM memory controller device node
 
-Addressed comments from:
- - Rob Herring : https://lkml.org/lkml/2022/2/25/1103
- - Krzysztof Kozlowski : https://lkml.org/lkml/2022/2/27/63
- - Rob Herring : https://lkml.org/lkml/2022/3/2/828
+Signed-off-by: Medad CChien <ctcchien@nuvoton.com>
+---
+ arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-Changes since version 3:
- - Rename npcm-edac.yaml as nuvoton,npcm-memory-controller.yaml.
- - Drop 'EDAC' in title of nuvoton,npcm-memory-controller.yaml.
- - Update compatible in nuvoton,npcm-memory-controller.yaml.
-
-Changes since version 2:
- - Update description and compatible in npcm-edac.yaml.
- - Remove address-cells and size-cells in npcm-edac.yaml.
- - Reorder the items of examples in npcm-edac.yaml.
- - Reorder header file in driver.
-
-Changes since version 1:
- - Add nuvoton,npcm750-memory-controller property in NPCM devicetree.
- - Add new property in edac binding document.
- - Add new driver for nuvoton NPCM memory controller.
-
-Medad CChien (3):
-  ARM: dts: nuvoton: Add new device node
-  dt-bindings: edac: nuvoton,npcm-memory-controller.yaml
-  EDAC: nuvoton: Add NPCM memory controller driver
-
- .../edac/nuvoton,npcm-memory-controller.yaml  |  62 ++
- arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi |   7 +
- drivers/edac/Kconfig                          |   9 +
- drivers/edac/Makefile                         |   1 +
- drivers/edac/npcm_edac.c                      | 714 ++++++++++++++++++
- 5 files changed, 793 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-controller.yaml
- create mode 100644 drivers/edac/npcm_edac.c
-
+diff --git a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
+index 3696980a3da1..ba542b26941e 100644
+--- a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
++++ b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
+@@ -106,6 +106,13 @@
+ 		interrupt-parent = <&gic>;
+ 		ranges;
+ 
++		mc: memory-controller@f0824000 {
++			compatible = "nuvoton,npcm750-memory-controller";
++			reg = <0x0 0xf0824000 0x0 0x1000>;
++			interrupts = <GIC_SPI 25 IRQ_TYPE_LEVEL_HIGH>;
++			status = "disabled";
++		};
++
+ 		rstc: rstc@f0801000 {
+ 			compatible = "nuvoton,npcm750-reset";
+ 			reg = <0xf0801000 0x70>;
 -- 
 2.17.1
 
