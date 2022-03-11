@@ -1,62 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 11EB34D6481
-	for <lists+openbmc@lfdr.de>; Fri, 11 Mar 2022 16:25:04 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 165314D6851
+	for <lists+openbmc@lfdr.de>; Fri, 11 Mar 2022 19:10:51 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KFV9T6Q4Cz30Fw
-	for <lists+openbmc@lfdr.de>; Sat, 12 Mar 2022 02:25:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KFYrm6jqQz30Md
+	for <lists+openbmc@lfdr.de>; Sat, 12 Mar 2022 05:10:48 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=b91012sJ;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.167.176;
- helo=mail-oi1-f176.google.com; envelope-from=robherring2@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c29;
+ helo=mail-oo1-xc29.google.com; envelope-from=bjwyman@gmail.com;
  receiver=<UNKNOWN>)
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com
- [209.85.167.176])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=b91012sJ; dkim-atps=neutral
+Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com
+ [IPv6:2607:f8b0:4864:20::c29])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KFV9B64h2z2yn9
- for <openbmc@lists.ozlabs.org>; Sat, 12 Mar 2022 02:24:46 +1100 (AEDT)
-Received: by mail-oi1-f176.google.com with SMTP id o83so2225486oif.0
- for <openbmc@lists.ozlabs.org>; Fri, 11 Mar 2022 07:24:45 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KFYrJ2HQPz2yXP
+ for <openbmc@lists.ozlabs.org>; Sat, 12 Mar 2022 05:10:23 +1100 (AEDT)
+Received: by mail-oo1-xc29.google.com with SMTP id
+ w3-20020a4ac183000000b0031d806bbd7eso11349926oop.13
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Mar 2022 10:10:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=IiXxyHsgfTOlGSBUBDet/+QfpWGHIGkaOs4O67rqF3M=;
+ b=b91012sJtY7KuSmcUXg8KKm7RlHqbOU8tfkEkcbx+9FEZX4EIj9BrubwmW6hkWhjhf
+ ZyaUPkv8QbXKFbW23ATHEJmCBP9V5zUt4BEgBJdrjeM5FucuaRusNeQ2BgkEFBknZBeI
+ awuG4zzfXB975rpus0R+/RN9Ws5MCklOI7zRzqq5hvv7VIuuvdTQl1xkSqUAJlRIT9sn
+ +ulJQkPjRyJQFiorMTsdnn9lmB6kKuLRKNkNYaulNY+IctlyQBxlr3NO+xukPdPwnJpe
+ N5VM65FKjbUft74bX4D6H5KDwuBEyjDOZtgEZc0BPtvXUxHgCGN/eDTBjcwdNci4vzx0
+ w8+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:date:from:to:cc:subject:message-id:references
- :mime-version:content-disposition:in-reply-to;
- bh=Wj8G09tyyau5yMZxls0yIJBXoGqCQIhnO/G1icNodFU=;
- b=hajTvJPaZsvpLeXDL/rJ3VLorIa9CVIVMKOfFU63MN1EXmhkfEpZCAvSHlcrXr6MbO
- 8Xn4/6Y2fWEJ7WJAG0SndLPlpDyZgUB3+ZJ38tODjvIv76ticdoUh2Hd+Bv8uh845wQV
- MApb0U9CaP3h6nhH//92ZbfsFeGlaBDRwoXHe5eYagPFeLDO80rcc6jnKbJz5MgmR7H9
- WWMdYyV1VoNEzaguZGo+X1Qh8NmglOtnDX5wT8f6/LFhaPX/z/O3OB+hJukpyszaAGbf
- L61S76gMpEYZb3EvWT56GHl9ETc3duxuoqKq/Lkj9oZAniZVOjI9PDFaiLieoSggUOOl
- 7iuQ==
-X-Gm-Message-State: AOAM531mItD4lVOzyD2MGL3Ug5tEWuwP023slA7KwpNrryeclRxbo6Ls
- Q8StfOFnYuBJbA4YEXM9lA==
-X-Google-Smtp-Source: ABdhPJzzQzQLbkCyppMXDo/APn8Hm72RdGKl9lKuHngLjJNbvlPq/mreKAsrBqheGl31MgPNNCLJMA==
-X-Received: by 2002:a05:6808:2122:b0:2da:3444:9908 with SMTP id
- r34-20020a056808212200b002da34449908mr7203108oiw.207.1647012283302; 
- Fri, 11 Mar 2022 07:24:43 -0800 (PST)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net.
- [66.90.144.107]) by smtp.gmail.com with ESMTPSA id
- p21-20020a4a2f15000000b00320fca09b74sm3765248oop.1.2022.03.11.07.24.42
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=IiXxyHsgfTOlGSBUBDet/+QfpWGHIGkaOs4O67rqF3M=;
+ b=yr7j4+EjKnEz2AGVyTC1FSwu7kaNX/F4YW0IlYwugKAYf3CmdgVW+wR+s2edSWqzuy
+ bEcTMGWy7OF7NWC6HD9gqdvZGjazEqZ0paGxkWMtnh0qDIbjEBIu+SitHC95CFzcXR6c
+ /wjMBiLaTrNwriI8wzWvqmgHCbxI9TvECmpkZ5eUjc1LI1XOL2nGA1JtYZtJIlFyruvA
+ gec1Rd3wDPYE9McmHT+G7GzRmvtGf6BVzcxn8xuWtvZUa29Px8qN4NeUqCRaPxEjgYIb
+ 8TxFZHy7zG9V+fdBiwANFrUrsoljVC7H3QZRaWcLa1B1rIAVBB/c6HTEHQS4B2hKx9Bg
+ UGqw==
+X-Gm-Message-State: AOAM531yuygJoXUe1xnxbMGKAbbN//gwYlqi4HZ2b0eOl3v6TvCWkKXg
+ NMx8jOWfCG+kXIHp5JZqtZ8=
+X-Google-Smtp-Source: ABdhPJzMyariRy8rQjTfsq0Ik6o8MYOaMiQZDQen9AtoKXvvNrfz9qRad3dE3XqwMqtDbkP0u9b+yg==
+X-Received: by 2002:a05:6870:3113:b0:d3:473b:3f1d with SMTP id
+ v19-20020a056870311300b000d3473b3f1dmr6061237oaa.116.1647022220168; 
+ Fri, 11 Mar 2022 10:10:20 -0800 (PST)
+Received: from fstone04p1.aus.stglabs.ibm.com ([129.41.86.7])
+ by smtp.gmail.com with ESMTPSA id
+ s24-20020a056808209800b002da3b9bf8e0sm3600917oiw.32.2022.03.11.10.10.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 11 Mar 2022 07:24:42 -0800 (PST)
-Received: (nullmailer pid 3824535 invoked by uid 1000);
- Fri, 11 Mar 2022 15:24:41 -0000
-Date: Fri, 11 Mar 2022 09:24:41 -0600
-From: Rob Herring <robh@kernel.org>
-To: Zev Weiss <zev@bewilderbeest.net>
-Subject: Re: [PATCH v2 1/2] dt-bindings: Add power-efuse binding
-Message-ID: <YitpuR+SlDiKh4eq@robh.at.kernel.org>
-References: <20220308011811.10353-1-zev@bewilderbeest.net>
- <20220308011811.10353-2-zev@bewilderbeest.net>
+ Fri, 11 Mar 2022 10:10:19 -0800 (PST)
+From: Brandon Wyman <bjwyman@gmail.com>
+To: Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org,
+ Eddie James <eajames@linux.ibm.com>, Guenter Roeck <linux@roeck-us.net>,
+ Jean Delvare <jdelvare@suse.com>, linux-hwmon@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: [PATCH v2] hwmon: (pmbus/ibm-cffps) Add clear_faults debugfs entry
+Date: Fri, 11 Mar 2022 18:10:14 +0000
+Message-Id: <20220311181014.3448936-1-bjwyman@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220308011811.10353-2-zev@bewilderbeest.net>
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,95 +83,59 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
- Mark Brown <broonie@kernel.org>
+Cc: Brandon Wyman <bjwyman@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Mar 07, 2022 at 05:18:09PM -0800, Zev Weiss wrote:
-> This can be used to describe a power output supplied by a regulator
-> device that the system controls.
-> 
-> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-> ---
->  .../devicetree/bindings/misc/power-efuse.yaml | 49 +++++++++++++++++++
->  1 file changed, 49 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/misc/power-efuse.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/misc/power-efuse.yaml b/Documentation/devicetree/bindings/misc/power-efuse.yaml
-> new file mode 100644
-> index 000000000000..5f8f0b21af0e
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/misc/power-efuse.yaml
-> @@ -0,0 +1,49 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/misc/power-efuse.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Generic power efuse device
-> +
-> +maintainers:
-> +  - Zev Weiss <zev@bewilderbeest.net>
-> +
-> +description: |
-> +  This binding describes a physical power output supplied by a
-> +  regulator providing efuse functionality (manual on/off control, and
-> +  auto-shutoff if current, voltage, or thermal limits are exceeded).
-> +
-> +  These may be found on systems such as "smart" network PDUs, and
-> +  typically supply power to devices entirely separate from the system
-> +  described by the device-tree by way of an external connector such as
-> +  an Open19 power cable:
-> +
-> +  https://www.open19.org/marketplace/coolpower-cable-assembly-8ru/
+Add a clear_faults write-only debugfs entry for the ibm-cffps device
+driver.
 
-Not really a helpful link...
+Certain IBM power supplies require clearing some latched faults in order
+to indicate that the fault has indeed been observed/noticed.
 
-I still don't understand what the h/w looks like here. At least I now 
-understand we're talking a fuse on power rail, not efuses in an SoC 
-used as OTP bits or feature disables.
+Signed-off-by: Brandon Wyman <bjwyman@gmail.com>
+---
+V1 -> V2: Explain why this change is needed
 
-> +
-> +properties:
-> +  compatible:
-> +    const: power-efuse
-> +
-> +  vout-supply:
-> +    description:
-> +      phandle to the regulator providing power for the efuse
+ drivers/hwmon/pmbus/ibm-cffps.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-Vout is a supply to the efuse and not the rail being fused? 
+diff --git a/drivers/hwmon/pmbus/ibm-cffps.c b/drivers/hwmon/pmbus/ibm-cffps.c
+index e3294a1a54bb..3f02dde02a4b 100644
+--- a/drivers/hwmon/pmbus/ibm-cffps.c
++++ b/drivers/hwmon/pmbus/ibm-cffps.c
+@@ -67,6 +67,7 @@ enum {
+ 	CFFPS_DEBUGFS_CCIN,
+ 	CFFPS_DEBUGFS_FW,
+ 	CFFPS_DEBUGFS_ON_OFF_CONFIG,
++	CFFPS_DEBUGFS_CLEAR_FAULTS,
+ 	CFFPS_DEBUGFS_NUM_ENTRIES
+ };
+ 
+@@ -274,6 +275,13 @@ static ssize_t ibm_cffps_debugfs_write(struct file *file,
+ 		if (rc)
+ 			return rc;
+ 
++		rc = 1;
++		break;
++	case CFFPS_DEBUGFS_CLEAR_FAULTS:
++		rc = i2c_smbus_write_byte(psu->client, PMBUS_CLEAR_FAULTS);
++		if (rc < 0)
++			return rc;
++
+ 		rc = 1;
+ 		break;
+ 	default:
+@@ -607,6 +615,9 @@ static int ibm_cffps_probe(struct i2c_client *client)
+ 	debugfs_create_file("on_off_config", 0644, ibm_cffps_dir,
+ 			    &psu->debugfs_entries[CFFPS_DEBUGFS_ON_OFF_CONFIG],
+ 			    &ibm_cffps_fops);
++	debugfs_create_file("clear_faults", 0200, ibm_cffps_dir,
++			    &psu->debugfs_entries[CFFPS_DEBUGFS_CLEAR_FAULTS],
++			    &ibm_cffps_fops);
+ 
+ 	return 0;
+ }
+-- 
+2.25.1
 
-Sorry, I know nothing about how an efuse is implemented so you are going 
-to have to explain or draw it.
-
-> +
-> +  error-flags-cache-ttl-ms:
-> +    description:
-> +      The number of milliseconds the vout-supply regulator's error
-> +      flags should be cached before re-fetching them.
-
-How does one fetch/read? the error flags?
-
-> +
-> +required:
-> +  - compatible
-> +  - vout-supply
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    efuse {
-> +        compatible = "power-efuse";
-> +        vout-supply = <&efuse_reg>;
-> +        error-flags-cache-ttl-ms = <500>;
-> +    };
-> -- 
-> 2.35.1
-> 
-> 
