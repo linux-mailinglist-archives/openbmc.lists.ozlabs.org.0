@@ -1,62 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17CA24D62F2
-	for <lists+openbmc@lfdr.de>; Fri, 11 Mar 2022 15:08:29 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 11EB34D6481
+	for <lists+openbmc@lfdr.de>; Fri, 11 Mar 2022 16:25:04 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KFST70BZ5z308F
-	for <lists+openbmc@lfdr.de>; Sat, 12 Mar 2022 01:08:27 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=QpWCf0Qr;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KFV9T6Q4Cz30Fw
+	for <lists+openbmc@lfdr.de>; Sat, 12 Mar 2022 02:25:01 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1;
- helo=dfw.source.kernel.org; envelope-from=mchehab@kernel.org;
+ smtp.mailfrom=gmail.com (client-ip=209.85.167.176;
+ helo=mail-oi1-f176.google.com; envelope-from=robherring2@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=k20201202 header.b=QpWCf0Qr; 
- dkim-atps=neutral
-Received: from dfw.source.kernel.org (dfw.source.kernel.org
- [IPv6:2604:1380:4641:c500::1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com
+ [209.85.167.176])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KFSSc6gJqz2xTp;
- Sat, 12 Mar 2022 01:08:00 +1100 (AEDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id CD79061D7C;
- Fri, 11 Mar 2022 14:07:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339ADC340F7;
- Fri, 11 Mar 2022 14:07:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1647007676;
- bh=yWuOwgCKKH3cUQ5RmtkkII7ase31tF+oYbnerblLvgM=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=QpWCf0Qrck+zSaJE47tBgImiRqglXOFjUPQxPhC5ayhWGorCOKPdrECbanYgw2Ybp
- VsOka/+ZKE/Msht00BGN3dcBaMpQ9JWm2vlHpse5XVjjAQ/ioDe+IjBkbscB9fiZCC
- VKUPg9ztSO21kJVpBMmKy/NGGP9rlWkubVZW6hL17gcO/mAJiL6p8UkJ70ZLsC+QVR
- MggGCjVA1YsZvek+yXv5B3vLre1tLHTPIfrbjx31DkMRF3xZo+2lynbzQceX7SVZW/
- Dkkr+LJIq1hGjVVm3M0rOXFQx/WsQEalMemdlIpypOd4NJ+5+H0RCP7luF1a3IJ0xB
- +EvgYifjDZ2yg==
-Received: from mchehab by mail.kernel.org with local (Exim 4.94.2)
- (envelope-from <mchehab@kernel.org>)
- id 1nSfvt-000lAu-SD; Fri, 11 Mar 2022 15:07:53 +0100
-From: Mauro Carvalho Chehab <mchehab@kernel.org>
-To: 
-Subject: [PATCH v2 06/38] media: platform: place Aspeed driver on a separate
- dir
-Date: Fri, 11 Mar 2022 15:07:19 +0100
-Message-Id: <97fe1a5a4183c04ac8bed0cee7583fcda96a3dd6.1647006877.git.mchehab@kernel.org>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <cover.1647006877.git.mchehab@kernel.org>
-References: <cover.1647006877.git.mchehab@kernel.org>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KFV9B64h2z2yn9
+ for <openbmc@lists.ozlabs.org>; Sat, 12 Mar 2022 02:24:46 +1100 (AEDT)
+Received: by mail-oi1-f176.google.com with SMTP id o83so2225486oif.0
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Mar 2022 07:24:45 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=Wj8G09tyyau5yMZxls0yIJBXoGqCQIhnO/G1icNodFU=;
+ b=hajTvJPaZsvpLeXDL/rJ3VLorIa9CVIVMKOfFU63MN1EXmhkfEpZCAvSHlcrXr6MbO
+ 8Xn4/6Y2fWEJ7WJAG0SndLPlpDyZgUB3+ZJ38tODjvIv76ticdoUh2Hd+Bv8uh845wQV
+ MApb0U9CaP3h6nhH//92ZbfsFeGlaBDRwoXHe5eYagPFeLDO80rcc6jnKbJz5MgmR7H9
+ WWMdYyV1VoNEzaguZGo+X1Qh8NmglOtnDX5wT8f6/LFhaPX/z/O3OB+hJukpyszaAGbf
+ L61S76gMpEYZb3EvWT56GHl9ETc3duxuoqKq/Lkj9oZAniZVOjI9PDFaiLieoSggUOOl
+ 7iuQ==
+X-Gm-Message-State: AOAM531mItD4lVOzyD2MGL3Ug5tEWuwP023slA7KwpNrryeclRxbo6Ls
+ Q8StfOFnYuBJbA4YEXM9lA==
+X-Google-Smtp-Source: ABdhPJzzQzQLbkCyppMXDo/APn8Hm72RdGKl9lKuHngLjJNbvlPq/mreKAsrBqheGl31MgPNNCLJMA==
+X-Received: by 2002:a05:6808:2122:b0:2da:3444:9908 with SMTP id
+ r34-20020a056808212200b002da34449908mr7203108oiw.207.1647012283302; 
+ Fri, 11 Mar 2022 07:24:43 -0800 (PST)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net.
+ [66.90.144.107]) by smtp.gmail.com with ESMTPSA id
+ p21-20020a4a2f15000000b00320fca09b74sm3765248oop.1.2022.03.11.07.24.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 11 Mar 2022 07:24:42 -0800 (PST)
+Received: (nullmailer pid 3824535 invoked by uid 1000);
+ Fri, 11 Mar 2022 15:24:41 -0000
+Date: Fri, 11 Mar 2022 09:24:41 -0600
+From: Rob Herring <robh@kernel.org>
+To: Zev Weiss <zev@bewilderbeest.net>
+Subject: Re: [PATCH v2 1/2] dt-bindings: Add power-efuse binding
+Message-ID: <YitpuR+SlDiKh4eq@robh.at.kernel.org>
+References: <20220308011811.10353-1-zev@bewilderbeest.net>
+ <20220308011811.10353-2-zev@bewilderbeest.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220308011811.10353-2-zev@bewilderbeest.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,124 +68,95 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-arm-kernel@lists.infradead.org,
- Jammy Huang <jammy_huang@aspeedtech.com>,
- =?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
- linux-aspeed@lists.ozlabs.org, Zev Weiss <zev@bewilderbeest.net>,
- Paul Menzel <pmenzel@molgen.mpg.de>, Andrew Jeffery <andrew@aj.id.au>,
- openbmc@lists.ozlabs.org, Eddie James <eajames@linux.ibm.com>,
- Jacopo Mondi <jacopo@jmondi.org>, linux-kernel@vger.kernel.org,
- Yang Li <yang.lee@linux.alibaba.com>, Joel Stanley <joel@jms.id.au>,
- Sakari Ailus <sakari.ailus@linux.intel.com>,
- Hans Verkuil <hverkuil-cisco@xs4all.nl>,
- Eugen Hristev <eugen.hristev@microchip.com>,
- Dmitry Osipenko <digetx@gmail.com>, Mauro Carvalho Chehab <mchehab@kernel.org>,
- linux-media@vger.kernel.org, Ming Qian <ming.qian@nxp.com>,
- Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Cc: devicetree@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, Liam Girdwood <lgirdwood@gmail.com>,
+ Mark Brown <broonie@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-In order to cleanup the main platform media directory, move Aspeed
-driver to its own directory.
+On Mon, Mar 07, 2022 at 05:18:09PM -0800, Zev Weiss wrote:
+> This can be used to describe a power output supplied by a regulator
+> device that the system controls.
+> 
+> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+> ---
+>  .../devicetree/bindings/misc/power-efuse.yaml | 49 +++++++++++++++++++
+>  1 file changed, 49 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/misc/power-efuse.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/misc/power-efuse.yaml b/Documentation/devicetree/bindings/misc/power-efuse.yaml
+> new file mode 100644
+> index 000000000000..5f8f0b21af0e
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/misc/power-efuse.yaml
+> @@ -0,0 +1,49 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/misc/power-efuse.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Generic power efuse device
+> +
+> +maintainers:
+> +  - Zev Weiss <zev@bewilderbeest.net>
+> +
+> +description: |
+> +  This binding describes a physical power output supplied by a
+> +  regulator providing efuse functionality (manual on/off control, and
+> +  auto-shutoff if current, voltage, or thermal limits are exceeded).
+> +
+> +  These may be found on systems such as "smart" network PDUs, and
+> +  typically supply power to devices entirely separate from the system
+> +  described by the device-tree by way of an external connector such as
+> +  an Open19 power cable:
+> +
+> +  https://www.open19.org/marketplace/coolpower-cable-assembly-8ru/
 
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
----
+Not really a helpful link...
 
-To avoid mailbombing on a large number of people, only mailing lists were C/C on the cover.
-See [PATCH v2 00/38] at: https://lore.kernel.org/all/cover.1647006877.git.mchehab@kernel.org/
+I still don't understand what the h/w looks like here. At least I now 
+understand we're talking a fuse on power rail, not efuses in an SoC 
+used as OTP bits or feature disables.
 
- MAINTAINERS                                        |  2 +-
- drivers/media/platform/Kconfig                     | 10 +---------
- drivers/media/platform/Makefile                    |  2 +-
- drivers/media/platform/aspeed/Kconfig              | 10 ++++++++++
- drivers/media/platform/aspeed/Makefile             |  1 +
- drivers/media/platform/{ => aspeed}/aspeed-video.c |  0
- 6 files changed, 14 insertions(+), 11 deletions(-)
- create mode 100644 drivers/media/platform/aspeed/Kconfig
- create mode 100644 drivers/media/platform/aspeed/Makefile
- rename drivers/media/platform/{ => aspeed}/aspeed-video.c (100%)
+> +
+> +properties:
+> +  compatible:
+> +    const: power-efuse
+> +
+> +  vout-supply:
+> +    description:
+> +      phandle to the regulator providing power for the efuse
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 1a9fb0615925..1b6f48a660de 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3026,7 +3026,7 @@ L:	linux-media@vger.kernel.org
- L:	openbmc@lists.ozlabs.org (moderated for non-subscribers)
- S:	Maintained
- F:	Documentation/devicetree/bindings/media/aspeed-video.txt
--F:	drivers/media/platform/aspeed-video.c
-+F:	drivers/media/platform/aspeed/
- 
- ASUS NOTEBOOKS AND EEEPC ACPI/WMI EXTRAS DRIVERS
- M:	Corentin Chary <corentin.chary@gmail.com>
-diff --git a/drivers/media/platform/Kconfig b/drivers/media/platform/Kconfig
-index 1cb73f09d0b5..ad95a25ae2fc 100644
---- a/drivers/media/platform/Kconfig
-+++ b/drivers/media/platform/Kconfig
-@@ -57,15 +57,7 @@ source "drivers/media/platform/davinci/Kconfig"
- 
- source "drivers/media/platform/omap/Kconfig"
- 
--config VIDEO_ASPEED
--	tristate "Aspeed AST2400 and AST2500 Video Engine driver"
--	depends on V4L_PLATFORM_DRIVERS
--	depends on VIDEO_V4L2
--	select VIDEOBUF2_DMA_CONTIG
--	help
--	  Support for the Aspeed Video Engine (VE) embedded in the Aspeed
--	  AST2400 and AST2500 SOCs. The VE can capture and compress video data
--	  from digital or analog sources.
-+source "drivers/media/platform/aspeed/Kconfig"
- 
- config VIDEO_SH_VOU
- 	tristate "SuperH VOU video output driver"
-diff --git a/drivers/media/platform/Makefile b/drivers/media/platform/Makefile
-index c7ee7dafe6b3..1a52a1a784b5 100644
---- a/drivers/media/platform/Makefile
-+++ b/drivers/media/platform/Makefile
-@@ -5,6 +5,7 @@
- 
- # Place here, alphabetically sorted, all directories
- obj-y += allegro-dvt/
-+obj-y += aspeed/
- obj-y += am437x/
- obj-y += amphion/
- obj-y += atmel/
-@@ -44,7 +45,6 @@ obj-y += vsp1/
- obj-y += xilinx/
- 
- # Please place here only ancillary drivers that aren't SoC-specific
--obj-$(CONFIG_VIDEO_ASPEED)		+= aspeed-video.o
- obj-$(CONFIG_VIDEO_IMX_PXP)		+= imx-pxp.o
- obj-$(CONFIG_VIDEO_MEM2MEM_DEINTERLACE)	+= m2m-deinterlace.o
- obj-$(CONFIG_VIDEO_MUX)			+= video-mux.o
-diff --git a/drivers/media/platform/aspeed/Kconfig b/drivers/media/platform/aspeed/Kconfig
-new file mode 100644
-index 000000000000..5025e892844c
---- /dev/null
-+++ b/drivers/media/platform/aspeed/Kconfig
-@@ -0,0 +1,10 @@
-+# SPDX-License-Identifier: GPL-2.0-only
-+config VIDEO_ASPEED
-+	tristate "Aspeed AST2400 and AST2500 Video Engine driver"
-+	depends on V4L_PLATFORM_DRIVERS
-+	depends on VIDEO_V4L2
-+	select VIDEOBUF2_DMA_CONTIG
-+	help
-+	  Support for the Aspeed Video Engine (VE) embedded in the Aspeed
-+	  AST2400 and AST2500 SOCs. The VE can capture and compress video data
-+	  from digital or analog sources.
-diff --git a/drivers/media/platform/aspeed/Makefile b/drivers/media/platform/aspeed/Makefile
-new file mode 100644
-index 000000000000..4ee15b3ddd90
---- /dev/null
-+++ b/drivers/media/platform/aspeed/Makefile
-@@ -0,0 +1 @@
-+obj-$(CONFIG_VIDEO_ASPEED)		+= aspeed-video.o
-diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed/aspeed-video.c
-similarity index 100%
-rename from drivers/media/platform/aspeed-video.c
-rename to drivers/media/platform/aspeed/aspeed-video.c
--- 
-2.35.1
+Vout is a supply to the efuse and not the rail being fused? 
 
+Sorry, I know nothing about how an efuse is implemented so you are going 
+to have to explain or draw it.
+
+> +
+> +  error-flags-cache-ttl-ms:
+> +    description:
+> +      The number of milliseconds the vout-supply regulator's error
+> +      flags should be cached before re-fetching them.
+
+How does one fetch/read? the error flags?
+
+> +
+> +required:
+> +  - compatible
+> +  - vout-supply
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    efuse {
+> +        compatible = "power-efuse";
+> +        vout-supply = <&efuse_reg>;
+> +        error-flags-cache-ttl-ms = <500>;
+> +    };
+> -- 
+> 2.35.1
+> 
+> 
