@@ -2,13 +2,13 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0041F4D5DFC
-	for <lists+openbmc@lfdr.de>; Fri, 11 Mar 2022 09:59:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D90104D5E02
+	for <lists+openbmc@lfdr.de>; Fri, 11 Mar 2022 10:00:05 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KFKcB72vRz2yxV
-	for <lists+openbmc@lfdr.de>; Fri, 11 Mar 2022 19:59:06 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KFKdH61LGz30H5
+	for <lists+openbmc@lfdr.de>; Fri, 11 Mar 2022 20:00:03 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=canonical.com header.i=@canonical.com header.a=rsa-sha256 header.s=20210705 header.b=qiedKUuT;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=canonical.com header.i=@canonical.com header.a=rsa-sha256 header.s=20210705 header.b=BTwuQE0Y;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -18,70 +18,69 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  envelope-from=krzysztof.kozlowski@canonical.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=canonical.com header.i=@canonical.com
- header.a=rsa-sha256 header.s=20210705 header.b=qiedKUuT; 
+ header.a=rsa-sha256 header.s=20210705 header.b=BTwuQE0Y; 
  dkim-atps=neutral
 Received: from smtp-relay-internal-1.canonical.com
  (smtp-relay-internal-1.canonical.com [185.125.188.123])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KFKbk6DhTz2xTq
- for <openbmc@lists.ozlabs.org>; Fri, 11 Mar 2022 19:58:41 +1100 (AEDT)
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KFKc56V1pz30Gd
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Mar 2022 19:59:01 +1100 (AEDT)
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 4ABA83F338
- for <openbmc@lists.ozlabs.org>; Fri, 11 Mar 2022 08:58:33 +0000 (UTC)
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 60A3A3F1DE
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Mar 2022 08:58:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1646989113;
- bh=4oWCA4NLKvjSmIF/iS2q4v0RGuN/XnWESBLEc5FowtU=;
+ s=20210705; t=1646989139;
+ bh=0knUq+nj9peEmS1Svs4MEOnTn+oxEzDhNDhC8HFWh70=;
  h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
  In-Reply-To:Content-Type;
- b=qiedKUuTHl3gPJIqzcQEEPmz6uJsMPhD0b3peWMCyBbl7oCgJbzAarfwBoB866/s7
- OHY2GNjOJNTTnzQZ/+eBsZbfdxvxl65KX3UXe4On3nlhjYcBJQnFgpJnPzg4kIiP/0
- hqGLPTh6nfieJMdwh6hB6Un7te1+QrXNVXhO5CFTefFL/dexcBYVaB4Kr8eN3LhWMx
- Cbs5asPAMZBNuKQ7QV8AdnvFGPHt1ypi/0H2cpXFk2dxKo98wnM/yKU/BxCwmRMsps
- ccRivZGoTbOXeBUWECK6df07CgoATyWhgaHc2WsyvXIJmW0zIHkrghiWharPbk8i6I
- aSvRtY99kg5OA==
-Received: by mail-ej1-f72.google.com with SMTP id
- og24-20020a1709071dd800b006dab87bec4fso4615392ejc.0
- for <openbmc@lists.ozlabs.org>; Fri, 11 Mar 2022 00:58:33 -0800 (PST)
+ b=BTwuQE0Y+2RRIreddBlEqgV2MkER+bsd1IKgqfhmeiSJybopa7NukAOcqE+s2tc+h
+ Zx9pEtqRwT5FjtPP7UD9C7uHTuq2ypg0wRzkssLtVMSrRJHlQH1nyOstisLiSj+SRk
+ 8PTorEWWT43oOi6p0UK60UDDeSFWV6td+SDFgzXddm2imiJhwzzHuuqK4JeQYQ80v8
+ 4+zCRiyOXJ7el+oQq1G+xQdDhKhIinyJTpwIhrytP2BRPwztAS4BPDVl8Za9DZtUPJ
+ 21WJqvRhWbkv813g9Zp4QzsIYExaltNq1N+ZS/pcWjsYCccofeQ0DPnOhqfYOJlDVT
+ KDre3bZJoT3Gg==
+Received: by mail-ej1-f71.google.com with SMTP id
+ l24-20020a170906a41800b006da873d66b6so4568276ejz.3
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Mar 2022 00:58:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
  :content-language:to:cc:references:from:in-reply-to
  :content-transfer-encoding;
- bh=4oWCA4NLKvjSmIF/iS2q4v0RGuN/XnWESBLEc5FowtU=;
- b=W7F+QeqNyE18tBxWFHDk8ekS2CJuWwyrP9JeEHfHK6xmZZM7LuEeblmcGNlOwh3xyF
- ONFSRRJnNgfttaN7o1GTlkD7j6npGa7oKe7AARo8gDbA40ZCjxnJYuJKjCRQKvFXg7uH
- w/QBurlBbAHEdgT0qZCpPHvejViz2tFG7YhL8qkv4MA46QKGuDu/lURp3XBieTdQVHda
- +gH2bASG3rbwnP2/imjnkxJ69/7OQoeO2VD+Ej17g7EOfo6BT4uYWkSiv3z8mj4doxpC
- ohnzvRelgXy7VqxCoe0gmOYUG5gJ32Pgb0p0fAud4QjQ8hYcGyh4lI1ebem23j98FjXd
- 1hpg==
-X-Gm-Message-State: AOAM531Q6oB5fPYfX6MMRaS0gkR9PJrcE1qgSuqz6WT9CdmIpUDJk2XK
- I4nTt75gOrlkKcbpKM9lWl+d6mKVYIjS8mlFhkhYDuM3w2xYv2qiJBC0IEXa2RMVyC3D7sSndni
- k58/cbOT+1tpJOTxdribYSgzwBsm7+8PfN4q+
-X-Received: by 2002:a17:906:7852:b0:5bb:1bdb:e95f with SMTP id
- p18-20020a170906785200b005bb1bdbe95fmr7861551ejm.435.1646989112770; 
- Fri, 11 Mar 2022 00:58:32 -0800 (PST)
-X-Google-Smtp-Source: ABdhPJxO1BN5CDGpOVftYD6z0QjOIReFTewAdaLx5yU/nD7h3MjTVXoyy86j2o/DRNBRsU6XYOPTNg==
-X-Received: by 2002:a17:906:7852:b0:5bb:1bdb:e95f with SMTP id
- p18-20020a170906785200b005bb1bdbe95fmr7861521ejm.435.1646989112541; 
- Fri, 11 Mar 2022 00:58:32 -0800 (PST)
+ bh=0knUq+nj9peEmS1Svs4MEOnTn+oxEzDhNDhC8HFWh70=;
+ b=kUA2nIfP2akzkwrxqR32oCxzOQbsim7d7UZzzBOYj3itEN81dBJbbE5ujr6p/w8HFa
+ jTeipVHzTlRn1FS5d2OYIEmY98JNfiuICoqwm0nx4CWtCYAkj8guX0mqkFheHdAYjidc
+ RmtNa1UZ+of7AC3TIkvNR/2g8JzOekHrTNyWGW3poTn/0VpHf5bwMZafBEoL/hcqfL4X
+ etNtxek1WYOGmqb1Y1Axq6QO0HWr3SLTe4uUCOzijBbxryBAq7nP1W8lB6+BdsOFhuEp
+ 3IogQiKaC0Hj6lqA3zSV7eh+9QcSCjaF2RV7++2CRfBXA1BRJqEqPcdyGOtwrIYJxllz
+ qiCg==
+X-Gm-Message-State: AOAM531FmGhbujwWZiHxtIyeC+Tp7pVUfLjT85eN1rkWGZ+RmJQPasrH
+ We85AK3Gt3wYZzkynpBMz7pff0Z2HNN5a3rNAHATAdjUvXEkBzujZ8aPyw7GnZp6S81Rv2RcXoa
+ fXa43NTp3SRvbT9zLQmfubATrBCH/u5a9iQFD
+X-Received: by 2002:a17:906:4fc2:b0:6db:718f:7b18 with SMTP id
+ i2-20020a1709064fc200b006db718f7b18mr7304023ejw.412.1646989139047; 
+ Fri, 11 Mar 2022 00:58:59 -0800 (PST)
+X-Google-Smtp-Source: ABdhPJwJ0MYmCOnRGydkzT13dr5ZvqsEe8P/UTOTbqINId0zENiFAHB5jwB73TPSN7i3f0Z42WkHBw==
+X-Received: by 2002:a17:906:4fc2:b0:6db:718f:7b18 with SMTP id
+ i2-20020a1709064fc200b006db718f7b18mr7303993ejw.412.1646989138835; 
+ Fri, 11 Mar 2022 00:58:58 -0800 (PST)
 Received: from [192.168.0.148] (xdsl-188-155-174-239.adslplus.ch.
  [188.155.174.239]) by smtp.gmail.com with ESMTPSA id
- og49-20020a1709071df100b006db0dcf673esm2742538ejc.27.2022.03.11.00.58.31
+ fq14-20020a1709069d8e00b006da650af5a9sm2680769ejc.3.2022.03.11.00.58.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 11 Mar 2022 00:58:31 -0800 (PST)
-Message-ID: <a6e719f2-2ca1-4ae6-680e-46ec0dd96969@canonical.com>
-Date: Fri, 11 Mar 2022 09:58:30 +0100
+ Fri, 11 Mar 2022 00:58:58 -0800 (PST)
+Message-ID: <b9eb6b6b-b295-4d10-d4f2-c56461994d71@canonical.com>
+Date: Fri, 11 Mar 2022 09:58:57 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.5.0
-Subject: Re: [PATCH v3 2/3] dt-bindings: edac:
- nuvoton,npcm-memory-controller.yaml
+Subject: Re: [PATCH v3 1/3] ARM: dts: nuvoton: Add new device node
 Content-Language: en-US
 To: Medad CChien <medadyoung@gmail.com>, rric@kernel.org,
  james.morse@arm.com, tony.luck@intel.com, mchehab@kernel.org, bp@alien8.de,
@@ -90,9 +89,9 @@ To: Medad CChien <medadyoung@gmail.com>, rric@kernel.org,
  JJLIU0@nuvoton.com, KFTING@nuvoton.com, avifishman70@gmail.com,
  tmaimon77@gmail.com, tali.perry1@gmail.com, ctcchien@nuvoton.com
 References: <20220311014245.4612-1-ctcchien@nuvoton.com>
- <20220311014245.4612-3-ctcchien@nuvoton.com>
+ <20220311014245.4612-2-ctcchien@nuvoton.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <20220311014245.4612-3-ctcchien@nuvoton.com>
+In-Reply-To: <20220311014245.4612-2-ctcchien@nuvoton.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -112,30 +111,13 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On 11/03/2022 02:42, Medad CChien wrote:
-> Add device tree bindings for NPCM memory controller.
-
-Use reasonable subject. You missed the verb describing what are you
-doing here. See git history for this and other directories.
-
+>  Add NPCM memory controller device node
 > 
 > Signed-off-by: Medad CChien <ctcchien@nuvoton.com>
 > ---
->  .../edac/nuvoton,npcm-memory-controller.yaml  | 62 +++++++++++++++++++
->  1 file changed, 62 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-controller.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-controller.yaml b/Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-controller.yaml
-> new file mode 100644
-> index 000000000000..46f61b0806ee
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-controller.yaml
-> @@ -0,0 +1,62 @@
-> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/edac/npcm-edac.yaml#
 
-Please, test your changes. This won't work.
+Subject is too generic. Describe shortly what are you adding.
+
 
 Best regards,
 Krzysztof
