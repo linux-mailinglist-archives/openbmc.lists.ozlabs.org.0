@@ -1,71 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 993B04D62B3
-	for <lists+openbmc@lfdr.de>; Fri, 11 Mar 2022 14:57:34 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17CA24D62F2
+	for <lists+openbmc@lfdr.de>; Fri, 11 Mar 2022 15:08:29 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KFSDX390sz30J9
-	for <lists+openbmc@lfdr.de>; Sat, 12 Mar 2022 00:57:32 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KFST70BZ5z308F
+	for <lists+openbmc@lfdr.de>; Sat, 12 Mar 2022 01:08:27 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=evg1syco;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=QpWCf0Qr;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::135;
- helo=mail-lf1-x135.google.com; envelope-from=medadyoung@gmail.com;
+ smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1;
+ helo=dfw.source.kernel.org; envelope-from=mchehab@kernel.org;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=evg1syco; dkim-atps=neutral
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com
- [IPv6:2a00:1450:4864:20::135])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=QpWCf0Qr; 
+ dkim-atps=neutral
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [IPv6:2604:1380:4641:c500::1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KFSD64G2Wz2yjS
- for <openbmc@lists.ozlabs.org>; Sat, 12 Mar 2022 00:57:08 +1100 (AEDT)
-Received: by mail-lf1-x135.google.com with SMTP id bu29so15277534lfb.0
- for <openbmc@lists.ozlabs.org>; Fri, 11 Mar 2022 05:57:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=MW/elKEDTh0ZwJITFxFx/C/MhHPPv27Q6nE9F+fyVdw=;
- b=evg1sycoN0Ly3S6HIGwc6R7GEw1X1Y2TUGOpDVap4n3uIooh6V+hQu4i9ZKFuKrlAG
- c5I1tBOYF+d8SlaR1y+CKxIwKCzcsPrIA2kE8OUtZ3ClNUsmnb9OS32epo2Se/SiWx2R
- B4MdhNgjFZNOwgl9CkhJaBvfnsp0EsafpRWVqON3J8LshLWINnsjdYBYob5MnJ5rUsr9
- F4fVQOOvVZto2OIiZC3/rqOUp139sjB/BoFunnHTbdD9Lv34K8UB6vgu/K3kV3NjP4AY
- 4fCZCfCyvKsp47yvdg0h+wY+y0+Hi0P9VkHRFT9ApjEWbYEkuoOh/RS3F8b3ayJvSRm6
- jO2Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=MW/elKEDTh0ZwJITFxFx/C/MhHPPv27Q6nE9F+fyVdw=;
- b=GTk+tT70NYflzQ/REV87aWcDkg8EOeIpPj+ov+bgGjbIrW5EnClZ5xEAW+FUmJ2i5P
- V1pmfgy7cxEsUZX+fxuzUr5+l+ttWKVS2PzqJ/8SsH3YUg59iqRtrW059Q/UTog5MIU0
- bNFFcNnDTjYc6s+y5dcYIYKPm8Rp0Z81YN9GCFqVpLazchtQ/C8IHG4JEBfvveBTZBM5
- Jp6xPAVtseEpFToy9F0d+ocKsPNgmO+G0vODwFMhR+rymsddRUDSHLitSSKVkYj4Vci1
- 8mmYPfMeSwP6jrqYB9EvunVvphA/MKf4wUmXYmhN8ORqlKNKiW5+jQlAboQ9tIwGVm+H
- yoCg==
-X-Gm-Message-State: AOAM533D8UEXtHQPs6ZZSEU2Xe0SBr0KTT0ZY+DHoFjsybfG1L3SX2n7
- uJ8BbEF8agZmFv//L8fENi5BJnXiVYnK6Sh9ZaA=
-X-Google-Smtp-Source: ABdhPJwUxWRLqf6LDP3rzf4YerR1uNsH9+peqQJoHPx5E9pOZJgzRWxO7VzUOtG/G6gbYBhy9s0jUIVK1rvdFq8ueC8=
-X-Received: by 2002:ac2:4dae:0:b0:448:127f:d15 with SMTP id
- h14-20020ac24dae000000b00448127f0d15mr6033696lfe.185.1647007023042; Fri, 11
- Mar 2022 05:57:03 -0800 (PST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KFSSc6gJqz2xTp;
+ Sat, 12 Mar 2022 01:08:00 +1100 (AEDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id CD79061D7C;
+ Fri, 11 Mar 2022 14:07:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 339ADC340F7;
+ Fri, 11 Mar 2022 14:07:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1647007676;
+ bh=yWuOwgCKKH3cUQ5RmtkkII7ase31tF+oYbnerblLvgM=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=QpWCf0Qrck+zSaJE47tBgImiRqglXOFjUPQxPhC5ayhWGorCOKPdrECbanYgw2Ybp
+ VsOka/+ZKE/Msht00BGN3dcBaMpQ9JWm2vlHpse5XVjjAQ/ioDe+IjBkbscB9fiZCC
+ VKUPg9ztSO21kJVpBMmKy/NGGP9rlWkubVZW6hL17gcO/mAJiL6p8UkJ70ZLsC+QVR
+ MggGCjVA1YsZvek+yXv5B3vLre1tLHTPIfrbjx31DkMRF3xZo+2lynbzQceX7SVZW/
+ Dkkr+LJIq1hGjVVm3M0rOXFQx/WsQEalMemdlIpypOd4NJ+5+H0RCP7luF1a3IJ0xB
+ +EvgYifjDZ2yg==
+Received: from mchehab by mail.kernel.org with local (Exim 4.94.2)
+ (envelope-from <mchehab@kernel.org>)
+ id 1nSfvt-000lAu-SD; Fri, 11 Mar 2022 15:07:53 +0100
+From: Mauro Carvalho Chehab <mchehab@kernel.org>
+To: 
+Subject: [PATCH v2 06/38] media: platform: place Aspeed driver on a separate
+ dir
+Date: Fri, 11 Mar 2022 15:07:19 +0100
+Message-Id: <97fe1a5a4183c04ac8bed0cee7583fcda96a3dd6.1647006877.git.mchehab@kernel.org>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <cover.1647006877.git.mchehab@kernel.org>
+References: <cover.1647006877.git.mchehab@kernel.org>
 MIME-Version: 1.0
-References: <20220311014245.4612-1-ctcchien@nuvoton.com>
- <20220311014245.4612-3-ctcchien@nuvoton.com>
- <1647005325.599595.3638164.nullmailer@robh.at.kernel.org>
-In-Reply-To: <1647005325.599595.3638164.nullmailer@robh.at.kernel.org>
-From: Medad Young <medadyoung@gmail.com>
-Date: Fri, 11 Mar 2022 21:56:50 +0800
-Message-ID: <CAHpyw9ceyS_HceL7=HdJrq-hnu2XomgNcTkai6+vL+GTJ0ZY3A@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] dt-bindings: edac: nuvoton,
- npcm-memory-controller.yaml
-To: Rob Herring <robh@kernel.org>
-Content-Type: multipart/alternative; boundary="0000000000008d172f05d9f1b446"
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,123 +68,124 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: KWLIU@nuvoton.com, tony.luck@intel.com, rric@kernel.org,
- tmaimon77@gmail.com, linux-edac@vger.kernel.org, devicetree@vger.kernel.org,
- avifishman70@gmail.com, Patrick Venture <venture@google.com>,
- openbmc@lists.ozlabs.org, KFTING <KFTING@nuvoton.com>, JJLIU0@nuvoton.com,
- linux-kernel@vger.kernel.org, robh+dt@kernel.org, tali.perry1@gmail.com,
- ctcchien@nuvoton.com, james.morse@arm.com, bp@alien8.de, YSCHU@nuvoton.com,
- mchehab@kernel.org, Benjamin Fair <benjaminfair@google.com>
+Cc: linux-arm-kernel@lists.infradead.org,
+ Jammy Huang <jammy_huang@aspeedtech.com>,
+ =?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+ linux-aspeed@lists.ozlabs.org, Zev Weiss <zev@bewilderbeest.net>,
+ Paul Menzel <pmenzel@molgen.mpg.de>, Andrew Jeffery <andrew@aj.id.au>,
+ openbmc@lists.ozlabs.org, Eddie James <eajames@linux.ibm.com>,
+ Jacopo Mondi <jacopo@jmondi.org>, linux-kernel@vger.kernel.org,
+ Yang Li <yang.lee@linux.alibaba.com>, Joel Stanley <joel@jms.id.au>,
+ Sakari Ailus <sakari.ailus@linux.intel.com>,
+ Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+ Eugen Hristev <eugen.hristev@microchip.com>,
+ Dmitry Osipenko <digetx@gmail.com>, Mauro Carvalho Chehab <mchehab@kernel.org>,
+ linux-media@vger.kernel.org, Ming Qian <ming.qian@nxp.com>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000008d172f05d9f1b446
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In order to cleanup the main platform media directory, move Aspeed
+driver to its own directory.
 
-Ok, I will check.
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+---
 
-Rob Herring <robh@kernel.org> =E6=96=BC 2022=E5=B9=B43=E6=9C=8811=E6=97=A5 =
-=E9=80=B1=E4=BA=94 =E4=B8=8B=E5=8D=889:29 =E5=AF=AB=E9=81=93=EF=BC=9A
+To avoid mailbombing on a large number of people, only mailing lists were C/C on the cover.
+See [PATCH v2 00/38] at: https://lore.kernel.org/all/cover.1647006877.git.mchehab@kernel.org/
 
-> On Fri, 11 Mar 2022 09:42:44 +0800, Medad CChien wrote:
-> > Add device tree bindings for NPCM memory controller.
-> >
-> > Signed-off-by: Medad CChien <ctcchien@nuvoton.com>
-> > ---
-> >  .../edac/nuvoton,npcm-memory-controller.yaml  | 62 +++++++++++++++++++
-> >  1 file changed, 62 insertions(+)
-> >  create mode 100644
-> Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-controller.yam=
-l
-> >
->
-> My bot found errors running 'make DT_CHECKER_FLAGS=3D-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
->
-> yamllint warnings/errors:
->
-> dtschema/dtc warnings/errors:
-> ./Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-controller.y=
-aml:
-> $id: relative path/filename doesn't match actual path or filename
->         expected:
-> http://devicetree.org/schemas/edac/nuvoton,npcm-memory-controller.yaml#
->
-> doc reference errors (make refcheckdocs):
->
-> See https://patchwork.ozlabs.org/patch/1604217
->
-> This check can fail if there are any dependencies. The base for a patch
-> series is generally the most recent rc1.
->
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
->
-> pip3 install dtschema --upgrade
->
-> Please check and re-submit.
->
->
+ MAINTAINERS                                        |  2 +-
+ drivers/media/platform/Kconfig                     | 10 +---------
+ drivers/media/platform/Makefile                    |  2 +-
+ drivers/media/platform/aspeed/Kconfig              | 10 ++++++++++
+ drivers/media/platform/aspeed/Makefile             |  1 +
+ drivers/media/platform/{ => aspeed}/aspeed-video.c |  0
+ 6 files changed, 14 insertions(+), 11 deletions(-)
+ create mode 100644 drivers/media/platform/aspeed/Kconfig
+ create mode 100644 drivers/media/platform/aspeed/Makefile
+ rename drivers/media/platform/{ => aspeed}/aspeed-video.c (100%)
 
---0000000000008d172f05d9f1b446
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1a9fb0615925..1b6f48a660de 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3026,7 +3026,7 @@ L:	linux-media@vger.kernel.org
+ L:	openbmc@lists.ozlabs.org (moderated for non-subscribers)
+ S:	Maintained
+ F:	Documentation/devicetree/bindings/media/aspeed-video.txt
+-F:	drivers/media/platform/aspeed-video.c
++F:	drivers/media/platform/aspeed/
+ 
+ ASUS NOTEBOOKS AND EEEPC ACPI/WMI EXTRAS DRIVERS
+ M:	Corentin Chary <corentin.chary@gmail.com>
+diff --git a/drivers/media/platform/Kconfig b/drivers/media/platform/Kconfig
+index 1cb73f09d0b5..ad95a25ae2fc 100644
+--- a/drivers/media/platform/Kconfig
++++ b/drivers/media/platform/Kconfig
+@@ -57,15 +57,7 @@ source "drivers/media/platform/davinci/Kconfig"
+ 
+ source "drivers/media/platform/omap/Kconfig"
+ 
+-config VIDEO_ASPEED
+-	tristate "Aspeed AST2400 and AST2500 Video Engine driver"
+-	depends on V4L_PLATFORM_DRIVERS
+-	depends on VIDEO_V4L2
+-	select VIDEOBUF2_DMA_CONTIG
+-	help
+-	  Support for the Aspeed Video Engine (VE) embedded in the Aspeed
+-	  AST2400 and AST2500 SOCs. The VE can capture and compress video data
+-	  from digital or analog sources.
++source "drivers/media/platform/aspeed/Kconfig"
+ 
+ config VIDEO_SH_VOU
+ 	tristate "SuperH VOU video output driver"
+diff --git a/drivers/media/platform/Makefile b/drivers/media/platform/Makefile
+index c7ee7dafe6b3..1a52a1a784b5 100644
+--- a/drivers/media/platform/Makefile
++++ b/drivers/media/platform/Makefile
+@@ -5,6 +5,7 @@
+ 
+ # Place here, alphabetically sorted, all directories
+ obj-y += allegro-dvt/
++obj-y += aspeed/
+ obj-y += am437x/
+ obj-y += amphion/
+ obj-y += atmel/
+@@ -44,7 +45,6 @@ obj-y += vsp1/
+ obj-y += xilinx/
+ 
+ # Please place here only ancillary drivers that aren't SoC-specific
+-obj-$(CONFIG_VIDEO_ASPEED)		+= aspeed-video.o
+ obj-$(CONFIG_VIDEO_IMX_PXP)		+= imx-pxp.o
+ obj-$(CONFIG_VIDEO_MEM2MEM_DEINTERLACE)	+= m2m-deinterlace.o
+ obj-$(CONFIG_VIDEO_MUX)			+= video-mux.o
+diff --git a/drivers/media/platform/aspeed/Kconfig b/drivers/media/platform/aspeed/Kconfig
+new file mode 100644
+index 000000000000..5025e892844c
+--- /dev/null
++++ b/drivers/media/platform/aspeed/Kconfig
+@@ -0,0 +1,10 @@
++# SPDX-License-Identifier: GPL-2.0-only
++config VIDEO_ASPEED
++	tristate "Aspeed AST2400 and AST2500 Video Engine driver"
++	depends on V4L_PLATFORM_DRIVERS
++	depends on VIDEO_V4L2
++	select VIDEOBUF2_DMA_CONTIG
++	help
++	  Support for the Aspeed Video Engine (VE) embedded in the Aspeed
++	  AST2400 and AST2500 SOCs. The VE can capture and compress video data
++	  from digital or analog sources.
+diff --git a/drivers/media/platform/aspeed/Makefile b/drivers/media/platform/aspeed/Makefile
+new file mode 100644
+index 000000000000..4ee15b3ddd90
+--- /dev/null
++++ b/drivers/media/platform/aspeed/Makefile
+@@ -0,0 +1 @@
++obj-$(CONFIG_VIDEO_ASPEED)		+= aspeed-video.o
+diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed/aspeed-video.c
+similarity index 100%
+rename from drivers/media/platform/aspeed-video.c
+rename to drivers/media/platform/aspeed/aspeed-video.c
+-- 
+2.35.1
 
-<div dir=3D"auto">Ok, I will check.=C2=A0</div><br><div class=3D"gmail_quot=
-e"><div dir=3D"ltr" class=3D"gmail_attr">Rob Herring &lt;<a href=3D"mailto:=
-robh@kernel.org">robh@kernel.org</a>&gt; =E6=96=BC 2022=E5=B9=B43=E6=9C=881=
-1=E6=97=A5 =E9=80=B1=E4=BA=94 =E4=B8=8B=E5=8D=889:29 =E5=AF=AB=E9=81=93=EF=
-=BC=9A<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8e=
-x;border-left:1px #ccc solid;padding-left:1ex">On Fri, 11 Mar 2022 09:42:44=
- +0800, Medad CChien wrote:<br>
-&gt; Add device tree bindings for NPCM memory controller.<br>
-&gt; <br>
-&gt; Signed-off-by: Medad CChien &lt;<a href=3D"mailto:ctcchien@nuvoton.com=
-" target=3D"_blank" rel=3D"noreferrer">ctcchien@nuvoton.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 .../edac/nuvoton,npcm-memory-controller.yaml=C2=A0 | 62 ++++++++=
-+++++++++++<br>
-&gt;=C2=A0 1 file changed, 62 insertions(+)<br>
-&gt;=C2=A0 create mode 100644 Documentation/devicetree/bindings/edac/nuvoto=
-n,npcm-memory-controller.yaml<br>
-&gt; <br>
-<br>
-My bot found errors running &#39;make DT_CHECKER_FLAGS=3D-m dt_binding_chec=
-k&#39;<br>
-on your patch (DT_CHECKER_FLAGS is new in v5.13):<br>
-<br>
-yamllint warnings/errors:<br>
-<br>
-dtschema/dtc warnings/errors:<br>
-./Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-controller.yam=
-l: $id: relative path/filename doesn&#39;t match actual path or filename<br=
->
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 expected: <a href=3D"http://devicetree.org/sche=
-mas/edac/nuvoton,npcm-memory-controller.yaml#" rel=3D"noreferrer noreferrer=
-" target=3D"_blank">http://devicetree.org/schemas/edac/nuvoton,npcm-memory-=
-controller.yaml#</a><br>
-<br>
-doc reference errors (make refcheckdocs):<br>
-<br>
-See <a href=3D"https://patchwork.ozlabs.org/patch/1604217" rel=3D"noreferre=
-r noreferrer" target=3D"_blank">https://patchwork.ozlabs.org/patch/1604217<=
-/a><br>
-<br>
-This check can fail if there are any dependencies. The base for a patch<br>
-series is generally the most recent rc1.<br>
-<br>
-If you already ran &#39;make dt_binding_check&#39; and didn&#39;t see the a=
-bove<br>
-error(s), then make sure &#39;yamllint&#39; is installed and dt-schema is u=
-p to<br>
-date:<br>
-<br>
-pip3 install dtschema --upgrade<br>
-<br>
-Please check and re-submit.<br>
-<br>
-</blockquote></div>
-
---0000000000008d172f05d9f1b446--
