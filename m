@@ -1,68 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id DA1F94D583C
-	for <lists+openbmc@lfdr.de>; Fri, 11 Mar 2022 03:39:33 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9FFBC4D5A5C
+	for <lists+openbmc@lfdr.de>; Fri, 11 Mar 2022 06:17:16 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KF9BC5RKMz30Dv
-	for <lists+openbmc@lfdr.de>; Fri, 11 Mar 2022 13:39:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KFDhB3CDVz30BV
+	for <lists+openbmc@lfdr.de>; Fri, 11 Mar 2022 16:17:14 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=A5jA/zf/;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=iVVV5zWg;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::433;
- helo=mail-wr1-x433.google.com; envelope-from=bjwyman@gmail.com;
+ smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::235;
+ helo=mail-oi1-x235.google.com; envelope-from=yulei.sh@bytedance.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=A5jA/zf/; dkim-atps=neutral
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com
- [IPv6:2a00:1450:4864:20::433])
+ unprotected) header.d=bytedance-com.20210112.gappssmtp.com
+ header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256
+ header.s=20210112 header.b=iVVV5zWg; dkim-atps=neutral
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com
+ [IPv6:2607:f8b0:4864:20::235])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KF99Q2DNwz30R1
- for <openbmc@lists.ozlabs.org>; Fri, 11 Mar 2022 13:38:49 +1100 (AEDT)
-Received: by mail-wr1-x433.google.com with SMTP id t11so10883971wrm.5
- for <openbmc@lists.ozlabs.org>; Thu, 10 Mar 2022 18:38:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=a7DTeDEbKx5KJQVwJ+AhwwoJQbxNGNy74ssqdwTeGWc=;
- b=A5jA/zf/Z3qsp0jKcMLCJskCu9VJ2wvvcK6Ohyq0JvZGOcv8RqGHSQZ+dktx2ayM19
- /WrgSt75xLxG0fWpRU373ELgPH485foVSzz17U24LLUQ4OMmL9Hx0uBgxuB81xPbvdEf
- jRKUAetojzHExGsxIwKUnFyQxSMUsw5WNKIJnERDsQVXsgwmKU3Ox1pvtPFM4+9qUGLz
- pHugdqNe8mLJuTHVy2FIXwp3q6xjFKP2BqqTYzWQfH2ShPuInbXoIvUlMdtXv2QKJXCx
- CthAu8iY1f8ZwW+06Fqc1cN2xNaAOfvJrcC75yBkL3jtISNN0uJpjZlviGYWd4fsvt3O
- SbAQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KFDgm44Fkz2xVn
+ for <openbmc@lists.ozlabs.org>; Fri, 11 Mar 2022 16:16:47 +1100 (AEDT)
+Received: by mail-oi1-x235.google.com with SMTP id i5so8298901oih.1
+ for <openbmc@lists.ozlabs.org>; Thu, 10 Mar 2022 21:16:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance-com.20210112.gappssmtp.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to:cc;
+ bh=jckCdFeHNPuojn+MlbEjOw36HO5ZjYhOYdNe8Pqj/JQ=;
+ b=iVVV5zWg8T5t6tiifGSrWwcmCxeQwtrnVoaae3wWq7+n8VQ4N+3KtGKahkpLHHq8zX
+ zrKBz7untspg/fAj9iEoQEcyjN9PjmKkCjSRraXWfDLpoavpO5uwv4aXSNt65y8xR3Dj
+ N/rYup3j8gRX96De4c8ibHBrNoKnK52uMFxjYWFA4qyRPgmKhQFF0XHrTSsZpY8JcDyi
+ 2t7PShCiEHeKq+grQWUgysWzVl5CzM8Z3GnpKsgOkZBJx1BfoCcqYL2BG609zKo20Jd1
+ loDOZfBvS9HhmeQrMz11iXKxk6OeWqgstWTJS/uJI1UQlQvY1VolPtdsPICPLKKewbIs
+ 1/pg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=a7DTeDEbKx5KJQVwJ+AhwwoJQbxNGNy74ssqdwTeGWc=;
- b=cwy3fzPhVbTb394TTJnsc7icALP6t3v9Nm3cFO+ePWFdh/Mh1MvBRXI5prSjLOXpjD
- aPlt4CEfDRhMZQLl8FF80sIIe4bYRJTtZ19UZXCKyNu1uGHNvrZjOfxN1x6lBGTZ3D5x
- kwG64SAAiooLAk6NyJI7xBf5P8HvvOMSkgr+gndINTQWjPvys+0KQOwR6Aa06FWntwkV
- L3KpOGG1PdybhC9Ol5u80ZU9xG+t502SVBy7qj4MjzuZ6C1EbipOs95Es5rOmvzOUqVB
- uEdWTfQciyuYa8N/GoEKaPTz800w3anq8GMA/9ZqOoEtvDWG1F3DcAGfen7TKKU0VQWC
- X13w==
-X-Gm-Message-State: AOAM531H1Oo4Vlh/JlkAAr3b6a3YtgKItX5D9LKYe7qJChjYsEkSor4e
- ucZO0omiINHomI2aDhXVtXY4JjzNxl/0ft4ezxQ=
-X-Google-Smtp-Source: ABdhPJzan+575jWFZNJg0aqxz6vncXWbvUFYtNBVRas43tiHZ7FW5Ne8nNjHpBg4itlF+DqRpszg8Uh33vVb76pxzb0=
-X-Received: by 2002:a5d:47ac:0:b0:1fc:f09b:c258 with SMTP id
- 12-20020a5d47ac000000b001fcf09bc258mr5765512wrb.618.1646966325578; Thu, 10
- Mar 2022 18:38:45 -0800 (PST)
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+ bh=jckCdFeHNPuojn+MlbEjOw36HO5ZjYhOYdNe8Pqj/JQ=;
+ b=pLWEGeZNxDr65wxl0Pz4lc6/N9lTBrD2xlu4u/GkiAYdMvAjoWqLUonQDbwKAexn6T
+ tYlOL3l7Hx8SrTA9wZ+3wO+j+SKILsd7o+Nw4F3PJwFng5vWOj5pX9ljuQD2WnZirdX9
+ aRS191Mo8fqL2bZ9HhjicKZ6nVmuWtLZ1zr6fjq3Un9LKDbQgn64kq1tRPCZnEl6Xx84
+ Z4lAJSPnvSzXqG233W5cXHPMG7+sY5c8JnozxUyuNFN4MwG+jxRuRYuapCt2ZSvaLEdS
+ L5BYI0VpVsQ8EvPMF+ZkR3yTdxG+7QprvIEHupXdxXHS4X5oiYETmrPcSc/cofqdYc4u
+ uULQ==
+X-Gm-Message-State: AOAM532JnrnJm4jDqcgO4DbYqkbZ3N6GEDbwvnxeaWgIvV4VjBeMhEDj
+ lVpC7zXfZp7bJ7Xsu/5BJVQqEGoYHLOWULF6/z02aSGCzThC6Q==
+X-Google-Smtp-Source: ABdhPJwIfdEvv1W7EFcZtiI1aMmUfJw7sjcdJihHzHmWDL/cgxUZdi2ul185RuIbPUf1dcmJkY19XRTUzI6+Oqzl03c=
+X-Received: by 2002:a05:6808:1450:b0:2d9:dad1:a14e with SMTP id
+ x16-20020a056808145000b002d9dad1a14emr11893775oiv.294.1646975804466; Thu, 10
+ Mar 2022 21:16:44 -0800 (PST)
 MIME-Version: 1.0
-References: <20220311001858.4166205-1-bjwyman@gmail.com>
- <3602c1b2-1335-0663-c96a-c524c555ccc9@roeck-us.net>
-In-Reply-To: <3602c1b2-1335-0663-c96a-c524c555ccc9@roeck-us.net>
-From: Brandon Wyman <bjwyman@gmail.com>
-Date: Thu, 10 Mar 2022 20:38:10 -0600
-Message-ID: <CAK_vbW3ccx-bXzTXGJHj-v1o8f0ehqp8Xf=e_667jaWisAWb-A@mail.gmail.com>
-Subject: Re: [PATCH] hwmon: (pmbus/ibm-cffps) Add clear_faults debugfs entry
-To: Guenter Roeck <linux@roeck-us.net>
+From: Lei Yu <yulei.sh@bytedance.com>
+Date: Fri, 11 Mar 2022 13:16:33 +0800
+Message-ID: <CAGm54UG6o2_kFfor81+MmWW7pqxQ4bQu9FkVXaEbGhQ_JLQi-Q@mail.gmail.com>
+Subject: Delayed match callback with sdbusplus asio APIs
+To: openbmc <openbmc@lists.ozlabs.org>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -75,66 +73,82 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Eddie James <eajames@linux.ibm.com>, linux-kernel@vger.kernel.org,
- Joel Stanley <joel@jms.id.au>
+Cc: Ed Tanous <edtanous@google.com>, William Kennington <wak@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Mar 10, 2022 at 7:00 PM Guenter Roeck <linux@roeck-us.net> wrote:
->
-> On 3/10/22 16:18, Brandon Wyman wrote:
-> > Add a clear_faults write-only debugfs entry for the ibm-cffps device
-> > driver.
-> >
->
-> This does not explain _why_ this would be needed.
->
-> Guenter
+This mail is to describe an issue that the match signal's callback is
+delayed if it's using sdbusplus asio APIs.
 
-I must have chopped that out when I did a squash on the commits I had.
+# TL;DR
+If the app is using sync DBus calls and using asio to register a match
+callback, the callback may be delayed if it occurs when the sync DBus
+call is ongoing.
+Note the issue does not occur if it's not using asio APIs.
 
->
-> > Signed-off-by: Brandon Wyman <bjwyman@gmail.com>
-> > ---
-> >   drivers/hwmon/pmbus/ibm-cffps.c | 11 +++++++++++
-> >   1 file changed, 11 insertions(+)
-> >
-> > diff --git a/drivers/hwmon/pmbus/ibm-cffps.c b/drivers/hwmon/pmbus/ibm-cffps.c
-> > index e3294a1a54bb..fca2642a8ed4 100644
-> > --- a/drivers/hwmon/pmbus/ibm-cffps.c
-> > +++ b/drivers/hwmon/pmbus/ibm-cffps.c
-> > @@ -67,6 +67,7 @@ enum {
-> >       CFFPS_DEBUGFS_CCIN,
-> >       CFFPS_DEBUGFS_FW,
-> >       CFFPS_DEBUGFS_ON_OFF_CONFIG,
-> > +     CFFPS_DEBUGFS_CLEAR_FAULTS,
-> >       CFFPS_DEBUGFS_NUM_ENTRIES
-> >   };
-> >
-> > @@ -274,6 +275,13 @@ static ssize_t ibm_cffps_debugfs_write(struct file *file,
-> >               if (rc)
-> >                       return rc;
-> >
-> > +             rc = 1;
-> > +             break;
-> > +     case CFFPS_DEBUGFS_CLEAR_FAULTS:
-> > +             rc = i2c_smbus_write_byte(psu->client, PMBUS_CLEAR_FAULTS);
-> > +             if (rc < 0)
-> > +                     return rc;
-> > +
-> >               rc = 1;
-> >               break;
-> >       default:
-> > @@ -607,6 +615,9 @@ static int ibm_cffps_probe(struct i2c_client *client)
-> >       debugfs_create_file("on_off_config", 0644, ibm_cffps_dir,
-> >                           &psu->debugfs_entries[CFFPS_DEBUGFS_ON_OFF_CONFIG],
-> >                           &ibm_cffps_fops);
-> > +     debugfs_create_file("clear_faults", 0200, ibm_cffps_dir,
-> > +                         &psu->debugfs_entries[CFFPS_DEBUGFS_CLEAR_FAULTS],
-> > +                         &ibm_cffps_fops);
-> >
-> >       return 0;
-> >   }
->
+# Details
+
+Pasted a full buildable source at https://pastebin.com/KEmpvDzp
+The code
+* Registers a match for host power status, and print the changes.
+* Uses a timer to get sensors via sync DBus calls.
+
+With this code, it's very easy to reproduce the above issue in QEMU,
+just toggle the `RequestedHostTransition` to On and Off for a few
+times:
+# busctl set-property xyz.openbmc_project.State.Host0
+/xyz/openbmc_project/state/host0 xyz.openbmc_project.State.Host
+RequestedHostTransition s xyz.openbmc_project.State.Host.Transition.On
+# busctl set-property xyz.openbmc_project.State.Host0
+/xyz/openbmc_project/state/host0 xyz.openbmc_project.State.Host
+RequestedHostTransition s
+xyz.openbmc_project.State.Host.Transition.Off
+
+We can see the journal logs:
+# journalctl | grep -e test_asio -e "Moving to \"Off" -e "POWER_OUT set to 0"
+Mar 11 04:59:25 power-control[195]: POWER_OUT set to 0
+Mar 11 04:59:25 test_asio[23478]: aiso callback, property:
+RequestedHostTransition, value:
+xyz.openbmc_project.State.Host.Transition.On
+Mar 11 04:59:33 power-control[195]: Host0: Moving to "Off" state
+Mar 11 04:59:37 power-control[195]: POWER_OUT set to 0
+Mar 11 04:59:45 power-control[195]: Host0: Moving to "Off" state
+Mar 11 04:59:48 power-control[195]: POWER_OUT set to 0
+Mar 11 04:59:56 test_asio[23478]: aiso callback, property:
+RequestedHostTransition, value:
+xyz.openbmc_project.State.Host.Transition.Off
+Mar 11 04:59:56 test_asio[23478]: aiso callback, property:
+RequestedHostTransition, value:
+xyz.openbmc_project.State.Host.Transition.On
+Mar 11 04:59:56 test_asio[23478]: aiso callback, property:
+RequestedHostTransition, value:
+xyz.openbmc_project.State.Host.Transition.Off
+Mar 11 04:59:56 test_asio[23478]: aiso callback, property:
+RequestedHostTransition, value:
+xyz.openbmc_project.State.Host.Transition.On
+Mar 11 04:59:56 test_asio[23478]: aiso callback, property:
+RequestedHostTransition, value:
+xyz.openbmc_project.State.Host.Transition.Off
+Mar 11 04:59:56 power-control[195]: Host0: Moving to "Off" state
+
+In the log, `POWER_OUT set to 0` means RequestedHostTransition is set
+to On, and `Host0: Moving to "Off" state` means it's set to Off.
+You can see that test_asio's callback is not triggered during
+04:59:33~04:59:48, and it's triggered for multiple times on 04:59:56.
+
+# More info
+* If the sync DBus calls are removed, the issue is not reproduced.
+* If I do not use asio at all, and use sync DBus calls with
+`sdeventplus::utility::Timer`, the issue is not reproduced.
+
+That is to say, this issue only occurs when asio and sync DBus calls are mixed.
+
+
+@Ed Tanous @William Kennington @Patrick Williams Could you kindly
+check the above behavior and let's see what could be wrong?
+
+Thanks!
+
+-- 
+BRs,
+Lei YU
