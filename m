@@ -2,125 +2,56 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B17E4D9055
-	for <lists+openbmc@lfdr.de>; Tue, 15 Mar 2022 00:27:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0891B4D9057
+	for <lists+openbmc@lfdr.de>; Tue, 15 Mar 2022 00:28:26 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KHXl461knz30RJ
-	for <lists+openbmc@lfdr.de>; Tue, 15 Mar 2022 10:27:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KHXlq5wyXz30CL
+	for <lists+openbmc@lfdr.de>; Tue, 15 Mar 2022 10:28:23 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=prodrive-technologies.com header.i=@prodrive-technologies.com header.a=rsa-sha256 header.s=selector1 header.b=EbBPXFkH;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=I1IWazuB;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=permerror (SPF Permanent Error: Void lookup limit
- of 2 exceeded) smtp.mailfrom=prodrive-technologies.com
- (client-ip=2a01:111:f400:fe0d::705;
- helo=eur04-he1-obe.outbound.protection.outlook.com;
- envelope-from=govert.overgaauw@prodrive-technologies.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=prodrive-technologies.com
- header.i=@prodrive-technologies.com header.a=rsa-sha256 header.s=selector1
- header.b=EbBPXFkH; dkim-atps=neutral
-Received: from EUR04-HE1-obe.outbound.protection.outlook.com
- (mail-he1eur04on0705.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:fe0d::705])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=kernel.org (client-ip=145.40.68.75; helo=ams.source.kernel.org;
+ envelope-from=mchehab@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=I1IWazuB; 
+ dkim-atps=neutral
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KFSLB0vGZz2yjS
- for <openbmc@lists.ozlabs.org>; Sat, 12 Mar 2022 01:02:23 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=aOzkwx9bcStUdWiLbj8OZOmr0eLZJB66+hUka4hSmvsDxU1Xpt8Mk/CpM3wYC03eAT4Qb4BSOqty/PGGf/fFwNmsdpxuDbeDAyCq+k4YJ75TdnHKn/ULQAvagEdwQoORYC2h2EbbyGiZAokxyr296W7IPV3f922qPrhgOLlt+IGuehYcIL1wKiPiJf9pWiQwAw55yeHdKj2A7jXRY0/YWnp5AeXRaAIoisScdXy9Y4ywZqERQ09nfcY2usWSWAtVGEZ9FP54OBG5CSiKUHaqw1Y9Xv8OwmMRdK7LcW6ncaOsvn9sKgv2NRSHpj3fho6VTbDGEl3gnmTKHYxMEkyTEw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=/wy7kLQcdI5mrhG4/bw03O1W9KVmP476jBso+Xip8WM=;
- b=iZjNXsspZHjWTc16slhjItyy1SACbaBJsCJgDaSu/+WUiBw2ky14yB51P9+ndp4qZxuNsFn6DOu+8nfoUtao2uZ7/5Bk2F7LIweI5ripLIaVpyLYRo9ZPDlAWO3R5PIQ2yBFl7dApqlgdZawV4cqYFknbZYDrK0YypgR/7/nGNNEIFw16rm2Avqavd9opBhtQaxhquZHLKX9cCyiiLezLUAbTFEqUtpOCLbMDydeoa8CfjADY2cYjY1Dnm2ctzEkVvlcoCMVlFSCVA8QFeN1IBeXZ8ytDcuB+nRnOTTC4YqrAQfdEeL0MLHJODqCixEegQNet+ygxB3VVlitqGeBdw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=prodrive-technologies.com; dmarc=pass action=none
- header.from=prodrive-technologies.com; dkim=pass
- header.d=prodrive-technologies.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=prodrive-technologies.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=/wy7kLQcdI5mrhG4/bw03O1W9KVmP476jBso+Xip8WM=;
- b=EbBPXFkHKIMT2FjQXJNfizbauiwKYjx5SCgconcFYvofXB8h7ETRcaQnl736Ii6jRCjp54cfWnNP7ydbAgBRab5v5nxjQ556NZJGpD1q7QxnzL3h/q2Oly9CLAaWbeBkaSYa+8WhG7Yn1X/EP0dSelKc3buzbz8NbCgO0XkgqSc=
-Received: from AM9PR02MB6499.eurprd02.prod.outlook.com (2603:10a6:20b:2ce::16)
- by AM0PR02MB5507.eurprd02.prod.outlook.com (2603:10a6:208:166::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5061.22; Fri, 11 Mar
- 2022 14:02:02 +0000
-Received: from AM9PR02MB6499.eurprd02.prod.outlook.com
- ([fe80::5595:71b6:c5c5:9acf]) by AM9PR02MB6499.eurprd02.prod.outlook.com
- ([fe80::5595:71b6:c5c5:9acf%5]) with mapi id 15.20.5038.027; Fri, 11 Mar 2022
- 14:02:02 +0000
-From: Govert Overgaauw <govert.overgaauw@prodrive-technologies.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: MCTP LPC FW binding
-Thread-Topic: MCTP LPC FW binding
-Thread-Index: AQHYNU9GubvxQCJ8q0a6N7Omlm7czw==
-Date: Fri, 11 Mar 2022 14:02:02 +0000
-Message-ID: <AM9PR02MB6499C2AB30799F6A97D92095C10C9@AM9PR02MB6499.eurprd02.prod.outlook.com>
-Accept-Language: nl-NL, en-US
-Content-Language: nl-NL
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-suggested_attachment_session_id: 5d83683e-260c-0238-dbdc-02b1538b7a97
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=prodrive-technologies.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 465658af-2df2-46ef-18ed-08da0367b7a9
-x-ms-traffictypediagnostic: AM0PR02MB5507:EE_
-x-microsoft-antispam-prvs: <AM0PR02MB5507F3D7D2A406A7CAC2C88EC10C9@AM0PR02MB5507.eurprd02.prod.outlook.com>
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: dHuI/VG3k/ghedQQNE24dzPMowC11I0uOHboz0kgkmcMZv4ehI2DuXQTNg+Q0iWsgptW8l+NMxECHM7MogNwelXiIcm518KmxoK4xS6LgrdaTStIF0w00BVM0pnPNXDkjw/CC/X+L2JLezIVeXxUKD+eBzNoMkmMZbOVwvAkL/4H+j3shny/21iPk1A4LZabgzmfiTRFJF0dVHjtI8Zn+w9HU4BTE9MyvT7vKtO1wslg6aUbh/02tEsXFPNrwABoZqf79qlm4ulT4uDz0+EXLIYpeseHhQpzCU86Br9WeX2avU3nvKaeirN5vL+5aBV00JpWjZ4+RMyu/6mfxXnxlE7w5wM0DT5wba6W5uor6AmB1UlFwKgYU9im2/Xlkut1Efe8lOvM5kO8EY8JXBpxsW1F4bQPwIKKORZ8W9P760rJgtXNhYSg/UcA901aVt52h+YOiw0lkeylgfX+F/xyrWiT1nWKnJgTc9KS5lzneDA6T6atn1QEu24JyUFAJOsNNf9g9DnH9rxVzbQ1SaN34IxeJ1kAyA5MtEYuBEhO2pgGKM7pU//MxRWx5wPqJLVuw6e6CioO5Q0Fh8Sc/Bg6LtctHYxQBWuFnAWwVsTTUBsjGgF7L9A/kEHrVzRM54j075PZIZ2zJ7PEEtXqsDCJtSIWc9P+LH5a49cAHZvXtABsi0K4g2cYvjg+oVXO8Ox3a6JJfkE/dba1ETiwXVw0cA==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM9PR02MB6499.eurprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230001)(4636009)(366004)(66946007)(122000001)(6916009)(38100700002)(9686003)(8676002)(4326008)(64756008)(66446008)(66476007)(66556008)(86362001)(508600001)(38070700005)(316002)(76116006)(91956017)(71200400001)(19627405001)(5660300002)(44832011)(4744005)(3480700007)(55016003)(52536014)(8936002)(186003)(2906002)(7696005)(6506007)(26005)(33656002)(107886003);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?lS1UGoe8eZq1NYZHh4QqkzJp2O+2UvlGGY9uFBaIMssTpgE5ezKlb82jhM?=
- =?iso-8859-1?Q?5tmwn756IYoq9nyLhDufRjleaPLmXzlbjoT8u8U48EvytqAtiXDO3HB8Ls?=
- =?iso-8859-1?Q?yhws+x0fudVoK1e7THJNdYlGaNdWuTmk2f4L+e1SoZ6xJ2cDoPeeYmnQVA?=
- =?iso-8859-1?Q?g05sGkhlX3OQsAzADj35JYg+qQPmloeq3FXs7MUz1DQYGGyABmujrSpPSa?=
- =?iso-8859-1?Q?oxycRdtjg0N7/RUj+H98SXLhcJskx+EUQbEiHoS8MDwT5Ak79bEwFT7qRz?=
- =?iso-8859-1?Q?MCSEma5fOQC1PtuBy94utp7ACGVXd7EXiKBAyFyeuAqt3RGVmuRHruKVSX?=
- =?iso-8859-1?Q?2E6UYY3k10/xQNJ7LvIgl21OVtbSPLK2ApzeTIBd9WvtrFlsXVOklb+sEO?=
- =?iso-8859-1?Q?eHXdsDsprIem7/jeHUDjh0CZQ6csl1nav/2Js+4PFL7EP6DE20jeI5hfhz?=
- =?iso-8859-1?Q?cxQxtjMsFSzfr4oI1k15vTNuBteHiAfRZFhmamDaU1sEYSnhKUrt4CCY8P?=
- =?iso-8859-1?Q?Yi+fyGvpqjXDxHzUexgrX8b/R1pYAea8C0n3dTUbUg7ONKGHSeMM4vGkqi?=
- =?iso-8859-1?Q?WwC/dAxsQ4uVRvTp+qW07YY/z1yOElX6wYSQ76BUfhrZ08En1pTKtwHmL/?=
- =?iso-8859-1?Q?ifmaizJj/OwP6baSOpns/yPt7jzstlV2pM10vCeX8nTBQHI9gUNrM7mrOw?=
- =?iso-8859-1?Q?8KyjywM9h4av/7eEZAhFfR+YBRcTip8SsaTMIirZUba5BGUGNPKeeG5WkC?=
- =?iso-8859-1?Q?NA3eDDvJv0BxwQeIUyt8kAGKlqZtFVYnyNf+glpTLAOuEEiBVniOxpRkLX?=
- =?iso-8859-1?Q?GE0HwdX9wBlXgVE69hYD9n5u2KDP+49iCyL+A6vVF/mKwrY+85xkG54GuN?=
- =?iso-8859-1?Q?jssNjjZMWKi5odf07khS9Jew5jNYNji96r4Aj59/o4RHnUauTtwYrE7yAS?=
- =?iso-8859-1?Q?uFp1sxqp3owrNYJxme4vHGWMDelCoWGfZarLCjDucySfnwe0ZIDs4Hw3GN?=
- =?iso-8859-1?Q?ATVqXK45XFT5l7oklBWo5zYcLZKIGC0SSMu6Jp1BkGI3Qaurz7BKngaMZn?=
- =?iso-8859-1?Q?unZiZd72g5Z2d282fiyqkMfY/XFmkcJk8URRTNzkYczVmCUy06nOQ3FPJ9?=
- =?iso-8859-1?Q?A9RCEJTPpuDFWlWQJi30JTTChAeB+RnDX3bTyjQUzKEpv8QEye4IUqJ8qm?=
- =?iso-8859-1?Q?xtehcnDxlDNsiKDH99ukur++r+T6yfdGK43vcVRvUszT06pcrQt2DF/mvk?=
- =?iso-8859-1?Q?WK7IoP/X5QLshceGGu9vgk2O9Ty9A1sBpR7iM2q34TVWED5JNuv1RobHVm?=
- =?iso-8859-1?Q?SIeCKSxTgDcvgFy5yt5tvajV2YQWaePXNTfkhurxR6RXmgthQrCn5Rk+xc?=
- =?iso-8859-1?Q?tp6+2NQumpUZvCYRgErdGibs2p8jjyhWK7+KlRSjoz3maNROVH16tpqFv5?=
- =?iso-8859-1?Q?Qe6mmSX8+roedwXToO1EYpUQb+cBQBlBT9uxlNSt8kQYITn/6mtvorlNyf?=
- =?iso-8859-1?Q?EuzYYqOV1GZNEPoor98YtGl7Eyn3rf17Jgu0YBaGdQuXsYktOPbAdYkRAO?=
- =?iso-8859-1?Q?D19oNvA=3D?=
-Content-Type: multipart/alternative;
- boundary="_000_AM9PR02MB6499C2AB30799F6A97D92095C10C9AM9PR02MB6499eurp_"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KFSSg6hkyz2xTp;
+ Sat, 12 Mar 2022 01:08:03 +1100 (AEDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id DD2E6B82C24;
+ Fri, 11 Mar 2022 14:07:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05B1DC340F5;
+ Fri, 11 Mar 2022 14:07:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1647007676;
+ bh=oxhEMvElWODt6u9CQYS0TOzkW9ZRnJdY8HwZrc0XbnA=;
+ h=From:To:Cc:Subject:Date:From;
+ b=I1IWazuBan229oTPyXer46CT9bijBRhJJ438WpPXOCKnJHuH3LeSiHJtETgwak7Cp
+ RriKkP6rtuas2UOOhvuwjNOEDgPJfjFZhnKcr8zG6zQViko9vb21SdMBmnSKh1PQSc
+ Qy0JIkMVupausOA+J7sYzH1JLhewlQtAO6NFu5t6x5zXy7qvKJh0SGW3PPVYsP8HRT
+ LGlj/1X9iqZK64iYH49dD+0mM5TFOxCzC9kS/v92w1KYH4o34oP4eI8wkIF2V70jO5
+ 6TShJ2I2kNzNWoacqVs4hAwAQiDPtgn4VVvEsv3RJ2XfrO2bKsDhF2zGb3FOd1oouB
+ xG+udw2dDr8EA==
+Received: from mchehab by mail.kernel.org with local (Exim 4.94.2)
+ (envelope-from <mchehab@kernel.org>)
+ id 1nSfvt-000lAX-Ey; Fri, 11 Mar 2022 15:07:53 +0100
+From: Mauro Carvalho Chehab <mchehab@kernel.org>
+To: 
+Subject: [PATCH v2 00/38] Sort Makefiles and platform/Kconfig
+Date: Fri, 11 Mar 2022 15:07:13 +0100
+Message-Id: <cover.1647006877.git.mchehab@kernel.org>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-X-OriginatorOrg: prodrive-technologies.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM9PR02MB6499.eurprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 465658af-2df2-46ef-18ed-08da0367b7a9
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Mar 2022 14:02:02.1816 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 612607c9-5af7-4e7f-8976-faf1ae77be60
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: eTcwB1RbzILkdDmPQ0rEeKIKb9+xNtkGR4SrkqV3TGsJo/q6Ip0N8uzN02VMOEile7Iymre25AOs8v56hg9RTpNYvZTuhFoLhbujitw8trl3dudaW7qzLBGGxBieAyrz8cLM43HB3LnLeRrsOvalWw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AM0PR02MB5507
+Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Tue, 15 Mar 2022 10:24:35 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -133,95 +64,310 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Stef van Os <stef.van.os@prodrive-technologies.com>
+Cc: Heiko Stuebner <heiko@sntech.de>, Dafna Hirschfeld <dafna@fastmail.com>,
+ Eddie James <eajames@linux.ibm.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>,
+ Todor Tomov <todor.too@gmail.com>,
+ Bjorn Andersson <bjorn.andersson@linaro.org>,
+ Matthias Brugger <matthias.bgg@gmail.com>, "Lad,
+ Prabhakar" <prabhakar.csengg@gmail.com>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+ Andrzej Hajda <andrzej.hajda@intel.com>, Dmitry Osipenko <digetx@gmail.com>,
+ linux1394-devel@lists.sourceforge.net, Fabio Estevam <festevam@gmail.com>,
+ linux-stm32@st-md-mailman.stormreply.com, linux-kernel@vger.kernel.org,
+ Jerome Brunet <jbrunet@baylibre.com>, linux-samsung-soc@vger.kernel.org,
+ linux-aspeed@lists.ozlabs.org, Michael Tretter <m.tretter@pengutronix.de>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+ Kevin Hilman <khilman@baylibre.com>, openbmc@lists.ozlabs.org,
+ Jernej Skrabec <jernej.skrabec@gmail.com>, Shijie Qin <shijie.qin@nxp.com>,
+ Chen-Yu Tsai <wens@csie.org>, Jacob Chen <jacob-chen@iotwrt.com>,
+ Michael Krufky <mkrufky@linuxtv.org>,
+ Ezequiel Garcia <ezequiel@vanguardiasur.com.ar>,
+ Mikhail Ulyanov <mikhail.ulyanov@cogentembedded.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Andrzej Pietrasiewicz <andrzejtp2010@gmail.com>,
+ Patrice Chotard <patrice.chotard@foss.st.com>,
+ NXP Linux Team <linux-imx@nxp.com>,
+ Sylwester Nawrocki <s.nawrocki@samsung.com>, linux-tegra@vger.kernel.org,
+ Pengutronix Kernel Team <kernel@pengutronix.de>,
+ Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+ linux-arm-msm@vger.kernel.org, Sascha Hauer <s.hauer@pengutronix.de>,
+ =?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>,
+ Maxime Ripard <mripard@kernel.org>,
+ Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+ Benoit Parrot <bparrot@ti.com>, linux-mediatek@lists.infradead.org,
+ Jacek Anaszewski <jacek.anaszewski@gmail.com>,
+ Yong Deng <yong.deng@magewell.com>,
+ Marek Szyprowski <m.szyprowski@samsung.com>, linux-amlogic@lists.infradead.org,
+ Sylwester Nawrocki <sylvester.nawrocki@gmail.com>,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ linux-arm-kernel@lists.infradead.org, Andy Walls <awalls@md.metrocast.net>,
+ Zhou Peng <eagle.zhou@nxp.com>, Mirela Rabulea <mirela.rabulea@nxp.com>,
+ Andrew Jeffery <andrew@aj.id.au>, Andy Gross <agross@kernel.org>,
+ Robert Foss <robert.foss@linaro.org>, Tomasz Figa <tfiga@chromium.org>,
+ linux-renesas-soc@vger.kernel.org, linux-rockchip@lists.infradead.org,
+ Stefan Richter <stefanr@s5r6.in-berlin.de>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>, linux-media@vger.kernel.org,
+ Shawn Guo <shawnguo@kernel.org>, linux-sunxi@lists.linux.dev,
+ Ming Qian <ming.qian@nxp.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_AM9PR02MB6499C2AB30799F6A97D92095C10C9AM9PR02MB6499eurp_
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+Entries at Makefiles and Kconfig files end being merged on random order. 
 
-Hello,
+Sort Makefile entries in alphabetical order. 
 
-I was wondering if anyone is/was successful in using the MCTP over LPC bind=
-ing with an intel platform? I read through the documents, it seems to me th=
-e binding was designed to use LPC firmware cycles. To me it is unclear if t=
-he ast2500 supports memory cycles on the LPC2AHB bridge (datasheet seems to=
- list it in the features, not much explanation).  The problem is that the C=
-620 chipset doesn't support firmware cycles (only memory and I/O cycles). A=
-nd having a properly mapped window in the C620 chipset and reserved memory =
-in Linux. Writing and Reading to it only returns ('1s').
+Sorting Kconfig is harder. So, for now, do it only for platform/Kconfig.
 
-Writing a simple test on x86 that keeps writing a value to the mapped regis=
-ters, seems to trigger LAD[3:1] =3D 0xF readout on the BMC LPC host control=
-ler register 0 (that has some debug registers to see the state of the LPC b=
-us). 0xF is the stop frame of a standard LPC memory cycle.
+On platform/Kconfig, there is a mix of:
+	- two ancillary drivers;
+	- per-SoC drivers whose Kconfig/Makefile is on separate files;
+	- per-SoC drivers whose Makefile is on separate files, but the
+	  driver is at platform/Makefile;
+	- per-SoC drivers that are specified inside platform/Makefile and
+	  platform/Kconfig.
 
-Kind Regards,
+Give some order by ensuring that all non-generic drivers will be on
+subdirectories.
 
-Govert Overgaauw
+The end goal is to have one directory below platform per manufacturer,
+This series prepare for that.
+
+Suggested-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+
+-
+
+v2:
+  - removed some renames at DVB frontend;
+  - added patches for platform/Kconfig sort.
+
+Mauro Carvalho Chehab (38):
+  media: xc2028: rename the driver from tuner-xc2028
+  media: Makefiles: remove extra spaces
+  media: Makefiles: sort entries where it fits
+  media: platform: Makefile: reorganize its contents
+  media: platform: move platform menu dependencies to drivers
+  media: platform: place Aspeed driver on a separate dir
+  media: platform: place NXP drivers on a separate dir
+  media: platform: place Intel drivers on a separate dir
+  media: platform: place Via drivers on a separate dir
+  media: platform: place Renesas drivers on a separate dir
+  media: platform: allegro-dvt: move config to its own file
+  media: platform: amphion: move config to its own file
+  media: platform: coda: move config to its own file
+  media: platform: exynos-gsc: move config to its own file
+  media: platform: ge2d: move config to its own file
+  media: platform: mtk-jpeg: move config to its own file
+  media: platform: mtk-mdp: move config to its own file
+  media: platform: mtk-vcodec: move config to its own file
+  media: platform: mtk-vpu: move config to its own file
+  media: platform: omap3isp: move config to its own file
+  media: platform: camss: move config to its own file
+  media: platform: venus: move config to its own file
+  media: platform: rga: move config to its own file
+  media: platform: s3c-camif: move config to its own file
+  media: platform: s5p-g2d: move config to its own file
+  media: platform: hva: move config to its own file
+  media: platform: stm32: move config to its own file
+  media: platform: sun8i-di: move config to its own file
+  media: platform: sun8i-rotate: move config to its own file
+  media: platform: vde: move config to its own file
+  media: platform: ti-vpe: move config to its own file
+  media: platform: rkisp1: move config to its own file
+  media: platform: delta: move config to its own file
+  media: platform: bdisp: move config to its own file
+  media: platform: s5p-mfc: move config to its own file
+  media: platform: s5p-jpeg: move config to its own file
+  media: platform: Kconfig: sort entries
+  drivers: media: platform: move some manufacturer entries
+
+ .../admin-guide/media/i2c-cardlist.rst        |   2 +-
+ MAINTAINERS                                   |  22 +-
+ drivers/media/Makefile                        |   4 +-
+ drivers/media/cec/platform/Makefile           |  16 +-
+ drivers/media/common/Makefile                 |   4 +-
+ drivers/media/common/videobuf2/Makefile       |   6 +-
+ drivers/media/dvb-frontends/Makefile          | 192 ++---
+ drivers/media/firewire/Makefile               |   2 +-
+ drivers/media/i2c/Makefile                    |  92 +--
+ drivers/media/pci/Makefile                    |  18 +-
+ drivers/media/pci/cx18/cx18-driver.c          |   2 +-
+ drivers/media/pci/cx18/cx18-dvb.c             |   2 +-
+ drivers/media/pci/cx18/cx18-gpio.c            |   2 +-
+ drivers/media/pci/cx23885/cx23885-cards.c     |   2 +-
+ drivers/media/pci/cx23885/cx23885-dvb.c       |   2 +-
+ drivers/media/pci/cx23885/cx23885-video.c     |   2 +-
+ drivers/media/pci/cx88/cx88.h                 |   2 +-
+ drivers/media/pci/ivtv/ivtv-driver.c          |   2 +-
+ drivers/media/pci/ivtv/ivtv-gpio.c            |   2 +-
+ drivers/media/pci/saa7134/saa7134-cards.c     |   2 +-
+ drivers/media/pci/saa7134/saa7134-dvb.c       |   2 +-
+ drivers/media/platform/Kconfig                | 755 ++----------------
+ drivers/media/platform/Makefile               | 132 +--
+ drivers/media/platform/allegro-dvt/Kconfig    |  16 +
+ drivers/media/platform/am437x/Kconfig         |   1 +
+ drivers/media/platform/amphion/Kconfig        |  20 +
+ drivers/media/platform/aspeed/Kconfig         |  10 +
+ drivers/media/platform/aspeed/Makefile        |   1 +
+ .../platform/{ => aspeed}/aspeed-video.c      |   0
+ drivers/media/platform/atmel/Kconfig          |   4 +
+ drivers/media/platform/cadence/Kconfig        |   1 +
+ drivers/media/platform/coda/Kconfig           |  17 +
+ drivers/media/platform/davinci/Kconfig        |   6 +
+ drivers/media/platform/exynos-gsc/Kconfig     |  10 +
+ drivers/media/platform/exynos4-is/Kconfig     |   1 +
+ drivers/media/platform/imx-jpeg/Kconfig       |   1 +
+ drivers/media/platform/imx/Kconfig            |   1 +
+ drivers/media/platform/intel/Kconfig          |  11 +
+ drivers/media/platform/intel/Makefile         |   1 +
+ .../media/platform/{ => intel}/pxa_camera.c   |   0
+ drivers/media/platform/marvell-ccic/Kconfig   |   2 +
+ drivers/media/platform/meson/ge2d/Kconfig     |  14 +
+ drivers/media/platform/mtk-jpeg/Kconfig       |  16 +
+ drivers/media/platform/mtk-mdp/Kconfig        |  17 +
+ drivers/media/platform/mtk-vcodec/Kconfig     |  36 +
+ drivers/media/platform/mtk-vpu/Kconfig        |  15 +
+ drivers/media/platform/nxp/Kconfig            |  40 +
+ drivers/media/platform/nxp/Makefile           |   5 +
+ drivers/media/platform/{ => nxp}/fsl-viu.c    |   0
+ drivers/media/platform/{ => nxp}/imx-pxp.c    |   0
+ drivers/media/platform/{ => nxp}/imx-pxp.h    |   0
+ .../media/platform/{ => nxp}/mx2_emmaprp.c    |   0
+ drivers/media/platform/omap/Kconfig           |   1 +
+ drivers/media/platform/omap3isp/Kconfig       |  21 +
+ drivers/media/platform/qcom/Kconfig           |   3 +
+ drivers/media/platform/qcom/camss/Kconfig     |   9 +
+ drivers/media/platform/qcom/venus/Kconfig     |  14 +
+ drivers/media/platform/renesas/Kconfig        | 119 +++
+ drivers/media/platform/renesas/Makefile       |  14 +
+ .../media/platform/{ => renesas}/rcar-fcp.c   |   0
+ .../media/platform/{ => renesas}/rcar-isp.c   |   0
+ .../platform/{ => renesas}/rcar-vin/Kconfig   |   2 +
+ .../platform/{ => renesas}/rcar-vin/Makefile  |   0
+ .../{ => renesas}/rcar-vin/rcar-core.c        |   0
+ .../{ => renesas}/rcar-vin/rcar-csi2.c        |   0
+ .../{ => renesas}/rcar-vin/rcar-dma.c         |   0
+ .../{ => renesas}/rcar-vin/rcar-v4l2.c        |   0
+ .../{ => renesas}/rcar-vin/rcar-vin.h         |   0
+ .../media/platform/{ => renesas}/rcar_drif.c  |   0
+ .../media/platform/{ => renesas}/rcar_fdp1.c  |   0
+ .../media/platform/{ => renesas}/rcar_jpu.c   |   0
+ .../platform/{ => renesas}/renesas-ceu.c      |   0
+ drivers/media/platform/{ => renesas}/sh_vou.c |   0
+ drivers/media/platform/rockchip/Kconfig       |   3 +
+ drivers/media/platform/rockchip/rga/Kconfig   |  14 +
+ .../media/platform/rockchip/rkisp1/Kconfig    |  19 +
+ drivers/media/platform/s3c-camif/Kconfig      |  15 +
+ drivers/media/platform/s5p-g2d/Kconfig        |  11 +
+ drivers/media/platform/s5p-jpeg/Kconfig       |  12 +
+ drivers/media/platform/s5p-mfc/Kconfig        |   9 +
+ drivers/media/platform/sti/Kconfig            |   5 +
+ drivers/media/platform/sti/bdisp/Kconfig      |  10 +
+ drivers/media/platform/sti/c8sectpfe/Kconfig  |   1 +
+ drivers/media/platform/sti/delta/Kconfig      |  36 +
+ drivers/media/platform/sti/hva/Kconfig        |  26 +
+ drivers/media/platform/stm32/Kconfig          |  31 +
+ drivers/media/platform/sunxi/Kconfig          |   2 +
+ .../media/platform/sunxi/sun4i-csi/Kconfig    |   1 +
+ .../media/platform/sunxi/sun6i-csi/Kconfig    |   1 +
+ drivers/media/platform/sunxi/sun8i-di/Kconfig |  14 +
+ .../media/platform/sunxi/sun8i-rotate/Kconfig |  14 +
+ drivers/media/platform/tegra/vde/Kconfig      |  17 +
+ drivers/media/platform/ti-vpe/Kconfig         |  62 ++
+ drivers/media/platform/via/Kconfig            |  11 +
+ drivers/media/platform/via/Makefile           |   1 +
+ drivers/media/platform/{ => via}/via-camera.c |   0
+ drivers/media/platform/{ => via}/via-camera.h |   0
+ drivers/media/platform/xilinx/Kconfig         |   1 +
+ drivers/media/radio/Makefile                  |  42 +-
+ drivers/media/rc/Makefile                     |  45 +-
+ drivers/media/rc/keymaps/Makefile             |  33 +-
+ drivers/media/spi/Makefile                    |   5 +-
+ drivers/media/test-drivers/Makefile           |  13 +-
+ drivers/media/tuners/Makefile                 |  66 +-
+ drivers/media/tuners/tuner-types.c            |   2 +-
+ .../{tuner-xc2028-types.h => xc2028-types.h}  |   6 +-
+ .../media/tuners/{tuner-xc2028.c => xc2028.c} |   6 +-
+ .../media/tuners/{tuner-xc2028.h => xc2028.h} |   2 +-
+ drivers/media/tuners/xc4000.c                 |   2 +-
+ drivers/media/usb/Makefile                    |  25 +-
+ drivers/media/usb/dvb-usb/cxusb.c             |   2 +-
+ drivers/media/usb/dvb-usb/dib0700_devices.c   |   2 +-
+ drivers/media/usb/em28xx/em28xx-i2c.c         |   2 +-
+ drivers/media/usb/em28xx/em28xx.h             |   2 +-
+ drivers/media/usb/gspca/Makefile              |  88 +-
+ drivers/media/usb/tm6000/tm6000-cards.c       |   2 +-
+ drivers/media/usb/tm6000/tm6000-dvb.c         |   2 +-
+ drivers/media/usb/tm6000/tm6000-i2c.c         |   2 +-
+ drivers/media/v4l2-core/Makefile              |  29 +-
+ drivers/media/v4l2-core/tuner-core.c          |   2 +-
+ 120 files changed, 1248 insertions(+), 1144 deletions(-)
+ create mode 100644 drivers/media/platform/allegro-dvt/Kconfig
+ create mode 100644 drivers/media/platform/amphion/Kconfig
+ create mode 100644 drivers/media/platform/aspeed/Kconfig
+ create mode 100644 drivers/media/platform/aspeed/Makefile
+ rename drivers/media/platform/{ => aspeed}/aspeed-video.c (100%)
+ create mode 100644 drivers/media/platform/coda/Kconfig
+ create mode 100644 drivers/media/platform/exynos-gsc/Kconfig
+ create mode 100644 drivers/media/platform/intel/Kconfig
+ create mode 100644 drivers/media/platform/intel/Makefile
+ rename drivers/media/platform/{ => intel}/pxa_camera.c (100%)
+ create mode 100644 drivers/media/platform/meson/ge2d/Kconfig
+ create mode 100644 drivers/media/platform/mtk-jpeg/Kconfig
+ create mode 100644 drivers/media/platform/mtk-mdp/Kconfig
+ create mode 100644 drivers/media/platform/mtk-vcodec/Kconfig
+ create mode 100644 drivers/media/platform/mtk-vpu/Kconfig
+ create mode 100644 drivers/media/platform/nxp/Kconfig
+ create mode 100644 drivers/media/platform/nxp/Makefile
+ rename drivers/media/platform/{ => nxp}/fsl-viu.c (100%)
+ rename drivers/media/platform/{ => nxp}/imx-pxp.c (100%)
+ rename drivers/media/platform/{ => nxp}/imx-pxp.h (100%)
+ rename drivers/media/platform/{ => nxp}/mx2_emmaprp.c (100%)
+ create mode 100644 drivers/media/platform/omap3isp/Kconfig
+ create mode 100644 drivers/media/platform/qcom/Kconfig
+ create mode 100644 drivers/media/platform/qcom/camss/Kconfig
+ create mode 100644 drivers/media/platform/qcom/venus/Kconfig
+ create mode 100644 drivers/media/platform/renesas/Kconfig
+ create mode 100644 drivers/media/platform/renesas/Makefile
+ rename drivers/media/platform/{ => renesas}/rcar-fcp.c (100%)
+ rename drivers/media/platform/{ => renesas}/rcar-isp.c (100%)
+ rename drivers/media/platform/{ => renesas}/rcar-vin/Kconfig (93%)
+ rename drivers/media/platform/{ => renesas}/rcar-vin/Makefile (100%)
+ rename drivers/media/platform/{ => renesas}/rcar-vin/rcar-core.c (100%)
+ rename drivers/media/platform/{ => renesas}/rcar-vin/rcar-csi2.c (100%)
+ rename drivers/media/platform/{ => renesas}/rcar-vin/rcar-dma.c (100%)
+ rename drivers/media/platform/{ => renesas}/rcar-vin/rcar-v4l2.c (100%)
+ rename drivers/media/platform/{ => renesas}/rcar-vin/rcar-vin.h (100%)
+ rename drivers/media/platform/{ => renesas}/rcar_drif.c (100%)
+ rename drivers/media/platform/{ => renesas}/rcar_fdp1.c (100%)
+ rename drivers/media/platform/{ => renesas}/rcar_jpu.c (100%)
+ rename drivers/media/platform/{ => renesas}/renesas-ceu.c (100%)
+ rename drivers/media/platform/{ => renesas}/sh_vou.c (100%)
+ create mode 100644 drivers/media/platform/rockchip/Kconfig
+ create mode 100644 drivers/media/platform/rockchip/rga/Kconfig
+ create mode 100644 drivers/media/platform/rockchip/rkisp1/Kconfig
+ create mode 100644 drivers/media/platform/s3c-camif/Kconfig
+ create mode 100644 drivers/media/platform/s5p-g2d/Kconfig
+ create mode 100644 drivers/media/platform/s5p-jpeg/Kconfig
+ create mode 100644 drivers/media/platform/s5p-mfc/Kconfig
+ create mode 100644 drivers/media/platform/sti/Kconfig
+ create mode 100644 drivers/media/platform/sti/bdisp/Kconfig
+ create mode 100644 drivers/media/platform/sti/delta/Kconfig
+ create mode 100644 drivers/media/platform/sti/hva/Kconfig
+ create mode 100644 drivers/media/platform/stm32/Kconfig
+ create mode 100644 drivers/media/platform/sunxi/sun8i-di/Kconfig
+ create mode 100644 drivers/media/platform/sunxi/sun8i-rotate/Kconfig
+ create mode 100644 drivers/media/platform/tegra/vde/Kconfig
+ create mode 100644 drivers/media/platform/ti-vpe/Kconfig
+ create mode 100644 drivers/media/platform/via/Kconfig
+ create mode 100644 drivers/media/platform/via/Makefile
+ rename drivers/media/platform/{ => via}/via-camera.c (100%)
+ rename drivers/media/platform/{ => via}/via-camera.h (100%)
+ rename drivers/media/tuners/{tuner-xc2028-types.h => xc2028-types.h} (96%)
+ rename drivers/media/tuners/{tuner-xc2028.c => xc2028.c} (99%)
+ rename drivers/media/tuners/{tuner-xc2028.h => xc2028.h} (99%)
+
+-- 
+2.35.1
 
 
---_000_AM9PR02MB6499C2AB30799F6A97D92095C10C9AM9PR02MB6499eurp_
-Content-Type: text/html; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
-1">
-<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
-ttom:0;} </style>
-</head>
-<body dir=3D"ltr">
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-Hello,</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-I was wondering if anyone is/was successful in using the MCTP over LPC bind=
-ing with an intel platform? I read through the documents, it seems to me th=
-e binding was designed to use LPC firmware cycles. To me it is unclear if t=
-he ast2500 supports memory cycles
- on the LPC2AHB bridge (datasheet seems to list it in the features, not muc=
-h explanation).&nbsp; The problem is that the C620 chipset doesn't support =
-firmware cycles (only memory and I/O cycles). And having a properly mapped =
-window in the C620 chipset and reserved
- memory in Linux. Writing and Reading to it only returns ('1s').</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-Writing a simple test on x86 that keeps writing a value to the mapped regis=
-ters, seems to trigger LAD[3:1] =3D 0xF readout on the BMC LPC host control=
-ler register 0 (that has some debug registers to see the state of the LPC b=
-us). 0xF is the stop frame of a standard
- LPC memory cycle.</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-Kind Regards,</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-Govert Overgaauw</div>
-<div style=3D"font-family: Calibri, Arial, Helvetica, sans-serif; font-size=
-: 12pt; color: rgb(0, 0, 0);">
-<br>
-</div>
-</body>
-</html>
-
---_000_AM9PR02MB6499C2AB30799F6A97D92095C10C9AM9PR02MB6499eurp_--
