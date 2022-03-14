@@ -2,70 +2,95 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7FE934D7A6A
-	for <lists+openbmc@lfdr.de>; Mon, 14 Mar 2022 06:34:08 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E86634D7C2E
+	for <lists+openbmc@lfdr.de>; Mon, 14 Mar 2022 08:42:17 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KH4wG3WsLz30L1
-	for <lists+openbmc@lfdr.de>; Mon, 14 Mar 2022 16:34:06 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KH7m761Cxz3ch0
+	for <lists+openbmc@lfdr.de>; Mon, 14 Mar 2022 18:42:15 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=OI+UF+QJ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=canonical.com header.i=@canonical.com header.a=rsa-sha256 header.s=20210705 header.b=RRjxuZri;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12c;
- helo=mail-lf1-x12c.google.com; envelope-from=medadyoung@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=canonical.com (client-ip=185.125.188.122;
+ helo=smtp-relay-internal-0.canonical.com;
+ envelope-from=krzysztof.kozlowski@canonical.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=OI+UF+QJ; dkim-atps=neutral
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com
- [IPv6:2a00:1450:4864:20::12c])
+ unprotected) header.d=canonical.com header.i=@canonical.com
+ header.a=rsa-sha256 header.s=20210705 header.b=RRjxuZri; 
+ dkim-atps=neutral
+Received: from smtp-relay-internal-0.canonical.com
+ (smtp-relay-internal-0.canonical.com [185.125.188.122])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KH4vv0p1rz2xDY
- for <openbmc@lists.ozlabs.org>; Mon, 14 Mar 2022 16:33:47 +1100 (AEDT)
-Received: by mail-lf1-x12c.google.com with SMTP id 3so25085891lfr.7
- for <openbmc@lists.ozlabs.org>; Sun, 13 Mar 2022 22:33:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=eVrhLG6j1/NEw6F+1cYhKxryjr7l/j18/EJtyxq3Sx8=;
- b=OI+UF+QJc04dTD0jnL0AP1YNDkp2Ek6Ae8UAGX8B7itlQ5h/ujK4HYwA7eEeTIPx41
- DO9q9VPiOgOHkaJc6QYA+k1QFZYI7MCnuvd/OxHdqJHEieOwrkgOZARv4uGRQQjYjhVP
- nSh9CrD1p8g4M1MIJ6xgpadhYBXL1ddp/SmpDQLCCt2YTqwQj4QIzeHZP4q0kb4ZIQPN
- +/MHpYGNgo8LhwCE4t2dArZ9FKMmaOVkgeewXOdJGx9VC7WiV+mvioxh6ZdcbGI4YDcL
- WvciOzO1WRDezd2OiK3jnb+ltlnUpGyWxTq2H1yFJmU+BKPgQNoSOPfU84jd1QYIR3y0
- W+cQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KH7cF1R7Rz3bl4
+ for <openbmc@lists.ozlabs.org>; Mon, 14 Mar 2022 18:35:24 +1100 (AEDT)
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id EF66C3FC9F
+ for <openbmc@lists.ozlabs.org>; Mon, 14 Mar 2022 07:35:16 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20210705; t=1647243316;
+ bh=7XD/ZCIPD+pSa/ajluyXSHrFnnLxPbj9dv4H6XXzi7o=;
+ h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+ In-Reply-To:Content-Type;
+ b=RRjxuZriAsaR77So9xWe6U3lKguXv3h8zPlDoRWaGCNefBEj2hLvSsREqM4viYOna
+ 4ax02wxx1bMBZ/0eSeoAatw5HU9rSkW2HY86ZeDuz/u10Oqo184enCuPAUDxegRywC
+ 4DDB5qVlzDVl6cepdg1TqmTyERUwyuvLJJe8k0Rrr5VHdKktOx65Z85OTuIyII4lDG
+ hrF9Jch2pR2Vh5jTjKYrH+JZvd7wxy3EvqNYHeM3pKDX1WLYXY97tmweNmljhCDZCi
+ 1RmRMn3mDk65Q+cZepjqpHFgG19K2X1hhsEJcObiNFI6cmcS9TJWok1khtl2fgc29x
+ 8wBk0NwPz2q4g==
+Received: by mail-ed1-f69.google.com with SMTP id
+ b9-20020aa7d489000000b0041669cd2cbfso8169145edr.16
+ for <openbmc@lists.ozlabs.org>; Mon, 14 Mar 2022 00:35:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=eVrhLG6j1/NEw6F+1cYhKxryjr7l/j18/EJtyxq3Sx8=;
- b=IxOlt9r1nLXkpZ9VgVDp8orYhf9E3H93cBto5B1bhRPZqPaZTETXOu5LksWHggd2pq
- pt1bB69MjryLOc7Vbq40M10T8a0CIRLXKJsQVCmxWkDhNInIpg9ayu/OXrOFhsRzNJSu
- Owl9SSjB27cWVk5rUy/vMbiv1uUoZpl/YZ42v9ZT9/PZvIXGaTGTgdui3ZDRA9gjeCiE
- oO1gIYYf/+ebb8ZHIbs6B48YHWSeYMtJpq/WGS3kMifqZJKY0EuSVxRegPt67o4Y+xUV
- m1ymSHwWItBjKCnpQzlkxdZqbOGQsuEWha3BjKw2F+1xBfVN5cwbbWqa861JsUEK1wkw
- ujqw==
-X-Gm-Message-State: AOAM5314v5PDGywMwxZjsHULfB+SleZliPb8uHQ1VzSMy/jaKzPmtOq2
- CrbCOwOd0iuqZTgvgB3okmKR4zAxZVi+fhqZ3Sg=
-X-Google-Smtp-Source: ABdhPJziLv83XC63JaseKGLfszaBZYc/9exZbgqcMvLywE2DzYsJ7m4ePKilApX8W8UZkkQRGQIQL9VaVN/xB1LsxBI=
-X-Received: by 2002:a05:6512:79a:b0:448:6a57:8b37 with SMTP id
- x26-20020a056512079a00b004486a578b37mr10369861lfr.48.1647236023551; Sun, 13
- Mar 2022 22:33:43 -0700 (PDT)
+ h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+ :content-language:to:cc:references:from:in-reply-to
+ :content-transfer-encoding;
+ bh=7XD/ZCIPD+pSa/ajluyXSHrFnnLxPbj9dv4H6XXzi7o=;
+ b=sLaKE1lU9OA6HrXMSR2alpr807j9tQ4VrcCdgg+MqeFLn9su5+GXp7N1hRm27hgcrB
+ a2WjKe4t1EmVz9V2WPlr/auH1BXEAOzbvqfU+w+k12DxDKKfdhT3YL7X58/h5ib3IyMk
+ 6MB0JrqNcq8hIWtLYG3pPN8AzSBMur9SUfk/SshG62E5fyer3TF2qQTfNLeDADEbWmvr
+ jrPm7KOv1CaIEaEtjF44PZn2M7/0UNYFYcUvZ6lldhVio01clyK3CKLcSU2f5mqf1sRm
+ tR8Q18dDhCOIGREk6TfZDfs9Wf+Tj+jWYawptf4O3kqGyjg+W0Cg1FNOoI6AQi9XZw5G
+ mFcw==
+X-Gm-Message-State: AOAM533dv4tnUSgifKn6D4yt33qmoWkOHyQjOSluI8yBj3dFZt3OdfGj
+ hnvyqr9hdGbCmBaZphKOfWSAkYLChIDn25TcbVQmX1AtXU+JTOMVoYcXCJ5BfIn9Mi7kzRp66Fa
+ QPjgpkqDkDm6A/lhwbW0Sn05igKSZWrYkpMKW
+X-Received: by 2002:a05:6402:4301:b0:418:585b:cfe1 with SMTP id
+ m1-20020a056402430100b00418585bcfe1mr9566754edc.250.1647243316380; 
+ Mon, 14 Mar 2022 00:35:16 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJyQjBMUwRWUV4MpFNb8hzB27BfL/O3/uSgyWyC0crEVt9Qfy2ep0MNaTkAJB5rcza+jxkL4Mg==
+X-Received: by 2002:a05:6402:4301:b0:418:585b:cfe1 with SMTP id
+ m1-20020a056402430100b00418585bcfe1mr9566734edc.250.1647243316197; 
+ Mon, 14 Mar 2022 00:35:16 -0700 (PDT)
+Received: from [192.168.0.152] (xdsl-188-155-174-239.adslplus.ch.
+ [188.155.174.239]) by smtp.googlemail.com with ESMTPSA id
+ l9-20020a1709066b8900b006daa6015a0dsm6336356ejr.89.2022.03.14.00.35.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 14 Mar 2022 00:35:15 -0700 (PDT)
+Message-ID: <4f8fffa7-631a-9b87-ee0a-0fb7dc1fec66@canonical.com>
+Date: Mon, 14 Mar 2022 08:35:14 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v3 3/3] EDAC: nuvoton: Add NPCM memory controller driver
+Content-Language: en-US
+To: Avi Fishman <avifishman70@gmail.com>
 References: <20220311014245.4612-1-ctcchien@nuvoton.com>
- <20220311014245.4612-3-ctcchien@nuvoton.com>
- <a6e719f2-2ca1-4ae6-680e-46ec0dd96969@canonical.com>
-In-Reply-To: <a6e719f2-2ca1-4ae6-680e-46ec0dd96969@canonical.com>
-From: Medad Young <medadyoung@gmail.com>
-Date: Mon, 14 Mar 2022 13:33:32 +0800
-Message-ID: <CAHpyw9c6ConNga0ZK=bBdc0RWMtVmyJV+isjxw7AhQW-LRTgFA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] dt-bindings: edac: nuvoton,
- npcm-memory-controller.yaml
-To: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Content-Type: multipart/alternative; boundary="0000000000000b8a5405da2706a2"
+ <20220311014245.4612-4-ctcchien@nuvoton.com>
+ <1f5e1e49-4ab0-5e06-fa8f-2a11b0fd1df9@canonical.com>
+ <CAKKbWA7Pr8Gi-rU5_BZ32y5aiLV0tSM19WkRe+zF8spWdk5zMg@mail.gmail.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+In-Reply-To: <CAKKbWA7Pr8Gi-rU5_BZ32y5aiLV0tSM19WkRe+zF8spWdk5zMg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,112 +103,87 @@ List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: KWLIU@nuvoton.com, tony.luck@intel.com, rric@kernel.org,
- Benjamin Fair <benjaminfair@google.com>, linux-edac@vger.kernel.org,
- KFTING <KFTING@nuvoton.com>, avifishman70@gmail.com,
- Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org,
- JJLIU0@nuvoton.com, ctcchien@nuvoton.com, tali.perry1@gmail.com,
- devicetree@vger.kernel.org, robh+dt@kernel.org, bp@alien8.de,
- james.morse@arm.com, YSCHU@nuvoton.com, mchehab@kernel.org,
- linux-kernel@vger.kernel.org, tmaimon77@gmail.com
+ Benjamin Fair <benjaminfair@google.com>,
+ linux-edac <linux-edac@vger.kernel.org>, KFTING@nuvoton.com,
+ Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, JJLIU0@nuvoton.com,
+ ctcchien@nuvoton.com, Tali Perry <tali.perry1@gmail.com>,
+ devicetree <devicetree@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ James Morse <james.morse@arm.com>, Medad CChien <medadyoung@gmail.com>,
+ Borislav Petkov <bp@alien8.de>, YSCHU@nuvoton.com,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000000b8a5405da2706a2
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 13/03/2022 21:22, Avi Fishman wrote:
+> On Fri, Mar 11, 2022 at 11:15 AM Krzysztof Kozlowski
+> <krzysztof.kozlowski@canonical.com> wrote:
+>>
+>> On 11/03/2022 02:42, Medad CChien wrote:
+>>> Add support for Nuvoton NPCM SoC.
+>>>
+>>> Signed-off-by: Medad CChien <ctcchien@nuvoton.com>
+>>> ---
+>>>  drivers/edac/Kconfig     |   9 +
+>>>  drivers/edac/Makefile    |   1 +
+>>>  drivers/edac/npcm_edac.c | 714 +++++++++++++++++++++++++++++++++++++++
+>>>  3 files changed, 724 insertions(+)
+>>>  create mode 100644 drivers/edac/npcm_edac.c
+>>>
+>>> diff --git a/drivers/edac/Kconfig b/drivers/edac/Kconfig
+>>> index 58ab63642e72..757e1d160640 100644
+>>> --- a/drivers/edac/Kconfig
+>>> +++ b/drivers/edac/Kconfig
+>>> @@ -539,4 +539,13 @@ config EDAC_DMC520
+>>>         Support for error detection and correction on the
+>>>         SoCs with ARM DMC-520 DRAM controller.
+>>>
+>>> +config EDAC_NPCM
+>>> +     tristate "Nuvoton NPCM DDR Memory Controller"
+>>> +     depends on ARCH_NPCM
+>>
+>> || COMPILE_TEST
+>> (and test if it compiles)
+>>
+>> (...)
+>>
+>>> +
+>>> +MODULE_DEVICE_TABLE(of, npcm_edac_of_match);
+>>> +
+>>> +static int npcm_edac_mc_probe(struct platform_device *pdev)
+>>> +{
+>>> +     const struct npcm_edac_platform_data *npcm_chip;
+>>> +     struct device *dev = &pdev->dev;
+>>> +     struct edac_mc_layer layers[1];
+>>> +     const struct of_device_id *id;
+>>> +     struct priv_data *priv_data;
+>>> +     struct mem_ctl_info *mci;
+>>> +     struct resource *res;
+>>> +     void __iomem *reg;
+>>> +     int ret = -ENODEV;
+>>> +     int irq;
+>>> +
+>>> +     id = of_match_device(npcm_edac_of_match, &pdev->dev);
+>>> +     if (!id)
+>>> +             return -ENODEV;
+>>
+>> Why do you need it? How such case is even possible?
+>>
+>>> +
+>>> +     npcm_chip = of_device_get_match_data(&pdev->dev);
+>>> +     if (!npcm_chip)
+>>> +             return -ENODEV;
+>>
+>> I wonder, how is it possible to have here NULL?
+>>
+> Both of_match_device() and of_device_get_match_data() can return NULL,
+> are we missing something?
 
-OK, I will check it out.
-thanks for your comments.
+I think your driver is OF-only, right? If yes, how is it possible to be
+here in probe() (meaning: being matched by of_device_id) and a few lines
+later do not match the same of_device_id?
 
-Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com> =E6=96=BC 2022=E5=
-=B9=B43=E6=9C=8811=E6=97=A5 =E9=80=B1=E4=BA=94
-=E4=B8=8B=E5=8D=884:58=E5=AF=AB=E9=81=93=EF=BC=9A
-
-> On 11/03/2022 02:42, Medad CChien wrote:
-> > Add device tree bindings for NPCM memory controller.
->
-> Use reasonable subject. You missed the verb describing what are you
-> doing here. See git history for this and other directories.
->
-> >
-> > Signed-off-by: Medad CChien <ctcchien@nuvoton.com>
-> > ---
-> >  .../edac/nuvoton,npcm-memory-controller.yaml  | 62 +++++++++++++++++++
-> >  1 file changed, 62 insertions(+)
-> >  create mode 100644
-> Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-controller.yam=
-l
-> >
-> > diff --git
-> a/Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-controller.y=
-aml
-> b/Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-controller.y=
-aml
-> > new file mode 100644
-> > index 000000000000..46f61b0806ee
-> > --- /dev/null
-> > +++
-> b/Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-controller.y=
-aml
-> > @@ -0,0 +1,62 @@
-> > +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/edac/npcm-edac.yaml#
->
-> Please, test your changes. This won't work.
->
-> Best regards,
-> Krzysztof
->
-
---0000000000000b8a5405da2706a2
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">OK, I will check it out.<div>thanks for your comments.</di=
-v><div><div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_=
-attr">Krzysztof Kozlowski &lt;<a href=3D"mailto:krzysztof.kozlowski@canonic=
-al.com" target=3D"_blank">krzysztof.kozlowski@canonical.com</a>&gt; =E6=96=
-=BC 2022=E5=B9=B43=E6=9C=8811=E6=97=A5 =E9=80=B1=E4=BA=94 =E4=B8=8B=E5=8D=
-=884:58=E5=AF=AB=E9=81=93=EF=BC=9A<br></div><blockquote class=3D"gmail_quot=
-e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
-;padding-left:1ex">On 11/03/2022 02:42, Medad CChien wrote:<br>
-&gt; Add device tree bindings for NPCM memory controller.<br>
-<br>
-Use reasonable subject. You missed the verb describing what are you<br>
-doing here. See git history for this and other directories.<br>
-<br>
-&gt; <br>
-&gt; Signed-off-by: Medad CChien &lt;<a href=3D"mailto:ctcchien@nuvoton.com=
-" target=3D"_blank">ctcchien@nuvoton.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 .../edac/nuvoton,npcm-memory-controller.yaml=C2=A0 | 62 ++++++++=
-+++++++++++<br>
-&gt;=C2=A0 1 file changed, 62 insertions(+)<br>
-&gt;=C2=A0 create mode 100644 Documentation/devicetree/bindings/edac/nuvoto=
-n,npcm-memory-controller.yaml<br>
-&gt; <br>
-&gt; diff --git a/Documentation/devicetree/bindings/edac/nuvoton,npcm-memor=
-y-controller.yaml b/Documentation/devicetree/bindings/edac/nuvoton,npcm-mem=
-ory-controller.yaml<br>
-&gt; new file mode 100644<br>
-&gt; index 000000000000..46f61b0806ee<br>
-&gt; --- /dev/null<br>
-&gt; +++ b/Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-contr=
-oller.yaml<br>
-&gt; @@ -0,0 +1,62 @@<br>
-&gt; +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause<br>
-&gt; +%YAML 1.2<br>
-&gt; +---<br>
-&gt; +$id: <a href=3D"http://devicetree.org/schemas/edac/npcm-edac.yaml#" r=
-el=3D"noreferrer" target=3D"_blank">http://devicetree.org/schemas/edac/npcm=
--edac.yaml#</a><br>
-<br>
-Please, test your changes. This won&#39;t work.<br>
-<br>
-Best regards,<br>
-Krzysztof<br>
-</blockquote></div></div></div></div>
-
---0000000000000b8a5405da2706a2--
+Best regards,
+Krzysztof
