@@ -1,93 +1,60 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0BCE64D8624
-	for <lists+openbmc@lfdr.de>; Mon, 14 Mar 2022 14:42:04 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 35D234D8951
+	for <lists+openbmc@lfdr.de>; Mon, 14 Mar 2022 17:35:30 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KHHlF64kSz30Ml
-	for <lists+openbmc@lfdr.de>; Tue, 15 Mar 2022 00:42:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KHMbN16H1z30R6
+	for <lists+openbmc@lfdr.de>; Tue, 15 Mar 2022 03:35:28 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm2 header.b=R6YE2Tzp;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=fJfcn2qD;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=C7VEwuHp;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.25;
- helo=out1-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org;
+ envelope-from=mchehab@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
- header.a=rsa-sha256 header.s=fm2 header.b=R6YE2Tzp; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm2 header.b=fJfcn2qD; 
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=C7VEwuHp; 
  dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
+ bits)) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KHMb136m6z2yws;
+ Tue, 15 Mar 2022 03:35:09 +1100 (AEDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KHHkn0RSgz2xrc
- for <openbmc@lists.ozlabs.org>; Tue, 15 Mar 2022 00:41:36 +1100 (AEDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailout.nyi.internal (Postfix) with ESMTP id 7F3D25C0158;
- Mon, 14 Mar 2022 09:41:33 -0400 (EDT)
-Received: from imap47 ([10.202.2.97])
- by compute5.internal (MEProxy); Mon, 14 Mar 2022 09:41:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- fuzziesquirrel.com; h=cc:cc:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:sender:subject:subject:to:to; s=fm2; bh=0XQ4WBGUJO+h9i
- 1TCKkqcE0YqsEqWK9ayXVbwCmHvcM=; b=R6YE2TzpiOaAqRoUZPmdH62knS60Mx
- ZZyHZjzBfGJAVaLblr38oaOAwICrDaWtW707skMcTMkRGF5jCG76LJE6/HZsq8Oj
- /GtV7136Pe2iM6Nu1uymsqMJFSWbh3mKTCi4Qw3nZyq+l2c9/BZKd4bXtBd9A/RF
- L1j3A2gFO7UEO8HBwzJh4qXD0zwvdaydOjN5o3qp0ExHlcjcJUsdcdOmjOGdbSrm
- 3YIpIEnblrqHGrFT7X5/Dmgs4aFAr1SwspdWMRI2JF2KDwF2W2bmWXGbHBgcYmMM
- juDXsTPpuFBXYph207toePM18iOGekMVxVNf9XaZeMk397FtPTvxjusA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm2; bh=0XQ4WBGUJO+h9i1TC
- KkqcE0YqsEqWK9ayXVbwCmHvcM=; b=fJfcn2qD5ZNTXnWMNfDZikeGXrWQBbXp6
- 9ptuhhMi/Q23PsjVPa2EQXVON+yQMDEg21USsAnZrdqXbMY0p9q1W99qKNUqaJ7j
- QmFGSjpD3ONjc9u0KOWrvAD0oiVvXke2jBk6Ju5VWohYu5cYL44C9V6IsZ9lScUl
- 1Vuvn0MiBz1u+MPZnDveLEJN1cq4WALda9E29TcehSLxVGTIelq6lk4OVN25kzd3
- NSzXdJuGE7VPNsBL0FeCzj23D57lWnPiazIvJi1772Lxk5mwwdwyjta7fB8HQ6wa
- WMs/zLaPtBOu5ufvoiDyR20kqluz3sv7absV59TPZ9Xk/s2jn2ytw==
-X-ME-Sender: <xms:DEYvYi3UGDg0m-B61t5Rc9ue7n6NfSicQ2NFb1Mqupe_nYpbSHFQ9A>
- <xme:DEYvYlHhpBhZSYV-MeyQ_cCjvaCgOnYMg_a-nWVVPaH7nWemNuKD2wKSl6wNfkuhg
- XL1Vwl5YdLGM0RNZkk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddruddvkedgheegucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfeehmdenucfjughrpefofg
- ggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedfuehrrgguuceuihhshhho
- phdfuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomheqnecugg
- ftrfgrthhtvghrnhepfeeileetgfejgeekffekueejffeiteefteelveekudfhjeehffeh
- jeelheelgfehnecuffhomhgrihhnpehophgvnhgsmhgtqdhprhhojhgvtghtrdighiiine
- cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghrrggu
- lhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
-X-ME-Proxy: <xmx:DUYvYq4Nr4zYwR_8dotS-nkcB7XgCVt00rv07ad3X3L-VEaClNG5Ng>
- <xmx:DUYvYj2THvJeMZlQ7cbE8_k0qIbuwYTCPhcLwiBwWmpvLNNOGhfBng>
- <xmx:DUYvYlFDzW1oMSLIYGnNGy_XelDCDKJf2TS5WPIGlDqgruMaNck5Cg>
- <xmx:DUYvYlB8vaYknqpnvV1VrubVJNPCyG9Xcxgv2D4xw2qf9ojLDnM4Sw>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id D95A627400FA; Mon, 14 Mar 2022 09:41:32 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-4778-g14fba9972e-fm-20220217.001-g14fba997
-Mime-Version: 1.0
-Message-Id: <207053ab-6c0d-4f26-9e75-178586c90804@www.fastmail.com>
-In-Reply-To: <77316d044b8c415fb07e751662869f30@wistron.com>
-References: <916794d657af450baccf0122cca5ea73@wistron.com>
- <9f9e145363cd4022ab7e5f72d12d77d1@wistron.com>
- <77316d044b8c415fb07e751662869f30@wistron.com>
-Date: Mon, 14 Mar 2022 09:40:51 -0400
-From: "Brad Bishop" <bradleyb@fuzziesquirrel.com>
-To: Bob_King@wistron.com, openbmc@lists.ozlabs.org
-Subject: Re: Openbmc commit question.
-Content-Type: text/plain
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 61F336135C;
+ Mon, 14 Mar 2022 16:35:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6711C340F7;
+ Mon, 14 Mar 2022 16:35:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1647275706;
+ bh=pGdMVo81L21nG9yhzpJ4FAUxkhj+Km9odTkR6fwp/F4=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=C7VEwuHpUixh3uASPaVRn5XFgd9qBRGXm2InpJIZ6XfvvsjPjR+9ZrW6HcrrFjoOg
+ MV3gZsgIY1iiIDA5KNGwjl/6OtPcVtZhV8n7KMSgpImb3Q1nJJzEUhO2fOg+T5Qw59
+ MggUQx1UmhRUcfSbtBKHnphRcKDJrItHbd3D11ntzxNW7DL8rfrI1Te4rP3GJF9CqU
+ T44iUq2ojBID43uO+t+LXsmiRdh/N4r4LjuFgVNPFiAcBZ2owDvLKMlxheRYSTkrI+
+ V30v3Gr9KM8I+COGWzXZrhVgIqnP7IRQEmQOyzaSKC9uBk9czJLczK4gZW3o4Krtwo
+ hhFow68/jywhw==
+Received: from mchehab by mail.kernel.org with local (Exim 4.94.2)
+ (envelope-from <mchehab@kernel.org>)
+ id 1nTney-001wwU-Gb; Mon, 14 Mar 2022 17:35:04 +0100
+From: Mauro Carvalho Chehab <mchehab@kernel.org>
+To: 
+Subject: [PATCH v2 06/67] media: platform: place Aspeed driver on a separate
+ dir
+Date: Mon, 14 Mar 2022 17:34:01 +0100
+Message-Id: <69c5ee8aae03bb9f9a8a825175a1cd0644eaf20c.1647274406.git.mchehab@kernel.org>
+X-Mailer: git-send-email 2.35.1
+In-Reply-To: <cover.1647274406.git.mchehab@kernel.org>
+References: <cover.1647274406.git.mchehab@kernel.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,21 +66,124 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jet_JC_Lee@wistron.com, geissonator@yahoo.com, Claire_Ku@wistron.com,
- Lulu_Su@wistron.com
+Cc: linux-arm-kernel@lists.infradead.org,
+ Jammy Huang <jammy_huang@aspeedtech.com>,
+ =?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+ linux-aspeed@lists.ozlabs.org, Zev Weiss <zev@bewilderbeest.net>,
+ Paul Menzel <pmenzel@molgen.mpg.de>, Andrew Jeffery <andrew@aj.id.au>,
+ openbmc@lists.ozlabs.org, Eddie James <eajames@linux.ibm.com>,
+ Jacopo Mondi <jacopo@jmondi.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ linux-kernel@vger.kernel.org, Yang Li <yang.lee@linux.alibaba.com>,
+ Joel Stanley <joel@jms.id.au>, Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+ Eugen Hristev <eugen.hristev@microchip.com>,
+ Dmitry Osipenko <digetx@gmail.com>, Mauro Carvalho Chehab <mchehab@kernel.org>,
+ linux-media@vger.kernel.org, Ming Qian <ming.qian@nxp.com>,
+ Laurent Pinchart <laurent.pinchart@ideasonboard.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Bob
+In order to cleanup the main platform media directory, move Aspeed
+driver to its own directory.
 
-On Tue, Mar 8, 2022, at 3:40 AM, Bob_King@wistron.com wrote:
-> Hi Brad,
->  
-> We have a problem that the members in OWNERS list can not +2 and merge.
-> Could you help for this?
-> https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/49786
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+---
 
-I sent OpenBMC GitHub organization invites to you and Jet.  After accepting it you should be able to give +2 and click the submit button. I can invite the others in the OWNERS file but I need their GitHub account usernames.
+To avoid mailbombing on a large number of people, only mailing lists were C/C on the cover.
+See [PATCH v2 00/67] at: https://lore.kernel.org/all/cover.1647274406.git.mchehab@kernel.org/
 
-Thanks,
-Brad
+ MAINTAINERS                                        |  2 +-
+ drivers/media/platform/Kconfig                     | 10 +---------
+ drivers/media/platform/Makefile                    |  2 +-
+ drivers/media/platform/aspeed/Kconfig              | 10 ++++++++++
+ drivers/media/platform/aspeed/Makefile             |  2 ++
+ drivers/media/platform/{ => aspeed}/aspeed-video.c |  0
+ 6 files changed, 15 insertions(+), 11 deletions(-)
+ create mode 100644 drivers/media/platform/aspeed/Kconfig
+ create mode 100644 drivers/media/platform/aspeed/Makefile
+ rename drivers/media/platform/{ => aspeed}/aspeed-video.c (100%)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 1a9fb0615925..1b6f48a660de 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3026,7 +3026,7 @@ L:	linux-media@vger.kernel.org
+ L:	openbmc@lists.ozlabs.org (moderated for non-subscribers)
+ S:	Maintained
+ F:	Documentation/devicetree/bindings/media/aspeed-video.txt
+-F:	drivers/media/platform/aspeed-video.c
++F:	drivers/media/platform/aspeed/
+ 
+ ASUS NOTEBOOKS AND EEEPC ACPI/WMI EXTRAS DRIVERS
+ M:	Corentin Chary <corentin.chary@gmail.com>
+diff --git a/drivers/media/platform/Kconfig b/drivers/media/platform/Kconfig
+index 1446a99159c5..10f453ff2717 100644
+--- a/drivers/media/platform/Kconfig
++++ b/drivers/media/platform/Kconfig
+@@ -50,15 +50,7 @@ source "drivers/media/platform/davinci/Kconfig"
+ 
+ source "drivers/media/platform/omap/Kconfig"
+ 
+-config VIDEO_ASPEED
+-	tristate "Aspeed AST2400 and AST2500 Video Engine driver"
+-	depends on V4L_PLATFORM_DRIVERS
+-	depends on VIDEO_V4L2
+-	select VIDEOBUF2_DMA_CONTIG
+-	help
+-	  Support for the Aspeed Video Engine (VE) embedded in the Aspeed
+-	  AST2400 and AST2500 SOCs. The VE can capture and compress video data
+-	  from digital or analog sources.
++source "drivers/media/platform/aspeed/Kconfig"
+ 
+ config VIDEO_SH_VOU
+ 	tristate "SuperH VOU video output driver"
+diff --git a/drivers/media/platform/Makefile b/drivers/media/platform/Makefile
+index e319044c57e9..18ec3d208483 100644
+--- a/drivers/media/platform/Makefile
++++ b/drivers/media/platform/Makefile
+@@ -6,6 +6,7 @@
+ # Place here, alphabetically sorted by directory
+ # (e. g. LC_ALL=C sort Makefile)
+ obj-y += allegro-dvt/
++obj-y += aspeed/
+ obj-y += am437x/
+ obj-y += amphion/
+ obj-y += atmel/
+@@ -47,7 +48,6 @@ obj-y += xilinx/
+ # Please place here only ancillary drivers that aren't SoC-specific
+ # Please keep it alphabetically sorted by Kconfig name
+ # (e. g. LC_ALL=C sort Makefile)
+-obj-$(CONFIG_VIDEO_ASPEED)		+= aspeed-video.o
+ obj-$(CONFIG_VIDEO_IMX_PXP)		+= imx-pxp.o
+ obj-$(CONFIG_VIDEO_MEM2MEM_DEINTERLACE)	+= m2m-deinterlace.o
+ obj-$(CONFIG_VIDEO_MUX)			+= video-mux.o
+diff --git a/drivers/media/platform/aspeed/Kconfig b/drivers/media/platform/aspeed/Kconfig
+new file mode 100644
+index 000000000000..5025e892844c
+--- /dev/null
++++ b/drivers/media/platform/aspeed/Kconfig
+@@ -0,0 +1,10 @@
++# SPDX-License-Identifier: GPL-2.0-only
++config VIDEO_ASPEED
++	tristate "Aspeed AST2400 and AST2500 Video Engine driver"
++	depends on V4L_PLATFORM_DRIVERS
++	depends on VIDEO_V4L2
++	select VIDEOBUF2_DMA_CONTIG
++	help
++	  Support for the Aspeed Video Engine (VE) embedded in the Aspeed
++	  AST2400 and AST2500 SOCs. The VE can capture and compress video data
++	  from digital or analog sources.
+diff --git a/drivers/media/platform/aspeed/Makefile b/drivers/media/platform/aspeed/Makefile
+new file mode 100644
+index 000000000000..1979af63dadd
+--- /dev/null
++++ b/drivers/media/platform/aspeed/Makefile
+@@ -0,0 +1,2 @@
++# SPDX-License-Identifier: GPL-2.0-only
++obj-$(CONFIG_VIDEO_ASPEED) += aspeed-video.o
+diff --git a/drivers/media/platform/aspeed-video.c b/drivers/media/platform/aspeed/aspeed-video.c
+similarity index 100%
+rename from drivers/media/platform/aspeed-video.c
+rename to drivers/media/platform/aspeed/aspeed-video.c
+-- 
+2.35.1
+
