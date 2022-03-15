@@ -2,67 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E36DE4D9122
-	for <lists+openbmc@lfdr.de>; Tue, 15 Mar 2022 01:17:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BB4414D921F
+	for <lists+openbmc@lfdr.de>; Tue, 15 Mar 2022 02:13:57 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KHYrk560pz30KV
-	for <lists+openbmc@lfdr.de>; Tue, 15 Mar 2022 11:17:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KHb5b4Q63z30NW
+	for <lists+openbmc@lfdr.de>; Tue, 15 Mar 2022 12:13:55 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=UkQj+FJP;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Ux34JU5Y;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::b29;
- helo=mail-yb1-xb29.google.com; envelope-from=linus.walleij@linaro.org;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f36;
+ helo=mail-qv1-xf36.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256
- header.s=google header.b=UkQj+FJP; dkim-atps=neutral
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com
- [IPv6:2607:f8b0:4864:20::b29])
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=Ux34JU5Y; dkim-atps=neutral
+Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com
+ [IPv6:2607:f8b0:4864:20::f36])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KHYrL4sZ4z2xTd
- for <openbmc@lists.ozlabs.org>; Tue, 15 Mar 2022 11:17:20 +1100 (AEDT)
-Received: by mail-yb1-xb29.google.com with SMTP id h126so34182621ybc.1
- for <openbmc@lists.ozlabs.org>; Mon, 14 Mar 2022 17:17:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KHb594SmBz2xXd
+ for <openbmc@lists.ozlabs.org>; Tue, 15 Mar 2022 12:13:31 +1100 (AEDT)
+Received: by mail-qv1-xf36.google.com with SMTP id jq9so13998020qvb.0
+ for <openbmc@lists.ozlabs.org>; Mon, 14 Mar 2022 18:13:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :cc:content-transfer-encoding;
- bh=1ArQOZVxzenABbqYZHdwfKyfyMVaevwYMywHZpJf/2c=;
- b=UkQj+FJPHmbwWu93FeD2QPZ0A4J6B+6JMEsDc0esiQoIJHNJtuG4RyGxU2+lfJM040
- p/4A0MliIJ3y3C8BGQd0Efhv3QUlD1jBG90dISCm9c6iV0oLoeE5NIGFA8ivdG71fjoj
- CxlBU2P/LyrsCZWFuITbHFk7WIYiPNTMuDns0C7TUqSvkyiK9s4oOguB/5AZgJZs+VjE
- igr4MruwLNtWN6+b0nb5FkqHbJ2fgXZ2Hh4RQ62LF8VjI4GkYqBEc0QImgoexZvgMdIt
- BswSgrRPFYvdX/f9a9F+ZVAjCcwzMYVdAYwlmEPCrP0CEsSz/Srk8t9yOuslom5Y664O
- m0AA==
+ bh=dwAn3W7JqTFJWnJs64oLAKVQi0GEmuJXd5CMnlgQgRo=;
+ b=Ux34JU5YorjpXisd5AMSmmAtUrKGTm9Mtqprl1tcSJdR9wJtcwpTcX15Y/Z40CP504
+ QCJtfE4Oqkh+sLBjAR7PdLdkn/xyldqxP8XkVHoJDo8eQS53Fo8YOgzvB3YxM7bUnjUh
+ hkaHGxrCmEEfZu9sEkeVL0d/WNJc8Afg4KuVI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc:content-transfer-encoding;
- bh=1ArQOZVxzenABbqYZHdwfKyfyMVaevwYMywHZpJf/2c=;
- b=f60PAYzx1EcLWszjzfL1wyji9rfa7FqmYmp2TznOSsYpGNSySzfNGkRvSa09gA4L6+
- g2kYOzJ46JDuiLDdUixEG9dZGhdr4PSKQ3QIRjcBcBccPv8JdGfX05j+ZVz1S/qUnmQW
- Y2Wzz3BMA8SgEQUDLBCzaO9gpET4phookw1ubDD478ZL75TL6sl/nMr/8svtC9Iq6Wpm
- h4hWV/Xf6rTc6ST7b6+zlINSxjwL2c4MqYkXkqso7qEqyA+39IMHjkxFtnnc9dvPZ2zO
- x7o1L+Kcpfhm1MS+F2mwVFwVfjbsVQ/5PdBU6V9ae93DSKCaz0h1pl5IkUxxtVc/C8eN
- tm4w==
-X-Gm-Message-State: AOAM5329CN7nOIMtvwuN5I5zYahaPoGyTDHc/UcOeXQYtDCSLOppI463
- jNDtsNcH6vynkdCwevmnJxU23eLmoi9hvecOFNMHMA==
-X-Google-Smtp-Source: ABdhPJz+8PCSwlfdQdIRRiqji2nDXgp0V81YBZrYP89nUdOUaEu7WIwbyG1lPyLfbQKvd4oNQlgu3RKgTq1/HgIJ0hc=
-X-Received: by 2002:a25:e710:0:b0:633:67d3:7264 with SMTP id
- e16-20020a25e710000000b0063367d37264mr3428789ybh.291.1647303436407; Mon, 14
- Mar 2022 17:17:16 -0700 (PDT)
+ bh=dwAn3W7JqTFJWnJs64oLAKVQi0GEmuJXd5CMnlgQgRo=;
+ b=xuDcjCuDgKMzfTpHxJhltyrprdXNnRbuK3gCWHm9mlD0e4QOCwj5IT1dkX26InDGD/
+ fQ7Rwq4gSzx6vGADtbGuIb/WO7eXpBUtT0ruv78c0XZaT9TBswPM2CRUo2TTGnnHf3J0
+ HjvPd8+VwVntPGEB0U+m2eznonrKGWAm+ClDXRkYTwSptrmoIQWyy6zEpOQbEnZGk9Tt
+ gpPUjouRIwQV41RmVI6XOvhW1fetfxWePOJjpw7X2Q1wmI6LXag7mo2uoKFfn3w46xuK
+ 8DFyXaseutySAhvG7qd3okwi5kb1Sb32N8PYZ8Y6mPgI5ap0huOm+m+ebAvzhVY1d7Yf
+ lPBg==
+X-Gm-Message-State: AOAM533iETqOb2t4nl1kT+tESt3UEo4W2N9/bvqQ0myRgzrftTqjCKaW
+ KLR174NeJftjIWLoV+DykaAOl4yGG6RCBeo1brs=
+X-Google-Smtp-Source: ABdhPJytKfY1Xv1hYw9fXk9v623Ig2P8yrtMnEqcEpDjV9v+JQJgqJQZKcLwZoqzgNdI/js1Wht0gpsieyZ3Mom37iY=
+X-Received: by 2002:a05:6214:2a85:b0:439:db71:f630 with SMTP id
+ jr5-20020a0562142a8500b00439db71f630mr16198122qvb.65.1647306807951; Mon, 14
+ Mar 2022 18:13:27 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220129115228.2257310-1-j.neuschaefer@gmx.net>
-In-Reply-To: <20220129115228.2257310-1-j.neuschaefer@gmx.net>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Tue, 15 Mar 2022 01:17:05 +0100
-Message-ID: <CACRpkdahSbWv4q7hoBAm_4+oKPEui9zX5-4m6wvPWfonWpbZUA@mail.gmail.com>
+ <CACRpkdahSbWv4q7hoBAm_4+oKPEui9zX5-4m6wvPWfonWpbZUA@mail.gmail.com>
+In-Reply-To: <CACRpkdahSbWv4q7hoBAm_4+oKPEui9zX5-4m6wvPWfonWpbZUA@mail.gmail.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 15 Mar 2022 01:13:15 +0000
+Message-ID: <CACPK8XeOE9mjmudvOS7uQg1e9Fh2e_cq1KTxkZsftbCo5YLk_A@mail.gmail.com>
 Subject: Re: [PATCH v5 0/9] Nuvoton WPCM450 pinctrl and GPIO driver
-To: =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: Linus Walleij <linus.walleij@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -76,23 +74,32 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>,
+Cc: devicetree <devicetree@vger.kernel.org>, Tomer Maimon <tmaimon77@gmail.com>,
  Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- Tali Perry <tali.perry1@gmail.com>, linux-gpio@vger.kernel.org,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
  Andy Shevchenko <andy.shevchenko@gmail.com>, Rob Herring <robh+dt@kernel.org>,
- Joel Stanley <joel@jms.id.au>, Benjamin Fair <benjaminfair@google.com>
+ Tali Perry <tali.perry1@gmail.com>, Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sat, Jan 29, 2022 at 12:57 PM Jonathan Neusch=C3=A4fer
-<j.neuschaefer@gmx.net> wrote:
+On Tue, 15 Mar 2022 at 00:17, Linus Walleij <linus.walleij@linaro.org> wrot=
+e:
+>
+> On Sat, Jan 29, 2022 at 12:57 PM Jonathan Neusch=C3=A4fer
+> <j.neuschaefer@gmx.net> wrote:
+>
+> >   dt-bindings: pinctrl: Add Nuvoton WPCM450
+> >   pinctrl: nuvoton: Add driver for WPCM450
+>
+> I applied these two to the pinctrl tree. Sorry for taking forever
+> to figure out that I needed to do this :/
 
->   dt-bindings: pinctrl: Add Nuvoton WPCM450
->   pinctrl: nuvoton: Add driver for WPCM450
+Thanks Linus. The device tree changes are queued for v5.18 too, so
+they will all go in at the same time.
 
-I applied these two to the pinctrl tree. Sorry for taking forever
-to figure out that I needed to do this :/
+Cheers,
 
-Yours,
-Linus Walleij
+Joel
