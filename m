@@ -1,54 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C6B54DD2CB
-	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 03:08:56 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 891D34DD2CC
+	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 03:09:31 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KKS9f2xPHz2xVq
-	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 13:08:54 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KKSBK3X82z30Jk
+	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 13:09:29 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=crapouillou.net header.i=@crapouillou.net header.a=rsa-sha256 header.s=mail header.b=DA60gc/c;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=walle.cc header.i=@walle.cc header.a=rsa-sha256 header.s=mail2016061301 header.b=Dlf3eoBU;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=crapouillou.net (client-ip=89.234.176.197; helo=aposti.net;
- envelope-from=paul@crapouillou.net; receiver=<UNKNOWN>)
+ smtp.mailfrom=walle.cc (client-ip=176.9.125.105; helo=ssl.serverraum.org;
+ envelope-from=michael@walle.cc; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=crapouillou.net header.i=@crapouillou.net
- header.a=rsa-sha256 header.s=mail header.b=DA60gc/c; 
+ secure) header.d=walle.cc header.i=@walle.cc header.a=rsa-sha256
+ header.s=mail2016061301 header.b=Dlf3eoBU; 
  dkim-atps=neutral
-X-Greylist: delayed 447 seconds by postgrey-1.36 at boromir;
- Fri, 18 Mar 2022 02:00:22 AEDT
-Received: from aposti.net (aposti.net [89.234.176.197])
+X-Greylist: delayed 507 seconds by postgrey-1.36 at boromir;
+ Fri, 18 Mar 2022 02:02:25 AEDT
+Received: from ssl.serverraum.org (ssl.serverraum.org [176.9.125.105])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KK9LG0mlFz2xVb
- for <openbmc@lists.ozlabs.org>; Fri, 18 Mar 2022 02:00:21 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=crapouillou.net;
- s=mail; t=1647528764; h=from:from:sender:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KK9Nd23kSz2yQG
+ for <openbmc@lists.ozlabs.org>; Fri, 18 Mar 2022 02:02:25 +1100 (AEDT)
+Received: from ssl.serverraum.org (web.serverraum.org [172.16.0.2])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ssl.serverraum.org (Postfix) with ESMTPSA id AD5E02223A;
+ Thu, 17 Mar 2022 15:53:48 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=walle.cc;
+ s=mail2016061301; t=1647528833;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IVYJfPU0rzzGa9hX02z9sV1yDGsv5kDMcOfss8bv8eQ=;
- b=DA60gc/c3O8sCB3ECGs5CZQzjoDCZ/waPK9k7Zq4U7G3cdq3ndgtsDeflLRpFdP5rWBvGm
- 6ZzEaKzLG70I+KcjgiY8Tf4K21S6xik2OJpvAba9nnqS+tQeil+vC9kxMNsHnFjShS9Jj4
- AeKBbEbYiofc5rJMCXES0b70ObmpB/M=
-Date: Thu, 17 Mar 2022 14:52:28 +0000
-From: Paul Cercueil <paul@crapouillou.net>
-Subject: Re: [PATCH 06/18] dt-bindings: irqchip: ingenic: include generic
- schema
-To: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Message-Id: <GB9W8R.4WH3AK5NKGDC@crapouillou.net>
-In-Reply-To: <20220317115705.450427-5-krzysztof.kozlowski@canonical.com>
-References: <20220317115542.450032-1-krzysztof.kozlowski@canonical.com>
- <20220317115705.450427-5-krzysztof.kozlowski@canonical.com>
+ bh=Hyh5t4TKfoidnQYqHVP2vqC50I83Xx9jmc0tLpP0DG0=;
+ b=Dlf3eoBU3JxuwJp0t9qUNEYrcPpx2XIxKnh5YLHVURl12SCaTP6ci7wAu3gdGlTVWlKHl+
+ tSQXuOteLrEmULdicZc70uyIH0OnWAh8NhuwC5eaXEmJCfrFO5p4k5J2pDDPkKbpJwFXr5
+ IRSWVfIURbWPWg3VZlrIL35zsEGQJzo=
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date: Thu, 17 Mar 2022 15:53:48 +0100
+From: Michael Walle <michael@walle.cc>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Subject: Re: [PATCH 08/18] dt-bindings: irqchip: kontron,sl28cpld: include
+ generic schema
+In-Reply-To: <20220317115705.450427-7-krzysztof.kozlowski@canonical.com>
+References: <20220317115542.450032-1-krzysztof.kozlowski@canonical.com>
+ <20220317115705.450427-7-krzysztof.kozlowski@canonical.com>
+User-Agent: Roundcube Webmail/1.4.13
+Message-ID: <9bbda22b8ad713bd901e209cda85d65d@walle.cc>
+X-Sender: michael@walle.cc
 X-Mailman-Approved-At: Fri, 18 Mar 2022 12:55:47 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -67,15 +75,16 @@ Cc: Nishanth Menon <nm@ti.com>, Bert Vermeulen <bert@biot.com>,
  Paul Walmsley <paul.walmsley@sifive.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>,
  Cristian Ciocaltea <cristian.ciocaltea@gmail.com>,
- Daniel Palmer <daniel@thingy.jp>, Sagar Kadam <sagar.kadam@sifive.com>,
- linux-riscv@lists.infradead.org, Suman Anna <s-anna@ti.com>,
- Mark-PK Tsai <mark-pk.tsai@mediatek.com>, Paul Burton <paulburton@kernel.org>,
- Marc Zyngier <maz@kernel.org>, openbmc@lists.ozlabs.org,
- John Crispin <john@phrozen.org>, Birger Koblitz <mail@birger-koblitz.de>,
- linux-oxnas@groups.io, devicetree@vger.kernel.org,
- Jason Cooper <jason@lakedaemon.net>, Manivannan Sadhasivam <mani@kernel.org>,
- linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
- Jonathan =?iso-8859-1?q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
+ Paul Cercueil <paul@crapouillou.net>, Daniel Palmer <daniel@thingy.jp>,
+ Sagar Kadam <sagar.kadam@sifive.com>, linux-riscv@lists.infradead.org,
+ Suman Anna <s-anna@ti.com>, Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
+ Paul Burton <paulburton@kernel.org>, Marc Zyngier <maz@kernel.org>,
+ openbmc@lists.ozlabs.org, John Crispin <john@phrozen.org>,
+ Birger Koblitz <mail@birger-koblitz.de>, linux-oxnas@groups.io,
+ devicetree@vger.kernel.org, Jason Cooper <jason@lakedaemon.net>,
+ Manivannan Sadhasivam <mani@kernel.org>, linux-kernel@vger.kernel.org,
+ linux-actions@lists.infradead.org,
+ =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
  Rob Herring <robh+dt@kernel.org>, Krzysztof Halasa <khalasa@piap.pl>,
  Santosh Shilimkar <ssantosh@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
  linux-arm-kernel@lists.infradead.org,
@@ -83,67 +92,49 @@ Cc: Nishanth Menon <nm@ti.com>, Bert Vermeulen <bert@biot.com>,
  Tero Kristo <kristo@kernel.org>, Linus Walleij <linusw@kernel.org>,
  Joakim Zhang <qiangqing.zhang@nxp.com>,
  Claudiu Beznea <claudiu.beznea@microchip.com>,
- Dinh Nguyen <dinguyen@kernel.org>, Michael Walle <michael@walle.cc>,
- Palmer Dabbelt <palmer@dabbelt.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Imre Kaloz <kaloz@openwrt.org>,
- Andreas =?iso-8859-1?q?F=E4rber?= <afaerber@suse.de>,
+ Dinh Nguyen <dinguyen@kernel.org>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Imre Kaloz <kaloz@openwrt.org>,
+ =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
  Lucas Stach <l.stach@pengutronix.de>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi,
-
-Le jeu., mars 17 2022 at 12:56:53 +0100, Krzysztof Kozlowski=20
-<krzysztof.kozlowski@canonical.com> a =E9crit :
+Am 2022-03-17 12:56, schrieb Krzysztof Kozlowski:
 > Include generic interrupt-controller.yaml schema, which enforces node
 > naming and other generic properties.
->=20
+> 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 
-Reviewed-by: Paul Cercueil <paul@crapouillou.net>
-
-Cheers,
--Paul
+Acked-by: Michael Walle <michael@walle.cc>
 
 > ---
->  .../bindings/interrupt-controller/ingenic,intc.yaml          | 5=20
-> ++++-
+>  .../bindings/interrupt-controller/kontron,sl28cpld-intc.yaml | 5 ++++-
 >  1 file changed, 4 insertions(+), 1 deletion(-)
->=20
-> diff --git=20
-> a/Documentation/devicetree/bindings/interrupt-controller/ingenic,intc.yam=
-l=20
-> b/Documentation/devicetree/bindings/interrupt-controller/ingenic,intc.yam=
-l
-> index 0358a7739c8e..74597a98f86c 100644
-> ---=20
-> a/Documentation/devicetree/bindings/interrupt-controller/ingenic,intc.yam=
-l
-> +++=20
-> b/Documentation/devicetree/bindings/interrupt-controller/ingenic,intc.yam=
-l
-> @@ -9,6 +9,9 @@ title: Ingenic SoCs interrupt controller devicetree=20
-> bindings
->  maintainers:
->    - Paul Cercueil <paul@crapouillou.net>
->=20
+> 
+> diff --git
+> a/Documentation/devicetree/bindings/interrupt-controller/kontron,sl28cpld-intc.yaml
+> b/Documentation/devicetree/bindings/interrupt-controller/kontron,sl28cpld-intc.yaml
+> index e8dfa6507f64..1d0939390631 100644
+> ---
+> a/Documentation/devicetree/bindings/interrupt-controller/kontron,sl28cpld-intc.yaml
+> +++
+> b/Documentation/devicetree/bindings/interrupt-controller/kontron,sl28cpld-intc.yaml
+> @@ -29,6 +29,9 @@ description: |
+>      7  n/a           not used
+>    ==== ============= ==================================
+> 
 > +allOf:
 > +  - $ref: /schemas/interrupt-controller.yaml#
 > +
 >  properties:
->    $nodename:
->      pattern: "^interrupt-controller@[0-9a-f]+$"
-> @@ -50,7 +53,7 @@ required:
+>    compatible:
+>      enum:
+> @@ -51,4 +54,4 @@ required:
 >    - "#interrupt-cells"
 >    - interrupt-controller
->=20
+> 
 > -additionalProperties: false
 > +unevaluatedProperties: false
->=20
->  examples:
->    - |
-> --
-> 2.32.0
->=20
 
-
+-- 
+-michael
