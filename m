@@ -2,67 +2,93 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6D9454DCB63
-	for <lists+openbmc@lfdr.de>; Thu, 17 Mar 2022 17:26:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 344A14DCDFC
+	for <lists+openbmc@lfdr.de>; Thu, 17 Mar 2022 19:51:32 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KKCG01qJFz30NC
-	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 03:26:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KKGSy0Cr5z30KL
+	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 05:51:30 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=a3+i7IVi;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=CL8exiWL;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::136;
- helo=mail-lf1-x136.google.com; envelope-from=hughsient@gmail.com;
+Authentication-Results: lists.ozlabs.org;
+ spf=softfail (domain owner discourages use of this
+ host) smtp.mailfrom=roeck-us.net (client-ip=192.185.50.93;
+ helo=gateway24.websitewelcome.com; envelope-from=linux@roeck-us.net;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=a3+i7IVi; dkim-atps=neutral
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com
- [IPv6:2a00:1450:4864:20::136])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256
+ header.s=default header.b=CL8exiWL; dkim-atps=neutral
+X-Greylist: delayed 81535 seconds by postgrey-1.36 at boromir;
+ Fri, 18 Mar 2022 05:51:02 AEDT
+Received: from gateway24.websitewelcome.com (gateway24.websitewelcome.com
+ [192.185.50.93])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KKCFb1hR2z2ynV
- for <openbmc@lists.ozlabs.org>; Fri, 18 Mar 2022 03:26:25 +1100 (AEDT)
-Received: by mail-lf1-x136.google.com with SMTP id b28so9903367lfc.4
- for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 09:26:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=ykQKHVK/b41zQGXTI/OW0EU3BRHK1r2hC/K9YIKXRBw=;
- b=a3+i7IViUD+Ql3pNHnOm7TnlwU8NsQ73xHoAuMcoPtPNmEyFG/psJNlVH8Bz4sOHs4
- NWVKT/738Lntvz/kNYvhTPf/3aB45nKP86pv3a7ZFfsLji72VSD6LysLCXzy8HNN4MPu
- +tw3/EPaDBNgIySFHg9CW63lRjHDE89IRUR592EozNhkHFQFQLKmCgp7Uba/s1OsO7Jk
- KW4+uvTLPvZRM0h8jegi9QOzDiWXKAnJ7AfwS8nA5ctgIjHdlM8Jengxq3vaidAzTcay
- HjHYRaMKeuQv8/VYP/aGT2CW1j1JgrCejYNBfHdjm5saym0cCc5SDUvmovp6pJZ6XEGN
- aeZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=ykQKHVK/b41zQGXTI/OW0EU3BRHK1r2hC/K9YIKXRBw=;
- b=zuQgjluWdghVA6kZ8VR9Rq33olV15DN3/Mv3O20wZ9gXhTYyLEUnSBAGIqCmJvXJlp
- 9t7dGCYAP2rKOcjZV0ppee2/4Y6LK4ATLPJdG7CsnLKKkaXEGxMzH4miAA0PHORjvhvI
- HaZQaTNLkrj0nWe+TzUd9PJ4IMn7N3M1b+kqejNz5zMRV+nnEpMJs7WZYNlXc/PsN07g
- HPadqLEPODf+D4Rq7ocanRgNDLgDIeXl3bDPF2TU8nd2clJoBWh6RGplTSZseEVGlcuq
- Ex1GPOsYQVXZ8OspOPoGOi1vqsECrI/NE0AIDucVgIDBQbdFZbdZQ27W/hocDZ/fiKNc
- 0y+g==
-X-Gm-Message-State: AOAM530pv9TQvmYOPz5gOnqdeQUlMyRISWOTfqhcoscVaiAUpgnL9zlk
- HErrrrm3f4KmirJ+bhupfJxHIGrfG4PZe7ISThmz7wYSfnU=
-X-Google-Smtp-Source: ABdhPJxu9k9hMCSuQAmzsI3ayNIaUb1E/KaFE1IhmDDhS6fdbz0EGnX6HHD4U9K8YxgwmiDE9HnrXqym8RhVrqPFxlQ=
-X-Received: by 2002:a05:6512:2248:b0:448:6ef2:9b2e with SMTP id
- i8-20020a056512224800b004486ef29b2emr3425252lfu.179.1647534380363; Thu, 17
- Mar 2022 09:26:20 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KKGSQ5r47z2xMQ
+ for <openbmc@lists.ozlabs.org>; Fri, 18 Mar 2022 05:51:01 +1100 (AEDT)
+Received: from cm14.websitewelcome.com (cm14.websitewelcome.com [100.42.49.7])
+ by gateway24.websitewelcome.com (Postfix) with ESMTP id 13F0E6BBF
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 13:50:56 -0500 (CDT)
+Received: from 162-215-252-75.unifiedlayer.com ([208.91.199.152])
+ by cmsmtp with SMTP
+ id UvD5nvQkWHnotUvD5n5zEj; Thu, 17 Mar 2022 13:50:56 -0500
+X-Authority-Reason: nr=8
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:Subject:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender
+ :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+ List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=bliZfqMjbtUe+Z7mtVzrTV+GXBLNQtnwAl5kZnYyJB4=; b=CL8exiWLR7XrnVE+ojkZHH+O6l
+ sOJmq8EkwYGUH2xuXE7Do8lfaqhGpiYv17psO8UtbBo5EsUHhLLEndTzltEUsR7oRVjDdsZCazuYT
+ mAI3KeuvD+lmeudaYPnpweZI53bLhfFKV434sex3m+Ur4ojLymm6PwqBEZ8iqK8QX3KHhHG8PHwoF
+ 3SoUKAsw73BFIw6ctbZNTgdYUIUX4mjS81rgW7adhEPjkr1UWeD2voY3iZVskHbFJPUhfbYTNTka4
+ 3O+vNDBvsF4PA9WVyt1W1f2RkbVXnPqyTlv0O+xQiKmX2vRcqcb6gMdZkRiHVaZ0N0OV/zm2TjJG9
+ fO90E1aQ==;
+Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net
+ ([108.223.40.66]:54314)
+ by bh-25.webhostbox.net with esmtpsa (TLS1.2) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
+ (envelope-from <linux@roeck-us.net>)
+ id 1nUvD5-0038xc-Gk; Thu, 17 Mar 2022 18:50:55 +0000
+Message-ID: <b284838a-6987-273c-ce00-592aa9ab51b2@roeck-us.net>
+Date: Thu, 17 Mar 2022 11:50:53 -0700
 MIME-Version: 1.0
-From: Richard Hughes <hughsient@gmail.com>
-Date: Thu, 17 Mar 2022 16:26:08 +0000
-Message-ID: <CAD2FfiEKfS-=ER9qJ9mftjCsiAiseytrDCcbiCn+EcyKOLd9Mg@mail.gmail.com>
-Subject: Software Bill of Materials
-To: openBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Content-Language: en-US
+To: Brandon Wyman <bjwyman@gmail.com>
+References: <20220311181014.3448936-1-bjwyman@gmail.com>
+ <fa8b2d9f-e5c9-73f4-3916-84e370748687@roeck-us.net>
+ <CAK_vbW2S07+S8+PrQnBLjvXYnLBXU06FHBvfM2zaT6RYx9HO+g@mail.gmail.com>
+ <582086fe-1cc3-d161-a866-f4726d04a254@roeck-us.net>
+ <CAK_vbW1Lfroo91cMxsLpuf-uuDwcsssG1=fjp3an_O5-FUHjMQ@mail.gmail.com>
+From: Guenter Roeck <linux@roeck-us.net>
+Subject: Re: [PATCH v2] hwmon: (pmbus/ibm-cffps) Add clear_faults debugfs entry
+In-Reply-To: <CAK_vbW1Lfroo91cMxsLpuf-uuDwcsssG1=fjp3an_O5-FUHjMQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-AntiAbuse: This header was added to track abuse,
+ please include it with any abuse report
+X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
+X-AntiAbuse: Original Domain - lists.ozlabs.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - roeck-us.net
+X-BWhitelist: no
+X-Source-IP: 108.223.40.66
+X-Source-L: No
+X-Exim-ID: 1nUvD5-0038xc-Gk
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net
+ [108.223.40.66]:54314
+X-Source-Auth: linux@roeck-us.net
+X-Email-Count: 5
+X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
+X-Local-Domain: yes
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,97 +100,88 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Eddie James <eajames@linux.ibm.com>, linux-kernel@vger.kernel.org,
+ Joel Stanley <joel@jms.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi all,
+On 3/17/22 09:12, Brandon Wyman wrote:
+> On Wed, Mar 16, 2022 at 3:14 PM Guenter Roeck <linux@roeck-us.net> wrote:
+>>
+>> On 3/16/22 13:03, Brandon Wyman wrote:
+>>> On Sun, Mar 13, 2022 at 11:36 PM Guenter Roeck <linux@roeck-us.net> wrote:
+>>>>
+>>>> On 3/11/22 10:10, Brandon Wyman wrote:
+>>>>> Add a clear_faults write-only debugfs entry for the ibm-cffps device
+>>>>> driver.
+>>>>>
+>>>>> Certain IBM power supplies require clearing some latched faults in order
+>>>>> to indicate that the fault has indeed been observed/noticed.
+>>>>>
+>>>>
+>>>> That is insufficient, sorry. Please provide the affected power supplies as
+>>>> well as the affected faults, and confirm that the problem still exists
+>>>> in v5.17-rc6 or later kernels - or, more specifically, in any kernel which
+>>>> includes commit 35f165f08950 ("hwmon: (pmbus) Clear pmbus fault/warning
+>>>> bits after read").
+>>>>
+>>>> Thanks,
+>>>> Guenter
+>>>
+>>> Sorry for the delay in responding. I did some testing with commit
+>>> 35f165f08950. I could not get that code to send the CLEAR_FAULTS
+>>> command to the power supplies.
+>>>
+>>> I can update the commit message to be more specific about which power
+>>> supplies need this CLEAR_FAULTS sent, and which faults. It is observed
+>>> with the 1600W power supplies (2B1E model). The faults that latch are
+>>> the VIN_UV and INPUT faults in the STATUS_WORD. The corresponding
+>>> STATUS_INPUT fault bits are VIN_UV_FAULT and Unit is Off.
+>>>
+>>
+>> The point is that the respective fault bits should be reset when the
+>> corresponding alarm attributes are read. This isn't about executing
+>> a CLEAR_FAULTS command, but about selectively resetting fault bits
+>> while ensuring that faults are reported at least once. Executing
+>> CLEAR_FAULTS is a big hammer.
+>>
+>> With the patch I pointed to in place, input (and other) faults should
+>> be reset after the corresponding alarm attributes are read, assuming
+>> that the condition no longer exists. If that does not happen, we should
+>> fix the problem instead of deploying the big hammer.
+>>
+>> Thanks,
+>> Guenter
+> 
+> Okay, I see what you are pointing out there. I had been mostly looking
+> at the "files" in the debugfs paths. Those do not end up running
+> through that pmbus_get_boolean() function, so the individual fault
+> clearing was not being attempted. The fault I was interested in
+> appears to be associated with in1_lcrti_alarm. Reading that will give
+> me a 1 if there is a VIN_UV fault, and then it sends 0x10 to
+> STATUS_INPUT. That clears out VIN_UV, but the STATUS_INPUT command was
+> returning 0x18. Nothing appears to handle clearing BIT(3), that 0x08
+> mask.
+> 
+> Should there be some kind of define for BIT(3) over in pmbus.h?
+> Something like PB_VOLTAGE_OFF? Somehow we need something using that in
+> sbit of the attributes. I had a quick hack that just OR'ed BIT(3) with
+> BIT(4) for that PB_VOLTAGE_UV_FAULT. That resulted in a clear of both
+> bits in STATUS_INPUT, and the faults clearing in STATUS_WORD.
+> 
+> It is not clear if there should be a separate alarm for that "Unit Off
+> For Insufficient Input Voltage", or if the one for in1_lcrit_alarm
+> could just be the two bits OR'ed into one mask. I can send a patch
+> with a proposal on how to fix this one bit not getting cleared.
+> 
 
-A Software Bill of Materials (aka SBoM) is something you=E2=80=99ve all
-probably heard of. In May last year the US president issued an
-executive order titled Improving the Nation=E2=80=99s Cybersecurity[1] in
-which it outlines the way that critical software used by various
-branches of the government should be more traceable and secure. One of
-the key pieces of information captured in a SBoM is =E2=80=9Cwho built what
-from where=E2=80=9D. This concept breaks down for firmware, where lots of
-different entities build each subsection in different ways, usually
-due to commercial and technical constraints.
+We don't have a separate standard attribute. I think the best approach
+would be to add a mask for bit 3 and or that mask for lcrit in
+vin_limit_attrs with PB_VOLTAGE_UV_FAULT. I'd suggest to name the
+define something like PB_VOLTAGE_VIN_OFF or PB_VOLTAGE_VIN_FAULT
+to clarify that the bit applies to the input.
 
-I've been thinking this about the SBoM problem from a firmware point
-of view, but in a "BMC image" it's often lumped together as one thing,
-but in reality a single BMC image might contain a BSP/FSP, microcode
-blob, an EC, a root filesystem and a lot more. Even something as
-seemingly-monolithic as a USB controller might contain a HAL from the
-silicon vendor, an ISV-supplied bootloader and an ODM-provided runtime
-firmware all built together.
-
-I=E2=80=99ve been spending the last few months putting all the pieces toget=
-her
-to make a firmware SBoM not just possible, but super easy for ISVs,
-OEMs, ODMs and IBVs to generate. This is so that vendors can make some
-plans on how to be in compliance with any future requirement from the
-US government, rather than reacting reactively. I was asked today if
-I'd considered "the BMC blob" and the answer until just now was "no"
--- apologies if I'm coming across like a 800-pound gorilla but I
-figured I'd get some discussion started.
-
-For UEFI firmware, one of the problems is how to embed the software ID
-(also known as SWID) metadata into each EFI binary. This is solved by
-putting coSWID metadata (a DTMF specification[2]) into a new COFF
-section called =E2=80=9CSBOM=E2=80=9D. This allows us to automatically capt=
-ure at
-build time some data, for instance the tree hash, and the files that
-were used to build the binary, etc. This isn't so relevant for BCMs,
-although some things like file hashes and tree hashes for the rootfs
-probably are. The uSWID readme[3] explains how to do this manually.
-
-The second problem is how to include SWID metadata for the blobs we
-either don=E2=80=99t build, or we can=E2=80=99t modify in any way, e.g. the=
- BSP/FSP or
-microcode. For this there=E2=80=99s an =E2=80=9Cexternal=E2=80=9D version o=
-f the same coSWID
-metadata which has a simple header we can find in the firmware image.
-This can either be included in the blob header, or just included as a
-file alongside the binary deliverable. The vendor can either use the
-[pip install] uswid command line (more examples in the uSWID readme)
-or more helpfully there=E2=80=99s also a web-generator[4] on the LVFS that =
-can
-spit out the tiny coSWID blob with the correct header ready to be
-included anywhere in the binary image.
-
-Open source firmware like coreboot is also in the same boat of course,
-but here we have more flexibility in how to generate and include the
-SWID metadata in the image. Some vendors are planning to work on this
-really soon, so we can have feature parity for free firmware like
-coreboot =E2=80=93 even when non-free blobs are included into the image so
-that it can actually work on real hardware. For firmware like NVME
-drives, NAS adaptors and the like the uSWID+coSWID blob can be
-included anywhere in the image =E2=80=93 even in the
-0xFF,0xFF,0xFF,0xFF,0xFF,0xFF =E2=80=9Cspare=E2=80=9D space left at the end=
- of the
-update image.
-
-This means the firmware blob will soon have the metadata from the IBV,
-ODM and OEM all sprinkled around the update binary. The LVFS now
-decompresses all the shards of the firmware, and does all the usual
-checks. At this point we also look for coSWID metadata in the EFI
-binaries and also uSWID+coSWID metadata for the non-free microcode or
-SATA blobs. From this we can save any of the detected SWID metadata to
-the database, and make it available as a SBoM HTML page[5] and also
-.zip archive[6] containing the raw SWID XML data. We're also planning
-a standalone tool which is more useful for the BMC firmware that's not
-ever going to be uploaded to the LVFS.
-
-If you do think it's helpful to add uSWID metadata to the BMC image
-please let me know; I think this makes just as much sense for firmware
-that sits on a USB hub as it does your system firmware. Comments
-welcome. Thanks!
-
-Richard
-
-[1] https://www.whitehouse.gov/briefing-room/presidential-actions/2021/05/1=
-2/executive-order-on-improving-the-nations-cybersecurity/
-[2] https://datatracker.ietf.org/doc/draft-ietf-sacm-coswid/
-[3] https://github.com/hughsie/python-uswid
-[4] https://fwupd.org/lvfs/uswid
-[5] https://fwupd.org/lvfs/components/12400/swid
-[6] https://fwupd.org/lvfs/components/12400/swid/archive
+Thanks,
+Guenter
