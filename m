@@ -1,76 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3BA514DC4D0
-	for <lists+openbmc@lfdr.de>; Thu, 17 Mar 2022 12:25:24 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A6B54DC6E2
+	for <lists+openbmc@lfdr.de>; Thu, 17 Mar 2022 13:57:06 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KK4ZB1KNtz308F
-	for <lists+openbmc@lfdr.de>; Thu, 17 Mar 2022 22:25:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KK6c03Xfqz30FR
+	for <lists+openbmc@lfdr.de>; Thu, 17 Mar 2022 23:57:04 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=Q6sIsGfi;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=dkim header.b=QMbTN2lz;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.22; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=alien8.de (client-ip=2a01:4f8:190:11c2::b:1457;
+ helo=mail.skyhub.de; envelope-from=bp@alien8.de; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=Q6sIsGfi; 
- dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KK4Yl0CRQz2xsW
- for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 22:24:57 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1647516277;
- bh=rz/kIL0ebTYiAvUOeOo0SqZ21Y/rMB/+G/lC/CVXaQo=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=Q6sIsGfiyqni72VWRmGARY9030nqerCMxTyZYypf7zOCJ2aoqz9MUCWmcZLLFClnp
- qWfwv1tuBNtmlrHUNubSsGLrUZMy8U2fhAfev797vI6yRwPfxyJ+Jesig/CBWOMCfS
- ksTFPWu8IIXBGgX2AUC/3qJ7M3gp9CBIzYDGXG/k=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mk0JM-1nxZTp1uqu-00kNsD; Thu, 17
- Mar 2022 12:24:37 +0100
-Date: Thu, 17 Mar 2022 12:24:35 +0100
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Jialin Zhang <zhangjialin11@huawei.com>
-Subject: Re: [PATCH -next] pinctrl: nuvoton: Fix return value check in
- wpcm450_gpio_register()
-Message-ID: <YjMac/pwFH5Z+Lxs@latitude>
-References: <20220317065851.495394-1-zhangjialin11@huawei.com>
+ unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256
+ header.s=dkim header.b=QMbTN2lz; dkim-atps=neutral
+X-Greylist: delayed 341 seconds by postgrey-1.36 at boromir;
+ Thu, 17 Mar 2022 23:56:41 AEDT
+Received: from mail.skyhub.de (mail.skyhub.de [IPv6:2a01:4f8:190:11c2::b:1457])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KK6bY38Wcz2y8P
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 23:56:41 +1100 (AEDT)
+Received: from [127.0.0.1] (pd95ca587.dip0.t-ipconnect.de [217.92.165.135])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+ (No client certificate requested)
+ by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id C17BE1EC063F;
+ Thu, 17 Mar 2022 13:50:41 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+ t=1647521442;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=EY+OVlK3FNjPeuxT1E19uUsmlLA7v3Vf0nxQLY63VP8=;
+ b=QMbTN2lzFuaJF5Ls5pbKgje3WyjB6xCyDSeGcHyA/A65kzY3q58KzvglWSOzq/ZQ6851av
+ pQKmCvSgjj6ZEKSEns6SZpuEOouk2AzEOLxqtxxYFbt9V9X+Jc2ZNnW1uSqOArBuptgc1U
+ pdM+HDeptKw1t7S5XFAjwrY6lp/QIEk=
+Date: Thu, 17 Mar 2022 12:50:38 +0000
+From: Boris Petkov <bp@alien8.de>
+To: Medad CChien <medadyoung@gmail.com>, rric@kernel.org, james.morse@arm.com, 
+ YSCHU@nuvoton.com, mchehab@kernel.org, tony.luck@intel.com,
+ benjaminfair@google.com, venture@google.com, KWLIU@nuvoton.com,
+ robh+dt@kernel.org, JJLIU0@nuvoton.com, KFTING@nuvoton.com,
+ avifishman70@gmail.com, yuenn@google.com, tali.perry1@gmail.com,
+ tmaimon77@gmail.com, ctcchien@nuvoton.com
+Subject: Re: [PATCH v5 3/3] EDAC: nuvoton: Add NPCM memory controller driver
+User-Agent: K-9 Mail for Android
+In-Reply-To: <20220317015854.18864-4-ctcchien@nuvoton.com>
+References: <20220317015854.18864-1-ctcchien@nuvoton.com>
+ <20220317015854.18864-4-ctcchien@nuvoton.com>
+Message-ID: <37361667-C932-4139-B649-52DE029BDEE5@alien8.de>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="gVWGy808rXGFxfpb"
-Content-Disposition: inline
-In-Reply-To: <20220317065851.495394-1-zhangjialin11@huawei.com>
-X-Provags-ID: V03:K1:3F1BaI76xUMu3QZtwU5ZFOFb2sBVwOzw0CAV5Hyo2V7xYEktmBw
- gZR2rtZY1OnA73RRDWfv6qQI2A0SZj0aJ2Q251Ogm04ZWRWjzd+XgLm9YwuyROraf7JeKbN
- fiSrUi4XYYc20D3HzXJtlubZ6RgxhjcDyqt1bTDggseLs7dhW+soMvdffLXmqpDLEdxiJ9p
- kxHyBXB7Yy0z1l5ZBWksg==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:NsN/WGv/mSs=:Cnc2bfkzOWHRjCU6R40qYH
- G2zybI/25E0oeQdE+CKGHePm8GLjf6KLzuIo0hEAaN0to2A/OgqpTx3qlpgz3I9BHYfKC/loh
- 1cNr86pyKNRTlDIkrLew5rIvK8NNZrj/LhHpMDyIwUfZd/8KhB7puCDozAwRze9dQr7QaRM50
- 5q9gwdQl/REjRTzc14FrHuCz4co/n1SfW5w0NHCER/ANOkc0SD954x+8zeuC3RtDMdM2FmmR0
- bj0uPG4OPD0mBICAsZ9ufaFpnUkZa3+MQR9wCXQuPsETzxH9Qlcy9jaUR2L7mSm6o3NL6YHqZ
- IKTA9qvZSptBKyZX6K1P7aNV1+VI/kRVj72Lg0U0+GPmbpyredNhqctdCX7IdIBTB97eXOkXB
- kx2QSynGjIP4+lyWYlh+lklHWzhpJ2a85k1knEh58gJemZfgxc6HVQuAPzlNmwTXoC2OG5OoO
- G+B3waaapTwRQWjl4aRrJoNaz/gLVaXfR1jcdqbTIBpB9/nQUv5B9T1lV7y/qmL4U5tkiBQxT
- CgxTtivrwchEl4WmBrsYWvhWrHz5cwpqLpB6+IQb5L2vh6F/xaPZx6cEzuFVW969xiyq19B2H
- Ash+q63zfWAjHJxFJKyjXv4ijFNYHRG0g3Eo4g+cYTCbfd4LJprQ6P9/kv0+LOc9CF3Fzix5R
- iM64LcsXdiMI/wAmgmhKVkamTpv1YhDtH2bXp5LGt2qHbgsEKJenWnyaUdbfgT+Eay13b37Fg
- JLpRarf84ML/S6DzwOe8r11LAMDGeSKeNg3FKDPZwAK9gla+WMhf9gWMYEqbmJRsXnmGKAONO
- fbXE3lvm0WGFhByZP4G30oefC+QRcDy6iyhUohGYT7XKafZlfctH6Ngp1Q6vlpMDSbJrAcSpq
- caeeiranVbCn6BMAeEfiljKB9NZBtQFagdylmWU5AAg9NfqpW7Z8LuAvvwi9lWPNVYmMC7cfF
- saoyMkVzsea1X/y4BGiDAz6aKLq9foVhslSCk9tA9VNQ8e8usEZBzQqm+LL8L3wdbmVTYYQiM
- 4lj7uuKZB1+klbGZ5hotUFyR0P5UdHEL7/dn90po5MbUuKPXm5eekkNwgV0jzcOWYdmIsDOWO
- Ux23WNuiEzRcig=
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,74 +69,29 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-gpio@vger.kernel.org, linus.walleij@linaro.org, j.neuschaefer@gmx.net,
- linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, linux-edac@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On March 17, 2022 1:58:54 AM UTC, Medad CChien <medadyoung@gmail=2Ecom> wro=
+te:
+>Add support for Nuvoton NPCM SoC=2E
+>
+>Signed-off-by: Medad CChien <ctcchien@nuvoton=2Ecom>
+>Reported-by: kernel test robot <lkp@intel=2Ecom>
 
---gVWGy808rXGFxfpb
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+What exactly has the robot reported here?
 
-On Thu, Mar 17, 2022 at 02:58:51PM +0800, Jialin Zhang wrote:
-> In case of error, the function devm_platform_ioremap_resource()
-> returns ERR_PTR() and never returns NULL. The NULL test in the
-> return value check should be replaced with IS_ERR().
+>---
+> drivers/edac/Kconfig     |   9 +
+> drivers/edac/Makefile    |   1 +
+> drivers/edac/npcm_edac=2Ec | 710 +++++++++++++++++++++++++++++++++++++++
+> 3 files changed, 720 insertions(+)
+> create mode 100644 drivers/edac/npcm_edac=2Ec
 
-Right.
+I don't see a MAINTAINERS file entry so that people can Cc you on bugs=2E =
+See the other EDAC drivers for an example=2E=20
 
->=20
-> Fixes: a1d1e0e3d80a ("pinctrl: nuvoton: Add driver for WPCM450")
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: Jialin Zhang <zhangjialin11@huawei.com>
-> ---
->  drivers/pinctrl/nuvoton/pinctrl-wpcm450.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->=20
-> diff --git a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c b/drivers/pinctrl/=
-nuvoton/pinctrl-wpcm450.c
-> index 661aa963e3fc..a71b684b9b44 100644
-> --- a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-> +++ b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-> @@ -1019,8 +1019,9 @@ static int wpcm450_gpio_register(struct platform_de=
-vice *pdev,
->  	int ret;
-> =20
->  	pctrl->gpio_base =3D devm_platform_ioremap_resource(pdev, 0);
-> -	if (!pctrl->gpio_base)
-> -		return dev_err_probe(dev, -ENOMEM, "Resource fail for GPIO controller\=
-n");
-> +	if (IS_ERR(pctrl->gpio_base))
-> +		return dev_err_probe(dev, PTR_ERR(pctrl->gpio_base),
-> +				     "Resource fail for GPIO controller\n");
-> =20
-
-Reviewed-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-
-
-Thanks!
-Jonathan
-
---gVWGy808rXGFxfpb
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmIzGjkACgkQCDBEmo7z
-X9uHzg/8CgMmkm5zckLAtMOv/xJMr+xEhsotnEUf87aBvGKvjZhDzhYXXu3hlAIM
-LLwNRfVpKdqupE3Hh3asBW113EiNH/cymS9jbTyxS02b9wn3G0a2svAGdFgYKsmC
-MT/5RWgUpj5eJo2q5PfJMRSQqQW4LP4ZPQyNvBPCqS93IFAJpuBAe4uQKcp589Kk
-0ZrPrOaodBKPv3V0Bdrole4gCuq67mV/erYRWx3/9nl9326jPDr9pzPtO9E63QQP
-uXaX5yyNw8EqVcJXyi4AFKF7C8iELvRwRrZ+xR2oW9mb/LEUohjFx13OPiX9rtaU
-px/EkKMCVvfyVOhSULlsGxGTZE7f2qHFPJkkHNAg59FC8dWP0MxZkVoz7q1UCaOd
-zRXd51IwY3yH2fmdAjDT6/p3xjcPumYtzgy4LikxvSG3kbcbqLDB+5R2p/kXmHMj
-HVNTkyDEYExRUByqIgDX5A6zWy4nZU8OgmGCZuzveRnZP+QSDnft6vRchLhwRE1P
-JF7Gm/Lwzb6kWOus1bYlAv7HvUAjPLdd8KKAtt6Fm9dR6cwyh1HfNDr7tuhuSDLu
-irk7KhP99uYuK0as5kOGy4yQjZ503uoEYgtaGNzMlCilAjHpe8rR5+cf+v5S8EG1
-wgPjX8O+lwINQxwyNrUB2cJ/IdLiZrWCvrLwGuwweiews3uD7jI=
-=2Ou/
------END PGP SIGNATURE-----
-
---gVWGy808rXGFxfpb--
+--=20
+Sent from a small device: formatting sux and brevity is inevitable=2E 
