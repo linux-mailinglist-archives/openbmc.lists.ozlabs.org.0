@@ -1,14 +1,14 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E2344DD2A8
-	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 02:57:18 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 440E74DD2A9
+	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 02:57:55 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KKRwD1LMsz301K
-	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 12:57:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KKRwx0p1pz30DW
+	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 12:57:53 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=canonical.com header.i=@canonical.com header.a=rsa-sha256 header.s=20210705 header.b=RIvnWzoK;
+	dkim=pass (2048-bit key; unprotected) header.d=canonical.com header.i=@canonical.com header.a=rsa-sha256 header.s=20210705 header.b=P6+3+KWL;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -18,62 +18,62 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  envelope-from=krzysztof.kozlowski@canonical.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=canonical.com header.i=@canonical.com
- header.a=rsa-sha256 header.s=20210705 header.b=RIvnWzoK; 
+ header.a=rsa-sha256 header.s=20210705 header.b=P6+3+KWL; 
  dkim-atps=neutral
 Received: from smtp-relay-internal-1.canonical.com
  (smtp-relay-internal-1.canonical.com [185.125.188.123])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KK5H245HDz2xsb
- for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 22:57:18 +1100 (AEDT)
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KK5H30Dvtz2xsb
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 22:57:19 +1100 (AEDT)
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id EB21F3F4BE
- for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 11:57:14 +0000 (UTC)
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id A7BC73F0EC
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 11:57:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1647518234;
- bh=VChXuM8K4QoDWKbjkubBo2C7YS9EHl+r3kLe9dbaCgo=;
+ s=20210705; t=1647518236;
+ bh=9zBbrIVySme8IHRcwhL+hzcd9fjni90AU02iDVUn98k=;
  h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
  MIME-Version;
- b=RIvnWzoKVJ+hbtq6+bzObfxgUdPhuE661YJauvJ9sKNPxRtrfDfPgJrvEyUJ7HOC0
- O1XpUNURmPZNZTOZ2gpFygWujmQU4j9xtmDsI3zRmGm0IIoQWY4TKA01HGd7aKU7Ed
- wsviopv5DETjEIZBIKjT+R9CejjvLu4+TBHAuLxbH0HHTE4nfq4sNX6zRMUDKdlGbT
- DXKs+JcZFEnM8sGtRCd2KVn1C2m3PUJJvWUl9Sp7DMi80msAWYyfpaCT2TvHLNlV/3
- 4ZGA55vwQ2UTNtgDwcaVBkPBRVhUFBJBzAcKA1Oi1nHpFYQzpodkkTGsTG/u3JZWXi
- 9qQ5oE2+9HXIg==
-Received: by mail-wm1-f71.google.com with SMTP id
- p8-20020a1c5448000000b0038a12987e1eso1545143wmi.6
- for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 04:57:14 -0700 (PDT)
+ b=P6+3+KWL9eflVqltWNmCGM7ivWIN6vu97+FWCh0Ey+btMhHM3MOT+PSYV6RQ4oNCA
+ e6GtjkxgSc3YtfPMxXRCmuPsQLXcCEprIS9gtHXJBSVG+cdFLSz9poYVJMC6PSC3bi
+ 1lgUujwz0pWHUAvB0z0ZslVuZhIl6rMCCqGw6wPzLeCe0E5Pe0UntaJgBhN7CHExfj
+ PH9oymNdn57O/0mh+fMez3rMR/IZEKGGnXO8WTo53nPeXncz36j2W1Bn4rG7a0D7lK
+ aJ0UdfleXRFzNljeDMbYM9V5Pg7my8QnCOTSyDkdKgagg+GVNPWo0A/S30tuEf9z04
+ NBw16rAAjkVtg==
+Received: by mail-wr1-f71.google.com with SMTP id
+ f18-20020adf9f52000000b00203d86759beso1476131wrg.11
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 04:57:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=VChXuM8K4QoDWKbjkubBo2C7YS9EHl+r3kLe9dbaCgo=;
- b=6m9pVetvLsoxbz0bWka1mRRbD9ENXZ4Y9gh2Yup2ojubFhQLdEspFlY7hNuz9PvdVx
- kV0pQP5jUqyuaT9/J6GJn2uqTLW8AsAMm+V22bancnwVTwl53Bibjk38l1la2mCGjMof
- 9f4Phds8QI0D4vslbz+W1Q+RSrd1an1kPIp0WhPcXCzOU8UkH8bRxLjKERzPM6zvND22
- NMfwp4SDqHJrLiNW9+W1Vk9lxj6x/KjdqpUBNW6iDR/Tz8BQAfaQk/r6wtTkhSOrLqF+
- wEtATuVI/jYNNrXMoVB99HCp80AUmJFZw/bfbY/jRhnq2chVWMUo0+zQcf1Dq28tkIym
- huVA==
-X-Gm-Message-State: AOAM530b4xr/fNmlqHyGVztFBHeBhq0lNar8kY5TvrBB+kyXJTxD5KIg
- NaFDxOrh0JbAXeA0UGQG3Gsthy/cdDTZWB1bzhxwiQGrudYwWs4Wi36zGzSl5fOnWjbEB1QM79v
- 9Ab8nKvs/+zH39ujXUIAW5CqnNL3IUyTrojpB
-X-Received: by 2002:a1c:7518:0:b0:381:c77:ceec with SMTP id
- o24-20020a1c7518000000b003810c77ceecmr3609306wmc.57.1647518234168; 
- Thu, 17 Mar 2022 04:57:14 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJxsiX6nbj0kfQADgRjJIDqdkJ617e7CvGmtStpgdMKD/NEmWTzdx19H/0Ce1BkkWrE8nM6zWw==
-X-Received: by 2002:a1c:7518:0:b0:381:c77:ceec with SMTP id
- o24-20020a1c7518000000b003810c77ceecmr3609267wmc.57.1647518233902; 
- Thu, 17 Mar 2022 04:57:13 -0700 (PDT)
+ bh=9zBbrIVySme8IHRcwhL+hzcd9fjni90AU02iDVUn98k=;
+ b=yWoWyPX7wY5+gxZzmlwBgXjozgWB/LOLtT6Bbo0rgooTASWFPVHOQjwEhZmARM71cW
+ 0bvRwcUMydS8/UB6N8z832tstKsKSLlDzuaEUiwvnrStNgfoojcvoxYnQ5Lz3HAA3Y1R
+ v79sqVfvtHnZWaONrrMNFabmvdRaUEeGm57LKkPJDgJWNqQ3FFo+KVVEzzH28lLT3Qqp
+ 8Qmtjay80INtYzWlJopeljbsQN3uDfFJKmblPa6YQZ1cXedONtLp0JIcZMVmUoT/xvyy
+ q8xHe/mNY0z/rNFwvPWQSyFdROqOssaPlpDuUnZJqsvtAhpwpijOpEgQJIFQ/PdjuucJ
+ DdMA==
+X-Gm-Message-State: AOAM530xfnDBhQpDhLt4Ku6fuPq36cUcrJOZsxQpnamY58ClZMEpgT/4
+ OSkMrHEyER9pTX8Je3OfPoS+nQfvx4ABvVK8EslkUD3BLhCZg1xlspzfIDxaQ7YgreN0srizOA8
+ TsZdGTT2f15dh2czu6+bAstTPv4Cr45Fg7jMN
+X-Received: by 2002:a05:6000:1ac7:b0:1f1:f9ee:7c57 with SMTP id
+ i7-20020a0560001ac700b001f1f9ee7c57mr3633448wry.52.1647518236421; 
+ Thu, 17 Mar 2022 04:57:16 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJwRVHHUrn4Gc7Ji2R1ZLqLDKn0bipCiLCnFH300rCQjMQzGcy481HRPG22f9lNVTtX9qFN6oQ==
+X-Received: by 2002:a05:6000:1ac7:b0:1f1:f9ee:7c57 with SMTP id
+ i7-20020a0560001ac700b001f1f9ee7c57mr3633417wry.52.1647518236248; 
+ Thu, 17 Mar 2022 04:57:16 -0700 (PDT)
 Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
  by smtp.gmail.com with ESMTPSA id
- r65-20020a1c4444000000b0038c48dd23b9sm5824900wma.5.2022.03.17.04.57.07
+ r65-20020a1c4444000000b0038c48dd23b9sm5824900wma.5.2022.03.17.04.57.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Mar 2022 04:57:12 -0700 (PDT)
+ Thu, 17 Mar 2022 04:57:15 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 To: Thomas Gleixner <tglx@linutronix.de>, Marc Zyngier <maz@kernel.org>,
  Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -103,10 +103,10 @@ To: Thomas Gleixner <tglx@linutronix.de>, Marc Zyngier <maz@kernel.org>,
  devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  linux-actions@lists.infradead.org, openbmc@lists.ozlabs.org,
  linux-riscv@lists.infradead.org, linux-oxnas@groups.io
-Subject: [PATCH 02/18] ARM: dts: ox820: align interrupt controller node name
+Subject: [PATCH 03/18] ARM: dts: socfpga: align interrupt controller node name
  with dtschema
-Date: Thu, 17 Mar 2022 12:56:49 +0100
-Message-Id: <20220317115705.450427-1-krzysztof.kozlowski@canonical.com>
+Date: Thu, 17 Mar 2022 12:56:50 +0100
+Message-Id: <20220317115705.450427-2-krzysztof.kozlowski@canonical.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220317115542.450032-1-krzysztof.kozlowski@canonical.com>
 References: <20220317115542.450032-1-krzysztof.kozlowski@canonical.com>
@@ -130,26 +130,40 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 Fixes dtbs_check warnings like:
 
-  gic@1000: $nodename:0: 'gic@1000' does not match '^interrupt-controller(@[0-9a-f,]+)*$'
+  $nodename:0: 'intc@fffed000' does not match '^interrupt-controller(@[0-9a-f,]+)*$'
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 ---
- arch/arm/boot/dts/ox820.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm/boot/dts/socfpga.dtsi         | 2 +-
+ arch/arm/boot/dts/socfpga_arria10.dtsi | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/ox820.dtsi b/arch/arm/boot/dts/ox820.dtsi
-index 90846a7655b4..dde4364892bf 100644
---- a/arch/arm/boot/dts/ox820.dtsi
-+++ b/arch/arm/boot/dts/ox820.dtsi
-@@ -287,7 +287,7 @@ local-timer@600 {
- 				clocks = <&armclk>;
- 			};
+diff --git a/arch/arm/boot/dts/socfpga.dtsi b/arch/arm/boot/dts/socfpga.dtsi
+index 7c1d6423d7f8..b8c5dd7860cb 100644
+--- a/arch/arm/boot/dts/socfpga.dtsi
++++ b/arch/arm/boot/dts/socfpga.dtsi
+@@ -46,7 +46,7 @@ pmu: pmu@ff111000 {
+ 		      <0xff113000 0x1000>;
+ 	};
  
--			gic: gic@1000 {
-+			gic: interrupt-controller@1000 {
- 				compatible = "arm,arm11mp-gic";
- 				interrupt-controller;
- 				#interrupt-cells = <3>;
+-	intc: intc@fffed000 {
++	intc: interrupt-controller@fffed000 {
+ 		compatible = "arm,cortex-a9-gic";
+ 		#interrupt-cells = <3>;
+ 		interrupt-controller;
+diff --git a/arch/arm/boot/dts/socfpga_arria10.dtsi b/arch/arm/boot/dts/socfpga_arria10.dtsi
+index 3ba431dfa8c9..f1e50d2e623a 100644
+--- a/arch/arm/boot/dts/socfpga_arria10.dtsi
++++ b/arch/arm/boot/dts/socfpga_arria10.dtsi
+@@ -38,7 +38,7 @@ pmu: pmu@ff111000 {
+ 		      <0xff113000 0x1000>;
+ 	};
+ 
+-	intc: intc@ffffd000 {
++	intc: interrupt-controller@ffffd000 {
+ 		compatible = "arm,cortex-a9-gic";
+ 		#interrupt-cells = <3>;
+ 		interrupt-controller;
 -- 
 2.32.0
 
