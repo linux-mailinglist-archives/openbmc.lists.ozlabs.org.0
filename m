@@ -1,94 +1,89 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 344A14DCDFC
-	for <lists+openbmc@lfdr.de>; Thu, 17 Mar 2022 19:51:32 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F48D4DD004
+	for <lists+openbmc@lfdr.de>; Thu, 17 Mar 2022 22:15:07 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KKGSy0Cr5z30KL
-	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 05:51:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KKKfd0RCBz30RG
+	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 08:15:05 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256 header.s=default header.b=CL8exiWL;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=BxdNT68w;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=softfail (domain owner discourages use of this
- host) smtp.mailfrom=roeck-us.net (client-ip=192.185.50.93;
- helo=gateway24.websitewelcome.com; envelope-from=linux@roeck-us.net;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=roeck-us.net header.i=@roeck-us.net header.a=rsa-sha256
- header.s=default header.b=CL8exiWL; dkim-atps=neutral
-X-Greylist: delayed 81535 seconds by postgrey-1.36 at boromir;
- Fri, 18 Mar 2022 05:51:02 AEDT
-Received: from gateway24.websitewelcome.com (gateway24.websitewelcome.com
- [192.185.50.93])
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=BxdNT68w; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KKGSQ5r47z2xMQ
- for <openbmc@lists.ozlabs.org>; Fri, 18 Mar 2022 05:51:01 +1100 (AEDT)
-Received: from cm14.websitewelcome.com (cm14.websitewelcome.com [100.42.49.7])
- by gateway24.websitewelcome.com (Postfix) with ESMTP id 13F0E6BBF
- for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 13:50:56 -0500 (CDT)
-Received: from 162-215-252-75.unifiedlayer.com ([208.91.199.152])
- by cmsmtp with SMTP
- id UvD5nvQkWHnotUvD5n5zEj; Thu, 17 Mar 2022 13:50:56 -0500
-X-Authority-Reason: nr=8
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=roeck-us.net; s=default; h=Content-Transfer-Encoding:Content-Type:
- In-Reply-To:Subject:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender
- :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=bliZfqMjbtUe+Z7mtVzrTV+GXBLNQtnwAl5kZnYyJB4=; b=CL8exiWLR7XrnVE+ojkZHH+O6l
- sOJmq8EkwYGUH2xuXE7Do8lfaqhGpiYv17psO8UtbBo5EsUHhLLEndTzltEUsR7oRVjDdsZCazuYT
- mAI3KeuvD+lmeudaYPnpweZI53bLhfFKV434sex3m+Ur4ojLymm6PwqBEZ8iqK8QX3KHhHG8PHwoF
- 3SoUKAsw73BFIw6ctbZNTgdYUIUX4mjS81rgW7adhEPjkr1UWeD2voY3iZVskHbFJPUhfbYTNTka4
- 3O+vNDBvsF4PA9WVyt1W1f2RkbVXnPqyTlv0O+xQiKmX2vRcqcb6gMdZkRiHVaZ0N0OV/zm2TjJG9
- fO90E1aQ==;
-Received: from 108-223-40-66.lightspeed.sntcca.sbcglobal.net
- ([108.223.40.66]:54314)
- by bh-25.webhostbox.net with esmtpsa (TLS1.2) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.94.2)
- (envelope-from <linux@roeck-us.net>)
- id 1nUvD5-0038xc-Gk; Thu, 17 Mar 2022 18:50:55 +0000
-Message-ID: <b284838a-6987-273c-ce00-592aa9ab51b2@roeck-us.net>
-Date: Thu, 17 Mar 2022 11:50:53 -0700
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KKKf940Xtz2yMD
+ for <openbmc@lists.ozlabs.org>; Fri, 18 Mar 2022 08:14:40 +1100 (AEDT)
+Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 22HJGP4M026413; 
+ Thu, 17 Mar 2022 21:14:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=apMRq4mae8+2j+tSOSavs0UnUWcHBNVoprohqfjTeuY=;
+ b=BxdNT68w8iBsWbACAY3WNWPJmjtDt8uehaqG3NXXOEekqqFrkt21n8p7gGxOam4uo3+i
+ SG2auXxErB4eIXj/FOv3j8ezxzeSo02kBqwKyDrcCfWj7MxdH0chII1bh+RnWqlY+SCZ
+ 02tlF07hX0oWQn8YGlh7EEmrhHjrknQEFFiocC2E+zDLGetChO4dGqnWT4AUHVcsBeZM
+ Oc/jof0jNtS6PaZ5RBKJBPeoRGAUvgrBDs6cBEHNktJo5pcW8XHpPm7m2d0kY35T+9ev
+ St9xpW5PluUzPuPQKC4gkJEsdd2tlpdtXOTjqJjm0X0TILT2uJngx9mYKRarh2qaXroU yg== 
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com
+ [169.53.41.122])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3ev04q880w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 17 Mar 2022 21:14:35 +0000
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+ by ppma04dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 22HLDVgh018860;
+ Thu, 17 Mar 2022 21:14:34 GMT
+Received: from b01cxnp22036.gho.pok.ibm.com (b01cxnp22036.gho.pok.ibm.com
+ [9.57.198.26]) by ppma04dal.us.ibm.com with ESMTP id 3erk5a7f51-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 17 Mar 2022 21:14:34 +0000
+Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
+ [9.57.199.108])
+ by b01cxnp22036.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 22HLEXse7275166
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 17 Mar 2022 21:14:33 GMT
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F3AD2B205F;
+ Thu, 17 Mar 2022 21:14:32 +0000 (GMT)
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id AD5C1B206E;
+ Thu, 17 Mar 2022 21:14:31 +0000 (GMT)
+Received: from v0005c16.aus.stglabs.ibm.com (unknown [9.211.82.208])
+ by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTP;
+ Thu, 17 Mar 2022 21:14:31 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: linux-spi@vger.kernel.org
+Subject: [PATCH] spi: fsi: Implement a timeout for polling status
+Date: Thu, 17 Mar 2022 16:14:26 -0500
+Message-Id: <20220317211426.38940-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Content-Language: en-US
-To: Brandon Wyman <bjwyman@gmail.com>
-References: <20220311181014.3448936-1-bjwyman@gmail.com>
- <fa8b2d9f-e5c9-73f4-3916-84e370748687@roeck-us.net>
- <CAK_vbW2S07+S8+PrQnBLjvXYnLBXU06FHBvfM2zaT6RYx9HO+g@mail.gmail.com>
- <582086fe-1cc3-d161-a866-f4726d04a254@roeck-us.net>
- <CAK_vbW1Lfroo91cMxsLpuf-uuDwcsssG1=fjp3an_O5-FUHjMQ@mail.gmail.com>
-From: Guenter Roeck <linux@roeck-us.net>
-Subject: Re: [PATCH v2] hwmon: (pmbus/ibm-cffps) Add clear_faults debugfs entry
-In-Reply-To: <CAK_vbW1Lfroo91cMxsLpuf-uuDwcsssG1=fjp3an_O5-FUHjMQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-AntiAbuse: This header was added to track abuse,
- please include it with any abuse report
-X-AntiAbuse: Primary Hostname - bh-25.webhostbox.net
-X-AntiAbuse: Original Domain - lists.ozlabs.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - roeck-us.net
-X-BWhitelist: no
-X-Source-IP: 108.223.40.66
-X-Source-L: No
-X-Exim-ID: 1nUvD5-0038xc-Gk
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: 108-223-40-66.lightspeed.sntcca.sbcglobal.net
- [108.223.40.66]:54314
-X-Source-Auth: linux@roeck-us.net
-X-Email-Count: 5
-X-Source-Cap: cm9lY2s7YWN0aXZzdG07YmgtMjUud2ViaG9zdGJveC5uZXQ=
-X-Local-Domain: yes
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: rdwRJAIw1DTGQsBOuy21UnzjMXm8lzOG
+X-Proofpoint-ORIG-GUID: rdwRJAIw1DTGQsBOuy21UnzjMXm8lzOG
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.850,Hydra:6.0.425,FMLib:17.11.64.514
+ definitions=2022-03-17_07,2022-03-15_01,2022-02-23_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0
+ phishscore=0 bulkscore=0 mlxscore=0 malwarescore=0 suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 clxscore=1011 mlxlogscore=880
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2202240000 definitions=main-2203170116
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,88 +95,72 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+Cc: openbmc@lists.ozlabs.org, broonie@kernel.org,
  Eddie James <eajames@linux.ibm.com>, linux-kernel@vger.kernel.org,
- Joel Stanley <joel@jms.id.au>
+ joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 3/17/22 09:12, Brandon Wyman wrote:
-> On Wed, Mar 16, 2022 at 3:14 PM Guenter Roeck <linux@roeck-us.net> wrote:
->>
->> On 3/16/22 13:03, Brandon Wyman wrote:
->>> On Sun, Mar 13, 2022 at 11:36 PM Guenter Roeck <linux@roeck-us.net> wrote:
->>>>
->>>> On 3/11/22 10:10, Brandon Wyman wrote:
->>>>> Add a clear_faults write-only debugfs entry for the ibm-cffps device
->>>>> driver.
->>>>>
->>>>> Certain IBM power supplies require clearing some latched faults in order
->>>>> to indicate that the fault has indeed been observed/noticed.
->>>>>
->>>>
->>>> That is insufficient, sorry. Please provide the affected power supplies as
->>>> well as the affected faults, and confirm that the problem still exists
->>>> in v5.17-rc6 or later kernels - or, more specifically, in any kernel which
->>>> includes commit 35f165f08950 ("hwmon: (pmbus) Clear pmbus fault/warning
->>>> bits after read").
->>>>
->>>> Thanks,
->>>> Guenter
->>>
->>> Sorry for the delay in responding. I did some testing with commit
->>> 35f165f08950. I could not get that code to send the CLEAR_FAULTS
->>> command to the power supplies.
->>>
->>> I can update the commit message to be more specific about which power
->>> supplies need this CLEAR_FAULTS sent, and which faults. It is observed
->>> with the 1600W power supplies (2B1E model). The faults that latch are
->>> the VIN_UV and INPUT faults in the STATUS_WORD. The corresponding
->>> STATUS_INPUT fault bits are VIN_UV_FAULT and Unit is Off.
->>>
->>
->> The point is that the respective fault bits should be reset when the
->> corresponding alarm attributes are read. This isn't about executing
->> a CLEAR_FAULTS command, but about selectively resetting fault bits
->> while ensuring that faults are reported at least once. Executing
->> CLEAR_FAULTS is a big hammer.
->>
->> With the patch I pointed to in place, input (and other) faults should
->> be reset after the corresponding alarm attributes are read, assuming
->> that the condition no longer exists. If that does not happen, we should
->> fix the problem instead of deploying the big hammer.
->>
->> Thanks,
->> Guenter
-> 
-> Okay, I see what you are pointing out there. I had been mostly looking
-> at the "files" in the debugfs paths. Those do not end up running
-> through that pmbus_get_boolean() function, so the individual fault
-> clearing was not being attempted. The fault I was interested in
-> appears to be associated with in1_lcrti_alarm. Reading that will give
-> me a 1 if there is a VIN_UV fault, and then it sends 0x10 to
-> STATUS_INPUT. That clears out VIN_UV, but the STATUS_INPUT command was
-> returning 0x18. Nothing appears to handle clearing BIT(3), that 0x08
-> mask.
-> 
-> Should there be some kind of define for BIT(3) over in pmbus.h?
-> Something like PB_VOLTAGE_OFF? Somehow we need something using that in
-> sbit of the attributes. I had a quick hack that just OR'ed BIT(3) with
-> BIT(4) for that PB_VOLTAGE_UV_FAULT. That resulted in a clear of both
-> bits in STATUS_INPUT, and the faults clearing in STATUS_WORD.
-> 
-> It is not clear if there should be a separate alarm for that "Unit Off
-> For Insufficient Input Voltage", or if the one for in1_lcrit_alarm
-> could just be the two bits OR'ed into one mask. I can send a patch
-> with a proposal on how to fix this one bit not getting cleared.
-> 
+The data transfer routines must poll the status register to
+determine when more data can be shifted in or out. If the hardware
+gets into a bad state, these polling loops may never exit. Prevent
+this by returning an error if a timeout is exceeded.
 
-We don't have a separate standard attribute. I think the best approach
-would be to add a mask for bit 3 and or that mask for lcrit in
-vin_limit_attrs with PB_VOLTAGE_UV_FAULT. I'd suggest to name the
-define something like PB_VOLTAGE_VIN_OFF or PB_VOLTAGE_VIN_FAULT
-to clarify that the bit applies to the input.
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+---
+ drivers/spi/spi-fsi.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-Thanks,
-Guenter
+diff --git a/drivers/spi/spi-fsi.c b/drivers/spi/spi-fsi.c
+index b6c7467f0b59..d403a7a3021d 100644
+--- a/drivers/spi/spi-fsi.c
++++ b/drivers/spi/spi-fsi.c
+@@ -25,6 +25,7 @@
+ 
+ #define SPI_FSI_BASE			0x70000
+ #define SPI_FSI_INIT_TIMEOUT_MS		1000
++#define SPI_FSI_STATUS_TIMEOUT_MS	100
+ #define SPI_FSI_MAX_RX_SIZE		8
+ #define SPI_FSI_MAX_TX_SIZE		40
+ 
+@@ -299,6 +300,7 @@ static int fsi_spi_transfer_data(struct fsi_spi *ctx,
+ 				 struct spi_transfer *transfer)
+ {
+ 	int rc = 0;
++	unsigned long end;
+ 	u64 status = 0ULL;
+ 
+ 	if (transfer->tx_buf) {
+@@ -315,10 +317,14 @@ static int fsi_spi_transfer_data(struct fsi_spi *ctx,
+ 			if (rc)
+ 				return rc;
+ 
++			end = jiffies + msecs_to_jiffies(SPI_FSI_STATUS_TIMEOUT_MS);
+ 			do {
+ 				rc = fsi_spi_status(ctx, &status, "TX");
+ 				if (rc)
+ 					return rc;
++
++				if (time_after(jiffies, end))
++					return -ETIMEDOUT;
+ 			} while (status & SPI_FSI_STATUS_TDR_FULL);
+ 
+ 			sent += nb;
+@@ -329,10 +335,14 @@ static int fsi_spi_transfer_data(struct fsi_spi *ctx,
+ 		u8 *rx = transfer->rx_buf;
+ 
+ 		while (transfer->len > recv) {
++			end = jiffies + msecs_to_jiffies(SPI_FSI_STATUS_TIMEOUT_MS);
+ 			do {
+ 				rc = fsi_spi_status(ctx, &status, "RX");
+ 				if (rc)
+ 					return rc;
++
++				if (time_after(jiffies, end))
++					return -ETIMEDOUT;
+ 			} while (!(status & SPI_FSI_STATUS_RDR_FULL));
+ 
+ 			rc = fsi_spi_read_reg(ctx, SPI_FSI_DATA_RX, &in);
+-- 
+2.27.0
+
