@@ -1,79 +1,79 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9EC194DD2BF
-	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 03:05:53 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 794734DD2BD
+	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 03:04:40 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KKS6738jFz30CT
-	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 13:05:51 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KKS4k2gZzz30Dv
+	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 13:04:38 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=canonical.com header.i=@canonical.com header.a=rsa-sha256 header.s=20210705 header.b=TWwjcdMC;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=canonical.com header.i=@canonical.com header.a=rsa-sha256 header.s=20210705 header.b=PX+BNk7A;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=canonical.com (client-ip=185.125.188.122;
- helo=smtp-relay-internal-0.canonical.com;
+ smtp.mailfrom=canonical.com (client-ip=185.125.188.123;
+ helo=smtp-relay-internal-1.canonical.com;
  envelope-from=krzysztof.kozlowski@canonical.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=canonical.com header.i=@canonical.com
- header.a=rsa-sha256 header.s=20210705 header.b=TWwjcdMC; 
+ header.a=rsa-sha256 header.s=20210705 header.b=PX+BNk7A; 
  dkim-atps=neutral
-Received: from smtp-relay-internal-0.canonical.com
- (smtp-relay-internal-0.canonical.com [185.125.188.122])
+Received: from smtp-relay-internal-1.canonical.com
+ (smtp-relay-internal-1.canonical.com [185.125.188.123])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KK5Ht33kXz30Bl
- for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 22:58:02 +1100 (AEDT)
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69])
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KK5Hp5Sjsz307B
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 22:57:58 +1100 (AEDT)
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id B2D173F62C
- for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 11:57:59 +0000 (UTC)
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 11C134003D
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 11:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1647518279;
- bh=9NVaJhFyk/7XIToYVXJ7m5aI93pLstb15hWUEyZBYi8=;
+ s=20210705; t=1647518273;
+ bh=nw83rNQU0DG2T5abexM+HrA3AT5FpHyglSBWAvBerB4=;
  h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
- MIME-Version:Content-Type;
- b=TWwjcdMCFWiUs+KkO3v3X2hDgH9Ltol1uoouQPpPi0EULbzge4AgFgmOmHJ7OTpb0
- Tp2G6lJrMx89z7oeBVu3DylMF9oo0h+I279zBJNxwjPBEv9btGjGXvP2rgYCeemjOt
- CYoOaWVSeaI89qgDgahxpQXmJ9CrHplPFZNXEx0h8ncSPwM2ltRO6kJwH3NW/F6bjo
- XlLGdi+3u59wVIarv8s48rnr/9cUUNraVROj3ty0Vn8jn8BNpwIPJzjd8mzBl7j1aT
- 9PhBUMHk7wE7bQqIk6ICsV0ET19iBpXg7Kwaj2+JfissmEJBjrkVWDhrJ+dzUtMUAf
- 7e+Pjj6KAu4IQ==
-Received: by mail-wr1-f69.google.com with SMTP id
- a5-20020adfdd05000000b001f023fe32ffso1458580wrm.18
- for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 04:57:59 -0700 (PDT)
+ MIME-Version;
+ b=PX+BNk7AXBlFX3rexADzGUt6CS9XYQXADMOUzPojwWzpDNnZOTar4JxU/KG5dAywp
+ CH8Fg91XihluSVGPzph+ds09XXGTU6woJxjHyV5pRSzW/bmT0ymPtmOULzVZpVrzmg
+ golHaNluiKh3wOxdACw2q5/0ZI8osYiFyJKtKMOCPydCBgyJzylPpY/MVUquCdklQB
+ v3gI+PvoOZlzKXFacxUGQJUGTxl2PYo50Zklm7+/SbW1yVUUxN+gX1m6eXjn/o0KiN
+ /2p+6dFxugyAZGX20AHRoC5RYPp+wrzZi3GFoHpaNb/gUFPZIb8fz+Ga48ntyhukDv
+ WjMgABwgZYJFw==
+Received: by mail-wm1-f72.google.com with SMTP id
+ o33-20020a05600c512100b0038a1d06e525so4197568wms.2
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 04:57:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=9NVaJhFyk/7XIToYVXJ7m5aI93pLstb15hWUEyZBYi8=;
- b=HEodY1xhXsA5Zd4CQdv7yRJihy5kmUTqLMCZsNG+37hU0s9oa6LYkvEK1ErpC1fl4z
- /8XUKuWm/SPWf4nERuqlYiEqXv+SIO4rIoaEpqE87xP/tH3Ec9JO3Wq23XrbaLdTP9vM
- W0APls8mCi03C9cDzFzfTjEK6Pf+3nwOi2jz01SFQLnht5cCmp2NMIkeyT8rXOvSeZyO
- AEMqral/c536l5aRr5JtEIGH2bi483CWZtG9mquNSVSMAQ88hU7slR7FSr6uZlZKjHr+
- Q4UkPmf/pXYMjDp8MMT+5LJOu2t3l6XjBt4Zo5M3IpMXPYOEezszxf/yVFGTsUf6PiM6
- ZONQ==
-X-Gm-Message-State: AOAM5304Ga3xwlBpO+B4HccyKAxqwBUSwpV7uMLkBqMdAI/ZBrokpCLa
- uNdWp3JiDw7fT0IZi/4iQ6t/eJYaDhHWlCdrJJm7t4oDWRRerVFZGGG3rDueqmP5QKRi6YUxheX
- LBzTSLOGOhd607jlomnqasxkwZ5Ev2hBCPm9s
-X-Received: by 2002:a05:6000:156f:b0:1f1:f99e:779e with SMTP id
- 15-20020a056000156f00b001f1f99e779emr3699072wrz.99.1647518266500; 
- Thu, 17 Mar 2022 04:57:46 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJymVAcTeO15IweAkScwvNQ6HG8sMEO3vGt45XqrwFfDK9yidy0suv6zYu7bE0rR0hIs55pTgQ==
-X-Received: by 2002:a05:6000:156f:b0:1f1:f99e:779e with SMTP id
- 15-20020a056000156f00b001f1f99e779emr3699013wrz.99.1647518266228; 
- Thu, 17 Mar 2022 04:57:46 -0700 (PDT)
+ bh=nw83rNQU0DG2T5abexM+HrA3AT5FpHyglSBWAvBerB4=;
+ b=ws5HT1F/TlQEC98c2gLCe9DJq4zUV4mPto+UxxaEw5/UHz1UrK+C9Zm6zJTMyEUcwT
+ JsxE1PddD8dep8WZKZMVfZ1U4kYlr1MUDX86ScZZyxvb9xBgkIqCZcQrkaAEuOX0HosG
+ M98QbIO+dWU59+4e4XkUsg6Q3OSMB1AqRGXWqlDjFG90smZR8y9PWfX3ms/nThSkjGxT
+ +utz7ITc5NURae9eELqPVDhl5HcDuk3EwXXLqTMCi/KstZLUw/WRG5RD2RMmW/EK5Xxm
+ 4aye8LKG2CiG2/7GoWWV4SJipiHhuHLKtsmYUQYOvn/WUi1gpADx+qKp5BtOvU9yAQqn
+ 8IKg==
+X-Gm-Message-State: AOAM533LNmC6jyeb6NLKkpa73uTlnUMoaE6X8sDG0MSJGx/ZpXuOv7/w
+ al8k8V9UZt/E9NlpM9r/0OYsSwrBov8G5sAFH4eZ9D62L9gp7mFNQNHZ4psaJbgkWUkSnbZ/Tf5
+ c7FsnyulpqOCzmLLs/yJ7JmjCjZbBn3eqDT+H
+X-Received: by 2002:adf:d1e5:0:b0:203:d609:38da with SMTP id
+ g5-20020adfd1e5000000b00203d60938damr3610501wrd.675.1647518269081; 
+ Thu, 17 Mar 2022 04:57:49 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJyjFXvDvHdQ01w0zg1EFDDh642eLMUzgHUDqkxXLdtcKH+7Ko3TzWiEFBj3msxkYp0Y5lUMFA==
+X-Received: by 2002:adf:d1e5:0:b0:203:d609:38da with SMTP id
+ g5-20020adfd1e5000000b00203d60938damr3610457wrd.675.1647518268881; 
+ Thu, 17 Mar 2022 04:57:48 -0700 (PDT)
 Received: from krzk-bin.. (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
  by smtp.gmail.com with ESMTPSA id
- r65-20020a1c4444000000b0038c48dd23b9sm5824900wma.5.2022.03.17.04.57.44
+ r65-20020a1c4444000000b0038c48dd23b9sm5824900wma.5.2022.03.17.04.57.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 17 Mar 2022 04:57:45 -0700 (PDT)
+ Thu, 17 Mar 2022 04:57:47 -0700 (PDT)
 From: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 To: Thomas Gleixner <tglx@linutronix.de>, Marc Zyngier <maz@kernel.org>,
  Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
@@ -103,15 +103,14 @@ To: Thomas Gleixner <tglx@linutronix.de>, Marc Zyngier <maz@kernel.org>,
  devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
  linux-actions@lists.infradead.org, openbmc@lists.ozlabs.org,
  linux-riscv@lists.infradead.org, linux-oxnas@groups.io
-Subject: [PATCH 14/18] dt-bindings: irqchip: nuvoton,
- wpcm450-aic: include generic schema
-Date: Thu, 17 Mar 2022 12:57:01 +0100
-Message-Id: <20220317115705.450427-13-krzysztof.kozlowski@canonical.com>
+Subject: [PATCH 15/18] dt-bindings: irqchip: realtek,
+ rtl-intc: include generic schema
+Date: Thu, 17 Mar 2022 12:57:02 +0100
+Message-Id: <20220317115705.450427-14-krzysztof.kozlowski@canonical.com>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20220317115542.450032-1-krzysztof.kozlowski@canonical.com>
 References: <20220317115542.450032-1-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Mailman-Approved-At: Fri, 18 Mar 2022 12:55:47 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -134,40 +133,32 @@ naming and other generic properties.
 
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 ---
- .../bindings/interrupt-controller/nuvoton,wpcm450-aic.yaml | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ .../bindings/interrupt-controller/realtek,rtl-intc.yaml      | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/interrupt-controller/nuvoton,wpcm450-aic.yaml b/Documentation/devicetree/bindings/interrupt-controller/nuvoton,wpcm450-aic.yaml
-index 9ce6804bdb99..285c20de0962 100644
---- a/Documentation/devicetree/bindings/interrupt-controller/nuvoton,wpcm450-aic.yaml
-+++ b/Documentation/devicetree/bindings/interrupt-controller/nuvoton,wpcm450-aic.yaml
-@@ -9,6 +9,9 @@ title: Nuvoton WPCM450 Advanced Interrupt Controller bindings
- maintainers:
-   - Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+diff --git a/Documentation/devicetree/bindings/interrupt-controller/realtek,rtl-intc.yaml b/Documentation/devicetree/bindings/interrupt-controller/realtek,rtl-intc.yaml
+index 9e76fff20323..4c00d44923b9 100644
+--- a/Documentation/devicetree/bindings/interrupt-controller/realtek,rtl-intc.yaml
++++ b/Documentation/devicetree/bindings/interrupt-controller/realtek,rtl-intc.yaml
+@@ -11,6 +11,9 @@ maintainers:
+   - Bert Vermeulen <bert@biot.com>
+   - John Crispin <john@phrozen.org>
  
 +allOf:
 +  - $ref: /schemas/interrupt-controller.yaml#
 +
  properties:
-   '#interrupt-cells':
-     const: 2
-@@ -21,14 +24,14 @@ properties:
-   reg:
-     maxItems: 1
+   compatible:
+     const: realtek,rtl-intc
+@@ -40,7 +43,7 @@ required:
+   - "#address-cells"
+   - interrupt-map
  
 -additionalProperties: false
--
- required:
-   - '#interrupt-cells'
-   - compatible
-   - reg
-   - interrupt-controller
- 
 +unevaluatedProperties: false
-+
+ 
  examples:
    - |
-     aic: interrupt-controller@b8002000 {
 -- 
 2.32.0
 
