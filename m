@@ -1,44 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C2234DC25B
-	for <lists+openbmc@lfdr.de>; Thu, 17 Mar 2022 10:10:33 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CAC74DC385
+	for <lists+openbmc@lfdr.de>; Thu, 17 Mar 2022 11:02:53 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KK1Zb167Sz30NC
-	for <lists+openbmc@lfdr.de>; Thu, 17 Mar 2022 20:10:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KK2kz3lFfz30CS
+	for <lists+openbmc@lfdr.de>; Thu, 17 Mar 2022 21:02:51 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=HLs9FneR;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=sandelman.ca (client-ip=176.58.120.209; helo=relay.sandelman.ca;
- envelope-from=mcr@sandelman.ca; receiver=<UNKNOWN>)
-X-Greylist: delayed 589 seconds by postgrey-1.36 at boromir;
- Thu, 17 Mar 2022 20:10:16 AEDT
-Received: from relay.sandelman.ca (unknown [176.58.120.209])
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b33;
+ helo=mail-yb1-xb33.google.com; envelope-from=tyler.sabdon@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=HLs9FneR; dkim-atps=neutral
+Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com
+ [IPv6:2607:f8b0:4864:20::b33])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KK1ZJ0Nv4z2xTq
- for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 20:10:11 +1100 (AEDT)
-Received: from dooku.sandelman.ca (unknown [62.218.44.74])
- by relay.sandelman.ca (Postfix) with ESMTPS id 469871F4BF;
- Thu, 17 Mar 2022 09:00:02 +0000 (UTC)
-Received: by dooku.sandelman.ca (Postfix, from userid 179)
- id 3CEC71A0461; Wed, 16 Mar 2022 15:45:31 -0400 (EDT)
-From: Michael Richardson <mcr@sandelman.ca>
-To: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Re: Security Working Group meeting - Wednesday March 16 - results
-In-reply-to: <fcc5d68f-a8d7-e857-370d-d1bf9971d018@linux.ibm.com>
-References: <bcdc1bcd-857c-9110-2ecc-aa3719ce1d10@linux.ibm.com>
- <fcc5d68f-a8d7-e857-370d-d1bf9971d018@linux.ibm.com>
-Comments: In-reply-to Joseph Reynolds <jrey@linux.ibm.com>
- message dated "Wed, 16 Mar 2022 12:51:11 -0500."
-X-Mailer: MH-E 8.6+git; nmh 1.7.1; GNU Emacs 26.3
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KK2kY6YWvz3069
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 21:02:28 +1100 (AEDT)
+Received: by mail-yb1-xb33.google.com with SMTP id v35so9185767ybi.10
+ for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 03:02:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=cMLjzJefK1zDVWxuTxUVJaetTqm0Mk0SxwcRRb7tcwI=;
+ b=HLs9FneRPtZQlEdYbMx2ceRHomZtCnSUthl1+3WIYvsTK7nl9SJG+3LlSybhIBpN0v
+ T7Y7i6OW99enviQTRrbhmt5WDrgtWXzPUZ8UKiOg3J44x2Vxci/3dhk8IeM7xnd/KzZ2
+ w56uiPK5iKJYblFjeufSQ2q5JPFCx6H8lUkGUlM4N1mc9py/8AYFdMDy3Mf5BUeCqbgi
+ iYxDqmIm8MjlNjmy1wuCN6fg54I6KxaY3YL3aow6O4YcCZvgRWiim45uCmsQHyJK1PZR
+ 4cg+O3llJ6MG7yaGqqy1x4lD/44FaFyXZwq8wHOClK4gdW9xQx6gPgJuw2T17//Q2XRZ
+ G2SQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=cMLjzJefK1zDVWxuTxUVJaetTqm0Mk0SxwcRRb7tcwI=;
+ b=IN+v5EfNsj5U3Llw6YjXvPllOwrchE/S2SdDpoZ7F9rlsWKgdYBpriot6s9TKkeJDP
+ ldxWnt1zJ/nr3JeO/82348ZiS7BgvExGr25NUgcoKP/3D/XHc2hJXi8BjLRww9TPwwcO
+ bUu0gVyX3bypUrkBHXhQnS3YTqrlRwIMjtaeqK5jfHH3OhoQtTV5CdgkPLlr/zu92n64
+ WSdW1Gy6hb7aqNNufm8wxh0qmfK5HJ75Njl6bIB4hJOWesziLZ5d94EijxxHBMAdbrNJ
+ iSkk3D0DX0M0iIkEMDitDrRG0vFG84n41CgeMT/Sjjr6JyIqiPkH/puukm5jDKjywaln
+ D2Sg==
+X-Gm-Message-State: AOAM5311MDFFB4F+R3eWcRNGYsDivxsXBoVKwH7c+ZcFurhZERGsS8an
+ gkjsheOPWEte7ghNdxyo13IYqeD3mIA6Q44vKKn9TIMr
+X-Google-Smtp-Source: ABdhPJzTa0kXYQRXUlzKikyreTQwrpvbNc+VYetoDOGPqzn4kRwp/9igtzcVHlLMApCipqcHxQtWjevPtzEErMb+Umw=
+X-Received: by 2002:a25:838c:0:b0:633:883b:b411 with SMTP id
+ t12-20020a25838c000000b00633883bb411mr4142485ybk.92.1647511345606; Thu, 17
+ Mar 2022 03:02:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Wed, 16 Mar 2022 15:45:31 -0400
-Message-ID: <211577.1647459931@dooku>
+From: Deng Tyler <tyler.sabdon@gmail.com>
+Date: Thu, 17 Mar 2022 18:02:14 +0800
+Message-ID: <CAO9PYRLE+ZirKtvjG2GU7AQqJdxVOuUG6M_N39Q0zHKNEiUO9w@mail.gmail.com>
+Subject: Sensor reading and monitoring
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="00000000000084b13105da67201e"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -50,62 +71,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---=-=-=
-Content-Type: text/plain; charset=utf-8
+--00000000000084b13105da67201e
+Content-Type: text/plain; charset="UTF-8"
+
+Hi All:
+    I try to deploy openbmc on my platform and I have an question. I found
+there are more then one application to read and monitor sensor such as
+phosphor-hwmon and dbus-sensors. Could someone recommand what is the best
+application combination for sensor reading, monitoring and sel generation,
+both discrete and threshold sensor supported, on Aspeed/x86 platform?
+
+Tyler
+
+--00000000000084b13105da67201e
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr">Hi All:<div>=C2=A0 =C2=A0 I try to deploy openbmc on my pl=
+atform and I have an question. I found there are more then one application =
+to read and monitor sensor such as phosphor-hwmon and dbus-sensors. Could s=
+omeone recommand what is the best application combination for sensor readin=
+g, monitoring and sel generation, both discrete and threshold sensor suppor=
+ted, on Aspeed/x86 platform?=C2=A0</div><div><br></div><div>Tyler</div></di=
+v>
 
-Joseph Reynolds <jrey@linux.ibm.com> wrote:
-    > We also discussed encrypting data like logs, and storing keys in a
-    > vault / trust zone /=C2=A0 TPM.
-
-Wouldn't it make most sense to encrypt them *to* an asymmetric (public) key=
- that is
-not on the BMC?   Or one can send them over encrypted syslog, or netconf to
-another server for safe keeping.
-Or are you thinking that you need to sign the logs?
-
-If the key is stored locally, even in a TPM, and the point is to be able to
-review logs locally, then the logs need to get decrypted, and that means th=
-at
-the key needs to be enabled/opened/activated locally, and which point,
-if there was a compromised system, the bad guy wins.
-
-I guess I wonder what the goals are here.
-
-    > See also encrypted volume https://github.com/openbmc/estoraged
-    > <https://github.com/openbmc/estoraged>
-
-Same issue: where is the key stored?
-
-=2D-=20
-]               Never tell me the odds!                 | ipv6 mesh network=
-s [=20
-]   Michael Richardson, Sandelman Software Works        | network architect=
-  [=20
-]     mcr@sandelman.ca  http://www.sandelman.ca/        |   ruby on rails  =
-  [=20
-=09
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQGzBAEBCgAdFiEEow/1qDVgAbWL2zxYcAKuwszYgEMFAmIyPlsACgkQcAKuwszY
-gENwtQwAkAB+tV5zgUtANQvsLgzbQb0uee4sagVjCWbvnldkcx+vMouFdvzNYESf
-LYq9jXWWEW7xlyFqB3jwjUiP/efa8TJzfKzEZW4U6ltQdkTNPD4QTsFrrGqKzPer
-Sb7u492MnwZoNwT3l2wGYx8xqR5rgWytYsdG8xl6oFgv8gdSY4ZTA2uAQyI+EP39
-GXAS9g1ExbgnDUAyJQn6DmWmEG8HblCLKP33ErkiKzLezdP/jJnSSTZFcJDkw95Y
-Xn3N6fW43wTJKc/WxPAHzESJGgrYunsqMjTdtgrrK7oOuZL/eUxk9le7/7reMBSV
-5Hwcd+20eJ5FCxQaa1SnMdGJvWJnVfIHiBwMT0ShmzIpVv5zgpkZHioDYQlJn1I2
-Bqgma3b4E0ypaEAaD5XkL1dVVufdTDU0qG/djNIzYqQZZOk9EQjykl85eZfn0syU
-l8SVAborB+DAWbaTG/cJZCuj2Jb/9RfisMIroCbQqTWvMQfFlSJJHoqJ7M1EqYSq
-CydvpyCG
-=c8Kk
------END PGP SIGNATURE-----
---=-=-=--
+--00000000000084b13105da67201e--
