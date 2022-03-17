@@ -2,76 +2,88 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26EA64DD2C4
-	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 03:07:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DE5F24DD2C8
+	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 03:08:20 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KKS8H0HmRz2xsW
-	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 13:07:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KKS8y63MLz30Kq
+	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 13:08:18 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=Mrd5vzWf;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=RKxfjAoJ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.15.15; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=Mrd5vzWf; 
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1;
+ helo=dfw.source.kernel.org; envelope-from=dinguyen@kernel.org;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=RKxfjAoJ; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KK5VL3kCtz2ypV
- for <openbmc@lists.ozlabs.org>; Thu, 17 Mar 2022 23:07:04 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1647518763;
- bh=FvAOnwGgm6mSzo4GWwbSbtaPsT3+hToFjrf6jLKI3b8=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=Mrd5vzWfzAzg7upBL2NOum5ESRYqII4I7LB5+xCbu7zbeJY72xXm/4wnCf2Vdv7yp
- 8RnGN798Lzhv2zIEvf8XnzN1IQAaTbHHnYWyH/BP90OEBQqNNN4lFVowp+PC5VaZVN
- qVmFcKpo7juvb+9R9dWAkzyIQoH7TPf/QiFA1uUs=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MfHEP-1o19yD3EMd-00gssK; Thu, 17
- Mar 2022 13:06:02 +0100
-Date: Thu, 17 Mar 2022 13:05:54 +0100
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Subject: Re: [PATCH 14/18] dt-bindings: irqchip: nuvoton, wpcm450-aic: include
- generic schema
-Message-ID: <YjMkIkaMD4aXW4p3@latitude>
-References: <20220317115542.450032-1-krzysztof.kozlowski@canonical.com>
- <20220317115705.450427-13-krzysztof.kozlowski@canonical.com>
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [IPv6:2604:1380:4641:c500::1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KK8vC51Wfz2xBL
+ for <openbmc@lists.ozlabs.org>; Fri, 18 Mar 2022 01:40:23 +1100 (AEDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 198CE61844;
+ Thu, 17 Mar 2022 14:40:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE802C340E9;
+ Thu, 17 Mar 2022 14:40:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1647528019;
+ bh=Q3v4f9Cx+g0ywwj+2gvhzmqAnrWp4/uVf5eK9e3PenY=;
+ h=Date:Subject:To:References:From:In-Reply-To:From;
+ b=RKxfjAoJuYmjcBCROW1LVYYlESbYRnrUeqZlxl2BV0pf83G66g7LNWI0htc3e8fL5
+ q201sH5O0EStkAh/ls60L2xn7IlFCDUsFG0s+SE9j0Dsyd/creIsNMsgCAJy12Nqr9
+ E0HcuIyZceC7R8zgA2rPfpF4XA2H2TIFKP4ghGqVkg1/x+L6rxwWHzIXkp3AnjZ1Jk
+ p9BSTe+3EIGg8jUavJl7MSSZO+4qY9FZOsBFf7yG0JiECET1qg8XjazxA2YHhEbsm2
+ TAFrej3nfe+tknZ2wQMdxx73x0cnHIatXHSuZttEbBRjhrwHQJ+CB6DPxe1c12QDiK
+ gmwZi8+SqmwMA==
+Message-ID: <25338f4e-e5cb-7397-efa3-12501558ac94@kernel.org>
+Date: Thu, 17 Mar 2022 09:39:49 -0500
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="6We2K2LccY5TYmIH"
-Content-Disposition: inline
-In-Reply-To: <20220317115705.450427-13-krzysztof.kozlowski@canonical.com>
-X-Provags-ID: V03:K1:HgL/c7y20/2o06wU7DUbHTGm2dtdKvONyD2DCEUDcT19aKB9dp/
- 4YFswLqVeUacbJfuaUDINBhpX8w3EAd6v+d4BzRlu0XisSUP17PNuWg/7WN/pvmXHwcLhw9
- f4fq2mw5u+m5ub1UFpJm0YNLy237jEHwhPjQxCZUJ3KWdkHY3PtDNxdr4n9t/F25/ik6h9M
- JcWSfb1x/nlLhWFmAaahQ==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:Q+LaKt2UmKs=:OOCnDGzegq7M4POFDUWR4b
- M7csAE3emHW6sJoi+gtTJIMwzgN+Ow+9Nt4CL/4QdsUnbrvl6FfU09hizYzSvEbtmPklO99ap
- SjjPAHFGB6621T7B55di6QPcgLDFQUXK3tw+a2zeB00U9ijpUWWAlrd+KvzKhu9QnpACnatEn
- e0InZ2dITD8ae/tJ3bxreUEbEysNjf/WeUnmbz3Q7olzEIaiKh8qN0uJxjfBUXDjXqiCWTspP
- KxK8nEUG9hXMbI3oQ7wNwalMarGKFDlCwAFodPp0eAGNlNAU8J/Ee4d9wYAVFxTjwNKOgSpsn
- 3FUpyE7Uh2bRsibCBetlUjV20Ps/9Fq25jBodwt+QiEgDCq68M0T/HBprD/j08dCu7tgj5OOW
- +iBcP8m9X8CP2UYG7gXOKTCqVf5HFI99GAJ6DrvnVOlVaI5udZfWY485qmUZhZ5iBYipb1vAh
- 2Vj+8UdkO8A+w3TzocjW9InzwT0NdkCQpVZDjjwDbmpU53zIpct7/TZAwWr7/2D9sIp/SraMM
- rqAUQbPBEQFKsFNxDwRDifg4x4V+S/e7d0vaqIJGHY0FmEN8kQSpSU62mXfjapbft3OfaK3B9
- k6wxO0MXZYzYKONEPWvVU/IBPPIKxDoWMEyaMvb4V2zWoQlQbzOUZqQBLCBdKLLEmxu2xhYuj
- lcedH/Z8K/h8ctpENTCkzJmPmRNFWgNHvLE9fjwYF/w3ANCm76XdAEjQPPYZaLceFg2exs/Kc
- VMU7W4zqdO9hbpQkyFVecUgjvQJfvQghIk32+Hi1xlwgrK+37ne91k1/tnHfrMLZGQkg1650Q
- SmoN4Y7j9Uz/mbTROEqvASzxjOayimJMBQDKCHhkaM0/rW/PJwsabtmYH5YOyeXnHCnHyn18t
- ARwSlMVdGg6djVHg8TnK85kyvqjGSQ7xSfLTkQJ5gdqRbUlASCJt9p49BAAF3bWgTj/4eHMZJ
- p4qnimyKYT1jcZmZtmc32m/MmClphx33oBtSPt1Ux/MI6PSyiLbK8oC061wAUbgfLXpqWbhI/
- 1IHaDPvocdBDAUmVTrMgzWsGRJvhvaWU2GzwTcWKppO5gQb81i56C0EZKylcDKUuGCXQzVCkV
- qWMwg/tfQIUG8I=
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH 03/18] ARM: dts: socfpga: align interrupt controller node
+ name with dtschema
+Content-Language: en-US
+To: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+ Thomas Gleixner <tglx@linutronix.de>, Marc Zyngier <maz@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ =?UTF-8?Q?Andreas_F=c3=a4rber?= <afaerber@suse.de>,
+ Manivannan Sadhasivam <mani@kernel.org>, Linus Walleij <linusw@kernel.org>,
+ Imre Kaloz <kaloz@openwrt.org>, Krzysztof Halasa <khalasa@piap.pl>,
+ Michael Walle <michael@walle.cc>, Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
+ Daniel Palmer <daniel@thingy.jp>, =?UTF-8?Q?Jonathan_Neusch=c3=a4fer?=
+ <j.neuschaefer@gmx.net>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>, Nishanth Menon <nm@ti.com>,
+ Tero Kristo <kristo@kernel.org>, Santosh Shilimkar <ssantosh@kernel.org>,
+ Neil Armstrong <narmstrong@baylibre.com>,
+ Cristian Ciocaltea <cristian.ciocaltea@gmail.com>,
+ Joakim Zhang <qiangqing.zhang@nxp.com>, Lucas Stach
+ <l.stach@pengutronix.de>, Paul Cercueil <paul@crapouillou.net>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Claudiu Beznea <claudiu.beznea@microchip.com>,
+ Jason Cooper <jason@lakedaemon.net>, Paul Burton <paulburton@kernel.org>,
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+ Birger Koblitz <mail@birger-koblitz.de>, Bert Vermeulen <bert@biot.com>,
+ John Crispin <john@phrozen.org>, Geert Uytterhoeven
+ <geert+renesas@glider.be>, Sagar Kadam <sagar.kadam@sifive.com>,
+ Suman Anna <s-anna@ti.com>, Lokesh Vutla <lokeshvutla@ti.com>,
+ linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-actions@lists.infradead.org,
+ openbmc@lists.ozlabs.org, linux-riscv@lists.infradead.org,
+ linux-oxnas@groups.io
+References: <20220317115542.450032-1-krzysztof.kozlowski@canonical.com>
+ <20220317115705.450427-2-krzysztof.kozlowski@canonical.com>
+From: Dinh Nguyen <dinguyen@kernel.org>
+In-Reply-To: <20220317115705.450427-2-krzysztof.kozlowski@canonical.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-Mailman-Approved-At: Fri, 18 Mar 2022 12:55:47 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -84,113 +96,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Nishanth Menon <nm@ti.com>, Bert Vermeulen <bert@biot.com>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Neil Armstrong <narmstrong@baylibre.com>, Lokesh Vutla <lokeshvutla@ti.com>,
- Paul Walmsley <paul.walmsley@sifive.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Cristian Ciocaltea <cristian.ciocaltea@gmail.com>,
- Paul Cercueil <paul@crapouillou.net>, Daniel Palmer <daniel@thingy.jp>,
- Sagar Kadam <sagar.kadam@sifive.com>, linux-riscv@lists.infradead.org,
- Suman Anna <s-anna@ti.com>, Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
- Paul Burton <paulburton@kernel.org>, Marc Zyngier <maz@kernel.org>,
- openbmc@lists.ozlabs.org, John Crispin <john@phrozen.org>,
- Birger Koblitz <mail@birger-koblitz.de>, linux-oxnas@groups.io,
- devicetree@vger.kernel.org, Jason Cooper <jason@lakedaemon.net>,
- Manivannan Sadhasivam <mani@kernel.org>, linux-kernel@vger.kernel.org,
- linux-actions@lists.infradead.org,
- Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- Rob Herring <robh+dt@kernel.org>, Krzysztof Halasa <khalasa@piap.pl>,
- Santosh Shilimkar <ssantosh@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
- linux-arm-kernel@lists.infradead.org,
- Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
- Tero Kristo <kristo@kernel.org>, Linus Walleij <linusw@kernel.org>,
- Joakim Zhang <qiangqing.zhang@nxp.com>,
- Claudiu Beznea <claudiu.beznea@microchip.com>,
- Dinh Nguyen <dinguyen@kernel.org>, Michael Walle <michael@walle.cc>,
- Palmer Dabbelt <palmer@dabbelt.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Imre Kaloz <kaloz@openwrt.org>,
- Andreas =?utf-8?Q?F=C3=A4rber?= <afaerber@suse.de>,
- Lucas Stach <l.stach@pengutronix.de>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---6We2K2LccY5TYmIH
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Thu, Mar 17, 2022 at 12:57:01PM +0100, Krzysztof Kozlowski wrote:
-> Include generic interrupt-controller.yaml schema, which enforces node
-> naming and other generic properties.
->=20
+On 3/17/22 06:56, Krzysztof Kozlowski wrote:
+> Fixes dtbs_check warnings like:
+> 
+>    $nodename:0: 'intc@fffed000' does not match '^interrupt-controller(@[0-9a-f,]+)*$'
+> 
 > Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 > ---
+>   arch/arm/boot/dts/socfpga.dtsi         | 2 +-
+>   arch/arm/boot/dts/socfpga_arria10.dtsi | 2 +-
+>   2 files changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm/boot/dts/socfpga.dtsi b/arch/arm/boot/dts/socfpga.dtsi
+> index 7c1d6423d7f8..b8c5dd7860cb 100644
+> --- a/arch/arm/boot/dts/socfpga.dtsi
+> +++ b/arch/arm/boot/dts/socfpga.dtsi
+> @@ -46,7 +46,7 @@ pmu: pmu@ff111000 {
+>   		      <0xff113000 0x1000>;
+>   	};
+>   
+> -	intc: intc@fffed000 {
+> +	intc: interrupt-controller@fffed000 {
+>   		compatible = "arm,cortex-a9-gic";
+>   		#interrupt-cells = <3>;
+>   		interrupt-controller;
+> diff --git a/arch/arm/boot/dts/socfpga_arria10.dtsi b/arch/arm/boot/dts/socfpga_arria10.dtsi
+> index 3ba431dfa8c9..f1e50d2e623a 100644
+> --- a/arch/arm/boot/dts/socfpga_arria10.dtsi
+> +++ b/arch/arm/boot/dts/socfpga_arria10.dtsi
+> @@ -38,7 +38,7 @@ pmu: pmu@ff111000 {
+>   		      <0xff113000 0x1000>;
+>   	};
+>   
+> -	intc: intc@ffffd000 {
+> +	intc: interrupt-controller@ffffd000 {
+>   		compatible = "arm,cortex-a9-gic";
+>   		#interrupt-cells = <3>;
+>   		interrupt-controller;
 
-Reviewed-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-
->  .../bindings/interrupt-controller/nuvoton,wpcm450-aic.yaml | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
->=20
-> diff --git a/Documentation/devicetree/bindings/interrupt-controller/nuvot=
-on,wpcm450-aic.yaml b/Documentation/devicetree/bindings/interrupt-controlle=
-r/nuvoton,wpcm450-aic.yaml
-> index 9ce6804bdb99..285c20de0962 100644
-> --- a/Documentation/devicetree/bindings/interrupt-controller/nuvoton,wpcm=
-450-aic.yaml
-> +++ b/Documentation/devicetree/bindings/interrupt-controller/nuvoton,wpcm=
-450-aic.yaml
-> @@ -9,6 +9,9 @@ title: Nuvoton WPCM450 Advanced Interrupt Controller bind=
-ings
->  maintainers:
->    - Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-> =20
-> +allOf:
-> +  - $ref: /schemas/interrupt-controller.yaml#
-> +
->  properties:
->    '#interrupt-cells':
->      const: 2
-> @@ -21,14 +24,14 @@ properties:
->    reg:
->      maxItems: 1
-> =20
-> -additionalProperties: false
-> -
->  required:
->    - '#interrupt-cells'
->    - compatible
->    - reg
->    - interrupt-controller
-> =20
-> +unevaluatedProperties: false
-> +
->  examples:
->    - |
->      aic: interrupt-controller@b8002000 {
-> --=20
-> 2.32.0
->=20
-
---6We2K2LccY5TYmIH
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmIzJAAACgkQCDBEmo7z
-X9uWABAAyCJBDe/oJqNtFTHpiAaREvkhvc/p2FA+LYL7rx1AakR0loGpsK2LPJKZ
-zyaXqwnn/eM43JdcpN8IiOu4hcrpBZ3IYwvdbBbCyvhTruAxgCYyeVCzYTiaDvl1
-viiR1Nrne+v9WIV5+6wQzU3SCXIIZFHR8NTDoYjIwQm+Kk/0iIgp31Fir5/1Gxne
-qkFkHNxsTyuV+lhXPPxR4Ckws+DBAhSAoD7Z93Fz3Wxe8dvwSqCm9bdrRwBI3FoN
-PMsK68P8HY8UjfJaShm1YCmiHAVVXCuVtPhv8t5qYk9QRRnwR9PMmsWBZUWJ5/X3
-PVc+U61swOpCcjekpEqCaANNOIj5gGegG7TyOfFKMvjQg007dOXkrVneZY6LWct7
-bBz9YqPvobcqXgQ65kY3hZN31F7NbK1NqEN1Y6uuEPzWBh63rSQusXuOMXYqIg2W
-gX43E6GEAfZODJErtwXdF2GQOnaK0VcnHHVzn2xO7n2ygXXtgh5Ty7t/wAAV34Li
-cUeL3a5B0drHBT4SHGGGyDGtgar4gfoUQuMWipQo3in/puaUPwK0ZdpEHxRuy5lJ
-B1OlCMRiBAm4TeGr3uAo5xEnCagPAYOQnX5YuGF4LXgWKtBNvrbMekA8MtNg2jTz
-nsyloA9vu5b6xYWcBOych0jIGJqubGCUmTLG5/AYXoAZfWTm8Js=
-=eXJh
------END PGP SIGNATURE-----
-
---6We2K2LccY5TYmIH--
+Acked-by: Dinh Nguyen <dinguyen@kernel.org>
