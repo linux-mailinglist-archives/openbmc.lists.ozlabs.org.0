@@ -1,76 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A46744DD78C
-	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 10:58:59 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E99BD4DD791
+	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 10:59:34 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KKfc13x3sz30Kq
-	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 20:58:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KKfch5fMFz3bNx
+	for <lists+openbmc@lfdr.de>; Fri, 18 Mar 2022 20:59:32 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=Ye8eCRHB;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=h6AK5fzM;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.22; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=Ye8eCRHB; 
- dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::135;
+ helo=mail-lf1-x135.google.com; envelope-from=hughsient@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=h6AK5fzM; dkim-atps=neutral
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com
+ [IPv6:2a00:1450:4864:20::135])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KKfbY323qz302S
- for <openbmc@lists.ozlabs.org>; Fri, 18 Mar 2022 20:58:31 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1647597497;
- bh=tzB60njyHLs/6P39IxHt148nappSoXRyog+UqAqaohE=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=Ye8eCRHBy6Ze14PxO2h7NLFAe5YTJy+Dosy81OR8P1texxyOTp8LzcSPf3PVD9x7a
- zXo/GLFd/W+akJmj0fifVTAYEvQ/8nn0OebPygL4L4KKqqgETaFwz+hRSFj5Di8H86
- X/jfJNIOoHO7mB1svLaeML88ZuVWqU/ZUY1+GxFY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N7iCg-1o9NgB0ZIA-014ogo; Fri, 18
- Mar 2022 10:58:17 +0100
-Date: Fri, 18 Mar 2022 10:58:15 +0100
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Dan Carpenter <dan.carpenter@oracle.com>
-Subject: Re: [PATCH] pinctrl: nuvoton: wpcm450: off by one in
- wpcm450_gpio_register()
-Message-ID: <YjRXtzaiphcz9V3W@latitude>
-References: <20220318071131.GA29472@kili>
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KKfcC2K1qz3Wtr
+ for <openbmc@lists.ozlabs.org>; Fri, 18 Mar 2022 20:59:06 +1100 (AEDT)
+Received: by mail-lf1-x135.google.com with SMTP id s29so13230224lfb.13
+ for <openbmc@lists.ozlabs.org>; Fri, 18 Mar 2022 02:59:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=2ZeFOFDwQlgMY+DqmfHxqDC4nyrCMwL6jBHQxBJ6uuU=;
+ b=h6AK5fzMqQbknXgcNCaK8pzLqy4+/yGxE0nj2fO/ZSKTlaTT7O88e86NrETODtOh7V
+ 71+4jHkjBS0prGiBDOxpw9nUz5TB+Gqh+WV/683RGHq2DtFQ7K8IcbZyqOMc9PPJTsjq
+ K2XeGpGWA+cYyT/5fHTQPywv+LHyaXbLsdgGlHUWHln8U00cWfSXhZsmouhw4shw6D4d
+ lH5nd94aILbJtGxj8m2HToSDWOAkun6eZH2zC2mNzlBq2zXnbGINGS9cQZTB3aS8hqm1
+ YgWI+7TRQvGlbDvjeJssQSY4yFI1tdg2/F3GhxOQQ6FoNn04CwCSjnQn4GEATCCo9UtW
+ /W4w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=2ZeFOFDwQlgMY+DqmfHxqDC4nyrCMwL6jBHQxBJ6uuU=;
+ b=LWhrWSh38/MNNKgNNPyW+8miiA+zFfJ1Bq3GT9LtOxYojPEeSwC06H2mdSG+H5kVnY
+ V4IZFSLnKNNjeWggN1gpSO3/ZFuZaKCXHVlpWMvsJ85M52D+/rYfAahI1klbtBp6HYSH
+ pC7hzEn69n099O5Ej73AOFxHbx2GgOJ4vBXWs1kG0NAyVvVTH3h2BnVQ3MUykgwLQWgt
+ AnccC5MZOKTOM37bvJ6pH0pvNbqs4q6EpYhLbOZ8ysY4WwA621VnhBpKnv8TrBuw4XDz
+ k/E6A12ePEAnYsBRm75hu/6DZhm5hmK95fnUO2mjro5F/fsQfycdPPbMvBu3tW5KMOdA
+ W6og==
+X-Gm-Message-State: AOAM530zrsWH1a1i0DgZTDe7N0G4hd+CynbuwDYPK45/l+fEXvCcUmTu
+ ZM27M7XsYWClCfzMTyKlqzdnkFGU4bOEQ1XogwA=
+X-Google-Smtp-Source: ABdhPJwQqdo2u/hGmsOeuZqhG43/v4zEV88bzOhNz5h95pAwlKWGFO6XMcBdyMi4mdSt+JjIyNMV8bSmbIXl4lOVXAI=
+X-Received: by 2002:a05:6512:1045:b0:448:c883:7463 with SMTP id
+ c5-20020a056512104500b00448c8837463mr5558847lfb.51.1647597539493; Fri, 18 Mar
+ 2022 02:58:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="8eO5T9XC5TjLSkBl"
-Content-Disposition: inline
-In-Reply-To: <20220318071131.GA29472@kili>
-X-Provags-ID: V03:K1:TxPogLUIoI93kGAxHmjr3NF0gILg5qADE4UQHW0w7nse65uxiZm
- MvUR7deR+NDu34ebaljEfs9h8EtnH5UWvzdmpCqyO5o/yEdaMuRhHU/fexk5YTj5FCY8IZC
- a8/KaKzm9C3Kot0bsJ57zxvndFulv/gtpAyqLui6eHlI2B37n1WfDcFDeDXvCL+ImiLM190
- Xn95Q9seYTq61YZkaUeRw==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:gfIymdIHCZI=:n6xvcTOO5jNUdSDLxByoFH
- KpVfQ3OZW5TiMyojFxXUowNBtAi/mxDqjMwHKvdsMgZKiZOsSbAVyQPbZM4XtKQMTiBO3xk8D
- zeKZ2Vrz8ciF3rQkiCcmc7FgWy1JFtcERflLF7wDlxxepcNXGbcw6t9ti1df90o+Ko+sltROn
- ktnuIAPftmWsPpWCdy+LKwBMZ9gbP7EjId00xkf9/toWvoYVicfQzXPQi3QA0QhnCplVcIFPs
- DyUlh0VDroNzKp2dhyFE9+HnpqEK7/TtfXWRKQNnrDrgN+7eZA4iE1sGIAUP2s2u2PjwGsjlA
- YXa8cE/6zfkv999G9VV73BHVF2lxm4Mmz+MWwc7AnHTgT7jChzpw0H5a944eU8k/UHvsOgxps
- kneSYFrpXUuR0Y1o0XHtXWb7B1IrVjScaNpYQ5178zpFIdbIWImj2iR3DeEB9UTzHSXk80tOM
- W+68Wzwe2lPrcW2kEQUSjQKDnMhzoEJiqi57tCWy5zirtYkFOO6xt0l+z6fw42XBVTBwLEYjI
- aaqQAkqh9tvn8OjNZVA5FaB2cel3y7Tl+h1EMS9HdC35JjiU4o8sQFcvDhRWHArri7BHvwJ1n
- MH8UTu1jZjqP9YQ2JzbzbeJ9lKh9H29ACSld6aj0qdgK4x0lAP6pWGOGr1YZL+G2AXSrFE8Aw
- XMKZgKm66saANKZwxV9Evo6JLg1qHfrVFTn35Q3u3De3JKjcEKNEyJ9bd2fReLsavaPB/Gvh4
- UY2mEBIfqyxkL+UtwjtsJNCSXdFtxKCprj9tZFGtsMvVkZYGvi4RWhbZuLehSvHrUGwIK+4IL
- D9sMr3gAzJT3y/2KmIqHTLuKQ+CdHjpk245sh3ad2zH4ZmQFE1944fW4d7K9/MRfEpzOgsesJ
- ntnGdSLw3sKMFZxvTh1POzhjqvQPvE3dAW6q/THoAgbGLUEAIgjg7rYM8AJBZnaSKsjkX82ej
- LFWoS7LnLuOzXDm85xTBBHkjBV9l9OxZoZjz5tXd7UzvC9TetyWb4z/gBOAhWsrZPqgRfqnGh
- s+tAnQbUEqGb8rX9hDINhC8wkDE4gVw3f2PVhw04B5krCoU5PhfZuWiNn1FabPDijFIKlvTK6
- TZ4X4SJZ4XFQWk=
+References: <CAD2FfiEKfS-=ER9qJ9mftjCsiAiseytrDCcbiCn+EcyKOLd9Mg@mail.gmail.com>
+ <YjO0QqLKbNned7dk@heinlein>
+In-Reply-To: <YjO0QqLKbNned7dk@heinlein>
+From: Richard Hughes <hughsient@gmail.com>
+Date: Fri, 18 Mar 2022 09:58:48 +0000
+Message-ID: <CAD2FfiGFTe-6Ut+Pg4+3jSUrwzwASMCm6=vmsPnXrTsk8jYWfw@mail.gmail.com>
+Subject: Re: Software Bill of Materials
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,75 +75,53 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-gpio@vger.kernel.org, Linus Walleij <linus.walleij@linaro.org>,
- kernel-janitors@vger.kernel.org,
- Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- openbmc@lists.ozlabs.org
+Cc: openBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Thu, 17 Mar 2022 at 22:21, Patrick Williams <patrick@stwcx.xyz> wrote:
+> there appears to be a good amount to digest.
 
---8eO5T9XC5TjLSkBl
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Yes, agreed!
 
-On Fri, Mar 18, 2022 at 10:11:31AM +0300, Dan Carpenter wrote:
-> The > WPCM450_NUM_BANKS should be >=3D or it leads to an out of bounds
-> access on the next line.
+> I believe most of our BMC images actually are much simpler than you've laid out
+> here.  Typically it really is just the BMC code and images for any other devices
+> are updated independently.  For the BMC that means u-boot, kernel, rootfs.
 
-True.
+Ahh, no binary BSP/FSP does make things a lot easier.
 
-> Fixes: a1d1e0e3d80a ("pinctrl: nuvoton: Add driver for WPCM450")
-> Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
-> ---
+> Do you know if there has been any effort put into this at a Yocto level?
+> bitbake already has all the source code used to build our image and all the
+> metadata about how it was built.  It seems like they could add the SBoM to their
+> build process, if you wanted it on each package in the rootfs.
 
-Reviewed-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+Not bitbake, but there are people doing the same kind of thing in the
+EDK2 tree, i.e. generating the SWID metadata at build time
+automatically with a "vendor.ini" file in the toplevel to provide
+entity details.
 
+> Alternatively, would something as simple as the git-commit of the Yocto
+> metadata used to build the image be sufficient for a SBoM?
 
-Thanks,
-Jonathan
+It's some of the metadata we need, but it's not the "who built" part
+-- which is the most important bit from a SBoM point of view.
 
->  drivers/pinctrl/nuvoton/pinctrl-wpcm450.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c b/drivers/pinctrl/=
-nuvoton/pinctrl-wpcm450.c
-> index 661aa963e3fc..164d7a6e7b5b 100644
-> --- a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-> +++ b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-> @@ -1043,7 +1043,7 @@ static int wpcm450_gpio_register(struct platform_de=
-vice *pdev,
->  		gpio =3D &pctrl->gpio_bank[reg];
->  		gpio->pctrl =3D pctrl;
-> =20
-> -		if (reg > WPCM450_NUM_BANKS)
-> +		if (reg >=3D WPCM450_NUM_BANKS)
->  			return dev_err_probe(dev, -EINVAL,
->  					     "GPIO index %d out of range!\n", reg);
-> =20
-> --=20
-> 2.20.1
->=20
+> The Yocto metadata
+> itself contains hashes (or git-commits) of the source for each package
+> bitbake built.  I don't know how far down into the onion you're expected to peel
+> for whatever these SBoM hashes are.
 
---8eO5T9XC5TjLSkBl
-Content-Type: application/pgp-signature; name="signature.asc"
+That's a valid question. I'm guessing less granularity is fine -- as
+it's not like your kernel was built by a different legal entity to the
+openbmc binaries -- it's all done at the same time.
 
------BEGIN PGP SIGNATURE-----
+> I'm not really sure where to go from here.  It seems like, since we've built
+> everything on top of Yocto, having someone go write a bbclass that creates
+> whatever coSWID data you want from existing information the bitbake recipes
+> already have would be the start.
 
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmI0V5AACgkQCDBEmo7z
-X9so5w//UcM91i41yLrTQBBTkPZIa14bFqkb+qIA1PkPP4Rsp+Zri6oa8bwUOJFg
-Fc0cg6NVwOnWdw4xVjfterTGGBF7IqGH/W9PDL3mFDpZTrL21jvpe1OlJUONByRJ
-8DrU/zmdx+bwpNaiaGBB9gRoCDk8BU/WpqHlrDlR8Yq9gHnq+z0/DNL+ZobV3IyN
-ir3cHQl1FOde51aBe3EzlL8TS3zys0ylrQC85enDeay6MuubfVdMLRp7gy/aO19+
-bgtp9hAipGnvGJeHRIRsKISE1qgjN4SwSgpWZSZrcPOFZy2c0h/CHR2OMj1qtTSE
-ESMGY/16ZnNUcz7XdvoTKVYxqbZoE9lo6GbPANDoMK50Srsc5VtETDv+4HIw19XE
-IkGXVbVjkhTvxIc8Zv89HWgpVIlOhcpok70yo/EbAjFgYfoOtedoK1Wg4bHCvDPL
-USyUDjl5fK00I/W7x9mH791TDbcT1w38CbNBHYGApV1QDVffQSY5+aSChQb+WxM1
-JQ8B1Va4adt9LDwdLPQMbAha/1YD56rA87pSfYpk6TisV3hZg9FBnBazafBqMs6y
-Z8f5l/a0XqCyLT6rHlBR22tsxemgY/AyBnsNGcGTFOwEspuL9N5xQb/1q0ZlwmY9
-Jyybwb5XvlfEv2lEiYFCsRWLG2BIJKxqa5iyWI4pD+eRgdP+hiw=
-=cq6x
------END PGP SIGNATURE-----
+Agree. I'll take this discussion to the Yocto mailing list, and then I
+guess OpenBMC gets this "for free" too. Many thanks for the speedy
+reply, it's most appreciated.
 
---8eO5T9XC5TjLSkBl--
+Richard.
