@@ -2,82 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 799024E1AE3
-	for <lists+openbmc@lfdr.de>; Sun, 20 Mar 2022 10:35:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 68E064E1AEE
+	for <lists+openbmc@lfdr.de>; Sun, 20 Mar 2022 10:42:42 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KLszW3H3Xz30NV
-	for <lists+openbmc@lfdr.de>; Sun, 20 Mar 2022 20:35:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KLt8J2YNNz30Q9
+	for <lists+openbmc@lfdr.de>; Sun, 20 Mar 2022 20:42:40 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=L5nbzkpv;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=SJCZbu5F;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e2b;
- helo=mail-vs1-xe2b.google.com; envelope-from=warp5tw@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=kernel.org (client-ip=2604:1380:4601:e00::1;
+ helo=ams.source.kernel.org; envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=L5nbzkpv; dkim-atps=neutral
-Received: from mail-vs1-xe2b.google.com (mail-vs1-xe2b.google.com
- [IPv6:2607:f8b0:4864:20::e2b])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=SJCZbu5F; 
+ dkim-atps=neutral
+Received: from ams.source.kernel.org (ams.source.kernel.org
+ [IPv6:2604:1380:4601:e00::1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KLsz46mKFz2ynV
- for <openbmc@lists.ozlabs.org>; Sun, 20 Mar 2022 20:34:39 +1100 (AEDT)
-Received: by mail-vs1-xe2b.google.com with SMTP id m184so467705vsm.12
- for <openbmc@lists.ozlabs.org>; Sun, 20 Mar 2022 02:34:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=k96JhXl3WCD4rA/nH5gA5Te+rz3QsUmRsaPBqcMVBro=;
- b=L5nbzkpvlCIIjhR5U72pm4Gf81AS26MXKr4gBtTeHv72wOkdrrqBi7uM58y4kWqE2L
- NaQTufKL8JYCwSb4AeDQ4RqSyNuuX2v/qfnVwIUi0KYhT+p0hdNzxYi/m4J+Xh83hhLz
- AY4oyZGSXslc4Xz2AkcKYSm/ovuDMGELJSCRXC4hU+Lwuk7QrBJfaWkF90Rfar98xHP8
- ZI7tD0cG+tmRHQuvhxHZxxWjx4/XrWJ1LHWRurhPjIkbOriLkGgjbfIArw6cP9IMLLEp
- 00RTqk0BzNTdgi346D6z5BybWhzbapieP6zbFuXLJ4soZsSE9yOaCSPCaFK83VUn568C
- BZYg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:content-transfer-encoding;
- bh=k96JhXl3WCD4rA/nH5gA5Te+rz3QsUmRsaPBqcMVBro=;
- b=OvclMIxU2WRiYL+Lf3dnbdI4cYCQwbnpCmn68+sS09dgomn/F3Bd2qBB+2moDum3es
- dAPXeBoD7jINIvov12ZDMZQVfyjrZr/UkQg5X8JNK3mqQpb0M/nsoz7p6hJUY/Zubruq
- Avka4O13NFqGfFEVnmD/XICWNL3hHAhqa0+2rvJsyt7y56saVmSjVEhjkr8b3qJvPBVU
- if6MqK0c1s6wUH0e2u0WyzqaB2IvgUuszV+0Pg6tup8yz5xVx8jWi7AeUpxWP5Jh+NmN
- QCOw1D9seosInoKQiz8Jtpy/LxVq20ocgxH+hWH0U5aEcXg15d2D6w77Ze8RTaIbyQs3
- 0BZw==
-X-Gm-Message-State: AOAM532Xk2wnzjma97wKxRAp5wQ9htGI+R8eG23y+1YjPFBGd/H2Q/qB
- RiY0vZA6haQhI4kMPLUluhUcLC5X2U6QpEj2YA==
-X-Google-Smtp-Source: ABdhPJxz/+otTMk11U8KJ5mGaJRfVbBxkf9afGF7WtFFI5Z9nzL4Z6guq/Xh6KBFSKcN/wtr1W2v2eCd6vYHLnmNABY=
-X-Received: by 2002:a67:f353:0:b0:324:fc5f:5261 with SMTP id
- p19-20020a67f353000000b00324fc5f5261mr1031275vsm.47.1647768874683; Sun, 20
- Mar 2022 02:34:34 -0700 (PDT)
-MIME-Version: 1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KLt7t1CqMz2yyn
+ for <openbmc@lists.ozlabs.org>; Sun, 20 Mar 2022 20:42:18 +1100 (AEDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id A6F3FB80E3B;
+ Sun, 20 Mar 2022 09:42:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA43C340E9;
+ Sun, 20 Mar 2022 09:42:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1647769331;
+ bh=m+CrXHcs1IMz031io+qrVwSLHQcIkDc2WgYRBJMoU5I=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=SJCZbu5FTyVw0taTsBz0vOAiE+XN0VdhH5f9jqSD6hhSETTg2crd9GcDC3tMqcq9O
+ crMsDdveov+dpqa5KsNJLxCkdzYtdp7u/knUnkWSQB5/SH5br4ZXr6A8qXBPIzV+tO
+ KWUXxmCuYOH1l1sRamcEmt9hNAeKvyKJxwDVxNN6NsUuJA0L8eBaJbsn7La85DMoyO
+ 0Db5sSXyhbZImY+adn7DqnDhUscYF7vfYJpaJHXaM5juFox+JK+HtfpxPNJnv0x6HD
+ Z4VxOnPUYP3u3qSTQjlmiMBVwAk8ELMWyGsHzaTSSLDQx4PDHN9T2t17D9qLCdUYr4
+ 2HSZAlJoKtZGw==
+Date: Sun, 20 Mar 2022 10:42:05 +0100
+From: Wolfram Sang <wsa@kernel.org>
+To: Tyrone Ting <warp5tw@gmail.com>
+Subject: Re: [PATCH v3 01/11] arm: dts: add new property for NPCM i2c module
+Message-ID: <Yjb27Qbl8VRFZTkm@ninjato>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+ Tyrone Ting <warp5tw@gmail.com>, avifishman70@gmail.com,
+ tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com,
+ yuenn@google.com, benjaminfair@google.com, robh+dt@kernel.org,
+ krzysztof.kozlowski@canonical.com, yangyicong@hisilicon.com,
+ semen.protsenko@linaro.org, jie.deng@intel.com, sven@svenpeter.dev,
+ bence98@sch.bme.hu, lukas.bulwahn@gmail.com, arnd@arndb.de,
+ olof@lixom.net, andriy.shevchenko@linux.intel.com,
+ tali.perry@nuvoton.com, Avi.Fishman@nuvoton.com,
+ tomer.maimon@nuvoton.com, KWLIU@nuvoton.com, JJLIU0@nuvoton.com,
+ kfting@nuvoton.com, openbmc@lists.ozlabs.org,
+ linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org
 References: <20220303083141.8742-1-warp5tw@gmail.com>
  <20220303083141.8742-2-warp5tw@gmail.com>
  <YjTrgia/VX6rBT1r@shikoro>
-In-Reply-To: <YjTrgia/VX6rBT1r@shikoro>
-From: Tyrone Ting <warp5tw@gmail.com>
-Date: Sun, 20 Mar 2022 17:34:24 +0800
-Message-ID: <CACD3sJarf9jBny8ru0YihehT4C6k1pqw9Ln+5a+Rs6_F_o6=AQ@mail.gmail.com>
-Subject: Re: [PATCH v3 01/11] arm: dts: add new property for NPCM i2c module
-To: Wolfram Sang <wsa@kernel.org>, Tyrone Ting <warp5tw@gmail.com>,
- avifishman70@gmail.com, 
- tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com, 
- yuenn@google.com, benjaminfair@google.com, robh+dt@kernel.org, 
- krzysztof.kozlowski@canonical.com, yangyicong@hisilicon.com, 
- semen.protsenko@linaro.org, jie.deng@intel.com, sven@svenpeter.dev, 
- bence98@sch.bme.hu, lukas.bulwahn@gmail.com, arnd@arndb.de, olof@lixom.net, 
- andriy.shevchenko@linux.intel.com, tali.perry@nuvoton.com, 
- Avi.Fishman@nuvoton.com, tomer.maimon@nuvoton.com, KWLIU@nuvoton.com, 
- JJLIU0@nuvoton.com, kfting@nuvoton.com, openbmc@lists.ozlabs.org, 
- linux-i2c@vger.kernel.org, devicetree@vger.kernel.org, 
- linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ <CACD3sJarf9jBny8ru0YihehT4C6k1pqw9Ln+5a+Rs6_F_o6=AQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="zy3zYHWxJ9cmIO3t"
+Content-Disposition: inline
+In-Reply-To: <CACD3sJarf9jBny8ru0YihehT4C6k1pqw9Ln+5a+Rs6_F_o6=AQ@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,37 +80,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: tmaimon77@gmail.com, devicetree@vger.kernel.org, tali.perry1@gmail.com,
+ linux-i2c@vger.kernel.org, benjaminfair@google.com,
+ krzysztof.kozlowski@canonical.com, openbmc@lists.ozlabs.org,
+ JJLIU0@nuvoton.com, lukas.bulwahn@gmail.com, tomer.maimon@nuvoton.com,
+ KWLIU@nuvoton.com, bence98@sch.bme.hu, arnd@arndb.de, sven@svenpeter.dev,
+ robh+dt@kernel.org, Avi.Fishman@nuvoton.com, andriy.shevchenko@linux.intel.com,
+ semen.protsenko@linaro.org, jie.deng@intel.com, avifishman70@gmail.com,
+ venture@google.com, yangyicong@hisilicon.com, linux-kernel@vger.kernel.org,
+ kfting@nuvoton.com, tali.perry@nuvoton.com, olof@lixom.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Wolfram:
 
-Thank you for your reminder and suggestion.
+--zy3zYHWxJ9cmIO3t
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-There are still some discussions for the patch V4 and it might take
-some time though.
+Hi Tyrone,
 
-Yes, the dts patch could be submitted via arm-soc.
+> There are still some discussions for the patch V4 and it might take
+> some time though.
 
-I really appreciate your comments.
+Take your time, I am not in a hurry. Just wanted to outline the best
+process so it will be easier to apply the new version.
 
-Wolfram Sang <wsa@kernel.org> =E6=96=BC 2022=E5=B9=B43=E6=9C=8819=E6=97=A5 =
-=E9=80=B1=E5=85=AD =E4=B8=8A=E5=8D=884:29=E5=AF=AB=E9=81=93=EF=BC=9A
->
-> On Thu, Mar 03, 2022 at 04:31:31PM +0800, Tyrone Ting wrote:
-> > From: Tyrone Ting <kfting@nuvoton.com>
-> >
-> > Add nuvoton,sys-mgr property for controlling NPCM gcr register.
-> >
-> > Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
-> > Signed-off-by: Tali Perry <tali.perry1@gmail.com>
->
-> There are some comments about this series, so I am expecting a v4
-> somewhen. However, I already want to state that I usually don't take DTS
-> patches. So, I guess the path forward is that Rob needs to ack the patch
-> which is now patch 2. Once he does this and I apply it, you can take this
-> DTS patch via arm-soc. Sounds good?
->
+> Yes, the dts patch could be submitted via arm-soc.
 
-Regards,
-Tyrone
+Great.
+
+> I really appreciate your comments.
+
+Thank you and happy hacking,
+
+   Wolfram
+
+
+--zy3zYHWxJ9cmIO3t
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmI29u0ACgkQFA3kzBSg
+KbYWaQ/+OmWLzRVx0uITX7+yRTH8JlxcvGXr/kxT3kHYYKURJbJQLUDXrLgAasbq
+Yaf+7x9LECjsNF2zpr6ndF/pxvClrDmVdH7MMjjXrpMVgcFFQiJFufMkDDURtT+w
+ed7maEfDwwk1gjnrgZfmIKONhnrw0PwOxu+W+5N+gT7cX/i6/cmm4k9OMV18VJLs
+hMhz/DXuYFwqj/NKrDbQSqeRp9hPmNWXMWHWBaJARZOL6rB7/uLwM2JvJOJl/1gS
+X5upnQGJIBQs9LQ8TKFZqBHLb6HUBi4YE/EKGfVsAmJh48TdaIe4ava7X1ec41wc
+MBKW64Q5Hqmh85pSZLwTqkbhS/4xFIDUClPuV3ED8RzOdVWD9EMc3ubXrxYppEU1
+dTsp76kgMJjVoa17zizzMx2dvvceuonI0QPZvltb/qoWWeGrPt6HS5Lr+GzMtQ+e
+6tuIcmCxQnbIPVNvsXAO+ISzw4g07AEJTHD7azy3PMVRoo6YBajHiwWbRC9Q6+Iw
+H1BYlsOIvrVrYyydfN1gnxycbnwGDVu3ZVy+CCwIAeU4QLzHW+HobLHQg+U76wOr
+sz/KN/t+7XzP3bHUiLI9DjBP/PLxs5A2fJqNMZi8MiOH6WGAFPOJ+cP4GRN5F4Hk
+1xyPmSk+WQHr33vieTjYoG3hIAuMvJQPvbyyVAsl8rT0o/3/Ic4=
+=7k8X
+-----END PGP SIGNATURE-----
+
+--zy3zYHWxJ9cmIO3t--
