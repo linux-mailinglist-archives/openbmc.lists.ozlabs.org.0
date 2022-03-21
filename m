@@ -1,60 +1,57 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id EA57E4E2403
-	for <lists+openbmc@lfdr.de>; Mon, 21 Mar 2022 11:09:10 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50D754E2A92
+	for <lists+openbmc@lfdr.de>; Mon, 21 Mar 2022 15:26:43 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KMVhN6JJ0z30hh
-	for <lists+openbmc@lfdr.de>; Mon, 21 Mar 2022 21:09:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KMcPY17tgz30Ph
+	for <lists+openbmc@lfdr.de>; Tue, 22 Mar 2022 01:26:41 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=VewZZqI9;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.218.42; helo=mail-ej1-f42.google.com;
- envelope-from=k.kozlowski.k@gmail.com; receiver=<UNKNOWN>)
-Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com
- [209.85.218.42])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=intel.com (client-ip=134.134.136.24; helo=mga09.intel.com;
+ envelope-from=lkp@intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
+ header.s=Intel header.b=VewZZqI9; dkim-atps=neutral
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KMVh42l7Qz30GB
- for <openbmc@lists.ozlabs.org>; Mon, 21 Mar 2022 21:08:50 +1100 (AEDT)
-Received: by mail-ej1-f42.google.com with SMTP id bg10so28760999ejb.4
- for <openbmc@lists.ozlabs.org>; Mon, 21 Mar 2022 03:08:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
- :content-language:to:cc:references:from:in-reply-to
- :content-transfer-encoding;
- bh=ohJbf78zjin+5q9ryuarHm9CqYHkiO/NM9/l5+6R9tY=;
- b=48d19KLC2SwxIhhJwxPLrpdmwsbZJw7JAOGz323TVP5NM/hSKCs+tB9EQ9bP3SyCHS
- qPuGEQYJ30lbqGkuQN8E9cJp33KfhqdbBmGAlTDGQIbzlRrrBzciHZFTpXER4mV83/Ab
- 2FrSXjWSg3lMOPgg+fSHr+Ey1rbwyOsSDwRRm7fuXjh7TfgysSZQFkbHSsMODdO23vud
- GuOmXwGDSdsdCprgLiivaq8U3L43EG9ThW0m6mGPx7NrGB7ftv+Qkvo+4XFeg2OuQzZq
- B8CWtfE7uA9gFIScqa2DitCUm729SBlWPEnSZa9t92jtR4CGzW0h1NCoSzPU/oyD53W9
- Ntlw==
-X-Gm-Message-State: AOAM531TW7NI7FsGZw/Vf3KInUuW3fyGbARM30IyIobKdZ9MpUrqaHjW
- tCiV4u3KkEAl02ucdeh4XcE=
-X-Google-Smtp-Source: ABdhPJwvPvvYGWDQK30yeTZIw1qeHF3chb1y8K+jA8blsriDhstCDWKpikJ8sYoD29847pcsHJDf7A==
-X-Received: by 2002:a17:906:8d8:b0:6d2:131d:be51 with SMTP id
- o24-20020a17090608d800b006d2131dbe51mr20165153eje.564.1647857326974; 
- Mon, 21 Mar 2022 03:08:46 -0700 (PDT)
-Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl.
- [78.11.189.27]) by smtp.googlemail.com with ESMTPSA id
- b11-20020a170906728b00b006df8494d384sm6372593ejl.122.2022.03.21.03.08.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 21 Mar 2022 03:08:46 -0700 (PDT)
-Message-ID: <766931c9-6647-19c5-24d8-9b8fb3ab58d6@kernel.org>
-Date: Mon, 21 Mar 2022 11:08:45 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH v7 7/9] dt-bindings: mfd: Add bindings for Ampere Altra
- SMPro MFD driver
-Content-Language: en-US
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KMcP50nKpz2yxV
+ for <openbmc@lists.ozlabs.org>; Tue, 22 Mar 2022 01:26:10 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1647872777; x=1679408777;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=ZRgMOrMKRu4QklsqExf2gmjTp684KRU6lmpsY+ibWYM=;
+ b=VewZZqI9aZsE+PPuovDrEV11VR2+sPXYFjgg/J1vEL2ueFKaVXaIE1MS
+ LEqKcHX2IpDgEacfu4ye62tpA3guWdT93Nn40kUMks9Zxn94uwc/4qPmm
+ DtsA+IxzexO5QwSIWVnmci+JYmX2hPWW3rVqp1VtqSZWrTuSB2DHMzUrw
+ y1/4q+ogw3XzdQWrGxgq7GHCLtzoIzKIQSoNgmI9ZhywH83QaA8jaFofv
+ 6iQjqgqlwyxdj2j4Dfavp6ZEQQFpIjWYRn8rxXWQFDKPZ2BLL0BnJ3NXZ
+ LY2Q41AlEUtnijsGa+EWJhz9N2/uCYKpwZQQ0Nftc1wE5nJ1ND+y0yFGh g==;
+X-IronPort-AV: E=McAfee;i="6200,9189,10292"; a="257281840"
+X-IronPort-AV: E=Sophos;i="5.90,198,1643702400"; d="scan'208";a="257281840"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+ by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 21 Mar 2022 07:25:06 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.90,198,1643702400"; d="scan'208";a="824465825"
+Received: from lkp-server02.sh.intel.com (HELO 89b41b6ae01c) ([10.239.97.151])
+ by fmsmga005.fm.intel.com with ESMTP; 21 Mar 2022 07:25:01 -0700
+Received: from kbuild by 89b41b6ae01c with local (Exim 4.92)
+ (envelope-from <lkp@intel.com>)
+ id 1nWIxu-000HtG-Qp; Mon, 21 Mar 2022 14:24:58 +0000
+Date: Mon, 21 Mar 2022 22:24:20 +0800
+From: kernel test robot <lkp@intel.com>
 To: Quan Nguyen <quan@os.amperecomputing.com>,
  Lee Jones <lee.jones@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Jean Delvare <jdelvare@suse.com>,
+ Krzysztof Kozlowski <krzk@kernel.org>, Jean Delvare <jdelvare@suse.com>,
  Guenter Roeck <linux@roeck-us.net>, Jonathan Corbet <corbet@lwn.net>,
  Derek Kiernan <derek.kiernan@xilinx.com>,
  Dragan Cvetic <dragan.cvetic@xilinx.com>, Arnd Bergmann <arnd@arndb.de>,
@@ -63,16 +60,19 @@ To: Quan Nguyen <quan@os.amperecomputing.com>,
  Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
  open list <linux-kernel@vger.kernel.org>,
  "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
- <devicetree@vger.kernel.org>,
+ <devicetree@vger.kernel.org>, 
  "open list:HARDWARE MONITORING" <linux-hwmon@vger.kernel.org>,
  "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
  OpenBMC Maillist <openbmc@lists.ozlabs.org>
-References: <20220321081355.6802-1-quan@os.amperecomputing.com>
- <20220321081355.6802-8-quan@os.amperecomputing.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <20220321081355.6802-8-quan@os.amperecomputing.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Subject: Re: [PATCH v7 3/9] misc: smpro-errmon: Add Ampere's SMpro error
+ monitor driver
+Message-ID: <202203212244.dJ8wLdCt-lkp@intel.com>
+References: <20220321081355.6802-4-quan@os.amperecomputing.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220321081355.6802-4-quan@os.amperecomputing.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,74 +84,119 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Open Source Submission <patches@amperecomputing.com>,
- "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
- Phong Vo <phong@os.amperecomputing.com>
+Cc: Open Source Submission <patches@amperecomputing.com>, llvm@lists.linux.dev,
+ kbuild-all@lists.01.org, Phong Vo <phong@os.amperecomputing.com>,
+ "Thang Q . Nguyen" <thang@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 21/03/2022 09:13, Quan Nguyen wrote:
-> Adds device tree bindings for SMPro MFD driver found on the Mt.Jade
-> hardware reference platform with Ampere's Altra Processor family.
-> 
-> The SMpro co-processor on Ampere Altra processor family is to monitor
-> and report various data included hwmon-related info, RAS errors, and
-> other miscellaneous information.
-> 
-> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> ---
-> Changes in v7:
->   + None
-> 
-> Changes in v6:
->   + None
-> 
->  .../devicetree/bindings/mfd/ampere,smpro.yaml | 48 +++++++++++++++++++
->  1 file changed, 48 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/mfd/ampere,smpro.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/mfd/ampere,smpro.yaml b/Documentation/devicetree/bindings/mfd/ampere,smpro.yaml
-> new file mode 100644
-> index 000000000000..c29d975c1bc3
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/mfd/ampere,smpro.yaml
-> @@ -0,0 +1,48 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/mfd/ampere,smpro.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Ampere Altra SMPro firmware driver
-> +
-> +maintainers:
-> +  - Quan Nguyen <quan@os.amperecomputing.com>
-> +
-> +description: |
-> +  Ampere Altra SMPro firmware may contain different blocks like hardware
-> +  monitoring, error monitoring and other miscellaneous features.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - ampere,smpro
-> +
-> +  reg:
-> +    description:
-> +      I2C device address.
-> +    maxItems: 1
-> +
-> +  "#address-cells":
-> +    const: 1
-> +
-> +  "#size-cells":
-> +    const: 0
+Hi Quan,
 
-Why do you need address/size cells? Is the binding not complete? The
-commit description does not mention such case.
+I love your patch! Perhaps something to improve:
+
+[auto build test WARNING on char-misc/char-misc-testing]
+[also build test WARNING on groeck-staging/hwmon-next lee-mfd/for-mfd-next v5.17 next-20220318]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
+
+url:    https://github.com/0day-ci/linux/commits/Quan-Nguyen/Add-Ampere-s-Altra-SMPro-MFD-and-its-child-drivers/20220321-161811
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/char-misc.git 37fd83916da2e4cae03d350015c82a67b1b334c4
+config: hexagon-allyesconfig (https://download.01.org/0day-ci/archive/20220321/202203212244.dJ8wLdCt-lkp@intel.com/config)
+compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project 85e9b2687a13d1908aa86d1b89c5ce398a06cd39)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/0day-ci/linux/commit/3e85c45303bab9bd02a4761bc7e182fb001ac625
+        git remote add linux-review https://github.com/0day-ci/linux
+        git fetch --no-tags linux-review Quan-Nguyen/Add-Ampere-s-Altra-SMPro-MFD-and-its-child-drivers/20220321-161811
+        git checkout 3e85c45303bab9bd02a4761bc7e182fb001ac625
+        # save the config file to linux build tree
+        mkdir build_dir
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=hexagon SHELL=/bin/bash drivers/hwmon/ drivers/misc/
+
+If you fix the issue, kindly add following tag as appropriate
+Reported-by: kernel test robot <lkp@intel.com>
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/misc/smpro-errmon.c:276:6: warning: variable 'data_hi' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
+           if (addr2 != 0xff) {
+               ^~~~~~~~~~~~~
+   drivers/misc/smpro-errmon.c:303:28: note: uninitialized use occurs here
+                            ret_hi & 0xff, ret_lo, data_hi, data_lo);
+                                                   ^~~~~~~
+   drivers/misc/smpro-errmon.c:276:2: note: remove the 'if' if its condition is always true
+           if (addr2 != 0xff) {
+           ^~~~~~~~~~~~~~~~~~~
+   drivers/misc/smpro-errmon.c:265:47: note: initialize the variable 'data_hi' to silence this warning
+           unsigned int ret_hi, ret_lo, data_lo, data_hi;
+                                                        ^
+                                                         = 0
+>> drivers/misc/smpro-errmon.c:276:6: warning: variable 'data_lo' is used uninitialized whenever 'if' condition is false [-Wsometimes-uninitialized]
+           if (addr2 != 0xff) {
+               ^~~~~~~~~~~~~
+   drivers/misc/smpro-errmon.c:303:37: note: uninitialized use occurs here
+                            ret_hi & 0xff, ret_lo, data_hi, data_lo);
+                                                            ^~~~~~~
+   drivers/misc/smpro-errmon.c:276:2: note: remove the 'if' if its condition is always true
+           if (addr2 != 0xff) {
+           ^~~~~~~~~~~~~~~~~~~
+   drivers/misc/smpro-errmon.c:265:38: note: initialize the variable 'data_lo' to silence this warning
+           unsigned int ret_hi, ret_lo, data_lo, data_hi;
+                                               ^
+                                                = 0
+   2 warnings generated.
 
 
+vim +276 drivers/misc/smpro-errmon.c
 
-Best regards,
-Krzysztof
+   261	
+   262	static s32 smpro_internal_err_get_info(struct regmap *regmap, u8 addr, u8 addr1,
+   263					       u8 addr2, u8 addr3, u8 subtype, char *buf)
+   264	{
+   265		unsigned int ret_hi, ret_lo, data_lo, data_hi;
+   266		int ret;
+   267	
+   268		ret = regmap_read(regmap, addr, &ret_lo);
+   269		if (ret)
+   270			return ret;
+   271	
+   272		ret = regmap_read(regmap, addr1, &ret_hi);
+   273		if (ret)
+   274			return ret;
+   275	
+ > 276		if (addr2 != 0xff) {
+   277			ret = regmap_read(regmap, addr2, &data_lo);
+   278			if (ret)
+   279				return ret;
+   280			ret = regmap_read(regmap, addr3, &data_hi);
+   281			if (ret)
+   282				return ret;
+   283		}
+   284		/*
+   285		 * Output format:
+   286		 * <errType> <image> <dir> <Location> <errorCode> <data>
+   287		 * Where:
+   288		 *   + errType: SCP Error Type (3 bits)
+   289		 *      1: Warning
+   290		 *      2: Error
+   291		 *      4: Error with data
+   292		 *   + image: SCP Image Code (8 bits)
+   293		 *   + dir: Direction (1 bit)
+   294		 *      0: Enter
+   295		 *      1: Exit
+   296		 *   + location: SCP Module Location Code (8 bits)
+   297		 *   + errorCode: SCP Error Code (16 bits)
+   298		 *   + data : Extensive data (32 bits)
+   299		 *      All bits are 0 when errType is warning or error.
+   300		 */
+   301		return scnprintf(buf, MAX_MSG_LEN, "%01x %02x %01x %02x %04x %04x%04x\n",
+   302				 subtype, (ret_hi & 0xf000) >> 12, (ret_hi & 0x0800) >> 11,
+   303				 ret_hi & 0xff, ret_lo, data_hi, data_lo);
+   304	}
+   305	
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
