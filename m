@@ -2,13 +2,13 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 962964E21E8
-	for <lists+openbmc@lfdr.de>; Mon, 21 Mar 2022 09:17:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C882A4E2200
+	for <lists+openbmc@lfdr.de>; Mon, 21 Mar 2022 09:18:08 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KMSCR3bxKz30JY
-	for <lists+openbmc@lfdr.de>; Mon, 21 Mar 2022 19:17:23 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KMSDG5XYkz3081
+	for <lists+openbmc@lfdr.de>; Mon, 21 Mar 2022 19:18:06 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=l4DkPXy2;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=vmIHL9JB;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -18,22 +18,22 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=l4DkPXy2; 
+ header.a=rsa-sha256 header.s=selector2 header.b=vmIHL9JB; 
  dkim-atps=neutral
 Received: from NAM10-BN7-obe.outbound.protection.outlook.com
  (mail-bn7nam10on2072c.outbound.protection.outlook.com
  [IPv6:2a01:111:f400:7e8a::72c])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KMS8f2wMVz2xF0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KMS8f6HFCz2xF0
  for <openbmc@lists.ozlabs.org>; Mon, 21 Mar 2022 19:14:58 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=PT9vVRcJsp+D+QmgslY83O1fZY30K5iQxcwDEcOKCOA/pheZGm8MMDj8FXiRQ/O2LA4hTSg3mtxKrm3ZMWqJmlF280VFA1BlYg1esLV5TUTMP+KFPuMXb/igzy/hnDYLg0ZDXeZ/NMNwqY7AISVaVJJ1W4P7w6HhfJO8SM9IGfQvQkeKBN1A3iTzABDcDZW5hAsxv8oSegKIv0LeKWlK1XFKf21/+DpHRIeO4oyjgZwArG9TIUGjgZiJZbJDCVcWn5xjciMc/H7qXcHSXy8609A7diwcM5k4sunnz88u55hSWEj9DrMkvyihCSyJ1UaGViZkfAFCjwdaKImIM52i+g==
+ b=ceAvIJqLZV5zrL9IlVw1hfvlN8shW40jS7onu2P/hvLMghigEkLnP9djGLeKuwI6UlIvt0PIH+tB2ySXtuInaK33p1RGanILW8p253LoNLSGceGyGktwo4CHpcfgbU5eJx2MI3MyYvtmKWYFtFjwBRPi58WuwZSsocm80JObCjg6IAkypkPO3zt1A9iHvoyJMYyq1+m6muMbpqsoU2LvB7kmrUzGy+N68wnFoeLLq4YuYG6/iFplw52hhQhMbgX/vnkbHWbPoDOJclMTLQI/iY9b0VdOG+TemLZbtexDFfF/yfCWQqZczOUJ9wv8XSLO89sdMrZvYXeZ+XGer07d7w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rcYYNWgHsrE/Z8uZsrktWl10lcxxHkqVI8oR5ESOmsE=;
- b=Pn1C35dUncdrTQ7q/N2whW3qbMw7S0T5RyDMBejenZSZVN94EFt0gZZpsS58r+8qIKNglMBMhVdgMC4fd/niseXAoRKwMX8F6Qw7Gz6U2xYkajreQRGZ9FollByjgvF2QHwUfZbrPC6GiTu7w3t0b9lPNrvDsdNZIQ3T637TVsSb5nCzbOtkkUpCz5vIfmN76CYc8n5/5KCVtqym47n6jAecJJbhPVoD3EORYrvbWf0JTji0f+evPIUox/qW4T5syWQ+FxzpJYACMQOMGm6IswmZp4uisnrAth/wTdyPwdebahsCWN6z7C5hraa7/7f+J+j4lYj7SrDEznDbXHOYCQ==
+ bh=nAw9+4c3MzMPzOt4/wXifFK9WLiGJlKNXVjANFrOWl0=;
+ b=IFz+JSANp3N20bQMrDDv92smG45SnNvxX1r4zQQxu03NDSiDPXV9L+LccN4nfn1+294FLO63nRPljeMMoBsU+wDMV8u/MdpZ0wGWT3H3MBPp24KWhDxC5XjwJj2Me5T8mIxKvAeCNLP03NgCMZkd4q92Jg1WoJWpexHesvZPR8t31bIXmAfmTXugO++zjL5BpIdTWiVUdCJEfCsOLb0wYVvbYpviG26YNyW4RELKFCpj1kxiqwHRpr/XW5Ftc8+eOTJXrNLVuVTsMbgxH15QRft1/s5zXf/4tex0h/vfH5li5gqD6I3ni07Q9T7kzLeXOf4TY/0Cw4WzH6ItLIG+pw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
  header.from=os.amperecomputing.com; dkim=pass
@@ -41,19 +41,19 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=os.amperecomputing.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rcYYNWgHsrE/Z8uZsrktWl10lcxxHkqVI8oR5ESOmsE=;
- b=l4DkPXy2+QsxJjDtzASTq/DvFFdG9d5nhJdgUg2a/KFOX2a8eSQa+37qN8h+9hhsvhNEHRpfbiCjYt25YqSnLL/TgwhWL1HknBwYtuj+hCjyW3NmLSrpAqOwYycPOyXO4EZJpiMqKsSyoGHYGjnW+hT18VoxotMDGv//HHhzsg0=
+ bh=nAw9+4c3MzMPzOt4/wXifFK9WLiGJlKNXVjANFrOWl0=;
+ b=vmIHL9JB/B5nVdxl+Qn1QhfOJUzmIrp768PAhrtnVLSzKvXkCPhPGpY03wKvEuHKJIQJFjBAhE8f5rdBuhh1OmBFs4rUtjRmrCmVGmRwXL3LJUF96+oaNPnOw7RkNnAWGibvO+cURg7xq62KgAXmsYOrXZdjE38Zdk/AjQo2b2w=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
 Received: from SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24) by
  BN6PR01MB2738.prod.exchangelabs.com (2603:10b6:404:ce::11) with
  Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5081.14; Mon, 21 Mar 2022 08:14:49 +0000
+ 15.20.5081.14; Mon, 21 Mar 2022 08:14:54 +0000
 Received: from SJ0PR01MB7282.prod.exchangelabs.com
  ([fe80::cd24:39ed:7042:46d6]) by SJ0PR01MB7282.prod.exchangelabs.com
  ([fe80::cd24:39ed:7042:46d6%8]) with mapi id 15.20.5081.022; Mon, 21 Mar 2022
- 08:14:49 +0000
+ 08:14:54 +0000
 From: Quan Nguyen <quan@os.amperecomputing.com>
 To: Lee Jones <lee.jones@linaro.org>, Rob Herring <robh+dt@kernel.org>,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, Jean Delvare <jdelvare@suse.com>,
@@ -69,10 +69,9 @@ To: Lee Jones <lee.jones@linaro.org>, Rob Herring <robh+dt@kernel.org>,
  BINDINGS), linux-hwmon@vger.kernel.org (open list:HARDWARE MONITORING),
  linux-doc@vger.kernel.org (open list:DOCUMENTATION),
  OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Subject: [PATCH v7 3/9] misc: smpro-errmon: Add Ampere's SMpro error monitor
- driver
-Date: Mon, 21 Mar 2022 15:13:49 +0700
-Message-Id: <20220321081355.6802-4-quan@os.amperecomputing.com>
+Subject: [PATCH v7 4/9] docs: misc-devices: (smpro-errmon) Add documentation
+Date: Mon, 21 Mar 2022 15:13:50 +0700
+Message-Id: <20220321081355.6802-5-quan@os.amperecomputing.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220321081355.6802-1-quan@os.amperecomputing.com>
 References: <20220321081355.6802-1-quan@os.amperecomputing.com>
@@ -83,53 +82,53 @@ X-ClientProxiedBy: SGXP274CA0010.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b8::22)
  (2603:10b6:a03:3f2::24)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 20658a0e-7d5f-40af-38a1-08da0b12ddf8
+X-MS-Office365-Filtering-Correlation-Id: aa89d775-2557-4b14-93f6-08da0b12e138
 X-MS-TrafficTypeDiagnostic: BN6PR01MB2738:EE_
-X-Microsoft-Antispam-PRVS: <BN6PR01MB2738C56CB810D3149BEF159DF2169@BN6PR01MB2738.prod.exchangelabs.com>
+X-Microsoft-Antispam-PRVS: <BN6PR01MB273804DCB1105413B9BA649AF2169@BN6PR01MB2738.prod.exchangelabs.com>
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: lyayk42mPDvJcpqarXKUcoAYTgoTOdbf4Qj+4CEq91TR30J0yw3NadKd7kzreF6QHxjRycpYHL8xCA/0DeCeIrfSDxdsCkGeQ8ZL7rZIgCo6bg51AdFpWD+jKZEREMS6+/hYeGMyo/2puf3c+hRk0Yv5W5EHIoU15jWCbNUrFzoIqdgLBbKzZXBWSqAGrvfkr25x8JlgRcsvuUpigDNsG2T6f1i15UvpNbNEbG30eg/fGGXsEKcJGJhhzN31zzgfBAUz0slktGBvdukQ6DwkIW3PMhsufSwF4Cb9EdO2aiF4HSFrsi7qvrkF54K0z1rpNqd20y71d3bReVXpDEj4JIBR/ItcFnBDEBFu8eYBUPL7QIw4+tzd0+ML8E3K4HY2dsug3WW3dyzxLMglt+SBBZau8wINPPYMCO5ltD5UC5gUTZlZWgMNHmeWL0/GQ3yCfWXrov3BziCnOW13W0Anh9sc+TciaBDS4+/hWQA+ZWgOZ9R11L9VafYD7q5pDj7F0nirts/7g1wHKGnf8t1bwuJOJGhepNdk7dtjS1BFhpDJ2YTgy2gpT7hp2nQ7yhzFzVGyG1iimmUN4vYGuWFlAmmoXr1y0w01KDm2mbXMZcRuqFazA89z2zBii1ZhPbGkEyapxSfVYISD/fEg4KxgZccL+easIyYGmYa/7nmDwsrxtnO+urVkTmZYTUkqWDkxC5baN6QSCMv4U8V4aiG+iXwzL2ko7z99Pebc10FObY8=
+X-Microsoft-Antispam-Message-Info: trc2GXABXiBI6judzF4eNXwXfD+Lx5uZWfYVjEJkYyRO7HJFy6hWIFeuk9RN0+vlMvVGGDgoCacafDM3/N5bLo5VGzau8JlF70bll2jtUSwJaA9isvLCSvwtT5VBqRugR53TLoUIq2thrTifwK1aXUILFQs984hHqLgdqL0QA9QCNllf632XWoHzqs3+mGw4bK7gLWlxQp93W/JfXNeEoMAw7Ds9/s9xHxbYQS0qmozQP/DHH+m0hDE/X2yQQyJTUvdopuVkR8YtXip7cnesyp5dHCx8Ceq4dhSN29WpC5JPmfWRih4ogw5Ik3VBE3xd5/As0IF3aQt09HD4+IRmNJn73x04NSWdEv3GjrJCUXvFKl+pUgE6L3mKXrLX+OwXeDzSyzUCgnlzd97qnts7Pb81YSCTK5BDZQOMn5ZhC1QQ6b3FBbJdu20zqHkPKidwbs6FzyFqDvPg7Qi72e4umvo9XZmRosaJuC/TB3FgmbRchuzRT+Ch52F/z00eVviTmCcZRXnm2pz/BKBVBRV6NsuuVRqHl4C7xJkjbhCCdb7qyjY/2OyO8Bt8ZyVfl60FZhKF1+yrvDIVZ4RqDV0gHyNwPL3AjNIOa3hzcYKi7Ywi8ZWgO2bEmc1OFXaeHJmly0dm/TyC6iHkys2I9BYW+r9nZNbNQwixmKAyrvpzu0t725q/SqUh4/0Rnsyh3rGBu0HzqivpHKt7G4BXAJa/15KJEBDg99kq0N/qo22Pffo=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SJ0PR01MB7282.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(13230001)(4636009)(366004)(38100700002)(66476007)(66556008)(6512007)(66946007)(7416002)(30864003)(107886003)(186003)(1076003)(86362001)(38350700002)(4326008)(5660300002)(8676002)(26005)(316002)(52116002)(110136005)(921005)(54906003)(2616005)(2906002)(508600001)(8936002)(6486002)(6506007)(83380400001);
+ SFS:(13230001)(4636009)(366004)(38100700002)(66476007)(66556008)(6512007)(66946007)(7416002)(107886003)(186003)(1076003)(86362001)(38350700002)(4326008)(5660300002)(8676002)(26005)(316002)(52116002)(110136005)(921005)(54906003)(2616005)(2906002)(508600001)(8936002)(6486002)(6506007)(6666004)(83380400001);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?0ytNQ8u1g/XfJdRr/0nk0YEIQfSgrdUIAOYj61u7QV6N+WspOTUC9YdYHXo8?=
- =?us-ascii?Q?J9GmisAYKv0G5au2t2WLkf81GpXyi+OxQaHSsIKZ8wVVkbJMs8Gqj/aU/H0X?=
- =?us-ascii?Q?6UH2zn+YjsKEqNzSgx5MffjAzz7253WnEtb2JYfq7hazeuas4nt/O3w1pVWO?=
- =?us-ascii?Q?TMMmBMDs3Yyne5zV8UXbw8/moC4bhtnBx0LqOm+wKI8xaL0Gg/O79Mka2Xdy?=
- =?us-ascii?Q?zxqzcPjPxQG2e/6ynY5mdxZoNMSG5rJ6yi6NSuqODlOcBHXdHyJVvs3MwU8A?=
- =?us-ascii?Q?VHM84QlVXkTOredfSCz2O5gR1HrzPquITAcXGWorZ9u7i0kQnXHjqdd3MTGu?=
- =?us-ascii?Q?I/vecq+LBX5n3d17wEV5Dj6FSsuXKVV7AsfQULUalj/qgNk5kynklumURXaD?=
- =?us-ascii?Q?t2l416VODi2+MPHF2a+L6TF3e7eLY1j9sTvQNTsh5IBnPUsaJjaSJ5ealyhA?=
- =?us-ascii?Q?uZ0BLPaGapDRuiG7X8WeWlAg20N19nFgIdJEcnwGbXQuP8l3S5PmDgUrBp4s?=
- =?us-ascii?Q?xW/xDPJ7DdLUHt5jcMoAVHJbWOrTt9kSSjWxgT7QZ0lBWCb0paTiP3bWDH6Z?=
- =?us-ascii?Q?obI8giTuaoVmfxEqI957yii3/EipfPhozx5onDxbZ23Kgvszj0KOK9wBps7J?=
- =?us-ascii?Q?JuocmsdlA2/Lxhki/3r5jJumCTuVvP3ae1jAF2EXhUXVde0hdEDGh0yY7zRg?=
- =?us-ascii?Q?ah0UG60Qw51bgJyqMrXdY6Np+b/tu0PfXHu3Cx1NSlbpyUrekdoSdoCV2lZp?=
- =?us-ascii?Q?7bE1txRZtN8IQgdiLv9lBgJcg/NiYGWACQSrzY1FqX531XesH7b8nHdj5jxq?=
- =?us-ascii?Q?CIUH0upVO+ktUmbFUK3KgRQLZmE/sfnRMwKOuHCDCW8L7gyOsoxQNsuKgkRS?=
- =?us-ascii?Q?aIHSkzCIbRUjTLlK5caaO4rWQdKQQnEY5JxU60x6OdCAkq7NrAI5+V25VPeV?=
- =?us-ascii?Q?JLvYeDBjHvuaAbv1GiFeAnGqZqklljyRGl4SxRE/x5maWNd+bXktADtuPIQG?=
- =?us-ascii?Q?ATRrba9zhSXbRinhmQzRt+RiQDZRS8KxFB3WgVEAmKzaaORFuUhYIXHthA4o?=
- =?us-ascii?Q?ZYvgT0tVgx3XUfmsfFkJRAC7mAfD5cFeqEZh/5Coiq07nkphoQOAjeeyqzeL?=
- =?us-ascii?Q?Su/vKoQRlodDEYFMZrrBjpDjbA9oDC01MzGvHkO3fDDFAVb4ZKK1ZYYK9xWs?=
- =?us-ascii?Q?WRGZJ9cPySqTHUHutyMcAzQV2iLx2bJDdDKa0eZooJNNMr71/mNsodkmGLGn?=
- =?us-ascii?Q?D4su5EidZ+7wKFxvyWcraTRBFRJ3hxMrplidySizmynyC1HIJFfklHEIyX4f?=
- =?us-ascii?Q?xj0QCTKpandtFW6twEzHS56BV58BduWUGmLTQRDjm+cDLIzM0+ln6ECnLLad?=
- =?us-ascii?Q?JjH8I5Lsdtzd6zbAsGOktezuFlsYhyeXwU/PLkuF586e2AIe6AJxKwHjUE93?=
- =?us-ascii?Q?9sNo1k2kd5vvnIfHwxIYe1pkF2XtVOhRb89upJaUSYxfhrJ5mtqC0OYFfOP6?=
- =?us-ascii?Q?q2aw040SBgnji1Q=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?VGrlRWSPhOkC4GxZK+GKdndivTU9aI3FlIepDQqGyqvCzXcJKrzO1D8fq/p0?=
+ =?us-ascii?Q?m+VS2xiAtXS4bodFyk/sh1F7ROBsyZlPcaFhy5TPq/Lg+ftUsH63ZrTrQLXa?=
+ =?us-ascii?Q?x88SvDX1JXun9VsOWJm7uQnIwnulUMIjlizl1wCFjMQ6kGyzMOSPA8MmvM1g?=
+ =?us-ascii?Q?ZPMvkFYiiP/gDnu3mYlZQBmrJmqvPEEq0RHS/mvjOEUoWFk6a47TISiC9tVy?=
+ =?us-ascii?Q?2iiF2/3ajMLNbx70WJLLzXqDVHbyGqEg1BXzCZkkZeOuFFom6TQ52CtBsofS?=
+ =?us-ascii?Q?i74uc5SF3bSXRAnOQJunNLGVAxKkwJ/jVAetNG0axqw1sjzAVkVQvCUkP6IH?=
+ =?us-ascii?Q?6HSS83Ji8Z3hAQDy1lcGRow28Z+gUEyJT3/0fd+j5EvDWe86yk9fijcEEgM6?=
+ =?us-ascii?Q?/gnO37u/It1/LFo1wx1wgWcrLsKonQSk/zfbqP3FbEz+key/LMA7bsJnOfH7?=
+ =?us-ascii?Q?YycCz9iu3jPLxbgzcmHErvIL4mxkjE8yuSEo5w3+FrLOWQ4grZ3kyyLCl5iT?=
+ =?us-ascii?Q?1mBaItpPQHFWR1OaENBcyoJej66+JnOB+rwTnogurk+8YLGL3Qa3POMK5uwP?=
+ =?us-ascii?Q?Fk5K/nIBuxsm+o3f/eOamvCnDaQpFM7WYlopGUAwSyQPjRFJ+ns6g4eUf1Th?=
+ =?us-ascii?Q?lhDfGzE3mUlQSeo3JMPT4doW7hFmWEFj+N5hGU/dn0lWV0Ds1VWWZtNHKW76?=
+ =?us-ascii?Q?bLyXBEl5Jx8BANrdxmX0NCy0cAh7385BVycFfJLIStmBpytLSUmLwOZYCAf+?=
+ =?us-ascii?Q?39kc4khj90c23yn78rwWk1GzN+7rIybdeABUBdEgObTDtU7wi6O2ArYqaqD9?=
+ =?us-ascii?Q?M1RioTm86nv7VnZj3gBDCern6NOcc6mnJrdgqN+6HkbZK+s7lUqq9MCFA1m/?=
+ =?us-ascii?Q?s/oZ8z6XPpZmV7SvWLfU6Jnk9hqfWWfVQDpbEDyzFwbHs/iNHt+9ycZeQYaf?=
+ =?us-ascii?Q?0kmOZ54ILLeyVk0tNNWvHDUqpBkq7DJOi/7ldDzlHULYEP88seGyRbu/ReV3?=
+ =?us-ascii?Q?jkueBD3zM03PxwPRu82Xjc+TGTNNNiiVu9OvkrM/YtQlTBX8MTr3ILIUD4wU?=
+ =?us-ascii?Q?LwtycdESw8lSSMiQt3gl5O+sYEH67f9hDTB2TUIFBsp0S2TvE7NlWby8XKbH?=
+ =?us-ascii?Q?XZYt51RXnr5SlhciU/g0JkmizvLObAXhAWzk/g8iLEH/nociyjYfrHSMy2yp?=
+ =?us-ascii?Q?kS7+kg7a12BUVQYJj8nj6N2OIf5m7YnWDZ2kzG4Henp+sWcfCeyhJ0sCm86j?=
+ =?us-ascii?Q?Y4KjN+EJPUMICKSy92i4sF94pqZNZTUJGgfUOs189IhbgUXhhCgsGcvXCU5L?=
+ =?us-ascii?Q?WUibzYvAXAHPnSk5ueYndjn0qKr+DejUiooEW9Phj8MNjvk4yCkUKVrQ5ZXc?=
+ =?us-ascii?Q?eOS53Txb4dKpRpOIKi6S1FzVR2iAEJrjV/2iUkCPrTCA276Gpvmq2G28Mr9i?=
+ =?us-ascii?Q?DBLzhTmhNONNJvU4Vg5leTj9XiNabLkhCGobKNiOCNWrNG9+lI2+eEPdky5t?=
+ =?us-ascii?Q?GbPKnmi1WqsJqsI=3D?=
 X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 20658a0e-7d5f-40af-38a1-08da0b12ddf8
+X-MS-Exchange-CrossTenant-Network-Message-Id: aa89d775-2557-4b14-93f6-08da0b12e138
 X-MS-Exchange-CrossTenant-AuthSource: SJ0PR01MB7282.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Mar 2022 08:14:49.0832 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Mar 2022 08:14:54.5838 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7RM50jgX+H6aOcs29lLfDhALaUhcLoKeMvzrrDoGisOsaI1k01bDytwItRfBDoQXTPj0SSxyCCZb/rwgj/0tqm18vU7KY9w8AZNWFCcZyIY=
+X-MS-Exchange-CrossTenant-UserPrincipalName: WTX2I7wNKUmyMPsqrGyjsX0demmwkTDniZaD0A+BYmfWDrwec55xb2KgbybmV2X+yw2FUJRgebQWKi9cBo1XLq3HlD2HqW5+tQc/kz6N9W4=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN6PR01MB2738
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -148,582 +147,246 @@ Cc: Open Source Submission <patches@amperecomputing.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This commit adds Ampere's SMpro error monitor driver for monitoring
-and reporting RAS-related errors as reported by SMpro co-processor
-found on Ampere's Altra processor family.
+Adds documentation for Ampere(R)'s Altra(R) SMpro errmon driver.
 
+Signed-off-by: Thu Nguyen <thu@os.amperecomputing.com>
 Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
 ---
 Changes in v7:
-  + Remove regmap_acquire/release_lock(), read_i2c_block_data() [Quan]
-  + Use regmap_noinc_read() instead of errmon_read_block()      [Quan]
-  + Validate number of errors before read                       [Quan]
-  + Fix wrong return type of *_show() function     [kernel test robot]
-  + Adjust patch order to avoid dependence with smpro-mfd  [Lee Jones]
-  + Use pointer instead of stack memory                         [Quan]
+  + None
 
 Changes in v6:
   + First introduced in v6 [Quan]
 
- drivers/misc/Kconfig        |   7 +
- drivers/misc/Makefile       |   1 +
- drivers/misc/smpro-errmon.c | 517 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 525 insertions(+)
- create mode 100644 drivers/misc/smpro-errmon.c
+ Documentation/misc-devices/index.rst        |   1 +
+ Documentation/misc-devices/smpro-errmon.rst | 206 ++++++++++++++++++++
+ 2 files changed, 207 insertions(+)
+ create mode 100644 Documentation/misc-devices/smpro-errmon.rst
 
-diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
-index a2b26426efba..4e1a0b451f3d 100644
---- a/drivers/misc/Kconfig
-+++ b/drivers/misc/Kconfig
-@@ -176,6 +176,13 @@ config SGI_XP
- 	  this feature will allow for direct communication between SSIs
- 	  based on a network adapter and DMA messaging.
- 
-+config SMPRO_ERRMON
-+	tristate "Ampere Computing SMPro error monitor driver"
-+	depends on MFD_SMPRO || COMPILE_TEST
-+	help
-+	  If you say yes here you get support for error monitor function
-+	  provides by Ampere Computing's SoC with SMpro processor.
-+
- config CS5535_MFGPT
- 	tristate "CS5535/CS5536 Geode Multi-Function General Purpose Timer (MFGPT) support"
- 	depends on MFD_CS5535
-diff --git a/drivers/misc/Makefile b/drivers/misc/Makefile
-index 70e800e9127f..483308a6e113 100644
---- a/drivers/misc/Makefile
-+++ b/drivers/misc/Makefile
-@@ -23,6 +23,7 @@ obj-$(CONFIG_ENCLOSURE_SERVICES) += enclosure.o
- obj-$(CONFIG_KGDB_TESTS)	+= kgdbts.o
- obj-$(CONFIG_SGI_XP)		+= sgi-xp/
- obj-$(CONFIG_SGI_GRU)		+= sgi-gru/
-+obj-$(CONFIG_SMPRO_ERRMON)	+= smpro-errmon.o
- obj-$(CONFIG_CS5535_MFGPT)	+= cs5535-mfgpt.o
- obj-$(CONFIG_GEHC_ACHC)		+= gehc-achc.o
- obj-$(CONFIG_HP_ILO)		+= hpilo.o
-diff --git a/drivers/misc/smpro-errmon.c b/drivers/misc/smpro-errmon.c
+diff --git a/Documentation/misc-devices/index.rst b/Documentation/misc-devices/index.rst
+index 30ac58f81901..7a6a6263cbab 100644
+--- a/Documentation/misc-devices/index.rst
++++ b/Documentation/misc-devices/index.rst
+@@ -26,6 +26,7 @@ fit into other categories.
+    lis3lv02d
+    max6875
+    pci-endpoint-test
++   smpro-errmon
+    spear-pcie-gadget
+    uacce
+    xilinx_sdfec
+diff --git a/Documentation/misc-devices/smpro-errmon.rst b/Documentation/misc-devices/smpro-errmon.rst
 new file mode 100644
-index 000000000000..50970a48d5df
+index 000000000000..e05d19412c07
 --- /dev/null
-+++ b/drivers/misc/smpro-errmon.c
-@@ -0,0 +1,517 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+/*
-+ * Ampere Computing SoC's SMpro Error Monitoring Driver
-+ *
-+ * Copyright (c) 2022, Ampere Computing LLC
-+ *
-+ */
-+
-+#include <linux/i2c.h>
-+#include <linux/mod_devicetable.h>
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+#include <linux/regmap.h>
-+
-+/* GPI RAS Error Registers */
-+#define GPI_RAS_ERR		0x7E
-+
-+/* Core and L2C Error Registers */
-+#define CORE_CE_ERR_CNT		0x80
-+#define CORE_CE_ERR_LEN		0x81
-+#define CORE_CE_ERR_DATA	0x82
-+#define CORE_UE_ERR_CNT		0x83
-+#define CORE_UE_ERR_LEN		0x84
-+#define CORE_UE_ERR_DATA	0x85
-+
-+/* Memory Error Registers */
-+#define MEM_CE_ERR_CNT		0x90
-+#define MEM_CE_ERR_LEN		0x91
-+#define MEM_CE_ERR_DATA		0x92
-+#define MEM_UE_ERR_CNT		0x93
-+#define MEM_UE_ERR_LEN		0x94
-+#define MEM_UE_ERR_DATA		0x95
-+
-+/* RAS Error/Warning Registers */
-+#define ERR_SMPRO_TYPE		0xA0
-+#define ERR_PMPRO_TYPE		0xA1
-+#define ERR_SMPRO_INFO_LO	0xA2
-+#define ERR_SMPRO_INFO_HI	0xA3
-+#define ERR_SMPRO_DATA_LO	0xA4
-+#define ERR_SMPRO_DATA_HI	0xA5
-+#define WARN_SMPRO_INFO_LO	0xAA
-+#define WARN_SMPRO_INFO_HI	0xAB
-+#define ERR_PMPRO_INFO_LO	0xA6
-+#define ERR_PMPRO_INFO_HI	0xA7
-+#define ERR_PMPRO_DATA_LO	0xA8
-+#define ERR_PMPRO_DATA_HI	0xA9
-+#define WARN_PMPRO_INFO_LO	0xAC
-+#define WARN_PMPRO_INFO_HI	0xAD
-+
-+/* PCIE Error Registers */
-+#define PCIE_CE_ERR_CNT		0xC0
-+#define PCIE_CE_ERR_LEN		0xC1
-+#define PCIE_CE_ERR_DATA	0xC2
-+#define PCIE_UE_ERR_CNT		0xC3
-+#define PCIE_UE_ERR_LEN		0xC4
-+#define PCIE_UE_ERR_DATA	0xC5
-+
-+/* Other Error Registers */
-+#define OTHER_CE_ERR_CNT	0xD0
-+#define OTHER_CE_ERR_LEN	0xD1
-+#define OTHER_CE_ERR_DATA	0xD2
-+#define OTHER_UE_ERR_CNT	0xD8
-+#define OTHER_UE_ERR_LEN	0xD9
-+#define OTHER_UE_ERR_DATA	0xDA
-+
-+/* Event Data Registers */
-+#define VRD_WARN_FAULT_EVENT_DATA	0x78
-+#define VRD_HOT_EVENT_DATA		0x79
-+#define DIMM_HOT_EVENT_DATA		0x7A
-+#define DIMM_2X_REFRESH_EVENT_DATA	0x96
-+
-+#define MAX_READ_BLOCK_LENGTH	48
-+#define NUM_I2C_MESSAGES	2
-+#define MAX_MSG_LEN		128
-+
-+#define RAS_SMPRO_ERRS		0
-+#define RAS_PMPRO_ERRS		1
-+
-+enum RAS_48BYTES_ERR_TYPES {
-+	CORE_CE_ERRS,
-+	CORE_UE_ERRS,
-+	MEM_CE_ERRS,
-+	MEM_UE_ERRS,
-+	PCIE_CE_ERRS,
-+	PCIE_UE_ERRS,
-+	OTHER_CE_ERRS,
-+	OTHER_UE_ERRS,
-+	NUM_48BYTES_ERR_TYPE,
-+};
-+
-+struct smpro_error_hdr {
-+	u8 err_count;	/* Number of the RAS errors */
-+	u8 err_len;	/* Number of data bytes */
-+	u8 err_data;	/* Start of 48-byte data */
-+	u8 max_err_cnt;	/* Max num of errors */
-+};
-+
-+/*
-+ * Included Address of registers to get Count, Length of data and Data
-+ * of the 48 bytes error data
-+ */
-+static struct smpro_error_hdr smpro_error_table[NUM_48BYTES_ERR_TYPE] = {
-+	{CORE_CE_ERR_CNT, CORE_CE_ERR_LEN, CORE_CE_ERR_DATA, 32},
-+	{CORE_UE_ERR_CNT, CORE_UE_ERR_LEN, CORE_UE_ERR_DATA, 32},
-+	{MEM_CE_ERR_CNT, MEM_CE_ERR_LEN, MEM_CE_ERR_DATA, 16},
-+	{MEM_UE_ERR_CNT, MEM_UE_ERR_LEN, MEM_UE_ERR_DATA, 16},
-+	{PCIE_CE_ERR_CNT, PCIE_CE_ERR_LEN, PCIE_CE_ERR_DATA, 96},
-+	{PCIE_UE_ERR_CNT, PCIE_UE_ERR_LEN, PCIE_UE_ERR_DATA, 96},
-+	{OTHER_CE_ERR_CNT, OTHER_CE_ERR_LEN, OTHER_CE_ERR_DATA, 8},
-+	{OTHER_UE_ERR_CNT, OTHER_UE_ERR_LEN, OTHER_UE_ERR_DATA, 8},
-+};
-+
-+/*
-+ * List of SCP registers which are used to get
-+ * one type of RAS Internal errors.
-+ */
-+struct smpro_int_error_hdr {
-+	u8 err_type;
-+	u8 err_info_low;
-+	u8 err_info_high;
-+	u8 err_data_high;
-+	u8 err_data_low;
-+	u8 warn_info_low;
-+	u8 warn_info_high;
-+};
-+
-+static struct smpro_int_error_hdr list_smpro_int_error_hdr[2] = {
-+	{
-+	 ERR_SMPRO_TYPE,
-+	 ERR_SMPRO_INFO_LO, ERR_SMPRO_INFO_HI,
-+	 ERR_SMPRO_DATA_LO, ERR_SMPRO_DATA_HI,
-+	 WARN_SMPRO_INFO_LO, WARN_SMPRO_INFO_HI
-+	},
-+	{
-+	 ERR_PMPRO_TYPE,
-+	 ERR_PMPRO_INFO_LO, ERR_PMPRO_INFO_HI,
-+	 ERR_PMPRO_DATA_LO, ERR_PMPRO_DATA_HI,
-+	 WARN_PMPRO_INFO_LO, WARN_PMPRO_INFO_HI
-+	},
-+};
-+
-+struct smpro_errmon {
-+	struct regmap *regmap;
-+};
-+
-+enum EVENT_TYPES {
-+	VRD_WARN_FAULT_EVENTS,
-+	VRD_HOT_EVENTS,
-+	DIMM_HOT_EVENTS,
-+	NUM_EVENTS_TYPE,
-+};
-+
-+/* Included Address of event source and data registers */
-+static u8 smpro_event_table[NUM_EVENTS_TYPE] = {
-+	VRD_WARN_FAULT_EVENT_DATA,
-+	VRD_HOT_EVENT_DATA,
-+	DIMM_HOT_EVENT_DATA,
-+};
-+
-+static ssize_t smpro_event_data_read(struct device *dev,
-+				     struct device_attribute *da, char *buf,
-+				     int channel)
-+{
-+	struct smpro_errmon *errmon = dev_get_drvdata(dev);
-+	unsigned char msg[MAX_MSG_LEN] = {'\0'};
-+	s32 event_data;
-+	int ret;
-+
-+	*buf = 0;
-+	if (channel >= NUM_EVENTS_TYPE)
-+		goto done;
-+
-+	ret = regmap_read(errmon->regmap, smpro_event_table[channel], &event_data);
-+	if (ret)
-+		goto done;
-+
-+	ret = scnprintf(msg, MAX_MSG_LEN, "%02x %04x\n", channel, event_data);
-+	strncat(buf, msg, ret);
-+	/* Clear event after read */
-+	if (event_data != 0)
-+		regmap_write(errmon->regmap, smpro_event_table[channel], event_data);
-+done:
-+	return strlen(buf);
-+}
-+
-+static ssize_t smpro_error_data_read(struct device *dev, struct device_attribute *da,
-+				     char *buf, int channel)
-+{
-+	struct smpro_errmon *errmon = dev_get_drvdata(dev);
-+	unsigned char err_data[MAX_READ_BLOCK_LENGTH];
-+	unsigned char msg[MAX_MSG_LEN] = {'\0'};
-+	struct smpro_error_hdr *err_info;
-+	s32 err_count, err_length;
-+	int ret, len, i;
-+
-+	*buf = 0;
-+	if (channel >= NUM_48BYTES_ERR_TYPE)
-+		goto done;
-+
-+	err_info = &smpro_error_table[channel];
-+
-+	ret = regmap_read(errmon->regmap, err_info->err_count, &err_count);
-+	/* Error count is the low byte */
-+	err_count &= 0xff;
-+	if (ret || err_count > err_info->max_err_cnt)
-+		goto done;
-+
-+	/* Bit 8 indentifies the overflow status of one error type */
-+	if (err_count & BIT(8)) {
-+		len = scnprintf(msg, MAX_MSG_LEN,
-+				"%02x %02x %04x %08x %016llx %016llx %016llx %016llx %016llx\n",
-+				0xFF, 0xFF, 0, 0, 0LL, 0LL, 0LL, 0LL, 0LL);
-+		strncat(buf, msg, len);
-+	}
-+
-+	for (i = 0; i < err_count; i++) {
-+		ret = regmap_read(errmon->regmap, err_info->err_len, &err_length);
-+		if (ret || err_length <= 0)
-+			break;
-+
-+		if (err_length > MAX_READ_BLOCK_LENGTH)
-+			err_length = MAX_READ_BLOCK_LENGTH;
-+
-+		memset(err_data, 0x00, MAX_READ_BLOCK_LENGTH);
-+		ret = regmap_noinc_read(errmon->regmap, err_info->err_data, err_data, err_length);
-+		if (ret < 0)
-+			break;
-+
-+		/*
-+		 * The output of Core/Memory/PCIe/Others UE/CE errors follows below format:
-+		 * <Error Type>  <Error SubType>  <Instance>  <Error Status> \
-+		 * <Error Address>  <Error Misc 0> <Error Misc 1> <Error Misc2> <Error Misc 3>
-+		 * Where:
-+		 *  + Error Type: The hardwares cause the errors. (1 byte)
-+		 *  + SubType: Sub type of error in the specified hardware error. (1 byte)
-+		 *  + Instance: Combination of the socket, channel,
-+		 *    slot cause the error. (2 bytes)
-+		 *  + Error Status: Encode of error status. (4 bytes)
-+		 *  + Error Address: The address in device causes the errors. (8 bytes)
-+		 *  + Error Misc 0/1/2/3: Addition info about the errors. (8 bytes for each)
-+		 * Reference Altra SOC BMC Interface specification.
-+		 */
-+		len = scnprintf(msg, MAX_MSG_LEN,
-+				"%02x %02x %04x %08x %016llx %016llx %016llx %016llx %016llx\n",
-+				err_data[0], err_data[1], *(u16 *)&err_data[2],
-+				*(u32 *)&err_data[4], *(u64 *)&err_data[8],
-+				*(u64 *)&err_data[16], *(u64 *)&err_data[24],
-+				*(u64 *)&err_data[32], *(u64 *)&err_data[40]);
-+
-+		/* go to next error */
-+		ret = regmap_write(errmon->regmap, err_info->err_count, 0x100);
-+		if (ret)
-+			break;
-+
-+		/* add error message to buffer */
-+		strncat(buf, msg, len);
-+	}
-+done:
-+	return strlen(buf);
-+}
-+
-+static s32 smpro_internal_err_get_info(struct regmap *regmap, u8 addr, u8 addr1,
-+				       u8 addr2, u8 addr3, u8 subtype, char *buf)
-+{
-+	unsigned int ret_hi, ret_lo, data_lo, data_hi;
-+	int ret;
-+
-+	ret = regmap_read(regmap, addr, &ret_lo);
-+	if (ret)
-+		return ret;
-+
-+	ret = regmap_read(regmap, addr1, &ret_hi);
-+	if (ret)
-+		return ret;
-+
-+	if (addr2 != 0xff) {
-+		ret = regmap_read(regmap, addr2, &data_lo);
-+		if (ret)
-+			return ret;
-+		ret = regmap_read(regmap, addr3, &data_hi);
-+		if (ret)
-+			return ret;
-+	}
-+	/*
-+	 * Output format:
-+	 * <errType> <image> <dir> <Location> <errorCode> <data>
-+	 * Where:
-+	 *   + errType: SCP Error Type (3 bits)
-+	 *      1: Warning
-+	 *      2: Error
-+	 *      4: Error with data
-+	 *   + image: SCP Image Code (8 bits)
-+	 *   + dir: Direction (1 bit)
-+	 *      0: Enter
-+	 *      1: Exit
-+	 *   + location: SCP Module Location Code (8 bits)
-+	 *   + errorCode: SCP Error Code (16 bits)
-+	 *   + data : Extensive data (32 bits)
-+	 *      All bits are 0 when errType is warning or error.
-+	 */
-+	return scnprintf(buf, MAX_MSG_LEN, "%01x %02x %01x %02x %04x %04x%04x\n",
-+			 subtype, (ret_hi & 0xf000) >> 12, (ret_hi & 0x0800) >> 11,
-+			 ret_hi & 0xff, ret_lo, data_hi, data_lo);
-+}
-+
-+static ssize_t smpro_internal_err_read(struct device *dev, struct device_attribute *da,
-+				       char *buf, int channel)
-+{
-+	struct smpro_errmon *errmon = dev_get_drvdata(dev);
-+	struct smpro_int_error_hdr *err_info;
-+	unsigned char msg[MAX_MSG_LEN] = {'\0'};
-+	unsigned int err_type;
-+	unsigned int value;
-+	int ret = 0;
-+
-+	*buf = 0;
-+	/* read error status */
-+	ret = regmap_read(errmon->regmap, GPI_RAS_ERR, &value);
-+	if (ret)
-+		goto done;
-+
-+	if (!((channel == RAS_SMPRO_ERRS && (value & BIT(0))) ||
-+	      (channel == RAS_PMPRO_ERRS && (value & BIT(1)))))
-+		goto done;
-+
-+	err_info = &list_smpro_int_error_hdr[channel];
-+	ret = regmap_read(errmon->regmap, err_info->err_type, &err_type);
-+	if (ret)
-+		goto done;
-+
-+	/* Warning type */
-+	if (err_type & BIT(0)) {
-+		ret = smpro_internal_err_get_info(errmon->regmap, err_info->warn_info_low,
-+						  err_info->warn_info_high, 0xff, 0xff, 1, msg);
-+		if (ret < 0)
-+			goto done;
-+
-+		strncat(buf, msg, ret);
-+	}
-+
-+	/* Error with data type */
-+	if (err_type & BIT(2)) {
-+		ret = smpro_internal_err_get_info(errmon->regmap,
-+						  err_info->err_info_low,
-+						  err_info->err_info_high,
-+						  err_info->err_data_low,
-+						  err_info->err_data_high, 4, msg);
-+		if (ret < 0)
-+			goto done;
-+
-+		strncat(buf, msg, ret);
-+	}
-+	/* Error type */
-+	else if (err_type & BIT(1)) {
-+		ret = smpro_internal_err_get_info(errmon->regmap,
-+						  err_info->err_info_low,
-+						  err_info->err_info_high,
-+						  0xff, 0xff, 2, msg);
-+		if (ret < 0)
-+			goto done;
-+
-+		strncat(buf, msg, ret);
-+	}
-+
-+	/* clear the read errors */
-+	regmap_write(errmon->regmap, err_info->err_type, err_type);
-+
-+done:
-+	return strlen(buf);
-+}
-+
-+static ssize_t errors_core_ce_show(struct device *dev, struct device_attribute *da, char *buf)
-+{
-+	return smpro_error_data_read(dev, da, buf, CORE_CE_ERRS);
-+}
-+static DEVICE_ATTR_RO(errors_core_ce);
-+
-+static ssize_t errors_core_ue_show(struct device *dev, struct device_attribute *da, char *buf)
-+{
-+	return smpro_error_data_read(dev, da, buf, CORE_UE_ERRS);
-+}
-+static DEVICE_ATTR_RO(errors_core_ue);
-+
-+static ssize_t errors_mem_ce_show(struct device *dev, struct device_attribute *da, char *buf)
-+{
-+	return smpro_error_data_read(dev, da, buf, MEM_CE_ERRS);
-+}
-+static DEVICE_ATTR_RO(errors_mem_ce);
-+
-+static ssize_t errors_mem_ue_show(struct device *dev, struct device_attribute *da, char *buf)
-+{
-+	return smpro_error_data_read(dev, da, buf, MEM_UE_ERRS);
-+}
-+static DEVICE_ATTR_RO(errors_mem_ue);
-+
-+static ssize_t errors_pcie_ce_show(struct device *dev, struct device_attribute *da, char *buf)
-+{
-+	return smpro_error_data_read(dev, da, buf, PCIE_CE_ERRS);
-+}
-+static DEVICE_ATTR_RO(errors_pcie_ce);
-+
-+static ssize_t errors_pcie_ue_show(struct device *dev, struct device_attribute *da, char *buf)
-+{
-+	return smpro_error_data_read(dev, da, buf, PCIE_UE_ERRS);
-+}
-+static DEVICE_ATTR_RO(errors_pcie_ue);
-+
-+static ssize_t errors_other_ce_show(struct device *dev, struct device_attribute *da, char *buf)
-+{
-+	return smpro_error_data_read(dev, da, buf, OTHER_CE_ERRS);
-+}
-+static DEVICE_ATTR_RO(errors_other_ce);
-+
-+static ssize_t errors_other_ue_show(struct device *dev, struct device_attribute *da, char *buf)
-+{
-+	return smpro_error_data_read(dev, da, buf, OTHER_UE_ERRS);
-+}
-+static DEVICE_ATTR_RO(errors_other_ue);
-+
-+static ssize_t errors_smpro_show(struct device *dev, struct device_attribute *da, char *buf)
-+{
-+	return smpro_internal_err_read(dev, da, buf, RAS_SMPRO_ERRS);
-+}
-+static DEVICE_ATTR_RO(errors_smpro);
-+
-+static ssize_t errors_pmpro_show(struct device *dev, struct device_attribute *da, char *buf)
-+{
-+	return smpro_internal_err_read(dev, da, buf, RAS_PMPRO_ERRS);
-+}
-+static DEVICE_ATTR_RO(errors_pmpro);
-+
-+static ssize_t event_vrd_warn_fault_show(struct device *dev, struct device_attribute *da, char *buf)
-+{
-+	return smpro_event_data_read(dev, da, buf, VRD_WARN_FAULT_EVENTS);
-+}
-+static DEVICE_ATTR_RO(event_vrd_warn_fault);
-+
-+static ssize_t event_vrd_hot_show(struct device *dev, struct device_attribute *da, char *buf)
-+{
-+	return smpro_event_data_read(dev, da, buf, VRD_HOT_EVENTS);
-+}
-+static DEVICE_ATTR_RO(event_vrd_hot);
-+
-+static ssize_t event_dimm_hot_show(struct device *dev, struct device_attribute *da, char *buf)
-+{
-+	return smpro_event_data_read(dev, da, buf, DIMM_HOT_EVENTS);
-+}
-+static DEVICE_ATTR_RO(event_dimm_hot);
-+
-+static struct attribute *smpro_errmon_attrs[] = {
-+	&dev_attr_errors_core_ce.attr,
-+	&dev_attr_errors_core_ue.attr,
-+	&dev_attr_errors_mem_ce.attr,
-+	&dev_attr_errors_mem_ue.attr,
-+	&dev_attr_errors_pcie_ce.attr,
-+	&dev_attr_errors_pcie_ue.attr,
-+	&dev_attr_errors_other_ce.attr,
-+	&dev_attr_errors_other_ue.attr,
-+	&dev_attr_errors_smpro.attr,
-+	&dev_attr_errors_pmpro.attr,
-+	&dev_attr_event_vrd_warn_fault.attr,
-+	&dev_attr_event_vrd_hot.attr,
-+	&dev_attr_event_dimm_hot.attr,
-+	NULL
-+};
-+
-+static const struct attribute_group smpro_errmon_attr_group = {
-+	.attrs = smpro_errmon_attrs
-+};
-+
-+static int smpro_errmon_probe(struct platform_device *pdev)
-+{
-+	struct smpro_errmon *errmon;
-+	int ret;
-+
-+	errmon = devm_kzalloc(&pdev->dev, sizeof(struct smpro_errmon), GFP_KERNEL);
-+	if (!errmon)
-+		return -ENOMEM;
-+
-+	platform_set_drvdata(pdev, errmon);
-+
-+	errmon->regmap = dev_get_regmap(pdev->dev.parent, NULL);
-+	if (!errmon->regmap)
-+		return -ENODEV;
-+
-+	ret = sysfs_create_group(&pdev->dev.kobj, &smpro_errmon_attr_group);
-+	if (ret)
-+		dev_err(&pdev->dev, "SMPro errmon sysfs registration failed\n");
-+
-+	return 0;
-+}
-+
-+static int smpro_errmon_remove(struct platform_device *pdev)
-+{
-+	sysfs_remove_group(&pdev->dev.kobj, &smpro_errmon_attr_group);
-+	pr_info("SMPro errmon sysfs entries removed");
-+
-+	return 0;
-+}
-+
-+static struct platform_driver smpro_errmon_driver = {
-+	.probe          = smpro_errmon_probe,
-+	.remove         = smpro_errmon_remove,
-+	.driver = {
-+		.name   = "smpro-errmon",
-+	},
-+};
-+
-+module_platform_driver(smpro_errmon_driver);
-+
-+MODULE_AUTHOR("Tung Nguyen <tung.nguyen@amperecomputing.com>");
-+MODULE_AUTHOR("Thinh Pham <thinh.pham@amperecomputing.com>");
-+MODULE_AUTHOR("Hoang Nguyen <hnguyen@amperecomputing.com>");
-+MODULE_AUTHOR("Thu Nguyen <thu@os.amperecomputing.com>");
-+MODULE_AUTHOR("Quan Nguyen <quan@os.amperecomputing.com>");
-+MODULE_DESCRIPTION("Ampere Altra SMpro driver");
-+MODULE_LICENSE("GPL");
++++ b/Documentation/misc-devices/smpro-errmon.rst
+@@ -0,0 +1,206 @@
++.. SPDX-License-Identifier: GPL-2.0-or-later
++
++Kernel driver Ampere(R)'s Altra(R) SMpro errmon
++===============================================
++
++Supported chips:
++
++  * Ampere(R) Altra(R)
++
++    Prefix: 'smpro'
++
++    Preference: Altra SoC BMC Interface Specification
++
++Author: Thu Nguyen <thu@os.amperecomputing.com>
++
++Description
++-----------
++
++This driver supports hardware monitoring for Ampere(R) Altra(R) SoC's based on the
++SMpro co-processor (SMpro).
++The following SoC alert/event types are supported by the errmon driver:
++
++* Core CE/UE errors
++* Memory CE/UE errors
++* PCIe CE/UE errors
++* Other CE/UE errors
++* Internal SMpro/PMpro errors
++* VRD hot
++* VRD warn/fault
++* DIMM Hot
++* DIMM 2x refresh rate
++
++The SMpro interface provides the registers to query the status of the SoC alerts/events
++and their data and export to userspace by this driver.
++
++Usage Notes
++-----------
++
++SMpro errmon driver creates the sysfs files for each host alert/event type.
++Example: ``errors_core_ce`` to get Core CE error type.
++
++To get a host alert/event type, the user will read the corresponding sysfs file.
++
++* If the alert/event is absented, the sysfs file returns empty.
++* If the alerts/events are presented, the existing alerts/events will be reported as the error lines.
++
++The format of the error lines is defended on the alert/event type.
++
++1) Type 1 for Core/Memory/PCIe/Other CE/UE alert types::
++
++    <Error Type> <Error SubType> <Instance> <Error Status> <Error Address> <Error Misc 0> <Error Misc 1> <Error Misc2> <Error Misc 3>
++
++    Where:
++    * Error Type: The hardwares cause the errors in format of two hex characters.
++    * SubType: Sub type of error in the specified hardware error in format of two hex characters.
++    * Instance: Combination of the socket, channel, slot cause the error in format of four hex characters.
++    * Error Status: Encode of error status in format of eight hex characters.
++    * Error Address: The address in device causes the errors in format of sixteen hex characters.
++    * Error Misc 0/1/2/3: Addition info about the errors. Each field is in format of sixteen hex characters.
++
++    Example:
++    # cat errors_other_ce
++    0a 02 0000 000030e4 0000000000000080 0000020000000000 0000000000000000 0000000000000000 0000000000000000
++    0a 01 0000 000030e4 0000000000000080 0000020000000000 0000000000000000 0000000000000000 0000000000000000
++
++    The size of the alert buffer for this error type is 8 alerts.
++    When the buffer is overflowed, the errmon driver will be added the overflowed alert line to sysfs output.
++
++    ff ff 0000 00000000 0000000000000080 0000000000000000 0000000000000000 0000000000000000 0000000000000000
++
++Below table defines the value of Error types, Sub Types, Sub component and instance:
++
++    ============   ==========    =========   ===============  ================
++    Error Group    Error Type    Sub type    Sub component    Instance
++    CPM            0             0           Snoop-Logic      CPM #
++    CPM            0             2           Armv8 Core 1     CPM #
++    MCU            1             1           ERR1             MCU # | SLOT << 11
++    MCU            1             2           ERR2             MCU # | SLOT << 11
++    MCU            1             3           ERR3             MCU #
++    MCU            1             4           ERR4             MCU #
++    MCU            1             5           ERR5             MCU #
++    MCU            1             6           ERR6             MCU #
++    MCU            1             7           Link Error       MCU #
++    Mesh           2             0           Cross Point      X | (Y << 5) | NS <<11
++    Mesh           2             1           Home Node(IO)    X | (Y << 5) | NS <<11
++    Mesh           2             2           Home Node(Mem)   X | (Y << 5) | NS <<11 | device<<12
++    Mesh           2             4           CCIX Node        X | (Y << 5) | NS <<11
++    2P Link        3             0           N/A              Altra 2P Link #
++    GIC            5             0           ERR0             0
++    GIC            5             1           ERR1             0
++    GIC            5             2           ERR2             0
++    GIC            5             3           ERR3             0
++    GIC            5             4           ERR4             0
++    GIC            5             5           ERR5             0
++    GIC            5             6           ERR6             0
++    GIC            5             7           ERR7             0
++    GIC            5             8           ERR8             0
++    GIC            5             9           ERR9             0
++    GIC            5             10          ERR10            0
++    GIC            5             11          ERR11            0
++    GIC            5             12          ERR12            0
++    GIC            5             13-21       ERR13            RC# + 1
++    SMMU           6             TCU         100              RC #
++    SMMU           6             TBU0        0                RC #
++    SMMU           6             TBU1        1                RC #
++    SMMU           6             TBU2        2                RC #
++    SMMU           6             TBU3        3                RC #
++    SMMU           6             TBU4        4                RC #
++    SMMU           6             TBU5        5                RC #
++    SMMU           6             TBU6        6                RC #
++    SMMU           6             TBU7        7                RC #
++    SMMU           6             TBU8        8                RC #
++    SMMU           6             TBU9        9                RC #
++    PCIe AER       7             Root        0                RC #
++    PCIe AER       7             Device      1                RC #
++    PCIe RC        8             RCA HB      0                RC #
++    PCIe RC        8             RCB HB      1                RC #
++    PCIe RC        8             RASDP       8                RC #
++    OCM            9             ERR0        0                0
++    OCM            9             ERR1        1                0
++    OCM            9             ERR2        2                0
++    SMpro          10            ERR0        0                0
++    SMpro          10            ERR1        1                0
++    SMpro          10            MPA_ERR     2                0
++    PMpro          11            ERR0        0                0
++    PMpro          11            ERR1        1                0
++    PMpro          11            MPA_ERR     2                0
++    =============  ==========    =========   ===============  ================
++
++
++2) Type 2 for the Internal SMpro/PMpro alert types::
++
++    <Error Type> <Error SubType> <Direction> <Error Location> <Error Code> <Error Data>
++
++    Where:
++    * Error Type: SMpro/PMpro Error types in format of two hex characters.
++      + 1: Warning
++      + 2: Error
++      + 4: Error with data
++    * Error SubType: SMpro/PMpro Image Code in format of two hex characters.
++    * Direction: Direction in format of two hex characters.
++      + 0: Enter
++      + 1: Exit
++    * Error Location: SMpro/PMpro Module Location code in format of two hex characters.
++    * Error Code: SMpro/PMpro Error code in format of four hex characters.
++    * Error Data: Extensive datae in format of eight hex characters.
++      All bits are 0 when Error Type is warning or error.
++
++    Example:
++    # cat errors_smpro
++    01 04 01 08 0035 00000000
++
++3) Type 3 for the VRD hot, VRD /warn/fault, DIMM Hot, DIMM 2x refresh rate event::
++
++    <Event Type> <Event SubType> <Direction> <Event Location> [Event Data]
++
++    Where:
++    * Event Type: event type in format of two hex characters.
++    * Event SubType: event sub type in format of two hex characters.
++    * Direction: Direction in format of two hex characters.
++      + 0: Asserted
++      + 1: De-asserted
++    * Event Location: The index of component cause the alert in format of two hex characters.
++    * Event Data: Extensive data if have in format of four hex characters.
++
++    Example:
++    #cat event_vr_hot
++    00 02 00 00 -> /* DIMM VRD hot event is asserted at channel 0 */
++    00 02 01 00 -> /* DIMM VRD hot event is de-asserted at channel 0 */
++    00 01 00 03 -> /* Core VRD hot event is asserted at channel 3 */
++    00 00 00 00 -> /* SoC  VRD hot event is asserted */
++    00 00 00 00 -> /* SoC  VRD hot event is de-asserted */
++    00 02 00 06 -> /* DIMM VRD hot event is de-asserted at channel 6 */
++
++Sysfs entries
++-------------
++
++The following sysfs files are supported:
++
++* Ampere(R) Altra(R):
++
++Alert Types:
++
++    ================= =============== =========================================================== =======
++    Alert Type        Sysfs name      Description                                                 Format
++    Core CE Errors    errors_core_ce  Triggered by CPU when Core has an CE error                  1
++    Core UE Errors    errors_core_ue  Triggered by CPU when Core has an UE error                  1
++    Memory CE Errors  errors_mem_ce   Triggered by CPU when Memory has an CE error                1
++    Memory UE Errors  errors_mem_ue   Triggered by CPU when Memory has an UE error                1
++    PCIe CE Errors    errors_pcie_ce  Triggered by CPU when any PCIe controller has any CE error  1
++    PCIe UE Errors    errors_pcie_ue  Triggered by CPU when any PCIe controller has any UE error  1
++    Other CE Errors   errors_other_ce Triggered by CPU when any Others CE error                   1
++    Other UE Errors   errors_other_ue Triggered by CPU when any Others UE error                   1
++    SMpro Errors      errors_smpro    Triggered by CPU when system have SMpro error               2
++    PMpro Errors      errors_pmpro    Triggered by CPU when system have PMpro error               2
++    ================= =============== =========================================================== =======
++
++Event Type:
++
++    ============================ ========================== =========== ========================
++    Event Type                   Sysfs name                 Event Type  Sub Type
++    VRD HOT                      event_vrd_hot              0           0: SoC, 1: Core, 2: DIMM
++    VR Warn/Fault                event_vrd_warn_fault       1           0: SoC, 1: Core, 2: DIMM
++    DIMM Hot                     event_dimm_hot             2           NA (Default 0)
++    DIMM 2x refresh rate status  event_dimm_2x_refresh      3           NA (Default 0)
++    ============================ ========================== =========== ========================
 -- 
 2.35.1
 
