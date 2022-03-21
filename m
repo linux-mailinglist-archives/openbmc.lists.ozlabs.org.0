@@ -2,79 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E9BB4E458C
-	for <lists+openbmc@lfdr.de>; Tue, 22 Mar 2022 18:52:46 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F0F44E4A5A
+	for <lists+openbmc@lfdr.de>; Wed, 23 Mar 2022 02:12:23 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KNJwr3jjdz2yPj
-	for <lists+openbmc@lfdr.de>; Wed, 23 Mar 2022 04:52:44 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=QGdT7wfv;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KNVh53V15z30J6
+	for <lists+openbmc@lfdr.de>; Wed, 23 Mar 2022 12:12:21 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.15.18; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=QGdT7wfv; 
- dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=209.85.167.174;
+ helo=mail-oi1-f174.google.com; envelope-from=robherring2@gmail.com;
+ receiver=<UNKNOWN>)
+Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com
+ [209.85.167.174])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KNJwQ4QsNz2xXW
- for <openbmc@lists.ozlabs.org>; Wed, 23 Mar 2022 04:52:21 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1647971499;
- bh=8I3GWS6pWMeWlp9zUKzJSs1LzgYKqg1PVBPAq/Lm0LU=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=QGdT7wfvtbx7EEq50BWSNOASiB8Ii9nryA7qMItQPCg349ur6bRln9+OctCQWWaFw
- sKEmfK1ssCrodaywip/zGtr1TH9dzGkPDga3DON2C8SDJrjv3Q4Yk4TNwFde19j3Rf
- TgNQQ5wqXK/XhOkavE7/CibOdmg6poxuBj+4PKko=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([5.146.194.160]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MGz1V-1nJIfA2WJf-00E1fI; Tue, 22
- Mar 2022 18:51:39 +0100
-Date: Tue, 22 Mar 2022 18:51:35 +0100
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Avi Fishman <avifishman70@gmail.com>
-Subject: Re: [PATCH v3 08/11] i2c: npcm: Correct register access width
-Message-ID: <YjoMpyEmuXHObF1p@latitude>
-References: <20220303083141.8742-1-warp5tw@gmail.com>
- <20220303083141.8742-9-warp5tw@gmail.com>
- <YiCZlhJoXPLpQ6/D@smile.fi.intel.com>
- <CAHb3i=t+Ai3w5mMhmZxxMsD7Zv0xpM4ZicMCmdDMtVn_OMbWYA@mail.gmail.com>
- <YiDNdlEKqorDFkZB@smile.fi.intel.com> <YiJ5unrCb82ZMV4Z@latitude>
- <CAKKbWA4quvDbHWBdckAsKe65fDXXe8M-9CsjaP=4wsA=-NnULA@mail.gmail.com>
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KMkKW4Dvgz3036
+ for <openbmc@lists.ozlabs.org>; Tue, 22 Mar 2022 05:53:34 +1100 (AEDT)
+Received: by mail-oi1-f174.google.com with SMTP id n7so17212864oif.5
+ for <openbmc@lists.ozlabs.org>; Mon, 21 Mar 2022 11:53:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=a7Xyf2QArSyizp0F9X7a7N1r4113OGPHtnk41fQc9lc=;
+ b=F7+I0l9vrDsIZHksOKJ4RW7E7O8fk55jdaUW9HBIpJFmbFGO5TCzkU9zf/pN5YzT1P
+ 1bKTetnZZwbTrcWQjJogtUUej3qf1ZeGRB1D15W9GcZwDtUTOVz33H9cOv2ytVrA+yET
+ i2gV9NiRFDRZdTqf1E7ekXAqmvFEG8LF/pQwUYzsRwi5N0Xaj5xn1T7EWsBokRp6WNAu
+ 2jhmSrdMQvvJ4mZuBpjGL/U8zg5ZdyB7IymTl+r9t/5QkvdXnLWIipvcmWvv5D8fcAiv
+ vOtJMyf3KNM1C2f5Xyc5o5UkWHNYLhU3wDXoJBECUKGK3e5FoEnoijbCkcXxpL4y446y
+ ZNRw==
+X-Gm-Message-State: AOAM532P4OJ0EI3+AcInSCZMU4RcwLenoajn542RzmQkbClVkh0rX2Z8
+ w03sgYeIaTDXzVqkTYQjHA==
+X-Google-Smtp-Source: ABdhPJym1cVJ6hIiuqEDxMhZRQrspeqqkZR5PA/kFVaC8hdwQ5SdvwfkufWH3kcX6wu+LcnGMs9IxQ==
+X-Received: by 2002:a05:6808:f88:b0:2da:850d:18f0 with SMTP id
+ o8-20020a0568080f8800b002da850d18f0mr270615oiw.19.1647888810502; 
+ Mon, 21 Mar 2022 11:53:30 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net.
+ [66.90.144.107]) by smtp.gmail.com with ESMTPSA id
+ e8-20020a9d63c8000000b005b235a56831sm7783461otl.49.2022.03.21.11.53.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 21 Mar 2022 11:53:29 -0700 (PDT)
+Received: (nullmailer pid 359469 invoked by uid 1000);
+ Mon, 21 Mar 2022 18:53:27 -0000
+Date: Mon, 21 Mar 2022 13:53:27 -0500
+From: Rob Herring <robh@kernel.org>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Subject: Re: [PATCH 00/18] dt-bindings: irqchip: include generic schema
+Message-ID: <YjjJpxLWJ/YOe0OX@robh.at.kernel.org>
+References: <20220317115542.450032-1-krzysztof.kozlowski@canonical.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="xEONTgdtFn65elzz"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAKKbWA4quvDbHWBdckAsKe65fDXXe8M-9CsjaP=4wsA=-NnULA@mail.gmail.com>
-X-Provags-ID: V03:K1:0rjSZOfEJikFn7A+rHnQNa8z+5/c3I2xEC7rEjobVZzMEAraX6e
- HuMvVgLJ7P7UCggzPmwigflP5I4Y42Hx83j5Wq4SLEmryBl9Q62CsWZ5TVO2lnQ9e4YVuLt
- ce9YVgEYqgx/WHDMUqNy6S2guHkv8SCiC72aUek3IHtIqD2Lo6gY+hqyRGy6/GYZY/8SsCU
- 21BsmVI3TAmgW/4gTihZw==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:ClpHcWe8vX0=:FnYR1l8g/xZYeCZXfKUnPC
- ZQ1Jm5fS9cmjKDrj78s7VFpOhu3kBgNos+6ZQguLEF9pHKnSh9+npF2SdI80BXPXR4Di1Z08F
- A11pAz5nZl7/G0IxbtG4eBNDVHMJr8slGm8t/719Lsdwc3P7xKYCO31ExqHApgZYBz8tUFqEf
- mXYly5cDCwimiO9Ny4meh5dfynQ4OjJ53zT3Y76TzNC2h7CFOMyMNCOgmESg0wyAoKwIK7Xqw
- ULrqaLAr3zJuV/wN2VNGK48+Nsx1RNaNbPX/n+8BepsAf0FYm51CAZpelLD9dqfYn1pgm/0tg
- fN7/mNErFnSsfPDIlGI+DY+uaDrXEB48aHwO7PFL8oHsRMgTKSB8/vxHLkShyu0ixa80Ah1AC
- mUTjB7Ep46l9DojTrkHSOIKvCTG24kTmzK12GtvZAay597EKCn+pdCUiqNCxtGDdr8MibGlr1
- liR7qS6Xzx6B7hiBlyuoRQGtIsmkhSW42LXdVPqzFaQeZQ+YFoO5rpqk/ZyNKZ1F9s/krbbt+
- 4Imm8dSEfsXTVTDNaJEALxF/uEas5uzTP2BpIVKEmD0EymQkFuqNfXzypVMo47L7N4ITbmML8
- oPFSfLIv0xJMpc3dMBj8r9PWMin7Wa++ManQcf3O/GF/WU/RZMfLHJ5ndxB/i4/U0j11GEIe0
- ATkE0rlYWI0qleAyWQ+tnv+q+RFdUEcVqiv1yCGi2BzcmjU0KuVlN2BdzO3MkPjKuXbpf1uIp
- cT+EFhJejQNm/mljmHEsCEIaUw7lZYOqYPtAaWBJ3N3/rT46ijUNyicrAtvc+I470x6v+pDzp
- BMKuZEfMR430mGMbS+ng1ofWwVz1oy+tdsM+qKSI+sYsvTmGJWY+c2+bSxnGaaKseQQI8/ct2
- Zj8kg9vRi6LoMTwQqcmFeiygjPCjDlvlmOoRt+DQXl064e05wX+NhPPPjxQrNrZOEp39zmCOD
- N+S5rVXt0hWElZmwZoeQmKmon7b/RY0U7Mm+cb34+sYMJw6TcI/nlDcxTLV3hTYPpD5ZCfydF
- K04Vrx1fA5aJNtueyyXXjmIEnivAYonb2LtK4pSM42REOm/YQ0bD5dqMx8koNn3SuKmT/StPn
- Evc2hracwZPBr8=
+In-Reply-To: <20220317115542.450032-1-krzysztof.kozlowski@canonical.com>
+X-Mailman-Approved-At: Wed, 23 Mar 2022 12:12:09 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,115 +68,78 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tomer Maimon <tmaimon77@gmail.com>, devicetree <devicetree@vger.kernel.org>,
- yangyicong@hisilicon.com, Linux I2C <linux-i2c@vger.kernel.org>,
- Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
- Benjamin Fair <benjaminfair@google.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, JJLIU0@nuvoton.com,
- Lukas Bulwahn <lukas.bulwahn@gmail.com>,
- Tomer Maimon <tomer.maimon@nuvoton.com>, KWLIU@nuvoton.com, bence98@sch.bme.hu,
- Arnd Bergmann <arnd@arndb.de>, sven@svenpeter.dev,
- Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- Rob Herring <robh+dt@kernel.org>, Avi Fishman <Avi.Fishman@nuvoton.com>,
- Tyrone Ting <warp5tw@gmail.com>, Tali Perry <tali.perry1@gmail.com>,
- semen.protsenko@linaro.org, jie.deng@intel.com,
- Patrick Venture <venture@google.com>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Wolfram Sang <wsa@kernel.org>, kfting@nuvoton.com,
- Tali Perry <tali.perry@nuvoton.com>, olof@lixom.net
+Cc: Nishanth Menon <nm@ti.com>, Bert Vermeulen <bert@biot.com>,
+ Geert Uytterhoeven <geert+renesas@glider.be>,
+ Neil Armstrong <narmstrong@baylibre.com>, Lokesh Vutla <lokeshvutla@ti.com>,
+ Paul Walmsley <paul.walmsley@sifive.com>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Cristian Ciocaltea <cristian.ciocaltea@gmail.com>,
+ Paul Cercueil <paul@crapouillou.net>, Daniel Palmer <daniel@thingy.jp>,
+ Sagar Kadam <sagar.kadam@sifive.com>, linux-riscv@lists.infradead.org,
+ Suman Anna <s-anna@ti.com>, Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
+ Paul Burton <paulburton@kernel.org>, Marc Zyngier <maz@kernel.org>,
+ openbmc@lists.ozlabs.org, John Crispin <john@phrozen.org>,
+ Birger Koblitz <mail@birger-koblitz.de>, linux-oxnas@groups.io,
+ devicetree@vger.kernel.org, Jason Cooper <jason@lakedaemon.net>,
+ Manivannan Sadhasivam <mani@kernel.org>, linux-kernel@vger.kernel.org,
+ linux-actions@lists.infradead.org,
+ =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+ Krzysztof Halasa <khalasa@piap.pl>, Santosh Shilimkar <ssantosh@kernel.org>,
+ Thomas Gleixner <tglx@linutronix.de>, linux-arm-kernel@lists.infradead.org,
+ Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+ Tero Kristo <kristo@kernel.org>, Linus Walleij <linusw@kernel.org>,
+ Joakim Zhang <qiangqing.zhang@nxp.com>,
+ Claudiu Beznea <claudiu.beznea@microchip.com>,
+ Dinh Nguyen <dinguyen@kernel.org>, Michael Walle <michael@walle.cc>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Imre Kaloz <kaloz@openwrt.org>,
+ =?UTF-8?Q?Andreas_F=C3=A4rber?= <afaerber@suse.de>,
+ Lucas Stach <l.stach@pengutronix.de>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Thu, Mar 17, 2022 at 12:55:24PM +0100, Krzysztof Kozlowski wrote:
+> Hi,
+> 
+> The DTS patches can be picked up independently.
+> 
+> Best regards,
+> Krzysztof
+> 
+> Krzysztof Kozlowski (18):
+>   ARM: dts: nspire: use lower case hex addresses in node unit addresses
+>   ARM: dts: ox820: align interrupt controller node name with dtschema
+>   ARM: dts: socfpga: align interrupt controller node name with dtschema
+>   dt-bindings: irqchip: actions,owl-sirq: include generic schema
+>   dt-bindings: irqchip: fsl: include generic schema
+>   dt-bindings: irqchip: ingenic: include generic schema
+>   dt-bindings: irqchip: intel,ixp4xx: include generic schema
+>   dt-bindings: irqchip: kontron,sl28cpld: include generic schema
+>   dt-bindings: irqchip: loongson: include generic schema
+>   dt-bindings: irqchip: microchip,eic: include generic schema
+>   dt-bindings: irqchip: mrvl,intc: include generic schema
+>   dt-bindings: irqchip: mstar,mst-intc: include generic schema
+>   dt-bindings: irqchip: mti,gic: include generic schema
+>   dt-bindings: irqchip: nuvoton,wpcm450-aic: include generic schema
+>   dt-bindings: irqchip: realtek,rtl-intc: include generic schema
+>   dt-bindings: irqchip: renesas: include generic schema
+>   dt-bindings: irqchip: sifive: include generic schema
+>   dt-bindings: irqchip: ti: include generic schema
 
---xEONTgdtFn65elzz
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I'm somewhat on the fence about these. Originally only devices with a 
+bus or child nodes included a common schema. For 'simple' providers 
+with mainly a '#<provider>-cells' property, we had to set the 
+constraints on the number of cells anyways, so referencing another 
+schema doesn't save anything. It is nice to declare the 'class' of the 
+device though.
 
-On Tue, Mar 22, 2022 at 07:18:34PM +0200, Avi Fishman wrote:
-> On Fri, Mar 4, 2022 at 10:42 PM Jonathan Neusch=C3=A4fer
-> <j.neuschaefer@gmx.net> wrote:
-> >
-> > Hello,
-> >
-> > On Thu, Mar 03, 2022 at 04:15:18PM +0200, Andy Shevchenko wrote:
-> > > On Thu, Mar 03, 2022 at 02:54:27PM +0200, Tali Perry wrote:
-> > > > > On Thu, Mar 03, 2022 at 04:31:38PM +0800, Tyrone Ting wrote:
-> > > > > > From: Tyrone Ting <kfting@nuvoton.com>
-> > > > > >
-> > > > > > Use ioread8 instead of ioread32 to access the SMBnCTL3 register=
- since
-> > > > > > the register is only 8-bit wide.
-> > > > >
-> > > > > > Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C contro=
-ller driver")
-> > > > >
-> > > > > No, this is bad commit message, since you have bitwise masks and =
-there is
-> > > > > nothing to fix from functional point of view. So, why is this a f=
-ix?
-> > > > >
-> > > >
-> > > > The next gen of this device is a 64 bit cpu.
-> > > > The module is and was 8 bit.
-> > > >
-> > > > The ioread32 that seemed to work smoothly on a 32 bit machine
-> > > > was causing a panic on a 64 bit machine.
-> > > > since the module is 8 bit we changed to ioread8.
-> > > > This is working both for the 32 and 64 CPUs with no issue.
-> > >
-> > > Then the commit message is completely wrong here.
-> >
-> > I disagree: The commit message is perhaps incomplete, but not wrong.
-> > The SMBnCTL3 register was specified as 8 bits wide in the datasheets of
-> > multiple chip generations, as far as I can tell, but the driver wrongly
-> > made a 32-bit access, which just happened not to blow up.
-> >
-> > So, indeed, "since the register is only 8-bit wide" seems to be a
-> > correct claim.
-> >
-> > > And provide necessary (no need to have noisy commit messages)
-> > > bits of the oops to show what's going on
-> >
-> > I guess it's blowing up now because SMBnCTL3 isn't 32-bit aligned
-> > (being at offset 0x0e in the controller).
-> >
->=20
-> Hi Andy,
-> After this clarification can you please acknowledge this specific patch?
-> If you think there is a better way to describe this, can you propose one?
+It makes the schema be applied twice (if the node name matches). That's 
+not all bad because it finds cases of wrong node name. However, 
+sometimes we have devices which are multiple providers and can't set the 
+node name. So those can't reference interrupt-controller.yaml.
 
-To be honest, I think it's probably best to include all the necessary
-explanations in the next version of this patch, i.e.:
+It also means that 'interrupt-map' for example is now valid. That could 
+be fixed by splitting 'interrupt-map' related properties to its own 
+schema. 
 
- - That the register was always defined as 8-bit in the datasheets,
-   and so the 32-bit access was always incorrect, but simply didn't
-   cause a visible error
- - How the 32-bit access caused an error now, perhaps with a trimmed
-   Oops log as Andy suggested
-
-
-Jonathan
-
---xEONTgdtFn65elzz
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmI6DIQACgkQCDBEmo7z
-X9s7OQ//X2W94xxyy5YEI/+1O2hIBvmm36jDMTS3z+mAnxmeUKhEBZdn0v8d/euk
-JSimNGFJCDze0zmLhJK6yve/1N0Jg0IersKHikjnx06ZU4mgxG5udJKCU2W6MPVj
-Zp4IiXgBQ7pTDEMlgEPbT0wSjkmuiiimkjp6QWJZkyKapp3SttzUOiKX/3SeyUtZ
-Y1/L3txILtSnYuzlvlL5knG+KJu2Um3/BKCOEzqop+FeQr/16wEvYUWS5Ggg94kK
-M9uwBI9cgOhvqS+SOFoNHyPc2VIJ6zsshwz6lB8/NrRQMqrpqyjwZttderEguxNO
-MP96a9M7VKpytM+eEbzIZFIxSa/A0zeNqXXXQNB/K+t7Awwdhf32qD4jPRIK0JCK
-2pO+hBT5XfRXmRI6f3U7X7lpSpzlR+DMLkq7nEI76rgJfN5qI87ml+WmbzIDXPFf
-b04x9eu6AbFeSuz0HW+F/MFwimMiTz+CKVpF7hgZEmJew7OiJT2a1bu6eTPr+4Fv
-pOut/60haUWiMulL9QXqbk+0gWWa8k3Mzv6DwQ0wbO/GFHkzlRfBOkMyUUXmNnho
-RdBd0cCISHsGLRsRkXEHgCRT67X1sadBrxcB03k91MKNNJoD4mnUr79JpFvIJidC
-XL4AOd2HO/z+OFq2y4K14ea8dPl1NgziCcFpC46TAKBrywMDtgg=
-=EGzi
------END PGP SIGNATURE-----
-
---xEONTgdtFn65elzz--
+Rob
