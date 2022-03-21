@@ -1,14 +1,14 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 524BC4E23E9
-	for <lists+openbmc@lfdr.de>; Mon, 21 Mar 2022 11:03:11 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27E6F4E23EE
+	for <lists+openbmc@lfdr.de>; Mon, 21 Mar 2022 11:03:54 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KMVYT0z6hz30JD
-	for <lists+openbmc@lfdr.de>; Mon, 21 Mar 2022 21:03:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KMVZJ0ftpz30RH
+	for <lists+openbmc@lfdr.de>; Mon, 21 Mar 2022 21:03:52 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=PoLl+mAz;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M71m8WKC;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -18,41 +18,41 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org
- header.a=rsa-sha256 header.s=korg header.b=PoLl+mAz; 
+ header.a=rsa-sha256 header.s=korg header.b=M71m8WKC; 
  dkim-atps=neutral
 Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KMVY46GwFz3071
- for <openbmc@lists.ozlabs.org>; Mon, 21 Mar 2022 21:02:47 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KMVYw2FdLz3071
+ for <openbmc@lists.ozlabs.org>; Mon, 21 Mar 2022 21:03:32 +1100 (AEDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 97C29B811BC;
- Mon, 21 Mar 2022 10:02:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5453C340E8;
- Mon, 21 Mar 2022 10:02:41 +0000 (UTC)
+ by ams.source.kernel.org (Postfix) with ESMTPS id CAEA9B811B8;
+ Mon, 21 Mar 2022 10:03:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3718AC340E8;
+ Mon, 21 Mar 2022 10:03:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1647856962;
- bh=UllJSsQg00ZnHBhZbERtaYlT/9n0riP5truM20tn4m8=;
+ s=korg; t=1647857008;
+ bh=Urs1WBqJhnohfH0zLlL03sA1jfDJexJVbVcUFckiFGw=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=PoLl+mAzwgOEykMATfNyoxYBOKibroqamcG5UXr/BkdtaN6MJsyURn0LlXVPh1pkC
- eJBQmPnsq6Vho1bFHdNRtszlvkLzb5zQo87nWhZ+Tviokbyy5AeabDIXpSnfx+eJFl
- u+kmU+dMw8zx/goRqkmi1Lopj2mkS+vswrIQaVlY=
-Date: Mon, 21 Mar 2022 11:02:39 +0100
+ b=M71m8WKC9uJ11+TpouqdAedjog3Y7ReATMY41tjTuDB6z6q+HWjN9rCaw0ZbVyLfj
+ afj9hNC9ylnp5ueaxuAlzGFESs8TO4EufIfxhwK9dpdkBz6fCLIXRt+MSguwqcTpqN
+ VYOos0MNu241dfTkSQTpcyX2Petp34pVp+Gl227g=
+Date: Mon, 21 Mar 2022 11:03:25 +0100
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: Quan Nguyen <quan@os.amperecomputing.com>
-Subject: Re: [PATCH v7 5/9] misc: smpro-misc: Add Ampere's Altra SMpro misc
- driver
-Message-ID: <YjhNP+Jzn/z4+5Zw@kroah.com>
+Subject: Re: [PATCH v7 9/9] docs: ABI: testing: Document the Ampere Altra
+ Family's SMpro sysfs interfaces
+Message-ID: <YjhNbUDFUXsNkL+/@kroah.com>
 References: <20220321081355.6802-1-quan@os.amperecomputing.com>
- <20220321081355.6802-6-quan@os.amperecomputing.com>
- <Yjg1nREijopyA+8A@kroah.com>
- <e9f92650-4f7c-260d-8aa2-92d1c84bf74a@os.amperecomputing.com>
+ <20220321081355.6802-10-quan@os.amperecomputing.com>
+ <Yjg2AkYOCTi2CXc1@kroah.com>
+ <8f01a63d-0d10-81ee-7398-b69e496964f8@os.amperecomputing.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <e9f92650-4f7c-260d-8aa2-92d1c84bf74a@os.amperecomputing.com>
+In-Reply-To: <8f01a63d-0d10-81ee-7398-b69e496964f8@os.amperecomputing.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,102 +83,67 @@ Cc: "open list:HARDWARE MONITORING" <linux-hwmon@vger.kernel.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Mar 21, 2022 at 04:46:50PM +0700, Quan Nguyen wrote:
+On Mon, Mar 21, 2022 at 04:46:36PM +0700, Quan Nguyen wrote:
 > 
 > 
-> On 21/03/2022 15:21, Greg Kroah-Hartman wrote:
-> > On Mon, Mar 21, 2022 at 03:13:51PM +0700, Quan Nguyen wrote:
-> > > This commit adds driver support for accessing various information
-> > > reported by Ampere's SMpro co-processor such as Boot Progress and
-> > > other miscellaneous data.
+> On 21/03/2022 15:23, Greg Kroah-Hartman wrote:
+> > On Mon, Mar 21, 2022 at 03:13:55PM +0700, Quan Nguyen wrote:
+> > > Add documentation for the Ampere(R)'s Altra(R) SMpro sysfs interfaces
 > > > 
 > > > Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+> > > ---
+> > > Changes in v7:
+> > >    + First introduce in v7     [Greg]
+> > > 
+> > >   .../sysfs-bus-platform-devices-ampere-smpro   | 133 ++++++++++++++++++
+> > >   1 file changed, 133 insertions(+)
+> > >   create mode 100644 Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
+> > > 
+> > > diff --git a/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro b/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
+> > > new file mode 100644
+> > > index 000000000000..9bfd8d6d0f71
+> > > --- /dev/null
+> > > +++ b/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
+> > > @@ -0,0 +1,133 @@
+> > > +What:		/sys/bus/platform/devices/smpro-errmon.*/errors_[core|mem|pcie|other]_[ce|ue]
 > > 
-> > No Documentation/ABI/ entries for your sysfs file?
+> > Please split this out as one entry per file.
 > > 
 > 
-> Thank you, Greg, for a very quick review.
-> I have put this file in other patch.
+> These sysfs share same format of HW errors (the 48-byte Arm vendor specific
+> HW error record) but for separate HW domains: Core, PCIe, Mem... etc
 > 
-> > > +static ssize_t boot_progress_show(struct device *dev, struct device_attribute *da, char *buf)
-> > > +{
-> > > +	struct smpro_misc *misc = dev_get_drvdata(dev);
-> > > +	u32 boot_progress;
-> > > +	u8 current_stage;
-> > > +	u8 boot_status;
-> > > +	u8 boot_stage;
-> > > +	u32 select;
-> > > +	u32 reg_lo;
-> > > +	u32 reg;
-> > > +	int ret;
-> > > +
-> > > +	/* Read current boot stage */
-> > > +	ret = regmap_read(misc->regmap, BOOTSTAGE_CUR_STAGE, &reg);
-> > > +	if (ret)
-> > > +		return ret;
-> > > +
-> > > +	current_stage = reg & 0xff;
-> > > +
-> > > +	/* Read the boot progress */
-> > > +	ret = regmap_read(misc->regmap, BOOTSTAGE_SELECT, &select);
-> > > +	if (ret)
-> > > +		return ret;
-> > > +
-> > > +	boot_stage = (select >> 8) & 0xff;
-> > > +	boot_status = select & 0xff;
-> > > +
-> > > +	if (boot_stage > current_stage)
-> > > +		return -EINVAL;
-> > > +
-> > > +	ret = regmap_read(misc->regmap,	BOOTSTAGE_STATUS_LO, &reg_lo);
-> > > +	if (!ret)
-> > > +		ret = regmap_read(misc->regmap, BOOTSTAGE_STATUS_HI, &reg);
-> > > +	if (ret)
-> > > +		return ret;
-> > > +
-> > > +	boot_progress = swab16(reg) << 16 | swab16(reg_lo);
-> > > +
-> > > +	/* Tell firmware to provide next boot stage next time */
-> > > +	if (boot_stage < current_stage) {
-> > > +		ret = regmap_write(misc->regmap, BOOTSTAGE_SELECT, ((select & 0xff00) | 0x1));
-> > > +		if (ret)
-> > > +			return ret;
-> > > +	}
-> > > +
-> > > +	return snprintf(buf, PAGE_SIZE, "0x%02x 0x%02x 0x%08x\n",
-> > > +			boot_stage, boot_status, boot_progress);
+> > > +KernelVersion:	5.14
 > > 
-> > sysfs_emit() please.
+> > 5.14 is a long time ago.
 > > 
-> Thanks, Greg.
+> > > +Contact:	quan@os.amperecomputing.com
+> > > +Description:
+> > > +		(RO) Contains the 48-byte Ampere (Vendor-Specific) Error Record, see [1]
+> > > +		printed in hex format as below:
+> > > +
+> > > +		AA BB CCCC DDDDDDDD DDDDDDDDDDDDDDDD DDDDDDDDDDDDDDDD \
+> > > +		   DDDDDDDDDDDDDDDD DDDDDDDDDDDDDDDD DDDDDDDDDDDDDDDD
+> > > +		Where:
+> > > +		  AA       : Error Type
+> > > +		  BB       : Subtype
+> > > +		  CCCC     : Instance
+> > > +		  DDD...DDD: Similar to the Arm RAS standard error record
+> > 
+> > No, this is not a valid sysfs file, sorry.  This should just be one
+> > value per file.
+> > 
 > 
-> Will switch to sysfs_emit() in my next version.
+> This 48-byte value is unable to separate into smaller values because it
+> contain all information necessary to indicate a single HW error as per ARM
+> RAS supplement document [1]. The format is to make it read-able other than a
+> single 48-byte hex value.
 > 
-> > Also, this is 3 different things, put all of these in different sysfs
-> > files.
-> > 
-> > thanks,
-> > 
-> > greg k-h
-> 
-> Actually, no. It is single value of boot stage.
+> [1] https://developer.arm.com/documentation/ddi0587/latest/
 
-You are displaying 3 things in a single line, those are 3 different
-things.
-
-> Let me explain:
-> The boot progress consists of three things together: boot_stage, boot_status
-> and boot_progress and they have no meaning if reported them as three
-> separate values:
-> + boot_stage is to indicate the boot stage
-> + boot_status is to report the result of that boot_stage: started, complete
-> or error.
-> + boot_progress is to report more extra information for the stage other than
-> the boot_stage/boot_status.
-
-Why are these just not 3 different files?  They describe three different
-things, please do not EVER force userspace to parse a sysfs file other
-than a single value.
+Just export the 48 byte hex value and make userspace split it up if it
+wants to do so.  Don't do things in the kernel that can be done in
+userspace.
 
 thanks,
 
