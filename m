@@ -2,57 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27E6F4E23EE
-	for <lists+openbmc@lfdr.de>; Mon, 21 Mar 2022 11:03:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id EA57E4E2403
+	for <lists+openbmc@lfdr.de>; Mon, 21 Mar 2022 11:09:10 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KMVZJ0ftpz30RH
-	for <lists+openbmc@lfdr.de>; Mon, 21 Mar 2022 21:03:52 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=M71m8WKC;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KMVhN6JJ0z30hh
+	for <lists+openbmc@lfdr.de>; Mon, 21 Mar 2022 21:09:08 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linuxfoundation.org (client-ip=145.40.68.75;
- helo=ams.source.kernel.org; envelope-from=gregkh@linuxfoundation.org;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org
- header.a=rsa-sha256 header.s=korg header.b=M71m8WKC; 
- dkim-atps=neutral
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=209.85.218.42; helo=mail-ej1-f42.google.com;
+ envelope-from=k.kozlowski.k@gmail.com; receiver=<UNKNOWN>)
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com
+ [209.85.218.42])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KMVYw2FdLz3071
- for <openbmc@lists.ozlabs.org>; Mon, 21 Mar 2022 21:03:32 +1100 (AEDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id CAEA9B811B8;
- Mon, 21 Mar 2022 10:03:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3718AC340E8;
- Mon, 21 Mar 2022 10:03:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
- s=korg; t=1647857008;
- bh=Urs1WBqJhnohfH0zLlL03sA1jfDJexJVbVcUFckiFGw=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=M71m8WKC9uJ11+TpouqdAedjog3Y7ReATMY41tjTuDB6z6q+HWjN9rCaw0ZbVyLfj
- afj9hNC9ylnp5ueaxuAlzGFESs8TO4EufIfxhwK9dpdkBz6fCLIXRt+MSguwqcTpqN
- VYOos0MNu241dfTkSQTpcyX2Petp34pVp+Gl227g=
-Date: Mon, 21 Mar 2022 11:03:25 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Quan Nguyen <quan@os.amperecomputing.com>
-Subject: Re: [PATCH v7 9/9] docs: ABI: testing: Document the Ampere Altra
- Family's SMpro sysfs interfaces
-Message-ID: <YjhNbUDFUXsNkL+/@kroah.com>
-References: <20220321081355.6802-1-quan@os.amperecomputing.com>
- <20220321081355.6802-10-quan@os.amperecomputing.com>
- <Yjg2AkYOCTi2CXc1@kroah.com>
- <8f01a63d-0d10-81ee-7398-b69e496964f8@os.amperecomputing.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KMVh42l7Qz30GB
+ for <openbmc@lists.ozlabs.org>; Mon, 21 Mar 2022 21:08:50 +1100 (AEDT)
+Received: by mail-ej1-f42.google.com with SMTP id bg10so28760999ejb.4
+ for <openbmc@lists.ozlabs.org>; Mon, 21 Mar 2022 03:08:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+ :content-language:to:cc:references:from:in-reply-to
+ :content-transfer-encoding;
+ bh=ohJbf78zjin+5q9ryuarHm9CqYHkiO/NM9/l5+6R9tY=;
+ b=48d19KLC2SwxIhhJwxPLrpdmwsbZJw7JAOGz323TVP5NM/hSKCs+tB9EQ9bP3SyCHS
+ qPuGEQYJ30lbqGkuQN8E9cJp33KfhqdbBmGAlTDGQIbzlRrrBzciHZFTpXER4mV83/Ab
+ 2FrSXjWSg3lMOPgg+fSHr+Ey1rbwyOsSDwRRm7fuXjh7TfgysSZQFkbHSsMODdO23vud
+ GuOmXwGDSdsdCprgLiivaq8U3L43EG9ThW0m6mGPx7NrGB7ftv+Qkvo+4XFeg2OuQzZq
+ B8CWtfE7uA9gFIScqa2DitCUm729SBlWPEnSZa9t92jtR4CGzW0h1NCoSzPU/oyD53W9
+ Ntlw==
+X-Gm-Message-State: AOAM531TW7NI7FsGZw/Vf3KInUuW3fyGbARM30IyIobKdZ9MpUrqaHjW
+ tCiV4u3KkEAl02ucdeh4XcE=
+X-Google-Smtp-Source: ABdhPJwvPvvYGWDQK30yeTZIw1qeHF3chb1y8K+jA8blsriDhstCDWKpikJ8sYoD29847pcsHJDf7A==
+X-Received: by 2002:a17:906:8d8:b0:6d2:131d:be51 with SMTP id
+ o24-20020a17090608d800b006d2131dbe51mr20165153eje.564.1647857326974; 
+ Mon, 21 Mar 2022 03:08:46 -0700 (PDT)
+Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl.
+ [78.11.189.27]) by smtp.googlemail.com with ESMTPSA id
+ b11-20020a170906728b00b006df8494d384sm6372593ejl.122.2022.03.21.03.08.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 21 Mar 2022 03:08:46 -0700 (PDT)
+Message-ID: <766931c9-6647-19c5-24d8-9b8fb3ab58d6@kernel.org>
+Date: Mon, 21 Mar 2022 11:08:45 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8f01a63d-0d10-81ee-7398-b69e496964f8@os.amperecomputing.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH v7 7/9] dt-bindings: mfd: Add bindings for Ampere Altra
+ SMPro MFD driver
+Content-Language: en-US
+To: Quan Nguyen <quan@os.amperecomputing.com>,
+ Lee Jones <lee.jones@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Jean Delvare <jdelvare@suse.com>,
+ Guenter Roeck <linux@roeck-us.net>, Jonathan Corbet <corbet@lwn.net>,
+ Derek Kiernan <derek.kiernan@xilinx.com>,
+ Dragan Cvetic <dragan.cvetic@xilinx.com>, Arnd Bergmann <arnd@arndb.de>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Thu Nguyen <thu@os.amperecomputing.com>,
+ Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
+ open list <linux-kernel@vger.kernel.org>,
+ "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
+ <devicetree@vger.kernel.org>,
+ "open list:HARDWARE MONITORING" <linux-hwmon@vger.kernel.org>,
+ "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <20220321081355.6802-1-quan@os.amperecomputing.com>
+ <20220321081355.6802-8-quan@os.amperecomputing.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+In-Reply-To: <20220321081355.6802-8-quan@os.amperecomputing.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,87 +84,74 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "open list:HARDWARE MONITORING" <linux-hwmon@vger.kernel.org>,
- "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
- <devicetree@vger.kernel.org>, Jean Delvare <jdelvare@suse.com>,
- Phong Vo <phong@os.amperecomputing.com>, Arnd Bergmann <arnd@arndb.de>,
- Jonathan Corbet <corbet@lwn.net>,
- Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
- Dragan Cvetic <dragan.cvetic@xilinx.com>,
- "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
- open list <linux-kernel@vger.kernel.org>,
+Cc: Open Source Submission <patches@amperecomputing.com>,
  "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Thu Nguyen <thu@os.amperecomputing.com>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Open Source Submission <patches@amperecomputing.com>,
- Lee Jones <lee.jones@linaro.org>, Derek Kiernan <derek.kiernan@xilinx.com>,
- Guenter Roeck <linux@roeck-us.net>
+ Phong Vo <phong@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Mar 21, 2022 at 04:46:36PM +0700, Quan Nguyen wrote:
+On 21/03/2022 09:13, Quan Nguyen wrote:
+> Adds device tree bindings for SMPro MFD driver found on the Mt.Jade
+> hardware reference platform with Ampere's Altra Processor family.
 > 
+> The SMpro co-processor on Ampere Altra processor family is to monitor
+> and report various data included hwmon-related info, RAS errors, and
+> other miscellaneous information.
 > 
-> On 21/03/2022 15:23, Greg Kroah-Hartman wrote:
-> > On Mon, Mar 21, 2022 at 03:13:55PM +0700, Quan Nguyen wrote:
-> > > Add documentation for the Ampere(R)'s Altra(R) SMpro sysfs interfaces
-> > > 
-> > > Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
-> > > ---
-> > > Changes in v7:
-> > >    + First introduce in v7     [Greg]
-> > > 
-> > >   .../sysfs-bus-platform-devices-ampere-smpro   | 133 ++++++++++++++++++
-> > >   1 file changed, 133 insertions(+)
-> > >   create mode 100644 Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
-> > > 
-> > > diff --git a/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro b/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
-> > > new file mode 100644
-> > > index 000000000000..9bfd8d6d0f71
-> > > --- /dev/null
-> > > +++ b/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
-> > > @@ -0,0 +1,133 @@
-> > > +What:		/sys/bus/platform/devices/smpro-errmon.*/errors_[core|mem|pcie|other]_[ce|ue]
-> > 
-> > Please split this out as one entry per file.
-> > 
+> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> ---
+> Changes in v7:
+>   + None
 > 
-> These sysfs share same format of HW errors (the 48-byte Arm vendor specific
-> HW error record) but for separate HW domains: Core, PCIe, Mem... etc
+> Changes in v6:
+>   + None
 > 
-> > > +KernelVersion:	5.14
-> > 
-> > 5.14 is a long time ago.
-> > 
-> > > +Contact:	quan@os.amperecomputing.com
-> > > +Description:
-> > > +		(RO) Contains the 48-byte Ampere (Vendor-Specific) Error Record, see [1]
-> > > +		printed in hex format as below:
-> > > +
-> > > +		AA BB CCCC DDDDDDDD DDDDDDDDDDDDDDDD DDDDDDDDDDDDDDDD \
-> > > +		   DDDDDDDDDDDDDDDD DDDDDDDDDDDDDDDD DDDDDDDDDDDDDDDD
-> > > +		Where:
-> > > +		  AA       : Error Type
-> > > +		  BB       : Subtype
-> > > +		  CCCC     : Instance
-> > > +		  DDD...DDD: Similar to the Arm RAS standard error record
-> > 
-> > No, this is not a valid sysfs file, sorry.  This should just be one
-> > value per file.
-> > 
+>  .../devicetree/bindings/mfd/ampere,smpro.yaml | 48 +++++++++++++++++++
+>  1 file changed, 48 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/mfd/ampere,smpro.yaml
 > 
-> This 48-byte value is unable to separate into smaller values because it
-> contain all information necessary to indicate a single HW error as per ARM
-> RAS supplement document [1]. The format is to make it read-able other than a
-> single 48-byte hex value.
-> 
-> [1] https://developer.arm.com/documentation/ddi0587/latest/
+> diff --git a/Documentation/devicetree/bindings/mfd/ampere,smpro.yaml b/Documentation/devicetree/bindings/mfd/ampere,smpro.yaml
+> new file mode 100644
+> index 000000000000..c29d975c1bc3
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/mfd/ampere,smpro.yaml
+> @@ -0,0 +1,48 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/mfd/ampere,smpro.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Ampere Altra SMPro firmware driver
+> +
+> +maintainers:
+> +  - Quan Nguyen <quan@os.amperecomputing.com>
+> +
+> +description: |
+> +  Ampere Altra SMPro firmware may contain different blocks like hardware
+> +  monitoring, error monitoring and other miscellaneous features.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - ampere,smpro
+> +
+> +  reg:
+> +    description:
+> +      I2C device address.
+> +    maxItems: 1
+> +
+> +  "#address-cells":
+> +    const: 1
+> +
+> +  "#size-cells":
+> +    const: 0
 
-Just export the 48 byte hex value and make userspace split it up if it
-wants to do so.  Don't do things in the kernel that can be done in
-userspace.
+Why do you need address/size cells? Is the binding not complete? The
+commit description does not mention such case.
 
-thanks,
 
-greg k-h
+
+Best regards,
+Krzysztof
