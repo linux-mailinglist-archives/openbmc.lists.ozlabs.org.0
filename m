@@ -1,95 +1,90 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7C314E4A5E
-	for <lists+openbmc@lfdr.de>; Wed, 23 Mar 2022 02:12:55 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 619124E4BC1
+	for <lists+openbmc@lfdr.de>; Wed, 23 Mar 2022 05:06:05 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KNVhj56hxz2xXw
-	for <lists+openbmc@lfdr.de>; Wed, 23 Mar 2022 12:12:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KNZXW1QP1z2ywJ
+	for <lists+openbmc@lfdr.de>; Wed, 23 Mar 2022 15:06:03 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=canonical.com header.i=@canonical.com header.a=rsa-sha256 header.s=20210705 header.b=nSCSXJ1O;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=ETZzIt/h;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=EI0GGGnD;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=canonical.com (client-ip=185.125.188.122;
- helo=smtp-relay-internal-0.canonical.com;
- envelope-from=krzysztof.kozlowski@canonical.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.26;
+ helo=out2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=canonical.com header.i=@canonical.com
- header.a=rsa-sha256 header.s=20210705 header.b=nSCSXJ1O; 
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm3 header.b=ETZzIt/h; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=EI0GGGnD; 
  dkim-atps=neutral
-Received: from smtp-relay-internal-0.canonical.com
- (smtp-relay-internal-0.canonical.com [185.125.188.122])
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
+ [66.111.4.26])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KNKvh5LB5z2yN1
- for <openbmc@lists.ozlabs.org>; Wed, 23 Mar 2022 05:36:47 +1100 (AEDT)
-Received: from mail-lf1-f69.google.com (mail-lf1-f69.google.com
- [209.85.167.69])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 914763F6F1
- for <openbmc@lists.ozlabs.org>; Tue, 22 Mar 2022 18:36:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
- s=20210705; t=1647974197;
- bh=5jtpXxEom/a/jiH/sFwvBmFkIoAoceZfaQ8rDmnOzv8=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
- In-Reply-To:Content-Type;
- b=nSCSXJ1Org77dv/A9cffkocpcgggQstGpHStZaxVMZSS4x6SDkbp7hs4owzuJ52yX
- ur3puZUq/bDir6LhvQg/RD48PRu4zYpEa/DyO83RhCudTP2Oar1SdcEL50wUHdKaFm
- 8e6Dz6SJn4WJxOU1TKiDQCUG4GQcPHcOFNH5uUB1Ak6zF4Fw4hzobovSbLm3lyKBOe
- wAxr3Sem9cvrDKgPt7XLX85xzakY9zOmXqxcqsK9RazpX9I+wewFuWS9cnb3FzoSNC
- P+x+xYGTEoeS2dRal5IWkPE7SBSCd1eJ5O/rbEosazbL/OD7g9RzuSb9yZcMiZ1nD1
- g1nY6xhIj5xtQ==
-Received: by mail-lf1-f69.google.com with SMTP id
- z39-20020a0565120c2700b0044a219505a4so1971538lfu.11
- for <openbmc@lists.ozlabs.org>; Tue, 22 Mar 2022 11:36:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
- :content-language:to:cc:references:from:in-reply-to
- :content-transfer-encoding;
- bh=5jtpXxEom/a/jiH/sFwvBmFkIoAoceZfaQ8rDmnOzv8=;
- b=B/1TcGYjP/o8AKE3kSJLSqpSLvf/nThe2nUE9HeDGlcgm8XrdWMSVcXMa8FwzTIEij
- ipiMwoYl9NmDCZ438Q4tazf3yDVM8dHtwgIAYMjpkoXeuOJ0ziXvfBZgJLS96a/KIZqV
- 1CGA8A5e7WJ0oBaLTp4F7IHlKUC5x/Sq4TtZ2I5pthwHnPYiE04h9D3kTMOKPb4lR1Vd
- TpJViyKdAaizd6MDfEpy43RPnNvwJbN4LhPIoSVen/1gD5GXTVZ2roeEhd7iYiPCq6nL
- ssNgqrPS48celVMIqjPLpBALAn468JI3aXxSUuRO4Hio5yvXXk+9bSJE5vvIfoxRxX7P
- LsQw==
-X-Gm-Message-State: AOAM532i6c4Jdso0YeU11jk0+CtXYnip5gAd/YJkbrumcpH8TKGJrXie
- ZhIXqocGU2XmKGjLVOXMOYx0tlwzGE0bSjTrKPo/bN5m4ZqImEaxACdunisegNmhJfUU20j2KAX
- 21d4q5o+YMOY8uKy+WCilEKj346ylzci50aUL
-X-Received: by 2002:a05:6402:1941:b0:413:2555:53e3 with SMTP id
- f1-20020a056402194100b00413255553e3mr30164484edz.164.1647974184162; 
- Tue, 22 Mar 2022 11:36:24 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJxXjJuzBLH9hbRDSjsXFrbLCVkaIICKYGv+IQ5EfXGkXfhv1U2vMFYP/O//lEDRT2Fv/Gfc1w==
-X-Received: by 2002:a05:6402:1941:b0:413:2555:53e3 with SMTP id
- f1-20020a056402194100b00413255553e3mr30164440edz.164.1647974183906; 
- Tue, 22 Mar 2022 11:36:23 -0700 (PDT)
-Received: from [192.168.0.17] (78-11-189-27.static.ip.netia.com.pl.
- [78.11.189.27]) by smtp.gmail.com with ESMTPSA id
- d4-20020a1709067a0400b006d6e3ca9f71sm8816466ejo.198.2022.03.22.11.36.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 22 Mar 2022 11:36:23 -0700 (PDT)
-Message-ID: <ff8da126-8eac-7b72-c992-3b4223f2b077@canonical.com>
-Date: Tue, 22 Mar 2022 19:36:21 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [PATCH 00/18] dt-bindings: irqchip: include generic schema
-Content-Language: en-US
-To: Rob Herring <robh@kernel.org>
-References: <20220317115542.450032-1-krzysztof.kozlowski@canonical.com>
- <YjjJpxLWJ/YOe0OX@robh.at.kernel.org>
-From: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-In-Reply-To: <YjjJpxLWJ/YOe0OX@robh.at.kernel.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Mailman-Approved-At: Wed, 23 Mar 2022 12:12:09 +1100
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KNZX16KfDz2xTq
+ for <openbmc@lists.ozlabs.org>; Wed, 23 Mar 2022 15:05:36 +1100 (AEDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailout.nyi.internal (Postfix) with ESMTP id 5AC905C02B8;
+ Wed, 23 Mar 2022 00:05:32 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+ by compute5.internal (MEProxy); Wed, 23 Mar 2022 00:05:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
+ :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:sender:subject
+ :subject:to:to; s=fm3; bh=Np+QyQI1uB3q+4T6pTmdJJkKnx9ws99Vdj30jB
+ 4IYvo=; b=ETZzIt/h0CjpGv3gtVmR4hsA/l444IZCjMavnx9DhRyHdpWLIbutCr
+ /n2y7AvgCtL8y5pSXFUIPuqf4lVdFH3cSOA6TTaMMahXL1gkILvtRP5k+W7GTWp+
+ rfyv9D6KlCklEu1edYArJsE/DjSh9Jcs7cTC3A4Bc7At2SybC1Xm9ilyhe3srshy
+ WcPodlEwuOe5XOy5s7LF4u8srJlaVdu7iPjJLEDGHFDsw3RrKi6TgSOi3EV8tPeD
+ vNepwMQbWiGyOGDUozT2adDirf8S27hX5eox7vhI0bILub7IDFBVIwHxXZcfH7ny
+ vDPDVfikD5KqsA+J8Coov51+y8Cqcqyw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=Np+QyQI1uB3q+4T6p
+ TmdJJkKnx9ws99Vdj30jB4IYvo=; b=EI0GGGnDDmH2XftK34b3P6Ghopc7OQuDO
+ X/oUjdMCsZ87Xqd2F5Pcb6NSVlk1WJd9wtlIobnq1M+RIJvhwnkLH2Y6jji0HEoJ
+ FQ4UbJmvwyAODxuDGI+DNJ02hqYxCFiOJty6qzlsV8WyDFUArGzB+42rRHkDkjqc
+ 6p8KM7RDAMZXrDgp38BDkQphlBuLG137c8GnMZW+mLcR7mtjwMonT31CeaBACObC
+ AvXEVWQhTDQupivbUnBAcza52ih9itfGGtPYvkYT9yun9iM1a8Cw6ypY8UiuHDap
+ G7iiVyCKxfMMgqQVdpCDM7xpdkd/DGSvt+eReILtOXIPqhNccuxow==
+X-ME-Sender: <xms:i5w6Yngs2MQp1VPeP2BI57B6sF6xd6v0HulPZZddkdJAtSgJ16rvsQ>
+ <xme:i5w6YkDblF7N4q4tw4OVk7VBD2kp92MfvkGXUG6yJu4kSdM9RDKYFFBmGuhRAvHvj
+ 1fLc2m975L9sWDUfA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudegiedgieehucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
+ grthhtvghrnhephefhfeekgfekudevheffheeihedujeefjeevjeefudfgfeeutdeuvdeh
+ hfevueffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+ eprghnughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:i5w6YnEyvZjB8hwI3ywjuqTwf9C91_kzdB_xaOFP4SHwNdDo5rm1CQ>
+ <xmx:i5w6YkRs78ZQ8HJkA-SdbcT1iMZeYeRJV-rPOAC5hThTPlBmhP9IuQ>
+ <xmx:i5w6Ykz1KdIqay4FywmfPNZM_ZZTvrhpSGUO88qE3gquuEAaNcAVrg>
+ <xmx:jJw6Yho8RlYkCNgWEV0uuCp8X6jJTPPz4fkl0XqLwW_k0BHz4ryGkw>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 7FC64F60083; Wed, 23 Mar 2022 00:05:31 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.5.0-alpha0-4907-g25ce6f34a9-fm-20220311.001-g25ce6f34
+Mime-Version: 1.0
+Message-Id: <ea0c2d76-0a89-487a-a710-d6a07ae967b9@www.fastmail.com>
+In-Reply-To: <CAGpPFEHeN0NL3EJ238BbGLNpaayRo4SGcfWdRTdNiEgpq2a0Ng@mail.gmail.com>
+References: <CAGpPFEHeN0NL3EJ238BbGLNpaayRo4SGcfWdRTdNiEgpq2a0Ng@mail.gmail.com>
+Date: Wed, 23 Mar 2022 14:35:10 +1030
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "logananth hcl" <logananth13.hcl@gmail.com>, openbmc@lists.ozlabs.org
+Subject: Re: Applying patches to U-boot 2019.04
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,85 +96,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Nishanth Menon <nm@ti.com>, Bert Vermeulen <bert@biot.com>,
- Geert Uytterhoeven <geert+renesas@glider.be>,
- Neil Armstrong <narmstrong@baylibre.com>, Lokesh Vutla <lokeshvutla@ti.com>,
- Paul Walmsley <paul.walmsley@sifive.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Cristian Ciocaltea <cristian.ciocaltea@gmail.com>,
- Paul Cercueil <paul@crapouillou.net>, Daniel Palmer <daniel@thingy.jp>,
- Sagar Kadam <sagar.kadam@sifive.com>, linux-riscv@lists.infradead.org,
- Suman Anna <s-anna@ti.com>, Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
- Paul Burton <paulburton@kernel.org>, Marc Zyngier <maz@kernel.org>,
- openbmc@lists.ozlabs.org, John Crispin <john@phrozen.org>,
- Birger Koblitz <mail@birger-koblitz.de>, linux-oxnas@groups.io,
- devicetree@vger.kernel.org, Jason Cooper <jason@lakedaemon.net>,
- Manivannan Sadhasivam <mani@kernel.org>, linux-kernel@vger.kernel.org,
- linux-actions@lists.infradead.org,
- =?UTF-8?Q?Jonathan_Neusch=c3=a4fer?= <j.neuschaefer@gmx.net>,
- Krzysztof Halasa <khalasa@piap.pl>, Santosh Shilimkar <ssantosh@kernel.org>,
- Thomas Gleixner <tglx@linutronix.de>, linux-arm-kernel@lists.infradead.org,
- Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
- Tero Kristo <kristo@kernel.org>, Linus Walleij <linusw@kernel.org>,
- Joakim Zhang <qiangqing.zhang@nxp.com>,
- Claudiu Beznea <claudiu.beznea@microchip.com>,
- Dinh Nguyen <dinguyen@kernel.org>, Michael Walle <michael@walle.cc>,
- Palmer Dabbelt <palmer@dabbelt.com>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Imre Kaloz <kaloz@openwrt.org>,
- =?UTF-8?Q?Andreas_F=c3=a4rber?= <afaerber@suse.de>,
- Lucas Stach <l.stach@pengutronix.de>
+Cc: "Velumani T-ERS, HCLTech" <velumanit@hcl.com>,
+ Joel Stanley <joel@jms.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 21/03/2022 19:53, Rob Herring wrote:
-> On Thu, Mar 17, 2022 at 12:55:24PM +0100, Krzysztof Kozlowski wrote:
->> Hi,
->>
->> The DTS patches can be picked up independently.
->>
->> Best regards,
->> Krzysztof
->>
->> Krzysztof Kozlowski (18):
->>   ARM: dts: nspire: use lower case hex addresses in node unit addresses
->>   ARM: dts: ox820: align interrupt controller node name with dtschema
->>   ARM: dts: socfpga: align interrupt controller node name with dtschema
->>   dt-bindings: irqchip: actions,owl-sirq: include generic schema
->>   dt-bindings: irqchip: fsl: include generic schema
->>   dt-bindings: irqchip: ingenic: include generic schema
->>   dt-bindings: irqchip: intel,ixp4xx: include generic schema
->>   dt-bindings: irqchip: kontron,sl28cpld: include generic schema
->>   dt-bindings: irqchip: loongson: include generic schema
->>   dt-bindings: irqchip: microchip,eic: include generic schema
->>   dt-bindings: irqchip: mrvl,intc: include generic schema
->>   dt-bindings: irqchip: mstar,mst-intc: include generic schema
->>   dt-bindings: irqchip: mti,gic: include generic schema
->>   dt-bindings: irqchip: nuvoton,wpcm450-aic: include generic schema
->>   dt-bindings: irqchip: realtek,rtl-intc: include generic schema
->>   dt-bindings: irqchip: renesas: include generic schema
->>   dt-bindings: irqchip: sifive: include generic schema
->>   dt-bindings: irqchip: ti: include generic schema
-> 
-> I'm somewhat on the fence about these. Originally only devices with a 
-> bus or child nodes included a common schema. For 'simple' providers 
-> with mainly a '#<provider>-cells' property, we had to set the 
-> constraints on the number of cells anyways, so referencing another 
-> schema doesn't save anything. It is nice to declare the 'class' of the 
-> device though.
-> 
-> It makes the schema be applied twice (if the node name matches). That's 
-> not all bad because it finds cases of wrong node name. However, 
-> sometimes we have devices which are multiple providers and can't set the 
-> node name. So those can't reference interrupt-controller.yaml.
 
-Indeed there were cases of MSI and interrupt controller.
 
-> 
-> It also means that 'interrupt-map' for example is now valid. That could 
-> be fixed by splitting 'interrupt-map' related properties to its own 
-> schema. 
+On Wed, 23 Mar 2022, at 01:13, logananth hcl wrote:
+> Hai all,
+> I'm trying to port the u-boot to the 2019.04-aspeed-openbmc,
+> Here trying to apply *.patch file and also applying the defconfig for the
+> u-boot from the specific meta-layer.
+>
+> In this case, the defconfig file changes have been applied clearly to
+> u-boot in tmp, but those patch files are copying to the machine tmp folder
+> but not applied to the code!
+>
+> Is there any restriction for applying patches to the 2019.04-aspeed openbmc
+> ?
+> If not, is there any other suggestion for applying patches.
 
-Yes, that's a side effect. Maybe my series should be abandoned.
+Send them to this list so we can apply them to the openbmc/u-boot tree :)
 
-Best regards,
-Krzysztof
+Andrew
