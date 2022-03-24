@@ -1,65 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3EEB84E63BD
-	for <lists+openbmc@lfdr.de>; Thu, 24 Mar 2022 13:56:49 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id D61BA4E646A
+	for <lists+openbmc@lfdr.de>; Thu, 24 Mar 2022 14:50:17 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KPQGR0b2Rz30GN
-	for <lists+openbmc@lfdr.de>; Thu, 24 Mar 2022 23:56:47 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KPRS75rt4z30GN
+	for <lists+openbmc@lfdr.de>; Fri, 25 Mar 2022 00:50:15 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=BTgzShhr;
+	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=dIPrf4M0;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b2b;
- helo=mail-yb1-xb2b.google.com; envelope-from=srid.11486@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=BTgzShhr; dkim-atps=neutral
-Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com
- [IPv6:2607:f8b0:4864:20::b2b])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com;
+ envelope-from=a.filippov@yadro.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=dIPrf4M0; dkim-atps=neutral
+X-Greylist: delayed 451 seconds by postgrey-1.36 at boromir;
+ Fri, 25 Mar 2022 00:49:57 AEDT
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KPQG06pg2z302S
- for <openbmc@lists.ozlabs.org>; Thu, 24 Mar 2022 23:56:22 +1100 (AEDT)
-Received: by mail-yb1-xb2b.google.com with SMTP id y142so8254432ybe.11
- for <openbmc@lists.ozlabs.org>; Thu, 24 Mar 2022 05:56:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=2kTLa06OZ5Fb32YD6vZXURcoS2kSW+t/HZrHp9UPUWc=;
- b=BTgzShhrfYR7c0yM6zJE6/Vi4HOm2R3daU8RJ0953y9VHxOEaIloSpLpCK3mFiwh8a
- G4rc0YMpiTOnFJ1ekxE8FeAmsw/zqCotzl40Ks85ASa+LA7g22CSxtSeRIne9sFM80lI
- lgstNYAV/ythCEq3llQjrHQUUF2mf5YtvwJdDovssOfwq3FOKW/3PUedsYhkjKE+nMZw
- i2gJbsLTU3pFTdM+HU0GswtC3YvbFoDCYSR/vYiJjAeWPg7fuZ3SZz8puq3ayRU7BDm6
- 2dvJ3yT9Q5YWjocpUrcWVr6np6t+KXbLhJ98XtEmkZmlinN/++jY/JP6BxX5eiyFmBB6
- +gJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=2kTLa06OZ5Fb32YD6vZXURcoS2kSW+t/HZrHp9UPUWc=;
- b=0bavRIM7+Jh8ypEFikxroShnP4oH8alRTBFbxHV/JxC4tc9FbPlTuSxkcqFY131qBW
- abnKdb5USV7lvy9ekPVI1yJ0wt/IBt0nrNvYJQ8cNn/xG0bFi9ahpD8wF2Tr8r+x/Caa
- E+FOJ5LpXjekL5gjyJSkNMbYD3JJWsMvkOVqIR2S5oTwQmCwIgxXq/xQxnXz0Q2zhQ7r
- lkaKteWZqRDVBhGtnBfYayYRgz16dthQyHVXev8cyEPIrTwhTbRTCQZ/WHDmYGfyS+VB
- 5kQy9AdnKQcC7h5HO9bQRil8IK/GjmPsNWt21GZ7DYV53GNAfq9VWmghpu+XvMGWB2+1
- endg==
-X-Gm-Message-State: AOAM531xjS8eksUs0HU23PB7Vk3DUXQ1rPW8A1BoM5CyY+T/GR/bfH7c
- R2YI2/b+oL4pczdTpTmSprGNWYo63ngdh2ZbIZXFoADrwAlms+8O
-X-Google-Smtp-Source: ABdhPJyGknkhK2xBuL9UzZpXp6s0OTh2HtP4c4lwDo6dg7zRSTQJg1KNURZwmufYZn+n8X+wCnHbaHrtPnLB1no+RY8=
-X-Received: by 2002:a25:d8e:0:b0:636:ef10:4144 with SMTP id
- 136-20020a250d8e000000b00636ef104144mr4122415ybn.510.1648126578781; Thu, 24
- Mar 2022 05:56:18 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KPRRn6wBPz2x9S
+ for <openbmc@lists.ozlabs.org>; Fri, 25 Mar 2022 00:49:57 +1100 (AEDT)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 2AE1C41B56;
+ Thu, 24 Mar 2022 13:42:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ in-reply-to:content-disposition:content-type:content-type
+ :mime-version:references:message-id:subject:subject:from:from
+ :date:date:received:received:received; s=mta-01; t=1648129339;
+ x=1649943740; bh=BAjTdwLn08Veb99uQ8Tt5B4/gjCu+U/+nLMEyjTmvgk=; b=
+ dIPrf4M0PlH5ujsYz7zo7MHCEKY+b/XyLzd98qt0sdK9r7IhzBdY3bfsC9SkeOED
+ 0Xb0uv4JlLRlhXVcAcrh2Q9oWsgmX14hlSUUw4xaSgb+Q//W+Khgr2ADnZG2+5CC
+ LaU0mZPA9XflanBscgu2kNWajMGnVnksDDIzWOYoHcg=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id NAFj4W5DwJUo; Thu, 24 Mar 2022 16:42:19 +0300 (MSK)
+Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
+ [172.17.100.104])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 4F0A441B10;
+ Thu, 24 Mar 2022 16:42:18 +0300 (MSK)
+Received: from localhost (172.17.1.114) by T-EXCH-04.corp.yadro.com
+ (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 24
+ Mar 2022 16:42:18 +0300
+Date: Thu, 24 Mar 2022 16:42:17 +0300
+From: "Alexander A. Filippov" <a.filippov@yadro.com>
+To: sri d <srid.11486@gmail.com>
+Subject: Re: Multi-led configuration in dts
+Message-ID: <Yjx1OQt7YRgD0OHt@nbwork.lan>
+References: <CALXuKJc_pYJv0xYWtN5mzbHwpbHshukg34BjSzhqmpTdUMXwXg@mail.gmail.com>
 MIME-Version: 1.0
-From: sri d <srid.11486@gmail.com>
-Date: Thu, 24 Mar 2022 18:26:07 +0530
-Message-ID: <CALXuKJc_pYJv0xYWtN5mzbHwpbHshukg34BjSzhqmpTdUMXwXg@mail.gmail.com>
-Subject: Multi-led configuration in dts
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="00000000000045f45d05daf65ffb"
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+In-Reply-To: <CALXuKJc_pYJv0xYWtN5mzbHwpbHshukg34BjSzhqmpTdUMXwXg@mail.gmail.com>
+X-Originating-IP: [172.17.1.114]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-04.corp.yadro.com (172.17.100.104)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,102 +74,36 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: spinler@us.ibm.com, andrew@aj.id.au, bradleyb@fuzziesquirrel.com,
- velumanit@hcl.com
+Cc: spinler@us.ibm.com, andrew@aj.id.au, openbmc@lists.ozlabs.org,
+ bradleyb@fuzziesquirrel.com, velumanit@hcl.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000045f45d05daf65ffb
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Mar 24, 2022 at 06:26:07PM +0530, sri d wrote:
+> 
+> Hi Team,
+> 
+> I am working on implementing Power and system identification LEDs, in which LEDs are connected to GPIO pins directly. I need to handle two colors (blue & yellow) for LEDs in *.dts file.
+> In phosphor-led-sysfs repo, whether multi-led configuration is handled ? https://github.com/torvalds/linux/blob/master/Documentation/devicetree/bindings/leds/leds-class-multicolor.yaml
+> 
 
-Hi Team,
+You could define them as two standalone LED and manage them separately.
+It works fine even for a paired LED until you want to synchronized switching
+(for example: the blinking of mixed color).
 
-I am working on implementing Power and system identification LEDs, in which
-LEDs are connected to GPIO pins directly. I need to handle two colors (blue
-& yellow) for LEDs in *.dts file.
-In phosphor-led-sysfs repo, whether multi-led configuration is handled ?
-https://github.com/torvalds/linux/blob/master/Documentation/devicetree/bindings/leds/leds-class-multicolor.yaml
 
-As far as I analyzed, multi-led seems to work for dedicated LED controllers
-and not for GPIO pins directly. Is there a way we can make it work for
-directly connected GPIOs ?
-https://www.phoronix.com/scan.php?page=news_item&px=Linux-5.9-Multi-Color-LEDs
+> As far as I analyzed, multi-led seems to work for dedicated LED controllers and not for GPIO pins directly. Is there a way we can make it work for directly connected GPIOs ?
+> https://www.phoronix.com/scan.php?page=news_item&px=Linux-5.9-Multi-Color-LEDs
+> 
 
-Thanks,
-Jayashree
+The multi-color LEDs are not supported by the gpio-led driver yet.
 
---00000000000045f45d05daf65ffb
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+We have a desire to implement multi-color LED support in gpio-led driver, but
+it's a low priority task and I can't tell when it will be done. :)
 
-<div dir=3D"ltr"><div><span style=3D"color:rgb(36,36,36);font-family:&quot;=
-Segoe UI&quot;,system-ui,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji=
-&quot;,sans-serif;font-size:14px;font-variant-ligatures:normal;font-variant=
--caps:normal;letter-spacing:normal;text-align:start;text-indent:0px;text-tr=
-ansform:none;white-space:normal;word-spacing:0px;background-color:rgb(255,2=
-55,255);text-decoration-style:initial;text-decoration-color:initial;display=
-:inline;float:none">Hi Team,</span></div><div><span style=3D"color:rgb(36,3=
-6,36);font-family:&quot;Segoe UI&quot;,system-ui,&quot;Apple Color Emoji&qu=
-ot;,&quot;Segoe UI Emoji&quot;,sans-serif;font-size:14px;font-variant-ligat=
-ures:normal;font-variant-caps:normal;letter-spacing:normal;text-align:start=
-;text-indent:0px;text-transform:none;white-space:normal;word-spacing:0px;ba=
-ckground-color:rgb(255,255,255);text-decoration-style:initial;text-decorati=
-on-color:initial;display:inline;float:none"><br></span></div><div><span sty=
-le=3D"color:rgb(36,36,36);font-family:&quot;Segoe UI&quot;,system-ui,&quot;=
-Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,sans-serif;font-size:14p=
-x;font-variant-ligatures:normal;font-variant-caps:normal;letter-spacing:nor=
-mal;text-align:start;text-indent:0px;text-transform:none;white-space:normal=
-;word-spacing:0px;background-color:rgb(255,255,255);text-decoration-style:i=
-nitial;text-decoration-color:initial;display:inline;float:none"></span></di=
-v><div><span style=3D"color:rgb(36,36,36);font-family:&quot;Segoe UI&quot;,=
-system-ui,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,sans-ser=
-if;font-size:14px;font-variant-ligatures:normal;font-variant-caps:normal;le=
-tter-spacing:normal;text-align:start;text-indent:0px;text-transform:none;wh=
-ite-space:normal;word-spacing:0px;background-color:rgb(255,255,255);text-de=
-coration-style:initial;text-decoration-color:initial;display:inline;float:n=
-one">I am working on implementing Power and system identification LEDs, in =
-which LEDs are connected to GPIO pins directly. I need to handle two colors=
- (blue &amp; yellow) for LEDs in *.dts file.<br>In phosphor-led-sysfs repo,=
- whether multi-led configuration is handled ? <a href=3D"https://github.com=
-/torvalds/linux/blob/master/Documentation/devicetree/bindings/leds/leds-cla=
-ss-multicolor.yaml">https://github.com/torvalds/linux/blob/master/Documenta=
-tion/devicetree/bindings/leds/leds-class-multicolor.yaml</a><br></span></di=
-v><div><span style=3D"color:rgb(36,36,36);font-family:&quot;Segoe UI&quot;,=
-system-ui,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,sans-ser=
-if;font-size:14px;font-variant-ligatures:normal;font-variant-caps:normal;le=
-tter-spacing:normal;text-align:start;text-indent:0px;text-transform:none;wh=
-ite-space:normal;word-spacing:0px;background-color:rgb(255,255,255);text-de=
-coration-style:initial;text-decoration-color:initial;display:inline;float:n=
-one"><br></span></div><div><span style=3D"color:rgb(36,36,36);font-family:&=
-quot;Segoe UI&quot;,system-ui,&quot;Apple Color Emoji&quot;,&quot;Segoe UI =
-Emoji&quot;,sans-serif;font-size:14px;font-variant-ligatures:normal;font-va=
-riant-caps:normal;letter-spacing:normal;text-align:start;text-indent:0px;te=
-xt-transform:none;white-space:normal;word-spacing:0px;background-color:rgb(=
-255,255,255);text-decoration-style:initial;text-decoration-color:initial;di=
-splay:inline;float:none">As far as I analyzed, multi-led seems to work for =
-dedicated LED controllers and not for GPIO pins directly. Is there a way we=
- can make it work for directly connected GPIOs ?<br><a href=3D"https://www.=
-phoronix.com/scan.php?page=3Dnews_item&amp;px=3DLinux-5.9-Multi-Color-LEDs"=
->https://www.phoronix.com/scan.php?page=3Dnews_item&amp;px=3DLinux-5.9-Mult=
-i-Color-LEDs</a></span></div><div><span style=3D"color:rgb(36,36,36);font-f=
-amily:&quot;Segoe UI&quot;,system-ui,&quot;Apple Color Emoji&quot;,&quot;Se=
-goe UI Emoji&quot;,sans-serif;font-size:14px;font-variant-ligatures:normal;=
-font-variant-caps:normal;letter-spacing:normal;text-align:start;text-indent=
-:0px;text-transform:none;white-space:normal;word-spacing:0px;background-col=
-or:rgb(255,255,255);text-decoration-style:initial;text-decoration-color:ini=
-tial;display:inline;float:none"><br></span></div><div><span style=3D"color:=
-rgb(36,36,36);font-family:&quot;Segoe UI&quot;,system-ui,&quot;Apple Color =
-Emoji&quot;,&quot;Segoe UI Emoji&quot;,sans-serif;font-size:14px;font-varia=
-nt-ligatures:normal;font-variant-caps:normal;letter-spacing:normal;text-ali=
-gn:start;text-indent:0px;text-transform:none;white-space:normal;word-spacin=
-g:0px;background-color:rgb(255,255,255);text-decoration-style:initial;text-=
-decoration-color:initial;display:inline;float:none">Thanks,</span></div><di=
-v><span style=3D"color:rgb(36,36,36);font-family:&quot;Segoe UI&quot;,syste=
-m-ui,&quot;Apple Color Emoji&quot;,&quot;Segoe UI Emoji&quot;,sans-serif;fo=
-nt-size:14px;font-variant-ligatures:normal;font-variant-caps:normal;letter-=
-spacing:normal;text-align:start;text-indent:0px;text-transform:none;white-s=
-pace:normal;word-spacing:0px;background-color:rgb(255,255,255);text-decorat=
-ion-style:initial;text-decoration-color:initial;display:inline;float:none">=
-Jayashree<br></span></div></div>
+> Thanks,
+> Jayashree
 
---00000000000045f45d05daf65ffb--
+--
+Cheers,
+Alexander
