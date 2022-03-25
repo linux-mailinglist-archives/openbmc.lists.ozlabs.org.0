@@ -1,157 +1,148 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E93D14E6A0D
-	for <lists+openbmc@lfdr.de>; Thu, 24 Mar 2022 21:55:36 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7C0D44E6E9E
+	for <lists+openbmc@lfdr.de>; Fri, 25 Mar 2022 08:14:51 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KPctt62lrz30Dk
-	for <lists+openbmc@lfdr.de>; Fri, 25 Mar 2022 07:55:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KPtdL2M5sz30Fs
+	for <lists+openbmc@lfdr.de>; Fri, 25 Mar 2022 18:14:46 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256 header.s=pps202002 header.b=P/FNzfDr;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=moaYhi3g;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=equinix.com (client-ip=148.163.148.236;
- helo=mx0a-00268f01.pphosted.com;
- envelope-from=prvs=60829ea79f=zweiss@equinix.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256
- header.s=pps202002 header.b=P/FNzfDr; 
+ smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7ea9::729;
+ helo=nam02-sn1-obe.outbound.protection.outlook.com;
+ envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
+ header.a=rsa-sha256 header.s=selector2 header.b=moaYhi3g; 
  dkim-atps=neutral
-Received: from mx0a-00268f01.pphosted.com (mx0a-00268f01.pphosted.com
- [148.163.148.236])
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com
+ (mail-sn1anam02on20729.outbound.protection.outlook.com
+ [IPv6:2a01:111:f400:7ea9::729])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KPctP4NKsz2yyn
- for <openbmc@lists.ozlabs.org>; Fri, 25 Mar 2022 07:55:02 +1100 (AEDT)
-Received: from pps.filterd (m0165118.ppops.net [127.0.0.1])
- by mx0a-00268f01.pphosted.com (8.16.1.2/8.16.1.2) with ESMTP id 22OIGhGY025921;
- Thu, 24 Mar 2022 20:54:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=equinix.com;
- h=from : to : cc :
- subject : date : message-id : references : in-reply-to : content-type :
- content-id : content-transfer-encoding : mime-version; s=pps202002;
- bh=S1hI87sw6vPBHUs4hCvVOvJKtUgf2gHeFnBB3s7Vtao=;
- b=P/FNzfDrWFoA5/gk3B0Pbnu8ZfvDW+KPMNytRq5dn0s48ogtE2K8SW0SzSmmEDhqXgyb
- B1MT38v85Pu9hHjg8o3Q6MGOgBZGihltvcEe2Hf1kAPB/ZvnQzPZClqhgGzQwSZ1F1qG
- iE9QoY3mYN6qkR7/rySthBt4n2la79MeZLASiu0XjnhY29EPQ2a2ZMEGv6vTBprrIW/V
- dcSHFWSxVpDonpvMNDAWUMxIyseqKuD7qkNKWwmglzJ+b3sCxR9ekrLGwaTxjCyr7NMh
- srdWLNMAcZ5V3qetyYzPSm83outLBW1WD5HxKYW23vrDJJKFne937nF6ICGhmtiUTnB5 DA== 
-Received: from nam12-mw2-obe.outbound.protection.outlook.com
- (mail-mw2nam12lp2048.outbound.protection.outlook.com [104.47.66.48])
- by mx0a-00268f01.pphosted.com (PPS) with ESMTPS id 3f0q1ft039-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 24 Mar 2022 20:54:57 +0000
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KPtcv0GfCz2xD4
+ for <openbmc@lists.ozlabs.org>; Fri, 25 Mar 2022 18:14:22 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dJ8ajOhIgszHD14YczgYz+7jfwS9HgfM3i+w5OmOKLVId2Pt4cZF4Tlda2rFRrV2sH4ZIdsvUihg+FIz+lpv7rkbQCm5U6ClBEdDJV/vlhVVlHNwMcdhYvxfx5I4dZ4VPjQDbINqnNZTO8ZpE6AIO0lrCooiZNhZ+bqe9bFUvIytZzUD3AtwXT16ra1V3bMZ0bleUXZCkKE6vVyoehboyvYgBi1AcpmhadMSpMfhjrk1SvmnIGr21/WUINRzRNM/BkV+V/pPjhFoawntRqzG83JfV2YP+R0Oz1zOdDV3aO4/FBepWV7kOrA7JSjw/qz3UoGYQGc881hyuyA+kgpQjg==
+ b=PcRireziNS3gclKefjPGdFSF45gZqP5xGIXTIHCSPM3c29CVAjqA2L32oZlD5exe+XLd84a95CRH4XFnVngDtXqld+lOqnEQA92Vqa02oAjCBySUjc0iLruITnFCu/M0j2UTf3E1+DCxz7V7mNCUZ2B2mYYQ12a8s+g7mOwwWPmleRxSAnCZjR0L7xcfuaZO5pdxTZ3a96ghMs2cU6gqdv8g9P3jJMdmmCZryIge7XLxp48QNPSrZ7PvRX2zydrxJgb+L36MzR9iMdymkLYBCOVftBs4AkaYgvZeF3vE2V5+8aEF8U52d4MaXz1EkIFCNkxcUKucvtT2f+kGKxFKug==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=S1hI87sw6vPBHUs4hCvVOvJKtUgf2gHeFnBB3s7Vtao=;
- b=WSM5ABEk9e0VpJr3JRHAKEHrXf3hsbl54Oa5gzRt48oc4/r6wXcvAF0oGqGb+7jfAyzNNaFRnHroLwiWYblYfVg50M7B6Zx0owqsq9MczSeT5oByqu6uPJoy9oEnk1ez8FZvMBxWFBLln1xzsH81hTdcUMhE8Nx/4s8KCzGxFUtsNrrcgGnRk4iXsgbwBY/nMEqBni2oera8UCe+V7NlphXiaSTdtgsJemcRelZw/P0LLYNIy0v2y38L0xgbDIX88wMspbFMvfF7dboYcf3W7r5ooKX7BzQZ4JJ1EsJYNOyQ7XEGhCdmScjumMxi9nWWhjp571+e/MxTlQoD2NXquQ==
+ bh=/+rHPSWDbxtPst8YSxjh0RxwE13AyBRS+LbQSI1YrTk=;
+ b=Yuh/uQOB7dLCuUMCivn4sfygMW+Rms1RKtCcY6usPXKiPPpkKvUMGCmAuqz6FVw2d7YDGJ6CCMtXzlQ2QdeAaVWu0pd8mdSChZ/brEGNsJLP/dilaGAe7qUC838MLA6+DDdyyYDg5fw6cyMhj3g/GZwXuDQf6sIZB6XNlb3vKhCLbeZ1pmGZ32jTNOLubArKdxeuneW5vsU3a0oWVp7KXSreGFlif7MeL5PIBS1cnb0VoR1z4E+i1Sk0afy5caTDBSW4/H9hlmfoN8dmCO8ftYSb2Vk0HAGdmUIZS78BxSR2OwRr2ElonzEtdhJrCv1QeLhTqBVC0PbpQ1iUyR0PQg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=equinix.com; dmarc=pass action=none header.from=equinix.com;
- dkim=pass header.d=equinix.com; arc=none
-Received: from DM8PR04MB8007.namprd04.prod.outlook.com (2603:10b6:5:314::20)
- by SJ0PR04MB8260.namprd04.prod.outlook.com (2603:10b6:a03:3f0::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5102.16; Thu, 24 Mar
- 2022 20:54:54 +0000
-Received: from DM8PR04MB8007.namprd04.prod.outlook.com
- ([fe80::42f:1f1b:3a9b:b4a3]) by DM8PR04MB8007.namprd04.prod.outlook.com
- ([fe80::42f:1f1b:3a9b:b4a3%4]) with mapi id 15.20.5102.019; Thu, 24 Mar 2022
- 20:54:54 +0000
-From: Zev Weiss <zweiss@equinix.com>
-To: =?utf-8?B?R2VvcmdlIEh1bmcgKOa0quW/oOaVrCk=?= <George.Hung@quantatw.com>
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc 1/1] ARM: dts: aspeed: add
- Quanta S6Q machine dts
-Thread-Topic: [PATCH u-boot v2019.04-aspeed-openbmc 1/1] ARM: dts: aspeed: add
- Quanta S6Q machine dts
-Thread-Index: AQHYLRqIGGvL9mrdK0CMjMeL/YZHQqzPKJ4A
-Date: Thu, 24 Mar 2022 20:54:54 +0000
-Message-ID: <20220324205454.GN5754@packtop>
-References: <20220301011135.14066-1-george.hung@quantatw.com>
- <CACPK8XcSkQ0HpAMAh8o_jouVprWrdnTOA0dn07Wkoo-5ZWfMew@mail.gmail.com>
- <HK0PR04MB23394082DE0F46CA8111B1A18F029@HK0PR04MB2339.apcprd04.prod.outlook.com>
-In-Reply-To: <HK0PR04MB23394082DE0F46CA8111B1A18F029@HK0PR04MB2339.apcprd04.prod.outlook.com>
-Accept-Language: en-US
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=os.amperecomputing.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=/+rHPSWDbxtPst8YSxjh0RxwE13AyBRS+LbQSI1YrTk=;
+ b=moaYhi3g7P35Npmw+FrlFrKPC/hqQM7/AEvIojfsLM+nFQvYQIyEe5lMZP/R3q3wvRptN2UjFOlqoE0mj/ab6amez17WMqn1z3tZNdddUrQWnTZO2o+hMDKQRc8VANfiFhSnwnlGeJKBtZ7Afk8PXZqi0RJUMPryXn1Js9fPVrY=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
+Received: from SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24) by
+ BYAPR01MB4086.prod.exchangelabs.com (2603:10b6:a03:56::23) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5081.17; Fri, 25 Mar 2022 07:14:01 +0000
+Received: from SJ0PR01MB7282.prod.exchangelabs.com
+ ([fe80::cd24:39ed:7042:46d6]) by SJ0PR01MB7282.prod.exchangelabs.com
+ ([fe80::cd24:39ed:7042:46d6%7]) with mapi id 15.20.5102.019; Fri, 25 Mar 2022
+ 07:14:01 +0000
+Message-ID: <449ef91b-42b1-804e-bc52-a85249b9da77@os.amperecomputing.com>
+Date: Fri, 25 Mar 2022 14:13:45 +0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.6.0
+Subject: Re: [PATCH v7 7/9] dt-bindings: mfd: Add bindings for Ampere Altra
+ SMPro MFD driver
 Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: e38d02e1-4964-42de-4267-08da0dd88c89
-x-ms-traffictypediagnostic: SJ0PR04MB8260:EE_
-x-microsoft-antispam-prvs: <SJ0PR04MB8260410584592BCF1790AD06C3199@SJ0PR04MB8260.namprd04.prod.outlook.com>
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: vvXB5GfQE39UiLntn4O21ucj+pkODIX8sYJ/KvhTYwLias5gIesTqo1E0JamNVPE3VCDTMoq/EyZ29T9ma13TTihlB3SnE0D8ZYwZhEyjFZ/LHBw/mjvWjo2rjlXC8ZyuQE/qyuvu5v+HHzIFIzbM5yJ0AIRrZkkmnPvHDDlSICTxYMPIrVB0tq02zzA9XOK7rhG0/UwaGFCul4QwYXyJPyGxrq/oej3DHVO1J1zQ23VbRhhM78os+McbBIi/bQNld18OdPrj2bSkgRKheZVpuYxA64QkHYeEgjiT8m2KsYfG0UYuimOXMhaHrBNoisqMuDTp1V1a+QSf0vdijz5Ma81gkEDLjMY+C69fc+FhLBLW8I94ZGgu7s6rdUn6F/dvXxxhS5F2pcbpn6/xmG8gxD+NYlgGdgBjJ/NLIdamfsa4xP+YIfdMtZBBzJkDkVbhKjAs3mYp3VNXw3sUNE5hYMbQp0mFjkvGfvBixIzmbcB4Hy5x3UQanFbCLmqxstJa2umUcWk3rIDgjJ5oaTBeqpD/jmA0zJSUe3MX/aexwPmgH6XrihCsAYWd05s2IYITHe063xOnZJjr5pA+L5ic1HVXVMsdp8Ppqb6YWtG0G91djlT5OnVv1m+HkiuOgWkJiCoqKA6l0vCw/6jDwum4M8gBqEDKNStXstikBN/ADddTEXToQzrO6ykkDbpnRskGOS6spGe99yYW1i8OZdNpw==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM8PR04MB8007.namprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230001)(7916004)(4636009)(366004)(4326008)(8936002)(122000001)(6506007)(33656002)(6512007)(71200400001)(5660300002)(2906002)(38100700002)(6486002)(66476007)(8676002)(66946007)(64756008)(66446008)(76116006)(66556008)(9686003)(91956017)(86362001)(54906003)(508600001)(33716001)(316002)(26005)(1076003)(6916009)(186003)(38070700005);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?VTcvRzI0SVdyKzJLNDhNZ2Ria0YzQVNDUUpreTY2bUh1L0ErdjJFam8rS2xk?=
- =?utf-8?B?dFpveXdlTDRURExuZlpYL0tmNG0wTlZJQnExWDJFaDlWaTB2N3lpbHlNUU82?=
- =?utf-8?B?RFVXS21ETjVSS1IxM3Z1MjN3QmlEL2V0cjlBeWUyckd3TFJra0tEOTJmMGk5?=
- =?utf-8?B?NnVEbnhLeGhwNVNndnJpdWtNUjZlUzBKN2Z4bEJjQW1Ea2Q3Q281KzlvTTlj?=
- =?utf-8?B?Z2thSVRLNjY4NGYzQUZHYU8waFVsSnBzRVpRL3BkRmk0Ujk2MGJPZkdPbWhk?=
- =?utf-8?B?dFdrQUVqM1RQaEQ5ZWVFM0Nhb3VuYVh6N0U0RFpVSmVoWGxHVnR1bEZPK1Nt?=
- =?utf-8?B?L1dJRmZKVXZZWjVEYTBmL1VEdTh3dHlHQ2RKZi9rV1RHUTRVdlVtSU13VlJl?=
- =?utf-8?B?b2laVjI3NGdNOU4ybHZ3OUNGditBS1NPWlpYTFE3WENTb2NkdUJzeG82a1py?=
- =?utf-8?B?WFJueU5BN3N0Zzh6eGdZdS9OQUNobFpzb1VCUE85dUxWV1VNYmpaa3FRUzZ4?=
- =?utf-8?B?eGxucGU1d2hzTEswbHphVStJNDg1cmpYMkdQUE5pbUdicHZ5Smt1Y0VTN1M4?=
- =?utf-8?B?V05RaWViZ2czMzMvTmxiZkpaMjVPVTV3eFRTcnMyMGZOVmJqendJV09QTlhR?=
- =?utf-8?B?UUZ2OVFoZ2QyajJab0Njcm0zQkNRZHRsVW04VitHL0lYMkxzOVpqVHBYTHo1?=
- =?utf-8?B?SHAvd3N0dzdocUlSbjZOcEFacjg2YjVXRjVSV0xUVGQvamhQbWQzYWFtalhz?=
- =?utf-8?B?ZEpZWG9rZ2NxVXQzY1dZVGFqdmZXelpBWXdObGJBN1YrN25CSjRXZE1wcUlT?=
- =?utf-8?B?ZlhIRUQ3RFArNHNmMXQ2eUQwU0trbWNhMU5FTTZFTkRNbnVzVFpWTFV0RERN?=
- =?utf-8?B?alBLMFkrdE96YnlDb0YyUEJjaEFZZVFlSFlTejdtNVF3TDFudzNuOERYL09a?=
- =?utf-8?B?Vmx3YXcvdm04RlFOM0VYQlI3ckJIbGdtK3Y0bmdxTmZqaFJPV3l5cEtWbEla?=
- =?utf-8?B?YkVwZ1BhSlpuU2RQMjZUQjJXbjRHaHhxNURHTUFWRktIcTkyTjNqU05qN0dG?=
- =?utf-8?B?eWZVMmltLzRWNlhpNG9CQzVRMTVkbDNwQUNaUHlJcW9qVkFTK1gvZU4xcTVn?=
- =?utf-8?B?UzRFTGd2QVNldE91R0FzVVFacVIxRE5VYnQzYW43VER5eGZkWUU3RnFSam5M?=
- =?utf-8?B?OStlR1lDWnJqbmtLNk0wYXV4NlNCVWg3dWJsaU02RnRtZ2tCYU5LSm5TZ2Ur?=
- =?utf-8?B?KzdPMEJWcjFlN3FIczNXYnBUWWN6c0tTWXJFQU5oaGVmSk5Xb0NGRnVwSmZW?=
- =?utf-8?B?YUlTT0ZmalI5amN2L21RMi9CQVlmUlh5QVRyZmVtUm5pMnNoQ1BaWEgvSi9J?=
- =?utf-8?B?dnI3TEJMTVJOZDdMRDJNUEJRQlNnYzQrV2tuNW4ySEwvR2ovNVIvVVhBazdL?=
- =?utf-8?B?aE1qbFBqWjlybkFDL0Vra09aNFRBUkI0cGllRkZmOXRSUWIzTkd0THFMcGlo?=
- =?utf-8?B?dTBKWmVqYjBmaDVXTld5NWxIQncyOFRhZ21mVlE4QWJBY000YkZFcHVpRHU3?=
- =?utf-8?B?SkJSSm5YQ1BBSTBxMGZ5MUx1UG50RGpXS2hwOFdwVFVUbDVrb1lWV0ZVeDBH?=
- =?utf-8?B?Tno4V0Iwc2JhUkRpNm5KdVJFdlNFRjRERFM0NStOTW5QeXc2YTN0MHh4SUVw?=
- =?utf-8?B?cFVJcGVTWG9QanMvSVJ5aUdNNlBFSnlLMlBnYi9acSs1bGxsQUc5djAxSHlB?=
- =?utf-8?B?NGhORHJjcFZQWGtPaVBOeUJhU1VBZlNPVmdxNjRYSzZRNXB3WGI3K1Z0WUNR?=
- =?utf-8?B?WCtnU1ZrdmtYbVF4anFQb0Y1a0ZoRVdxY0N3SWFMelpmbEtIQWFwNVEzLzQw?=
- =?utf-8?B?eTFaMnNIK2ZscDgrM2FLTEM1RnBHMEJmTmp1cFlDRlhLaDlNOTM3RjYwSXhR?=
- =?utf-8?B?RFcyZFdVRnliRzdraEU2UlhxVW4zTHVTUytoaU9rYk5vcnNxdWc2NVl4dnZo?=
- =?utf-8?B?SmpiSDBKZU93PT0=?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <804793F0E1BA3747BF183BD9071CE556@namprd04.prod.outlook.com>
-Content-Transfer-Encoding: base64
+To: Krzysztof Kozlowski <krzk@kernel.org>, Lee Jones <lee.jones@linaro.org>,
+ Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Jean Delvare <jdelvare@suse.com>, Guenter Roeck <linux@roeck-us.net>,
+ Jonathan Corbet <corbet@lwn.net>, Derek Kiernan <derek.kiernan@xilinx.com>,
+ Dragan Cvetic <dragan.cvetic@xilinx.com>, Arnd Bergmann <arnd@arndb.de>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ Thu Nguyen <thu@os.amperecomputing.com>,
+ Gustavo Pimentel <Gustavo.Pimentel@synopsys.com>,
+ open list <linux-kernel@vger.kernel.org>,
+ "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS"
+ <devicetree@vger.kernel.org>,
+ "open list:HARDWARE MONITORING" <linux-hwmon@vger.kernel.org>,
+ "open list:DOCUMENTATION" <linux-doc@vger.kernel.org>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <20220321081355.6802-1-quan@os.amperecomputing.com>
+ <20220321081355.6802-8-quan@os.amperecomputing.com>
+ <766931c9-6647-19c5-24d8-9b8fb3ab58d6@kernel.org>
+From: Quan Nguyen <quan@os.amperecomputing.com>
+In-Reply-To: <766931c9-6647-19c5-24d8-9b8fb3ab58d6@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI2P153CA0033.APCP153.PROD.OUTLOOK.COM
+ (2603:1096:4:190::21) To SJ0PR01MB7282.prod.exchangelabs.com
+ (2603:10b6:a03:3f2::24)
 MIME-Version: 1.0
-X-OriginatorOrg: equinix.com
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: cc01ccf1-ee1b-45dd-a16a-08da0e2f0917
+X-MS-TrafficTypeDiagnostic: BYAPR01MB4086:EE_
+X-Microsoft-Antispam-PRVS: <BYAPR01MB40867984BF603875945DFBAFF21A9@BYAPR01MB4086.prod.exchangelabs.com>
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: kSgnyV24Ww5K1JmLvmrCL9Cjv4OmmNeR/bLhs9rQ2B077DmgPzhSQJV4CS2D9vSNI5LPugf0FgdUiByJ7EGbq9NfxGZDY+b5aH8IXkWgm4QNWuV8tblr4xGHc5Tw1i3LbHSlQjyHz2gpZwKI3E+TV84pQQ0gXb2ISYm5nJ9S65OhmKTkFYqV2wioI6F8J8yuXzgfVf9OKKU8ixkdygrlbLu8ij2rAO+EfCZ8FAWrG1DbjSuRi8JAQjLoYqG3kqmOSpATmZhoh2s8hUUDicqPgzyV+hwJ7KOyIoUXmCHHYMDHprYcQfcMIRtgygNxWk4Gj1hM/E0l0O9ieQtQs/1CaF8Mg/o7jW1eJKazIqdkxuQsd/IiaiPpwa0U4gfK5/BslWBGPQ0aS+AHOX7TkcEna4pSTdTKG3TDN3jbZ9GRwjGqP+aYPwforz5vd5nt5NpUZhtapXa/bVtUD2Fd5NuTPZ37ZsHdgOiazBdulPfkA/AZw2DrSpLovV4EzzIMjDT3sNDgVvFAlsuMqGpMdJUeh1pG5L5epOHbBOxeg0dXwOhgBJbMBlj/iea96WXPpg/O7CmhDRoFFm8FRQpeiHYM0fbc775vFcv02VL/MgP54mMwH/YOVMJoIgoHZLH8PxinFv5zobpEQLlnZZLcWz33LI4sp/ewbBwjfPMJHAmunOXV3SZvIn4TOcFAZSqaK6V7w6iABNepQ+8iMAJfvP/97Weg7wGZf0aXI8NHrLM3ub28iV/EvHh2xUzBJliAt5TDTHsq5GxDZNM3RPDoJLvjfe3lFdCl+ZOS1f/5GDjvtc/dWKA6Pp1wVlHT1dAn59Dq00rm+//NDbN/+zFABkDy3PtgLfuaTdGH21CBpAp8hROzulOF5Bd6QZQhMZwqjXO/
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SJ0PR01MB7282.prod.exchangelabs.com; PTR:; CAT:NONE;
+ SFS:(13230001)(4636009)(366004)(26005)(8936002)(186003)(316002)(54906003)(2616005)(5660300002)(4326008)(7416002)(110136005)(38100700002)(38350700002)(31696002)(31686004)(66946007)(52116002)(53546011)(6486002)(107886003)(6512007)(66476007)(8676002)(66556008)(83380400001)(86362001)(966005)(921005)(2906002)(6666004)(508600001)(6506007)(43740500002);
+ DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Y0t5dS81K0FITWtZK0xMbXlza2FtRnNPdDQwZlNCQWx6ZHE5SUR0M0lKQTB6?=
+ =?utf-8?B?c3FlaTFubVF5bm1DS2Y3R0ZIVC8yYlduUllYVW9zVUFHSmF3T3JOSDk2Q1A4?=
+ =?utf-8?B?U2VJK2NNWTdUY0oxZFZlelRQSWk5RmYwRHFUWm5nTXpGSURSYjF1UGRLUndo?=
+ =?utf-8?B?U21pZ1BwTnVWZkhxUDcycGJVUHIrRE9UUnE2N3ArdythMTFXbmNlTjFwQU9G?=
+ =?utf-8?B?V3JBdDVWMEN4VHE3MStLd1pYaXVJTlhUUWhqaVFuNTF6UDM0ZmtRNlJkYXRn?=
+ =?utf-8?B?QlF1dHJlcG9wUUJWamYrVzZLWXhBU0hHeitERXVlNDUwNmd5VEJ3c2VFWkgx?=
+ =?utf-8?B?Zm5LLzVGWE9PRzRxWStocUdwS2Q2eUdhZnJUdTBTSjRQbk5FSGpDaEdCOWE3?=
+ =?utf-8?B?VU02V3ppZk1obndjYTVRZk5TdnZaNE53bStPVEpkYU81dlZIeVVQMldBUzd6?=
+ =?utf-8?B?ZjNqTXZEczVKSlFQVXZCanQ5RlEwK1g5d2M1TXF1NDlrNE9VRWxkcVk3RitZ?=
+ =?utf-8?B?UEFZK2c3QU9pd0pKTmpyYjB6MXVGWUl2dEx5VHphWHhuOTZVc2NPSFcrSHFV?=
+ =?utf-8?B?TTZadVNjY2ZJbG1IaFJGYWZKQ0RzY0hCRUpnVXN4ZkZPU3BsK0xzWThHRi9L?=
+ =?utf-8?B?WU9ZQURucEtEbUxPeCtnRjZoRWwrVmxVOTdMOE1IdWVqRmZLOU9Ca3JRdFR1?=
+ =?utf-8?B?SG5GdFIyd09LNU10SDRob3BnRXVwdkNHUlBTaldWR1EzOWFIMEQyNnNyamh3?=
+ =?utf-8?B?bDBvUTg3QW9TcDhlNU5CKy9VN09laVZXajMwU0J2U0o1UGhnanFSOE8yRVFl?=
+ =?utf-8?B?V015L3Nmckt0K21BUjhHbExFMjd0aUh6cktXK0ZDa05ranVCaUJlRUtCYUx3?=
+ =?utf-8?B?ZC9CWU5LSjUyT05SOVBJa2kvNkVJVWVpU0VJckdKMDRQVHNLOWQyWEFsL2hz?=
+ =?utf-8?B?Z0xCWGlOSlRPM2g4c3ZvVVo2d1JoWml0NTFFTi9NTjV4MmxUTm9OWlI5UHJP?=
+ =?utf-8?B?REgyZ1UyOTFWQTZPeVUzM281c2ZoRGgvdU12KzdVaHN5RTZDd1FhREd4WS9t?=
+ =?utf-8?B?VTdTTFYxWUg1SmovcCtJVXp1aGExY2RQblN4M0N2T2ROcXVxcGFBT3pqR2Zv?=
+ =?utf-8?B?M2Vra05vWHF6WGVVazYxc2VITmxVUHI3Q3B5ck9iV0JLVE8rV1E5endQLzJH?=
+ =?utf-8?B?dGZYMThmMHJrL3YyWmF0cDk0Y1F3ekZHRjlhK2J5NmRTOWI1OGRTSnVza1l2?=
+ =?utf-8?B?V3JSM053TjJNZTllYXpZbDBlUzM4NDFYSDZvQ1hYZHEwMExjbmpXdnRINHhC?=
+ =?utf-8?B?ZCtKMmFXRHgva0ZEdHl0djR1bjhEUWEvTWZ0THdobTRsckNRNnhIUHp5MjZI?=
+ =?utf-8?B?M1NBbU1sZWI1eW1rSXFQbkpuYUMxZnJER3VlSmU1SnZiQlVRRHZ3eCtNYlJV?=
+ =?utf-8?B?NEJEZ0xvWGhobGh0dXdNVitSbEU5NEp6dDNnWG1ScndTeTdtVlc0bUpkRkZT?=
+ =?utf-8?B?ei9mZytzdmFpdG9TN1U2Tk01S24yUUhNSEZWU0VaSnE2SWFxV2MyMk1KSko1?=
+ =?utf-8?B?dGY1bDlwR2djSnkzY3pxVGF2RWo4RWVJWWJXSUhRZUVkVi9FL2huUmo2cU5a?=
+ =?utf-8?B?bzlIVktJSTFRYzdJNTNFSkg2MythU3NBdFJuOTNpaWN0MU81QUg0SEREWUtI?=
+ =?utf-8?B?UC91VFJEbis4eCsxd1FYdU9LcFRwcGxrSzlpVWl1QmhqNVFQOWk4bW1SYlNR?=
+ =?utf-8?B?NXgvbXJXWGlTRTNCV3d1dUJ5M2VBM3hxcnBSQ2xET2xUcC9ISWVQS0JvVHJY?=
+ =?utf-8?B?bklNK082WkVxS3BBSWk5WjRTdUlvNmRNdnBkMktmV3ZYTElxKzVBMXR5ZWps?=
+ =?utf-8?B?UHNWL0J5U0ZsSyt6aVREU1U5U3oyZFB3UVU2SGJneFBGRmxLRjZORzRPMWxL?=
+ =?utf-8?B?ekd6c3RNdi9Hd1d4NUw4c25lQUhsTEpsTmFJdWYrbVdrRStqOUpxL2FieHJI?=
+ =?utf-8?Q?go0oiFKO578pSBPTvn2oaW2s1opYtI=3D?=
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: cc01ccf1-ee1b-45dd-a16a-08da0e2f0917
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR01MB7282.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM8PR04MB8007.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e38d02e1-4964-42de-4267-08da0dd88c89
-X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Mar 2022 20:54:54.7311 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72adb271-2fc7-4afe-a5ee-9de6a59f6bfb
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: /TrxYySg272I+pj7xairveZEuni8F42XetVZvcyJCUwj6ZSY+6rvzfG4AqaQA1zKEuAh6Dmf52zdwC8HyHW6yQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR04MB8260
-X-Proofpoint-ORIG-GUID: ioszrV6gMfPKjcc8PCk67dtMAIDGxNgd
-X-Proofpoint-GUID: ioszrV6gMfPKjcc8PCk67dtMAIDGxNgd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.850,Hydra:6.0.425,FMLib:17.11.64.514
- definitions=2022-03-24_07,2022-03-24_01,2022-02-23_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0
- priorityscore=1501 clxscore=1011 malwarescore=0 mlxlogscore=698
- bulkscore=0 impostorscore=0 adultscore=0 lowpriorityscore=0 phishscore=0
- mlxscore=0 spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2202240000 definitions=main-2203240110
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Mar 2022 07:14:01.3748 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: hoDioqU6lvEyc5KBK+BlXwF0gkK/Lb2VjDF7gLMjsv3m3I1tD7VEQPOkMyeFDxEmsQ0AOrASl0BOfvoo0TT1OJbt7RyI52UYJOlgploZEHE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR01MB4086
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -163,35 +154,80 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: =?utf-8?B?QWxhbiBLdW8gKOmDreaMr+e2rSk=?= <Alan_Kuo@quantatw.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- =?utf-8?B?UC4gSy4gTGVlICjmnY7mn4/lr6wp?= <P.K.Lee@quantatw.com>,
- George Hung <ghung.quanta@gmail.com>, Joel Stanley <joel@jms.id.au>
+Cc: Open Source Submission <patches@amperecomputing.com>,
+ "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
+ Phong Vo <phong@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-T24gTW9uLCBGZWIgMjgsIDIwMjIgYXQgMDc6MTM6NDRQTSBQU1QsIEdlb3JnZSBIdW5nICjmtKrl
-v6DmlawpIHdyb3RlOg0KPj5PbiBUdWUsIDEgTWFyIDIwMjIgYXQgMDE6MjMsIEdlb3JnZSBIdW5n
-IDxnaHVuZy5xdWFudGFAZ21haWwuY29tPg0KPj53cm90ZToNCj4+Pg0KPj4+IEFkZCBidWlsZCBz
-dXBwb3J0IGZvciBRdWFudGEgUzZRIGJvYXJkIGVxdWlwcGVkIHdpdGgNCj4+PiBBU1QyNjAwIEJN
-QyBTb0MNCj4+DQo+PkhpIEdlb3JnZSwNCj4+DQo+PldoaWNoIGNvbmZpZ3VyYXRpb24gKGRlZmNv
-bmZpZykgZG8geW91IHJ1biB5b3VyIHN5c3RlbSB3aXRoPw0KPg0KPkhpIEpvZWwsDQo+DQo+V2Ug
-dXNlICJldmItYXN0MjYwMGExLXNwbF9kZWZjb25maWciIGZvciBTNlEgc3lzdGVtLg0KPg0KPj4N
-Cj4+SG93IGRpZmZlcmVudCBpcyB0aGlzIGNvbmZpZ3VyYXRpb24gZnJvbSBvdGhlciBwbGF0Zm9y
-bXMgcHJlc2VudCBpbiB0aGUgdHJlZT8NCj4NCj5Ob3QgbXVjaCBkaWZmZXJlbmNlOg0KPg0KPjEu
-IFJHTUlJIGZvciBtYWMyIGFuZCBlbmFibGUgbWRpbzMgZnVuY3Rpb24gcGlucw0KPjIuIHNwaTIg
-Zm9yIEJJT1MgZmxhc2gNCj4zLiBtYWMgZGVsYXkgZm9yIG1hYzIvbWFjMyB0byBwcmV2ZW50IG5l
-dHdvcmsgYWJub3JtYWwgYWZ0ZXIgQS9DDQo+NC4gSTJDIGJ1c2VzIGVuYWJsZWQgYWNjb3JkaW5n
-IHRvIFM2USBwbGF0Zm9ybQ0KPg0KPj4NCj4+SSBhc2sgYXMgSSB3b25kZXIgaWYgd2UgY2FuIGdl
-dCBhd2F5IHdpdGggc29tZSBjb21tb24gY29uZmlncyBpbiB1LWJvb3QsDQo+PndpdGhvdXQgcmVx
-dWlyaW5nIGV2ZXJ5IHBsYXRmb3JtIGFkZCB0aGVpciBvd24gZHRzLg0KPg0KPkRvZXMgaXQgbWVh
-biB5b3UnZCBsaWtlIHRvIGFkZCB0aGUgYWRkaXRpb25hbCBjb21tb24gZHRzIGZvciBBU1QyNjAw
-ID8NCg0KQW55IGZ1cnRoZXIgdGhvdWdodHMgZnJvbSBhbnlvbmUgb24gdGhlIGJlc3Qgd2F5IHRv
-IGFkZCBzdXBwb3J0IGZvcg0KcGxhdGZvcm1zIGxpa2UgdGhpcz8gIEkndmUgZ290IGEgbG9jYWwg
-cGF0Y2ggYWRkaW5nIGEgLmR0cyBmb3IgYW4NCmFzdDI0MDAgc3lzdGVtIHRoYXQgZGlmZmVycyBm
-cm9tIGFzdDI0MDAtZXZiLmR0cyBldmVuIGxlc3MgdGhhbiB0aGUNCmFib3ZlIChqdXN0IHN3aXRj
-aGluZyB0aGUgY29uc29sZSB0byBhIGRpZmZlcmVudCBVQVJUIGFuZCBtYWtpbmcgYQ0Kc2ltaWxh
-ciBwaW5jdHJsIHR3ZWFrIGZvciBSR01JSSBvbiBtYWMxKS4gIEkgd2FzIGFib3V0IHRvIHBvc3Qg
-aXQsIGJ1dA0KdGhlbiBzYXcgdGhpcyB0aHJlYWQsIHNvIEkgZmlndXJlZCBJJ2QgaG9sZCBvZmYg
-aWYgdGhlcmUncyBsaWtlbHkgdG8gYmUNCmEgS2NvbmZpZy1iYXNlZCB3YXkgb2YgYWNoaWV2aW5n
-IHRoYXQgc29vbi4NCg0KDQpUaGFua3MsDQpaZXYNCg==
+
+
+On 21/03/2022 17:08, Krzysztof Kozlowski wrote:
+> On 21/03/2022 09:13, Quan Nguyen wrote:
+>> Adds device tree bindings for SMPro MFD driver found on the Mt.Jade
+>> hardware reference platform with Ampere's Altra Processor family.
+>>
+>> The SMpro co-processor on Ampere Altra processor family is to monitor
+>> and report various data included hwmon-related info, RAS errors, and
+>> other miscellaneous information.
+>>
+>> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+>> Reviewed-by: Rob Herring <robh@kernel.org>
+>> ---
+>> Changes in v7:
+>>    + None
+>>
+>> Changes in v6:
+>>    + None
+>>
+>>   .../devicetree/bindings/mfd/ampere,smpro.yaml | 48 +++++++++++++++++++
+>>   1 file changed, 48 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/mfd/ampere,smpro.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/mfd/ampere,smpro.yaml b/Documentation/devicetree/bindings/mfd/ampere,smpro.yaml
+>> new file mode 100644
+>> index 000000000000..c29d975c1bc3
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/mfd/ampere,smpro.yaml
+>> @@ -0,0 +1,48 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/mfd/ampere,smpro.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Ampere Altra SMPro firmware driver
+>> +
+>> +maintainers:
+>> +  - Quan Nguyen <quan@os.amperecomputing.com>
+>> +
+>> +description: |
+>> +  Ampere Altra SMPro firmware may contain different blocks like hardware
+>> +  monitoring, error monitoring and other miscellaneous features.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - ampere,smpro
+>> +
+>> +  reg:
+>> +    description:
+>> +      I2C device address.
+>> +    maxItems: 1
+>> +
+>> +  "#address-cells":
+>> +    const: 1
+>> +
+>> +  "#size-cells":
+>> +    const: 0
+> 
+> Why do you need address/size cells? Is the binding not complete? The
+> commit description does not mention such case.
+> 
+
+Thanks Krzysztof for the comment.
+The address/size cells are indeed not used. The child drivers are 
+instantiated by the parent MFD and there is no child nodes in DT. This 
+part will be removed in my next version.
+
+- Quan
