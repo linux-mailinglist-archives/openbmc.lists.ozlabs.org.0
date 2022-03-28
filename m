@@ -1,62 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A83604E9406
-	for <lists+openbmc@lfdr.de>; Mon, 28 Mar 2022 13:24:29 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9FF464E97E6
+	for <lists+openbmc@lfdr.de>; Mon, 28 Mar 2022 15:20:02 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KRr233p9fz3c2K
-	for <lists+openbmc@lfdr.de>; Mon, 28 Mar 2022 22:24:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KRtbN4T00z3c1S
+	for <lists+openbmc@lfdr.de>; Tue, 29 Mar 2022 00:20:00 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=OU6x7Wns;
+	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=gACqMWky;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=2604:1380:4601:e00::1;
- helo=ams.source.kernel.org; envelope-from=sashal@kernel.org;
+ smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::22a;
+ helo=mail-oi1-x22a.google.com; envelope-from=yulei.sh@bytedance.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=k20201202 header.b=OU6x7Wns; 
- dkim-atps=neutral
-Received: from ams.source.kernel.org (ams.source.kernel.org
- [IPv6:2604:1380:4601:e00::1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=bytedance-com.20210112.gappssmtp.com
+ header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256
+ header.s=20210112 header.b=gACqMWky; dkim-atps=neutral
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com
+ [IPv6:2607:f8b0:4864:20::22a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KRr1R1bFFz3c1X
- for <openbmc@lists.ozlabs.org>; Mon, 28 Mar 2022 22:23:55 +1100 (AEDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id E0E8DB81059;
- Mon, 28 Mar 2022 11:23:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F339C340ED;
- Mon, 28 Mar 2022 11:23:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1648466632;
- bh=HsY3DRjCKJW8f2PgxoHQHpP1seqO9d0yvMdx77Gtv/o=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=OU6x7WnsQphFlY4lZ3nbB0ZsiwAxavCA+hItLXp5zQxkxlE+TJq5WTD4mPnkZVu1S
- kniqSiV6a1DzA37e10pLqcVmeSe70pLeG6QgydDeHMWnhpdP8p3AhjyuoNlgZUoxeU
- YNEC0ummmC794UY5N1GOGT6U5VynzuZDvhD+rWTsSp29VDvzqELpQieHkpBuk4lSqZ
- NwIb5xdPfvFb+7SzPZcppKUIFPdvVzfS+v4997fMu+d9JVjJXMidI4v3HM75OQdPPz
- HeqdANqzpnPRrddW1kIm1au1IutiyB98gbZ1u6/Ea9NCW0xptXpyeWse7GaDibaRmq
- cO3q+Lh+DBdfA==
-From: Sasha Levin <sashal@kernel.org>
-To: linux-kernel@vger.kernel.org,
-	stable@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 03/16] pinctrl: npcm: Fix broken references to
- chip->parent_device
-Date: Mon, 28 Mar 2022 07:23:32 -0400
-Message-Id: <20220328112345.1556601-3-sashal@kernel.org>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220328112345.1556601-1-sashal@kernel.org>
-References: <20220328112345.1556601-1-sashal@kernel.org>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KRtZx17hhz2ynj
+ for <openbmc@lists.ozlabs.org>; Tue, 29 Mar 2022 00:19:35 +1100 (AEDT)
+Received: by mail-oi1-x22a.google.com with SMTP id j83so15536408oih.6
+ for <openbmc@lists.ozlabs.org>; Mon, 28 Mar 2022 06:19:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance-com.20210112.gappssmtp.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=Xf69RgBoGZiecgaFL+oOOPgNe95qczLmVWeHXlTXt+c=;
+ b=gACqMWkyYf1BA0ZpMf1hHVaL+pFYXF86t2vQVbxEnSEJ/7wbpotM6UmNAT4qtE8smk
+ C9zaki1Ur7EKQo0tke8uGOV2yQTtabaQ00Y9/24JrCbbbzLCw6Nb56P1zs248Jne21hb
+ S7Lgj9qoRgS17a/h0QOBVJkvbyleHOv6JHIdZQ4OiD4RyqKOzzxIXp4wdCYbxfv8gpv9
+ LgV12cp2S/cfEy1oeCTslDyDVCnoVbFl5KGErlnmI7jxvR07VAIs0vy9UbEY2V5WqKqq
+ tZWX3w7xilVOELBBQmud/n1gYve78bftC8licdeAuVVVXSDsu5IryuF4XBdkono9A083
+ vNRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=Xf69RgBoGZiecgaFL+oOOPgNe95qczLmVWeHXlTXt+c=;
+ b=3zGRJoSJxLEbfT1UOMcI0PlbzWuY93+R+fOKh9cuXqDS/QpvwJrW8xWj0yCsEPOZJG
+ PDJQ/q/jLK1jA5c2foOM15b9AA6epoYHRtj/4ycTYxzc47uhtZ65GfbPdtKQuxYv9ZXW
+ jYBWNMYx3yzKIYJ3RzvtUpTBWiEqQFPEXkws/O86r7JDWoMvGZLJNvIHVtxp/+zw4I80
+ cQzurOsRjaIhlx4aLySETwoNBaoT2tGZCL/g6sHT1+da3FKq7Gp2bckzlDvAEO28wyyv
+ 9O7HiiytfPix9AAO9u8BqfdZM1EvqcrsN57A9iACQOwvtMPSifAHlQMbZRYoumeojN91
+ TqQQ==
+X-Gm-Message-State: AOAM531Fc4AolU9NYrc4D0NdVR7zxMThL5EyQVd5dsTcAbhASkxwl63W
+ Qty+yrYrlUkvV0Hw8ZDKf2AFq1xSyddR2CY/ol//DTQN+tvrN74r
+X-Google-Smtp-Source: ABdhPJxAWPUiHeHGzaP4PT//OAWEG+Ny789JySNKFVugoopbOqgRP7B1sjJ2Z0+ia5Zhw8O12gy6GOBvl+ZdKu4nzbc=
+X-Received: by 2002:a05:6808:200e:b0:2f7:5c99:2f3d with SMTP id
+ q14-20020a056808200e00b002f75c992f3dmr751658oiw.294.1648473572530; Mon, 28
+ Mar 2022 06:19:32 -0700 (PDT)
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+From: Lei Yu <yulei.sh@bytedance.com>
+Date: Mon, 28 Mar 2022 21:19:40 +0800
+Message-ID: <CAGm54UHMED4Np0MThLfp4H-i8R24o8pCns2-6MEzy1Me-9XJmA@mail.gmail.com>
+Subject: Missed interfacesRemoved signal callbacks in object-mapper results in
+ invalidated DBus objects
+To: openbmc <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,130 +74,59 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Sasha Levin <sashal@kernel.org>, tmaimon77@gmail.com,
- avifishman70@gmail.com, Marc Zyngier <maz@kernel.org>,
- Bartosz Golaszewski <brgl@bgdev.pl>, openbmc@lists.ozlabs.org,
- tali.perry1@gmail.com, linux-gpio@vger.kernel.org, linus.walleij@linaro.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Marc Zyngier <maz@kernel.org>
+An issue that is related to missed match callbacks is noticed and it
+causes the inconsistency between object-mapper and the dbus objects.
 
-[ Upstream commit f7e53e2255808ca3abcc8f38d18ad0823425e771 ]
+Steps to reproduce on g220a QEMU (it is not 100% reproducible and when
+it occurs it likely occurs on the first try when BMC boots)
 
-The npcm driver has a bunch of references to the irq_chip parent_device
-field, but never sets it.
+1. Generate several logging entries
+2. Call logging service's DeleteAll
+3. Check the objects of logging service, all entries are deleted
+ ```
+ # busctl tree xyz.openbmc_project.Logging
+ `-/xyz
+   `-/xyz/openbmc_project
+     `-/xyz/openbmc_project/logging
+       `-/xyz/openbmc_project/logging/internal
+         `-/xyz/openbmc_project/logging/internal/manager
+ ```
+4. Check the entries via object-mapper, it gets the entries
+ ```
+ # busctl call xyz.openbmc_project.ObjectMapper
+/xyz/openbmc_project/object_mapper xyz.openbmc_project.ObjectMapper
+GetObject sas /xyz/openbmc_project/logging/entry/1 0
+ a{sas} 1 "xyz.openbmc_project.Logging" 8
+"org.freedesktop.DBus.Introspectable" "org.freedesktop.DBus.Peer"
+"org.freedesktop.DBus.Properties"
+"xyz.openbmc_project.Association.Definitions" "xyz.open
+bmc_project.Common.FilePath" "xyz.openbmc_project.Logging.Entry"
+"xyz.openbmc_project.Object.Delete"
+"xyz.openbmc_project.Software.Version"
+ ```
+5. I could verify that the DBus object does not really exist:
+ ```
+ # busctl introspect "xyz.openbmc_project.Logging"
+/xyz/openbmc_project/logging/entry/1
+ Failed to introspect object /xyz/openbmc_project/logging/entry/1 of
+service xyz.openbmc_project.Logging: Unknown object
+'/xyz/openbmc_project/logging/entry/1'.
+ ```
 
-Fix it by fishing that reference from somewhere else, but it is
-obvious that these debug statements were never used. Also remove
-an unused field in a local data structure.
+I also added some logs in my service to get callbacks of the
+interfacesRemoved signal, and it shows that I really do not get the
+callbacks for some objects.
+For example, in one test I have 41 logging entries, and my service
+only gets `interfacesRemoved` callback for entry 18~41, this causes
+the object-mapper to show the remaining 1~17 entries while they do not
+really exist on DBus.
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Acked-by: Bartosz Golaszewski <brgl@bgdev.pl>
-Link: https://lore.kernel.org/r/20220201120310.878267-11-maz@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c | 25 +++++++++++------------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+This looks like some fundamental issue in dbus-broker or sdbusplus.
+Is there anyone who hits the similar issue?
 
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-index 17f909d8b63a..e7dc97e099f2 100644
---- a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-@@ -78,7 +78,6 @@ struct npcm7xx_gpio {
- 	struct gpio_chip	gc;
- 	int			irqbase;
- 	int			irq;
--	void			*priv;
- 	struct irq_chip		irq_chip;
- 	u32			pinctrl_id;
- 	int (*direction_input)(struct gpio_chip *chip, unsigned offset);
-@@ -226,7 +225,7 @@ static void npcmgpio_irq_handler(struct irq_desc *desc)
- 	chained_irq_enter(chip, desc);
- 	sts = ioread32(bank->base + NPCM7XX_GP_N_EVST);
- 	en  = ioread32(bank->base + NPCM7XX_GP_N_EVEN);
--	dev_dbg(chip->parent_device, "==> got irq sts %.8x %.8x\n", sts,
-+	dev_dbg(bank->gc.parent, "==> got irq sts %.8x %.8x\n", sts,
- 		en);
- 
- 	sts &= en;
-@@ -241,33 +240,33 @@ static int npcmgpio_set_irq_type(struct irq_data *d, unsigned int type)
- 		gpiochip_get_data(irq_data_get_irq_chip_data(d));
- 	unsigned int gpio = BIT(d->hwirq);
- 
--	dev_dbg(d->chip->parent_device, "setirqtype: %u.%u = %u\n", gpio,
-+	dev_dbg(bank->gc.parent, "setirqtype: %u.%u = %u\n", gpio,
- 		d->irq, type);
- 	switch (type) {
- 	case IRQ_TYPE_EDGE_RISING:
--		dev_dbg(d->chip->parent_device, "edge.rising\n");
-+		dev_dbg(bank->gc.parent, "edge.rising\n");
- 		npcm_gpio_clr(&bank->gc, bank->base + NPCM7XX_GP_N_EVBE, gpio);
- 		npcm_gpio_clr(&bank->gc, bank->base + NPCM7XX_GP_N_POL, gpio);
- 		break;
- 	case IRQ_TYPE_EDGE_FALLING:
--		dev_dbg(d->chip->parent_device, "edge.falling\n");
-+		dev_dbg(bank->gc.parent, "edge.falling\n");
- 		npcm_gpio_clr(&bank->gc, bank->base + NPCM7XX_GP_N_EVBE, gpio);
- 		npcm_gpio_set(&bank->gc, bank->base + NPCM7XX_GP_N_POL, gpio);
- 		break;
- 	case IRQ_TYPE_EDGE_BOTH:
--		dev_dbg(d->chip->parent_device, "edge.both\n");
-+		dev_dbg(bank->gc.parent, "edge.both\n");
- 		npcm_gpio_set(&bank->gc, bank->base + NPCM7XX_GP_N_EVBE, gpio);
- 		break;
- 	case IRQ_TYPE_LEVEL_LOW:
--		dev_dbg(d->chip->parent_device, "level.low\n");
-+		dev_dbg(bank->gc.parent, "level.low\n");
- 		npcm_gpio_set(&bank->gc, bank->base + NPCM7XX_GP_N_POL, gpio);
- 		break;
- 	case IRQ_TYPE_LEVEL_HIGH:
--		dev_dbg(d->chip->parent_device, "level.high\n");
-+		dev_dbg(bank->gc.parent, "level.high\n");
- 		npcm_gpio_clr(&bank->gc, bank->base + NPCM7XX_GP_N_POL, gpio);
- 		break;
- 	default:
--		dev_dbg(d->chip->parent_device, "invalid irq type\n");
-+		dev_dbg(bank->gc.parent, "invalid irq type\n");
- 		return -EINVAL;
- 	}
- 
-@@ -289,7 +288,7 @@ static void npcmgpio_irq_ack(struct irq_data *d)
- 		gpiochip_get_data(irq_data_get_irq_chip_data(d));
- 	unsigned int gpio = d->hwirq;
- 
--	dev_dbg(d->chip->parent_device, "irq_ack: %u.%u\n", gpio, d->irq);
-+	dev_dbg(bank->gc.parent, "irq_ack: %u.%u\n", gpio, d->irq);
- 	iowrite32(BIT(gpio), bank->base + NPCM7XX_GP_N_EVST);
- }
- 
-@@ -301,7 +300,7 @@ static void npcmgpio_irq_mask(struct irq_data *d)
- 	unsigned int gpio = d->hwirq;
- 
- 	/* Clear events */
--	dev_dbg(d->chip->parent_device, "irq_mask: %u.%u\n", gpio, d->irq);
-+	dev_dbg(bank->gc.parent, "irq_mask: %u.%u\n", gpio, d->irq);
- 	iowrite32(BIT(gpio), bank->base + NPCM7XX_GP_N_EVENC);
- }
- 
-@@ -313,7 +312,7 @@ static void npcmgpio_irq_unmask(struct irq_data *d)
- 	unsigned int gpio = d->hwirq;
- 
- 	/* Enable events */
--	dev_dbg(d->chip->parent_device, "irq_unmask: %u.%u\n", gpio, d->irq);
-+	dev_dbg(bank->gc.parent, "irq_unmask: %u.%u\n", gpio, d->irq);
- 	iowrite32(BIT(gpio), bank->base + NPCM7XX_GP_N_EVENS);
- }
- 
-@@ -323,7 +322,7 @@ static unsigned int npcmgpio_irq_startup(struct irq_data *d)
- 	unsigned int gpio = d->hwirq;
- 
- 	/* active-high, input, clear interrupt, enable interrupt */
--	dev_dbg(d->chip->parent_device, "startup: %u.%u\n", gpio, d->irq);
-+	dev_dbg(gc->parent, "startup: %u.%u\n", gpio, d->irq);
- 	npcmgpio_direction_input(gc, gpio);
- 	npcmgpio_irq_ack(d);
- 	npcmgpio_irq_unmask(d);
 -- 
-2.34.1
-
+BRs,
+Lei YU
