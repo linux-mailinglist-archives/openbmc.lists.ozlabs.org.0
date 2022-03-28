@@ -1,51 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 93B224E8FBD
-	for <lists+openbmc@lfdr.de>; Mon, 28 Mar 2022 10:06:32 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 492314E9333
+	for <lists+openbmc@lfdr.de>; Mon, 28 Mar 2022 13:19:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KRldf48cxz3c38
-	for <lists+openbmc@lfdr.de>; Mon, 28 Mar 2022 19:06:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KRqw1106Lz2xSh
+	for <lists+openbmc@lfdr.de>; Mon, 28 Mar 2022 22:19:13 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=lJomRRnN;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux-m68k.org
- (client-ip=2a02:1800:120:4::f00:10; helo=cantor.telenet-ops.be;
- envelope-from=geert@linux-m68k.org; receiver=<UNKNOWN>)
-X-Greylist: delayed 514 seconds by postgrey-1.36 at boromir;
- Mon, 28 Mar 2022 19:06:15 AEDT
-Received: from cantor.telenet-ops.be (cantor.telenet-ops.be
- [IPv6:2a02:1800:120:4::f00:10])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=kernel.org (client-ip=2604:1380:4601:e00::1;
+ helo=ams.source.kernel.org; envelope-from=sashal@kernel.org;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=lJomRRnN; 
+ dkim-atps=neutral
+Received: from ams.source.kernel.org (ams.source.kernel.org
+ [IPv6:2604:1380:4601:e00::1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KRldM0Hy5z3036
- for <openbmc@lists.ozlabs.org>; Mon, 28 Mar 2022 19:06:13 +1100 (AEDT)
-Received: from xavier.telenet-ops.be (xavier.telenet-ops.be
- [IPv6:2a02:1800:120:4::f00:14])
- by cantor.telenet-ops.be (Postfix) with ESMTPS id 4KRlRB5t71z55hKy
- for <openbmc@lists.ozlabs.org>; Mon, 28 Mar 2022 09:57:26 +0200 (CEST)
-Received: from ramsan.of.borg ([IPv6:2a02:1810:ac12:ed40:e89f:bbc:3ef3:db3f])
- by xavier.telenet-ops.be with bizsmtp
- id Bjx82700v1mfJzQ01jx8mS; Mon, 28 Mar 2022 09:57:26 +0200
-Received: from geert (helo=localhost)
- by ramsan.of.borg with local-esmtp (Exim 4.93)
- (envelope-from <geert@linux-m68k.org>)
- id 1nYkFQ-0074P3-Bn; Mon, 28 Mar 2022 09:57:08 +0200
-Date: Mon, 28 Mar 2022 09:57:08 +0200 (CEST)
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-X-X-Sender: geert@ramsan.of.borg
-To: Ansuel Smith <ansuelsmth@gmail.com>
-Subject: Re: [PATCH RFC 1/1] ARM/arm64: categorize dts in arm dir and fix
- dependency in arm64
-In-Reply-To: <20220328000915.15041-2-ansuelsmth@gmail.com>
-Message-ID: <alpine.DEB.2.22.394.2203280956080.1685195@ramsan.of.borg>
-References: <20220328000915.15041-1-ansuelsmth@gmail.com>
- <20220328000915.15041-2-ansuelsmth@gmail.com>
-User-Agent: Alpine 2.22 (DEB 394 2020-01-19)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KRqvY5DZ6z2xSh
+ for <openbmc@lists.ozlabs.org>; Mon, 28 Mar 2022 22:18:49 +1100 (AEDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id 34271B80EAE;
+ Mon, 28 Mar 2022 11:18:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4844C34110;
+ Mon, 28 Mar 2022 11:18:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1648466324;
+ bh=GtXm7TP4FiF7Hh17CXHOhSXHFwXsRaUDFmn/WhLxqg0=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=lJomRRnNLOsTXo4+e+vfyikmvm3kVJ7qRaOK4ql4IOF0x7ny9gMi4Kz3t26oID6Im
+ XD/mYjgiBlWgRowJqtHja3t0rjJvoQESJbZI9WTU0isPHXbeFw4hSCYOCZzYPVVLk4
+ TPNH1oA2BI5UegfAK1jv3gmt9BcQHZVH0tP5tvQuHKMyP/F95Hj33bwaYLXQ+GbEKY
+ 4bRDKoTUB2xU6uOLcKWB7j1zxjQkmXPRKnZieBPAl7NuYJa0LddXHcmHzgtqhww9t6
+ UkGf95QdrbhECoJu9wsQ/Nx9vNt7f/FsuMuJANBvs3zltXD0A6pwL+i2WYwEO6eo0e
+ H6bTV1IVzPnKg==
+From: Sasha Levin <sashal@kernel.org>
+To: linux-kernel@vger.kernel.org,
+	stable@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.17 07/43] pinctrl: npcm: Fix broken references to
+ chip->parent_device
+Date: Mon, 28 Mar 2022 07:17:51 -0400
+Message-Id: <20220328111828.1554086-7-sashal@kernel.org>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20220328111828.1554086-1-sashal@kernel.org>
+References: <20220328111828.1554086-1-sashal@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,47 +68,130 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, linux-realtek-soc@lists.infradead.org,
- linux-stm32@st-md-mailman.stormreply.com, chrome-platform@lists.linux.dev,
- linux-samsung-soc@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-arm-kernel@axis.com, linux-rockchip@lists.infradead.org,
- linux-sunxi@lists.linux.dev, devicetree@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-actions@lists.infradead.org,
- linux-unisoc@lists.infradead.org, Rob Herring <robh+dt@kernel.org>,
- linux-mediatek@lists.infradead.org, linux-rpi-kernel@lists.infradead.org,
- linux-tegra@vger.kernel.org, linux-amlogic@lists.infradead.org,
- linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
- linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
- kernel@dh-electronics.com, Krzysztof Kozlowski <krzk+dt@kernel.org>,
- linux-oxnas@groups.io
+Cc: Sasha Levin <sashal@kernel.org>, tmaimon77@gmail.com,
+ avifishman70@gmail.com, Marc Zyngier <maz@kernel.org>,
+ Bartosz Golaszewski <brgl@bgdev.pl>, openbmc@lists.ozlabs.org,
+ tali.perry1@gmail.com, linux-gpio@vger.kernel.org, linus.walleij@linaro.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
- 	Hi Ansuel,
+From: Marc Zyngier <maz@kernel.org>
 
-On Mon, 28 Mar 2022, Ansuel Smith wrote:
-> - Categorize every dts in arm directory in subdirectory
-> - Fix Makefile to address for the arm subdirectory
-> - Fix any arm64 dependency
->
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+[ Upstream commit f7e53e2255808ca3abcc8f38d18ad0823425e771 ]
 
-Thanks for your patch!
+The npcm driver has a bunch of references to the irq_chip parent_device
+field, but never sets it.
 
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/renasas/Makefile
+Fix it by fishing that reference from somewhere else, but it is
+obvious that these debug statements were never used. Also remove
+an unused field in a local data structure.
 
-s/renasas/renesas/
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Acked-by: Bartosz Golaszewski <brgl@bgdev.pl>
+Link: https://lore.kernel.org/r/20220201120310.878267-11-maz@kernel.org
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c | 25 +++++++++++------------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
-The actual split for the Renesas parts LGTM.
+diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
+index 4d81908d6725..ba536fd4d674 100644
+--- a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
++++ b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
+@@ -78,7 +78,6 @@ struct npcm7xx_gpio {
+ 	struct gpio_chip	gc;
+ 	int			irqbase;
+ 	int			irq;
+-	void			*priv;
+ 	struct irq_chip		irq_chip;
+ 	u32			pinctrl_id;
+ 	int (*direction_input)(struct gpio_chip *chip, unsigned offset);
+@@ -226,7 +225,7 @@ static void npcmgpio_irq_handler(struct irq_desc *desc)
+ 	chained_irq_enter(chip, desc);
+ 	sts = ioread32(bank->base + NPCM7XX_GP_N_EVST);
+ 	en  = ioread32(bank->base + NPCM7XX_GP_N_EVEN);
+-	dev_dbg(chip->parent_device, "==> got irq sts %.8x %.8x\n", sts,
++	dev_dbg(bank->gc.parent, "==> got irq sts %.8x %.8x\n", sts,
+ 		en);
+ 
+ 	sts &= en;
+@@ -241,33 +240,33 @@ static int npcmgpio_set_irq_type(struct irq_data *d, unsigned int type)
+ 		gpiochip_get_data(irq_data_get_irq_chip_data(d));
+ 	unsigned int gpio = BIT(d->hwirq);
+ 
+-	dev_dbg(d->chip->parent_device, "setirqtype: %u.%u = %u\n", gpio,
++	dev_dbg(bank->gc.parent, "setirqtype: %u.%u = %u\n", gpio,
+ 		d->irq, type);
+ 	switch (type) {
+ 	case IRQ_TYPE_EDGE_RISING:
+-		dev_dbg(d->chip->parent_device, "edge.rising\n");
++		dev_dbg(bank->gc.parent, "edge.rising\n");
+ 		npcm_gpio_clr(&bank->gc, bank->base + NPCM7XX_GP_N_EVBE, gpio);
+ 		npcm_gpio_clr(&bank->gc, bank->base + NPCM7XX_GP_N_POL, gpio);
+ 		break;
+ 	case IRQ_TYPE_EDGE_FALLING:
+-		dev_dbg(d->chip->parent_device, "edge.falling\n");
++		dev_dbg(bank->gc.parent, "edge.falling\n");
+ 		npcm_gpio_clr(&bank->gc, bank->base + NPCM7XX_GP_N_EVBE, gpio);
+ 		npcm_gpio_set(&bank->gc, bank->base + NPCM7XX_GP_N_POL, gpio);
+ 		break;
+ 	case IRQ_TYPE_EDGE_BOTH:
+-		dev_dbg(d->chip->parent_device, "edge.both\n");
++		dev_dbg(bank->gc.parent, "edge.both\n");
+ 		npcm_gpio_set(&bank->gc, bank->base + NPCM7XX_GP_N_EVBE, gpio);
+ 		break;
+ 	case IRQ_TYPE_LEVEL_LOW:
+-		dev_dbg(d->chip->parent_device, "level.low\n");
++		dev_dbg(bank->gc.parent, "level.low\n");
+ 		npcm_gpio_set(&bank->gc, bank->base + NPCM7XX_GP_N_POL, gpio);
+ 		break;
+ 	case IRQ_TYPE_LEVEL_HIGH:
+-		dev_dbg(d->chip->parent_device, "level.high\n");
++		dev_dbg(bank->gc.parent, "level.high\n");
+ 		npcm_gpio_clr(&bank->gc, bank->base + NPCM7XX_GP_N_POL, gpio);
+ 		break;
+ 	default:
+-		dev_dbg(d->chip->parent_device, "invalid irq type\n");
++		dev_dbg(bank->gc.parent, "invalid irq type\n");
+ 		return -EINVAL;
+ 	}
+ 
+@@ -289,7 +288,7 @@ static void npcmgpio_irq_ack(struct irq_data *d)
+ 		gpiochip_get_data(irq_data_get_irq_chip_data(d));
+ 	unsigned int gpio = d->hwirq;
+ 
+-	dev_dbg(d->chip->parent_device, "irq_ack: %u.%u\n", gpio, d->irq);
++	dev_dbg(bank->gc.parent, "irq_ack: %u.%u\n", gpio, d->irq);
+ 	iowrite32(BIT(gpio), bank->base + NPCM7XX_GP_N_EVST);
+ }
+ 
+@@ -301,7 +300,7 @@ static void npcmgpio_irq_mask(struct irq_data *d)
+ 	unsigned int gpio = d->hwirq;
+ 
+ 	/* Clear events */
+-	dev_dbg(d->chip->parent_device, "irq_mask: %u.%u\n", gpio, d->irq);
++	dev_dbg(bank->gc.parent, "irq_mask: %u.%u\n", gpio, d->irq);
+ 	iowrite32(BIT(gpio), bank->base + NPCM7XX_GP_N_EVENC);
+ }
+ 
+@@ -313,7 +312,7 @@ static void npcmgpio_irq_unmask(struct irq_data *d)
+ 	unsigned int gpio = d->hwirq;
+ 
+ 	/* Enable events */
+-	dev_dbg(d->chip->parent_device, "irq_unmask: %u.%u\n", gpio, d->irq);
++	dev_dbg(bank->gc.parent, "irq_unmask: %u.%u\n", gpio, d->irq);
+ 	iowrite32(BIT(gpio), bank->base + NPCM7XX_GP_N_EVENS);
+ }
+ 
+@@ -323,7 +322,7 @@ static unsigned int npcmgpio_irq_startup(struct irq_data *d)
+ 	unsigned int gpio = d->hwirq;
+ 
+ 	/* active-high, input, clear interrupt, enable interrupt */
+-	dev_dbg(d->chip->parent_device, "startup: %u.%u\n", gpio, d->irq);
++	dev_dbg(gc->parent, "startup: %u.%u\n", gpio, d->irq);
+ 	npcmgpio_direction_input(gc, gpio);
+ 	npcmgpio_irq_ack(d);
+ 	npcmgpio_irq_unmask(d);
+-- 
+2.34.1
 
-Gr{oetje,eeting}s,
-
- 						Geert
-
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
-
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
- 							    -- Linus Torvalds
