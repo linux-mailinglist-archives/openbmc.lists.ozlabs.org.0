@@ -2,13 +2,13 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECC384E93C0
-	for <lists+openbmc@lfdr.de>; Mon, 28 Mar 2022 13:23:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A83604E9406
+	for <lists+openbmc@lfdr.de>; Mon, 28 Mar 2022 13:24:29 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KRr0y5StJz3c20
-	for <lists+openbmc@lfdr.de>; Mon, 28 Mar 2022 22:23:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KRr233p9fz3c2K
+	for <lists+openbmc@lfdr.de>; Mon, 28 Mar 2022 22:24:27 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=fXg0i9U6;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=OU6x7Wns;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -18,41 +18,41 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=k20201202 header.b=fXg0i9U6; 
+ header.s=k20201202 header.b=OU6x7Wns; 
  dkim-atps=neutral
 Received: from ams.source.kernel.org (ams.source.kernel.org
  [IPv6:2604:1380:4601:e00::1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KRr0Z5CYTz2x9S
- for <openbmc@lists.ozlabs.org>; Mon, 28 Mar 2022 22:23:10 +1100 (AEDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KRr1R1bFFz3c1X
+ for <openbmc@lists.ozlabs.org>; Mon, 28 Mar 2022 22:23:55 +1100 (AEDT)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 25F54B81059;
- Mon, 28 Mar 2022 11:23:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA129C340EC;
- Mon, 28 Mar 2022 11:23:05 +0000 (UTC)
+ by ams.source.kernel.org (Postfix) with ESMTPS id E0E8DB81059;
+ Mon, 28 Mar 2022 11:23:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F339C340ED;
+ Mon, 28 Mar 2022 11:23:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1648466586;
- bh=fyuTIgKNBTLo6gyUetiojpVpLb0Ee9KatKz+ZJtxinM=;
+ s=k20201202; t=1648466632;
+ bh=HsY3DRjCKJW8f2PgxoHQHpP1seqO9d0yvMdx77Gtv/o=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=fXg0i9U6bP2+fYfxgEEf7Cg4FVhsmVYFuC3TNIQ8/6Ta5jCyUldt/GtOU0k+csduC
- eUU0v+3Cx2yeAn6msPg+v8UNo7IqdZ8UdQavpXll2TXHqA5lPliwtjIlGqRsNWYNZw
- mEF0Fu4HmKy+TfoOSKipFRjpDi8K9w0YFXdSced+MYYIoHwK615TmydBYZAeZadWd9
- erxinEbpIyfmyKKzt545VYOnj5guj+6VyEzTLYEmqel5iyCVjVQIxi2qVbIvtEHHHy
- uQ0eIWw95DYXCFyVRnKwQNIaXA29Jyb0X2+d/D4oQJ+Wyek3hJzdfWXclclDTBEj1F
- BzenNnlnjoHWQ==
+ b=OU6x7WnsQphFlY4lZ3nbB0ZsiwAxavCA+hItLXp5zQxkxlE+TJq5WTD4mPnkZVu1S
+ kniqSiV6a1DzA37e10pLqcVmeSe70pLeG6QgydDeHMWnhpdP8p3AhjyuoNlgZUoxeU
+ YNEC0ummmC794UY5N1GOGT6U5VynzuZDvhD+rWTsSp29VDvzqELpQieHkpBuk4lSqZ
+ NwIb5xdPfvFb+7SzPZcppKUIFPdvVzfS+v4997fMu+d9JVjJXMidI4v3HM75OQdPPz
+ HeqdANqzpnPRrddW1kIm1au1IutiyB98gbZ1u6/Ea9NCW0xptXpyeWse7GaDibaRmq
+ cO3q+Lh+DBdfA==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 04/21] pinctrl: npcm: Fix broken references to
+Subject: [PATCH AUTOSEL 5.4 03/16] pinctrl: npcm: Fix broken references to
  chip->parent_device
-Date: Mon, 28 Mar 2022 07:22:37 -0400
-Message-Id: <20220328112254.1556286-4-sashal@kernel.org>
+Date: Mon, 28 Mar 2022 07:23:32 -0400
+Message-Id: <20220328112345.1556601-3-sashal@kernel.org>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220328112254.1556286-1-sashal@kernel.org>
-References: <20220328112254.1556286-1-sashal@kernel.org>
+In-Reply-To: <20220328112345.1556601-1-sashal@kernel.org>
+References: <20220328112345.1556601-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -95,7 +95,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 12 insertions(+), 13 deletions(-)
 
 diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-index 6de31b5ee358..c359e25519f8 100644
+index 17f909d8b63a..e7dc97e099f2 100644
 --- a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
 +++ b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
 @@ -78,7 +78,6 @@ struct npcm7xx_gpio {
