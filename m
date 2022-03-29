@@ -2,66 +2,58 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D75C34EAA09
-	for <lists+openbmc@lfdr.de>; Tue, 29 Mar 2022 11:04:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 250CB4EAA76
+	for <lists+openbmc@lfdr.de>; Tue, 29 Mar 2022 11:25:11 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KSNtR5Lvzz2xsm
-	for <lists+openbmc@lfdr.de>; Tue, 29 Mar 2022 20:04:47 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KSPKw6mfvz30Kt
+	for <lists+openbmc@lfdr.de>; Tue, 29 Mar 2022 20:25:08 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=gm1 header.b=E0C2ytxP;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.222.175;
- helo=mail-qk1-f175.google.com; envelope-from=geert.uytterhoeven@gmail.com;
+ smtp.mailfrom=bootlin.com (client-ip=217.70.178.240;
+ helo=mslow1.mail.gandi.net; envelope-from=alexandre.belloni@bootlin.com;
  receiver=<UNKNOWN>)
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com
- [209.85.222.175])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KSNt65XQMz2xT8;
- Tue, 29 Mar 2022 20:04:28 +1100 (AEDT)
-Received: by mail-qk1-f175.google.com with SMTP id d65so10044122qke.5;
- Tue, 29 Mar 2022 02:04:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=7LLXUdiKn5zGolda6p6nU0L90Q8R5gkNG4kyWBHOgl4=;
- b=ojjOxHoNTABGJRMfyHoeio0fxTb76wJ983pPn42WACIx32ENJFXONEUolKPYIjnEn5
- s52BArJgJqI6JX6oy2sZaRZNGjJp8Fm5/d0PutuLv2O3EUl6mPX5yIwu00/4UG7ZADXU
- QrhzvvqfTtwVUbQWgm3qbpLeKTgGMmq/jJ1aZJJ2IGm24Gc7W8IFwpkLZ0/yxM1y1CJU
- 0YiAyGDbgT9nlDXXhfcWp4rvHA01tFvptou8E9R/smgsnOgKIYbuHm5aPegMVGcQY9U+
- a+bJ0aio8vc4htZR5ZB0fpyd1D9X/Kvdb6Cm4m9WYKGAcdIow/F88Rv92tYo38wUxEuD
- GcUA==
-X-Gm-Message-State: AOAM531GXlRUjxJENFNRuve/FNM0qM49LhhjPkqZZJraqC42a/sdcEkb
- CxK9DuXr5x9TUmo8ie7wnZ74zC8yUvS+Kw==
-X-Google-Smtp-Source: ABdhPJwWYq1gKIHIsRt9iJnUMBJ6ysXNX3ka1YiKwpAGISnih82BmjtG/Xeq++ikNruSWjHYs3JgLw==
-X-Received: by 2002:a05:620a:4082:b0:67e:e53d:a68f with SMTP id
- f2-20020a05620a408200b0067ee53da68fmr19159612qko.406.1648544664639; 
- Tue, 29 Mar 2022 02:04:24 -0700 (PDT)
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com.
- [209.85.128.174]) by smtp.gmail.com with ESMTPSA id
- u62-20020a379241000000b0067ed2b0994dsm9267172qkd.54.2022.03.29.02.04.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 29 Mar 2022 02:04:24 -0700 (PDT)
-Received: by mail-yw1-f174.google.com with SMTP id
- 00721157ae682-2e68c95e0f9so176420197b3.0; 
- Tue, 29 Mar 2022 02:04:23 -0700 (PDT)
-X-Received: by 2002:a81:24d6:0:b0:2e5:b253:f9fc with SMTP id
- k205-20020a8124d6000000b002e5b253f9fcmr30366724ywk.438.1648544663596; Tue, 29
- Mar 2022 02:04:23 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220328000915.15041-1-ansuelsmth@gmail.com>
- <CAFr9PXkgrRe-=E=GhNnZ4w1x_FMb97-_RmX6ND1vEd74_TbZSw@mail.gmail.com>
- <YkK691VG6ON/6Ysn@atomide.com>
-In-Reply-To: <YkK691VG6ON/6Ysn@atomide.com>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Tue, 29 Mar 2022 11:04:11 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdXDDNTgBdJTa8+H1H5v1gAarp07xxWu_E1JL8mXS8HPMg@mail.gmail.com>
-Message-ID: <CAMuHMdXDDNTgBdJTa8+H1H5v1gAarp07xxWu_E1JL8mXS8HPMg@mail.gmail.com>
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256
+ header.s=gm1 header.b=E0C2ytxP; dkim-atps=neutral
+Received: from mslow1.mail.gandi.net (mslow1.mail.gandi.net [217.70.178.240])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
+ bits)) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KSPJr1W72z2xCy;
+ Tue, 29 Mar 2022 20:24:10 +1100 (AEDT)
+Received: from relay10.mail.gandi.net (unknown [217.70.178.230])
+ by mslow1.mail.gandi.net (Postfix) with ESMTP id 0E5CDD01FD;
+ Tue, 29 Mar 2022 09:19:51 +0000 (UTC)
+Received: (Authenticated sender: alexandre.belloni@bootlin.com)
+ by mail.gandi.net (Postfix) with ESMTPSA id 17680240012;
+ Tue, 29 Mar 2022 09:19:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
+ t=1648545573;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4OYEQcpxV5ZoCImFdldnCROqjeYEuOqk5lTqs4xQNOw=;
+ b=E0C2ytxPlV1W+Oe2MExHPN7L1HAoV5OikaBi/U7DewsMCqNtbPDqkZmi2EkEtqy1h9eSgE
+ iiefcHj+RmgZ+f+Nhg1dBvgQLIyFkVMlqvsI0mQLoe4LXrWKzoi2/xC4DJe0nxuepZkThU
+ FRyNwSRBCCVeRjb5oEYt0caD6HgzFm/e5R4zbhwmHQOWSB6a/GJnngaEUVODgCoYqdO+7g
+ DcfNnSRhpGEP/dmCe7VL2vFiRtpk1xrIevN5WpjBBTppF28IllsoBjw5Ux75BSFoUNa40U
+ iEy83TwJxTr5nOyIxsdHupHOzrfEzXzdR3N0Ts3ALvlLshPNCnGr1VoMVatfnA==
+Date: Tue, 29 Mar 2022 11:19:30 +0200
+From: Alexandre Belloni <alexandre.belloni@bootlin.com>
+To: Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>
 Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
-To: Tony Lindgren <tony@atomide.com>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <YkLPIgwClJAUc1Uf@piout.net>
+References: <20220328000915.15041-1-ansuelsmth@gmail.com>
+ <YkG2RPrtPaBNXb7a@latitude>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <YkG2RPrtPaBNXb7a@latitude>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,56 +67,81 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
 Cc: linux-aspeed@lists.ozlabs.org, linux-realtek-soc@lists.infradead.org,
  linux-stm32@st-md-mailman.stormreply.com, chrome-platform@lists.linux.dev,
- linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
- openbmc@lists.ozlabs.org, Daniel Palmer <daniel@0x0f.com>,
- linux-arm-kernel@axis.com,
- "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>,
- linux-sunxi@lists.linux.dev, DTML <devicetree@vger.kernel.org>,
- linux-arm-msm <linux-arm-msm@vger.kernel.org>,
- linux-actions@lists.infradead.org, linux-unisoc@lists.infradead.org,
- Rob Herring <robh+dt@kernel.org>, linux-mediatek@lists.infradead.org,
- linux-rpi-kernel <linux-rpi-kernel@lists.infradead.org>,
- linux-tegra <linux-tegra@vger.kernel.org>,
- "open list:ARM/Amlogic Meson..." <linux-amlogic@lists.infradead.org>,
- "open list:TI ETHERNET SWITCH DRIVER \(CPSW\)" <linux-omap@vger.kernel.org>,
- linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Ansuel Smith <ansuelsmth@gmail.com>,
- Linux-Renesas <linux-renesas-soc@vger.kernel.org>, kernel@dh-electronics.com,
+ linux-samsung-soc@vger.kernel.org, openbmc@lists.ozlabs.org,
+ linux-arm-kernel@axis.com, linux-rockchip@lists.infradead.org,
+ linux-sunxi@lists.linux.dev, devicetree@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-actions@lists.infradead.org,
+ linux-unisoc@lists.infradead.org, Rob Herring <robh+dt@kernel.org>,
+ linux-mediatek@lists.infradead.org, linux-rpi-kernel@lists.infradead.org,
+ linux-tegra@vger.kernel.org, linux-amlogic@lists.infradead.org,
+ linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-kernel@vger.kernel.org, Ansuel Smith <ansuelsmth@gmail.com>,
+ linux-renesas-soc@vger.kernel.org, kernel@dh-electronics.com,
  Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-oxnas@groups.io
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Tony,
+Hi,
 
-On Tue, Mar 29, 2022 at 10:03 AM Tony Lindgren <tony@atomide.com> wrote:
-> * Daniel Palmer <daniel@0x0f.com> [220328 08:53]:
-> > On Mon, 28 Mar 2022 at 09:09, Ansuel Smith <ansuelsmth@gmail.com> wrote:
-> > > as the title say, the intention of this ""series"" is to finally categorize
-> > > the ARM dts directory in subdirectory for each oem.
-> >
-> > While I agree with this change and think it's for the good (browsing
-> > the ARM dts directory at the moment is frustrating..) I think
-> > buildroot and others need to be told about this as it'll potentially
-> > break their kernel build scripting for ARM and probably messes up the
-> > configs they have for existing boards.
->
-> Yeah.. And ideally this would be done in smaller steps as these will
-> conflict with all the other pending patches.
->
-> For example, I have a pile of pending omap clock clean-up dts patches
-> posted and tested waiting for v5.19-rc1 to apply. I'd rather not start
-> redoing or fixing up the patches with sed :)
+On 28/03/2022 15:21:08+0200, Jonathan Neuschäfer wrote:
+> On Mon, Mar 28, 2022 at 02:09:14AM +0200, Ansuel Smith wrote:
+> >  create mode 100644 arch/arm/boot/dts/freescale/Makefile
+> 
+> Freescale has been part of NXP for a while, so it might make sense to
+> merge the freescale and nxp directories. I can't speak for
+> NXP-the-company, so that's just my view as a bystander.
+> 
 
-Git merge/rebase/cherry-pick should handle renames fine?
+Maybe we should wait for the market consolidation to end so we can put
+all the files in a single subfolder?
 
-Gr{oetje,eeting}s,
+this would save us from all the bikeshedding ;)
 
-                        Geert
+> >  create mode 100644 arch/arm/boot/dts/kirkwood/Makefile
+> 
+> The Kirkwood family should probably be sorted into Marvell.
+> 
+> >  create mode 100644 arch/arm/boot/dts/layerscape/Makefile
+> >  rename arch/arm/boot/dts/{ => layerscape}/ls1021a-moxa-uc-8410a.dts (100%)
+> >  rename arch/arm/boot/dts/{ => layerscape}/ls1021a-qds.dts (100%)
+> >  rename arch/arm/boot/dts/{ => layerscape}/ls1021a-tsn.dts (100%)
+> >  rename arch/arm/boot/dts/{ => layerscape}/ls1021a-twr.dts (100%)
+> >  rename arch/arm/boot/dts/{ => layerscape}/ls1021a.dtsi (100%)
+> 
+> The Layerscape family is part of Freescale/NXP.
+> 
+> >  create mode 120000 arch/arm/boot/dts/nxp/armv7-m.dtsi
+> 
+> armv7-m.dtsi is a bit confusing, because it contains a few devices at
+> fixed addresses, so it looks vendor-specific at a first glance into the
+> file. However, if it is actually as vendor-neutral as the name implies,
+> I think it should live dts/ directly, rather than in vendor
+> subdirectories.
+> 
+> >  rename arch/arm/boot/dts/{ => nxp}/lpc18xx.dtsi (100%)
+> 
+> Here we have the NXP LPCxxxx family, which is AFAIK unrelated to the
+> i.MX family (and thus the bulk of the Freescale legacy).
+> 
+> >  create mode 100644 arch/arm/boot/dts/vybrid/Makefile
+> 
+> Vybrid is another chip family of NXP, with a good deal of Freescale
+> legacy in it as evidenced by the "fsl," prefix in the devicetrees.
+> 
+> 
+> 
+> Thanks,
+> Jonathan
 
---
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+
+> _______________________________________________
+> linux-arm-kernel mailing list
+> linux-arm-kernel@lists.infradead.org
+> http://lists.infradead.org/mailman/listinfo/linux-arm-kernel
+
+
+-- 
+Alexandre Belloni, co-owner and COO, Bootlin
+Embedded Linux and Kernel engineering
+https://bootlin.com
