@@ -1,92 +1,92 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E99B64EA4F1
-	for <lists+openbmc@lfdr.de>; Tue, 29 Mar 2022 04:07:47 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id BE7174EA71D
+	for <lists+openbmc@lfdr.de>; Tue, 29 Mar 2022 07:26:48 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KSCdF5N8Mz3c00
-	for <lists+openbmc@lfdr.de>; Tue, 29 Mar 2022 13:07:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KSJ2s5ysVz2xgJ
+	for <lists+openbmc@lfdr.de>; Tue, 29 Mar 2022 16:26:45 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=YWDyx7c0;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=CkUQ9OGJ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=PEObBxjg;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=MsY+YRrW;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.26;
- helo=out2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.21;
+ helo=wout5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm3 header.b=YWDyx7c0; 
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm2 header.b=PEObBxjg; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=CkUQ9OGJ; 
+ header.a=rsa-sha256 header.s=fm3 header.b=MsY+YRrW; 
  dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com
- [66.111.4.26])
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
+ [64.147.123.21])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KSCcn5DmDz2yZw
- for <openbmc@lists.ozlabs.org>; Tue, 29 Mar 2022 13:07:20 +1100 (AEDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailout.nyi.internal (Postfix) with ESMTP id B6FEF5C01D5;
- Mon, 28 Mar 2022 22:07:17 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
- by compute5.internal (MEProxy); Mon, 28 Mar 2022 22:07:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
- :cc:content-type:date:date:from:from:in-reply-to:message-id
- :mime-version:reply-to:sender:subject:subject:to:to; s=fm3; bh=t
- Dglojh0NUIs2hIp76uBvbzvnFt/LCrEiUr33At35po=; b=YWDyx7c07CG4IoQ8x
- aEc4rnPyqUnS1LS9IhjjQMGZX2ONkCrE9nR7Tawygq8/41ryPTVxciF4UcdAW3yR
- 880eD57cSC2pNHtYwgkWKSooqGrTPvB5bwtaWa8fGR9iWu8eiN6fo8XSf1Tj/HgJ
- +tbDT+HwPeFfYPw4/NI1GC43cE3z7YfCA7ISnWule/R4uSsVkcAmYSQVniZuAHsk
- pmIyoLLwUn9qk2IL3/tXsK77+ynlA18E373jlvFXfXPr5xnuTweyrTWNDnVZak3m
- PmtXGefK64SnwLb7So8nkCaqTNX0S2RI8JM8ialhycjj8fitlcap92nkL1YoVcua
- c/RcQ==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KSJ2N4ZyVz2xBV
+ for <openbmc@lists.ozlabs.org>; Tue, 29 Mar 2022 16:26:19 +1100 (AEDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.west.internal (Postfix) with ESMTP id 5467D3202083;
+ Tue, 29 Mar 2022 01:26:16 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute3.internal (MEProxy); Tue, 29 Mar 2022 01:26:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+ :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:sender:subject
+ :subject:to:to; s=fm2; bh=UEyTFYY+lHkzARK8MWyChvloU4DQEKZ6goNzaq
+ kOXvk=; b=PEObBxjgtD177malMAbkvTfmq6DCMihItvMgDp6cZNgyLKhuxNY6Uq
+ jpg76RvVjg0EA6rXM4VKnG2zuf2ejDo6OAFT2QN7je/QnAw7OucB2gD5xoZ2NFZt
+ BAYX5/QKuwYl/jpyvdlKQpqbbrZ5jj8COkJokrN5lSSOSUxpxCi66kP6FGMbfGm2
+ 6PyEfx+AlwC5pszDaodGOq15MeLDbCAXq0c4r2LPagyF7Z0UXFZ9uRAx0TtbizTG
+ MUPSKblAX6OfvLg4omPKSaSIGCpfrsTB/a/IA/lSgGWUaWPZZCklDHSw+Qt6aY+Z
+ IhtnV1mKKoKDgqjIuE8lm4ltI94O6Caw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-type:date:date:from:from
- :in-reply-to:message-id:mime-version:reply-to:sender:subject
- :subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
- :x-sasl-enc; s=fm3; bh=tDglojh0NUIs2hIp76uBvbzvnFt/LCrEiUr33At35
- po=; b=CkUQ9OGJw7GX8S7htXfdIcmqizFX922ba3GkTbmv5dYjsAwgIrC4bcMc6
- V23Yx6QrZKi4XvnC+aP1O/rKzHnUJVu9XC9DQJWyD/bEpxsLDMtw3LvM8dGTAUcN
- nG9x0Vgb+a3KKgUyOOtuFRj6Od//DTsjv3CcZKQEJNtAMe5ozdj0sAB/pSF37ARl
- pJyM3Gof+PHu1y+c6atrFHe/5sqKXOL/mhr/rldP7OXwSUHSZJyRlljbUadpCXff
- 6Ny/tebr39jxgJOoj4EbXmDQXKkgJuV+xdIsmKKjwb2PwkIpejIJ0Y+lvp+x43WX
- SmV0MObOrinj7aMEN/fXMEPUOXVcw==
-X-ME-Sender: <xms:1WlCYrv8VD_ilQlqwrx8uqVjb2uVTeA_OlfEaTFU-a6DIqwVh6S1Rg>
- <xme:1WlCYse5mcAADZkp6_eVWUBKQxcfsXiAlvZ32En-nAc-JvT_hE5d8gUE1RCEln1b4
- 2O4lTRX3h8Mn3_1Zg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudehkedgheefucetufdoteggodetrfdotf
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=UEyTFYY+lHkzARK8M
+ WyChvloU4DQEKZ6goNzaqkOXvk=; b=MsY+YRrWeFplZz4iwENVrCg8a/A4/KGk/
+ tJY68rHzAf8TIUSCzzR3Ovr/NcKlzxE8y4vdrqNAWKV73iGaoL34lKFfhhAffdYT
+ 84y5dYAZ7PCePVUjqSQo+ykmKyTo25utgN9+UXhgk+jFgHngM8SeETv8B0sf+9GD
+ XB/9ByChf0NmjzoIi+OIBUCmydD4vZzCuwwSY/wL/ex718RwovU/Tn5yF6+akSVY
+ npJOTFAXLtPe5ZFHw9Ny4XLTumhJvmYuE1stNdXJN4DW06h8jD2xVpHneNueb2wz
+ XBGsotnMK4WLtSj/9zH35i+aQg9mf7aRBFaxhSPRtjKKZkvHHD8gQ==
+X-ME-Sender: <xms:d5hCYm-5GqDCsQ5W5iQUX3AGdNx6YYPb2iSCDGii3Q8Or5G7xNXoRQ>
+ <xme:d5hCYmvKRKqmTQcY1VVYSkid0kDz7BKtZB6sfSLRmpf3NnK7uag_FQx4Y9AHcUymt
+ vFOOUPVvu-wPc5MiUE>
+X-ME-Received: <xmr:d5hCYsCpKqlFZCbNHI1QPTcnyHm8J7JJBMZ46_fdMUu0G2lZeGlfGpYmBsnr3G04HQuEAkXyuVLx23VidgwrTypBP3tPFYo8z2k>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudehkedgleegucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
  uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdlvdefmdenucfjughrpefofgggkfffhffvufgtsehttdertderredt
- necuhfhrohhmpedftehnughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrd
- hiugdrrghuqeenucggtffrrghtthgvrhhnpeeuteekkeffgeeiheeiffffjedtledvtdev
- hfdtfefhvdehudeviedvieejteehgeenucffohhmrghinhepohhpvghnsghmtgdqphhroh
- hjvggtthdrgiihiidpghhithhhuhgsrdgtohhmpdhfohhrmhgrthdqtghouggvrdhshhdp
- uhhnihhtqdhtvghsthdrphihnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
- hmrghilhhfrhhomheprghnughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:1WlCYuw7MevA3LSN4XPuI19WL_DfYxFjRZYogNaU35dLfvYkugOzIw>
- <xmx:1WlCYqP3P4p-X_eS6FIr7OM-49f3euZYU_z7n3eL_Et4nQklMLodKg>
- <xmx:1WlCYr-mQDZf1xr_kCWWvM0dco48bBXHewqlTIGClV3bPnA7oFGvUA>
- <xmx:1WlCYubKSubd0AjevwiJGgyUdekHwgBuJWNNk7pf5CjDQ9NPMZcEDQ>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 3F5C8F6043F; Mon, 28 Mar 2022 22:07:17 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.5.0-alpha0-4911-g925b585eab-fm-20220323.003-g925b585e
-Mime-Version: 1.0
-Message-Id: <4bc2b30d-b335-4457-9601-9c7226d6c656@www.fastmail.com>
-Date: Tue, 29 Mar 2022 12:36:33 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: openbmc@lists.ozlabs.org, "Ed Tanous" <edtanous@google.com>,
- jiaqing.zhao@intel.com, "Andrew Geissler" <geissonator@gmail.com>,
- "Adriana Kobylak" <anoo@linux.ibm.com>
-Subject: Defining the behaviour of code formatting in openbmc-build-scripts
-Content-Type: text/plain
+ gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepvdeuhfdvuedvgedtvedvjeffjeeh
+ heejgedvfeekvddtudejtdfgfedtvdevkedtnecuffhomhgrihhnpehtrhhunhhkrdhioh
+ enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprght
+ rhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:d5hCYucykJ3pqjtc5lvwFQlL5PxFLSmx_hBqFFGP_UItYERZ84RisA>
+ <xmx:d5hCYrP6WB8OUxdETWlknr3Dn62dGyvFLt78EuZo15q2BoM2J9o-6g>
+ <xmx:d5hCYoksCiIOaFBUgB90Mr-pDX86Tol6sIWt7fYWuOTG90WZGFFqTA>
+ <xmx:d5hCYm3fFPYQ8XFZLkp0Ry4s6uCFQ4Ys1Ms2u8QpOTCHs3KxzQ0bag>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 29 Mar 2022 01:26:15 -0400 (EDT)
+Date: Tue, 29 Mar 2022 00:26:13 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Andrew Jeffery <andrew@aj.id.au>
+Subject: Re: Defining the behaviour of code formatting in openbmc-build-scripts
+Message-ID: <YkKYdecCGm4vGMUa@heinlein>
+References: <4bc2b30d-b335-4457-9601-9c7226d6c656@www.fastmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="0FYqy1R8LqKHP43j"
+Content-Disposition: inline
+In-Reply-To: <4bc2b30d-b335-4457-9601-9c7226d6c656@www.fastmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,121 +98,132 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Matt Spinler <mspinler@linux.ibm.com>
+Cc: openbmc@lists.ozlabs.org, Matt Spinler <mspinler@linux.ibm.com>,
+ jiaqing.zhao@intel.com, Ed Tanous <edtanous@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
 
-Review of https://gerrit.openbmc-project.xyz/c/openbmc/entity-manager/+/52406
-sparked some discussion about what we actually want from the code-formatting
-support in openbmc-build-scripts going forward.
+--0FYqy1R8LqKHP43j
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-## General statements
+On Tue, Mar 29, 2022 at 12:36:33PM +1030, Andrew Jeffery wrote:
+> ## The problem
+>=20
+> "Like all Vogon ships, it looked as if it had been not so much designed, =
+as
+> congealed." - Douglas Adams, The Salmon of Doubt
+>=20
+> Code formatting support in openbmc-build-scripts has evolved over time and
+> no-one has ever written down what we actually want. The lack of concrete
+> requirements has lead to an counter-intuitive and convoluted implementati=
+on
+> that has ended in some repositories (e.g. entity-manager) not having thei=
+r code
+> formatted as expected.
 
-Enforcing code formatting in CI is effective in that it ensures style from
-multiple contributors is consistent with minimal maintainer intervention.
-Sometimes the automated formatting might be questionable, but the judgement is
-that on the whole the consistency is a better trade-off than occasional
-enforced untidiness. There are also escape hatches to disable formatting in
-extreme circumstances. Automated code formatting is desirable.
+I entirely agree that this is ultimately the problem.  The code has
+evolved as people add new checks and it has a lot of looking for magic
+files to make determinations on what to do.  Unless you know all the
+knobs it's hard to discover what is even possible.
 
-clang-format is at the heart of OpenBMC's code formatting support as the bulk
-of the OpenBMC codebase is written in C++.
+> Code formatting support in openbmc-build-scripts began with an implementa=
+tion
+> of 1. However, along the way we introduced the phosphor-mboxd repository =
+which
+> due to some unfortunate history has a mixed C and C++ codebase. The C cod=
+e is
+> written in kernel style, while it was desired that the C++ be written in
+> OpenBMC style.
 
-## The problem
+Do we still have this situation?  (I think this repo is now hiomap which
+does seem to have two different clang style files).  Can we just do away
+with the "C code should be written in a kernel style" and use the same
+format between all the userspace code?
 
-"Like all Vogon ships, it looked as if it had been not so much designed, as
-congealed." - Douglas Adams, The Salmon of Doubt
+> At the time the problem arose, clang-format had two issues:
+>=20
+> a. It treats C and C++ as the same language, and so maintaining a code
+>    formatting split across those language boundaries requires two separate
+>    clang-format configuration files
+>=20
+> b. clang-format's -style=3Dfile historically required that the style file=
+ in
+>    question be called ".clang-format"
 
-Code formatting support in openbmc-build-scripts has evolved over time and
-no-one has ever written down what we actually want. The lack of concrete
-requirements has lead to an counter-intuitive and convoluted implementation
-that has ended in some repositories (e.g. entity-manager) not having their code
-formatted as expected.
+I believe (a.) is still the case but not (b.).  We could add yet another
+special case to detect the two .clang-format files.
 
-There are 4 possible behaviours that openbmc-build-scripts could take against
-an application repository:
+> Hence, we support 1, 2 and 4, but not (yet) 3.
+> ## Proposal
+>=20
+> I don't really have one. Does anyone have thoughts on how we differentiate
+> between cases 3 and 4? Use different file names? Invoke the script and as=
+k it
+> what it expects?
 
-1. All code formatting is disabled: No further action
+I'm somewhat surprised still that the difference between 3/4 is hard to
+detect.  Is hiomap the only repository expecting behavior 4?
 
-2. No custom code formatting: Just do whatever the default actions are as
-   implemented in openbmc-build-scripts
+In my opinion if you have a .clang-format, we should run clang-format; if we
+don't find .clang-format, we should not run clang-format.  And that
+should go for any formatting tool.  I believe we should always treat the
+`format-code[.sh]` as yet-another-formatting-option and run it in
+addition to everything else that we discover.
 
-3. Some custom code formatting: Actions to run in addition to the default
-   actions implemented in openbmc-build-scripts
+There has been talk previously about making something like
+`.openbmc/config.json` as a further configuration file where we could
+enable / disable all these check.  I think it would be worthwhile as a
+way to eliminate many of the "search for special file X" checks we have
+where we simply touch an empty file, but I suspect we really shouldn't
+be using the "touch a magic empty file" mechanism anyhow.
 
-4. Only custom code formatting: Actions to run in-place of the default actions
-   implemented in openbmc-build-scripts (which must not be run)
+I've been playing locally with a relatively new tool that seems pretty
+promising: https://trunk.io/ .  They have something like the JS
+packages-lock.js` that allows you to enable and version-pin all your
+style checks and linters and it automatically downloads pristine copies
+of those tools (without installing them globally on your system).  They are
+missing a few features that would allow it to integrate nicely into our Doc=
+ker
+images, but hopefully it is getting there soon.
 
-Currently openbmc-build-scripts only implements 1, 2 and 4, while
-entity-manager had assumed 3 was supported.
+Ideally I'd like to see some automation that:
 
-## Background (AKA why don't we have support for 3?)
+    1. Leverages trunk.io to run all the linters / style checks that
+       trunk.io supports, which is way more than we do now.
 
-Code formatting support in openbmc-build-scripts began with an implementation
-of 1. However, along the way we introduced the phosphor-mboxd repository which
-due to some unfortunate history has a mixed C and C++ codebase. The C code is
-written in kernel style, while it was desired that the C++ be written in
-OpenBMC style.
+    2. Create a common set of configs for all these linters and tooling
+       detect if some repository has deviated from the common set.
 
-At the time the problem arose, clang-format had two issues:
+    3. Run a nightly Dependabot-like fix-up commit for any repositories
+       with an out-of-date linter version.
 
-a. It treats C and C++ as the same language, and so maintaining a code
-   formatting split across those language boundaries requires two separate
-   clang-format configuration files
+This is a longer term project than what you're probably after for this
+immediate problem though.
 
-b. clang-format's -style=file historically required that the style file in
-   question be called ".clang-format"
+--=20
+Patrick Williams
 
-These two constraints together required that phosphor-mboxd ship two separate
-configuration files, and to explicitly symlink them as .clang-format before
-invoking the clang-format command. As such it was easier to reason about code
-formatting if the support in openbmc-build-scripts transferred the entire
-formatting responsibility to repository-specific format-code script rather than
-attempting to do anything of its own accord.
+--0FYqy1R8LqKHP43j
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Hence, we support 1, 2 and 4, but not (yet) 3.
+-----BEGIN PGP SIGNATURE-----
 
-## Analysis
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmJCmHMACgkQqwNHzC0A
+wRlx7g/7B7FoQFfrtw6t29sAeOTRg6pFsZMDDxPJqXegFgPleJZ/uuHBq/G4EK3e
+frceu0OKGf7Ey/QrzSxciOEN4buaNACMTzWmVwavFfQfNA+DjSwdGjjaCNRGoeN2
+pWLxdQJs0KvIUuEFPHTb43uMBgg6slc5Vmr3nHECKF58nnJ+K3kyclnC62yd8qa3
+6Ys+ER0TCLeQ++vTC9yy9xGjylPewKHRTDqtqK5gNs6l8Kq6RGd9/1l3tnVCapHX
+wcW0a9PaTcBRUPONjQ4MrRUNQCLgHtSY9K7wYnP6RxSy9qVsrGBdFOCK4EEuui+N
+1zqIgtyiA6/DHTmsu0KPFvDPPB87OXYmUocbHiez60r8buAcw98oxnF93+Ag1hz3
+nZUoY/mB43tSh+rBTSshq25RWhBopG/8PSi/ok63L80vHcTL3zzPquQn206m7Wau
+ebCPWt21n6AiB/WJ6MlewJxXlg8qXgv/dC9P2C6cLLogyig9oVKWpbT+BO1GaEjF
+k/kJOWSS1nHTz4IutrmJFGhKUo1UEFYcEYzxU0jE9kD+r/sBvY3BWfKtSZ5hHksI
+QpRQwOAoCLmD5mMLCVxVwPjAiIq0GW7KfnW8BbxiPsay1ClRTdaPsD/Ias1DWCSz
+MEtpQjVfOmaHDR0Ugx7B8uUeCMP/zFaxxjPqiljWkKUhwr8jrWs=
+=6Exi
+-----END PGP SIGNATURE-----
 
-The current behaviour of openbmc-build-scripts is as follows, from
-scripts/unit-test.py:
-
-1. Check that code formatting was requested. If not, no further code-formatting
-   action is taken
-
-2. Check for `format-code` and `format-code.sh` in the root of the target
-   repository and add them to the formatter list
-
-3. If no custom scripts were found in 1, add the default format-code.sh
-   implementation[1] to the formatter list 4. Execute the scripts in the
-   formatter list
-
-[1] https://github.com/openbmc/openbmc-build-scripts/blob/0ea75ec9efb7ffacb88f63e38fa7823fe8b124a7/scripts/format-code.sh
-
-This algorithm is implemented here:
-
-https://github.com/openbmc/openbmc-build-scripts/blob/0ea75ec9efb7ffacb88f63e38fa7823fe8b124a7/scripts/unit-test.py#L1215-L1226
-
-Confusingly, inside the default format-code.sh implementation there's also an
-invocation of the custom format-code.sh script if it exists, but the default
-format-code.sh implementation won't be executed if the custom format-code.sh
-file exists (due to the implementation of scripts/unit-test.py). So this code
-is dead:
-
-https://github.com/openbmc/openbmc-build-scripts/blob/ac5915f07d3b796f224c85477763ca7fe893dcc2/scripts/format-code.sh#L136-L141
-
-The a consequence of all this is that the entity-manager codebase isn't being
-formatted with clang-format because it ships a custom format-code script that
-doesn't invoke it.
-
-## Proposal
-
-I don't really have one. Does anyone have thoughts on how we differentiate
-between cases 3 and 4? Use different file names? Invoke the script and ask it
-what it expects?
-
-Interested in your thoughts.
-
-Andrew
+--0FYqy1R8LqKHP43j--
