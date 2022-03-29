@@ -2,91 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id BE7174EA71D
-	for <lists+openbmc@lfdr.de>; Tue, 29 Mar 2022 07:26:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A133A4EA7CC
+	for <lists+openbmc@lfdr.de>; Tue, 29 Mar 2022 08:21:00 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KSJ2s5ysVz2xgJ
-	for <lists+openbmc@lfdr.de>; Tue, 29 Mar 2022 16:26:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KSKFQ3SNcz2xsP
+	for <lists+openbmc@lfdr.de>; Tue, 29 Mar 2022 17:20:58 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=PEObBxjg;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=MsY+YRrW;
+	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=kw7eJCaR;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.21;
- helo=wout5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=bytedance.com (client-ip=2001:4860:4864:20::36;
+ helo=mail-oa1-x36.google.com; envelope-from=yulei.sh@bytedance.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=PEObBxjg; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=MsY+YRrW; 
- dkim-atps=neutral
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
- [64.147.123.21])
+ unprotected) header.d=bytedance-com.20210112.gappssmtp.com
+ header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256
+ header.s=20210112 header.b=kw7eJCaR; dkim-atps=neutral
+Received: from mail-oa1-x36.google.com (mail-oa1-x36.google.com
+ [IPv6:2001:4860:4864:20::36])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KSJ2N4ZyVz2xBV
- for <openbmc@lists.ozlabs.org>; Tue, 29 Mar 2022 16:26:19 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.west.internal (Postfix) with ESMTP id 5467D3202083;
- Tue, 29 Mar 2022 01:26:16 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute3.internal (MEProxy); Tue, 29 Mar 2022 01:26:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
- :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to; s=fm2; bh=UEyTFYY+lHkzARK8MWyChvloU4DQEKZ6goNzaq
- kOXvk=; b=PEObBxjgtD177malMAbkvTfmq6DCMihItvMgDp6cZNgyLKhuxNY6Uq
- jpg76RvVjg0EA6rXM4VKnG2zuf2ejDo6OAFT2QN7je/QnAw7OucB2gD5xoZ2NFZt
- BAYX5/QKuwYl/jpyvdlKQpqbbrZ5jj8COkJokrN5lSSOSUxpxCi66kP6FGMbfGm2
- 6PyEfx+AlwC5pszDaodGOq15MeLDbCAXq0c4r2LPagyF7Z0UXFZ9uRAx0TtbizTG
- MUPSKblAX6OfvLg4omPKSaSIGCpfrsTB/a/IA/lSgGWUaWPZZCklDHSw+Qt6aY+Z
- IhtnV1mKKoKDgqjIuE8lm4ltI94O6Caw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=UEyTFYY+lHkzARK8M
- WyChvloU4DQEKZ6goNzaqkOXvk=; b=MsY+YRrWeFplZz4iwENVrCg8a/A4/KGk/
- tJY68rHzAf8TIUSCzzR3Ovr/NcKlzxE8y4vdrqNAWKV73iGaoL34lKFfhhAffdYT
- 84y5dYAZ7PCePVUjqSQo+ykmKyTo25utgN9+UXhgk+jFgHngM8SeETv8B0sf+9GD
- XB/9ByChf0NmjzoIi+OIBUCmydD4vZzCuwwSY/wL/ex718RwovU/Tn5yF6+akSVY
- npJOTFAXLtPe5ZFHw9Ny4XLTumhJvmYuE1stNdXJN4DW06h8jD2xVpHneNueb2wz
- XBGsotnMK4WLtSj/9zH35i+aQg9mf7aRBFaxhSPRtjKKZkvHHD8gQ==
-X-ME-Sender: <xms:d5hCYm-5GqDCsQ5W5iQUX3AGdNx6YYPb2iSCDGii3Q8Or5G7xNXoRQ>
- <xme:d5hCYmvKRKqmTQcY1VVYSkid0kDz7BKtZB6sfSLRmpf3NnK7uag_FQx4Y9AHcUymt
- vFOOUPVvu-wPc5MiUE>
-X-ME-Received: <xmr:d5hCYsCpKqlFZCbNHI1QPTcnyHm8J7JJBMZ46_fdMUu0G2lZeGlfGpYmBsnr3G04HQuEAkXyuVLx23VidgwrTypBP3tPFYo8z2k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudehkedgleegucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
- vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
- htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepvdeuhfdvuedvgedtvedvjeffjeeh
- heejgedvfeekvddtudejtdfgfedtvdevkedtnecuffhomhgrihhnpehtrhhunhhkrdhioh
- enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprght
- rhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:d5hCYucykJ3pqjtc5lvwFQlL5PxFLSmx_hBqFFGP_UItYERZ84RisA>
- <xmx:d5hCYrP6WB8OUxdETWlknr3Dn62dGyvFLt78EuZo15q2BoM2J9o-6g>
- <xmx:d5hCYoksCiIOaFBUgB90Mr-pDX86Tol6sIWt7fYWuOTG90WZGFFqTA>
- <xmx:d5hCYm3fFPYQ8XFZLkp0Ry4s6uCFQ4Ys1Ms2u8QpOTCHs3KxzQ0bag>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Mar 2022 01:26:15 -0400 (EDT)
-Date: Tue, 29 Mar 2022 00:26:13 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Andrew Jeffery <andrew@aj.id.au>
-Subject: Re: Defining the behaviour of code formatting in openbmc-build-scripts
-Message-ID: <YkKYdecCGm4vGMUa@heinlein>
-References: <4bc2b30d-b335-4457-9601-9c7226d6c656@www.fastmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KSKF037b1z2xBf
+ for <openbmc@lists.ozlabs.org>; Tue, 29 Mar 2022 17:20:32 +1100 (AEDT)
+Received: by mail-oa1-x36.google.com with SMTP id
+ 586e51a60fabf-df02f7e2c9so5253926fac.10
+ for <openbmc@lists.ozlabs.org>; Mon, 28 Mar 2022 23:20:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance-com.20210112.gappssmtp.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=ecWONwa8QSD/PEymkdaREVN+OinJwx+uuFblU5CYFC8=;
+ b=kw7eJCaROmUxy9z/HdtiQ8EF04zYnPlrJVlwQ4i8s1gdqVtoepd2Owb5DH/HqL4pcb
+ vOs/ZjNvdpulf7qKe8oplod9yFCVNiUSQ+cQjfZWuX6wEckhnC+UBZW0d3HlavfpDfW5
+ 5vWHkGDCWv5ikfIiKCxWe0tNYsmzU2FTJEBx24MU28JR/fl2twygV3en4SgiUdSAjaX4
+ N7UjVOn+b1vy2Qt5o3BPEXa0PJmaDgpZ1QBd710NzD2nB4NrzbWyUtMGdTTurWEQGAQl
+ bVzt0khnHNzstRnhMRoa6ry+e7YXtPkuyRU+Nb9YcIcM82QR5Ni5GFd9BZcuy4yXVeiZ
+ 9/Uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=ecWONwa8QSD/PEymkdaREVN+OinJwx+uuFblU5CYFC8=;
+ b=krSzfpC86LlYGhBBQTQ63N2MmGYBM4H1J7XnJox464fxPp7V1uNCrIROHx7l8sLLXd
+ 7wk7NfeaNWhlDe65eUY0jamhwumlVaA9SVB9k+ixdPGArL1P9I8iHFGkRftcYZ3heuvB
+ bUu4Zq4VASpi+DsNN8BFO7TF26MgSUnSOC2vyDrHvGJmwUsYVLtKi8ehx2U9yMKfvEvI
+ XUKj6PeSydSa37xIzn2LXDHDYWkxvExUq2uOtIltOw6ifKqEGN7idfwyoWZSK5oGuwTj
+ 9/hsTmsQ0P91H01Ik6UfgrBg8QYsI7RRrH1gNVltBhbdZGubLPQrWSFb055Dj46AdN0U
+ G8Zg==
+X-Gm-Message-State: AOAM531SwVZuzF+6PExVALU1u3xY/I27uT89K8iJA8L6602EtZyW6GuI
+ UZyIx6cLhwUOFuHe27YasbOjh9E0HMzM5rx/hCmStKxzsib1Dw==
+X-Google-Smtp-Source: ABdhPJzGLBUbQIv6JvE2jUZBETM0MKJlONc71Dvqf3bbI0Uir4zXtwuzNTWFqN/thLxfJWJXoF6uHWQDQkFuqleNpBI=
+X-Received: by 2002:a05:6870:63a0:b0:dd:b56e:87eb with SMTP id
+ t32-20020a05687063a000b000ddb56e87ebmr1477518oap.294.1648534825985; Mon, 28
+ Mar 2022 23:20:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="0FYqy1R8LqKHP43j"
-Content-Disposition: inline
-In-Reply-To: <4bc2b30d-b335-4457-9601-9c7226d6c656@www.fastmail.com>
+References: <CAGm54UHMED4Np0MThLfp4H-i8R24o8pCns2-6MEzy1Me-9XJmA@mail.gmail.com>
+ <ED8098DE-8D59-437E-8088-FE7062CDEE15@linux.ibm.com>
+ <SJ0PR15MB4203E9DBC4747F99D019A2E2E81D9@SJ0PR15MB4203.namprd15.prod.outlook.com>
+In-Reply-To: <SJ0PR15MB4203E9DBC4747F99D019A2E2E81D9@SJ0PR15MB4203.namprd15.prod.outlook.com>
+From: Lei Yu <yulei.sh@bytedance.com>
+Date: Tue, 29 Mar 2022 14:20:34 +0800
+Message-ID: <CAGm54UFkd=mOQRtzEbDU2v6748QN3fYavwxgq_5JSXTu=NraJA@mail.gmail.com>
+Subject: Re: Missed interfacesRemoved signal callbacks in object-mapper
+ results in invalidated DBus objects
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,132 +80,130 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Matt Spinler <mspinler@linux.ibm.com>,
- jiaqing.zhao@intel.com, Ed Tanous <edtanous@google.com>
+Cc: Shantappa Teekappanavar <shantappa.teekappanavar@ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Additional information:
 
---0FYqy1R8LqKHP43j
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+I tried to use `dbus-monitor --system
+"type='signal',interface='org.freedesktop.DBus.ObjectManager',member='InterfacesRemoved'"
+| tee /tmp/interfacesRemoved.log` to capture the signals when deleting
+logging log entries.
+It does show that some missing signals, e.g. below link shows that it
+dose not get the interfacesRemoved signal for
+/xyz/openbmc_project/logging/entry/1
 
-On Tue, Mar 29, 2022 at 12:36:33PM +1030, Andrew Jeffery wrote:
-> ## The problem
->=20
-> "Like all Vogon ships, it looked as if it had been not so much designed, =
-as
-> congealed." - Douglas Adams, The Salmon of Doubt
->=20
-> Code formatting support in openbmc-build-scripts has evolved over time and
-> no-one has ever written down what we actually want. The lack of concrete
-> requirements has lead to an counter-intuitive and convoluted implementati=
-on
-> that has ended in some repositories (e.g. entity-manager) not having thei=
-r code
-> formatted as expected.
+https://pastebin.com/EgFpeLxK
 
-I entirely agree that this is ultimately the problem.  The code has
-evolved as people add new checks and it has a lot of looking for magic
-files to make determinations on what to do.  Unless you know all the
-knobs it's hard to discover what is even possible.
+So this looks like a dbus (or dbus-broker) issue instead of sdbusplus issue.
 
-> Code formatting support in openbmc-build-scripts began with an implementa=
-tion
-> of 1. However, along the way we introduced the phosphor-mboxd repository =
-which
-> due to some unfortunate history has a mixed C and C++ codebase. The C cod=
-e is
-> written in kernel style, while it was desired that the C++ be written in
-> OpenBMC style.
+On Tue, Mar 29, 2022 at 5:51 AM Shantappa Teekappanavar
+<Shantappa.Teekappanavar@ibm.com> wrote:
+>
+> Hi Lei,
+>
+>
+>
+> I've hit this same exact issue on few of our platforms. Like as you said, I agree it is not 100% reproducible . But once the issue is hit, it is kind of persistent on that system.
+>
+>
+>
+> I tried adding entries, deleting one at a time or Delete All, with the hope of flushing out the paths. But so far no success.
+>
+>
+>
+> I agree that there is some sort of fundamental issue...
+>
+>
+>
+> -Teeks
+>
+>
+>
+> From: Adriana Kobylak <anoo@linux.ibm.com>
+> Sent: Monday, March 28, 2022 2:42 PM
+> To: Shantappa Teekappanavar <Shantappa.Teekappanavar@ibm.com>
+> Subject: Fwd: Missed interfacesRemoved signal callbacks in object-mapper results in invalidated DBus objects
+>
+>
+>
+>
+>
+>
+>
+> Begin forwarded message:
+>
+>
+>
+> From: Lei Yu <yulei.sh@bytedance.com>
+>
+> Subject: Missed interfacesRemoved signal callbacks in object-mapper results in invalidated DBus objects
+>
+> Date: March 28, 2022 at 8:19:40 AM CDT
+>
+> To: openbmc <openbmc@lists.ozlabs.org>
+>
+>
+>
+> An issue that is related to missed match callbacks is noticed and it
+> causes the inconsistency between object-mapper and the dbus objects.
+>
+> Steps to reproduce on g220a QEMU (it is not 100% reproducible and when
+> it occurs it likely occurs on the first try when BMC boots)
+>
+> 1. Generate several logging entries
+> 2. Call logging service's DeleteAll
+> 3. Check the objects of logging service, all entries are deleted
+> ```
+> # busctl tree xyz.openbmc_project.Logging
+> `-/xyz
+>   `-/xyz/openbmc_project
+>     `-/xyz/openbmc_project/logging
+>       `-/xyz/openbmc_project/logging/internal
+>         `-/xyz/openbmc_project/logging/internal/manager
+> ```
+> 4. Check the entries via object-mapper, it gets the entries
+> ```
+> # busctl call xyz.openbmc_project.ObjectMapper
+> /xyz/openbmc_project/object_mapper xyz.openbmc_project.ObjectMapper
+> GetObject sas /xyz/openbmc_project/logging/entry/1 0
+> a{sas} 1 "xyz.openbmc_project.Logging" 8
+> "org.freedesktop.DBus.Introspectable" "org.freedesktop.DBus.Peer"
+> "org.freedesktop.DBus.Properties"
+> "xyz.openbmc_project.Association.Definitions" "xyz.open
+> bmc_project.Common.FilePath" "xyz.openbmc_project.Logging.Entry"
+> "xyz.openbmc_project.Object.Delete"
+> "xyz.openbmc_project.Software.Version"
+> ```
+> 5. I could verify that the DBus object does not really exist:
+> ```
+> # busctl introspect "xyz.openbmc_project.Logging"
+> /xyz/openbmc_project/logging/entry/1
+> Failed to introspect object /xyz/openbmc_project/logging/entry/1 of
+> service xyz.openbmc_project.Logging: Unknown object
+> '/xyz/openbmc_project/logging/entry/1'.
+> ```
+>
+> I also added some logs in my service to get callbacks of the
+> interfacesRemoved signal, and it shows that I really do not get the
+> callbacks for some objects.
+> For example, in one test I have 41 logging entries, and my service
+> only gets `interfacesRemoved` callback for entry 18~41, this causes
+> the object-mapper to show the remaining 1~17 entries while they do not
+> really exist on DBus.
+>
+> This looks like some fundamental issue in dbus-broker or sdbusplus.
+> Is there anyone who hits the similar issue?
+>
+> --
+> BRs,
+> Lei YU
+>
+>
 
-Do we still have this situation?  (I think this repo is now hiomap which
-does seem to have two different clang style files).  Can we just do away
-with the "C code should be written in a kernel style" and use the same
-format between all the userspace code?
 
-> At the time the problem arose, clang-format had two issues:
->=20
-> a. It treats C and C++ as the same language, and so maintaining a code
->    formatting split across those language boundaries requires two separate
->    clang-format configuration files
->=20
-> b. clang-format's -style=3Dfile historically required that the style file=
- in
->    question be called ".clang-format"
 
-I believe (a.) is still the case but not (b.).  We could add yet another
-special case to detect the two .clang-format files.
-
-> Hence, we support 1, 2 and 4, but not (yet) 3.
-> ## Proposal
->=20
-> I don't really have one. Does anyone have thoughts on how we differentiate
-> between cases 3 and 4? Use different file names? Invoke the script and as=
-k it
-> what it expects?
-
-I'm somewhat surprised still that the difference between 3/4 is hard to
-detect.  Is hiomap the only repository expecting behavior 4?
-
-In my opinion if you have a .clang-format, we should run clang-format; if we
-don't find .clang-format, we should not run clang-format.  And that
-should go for any formatting tool.  I believe we should always treat the
-`format-code[.sh]` as yet-another-formatting-option and run it in
-addition to everything else that we discover.
-
-There has been talk previously about making something like
-`.openbmc/config.json` as a further configuration file where we could
-enable / disable all these check.  I think it would be worthwhile as a
-way to eliminate many of the "search for special file X" checks we have
-where we simply touch an empty file, but I suspect we really shouldn't
-be using the "touch a magic empty file" mechanism anyhow.
-
-I've been playing locally with a relatively new tool that seems pretty
-promising: https://trunk.io/ .  They have something like the JS
-packages-lock.js` that allows you to enable and version-pin all your
-style checks and linters and it automatically downloads pristine copies
-of those tools (without installing them globally on your system).  They are
-missing a few features that would allow it to integrate nicely into our Doc=
-ker
-images, but hopefully it is getting there soon.
-
-Ideally I'd like to see some automation that:
-
-    1. Leverages trunk.io to run all the linters / style checks that
-       trunk.io supports, which is way more than we do now.
-
-    2. Create a common set of configs for all these linters and tooling
-       detect if some repository has deviated from the common set.
-
-    3. Run a nightly Dependabot-like fix-up commit for any repositories
-       with an out-of-date linter version.
-
-This is a longer term project than what you're probably after for this
-immediate problem though.
-
---=20
-Patrick Williams
-
---0FYqy1R8LqKHP43j
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmJCmHMACgkQqwNHzC0A
-wRlx7g/7B7FoQFfrtw6t29sAeOTRg6pFsZMDDxPJqXegFgPleJZ/uuHBq/G4EK3e
-frceu0OKGf7Ey/QrzSxciOEN4buaNACMTzWmVwavFfQfNA+DjSwdGjjaCNRGoeN2
-pWLxdQJs0KvIUuEFPHTb43uMBgg6slc5Vmr3nHECKF58nnJ+K3kyclnC62yd8qa3
-6Ys+ER0TCLeQ++vTC9yy9xGjylPewKHRTDqtqK5gNs6l8Kq6RGd9/1l3tnVCapHX
-wcW0a9PaTcBRUPONjQ4MrRUNQCLgHtSY9K7wYnP6RxSy9qVsrGBdFOCK4EEuui+N
-1zqIgtyiA6/DHTmsu0KPFvDPPB87OXYmUocbHiez60r8buAcw98oxnF93+Ag1hz3
-nZUoY/mB43tSh+rBTSshq25RWhBopG/8PSi/ok63L80vHcTL3zzPquQn206m7Wau
-ebCPWt21n6AiB/WJ6MlewJxXlg8qXgv/dC9P2C6cLLogyig9oVKWpbT+BO1GaEjF
-k/kJOWSS1nHTz4IutrmJFGhKUo1UEFYcEYzxU0jE9kD+r/sBvY3BWfKtSZ5hHksI
-QpRQwOAoCLmD5mMLCVxVwPjAiIq0GW7KfnW8BbxiPsay1ClRTdaPsD/Ias1DWCSz
-MEtpQjVfOmaHDR0Ugx7B8uUeCMP/zFaxxjPqiljWkKUhwr8jrWs=
-=6Exi
------END PGP SIGNATURE-----
-
---0FYqy1R8LqKHP43j--
+-- 
+BRs,
+Lei YU
