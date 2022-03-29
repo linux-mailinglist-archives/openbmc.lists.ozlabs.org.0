@@ -2,72 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C05494EAE4D
-	for <lists+openbmc@lfdr.de>; Tue, 29 Mar 2022 15:20:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 877354EB07F
+	for <lists+openbmc@lfdr.de>; Tue, 29 Mar 2022 17:29:50 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KSVZ15dJwz2yHD
-	for <lists+openbmc@lfdr.de>; Wed, 30 Mar 2022 00:20:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KSYQh3Jhrz2ybB
+	for <lists+openbmc@lfdr.de>; Wed, 30 Mar 2022 02:29:48 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Lf6UdkMw;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=tanous-net.20210112.gappssmtp.com header.i=@tanous-net.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=VsmZ0Got;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=2604:1380:4601:e00::1;
- helo=ams.source.kernel.org; envelope-from=krzk@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=tanous.net
+ (client-ip=2607:f8b0:4864:20::b34; helo=mail-yb1-xb34.google.com;
+ envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=k20201202 header.b=Lf6UdkMw; 
- dkim-atps=neutral
-Received: from ams.source.kernel.org (ams.source.kernel.org
- [IPv6:2604:1380:4601:e00::1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=tanous-net.20210112.gappssmtp.com
+ header.i=@tanous-net.20210112.gappssmtp.com header.a=rsa-sha256
+ header.s=20210112 header.b=VsmZ0Got; dkim-atps=neutral
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com
+ [IPv6:2607:f8b0:4864:20::b34])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KSVYb243yz2xMQ;
- Wed, 30 Mar 2022 00:20:34 +1100 (AEDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id A50A9B816FB;
- Tue, 29 Mar 2022 13:20:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 079B3C2BBE4;
- Tue, 29 Mar 2022 13:20:20 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1648560029;
- bh=vcBGlG+sqaPt0UpTdoZ2lc9iEFALH1pzWeKYoBtVGc0=;
- h=Date:Subject:To:References:Cc:From:In-Reply-To:From;
- b=Lf6UdkMwpGMKF/bCzH0duecbGSrWXhu70CtFUq2mNv7IsC6370BCiPtfWXaI+yKF/
- UQxjxo/5ELIHPpruCIzbUN34wBvgy5Fc7eS22PnhD5aL+YcFYfFaN/O+tr+ZmUM+S5
- A/HxyRRfNmBU9vHwyfdDK7puvv8H+mPmsnx7QORDs2EqLL+mvW+oCz1joHCa6v9S30
- zZSq7JcFWt8iEt24hFmi80tnq5vNy7tr3oSE2yE/htc0EfUX3gZEr+PbO1Xh/RhzQv
- IsUb015h84Gz6Om/nGHx49iikUSPAbDyLFfT+LjbZl0E6DwqI3AOYIbHwd8W8xbJcf
- NtJzDPqA8j7Dw==
-Message-ID: <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
-Date: Tue, 29 Mar 2022 15:20:18 +0200
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KSYQF2nZqz2x9g
+ for <openbmc@lists.ozlabs.org>; Wed, 30 Mar 2022 02:29:23 +1100 (AEDT)
+Received: by mail-yb1-xb34.google.com with SMTP id u103so32144553ybi.9
+ for <openbmc@lists.ozlabs.org>; Tue, 29 Mar 2022 08:29:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=tanous-net.20210112.gappssmtp.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=15srLQ18bIJIdjh+SMeM5uCZjZfbhOpPjkSMzirLV5A=;
+ b=VsmZ0Gotk8vwVziC8TDU2FRBcHc5mnnIuSNF4UvuThbzdZa3Hdciv1PDuAkTzkoYhF
+ KowWnP3NcJOWabp7jpCRhR/SYp4rPWMGafOqbOVUhH+B0SnEeR4xIW3el4+WC56gTaoF
+ qWlXUadQKmI2rxreVvdZJNtVxCAQvWU9jTqMYcXLU/s3ZQZgUGgQEwaCFDRekQ7ziUPl
+ HwuG6xhAFvQSo9SMDYRVM5HD1eAQzusjO9lD0gSvBC1AC2saJBZ5OjjkEuIRdP5xXYW+
+ qV/2nRSxsnKCoPTe2AIRy9GO87xk912VJrHKSFScpJQQfoWj73jhNN29/412fJ6je7WC
+ Unuw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=15srLQ18bIJIdjh+SMeM5uCZjZfbhOpPjkSMzirLV5A=;
+ b=zXjr34E+6lCAZ9iR4zQWARaeolJhINpAwnseLYA/78KT+K+tP4nhxJcNV+qs4SmSj7
+ HudTJ8k7XbqDCfWiOidB6KCNPnFLGCazc4h2SutlfFiGjZyws14PR5wgRgN2/MslB46J
+ gLOvuGUKi1jtzJeoKrqkvNfvjGmd+OZt6vAX2qLp21H+D4YI78XOLsYcJ9dKADXqeb9V
+ dh+cd7XG08yiU4yGAuflb8amBRPr+cI2GAuljjB7sWd2KBkUJe8Rh2oywR9wh5Dq35Px
+ OdnWnLOnaEfrUC1We1mT0zcwBi6k96M0dpDlKFsbVkas3KiCGs2A0y32xekeyeBazf+l
+ HLuQ==
+X-Gm-Message-State: AOAM532UcaanhBFhGfdfbLvQ2UZqZJcWFwIxr41dQmJSJqRrKWiRNUfm
+ 92yyOA+jpgVF6eMexAEU9XkrJ/GQTemhp3rlbLBndg==
+X-Google-Smtp-Source: ABdhPJynrx7TmHjkpIeOm030yVpxi4UpuhNmClfzfTFrFeQ6vWTaQwyqBXyyF7x29b3JdO/wcAuoVaz8rvCwUyc39Ok=
+X-Received: by 2002:a05:6902:1502:b0:637:7536:65cf with SMTP id
+ q2-20020a056902150200b00637753665cfmr27478039ybu.91.1648567759228; Tue, 29
+ Mar 2022 08:29:19 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
-Content-Language: en-US
-To: Ansuel Smith <ansuelsmth@gmail.com>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>,
- linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, linux-actions@lists.infradead.org,
- linux-sunxi@lists.linux.dev, linux-omap@vger.kernel.org,
- linux-amlogic@lists.infradead.org, linux-arm-kernel@axis.com,
- linux-aspeed@lists.ozlabs.org, linux-rpi-kernel@lists.infradead.org,
- chrome-platform@lists.linux.dev, linux-renesas-soc@vger.kernel.org,
- linux-samsung-soc@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com,
- kernel@dh-electronics.com, linux-mediatek@lists.infradead.org,
- openbmc@lists.ozlabs.org, linux-tegra@vger.kernel.org,
- linux-oxnas@groups.io, linux-arm-msm@vger.kernel.org,
- linux-unisoc@lists.infradead.org, linux-rockchip@lists.infradead.org,
- linux-realtek-soc@lists.infradead.org
-References: <20220328000915.15041-1-ansuelsmth@gmail.com>
-From: Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <20220328000915.15041-1-ansuelsmth@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <4bc2b30d-b335-4457-9601-9c7226d6c656@www.fastmail.com>
+In-Reply-To: <4bc2b30d-b335-4457-9601-9c7226d6c656@www.fastmail.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Tue, 29 Mar 2022 08:29:08 -0700
+Message-ID: <CACWQX82FJw=wfpjfT9_T+bnvW85SJTca=yr7gOrSaY7Z7ShyAA@mail.gmail.com>
+Subject: Re: Defining the behaviour of code formatting in openbmc-build-scripts
+To: Andrew Jeffery <andrew@aj.id.au>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,85 +76,142 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Olof Johansson <olof@lixom.net>, Arnd Bergmann <arnd@arndb.de>
+Cc: openbmc@lists.ozlabs.org, Matt Spinler <mspinler@linux.ibm.com>,
+ jiaqing.zhao@intel.com, Ed Tanous <edtanous@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 28/03/2022 02:09, Ansuel Smith wrote:
-> Hi,
-> as the title say, the intention of this ""series"" is to finally categorize
-> the ARM dts directory in subdirectory for each oem.
-> 
-> The main reason for this is that it became unpractical to handle 2600
-> dts files and try to even understand/edit/check the situation for a
-> specific target.
-> 
-> In arm64 we already have this kind of separation and I honestly think
-> that this was never proposed for ARM due to the fact that there are
-> 2600+ files to sort and the fact that it will be a mess to merge this
-> entirely but IMHO with a little bit of effort we can finally solve this
-> problem and have a well organized directory just like arm64.
-> 
-> Some prerequisite on how this work was done:
-> - This comes entirely from a python script created by me for the task.
->   linked here [1]
-> - I had to manually categorize all the different arch in the makefile
->   based on the oem. I searched every arch on the internet trying to
->   understand the correct oem. I hope they are correct but I would love
->   some comments about them.
-> - This current ""series"" is all squashed in one big commit to better
->   receive comments for this. The final version ideally would have all
->   changes in separate commits. The script can already do this, it's just
->   commented.
-> 
-> Here is a list of some discoveries while doing all the sorting.
-> These are totally additional reason why we need this.
-> 
-> While creating the script I discovered some funny things:
-> - We have orphan dts! There are dts that are never compiled and are
->   there just for reference. We would never have noticed this without this
->   change and probably nobody noticed it. They are currently all listed
->   in the python script.
-> - We have dtsi shared across different oem. My current solution for them
->   is: NOT SORT THEM and leave them in the generic directory and create a
->   link in each oem dts that points to these dtsi. This is to try in
->   every way possible to skip any additional changes to the dts.
->   Current dtsi that suffers from this are only 3. (listed in the script)
-> - arm64 dts and dtsi reference ARM dts. Obviously this change would cause
->   broken include for these special dtsi. The script creates a dependency
->   table of the entire arm64 directory and fix every broken dependency
->   (hoping they all use a sane include logic... regex is used to parse
->   all the different dependency)
-> 
-> So in short the script does the following steps:
-> 1. Enumerate all the action to do... (dts to move, scan dependency for
->    the dts...)
-> 2. Generate the arm64 dependency
-> 3. Creates the Makefile
-> 4. Generate the Makefiles for the current oem
-> 5. Move all the related dts and dtsi for the current oem
-> 6. Check broken dependency and fix them by editing the dts and writing
->    the correct include (or fix any symbolic link)
-> 
-> This is an output that describes all the things done by the script [2]
-> 
-> I really hope I didn't commit any logic mistake in the script but most
-> of the work should be done.
-> 
+On Mon, Mar 28, 2022 at 7:08 PM Andrew Jeffery <andrew@aj.id.au> wrote:
+>
+> Hello,
+>
+> Review of https://gerrit.openbmc-project.xyz/c/openbmc/entity-manager/+/52406
+> sparked some discussion about what we actually want from the code-formatting
+> support in openbmc-build-scripts going forward.
+>
+> ## General statements
+>
+> Enforcing code formatting in CI is effective in that it ensures style from
+> multiple contributors is consistent with minimal maintainer intervention.
+> Sometimes the automated formatting might be questionable, but the judgement is
+> that on the whole the consistency is a better trade-off than occasional
+> enforced untidiness. There are also escape hatches to disable formatting in
+> extreme circumstances. Automated code formatting is desirable.
+>
+> clang-format is at the heart of OpenBMC's code formatting support as the bulk
+> of the OpenBMC codebase is written in C++.
+>
+> ## The problem
+>
+> "Like all Vogon ships, it looked as if it had been not so much designed, as
+> congealed." - Douglas Adams, The Salmon of Doubt
 
-+Cc Arnd and Olof,
+Don't panic.
 
-Ansuel,
-Thanks for you patch. Please cc the SoC maintainers in such submissions.
-It seems that you got some quite nice discussion, but still the core
-folks are not Cced, so no one would be able to take your patch...
+>
+>
+> Code formatting support in openbmc-build-scripts has evolved over time and
+> no-one has ever written down what we actually want. The lack of concrete
+> requirements has lead to an counter-intuitive and convoluted implementation
+> that has ended in some repositories (e.g. entity-manager) not having their code
+> formatted as expected.
+>
+> There are 4 possible behaviours that openbmc-build-scripts could take against
+> an application repository:
+>
+> 1. All code formatting is disabled: No further action
 
-I am pretty sure we were discussing such split idea in the past and it
-did not get traction, but I cannot recall the exact discussion.
+Long term, is there a use case for this?  I realize it's required
+temporarily while we make all the repos consistent, but it seems like
+it should ideally be a temporary situation for portions of the
+codebase, and something that eventually we can just enforce globally
+in the project.
 
-To me the idea is good but will cause huge `git am` conflicts.
-Cherry-picks, backports and merges should nicely detect path renames,
-but git am (and b4 am) I think cannot.
+>
+> 2. No custom code formatting: Just do whatever the default actions are as
+>    implemented in openbmc-build-scripts
+>
+> 3. Some custom code formatting: Actions to run in addition to the default
+>    actions implemented in openbmc-build-scripts
+>
+> 4. Only custom code formatting: Actions to run in-place of the default actions
+>    implemented in openbmc-build-scripts (which must not be run)
+>
+> Currently openbmc-build-scripts only implements 1, 2 and 4, while
+> entity-manager had assumed 3 was supported.
+>
+> ## Background (AKA why don't we have support for 3?)
+>
+> Code formatting support in openbmc-build-scripts began with an implementation
+> of 1. However, along the way we introduced the phosphor-mboxd repository which
+> due to some unfortunate history has a mixed C and C++ codebase. The C code is
+> written in kernel style, while it was desired that the C++ be written in
+> OpenBMC style.
+>
+> At the time the problem arose, clang-format had two issues:
+>
+> a. It treats C and C++ as the same language, and so maintaining a code
+>    formatting split across those language boundaries requires two separate
+>    clang-format configuration files
 
-Best regards,
-Krzysztof
+Is the core of the issue here that we have different formatting rules
+for C than C++?  clang-format is entirely whitespace changes, so could
+we solve this simply by just reformatting all the C code to the common
+project style, and we wouldn't need this anymore?  It seems like
+regardless of C vs C++ we should be consistent.
+
+>
+> b. clang-format's -style=file historically required that the style file in
+>    question be called ".clang-format"
+>
+> These two constraints together required that phosphor-mboxd ship two separate
+> configuration files, and to explicitly symlink them as .clang-format before
+> invoking the clang-format command. As such it was easier to reason about code
+> formatting if the support in openbmc-build-scripts transferred the entire
+> formatting responsibility to repository-specific format-code script rather than
+> attempting to do anything of its own accord.
+>
+> Hence, we support 1, 2 and 4, but not (yet) 3.
+>
+> ## Analysis
+>
+> The current behaviour of openbmc-build-scripts is as follows, from
+> scripts/unit-test.py:
+>
+> 1. Check that code formatting was requested. If not, no further code-formatting
+>    action is taken
+>
+> 2. Check for `format-code` and `format-code.sh` in the root of the target
+>    repository and add them to the formatter list
+>
+> 3. If no custom scripts were found in 1, add the default format-code.sh
+>    implementation[1] to the formatter list 4. Execute the scripts in the
+>    formatter list
+>
+> [1] https://github.com/openbmc/openbmc-build-scripts/blob/0ea75ec9efb7ffacb88f63e38fa7823fe8b124a7/scripts/format-code.sh
+>
+> This algorithm is implemented here:
+>
+> https://github.com/openbmc/openbmc-build-scripts/blob/0ea75ec9efb7ffacb88f63e38fa7823fe8b124a7/scripts/unit-test.py#L1215-L1226
+>
+> Confusingly, inside the default format-code.sh implementation there's also an
+> invocation of the custom format-code.sh script if it exists, but the default
+> format-code.sh implementation won't be executed if the custom format-code.sh
+> file exists (due to the implementation of scripts/unit-test.py). So this code
+> is dead:
+>
+> https://github.com/openbmc/openbmc-build-scripts/blob/ac5915f07d3b796f224c85477763ca7fe893dcc2/scripts/format-code.sh#L136-L141
+>
+> The a consequence of all this is that the entity-manager codebase isn't being
+> formatted with clang-format because it ships a custom format-code script that
+> doesn't invoke it.
+>
+> ## Proposal
+>
+> I don't really have one. Does anyone have thoughts on how we differentiate
+> between cases 3 and 4? Use different file names? Invoke the script and ask it
+> what it expects?
+>
+> Interested in your thoughts.
+>
+> Andrew
