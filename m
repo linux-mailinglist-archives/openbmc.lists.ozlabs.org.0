@@ -1,60 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB8374ED551
-	for <lists+openbmc@lfdr.de>; Thu, 31 Mar 2022 10:18:08 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50FC74ED705
+	for <lists+openbmc@lfdr.de>; Thu, 31 Mar 2022 11:33:35 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KTblf5v3rz2yY7
-	for <lists+openbmc@lfdr.de>; Thu, 31 Mar 2022 19:18:06 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KTdQj1vd4z2yw1
+	for <lists+openbmc@lfdr.de>; Thu, 31 Mar 2022 20:33:33 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=v9uQyhos;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kaod.org (client-ip=178.33.255.19; helo=2.mo548.mail-out.ovh.net;
- envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
-X-Greylist: delayed 4209 seconds by postgrey-1.36 at boromir;
- Thu, 31 Mar 2022 19:17:45 AEDT
-Received: from 2.mo548.mail-out.ovh.net (2.mo548.mail-out.ovh.net
- [178.33.255.19])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org;
+ spf=permerror (SPF Permanent Error: Two or more type
+ TXT spf records found.) smtp.mailfrom=yadro.com (client-ip=89.207.88.252;
+ helo=mta-01.yadro.com; envelope-from=a.filippov@yadro.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256
+ header.s=mta-01 header.b=v9uQyhos; dkim-atps=neutral
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KTblF15Pwz2yHp
- for <openbmc@lists.ozlabs.org>; Thu, 31 Mar 2022 19:17:42 +1100 (AEDT)
-Received: from mxplan5.mail.ovh.net (unknown [10.109.156.35])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id A9BA6221DF;
- Thu, 31 Mar 2022 05:50:58 +0000 (UTC)
-Received: from kaod.org (37.59.142.102) by DAG4EX1.mxp5.local (172.16.2.31)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Thu, 31 Mar
- 2022 07:50:58 +0200
-Authentication-Results: garm.ovh; auth=pass
- (GARM-102R004ac05887a-fbe1-4528-bd48-2c8837da01f5,
- FC9088D273F6636B0CAAD4892A2C3D02B7ACC8E0) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <f62f43ad-8eda-c4fc-ad56-04227ef38c9f@kaod.org>
-Date: Thu, 31 Mar 2022 07:50:57 +0200
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KTdQH0xyzz2yHX
+ for <openbmc@lists.ozlabs.org>; Thu, 31 Mar 2022 20:33:10 +1100 (AEDT)
+Received: from localhost (unknown [127.0.0.1])
+ by mta-01.yadro.com (Postfix) with ESMTP id 4124A41257;
+ Thu, 31 Mar 2022 09:33:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+ in-reply-to:content-disposition:content-type:content-type
+ :mime-version:references:message-id:subject:subject:from:from
+ :date:date:received:received:received; s=mta-01; t=1648719184;
+ x=1650533585; bh=VpkK3Y1iE5GIBwC9pwTNCECBf4j9ZM2iAIXptoy4Gkk=; b=
+ v9uQyhoshRMDyGEh7DQ8rOENLTycemlbUfcJ6kSQZs2c/T9vzDL9I3W+33po/RLf
+ xi4QWq5MzEQLqWG+q7X2sO+fUDokuK9sam9Fkaz+jOpe5472QAlvpFClbZG7kDXM
+ lAR4gt0U1CGJKF2BpFGT94WVVJ2jH1w8EQOeS7d8Pj4=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+ by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+ with ESMTP id SFPPq9SmydcR; Thu, 31 Mar 2022 12:33:04 +0300 (MSK)
+Received: from T-EXCH-04.corp.yadro.com (t-exch-04.corp.yadro.com
+ [172.17.100.104])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mta-01.yadro.com (Postfix) with ESMTPS id 927204152E;
+ Thu, 31 Mar 2022 12:33:01 +0300 (MSK)
+Received: from localhost (172.17.1.114) by T-EXCH-04.corp.yadro.com
+ (172.17.100.104) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id 15.1.669.32; Thu, 31
+ Mar 2022 12:33:00 +0300
+Date: Thu, 31 Mar 2022 12:33:00 +0300
+From: "Alexander A. Filippov" <a.filippov@yadro.com>
+To: "Velumani T-ERS,HCLTech" <velumanit@hcl.com>
+Subject: Re: Multi-led configuration in dts
+Message-ID: <YkV1TIPJ7rPfip8A@nbwork.lan>
+References: <CALXuKJc_pYJv0xYWtN5mzbHwpbHshukg34BjSzhqmpTdUMXwXg@mail.gmail.com>
+ <Yjx1OQt7YRgD0OHt@nbwork.lan>
+ <PSAPR04MB47261F3666AFD3FC08D0D7A2A71F9@PSAPR04MB4726.apcprd04.prod.outlook.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [RESEND][PATCH linux dev-5.15 v2 1/1] mtd: spi-nor: aspeed: set
- the decoding size to at least 2MB for AST2600
-Content-Language: en-US
-To: Joel Stanley <joel@jms.id.au>, Potin Lai <potin.lai@quantatw.com>
-References: <20220331002914.30495-1-potin.lai@quantatw.com>
- <CACPK8XfzFNqyoa4Fe0sY3usfAd75KAVg2pO8fnW+BzyvSSp9dg@mail.gmail.com>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <CACPK8XfzFNqyoa4Fe0sY3usfAd75KAVg2pO8fnW+BzyvSSp9dg@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.102]
-X-ClientProxiedBy: DAG5EX2.mxp5.local (172.16.2.42) To DAG4EX1.mxp5.local
- (172.16.2.31)
-X-Ovh-Tracer-GUID: 04d84c22-b60b-43b0-8270-223bc835b4df
-X-Ovh-Tracer-Id: 4702320962624392099
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvvddrudeifedgleehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepkfffgggfuffvfhfhjggtgfhisehtkeertddtfeejnecuhfhrohhmpeevrogurhhitggpnfgvpgfiohgrthgvrhcuoegtlhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepjeekvdfgudevkeefkeeltdejteekvdegffegudetgeettdffjeefheekfeelffdtnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucfkpheptddrtddrtddrtddpfeejrdehledrudegvddruddtvdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhhvghlohepmhigphhlrghnhedrmhgrihhlrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpegtlhhgsehkrghougdrohhrghdpnhgspghrtghpthhtohepuddprhgtphhtthhopehprghtrhhitghksehsthiftgigrdighiii
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+In-Reply-To: <PSAPR04MB47261F3666AFD3FC08D0D7A2A71F9@PSAPR04MB4726.apcprd04.prod.outlook.com>
+X-Originating-IP: [172.17.1.114]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-04.corp.yadro.com (172.17.100.104)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,73 +75,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- linux-aspeed <linux-aspeed@lists.ozlabs.org>
+Cc: "spinler@us.ibm.com" <spinler@us.ibm.com>, sri d <srid.11486@gmail.com>,
+ "andrew@aj.id.au" <andrew@aj.id.au>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "bradleyb@fuzziesquirrel.com" <bradleyb@fuzziesquirrel.com>,
+ Patrick Williams <patrickw3@fb.com>,
+ "Alexander A. Filippov" <a.filippov@yadro.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 3/31/22 03:07, Joel Stanley wrote:
-> On Thu, 31 Mar 2022 at 00:29, Potin Lai <potin.lai@quantatw.com> wrote:
->>
->> In AST2600, the unit of SPI CEx decoding range register is 1MB, and end
->> address offset is set to the acctual offset - 1MB. If the flash only has
->> 1MB, the end address will has same value as start address, which will
->> causing unexpected errors.
->>
->> This patch set the decoding size to at least 2MB to avoid decoding errors.
->>
->> Tested:
->> root@bletchley:~# dmesg | grep "aspeed-smc 1e631000.spi: CE0 window"
->> [   59.328134] aspeed-smc 1e631000.spi: CE0 window resized to 2MB (AST2600 Decoding)
->> [   59.343001] aspeed-smc 1e631000.spi: CE0 window [ 0x50000000 - 0x50200000 ] 2MB
->> root@bletchley:~# devmem 0x1e631030
->> 0x00100000
->>
->> Signed-off-by: Potin Lai <potin.lai@quantatw.com>
->>
->> ---
->> [v1]: https://lore.kernel.org/all/20220304170757.16924-1-potin.lai@quantatw.com/
+On Wed, Mar 30, 2022 at 04:04:28PM +0000, Velumani T-ERS,HCLTech wrote:
 > 
-> Cédric, can I get an ack from you before I put this in the openbmc tree?
+> Thanks for your response. There are two ways to get this done.
+> 1. bring support in phosphor-led-sysfs for defining multi-color and use them in the application
+> 2. Add support in multi-color led driver framework.
+> @Alexander @Andres Jefery Please provide your suggestions. We may be using this in multiple platforms. We can plan for the implementation.
+
+I had the similar question earlier:
+https://lists.ozlabs.org/pipermail/openbmc/2021-October/028045.html
+It looks like a preferred solution is 2.
 
 
-Reviewed-by: Cédric Le Goater <clg@kaod.org>
+> 
+> Regards,
+> Velu
+> 
 
-Thanks,
-
-C.
-
->>
->> Changes v1 --> v2:
->> - add fmc controller into decoding range resize checking
->> ---
->>   drivers/mtd/spi-nor/controllers/aspeed-smc.c | 12 ++++++++++++
->>   1 file changed, 12 insertions(+)
->>
->> diff --git a/drivers/mtd/spi-nor/controllers/aspeed-smc.c b/drivers/mtd/spi-nor/controllers/aspeed-smc.c
->> index 416ea247f843..74fa46439246 100644
->> --- a/drivers/mtd/spi-nor/controllers/aspeed-smc.c
->> +++ b/drivers/mtd/spi-nor/controllers/aspeed-smc.c
->> @@ -781,6 +781,18 @@ static u32 aspeed_smc_chip_set_segment(struct aspeed_smc_chip *chip)
->>                           chip->cs, size >> 20);
->>          }
->>
->> +       /*
->> +        * The decoding size of AST2600 SPI controller should set at
->> +        * least 2MB.
->> +        */
->> +       if ((controller->info == &spi_2600_info ||
->> +            controller->info == &fmc_2600_info) && size < SZ_2M) {
->> +               size = SZ_2M;
->> +               dev_info(chip->nor.dev,
->> +                        "CE%d window resized to %dMB (AST2600 Decoding)",
->> +                        chip->cs, size >> 20);
->> +       }
->> +
->>          ahb_base_phy = controller->ahb_base_phy;
->>
->>          /*
->> --
->> 2.17.1
->>
-
+Cheers,
+Alexander
