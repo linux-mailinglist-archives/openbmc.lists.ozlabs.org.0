@@ -1,97 +1,92 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A27FD4EEF1C
-	for <lists+openbmc@lfdr.de>; Fri,  1 Apr 2022 16:17:58 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D4CD4EFBE3
+	for <lists+openbmc@lfdr.de>; Fri,  1 Apr 2022 22:55:11 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KVMhN4CCjz3053
-	for <lists+openbmc@lfdr.de>; Sat,  2 Apr 2022 01:17:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KVXVj3B15z2yn1
+	for <lists+openbmc@lfdr.de>; Sat,  2 Apr 2022 07:55:09 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=L02HjvnV;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=Pk3f4fon;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=BnJIng26;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25;
+ helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=L02HjvnV; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm2 header.b=Pk3f4fon; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=BnJIng26; 
+ dkim-atps=neutral
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KVMgt72fdz2xgX
- for <openbmc@lists.ozlabs.org>; Sat,  2 Apr 2022 01:17:30 +1100 (AEDT)
-Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 231DCe4t004568; 
- Fri, 1 Apr 2022 14:17:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=j+GrgQwSNP6LhnjiDCskOWjxGf/kQMb9FWXh3SM6zZY=;
- b=L02HjvnV5//Swk5/pi0Oakf0r6E5nFlWyExEyF4nVFYBycUizttE3TY81IW1/578xmzf
- JrEO6EFFehin9pH0OkC0J6awWPLBaCEvDnrWLGDUtg7COPWIqSmDc1gAPE42jutj9In3
- jQwcKwJ+YbFDj2cuvus/zedi6iVrmHdeKtHTo4fUvz5V2VsXWeen9/kcbAHh7ioqWTI7
- y8DBQyDMhoNS5HKsMDw2lwfmmf0OsE8CBX+gfx4Ap29E2J67YhYXNvqkrHuWNc3m/hws
- LhrPXDH5c1K+i21Dq+bLFnim1Q7RUv8VFbOe83MwZnuR/L9nwUNEOEZwc//Pds7Tx+Td Nw== 
-Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com
- [169.63.214.131])
- by mx0b-001b2d01.pphosted.com with ESMTP id 3f60ds44ax-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 01 Apr 2022 14:17:27 +0000
-Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
- by ppma01dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 231EDXEF013373;
- Fri, 1 Apr 2022 14:17:26 GMT
-Received: from b03cxnp08025.gho.boulder.ibm.com
- (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
- by ppma01dal.us.ibm.com with ESMTP id 3f5y5r1ybr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 01 Apr 2022 14:17:26 +0000
-Received: from b03ledav005.gho.boulder.ibm.com
- (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
- by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 231EHPpg32899400
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 1 Apr 2022 14:17:25 GMT
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0F7F3BE054;
- Fri,  1 Apr 2022 14:17:25 +0000 (GMT)
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B5566BE056;
- Fri,  1 Apr 2022 14:17:24 +0000 (GMT)
-Received: from [9.211.155.52] (unknown [9.211.155.52])
- by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
- Fri,  1 Apr 2022 14:17:24 +0000 (GMT)
-Message-ID: <82528887-a6e9-f7cc-26f3-6a0932d967c9@linux.ibm.com>
-Date: Fri, 1 Apr 2022 09:17:24 -0500
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KVXVD6n17z2y7M
+ for <openbmc@lists.ozlabs.org>; Sat,  2 Apr 2022 07:54:43 +1100 (AEDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+ by mailout.nyi.internal (Postfix) with ESMTP id B52675C023C;
+ Fri,  1 Apr 2022 16:54:39 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute1.internal (MEProxy); Fri, 01 Apr 2022 16:54:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+ :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:sender:subject
+ :subject:to:to; s=fm2; bh=yv5X4gYyYHFTyAj1Lzu/SkE18dSzfbyJsEB/Fd
+ u3DYk=; b=Pk3f4fonLpZBAEl1X2vstxpkfiN87B84+OEe9NvPxD+lafFeMn1Nd2
+ a5OscH0zF0cLMF0pUMEZGoy8dplUf+Q1yH5zAsJJjkrjWKgmiJUmDnfkDStwOzN5
+ InlwUkCOzyQNGyE44aKf6glLqSNoTFprcBPU1qN0UW7bungH2/TgA3B2m/KiZQZ4
+ uz6OjtJQH/tHYmv5jdS2wAe0gImt4IuPTouo0La0fz/PoZI8MnugMTeZXEMvyZnl
+ dQKCFrum7dhSt1OtREMjMAEQf78UBj53LkckaATNvT1Z2qH5AyM66F9zKPJgufSZ
+ d25eIIBdxgBoW6uvDbVYWuOa581uwGvw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=yv5X4gYyYHFTyAj1L
+ zu/SkE18dSzfbyJsEB/Fdu3DYk=; b=BnJIng263H+QlbJJMnAA3l3+mdzSBrtyh
+ XtzlvySaQdFOJXpQ88mWsqB+5P7jHIFxaJA0c3FpfOsesnRSjlWELpr/mTQSaifY
+ wdcISkoxFlccgVVZ6fHGNnS2eIr7JufwLbjUJRZJeOYu2pDHEgQ+UaM3YL0JFLIP
+ PW8exhM2qKcm9e4eoDJ1Sa6FN5kHXthA2GoZJ6I57mFTy/fxvZ4/EVgk2FlrlKIq
+ OnESfs9JCb5v8GHokiuBlhgASKiUsnCau/XW1551H+YsQzZ5gEVlWByF9Odajt/t
+ zZwXBSJ1rAgENJDrpC+PdJoOeT3vlH6IBFyAVNen0I+DvPuzw1AFA==
+X-ME-Sender: <xms:jmZHYosp3c-fB2F8ueSl5JREz_2BRZKrkOPf9X-gzQs16O8xuJyHxw>
+ <xme:jmZHYleul1JlxQdOXMea6E-cZdLoe0--wOSMYqf3DAZ7rAatpuDNQ-fMQ1320JmLk
+ CC29lMIkoikFZcwnJ8>
+X-ME-Received: <xmr:jmZHYjy9y5JxXrj5UuP6Rk-NcjL_Pw5v8kriivi077aLUr_zmLxhWcd3RLzQPmSm14AJj_HPvo_bhRaCkhlndn0oawCfV64rMh4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudeiiedgudehgecutefuodetggdotefrod
+ ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+ necuuegrihhlohhuthemuceftddtnecufghrlhcuvffnffculdefhedmnecujfgurhepff
+ fhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhitghkucghihhl
+ lhhirghmshcuoehprghtrhhitghksehsthiftgigrdighiiiqeenucggtffrrghtthgvrh
+ hnpeduveffveffueehtdehieelvdehvdeikeeghfejiefgveefjeekfeehvdejkeeileen
+ ucffohhmrghinhepshhtfigtgidrgiihiienucevlhhushhtvghrufhiiigvpedtnecurf
+ grrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:jmZHYrPm9kxKykcMOnreiN7SQ1Df-cO9gtjyHc5aPk-U6cNKqyr5jQ>
+ <xmx:jmZHYo_QrLuKivP3_j_eROtocVzSjeki2nLdSHdiru-7kzecoDq_9w>
+ <xmx:jmZHYjXjr_IuiPvvsRdjVOSTJqDSpgyimml4NIHVGHzh60il3h5tAw>
+ <xmx:j2ZHYtHFxDxDgBb0m-m6hiQJBLBW9Zn4d85LKO9PtU9sPQ1TeuQbew>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 1 Apr 2022 16:54:38 -0400 (EDT)
+Date: Fri, 1 Apr 2022 15:54:37 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Lei Yu <yulei.sh@bytedance.com>
+Subject: Re: Missed interfacesRemoved signal callbacks in object-mapper
+ results in invalidated DBus objects
+Message-ID: <YkdmjcI3Mk3dvySe@heinlein.stwcx.org.github.beta.tailscale.net>
+References: <CAGm54UHMED4Np0MThLfp4H-i8R24o8pCns2-6MEzy1Me-9XJmA@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH] leds: pca955x: Add HW blink support
-Content-Language: en-US
-To: Patrick Williams <patrick@stwcx.xyz>
-References: <20220330203318.19225-1-eajames@linux.ibm.com>
- <YkXLG++LWdQWCxQF@heinlein>
-From: Eddie James <eajames@linux.ibm.com>
-In-Reply-To: <YkXLG++LWdQWCxQF@heinlein>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 4K5KvNpjB3ggIrLj-E8OVtJgVj3KKUFO
-X-Proofpoint-GUID: 4K5KvNpjB3ggIrLj-E8OVtJgVj3KKUFO
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.850,Hydra:6.0.425,FMLib:17.11.64.514
- definitions=2022-04-01_05,2022-03-31_01,2022-02-23_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0
- impostorscore=0 bulkscore=0 spamscore=0 adultscore=0 lowpriorityscore=0
- phishscore=0 clxscore=1011 mlxscore=0 priorityscore=1501 mlxlogscore=796
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2202240000
- definitions=main-2204010066
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="Pvpx44H69+VqOctD"
+Content-Disposition: inline
+In-Reply-To: <CAGm54UHMED4Np0MThLfp4H-i8R24o8pCns2-6MEzy1Me-9XJmA@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,74 +98,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, linux-leds@vger.kernel.org,
- linux-kernel@vger.kernel.org, pavel@ucw.cz, joel@jms.id.au
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
-On 3/31/22 10:39, Patrick Williams wrote:
-> On Wed, Mar 30, 2022 at 03:33:18PM -0500, Eddie James wrote:
->> Support blinking using the PCA955x chip. Use PWM0 for blinking
->> instead of LED_HALF brightness. Since there is only one frequency
->> and brightness register for any blinking LED, all blinked LEDs on
->> the chip will have the same frequency and brightness.
-> The current implementation uses the PWM to control the "brightness"
-> with PWM0 being assigned 50% and PWM1 being configured as a single value
-> that isn't ON, OFF, or 50%.  I suspect that most users of these 955x
-> chips care either about brightness or blinking but not both, but it is
-> possible I am wrong.  It would be nice if we could use PWM1 as another
-> hardware blink control when it hasn't been used for brightness, but that
-> would require some additional state tracking I think.
->
-> I like that we can now use the hardware to control blink rate, rather
-> than doing it in software, and, I really like that in theory if N LEDs on
-> the device are all blinking at the same rate they will actually turn on and
-> off at the same exact moment because it is done in hardware.  I am really
-> concerned about this proposed change and the way it will change current
-> behavior though.
->
-> It is not uncommon in a BMC design to use one of these 955x chips to control
-> 8 or 16 different LEDs reflecting the state of the system and at
-> different blink rates.  An example LED policy might be that you have 1 LED
-> for "power status" and another LED for "system identify + health status".
-> When the system is powered off the "power status" LED flashes at a slow rate
-> and when the system is powered on it goes on solid.  When the system is healthy
-> the "health status" is on, when it is unhealthy it blinks slowly, and when the
-> system is "identified" it blinks fast.
->
-> My point of the above is that there are certainly system policies where
-> you'd want to flash two different LEDs at two different rates.  In
-> today's implementation of this driver those both turn into
-> software-emulated blinking by the kernel.  With your proposal we lose
-> this ability and instead whichever LED is configured second will affect
-> all other blinking LEDs.
+--Pvpx44H69+VqOctD
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
+On Mon, Mar 28, 2022 at 09:19:40PM +0800, Lei Yu wrote:
 
-Yep. I see your point, it could be problematic.
+> This looks like some fundamental issue in dbus-broker or sdbusplus.
+> Is there anyone who hits the similar issue?
 
+I've have a write-up on what I intend to do about this issue at:
+    https://www.stwcx.xyz/blog/2022/04/01/sdbusplus-object-signals.html
 
->
-> It looks like in led-core.c led_blink_setup that if the device
-> `blink_set` returns an error then software blinking is the fallback.  Is
-> it possible for us to have this driver keep track of how many LEDs are
-> in blink state (and which speeds are allocated) and get led-core to
-> fallback to software blinking if we are unable to satisfy the new blink
-> rate without affecting an existing LED blink rate?
+--=20
+Patrick Williams
 
+--Pvpx44H69+VqOctD
+Content-Type: application/pgp-signature; name="signature.asc"
 
-OK, I like this idea, I'll go ahead and implement it. Thanks for the 
-suggestion!
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmJHZosACgkQqwNHzC0A
+wRnXrA//TBLeXvupT3r6lO4Me5NsyNjM6UUyJ88LRXiWPGck1jfRC5Xv5BZOotwT
+ScED0zhea8fnr212B0Ev0yiIFCFxFA6HrcsBMbKjN84MCBSgPUaQW8CJ0ShyWZMd
+kz9wx5PIEOXoKc3wZx4d1eeSqtujjNWTBZsMH3QKEZTFysA1aUMEtiX0TbIuXQDh
+lV58VZgznVE0MIxkrV8ujk9zKfrpjZ96tKaMmtg6mgt1HbSzNND6uVMEcCqRJleS
+beWaVNpuJIE6nGwziiSvKl1NP5yK64lGMsM4kWw6ie20uj3OLruLrvzoJOrPuD//
+LUu3f9Mi+/KM9o0eq0N8I9ruMwr6WvgO4r2d18BKnI9Qfz9JX0jb7Bo2r1zm7AiA
+PnKDe5ds1fDwHoEK73jMIgoBrrpfXS38sZts1EfNs4QZSouInQDGW2ui0DcRQC7s
+KSWBDpB8jB7dKf1AaaGIuwLkUROVT3BhX7+3S1om4pJ2EUBpH4xWZNOOulJ+gFp9
+dUC3ZXxgrfvyZ624PQ0ZYlNnSxJ7qX1844aran6XLInlUrOPqgfELfmJHfUKlUaw
+DixkzFOWWSMPkn0IlkXWk4NO4yg2d6xoltdmdE/dW5W0ZzdaiTR+XKPN7BGFyIIg
+pJBshfh9IPjgzdus6XiTFQ69B5s/nwOh5JVb9y8BA8mrZbnLo1E=
+=09CN
+-----END PGP SIGNATURE-----
 
-Eddie
-
-
->
-> Looking at the tree it seems bcm6328 does what I am suggesting already
-> but I don't see any other drivers that obviously do.  The PCA955x is
-> pretty widely used in BMC implementations:
->
->      $ git grep -l pca955 arch/arm/boot/dts/aspeed* | wc -l
->      13
->
+--Pvpx44H69+VqOctD--
