@@ -2,64 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08B924F0FEC
-	for <lists+openbmc@lfdr.de>; Mon,  4 Apr 2022 09:20:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B14244F197A
+	for <lists+openbmc@lfdr.de>; Mon,  4 Apr 2022 19:04:24 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KX2HG6L25z2yHD
-	for <lists+openbmc@lfdr.de>; Mon,  4 Apr 2022 17:20:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KXHF24DyHz2ymS
+	for <lists+openbmc@lfdr.de>; Tue,  5 Apr 2022 03:04:22 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=GFYuWrj4;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=I8pC/miI;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62c;
- helo=mail-ej1-x62c.google.com; envelope-from=kumarthangavel.hcl@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12a;
+ helo=mail-lf1-x12a.google.com; envelope-from=avifishman70@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=GFYuWrj4; dkim-atps=neutral
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com
- [IPv6:2a00:1450:4864:20::62c])
+ header.s=20210112 header.b=I8pC/miI; dkim-atps=neutral
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com
+ [IPv6:2a00:1450:4864:20::12a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KX2Gr3rTtz2x9F
- for <openbmc@lists.ozlabs.org>; Mon,  4 Apr 2022 17:20:04 +1000 (AEST)
-Received: by mail-ej1-x62c.google.com with SMTP id a6so6988655ejk.0
- for <openbmc@lists.ozlabs.org>; Mon, 04 Apr 2022 00:20:04 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KXHDd52Ycz2xfP
+ for <openbmc@lists.ozlabs.org>; Tue,  5 Apr 2022 03:04:00 +1000 (AEST)
+Received: by mail-lf1-x12a.google.com with SMTP id p15so18487240lfk.8
+ for <openbmc@lists.ozlabs.org>; Mon, 04 Apr 2022 10:04:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=mGG8RnoZi7BJXkUf96mnIBVmKPIUpY8G58qrnnDCK9I=;
- b=GFYuWrj4Ar7vE9lvK26JxrnGEBtgAXt3Zs0LRgolkZ4y4zatZoPmPdcMHax41c1Aax
- CBWBeugD9lx6OSmL5LZnTn/B188Iy9z4HXRVM+zlNOEgFUwG8yiMxQrnowTyOj7Y1vu+
- PssXRwAnbgYgZN4GIyhJrR8z4CSCup3VUUU20G2hPZddzRMTff4PlzRWXgT3MRcpiw6w
- n/BA6CNAtRYsHi/tLJ8hiB2VKjeKfq0gpSZTExZjpDCsZzHSl26m0aljDLeLSDeK80Xa
- 0xy9xJ46Z08Th+hAz36wh4fsrF3JlPD8qemh3w7XhDEhjyGiUADITqhoEaUaoW56rt1J
- vvbw==
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=JweidwxrjFhAI/2v7P1YrxPew3638Ty2dzeJpVrQWYE=;
+ b=I8pC/miIU61OHd5dqRJenQe4iwqEMNWcbRRJquHcwqrA41pIdbn+rDkftP4Wgy8De6
+ l2P/kMX+m1AlHndTCFw3I9e8C2PbWnptwDkLhCKGENUjppP00s+oaSpn30odJADOWz80
+ gZ8aVgizdoRJMD3T6AeNpo8DIwPDr87SzDVdFiM8OdSG4AmvAn65FA0Q/pYGDN1oIlao
+ +YKcox4/vRA3RiBKPCUROakAioTHX5ZKNwEvMn7A4BVVjmQPgHDz09Xezqhs7kUtDDfY
+ rUW3RKJYgdzLAkmjcApGuwZWiQMC6aAEsIC1HT66RK9v0vxmMklonMMLr9nzl3HGoQcI
+ 8TDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=mGG8RnoZi7BJXkUf96mnIBVmKPIUpY8G58qrnnDCK9I=;
- b=0hO4WZbkJZ2kORP5v1O70IPSM1bU2Qc4W91C+2CUiAQhe3B5dCMumy4bI77zidpqrr
- gnn0DmpaIXR7sFJmPHnCMq0xlozOzMqEmgMuHRyph2VPQ8VS3rBRNy4w9x+3Dxobyp9z
- sPWtczze88MVJLvDf6kBS5wjKztfMww8uGGkBHM3zezvlX/aoydIcg11MjK7UJ96xtY9
- kciP9sGJF4P8wYadS+47G2zw0Rehd7VVl/ds2VR1PN8OP8w2He8tn05lt+KomukqatLS
- 4nobJgpVHqDS9GzdFx4U7vV9zJgT4r7ZKu0+uZlzMvEu7E5MYljfCuCRqIMARp9VcKI+
- tGLg==
-X-Gm-Message-State: AOAM532K3f2d4uLyKtrb6RkbtmiJUeKidHPO5ahunsOmbXIOo0yelvT6
- MjOQ7ys1i+kSAFDgJDhdifqZXQ/8EmBAEd4M1CEOTzZCt0c=
-X-Google-Smtp-Source: ABdhPJwdjA0y1fUdpwRB1LCbXRHV3m3N+uvCvaT8QsBT99507vyyC8H1MQQPVX2+k8lr44oQKQe2Vryam7sVLVMrq4Y=
-X-Received: by 2002:a17:907:7244:b0:6df:fb38:1d02 with SMTP id
- ds4-20020a170907724400b006dffb381d02mr9514511ejc.453.1649056800069; Mon, 04
- Apr 2022 00:20:00 -0700 (PDT)
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=JweidwxrjFhAI/2v7P1YrxPew3638Ty2dzeJpVrQWYE=;
+ b=2OSlRyIKQh3JESPOK6vNXX4kjvsl15kAgm57i9kWUsn6pJLKKnhO5doDNNx/vZEgBT
+ a3P2YK5Q5dkl/wE+3vv3+KFPvCfdaDoh6DlBxaG0OW6pIrWhX9VrtKqDrSqTFuxuWOK/
+ 61kP0d2AbDf4lZ3Mo9giodR0E+giKpOmHdYQMdDJI+SqakyIHsy+sJHWR+3RVK64kZ4k
+ 7ZMw8v6rKZfUsfiJMkHGpE7LU7Wh/veH9m53SC5a2EeFFhqri15j2DUri7rPkF1tadjv
+ qLpM857lZPwBw+aZTVjDZ5bhaW3ZGAZbl3FLfQ7HCjDbC9ZPj7Tg/6/P1hHt5w8cEB5S
+ JVNw==
+X-Gm-Message-State: AOAM531dsYCxcDnuMnRf9iRtnnx6eLVx1Fu3zoCabyJ18MnBNjRVwJ9F
+ VXU0po/fHBIjuBjiHUYglMSsfL2QJjiSTe4plA==
+X-Google-Smtp-Source: ABdhPJyWHkLML0CW+orqZVMU399DWfiqN//krw23FbqOQO+YZ/LLJNNX0j1rbJvWijFJbBpeNZJnAR2Kqa0Pofh74F8=
+X-Received: by 2002:ac2:4203:0:b0:448:8053:d402 with SMTP id
+ y3-20020ac24203000000b004488053d402mr252549lfh.687.1649091835467; Mon, 04 Apr
+ 2022 10:03:55 -0700 (PDT)
 MIME-Version: 1.0
-From: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
-Date: Mon, 4 Apr 2022 12:49:49 +0530
-Message-ID: <CAA7Tbctgg9YJPTRcYCwkucajTvk-AUNeHJ9_=MD5dpvxF5D0ZA@mail.gmail.com>
-Subject: IPMI Restriction Mode
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="000000000000c85d6e05dbcef44b"
+References: <20220303083141.8742-1-warp5tw@gmail.com>
+ <20220303083141.8742-10-warp5tw@gmail.com>
+ <YiCaSSbbszm3qYIQ@smile.fi.intel.com>
+ <CAHb3i=sStqdSpLKtF_UGmTsOssR_swssTd3pv6c2-z_kiUPTTA@mail.gmail.com>
+ <YiDNDsPWKyaIUlQR@smile.fi.intel.com>
+In-Reply-To: <YiDNDsPWKyaIUlQR@smile.fi.intel.com>
+From: Avi Fishman <avifishman70@gmail.com>
+Date: Mon, 4 Apr 2022 20:03:44 +0300
+Message-ID: <CAKKbWA5FyCKTjEUw8rqtkoL7aw6f7Fa_QzcAkgaRnnUMTe0SKg@mail.gmail.com>
+Subject: Re: [PATCH v3 09/11] i2c: npcm: Handle spurious interrupts
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,45 +78,101 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: anoo@us.ibm.com, Amithash Prasad <amithash@fb.com>,
- deepak.kodihalli.83@gmail.com, velumani.hcl@gmail.com, velumanit@hcl.com
+Cc: Tomer Maimon <tmaimon77@gmail.com>, devicetree <devicetree@vger.kernel.org>,
+ Tali Perry <tali.perry1@gmail.com>, Linux I2C <linux-i2c@vger.kernel.org>,
+ Benjamin Fair <benjaminfair@google.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, JJLIU0@nuvoton.com,
+ Lukas Bulwahn <lukas.bulwahn@gmail.com>,
+ Tomer Maimon <tomer.maimon@nuvoton.com>, KWLIU@nuvoton.com, bence98@sch.bme.hu,
+ Arnd Bergmann <arnd@arndb.de>, sven@svenpeter.dev,
+ Rob Herring <robh+dt@kernel.org>, Avi Fishman <Avi.Fishman@nuvoton.com>,
+ Tyrone Ting <warp5tw@gmail.com>, yangyicong@hisilicon.com,
+ semen.protsenko@linaro.org, jie.deng@intel.com,
+ Patrick Venture <venture@google.com>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Wolfram Sang <wsa@kernel.org>, kfting@nuvoton.com,
+ Tali Perry <tali.perry@nuvoton.com>, olof@lixom.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000c85d6e05dbcef44b
-Content-Type: text/plain; charset="UTF-8"
+On Thu, Mar 3, 2022 at 4:14 PM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
+>
+> On Thu, Mar 03, 2022 at 02:48:20PM +0200, Tali Perry wrote:
+> > > On Thu, Mar 3, 2022 at 12:37 PM Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
+> > > >
+> > > > On Thu, Mar 03, 2022 at 04:31:39PM +0800, Tyrone Ting wrote:
+> > > > > From: Tali Perry <tali.perry1@gmail.com>
+> > > > >
+> > > > > In order to better handle spurious interrupts:
+> > > > > 1. Disable incoming interrupts in master only mode.
+> > > > > 2. Clear end of busy (EOB) after every interrupt.
+> > > > > 3. Return correct status during interrupt.
+> > > >
+> > > > This is bad commit message, it doesn't explain "why" you are doing these.
+>
+> ...
+>
+> > BMC users connect a huge tree of i2c devices and muxes.
+> > This tree suffers from spikes, noise and double clocks.
+> > All these may cause spurious interrupts to the BMC.
+> >
+> > If the driver gets an IRQ which was not expected and was not handled
+> > by the IRQ handler,
+> > there is nothing left to do but to clear the interrupt and move on.
+>
+> Yes, the problem is what "move on" means in your case.
+> If you get a spurious interrupts there are possibilities what's wrong:
+> 1) HW bug(s)
+> 2) FW bug(s)
+> 3) Missed IRQ mask in the driver
+> 4) Improper IRQ mask in the driver
+>
+> The below approach seems incorrect to me.
+>
 
-Hi All,
+Andy, What about this explanation:
+On rare cases the i2c gets a spurious interrupt which means that we
+enter an interrupt but in
+the interrupt handler we don't find any status bit that points to the
+reason we got this interrupt.
+This may be a rare case of HW issue that is still under investigation.
+In order to overcome this we are doing the following:
+1. Disable incoming interrupts in master mode only when slave mode is
+not enabled.
+2. Clear end of busy (EOB) after every interrupt.
+3. Clear other status bits (just in case since we found them cleared)
+4. Return correct status during the interrupt that will finish the transaction.
+On next xmit transaction if the bus is still busy the master will
+issue a recovery process before issuing the new transaction.
+> > If the transaction failed, driver has a recovery function.
+> > After that, user may retry to send the message.
+> >
+> > Indeed the commit message doesn't explain all this.
+> > We will fix and add to the next patchset.
+> >
+> > > > > +     /*
+> > > > > +      * if irq is not one of the above, make sure EOB is disabled and all
+> > > > > +      * status bits are cleared.
+> > > >
+> > > > This does not explain why you hide the spurious interrupt.
+> > > >
+> > > > > +      */
+> > > > > +     if (ret == IRQ_NONE) {
+> > > > > +             npcm_i2c_eob_int(bus, false);
+> > > > > +             npcm_i2c_clear_master_status(bus);
+> > > > > +     }
+> > > > > +
+> > > > > +     return IRQ_HANDLED;
+>
+> --
+> With Best Regards,
+> Andy Shevchenko
+>
+>
 
-        IPMI Restriction mode support has been added for host machines
-which support IPMI.
 
-https://github.com/openbmc/openbmc/blob/7298b2478ec25cc1814124af523acc4ffade05e6/meta-phosphor/recipes-phosphor/settings/phosphor-settings-defaults/host-template.yaml#L61
-
-        How IPMI restriction mode support can be added for other than host
-devices (IPMI based devices). Ex Debug card.  ?
-
-        Could you please provide any suggestions or any docs ?
-
-Thanks,
-Kumar.
-
---000000000000c85d6e05dbcef44b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi All,<div>=C2=A0</div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0 I=
-PMI Restriction mode support has been added for host=C2=A0machines which su=
-pport IPMI.</div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0<a href=3D"https://=
-github.com/openbmc/openbmc/blob/7298b2478ec25cc1814124af523acc4ffade05e6/me=
-ta-phosphor/recipes-phosphor/settings/phosphor-settings-defaults/host-templ=
-ate.yaml#L61">https://github.com/openbmc/openbmc/blob/7298b2478ec25cc181412=
-4af523acc4ffade05e6/meta-phosphor/recipes-phosphor/settings/phosphor-settin=
-gs-defaults/host-template.yaml#L61</a></div><div><br></div><div>=C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 How IPMI restriction mode support can be added for other=
-=C2=A0than host devices (IPMI based devices). Ex Debug card.=C2=A0 ?</div><=
-div><br></div><div>=C2=A0 =C2=A0 =C2=A0 =C2=A0 Could you please provide any=
- suggestions or any docs ?</div><div><br></div><div>Thanks,</div><div>Kumar=
-.</div></div>
-
---000000000000c85d6e05dbcef44b--
+-- 
+Regards,
+Avi
