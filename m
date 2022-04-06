@@ -1,71 +1,94 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A52914F3A67
-	for <lists+openbmc@lfdr.de>; Tue,  5 Apr 2022 17:01:19 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD08F4F5093
+	for <lists+openbmc@lfdr.de>; Wed,  6 Apr 2022 04:22:40 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KXrSY3Mxlz3bWG
-	for <lists+openbmc@lfdr.de>; Wed,  6 Apr 2022 01:01:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KY7Zk5pzjz3bZZ
+	for <lists+openbmc@lfdr.de>; Wed,  6 Apr 2022 12:22:38 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bgdev-pl.20210112.gappssmtp.com header.i=@bgdev-pl.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=pFPzLOJx;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=AuAWdC6B;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=j563V3ib;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=bgdev.pl
- (client-ip=2a00:1450:4864:20::62c; helo=mail-ej1-x62c.google.com;
- envelope-from=brgl@bgdev.pl; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=aj.id.au (client-ip=66.111.4.28;
+ helo=out4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bgdev-pl.20210112.gappssmtp.com
- header.i=@bgdev-pl.20210112.gappssmtp.com header.a=rsa-sha256
- header.s=20210112 header.b=pFPzLOJx; dkim-atps=neutral
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com
- [IPv6:2a00:1450:4864:20::62c])
+ unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
+ header.s=fm3 header.b=AuAWdC6B; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm3 header.b=j563V3ib; 
+ dkim-atps=neutral
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
+ [66.111.4.28])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KXrS45WKqz2xCy
- for <openbmc@lists.ozlabs.org>; Wed,  6 Apr 2022 01:00:52 +1000 (AEST)
-Received: by mail-ej1-x62c.google.com with SMTP id bq8so27259923ejb.10
- for <openbmc@lists.ozlabs.org>; Tue, 05 Apr 2022 08:00:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bgdev-pl.20210112.gappssmtp.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=TgB722TXOeA+KWOOyVvUy7nH9Zl1L2P6k8Qo4JDjI6U=;
- b=pFPzLOJxaXGXE+Doi8S5we0LYGj+RKgvARysyPMoU7T4oo9k5kQv/avnXjRzyj0815
- GVRSiWKNg8pDP0WhJVS4XPhhBcdN9ccsaMmSazuCt4TKaEzRe6nzO7LQyyFe6auUETSK
- U4uD8duPnD/UqHUSfT1wpJvcVEDfEfSh7Iwr6C3XiFozn3sJr/7gL+D4wx6yM3B2z8BJ
- A30ZWIJf1BxxNtlK/2q7QHfxGRyvFPWXQbMEQXtahCYRQdXuD+Qna/eAxqrHGTCqW/As
- mBwyEG0J468wzKvqM1ZH7TNYoS2/6PYJIDJE021yCxe/85ZtBPRqAMu4b+bQhrLgbaZ/
- OWRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=TgB722TXOeA+KWOOyVvUy7nH9Zl1L2P6k8Qo4JDjI6U=;
- b=wAOEB8BGN7bkBonK95ZKGq/wDpIwIECLZAZtoqkbOprtnvmSl2efdCDdINfICihkXe
- qMs22l/+hZZPFQPNJNxHc79wUhLgvulQMsHABYXsWYLrAfQNUU2XxxF+nMKSzFfJ1+T0
- xFMgcNARlQEExNZ8HjXSQw9WADsGIKSDKVknU7lrQUG6goJXUyB15M8iNMVv6SRxDIfx
- mtnlkod/p1MssJ/O6Vog2c1VWSCIAxNKCHEub31xJ3vRcAsxZhgioUHO6x5DRivXA165
- t+Snd7399bi3hvUfrb+PA1pcpw/kb78BN5udiPTcYBELLNX5KvLqY2ZMa7pSKZEZiR98
- fs7g==
-X-Gm-Message-State: AOAM531FYISLRHOWvjkRhNJS/uPczyyKWSldyqINWo+9PUVu8SkQp7Eg
- rbvxcipOZ9gU0VgZZmgp1L+uN8XWyF0O4FNJzqF/BA==
-X-Google-Smtp-Source: ABdhPJzz1bD75TTAv+PXvy5/g0zWZSWrSc0FZt+VHSvhCk5dK7QBE8svS7/lGaTuRWsWJgRfOL3QUNyOBabA69D9Js0=
-X-Received: by 2002:a17:907:10ce:b0:6e7:116:10d0 with SMTP id
- rv14-20020a17090710ce00b006e7011610d0mr3885354ejb.101.1649170842140; Tue, 05
- Apr 2022 08:00:42 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220311060936.10663-1-JJLIU0@nuvoton.com>
- <20220311060936.10663-4-JJLIU0@nuvoton.com>
-In-Reply-To: <20220311060936.10663-4-JJLIU0@nuvoton.com>
-From: Bartosz Golaszewski <brgl@bgdev.pl>
-Date: Tue, 5 Apr 2022 17:00:31 +0200
-Message-ID: <CAMRc=MdGqZhbS4s29JQr3ixK0feHvTm1knt3fb7y+kP0AK-qjA@mail.gmail.com>
-Subject: Re: [PATCH v1 3/3] gpio:gpio-npcm-sgpio: Add Nuvoton sgpio driver
-To: jimliu2 <jim.t90615@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KY7ZC2R1mz3bdB
+ for <openbmc@lists.ozlabs.org>; Wed,  6 Apr 2022 12:22:10 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.nyi.internal (Postfix) with ESMTP id A0DE75C01B5;
+ Tue,  5 Apr 2022 22:22:06 -0400 (EDT)
+Received: from imap49 ([10.202.2.99])
+ by compute3.internal (MEProxy); Tue, 05 Apr 2022 22:22:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
+ :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:sender:subject
+ :subject:to:to; s=fm3; bh=VEcI7mok92JlAFDBBPMq0l/cJTlWWCsw7hAR/4
+ aYdlY=; b=AuAWdC6BxYQ6+tq8QOjV6qUvfULdIXO+tmKiTLRTtFLV87t0bqZlfu
+ uBzehOzWfhFx4+hIJWFTlUevNGuWAZFf3v+0B8kRu3TjyQZ8pMztpC7ZaH4ZHnH5
+ o4ooVKQs7uSDwQnsxLH1fVKGM4t9hGvLjAOEzWzZWZE5jZAhyfcusztB7FeRAZtH
+ 1j1/6jOtMKGXZv8Z26Dt+pzr0ZVR3BC8c79LkDojgMX/OIibTsL5Fd8JMbGg8uTc
+ 4oKTHHgHXF+0jGoi5fm/UfY880mhLOVGDbb0QU1poer/g4Jy0wi7GswLx8ukLiZp
+ Ro8ArcC58uYUhj2OhBoBqLi8w04pU0tQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=VEcI7mok92JlAFDBB
+ PMq0l/cJTlWWCsw7hAR/4aYdlY=; b=j563V3ibdLQGIg2ffLYvrnbHrXriOR6FA
+ 3j1ccVqfwcZW9EkBp+4O8nASpBcSlFiqPg2ZC5yo4tYtmlgwhDM+OsbAJ9xrLVXy
+ IVlpM119OlYwH/oFo42aI6b74j+tcCsipXF5zlKOLhuwEU/30yo3YnaVSTYIeK2F
+ C/O6vj5W/h4YM8vK/cbowdubHO/QEbJ4IUXLUR+dpXHLWPOHn0czlDrfqXQ/MYv7
+ W0yCZOV0lRrfxTiCZgy7vo2yA+WH2vJmeEZd3r7MC5eCHryN0G5RFF9l4GA9zZXU
+ TFDZY0zepCBsDlMtb3d2l3AueMYc21QXxFGtSSv5r2h0BSZ60k/ZA==
+X-ME-Sender: <xms:TvlMYiUo1Prgr5eIAbMF8i7SWIR_jdGAj7bXH4EFZ5NPMsiV-EdN1A>
+ <xme:TvlMYulxeMimp13p3exs3wodQmZM010nCrYeK3loFpFhvDTVbB5aQZpdfs42lQfzC
+ 2EPtKhV8_QVDkfN8A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudejhedgheejucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+ rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
+ grthhtvghrnhepuedtieehgfeuheejfefhffetjeffvdefuddvvefhgfeuheetieduleej
+ gfeftdejnecuffhomhgrihhnpehfrhgvvgguvghskhhtohhprdhorhhgpdhgihhthhhusg
+ drtghomhdpkhgvrhhnvghlrdhorhhgpdhgihhtqdhstghmrdgtohhmpdgtohhnthhrihgs
+ uhhtihhnghdrmhgupdihohgtthhophhrohhjvggtthdrohhrghenucevlhhushhtvghruf
+ hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdr
+ rghu
+X-ME-Proxy: <xmx:TvlMYmYuzJndb_Qy5eUQXVFKBt2zy9RVnzdU_8suiZtil3lsGUk3Bw>
+ <xmx:TvlMYpXRimwHv4Nl-NDA7DhuRyIrQsHR3rfdVO81D7WZe9V5l2aFVw>
+ <xmx:TvlMYsneBpcERDBWL0otDWz1Y-asMWaZ69h91mm2SIO0eOY9f_ps-g>
+ <xmx:TvlMYoua8CY6CEj0fEVheh9BQ1d7Mr20z-O72u08P2dpDV3BNlv1sw>
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+ id 4C93715A005D; Tue,  5 Apr 2022 22:22:06 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-385-g3a17909f9e-fm-20220404.001-g3a17909f
+Mime-Version: 1.0
+Message-Id: <43a7fff2-2616-4f81-9c18-01454f0b30b2@www.fastmail.com>
+In-Reply-To: <CAH2-KxAJS_U8=meCxp8ue7n0bmnzeRpyZOPZpy0h1cFEbbz-HA@mail.gmail.com>
+References: <CAH2-KxAJS_U8=meCxp8ue7n0bmnzeRpyZOPZpy0h1cFEbbz-HA@mail.gmail.com>
+Date: Wed, 06 Apr 2022 11:49:14 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Ed Tanous" <edtanous@google.com>,
+ "OpenBMC Maillist" <openbmc@lists.ozlabs.org>
+Subject: Re: Proposing changes to the OpenBMC tree (to make upstreaming easier)
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,738 +100,202 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: KWLIU@nuvoton.com, Tomer Maimon <tmaimon77@gmail.com>,
- "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
- Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
- Linus Walleij <linus.walleij@linaro.org>, JJLIU0@nuvoton.com,
- CTCCHIEN@nuvoton.com, Tali Perry <tali.perry1@gmail.com>,
- devicetree <devicetree@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Benjamin Fair <benjaminfair@google.com>
+Cc: Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Mar 11, 2022 at 7:17 AM jimliu2 <jim.t90615@gmail.com> wrote:
+Hi Ed,
+
+I think what's below largely points to a bit of an identity crisis for
+the project, on a couple of fronts. Fundamentally OpenBMC is a distro
+(or as Yocto likes to point out, a meta-distro), and we can:
+
+1. Identify as a traditional OSS distro: An integration of otherwise
+   independent applications
+
+2. Identify as an appliance distro: The distro and the
+   applications are a monolith
+
+You're proposing 2, while I think there exists some tension towards 1.
+
+With the amount of custom userspace we've always kinda sat in-between.
+I'd like to see libraries and applications that have use cases outside
+of OpenBMC be accessible to people with those external use cases,
+without being burdened by understanding the rest of the OpenBMC context.
+I have a concern that by integrating things in the way you're proposing
+it will lead to more inertia there (e.g. for implementations of
+standards MCTP or PLDM (libmctp and libpldm)).
+
+On Tue, 5 Apr 2022, at 03:58, Ed Tanous wrote:
+> The OpenBMC development process as it stands is difficult for people
+> new to the project to understand, which severely limits our ability to
+> onboard new maintainers, developers, and groups which would otherwise
+> contribute major features to upstream, but don't have the technical
+> expertise to do so.  This initiative, much like others before it[1] is
+> attempting to reduce the toil and OpenBMC-specific processes of
+> passing changes amongst the community, and move things to being more
+> like other projects that have largely solved this problem already.
+
+Can you be more specific about which projects here? Do you have links 
+to examples?
+
 >
-> Add Nuvoton sgpio driver and add config to Kconfig/Makefile
+> To that end, I'd like to propose a change to the way we structure our
+> repositories within the project: specifically, putting (almost) all of
+> the Linux Foundation OpenBMC owned code into a single repo that we can
+> version as a single entity, rather than spreading out amongst many
+> repos.  In practice, this would have some significant advantages:
 >
-> Signed-off-by: jimliu2 <JJLIU0@nuvoton.com>
-> ---
->  drivers/gpio/Kconfig           |  12 +
->  drivers/gpio/Makefile          |   1 +
->  drivers/gpio/gpio-npcm-sgpio.c | 634 +++++++++++++++++++++++++++++++++
->  3 files changed, 647 insertions(+)
->  create mode 100644 drivers/gpio/gpio-npcm-sgpio.c
+> - The tree would be easily shareable amongst the various people
+> working on OpenBMC, without having to rely on a single-source Gerrit
+> instance.  Git is designed to be distributed, but if our recipe files
+> point at other repositories, it largely defeats a lot of this
+> capability.  Today, if you want to share a tree that has a change in
+> it, you have to fork the main tree, then fork every single subproject
+> you've made modifications to, then update the main tree to point to
+> your forks. 
+
+This isn't true, as you can add patches in the OpenBMC tree.
+
+CI prevents these from being submitted, as it should, but there's nothing to
+stop anyone using the `devtool modify ...` / `devtool finish ...` and
+committing the result as a workflow to exchange state (I do this)?
+
+Is the issue instead with devtool? Is it bad? Is the learning curve too steep?
+It is at least the Yocto workflow.
+
+> This gets very onerous over time, especially for simple
+> commits.  Having maintained several different companies forks
+> personally, and spoken to many others having problems with the same,
+> adding major features are difficult to test and rebase because of
+> this.  Moving the code to a single tree makes a lot of the toil of
+> tagging and modifying local trees a lot more manageable, as a series
+> of well-documented git commands (generally git rebase[2]).  It also
+> increases the likelihood that someone pulls down the fork to test it
+> if it's highly likely that they can apply it to their own tree in a
+> single command.
+
+Again, this is moot if the patches are applied in-tree.
+
 >
-> diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
-> index 1c211b4c63be..f4d97016d184 100644
-> --- a/drivers/gpio/Kconfig
-> +++ b/drivers/gpio/Kconfig
-> @@ -1575,6 +1575,18 @@ config GPIO_SODAVILLE
+> - There would be a reduction in reviews.  Today, anytime a person
+> wants to make a change that would involve any part of the tree,
+> there's at least 2 code reviews, one for the commit, and one for the
+> recipe bump.  Compared to a single tree, this at least doubles the
+> number of reviews we need to process.
+
+Is there more work? Yes.
+
+Is it always double? No. Is it sometimes double? Yes.
+
+Often bumps batch multiple application commits. I think this paragraph 
+overstates the problem somewhat, but what it does get right is 
+identifying that *some* overhead exists.
+
+>  For changes that want to make
+> any change to a few subsystems, as is the case when developing a
+> feature, they require 2 X <number of project changes> reviews, all of
+> which need to be synchronized.
+
+Same issue as above here.
+
+> There is a well documented problem
+> where we have no official way to synchronize merging of changes to
+> userspace applications within a bump without manual human
+> intervention.  This would largely render that problem moot.
+
+Right, this can be hard to handle.
+
+It can be mitigated by versioning interfaces (which the D-Bus spec 
+calls out[6][7] but OpenBMC fails to do (?)) and supporting multiple 
+interfaces for the transition period.
+
+That said, that's also more work, and so needs to be considered in the 
+set of trade-offs.
+
+[6] https://dbus.freedesktop.org/doc/dbus-specification.html#message-protocol-names-interface
+[7] https://dbus.freedesktop.org/doc/dbus-specification.html#message-protocol-names-bus
+
 >
->  endmenu
+> - It would allow most developers to not need to understand Yocto at
+> all to do their day to day work on existing applications.  No more
+> "devtool modify", and related SRCREV bumps.  This will help most of
+> the new developers on the project with a lower mental load, which will
+> mean people are able to ramp up faster..
+
+Okay. So devtool is seen as an issue.
+
+Can we improve its visibility and any education around it? Or is it a 
+lost cause? If so, why?
+
+Separately, I'm concerned this is an attempt to shield people from
+skills that help them work with upstream Yocto. OpenBMC feels like it's
+a bit of an on-ramp for open-source contributions for people who have
+worked in what was previously quite a proprietary environment. We tried
+shielding people in the past wrt kernel contributions, and that failed
+pretty spectacularly. We (at least Joel and I) now encourage people to
+work with upstream directly *and support them in the process of doing
+that* rather than trying to mitigate some of the difficulties with
+working upstream by avoiding them.
+
 >
-> +config GPIO_NUVOTON_SGPIO
-> +       bool "Nuvoton SGPIO support"
-> +       depends on (ARCH_NPCM || COMPILE_TEST) && OF_GPIO
-> +       select GPIO_GENERIC
-> +       select GPIOLIB_IRQCHIP
-> +       help
-> +         Say Y here to support Nuvoton NPCM7XX/NPCM8XX SGPIO functionality.
-> +         If unsure, say N.
-> +         NPCM7XX/NPCM8XX can use same serial GPIO driver.
-> +         NPCM7XX/NPCM8XX includes two SGPIO modules, SIOX1 ans SIOX2 are
-> +         under BMC control.
-> +
->  menu "SPI GPIO expanders"
->         depends on SPI_MASTER
+> - It would give an opportunity for individuals and companies to "own"
+> well-supported public forks (ie Redhat) of the codebase, which would
+> increase participation in the project overall.  This already happens
+> quite a bit, but in practice, the forks that do it squash history,
+> making it nearly impossible to get their changes upstreamed from an
+> outside entity.
+
+Not sure this is something we want to encourage, even if it happens in 
+practice.
+
 >
-> diff --git a/drivers/gpio/Makefile b/drivers/gpio/Makefile
-> index edbaa3cb343c..109c4a5c845b 100644
-> --- a/drivers/gpio/Makefile
-> +++ b/drivers/gpio/Makefile
-> @@ -106,6 +106,7 @@ obj-$(CONFIG_GPIO_MT7621)           += gpio-mt7621.o
->  obj-$(CONFIG_GPIO_MVEBU)               += gpio-mvebu.o
->  obj-$(CONFIG_GPIO_MXC)                 += gpio-mxc.o
->  obj-$(CONFIG_GPIO_MXS)                 += gpio-mxs.o
-> +obj-$(CONFIG_GPIO_NUVOTON_SGPIO)       += gpio-npcm-sgpio.o
->  obj-$(CONFIG_GPIO_OCTEON)              += gpio-octeon.o
->  obj-$(CONFIG_GPIO_OMAP)                        += gpio-omap.o
->  obj-$(CONFIG_GPIO_PALMAS)              += gpio-palmas.o
-> diff --git a/drivers/gpio/gpio-npcm-sgpio.c b/drivers/gpio/gpio-npcm-sgpio.c
-> new file mode 100644
-> index 000000000000..e8c13dd51564
-> --- /dev/null
-> +++ b/drivers/gpio/gpio-npcm-sgpio.c
-> @@ -0,0 +1,634 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Nuvoton NPCM Serial GPIO Driver
-> + *
-> + * Copyright (C) 2021 Nuvoton Technologies
-> + */
+> - It would centralize the bug databases.  Today, bugs filed against
+> sub projects tend to not get answered. 
 
-Add a newline here.
+Do you have some numbers handy?
 
-> +#include <linux/bitfield.h>
-> +#include <linux/clk.h>
-> +#include <linux/gpio/driver.h>
-> +#include <linux/hashtable.h>
-> +#include <linux/init.h>
-> +#include <linux/io.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/spinlock.h>
-> +#include <linux/string.h>
-> +
-> +#define MAX_NR_HW_SGPIO                        64
-> +
-> +#define  IOXCFG1 0x2A
-> +#define  IOXCFG1_SFT_CLK GENMASK(3, 0)
-> +#define  IOXCFG1_SCLK_POL BIT(4)
-> +#define  IOXCFG1_LDSH_POL BIT(5)
-> +
-> +#define  IOXCTS 0x28
-> +#define  IOXCTS_IOXIF_EN BIT(7)
-> +#define  IOXCTS_RD_MODE GENMASK(2, 1)
-> +#define  IOXCTS_RD_MODE_PERIODIC BIT(2)
-> +#define  IOXCTS_RD_MODE_CONTINUOUS GENMASK(2, 1)
-> +
-> +#define  IOXCFG2 0x2B
-> +#define  IXOEVCFG_MASK 0x3
-> +#define  IXOEVCFG_BOTH 0x3
-> +#define  IXOEVCFG_FALLING 0x2
-> +#define  IXOEVCFG_RISING 0x1
-> +
-> +#define GPIO_BANK(x)    ((x) / 8)
-> +#define GPIO_BIT(x)     ((x) % 8)
-> +
+> Having all the bugs in
+> openbmc/openbmc would help in the future to avoid duplicating bugs
+> across projects.
 
-Would you mind adding the NPCM_ prefix to the above? So that's it's
-clear they come from this driver?
+Has this actually been a problem?
 
-> +/*
-> + * Slect the freqency of shift clock.
-> + * The shift clock is a division of the APB clock.
-> + */
-> +struct npcm_clk_cfg {
-> +       const int *SFT_CLK;
-> +       const u8 *CLK_SEL;
-> +       const u8 cfg_opt;
-> +};
-> +
-> +struct npcm_sgpio {
-> +       struct gpio_chip chip;
-> +       struct clk *pclk;
-> +       struct irq_chip intc;
-> +       spinlock_t lock; /*protect event config*/
-> +       void __iomem *base;
-> +       int irq;
-> +       u8 nin_sgpio;
-> +       u8 nout_sgpio;
-> +       u8 in_port;
-> +       u8 out_port;
-> +       u8 int_type[MAX_NR_HW_SGPIO];
-> +};
-> +
-> +struct npcm_sgpio_bank {
-> +       u8      rdata_reg;
-
-Don't use tabs like this, please.
-
-> +       u8      wdata_reg;
-> +       u8      event_config;
-> +       u8      event_status;
-> +};
-> +
-> +enum npcm_sgpio_reg {
-> +       read_data,
-> +       write_data,
-> +       event_cfg,
-> +       event_sts,
-> +};
-
-For consistency write the enum values in all capitals.
-
-> +
-> +static const struct npcm_sgpio_bank npcm_sgpio_banks[] = {
-> +       {
-> +               .wdata_reg = 0x00,
-> +               .rdata_reg = 0x08,
-> +               .event_config = 0x10,
-> +               .event_status = 0x20,
-> +       },
-> +       {
-> +               .wdata_reg = 0x01,
-> +               .rdata_reg = 0x09,
-> +               .event_config = 0x12,
-> +               .event_status = 0x21,
-> +       },
-> +       {
-> +               .wdata_reg = 0x02,
-> +               .rdata_reg = 0x0a,
-> +               .event_config = 0x14,
-> +               .event_status = 0x22,
-> +       },
-> +       {
-> +               .wdata_reg = 0x03,
-> +               .rdata_reg = 0x0b,
-> +               .event_config = 0x16,
-> +               .event_status = 0x23,
-> +       },
-> +       {
-> +               .wdata_reg = 0x04,
-> +               .rdata_reg = 0x0c,
-> +               .event_config = 0x18,
-> +               .event_status = 0x24,
-> +       },
-> +       {
-> +               .wdata_reg = 0x05,
-> +               .rdata_reg = 0x0d,
-> +               .event_config = 0x1a,
-> +               .event_status = 0x25,
-> +       },
-> +       {
-> +               .wdata_reg = 0x06,
-> +               .rdata_reg = 0x0e,
-> +               .event_config = 0x1c,
-> +               .event_status = 0x26,
-> +       },
-> +       {
-> +               .wdata_reg = 0x07,
-> +               .rdata_reg = 0x0f,
-> +               .event_config = 0x1e,
-> +               .event_status = 0x27,
-> +       },
-> +
-> +};
-> +
-> +static void __iomem *bank_reg(struct npcm_sgpio *gpio,
-> +                             const struct npcm_sgpio_bank *bank,
-> +                               const enum npcm_sgpio_reg reg)
-> +{
-> +       switch (reg) {
-> +       case read_data:
-> +               return gpio->base + bank->rdata_reg;
-> +       case write_data:
-> +               return gpio->base + bank->wdata_reg;
-> +       case event_cfg:
-> +               return gpio->base + bank->event_config;
-> +       case event_sts:
-> +               return gpio->base + bank->event_status;
-> +       default:
-> +               /* acturally if code runs to here, it's an error case */
-> +               BUG();
-
-But maybe it shouldn't crash the kernel? How about a WARN?
-
-> +       }
-> +}
-> +
-> +static const struct npcm_sgpio_bank *to_bank(unsigned int offset)
-> +{
-> +       unsigned int bank = GPIO_BANK(offset);
-> +
-> +       return &npcm_sgpio_banks[bank];
-> +}
-
-Usually functions starting with to_ cast structure pointers to their
-containing parent structures. Can we make it a simple npcm_get_bank?
-
-> +
-> +static void irqd_to_npcm_sgpio_data(struct irq_data *d,
-> +                                   struct npcm_sgpio **gpio,
-> +                                   const struct npcm_sgpio_bank **bank,
-> +                                   u8 *bit, int *offset)
-> +{
-> +       struct npcm_sgpio *internal;
-> +
-> +       *offset = irqd_to_hwirq(d);
-> +       internal = irq_data_get_irq_chip_data(d);
-> +       WARN_ON(!internal);
-> +
-> +       *gpio = internal;
-> +       *offset -= internal->nout_sgpio;
-> +       *bank = to_bank(*offset);
-> +       *bit = GPIO_BIT(*offset);
-> +}
-> +
-> +static int npcm_sgpio_init_valid_mask(struct gpio_chip *gc,
-> +                                     unsigned long *valid_mask, unsigned int ngpios)
-> +{
-> +       struct npcm_sgpio *gpio = gpiochip_get_data(gc);
-> +       u8 in_port, out_port, set_port;
-> +
-> +       in_port = gpio->nin_sgpio / 8;
-> +       if (gpio->nin_sgpio % 8 > 0)
-> +               in_port += 1;
-> +
-> +       out_port = gpio->nout_sgpio / 8;
-> +       if (gpio->nout_sgpio % 8 > 0)
-> +               out_port += 1;
-> +
-> +       gpio->in_port = in_port;
-> +       gpio->out_port = out_port;
-> +       set_port = ((out_port & 0xf) << 4) | (in_port & 0xf);
-> +       iowrite8(set_port, gpio->base + IOXCFG2);
-> +
-> +       return 0;
-> +}
-> +
-> +static int npcm_sgpio_dir_in(struct gpio_chip *gc, unsigned int offset)
-> +{
-> +       struct npcm_sgpio *gpio = gpiochip_get_data(gc);
-> +
-> +       if (offset < gpio->nout_sgpio)
-> +               return -EINVAL;
-> +
-> +       return 0;
-> +}
-> +
-> +static int npcm_sgpio_dir_out(struct gpio_chip *gc, unsigned int offset, int val)
-> +{
-> +       struct npcm_sgpio *gpio = gpiochip_get_data(gc);
-> +
-> +       if (offset < gpio->nout_sgpio) {
-> +               gc->set(gc, offset, val);
-> +               return 0;
-> +       }
-> +       return -EINVAL;
-> +}
-> +
-> +static int npcm_sgpio_get_direction(struct gpio_chip *gc, unsigned int offset)
-> +{
-> +       struct npcm_sgpio *gpio = gpiochip_get_data(gc);
-> +
-> +       if (offset < gpio->nout_sgpio)
-> +               return 0;
-> +       return 1;
-> +}
-> +
-> +static void npcm_sgpio_set(struct gpio_chip *gc, unsigned int offset, int val)
-> +{
-> +       struct npcm_sgpio *gpio = gpiochip_get_data(gc);
-> +       const struct  npcm_sgpio_bank *bank = to_bank(offset);
-> +       void __iomem *addr;
-> +       u8 reg = 0;
-> +
-> +       addr = bank_reg(gpio, bank, write_data);
-> +       reg = ioread8(addr);
-> +
-> +       if (val) {
-> +               reg |= (val << GPIO_BIT(offset));
-> +               iowrite8(reg, addr);
-> +       } else {
-> +               reg &= ~(1 << GPIO_BIT(offset));
-> +               iowrite8(reg, addr);
-> +       }
-> +}
-> +
-> +static int npcm_sgpio_get(struct gpio_chip *gc, unsigned int offset)
-> +{
-> +       struct npcm_sgpio *gpio = gpiochip_get_data(gc);
-> +       const struct  npcm_sgpio_bank *bank;
-> +       void __iomem *addr;
-> +       u8 dir, reg;
-> +
-> +       dir = npcm_sgpio_get_direction(gc, offset);
-> +       if (dir == 0) {
-> +               bank = to_bank(offset);
-> +
-> +               addr = bank_reg(gpio, bank, write_data);
-> +               reg = ioread8(addr);
-> +               reg = (reg >> GPIO_BIT(offset)) & 0x01;
-> +       } else {
-> +               offset -= gpio->nout_sgpio;
-> +               bank = to_bank(offset);
-> +
-> +               addr = bank_reg(gpio, bank, read_data);
-> +               reg = ioread8(addr);
-> +               reg = (reg >> GPIO_BIT(offset)) & 0x01;
-> +       }
-> +
-> +       return reg;
-> +}
-> +
-> +static void npcm_sgpio_setup_enable(struct npcm_sgpio *gpio, bool enable)
-> +{
-> +       u8 reg = 0;
-> +
-> +       reg = ioread8(gpio->base + IOXCTS);
-> +       reg = reg & ~IOXCTS_RD_MODE;
-> +       reg = reg | IOXCTS_RD_MODE_PERIODIC;
-> +
-> +       if (enable) {
-> +               reg |= IOXCTS_IOXIF_EN;
-> +               iowrite8(reg, gpio->base + IOXCTS);
-> +       } else {
-> +               reg &= ~IOXCTS_IOXIF_EN;
-> +               iowrite8(reg, gpio->base + IOXCTS);
-> +       }
-> +}
-> +
-> +static int npcm_sgpio_setup_clk(struct npcm_sgpio *gpio,
-> +                               const struct npcm_clk_cfg *clk_cfg, u32 sgpio_freq)
-> +{
-> +       unsigned long apb_freq;
-> +       u32 sgpio_clk_div;
-> +       u8 tmp;
-> +       int i;
-> +
-> +       apb_freq = clk_get_rate(gpio->pclk);
-> +       sgpio_clk_div = (apb_freq / sgpio_freq);
-> +       if ((apb_freq % sgpio_freq) != 0)
-> +               sgpio_clk_div += 1;
-> +
-> +       tmp = ioread8(gpio->base + IOXCFG1) & ~IOXCFG1_SFT_CLK;
-> +
-> +       for (i = 0; i < clk_cfg->cfg_opt; i++) {
-> +               if (sgpio_clk_div >= clk_cfg->SFT_CLK[i]) {
-> +                       iowrite8(clk_cfg->CLK_SEL[i] | tmp, gpio->base + IOXCFG1);
-> +                       return 0;
-> +               }
-> +       }
-> +
-> +       return -EINVAL;
-> +}
-> +
-> +static void npcm_sgpio_irq_init_valid_mask(struct gpio_chip *gc,
-> +                                          unsigned long *valid_mask, unsigned int ngpios)
-> +{
-> +       struct npcm_sgpio *gpio = gpiochip_get_data(gc);
-> +       int n = gpio->nin_sgpio;
-> +
-> +       /* input GPIOs in the high range */
-> +       bitmap_set(valid_mask, gpio->nout_sgpio, n);
-> +       bitmap_clear(valid_mask, 0, gpio->nout_sgpio);
-> +}
-> +
-> +static void npcm_sgpio_irq_set_mask(struct irq_data *d, bool set)
-> +{
-> +       const struct npcm_sgpio_bank *bank;
-> +       struct npcm_sgpio *gpio;
-> +       unsigned long flags;
-> +       void __iomem *addr;
-> +       int offset;
-> +       u16 reg, type;
-> +       u8 bit;
-> +
-> +       irqd_to_npcm_sgpio_data(d, &gpio, &bank, &bit, &offset);
-> +       addr = bank_reg(gpio, bank, event_cfg);
-> +
-> +       spin_lock_irqsave(&gpio->lock, flags);
-> +
-> +       npcm_sgpio_setup_enable(gpio, false);
-> +
-> +       reg = ioread16(addr);
-> +       if (set) {
-> +               reg &= ~(IXOEVCFG_MASK << (bit * 2));
-> +       } else {
-> +               type = gpio->int_type[offset];
-> +               reg |= (type << (bit * 2));
-> +       }
-> +
-> +       iowrite16(reg, addr);
-> +
-> +       npcm_sgpio_setup_enable(gpio, true);
-> +
-> +       addr = bank_reg(gpio, bank, event_sts);
-> +       reg = ioread8(addr);
-> +       reg |= BIT(bit);
-> +       iowrite8(reg, addr);
-> +
-> +       spin_unlock_irqrestore(&gpio->lock, flags);
-> +}
-> +
-> +static void npcm_sgpio_irq_ack(struct irq_data *d)
-> +{
-> +       const struct npcm_sgpio_bank *bank;
-> +       struct npcm_sgpio *gpio;
-> +       unsigned long flags;
-> +       void __iomem *status_addr;
-> +       int offset;
-> +       u8 bit;
-> +
-> +       irqd_to_npcm_sgpio_data(d, &gpio, &bank, &bit, &offset);
-> +       status_addr = bank_reg(gpio, bank, event_sts);
-> +       spin_lock_irqsave(&gpio->lock, flags);
-> +       iowrite8(BIT(bit), status_addr);
-> +       spin_unlock_irqrestore(&gpio->lock, flags);
-> +}
-> +
-> +static void npcm_sgpio_irq_mask(struct irq_data *d)
-> +{
-> +       npcm_sgpio_irq_set_mask(d, true);
-> +}
-> +
-> +static void npcm_sgpio_irq_unmask(struct irq_data *d)
-> +{
-> +       npcm_sgpio_irq_set_mask(d, false);
-> +}
-> +
-> +static int npcm_sgpio_set_type(struct irq_data *d, unsigned int type)
-> +{
-> +       const struct npcm_sgpio_bank *bank;
-> +       irq_flow_handler_t handler;
-> +       struct npcm_sgpio *gpio;
-> +       unsigned long flags;
-> +       void __iomem *addr;
-> +       int offset;
-> +       u16 reg, val;
-> +       u8 bit;
-> +
-> +       irqd_to_npcm_sgpio_data(d, &gpio, &bank, &bit, &offset);
-> +
-> +       switch (type & IRQ_TYPE_SENSE_MASK) {
-> +       case IRQ_TYPE_EDGE_BOTH:
-> +               val = IXOEVCFG_BOTH;
-> +               handler = handle_edge_irq;
-> +               break;
-> +       case IRQ_TYPE_EDGE_RISING:
-> +               val = IXOEVCFG_RISING;
-> +               handler = handle_edge_irq;
-> +               break;
-> +       case IRQ_TYPE_EDGE_FALLING:
-> +               val = IXOEVCFG_FALLING;
-> +               handler = handle_edge_irq;
-> +               break;
-> +       case IRQ_TYPE_LEVEL_HIGH:
-> +               val = IXOEVCFG_RISING;
-> +               handler = handle_level_irq;
-> +               break;
-> +       case IRQ_TYPE_LEVEL_LOW:
-> +               val = IXOEVCFG_FALLING;
-> +               handler = handle_level_irq;
-> +               break;
-> +       default:
-> +               return -EINVAL;
-> +       }
-> +
-> +       gpio->int_type[offset] = val;
-> +
-> +       spin_lock_irqsave(&gpio->lock, flags);
-> +       npcm_sgpio_setup_enable(gpio, false);
-> +       addr = bank_reg(gpio, bank, event_cfg);
-> +       reg = ioread16(addr);
-> +
-> +       reg |= (val << (bit * 2));
-> +
-> +       iowrite16(reg, addr);
-> +       npcm_sgpio_setup_enable(gpio, true);
-> +       spin_unlock_irqrestore(&gpio->lock, flags);
-> +
-> +       irq_set_handler_locked(d, handler);
-> +
-> +       return 0;
-> +}
-> +
-> +static void npcm_sgpio_irq_handler(struct irq_desc *desc)
-> +{
-> +       struct gpio_chip *gc = irq_desc_get_handler_data(desc);
-> +       struct irq_chip *ic = irq_desc_get_chip(desc);
-> +       struct npcm_sgpio *gpio = gpiochip_get_data(gc);
-> +       unsigned int i, j, girq;
-> +       unsigned long reg;
-> +
-> +       chained_irq_enter(ic, desc);
-> +
-> +       for (i = 0; i < ARRAY_SIZE(npcm_sgpio_banks); i++) {
-> +               const struct npcm_sgpio_bank *bank = &npcm_sgpio_banks[i];
-> +
-> +               reg = ioread8(bank_reg(gpio, bank, event_sts));
-> +               for_each_set_bit(j, &reg, 8) {
-> +                       girq = irq_find_mapping(gc->irq.domain, i * 8 + gpio->nout_sgpio + j);
-> +                       generic_handle_irq(girq);
-> +               }
-> +       }
-> +
-> +       chained_irq_exit(ic, desc);
-> +}
-> +
-> +static int npcm_sgpio_setup_irqs(struct npcm_sgpio *gpio,
-> +                                struct platform_device *pdev)
-> +{
-> +       int rc, i;
-> +       struct gpio_irq_chip *irq;
-> +
-> +       rc = platform_get_irq(pdev, 0);
-> +       if (rc < 0)
-> +               return rc;
-> +
-> +       gpio->irq = rc;
-> +
-> +       /* Disable IRQ and clear Interrupt status registers for all SGPIO Pins. */
-> +       for (i = 0; i < ARRAY_SIZE(npcm_sgpio_banks); i++) {
-> +               const struct npcm_sgpio_bank *bank = &npcm_sgpio_banks[i];
-> +
-> +               iowrite16(0x0000, bank_reg(gpio, bank, event_cfg));
-> +               iowrite8(0xff, bank_reg(gpio, bank, event_sts));
-> +       }
-> +
-> +       gpio->intc.name = dev_name(&pdev->dev);
-> +       gpio->intc.irq_ack = npcm_sgpio_irq_ack;
-> +       gpio->intc.irq_mask = npcm_sgpio_irq_mask;
-> +       gpio->intc.irq_unmask = npcm_sgpio_irq_unmask;
-> +       gpio->intc.irq_set_type = npcm_sgpio_set_type;
-> +
-> +       irq = &gpio->chip.irq;
-> +       irq->chip = &gpio->intc;
-> +       irq->init_valid_mask = npcm_sgpio_irq_init_valid_mask;
-> +       irq->handler = handle_bad_irq;
-> +       irq->default_type = IRQ_TYPE_NONE;
-> +       irq->parent_handler = npcm_sgpio_irq_handler;
-> +       irq->parent_handler_data = gpio;
-> +       irq->parents = &gpio->irq;
-> +       irq->num_parents = 1;
-> +
-> +       return 0;
-> +}
-> +
-> +static const int npcm7xx_SFT_CLK[] = {
-> +               1024, 32, 8, 4, 3, 2,
-> +};
-> +
-> +static const u8 npcm7xx_CLK_SEL[] = {
-> +               0x00, 0x05, 0x07, 0x0C, 0x0D, 0x0E,
-> +};
-> +
-> +static const int npcm845_SFT_CLK[] = {
-> +               1024, 32, 16, 8, 4,
-> +};
-> +
-> +static const u8 npcm845_CLK_SEL[] = {
-> +               0x00, 0x05, 0x06, 0x07, 0x0C,
-> +};
-> +
-> +static const struct npcm_clk_cfg npcm7xx_sgpio_pdata = {
-> +       .SFT_CLK = npcm7xx_SFT_CLK,
-> +       .CLK_SEL = npcm7xx_CLK_SEL,
-> +       .cfg_opt = 6,
-> +};
-> +
-> +static const struct npcm_clk_cfg npcm845_sgpio_pdata = {
-> +       .SFT_CLK = npcm845_SFT_CLK,
-> +       .CLK_SEL = npcm845_CLK_SEL,
-> +       .cfg_opt = 5,
-> +};
-> +
-> +static const struct of_device_id npcm_sgpio_of_table[] = {
-> +       { .compatible = "nuvoton,npcm750-sgpio", .data = &npcm7xx_sgpio_pdata, },
-> +       { .compatible = "nuvoton,npcm845-sgpio", .data = &npcm845_sgpio_pdata, },
-> +       {}
-> +};
-> +
-> +MODULE_DEVICE_TABLE(of, npcm_sgpio_of_table);
-> +
-> +static int __init npcm_sgpio_probe(struct platform_device *pdev)
-
-With 99% confidence you shouldn't have __init here.
-
-> +{
-> +       struct npcm_sgpio *gpio;
-> +       const struct npcm_clk_cfg *clk_cfg;
-> +       int rc;
-> +       u32 nin_gpios, nout_gpios, sgpio_freq;
-> +
-> +       gpio = devm_kzalloc(&pdev->dev, sizeof(*gpio), GFP_KERNEL);
-> +       if (!gpio)
-> +               return -ENOMEM;
-> +
-> +       gpio->base = devm_platform_ioremap_resource(pdev, 0);
-> +       if (IS_ERR(gpio->base))
-> +               return PTR_ERR(gpio->base);
-> +
-> +       clk_cfg = device_get_match_data(&pdev->dev);
-> +       if (!clk_cfg)
-> +               return -EINVAL;
-> +
-> +       rc = device_property_read_u32(&pdev->dev, "nin_gpios", &nin_gpios);
-> +       if (rc < 0) {
-> +               dev_err(&pdev->dev, "Could not read ngpios property\n");
-> +               return -EINVAL;
-> +       }
-> +       rc = device_property_read_u32(&pdev->dev, "nout_gpios", &nout_gpios);
-> +       if (rc < 0) {
-> +               dev_err(&pdev->dev, "Could not read ngpios property\n");
-> +               return -EINVAL;
-> +       }
-> +
-> +       gpio->nin_sgpio = nin_gpios;
-> +       gpio->nout_sgpio = nout_gpios;
-> +       if (gpio->nin_sgpio > MAX_NR_HW_SGPIO || gpio->nout_sgpio > MAX_NR_HW_SGPIO) {
-> +               dev_err(&pdev->dev, "Number of GPIOs exceeds the maximum of %d: input: %d output: %d\n",
-> +                       MAX_NR_HW_SGPIO, nin_gpios, nout_gpios);
-> +               return -EINVAL;
-> +       }
-> +
-> +       rc = device_property_read_u32(&pdev->dev, "bus-frequency", &sgpio_freq);
-> +       if (rc < 0) {
-> +               dev_err(&pdev->dev, "Could not read bus-frequency property\n");
-> +               return -EINVAL;
-> +       }
-> +
-> +       gpio->pclk = devm_clk_get(&pdev->dev, NULL);
-> +       if (IS_ERR(gpio->pclk)) {
-> +               dev_err(&pdev->dev, "devm_clk_get failed\n");
-> +               return PTR_ERR(gpio->pclk);
-> +       }
-> +
-> +       rc = npcm_sgpio_setup_clk(gpio, clk_cfg, sgpio_freq);
-> +       if (rc < 0) {
-> +               dev_err(&pdev->dev, "Failed to setup clock\n");
-> +               return -EINVAL;
-> +       }
-> +       spin_lock_init(&gpio->lock);
-
-This lock is used very inconsistently. Don't you need protection when
-reading/writing to the input and output registers?
-
-> +       gpio->chip.parent = &pdev->dev;
-> +       gpio->chip.ngpio = gpio->nin_sgpio + gpio->nout_sgpio;
-> +       gpio->chip.init_valid_mask = npcm_sgpio_init_valid_mask;
-> +       gpio->chip.direction_input = npcm_sgpio_dir_in;
-> +       gpio->chip.direction_output = npcm_sgpio_dir_out;
-> +       gpio->chip.get_direction = npcm_sgpio_get_direction;
-> +       gpio->chip.request = NULL;
-> +       gpio->chip.free = NULL;
-> +       gpio->chip.get = npcm_sgpio_get;
-> +       gpio->chip.set = npcm_sgpio_set;
-> +       gpio->chip.set_config = NULL;
-> +       gpio->chip.label = dev_name(&pdev->dev);
-> +       gpio->chip.base = -1;
-> +
-> +       rc = npcm_sgpio_setup_irqs(gpio, pdev);
-> +       if (rc < 0)
-> +               return rc;
-> +
-> +       rc = devm_gpiochip_add_data(&pdev->dev, &gpio->chip, gpio);
-> +       if (rc < 0)
-> +               return rc;
-> +
-> +       npcm_sgpio_setup_enable(gpio, true);
-> +       return 0;
-> +}
-> +
-> +static struct platform_driver npcm_sgpio_driver = {
-> +       .driver = {
-> +               .name = KBUILD_MODNAME,
-> +               .of_match_table = npcm_sgpio_of_table,
-> +       },
-> +};
-> +
-> +module_platform_driver_probe(npcm_sgpio_driver, npcm_sgpio_probe);
-
-Any reason to use this instead of module_platform_driver()? It's much
-clearer IMO and almost all platform drivers use it instead.
-
-Newline here please too.
-
-> +MODULE_AUTHOR("Jim Liu <jjliu0@nuvoton.com>");
-> +MODULE_AUTHOR("Joseph Liu <kwliu@nuvoton.com>");
-> +MODULE_DESCRIPTION("Nuvoton NPCM Serial GPIO Driver");
-> +MODULE_LICENSE("GPL v2");
-> --
-> 2.17.1
 >
+> - Would increase the likelihood that someone contributes a patch,
+> especially a patch written by someone else.  If contributing a patch
+> was just a matter of cherry-picking a tree of commits and submitting
+> it to gerrit, it's a lot more likely that people would do it.
+
+It sounds plausible, but again, some evidence for this would be helpful.
+
+Why is this easier than submitting the patches to the application repo?
+
+> My proposed version of this tree is pushed to a github fork here, and
+> is based on the tree from a few weeks ago:
+> https://github.com/edtanous/openbmc
+>
+> It implements all the above for the main branch.  This tree is based
+> on the output of the automated tooling, and in the case where this
+> proposal is accepted, the tooling would be re-run to capture the state
+> of the tree at the point where we chose to make this change.
+>
+> The tool I wrote to generate this tree is also published, if you're
+> interested in how this tree was built, and is quite interesting in its
+> use of git export/import [5], but functionally, I would not expect
+> that tooling to survive after this transition is made.
+
+I think it would be good to capture the script in openbmc-tools if we 
+choose to go ahead with this, mainly as a record of how we achieved it.
+
+Andrew
+
+>
+> [1] 
+> https://lore.kernel.org/openbmc/CACWQX821ADQCrekLj_bGAu=1SSLCv5pTee7jaoVo2Zs6havgnA@mail.gmail.com/
+> [2] https://git-scm.com/docs/git-rebase
+> [3] 
+> https://github.com/openbmc/docs/blob/master/CONTRIBUTING.md#inclusive-naming
+> [4] 
+> https://www.yoctoproject.org/docs/1.8/ref-manual/ref-manual.html#ref-classes-externalsrc
+> [5] https://github.com/edtanous/obmc-repo-combine/blob/main/combine
