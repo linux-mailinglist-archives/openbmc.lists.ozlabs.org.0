@@ -1,94 +1,93 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BA314F66F5
-	for <lists+openbmc@lfdr.de>; Wed,  6 Apr 2022 19:29:29 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CB20F4F6AD9
+	for <lists+openbmc@lfdr.de>; Wed,  6 Apr 2022 22:07:31 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KYWj328Kkz2ymf
-	for <lists+openbmc@lfdr.de>; Thu,  7 Apr 2022 03:29:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KYbCN6DN3z3bYT
+	for <lists+openbmc@lfdr.de>; Thu,  7 Apr 2022 06:07:28 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=nUfZ/8SM;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=kEuxPGoo;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=pk1UzPsb;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=d2KOTOzn;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.20;
- helo=wout4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.27;
+ helo=out3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=nUfZ/8SM; 
+ header.s=fm2 header.b=pk1UzPsb; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm3 header.b=kEuxPGoo; 
+ header.a=rsa-sha256 header.s=fm3 header.b=d2KOTOzn; 
  dkim-atps=neutral
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
- [64.147.123.20])
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KYWhX5VC5z2yPR
- for <openbmc@lists.ozlabs.org>; Thu,  7 Apr 2022 03:28:59 +1000 (AEST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
- by mailout.west.internal (Postfix) with ESMTP id 208A73202113;
- Wed,  6 Apr 2022 13:28:55 -0400 (EDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KYbBq1cppz2y6F
+ for <openbmc@lists.ozlabs.org>; Thu,  7 Apr 2022 06:06:58 +1000 (AEST)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailout.nyi.internal (Postfix) with ESMTP id 1D15F5C016C;
+ Wed,  6 Apr 2022 16:06:54 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
- by compute2.internal (MEProxy); Wed, 06 Apr 2022 13:28:55 -0400
+ by compute5.internal (MEProxy); Wed, 06 Apr 2022 16:06:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
  :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
  :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to; s=fm2; bh=AGP9WaqFcZJ1x3DEoORjuXV7CRO4zACAzxykfj
- Xze34=; b=nUfZ/8SMxcUf361mskgwONe8DnxHm8m4NBeZjD03HQGCYZUfvqm3eD
- N37hw49WQaIJ3ey/lVdm9+xTVTHGTaHwHQ8u+VFdDJJZI7fNi6qv8/LSs1F7cHjk
- LQ6XZ8NTpeDhzdSQZz0rnK9fomnBfCnfBLqdOku5poa62ZmkvrJtk6ebboBPD1VX
- +5PzsVOXBbL0F9GcWx+VRRFmXFWZRtsOnkJARE6usli7VB4ij9F6mFrYMVZfTO1y
- Fet72jOirwVr7cF9WZKVw5RqKEgpTZ11j893rUvwo5PFZVVxIUCxj69Rxs+tlWOP
- ouPGZvmg6CPL0TXRolzfeEqQggTTfsjA==
+ :subject:to:to; s=fm2; bh=StfZvfCT7bGj+1Z9SSe+1K6gzAx9QlLgOR5jni
+ fqX+4=; b=pk1UzPsb/p6RhCu2qe6TUczNPV5qwsb4iqMY75Yl/HRW4GLOg4RIgr
+ T4AtHzBExDoh/3u+uL42MKnOjBewqv4z+nsm5TMaY0qu2oDxLbIeXQGGpL+/Qkxr
+ mwkC9kjHI9MLWnaEYaxK9ocGPPa/JMRCmcs80Im8EPnwYVHSX19xaGQEwPAc4KCq
+ nwca9z7GwxZQrQrld6xlPbRuG9ibeZbuUnv817A+/Q7VVGQFPl7gqh+PSoKH2ioC
+ GR6n8rK4BifH+K4ov8yGkDRqXv+A7Usbe8gEa4MHugAi4BNhiqCKnmK+BGn9KXq1
+ IsylZxq4N6D0KOW+ci4WPJdPG0WgPusQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-type:date:date:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
  :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=AGP9WaqFcZJ1x3DEo
- ORjuXV7CRO4zACAzxykfjXze34=; b=kEuxPGooNf4nxBzIaOaz+f9YWWkAQ0rf1
- vPg5XI+84nmP2UhVmdPhmakx40+ZC6da6elVC4+sEROY/RYKVF9CcXzWCdj4oqnd
- jgybSBKO/6iOvtQrLouDka09xeNSkInbkv+FcQtzdcraTicGZQBXC0cUNkK6oTvd
- P9RBYma9qPDBPHSJhtYv3uuhoixz+jJeyHRy6sa2zCPSmasDC0SH1Dq2SCiUPYPl
- BLlYZTtO7Ens2k64wSeI0jRZtml55YclRi7DuDSkqh5Ppq5sag3THJgBzlYoF0xd
- pqEPjgIXp9N8eoXrcl+vd3JNAlODChkMplCNzw/qN0qS10NXZiB9A==
-X-ME-Sender: <xms:1s1NYquh6X9N6_JJq_IeXZ_yEeuve5QNuHsVTPsZpjDti5EMEejq0g>
- <xme:1s1NYveTU_njaYEdFk93qbE8FQKz6wgMqbfHXCj4fpQqgB_6cimPfcfDrx4krB6-1
- 10TMAk-qZDEiYIYpRE>
-X-ME-Received: <xmr:1s1NYlxCmtBQl3uerau-4leoz5doS9XfoCR6YCVTmi6SJCJmh0U-_CaveWfy95QQdF5_hvDSihIBve5-ATAHBzBWglm6CanNuj4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudejiedguddugecutefuodetggdotefrod
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=StfZvfCT7bGj+1Z9S
+ Se+1K6gzAx9QlLgOR5jnifqX+4=; b=d2KOTOzne6EL8HxfiyfpXKTRFGH9gy5G4
+ da/maMEIuP2h6UI4AadoCoy2eTRwX9NyoFvGj/+CrR8B3QWKenKZOaNbF1UYYSwi
+ P5XFvVzClj7TE+jDWu7kaXmIM4zGJXrGizk/KJ0DKS+PahuZHIyvP96gHY5OZ1Gm
+ eyDrc4GO+KuUzAYbkEq1rdkKKUVTiZ29KdNKof4YMe+6M2IvgO0DWDuRtrthHce/
+ sxCnImMLkFHaIJX/ryWPOCCVwOSiuOtywMW343xKLia1Oh/MNV4YE1hdSdJwtNqj
+ rj8PPsI/YbEMj6R3X4KAGJaf7+jkToTIBNKzC9SCl+WlbPyeX1hzg==
+X-ME-Sender: <xms:3fJNYpvCp6kZBP9H6V131LM920e5Siuo9i05nRXb2WdpsZLBSSRtmA>
+ <xme:3fJNYic6Hw7b_Tk7W2sqJdNfjXq5Lb89geHLdX1jDhyxZMBZ-e5o791ZbGLBde9mq
+ YptlTxxElSp9Ct7gko>
+X-ME-Received: <xmr:3fJNYswk33YGYIS_qV6Gz1xYjNRyx2djGO6N7YRDVOFYjAulhYvSrPHID7KvktbwYWSoogmW7ZrRdXz71ap1T6UR-zIVRLcrflo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvvddrudejiedgudeggecutefuodetggdotefrod
  ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
  necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
- enfghrlhcuvffnffculddugedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredt
+ enfghrlhcuvffnffculddvfedmnecujfgurhepfffhvffukfhfgggtuggjsehgtderredt
  tddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
- hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeeugeelheefueelgfefvdduheel
- heehgeeuvefhiedvheettdeivdevfefhieekjeenucffohhmrghinhepohhpvghnfihrth
- drohhrghdpghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
- rghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:1s1NYlNVAKPmDJ-jWP8OIPgha4kPoz7uVcfZs7fn9fRNrWn2-fbp3g>
- <xmx:1s1NYq-qlJLuYllIb9A00jqNLXCE-Ixx7xaV3B0A9FtMFU0VsTFBOw>
- <xmx:1s1NYtWC4JbiZIx0Be7fgTKeddNSDuM89GhwnClCm4vNaKOuHeKKOg>
- <xmx:1s1NYsK-QlSvcchDqS6L_hGnDXP0svEt2Q6fl2NqWDn7XDSTx3ROQA>
+ hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpefgteehhfetfedthefgveehveeh
+ kedvudfhjeefgedvteegudeghfduffdujeekudenucffohhmrghinhepkhgvrhhnvghlrd
+ horhhgpdhgihhthhhusgdrtghomhdpshhtfigtgidrgiihiienucevlhhushhtvghrufhi
+ iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrd
+ ighiii
+X-ME-Proxy: <xmx:3fJNYgNfBTFrcvvuXCw2qRNBN8B84HQtnZ85dqUphX49dDQvgn3eWg>
+ <xmx:3fJNYp_qrR9Mkyi2DL90uiIecXftodXEqIARPF8wwmWMdLx5g5Vcrg>
+ <xmx:3fJNYgVcUmuRFXdP0aMiPFuHvsGD3Q6p9tvRuWJJF7IT582Gd9V2Cg>
+ <xmx:3vJNYrIM6oBkgHWjG90ShM9O9VHFMk06ipqndkEITMRpZE_HkawdFA>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 6 Apr 2022 13:28:53 -0400 (EDT)
-Date: Wed, 6 Apr 2022 12:28:52 -0500
+ 6 Apr 2022 16:06:53 -0400 (EDT)
+Date: Wed, 6 Apr 2022 15:06:52 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
 To: Ed Tanous <edtanous@google.com>
 Subject: Re: Proposing changes to the OpenBMC tree (to make upstreaming easier)
-Message-ID: <Yk3N1EG21r+NRQa5@heinlein.stwcx.org.github.beta.tailscale.net>
+Message-ID: <Yk3y3IHSh2/XMu6e@heinlein.stwcx.org.github.beta.tailscale.net>
 References: <CAH2-KxAJS_U8=meCxp8ue7n0bmnzeRpyZOPZpy0h1cFEbbz-HA@mail.gmail.com>
- <43a7fff2-2616-4f81-9c18-01454f0b30b2@www.fastmail.com>
- <CAH2-KxCXYzmLS7OhEDCaDX2pvYHcshLgqL=7gu5XCsNXb=wEGg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="wjgM+jvwEkziTqaI"
+ protocol="application/pgp-signature"; boundary="/eOdTtYFTzgTdVZX"
 Content-Disposition: inline
-In-Reply-To: <CAH2-KxCXYzmLS7OhEDCaDX2pvYHcshLgqL=7gu5XCsNXb=wEGg@mail.gmail.com>
+In-Reply-To: <CAH2-KxAJS_U8=meCxp8ue7n0bmnzeRpyZOPZpy0h1cFEbbz-HA@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -107,316 +106,528 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---wjgM+jvwEkziTqaI
+--/eOdTtYFTzgTdVZX
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-I'll likely respond to the original post with more thoughts later as
-well...
+On Mon, Apr 04, 2022 at 11:28:06AM -0700, Ed Tanous wrote:
+> The OpenBMC development process as it stands is difficult for people
+> new to the project to understand, which severely limits our ability to
+> onboard new maintainers, developers, and groups which would otherwise
+> contribute major features to upstream, but don't have the technical
+> expertise to do so. =20
 
-On Wed, Apr 06, 2022 at 08:54:28AM -0700, Ed Tanous wrote:
-> On Tue, Apr 5, 2022 at 7:22 PM Andrew Jeffery <andrew@aj.id.au> wrote:
-=20
-> >
-> > With the amount of custom userspace we've always kinda sat in-between.
-> > I'd like to see libraries and applications that have use cases outside
-> > of OpenBMC be accessible to people with those external use cases,
-> > without being burdened by understanding the rest of the OpenBMC context.
-> > I have a concern that by integrating things in the way you're proposing
-> > it will lead to more inertia there (e.g. for implementations of
-> > standards MCTP or PLDM (libmctp and libpldm)).
->=20
->=20
-> I had assumed that libmctp and libpldm fell into the "intended to be
-> used outside the project" category and would retain their own
-> repositories, given that they publish interfaces that are not OpenBMC
-> specific, but lots of things within the project are openbmc-specific,
-> including the daemons that attach both of those libraries to dbus.
-> The only real difference here is that it makes the difference
-> explicit.
+This is, to me, a rather bold and surprising statement.
 
-It wasn't long ago that the TOF discussed some of these libraries w.r.t.
-"intended to be used outside the project" and we really had trouble
-determining clear language on what classified as this and what did not.
-Actually, neither of these libraries were mentioned, but it was a recipe
-contribution by someone pointing at a non-openbmc github repository.  We
-couldn't really come up with a clear definition but we settled on
-"intended to be used outside the project" recipes that also weren't in
-the openbmc org needed to be submitted upstream to Yocto.
+You're saying there are people out there who can work on an embedded
+system like the BMC at layers of the stack where they might be modifying
+everything from the kernel up to REST APIs to "contribute major
+features" and yet they can't figure out how to manipulate multiple git
+repositories?
 
-Are we going to be able to come up with a clear definition for this,
-which is actually for code that is _within_ our org?  libpldm, for
-instance, isn't even in a separate repository but covered as part of the
-bigger PLDM with some special build flags for "library only".
+I get that I've heard "Yocto has a big learning curve" over and over,
+but you're not actually proposing moving away from Yocto and I admin
+that it is quite likely the "Yocto has a big learning curve" is actually a
+conflation of some of these points that you're raising along with Yocto
+itself, but still, this is worded rather boldly.
 
-> >
-> > On Tue, 5 Apr 2022, at 03:58, Ed Tanous wrote:
-> > > The OpenBMC development process as it stands is difficult for people
-> > > new to the project to understand, which severely limits our ability to
-> > > onboard new maintainers, developers, and groups which would otherwise
-> > > contribute major features to upstream, but don't have the technical
-> > > expertise to do so.  This initiative, much like others before it[1] is
-> > > attempting to reduce the toil and OpenBMC-specific processes of
-> > > passing changes amongst the community, and move things to being more
-> > > like other projects that have largely solved this problem already.
-> >
-> > Can you be more specific about which projects here? Do you have links
-> > to examples?
->=20
-> Linux is the primary example I think of, which hosts libraries within
-> it (libbpf, ect) that are meant to be used elsewhere.  u-root, u-bmc
-> are other examples of firmware that put all of their application
-> specific code in a single repository.  As a counter example, openwrt
-> sticks with multiple repositories, but seems to have significantly
-> fewer repositories in total than we do, despite being a much older
-> project.
->=20
-> As a side note, one thing I find interesting is that they host staging
-> branches for contributors/maintainers on their main project page.
-> That's a different model than I've seen elsewhere.  Unrelated to this
-> dicussion, but interesting nonetheless.
-> https://git.openwrt.org/
+> This initiative, much like others before it[1] is
+> attempting to reduce the toil and OpenBMC-specific processes of
+> passing changes amongst the community, and move things to being more
+> like other projects that have largely solved this problem already.
 
-I was going to point to Android and OpenStack as two large open source
-projects, which also use Gerrit, and seem to have no trouble with the
-micro-repo model.
+I'm not sure what is OpenBMC-specific about this process though.
 
-> > > To that end, I'd like to propose a change to the way we structure our
-> > > repositories within the project: specifically, putting (almost) all of
-> > > the Linux Foundation OpenBMC owned code into a single repo that we can
-> > > version as a single entity, rather than spreading out amongst many
-> > > repos.  In practice, this would have some significant advantages:
-> > >
-> > > - The tree would be easily shareable amongst the various people
-> > > working on OpenBMC, without having to rely on a single-source Gerrit
-> > > instance.  Git is designed to be distributed, but if our recipe files
-> > > point at other repositories, it largely defeats a lot of this
-> > > capability.  Today, if you want to share a tree that has a change in
-> > > it, you have to fork the main tree, then fork every single subproject
-> > > you've made modifications to, then update the main tree to point to
-> > > your forks.
-> >
-> > This isn't true, as you can add patches in the OpenBMC tree.
->=20
-> As most people that have stacked patches can attest to, managing patch
-> files in a meta layer over time is very difficult (unless you meant
-> something else).  Yes, I should not have said "have to", but a number
-> of the forks that I've seen have ended up resorting to that. Example:
-> (https://github.com/opencomputeproject/HWMgmt-MegaRAC-OpenEdition/tree/ma=
-ster/openbmc_modules)
+There are some large successful projects that work in a mono-repo and some
+which work in a micro-repo model.  Android and OpenStack are both micro-repo
+models that use Gerrit, just like us, and have similar "how do you put the
+dependencies together" problems, which they have solved: Android with `repo`
+and OpenStack with `zuul`.  `repo` and `Yocto recipes` are pretty similar
+mechanics to me (and I would like to see something more `zuul`-like in our
+CI).
 
-Why is managing patch files difficult?  Is it lack of documentation?
+Many open source communities work in a micro-repo model; the challenge
+is always about pulling dependencies together.  Newer languages like
+Rust and JS make this easier, but again, there isn't much fundamentally
+different than Yocto recipes out there.
 
-Upstream Yocto deals with patch files all the time.  The Facebook BMC
-tree has machines in production that are still on Rocko-based Yocto
-distributions and we have plenty of patch files we support there.
+The mechanics of how we maintain our dependencies might be different,
+because we're built on Yocto, but I would argue that this proposal is
+itself _more_ OpenBMC-specific and not less.  I say this because we are
+deviating from how every other Yocto project I know of works and how
+most other "Linux Distribution" projects work (which is what we are).
 
-I wouldn't be surprised if Yocto doesn't already have tools to simplify
-"git-format-patch" -> "package.bbappend" workflow, but if they don't I
-could probably write something.
+> - The tree would be easily shareable amongst the various people
+> working on OpenBMC, without having to rely on a single-source Gerrit
+> instance. =20
 
-For what it is worth, I'm currently doing a change for sdbusplus that
-requires fixes across tens of repositories (as I wrote about recently).
-I pretty quickly hacked up this shell function in order to automatically
-update my OpenBMC tree with commits from another repo that I've pushed
-to Gerrit already.
+What do you mean by "rely on a single-source Gerrit instance"?
 
-https://github.com/williamspatrick/dotfiles/commit/df180ac2b74f2b7fcb6ae913=
-02f0211bc49cb2e9
+> Git is designed to be distributed, but if our recipe files
+> point at other repositories, it largely defeats a lot of this
+> capability.  Today, if you want to share a tree that has a change in
+> it, you have to fork the main tree, then fork every single subproject
+> you've made modifications to, then update the main tree to point to
+> your forks.  This gets very onerous over time, especially for simple
+> commits.  Having maintained several different companies forks
+> personally, and spoken to many others having problems with the same,
+> adding major features are difficult to test and rebase because of
+> this.  Moving the code to a single tree makes a lot of the toil of
+> tagging and modifying local trees a lot more manageable, as a series
+> of well-documented git commands (generally git rebase[2]).  It also
+> increases the likelihood that someone pulls down the fork to test it
+> if it's highly likely that they can apply it to their own tree in a
+> single command.
 
-I don't see using 'git-format-patch' to create the patchfile instead as
-too much additional effort.
+I'm almost certain that nobody would do a git-rebase of their fork even
+if everything were in one tree.
 
-> > CI prevents these from being submitted, as it should, but there's nothi=
-ng to
-> > stop anyone using the `devtool modify ...` / `devtool finish ...` and
-> > committing the result as a workflow to exchange state (I do this)?
-> >
-> > Is the issue instead with devtool? Is it bad? Is the learning curve too=
- steep?
-> > It is at least the Yocto workflow.
->=20
-> devtool provides just one form of friction;  There are also a number
-> of cases where devtool modify and devtool finish fail in non obvious
-> ways (usually due to some not-quite-optimal yocto handling in a meta
-> layer, or patches being distributed across meta layers).  The biggest
-> key is that it's yet another tool that seasoned firmware developers
-> have to learn to jump into our codebase.  Each tool adds some friction
-> compared to if it just didn't exist.  It also adds the "which recipe
-> do I need to devtool to modify the webui?" type trouble that people
-> have talked about many times.
+Why do we want to improve outside testing of forks?  I don't understand
+why that is an advantage.
 
-Do we have pointers to when devtool fails?  The only time I've seen it
-are for recipes that aren't in the rootfs image: kernel and u-boot and
-they've all been due to bugs in the image.bbclass on our part.  There
-was actually a fix to one of the u-boot recipes very recently.
+Most of what you're describing here is making it easier for people to
+live without getting their code upstreamed, which doesn't seem like a
+good thing to the project as a whole, and seems to actively work against
+the title of "to make upstreaming easier".
 
-I personally don't use devtool all that much, but when I do I want it to
-point at the central "workspace" of all the openbmc repos I already have
-so I can get it to pick up code I already have in progress there.  Do we
-need better documentation around those workflows?
+If you're maintaining a few fixes in a backports tree, maintain them as
+Yocto-supported patch files.  If you're maintaining whole features
+elsewhere, I have no interest in making this easier for you (if it is
+worse in other ways for the project).
 
-(At one point there was a statement made that we didn't want tooling
-written to assist with one workflow or another.  This was somewhat made
-in reference to the `setup` script, but I think it had extensions that
-made it that any workflow-related tools people have are hosted in their
-own personal spaces and not talked about.  Maybe we need to change this
-mentality.)
+> - There would be a reduction in reviews.  Today, anytime a person
+> wants to make a change that would involve any part of the tree,
+> there's at least 2 code reviews, one for the commit, and one for the
+> recipe bump.  Compared to a single tree, this at least doubles the
+> number of reviews we need to process.
 
-> > > This gets very onerous over time, especially for simple
-> > > commits.  Having maintained several different companies forks
-> > > personally, and spoken to many others having problems with the same,
-> > > adding major features are difficult to test and rebase because of
-> > > this.  Moving the code to a single tree makes a lot of the toil of
-> > > tagging and modifying local trees a lot more manageable, as a series
-> > > of well-documented git commands (generally git rebase[2]).  It also
-> > > increases the likelihood that someone pulls down the fork to test it
-> > > if it's highly likely that they can apply it to their own tree in a
-> > > single command.
-> >
-> > Again, this is moot if the patches are applied in-tree.
->=20
-> Meta layer patch files in my experience tend to not layer well, and
-> require a good amount of maintenance.  They also have problems where
-> they're not versioned against a git base, so there's no guarantees of
-> where in the history the patches were forked from, and whether they
-> apply to your tree, or if they fail, what patches likely caused them
-> to fail.  Admittedly, tracking them in git isn't perfect either, but
-> at least it publishes "this is the source base these were based on" to
-> give some indication.  In practice, the public forks I've seen just
-> embed the custom meta layer within an openbmc tree to solve this
-> problem.
-> https://github.com/Intel-BMC/openbmc/tree/intel/meta-openbmc-mods
-> https://github.com/HewlettPackard/openbmc
+The typical bump commit is trivial to review and nobody does it except
+Andrew G or me anyhow.
 
-I could entirely be misunderstand what problem you're pointing out here.
-Why would it matter "where in this history the patches were forked
-=66rom"?  Aren't they forked from whatever the SRCREV in the recipe says?
-It is on the maintainer of the meta-layer to ensure they apply to that
-revision.
+You could argue that there is actually some velocity advantage of decoupling
+the feature support in the code repo while figuring out the minor
+implications at a recipe level separately.  Having to have every code
+repo commit pass on hardware before it can get +1 Verified is going to
+greatly increase our CI requirements, plus you're going to get lots more
+"I don't understand why this failed" because of a flaky Yocto-wget-fetch
+or Romulus QEMU failure or ...
 
-Having all the code in one repo doesn't give you any more visibility as
-to where the code was "forked from".  It ends up being exactly the same
-as a patch file except that the patch file has been "applied" already to
-the code.  You still don't have visibility to the underlying upstream
-commit number.  And, I would suspect it is going to be even worse
-because you're going to end up with back and forth merge commits trying
-to pick up the latest upstream code in these forks.  You're not going to
-have a nice git-submodule number indicating openbmc/openbmc was from
-here.
+We also would need to implement everything we have in code-repo level CI
+in the recipe-level CI.  I've spoken to this later as well, but I think
+while decreasing the number of reviews it will also decrease the
+velocity of the reviews even more.  I don't think that the bump commits
+are what are decreasing our velocity here.
 
-In my opinion, this is a problem with how people maintaining these trees
-are doing it and not a problem with how our code is organized.  In the
-facebook/openbmc tree we use git-submodules internally to hold the
-upstream trees.  For our github-side we have a script that updates them,
-but there isn't a strong reason we couldn't do the same git-submodule
-layout there (I think it is due to a deficiency in the way our
-internal<=3D>external mirror tool works).
+> For changes that want to make
+> any change to a few subsystems, as is the case when developing a
+> feature, they require 2 X <number of project changes> reviews, all of
+> which need to be synchronized. =20
 
-    https://github.com/facebook/openbmc/blob/helium/yocto_repos.sh
+I think there is a fundamental problem of how we develop features here.
+"All of which need to be synchronized" implies that every new feature we
+develop has hard co-reqs between repositories.  If that is the case,
+something is broken in our architecture.  We shouldn't patch around it
+by manipulating the code layout.
 
-If people are not treating the openbmc/openbmc tree as an unchanged
-blob, that is their fault and not ours.  Having all the source imported
-in one repo doesn't really solve this either and in fact is likely to
-make it worse because you now _can't_ treat openbmc/openbmc as an
-unchanged blob because you're going to have to patch-in-tree any changes
-to code you want to make.
+> There is a well documented problem
+> where we have no official way to synchronize merging of changes to
+> userspace applications within a bump without manual human
+> intervention.  This would largely render that problem moot.
 
-> I also think that having
-> one or a smaller number of reviews would concentrate a lot of the
-> discussion when we make treewide changes.  (OWNERS files, ect)  When
-> they get distributed among many reviews, in my experience it tends to
-> dilute the discussion a bit.
+This is a solved problem in projects with a similar layout to ours, such
+as OpenStack.  I've previously offered to add topic-based testing[1] to our
+CI framework and, maybe I misread the attitudes, but it didn't seem like
+it was interesting to the project.
 
-I would argue this is actually a bad thing.  We're going to more likely
-end up with large cross-repository commits that are harder to review,
-require more people to review them (a larger set of OWNERS), and are
-harder to revert.
+I _did_ add some amount of dependency-based testing to the repositories
+that are included in our base Docker image already.  If you change one
+of those repositories, they get included in the Docker image used for
+testing your code as well.  This has identified problems in the past
+because of, say, a change in sdbusplus that broke phosphor-logging's
+compile.
 
-If there is larger discussion to be had that should probably happen on
-the mailing list anyhow.
+> - It would allow most developers to not need to understand Yocto at
+> all to do their day to day work on existing applications.  No more
+> "devtool modify", and related SRCREV bumps.  This will help most of
+> the new developers on the project with a lower mental load, which will
+> mean people are able to ramp up faster..
 
-> > > - It would give an opportunity for individuals and companies to "own"
-> > > well-supported public forks (ie Redhat) of the codebase, which would
-> > > increase participation in the project overall.  This already happens
-> > > quite a bit, but in practice, the forks that do it squash history,
-> > > making it nearly impossible to get their changes upstreamed from an
-> > > outside entity.
-> >
-> > Not sure this is something we want to encourage, even if it happens in
-> > practice.
->=20
-> I think when done properly, it would be a huge help to the project.
-> My main point is that this isn't something we can stop (companies and
-> individuals have and will continue to do it anyway), so would we
-> rather make their changes easier to ingest back to upstream?
+I think there is something more fundamental going on here which I'll
+speak about later in "## End-to-end features"
 
-In my experience the difficulties with upstreaming are not related to
-logistics of sending patches to Gerrit.  They are related to the effort
-involved with getting other people in the community bought into what you're
-trying to do.  Having all the code in one place alleviates 1% of the
-upstreaming effort while doing nothing for the remaining 99%.
+> - It would give an opportunity for individuals and companies to "own"
+> well-supported public forks (ie Redhat) of the codebase, which would
+> increase participation in the project overall.  This already happens
+> quite a bit, but in practice, the forks that do it squash history,
+> making it nearly impossible to get their changes upstreamed from an
+> outside entity.
 
-> > > - It would centralize the bug databases.  Today, bugs filed against
-> > > sub projects tend to not get answered.
-> >
-> > Do you have some numbers handy?
->=20
-> I do not.  I can say that anecdotally the "you filed this bug against
-> the wrong project" happens quite often in the repositories I maintain,
-> and the lack of reasonable cross project "transfer the bug" semantics
-> makes this difficult (yes, admins can transfer bugs cross project, but
-> I'm pretty sure we don't want to call on core maintainers every time
-> we want to move things around.)  It would be quite helpful to the
-> project to have less than N bug trackers (might not necessarily be
-> one) to increase the odds that someone searches for and finds their
-> bug before filing a duplicate.
+I don't see how this improves the "forks that squash history" situation.
+Rebases are hard to pull off with how most companies handle their
+internal processes, so the best case here is merge commits.
 
-"bugs filed against a sub project tend to not get answered" and
-"bugs are filed against the wrong project" are different problems;
-you've shifted the discussion.
+> - It would centralize the bug databases.  Today, bugs filed against
+> sub projects tend to not get answered.  Having all the bugs in
+> openbmc/openbmc would help in the future to avoid duplicating bugs
+> across projects.
 
-The first is a problem against our maintainers.  Having all the issues
-in one repository doesn't improve that situation, but it actually makes
-it worse because you're going to shift that burden on a few individuals
-who pay attention to openbmc/openbmc issues while doing nothing to fix
-the certain-maintainers-don't-respond issue.
+We could do this without changing any code.  Just turn off the issue
+tracking on all our code repos[2].
 
-> > > Having all the bugs in
-> > > openbmc/openbmc would help in the future to avoid duplicating bugs
-> > > across projects.
-> >
-> > Has this actually been a problem?
->=20
-> Duplication?  It happens from time to time.  Not being able to search
-> for a bug across the project happens a lot, and in our current model,
-> requires the user to know which component they are filing the bug
-> against.
+> - Would increase the likelihood that someone contributes a patch,
+> especially a patch written by someone else.  If contributing a patch
+> was just a matter of cherry-picking a tree of commits and submitting
+> it to gerrit, it's a lot more likely that people would do it.
 
-Why can't people search bugs or code at an org-level?  I do it all the time.
+I'm not following why this can't be done today.  Aren't you just
+cherry-picking commits at a different level? =20
 
+I think there is likely legal apprehension about trying to take code
+=66rom a fork that isn't your own and trying to contribute it upstream.
+With the current CLA structure, the SOB in "fork/repo" doesn't have the
+same meaning legally as our SOB+CLA, so I cannot comfortably add my own
+SOB on code I picked up from "fork/repo".  No change to the repository
+layout will fix this.
+
+> - Greatly increases the ease with which stats are collected.
+> Questions like: How many patches were submitted last year?  How many
+> lines of code changed between commit A and commit B?  Where was this
+> regression injected (ie git bisect)?  How much of our codebase is C++?
+> How many users of the dbus Sensor.Value interface are there?  Are all
+> easily answered in one liner git commands once this change is done.
+
+I'm not saying some of these aren't positives, but most of them can
+already be answered today with existing tools.  Either github or grok
+search or gerrit queries can answer almost all of these except "how many
+lines of code changed between A and B", if you're expecting to count all
+the code in subordinate repos, but I don't see that as a particularly
+interesting question.
+
+> - New features no longer require single-point-of-contact core
+> maintainer processes (ie, creating a repo for changes, setting up
+> maintainer groups, ect) and can just be submitted as a series of
+> patches to openbmc/openbmc.
+
+If the single-point-of-contact is the issue, let's solve that.  I don't
+think it is though.  I think the bulk of the issue with new repos is
+disagreement on if something belongs in a new repo.  Submitting as a
+series makes _that_ situation worse because it doesn't force the
+discussion upfront and instead someone is upset they spent a bunch of
+time working on a new daemon that is rejected.
+
+> - Tree-wide changes (c++ standard, yocto updates, formatting, ect) are
+> much easier to accomplish in a small number of patches, or a series of
+> patches that is easy to pull and test as a unit.
+
+Patches that are also much more difficult to revert if they break one
+particular area...
+
+Why would we want these pulled together and tested as a unit anyhow?  If
+I update the formatting or the C++ standard used of repo A, that doesn't
+affect repo B. =20
+
+I've been involved in almost every difficult Yocto subtree update and the o=
+nly
+case I can think where we couldn't apply the changes to the older Yocto ver=
+sion
+was the OpenSSL3 changes, which we had to #define check around based on an
+OpenSSL version they export.  Even if all the code were in one repo
+would we have wanted to cram all that into a single "Yocto update plus
+fix all the code" commit?  I suspect not.  Doing the #define was
+appropriate no matter how the code was laid out.
+
+> - Inclusive guidelines: To make progress toward an unrelated but
+> important goal at the same time, I'm recommending that the
+> openbmc/master branch will be left as-is, and the newly-created sha1
+> will be pushed to the branch openbmc/openbmc:main, to retain peoples
+> links to previous commits on master, and retain the exact project
+> history while at the same time moving the project to having more
+> inclusive naming, as has been documented previously[3].  At some point
+> in the future the master branch could be renamed and deprecated, but
+> this is considered out of scope for this specific change.
+
+This is a separate topic and should be tackled separately.  I guess it
+is simpler if you're pushing all the code into one repo to only deal
+with it there.  If this is something we want to emphasize now, I think
+the Yocto bits are in place that we could just do it relatively quickly.
+The only painful part would be all the existing commits in Gerrit that
+are unmerged and targetting `refs/for/master` but we'd have to tackle
+that with this proposed move as well.
+
+> - Each individual sub-project will be given a folder within
+> openbmc/openbmc based on their current repository name.  While there
+> is an opportunity to reorganize in more specific ways (ie, put all
+> ipmi-oem handler repos in a folder) this proposal intentionally
+> doesn't, under the proposition that once this change is made, any sort
+> of folder rearranging will be much easier to accomplish, and to keep
+> the scope limited.
+
+At a minimum I'd like these all put into a subdirectory off the root.
+It is bad enough with how many meta-layers we have, but we shouldn't
+then add a hundred top-level subdirectories for the code.
+
+> - Yocto recipes will be changed to point to their path equivalent, and
+> inherit externalsrc bbclass[4].  This workflow is exactly the workflow
+> devtool uses to point to local repositories during a "devtool modify",
+> so it's unlikely we will have incremental build-consistency issues
+> with this approach, as was a concern in the past.
+
+Are you sure this works?  I thought externalsrc required the code to be
+in an absolute directory and not a relative one?
+
+    if externalsrc and not externalsrc.startswith("/"):
+        bb.error("EXTERNALSRC must be an absolute path")
+    if externalsrcbuild and not externalsrcbuild.startswith("/"):
+        bb.error("EXTERNALSRC_BUILD must be an absolute path")
+
+The original facebook/openbmc codebase kept all of the code in the repo
+and we simply appended the directories to the SRC_URI.  It is somewhat
+of a pain to maintain the SRC_URI lists, so maybe externalsrc is better
+in that regard.  We also ran into issues with getting lots of
+pseudo-abort issues, as if Yocto didn't really support source-in-tree in
+the latest code.  In order to avoid the pseudo-abort issues I had to do
+this rather ugly hack in our code[3].  I don't know how we sanity test
+your proposal to ensure it doesn't have this issue.
+
+> - Subprojects that are intended to be reused outside of OpenBMC (ex
+> sdbusplus) will retain their previous commit, history, and trees, such
+> that they are usable outside the project.  This is intended to make
+> sure that the code that should be reusable by others remains so.
+
+How do we identify all of these?  (I spoke about this in another part of
+the chain, so we don't need to expand on it here.)
+
+> - The above intentionally makes no changes to our subtree update
+> process, which would remain the same process as is currently.  The
+> openbmc-specific autobump job in Jenkins would be disabled considering
+> it's no longer required in this approach.
+
+Wouldn't it still be handy for the above-mentioned repos?
+
+> Let me know what you think.
+
+In general, I'm not a fan of mono-repo style.  Both the mono-repo and
+micro-repo style have issues.  I think we need to have an adequate
+discussion of what the issues are that would be _introduced_ by moving
+to a mono-repo in our case as well.  I'm not currently convinced that
+this proposal is optimizing in the way that is most beneficial to the
+project.
+
+## Reviews
+
+You've mentioned that this will make reviews easier and I think the
+opposite is far more likely to be true.  OWNERS + Gerrit is not
+sufficient in a mono-repo (and Github doesn't solve this either).
+
+The biggest complaint, as I've heard it, has been the review cycle
+velocity.  I myself have ran into sub-repos where it takes weeks to get
+a trivial change in because the maintainers just don't stay on top of
+it.  This proposal will make the problem exponentially worse.
+
+Our most proficient and active reviewers tend to be OWNERS higher up in
+the "merge chain".  In 2022H2, I think the top 5 reviewers handled more
+reviews than everyone else put together.  The only way I can stay somewhat =
+on
+top of what needs my attention is by having all my Gerrit notifications
+going into a folder and deleting them as I've taken action.  With the
+current OWNERS I'm already having to delete almost half of these just by
+skimming the title (ex. "meta-not-my-company: ..." commits).  If you
+start throwing every single commit in Gerrit at me because I matched in
+OWNERS, I'll have absolutely no idea how to know what needs my attention and
+what doesn't.  How are you planning on handling this as you are a
+top-level OWNER as well?
+
+## Out-of-Yocto builds
+
+The biggest impediment to my development tends to be the repositories
+that are not using Meson and haven't properly Supported meson
+subprojects, because it makes it almost impossible to make changes to
+those without invoking Yocto which is a much slower process.  I've
+written about this in the past[5].  If all the code is in a single
+repository, I fear there will be almost no effort put into supporting
+out-of-Yocto builds because at that point, why support them?  I wrote
+about the time involved in that post but you're taking activities that
+take seconds with Meson subprojects and turning them into 5 minutes.
+
+If we are doing something that slows down the most active developers, we
+need to make sure that the increase in contributions from other
+developers is going to more than offset it.  Based on the kind of people
+affected by the problems you're describing, I'm really not convinced it
+will.
+
+## End-to-End Features
+
+You used the concept of an "end-to-end feature" a few times in this
+proposal but talking about different things.  I'm going to specifically
+talk about a feature that requires changes across multiple existing
+repositories.
+
+A bold statement: nobody here actually implements end-to-end features.
+
+I've never witnessed a single person implement a new feature in the
+kernel, add userspace support to interact with that kernel work, add
+the Redfish APIs to interact with the userspace support they added,
+implement the WebUI to control the Redfish APIs, and then wrote system
+integration tests in phosphor-test-automation.  We draw somewhat
+arbitrary boundaries already and call something "end-to-end" because it
+happens to reside within those boundaries.  For a typical feature, for
+many developers, that boundary seems to be "Redfish + some other
+userspace app(s)".  Admittedly, this proposal does help (a little) with
+_that_ particular arbitrary boundary, but it doesn't help with anything
+outside of it.
+
+There is a bigger problem that this is exposing though, in my mind at
+least: many developers can't or don't work at the component level.
+
+Let's consider a "simple" change that requires:
+    - Adding a new DBus API.
+    - Adding support in App-A for said DBus API.
+    - Adding Redfish support for said DBus API in bmcweb.
+
+You're suggesting that this is hard to accomplish today, end-to-end, and ma=
+ybe
+it is.  But, the fact that anyone is attempting to solve it end-to-end
+means that the resulting product is pretty terrible from a future
+development and maintenance stand-point:
+
+   * Repositories aren't using meson subproject wrap files which makes
+     developing against a change to phosphor-dbus-interfaces trivially
+     easy.
+
+   * Developers are not developing the changes to App-A with unit-tests.
+
+   * Developers are not confirming that their changes to App-A are sound
+     at a dbus-level, so the code is tightly coupled with however
+     they've changed bmcweb to interact with it and often crumbles when
+     another application interacts with it (ex. PLDM).
+
+   * The changes to bmcweb have no unit testing and/or mocking of the DBus =
+APIs.
+
+   * There is not a single integration test added to
+     phosphor-test-automation to make sure nobody breaks this feature in
+     the future.
+
+Combining all the code together completely throws away the necessity to tre=
+at
+the software as components, which certainly doesn't improve all of the
+above.
+
+Your proposal seems to be optimizing for the "I need to hack at code
+across a few repos and throw it all together into a BMC binary image so
+I can test drive it" case, but I would suggest this case should rarely even
+be done by most of our developers.  The fact that this is even a "regular
+development case" to begin with is a problem.
+
+Everyone should be able to add a new DBus API and at least 95% of the suppo=
+rt in
+App-A without ever touching a BMC.  You then have the other 5% that
+maybe needs some confirmation on hardware (you mocked out how you
+_think_ the hardware behaves already, right?).  Once that is done you
+should be able to develop the whole bmcweb feature without touching
+hardware as that is _completely_ software-based (mock out all the dbus
+interfaces for your new feature please, and please add a test case).  If
+all these pieces are working independently, you can, only then, spend a
+little time throwing it all into a single image with something like [6]
+and test-driving it, but better yet is if you also add code to
+phosphor-test-automation.
+
+If there are pieces of what I just wrote above that are difficult today,
+let's fix them, but combining all the code into a mono-repo is, to me,
+just a band-aid over these problems.
+
+## Tightly coupled software
+
+I've worked on a large BMC-like product that had a mono-repo.  The
+result was a tightly-coupled mess of code that was impossible to work
+in, so there ended up being arbitrary "component boundaries" put in
+place and nobody worked outside their "component boundary" silo.  We
+already have a bit of this "silo" mentality here but at least we don't
+have the tightly-coupled aspect of it.  We have an architecture that
+allows the pieces to, mostly, move independent from each other.  How
+would we ensure that a mono-repo doesn't devolve into tightly-coupled
+code because the frictions that stop it are removed?
+
+I think a very likely outcome of this proposal is we end up with more
+"utility" libraries that are going to increase the coupling and
+library-dependency structure, which is worse for performance.
+
+## Reverting and large reviews
+
+I already see quite often large commits even within a single repository,
+which are difficult to review and difficult to revert.  It is currently
+on the maintainers to push back on these and request smaller commits.
+Having the code in a mono-repo seems to encourage cross-package changes
+(and in fact was listed as a selling point here), which means more
+likely that a bug introduced by one small piece of the change needs to
+have the whole change reverted.
+
+This proposal is likely to increase the average size of a commit since
+it is more likely to include cross-package changes.  That means we also
+need more people to give feedback on an individual change and as a
+reviewer I have to sift through all the pieces that aren't even relevant
+to me.  Both of these slow the review process down even more, not increase =
+it.
+
+## "To make upstreaming easier"
+
+You started with the topic of making upstreaming easier and I'm really
+not convinced that our repo structure is the major impediment to
+upstreaming.  Most of the advantages you talked to seemed to be around
+_development_ and not _upstreaming_.  Which is it we are solving?  Do we
+really have data that indicates upstreaming is hard because we have
+multiple repositories?  I don't think I've ever heard this.  I have
+heard that development is hard[er].
+
+---
+
+Some of these issues I've raised could certainly be solved by stronger
+worded "guidelines" than we currently have in place (and somehow
+ensuring they are followed).  I am worried about the overall code-smell that
+will come from a monorepo (based on my past experiences with them).
+
+The biggest concern I have is with the [negative] impact to code reviews and
+I don't really have any way to solve them except for completely changing our
+code review process at the same time.  Something like the Linux maintainer
+owned subtree model maybe where a maintainer owns a fork for their part of
+the tree and we bless them at a higher level; it doesn't sound appealing.
+Maybe there is some better Gerrit tooling than what we're currently
+getting from OWNERS or maybe some other review tool.
+
+[1]: https://lore.kernel.org/openbmc/20191119003509.GA80304@patrickw3-mbp.d=
+hcp.thefacebook.com/
+[2]: https://docs.github.com/en/repositories/managing-your-repositorys-sett=
+ings-and-features/enabling-features-for-your-repository/disabling-issues
+[3]: https://github.com/facebook/openbmc/commit/e418bfbcf382185fdffb768a012=
+e762a4600ae63#diff-b0fea89439c1004ad5229cb7058b4740ee1c542b32cfb0d2165788f9=
+020b5da0R1
+[4]: https://github.com/williamspatrick/openbmc-tof-election-data/blob/995f=
+0d73184db7c25446284261cc023af611e7c4/2021H2/data/report.json#L1
+[5]: https://www.stwcx.xyz/blog/2021/04/18/meson-subprojects.html
+[6]: https://github.com/williamspatrick/dotfiles/commit/df180ac2b74f2b7fcb6=
+ae91302f0211bc49cb2e9
 --=20
 Patrick Williams
 
---wjgM+jvwEkziTqaI
+--/eOdTtYFTzgTdVZX
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmJNzdMACgkQqwNHzC0A
-wRmijBAAhxaZWqAM/N7I0lOxY43lMz44Y2IfqiWrUsf0VHshkC+nhIiDh+dDWFtc
-dl/c6OYlHClSiUh08FBV0r1/ptvDOZKY8hdoUdNdKGifUvP3g6LYVJp2TGnFQBF6
-+y21PdjYZf6fP05N8+MZXSbO56qfPpWD5+l5to3FRT/k7yL8ya41Hwz4A5v8maeW
-ZT634CErwbPT27IHzba9N1AUTcqYbwtSUGLclVJ504DJMISJOuZdTSco+JMcR8Rq
-G64DTcFTWEcb1klkOGzWzlYFTBU68ldaLdoTwV8+dO7hwNvUprPfE00DOvDp9wu2
-PcHlOWPMOT64awwULa6Ik0ES5UwMHtBr694A3GArp2mtUv2Oc3KgzlhsEGnraXfw
-qPftx8KJk4yg6W0C1bommxraLcB0gOF4ax1MkpzXOxjTyjXmpWV5Ir7mSn5YwSuR
-1m4k+8snKbympRyeDX8Shi1w2U/D4e8bJ3K2EdGdOOPsZ3LddC87s8pU3ZrOMGvQ
-Z2Z5DdB7yVWOdtIHvr5XbEvZAFEURY/qQk+H6QwJZYJPhYPrgx1IVthxn0k40n4d
-jn3ni4QlSHdiMVOI247PytoFsABsz6i+qrfRo9GuOjyZuu8CMG9bMyxpSOcO35P6
-doguNFS5aW9Tf/fmPa/Ugf6m8DNRZdqscVc3+KbWkYeIt91eEWk=
-=gKer
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmJN8toACgkQqwNHzC0A
+wRmaMg//a3m42sPhYqlx7MsdN/xFLEz5pi/RMI7aHxRMbq3WPoWVh0pMhkN17/6h
+h9r7D4iezct55+8dTc3LolKdAsCINysLPrIFxU1rmGOe6g3Hi5vRtCYrSkA4KPMR
+zbqoXTpKS5ImjD77bTuwnF7LQmBgOCtpR2Jk3A/aJtF9ccQb4eOTkexhfIkjDuH9
+nWBSnaueFG5F2FCB6rSK6bKcpoeNrA/qUXIJsoYRVsa4fA4nsSLL1C4ghBuxGh+S
+qM/8Z/OnHX72esTuT3podx9ZZ55bqVbujkPE0sxowqAWW8hEnExjR4Jw3NMHhfQu
+i85x7U1q3aZAh/fg2KRx16DSyjg+Qas35rBCSNZnIHAhfmBAhg3Zsu4zX8IkXLdk
+/awuGo42e7DN26RZqFSeCj3AXMg3EpJWrqJDXklgY8V1oP4XtXLLnKoUMCH7Ry10
+lxxxA7IKBXclaLfqgnH7k8pvP93W9jFwYuA2og1+1Uy6GsKWHlhrJxxNIbNQxWW6
+i91BCWg3g0RzqOnp8McTxrjVJD7T+EEc1d8v7MtdDLKvZiegCSHlPdaE13nYKEKx
+vQUpCv2h2Rx0wAcFpIdQX7AmBQkNrUoY+8ijLgdXI2Bd081Jfle6rrirpNqUcpim
+xji/cQUPfKsQSu1xW4TexJtybwowbJAuQQBqDF1j0M15lMegmLo=
+=SW3h
 -----END PGP SIGNATURE-----
 
---wjgM+jvwEkziTqaI--
+--/eOdTtYFTzgTdVZX--
