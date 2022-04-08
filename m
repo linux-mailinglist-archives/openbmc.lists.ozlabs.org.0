@@ -2,68 +2,53 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EABD4F93E3
-	for <lists+openbmc@lfdr.de>; Fri,  8 Apr 2022 13:23:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C1D304F9B4B
+	for <lists+openbmc@lfdr.de>; Fri,  8 Apr 2022 19:03:46 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KZbVP0J9Tz2yh9
-	for <lists+openbmc@lfdr.de>; Fri,  8 Apr 2022 21:23:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KZl2S4ZV7z3bcl
+	for <lists+openbmc@lfdr.de>; Sat,  9 Apr 2022 03:03:44 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=OLcF3ugv;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=dkim header.b=KMShXiXQ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::630;
- helo=mail-ej1-x630.google.com; envelope-from=andy.shevchenko@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=OLcF3ugv; dkim-atps=neutral
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com
- [IPv6:2a00:1450:4864:20::630])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=alien8.de (client-ip=2a01:4f8:190:11c2::b:1457;
+ helo=mail.skyhub.de; envelope-from=bp@alien8.de; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256
+ header.s=dkim header.b=KMShXiXQ; dkim-atps=neutral
+Received: from mail.skyhub.de (mail.skyhub.de [IPv6:2a01:4f8:190:11c2::b:1457])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KZbTz44s6z2x9G
- for <openbmc@lists.ozlabs.org>; Fri,  8 Apr 2022 21:23:34 +1000 (AEST)
-Received: by mail-ej1-x630.google.com with SMTP id i27so16654147ejd.9
- for <openbmc@lists.ozlabs.org>; Fri, 08 Apr 2022 04:23:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=cRoyXCmCEfHW6FbxD2a5gAxg2fHOPCI7K6xvLP7LBlY=;
- b=OLcF3ugvB6AlRI055J9tJP1EjOYQdBpBT+XkuD7zndoJU11AGacmBG0mk67F36A7sV
- /hFA2veApJ1HXhiYh86006TKDvYD4t+E2QlFKC9lCt7JnwjqYOKX1AeY57SseQhW8FA2
- h/vVYNGtyuU++PyL6Mpo8/tsqUQx845T+UDGFMZifewrDlXr1ltR6c2pYS4KjTGVRnny
- GqRV2E7BWxjpx8Y9KBKYV7zPxSRxGXZTcrfQADOJzyfKbY/Z2dIxNA+E54a+1qOhTQUp
- F1dCghAsXSy1BL3OswS8qj7zWCPpRIBqHp5HhU/cnibFj0k7iK6cwSXitz9skmpzPL3m
- KMqQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=cRoyXCmCEfHW6FbxD2a5gAxg2fHOPCI7K6xvLP7LBlY=;
- b=vGWHI9ndRtEcBG7bE8lde1S5ZgHztpIynlJQnfZF0VikqOUqX52lHdUUuMCL1IVmMY
- lzzwA6TgJTSHaUQXFtxS415CGorgRLFCqfXL4ic7+g25X9OrCj4BvQzQKDaMUHDoFM8W
- 3NIlUzMPIOEuxxEokq1UDadoEwhnJDfX6Cz9rP2zPgU2kG+OSFrKTmq7r0wcfwd9IzmJ
- NBOCGUnsmZ847Oxg1yJnT0JxEskh03GVfdn//jTrARO/+B72VZovB4XsrfKYF3Hmb6nl
- iSVA0overhpqCY26mbsKMNY6IQ8TmBhvBfC5IK1Jidd4L+Rz9H4k4oaLgz2mGc6eU+2q
- 8Ikg==
-X-Gm-Message-State: AOAM531fLGcDVG1Od3m6X/r4QTPChF6ND1dXY1pS/+BnUL3KJdmdo0qg
- wGED6L1ChGAKthUiivAJfWSwUvuFAtdgs5Ci0ys=
-X-Google-Smtp-Source: ABdhPJykQNqDc7FaAjGw5x9RJlN7Ipzg84vVW8ik/7vJMM2bSnf0UwzV3g7qHKQy7+iLJ6yUnwC5p+UHpZTxxck2Pfw=
-X-Received: by 2002:a17:907:968e:b0:6db:aed5:43c8 with SMTP id
- hd14-20020a170907968e00b006dbaed543c8mr17927638ejc.636.1649417010579; Fri, 08
- Apr 2022 04:23:30 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KZl1Z0dQhz3bYb
+ for <openbmc@lists.ozlabs.org>; Sat,  9 Apr 2022 03:02:58 +1000 (AEST)
+Received: from zn.tnic (p200300ea971561a9329c23fffea6a903.dip0.t-ipconnect.de
+ [IPv6:2003:ea:9715:61a9:329c:23ff:fea6:a903])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 2D46A1EC051E;
+ Fri,  8 Apr 2022 19:02:38 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+ t=1649437358;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+ bh=89ZZusgZlQLzjBgn/vcDWRXT/K3jazA2dI5kFw6JX9I=;
+ b=KMShXiXQDurLK/vgHdfMrM+Bc1DrLH0mxV3HkZnwtJ4q6i6wPKi4D20Nmfp+NpLK/FzTwX
+ SGTwF9N4W0OE5/dBjtPXJSujvo4Ql1OJnNpoKEVGGc9S0lOET1RclTGx4/YkRMyWbmE+3D
+ ssuRUjHgkKkqyGVlA+/n9Ii0m5im8U0=
+Date: Fri, 8 Apr 2022 19:02:36 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: Medad CChien <medadyoung@gmail.com>
+Subject: Re: [PATCH v6 1/3] ARM: dts: nuvoton: Add memory controller node
+Message-ID: <YlBqrAApeb8rV9WJ@zn.tnic>
+References: <20220322030152.19018-1-ctcchien@nuvoton.com>
+ <20220322030152.19018-2-ctcchien@nuvoton.com>
 MIME-Version: 1.0
-References: <20220407183941.36555-1-eajames@linux.ibm.com>
- <20220407183941.36555-3-eajames@linux.ibm.com>
-In-Reply-To: <20220407183941.36555-3-eajames@linux.ibm.com>
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Fri, 8 Apr 2022 14:19:15 +0300
-Message-ID: <CAHp75VfcmhGitd6_6mDVG6_eE02sX2B3_iqZxeiX3iFDkmPShg@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] leds: pca955x: Add HW blink support
-To: Eddie James <eajames@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220322030152.19018-2-ctcchien@nuvoton.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,116 +60,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Joel Stanley <joel@jms.id.au>, Pavel Machek <pavel@ucw.cz>,
- Linux LED Subsystem <linux-leds@vger.kernel.org>
+Cc: KWLIU@nuvoton.com, tony.luck@intel.com, rric@kernel.org,
+ benjaminfair@google.com, linux-edac@vger.kernel.org, KFTING@nuvoton.com,
+ avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org,
+ JJLIU0@nuvoton.com, ctcchien@nuvoton.com, tali.perry1@gmail.com,
+ devicetree@vger.kernel.org, robh+dt@kernel.org, james.morse@arm.com,
+ YSCHU@nuvoton.com, mchehab@kernel.org, linux-kernel@vger.kernel.org,
+ tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Apr 7, 2022 at 10:43 PM Eddie James <eajames@linux.ibm.com> wrote:
->
-> Support blinking using the PCA955x chip. Use PWM0 for blinking
-> instead of LED_HALF brightness. Since there is only one frequency
-> and brightness register for any blinking LED, track the blink state
-> of each LED and only support one HW blinking frequency. If another
-> frequency is requested, fallback to software blinking.
-
-...
-
-> +#define PCA955X_BLINK_DEFAULT  1000
-
-What's the unit of this number?
-
-...
-
->   * Write to frequency prescaler register, used to program the
-> - * period of the PWM output.  period = (PSCx + 1) / 38
-> + * period of the PWM output.  period = (PSCx + 1) / <38 or 44, chip dependent>
-
-Using <> in  formulas a bit confusing, what about
-
- * period of the PWM output.  period = (PSCx + 1) / coeff
- * where for ... chips coeff = 38, for ... chips coeff = 44.
-
-?
-
-...
-
-> +               dev_err(&pca955x->client->dev, "%s: reg 0x%x, err %d\n",
-> +                       __func__, n, ret);
-
-Can be indented better. But I would rather see regmap, where this kind
-of debugging is for free and already present in the regmap core/.
-
-...
-
-> +static u8 pca955x_period_to_psc(struct pca955x *pca955x, unsigned long p)
-> +{
-> +       p *= (unsigned long)pca955x->chipdef->blink_div;
-
-Why casting?
-
-> +       p /= 1000;
-
-Does this 1000 have a meaning? (see units.h and other headers with
-time / frequency multiplier definitions).
-
-> +       p -= 1;
-
-> +       return (u8)p;
-
-Redundant casting.
-
-> +}
-
-> +static unsigned long pca955x_psc_to_period(struct pca955x *pca955x, u8 psc)
-> +{
-> +       unsigned long p = (unsigned long)psc;
+On Tue, Mar 22, 2022 at 11:01:50AM +0800, Medad CChien wrote:
+> ECC must be configured in the BootBlock header.
+> Then, you can read error counts via
+> the EDAC kernel framework.
+> 
+> Signed-off-by: Medad CChien <ctcchien@nuvoton.com>
+> ---
+>  arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi | 7 +++++++
+>  1 file changed, 7 insertions(+)
+> 
+> diff --git a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
+> index 3696980a3da1..ba542b26941e 100644
+> --- a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
+> +++ b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
+> @@ -106,6 +106,13 @@
+>  		interrupt-parent = <&gic>;
+>  		ranges;
+>  
+> +		mc: memory-controller@f0824000 {
+> +			compatible = "nuvoton,npcm750-memory-controller";
+> +			reg = <0x0 0xf0824000 0x0 0x1000>;
+> +			interrupts = <GIC_SPI 25 IRQ_TYPE_LEVEL_HIGH>;
+> +			status = "disabled";
+> +		};
 > +
-> +       p += 1;
-> +       p *= 1000;
-> +       p /= (unsigned long)pca955x->chipdef->blink_div;
-> +
-> +       return p;
+>  		rstc: rstc@f0801000 {
+>  			compatible = "nuvoton,npcm750-reset";
+>  			reg = <0xf0801000 0x70>;
+> --
 
-Similar questions here.
-
-> +}
-
-...
-
-> +       if (!p) {
-
-Why not use a positive conditional?
-
-> +               p = pca955x->active_blink ? pca955x->blink_period :
-> +                       PCA955X_BLINK_DEFAULT;
-> +       } else {
-> +               if (*delay_on != *delay_off) {
-> +                       ret = -EINVAL;
-> +                       goto out;
-> +               }
-> +
-> +               if (p < pca955x_psc_to_period(pca955x, 0) ||
-> +                   p > pca955x_psc_to_period(pca955x, 0xff)) {
-> +                       ret = -EINVAL;
-> +                       goto out;
-> +               }
-> +       }
-
-...
-
-> +       if (!keep_psc0) {
-
-Ditto.
-
-> +               psc0 = pca955x_period_to_psc(pca955x, pca955x->blink_period);
-> +               err = pca955x_write_psc(pca955x, 0, psc0);
-> +       } else {
-> +               err = pca955x_read_psc(pca955x, 0, &psc0);
->         }
+This needs an ACK from devicetree folks.
 
 -- 
-With Best Regards,
-Andy Shevchenko
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
