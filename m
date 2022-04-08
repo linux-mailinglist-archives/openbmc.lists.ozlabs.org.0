@@ -2,141 +2,128 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7BE384F8D29
-	for <lists+openbmc@lfdr.de>; Fri,  8 Apr 2022 06:41:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id AEF3A4F8D46
+	for <lists+openbmc@lfdr.de>; Fri,  8 Apr 2022 07:31:36 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KZQZS2Vg3z3bXy
-	for <lists+openbmc@lfdr.de>; Fri,  8 Apr 2022 14:41:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KZRgp3gNLz3bVH
+	for <lists+openbmc@lfdr.de>; Fri,  8 Apr 2022 15:31:34 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=GlzR3moQ;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=shN7XQGT;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7e8d::731;
- helo=nam04-bn8-obe.outbound.protection.outlook.com;
- envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=GlzR3moQ; 
+ smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f400:feae::718;
+ helo=apc01-psa-obe.outbound.protection.outlook.com;
+ envelope-from=howard_chiu@aspeedtech.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com
+ header.a=rsa-sha256 header.s=selector1 header.b=shN7XQGT; 
  dkim-atps=neutral
-Received: from NAM04-BN8-obe.outbound.protection.outlook.com
- (mail-bn8nam08on20731.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:7e8d::731])
+Received: from APC01-PSA-obe.outbound.protection.outlook.com
+ (mail-psaapc01on20718.outbound.protection.outlook.com
+ [IPv6:2a01:111:f400:feae::718])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KZQYx18NGz2xCC;
- Fri,  8 Apr 2022 14:41:22 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KZRgG0mm5z2xY1
+ for <openbmc@lists.ozlabs.org>; Fri,  8 Apr 2022 15:31:04 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=WZFPUGIE1IV1XBwvOhoAJpvz71o4mQ2RIS6+fnmxIepj11IylaKfuv+PZAWYeCZ7vawYq0Tm/A0Q6EYyRl3SHQc6zJDybm1iCvXtKXObFpCidV2fmV22pVi5hGbFKWE/6rLVJsZB4ozM4xgxa3GKDOH3bmw5af8tyc+zf9vYdG+oqNosbCDSuCmGNY/mtI8HxWE4sZjFhGdXMX83ZtgyrHY+xYddZx4rMzQbZpwaGdpHwZJCY0VvmDNU+EJTbgCt3OU+015bKCE5GoTSXEfilFDJRHvk0miLZmiDgU3PjuQH4LbWfalx4lXtsdVV8wkEdK7P+5FgZQokSR1jkTDi/w==
+ b=PhngEobv+yWqoWUMxnCjUk8tKKzK2wjunM82e6lephierkwAslomF7JNuIUt5rBG2Qiv1NUZTU3Ftj4wzNbAZotmFcn95D/ffB9Qxvpv8vfixEC37BH1HlyHayl9B/PSZb8rz1gXvbCeUQ77lg41T5lwJS5EX37ThT9G/LtKEtaR5PVZwtKMYFe6++nLAdG2SfCde4lJ9vOlnF7fYajRK1TH5B/BYu2omEq8LTsr63VdoCR7D/r+YKH48DiYYU5BB7v1MHm+r2DuTvVRrLzUDBjnTQ/09l9j46oSed3ogCtwyiZkKoDxRE14AcnU3aoMYs9/PHyEEjP2foKjwrVYqA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xfL8xJCVIbLB53B+QJyM8NUM+E2lo2AYnMXMh56GvjU=;
- b=LGAaEOarW9d4uYtNsZeibODnnLqbjxWJh5ao8yUZpvfcY9SeG4fMTk2KoppUPDdu8rxIBz8PXURPcPESaqdB5r+KyIAOjnzt95E/54zrBK8CBn/NGyeimfwb6cHUKzbsf2KpiYLIGnf+fEQuDW9jJ8DyrgLJlKYJeLCzv1/wmuOh9MmjPcA89E23BD921nnRC/HuScVlNum4BCyZxXXTAefi0ZbvTeteOUsc2NdUzmaIa8fgC0pgN6VLqlexjdRlQN6l5xNt17k+dHVhc7jq1iNSNeVJtQ4a2rMir69vHUM5KeJUs0ANl+pzZ/HCXDSyGa9PB1YQ5AhYMNd6pPpQJg==
+ bh=DBCzCS2eh70hC2JAaq7bXoS/4ajX9H4lbMY4a0mTOGc=;
+ b=WFA5v31dvzRdSPEB3WKCv8Bqzf1q7ctvjhD679bQKwiToD2hLWtsW9vkNI2QhJ4xmvulLPwWKbriBuANf91qS3x2icMc6XTjvD/lI8awlrFKALe4Z81jLwytgRqxBR8SIZce3f1AFD62D2w60mQHLUKMt8DJT5aOHRNw4vlSrez5MratGjBdqS6p3O+xqkBw7JsEoPCPtG/IIe+q9vs0FNdF+RRLEMEVk18/+B0gEZA5nS1kg8+pyabKITnBypwIDZnlVbdEO00WUj2lKIqNZUE1U8vL6blCw2f8bD/UC0hm66Jq0YF7X8ggC8JjxNAp2IBe6d3rE6KDL6ZecRn/Tg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xfL8xJCVIbLB53B+QJyM8NUM+E2lo2AYnMXMh56GvjU=;
- b=GlzR3moQnhqyyOejPF19gbIYn0Pl1l+0GgxXdtTbW8Wn1aEuXLke9AqmFxMINme5SQ0GErm65bjLsGTwAJGl9uTsQ5ZBFwcVVD31pLqYDGewhbON+Rhc3u4mXYyKipkODnjOsaXYoDemCvyDUu3GiaJloHTJ47YQta3Oc3WWSU0=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
-Received: from SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24) by
- DM6PR01MB4123.prod.exchangelabs.com (2603:10b6:5:22::26) with
- Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5123.30; Fri, 8 Apr 2022 04:41:00 +0000
-Received: from SJ0PR01MB7282.prod.exchangelabs.com
- ([fe80::68f1:1dd2:fa3e:28be]) by SJ0PR01MB7282.prod.exchangelabs.com
- ([fe80::68f1:1dd2:fa3e:28be%3]) with mapi id 15.20.5144.022; Fri, 8 Apr 2022
- 04:41:00 +0000
-Message-ID: <2552a9e2-ca37-c2d3-f636-da18a56bf32e@os.amperecomputing.com>
-Date: Fri, 8 Apr 2022 11:40:47 +0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.6.0
-Subject: Re: [PATCH v6 1/4] ipmi: ssif_bmc: Add SSIF BMC driver
-Content-Language: en-US
-To: minyard@acm.org
-References: <20220310114119.13736-1-quan@os.amperecomputing.com>
- <20220310114119.13736-2-quan@os.amperecomputing.com>
- <20220311011942.GX3457@minyard.net>
- <569f50d5-8f13-280e-b944-6e26d95dc50b@os.amperecomputing.com>
- <20220317131356.GC3457@minyard.net>
-From: Quan Nguyen <quan@os.amperecomputing.com>
-In-Reply-To: <20220317131356.GC3457@minyard.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SI2PR06CA0005.apcprd06.prod.outlook.com
- (2603:1096:4:186::12) To SJ0PR01MB7282.prod.exchangelabs.com
- (2603:10b6:a03:3f2::24)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: d958bdeb-01fa-4bd7-535d-08da1919fabf
-X-MS-TrafficTypeDiagnostic: DM6PR01MB4123:EE_
-X-Microsoft-Antispam-PRVS: <DM6PR01MB4123D72DF7CA327E0E3C5F0FF2E99@DM6PR01MB4123.prod.exchangelabs.com>
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: YO++buxVyiBDlwevWtFbv4XDAZM+vgfta62XwlfZjIEWRmdPe5RCB44t0vr+p10VY/o3nY0DzeyuQuWR1dZf+2tbyLrjnG1Bnkk5kRFxiZYIdkJ9O8hlgmQzEsE/ewLKwU0fFn6rUDb/OMoMFejJ6SvE6UmJt7n38ZJRHgKHepupoJoDuJq8AYWANj1mM4ig/+66Kn5RdS7orUmkZpVNOz3Lej6LnR9T5gRPQwIy4MzinFtPmCQfb948eXbpWzmyg5FIOGC5xvfYiem3lH95cV9z21ifUDBfNlC5y2PAb5w8IbP+jQxK3TRacilV+SjffxJHT4coQAW0qGRUgKMAAbL8/0gkfuIegbv/mib8Xyvt46z5KgSMU6TyP6eb9HFHNIgPtbwRWETW2EvxJHzFY4kvi/T4sRRPk2kDJsw+GJCnwFT7LIcbB1OglTR8EWCctFxYiPdS5PPMYMeGle/VY95QXkYeyr8L2iC3JBwDRBTZsBugwQaZeapHSd4rn/FEZApUHPAxtGsH/+zKCUKD9bisWhdv3o1MlV7DhhNbYd1Os1F0ohYSI1go7TSS5Vnr7VSHlQv9koN1vivQG44npizx/H4IIWeyLHDYMERh/6a/aegTRC1OZdP6lg183Bh+cObXhsHIR3YEcZ0XJn28yR03oXmQ5jiR4XQluiyAU3BjWxdghTymqGjm6TmqUMW57FudKlis9m/Q2sfZo80iU0DY2BPZo/AJjHwImEWJvE8=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:SJ0PR01MB7282.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(13230001)(4636009)(366004)(54906003)(6916009)(66556008)(4326008)(31696002)(66946007)(38350700002)(38100700002)(186003)(66476007)(6512007)(8676002)(316002)(86362001)(52116002)(53546011)(6506007)(26005)(8936002)(6486002)(107886003)(2906002)(5660300002)(30864003)(83380400001)(508600001)(7416002)(6666004)(31686004)(2616005)(43740500002);
+ bh=DBCzCS2eh70hC2JAaq7bXoS/4ajX9H4lbMY4a0mTOGc=;
+ b=shN7XQGTm+bEOMzuqrnjtk/8BLY6uA2xvlVP1Fb82l1I8+EvtGfbgwQkeP+2aeU/x5o+9a0yWD/bzu5CeZSvUG+xMGD+nIfuX5h1ae1HrAujcHCunZpIWF6Mk5Ob/F8Xr06M8HNg+ZMQeJesaWrGcd5mSED73HWTbuzrhKgTxywO7b5YCb/wjWwHv/DdPoD5IQShbzBNC3NUETEjZemuwGtVr2mr813/Ry4dTELGvZ9P4x1XQTdcC/jCDCRAAmUg6SlQYzy2TT+5UiEUtOJUodfc1qMbwMhjK5eHsQGmWVHzix8cBiAEiJQx+58tW9u9d770wlIYYJ9bdg5fIsFIJg==
+Received: from SG2PR06MB2315.apcprd06.prod.outlook.com (2603:1096:4:b::19) by
+ HK0PR06MB2596.apcprd06.prod.outlook.com (2603:1096:203:30::14) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5144.22; Fri, 8 Apr 2022 05:30:41 +0000
+Received: from SG2PR06MB2315.apcprd06.prod.outlook.com
+ ([fe80::69db:d6a9:d891:e1fc]) by SG2PR06MB2315.apcprd06.prod.outlook.com
+ ([fe80::69db:d6a9:d891:e1fc%7]) with mapi id 15.20.5123.031; Fri, 8 Apr 2022
+ 05:30:41 +0000
+From: Howard Chiu <howard_chiu@aspeedtech.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Solutions to fix the problem which u-boot failed to load the kernel
+ on ast2500 EVB
+Thread-Topic: Solutions to fix the problem which u-boot failed to load the
+ kernel on ast2500 EVB
+Thread-Index: AdhJelnBj18fTaW0QrmsRhKfOVz6ewBjy+lw
+Date: Fri, 8 Apr 2022 05:30:41 +0000
+Message-ID: <SG2PR06MB23151EF8DA561670CE6D9787E6E99@SG2PR06MB2315.apcprd06.prod.outlook.com>
+References: <SG2PR06MB231524FAA84DE1162B97C6F4E6E79@SG2PR06MB2315.apcprd06.prod.outlook.com>
+In-Reply-To: <SG2PR06MB231524FAA84DE1162B97C6F4E6E79@SG2PR06MB2315.apcprd06.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 9fc833d5-783a-47a7-c320-08da1920ec19
+x-ms-traffictypediagnostic: HK0PR06MB2596:EE_
+x-microsoft-antispam-prvs: <HK0PR06MB25966ABB29B1836B0B56DA6EE6E99@HK0PR06MB2596.apcprd06.prod.outlook.com>
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: wxOqoWklTm9QANSaqz9xKYicZUEaeNXDH667JUlqGZx9NC8Se7M98Cb37j6tM80cS/KuLJNQa66TZh6XgU/mNgyNVWFJ6LOpmm8z7eW0LXx6tWJS+wUec5MnUaIoq1hZvaltIYx5g3e3ll+VQEgyF5G/QUbtrGcndrqJE6w2NEQL6I3+sWqKKh5QAwFPKF59xUf5nbl5eSRo1fpKtJ5+YgJGhJEds1ba5qPV0f9y5JESovA6HmlBfSLq1w4BaIWyL1U9uuAUAPmUsowEnsZliwvhcU+uw1lbZG3+q4WLKQulBEYksq+fGIRTAOe8R/x0GdoC0fGqYxlZOPGVZbo38Rm35aM4TKTusUgvdXIR3e1oNg/9rBy0nK2siQbMCS9TDpFYTv5yrthXcTgFsbCZPji/IMZeq2aHXsmRYbZsnDV3VT6SHSIZBe4sHKGlWk7khfeT2N6VoXjgN/Ca58xSpBBb7ETKRnhJ5aa4sBzDVh82xqrdbRZu+wFQ8vRCwz/xZdzs37Erkg9C+f3sEcmtNw9awAIAdtkq2b3tP4FWhYZVEt6RrHvYonnh85EW8td6CN74eKsnpLv21Ua9aZpOyBh5/Tv3B07JssKmbQYmDCHJjsRJnjz2NMGTOlIy+OxTG5vXq5RZsmOMYf4cCtq+evc2bQO+gxqlu/qg8GkqLGSobkdNYpVqcgoiMCspT7ZJnNIqFAYSfrx73wlrSpwWRUd+eB7lTlZAr+L0SHZjmuXdOjk/+939Xgvx3eax0NyFHzgxwzZiyrwj5q413BQX78RGoBTHgRqs5oyE/1luYdrBKwwE866dut+X3R5lGg01
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:SG2PR06MB2315.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230001)(346002)(136003)(39840400004)(366004)(376002)(396003)(86362001)(166002)(7696005)(26005)(186003)(76116006)(9686003)(71200400001)(6916009)(2906002)(5660300002)(316002)(55016003)(83380400001)(6506007)(21615005)(52536014)(508600001)(966005)(33656002)(38070700005)(38100700002)(66476007)(64756008)(8676002)(66946007)(66446008)(122000001)(66556008)(8936002);
  DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cVlDUDBtNy9yK2JJRndaU25lQlJsYlNHZnNzWE1ZWjNnQlVKdi9PMkM1TEpy?=
- =?utf-8?B?UjBxN0puU1dhcjlvMnM1T1crRDhMaGR5MHdiak5BeVNpNmM1Wm9IS2VtdW91?=
- =?utf-8?B?Q2pibDF4SWlkWG11UXZzekl2YXBwRDRUTnBrRWJucDd4N1hXVDgxM2NNRDRx?=
- =?utf-8?B?b0Y2LzJRc3BBaUIvK2U0SzNBNlYzWjM2cUQ5NiszT0l5MXpBNmVMdElMcTlC?=
- =?utf-8?B?NGJTUnBTN1ZoVFFWamJmQzVXUDU1NHZrWUtzL2FlZmtEV1BFWEFHTy9pY1Jq?=
- =?utf-8?B?N3lQaHN6WGN6eEJGb1NCRDROR0UvZGgvWkFXbzNDdG1pcnBndFh5dmVGYS9u?=
- =?utf-8?B?SXp3QW40TUJqMjlNZk9UZzRRQlgxTklYd0h6c2c4UXQxL00vdDJDRFpmUDBs?=
- =?utf-8?B?M04xZnZ4L1ZBMWdlV2JPaTl3eUhUb0pTYTVIR3BiZGI3Zkw3VnZWTkVBbENl?=
- =?utf-8?B?c2RSY2JkclgxclNkMm9FZktlM3JkLzlLeWNLRS8xTy9MQkY1aUpLcnBnQUpJ?=
- =?utf-8?B?ZUo4YjlkamQ2MHhseGcveWhYRHJyd1VLbUF2T1JOY3hTTUl6Z1NTKzBNTnRr?=
- =?utf-8?B?c3dmL3U5UFp0aUhUWWUxZXQ0Z3BEd2hReHVmNFU0dXBvc0RpbE45QUxGb3V1?=
- =?utf-8?B?ZnRJTEt1T3dkc29PalJ1ODQxclBoSUJINUdTampEQmxzNXMwYVpldWNVNVVo?=
- =?utf-8?B?d2Q1cE01R3ZkdGphVGxwVWw0WlVGYk1Mczd1djRuaFRTalh1SDh3Z1ZmSVg0?=
- =?utf-8?B?bWgvQ21kNDZSTjJwbEp4aGEwNFdISFlFV2FwYzBsbEtzaXBjYitaaTEwVENz?=
- =?utf-8?B?RVdSQzN5dHFOY1BaUVZncTUra1duUkdLZ0x5R1NvaTJjZWdORXdBd1dpNEV1?=
- =?utf-8?B?a2FPdlgyMHBiRy9CTjJGSFFXdm9ZYkFrcFVNR3BSQ3dGV2RTMXZFYStnS3dM?=
- =?utf-8?B?SzlpcDZ6cGo0NlZvNmplZlVqclhxWEdFMTFXQkYwdkxMbEVyNTA5RXJHWDJk?=
- =?utf-8?B?dHB6dU1XSHdlU2VmalNqaEJpMWRVZHNvL3pWU3puUUF3K0hKbnY0MXRpUUxQ?=
- =?utf-8?B?UTZMV0lEcmFiZ2R3NGF0enJRSWFwWjZKRUJzaG4vNXhqMXVHU3kwd1M4azFu?=
- =?utf-8?B?R3B1N2NWa01GUjdPdndSNmo0L3BPeGJIUnRoUDB5SzNuMCtnTWQ1blQvVnJS?=
- =?utf-8?B?M2NoZjMrOTVxSkhKUmVENjk1U3VZV3FSbUpsd1VJd0FOMHgyYzBMYlQrM2NZ?=
- =?utf-8?B?ejRqWkc4MW1USlBaaWxtbGZLb3I0OVoyVkMxWm43Q3RZcnNGODNOYy9jNGZX?=
- =?utf-8?B?SW5qNUtzbFRtdVd2bDZTa0tmVDJWRUp4TCtQOHZiekxlS0ErajZwa2VUUFVQ?=
- =?utf-8?B?T2NWY05mRGpKdlNrMTRnMXc5TkdyeGEyNUsyZjJKMm56YysrRTVzakJwY0cx?=
- =?utf-8?B?MUpHdjVBamRQajFWWmIzSWRVaDBJc0dWWWU0ZjJVNmp4a0cwSmVLZCsvWGk4?=
- =?utf-8?B?Rkd5Vm5wekQzTU44VVZHNlZ6dHFObEYyRjhFanlmMEsxVHZQRzRwVXg5UVlF?=
- =?utf-8?B?N2t3Q3pLeGpFV0VPSSsyWWJXazNmN08yRlo4RXVkODBYN2hSYjRVV0crazc1?=
- =?utf-8?B?TktUbXV3MEZGeWQxWEVLVjl3dncxRG5JTzM4Y25aYWU5TmJ4TDR0WElBWG9G?=
- =?utf-8?B?UDRIVVNTWW9mK3FPcW55U2UrU3Z3RTluWkZ6VWQ0cXZZN0MxMmJlanQzNURr?=
- =?utf-8?B?czJ5ejI4YnRZUFhEN3hqUE1UOG1waEF1QUNtZlRuZ3NLM3dsWHdPZEF5VHQ1?=
- =?utf-8?B?MWprMzFMV0RoR1Rnbi95WlFWZ216SVo0NGhLZEY0Y3Y3OE1ERERpbTQwQjRm?=
- =?utf-8?B?VlhiNE5IcTg0WXM1OEJJbTQwbHZWY3NVdDhNSmJ3L2hhb251SjNIOWluUmcr?=
- =?utf-8?B?NjFnbGwxTWs1S2pDV1ZJNUZhL0ljdWczQmlwRm00cVBiUEkxQ1JLbTREQnU5?=
- =?utf-8?B?ZGdXM0cxNHp5R3U0UDBERDZGb3FTZVZzeG91MnkxYTFWY3luZUVzUmZ0cVFN?=
- =?utf-8?B?SU4yS21FcjY3bisrOFRnTXlSTnYza09vcmFnYlVuSzM2QUc0cUI4Wk5pRGVw?=
- =?utf-8?B?czhmaUZUaUFmM0pFVDBzaFNQVWJpd25OY3VTWjJacDZaMk5XelZTZDIwbHA4?=
- =?utf-8?B?Rm1BMmE0WmdGTmZIbHRxTCtxT3FEL3UvTWNjL1hVNHg1aFNqNkdnZmM5OTFx?=
- =?utf-8?B?SThQU3JkWHlnbFBibHIrUXh0SUZWd1M2UHM5UTNYVHJ2d1V0YVA4MEx2TUF6?=
- =?utf-8?B?Z3hra1Y0MVFMVVk0Slc2eG9PdzJCcmhzRnBxTjVQS1RJbktmd0RLUDgrYVgw?=
- =?utf-8?Q?kWBCJgMFeqdDt/2Ro+gJ88YJpF98tr1lNRxB0?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d958bdeb-01fa-4bd7-535d-08da1919fabf
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR01MB7282.prod.exchangelabs.com
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?Ad8BkgKE9bMN6j0+3lEv8QlRL40RsVXRNCmwSAhzGgj7XUQANFzZKncBuZZ5?=
+ =?us-ascii?Q?zXjczKrFMLKeGviSe3/nA9aae6ICwaznLE6z6bvJEFZE3fcefAySV1uHGxlY?=
+ =?us-ascii?Q?EplhAUljWAZacYj3EecMeSw2HmEIfNe++tPcuaHEkkK3v788bsxRMWmSvmFW?=
+ =?us-ascii?Q?hhMOwCej/SFGji8PcOqdvBDSMSN5s7xToGHWD+52m+Ldyw5++M/TAmA6Qu01?=
+ =?us-ascii?Q?9tyi1KG//W1oixcV9Eg65RkxcR4DNHTbawAk3+tHghG/aEbpjv52jPgGHBty?=
+ =?us-ascii?Q?P0EaZp1K8Tqp/CUysTMdqtWVCq3NBSscwrB9XnBMjw2a0QDoVGGC3cxBn1nP?=
+ =?us-ascii?Q?QO+8pGsufh0PaTFZ5BTCpqNiQZgTYhi3K0enVgDFPeCwjwsBVQojFVxVafcc?=
+ =?us-ascii?Q?jmE45nWB1wlXU8iwMaAAlxf1gF7KUvCc3nbpEupXIVkJx2NIgikxA5m4d8VT?=
+ =?us-ascii?Q?T/zIl5f4/P0Rpe2RV/Tsh2Yu6PMh8rbxNAnrzMxYXhOYVb081pZGjNGlAZ3Y?=
+ =?us-ascii?Q?hCSaxqPpb3kfWsV52T1+bkojjxldVC7xrCUNBfH3JwuPZCDYvuLetSQwj/5I?=
+ =?us-ascii?Q?OGkUfPjPfbDw4P1sPenCFf1ZYQ1CYuYq6jju86QzpexmG9Ts9ZhEOgFdBVbp?=
+ =?us-ascii?Q?oYw22D1CFNILG6pUxhO9PIiVmvwTIYWIUSz6gVq731ED1tP7I9D6LwlawN6e?=
+ =?us-ascii?Q?iGjGjqR1cN4rEJEyGqB15c6jIFtJnm3c55InPUudqAXSV9B0d0h64N9QYjlS?=
+ =?us-ascii?Q?n2ocKTcvJox7ZR8iNlVksWvaxu+aGg1Asj4ihwUer+c6p3H8e5ZJxFhC/hRp?=
+ =?us-ascii?Q?rnUnfEUuI2ToSUz8nfSXqpOeZ7GBuCxYxmi+emG2LvdyzTKxXvKknc/FBe8J?=
+ =?us-ascii?Q?/WjZmUsxAezFcscq2PTg8m3q6zGcNEZsHt+zfqZ6P/Nl5m1RK/XgVJmr3H6Y?=
+ =?us-ascii?Q?CK2sAcLSEz16MMIXk20HXxFI3APfR56+nMNfmAv/tv8iT8wDRLJIscwmf4Zr?=
+ =?us-ascii?Q?zTDNuwjPFnkE6J+hzbkqSNYhe9SRYfebOJidsJyXSQEi4SHmQJr0tDEyfct0?=
+ =?us-ascii?Q?O6D86f4xxXFbEaETXoY54ErRPO7zxypZbjbmyi1lTJfbQXLT8JYdJsoranex?=
+ =?us-ascii?Q?ufQuMu7TaNBAwnw0a1oa48xfCWqITStKsxbb15QFcHIPUTD5Uxng95GhZx1X?=
+ =?us-ascii?Q?nw8esaejr5FlWfr6dA97DrYGK0dl15nN97U8lPMR6/H8OsWfOjIcbOd6uH72?=
+ =?us-ascii?Q?l1FQV+Q0BpEqoAmGy9lsWNWS7hjlCT1jMFWw2MRNIILApvo3f7c3LC+Gf1/2?=
+ =?us-ascii?Q?835u8DTB8O4JKNZ4TeGxiU+p8afAoZIWnzjaJeiIFmhTDUas1BWjNHqFki1X?=
+ =?us-ascii?Q?fmovKlQl4erI7/J55Qwzv1gWv2vqs+VyGfueaSJP4sA3sw5VcduapB+ipjyu?=
+ =?us-ascii?Q?cSThpFwKSBjmtEyVcrmc8npA4F+eorGsjKqC8CnN3nEQk2j6Qx50TN+PQWLj?=
+ =?us-ascii?Q?GLB7CsesB8Z6Gr6NlhpJyIEgjAwSN2fxnT5XxweY+CeIGua/N60gtUIxhaw4?=
+ =?us-ascii?Q?7YQqqtn/yY1xduwQH02rzwrm7oWcoibSKzUGXnUv32FhMKWt+6xPfcQXFf7E?=
+ =?us-ascii?Q?+7IQES19pDvin3IwNlxUXpZxnKa2O963HZbNU5sLqaxaj4/5GFOxKKKyhoOl?=
+ =?us-ascii?Q?M/o82UY1u/gGgI7oCGcM3dbDyRepBB/Q8NWUC4mr8LA9izoeT608JX2MKAB2?=
+ =?us-ascii?Q?pzx8AKn8aTpM+DvW00FfxCnfHSq93Sg=3D?=
+Content-Type: multipart/alternative;
+ boundary="_000_SG2PR06MB23151EF8DA561670CE6D9787E6E99SG2PR06MB2315apcp_"
+MIME-Version: 1.0
+X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Apr 2022 04:41:00.2127 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: mlroa2n6m0KpsRQS6Y5P/+4aEvGsqislp3ZrAjLPbqUMPsG4qC+2ji9YPfYjcWBhX7HvhmXpvn0h3ctBY22UwWENsJT9TIVKon65c7t7DrU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR01MB4123
+X-MS-Exchange-CrossTenant-AuthSource: SG2PR06MB2315.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9fc833d5-783a-47a7-c320-08da1920ec19
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Apr 2022 05:30:41.6636 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: a+bCsr5hJXJGQKECOSghamPf3k1x7BzPmv3VtpbMxciwbWcS4RvSUGGiipQy9F1+kZZQ0u7c9uKuFV3EsPkkZ2+PtOM1xlZb9zq9dE+ly2U=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: HK0PR06MB2596
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -148,435 +135,195 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
- Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
- Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
- "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
- Brendan Higgins <brendanhiggins@google.com>, linux-kernel@vger.kernel.org,
- Phong Vo <phong@os.amperecomputing.com>, Wolfram Sang <wsa@kernel.org>,
- Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
- openipmi-developer@lists.sourceforge.net,
- Open Source Submission <patches@amperecomputing.com>,
- linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--_000_SG2PR06MB23151EF8DA561670CE6D9787E6E99SG2PR06MB2315apcp_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+Hi OpenBMC team,
 
 
-On 17/03/2022 20:13, Corey Minyard wrote:
-> snip...
->>>> +
->>>> +static void response_timeout(struct timer_list *t)
->>>> +{
->>>> +	struct ssif_bmc_ctx *ssif_bmc = from_timer(ssif_bmc, t, response_timer);
->>>> +	unsigned long flags;
->>>> +
->>>
->>> Is there a possible race here?  The timeout can happen at the same time
->>> as a received message, will something bad happen if that's the case?
->>>
->>
->> Thanks Corey,
->> I think I need extra comment here.
->>
->> The purpose of this timeout is to make sure ssif_bmc will recover from busy
->> state in case the upper stack does not provide the response.
->> Hence, the response timeout is set as 500ms, twice the time of max
->> Request-to-Response in spec as the code below. Should it be longer?
-> 
-> That's not what I was asking.  I know what the timer is for.  But what
-> happens if the response comes in at the same time this timer goes off?
-> What will keep the data from getting messed up?
-> 
 
-Dear Corey, thanks for pointing this out.
+I had identified the root cause of the problem reported by dekriea on disco=
+rd [1].
 
-In case the response comes in at the same time this timer goes off, both 
-timeout handler and the ssif_bmc_write must first win to acquire the 
-lock first, eg: ssif_bmc->lock
+We have a 32MB NOR flash on ast2500 EVB, which means the kernel image will =
+be placed at offset 512 KB by default, but u-boot is trying to load kernel =
+image from the offset 1024 KB due to the incorrect setting in evb-ast2500_d=
+efconfig.
 
-If timeout handler wins it firstly test ssif_bmc->response_in_progress 
-to make sure if the ssif_bmc_write() is succeeded. If not, 
-ssif_bmc->response_in_progress is false, then set the ssif_bmc->busy and 
-ssif_bmc->response_timer_inited flags to false, and set the flag 
-ssif_bmc->aborting = true to start aborting the current response.
+The evb-ast2500_defconfig was ported from Aspeed SDK, so the partition layo=
+ut is different from OpenBMC 32MB flash layout which is defined in image-ty=
+pe-phosphor.bbclass[2] and openbmc-flash-layout.dtsi[3].
 
-If ssif_bmc_write() wins, it then first test if the timer not yet goes 
-off, ie: ssif_bmc->response_timer_inited is true, if so, del the timer 
-and let the response ready to send back to host. If not, make 
-ssif_bmc_write() to return -EINVAL as the driver had already aborted the 
-response and wait for the new request.
 
-This will be included in my next version.
 
->>
->> As per spec, the max Request-to-Respose would not exceed 250ms.
->>
->> I put the comment in ssif_bmc.h as below:
->>>> +/*
->>>> + * IPMI 2.0 Spec, section 12.7 SSIF Timing,
->>>> + * Request-to-Response Time is T6max(250ms) - T1max(20ms) - 3ms = 227ms
->>>> + * Recover ssif_bmc from busy state if it takes upto 500ms
->>>> + */
->>>> +#define RESPONSE_TIMEOUT			500 /* ms */
->>
->>
->>>> +	spin_lock_irqsave(&ssif_bmc->lock, flags);
->>>> +
->>>> +	/* Recover ssif_bmc from busy */
->>>> +	ssif_bmc->busy = false;
->>>> +	del_timer(&ssif_bmc->response_timer);
->>>
->>> You don't need to delete the timer, it's in the timeout.
->>>
->>
->> Will remove this redundant code in next version
->>
->>>> +	ssif_bmc->response_timer_inited = false;
->>>> +
->>>> +	spin_unlock_irqrestore(&ssif_bmc->lock, flags);
->>>> +}
->>>> +
->>>> +/* Called with ssif_bmc->lock held. */
->>>> +static void handle_request(struct ssif_bmc_ctx *ssif_bmc)
->>>> +{
->>>> +	/* set ssif_bmc to busy waiting for response */
->>>> +	ssif_bmc->busy = true;
->>>> +
->>>> +	/* Request message is available to process */
->>>> +	ssif_bmc->request_available = true;
->>>> +
->>>> +	/* Clean old response buffer */
->>>> +	memset(&ssif_bmc->response, 0, sizeof(struct ssif_msg));
->>>> +
->>>> +	/* This is the new READ request.*/
->>>> +	wake_up_all(&ssif_bmc->wait_queue);
->>>> +
->>>> +	/* Armed timer to recover slave from busy state in case of no response */
->>>> +	if (!ssif_bmc->response_timer_inited) {
->>>> +		timer_setup(&ssif_bmc->response_timer, response_timeout, 0);
->>>> +		ssif_bmc->response_timer_inited = true;
->>>> +	}
->>>> +	mod_timer(&ssif_bmc->response_timer, jiffies + msecs_to_jiffies(RESPONSE_TIMEOUT));
->>>> +}
->>>> +
->>>> +static void set_multipart_response_buffer(struct ssif_bmc_ctx *ssif_bmc, u8 *val)
->>>> +{
->>>> +	u8 response_len = 0;
->>>> +	int idx = 0;
->>>> +	u8 data_len;
->>>> +
->>>> +	data_len = ssif_bmc->response.len;
->>>> +	switch (ssif_bmc->smbus_cmd) {
->>>> +	case SSIF_IPMI_MULTIPART_READ_START:
->>>> +		/*
->>>> +		 * Read Start length is 32 bytes.
->>>> +		 * Read Start transfer first 30 bytes of IPMI response
->>>> +		 * and 2 special code 0x00, 0x01.
->>>> +		 */
->>>> +		*val = MAX_PAYLOAD_PER_TRANSACTION;
->>>> +		ssif_bmc->remain_len = data_len - MAX_IPMI_DATA_PER_START_TRANSACTION;
->>>> +		ssif_bmc->block_num = 0;
->>>
->>> Do you need to validate the data length before using this?
->>> This applies for lots of places through here.
->>>
->>
->> set_multipart_response_buffer() is called only when ->is_singlepart_read is
->> false, which is determined by the below code under the *_write()
->>
->> ssif_bmc->is_singlepart_read = (ssif_msg_len(&msg) <=
->> MAX_PAYLOAD_PER_TRANSACTION + 1);
->>
->> So, I think the len is validated and could be use in this functions.
-> 
-> Ah, I had things backwards.  "Read" here is when you are writing to
-> the other side.  I understand now.
-> 
->>
->>>> +
->>>> +		ssif_bmc->response_buf[idx++] = 0x00; /* Start Flag */
->>>> +		ssif_bmc->response_buf[idx++] = 0x01; /* Start Flag */
->>>> +		ssif_bmc->response_buf[idx++] = ssif_bmc->response.netfn_lun;
->>>> +		ssif_bmc->response_buf[idx++] = ssif_bmc->response.cmd;
->>>> +		ssif_bmc->response_buf[idx++] = ssif_bmc->response.payload[0];
->>>> +
->>>> +		response_len = MAX_PAYLOAD_PER_TRANSACTION - idx;
->>>> +
->>>> +		memcpy(&ssif_bmc->response_buf[idx], &ssif_bmc->response.payload[1],
->>>> +		       response_len);
->>>> +		break;
->>>> +
->>>> +	case SSIF_IPMI_MULTIPART_READ_MIDDLE:
->>>> +		/*
->>>> +		 * IPMI READ Middle or READ End messages can carry up to 31 bytes
->>>> +		 * IPMI data plus block number byte.
->>>> +		 */
->>>> +		if (ssif_bmc->remain_len < MAX_IPMI_DATA_PER_MIDDLE_TRANSACTION) {
->>>> +			/*
->>>> +			 * This is READ End message
->>>> +			 *  Return length is the remaining response data length
->>>> +			 *  plus block number
->>>> +			 *  Block number 0xFF is to indicate this is last message
->>>> +			 *
->>>> +			 */
->>>> +			*val = ssif_bmc->remain_len + 1;
->>>> +			ssif_bmc->block_num = 0xFF;
->>>> +			ssif_bmc->response_buf[idx++] = ssif_bmc->block_num;
->>>> +			response_len = ssif_bmc->remain_len;
->>>> +			/* Clean the buffer */
->>>> +			memset(&ssif_bmc->response_buf[idx], 0, MAX_PAYLOAD_PER_TRANSACTION - idx);
->>>> +		} else {
->>>> +			/*
->>>> +			 * This is READ Middle message
->>>> +			 *  Response length is the maximum SMBUS transfer length
->>>> +			 *  Block number byte is incremented
->>>> +			 * Return length is maximum SMBUS transfer length
->>>> +			 */
->>>> +			*val = MAX_PAYLOAD_PER_TRANSACTION;
->>>> +			ssif_bmc->remain_len -= MAX_IPMI_DATA_PER_MIDDLE_TRANSACTION;
->>>> +			response_len = MAX_IPMI_DATA_PER_MIDDLE_TRANSACTION;
->>>> +			ssif_bmc->response_buf[idx++] = ssif_bmc->block_num;
->>>> +			ssif_bmc->block_num++;
->>>> +		}
->>>> +
->>>> +		memcpy(&ssif_bmc->response_buf[idx],
->>>> +		       ssif_bmc->response.payload + 1 + ssif_bmc->nbytes_processed,
->>>> +		       response_len);
->>>> +		break;
->>>> +
->>>> +	default:
->>>> +		/* Do not expect to go to this case */
->>>> +		dev_err(&ssif_bmc->client->dev,
->>>> +			"%s: Unexpected SMBus command 0x%x\n",
->>>> +			__func__, ssif_bmc->smbus_cmd);
->>>> +		break;
->>>> +	}
->>>> +
->>>> +	ssif_bmc->nbytes_processed += response_len;
->>>> +}
->>>> +
->>>> +/* Process the IPMI response that will be read by master */
->>>> +static void handle_read_processed(struct ssif_bmc_ctx *ssif_bmc, u8 *val)
->>>> +{
->>>> +	u8 *buf;
->>>> +	u8 pec_len, addr, len;
->>>> +	u8 pec = 0;
->>>> +
->>>> +	pec_len = ssif_bmc->pec_support ? 1 : 0;
->>>> +	/* PEC - Start Read Address */
->>>> +	addr = GET_8BIT_ADDR(ssif_bmc->client->addr);
->>>> +	pec = i2c_smbus_pec(pec, &addr, 1);
->>>> +	/* PEC - SSIF Command */
->>>> +	pec = i2c_smbus_pec(pec, &ssif_bmc->smbus_cmd, 1);
->>>> +	/* PEC - Restart Write Address */
->>>> +	addr = addr | 0x01;
->>>> +	pec = i2c_smbus_pec(pec, &addr, 1);
->>>> +
->>>> +	if (ssif_bmc->is_singlepart_read) {
->>>> +		/* Single-part Read processing */
->>>> +		buf = (u8 *)&ssif_bmc->response;
->>>> +
->>>> +		if (ssif_bmc->response.len && ssif_bmc->msg_idx < ssif_bmc->response.len) {
->>>> +			ssif_bmc->msg_idx++;
->>>> +			*val = buf[ssif_bmc->msg_idx];
->>>> +		} else if (ssif_bmc->response.len && ssif_bmc->msg_idx == ssif_bmc->response.len) {
->>>> +			ssif_bmc->msg_idx++;
->>>> +			*val = i2c_smbus_pec(pec, buf, ssif_msg_len(&ssif_bmc->response));
->>>> +		} else {
->>>
->>> I thought for a second that this was wrong, but I think it's correct.
->>> Supply zero if you don't have data.
->>>
->>>> +			*val = 0;
->>>> +		}
->>>> +		/* Invalidate response buffer to denote it is sent */
->>>> +		if (ssif_bmc->msg_idx + 1 >= (ssif_msg_len(&ssif_bmc->response) + pec_len))
->>>> +			complete_response(ssif_bmc);
->>>> +	} else {
->>>> +		/* Multi-part Read processing */
->>>
->>> You don't check the length here like you did above.  I think that's
->>> required.
->>>
->>
->> As per my explanation above, the ->is_singlepart_read is determined by
->> testing the length, so it is validated as I assumed.
->>
->>>> +		switch (ssif_bmc->smbus_cmd) {
->>>> +		case SSIF_IPMI_MULTIPART_READ_START:
->>>> +		case SSIF_IPMI_MULTIPART_READ_MIDDLE:
->>>> +			buf = (u8 *)&ssif_bmc->response_buf;
->>>> +			*val = buf[ssif_bmc->msg_idx];
->>>> +			ssif_bmc->msg_idx++;
->>>> +			break;
->>>> +		default:
->>>> +			/* Do not expect to go to this case */
->>>> +			dev_err(&ssif_bmc->client->dev,
->>>> +				"%s: Unexpected SMBus command 0x%x\n",
->>>> +				__func__, ssif_bmc->smbus_cmd);
->>>> +			break;
->>>> +		}
->>>> +
->>>> +		len = (ssif_bmc->block_num == 0xFF) ?
->>>> +		       ssif_bmc->remain_len + 1 : MAX_PAYLOAD_PER_TRANSACTION;
->>>> +		if (ssif_bmc->msg_idx == (len + 1)) {
->>>> +			pec = i2c_smbus_pec(pec, &len, 1);
->>>> +			*val = i2c_smbus_pec(pec, ssif_bmc->response_buf, len);
->>>> +		}
->>>> +		/* Invalidate response buffer to denote last response is sent */
->>>> +		if (ssif_bmc->block_num == 0xFF &&
->>>> +		    ssif_bmc->msg_idx > (ssif_bmc->remain_len + pec_len)) {
->>>> +			complete_response(ssif_bmc);
->>>> +		}
->>>> +	}
->>>> +}
->>>> +
->>>> +static void handle_write_received(struct ssif_bmc_ctx *ssif_bmc, u8 *val)
->>>> +{
->>>> +	u8 *buf = (u8 *)&ssif_bmc->request;
->>>> +
->>>> +	if (ssif_bmc->msg_idx >= sizeof(struct ssif_msg))
->>>> +		return;
-> 
-> I don't think this check is valid.  I believe the msg_idx only covers
-> the current message, but ssif_msg is a full multi-part message.  It
-> covers the single-part message, I think but not the multi-part ones.
-> Also, abort the operation and log on bad data.
-> 
+So we have three solutions for this issue:
 
-Yes, thank you for this catch.
+1. Revise the CONFIG_BOOTCOMMAND and CONFIG_ENV_OFFSET/SIZE in evb-ast2500_=
+defconfig of u-boot v2019.04.
 
-Will change in next version.
+2. Add .cfg to override CONFIG_BOOTCOMMAND and CONFIG_ENV_OFFSET/SIZE in ma=
+chine evb-ast2500.
 
->>>> +
->>>> +	switch (ssif_bmc->smbus_cmd) {
->>>> +	case SSIF_IPMI_SINGLEPART_WRITE:
->>>> +		buf[ssif_bmc->msg_idx - 1] = *val;
->>>> +		ssif_bmc->msg_idx++;
->>>> +
->>>> +		break;
->>>> +	case SSIF_IPMI_MULTIPART_WRITE_START:
->>>> +		if (ssif_bmc->msg_idx == 1)
->>>> +			ssif_bmc->request.len = 0;
->>>> +
->>>> +		fallthrough;
->>>> +	case SSIF_IPMI_MULTIPART_WRITE_MIDDLE:
->>>> +		/* The len should always be 32 */
->>>> +		if (ssif_bmc->msg_idx == 1 && *val != MAX_PAYLOAD_PER_TRANSACTION)
->>>> +			dev_warn(&ssif_bmc->client->dev,
->>>> +				 "Warn: Invalid Multipart Write len");
-> 
-> You should abort the operation here.  Don't deliver obviously bad data.
-> Same in the code just below.
-> 
-> This will require that you add a message aborted type of state to just
-> ignore everything that comes in until the full sequence ends or a new
-> message starts.
-> 
+For example: https://github.com/blackcatevil/openbmc/commit/5eecaf84d91c252=
+3767da239aa5dbbf42af13bfc.patch
 
-Will introduce the abort state which will ignore everything until the 
-new request comes to handle those invalid cases.
+3. Add an ast2500_openbmc_defconfig for evb-ast2500 machine which is simila=
+r to ast2600[4].
 
->>>> +
->>>> +		fallthrough;
->>>> +	case SSIF_IPMI_MULTIPART_WRITE_END:
->>>> +		/* Multi-part write, 2nd byte received is length */
->>>> +		if (ssif_bmc->msg_idx == 1) {
->>>> +			if (*val > MAX_PAYLOAD_PER_TRANSACTION)
->>>> +				dev_warn(&ssif_bmc->client->dev,
->>>> +					 "Warn: Invalid Multipart Write End len");
->>>> +
->>>> +			ssif_bmc->request.len += *val;
->>>> +			ssif_bmc->recv_len = *val;
->>>> +
->>>> +			/* request len should never exceeded 255 bytes */
->>>> +			if (ssif_bmc->request.len > 255)
->>>> +				dev_warn(&ssif_bmc->client->dev,
->>>> +					 "Warn: Invalid request len");
->>>> +
->>>> +		} else {
->>>
->>> You check msg_idx above, but I'm not sure that check will cover this
->>> operation.
->>>
->> That check is to make sure the length (*val) must always be strictly 32
->> bytes in case of MULTIPART_WRITE_START/MIDDLE. And this check allows the
->> length is up to 32 bytes in MULTIPART_WRITE_END.
-> 
-> Now that I have read and write straight, this is where the previous
-> comments apply.
-> 
-> You are trusting the the length sent by the remote end in the second
-> byte is correct, but there is no guarantee of this.  The remote end can
-> send as many bytes as it likes.  You need to check that you don't
-> overflow buf here and that it actually sends the number of bytes that it
-> said it was going to send to avoid underflow.
-> 
 
-Will include in next version. The request which is exceeded the 255 
-bytes should be aborted.
 
->>
->>>> +			buf[ssif_bmc->msg_idx - 1 +
->>>> +			    ssif_bmc->request.len - ssif_bmc->recv_len]	= *val;
-> 
-> This computation is fairly complicated and hard to understand.
-> Calculations like this are asking for trouble.
-> 
-> It would be easier to understand had request.len be the current length
-> of what is in request.payload and increment it on every incoming byte.
-> Then request.len could be used to add data to the buffer, like
-> 
-> 	if (ssif_bmc->request.len >= sizeof(ssif_bmc->payload))
-> 		error...
-> 	ssif_bmc->payload[ssif_bmc->request.len++] = *val;
-> 
-> If you renamed msg_idx to curr_recv_idx and recv_len to curr_recv_len,
-> it would be more clear that these are related and operate on the current
-> incoming message.
-> 
-> It would also be nice to get rid of the casts from ssif_msg to a buffer
-> array and just index directly into request.payload[].
-> 
+Which solution is the community preferred?
 
-Really appreciate for these comments, Corey.
-I have rechecked the code and there will be, definitely, changes to 
-refactor this code in my next version.
 
-> In thinking about this further, I have a few more observations...
-> 
-> There is no need to have the netfn and cmd in ssif_msg.  They are just
-> the first and second bytes of the message.  You don't care what they
-> are in this code.
-> 
-Agree. Will change in next version
 
-> Why do you deliver the length as part of the message to the user?  The
-> length is returned by the system call.  You have all these +1 and -1
-> things around the message length, which is error-prone.  Removing the
-> length from the message would get rid of all of that.  And using packed
-> structures is generally not the best, anyway.
-> 
+Reference:
 
-Will avoid those +1, -1 in next version.
-About the packed structures, I think it is needed because we want to 
-just copy the whole request/response struct from/to user space.
+[1] https://discord.com/channels/775381525260664832/922871693008068638/9608=
+22924867145728
 
-> The PEC calculations remove one byte from the maximum message length.
-> Since they are not included in the length byte, it's kind of unnatural
-> to do this the way you are doing it.  Instead, it might be best to say
-> if you receive a byte and curr_recv_idx == curr_recv_len, process it
-> as PEC.  That way the PEC never hits the buffer.
-> 
-> There is no need for msg_idx, or cur_recv_idx, to be size_t.
-> 
-> I need to look at this some more, but I'll need to see the rewrite.
-> 
-> -corey
-> 
-Thanks Corey,
+[2] https://github.com/openbmc/openbmc/blob/master/meta-phosphor/classes/im=
+age_types_phosphor.bbclass#L40-L52
 
-Will address these suggestions on next version.
+[3] https://github.com/openbmc/linux/blob/dev-5.15/arch/arm/boot/dts/openbm=
+c-flash-layout.dtsi
 
-- Quan
+[4] https://lists.ozlabs.org/pipermail/openbmc/2022-February/029334.html
+
+
+
+B.R.
+
+Howard
+
+--_000_SG2PR06MB23151EF8DA561670CE6D9787E6E99SG2PR06MB2315apcp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
+/* Style Definitions */
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+p.MsoPlainText, li.MsoPlainText, div.MsoPlainText
+	{mso-style-priority:99;
+	mso-style-link:"\7D14\6587\5B57 \5B57\5143";
+	margin:0cm;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+span.a
+	{mso-style-name:"\7D14\6587\5B57 \5B57\5143";
+	mso-style-priority:99;
+	mso-style-link:\7D14\6587\5B57;
+	font-family:"Calibri",sans-serif;}
+span.EmailStyle20
+	{mso-style-type:personal-reply;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-size:10.0pt;}
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:=
+break-word;text-justify-trim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoPlainText"><span lang=3D"EN-US">Hi OpenBMC team,<o:p></o:p><=
+/span></p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US">I had identified the root ca=
+use of the problem reported by dekriea on discord [1].<o:p></o:p></span></p=
+>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US">We have a 32MB NOR flash on =
+ast2500 EVB, which means the kernel image will be placed at offset 512 KB b=
+y default, but u-boot is trying to load kernel image from the offset 1024 K=
+B due to the incorrect setting in evb-ast2500_defconfig.<o:p></o:p></span><=
+/p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US">The evb-ast2500_defconfig wa=
+s ported from Aspeed SDK, so the partition layout is different from OpenBMC=
+ 32MB flash layout which is defined in image-type-phosphor.bbclass[2] and o=
+penbmc-flash-layout.dtsi[3].<o:p></o:p></span></p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US">So we have three solutions f=
+or this issue:<o:p></o:p></span></p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US">1. Revise the CONFIG_BOOTCOM=
+MAND and CONFIG_ENV_OFFSET/SIZE in evb-ast2500_defconfig of u-boot v2019.04=
+.<o:p></o:p></span></p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US">2. Add .cfg to override CONF=
+IG_BOOTCOMMAND and CONFIG_ENV_OFFSET/SIZE in machine evb-ast2500.<o:p></o:p=
+></span></p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US">For example: <a href=3D"http=
+s://github.com/blackcatevil/openbmc/commit/5eecaf84d91c2523767da239aa5dbbf4=
+2af13bfc.patch">
+https://github.com/blackcatevil/openbmc/commit/5eecaf84d91c2523767da239aa5d=
+bbf42af13bfc.patch</a><o:p></o:p></span></p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US">3. Add an ast2500_openbmc_de=
+fconfig for evb-ast2500 machine which is similar to ast2600[4].<o:p></o:p><=
+/span></p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US">Which solution is the commun=
+ity preferred?<o:p></o:p></span></p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US">Reference:<o:p></o:p></span>=
+</p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US">[1] <a href=3D"https://disco=
+rd.com/channels/775381525260664832/922871693008068638/960822924867145728">
+https://discord.com/channels/775381525260664832/922871693008068638/96082292=
+4867145728</a><o:p></o:p></span></p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US">[2] <a href=3D"https://githu=
+b.com/openbmc/openbmc/blob/master/meta-phosphor/classes/image_types_phospho=
+r.bbclass#L40-L52">
+https://github.com/openbmc/openbmc/blob/master/meta-phosphor/classes/image_=
+types_phosphor.bbclass#L40-L52</a><o:p></o:p></span></p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US">[3] <a href=3D"https://githu=
+b.com/openbmc/linux/blob/dev-5.15/arch/arm/boot/dts/openbmc-flash-layout.dt=
+si">
+https://github.com/openbmc/linux/blob/dev-5.15/arch/arm/boot/dts/openbmc-fl=
+ash-layout.dtsi</a><o:p></o:p></span></p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US">[4] <a href=3D"https://lists=
+.ozlabs.org/pipermail/openbmc/2022-February/029334.html">
+https://lists.ozlabs.org/pipermail/openbmc/2022-February/029334.html</a><o:=
+p></o:p></span></p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US">B.R.<o:p></o:p></span></p>
+<p class=3D"MsoPlainText"><span lang=3D"EN-US">Howard<o:p></o:p></span></p>
+</div>
+</body>
+</html>
+
+--_000_SG2PR06MB23151EF8DA561670CE6D9787E6E99SG2PR06MB2315apcp_--
