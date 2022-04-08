@@ -1,67 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 232D64F9399
-	for <lists+openbmc@lfdr.de>; Fri,  8 Apr 2022 13:15:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2EABD4F93E3
+	for <lists+openbmc@lfdr.de>; Fri,  8 Apr 2022 13:23:59 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KZbK015bKz3bYZ
-	for <lists+openbmc@lfdr.de>; Fri,  8 Apr 2022 21:15:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KZbVP0J9Tz2yh9
+	for <lists+openbmc@lfdr.de>; Fri,  8 Apr 2022 21:23:57 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Ebq/3CFz;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=OLcF3ugv;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::52f;
- helo=mail-ed1-x52f.google.com; envelope-from=andy.shevchenko@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::630;
+ helo=mail-ej1-x630.google.com; envelope-from=andy.shevchenko@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=Ebq/3CFz; dkim-atps=neutral
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com
- [IPv6:2a00:1450:4864:20::52f])
+ header.s=20210112 header.b=OLcF3ugv; dkim-atps=neutral
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com
+ [IPv6:2a00:1450:4864:20::630])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KZbJc5DT3z2yHp
- for <openbmc@lists.ozlabs.org>; Fri,  8 Apr 2022 21:15:26 +1000 (AEST)
-Received: by mail-ed1-x52f.google.com with SMTP id r10so9675397eda.1
- for <openbmc@lists.ozlabs.org>; Fri, 08 Apr 2022 04:15:26 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KZbTz44s6z2x9G
+ for <openbmc@lists.ozlabs.org>; Fri,  8 Apr 2022 21:23:34 +1000 (AEST)
+Received: by mail-ej1-x630.google.com with SMTP id i27so16654147ejd.9
+ for <openbmc@lists.ozlabs.org>; Fri, 08 Apr 2022 04:23:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=aa7QZzIFVFDFbunq9XhVZaHXC3Qs6q5HoIqOfQS/Ym0=;
- b=Ebq/3CFzWxM8qOh59YVH2MLYRjSnNcFwOCUvzxHE9Tbiurl/HsdJniiD1qliVZEERU
- egaLCA4UmdSfDDN4EPXlUQ+PS23hRirNXWulOyJhJfUged92Dj3FhTk1J4IJz6ZUyLAu
- eyZiQgZ64kpqJK+yU6ddWURM04C7fRJ9zFadeHEtp96BCtlb+gQpFIysmzvQkmIKjs+S
- yHJ0SontZJT/j9Q1IYD+29wUihigkLmLLmjmhlkqmm/c7z9LVxxiiB3t8XGHCl/rpJOD
- 76p5WnLAs7lPxHuxR0L12v31RA0rUoi9fnTewbklVrxk03jNZkTbX+2Wg/R9zcGYHzLt
- VpSg==
+ :cc; bh=cRoyXCmCEfHW6FbxD2a5gAxg2fHOPCI7K6xvLP7LBlY=;
+ b=OLcF3ugvB6AlRI055J9tJP1EjOYQdBpBT+XkuD7zndoJU11AGacmBG0mk67F36A7sV
+ /hFA2veApJ1HXhiYh86006TKDvYD4t+E2QlFKC9lCt7JnwjqYOKX1AeY57SseQhW8FA2
+ h/vVYNGtyuU++PyL6Mpo8/tsqUQx845T+UDGFMZifewrDlXr1ltR6c2pYS4KjTGVRnny
+ GqRV2E7BWxjpx8Y9KBKYV7zPxSRxGXZTcrfQADOJzyfKbY/Z2dIxNA+E54a+1qOhTQUp
+ F1dCghAsXSy1BL3OswS8qj7zWCPpRIBqHp5HhU/cnibFj0k7iK6cwSXitz9skmpzPL3m
+ KMqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=aa7QZzIFVFDFbunq9XhVZaHXC3Qs6q5HoIqOfQS/Ym0=;
- b=e+e+p4n2Ir6NfRsGVund3W1rtkvdwSYOiaL+0DEy7o52QenH7Au6GjZLxxj78+fp3N
- Rv4uqKZLXWtkJh7Bk9Rmj7YWdMpXtNQmQNmuVMVtvDe0mbtNN/8UFxfchEgbOBFJDIUZ
- BWhe4hf+LKi5Z7vPKzki9Y2nSKGBC2noP7Xn+ONpg465Vu+E1dYHveeJF5pyAnGQ0uxv
- cMKvFxGbfigyMhJpxfIH79jIVqkbaiVi4bABqI3vyuzsHu9WjgEV38v38el9D+IiRYb/
- maLkqlO3Td2k3nEB7CqDwhfVdt+/22ePWPTMfrOh3VoojtVSt+Anl4QxaF/V72Rv2ijj
- Y5Kg==
-X-Gm-Message-State: AOAM533SZZ2CiN24Qc44QRf4hI5lQvteJ4eMeP0E7ndeZIPvvIoraC4I
- mIHWoW6IpiPNJw32JVeYtxKcoqCX8A4901vZAaw=
-X-Google-Smtp-Source: ABdhPJwTfsTBXB3ob+uJK79ZSJa5OgMnE+cTkAqMYO9XInOo/wP0oHo9pORKY6Cub50GFUTgpI9H5oRJ7wNnqKs1i0g=
-X-Received: by 2002:a50:e696:0:b0:419:998d:5feb with SMTP id
- z22-20020a50e696000000b00419998d5febmr19167579edm.122.1649416520116; Fri, 08
- Apr 2022 04:15:20 -0700 (PDT)
+ bh=cRoyXCmCEfHW6FbxD2a5gAxg2fHOPCI7K6xvLP7LBlY=;
+ b=vGWHI9ndRtEcBG7bE8lde1S5ZgHztpIynlJQnfZF0VikqOUqX52lHdUUuMCL1IVmMY
+ lzzwA6TgJTSHaUQXFtxS415CGorgRLFCqfXL4ic7+g25X9OrCj4BvQzQKDaMUHDoFM8W
+ 3NIlUzMPIOEuxxEokq1UDadoEwhnJDfX6Cz9rP2zPgU2kG+OSFrKTmq7r0wcfwd9IzmJ
+ NBOCGUnsmZ847Oxg1yJnT0JxEskh03GVfdn//jTrARO/+B72VZovB4XsrfKYF3Hmb6nl
+ iSVA0overhpqCY26mbsKMNY6IQ8TmBhvBfC5IK1Jidd4L+Rz9H4k4oaLgz2mGc6eU+2q
+ 8Ikg==
+X-Gm-Message-State: AOAM531fLGcDVG1Od3m6X/r4QTPChF6ND1dXY1pS/+BnUL3KJdmdo0qg
+ wGED6L1ChGAKthUiivAJfWSwUvuFAtdgs5Ci0ys=
+X-Google-Smtp-Source: ABdhPJykQNqDc7FaAjGw5x9RJlN7Ipzg84vVW8ik/7vJMM2bSnf0UwzV3g7qHKQy7+iLJ6yUnwC5p+UHpZTxxck2Pfw=
+X-Received: by 2002:a17:907:968e:b0:6db:aed5:43c8 with SMTP id
+ hd14-20020a170907968e00b006dbaed543c8mr17927638ejc.636.1649417010579; Fri, 08
+ Apr 2022 04:23:30 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220407183941.36555-1-eajames@linux.ibm.com>
- <20220407183941.36555-2-eajames@linux.ibm.com>
-In-Reply-To: <20220407183941.36555-2-eajames@linux.ibm.com>
+ <20220407183941.36555-3-eajames@linux.ibm.com>
+In-Reply-To: <20220407183941.36555-3-eajames@linux.ibm.com>
 From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Fri, 8 Apr 2022 14:11:05 +0300
-Message-ID: <CAHp75VedZdEYB-BjJTVaKJgPwQ9a1DhTp=MYsrh1Ve9Eyfnytw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] leds: pca955x: Clean up and optimize
+Date: Fri, 8 Apr 2022 14:19:15 +0300
+Message-ID: <CAHp75VfcmhGitd6_6mDVG6_eE02sX2B3_iqZxeiX3iFDkmPShg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] leds: pca955x: Add HW blink support
 To: Eddie James <eajames@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -82,67 +82,108 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Apr 7, 2022 at 10:42 PM Eddie James <eajames@linux.ibm.com> wrote:
+On Thu, Apr 7, 2022 at 10:43 PM Eddie James <eajames@linux.ibm.com> wrote:
 >
-> Clean up the I2C access functions to avoid fetching the pca955x
-> driver data again. Optimize the probe to do at most 4 reads and
-> 4 writes of the LED selector regs, rather than 16 of each.
-
-> Rename some functions and variables to be more consistent and
-> descriptive.
-
-Separate patch.
-
-> +               dev_err(&pca955x->client->dev,
-> +                       "%s: reg 0x%x, val 0x%x, err %d\n", __func__, n, val,
-> +                       ret);
-
-This can be indented better.
-
-I would add a temporary dev pointer variable and put this on one line.
-
- struct device *dev = &pca955x->client->dev;
-
-               dev_err(dev, "%s: reg 0x%x, val 0x%x, err %d\n",
-__func__, n, val, ret);
+> Support blinking using the PCA955x chip. Use PWM0 for blinking
+> instead of LED_HALF brightness. Since there is only one frequency
+> and brightness register for any blinking LED, track the blink state
+> of each LED and only support one HW blinking frequency. If another
+> frequency is requested, fallback to software blinking.
 
 ...
 
-> +               dev_err(&pca955x->client->dev,
-> +                       "%s: reg 0x%x, val 0x%x, err %d\n", __func__, n, val,
-> +                       ret);
+> +#define PCA955X_BLINK_DEFAULT  1000
 
-Ditto.
+What's the unit of this number?
 
 ...
 
-> +               dev_err(&pca955x->client->dev,
-> +                       "%s: reg 0x%x, val 0x%x, err %d\n", __func__, n, val,
-> +                       ret);
+>   * Write to frequency prescaler register, used to program the
+> - * period of the PWM output.  period = (PSCx + 1) / 38
+> + * period of the PWM output.  period = (PSCx + 1) / <38 or 44, chip dependent>
 
-Ditto.
+Using <> in  formulas a bit confusing, what about
+
+ * period of the PWM output.  period = (PSCx + 1) / coeff
+ * where for ... chips coeff = 38, for ... chips coeff = 44.
+
+?
 
 ...
 
 > +               dev_err(&pca955x->client->dev, "%s: reg 0x%x, err %d\n",
->                         __func__, n, ret);
+> +                       __func__, n, ret);
 
-Ditto.
-
-...
-
-> +               dev_err(&pca955x->client->dev, "%s: reg 0x%x, err %d\n",
->                         __func__, n, ret);
-
-Ditto.
+Can be indented better. But I would rather see regmap, where this kind
+of debugging is for free and already present in the regmap core/.
 
 ...
 
-> +       struct pca955x_led *pca955x_led = container_of(led_cdev,
-> +                                                      struct pca955x_led,
-> +                                                      led_cdev);
+> +static u8 pca955x_period_to_psc(struct pca955x *pca955x, unsigned long p)
+> +{
+> +       p *= (unsigned long)pca955x->chipdef->blink_div;
 
-Is it used once? If more than once, consider a helper for that as well.
+Why casting?
+
+> +       p /= 1000;
+
+Does this 1000 have a meaning? (see units.h and other headers with
+time / frequency multiplier definitions).
+
+> +       p -= 1;
+
+> +       return (u8)p;
+
+Redundant casting.
+
+> +}
+
+> +static unsigned long pca955x_psc_to_period(struct pca955x *pca955x, u8 psc)
+> +{
+> +       unsigned long p = (unsigned long)psc;
+> +
+> +       p += 1;
+> +       p *= 1000;
+> +       p /= (unsigned long)pca955x->chipdef->blink_div;
+> +
+> +       return p;
+
+Similar questions here.
+
+> +}
+
+...
+
+> +       if (!p) {
+
+Why not use a positive conditional?
+
+> +               p = pca955x->active_blink ? pca955x->blink_period :
+> +                       PCA955X_BLINK_DEFAULT;
+> +       } else {
+> +               if (*delay_on != *delay_off) {
+> +                       ret = -EINVAL;
+> +                       goto out;
+> +               }
+> +
+> +               if (p < pca955x_psc_to_period(pca955x, 0) ||
+> +                   p > pca955x_psc_to_period(pca955x, 0xff)) {
+> +                       ret = -EINVAL;
+> +                       goto out;
+> +               }
+> +       }
+
+...
+
+> +       if (!keep_psc0) {
+
+Ditto.
+
+> +               psc0 = pca955x_period_to_psc(pca955x, pca955x->blink_period);
+> +               err = pca955x_write_psc(pca955x, 0, psc0);
+> +       } else {
+> +               err = pca955x_read_psc(pca955x, 0, &psc0);
+>         }
 
 -- 
 With Best Regards,
