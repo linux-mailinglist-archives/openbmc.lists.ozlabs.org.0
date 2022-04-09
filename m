@@ -1,12 +1,12 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 912484FA544
-	for <lists+openbmc@lfdr.de>; Sat,  9 Apr 2022 07:58:05 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C4B74FA55A
+	for <lists+openbmc@lfdr.de>; Sat,  9 Apr 2022 08:12:20 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Kb4Cv4Ts6z3bYw
-	for <lists+openbmc@lfdr.de>; Sat,  9 Apr 2022 15:58:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Kb4XL0XxNz2ynd
+	for <lists+openbmc@lfdr.de>; Sat,  9 Apr 2022 16:12:18 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
@@ -16,27 +16,28 @@ Received: from mx1.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Kb4Cc4c6xz2xgX
- for <openbmc@lists.ozlabs.org>; Sat,  9 Apr 2022 15:57:45 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Kb4X52qmpz2yXs
+ for <openbmc@lists.ozlabs.org>; Sat,  9 Apr 2022 16:12:04 +1000 (AEST)
 Received: from [192.168.0.2] (ip5f5ae90c.dynamic.kabel-deutschland.de
  [95.90.233.12])
  (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested) (Authenticated sender: pmenzel)
- by mx.molgen.mpg.de (Postfix) with ESMTPSA id 9B8C361E6478B;
- Sat,  9 Apr 2022 07:57:37 +0200 (CEST)
-Message-ID: <c73bf178-f5bd-01c6-209d-051706112877@molgen.mpg.de>
-Date: Sat, 9 Apr 2022 07:57:39 +0200
+ by mx.molgen.mpg.de (Postfix) with ESMTPSA id CDD4761E6478B;
+ Sat,  9 Apr 2022 08:12:01 +0200 (CEST)
+Message-ID: <9cf20395-369a-2738-608d-dd5f1aabe48b@molgen.mpg.de>
+Date: Sat, 9 Apr 2022 08:12:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.0
-Subject: Re: [PATCH v6 1/3] ARM: dts: nuvoton: Add memory controller node
+Subject: Re: [PATCH v6 2/3] dt-bindings: edac: nuvoton: add NPCM memory
+ controller
 Content-Language: en-US
 To: Medad CChien <medadyoung@gmail.com>
 References: <20220322030152.19018-1-ctcchien@nuvoton.com>
- <20220322030152.19018-2-ctcchien@nuvoton.com>
+ <20220322030152.19018-3-ctcchien@nuvoton.com>
 From: Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <20220322030152.19018-2-ctcchien@nuvoton.com>
+In-Reply-To: <20220322030152.19018-3-ctcchien@nuvoton.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -63,58 +64,101 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 Dear Medad,
 
 
-Thank you for the patch.
+Thank you for your patch.
 
 Am 22.03.22 um 04:01 schrieb Medad CChien:
-> ECC must be configured in the BootBlock header.
+> Added device tree binding documentation for Nuvoton BMC
+> NPCM memory controller.
 
-bootblock
+Please use present tense, and spell *devicetree* without a space. The 
+line below even fits in 75 characters:
 
-I search for *bootblock* in Linux and the git commit messages, and does 
-not seem to be a common term. Is that term used in the datasheet?
-
-> Then, you can read error counts via
-> the EDAC kernel framework.
-
-Please reflow for 75 characters per line. (Also, there is no need to 
-break lines after a sentence, unless 75 characters are reached or a new 
-paragraph starts.)
-
-Tested on what board?
+Document devicetree bindings for the Nuvoton BMC NPCM memory controller.
 
 > Signed-off-by: Medad CChien <ctcchien@nuvoton.com>
-
-Out of curiosity, is the first C in CChien the letter of your middle 
-name, or the last name really spelled with two capital letters in the 
-beginning?
-
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
 > ---
->   arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi | 7 +++++++
->   1 file changed, 7 insertions(+)
+>   .../edac/nuvoton,npcm-memory-controller.yaml  | 62 +++++++++++++++++++
+>   1 file changed, 62 insertions(+)
+>   create mode 100644 Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-controller.yaml
 > 
-> diff --git a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
-> index 3696980a3da1..ba542b26941e 100644
-> --- a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
-> +++ b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
-> @@ -106,6 +106,13 @@
->   		interrupt-parent = <&gic>;
->   		ranges;
->   
-> +		mc: memory-controller@f0824000 {
-> +			compatible = "nuvoton,npcm750-memory-controller";
-> +			reg = <0x0 0xf0824000 0x0 0x1000>;
-
-Is f0824000 from some datasheet?
-
-> +			interrupts = <GIC_SPI 25 IRQ_TYPE_LEVEL_HIGH>;
-> +			status = "disabled";
-> +		};
+> diff --git a/Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-controller.yaml b/Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-controller.yaml
+> new file mode 100644
+> index 000000000000..97469294f4ba
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-controller.yaml
+> @@ -0,0 +1,62 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/edac/nuvoton,npcm-memory-controller.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
->   		rstc: rstc@f0801000 {
->   			compatible = "nuvoton,npcm750-reset";
->   			reg = <0xf0801000 0x70>;
+> +title: Nuvoton NPCM Memory Controller
+> +
+> +maintainers:
+> +  - Medad CChien <ctcchien@nuvoton.com>
+> +
+> +description: |
+> +  The Nuvoton BMC SoC supports DDR4 memory with and without ECC (error
+> +  correction check).
+> +
+> +  The memory controller supports single bit error correction, double bit
+> +  error detection (in-line ECC in which a section (1/8th) of the
+> +  memory device used to store data is used for ECC storage).
+
+*memory* fits on the line above?
+
+> +
+> +  Note, the bootloader must configure ECC mode for the memory controller.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - nuvoton,npcm845-memory-controller
+> +      - nuvoton,npcm750-memory-controller
+
+Sort the entries?
 
 
 Kind regards,
 
 Paul
+
+
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    minItems: 1
+> +    items:
+> +      - description: uncorrectable error interrupt
+> +      - description: correctable error interrupt
+> +
+> +  interrupt-names:
+> +    minItems: 1
+> +    items:
+> +      - const: ue
+> +      - const: ce
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    ahb {
+> +        #address-cells = <2>;
+> +        #size-cells = <2>;
+> +        mc: memory-controller@f0824000 {
+> +            compatible = "nuvoton,npcm750-memory-controller";
+> +            reg = <0x0 0xf0824000 0x0 0x1000>;
+> +            interrupts = <GIC_SPI 25 IRQ_TYPE_LEVEL_HIGH>;
+> +        };
+> +    };
+> +
