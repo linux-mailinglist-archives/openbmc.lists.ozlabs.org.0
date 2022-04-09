@@ -1,76 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C93134FA910
-	for <lists+openbmc@lfdr.de>; Sat,  9 Apr 2022 16:36:32 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 560064FA917
+	for <lists+openbmc@lfdr.de>; Sat,  9 Apr 2022 16:47:50 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KbHk657ZBz3bbL
-	for <lists+openbmc@lfdr.de>; Sun, 10 Apr 2022 00:36:30 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KbHz82VS5z3bZt
+	for <lists+openbmc@lfdr.de>; Sun, 10 Apr 2022 00:47:48 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=YgHVQaVR;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=KrWZdZOP;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.21; helo=mout.gmx.net;
+ (client-ip=212.227.17.20; helo=mout.gmx.net;
  envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=YgHVQaVR; 
+ header.s=badeba3b8450 header.b=KrWZdZOP; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KbHjk3xtFz2ynF
- for <openbmc@lists.ozlabs.org>; Sun, 10 Apr 2022 00:36:10 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KbHym5T9bz2ynF
+ for <openbmc@lists.ozlabs.org>; Sun, 10 Apr 2022 00:47:27 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1649514958;
- bh=ghNr2zs3nB8uWGOaMVInvT80i/YBm7oEAKKakSvfjK4=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
- b=YgHVQaVRN98ayrwUocBoKQV1ebg1Xk4gO95TJXL28Cv5urL0frJOq/D7AOBNf3Yxp
- r1cENgW6sPoGp2/sOlsRMscoEdkIifSbL/y1YvX+Rpmk8K04UaMUc3Oahokt36E8TX
- i7SnDizvp4YUK8QFTOql/vR6KRlYlBfkuUfVrWEI=
+ s=badeba3b8450; t=1649515626;
+ bh=eRCiq3u2pxG3Hmn1omKzJoVVVREpXfrFJ1BLhP4CdT4=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+ b=KrWZdZOPcxgaH4lnKaZNZTV916TqJXRwi5W5V8haBDPsOAmNcCilILrOTd8CGDMGr
+ s27JktkG7iizMR/5C4X6tSAcVFdQPt3LX+I6W6zD1fM52eE30WU3/PGu9mYYsUUEWJ
+ 4OiM0bk1mcpKc2TROEA4oY8ejPYm/qac16GvbZ3Q=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from longitude ([78.35.207.192]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1McpNy-1oCo7o0gvC-00ZttH; Sat, 09
- Apr 2022 16:35:58 +0200
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MaJ3t-1nQuH1261l-00WJ5T; Sat, 09
+ Apr 2022 16:47:06 +0200
 From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH v2] ARM: dts: nuvoton: wpcm450: Add missing aliases for
- serial0/serial1
-Date: Sat,  9 Apr 2022 16:35:49 +0200
-Message-Id: <20220409143549.2447801-1-j.neuschaefer@gmx.net>
+Subject: [PATCH] ARM: Add wpcm450_defconfig for Nuvoton WPCM450
+Date: Sat,  9 Apr 2022 16:46:53 +0200
+Message-Id: <20220409144654.2452387-1-j.neuschaefer@gmx.net>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220409143309.2446741-1-j.neuschaefer@gmx.net>
-References: <20220409143309.2446741-1-j.neuschaefer@gmx.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:UDmceD+wOc+uQq+TihNCEBkomyR+dEQoC35DYTAHqnjZc9Jd4ok
- av/sSSAx3tsVPIG0TcugS3QmFbNZA8bhF6Fgh8CLeiZS5bz9jOnJTEoH18WyvNkEjFosuw0
- eZSjRXXhwUdcf1udrukTEG2dAFn9xU6GGQFPy/TWSxsaqBfX0Sg9rjb7FymSH8LOCmhqLaU
- sp9Z264KX/5u4H4PmEDkQ==
+X-Provags-ID: V03:K1:TCttMxES3l37ugJU4mLbNRxufa1y+dNkiSY+BtF8ymR0kfsB+I3
+ IbRY46aKQJ4D0PYQ8uZW9MtV6bfK8fugXFFjrrJtvVyFSPs5BxYgE+6LN1wMI0VxLTRgl1Q
+ XTVml1DIKY1i955IwznQMSxN3vAVLo75Iiq8CxPEadw1yPfrDS5NbNF0uf494XT+55hhQK+
+ SgTAEN/rOUiSKJ0+JFmJw==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:QB55vLoh4ws=:Vj6JcyBgIiHxCFNJJfFbPj
- EItxw2ktRq0GOAtn0xsRuGQ7wxsq1OUR5qzVwC9SaHtHQer1f+ihdHxA46VQZVMftNcKi1vqH
- Rpwl0DMD7v2jZRQTL9x/W11YdcUbiHStcHMHlLdHdy0acgrxUpEUpYWwN9rjq8B0nle8jlhCe
- tWut46ZJtJohM5TngVrtKSktY8c1O6rrNOK60fwFVCBj0Ax8eIXI4h7hJCQqS+WXxKoWMY0/R
- xDMgyOlprJq/8qYLIGoy8oiy5+j64RTEaWhQaXJiDaqDcPKeawPnPSG49VQbs9KT31p9UrYyc
- fAQneqpfeBF+P+3sUSSYwsNd5ZYbbJXwpuCEoMfa0jpWb9BI//NT62Pgb1lLy/aEUvnhJZMuO
- rTByJnLa2Ek8EEckntiQE/OVkEuCPc+Oq9i3PZKKLRjdj+6yjd95wC4Mc6x86/Qu0tFInLuOU
- wvY5sO3IEZVYCVNploTKCILWiDyTlz4T6m2McLBqEfFK6sqkH7OUC+M5lkMwRSbX0karzGsEw
- hNVZsHc/H0JQKwvVrvJQp1iilGGIS2bdQI6/Iz91wq9TEFLNRPEGIp09+d0mTGbYVx/P2/CUT
- T0p8MIhzdMJRlRVzHtyah9lAPhcZX0AoE+MUGapDYiSwKFvbxdcQ1hW20kOc8FDEtB0dCeQ2n
- WTdsnVlm/WXbIyFgf7aYqSyMDuhooqpcQAQiKEUhe4FG5LULt0K9TS7XoY3n4EEiAm6xN/l3A
- 1kss2jGVQWR/cn339H4kBQjwUdXyoOLMYHmLWLToPbcOxo+d5xVbI6sI2PcLT6mD6lBwunYo8
- Y5TvlDFgOlgBwG1LwqoIvO5LK7V6kBMvZ5EQ5TwqpEHJxurJoMgZrxWWOclyD+QTjQ/PHF5ka
- B2i7ebWwDZ+ZBJwIeI3OVbyuMVP1mYdfHIxPO5gS5kMagEOV0MhGVmUtML+2BbcCkg2S7zjTi
- usZmHWrO7ojTiPi5D/Z9LfKrmMocN4HYaxIBmqlHWtMGFO/reD3o7kua1ss1ZhqwVibwiBcqX
- sTMD4hVpxyadmZh/ienNGUs0qXB4Y/upA1GDqBZLkPYS5K49lVfhyXebJFT1VqQLIIKYDdw5C
- gqi93z/ZIZ4Z9E=
+X-UI-Out-Filterresults: notjunk:1;V03:K0:GzR9nuIk2M0=:YKHweBPnnrm1xMPNgcun4Z
+ sjzlfXTB4cSQCSGBPt2WKh5SK0w0JLJql5IyLSH/jRewPN71tMBLV/qn5oNpuniovODQWi+k5
+ STctUX1MopXHWSBkD6SVxB8pOcWH6VSA05DY67P3z8MLeR4v4xtIA6d/IC9LXIqc8En/wrZ5p
+ 5zYFmVP3QTaId+4lChvPuiPJAG0qe59brpY2pGfc91y4OX1nRVvTVcU0qJI1IJLBoRcyQp7iH
+ ZFAbPaXmkEDfoU4+MPMWO3E1kyUP9S7ZjVYcz6kQLxk65Jgi9EpXIgbvmVc3weIMsqyVdwt9y
+ PHT1neSosheppAeTesI/Dxj4Gp2uAOLS63S5QkhoHxPRhJqT73uG0GZG0OAzQgqap6HUmssnp
+ Oept+4mhlSe4HJ0BMSQfNvmKMhjzO/slpMo24HCjQDfmaDxdS3oCY/40GRS8nqnPL2H0rlHra
+ KBnSUW931ZlFq4kGJLeTTHP+EAr5sRNowpg2GkziG2bJeo1alFyivVcxPQKE1lTL+3vRtU5OE
+ LEO6dglH/YVIsadqlxfX7uBDc3MQtR9UmkafQWgqap1r2LFixihuH0uH5zik8aWcDaPNChNGk
+ rMzR4r7BS1G8qKibpoyvDLDKthtXEbojXZlgom3pM4/DprEIIjxar4NckVUNGBL0phpbFFWVT
+ UIgb5SMdGyN9L4hnAuSZPbauloIgXXErJf/JkylSKwipfkX+M7K+uFjjer4QVN3zw9pcXMqkz
+ bDMdDULMpbo5NLwycRKqCdwK2TxRdK51tSNgKM6Vq8xhMGkjHrb4wmJZ6TPor9QUmoYeow6Uw
+ y7AmtITZFfslbVwb9XiAvtPr+OqW/nSBt+vhBy1T3buIqudO9Akq0//QwAQsoufd1//UshyGi
+ OZ2Ih9CWTTRad0qRwxQCepnyU/trp5/ynVMRUTpTtk/OLRzbfqscdjyTJZ7dO1fo8DRpAke+y
+ 2ic6NPW6d0sCe8lXPokO4II/QAIJZWkqgYr1ZGLbjbDXJ2oYMG0XAA4v33WGizXnr/AO/IwGy
+ pAs1u2k4GilD3xRH1VZYijyBA/F5QjpyHktTV+j4h331HfvsnA8LN7K52oPZyRlSjt8rf3Fmx
+ mE9exyrynDRKwo=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,39 +79,248 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
- =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc: linux-arm-kernel@lists.infradead.org, Russell King <linux@armlinux.org.uk>,
+ Joel Stanley <joel@jms.id.au>, linux-kernel@vger.kernel.org,
+ =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Without these, /chosen/stdout-path =3D "serial0:115200n8", as done in
-nuvoton-wpcm450-supermicro-x9sci-ln4f.dts, does not work.
+This defconfig aims to offer a reasonable set of defaults for all
+systems running on a Nuvoton WPCM450 chip.
 
 Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
 =2D--
+ MAINTAINERS                        |   1 +
+ arch/arm/configs/wpcm450_defconfig | 207 +++++++++++++++++++++++++++++
+ 2 files changed, 208 insertions(+)
+ create mode 100644 arch/arm/configs/wpcm450_defconfig
 
-v2:
-- mention WPCM450 in the summary
-=2D--
- arch/arm/boot/dts/nuvoton-wpcm450.dtsi | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/arch/arm/boot/dts/nuvoton-wpcm450.dtsi b/arch/arm/boot/dts/nu=
-voton-wpcm450.dtsi
-index 93595850a4c3c..57943bf5aa4a9 100644
-=2D-- a/arch/arm/boot/dts/nuvoton-wpcm450.dtsi
-+++ b/arch/arm/boot/dts/nuvoton-wpcm450.dtsi
-@@ -17,6 +17,8 @@ aliases {
- 		gpio5 =3D &gpio5;
- 		gpio6 =3D &gpio6;
- 		gpio7 =3D &gpio7;
-+		serial0 =3D &serial0;
-+		serial1 =3D &serial1;
- 	};
-
- 	cpus {
+diff --git a/MAINTAINERS b/MAINTAINERS
+index fd768d43e0482..edd7e9e97cf15 100644
+=2D-- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2441,6 +2441,7 @@ S:	Maintained
+ W:	https://github.com/neuschaefer/wpcm450/wiki
+ F:	Documentation/devicetree/bindings/*/*wpcm*
+ F:	arch/arm/boot/dts/nuvoton-wpcm450*
++F:	arch/arm/configs/wpcm450_defconfig
+ F:	arch/arm/mach-npcm/wpcm450.c
+ F:	drivers/*/*/*wpcm*
+ F:	drivers/*/*wpcm*
+diff --git a/arch/arm/configs/wpcm450_defconfig b/arch/arm/configs/wpcm450=
+_defconfig
+new file mode 100644
+index 0000000000000..24886664aaca2
+=2D-- /dev/null
++++ b/arch/arm/configs/wpcm450_defconfig
+@@ -0,0 +1,207 @@
++CONFIG_SYSVIPC=3Dy
++CONFIG_NO_HZ_IDLE=3Dy
++CONFIG_HIGH_RES_TIMERS=3Dy
++CONFIG_PREEMPT=3Dy
++CONFIG_IKCONFIG=3Dy
++CONFIG_IKCONFIG_PROC=3Dy
++CONFIG_LOG_BUF_SHIFT=3D19
++CONFIG_CGROUPS=3Dy
++CONFIG_BLK_DEV_INITRD=3Dy
++CONFIG_CC_OPTIMIZE_FOR_SIZE=3Dy
++CONFIG_PROFILING=3Dy
++# CONFIG_ARCH_MULTI_V7 is not set
++CONFIG_ARCH_NPCM=3Dy
++CONFIG_ARCH_WPCM450=3Dy
++CONFIG_CPU_DCACHE_WRITETHROUGH=3Dy
++CONFIG_AEABI=3Dy
++CONFIG_UACCESS_WITH_MEMCPY=3Dy
++# CONFIG_ATAGS is not set
++CONFIG_ARM_APPENDED_DTB=3Dy
++CONFIG_KEXEC=3Dy
++CONFIG_CPU_FREQ=3Dy
++CONFIG_CPU_FREQ_STAT=3Dy
++CONFIG_CPU_FREQ_DEFAULT_GOV_ONDEMAND=3Dy
++CONFIG_CPU_IDLE=3Dy
++CONFIG_KPROBES=3Dy
++CONFIG_JUMP_LABEL=3Dy
++CONFIG_STRICT_KERNEL_RWX=3Dy
++CONFIG_MODULES=3Dy
++CONFIG_MODULE_UNLOAD=3Dy
++CONFIG_NET=3Dy
++CONFIG_PACKET=3Dy
++CONFIG_PACKET_DIAG=3Dy
++CONFIG_UNIX=3Dy
++CONFIG_UNIX_DIAG=3Dy
++CONFIG_INET=3Dy
++CONFIG_IP_MULTICAST=3Dy
++CONFIG_IP_PNP=3Dy
++CONFIG_IP_PNP_DHCP=3Dy
++CONFIG_IP_PNP_BOOTP=3Dy
++CONFIG_NET_DSA=3Dy
++CONFIG_NET_DSA_TAG_DSA=3Dy
++CONFIG_NET_DSA_TAG_EDSA=3Dy
++CONFIG_NET_DSA_TAG_TRAILER=3Dy
++CONFIG_NET_PKTGEN=3Dm
++# CONFIG_WIRELESS is not set
++CONFIG_DEVTMPFS=3Dy
++CONFIG_DEVTMPFS_MOUNT=3Dy
++CONFIG_MTD=3Dy
++CONFIG_MTD_CMDLINE_PARTS=3Dy
++CONFIG_MTD_BLOCK=3Dy
++CONFIG_MTD_SPI_NOR=3Dy
++CONFIG_MTD_UBI=3Dy
++CONFIG_MTD_UBI_FASTMAP=3Dy
++CONFIG_MTD_UBI_BLOCK=3Dy
++CONFIG_BLK_DEV_LOOP=3Dy
++CONFIG_SRAM=3Dy
++CONFIG_EEPROM_AT24=3Dy
++CONFIG_SCSI=3Dy
++# CONFIG_SCSI_PROC_FS is not set
++# CONFIG_SCSI_LOWLEVEL is not set
++CONFIG_NETDEVICES=3Dy
++# CONFIG_NET_VENDOR_ALACRITECH is not set
++# CONFIG_NET_VENDOR_AMAZON is not set
++# CONFIG_NET_VENDOR_AQUANTIA is not set
++# CONFIG_NET_VENDOR_ARC is not set
++# CONFIG_NET_VENDOR_BROADCOM is not set
++# CONFIG_NET_VENDOR_CADENCE is not set
++# CONFIG_NET_VENDOR_CAVIUM is not set
++# CONFIG_NET_VENDOR_CIRRUS is not set
++# CONFIG_NET_VENDOR_CORTINA is not set
++# CONFIG_NET_VENDOR_EZCHIP is not set
++# CONFIG_NET_VENDOR_FARADAY is not set
++# CONFIG_NET_VENDOR_GOOGLE is not set
++# CONFIG_NET_VENDOR_HISILICON is not set
++# CONFIG_NET_VENDOR_HUAWEI is not set
++# CONFIG_NET_VENDOR_INTEL is not set
++# CONFIG_NET_VENDOR_MARVELL is not set
++# CONFIG_NET_VENDOR_MELLANOX is not set
++# CONFIG_NET_VENDOR_MICREL is not set
++# CONFIG_NET_VENDOR_MICROCHIP is not set
++# CONFIG_NET_VENDOR_MICROSEMI is not set
++# CONFIG_NET_VENDOR_NATSEMI is not set
++# CONFIG_NET_VENDOR_NETRONOME is not set
++# CONFIG_NET_VENDOR_NI is not set
++# CONFIG_NET_VENDOR_PENSANDO is not set
++# CONFIG_NET_VENDOR_QUALCOMM is not set
++# CONFIG_NET_VENDOR_RENESAS is not set
++# CONFIG_NET_VENDOR_ROCKER is not set
++# CONFIG_NET_VENDOR_SAMSUNG is not set
++# CONFIG_NET_VENDOR_SEEQ is not set
++# CONFIG_NET_VENDOR_SOLARFLARE is not set
++# CONFIG_NET_VENDOR_SMSC is not set
++# CONFIG_NET_VENDOR_SOCIONEXT is not set
++# CONFIG_NET_VENDOR_STMICRO is not set
++# CONFIG_NET_VENDOR_SYNOPSYS is not set
++# CONFIG_NET_VENDOR_VIA is not set
++# CONFIG_NET_VENDOR_WIZNET is not set
++# CONFIG_NET_VENDOR_XILINX is not set
++CONFIG_REALTEK_PHY=3Dy
++# CONFIG_WLAN is not set
++CONFIG_INPUT_FF_MEMLESS=3Dy
++CONFIG_INPUT_EVDEV=3Dy
++CONFIG_KEYBOARD_QT1070=3Dm
++CONFIG_KEYBOARD_GPIO=3Dy
++# CONFIG_INPUT_MOUSE is not set
++CONFIG_VT_HW_CONSOLE_BINDING=3Dy
++CONFIG_LEGACY_PTY_COUNT=3D16
++CONFIG_SERIAL_8250=3Dy
++CONFIG_SERIAL_8250_CONSOLE=3Dy
++CONFIG_SERIAL_8250_NR_UARTS=3D6
++CONFIG_SERIAL_8250_RUNTIME_UARTS=3D6
++CONFIG_SERIAL_8250_EXTENDED=3Dy
++CONFIG_SERIAL_8250_MANY_PORTS=3Dy
++CONFIG_SERIAL_8250_ASPEED_VUART=3Dm
++CONFIG_SERIAL_OF_PLATFORM=3Dy
++CONFIG_HW_RANDOM=3Dy
++CONFIG_HW_RANDOM_TIMERIOMEM=3Dm
++CONFIG_I2C=3Dy
++# CONFIG_I2C_COMPAT is not set
++CONFIG_I2C_CHARDEV=3Dy
++CONFIG_I2C_MUX=3Dy
++CONFIG_SPI=3Dy
++CONFIG_PINCTRL_SINGLE=3Dy
++CONFIG_PINCTRL_WPCM450=3Dy
++# CONFIG_GPIO_CDEV_V1 is not set
++CONFIG_POWER_SUPPLY=3Dy
++CONFIG_WATCHDOG=3Dy
++CONFIG_NPCM7XX_WATCHDOG=3Dy
++CONFIG_MFD_SYSCON=3Dy
++CONFIG_REGULATOR=3Dy
++CONFIG_REGULATOR_FIXED_VOLTAGE=3Dy
++CONFIG_FB=3Dy
++CONFIG_FB_MODE_HELPERS=3Dy
++# CONFIG_HID is not set
++CONFIG_USB_CHIPIDEA=3Dy
++CONFIG_USB_CHIPIDEA_UDC=3Dy
++CONFIG_USB_GADGET=3Dy
++CONFIG_USB_CONFIGFS=3Dy
++CONFIG_USB_CONFIGFS_SERIAL=3Dy
++CONFIG_USB_CONFIGFS_ACM=3Dy
++CONFIG_USB_CONFIGFS_EEM=3Dy
++CONFIG_USB_CONFIGFS_MASS_STORAGE=3Dy
++CONFIG_USB_CONFIGFS_F_FS=3Dy
++CONFIG_USB_CONFIGFS_F_HID=3Dy
++CONFIG_NEW_LEDS=3Dy
++CONFIG_LEDS_CLASS=3Dy
++CONFIG_LEDS_GPIO=3Dy
++CONFIG_LEDS_TRIGGERS=3Dy
++CONFIG_LEDS_TRIGGER_TIMER=3Dy
++CONFIG_LEDS_TRIGGER_HEARTBEAT=3Dy
++CONFIG_LEDS_TRIGGER_DEFAULT_ON=3Dy
++CONFIG_DMADEVICES=3Dy
++CONFIG_SYNC_FILE=3Dy
++# CONFIG_VIRTIO_MENU is not set
++# CONFIG_VHOST_MENU is not set
++CONFIG_STAGING=3Dy
++# CONFIG_IOMMU_SUPPORT is not set
++CONFIG_PWM=3Dy
++CONFIG_GENERIC_PHY=3Dy
++CONFIG_MSDOS_FS=3Dy
++CONFIG_VFAT_FS=3Dy
++CONFIG_TMPFS=3Dy
++CONFIG_UBIFS_FS=3Dy
++CONFIG_SQUASHFS=3Dy
++CONFIG_SQUASHFS_XZ=3Dy
++CONFIG_SQUASHFS_ZSTD=3Dy
++# CONFIG_NETWORK_FILESYSTEMS is not set
++CONFIG_NLS_CODEPAGE_437=3Dy
++CONFIG_NLS_CODEPAGE_850=3Dy
++CONFIG_NLS_ISO8859_1=3Dy
++CONFIG_NLS_ISO8859_2=3Dy
++CONFIG_NLS_UTF8=3Dy
++CONFIG_KEYS=3Dy
++CONFIG_HARDENED_USERCOPY=3Dy
++CONFIG_FORTIFY_SOURCE=3Dy
++CONFIG_CRYPTO_RSA=3Dy
++CONFIG_CRYPTO_CCM=3Dy
++CONFIG_CRYPTO_GCM=3Dy
++CONFIG_CRYPTO_CBC=3Dm
++CONFIG_CRYPTO_PCBC=3Dm
++CONFIG_CRYPTO_CMAC=3Dy
++CONFIG_CRYPTO_SHA256=3Dy
++CONFIG_CRYPTO_AES=3Dy
++CONFIG_ASYMMETRIC_KEY_TYPE=3Dy
++CONFIG_ASYMMETRIC_PUBLIC_KEY_SUBTYPE=3Dy
++CONFIG_X509_CERTIFICATE_PARSER=3Dy
++CONFIG_PKCS7_MESSAGE_PARSER=3Dy
++CONFIG_SYSTEM_TRUSTED_KEYRING=3Dy
++CONFIG_CRC_CCITT=3Dy
++CONFIG_CRC_ITU_T=3Dm
++CONFIG_LIBCRC32C=3Dy
++CONFIG_PRINTK_TIME=3Dy
++CONFIG_DEBUG_KERNEL=3Dy
++CONFIG_MAGIC_SYSRQ=3Dy
++CONFIG_DEBUG_FS=3Dy
++# CONFIG_SCHED_DEBUG is not set
++# CONFIG_DEBUG_PREEMPT is not set
++# CONFIG_FTRACE is not set
++CONFIG_IO_STRICT_DEVMEM=3Dy
++CONFIG_DEBUG_USER=3Dy
++CONFIG_DEBUG_LL=3Dy
++CONFIG_DEBUG_LL_UART_8250=3Dy
++CONFIG_DEBUG_UART_PHYS=3D0xb8000000
++CONFIG_DEBUG_UART_VIRT=3D0x0ff000000
++CONFIG_DEBUG_UART_8250_WORD=3Dy
++CONFIG_DEBUG_UNCOMPRESS=3Dy
++CONFIG_EARLY_PRINTK=3Dy
 =2D-
 2.35.1
 
