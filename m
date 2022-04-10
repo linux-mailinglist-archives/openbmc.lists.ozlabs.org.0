@@ -1,43 +1,74 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C16534FAA01
-	for <lists+openbmc@lfdr.de>; Sat,  9 Apr 2022 19:55:33 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 240B84FAC93
+	for <lists+openbmc@lfdr.de>; Sun, 10 Apr 2022 09:34:00 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KbN7l6GK0z3bbk
-	for <lists+openbmc@lfdr.de>; Sun, 10 Apr 2022 03:55:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KbkJ600qRz3bYZ
+	for <lists+openbmc@lfdr.de>; Sun, 10 Apr 2022 17:33:58 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Bz0LpOef;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx1.molgen.mpg.de;
- envelope-from=pmenzel@molgen.mpg.de; receiver=<UNKNOWN>)
-Received: from mx1.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12f;
+ helo=mail-lf1-x12f.google.com; envelope-from=avifishman70@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=Bz0LpOef; dkim-atps=neutral
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com
+ [IPv6:2a00:1450:4864:20::12f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KbN7R045nz3bbT
- for <openbmc@lists.ozlabs.org>; Sun, 10 Apr 2022 03:55:14 +1000 (AEST)
-Received: from [192.168.0.2] (ip5f5ae90c.dynamic.kabel-deutschland.de
- [95.90.233.12])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: pmenzel)
- by mx.molgen.mpg.de (Postfix) with ESMTPSA id 929A161EA1928;
- Sat,  9 Apr 2022 19:55:09 +0200 (CEST)
-Message-ID: <67f42821-34ad-cee6-98fb-7086599c4c0f@molgen.mpg.de>
-Date: Sat, 9 Apr 2022 19:55:09 +0200
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KbkHk0hlbz2xCB
+ for <openbmc@lists.ozlabs.org>; Sun, 10 Apr 2022 17:33:35 +1000 (AEST)
+Received: by mail-lf1-x12f.google.com with SMTP id d40so14045684lfv.11
+ for <openbmc@lists.ozlabs.org>; Sun, 10 Apr 2022 00:33:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=Ox3tf6Vdl+MQsr77fGjpkrwS1r+0QmB/6mtEgP5kOo8=;
+ b=Bz0LpOefLI1lEojOFoqUlsAMdkco/5HPV+AeTU8rHp3rFzg2cMD4iJ00Rm8TxmsIxZ
+ sQ1/5o80CAfxhQMQ92Uv0ZIWBiDcfEftMM9yT+G9p3ptL5HUn7yIbqeqVVjgGwneCRJ0
+ 5nn0YNGTFNK9A4MaqZXdlfeteZadEXkSG7YgMXeAVw5bdHl0+NfShg2FVksEaH0QLaYb
+ 9VAbdRSL7/217gvvfj/DFOdJ8jMwie1OVmRuDZqJJDWz5D7zB0Dzfjr74dQ3e44hi3QB
+ BRxQHStxTpWRqYaHaupRGJewHhsSVcra/7/KN/DzesBRXa5L4KyhCxzOcISyXRon0ihN
+ DUJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=Ox3tf6Vdl+MQsr77fGjpkrwS1r+0QmB/6mtEgP5kOo8=;
+ b=VZI0TCYF6zYv+FfA1C7phW/EukvlUCBdAw1nShdGmVYLPJvIsm53mtMcs5ha+e22dP
+ y2TEnipq+lnZLlQqkOSass69jN48XxdF6owq3I9GeZ1zBXnpBaGC2zHYiYOp4Y90+7MG
+ 8jQxmrPK9JLrZdNzsyX4YuzqeJ9U4LDdDfaU94LSIjmkQyax1OQB8amfNgvRxNcEVg9P
+ YkX1bx9sKhlcuFAur0xzrK5GMOIeAiGbAlwD3xLg/RDU5I6g8xS/clLP9iWWcTl+teui
+ aBdszuH3hoyaKhM+0FBiofZHyMPHTNJarS+mvh8R+WxdL1juWh02I/n3TuklDAu0KFKR
+ vHLw==
+X-Gm-Message-State: AOAM531DP9QMo5ZJmpot5j/pUskyVjxyPGkmM5fMel+qkawvzMxLsVud
+ WDb9pWgcxJT+l4dqOb7wG6xM2tlXv7aqjBi7Mg==
+X-Google-Smtp-Source: ABdhPJxMe5Lm1RdB41pICYNqF8fraGS6Hg0euDwsM1rxKXmiuFYkQ8RgSAxFld06VADpygjbCv6naNQgqZecQN5dzrs=
+X-Received: by 2002:a05:6512:3b2c:b0:44a:35fd:994c with SMTP id
+ f44-20020a0565123b2c00b0044a35fd994cmr17605988lfv.473.1649576009787; Sun, 10
+ Apr 2022 00:33:29 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH v2] soc: nuvoton: Add SoC info driver for WPCM450
-Content-Language: en-US
-To: =?UTF-8?Q?Jonathan_Neusch=c3=a4fer?= <j.neuschaefer@gmx.net>
-References: <20220409173319.2491196-1-j.neuschaefer@gmx.net>
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <20220409173319.2491196-1-j.neuschaefer@gmx.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20220303083141.8742-1-warp5tw@gmail.com>
+ <20220303083141.8742-10-warp5tw@gmail.com>
+ <YiCaSSbbszm3qYIQ@smile.fi.intel.com>
+ <CAHb3i=sStqdSpLKtF_UGmTsOssR_swssTd3pv6c2-z_kiUPTTA@mail.gmail.com>
+ <YiDNDsPWKyaIUlQR@smile.fi.intel.com>
+ <CAKKbWA5FyCKTjEUw8rqtkoL7aw6f7Fa_QzcAkgaRnnUMTe0SKg@mail.gmail.com>
+ <YkvsB27Oj0kSmJRG@smile.fi.intel.com>
+In-Reply-To: <YkvsB27Oj0kSmJRG@smile.fi.intel.com>
+From: Avi Fishman <avifishman70@gmail.com>
+Date: Sun, 10 Apr 2022 10:33:18 +0300
+Message-ID: <CAKKbWA5aQeQTtM06NdNvg0=D5ThcghW5rVaM__0c1kopftqX+w@mail.gmail.com>
+Subject: Re: [PATCH v3 09/11] i2c: npcm: Handle spurious interrupts
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -49,208 +80,118 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Arnd Bergmann <arnd@arndb.de>, openbmc@lists.ozlabs.org,
- Hector Martin <marcan@marcan.st>, Nicolas Ferre <nicolas.ferre@microchip.com>,
- linux-kernel@vger.kernel.org, Conor Dooley <conor.dooley@microchip.com>,
- Joel Stanley <joel@jms.id.au>, Linus Walleij <linus.walleij@linaro.org>
+Cc: Tomer Maimon <tmaimon77@gmail.com>, devicetree <devicetree@vger.kernel.org>,
+ Tali Perry <tali.perry1@gmail.com>, Linux I2C <linux-i2c@vger.kernel.org>,
+ Benjamin Fair <benjaminfair@google.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, JJLIU0@nuvoton.com,
+ Lukas Bulwahn <lukas.bulwahn@gmail.com>,
+ Tomer Maimon <tomer.maimon@nuvoton.com>, KWLIU@nuvoton.com, bence98@sch.bme.hu,
+ Arnd Bergmann <arnd@arndb.de>, sven@svenpeter.dev,
+ Rob Herring <robh+dt@kernel.org>, Avi Fishman <Avi.Fishman@nuvoton.com>,
+ Tyrone Ting <warp5tw@gmail.com>, yangyicong@hisilicon.com,
+ semen.protsenko@linaro.org, jie.deng@intel.com,
+ Patrick Venture <venture@google.com>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Wolfram Sang <wsa@kernel.org>, kfting@nuvoton.com,
+ Tali Perry <tali.perry@nuvoton.com>, olof@lixom.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Dear Jonathan,
+On Tue, Apr 5, 2022 at 10:13 AM Andy Shevchenko
+<andriy.shevchenko@linux.intel.com> wrote:
+>
+> On Mon, Apr 04, 2022 at 08:03:44PM +0300, Avi Fishman wrote:
+> > On Thu, Mar 3, 2022 at 4:14 PM Andy Shevchenko
+> > <andriy.shevchenko@linux.intel.com> wrote:
+> > > On Thu, Mar 03, 2022 at 02:48:20PM +0200, Tali Perry wrote:
+> > > > > On Thu, Mar 3, 2022 at 12:37 PM Andy Shevchenko <andriy.shevchenko@linux.intel.com> wrote:
+> > > > > > On Thu, Mar 03, 2022 at 04:31:39PM +0800, Tyrone Ting wrote:
+> > > > > > > From: Tali Perry <tali.perry1@gmail.com>
+> > > > > > >
+> > > > > > > In order to better handle spurious interrupts:
+> > > > > > > 1. Disable incoming interrupts in master only mode.
+> > > > > > > 2. Clear end of busy (EOB) after every interrupt.
+> > > > > > > 3. Return correct status during interrupt.
+> > > > > >
+> > > > > > This is bad commit message, it doesn't explain "why" you are doing these.
+> > >
+> > > ...
+> > >
+> > > > BMC users connect a huge tree of i2c devices and muxes.
+> > > > This tree suffers from spikes, noise and double clocks.
+> > > > All these may cause spurious interrupts to the BMC.
+>
+> (1)
+>
+> > > > If the driver gets an IRQ which was not expected and was not handled
+> > > > by the IRQ handler,
+> > > > there is nothing left to do but to clear the interrupt and move on.
+> > >
+> > > Yes, the problem is what "move on" means in your case.
+> > > If you get a spurious interrupts there are possibilities what's wrong:
+> > > 1) HW bug(s)
+> > > 2) FW bug(s)
+> > > 3) Missed IRQ mask in the driver
+> > > 4) Improper IRQ mask in the driver
+> > >
+> > > The below approach seems incorrect to me.
+> >
+> > Andy, What about this explanation:
+> > On rare cases the i2c gets a spurious interrupt which means that we
+> > enter an interrupt but in
+> > the interrupt handler we don't find any status bit that points to the
+> > reason we got this interrupt.
+> > This may be a rare case of HW issue that is still under investigation
 
+About 1 to 100,000 transactions
 
-Thank you for your patch.
+> > In order to overcome this we are doing the following:
+> > 1. Disable incoming interrupts in master mode only when slave mode is
+> > not enabled.
+> > 2. Clear end of busy (EOB) after every interrupt.
+> > 3. Clear other status bits (just in case since we found them cleared)
+> > 4. Return correct status during the interrupt that will finish the transaction.
+> > On next xmit transaction if the bus is still busy the master will
+> > issue a recovery process before issuing the new transaction.
+>
+> This sounds better, thanks.
+>
+> One thing to clarify, the (1) states that the HW "issue" is known and becomes a
+> PCB level one, i.e. noisy environment that has not been properly shielded.
+> So, if it is known, please put the reason in the commit message.
+>
 
-Am 09.04.22 um 19:33 schrieb Jonathan Neuschäfer:
-> Add a SoC information driver for Nuvoton WPCM450 SoCs. It provides
-> information such as the SoC revision.
+The HW issue is not known yet, we see it on few platforms and in other
+platforms we don't, so the first assumption was this.
+So eventually we don't want to claim this without proving it.
 
-Maybe add an example command, how to read the model and revision.
+> Also would be good to see numbers of "rare". Is it 0.1%?
 
-> Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
-> Reviewed-by: Joel Stanley <joel@jms.id.au>
-> ---
-> 
-> v2:
-> - Add R-b tag
-> - rebase on 5.18-rc1
-> 
-> v1:
-> - https://lore.kernel.org/lkml/20220129143316.2321460-1-j.neuschaefer@gmx.net/
-> ---
->   drivers/soc/Kconfig               |  1 +
->   drivers/soc/Makefile              |  1 +
->   drivers/soc/nuvoton/Kconfig       | 11 ++++
->   drivers/soc/nuvoton/Makefile      |  2 +
->   drivers/soc/nuvoton/wpcm450-soc.c | 90 +++++++++++++++++++++++++++++++
->   5 files changed, 105 insertions(+)
->   create mode 100644 drivers/soc/nuvoton/Kconfig
->   create mode 100644 drivers/soc/nuvoton/Makefile
->   create mode 100644 drivers/soc/nuvoton/wpcm450-soc.c
-> 
-> diff --git a/drivers/soc/Kconfig b/drivers/soc/Kconfig
-> index c5aae42673d3b..42a5e0be77f3d 100644
-> --- a/drivers/soc/Kconfig
-> +++ b/drivers/soc/Kconfig
-> @@ -14,6 +14,7 @@ source "drivers/soc/ixp4xx/Kconfig"
->   source "drivers/soc/litex/Kconfig"
->   source "drivers/soc/mediatek/Kconfig"
->   source "drivers/soc/microchip/Kconfig"
-> +source "drivers/soc/nuvoton/Kconfig"
->   source "drivers/soc/qcom/Kconfig"
->   source "drivers/soc/renesas/Kconfig"
->   source "drivers/soc/rockchip/Kconfig"
-> diff --git a/drivers/soc/Makefile b/drivers/soc/Makefile
-> index 904eec2a78713..3239fc49eeb27 100644
-> --- a/drivers/soc/Makefile
-> +++ b/drivers/soc/Makefile
-> @@ -19,6 +19,7 @@ obj-$(CONFIG_SOC_XWAY)		+= lantiq/
->   obj-$(CONFIG_LITEX_SOC_CONTROLLER) += litex/
->   obj-y				+= mediatek/
->   obj-y				+= microchip/
-> +obj-y				+= nuvoton/
->   obj-y				+= amlogic/
->   obj-y				+= qcom/
->   obj-y				+= renesas/
-> diff --git a/drivers/soc/nuvoton/Kconfig b/drivers/soc/nuvoton/Kconfig
-> new file mode 100644
-> index 0000000000000..50166f37096b7
-> --- /dev/null
-> +++ b/drivers/soc/nuvoton/Kconfig
-> @@ -0,0 +1,11 @@
-> +# SPDX-License-Identifier: GPL-2.0
-> +menuconfig WPCM450_SOC
-> +	bool "Nuvoton WPCM450 SoC driver"
-> +	default y if ARCH_WPCM450
-> +	select SOC_BUS
-> +	help
-> +	  Say Y here to compile the SoC information driver for Nuvoton
-> +	  WPCM450 SoCs.
-> +
-> +	  This driver provides information such as the SoC model and
-> +	  revision.
-> diff --git a/drivers/soc/nuvoton/Makefile b/drivers/soc/nuvoton/Makefile
-> new file mode 100644
-> index 0000000000000..e30317b4e8290
-> --- /dev/null
-> +++ b/drivers/soc/nuvoton/Makefile
-> @@ -0,0 +1,2 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +obj-$(CONFIG_WPCM450_SOC)	+= wpcm450-soc.o
-> diff --git a/drivers/soc/nuvoton/wpcm450-soc.c b/drivers/soc/nuvoton/wpcm450-soc.c
-> new file mode 100644
-> index 0000000000000..8bad63e1f7a80
-> --- /dev/null
-> +++ b/drivers/soc/nuvoton/wpcm450-soc.c
-> @@ -0,0 +1,90 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Nuvoton WPCM450 SoC Identification
-> + *
-> + * Copyright (C) 2022 Jonathan Neuschäfer
-> + */
-> +
-> +#include <linux/mfd/syscon.h>
-> +#include <linux/of.h>
-> +#include <linux/regmap.h>
-> +#include <linux/sys_soc.h>
-> +#include <linux/slab.h>
-> +
-> +#define GCR_PDID	0
-> +#define PDID_CHIP(x)	((x) & 0x00ffffff)
-> +#define CHIP_WPCM450	0x926450
-> +#define PDID_REV(x)	((x) >> 24)
-> +
-> +struct revision {
-> +	u8 number;
+I added above the known statistics.
 
-Can this be just be `unsigned int`s
-
-> +	const char *name;
-> +};
-> +
-> +const struct revision revisions[] __initconst = {
-> +	{ 0x00, "Z1" },
-> +	{ 0x03, "Z2" },
-> +	{ 0x04, "Z21" },
-> +	{ 0x08, "A1" },
-> +	{ 0x09, "A2" },
-> +	{ 0x0a, "A3" },
-> +	{}
-> +};
-> +
-> +static const char * __init get_revision(u8 rev)
-> +{
-> +	int i;
-
-I’d do `unsigned int`, though it does not make a difference in the end 
-result.
-
-> +
-> +	for (i = 0; revisions[i].name; i++)
-> +		if (revisions[i].number == rev)
-> +			return revisions[i].name;
-> +	return NULL;
-> +}
-> +
-> +static int __init wpcm450_soc_init(void)
-> +{
-> +	struct soc_device_attribute *attr;
-> +	struct soc_device *soc;
-> +	const char *revision;
-> +	struct regmap *gcr;
-> +	u32 pdid;
-> +	int ret;
-> +
-> +	if (!of_machine_is_compatible("nuvoton,wpcm450"))
-> +		return 0;
-> +
-> +	gcr = syscon_regmap_lookup_by_compatible("nuvoton,wpcm450-gcr");
-> +	if (IS_ERR(gcr))
-> +		return PTR_ERR(gcr);
-> +	ret = regmap_read(gcr, GCR_PDID, &pdid);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (PDID_CHIP(pdid) != CHIP_WPCM450) {
-> +		pr_warn("Unknown chip ID in GCR.PDID: 0x%06x\n", PDID_CHIP(pdid));
-> +		return -ENODEV;
-> +	}
-> +
-> +	revision = get_revision(PDID_REV(pdid));
-
-The signature of `get_revision()` is u8, but you pass u32, if I am not 
-mistaken.
-
-> +	if (!revision) {
-> +		pr_warn("Unknown chip revision in GCR.PDID: 0x%02x\n", PDID_REV(pdid));
-> +		return -ENODEV;
-> +	}
-> +
-> +	attr = kzalloc(sizeof(*attr), GFP_KERNEL);
-> +	if (!attr)
-> +		return -ENOMEM;
-> +
-> +	attr->family = "Nuvoton NPCM";
-> +	attr->soc_id = "WPCM450";
-> +	attr->revision = revision;
-> +	soc = soc_device_register(attr);
-> +	if (IS_ERR(soc)) {
-> +		kfree(attr);
-> +		pr_warn("Could not register SoC device\n");
-> +		return PTR_ERR(soc);
-> +	}
-> +
-> +	return 0;
-> +}
-> +device_initcall(wpcm450_soc_init);
+>
+> > > > If the transaction failed, driver has a recovery function.
+> > > > After that, user may retry to send the message.
+> > > >
+> > > > Indeed the commit message doesn't explain all this.
+> > > > We will fix and add to the next patchset.
+> > > >
+> > > > > > > +     /*
+> > > > > > > +      * if irq is not one of the above, make sure EOB is disabled and all
+> > > > > > > +      * status bits are cleared.
+> > > > > >
+> > > > > > This does not explain why you hide the spurious interrupt.
+> > > > > >
+> > > > > > > +      */
+>
 > --
-> 2.35.1
-> 
+> With Best Regards,
+> Andy Shevchenko
+>
+>
 
-Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
 
-
-Kind regards,
-
-Paul
+-- 
+Regards,
+Avi
