@@ -1,104 +1,96 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4AF44FC270
-	for <lists+openbmc@lfdr.de>; Mon, 11 Apr 2022 18:32:03 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 662154FC225
+	for <lists+openbmc@lfdr.de>; Mon, 11 Apr 2022 18:21:49 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KcZBT6Z1qz3bbN
-	for <lists+openbmc@lfdr.de>; Tue, 12 Apr 2022 02:32:01 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KcYyg2B5xz3bWD
+	for <lists+openbmc@lfdr.de>; Tue, 12 Apr 2022 02:21:47 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=NrBQeVsc;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=n7Ce8J1A;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
  helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=NrBQeVsc; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ header.s=pp1 header.b=n7Ce8J1A; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KcZB36lGXz2ync
- for <openbmc@lists.ozlabs.org>; Tue, 12 Apr 2022 02:31:39 +1000 (AEST)
-Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 23BFkJZ7024108; 
- Mon, 11 Apr 2022 16:31:36 GMT
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KcYxR5vnvz2yPv
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Apr 2022 02:20:43 +1000 (AEST)
+Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 23BF2sqb004067; 
+ Mon, 11 Apr 2022 16:20:39 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=iH9lBHJhM1J/gyBwR0y/mZ34Ldf8D+ODaA4+c/22vuM=;
- b=NrBQeVscIksbATe3LLXVqjIF4qLNRmr18Kdi5Jlx921F15cj1XQuPin6q7gRwUZOD2Bg
- eYeUhn5mSA7XguxCVeqpViK9hJgiJPJ2swJzaNovBLTv+7kHxdtw7Lnigwa7gmaKWNmK
- E3Itr4DpbueGOZmdXZfClkcPOxCNXC9WiS0MRUEBRV2i1d1TAEr2tOf38opK2ZhkTiTI
- C+BGd/NhF1Wf3wH51tTGc/jlKSs9VXbvv1OY7XIp0+ihn2VCTbu9ixsuOY5wNjM8scmi
- Tv9Rn0TE1PNAsQbWtGqRL7h23F9+DEl6fgk6TgM5VInOe1ZmGMHG0viGh8wQ1hYhoYoc /w== 
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=tXJSfYG+ezzJKJJETcRDQ6rZOBy2t4qsDATl1Irm9bc=;
+ b=n7Ce8J1AyarOvntZBpkORjDVjks8f5KlQEy5gpbovRDrS8c8irjNUtA++lJ9fOlKgXu5
+ lxRf6A14yPGQMZ5AZYpRxLFjWU5PkDOhgjMOT09QLcblC9xDvMDZKqUml1prNxsOE6G1
+ UxgDnWBOhWEwSbpkH3T/9Dnz/rD6P1Y4uZSoljGppYXXm4KcIbYzedpH149C8Aa5pAdd
+ NI75uUZRnFOgdCvbqjXhY6I4a8Y8iuMEg6gmKi3Do4kSAtuys61lso8aWLZOGvDmpdrc
+ czy6rIMabWZ97RO2vMk0PxFZaPS44gTTKYowZVNYiu6hmZ0dU7caBJhQcEtpjXf34BRg Gg== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com with ESMTP id 3fcn584anq-1
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3fcpmghn6e-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 Apr 2022 16:31:36 +0000
-Received: from m0098413.ppops.net (m0098413.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 23BGKp3Z023499;
- Mon, 11 Apr 2022 16:31:35 GMT
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0b-001b2d01.pphosted.com with ESMTP id 3fcn584ang-1
+ Mon, 11 Apr 2022 16:20:39 +0000
+Received: from m0098393.ppops.net (m0098393.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 23BGDTQL024487;
+ Mon, 11 Apr 2022 16:20:39 GMT
+Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com
+ [169.47.144.27])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3fcpmghn5w-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 Apr 2022 16:31:35 +0000
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 23BG3pcD020199;
- Mon, 11 Apr 2022 16:06:37 GMT
-Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
- [9.57.198.27]) by ppma03dal.us.ibm.com with ESMTP id 3fb1s9n26s-1
+ Mon, 11 Apr 2022 16:20:38 +0000
+Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
+ by ppma05wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 23BGDQfs031571;
+ Mon, 11 Apr 2022 16:20:37 GMT
+Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com
+ [9.57.198.24]) by ppma05wdc.us.ibm.com with ESMTP id 3fb1s98x77-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 11 Apr 2022 16:06:37 +0000
-Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
- [9.57.199.110])
- by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 23BG6aH025100720
+ Mon, 11 Apr 2022 16:20:37 +0000
+Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
+ [9.57.199.107])
+ by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 23BGKb8N59375900
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 11 Apr 2022 16:06:36 GMT
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 96BD8AE067;
- Mon, 11 Apr 2022 16:06:36 +0000 (GMT)
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F1BA4AE063;
- Mon, 11 Apr 2022 16:06:35 +0000 (GMT)
-Received: from [9.211.106.206] (unknown [9.211.106.206])
- by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTP;
- Mon, 11 Apr 2022 16:06:35 +0000 (GMT)
-Message-ID: <fe69f04f-c356-b532-e82b-0b9b99e25c86@linux.ibm.com>
-Date: Mon, 11 Apr 2022 11:06:35 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH v2 2/2] leds: pca955x: Add HW blink support
-Content-Language: en-US
-To: Andy Shevchenko <andy.shevchenko@gmail.com>
-References: <20220407183941.36555-1-eajames@linux.ibm.com>
- <20220407183941.36555-3-eajames@linux.ibm.com>
- <CAHp75VfcmhGitd6_6mDVG6_eE02sX2B3_iqZxeiX3iFDkmPShg@mail.gmail.com>
+ Mon, 11 Apr 2022 16:20:37 GMT
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 45B88124055;
+ Mon, 11 Apr 2022 16:20:37 +0000 (GMT)
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 50471124058;
+ Mon, 11 Apr 2022 16:20:36 +0000 (GMT)
+Received: from v0005c16.aus.stglabs.ibm.com (unknown [9.211.106.206])
+ by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP;
+ Mon, 11 Apr 2022 16:20:36 +0000 (GMT)
 From: Eddie James <eajames@linux.ibm.com>
-In-Reply-To: <CAHp75VfcmhGitd6_6mDVG6_eE02sX2B3_iqZxeiX3iFDkmPShg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: linux-leds@vger.kernel.org
+Subject: [PATCH v3 0/4] leds: pca955x: Add HW blink support
+Date: Mon, 11 Apr 2022 11:20:29 -0500
+Message-Id: <20220411162033.39613-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.27.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: lJmgO7uB-Y7vD9M0-dOWkcXc3w0CFTup
-X-Proofpoint-ORIG-GUID: ARYE2VuD9cgdgj7BI5Lj9Gh-ZfgJXYJB
+X-Proofpoint-ORIG-GUID: Jf0Lhr0ZSQWN8O_D1VdS7xpZ6MMjN8yr
+X-Proofpoint-GUID: Av2hZI4HOjfN_Hq7XENZ5kTBcvcx7X3n
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.858,Hydra:6.0.425,FMLib:17.11.64.514
  definitions=2022-04-11_06,2022-04-11_01,2022-02-23_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 malwarescore=0
- lowpriorityscore=0 impostorscore=0 suspectscore=0 spamscore=0 phishscore=0
- clxscore=1015 adultscore=0 priorityscore=1501 mlxlogscore=999 bulkscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2202240000
- definitions=main-2204110091
+ adultscore=0 clxscore=1015
+ lowpriorityscore=0 suspectscore=0 mlxscore=0 priorityscore=1501
+ bulkscore=0 spamscore=0 phishscore=0 impostorscore=0 mlxlogscore=655
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2202240000 definitions=main-2204110089
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -110,72 +102,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Linux LED Subsystem <linux-leds@vger.kernel.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Pavel Machek <pavel@ucw.cz>, Joel Stanley <joel@jms.id.au>
+Cc: openbmc@lists.ozlabs.org, Eddie James <eajames@linux.ibm.com>,
+ linux-kernel@vger.kernel.org, andy.shevchenko@gmail.com, joel@jms.id.au,
+ pavel@ucw.cz
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This series adds support for blinking using the PCA955x chip, falling
+back to software blinking if another LED on the chip is already blinking
+at a different rate, or if the requested rate isn't representable with
+the PCA955x.
+Also included are some minor clean up and optimization changes that make
+the HW blinking a bit easier.
 
-On 4/8/22 06:19, Andy Shevchenko wrote:
-> On Thu, Apr 7, 2022 at 10:43 PM Eddie James <eajames@linux.ibm.com> wrote:
->> Support blinking using the PCA955x chip. Use PWM0 for blinking
->> instead of LED_HALF brightness. Since there is only one frequency
->> and brightness register for any blinking LED, track the blink state
->> of each LED and only support one HW blinking frequency. If another
->> frequency is requested, fallback to software blinking.
-> ...
->
->> +#define PCA955X_BLINK_DEFAULT  1000
-> What's the unit of this number?
+Changes since v2:
+ - Split the cleanup patch
+ - Prettier dev_err calls
+ - Include units for blink period and use defined unit translations
+   rather than just a number.
+ - Use positive conditionals.
 
+Changes since v1:
+ - Rework the blink function to fallback to software blinking if the
+   period is out of range of the chip's capabilities or if another LED
+   on the chip is already blinking at a different rate.
+ - Add the cleanup patch
 
-milliseconds, I'll change the name to reflect that.
+Eddie James (4):
+  leds: pca955x: Refactor with helper functions and renaming
+  leds: pca955x: Use pointers to driver data rather than I2C client
+  leds: pca955x: Optimize probe led selection
+  leds: pca955x: Add HW blink support
 
+ drivers/leds/leds-pca955x.c | 341 ++++++++++++++++++++++++------------
+ 1 file changed, 232 insertions(+), 109 deletions(-)
 
->
-> ...
->
->>    * Write to frequency prescaler register, used to program the
->> - * period of the PWM output.  period = (PSCx + 1) / 38
->> + * period of the PWM output.  period = (PSCx + 1) / <38 or 44, chip dependent>
-> Using <> in  formulas a bit confusing, what about
->
->   * period of the PWM output.  period = (PSCx + 1) / coeff
->   * where for ... chips coeff = 38, for ... chips coeff = 44.
->
-> ?
-
-
-Ack.
-
-
->
-> ...
->
->> +               dev_err(&pca955x->client->dev, "%s: reg 0x%x, err %d\n",
->> +                       __func__, n, ret);
-> Can be indented better. But I would rather see regmap, where this kind
-> of debugging is for free and already present in the regmap core/.
-
-
-Agree, but perhaps for a future enhancement?
-
-
->
-> ...
->
->> +static u8 pca955x_period_to_psc(struct pca955x *pca955x, unsigned long p)
->> +{
->> +       p *= (unsigned long)pca955x->chipdef->blink_div;
-> Why casting?
-
-
-Ack, and all the rest. Will get a v2 up.
-
-
-Thanks Andy.
-
-Eddie
+-- 
+2.27.0
 
