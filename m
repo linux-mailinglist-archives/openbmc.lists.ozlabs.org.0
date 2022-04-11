@@ -2,70 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7C724FB572
-	for <lists+openbmc@lfdr.de>; Mon, 11 Apr 2022 09:58:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 26CEF4FB58E
+	for <lists+openbmc@lfdr.de>; Mon, 11 Apr 2022 10:02:04 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KcLp05wHZz3bc4
-	for <lists+openbmc@lfdr.de>; Mon, 11 Apr 2022 17:58:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KcLt21X4Sz3bXq
+	for <lists+openbmc@lfdr.de>; Mon, 11 Apr 2022 18:02:02 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=U0XUaMQ5;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=cQkZQcy+;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::235;
- helo=mail-lj1-x235.google.com; envelope-from=medadyoung@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12b;
+ helo=mail-lf1-x12b.google.com; envelope-from=medadyoung@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=U0XUaMQ5; dkim-atps=neutral
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com
- [IPv6:2a00:1450:4864:20::235])
+ header.s=20210112 header.b=cQkZQcy+; dkim-atps=neutral
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com
+ [IPv6:2a00:1450:4864:20::12b])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KcLnS1kyVz3bcn
- for <openbmc@lists.ozlabs.org>; Mon, 11 Apr 2022 17:58:03 +1000 (AEST)
-Received: by mail-lj1-x235.google.com with SMTP id o16so13160056ljp.3
- for <openbmc@lists.ozlabs.org>; Mon, 11 Apr 2022 00:58:03 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KcLsg1vBwz2xF0
+ for <openbmc@lists.ozlabs.org>; Mon, 11 Apr 2022 18:01:41 +1000 (AEST)
+Received: by mail-lf1-x12b.google.com with SMTP id z17so618993lfj.11
+ for <openbmc@lists.ozlabs.org>; Mon, 11 Apr 2022 01:01:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :cc:content-transfer-encoding;
- bh=IMcasM2PXwFO3pPL8keGLKPAAlGEHPxLC32XHN34NLQ=;
- b=U0XUaMQ5tt4vKUweVNbljOWAJtiPEYBd5YlbplTVAuToU4xiavT1C7ARxnf1EBCCBH
- MnCHlB+ZkZ4JAj7CG2Tiq+1QdnUZ1NTVZykJlt4ODm9pni0CXwlVCm5LSiSAp/bHWbJb
- lgjQaPDDBcRYPYta5T4ctVgKgHPH3zMoA75HjCQGNvXkS4UFJxPS8BpyEXvhEsYWxxAx
- kZb82CUVQZmolyF8OzFEVGi+zJA/0afLmLRwjU49E2VfP8YNrL7555POqrnHeod7ep8b
- MNq6N0nC/7fhFg3KvgJ25aIiUqaLgzlE+J7Go3kwC+hJtJVRIuda9asI1ZEfjVqB28/a
- X1Rg==
+ bh=dLagX0bznMYseBWYG2xpKUjyrFUW3pN56bkzoSU2tp0=;
+ b=cQkZQcy+MHkSXUoI9MDT/c+0IGaIn27ea7X86YOuBUMNrKg83hntaExUO3lD9XId0p
+ ly/XPa0D6U2DoNOg3j+gf5pkBCLsW1zW6vvL9c8PjlYdJ4tyQJAvIubVqSEIp2QNQDTF
+ 5KoGJm0ZiXPohruC2B0c+94CQJV+X/C0xpl70Pt2ejLEWPG4heCAQmGwSfty2je2uFB/
+ QkEmv6M2fi3TlglcnxdMYhJ92xTA9jxJ29wn+Kcd4yqcD8Ahhj8ggyKnlkPN3+W4CzsT
+ LLhA9bxZEx35GUYJtOOVp5N8aR9yyQu7Eu27bjFvWXgpYATBUszDzcYc1kZ1fnSrmOeO
+ TEVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc:content-transfer-encoding;
- bh=IMcasM2PXwFO3pPL8keGLKPAAlGEHPxLC32XHN34NLQ=;
- b=5EyHd3q/KMvm24TlFSWxVUJWVjl4xlEuuzUBMdbZ0wEqhcQ6X3iXilPnNmfcVDcjrG
- TA8Nmvl+Go2j3sT/ZF5E6SLv91Kc8Id+byXcFkpywdrq8eGqcKq+VqejKaArDCi8V/r1
- N898Micp5xEtvUPNeDHBf5V54dT6k15BWoFsoHnno+40MYRj+q3iqCEIAjPQcFovrpq0
- 8bhavPWdCj0Kj2MmDQPANNszzVzx/2cf7/U7TfP80owvnXDRd4kFuNcEupnhbDTp/K5F
- DzIQngJEOSjFSOI7UESwgwbPUjdL8TXj/8FXBUPQ40synNkyUTlg+4JDyDSIvG+M6FhZ
- A+nw==
-X-Gm-Message-State: AOAM533zzW6M6orSZ7Fo0ckDJcHLw2h5wYXvY+9io03yqQclIw1BfTPy
- iunoINE0tOtYLtI8IRp34wmxQ4ABujO2WNXwKjA=
-X-Google-Smtp-Source: ABdhPJyPAAdguzOq292jJl/qwqyh/fbTfn44rqQap5nOluCafw7d/O4zQ36Mqdux7bn5CWzO66s3VyAKwZ5+TQdv6jo=
-X-Received: by 2002:a2e:9b18:0:b0:24b:61f3:7beb with SMTP id
- u24-20020a2e9b18000000b0024b61f37bebmr3100487lji.487.1649663879833; Mon, 11
- Apr 2022 00:57:59 -0700 (PDT)
+ bh=dLagX0bznMYseBWYG2xpKUjyrFUW3pN56bkzoSU2tp0=;
+ b=NflP0ARVex+33DNGJqAGggauYqYKEvyGIgR2ytxKWwxjxJpeCWqjdUZtfKCecnC6/8
+ T/VatTtzQYvYeAVJ7wWRXRMypqrKQaw3Cvnl3dbkDnkTHCWEG617vQV45OZflCYH7LSa
+ gwtVK4gAkc3hCA4Eg0iYy2fBFr39WNkDJ2scrj6fZpiAyDZeiOAlaJ4lsYPiZtp4XmKa
+ 46fErpW3YPIP8YzwENVwSCnwV1JF9OZJKazoE3nL2S1UYjQWXLkDbwaNsktzwOMlInpz
+ 5WnDQp9uf+ZBuVnkaOfTVOzKUBeP/qDmXHN62stxhD/gFpDpZouvz8L0JuHE9UYoRQbQ
+ 5SGA==
+X-Gm-Message-State: AOAM532v5oojCqpo3We2AcgpzFFAzsIp1nsv60wqBOrd1lPuNhsz7eN4
+ ZL9TPsKL2JIQpV3VUGiINYU4MB7SKNrcOTo4vxo=
+X-Google-Smtp-Source: ABdhPJxgJUUuROZgRKb0LEDLbuJHGqQUY3ojRGDjYwhHu2TK5fuKy2HxIiB6oeFUznuhvW81hNnfqmy8On1RUDGf9mE=
+X-Received: by 2002:a05:6512:262a:b0:45d:b42d:3e46 with SMTP id
+ bt42-20020a056512262a00b0045db42d3e46mr20444462lfb.22.1649664096793; Mon, 11
+ Apr 2022 01:01:36 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220322030152.19018-1-ctcchien@nuvoton.com>
  <20220322030152.19018-3-ctcchien@nuvoton.com>
- <YlBrbV2rstunqrW6@zn.tnic>
-In-Reply-To: <YlBrbV2rstunqrW6@zn.tnic>
+ <9cf20395-369a-2738-608d-dd5f1aabe48b@molgen.mpg.de>
+In-Reply-To: <9cf20395-369a-2738-608d-dd5f1aabe48b@molgen.mpg.de>
 From: Medad Young <medadyoung@gmail.com>
-Date: Mon, 11 Apr 2022 15:57:48 +0800
-Message-ID: <CAHpyw9eR9tcg9TSXnecOgJJsxSm=B=FyqKV9kOXd9We=o+RjKA@mail.gmail.com>
+Date: Mon, 11 Apr 2022 16:01:25 +0800
+Message-ID: <CAHpyw9fByk_pyD3pb0MX=p_t1AuD5qXKaECKwrB0uog6ZxX5qw@mail.gmail.com>
 Subject: Re: [PATCH v6 2/3] dt-bindings: edac: nuvoton: add NPCM memory
  controller
-To: Borislav Petkov <bp@alien8.de>
+To: Paul Menzel <pmenzel@molgen.mpg.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -86,25 +86,126 @@ Cc: KWLIU@nuvoton.com, tony.luck@intel.com, rric@kernel.org,
  OpenBMC Maillist <openbmc@lists.ozlabs.org>, JJLIU0@nuvoton.com,
  ctcchien@nuvoton.com, Tali Perry <tali.perry1@gmail.com>,
  devicetree <devicetree@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
- James Morse <james.morse@arm.com>, YSCHU@nuvoton.com,
- Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Borislav Petkov <bp@alien8.de>, James Morse <james.morse@arm.com>,
+ YSCHU@nuvoton.com, Mauro Carvalho Chehab <mchehab@kernel.org>,
  Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
  Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Dear Borislav,
+Dear Paul,
 
-thanks for your comment
-I will revise it
+thanks for your comments
 
-B.R.
-Medad
-
-Borislav Petkov <bp@alien8.de> =E6=96=BC 2022=E5=B9=B44=E6=9C=889=E6=97=A5 =
-=E9=80=B1=E5=85=AD =E4=B8=8A=E5=8D=881:05=E5=AF=AB=E9=81=93=EF=BC=9A
+Paul Menzel <pmenzel@molgen.mpg.de> =E6=96=BC 2022=E5=B9=B44=E6=9C=889=E6=
+=97=A5 =E9=80=B1=E5=85=AD =E4=B8=8B=E5=8D=882:12=E5=AF=AB=E9=81=93=EF=BC=9A
 >
-> On Tue, Mar 22, 2022 at 11:01:51AM +0800, Medad CChien wrote:
+> Dear Medad,
+>
+>
+> Thank you for your patch.
+>
+> Am 22.03.22 um 04:01 schrieb Medad CChien:
+> > Added device tree binding documentation for Nuvoton BMC
+> > NPCM memory controller.
+>
+> Please use present tense, and spell *devicetree* without a space. The
+> line below even fits in 75 characters:
+>
+> Document devicetree bindings for the Nuvoton BMC NPCM memory controller.
+
+OK
+
+
+>
+> > Signed-off-by: Medad CChien <ctcchien@nuvoton.com>
+> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+> > ---
+> >   .../edac/nuvoton,npcm-memory-controller.yaml  | 62 ++++++++++++++++++=
++
+> >   1 file changed, 62 insertions(+)
+> >   create mode 100644 Documentation/devicetree/bindings/edac/nuvoton,npc=
+m-memory-controller.yaml
+> >
+> > diff --git a/Documentation/devicetree/bindings/edac/nuvoton,npcm-memory=
+-controller.yaml b/Documentation/devicetree/bindings/edac/nuvoton,npcm-memo=
+ry-controller.yaml
+> > new file mode 100644
+> > index 000000000000..97469294f4ba
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-contro=
+ller.yaml
+> > @@ -0,0 +1,62 @@
+> > +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/edac/nuvoton,npcm-memory-controller=
+.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Nuvoton NPCM Memory Controller
+> > +
+> > +maintainers:
+> > +  - Medad CChien <ctcchien@nuvoton.com>
+> > +
+> > +description: |
+> > +  The Nuvoton BMC SoC supports DDR4 memory with and without ECC (error
+> > +  correction check).
+> > +
+> > +  The memory controller supports single bit error correction, double b=
+it
+> > +  error detection (in-line ECC in which a section (1/8th) of the
+> > +  memory device used to store data is used for ECC storage).
+>
+> *memory* fits on the line above?
+
+do you mean I should change the term "memory" to others?
+
+>
+> > +
+> > +  Note, the bootloader must configure ECC mode for the memory controll=
+er.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    enum:
+> > +      - nuvoton,npcm845-memory-controller
+> > +      - nuvoton,npcm750-memory-controller
+>
+> Sort the entries?
+
+OK
+
+>
+>
+> Kind regards,
+>
+> Paul
+>
+>
+> > +
+> > +  reg:
+> > +    maxItems: 1
+> > +
+> > +  interrupts:
+> > +    minItems: 1
+> > +    items:
+> > +      - description: uncorrectable error interrupt
+> > +      - description: correctable error interrupt
+> > +
+> > +  interrupt-names:
+> > +    minItems: 1
+> > +    items:
+> > +      - const: ue
+> > +      - const: ce
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - interrupts
+> > +
+> > +additionalProperties: false
+> > +
 > > +examples:
 > > +  - |
 > > +    #include <dt-bindings/interrupt-controller/arm-gic.h>
@@ -118,14 +219,3 @@ Borislav Petkov <bp@alien8.de> =E6=96=BC 2022=E5=B9=B44=E6=9C=889=E6=97=A5 =
 > > +        };
 > > +    };
 > > +
->
-> .git/rebase-apply/patch:73: new blank line at EOF.
-> +
-> warning: 1 line adds whitespace errors.
->
->
-> --
-> Regards/Gruss,
->     Boris.
->
-> https://people.kernel.org/tglx/notes-about-netiquette
