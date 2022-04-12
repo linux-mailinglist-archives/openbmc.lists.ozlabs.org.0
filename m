@@ -2,69 +2,44 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E90654FD1A7
-	for <lists+openbmc@lfdr.de>; Tue, 12 Apr 2022 08:57:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DA424FD29A
+	for <lists+openbmc@lfdr.de>; Tue, 12 Apr 2022 09:23:53 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KcxPd5kZHz3bXB
-	for <lists+openbmc@lfdr.de>; Tue, 12 Apr 2022 16:57:57 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=X5P51EVf;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KcxzV6h74z3bYh
+	for <lists+openbmc@lfdr.de>; Tue, 12 Apr 2022 17:23:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::e32;
- helo=mail-vs1-xe32.google.com; envelope-from=suichen@google.com;
+ smtp.mailfrom=linux.alibaba.com (client-ip=47.90.199.1;
+ helo=out199-1.us.a.mail.aliyun.com; envelope-from=guoheyi@linux.alibaba.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20210112 header.b=X5P51EVf; dkim-atps=neutral
-Received: from mail-vs1-xe32.google.com (mail-vs1-xe32.google.com
- [IPv6:2607:f8b0:4864:20::e32])
+Received: from out199-1.us.a.mail.aliyun.com (out199-1.us.a.mail.aliyun.com
+ [47.90.199.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KcxPC3rv1z2xm2
- for <openbmc@lists.ozlabs.org>; Tue, 12 Apr 2022 16:57:34 +1000 (AEST)
-Received: by mail-vs1-xe32.google.com with SMTP id m14so5435754vsp.11
- for <openbmc@lists.ozlabs.org>; Mon, 11 Apr 2022 23:57:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=qgnZcpBIVw/20jUOhWmEfTuzXQZyJ+1bcARldVvAaR8=;
- b=X5P51EVfPZjlbksZyO8vAa5jI/Zmu0YnhLWRiZSjuxLtdc/pjrnDR2w0YrNKPH+cYI
- fyWBt1ei0QdsjfOLU4EOZPj0JZY4HQUPf5PKZEvdUM9d2qfY3pb+jOK2vFsVHNBeKFof
- H+aGU2m1QTsI60XYNtY9YDdRy596GSkEsYoYz3t4GknmiZeZ5BwyGm4SmdQYdT7yRmHs
- vFxqbKONBi5e5dw9d+vRLJBI21c8uRvNoujF3IuGz83SpOggyv2GstoR4RaU1pC8WaSq
- jlmsB9tIzEMSmDCjOjZMTiZjSCjinQi8358aY8SDxoSr23xR2E831/yFOna4ixh/ynUM
- P86A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=qgnZcpBIVw/20jUOhWmEfTuzXQZyJ+1bcARldVvAaR8=;
- b=hoLaF2Y+7d07dHeJqlgoiPkfbnI8EKiK57FbZB9T9CHrq07uN/3VpTZY/SWqmRVIMl
- YBrT67rrnQSuwwXjWU4Dw91P6zkLec6mCCrnH39ABJlPVmnbCNSOwCZuYgyD1skNNkip
- rDX3iWszHiIfdjaXV9TkBvcTkg1ExTR6mjGPAVmBxGuLLoKI43rZ0aM0AvfUobXjacSF
- dMDi+lokn5i8ORKHBjRWQ4gGCGe8voJ3uLjNCO8m6ReU/65v54nTfkJELeeoaMojaBVr
- F7DDkcLlEdycaKhPaS502yq2fUdu9Fqe8b3/Uy0Pi94kkax3zxEYvcDxSjKUHk4yiWDE
- OUoQ==
-X-Gm-Message-State: AOAM5323JvvxHUkVk0hzV4AVr/fizN6teTaQxcYRz0O2gG4sEp+o1nCh
- Ffp1oSaCV/wIZZ5pIKSKfTjnCfqWnj9FAaY1zct911l+XiDTAg==
-X-Google-Smtp-Source: ABdhPJzxZ0VVLhQigdhqHW6xTC41Uj5hvZ0KEw/IZ7uR6XRK3pIOiIWoZvfuPQfTUR2BGgYZOOC2fTl7spYQoc7habo=
-X-Received: by 2002:a05:6102:100c:b0:328:1794:ac99 with SMTP id
- q12-20020a056102100c00b003281794ac99mr6690714vsp.69.1649746649144; Mon, 11
- Apr 2022 23:57:29 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Kcxz95PWZz2xsb
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Apr 2022 17:23:29 +1000 (AEST)
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R761e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=e01e04423; MF=guoheyi@linux.alibaba.com;
+ NM=1; PH=DS; RN=4; SR=0; TI=SMTPD_---0V9tiwHZ_1649748201; 
+Received: from 30.225.140.31(mailfrom:guoheyi@linux.alibaba.com
+ fp:SMTPD_---0V9tiwHZ_1649748201) by smtp.aliyun-inc.com(127.0.0.1);
+ Tue, 12 Apr 2022 15:23:22 +0800
+Message-ID: <baabb8ca-e1b2-049b-e112-cfe8e211c301@linux.alibaba.com>
+Date: Tue, 12 Apr 2022 15:23:21 +0800
 MIME-Version: 1.0
-References: <20220401002200.27584-1-suichen@google.com>
- <20220401002200.27584-2-suichen@google.com>
- <CAKKbWA4cuv3mPF9Es-TzV-OtbQuLDJdZNU=uOfZXMYaWD-FWCg@mail.gmail.com>
-In-Reply-To: <CAKKbWA4cuv3mPF9Es-TzV-OtbQuLDJdZNU=uOfZXMYaWD-FWCg@mail.gmail.com>
-From: Sui Chen <suichen@google.com>
-Date: Mon, 11 Apr 2022 23:57:18 -0700
-Message-ID: <CAJOps0uyo0z7EdBweV4gXUCb6fE-23ayEgce1B3h9KWRQpYwcA@mail.gmail.com>
-Subject: Re: [RFC Patch v4 1/1] i2c debug counters as sysfs attributes
-To: Avi Fishman <avifishman70@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.7.0
+Subject: Re: Proposing changes to the OpenBMC tree (to make upstreaming easier)
+Content-Language: en-US
+To: Ed Tanous <edtanous@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <CAH2-KxAJS_U8=meCxp8ue7n0bmnzeRpyZOPZpy0h1cFEbbz-HA@mail.gmail.com>
+From: Heyi Guo <guoheyi@linux.alibaba.com>
+In-Reply-To: <CAH2-KxAJS_U8=meCxp8ue7n0bmnzeRpyZOPZpy0h1cFEbbz-HA@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,337 +51,177 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Benjamin Fair <benjaminfair@google.com>, Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Tali Perry <tali.perry1@gmail.com>, Josh Lehan <krellan@google.com>,
- linux-i2c <linux-i2c@vger.kernel.org>, Joel Stanley <joel@jms.id.au>
+Cc: Andrew Jeffery <andrew@aj.id.au>, Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello Avi,
-
-I recently installed a patched kernel on a real machine and am trying
-to validate the counters a bit; I would like to find out how the
-counters in the i2c core relate to the counters in the npcm7xx driver,
-and also explore the possibility of per-address counters, then update
-to this list and the linux-kernel list when the results are clear.
-
-And also I need to find a better place to create the sysfs folders
-than from within i2c_transfer and i2c_recover_bus.
+I like the idea, for we don't utilize additional tools like repo to 
+maintain the code, and it should make it easier for us to maintain 
+multiple internal branches.
 
 Thanks,
-Sui
 
+Heyi
 
-On Sun, Apr 3, 2022 at 5:12 AM Avi Fishman <avifishman70@gmail.com> wrote:
+在 2022/4/5 上午2:28, Ed Tanous 写道:
+> The OpenBMC development process as it stands is difficult for people
+> new to the project to understand, which severely limits our ability to
+> onboard new maintainers, developers, and groups which would otherwise
+> contribute major features to upstream, but don't have the technical
+> expertise to do so.  This initiative, much like others before it[1] is
+> attempting to reduce the toil and OpenBMC-specific processes of
+> passing changes amongst the community, and move things to being more
+> like other projects that have largely solved this problem already.
 >
-> Hi Sui,
+> To that end, I'd like to propose a change to the way we structure our
+> repositories within the project: specifically, putting (almost) all of
+> the Linux Foundation OpenBMC owned code into a single repo that we can
+> version as a single entity, rather than spreading out amongst many
+> repos.  In practice, this would have some significant advantages:
 >
-> Do you intend later to push it also to kernel.org?
+> - The tree would be easily shareable amongst the various people
+> working on OpenBMC, without having to rely on a single-source Gerrit
+> instance.  Git is designed to be distributed, but if our recipe files
+> point at other repositories, it largely defeats a lot of this
+> capability.  Today, if you want to share a tree that has a change in
+> it, you have to fork the main tree, then fork every single subproject
+> you've made modifications to, then update the main tree to point to
+> your forks.  This gets very onerous over time, especially for simple
+> commits.  Having maintained several different companies forks
+> personally, and spoken to many others having problems with the same,
+> adding major features are difficult to test and rebase because of
+> this.  Moving the code to a single tree makes a lot of the toil of
+> tagging and modifying local trees a lot more manageable, as a series
+> of well-documented git commands (generally git rebase[2]).  It also
+> increases the likelihood that someone pulls down the fork to test it
+> if it's highly likely that they can apply it to their own tree in a
+> single command.
 >
-> Avi
+> - There would be a reduction in reviews.  Today, anytime a person
+> wants to make a change that would involve any part of the tree,
+> there's at least 2 code reviews, one for the commit, and one for the
+> recipe bump.  Compared to a single tree, this at least doubles the
+> number of reviews we need to process.  For changes that want to make
+> any change to a few subsystems, as is the case when developing a
+> feature, they require 2 X <number of project changes> reviews, all of
+> which need to be synchronized.  There is a well documented problem
+> where we have no official way to synchronize merging of changes to
+> userspace applications within a bump without manual human
+> intervention.  This would largely render that problem moot.
 >
-> On Fri, Apr 1, 2022 at 3:28 AM Sui Chen <suichen@google.com> wrote:
-> >
-> > This change renames the I2C debug counters as suggested, and moves their
-> > processing into the i2c core:
-> > - bus_errors
-> > - transfers
-> > - nacks
-> > - recovery_successes
-> > - recovery_failures
-> > - timeouts
-> >
-> > The function i2c_adapter_create_stats_folder creates a stats directory
-> > in the device's sysfs directory to hold the above debug counters.
-> >
-> > Did some brief tests with a few test programs that saves/replays I2C
-> > trace by reading hwmon sensors. The test program and hardware run in
-> > QEMU. The test programs are located at
-> > https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-tools/+/52527
-> >
-> > (A normal read)
-> >
-> > root@gsj:/tmp# cat /sys/class/i2c-adapter/i2c-1/stats/transfers
-> > 264
-> > root@gsj:/tmp# ./i2c_bmk_bmc  0
-> > idx=0
-> > Processing 1 inputs
-> > /sys/class/hwmon/hwmon0/temp1_input
-> > (../../devices/platform/ahb/ahb:apb/f0081000.i2c/i2c-1/1-005c/hwmon/hwmon0):
-> > 0
-> > [FindTraceEntries] t0=391.000000 t1=393.000000
-> > Found 4 interesting I2C trace entries:
-> >  i2c_write: i2c-1 #0 a=05c f=0000 l=1 [00]
-> >  i2c_read: i2c-1 #1 a=05c f=0001 l=2
-> >  i2c_reply: i2c-1 #1 a=05c f=0001 l=2 [00-00]
-> >  i2c_result: i2c-1 n=2 ret=2
-> > root@gsj:/tmp# cat /sys/class/i2c-adapter/i2c-1/stats/transfers
-> > 265
-> >
-> > (Read from an inexistent address, NACK)
-> >
-> > root@gsj:/tmp# cat /sys/class/i2c-adapter/i2c-1/stats/nacks
-> > 6
-> > root@gsj:/tmp# cat /sys/class/i2c-adapter/i2c-1/stats/transfers
-> > 265
-> >
-> > root@gsj:/tmp# cat i2c_trace.txt
-> >  i2c_write: i2c-1 #0 a=0ff f=0000 l=1 [00]
-> >  i2c_read: i2c-1 #1 a=0ff f=0001 l=2
-> > root@gsj:/tmp# ./i2c_replay_bmc i2c_trace.txt
-> > (program runs and completes)
-> >
-> > root@gsj:/tmp# cat /sys/class/i2c-adapter/i2c-1/stats/nacks
-> > 12
-> > root@gsj:/tmp# cat /sys/class/i2c-adapter/i2c-1/stats/transfers
-> > 265
-> >
-> > The program makes 2 attempts, performing 3 I2C operations at each
-> > attempt, which translates to the 6 nack events.
-> >
-> > Signed-off-by: Sui Chen <suichen@google.com>
-> > ---
-> >  drivers/i2c/i2c-core-base.c | 32 ++++++++++++-
-> >  drivers/i2c/i2c-dev.c       | 94 +++++++++++++++++++++++++++++++++++++
-> >  include/linux/i2c.h         | 26 ++++++++++
-> >  3 files changed, 151 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
-> > index 84f12bf90644..53688b1d855a 100644
-> > --- a/drivers/i2c/i2c-core-base.c
-> > +++ b/drivers/i2c/i2c-core-base.c
-> > @@ -270,11 +270,22 @@ EXPORT_SYMBOL_GPL(i2c_generic_scl_recovery);
-> >
-> >  int i2c_recover_bus(struct i2c_adapter *adap)
-> >  {
-> > +
-> > +       if (adap->stats == NULL)
-> > +               i2c_adapter_create_stats_directory(adap);
-> > +
-> >         if (!adap->bus_recovery_info)
-> >                 return -EBUSY;
-> >
-> >         dev_dbg(&adap->dev, "Trying i2c bus recovery\n");
-> > -       return adap->bus_recovery_info->recover_bus(adap);
-> > +       int ret = adap->bus_recovery_info->recover_bus(adap);
-> > +
-> > +       if (ret == 0)
-> > +               ++(adap->stats->recovery_successes);
-> > +       else
-> > +               ++(adap->stats->recovery_failures);
-> > +
-> > +       return ret;
-> >  }
-> >  EXPORT_SYMBOL_GPL(i2c_recover_bus);
-> >
-> > @@ -2223,6 +2234,23 @@ int __i2c_transfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
-> >                 trace_i2c_result(adap, num, ret);
-> >         }
-> >
-> > +       if (adap->stats == NULL) {
-> > +               i2c_adapter_create_stats_directory(adap);
-> > +       }
-> > +
-> > +       if (ret < 0) {
-> > +               if (ret == -ENXIO)
-> > +                       ++(adap->stats->nacks);
-> > +               else if (ret == -ETIMEDOUT)
-> > +                       ++(adap->stats->timeouts);
-> > +               else
-> > +                       ++(adap->stats->bus_errors);
-> > +       }
-> > +
-> > +       if (ret == num) {
-> > +               ++(adap->stats->transfers);
-> > +       }
-> > +
-> >         return ret;
-> >  }
-> >  EXPORT_SYMBOL(__i2c_transfer);
-> > @@ -2485,6 +2513,7 @@ static int i2c_detect(struct i2c_adapter *adapter, struct i2c_driver *driver)
-> >         }
-> >
-> >         kfree(temp_client);
-> > +       i2c_adapter_create_stats_directory(adapter);
-> >         return err;
-> >  }
-> >
-> > @@ -2617,6 +2646,7 @@ void i2c_put_dma_safe_msg_buf(u8 *buf, struct i2c_msg *msg, bool xferred)
-> >
-> >         kfree(buf);
-> >  }
-> > +
-> >  EXPORT_SYMBOL_GPL(i2c_put_dma_safe_msg_buf);
-> >
-> >  MODULE_AUTHOR("Simon G. Vogl <simon@tk.uni-linz.ac.at>");
-> > diff --git a/drivers/i2c/i2c-dev.c b/drivers/i2c/i2c-dev.c
-> > index 77f576e51652..253622706b63 100644
-> > --- a/drivers/i2c/i2c-dev.c
-> > +++ b/drivers/i2c/i2c-dev.c
-> > @@ -767,6 +767,100 @@ static void __exit i2c_dev_exit(void)
-> >         unregister_chrdev_region(MKDEV(I2C_MAJOR, 0), I2C_MINORS);
-> >  }
-> >
-> > +static struct i2c_adapter *kobj_to_adapter(struct device *pdev)
-> > +{
-> > +       struct kobject *dev_kobj;
-> > +       struct device *dev;
-> > +
-> > +       dev_kobj = ((struct kobject *)pdev)->parent;
-> > +       dev = container_of(dev_kobj, struct device, kobj);
-> > +       return to_i2c_adapter(dev);
-> > +}
-> > +
-> > +ssize_t bus_errors_show(struct device *pdev,
-> > +                       struct device_attribute *attr, char *buf)
-> > +{
-> > +       return sysfs_emit(buf, "%llu\n", kobj_to_adapter(pdev)->stats->bus_errors);
-> > +}
-> > +DEVICE_ATTR_RO(bus_errors);
-> > +
-> > +ssize_t transfers_show(struct device *pdev,
-> > +                            struct device_attribute *attr, char *buf)
-> > +{
-> > +       return sysfs_emit(buf, "%llu\n", kobj_to_adapter(pdev)->stats->transfers);
-> > +}
-> > +DEVICE_ATTR_RO(transfers);
-> > +
-> > +ssize_t nacks_show(struct device *pdev,
-> > +                  struct device_attribute *attr, char *buf)
-> > +{
-> > +       return sysfs_emit(buf, "%llu\n", kobj_to_adapter(pdev)->stats->nacks);
-> > +}
-> > +DEVICE_ATTR_RO(nacks);
-> > +
-> > +ssize_t recovery_successes_show(struct device *pdev,
-> > +                               struct device_attribute *attr, char *buf)
-> > +{
-> > +       return sysfs_emit(buf, "%llu\n", kobj_to_adapter(pdev)->stats->recovery_successes);
-> > +}
-> > +DEVICE_ATTR_RO(recovery_successes);
-> > +
-> > +ssize_t recovery_failures_show(struct device *pdev,
-> > +                              struct device_attribute *attr, char *buf)
-> > +{
-> > +       return sysfs_emit(buf, "%llu\n", kobj_to_adapter(pdev)->stats->recovery_failures);
-> > +}
-> > +DEVICE_ATTR_RO(recovery_failures);
-> > +
-> > +ssize_t timeouts_show(struct device *pdev,
-> > +                     struct device_attribute *attr, char *buf)
-> > +{
-> > +       return sysfs_emit(buf, "%llu\n", kobj_to_adapter(pdev)->stats->timeouts);
-> > +}
-> > +DEVICE_ATTR_RO(timeouts);
-> > +
-> > +/**
-> > + * i2c_adapter_create_stats_directory - creates folder for I2C statistics.
-> > + * @adapter: the i2c_adapter to create the stats directory for.
-> > + *
-> > + * Return: 0 if successful, 1 if failed.
-> > + */
-> > +int i2c_adapter_create_stats_directory(struct i2c_adapter *adapter)
-> > +{
-> > +       struct i2c_adapter_stats *stats;
-> > +       int ret = 1;
-> > +
-> > +       stats = kzalloc(sizeof(*stats), GFP_KERNEL);
-> > +       if (!stats) {
-> > +               adapter->stats = NULL;
-> > +               return ret;
-> > +       }
-> > +       adapter->stats = stats;
-> > +       adapter->stats->kobj = kobject_create_and_add("stats", &adapter->dev.kobj);
-> > +
-> > +       ret = sysfs_create_file(adapter->stats->kobj, &dev_attr_transfers.attr);
-> > +       if (ret)
-> > +               dev_warn(&adapter->dev, "Failed to create sysfs file for tx_complete_cnt\n");
-> > +
-> > +       ret = sysfs_create_file(adapter->stats->kobj, &dev_attr_bus_errors.attr);
-> > +       if (ret)
-> > +               dev_warn(&adapter->dev, "Failed to create sysfs file for bus_errors\n");
-> > +
-> > +       ret = sysfs_create_file(adapter->stats->kobj, &dev_attr_nacks.attr);
-> > +       if (ret)
-> > +               dev_warn(&adapter->dev, "Failed to create sysfs file for nacks\n");
-> > +
-> > +       ret = sysfs_create_file(adapter->stats->kobj, &dev_attr_recovery_successes.attr);
-> > +       if (ret)
-> > +               dev_warn(&adapter->dev, "Failed to create sysfs file for recovery_successes\n");
-> > +
-> > +       ret = sysfs_create_file(adapter->stats->kobj, &dev_attr_recovery_failures.attr);
-> > +       if (ret)
-> > +               dev_warn(&adapter->dev, "Failed to create sysfs file for recovery_failures\n");
-> > +
-> > +       return ret;
-> > +}
-> > +
-> >  MODULE_AUTHOR("Frodo Looijaard <frodol@dds.nl>");
-> >  MODULE_AUTHOR("Simon G. Vogl <simon@tk.uni-linz.ac.at>");
-> >  MODULE_DESCRIPTION("I2C /dev entries driver");
-> > diff --git a/include/linux/i2c.h b/include/linux/i2c.h
-> > index 3eb60a2e9e61..c8608378da2a 100644
-> > --- a/include/linux/i2c.h
-> > +++ b/include/linux/i2c.h
-> > @@ -21,6 +21,7 @@
-> >  #include <linux/of.h>          /* for struct device_node */
-> >  #include <linux/swab.h>                /* for swab16 */
-> >  #include <uapi/linux/i2c.h>
-> > +#include <linux/slab.h> /* for kzalloc */
-> >
-> >  extern struct bus_type i2c_bus_type;
-> >  extern struct device_type i2c_adapter_type;
-> > @@ -684,6 +685,25 @@ struct i2c_adapter_quirks {
-> >         u16 max_comb_2nd_msg_len;
-> >  };
-> >
-> > +/**
-> > + * I2C statistics
-> > + * The list of statistics are currently copied from npcm7xx.
-> > + * Perhaps a more universal set of statistics can be used.
-> > + *
-> > + * The stats are currently modeled as pointers to members in the bus drivers.
-> > + * A null pointer indicates the counter is not supported by the bus driver.
-> > + */
-> > +struct i2c_adapter_stats {
-> > +       struct kobject *kobj;
-> > +
-> > +       u64 transfers;
-> > +       u64 bus_errors;
-> > +       u64 nacks;
-> > +       u64 recovery_successes;
-> > +       u64 recovery_failures;
-> > +       u64 timeouts;
-> > +};
-> > +
-> >  /* enforce max_num_msgs = 2 and use max_comb_*_len for length checks */
-> >  #define I2C_AQ_COMB                    BIT(0)
-> >  /* first combined message must be write */
-> > @@ -735,12 +755,18 @@ struct i2c_adapter {
-> >
-> >         struct i2c_bus_recovery_info *bus_recovery_info;
-> >         const struct i2c_adapter_quirks *quirks;
-> > +       struct i2c_adapter_stats *stats;
-> >
-> >         struct irq_domain *host_notify_domain;
-> >         struct regulator *bus_regulator;
-> >  };
-> >  #define to_i2c_adapter(d) container_of(d, struct i2c_adapter, dev)
-> >
-> > +int i2c_adapter_create_stats_directory(struct i2c_adapter *adapter);
-> > +
-> > +void i2c_adapter_stats_register_counter(struct i2c_adapter *adapter,
-> > +                                       const char *counter_name, void *data_source);
-> > +
-> >  static inline void *i2c_get_adapdata(const struct i2c_adapter *adap)
-> >  {
-> >         return dev_get_drvdata(&adap->dev);
-> > --
-> > 2.35.1.1094.g7c7d902a7c-goog
-> >
+> - It would allow most developers to not need to understand Yocto at
+> all to do their day to day work on existing applications.  No more
+> "devtool modify", and related SRCREV bumps.  This will help most of
+> the new developers on the project with a lower mental load, which will
+> mean people are able to ramp up faster..
 >
+> - It would give an opportunity for individuals and companies to "own"
+> well-supported public forks (ie Redhat) of the codebase, which would
+> increase participation in the project overall.  This already happens
+> quite a bit, but in practice, the forks that do it squash history,
+> making it nearly impossible to get their changes upstreamed from an
+> outside entity.
 >
-> --
-> Regards,
-> Avi
+> - It would centralize the bug databases.  Today, bugs filed against
+> sub projects tend to not get answered.  Having all the bugs in
+> openbmc/openbmc would help in the future to avoid duplicating bugs
+> across projects.
+>
+> - Would increase the likelihood that someone contributes a patch,
+> especially a patch written by someone else.  If contributing a patch
+> was just a matter of cherry-picking a tree of commits and submitting
+> it to gerrit, it's a lot more likely that people would do it.
+>
+> - Greatly increases the ease with which stats are collected.
+> Questions like: How many patches were submitted last year?  How many
+> lines of code changed between commit A and commit B?  Where was this
+> regression injected (ie git bisect)?  How much of our codebase is C++?
+> How many users of the dbus Sensor.Value interface are there?  Are all
+> easily answered in one liner git commands once this change is done.
+>
+> - New features no longer require single-point-of-contact core
+> maintainer processes (ie, creating a repo for changes, setting up
+> maintainer groups, ect) and can just be submitted as a series of
+> patches to openbmc/openbmc.
+>
+> - Tree-wide changes (c++ standard, yocto updates, formatting, ect) are
+> much easier to accomplish in a small number of patches, or a series of
+> patches that is easy to pull and test as a unit.
+>
+> In terms of concretely how we would accomplish this, I've put together
+> what such a tree would look like, and I'm looking for input on how it
+> could be improved.  Some key points on what it represents:
+>
+> - All history for both openbmc and sub projects will be retained.
+> Commits are interleaved based on the date in which they were submitted
+> using custom tooling that was built on top of git fast-export and
+> fast-import.  All previously available tags will have similar tags in
+> the new repository pointing at their equivalent commits in the new
+> repository.
+>
+> - Inclusive guidelines: To make progress toward an unrelated but
+> important goal at the same time, I'm recommending that the
+> openbmc/master branch will be left as-is, and the newly-created sha1
+> will be pushed to the branch openbmc/openbmc:main, to retain peoples
+> links to previous commits on master, and retain the exact project
+> history while at the same time moving the project to having more
+> inclusive naming, as has been documented previously[3].  At some point
+> in the future the master branch could be renamed and deprecated, but
+> this is considered out of scope for this specific change.
+>
+> - Each individual sub-project will be given a folder within
+> openbmc/openbmc based on their current repository name.  While there
+> is an opportunity to reorganize in more specific ways (ie, put all
+> ipmi-oem handler repos in a folder) this proposal intentionally
+> doesn't, under the proposition that once this change is made, any sort
+> of folder rearranging will be much easier to accomplish, and to keep
+> the scope limited.
+>
+> - Yocto recipes will be changed to point to their path equivalent, and
+> inherit externalsrc bbclass[4].  This workflow is exactly the workflow
+> devtool uses to point to local repositories during a "devtool modify",
+> so it's unlikely we will have incremental build-consistency issues
+> with this approach, as was a concern in the past.
+>
+> - Places where we've forked other well supported projects (u-boot,
+> kernel, ect) will continue to point to the openbmc/<projectname> fork.
+> This is done to ensure that we don't inflict the same problem we're
+> attempting to solve in OpenBMC upon those working in the subproject
+> forks, and to reinforce to contributors that patches to these projects
+> should prefer submitting first to the relevant upstream.
+>
+> - Subprojects that are intended to be reused outside of OpenBMC (ex
+> sdbusplus) will retain their previous commit, history, and trees, such
+> that they are usable outside the project.  This is intended to make
+> sure that the code that should be reusable by others remains so.
+>
+> - The above intentionally makes no changes to our subtree update
+> process, which would remain the same process as is currently.  The
+> openbmc-specific autobump job in Jenkins would be disabled considering
+> it's no longer required in this approach.
+>
+> - Most Gerrit patches would now be submitted to openbmc/openbmc.
+>
+> My proposed version of this tree is pushed to a github fork here, and
+> is based on the tree from a few weeks ago:
+> https://github.com/edtanous/openbmc
+>
+> It implements all the above for the main branch.  This tree is based
+> on the output of the automated tooling, and in the case where this
+> proposal is accepted, the tooling would be re-run to capture the state
+> of the tree at the point where we chose to make this change.
+>
+> The tool I wrote to generate this tree is also published, if you're
+> interested in how this tree was built, and is quite interesting in its
+> use of git export/import [5], but functionally, I would not expect
+> that tooling to survive after this transition is made.
+>
+> Let me know what you think.
+>
+> -Ed
+>
+> [1] https://lore.kernel.org/openbmc/CACWQX821ADQCrekLj_bGAu=1SSLCv5pTee7jaoVo2Zs6havgnA@mail.gmail.com/
+> [2] https://git-scm.com/docs/git-rebase
+> [3] https://github.com/openbmc/docs/blob/master/CONTRIBUTING.md#inclusive-naming
+> [4] https://www.yoctoproject.org/docs/1.8/ref-manual/ref-manual.html#ref-classes-externalsrc
+> [5] https://github.com/edtanous/obmc-repo-combine/blob/main/combine
