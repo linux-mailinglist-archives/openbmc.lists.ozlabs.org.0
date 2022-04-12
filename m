@@ -2,44 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C6C7D4FCF30
-	for <lists+openbmc@lfdr.de>; Tue, 12 Apr 2022 07:59:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E90654FD1A7
+	for <lists+openbmc@lfdr.de>; Tue, 12 Apr 2022 08:57:59 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Kcw6951Nmz3bZX
-	for <lists+openbmc@lfdr.de>; Tue, 12 Apr 2022 15:59:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KcxPd5kZHz3bXB
+	for <lists+openbmc@lfdr.de>; Tue, 12 Apr 2022 16:57:57 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=X5P51EVf;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.alibaba.com (client-ip=115.124.30.57;
- helo=out30-57.freemail.mail.aliyun.com;
- envelope-from=guoheyi@linux.alibaba.com; receiver=<UNKNOWN>)
-Received: from out30-57.freemail.mail.aliyun.com
- (out30-57.freemail.mail.aliyun.com [115.124.30.57])
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::e32;
+ helo=mail-vs1-xe32.google.com; envelope-from=suichen@google.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20210112 header.b=X5P51EVf; dkim-atps=neutral
+Received: from mail-vs1-xe32.google.com (mail-vs1-xe32.google.com
+ [IPv6:2607:f8b0:4864:20::e32])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Kcw5v5511z2xZp
- for <openbmc@lists.ozlabs.org>; Tue, 12 Apr 2022 15:59:10 +1000 (AEST)
-X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R121e4; CH=green; DM=||false|;
- DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=e01e04395; MF=guoheyi@linux.alibaba.com;
- NM=1; PH=DS; RN=2; SR=0; TI=SMTPD_---0V9tSQ9h_1649743131; 
-Received: from 30.225.140.31(mailfrom:guoheyi@linux.alibaba.com
- fp:SMTPD_---0V9tSQ9h_1649743131) by smtp.aliyun-inc.com(127.0.0.1);
- Tue, 12 Apr 2022 13:58:52 +0800
-Message-ID: <090d3636-b796-3737-7814-eaf5c3486619@linux.alibaba.com>
-Date: Tue, 12 Apr 2022 13:58:51 +0800
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KcxPC3rv1z2xm2
+ for <openbmc@lists.ozlabs.org>; Tue, 12 Apr 2022 16:57:34 +1000 (AEST)
+Received: by mail-vs1-xe32.google.com with SMTP id m14so5435754vsp.11
+ for <openbmc@lists.ozlabs.org>; Mon, 11 Apr 2022 23:57:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=qgnZcpBIVw/20jUOhWmEfTuzXQZyJ+1bcARldVvAaR8=;
+ b=X5P51EVfPZjlbksZyO8vAa5jI/Zmu0YnhLWRiZSjuxLtdc/pjrnDR2w0YrNKPH+cYI
+ fyWBt1ei0QdsjfOLU4EOZPj0JZY4HQUPf5PKZEvdUM9d2qfY3pb+jOK2vFsVHNBeKFof
+ H+aGU2m1QTsI60XYNtY9YDdRy596GSkEsYoYz3t4GknmiZeZ5BwyGm4SmdQYdT7yRmHs
+ vFxqbKONBi5e5dw9d+vRLJBI21c8uRvNoujF3IuGz83SpOggyv2GstoR4RaU1pC8WaSq
+ jlmsB9tIzEMSmDCjOjZMTiZjSCjinQi8358aY8SDxoSr23xR2E831/yFOna4ixh/ynUM
+ P86A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=qgnZcpBIVw/20jUOhWmEfTuzXQZyJ+1bcARldVvAaR8=;
+ b=hoLaF2Y+7d07dHeJqlgoiPkfbnI8EKiK57FbZB9T9CHrq07uN/3VpTZY/SWqmRVIMl
+ YBrT67rrnQSuwwXjWU4Dw91P6zkLec6mCCrnH39ABJlPVmnbCNSOwCZuYgyD1skNNkip
+ rDX3iWszHiIfdjaXV9TkBvcTkg1ExTR6mjGPAVmBxGuLLoKI43rZ0aM0AvfUobXjacSF
+ dMDi+lokn5i8ORKHBjRWQ4gGCGe8voJ3uLjNCO8m6ReU/65v54nTfkJELeeoaMojaBVr
+ F7DDkcLlEdycaKhPaS502yq2fUdu9Fqe8b3/Uy0Pi94kkax3zxEYvcDxSjKUHk4yiWDE
+ OUoQ==
+X-Gm-Message-State: AOAM5323JvvxHUkVk0hzV4AVr/fizN6teTaQxcYRz0O2gG4sEp+o1nCh
+ Ffp1oSaCV/wIZZ5pIKSKfTjnCfqWnj9FAaY1zct911l+XiDTAg==
+X-Google-Smtp-Source: ABdhPJzxZ0VVLhQigdhqHW6xTC41Uj5hvZ0KEw/IZ7uR6XRK3pIOiIWoZvfuPQfTUR2BGgYZOOC2fTl7spYQoc7habo=
+X-Received: by 2002:a05:6102:100c:b0:328:1794:ac99 with SMTP id
+ q12-20020a056102100c00b003281794ac99mr6690714vsp.69.1649746649144; Mon, 11
+ Apr 2022 23:57:29 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.7.0
-Subject: Re: boot failure when read-write fs is full
-Content-Language: en-US
-To: Rohit Pai <ropai@nvidia.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <LV2PR12MB6014F744D07F3385DC934A38CDEA9@LV2PR12MB6014.namprd12.prod.outlook.com>
-From: Heyi Guo <guoheyi@linux.alibaba.com>
-In-Reply-To: <LV2PR12MB6014F744D07F3385DC934A38CDEA9@LV2PR12MB6014.namprd12.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20220401002200.27584-1-suichen@google.com>
+ <20220401002200.27584-2-suichen@google.com>
+ <CAKKbWA4cuv3mPF9Es-TzV-OtbQuLDJdZNU=uOfZXMYaWD-FWCg@mail.gmail.com>
+In-Reply-To: <CAKKbWA4cuv3mPF9Es-TzV-OtbQuLDJdZNU=uOfZXMYaWD-FWCg@mail.gmail.com>
+From: Sui Chen <suichen@google.com>
+Date: Mon, 11 Apr 2022 23:57:18 -0700
+Message-ID: <CAJOps0uyo0z7EdBweV4gXUCb6fE-23ayEgce1B3h9KWRQpYwcA@mail.gmail.com>
+Subject: Re: [RFC Patch v4 1/1] i2c debug counters as sysfs attributes
+To: Avi Fishman <avifishman70@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -51,82 +76,337 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Benjamin Fair <benjaminfair@google.com>, Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Tali Perry <tali.perry1@gmail.com>, Josh Lehan <krellan@google.com>,
+ linux-i2c <linux-i2c@vger.kernel.org>, Joel Stanley <joel@jms.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Rohit,
+Hello Avi,
 
-We also got similar issue, and it should be directly caused by the 
-failure of "mkdir -p $upper $work" in obmc-init.sh. Our work around is 
-done by below patch, i.e. avoid to remove the directory 
-/run/initramfs/rw/work and recreate it, but only removing its contents.
+I recently installed a patched kernel on a real machine and am trying
+to validate the counters a bit; I would like to find out how the
+counters in the i2c core relate to the counters in the npcm7xx driver,
+and also explore the possibility of per-address counters, then update
+to this list and the linux-kernel list when the results are clear.
 
-This may cause rwfs to become read only when it is full, but it won't 
-trigger kernel panic and we still have chance to repair it. We are 
-planing to send a patch to OBMC gerrit, but not yet.
+And also I need to find a better place to create the sysfs folders
+than from within i2c_transfer and i2c_recover_bus.
 
-diff --git 
-a/meta-phosphor/recipes-phosphor/initrdscripts/files/obmc-init.sh 
-b/meta-phosphor/recipes-phosphor/initrdscripts/files/obmc-init.sh
-index e61ede9111..d4425b56b1 100644
---- a/meta-phosphor/recipes-phosphor/initrdscripts/files/obmc-init.sh
-+++ b/meta-phosphor/recipes-phosphor/initrdscripts/files/obmc-init.sh
-@@ -411,7 +411,15 @@ HERE
-         debug_takeover "$msg"
-  fi
-
--rm -rf $work
-+# Empty workdir; do not remove workdir itself for it will fail to 
-recreate it if
-+# RWFS is full
-+if [ -d $work ]
-+then
-+    cd $work
-+    ls -a | grep -v -E '^\.$|^\.\.$' | xargs rm -rf
-+    cd -
-+fi
-+
-  mkdir -p $upper $work
-
-  mount -t overlay -o lowerdir=$rodir,upperdir=$upper,workdir=$work cow 
-/root
-
-Heyi
+Thanks,
+Sui
 
 
-在 2022/4/12 上午1:51, Rohit Pai 写道:
-> Hello All,
+On Sun, Apr 3, 2022 at 5:12 AM Avi Fishman <avifishman70@gmail.com> wrote:
 >
-> Currently I am investigating the bootup failures which I see on our 0penBmc based boards when the rw-fs is full.
-> The rw-fs can become full because of many reasons. One example being too frequent bmc dump creation which are stored in rw-fs.
+> Hi Sui,
 >
-> I have allocated 16MB for the read-write fs and part of the init sequence there is overlay file system which is being mounted as the root-fs which combines the ro-fs and the rw-fs.
+> Do you intend later to push it also to kernel.org?
+>
+> Avi
+>
+> On Fri, Apr 1, 2022 at 3:28 AM Sui Chen <suichen@google.com> wrote:
+> >
+> > This change renames the I2C debug counters as suggested, and moves their
+> > processing into the i2c core:
+> > - bus_errors
+> > - transfers
+> > - nacks
+> > - recovery_successes
+> > - recovery_failures
+> > - timeouts
+> >
+> > The function i2c_adapter_create_stats_folder creates a stats directory
+> > in the device's sysfs directory to hold the above debug counters.
+> >
+> > Did some brief tests with a few test programs that saves/replays I2C
+> > trace by reading hwmon sensors. The test program and hardware run in
+> > QEMU. The test programs are located at
+> > https://gerrit.openbmc-project.xyz/c/openbmc/openbmc-tools/+/52527
+> >
+> > (A normal read)
+> >
+> > root@gsj:/tmp# cat /sys/class/i2c-adapter/i2c-1/stats/transfers
+> > 264
+> > root@gsj:/tmp# ./i2c_bmk_bmc  0
+> > idx=0
+> > Processing 1 inputs
+> > /sys/class/hwmon/hwmon0/temp1_input
+> > (../../devices/platform/ahb/ahb:apb/f0081000.i2c/i2c-1/1-005c/hwmon/hwmon0):
+> > 0
+> > [FindTraceEntries] t0=391.000000 t1=393.000000
+> > Found 4 interesting I2C trace entries:
+> >  i2c_write: i2c-1 #0 a=05c f=0000 l=1 [00]
+> >  i2c_read: i2c-1 #1 a=05c f=0001 l=2
+> >  i2c_reply: i2c-1 #1 a=05c f=0001 l=2 [00-00]
+> >  i2c_result: i2c-1 n=2 ret=2
+> > root@gsj:/tmp# cat /sys/class/i2c-adapter/i2c-1/stats/transfers
+> > 265
+> >
+> > (Read from an inexistent address, NACK)
+> >
+> > root@gsj:/tmp# cat /sys/class/i2c-adapter/i2c-1/stats/nacks
+> > 6
+> > root@gsj:/tmp# cat /sys/class/i2c-adapter/i2c-1/stats/transfers
+> > 265
+> >
+> > root@gsj:/tmp# cat i2c_trace.txt
+> >  i2c_write: i2c-1 #0 a=0ff f=0000 l=1 [00]
+> >  i2c_read: i2c-1 #1 a=0ff f=0001 l=2
+> > root@gsj:/tmp# ./i2c_replay_bmc i2c_trace.txt
+> > (program runs and completes)
+> >
+> > root@gsj:/tmp# cat /sys/class/i2c-adapter/i2c-1/stats/nacks
+> > 12
+> > root@gsj:/tmp# cat /sys/class/i2c-adapter/i2c-1/stats/transfers
+> > 265
+> >
+> > The program makes 2 attempts, performing 3 I2C operations at each
+> > attempt, which translates to the 6 nack events.
+> >
+> > Signed-off-by: Sui Chen <suichen@google.com>
+> > ---
+> >  drivers/i2c/i2c-core-base.c | 32 ++++++++++++-
+> >  drivers/i2c/i2c-dev.c       | 94 +++++++++++++++++++++++++++++++++++++
+> >  include/linux/i2c.h         | 26 ++++++++++
+> >  3 files changed, 151 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/drivers/i2c/i2c-core-base.c b/drivers/i2c/i2c-core-base.c
+> > index 84f12bf90644..53688b1d855a 100644
+> > --- a/drivers/i2c/i2c-core-base.c
+> > +++ b/drivers/i2c/i2c-core-base.c
+> > @@ -270,11 +270,22 @@ EXPORT_SYMBOL_GPL(i2c_generic_scl_recovery);
+> >
+> >  int i2c_recover_bus(struct i2c_adapter *adap)
+> >  {
+> > +
+> > +       if (adap->stats == NULL)
+> > +               i2c_adapter_create_stats_directory(adap);
+> > +
+> >         if (!adap->bus_recovery_info)
+> >                 return -EBUSY;
+> >
+> >         dev_dbg(&adap->dev, "Trying i2c bus recovery\n");
+> > -       return adap->bus_recovery_info->recover_bus(adap);
+> > +       int ret = adap->bus_recovery_info->recover_bus(adap);
+> > +
+> > +       if (ret == 0)
+> > +               ++(adap->stats->recovery_successes);
+> > +       else
+> > +               ++(adap->stats->recovery_failures);
+> > +
+> > +       return ret;
+> >  }
+> >  EXPORT_SYMBOL_GPL(i2c_recover_bus);
+> >
+> > @@ -2223,6 +2234,23 @@ int __i2c_transfer(struct i2c_adapter *adap, struct i2c_msg *msgs, int num)
+> >                 trace_i2c_result(adap, num, ret);
+> >         }
+> >
+> > +       if (adap->stats == NULL) {
+> > +               i2c_adapter_create_stats_directory(adap);
+> > +       }
+> > +
+> > +       if (ret < 0) {
+> > +               if (ret == -ENXIO)
+> > +                       ++(adap->stats->nacks);
+> > +               else if (ret == -ETIMEDOUT)
+> > +                       ++(adap->stats->timeouts);
+> > +               else
+> > +                       ++(adap->stats->bus_errors);
+> > +       }
+> > +
+> > +       if (ret == num) {
+> > +               ++(adap->stats->transfers);
+> > +       }
+> > +
+> >         return ret;
+> >  }
+> >  EXPORT_SYMBOL(__i2c_transfer);
+> > @@ -2485,6 +2513,7 @@ static int i2c_detect(struct i2c_adapter *adapter, struct i2c_driver *driver)
+> >         }
+> >
+> >         kfree(temp_client);
+> > +       i2c_adapter_create_stats_directory(adapter);
+> >         return err;
+> >  }
+> >
+> > @@ -2617,6 +2646,7 @@ void i2c_put_dma_safe_msg_buf(u8 *buf, struct i2c_msg *msg, bool xferred)
+> >
+> >         kfree(buf);
+> >  }
+> > +
+> >  EXPORT_SYMBOL_GPL(i2c_put_dma_safe_msg_buf);
+> >
+> >  MODULE_AUTHOR("Simon G. Vogl <simon@tk.uni-linz.ac.at>");
+> > diff --git a/drivers/i2c/i2c-dev.c b/drivers/i2c/i2c-dev.c
+> > index 77f576e51652..253622706b63 100644
+> > --- a/drivers/i2c/i2c-dev.c
+> > +++ b/drivers/i2c/i2c-dev.c
+> > @@ -767,6 +767,100 @@ static void __exit i2c_dev_exit(void)
+> >         unregister_chrdev_region(MKDEV(I2C_MAJOR, 0), I2C_MINORS);
+> >  }
+> >
+> > +static struct i2c_adapter *kobj_to_adapter(struct device *pdev)
+> > +{
+> > +       struct kobject *dev_kobj;
+> > +       struct device *dev;
+> > +
+> > +       dev_kobj = ((struct kobject *)pdev)->parent;
+> > +       dev = container_of(dev_kobj, struct device, kobj);
+> > +       return to_i2c_adapter(dev);
+> > +}
+> > +
+> > +ssize_t bus_errors_show(struct device *pdev,
+> > +                       struct device_attribute *attr, char *buf)
+> > +{
+> > +       return sysfs_emit(buf, "%llu\n", kobj_to_adapter(pdev)->stats->bus_errors);
+> > +}
+> > +DEVICE_ATTR_RO(bus_errors);
+> > +
+> > +ssize_t transfers_show(struct device *pdev,
+> > +                            struct device_attribute *attr, char *buf)
+> > +{
+> > +       return sysfs_emit(buf, "%llu\n", kobj_to_adapter(pdev)->stats->transfers);
+> > +}
+> > +DEVICE_ATTR_RO(transfers);
+> > +
+> > +ssize_t nacks_show(struct device *pdev,
+> > +                  struct device_attribute *attr, char *buf)
+> > +{
+> > +       return sysfs_emit(buf, "%llu\n", kobj_to_adapter(pdev)->stats->nacks);
+> > +}
+> > +DEVICE_ATTR_RO(nacks);
+> > +
+> > +ssize_t recovery_successes_show(struct device *pdev,
+> > +                               struct device_attribute *attr, char *buf)
+> > +{
+> > +       return sysfs_emit(buf, "%llu\n", kobj_to_adapter(pdev)->stats->recovery_successes);
+> > +}
+> > +DEVICE_ATTR_RO(recovery_successes);
+> > +
+> > +ssize_t recovery_failures_show(struct device *pdev,
+> > +                              struct device_attribute *attr, char *buf)
+> > +{
+> > +       return sysfs_emit(buf, "%llu\n", kobj_to_adapter(pdev)->stats->recovery_failures);
+> > +}
+> > +DEVICE_ATTR_RO(recovery_failures);
+> > +
+> > +ssize_t timeouts_show(struct device *pdev,
+> > +                     struct device_attribute *attr, char *buf)
+> > +{
+> > +       return sysfs_emit(buf, "%llu\n", kobj_to_adapter(pdev)->stats->timeouts);
+> > +}
+> > +DEVICE_ATTR_RO(timeouts);
+> > +
+> > +/**
+> > + * i2c_adapter_create_stats_directory - creates folder for I2C statistics.
+> > + * @adapter: the i2c_adapter to create the stats directory for.
+> > + *
+> > + * Return: 0 if successful, 1 if failed.
+> > + */
+> > +int i2c_adapter_create_stats_directory(struct i2c_adapter *adapter)
+> > +{
+> > +       struct i2c_adapter_stats *stats;
+> > +       int ret = 1;
+> > +
+> > +       stats = kzalloc(sizeof(*stats), GFP_KERNEL);
+> > +       if (!stats) {
+> > +               adapter->stats = NULL;
+> > +               return ret;
+> > +       }
+> > +       adapter->stats = stats;
+> > +       adapter->stats->kobj = kobject_create_and_add("stats", &adapter->dev.kobj);
+> > +
+> > +       ret = sysfs_create_file(adapter->stats->kobj, &dev_attr_transfers.attr);
+> > +       if (ret)
+> > +               dev_warn(&adapter->dev, "Failed to create sysfs file for tx_complete_cnt\n");
+> > +
+> > +       ret = sysfs_create_file(adapter->stats->kobj, &dev_attr_bus_errors.attr);
+> > +       if (ret)
+> > +               dev_warn(&adapter->dev, "Failed to create sysfs file for bus_errors\n");
+> > +
+> > +       ret = sysfs_create_file(adapter->stats->kobj, &dev_attr_nacks.attr);
+> > +       if (ret)
+> > +               dev_warn(&adapter->dev, "Failed to create sysfs file for nacks\n");
+> > +
+> > +       ret = sysfs_create_file(adapter->stats->kobj, &dev_attr_recovery_successes.attr);
+> > +       if (ret)
+> > +               dev_warn(&adapter->dev, "Failed to create sysfs file for recovery_successes\n");
+> > +
+> > +       ret = sysfs_create_file(adapter->stats->kobj, &dev_attr_recovery_failures.attr);
+> > +       if (ret)
+> > +               dev_warn(&adapter->dev, "Failed to create sysfs file for recovery_failures\n");
+> > +
+> > +       return ret;
+> > +}
+> > +
+> >  MODULE_AUTHOR("Frodo Looijaard <frodol@dds.nl>");
+> >  MODULE_AUTHOR("Simon G. Vogl <simon@tk.uni-linz.ac.at>");
+> >  MODULE_DESCRIPTION("I2C /dev entries driver");
+> > diff --git a/include/linux/i2c.h b/include/linux/i2c.h
+> > index 3eb60a2e9e61..c8608378da2a 100644
+> > --- a/include/linux/i2c.h
+> > +++ b/include/linux/i2c.h
+> > @@ -21,6 +21,7 @@
+> >  #include <linux/of.h>          /* for struct device_node */
+> >  #include <linux/swab.h>                /* for swab16 */
+> >  #include <uapi/linux/i2c.h>
+> > +#include <linux/slab.h> /* for kzalloc */
+> >
+> >  extern struct bus_type i2c_bus_type;
+> >  extern struct device_type i2c_adapter_type;
+> > @@ -684,6 +685,25 @@ struct i2c_adapter_quirks {
+> >         u16 max_comb_2nd_msg_len;
+> >  };
+> >
+> > +/**
+> > + * I2C statistics
+> > + * The list of statistics are currently copied from npcm7xx.
+> > + * Perhaps a more universal set of statistics can be used.
+> > + *
+> > + * The stats are currently modeled as pointers to members in the bus drivers.
+> > + * A null pointer indicates the counter is not supported by the bus driver.
+> > + */
+> > +struct i2c_adapter_stats {
+> > +       struct kobject *kobj;
+> > +
+> > +       u64 transfers;
+> > +       u64 bus_errors;
+> > +       u64 nacks;
+> > +       u64 recovery_successes;
+> > +       u64 recovery_failures;
+> > +       u64 timeouts;
+> > +};
+> > +
+> >  /* enforce max_num_msgs = 2 and use max_comb_*_len for length checks */
+> >  #define I2C_AQ_COMB                    BIT(0)
+> >  /* first combined message must be write */
+> > @@ -735,12 +755,18 @@ struct i2c_adapter {
+> >
+> >         struct i2c_bus_recovery_info *bus_recovery_info;
+> >         const struct i2c_adapter_quirks *quirks;
+> > +       struct i2c_adapter_stats *stats;
+> >
+> >         struct irq_domain *host_notify_domain;
+> >         struct regulator *bus_regulator;
+> >  };
+> >  #define to_i2c_adapter(d) container_of(d, struct i2c_adapter, dev)
+> >
+> > +int i2c_adapter_create_stats_directory(struct i2c_adapter *adapter);
+> > +
+> > +void i2c_adapter_stats_register_counter(struct i2c_adapter *adapter,
+> > +                                       const char *counter_name, void *data_source);
+> > +
+> >  static inline void *i2c_get_adapdata(const struct i2c_adapter *adap)
+> >  {
+> >         return dev_get_drvdata(&adap->dev);
+> > --
+> > 2.35.1.1094.g7c7d902a7c-goog
+> >
 >
 >
-> mount<https://grok.openbmc.org/s?defs=mount&project=openbmc> -t overlay<https://grok.openbmc.org/s?defs=overlay&project=openbmc> -o lowerdir<https://grok.openbmc.org/s?defs=lowerdir&project=openbmc>=$rodir<https://grok.openbmc.org/s?defs=%24rodir&project=openbmc>,upperdir<https://grok.openbmc.org/s?defs=upperdir&project=openbmc>=$upper<https://grok.openbmc.org/s?defs=%24upper&project=openbmc>,workdir<https://grok.openbmc.org/s?defs=workdir&project=openbmc>=$work<https://grok.openbmc.org/s?defs=%24work&project=openbmc> cow<https://grok.openbmc.org/s?defs=cow&project=openbmc> /root<https://grok.openbmc.org/s?defs=root&project=openbmc>
->
-> Above 'mount overlay' command fails with the below error when the upperdir which the rw-fs is full.
->
->
-> chroot: can't execute '/bin/sh': No such file or directory
->
-> Unable to confirm /sbin/init is an executable non-empty file
->
-> in merged file system mounted at /root.
->
-> Change Root test failed!
->
-> Fatal error, triggering kernel panic!
->
-> Basically, when the 'overlayfs' fails there is no rootfs mounted on the /. So, I am thinking the subsequent init sequence fails.
->
-> I am very much interested in knowing if anyone has any thoughts on solving this issue or has encountered and already found some existing solutions.
-> One solution which is in my mind is to capture the failure of mount overlay command and do a self-clean-up procedure on the rw-fs with a white-list policy.
-> Thanks for any kind input.
->
+> --
 > Regards,
-> Rohit PAI
->
->
->
->
+> Avi
