@@ -2,103 +2,96 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7B92B4FE5F3
-	for <lists+openbmc@lfdr.de>; Tue, 12 Apr 2022 18:35:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8750E4FE629
+	for <lists+openbmc@lfdr.de>; Tue, 12 Apr 2022 18:43:48 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KdBDW3rcYz3bWf
-	for <lists+openbmc@lfdr.de>; Wed, 13 Apr 2022 02:35:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KdBPZ4YW9z3bdY
+	for <lists+openbmc@lfdr.de>; Wed, 13 Apr 2022 02:43:46 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=czHEJafT;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ttGxR0MF;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=czHEJafT; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ header.s=pp1 header.b=ttGxR0MF; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KdBD52kr5z2yh9
- for <openbmc@lists.ozlabs.org>; Wed, 13 Apr 2022 02:35:33 +1000 (AEST)
-Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 23CGPGl3012260
- for <openbmc@lists.ozlabs.org>; Tue, 12 Apr 2022 16:35:30 GMT
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KdBMt62jSz3bdg
+ for <openbmc@lists.ozlabs.org>; Wed, 13 Apr 2022 02:42:18 +1000 (AEST)
+Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 23CEn2jl024494; 
+ Tue, 12 Apr 2022 16:42:15 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date :
- subject : references : to : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=e3jGFWUGTH5HOAy2p2BtLru5uH5IRny9rLpy5HVFHik=;
- b=czHEJafTj+tPNHRXJhqkIrGgb41uap8MRLqdwE4MjSC4y9mbwuZ4e0sbPvfOJays6tNe
- DSZASZyaHfA6bMlGIkOyqKVukBlmzad9TDH690x6xMuythmcr6Z4pwb5PgursbhMMlrZ
- TKObZF61XMebCiXyV29hlf8PRpo1ivcll5Y8MqvWSImJMlbQbVACW3x4i+rQDGMI+/Kx
- czd9FmQQ//gVM7y8FLLEc1WvpSX/X38Tj6+eUp/+7LjoqHM53qzJ+KMBmd/XeFzcWOLl
- +QTQoZvbMfQJVCrlHX5+SJ8xz+aOJgk+vfhkKuuZE2ootVteW+4/qGBTAIy/rkgE1qdM gw== 
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=yjFUmtF9lzw/pLS2jT7ftcOi8fa7TEqX29DpniEUwqg=;
+ b=ttGxR0MFBsHlBGuanhpp4CDzpojpP8SeQ1c8c97zHQCffkGOR1dZeZ9pJ51SPn0t2AZO
+ tc/vvArtpiZmSzNOfQKo2SooFiMmDxgCx6IO3HAXlx075yzBhPy00upIMUGqjjx3WSHW
+ 10fg6F7TWrDmhQ9bo2K09U7BiyJS4d3qxTYq7uGo6sliBiTbw7qT2yP8qRKpzhTfoXJM
+ CoFYGSs5Ee7hvK1LAM6THAFees/iJ9wp+6A/HCgsq1/nPWm7p1uicGfH8+JrnE5H+XuA
+ o96LOdMk43VXGHYPgMF451/3bW535/7gsF5/T+8tV6eCTxk8BZ1TO66SVoV/sHi31EMU gw== 
 Received: from pps.reinject (localhost [127.0.0.1])
- by mx0b-001b2d01.pphosted.com with ESMTP id 3fdcx788er-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Tue, 12 Apr 2022 16:35:30 +0000
-Received: from m0098416.ppops.net (m0098416.ppops.net [127.0.0.1])
- by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 23CGP9dT012105
- for <openbmc@lists.ozlabs.org>; Tue, 12 Apr 2022 16:35:30 GMT
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.10])
- by mx0b-001b2d01.pphosted.com with ESMTP id 3fdcx788ec-1
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3fdaqkv037-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Apr 2022 16:35:30 +0000
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
- by ppma02dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 23CGWApp017950;
- Tue, 12 Apr 2022 16:35:29 GMT
-Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com
- [9.57.198.25]) by ppma02dal.us.ibm.com with ESMTP id 3fb1s9qq1a-1
+ Tue, 12 Apr 2022 16:42:15 +0000
+Received: from m0098394.ppops.net (m0098394.ppops.net [127.0.0.1])
+ by pps.reinject (8.16.0.43/8.16.0.43) with SMTP id 23CGgEU0015226;
+ Tue, 12 Apr 2022 16:42:14 GMT
+Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
+ [169.55.85.253])
+ by mx0a-001b2d01.pphosted.com with ESMTP id 3fdaqkv02r-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 12 Apr 2022 16:35:29 +0000
-Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com
- [9.57.199.108])
- by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 23CGZTnA25625070
+ Tue, 12 Apr 2022 16:42:14 +0000
+Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
+ by ppma01wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 23CGW0cX001653;
+ Tue, 12 Apr 2022 16:42:13 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com
+ [9.57.198.29]) by ppma01wdc.us.ibm.com with ESMTP id 3fb1s91e96-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 12 Apr 2022 16:42:13 +0000
+Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com
+ [9.57.199.110])
+ by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 23CGgDiO27656702
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 12 Apr 2022 16:35:29 GMT
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F0872B2068;
- Tue, 12 Apr 2022 16:35:28 +0000 (GMT)
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B29ABB2065;
- Tue, 12 Apr 2022 16:35:28 +0000 (GMT)
-Received: from [9.160.0.223] (unknown [9.160.0.223])
- by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTPS;
- Tue, 12 Apr 2022 16:35:28 +0000 (GMT)
-Message-ID: <9e907d43-4d45-ab8c-9b75-7d9347bd1822@linux.ibm.com>
-Date: Tue, 12 Apr 2022 11:35:27 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.6.0
-Subject: Fwd: Security Working Group meeting - Wednesday April 13 - SELinux
-Content-Language: en-US
-References: <04f7f71d-16db-ce88-f359-f7d60c0a798e@linux.ibm.com>
-To: openbmc <openbmc@lists.ozlabs.org>, Anton Kachalov <gmouse@google.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-In-Reply-To: <04f7f71d-16db-ce88-f359-f7d60c0a798e@linux.ibm.com>
-X-Forwarded-Message-Id: <04f7f71d-16db-ce88-f359-f7d60c0a798e@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 43tNVzGzWSChyKd2Tzxne4-GLmcM9W3M
-X-Proofpoint-ORIG-GUID: 3_mPeh7UFo2jqOJCzmuVIbjK7-F7Ytg1
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ Tue, 12 Apr 2022 16:42:13 GMT
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 08172AE064;
+ Tue, 12 Apr 2022 16:42:13 +0000 (GMT)
+Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1592EAE05F;
+ Tue, 12 Apr 2022 16:42:12 +0000 (GMT)
+Received: from v0005c16.aus.stglabs.ibm.com (unknown [9.211.113.187])
+ by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTP;
+ Tue, 12 Apr 2022 16:42:11 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: pavel@ucw.cz
+Subject: [PATCH v4 0/4] leds: pca955x: Add HW blink support
+Date: Tue, 12 Apr 2022 11:42:07 -0500
+Message-Id: <20220412164211.28824-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: tyK17CKS3GPSsTcnh8xvB004_JUm6lUJ
+X-Proofpoint-ORIG-GUID: n3jTm-RN7LKzR09Pxp_JBHiOOHpwiRa5
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.205,Aquarius:18.0.858,Hydra:6.0.486,FMLib:17.11.64.514
  definitions=2022-04-12_06,2022-04-12_02,2022-02-23_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 phishscore=0
- spamscore=0 malwarescore=0 mlxlogscore=896 priorityscore=1501
- suspectscore=0 bulkscore=0 lowpriorityscore=0 adultscore=0 mlxscore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2202240000 definitions=main-2204120079
+ impostorscore=0
+ malwarescore=0 spamscore=0 clxscore=1011 priorityscore=1501
+ mlxlogscore=640 adultscore=0 phishscore=0 suspectscore=0
+ lowpriorityscore=0 mlxscore=0 bulkscore=0 classifier=spam adjust=0
+ reason=mlx scancount=1 engine=8.12.0-2202240000
+ definitions=main-2204120079
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -110,46 +103,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ andy.shevchenko@gmail.com, linux-leds@vger.kernel.org,
+ dan.carpenter@oracle.com, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Anton,
+This series adds support for blinking using the PCA955x chip, falling
+back to software blinking if another LED on the chip is already blinking
+at a different rate, or if the requested rate isn't representable with
+the PCA955x.
+Also included are some minor clean up and optimization changes that make
+the HW blinking a bit easier.
 
-Folks from IBM research are planning to attend the OpenBMC Security 
-Working Group meeting to learn more about how to apply SELinux to 
-OpenBMC.  I understand this is an alternate solution to the work you had 
-started here: 
-https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/42748 
-<https://gerrit.openbmc-project.xyz/c/openbmc/openbmc/+/42748> and 
-https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/49100 
-<https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/49100>.
+Changes since v3:
+ - Initialize return value in the blink function
+   Thanks Dan Carpenter and kernel test robot
 
-Joseph
+Changes since v2:
+ - Split the cleanup patch
+ - Prettier dev_err calls
+ - Include units for blink period and use defined unit translations
+   rather than just a number.
+ - Use positive conditionals.
 
+Changes since v1:
+ - Rework the blink function to fallback to software blinking if the
+   period is out of range of the chip's capabilities or if another LED
+   on the chip is already blinking at a different rate.
+ - Add the cleanup patch
 
--------- Forwarded Message --------
-Subject: 	Security Working Group meeting - Wednesday April 13
-Date: 	Tue, 12 Apr 2022 11:28:24 -0500
-From: 	Joseph Reynolds <jrey@linux.ibm.com>
-To: 	openbmc <openbmc@lists.ozlabs.org>
+Eddie James (4):
+  leds: pca955x: Refactor with helper functions and renaming
+  leds: pca955x: Use pointers to driver data rather than I2C client
+  leds: pca955x: Optimize probe led selection
+  leds: pca955x: Add HW blink support
 
+ drivers/leds/leds-pca955x.c | 341 ++++++++++++++++++++++++------------
+ 1 file changed, 232 insertions(+), 109 deletions(-)
 
-
-This is a reminder of the OpenBMC Security Working Group meeting 
-scheduled for this Wednesday April 13 at 10:00am PDT.
-
-We'll discuss the following items on the agenda 
-<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
-and anything else that comes up:
-
-1. Renewed interest in securing D-Bus interfaces and using SELinux.
-
-
-
-
-Access, agenda and notes are in the wiki:
-https://github.com/openbmc/openbmc/wiki/Security-working-group 
-<https://github.com/openbmc/openbmc/wiki/Security-working-group>
-
-- Joseph
+-- 
+2.27.0
 
