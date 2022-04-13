@@ -1,35 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 36CA04FEBBB
-	for <lists+openbmc@lfdr.de>; Wed, 13 Apr 2022 02:03:45 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id BDBE84FEC09
+	for <lists+openbmc@lfdr.de>; Wed, 13 Apr 2022 03:05:01 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KdN9C0gPrz3bYb
-	for <lists+openbmc@lfdr.de>; Wed, 13 Apr 2022 10:03:43 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KdPWv5spWz3bYF
+	for <lists+openbmc@lfdr.de>; Wed, 13 Apr 2022 11:04:59 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=pfAmzAgd;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=sysmate.com (client-ip=58.224.160.96; helo=sysmate.com;
- envelope-from=pooky@sysmate.com; receiver=<UNKNOWN>)
-Received: from sysmate.com (mail.sysmate.com [58.224.160.96])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42b;
+ helo=mail-pf1-x42b.google.com; envelope-from=cgel.zte@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=pfAmzAgd; dkim-atps=neutral
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com
+ [IPv6:2607:f8b0:4864:20::42b])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KcynM4YBTz2xCC
- for <openbmc@lists.ozlabs.org>; Tue, 12 Apr 2022 18:00:04 +1000 (AEST)
-From: <pooky@sysmate.com>
-To: <openbmc@lists.ozlabs.org>
-Subject: [Help] I want to run may application at start up with openBmc.
-Date: Tue, 12 Apr 2022 16:59:58 +0900
-Organization: SYSMATE
-Message-ID: <000301d84e43$4de77760$e9b66620$@sysmate.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KdPWS2qnzz2xnW;
+ Wed, 13 Apr 2022 11:04:35 +1000 (AEST)
+Received: by mail-pf1-x42b.google.com with SMTP id a21so573737pfv.10;
+ Tue, 12 Apr 2022 18:04:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding;
+ bh=nY/di/ysNrXys5hLZLAzfqtetv16NHy5HD+OIKSD450=;
+ b=pfAmzAgd+3XvYXMaijTNmoTdKLKheabhIAus+/1HOCL9K/aGGRWf0wIqFioAi75BsT
+ 03EegT91x09xqKjy+NphmLlDhLtcT9fqKPcmucw3I4hUbrCKwckux01A/LIntSY4do7R
+ hVp/6fdoa3DfedqIR5+4FtFVZuAeJcs/xSBDQgT5Gm0fav19AHvD4/LSX5tkdVl0L07t
+ QDK+gddHbdRjcclAJb5QzvveGx9bwYh4h1QS2NtaENHYmsR/IBqhpnD7MMmgrKfw1cr7
+ /IgFOIB6QsNwWXRBbbatKWXAbVdhihw9PvV+8NpYcmWTFP5dnHaCKS1IWKAoxTKBodYM
+ SBnw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+ :references:mime-version:content-transfer-encoding;
+ bh=nY/di/ysNrXys5hLZLAzfqtetv16NHy5HD+OIKSD450=;
+ b=K9f90DS0fA0qAjuldf+FK4FtsygtW6dv8Y2cIxZ8I2EhH23b5BJRLSLZsaFkykJg/1
+ 0RF50xO1Liou2q1od0argtfbgKjdIb5amysuh2E6hlXvzO0VQ7aQeq1bzdrAtQ2liInG
+ S3113kBjHCaoJ1e+fb128xxV6Et41Nt7ya1sDH5wlwiB+/jOkbIumoiUrh31YH0/vVb1
+ 0DlxMgkVkw8Fr8XFIziHOnTNLvXNFdc1BU+all0MUM0jYcuXlxzoypC1vc7xJvJlp5PZ
+ T/n3BY5SJEtGMY3+lgasHTyLs4fteHtBdeakbr+a9cIIRiQRgAd5OB+0MqvDg1MJ8IXf
+ w0Jw==
+X-Gm-Message-State: AOAM533+de3LL9GjwOK9QDEBCLULnkr/ud8BQ0T3AxNz1RHVP5gNznBx
+ rdJ9o3QVj0SoRFz+KtxbpFM=
+X-Google-Smtp-Source: ABdhPJzO2HhOlpHu6E6g/YKT6WPznRIK8MTuigx0kAa2cPRadPTgCsRINF7fdUU8ekY6oAQzyooYSg==
+X-Received: by 2002:a63:5219:0:b0:39d:7212:4b3f with SMTP id
+ g25-20020a635219000000b0039d72124b3fmr7907489pgb.255.1649811870927; 
+ Tue, 12 Apr 2022 18:04:30 -0700 (PDT)
+Received: from localhost.localdomain ([193.203.214.57])
+ by smtp.gmail.com with ESMTPSA id
+ i15-20020a17090a058f00b001cd50a6ec5csm251107pji.16.2022.04.12.18.04.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 12 Apr 2022 18:04:30 -0700 (PDT)
+From: cgel.zte@gmail.com
+X-Google-Original-From: lv.ruyi@zte.com.cn
+To: iwona.winiarska@intel.com
+Subject: [PATCH v2] peci: aspeed: fix error check return value of
+ platform_get_irq()
+Date: Wed, 13 Apr 2022 01:04:25 +0000
+Message-Id: <20220413010425.2534887-1-lv.ruyi@zte.com.cn>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <d09484f7cda13de3f156bd1bcba8c2671495dcd1.camel@intel.com>
+References: <d09484f7cda13de3f156bd1bcba8c2671495dcd1.camel@intel.com>
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
- boundary="----=_NextPart_000_0004_01D84E8E.BDCF9490"
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdhOQziKSKkA1fVKR/KQXyTGbOGMqw==
-Content-Language: ko
-X-Mailman-Approved-At: Wed, 13 Apr 2022 10:03:31 +1000
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -41,154 +83,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: pooky@sysmate.com
+Cc: jae.hyun.yoo@linux.intel.com, linux-aspeed@lists.ozlabs.org,
+ andrew@aj.id.au, cgel.zte@gmail.com, lv.ruyi@zte.com.cn,
+ Zeal Robot <zealci@zte.com.cn>, linux-kernel@vger.kernel.org,
+ pierre-louis.bossart@linux.intel.com, joel@jms.id.au, openbmc@lists.ozlabs.org,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multipart message in MIME format.
+From: Lv Ruyi <lv.ruyi@zte.com.cn>
 
-------=_NextPart_000_0004_01D84E8E.BDCF9490
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+platform_get_irq() return negative value on failure, so null check of
+priv->irq is incorrect. Fix it by comparing whether it is less than zero.
 
-To whom it may concern,
+Fixes: a85e4c52086c ("peci: Add peci-aspeed controller driver")
+Reported-by: Zeal Robot <zealci@zte.com.cn>
+Signed-off-by: Lv Ruyi <lv.ruyi@zte.com.cn>
+---
+v2: prefix the subject with "peci: aspeed:"
+---
+ drivers/peci/controller/peci-aspeed.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/drivers/peci/controller/peci-aspeed.c b/drivers/peci/controller/peci-aspeed.c
+index 1925ddc13f00..731c5d8f75c6 100644
+--- a/drivers/peci/controller/peci-aspeed.c
++++ b/drivers/peci/controller/peci-aspeed.c
+@@ -523,7 +523,7 @@ static int aspeed_peci_probe(struct platform_device *pdev)
+ 		return PTR_ERR(priv->base);
  
-
-My name is Hounjoung, Software engineer for Sysmate in South Korea.
-
-I found your email address on website.
-
+ 	priv->irq = platform_get_irq(pdev, 0);
+-	if (!priv->irq)
++	if (priv->irq < 0)
+ 		return priv->irq;
  
-
-I am a complete beginner to openbmc.
-
-I am developing a motherboard using AST2500 chip using openbmc. 
-
- 
-
-I am setting up the development environment based on  Asrock's e3c246d4i
-target.
-
- 
-
-I create my application comply with
-"https://stackoverflow.com/questions/63723563/run-application-at-start-up-wi
-th-yocto-dunfell"
-
- 
-
-During boot, I see the warning message. And my application did not run.
-
-[   12.963889] systemd-sysv-generator[103]: SysV service
-'/etc/init.d/start-sysmate' lacks a native systemd unit file. Automatically
-generating a unit file for compatibility. Please update package to include a
-native systemd unit file, in order to make it more safe and robust.
-
-
-How can I run may application at start up with openBmc ?
-
- 
-
-Best regards, 
-
-Houn-Joung
-
-
-------=_NextPart_000_0004_01D84E8E.BDCF9490
-Content-Type: text/html;
-	charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
-xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
-xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
-xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta =
-http-equiv=3DContent-Type content=3D"text/html; =
-charset=3Dus-ascii"><meta name=3DGenerator content=3D"Microsoft Word 15 =
-(filtered medium)"><style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"Malgun Gothic";
-	panose-1:2 11 5 3 2 0 0 2 0 4;}
-@font-face
-	{font-family:"Malgun Gothic";
-	panose-1:2 11 5 3 2 0 0 2 0 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	text-align:justify;
-	text-justify:inter-ideograph;
-	text-autospace:none;
-	word-break:break-hangul;
-	font-size:10.0pt;
-	font-family:"Malgun Gothic";}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-span.EmailStyle19
-	{mso-style-type:personal-reply;
-	font-family:"Malgun Gothic";
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;}
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:3.0cm 72.0pt 72.0pt 72.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]--></head><body lang=3DKO =
-link=3D"#0563C1" vlink=3D"#954F72" style=3D'word-wrap:break-word'><div =
-class=3DWordSection1><p class=3DMsoNormal><span lang=3DEN-US>To whom it =
-may concern,<o:p></o:p></span></p><p class=3DMsoNormal><span =
-lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
-lang=3DEN-US>My name is Hounjoung, Software engineer for Sysmate in =
-South Korea.<o:p></o:p></span></p><p class=3DMsoNormal><span =
-lang=3DEN-US>I found your email address on =
-website.<o:p></o:p></span></p><p class=3DMsoNormal><span =
-lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
-lang=3DEN-US>I am a complete beginner to =
-openbmc.<o:p></o:p></span></p><p class=3DMsoNormal><span lang=3DEN-US>I =
-am developing a motherboard using AST2500 chip using openbmc. =
-<o:p></o:p></span></p><p class=3DMsoNormal><span =
-lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
-lang=3DEN-US>I am setting up the development environment based on =
-&nbsp;Asrock</span>&#8217;<span lang=3DEN-US>s e3c246d4i =
-target.<o:p></o:p></span></p><p class=3DMsoNormal><span =
-lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
-lang=3DEN-US>I create my application comply with &#8220;<a =
-href=3D"https://stackoverflow.com/questions/63723563/run-application-at-s=
-tart-up-with-yocto-dunfell">https://stackoverflow.com/questions/63723563/=
-run-application-at-start-up-with-yocto-dunfell</a>&#8221;<o:p></o:p></spa=
-n></p><p class=3DMsoNormal><span =
-lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
-lang=3DEN-US>During boot, I see the warning message. And my application =
-did not run.<o:p></o:p></span></p><p class=3DMsoNormal><span =
-lang=3DEN-US style=3D'color:red'>[&nbsp;&nbsp; 12.963889] =
-systemd-sysv-generator[103]: SysV service '/etc/init.d/start-sysmate' =
-lacks a native systemd unit file. Automatically generating a unit file =
-for compatibility. Please update package to include a native systemd =
-unit file, in order to make it more safe and =
-robust.<o:p></o:p></span></p><p class=3DMsoNormal><span =
-lang=3DEN-US><br>How can I run may application at start up with openBmc =
-?<o:p></o:p></span></p><p class=3DMsoNormal><span =
-lang=3DEN-US><o:p>&nbsp;</o:p></span></p><p class=3DMsoNormal><span =
-lang=3DEN-US>Best regards, <o:p></o:p></span></p><p =
-class=3DMsoNormal><span =
-lang=3DEN-US>Houn-Joung<o:p></o:p></span></p></div></body></html>
-------=_NextPart_000_0004_01D84E8E.BDCF9490--
+ 	ret = devm_request_irq(&pdev->dev, priv->irq, aspeed_peci_irq_handler,
+-- 
+2.25.1
 
