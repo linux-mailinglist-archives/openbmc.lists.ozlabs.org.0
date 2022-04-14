@@ -1,60 +1,59 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE7A9500AAC
-	for <lists+openbmc@lfdr.de>; Thu, 14 Apr 2022 12:00:23 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 349B3500AD2
+	for <lists+openbmc@lfdr.de>; Thu, 14 Apr 2022 12:16:09 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KfFMB00Jpz2yNH
-	for <lists+openbmc@lfdr.de>; Thu, 14 Apr 2022 20:00:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KfFjM13Ykz2yK2
+	for <lists+openbmc@lfdr.de>; Thu, 14 Apr 2022 20:16:07 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=mi9QyI4g;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=dkim header.b=BKlCWqNG;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
- helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=alien8.de (client-ip=5.9.137.197; helo=mail.skyhub.de;
+ envelope-from=bp@alien8.de; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=mi9QyI4g; 
- dkim-atps=neutral
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
- [IPv6:2605:2700:0:5::4713:9cab])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256
+ header.s=dkim header.b=BKlCWqNG; dkim-atps=neutral
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KfFLm3hdXz2xBv
- for <openbmc@lists.ozlabs.org>; Thu, 14 Apr 2022 20:00:00 +1000 (AEST)
-Received: from hatter.bewilderbeest.net (174-21-187-98.tukw.qwest.net
- [174.21.187.98])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id C00231C5;
- Thu, 14 Apr 2022 02:59:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
- s=thorn; t=1649930393;
- bh=zfWxccrOXSDJmboyRrOF1GXePJrFZYaR5aymmV+6dO4=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=mi9QyI4gwAG/abnSm63D4y8/R4kvt133+tKNJOGR3f4sPD8/WiP3Vp6jC91mdeKmx
- HF/tEMsMKtIPX2BsPVt5fmDNI5SEW74/kvSWDrt8ufAU9JlUCOn/gyxX0UoKQaaWV+
- SralrfZ0+vpUyOljl2j4d10w9YlU4HPHfEGCUtCU=
-Date: Thu, 14 Apr 2022 02:59:50 -0700
-From: Zev Weiss <zev@bewilderbeest.net>
-To: Joel Stanley <joel@jms.id.au>
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] aspeed: add
- CONFIG_ASPEED_ISOLATE_BMC
-Message-ID: <YlfwlkBcyF4MZvYS@hatter.bewilderbeest.net>
-References: <20220414040448.27100-1-zev@bewilderbeest.net>
- <CACPK8XfKuNEvrZBxuD0Q891Wb23hkwRSRe6GcmZ_KR=3g4Q=mw@mail.gmail.com>
- <YlfePCrv0TBYtNHJ@hatter.bewilderbeest.net>
- <CACPK8Xd3HnX1angrhtb1UC5Zaa08n8emKp5Og9QEsm9yp-wpTA@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KfFhy4dmJz2xRm
+ for <openbmc@lists.ozlabs.org>; Thu, 14 Apr 2022 20:15:45 +1000 (AEST)
+Received: from zn.tnic (p2e55d808.dip0.t-ipconnect.de [46.85.216.8])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 2EF031EC05ED;
+ Thu, 14 Apr 2022 12:15:37 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+ t=1649931337;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=tcvILpawoy/EPkGkLSEhvv0Kdz440+lEpC25Pt/VCcQ=;
+ b=BKlCWqNGE/Ep1cvt/qOcZSftYkpVpT+iOaYR+yPMnEQ2cHucqhZKpKdJv8W07gJQDPVYvY
+ Dr8UoJLd4dHuOT55Ag1YvyTF/N5fAIOfsrgpfRzbWwcDBRa3ipPH5RrN/IQk8hzgpR6BuV
+ 4zWAZ+lq9tJFmmI4yxAiLuAR+/7If2o=
+Date: Thu, 14 Apr 2022 12:15:37 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: Paul Menzel <pmenzel@molgen.mpg.de>
+Subject: Re: [PATCH v6 3/3] EDAC: nuvoton: Add NPCM memory controller driver
+Message-ID: <Ylf0Sc7fqv25Ay05@zn.tnic>
+References: <20220322030152.19018-1-ctcchien@nuvoton.com>
+ <20220322030152.19018-4-ctcchien@nuvoton.com>
+ <a06441fc-85cf-9386-e362-4a90e855aa19@molgen.mpg.de>
+ <CAHpyw9fQVbS1Cpv0ULQc2=vK8LsG6n7tgP+J9AboUupDAPT27Q@mail.gmail.com>
+ <YlfeXVSkUC2B4xH2@zn.tnic>
+ <14d07709-07ef-21a8-ad74-0f56447cf6dd@molgen.mpg.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <CACPK8Xd3HnX1angrhtb1UC5Zaa08n8emKp5Og9QEsm9yp-wpTA@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <14d07709-07ef-21a8-ad74-0f56447cf6dd@molgen.mpg.de>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,95 +65,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Ryan Chen <ryan_chen@aspeedtech.com>
+Cc: KWLIU@nuvoton.com, tony.luck@intel.com, rric@kernel.org,
+ Benjamin Fair <benjaminfair@google.com>,
+ linux-edac <linux-edac@vger.kernel.org>, KFTING <KFTING@nuvoton.com>,
+ Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, JJLIU0@nuvoton.com,
+ ctcchien@nuvoton.com, Tali Perry <tali.perry1@gmail.com>,
+ devicetree <devicetree@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ James Morse <james.morse@arm.com>, Medad Young <medadyoung@gmail.com>,
+ YSCHU@nuvoton.com, Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Apr 14, 2022 at 01:56:49AM PDT, Joel Stanley wrote:
->On Thu, 14 Apr 2022 at 08:41, Zev Weiss <zev@bewilderbeest.net> wrote:
->>
->> On Thu, Apr 14, 2022 at 01:13:37AM PDT, Joel Stanley wrote:
->> >On Thu, 14 Apr 2022 at 04:05, Zev Weiss <zev@bewilderbeest.net> wrote:
->> >>
->> >> This provides the functionality of the OpenBMC df-isolate-bmc distro
->> >> feature flag, and is very directly derived from Andrew Jeffery's patch
->> >> in the OpenBMC tree for the v2016.07 u-boot branch.  The
->> >> implementation currently only supports ast2500, though ast2400 and
->> >> ast2600 support should be fairly simple extensions.
->> >>
->> >> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
->> >> ---
->> >>
->> >> This is meant more as something of an RFC to see if this seems like
->> >> approximately the right way of going about this (since as far as I can
->> >> see the existing df-isolate-bmc implementation only supports the old
->> >> 2016 u-boot branch), but if it looks OK I suppose it could potentially
->> >> go in as-is.
->> >
->> >Thanks for doing this. The only potential change I can suggest is we
->> >make each bit of hardware a different option (or we allow it to be
->> >configured in the device tree). That assumes someone has a use case
->> >for leaving one of the backdoorts open but closing the others.
->> >
->>
->> This possibility came up on Discord with Andrew earlier -- I agree it'd
->> be nice to have somewhat more fine-grained control over it, though I'm
->> not aware of any platforms that really need it at the moment.  I'm
->> certainly not as well-versed as Andrew in the precise details of exactly
->> how all the various busses interact in different circumstances (this was
->> just a fairly mechanical translation of his patch), so I'm not 100%
->> confident I wouldn't unwittingly introduce screwy combinations with a
->> more fine-grained set of config options (mostly w.r.t. to the LPC & iLPC
->> stuff).
->
->Okay. Let this thread be a guide for the person who wants to follow up
->with that work.
->
->> >I suggest we invert the meaning of the option. The default should be
->> >turn off the backdoors, and someone can optionally re-enable them by
->> >selecting the option.
->> >
->>
->> I was tempted to make it 'default y' (i.e. secure-by-default), but the
->> possibility of compatibility breaks with existing systems that might
->> depend on the current insecure-by-default arrangement gave me pause.  If
->> we don't think that's a big concern though I'm happy to flip the sense
->> of it and have the more aggressive default.
->
->Given the impact of having these left accidentally open, I think we're
->doing the industry a favour by closing them off.
->
->This aligns the 2500 with the 2600 which defaults to the backdoors
->closed from A3 in silicon, and for all systems running their u-boot
->SDK (which the openbmc tree is based on):
->
->https://github.com/AspeedTech-BMC/u-boot/blob/v00.04.10/arch/arm/mach-aspeed/ast2600/platform.S#L307
->
->>
->> >config ASPEED_ALLOW_BACKDOORS?
->>
->> Sounds reasonable to me, though maybe s/ALLOW/ENABLE/?
->
->Yep, go for it.
+On Thu, Apr 14, 2022 at 10:56:43AM +0200, Paul Menzel wrote:
+> No idea, why you had to ask this question, while you statement before
+> already made the point.
 
-Hmm, though now that I've drafted up a version of the patch with that 
-change incorporated, one other thing that's occurred to me is the 
-potential for confusion on ast2[46]00 systems -- since the patch as it 
-stands doesn't cover them, those will still have the backdoors enabled 
-regardless, but it seems like the Kconfig text could easily leave people 
-with the incorrect impression that they'll have the secure configuration 
-unless they explicitly opt out of it.
+You've told Medad one thing. I told him the complete opposite. Medad as
+new submitter gets confused. And I don't want patch submitters to get
+confused by review.
 
-I don't have any g6 hardware to test on, but I think I'll expand it to 
-cover the ast2400 at least, and add a note to the Kconfig help text 
-clarifying that pre-A3 ast2600s will still be insecure.  Though I guess 
-people doing a 'make menuconfig' for an ast2600 probably won't see it 
-anyway given the dependencies...not sure if there's a better way of 
-handling that.
+So, if you're unsure about a review feedback, don't give it pls.
 
+> Sorry I do not get your point. Would you elaborate on the debug message so
+> it’s more useful?
 
-Thanks,
-Zev
+Just think of the big picture: is my error message useful enough for
+debugging or would I have to go and add more info to it so that I can
+debug an issue?
 
+Example:
+
+There is
+
+	edac_dbg(3, "InterruptStatus : 0x%x\n", intr_status);
+
+now.
+
+Now, how about this?
+
+        edac_dbg(3, "dev: %s, id: %s: IRQ: %d, interrupt status: 0x%x\n",
+                 mci->dev_name, mci->ctl_name, irq, intr_status);
+
+Which one, do you think, is more helpful to a person trying to debug any
+potential issue with the interrupt handler and the ECCs it is supposed
+to issue?
+
+Thx.
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
