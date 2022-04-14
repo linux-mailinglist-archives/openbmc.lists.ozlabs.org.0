@@ -1,82 +1,74 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6AEE852FCD2
-	for <lists+openbmc@lfdr.de>; Sat, 21 May 2022 15:22:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id D206F532A14
+	for <lists+openbmc@lfdr.de>; Tue, 24 May 2022 14:12:52 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L545h1l4Nz3bmQ
-	for <lists+openbmc@lfdr.de>; Sat, 21 May 2022 23:22:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L6tPZ5m4Dz3blv
+	for <lists+openbmc@lfdr.de>; Tue, 24 May 2022 22:12:50 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=mKHk4Rof;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=quicinc.com header.i=@quicinc.com header.a=rsa-sha256 header.s=qcdkim header.b=jc1D43wX;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e2a;
- helo=mail-vs1-xe2a.google.com; envelope-from=warp5tw@gmail.com;
+ smtp.mailfrom=quicinc.com (client-ip=199.106.114.39;
+ helo=alexa-out-sd-02.qualcomm.com; envelope-from=quic_ggregory@quicinc.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=mKHk4Rof; dkim-atps=neutral
-Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com
- [IPv6:2607:f8b0:4864:20::e2a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=quicinc.com header.i=@quicinc.com header.a=rsa-sha256
+ header.s=qcdkim header.b=jc1D43wX; dkim-atps=neutral
+X-Greylist: delayed 123 seconds by postgrey-1.36 at boromir;
+ Tue, 24 May 2022 22:12:27 AEST
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com
+ [199.106.114.39])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L545H0xZNz3bks
- for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 23:22:26 +1000 (AEST)
-Received: by mail-vs1-xe2a.google.com with SMTP id z6so10608108vsp.0
- for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 06:22:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=k83DVcIcffNjBmT+wlu9VAh4wJXwqJzexEQvALMCO7A=;
- b=mKHk4RofXhQK4eLxHsDk3reXwyjiqEQbNfsXRsKBcRxL7PGJHEfGWrQ8bhweXz4jxG
- uq+3+8pHy4BRpHyRFeRtZ0gukNg7qQ6O7sILCCMt58U483zdPWBKHp+ueWMB3r3hNIVi
- 8VsP5a0g5Tevkx/KXwAhUwOCsSamPX0ltozwWgemNIDUlnehLD9A6Z+MOLWODO4kxKqN
- +yLwWy1K675pz86c3DP780FZwasgG0lUh6T6jv871cdhEKFR5Xo8rVwjmyORMiBikx/7
- 2ANja/zRSj6Y1f9ToeFivDSqScWMwSO+nI23R3B4z5xaT/XlIDwp0Bbx7CrAs3KZ8z0G
- i4dA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:content-transfer-encoding;
- bh=k83DVcIcffNjBmT+wlu9VAh4wJXwqJzexEQvALMCO7A=;
- b=Y1c5eogCy9BsLyNX4OfZd4Nro9zfsI4Fcy7fFf4JU7DQJsV0A66ZvTTkOmAz47hp/z
- 7/oCb7DXPfc+c5SAnIMG1ChP5RsEKZhhNRetMnzfYkm+TzuZ9jiZNoX/n4h+3mGWevvT
- IvH1jsUuoy9+utFyYZZLRRhWXqlHGKFVBMH4E4ZqoHwwwBaI0d9epPZMUnNdR8xhGclK
- bzWuySMlS+sMpgb1AmfLhfPCVg/ewcqTVJHnDQBiL+Sxl1VwBxasL+r9rSVsAmkUQqJL
- /IH+wrWtc/lcV5L3GFWFV9kD+Cfa4G8SFQbD0nS0Xtu2gvDgksbLfZzxv/8JuhcJq+Pv
- IQ0g==
-X-Gm-Message-State: AOAM5336CZCL9frM0kqp9NxLVO/zz8/P5q2u7xPUpiRGbbaJE0TcZYWW
- yXP9vB7wiDk0aXnzsnyED+T57VXldhUFsl+VVQ==
-X-Google-Smtp-Source: ABdhPJwdtT3lmW5L/ar4Qia93oyUEeZtSo6Wvd80aKSyRZZ7LHnsu45ANLywj2/NuRH/cy3ZSEbxXTtiwQ9Y6ncBtno=
-X-Received: by 2002:a67:cc02:0:b0:335:c5ac:96d7 with SMTP id
- q2-20020a67cc02000000b00335c5ac96d7mr5905980vsl.50.1653139342676; Sat, 21 May
- 2022 06:22:22 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L6tP72hGTz3bkv
+ for <openbmc@lists.ozlabs.org>; Tue, 24 May 2022 22:12:27 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+ t=1653394347; x=1684930347;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=kfrqmMX9mOlj9019q2693j+2qi59qnHwT6D/bvMA5KQ=;
+ b=jc1D43wXFe8tMNCXsfuwa5fPeqk52eNmY+soSB5aIv5VU4dQEqwTvrBL
+ /r55x3qF3mT1bimqIy13WhXSlrB0K2IOd3khSW4o2fzq4Wdvc5wPuU+p+
+ 8xoExKGjZ1L/vtPfjp3dzhu+y9rExdyuciBXbfBfv2k1k9snZKulD8Inz U=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+ by alexa-out-sd-02.qualcomm.com with ESMTP; 24 May 2022 05:10:21 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+ by ironmsg04-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 24 May 2022 05:10:21 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 24 May 2022 05:10:21 -0700
+Received: from quicinc.com (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 24 May
+ 2022 05:10:20 -0700
+Date: Thu, 14 Apr 2022 09:33:38 +0100
+From: Graeme Gregory <quic_ggregory@quicinc.com>
+To: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
+Subject: Re: Updated CCLA for Qualcomm Inovation Center Inc
+Message-ID: <20220414083338.7mfc5ql35kl253fr@ggregory-linuxws>
+References: <9c5a07b1-99a4-3eae-6cea-973d96bb14f1@quicinc.com>
+ <228c6f6d-51aa-41c9-bd34-9ce27766761e@www.fastmail.com>
+ <f9364e8a-6183-3306-fc28-5874821cd918@quicinc.com>
+ <YlciUMACC3Nv3Lht@heinlein.stwcx.org.github.beta.tailscale.net>
+ <b8e85f57-3846-7cd6-c1f8-e9e13e7b542c@quicinc.com>
+ <YlcyTpAB7j2mLhh5@heinlein.stwcx.org.github.beta.tailscale.net>
+ <cb68c4a1-f3da-a3fe-5e56-4646ed083396@quicinc.com>
 MIME-Version: 1.0
-References: <20220517101142.28421-1-warp5tw@gmail.com>
- <20220517101142.28421-11-warp5tw@gmail.com>
- <YoiAmI2wZz2Bkcm1@shikoro>
-In-Reply-To: <YoiAmI2wZz2Bkcm1@shikoro>
-From: Tyrone Ting <warp5tw@gmail.com>
-Date: Sat, 21 May 2022 21:22:11 +0800
-Message-ID: <CACD3sJb3ZBsZF=qtbvSikxUU8C-BLChZeHL2mG5JXKkx3QNWyw@mail.gmail.com>
-Subject: Re: [PATCH v5 10/10] i2c: npcm: Capitalize the one-line comment
-To: Wolfram Sang <wsa@kernel.org>, Tyrone Ting <warp5tw@gmail.com>,
- avifishman70@gmail.com, 
- tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com, 
- yuenn@google.com, benjaminfair@google.com, robh+dt@kernel.org, 
- krzysztof.kozlowski+dt@linaro.org, andriy.shevchenko@linux.intel.com, 
- jarkko.nikula@linux.intel.com, semen.protsenko@linaro.org, rafal@milecki.pl, 
- sven@svenpeter.dev, jsd@semihalf.com, lukas.bulwahn@gmail.com, arnd@arndb.de, 
- olof@lixom.net, tali.perry@nuvoton.com, Avi.Fishman@nuvoton.com, 
- tomer.maimon@nuvoton.com, KWLIU@nuvoton.com, JJLIU0@nuvoton.com, 
- kfting@nuvoton.com, openbmc@lists.ozlabs.org, linux-i2c@vger.kernel.org, 
- devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <cb68c4a1-f3da-a3fe-5e56-4646ed083396@quicinc.com>
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,29 +80,94 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org, quic_mkurapat@quicinc.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Wolfram:
-
-Got it and thank you for your help.
-
-Wolfram Sang <wsa@kernel.org> =E6=96=BC 2022=E5=B9=B45=E6=9C=8821=E6=97=A5 =
-=E9=80=B1=E5=85=AD =E4=B8=8B=E5=8D=882:03=E5=AF=AB=E9=81=93=EF=BC=9A
+On Wed, Apr 13, 2022 at 01:38:56PM -0700, Jae Hyun Yoo wrote:
+> On 4/13/2022 1:27 PM, Patrick Williams wrote:
+> > On Wed, Apr 13, 2022 at 12:41:21PM -0700, Jae Hyun Yoo wrote:
+> > > On 4/13/2022 12:19 PM, Patrick Williams wrote:
+> > > > On Wed, Apr 13, 2022 at 09:59:16AM -0700, Jae Hyun Yoo wrote:
+> > > > > Hi Brad,
+> > > > > 
+> > > > > On 3/14/2022 5:06 AM, Brad Bishop wrote:
+> > > > > > Hi Graeme
+> > > > > > 
+> > > > > > On Tue, Mar 8, 2022, at 7:40 AM, Graeme Gregory wrote:
+> > > > > > > Hi, Please find attached updated CCLA with Updated Schedule A for
+> > > > > > > Qualcomm Inovation Center Inc.
+> > > > > > 
+> > > > > > Accepted!  Thanks.
+> > > > > 
+> > > > > I checked my email inbox and found that Qualcomm CCLA is accepted a
+> > > > > month ago, but CI build isn't triggered automatically if I submit a
+> > > > > change into Gerrit.
+> > > > > 
+> > > > > https://gerrit.openbmc-project.xyz/c/openbmc/entity-manager/+/52577
+> > > > > 
+> > > > > Should I make any additional request to make it available?
+> > > > 
+> > > > Hello Jae.
+> > > > 
+> > > > We should probably write up some better documentation on this process.
+> > > > When Brad "accepts" a CCLA update that just means he's put it into the
+> > > > Google Drive, AFAIK.  He doesn't do anything in Gerrit/Jenkins.
+> > > > 
+> > > > What we need to do is:
+> > > > 
+> > > > 1. Create a quic/ci-authorized-owners and quic/ci-authorized group in
+> > > >      Gerrit for your members.
+> > > > 
+> > > > 2. Create a commit in openbmc-build-scripts to add quic/ci-authorized to
+> > > >      the Jenkins approved list.
+> > > > 
+> > > > 3. Add everyone in the CLA to ci-authorized and the CLA Manager(s) to
+> > > >      ci-authorized-owners.
+> > > > 
+> > > > 4. Retrigger your commit(s) in Jenkins so the approval process sees that
+> > > >      you are in a CLA group.
+> > > > 
+> > > > In the meantime, I can manually "+1 Ok-To-Test" your EM commit above so
+> > > > that Jenkins will run on it.  Can you confirm 'quic' is what you want to
+> > > > see for your company CLA name and work on #2?  Andrew Geissler or I can
+> > > > take care of #1 and #3.
+> > > > 
+> > > > See https://gerrit.openbmc-project.xyz/admin/groups for similar groups
+> > > > for other companies.
+> > > 
+> > > Hello Patrick,
+> > > 
+> > > Thank you for your kind explanation.
+> > > I tried to find a way of creating a new group in the
+> > > https://gerrit.openbmc-project.xyz/admin/groups but I can't find any.
+> > > Probably a permission issue?
+> > > 
+> > > I would really appreciate it if you can take care of them. 'quic' is
+> > > what I want to see as the CLA name.
+> > > 
+> > > Regards,
+> > > Jae
+> > 
+> > I've taken care of #1.  You are the only one that seems to have a Gerrit
+> > account, so I've done #3 the best I can.  It would be good if, at least,
+> > your CLA Manager could create a Gerrit account so that we can add them
+> > to the `quic/ci-authorized-owners` group and they can add new members
+> > themselves.
+> > 
+> > I've manually "+1 Ok-To-Test" your EM commit, as mentioned.  Waiting on
+> > you to take care of #2.  See this example commit:
+> > 
+> > https://github.com/openbmc/openbmc-build-scripts/commit/123ffbe91566073ecc73553cb32ddccf7a8a342e
+> 
+> Thank you so much for your help! I appreciate it.
+> 
+> I'll check #2 with my CLA manager.
 >
-> On Tue, May 17, 2022 at 06:11:42PM +0800, Tyrone Ting wrote:
-> > From: Tyrone Ting <kfting@nuvoton.com>
-> >
-> > Make the one-line comments capital in the driver to get the comment sty=
-le
-> > consistent.
-> >
-> > Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller dri=
-ver")
-> > Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
->
-> Needs to wait until comments to patches 8+9 are addressed.
->
 
-Best Regards,
-Tyrone
+I have created a gerrit account ID:1001418.
+
+Thanks
+
+Graeme
+
