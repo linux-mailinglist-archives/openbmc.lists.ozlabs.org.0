@@ -1,47 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 30496500B19
-	for <lists+openbmc@lfdr.de>; Thu, 14 Apr 2022 12:29:27 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 07B74500B33
+	for <lists+openbmc@lfdr.de>; Thu, 14 Apr 2022 12:33:23 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KfG0j1hxvz2yhD
-	for <lists+openbmc@lfdr.de>; Thu, 14 Apr 2022 20:29:25 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KfG5D6Ttwz305j
+	for <lists+openbmc@lfdr.de>; Thu, 14 Apr 2022 20:33:20 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=WH6qlyOA;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71;
- helo=twspam01.aspeedtech.com; envelope-from=chin-ting_kuo@aspeedtech.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72a;
+ helo=mail-qk1-x72a.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com
- [211.20.114.71])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=WH6qlyOA; dkim-atps=neutral
+Received: from mail-qk1-x72a.google.com (mail-qk1-x72a.google.com
+ [IPv6:2607:f8b0:4864:20::72a])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KfFzz43XKz2xVY;
- Thu, 14 Apr 2022 20:28:47 +1000 (AEST)
-Received: from mail.aspeedtech.com ([192.168.0.24])
- by twspam01.aspeedtech.com with ESMTP id 23EAGooQ068168;
- Thu, 14 Apr 2022 18:16:51 +0800 (GMT-8)
- (envelope-from chin-ting_kuo@aspeedtech.com)
-Received: from localhost.localdomain (192.168.10.10) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 14 Apr
- 2022 18:28:36 +0800
-From: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
-To: <linux-aspeed@lists.ozlabs.org>, <openbmc@lists.ozlabs.org>
-Subject: [PATCH 1/1] spi: aspeed: Update SPI clock frequency configuration
-Date: Thu, 14 Apr 2022 18:28:29 +0800
-Message-ID: <20220414102829.3892843-2-chin-ting_kuo@aspeedtech.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20220414102829.3892843-1-chin-ting_kuo@aspeedtech.com>
-References: <20220414102829.3892843-1-chin-ting_kuo@aspeedtech.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KfG4r5pgFz2xVn
+ for <openbmc@lists.ozlabs.org>; Thu, 14 Apr 2022 20:32:59 +1000 (AEST)
+Received: by mail-qk1-x72a.google.com with SMTP id c1so3490030qkf.13
+ for <openbmc@lists.ozlabs.org>; Thu, 14 Apr 2022 03:32:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=tz6JNLwRsuUV9e6Wb/jK5vZyFuS2XOWbOcUlOf+YiW4=;
+ b=WH6qlyOAMs7+dFOJkHP/SnFHVWFEpE3voObP02vevVi6ml30Oirb2csqv5gU70/Mds
+ cqRyTpfgtM7ndEVsulQWxaybNfEl337RXXkMaLSzLMnZGV4IcF6iiqAp8/hhfk4Iu1VY
+ cAZHDGIY/nl8XA2rm4RmfKCsdnwRQpOn8CevM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=tz6JNLwRsuUV9e6Wb/jK5vZyFuS2XOWbOcUlOf+YiW4=;
+ b=BcaW5Jtz3mIUIA29c0mbwxQLdL7Hd0zq0+8dwNfqc3Atz0htMbZa2XnA9A0oClcEMg
+ lE5WQhNZYX9CBskdtCFSkhTQ0u3dsSoH46/HExNSQVZu1UQ2cK1DlhnrgySsuu5H4huB
+ qvpWOI2qGVnRY88YaNHMEUthr9QO0EBQmumVTosU5sxtIVK/38HhNv7lKv5TdJhM/o7O
+ tdVEmfR3wDSY9+zm7gyueZokuB8PdSxUSpyIn7L85RyzXLhng9biqX9U38qY5mnhdo4B
+ 7h4F/M9ReAlL8hsjTq1cfJrR4aJzJB5W+9U2Lt08BfgwDtQhXQkX6Bm9/++D8I+fGrll
+ 0HTA==
+X-Gm-Message-State: AOAM531vqpnt927cT1DjVmVJzy/Q3+y5f3tgGVdlfkqCBNMVyE8HZ4pe
+ pF3+vZA2FboivGppZ02zLVyKL+oUH0Cwu/wCPVo=
+X-Google-Smtp-Source: ABdhPJwE501Cs/3uWsypa05t/G9JuFL5oZkmuzp/rTBfXyqCzxJn37Okgqmj82gz/IPrlkaD1X5itxFhUzH0ynHXk54=
+X-Received: by 2002:a05:620a:1422:b0:69c:4c45:18ec with SMTP id
+ k2-20020a05620a142200b0069c4c4518ecmr1214157qkj.243.1649932374910; Thu, 14
+ Apr 2022 03:32:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [192.168.10.10]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 23EAGooQ068168
+References: <20220414040448.27100-1-zev@bewilderbeest.net>
+ <CACPK8XfKuNEvrZBxuD0Q891Wb23hkwRSRe6GcmZ_KR=3g4Q=mw@mail.gmail.com>
+ <YlfePCrv0TBYtNHJ@hatter.bewilderbeest.net>
+ <CACPK8Xd3HnX1angrhtb1UC5Zaa08n8emKp5Og9QEsm9yp-wpTA@mail.gmail.com>
+ <YlfwlkBcyF4MZvYS@hatter.bewilderbeest.net>
+In-Reply-To: <YlfwlkBcyF4MZvYS@hatter.bewilderbeest.net>
+From: Joel Stanley <joel@jms.id.au>
+Date: Thu, 14 Apr 2022 10:32:42 +0000
+Message-ID: <CACPK8XdJya+_KhCQd1uoC7=2auUg00SYz2pmCkDvsqHCPCMQ-g@mail.gmail.com>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] aspeed: add
+ CONFIG_ASPEED_ISOLATE_BMC
+To: Zev Weiss <zev@bewilderbeest.net>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -53,296 +76,110 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: chin-ting_kuo@aspeedtech.com
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Ryan Chen <ryan_chen@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Instead of using the slowest one, the maximum clock
-frequency configured in the device tree should be kept
-when no timing calibration process is executed.
-Besides, an extra callback function is added in order
-to calculate clock frequency configuration for
-different ASPEED platforms.
+On Thu, 14 Apr 2022 at 09:59, Zev Weiss <zev@bewilderbeest.net> wrote:
+>
+> On Thu, Apr 14, 2022 at 01:56:49AM PDT, Joel Stanley wrote:
+> >On Thu, 14 Apr 2022 at 08:41, Zev Weiss <zev@bewilderbeest.net> wrote:
+> >>
+> >> On Thu, Apr 14, 2022 at 01:13:37AM PDT, Joel Stanley wrote:
+> >> >On Thu, 14 Apr 2022 at 04:05, Zev Weiss <zev@bewilderbeest.net> wrote:
+> >> >>
+> >> >> This provides the functionality of the OpenBMC df-isolate-bmc distro
+> >> >> feature flag, and is very directly derived from Andrew Jeffery's patch
+> >> >> in the OpenBMC tree for the v2016.07 u-boot branch.  The
+> >> >> implementation currently only supports ast2500, though ast2400 and
+> >> >> ast2600 support should be fairly simple extensions.
+> >> >>
+> >> >> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+> >> >> ---
+> >> >>
+> >> >> This is meant more as something of an RFC to see if this seems like
+> >> >> approximately the right way of going about this (since as far as I can
+> >> >> see the existing df-isolate-bmc implementation only supports the old
+> >> >> 2016 u-boot branch), but if it looks OK I suppose it could potentially
+> >> >> go in as-is.
+> >> >
+> >> >Thanks for doing this. The only potential change I can suggest is we
+> >> >make each bit of hardware a different option (or we allow it to be
+> >> >configured in the device tree). That assumes someone has a use case
+> >> >for leaving one of the backdoorts open but closing the others.
+> >> >
+> >>
+> >> This possibility came up on Discord with Andrew earlier -- I agree it'd
+> >> be nice to have somewhat more fine-grained control over it, though I'm
+> >> not aware of any platforms that really need it at the moment.  I'm
+> >> certainly not as well-versed as Andrew in the precise details of exactly
+> >> how all the various busses interact in different circumstances (this was
+> >> just a fairly mechanical translation of his patch), so I'm not 100%
+> >> confident I wouldn't unwittingly introduce screwy combinations with a
+> >> more fine-grained set of config options (mostly w.r.t. to the LPC & iLPC
+> >> stuff).
+> >
+> >Okay. Let this thread be a guide for the person who wants to follow up
+> >with that work.
+> >
+> >> >I suggest we invert the meaning of the option. The default should be
+> >> >turn off the backdoors, and someone can optionally re-enable them by
+> >> >selecting the option.
+> >> >
+> >>
+> >> I was tempted to make it 'default y' (i.e. secure-by-default), but the
+> >> possibility of compatibility breaks with existing systems that might
+> >> depend on the current insecure-by-default arrangement gave me pause.  If
+> >> we don't think that's a big concern though I'm happy to flip the sense
+> >> of it and have the more aggressive default.
+> >
+> >Given the impact of having these left accidentally open, I think we're
+> >doing the industry a favour by closing them off.
+> >
+> >This aligns the 2500 with the 2600 which defaults to the backdoors
+> >closed from A3 in silicon, and for all systems running their u-boot
+> >SDK (which the openbmc tree is based on):
+> >
+> >https://github.com/AspeedTech-BMC/u-boot/blob/v00.04.10/arch/arm/mach-aspeed/ast2600/platform.S#L307
+> >
+> >>
+> >> >config ASPEED_ALLOW_BACKDOORS?
+> >>
+> >> Sounds reasonable to me, though maybe s/ALLOW/ENABLE/?
+> >
+> >Yep, go for it.
+>
+> Hmm, though now that I've drafted up a version of the patch with that
+> change incorporated, one other thing that's occurred to me is the
+> potential for confusion on ast2[46]00 systems -- since the patch as it
+> stands doesn't cover them, those will still have the backdoors enabled
+> regardless, but it seems like the Kconfig text could easily leave people
+> with the incorrect impression that they'll have the secure configuration
+> unless they explicitly opt out of it.
 
-Signed-off-by: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
----
- drivers/spi/spi-aspeed-smc.c | 166 +++++++++++++++++++++++++++++++----
- 1 file changed, 149 insertions(+), 17 deletions(-)
+The 2600 is covered, see the link above. It unconditionally sets the
+"disable backdoor" bits on the 2600A1/A2, and those bits default to
+"disable backdoor" on the A3.
 
-diff --git a/drivers/spi/spi-aspeed-smc.c b/drivers/spi/spi-aspeed-smc.c
-index 227797e13997..728163d0045d 100644
---- a/drivers/spi/spi-aspeed-smc.c
-+++ b/drivers/spi/spi-aspeed-smc.c
-@@ -3,7 +3,7 @@
-  * ASPEED FMC/SPI Memory Controller Driver
-  *
-  * Copyright (c) 2015-2022, IBM Corporation.
-- * Copyright (c) 2020, ASPEED Corporation.
-+ * Copyright (c) 2020-2022, ASPEED Corporation.
-  */
- 
- #include <linux/clk.h>
-@@ -84,6 +84,7 @@ struct aspeed_spi_data {
- 	u32 (*segment_reg)(struct aspeed_spi *aspi, u32 start, u32 end);
- 	int (*calibrate)(struct aspeed_spi_chip *chip, u32 hdiv,
- 			 const u8 *golden_buf, u8 *test_buf);
-+	u32 (*clk_config)(struct aspeed_spi_chip *chip, u32 max_hz);
- };
- 
- #define ASPEED_SPI_MAX_NUM_CS	5
-@@ -959,7 +960,10 @@ static int aspeed_spi_do_calibration(struct aspeed_spi_chip *chip)
- 	u32 ctl_val;
- 	u8 *golden_buf = NULL;
- 	u8 *test_buf = NULL;
--	int i, rc, best_div = -1;
-+	int i, rc;
-+	u32 best_freq = 0;
-+	u32 freq;
-+	u32 clk_conf;
- 
- 	dev_dbg(aspi->dev, "calculate timing compensation - AHB freq: %d MHz",
- 		ahb_freq / 1000000);
-@@ -980,7 +984,7 @@ static int aspeed_spi_do_calibration(struct aspeed_spi_chip *chip)
- 	memcpy_fromio(golden_buf, chip->ahb_base, CALIBRATE_BUF_SIZE);
- 	if (!aspeed_spi_check_calib_data(golden_buf, CALIBRATE_BUF_SIZE)) {
- 		dev_info(aspi->dev, "Calibration area too uniform, using low speed");
--		goto no_calib;
-+		goto end_calib;
- 	}
- 
- #if defined(VERBOSE_DEBUG)
-@@ -990,7 +994,7 @@ static int aspeed_spi_do_calibration(struct aspeed_spi_chip *chip)
- 
- 	/* Now we iterate the HCLK dividers until we find our breaking point */
- 	for (i = ARRAY_SIZE(aspeed_spi_hclk_divs); i > data->hdiv_max - 1; i--) {
--		u32 tv, freq;
-+		u32 tv;
- 
- 		freq = ahb_freq / i;
- 		if (freq > max_freq)
-@@ -1002,27 +1006,149 @@ static int aspeed_spi_do_calibration(struct aspeed_spi_chip *chip)
- 		dev_dbg(aspi->dev, "Trying HCLK/%d [%08x] ...", i, tv);
- 		rc = data->calibrate(chip, i, golden_buf, test_buf);
- 		if (rc == 0)
--			best_div = i;
-+			best_freq = freq;
- 	}
- 
- 	/* Nothing found ? */
--	if (best_div < 0) {
--		dev_warn(aspi->dev, "No good frequency, using dumb slow");
--	} else {
--		dev_dbg(aspi->dev, "Found good read timings at HCLK/%d", best_div);
-+	if (best_freq == 0)
-+		dev_warn(aspi->dev, "Use the default timing setting");
-+	else
-+		dev_dbg(aspi->dev, "Found good read timings at HCLK/%d", i);
- 
--		/* Record the freq */
--		for (i = 0; i < ASPEED_SPI_MAX; i++)
--			chip->ctl_val[i] = (chip->ctl_val[i] & data->hclk_mask) |
--				ASPEED_SPI_HCLK_DIV(best_div);
--	}
- 
--no_calib:
-+end_calib:
-+	if (best_freq == 0)
-+		best_freq = max_freq;
-+
-+	clk_conf = data->clk_config(chip, best_freq);
-+	/* Record the freq */
-+	for (i = 0; i < ASPEED_SPI_MAX; i++)
-+		chip->ctl_val[i] = (chip->ctl_val[i] & data->hclk_mask) | clk_conf;
-+
- 	writel(chip->ctl_val[ASPEED_SPI_READ], chip->ctl);
- 	kfree(test_buf);
- 	return 0;
- }
- 
-+/* HCLK/1 ..	HCLK/16 */
-+static const u32 aspeed_spi_hclk_masks[] = {
-+	15, 7, 14, 6, 13, 5, 12, 4,
-+	11, 3, 10, 2, 9,  1, 8,  0
-+};
-+
-+static u32 aspeed_spi_ast2400_clk_config(struct aspeed_spi_chip *chip,
-+					 u32 max_hz)
-+{
-+	struct aspeed_spi *aspi = chip->aspi;
-+	u32 ahb_freq = aspi->clk_freq;
-+	u32 hclk_div = 0; /* default value */
-+	u32 i;
-+	bool found = false;
-+
-+	/* FMC/SPIR10[11:8] */
-+	for (i = 0; i < ARRAY_SIZE(aspeed_spi_hclk_masks); i++) {
-+		if (ahb_freq / (i + 1) <= max_hz) {
-+			found = true;
-+			break;
-+		}
-+	}
-+
-+	if (found)
-+		hclk_div = aspeed_spi_hclk_masks[i] << 8;
-+
-+	dev_dbg(aspi->dev, "found: %s, hclk: %d, max_clk: %d\n",
-+		found ? "yes" : "no", ahb_freq, max_hz);
-+
-+	if (found) {
-+		dev_dbg(aspi->dev, "h_div: %d (mask %x)\n",
-+			i + 1, aspeed_spi_hclk_masks[i]);
-+	}
-+
-+	return hclk_div;
-+}
-+
-+static u32 aspeed_spi_ast2500_clk_config(struct aspeed_spi_chip *chip,
-+					 u32 max_hz)
-+{
-+	struct aspeed_spi *aspi = chip->aspi;
-+	u32 ahb_freq = aspi->clk_freq;
-+	u32 hclk_div = 0; /* default value */
-+	u32 i;
-+	bool found = false;
-+
-+	/* FMC/SPIR10[11:8] */
-+	for (i = 0; i < ARRAY_SIZE(aspeed_spi_hclk_masks); i++) {
-+		if (ahb_freq / (i + 1) <= max_hz) {
-+			found = true;
-+			break;
-+		}
-+	}
-+
-+	if (found) {
-+		hclk_div = aspeed_spi_hclk_masks[i] << 8;
-+	} else {
-+		/* If FMC10[13] is set, an extra div_4 can be introduced. */
-+		for (i = 0; i < ARRAY_SIZE(aspeed_spi_hclk_masks); i++) {
-+			if (ahb_freq / ((i + 1) * 4) <= max_hz) {
-+				found = true;
-+				break;
-+			}
-+		}
-+
-+		if (found)
-+			hclk_div = BIT(13) | (aspeed_spi_hclk_masks[i] << 8);
-+	}
-+
-+	dev_dbg(aspi->dev, "found: %s, hclk: %d, max_clk: %d\n",
-+		found ? "yes" : "no", ahb_freq, max_hz);
-+
-+	if (found) {
-+		dev_dbg(aspi->dev, "h_div: %d (mask %x)\n",
-+			i + 1, aspeed_spi_hclk_masks[i]);
-+	}
-+
-+	return hclk_div;
-+}
-+
-+static u32 aspeed_spi_ast2600_clk_config(struct aspeed_spi_chip *chip,
-+					 u32 max_hz)
-+{
-+	struct aspeed_spi *aspi = chip->aspi;
-+	u32 ahb_freq = aspi->clk_freq;
-+	u32 hclk_div = 0x400; /* default value */
-+	u32 i, j;
-+	bool found = false;
-+
-+	/* FMC/SPIR10[27:24] */
-+	for (j = 0; j < 0xf; j++) {
-+		/* FMC/SPIR10[11:8] */
-+		for (i = 0; i < ARRAY_SIZE(aspeed_spi_hclk_masks); i++) {
-+			if (i == 0 && j == 0)
-+				continue;
-+
-+			if (ahb_freq / (i + 1 + (j * 16)) <= max_hz) {
-+				found = true;
-+				break;
-+			}
-+		}
-+
-+		if (found) {
-+			hclk_div = ((j << 24) | aspeed_spi_hclk_masks[i] << 8);
-+			break;
-+		}
-+	}
-+
-+	dev_dbg(aspi->dev, "found: %s, hclk: %d, max_clk: %d\n",
-+		found ? "yes" : "no", ahb_freq, max_hz);
-+
-+	if (found) {
-+		dev_dbg(aspi->dev, "base_clk: %d, h_div: %d (mask %x)\n",
-+			j, i + 1, aspeed_spi_hclk_masks[i]);
-+	}
-+
-+	return hclk_div;
-+}
-+
- #define TIMING_DELAY_DI		BIT(3)
- #define TIMING_DELAY_HCYCLE_MAX	5
- #define TIMING_REG_AST2600(chip)				\
-@@ -1097,6 +1223,7 @@ static const struct aspeed_spi_data ast2400_fmc_data = {
- 	.segment_start = aspeed_spi_segment_start,
- 	.segment_end   = aspeed_spi_segment_end,
- 	.segment_reg   = aspeed_spi_segment_reg,
-+	.clk_config    = aspeed_spi_ast2400_clk_config,
- };
- 
- static const struct aspeed_spi_data ast2400_spi_data = {
-@@ -1109,6 +1236,7 @@ static const struct aspeed_spi_data ast2400_spi_data = {
- 	.hdiv_max      = 1,
- 	.calibrate     = aspeed_spi_calibrate,
- 	/* No segment registers */
-+	.clk_config    = aspeed_spi_ast2400_clk_config,
- };
- 
- static const struct aspeed_spi_data ast2500_fmc_data = {
-@@ -1117,12 +1245,13 @@ static const struct aspeed_spi_data ast2500_fmc_data = {
- 	.we0	       = 16,
- 	.ctl0	       = CE0_CTRL_REG,
- 	.timing	       = CE0_TIMING_COMPENSATION_REG,
--	.hclk_mask     = 0xfffff0ff,
-+	.hclk_mask     = 0xffffd0ff,
- 	.hdiv_max      = 1,
- 	.calibrate     = aspeed_spi_calibrate,
- 	.segment_start = aspeed_spi_segment_start,
- 	.segment_end   = aspeed_spi_segment_end,
- 	.segment_reg   = aspeed_spi_segment_reg,
-+	.clk_config    = aspeed_spi_ast2500_clk_config,
- };
- 
- static const struct aspeed_spi_data ast2500_spi_data = {
-@@ -1131,12 +1260,13 @@ static const struct aspeed_spi_data ast2500_spi_data = {
- 	.we0	       = 16,
- 	.ctl0	       = CE0_CTRL_REG,
- 	.timing	       = CE0_TIMING_COMPENSATION_REG,
--	.hclk_mask     = 0xfffff0ff,
-+	.hclk_mask     = 0xffffd0ff,
- 	.hdiv_max      = 1,
- 	.calibrate     = aspeed_spi_calibrate,
- 	.segment_start = aspeed_spi_segment_start,
- 	.segment_end   = aspeed_spi_segment_end,
- 	.segment_reg   = aspeed_spi_segment_reg,
-+	.clk_config    = aspeed_spi_ast2500_clk_config,
- };
- 
- static const struct aspeed_spi_data ast2600_fmc_data = {
-@@ -1152,6 +1282,7 @@ static const struct aspeed_spi_data ast2600_fmc_data = {
- 	.segment_start = aspeed_spi_segment_ast2600_start,
- 	.segment_end   = aspeed_spi_segment_ast2600_end,
- 	.segment_reg   = aspeed_spi_segment_ast2600_reg,
-+	.clk_config    = aspeed_spi_ast2600_clk_config,
- };
- 
- static const struct aspeed_spi_data ast2600_spi_data = {
-@@ -1167,6 +1298,7 @@ static const struct aspeed_spi_data ast2600_spi_data = {
- 	.segment_start = aspeed_spi_segment_ast2600_start,
- 	.segment_end   = aspeed_spi_segment_ast2600_end,
- 	.segment_reg   = aspeed_spi_segment_ast2600_reg,
-+	.clk_config    = aspeed_spi_ast2600_clk_config,
- };
- 
- static const struct of_device_id aspeed_spi_matches[] = {
--- 
-2.25.1
+> I don't have any g6 hardware to test on, but I think I'll expand it to
+> cover the ast2400 at least, and add a note to the Kconfig help text
+> clarifying that pre-A3 ast2600s will still be insecure.  Though I guess
+> people doing a 'make menuconfig' for an ast2600 probably won't see it
+> anyway given the dependencies...not sure if there's a better way of
+> handling that.
 
+It would be good to cover the 2400 for completeness.
+
+You could add an ifdef to remove the "disable backdoor" code on the
+2600. I think it would be better to leave it as-is, and clarify that
+the 2600 doesn't support the option as it disables backdoorts by
+default.
+
+It would be good to document the existence of these settings and the
+defaults we have in place.
+
+Cheers,
+
+Joel
