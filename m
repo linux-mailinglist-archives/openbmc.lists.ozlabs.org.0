@@ -1,60 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F195D505EF7
-	for <lists+openbmc@lfdr.de>; Mon, 18 Apr 2022 22:48:12 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4E6755060DC
+	for <lists+openbmc@lfdr.de>; Tue, 19 Apr 2022 02:20:17 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KhzXp6FpGz2yph
-	for <lists+openbmc@lfdr.de>; Tue, 19 Apr 2022 06:48:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Kj4FV2y2Yz2yMP
+	for <lists+openbmc@lfdr.de>; Tue, 19 Apr 2022 10:20:14 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=ufispace-com.20210112.gappssmtp.com header.i=@ufispace-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=1R29CeB/;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kaod.org (client-ip=178.32.125.2;
- helo=smtpout1.mo529.mail-out.ovh.net; envelope-from=clg@kaod.org;
+ smtp.mailfrom=ufispace.com (client-ip=2607:f8b0:4864:20::b29;
+ helo=mail-yb1-xb29.google.com; envelope-from=jordan.chang@ufispace.com;
  receiver=<UNKNOWN>)
-X-Greylist: delayed 370 seconds by postgrey-1.36 at boromir;
- Tue, 19 Apr 2022 06:47:53 AEST
-Received: from smtpout1.mo529.mail-out.ovh.net
- (smtpout1.mo529.mail-out.ovh.net [178.32.125.2])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ufispace-com.20210112.gappssmtp.com
+ header.i=@ufispace-com.20210112.gappssmtp.com header.a=rsa-sha256
+ header.s=20210112 header.b=1R29CeB/; dkim-atps=neutral
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com
+ [IPv6:2607:f8b0:4864:20::b29])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KhzXT1G0hz2x9W
- for <openbmc@lists.ozlabs.org>; Tue, 19 Apr 2022 06:47:50 +1000 (AEST)
-Received: from mxplan5.mail.ovh.net (unknown [10.108.16.235])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id 151C9F7E8095;
- Mon, 18 Apr 2022 22:41:35 +0200 (CEST)
-Received: from kaod.org (37.59.142.105) by DAG4EX1.mxp5.local (172.16.2.31)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Mon, 18 Apr
- 2022 22:41:35 +0200
-Authentication-Results: garm.ovh; auth=pass
- (GARM-105G006b621f0ab-1e50-4feb-b1d9-500e9b452f45,
- 3C3EC69A9BBCF5E3F551F02F0EFEFD6AB1600A8C) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <e1138a33-a935-7edf-8038-f4ab61754865@kaod.org>
-Date: Mon, 18 Apr 2022 22:41:34 +0200
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Khjs611tSz2yNn
+ for <openbmc@lists.ozlabs.org>; Mon, 18 Apr 2022 20:31:19 +1000 (AEST)
+Received: by mail-yb1-xb29.google.com with SMTP id v77so24784491ybi.12
+ for <openbmc@lists.ozlabs.org>; Mon, 18 Apr 2022 03:31:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ufispace-com.20210112.gappssmtp.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to;
+ bh=x8/sbwiFtnrMawvBaUTzNs7zgO8Rgd5W1Lbh8ta6H1s=;
+ b=1R29CeB/0r54mp859RZ8kJ1VyJI6COHj2PD+eRdkAd6jrtV7cEBCAg2+LJKBaiwu9w
+ 7eg95JANW42Du71wI19qoTQP5+MgXjEwLoXvBohGovJJrl7BLWkbQnOQU60PQrSdjw7N
+ 0wXz8VKG/68zelh3KWjvJnZrEv1ypU56doqwp3DwfbXzR1iTU/O4mKCLXfLrUTJkarA6
+ tJGxsX4aRQODOf8Zb1TMadMhdFOWBrlhcDeURewz8/t3Hv8IDM+HAY8V2/agzFgfuiYJ
+ YQdkl8CWdBKen7hhGTZn+rUnuGxfP7TU6ifOp2X2nVIDyy1P/UNiYIFiUrYh4+G7vQtv
+ Mx/g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+ bh=x8/sbwiFtnrMawvBaUTzNs7zgO8Rgd5W1Lbh8ta6H1s=;
+ b=1LBpTYkbyMND9cwZd95F1Tzs4hujBXZr6wM7t1qF5Z5qONyybJvvY0+kdvEX/aG7dy
+ /CtyThw1BZDJcjs0AhnnykIjOf8a1a/J+lOcreI69YrPH3KuNIVLCMLv+WDhZ2FjWhz8
+ ELHQLJBlfQt4uThNpEcIwOJuPgWfGty9NSwx+b4Ln3AWfbEea43s63sci0a+ETFgOVPX
+ Xo+6KAheDnc+70ZVmXKoMba320bw9+fI9Ogpspzai/yeoVHXJJG24WszX60pcYdfzfZ4
+ Kcfm/1fdmSEJ2UuFwOaSzIW7Osq9oA24EfVbFiKBECYgWv+femCv1FjgTbo7qKurh57q
+ 7pkg==
+X-Gm-Message-State: AOAM5314dP5uLWHk5vh1+mJ0M56mKheChAT5x1OpPahU9lJdwin+p4Zx
+ FPtW1I+1EIj0VGFXIM9Mkh8moVAFlBM60MegohQa/StZZ3ACW3Wdu62cESd9Ls8JI7E7VZFkshd
+ WemQaWAyOJxEkwHFRA5cRE+dbQZEdOtt4UdA5
+X-Google-Smtp-Source: ABdhPJwOsNfeV55h716NWo1FkkOTsHB7CcB+S5sKRSst8XdWPn04yjCDZ6iRbsy1++w39cB+39Hv72a2i7wa47lEocY=
+X-Received: by 2002:a25:bf88:0:b0:633:93e9:b2fc with SMTP id
+ l8-20020a25bf88000000b0063393e9b2fcmr8750252ybk.202.1650277875344; Mon, 18
+ Apr 2022 03:31:15 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.7.0
-Subject: Re: [PATCH 1/1] spi: aspeed: Update SPI clock frequency configuration
-Content-Language: en-US
-To: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
- <linux-aspeed@lists.ozlabs.org>, <openbmc@lists.ozlabs.org>
-References: <20220414102829.3892843-1-chin-ting_kuo@aspeedtech.com>
- <20220414102829.3892843-2-chin-ting_kuo@aspeedtech.com>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20220414102829.3892843-2-chin-ting_kuo@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.105]
-X-ClientProxiedBy: DAG5EX1.mxp5.local (172.16.2.41) To DAG4EX1.mxp5.local
- (172.16.2.31)
-X-Ovh-Tracer-GUID: d145de27-1fc0-4dc2-b384-47b39b597e1f
-X-Ovh-Tracer-Id: 14771525305511283677
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: 0
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvvddrvddtuddgudehvdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhepkfffgggfuffvfhfhjggtgfhisehtjeertddtfeejnecuhfhrohhmpeevrogurhhitggpnfgvpgfiohgrthgvrhcuoegtlhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhephffhleegueektdetffdvffeuieeugfekkeelheelteeftdfgtefffeehueegleehnecukfhppedtrddtrddtrddtpdefjedrheelrddugedvrddutdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmohguvgepshhmthhpohhuthdphhgvlhhopehmgihplhgrnhehrdhmrghilhdrohhvhhdrnhgvthdpihhnvghtpedtrddtrddtrddtpdhmrghilhhfrhhomheptghlgheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopedupdhrtghpthhtohepohhpvghnsghmtgeslhhishhtshdrohiilhgrsghsrdhorhhg
+From: Jordan Chang <jordan.chang@ufispace.com>
+Date: Mon, 18 Apr 2022 18:31:04 +0800
+Message-ID: <CAJ3czeTVv-587VJbR2YuZz1jwOUKskzOzk=HRpmW040VL=ORrA@mail.gmail.com>
+Subject: [phosphor-state-manager] Error reading HostFirmware condition, error:
+ sd_bus_call: org.freedesktop.DBus.Error.ServiceUnknown
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="0000000000008a802e05dceb4283"
+X-Mailman-Approved-At: Tue, 19 Apr 2022 10:19:56 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,312 +79,216 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello Chin-Ting,
+--0000000000008a802e05dceb4283
+Content-Type: text/plain; charset="UTF-8"
 
-On 4/14/22 12:28, Chin-Ting Kuo wrote:
-> Instead of using the slowest one, the maximum clock
-> frequency configured in the device tree should be kept
-> when no timing calibration process is executed.
-> Besides, an extra callback function is added in order
-> to calculate clock frequency configuration for
-> different ASPEED platforms.
-> 
-> Signed-off-by: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
+Hi Sir/Madam,
+I am implementing the power control mechanisms for my platform, and
+encounter the problem in below:
+*phosphor-host-state-manager[341]: Error reading HostFirmware condition,
+error: sd_bus_call: org.freedesktop.DBus.Error.ServiceUnknown: The name is
+not activatable, service: xyz.openbmc_project.Control.Host path:
+/xyz/openbmc_project/control/host0*
 
-I gave this patch a try on an AST2600 A3 EVB and an AST2500 EVB and it
-behaved as expected. The default setting from the DT is chosen when the
-flash contents are too uniform.
+I am using the host0-ready gpio pin to determine the HostFirmwareCondition
+is running or not. However, the service
+*xyz.openbmc_project.State.Host.HostState* could not be established since
+the dbus call method of  *xyz.openbmc_project.Control.Host *returns an
+error. Therefore, I have printed some debug messages starting with Ufi to
+ensure the xyz.openbmc_project.State.HostCondition.Gpio service is involved
+in phosphor-host-state-manager. Not sure why the bus call function of
+*xyz.openbmc_project.Control.Host
+service* failed. Which packages or settings should I configure to enable
+this service?  Could someone give me some instructions or suggestions?
+Thank you!
 
+```
+root@siad:~# obmcutil state
+CurrentBMCState     : xyz.openbmc_project.State.BMC.BMCState.NotReady
+CurrentPowerState   : xyz.openbmc_project.State.Chassis.PowerState.On
+Error finding '/xyz/openbmc_project/state/host0' service: Input/output error
 
-> ---
->   drivers/spi/spi-aspeed-smc.c | 166 +++++++++++++++++++++++++++++++----
->   1 file changed, 149 insertions(+), 17 deletions(-)
-> 
-> diff --git a/drivers/spi/spi-aspeed-smc.c b/drivers/spi/spi-aspeed-smc.c
-> index 227797e13997..728163d0045d 100644
-> --- a/drivers/spi/spi-aspeed-smc.c
-> +++ b/drivers/spi/spi-aspeed-smc.c
-> @@ -3,7 +3,7 @@
->    * ASPEED FMC/SPI Memory Controller Driver
->    *
->    * Copyright (c) 2015-2022, IBM Corporation.
-> - * Copyright (c) 2020, ASPEED Corporation.
-> + * Copyright (c) 2020-2022, ASPEED Corporation.
->    */
->   #include <linux/clk.h>
-> @@ -84,6 +84,7 @@ struct aspeed_spi_data {
->   	u32 (*segment_reg)(struct aspeed_spi *aspi, u32 start, u32 end);
->   	int (*calibrate)(struct aspeed_spi_chip *chip, u32 hdiv,
->   			 const u8 *golden_buf, u8 *test_buf);
-> +	u32 (*clk_config)(struct aspeed_spi_chip *chip, u32 max_hz);
->   };
->   
->   #define ASPEED_SPI_MAX_NUM_CS	5
-> @@ -959,7 +960,10 @@ static int aspeed_spi_do_calibration(struct aspeed_spi_chip *chip)
->   	u32 ctl_val;
->   	u8 *golden_buf = NULL;
->   	u8 *test_buf = NULL;
-> -	int i, rc, best_div = -1;
-> +	int i, rc;
-> +	u32 best_freq = 0;
-> +	u32 freq;
-> +	u32 clk_conf;
->   
->   	dev_dbg(aspi->dev, "calculate timing compensation - AHB freq: %d MHz",
->   		ahb_freq / 1000000);
-> @@ -980,7 +984,7 @@ static int aspeed_spi_do_calibration(struct aspeed_spi_chip *chip)
->   	memcpy_fromio(golden_buf, chip->ahb_base, CALIBRATE_BUF_SIZE);
->   	if (!aspeed_spi_check_calib_data(golden_buf, CALIBRATE_BUF_SIZE)) {
->   		dev_info(aspi->dev, "Calibration area too uniform, using low speed");
+---------------------------------------------------------------------------------------------------------------------------
+root@siad:~# busctl call  xyz.openbmc_project.ObjectMapper
+ /xyz/openbmc_project /object_mapper xyz.openbmc_project.ObjectMapper
+GetSubTree sias ""  0 1  "xyz.op enbmc_project.Condition.HostFirmware"
+a{sa{sas}} 2 "/xyz/openbmc_project/Gpios/host0" 1
+"xyz.openbmc_project.State.Hos tCondition.Gpio" 4
+"org.freedesktop.DBus.Introspectable" "org.freedesktop.DBus.P eer"
+"org.freedesktop.DBus.Properties" "xyz.openbmc_project.Condition.HostFirmwa
+re" "/xyz/openbmc_project/control/host0" 1
+"xyz.openbmc_project.Control.Host" 5  "org.freedesktop.DBus.Introspectable"
+"org.freedesktop.DBus.Peer" "org.freedeskt op.DBus.Properties"
+"xyz.openbmc_project.Condition.HostFirmware" "xyz.openbmc_pr
+oject.Control.Host"
 
-may be change dev_info() to "..., using default freq"
+---------------------------------------------------------------------------------------------------------------------------
+root@siad:~# busctl get-property
+xyz.openbmc_project.State.HostCondition.Gpio
+/xyz/openbmc_project/Gpios/host0
+ xyz.openbmc_project.Condition.HostFirmware  CurrentFirmwareCondition
+s "xyz.openbmc_project.Condition.HostFirmware.FirmwareCondition.Running"
 
-> -		goto no_calib;
-> +		goto end_calib;
->   	}
->   
->   #if defined(VERBOSE_DEBUG)
-> @@ -990,7 +994,7 @@ static int aspeed_spi_do_calibration(struct aspeed_spi_chip *chip)
->   
->   	/* Now we iterate the HCLK dividers until we find our breaking point */
->   	for (i = ARRAY_SIZE(aspeed_spi_hclk_divs); i > data->hdiv_max - 1; i--) {
-> -		u32 tv, freq;
-> +		u32 tv;
->   
->   		freq = ahb_freq / i;
->   		if (freq > max_freq)
-> @@ -1002,27 +1006,149 @@ static int aspeed_spi_do_calibration(struct aspeed_spi_chip *chip)
->   		dev_dbg(aspi->dev, "Trying HCLK/%d [%08x] ...", i, tv);
->   		rc = data->calibrate(chip, i, golden_buf, test_buf);
->   		if (rc == 0)
-> -			best_div = i;
-> +			best_freq = freq;
->   	}
->   
->   	/* Nothing found ? */
-> -	if (best_div < 0) {
-> -		dev_warn(aspi->dev, "No good frequency, using dumb slow");
-> -	} else {
-> -		dev_dbg(aspi->dev, "Found good read timings at HCLK/%d", best_div);
-> +	if (best_freq == 0)
-> +		dev_warn(aspi->dev, "Use the default timing setting");
-> +	else
-> +		dev_dbg(aspi->dev, "Found good read timings at HCLK/%d", i);
->   
-> -		/* Record the freq */
-> -		for (i = 0; i < ASPEED_SPI_MAX; i++)
-> -			chip->ctl_val[i] = (chip->ctl_val[i] & data->hclk_mask) |
-> -				ASPEED_SPI_HCLK_DIV(best_div);
-> -	}
->   
-> -no_calib:
-> +end_calib:
-> +	if (best_freq == 0)
-> +		best_freq = max_freq;
-> +
-> +	clk_conf = data->clk_config(chip, best_freq);
-> +	/* Record the freq */
-> +	for (i = 0; i < ASPEED_SPI_MAX; i++)
-> +		chip->ctl_val[i] = (chip->ctl_val[i] & data->hclk_mask) | clk_conf;
-> +
->   	writel(chip->ctl_val[ASPEED_SPI_READ], chip->ctl);
->   	kfree(test_buf);
->   	return 0;
->   }
->   
-> +/* HCLK/1 ..	HCLK/16 */
-> +static const u32 aspeed_spi_hclk_masks[] = {
-> +	15, 7, 14, 6, 13, 5, 12, 4,
-> +	11, 3, 10, 2, 9,  1, 8,  0
-> +};
+---------------------------------------------------------------------------------------------------------------------------
+root@siad:~# journalctl | grep -i phosphor-host-state-manager
+Apr 18 08:19:13 siad phosphor-host-state-manager[341]: Check if host is
+running
+Apr 18 08:19:13 siad phosphor-host-state-manager[341]: Ufi:
+mapper1=/xyz/openbmc_project/Gpios/host0
+Apr 18 08:19:13 siad phosphor-host-state-manager[341]: Ufi:
+mapper1=/xyz/openbmc_project/control/host0
+Apr 18 08:19:13 siad phosphor-host-state-manager[341]: Ufi:
+mapper2=xyz.openbmc_project.State.HostCondition.Gpio
+Apr 18 08:19:13 siad phosphor-host-state-manager[341]: Ufi:
+mapper2=xyz.openbmc_project.Control.Host
+Apr 18 08:19:14 siad phosphor-host-state-manager[341]: terminate called
+after throwing an instance of 'sdbusplus::exception::SdBusError'
+Apr 18 08:19:14 siad phosphor-host-state-manager[341]:   what():
+ sd_bus_call: org.freedesktop.DBus.Error.ServiceUnknown: The name is not
+activatable
+Apr 18 08:19:13 siad phosphor-host-state-manager[341]: Ufi:
+path=/xyz/openbmc_project/control/host0
+Apr 18 08:19:13 siad phosphor-host-state-manager[341]: Ufi:
+services=xyz.openbmc_project.Control.Host
+Apr 18 08:19:14 siad phosphor-host-state-manager[341]: Error reading
+HostFirmware condition, error: sd_bus_call:
+org.freedesktop.DBus.Error.ServiceUnknown: The name is not activatable,
+service: xyz.openbmc_project.Control.Host path:
+/xyz/openbmc_project/control/host0
+Apr 18 08:19:24 siad phosphor-host-state-manager[366]: Check if host is
+running
+Apr 18 08:19:24 siad phosphor-host-state-manager[366]: Ufi:
+mapper1=/xyz/openbmc_project/Gpios/host0
+Apr 18 08:19:24 siad phosphor-host-state-manager[366]: Ufi:
+mapper1=/xyz/openbmc_project/control/host0
+Apr 18 08:19:24 siad phosphor-host-state-manager[366]: Ufi:
+mapper2=xyz.openbmc_project.State.HostCondition.Gpio
+Apr 18 08:19:24 siad phosphor-host-state-manager[366]: Ufi:
+mapper2=xyz.openbmc_project.Control.Host
+Apr 18 08:19:24 siad phosphor-host-state-manager[366]: terminate called
+after throwing an instance of 'sdbusplus::exception::SdBusError'
+Apr 18 08:19:24 siad phosphor-host-state-manager[366]:   what():
+ sd_bus_call: org.freedesktop.DBus.Error.ServiceUnknown: The name is not
+activatable
+Apr 18 08:19:24 siad phosphor-host-state-manager[366]: Ufi:
+path=/xyz/openbmc_project/control/host0
+Apr 18 08:19:24 siad phosphor-host-state-manager[366]: Ufi:
+services=xyz.openbmc_project.Control.Host
+Apr 18 08:19:24 siad phosphor-host-state-manager[366]: Error reading
+HostFirmware condition, error: sd_bus_call:
+org.freedesktop.DBus.Error.ServiceUnknown: The name is not activatable,
+service: xyz.openbmc_project.Control.Host path:
+/xyz/openbmc_project/control/host0
 
-This new array is a bit redundant with aspeed_spi_hclk_divs[]
+```
 
-> +
-> +static u32 aspeed_spi_ast2400_clk_config(struct aspeed_spi_chip *chip,
-> +					 u32 max_hz)
-> +{
-> +	struct aspeed_spi *aspi = chip->aspi;
-> +	u32 ahb_freq = aspi->clk_freq;
-> +	u32 hclk_div = 0; /* default value */
-> +	u32 i;
-> +	bool found = false;
-> +
-> +	/* FMC/SPIR10[11:8] */
-> +	for (i = 0; i < ARRAY_SIZE(aspeed_spi_hclk_masks); i++) {
-> +		if (ahb_freq / (i + 1) <= max_hz) {
-> +			found = true;
-> +			break;
-> +		}
-> +	}
-> +
-> +	if (found)
-> +		hclk_div = aspeed_spi_hclk_masks[i] << 8;
-> +
-> +	dev_dbg(aspi->dev, "found: %s, hclk: %d, max_clk: %d\n",
-> +		found ? "yes" : "no", ahb_freq, max_hz);
-> +
-> +	if (found) {
-> +		dev_dbg(aspi->dev, "h_div: %d (mask %x)\n",
-> +			i + 1, aspeed_spi_hclk_masks[i]);
-> +	}
-> +
-> +	return hclk_div;
-> +}
-> +
-> +static u32 aspeed_spi_ast2500_clk_config(struct aspeed_spi_chip *chip,
-> +					 u32 max_hz)
-> +{
-> +	struct aspeed_spi *aspi = chip->aspi;
-> +	u32 ahb_freq = aspi->clk_freq;
-> +	u32 hclk_div = 0; /* default value */
-> +	u32 i;
-> +	bool found = false;
-> +
-> +	/* FMC/SPIR10[11:8] */
-> +	for (i = 0; i < ARRAY_SIZE(aspeed_spi_hclk_masks); i++) {
-> +		if (ahb_freq / (i + 1) <= max_hz) {
-> +			found = true;
-> +			break;
-> +		}
-> +	}
-> +
-> +	if (found) {
-> +		hclk_div = aspeed_spi_hclk_masks[i] << 8;
-> +	} else {
-> +		/* If FMC10[13] is set, an extra div_4 can be introduced. */
-> +		for (i = 0; i < ARRAY_SIZE(aspeed_spi_hclk_masks); i++) {
-> +			if (ahb_freq / ((i + 1) * 4) <= max_hz) {
-> +				found = true;
-> +				break;
-> +			}
-> +		}
-> +
-> +		if (found)
-> +			hclk_div = BIT(13) | (aspeed_spi_hclk_masks[i] << 8);
-> +	}
-> +
-> +	dev_dbg(aspi->dev, "found: %s, hclk: %d, max_clk: %d\n",
-> +		found ? "yes" : "no", ahb_freq, max_hz);
-> +
-> +	if (found) {
-> +		dev_dbg(aspi->dev, "h_div: %d (mask %x)\n",
-> +			i + 1, aspeed_spi_hclk_masks[i]);
-> +	}
-> +
-> +	return hclk_div;
-> +}
-> +
-> +static u32 aspeed_spi_ast2600_clk_config(struct aspeed_spi_chip *chip,
-> +					 u32 max_hz)
-> +{
-> +	struct aspeed_spi *aspi = chip->aspi;
-> +	u32 ahb_freq = aspi->clk_freq;
-> +	u32 hclk_div = 0x400; /* default value */
-> +	u32 i, j;
-> +	bool found = false;
-> +
-> +	/* FMC/SPIR10[27:24] */
-> +	for (j = 0; j < 0xf; j++) {
-> +		/* FMC/SPIR10[11:8] */
-> +		for (i = 0; i < ARRAY_SIZE(aspeed_spi_hclk_masks); i++) {
-> +			if (i == 0 && j == 0)
-> +				continue;
-> +
-> +			if (ahb_freq / (i + 1 + (j * 16)) <= max_hz) {
-> +				found = true;
-> +				break;
-> +			}
-> +		}
-> +
-> +		if (found) {
-> +			hclk_div = ((j << 24) | aspeed_spi_hclk_masks[i] << 8);
-> +			break;
-> +		}
-> +	}
-> +
-> +	dev_dbg(aspi->dev, "found: %s, hclk: %d, max_clk: %d\n",
-> +		found ? "yes" : "no", ahb_freq, max_hz);
-> +
-> +	if (found) {
-> +		dev_dbg(aspi->dev, "base_clk: %d, h_div: %d (mask %x)\n",
-> +			j, i + 1, aspeed_spi_hclk_masks[i]);
-> +	}
-> +
-> +	return hclk_div;
-> +}
-> +
->   #define TIMING_DELAY_DI		BIT(3)
->   #define TIMING_DELAY_HCYCLE_MAX	5
->   #define TIMING_REG_AST2600(chip)				\
-> @@ -1097,6 +1223,7 @@ static const struct aspeed_spi_data ast2400_fmc_data = {
->   	.segment_start = aspeed_spi_segment_start,
->   	.segment_end   = aspeed_spi_segment_end,
->   	.segment_reg   = aspeed_spi_segment_reg,
-> +	.clk_config    = aspeed_spi_ast2400_clk_config,
->   };
->   
->   static const struct aspeed_spi_data ast2400_spi_data = {
-> @@ -1109,6 +1236,7 @@ static const struct aspeed_spi_data ast2400_spi_data = {
->   	.hdiv_max      = 1,
->   	.calibrate     = aspeed_spi_calibrate,
->   	/* No segment registers */
-> +	.clk_config    = aspeed_spi_ast2400_clk_config,
->   };
->   
->   static const struct aspeed_spi_data ast2500_fmc_data = {
-> @@ -1117,12 +1245,13 @@ static const struct aspeed_spi_data ast2500_fmc_data = {
->   	.we0	       = 16,
->   	.ctl0	       = CE0_CTRL_REG,
->   	.timing	       = CE0_TIMING_COMPENSATION_REG,
-> -	.hclk_mask     = 0xfffff0ff,
-> +	.hclk_mask     = 0xffffd0ff,
+Best regards,
+Jordan Chang
 
-I think this change of. hclk_mask and the one below should be included
-in the initial patchset. I will when I publish v5.
+-- 
+******************************
+This e-mail is confidential. If you are not 
+the intended recipient, you must not disclose, distribute or use the 
+information in it as this could be a breach of confidentiality.If you have 
+received this message in error, please advise us immediately by return 
+e-mail and delete the document. The address from which this message has 
+been sent is strictly for business mail only and the company reserves the 
+right to monitor the contents of communications and take action where and 
+when it is deemed necessary.
+Thank you for your co-operation.
 
-Thanks,
+--0000000000008a802e05dceb4283
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-C.
+<div dir=3D"ltr">Hi Sir/Madam,<br>I am implementing=C2=A0the power control =
+mechanisms for my platform, and encounter the problem in below:<br><i>phosp=
+hor-host-state-manager[341]: Error reading HostFirmware condition, error: s=
+d_bus_call: org.freedesktop.DBus.Error.ServiceUnknown: The name is not acti=
+vatable, service: xyz.openbmc_project.Control.Host path: /xyz/openbmc_proje=
+ct/control/host0</i><div><br></div><div>I am using the host0-ready gpio pin=
+ to determine the HostFirmwareCondition is running or not.=C2=A0However, th=
+e service=C2=A0<i>xyz.openbmc_project.State.Host.HostState</i>=C2=A0could n=
+ot be established since the dbus call method of=C2=A0=C2=A0<i>xyz.openbmc_p=
+roject.Control.Host </i>returns an error. Therefore, I have printed some de=
+bug messages starting with Ufi to ensure the=C2=A0xyz.openbmc_project.State=
+.HostCondition.Gpio service is involved in phosphor-host-state-manager. Not=
+ sure why the bus call function of <i>xyz.openbmc_project.Control.Host serv=
+ice</i>=C2=A0failed. Which packages or settings should I configure to enabl=
+e this service?=C2=A0 Could someone give me some instructions or suggestion=
+s? Thank you!<div><br>```</div><div>root@siad:~# obmcutil state<br>CurrentB=
+MCState =C2=A0 =C2=A0 : xyz.openbmc_project.State.BMC.BMCState.NotReady<br>=
+CurrentPowerState =C2=A0 : xyz.openbmc_project.State.Chassis.PowerState.On<=
+br>Error finding &#39;/xyz/openbmc_project/state/host0&#39; service: Input/=
+output error</div><div><br></div><div>-------------------------------------=
+---------------------------------------------------------------------------=
+-----------</div><div><div>root@siad:~# busctl call =C2=A0xyz.openbmc_proje=
+ct.ObjectMapper =C2=A0/xyz/openbmc_project /object_mapper xyz.openbmc_proje=
+ct.ObjectMapper GetSubTree sias &quot;&quot; =C2=A00 1 =C2=A0&quot;xyz.op e=
+nbmc_project.Condition.HostFirmware&quot;<br>a{sa{sas}} 2 &quot;/xyz/openbm=
+c_project/Gpios/host0&quot; 1 &quot;xyz.openbmc_project.State.Hos tConditio=
+n.Gpio&quot; 4 &quot;org.freedesktop.DBus.Introspectable&quot; &quot;org.fr=
+eedesktop.DBus.P eer&quot; &quot;org.freedesktop.DBus.Properties&quot; &quo=
+t;xyz.openbmc_project.Condition.HostFirmwa re&quot; &quot;/xyz/openbmc_proj=
+ect/control/host0&quot; 1 &quot;xyz.openbmc_project.Control.Host&quot; 5 =
+=C2=A0&quot;org.freedesktop.DBus.Introspectable&quot; &quot;org.freedesktop=
+.DBus.Peer&quot; &quot;org.freedeskt op.DBus.Properties&quot; &quot;xyz.ope=
+nbmc_project.Condition.HostFirmware&quot; &quot;xyz.openbmc_pr oject.Contro=
+l.Host&quot;</div><div><br></div><div>-------------------------------------=
+---------------------------------------------------------------------------=
+-----------</div><div>root@siad:~# busctl get-property xyz.openbmc_project.=
+State.HostCondition.Gpio =C2=A0 /xyz/openbmc_project/Gpios/host0 =C2=A0xyz.=
+openbmc_project.Condition.HostFirmware =C2=A0CurrentFirmwareCondition<br>s =
+&quot;xyz.openbmc_project.Condition.HostFirmware.FirmwareCondition.Running&=
+quot;</div></div><div><br></div><div>--------------------------------------=
+---------------------------------------------------------------------------=
+----------<br></div><div><div>root@siad:~# journalctl | grep -i phosphor-ho=
+st-state-manager<br>Apr 18 08:19:13 siad phosphor-host-state-manager[341]: =
+Check if host is running<br>Apr 18 08:19:13 siad phosphor-host-state-manage=
+r[341]: Ufi: mapper1=3D/xyz/openbmc_project/Gpios/host0<br>Apr 18 08:19:13 =
+siad phosphor-host-state-manager[341]: Ufi: mapper1=3D/xyz/openbmc_project/=
+control/host0<br>Apr 18 08:19:13 siad phosphor-host-state-manager[341]: Ufi=
+: mapper2=3Dxyz.openbmc_project.State.HostCondition.Gpio<br>Apr 18 08:19:13=
+ siad phosphor-host-state-manager[341]: Ufi: mapper2=3Dxyz.openbmc_project.=
+Control.Host<br>Apr 18 08:19:14 siad phosphor-host-state-manager[341]: term=
+inate called after throwing an instance of &#39;sdbusplus::exception::SdBus=
+Error&#39;<br>Apr 18 08:19:14 siad phosphor-host-state-manager[341]: =C2=A0=
+ what(): =C2=A0sd_bus_call: org.freedesktop.DBus.Error.ServiceUnknown: The =
+name is not activatable<br>Apr 18 08:19:13 siad phosphor-host-state-manager=
+[341]: Ufi: path=3D/xyz/openbmc_project/control/host0<br>Apr 18 08:19:13 si=
+ad phosphor-host-state-manager[341]: Ufi: services=3Dxyz.openbmc_project.Co=
+ntrol.Host<br>Apr 18 08:19:14 siad phosphor-host-state-manager[341]: Error =
+reading HostFirmware condition, error: sd_bus_call: org.freedesktop.DBus.Er=
+ror.ServiceUnknown: The name is not activatable, service: xyz.openbmc_proje=
+ct.Control.Host path: /xyz/openbmc_project/control/host0<br>Apr 18 08:19:24=
+ siad phosphor-host-state-manager[366]: Check if host is running<br>Apr 18 =
+08:19:24 siad phosphor-host-state-manager[366]: Ufi: mapper1=3D/xyz/openbmc=
+_project/Gpios/host0<br>Apr 18 08:19:24 siad phosphor-host-state-manager[36=
+6]: Ufi: mapper1=3D/xyz/openbmc_project/control/host0<br>Apr 18 08:19:24 si=
+ad phosphor-host-state-manager[366]: Ufi: mapper2=3Dxyz.openbmc_project.Sta=
+te.HostCondition.Gpio<br>Apr 18 08:19:24 siad phosphor-host-state-manager[3=
+66]: Ufi: mapper2=3Dxyz.openbmc_project.Control.Host<br>Apr 18 08:19:24 sia=
+d phosphor-host-state-manager[366]: terminate called after throwing an inst=
+ance of &#39;sdbusplus::exception::SdBusError&#39;<br>Apr 18 08:19:24 siad =
+phosphor-host-state-manager[366]: =C2=A0 what(): =C2=A0sd_bus_call: org.fre=
+edesktop.DBus.Error.ServiceUnknown: The name is not activatable<br>Apr 18 0=
+8:19:24 siad phosphor-host-state-manager[366]: Ufi: path=3D/xyz/openbmc_pro=
+ject/control/host0<br>Apr 18 08:19:24 siad phosphor-host-state-manager[366]=
+: Ufi: services=3Dxyz.openbmc_project.Control.Host<br>Apr 18 08:19:24 siad =
+phosphor-host-state-manager[366]: Error reading HostFirmware condition, err=
+or: sd_bus_call: org.freedesktop.DBus.Error.ServiceUnknown: The name is not=
+ activatable, service: xyz.openbmc_project.Control.Host path: /xyz/openbmc_=
+project/control/host0</div><div><br></div><div><div>```<br><br>Best regards=
+,<br>Jordan Chang</div></div></div></div></div>
 
->   	.hdiv_max      = 1,
->   	.calibrate     = aspeed_spi_calibrate,
->   	.segment_start = aspeed_spi_segment_start,
->   	.segment_end   = aspeed_spi_segment_end,
->   	.segment_reg   = aspeed_spi_segment_reg,
-> +	.clk_config    = aspeed_spi_ast2500_clk_config,
->   };
->   
->   static const struct aspeed_spi_data ast2500_spi_data = {
-> @@ -1131,12 +1260,13 @@ static const struct aspeed_spi_data ast2500_spi_data = {
->   	.we0	       = 16,
->   	.ctl0	       = CE0_CTRL_REG,
->   	.timing	       = CE0_TIMING_COMPENSATION_REG,
-> -	.hclk_mask     = 0xfffff0ff,
-> +	.hclk_mask     = 0xffffd0ff,
->   	.hdiv_max      = 1,
->   	.calibrate     = aspeed_spi_calibrate,
->   	.segment_start = aspeed_spi_segment_start,
->   	.segment_end   = aspeed_spi_segment_end,
->   	.segment_reg   = aspeed_spi_segment_reg,
-> +	.clk_config    = aspeed_spi_ast2500_clk_config,
->   };
->   
->   static const struct aspeed_spi_data ast2600_fmc_data = {
-> @@ -1152,6 +1282,7 @@ static const struct aspeed_spi_data ast2600_fmc_data = {
->   	.segment_start = aspeed_spi_segment_ast2600_start,
->   	.segment_end   = aspeed_spi_segment_ast2600_end,
->   	.segment_reg   = aspeed_spi_segment_ast2600_reg,
-> +	.clk_config    = aspeed_spi_ast2600_clk_config,
->   };
->   
->   static const struct aspeed_spi_data ast2600_spi_data = {
-> @@ -1167,6 +1298,7 @@ static const struct aspeed_spi_data ast2600_spi_data = {
->   	.segment_start = aspeed_spi_segment_ast2600_start,
->   	.segment_end   = aspeed_spi_segment_ast2600_end,
->   	.segment_reg   = aspeed_spi_segment_ast2600_reg,
-> +	.clk_config    = aspeed_spi_ast2600_clk_config,
->   };
->   
->   static const struct of_device_id aspeed_spi_matches[] = {
-
+<br>
+<div><font size=3D"2">******************************</font></div><div><font=
+ size=3D"2">This e-mail is confidential. If you are not the intended recipi=
+ent, you must not disclose, distribute or use the information in it as this=
+ could be a breach of confidentiality.If you have received this message in =
+error, please advise us immediately by return e-mail and delete the documen=
+t. The address from which this message has been sent is strictly for busine=
+ss mail only and the company reserves the right to monitor the contents of =
+communications and take action where and when it is deemed necessary.</font=
+></div><div><font size=3D"2">Thank you for your co-operation.</font></div>
+--0000000000008a802e05dceb4283--
