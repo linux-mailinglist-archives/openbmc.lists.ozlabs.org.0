@@ -1,14 +1,14 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D009504E50
-	for <lists+openbmc@lfdr.de>; Mon, 18 Apr 2022 11:20:02 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79CF9504E51
+	for <lists+openbmc@lfdr.de>; Mon, 18 Apr 2022 11:20:43 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KhhGm3Wbmz3bWf
-	for <lists+openbmc@lfdr.de>; Mon, 18 Apr 2022 19:20:00 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KhhHY47K9z2yZv
+	for <lists+openbmc@lfdr.de>; Mon, 18 Apr 2022 19:20:41 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=uH6lcLtx;
+	dkim=pass (1024-bit key; unprotected) header.d=quantacorp.onmicrosoft.com header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-quantacorp-onmicrosoft-com header.b=MH58s8/w;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,48 +19,48 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=quantacorp.onmicrosoft.com
  header.i=@quantacorp.onmicrosoft.com header.a=rsa-sha256
- header.s=selector2-quantacorp-onmicrosoft-com header.b=uH6lcLtx; 
+ header.s=selector2-quantacorp-onmicrosoft-com header.b=MH58s8/w; 
  dkim-atps=neutral
 Received: from APC01-TYZ-obe.outbound.protection.outlook.com
  (mail-tyzapc01on2071f.outbound.protection.outlook.com
  [IPv6:2a01:111:f403:704b::71f])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KhhFS6n2Cz2xSN
- for <openbmc@lists.ozlabs.org>; Mon, 18 Apr 2022 19:18:52 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KhhFT5XHhz2xSN
+ for <openbmc@lists.ozlabs.org>; Mon, 18 Apr 2022 19:18:53 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=LQWzVeRuW+4xPEgh3h2X6RBxMFFp1paOCk/4uO4Xp60GWOXS8+vdtXHEnZodiuMTrJjK/ac7/8UiLG5WbPq9qK8PntObY2xQtt2Sub3tA9YbyeXwop406HJKZmqs5GLNWRnWZ0VY7LLbsZ5iy6yfEyIAMI3TKXhjKO4MzCS76CcC7YZnXIJ6KmbRF/1WTIcFKbOaRwdpUqGX3Mb6kq5AHyAOdQAiOhb5gUwC79iEBJ/vfSABovDifS8GJ2JJjvSoj+PjuYqz1/dAtgXY/caDBfAafCrFgMk0q6AgMTi328s4NPtDXSTgj5kWWnF3Ux5rPjer8OQiBTsiKNwD++wQDw==
+ b=muolYrzAvtI1bS/6BnZ6f1Ttu7olejrTCIYIiKeNom5vUbR3OYWRA5ECweyeGnvvcxYS1YE08Th7fkMsha4e/mLp0csSJEukfRCHlgQCd/LH8/EeHwzht1/4zWgGNlY1kFfucxALJI2w+3t6dUgkGZl/CUhaCLlmYEJobEmrMjj9NKLfvO5H8iWoVM6CR1m/wO5xLY0JQpHi4iWuD1tYTpwqMGQ87B5qJhPz6xqzfHlVjEuOKFLIYkqsesxwIuHyWEDXP4yquEk415W3rkUjIMuXGDw6kqAOW4werzti9ZaTuXCun2CgofpsdSgZDH9hZCIiQSDb1LOZiQ3CRr9Z4Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xp/OTIs6e+lq8jiPAfPJPe45bO9st3FKn4tdsET8gCY=;
- b=dn6C96CzRxNh1Ct6D3BB939pI1leURQFkdoj5h4LGJjSxVkjVigIpIfu5DTRT2lMxsBEoDPmERUS8AUp3Jvpqk2zUnADjET1BM4dp6C4/Uh5IfzpMSRDr2XmEMuiBc1lwctSgG0/ZM06g7uJCvAqU8vVYJJwwe9eE7D6SusuGqDAD+eVyfeYSqTd8AClzSGYZN0gg6pN/RMlpNA5py/aU++QIiUql+ljQ7B6D9Lhln+TiMjd+WC2SZSeGVK4ZR3uc9rThtcisa2DzhPmHzSk6XKf5Uc5b2//+bLJnO+dysvzwRkR5xQ9+G88d0n0iuqnl71QJ7TowlFfR5+3n2jNyw==
+ bh=T2yzwDAW+FYkqNbgXwXlv5jRphtoyYj6poyIdaHulWM=;
+ b=kcy9YjfpUOCsXHffkQJTGpw8bFrMy9wMUun4Y4gKIrW1a0Rgj/4SaMYp/l6KKocdTp3FtTFONcSjoPnMtNqmTQH1aRhJ+ADxWJpnNwXlK/HZYrCOBlsUGw96fcU9scTmuQwl5gQk6KTon9dCsOybMEy5XpOXXBdG1JeZqNwjXP0r+Dcam/Q3G5gG9Kt4K32iQGm2XX+ONe5Qws0yz0fkCO/gvOpLAfaRaCxPNXaDHbocyEEX9DrUAd176VhO+79d4uL9seDdLdqDtoV+Luv7mY167DBBu1K7u/jXjxKsUXw6ZLKxn1YuXixqmew8j+eL8FcJk6mnlsl4qrhgV8t0/Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=quantatw.com; dmarc=pass action=none header.from=quantatw.com;
  dkim=pass header.d=quantatw.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=quantacorp.onmicrosoft.com; s=selector2-quantacorp-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xp/OTIs6e+lq8jiPAfPJPe45bO9st3FKn4tdsET8gCY=;
- b=uH6lcLtxAp743plen4T8rmHyyklNOT6CY/WA1HdWkCX9t8LRuGiybdGmUTz8pMmnk0XfcEdfha/5Vfy7Y1ZKvWIZyEv4zyhRU5GE6bmRWueVklL4inGvXiWDmewXo0rpgDu3uOOtkD0CgjIF+8WeUaFOdDwlwx2vQ3IJAuFI4Zs=
+ bh=T2yzwDAW+FYkqNbgXwXlv5jRphtoyYj6poyIdaHulWM=;
+ b=MH58s8/wnNVGskuudnhoqg7u/R/qVs5l2Y2Zyav9JPMNbZizOgP7z7r8OIR3MPXQ3Hsipx8J3s/cQSCYzktoT7+A6vZHfyBAOUo3XH2933HwRIr/A2RWnd3LhwMj42AyRgksoFKiAgpM1NiUdhvhRbdP4qEVVZZiub0//BY5lfk=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=quantatw.com;
 Received: from HK0PR04MB3282.apcprd04.prod.outlook.com (2603:1096:203:89::17)
  by PUZPR04MB5229.apcprd04.prod.outlook.com (2603:1096:301:bc::10)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5164.18; Mon, 18 Apr
- 2022 09:18:25 +0000
+ 2022 09:18:26 +0000
 Received: from HK0PR04MB3282.apcprd04.prod.outlook.com
  ([fe80::1109:2541:660f:1489]) by HK0PR04MB3282.apcprd04.prod.outlook.com
  ([fe80::1109:2541:660f:1489%6]) with mapi id 15.20.5164.025; Mon, 18 Apr 2022
- 09:18:25 +0000
+ 09:18:26 +0000
 From: Potin Lai <potin.lai@quantatw.com>
 To: openbmc@lists.ozlabs.org,
 	joel@jms.id.au
-Subject: [PATCH linux dev-5.15 RESEND 1/2] hwmon: (adm1275) Allow setting
- sample averaging
-Date: Mon, 18 Apr 2022 17:17:27 +0800
-Message-Id: <20220418091728.23051-2-potin.lai@quantatw.com>
+Subject: [PATCH linux dev-5.15 RESEND 2/2] dt-bindings: hwmon: Add sample
+ averaging properties for ADM1275
+Date: Mon, 18 Apr 2022 17:17:28 +0800
+Message-Id: <20220418091728.23051-3-potin.lai@quantatw.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20220418091728.23051-1-potin.lai@quantatw.com>
 References: <20220418091728.23051-1-potin.lai@quantatw.com>
@@ -70,57 +70,57 @@ X-ClientProxiedBy: HK2PR02CA0142.apcprd02.prod.outlook.com
  (2603:1096:203:89::17)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: dc3ad1d5-4c98-4f55-c2cc-08da211c63d8
+X-MS-Office365-Filtering-Correlation-Id: ddce48f4-3919-4c95-6f2d-08da211c6427
 X-MS-TrafficTypeDiagnostic: PUZPR04MB5229:EE_
-X-Microsoft-Antispam-PRVS: <PUZPR04MB5229E74A0CD7E46CAA8AFB868EF39@PUZPR04MB5229.apcprd04.prod.outlook.com>
+X-Microsoft-Antispam-PRVS: <PUZPR04MB5229F83424208A98850D04E38EF39@PUZPR04MB5229.apcprd04.prod.outlook.com>
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: hUjYIuz77QFFr45nT1fxqH8sfy8eoJ3PHXfXABtWw6Yr3DM4HZoDnX84sP6KBuViCrzFxcLg5k2p3msr9XRXQFNY1Tooswtu0CWHF4BxjnAEPF6CpIzF1uGkh8MAaT6HV6KFKbWxQdGGgN0eA58syJCCKCyRr6XReRSKckvUAtJQzig5uuRVzJv//SI+IFDLaWo+hK61exQ8ebv1c5qxeILAcObc387H3y2vQ4QEyF5LfjE/eJi82OAbNwSMPJD/ngtg/47Whqa6CnYCL+lek+MF9tw+qTrGgtfBeONNKZs8VYfgGt0nA+4Xv2PISHgww0x3PLr1l7thYjqEZ0fpQ41pdFxfzLTV9N8dfBKhGOdkasaCOAimPAvx8O/uc6fxkbAt6nh+MRldr0U/lyRqyFysou0qkmTtUJ1D9YjIG/yGmyisOFXY4rs/bYtLIMoaBS9sc5fCopSqHKaLEyOqaREpDhZqF46oB65AS5PHlZRgvOc0xSGZbQhdVA/xA2cCMKyUK4kmTzN5eb6Wfn8ugYDD1wYPcRTod1k7zrTFoHNPBrG9TQEIy7iGybyGOp1IM/ENLPX/tvgcFMrA+pc10jQoM2a7x+36C1TcN3wmp1ul/44BfgJHPmbVnzrLoNpVvAJicXPy4hVHvRCMki1iwGkKY5bQivIQLNUDlULonFTf9/DhBLtNq5eJMMuRtpghuWCoXzd4uppnyGGW+qn0NwhR7yWg8mlFURVo7AuV6g1vS5thE+Hx5PZh54HWHmHJSg1BseitXllEfTltIPCA2NIhicD9pBVr2rfvswkf4GQ=
+X-Microsoft-Antispam-Message-Info: wmpjtTL1O29uNpT90HzYLx1RMFHN6HTKkrd01xFKk77ro0+YRUK6HdYrL0nt1m8MjVWqEnNLYg7DAVz64I8Fl9KVCDmaM7cxaTBysfQ1Mh0tu5+mXgAp5OJ41rNoeHiT8BHsrd/XQtAhhq9j2Uc6qgDT+FLfXZf3pQVOKGPFet9G+WnXluUTAZ190SneDUxx1+Tlfkitu0t0Hrjm+eff+qZotxqBbsVS4bg4d0aHSzFRNwY8+eJnTZnvKA+2fdGvqFryPbP8s+Ux21sZA7MsrqSIeH+TKAmNbZGH2HxJ5vu4qjfEyRIV+CSO+Aa2jG8rlBU29vDNAb88TXamMsT/N2RxUc/MO+j67hgwa/6TyDxkkz112+sCiA6YBHdbnPTpk0pmEBMbgFkaeq+OCZWHmX9v7udHEccBAkOsUOe8AI0OhJMyouri7TyIcDClaWrELRK9QrXLNvI2JKuF5ivR8BMVRbJyMO0sO/lTwJ43ED3hPfL0O4fMnWKVNYqFsj54Vdo1iGmHx8qwB8tEGIEsVoWga8cDw3I0yr1RwCt5PbprBftwZ4MSRsNdGxz3Ka8uRW4d+b8xkcPMU8ITXz5BCROWmPBbG7843F49r9GLUrjv0lcO6mFOlU4BiOTjdIiXdknM2H96/QII+iFoZ0RN/GgeU/IFGjN+JPeazX790irs5+mLARYHKbUM54uG6U/EMzSBlrDDkPm/gly8wCz+FXQjv7zB+KBskgjYMdeOMNA/vRe6F1rN0BScybF+4uzoU9QugyWmYE+GxZKUpHPzgo4M5cWXwkZT8+FpH/1YG9w=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:HK0PR04MB3282.apcprd04.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230001)(4636009)(366004)(5660300002)(83380400001)(66946007)(66556008)(86362001)(966005)(66476007)(6512007)(6506007)(316002)(36756003)(2906002)(38100700002)(38350700002)(8676002)(6486002)(8936002)(44832011)(52116002)(508600001)(186003)(26005)(2616005)(1076003);
+ SFS:(13230001)(4636009)(366004)(5660300002)(66946007)(66556008)(86362001)(966005)(66476007)(6512007)(6506007)(316002)(36756003)(2906002)(38100700002)(38350700002)(8676002)(6486002)(8936002)(44832011)(52116002)(508600001)(186003)(26005)(2616005)(1076003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?ZSGK4w5tLnn4SmIG+8/sVP/uEZXoCXbQ/4QsoDyjrnAVnGky/26Nz+ZOWUl6?=
- =?us-ascii?Q?RIQ9M6V7gGB/dKlkpwtvcX5NoSvuI2AVoFw2A5ovjKuF89yrf64HjW5kn7WO?=
- =?us-ascii?Q?0wT0ACOWUHJ9bENDR/zY58Nv9LoJ9wBRFVdSEiooVzix5wz6zPSjx8nT6XUh?=
- =?us-ascii?Q?am9szGSbvW5vmOvfUTspvXIe59U+cxoOCfeFLaksxOmGfXF3Q+nrRGunZvI8?=
- =?us-ascii?Q?wNcjIjWGdxKrLX0KuoxdRkCnKUboSC1hS9mF4IKcvcUX1BqPZ2NNrlhzMCQK?=
- =?us-ascii?Q?0EbGu8bp2meSG3c9U9SY4a5QjkLJZwW2nZP5atE3KTXeAW2kfhd4w4+yJs+f?=
- =?us-ascii?Q?57F2+pwQf+YMKUw+2nlEbxWFgj7ci8iRQEpCmtqQbvyo3ZpfjuymvgCJHWTD?=
- =?us-ascii?Q?tBXT68SmkskLdA9q584cG+w5V0VmnD8gPJGF2pNCmbHPia6RVjbekvKZcINm?=
- =?us-ascii?Q?+uprHDU07HrLF0mlU8D7pdMjI5/yZLTQjoIHn8r/pIeUKLTaM1JhidiZACym?=
- =?us-ascii?Q?PBJqd/R+2ExtHno4kQ2OwEV64UOrm1Lz5fXpxMCyz48tG+bBNpPsxUt0O3SZ?=
- =?us-ascii?Q?fMJ8eWQrNxVKjdFYGA6fnfkwhI3m/D5KTylS0Srsa6/zfqqlurX+pGNqQq4P?=
- =?us-ascii?Q?lar5hnv4DgR3DBDqO12UaMvhdhbPiRDDdtRH6NrpaKdcg8g+C6Yh7rqwkIKv?=
- =?us-ascii?Q?xtmTWnRssAUzmCy376/zo9PB7JSg0S0hIsRYir5dmbCINyhwS7dWP7HR1mQB?=
- =?us-ascii?Q?TKEBlpkUOpNsbAULwUxfX+ncurKc1vy7qaUsBRUXZYjMGu0STM42sVAxeL+v?=
- =?us-ascii?Q?AkUYV8+CW6vJ0Gn2wdCKC9gSOqMV8CCnfZNPVWrnP4sgIh1079KWlD4PonKn?=
- =?us-ascii?Q?sLehWFzLIA3w0UiYdTLHGVd9wD/oClYsnlOc9ZnQ96fbLNVbHDX94CGTZqve?=
- =?us-ascii?Q?Yw71dHbGOkFNJBthVwUETFFuV+BqZb2nyVOCE6C1o2MnmPdAcIiR5yph8lfa?=
- =?us-ascii?Q?PULBTcWR+tt80/VfsRcGBk9qFLk3a6uuJ4E+Z9L6JIDHZX2SKavE1zlE/Xi5?=
- =?us-ascii?Q?ocVQwvyHlo+PjPGc0rjE4F8i7a+s+J7U3BEJtP+Fd2bCP/2T0+xlqMxn57ut?=
- =?us-ascii?Q?kW81Gcoa4Gr7DLIpANtmKbw8oakpoWhyxcZ5txZ+0wP/Gf2SwNC/uDLveLkU?=
- =?us-ascii?Q?lEAOJnZzhMFycVPaachJKYN7DmKh8Q3CBgQYAJ7BBSnd5O0w99SYVcWxYrTu?=
- =?us-ascii?Q?7Kft+HuNQlmEvfAwBXeACMHIYewiTU9vl9Lyfoeb+NgogWgn6VTilqXCg0V5?=
- =?us-ascii?Q?SgHvSKxL00rgxwfohr6NLg1cnGR8vKaBpyobVh1yBe7b2u4Ra3DLSUB5X/7I?=
- =?us-ascii?Q?iCU6thVs6IIFAWwFYC8GWWQ5rfopPsWnwtLAIjkGdwiPcnpbydNKAv7WPBmm?=
- =?us-ascii?Q?+0MDsh+pvE6xGSZ8+jLcEPkdSZiHvjKMv14hnkRvOxRAa8YxKuvzPmqezNpo?=
- =?us-ascii?Q?qa5Rp5EkrvNPkA3vnByEa1Uzg2FhJOawMEHikt4RV8M/MvHIQoRAKSqpX1DK?=
- =?us-ascii?Q?5fnw81RHgwTg6OHKiD34syUMFgKNxBUKRWPGUudDTR0n9yP/sqgjiftrsA45?=
- =?us-ascii?Q?Zs4J6zkA4WA8yOzk86BfRT9r34aWhn01MZRMH7QZmhh1HaWoluBVTF62AYpp?=
- =?us-ascii?Q?B/WvtmugYAkZ0PC/b/ylEtw6yyf8mHpiqWuqFwzmV3GqT9ciEAnts8BXcqOt?=
- =?us-ascii?Q?tkr/s8je2AXnI4L5F60dLhH1qU8PCOQ=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?DWIwixJ6ZMElfgPLVHQv6hvKuAxThYs3aPNITw7Fjyk4Qeno0zz0nH/l7vFs?=
+ =?us-ascii?Q?EhGrnRlu1sXRXX+0rruzfVMYpOKT3SpESRBfWP6cc1zB/gVX5qGdizirQSSc?=
+ =?us-ascii?Q?UU6W7ostZ6Y5lkg1nAv9SnL26NjiBYXDFTsm07xVkfR4F29LpQRMu4mh7nW4?=
+ =?us-ascii?Q?AahF+jbxbzQDsfGYbs1ms4+TsPJok16lzbaNZsWdfrUmijO6b6MoGtugUZ4+?=
+ =?us-ascii?Q?v9MUhJT7K/QI1SBp6CYKA5SPXab29re1XaziFDN+jDgY/bEjdOp+Q7g+xHWP?=
+ =?us-ascii?Q?jHnK6fgb6nx0mxOohKJ/mLVkrcMxBXy/cVRIAcZFL2mWd+s6kfU3x8hThuEk?=
+ =?us-ascii?Q?kZZE5Yt4OONtjmf/cTFOm/UYzleoUmGiIlyG5tZiV+Oimqo2+6FlqZMKpFXJ?=
+ =?us-ascii?Q?hiNbRucI4eL3KNM7C4KMVEHdHrMPiUgRSwmvNjJrtXSxEqXwhf3rmboLUTNW?=
+ =?us-ascii?Q?h7IQU1v8DEoMsjniPJd6d2LH0F/oXeXzmSmFcbhHRalVvG0pA4kDLJVVdsUS?=
+ =?us-ascii?Q?0c/5E46Mzbb7QDbOfjl46cmsSMcPNQ6B44Sufege1mtzsTYM1lPdKFHxjY2s?=
+ =?us-ascii?Q?PPqEo1aVbHAuirsjHjjROR6VqDomK4bxResHlO8/VKZ1rJoT5Lgk9A39t3es?=
+ =?us-ascii?Q?0rXCk+cYaA6fWHuzu+OfHb3ypVD6hQdPvyQNn4wSqNV1vrOGnT9qgoQOpQvt?=
+ =?us-ascii?Q?uhEgBaq52fMQaiUB5Hit9ZOgaye7mzM197nPD7zZ8uBEwud9XKubnvdNKCpo?=
+ =?us-ascii?Q?rUYy0uHCiSrjWqhdj5mptRm6EM/jewWRegLDbZhXiC+8XsrHn7Jmc4KG3SsV?=
+ =?us-ascii?Q?kXTZajl0V+CuJpNcIkyuZ2JxlzxGwrALdlAZE0RCDSjbMcLbQvHictTyqu0I?=
+ =?us-ascii?Q?jLc5kNR62Cety0ULz7RK7Mi1VoOytWqTGS7IIqmrJuBACZeabb7PzAiod4kG?=
+ =?us-ascii?Q?D4SpHfwoeIrRh0aDp99/SF5y9+zagUHIrMZjs6LOpdY1pDZmJXp/6tTbkqQ8?=
+ =?us-ascii?Q?uEfyD3/kR1cFWfjL94Zy9xHSbnbFvZAeqXktH7fcE0z+GA8t2NkSWgpT9atQ?=
+ =?us-ascii?Q?b5ZjS14R+Iwg5Z64ZH6lHoOUg0oiIFaecbH3YlKlR9tMiWI8rO1fqk6egwOn?=
+ =?us-ascii?Q?r1hEwV9x8QO9XvnBNK+OPtzyUMiH88FvPv9g2IW/CCytwvtPbi4DImr/3LOW?=
+ =?us-ascii?Q?cEdtab1Zrr2+M4rTFdYbUs++Gm5hJC0PidqJb1k+GEPTNh16qwY8vypUmCKS?=
+ =?us-ascii?Q?IHYDjW1N0iPM51+/qU26zL5NHZickMZo/tvi41v5y3B2qqwdiJdsUU50O6QV?=
+ =?us-ascii?Q?nUYDK8n+8YIiYLBwp7x6dLr3vy9tBfZk5FNOtF95Dh1gdsjOD6nOdRdj3S8f?=
+ =?us-ascii?Q?8PZoafD/T2xv9Ey+zs39S79M7XiN7eiF09x3EZSzxXczxRxgJ26GciORB7vJ?=
+ =?us-ascii?Q?thrW//b3fC82leFM1BTUf2hpemKEiugf2P7jnbxiY8Syq7YetmLgkzcF7dZj?=
+ =?us-ascii?Q?1Xkd5FWekdkv4xscT+KBbLs37y+mcPaPna127+AawJbSXXnC8i/sRgVOzSQe?=
+ =?us-ascii?Q?aH96lWUU89WKrXNqQQg8/qwpfWKU7ep2tr11SPYWM/zMETWUjAQdq/e2JUS5?=
+ =?us-ascii?Q?jlClY86hJ3sz3qir41qHjRrc7mt4bZV8lxKcc50j/BqfHMKQOZWDf6CgeOwe?=
+ =?us-ascii?Q?IcScQYjKochy0eDUjE73hZauZ4oWuvqhL0pRHOcvOfRecfwJlIjAbbHQxA12?=
+ =?us-ascii?Q?Zgqq+hJbJYemXaUNgMElgyFhYKglDd0=3D?=
 X-OriginatorOrg: quantatw.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: dc3ad1d5-4c98-4f55-c2cc-08da211c63d8
+X-MS-Exchange-CrossTenant-Network-Message-Id: ddce48f4-3919-4c95-6f2d-08da211c6427
 X-MS-Exchange-CrossTenant-AuthSource: HK0PR04MB3282.apcprd04.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Apr 2022 09:18:24.6016 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Apr 2022 09:18:25.1015 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 179b0327-07fc-4973-ac73-8de7313561b2
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ZU0I20U1qjVbwaNIOmc+V5aALRM2HJeDNskNn4nyISup0Gs1VT4EXrATJHSQAOB7p5iUrBuV0PSnA3gbL+KflQ==
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9LFN4E8hHB2ds9azdzpz+/5xmv/bjAFxKyMwk+6CAuBpccha7yQ1KMPcIxxT1NT14lji1YVoN0yUPBcba3pIMw==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR04MB5229
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -136,86 +136,107 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Current driver assume PWR_AVG and VI_AVG as 1 by default, and user needs
-to set sample averaging via sysfs manually.
+Add documentation of new properties for sample averaging in PMON_CONFIG
+register.
 
-This patch parses the properties "adi,power-sample-average" and
-"adi,volt-curr-sample-average" from device tree, and setting sample
-averaging during probe. Input value must be one of value in the
-list [1, 2, 4, 8, 16, 32, 64, 128].
+New properties:
+- adi,volt-curr-sample-average
+- adi,power-sample-average
 
 Signed-off-by: Potin Lai <potin.lai@quantatw.com>
-Link: https://lore.kernel.org/r/20220302123817.27025-2-potin.lai@quantatw.com
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Link: https://lore.kernel.org/r/20220302123817.27025-3-potin.lai@quantatw.com
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 ---
- drivers/hwmon/pmbus/adm1275.c | 40 ++++++++++++++++++++++++++++++++++-
- 1 file changed, 39 insertions(+), 1 deletion(-)
+ .../bindings/hwmon/adi,adm1275.yaml           | 68 +++++++++++++++++++
+ 1 file changed, 68 insertions(+)
 
-diff --git a/drivers/hwmon/pmbus/adm1275.c b/drivers/hwmon/pmbus/adm1275.c
-index d311e0557401..3b07bfb43e93 100644
---- a/drivers/hwmon/pmbus/adm1275.c
-+++ b/drivers/hwmon/pmbus/adm1275.c
-@@ -475,6 +475,7 @@ static int adm1275_probe(struct i2c_client *client)
- 	int vindex = -1, voindex = -1, cindex = -1, pindex = -1;
- 	int tindex = -1;
- 	u32 shunt;
-+	u32 avg;
+diff --git a/Documentation/devicetree/bindings/hwmon/adi,adm1275.yaml b/Documentation/devicetree/bindings/hwmon/adi,adm1275.yaml
+index 223393d7cafd..ab87f51c5aef 100644
+--- a/Documentation/devicetree/bindings/hwmon/adi,adm1275.yaml
++++ b/Documentation/devicetree/bindings/hwmon/adi,adm1275.yaml
+@@ -37,6 +37,72 @@ properties:
+     description:
+       Shunt resistor value in micro-Ohm.
  
- 	if (!i2c_check_functionality(client->adapter,
- 				     I2C_FUNC_SMBUS_READ_BYTE_DATA
-@@ -687,7 +688,7 @@ static int adm1275_probe(struct i2c_client *client)
- 		if ((config & (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) !=
- 		    (ADM1278_VOUT_EN | ADM1278_TEMP1_EN)) {
- 			config |= ADM1278_VOUT_EN | ADM1278_TEMP1_EN;
--			ret = i2c_smbus_write_byte_data(client,
-+			ret = i2c_smbus_write_word_data(client,
- 							ADM1275_PMON_CONFIG,
- 							config);
- 			if (ret < 0) {
-@@ -756,6 +757,43 @@ static int adm1275_probe(struct i2c_client *client)
- 		return -ENODEV;
- 	}
- 
-+	if (data->have_power_sampling &&
-+	    of_property_read_u32(client->dev.of_node,
-+				 "adi,power-sample-average", &avg) == 0) {
-+		if (!avg || avg > ADM1275_SAMPLES_AVG_MAX ||
-+		    BIT(__fls(avg)) != avg) {
-+			dev_err(&client->dev,
-+				"Invalid number of power samples");
-+			return -EINVAL;
-+		}
-+		ret = adm1275_write_pmon_config(data, client, true,
-+						ilog2(avg));
-+		if (ret < 0) {
-+			dev_err(&client->dev,
-+				"Setting power sample averaging failed with error %d",
-+				ret);
-+			return ret;
-+		}
-+	}
++  adi,volt-curr-sample-average:
++    description: |
++      Number of samples to be used to report voltage and current values.
++    $ref: /schemas/types.yaml#/definitions/uint32
++    enum: [1, 2, 4, 8, 16, 32, 64, 128]
 +
-+	if (of_property_read_u32(client->dev.of_node,
-+				"adi,volt-curr-sample-average", &avg) == 0) {
-+		if (!avg || avg > ADM1275_SAMPLES_AVG_MAX ||
-+		    BIT(__fls(avg)) != avg) {
-+			dev_err(&client->dev,
-+				"Invalid number of voltage/current samples");
-+			return -EINVAL;
-+		}
-+		ret = adm1275_write_pmon_config(data, client, false,
-+						ilog2(avg));
-+		if (ret < 0) {
-+			dev_err(&client->dev,
-+				"Setting voltage and current sample averaging failed with error %d",
-+				ret);
-+			return ret;
-+		}
-+	}
++  adi,power-sample-average:
++    description: |
++      Number of samples to be used to report power values.
++    $ref: /schemas/types.yaml#/definitions/uint32
++    enum: [1, 2, 4, 8, 16, 32, 64, 128]
 +
- 	if (voindex < 0)
- 		voindex = vindex;
- 	if (vindex >= 0) {
++allOf:
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - adi,adm1075
++              - adi,adm1276
++    then:
++      properties:
++        adi,volt-curr-sample-average:
++          default: 128
++        adi,power-sample-average: false
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - adi,adm1275
++    then:
++      properties:
++        adi,volt-curr-sample-average:
++          default: 16
++        adi,power-sample-average: false
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - adi,adm1272
++    then:
++      properties:
++        adi,volt-curr-sample-average:
++          default: 128
++        adi,power-sample-average:
++          default: 128
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - adi,adm1278
++              - adi,adm1293
++              - adi,adm1294
++    then:
++      properties:
++        adi,volt-curr-sample-average:
++          default: 128
++        adi,power-sample-average:
++          default: 1
++
+ required:
+   - compatible
+   - reg
+@@ -53,5 +119,7 @@ examples:
+             compatible = "adi,adm1272";
+             reg = <0x10>;
+             shunt-resistor-micro-ohms = <500>;
++            adi,volt-curr-sample-average = <128>;
++            adi,power-sample-average = <128>;
+         };
+     };
 -- 
 2.17.1
 
