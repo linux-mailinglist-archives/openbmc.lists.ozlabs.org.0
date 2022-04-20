@@ -2,40 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 41FC8508F94
-	for <lists+openbmc@lfdr.de>; Wed, 20 Apr 2022 20:37:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F80E5092EA
+	for <lists+openbmc@lfdr.de>; Thu, 21 Apr 2022 00:37:18 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Kk8YB1C9Zz3bcC
-	for <lists+openbmc@lfdr.de>; Thu, 21 Apr 2022 04:37:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KkFsm2v90z3bWt
+	for <lists+openbmc@lfdr.de>; Thu, 21 Apr 2022 08:37:16 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=aXQw8P4V;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=sandelman.ca (client-ip=176.58.120.209; helo=relay.sandelman.ca;
- envelope-from=mcr@sandelman.ca; receiver=<UNKNOWN>)
-Received: from relay.sandelman.ca (relay.cooperix.net [176.58.120.209])
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d2f;
+ helo=mail-io1-xd2f.google.com; envelope-from=brandonkim@google.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20210112 header.b=aXQw8P4V; dkim-atps=neutral
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com
+ [IPv6:2607:f8b0:4864:20::d2f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Kk8Xr3YPNz2yRX
- for <openbmc@lists.ozlabs.org>; Thu, 21 Apr 2022 04:37:11 +1000 (AEST)
-Received: from dooku.sandelman.ca (unknown [142.169.78.9])
- by relay.sandelman.ca (Postfix) with ESMTPS id 33C651F456;
- Wed, 20 Apr 2022 18:37:04 +0000 (UTC)
-Received: by dooku.sandelman.ca (Postfix, from userid 179)
- id 1ECAF1A03B8; Wed, 20 Apr 2022 14:37:02 -0400 (EDT)
-From: Michael Richardson <mcr@sandelman.ca>
-To: Andrew Geissler <geissonator@gmail.com>
-Subject: Re: preventing chassis power-on until bmc Ready
-In-reply-to: <FE2B7C36-070C-4DCF-84C0-FB3A53EC0837@gmail.com>
-References: <FE2B7C36-070C-4DCF-84C0-FB3A53EC0837@gmail.com>
-Comments: In-reply-to Andrew Geissler <geissonator@gmail.com>
- message dated "Tue, 19 Apr 2022 17:02:58 -0400."
-X-Mailer: MH-E 8.6+git; nmh 1.7.1; GNU Emacs 26.3
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KkFsL6yH0z2xSh
+ for <openbmc@lists.ozlabs.org>; Thu, 21 Apr 2022 08:36:52 +1000 (AEST)
+Received: by mail-io1-xd2f.google.com with SMTP id p21so3465720ioj.4
+ for <openbmc@lists.ozlabs.org>; Wed, 20 Apr 2022 15:36:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=mime-version:from:date:message-id:subject:to:cc;
+ bh=KtOW4cPzMzwQbiOFRK9GzoQAUQMWX2QpflZ5f/qDnbk=;
+ b=aXQw8P4V+eE54eXVybU8Yd8+aZS6kuHt+2HDV9iowZF7JYl5/lxn+TwVfoNKwajpJK
+ hpobb3sAKUBFGUXyu1aw1C1UiO1LAGGG/DspGx712bOzftIvEC6N1YpF3IIdEJOhecyq
+ oI6k9swdmFHr3aknmpNIpYUduLdz/yCCjuFmRlhgTkI62Ixvq+ySEH8E0GH2A/P9D04K
+ UJL6PbxiGux7xgmVJ0uGKeJs+B2Jyat/w2iibB+uylNrXdzc9wey1+E+ZUW2C8lRAE2a
+ 2jlL0vPJIXcKjL+dIKUWQPC4QPBN+ikokNapgD4CJ/G9If9Rzy/gpY48qTpCxCub3f8Y
+ I3Gg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+ bh=KtOW4cPzMzwQbiOFRK9GzoQAUQMWX2QpflZ5f/qDnbk=;
+ b=uJkOzVh3/7qx86hYMkwNx54MBxmNK/b60xa/SWLbuvqeBp+eVk6fCLcINzrzrCmueP
+ ko5IxYyd/HtszFjbDqXREIgYtrHIu94HSRjT056qmVgP+rVsdn9Qmhn79qNX/owUL8gz
+ K5nXUik9EmwL9hwsvVUpu0Ssdj3s24LUvOy5RT1oTdv7Q+Mm88m6+em55/8ngM63/s+1
+ ROmRmn+HeBpBfs+A9FY24+WC3INFQM1FkawoPsynJ8xiChxCmwH7qRgrfktNFUQyLAlp
+ CpNLrV73uIjEU29kuQxBLZDTFxsIFE6uKeJ32bd35z0/FoxsZdzl+RnIOn4BDjztDYnd
+ GhuA==
+X-Gm-Message-State: AOAM530bzg7DHMjXOWCDDV7AXlZOKtn8DyZOfhCqkVT6qTCrldBs0eog
+ ydoIWHSBHLyfsgL5rIZ7NNrYfOGf54P+lbAJq07SFYxRTjUmgw==
+X-Google-Smtp-Source: ABdhPJzMqrRQANbaKGFvYB0Az1x/9BlypIhg2qrHCyU2bhSNYaoDCWOuDnNI2JDrDwWL8zrmk5fJjbvZMA8e90zBF/k=
+X-Received: by 2002:a02:cb03:0:b0:328:8369:9023 with SMTP id
+ j3-20020a02cb03000000b0032883699023mr8539419jap.247.1650494207895; Wed, 20
+ Apr 2022 15:36:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Date: Wed, 20 Apr 2022 14:37:02 -0400
-Message-ID: <820955.1650479822@dooku>
+From: Brandon Kim <brandonkim@google.com>
+Date: Wed, 20 Apr 2022 15:36:37 -0700
+Message-ID: <CALGRKGMgs4m=h6udakL_hcUugrPFyvTt+RefBjyVinE9ReGXyQ@mail.gmail.com>
+Subject: Request to create 2 new repositories for "bios-bmc-smm-error-logger"
+To: "OpenBMC (openbmc@lists.ozlabs.org)" <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -47,59 +71,29 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Ed Tanous <edtanous@google.com>, Kasun Athukorala <kasunath@google.com>,
+ Willy Tu <wltu@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---=-=-=
-Content-Type: text/plain
+Hello,
 
+Following the design doc review here:
+https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/52109/12
 
-Andrew Geissler <geissonator@gmail.com> wrote:
-    > I know in the past I've heard of servers that allow both the BMC and
-    > Host to boot in parallel (which sounds awesome) but we're not there
-    > yet.
+I would like to request 2 new repositories as listed in the new
+"Organizational" section of the design template that I filled out
+here: https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/53169/2
 
-That would really be awesome... server boot times have become ridiculous,
-with the time amount of Black Screen (BMC boot time I think) time seeming to
-be increasing...
-I think that Dell had to tweak some things a decade ago when people started
-putting multiple hundred Gb of ram in; I have old servers that take 10+
-minutes to POST.
+bios-bmc-smm-error-logger
+  - This repository will implement the daemon described in this document
+  - Proposed maintainer: wltu@google.com , brandonkim@google.com
 
-I do wonder if, as you say, the whack-a-mole should continue, or if the host
-should just be able to inquire (and wait) for the BMC to finish booting.
-So, don't prevent the host from booting, but allow the host to synchronize
-with the BMC before it continues.
-That would be in the BIOS, and perhaps could even be a prototyped as a (host) grub module.
+libbej
+  - This repository will follow the PLDM RDE specification as much as possible
+    for RDE BEJ decoding (initially, encoding may come in the future) and will
+    host a library written in C
+  - Proposed maintainer: wltu@google.com , brandonkim@google.com
 
-It seems like there is a lot of mechanism in the BMC that affects the host
-booting. (Like virtual USB bootable media)
-It would also be very very annoying if one never could get boot console
-capture after a cold boot, but only after a warm boot.
-
---
-]               Never tell me the odds!                 | ipv6 mesh networks [
-]   Michael Richardson, Sandelman Software Works        | network architect  [
-]     mcr@sandelman.ca  http://www.sandelman.ca/        |   ruby on rails    [
-
-
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQGzBAEBCgAdFiEEow/1qDVgAbWL2zxYcAKuwszYgEMFAmJgUs0ACgkQcAKuwszY
-gEM2fwv/dr7vsriJVvMa5EWGh+KLc93r+FFSGTehLpxqWsUlgckNkT/SqFhWXWki
-yOiokpaEyLoArW2jNmB3Kx01a6zM6qkY1PFd1cHTkS/5kansYY+nMBokc163XSI6
-N+b0mOqZLm8WbIhqGo0Q19eM4WXaQ83V1T1MmOgKNlzRiic6vx15YRx1iq/bNemN
-l3BRHQZS5pfWI5FqS4lGQ4G3Z86AQLLBkcCw781ajFhJxxfWyBvXB32iQHIT9+/y
-iKXjO7DSOAAH3g2uMDQZzdJCVEBuBcCNoz3p5cgB5S0b7rp47p+TEilK8hKbEc8I
-LEGKVhOahX4kcbZCP83Kre08rPq5TMBgNv2V/6TpWFfkjUG43rvu/2F05VonNzI9
-ji3j/g2DYdq0bN+QIPIMVtG9eA99B43gPe2Njo6ppEceqUoy3P9oiMqhJQYgkwQy
-SLAwUbyz76MSY5ZohkJrpluLClwR8ReZ1lWtwf3+VTuQ/P6GXQHOObGLr3aA91ix
-ozcCvNZy
-=iC2A
------END PGP SIGNATURE-----
---=-=-=--
+Thank you,
+Brandon
