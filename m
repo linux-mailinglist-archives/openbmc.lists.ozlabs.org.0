@@ -1,39 +1,39 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C6D450AE41
-	for <lists+openbmc@lfdr.de>; Fri, 22 Apr 2022 04:55:24 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0BBF550AEBB
+	for <lists+openbmc@lfdr.de>; Fri, 22 Apr 2022 06:09:20 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KkzY61QZCz3bbG
-	for <lists+openbmc@lfdr.de>; Fri, 22 Apr 2022 12:55:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Kl1BP5xh6z3bbQ
+	for <lists+openbmc@lfdr.de>; Fri, 22 Apr 2022 14:09:17 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=FUkr77Bd;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=DXSi+Bi7;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7eae::719;
- helo=nam11-bn8-obe.outbound.protection.outlook.com;
+ smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7e88::712;
+ helo=nam10-dm6-obe.outbound.protection.outlook.com;
  envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com
- header.a=rsa-sha256 header.s=selector2 header.b=FUkr77Bd; 
+ header.a=rsa-sha256 header.s=selector2 header.b=DXSi+Bi7; 
  dkim-atps=neutral
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com
- (mail-bn8nam11on20719.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:7eae::719])
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com
+ (mail-dm6nam10on20712.outbound.protection.outlook.com
+ [IPv6:2a01:111:f400:7e88::712])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KkzNh2Y5jz3bXw
- for <openbmc@lists.ozlabs.org>; Fri, 22 Apr 2022 12:48:04 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Kl19w4swfz2yHp;
+ Fri, 22 Apr 2022 14:08:51 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=XLF+j3AvPaLf0xjAlBTynhX17EdEKoYOwfvD99910uZUTrFARYCbb08h0ioxXACCHlTzMMWW1Vin0MVga8fw4CAbXqPeTGO15PsAY3aNPJjPTzrtv7h7KdyFo3HoBLhKXevfdVO3jrXwfM8AeIvIs6+caGkV8gOOXxlTE7iyLD7d6WyWiYGY1mimMfcto5tLjy6Ls4pXd/6x4xNxATEfY28x/NXv6anifr5mibeCvtAI8WQlb0NAnaRp+MrmbR3eOeEUtPdFuuDLRs2Sh1NPIxF6c4cWnEUpECXY3v+0GLHLZoLknZ2IBwG4g7VmaaAFj4TTF2aR+xr1UFyfQk1gAA==
+ b=gz0CYriW93Ue3N015i06ThebS+dOha+wpgdkB4h+BIv1n8p1WGV+u6vhixbUIoCjQuyB2kR0kc4HElVIyn5/xIVLtu1kR3AUNqWk6KVGA+kh9dDiugjDI1IHA0om1zNLV3DkJ2IwJeEp/U2A36TMiCfbs4x96vPi/WmXFDQ1IQRwvjFl2Mzdtrj+PTZkmeUADp0srsr1RJGi087/QK3SX3vVlCwkuIaniOmjcrx6K3kF/Fxe5NSsyHZA6s/G8mxFc8zX8Rauw7bkJYNuNe0AnKw0SAZcDIxsBASY2fSutg1uAEj7iRS9yLVc9nTFCFBK1Uv492kJt+wYPrhWybduMQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XKW3tX2irOcFfd4A5C7Ny+p3TT6LDPyX3IvlKuTfscE=;
- b=Nfc/CP2RxH+95XB2fUUvGyeKX+ApKyjFOQAx9SZOMp1xENP9x8eW0asQT3x2We+1jz6fPtu/ll+xt63mdnpANrUa+A9my44erbklK7PRNRmBgPb339Cm3/eYbYywQKS32aJqdNFrRVxImTX1AgFER3sFihvROicz1mg0NLMoFTusySB2sObNbRrtqi8+3JCQMokjjesgbVVVyZBmdAAnnRSEheJ0wZgNRCi4pFMXNVgGsfeWvNhy1MAqQVqsV3ap+ZxDwfcKQ5cWe4rmftVaHDsXUgTy4dNEWhhPIoF1fO/Ch5/HM1PDDcpyuE4AFEhOn/AxrJU32i0SnVXjjWCimA==
+ bh=57XlQW3r5Ws5SYh1U+nJdq86xcDgkdo9lwML0jQEA98=;
+ b=aPgD1Q8IuKXnBgV0HJnYCaVdbHqkrCBB3Ch8hTd3nM3ck8rIpqnGcTb7FBWwwayXZXUHpU1pRQvA/G2hNazb1PnmGw+wpmAEZgBIS90/jAAtyozBKe+PuMtLvE7d/ssHqWytnv6/Dov/9mMT2R7+aFx/OaFTl2Lw8Y9VEpnzoRgDIRpwIez06xom3GifsgvmGLqlqMY8mYf9qQKnyTS3lDWwo2dQBbbx0uf38fCZXGy8otOndkk92WV92YkabWp1azwWlyDZbF5xB8aFWXKXdFE+ORl4/bZSaqEZXOsYOg0e8P+efNsAiK22Lk70vjUVHGuRXDISyPLQwBxy6YrkUg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
  header.from=os.amperecomputing.com; dkim=pass
@@ -41,96 +41,92 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=os.amperecomputing.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XKW3tX2irOcFfd4A5C7Ny+p3TT6LDPyX3IvlKuTfscE=;
- b=FUkr77BdWxHs9h/HvobKJJGcapNlw7LiNoxgfhCQBsQ/9o1bvCFqMDEDkVbbU8gELaSfw8lXFvOvHUTfbmk3YOyU6he3XC7+2Ln+88k/e5BzPei8yQwitelu1WXMv5eypEc++LP0cAcodvI4wYCoRfsKssYlCfqnO4Wxz8DuJUU=
+ bh=57XlQW3r5Ws5SYh1U+nJdq86xcDgkdo9lwML0jQEA98=;
+ b=DXSi+Bi7vjtCVxVOysaaikLQCHXtADfFhwl2eWNbB6pOcDeMATZUvCJm2lUr4niJbd1YYx6hkOOO8FbkvUGXIWXz05RfluqYqtNEWKoPPzEatmKbFzDEoJw6k4Pp3jWhID5UD357CJxf4WIcQQshBIodB68J5E231IW5sb0wwOM=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
 Received: from SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24) by
- SN6PR01MB4653.prod.exchangelabs.com (2603:10b6:805:cc::28) with
+ BL0PR0102MB3587.prod.exchangelabs.com (2603:10b6:207:38::14) with
  Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5186.15; Fri, 22 Apr 2022 02:47:58 +0000
+ 15.20.5164.25; Fri, 22 Apr 2022 04:08:25 +0000
 Received: from SJ0PR01MB7282.prod.exchangelabs.com
  ([fe80::319b:4612:e6f4:f22c]) by SJ0PR01MB7282.prod.exchangelabs.com
  ([fe80::319b:4612:e6f4:f22c%3]) with mapi id 15.20.5186.015; Fri, 22 Apr 2022
- 02:47:58 +0000
+ 04:08:25 +0000
 From: Quan Nguyen <quan@os.amperecomputing.com>
-To: Lee Jones <lee.jones@linaro.org>, Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Jean Delvare <jdelvare@suse.com>, Guenter Roeck <linux@roeck-us.net>,
- Jonathan Corbet <corbet@lwn.net>, Derek Kiernan <derek.kiernan@xilinx.com>,
- Dragan Cvetic <dragan.cvetic@xilinx.com>, Arnd Bergmann <arnd@arndb.de>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Quan Nguyen <quan@os.amperecomputing.com>,
- Thu Nguyen <thu@os.amperecomputing.com>, linux-kernel@vger.kernel.org,
- devicetree@vger.kernel.org, linux-hwmon@vger.kernel.org,
- linux-doc@vger.kernel.org, OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Subject: [PATCH v8 9/9] docs: ABI: testing: Document the Ampere Altra Family's
- SMpro sysfs interfaces
-Date: Fri, 22 Apr 2022 09:46:53 +0700
-Message-Id: <20220422024653.2199489-10-quan@os.amperecomputing.com>
+To: Corey Minyard <minyard@acm.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+ Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+ Brendan Higgins <brendanhiggins@google.com>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Wolfram Sang <wsa@kernel.org>, openipmi-developer@lists.sourceforge.net,
+ devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+ linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ linux-i2c@vger.kernel.org, openbmc@lists.ozlabs.org
+Subject: [PATCH v7 0/3] Add SSIF BMC driver
+Date: Fri, 22 Apr 2022 11:08:00 +0700
+Message-Id: <20220422040803.2524940-1-quan@os.amperecomputing.com>
 X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220422024653.2199489-1-quan@os.amperecomputing.com>
-References: <20220422024653.2199489-1-quan@os.amperecomputing.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: SG2P153CA0023.APCP153.PROD.OUTLOOK.COM (2603:1096:4:c7::10)
- To SJ0PR01MB7282.prod.exchangelabs.com
+X-ClientProxiedBy: SI2PR04CA0005.apcprd04.prod.outlook.com
+ (2603:1096:4:197::16) To SJ0PR01MB7282.prod.exchangelabs.com
  (2603:10b6:a03:3f2::24)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 0858b4ab-b3e5-40ba-54d9-08da240a8245
-X-MS-TrafficTypeDiagnostic: SN6PR01MB4653:EE_
-X-Microsoft-Antispam-PRVS: <SN6PR01MB4653115963C5410E5A868DB0F2F79@SN6PR01MB4653.prod.exchangelabs.com>
+X-MS-Office365-Filtering-Correlation-Id: 9ee23ee7-1b09-4240-0e50-08da2415bfa3
+X-MS-TrafficTypeDiagnostic: BL0PR0102MB3587:EE_
+X-Microsoft-Antispam-PRVS: <BL0PR0102MB35876EF8ACE87185C5FDA092F2F79@BL0PR0102MB3587.prod.exchangelabs.com>
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: MbST7Z0rpWJ/O+Ka059B+jWZ1bDf1tLtlL+R9X0bVM/0nTakGLPdlyVE2RQi9+Y8uVXgjuWgStXXtMuiU16RIbeFOZ8UUWMeIjPG6b244Y3oP89V/qgQ1bPMppKZ4+IJEnycNcvdbuXE5RYG5+yoMvzjDhFny2DDIGr1tEO5SuujN46SnTdQky+RmnrAc+m544EpZVr386jH2mnm6XA4tNrsKLFHLbaGq2uqUmqsNl4UOQEQnX2Kkh9zSwC7jrMPf7ZJw+SO94NLeqZBN6VQK3EQZrBqGhvDkFpFWru4kY/2/SSzpo5KjKVco++WWJAhR4FwuIViH1IJwPx0JAoece9MVTvQwJTvcBZSa8lM1Eicz1Tj1LUmccmNropmr9dKOw1bJ/AqNMSGdTBxtOUkffjWWa5F/e1t5CdwNN8jGStmBukHurK39RRmvnUWxUvB+E2VgX4wNYgpWrHGbRhSNeWV74kWqgYzFAar8bT9/GktrVgjTd3dlVb0gCZWAXGio4iXItOsGS0Ws0fo9DydIYYZQr4/BapYjk/0zZLRzX8HBwQCHCFcu7GFYGzIsNGfZCpZkiOjt2eqRSFKOef5a8outjtrrLCpiCkahnN164R0BoWMwokY4UH6ubA3q3HRKwbLKYXLQVidFQM6f0PHWSpaW9I04rOnw5UAvuR8+CAySfa42YepdMPs3Z8tHKPob161GTRXya3QojsJbMYqBooWKIPNHfYpv/E+LiBE5Lo=
+X-Microsoft-Antispam-Message-Info: lrHlCjn75tlLonMQyhawkssGUqfd/4RB4R7QO1dxjxkPh6ZBrKTrsfBpVSovjqPogOvcmmARlBNASoO9jP0CHu5FVVkIX8WADbWS3RNo81GWKEtVf6Qix9gsMdJD6JqOpGZAEgGxPRBmNllVpm/MiWSrG5J7xB0dLpVy38zdvIe2TigbPlB1T+oPa+qjlztgwcjOYrNotQ/bco4QEzTGP6k7hQDALG5gZXk2XuOpK9ce2qa8uU04bJ53VfYWq8FlXfKC7dCjCrfLlcj7dFZC3SMJPbwj/nCCt/BRKhcs/gsNACw2qhkLQCvFEntQjjnX0aTYGb9QRKOt/7pc5IbP8t8hVJ5Qt5btqWxwHxXe0Odh4qn0Eds61o43z8tWqXlmrtJPfAvETb2RP6AXJgTOjfcNS3IMGnt0B1oqSfuN5KHrpehkXPHLVWl+lBNVqoZRuDn9yMtJy4bo3Lp8g6q4XEJxLl40F5mYk1zbYX8FopK4iVUgbdyBrJVqYfPMCaT+Np83eueEDfEyZ81GBQga6FPMlavhdy2i6X5wSTmTuiNQel/ASuZwXGGzQOHFNNIJrc+4G0I0OD01qqTR+B3HdoczpQbDIphLyzDEHEoKT3P3dAl978RnX5HP3i+h+avbWhr1+sCWJMR5cxB8Uy8ghJ38Dq5oZJlcs2qBI7uWnOHaaI1lGk7EVEOQA31EnzKw0kHYbwWhOaUYo737b9x2StM9IpVAKYlGrwNvG1k1twTKnGyYFltcg3JcUcUPExXBAe0ssmZk0/AjwFWy9um/kDPcKgh6XTMqqszuWC2nDAYhNAmN4b/aut3h70CqDa/+
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:SJ0PR01MB7282.prod.exchangelabs.com; PTR:; CAT:NONE;
- SFS:(13230001)(4636009)(366004)(6486002)(6506007)(6512007)(508600001)(54906003)(8936002)(7416002)(66946007)(66476007)(107886003)(8676002)(316002)(110136005)(2616005)(1076003)(6666004)(66556008)(52116002)(186003)(26005)(86362001)(2906002)(5660300002)(921005)(83380400001)(4326008)(38350700002)(38100700002);
+ SFS:(13230001)(4636009)(366004)(316002)(186003)(4326008)(921005)(38100700002)(54906003)(66946007)(7416002)(86362001)(110136005)(8676002)(6486002)(38350700002)(8936002)(966005)(83380400001)(52116002)(2906002)(66476007)(66556008)(5660300002)(508600001)(1076003)(6512007)(6506007)(2616005)(26005)(6666004)(107886003);
  DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?JKxtAaoYVY8LRLued8o3R8S6NDPNYLOHuP118n4MS2PTFgjbkE+RaQhF2I4C?=
- =?us-ascii?Q?7U1aU3fPXiGeG/jg9VoECEiSfXTpc/bmQkIkouiut25+4rOYteQBuXLHl79x?=
- =?us-ascii?Q?7T2t6Bl44LVoY3Fz4HJW7AgxMhvnhCWiJjczs0yhRub/piDvrQKhZNqL4xeO?=
- =?us-ascii?Q?nYgavSO7Q2OgYramgHdbj/IB9UfdHYrFoJwVoyIWuGLObcLbW+nE6wzjXL2Z?=
- =?us-ascii?Q?qW1re7/Tq/mbZnx1poSPzqPijCIF2quL1ZAbbhJ+KR6n405NnjoeaQClcgAF?=
- =?us-ascii?Q?fOtmXEr58aR3+1s6ShBAEbMNsUNhXS4MeyeeyTEMSAaEbSuldL7A9kym+C0L?=
- =?us-ascii?Q?Fy3Lef2WeT1ShmYzaanblYDGxIpYxME0Bjiua/RRAkShlmpHFkLfTnzwuuKS?=
- =?us-ascii?Q?loGB8bQ//f2tNxHsKkJJRAAnI9v9iGwwYyygTW04csZ4nu0zqS/oS3ChRyba?=
- =?us-ascii?Q?vMF9TQAdW308eSI08lYfLq0wzmvFKXVXRiMGzbYG1oo9ws5kx7rIgwKRUPPS?=
- =?us-ascii?Q?dZidovry3IRDuOcqaD/boKJeBicTElNXLZ/eiCmOFrsHaKyRsFwdhQr/933a?=
- =?us-ascii?Q?yoLcpXKeIc4qEIMAt+YvCoFaOizKO1WMLq+DCXOHXplATtj9dEdgONRBiFh4?=
- =?us-ascii?Q?H9y7aMuZEp5kc5b8r9Pt2ZrYcTHRGhz22VVXOvHe+qRTwbQu5BCuVixb5FDe?=
- =?us-ascii?Q?XXaINIo3A+lw+6hAW3anPy5ASU5F2KgKToWqkvCm+Q6tXxsqla8hLv9OjmLq?=
- =?us-ascii?Q?5i7GafOwmsu//aAXZWEFFoGSGJd3sBJiyldL6DL5PPNAmCQ8YfNT02V+6ghv?=
- =?us-ascii?Q?aFeC2IyO2x5aygsOsg61lRzCOg+nfUnQ9999erTFONpseGhzV0F48Dv+arlJ?=
- =?us-ascii?Q?jAvOiNAzbtGhJrsLUovU8suaFBH+yTIg0lFzdJIHsQ6CGJ0b+wwHVIzqUiPM?=
- =?us-ascii?Q?lsq40xZDi4r/H2E5bLhJSThJLvi/a5hcCrcCmL/M6EHPA6ykD/wU2Llr03VH?=
- =?us-ascii?Q?ZcRLLZqYeVDzdAsvdpxBfS0usaLNgwqeCqePhm8k0nkJj5rYS41Yg3XH3roS?=
- =?us-ascii?Q?wFztjS7lcPC7prjqDCTJNUBWEsKVQkMaUjerel1rzZvbkOkLSFUSbw1iSpgB?=
- =?us-ascii?Q?6ZilIxfOU8caCjZbdWzpm9YvdgjugBWTD36JYwtuFi0VUyI98r/30bhCGNpn?=
- =?us-ascii?Q?gIoIKjWxmYQcRbbmdjmoMqljy9o0Y5eCuwN6J2krDAikD5RVMN/tjExjwDue?=
- =?us-ascii?Q?mDQMSqzFWGla10P3w8RShCZEZTAYjpvE1c/ISk0jUsu03NbOZ6OcQiyM1lH/?=
- =?us-ascii?Q?QiteU5tam9Ll5PX7JuJzD9NiK4Pugn6AzHO7o7LbNrTZVDAZMlFQMyFVvi2V?=
- =?us-ascii?Q?/+Bj8BCiXfz5MlDsVHWfGy2Uls4Rwp6SlaTod/aBcSRe8YxI7/zMOQJmjjxq?=
- =?us-ascii?Q?s7tpD1VoU2uJcq2gDQAod7mlefPXnq1kroKM0bc4Odp8LGWJzcH3KGZLAbKq?=
- =?us-ascii?Q?tlcb5KlnoXX13zip3zPelaxn8ZbeISdwUg+k920g3vD+gdb0GZUJxAkqh26y?=
- =?us-ascii?Q?pQMDISlknde/NVnQm0ptAU09+VzEIJSwE2pzU0pWmyioZ8CPR3qW8ujIQgwG?=
- =?us-ascii?Q?yAGDLdhh1QWFAnKFRmycaskDmKz8iIUq7t95Y+4dxOh45pY1eCAsBhRi8Icm?=
- =?us-ascii?Q?QubEa3jFH6ekiM4rE+YIi5YOEoKdBpUiS+3cLIFce3P1wWOPNFT6H605sMlM?=
- =?us-ascii?Q?8QrOlXC6FMgYaBqAUtwsXzqpRxdsIOfBnkK5O/8AilhtnysQ1H+d?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?jVsDEcxFy89PSbahCmJSW0FE/k8fJFOQV8CHgt7JsScKZV1Rj91eSbJZfwwE?=
+ =?us-ascii?Q?5cgrU0S8t25Bmyg6v4awzjvxrx8gef4TNvsghbqtJm9jaltc8NXPYNWSN+ra?=
+ =?us-ascii?Q?GUpXZdINSkhqV7J5Fwu8UigFpHfABTVClUAzC8VavZfh4RNt2jboKh5L91eW?=
+ =?us-ascii?Q?tBMUl6NnsDToTZtf3OpOc0lc5GqzAs09sRzxstf0cQ6lQED9lFxFiWGMoBB2?=
+ =?us-ascii?Q?oBJi/syu4Uevluzm776PBdlKvs8eI+EcvH+qbWoqbL9yvSo6KFdH4+zCDoBW?=
+ =?us-ascii?Q?r09w3h6OWEG1aUlzOkOqM6zim9g3tIGxwKCPJVB3dO75qLxFHsvOYIGXBZ8q?=
+ =?us-ascii?Q?0vzPitkqKD+lZ1fabgeL6FlzvYwHN6mb8/Nalw5drlhrUUwWTH9Y6mD/fONz?=
+ =?us-ascii?Q?RZQJi2GCTrtJ0KiL/6G7ZBjGUbx6hixYX3ucW3VHc1+xUzghWb0Jk175prcP?=
+ =?us-ascii?Q?+RQyE2unBqz3cF+bnaHz1bKBtaItOihBmt/yKsJU/y8+pT/awxTk7FEtKxlm?=
+ =?us-ascii?Q?dIqS4ovDRxrS5R4AzdhL2t3dPOo3IRlUsLgKlDgH3z9U4pcfytMQutVmUd70?=
+ =?us-ascii?Q?kCuXgEGJEt0yBWymQbgjdBhgggQ2O/jGU4HgMFtPyir2PUEJ6DsgaYs44Ceu?=
+ =?us-ascii?Q?SdSNUbkKHFBPc4B6FASPiRw005POH0uKPVm5wPaUsY3uv2ACRA/dTL6y4uOl?=
+ =?us-ascii?Q?DAxcranu5B0g1vWMfFRK6x6O4B4Pa8IG17e0fstsvTQAcuyFk3r2u6JIEoRO?=
+ =?us-ascii?Q?t+3p5/BHCUVVxYxXWSPNfq0Dhs4TYbxFkvMyyEKNjxGdR4m2diXtnV/R5fpb?=
+ =?us-ascii?Q?rZGjrUh/ICHNDmIK9XWYdLrm33t+Ws0UuTHokDurX4w3M/GWCBle2Vqq8c15?=
+ =?us-ascii?Q?cVjok1SEslKtU3/HKctzfjWaatlYAs48V2lmNLTDfU7Tkw11O01xFytTOlmu?=
+ =?us-ascii?Q?l6QN4EOz3gLxPYCRZ3IDCKT4vfgyQPZFN+iBXsw4j1ZDv+A4fzDAM2ONF874?=
+ =?us-ascii?Q?bcpu8oS09qbsTWxp3DaixeBZUfyEuMYO9vNlw+fFbCKo5vXsr0ZJOczfSZuk?=
+ =?us-ascii?Q?InL+tUJk4xmHcBpHmH+BVZ15m9Zc3Lm5JbpIrbhM6KA9DN9FpFxN/0/N+FdM?=
+ =?us-ascii?Q?k5Q+/xTr7G1O+kyZKqxzRXAPIlsdTv5KMHhRNjXft8AVUYHm8cdRRU02JGaL?=
+ =?us-ascii?Q?AMQCk1I2lcsxofFgu+bWpdToYF22BxrmSQhUNcFHKR6nV52j1Zdd18bYAr8Z?=
+ =?us-ascii?Q?K83UVwYcJBoV/20wwb4g4ci+hGlRLExUSQjlG7X1NSdmxB+u2FjMEc7z+rGe?=
+ =?us-ascii?Q?GOxc+rJPQtnNLzQSoOXzf/VaeLbAh0tzhba7xGr3RVVpGBR9OcXW7tMdix64?=
+ =?us-ascii?Q?ia9HnJ4VVbFv4SQXZWoICH+2ec4nyxh+YGfYpkcor/58JZ1L2iJvyWUU2xJI?=
+ =?us-ascii?Q?YdQSqm4BJlF0M2uB7jbe+2kS9kDj/3vepJ9WzcxvF497PSc+LBfKP7PbAUco?=
+ =?us-ascii?Q?NlGX+QP8xnAuflamkfoodznbG/WHkEfRfClX42d6CCnBJfUnjZpvdH1SFt5a?=
+ =?us-ascii?Q?FdLILJV9bloON/FGiq7AnCucAMWKOn4UbtiyoqDFF1t8YWZw3IKhDbQtEZ9E?=
+ =?us-ascii?Q?/5QLw6W41WroSiTFra1eltzxNwPEuXMP0jIKGz43U/wXuBidT/+TYj9pKBIv?=
+ =?us-ascii?Q?On8rJXbvxUb+e8tEAoUMKs0ECS1JHDKp/V+MSxM8nmLq1nzWOxpnd7aONRYa?=
+ =?us-ascii?Q?sLAFSnwMSSXtYX+pbuxB3bv7ToZPKI0S2k4EQUm6+QVQokvHaohG?=
 X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0858b4ab-b3e5-40ba-54d9-08da240a8245
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9ee23ee7-1b09-4240-0e50-08da2415bfa3
 X-MS-Exchange-CrossTenant-AuthSource: SJ0PR01MB7282.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Apr 2022 02:47:58.3326 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Apr 2022 04:08:25.6893 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 6Dmkw7r0STh8G6q5IXY2gdeV17IccBj8GRGLWTKSuMt1kk09mNSgl5y6LplQ+GRzCxgwDWMCI8nWgqOkq9JfHQ8QoXuCE7vn09pffEnTpH8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR01MB4653
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9LsjpFsLA/GQTD9yiDl3Q6p5oFHgXzFJf4OQnzJ7ytzHJnc0NhaNw1IS7D5+SaZD7Hfih1VCIdWhPiXS1/N3ZzNxYjX3oN8mXfmdUamPBdI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR0102MB3587
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -148,186 +144,120 @@ Cc: Open Source Submission <patches@amperecomputing.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add documentation for the Ampere(R)'s Altra(R) SMpro sysfs interfaces
+This series add support the SSIF BMC driver which is to perform in-band
+IPMI communication with their host in management (BMC) side.
 
-Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
----
-Changes in v8:
-  + Sysfs to return single value in hex format              [Greg]
-  + Fix KernelVersion info                                  [Greg]
-  + Change errors_* to error_*                              [Quan]
-  + Added overflow_[core|mem|pcie|other]_[ce|ue]            [Quan]
+SSIF BMC driver in this series is tested with Aspeed AST2500.
 
-Changes in v7:
-  + First introduce in v7                                   [Greg]
+Discussion for v6: https://lkml.org/lkml/2022/3/10/340
 
- .../sysfs-bus-platform-devices-ampere-smpro   | 157 ++++++++++++++++++
- 1 file changed, 157 insertions(+)
- create mode 100644 Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
+v7:
+  + Remove unnecessary del_timer() in response_timeout()        [Corey]
+  + Change compatible string from "ampere,ssif-bmc" to "ssif-bmc"  [Jae]
+  + Dropped the use of ssif_msg_len() macro, use the len directly [Quan]
+  + Solve possible issue if both response timer and ssif_bmc_write()
+  occurred at the same time                                      [Corey]
+  + Fix wrong return type of ssif_bmc_poll()         [kernel robot test]
+  + Refactor and introduce ssif_part_buffer struct to replace the
+  response_buf to manage each send/receive part of ssif           [Quan]
+  + Change SSIF_BAD_SMBUS state to SSIF_ABORTING state           [Corey]
+  + Support abort feature to skip the current bad request/response and
+  wait until next new request                                    [Corey]
+  + Refactor the PEC calculation to avoid the re-calculate the PEC on
+  each I2C_SLAVE_WRITE_RECEIVED event                             [Quan]
+  + Fix the use of error-proned idx                              [Corey]
+  + Defer the test for valid SMBus command until the read/write part
+  is determined                                                   [Quan]
+  + Change/split unsupported_smbus_cmd() to
+  supported_[write|read]_cmd()                                   [Corey]
+  + Abort the request if somehow its size exceeded 255 bytes      [Quan]
 
-diff --git a/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro b/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
-new file mode 100644
-index 000000000000..41edab6c3e28
---- /dev/null
-+++ b/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
-@@ -0,0 +1,157 @@
-+What:		/sys/bus/platform/devices/smpro-errmon.*/error_[core|mem|pcie|other]_[ce|ue]
-+KernelVersion:	5.18
-+Contact:	quan@os.amperecomputing.com
-+Description:
-+		(RO) Contains the 48-byte Ampere (Vendor-Specific) Error Record, see [1],
-+		printed in hex format as below:
-+
-+		AABBCCCCDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD\
-+		DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-+		Where:
-+		  AA       : Error Type
-+		  BB       : Subtype
-+		  CCCC     : Instance
-+		  DDD...DDD: 44-byte value similar to the Arm RAS standard error record
-+
-+		See [1] below for the format details.
-+
-+		The detail of each sysfs entries is as below:
-+		+-------------+---------------------------------------------------------+
-+		|   Error     |                   Sysfs entry                           |
-+		+-------------+---------------------------------------------------------+
-+		| Core's CE   | /sys/bus/platform/devices/smpro-errmon.*/error_core_ce |
-+		| Core's UE   | /sys/bus/platform/devices/smpro-errmon.*/error_core_ue |
-+		| Memory's CE | /sys/bus/platform/devices/smpro-errmon.*/error_mem_ce  |
-+		| Memory's UE | /sys/bus/platform/devices/smpro-errmon.*/error_mem_ue  |
-+		| PCIe's CE   | /sys/bus/platform/devices/smpro-errmon.*/error_pcie_ce |
-+		| PCIe's UE   | /sys/bus/platform/devices/smpro-errmon.*/error_pcie_ue |
-+		| Other's CE  | /sys/bus/platform/devices/smpro-errmon.*/error_other_ce|
-+		| Other's UE  | /sys/bus/platform/devices/smpro-errmon.*/error_other_ue|
-+		+-------------+---------------------------------------------------------+
-+		UE: Uncorrect-able Error
-+		CE: Correct-able Error
-+
-+		[1] Section 3.3 Ampere (Vendor-Specific) Error Record Formats,
-+		    Altra Family RAS Supplement.
-+
-+
-+What:		/sys/bus/platform/devices/smpro-errmon.*/overflow_[core|mem|pcie|other]_[ce|ue]
-+KernelVersion:	5.18
-+Contact:	quan@os.amperecomputing.com
-+Description:
-+		(RO) Return the overflow status of each type HW error reported:
-+		  0      : No overflow
-+		  1      : There is an overflow and the oldest HW errors are dropped
-+
-+		The detail of each sysfs entries is as below:
-+		+-------------+-----------------------------------------------------------+
-+		|   Overflow  |                   Sysfs entry                             |
-+		+-------------+-----------------------------------------------------------+
-+		| Core's CE   | /sys/bus/platform/devices/smpro-errmon.*/overflow_core_ce |
-+		| Core's UE   | /sys/bus/platform/devices/smpro-errmon.*/overflow_core_ue |
-+		| Memory's CE | /sys/bus/platform/devices/smpro-errmon.*/overflow_mem_ce  |
-+		| Memory's UE | /sys/bus/platform/devices/smpro-errmon.*/overflow_mem_ue  |
-+		| PCIe's CE   | /sys/bus/platform/devices/smpro-errmon.*/overflow_pcie_ce |
-+		| PCIe's UE   | /sys/bus/platform/devices/smpro-errmon.*/overflow_pcie_ue |
-+		| Other's CE  | /sys/bus/platform/devices/smpro-errmon.*/overflow_other_ce|
-+		| Other's UE  | /sys/bus/platform/devices/smpro-errmon.*/overflow_other_ue|
-+		+-------------+-----------------------------------------------------------+
-+		UE: Uncorrect-able Error
-+		CE: Correct-able Error
-+
-+What:           /sys/bus/platform/devices/smpro-errmon.*/error_[smpro|pmpro]
-+KernelVersion:	5.18
-+Contact:	quan@os.amperecomputing.com
-+Description:
-+		(RO) Contains the internal firmware error record printed as hex format
-+		as below:
-+
-+		ABBCDDEEEEFFFFFFFF
-+		Where:
-+		  A       : Firmware Error Type
-+		              1: Warning
-+		              2: Error
-+			      4: Error with data
-+		  BB      : Firmware Image Code (8-bit value)
-+		  C       : Direction:
-+		              0: Enter
-+		              1: Exit
-+		  DD      : Location, firmware module location code (8-bit value)
-+		  EEEE    : Error Code, firmware Error Code (16-bit value)
-+		  FFFFFFFF: Extensive data (32-bit value)
-+
-+		Example:
-+		  root@mtjade:~# cat /sys/bus/platform/devices/smpro-errmon.1.auto/error_smpro
-+		  109008000a00000000
-+
-+		The detail of each sysfs entries is as below:
-+		+-------------+-------------------------------------------------------+
-+		|   Error     |                   Sysfs entry                         |
-+		+-------------+-------------------------------------------------------+
-+		| SMpro error | /sys/bus/platform/devices/smpro-errmon.*/error_smpro  |
-+		| PMpro error | /sys/bus/platform/devices/smpro-errmon.*/error_pmpro  |
-+		+-------------+-------------------------------------------------------+
-+		See more details in section 5.10 RAS Internal Error Register Definitions,
-+		Altra Family Soc BMC Interface Specification.
-+
-+
-+What:           /sys/bus/platform/devices/smpro-errmon.*/event_[vrd_warn_fault|vrd_hot|dimm_hot]
-+KernelVersion:	5.18
-+Contact:	quan@os.amperecomputing.com
-+Description:
-+		(RO) Contains the detail information in case of VRD/DIMM warning/hot events
-+		in hex format as below:
-+
-+		AABBBB
-+		Where:
-+		  AA  : The event channel
-+		          00: VRD Warning Fault
-+		          01: VRD Hot
-+			  02: DIMM host
-+		  BBBB: The event detail information data
-+
-+		See more details in section 5.7 GPI Status Registers,
-+		Altra Family Soc BMC Interface Specification.
-+
-+
-+What:		/sys/bus/platform/devices/smpro-misc.*/boot_progress
-+KernelVersion:	5.18
-+Contact:	quan@os.amperecomputing.com
-+Description:
-+		(RO) Contains the boot stages information in hex as format below:
-+
-+		AABBCCCCCCCC
-+		Where:
-+		  AA      : The boot stages
-+		              00: SMpro firmware booting
-+		              01: PMpro firmware booting
-+		              02: ATF BL1 firmware booting
-+		              03: DDR initialization
-+		              04: DDR training report status
-+		              05: ATF BL2 firmware booting
-+		              06: ATF BL31 firmware booting
-+		              07: ATF BL32 firmware booting
-+		              08: UEFI firmware booting
-+		              09: OS booting
-+		  BB      : Boot status
-+		              00: Not started
-+		              01: Started
-+		              02: Completed without error
-+		              03: Failed.
-+		  CCCCCCCC: Boot status information defined for each boot stages
-+
-+		See more details in section 5.11 Boot Stage Register Definitions,
-+		and section 6. Processor Boot Progress Codes, Altra Family Soc BMC
-+		Interface Specification.
-+
-+
-+What:           /sys/bus/platform/devices/smpro-misc*/soc_power_limit
-+KernelVersion:	5.18
-+Contact:	quan@os.amperecomputing.com
-+Description:
-+		(RW) Contains the desired SoC power limit in Watt.
-+		Writes to this sysfs set the desired SoC power limit (W).
-+		Reads from this register return the current SoC power limit (W).
-+		The value ranges:
-+		  Minimum: 120 W
-+		  Maximum: Socket TDP power
+v6:
+  + Drop the use of slave_enable()                             [Wolfram]
+  + Make i2c-aspeed to issue RxCmdLast command on all
+  I2C_SLAVE_WRITE_REQUESTED event to assert NAK when slave busy   [Quan]
+  + Make i2c slave to return -EBUSY when it's busy                [Quan]
+  + Drop the aborting feature as return Completion Code 0xFF may stop
+  host to retry and make ipmi_ssif.so fails to load               [Quan]
+  + Add timer to recover slave from busy state when no response   [Quan]
+  + Clean request/response buffer appropriately                   [Quan]
+  + Add some minor change on error and warning messages           [Quan]
+
+v5:
+  + Correct the patches order to fix the bisect issue found by
+  kernel build robot
+
+v4:
+  + Fix recursive spinlock                                      [Graeme]
+  + Send response with Completion code 0xFF when aborting         [Quan]
+  + Fix warning with dt_binding_check                              [Rob]
+  + Change aspeed-ssif-bmc.yaml to ssif-bmc.yaml                  [Quan]
+  + Added bounding check on SMBus writes and the whole request     [Dan]
+  + Moved buffer to end of struct ssif_bmc_ctx to avoid context
+    corruption if somehow buffer is written past the end           [Dan]
+  + Return -EINVAL if userspace buffer too small, don't
+    silence truncate                                       [Corey, Joel]
+  + Not necessary to check NONBLOCK in lock                      [Corey]
+  + Enforce one user at a time                                    [Joel]
+  + Reject write with invalid response length from userspace     [Corey]
+  + Add state machines for better ssif bmc state handling         [Quan]
+  + Drop ssif_bmc_aspeed.c and make ssif_bmc.c is generic
+    SSIF BMC driver                                               [Quan]
+  + Change compatible string "aspeed,ast2500-ssif-bmc" to
+    "ampere,ssif-bmc"                                             [Quan]
+  + Toggle Slave enable in i2c-aspeed to turn on/off slave mode   [Ryan]
+  + Added slave_enable() to struct i2c_algorithm to control
+    slave mode and to address the recursive spinlock      [Graeme, Ryan]
+  + Abort current request with invalid SMBus write or
+    invalid command                                               [Quan]
+  + Abort all request if there is pending response                [Quan]
+  + Changed validate_pec() to validate_request()                  [Quan]
+  + Add unsupported_smbus_cmd() to handle unknown SMBus command   [Quan]
+  + Print internal state string for ease investigating issue      [Quan]
+  + Move to READY state on SLAVE_STOP event                       [Quan]
+  + Change initilize_transfer() to process_smbus_cmd()            [Quan]
+  + Introduce functions for each slave event                      [Quan]
+
+v3:
+  + Switched binding doc to use DT schema format                   [Rob]
+  + Splited into generic ssif_bmc and aspeed-specific      [Corey, Joel]
+  + Removed redundant license info                                [Joel]
+  + Switched to use traditional if-else                           [Joel]
+  + Removed unused ssif_bmc_ioctl()                               [Joel]
+  + Made handle_request()/complete_response() to return void      [Joel]
+  + Refactored send_ssif_bmc_response() and
+  receive_ssif_bmc_request()                                     [Corey]
+  + Remove mutex                                                 [Corey]
+  + Use spin_lock/unlock_irqsave/restore in callback             [Corey]
+  + Removed the unnecessary memset                               [Corey]
+  + Switch to use dev_err()                                      [Corey]
+  + Combine mask/unmask two interrupts together                  [Corey]
+  + Fixed unhandled Tx done with NAK                              [Quan]
+  + Late ack'ed Tx done w/wo Ack irq                              [Quan]
+  + Use aspeed-specific exported aspeed_set_slave_busy() when
+  slave busy to fix the deadlock                 [Graeme, Philipp, Quan]
+  + Clean buffer for last multipart read                          [Quan]
+  + Handle unknown incoming command                               [Quan]
+
+v2:
+  + Fixed compiling error with COMPILE_TEST for arc
+
+Quan Nguyen (3):
+  ipmi: ssif_bmc: Add SSIF BMC driver
+  bindings: ipmi: Add binding for SSIF BMC driver
+  i2c: aspeed: Assert NAK when slave is busy
+
+ .../devicetree/bindings/ipmi/ssif-bmc.yaml    |  38 +
+ drivers/char/ipmi/Kconfig                     |  11 +
+ drivers/char/ipmi/Makefile                    |   1 +
+ drivers/char/ipmi/ssif_bmc.c                  | 780 ++++++++++++++++++
+ drivers/char/ipmi/ssif_bmc.h                  | 107 +++
+ drivers/i2c/busses/i2c-aspeed.c               |   5 +-
+ 6 files changed, 941 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/ipmi/ssif-bmc.yaml
+ create mode 100644 drivers/char/ipmi/ssif_bmc.c
+ create mode 100644 drivers/char/ipmi/ssif_bmc.h
+
 -- 
 2.35.1
 
