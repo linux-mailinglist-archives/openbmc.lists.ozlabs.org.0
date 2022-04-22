@@ -2,66 +2,57 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69D9E50BB0E
-	for <lists+openbmc@lfdr.de>; Fri, 22 Apr 2022 17:04:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1544E50BAE5
+	for <lists+openbmc@lfdr.de>; Fri, 22 Apr 2022 16:58:25 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KlHkk1cWtz3bc9
-	for <lists+openbmc@lfdr.de>; Sat, 23 Apr 2022 01:04:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KlHbL6HjSz3bYw
+	for <lists+openbmc@lfdr.de>; Sat, 23 Apr 2022 00:58:22 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256 header.s=2020 header.b=yAkNhORu;
-	dkim=pass header.d=linutronix.de header.i=@linutronix.de header.a=ed25519-sha256 header.s=2020e header.b=pbX00wnH;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=zynYzEfd;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linutronix.de (client-ip=2a0a:51c0:0:12e:550::1;
- helo=galois.linutronix.de; envelope-from=tglx@linutronix.de;
+ smtp.mailfrom=linuxfoundation.org (client-ip=139.178.84.217;
+ helo=dfw.source.kernel.org; envelope-from=gregkh@linuxfoundation.org;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- secure) header.d=linutronix.de header.i=@linutronix.de header.a=rsa-sha256
- header.s=2020 header.b=yAkNhORu; 
- dkim=pass header.d=linutronix.de header.i=@linutronix.de
- header.a=ed25519-sha256 header.s=2020e header.b=pbX00wnH; 
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org
+ header.a=rsa-sha256 header.s=korg header.b=zynYzEfd; 
  dkim-atps=neutral
-X-Greylist: delayed 464 seconds by postgrey-1.36 at boromir;
- Sat, 23 Apr 2022 01:04:24 AEST
-Received: from galois.linutronix.de (Galois.linutronix.de
- [IPv6:2a0a:51c0:0:12e:550::1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
+ bits)) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KlHZv1jdqz2yWn
+ for <openbmc@lists.ozlabs.org>; Sat, 23 Apr 2022 00:57:58 +1000 (AEST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KlHkJ1tt2z2x9G
- for <openbmc@lists.ozlabs.org>; Sat, 23 Apr 2022 01:04:24 +1000 (AEST)
-From: Thomas Gleixner <tglx@linutronix.de>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020; t=1650639387;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=yeO7DB/oOdZiE5YWbOfjg8Pxdhh85gWuIsOq1Wgec1w=;
- b=yAkNhORuwRA0vCkGQ5lKnhlYDhJjnaqjPGowwq3uqTmK8KvetIzZWoXWNo5H4914SRrOXI
- 6Y67ttATBwOnFttY/DaIyaJw4VQghgL/kEQjfjEPfxePgSljVurZrWBM8zov5T4QALRDjd
- 9CtP7gmEzYXv7oU9El41VxogjuI/D52/QRv0T9zHIaMrt5nJK93pmAXkUufe8I6f7pA5+t
- wGcfQ3HW+XmlACHBjESFr3qPyCvmFFibk/xbD5D55Gkwil37SzQQJzwbN+G71L2WCxsALV
- dAZMR+OsWLc82wjDlNeB1cyx76ooxJb4zH26hOQqjTVkhfw1l9izIKqzDPxElA==
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=linutronix.de;
- s=2020e; t=1650639387;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=yeO7DB/oOdZiE5YWbOfjg8Pxdhh85gWuIsOq1Wgec1w=;
- b=pbX00wnHWFBeWEQwToFkdzn2dZAsMpSlsXcZZWK42rB4fM0DI8EfoHH6HgWMhZHvTPgL2E
- RsgBuCxAU7Fdw1Bw==
-To: nick.hawkins@hpe.com, verdun@hpe.com, nick.hawkins@hpe.com,
- joel@jms.id.au, arnd@arndb.de, openbmc@lists.ozlabs.org
-Subject: Re: [PATCH v5 04/11] clocksource/drivers: Add HPE GXP timer
-In-Reply-To: <20220421192132.109954-5-nick.hawkins@hpe.com>
-References: <20220421192132.109954-1-nick.hawkins@hpe.com>
- <20220421192132.109954-5-nick.hawkins@hpe.com>
-Date: Fri, 22 Apr 2022 16:56:26 +0200
-Message-ID: <87o80t5fqd.ffs@tglx>
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 6D81261782;
+ Fri, 22 Apr 2022 14:57:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D7A8C385A9;
+ Fri, 22 Apr 2022 14:57:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+ s=korg; t=1650639474;
+ bh=jdfEAEfL/tHuS0CUSWCzH65IfQhsNXe6NsYvzPJn3m4=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=zynYzEfdFxTqZdpwtraIU+SDaP99Q45Vdj1QS+aVTi2hBIobLBP/a/r3UncGpLOeo
+ WyJ/R8zr9m7h/9tXlqQxonNVA8sa9bBi7St098xXmKgmu2rCFXHh1oxPlQt/Lo5erl
+ u6+URGfEHCqD/w+tRhIGFr7b9PaJeNjCVhwl97g4=
+Date: Fri, 22 Apr 2022 16:57:52 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Quan Nguyen <quan@os.amperecomputing.com>
+Subject: Re: [PATCH v8 3/9] misc: smpro-errmon: Add Ampere's SMpro error
+ monitor driver
+Message-ID: <YmLCcFrrobUJtiLI@kroah.com>
+References: <20220422024653.2199489-1-quan@os.amperecomputing.com>
+ <20220422024653.2199489-4-quan@os.amperecomputing.com>
+ <YmJJIb1DAIq5arCw@kroah.com>
+ <82a6452a-965b-7fbe-eba2-919f0a6ed73a@os.amperecomputing.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <82a6452a-965b-7fbe-eba2-919f0a6ed73a@os.amperecomputing.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,118 +64,112 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Daniel Lezcano <daniel.lezcano@linaro.org>, linux-kernel@vger.kernel.org
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
+ Jean Delvare <jdelvare@suse.com>, Phong Vo <phong@os.amperecomputing.com>,
+ Arnd Bergmann <arnd@arndb.de>, Jonathan Corbet <corbet@lwn.net>,
+ Dragan Cvetic <dragan.cvetic@xilinx.com>, linux-doc@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Derek Kiernan <derek.kiernan@xilinx.com>,
+ Open Source Submission <patches@amperecomputing.com>,
+ Lee Jones <lee.jones@linaro.org>, Thu Nguyen <thu@os.amperecomputing.com>,
+ Guenter Roeck <linux@roeck-us.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Apr 21 2022 at 14:21, nick hawkins wrote:
-> +
-> +static struct gxp_timer *local_gxp_timer;
+On Fri, Apr 22, 2022 at 09:43:39PM +0700, Quan Nguyen wrote:
+> On 22/04/2022 13:20, Greg Kroah-Hartman wrote:
+> > On Fri, Apr 22, 2022 at 09:46:47AM +0700, Quan Nguyen wrote:
+> > > This commit adds Ampere's SMpro error monitor driver for monitoring
+> > > and reporting RAS-related errors as reported by SMpro co-processor
+> > > found on Ampere's Altra processor family.
+> > > 
+> > > Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+> > > ---
+> > > Changes in v8:
+> > >    + Update wording for SMPRO_ERRMON on Kconfig file             [Quan]
+> > >    + Avoid uninitialized variable use               [kernel test robot]
+> > >    + Switch to use sysfs_emit()                                  [Greg]
+> > >    + Make sysfs to return single value                           [Greg]
+> > >    + Change errors_* sysfs to error_*                            [Quan]
+> > >    + Add overflow_[core|mem|pcie|other]_[ce|ue] sysfs to report
+> > >    overflow status of each type of HW errors                     [Quan]
+> > >    + Add some minor refactor                                     [Quan]
+> > > 
+> > > Changes in v7:
+> > >    + Remove regmap_acquire/release_lock(), read_i2c_block_data() [Quan]
+> > >    + Use regmap_noinc_read() instead of errmon_read_block()      [Quan]
+> > >    + Validate number of errors before read                       [Quan]
+> > >    + Fix wrong return type of *_show() function     [kernel test robot]
+> > >    + Adjust patch order to avoid dependence with smpro-mfd  [Lee Jones]
+> > >    + Use pointer instead of stack memory                         [Quan]
+> > > 
+> > > Changes in v6:
+> > >    + First introduced in v6 [Quan]
+> > > 
+> > >   drivers/misc/Kconfig        |  12 +
+> > >   drivers/misc/Makefile       |   1 +
+> > >   drivers/misc/smpro-errmon.c | 477 ++++++++++++++++++++++++++++++++++++
+> > >   3 files changed, 490 insertions(+)
+> > >   create mode 100644 drivers/misc/smpro-errmon.c
+> > > 
+> > > diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
+> > > index 41d2bb0ae23a..9fbe6797c440 100644
+> > > --- a/drivers/misc/Kconfig
+> > > +++ b/drivers/misc/Kconfig
+> > > @@ -176,6 +176,18 @@ config SGI_XP
+> > >   	  this feature will allow for direct communication between SSIs
+> > >   	  based on a network adapter and DMA messaging.
+> > > +config SMPRO_ERRMON
+> > > +	tristate "Ampere Computing SMPro error monitor driver"
+> > > +	depends on MFD_SMPRO || COMPILE_TEST
+> > > +	help
+> > > +	  Say Y here to get support for the SMpro error monitor function
+> > > +	  provided by Ampere Computing's Altra and Altra Max SoCs. Upon
+> > > +	  loading, the driver creates sysfs files which can be use to gather
+> > > +	  multiple HW error data reported via read and write system calls.
+> > > +
+> > > +	  To compile this driver as a module, say M here. The driver will be
+> > > +	  called smpro-errmon.
+> > > +
+> > >   config CS5535_MFGPT
+> > >   	tristate "CS5535/CS5536 Geode Multi-Function General Purpose Timer (MFGPT) support"
+> > >   	depends on MFD_CS5535
+> > > diff --git a/drivers/misc/Makefile b/drivers/misc/Makefile
+> > > index 70e800e9127f..483308a6e113 100644
+> > > --- a/drivers/misc/Makefile
+> > > +++ b/drivers/misc/Makefile
+> > > @@ -23,6 +23,7 @@ obj-$(CONFIG_ENCLOSURE_SERVICES) += enclosure.o
+> > >   obj-$(CONFIG_KGDB_TESTS)	+= kgdbts.o
+> > >   obj-$(CONFIG_SGI_XP)		+= sgi-xp/
+> > >   obj-$(CONFIG_SGI_GRU)		+= sgi-gru/
+> > > +obj-$(CONFIG_SMPRO_ERRMON)	+= smpro-errmon.o
+> > >   obj-$(CONFIG_CS5535_MFGPT)	+= cs5535-mfgpt.o
+> > >   obj-$(CONFIG_GEHC_ACHC)		+= gehc-achc.o
+> > >   obj-$(CONFIG_HP_ILO)		+= hpilo.o
+> > > diff --git a/drivers/misc/smpro-errmon.c b/drivers/misc/smpro-errmon.c
+> > > new file mode 100644
+> > > index 000000000000..df7d8fc4ff3f
+> > > --- /dev/null
+> > > +++ b/drivers/misc/smpro-errmon.c
+> > > @@ -0,0 +1,477 @@
+> > > +// SPDX-License-Identifier: GPL-2.0+
+> > 
+> > Are you sure you mean "or any later version"?  I have to ask.
+> > 
+> 
+> Thank Greg for the review.
+> 
+> Will change all to SPDX-License-Identifier: GPL-2.0-or-later in next
+> version.
 
-What is local about that time?
+That is not what I am asking (the SPDX tag format).  I mean, do you
+really mean "or later" for your license as that is not the license of
+the kernel overall?  If so, wonderful, but I have to ask that as your
+legal group needs to be aware of it, sorry.
 
-> +static void __iomem *system_clock __read_mostly;
+thanks,
 
-__ro_after_init perhaps?
-
-> +static inline struct gxp_timer *to_gxp_timer(struct clock_event_device *evt_dev)
-> +{
-> +	return container_of(evt_dev, struct gxp_timer, evt);
-> +}
-> +
-> +static u64 notrace gxp_sched_read(void)
-> +{
-> +	return readl_relaxed(system_clock);
-> +}
-> +
-> +static int gxp_time_set_next_event(unsigned long event,	struct clock_event_device *evt_dev)
-
-Stray TAB in arguments
-
-> +static int __init gxp_timer_init(struct device_node *node)
-> +{
-> +	void __iomem *base;
-> +	struct clk *clk;
-> +	u32 freq;
-> +	int ret, irq;
-> +	struct gxp_timer *gxp_timer;
-> +
-> +	base = of_iomap(node, 0);
-> +	if (!base) {
-> +		pr_err("Can't remap timer base register");
-> +		ret = -ENXIO;
-> +		return ret;
-> +	}
-> +
-> +	/*Set the offset to the clock register*/
-> +	system_clock = base + GXP_TIMESTAMP_OFS;
-> +
-> +	clk = of_clk_get(node, 0);
-> +	if (IS_ERR(clk)) {
-> +		pr_err("%pOFn clock not found: %d\n", node, (int)PTR_ERR(clk));
-> +		ret = -EIO;
-> +		goto err_iounmap;
-> +	}
-> +
-> +	ret = clk_prepare_enable(clk);
-> +
-> +	freq = clk_get_rate(clk);
-> +
-> +	sched_clock_register(gxp_sched_read, 32, freq);
-> +	clocksource_mmio_init(system_clock, node->name, freq,
-> +			      300, 32, clocksource_mmio_readl_up);
-
-So this registers sched clock and clocksource and if one of the
-following fails....
-
-> +	irq = irq_of_parse_and_map(node, 0);
-> +	if (irq <= 0) {
-> +		ret = -EINVAL;
-> +		pr_err("GXP Timer Can't parse IRQ %d", irq);
-> +		goto err_iounmap;
-
-... the error path unmaps 'system_clock'
-
-> +	}
-> +
-> +	gxp_timer = kzalloc(sizeof(*gxp_timer), GFP_KERNEL);
-> +	if (!gxp_timer) {
-> +		ret = -ENOMEM;
-> +		goto err_iounmap;
-> +	}
-> +
-> +	gxp_timer->counter = base + GXP_TIMER_CNT_OFS;
-> +	gxp_timer->control = base + GXP_TIMER_CTRL_OFS;
-> +	gxp_timer->evt.name = node->name;
-> +	gxp_timer->evt.rating = 300;
-> +	gxp_timer->evt.features = CLOCK_EVT_FEAT_ONESHOT;
-> +	gxp_timer->evt.set_next_event = gxp_time_set_next_event;
-> +	gxp_timer->evt.cpumask = cpumask_of(0);
-> +
-> +	local_gxp_timer = gxp_timer;
-> +
-> +	ret = request_irq(irq, gxp_timer_interrupt, IRQF_TIMER | IRQF_SHARED,
-> +			  node->name, gxp_timer);
-> +	if (ret) {
-> +		pr_err("%s: request_irq() failed %pe\n", "GXP Timer Tick", ERR_PTR(ret));
-> +		goto err_iounmap;
-
-... and here as a bonus leaks gxp_timer.
-
-> +	}
-> +
-> +	clockevents_config_and_register(&gxp_timer->evt, TIMER0_FREQ,
-> +					0xf, 0xffffffff);
-> +
-> +	pr_debug("gxp: system timer (irq = %d)\n", irq);
-> +	return 0;
-> +
-> +err_iounmap:
-> +	iounmap(system_clock);
-> +	iounmap(base);
-> +	return ret;
-> +}
-
-Thanks,
-
-        tglx
+greg k-h
