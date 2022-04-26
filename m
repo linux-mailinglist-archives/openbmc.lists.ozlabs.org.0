@@ -1,45 +1,59 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 772875105E7
-	for <lists+openbmc@lfdr.de>; Tue, 26 Apr 2022 19:51:10 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A05E751093A
+	for <lists+openbmc@lfdr.de>; Tue, 26 Apr 2022 21:38:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KnqDr2jDXz3blK
-	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 03:51:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Knscv3HR4z3bh9
+	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 05:38:39 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=HMHQf6pN;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx1.molgen.mpg.de;
- envelope-from=pmenzel@molgen.mpg.de; receiver=<UNKNOWN>)
-Received: from mx1.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+ smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=HMHQf6pN; 
+ dkim-atps=neutral
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [71.19.156.171])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KnqDb239Fz2xvW
- for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 03:50:52 +1000 (AEST)
-Received: from [172.18.211.123] (unknown [46.183.103.8])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
- (No client certificate requested) (Authenticated sender: pmenzel)
- by mx.molgen.mpg.de (Postfix) with ESMTPSA id 4756461E6478B;
- Tue, 26 Apr 2022 19:50:45 +0200 (CEST)
-Message-ID: <5ee55a29-85de-b84c-abbe-7100aa297a26@molgen.mpg.de>
-Date: Tue, 26 Apr 2022 19:50:44 +0200
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KnscW0Pprz2yw9
+ for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 05:38:18 +1000 (AEST)
+Received: from hatter.bewilderbeest.net (174-21-163-222.tukw.qwest.net
+ [174.21.163.222])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 587D21BA;
+ Tue, 26 Apr 2022 12:38:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1651001896;
+ bh=0/xW5YXm98VDV8HncQuBWEbdx7lEyK7iJy3W3BVLhnU=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=HMHQf6pNKw2cRdvulbPi/kjrFzyVJRiY9ldKlILkY+jbUo0IVMzDKoYhm5cNEyZMS
+ PlTMstxErCIk4VDgdyCKeAe5xstMJbUyUgBrwBrd6W/EdOh0L1NxNtHcrMg7+KPRc1
+ 2bqnLSxDzQP0usxOicxJLZ4leieK73Kkw8ELCQtU=
+Date: Tue, 26 Apr 2022 12:38:12 -0700
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Guenter Roeck <linux@roeck-us.net>
+Subject: Re: [PATCH v3 0/6] hwmon: (nct6775) Convert to regmap, add i2c support
+Message-ID: <YmhKJMebdVAzIGd8@hatter.bewilderbeest.net>
+References: <20220426071848.11619-1-zev@bewilderbeest.net>
+ <YmetYjSKFs+WWwYz@hatter.bewilderbeest.net>
+ <dd522f49-89b6-14b2-c402-9cfc93b51d4b@roeck-us.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v5 01/11] aach: arm: mach-hpe: Introduce the HPE GXP
- architecture
-Content-Language: en-US
-To: "Hawkins, Nick" <nick.hawkins@hpe.com>
-References: <20220421192132.109954-1-nick.hawkins@hpe.com>
- <44c145a8-cbfd-c8e4-8391-76abb9562f97@molgen.mpg.de>
- <PH0PR84MB171823121FD62E90495BCB7288FB9@PH0PR84MB1718.NAMPRD84.PROD.OUTLOOK.COM>
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <PH0PR84MB171823121FD62E90495BCB7288FB9@PH0PR84MB1718.NAMPRD84.PROD.OUTLOOK.COM>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <dd522f49-89b6-14b2-c402-9cfc93b51d4b@roeck-us.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -51,79 +65,65 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "arnd@arndb.de" <arnd@arndb.de>, Jean-Marie Verdun <verdun@hpe.com>,
- Russell King <linux@armlinux.org.uk>, linux-kernel@vger.kernel.org,
- joel@jms.id.au, openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
+ Jean Delvare <jdelvare@suse.com>, webmaster@kernel.org,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ Krzysztof Kozlowski <krzk@kernel.org>,
+ Oleksandr Natalenko <oleksandr@natalenko.name>,
+ Rob Herring <robh+dt@kernel.org>, Renze Nicolai <renze@rnplus.nl>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-Dear Nick,
-
-
-Am 26.04.22 um 19:28 schrieb Hawkins, Nick:
-> 
-> 
-> -----Original Message-----
-> From: Paul Menzel [mailto:pmenzel@molgen.mpg.de]
-> Sent: Tuesday, April 26, 2022 3:26 AM
-> To: Hawkins, Nick <nick.hawkins@hpe.com>
-> Cc: Verdun, Jean-Marie <verdun@hpe.com>; joel@jms.id.au; arnd@arndb.de; openbmc@lists.ozlabs.org; Russell King <linux@armlinux.org.uk>; linux-arm-kernel@lists.infradead.org; linux-kernel@vger.kernel.org
-> Subject: Re: [PATCH v5 01/11] aach: arm: mach-hpe: Introduce the HPE GXP architecture
-
-[OT: Maybe use an email program, that does not add an unnecessary header.]
-
-[â€¦]
-
->>> The GXP is the HPE BMC SoC that is used in the majority of HPE
->>> Generation 10 servers. Traditionally the asic will last multiple
->>> generations of server before being replaced.
-> 
->> Please mention what kind of documentation (datasheets, â€¦) are available.
-> 
-> Currently there are none available. The only reference I can provide
-> will be arm documentation.
-
-Too bad.
-
->>> In gxp.c we reset the EHCI controller early to boot the asic.
-> 
->> Why does the EHCI controller need to be reset?
-> This functionality was moved into the boot loader. This message is
-> stale and needs to be removed. It was necessary for the chip to
-> boot.
-
-Understood. Please mention somewhere, what bootloader is used.
-
->>> Info about SoC:
+On Tue, Apr 26, 2022 at 01:57:40AM PDT, Guenter Roeck wrote:
+>On 4/26/22 01:29, Zev Weiss wrote:
+>>[Adding korg webmaster re: list infrastructure]
+>>
+>>On Tue, Apr 26, 2022 at 12:18:42AM PDT, Zev Weiss wrote:
+>>>Hello,
 >>>
->>> HPE GXP is the name of the HPE Soc. This SoC is used to implement many
->>> BMC features at HPE. It supports ARMv7 architecture based on the
->>> Cortex A9 core. It is capable of using an AXI bus to which a memory
->>> controller is attached. It has multiple SPI interfaces to connect boot
->>> flash and BIOS flash. It uses a 10/100/1000 MAC for network
->>> connectivity. It has multiple i2c engines to drive connectivity with a
->>> host infrastructure. The initial patches enable the watchdog and timer
->>> enabling the host to be able to boot.
-> 
->> Maybe doe that in separate commits?
-> Are you asking for me to have this paragraph in the other commits?
-> Or perhaps not mention the other patches in this paragraph?
+>>>This is v3 of my effort to add i2c support to the nct6775 hwmon
+>>>driver.
+>>>
+>>>Changes since v2 [0]:
+>>>...
+>>>- Renamed drivers and Kconfig symbols to keep existing platform
+>>>  driver as "nct6775" (SENSORS_NCT6775) and the core module as
+>>>  "nct6775-core" (SENSORS_NCT6775_CORE) [Guenter]
+>>
+>>Unfortunately while this was a simple enough change to make (a few 'git mv' commands and a handful of actual text changes), it ballooned the size of the diff for patch 5 to the point that vger bounced it for exceeding the 100K message-size limit.  As far as I can tell it looks like it went through elsewhere, but does leave a bit of a gap in the public list archives -- please let me know if there's anything I should try in terms of re-sending it.  (The only combination of 'git format-patch' flags I've been able to find that gets it back down to approximately its previous size is '-B -D', which isn't so useful for actually applying.)
+>>
+>>I'm not sure how critical a limit that 100K is, or if it's something we might consider raising a bit?
+>>
+>
+>You could split it up further. For example, you could introduce
+>the include file first. Also, please run checkpatch --strict on
+>your patches. I don't care about commenting the mutex, but there
+>should be no double empty lines. Also, while you are at it,
+>it would be great if you can add another patch to fix the
+>
+>WARNING: Symbolic permissions 'S_IWUSR | S_IRUGO' are not preferred. Consider using octal permissions '0644'.
+>
+>warnings.
 
-Yes, please move:
+Ack -- hadn't been aware of the --strict flag for checkpatch, thanks.  
+I'll do that in v4.
 
-> The initial patches enable the watchdog and timer enabling the host
-> to be able to boot.
+>
+>Anyway, I wondered what changed... oh, I see. You didn't rename
+>nct6775.c. I didn't suggest that. The new file name was fine.
+>I only asked you to change the Kconfig symbols, not the file names.
+>It is ok and actually desirable to change the file names.
+>The platform driver module can and should still be named nct6775;
+>that can be handled in the Makefile with something like
+>
+>nct6775-objs := nct6775-platform.o
+>obj-$(CONFIG_SENSORS_NCT6775)  += nct6775.o
+>
 
-in a cover letter for example.
-
->> Please reflow the commit message for 75 characters per line.
-> I will verify all the lines are under 75 characters.
-
-Please make sure the lines are as long as possible, while being at most 
-75 characters long.
+Got it, will revert to the previous file names, which should sidestep 
+the message-size problem.
 
 
-Kind regards,
+Thanks,
+Zev
 
-Paul
