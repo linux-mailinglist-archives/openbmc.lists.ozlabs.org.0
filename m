@@ -1,92 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4DEBB50F01C
-	for <lists+openbmc@lfdr.de>; Tue, 26 Apr 2022 07:13:27 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A46A650F09E
+	for <lists+openbmc@lfdr.de>; Tue, 26 Apr 2022 08:06:14 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KnVQY10bRz2x9J
-	for <lists+openbmc@lfdr.de>; Tue, 26 Apr 2022 15:13:25 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=mFeRPsc7;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=yAxUJ0Zn;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KnWbS4QBtz3bbV
+	for <lists+openbmc@lfdr.de>; Tue, 26 Apr 2022 16:06:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aj.id.au (client-ip=66.111.4.27;
- helo=out3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256
- header.s=fm3 header.b=mFeRPsc7; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=yAxUJ0Zn; 
- dkim-atps=neutral
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
- [66.111.4.27])
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=arndb.de
+ (client-ip=212.227.126.133; helo=mout.kundenserver.de;
+ envelope-from=arnd@arndb.de; receiver=<UNKNOWN>)
+X-Greylist: delayed 308 seconds by postgrey-1.36 at boromir;
+ Tue, 26 Apr 2022 16:05:53 AEST
+Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.126.133])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KnVQ33bFqz2xh0
- for <openbmc@lists.ozlabs.org>; Tue, 26 Apr 2022 15:12:58 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 89F0C5C011D;
- Tue, 26 Apr 2022 01:12:55 -0400 (EDT)
-Received: from imap49 ([10.202.2.99])
- by compute3.internal (MEProxy); Tue, 26 Apr 2022 01:12:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
- :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to; s=fm3; t=1650949975; x=1651036375; bh=bibN5mlBzn
- VXyWkFwEUjVfKpt/d6fGu57VxTbFhfoUA=; b=mFeRPsc75+2Acy3DokqUnRCC5J
- g+KAvKZOPO+VGm2HEMNiSv0+ERLUcmDlTaPCoqMC5L11Doq1MxxIHU5trGWNoVxO
- kInAyd5pTjoXUujKuBIs05jWuVxQbCOijru6nmQ3Me+rB3NRU1Q7tpRyvGTIvIOM
- 0Xyv+RWW1mNVFVHe8prJP/7V+MCB1wUWvp6XSKcPHUlC/MCyC5OMi8HM7stRYRQ3
- S/H+z7J6ZGbFSHo7lFcneXCV+k++SP9MY3fvtotMzcTVtPvR+BkrL37P3uaR9KUW
- Fu+eP+FqxsEeQ3MTx4T4rBj0df6FSVIzEfzXQrpDe+eCDqdbVVVHj2i/a9LA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1650949975; x=
- 1651036375; bh=bibN5mlBznVXyWkFwEUjVfKpt/d6fGu57VxTbFhfoUA=; b=y
- AxUJ0ZnPnIhPM1hW4u+fjU+18l00niHvE5F4zZUwowR8g+O/f7L+X9wW1BkS0ZOa
- xOKRfMxo2jnpHREq6LYE/lxRwep/nSmt//4hPfVLVGLBbEQ5Tr4t5xgCe2ITaXS8
- p6pw6gqAwqeMMOk3lbi0jIWsVswCgZwKJVt8SAwi3IErAc2/7a+ebaul+2B+59bo
- wctNXyww6e8gA56ZC8ghhYvlQEBD/yfTxy9pLbKOllokNrIQZsor5j3WBHCAxKia
- 3RYQ3PO+Od1D1vFUNVhQKvGSRO228vqzaDqzpRixCo6mTpkwm04nVOEowPi98GoK
- CmsjGOKTXPiObFAPWwQdQ==
-X-ME-Sender: <xms:Vn9nYme49oRM4aBEZSX9-uOW7DEAQ2Z2phoSEifelhD_-lHrUSEq8Q>
- <xme:Vn9nYgMqo98XnJ_R2_FtRB0XVSIHK-Xxi_NcabknXW8VZ3WDEoL97Ozu2Vk93cnDx
- uC50cWuKbpCmAA9Kg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedruddvgdeltdcutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdetnhgu
- rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
- grthhtvghrnheptdehkeejleeljeeikefgjeelueevjeetjeduveefveetffeiteevtdei
- ffdttddunecuffhomhgrihhnpehgihhthhhusgdrtghomhdpphhhohhrohhnihigrdgtoh
- hmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghn
- ughrvgifsegrjhdrihgurdgruh
-X-ME-Proxy: <xmx:Vn9nYnjtWxzXsLFYxJjO5d1256OHBFwDx2WTySsmmpBCPwEocU0Ifw>
- <xmx:Vn9nYj9YAeplC01UidW6_-p2Dw9J_BS6pC0FGcdqdDLzI6KoLNQ21g>
- <xmx:Vn9nYivxMhD4Bf6x9KuCNIaYcIRVMD3DV7fwdNvSyD2r9DB5cFCfBg>
- <xmx:V39nYkJjzCivz40YL6we2wgZ1WyKgyj_pWf2euQnFbq2IX5MswRfZg>
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
- id 96F7A15A007A; Tue, 26 Apr 2022 01:12:54 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-569-g7622ad95cc-fm-20220421.002-g7622ad95
-Mime-Version: 1.0
-Message-Id: <dcf16c8d-0e63-4cc0-ba88-5e9433223165@www.fastmail.com>
-In-Reply-To: <CALXuKJc_pYJv0xYWtN5mzbHwpbHshukg34BjSzhqmpTdUMXwXg@mail.gmail.com>
-References: <CALXuKJc_pYJv0xYWtN5mzbHwpbHshukg34BjSzhqmpTdUMXwXg@mail.gmail.com>
-Date: Tue, 26 Apr 2022 14:42:05 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "sri d" <srid.11486@gmail.com>, openbmc@lists.ozlabs.org
-Subject: Re: Multi-led configuration in dts
-Content-Type: text/plain
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KnWb50YL7z2xmV
+ for <openbmc@lists.ozlabs.org>; Tue, 26 Apr 2022 16:05:52 +1000 (AEST)
+Received: from mail-wm1-f51.google.com ([209.85.128.51]) by
+ mrelayeu.kundenserver.de (mreue011 [213.165.67.97]) with ESMTPSA (Nemesis) id
+ 1MLzSD-1nRQPv1r61-00Ht8W for <openbmc@lists.ozlabs.org>; Tue, 26 Apr 2022
+ 08:00:38 +0200
+Received: by mail-wm1-f51.google.com with SMTP id
+ l62-20020a1c2541000000b0038e4570af2fso820813wml.5
+ for <openbmc@lists.ozlabs.org>; Mon, 25 Apr 2022 23:00:37 -0700 (PDT)
+X-Gm-Message-State: AOAM533afRg8bSuo4COZYgdZIH03ElX44eEcQnEvs3P0E811uaPuOrQq
+ ZT7lpirqF6mpzh9sioevowMFiXSx8Pxesb+OfTY=
+X-Google-Smtp-Source: ABdhPJy3c5lcSeSluq1OFXX5XYB6LISDtFDlKiWa0Rg3d6M03Gmt+hhEqCW75iUtmXQ0VFTk/w8CPqLe8gy80hIGYlQ=
+X-Received: by 2002:a1c:f219:0:b0:38c:782c:3bb with SMTP id
+ s25-20020a1cf219000000b0038c782c03bbmr28016089wmc.94.1650952837280; Mon, 25
+ Apr 2022 23:00:37 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220421192132.109954-1-nick.hawkins@hpe.com>
+ <20220421192132.109954-5-nick.hawkins@hpe.com>
+ <CAK8P3a0nQ1BrtfBJ7sUSaLkA=pbVwx83bEUpZczvLOSOHDR=dw@mail.gmail.com>
+ <CACRpkdbJ1N7VOgoBzGS+cOaErFcYiOVDeWRmhPyHA7=9W0CGhA@mail.gmail.com>
+In-Reply-To: <CACRpkdbJ1N7VOgoBzGS+cOaErFcYiOVDeWRmhPyHA7=9W0CGhA@mail.gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
+Date: Tue, 26 Apr 2022 08:00:20 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a2ie8kFYstCYr6FO6+yFw7VxyJjWYyy9b+rUHu_u0YXPg@mail.gmail.com>
+Message-ID: <CAK8P3a2ie8kFYstCYr6FO6+yFw7VxyJjWYyy9b+rUHu_u0YXPg@mail.gmail.com>
+Subject: Re: [PATCH v5 04/11] clocksource/drivers: Add HPE GXP timer
+To: Linus Walleij <linus.walleij@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Provags-ID: V03:K1:0Xp2b+ydEZjipneBlHsBb/iwRFrpjaBxqKGqXQYnfDCrFM1Aeck
+ bhYwdsxvZ9a7Ag9/ZmxzSKDBd1ENUUSkCAVP9FbgcJLjfrzh+Pk94HUbk3odrK1UMmS3RkU
+ aI9yb2kcZdC/vxgYnorl56iY1WodrnzdsfJpfFtdN6u8wkksLDdl4E1v9o1ZVSNZXv4iC4P
+ 8x4llVYQzyoBEg7diYM7g==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:Ll27IeIfWlo=:keMzcZrXM8omnwwV1rbwQt
+ wimf1yhf4uEIJRe7AkwSSt6LxQMgvViWJFKgUDeS2FbD+RvWYmvy844+UEtX5JTNAbm6YADoL
+ qt5yM7WjbEILK1Woetu62UtuVgDG7xBL5L+068vzXkVviJqcf56s13xNUhp7RtWPhgRJAAG8E
+ lHgsdZqIWvjorM0Y7QPoT38c6djkhlEu5CSgusseHyPECa2qmDuCovfn0UFFV6tgJnhIKiykM
+ XWiD6WldJq/OrGT6Rq2x286AfTwvZshVPEka0993ittAMYedYyjq3ceKzFVaRKugoWkko75S1
+ IBt0Jf3xkaAoT3RJm7RljM23LLuC2ltkuXX7PrtXUGk9PFX1mjyf9fowmCE3baeGECTYuBikK
+ 6RJzX4HJHrEJ5kYnM76NTpBYGYpFlxdtQ18QY37jpgWx//pIf3H0mj/TH2CERa6G9Gk5zPnCR
+ fnJ1Ohyw6YjkfCeztpLSYL1jVEBqMJUR0ERNrKudUmp2ZWzA+Z48b/i05alH6jY/9A23vqp9B
+ eBsGSQIYKsuJT96EDCeyWsHz+44pI2zfox0TVjltCrjUCFHaZTYQn18BiMlHWbezj19hZu/gs
+ VvC1LnvaUJd6De8L4LyOh9I5kEAKAZF7FAHMjT5dxl6rm7YPGiRm5xLh/sFY3D6oJE9pzdasU
+ ZwKY6aLbTtiLq9egjBX2z+oBBOjOtwNQI+DqQgsUEuv2AtfVdIXDuIO7L4MQWhHhuAJM=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,56 +74,80 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Matt Spinler <spinler@us.ibm.com>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>, "Velumani T-ERS,
- HCLTech" <velumanit@hcl.com>
+Cc: Arnd Bergmann <arnd@arndb.de>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Joel Stanley <joel@jms.id.au>, "Hawkins, Nick" <nick.hawkins@hpe.com>,
+ Thomas Gleixner <tglx@linutronix.de>, "Verdun, Jean-Marie" <verdun@hpe.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-
-On Thu, 24 Mar 2022, at 23:26, sri d wrote:
-> Hi Team,
+On Mon, Apr 25, 2022 at 10:38 PM Linus Walleij <linus.walleij@linaro.org> wrote:
+> On Fri, Apr 22, 2022 at 3:16 PM Arnd Bergmann <arnd@arndb.de> wrote:
+> > On Thu, Apr 21, 2022 at 9:21 PM <nick.hawkins@hpe.com> wrote:
+> >
+> > > +
+> > > +static struct platform_device gxp_watchdog_device = {
+> > > +       .name = "gxp-wdt",
+> > > +       .id = -1,
+> > > +};
+> > > +/*
+> > > + * This probe gets called after the timer is already up and running. This will create
+> > > + * the watchdog device as a child since the registers are shared.
+> > > + */
+> > > +
+> > > +static int gxp_timer_probe(struct platform_device *pdev)
+> > > +{
+> > > +       struct device *dev = &pdev->dev;
+> > > +
+> > > +       /* Pass the base address (counter) as platform data and nothing else */
+> > > +       gxp_watchdog_device.dev.platform_data = local_gxp_timer->counter;
+> > > +       gxp_watchdog_device.dev.parent = dev;
+> > > +       return platform_device_register(&gxp_watchdog_device);
+> > > +}
+> >
+> > I don't understand what this is about: the device should be created from
+> > DT, not defined statically in the code. There are multiple ways of creating
+> > a platform_device from a DT node, or you can allocate one here, but static
+> > definitions are generally a mistake.
+> >
+> > I see that you copied this from the ixp4xx driver, so I think we should fix this
+> > there as well.
 >
-> I am working on implementing Power and system identification LEDs, in 
-> which
-> LEDs are connected to GPIO pins directly. I need to handle two colors 
-> (blue
-> & yellow) for LEDs in *.dts file.
-> In phosphor-led-sysfs repo, whether multi-led configuration is handled ?
-> https://github.com/torvalds/linux/blob/master/Documentation/devicetree/bindings/leds/leds-class-multicolor.yaml
-
-I did a quick grep in phosphor-led-sysfs and there's no support for the 
-multicolor sysfs attributes that I saw.
-
+> The ixp4xx driver looks like that because the register range used for
+> the timer and the watchdog is combined, i.e. it is a single IP block:
 >
-> As far as I analyzed, multi-led seems to work for dedicated LED controllers
-> and not for GPIO pins directly. Is there a way we can make it work for
-> directly connected GPIOs ?
-> https://www.phoronix.com/scan.php?page=news_item&px=Linux-5.9-Multi-Color-LEDs
+>                 timer@c8005000 {
+>                         compatible = "intel,ixp4xx-timer";
+>                         reg = <0xc8005000 0x100>;
+>                         interrupts = <5 IRQ_TYPE_LEVEL_HIGH>;
+>                 };
+>
+> Device tree probing does not allow two devices to probe from the same
+> DT node, so this was solved by letting the (less important) watchdog
+> be spawn as a platform device from the timer.
+>
+> I don't know if double-probing for the same register range can be fixed,
+> but I was assuming that the one-compatible-to-one-driver assumption
+> was pretty hard-coded into the abstractions. Maybe it isn't?
 
-I'm not sure whether this should be handled in the kernel or in 
-userspace. From a conceptual standpoint (and from some background 
-discussion with Patrick) it sounds like you're using two LEDs as one, 
-operating with a small, well-defined set of states across the two. It 
-feels like it would be nice if this was exposed to userspace as a 
-single thing, though whether that's an LED or not is another matter.
+Having a child device is fine, my objection was about the way
+the device is created from a 'static platform_device ...' definition
+rather than having the device structure allocated at probe time.
 
-The alternative is to come up with some way to identify pairs of LEDs 
-via the devicetree (the obvious, cheap-and-nasty approach is to use 
-pairs of LED names) and do the work in userspace.
+> Another way is of course to introduce an MFD. That becomes
+> problematic in another way: MFD abstractions are supposed to
+> be inbetween the resource and the devices it spawns, and with
+> timers/clocksources this creates a horrible special-casing since the
+> MFD bus (the parent may be providing e.g. an MMIO regmap)
+> then need to be early-populated and searched by the timer core
+> from TIMER_OF_DECLARE() early in boot.
+>
+> So this solution was the lesser evil that I could think about.
 
-I don't know which is better (maybe someone should write a design 
-document analysing the trade-offs?) but it would get kind of awkward 
-with the current phosphor-led-sysfs design which exposes one process 
-per LED. This doesn't give you much (any) abstraction in terms of the 
-DBus objects/interfaces involved. I think it would be nice if we had 
-something a bit more coherent for this specific use case. Something to 
-consider is reworking phosphor-led-sysfs such that it exposes all the 
-LEDs in a single process (but is still dynamic and driven by udev under 
-the covers - e.g. make the udev rule do DBus calls to poke the one 
-phosphor-led-sysfs instance). From there you can handle the pairing 
-internally and expose a coherent interface that drives both LEDs once 
-both are found by userspace.
+There are multiple ways of doing this that we already discussed
+in the thread. The easiest is probably to have a child node without
+custom registers in the DT and then use the DT helpers to
+populate the linux devices with the correct data.
 
-Andrew
+       Arnd
