@@ -1,43 +1,57 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1D0650F3AB
-	for <lists+openbmc@lfdr.de>; Tue, 26 Apr 2022 10:26:01 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 147B550F410
+	for <lists+openbmc@lfdr.de>; Tue, 26 Apr 2022 10:29:59 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KnZhl4ZPZz3bk9
-	for <lists+openbmc@lfdr.de>; Tue, 26 Apr 2022 18:25:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KnZnJ6hxgz3bck
+	for <lists+openbmc@lfdr.de>; Tue, 26 Apr 2022 18:29:56 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=SqRxQbsx;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx1.molgen.mpg.de;
- envelope-from=pmenzel@molgen.mpg.de; receiver=<UNKNOWN>)
-Received: from mx1.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+ smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=SqRxQbsx; 
+ dkim-atps=neutral
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [IPv6:2605:2700:0:5::4713:9cab])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KnZhP6bHCz2xB1
- for <openbmc@lists.ozlabs.org>; Tue, 26 Apr 2022 18:25:40 +1000 (AEST)
-Received: from [172.16.4.143] (unknown [87.190.40.202])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: pmenzel)
- by mx.molgen.mpg.de (Postfix) with ESMTPSA id 086E861EA1928;
- Tue, 26 Apr 2022 10:25:35 +0200 (CEST)
-Message-ID: <44c145a8-cbfd-c8e4-8391-76abb9562f97@molgen.mpg.de>
-Date: Tue, 26 Apr 2022 10:25:34 +0200
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KnZmw6fl8z2x9V
+ for <openbmc@lists.ozlabs.org>; Tue, 26 Apr 2022 18:29:36 +1000 (AEST)
+Received: from hatter.bewilderbeest.net (174-21-163-222.tukw.qwest.net
+ [174.21.163.222])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 493324F;
+ Tue, 26 Apr 2022 01:29:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1650961774;
+ bh=SNEEfzyg9e7zSf3s0KHAajmviT5U9WD7JJYzw4V8nPc=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=SqRxQbsxJ8p4HT+cwT8K4Q7b5LlTTE6n0e/rtUTR9HdGsjyJV9OqppeQirLCrnoI3
+ tgf8oUElUjUiyi8cP1ZmdF+J4lgpnso36G+aEM1cjtiy982UhhyjTQnR8oHyI6JjiM
+ NvtgdkQtaIUQ2H6ztI3hAfNqZ8o+sc7aj4eaCAZk=
+Date: Tue, 26 Apr 2022 01:29:22 -0700
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Guenter Roeck <linux@roeck-us.net>, Jean Delvare <jdelvare@suse.com>,
+ linux-hwmon@vger.kernel.org
+Subject: Re: [PATCH v3 0/6] hwmon: (nct6775) Convert to regmap, add i2c support
+Message-ID: <YmetYjSKFs+WWwYz@hatter.bewilderbeest.net>
+References: <20220426071848.11619-1-zev@bewilderbeest.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v5 01/11] aach: arm: mach-hpe: Introduce the HPE GXP
- architecture
-Content-Language: en-US
-To: Nick Hawkins <nick.hawkins@hpe.com>
-References: <20220421192132.109954-1-nick.hawkins@hpe.com>
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <20220421192132.109954-1-nick.hawkins@hpe.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20220426071848.11619-1-zev@bewilderbeest.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -49,168 +63,42 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: arnd@arndb.de, verdun@hpe.com, Russell King <linux@armlinux.org.uk>,
- linux-kernel@vger.kernel.org, joel@jms.id.au, openbmc@lists.ozlabs.org,
- linux-arm-kernel@lists.infradead.org
+Cc: devicetree@vger.kernel.org, webmaster@kernel.org, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzk@kernel.org>,
+ Oleksandr Natalenko <oleksandr@natalenko.name>,
+ Rob Herring <robh+dt@kernel.org>, Renze Nicolai <renze@rnplus.nl>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Dear Nick,
+[Adding korg webmaster re: list infrastructure]
+
+On Tue, Apr 26, 2022 at 12:18:42AM PDT, Zev Weiss wrote:
+>Hello,
+>
+>This is v3 of my effort to add i2c support to the nct6775 hwmon
+>driver.
+>
+>Changes since v2 [0]:
+> ...
+> - Renamed drivers and Kconfig symbols to keep existing platform
+>   driver as "nct6775" (SENSORS_NCT6775) and the core module as
+>   "nct6775-core" (SENSORS_NCT6775_CORE) [Guenter]
+
+Unfortunately while this was a simple enough change to make (a few 'git 
+mv' commands and a handful of actual text changes), it ballooned the 
+size of the diff for patch 5 to the point that vger bounced it for 
+exceeding the 100K message-size limit.  As far as I can tell it looks 
+like it went through elsewhere, but does leave a bit of a gap in the 
+public list archives -- please let me know if there's anything I should 
+try in terms of re-sending it.  (The only combination of 'git 
+format-patch' flags I've been able to find that gets it back down to 
+approximately its previous size is '-B -D', which isn't so useful for 
+actually applying.)
+
+I'm not sure how critical a limit that 100K is, or if it's something we 
+might consider raising a bit?
 
 
-Thank you for the patches.
+Thanks,
+Zev
 
-Am 21.04.22 um 21:21 schrieb nick.hawkins@hpe.com:
-> From: Nick Hawkins <nick.hawkins@hpe.com>
-
-Type in the prefix: s/aach/arch/. Looking at `git log --oneline 
-arch/arm`, *ARM* or *arm* seems to be commonly used though.
-
-> The GXP is the HPE BMC SoC that is used in the majority
-> of HPE Generation 10 servers. Traditionally the asic will
-> last multiple generations of server before being replaced.
-
-Please mention what kind of documentation (datasheets, …) are available.
-
-> In gxp.c we reset the EHCI controller early to boot the asic.
-
-Why does the EHCI controller need to be reset?
-
-> Info about SoC:
-> 
-> HPE GXP is the name of the HPE Soc. This SoC is used to implement
-> many BMC features at HPE. It supports ARMv7 architecture based on
-> the Cortex A9 core. It is capable of using an AXI bus to which
-> a memory controller is attached. It has multiple SPI interfaces
-> to connect boot flash and BIOS flash. It uses a 10/100/1000 MAC
-> for network connectivity. It has multiple i2c engines to drive
-> connectivity with a host infrastructure. The initial patches
-> enable the watchdog and timer enabling the host to be able to
-> boot.
-
-Maybe doe that in separate commits?
-
-Please reflow the commit message for 75 characters per line.
-
-> Signed-off-by: Nick Hawkins <nick.hawkins@hpe.com>
-> 
-> ---
-> v5:
-> * Fixed version log
-> v4:
-> * Removed unecessary code: restart, iomap, init_machine
-
-unnecessary
-
-> * Reordered Kconfig depends
-> * Removed SPARSE_IRQ, MULTI_IRQ_HANDLER, IRQ_DOMAIN, PINCTL from
->    Kconfig
-> v3:
-> * Put into proper patchset format
-> v2:
-> * No change
-> ---
->   arch/arm/Kconfig           |  2 ++
->   arch/arm/Makefile          |  1 +
->   arch/arm/mach-hpe/Kconfig  | 17 +++++++++++++++++
->   arch/arm/mach-hpe/Makefile |  1 +
->   arch/arm/mach-hpe/gxp.c    | 16 ++++++++++++++++
->   5 files changed, 37 insertions(+)
->   create mode 100644 arch/arm/mach-hpe/Kconfig
->   create mode 100644 arch/arm/mach-hpe/Makefile
->   create mode 100644 arch/arm/mach-hpe/gxp.c
-> 
-> diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
-> index 2e8091e2d8a8..13f77eec7c40 100644
-> --- a/arch/arm/Kconfig
-> +++ b/arch/arm/Kconfig
-> @@ -620,6 +620,8 @@ source "arch/arm/mach-highbank/Kconfig"
->   
->   source "arch/arm/mach-hisi/Kconfig"
->   
-> +source "arch/arm/mach-hpe/Kconfig"
-> +
->   source "arch/arm/mach-imx/Kconfig"
->   
->   source "arch/arm/mach-integrator/Kconfig"
-> diff --git a/arch/arm/Makefile b/arch/arm/Makefile
-> index a2391b8de5a5..97a89023c10f 100644
-> --- a/arch/arm/Makefile
-> +++ b/arch/arm/Makefile
-> @@ -179,6 +179,7 @@ machine-$(CONFIG_ARCH_FOOTBRIDGE)	+= footbridge
->   machine-$(CONFIG_ARCH_GEMINI)		+= gemini
->   machine-$(CONFIG_ARCH_HIGHBANK)		+= highbank
->   machine-$(CONFIG_ARCH_HISI)		+= hisi
-> +machine-$(CONFIG_ARCH_HPE)		+= hpe
->   machine-$(CONFIG_ARCH_INTEGRATOR)	+= integrator
->   machine-$(CONFIG_ARCH_IOP32X)		+= iop32x
->   machine-$(CONFIG_ARCH_IXP4XX)		+= ixp4xx
-> diff --git a/arch/arm/mach-hpe/Kconfig b/arch/arm/mach-hpe/Kconfig
-> new file mode 100644
-> index 000000000000..c075248b259e
-> --- /dev/null
-> +++ b/arch/arm/mach-hpe/Kconfig
-> @@ -0,0 +1,17 @@
-> +menuconfig ARCH_HPE
-> +	bool "HPE SoC support"
-> +	depends on ARCH_MULTI_V7
-> +	help
-> +	  This enables support for HPE ARM based SoC chips
-
-Add a dot/period at the end?
-
-> +if ARCH_HPE
-> +
-> +config ARCH_HPE_GXP
-> +	bool "HPE GXP SoC"
-> +	depends on ARCH_MULTI_V7
-> +	select ARM_VIC
-> +	select GENERIC_IRQ_CHIP
-> +	select CLKSRC_MMIO
-> +	help
-> +	  Support for GXP SoCs
-
-Please elaborate here, maybe copying parts of the commit message, in 
-what servers it is used.
-
-> +
-> +endif
-> diff --git a/arch/arm/mach-hpe/Makefile b/arch/arm/mach-hpe/Makefile
-> new file mode 100644
-> index 000000000000..8b0a91234df4
-> --- /dev/null
-> +++ b/arch/arm/mach-hpe/Makefile
-> @@ -0,0 +1 @@
-> +obj-$(CONFIG_ARCH_HPE_GXP) += gxp.o
-> diff --git a/arch/arm/mach-hpe/gxp.c b/arch/arm/mach-hpe/gxp.c
-> new file mode 100644
-> index 000000000000..e2f0c3ae6bd8
-> --- /dev/null
-> +++ b/arch/arm/mach-hpe/gxp.c
-> @@ -0,0 +1,16 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/* Copyright (C) 2022 Hewlett-Packard Enterprise Development Company, L.P.*/
-
-Space before closing comment delimiter.
-
-> +
-> +#include <linux/of_platform.h>
-> +#include <asm/mach/arch.h>
-> +
-> +static const char * const gxp_board_dt_compat[] = {
-> +	"hpe,gxp",
-> +	NULL,
-> +};
-> +
-> +DT_MACHINE_START(GXP_DT, "HPE GXP")
-> +	.dt_compat	= gxp_board_dt_compat,
-> +	.l2c_aux_val = 0,
-> +	.l2c_aux_mask = 0,
-> +MACHINE_END
-
-Where is the EHCI controller reset?
-
-
-Kind regards,
-
-Paul
