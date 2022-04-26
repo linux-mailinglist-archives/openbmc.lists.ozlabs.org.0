@@ -1,59 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A05E751093A
-	for <lists+openbmc@lfdr.de>; Tue, 26 Apr 2022 21:38:41 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CFDA510B72
+	for <lists+openbmc@lfdr.de>; Tue, 26 Apr 2022 23:39:04 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Knscv3HR4z3bh9
-	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 05:38:39 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=HMHQf6pN;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KnwHp4BMjz3bdW
+	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 07:39:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
- helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=HMHQf6pN; 
- dkim-atps=neutral
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
- [71.19.156.171])
+ smtp.mailfrom=gmail.com (client-ip=209.85.160.50; helo=mail-oa1-f50.google.com;
+ envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com
+ [209.85.160.50])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KnscW0Pprz2yw9
- for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 05:38:18 +1000 (AEST)
-Received: from hatter.bewilderbeest.net (174-21-163-222.tukw.qwest.net
- [174.21.163.222])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 587D21BA;
- Tue, 26 Apr 2022 12:38:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
- s=thorn; t=1651001896;
- bh=0/xW5YXm98VDV8HncQuBWEbdx7lEyK7iJy3W3BVLhnU=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=HMHQf6pNKw2cRdvulbPi/kjrFzyVJRiY9ldKlILkY+jbUo0IVMzDKoYhm5cNEyZMS
- PlTMstxErCIk4VDgdyCKeAe5xstMJbUyUgBrwBrd6W/EdOh0L1NxNtHcrMg7+KPRc1
- 2bqnLSxDzQP0usxOicxJLZ4leieK73Kkw8ELCQtU=
-Date: Tue, 26 Apr 2022 12:38:12 -0700
-From: Zev Weiss <zev@bewilderbeest.net>
-To: Guenter Roeck <linux@roeck-us.net>
-Subject: Re: [PATCH v3 0/6] hwmon: (nct6775) Convert to regmap, add i2c support
-Message-ID: <YmhKJMebdVAzIGd8@hatter.bewilderbeest.net>
-References: <20220426071848.11619-1-zev@bewilderbeest.net>
- <YmetYjSKFs+WWwYz@hatter.bewilderbeest.net>
- <dd522f49-89b6-14b2-c402-9cfc93b51d4b@roeck-us.net>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KnwHS4y4Bz2yyM
+ for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 07:38:42 +1000 (AEST)
+Received: by mail-oa1-f50.google.com with SMTP id
+ 586e51a60fabf-d6e29fb3d7so26871fac.7
+ for <openbmc@lists.ozlabs.org>; Tue, 26 Apr 2022 14:38:42 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=zhyNtTRWKpgiVoHNVp/CiGMxHi3Y9XR1OWQf9/EqURQ=;
+ b=NEesI/N16KI8p17oeVSo8mzmyF+3LpoXYNvOnW4P5+uY218rEuPma6m2f3wsaGniOe
+ uDmXxYA7y0Lu0hd7X5iYzZQh16hy1X/HZfMy+w2JpjjeJdL03mPUhWzZElIEJ3AqBJwK
+ JTNUM6rAhTxxUtUf1KDriLg/pxhvyrvoj7uwep0waQevLPAEJ9w5cTLZQFrovnBX6BC4
+ KTtQ5K42aA1ENtnaMomQvk9bmLHC/ZUeL1mi87hKA2QSHOLshvZa0FqO7q7ClUUm9brK
+ wzn5dIuYZ1mKLpxVuso0inTImvrq88O4JofTK+wFZpdo4jXpY/ccPHbdj9yHVf1qyKdW
+ I/lg==
+X-Gm-Message-State: AOAM53003OxhTQEE18TzCiIgbq9J8CBihxgDsuOlBrWBc8oJKoftnrPT
+ YzQ6+ep4Sw+Wa4Hq88KO7g==
+X-Google-Smtp-Source: ABdhPJydqYRqWI0cp4kXY25TEM4qbC2jQJOu+ISl9HwJMZmr7tsR1Tjj0vCRAPwtiK15Bcd2ft593Q==
+X-Received: by 2002:a05:6870:d210:b0:e2:c10b:a7b with SMTP id
+ g16-20020a056870d21000b000e2c10b0a7bmr10187521oac.181.1651009119901; 
+ Tue, 26 Apr 2022 14:38:39 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net.
+ [66.90.144.107]) by smtp.gmail.com with ESMTPSA id
+ y22-20020a056870389600b000e93d386d97sm1252404oan.31.2022.04.26.14.38.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 26 Apr 2022 14:38:39 -0700 (PDT)
+Received: (nullmailer pid 2577401 invoked by uid 1000);
+ Tue, 26 Apr 2022 21:38:38 -0000
+Date: Tue, 26 Apr 2022 16:38:38 -0500
+From: Rob Herring <robh@kernel.org>
+To: Arnd Bergmann <arnd@arndb.de>
+Subject: Re: [PATCH v5 04/11] clocksource/drivers: Add HPE GXP timer
+Message-ID: <YmhmXl5IWHmKzAyG@robh.at.kernel.org>
+References: <20220421192132.109954-1-nick.hawkins@hpe.com>
+ <20220421192132.109954-5-nick.hawkins@hpe.com>
+ <CAK8P3a0nQ1BrtfBJ7sUSaLkA=pbVwx83bEUpZczvLOSOHDR=dw@mail.gmail.com>
+ <CACRpkdbJ1N7VOgoBzGS+cOaErFcYiOVDeWRmhPyHA7=9W0CGhA@mail.gmail.com>
+ <CAK8P3a2ie8kFYstCYr6FO6+yFw7VxyJjWYyy9b+rUHu_u0YXPg@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <dd522f49-89b6-14b2-c402-9cfc93b51d4b@roeck-us.net>
+In-Reply-To: <CAK8P3a2ie8kFYstCYr6FO6+yFw7VxyJjWYyy9b+rUHu_u0YXPg@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,65 +71,89 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
- Jean Delvare <jdelvare@suse.com>, webmaster@kernel.org,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- Krzysztof Kozlowski <krzk@kernel.org>,
- Oleksandr Natalenko <oleksandr@natalenko.name>,
- Rob Herring <robh+dt@kernel.org>, Renze Nicolai <renze@rnplus.nl>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, "Verdun,
+ Jean-Marie" <verdun@hpe.com>, Joel Stanley <joel@jms.id.au>, "Hawkins,
+ Nick" <nick.hawkins@hpe.com>, Thomas Gleixner <tglx@linutronix.de>,
+ Linus Walleij <linus.walleij@linaro.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Apr 26, 2022 at 01:57:40AM PDT, Guenter Roeck wrote:
->On 4/26/22 01:29, Zev Weiss wrote:
->>[Adding korg webmaster re: list infrastructure]
->>
->>On Tue, Apr 26, 2022 at 12:18:42AM PDT, Zev Weiss wrote:
->>>Hello,
->>>
->>>This is v3 of my effort to add i2c support to the nct6775 hwmon
->>>driver.
->>>
->>>Changes since v2 [0]:
->>>...
->>>- Renamed drivers and Kconfig symbols to keep existing platform
->>>  driver as "nct6775" (SENSORS_NCT6775) and the core module as
->>>  "nct6775-core" (SENSORS_NCT6775_CORE) [Guenter]
->>
->>Unfortunately while this was a simple enough change to make (a few 'git mv' commands and a handful of actual text changes), it ballooned the size of the diff for patch 5 to the point that vger bounced it for exceeding the 100K message-size limit.  As far as I can tell it looks like it went through elsewhere, but does leave a bit of a gap in the public list archives -- please let me know if there's anything I should try in terms of re-sending it.  (The only combination of 'git format-patch' flags I've been able to find that gets it back down to approximately its previous size is '-B -D', which isn't so useful for actually applying.)
->>
->>I'm not sure how critical a limit that 100K is, or if it's something we might consider raising a bit?
->>
->
->You could split it up further. For example, you could introduce
->the include file first. Also, please run checkpatch --strict on
->your patches. I don't care about commenting the mutex, but there
->should be no double empty lines. Also, while you are at it,
->it would be great if you can add another patch to fix the
->
->WARNING: Symbolic permissions 'S_IWUSR | S_IRUGO' are not preferred. Consider using octal permissions '0644'.
->
->warnings.
+On Tue, Apr 26, 2022 at 08:00:20AM +0200, Arnd Bergmann wrote:
+> On Mon, Apr 25, 2022 at 10:38 PM Linus Walleij <linus.walleij@linaro.org> wrote:
+> > On Fri, Apr 22, 2022 at 3:16 PM Arnd Bergmann <arnd@arndb.de> wrote:
+> > > On Thu, Apr 21, 2022 at 9:21 PM <nick.hawkins@hpe.com> wrote:
+> > >
+> > > > +
+> > > > +static struct platform_device gxp_watchdog_device = {
+> > > > +       .name = "gxp-wdt",
+> > > > +       .id = -1,
+> > > > +};
+> > > > +/*
+> > > > + * This probe gets called after the timer is already up and running. This will create
+> > > > + * the watchdog device as a child since the registers are shared.
+> > > > + */
+> > > > +
+> > > > +static int gxp_timer_probe(struct platform_device *pdev)
+> > > > +{
+> > > > +       struct device *dev = &pdev->dev;
+> > > > +
+> > > > +       /* Pass the base address (counter) as platform data and nothing else */
+> > > > +       gxp_watchdog_device.dev.platform_data = local_gxp_timer->counter;
+> > > > +       gxp_watchdog_device.dev.parent = dev;
+> > > > +       return platform_device_register(&gxp_watchdog_device);
+> > > > +}
+> > >
+> > > I don't understand what this is about: the device should be created from
+> > > DT, not defined statically in the code. There are multiple ways of creating
+> > > a platform_device from a DT node, or you can allocate one here, but static
+> > > definitions are generally a mistake.
+> > >
+> > > I see that you copied this from the ixp4xx driver, so I think we should fix this
+> > > there as well.
+> >
+> > The ixp4xx driver looks like that because the register range used for
+> > the timer and the watchdog is combined, i.e. it is a single IP block:
+> >
+> >                 timer@c8005000 {
+> >                         compatible = "intel,ixp4xx-timer";
+> >                         reg = <0xc8005000 0x100>;
+> >                         interrupts = <5 IRQ_TYPE_LEVEL_HIGH>;
+> >                 };
+> >
+> > Device tree probing does not allow two devices to probe from the same
+> > DT node, so this was solved by letting the (less important) watchdog
+> > be spawn as a platform device from the timer.
+> >
+> > I don't know if double-probing for the same register range can be fixed,
+> > but I was assuming that the one-compatible-to-one-driver assumption
+> > was pretty hard-coded into the abstractions. Maybe it isn't?
+> 
+> Having a child device is fine, my objection was about the way
+> the device is created from a 'static platform_device ...' definition
+> rather than having the device structure allocated at probe time.
+> 
+> > Another way is of course to introduce an MFD. That becomes
+> > problematic in another way: MFD abstractions are supposed to
+> > be inbetween the resource and the devices it spawns, and with
+> > timers/clocksources this creates a horrible special-casing since the
+> > MFD bus (the parent may be providing e.g. an MMIO regmap)
+> > then need to be early-populated and searched by the timer core
+> > from TIMER_OF_DECLARE() early in boot.
+> >
+> > So this solution was the lesser evil that I could think about.
+> 
+> There are multiple ways of doing this that we already discussed
+> in the thread. The easiest is probably to have a child node without
+> custom registers in the DT and then use the DT helpers to
+> populate the linux devices with the correct data.
 
-Ack -- hadn't been aware of the --strict flag for checkpatch, thanks.  
-I'll do that in v4.
+I think that's what the wdt binding is doing, but I don't like that. 
+Maybe it's not a child node, I can't tell.
 
->
->Anyway, I wondered what changed... oh, I see. You didn't rename
->nct6775.c. I didn't suggest that. The new file name was fine.
->I only asked you to change the Kconfig symbols, not the file names.
->It is ok and actually desirable to change the file names.
->The platform driver module can and should still be named nct6775;
->that can be handled in the Makefile with something like
->
->nct6775-objs := nct6775-platform.o
->obj-$(CONFIG_SENSORS_NCT6775)  += nct6775.o
->
+Bindings should not be decided on the *current* driver split on one 
+particular OS. This looks like 1 block, so 1 node. If that doesn't work 
+well or easy for Linux, then we should fix Linux.
 
-Got it, will revert to the previous file names, which should sidestep 
-the message-size problem.
-
-
-Thanks,
-Zev
-
+Rob
