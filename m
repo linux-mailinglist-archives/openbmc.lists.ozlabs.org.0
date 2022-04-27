@@ -2,67 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE6C05148F2
-	for <lists+openbmc@lfdr.de>; Fri, 29 Apr 2022 14:13:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 09F225148F5
+	for <lists+openbmc@lfdr.de>; Fri, 29 Apr 2022 14:14:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KqWcG69tBz3bc1
-	for <lists+openbmc@lfdr.de>; Fri, 29 Apr 2022 22:13:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KqWcz6h7Hz3bcQ
+	for <lists+openbmc@lfdr.de>; Fri, 29 Apr 2022 22:14:27 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=c3w0b4Mo;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=Rq0vUpX2;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::62a;
- helo=mail-ej1-x62a.google.com; envelope-from=krzysztof.kozlowski@linaro.org;
+ smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::630;
+ helo=mail-ej1-x630.google.com; envelope-from=krzysztof.kozlowski@linaro.org;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256
- header.s=google header.b=c3w0b4Mo; dkim-atps=neutral
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com
- [IPv6:2a00:1450:4864:20::62a])
+ header.s=google header.b=Rq0vUpX2; dkim-atps=neutral
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com
+ [IPv6:2a00:1450:4864:20::630])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Kp8lw603zz2xX6
- for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 17:00:42 +1000 (AEST)
-Received: by mail-ej1-x62a.google.com with SMTP id i19so1469257eja.11
- for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 00:00:42 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KpPYM4p67z2xCC
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Apr 2022 02:37:24 +1000 (AEST)
+Received: by mail-ej1-x630.google.com with SMTP id j6so4474785ejc.13
+ for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 09:37:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
  h=message-id:date:mime-version:user-agent:subject:content-language:to
  :cc:references:from:in-reply-to:content-transfer-encoding;
- bh=knB5re2yE+knNYDwWLwV5oj9zfgG60eQTuuGICfcavo=;
- b=c3w0b4MoE63PeggJZgNSDCaIH6w9y7ctbyjC63+q6frBaZhU1HZvhDLJnumNuLC5u4
- Nom3enBsHvBvXVYwcflIWz5ouuAp0idEknyYRARXXG4rjRntZCpRwOtsqBnDB4TAfLEf
- r2Lnae9ns34uBM2GarNe07PaIw6KiCNkM4+I9D/Fv4rmkCXUEVfZxKuoeBmjGXV6gReW
- c49FxJSSDom/8zrKN9OB0FNklDPH9QDZZ19SAc61MAjWGZADreyaxIsn4AWtkWGuC3ue
- gzsMFhQanpPLoglKdHGfJptXIr+Jx61vIfGynY7IYeqvqrdM70GtgZ4Ywc9roPGKEQfs
- Ld1g==
+ bh=J/YKQZJJA+ogT3/a4U1yoxjCA4/ZVLkuY10wH+/url8=;
+ b=Rq0vUpX2noDFfwzl1T7aznlztl4rUv32V26rOZSrnHEUew+gr/+RppDXrUXOCCTJaS
+ zVFbC04LvMH39ZviDMvJJg9XReaz2bTDvX08S8SIuAvjIW+cHu/sCkhFAZEZtAcDt0G+
+ anr07GVzgWFwT0gmCtzza4H03UsEsXAJsby/DLoGMLa5/eF8koOLMTJi4yeeeBF9aYeH
+ Pa3YD0Yf+hOOOaxww2YVyry98d7ZMNLRuHiznjposx9RjhwoZGJBItA/hN+V6PE4WFeP
+ 8AEcOTjmoDT54/cgpB+Q8utWh4kR3el/kgl6vPw2HMkkvfHQYKsyY/NMnyPBs4rQzuug
+ UDug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
  :content-language:to:cc:references:from:in-reply-to
  :content-transfer-encoding;
- bh=knB5re2yE+knNYDwWLwV5oj9zfgG60eQTuuGICfcavo=;
- b=IdZqrDqdSXeWuL18S/t9TPwLHJ43AItOZXX0ybuED0vS4ygp4OeEFsIfCUeMhl9sBR
- YGXmk0C4Xi7tlqN32bsMq8z60En5KpHbTuuEnAUOvFlVxUaGT/OpGvK+CA0RBb0D33dh
- 2YiPA+++xSUVfM8DxxfwFN88YDohIXFdKCqb0HKcerk3WodEc+JvNoa/wQKDZzOb5frP
- TjkSh0WvPfstwXAGr2/vZQmGvd+5h5YRvetCErLILPYAV+iUCo1Ys1Cr8D64V4jy4Mo0
- 64mTLPeXrfXGRfCCTLp+eAtkBVfMAVou8w03P/LXr7b83hNe0jv2nT+zpqU80/+OyUG1
- GHmg==
-X-Gm-Message-State: AOAM530NoivU5+VIq2y4loDLwtycEXq0y6O4sjw4JkOWXtCiS46C8sNy
- Z3G9daSZfEdZFBOaqAodq+9rBrIc8OsW9Q==
-X-Google-Smtp-Source: ABdhPJy42PnL5k6WxDMHs9qpbs1kW+ltaQb338xJc6J452058yJtzF813cfMVtTrgpuVYaW3axL7/g==
-X-Received: by 2002:a17:906:8982:b0:6f3:95f4:4adf with SMTP id
- gg2-20020a170906898200b006f395f44adfmr13223466ejc.524.1651042838202; 
- Wed, 27 Apr 2022 00:00:38 -0700 (PDT)
-Received: from [192.168.0.252] (xdsl-188-155-176-92.adslplus.ch.
+ bh=J/YKQZJJA+ogT3/a4U1yoxjCA4/ZVLkuY10wH+/url8=;
+ b=cOUZPENEupUgzbhWf3obQDUfL7xVrdmMGn7q8gI2Smo9U7eGT0jIYr6EeseHz/loPI
+ Q7UiUaiRa0aXCjOx1CTaPWLGLGEEk6iINMLTv3t3CjmPwgQLidjkDgjpy9GGH/l/PNwQ
+ DsP+TSEaxHGxApFWYI24e/I402kJbJGh10faffnnqmhRjtfXBdxtb7AlAyF9l9AJRwTz
+ GX86bFXTJtreDBJAhA5+KeDDEYubfT0BpwDSdH6e9kS9WI3yF5qLoqMADoURuN4IY3kG
+ 6ijqOYN7cnfv5SKC5WMRclwqFnYeJf2Eb+jXRczbZjAw9t1cHIEd1EYLrOpESQpFmoV1
+ 9bwg==
+X-Gm-Message-State: AOAM533SrnLUpy6gT91p0r/rxL1Frqvssl6Be17mEslaT+qB7XeoxJ1U
+ JdMQhDo6KjjT5fZLASYJJs0CVw==
+X-Google-Smtp-Source: ABdhPJxUeMGT05JDUbQztMtjK+f5XWgcQc6Wt5A/Zx5c82Lq7VCC+s6KhF9pR4qQSR0RhsvcS7E4ZA==
+X-Received: by 2002:a17:906:559:b0:6f3:8ba6:39c8 with SMTP id
+ k25-20020a170906055900b006f38ba639c8mr17537928eja.486.1651077442041; 
+ Wed, 27 Apr 2022 09:37:22 -0700 (PDT)
+Received: from [192.168.0.156] (xdsl-188-155-176-92.adslplus.ch.
  [188.155.176.92]) by smtp.gmail.com with ESMTPSA id
- x14-20020a1709064bce00b006f006948581sm6267366ejv.170.2022.04.27.00.00.36
+ rb48-20020a170907693000b006f3d4b12d41sm284727ejc.177.2022.04.27.09.37.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 27 Apr 2022 00:00:37 -0700 (PDT)
-Message-ID: <a3d9f68d-9101-2749-a7cd-5a4b3595a07a@linaro.org>
-Date: Wed, 27 Apr 2022 09:00:36 +0200
+ Wed, 27 Apr 2022 09:37:21 -0700 (PDT)
+Message-ID: <5139dc9f-96c3-9f20-4c62-feee902cb5e6@linaro.org>
+Date: Wed, 27 Apr 2022 18:37:20 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
@@ -98,23 +98,21 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On 27/04/2022 08:44, Zev Weiss wrote:
-> 
->>> +    maximum: 0xff
->>> +    default: 0
+>>> +  reg:
+>>> +    maxItems: 1
+>>> +
+>>> +  nuvoton,tsi-channel-mask:
+>>> +    description:
+>>> +      Bitmask indicating which TSI temperature sensor channels are
+>>> +      active.  LSB is TSI0, bit 1 is TSI1, etc.
 >>
->> Since by default it is disabled, doesn't it make a required property?
->> IOW, if you add a node without this mask, will the device operate
->> properly and usefully?
+>> Need a type/ref.
 >>
 > 
-> Yeah, zero active TSI channels is a totally legitimate way for these 
-> devices to operate.  TSI is just an optional source of additional 
-> temperature readings that's used on some (AMD) systems; all the basic 
-> Super I/O functionality works fine without it.
+> Ack, thanks.
 
-
-OK, thanks.
-
+Did you test the bindings after the changes? Using reviewers time
+instead of testing by yourself with an automated tool is quite a waste.
 
 Best regards,
 Krzysztof
