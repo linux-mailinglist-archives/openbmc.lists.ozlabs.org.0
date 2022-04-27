@@ -1,93 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8C9E51220B
-	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 21:04:05 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B18B512309
+	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 21:45:17 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KpSpW4zCrz3bcK
-	for <lists+openbmc@lfdr.de>; Thu, 28 Apr 2022 05:04:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KpTk33MN9z3bdZ
+	for <lists+openbmc@lfdr.de>; Thu, 28 Apr 2022 05:45:15 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=eBrF1FQu;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=iPsZveus;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=fCaVbSxe;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25;
- helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::d33;
+ helo=mail-io1-xd33.google.com; envelope-from=brandonkim@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=eBrF1FQu; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=iPsZveus; 
- dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
- [66.111.4.25])
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20210112 header.b=fCaVbSxe; dkim-atps=neutral
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com
+ [IPv6:2607:f8b0:4864:20::d33])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KpSp673Q9z2xCB
- for <openbmc@lists.ozlabs.org>; Thu, 28 Apr 2022 05:03:42 +1000 (AEST)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
- by mailout.nyi.internal (Postfix) with ESMTP id F16615C0215;
- Wed, 27 Apr 2022 15:03:40 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute5.internal (MEProxy); Wed, 27 Apr 2022 15:03:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
- :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to; s=fm2; t=1651086220; x=1651172620; bh=YFQam2zdjL
- XqJ0350WMrkiBOnNLbpvEzEUaobEUt/ng=; b=eBrF1FQuF11JHgJEHesdSOwkLV
- qc/QAFcix11D0KdMOfg9Nc5kGw6lu8YykvWzDkN1VmijEVmT9lvaKb5ePo/jiifz
- q/QghK3XHohr0YjU0USnj66fNCpJTBkRtHmnP4zofzBK+AfgE09cf3EzrhfLT1e7
- gaqh/NzlkDQkPZ9lau/XyYv4aCoRcHYgYjh1W+wpEHLllzVWWpr2O2joama0HZeF
- rRvc+yfJwcXuN2QeT383tZ34C3FAHM2Xj6XB8z+t1sl+rG+De3VULclQno2oVC/I
- //4Wi5IRrdFsFBeu5Sr4QFTKWpxFcetjZ9JlCQeNsDc2aICvtDMUVop0klAg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1651086220; x=
- 1651172620; bh=YFQam2zdjLXqJ0350WMrkiBOnNLbpvEzEUaobEUt/ng=; b=i
- PsZveusmF5TYVKQquw21X+NA/f666DFgajDt1sxCOyK/mPQql9kQeP7ell69ANJ2
- qrQgL2iklhlBcEdxJYiT0chmluUsuQPcYn4oElzL5dgFMWoJESBQCiLNmBP2BuCk
- +q9sEM1hZn/OsV9/671AEOXTbY//qSJ6aqNy7eNipdPk7aakORM8LdGeHemPzw4X
- KUuhIVGreEN5aYCzWsZnLNJDTDOjFdUT+Zvjcen7QR6AgXmgIMFi9JW4mLAy2NsW
- IYDW3oYQ7aSn43h4kkBdkQyrmQH++77Ps4IS4z4DdD0g8Lsuhd7njPLA1lNQ1Bzm
- 5tR12asEVaBv2DUYpYS8g==
-X-ME-Sender: <xms:jJNpYpH7hpSQdECuuJ17LqobiQQOzKMkef2n1_FKfWrXVIqWtaNJIQ>
- <xme:jJNpYuV-H3OsGHBT8KI85by3kJyhPGzrZ0WEwAnV7sqiYAlwihlhm9C_vu5hiiPZA
- 6VcviWQ9WfUflEuWpg>
-X-ME-Received: <xmr:jJNpYrId59gUFl2lDsVbyEG9hTfP10TMi3XU0hV-SIvRQk1beLTa9vSIVAu3hjj3kwwspPAUl4mkyDtbEi48FL_x7WgzXBD6mCE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudehgdduvdelucetufdoteggodetrfdotf
- fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
- gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredt
- tddunecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
- hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpedtjeejgfdugefhtedvudfghfej
- feejfefhffeffeelgeduveejleelffefvdffleenucevlhhushhtvghrufhiiigvpedtne
- curfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:jJNpYvH8EABm3WjSBgbt3bklT09cqD1uLcFO9Nu0LOn3vCIvqnz49w>
- <xmx:jJNpYvX867ISyeiNXM8PE3K-4cAzvDvpHW3i_yqkuw8Am5sUauqtnw>
- <xmx:jJNpYqNugVzpqHMF8zH2kudGdf8gq1GmjqTNTQ2SeUJ-c-F33Yz4kQ>
- <xmx:jJNpYgd_Q4I-NKgTeTJuZBJ57QY9wsuVa0Y2pxbtlR0P7Ql39A2PVA>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 27 Apr 2022 15:03:40 -0400 (EDT)
-Date: Wed, 27 Apr 2022 14:03:39 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Re: Security Working Group meeting - Wednesday April 27 - results
-Message-ID: <YmmTi6Lkrw3HvTkV@heinlein.stwcx.org.github.beta.tailscale.net>
-References: <0b3f41c1-476b-bd94-3351-69faf93b2e82@linux.ibm.com>
- <8f2429cb-bf11-44c8-cbef-9425dfa93481@linux.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KpTjd68f4z3bXD
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Apr 2022 05:44:52 +1000 (AEST)
+Received: by mail-io1-xd33.google.com with SMTP id m6so206815iob.4
+ for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 12:44:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=7K1IxQSsZaQnvpxVZ7ih4kv2fhwg76CpVr8Gpp5faHg=;
+ b=fCaVbSxebrWAnlBVlulsPn619yKEPuEPW0VSDmqQP/67p3ABUOgAQRM8YraKvktjGn
+ eYfUi6lRlG30z1HQIXjsrWFDjc8TsJbLICBmTbwpEjQLw4ZIVmebgRYreDLiNZcq30zY
+ nqe8a1zLMoG+5x41HKN0B/J/DURxcMsRjNEo0+pzkxB7FFKwyNYK/SENxka8iatZI7F6
+ lrQDHjCYS3JS+033ZKHH83jxeIVtqOSwpApmamfJUnQMnPqjVbFzo58kWAidYUBJkayj
+ 0vNU9mVTfYsGPrETA5VbuJ1XdSFPd+itVNzBw3e+MExYlQaZoyTX61mujzQLr67ilscm
+ l6FQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=7K1IxQSsZaQnvpxVZ7ih4kv2fhwg76CpVr8Gpp5faHg=;
+ b=bUTqHkyF+YxS47Av1zH3XcvfIOHTbABq5X9/btlLcmuCkefTThYbUTNx090Ez49YEj
+ 8Cm98PMaj6qewnsSAo7nwHA5AKWvV6arD1FoqZ3NcRWR7QD7cynz5SW7pWEOfTt9W2uJ
+ avSkkWEar5TBkisn7BR2Fp450AGbPsOYyq6/OzRgMl9AREXXg1XA0pVpsX22RJKv1A/o
+ /T59pQLKBlKl9jkqlueCEWXaf0l9gfQMUGJwhD9yKo5RbNvISaROGMUH7mfZCe8boVb7
+ 4Qme5foUETVRciyKVJOOYwNt6Wuelp0WTI00+Rt6WXMiq7KviYEV+UtWAEfLHWTHnXlQ
+ sKfw==
+X-Gm-Message-State: AOAM531h8O5zKo/+fv77NK6JSxpQ9r/+lStPVWtmSQBs7btQKdIMIU7R
+ obaaFbdl6o90Y/Szzigx8HgbOjQhkvOoxQcsVLNiog==
+X-Google-Smtp-Source: ABdhPJzucdc5/wnsFkLCQNwk3BHop154yQX41PgXtHik7CQKwL38pF8Ewh5CqYEptoq6uHcOiFZflWrscLLwaO7d5K8=
+X-Received: by 2002:a05:6602:2d91:b0:648:cff2:b2c0 with SMTP id
+ k17-20020a0566022d9100b00648cff2b2c0mr12333168iow.45.1651088687592; Wed, 27
+ Apr 2022 12:44:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="txphU3D7ngsKLQOF"
-Content-Disposition: inline
-In-Reply-To: <8f2429cb-bf11-44c8-cbef-9425dfa93481@linux.ibm.com>
+References: <CALGRKGMgs4m=h6udakL_hcUugrPFyvTt+RefBjyVinE9ReGXyQ@mail.gmail.com>
+ <CALGRKGMPDZXh8kZSifJ+XLKbi96LRHcYyJ=Jt9KGHPMmPWk+OQ@mail.gmail.com>
+ <YmmSyjbeOtEOQuaK@heinlein.stwcx.org.github.beta.tailscale.net>
+In-Reply-To: <YmmSyjbeOtEOQuaK@heinlein.stwcx.org.github.beta.tailscale.net>
+From: Brandon Kim <brandonkim@google.com>
+Date: Wed, 27 Apr 2022 12:44:36 -0700
+Message-ID: <CALGRKGPOv9XJcUr9jBgjXLyUr8SPWro8RQ8_=m6tmy5sf4O4Zw@mail.gmail.com>
+Subject: Re: Request to create 2 new repositories for
+ "bios-bmc-smm-error-logger"
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,63 +77,28 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
+Cc: "OpenBMC \(openbmc@lists.ozlabs.org\)" <openbmc@lists.ozlabs.org>,
+ Ed Tanous <edtanous@google.com>, Kasun Athukorala <kasunath@google.com>,
+ Willy Tu <wltu@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Thanks for the response Patrick. I've created
+https://github.com/openbmc/technical-oversight-forum/issues/14
 
---txphU3D7ngsKLQOF
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Cheers,
+Brandon
 
-On Wed, Apr 27, 2022 at 01:07:49PM -0500, Joseph Reynolds wrote:
-> On 4/27/22 7:31 AM, Joseph Reynolds wrote:
-
-> 3 Nirav Shah - Alternate idea: Use D-Bus session buses (vs the system bus=
-).
->=20
-> Note that all OpenBMC applications use the D-Bus system bus, which only=
-=20
-> the root user is allowed to access.
->=20
-> Nirav presented an idea to change some applications to use a session bus=
-=20
-> (and away from the system bus).=A0 Doing so allows BMC applications to ru=
-n=20
-> as non-root and makes it easier for different applications to=20
-> communicate via D-bus APIs.
->=20
-> We believe this work is relatively independent of SELinux policy=20
-> configuration.
-
-In my opinion, architectural changes like this fall pretty far outside
-of "Security" and need pretty wide consensus.  It's fine if you want to
-use the Security Workgroup to refine the idea but I want to be clear
-that acceptance by the Security Workgroup isn't sufficient to move
-forward.
-
---=20
-Patrick Williams
-
---txphU3D7ngsKLQOF
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmJpk4sACgkQqwNHzC0A
-wRnGRg/+MGugUXaxCS31543QMYFm0wsgpSikuP0pB7a4WPr5ugiJrdUnmlErKeQu
-BrwrfEibArXRXUVorXsY9I0CY4uNWTEz01k0VXZCdF1on7kVlNl8eNZMAk/50KXu
-vrmXI4QV4KNBobO6/5yR9wuj2zGjk1dwfMl6jGaHEDGYwiPwUJR3rVJ2YGB0/SXH
-/cJT/AQOj5+RVofL3C6HCZzrVjwpZCN/52z+dCMOkQtyVjXon9EP+Jd6u38a7VPr
-ax+4376EfQU15DqaNGMcWgFHJouzUKsOvl+X3pRjd65pN6B8WHI6Qn/QjBo4Q1mZ
-FZtU8VWlacSzAl3YoEbtk4Yg/bR7q2+JcKtU2aAd4Gwqow5JLdQV4bGVxR4f8zIk
-0b4iM4IUupxpL5lfauuayrx01efuBg04ogTgOJG8r/i8VMaF/3iZzkd86xGMcW3X
-x5p+KTEU90esnqTqjLoV7dJvuIkMczVYCFicrtF2EOydG5U/LbKE1sMtyuq/6I1L
-mJ+fakLYEIHgX/0PZh8uPNB8pinMB99++0dymlhqo/qm+eSGr8PqZ7q7Bs8OPDLu
-sVHi76UY93QdVfiWguojJUFtOCmxLmo/eMuf6e0pY5XkG4g5O7P2r+Zaw8ZFNnOT
-8BBE3yUn68jZgwrBqdo6Yl3WQerV2hm+IJVytokip2tInfeJ0K8=
-=XVOZ
------END PGP SIGNATURE-----
-
---txphU3D7ngsKLQOF--
+On Wed, Apr 27, 2022 at 12:00 PM Patrick Williams <patrick@stwcx.xyz> wrote:
+>
+> On Wed, Apr 27, 2022 at 11:03:29AM -0700, Brandon Kim wrote:
+> > Let me know if the community would prefer I create a
+> > GitHub Issue in the TOF repo
+> > (https://github.com/openbmc/technical-oversight-forum/issues) instead.
+>
+> Yes, please do this.  One of the primary responsibilities of the TOF is
+> to approve new repositories now.  Creating an issue will get it onto the
+> agenda.
+>
+> --
+> Patrick Williams
