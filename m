@@ -1,90 +1,95 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C8CFC51217C
-	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 20:45:46 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E49065121F7
+	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 21:01:00 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KpSPN5bxpz3bbV
-	for <lists+openbmc@lfdr.de>; Thu, 28 Apr 2022 04:45:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KpSky5bH2z3bbs
+	for <lists+openbmc@lfdr.de>; Thu, 28 Apr 2022 05:00:58 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=UFzMYWgy;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=pZHO5TRC;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=TtttghYq;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
+ smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25;
+ helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=UFzMYWgy; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm2 header.b=pZHO5TRC; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=TtttghYq; 
+ dkim-atps=neutral
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com
+ [66.111.4.25])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KpSNy2pcJz3bpH
- for <openbmc@lists.ozlabs.org>; Thu, 28 Apr 2022 04:45:21 +1000 (AEST)
-Received: from pps.filterd (m0098413.ppops.net [127.0.0.1])
- by mx0b-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 23RHx1MC017607;
- Wed, 27 Apr 2022 18:45:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : mime-version : content-transfer-encoding; s=pp1;
- bh=+2FTwFw5GivqoPitlQQuogzXBngr7laJzEtA3VpfnEc=;
- b=UFzMYWgy08ANG8k0S11qYF+6Mykw17cTmDH0iaTIwErxIS0XljRxrnYltibMmpegvIOs
- uGfn8QjWmH+ugpbONWM87OpofHR2eSrwvjWHWoThPF2HT99Gvh/73zYdMTf8xXZcnbIe
- RHGO+X0SJtY7br1UTV3ZDMa6aEx52A+InoRQGDwo3YC+HsYBVKf6/3vjWz75FXdqUAWs
- zOoeeo5HfNRL8ApfYesyE72AHtiXpPuOq6TNzoKOnZ4fTF71rFNO+/vNBqlr2A1kz3f7
- 5BP+IrJpQNV0QHgXqHuw0Wu+SpBDgeGm9ZACm9FzHFdokMK3/bFDEPlgQ7KYOq7gAVcx SA== 
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.10])
- by mx0b-001b2d01.pphosted.com (PPS) with ESMTPS id 3fpv88hqy5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 27 Apr 2022 18:45:18 +0000
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
- by ppma02dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 23RIgdLU000624;
- Wed, 27 Apr 2022 18:45:18 GMT
-Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com
- [9.57.198.27]) by ppma02dal.us.ibm.com with ESMTP id 3fm93a5exm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 27 Apr 2022 18:45:18 +0000
-Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com
- [9.57.199.107])
- by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 23RIjHir26083626
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 27 Apr 2022 18:45:17 GMT
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 37C05124070;
- Wed, 27 Apr 2022 18:45:17 +0000 (GMT)
-Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C3B68124064;
- Wed, 27 Apr 2022 18:45:16 +0000 (GMT)
-Received: from v0005c16.aus.stglabs.ibm.com (unknown [9.211.88.172])
- by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTP;
- Wed, 27 Apr 2022 18:45:16 +0000 (GMT)
-From: Eddie James <eajames@linux.ibm.com>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.15] leds: pca955x: Set blink duty cycle to fifty
- percent
-Date: Wed, 27 Apr 2022 13:45:13 -0500
-Message-Id: <20220427184513.21192-1-eajames@linux.ibm.com>
-X-Mailer: git-send-email 2.27.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KpSkT0q2sz2xBF
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Apr 2022 05:00:32 +1000 (AEST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+ by mailout.nyi.internal (Postfix) with ESMTP id 62D945C022A;
+ Wed, 27 Apr 2022 15:00:28 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute2.internal (MEProxy); Wed, 27 Apr 2022 15:00:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+ :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:sender:subject
+ :subject:to:to; s=fm2; t=1651086028; x=1651172428; bh=FD2TwkjslY
+ eqOMmgAzGTYloYNTWbnW9R0cyvjmqihoA=; b=pZHO5TRC2sKdbZSkNmXV4/lYzs
+ 1muJaWA6MBCiwC+x5opOUyP8HlmuG2P2lw2W1Zfe/XhUbQ2OcbhjIDA5m4209mmo
+ OQGaSQNlzqh3FHAan0+nnYCa5BUJNc6I8f8Et1oiymk3zw/m0OmSMMm5Jcc9SkvE
+ VM7yHhodWX1CKbN2Me/vL5zdX8Z8QhNU+0jdCsYBuFuHJoESIIdNrOkSH2HI+yUQ
+ VcSeLXujuT3XIrxlVa9STYCmuPpMd05TyRLuSpVDM0yYL3ajiUnmmOlgTprfVeX0
+ enND2yJbcqQ1Ysft0IBraP7sx/bbv7WAWPqfbCKgzwVvxBWkxymPM8TzK3qw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1651086028; x=
+ 1651172428; bh=FD2TwkjslYeqOMmgAzGTYloYNTWbnW9R0cyvjmqihoA=; b=T
+ tttghYqhCu6ybcg/HEHOhyhfe3EYx45+eMhxXn257+wlqdeYva7qm6Uf33aWqqfK
+ N3Jv1/VxeXbzIat4v2aOeqpiseJhJFZm1gDqDcTfLFWBIW5Mu0U7j/VGMD78p/4q
+ WmAsRQUYGqnp/4dljFrooCYa+XCLkSgjjEStduzBMHJX5X3PABwCkUejM/T0tF0v
+ wIh5O5YIWUeLx6FY5zmv+aUOs5/0zsIIu1UueiYQLBUeI6TYiGlD/bYJuASugbli
+ pgcvmyGcZ2CfLvBY8in1XfxfMNxpfRSyAOSSs/eAULoti6iJzIHD49rNarEs2Fn/
+ CP5sBZNiAdQ/dd5w1NOsA==
+X-ME-Sender: <xms:zJJpYp9Kc51LjQP46okCnvOE6KpVdW2ofWN5qOLt0FZTnnkhCLY1cw>
+ <xme:zJJpYtu7q5O3TCOA9bCFzMjvq2R5TqWPFFwSNpUFlYfqfl_HMzz7fDPlSPh_ziU8J
+ DzdoXdtIqOPgARcukY>
+X-ME-Received: <xmr:zJJpYnAWKjo_B8Oj9ogWMMzIRCMPSNopayn9NBBUyxZYG6x7K8ScAeN0-JS3VVDcc2a7vb2Wm0hi_MInbGEEtolul-AZB8rtYfI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudehgdduvdelucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlvdefmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtdorredt
+ tddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
+ hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeekvdfgtefgheekudejgfehvddv
+ udfgvdefffetieefffffvefhtedtgeejhfetveenucffohhmrghinhepghhithhhuhgsrd
+ gtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
+ phgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:zJJpYteZN6jA5McKj7gMaQ6qp2DULHsXWLsv3-un5jmOIEZKofpNIA>
+ <xmx:zJJpYuNuWxSbkArc6p0bvqfA88zhybveBbQguHlZeOueOmNgy5hWyQ>
+ <xmx:zJJpYvnEuGT_x62GHFe1f6MneaAcIARccKEqW6IWbXFwIbKTr9YQEQ>
+ <xmx:zJJpYrpwzcK_FyP2ra9AyV0WoQ_ULhr7NT9TmA_6hvy3BX1IqReECw>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 27 Apr 2022 15:00:27 -0400 (EDT)
+Date: Wed, 27 Apr 2022 14:00:26 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Brandon Kim <brandonkim@google.com>
+Subject: Re: Request to create 2 new repositories for
+ "bios-bmc-smm-error-logger"
+Message-ID: <YmmSyjbeOtEOQuaK@heinlein.stwcx.org.github.beta.tailscale.net>
+References: <CALGRKGMgs4m=h6udakL_hcUugrPFyvTt+RefBjyVinE9ReGXyQ@mail.gmail.com>
+ <CALGRKGMPDZXh8kZSifJ+XLKbi96LRHcYyJ=Jt9KGHPMmPWk+OQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: JwwUlAvYp0G7dgjAZYg-jU3ffpkFnozf
-X-Proofpoint-ORIG-GUID: JwwUlAvYp0G7dgjAZYg-jU3ffpkFnozf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.858,Hydra:6.0.486,FMLib:17.11.64.514
- definitions=2022-04-27_04,2022-04-27_01,2022-02-23_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- lowpriorityscore=0 malwarescore=0 clxscore=1015 priorityscore=1501
- phishscore=0 adultscore=0 suspectscore=0 spamscore=0 bulkscore=0
- mlxlogscore=840 mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2202240000 definitions=main-2204270116
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="YQL4Kgl7t5S3uhFi"
+Content-Disposition: inline
+In-Reply-To: <CALGRKGMPDZXh8kZSifJ+XLKbi96LRHcYyJ=Jt9KGHPMmPWk+OQ@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,67 +101,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Eddie James <eajames@linux.ibm.com>, joel@jms.id.au
+Cc: "OpenBMC \(openbmc@lists.ozlabs.org\)" <openbmc@lists.ozlabs.org>,
+ Ed Tanous <edtanous@google.com>, Kasun Athukorala <kasunath@google.com>,
+ Willy Tu <wltu@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-In order to blink at the specified rate, the blinking LEDs
-need to maintain a 50% duty cycle. Therefore, don't use PWM0
-for any attempted brightness change, and set PWM0 when
-enabling blinking.
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
----
- drivers/leds/leds-pca955x.c | 17 ++++++++++-------
- 1 file changed, 10 insertions(+), 7 deletions(-)
+--YQL4Kgl7t5S3uhFi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/drivers/leds/leds-pca955x.c b/drivers/leds/leds-pca955x.c
-index 2570f92b6754..da93f04e4d10 100644
---- a/drivers/leds/leds-pca955x.c
-+++ b/drivers/leds/leds-pca955x.c
-@@ -289,17 +289,12 @@ static enum led_brightness pca955x_led_get(struct led_classdev *led_cdev)
- 
- 	switch (pca955x_ledstate(ls, pca955x_led->led_num % 4)) {
- 	case PCA955X_LS_LED_ON:
-+	case PCA955X_LS_BLINK0:
- 		ret = LED_FULL;
- 		break;
- 	case PCA955X_LS_LED_OFF:
- 		ret = LED_OFF;
- 		break;
--	case PCA955X_LS_BLINK0:
--		ret = pca955x_read_pwm(pca955x, 0, &pwm);
--		if (ret)
--			return ret;
--		ret = 256 - pwm;
--		break;
- 	case PCA955X_LS_BLINK1:
- 		ret = pca955x_read_pwm(pca955x, 1, &pwm);
- 		if (ret)
-@@ -332,7 +327,7 @@ static int pca955x_led_set(struct led_classdev *led_cdev,
- 			clear_bit(pca955x_led->led_num, &pca955x->active_blink);
- 			ls = pca955x_ledsel(ls, bit, PCA955X_LS_LED_OFF);
- 		} else {
--			ret = pca955x_write_pwm(pca955x, 0, 256 - value);
-+			/* No variable brightness for blinking LEDs */
- 			goto out;
- 		}
- 	} else {
-@@ -432,6 +427,14 @@ static int pca955x_led_blink(struct led_classdev *led_cdev,
- 			ret = pca955x_write_ls(pca955x, reg, ls);
- 			if (ret)
- 				goto out;
-+
-+			/*
-+			 * Force 50% duty cycle to maintain the specified
-+			 * blink rate.
-+			 */
-+			ret = pca955x_write_pwm(pca955x, 0, 128);
-+			if (ret)
-+				goto out;
- 		}
- 
- 		if (pca955x->blink_period != p) {
--- 
-2.27.0
+On Wed, Apr 27, 2022 at 11:03:29AM -0700, Brandon Kim wrote:
+> Let me know if the community would prefer I create a
+> GitHub Issue in the TOF repo
+> (https://github.com/openbmc/technical-oversight-forum/issues) instead.
 
+Yes, please do this.  One of the primary responsibilities of the TOF is
+to approve new repositories now.  Creating an issue will get it onto the
+agenda.
+
+--=20
+Patrick Williams
+
+--YQL4Kgl7t5S3uhFi
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmJpksgACgkQqwNHzC0A
+wRnHCA/8DJTFNP2hZIb1xn8i7k3inW7bZJsrhbKS31dug/fNsd1/JF9XbHZR9fGV
+6tP3SJINbGLQk1bbrfSLM7KpyqldhqaPS3LDAoluhfMmEVc0MqLQWxeuPK5KuYrJ
+u7+e7f+5BrpzWgqifcz+18VLLFugjfCWys07FDLc/IVdPJjTbll9YRaKLQ7/p7AZ
+H9QpbzJfC2Z0r2JWoNU/2hTSVYIRYITNn2n1/sNkDcT8Sgzzuo98Cpu7wygs9D6I
+RfIgMHFs/qLNHHFyTqYqoZHBhxDAI43jzTOzcB31au/7NPUzfJQpNcffvwTsi+PU
+eQXKvSmOfmr4ATIO29l7x3zf21zyptsJwkFoiNMuMPC+aU3mH/mwR81Jk9BmpbEf
+VlJ/zohuyHeqCItFeDsl9k2jYs06rR9U/C07p/Z5gJ95r+AWwjfWWHmXCAz76+68
+9ttjPY7YVP2eWhYse6dgayQvfFVbETZVnO2mP3H8WWIItuJ6Pg7G+1Jt8OsFHx7W
+DhefQT4+ENrcCtm98l7R3b5ZuTEwFpe+tjMQFqnsXfrNFeuOA4zpST+Xz14Td/sv
+Dw9oXHQirajpCewTXx75DbAy7u2wZmXegPcWI0x5eWodS3/iRkQjBmlRT9iKZQAp
+xnzikm6hUmMBzCbCosUOtPcpNxxDZHG7Wu+WCIAB/mwB/wZedJ8=
+=7KRT
+-----END PGP SIGNATURE-----
+
+--YQL4Kgl7t5S3uhFi--
