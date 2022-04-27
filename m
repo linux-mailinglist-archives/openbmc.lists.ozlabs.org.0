@@ -2,58 +2,92 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3D16A5118B4
-	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 16:19:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E346511C59
+	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 18:19:26 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KpLTs1Ky9z3c7V
-	for <lists+openbmc@lfdr.de>; Thu, 28 Apr 2022 00:19:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KpP8X1zZwz3dxT
+	for <lists+openbmc@lfdr.de>; Thu, 28 Apr 2022 02:19:24 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=NyqIXgpM;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=IvZaya0v;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=209.85.160.43; helo=mail-oa1-f43.google.com;
- envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
-Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com
- [209.85.160.43])
+ smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.21;
+ helo=wout5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
+ header.s=fm2 header.b=NyqIXgpM; 
+ dkim=pass (2048-bit key;
+ unprotected) header.d=messagingengine.com header.i=@messagingengine.com
+ header.a=rsa-sha256 header.s=fm1 header.b=IvZaya0v; 
+ dkim-atps=neutral
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com
+ [64.147.123.21])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KpLT70Hqfz2yK2
- for <openbmc@lists.ozlabs.org>; Thu, 28 Apr 2022 00:18:34 +1000 (AEST)
-Received: by mail-oa1-f43.google.com with SMTP id
- 586e51a60fabf-e2fa360f6dso2095401fac.2
- for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 07:18:34 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
- :message-id;
- bh=PhXcDgK09TfJ0k4/TcfwOYlktcKSTjsxAO+dgwid8sU=;
- b=4Wxh8cpJZMW2b3BNiKg3v9okMMW073ns/FsbRuqbQknu72rcu6r36QkQCFis7E4orN
- WLue+TFz3TEBy1q3in3+qRk6CoI5GNhLzoegvQjJuy+0V2sk8Smf9B96meqGbdA6eaRT
- 84Zx5MWV0rRgRfBz3/MFj/ghnt5LZXWbsu1SW7OY822s6U2xBt0iICYL/nMVO5RrFyKX
- fcPwVOEUDuHY84oQVKQCeQx7dIj/WWvxRYd5z94GTX/t4j/9F/X/oroCqUmHgyiJ3/na
- FzAhy6qgqGTtmTCrmKpzGU5yIwAWBGySDXKOUWOIgLsEHn/Vsa7/oRVlRRy0XQn6mepM
- J9GA==
-X-Gm-Message-State: AOAM5312NIPH69x10XrFcriBIP1afH6ICbeGCPhUhrjqZFzyUUbbnzPS
- IZIhsvXJJuSN3ixvkVtHuw==
-X-Google-Smtp-Source: ABdhPJzEazdYi+wBumpNxD6+bRTRjB1cnfTbRe3mJ/iYA6rFI8tXYvlUpz6mMwksoa3oLiTqbPubyQ==
-X-Received: by 2002:a05:6870:ea8d:b0:e6:135c:1a2e with SMTP id
- s13-20020a056870ea8d00b000e6135c1a2emr15718470oap.9.1651069109351; 
- Wed, 27 Apr 2022 07:18:29 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-144-107.dyn.grandenetworks.net.
- [66.90.144.107]) by smtp.gmail.com with ESMTPSA id
- b14-20020a056870160e00b000e915a9121csm672499oae.52.2022.04.27.07.18.28
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 27 Apr 2022 07:18:28 -0700 (PDT)
-Received: (nullmailer pid 4142584 invoked by uid 1000);
- Wed, 27 Apr 2022 14:18:28 -0000
-From: Rob Herring <robh@kernel.org>
-To: Zev Weiss <zev@bewilderbeest.net>
-In-Reply-To: <20220427010154.29749-2-zev@bewilderbeest.net>
-References: <20220427010154.29749-1-zev@bewilderbeest.net>
- <20220427010154.29749-2-zev@bewilderbeest.net>
-Subject: Re: [PATCH v4 1/7] dt-bindings: hwmon: Add nuvoton,nct6775
-Date: Wed, 27 Apr 2022 09:18:28 -0500
-Message-Id: <1651069108.145838.4142583.nullmailer@robh.at.kernel.org>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KpP1R4nTGz3dyF
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Apr 2022 02:13:14 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+ by mailout.west.internal (Postfix) with ESMTP id 2D732320097C;
+ Wed, 27 Apr 2022 12:13:09 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute3.internal (MEProxy); Wed, 27 Apr 2022 12:13:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+ :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:sender:subject
+ :subject:to:to; s=fm2; t=1651075988; x=1651162388; bh=VHUu/vM8XO
+ aL18DiyQ6j/8MAK7fvaarovQM7OyVnHpc=; b=NyqIXgpMRm5SIP0wADc6PtOzf4
+ jVmMGftBYWFGF7cMV9264ieD0iMdFILFaRuOoDztwo7Svnmc4M6geULnlw7SPQBa
+ DFKI+vKd0XHEbASnfQqStgp4+AaR2yWG8d7GgXq9ZtALJqpDjKdnVt3uHXVlD/AU
+ YNX86aPUbDGiIuzbd1xKPKaIPcqEJbQ1eXx0McU7nnclL85be/yKtzcQCg3R2EX8
+ 0TgMAYTW8gPRtb91b/BZMqBbKxA4GpVPjtEMTURnO+TeJN5ZCqtxErnfptATCSnD
+ zrF/uPxtgL8BCp8KqcScSTa75Amjft6Meb2evLh1ShND/OjodPSkR8u8NaUg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1651075988; x=
+ 1651162388; bh=VHUu/vM8XOaL18DiyQ6j/8MAK7fvaarovQM7OyVnHpc=; b=I
+ vZaya0vlZDGchuJKY0Eg0CnGoj6GdLnD4oazGexv7IgeCQUj8K4oVSAjbZDy0tMD
+ 5E0FQhYVHSnyUyQfa4VtXS839KYyC8KgU4Kc/Ez+CLCbmGMIGW7b1LX6DPUoGNou
+ aSR75dJ64hWhOla1qHjL4HqWuFnQqH9fO1RCRGauy/HZnKtw0U//ooRwI0U8R+/d
+ HrpyM+yK/09of7zbC19ObeeQShYE3vtJfztZHSg5vm8FftyMizXY6ZDFt3E4udc3
+ XUcGbfyiyTuPdPEQ0BNnEIP9grYLRnZoNgVJ7uwmQaPsUzOcuD+yOTF2JYwXe9wj
+ KqvqtXUE7sFHz4pzv/EWg==
+X-ME-Sender: <xms:lGtpYmBQFkky_uky0jnqjFw0fmwbeWsyIgbNS8kM5K9QLg43YqN1LQ>
+ <xme:lGtpYgiVLMsiVgyWxXv59ZVCi9OcAF9cRmaXyOsnbX7lCO6u-IT0cc1JAmQkcWmLq
+ 2_pP-8JFx-ihja8JWg>
+X-ME-Received: <xmr:lGtpYpn8oNpF64Z58e54XfDzkmzrx0UCzulAS6D77kt6zBNcI99qZcq_PTZukdxgrxNb_s3UK4RyY__hF7kDDhhhhUREgfCypow>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudehgdelgecutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+ uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+ hrlhcuvffnffculddvfedmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddt
+ vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+ htfigtgidrgiihiieqnecuggftrfgrthhtvghrnheptdetudeujeehjedutdfgffekfeel
+ heeguedvvdeviefhueekffdugffgueevgeegnecuffhomhgrihhnpehgihhthhhusgdrtg
+ homhdpfhhorhhmrghtqdgtohguvgdrshhhnecuvehluhhsthgvrhfuihiivgeptdenucfr
+ rghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:lGtpYkxvbIk3omXdmvrEpZAAfkJihPnKUElN0Tj4w0EMEyTXf5jQRA>
+ <xmx:lGtpYrRvfa1rwFkx7DXeYB-KiINh-v0dL2BTuozbynZ4MxF2lLx3Ow>
+ <xmx:lGtpYvbjmiNMXH6Oi_Aeeca_K0impyMf6w-bZ-7N2tcVdFpJfYvsOw>
+ <xmx:lGtpYiKYbXWWXuIKWhWk-Y3irM4e_LFAbyRo8In_yXdkyIXMpo-0nw>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 27 Apr 2022 12:13:07 -0400 (EDT)
+Date: Wed, 27 Apr 2022 11:13:06 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: "i.kononenko" <i.kononenko@yadro.com>
+Subject: Re: phosphor-misc: CI Build failure
+Message-ID: <Ymlrkt3HmnHuY1Ag@heinlein.stwcx.org.github.beta.tailscale.net>
+References: <7a071d50-b581-2623-d439-d134f805f228@yadro.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature"; boundary="bpMPcvgU3O/qvVSe"
+Content-Disposition: inline
+In-Reply-To: <7a071d50-b581-2623-d439-d134f805f228@yadro.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,64 +99,73 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
- Jean Delvare <jdelvare@suse.com>, linux-kernel@vger.kernel.org,
- openbmc@lists.ozlabs.org, Oleksandr Natalenko <oleksandr@natalenko.name>,
- Krzysztof Kozlowski <krzk@kernel.org>, Renze Nicolai <renze@rnplus.nl>,
- Rob Herring <robh+dt@kernel.org>, Guenter Roeck <linux@roeck-us.net>
+Cc: "Brad Bishop \(Code Review\)" <gerrit@openbmc-project.xyz>,
+ OpenBMC MailList OZLabs <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 26 Apr 2022 18:01:48 -0700, Zev Weiss wrote:
-> These Super I/O chips have an i2c interface that some systems expose
-> to a BMC; the BMC's device tree can now describe that via this
-> binding.
-> 
-> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-> ---
->  .../bindings/hwmon/nuvoton,nct6775.yaml       | 56 +++++++++++++++++++
->  1 file changed, 56 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/hwmon/nuvoton,nct6775.yaml
-> 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+--bpMPcvgU3O/qvVSe
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-yamllint warnings/errors:
+On Wed, Apr 27, 2022 at 04:39:01PM +0300, i.kononenko wrote:
+> Hello.                                                                 =
+=20
+>=20
+> Today I was received notice of the phosphor-misc CI build failed due to=
+=20
+> many `shellcheck` verify failed.  The last build (where CI fail was    =
+=20
+> found) related to the gerrit change [1] according add support RNDIS and=
+=20
+> EEM network feature, but `shellchek` raise too many error about another=
+=20
+> code that hasn't been changed.                                         =
+=20
 
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/hwmon/nuvoton,nct6775.yaml: properties:nuvoton,tsi-channel-mask: 'oneOf' conditional failed, one must be fixed:
-	'type' is a required property
-		hint: A vendor boolean property can use "type: boolean"
-	Additional properties are not allowed ('default', 'maximum' were unexpected)
-		hint: A vendor boolean property can use "type: boolean"
-	/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/hwmon/nuvoton,nct6775.yaml: properties:nuvoton,tsi-channel-mask: 'oneOf' conditional failed, one must be fixed:
-		'enum' is a required property
-		'const' is a required property
-		hint: A vendor string property with exact values has an implicit type
-		from schema $id: http://devicetree.org/meta-schemas/vendor-props.yaml#
-	/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/hwmon/nuvoton,nct6775.yaml: properties:nuvoton,tsi-channel-mask: 'oneOf' conditional failed, one must be fixed:
-		'$ref' is a required property
-		'allOf' is a required property
-		hint: A vendor property needs a $ref to types.yaml
-		from schema $id: http://devicetree.org/meta-schemas/vendor-props.yaml#
-	hint: Vendor specific properties must have a type and description unless they have a defined, common suffix.
-	from schema $id: http://devicetree.org/meta-schemas/vendor-props.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/hwmon/nuvoton,nct6775.yaml: ignoring, error in schema: properties: nuvoton,tsi-channel-mask
-Documentation/devicetree/bindings/hwmon/nuvoton,nct6775.example.dtb:0:0: /example-0/i2c/superio@4d: failed to match any schema with compatible: ['nuvoton,nct6779']
+I took a look at the failure and it is not due to shellcheck.  We run
+shellcheck every where but it only fails the build if the .shellcheck
+file is present, which this repo does not have[1].
 
-doc reference errors (make refcheckdocs):
+The failure here is that a more recent version of Meson is upset if
+options are passed which are not supported.  This appears to be the case
+in this repo:
 
-See https://patchwork.ozlabs.org/patch/
+```
+/data0/jenkins/workspace/ci-repository/openbmc/phosphor-misc > meson config=
+ure build -Db_sanitize=3Daddress,undefined -Db_lundef=3Dfalse
 
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
+ERROR: Unknown options: "b_lundef, b_sanitize"
+```
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+We'll need to clean up whatever is going on with the meson calls here.
 
-pip3 install dtschema --upgrade
+1. https://github.com/openbmc/openbmc-build-scripts/blob/ac5915f07d3b796f22=
+4c85477763ca7fe893dcc2/scripts/format-code.sh#L64
 
-Please check and re-submit.
+--=20
+Patrick Williams
 
+--bpMPcvgU3O/qvVSe
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmJpa5EACgkQqwNHzC0A
+wRkylQ//RSMAWHnknKxzUZ+76RIBIM+SIkeGPuevYq438iKbbrTZXUkYoBOVtP8N
+mYYanMPzARMmDyeM816XpLV4KWULuqkCFtBdxbq3Vf536j3FPuvGev7cYw7J4DDX
+VWeP6GjVuJIQdY+6HpBqgRs1VTgOLN2bii4qE9BwL7ythU3pghvXAFib2fPaRe6i
+q4BexV/XRC6AIcG/ukfuL1IKVY5TLiVcBA/oT5gRRf6sVfmoc7KFnH4JNbjoo5O2
+0FDOKsRubgdNNRIVqNDFAHg++hlxrHeXCdR3mT+F9JP9gnhICzuKD7/E2ZHbrVsx
+/LWsiIguosG13lsz2HJ3Mt6jUgD40YWVzcXzuhJQpw7Kd/lSXwgLZX7YIKjTK8jk
++B5IraXmPctu8Q2zbfOiCBrW8IqevbEDk2qTYdY+KX6HgYuuO8s8aouB4we2gQwj
+84+pLCDgtMyUB6cotbWTQWZY3Seb4+2LAOaA9W+gY2TAWXYGULfCcOBtFoJjvSQT
+ksl7iD7VblOw6nnB9TQ+dtwLXKFu/0ABoaOM2yQ4/ZI8ONZBeDLZMZJ+Oyg9xo4u
+GZ8GD7aT1trdmTo87/9uNYeSfamXF+bZrp8utbEHCs1aO0xfH18W+2UWvGpcAp1c
+enIhVkdMoVUKLjvJHGmJKgmexWZX73WjSo1u/zUxnuTDvTZuCyI=
+=fW86
+-----END PGP SIGNATURE-----
+
+--bpMPcvgU3O/qvVSe--
