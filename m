@@ -2,93 +2,58 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF9035116BF
-	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 14:31:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0184051187A
+	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 15:47:48 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KpJ5j5c77z3bbV
-	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 22:31:37 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=OmKfG9e8;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KpKnY60rHz3c5C
+	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 23:47:45 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=OmKfG9e8; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=kaod.org (client-ip=46.105.33.25; helo=7.mo548.mail-out.ovh.net;
+ envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
+X-Greylist: delayed 603 seconds by postgrey-1.36 at boromir;
+ Wed, 27 Apr 2022 23:47:27 AEST
+Received: from 7.mo548.mail-out.ovh.net (7.mo548.mail-out.ovh.net
+ [46.105.33.25])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KpJ5D3GZKz2yMS
- for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 22:31:11 +1000 (AEST)
-Received: from pps.filterd (m0098394.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 23R9Oif2007760
- for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 12:31:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date : to :
- from : subject : content-type : content-transfer-encoding : mime-version;
- s=pp1; bh=ST3gm5dRN7gi+2cZ4fOKCc0VFOcGiMZ4anyRawf6tQc=;
- b=OmKfG9e89zJVAV7oG8ydtpCC2WaAHv8h/TfLKJKT/QnlqOll0wad3ue/3pLx7fDN72yX
- gZdzCMVGtxaL8HQYju0BsIxdlaKQ0B73WMD/BKOgVhUBTMJqAGTxAPD7dvXXLggi+rOK
- WWKPHGjkfkzryt4JU7eGcCtamFZ2X3XXqeM/D6Dt5G+SRxatpj8EoaDG9mnPZplL1ZwI
- VHQ3OJ6v2oG2N/lzNNbhvqg/NOi4p0ZMrUJmHtpz3luc9w28C4Z75dE0y9Fr/KyghmiV
- Jz/LVCjo9jO2SRjarm9a7foQUPuwizbOCH+SD45cRWTgjgcBGNPd9bJXtQd7zhIaYWro IQ== 
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3fpv1ejhw9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 12:31:09 +0000
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 23RCCk0F025987
- for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 12:31:08 GMT
-Received: from b03cxnp07029.gho.boulder.ibm.com
- (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
- by ppma03dal.us.ibm.com with ESMTP id 3fm93a2xwv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 12:31:08 +0000
-Received: from b03ledav001.gho.boulder.ibm.com
- (b03ledav001.gho.boulder.ibm.com [9.17.130.232])
- by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 23RCV74t31261154
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 12:31:07 GMT
-Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2B7DB6E066
- for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 12:31:07 +0000 (GMT)
-Received: from b03ledav001.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id EEEA16E056
- for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 12:31:06 +0000 (GMT)
-Received: from [9.65.238.111] (unknown [9.65.238.111])
- by b03ledav001.gho.boulder.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 12:31:06 +0000 (GMT)
-Message-ID: <0b3f41c1-476b-bd94-3351-69faf93b2e82@linux.ibm.com>
-Date: Wed, 27 Apr 2022 07:31:05 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.6.0
-Content-Language: en-US
-To: openbmc <openbmc@lists.ozlabs.org>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Security Working Group meeting - Wednesday April 27
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: _hJMfiLwRIuwXkmDe1pV5rpUJlrIdIoz
-X-Proofpoint-GUID: _hJMfiLwRIuwXkmDe1pV5rpUJlrIdIoz
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KpKnC3j4Hz3bbs
+ for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 23:47:26 +1000 (AEST)
+Received: from mxplan5.mail.ovh.net (unknown [10.109.156.102])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id B36F6206B6;
+ Wed, 27 Apr 2022 13:31:31 +0000 (UTC)
+Received: from kaod.org (37.59.142.105) by DAG4EX1.mxp5.local (172.16.2.31)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.24; Wed, 27 Apr
+ 2022 15:31:31 +0200
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-105G006a82e225d-9d42-49c3-adac-7c9f9c4edfb9,
+ 17BF23367636C0D6DAFD61CED3DAD67CB3096C97) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <c60bf907-70bf-94ff-42da-d53b75cdc35b@kaod.org>
+Date: Wed, 27 Apr 2022 15:31:30 +0200
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.858,Hydra:6.0.486,FMLib:17.11.64.514
- definitions=2022-04-27_04,2022-04-27_01,2022-02-23_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 bulkscore=0
- spamscore=0 priorityscore=1501 phishscore=0 adultscore=0 mlxscore=0
- mlxlogscore=619 lowpriorityscore=0 clxscore=1015 malwarescore=0
- impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2202240000 definitions=main-2204270082
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: aspeed: spi driver: fmc wdt2
+Content-Language: en-US
+To: =?UTF-8?B?5byg5YGl?= <zhangjian.3032@bytedance.com>, openbmc
+ <openbmc@lists.ozlabs.org>
+References: <CA+J-oUs6V5HGw9kekOW0YAbpTC-P79WWZti21tJ1n86pMsVKiw@mail.gmail.com>
+From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <CA+J-oUs6V5HGw9kekOW0YAbpTC-P79WWZti21tJ1n86pMsVKiw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.105]
+X-ClientProxiedBy: DAG4EX2.mxp5.local (172.16.2.32) To DAG4EX1.mxp5.local
+ (172.16.2.31)
+X-Ovh-Tracer-GUID: b285efbe-1e97-4496-b43b-38a904a744de
+X-Ovh-Tracer-Id: 5022358010003360733
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: 0
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvfedrudehgdeivdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecunecujfgurhepkfffgggfuffvvehfhfgjtgfgihesthekredttdefjeenucfhrhhomhepveorughrihgtpgfnvggpifhorghtvghruceotghlgheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpeejgefggffgheejgfdufeeiueffveehteejgfelueekgfegtefgffejhedtgfejgfenucffohhmrghinhepghhithhhuhgsrdgtohhmnecukfhppedtrddtrddtrddtpdefjedrheelrddugedvrddutdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmohguvgepshhmthhpohhuthdphhgvlhhopehmgihplhgrnhehrdhmrghilhdrohhvhhdrnhgvthdpihhnvghtpedtrddtrddtrddtpdhmrghilhhfrhhomheptghlgheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopedupdhrtghpthhtohepjhhovghlsehjmhhsrdhiugdrrghu
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,23 +65,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "joel@jms.id.au" <joel@jms.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a reminder of the OpenBMC Security Working Group meeting 
-scheduled for this Wednesday April 27 at 10:00am PDT.
+On 4/26/22 16:09, 张健 wrote:
+> Hi Guys;
+> 
+> I would like implement the flash toggle function in ast2600.
 
-We'll discuss the following items on the agenda 
-<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
-and anything else that comes up:
+It would be nice to have the support in QEMU also.
 
-1.
+> That function about ast2400/2500 implement at linux/aspeed_wdt.c at aspeed-master-v5.15 · AspeedTech-BMC/linux ( <https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v5.15/drivers/watchdog/aspeed_wdt.c#L172>github.com <https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v5.15/drivers/watchdog/aspeed_wdt.c#L172>) <https://github.com/AspeedTech-BMC/linux/blob/aspeed-master-v5.15/drivers/watchdog/aspeed_wdt.c#L172>
+> 
+> Here is my design, just an idea. I would like to see your suggestions. Thanks.
+> 
+> There are some differences between ast2600 and ast2500/2400. For the ast2600 SoC abr function, there is a set of registers named `FMC_WDT2` in FMC(SPI).
+> FMC_WDT2 is not a full function WDT, thus, I can't use aspeed_wdt driver to do that.
 
 
+yes. The FMC_WDT2 is a standalone logic under FMC which is simplified
+compared to the other watchdogs.
 
+I spent sometime adding WDT2 on the FMC AST2600 (not mainline but in OpenBMC
+QEMU) but I didn't handle the CS switch. It shouldn't be too hard.
 
-Access, agenda and notes are in the wiki:
-https://github.com/openbmc/openbmc/wiki/Security-working-group 
-<https://github.com/openbmc/openbmc/wiki/Security-working-group>
+Keep me updated on your progress.
 
-- Joseph
+Thanks,
+
+C.
+
+> In ast2400/2500 used a sysfs attr `access_cs0`, can make cs0->cs1 and cs1->cs0.
+> For cs0->cs1, ast2400/2500 use the wdt2's self timer, cs1->cs0, use `access_cs0` to set the `flash indicate` bit.
+> But ast2600 without the FMC_WDT2 timer driver to trigger `cs0`->`cs1`, thus, I would like to add 2 sysfs attrs in spi driver.
+> Because ast2600 supports single image abr mode, i'd like to use primary/backup instead of cs0/1.
+> 
+> attr1 "access_backup": (only appears in primary and compatible is "aspeed,ast2600-fmc")
+> store: The parameter is the timeout time for fmc_wdt2, if written, timer will be enabled, if timeout, will reboot from backup.
+> show: the time left in fmc_wdt2 timer. 0 means timer is not enabled.
+> 
+> attr2 "access_primary”: (only appears in backup, and compatible is "aspeed,ast2600-fmc")
+> store: Non-zero values indicate access to primary, 0 indicate access to backup
+> show: 0: next reboot will boot from backup, 1 : will boot from primary.
+> 
+> 
+> 
+> 
+
