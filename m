@@ -1,55 +1,58 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 31295510FAC
-	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 05:52:00 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 27B0D51117E
+	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 08:45:12 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Kp4Z603xRz3bZp
-	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 13:51:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Kp8Py0Xhhz3bdq
+	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 16:45:10 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=JJlNVM5S;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=foeAGPh8;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
+ smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
  helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=JJlNVM5S; 
+ header.a=rsa-sha256 header.s=thorn header.b=foeAGPh8; 
  dkim-atps=neutral
 Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
- [IPv6:2605:2700:0:5::4713:9cab])
+ [71.19.156.171])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Kp4Yh6VkFz2xlF
- for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 13:51:36 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Kp8PY4LRMz2xtQ
+ for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 16:44:49 +1000 (AEST)
 Received: from hatter.bewilderbeest.net (174-21-163-222.tukw.qwest.net
  [174.21.163.222])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 4AD74137;
- Tue, 26 Apr 2022 20:51:34 -0700 (PDT)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 94A401BA;
+ Tue, 26 Apr 2022 23:44:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
- s=thorn; t=1651031494;
- bh=fiHBh/Fh5zEGAH6yN71KI47zEv55JXWMRQICkzrdU2Q=;
- h=From:To:Cc:Subject:Date:From;
- b=JJlNVM5S2ycrHAuvWGNKCO+mC+eSG/qH5Awg4cMw8+4eeMZT3ECtCKsI/ovXbPBGo
- Vg5TRiNzlq+t0KMUAL7GQWvn4TyqFRkcZ9RBOtNPAlWJU27ol0HfUtw2YQBlyVORYz
- fGUY4P62bEwjyACYYnycdeBHjLGrlIxugI3lD7ig=
+ s=thorn; t=1651041884;
+ bh=Pc/P965/OJeehYyicfBvk821lPIWQ3ALNZy/rCj/WUw=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=foeAGPh8IshQudsNi3FtMgXt5RQKupidc5utcg6pJ0R1r6FjqNlVtUXQW5xwSijDa
+ 0moau1aY1QU0jWseodPxgoHK2iBADT0ddLoE1DGzFdwhqgVagZ3y3fymCG2D1rMCUU
+ yGZSzchECmBbKnbjx4tklTDTakXcwJVWwyqn3Wnk=
+Date: Tue, 26 Apr 2022 23:44:40 -0700
 From: Zev Weiss <zev@bewilderbeest.net>
-To: Guenter Roeck <linux@roeck-us.net>, Jean Delvare <jdelvare@suse.com>,
- linux-hwmon@vger.kernel.org
-Subject: [PATCH] hwmon: (pmbus) delta-ahe50dc-fan: work around hardware quirk
-Date: Tue, 26 Apr 2022 20:51:09 -0700
-Message-Id: <20220427035109.3819-1-zev@bewilderbeest.net>
-X-Mailer: git-send-email 2.36.0
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v4 1/7] dt-bindings: hwmon: Add nuvoton,nct6775
+Message-ID: <YmjmWNUpCAFYesyk@hatter.bewilderbeest.net>
+References: <20220427010154.29749-1-zev@bewilderbeest.net>
+ <20220427010154.29749-2-zev@bewilderbeest.net>
+ <178b9310-a854-dfa6-a4f3-f971b608abe3@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <178b9310-a854-dfa6-a4f3-f971b608abe3@linaro.org>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,55 +64,97 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: stable@vger.kernel.org, openbmc@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, Zev Weiss <zev@bewilderbeest.net>
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org,
+ Jean Delvare <jdelvare@suse.com>, linux-kernel@vger.kernel.org,
+ openbmc@lists.ozlabs.org, Oleksandr Natalenko <oleksandr@natalenko.name>,
+ Renze Nicolai <renze@rnplus.nl>, Rob Herring <robh+dt@kernel.org>,
+ Guenter Roeck <linux@roeck-us.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-CLEAR_FAULTS commands can apparently sometimes trigger catastrophic
-power output glitches on the ahe-50dc, so block them from being sent
-at all.
+On Tue, Apr 26, 2022 at 11:04:30PM PDT, Krzysztof Kozlowski wrote:
+>On 27/04/2022 03:01, Zev Weiss wrote:
+>> These Super I/O chips have an i2c interface that some systems expose
+>> to a BMC; the BMC's device tree can now describe that via this
+>> binding.
+>>
+>> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+>
+>I already reviewed it so I guess you did not include the tag because of
+>significant changes?
+>
 
-Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-Cc: stable@vger.kernel.org
----
- drivers/hwmon/pmbus/delta-ahe50dc-fan.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+Yeah, the nuvoton,tsi-channel-mask property is new this round, so I 
+dropped the previous R-B -- and since it looks like I missed some stuff, 
+thanks for taking another look (though perhaps some of it could have 
+been avoided if I'd remembered to run 'make dt_binding_check').
 
-diff --git a/drivers/hwmon/pmbus/delta-ahe50dc-fan.c b/drivers/hwmon/pmbus/delta-ahe50dc-fan.c
-index 40dffd9c4cbf..f546f0c12497 100644
---- a/drivers/hwmon/pmbus/delta-ahe50dc-fan.c
-+++ b/drivers/hwmon/pmbus/delta-ahe50dc-fan.c
-@@ -14,6 +14,21 @@
- 
- #define AHE50DC_PMBUS_READ_TEMP4 0xd0
- 
-+static int ahe50dc_fan_write_byte(struct i2c_client *client, int page, u8 value)
-+{
-+	/*
-+	 * The CLEAR_FAULTS operation seems to sometimes (unpredictably, perhaps
-+	 * 5% of the time or so) trigger a problematic phenomenon in which the
-+	 * fan speeds surge momentarily and at least some (perhaps all?) of the
-+	 * system's power outputs experience a glitch.
-+	 *
-+	 * However, according to Delta it should be OK to simply not send any
-+	 * CLEAR_FAULTS commands (the device doesn't seem to be capable of
-+	 * reporting any faults anyway), so just blackhole them unconditionally.
-+	 */
-+	return value == PMBUS_CLEAR_FAULTS ? -EOPNOTSUPP : -ENODATA;
-+}
-+
- static int ahe50dc_fan_read_word_data(struct i2c_client *client, int page, int phase, int reg)
- {
- 	/* temp1 in (virtual) page 1 is remapped to mfr-specific temp4 */
-@@ -68,6 +83,7 @@ static struct pmbus_driver_info ahe50dc_fan_info = {
- 		PMBUS_HAVE_VIN | PMBUS_HAVE_FAN12 | PMBUS_HAVE_FAN34 |
- 		PMBUS_HAVE_STATUS_FAN12 | PMBUS_HAVE_STATUS_FAN34 | PMBUS_PAGE_VIRTUAL,
- 	.func[1] = PMBUS_HAVE_TEMP | PMBUS_PAGE_VIRTUAL,
-+	.write_byte = ahe50dc_fan_write_byte,
- 	.read_word_data = ahe50dc_fan_read_word_data,
- };
- 
--- 
-2.36.0
+>> ---
+>>  .../bindings/hwmon/nuvoton,nct6775.yaml       | 56 +++++++++++++++++++
+>>  1 file changed, 56 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/hwmon/nuvoton,nct6775.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/hwmon/nuvoton,nct6775.yaml b/Documentation/devicetree/bindings/hwmon/nuvoton,nct6775.yaml
+>> new file mode 100644
+>> index 000000000000..418477374fdb
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/hwmon/nuvoton,nct6775.yaml
+>> @@ -0,0 +1,56 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +
+>> +$id: http://devicetree.org/schemas/hwmon/nuvoton,nct6775.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Nuvoton NCT6775 and compatible Super I/O chips
+>> +
+>> +maintainers:
+>> +  - Zev Weiss <zev@bewilderbeest.net>
+>> +
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - nuvoton,nct6106
+>> +      - nuvoton,nct6116
+>> +      - nuvoton,nct6775
+>> +      - nuvoton,nct6776
+>> +      - nuvoton,nct6779
+>> +      - nuvoton,nct6791
+>> +      - nuvoton,nct6792
+>> +      - nuvoton,nct6793
+>> +      - nuvoton,nct6795
+>> +      - nuvoton,nct6796
+>> +      - nuvoton,nct6797
+>> +      - nuvoton,nct6798
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  nuvoton,tsi-channel-mask:
+>> +    description:
+>> +      Bitmask indicating which TSI temperature sensor channels are
+>> +      active.  LSB is TSI0, bit 1 is TSI1, etc.
+>
+>Need a type/ref.
+>
+
+Ack, thanks.
+
+>> +    maximum: 0xff
+>> +    default: 0
+>
+>Since by default it is disabled, doesn't it make a required property?
+>IOW, if you add a node without this mask, will the device operate
+>properly and usefully?
+>
+
+Yeah, zero active TSI channels is a totally legitimate way for these 
+devices to operate.  TSI is just an optional source of additional 
+temperature readings that's used on some (AMD) systems; all the basic 
+Super I/O functionality works fine without it.
+
+
+Thanks,
+Zev
 
