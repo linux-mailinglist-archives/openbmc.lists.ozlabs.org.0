@@ -2,71 +2,54 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A96B510C0F
-	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 00:27:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 51FAF510D96
+	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 03:02:59 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KnxMF6hwXz301s
-	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 08:27:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Kp0q51Y0jz3bpf
+	for <lists+openbmc@lfdr.de>; Wed, 27 Apr 2022 11:02:57 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=RP4ihxzh;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=arndb.de
- (client-ip=212.227.17.24; helo=mout.kundenserver.de;
- envelope-from=arnd@arndb.de; receiver=<UNKNOWN>)
-Received: from mout.kundenserver.de (mout.kundenserver.de [212.227.17.24])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=RP4ihxzh; 
+ dkim-atps=neutral
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [IPv6:2605:2700:0:5::4713:9cab])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KnxLz4Pv5z2xZB
- for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 08:26:50 +1000 (AEST)
-Received: from mail-yw1-f171.google.com ([209.85.128.171]) by
- mrelayeu.kundenserver.de (mreue109 [213.165.67.113]) with ESMTPSA (Nemesis)
- id 1MAORp-1nZHIM3WeJ-00BrPp for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022
- 00:26:46 +0200
-Received: by mail-yw1-f171.google.com with SMTP id
- 00721157ae682-2f7c424c66cso193297b3.1
- for <openbmc@lists.ozlabs.org>; Tue, 26 Apr 2022 15:26:45 -0700 (PDT)
-X-Gm-Message-State: AOAM530u9yQ58SeryFDCuxv1DSbfPxwSMuQ4HL0htrYb0oNs6+zAfVM0
- Mva0NOX4q/QMCAutCOPetSMj8RUWqtxdEWvxnuQ=
-X-Google-Smtp-Source: ABdhPJyC0LoJVNwBAD4ynQWDeVjHEA5B8GtrMZ9XSvaUD6FA2vbbZNGwJPehjny6QhUEkNHAItWM3zedUmoHsTkgLY8=
-X-Received: by 2002:a81:2305:0:b0:2f7:dadb:2162 with SMTP id
- j5-20020a812305000000b002f7dadb2162mr13216162ywj.42.1651012004174; Tue, 26
- Apr 2022 15:26:44 -0700 (PDT)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Kp0pm2sbFz2xnS
+ for <openbmc@lists.ozlabs.org>; Wed, 27 Apr 2022 11:02:39 +1000 (AEST)
+Received: from hatter.bewilderbeest.net (174-21-163-222.tukw.qwest.net
+ [174.21.163.222])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 933D91B3;
+ Tue, 26 Apr 2022 18:02:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1651021357;
+ bh=EeIK9PTg8rt6iLK9xsWDK8s27aTwF2TDPocS/GpHidw=;
+ h=From:To:Cc:Subject:Date:From;
+ b=RP4ihxzhTiLuLRHmFcRKfLNc6MiWABggR5EhKClQ/AQCg03BS53P/B1CwLuDOMKEY
+ TKypMdoURE7BoEDEBJppH1ifp9cuskSnYxwsLPiim97InbREi16MIw5+GXEqfl3OGO
+ ZniQuLPOupww1kEarHX+QuthS/MBu/4lEDqnIir0=
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Guenter Roeck <linux@roeck-us.net>, Jean Delvare <jdelvare@suse.com>,
+ linux-hwmon@vger.kernel.org
+Subject: [PATCH v4 0/7] hwmon: (nct6775) Convert to regmap, add i2c support
+Date: Tue, 26 Apr 2022 18:01:47 -0700
+Message-Id: <20220427010154.29749-1-zev@bewilderbeest.net>
+X-Mailer: git-send-email 2.36.0
 MIME-Version: 1.0
-References: <20220421192132.109954-1-nick.hawkins@hpe.com>
- <20220421192132.109954-5-nick.hawkins@hpe.com>
- <CAK8P3a0nQ1BrtfBJ7sUSaLkA=pbVwx83bEUpZczvLOSOHDR=dw@mail.gmail.com>
- <CACRpkdbJ1N7VOgoBzGS+cOaErFcYiOVDeWRmhPyHA7=9W0CGhA@mail.gmail.com>
- <CAK8P3a2ie8kFYstCYr6FO6+yFw7VxyJjWYyy9b+rUHu_u0YXPg@mail.gmail.com>
- <YmhmXl5IWHmKzAyG@robh.at.kernel.org>
- <CAK8P3a3+TGSJgJ2-mgj+NjT3k8uuUpesLErwqZ2M_dkNqbMXXQ@mail.gmail.com>
- <CAL_JsqKqB+Fas1NOmAq+ocG8KY6ugOiZ_o6e9=5unzf5-ku5Ag@mail.gmail.com>
-In-Reply-To: <CAL_JsqKqB+Fas1NOmAq+ocG8KY6ugOiZ_o6e9=5unzf5-ku5Ag@mail.gmail.com>
-From: Arnd Bergmann <arnd@arndb.de>
-Date: Wed, 27 Apr 2022 00:26:28 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a15eWvt9hWx66iR-qtxYOrYHNJhpvnfqh=j+nLOfOSE8Q@mail.gmail.com>
-Message-ID: <CAK8P3a15eWvt9hWx66iR-qtxYOrYHNJhpvnfqh=j+nLOfOSE8Q@mail.gmail.com>
-Subject: Re: [PATCH v5 04/11] clocksource/drivers: Add HPE GXP timer
-To: Rob Herring <robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:fSRPrtDs3Wb2QfADopXJyxG2ACiw+6goijChC1iGIVVLtnTnN41
- 1aPmdFigAjnTgO79iZ+/zZsK1MreI7yLu0QQwybAyffBeSBcuhT6o0IrKDBdSgwJD664aBq
- VbchMbIlRhiSHkpHOh8r3wP5OLa26xg+CJ+Ubjm1tBWwQ0cpNCk3AfLIN4oEi5Q07m3Ei8k
- Nf145nIOjGkG6KMu914tA==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:zpyC4sSWBCI=:r13aOOLiYOaNb0Eo3pwc8K
- pu4RmJf3RKHRA7frQg8F3UhvAnrDRznLXFV28w9T7Fnw7JGKfcqyu2PyHrnnwsR97QTuT/YFm
- reaQi7PxCSBSpKcxHfZfaE7LsJaRGPnUQEt9Nm89VvJqf/9XSCWV0SUoxo2eL5/fITEQCOaEw
- EvypwWFx0rYcJQpQ/ZXlMhjIWzqX8NEM9ZgFaH0LYE/dsC8m03JvCqURF9wGcwIfmEjJqs0N6
- Kbl8TsMna3t4odlDELv0sCKsoiY3vzg+gqKBIiNFjrhIkpG+nAjz5cBx8Hlv0kr4DEjd5muNU
- JY21aWCbWe0YapLY8/NEdzbwgXPagz3LGgRxnFIFa/9fQkT0Ll7Yc/cDDCvtP2rCG4Izh47Zl
- 9DH1jQNiWW0zk7P4dTeGvki+p/RpMQcCAk+XHDtHB2IIQZ7oCgUrzACuZKQ4Ds/0PiexcYb9B
- S3FeEKVGLsURf3m1DpP5CAtvBxH5QtHV14vnGbV4CxYz0ExHyFd94VNSTZEvHnZXcuuXvTeOD
- igwII7aT52q1HjN743K3AW9SnLqyxhn8YjS3v1r+8XrT3/OxO9L4ijHtA97vB/mDopj62IpU1
- c5PP2PbCTDvnMI3m7jpZZ1lJdItoIWZt+yJ9C7CkDmfQZk8NlMXoCTsXNAHaKLzmq0/pb2XuL
- BbI4S2o3fowsz34wtAWis4c+mrO7v6M/H2DTv82W+YIM18HnZ+PV+ogvDDggNQuAME/MmUvtB
- JA5eZ5Ow0j+9Qn1mf5nVoESoVzyspcM5mmxf932UpKPD0SPidqGhHi6PpKb53LQYxUF+EcthK
- Th0ZRDIHEWTSntHrQsSOnjkYtR+oh3Nrszr0gWYajOBgAZH3kc=
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,46 +61,143 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Arnd Bergmann <arnd@arndb.de>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, "Verdun,
- Jean-Marie" <verdun@hpe.com>, Joel Stanley <joel@jms.id.au>, "Hawkins,
- Nick" <nick.hawkins@hpe.com>, Thomas Gleixner <tglx@linutronix.de>,
- Linus Walleij <linus.walleij@linaro.org>
+Cc: devicetree@vger.kernel.org, Zev Weiss <zev@bewilderbeest.net>,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+ Krzysztof Kozlowski <krzk@kernel.org>,
+ Oleksandr Natalenko <oleksandr@natalenko.name>,
+ Rob Herring <robh+dt@kernel.org>, Renze Nicolai <renze@rnplus.nl>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Apr 27, 2022 at 12:04 AM Rob Herring <robh@kernel.org> wrote:
->
-> On Tue, Apr 26, 2022 at 4:55 PM Arnd Bergmann <arnd@arndb.de> wrote:
-> >
-> > On Tue, Apr 26, 2022 at 11:38 PM Rob Herring <robh@kernel.org> wrote:
-> > > On Tue, Apr 26, 2022 at 08:00:20AM +0200, Arnd Bergmann wrote:
-> > > > On Mon, Apr 25, 2022 at 10:38 PM Linus Walleij <linus.walleij@linaro.org> wrote:
-> >
-> > > > There are multiple ways of doing this that we already discussed
-> > > > in the thread. The easiest is probably to have a child node without
-> > > > custom registers in the DT and then use the DT helpers to
-> > > > populate the linux devices with the correct data.
-> > >
-> > > I think that's what the wdt binding is doing, but I don't like that.
-> > > Maybe it's not a child node, I can't tell.
-> > >
-> > > Bindings should not be decided on the *current* driver split on one
-> > > particular OS. This looks like 1 block, so 1 node.
-> >
-> > Fair enough.
-> >
-> > > If that doesn't work well or easy for Linux, then we should fix Linux.
-> >
-> > Doing a simple platform_device_create_pdata() should work fine here,
-> > the only problem that might exist is if the wdt driver needs access to
-> > DT properties, as we can't have both devices refer to the same of_node
-> > pointer,
->
-> Why not? There's even a struct device flag for that.
+Hello,
 
-Ah, I forgot about ->of_node_reused, that should work then if
-it needs access to properties.
+This is v4 of my effort to add i2c support to the nct6775 hwmon
+driver.
 
-        Arnd
+Changes since v3 [0]:
+ - Reverted to dedicated DT binding file, added
+   nuvoton,tsi-channel-mask property and support for it to the i2c
+   driver
+ - Reverted file names to the ones in v2 [Guenter]
+ - Added patch 5 converting S_I* permissions macros to octal [Guenter]
+ - R-B tags from Joel on patches 2-4
+ - Tiny comment-formatting tweak to appease checkpatch on patch 6
+
+Changes since v2 [1]:
+ - Fixed wrong parenthesization in nct6775_write_value()
+ - Moved DT binding to trivial-devices.yml instead of a dedicated file
+   [Guenter]
+ - Renamed drivers and Kconfig symbols to keep existing platform
+   driver as "nct6775" (SENSORS_NCT6775) and the core module as
+   "nct6775-core" (SENSORS_NCT6775_CORE) [Guenter]
+ - Fixed SENSORS_NCT6775_CORE Kconfig to select REGMAP, removed
+   erroneous REGMAP_I2C selection from SENSORS_NCT6775_I2C [Guenter]
+
+Changes since v1 [2]:
+ - Added preparatory patch converting driver to regmap API [Guenter]
+ - Replaced ENOSPC with ENOBUFS and removed WARN_ON() in
+   nct6775_add_attr_group() [Guenter]
+ - Added dedicated symbol namespace [Guenter]
+ - Removed nct6775_write_temp() and nct6775_update_device() symbol
+   exports [Guenter]
+ - Reordered patches to put dt-bindings patch first [Krzysztof]
+
+[0] https://lore.kernel.org/openbmc/20220426071848.11619-1-zev@bewilderbeest.net/
+[1] https://lore.kernel.org/linux-hwmon/20220309005047.5107-1-zev@bewilderbeest.net/
+[2] https://lore.kernel.org/linux-hwmon/20220226133047.6226-1-zev@bewilderbeest.net/
+
+A slightly edited version of the previous cover letter follows:
+
+
+This patch series augments the existing nct6775 driver with support
+for the hardware's i2c interface; along the way it converts the driver
+to use the regmap API, and splits the LPC-specific platform driver
+into a separate module from the interface-independent core.
+
+Thus far the nct6775 driver has only supported the LPC interface,
+which is the main interface by which the Super-I/O chip is typically
+connected to the host (x86) processor.
+
+However, these chips also provide an i2c interface, which can provide
+a way for a BMC to also monitor sensor readings from them.  On some
+systems (such as the ASRock Rack ROMED8HM3 and X570-D4U) this may be
+the only way for the BMC to monitor host CPU temperatures (e.g. to
+indirectly access a TSI interface); this functionality is thus an
+important component of enabling OpenBMC to support such systems.
+
+In such an arrangement the Super-I/O chip is simultaneously controlled
+by two independent processors (the host and the BMC) which typically
+do not coordinate their accesses with each other.  In order to avoid
+conflicts between the two, the i2c driver avoids all writes to the
+device, since the BMC's needs with the hardware are merely that it be
+able to retrieve sensor readings.  This allows the host processor to
+remain ultimately in control of the chip and unaware of the BMC's use
+of it at all.
+
+The sole exception to the "no writes" rule for the i2c driver is for
+the bank-select register -- while I haven't been able to find any
+explicit statement in the Nuvoton datasheets guaranteeing this,
+testing via manual register accesses (as detailed in [3]) has
+indicated that, as one might hope, the i2c interface has its own
+bank-select register independent of the one used by the LPC interface.
+
+In terms of code structure, the approach taken in this series is to
+first convert the driver's register accesses to the regmap API, and
+then split the LPC-specific parts of it out into a separate module
+(retaining the current "nct6775" name), leaving the
+interface-independent parts in a generic driver (called nct6775-core).
+The nct6775-i2c driver is then added as an additional consumer of the
+nct6775-core module's functionality (essentially just providing its
+own set of regmap read/write callback functions).
+
+The first patch adds the chips supported by the nct6775 driver to
+Documentation/device-tree-bindings/trivial-devices.yml.  The second
+patch contains the change to convert all register accesses to use a
+regmap.  The third and fourth patches make some relatively small
+infrastructural changes to the driver, and the fifth cleans up a bunch
+of checkpatch complaints prior to the main split patch.  The
+core/platform driver split is in the sixth patch, and the final patch
+adds the i2c driver itself.
+
+The nct6775 and nct6775-i2c drivers have both been tested on the
+NCT6779D in an ASRock ROMED8HM3 system and the NCT6798 [4] in an
+ASRock X570-D4U (the latter thanks to Renze, CCed); both seem to work
+as expected on both systems.  I don't have access to any asuswmi
+hardware, so testing of the nct6775-platform driver on that to ensure
+it doesn't break there would be appreciated (Oleksandr, perhaps?).
+
+
+Thanks,
+Zev
+
+[3] https://lore.kernel.org/linux-hwmon/YhttzgDtGpcTniyw@hatter.bewilderbeest.net/
+[4] Though it's physically labeled (mislabeled?) as an NCT6796, for
+    what that's worth.
+
+Zev Weiss (7):
+  dt-bindings: hwmon: Add nuvoton,nct6775
+  hwmon: (nct6775) Convert register access to regmap API
+  hwmon: (nct6775) Rearrange attr-group initialization
+  hwmon: (nct6775) Add read-only mode
+  hwmon: (nct6775) Convert S_I* permissions macros to octal
+  hwmon: (nct6775) Split core and platform driver
+  hwmon: (nct6775) Add i2c driver
+
+ .../bindings/hwmon/nuvoton,nct6775.yaml       |   56 +
+ MAINTAINERS                                   |   12 +-
+ drivers/hwmon/Kconfig                         |   31 +-
+ drivers/hwmon/Makefile                        |    3 +
+ drivers/hwmon/{nct6775.c => nct6775-core.c}   | 2445 +++++------------
+ drivers/hwmon/nct6775-i2c.c                   |  195 ++
+ drivers/hwmon/nct6775-platform.c              | 1226 +++++++++
+ drivers/hwmon/nct6775.h                       |  252 ++
+ 8 files changed, 2455 insertions(+), 1765 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/hwmon/nuvoton,nct6775.yaml
+ rename drivers/hwmon/{nct6775.c => nct6775-core.c} (66%)
+ create mode 100644 drivers/hwmon/nct6775-i2c.c
+ create mode 100644 drivers/hwmon/nct6775-platform.c
+ create mode 100644 drivers/hwmon/nct6775.h
+
+-- 
+2.36.0
+
