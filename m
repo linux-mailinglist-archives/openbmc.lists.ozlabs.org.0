@@ -1,76 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 00C6B512E70
-	for <lists+openbmc@lfdr.de>; Thu, 28 Apr 2022 10:29:45 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CF76F512EAB
+	for <lists+openbmc@lfdr.de>; Thu, 28 Apr 2022 10:37:53 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Kpph66769z3bdY
-	for <lists+openbmc@lfdr.de>; Thu, 28 Apr 2022 18:29:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KppsW542Dz3bcn
+	for <lists+openbmc@lfdr.de>; Thu, 28 Apr 2022 18:37:51 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=QAg/+pe8;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=PHaGpcoZ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::430;
- helo=mail-pf1-x430.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=QAg/+pe8; dkim-atps=neutral
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com
- [IPv6:2607:f8b0:4864:20::430])
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
+ (client-ip=212.227.15.18; helo=mout.gmx.net;
+ envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
+ header.s=badeba3b8450 header.b=PHaGpcoZ; 
+ dkim-atps=neutral
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Kppgf4ns2z2xXV
- for <openbmc@lists.ozlabs.org>; Thu, 28 Apr 2022 18:29:16 +1000 (AEST)
-Received: by mail-pf1-x430.google.com with SMTP id y14so3642881pfe.10
- for <openbmc@lists.ozlabs.org>; Thu, 28 Apr 2022 01:29:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=sender:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=fVM62GyHltSE0ionm6SdLetw0VDoqMgiKzSssxmigAY=;
- b=QAg/+pe8G9Sc1mDs8zVzp2hV9mfGq78LAOAd66G/6sLc/MF0CQzJ+bcaT+w90Jh2Av
- 8HNDkJ3nqfhlCnkcwEmEpxoPBuZYl+bg4oAGMUv+lHlqdU5B+7U81PP648+Yp3LFWan2
- P21d/yeqp3wWUW9qrIholko+vTlpsdc7JFWCIaMc+X3Xk+llOP1UjzKEB7ABeH5PVukb
- zUycFoHjS6PqN+FO/soY2wkuuvzG/vccsNhDQpW4zC5sE+dNYAIVpYjZXDbv5gluvKxw
- VOWM6/HpQ+dl+L0G7Al0ETAMQAnC35i/vMB48RkbhXVKP5rD+rw3fvMiNiO2hqNyyy0w
- IY3g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
- :mime-version:content-transfer-encoding;
- bh=fVM62GyHltSE0ionm6SdLetw0VDoqMgiKzSssxmigAY=;
- b=HnX1qgehjO2duo8hLemugg6mCu1ZzLL8UKuWDHaNuUc8YLYkQFXtX/gNoOkX5ctCf6
- cpybMgVY6a/VBnzkTiLgw3U5QYwDoucCcngTURH4Gqd8Ywix6CpY+3JYH0hK3UuJItdE
- fhN+TtA/hxT+gs71w9mOQ5UPB0LY2kBukerEsaAa/a3ZnzArI6RHJtBp5GwI1xq99Ft2
- PapoQBoNiEU6JKPd2mY7lueHJS6xublgvK296OwUaWGKHEIHKlr6VZwTl7K50LJjtn09
- SV2pZTJDDL3jNbrPdmhuLtojl5brfk2jhGI3jVJ5/PGIHdQ1ygohfyXqy5XfsbEFRSeG
- kkkQ==
-X-Gm-Message-State: AOAM533wDOaoqp8yqE2GKJig/+KqFOP2zGrMbelvBTxdGGgdeGJyproe
- 2q3MSnwqpWPxK1HkRTJX+6k=
-X-Google-Smtp-Source: ABdhPJyTwDWftDHCcw6uVgNjozxu/y8Z4nCvbradyfoQcJDA2hYLwD/0AaZAp85aHF8Lo+WyhP0sgg==
-X-Received: by 2002:a63:42:0:b0:3a8:47f7:bf0d with SMTP id
- 63-20020a630042000000b003a847f7bf0dmr27515113pga.276.1651134552242; 
- Thu, 28 Apr 2022 01:29:12 -0700 (PDT)
-Received: from voyager.ozlabs.ibm.com (pa49-178-80-133.pa.nsw.optusnet.com.au.
- [49.178.80.133]) by smtp.gmail.com with ESMTPSA id
- i62-20020a639d41000000b003c14af50627sm1827176pgd.63.2022.04.28.01.29.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 28 Apr 2022 01:29:11 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: "David S . Miller" <davem@davemloft.net>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
- Dylan Hung <dylan_hung@aspeedtech.com>, David Wilder <dwilder@us.ibm.com>
-Subject: [PATCH net] net: ftgmac100: Disable hardware checksum on AST2600
-Date: Thu, 28 Apr 2022 17:58:58 +0930
-Message-Id: <20220428082858.545176-1-joel@jms.id.au>
-X-Mailer: git-send-email 2.35.1
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Kpps62HM6z2yXf
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Apr 2022 18:37:29 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=badeba3b8450; t=1651135011;
+ bh=Q4+3ChFfyhKA+KTPGoIQx0R1D0LMLWXJ6J60qMTKnAc=;
+ h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=PHaGpcoZ3WPGPl13ST6Zk8WpnU1HwRAWva6B85NnDWN8fUn+CGlkwNQE27vvfLrK0
+ aOIH8AtugWKH2+SxFNHyLGsY5Stf06uOtjX77Zqs2PETm9tOtrShe65I7usUpueheb
+ b5V3i/MnxKlHgVZtrNE841yh2wEMrGzur3bltfsk=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from longitude ([37.201.215.103]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M3lc9-1njiWf3chP-000vpD; Thu, 28
+ Apr 2022 10:36:50 +0200
+Date: Thu, 28 Apr 2022 10:36:48 +0200
+From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: Guenter Roeck <linux@roeck-us.net>
+Subject: Re: [PATCH 3/7] watchdog: npcm: Enable clock if provided
+Message-ID: <YmpSIFHTYDsuEm85@latitude>
+References: <20220422183012.444674-1-j.neuschaefer@gmx.net>
+ <20220422183012.444674-4-j.neuschaefer@gmx.net>
+ <20220422183417.GB2637654@roeck-us.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="3JafQPKgiRq88lVT"
+Content-Disposition: inline
+In-Reply-To: <20220422183417.GB2637654@roeck-us.net>
+X-Provags-ID: V03:K1:p7i6FNHfF3FlpnhFKvMhXgLjFljWIjKMJgX4cNG3EwazOtlZlAl
+ A9/tr/ov/cUpHkz6Bg5t0ni5NA6BknxyNVNd0m/B4NnYcuwu0Htmg4MLDdwaoCI8648pFVu
+ n06WalmbWJ4P5vfDob6h/zirRlfnoXDRXHpm03nRrLFUP6VtjNLPUgcOkdebrLdC7eKaPcf
+ ib6FcoTVFY76Fsz2S3fsg==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:q6/F/sBWuO0=:DiOMmpBm+d61DOtlcby/Nm
+ zuGYlHuDf/HK8+9VYtfu2zKMt6XjZj8gPYnUIkNNgP/whzdTUtOV67Kfclqz3xRg5Pn4WOgmX
+ Nw5tbjCeMZWwLM3hRjCJhsbGK4niQHcO8xJwANvNi1AN5xDV6MeA5wUtEzFtKec9bhg2MC7dV
+ 6HvTeERhw9fxajcCa0Rysxlf8+hJekY4WlFQjo9L9oFjfHJTs8dchOy6lGGX3WDHISe2B4fBv
+ QOSNPUtq/mwGQgX4Np5DXH13xjd5cUvTMzDGY5k0yA9HzT3YESQiJbO2HHFWJGUKpRJ1yWbul
+ 3fTi2gwywW53Pu7XKBqmDBsqKOpmftc1xVnk1lYV+wXWme1nQ2aP4KQyceLf07P4Psv6UIAEw
+ KG4tQ4dI6/cJ8/+vM2p6rO77aYwYlzVmEa2ePpTKGpByk2WcDPnewmiGtjtQItIFCo/DTNxDB
+ rdqA9N0byNxQuKE8dtiGFg76a/Qsg/ce1PUrBWn0DIq8xm/rdJXwM8fbS+GFtTS/OPnNhVnYM
+ Lb1JmjB9oi/BbqQKszE8zDsRMmArEdoo5tASXHXb5rroVZ77HDdiTfMqVVrwfiPrK43rfJIR4
+ npKB+3T/UvD7kUmC8hWWa/C3DOVtCZ47ub5EVkBobTsQkk3VlU+wZZtfdQd5xLcyjKs0YCk7t
+ +kfDXQqLt4CO8zN+eXyPL+OUdvORZuNKWXezwTJ75nkSKKMbQBCmf4WqNqoBa89iHUf3FZvxJ
+ EAH6yO7fOvaSMJoobpfUKdyDprQFiJ83OH2pyhEGZAXVLrtJEIAMdMeJ1kTNjPx0Pzvrmhjqf
+ VGsCIyvV/bt/xFR5v7hQkQQkwOfkqsvjQzlQGNPev3jWIvNvH/AZTMUv1OhV0V+OMaWm4DV1k
+ 6CncbPWocgPLQNv4yAtwBn99a8UDhxZJPl+fTiIQ3Ue9UiXQMeiUhY/yoP9ou+rtWYpfUNYNV
+ x7+Ea0t9n/UPKL57VIrJErYEhxADYY3ok+ESPxUKQpjECO7aMhp1ouHf9q5mYGIufhlcV4tTF
+ Y/uq3aerx5n8kb6hQHS6RS8P1I0LtQDQhCwwrTygd1cE7uCYKgkjt8tJWjPmSi7JSb8r2nKUV
+ 3omH0tDPMUtQro=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,90 +83,98 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: netdev@vger.kernel.org, openbmc@lists.ozlabs.org,
- David Wilder <wilder@us.ibm.com>, linux-kernel@vger.kernel.org
+Cc: devicetree@vger.kernel.org, Wim Van Sebroeck <wim@linux-watchdog.org>,
+ linux-watchdog@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+ Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org,
+ Daniel Lezcano <daniel.lezcano@linaro.org>, linux-kernel@vger.kernel.org,
+ Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+ Michael Turquette <mturquette@baylibre.com>, Rob Herring <robh+dt@kernel.org>,
+ Thomas Gleixner <tglx@linutronix.de>, Benjamin Fair <benjaminfair@google.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Tali Perry <tali.perry1@gmail.com>,
+ linux-clk@vger.kernel.org, Avi Fishman <avifishman70@gmail.com>,
+ Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The AST2600 when using the i210 NIC over NC-SI has been observed to
-produce incorrect checksum results with specific MTU values. This was
-first observed when sending data across a long distance set of networks.
 
-On a local network, the following test was performed using a 1MB file of
-random data.
+--3JafQPKgiRq88lVT
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On the receiver run this script:
+On Fri, Apr 22, 2022 at 11:34:17AM -0700, Guenter Roeck wrote:
+> On Fri, Apr 22, 2022 at 08:30:08PM +0200, Jonathan Neusch=C3=A4fer wrote:
+> > On the Nuvoton WPCM450 SoC, with its upcoming clock driver, peripheral
+> > clocks are individually gated and ungated. Therefore, the watchdog
+> > driver must be able to ungate the watchdog clock.
+> >=20
+> > Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+> > ---
+> >  drivers/watchdog/npcm_wdt.c | 9 +++++++++
+> >  1 file changed, 9 insertions(+)
+> >=20
+> > diff --git a/drivers/watchdog/npcm_wdt.c b/drivers/watchdog/npcm_wdt.c
+> > index 28a24caa2627c..6d27f0e16188e 100644
+> > --- a/drivers/watchdog/npcm_wdt.c
+> > +++ b/drivers/watchdog/npcm_wdt.c
+> > @@ -3,6 +3,7 @@
+> >  // Copyright (c) 2018 IBM Corp.
+> >=20
+> >  #include <linux/bitops.h>
+> > +#include <linux/clk.h>
+> >  #include <linux/delay.h>
+> >  #include <linux/interrupt.h>
+> >  #include <linux/kernel.h>
+> > @@ -180,6 +181,7 @@ static int npcm_wdt_probe(struct platform_device *p=
+dev)
+> >  {
+> >  	struct device *dev =3D &pdev->dev;
+> >  	struct npcm_wdt *wdt;
+> > +	struct clk *clk;
+> >  	int irq;
+> >  	int ret;
+> >=20
+> > @@ -191,6 +193,13 @@ static int npcm_wdt_probe(struct platform_device *=
+pdev)
+> >  	if (IS_ERR(wdt->reg))
+> >  		return PTR_ERR(wdt->reg);
+> >=20
+> > +	clk =3D devm_clk_get_optional(&pdev->dev, NULL);
+> > +	if (IS_ERR(clk))
+> > +		return PTR_ERR(clk);
+> > +
+> > +	if (clk)
+> > +		clk_prepare_enable(clk);
+> > +
+>=20
+> This needs a matching clk_disable_unprepare().
 
- #!/bin/bash
- while [ 1 ]; do
-        # Zero the stats
-        nstat -r  > /dev/null
-        nc -l 9899 > test-file
-        # Check for checksum errors
-        TcpInCsumErrors=$(nstat | grep TcpInCsumErrors)
-        if [ -z "$TcpInCsumErrors" ]; then
-                echo No TcpInCsumErrors
-        else
-                echo TcpInCsumErrors = $TcpInCsumErrors
-        fi
- done
+Good point. It's probably easiest if I move the clk calls to the
+watchdog start/stop callbacks, then.
 
-On an AST2600 system:
 
- # nc <IP of  receiver host> 9899 < test-file
+Thanks,
+Jonathan
 
-The test was repeated with various MTU values:
+--3JafQPKgiRq88lVT
+Content-Type: application/pgp-signature; name="signature.asc"
 
- # ip link set mtu 1410 dev eth0
+-----BEGIN PGP SIGNATURE-----
 
-The observed results:
+iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmJqUhkACgkQCDBEmo7z
+X9utARAApLMgx0770Ai3h8mEawS8c5e/WFuzL9GGC8DU9yxUmSa6RlQk9H3O8lIf
+hiOfIS4Kxvjtmy+mTcgqJK4R37I5eIFC8BKVmHbwqupZGl4Mdzhoa7mvAD/IytUL
+HtRScJ1zyyb5Rlu9J2IHIIVNAUN8ErlA7oJ+evC0ygr+6JySBgdk/0UIfp3ks6Ke
+QxzvAh/VvWNSmcRk2pg61q6VfKks7xr5DEURrUWPJFMpx7SrhdPbaFQ8d7pIAFI3
+Xy/KTzAFwf5Qnpwr5nUkhkpZVPgkKSmTmVj0Ouknm73dt+cnr0XmQ+8mljtlocYs
+Qa8QybxIXqU3leIx6OqbvxTFgBkj90ll3M15b0+Z2KWTrtjZ/E/ng/hzx3X4V5xv
+ZEBgYVTCnZSzOOlU+okXvWwepzR7/w1Zf96TqrXhn/xhB5L6ME+02EVGREJUvT0b
+/kyUXR7krD2tlute5lUQOPnkhgbc8ZecZ9PSWKQ1E/BojQKRxQ9F9GVojZox+9Hx
+8Pgo1J1czreFcFhrAdYv9SR2fWfv8qggYp+cotvhgwTBPLom7ppUrgTPnUYDuvdj
+srCV/12bGLS65rKL7BN6VpkF9hCyi8VUh7qw8XbaiH/rTilA1hWQch7+1MOTA/wG
+EVuRYrnRbWSBOo5GUMtfCrJc8oOWhmWmADLRvO54oPkfjdlUFe4=
+=Ep5M
+-----END PGP SIGNATURE-----
 
- 1500 - good
- 1434 - bad
- 1400 - good
- 1410 - bad
- 1420 - good
-
-The test was repeated after disabling tx checksumming:
-
- # ethtool -K eth0 tx-checksumming off
-
-And all MTU values tested resulted in transfers without error.
-
-An issue with the driver cannot be ruled out, however there has been no
-bug discovered so far.
-
-David has done the work to take the original bug report of slow data
-transfer between long distance connections and triaged it down to this
-test case.
-
-Fixes: 39bfab8844a0 ("net: ftgmac100: Add support for DT phy-handle property")
-Reported-by: David Wilder <wilder@us.ibm.com>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
-Net maintainers, if no one has a counter proposal I would like this
-merged as a fix. Please give Dylan from Aspeed a chance to reply before
-applying the patch.
-
- drivers/net/ethernet/faraday/ftgmac100.c | 5 +++++
- 1 file changed, 5 insertions(+)
-
-diff --git a/drivers/net/ethernet/faraday/ftgmac100.c b/drivers/net/ethernet/faraday/ftgmac100.c
-index caf48023f8ea..5231818943c6 100644
---- a/drivers/net/ethernet/faraday/ftgmac100.c
-+++ b/drivers/net/ethernet/faraday/ftgmac100.c
-@@ -1928,6 +1928,11 @@ static int ftgmac100_probe(struct platform_device *pdev)
- 	/* AST2400  doesn't have working HW checksum generation */
- 	if (np && (of_device_is_compatible(np, "aspeed,ast2400-mac")))
- 		netdev->hw_features &= ~NETIF_F_HW_CSUM;
-+
-+	/* AST2600 tx checksum with NCSI is broken */
-+	if (priv->use_ncsi && of_device_is_compatible(np, "aspeed,ast2600-mac"))
-+		netdev->hw_features &= ~NETIF_F_HW_CSUM;
-+
- 	if (np && of_get_property(np, "no-hw-checksum", NULL))
- 		netdev->hw_features &= ~(NETIF_F_HW_CSUM | NETIF_F_RXCSUM);
- 	netdev->features |= netdev->hw_features;
--- 
-2.35.1
-
+--3JafQPKgiRq88lVT--
