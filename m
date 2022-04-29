@@ -2,75 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1CB485151D1
-	for <lists+openbmc@lfdr.de>; Fri, 29 Apr 2022 19:26:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 232CA515282
+	for <lists+openbmc@lfdr.de>; Fri, 29 Apr 2022 19:42:55 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KqfXb0PBCz3bdg
-	for <lists+openbmc@lfdr.de>; Sat, 30 Apr 2022 03:26:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Kqfvx0Ffxz3bfb
+	for <lists+openbmc@lfdr.de>; Sat, 30 Apr 2022 03:42:53 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=B7xslFnJ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=BFVgjtTH;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.22; helo=mout.gmx.net;
- envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=B7xslFnJ; 
- dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::329;
+ helo=mail-ot1-x329.google.com; envelope-from=groeck7@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=BFVgjtTH; dkim-atps=neutral
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com
+ [IPv6:2607:f8b0:4864:20::329])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
- SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KqfRC6CNlz3bdg
- for <openbmc@lists.ozlabs.org>; Sat, 30 Apr 2022 03:21:27 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1651252851;
- bh=jFeo/rlMoN3F0JvMc3759b06/L1UffYivvp83FqyW6o=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
- b=B7xslFnJ51XNV2ADIknZnclvBN0gfTSbt4TcwaSv6Ps3K+/Dr4hBlmEskFceY0gA5
- pkV1tifXQaZge56H52Mk/d8OIJng3txyPTfXLb7nIih4fsU/1nMB5fQMevpOWUmbK0
- TUhRci4P0rZi/jKgsQoEs8eid301qNizICHYK8sY=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([37.201.215.103]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MUXtY-1nKByF2qyO-00QPKS; Fri, 29
- Apr 2022 19:20:51 +0200
-From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: linux-clk@vger.kernel.org,
-	openbmc@lists.ozlabs.org
-Subject: [PATCH v2 7/7] ARM: dts: wpcm450: Switch clocks to clock controller
-Date: Fri, 29 Apr 2022 19:20:30 +0200
-Message-Id: <20220429172030.398011-8-j.neuschaefer@gmx.net>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220429172030.398011-1-j.neuschaefer@gmx.net>
-References: <20220429172030.398011-1-j.neuschaefer@gmx.net>
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KqfvW5N9Vz2xRm
+ for <openbmc@lists.ozlabs.org>; Sat, 30 Apr 2022 03:42:30 +1000 (AEST)
+Received: by mail-ot1-x329.google.com with SMTP id
+ k25-20020a056830169900b00605f215e55dso2241467otr.13
+ for <openbmc@lists.ozlabs.org>; Fri, 29 Apr 2022 10:42:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=sender:message-id:date:mime-version:user-agent:subject
+ :content-language:to:cc:references:from:in-reply-to
+ :content-transfer-encoding;
+ bh=9z0oLEhMUo0s36vvIh02UNk7tir7g6nfy3uYHA227Nk=;
+ b=BFVgjtTHDF38sq9/Xc3eyU+f5mbUCTUHCGLzkBEp4pgpiOZYELdIjgA2DA68sFhr89
+ XhdrPwINbYmzlVQXplgDQddxEPCW1P+YV2W3c4eqkNIAiPmh3q2YPplseotDaMggWQ+8
+ QYBYqqIIYhV0RD/XaoIT5059YH+ZaVnzE8OEAMnymG8TGZZkF/k4oKb1jqvPK2br0F34
+ AvQkE7aC6RVa9m7DDP2509iIaYTzZhrhxmPV0OY+BRWSGKy3FUl8TIMV0NtR5f97QLOK
+ A8JHelq4uHiBlVzfaw/nDtmgUjXBCE8ucibVmVLEgk0ki2kJhwQglWmwm9PLRo0YPJXg
+ jIMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:sender:message-id:date:mime-version:user-agent
+ :subject:content-language:to:cc:references:from:in-reply-to
+ :content-transfer-encoding;
+ bh=9z0oLEhMUo0s36vvIh02UNk7tir7g6nfy3uYHA227Nk=;
+ b=UVB2d1i2XWU+v2GuLXxS+0CiIfu13sbutYOzGD1+J9qJz6R0WCh9B5PnBLjplE/cR6
+ al1F311SnklUoeVabM7qat08Gip1UWH3KFmb2v+cYzcEFQ/yYZYfR+m95AOP9Y+cQ89s
+ 5BeBN5utohZ7uF15GGiA4vwzYnwqYCVMB/M8kxUXvZFxBPAWKIVoBHxcPQqwPm2NsRzu
+ tWj+QfcNVPVPAJj+68216PfBDHtwAhjQ3dWYCeGHpJTgq0YYE/5f/9GTSw6hQUu//F24
+ coyK9jO4PSKe5bdewIQNf5fW4y3RoGERy1X7kWXsfwY8Mmk3sxcb7rFf5pTp9cE/QLjD
+ IQLw==
+X-Gm-Message-State: AOAM5317Y23UnYr6BdAPBv/BhfUCGwkVQ/fdT/zAzMQ0hsDBxwl25wLE
+ /dtn8/VoDeHsLZTg5xZJIAY=
+X-Google-Smtp-Source: ABdhPJz5e2UfdinEgtc+ze6y3kQhFU9T8UDmBrBsmd/4YwtVPRLBwHmqIvvcLUpZfYNdPNZqQAJJkA==
+X-Received: by 2002:a9d:491c:0:b0:605:c207:1f6b with SMTP id
+ e28-20020a9d491c000000b00605c2071f6bmr186432otf.41.1651254147619; 
+ Fri, 29 Apr 2022 10:42:27 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c?
+ ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+ by smtp.gmail.com with ESMTPSA id
+ i8-20020a9d53c8000000b00605f347a4fdsm844322oth.79.2022.04.29.10.42.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 29 Apr 2022 10:42:27 -0700 (PDT)
+Message-ID: <aec36ea2-b007-f24a-5709-27b6e87e5177@roeck-us.net>
+Date: Fri, 29 Apr 2022 10:42:24 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:CapGnF66PbIaJCrYydROSSzdBD4+jGIG259czWWFShncx/7mfO5
- n7LWPKDdswQhfnHBzXYt8/fCGYBOs/TNhEn25Fwffb80q+MwOOZ/NEiURk+UPXwY48HALAb
- FbieQhHcsWYBrn+zRmzCSCsAlAiOK8G3pN4hGDYJzh4lauaSbA0mrj4YIkwuAW/mxJDP71A
- WtSOAngqDLdX/T5fi7Z+Q==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:op7guGsTdCo=:wC4SD8Y6g9Umj7VnspIayf
- M+K6RolgpoBePq+LQFfem4hZ/4qtppk6wZv/b5ufzOtFf7pn5u7aptkk68boj8jPa3xOSKeCm
- gvipfpEuKYq6jwsFS5l3nUNpNTle18GMbLDwHoOBahGxOmNyZrl1pPQY5sl1IVs0W2F1iKeTR
- J74wtKyQBw9WsURuXNCp6j9F8MktBcPOo6HSVGT8H9HNV4Ti4fp53S6OzQS2la/BqcZWwPi7s
- wxm//FqpVJutc+WperY1CO5EBT9pMzH08efPnCua8Ek6xBeUKHtnAlxlxlLGDofQcJ95YEmRQ
- xA//2YdM7BrZXFuRtGcdGVn9QDRrVBMyOaT3bX6HwvjR9sEc4Z/IOWhfgPWk5hldVXknze4Vk
- uX9cBpXZMZkwBpg+1RqNzjyLrPUG1e1l1MAl/BUWM1sKkIu775SQJtBF8xgpBoHyl0sySYrqb
- WH8a1koFNspArjEaKdsgNa867z1EsE8FeV1ec2l4fTr18MdA/vC1eeab1Ib30aLklltfp76Cv
- xP7pcO7oPQZI/FWhPoFiFonH1RGGBNXuUqSQkwR8AKZN0aPpc/LoYUOUXnUXMgVdOrGXL9Y32
- z9R/fMTs0xz0hrXAoR12Y6uBZ4XGBS2eqdb3AuMNcadYYNHLWhPeXq8omoaZe1/kniBnF88Tn
- Mk6AZ31Wx2wrI5OCfEnJ2DxnIuz8w7QSUea1K/xzn2xj0B+Ef4fU9aj9jwFSJ4bEX3UGCWXhz
- qb3BTZJ1ELYrxLj5ocIlmWSxEnorHWa6iBGSsRFu4hv7wGTJFojL+iOvxrhhQlRX052pW7cuu
- Gk9lTUcxyeOvMHPGnnta/R8yeasFpp395WVdzy4c4GxowDOmNdkH79Od/BiXM/x1DxUtHjJFB
- lcVIQayLDqnFmRNEoYJ/8y7J2K4M9QJ+Tb/4W4RcHfO4qjaNWwy7gDGwQbV0PQfGR7pgL1/mY
- QcBCw+n+yE56UXHSAdTIDM3Uwh2Agsn7aNZJ7+LP4KSIk09Nmxas2hUkDrNP2j1zJgEo9NJA4
- yRJSkKhI/E9xl/lQQXPs+bEwm96qYbA5l6hDaoB9oFjin3r6pMCPubmsgXG9upCPTcKDBfxJ1
- xKJR09p/xyGTsc=
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH v2 3/7] watchdog: npcm: Enable clock if provided
+Content-Language: en-US
+To: =?UTF-8?Q?Jonathan_Neusch=c3=a4fer?= <j.neuschaefer@gmx.net>,
+ linux-clk@vger.kernel.org, openbmc@lists.ozlabs.org
+References: <20220429172030.398011-1-j.neuschaefer@gmx.net>
+ <20220429172030.398011-4-j.neuschaefer@gmx.net>
+From: Guenter Roeck <linux@roeck-us.net>
+In-Reply-To: <20220429172030.398011-4-j.neuschaefer@gmx.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,100 +90,91 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Wim Van Sebroeck <wim@linux-watchdog.org>,
- linux-watchdog@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
- Patrick Venture <venture@google.com>,
+Cc: devicetree@vger.kernel.org, linux-watchdog@vger.kernel.org,
+ Stephen Boyd <sboyd@kernel.org>, Patrick Venture <venture@google.com>,
  Michael Turquette <mturquette@baylibre.com>,
  Daniel Lezcano <daniel.lezcano@linaro.org>, linux-kernel@vger.kernel.org,
- =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
- Avi Fishman <avifishman70@gmail.com>, Rob Herring <robh+dt@kernel.org>,
- Benjamin Fair <benjaminfair@google.com>,
+ Tali Perry <tali.perry1@gmail.com>, Avi Fishman <avifishman70@gmail.com>,
+ Rob Herring <robh+dt@kernel.org>, Benjamin Fair <benjaminfair@google.com>,
  Philipp Zabel <p.zabel@pengutronix.de>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>, Tali Perry <tali.perry1@gmail.com>,
- Thomas Gleixner <tglx@linutronix.de>, Guenter Roeck <linux@roeck-us.net>,
- Tomer Maimon <tmaimon77@gmail.com>
+ Krzysztof Kozlowski <krzk+dt@kernel.org>,
+ Wim Van Sebroeck <wim@linux-watchdog.org>,
+ Thomas Gleixner <tglx@linutronix.de>, Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This change is incompatible with older kernels because it requires the
-clock controller driver, but I think that's acceptable because WPCM450
-support is generally still in an early phase.
+On 4/29/22 10:20, Jonathan Neuschäfer wrote:
+> On the Nuvoton WPCM450 SoC, with its upcoming clock driver, peripheral
+> clocks are individually gated and ungated. Therefore, the watchdog
+> driver must be able to ungate the watchdog clock.
+> 
+> Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
 
-Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-=2D--
+Acked-by: Guenter Roeck <linux@roeck-us.net>
 
-v2:
-- no changes
-=2D--
- arch/arm/boot/dts/nuvoton-wpcm450.dtsi | 20 +++++++++-----------
- 1 file changed, 9 insertions(+), 11 deletions(-)
-
-diff --git a/arch/arm/boot/dts/nuvoton-wpcm450.dtsi b/arch/arm/boot/dts/nu=
-voton-wpcm450.dtsi
-index 62d70fda7b520..f868bd7db009a 100644
-=2D-- a/arch/arm/boot/dts/nuvoton-wpcm450.dtsi
-+++ b/arch/arm/boot/dts/nuvoton-wpcm450.dtsi
-@@ -2,6 +2,7 @@
- // Copyright 2021 Jonathan Neusch=C3=A4fer
-
- #include <dt-bindings/interrupt-controller/irq.h>
-+#include <dt-bindings/clock/nuvoton,wpcm450-clk.h>
-
- / {
- 	compatible =3D "nuvoton,wpcm450";
-@@ -32,13 +33,6 @@ cpu@0 {
- 		};
- 	};
-
--	clk24m: clock-24mhz {
--		/* 24 MHz dummy clock */
--		compatible =3D "fixed-clock";
--		clock-frequency =3D <24000000>;
--		#clock-cells =3D <0>;
--	};
--
- 	refclk: clock-48mhz {
- 		/* 48 MHz reference oscillator */
- 		compatible =3D "fixed-clock";
-@@ -73,7 +67,7 @@ serial0: serial@b8000000 {
- 			reg =3D <0xb8000000 0x20>;
- 			reg-shift =3D <2>;
- 			interrupts =3D <7 IRQ_TYPE_LEVEL_HIGH>;
--			clocks =3D <&clk24m>;
-+			clocks =3D <&clk WPCM450_CLK_UART0>;
- 			pinctrl-names =3D "default";
- 			pinctrl-0 =3D <&bsp_pins>;
- 			status =3D "disabled";
-@@ -84,7 +78,7 @@ serial1: serial@b8000100 {
- 			reg =3D <0xb8000100 0x20>;
- 			reg-shift =3D <2>;
- 			interrupts =3D <8 IRQ_TYPE_LEVEL_HIGH>;
--			clocks =3D <&clk24m>;
-+			clocks =3D <&clk WPCM450_CLK_UART1>;
- 			status =3D "disabled";
- 		};
-
-@@ -92,14 +86,18 @@ timer0: timer@b8001000 {
- 			compatible =3D "nuvoton,wpcm450-timer";
- 			interrupts =3D <12 IRQ_TYPE_LEVEL_HIGH>;
- 			reg =3D <0xb8001000 0x1c>;
--			clocks =3D <&clk24m>;
-+			clocks =3D <&clk WPCM450_CLK_TIMER0>,
-+				 <&clk WPCM450_CLK_TIMER1>,
-+				 <&clk WPCM450_CLK_TIMER2>,
-+				 <&clk WPCM450_CLK_TIMER3>,
-+				 <&clk WPCM450_CLK_TIMER4>;
- 		};
-
- 		watchdog0: watchdog@b800101c {
- 			compatible =3D "nuvoton,wpcm450-wdt";
- 			interrupts =3D <1 IRQ_TYPE_LEVEL_HIGH>;
- 			reg =3D <0xb800101c 0x4>;
--			clocks =3D <&clk24m>;
-+			clocks =3D <&clk WPCM450_CLK_WDT>;
- 		};
-
- 		aic: interrupt-controller@b8002000 {
-=2D-
-2.35.1
+> ---
+> 
+> v2:
+> - Add clk_disable_unprepare call, suggested by Guenter Roeck
+> 
+> v1:
+> - https://lore.kernel.org/lkml/20220422183012.444674-4-j.neuschaefer@gmx.net/
+> ---
+>   drivers/watchdog/npcm_wdt.c | 12 ++++++++++++
+>   1 file changed, 12 insertions(+)
+> 
+> diff --git a/drivers/watchdog/npcm_wdt.c b/drivers/watchdog/npcm_wdt.c
+> index 28a24caa2627c..ee08d9805f966 100644
+> --- a/drivers/watchdog/npcm_wdt.c
+> +++ b/drivers/watchdog/npcm_wdt.c
+> @@ -3,6 +3,7 @@
+>   // Copyright (c) 2018 IBM Corp.
+> 
+>   #include <linux/bitops.h>
+> +#include <linux/clk.h>
+>   #include <linux/delay.h>
+>   #include <linux/interrupt.h>
+>   #include <linux/kernel.h>
+> @@ -43,6 +44,7 @@
+>   struct npcm_wdt {
+>   	struct watchdog_device  wdd;
+>   	void __iomem		*reg;
+> +	struct clk		*clk;
+>   };
+> 
+>   static inline struct npcm_wdt *to_npcm_wdt(struct watchdog_device *wdd)
+> @@ -66,6 +68,9 @@ static int npcm_wdt_start(struct watchdog_device *wdd)
+>   	struct npcm_wdt *wdt = to_npcm_wdt(wdd);
+>   	u32 val;
+> 
+> +	if (wdt->clk)
+> +		clk_prepare_enable(wdt->clk);
+> +
+>   	if (wdd->timeout < 2)
+>   		val = 0x800;
+>   	else if (wdd->timeout < 3)
+> @@ -100,6 +105,9 @@ static int npcm_wdt_stop(struct watchdog_device *wdd)
+> 
+>   	writel(0, wdt->reg);
+> 
+> +	if (wdt->clk)
+> +		clk_disable_unprepare(wdt->clk);
+> +
+>   	return 0;
+>   }
+> 
+> @@ -191,6 +199,10 @@ static int npcm_wdt_probe(struct platform_device *pdev)
+>   	if (IS_ERR(wdt->reg))
+>   		return PTR_ERR(wdt->reg);
+> 
+> +	wdt->clk = devm_clk_get_optional(&pdev->dev, NULL);
+> +	if (IS_ERR(wdt->clk))
+> +		return PTR_ERR(wdt->clk);
+> +
+>   	irq = platform_get_irq(pdev, 0);
+>   	if (irq < 0)
+>   		return irq;
+> --
+> 2.35.1
+> 
 
