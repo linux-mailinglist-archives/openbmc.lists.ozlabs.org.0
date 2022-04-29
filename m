@@ -2,84 +2,81 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC68A5148FA
-	for <lists+openbmc@lfdr.de>; Fri, 29 Apr 2022 14:15:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 778395148FB
+	for <lists+openbmc@lfdr.de>; Fri, 29 Apr 2022 14:16:18 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KqWfM63lkz3bZs
-	for <lists+openbmc@lfdr.de>; Fri, 29 Apr 2022 22:15:39 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KqWg4335Cz3bhK
+	for <lists+openbmc@lfdr.de>; Fri, 29 Apr 2022 22:16:16 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=nwxJLpJv;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=r4vPB+6V;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::52d;
- helo=mail-ed1-x52d.google.com; envelope-from=krzysztof.kozlowski@linaro.org;
+ smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::62a;
+ helo=mail-ej1-x62a.google.com; envelope-from=krzysztof.kozlowski@linaro.org;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256
- header.s=google header.b=nwxJLpJv; dkim-atps=neutral
-Received: from mail-ed1-x52d.google.com (mail-ed1-x52d.google.com
- [IPv6:2a00:1450:4864:20::52d])
+ header.s=google header.b=r4vPB+6V; dkim-atps=neutral
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com
+ [IPv6:2a00:1450:4864:20::62a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KpqtM3cSZz2y8R
- for <openbmc@lists.ozlabs.org>; Thu, 28 Apr 2022 19:23:37 +1000 (AEST)
-Received: by mail-ed1-x52d.google.com with SMTP id d6so4787567ede.8
- for <openbmc@lists.ozlabs.org>; Thu, 28 Apr 2022 02:23:36 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KqMNy120Rz2ypZ
+ for <openbmc@lists.ozlabs.org>; Fri, 29 Apr 2022 16:03:27 +1000 (AEST)
+Received: by mail-ej1-x62a.google.com with SMTP id j6so13418413ejc.13
+ for <openbmc@lists.ozlabs.org>; Thu, 28 Apr 2022 23:03:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
  h=message-id:date:mime-version:user-agent:subject:content-language:to
  :cc:references:from:in-reply-to:content-transfer-encoding;
- bh=jB9oC3xjpoFxUS9LFdQlfVxwFGaXRBq5QGeiE+tRIqM=;
- b=nwxJLpJvy+wRjL/DDaJ/04bHNsQKwmjHqfcQlgcfGg7zgRkGsl425sj0PSAkzSP1TT
- C649QghEbY76G7BX+E0MRj4p9vlpn0jgvkYBfx5YyWJjNndEb5EiXl3T6C6vex6rSWoQ
- l0w2z18kT2npM8rjj6JSz/HVAUY68Of+WRZswANlJOuaWLFIIg+3Sgw4Y4uZft3p3Cw0
- pcI4xRrsw/bn8Y3pLl5hq7/TC0nwv3o6fOCx1gEMMHVhiXRENcCxYkJPyuwi5y0sD0mf
- DuFHmMNI58YCgdoRqQ72JwIzRu7T8+yoyv0kHDPOKuNKjKB3efxoPbVYkBlu8Jyk6ejt
- TZzQ==
+ bh=2UVF1UzLTvXwjMuXjHk4vSsZBF8/xezWpjHU9KjaHyI=;
+ b=r4vPB+6VJeu8RIvrpfY3kIQQQjSlQs/o0234SVjt6pPhaCqx793Kmv1nmXZui80rWZ
+ Hg9w6CPZYYvkm0wlSZGRc9VZpOJYZU9CPuHml5XVyH3bP0giIoyYv+B0pEqYYnR7hrhP
+ Hb3YvlURM4kmTr6LCPbYSbVV16PG7a4ZuLsw39Rh81MV9rEOYlTrHK9yDMzg+CNO8hRX
+ XW992Ey9bFAZmHMC0+dgHuqAz4AVk9LLHU/BjBTf5/dIEF8ERi48fUEfVA26rfjRuA4R
+ D/vDS+5uy/V5qGtCC84SzqifWrFWDdDLSeApuMBzpu5Lr6Oyf1cwHzL8MI0kV17sg7Oc
+ eTsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
  :content-language:to:cc:references:from:in-reply-to
  :content-transfer-encoding;
- bh=jB9oC3xjpoFxUS9LFdQlfVxwFGaXRBq5QGeiE+tRIqM=;
- b=c0ISlVyswpveKPXYbrpWlo/NK80d1pK+CxxZiSnSAkWpJelHbLRGrYnRfWhpvpDSZR
- oJxigDyUSciA/sR2wwrucT8gCutucm0d65PYm3Yh7cVls31FYPFEl9H5f3G4p3F0Kk5Z
- NMRf7yj/R9YHCD8Tnj/dIkbklMg6LlfVlL4PlIGdKgDML0BNaVDo800xJRTEiMp9A7AM
- G+SnOuuixC6B0dU5umPaJzp+D99GYiu2T6U+efNPpnDW1vvxo4htwar2ecA8ZUtiQiJ6
- GH1xyjzuT9F6taiKD7RfiTu5QAKcNubRStX34cwK1BSuHY2IqYRP8JKqlWyaifOqvri8
- zp4g==
-X-Gm-Message-State: AOAM530HKKBCtkQnsu7wme9ojCSdcOarBdsgx6hgJdqXbjGBvtrhmdbA
- k2PIKFfpAOaDxeddcQPwX/waNQ==
-X-Google-Smtp-Source: ABdhPJxqQB4FhB1qwQB/ovi3BQShEh8+1kJBd2RzhXx0hDKyJJUUMioSgGqZTIvWf08I0UyrdgaiKQ==
-X-Received: by 2002:a05:6402:3584:b0:423:e4d0:34f with SMTP id
- y4-20020a056402358400b00423e4d0034fmr34874477edc.72.1651137808445; 
- Thu, 28 Apr 2022 02:23:28 -0700 (PDT)
-Received: from [192.168.0.161] (xdsl-188-155-176-92.adslplus.ch.
+ bh=2UVF1UzLTvXwjMuXjHk4vSsZBF8/xezWpjHU9KjaHyI=;
+ b=ENq+7MGCDaxNrJsN19Wx5lOSBeUJN2GqOs3X17U32mZhwdSsKE8gepZLiBVZ+7qC64
+ DtkjE05prbJWMOiMSxYbdcQgBJfkG3u2H+pxQnpHPrSWd6W941891ZwQFdFK4h7meNP2
+ 9XJ5/NMg3Wkf+7nlIwvOy4WcsFxTzj/ER8ArSOIVuFQbRVvg3y4dK/T2Y9b4Zm+Cjyn7
+ bfCoRU6g7SxYzz3PryMlQlhkfqErUt0Z1i9RFwYpjVxMASfmYlANtzCXN/uoB1nRdUXi
+ Q+nZ6Ah2M0qh8a4wQlNjWdQO1x41DGJPJFVE/4BNM61f2M1ihvqmL05gpeIBOY+mz46T
+ CN9w==
+X-Gm-Message-State: AOAM5305hlVcuhiu6ylFQ+P0hccaIWlvliJeXvwdMse2ZY26Jgl2XOMR
+ luC/wPK2JqivcrGO5xJshdDptw==
+X-Google-Smtp-Source: ABdhPJzibkdFBoDF+cIhDOCqeeWmKmks/LjPu/SUPeRXPpTGCICXJ32FXdpt2PTlJmb2ApJRyQ4AYQ==
+X-Received: by 2002:a17:906:9c82:b0:6e1:1d6c:914c with SMTP id
+ fj2-20020a1709069c8200b006e11d6c914cmr33826027ejc.769.1651212200588; 
+ Thu, 28 Apr 2022 23:03:20 -0700 (PDT)
+Received: from [192.168.0.167] (xdsl-188-155-176-92.adslplus.ch.
  [188.155.176.92]) by smtp.gmail.com with ESMTPSA id
- ew15-20020a170907950f00b006f3a3d60b9csm4725483ejc.63.2022.04.28.02.23.26
+ ra48-20020a17090769b000b006f3ef214e69sm318162ejc.207.2022.04.28.23.03.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 28 Apr 2022 02:23:27 -0700 (PDT)
-Message-ID: <8d919dc0-80a2-106f-9397-49263cf4ed5a@linaro.org>
-Date: Thu, 28 Apr 2022 11:23:26 +0200
+ Thu, 28 Apr 2022 23:03:20 -0700 (PDT)
+Message-ID: <064f5758-a3ae-d116-fe72-9f52b4cbea78@linaro.org>
+Date: Fri, 29 Apr 2022 08:03:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.7.0
-Subject: Re: [PATCH 4/7] dt-bindings: clock: Add Nuvoton WPCM450 clock/reset
- controller
+Subject: Re: [PATCH v2 2/2] pinctrl: nuvoton: Fix irq_of_parse_and_map()
+ return value
 Content-Language: en-US
-To: =?UTF-8?Q?Jonathan_Neusch=c3=a4fer?= <j.neuschaefer@gmx.net>,
- Joel Stanley <joel@jms.id.au>
-References: <20220422183012.444674-1-j.neuschaefer@gmx.net>
- <20220422183012.444674-5-j.neuschaefer@gmx.net>
- <31cb9af1-173d-bef5-64da-ccf5a01f2485@linaro.org>
- <CACPK8XdRYvike9Z98JzfO1r0W2jfkESr8xMGSH4kkigwZ_MkyQ@mail.gmail.com>
- <YmpWeOb3oetvqyvl@latitude>
+To: Linus Walleij <linus.walleij@linaro.org>
+References: <20220423094142.33013-1-krzysztof.kozlowski@linaro.org>
+ <20220423094142.33013-2-krzysztof.kozlowski@linaro.org>
+ <CACRpkdY8LJ5xMW0eDsL-ycrqV8io2zXJrT6RfZj=KxaE9rvcvA@mail.gmail.com>
 From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-In-Reply-To: <YmpWeOb3oetvqyvl@latitude>
+In-Reply-To: <CACRpkdY8LJ5xMW0eDsL-ycrqV8io2zXJrT6RfZj=KxaE9rvcvA@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Mailman-Approved-At: Fri, 29 Apr 2022 22:12:55 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -92,53 +89,38 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>,
- LINUXWATCHDOG <linux-watchdog@vger.kernel.org>,
- Stephen Boyd <sboyd@kernel.org>, Patrick Venture <venture@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Daniel Lezcano <daniel.lezcano@linaro.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Tali Perry <tali.perry1@gmail.com>,
- Michael Turquette <mturquette@baylibre.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
- Rob Herring <robh+dt@kernel.org>, Thomas Gleixner <tglx@linutronix.de>,
- Benjamin Fair <benjaminfair@google.com>,
- Philipp Zabel <p.zabel@pengutronix.de>, Guenter Roeck <linux@roeck-us.net>,
- Krzysztof Kozlowski <krzk+dt@kernel.org>,
- Wim Van Sebroeck <wim@linux-watchdog.org>, linux-clk@vger.kernel.org,
- Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>
+Cc: Andrew Lunn <andrew@lunn.ch>, Tomer Maimon <tmaimon77@gmail.com>,
+ linux-gpio@vger.kernel.org, Avi Fishman <avifishman70@gmail.com>,
+ Patrick Venture <venture@google.com>,
+ Gregory Clement <gregory.clement@bootlin.com>, linux-kernel@vger.kernel.org,
+ Tali Perry <tali.perry1@gmail.com>, Benjamin Fair <benjaminfair@google.com>,
+ Andy Shevchenko <andriy.shevchenko@linux.intel.com>, openbmc@lists.ozlabs.org,
+ linux-arm-kernel@lists.infradead.org,
+ Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 28/04/2022 10:55, Jonathan Neuschäfer wrote:
->>>
->>> All these defines should be in second header in dt-bindings/reset/...
+On 29/04/2022 00:52, Linus Walleij wrote:
+> On Sat, Apr 23, 2022 at 11:41 AM Krzysztof Kozlowski
+> <krzysztof.kozlowski@linaro.org> wrote:
+> 
+>> The irq_of_parse_and_map() returns 0 on failure, not a negative ERRNO.
 >>
->> I disagree. It makes more sense to keep the definitions together, and
->> it's all for the same hardware and driver.
+>> Fixes: 3b588e43ee5c ("pinctrl: nuvoton: add NPCM7xx pinctrl and GPIO driver")
+>> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+>> Changes since v1:
+>> 1. Correct the return value passed further.
+> 
+> This doesn't apply to my tree neither for fixes or devel, can you rebase it?
+> I'd like to queue it on devel for non-urgent fixes.
 
-These are bindings so the usage by same driver (Linux implementation)
-matters less or even does not matter.
+Sure, I will rebase. The issue was because of Andy's commit
+https://lore.kernel.org/all/20220401103604.8705-9-andriy.shevchenko@linux.intel.com/
+which was in next but not in your tree.
 
-Driver can be split from one to several and you would need to include
-clocks in your just-split-reset driver. Such driver split should not
-affect bindings, therefore having the binding headers separate is
-actually the most flexible.
+Including such development branches in next, bypassing maintainer, makes
+it difficult for everyone else to develop patches... :(
 
-> 
-> It's for the same hardware, DT node, and driver.
-> 
-> I could imagine splitting it into
-> 
-> 	include/dt-bindings/clock/nuvoton,wpcm450-clk.h  and
-> 	include/dt-bindings/reset/nuvoton,wpcm450-clk.h
-> 
-> if someone insists on it.
-> 
-> For convenience (being able to see all relevant definitions for
-> nuvoton,wpcm450-clk at once), I'd prefer to keep the definitions together.
-
-I don't insist. For some of the devices we split it, for some not.
 
 Best regards,
 Krzysztof
