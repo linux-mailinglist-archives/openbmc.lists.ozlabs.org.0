@@ -2,76 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 139CC5151BA
-	for <lists+openbmc@lfdr.de>; Fri, 29 Apr 2022 19:22:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D7BFB51519A
+	for <lists+openbmc@lfdr.de>; Fri, 29 Apr 2022 19:21:39 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KqfS46wx8z3bcV
-	for <lists+openbmc@lfdr.de>; Sat, 30 Apr 2022 03:22:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KqfRP5K06z3bpD
+	for <lists+openbmc@lfdr.de>; Sat, 30 Apr 2022 03:21:37 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=PLZ4JQRY;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=fFKo+3FN;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.15.15; helo=mout.gmx.net;
+ (client-ip=212.227.17.20; helo=mout.gmx.net;
  envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=PLZ4JQRY; 
+ header.s=badeba3b8450 header.b=fFKo+3FN; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KqfR30h2Hz3bbs
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KqfR30G8Gz3bbl
  for <openbmc@lists.ozlabs.org>; Sat, 30 Apr 2022 03:21:16 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1651252837;
- bh=n+fYbs1revJrCSfeZGgMBlQnPyJ+1djPv/sSqDYSh2M=;
+ s=badeba3b8450; t=1651252840;
+ bh=KjOTaewkXeg9gD63/HWGEfLtPHd2o/Nc1ZX9pL1ItJU=;
  h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
- b=PLZ4JQRYGDdEFKjhek+GvIAHzcaErcttl2lIEORTdJhliutBiTJTgwvytTYmfljkJ
- 6bDKgIwQw/EPjBDGh9Wlz2ZYCoevf9lqi1zFIqkHcab+gD6ot/YKU+TXRlIi6HT2RV
- JgNNjjVkM1YCX1I1JwFaKPThaBtPvCmVUdx/8fb8=
+ b=fFKo+3FN3UNC4U+2YAFSv/d5O/JNFoCcTVYmlaK5MK5v6vvEtXWx+xJ38FybQNk8n
+ pi7K5syL1mamdZl4Quns2rgkcxH/0y8KCi2IDGmQNgsP/ej60Q8cfRcViOv821f9jL
+ sxrpMltzCuNOk0DtF+db46Fi/H6Uw+OtcMHlwi1w=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from longitude ([37.201.215.103]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MFKKh-1neAlY3EL3-00Flrr; Fri, 29
- Apr 2022 19:20:37 +0200
+Received: from longitude ([37.201.215.103]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MvK0X-1o2ZLN1Vx3-00rFqR; Fri, 29
+ Apr 2022 19:20:40 +0200
 From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 To: linux-clk@vger.kernel.org,
 	openbmc@lists.ozlabs.org
-Subject: [PATCH v2 1/7] dt-bindings: timer: nuvoton,
- npcm7xx-timer: Allow specifying all clocks
-Date: Fri, 29 Apr 2022 19:20:24 +0200
-Message-Id: <20220429172030.398011-2-j.neuschaefer@gmx.net>
+Subject: [PATCH v2 2/7] clocksource: timer-npcm7xx: Enable timer 1 clock
+ before use
+Date: Fri, 29 Apr 2022 19:20:25 +0200
+Message-Id: <20220429172030.398011-3-j.neuschaefer@gmx.net>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220429172030.398011-1-j.neuschaefer@gmx.net>
 References: <20220429172030.398011-1-j.neuschaefer@gmx.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:p6rSWqprkd/QaVYN6U31GBpxz/6hVLr3+Oe2BrJnZNSPt2M7+ap
- dIJpPkkVmy4PvlULhC3lfyadwa2uR7z0xdBxu08izsSoANi5UpMgvVG3M8758BuTEdEqfDp
- SXMWPYfeGd3DwBI7KsQgFo4+mFaIVJDZP/XgzcRdp0C74wSDFrnCXaLfDN9aRzOOon2Hvqi
- Gtneq4HkjbdpmIP2StEeQ==
+X-Provags-ID: V03:K1:F0+IFMLwve1L01E5CbdzpXZxEC0gnGkE9a9+pZhDgs7EwhdNaGh
+ E1hluldQg3kkl+1INd3E7S8dTQgQ9HPZR2BbRTxEokRuS3BFevdFBa13+ypjpPS6lKM/EdL
+ 9piJW4rKikAiJZwMwKGIvJRj5ZQm7HdNQIF8NQe/EoGdcJN7Q0Hdu6h72LC1KRLn6/d4LtK
+ NaXntm46PxSIKEGKff71A==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:p+Br6C7z6cY=:5VhrNBlpnMvwTXnoJIWo0M
- fsPgh8JUsRjopAOMXm+IqN7CIaYvdtSpvvOu3Yvme81d8vAX152vwnm3ydnmYWiD+1oVzInDH
- PvwYxYc0oZJTbEHyRlCAgzlShAizuPb6ipvCQY654AnqONXE/xF2XlBQkFxvBDKJntb1PtNUZ
- B9+3Xf3l8crGm/4s4YONxnsK2ALiQ8RgDwOwLNv/d1O1EZB7owOzOWXP9GItnCCBY02MKGIr6
- az8S8CGf9OI9ePp3np7+LpOk395xdV8rGU1jsET5tkOAU7su5yYropkAlX4r1gBP0hHwDun1t
- lTrKMEHAF7WyruQ+Hv6jm0+HPieAKaWo4KLAqRm4SH0COU55hdf9pgg3IuoJWI13NnCVOh69j
- gnDTKzZDXGJiNGpSWmDx/V94C1R2u8Hrp75utgGstsAcavvuYnMJEjewD615sqFQ8r2BPQXQp
- 7+ba2m83qDCt7cZGwRnNbAVd1X02LVmmsSslAMi6HBA8dNl1OeIq91v2r4158KUyVJaxnfRQg
- P2SyWpWiYCdHQUFWFLngCMFgDRE80/Ix0ncpqbQZK3d9xOWrVA1q9h3Rq50agWsv5lV/i4JJ1
- o38OsY41VaAP6/4NBHAIOBstQevqspfmH9bSUZ9Fl6n4AXNOfJBwp5y+e2pSA/YODpAygTHUd
- zN/72o3UsfA9lv0kkN21X8tlC0DvWrbSY6D0mQRK9SuWJIkf2Ke6XV1wQwMXtetjJZNw0kwOf
- KqfVjufYpwbtYCdindy99eV9xK5oyrWb8Wvbc/LAXv/MvYuFPgLaTi6eQI2wRv7/hcIuNmvjM
- oaBNO8GMZkIE0KKkjrkDFqwCeIxVenlh3ubWSLv/jkM/9buldVbIse1maMXAe2vhAUEzAz/do
- 0MNva4VMUQqlyC6P2NczzLlNPeuYkk/kt1jaohguMmHDVGyO9Hd9A54cJBl5TPgZbU8y3Eg4E
- vsuqKDHPGtcDNPOWtXWOtxdLssivm/4nI/2Wh3MrPuWy6uaIhBGEbffqAjwHsZHZQoLr7o3rc
- l8vSZPMvFauIAvNj8m6LnfwyGorowL7HMe2GhXINK6iKgDKznyZmO+T+TXwNsWyhDiPsBgRi5
- V1n3uMv0lbXoMM=
+X-UI-Out-Filterresults: notjunk:1;V03:K0:i9zb9H0jIH8=:GjPNtl7S/40sSf5720RMYP
+ eT78eAyQB5ybkGXAP74BN0IdHf19AmQk16ZrbNCkPBc2jgUofVhI1gNCaQwLcZWmOqajQ02HP
+ UDe+R7Om/NRe2Y93Q3j/NblA4AfQBgZg8pB2kn7CKcAWtOOpRsX+1WW/SQIcUgtRN3TCD6QkW
+ RPQKtSdMbTxDVObbBakJP4yk2F8YjnZABQyF9YiY3c29GDlavTTPJT4U/BstLYVL7R3U9XCaj
+ 75vW5TCFDZ3rjrkOweqwRR1X9Xu3X2TeZCDJM3JMy7JCsQCt7tRwqTtS1OLMBR7A1c9olYhXB
+ WAHawMIrSiFnSAOa4eaXHOu4pv7GS6TZnwv1sht5Y2HCvncPKntmVjRiNqCyf/elrRDIchywb
+ 1wKSbNNpYQtm5PYHNzX0m/eZjRd1wbYm2EbHrh+ZHge0GpjdC1OygAKqb77fg6oyTijkNvi8S
+ xC6tsmbAHllH/S6gik7zOgUBtcrYDpSjtiS8fhARU6WWMztEBn1EQE8dmHEn+TT1qgK6U9TSw
+ 5pydtrW1BQqaDJgOnfr7A0DkdsCk2P+gghsIm+sk3CKV2L2SEcrF5GC5O0ArLirb0KJNdE7s/
+ I736sLwQkscHcbEW4/+B1clyyzE6Hrk0GTWsKdf6sc28aXtoKcSmvcKmR6iq1nUvWZdpmQkDR
+ PEFg79afpMOhljpt54QccOqjlan26P04dJpTlhTntnKnagUKhDz8xUuIuDoQPbdmKS+Y+RX3q
+ y1ws/xCjVfZWebyd+lIKpxl0ewn0K3+snNQJPwVMdOjyOCa/UgbSGXokLHd/T0cs+7BUJrxiG
+ t3WLwkn/Gd4H6T8djfPLqyV4PGtXoZf652RXJopHcNAg9WWMLaq7XRufq1uEGqplzgN8h57ul
+ TAllRufMmrbelvcTHnZjORlg7IceaI2cRqZ60FYPnV+sk4cUHzisPGnhk9zLETMUqnj0JfPMM
+ G4XnEsJ2ZMA9gGdGBKTNvniirSfL7Bx2udvV3uDLI1jZ//OsHn00n9H35Io+8B5bPr3U/2Xt0
+ OHIu9uEs5az8CG91t82K15C3Dkj1RP8IT+lStp9MZAfk9WTvzy6fU5xIftBdSmJFFPukL4ouS
+ KuhLYz+pwn4q94=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,39 +98,52 @@ Cc: devicetree@vger.kernel.org, Wim Van Sebroeck <wim@linux-watchdog.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The timer module contains multiple timers. In the WPCM450 SoC, each timer
-runs off a clock can be gated individually. To model this correctly, the
-timer node in the devicetree needs to take multiple clock inputs.
+In the WPCM450 SoC, the clocks for each timer can be gated individually.
+To prevent the timer 1 clock from being gated, enable it explicitly.
 
 Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
 =2D--
 
 v2:
-- no changes
+- Provide context in pr_warn message
+
+v1:
+- https://lore.kernel.org/lkml/20220422183012.444674-3-j.neuschaefer@gmx.n=
+et/
 =2D--
- .../devicetree/bindings/timer/nuvoton,npcm7xx-timer.yaml  | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/clocksource/timer-npcm7xx.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer=
-.yaml b/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer.yaml
-index 0cbc26a721514..023c999113c38 100644
-=2D-- a/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer.yaml
-+++ b/Documentation/devicetree/bindings/timer/nuvoton,npcm7xx-timer.yaml
-@@ -23,7 +23,13 @@ properties:
-       - description: The timer interrupt of timer 0
+diff --git a/drivers/clocksource/timer-npcm7xx.c b/drivers/clocksource/tim=
+er-npcm7xx.c
+index a00520cbb660a..9af30af5f989a 100644
+=2D-- a/drivers/clocksource/timer-npcm7xx.c
++++ b/drivers/clocksource/timer-npcm7xx.c
+@@ -188,6 +188,7 @@ static void __init npcm7xx_clocksource_init(void)
 
-   clocks:
--    maxItems: 1
-+    items:
-+      - description: The reference clock for timer 0
-+      - description: The reference clock for timer 1
-+      - description: The reference clock for timer 2
-+      - description: The reference clock for timer 3
-+      - description: The reference clock for timer 4
-+    minItems: 1
+ static int __init npcm7xx_timer_init(struct device_node *np)
+ {
++	struct clk *clk;
+ 	int ret;
 
- required:
-   - compatible
+ 	ret =3D timer_of_init(np, &npcm7xx_to);
+@@ -199,6 +200,15 @@ static int __init npcm7xx_timer_init(struct device_no=
+de *np)
+ 	npcm7xx_to.of_clk.rate =3D npcm7xx_to.of_clk.rate /
+ 		(NPCM7XX_Tx_MIN_PRESCALE + 1);
+
++	/* Enable the clock for timer1, if it exists */
++	clk =3D of_clk_get(np, 1);
++	if (clk) {
++		if (!IS_ERR(clk))
++			clk_prepare_enable(clk);
++		else
++			pr_warn("%pOF: Failed to get clock for timer1: %pe", np, clk);
++	}
++
+ 	npcm7xx_clocksource_init();
+ 	npcm7xx_clockevents_init();
+
 =2D-
 2.35.1
 
