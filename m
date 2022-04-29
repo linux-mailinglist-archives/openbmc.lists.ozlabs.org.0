@@ -2,67 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 013695149F8
-	for <lists+openbmc@lfdr.de>; Fri, 29 Apr 2022 14:53:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 18E475151BC
+	for <lists+openbmc@lfdr.de>; Fri, 29 Apr 2022 19:22:51 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KqXVF6M3zz3bcK
-	for <lists+openbmc@lfdr.de>; Fri, 29 Apr 2022 22:53:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KqfSm6NmWz3bkv
+	for <lists+openbmc@lfdr.de>; Sat, 30 Apr 2022 03:22:48 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=iZtGAwW1;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=UsxigpwS;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=134.134.136.126; helo=mga18.intel.com;
- envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=iZtGAwW1; dkim-atps=neutral
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KqXTq56pRz2y6F
- for <openbmc@lists.ozlabs.org>; Fri, 29 Apr 2022 22:53:18 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1651236799; x=1682772799;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=UpTl+EI4OxATNhRZbN10QD6jlbsYNUk1LadQPcxzoLY=;
- b=iZtGAwW1TR9Q2BY2GqbBv+R3TqVDVPiR+FvHINBD9pHJp/ENTBR3IEyj
- 6GoC6yWQSiY0uxOZ1dbN3kEq0kuCH2BUxmIBAA6MyEy+KP3ZxLwQykinr
- CWWOhEWxbSDA2BZt099Euh/9XL7uo59Odwm4Sg7J5byal2k6QRkhnCWrj
- /5cujjKGEd++XZ1iPHsctUyIOa9aRPHV3Od9uQTQpp+QavtxYIIv7Z7ij
- V8ktORuuoQPwC/G6RNRnMNdQqZ1iZPNlFrjVnMJ8UxIjqsJpZDnSwtLM1
- wuG67foCH3tZzif++hayy1IYyGq0Y/GDNy+YtJmJyVDcaxDv62HceJana g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10331"; a="248564711"
-X-IronPort-AV: E=Sophos;i="5.91,185,1647327600"; d="scan'208";a="248564711"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
- by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Apr 2022 05:52:16 -0700
-X-IronPort-AV: E=Sophos;i="5.91,185,1647327600"; d="scan'208";a="542495249"
-Received: from smile.fi.intel.com ([10.237.72.54])
- by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 29 Apr 2022 05:52:12 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.95)
- (envelope-from <andriy.shevchenko@linux.intel.com>)
- id 1nkQ6T-009iHu-By; Fri, 29 Apr 2022 15:52:09 +0300
-Date: Fri, 29 Apr 2022 15:52:09 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH v2 2/2] pinctrl: nuvoton: Fix irq_of_parse_and_map()
- return value
-Message-ID: <Ymvfeea1QXqSoq76@smile.fi.intel.com>
-References: <20220423094142.33013-1-krzysztof.kozlowski@linaro.org>
- <20220423094142.33013-2-krzysztof.kozlowski@linaro.org>
- <CACRpkdY8LJ5xMW0eDsL-ycrqV8io2zXJrT6RfZj=KxaE9rvcvA@mail.gmail.com>
- <064f5758-a3ae-d116-fe72-9f52b4cbea78@linaro.org>
+ spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
+ (client-ip=212.227.17.20; helo=mout.gmx.net;
+ envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
+ header.s=badeba3b8450 header.b=UsxigpwS; 
+ dkim-atps=neutral
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KqfR308T6z3bYS
+ for <openbmc@lists.ozlabs.org>; Sat, 30 Apr 2022 03:21:16 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=badeba3b8450; t=1651252835;
+ bh=2h4V0W/yZhCGU1mSyzjHlAuoaUTbxzS6gJejM6vkUcc=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+ b=UsxigpwSjfbS0HKai5sT9/OgsaE1eJu29VEgfFrBixpIDJisHnShF/6KGIuvqR3tT
+ oIkG/nN0UmL/MlQgLkjdPkxB8SuSNggQ3olLPmwnuxRlo90pzlqbzoO2VNjGjFWmQG
+ OuyIuY6aA/i+kqVP1pwHHBpBfItmrvVAKECFxDOs=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from longitude ([37.201.215.103]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MBlxM-1nYPT50EGK-00CATa; Fri, 29
+ Apr 2022 19:20:35 +0200
+From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: linux-clk@vger.kernel.org,
+	openbmc@lists.ozlabs.org
+Subject: [PATCH v2 0/7] Nuvoton WPCM450 clock and reset driver
+Date: Fri, 29 Apr 2022 19:20:23 +0200
+Message-Id: <20220429172030.398011-1-j.neuschaefer@gmx.net>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <064f5758-a3ae-d116-fe72-9f52b4cbea78@linaro.org>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:TwLeqC0Md/m/ttyQAH8dOoovZVevV61hYozSDqi4RiDGLFt1HpI
+ F4vnLOhH3qGNu8Ob+KwyGa8g8zikwbZ3yRSdu97LnDkVon+U0nKqckfpmgwlpomC+kV9v0C
+ 44G9l/cZKGNUgDhpI+nQQMq7n1hASAQkTI8CUeBoVWWCd4G6dTiIyOAY84nL/HI8R78plRR
+ wbkeCJC8EzSwcIKawVbGw==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:3ZFw5jkiuog=:39Sd7Zc9bT++8WE1jaR3bU
+ 49oHNXN70y/k456eSqtJRPUA3b1MgZnRGoG/0a+bGA579Px7GzP/2ELmTEAupf+kxSFFzKWfZ
+ 7AyFAr1MMLa6X9qUImPQTkuKThlDbb+4COriI5kSXEY9ZOTwFXQq7FdUDmxiQNsuK8IanUWQK
+ htemUfBrV5P0TVslwbr9E1nbc2b5bqLNMvt4LJ7ejQY4Qn7HLuiHWiQzcODEWlo/cgq41myFG
+ dJAG4mhyyFZxTZ9c6XP8CKXknXRbM7whzddETbGQQAD4i0yAYb14oudC2nGeunL7j5xEzzWQl
+ 4dE0DRQ8hFL6SeylDXRZT/GbJOa5hg0Ig+XFYArwV9CPxzgSQh8jL5wVg2hjng6Et5vpt45oe
+ o225HMdimy85rZkKPD2uNGTXwBAj4r+pKdtIZ9O9RiZYm9pTekGL6bMkkgZSYFzeTp4SBtEEB
+ 2iMVMgbYTaceVEhbv9RvKV/D26RNXdB+EEB52pS3Isl7/BqHnRMCujH/qagrSxsZy/FYi9zNd
+ blhmOc+Y/QnE4nkll+rYI1z7TYoPiflty/O2g+v/rNB69/esNHdw49fP6E6jwPud3vqkXA+8a
+ IzV2KwZpxZewsaYB6hvsq2YCMbhFOWsbY3BqJ4ohuEUYZrcojN9IpqUg+si+84RsQ2EH4lw9O
+ YNh7f1qgEiJE6XBGcrBoB7NhaLZ+ZvAIvUIbx8xktUXRd9Qh+KV+4i1hWyxRzNLJaObWP2DiX
+ fvDTKREuaELFCZdX9HUf6TmiaEgfMFwCslxWczjHNUarWFBC78ePWBXi3Lz1jdT42P2XMQypK
+ RNNgYnVtxzKntm2SqBTNab0wegmBTZwDMD/V/Ja69VwIgaIDuIiUQfjjVYyvN3SKcFp7z5xE7
+ ChFpcZkKJuEqscq38EuULjWJX8wp64C855bzO+RkDrE8l8ViMB9Qqd4o3+0Gr0G40QPAKGcjp
+ Z+zr6muGR8WcSZ6Mo4UrGZ+cJfCRynWoUxCzkWMa3PxBcjF0ApapvieL2iCez9x4y89t3bCjt
+ 3IXFynkqME34CrEH2lIFBiV8q15pX1vsT8YzxNUiFQy25LGeWi6Stlyfg3d1q1/U9gEAP0+lP
+ oAkFGfO2rZDrkM=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,44 +80,82 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Lunn <andrew@lunn.ch>, Tomer Maimon <tmaimon77@gmail.com>,
- linux-gpio@vger.kernel.org, Avi Fishman <avifishman70@gmail.com>,
- Patrick Venture <venture@google.com>, Linus Walleij <linus.walleij@linaro.org>,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- Tali Perry <tali.perry1@gmail.com>, Benjamin Fair <benjaminfair@google.com>,
- Gregory Clement <gregory.clement@bootlin.com>,
- linux-arm-kernel@lists.infradead.org,
- Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
+Cc: devicetree@vger.kernel.org, Wim Van Sebroeck <wim@linux-watchdog.org>,
+ linux-watchdog@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
+ Patrick Venture <venture@google.com>,
+ Michael Turquette <mturquette@baylibre.com>,
+ Daniel Lezcano <daniel.lezcano@linaro.org>, linux-kernel@vger.kernel.org,
+ =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+ Avi Fishman <avifishman70@gmail.com>, Rob Herring <robh+dt@kernel.org>,
+ Benjamin Fair <benjaminfair@google.com>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ Krzysztof Kozlowski <krzk+dt@kernel.org>, Tali Perry <tali.perry1@gmail.com>,
+ Thomas Gleixner <tglx@linutronix.de>, Guenter Roeck <linux@roeck-us.net>,
+ Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Apr 29, 2022 at 08:03:19AM +0200, Krzysztof Kozlowski wrote:
-> On 29/04/2022 00:52, Linus Walleij wrote:
-> > On Sat, Apr 23, 2022 at 11:41 AM Krzysztof Kozlowski
-> > <krzysztof.kozlowski@linaro.org> wrote:
-> > 
-> >> The irq_of_parse_and_map() returns 0 on failure, not a negative ERRNO.
-> >>
-> >> Fixes: 3b588e43ee5c ("pinctrl: nuvoton: add NPCM7xx pinctrl and GPIO driver")
-> >> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> >> Changes since v1:
-> >> 1. Correct the return value passed further.
-> > 
-> > This doesn't apply to my tree neither for fixes or devel, can you rebase it?
-> > I'd like to queue it on devel for non-urgent fixes.
-> 
-> Sure, I will rebase. The issue was because of Andy's commit
-> https://lore.kernel.org/all/20220401103604.8705-9-andriy.shevchenko@linux.intel.com/
-> which was in next but not in your tree.
-> 
-> Including such development branches in next, bypassing maintainer, makes
-> it difficult for everyone else to develop patches... :(
+This series adds support for the clock and reset controller in the Nuvoton
+WPCM450 SoC. This means that the clock rates for peripherals will be calcu=
+lated
+automatically based on the clock tree as it was preconfigured by the bootl=
+oader.
+The 24 MHz dummy clock, that is currently in the devicetree, is no longer =
+needed.
+Somewhat unfortunately, this also means that there is a breaking change on=
+ce
+the devicetree starts relying on the clock driver, but I find it acceptabl=
+e in
+this case, because WPCM450 is still at a somewhat early stage.
 
-I'm about to send PR with my stuff to Linus and Bart, but I have difficulties
-right now with the signing tag. I hope I figure out sooner than later.
 
--- 
-With Best Regards,
-Andy Shevchenko
+Upstreaming plan (although other suggestions are welcome):
 
+Once reviewed,
+
+- The ARM/dts changes should go through Joel Stanley's bmc tree
+- The clocksource/timer changes should probably go via Daniel Lezcano and =
+TIP
+- The watchdog patch should go via the watchdog tree
+- The clock controller bindings and driver should go through the clk tree
+- It might make sense to delay the final ARM/dts patch ("ARM: dts: wpcm450=
+:
+  Switch clocks to clock controller") until next cycle to make sure it is
+  merged after the clock driver.
+
+
+New in version 2:
+- various small improvements
+
+v1:
+- https://lore.kernel.org/lkml/20220422183012.444674-1-j.neuschaefer@gmx.n=
+et/
+
+
+Jonathan Neusch=C3=A4fer (7):
+  dt-bindings: timer: nuvoton,npcm7xx-timer: Allow specifying all clocks
+  clocksource: timer-npcm7xx: Enable timer 1 clock before use
+  watchdog: npcm: Enable clock if provided
+  dt-bindings: clock: Add Nuvoton WPCM450 clock/reset controller
+  ARM: dts: wpcm450: Add clock controller node
+  clk: wpcm450: Add Nuvoton WPCM450 clock/reset controller driver
+  ARM: dts: wpcm450: Switch clocks to clock controller
+
+ .../bindings/clock/nuvoton,wpcm450-clk.yaml   |  66 +++
+ .../bindings/timer/nuvoton,npcm7xx-timer.yaml |   8 +-
+ arch/arm/boot/dts/nuvoton-wpcm450.dtsi        |  29 +-
+ drivers/clk/Makefile                          |   1 +
+ drivers/clk/clk-wpcm450.c                     | 378 ++++++++++++++++++
+ drivers/clocksource/timer-npcm7xx.c           |  10 +
+ drivers/reset/Kconfig                         |   2 +-
+ drivers/watchdog/npcm_wdt.c                   |  12 +
+ .../dt-bindings/clock/nuvoton,wpcm450-clk.h   |  67 ++++
+ 9 files changed, 564 insertions(+), 9 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/nuvoton,wpcm45=
+0-clk.yaml
+ create mode 100644 drivers/clk/clk-wpcm450.c
+ create mode 100644 include/dt-bindings/clock/nuvoton,wpcm450-clk.h
+
+=2D-
+2.35.1
 
