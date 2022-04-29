@@ -2,70 +2,52 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8A76F513EBD
-	for <lists+openbmc@lfdr.de>; Fri, 29 Apr 2022 00:52:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4268251403F
+	for <lists+openbmc@lfdr.de>; Fri, 29 Apr 2022 03:29:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Kq9qr30wsz3bWR
-	for <lists+openbmc@lfdr.de>; Fri, 29 Apr 2022 08:52:40 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KqFJz17lHz3bdP
+	for <lists+openbmc@lfdr.de>; Fri, 29 Apr 2022 11:29:39 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=K8LxjAyN;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256 header.s=20171124 header.b=qKdUTEd5;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::1130;
- helo=mail-yw1-x1130.google.com; envelope-from=linus.walleij@linaro.org;
+Authentication-Results: lists.ozlabs.org;
+ spf=pass (sender SPF authorized) smtp.mailfrom=lunn.ch
+ (client-ip=185.16.172.187; helo=vps0.lunn.ch; envelope-from=andrew@lunn.ch;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256
- header.s=google header.b=K8LxjAyN; dkim-atps=neutral
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com
- [IPv6:2607:f8b0:4864:20::1130])
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256
+ header.s=20171124 header.b=qKdUTEd5; dkim-atps=neutral
+X-Greylist: delayed 1584 seconds by postgrey-1.36 at boromir;
+ Fri, 29 Apr 2022 11:29:15 AEST
+Received: from vps0.lunn.ch (vps0.lunn.ch [185.16.172.187])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Kq9qR5rtfz2yZv
- for <openbmc@lists.ozlabs.org>; Fri, 29 Apr 2022 08:52:19 +1000 (AEST)
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-2f7d7e3b5bfso68709017b3.5
- for <openbmc@lists.ozlabs.org>; Thu, 28 Apr 2022 15:52:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=MQSHZFFqhGqguDQeUrlptfLxAJDHurEMXXQM/r/YNSQ=;
- b=K8LxjAyNdmlx+j/JFYhP5xn+d2TBYZuQfYbT4W9wrwV1KjF0cgCv0pLnSTXUwT0RrQ
- s5//4tVmbHa/DX8wkSQvqzfYGp/mIzP1bR0cW2nKNPesHO73BT0UNy1AsrJb2z1cvGMZ
- eYlTehXFEX5AErk4IIcRFcV0ibH6OQp+FTbBpE28KIq1xY09zOvKHUhrDMjoEHLwZCjT
- O8Nt+yYAZ6bPWW/fi3WFI0HoysWb7Mdz4Rxy+WyrPOhGvr7vqNRBWvm4d/x3r+izMvdN
- 9G8eFDC4xliZuz/wHY4BXIsdEI3kyCWMuoLBY9PiXgOmfPH/6kUwBimsqaHmxzlLO3+q
- LSHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=MQSHZFFqhGqguDQeUrlptfLxAJDHurEMXXQM/r/YNSQ=;
- b=4q6ZUBNfHSxUODFYW18d2JZD45Eg4ekBCMf3Sfe0DSisAU2nosBDlyEABa9egP8E48
- 2Sv8AI1kLEqgdxxhaomEOpJTcBNgfkWIRFw20DV0UX8B0mQitZg+Z1cji+Ss6Ht52FqY
- qD168FoYHmT9Nhe6p0G4HyJFogp8Bo2mrIf868woZ1hEBpav+F3V5MFtu1vuSuqzK9A5
- iYis8KUoRNOTASd+T1hH/wWAx/E+v2Hv2p+m+XBZ2Pg3EEVgF0VKx2HEND8d0JGY28Bq
- cJ15PtzY8s68kg8yGGeEazFO4lWhi/kS4EoDehICOGWKIbWPFmsBr+DZjgNxhuCbMvX6
- 2A4w==
-X-Gm-Message-State: AOAM5320gUvK8axvO929Ki5WZ4pPVmemNiUBNUR3cXrbeiv3h4/owq5s
- uYgBoEZB4uTT2i8NjWXQS+Ehd0xhd9EoQ1gaoEHlbw==
-X-Google-Smtp-Source: ABdhPJxeLmDpTaMNXY7Wqn0ZY0oHf2i3kitPQek08DWmM8V77lMeD1uVkcuL3axOpiMHKUg2pGTgK4SigJXtFUWHXtQ=
-X-Received: by 2002:a81:2154:0:b0:2f4:d79e:35dc with SMTP id
- h81-20020a812154000000b002f4d79e35dcmr35566381ywh.126.1651186335816; Thu, 28
- Apr 2022 15:52:15 -0700 (PDT)
+ key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
+ SHA256) (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KqFJW5qh0z2yHX
+ for <openbmc@lists.ozlabs.org>; Fri, 29 Apr 2022 11:29:15 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+ s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+ References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+ Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+ Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+ bh=7Kgksz1U+mpR5yolnT7/amlugtDRmACOMUcwglvKJUc=; b=qKdUTEd5nyy93U0dp1Dz1gWDVZ
+ gF+ddv0L6PzIaNwv4iRlOuv9idXs1gNYlZzsEYCl3Azlk9WGiwxoUDeysOdMcKgGw85BfX3YdAYcC
+ taV00TYA8wNY0fupmJwcH8YGrUiH1W+Zh6rK0oKVhKo6mpA8ar5Mx8zbPEBOZZ5RUheo=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+ (envelope-from <andrew@lunn.ch>)
+ id 1nkF1j-000Oz9-FZ; Fri, 29 Apr 2022 03:02:31 +0200
+Date: Fri, 29 Apr 2022 03:02:31 +0200
+From: Andrew Lunn <andrew@lunn.ch>
+To: Joel Stanley <joel@jms.id.au>
+Subject: Re: [PATCH net] net: ftgmac100: Disable hardware checksum on AST2600
+Message-ID: <Yms5JzcVMKDYpR5H@lunn.ch>
+References: <20220428082858.545176-1-joel@jms.id.au>
 MIME-Version: 1.0
-References: <20220423094142.33013-1-krzysztof.kozlowski@linaro.org>
- <20220423094142.33013-2-krzysztof.kozlowski@linaro.org>
-In-Reply-To: <20220423094142.33013-2-krzysztof.kozlowski@linaro.org>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Fri, 29 Apr 2022 00:52:04 +0200
-Message-ID: <CACRpkdY8LJ5xMW0eDsL-ycrqV8io2zXJrT6RfZj=KxaE9rvcvA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] pinctrl: nuvoton: Fix irq_of_parse_and_map()
- return value
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220428082858.545176-1-joel@jms.id.au>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,28 +59,25 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Lunn <andrew@lunn.ch>, Tomer Maimon <tmaimon77@gmail.com>,
- linux-gpio@vger.kernel.org, Avi Fishman <avifishman70@gmail.com>,
- Patrick Venture <venture@google.com>,
- Gregory Clement <gregory.clement@bootlin.com>, linux-kernel@vger.kernel.org,
- Tali Perry <tali.perry1@gmail.com>, Benjamin Fair <benjaminfair@google.com>,
- openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
- Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>
+Cc: David Wilder <dwilder@us.ibm.com>, openbmc@lists.ozlabs.org,
+ David Wilder <wilder@us.ibm.com>, linux-kernel@vger.kernel.org,
+ netdev@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>,
+ Dylan Hung <dylan_hung@aspeedtech.com>, Paolo Abeni <pabeni@redhat.com>,
+ "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sat, Apr 23, 2022 at 11:41 AM Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
+> Fixes: 39bfab8844a0 ("net: ftgmac100: Add support for DT phy-handle property")
+> Reported-by: David Wilder <wilder@us.ibm.com>
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> ---
+> Net maintainers, if no one has a counter proposal I would like this
+> merged as a fix. Please give Dylan from Aspeed a chance to reply before
+> applying the patch.
 
-> The irq_of_parse_and_map() returns 0 on failure, not a negative ERRNO.
->
-> Fixes: 3b588e43ee5c ("pinctrl: nuvoton: add NPCM7xx pinctrl and GPIO driver")
-> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-> Changes since v1:
-> 1. Correct the return value passed further.
+What has phy-handle got to do with this? You might want to add an
+explanation why you picked that as a Fixes: commit, if it is in fact
+correct.
 
-This doesn't apply to my tree neither for fixes or devel, can you rebase it?
-I'd like to queue it on devel for non-urgent fixes.
 
-Yours,
-Linus Walleij
+     Andrew
