@@ -1,77 +1,86 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D2DD8516484
-	for <lists+openbmc@lfdr.de>; Sun,  1 May 2022 15:14:00 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2AD0E5168AD
+	for <lists+openbmc@lfdr.de>; Mon,  2 May 2022 00:36:57 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Krmrk5r2gz2yZc
-	for <lists+openbmc@lfdr.de>; Sun,  1 May 2022 23:13:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Ks1LC6fWvz3bYZ
+	for <lists+openbmc@lfdr.de>; Mon,  2 May 2022 08:36:51 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=hUDvmvcF;
+	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=gbvxq1yY;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2a00:1450:4864:20::12d;
- helo=mail-lf1-x12d.google.com; envelope-from=zhangjian.3032@bytedance.com;
+ smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::634;
+ helo=mail-ej1-x634.google.com; envelope-from=krzysztof.kozlowski@linaro.org;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=bytedance-com.20210112.gappssmtp.com
- header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256
- header.s=20210112 header.b=hUDvmvcF; dkim-atps=neutral
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com
- [IPv6:2a00:1450:4864:20::12d])
+ unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256
+ header.s=google header.b=gbvxq1yY; dkim-atps=neutral
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com
+ [IPv6:2a00:1450:4864:20::634])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KrmrK581fz2xxn
- for <openbmc@lists.ozlabs.org>; Sun,  1 May 2022 23:13:35 +1000 (AEST)
-Received: by mail-lf1-x12d.google.com with SMTP id x33so21376313lfu.1
- for <openbmc@lists.ozlabs.org>; Sun, 01 May 2022 06:13:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bytedance-com.20210112.gappssmtp.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :content-transfer-encoding;
- bh=NnatgKS24CPvdS/N3DAZ5yjXROI4m7GIpe0wI3Xjb9s=;
- b=hUDvmvcFFBZBm9O6PcJZTEdvl5TZERuymNwC4/L7vomBL9grKrsrhO1mvyc1LPXNsd
- 2U5mXKi2OBFh0TZtjSpE/hWviYUnbzLMwYfDRlCYSQY6X3DSCxzBBi6jRpWdjsyIIhal
- RVtM2RVNen1q8bb00oqndXgk2dpagmX11gKeW7xs967zLCIdLWHl85nVC+JG+If5bdJ0
- XCid7d52vvb3Wxur9EUMpRGZJ8n8jrZ2AbAqFXAFt1M8TbLoa5JZBcGP8HeeNQOCcV5i
- rLiG+6VVZFlyCyQjAIDzCcVLGaWX81JmSWUpwjDj2tFFgesTNYPncwekOQgBe3zCG5NK
- uy3A==
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Kr6qJ5K5Wz2yXM
+ for <openbmc@lists.ozlabs.org>; Sat, 30 Apr 2022 21:40:26 +1000 (AEST)
+Received: by mail-ej1-x634.google.com with SMTP id gh6so19940270ejb.0
+ for <openbmc@lists.ozlabs.org>; Sat, 30 Apr 2022 04:40:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linaro.org; s=google;
+ h=message-id:date:mime-version:user-agent:subject:content-language:to
+ :cc:references:from:in-reply-to:content-transfer-encoding;
+ bh=37IZKYMhQSNg4t1jdanquzuzImuToF3uqBKV1QSoGwI=;
+ b=gbvxq1yYiDoaisR85HzGtsvG7lGu9kbT8uLnZc8etRsQliGN5hvvP+tVA0tkb2fVso
+ D5Z3vc/E5WLiSJt27kDTmCO+8KInOv+AqKmsNNf/gWVeis0TkxZecBRAvBjlhZ34a6qt
+ vFwkAST2rq/LeFg/BAL/BDe4eF9EGj+ayZ9Uu0ioZO1uJTV94qhriMOGRyiEuHYgelrO
+ 47GZ+MNiVyN/yfs0lsGzkQ2HzQpwwCDshS87c7y4vZnAeN2Oa0OjmiDdUCgPeHzGMbIp
+ ft9lG6rMfHrKpoQ1dkZdH/DXpCb0qChFEk5iDCRFINXhF1CCNDiyvgKtYAyX0y9Xk8Ry
+ qhyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:content-transfer-encoding;
- bh=NnatgKS24CPvdS/N3DAZ5yjXROI4m7GIpe0wI3Xjb9s=;
- b=YE2cGeoGQpS/NtV0FdA2lHqRKUG28vEpdS4453fTFjiVoOWb0iQxLciwdIs4gSRe75
- RMPoL6JskeNf1qz+It8ANuEZvTdMDAo0vvbx9NHkCAbc0DsW/J9oy2be5vhsX21AgQEX
- XCl/l2vYgGEw21t9eKGwVEbDJc9ipsR62po+Y9U/FOA6/cc0qguF8N8yeC7aUcQJeBPL
- GRIuKE1cjEkMOX0M940A/+DvrZNV1KmfJB1X81jK26T57bBW/Yzo5LQzp1PU4d8bh+KW
- sSzByJ1IklacF+V61lRpM6iG+lu8kLYT4oh7sK/z4SaqE90D2U5aI89/xuKm0cY9Fp46
- sC8g==
-X-Gm-Message-State: AOAM5327fWjH+uo7sT5HuBSoDpu6J3U2F3LWBXeDkNj4sIyQN1rO4lVz
- yD38vzBYfDls7oa7MQbmmuBOXI9yJ3C4HtyDFelYMNa/v4yfHsKO
-X-Google-Smtp-Source: ABdhPJygXfzA/mN5yOV3O5mnjI5tcKdjVVBCoPq13yDuiM/7TU2SjzR3IN1b1P68ZdGVvjduo0G9mXVBHmttFTjP0uk=
-X-Received: by 2002:a05:6512:2a92:b0:472:5c09:c1a8 with SMTP id
- dt18-20020a0565122a9200b004725c09c1a8mr4211627lfb.265.1651410806961; Sun, 01
- May 2022 06:13:26 -0700 (PDT)
+ h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
+ :content-language:to:cc:references:from:in-reply-to
+ :content-transfer-encoding;
+ bh=37IZKYMhQSNg4t1jdanquzuzImuToF3uqBKV1QSoGwI=;
+ b=6y3hE4ZgEepFdKcdB6Uz/fz6oP6goKg3jbXvecc80WX/NcpUVYb4N9Avs7qEnYpVuM
+ ow4oRS2VoevQaCpUIFqGwpGSOwTsaoek18ieI9IfXYWADugO1vl4iECdAOtFL4TTueoD
+ knYBo7C81w2gEXaHGRjMJp6rGvEL6O5HoLe3MRQ4tSuvEGSuNpvun+Up55scguIsZ6bE
+ b13S5qdtojd5qzVcRNq7Hk3G7py/xJlRaC9psufMVKvOd8B+d1RYQz81LCVWroR0Vp2d
+ dYFvAJG0LDRhel3vxt2t1cN3FBWZH4eW7ZYuf1g5MOPTHEr9aumndHn/39kZbXW2ebkq
+ dj1A==
+X-Gm-Message-State: AOAM530Hk6TPAW/l7bDfyqN7ODbHBRR+hzU1iwVcaYyIAEkYRdLWBvQw
+ oaSbrM+HwzsJVU7Ib/P3VRrhGQ==
+X-Google-Smtp-Source: ABdhPJxqvU+aueMbCCnCL1KZngADRZdQAAqgBioEW7uSV5Ga8AA/zvEd5BhlYdaXnzQ+KVNnCL5TCw==
+X-Received: by 2002:a17:907:1b1c:b0:6f0:10e2:7a9b with SMTP id
+ mp28-20020a1709071b1c00b006f010e27a9bmr3662004ejc.58.1651318819017; 
+ Sat, 30 Apr 2022 04:40:19 -0700 (PDT)
+Received: from [192.168.0.177] (xdsl-188-155-176-92.adslplus.ch.
+ [188.155.176.92]) by smtp.gmail.com with ESMTPSA id
+ eo9-20020a1709069b0900b006f3ef214e02sm1536835ejc.104.2022.04.30.04.40.18
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 30 Apr 2022 04:40:18 -0700 (PDT)
+Message-ID: <b5c2c497-c053-5d74-823b-73ad3e709ee4@linaro.org>
+Date: Sat, 30 Apr 2022 13:40:17 +0200
 MIME-Version: 1.0
-References: <CA+J-oUsqt4fcSiHtmA5W6RcPn2rnAoM6Att48FX_Up4EvrYncw@mail.gmail.com>
- <434692c9-e7af-0454-f09a-025a7e052eb8@kaod.org>
- <CA+J-oUsT+uGBU+bt7PL_XA52fj4m2gVrHHsc7wrHHLH4W7JH7w@mail.gmail.com>
- <E70F085F-C729-449B-83DA-81536AF58ED8@bytedance.com>
- <59304a28-b6ec-af68-8bbb-8a0de40135a9@kaod.org>
-In-Reply-To: <59304a28-b6ec-af68-8bbb-8a0de40135a9@kaod.org>
-From: =?UTF-8?B?5YGl5byg?= <zhangjian.3032@bytedance.com>
-Date: Sun, 1 May 2022 21:13:15 +0800
-Message-ID: <CA+J-oUvoyzyyfp7buDNF2Jibd=HGs=wb4QBhUxgTQe7+v68seA@mail.gmail.com>
-Subject: Re: [External] ` NETDEV WATCHDOG: eth0 (ftgmac100): transmit queue 0
- timed out ` error in qemu
-To: openbmc <openbmc@lists.ozlabs.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.7.0
+Subject: Re: [PATCH v5 02/11] arch: arm: configs: multi_v7_defconfig
+Content-Language: en-US
+To: "Hawkins, Nick" <nick.hawkins@hpe.com>,
+ "Verdun, Jean-Marie" <verdun@hpe.com>, "joel@jms.id.au" <joel@jms.id.au>,
+ "arnd@arndb.de" <arnd@arndb.de>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <20220421192132.109954-1-nick.hawkins@hpe.com>
+ <20220421192132.109954-3-nick.hawkins@hpe.com>
+ <b5a549c0-c3f8-3c39-c4ca-a960fb748814@linaro.org>
+ <PH0PR84MB1718FC5AC7FFF0D5509337A888FC9@PH0PR84MB1718.NAMPRD84.PROD.OUTLOOK.COM>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+In-Reply-To: <PH0PR84MB1718FC5AC7FFF0D5509337A888FC9@PH0PR84MB1718.NAMPRD84.PROD.OUTLOOK.COM>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-Mailman-Approved-At: Mon, 02 May 2022 08:36:31 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,193 +92,17 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Russell King <linux@armlinux.org.uk>,
+ "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add a wiki to record this issue and for your reference.
+On 29/04/2022 22:34, Hawkins, Nick wrote:
+> I have moved CONFIG_GXP_WATCHDOG between CONFIG_PM8916_WATCHDOG=m and CONFIG_BCM47XX_WDT=y. How do I run savedefconfig to make sure it is in the right place for this file?
 
-https://github.com/zhangjian3032/qemu/wiki/NETDEV-WATCHDOG:-eth0-(ftgmac100=
-):-transmit-queue-0-timed-ou--error-in-qemu,-cause-net-device-start-fail
+make savedefconfig
 
-
-On Fri, Apr 29, 2022 at 1:48 PM C=C3=A9dric Le Goater <clg@kaod.org> wrote:
->
-> On 4/28/22 15:55, =E5=81=A5=E5=BC=A0 wrote:
-> > Hi C;
-> >
-> > That=E2=80=99s awesome , It's okay to use bridge,
-> >
-> >
-> > Here is my command line, 2 devices are good.
-> >
-> > ./qemu/build/install/bin/qemu-system-arm -M g220a-bmc -nographic -drive=
- file=3Dimage-bmc,format=3Draw,if=3Dmtd -net nic,netdev=3Dnet0, -netdev bri=
-dge,id=3Dnet0,helper=3D./qemu/build/install/libexec/qemu-bridge-helper,br=
-=3Dvirbr0, -net nic,netdev=3Dnet1, -netdev bridge,id=3Dnet1,helper=3D./qemu=
-/build/install/libexec/qemu-bridge-helper,br=3Dvirbr0
->
-> Perfect !
->
-> Something I would really like to work is the usb-net device.
->
-> Thanks,
->
-> C.
->
-> >> -net nic,macaddr=3D....,netdev=3Dnet0 \
-> >> -netdev bridge,id=3Dnet0,helper=3D/usr/libexec/qemu-bridge-helper,br=
-=3Dvirbr0
-> >
-> >
-> >
-> >> 2022=E5=B9=B44=E6=9C=8828=E6=97=A5 19:31=EF=BC=8C=E5=BC=A0=E5=81=A5 <z=
-hangjian.3032@bytedance.com <mailto:zhangjian.3032@bytedance.com>> =E5=86=
-=99=E9=81=93=EF=BC=9A
-> >>
-> >>
-> >>
-> >> From: "C=C3=A9dric Le Goater"<clg@kaod.org <mailto:clg@kaod.org>>
-> >> Date: Thu, Apr 28, 2022, 19:23
-> >> Subject: [External] Re: ` NETDEV WATCHDOG: eth0 (ftgmac100): transmit =
-queue 0 timed out ` error in qemu
-> >> To: "=E5=BC=A0=E5=81=A5"<zhangjian.3032@bytedance.com <mailto:zhangjia=
-n.3032@bytedance.com>>, "Joel Stanley"<joel@jms.id.au <mailto:joel@jms.id.a=
-u>>
-> >> Hello C;
-> >>
-> >> [ Adding Joel who has some experience on NCSI vs. QEMU ]
-> >>
-> >> On 4/28/22 12:29, =E5=BC=A0=E5=81=A5 wrote:
-> >> > Hi C;
-> >> > Excuse me to ask you a qemu question.
-> >>
-> >> It would help if you provided the QEMU command line. Not all NICs are
-> >> connected to the QEMU machine.
-> >>
-> >> It's my command line
-> >> qemu-system-arm -M g220a-bmc -nographic -drive file=3Dimage-bmc,format=
-=3Draw,if=3Dmtd -net nic,model=3Dftgmac100,netdev=3Dnetdev1 -netdev user,id=
-=3Dnetdev1,hostfwd=3Dudp::5623-:623, -net nic,model=3Dftgmac100,netdev=3Dne=
-tdev2 -netdev user,id=3Dnetdev2,hostfwd=3D:127.0.0.1:4222-:22,hostfwd=3D:12=
-7.0.0.1:3443-:443,hostfwd=3Dudp::3623-:623
-> >>
-> >> > According to my development needs, I need to reconfigure the network=
- configuration every time I start.
-> >> >
-> >> > The order is
-> >> >
-> >> > 1. Power on.
-> >> > 2. systemd-networkd start
-> >> > 3. update network config
-> >> > 4. systemctl reload systemd-networkd
-> >> >
-> >> > It looks fine after booting for a long time. I manually execution st=
-ep 3 and 4.>
-> >> > But I hit an issue in qemu when I make step 3/4 in Start-up process(=
-use a systemd script)
-> >> >
-> >> > There is always an error log like below .
-> >> > [ 155.772381] ftgmac100 1e660000.ethernet eth0: NCSI Channel 0 timed=
- out!
-> >>
-> >> That could be the issue. QEMU doesn't really model NCSI. There is
-> >> only a simple responder in slirp.
-> >>
-> >> Also at startup, OpenBMC does a few things that could load the CPU
-> >> which would slow down very much the overall machine.
-> >>
-> >>
-> >> > [ 159.132481] ------------[ cut here ]------------
-> >> > [ 159.133035] WARNING: CPU: 0 PID: 207 at net/sched/sch_generic.c:47=
-7 dev_watchdog+0x2a8/0x2c4
-> >> > [ 159.133543] NETDEV WATCHDOG: eth0 (ftgmac100): transmit queue 0 ti=
-med out
-> >> > [ 159.134143] CPU: 0 PID: 207 Comm: dropbearkey Not tainted 5.15.34-=
-0626498-dirty-006ed35 #1
-> >> > [ 159.134748] Hardware name: Generic DT based system
-> >> > [ 159.135241] Backtrace:
-> >> > [ 159.135637] [<807fbe0c>] (dump_backtrace) from [<807fc004>] (show_=
-stack+0x20/0x24)
-> >> > [ 159.136240] r7:00000009 r6:000001dd r5:806b0850 r4:80a06be8
-> >> > [ 159.136587] [<807fbfe4>] (show_stack) from [<808063e4>] (dump_stac=
-k+0x28/0x30)
-> >> > [ 159.136983] [<808063bc>] (dump_stack) from [<80115fe4>] (__warn+0x=
-e4/0x150)
-> >> > [ 159.137359] r5:806b0850 r4:80a75280
-> >> >
-> >> > Before this error log I reload systemd-networkd, will cause network =
-device start fail.
-> >> > But this error don't appear on physical machines.
-> >>
-> >> They are faster and they have a real NCSI backend.
-> >>
-> >> > Thus , I add a dirty delay `sleep 20`, reload after timeout. It will=
- be fine.
-> >>
-> >> ok. It looks like a load issue then.
-> >>
-> >> > Do you know how to fix `NETDEV WATCHDOG: eth0 (ftgmac100): transmit =
-queue 0 timed out` in qemu?
-> >> > or
-> >> > Can BMC know if it boots from a qemu virtual machine or a physical m=
-achine?
-> >>
-> >> not really and it is not the goal. we try to tune things from outside,
-> >> in QEMU.
-> >>
-> >> okay, i think so.
-> >>
-> >> > Network start fail log:
-> >> > Jan 01 00:01:28 g220a systemd[1]: Starting Network Configuration...
-> >> > Jan 01 00:01:54 g220a systemd-networkd[360]: bond1: netdev ready
-> >> > Jan 01 00:01:55 g220a systemd-networkd[360]: lo: Link UP
-> >> > Jan 01 00:01:55 g220a systemd-networkd[360]: lo: Gained carrier
-> >> > Jan 01 00:01:56 g220a systemd-networkd[360]: Enumeration completed
-> >> > Jan 01 00:01:57 g220a systemd[1]: Started Network Configuration.
-> >> > Jan 01 00:02:00 g220a systemd-networkd[360]: eth1: Link UP
-> >> > Jan 01 00:02:01 g220a systemd-networkd[360]: eth1: Gained carrier
-> >> > Jan 01 00:02:01 g220a systemd-networkd[360]: eth0: Link UP
-> >> > Jan 01 00:02:01 g220a systemd-networkd[360]: eth0: Gained carrier
-> >> > Jan 01 00:02:02 g220a systemd-networkd[360]: bond1: Link UP
-> >> > Jan 01 00:02:02 g220a systemd-networkd[360]: bond1: Gained carrier
-> >> > Jan 01 00:02:04 g220a systemd-networkd[360]: bond1: DHCPv4 address 1=
-0.0.2.15/24 , gateway 10.0.2.2 acquired from 10.0.2.2
-> >>
-> >> Ah. this is bonding two devices. I never tried that. Joel, have you ?
-> >>
-> >> > Jan 01 00:02:04 g220a systemd-networkd[360]: bond1: Gained IPv6LL
-> >> > Apr 28 10:24:11 g220a systemd-networkd[360]: eth1: Reconfiguring wit=
-h /etc/systemd/network/00-bmc-eth1.network.
-> >> > Apr 28 10:24:11 g220a systemd-networkd[360]: eth0: Reconfiguring wit=
-h /etc/systemd/network/00-bmc-eth0.network.
-> >> > Apr 28 10:24:13 g220a systemd-networkd[360]: eth1: Link DOWN
-> >> > Apr 28 10:24:13 g220a systemd-networkd[360]: eth1: Lost carrier
-> >> > Apr 28 10:24:13 g220a systemd-networkd[360]: eth0: Link DOWN
-> >> > Apr 28 10:24:13 g220a systemd-networkd[360]: eth0: Lost carrier
-> >> > Apr 28 10:24:38 g220a systemd-networkd[360]: eth1: Failed to sync li=
-nk information: Connection timed out
-> >> > Apr 28 10:24:38 g220a systemd-networkd[360]: eth1: Failed
-> >> > Apr 28 10:24:39 g220a systemd-networkd[360]: eth0: Failed to sync li=
-nk information: Connection timed out
-> >> > Apr 28 10:24:39 g220a systemd-networkd[360]: eth0: Failed
-> >> >
-> >> > Then, start manually, also fail.
-> >> > ip link set eth0 up
-> >> > [ 308.820798] ftgmac100 1e660000.ethernet eth0: NCSI: No channel fou=
-nd to configure!
-> >> > ip: SIOCSIFFLAGS: No such device
-> >>
-> >>
-> >> Just to eliminate the cause, have you tried with a libvirt bridge ?
-> >>
-> >> -net nic,macaddr=3D....,netdev=3Dnet0 \
-> >> -netdev bridge,id=3Dnet0,helper=3D/usr/libexec/qemu-bridge-helper,br=
-=3Dvirbr0
-> >>
-> >> nop, i'll have a try
-> >>
-> >> Thanks,
-> >>
-> >> C.
-> >
->
+Best regards,
+Krzysztof
