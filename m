@@ -2,77 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D634A5163EA
-	for <lists+openbmc@lfdr.de>; Sun,  1 May 2022 12:57:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D2DD8516484
+	for <lists+openbmc@lfdr.de>; Sun,  1 May 2022 15:14:00 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KrjqP5QHRz3bZp
-	for <lists+openbmc@lfdr.de>; Sun,  1 May 2022 20:57:37 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Krmrk5r2gz2yZc
+	for <lists+openbmc@lfdr.de>; Sun,  1 May 2022 23:13:58 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=EIiptmIO;
+	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=hUDvmvcF;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::102d;
- helo=mail-pj1-x102d.google.com; envelope-from=zhangjian.3032@bytedance.com;
+ smtp.mailfrom=bytedance.com (client-ip=2a00:1450:4864:20::12d;
+ helo=mail-lf1-x12d.google.com; envelope-from=zhangjian.3032@bytedance.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=bytedance-com.20210112.gappssmtp.com
  header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256
- header.s=20210112 header.b=EIiptmIO; dkim-atps=neutral
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com
- [IPv6:2607:f8b0:4864:20::102d])
+ header.s=20210112 header.b=hUDvmvcF; dkim-atps=neutral
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com
+ [IPv6:2a00:1450:4864:20::12d])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Krjpy6LSJz2yK6
- for <openbmc@lists.ozlabs.org>; Sun,  1 May 2022 20:57:12 +1000 (AEST)
-Received: by mail-pj1-x102d.google.com with SMTP id
- w17-20020a17090a529100b001db302efed6so9206307pjh.4
- for <openbmc@lists.ozlabs.org>; Sun, 01 May 2022 03:57:12 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KrmrK581fz2xxn
+ for <openbmc@lists.ozlabs.org>; Sun,  1 May 2022 23:13:35 +1000 (AEST)
+Received: by mail-lf1-x12d.google.com with SMTP id x33so21376313lfu.1
+ for <openbmc@lists.ozlabs.org>; Sun, 01 May 2022 06:13:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=bytedance-com.20210112.gappssmtp.com; s=20210112;
- h=from:to:cc:subject:date:message-id:mime-version
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :content-transfer-encoding;
- bh=ref09pVzmKehKJLaE3ql7rgQqo+jRk+JJ3BJb/yQNDo=;
- b=EIiptmIOKoBAtGUjy79Rt6qQSdXP4sps+nmcDoC+HGp6BYYOOIzpc4iG104sUaHPbg
- 9HqBOLWttihdDo0Pr+hUp3DUdBQZsgfgIFaT5kWRyPAKgVsLsW9Hl2LAWoWg+yI0idSC
- 9im+lU6Cs36BZXmCopazdDCAAYi6otrXiaqk9HN47M25aME4JMxCLNr8gCf4NEhar3VO
- 7UKoqS0VmExOrUdn3sYNl2cp1pNJamlw8158Aui8lsw5yT8pdWtIgIwmZvuYy9QoOwVC
- St+PouMioyuXozPKfXhQEY6B/YnXOLsw2EBWy7gVmYexthMZjTfcujQ3CkaHct4M4GQ1
- vpHg==
+ bh=NnatgKS24CPvdS/N3DAZ5yjXROI4m7GIpe0wI3Xjb9s=;
+ b=hUDvmvcFFBZBm9O6PcJZTEdvl5TZERuymNwC4/L7vomBL9grKrsrhO1mvyc1LPXNsd
+ 2U5mXKi2OBFh0TZtjSpE/hWviYUnbzLMwYfDRlCYSQY6X3DSCxzBBi6jRpWdjsyIIhal
+ RVtM2RVNen1q8bb00oqndXgk2dpagmX11gKeW7xs967zLCIdLWHl85nVC+JG+If5bdJ0
+ XCid7d52vvb3Wxur9EUMpRGZJ8n8jrZ2AbAqFXAFt1M8TbLoa5JZBcGP8HeeNQOCcV5i
+ rLiG+6VVZFlyCyQjAIDzCcVLGaWX81JmSWUpwjDj2tFFgesTNYPncwekOQgBe3zCG5NK
+ uy3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
- :content-transfer-encoding;
- bh=ref09pVzmKehKJLaE3ql7rgQqo+jRk+JJ3BJb/yQNDo=;
- b=v9f+RdmlZ0tWRRqjnBEo4wSPJG0E4dUsLqL2CAsKM/3Vwq+/QLmpDbyBjScD+hBLm+
- gNVj15FBs37vpqUpXgox4BFnBpEKTa2JFGnROhd3s/uPzN7p3+O8Krqy8DsSZjA/TJ1b
- xAg+Hf8VwSMOV9zhbLbu/aVJs5bRufcx04tW3xfa77aYwU9snC/gG8AMYAT+Ys97tuJd
- kw0SHUaDfZXgPx/lOOk+uhK074zg+737vp0Wjc6JX7icjZfmiAikDi/tUln2AOHyKQCt
- 8JmBXJEdlB7Bde1WI2Lal1j+br7HPVt7AxJhffDsGI0MUbCIwWk9O9PesY5d1HE6uDQj
- mn9Q==
-X-Gm-Message-State: AOAM532o0rt8Ju0/yYYr0aJRNLCQGBqALlMa9m4XKFfKMr3THM+SAAOM
- GHhoL6Yq05JpBejdjggF+nmWnxGvbc4Y19Bf
-X-Google-Smtp-Source: ABdhPJxXhYMF5cj6UvI5DKwEl9ozDUat1mEVxojaSzu68hCpYfpsnF7sdxQri4SH/D0isUTD91DS/w==
-X-Received: by 2002:a17:90a:a58d:b0:1db:ed34:e46d with SMTP id
- b13-20020a17090aa58d00b001dbed34e46dmr12731557pjq.124.1651402626080; 
- Sun, 01 May 2022 03:57:06 -0700 (PDT)
-Received: from localhost ([49.7.45.235]) by smtp.gmail.com with ESMTPSA id
- g11-20020aa7818b000000b0050dc76281d5sm2811611pfi.175.2022.05.01.03.57.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 May 2022 03:57:05 -0700 (PDT)
-From: Jian Zhang <zhangjian.3032@bytedance.com>
-To: openbmc@lists.ozlabs.org,
-	joel@jms.id.au,
-	clg@kaod.org
-Subject: [PATCH linux dev-5.15] soc: aspeed: abr: Add sysfs attrs for flash
- toggle
-Date: Sun,  1 May 2022 18:56:44 +0800
-Message-Id: <20220501105644.355062-1-zhangjian.3032@bytedance.com>
-X-Mailer: git-send-email 2.25.1
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:content-transfer-encoding;
+ bh=NnatgKS24CPvdS/N3DAZ5yjXROI4m7GIpe0wI3Xjb9s=;
+ b=YE2cGeoGQpS/NtV0FdA2lHqRKUG28vEpdS4453fTFjiVoOWb0iQxLciwdIs4gSRe75
+ RMPoL6JskeNf1qz+It8ANuEZvTdMDAo0vvbx9NHkCAbc0DsW/J9oy2be5vhsX21AgQEX
+ XCl/l2vYgGEw21t9eKGwVEbDJc9ipsR62po+Y9U/FOA6/cc0qguF8N8yeC7aUcQJeBPL
+ GRIuKE1cjEkMOX0M940A/+DvrZNV1KmfJB1X81jK26T57bBW/Yzo5LQzp1PU4d8bh+KW
+ sSzByJ1IklacF+V61lRpM6iG+lu8kLYT4oh7sK/z4SaqE90D2U5aI89/xuKm0cY9Fp46
+ sC8g==
+X-Gm-Message-State: AOAM5327fWjH+uo7sT5HuBSoDpu6J3U2F3LWBXeDkNj4sIyQN1rO4lVz
+ yD38vzBYfDls7oa7MQbmmuBOXI9yJ3C4HtyDFelYMNa/v4yfHsKO
+X-Google-Smtp-Source: ABdhPJygXfzA/mN5yOV3O5mnjI5tcKdjVVBCoPq13yDuiM/7TU2SjzR3IN1b1P68ZdGVvjduo0G9mXVBHmttFTjP0uk=
+X-Received: by 2002:a05:6512:2a92:b0:472:5c09:c1a8 with SMTP id
+ dt18-20020a0565122a9200b004725c09c1a8mr4211627lfb.265.1651410806961; Sun, 01
+ May 2022 06:13:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <CA+J-oUsqt4fcSiHtmA5W6RcPn2rnAoM6Att48FX_Up4EvrYncw@mail.gmail.com>
+ <434692c9-e7af-0454-f09a-025a7e052eb8@kaod.org>
+ <CA+J-oUsT+uGBU+bt7PL_XA52fj4m2gVrHHsc7wrHHLH4W7JH7w@mail.gmail.com>
+ <E70F085F-C729-449B-83DA-81536AF58ED8@bytedance.com>
+ <59304a28-b6ec-af68-8bbb-8a0de40135a9@kaod.org>
+In-Reply-To: <59304a28-b6ec-af68-8bbb-8a0de40135a9@kaod.org>
+From: =?UTF-8?B?5YGl5byg?= <zhangjian.3032@bytedance.com>
+Date: Sun, 1 May 2022 21:13:15 +0800
+Message-ID: <CA+J-oUvoyzyyfp7buDNF2Jibd=HGs=wb4QBhUxgTQe7+v68seA@mail.gmail.com>
+Subject: Re: [External] ` NETDEV WATCHDOG: eth0 (ftgmac100): transmit queue 0
+ timed out ` error in qemu
+To: openbmc <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,227 +83,193 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: zhangjian_linux@163.com, "moderated list:ARM/ASPEED MACHINE SUPPORT"
- <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>,
- open list <linux-kernel@vger.kernel.org>,
- "open list:SPI SUBSYSTEM" <linux-spi@vger.kernel.org>,
- Jian Zhang <zhangjian.3032@bytedance.com>, Mark Brown <broonie@kernel.org>,
- "moderated list:ARM/ASPEED MACHINE SUPPORT"
- <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Implement the flash toggle function in soc ast2600.
-Add two sysfs attrs named "access_primary" and "access_backup"
+Add a wiki to record this issue and for your reference.
 
-attr "access_primary": Appears only in the backup flash startup
-store: Non-zero values will clear "Boot Flash source select indicator"
-to '0', the next reboot will boot from primary flash. Nothing will be
-done at 0.
-show: 0 means the next reboot will boot from primary, 1 will boot from
-backup.
+https://github.com/zhangjian3032/qemu/wiki/NETDEV-WATCHDOG:-eth0-(ftgmac100=
+):-transmit-queue-0-timed-ou--error-in-qemu,-cause-net-device-start-fail
 
-attr "access_backup": Appears only in the primary flash startup
-store: Non-zero values are the timeout time for abr WDT, WDT will be
-turned on immediately if written. The maximum value is 0x3ff, and unit
-is "0.1s". zero value will disable WDT.
-show: the time left(unit is 0.1s) in WDT timer. 0 means timer is not
-enabled. Thus, A non-zero value means that waiting until the WTD times
-out will automatically start from the backup.
 
-Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
----
- drivers/spi/spi-aspeed.c              | 62 ++++++++++++++++++
- include/linux/soc/aspeed/aspeed-abr.h | 93 +++++++++++++++++++++++++++
- 2 files changed, 155 insertions(+)
- create mode 100644 include/linux/soc/aspeed/aspeed-abr.h
-
-diff --git a/drivers/spi/spi-aspeed.c b/drivers/spi/spi-aspeed.c
-index 909b5fb175d6..abe3bfe2bd42 100644
---- a/drivers/spi/spi-aspeed.c
-+++ b/drivers/spi/spi-aspeed.c
-@@ -24,6 +24,7 @@
- #include <linux/sizes.h>
- #include <linux/spi/spi.h>
- #include <linux/spi/spi-mem.h>
-+#include <linux/soc/aspeed/aspeed-abr.h>
- 
- /* ASPEED FMC/SPI memory control register related */
- #define OFFSET_CE_TYPE_SETTING		0x00
-@@ -127,6 +128,54 @@ struct aspeed_spi_controller {
- 	spinlock_t lock;
- };
- 
-+static ssize_t access_primary_show(struct device *dev,
-+				   struct device_attribute *attr, char *buf)
-+{
-+	struct aspeed_spi_controller *ast_ctrl = dev_get_drvdata(dev);
-+
-+	return _access_primary_show(ast_ctrl->regs, attr, buf);
-+}
-+
-+static ssize_t access_primary_store(struct device *dev,
-+				    struct device_attribute *attr,
-+				    const char *buf, size_t size)
-+{
-+	struct aspeed_spi_controller *ast_ctrl = dev_get_drvdata(dev);
-+
-+	return _access_primary_store(ast_ctrl->regs, attr, buf, size);
-+}
-+
-+static ssize_t access_backup_show(struct device *dev,
-+				  struct device_attribute *attr, char *buf)
-+{
-+	struct aspeed_spi_controller *ast_ctrl = dev_get_drvdata(dev);
-+
-+	return _access_backup_show(ast_ctrl->regs, attr, buf);
-+}
-+
-+static ssize_t access_backup_store(struct device *dev,
-+				   struct device_attribute *attr,
-+				   const char *buf, size_t size)
-+{
-+	struct aspeed_spi_controller *ast_ctrl = dev_get_drvdata(dev);
-+
-+	return _access_backup_store(ast_ctrl->regs, attr, buf, size);
-+}
-+
-+static DEVICE_ATTR_RW(access_primary);
-+static DEVICE_ATTR_RW(access_backup);
-+
-+static struct attribute *bswitch_primary_attrs[] = {
-+	&dev_attr_access_primary.attr, NULL
-+};
-+
-+static struct attribute *bswitch_backup_attrs[] = {
-+	&dev_attr_access_backup.attr, NULL
-+};
-+
-+ATTRIBUTE_GROUPS(bswitch_primary);
-+ATTRIBUTE_GROUPS(bswitch_backup);
-+
- static uint32_t
- aspeed_2600_spi_segment_start(struct aspeed_spi_controller *ast_ctrl,
- 			      uint32_t reg)
-@@ -1393,6 +1442,19 @@ static int aspeed_spi_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto end;
- 
-+	if (of_device_is_compatible(dev->of_node, "aspeed,ast2600-fmc")) {
-+		/* if boot from alt source, show access_primary, otherwise show access_backup */
-+		if (readl(ast_ctrl->regs + OFFSET_ABR_CTRL_STATUS) &
-+		    ABR_BOOT_SRC_INDICATE) {
-+
-+			if (devm_device_add_groups(dev, bswitch_primary_groups))
-+				dev_warn(dev, "Could not add access_primary\n");
-+		} else {
-+			if (devm_device_add_groups(dev, bswitch_backup_groups))
-+				dev_warn(dev, "Could not add access_backup\n");
-+		}
-+	}
-+
- 	ret = devm_spi_register_master(dev, spi_ctrl);
- 
- end:
-diff --git a/include/linux/soc/aspeed/aspeed-abr.h b/include/linux/soc/aspeed/aspeed-abr.h
-new file mode 100644
-index 000000000000..3542f76e0232
---- /dev/null
-+++ b/include/linux/soc/aspeed/aspeed-abr.h
-@@ -0,0 +1,93 @@
-+/* SPDX-License-Identifier: GPL-2.0+ */
-+
-+#ifndef __ASPEED_ABR_H__
-+#define __ASPEED_ABR_H__
-+
-+#include <linux/device.h>
-+#include <linux/sysfs.h>
-+#include <linux/io.h>
-+
-+#define OFFSET_ABR_CTRL_STATUS 0x64
-+#define OFFSET_ABR_TIMER_RELOAD 0x68
-+#define OFFSET_ABR_TIMER_RESTART 0x6c
-+
-+#define ABR_WDT_ENABLE BIT(0)
-+#define ABR_BOOT_SRC_INDICATE BIT(4)
-+#define ABR_RESTART_MAGIC 0x4755
-+#define ABR_CLEAR_BOOT_SRC_MAGIC (0xEA << 16)
-+#define ABR_RELOAD_MAX_VALUE 0x3ff
-+
-+static inline ssize_t _access_primary_show(void __iomem *regs,
-+					   struct device_attribute *attr,
-+					   char *buf)
-+{
-+	u32 status = readl(regs + OFFSET_ABR_CTRL_STATUS);
-+
-+	return sysfs_emit(buf, "%u\n", !(status & ABR_BOOT_SRC_INDICATE));
-+}
-+
-+static inline ssize_t _access_primary_store(void __iomem *regs,
-+					    struct device_attribute *attr,
-+					    const char *buf, size_t size)
-+{
-+	unsigned long val;
-+
-+	if (kstrtoul(buf, 10, &val))
-+		return -EINVAL;
-+
-+	/* write bit[23:16] = 0xEA */
-+	if (val)
-+		writel(readl(regs + OFFSET_ABR_CTRL_STATUS) |
-+			       ABR_CLEAR_BOOT_SRC_MAGIC,
-+		       regs + OFFSET_ABR_CTRL_STATUS);
-+
-+	return size;
-+}
-+
-+static inline ssize_t _access_backup_show(void __iomem *regs,
-+					  struct device_attribute *attr,
-+					  char *buf)
-+{
-+	u32 status = readl(regs + OFFSET_ABR_CTRL_STATUS);
-+	u32 timer_reload = readl(regs + OFFSET_ABR_TIMER_RELOAD);
-+
-+	if (!(status & ABR_WDT_ENABLE))
-+		return sysfs_emit(buf, "%u\n", 0);
-+	/* [31:16] Counter value status */
-+	return sysfs_emit(buf, "%u\n", timer_reload >> 16);
-+}
-+
-+static inline ssize_t _access_backup_store(void __iomem *regs,
-+					   struct device_attribute *attr,
-+					   const char *buf, size_t size)
-+{
-+	unsigned long count;
-+
-+	if (kstrtoul(buf, 10, &count))
-+		return -EINVAL;
-+
-+	/* disable watchdog */
-+	if (count == 0) {
-+		writel(0, regs + OFFSET_ABR_CTRL_STATUS);
-+		return size;
-+	}
-+
-+	/*
-+	 * bit[12:0] : Reload value of expire time
-+	 * The time unit is 0.1 second. Default set at 22 seconds
-+	 * 0: Immediately timeout
-+	 */
-+	count = count < ABR_RELOAD_MAX_VALUE ? count : ABR_RELOAD_MAX_VALUE;
-+
-+	writel(0, regs + OFFSET_ABR_CTRL_STATUS);
-+	writel(count, regs + OFFSET_ABR_TIMER_RELOAD);
-+
-+	/* Write 0x4755 value to load the reload value into watchdog counter */
-+	writel(ABR_RESTART_MAGIC, regs + OFFSET_ABR_TIMER_RESTART);
-+
-+	/* Enable watchdog */
-+	writel(ABR_WDT_ENABLE, regs + OFFSET_ABR_CTRL_STATUS);
-+	return size;
-+}
-+
-+#endif
--- 
-2.25.1
-
+On Fri, Apr 29, 2022 at 1:48 PM C=C3=A9dric Le Goater <clg@kaod.org> wrote:
+>
+> On 4/28/22 15:55, =E5=81=A5=E5=BC=A0 wrote:
+> > Hi C;
+> >
+> > That=E2=80=99s awesome , It's okay to use bridge,
+> >
+> >
+> > Here is my command line, 2 devices are good.
+> >
+> > ./qemu/build/install/bin/qemu-system-arm -M g220a-bmc -nographic -drive=
+ file=3Dimage-bmc,format=3Draw,if=3Dmtd -net nic,netdev=3Dnet0, -netdev bri=
+dge,id=3Dnet0,helper=3D./qemu/build/install/libexec/qemu-bridge-helper,br=
+=3Dvirbr0, -net nic,netdev=3Dnet1, -netdev bridge,id=3Dnet1,helper=3D./qemu=
+/build/install/libexec/qemu-bridge-helper,br=3Dvirbr0
+>
+> Perfect !
+>
+> Something I would really like to work is the usb-net device.
+>
+> Thanks,
+>
+> C.
+>
+> >> -net nic,macaddr=3D....,netdev=3Dnet0 \
+> >> -netdev bridge,id=3Dnet0,helper=3D/usr/libexec/qemu-bridge-helper,br=
+=3Dvirbr0
+> >
+> >
+> >
+> >> 2022=E5=B9=B44=E6=9C=8828=E6=97=A5 19:31=EF=BC=8C=E5=BC=A0=E5=81=A5 <z=
+hangjian.3032@bytedance.com <mailto:zhangjian.3032@bytedance.com>> =E5=86=
+=99=E9=81=93=EF=BC=9A
+> >>
+> >>
+> >>
+> >> From: "C=C3=A9dric Le Goater"<clg@kaod.org <mailto:clg@kaod.org>>
+> >> Date: Thu, Apr 28, 2022, 19:23
+> >> Subject: [External] Re: ` NETDEV WATCHDOG: eth0 (ftgmac100): transmit =
+queue 0 timed out ` error in qemu
+> >> To: "=E5=BC=A0=E5=81=A5"<zhangjian.3032@bytedance.com <mailto:zhangjia=
+n.3032@bytedance.com>>, "Joel Stanley"<joel@jms.id.au <mailto:joel@jms.id.a=
+u>>
+> >> Hello C;
+> >>
+> >> [ Adding Joel who has some experience on NCSI vs. QEMU ]
+> >>
+> >> On 4/28/22 12:29, =E5=BC=A0=E5=81=A5 wrote:
+> >> > Hi C;
+> >> > Excuse me to ask you a qemu question.
+> >>
+> >> It would help if you provided the QEMU command line. Not all NICs are
+> >> connected to the QEMU machine.
+> >>
+> >> It's my command line
+> >> qemu-system-arm -M g220a-bmc -nographic -drive file=3Dimage-bmc,format=
+=3Draw,if=3Dmtd -net nic,model=3Dftgmac100,netdev=3Dnetdev1 -netdev user,id=
+=3Dnetdev1,hostfwd=3Dudp::5623-:623, -net nic,model=3Dftgmac100,netdev=3Dne=
+tdev2 -netdev user,id=3Dnetdev2,hostfwd=3D:127.0.0.1:4222-:22,hostfwd=3D:12=
+7.0.0.1:3443-:443,hostfwd=3Dudp::3623-:623
+> >>
+> >> > According to my development needs, I need to reconfigure the network=
+ configuration every time I start.
+> >> >
+> >> > The order is
+> >> >
+> >> > 1. Power on.
+> >> > 2. systemd-networkd start
+> >> > 3. update network config
+> >> > 4. systemctl reload systemd-networkd
+> >> >
+> >> > It looks fine after booting for a long time. I manually execution st=
+ep 3 and 4.>
+> >> > But I hit an issue in qemu when I make step 3/4 in Start-up process(=
+use a systemd script)
+> >> >
+> >> > There is always an error log like below .
+> >> > [ 155.772381] ftgmac100 1e660000.ethernet eth0: NCSI Channel 0 timed=
+ out!
+> >>
+> >> That could be the issue. QEMU doesn't really model NCSI. There is
+> >> only a simple responder in slirp.
+> >>
+> >> Also at startup, OpenBMC does a few things that could load the CPU
+> >> which would slow down very much the overall machine.
+> >>
+> >>
+> >> > [ 159.132481] ------------[ cut here ]------------
+> >> > [ 159.133035] WARNING: CPU: 0 PID: 207 at net/sched/sch_generic.c:47=
+7 dev_watchdog+0x2a8/0x2c4
+> >> > [ 159.133543] NETDEV WATCHDOG: eth0 (ftgmac100): transmit queue 0 ti=
+med out
+> >> > [ 159.134143] CPU: 0 PID: 207 Comm: dropbearkey Not tainted 5.15.34-=
+0626498-dirty-006ed35 #1
+> >> > [ 159.134748] Hardware name: Generic DT based system
+> >> > [ 159.135241] Backtrace:
+> >> > [ 159.135637] [<807fbe0c>] (dump_backtrace) from [<807fc004>] (show_=
+stack+0x20/0x24)
+> >> > [ 159.136240] r7:00000009 r6:000001dd r5:806b0850 r4:80a06be8
+> >> > [ 159.136587] [<807fbfe4>] (show_stack) from [<808063e4>] (dump_stac=
+k+0x28/0x30)
+> >> > [ 159.136983] [<808063bc>] (dump_stack) from [<80115fe4>] (__warn+0x=
+e4/0x150)
+> >> > [ 159.137359] r5:806b0850 r4:80a75280
+> >> >
+> >> > Before this error log I reload systemd-networkd, will cause network =
+device start fail.
+> >> > But this error don't appear on physical machines.
+> >>
+> >> They are faster and they have a real NCSI backend.
+> >>
+> >> > Thus , I add a dirty delay `sleep 20`, reload after timeout. It will=
+ be fine.
+> >>
+> >> ok. It looks like a load issue then.
+> >>
+> >> > Do you know how to fix `NETDEV WATCHDOG: eth0 (ftgmac100): transmit =
+queue 0 timed out` in qemu?
+> >> > or
+> >> > Can BMC know if it boots from a qemu virtual machine or a physical m=
+achine?
+> >>
+> >> not really and it is not the goal. we try to tune things from outside,
+> >> in QEMU.
+> >>
+> >> okay, i think so.
+> >>
+> >> > Network start fail log:
+> >> > Jan 01 00:01:28 g220a systemd[1]: Starting Network Configuration...
+> >> > Jan 01 00:01:54 g220a systemd-networkd[360]: bond1: netdev ready
+> >> > Jan 01 00:01:55 g220a systemd-networkd[360]: lo: Link UP
+> >> > Jan 01 00:01:55 g220a systemd-networkd[360]: lo: Gained carrier
+> >> > Jan 01 00:01:56 g220a systemd-networkd[360]: Enumeration completed
+> >> > Jan 01 00:01:57 g220a systemd[1]: Started Network Configuration.
+> >> > Jan 01 00:02:00 g220a systemd-networkd[360]: eth1: Link UP
+> >> > Jan 01 00:02:01 g220a systemd-networkd[360]: eth1: Gained carrier
+> >> > Jan 01 00:02:01 g220a systemd-networkd[360]: eth0: Link UP
+> >> > Jan 01 00:02:01 g220a systemd-networkd[360]: eth0: Gained carrier
+> >> > Jan 01 00:02:02 g220a systemd-networkd[360]: bond1: Link UP
+> >> > Jan 01 00:02:02 g220a systemd-networkd[360]: bond1: Gained carrier
+> >> > Jan 01 00:02:04 g220a systemd-networkd[360]: bond1: DHCPv4 address 1=
+0.0.2.15/24 , gateway 10.0.2.2 acquired from 10.0.2.2
+> >>
+> >> Ah. this is bonding two devices. I never tried that. Joel, have you ?
+> >>
+> >> > Jan 01 00:02:04 g220a systemd-networkd[360]: bond1: Gained IPv6LL
+> >> > Apr 28 10:24:11 g220a systemd-networkd[360]: eth1: Reconfiguring wit=
+h /etc/systemd/network/00-bmc-eth1.network.
+> >> > Apr 28 10:24:11 g220a systemd-networkd[360]: eth0: Reconfiguring wit=
+h /etc/systemd/network/00-bmc-eth0.network.
+> >> > Apr 28 10:24:13 g220a systemd-networkd[360]: eth1: Link DOWN
+> >> > Apr 28 10:24:13 g220a systemd-networkd[360]: eth1: Lost carrier
+> >> > Apr 28 10:24:13 g220a systemd-networkd[360]: eth0: Link DOWN
+> >> > Apr 28 10:24:13 g220a systemd-networkd[360]: eth0: Lost carrier
+> >> > Apr 28 10:24:38 g220a systemd-networkd[360]: eth1: Failed to sync li=
+nk information: Connection timed out
+> >> > Apr 28 10:24:38 g220a systemd-networkd[360]: eth1: Failed
+> >> > Apr 28 10:24:39 g220a systemd-networkd[360]: eth0: Failed to sync li=
+nk information: Connection timed out
+> >> > Apr 28 10:24:39 g220a systemd-networkd[360]: eth0: Failed
+> >> >
+> >> > Then, start manually, also fail.
+> >> > ip link set eth0 up
+> >> > [ 308.820798] ftgmac100 1e660000.ethernet eth0: NCSI: No channel fou=
+nd to configure!
+> >> > ip: SIOCSIFFLAGS: No such device
+> >>
+> >>
+> >> Just to eliminate the cause, have you tried with a libvirt bridge ?
+> >>
+> >> -net nic,macaddr=3D....,netdev=3Dnet0 \
+> >> -netdev bridge,id=3Dnet0,helper=3D/usr/libexec/qemu-bridge-helper,br=
+=3Dvirbr0
+> >>
+> >> nop, i'll have a try
+> >>
+> >> Thanks,
+> >>
+> >> C.
+> >
+>
