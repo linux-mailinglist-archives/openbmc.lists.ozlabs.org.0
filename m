@@ -2,65 +2,98 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1918D516BB7
-	for <lists+openbmc@lfdr.de>; Mon,  2 May 2022 10:12:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 44F475170A4
+	for <lists+openbmc@lfdr.de>; Mon,  2 May 2022 15:36:35 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KsG6q5t7rz30BS
-	for <lists+openbmc@lfdr.de>; Mon,  2 May 2022 18:12:51 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KsPJG0hHTz3bYq
+	for <lists+openbmc@lfdr.de>; Mon,  2 May 2022 23:36:30 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=CZH3YIYH;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=oHJPZH+v;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f34;
- helo=mail-qv1-xf34.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
+ helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=CZH3YIYH; dkim-atps=neutral
-Received: from mail-qv1-xf34.google.com (mail-qv1-xf34.google.com
- [IPv6:2607:f8b0:4864:20::f34])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=oHJPZH+v; dkim-atps=neutral
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
+ [148.163.158.5])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KsG6Q64xPz2yHp
- for <openbmc@lists.ozlabs.org>; Mon,  2 May 2022 18:12:28 +1000 (AEST)
-Received: by mail-qv1-xf34.google.com with SMTP id kd11so9811606qvb.2
- for <openbmc@lists.ozlabs.org>; Mon, 02 May 2022 01:12:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=2PU6acCfEJUJL05zdmUYaK48X8TBv4BGOCGAJ6ERnXU=;
- b=CZH3YIYHSCMx3tdFBd1gfR9ItasKsSYyXyfGUf7EY6ZwLz9rGLnqh8WtGFhoznA0oL
- KtlYPk2NaILG4RjrPDJLjJUorrBMtDguiqg7u7U472xzmdlqYsLqOU7cw3+/qsmV/isM
- qy8IKU4h7kzQXiWYnn/vzidtZzwdHgCMZLbN0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=2PU6acCfEJUJL05zdmUYaK48X8TBv4BGOCGAJ6ERnXU=;
- b=o0GQsc8v7OPNhGk6cqDf7PZ6kPZ31/EgVfvNv1lQ9s5lU9Y6iZLuCXbRi9BCw4hXBP
- qQubXW5XkVfYJpaJZFNXoP3Br0DsYYUmrQtqAYjygov101OE4rrSWxUqTB046Ee6+pZY
- /v9iyOTE+7aVpFcvMhsIdIIp46At0vvRkwGeM+jpzgVHQBTWFNil01QcOmNVbpw7XM24
- XSI1LDCCwoAdd+pkqqGozPx2/6b0jZZrBUdwnRAT9y1TkUlfmAtfbjgAkovDnhjNzg5+
- jmhEW7ggJ4h42SQ+2E0DTfScpkxibebj6uVf+H8B/XvuRpaW2nCyH6l8XPE/W+Ac8YGY
- 1Wnw==
-X-Gm-Message-State: AOAM530Y+Uz3oqrSqvecx3h79VaCVuem5Zfv5vZ1KsQs2QR5auLUPxsG
- PEKtleD4Y1zgtifGi0drLIcWcGd/iquurHKRBpo=
-X-Google-Smtp-Source: ABdhPJxZoG4JUFF/9YhM7FU2yvcmiLUfhQcGRfh1CEOQ2T4W1DLFY7wnoP4Gi/JeeeedCSh+TRDIOTWRAx+RBtrtiwk=
-X-Received: by 2002:ad4:53c5:0:b0:42d:7bb4:a8e8 with SMTP id
- k5-20020ad453c5000000b0042d7bb4a8e8mr8625114qvv.8.1651479145951; Mon, 02 May
- 2022 01:12:25 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KsPHl3myGz3064
+ for <openbmc@lists.ozlabs.org>; Mon,  2 May 2022 23:36:02 +1000 (AEST)
+Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 242CJmUM029741;
+ Mon, 2 May 2022 13:35:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=MXtBUfzBb3I8T1gplp5O/d2Vu5W/bN1D/NzKqTAZwE8=;
+ b=oHJPZH+vhoEPQ3vCUwBexRrZjWKFKqD6shA37aC9UzdE7jM7NxuaVLqG//7cu2CPWHrz
+ gkfqTs+qA4TwrfJVz4llrHyV7mH0IUOox9P1+ueKSZpKaFJax8pwoDLgMrrBdCz5vU9d
+ 6TDiUSf9SUEb2DNtsHH/xiVnQ93vN/vgEa4Zza23mCJY+EIUOisX4EuKnrU9ioMKG/6d
+ 9eQJLqUxU2ZphmwVDEBniIV6EzoaReXeyn3gTOUVLB4vRe5SDtOw+aKumF1S3JoYSyfJ
+ eEvWN3XzzA02WiaN3tJ80+vb4eTF9bNh1soo1AFN+205YUyRUECwUhzEYRlmt9vIh44H mQ== 
+Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com
+ [169.55.85.253])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3fte23u73g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 02 May 2022 13:35:57 +0000
+Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
+ by ppma01wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 242DSA83013064;
+ Mon, 2 May 2022 13:35:57 GMT
+Received: from b03cxnp08028.gho.boulder.ibm.com
+ (b03cxnp08028.gho.boulder.ibm.com [9.17.130.20])
+ by ppma01wdc.us.ibm.com with ESMTP id 3frvr95ggy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 02 May 2022 13:35:57 +0000
+Received: from b03ledav005.gho.boulder.ibm.com
+ (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
+ by b03cxnp08028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 242DZuDl13173214
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 2 May 2022 13:35:56 GMT
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A4EAFBE053;
+ Mon,  2 May 2022 13:35:56 +0000 (GMT)
+Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 758C3BE058;
+ Mon,  2 May 2022 13:35:56 +0000 (GMT)
+Received: from [9.163.26.47] (unknown [9.163.26.47])
+ by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Mon,  2 May 2022 13:35:56 +0000 (GMT)
+Message-ID: <c651373b-97f1-acb6-9071-5c8a5aefd796@linux.ibm.com>
+Date: Mon, 2 May 2022 08:35:56 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.0
+Subject: Re: [PATCH linux dev-5.15] leds: pca955x: Set blink duty cycle to
+ fifty percent
+Content-Language: en-US
+To: Paul Menzel <pmenzel@molgen.mpg.de>
+References: <20220427184513.21192-1-eajames@linux.ibm.com>
+ <2483e26b-cfe6-b694-7da6-0eb09d5b1bd9@molgen.mpg.de>
+From: Eddie James <eajames@linux.ibm.com>
+In-Reply-To: <2483e26b-cfe6-b694-7da6-0eb09d5b1bd9@molgen.mpg.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 4WJkdWZYW4BvrUPClF29tW_Odb1tiBiH
+X-Proofpoint-ORIG-GUID: 4WJkdWZYW4BvrUPClF29tW_Odb1tiBiH
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-References: <20220419234202.8895-1-zev@bewilderbeest.net>
-In-Reply-To: <20220419234202.8895-1-zev@bewilderbeest.net>
-From: Joel Stanley <joel@jms.id.au>
-Date: Mon, 2 May 2022 08:11:00 +0000
-Message-ID: <CACPK8XfYuWT9Q5G_bo9AGugx-DcODDZ8xb39Sr+Sa8qWqVeW6A@mail.gmail.com>
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v3] aspeed: Disable
- backdoor interfaces
-To: Zev Weiss <zev@bewilderbeest.net>
-Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.858,Hydra:6.0.486,FMLib:17.11.64.514
+ definitions=2022-05-02_04,2022-05-02_03,2022-02-23_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0
+ impostorscore=0 adultscore=0 bulkscore=0 clxscore=1011 lowpriorityscore=0
+ phishscore=0 suspectscore=0 priorityscore=1501 mlxlogscore=999 mlxscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2202240000
+ definitions=main-2205020106
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,308 +105,98 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, Lei Yu <yulei.sh@bytedance.com>,
- Ryan Chen <ryan_chen@aspeedtech.com>, Ian Woloschin <ian.woloschin@akamai.com>
+Cc: openbmc@lists.ozlabs.org, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 19 Apr 2022 at 23:43, Zev Weiss <zev@bewilderbeest.net> wrote:
->
-> On ast2400 and ast2500 we now disable the various hardware backdoor
-> interfaces as is done on ast2600.  Two Kconfig options can selectively
-> re-enable some of these interfaces: CONFIG_ASPEED_ENABLE_SUPERIO
-> leaves the ast2x00 built-in Super I/O device enabled, as it is
-> required for some systems, and CONFIG_ASPEED_ENABLE_DEBUG_UART leaves
-> the hardware debug UART enabled, since it provides a relatively high
-> ratio of utility to security risk during development.
->
-> This patch is based on a patch by Andrew Jeffery for an older u-boot
-> branch in the OpenBMC tree for the df-isolate-bmc distro feature flag.
->
-> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-> ---
->
-> Tested on ast2500 and (hostless, BMC-only) ast2400.
->
-> Ryan, are you OK with having an option (off by default) to leave the
-> debug UART enabled as in this version of the patch?
->
-> Ian, if you could test this out with CONFIG_ASPEED_ENABLE_SUPERIO=y on
-> one of your systems and confirm that that setting works as intended
-> that would be great.
 
-Ian, did you get around to testing this?
+On 4/28/22 10:12, Paul Menzel wrote:
+> Dear Eddie,
+>
+>
+> Am 27.04.22 um 20:45 schrieb Eddie James:
+>> In order to blink at the specified rate, the blinking LEDs
+>> need to maintain a 50% duty cycle. Therefore, don't use PWM0
+>> for any attempted brightness change, and set PWM0 when
+>> enabling blinking.
+>
+> Is that specified in some datasheet?
 
-I've given it a careful review.
+
+It is in the PCA955X datasheets 
+(https://www.nxp.com/docs/en/data-sheet/PCA9552.pdf) but it's not 
+exactly clear. The relationship between the PWM rate and the blink rate 
+is not specified, but for example, setting maximum duty cycle and 1 
+second blink period results in the LED not blinking. Setting 50% duty 
+cycle blinks the LED at 1 second intervals, as expected.
+
 
 >
-> Changes since v2 [1]:
->  - made most of the changes unconditional/unconfigurable, but added
->    Kconfig options to leave Super I/O and debug UART enabled
+> Nit: I’d write 50 % in the commit message summary.
+
+
+Ah ok. Thanks!
+
+Eddie
+
+
 >
-> Changes since v1 [0]:
->  - extended to cover ast2400
->  - inverted sense of Kconfig option, default (n) is now secure mode
->  - renamed some register/bit macros more appropriately
 >
-> [0] https://lore.kernel.org/openbmc/20220414040448.27100-1-zev@bewilderbeest.net/
-> [1] https://lore.kernel.org/openbmc/20220414224004.29703-1-zev@bewilderbeest.net/
+> Kind regards,
 >
->  arch/arm/include/asm/arch-aspeed/platform.h   |  7 ++
->  .../arm/include/asm/arch-aspeed/scu_ast2400.h |  7 ++
->  .../arm/include/asm/arch-aspeed/scu_ast2500.h |  8 ++
->  arch/arm/mach-aspeed/Kconfig                  | 22 ++++++
->  arch/arm/mach-aspeed/ast2400/board_common.c   | 66 +++++++++++++++++
->  arch/arm/mach-aspeed/ast2500/board_common.c   | 73 +++++++++++++++++++
->  6 files changed, 183 insertions(+)
+> Paul
 >
-> diff --git a/arch/arm/include/asm/arch-aspeed/platform.h b/arch/arm/include/asm/arch-aspeed/platform.h
-> index f016bdaba3e7..f05747642f38 100644
-> --- a/arch/arm/include/asm/arch-aspeed/platform.h
-> +++ b/arch/arm/include/asm/arch-aspeed/platform.h
-> @@ -15,24 +15,31 @@
->  /*********************************************************************************/
->  #if defined(CONFIG_ASPEED_AST2400)
->  #define ASPEED_MAC_COUNT       2
-> +#define ASPEED_SDRAM_CTRL      0x1e6e0000
->  #define ASPEED_HW_STRAP1       0x1e6e2070
->  #define ASPEED_REVISION_ID     0x1e6e207C
->  #define ASPEED_SYS_RESET_CTRL  0x1e6e203C
->  #define ASPEED_VGA_HANDSHAKE0  0x1e6e2040      /*      VGA fuction handshake register */
-
-sp: function
-
-> +#define ASPEED_PCIE_CONFIG_SET 0x1e6e2180
->  #define ASPEED_DRAM_BASE       0x40000000
->  #define ASPEED_SRAM_BASE       0x1E720000
-> +#define ASPEED_LPC_CTRL                0x1e789000
->  #define ASPEED_SRAM_SIZE       0x8000
->  #define ASPEED_FMC_CS0_BASE    0x20000000
->  #elif defined(CONFIG_ASPEED_AST2500)
->  #define ASPEED_MAC_COUNT       2
-> +#define ASPEED_SDRAM_CTRL      0x1e6e0000
-> +#define ASPEED_MISC1_CTRL      0x1e6e202C
->  #define ASPEED_HW_STRAP1       0x1e6e2070
->  #define ASPEED_HW_STRAP2       0x1e6e20D0
->  #define ASPEED_REVISION_ID     0x1e6e207C
->  #define ASPEED_SYS_RESET_CTRL  0x1e6e203C
->  #define ASPEED_VGA_HANDSHAKE0  0x1e6e2040      /*      VGA fuction handshake register */
-
-sp: function
-
-> +#define ASPEED_PCIE_CONFIG_SET 0x1e6e2180
->  #define ASPEED_MAC_COUNT       2
->  #define ASPEED_DRAM_BASE       0x80000000
->  #define ASPEED_SRAM_BASE       0x1E720000
-> +#define ASPEED_LPC_CTRL                0x1e789000
->  #define ASPEED_SRAM_SIZE       0x9000
->  #define ASPEED_FMC_CS0_BASE    0x20000000
->  #elif defined(CONFIG_ASPEED_AST2600)
-> diff --git a/arch/arm/include/asm/arch-aspeed/scu_ast2400.h b/arch/arm/include/asm/arch-aspeed/scu_ast2400.h
-> index 9c5d96ae84b9..55875fd8312f 100644
-> --- a/arch/arm/include/asm/arch-aspeed/scu_ast2400.h
-> +++ b/arch/arm/include/asm/arch-aspeed/scu_ast2400.h
-> @@ -8,6 +8,7 @@
->  #define SCU_HWSTRAP_VGAMEM_MASK                (3 << SCU_HWSTRAP_VGAMEM_SHIFT)
->  #define SCU_HWSTRAP_MAC1_RGMII         (1 << 6)
->  #define SCU_HWSTRAP_MAC2_RGMII         (1 << 7)
-> +#define SCU_HWSTRAP_LPC_SIO_DEC_DIS    (1 << 20)
->  #define SCU_HWSTRAP_DDR4               (1 << 24)
->  #define SCU_HWSTRAP_CLKIN_25MHZ                (1 << 23)
 >
-> @@ -104,6 +105,12 @@
->  #define SCU_CLKDUTY_RGMII2TXCK_SHIFT   16
->  #define SCU_CLKDUTY_RGMII2TXCK_MASK    (0x7f << SCU_CLKDUTY_RGMII2TXCK_SHIFT)
->
-> +#define SCU_PCIE_CONFIG_SET_VGA_MMIO   (1 << 1)
-> +#define SCU_PCIE_CONFIG_SET_BMC_EN     (1 << 8)
-> +#define SCU_PCIE_CONFIG_SET_BMC_MMIO   (1 << 9)
-> +#define SCU_PCIE_CONFIG_SET_BMC_DMA    (1 << 14)
-> +
-> +
->  struct ast2400_clk_priv {
->         struct ast2400_scu *scu;
->  };
-> diff --git a/arch/arm/include/asm/arch-aspeed/scu_ast2500.h b/arch/arm/include/asm/arch-aspeed/scu_ast2500.h
-> index 8fe4028e4ff0..06dc998afaa8 100644
-> --- a/arch/arm/include/asm/arch-aspeed/scu_ast2500.h
-> +++ b/arch/arm/include/asm/arch-aspeed/scu_ast2500.h
-> @@ -11,6 +11,7 @@
->  #define SCU_HWSTRAP_VGAMEM_MASK                (3 << SCU_HWSTRAP_VGAMEM_SHIFT)
->  #define SCU_HWSTRAP_MAC1_RGMII         (1 << 6)
->  #define SCU_HWSTRAP_MAC2_RGMII         (1 << 7)
-> +#define SCU_HWSTRAP_LPC_SIO_DEC_DIS    (1 << 20)
->  #define SCU_HWSTRAP_DDR4               (1 << 24)
->  #define SCU_HWSTRAP_CLKIN_25MHZ                (1 << 23)
->
-> @@ -107,6 +108,13 @@
->  #define SCU_CLKDUTY_RGMII2TXCK_SHIFT   16
->  #define SCU_CLKDUTY_RGMII2TXCK_MASK    (0x7f << SCU_CLKDUTY_RGMII2TXCK_SHIFT)
->
-> +#define SCU_PCIE_CONFIG_SET_VGA_MMIO   (1 << 1)
-> +#define SCU_PCIE_CONFIG_SET_BMC_EN     (1 << 8)
-> +#define SCU_PCIE_CONFIG_SET_BMC_MMIO   (1 << 9)
-> +#define SCU_PCIE_CONFIG_SET_BMC_DMA    (1 << 14)
-> +
-> +#define SCU_MISC_DEBUG_UART_DISABLE    (1 << 10)
-> +
->  struct ast2500_clk_priv {
->         struct ast2500_scu *scu;
->  };
-> diff --git a/arch/arm/mach-aspeed/Kconfig b/arch/arm/mach-aspeed/Kconfig
-> index 579a547df61e..fc565e0da830 100644
-> --- a/arch/arm/mach-aspeed/Kconfig
-> +++ b/arch/arm/mach-aspeed/Kconfig
-> @@ -45,6 +45,28 @@ config ASPEED_AST2600
->           which is enabled by support of LPC and eSPI peripherals.
->  endchoice
->
-> +config ASPEED_ENABLE_SUPERIO
-> +       bool "Enable built-in AST2x00 Super I/O hardware"
-> +       depends on ASPEED_AST2400 || ASPEED_AST2500
-> +       help
-> +         The Aspeed AST2400 and AST2500 include a built-in Super I/O
-> +         device that is normally disabled; say Y here to enable it.
-
-Can you add a line break here.
-
-> +         Note that this has security implications: it grants the host
-> +         read access to the BMC's entire address space.  This should
-> +         thus be left disabled unless required by a specific system.
-
-Change "note" to WARNING or DANGER or an all caps label of your choosing.
-
-Do you think we should put these behind a config
-ASPEED_SHOW_DANGEROUS_BACKDOOR_FEATURE so users have to acknowledge
-that option before enabling these?
-
-
-> +
-> +config ASPEED_ENABLE_DEBUG_UART
-> +       bool "Enable AST2500 hardware debug UART"
-> +       depends on ASPEED_AST2500
-> +       help
-> +         The Aspeed AST2500 include a hardware-supported, UART-based
-> +         debug interface that is normally disabled; say Y here to
-> +         enable it.
-
-line break
-
-> Note that this has security implications: the
-> +         debug UART provide read/write access to the BMC's entire
-
-provides
-
-> +         address space.  This should thus be left disabled on
-> +         production systems, but may be useful to enable for
-> +         debugging during development.
-> +
-
-I did a build as follows:
-
-$ cat build-ast2500.sh
-#!/bin/bash
-
-set -e
-
-OBJ=ast2500-obj
-CONFIG=evb-ast2500_defconfig
-IMG="$OBJ/test.img"
-
-make -j8 O="$OBJ" -s clean
-make -j8 O="$OBJ" -j8 -s $CONFIG
-CROSS_COMPILE=arm-linux-gnueabi- ARCH=arm make -j8 O="$OBJ"  -j8
-DEVICE_TREE=ast2500-evb -s
-size "$OBJ/u-boot"
-
-cp "$OBJ/u-boot.bin" "$OBJ/test.img"
-truncate -s 32M "$OBJ/test.img"
-
-Testing on a qemu instance, before your patch:
-
-$ qemu-system-arm -M ast2500-evb -drive
-file=ast2500-obj/test.img,if=mtd -nographic -nic user,tftp=/srv/tftp/
-
-# ./culvert probe
-[*] Probing AHB interfaces
-[*] Performing interface discovery via devmem
-SuperIO: Enabled
-iLPC2AHB Bridge: Read-write
-VGA PCIe device: Enabled
-MMIO on VGA device: Enabled
-P2A write filter state:
-0x00000000-0x0fffffff (Firmware): Read-write
-0x10000000-0x1fffffff (SoC IO): Read-write
-0x20000000-0x2fffffff (BMC Flash): Read-write
-0x30000000-0x3fffffff (Host Flash): Read-write
-0x40000000-0x5fffffff (Reserved): Read-write
-0x60000000-0x7fffffff (LPC Host): Read-write
-0x80000000-0xffffffff (DRAM): Read-write
-X-DMA on VGA device: Enabled
-BMC PCIe device: Disabled
-X-DMA is unconstrained: Yes
-Debug UART: Enabled
-Debug UART enabled on: UART5
-
-After applying your patch:
-
-# ./culvert probe
-[*] Probing AHB interfaces
-[*] Performing interface discovery via devmem
-SuperIO: Disabled
-VGA PCIe device: Enabled
-MMIO on VGA device: Disabled
-X-DMA on VGA device: Enabled
-BMC PCIe device: Disabled
-X-DMA is unconstrained: No
-Debug UART: Disabled
-
-
-Similarly with the ast2400:
-
-qemu-system-arm -M palmetto-bmc -drive
-file=ast2400-obj/test.img,if=mtd -nographic -nic user,tftp=/srv/tftp/
-
-# ./culvert probe
-[*] Probing AHB interfaces
-[*] Performing interface discovery via devmem
-SuperIO: Enabled
-iLPC2AHB Bridge: Read-write
-VGA PCIe device: Enabled
-MMIO on VGA device: Enabled
-P2A write filter state:
-0x00000000-0x17ffffff (Firmware): Read-write
-0x18000000-0x1fffffff (SoC IO): Read-write
-0x20000000-0x2fffffff (BMC Flash): Read-write
-0x30000000-0x3fffffff (Host Flash): Read-write
-0x40000000-0x5fffffff (DRAM): Read-write
-0x60000000-0x7fffffff (LPC Host): Read-write
-0x80000000-0xffffffff (Reserved): Read-write
-X-DMA on VGA device: Enabled
-BMC PCIe device: Disabled
-X-DMA is unconstrained: Yes
-Debug UART: Absent
-
-# ./culvert probe
-[*] Probing AHB interfaces
-[*] Performing interface discovery via devmem
-SuperIO: Disabled
-VGA PCIe device: Enabled
-MMIO on VGA device: Disabled
-X-DMA on VGA device: Enabled
-BMC PCIe device: Disabled
-X-DMA is unconstrained: No
-Debug UART: Absent
-
-These "after" settings look good. I didn't check that qemu models the
-default state of these bits in detail, but the fact that they change
-from "insecure" to "secure" indicates your patch is setting the
-correct things.
-
-Tested-by: Joel Stanley <joel@jms.id.au>
-Reviewed-by: Joel Stanley <joel@jms.id.au>
-
-Cheers,
-
-Joel
+>> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+>> ---
+>>   drivers/leds/leds-pca955x.c | 17 ++++++++++-------
+>>   1 file changed, 10 insertions(+), 7 deletions(-)
+>>
+>> diff --git a/drivers/leds/leds-pca955x.c b/drivers/leds/leds-pca955x.c
+>> index 2570f92b6754..da93f04e4d10 100644
+>> --- a/drivers/leds/leds-pca955x.c
+>> +++ b/drivers/leds/leds-pca955x.c
+>> @@ -289,17 +289,12 @@ static enum led_brightness 
+>> pca955x_led_get(struct led_classdev *led_cdev)
+>>         switch (pca955x_ledstate(ls, pca955x_led->led_num % 4)) {
+>>       case PCA955X_LS_LED_ON:
+>> +    case PCA955X_LS_BLINK0:
+>>           ret = LED_FULL;
+>>           break;
+>>       case PCA955X_LS_LED_OFF:
+>>           ret = LED_OFF;
+>>           break;
+>> -    case PCA955X_LS_BLINK0:
+>> -        ret = pca955x_read_pwm(pca955x, 0, &pwm);
+>> -        if (ret)
+>> -            return ret;
+>> -        ret = 256 - pwm;
+>> -        break;
+>>       case PCA955X_LS_BLINK1:
+>>           ret = pca955x_read_pwm(pca955x, 1, &pwm);
+>>           if (ret)
+>> @@ -332,7 +327,7 @@ static int pca955x_led_set(struct led_classdev 
+>> *led_cdev,
+>>               clear_bit(pca955x_led->led_num, &pca955x->active_blink);
+>>               ls = pca955x_ledsel(ls, bit, PCA955X_LS_LED_OFF);
+>>           } else {
+>> -            ret = pca955x_write_pwm(pca955x, 0, 256 - value);
+>> +            /* No variable brightness for blinking LEDs */
+>>               goto out;
+>>           }
+>>       } else {
+>> @@ -432,6 +427,14 @@ static int pca955x_led_blink(struct led_classdev 
+>> *led_cdev,
+>>               ret = pca955x_write_ls(pca955x, reg, ls);
+>>               if (ret)
+>>                   goto out;
+>> +
+>> +            /*
+>> +             * Force 50% duty cycle to maintain the specified
+>> +             * blink rate.
+>> +             */
+>> +            ret = pca955x_write_pwm(pca955x, 0, 128);
+>> +            if (ret)
+>> +                goto out;
+>>           }
+>>             if (pca955x->blink_period != p) {
