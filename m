@@ -1,44 +1,53 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E39D5181D2
-	for <lists+openbmc@lfdr.de>; Tue,  3 May 2022 11:58:58 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 94323518225
+	for <lists+openbmc@lfdr.de>; Tue,  3 May 2022 12:16:03 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KswQm3MmZz3bfc
-	for <lists+openbmc@lfdr.de>; Tue,  3 May 2022 19:58:56 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KswpT3CJXz3bcn
+	for <lists+openbmc@lfdr.de>; Tue,  3 May 2022 20:16:01 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=dkim header.b=k+v0j3G2;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx1.molgen.mpg.de;
- envelope-from=pmenzel@molgen.mpg.de; receiver=<UNKNOWN>)
-Received: from mx1.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=alien8.de (client-ip=2a01:4f8:190:11c2::b:1457;
+ helo=mail.skyhub.de; envelope-from=bp@alien8.de; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256
+ header.s=dkim header.b=k+v0j3G2; dkim-atps=neutral
+Received: from mail.skyhub.de (mail.skyhub.de [IPv6:2a01:4f8:190:11c2::b:1457])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KswQV4PmFz2xnG
- for <openbmc@lists.ozlabs.org>; Tue,  3 May 2022 19:58:42 +1000 (AEST)
-Received: from [192.168.0.2] (ip5f5aed95.dynamic.kabel-deutschland.de
- [95.90.237.149])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
- (No client certificate requested) (Authenticated sender: pmenzel)
- by mx.molgen.mpg.de (Postfix) with ESMTPSA id E8DB461EA193F;
- Tue,  3 May 2022 11:58:38 +0200 (CEST)
-Message-ID: <d09f0131-65e2-d382-27b9-29ded4f47d84@molgen.mpg.de>
-Date: Tue, 3 May 2022 11:58:38 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: [PATCH v8 3/3] EDAC: nuvoton: Add NPCM memory controller driver
-Content-Language: en-US
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Kswp10j14z2xnG
+ for <openbmc@lists.ozlabs.org>; Tue,  3 May 2022 20:15:34 +1000 (AEST)
+Received: from zn.tnic (p5de8eeb4.dip0.t-ipconnect.de [93.232.238.180])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 611181EC0455;
+ Tue,  3 May 2022 12:15:20 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+ t=1651572920;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+ bh=mKTwIKrh4EWWiVkBp1uQfM1HxqpE6n66nTbg1oa/fMs=;
+ b=k+v0j3G24u+dsm0v1Dy3Hau5Ciwci0/rP3shg7OaHU3Hu1dutN5zcDK259Bdq4Ucfc3n7B
+ oJqGhAfr4UoD4KNHII84Nzi78k2eMxRXZtFmsJ3WAkFVLVIv/U1Y9vZjpws5SdeYvDyVbp
+ Che5jtFGBwnxYTOuEmR+/q3EBr5YSYY=
+Date: Tue, 3 May 2022 12:15:17 +0200
+From: Borislav Petkov <bp@alien8.de>
 To: Medad CChien <medadyoung@gmail.com>
+Subject: Re: [PATCH v8 1/3] ARM: dts: nuvoton: Add memory controller node
+Message-ID: <YnEAtQQ6Wnacfrub@zn.tnic>
 References: <20220503094728.926-1-ctcchien@nuvoton.com>
- <20220503094728.926-4-ctcchien@nuvoton.com>
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <20220503094728.926-4-ctcchien@nuvoton.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ <20220503094728.926-2-ctcchien@nuvoton.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20220503094728.926-2-ctcchien@nuvoton.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,83 +63,36 @@ Cc: KWLIU@nuvoton.com, tony.luck@intel.com, rric@kernel.org,
  benjaminfair@google.com, linux-edac@vger.kernel.org, KFTING@nuvoton.com,
  avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org,
  JJLIU0@nuvoton.com, ctcchien@nuvoton.com, tali.perry1@gmail.com,
- devicetree@vger.kernel.org, robh+dt@kernel.org, bp@alien8.de,
- james.morse@arm.com, YSCHU@nuvoton.com, mchehab@kernel.org,
- linux-kernel@vger.kernel.org, tmaimon77@gmail.com
+ devicetree@vger.kernel.org, robh+dt@kernel.org, james.morse@arm.com,
+ YSCHU@nuvoton.com, mchehab@kernel.org, linux-kernel@vger.kernel.org,
+ tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Dear Medad,
-
-
-Thank you for v8.
-
-Am 03.05.22 um 11:47 schrieb Medad CChien:
-> Add memory controller support for Nuvoton NPCM SoC.
+On Tue, May 03, 2022 at 05:47:26PM +0800, Medad CChien wrote:
+> ECC must be configured in the BootBlock header.
+> Then, you can read error counts via
+> the EDAC kernel framework.
 > 
 > Signed-off-by: Medad CChien <ctcchien@nuvoton.com>
 > Reviewed-by: Borislav Petkov <bp@alien8.de>
 > Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-> Reported-by: kernel test robot <lkp@intel.com>
 
-This line is confusing.
+I don't think you understand the concept of Reviewed-by: tags. You
+may add them to a patch of yours when the reviewer gives them to you
+explicitly - not because she/he has given comments to a patch of yours.
 
-> error:
->     macro "edac_printk" requires 4 arguments, but only 2 given
-> 
-> warnings:
->     performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
->     logical not is only applied to the left hand side of this bitwise operator [-Wlogical-not-parentheses]
->     mixing declarations and code is a C99 extension [-Wdeclaration-after-statement]
-> 
-> Note:
->     you can force an ecc event by writing a string to edac sysfs node
->     and remember to define CONFIG_EDAC_DEBUG to enable this feature
->     example: force a correctable event on checkcode bit 0
->     echo "CE checkcode 0" > /sys/devices/system/edac/mc/mc0/forced_ecc_error
+Please go over
 
-Shouldn’t this go above all the tags?
+Documentation/process/
 
-> ---
->   drivers/edac/Kconfig     |   9 +
->   drivers/edac/Makefile    |   1 +
->   drivers/edac/npcm_edac.c | 680 +++++++++++++++++++++++++++++++++++++++
->   3 files changed, 690 insertions(+)
->   create mode 100644 drivers/edac/npcm_edac.c
-> 
-> diff --git a/drivers/edac/Kconfig b/drivers/edac/Kconfig
-> index 58ab63642e72..64149b524f98 100644
-> --- a/drivers/edac/Kconfig
-> +++ b/drivers/edac/Kconfig
-> @@ -539,4 +539,13 @@ config EDAC_DMC520
->   	  Support for error detection and correction on the
->   	  SoCs with ARM DMC-520 DRAM controller.
->   
-> +config EDAC_NPCM
-> +	tristate "Nuvoton NPCM DDR Memory Controller"
-> +	depends on (ARCH_NPCM || COMPILE_TEST)
-> +	help
-> +	  Support for error detection and correction on the Nuvoton NPCM DDR
-> +	  memory controller.
+and Documentation/process/submitting-patches.rst especially and then
+send patches.
 
-Please add a blank line below.
+Thx.
 
-> +	  First, ECC must be configured in the BootBlock header. Then, this driver
-> +	  will expose error counters via the EDAC kernel framework.
-> +
->   endif # EDAC
+-- 
+Regards/Gruss,
+    Boris.
 
-[…]
-> +module_platform_driver(npcm_edac_mc_driver);
-> +
-> +MODULE_AUTHOR("Medad CChien<ctcchien@nuvoton.com>");
-
-Please add a space before the <.
-
-> +MODULE_DESCRIPTION("Nuvoton NPCM EDAC Driver");
-> +MODULE_LICENSE("GPL v2");
-
-
-Kind regards,
-
-Paul
+https://people.kernel.org/tglx/notes-about-netiquette
