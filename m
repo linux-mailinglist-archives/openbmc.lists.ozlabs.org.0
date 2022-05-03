@@ -2,60 +2,80 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3ED65517EE1
-	for <lists+openbmc@lfdr.de>; Tue,  3 May 2022 09:27:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 03146518199
+	for <lists+openbmc@lfdr.de>; Tue,  3 May 2022 11:48:07 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Kss460f6zz3bck
-	for <lists+openbmc@lfdr.de>; Tue,  3 May 2022 17:27:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KswBD5mXKz3bWf
+	for <lists+openbmc@lfdr.de>; Tue,  3 May 2022 19:48:04 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=moTJzkHn;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kaod.org (client-ip=188.165.58.48; helo=6.mo548.mail-out.ovh.net;
- envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
-X-Greylist: delayed 600 seconds by postgrey-1.36 at boromir;
- Tue, 03 May 2022 17:27:20 AEST
-Received: from 6.mo548.mail-out.ovh.net (6.mo548.mail-out.ovh.net
- [188.165.58.48])
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::431;
+ helo=mail-pf1-x431.google.com; envelope-from=medadyoung@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=moTJzkHn; dkim-atps=neutral
+Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com
+ [IPv6:2607:f8b0:4864:20::431])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits))
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Kss3r5fGxz2xBF
- for <openbmc@lists.ozlabs.org>; Tue,  3 May 2022 17:27:17 +1000 (AEST)
-Received: from mxplan5.mail.ovh.net (unknown [10.108.1.97])
- by mo548.mail-out.ovh.net (Postfix) with ESMTPS id A39072013F;
- Tue,  3 May 2022 07:08:21 +0000 (UTC)
-Received: from kaod.org (37.59.142.105) by DAG4EX1.mxp5.local (172.16.2.31)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.6; Tue, 3 May 2022
- 09:08:21 +0200
-Authentication-Results: garm.ovh; auth=pass
- (GARM-105G00639ce4f6f-e73a-463f-a254-00dadcdb17a4,
- F6B89E566DA044E9E2FB2CFEBB669705F2CEA7ED) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <4bb4745c-1e40-f42f-8929-aae5a3f03cbf@kaod.org>
-Date: Tue, 3 May 2022 09:08:20 +0200
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Ksw9r404dz2xKW
+ for <openbmc@lists.ozlabs.org>; Tue,  3 May 2022 19:47:43 +1000 (AEST)
+Received: by mail-pf1-x431.google.com with SMTP id x23so9004600pff.9
+ for <openbmc@lists.ozlabs.org>; Tue, 03 May 2022 02:47:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=EjpV3+31EBNyUsVuJvlPGp9I1RXm2tUH/4rxv/DGe3s=;
+ b=moTJzkHnFjjv71Xovd7gnwzgJx6VDoMjNUFmURvQDqrmU4g45U819+zEd5pQh58lvs
+ I9YnfQwwSZH15Gul0VanY0j5e1Q7ZzFT5CSB8zc4Fb9ri2e1LsnWDRjj1lkCvVeUeFW4
+ XdFlQ4f6vrLTSyLOq68x0gMS2d0nGktYFNoLFUUG13QCocXATXTddRUUMlMxnBTPnaWq
+ A3SnYQVIfFlQ7OKOW/5NqBuGGfV/Clys9cDn98WRPw3MqUDDX+uxrbaVjxOf+ZTneztq
+ Za5Pjt2p/UWutcA7ef1OWsBha5ZK1zrSYryLVzSoBkvSUEyVnJSv1wN0an8zmsl9x2s6
+ q8LQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=EjpV3+31EBNyUsVuJvlPGp9I1RXm2tUH/4rxv/DGe3s=;
+ b=zLw9edc/YQHi03GnBpy6np/IoErHybRdkoSgoj5aHNnCgfYD+n8tXiWXQZVXhr9zNQ
+ 7bd5L9LHPHqFuz5D77U3q5vpVW5Je0XXf0FG6udEM7E2/Z0KNI6URrlG0MuE5k/go+Uq
+ qmFsF4/5Ah/wze99devVhD72d2Bpam0ddpZhMNsFS5phds6eavEhc6hDWf86cWFIASkd
+ YCwty+iZUXnfw8UjhXlVXTMTDss+hvN5XNchdVANvOldC9AxihB4o0YpLhJDn/MIFmdF
+ QW9Fv9DxhDraWJnDq96JkzpvyNaWwhFQpJEgvUyXftcCapVHSDQRPmkg95qwlXqBP1f8
+ rxJQ==
+X-Gm-Message-State: AOAM5303aWUIxVdQUKX+2asPdcyVv7KqRbKvCZJTERdGZaawmEAfiNrq
+ KK7i3h5KBF0A6YnpIqSa1Ok=
+X-Google-Smtp-Source: ABdhPJzBUkPA1uZErb9GZC69Dlkgal8w1fuJ51a5baLHZWoZImwesjdf1ljfHWVPmtduXVQpDfXZJA==
+X-Received: by 2002:a05:6a00:2408:b0:4f7:a8cb:9b63 with SMTP id
+ z8-20020a056a00240800b004f7a8cb9b63mr15497522pfh.33.1651571259367; 
+ Tue, 03 May 2022 02:47:39 -0700 (PDT)
+Received: from cs20-buildserver.lan ([180.217.147.224])
+ by smtp.gmail.com with ESMTPSA id
+ o19-20020a17090a421300b001d90c8b6141sm1015222pjg.53.2022.05.03.02.47.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 May 2022 02:47:38 -0700 (PDT)
+From: Medad CChien <medadyoung@gmail.com>
+X-Google-Original-From: Medad CChien <ctcchien@nuvoton.com>
+To: rric@kernel.org, james.morse@arm.com, tony.luck@intel.com,
+ mchehab@kernel.org, bp@alien8.de, robh+dt@kernel.org,
+ benjaminfair@google.com, yuenn@google.com, venture@google.com,
+ KWLIU@nuvoton.com, YSCHU@nuvoton.com, JJLIU0@nuvoton.com,
+ KFTING@nuvoton.com, avifishman70@gmail.com, tmaimon77@gmail.com,
+ tali.perry1@gmail.com, ctcchien@nuvoton.com
+Subject: [PATCH v8 0/3] EDAC: nuvoton: Add nuvoton NPCM memory controller
+ driver
+Date: Tue,  3 May 2022 17:47:25 +0800
+Message-Id: <20220503094728.926-1-ctcchien@nuvoton.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH v6 00/11] spi: spi-mem: Convert Aspeed SMC driver to
- spi-mem
-Content-Language: en-US
-To: Joel Stanley <joel@jms.id.au>, OpenBMC Maillist
- <openbmc@lists.ozlabs.org>, Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
-References: <20220503060634.122722-1-clg@kaod.org>
- <CACPK8Xcoz6WzyHWV9pSibjGJFs-mBGuPheASsysKMTVv68YhLQ@mail.gmail.com>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <CACPK8Xcoz6WzyHWV9pSibjGJFs-mBGuPheASsysKMTVv68YhLQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.105]
-X-ClientProxiedBy: DAG1EX2.mxp5.local (172.16.2.2) To DAG4EX1.mxp5.local
- (172.16.2.31)
-X-Ovh-Tracer-GUID: 74259bd6-c9d1-4754-8197-0612312c0882
-X-Ovh-Tracer-Id: 15340667707878837213
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvfedrvdeigdduudehucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepkfffgggfuffvfhfhjggtgfhisehtkeertddtfeejnecuhfhrohhmpeevrogurhhitggpnfgvpgfiohgrthgvrhcuoegtlhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepueevledvjeetgeetfeeiveeftefffedvvdeikeetveelfeeglefgueetvdefvdefnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucfkpheptddrtddrtddrtddpfeejrdehledrudegvddruddtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhhvghlohepmhigphhlrghnhedrmhgrihhlrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpegtlhhgsehkrghougdrohhrghdpnhgspghrtghpthhtohepuddprhgtphhtthhopehquhhitggpjhgrvghhhihoohesqhhuihgtihhntgdrtghomh
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,28 +87,88 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, linux-edac@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
->> Tested on:
->>
->>   * OpenPOWER Palmetto (AST2400)
->>   * Facebook Wedge 100 BMC (AST2400) by Tao Ren <rentao.bupt@gmail.com>
->>   * Evaluation board (AST2500)
->>   * Inspur FP5280G2 BMC (AST2500) by John Wang <wangzq.jn@gmail.com>
->>   * Facebook Backpack CMM BMC (AST2500) by Tao Ren <rentao.bupt@gmail.com>
->>   * OpenPOWER Witherspoon (AST2500)
->>   * Evaluation board (AST2600 A0 and A3)
->>   * Rainier board (AST2600)
-> 
-> This is now the driver used in the dev-5.15 openbmc kernel tree. Thank
-> you for all of your hard work Cédric.
+Support memory controller for Nuvoton NPCM SoC.
 
-We could also activate Quad IO support in the OpenBMC tree because
-it includes the pinctrl fixes from Jae. That's what I use  :
+Addressed comments from:
+ - Rob Herring : https://lkml.org/lkml/2022/2/25/1103
+ - Krzysztof Kozlowski : https://lkml.org/lkml/2022/2/27/63
+ - Rob Herring : https://lkml.org/lkml/2022/3/2/828
+ - Krzysztof Kozlowski : https://lkml.org/lkml/2022/3/11/294
+ - Jonathan Neuschäfer : https://lkml.org/lkml/2022/3/11/1167
+ - Krzysztof Kozlowski : https://lkml.org/lkml/2022/3/11/293
+ - Rob Herring : https://lkml.org/lkml/2022/3/11/575
+ - Krzysztof Kozlowski : https://lkml.org/lkml/2022/3/11/305
+ - Avi Fishman : https://lkml.org/lkml/2022/3/13/339
+ - Krzysztof Kozlowski : https://lkml.org/lkml/2022/3/14/93
+ - Krzysztof Kozlowski : https://lkml.org/lkml/2022/3/14/95
+ - Krzysztof Kozlowski : https://lkml.org/lkml/2022/3/15/378
+ - Boris Petkov : https://lkml.org/lkml/2022/3/17/561
+ - Paul Menzel : https://lkml.org/lkml/2022/4/9/47
+ - Paul Menzel : https://lkml.org/lkml/2022/4/11/182
+ - Borislav Petkov : https://lkml.org/lkml/2022/4/8/871
+ - Paul Menzel : https://lkml.org/lkml/2022/4/9/51
+ - Paul Menzel : https://lkml.org/lkml/2022/4/9/65
+ - Rob Herring : https://lkml.org/lkml/2022/4/21/681
 
-   https://github.com/legoater/linux/commit/7c9cdf5d53ababb1908c2ad727bac861c2c2aac9
+Changes since version 8:
+ - Add new line character at the end of file of yaml file
 
-Cheers,
+Changes since version 7:
+ - Refactor npcm_edac.c.
+ - Sort strings in npcm_edac.c.
+ - Reflow code for 75 characters per line.
+ - Summarize errors and warnings reported by kernel test robot.
+ - Shorten name of values to make them become more readable in npcm_edac.c..
+ - Put spaces between the * and the text in npcm_edac.c.
 
-C.
+Changes since version 6:
+ - Fix warnings in npcm_edac.c.
+ - Add information reported by kernel test robot <lkp@intel.com>.
+
+Changes since version 5:
+ - Update commit message of dt-bindings: edac: nuvoton: add NPCM memory controller.
+ 
+Changes since version 4:
+ - Update filename in nuvoton,npcm-memory-controller.yaml.
+ - Add COMPILE_TEST in Kconfig.
+ - Fix errors in npcm_edac.c.
+ - Remove unnecessary checking after of_match_device() and of_device_get_match_data().
+
+Changes since version 3:
+ - Rename npcm-edac.yaml as nuvoton,npcm-memory-controller.yaml.
+ - Drop 'EDAC' in title of nuvoton,npcm-memory-controller.yaml.
+ - Update compatible in nuvoton,npcm-memory-controller.yaml.
+
+Changes since version 2:
+ - Update description and compatible in npcm-edac.yaml.
+ - Remove address-cells and size-cells in npcm-edac.yaml.
+ - Reorder the items of examples in npcm-edac.yaml.
+ - Reorder header file in driver.
+
+Changes since version 1:
+ - Add nuvoton,npcm750-memory-controller property in NPCM devicetree.
+ - Add new property in edac binding document.
+ - Add new driver for nuvoton NPCM memory controller.
+
+Medad CChien (3):
+  ARM: dts: nuvoton: Add memory controller node
+  dt-bindings: edac: nuvoton: add NPCM memory controller
+  EDAC: nuvoton: Add NPCM memory controller driver
+
+ .../edac/nuvoton,npcm-memory-controller.yaml  |  61 ++
+ arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi |   7 +
+ drivers/edac/Kconfig                          |   9 +
+ drivers/edac/Makefile                         |   1 +
+ drivers/edac/npcm_edac.c                      | 680 ++++++++++++++++++
+ 5 files changed, 758 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-controller.yaml
+ create mode 100644 drivers/edac/npcm_edac.c
+
+-- 
+2.17.1
+
