@@ -1,56 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9394E519802
-	for <lists+openbmc@lfdr.de>; Wed,  4 May 2022 09:22:24 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 98853519929
+	for <lists+openbmc@lfdr.de>; Wed,  4 May 2022 10:03:56 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KtSvf2wSFz2xnM
-	for <lists+openbmc@lfdr.de>; Wed,  4 May 2022 17:22:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KtTqZ333Kz3bfR
+	for <lists+openbmc@lfdr.de>; Wed,  4 May 2022 18:03:54 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=X62oo+L0;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=MX9cmwc6;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
- helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
+ smtp.helo=mga12.intel.com (client-ip=192.55.52.136; helo=mga12.intel.com;
+ envelope-from=przemyslaw.hawrylewicz.czarnowski@linux.intel.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=X62oo+L0; 
- dkim-atps=neutral
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
- [IPv6:2605:2700:0:5::4713:9cab])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
+ header.s=Intel header.b=MX9cmwc6; dkim-atps=neutral
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KtSvJ4cqWz2xCB
- for <openbmc@lists.ozlabs.org>; Wed,  4 May 2022 17:22:04 +1000 (AEST)
-Received: from hatter.bewilderbeest.net (174-21-163-222.tukw.qwest.net
- [174.21.163.222])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 8481127B;
- Wed,  4 May 2022 00:22:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
- s=thorn; t=1651648922;
- bh=sx0SctmyG9TOtwIaQSFtf68ixGOt40YgbnYjWyRrhuw=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=X62oo+L0uURQ4J/bspzv5N4OBv2LTgvA7vp+/L4Q792w4u6UA9edJNL4d6wepuPBf
- cehTyrf783Yc9C7Dd8OuCxFepA8OxH/spZpUO/F5v27jFRznhUZeDig9NB0e8cCAL0
- sNxi1LV9gVYX14co9uNTu+HVwP49DesxBlGMZZSU=
-Date: Wed, 4 May 2022 00:22:01 -0700
-From: Zev Weiss <zev@bewilderbeest.net>
-To: Mark Brown <broonie@kernel.org>, Liam Girdwood <lgirdwood@gmail.com>
-Subject: Re: [PATCH 0/6] regulator: core: Add support for external outputs
-Message-ID: <YnIpmdoQTm1gb4fp@hatter.bewilderbeest.net>
-References: <20220504065041.6718-1-zev@bewilderbeest.net>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KtTq65hfwz2yWn
+ for <openbmc@lists.ozlabs.org>; Wed,  4 May 2022 18:03:28 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1651651411; x=1683187411;
+ h=message-id:date:mime-version:from:subject:to:
+ content-transfer-encoding;
+ bh=47MDGrikji/FpGTET0sa8uy3TMzVytd0UQuz63wEqfw=;
+ b=MX9cmwc69i0BW00KzVbbwYaQiPeoL3Xs/oAEmXSXy26CMCZH0oLHtVel
+ Kelp7xy3T5xKFfO9YQ+pj8NU+vc3QBEagkkcD7MQQXPw4Ni9/8yavB7pz
+ JRVGuubnk4qGzhf/8hNSF4+UiK6LtcxuAlBIWE7l9Xwk58N+ILOZcPIZp
+ brx2yhhZvvpKTmuTfJ5ITv7aKD3Ajlye7xXwpJIUZrMpRIQoy6Ko9+yuq
+ kg8qGSq/ccJiVvaowme0aaTjBbxWKALb5X2RSdb+oPXfIdXB4Bg3X+hua
+ IfSi3mwV94xuXdxAZZdkmeaZ6xNxOBwLcoxFIEWcEZW7fWJXSbQrwOsfF A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10336"; a="247604757"
+X-IronPort-AV: E=Sophos;i="5.91,197,1647327600"; d="scan'208";a="247604757"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+ by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 May 2022 01:02:25 -0700
+X-IronPort-AV: E=Sophos;i="5.91,197,1647327600"; d="scan'208";a="516922857"
+Received: from dkowalsk-mobl1.ger.corp.intel.com (HELO [10.249.134.116])
+ ([10.249.134.116])
+ by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 May 2022 01:02:24 -0700
+Message-ID: <793f0d90-64fd-1899-6a74-c1434152ad64@linux.intel.com>
+Date: Wed, 4 May 2022 10:02:14 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <20220504065041.6718-1-zev@bewilderbeest.net>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+From: "Czarnowski, Przemyslaw"
+ <przemyslaw.hawrylewicz.czarnowski@linux.intel.com>
+Subject: Virtual Media upstream status
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ Ed Tanous <ed@tanous.net>
+Content-Language: en-US
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,32 +70,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org,
- Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, May 03, 2022 at 11:50:35PM PDT, Zev Weiss wrote:
->Hello,
->
->This patch series is a new approach at implementing some functionality
->I previously attempted as a separate driver in drivers/misc [0], but I
->think (as suggested by Greg in that thread) ultimately makes more
->sense being built into the regulator subsystem.
->
+Hi group.
 
-<snip>
+In response to Ed's request, I started this topic to discuss upstreaming 
+activities (to both existing and new code). And to make update seamless 
+and effective.
 
-Sorry for the broken threading here (missed a comma in the CC list on 
-patch 1 that 'git send-email --dry-run' didn't catch, then forgot to add 
-the necessary flags on the second attempt to tack it onto this cover 
-letter from the first).
+As service upstream is little stalled waiting for UT to be completed 
+(almost completed), I wanted to attack the problem from another surface. 
+I've pushed bmcweb patches as it got old since first submission.
 
-In case it's not obvious, the patches corresponding to this are here: 
-https://lore.kernel.org/openbmc/20220504065252.6955-1-zev@bewilderbeest.net/T/
+There are two blocking problems I am aware of in current nbd_proxy code. 
+First is that compilation fails. The second is a race appearing 
+sometimes during disconnection. But those are the simple ones.
 
+There is more to rework for redfish part. There are two patches
+* Make status of InsertMedia action consistent (I29d53483) 
+https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/53343/1
+* Apply async dbus API (I1d016126) 
+https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/53345/1
 
-Zev
+First one addresses simple problem with inconsistent responses from rest 
+api calls connected with actions. Proxy mode does not support 
+InsertMedia action, but is implemented for legacy so response has to be 
+applied accordingly. It has been fixed with some code generalization.
 
+The second one applies latest design changes 
+(https://github.com/openbmc/docs/blob/master/designs/virtual-media.md, 
+dbus communication part).
+
+Those are must-have changes to work with the service state we upstream 
+at the moment.
+
+After service upstream is completed changes removing nbd_proxy option in 
+meson has to be reverted as the last part.
+
+No more activities are planned now from out side, but later on we may 
+focus on adding privileges support for websockets (AFAIK it is not 
+supported on level of web server yet).
+
+-- 
+Best regards,
+Przemyslaw Czarnowski
