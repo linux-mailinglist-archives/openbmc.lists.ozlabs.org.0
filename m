@@ -2,67 +2,82 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9DCBD51996B
-	for <lists+openbmc@lfdr.de>; Wed,  4 May 2022 10:15:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B7C6E519EEA
+	for <lists+openbmc@lfdr.de>; Wed,  4 May 2022 14:07:08 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KtV4z37t5z3bc9
-	for <lists+openbmc@lfdr.de>; Wed,  4 May 2022 18:15:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KtbDB3v3Nz3bpD
+	for <lists+openbmc@lfdr.de>; Wed,  4 May 2022 22:07:06 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Xa6qyXmf;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=ZhzXCEkM;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.43; helo=mga05.intel.com;
- envelope-from=przemyslaw.hawrylewicz.czarnowski@linux.intel.com;
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::835;
+ helo=mail-qt1-x835.google.com; envelope-from=tcminyard@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=Xa6qyXmf; dkim-atps=neutral
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=ZhzXCEkM; dkim-atps=neutral
+Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com
+ [IPv6:2607:f8b0:4864:20::835])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KtV4Z0VB1z2xBF
- for <openbmc@lists.ozlabs.org>; Wed,  4 May 2022 18:15:09 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1651652110; x=1683188110;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=Ja4VbyFFzeHofOIg2yfYSSl4j5w0oz0Nneh4SIZecEY=;
- b=Xa6qyXmfNVBj9fyPH5ERFc5Sn+Yda8vHsXxOISsm8BaK6dEeScovJ520
- QH9rxOsefwXIj4Pw5z184tWKgVO1r5I5YB8a41ZNpwp/DDjnZKYtiJ9Sb
- IolDHqHXukrfUsgW7avl+Qiq+bH/QRo0QXZe4gUssrtIUMHyvCLHQPG7k
- XpGx55f9fZQpWmaGm+KqtKxyiMlhHYFo4sFGzjOEvYXwO7ROiWbADEM56
- RLH1sxHtvHgNRNWj09ii1tFMC2QQurcYmXzhkKwyMZ0AhADb0keNmUBVj
- yjf7bQtwjdGnZpI0ac02JN15rD7W/q5k28q/OdcP8+x9WaCjOwsoTzwy9 g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10336"; a="354134777"
-X-IronPort-AV: E=Sophos;i="5.91,197,1647327600"; d="scan'208";a="354134777"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
- by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 May 2022 01:14:07 -0700
-X-IronPort-AV: E=Sophos;i="5.91,197,1647327600"; d="scan'208";a="516925689"
-Received: from dkowalsk-mobl1.ger.corp.intel.com (HELO [10.249.134.116])
- ([10.249.134.116])
- by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 May 2022 01:14:06 -0700
-Message-ID: <bb54ab97-428c-f689-d6b1-abee147fa263@linux.intel.com>
-Date: Wed, 4 May 2022 10:14:03 +0200
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KtbCj0Pwtz3bbj;
+ Wed,  4 May 2022 22:06:39 +1000 (AEST)
+Received: by mail-qt1-x835.google.com with SMTP id fu47so648789qtb.5;
+ Wed, 04 May 2022 05:06:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=sender:date:from:to:cc:subject:message-id:reply-to:references
+ :mime-version:content-disposition:in-reply-to;
+ bh=+WNZryBXL+g7kwNzKGyTKWK4wg/wzwMgT6OB9tUEVx4=;
+ b=ZhzXCEkMq4XwxySq3BgrlTremloLuIKnLA4pTWCqSN9GHXJ7dLD8mUJk/a6Cx4DV9W
+ qtBExIMVKBAmXh6F1zj87sqgxLJJoNG2txnzswjsQGHmgWu/KYeYWE6K5H9gp7SW1sI5
+ FvlrNc8ComRabkEV3E0joBA8MMxDscVIJoHVfHhOSci22mtwHPfELk8iLcRGDJ15ELIO
+ QV/ET9LIWtE+LIp4kymM9EWIX3H72WMXcj5bRrb0wTFn5gkJ4iPpugvtCjMT928AliNZ
+ 7ElEpkBUxqZBip8N0hWXNku1ShOJ7TwDuPgcw64PDBIcHnngwNTweMqLJopbxEcd/iQG
+ uu9A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
+ :reply-to:references:mime-version:content-disposition:in-reply-to;
+ bh=+WNZryBXL+g7kwNzKGyTKWK4wg/wzwMgT6OB9tUEVx4=;
+ b=o7/xVJWtHo3p25rFiJIqfp00k2KXjj9Hvt9jPTOkir2GxccHhcAZ0XI5k0J8wdnD+y
+ Il4rR6XDEG/2PvvRzFNQzQ2k5NkevdgTu/t4LbXnaUpm3frGClkr3bZiQYi8lguGTomk
+ 4/0wLJxYomC88PuyfePUOGd3tz0F1De/UmcUgENtrOW6utGkBuRvC6FaDCfjEv8iPpXZ
+ Py/0875CkEHEVnKcyd2RKxFA9GRipzfDVNDoYQyASVsRhuj7LOIh44xUd8kPKAfXOH+f
+ MDkFloxi62+IIldSTwOEtcXl8N2HYvvxPygmdDbFZB+j9iQrncNtcoRQrk76EEBN3dW5
+ lmZQ==
+X-Gm-Message-State: AOAM532GpY5u4Mxq8n1X7NcRcVkuhZyiOaDh8o3HMqU/MBGJoo8PYMy5
+ kZIIvEKqSiYW+EyXYVFUUA==
+X-Google-Smtp-Source: ABdhPJy8E2ZGhOMqaubc9bI3GOFs28UeBhEN5Ik/qSGSpbMeojwEWqvAJa0IzwkfLKv2xoNBPuJkig==
+X-Received: by 2002:a05:622a:1ba7:b0:2f3:a08e:7c11 with SMTP id
+ bp39-20020a05622a1ba700b002f3a08e7c11mr15849578qtb.10.1651665993525; 
+ Wed, 04 May 2022 05:06:33 -0700 (PDT)
+Received: from serve.minyard.net (serve.minyard.net. [2001:470:b8f6:1b::1])
+ by smtp.gmail.com with ESMTPSA id
+ l184-20020a3789c1000000b0069fc13ce22esm7512348qkd.95.2022.05.04.05.06.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 04 May 2022 05:06:33 -0700 (PDT)
+Received: from minyard.net (unknown
+ [IPv6:2001:470:b8f6:1b:149c:2dc6:c0ab:4341])
+ by serve.minyard.net (Postfix) with ESMTPSA id 322621800BD;
+ Wed,  4 May 2022 12:06:32 +0000 (UTC)
+Date: Wed, 4 May 2022 07:06:31 -0500
+From: Corey Minyard <minyard@acm.org>
+To: Quan Nguyen <quan@os.amperecomputing.com>
+Subject: Re: [Openipmi-developer] [PATCH v7 1/3] ipmi: ssif_bmc: Add SSIF BMC
+ driver
+Message-ID: <20220504120631.GE3767252@minyard.net>
+References: <20220422040803.2524940-1-quan@os.amperecomputing.com>
+ <20220422040803.2524940-2-quan@os.amperecomputing.com>
+ <20220423015119.GE426325@minyard.net>
+ <ec7b86ec-827f-da64-8fd2-eae09f802694@os.amperecomputing.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: Virtual Media upstream status.
-Content-Language: en-US
-To: Ed Tanous <edtanous@google.com>, "Hawrylewicz Czarnowski, Przemyslaw"
- <przemyslaw.hawrylewicz.czarnowski@intel.com>
-References: <DM4PR11MB5247C11F5DAB40B354BE4088B9FC9@DM4PR11MB5247.namprd11.prod.outlook.com>
- <CAH2-KxAusoe1=puTtT-cz4gtFpPeRd7u6VG+4e5eqd-rnabq4Q@mail.gmail.com>
-From: "Czarnowski, Przemyslaw"
- <przemyslaw.hawrylewicz.czarnowski@linux.intel.com>
-In-Reply-To: <CAH2-KxAusoe1=puTtT-cz4gtFpPeRd7u6VG+4e5eqd-rnabq4Q@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ec7b86ec-827f-da64-8fd2-eae09f802694@os.amperecomputing.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,77 +89,144 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- Ed Tanous <ed@tanous.net>
+Reply-To: minyard@acm.org
+Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+ Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+ Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org,
+ "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
+ Brendan Higgins <brendanhiggins@google.com>, linux-kernel@vger.kernel.org,
+ Phong Vo <phong@os.amperecomputing.com>, Wolfram Sang <wsa@kernel.org>,
+ Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org,
+ openipmi-developer@lists.sourceforge.net,
+ Open Source Submission <patches@amperecomputing.com>,
+ linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 30.04.2022 00:52, Ed Tanous wrote:
-> On Fri, Apr 29, 2022 at 1:42 PM Hawrylewicz Czarnowski, Przemyslaw
-> <przemyslaw.hawrylewicz.czarnowski@intel.com> wrote:
->>
->> Hi.
->>
->> In response to Ed's request, I started this topic to discuss upstreaming activities (to both existing and new code). And to make update seamless and effective.
->>
->> As service upstream is little stalled waiting for UT to be completed (almost completed), I wanted to attack the problem from another surface. I've pushed bmcweb patches as it got old since first submission.
->>
->> There are two blocking problems I am aware of in current nbd_proxy code. First is that compilation fails. The second is a race appearing sometimes during disconnection. But those are the simple ones.
->>
->> There is more to rework for redfish part. There are two patches
->> * Make status of InsertMedia action consistent (I29d53483) https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/53343/1
->> * Apply async dbus API (I1d016126) https://gerrit.openbmc-project.xyz/c/openbmc/bmcweb/+/53345/1
->>
->> First one addresses simple problem with inconsistent responses from rest api calls connected with actions. Proxy mode does not support InsertMedia action, but is implemented for legacy so response has to be applied accordingly. It has been fixed with some code generalization.
->>
->> The second one applies latest design changes (https://github.com/openbmc/docs/blob/master/designs/virtual-media.md, dbus communication part).
->>
->> Those are must-have changes to work with the service state we upstream at the moment.
->>
->> After service upstream is completed changes removing nbd_proxy option in meson has to be reverted as the last part.
->>
->> No more activities are planned now from out side, but later on we may focus on adding privileges support for websockets (AFAIK it is not supported on level of web server yet).
+On Wed, May 04, 2022 at 01:45:03PM +0700, Quan Nguyen via Openipmi-developer wrote:
+> > 
+> > I seem to remember mentioning this before, but there is no reason to
+> > pack the structures below.
+> > 
 > 
-> Great to hear from you!  You mention a lot about the bmcweb-side
-> changes, which are a pretty minor part (I just merged 2 of the 4
-> patches), and I'm happy to review them.  The part that interests me is
-> the backend daemon upstreaming to make this feature useful and
-> testable outside of the Intel tree;  When would you expect that to
-> occur?  Will it be an incremental update to jsnb?
-Still working internally on UT's requested, unfortunately VM is not top 
-priority feature here. But trying best to put the work forward.
+> The packed structure is because we want to pick the len directly from user
+> space without worry about the padding byte.
+> 
+> As we plan not to use the .h file in next version, I still would like to use
+> packed structure internally inside ssif_bmc.c file.
+
+Packed doesn't matter for the userspace API.  If you look at other
+structures in the userspace API, they are not packed, either.  The
+compiler will do the right thing on both ends.
 
 > 
-> In terms of bmcweb, there's currently two implementations, the jsnb
-> targeted one, and the one you're working on above.  Is there any
-> reason to keep the jsnb one once this new daemon has been updated?
-New deamon will replace old one, this has been settled in other email 
-thread.
+> > And second, the following is a userspace API structures, so it needs to
+> > be in its own file in include/uapi/linux, along with any supporting
+> > things that users will need to use.  And your userspace code should be
+> > using that file.
+> > 
+> 
+> Meantime, I'd like not to use .h as I see there is no demand for sharing the
+> data structure between kernel and user space yet. But we may do it in the
+> future.
+
+If you have a userspace API, it needs to be in include/uapi/linux.
+You may not be the only user of this code.  In fact, you probably won't
+be.  You need to have a .h with the structures in it, you don't want the
+same structure in two places if you can help it.
 
 > 
-> The design doc referenced above is about 3 years old at this point,
-> are there any design updates that need to happen, or is it still
-> relatively accurate?
-Service being upstreamed, besides some bug fixes, is quite stable at the 
-moment. Quite recently async dbus interface has been added. No more 
-suggestions from our side.
+> > > +struct ssif_msg {
+> > > +	u8 len;
+> > 
+> > Just to be 100% safe, it might be better to use a u16 on this.  The spec
+> > sort of limits this to 255 bytes, but it also sort of leaves it open to
+> > be larger.
+> > 
+> Yes, u8 only limited to 255 bytes and there is no space for future grow.
+
+Please make it a unsigned int for the length and __u8 for the data to
+give necessary flexibility.
+
+Thanks,
+
+-corey
 
 > 
-> I'm glad to have someone working on it.  If you need quicker response
-> times to short-run things, most of the maintainers and myself are on
-> Discord, and would be happy to help you work through the specifics of
-> the patches needed to get this in.
-I am aware of discord byt lurking mostly so far, trying to catch and 
-answer VM questions. Thanks for letting me know.
-
+> > > +	u8 payload[MSG_PAYLOAD_LEN_MAX];
+> > > +} __packed;
+> > > +
+> > > +struct ssif_part_buffer {
+> > > +	u8 address;
+> > > +	u8 smbus_cmd;
+> > > +	u8 length;
+> > > +	u8 payload[MAX_PAYLOAD_PER_TRANSACTION];
+> > > +	u8 pec;
+> > > +	u8 index;
+> > > +} __packed;
+> > > +
+> > > +/*
+> > > + * SSIF internal states:
+> > > + *   SSIF_READY         0x00 : Ready state
+> > > + *   SSIF_START         0x01 : Start smbus transaction
+> > > + *   SSIF_SMBUS_CMD     0x02 : Received SMBus command
+> > > + *   SSIF_REQ_RECVING   0x03 : Receiving request
+> > > + *   SSIF_RES_SENDING   0x04 : Sending response
+> > > + *   SSIF_BAD_SMBUS     0x05 : Bad SMbus transaction
+> > > + */
+> > > +enum ssif_state {
+> > > +	SSIF_READY,
+> > > +	SSIF_START,
+> > > +	SSIF_SMBUS_CMD,
+> > > +	SSIF_REQ_RECVING,
+> > > +	SSIF_RES_SENDING,
+> > > +	SSIF_ABORTING,
+> > > +	SSIF_STATE_MAX
+> > > +};
+> > > +
+> > > +struct ssif_bmc_ctx {
+> > > +	struct i2c_client	*client;
+> > > +	struct miscdevice	miscdev;
+> > > +	int			msg_idx;
+> > > +	bool			pec_support;
+> > > +	/* ssif bmc spinlock */
+> > > +	spinlock_t		lock;
+> > > +	wait_queue_head_t	wait_queue;
+> > > +	u8			running;
+> > > +	enum ssif_state		state;
+> > > +	/* Timeout waiting for response */
+> > > +	struct timer_list	response_timer;
+> > > +	bool                    response_timer_inited;
+> > > +	/* Flag to identify a Multi-part Read Transaction */
+> > > +	bool			is_singlepart_read;
+> > > +	u8			nbytes_processed;
+> > > +	u8			remain_len;
+> > > +	u8			recv_len;
+> > > +	/* Block Number of a Multi-part Read Transaction */
+> > > +	u8			block_num;
+> > > +	bool			request_available;
+> > > +	bool			response_in_progress;
+> > > +	bool			busy;
+> > > +	bool			aborting;
+> > > +	/* Buffer for SSIF Transaction part*/
+> > > +	struct ssif_part_buffer	part_buf;
+> > > +	struct ssif_msg		response;
+> > > +	struct ssif_msg		request;
+> > > +};
+> > > +
+> > > +static inline struct ssif_bmc_ctx *to_ssif_bmc(struct file *file)
+> > > +{
+> > > +	return container_of(file->private_data, struct ssif_bmc_ctx, miscdev);
+> > > +}
+> > > +#endif /* __SSIF_BMC_H__ */
+> > > -- 
+> > > 2.35.1
+> > > 
+> > > 
 > 
 > 
->>
->> --
->> Best regards,
->> Przemyslaw Czarnowski
-
-
--- 
-Best regards,
-Przemyslaw Czarnowski
+> 
+> _______________________________________________
+> Openipmi-developer mailing list
+> Openipmi-developer@lists.sourceforge.net
+> https://lists.sourceforge.net/lists/listinfo/openipmi-developer
