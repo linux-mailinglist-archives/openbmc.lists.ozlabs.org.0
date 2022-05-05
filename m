@@ -1,72 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23F8B51B945
-	for <lists+openbmc@lfdr.de>; Thu,  5 May 2022 09:37:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id CAD3251BDF0
+	for <lists+openbmc@lfdr.de>; Thu,  5 May 2022 13:23:14 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Kv5By6dj8z3f03
-	for <lists+openbmc@lfdr.de>; Thu,  5 May 2022 17:37:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KvBC455Ccz3bqy
+	for <lists+openbmc@lfdr.de>; Thu,  5 May 2022 21:23:12 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=HjL+/0qW;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=QknI8z5j;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12f;
- helo=mail-lf1-x12f.google.com; envelope-from=medadyoung@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102a;
+ helo=mail-pj1-x102a.google.com; envelope-from=kumarthangavel.hcl@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=HjL+/0qW; dkim-atps=neutral
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com
- [IPv6:2a00:1450:4864:20::12f])
+ header.s=20210112 header.b=QknI8z5j; dkim-atps=neutral
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com
+ [IPv6:2607:f8b0:4864:20::102a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Kv59g4cDZz3cgX
- for <openbmc@lists.ozlabs.org>; Thu,  5 May 2022 17:36:38 +1000 (AEST)
-Received: by mail-lf1-x12f.google.com with SMTP id t25so6079409lfg.7
- for <openbmc@lists.ozlabs.org>; Thu, 05 May 2022 00:36:38 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KvBBg1fBqz3bhF
+ for <openbmc@lists.ozlabs.org>; Thu,  5 May 2022 21:22:50 +1000 (AEST)
+Received: by mail-pj1-x102a.google.com with SMTP id
+ w17-20020a17090a529100b001db302efed6so3822046pjh.4
+ for <openbmc@lists.ozlabs.org>; Thu, 05 May 2022 04:22:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=EvNPzmObJdLQoZe7mkFbV9lZXE5XGs6QumW7oyIXLLg=;
- b=HjL+/0qWmEWMgyiEe4e0unetPVu7pERTINMfTVtGtp3kO1zXtYJRAuyHyPv64jg1bh
- YhLUSfmqysBZuPqmB6XCgmDb2SEY5ocC4kCAPKnGm51CwF0BiD38pNcOyF4A1UoZBD7m
- amtR0IXtpKofD2GGI6cIygG6YvWki3kN90f+MFz/AkjrhMcFhggWvs700Lr13W33NalE
- et2ptnCYotWOX5aLb2Chy4K6L3v76wD2TihnEObTIIsQtnO4rCv/q9TI21gHBTNUmlHI
- 7vgqOmq+Yl4hW020s6SrGYQZ+Az/+DposHcglABsHqAVxtMy21eDhHFXokAo/W2FLMUU
- BCUA==
+ :cc; bh=wuCCOw3la46Rr+/Xh7I2hv3Rnh8Mr0QUR9K85T1OwaE=;
+ b=QknI8z5jpAikSQb46ljln/LwzKaQ4vrwXC9MkwITnqw6kvpidTfmg2FTwFua9NiVM1
+ P8xXAlTnEEsR9l4Ytym2izz9Oiu0VLZ586xAeF9ULD5fA82o56oGDp+q8xG83WkchmIs
+ gSVeGICfh6i5YjBjD+B8Dq8UcyafSxSupqooaBqmzovpH0PMDHJzVTEA1PKq4O4uizw2
+ 5JLqynflU5V64NKbkVOvp1F/z1X0jGUAHvquZuj8cYQOKvzG9p3aT8JBVptd8k+NdSZW
+ ed17zh2i8j+JQ5LIeCsiFRWzyni38kUBMM5jyyknsF+bXn5fQVnozwJdyOEn7kPdeIqt
+ jYgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=EvNPzmObJdLQoZe7mkFbV9lZXE5XGs6QumW7oyIXLLg=;
- b=3pvoqVUdsybdEE9ZCcxlC1Qnve4g7daezG9POj/d3HrFk1BI7BEuiZy9uKvhEj3hJ7
- RU1Apj5T/QiXq3MzMwMq/FCOD1y8daL0mSgToWFO/IhMTMmlPuMvG6aRCt3TPtsx5DZZ
- TB+s0FKKbXQmBTWsx8vTMj5h234jllrUvXgwaXWfaJkBdIoteGN24ihfkVNt666DHdh5
- 7SbALl7ZZr5cqREsO9toe4P83iPBe03d+kfKdzy0Jf3x2xRiDzpA/cyZwC7KH9lGYXC3
- FH558D0yAJ/aW9sKP/xYo+64bw2yIXAMR+sE0WjtFFX1wTMZ29WiSCH8PLpAx283hgRS
- T08A==
-X-Gm-Message-State: AOAM532AN56q11rERTIH4OGqLViKTfYHaVfc0voRGx/n2DqUUi2ifSLK
- wVsohtT0JBckPMHeBwJfRsdOQ6HEIPmOy4HfWIs=
-X-Google-Smtp-Source: ABdhPJzlCwN+zu+ztaxXdspnktpkbaSmCvx647Fl1CfKZFFvfCQpdiXXJZmh6tGGVGJJg0JoGRfpxnCdKl/iqzeKPdA=
-X-Received: by 2002:ac2:42d0:0:b0:471:fc7b:e53a with SMTP id
- n16-20020ac242d0000000b00471fc7be53amr16112040lfl.185.1651736194069; Thu, 05
- May 2022 00:36:34 -0700 (PDT)
+ :message-id:subject:to:cc;
+ bh=wuCCOw3la46Rr+/Xh7I2hv3Rnh8Mr0QUR9K85T1OwaE=;
+ b=STtBmkVpr/NBbX06gVricbhcR2nttPb/hG2Y3GU/RHZvMyBiB4fyC5Khht4bB4cHC4
+ bSDLbBNG7OljXBGJkuwKUgniRa7Ge3nzP3ln57ulwUPp9YDehb+7HnShMWtK/e2AeotC
+ aWEYEoULrEOv9UEiDCKECxfGNhJpPJeSwilB3Zzf8OjVFsvj7Y1SkJ2NounFfNEJQ8nN
+ L3hZmXwT03TSGVIj/fw0IcqhHX45x+P7D76Ki8gqBZAMwpNizIa07bEi28wCGU0MHX7H
+ dvnwsHjJanHJ0RU0g7QLjdggMPjHPY/K4eBGQ5RdMv7/qhs6lAdjAHl7aLfGlfYwqk8M
+ RaHQ==
+X-Gm-Message-State: AOAM533Qx1AqU20iwzJCumkdX59bmbLz+7wstg9U/U2Zys56vZlZactY
+ +z/Gn3eRKwgmK263jv9X5mq8AYm64lCe3Z2u9Ag=
+X-Google-Smtp-Source: ABdhPJwgOgPfYl5BzVmGCctqjb0FoF+lNcayH8mrKupZhzaBaKR9/sLbWZM7oU7QRy9JaAL8uzaYZDsi64Xwx7Bh1wU=
+X-Received: by 2002:a17:903:2cf:b0:151:a932:f1f0 with SMTP id
+ s15-20020a17090302cf00b00151a932f1f0mr27204127plk.130.1651749768047; Thu, 05
+ May 2022 04:22:48 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220503094728.926-1-ctcchien@nuvoton.com>
- <20220503094728.926-4-ctcchien@nuvoton.com>
- <d09f0131-65e2-d382-27b9-29ded4f47d84@molgen.mpg.de>
-In-Reply-To: <d09f0131-65e2-d382-27b9-29ded4f47d84@molgen.mpg.de>
-From: Medad Young <medadyoung@gmail.com>
-Date: Thu, 5 May 2022 15:36:22 +0800
-Message-ID: <CAHpyw9e+d20dVM3PO0UfqvxpTnkvU541ccEa0CGLCZFgjTr8vw@mail.gmail.com>
-Subject: Re: [PATCH v8 3/3] EDAC: nuvoton: Add NPCM memory controller driver
-To: Paul Menzel <pmenzel@molgen.mpg.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+References: <CAA7Tbctgg9YJPTRcYCwkucajTvk-AUNeHJ9_=MD5dpvxF5D0ZA@mail.gmail.com>
+ <20220414004457.GA230974@mauery.jf.intel.com>
+ <CAA7TbcsoBoRvcw_oNA4y_5WhV3z3KX73WMqACiXThJHtjmtUBg@mail.gmail.com>
+ <20220422232456.GA661800@mauery.jf.intel.com>
+ <CAA7Tbctpz6EgJcpYHtRAyWP98Y_hSMn+PCNYX0BKZ=c76sGByQ@mail.gmail.com>
+ <CAA7Tbcu8o6epZ8yMTAPNaJii8K=wUAvo-T0WYUgFab6NtMEk9g@mail.gmail.com>
+ <20220503230433.GA884273@mauery.jf.intel.com>
+ <CAA7TbcuOnorMX_oGbZ15ou7gVyARqFrzvEx4AwRGLPguNB8Eig@mail.gmail.com>
+ <20220504222543.GB884273@mauery.jf.intel.com>
+In-Reply-To: <20220504222543.GB884273@mauery.jf.intel.com>
+From: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
+Date: Thu, 5 May 2022 16:52:36 +0530
+Message-ID: <CAA7TbcuAUptEPFaBTw3=42KizVFEEK5Con3r4j8euKQdmjHddw@mail.gmail.com>
+Subject: Re: IPMI Restriction Mode
+To: Vernon Mauery <vernon.mauery@linux.intel.com>
+Content-Type: multipart/alternative; boundary="0000000000002eafff05de41f67d"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,115 +83,255 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: KWLIU@nuvoton.com, tony.luck@intel.com, rric@kernel.org,
- Benjamin Fair <benjaminfair@google.com>,
- linux-edac <linux-edac@vger.kernel.org>, KFTING <KFTING@nuvoton.com>,
- Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>, JJLIU0@nuvoton.com,
- ctcchien@nuvoton.com, Tali Perry <tali.perry1@gmail.com>,
- devicetree <devicetree@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
- Borislav Petkov <bp@alien8.de>, James Morse <james.morse@arm.com>,
- YSCHU@nuvoton.com, Mauro Carvalho Chehab <mchehab@kernel.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
- Tomer Maimon <tmaimon77@gmail.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, anoo@us.ibm.com,
+ velumanit@hcl.com, velumani.hcl@gmail.com, deepak.kodihalli.83@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Dear Paul,
+--0000000000002eafff05de41f67d
+Content-Type: text/plain; charset="UTF-8"
 
-Paul Menzel <pmenzel@molgen.mpg.de> =E6=96=BC 2022=E5=B9=B45=E6=9C=883=E6=
-=97=A5 =E9=80=B1=E4=BA=8C =E4=B8=8B=E5=8D=885:58=E5=AF=AB=E9=81=93=EF=BC=9A
->
-> Dear Medad,
->
->
-> Thank you for v8.
->
-> Am 03.05.22 um 11:47 schrieb Medad CChien:
-> > Add memory controller support for Nuvoton NPCM SoC.
+Thanks for your suggestions.
+
+--Kumar.
+
+On Thu, May 5, 2022 at 3:55 AM Vernon Mauery <vernon.mauery@linux.intel.com>
+wrote:
+
+> On 04-May-2022 10:27 PM, Kumar Thangavel wrote:
+> >On Wed, May 4, 2022 at 4:34 AM Vernon Mauery <
+> vernon.mauery@linux.intel.com>
+> >wrote:
 > >
-> > Signed-off-by: Medad CChien <ctcchien@nuvoton.com>
-> > Reviewed-by: Borislav Petkov <bp@alien8.de>
-> > Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
-> > Reported-by: kernel test robot <lkp@intel.com>
->
-> This line is confusing.
-
-OK, I will add more description.
-
->
-> > error:
-> >     macro "edac_printk" requires 4 arguments, but only 2 given
+> >> On 03-May-2022 07:46 PM, Kumar Thangavel wrote:
+> >> >Hi Vernon,
+> >> >
+> >> >     We may need to write our own custom filter for other channels as
+> you
+> >> >suggested.
+> >> >     While implementing this, we need some clarifications.
+> >> >
+> >> >     1. How can we map channel Id's with settingsd restriction mode
+> >> >dbus-objects ?
+> >>
+> >> Set up a restriction mode object for each channel? This is really up to
+> >> your implementation.
+> >>
 > >
-> > warnings:
-> >     performing pointer arithmetic on a null pointer has undefined behav=
-ior [-Wnull-pointer-arithmetic]
-> >     logical not is only applied to the left hand side of this bitwise o=
-perator [-Wlogical-not-parentheses]
-> >     mixing declarations and code is a C99 extension [-Wdeclaration-afte=
-r-statement]
+> >    Ack.
 > >
-> > Note:
-> >     you can force an ecc event by writing a string to edac sysfs node
-> >     and remember to define CONFIG_EDAC_DEBUG to enable this feature
-> >     example: force a correctable event on checkcode bit 0
-> >     echo "CE checkcode 0" > /sys/devices/system/edac/mc/mc0/forced_ecc_=
-error
->
-> Shouldn=E2=80=99t this go above all the tags?
-
-Yes, I should move this note above all the tags
-
->
-> > ---
-> >   drivers/edac/Kconfig     |   9 +
-> >   drivers/edac/Makefile    |   1 +
-> >   drivers/edac/npcm_edac.c | 680 ++++++++++++++++++++++++++++++++++++++=
-+
-> >   3 files changed, 690 insertions(+)
-> >   create mode 100644 drivers/edac/npcm_edac.c
+> >>
+> >> >     2. The Ipmb channel has multiple devices in our system, How can we
+> >> >handle and apply this multiple Ipmb interfaces with
+> >> >settingsd restriction mode dbus-objects ?
+> >> >
+> >> >     Please refer below link for multiple Ipmb channels for our system.
+> >> >
+> >>
+> >> When ipmb channel commands come in, there is also rqSA set in the
+> >> ipmi::Context. This should be unique per device. Will this work for you?
+> >>
+> >>     That also works. If we use rqSA, again we need to map this rqSA
+> value
+> >with phosphor-settingsd restriction mode dbus-objects name (
+> >/xyz/openbmc_project/control/*host1*/restriction_mode) ?
 > >
-> > diff --git a/drivers/edac/Kconfig b/drivers/edac/Kconfig
-> > index 58ab63642e72..64149b524f98 100644
-> > --- a/drivers/edac/Kconfig
-> > +++ b/drivers/edac/Kconfig
-> > @@ -539,4 +539,13 @@ config EDAC_DMC520
-> >         Support for error detection and correction on the
-> >         SoCs with ARM DMC-520 DRAM controller.
+> >Alternate logic we just think of
+> >1. Using "hostIdx'' in ipmi::Contextwhich is unique(0, 1, 2 to N) for each
+> >devices. we can map this with phosphor-settingsd restriction mode
+> >dbus-objects name ?  We need to maintain order (0, 1, 2 to N-1) for hosts
+> >and N for debug cards in all configs.
+> >2. Can we read i*pmb-channels.json* entry in ipmid with name field as
+> >"host1", "host2", "host3" "host4" and "debug_card" which should match the
+> >settingsd dbus-object names. ? So that we can map the name field with
+> >settings objects easily.
 > >
-> > +config EDAC_NPCM
-> > +     tristate "Nuvoton NPCM DDR Memory Controller"
-> > +     depends on (ARCH_NPCM || COMPILE_TEST)
-> > +     help
-> > +       Support for error detection and correction on the Nuvoton NPCM =
-DDR
-> > +       memory controller.
+> >  Example :
+> >  Ipmb-channels.json entry :
+> >
+> >{ "name" : "*host1*"
+> >"type": "ipmb",
+> >"slave-path": "/dev/ipmb-1",
+> >"bmc-addr": 32,
+> >"remote-addr": 64,
+> >"devIndex": 0
+> >},
+> >{ "name" : "*host2*"
+> >"type": "ipmb",
+> >"slave-path": "/dev/ipmb-3",
+> >"bmc-addr": 32,
+> >"remote-addr": 64,
+> >"devIndex": 2
+> >},
+> >
+> >{ "name" : "*hostN*"
+> >"type": "ipmb",
+> >"slave-path": "/dev/ipmb-7",
+> >"bmc-addr": 32,
+> >"remote-addr": 64,
+> >"devIndex": N
+> >},
+> >{ "name" : "*debug_card*"
+> >"type": "ipmb",
+> >"slave-path": "/dev/ipmb-13",
+> >"bmc-addr": 32,
+> >"remote-addr": 64,
+> >"devIndex": 4
+> >}
+> >]
+> >
+> >  Settingsd restriction mode objects :
+> >
+> >  /xyz/openbmc_project/control/*debug_card*/restriction_mode
+> >  /xyz/openbmc_project/control/*host1*/restriction_mode
+> >  /xyz/openbmc_project/control/*host2*/restriction_mode
+> >  /xyz/openbmc_project/control/*host3*/restriction_mode
+> >  /xyz/openbmc_project/control/*host3*/restriction_mode
+> >
+> >  Could you please provide your thoughts on this ?
 >
-> Please add a blank line below.
+> I think you can do all of this in your filter code. You can really do
+> just about anything in there. You can have a setup function that gets
+> called when the provider library is loaded and read the file and set up
+> your map. Then when an IPMI function is called you can consult your map
+> and filter however you want.
 >
-> > +       First, ECC must be configured in the BootBlock header. Then, th=
-is driver
-> > +       will expose error counters via the EDAC kernel framework.
-> > +
-> >   endif # EDAC
+> Just be aware that your filter code will run on *every* IPMI call, so do
+> your best to make it streamlined or it will impact performance.
 >
-> [=E2=80=A6]
-> > +module_platform_driver(npcm_edac_mc_driver);
-> > +
-> > +MODULE_AUTHOR("Medad CChien<ctcchien@nuvoton.com>");
+> --Vernon
 >
-> Please add a space before the <.
+>
 
-OK
+--0000000000002eafff05de41f67d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr">Thanks for your suggestions.<div><br></div><div>--Kumar.</=
+div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_at=
+tr">On Thu, May 5, 2022 at 3:55 AM Vernon Mauery &lt;<a href=3D"mailto:vern=
+on.mauery@linux.intel.com">vernon.mauery@linux.intel.com</a>&gt; wrote:<br>=
+</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
+order-left:1px solid rgb(204,204,204);padding-left:1ex">On 04-May-2022 10:2=
+7 PM, Kumar Thangavel wrote:<br>
+&gt;On Wed, May 4, 2022 at 4:34 AM Vernon Mauery &lt;<a href=3D"mailto:vern=
+on.mauery@linux.intel.com" target=3D"_blank">vernon.mauery@linux.intel.com<=
+/a>&gt;<br>
+&gt;wrote:<br>
+&gt;<br>
+&gt;&gt; On 03-May-2022 07:46 PM, Kumar Thangavel wrote:<br>
+&gt;&gt; &gt;Hi Vernon,<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0We may need to write our own custom filter=
+ for other channels as you<br>
+&gt;&gt; &gt;suggested.<br>
+&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0While implementing this, we need some clar=
+ifications.<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A01. How can we map channel Id&#39;s with se=
+ttingsd restriction mode<br>
+&gt;&gt; &gt;dbus-objects ?<br>
+&gt;&gt;<br>
+&gt;&gt; Set up a restriction mode object for each channel? This is really =
+up to<br>
+&gt;&gt; your implementation.<br>
+&gt;&gt;<br>
+&gt;<br>
+&gt;=C2=A0 =C2=A0 Ack.<br>
+&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A02. The Ipmb channel has multiple devices i=
+n our system, How can we<br>
+&gt;&gt; &gt;handle and apply this multiple Ipmb interfaces with<br>
+&gt;&gt; &gt;settingsd restriction mode dbus-objects ?<br>
+&gt;&gt; &gt;<br>
+&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0Please refer below link for multiple Ipmb =
+channels for our system.<br>
+&gt;&gt; &gt;<br>
+&gt;&gt;<br>
+&gt;&gt; When ipmb channel commands come in, there is also rqSA set in the<=
+br>
+&gt;&gt; ipmi::Context. This should be unique per device. Will this work fo=
+r you?<br>
+&gt;&gt;<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0That also works. If we use rqSA, again we need =
+to map this rqSA value<br>
+&gt;with phosphor-settingsd restriction mode dbus-objects name (<br>
+&gt;/xyz/openbmc_project/control/*host1*/restriction_mode) ?<br>
+&gt;<br>
+&gt;Alternate logic we just think of<br>
+&gt;1. Using &quot;hostIdx&#39;&#39; in ipmi::Contextwhich is unique(0, 1, =
+2 to N) for each<br>
+&gt;devices. we can map this with phosphor-settingsd restriction mode<br>
+&gt;dbus-objects name ?=C2=A0 We need to maintain order (0, 1, 2 to N-1) fo=
+r hosts<br>
+&gt;and N for debug cards in all configs.<br>
+&gt;2. Can we read i*pmb-channels.json* entry in ipmid with name field as<b=
+r>
+&gt;&quot;host1&quot;, &quot;host2&quot;, &quot;host3&quot; &quot;host4&quo=
+t; and &quot;debug_card&quot; which should match the<br>
+&gt;settingsd dbus-object names. ? So that we can map the name field with<b=
+r>
+&gt;settings objects easily.<br>
+&gt;<br>
+&gt;=C2=A0 Example :<br>
+&gt;=C2=A0 Ipmb-channels.json entry :<br>
+&gt;<br>
+&gt;{ &quot;name&quot; : &quot;*host1*&quot;<br>
+&gt;&quot;type&quot;: &quot;ipmb&quot;,<br>
+&gt;&quot;slave-path&quot;: &quot;/dev/ipmb-1&quot;,<br>
+&gt;&quot;bmc-addr&quot;: 32,<br>
+&gt;&quot;remote-addr&quot;: 64,<br>
+&gt;&quot;devIndex&quot;: 0<br>
+&gt;},<br>
+&gt;{ &quot;name&quot; : &quot;*host2*&quot;<br>
+&gt;&quot;type&quot;: &quot;ipmb&quot;,<br>
+&gt;&quot;slave-path&quot;: &quot;/dev/ipmb-3&quot;,<br>
+&gt;&quot;bmc-addr&quot;: 32,<br>
+&gt;&quot;remote-addr&quot;: 64,<br>
+&gt;&quot;devIndex&quot;: 2<br>
+&gt;},<br>
+&gt;<br>
+&gt;{ &quot;name&quot; : &quot;*hostN*&quot;<br>
+&gt;&quot;type&quot;: &quot;ipmb&quot;,<br>
+&gt;&quot;slave-path&quot;: &quot;/dev/ipmb-7&quot;,<br>
+&gt;&quot;bmc-addr&quot;: 32,<br>
+&gt;&quot;remote-addr&quot;: 64,<br>
+&gt;&quot;devIndex&quot;: N<br>
+&gt;},<br>
+&gt;{ &quot;name&quot; : &quot;*debug_card*&quot;<br>
+&gt;&quot;type&quot;: &quot;ipmb&quot;,<br>
+&gt;&quot;slave-path&quot;: &quot;/dev/ipmb-13&quot;,<br>
+&gt;&quot;bmc-addr&quot;: 32,<br>
+&gt;&quot;remote-addr&quot;: 64,<br>
+&gt;&quot;devIndex&quot;: 4<br>
+&gt;}<br>
+&gt;]<br>
+&gt;<br>
+&gt;=C2=A0 Settingsd restriction mode objects :<br>
+&gt;<br>
+&gt;=C2=A0 /xyz/openbmc_project/control/*debug_card*/restriction_mode<br>
+&gt;=C2=A0 /xyz/openbmc_project/control/*host1*/restriction_mode<br>
+&gt;=C2=A0 /xyz/openbmc_project/control/*host2*/restriction_mode<br>
+&gt;=C2=A0 /xyz/openbmc_project/control/*host3*/restriction_mode<br>
+&gt;=C2=A0 /xyz/openbmc_project/control/*host3*/restriction_mode<br>
+&gt;<br>
+&gt;=C2=A0 Could you please provide your thoughts on this ?<br>
+<br>
+I think you can do all of this in your filter code. You can really do <br>
+just about anything in there. You can have a setup function that gets <br>
+called when the provider library is loaded and read the file and set up <br=
 >
-> > +MODULE_DESCRIPTION("Nuvoton NPCM EDAC Driver");
-> > +MODULE_LICENSE("GPL v2");
+your map. Then when an IPMI function is called you can consult your map <br=
 >
->
-> Kind regards,
->
-> Paul
+and filter however you want.<br>
+<br>
+Just be aware that your filter code will run on *every* IPMI call, so do <b=
+r>
+your best to make it streamlined or it will impact performance.<br>
+<br>
+--Vernon<br>
+<br>
+</blockquote></div>
 
-B.R.
-Medad
+--0000000000002eafff05de41f67d--
