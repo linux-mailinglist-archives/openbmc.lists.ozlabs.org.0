@@ -2,76 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CAD3251BDF0
-	for <lists+openbmc@lfdr.de>; Thu,  5 May 2022 13:23:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CFB651BED4
+	for <lists+openbmc@lfdr.de>; Thu,  5 May 2022 14:05:55 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KvBC455Ccz3bqy
-	for <lists+openbmc@lfdr.de>; Thu,  5 May 2022 21:23:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KvC8K49rmz3bcm
+	for <lists+openbmc@lfdr.de>; Thu,  5 May 2022 22:05:53 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=QknI8z5j;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=MC2c9NhE;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102a;
- helo=mail-pj1-x102a.google.com; envelope-from=kumarthangavel.hcl@gmail.com;
+ smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1;
+ helo=dfw.source.kernel.org; envelope-from=broonie@kernel.org;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=QknI8z5j; dkim-atps=neutral
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com
- [IPv6:2607:f8b0:4864:20::102a])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=MC2c9NhE; 
+ dkim-atps=neutral
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [IPv6:2604:1380:4641:c500::1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KvBBg1fBqz3bhF
- for <openbmc@lists.ozlabs.org>; Thu,  5 May 2022 21:22:50 +1000 (AEST)
-Received: by mail-pj1-x102a.google.com with SMTP id
- w17-20020a17090a529100b001db302efed6so3822046pjh.4
- for <openbmc@lists.ozlabs.org>; Thu, 05 May 2022 04:22:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=wuCCOw3la46Rr+/Xh7I2hv3Rnh8Mr0QUR9K85T1OwaE=;
- b=QknI8z5jpAikSQb46ljln/LwzKaQ4vrwXC9MkwITnqw6kvpidTfmg2FTwFua9NiVM1
- P8xXAlTnEEsR9l4Ytym2izz9Oiu0VLZ586xAeF9ULD5fA82o56oGDp+q8xG83WkchmIs
- gSVeGICfh6i5YjBjD+B8Dq8UcyafSxSupqooaBqmzovpH0PMDHJzVTEA1PKq4O4uizw2
- 5JLqynflU5V64NKbkVOvp1F/z1X0jGUAHvquZuj8cYQOKvzG9p3aT8JBVptd8k+NdSZW
- ed17zh2i8j+JQ5LIeCsiFRWzyni38kUBMM5jyyknsF+bXn5fQVnozwJdyOEn7kPdeIqt
- jYgQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=wuCCOw3la46Rr+/Xh7I2hv3Rnh8Mr0QUR9K85T1OwaE=;
- b=STtBmkVpr/NBbX06gVricbhcR2nttPb/hG2Y3GU/RHZvMyBiB4fyC5Khht4bB4cHC4
- bSDLbBNG7OljXBGJkuwKUgniRa7Ge3nzP3ln57ulwUPp9YDehb+7HnShMWtK/e2AeotC
- aWEYEoULrEOv9UEiDCKECxfGNhJpPJeSwilB3Zzf8OjVFsvj7Y1SkJ2NounFfNEJQ8nN
- L3hZmXwT03TSGVIj/fw0IcqhHX45x+P7D76Ki8gqBZAMwpNizIa07bEi28wCGU0MHX7H
- dvnwsHjJanHJ0RU0g7QLjdggMPjHPY/K4eBGQ5RdMv7/qhs6lAdjAHl7aLfGlfYwqk8M
- RaHQ==
-X-Gm-Message-State: AOAM533Qx1AqU20iwzJCumkdX59bmbLz+7wstg9U/U2Zys56vZlZactY
- +z/Gn3eRKwgmK263jv9X5mq8AYm64lCe3Z2u9Ag=
-X-Google-Smtp-Source: ABdhPJwgOgPfYl5BzVmGCctqjb0FoF+lNcayH8mrKupZhzaBaKR9/sLbWZM7oU7QRy9JaAL8uzaYZDsi64Xwx7Bh1wU=
-X-Received: by 2002:a17:903:2cf:b0:151:a932:f1f0 with SMTP id
- s15-20020a17090302cf00b00151a932f1f0mr27204127plk.130.1651749768047; Thu, 05
- May 2022 04:22:48 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KvC7s6K7cz2yWn
+ for <openbmc@lists.ozlabs.org>; Thu,  5 May 2022 22:05:29 +1000 (AEST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 8DC4A615BD;
+ Thu,  5 May 2022 12:05:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5618C385A8;
+ Thu,  5 May 2022 12:05:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1651752326;
+ bh=YOSvkdiD9YeJgj4aRLVreDoeI4SdaGNCAtWBB3qrsZo=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=MC2c9NhE+Pp2MlVr3eXkpI9xcJh1KF7xIr04oUTt6jPiN4MhfDWrvX4CmOp/8DIkx
+ 6lLS9h6njGu+8KOSenAdgP5CoTDXKWtmfFqjh4LLgii3NS7DVLesGnm9Gs7r9ymxic
+ g0DNA2Dz3sfBQAJ7NYg0FcGyPHC54ylRSMHbAtZo8btjuEaXYeSXqK6KkY/t8J6ZbT
+ WPc4AabJ9vePARuVBWs1TjOjVg1JPToqG8IyIEdHtf8h0UHcYYTtljfxsDoZqmFH6M
+ hNBQRcMltqpyX/xHW8zQKpLnymUyV8sXagxEvYa8dlASeDdK2OsxqiHFp6goiTffCW
+ iNDW434jhq2zw==
+Date: Thu, 5 May 2022 13:05:19 +0100
+From: Mark Brown <broonie@kernel.org>
+To: Zev Weiss <zev@bewilderbeest.net>
+Subject: Re: [PATCH 2/6] dt-bindings: regulator: Add reg-external-output
+ binding
+Message-ID: <YnO9fxkuk6AnEhLl@sirena.org.uk>
+References: <20220504065252.6955-1-zev@bewilderbeest.net>
+ <20220504065252.6955-2-zev@bewilderbeest.net>
+ <YnJ32bG4IkSrRtHV@sirena.org.uk>
+ <YnLjNn9WVhvd4izZ@hatter.bewilderbeest.net>
+ <YnLmyHwMGnRL18LD@sirena.org.uk>
+ <YnLxjJI8Vu3LqAnL@hatter.bewilderbeest.net>
 MIME-Version: 1.0
-References: <CAA7Tbctgg9YJPTRcYCwkucajTvk-AUNeHJ9_=MD5dpvxF5D0ZA@mail.gmail.com>
- <20220414004457.GA230974@mauery.jf.intel.com>
- <CAA7TbcsoBoRvcw_oNA4y_5WhV3z3KX73WMqACiXThJHtjmtUBg@mail.gmail.com>
- <20220422232456.GA661800@mauery.jf.intel.com>
- <CAA7Tbctpz6EgJcpYHtRAyWP98Y_hSMn+PCNYX0BKZ=c76sGByQ@mail.gmail.com>
- <CAA7Tbcu8o6epZ8yMTAPNaJii8K=wUAvo-T0WYUgFab6NtMEk9g@mail.gmail.com>
- <20220503230433.GA884273@mauery.jf.intel.com>
- <CAA7TbcuOnorMX_oGbZ15ou7gVyARqFrzvEx4AwRGLPguNB8Eig@mail.gmail.com>
- <20220504222543.GB884273@mauery.jf.intel.com>
-In-Reply-To: <20220504222543.GB884273@mauery.jf.intel.com>
-From: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
-Date: Thu, 5 May 2022 16:52:36 +0530
-Message-ID: <CAA7TbcuAUptEPFaBTw3=42KizVFEEK5Con3r4j8euKQdmjHddw@mail.gmail.com>
-Subject: Re: IPMI Restriction Mode
-To: Vernon Mauery <vernon.mauery@linux.intel.com>
-Content-Type: multipart/alternative; boundary="0000000000002eafff05de41f67d"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="7moZXgHmwiy4vUEp"
+Content-Disposition: inline
+In-Reply-To: <YnLxjJI8Vu3LqAnL@hatter.bewilderbeest.net>
+X-Cookie: Real programs don't eat cache.
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,255 +72,62 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, anoo@us.ibm.com,
- velumanit@hcl.com, velumani.hcl@gmail.com, deepak.kodihalli.83@gmail.com
+Cc: devicetree@vger.kernel.org, Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ openbmc@lists.ozlabs.org, Liam Girdwood <lgirdwood@gmail.com>,
+ linux-kernel@vger.kernel.org, Chanwoo Choi <cw00.choi@samsung.com>,
+ Rob Herring <robh+dt@kernel.org>, MyungJoo Ham <myungjoo.ham@samsung.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000002eafff05de41f67d
-Content-Type: text/plain; charset="UTF-8"
 
-Thanks for your suggestions.
+--7moZXgHmwiy4vUEp
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
---Kumar.
+On Wed, May 04, 2022 at 02:35:08PM -0700, Zev Weiss wrote:
+> On Wed, May 04, 2022 at 01:49:12PM PDT, Mark Brown wrote:
 
-On Thu, May 5, 2022 at 3:55 AM Vernon Mauery <vernon.mauery@linux.intel.com>
-wrote:
+> > For example if the output comes out on a socket then that socket should
+> > be described.
 
-> On 04-May-2022 10:27 PM, Kumar Thangavel wrote:
-> >On Wed, May 4, 2022 at 4:34 AM Vernon Mauery <
-> vernon.mauery@linux.intel.com>
-> >wrote:
-> >
-> >> On 03-May-2022 07:46 PM, Kumar Thangavel wrote:
-> >> >Hi Vernon,
-> >> >
-> >> >     We may need to write our own custom filter for other channels as
-> you
-> >> >suggested.
-> >> >     While implementing this, we need some clarifications.
-> >> >
-> >> >     1. How can we map channel Id's with settingsd restriction mode
-> >> >dbus-objects ?
-> >>
-> >> Set up a restriction mode object for each channel? This is really up to
-> >> your implementation.
-> >>
-> >
-> >    Ack.
-> >
-> >>
-> >> >     2. The Ipmb channel has multiple devices in our system, How can we
-> >> >handle and apply this multiple Ipmb interfaces with
-> >> >settingsd restriction mode dbus-objects ?
-> >> >
-> >> >     Please refer below link for multiple Ipmb channels for our system.
-> >> >
-> >>
-> >> When ipmb channel commands come in, there is also rqSA set in the
-> >> ipmi::Context. This should be unique per device. Will this work for you?
-> >>
-> >>     That also works. If we use rqSA, again we need to map this rqSA
-> value
-> >with phosphor-settingsd restriction mode dbus-objects name (
-> >/xyz/openbmc_project/control/*host1*/restriction_mode) ?
-> >
-> >Alternate logic we just think of
-> >1. Using "hostIdx'' in ipmi::Contextwhich is unique(0, 1, 2 to N) for each
-> >devices. we can map this with phosphor-settingsd restriction mode
-> >dbus-objects name ?  We need to maintain order (0, 1, 2 to N-1) for hosts
-> >and N for debug cards in all configs.
-> >2. Can we read i*pmb-channels.json* entry in ipmid with name field as
-> >"host1", "host2", "host3" "host4" and "debug_card" which should match the
-> >settingsd dbus-object names. ? So that we can map the name field with
-> >settings objects easily.
-> >
-> >  Example :
-> >  Ipmb-channels.json entry :
-> >
-> >{ "name" : "*host1*"
-> >"type": "ipmb",
-> >"slave-path": "/dev/ipmb-1",
-> >"bmc-addr": 32,
-> >"remote-addr": 64,
-> >"devIndex": 0
-> >},
-> >{ "name" : "*host2*"
-> >"type": "ipmb",
-> >"slave-path": "/dev/ipmb-3",
-> >"bmc-addr": 32,
-> >"remote-addr": 64,
-> >"devIndex": 2
-> >},
-> >
-> >{ "name" : "*hostN*"
-> >"type": "ipmb",
-> >"slave-path": "/dev/ipmb-7",
-> >"bmc-addr": 32,
-> >"remote-addr": 64,
-> >"devIndex": N
-> >},
-> >{ "name" : "*debug_card*"
-> >"type": "ipmb",
-> >"slave-path": "/dev/ipmb-13",
-> >"bmc-addr": 32,
-> >"remote-addr": 64,
-> >"devIndex": 4
-> >}
-> >]
-> >
-> >  Settingsd restriction mode objects :
-> >
-> >  /xyz/openbmc_project/control/*debug_card*/restriction_mode
-> >  /xyz/openbmc_project/control/*host1*/restriction_mode
-> >  /xyz/openbmc_project/control/*host2*/restriction_mode
-> >  /xyz/openbmc_project/control/*host3*/restriction_mode
-> >  /xyz/openbmc_project/control/*host3*/restriction_mode
-> >
-> >  Could you please provide your thoughts on this ?
->
-> I think you can do all of this in your filter code. You can really do
-> just about anything in there. You can have a setup function that gets
-> called when the provider library is loaded and read the file and set up
-> your map. Then when an IPMI function is called you can consult your map
-> and filter however you want.
->
-> Just be aware that your filter code will run on *every* IPMI call, so do
-> your best to make it streamlined or it will impact performance.
->
-> --Vernon
->
->
+> Okay -- in the case of an Open19 power shelf like the ahe-50dc, there are 50
+> instances of this, 48 of which are in four ganged connectors each with 12
+> pairs of pins, but two of which have their own dedicated little individual
+> sockets.  The connectors are physically different, but they're all identical
+> as far as software is concerned, so I'm not clear on why it would need to be
+> expressed in any DT properties or the like.  Or did you just mean
+> explanatory free-form text in the description field?
 
---0000000000002eafff05de41f67d
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Explanatory description would be one example of something that should be
+described, yes - if there is control for switching the supplies on and
+off the user is going to need to be able to figure out which software
+control corresponds to which physical connection.  Other devices may
+have more things that need autoamtion (eg, jack detection).
 
-<div dir=3D"ltr">Thanks for your suggestions.<div><br></div><div>--Kumar.</=
-div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_at=
-tr">On Thu, May 5, 2022 at 3:55 AM Vernon Mauery &lt;<a href=3D"mailto:vern=
-on.mauery@linux.intel.com">vernon.mauery@linux.intel.com</a>&gt; wrote:<br>=
-</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;b=
-order-left:1px solid rgb(204,204,204);padding-left:1ex">On 04-May-2022 10:2=
-7 PM, Kumar Thangavel wrote:<br>
-&gt;On Wed, May 4, 2022 at 4:34 AM Vernon Mauery &lt;<a href=3D"mailto:vern=
-on.mauery@linux.intel.com" target=3D"_blank">vernon.mauery@linux.intel.com<=
-/a>&gt;<br>
-&gt;wrote:<br>
-&gt;<br>
-&gt;&gt; On 03-May-2022 07:46 PM, Kumar Thangavel wrote:<br>
-&gt;&gt; &gt;Hi Vernon,<br>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0We may need to write our own custom filter=
- for other channels as you<br>
-&gt;&gt; &gt;suggested.<br>
-&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0While implementing this, we need some clar=
-ifications.<br>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A01. How can we map channel Id&#39;s with se=
-ttingsd restriction mode<br>
-&gt;&gt; &gt;dbus-objects ?<br>
-&gt;&gt;<br>
-&gt;&gt; Set up a restriction mode object for each channel? This is really =
-up to<br>
-&gt;&gt; your implementation.<br>
-&gt;&gt;<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 Ack.<br>
-&gt;<br>
-&gt;&gt;<br>
-&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A02. The Ipmb channel has multiple devices i=
-n our system, How can we<br>
-&gt;&gt; &gt;handle and apply this multiple Ipmb interfaces with<br>
-&gt;&gt; &gt;settingsd restriction mode dbus-objects ?<br>
-&gt;&gt; &gt;<br>
-&gt;&gt; &gt;=C2=A0 =C2=A0 =C2=A0Please refer below link for multiple Ipmb =
-channels for our system.<br>
-&gt;&gt; &gt;<br>
-&gt;&gt;<br>
-&gt;&gt; When ipmb channel commands come in, there is also rqSA set in the<=
-br>
-&gt;&gt; ipmi::Context. This should be unique per device. Will this work fo=
-r you?<br>
-&gt;&gt;<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0That also works. If we use rqSA, again we need =
-to map this rqSA value<br>
-&gt;with phosphor-settingsd restriction mode dbus-objects name (<br>
-&gt;/xyz/openbmc_project/control/*host1*/restriction_mode) ?<br>
-&gt;<br>
-&gt;Alternate logic we just think of<br>
-&gt;1. Using &quot;hostIdx&#39;&#39; in ipmi::Contextwhich is unique(0, 1, =
-2 to N) for each<br>
-&gt;devices. we can map this with phosphor-settingsd restriction mode<br>
-&gt;dbus-objects name ?=C2=A0 We need to maintain order (0, 1, 2 to N-1) fo=
-r hosts<br>
-&gt;and N for debug cards in all configs.<br>
-&gt;2. Can we read i*pmb-channels.json* entry in ipmid with name field as<b=
-r>
-&gt;&quot;host1&quot;, &quot;host2&quot;, &quot;host3&quot; &quot;host4&quo=
-t; and &quot;debug_card&quot; which should match the<br>
-&gt;settingsd dbus-object names. ? So that we can map the name field with<b=
-r>
-&gt;settings objects easily.<br>
-&gt;<br>
-&gt;=C2=A0 Example :<br>
-&gt;=C2=A0 Ipmb-channels.json entry :<br>
-&gt;<br>
-&gt;{ &quot;name&quot; : &quot;*host1*&quot;<br>
-&gt;&quot;type&quot;: &quot;ipmb&quot;,<br>
-&gt;&quot;slave-path&quot;: &quot;/dev/ipmb-1&quot;,<br>
-&gt;&quot;bmc-addr&quot;: 32,<br>
-&gt;&quot;remote-addr&quot;: 64,<br>
-&gt;&quot;devIndex&quot;: 0<br>
-&gt;},<br>
-&gt;{ &quot;name&quot; : &quot;*host2*&quot;<br>
-&gt;&quot;type&quot;: &quot;ipmb&quot;,<br>
-&gt;&quot;slave-path&quot;: &quot;/dev/ipmb-3&quot;,<br>
-&gt;&quot;bmc-addr&quot;: 32,<br>
-&gt;&quot;remote-addr&quot;: 64,<br>
-&gt;&quot;devIndex&quot;: 2<br>
-&gt;},<br>
-&gt;<br>
-&gt;{ &quot;name&quot; : &quot;*hostN*&quot;<br>
-&gt;&quot;type&quot;: &quot;ipmb&quot;,<br>
-&gt;&quot;slave-path&quot;: &quot;/dev/ipmb-7&quot;,<br>
-&gt;&quot;bmc-addr&quot;: 32,<br>
-&gt;&quot;remote-addr&quot;: 64,<br>
-&gt;&quot;devIndex&quot;: N<br>
-&gt;},<br>
-&gt;{ &quot;name&quot; : &quot;*debug_card*&quot;<br>
-&gt;&quot;type&quot;: &quot;ipmb&quot;,<br>
-&gt;&quot;slave-path&quot;: &quot;/dev/ipmb-13&quot;,<br>
-&gt;&quot;bmc-addr&quot;: 32,<br>
-&gt;&quot;remote-addr&quot;: 64,<br>
-&gt;&quot;devIndex&quot;: 4<br>
-&gt;}<br>
-&gt;]<br>
-&gt;<br>
-&gt;=C2=A0 Settingsd restriction mode objects :<br>
-&gt;<br>
-&gt;=C2=A0 /xyz/openbmc_project/control/*debug_card*/restriction_mode<br>
-&gt;=C2=A0 /xyz/openbmc_project/control/*host1*/restriction_mode<br>
-&gt;=C2=A0 /xyz/openbmc_project/control/*host2*/restriction_mode<br>
-&gt;=C2=A0 /xyz/openbmc_project/control/*host3*/restriction_mode<br>
-&gt;=C2=A0 /xyz/openbmc_project/control/*host3*/restriction_mode<br>
-&gt;<br>
-&gt;=C2=A0 Could you please provide your thoughts on this ?<br>
-<br>
-I think you can do all of this in your filter code. You can really do <br>
-just about anything in there. You can have a setup function that gets <br>
-called when the provider library is loaded and read the file and set up <br=
->
-your map. Then when an IPMI function is called you can consult your map <br=
->
-and filter however you want.<br>
-<br>
-Just be aware that your filter code will run on *every* IPMI call, so do <b=
-r>
-your best to make it streamlined or it will impact performance.<br>
-<br>
---Vernon<br>
-<br>
-</blockquote></div>
+> > Sure, but there's no reason why it can't scale down to something
+> > simpler.  It's easier to support something simpler than have to extend
+> > to support something more complicated.
 
---0000000000002eafff05de41f67d--
+> Alright, so would you suggest creating something like
+> drivers/extcon/extcon-regulator-output.c, and just having its extcon
+> functionality be something of a stub for now?
+
+I'm not super familiar with extcon but that seems plausible.
+
+--7moZXgHmwiy4vUEp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmJzvX8ACgkQJNaLcl1U
+h9A8UAf/fie/0qtJtkcTIuxOavIxjrhnkZVoXgVXIZQkG30kKpFcFusvyLn7WqXr
+gpDsmSfB5Z2Eg2pd6Vqx58Gst7G7sDnZJt5O7PubZzenBQCMkyiWZiyqc5Rufp9F
+vtG6Zfsj1xhkkmZiXuuLuoDm+xLqFTuybFX0WiFCyis5gqvJdMnESUYcxrAhqafh
+YnxdpGueFPqxO/tT8kXNrt62bk5xZ1VpJDtesx1FvQ/tGj1I0alTPs30SRrNRNyc
+UkYI4t+wLyPh/NGIukqN+yzllWgjjHM7LCMnAM+VyM9vMtNunlRtx/M+T4E8K1b3
+j4fLzaFv8XLddtp/924vcwv2ZG/nnw==
+=k/3z
+-----END PGP SIGNATURE-----
+
+--7moZXgHmwiy4vUEp--
