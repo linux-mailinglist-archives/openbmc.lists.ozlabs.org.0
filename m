@@ -2,76 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7CAB851F0E0
-	for <lists+openbmc@lfdr.de>; Sun,  8 May 2022 21:47:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 483C451F0DC
+	for <lists+openbmc@lfdr.de>; Sun,  8 May 2022 21:46:04 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KxFFy39RGz3bff
-	for <lists+openbmc@lfdr.de>; Mon,  9 May 2022 05:47:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KxFCt1HYZz3c8t
+	for <lists+openbmc@lfdr.de>; Mon,  9 May 2022 05:46:02 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=JsMF/b6z;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=Tbtd0oOd;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
  spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net
- (client-ip=212.227.17.21; helo=mout.gmx.net;
+ (client-ip=212.227.17.22; helo=mout.gmx.net;
  envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256
- header.s=badeba3b8450 header.b=JsMF/b6z; 
+ header.s=badeba3b8450 header.b=Tbtd0oOd; 
  dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest
  SHA256) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KxFB25B9dz3bd4
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KxFB25G76z3bd9
  for <openbmc@lists.ozlabs.org>; Mon,  9 May 2022 05:44:24 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
- s=badeba3b8450; t=1652039025;
- bh=n76/hLRRaMIrLkiSBCnvLg8F9/bppo8blXTP7lMhyu8=;
+ s=badeba3b8450; t=1652039027;
+ bh=XVfOBublJT697s4b334rAe6W/GabYUlUTBRHBuTBhbk=;
  h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
- b=JsMF/b6z2Skbt7dmEjaQFgi6n9aqnm+yZEXi1SShVosusMlDmprqtCk7KYMW+xJGh
- Kzzk9IFiSm7haSLwph0ncQnntmtHe5hKRPQh+fH6h58KpHinu+tm6JFvzfa+G0M5us
- Vf7GANO/ublwGjiAzpZccFqkGZMm1bd0N7eyaHJI=
+ b=Tbtd0oOdkMsDXF1n3Ux0ph2RxJiqyYb0tDY6P++BmhN/e+iznGvekhTOLxOzVjlT4
+ igmUWjro1WUZHg1O3GobuQXl0BpDFZpHh+RzHq+mWs93r8mllPLNSgLuc78oVS0MTA
+ GoHI1D2jI1TjKTaS1G6BElFwn6Rtoo0LjwXgEf2s=
 X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
 Received: from longitude ([37.201.215.103]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MWzfl-1nH8hM1DHl-00XIKc; Sun, 08
- May 2022 21:43:45 +0200
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1N8ofO-1nu3cK3CBq-015oXV; Sun, 08
+ May 2022 21:43:46 +0200
 From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 To: linux-clk@vger.kernel.org,
 	openbmc@lists.ozlabs.org
-Subject: [PATCH v3 2/7] clocksource: timer-npcm7xx: Enable timer 1 clock
- before use
-Date: Sun,  8 May 2022 21:43:27 +0200
-Message-Id: <20220508194333.2170161-3-j.neuschaefer@gmx.net>
+Subject: [PATCH v3 3/7] watchdog: npcm: Enable clock if provided
+Date: Sun,  8 May 2022 21:43:28 +0200
+Message-Id: <20220508194333.2170161-4-j.neuschaefer@gmx.net>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220508194333.2170161-1-j.neuschaefer@gmx.net>
 References: <20220508194333.2170161-1-j.neuschaefer@gmx.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:pWq1JPNigWSSaZHAqUAune7+HNV0oDFRi3ixapHifQJW0Vw3bl/
- ZoyJWWix1P1YxeKAny6kOHF4FsWecJhiDo5Op2QjeFM+JDOeeYyzhycm3Hw/owLu+uB7wj/
- VLvVbzMZeQ9vIrhVFIlFCv/3JfTOULSFwDy3qoDCRrYVsVipPTVfSv+YfbSTYkNyvE0TRd3
- UzseGXZwNwnHRnzeqk74Q==
+X-Provags-ID: V03:K1:vzkFSMPPiFMDmjP7Vq0zkUC7L1qOOrUXx77prPxKxM5JG7X5Bw1
+ 6failCDgS4gKXyhQaublZGP7D3tqW6fJyFX+9hLCjc4rpt4Yr9g0gzqZfWifABWCas2Wndz
+ sjZOvqDUULn6wEzEb12IPa41+sDFls2w5G8n4cfH2kYLUF2O5u7/oj7N3wEijQ9tGuI0Bgj
+ 2hgBVc30Qr2xnLxdevVRA==
 X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:9SqJwJa9skw=:TtwrXU+6EBNvKZjWzfmS89
- Op3XOyAcftg/gHGbODC7HSllJCQpDC4Q6PGOTYQsPRxJXHQakAPqqg1f0SD1KV+oePCXNTgYf
- L2CsSSYunb75A1sOVWh287HuaW8PsMNscNn5caV/yZ2Yvs8c9zUth8DWjfk+3v4guVXxkw9Ht
- H37inUOmOpm5ryEzdTiaFbSk2EtggvmfDAXi2m2kzxYjW54dXAF2dd0ly+MYezDoST4aVEMjj
- 0Rg4/8lp4FlmvVL1GtmGW9dIcAAAxO1Zn4hXmKKwsmkq9+R8FOAUlyPVu0wLJ/XHENWR4q4t0
- bmzvxRE78a47zxKMe7qZMUGl8mS+wmPExe4HqCfL9Bq4Y/i1JdaQB1n58fahr0p90AdIyUsAh
- 6AUc8ZlTc9c82fexYbiigJpo+IB+m5pnGPK2pUP+Z8xNC7Yixminpqm3ZKTHDL9B6Z04yRuxF
- eqoPCuxO17cKZ8k2D5g7gXiqz9DrlfhQEeWzjRRwEJZXbHcu994oU8zlaffRRYCDZUwZPgMHp
- PIi8g6IfWxMHqHjhSAbn4dYEEasd4DlIkfqCsWEKbYj/Ts65v2q3xAAHeo41XiBPflBCWO1+d
- f8sfLZqyTi8K0WhsiDmRlIcWGyi1U4BqL+UuwlIpZMGiEQ6bT2a99QU8smbictQWGntTrWYDM
- vyhk4/T02WVt69YxD7GtcaDqzAbEsQFdz+Lvi/Lufkkn+qLfa44pysndmuGhGcQ9CEHuUqtkq
- 34ybixg9Mb7U9OiKBrODAltqZ2nJhxr1ZzMWgUBJgNfsj9WsfIuD2VhSO2/nFdSQe+MnvWTh8
- YD8cFADF+QJnsS+rPo7h4bBFdmPQh3X8uC5j43xasIZawB/Sx5bXpLiucqjgZVs4ij8JSpR7M
- YaNfTJi9hKV2/CeFnRj43RUsRZ7DvNV/KR7PxTE1lHSJ22nS8fLyp2HdMUv34wBo7Wyo9ri3B
- mT2Mag489GvzYFH4uOrKxK/y9W5KAVd6pSBKia123ORKtbX0b1rzdEMrRST9gIFr2c2xdqo3+
- hYPbmoy/Ptem282D/WFggiKkkgtaLs3B+4Lil3tRlwsDyvd0K4qofFScheSdTXvj9+OsXnVsG
- 4NGl0QfWIdGqXA=
+X-UI-Out-Filterresults: notjunk:1;V03:K0:zl9at1OVUvw=:DHCHsKZqeDHrG2eeIxE8MF
+ 4qykzY0abfuq0Nkh5diTE0IlRkrYeqRBk4630PBA6ruBHDa+Ezxa+ot4w4lgE33zPIyNnzJ3D
+ dTgHMGKzj/TNLRLTx1B+IJvHoh1sY1RCogaNWJ/Pgi3y5Wd4Iffv/9mUGLb3pW4RK81+q6YTK
+ YY9iPL5F3pX7DQrO/xJkWme/oUAwJP049gm74EBn4LKnV1rP54dBRhQTj0stCHXbZ8aCY8gYc
+ v+89X6RltU5Ptb2Wplvt99sdnEyb85zS3lw57Hl5Z2hkAxRKmy/tBpt72WWGmtjZRWT/fkAPM
+ TZtomYXwpNTdtRl94Pyv0/HmkIMSA4L4jyNGsB3drYBol3oyyJ/4niEfLXlFgKHT4lzeO1MHM
+ j9qk1YSMlEx2v7KgVvluc/x3vyoj/pcbLHdkL0xkoEunfPrfyWsxwQU5C87K9H2Y9GoE/Hhcj
+ Gepabk1f5e1dxVFrAvHpxwyCV1/0G4NxjvOSqZqXN//P+uEm3SLlnOmldfKNOtdlLakHrghc1
+ H8hnJS1BAOhZwpnAEer3KlxPQqHkY6zAHs4Fldia/ANUy9viBMrqaclFJsRNO7fzEoyX6N73f
+ af9xtZdr4ZbMf4WwzO9q2VGJg5h+Im0ILjUqgYgoA/JbzQBSire9ErIEo9J7TVxWa4hEuqVxF
+ wrmhCChpMAMlbRqg9XbsID3FQoGPSZIBWgbBt0PrE8ntkr6yGlcyC9ezBxoIG6XowiLHivzG3
+ 0KxC2DBXJ2pGwWLjXjwafwGCF/d3S4bfVe8f5XuLIZ0p2tFyC32Bgt5ZlpU3CmvcNg4gitiB9
+ r3nVhoqycmtQ0bs7fgyryAZUAxNw5dmJ4Bp9hl196irU/Fdy6a1zwH8JfUPB4XQ4OHCVG8YQw
+ 05NoycP93i789V7ZzsaZiS5o5SBXCfx6OFBF0sIgNwJqKxxDyQo7RY0sRcOf8TzSNEEURmlw4
+ oXiH8aqVL4yvLfIYhfclXD1zZzjV2YMiM5dd77brc30OBr09C7oe/iYeOP6eV6tFHMa/29MCp
+ mrXYnCy+yaAY4f49g9PWbpiQ5E6c55GInx41N2637GQAekCA81AeHcb8d4lUb6X0574Gg1DeH
+ hm/fEOJSKndp18=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,55 +97,99 @@ Cc: devicetree@vger.kernel.org, Wim Van Sebroeck <wim@linux-watchdog.org>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-In the WPCM450 SoC, the clocks for each timer can be gated individually.
-To prevent the timer 1 clock from being gated, enable it explicitly.
+On the Nuvoton WPCM450 SoC, with its upcoming clock driver, peripheral
+clocks are individually gated and ungated. Therefore, the watchdog
+driver must be able to ungate the watchdog clock.
 
 Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
 =2D--
 
 v3:
-- no changes
+- Add enable/disable calls to npcm_wdt_restart handler
+- Not applied due to the above change:  Acked-by: Guenter Roeck <linux@roe=
+ck-us.net>
 
 v2:
-- Provide context in pr_warn message
+- https://lore.kernel.org/lkml/20220429172030.398011-4-j.neuschaefer@gmx.n=
+et/
+- Add clk_disable_unprepare call, suggested by Guenter Roeck
 
 v1:
-- https://lore.kernel.org/lkml/20220422183012.444674-3-j.neuschaefer@gmx.n=
+- https://lore.kernel.org/lkml/20220422183012.444674-4-j.neuschaefer@gmx.n=
 et/
 =2D--
- drivers/clocksource/timer-npcm7xx.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/watchdog/npcm_wdt.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
-diff --git a/drivers/clocksource/timer-npcm7xx.c b/drivers/clocksource/tim=
-er-npcm7xx.c
-index a00520cbb660a..9af30af5f989a 100644
-=2D-- a/drivers/clocksource/timer-npcm7xx.c
-+++ b/drivers/clocksource/timer-npcm7xx.c
-@@ -188,6 +188,7 @@ static void __init npcm7xx_clocksource_init(void)
+diff --git a/drivers/watchdog/npcm_wdt.c b/drivers/watchdog/npcm_wdt.c
+index 28a24caa2627c..a1240a906ef2a 100644
+=2D-- a/drivers/watchdog/npcm_wdt.c
++++ b/drivers/watchdog/npcm_wdt.c
+@@ -3,6 +3,7 @@
+ // Copyright (c) 2018 IBM Corp.
 
- static int __init npcm7xx_timer_init(struct device_node *np)
- {
-+	struct clk *clk;
- 	int ret;
+ #include <linux/bitops.h>
++#include <linux/clk.h>
+ #include <linux/delay.h>
+ #include <linux/interrupt.h>
+ #include <linux/kernel.h>
+@@ -43,6 +44,7 @@
+ struct npcm_wdt {
+ 	struct watchdog_device  wdd;
+ 	void __iomem		*reg;
++	struct clk		*clk;
+ };
 
- 	ret =3D timer_of_init(np, &npcm7xx_to);
-@@ -199,6 +200,15 @@ static int __init npcm7xx_timer_init(struct device_no=
-de *np)
- 	npcm7xx_to.of_clk.rate =3D npcm7xx_to.of_clk.rate /
- 		(NPCM7XX_Tx_MIN_PRESCALE + 1);
+ static inline struct npcm_wdt *to_npcm_wdt(struct watchdog_device *wdd)
+@@ -66,6 +68,9 @@ static int npcm_wdt_start(struct watchdog_device *wdd)
+ 	struct npcm_wdt *wdt =3D to_npcm_wdt(wdd);
+ 	u32 val;
 
-+	/* Enable the clock for timer1, if it exists */
-+	clk =3D of_clk_get(np, 1);
-+	if (clk) {
-+		if (!IS_ERR(clk))
-+			clk_prepare_enable(clk);
-+		else
-+			pr_warn("%pOF: Failed to get clock for timer1: %pe", np, clk);
-+	}
++	if (wdt->clk)
++		clk_prepare_enable(wdt->clk);
 +
- 	npcm7xx_clocksource_init();
- 	npcm7xx_clockevents_init();
+ 	if (wdd->timeout < 2)
+ 		val =3D 0x800;
+ 	else if (wdd->timeout < 3)
+@@ -100,6 +105,9 @@ static int npcm_wdt_stop(struct watchdog_device *wdd)
 
+ 	writel(0, wdt->reg);
+
++	if (wdt->clk)
++		clk_disable_unprepare(wdt->clk);
++
+ 	return 0;
+ }
+
+@@ -147,9 +155,15 @@ static int npcm_wdt_restart(struct watchdog_device *w=
+dd,
+ {
+ 	struct npcm_wdt *wdt =3D to_npcm_wdt(wdd);
+
++	if (wdt->clk)
++		clk_prepare_enable(wdt->clk);
++
+ 	writel(NPCM_WTR | NPCM_WTRE | NPCM_WTE, wdt->reg);
+ 	udelay(1000);
+
++	if (wdt->clk)
++		clk_disable_unprepare(wdt->clk);
++
+ 	return 0;
+ }
+
+@@ -191,6 +205,10 @@ static int npcm_wdt_probe(struct platform_device *pde=
+v)
+ 	if (IS_ERR(wdt->reg))
+ 		return PTR_ERR(wdt->reg);
+
++	wdt->clk =3D devm_clk_get_optional(&pdev->dev, NULL);
++	if (IS_ERR(wdt->clk))
++		return PTR_ERR(wdt->clk);
++
+ 	irq =3D platform_get_irq(pdev, 0);
+ 	if (irq < 0)
+ 		return irq;
 =2D-
 2.35.1
 
