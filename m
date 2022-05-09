@@ -1,72 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9E3385205AE
-	for <lists+openbmc@lfdr.de>; Mon,  9 May 2022 22:09:43 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BB955205B0
+	for <lists+openbmc@lfdr.de>; Mon,  9 May 2022 22:10:49 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Kxshj4Dr7z3cKr
-	for <lists+openbmc@lfdr.de>; Tue, 10 May 2022 06:09:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Kxsjz0kjvz3c7x
+	for <lists+openbmc@lfdr.de>; Tue, 10 May 2022 06:10:47 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=N2AWjEE0;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=hUFrhR3r;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::332;
- helo=mail-wm1-x332.google.com; envelope-from=edtanous@google.com;
+ smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::42a;
+ helo=mail-wr1-x42a.google.com; envelope-from=edtanous@google.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
- header.s=20210112 header.b=N2AWjEE0; dkim-atps=neutral
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com
- [IPv6:2a00:1450:4864:20::332])
+ header.s=20210112 header.b=hUFrhR3r; dkim-atps=neutral
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com
+ [IPv6:2a00:1450:4864:20::42a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KxsgH6l05z3bdN
- for <openbmc@lists.ozlabs.org>; Tue, 10 May 2022 06:08:26 +1000 (AEST)
-Received: by mail-wm1-x332.google.com with SMTP id
- a14-20020a7bc1ce000000b00393fb52a386so184621wmj.1
- for <openbmc@lists.ozlabs.org>; Mon, 09 May 2022 13:08:26 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KxsjX31VKz2xgX
+ for <openbmc@lists.ozlabs.org>; Tue, 10 May 2022 06:10:24 +1000 (AEST)
+Received: by mail-wr1-x42a.google.com with SMTP id e2so20938341wrh.7
+ for <openbmc@lists.ozlabs.org>; Mon, 09 May 2022 13:10:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=IB8TfyTbS5+OJan4iajXnbZyomuAmKBgvnGrKo2onbs=;
- b=N2AWjEE0P85Gzt/PXcUoMhKsg8Rz7CN4INqAcR1D0GVV3eH1LT8QbGnKKpvH8a8xBH
- JhANSW3GqdNTrPGRXo/OkB+afcg6kNcC/b7fiywSMuU4cpQ6tq+xNFw9DYNM5Zzcewqw
- nzAXH5SQxffgB+ROmHeM2Hp7M64u8Vtv/nnsaQ+N7djfx7sLRvQ+/rje1Ty33z00MYlx
- SgvySBG06pBvVy2M58zspO2T0BaOh+b9QwW5ZrJP5zLZgUuc0HOM43gH/hZnjqOAI6uJ
- zQTcE8bIjovVR8EkB5lDhMu/1pb5pjHIxL9Ywg+WWw1fWXleuBnLbjs3gYnzSu8kVnuX
- WRwg==
+ :cc; bh=SJT0NK3A+xjd+DLua8rlkmQdZyoNgunI/I+a2WA0gUY=;
+ b=hUFrhR3raVPUkq1GLPE7Kl5VxsmyfvlKPtlLBv5hu1UP8s3oUtkdRNDseS+Ecs6cFN
+ k08xJKXxag5fEE/hs+sy7L3tuXuchTyPm2rNN3Htx8zh2XV1B7nqjeAdvKBiDHbZsc0B
+ 1WzA3W8qLS+fYFzV9G+ggGe7QTElhIYK26VERUN7ozFTQGl3WLBS82FFCvqGUD/8Cpwq
+ SaHlUYI/pmDnIT/d1kwEf4lLhFBTaD8+x6XWaxrBLbyAc76Zzxr9+qjH1G/+ppX0M98y
+ THOldn87QHJ1RIDNe2xUtiIYch8d36vlj6OBR9Qf+bAMdoGCslYJNBOjrMwaqCjrELt2
+ N02Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=IB8TfyTbS5+OJan4iajXnbZyomuAmKBgvnGrKo2onbs=;
- b=umRXr9d1+t5KcbDd7waBWvkg/u4rf+LWu1HEiDUmwIZqUupAUQsGt2wYqhqpudu1gl
- 8dPUXne9jfzl2bUfWyLctgcWg4aV0Il1kELJCXctKUs9j8iIUH39ysAqAtF1DLTzRL7m
- ELAifWVILcQFeFJ0Qe/DCTAMITI3lLYnHfvfxunZaPcWSKw453GXAuuiedYSch3I46Su
- ATGKOSogMf9kzczTGE0O5Vc6ohWhpF/FoGc5OZ0MlCQuKOJPlIcjcgvfUnf8W8c6H1kD
- /8Hq0oHfZEPRh0h+UMlg5tRusPHHTxjBG77+ncwBDNkJDWdgvdv83hZtPviQjIgyQNx4
- lm0g==
-X-Gm-Message-State: AOAM532i98AS8GJrTYwuhUwgXbTyi+GdKNxA3rglEnJmi5fi8/xpoY0y
- IkrwF2l4fgcgaDkenlSTs5+XmV3T2EPF4di0kWxh8A==
-X-Google-Smtp-Source: ABdhPJx0w94RtA1061MBuq5/ksPcWKdHpzJ3yE1EO/UxeBbVODpwWaNbemBIuXunTB4hQH5WxmZbO7cXKVuPwk4pneo=
-X-Received: by 2002:a05:600c:1151:b0:394:6816:d4f2 with SMTP id
- z17-20020a05600c115100b003946816d4f2mr23545778wmz.195.1652126900458; Mon, 09
- May 2022 13:08:20 -0700 (PDT)
+ :message-id:subject:to:cc;
+ bh=SJT0NK3A+xjd+DLua8rlkmQdZyoNgunI/I+a2WA0gUY=;
+ b=Bll9YIbMlyVXQUQL0luqPmqrP6VEZyGXBwj5Azh+XiSJWxLjwiW1FOS9KlqahTJUDV
+ LPuJ3NQM1mtRyhRnnjhNa7PdkL+VpqV2AiwHvHdpSmSvlIpZjxj//4MXUS0VkW7foQB4
+ nkYNF/iooQsq/Ue6h8hC9SUJjzEV7qoZgVDIIoqTrj+CjCcrYuhWQTgXUMksWfjbkWaC
+ sC6m0CHyVvTBBsysJgoY1hT41rh+reNjN0VrB/Ea6QTQsgqghW2IIhQZyhMF5KrL+o8I
+ FDMMxGnViKBy0KGHMNjlrFsnt+7CV+OBSbf+8y7g7t6reVAyj85BJgHVOGuQlscSAZT7
+ zSJA==
+X-Gm-Message-State: AOAM532EjRaRDmTjpntiqn8FoSKB3HUWAjEuLo1zaeaUi9HlQzdaFK0s
+ I+CElWt9PaBAcHGlNFR9mFKVOHNqf8M8wB1ti6MwrQtT/rvzFA==
+X-Google-Smtp-Source: ABdhPJwxL2l0vZBcsqZbgFfGTjQq5PxKU9PoR3lCSFRufXKbi3x4/iBLD0FyPQrZVFk96xum4awbqngHWj9mQxpEEPc=
+X-Received: by 2002:adf:e6c3:0:b0:20a:e1a1:b176 with SMTP id
+ y3-20020adfe6c3000000b0020ae1a1b176mr15045114wrm.291.1652127020011; Mon, 09
+ May 2022 13:10:20 -0700 (PDT)
 MIME-Version: 1.0
 References: <16ba58d6-d06b-1c92-340b-e94119a47708@linux.intel.com>
-In-Reply-To: <16ba58d6-d06b-1c92-340b-e94119a47708@linux.intel.com>
+ <YnBcJ6GPKIBpqYWN@heinlein.stwcx.org.github.beta.tailscale.net>
+ <cfed9171-10fa-d8a7-e1e5-74cef23bc299@linux.intel.com>
+ <YnEZ3irWISTwEikW@heinlein.stwcx.org.github.beta.tailscale.net>
+ <50d7a4cf-d379-29ae-f635-ce4d79974305@linux.intel.com>
+In-Reply-To: <50d7a4cf-d379-29ae-f635-ce4d79974305@linux.intel.com>
 From: Ed Tanous <edtanous@google.com>
-Date: Mon, 9 May 2022 13:08:09 -0700
-Message-ID: <CAH2-KxDkugwGbZZEenBObwzJENCXTUDGtZn5TXPi7c3Kkog5DQ@mail.gmail.com>
+Date: Mon, 9 May 2022 13:10:08 -0700
+Message-ID: <CAH2-KxD=i+rZpFkuQHvX136S8xKmTcViumu6ZyLmdeiBxLxSFw@mail.gmail.com>
 Subject: Re: Running OpenBMC Daemons/Applications as non root using D-Bus
  Session/User Bus.
-To: nirav.j2.shah@linux.intel.com
+To: "Bills, Jason M" <jason.m.bills@linux.intel.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,178 +79,81 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, nirav.j2.shah@intel.com
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, May 2, 2022 at 2:58 PM Nirav Shah <nirav.j2.shah@linux.intel.com> w=
-rote:
->
-> Hello,
+On Tue, May 3, 2022 at 12:49 PM Bills, Jason M
+<jason.m.bills@linux.intel.com> wrote:
 >
 >
 >
-> I am new to OpenBMC (and BMC ),
+> On 5/3/2022 6:02 AM, Patrick Williams wrote:
+> > On Mon, May 02, 2022 at 11:00:01PM -0700, Nirav Shah wrote:
+> >> Hello,
+> >>
+> >> <<<< Moving everything from the system to session /bus/ doesn't really
+> >> improve either of these aspects.
+> >>
+> >> I agree i am not proposing a complete transition to session bus. The
+> >> proposal is to move the interactions to and from as you defined it
+> >> "external facing application" and anything that does _*NOT*_ really need
+> >> root access to the session bus by running them as non-root. Applications
+> >> that "may" need root access (may be because the hardware interface
+> >> requires root privilege) will continue to use the system bus for
+> >> communicating with other root application and session bus for
+> >> communication with non root applications.
+> >
+> > To be honest, this sounds even more complex than just using the session
+> > bus for almost everything.
+> >
+> >> I agree that BMCWeb can run as non root today and still be on the system
+> >> bus. Also agree, this is better than running BMCWeb as root. However,
+> >> "We can then figure out how to further limit the DBus APIs after that"
+> >> is what I want to address. How does having a session bus help solve
+> >> this? This for me is complicated to put down in an email. If my
+> >> explanation below sounds too high level, I would agree with that too.
+> > ...
+> >> This is the approach I have seen in most of the Linux Distros for
+> >> desktop. I understand OpenBMC does not have the same use cases as
+> >> desktop but in this case it could be lot similar. Does this change your
+> >> mind?
+> >
+> > Not really. :)  Yes, "too high level" is probably the simplest statement
+> > here.
+> >
+> > Let me switch this discussion around a bit.  Please name me 4 daemons,
+> > which currently reside on the system bus, and that bmcweb does not and
+> > should not ever access.
+> One possible example that maybe isn't in place yet is MCTP.  If we end
+> up exposing an MCTP interface over D-Bus, is there risk that this could
+> be used maliciously since a compromised application running as root has
+> direct access to the MCTP interface?
+>
+> If the direct MCTP interface is on the system bus and the filtered MCTP
+> interface is on the session bus, then a compromised non-root application
+> would still be blocked from accessing the direct MCTP interface.
+>
 
-Welcome!  Glad to have you.
++1 IPMB would be similar to this, although I suspect that we really
+don't want to put raw MCTP on dbus like we did with IPMB.  Arguably
+even in the IPMB case there were likely better paths, and now that the
+shared IPMB state is in the kernel, needing to pass arbitrary ipmb
+messages over dbus is probably not something we'd do if we did it
+again.
 
-> so apologies if I am posting this in the wrong place. I have been looking=
- at this issue.  Here is my summary of the problem statement, please do com=
-ment and let me know if I got this right.
->
-> The biggest challenge is the use of system bus and non root access to the=
- system bus.
-
-This statement could be phrased a little more precisely.  The biggest
-challenge is that:
-1. bmcweb (and all user-facing daemons) run as root.
-2. There is no way to define an ACL such that a user-facing daemon
-would not have access to something.
-4. User-facing daemons enforce their own authorization systems,
-instead of relying on something out of process, which makes them more
-vulnerable than is ideal.
-
-> As previously suggested an ACL based approach can work. (whether it is us=
-ing a D-Bus ACL configuration file or SELinux)
-> However, it does require an exact configuration to cover all security sce=
-narios (for MAC) and IMO =E2=80=9Cmay=E2=80=9D make debugging efforts harde=
-r.
->
-> Coming from a desktop background (which additionally uses D-BUS session/u=
-ser bus for user isolation), I was investigating if having a session bus wo=
-uld help. For OpenBMC, the idea would be to allow non root application to c=
-ommunicate with each other and with root** applications on a single session=
- bus to begin with. This can be further augmented using ACL based approache=
-s if needed. I have a small POC, which tests this on OpenBMC with D-Bus bro=
-ker
-
-I think the thing you haven't touched on here is that in the way linux
-generally uses these, session busses are spun up per-user session,
-which provides some level of abstraction and segmentation between
-various users.  it'd be interesting to talk through that as an
-architecture, and how it maps, but as Patrick points out elsewhere,
-simply moving nearly everything onto a shared session bus doesn't
-really do much to solve the security concerns.
-
-An architecture that would be interesting would be:
-
-1. On creation of a session, bmcweb registers the session with linux,
-and gives the session that users permissions levels, similar to how a
-"normal distro" session manager would act.
-2. ACLs would define specifically (at dbus level) what that user was
-allowed to do.  Ideally we could drive some of these from
-PrivilegeRegistry.
-3. When user requests come in, bmcweb would route the requests to the
-appropriate session bus for that user.
-
-And in theory, at the end, we could remove the permissions code from
-bmcweb, because we'd be relying on linux permissions, which are
-arguably better.
-
->
-> To run the demo
->
-> As root, copy files dbus_session.service and dbus_session.socket to /etc/=
-systemd/system/
-> useradd nirav //or change the .service and .socket file to your user
-> systemctl daemon-reload
-> systemctl start dbus_session
-> ps | grep dbus //will show an additional dbus-broker running
-> compile dbus_server.c and dbus_client.c using yocto sdk or write a receip=
-e
-> ssh as root, export DBUS_SESSION_BUS_ADDRESS=3Dunix:path=3D/run/user/bus1=
- and ./dbus_server
-> ssh as nirav, export DBUS_SESSION_BUS_ADDRESS=3Dunix:path=3D/run/user/bus=
-1 and ./dbus_client
->
-> With the POC I was able to =E2=80=A6..
->
-> Show dbus_broker_launch =E2=80=9C=E2=80=93scope user=E2=80=9D works on Op=
-enBMC (A session busses can be created using the right system unit files an=
-d launcher provided by D-Bus broker)
->
-> Since I am new to D-Bus broker and systemd I had to confirm this.
->
-> Show DBUS_SESSION_BUS_ADDRESS is the only env variable required by root t=
-o access the session bus of another user. There is a limitation here, discu=
-ssed below.
->
-> As far as the actual solution, idea would be to have a configuration file=
- to specify which D-Bus interfaces can be on the session bus. An opt in mod=
-el which does not need any modification to existing and future OpenBMC daem=
-ons/applications would be the goal but there are limitations =E2=80=A6..
->
-> For root**, to access another user=E2=80=99s session bus, its needs to se=
-tuid/setgid to the corresponding user.
->
-> This is because D-Bus actively blocks any user even uid 0 from accessing =
-another=E2=80=99s session bus. It would be a simple patch to make an except=
-ion for root. But still something that needs to be maintained.
-
-This is something that would need to be looked at in more depth technically=
-.
-
->
-> My POC was not using sdbus/plus. At the very least, modification will be =
-needed to sdbusplus, sdbus, phosphor-dbus and possibly to object mapper. No=
-t sure if more applications need to change.
-> Supporting multiple session D-Buses will be really complicated for a lot =
-of reasons. So even if session bus is a reasonable idea (which I need feedb=
-ack on), I would not jump into having a session bus per usecase from the ge=
-t-go.
->
-> I am happy to start with a design document on git hub and also make some =
-code changes, but I had a few questions.
->
-> Your views on, if this a workable idea?
-
-I have very similar concerns with Patrick;  With that said, if these
-are minor additions to existing daemons that are optional, I'd be in
-support of some amount of experimentation in this regard to find an
-acceptable solution, but I don't think the above gets us to what we
-need.
-
-> I am hoping I can isolate all the changes to sdbusplus, sdbus, phosphor-d=
-bus and object mapper. What else might need to change?
-
-I'm fairly certain every daemon needs some changes to define the
-appropriate ACLs.  Essentially we need to distribute BMCWEBs privilege
-registry mapping to dbus, so individual daemons can put in ACLs that
-define whether their APIs are Admin, Operator, user, or read-only
-privilege level.
-
-> If I can make all these changes, I was thinking of starting with BMCWeb a=
-s non root but since BMCWeb interfaces with a lot of daemons that would be =
-a big step. Any better ideas?
-
-Keep in mind, bmcweb also accesses things that:
-1. Aren't openbmc dbus daemons (primarily systemd)
-2. Supports accessing data through unix sockets (KVM, serial port,
-virtual media, ect).
-3. Supports accessing system data through the filesystem (EventLog,
-HostLog, ect).
-4. Has data that it needs to persist (sessions, guids, ect) in
-bmcweb_persistent_data.json.
-
-If you want to run bmcweb as non-root on any non-trivial system, you'd
-have to find solutions for those use cases as well.  WIth that said,
-if you want to focus on the dbus aspects first, happy to work through
-that piecemeal, but it will mean that we will have to support both
-configs (bmcweb as root, and bmcweb as non-root) for some amount of
-time, so keep that in mind when you write your patches.
-
->
->
->
-> Thanks,
->
-> Nirav.
->
->
->
->
->
->
->
-> --
-> Nirav Shah
+> >
+> > I think you'll find it hard to enumerate because our architecture is
+> > purposefully very flat.  I know the codebase fairly well and have thought
+> > about it for a bit and can only come up with one: kcsbridge (or btbridge).
+> > Perhaps you could expand to a few of the systemd daemons (org.freedesktop)
+> > where we've created an abstraction (xyz.openbmc_project), but I actually see
+> > present day code in bmcweb which interacts with the ones I was thinking of
+> > there.
+> >
+> > So, effectively everything would need to be moved to the session bus
+> > _and_ we'd still need a mechanism for bmcweb to access some of the
+> > system bus end-points (via restricted ACLs), but effectively that is
+> > still every single dbus endpoint.  This proposed move didn't actually
+> > accomplish anything from a security standpoint in practice.
+> >
