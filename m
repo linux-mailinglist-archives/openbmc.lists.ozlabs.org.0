@@ -2,69 +2,49 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 49300520637
-	for <lists+openbmc@lfdr.de>; Mon,  9 May 2022 22:53:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BE69520806
+	for <lists+openbmc@lfdr.de>; Tue, 10 May 2022 00:55:25 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KxtgJ0yxQz3bgC
-	for <lists+openbmc@lfdr.de>; Tue, 10 May 2022 06:53:32 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20210112.gappssmtp.com header.i=@tanous-net.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=2BwPWbAx;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KxxMv0B9dz3cBR
+	for <lists+openbmc@lfdr.de>; Tue, 10 May 2022 08:55:23 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=tanous.net
- (client-ip=2607:f8b0:4864:20::b33; helo=mail-yb1-xb33.google.com;
- envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=tanous-net.20210112.gappssmtp.com
- header.i=@tanous-net.20210112.gappssmtp.com header.a=rsa-sha256
- header.s=20210112 header.b=2BwPWbAx; dkim-atps=neutral
-Received: from mail-yb1-xb33.google.com (mail-yb1-xb33.google.com
- [IPv6:2607:f8b0:4864:20::b33])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=zd-tech.com.cn (client-ip=220.194.24.100;
+ helo=mail-m24100.qiye.163.com; envelope-from=xzcheng@zd-tech.com.cn;
+ receiver=<UNKNOWN>)
+X-Greylist: delayed 469 seconds by postgrey-1.36 at boromir;
+ Mon, 09 May 2022 13:46:13 AEST
+Received: from mail-m24100.qiye.163.com (mail-m24100.qiye.163.com
+ [220.194.24.100])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Kxtfv0T56z3bbB
- for <openbmc@lists.ozlabs.org>; Tue, 10 May 2022 06:53:08 +1000 (AEST)
-Received: by mail-yb1-xb33.google.com with SMTP id w187so27171872ybe.2
- for <openbmc@lists.ozlabs.org>; Mon, 09 May 2022 13:53:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=tanous-net.20210112.gappssmtp.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=WcqbKeDprQ+NRHOKllYuZdO0HObLsqTgduToYO/nvZw=;
- b=2BwPWbAxQNZEj3nluH8swNjEU97qmUYQiDZi0hd1AhGsHg3fprj602il+UlO1vrc4z
- 6bcxzp5jmtC54q0IVvIoIH5LBhrtZQF720VyW87A2AXaHHvIlYdkD5lXLpD2NaMdZ8Jt
- gWvrPAO/I1gntmsieNyXBCmUc3BtObqjMtKc7qZFmHUngFtl6TzFvrsnLnH4tt2evE2t
- x4RxbuQ1qVll87MzGd18AmVfkwoXpPXZEmScqmeMREggsE5MIEcU4EP+w/H4UH8AMZWM
- 9HaeMsnUz+hcGxt4PDG0FtWxtXAKf3p9RU4jr3DEyOWlsD4K5Lm0w6+aYoJSRbLG3phL
- /KdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=WcqbKeDprQ+NRHOKllYuZdO0HObLsqTgduToYO/nvZw=;
- b=emQ38WX8tCMOouGBvTT7Iv3zdx3WRFkFutZBG3e+b4843N/o6AAw/asec9V/iGS4dg
- +7JSrgnpfwyLeFgmrrzDt4tpVxGYeEi/xD4bIetgckZvejR1tCYzoTqRzFvkAUmzsfVT
- YEhCF3T+SOuecfPvjpvj9gM9RwTchE1GS+GNydfRvoLsIYmfnEV0U3MON/gzaIFW2wNK
- OIsvmYj35lwsI6yaWbBL1HYMIR+pg3jn5gpJhwbNFyibHyuBKLbydRrehWMxOoe0o2u+
- aJeuJwja8fqIPHaQ6nejxmKAY9Y3Xljvzu0XC/gnCxO2U/Htl0/cJafgchERC9S40CEo
- N37Q==
-X-Gm-Message-State: AOAM530wGPHV1w6FRuVkBPGJTUOTebWMwyqkX6Uueo7Nvd3Ixy5v14WM
- WDXLRj9QcGWwly8kXCkFLDBMCF8uHKyiCfswDwhOnQ==
-X-Google-Smtp-Source: ABdhPJxVM2rDFlv+u1Fw9UA0AwW7H7tICGRg/FZWmN8kisTKB0EBr+J2jIwxQlwXYbKGz11bsGTLf972Hs9esk19mFM=
-X-Received: by 2002:a25:5f03:0:b0:64a:2f21:73af with SMTP id
- t3-20020a255f03000000b0064a2f2173afmr14893911ybb.586.1652129585483; Mon, 09
- May 2022 13:53:05 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KxRsx1xqhz2yZv
+ for <openbmc@lists.ozlabs.org>; Mon,  9 May 2022 13:46:12 +1000 (AEST)
+Received: from zd-tech.com.cn (localhost [127.0.0.1])
+ by mail-m24100.qiye.163.com (Hmail) with ESMTP id 2CF135600F2;
+ Mon,  9 May 2022 11:38:11 +0800 (CST)
+Content-Type: multipart/alternative;
+ BOUNDARY="=_Part_204367_1744688402.1652067491174"
+Message-ID: <AHcAiwCqIcaSxUw7ysgwraqT.1.1652067491174.Hmail.xzcheng@zd-tech.com.cn>
+To: openbmc@lists.ozlabs.org, bradleyb@fuzziesquirrel.com
+Subject: =?UTF-8?B?TmV3IHJlcG8gcmVxdWVzdDoga3VubHVuLWlwbWktb2Vt?=
+X-Priority: 3
+X-Mailer: HMail Webmail Server V2.0 Copyright (c) 2015-163.com
+X-Originating-IP: 218.247.145.2
 MIME-Version: 1.0
-References: <CAGm54UG6o2_kFfor81+MmWW7pqxQ4bQu9FkVXaEbGhQ_JLQi-Q@mail.gmail.com>
-In-Reply-To: <CAGm54UG6o2_kFfor81+MmWW7pqxQ4bQu9FkVXaEbGhQ_JLQi-Q@mail.gmail.com>
-From: Ed Tanous <ed@tanous.net>
-Date: Mon, 9 May 2022 13:52:54 -0700
-Message-ID: <CACWQX81w1ZzXx64r0UcxpZrNyWB7HudMzZpSttqEeNav98JC9g@mail.gmail.com>
-Subject: Re: Delayed match callback with sdbusplus asio APIs
-To: Lei Yu <yulei.sh@bytedance.com>
-Content-Type: text/plain; charset="UTF-8"
+Received: from xzcheng@zd-tech.com.cn( [218.247.145.2) ] by ajax-webmail (
+ [127.0.0.1] ) ; Mon, 9 May 2022 11:38:11 +0800 (GMT+08:00)
+From: =?UTF-8?B?5oiQ5L+u5rK7?= <xzcheng@zd-tech.com.cn>
+Date: Mon, 9 May 2022 11:38:11 +0800 (GMT+08:00)
+X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZCBgUCR5ZQVlLVUtZV1
+ kWDxoPAgseWUFZKDYvK1lXWShZQUlCN1dZLVlBSVdZDwkaFQgSH1lBWUMYQk1WTE8eGUlNQ0lOHk
+ NMVRkRExYaEhckFA4PWVdZFhoPEhUdFFlBWU9LSFVKSktISkNVS1kG
+X-HM-Sender-Digest: e1kMHhlZQQ8JDh5XWRIfHhUPWUFZRzozGDoSDDgKMhgaKAMuDEwCCBwM
+ CRoKL1VKVUpNTklLTUxPQkpOSEpVMxYaEhdVAwEYEx4VHDsBH1YPHhgTVRgUFlUYFUVZV1kSC1lB
+ WUlKQ1VJT0xVSk9OVUlZV1kIAVlBT0tNSTcG
+X-HM-Tid: 0a80a6bf6ba38c39kuqt1809495367d
+X-Mailman-Approved-At: Tue, 10 May 2022 08:55:11 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,96 +56,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>, Ed Tanous <edtanous@google.com>,
- William Kennington <wak@google.com>
+Cc: =?UTF-8?B?546L5Lqa5rSy?= <yzwang@zd-tech.com.cn>,
+ =?UTF-8?B?55m955Co?= <kbai@zd-tech.com.cn>,
+ =?UTF-8?B?6ZmI5bCP5pil?= <xcchen@zd-tech.com.cn>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Mar 10, 2022 at 9:17 PM Lei Yu <yulei.sh@bytedance.com> wrote:
->
-> This mail is to describe an issue that the match signal's callback is
-> delayed if it's using sdbusplus asio APIs.
->
-> # TL;DR
-> If the app is using sync DBus calls and using asio to register a match
-> callback, the callback may be delayed if it occurs when the sync DBus
-> call is ongoing.
-> Note the issue does not occur if it's not using asio APIs.
+--=_Part_204367_1744688402.1652067491174
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 
-You're doing blocking calls in an async daemon.  That's why your code
-has a bug in it.
+SGkgQnJhZCAsCiAgIFdvdWxkIHlvdSBsaWtlIHRvIGhlbHAgbWUgdG8gY3JlYXRlIGEgbmV3IHJl
+cG8ga3VubHVuLWlwbWktb2VtIGZvciBrdW5sdW4gb2VtIElQTUkgY29tbWFuZCBoYW5kbGluZz8K
+CgpBbmQgcGxlYXNlIGFkZCAKICBrYmFpQHpkLXRlY2guY29tLmNuIAp0byBteSBjb21wYW55J3Mg
+Q0NMQQoKCkJlc3QsClhpdXpoaQoKCkJNQyBGaXJtd2FyZSBUZWFtCgpaRCBUZWNobm9sb2d5IENv
+LiBMdGQuCgpUYWlqaSBidWlsZGluZywgTm8uMjExLCBCZWlzaWh1YW4gTWlkZGxlIFJvYWQsIEhh
+aWRpYW4gRGlzdHJpY3QsIEJlaWppbmcsQ2hpbmEuClRFTDogODYxMC04OTA1NjI5MAp3d3cuemQt
+dGVjaC5jb20uY24KCgoKCgoKCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLQoKCgoKCgoNCg0K
+--=_Part_204367_1744688402.1652067491174
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: base64
 
-One such example is on line 89:
-auto reply = bus.call(method);
-
-That will block the main event reactor until it returns.  Take a look
-at something like bmcweb for how to do async method calls without
-blocking the main reactor.
-
->
-> # Details
->
-> Pasted a full buildable source at https://pastebin.com/KEmpvDzp
-> The code
-> * Registers a match for host power status, and print the changes.
-> * Uses a timer to get sensors via sync DBus calls.
->
-> With this code, it's very easy to reproduce the above issue in QEMU,
-> just toggle the `RequestedHostTransition` to On and Off for a few
-> times:
-> # busctl set-property xyz.openbmc_project.State.Host0
-> /xyz/openbmc_project/state/host0 xyz.openbmc_project.State.Host
-> RequestedHostTransition s xyz.openbmc_project.State.Host.Transition.On
-> # busctl set-property xyz.openbmc_project.State.Host0
-> /xyz/openbmc_project/state/host0 xyz.openbmc_project.State.Host
-> RequestedHostTransition s
-> xyz.openbmc_project.State.Host.Transition.Off
->
-> We can see the journal logs:
-> # journalctl | grep -e test_asio -e "Moving to \"Off" -e "POWER_OUT set to 0"
-> Mar 11 04:59:25 power-control[195]: POWER_OUT set to 0
-> Mar 11 04:59:25 test_asio[23478]: aiso callback, property:
-> RequestedHostTransition, value:
-> xyz.openbmc_project.State.Host.Transition.On
-> Mar 11 04:59:33 power-control[195]: Host0: Moving to "Off" state
-> Mar 11 04:59:37 power-control[195]: POWER_OUT set to 0
-> Mar 11 04:59:45 power-control[195]: Host0: Moving to "Off" state
-> Mar 11 04:59:48 power-control[195]: POWER_OUT set to 0
-> Mar 11 04:59:56 test_asio[23478]: aiso callback, property:
-> RequestedHostTransition, value:
-> xyz.openbmc_project.State.Host.Transition.Off
-> Mar 11 04:59:56 test_asio[23478]: aiso callback, property:
-> RequestedHostTransition, value:
-> xyz.openbmc_project.State.Host.Transition.On
-> Mar 11 04:59:56 test_asio[23478]: aiso callback, property:
-> RequestedHostTransition, value:
-> xyz.openbmc_project.State.Host.Transition.Off
-> Mar 11 04:59:56 test_asio[23478]: aiso callback, property:
-> RequestedHostTransition, value:
-> xyz.openbmc_project.State.Host.Transition.On
-> Mar 11 04:59:56 test_asio[23478]: aiso callback, property:
-> RequestedHostTransition, value:
-> xyz.openbmc_project.State.Host.Transition.Off
-> Mar 11 04:59:56 power-control[195]: Host0: Moving to "Off" state
->
-> In the log, `POWER_OUT set to 0` means RequestedHostTransition is set
-> to On, and `Host0: Moving to "Off" state` means it's set to Off.
-> You can see that test_asio's callback is not triggered during
-> 04:59:33~04:59:48, and it's triggered for multiple times on 04:59:56.
->
-> # More info
-> * If the sync DBus calls are removed, the issue is not reproduced.
-> * If I do not use asio at all, and use sync DBus calls with
-> `sdeventplus::utility::Timer`, the issue is not reproduced.
->
-> That is to say, this issue only occurs when asio and sync DBus calls are mixed.
->
->
-> @Ed Tanous @William Kennington @Patrick Williams Could you kindly
-> check the above behavior and let's see what could be wrong?
->
-> Thanks!
->
-> --
-> BRs,
-> Lei YU
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9ImxpbmUtaGVpZ2h0OjEuNztjb2xvcjojMDAw
+MDAwO2ZvbnQtc2l6ZToxNHB4O2ZvbnQtZmFtaWx5OkFyaWFsIj48cD5IaSBCcmFkICw8L3A+PGRp
+dj4mbmJzcDsgJm5ic3A7V291bGQgeW91IGxpa2UgdG8gaGVscCBtZSB0byBjcmVhdGUgYSBuZXcg
+cmVwbyBrdW5sdW4taXBtaS1vZW0gZm9yIGt1bmx1biBvZW0gSVBNSSBjb21tYW5kIGhhbmRsaW5n
+PzwvZGl2PjxkaXY+PGJyIC8+PC9kaXY+PGRpdj5BbmQgcGxlYXNlIGFkZCZuYnNwOzwvZGl2Pjxk
+aXY+Jm5ic3A7IGtiYWlAemQtdGVjaC5jb20uY24mbmJzcDs8L2Rpdj48ZGl2PnRvIG15IGNvbXBh
+bnkncyBDQ0xBPC9kaXY+PGRpdj48YnIgLz48L2Rpdj48ZGl2PkJlc3QsPC9kaXY+PGRpdj5YaXV6
+aGk8L2Rpdj48ZGl2PjxiciAvPjwvZGl2PjxkaXY+Qk1DIEZpcm13YXJlIFRlYW08YnIgLz48L2Rp
+dj48ZGl2PlpEIFRlY2hub2xvZ3kgQ28uIEx0ZC48YnIgLz48L2Rpdj48ZGl2PlRhaWppIGJ1aWxk
+aW5nLCBOby4yMTEsIEJlaXNpaHVhbiBNaWRkbGUgUm9hZCwgSGFpZGlhbiBEaXN0cmljdCwgQmVp
+amluZyxDaGluYS48L2Rpdj48ZGl2PlRFTDogODYxMC08Zm9udCBzdHlsZT0iZm9udC1mYW1pbHk6
+ICflvq7ova/pm4Xpu5EnOyBmb250LXNpemU6MTNweCI+ODkwNTYyOTA8L2ZvbnQ+PC9kaXY+PGRp
+dj53d3cuemQtdGVjaC5jb20uY248YnIgLz48L2Rpdj48L2Rpdj48YnIgLz48YnIgLz48YnIgLz48
+YnIgLz48YnIgLz48ZGl2IGlkPSJkdkxldHRlckFuZ2xlIj48cD4tLS0tLS0tLS0tLS0tLS0tLS0t
+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS08L3A+PHA+PGltZyBzcmM9Imh0dHA6Ly9t
+YWlsLnFpeWUuMTYzLmNvbS9xaXllaW1hZ2UvbG9nby80NjM2MTI3OTQvMTY0NzgzMDIxNzg4Ny5w
+bmciIF9zcmM9Imh0dHA6Ly9tYWlsLnFpeWUuMTYzLmNvbS9xaXllaW1hZ2UvbG9nby80NjM2MTI3
+OTQvMTY0NzgzMDIxNzg4Ny5wbmciIC8+PC9wPjxwPjxzcGFuIHN0eWxlPSJmb250LXNpemU6IDE2
+cHg7Zm9udC1mYW1pbHk6IOWui+S9kyI+PC9zcGFuPjwvcD48L2Rpdj48ZGl2ICBzdHlsZT0icG9z
+aXRpb246cmVsYXRpdmU7em9vbToxIj48L2Rpdj48L2Rpdj48YnI+
+--=_Part_204367_1744688402.1652067491174--
