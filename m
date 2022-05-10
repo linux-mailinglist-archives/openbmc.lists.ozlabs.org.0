@@ -1,64 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8ABA8520AAD
-	for <lists+openbmc@lfdr.de>; Tue, 10 May 2022 03:29:34 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 50E43520AF0
+	for <lists+openbmc@lfdr.de>; Tue, 10 May 2022 04:02:46 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Ky0nm3JHsz3bwX
-	for <lists+openbmc@lfdr.de>; Tue, 10 May 2022 11:29:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Ky1X35xkFz3byP
+	for <lists+openbmc@lfdr.de>; Tue, 10 May 2022 12:02:43 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Lg+rn8bt;
+	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=VlWNey+0;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::429;
- helo=mail-wr1-x429.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::c35;
+ helo=mail-oo1-xc35.google.com; envelope-from=yulei.sh@bytedance.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=Lg+rn8bt; dkim-atps=neutral
-Received: from mail-wr1-x429.google.com (mail-wr1-x429.google.com
- [IPv6:2a00:1450:4864:20::429])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=bytedance-com.20210112.gappssmtp.com
+ header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256
+ header.s=20210112 header.b=VlWNey+0; dkim-atps=neutral
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com
+ [IPv6:2607:f8b0:4864:20::c35])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Ky0nM3qnxz2xF8
- for <openbmc@lists.ozlabs.org>; Tue, 10 May 2022 11:29:10 +1000 (AEST)
-Received: by mail-wr1-x429.google.com with SMTP id i5so21665114wrc.13
- for <openbmc@lists.ozlabs.org>; Mon, 09 May 2022 18:29:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Ky1Wc2MdYz2xF8
+ for <openbmc@lists.ozlabs.org>; Tue, 10 May 2022 12:02:18 +1000 (AEST)
+Received: by mail-oo1-xc35.google.com with SMTP id
+ q73-20020a4a334c000000b0035eb110dd0dso2878339ooq.10
+ for <openbmc@lists.ozlabs.org>; Mon, 09 May 2022 19:02:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=bytedance-com.20210112.gappssmtp.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=tZq2gU+7souRVLVl87Qih/I+EQONYEUjxSFlohmQke4=;
- b=Lg+rn8btUFXRBzeZdVzYac8XAXUjtwRyoEOSfl/BjSsLHWp1tOw/ahPBxVwG1wr0w7
- OQs7gquHom6c0aDulIYLRYr204ti+tbM4w+xI0X+5S+dmZBBMFW849V97HXFOeBOEjdS
- r/BurXvixsyl65tQ3R3qKYozzZ5niiO0YsRJQ=
+ :cc; bh=mitqiUZ6H8a93w/If7QQRiRYnEDsr+LESTNqWKDUEjM=;
+ b=VlWNey+0LBjZjpTqaAi3dm0KX2hqnZYaIHU3LD6MUr/7+FAzlMyANNhXKcNS0aB3/L
+ BlFdz604tW68mNtpoaG/U0FQFDlvuY9LPHOW1GjByuTIOgQzKi5ekMWiTJ38aZJj7Q7T
+ 9/neGHz6tUNjRD7Ub3uHKz7YYCZ3tnxaaRIvPxF0owlBbFuL0Z4cthTlg+oL65Vh2ole
+ 6LEzvXC29Yj/9m/PKRgCr9CfX0R5HKnITDaI3YhmZjqdCQZER/+FCzgd9yP3aRwTPE+D
+ UNM6wyoiXo2Mbr88bKTHQuPHmEjBBXqByCVatlpfGiO3lm+HzINbnrELz5zqmWpaQMk3
+ HLoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=tZq2gU+7souRVLVl87Qih/I+EQONYEUjxSFlohmQke4=;
- b=LK7Jb/XfGDfboQrK3lc2UFfJFDV6aOS+H+QbL1l5UW3DvKKsqN06TrUPDmSBUTXjWW
- gmWoTUY3f3tbSSIyglznytuIphOwIfQlojZzedAs9f62SbGCDzz0PJ0jPTX8snzH/KOq
- +KFlDcQqFGKTYGxRdIQCdCJS3S/cDKtU6YbtowkPTLFLQhqseo0Q9E+RYx/OTB0YhgEG
- 6M7uKiJhbDrA8N2CZidcCQFXz4F0V3rrLQNYaLMBFRy/lQTxx9vFZIc5hGsBL4OnWSVu
- F+gQ/0wVt/trASG7mHOlMkL4gmKZEBTGyFTU7yW1Saq04dFiRZS25lA0S3XhZYhKqEqs
- 4yJw==
-X-Gm-Message-State: AOAM530shsU7ARnOsatMeHFQcKpRQTt70qXz2InAL20pQsjHczTIuTVR
- ghfQZwgsiGXvrRNKju/o63EQn9RjMHxpR2UGk+Y=
-X-Google-Smtp-Source: ABdhPJyHY1ajQCk9EHifJmMUZtYfSrP//0rS/NVyCd90QoTF2g6heNQumAG4OrFocUxkkIsTYmkK3Mrjlje5rD5TjkY=
-X-Received: by 2002:a5d:6ac4:0:b0:20a:dd04:81da with SMTP id
- u4-20020a5d6ac4000000b0020add0481damr15847035wrw.705.1652146144888; Mon, 09
- May 2022 18:29:04 -0700 (PDT)
+ bh=mitqiUZ6H8a93w/If7QQRiRYnEDsr+LESTNqWKDUEjM=;
+ b=qSyWDl28SPy/h1iR+51TANyr9QHvEsB6Fw9yBxxT3k7ty0ei4R/4IkpviA4lTLSJkJ
+ sDrfdaPAdF4T0Y1O/OXdcK2+llXPfxep1fPpm/MfW07P74a1nFejbGcXnwGfj6/yJoUG
+ 2Qgbi9wuzz4giZkkkfNVPRFbhKmBuw8Zwz8flbSYkMcZut8ee2RfAMOll79md1DWVQIu
+ T8Lc5NSmMAy5pYSTvne0aipT4noPdOQAa+wh7AfYngvN9TD16DlBAEP9wZzLbVSNaPpI
+ vtarYrNl6yIHPuSX0919G/OZYZJMLz6JYnR6fA0TVWoGGaJMSaXjSWYbA/S+GkE9d+vE
+ 1PxA==
+X-Gm-Message-State: AOAM531v2AgQQ9mpiFg9s+QHKtDUSEU3lSMpczfXht1oskdoUEjGUh/F
+ 9JqcmaE5GqRIRy5/H1ls1CTum5LBp6qhHVm/rc8Nvg==
+X-Google-Smtp-Source: ABdhPJy9LrMTWVn4nmwlSWp2qw6b+B97g3fV6hpJrgz+WHg9AEtq2CsqklmUfymLPJuhLKk2Y15gZFwiTeQh96SNKTs=
+X-Received: by 2002:a4a:96e3:0:b0:35e:6c87:9133 with SMTP id
+ t32-20020a4a96e3000000b0035e6c879133mr7083801ooi.32.1652148135506; Mon, 09
+ May 2022 19:02:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <CALNFmy39ph1pQoVavHZbdTCACLMxf38f86WKH-CbPbrHDoomNg@mail.gmail.com>
-In-Reply-To: <CALNFmy39ph1pQoVavHZbdTCACLMxf38f86WKH-CbPbrHDoomNg@mail.gmail.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 10 May 2022 01:28:52 +0000
-Message-ID: <CACPK8XdU5C-_TdFDDxobOL4-jkwPZsjHts5hv2Jx2r1n3PuY6w@mail.gmail.com>
-Subject: Re: Aspeed platforms: MAC address provisioning
-To: Patrick Rudolph <patrick.rudolph@9elements.com>
+References: <CAGm54UG6o2_kFfor81+MmWW7pqxQ4bQu9FkVXaEbGhQ_JLQi-Q@mail.gmail.com>
+ <CACWQX81w1ZzXx64r0UcxpZrNyWB7HudMzZpSttqEeNav98JC9g@mail.gmail.com>
+In-Reply-To: <CACWQX81w1ZzXx64r0UcxpZrNyWB7HudMzZpSttqEeNav98JC9g@mail.gmail.com>
+From: Lei Yu <yulei.sh@bytedance.com>
+Date: Tue, 10 May 2022 10:03:09 +0800
+Message-ID: <CAGm54UHRT7U_iP0FYdAcmmDtXVjLVREhGpyZvfhvpNbGqb5Rog@mail.gmail.com>
+Subject: Re: [External] Re: Delayed match callback with sdbusplus asio APIs
+To: Ed Tanous <ed@tanous.net>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -71,45 +78,36 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: openbmc <openbmc@lists.ozlabs.org>, Ed Tanous <edtanous@google.com>,
+ William Kennington <wak@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 6 May 2022 at 06:04, Patrick Rudolph
-<patrick.rudolph@9elements.com> wrote:
+On Tue, May 10, 2022 at 4:53 AM Ed Tanous <ed@tanous.net> wrote:
 >
-> Hi,
-> I'm looking for the generic "OpenBMC way" of provisioning the BMC MAC
-> address on platforms with an integrated NIC. In the past there has
-> been the u-boot "u-boot-initial-env" target to create an environment,
-> but it's no longer used on u-boot-common-aspeed-sdk_2019.04.
-
-I wasn't aware of this. One option you have is to add this
-functionality to the new SDK.
-
+> On Thu, Mar 10, 2022 at 9:17 PM Lei Yu <yulei.sh@bytedance.com> wrote:
+> >
+> > This mail is to describe an issue that the match signal's callback is
+> > delayed if it's using sdbusplus asio APIs.
+> >
+> > # TL;DR
+> > If the app is using sync DBus calls and using asio to register a match
+> > callback, the callback may be delayed if it occurs when the sync DBus
+> > call is ongoing.
+> > Note the issue does not occur if it's not using asio APIs.
 >
-> What's the default/common/preferred way of provisioning an unique MAC
-> address in production? Should it be stored in an I2C EEPROM or should
-> the u-boot env be created from the running system?
+> You're doing blocking calls in an async daemon.  That's why your code
+> has a bug in it.
+>
+> One such example is on line 89:
+> auto reply = bus.call(method);
+>
+> That will block the main event reactor until it returns.  Take a look
+> at something like bmcweb for how to do async method calls without
+> blocking the main reactor.
 
-Take a look at first-boot-set-mac.
+So does it mean we can NOT use blocking DBus calls at all with async daemon?
 
-AFAIK there's code that populates the Inventory with the MAC addresses
-from the VPD.
-
-There's another service, first-boot-set-mac, that reads the inventory
-and configures the network service with the mac addresses. This
-persists the mac address in the network configuration (eg
-/etc/systemd/network/00-bmc-eth0.network) and optionally calls
-fw_setenv to configure the u-boot environment:
-
- https://github.com/openbmc/phosphor-networkd/blob/master/src/ethernet_interface.cpp#L995
-
- https://github.com/openbmc/phosphor-networkd/blob/master/src/ethernet_interface.cpp#L1206
-
-A design goal was to not have to read the I2C EEPROM and parse the VPD
-in u-boot, hence doing it on first boot.
-
-Cheers,
-
-Joel
+-- 
+BRs,
+Lei YU
