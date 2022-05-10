@@ -1,66 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8352C5210B2
-	for <lists+openbmc@lfdr.de>; Tue, 10 May 2022 11:21:11 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8DD675210BA
+	for <lists+openbmc@lfdr.de>; Tue, 10 May 2022 11:21:47 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KyCFx2zd2z2xCp
-	for <lists+openbmc@lfdr.de>; Tue, 10 May 2022 19:21:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KyCGd2hj3z3bwT
+	for <lists+openbmc@lfdr.de>; Tue, 10 May 2022 19:21:45 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=YWlQ11nZ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=LPaoDLd4;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42c;
- helo=mail-pf1-x42c.google.com; envelope-from=warp5tw@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1029;
+ helo=mail-pj1-x1029.google.com; envelope-from=warp5tw@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=YWlQ11nZ; dkim-atps=neutral
-Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com
- [IPv6:2607:f8b0:4864:20::42c])
+ header.s=20210112 header.b=LPaoDLd4; dkim-atps=neutral
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com
+ [IPv6:2607:f8b0:4864:20::1029])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KyCBV2G6Kz3c7p
- for <openbmc@lists.ozlabs.org>; Tue, 10 May 2022 19:18:10 +1000 (AEST)
-Received: by mail-pf1-x42c.google.com with SMTP id v11so14441738pff.6
- for <openbmc@lists.ozlabs.org>; Tue, 10 May 2022 02:18:10 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KyCBp4KYhz3brn
+ for <openbmc@lists.ozlabs.org>; Tue, 10 May 2022 19:18:26 +1000 (AEST)
+Received: by mail-pj1-x1029.google.com with SMTP id e24so15367919pjt.2
+ for <openbmc@lists.ozlabs.org>; Tue, 10 May 2022 02:18:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=from:to:cc:subject:date:message-id:in-reply-to:references;
- bh=VnQelYMKjVBHrVTpQi4LelIGs3/pDFcP4b0unjHuL9k=;
- b=YWlQ11nZJlHg2PEfUsZRnDdN2Y7O4SmXoTqZkSUDVYhlzs0tY55OW6zn6mKq2YXQOP
- miVOmqyFjSuTbqWMOVODy2QhlgyfpLpdEV0tRIDyDar9k+eKUs6vuGUuA2LUZp9yA9rS
- jiayj0M7qbRk3I8c34WAlhuv6enjD3jwYiGbARRZxpujoq759uxFpifXYysuDmbSUoMQ
- qSijrVPj0phm24w94vTf7gAsX0nBcYCoM52QCu0KQlmFr1mW2tnPejel+JYRBW3dsJoX
- 3INKpH1/O7yy72AqJ1RRMJxGnQH2H14HSrVXIHVZlhIKd/LiyC0mYhZPxkqafLaFPhRG
- MU/Q==
+ h=from:to:cc:subject:date:message-id:in-reply-to:references
+ :mime-version:content-transfer-encoding;
+ bh=qdZcbphejbuJUyI8ZEVHLXuIfaV6dJq4J7NvpDgtTDg=;
+ b=LPaoDLd4Ikgrg7XEbyCAALxooHVmKiLlzVexFnqt53TrM98BzkpR73oa/V2hJLohvU
+ B1aJUHEDRTEHt8gvAFtOjpgdjP87bI3esyPGDSSuNm9MF9vpQ7o1SEpnOI4JtE1DU6AD
+ GLMeEtcI+D69rMS6wNyyQeYV1z/f3YgugfpeMudoHY1U0UfUCwbolO8KUVVvM0HjE5lP
+ 2MCCPrctSV7sLbEIT0dc9WQZcmgrzuFmbxN0oRm1z97czaM4mFaKYq8mGiEsWenYlBFY
+ mLneOPu/puWKkmKFiuaoy69NV86xj1vRVoFn5DJ+gd9VqZWv8Vo0ykwY4sL2YwYGZh/3
+ eQqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
- :references;
- bh=VnQelYMKjVBHrVTpQi4LelIGs3/pDFcP4b0unjHuL9k=;
- b=tlds7RJ3C1XrTSBF93NLlaYWAYgQARn5pFz1zspqepdKzWoyHB9zc3+lwSSHkN+j/N
- ogZkrcMWdR/0O1IX8AvAkw1/Std9QyxqLB8oFjWCiLDgSjO3I6lqVIcjwEhjG99w+woE
- rKd7UG+DM0wdE8P5gFB1MN3GQwPabdkRYkP1iVyUm7GMrebOFxPOfdS/p9fjnR0mNy+d
- jvmU0PMNFNWDmIQXEjum/Gmi/5klmat7wJpbBf46D8czzSf6MDHraHZEpj+/MYeDEFfv
- cVZzH2HA7MeWN98yu9u9M6iq5Dyxyq9EOMY2z8lnfLoLRpOpOnR9qolxpSpDrNiWNvcq
- g2ZA==
-X-Gm-Message-State: AOAM530Q86gPNEVcor0t7hckignr2wauqorfGhuAWfs4DKa2VYebe9t0
- HVfWrheFG/ZUSOSI+kxJfA==
-X-Google-Smtp-Source: ABdhPJzLH7yfVzJK9FA+HiKIZOajcWkEVzxgG48lIMgSZKODiXP/rLrp5Advh5OGWdjV+5Fa+ykhuw==
-X-Received: by 2002:a63:df0f:0:b0:3db:2d4:ded9 with SMTP id
- u15-20020a63df0f000000b003db02d4ded9mr579198pgg.267.1652174288073; 
- Tue, 10 May 2022 02:18:08 -0700 (PDT)
+ :references:mime-version:content-transfer-encoding;
+ bh=qdZcbphejbuJUyI8ZEVHLXuIfaV6dJq4J7NvpDgtTDg=;
+ b=2RZRfLJ4zW3QaW5sEYrHOHW7MSH1KIioarFC9s63YwoStdkiJm+YOLJxkjqd7Sby0q
+ 7lnbJtO2ZBu7oRZQd0GmUWPRUm5r/LPzYNe+kfoCCdTHz/vwsqjTFmeyUGIgARMaixzU
+ pSk2vEaQEf/JQuvEJGRyHfldsSkm7yzNcyUJgutGfjbeOF6eLkivWXTjKlgEb2/L26BE
+ zI+USwDcg0J04QrVUMbLQf9+GSKu23S+BTE21MKJrruIhITFP9AW67juCwwJD64UAQQp
+ b8fWFX/csEMSboCaLkPc4mLRaInFxZ9ji4UxsrdS7g1LvG8R/ZL2mPyMLKhcQfWu4b3s
+ nLyQ==
+X-Gm-Message-State: AOAM532TxlOpyDmrm3RzwuSW+/bJMgjKO88+AI7BdPTSuXRYmHy+BiIn
+ zXeex8B9DZhsF4o1YhpgSA==
+X-Google-Smtp-Source: ABdhPJwK15ScNG0MQ6kvstR93vQS+YXUeN1JFJINlUwVpN3CbMW5fFJpYiqTuWGQCQuQWMqdliwEgA==
+X-Received: by 2002:a17:902:e549:b0:15e:aa63:6fd8 with SMTP id
+ n9-20020a170902e54900b0015eaa636fd8mr20036042plf.152.1652174304396; 
+ Tue, 10 May 2022 02:18:24 -0700 (PDT)
 Received: from localhost
  (2001-b011-7010-358e-c990-a8c9-85a7-1d3e.dynamic-ip6.hinet.net.
  [2001:b011:7010:358e:c990:a8c9:85a7:1d3e])
  by smtp.gmail.com with ESMTPSA id
- w6-20020a627b06000000b0050dc7628185sm10428968pfc.95.2022.05.10.02.17.57
+ v3-20020a622f03000000b0050e0a43712esm10166345pfv.63.2022.05.10.02.18.09
  (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
- Tue, 10 May 2022 02:18:07 -0700 (PDT)
+ Tue, 10 May 2022 02:18:24 -0700 (PDT)
 From: Tyrone Ting <warp5tw@gmail.com>
 To: avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
  venture@google.com, yuenn@google.com, benjaminfair@google.com,
@@ -71,12 +72,15 @@ To: avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
  warp5tw@gmail.com, tali.perry@nuvoton.com, Avi.Fishman@nuvoton.com,
  tomer.maimon@nuvoton.com, KWLIU@nuvoton.com, JJLIU0@nuvoton.com,
  kfting@nuvoton.com
-Subject: [PATCH v4 5/9] i2c: npcm: Add tx complete counter
-Date: Tue, 10 May 2022 17:16:50 +0800
-Message-Id: <20220510091654.8498-6-warp5tw@gmail.com>
+Subject: [PATCH v4 6/9] i2c: npcm: Correct register access width
+Date: Tue, 10 May 2022 17:16:51 +0800
+Message-Id: <20220510091654.8498-7-warp5tw@gmail.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20220510091654.8498-1-warp5tw@gmail.com>
 References: <20220510091654.8498-1-warp5tw@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,47 +97,45 @@ Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Tali Perry <tali.perry1@gmail.com>
+From: Tyrone Ting <kfting@nuvoton.com>
 
-tx_complete counter is used to indicate successful transaction
-count.
-Similar counters for failed tx were previously added.
+The SMBnCTL3 register is 8-bit wide and the 32-bit access was always
+incorrect, but simply didn't cause a visible error on the 32-bit machine.
+
+On the 64-bit machine, the kernel message reports that ESR value is
+0x96000021. Checking Arm Architecture Reference Manual Armv8 suggests that
+it's the alignment fault.
+
+SMBnCTL3's address is 0xE.
 
 Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
-Signed-off-by: Tali Perry <tali.perry1@gmail.com>
+Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
+Reviewed-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
 ---
- drivers/i2c/busses/i2c-npcm7xx.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/i2c/busses/i2c-npcm7xx.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-npcm7xx.c
-index eaec051e080d..56af571f65c1 100644
+index 56af571f65c1..e3c13f801f1a 100644
 --- a/drivers/i2c/busses/i2c-npcm7xx.c
 +++ b/drivers/i2c/busses/i2c-npcm7xx.c
-@@ -314,6 +314,7 @@ struct npcm_i2c {
- 	u64 rec_fail_cnt;
- 	u64 nack_cnt;
- 	u64 timeout_cnt;
-+	u64 tx_complete_cnt;
- };
+@@ -360,14 +360,14 @@ static int npcm_i2c_get_SCL(struct i2c_adapter *_adap)
+ {
+ 	struct npcm_i2c *bus = container_of(_adap, struct npcm_i2c, adap);
  
- static inline void npcm_i2c_select_bank(struct npcm_i2c *bus,
-@@ -684,6 +685,8 @@ static void npcm_i2c_callback(struct npcm_i2c *bus,
- 	switch (op_status) {
- 	case I2C_MASTER_DONE_IND:
- 		bus->cmd_err = bus->msgs_num;
-+		if (bus->tx_complete_cnt < ULLONG_MAX)
-+			bus->tx_complete_cnt++;
- 		fallthrough;
- 	case I2C_BLOCK_BYTES_ERR_IND:
- 		/* Master tx finished and all transmit bytes were sent */
-@@ -2223,6 +2226,7 @@ static void npcm_i2c_init_debugfs(struct platform_device *pdev,
- 	debugfs_create_u64("rec_succ_cnt", 0444, d, &bus->rec_succ_cnt);
- 	debugfs_create_u64("rec_fail_cnt", 0444, d, &bus->rec_fail_cnt);
- 	debugfs_create_u64("timeout_cnt", 0444, d, &bus->timeout_cnt);
-+	debugfs_create_u64("tx_complete_cnt", 0444, d, &bus->tx_complete_cnt);
- 
- 	bus->debugfs = d;
+-	return !!(I2CCTL3_SCL_LVL & ioread32(bus->reg + NPCM_I2CCTL3));
++	return !!(I2CCTL3_SCL_LVL & ioread8(bus->reg + NPCM_I2CCTL3));
  }
+ 
+ static int npcm_i2c_get_SDA(struct i2c_adapter *_adap)
+ {
+ 	struct npcm_i2c *bus = container_of(_adap, struct npcm_i2c, adap);
+ 
+-	return !!(I2CCTL3_SDA_LVL & ioread32(bus->reg + NPCM_I2CCTL3));
++	return !!(I2CCTL3_SDA_LVL & ioread8(bus->reg + NPCM_I2CCTL3));
+ }
+ 
+ static inline u16 npcm_i2c_get_index(struct npcm_i2c *bus)
 -- 
 2.17.1
 
