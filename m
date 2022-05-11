@@ -2,93 +2,55 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BCFE522A13
-	for <lists+openbmc@lfdr.de>; Wed, 11 May 2022 04:52:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4D35C522A14
+	for <lists+openbmc@lfdr.de>; Wed, 11 May 2022 04:53:47 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KyfZn73Jnz3by9
-	for <lists+openbmc@lfdr.de>; Wed, 11 May 2022 12:52:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KyfcT23V6z3bxY
+	for <lists+openbmc@lfdr.de>; Wed, 11 May 2022 12:53:45 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=hBg7aaEk;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=MY5YmxSM;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
- helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com;
+ smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=hBg7aaEk; dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
- [148.163.156.1])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=MY5YmxSM; 
+ dkim-atps=neutral
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [IPv6:2605:2700:0:5::4713:9cab])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KyfZH6nwdz3bqY
- for <openbmc@lists.ozlabs.org>; Wed, 11 May 2022 12:51:51 +1000 (AEST)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 24B19lUT009970
- for <openbmc@lists.ozlabs.org>; Wed, 11 May 2022 02:51:47 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=message-id : date : to :
- from : subject : content-type : content-transfer-encoding : mime-version;
- s=pp1; bh=Xol0atxjbXUsTSVRGszyio7u2n5PtYKs5cL053biS94=;
- b=hBg7aaEkvDJauwWjL+zjx2Xb+UcLwpjyJd0a4BBOanG1M5Jv0uCJGJjsyavMY7G5I8ZZ
- PS2ES+7+IvM10hgJI6wqENE1ghEHGCf2HTMdKwbvg10dTozC5HbxRz6G5k7vv8tPb0uz
- PrCsPQpQ6HA0Vrevfj5h+Di6QHB1VJhYNglHOtNKVQSKEy3xkFLdXF1QPpaj6bBujTyt
- /bX5bYhP0IuIezXStV6qoZ8wehzeYSok7y2wUP6SJMOO5rOxLYPQgLX9tsz+Ylz/CZ3b
- ZxsGJJm8hZsKWjcCPBqFwrkrrf/EBIEkCDGe9dopYelxLFYrzY0UbxABybQ4Vi46X1Bt Hg== 
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3g02g6svp3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 11 May 2022 02:51:47 +0000
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 24B2mNTQ010791
- for <openbmc@lists.ozlabs.org>; Wed, 11 May 2022 02:51:46 GMT
-Received: from b03cxnp08025.gho.boulder.ibm.com
- (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
- by ppma03dal.us.ibm.com with ESMTP id 3fwgd9ygym-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Wed, 11 May 2022 02:51:46 +0000
-Received: from b03ledav003.gho.boulder.ibm.com
- (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
- by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 24B2pju223200208
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <openbmc@lists.ozlabs.org>; Wed, 11 May 2022 02:51:45 GMT
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 857266A04F
- for <openbmc@lists.ozlabs.org>; Wed, 11 May 2022 02:51:45 +0000 (GMT)
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4A09A6A047
- for <openbmc@lists.ozlabs.org>; Wed, 11 May 2022 02:51:45 +0000 (GMT)
-Received: from [9.65.238.111] (unknown [9.65.238.111])
- by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTPS
- for <openbmc@lists.ozlabs.org>; Wed, 11 May 2022 02:51:45 +0000 (GMT)
-Message-ID: <2c32e77e-9f57-36f7-52da-15fa2d4ff17a@linux.ibm.com>
-Date: Tue, 10 May 2022 21:51:44 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.6.0
-Content-Language: en-US
-To: openbmc <openbmc@lists.ozlabs.org>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Security Working Group meeting - Wednesday May 11
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: veL-T9Rc6Nn23zpPF7LqOx_tmmf5uZ5p
-X-Proofpoint-ORIG-GUID: veL-T9Rc6Nn23zpPF7LqOx_tmmf5uZ5p
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Kyfc50GgKz2xvF
+ for <openbmc@lists.ozlabs.org>; Wed, 11 May 2022 12:53:24 +1000 (AEST)
+Received: from hatter.bewilderbeest.net (174-21-163-222.tukw.qwest.net
+ [174.21.163.222])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 8F86A1B8;
+ Tue, 10 May 2022 19:53:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1652237599;
+ bh=nj7fmcTLOBO3JDxB0Aa+4vAQvh4a4MDy+Q5o0HpOoI4=;
+ h=From:To:Cc:Subject:Date:From;
+ b=MY5YmxSMQUiSSMzTnvtIL+CuRuZMeSHaGFamglYBPWmg2+5BBmm8oDIvjLDU4a2l4
+ 3UzsC8mjipiw6R7NAlonqDnNi7a9uf1Zr2ZnFkJc7h6nE37QbFvwU1PaCjHg2bgFOp
+ keoqITqfPn3a3MHcy7HGWjbHlCdKdOX91hQiyq6M=
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Joel Stanley <joel@jms.id.au>,
+	openbmc@lists.ozlabs.org
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc] aspeed: Fix typos in
+ platform.h comments
+Date: Tue, 10 May 2022 19:53:09 -0700
+Message-Id: <20220511025309.27224-1-zev@bewilderbeest.net>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.858,Hydra:6.0.486,FMLib:17.11.64.514
- definitions=2022-05-10_07,2022-05-10_01,2022-02-23_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 spamscore=0
- bulkscore=0 mlxlogscore=655 suspectscore=0 priorityscore=1501 phishscore=0
- impostorscore=0 mlxscore=0 clxscore=1015 malwarescore=0 lowpriorityscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2202240000
- definitions=main-2205110010
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,23 +62,53 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Andrew Jeffery <andrew@aj.id.au>, Ryan Chen <ryan_chen@aspeedtech.com>,
+ Zev Weiss <zev@bewilderbeest.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a reminder of the OpenBMC Security Working Group meeting 
-scheduled for this Wednesday May 11 at 10:00am PDT.
+"function" had been missing an "n" in a few places.
 
-We'll discuss the following items on the agenda 
-<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
-and anything else that comes up:
+Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+---
 
-1. (no topics)
+As pointed out by Joel during review of the recent backdoor-disabling
+patch.
 
+ arch/arm/include/asm/arch-aspeed/platform.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
+diff --git a/arch/arm/include/asm/arch-aspeed/platform.h b/arch/arm/include/asm/arch-aspeed/platform.h
+index f05747642f38..ca270d4be118 100644
+--- a/arch/arm/include/asm/arch-aspeed/platform.h
++++ b/arch/arm/include/asm/arch-aspeed/platform.h
+@@ -19,7 +19,7 @@
+ #define ASPEED_HW_STRAP1	0x1e6e2070
+ #define ASPEED_REVISION_ID	0x1e6e207C
+ #define ASPEED_SYS_RESET_CTRL	0x1e6e203C
+-#define ASPEED_VGA_HANDSHAKE0	0x1e6e2040	/*	VGA fuction handshake register */
++#define ASPEED_VGA_HANDSHAKE0	0x1e6e2040	/*	VGA function handshake register */
+ #define ASPEED_PCIE_CONFIG_SET	0x1e6e2180
+ #define ASPEED_DRAM_BASE	0x40000000
+ #define ASPEED_SRAM_BASE	0x1E720000
+@@ -34,7 +34,7 @@
+ #define ASPEED_HW_STRAP2	0x1e6e20D0
+ #define ASPEED_REVISION_ID	0x1e6e207C
+ #define ASPEED_SYS_RESET_CTRL	0x1e6e203C
+-#define ASPEED_VGA_HANDSHAKE0	0x1e6e2040	/*	VGA fuction handshake register */
++#define ASPEED_VGA_HANDSHAKE0	0x1e6e2040	/*	VGA function handshake register */
+ #define ASPEED_PCIE_CONFIG_SET	0x1e6e2180
+ #define ASPEED_MAC_COUNT	2
+ #define ASPEED_DRAM_BASE	0x80000000
+@@ -54,7 +54,7 @@
+ #define ASPEED_SYS_RESET_CTRL	0x1e6e2064
+ #define ASPEED_SYS_RESET_CTRL3	0x1e6e206c
+ #define ASPEED_GPIO_YZ_DATA	0x1e7801e0
+-#define ASPEED_VGA_HANDSHAKE0	0x1e6e2100	/*	VGA fuction handshake register */
++#define ASPEED_VGA_HANDSHAKE0	0x1e6e2100	/*	VGA function handshake register */
+ #define ASPEED_SB_STS		0x1e6f2014
+ #define ASPEED_OTP_QSR		0x1e6f2040
+ #define ASPEED_MAC_COUNT	4
+-- 
+2.35.3
 
-
-Access, agenda and notes are in the wiki:
-https://github.com/openbmc/openbmc/wiki/Security-working-group 
-<https://github.com/openbmc/openbmc/wiki/Security-working-group>
-
-- Joseph
