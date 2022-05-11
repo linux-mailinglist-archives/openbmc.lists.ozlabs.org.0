@@ -1,14 +1,14 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDCD3523FF0
-	for <lists+openbmc@lfdr.de>; Thu, 12 May 2022 00:05:31 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3377E523FF2
+	for <lists+openbmc@lfdr.de>; Thu, 12 May 2022 00:06:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Kz89P4zWQz3c7J
-	for <lists+openbmc@lfdr.de>; Thu, 12 May 2022 08:05:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Kz8BF13Tvz3c8V
+	for <lists+openbmc@lfdr.de>; Thu, 12 May 2022 08:06:13 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=inK4FK0I;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=SEpm6OYj;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -18,36 +18,36 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=inK4FK0I; 
+ header.a=rsa-sha256 header.s=thorn header.b=SEpm6OYj; 
  dkim-atps=neutral
 Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
  [IPv6:2605:2700:0:5::4713:9cab])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Kz88z4FDsz2yK6
- for <openbmc@lists.ozlabs.org>; Thu, 12 May 2022 08:05:07 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Kz89p625Yz2yn2
+ for <openbmc@lists.ozlabs.org>; Thu, 12 May 2022 08:05:50 +1000 (AEST)
 Received: from hatter.bewilderbeest.net (174-21-163-222.tukw.qwest.net
  [174.21.163.222])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id EF6DE56;
- Wed, 11 May 2022 15:05:02 -0700 (PDT)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 2B67956;
+ Wed, 11 May 2022 15:05:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
- s=thorn; t=1652306703;
- bh=LRBQA9f7mq9xvT6kfKdeHpdWQ/DbESuXPls5kusIcT4=;
+ s=thorn; t=1652306749;
+ bh=WR9giu9c6oC0IN84nlPwwv04zCbwogbLjfeBO19jPKA=;
  h=From:To:Cc:Subject:Date:From;
- b=inK4FK0IihguTlnSnwKHbgFHp9fctj+U3cFsFGiJk+OdyBxolhR17BhCqNpjpCNB0
- pgGAPHThcKvEqiN3Z73FNe2/1Pts7iIVB8W5GCxN9r5Esxc6sNG08fVsPB5No8an2T
- 9dSz5OfMc3pPUnrctsqZN+sEUHvVoH/YX/mBsJck=
+ b=SEpm6OYjc7J0jfdRsnGrItCgrWMLRDWWYpr/Hq3l13GeShpHELAXIgFuBnRZGptQB
+ 1F+sppPrQINIqRwFdMncOjn/02lScvsaW+T09oj5JOzzPd8BGjCP+tfBPMsYZUaR+N
+ FfUGa67+ijm1M0sh1E8ciFWK1PA1y54Qg5sehlQo=
 From: Zev Weiss <zev@bewilderbeest.net>
 To: Joel Stanley <joel@jms.id.au>,
 	openbmc@lists.ozlabs.org
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc v2] pinctrl: ast2400: add
- support for RGMII1 and RGMII2
-Date: Wed, 11 May 2022 15:04:52 -0700
-Message-Id: <20220511220452.4320-1-zev@bewilderbeest.net>
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc v2] ARM: dts: aspeed: add Delta
+ AHE-50DC BMC
+Date: Wed, 11 May 2022 15:05:42 -0700
+Message-Id: <20220511220542.4394-1-zev@bewilderbeest.net>
 X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -67,50 +67,79 @@ Cc: Andrew Jeffery <andrew@aj.id.au>, Ryan Chen <ryan_chen@aspeedtech.com>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The bits configured by these pinctrl groups are set to the same values
-as their reset defaults, so RGMII functionality would likely work
-anyway, but it seems good to make it explicit instead of relying on
-that.
+The Delta AHE-50DC Open19 power shelf uses a pair of AST1250 BMCs that
+are mostly compatible with the existing ast2400-evb device tree, with
+a couple small tweaks for the serial console UART and ethernet MACs.
 
 Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
 ---
 
 Changes since v1 [0]:
- - Added RGMII1 group [Joel]
+ - Disabled spi1, which this system doesn't use [Joel]
 
-[0] https://lore.kernel.org/openbmc/20220414205950.26406-1-zev@bewilderbeest.net/
+[0] https://lore.kernel.org/openbmc/20220414210045.26480-1-zev@bewilderbeest.net/
 
- drivers/pinctrl/aspeed/pinctrl_ast2400.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/arm/dts/Makefile             |  1 +
+ arch/arm/dts/ast2400-ahe-50dc.dts | 38 +++++++++++++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
+ create mode 100644 arch/arm/dts/ast2400-ahe-50dc.dts
 
-diff --git a/drivers/pinctrl/aspeed/pinctrl_ast2400.c b/drivers/pinctrl/aspeed/pinctrl_ast2400.c
-index a8a5ff517108..531e116c7967 100644
---- a/drivers/pinctrl/aspeed/pinctrl_ast2400.c
-+++ b/drivers/pinctrl/aspeed/pinctrl_ast2400.c
-@@ -133,6 +133,14 @@ static struct aspeed_sig_desc rxd3_link[] = {
- 	{ 0x80, BIT(23), 0},
- };
+diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+index a79f885f54fb..3515100c65ce 100755
+--- a/arch/arm/dts/Makefile
++++ b/arch/arm/dts/Makefile
+@@ -676,6 +676,7 @@ dtb-$(CONFIG_ARCH_BCM6858) += \
  
-+static struct aspeed_sig_desc rgmii1_link[] = {
-+	{ 0xa0, GENMASK(17, 12) | GENMASK(5, 0), 1 },
+ dtb-$(CONFIG_ARCH_ASPEED) += \
+ 	ast2400-evb.dtb \
++	ast2400-ahe-50dc.dtb \
+ 	ast2500-evb.dtb \
+ 	ast2600a0-evb.dtb \
+ 	ast2600a1-evb.dtb \
+diff --git a/arch/arm/dts/ast2400-ahe-50dc.dts b/arch/arm/dts/ast2400-ahe-50dc.dts
+new file mode 100644
+index 000000000000..d5e6f1989586
+--- /dev/null
++++ b/arch/arm/dts/ast2400-ahe-50dc.dts
+@@ -0,0 +1,38 @@
++/dts-v1/;
++
++#include "ast2400-evb.dts"
++
++/ {
++	model = "Delta AHE-50DC BMC";
++	compatible = "delta,ahe-50dc-bmc", "aspeed,ast2400-evb", "aspeed,ast2400";
++
++	chosen {
++		stdout-path = &uart3;
++	};
 +};
 +
-+static struct aspeed_sig_desc rgmii2_link[] = {
-+	{ 0xa0, GENMASK(23, 18) | GENMASK(11, 6), 1 },
++&uart5 {
++	status = "disabled";
 +};
 +
- static const struct aspeed_group_config ast2400_groups[] = {
- 	{ "MAC1LINK", 1, mac1_link },
- 	{ "MAC2LINK", 1, mac2_link },
-@@ -156,6 +164,8 @@ static const struct aspeed_group_config ast2400_groups[] = {
- 	{ "SPI1CS1", 1, spi1cs1_link},
- 	{ "TXD3", 1, txd3_link },
- 	{ "RXD3", 1, rxd3_link },
-+	{ "RGMII1", 1, rgmii1_link },
-+	{ "RGMII2", 1, rgmii2_link },
- };
- 
- static int ast2400_pinctrl_get_groups_count(struct udevice *dev)
++&uart3 {
++	u-boot,dm-pre-reloc;
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_txd3_default &pinctrl_rxd3_default>;
++};
++
++&mac0 {
++	status = "disabled";
++};
++
++&mac1 {
++	status = "okay";
++	phy-mode = "rgmii";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
++};
++
++&spi1 {
++	status = "disabled";
++};
 -- 
 2.35.3
 
