@@ -1,67 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 16193522C0F
-	for <lists+openbmc@lfdr.de>; Wed, 11 May 2022 08:04:42 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B467522D68
+	for <lists+openbmc@lfdr.de>; Wed, 11 May 2022 09:31:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Kykrl74frz3c8V
-	for <lists+openbmc@lfdr.de>; Wed, 11 May 2022 16:04:39 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Kymmv6YYTz3drH
+	for <lists+openbmc@lfdr.de>; Wed, 11 May 2022 17:31:27 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=ORHC7SJy;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Q4UkOaes;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::330;
- helo=mail-wm1-x330.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::432;
+ helo=mail-wr1-x432.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=ORHC7SJy; dkim-atps=neutral
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com
- [IPv6:2a00:1450:4864:20::330])
+ header.s=google header.b=Q4UkOaes; dkim-atps=neutral
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com
+ [IPv6:2a00:1450:4864:20::432])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KykrL6XVCz3bYP
- for <openbmc@lists.ozlabs.org>; Wed, 11 May 2022 16:04:17 +1000 (AEST)
-Received: by mail-wm1-x330.google.com with SMTP id
- i20-20020a05600c355400b0039456976dcaso1957107wmq.1
- for <openbmc@lists.ozlabs.org>; Tue, 10 May 2022 23:04:17 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KymlD0p3jz3cHw
+ for <openbmc@lists.ozlabs.org>; Wed, 11 May 2022 17:29:59 +1000 (AEST)
+Received: by mail-wr1-x432.google.com with SMTP id w4so1612835wrg.12
+ for <openbmc@lists.ozlabs.org>; Wed, 11 May 2022 00:29:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=9yQZl0d0b6Eae6vWImC6ay9PBAOGRvV6AfQxjzefGuI=;
- b=ORHC7SJyT2LelI9KhMIoq14zzoo/Fa5U8LiaZNX9SICFDeAPOB0Yc/DaX8jUVp6jtX
- bs87JqWYMtIBwxeA3h9zRvrUrK/WJY4beR1J1EGZAGp4+IgP4gWC+1HRXnLWyGtyz8NV
- fZoO+K+KBagtfCndoVOl/YmMjAIULKMVaPDWc=
+ :cc; bh=FU82+y5KN4ZxmKkyH5RkenvSl1vzz+UllVsUOhHzyPo=;
+ b=Q4UkOaes4QEVtHiX+l6mbKDNaJd3KFcsBvYlI0Id21iWJ0WirPQW0mBSvjqBI0SKl3
+ F8n62ynnBW5TrO0WPCtYAA7j70wWm9iWOHR8C2eafpmnxEXGoi3Cmh+QPEfuHUBiDYgH
+ PIE+Klk7kOmg5Luct9qLHo3N4FzigofhbG9cs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=9yQZl0d0b6Eae6vWImC6ay9PBAOGRvV6AfQxjzefGuI=;
- b=Fz0sqgC0uTjPt4d8AcD21oMQRgQyvd9IYniKLa9WSg7eCtu3Ixqlt4073WKoL1SxE5
- 67RGK0a3++I+b9YV+2raWiJTl66ZhFfOXYjCngAwdKAGkprwMM49v36A3BVxeeN+IMFM
- Nh4TXGjILnR/WqgDYBNijfsrM21GaYP5DOsYVyanYRtmDsIM3quNwEbI63OlJRpJNFJL
- edks5R7vOXse8Xqvq06UQ7hqZmWRXITj4jcLxG+sSl8p2Dr08dADDNZnRO+qd28DBPpX
- wwua+1mgI8kOsfFr2xUFH0E6BU7ZzIecRhdTvFmiXN0rvyyOyCpqqDFUQRTK3WsfvPnM
- ySAw==
-X-Gm-Message-State: AOAM530arExRzTEsw6c6YXD4sSyKgYtvoskkELxe4YPiNkz7YA+zc9VW
- jxpsqLwfKyN9fQ/gnvZThessKRR0vN70qKwn4RM=
-X-Google-Smtp-Source: ABdhPJxWi5za2czYGzlKiNr7yKcEc/Admgg3a3c21R8XMJjrqpxTMZFz6dV2wHu4QFVNT5O+sPm1HYWo/zG2KtyccIc=
-X-Received: by 2002:a05:600c:3583:b0:394:77fc:d6a2 with SMTP id
- p3-20020a05600c358300b0039477fcd6a2mr3058328wmq.63.1652249053878; Tue, 10 May
- 2022 23:04:13 -0700 (PDT)
+ bh=FU82+y5KN4ZxmKkyH5RkenvSl1vzz+UllVsUOhHzyPo=;
+ b=WPh55yWjTLeXs6qIzxTfGNSLcQHKblWqk02XfC8fFEAjMwQPXgY2bSNdsK7XZs4WeI
+ qEBHVckaWX1hB7xHjj2XmtzKCR+Oz8JRxe6zOa3wywLmEVdlC0XrwWkm2F4xpsIIKYd7
+ WqxFHqbg8BXMulDAKuIJBc1Y5BpaBpJPStFZHYOJ9xOPF/lGwmxcmvM/tGx3i2LYItX5
+ vexXD3XYxmwKvADIB3CBnmyTQ2XmI6iGx+x4rDZiHhBnmodRl08tlX6tvRQroIxy5Qj5
+ hPiKHuYX2jWv2jVYXSHnzLbKR1AEhu89+pH/wOUQrPKtBZz9IKpuPsXH2omlindInuwP
+ Qpfg==
+X-Gm-Message-State: AOAM530sh05HSWaSG+bnNwFgcD4MPriWwjloIkgCpiGVhLyAHh4g+oBc
+ HlOOBBpNSWQryg97xdj7r1Ap5hmU8hD2Xx2OGVY=
+X-Google-Smtp-Source: ABdhPJwDYcBWzqK9F7GS5oeREq/Yf8FzzSqBcWsuwdSCdu0iq+JCtUXU12hzu9S8GeG421vjO2AoXfRz9AVodXQEYyA=
+X-Received: by 2002:a5d:6d04:0:b0:20c:52de:9ce4 with SMTP id
+ e4-20020a5d6d04000000b0020c52de9ce4mr22910847wrq.572.1652254193208; Wed, 11
+ May 2022 00:29:53 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220414210045.26480-1-zev@bewilderbeest.net>
- <YnsviIh2dFoogpIE@hatter.bewilderbeest.net>
-In-Reply-To: <YnsviIh2dFoogpIE@hatter.bewilderbeest.net>
+References: <20220421083151.1887871-1-patrick.rudolph@9elements.com>
+ <20220421083151.1887871-2-patrick.rudolph@9elements.com>
+In-Reply-To: <20220421083151.1887871-2-patrick.rudolph@9elements.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 11 May 2022 06:04:01 +0000
-Message-ID: <CACPK8Xdg9doTkKowWj7yS30Wqh=kstK5YbY1+QxRPw_6A0pR9A@mail.gmail.com>
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] ARM: dts: aspeed: add
- Delta AHE-50DC BMC
-To: Zev Weiss <zev@bewilderbeest.net>
+Date: Wed, 11 May 2022 07:29:40 +0000
+Message-ID: <CACPK8Xd8U3rH5g6N4QhKdv+spdy+zhb=iGK-pJ1pJNVK02RGvA@mail.gmail.com>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v2 1/4] arm/dts: Add
+ Genesis3 board
+To: Patrick Rudolph <patrick.rudolph@9elements.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -74,49 +73,143 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Ryan Chen <ryan_chen@aspeedtech.com>
+Cc: christian.walter@9elements.com, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ takken@us.ibm.com, Zev Weiss <zweiss@equinix.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 11 May 2022 at 03:37, Zev Weiss <zev@bewilderbeest.net> wrote:
+On Thu, 21 Apr 2022 at 08:32, Patrick Rudolph
+<patrick.rudolph@9elements.com> wrote:
 >
-> On Thu, Apr 14, 2022 at 02:00:45PM PDT, Zev Weiss wrote:
-> > The Delta AHE-50DC Open19 power shelf uses a pair of AST1250 BMCs that
-> > are mostly compatible with the existing ast2400-evb device tree, with
-> > a couple small tweaks for the serial console UART and ethernet MACs.
-> >
-> > Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-> > ---
-> >  arch/arm/dts/Makefile             |  1 +
-> >  arch/arm/dts/ast2400-ahe-50dc.dts | 34 +++++++++++++++++++++++++++++++
-> >  2 files changed, 35 insertions(+)
-> >  create mode 100644 arch/arm/dts/ast2400-ahe-50dc.dts
-> >
+> Add devicetree source file. It uses the evb-ast2500 board files.
 >
-> Ping...does this look like a reasonable approach for a board that's
-> mostly-but-not-entirely EVB-compatible?
+> Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+> ---
+>  arch/arm/dts/Makefile         |  1 +
+>  arch/arm/dts/ibm-genesis3.dts | 83 +++++++++++++++++++++++++++++++++++
+>  2 files changed, 84 insertions(+)
+>  create mode 100644 arch/arm/dts/ibm-genesis3.dts
+>
+> diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+> index a79f885f54..fae23e6bc1 100755
+> --- a/arch/arm/dts/Makefile
+> +++ b/arch/arm/dts/Makefile
+> @@ -677,6 +677,7 @@ dtb-$(CONFIG_ARCH_BCM6858) += \
+>  dtb-$(CONFIG_ARCH_ASPEED) += \
+>         ast2400-evb.dtb \
+>         ast2500-evb.dtb \
+> +       ibm-genesis3.dtb \
 
-That looks okay. Are you sure you have everything that the evb enables
-on your board? Dual flashes on both flash controllers, etc?
+The rest of the boards are named ast2x00-<machinename>.
 
-I wonder if it would be better to put more into ast2400-u-boot.dtsi
-and use that?
+Your dts would be ast2500-genesis3.dtb
 
-But I don't have strong opinions either way. Your device tree looks
-fine, and I am happy to merge it.
+Going back to the v1, I see that both Zev and I made the same comment.
+If you have a reason to not do this, please say so.
 
-> Once the regulator/extcon
-> driver question gets sorted out I'll post a kernel dts, after which I
-> think the necessary pieces will be in place to add an OpenBMC meta-layer
-> for this system.
->
-> This patch is also still outstanding as a semi-dependency (not strictly
-> necessary for this, but nice to have for it):
-> https://lore.kernel.org/openbmc/20220414205950.26406-1-zev@bewilderbeest.net/
->
->
-> Thanks,
-> Zev
+>         ast2600a0-evb.dtb \
+>         ast2600a1-evb.dtb \
+>         ast2600-bletchley.dtb \
+> diff --git a/arch/arm/dts/ibm-genesis3.dts b/arch/arm/dts/ibm-genesis3.dts
+> new file mode 100644
+> index 0000000000..c808fd27c4
+> --- /dev/null
+> +++ b/arch/arm/dts/ibm-genesis3.dts
+> @@ -0,0 +1,83 @@
+> +/dts-v1/;
+
+Add a copyright statement.
+
+
+
+> +
+> +#include "ast2500-u-boot.dtsi"
+> +
+> +/ {
+> +       model = "IBM Genesis3";
+> +       compatible = "ibm,genesis3-bmc", "aspeed,ast2500";
+> +
+> +       memory {
+> +               device_type = "memory";
+> +               reg = <0x80000000 0x20000000>;
+> +       };
+> +
+> +       chosen {
+> +               stdout-path = &uart5;
+> +       };
+> +
+> +       aliases {
+> +               spi0 = &fmc;
+> +               ethernet0 = &mac0;
+> +               ethernet1 = &mac1;
+> +       };
+> +};
+> +
+> +&uart5 {
+> +       u-boot,dm-pre-reloc;
+> +       status = "okay";
+> +};
+> +
+> +&sdrammc {
+> +       clock-frequency = <400000000>;
+> +};
+> +
+> +&wdt1 {
+> +       u-boot,dm-pre-reloc;
+> +       status = "okay";
+> +};
+> +
+> +&wdt2 {
+> +       u-boot,dm-pre-reloc;
+> +       status = "okay";
+> +};
+> +
+> +&wdt3 {
+> +       u-boot,dm-pre-reloc;
+> +       status = "okay";
+> +};
+> +
+> +&mac0 {
+> +       status = "okay";
+> +       phy-mode = "rgmii";
+> +
+> +       pinctrl-names = "default";
+> +       pinctrl-0 = <&pinctrl_mac1link_default &pinctrl_mdio1_default>;
+> +};
+> +
+> +&mac1 {
+> +       status = "okay";
+> +       phy-mode = "rgmii";
+> +       pinctrl-names = "default";
+> +       pinctrl-0 = <&pinctrl_mac2link_default &pinctrl_mdio2_default>;
+> +};
+> +
+> +&fmc {
+> +       status = "okay";
+> +       timing-calibration-disabled;
+> +       flash@0 {
+> +               compatible = "spi-flash", "spansion,s25fl256l";
+> +               status = "okay";
+> +               spi-max-frequency = <50000000>;
+> +               spi-tx-bus-width = <2>;
+> +               spi-rx-bus-width = <2>;
+> +       };
+> +
+> +       flash@1 {
+> +               compatible = "spi-flash", "spansion,s25fl256l";
+> +               status = "okay";
+> +               spi-max-frequency = <50000000>;
+> +               spi-tx-bus-width = <2>;
+> +               spi-rx-bus-width = <2>;
+> +       };
+> +};
+
+This is an exact copy of the ast2500-evb up until this point.
+
+Consider following Zev's example for the board he's adding, by
+including the dts and overriding/disabling things as required.
+
+> +
+> --
+> 2.35.1
 >
