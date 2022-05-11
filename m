@@ -2,71 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 27050522BCE
-	for <lists+openbmc@lfdr.de>; Wed, 11 May 2022 07:38:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 122E8522BF0
+	for <lists+openbmc@lfdr.de>; Wed, 11 May 2022 07:56:17 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KykGM6lpGz3c80
-	for <lists+openbmc@lfdr.de>; Wed, 11 May 2022 15:38:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Kykg26Y6Qz3c1K
+	for <lists+openbmc@lfdr.de>; Wed, 11 May 2022 15:56:14 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=iSXjFtVd;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=bABZhbC7;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e34;
- helo=mail-vs1-xe34.google.com; envelope-from=warp5tw@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::32c;
+ helo=mail-wm1-x32c.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=iSXjFtVd; dkim-atps=neutral
-Received: from mail-vs1-xe34.google.com (mail-vs1-xe34.google.com
- [IPv6:2607:f8b0:4864:20::e34])
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=bABZhbC7; dkim-atps=neutral
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com
+ [IPv6:2a00:1450:4864:20::32c])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KykFz61yxz3bd4
- for <openbmc@lists.ozlabs.org>; Wed, 11 May 2022 15:37:58 +1000 (AEST)
-Received: by mail-vs1-xe34.google.com with SMTP id q2so897712vsr.5
- for <openbmc@lists.ozlabs.org>; Tue, 10 May 2022 22:37:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4Kykfc5WzJz3bhR
+ for <openbmc@lists.ozlabs.org>; Wed, 11 May 2022 15:55:50 +1000 (AEST)
+Received: by mail-wm1-x32c.google.com with SMTP id
+ k126-20020a1ca184000000b003943fd07180so567946wme.3
+ for <openbmc@lists.ozlabs.org>; Tue, 10 May 2022 22:55:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=99+74zi/ugqpPP/H1BYx5mgxsw+MDJDahwiZMO6/fXg=;
- b=iSXjFtVdoulAW6NWsq1PlmfC+Qc6T0H6RCPJgN+0OIjZRODULDLwlVSQfCwx2mvpu4
- LeRNFlmImRZYhJo2Gipt91G9tXQlMJR6esNrSwjqvBDd218CuRg2Ct7WOxdYUoxA3dcy
- mma0bmpQdUAuxDWaBP4/vx2EshnDFGylyHaeVxK5KWWuW4mZpSOOy0Ogmyd1JaSkxuQg
- unlANkeTyEalXxWZMCJnsK2WG+XLkJJnMllmD17jQf2zbwj1Yl6Hn4s8ySOGuNUBoc3i
- si4s7/48IlQJ+tsGWUao50RjPAMdunVkiXKe6wmV9pUS/if4BYYIxycPZe5AqxByEjUE
- b69g==
+ :cc; bh=bg/FieHR6lJpbfjpRxqOkWs5k42ETVw5AAxpu86TOEc=;
+ b=bABZhbC7FQO+8LfGOoy/zpQdca2oTUc7oGjPwRKmTI8NXw+PsmMJ1ZLU0esaEZOzlq
+ PPMl9uqQIsQk6t8ey0zVZS8pzYytbydTvZAxkJeCgVnvQVycZ01DQGG3nA28V/I0W++6
+ Av7sh3QNkJS4vywqAON/F2t20U1uCY+ROKA50=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=99+74zi/ugqpPP/H1BYx5mgxsw+MDJDahwiZMO6/fXg=;
- b=5r/tQGQCnUdFnE/TWUeD44N+aq0smFOqmV1hNlvq7ba3J+XJfErQau26dueYGVXOtm
- cMLn5u/rUmPqN1vZdjHwI4dHOsiz44zZ20RP9EY0z44EV4my68EX5c+VehlgyKc/IwbW
- uTf8lKLf2+8yFMqAjQPr5aJ78Iire3Ef0TidjdJw9/34SSRSGBi7wr624XR3SPTiERBQ
- dS2H9zyM5/QsWauzsAnK4nYaEUQ33mvAZAOWoK9hj5ThN9bzVI1Ghv4t75XIxLOUJRn5
- OHeL47DSakTkATM7PDF6gJrP7+EtLmM2SDK6VWzzepi4/1E5FMe3nBxAXqD7ZGzrSKTS
- Gg3w==
-X-Gm-Message-State: AOAM532HnNKLXPwOKaJhXY/JFJt0lPw3OPf55P9z7+/B+53O5GvDO5Kw
- rN4NgcIyyqHId+bDIE3VNgbv66zCZUEJ/IKdzw==
-X-Google-Smtp-Source: ABdhPJzGI4xLPZN4cIpW61gkAg41dLMEipuG1mmnFJBEpFDmP97YmzjtAqLMeg6hmzlp8t4UkpaMK8VUfoOjgxnHaNs=
-X-Received: by 2002:a67:b60b:0:b0:32c:e69e:15b3 with SMTP id
- d11-20020a67b60b000000b0032ce69e15b3mr13088417vsm.2.1652247475469; Tue, 10
- May 2022 22:37:55 -0700 (PDT)
+ :message-id:subject:to:cc;
+ bh=bg/FieHR6lJpbfjpRxqOkWs5k42ETVw5AAxpu86TOEc=;
+ b=uPU7htut8M9cY55yqDRv1ZYJ8T6TwzxgRUu60V7IsymsHMoLqVcPwjTyamceoUCI7+
+ QQ0Vpi8IvnjW1qkqDtmvnEg7G+65xQBim0f0QZhwY1blN3MgGTKHeZCVR+2TagNYspBk
+ k+sgwO+pWDrQwmWEcUQDDNr3f/AtUN5d6Qbbg8glIC3mzQRYniiEZzoy7edI/GsdgiRE
+ VZecOmDFWKbHCEHwmGNGEIYCQOFCgwNFgAO0rTuCB4DOiOicd1KlppB6JiUrjWxzUVQ3
+ wWdCzjMReNaBs7pnjv2moR6gva0JzfMioOiPs0mMnOz2bcK8kNCOeAPlYaceL76k3yVG
+ sgnQ==
+X-Gm-Message-State: AOAM530RGGdZR6YtJJxYgaluz89vAkmvxXYIFsxEDa7/WDq0nH27mgoT
+ B6NRSwa+ulgOy7wTZNEgUyf3t0b493CADk7YHmI=
+X-Google-Smtp-Source: ABdhPJx2tTk6HMF4hWV0HWPyjaGPTGJ/yb49Oxz4OeBvjJZc/OkAmnE759nEK+Ksf+vAynHRSgr+t7UqMYCDuRbxXkM=
+X-Received: by 2002:a7b:cd82:0:b0:389:77ef:66d7 with SMTP id
+ y2-20020a7bcd82000000b0038977ef66d7mr2916990wmj.171.1652248544571; Tue, 10
+ May 2022 22:55:44 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220510091654.8498-1-warp5tw@gmail.com>
- <20220510091654.8498-8-warp5tw@gmail.com>
- <Yno7IaBNnR5U2GuF@smile.fi.intel.com>
-In-Reply-To: <Yno7IaBNnR5U2GuF@smile.fi.intel.com>
-From: Tyrone Ting <warp5tw@gmail.com>
-Date: Wed, 11 May 2022 13:37:43 +0800
-Message-ID: <CACD3sJYPrQoWzOkOKM5tWuTWS0uEertBSrwMa5QmX0cMAPF4EQ@mail.gmail.com>
-Subject: Re: [PATCH v4 7/9] i2c: npcm: Handle spurious interrupts
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+References: <20220414205950.26406-1-zev@bewilderbeest.net>
+In-Reply-To: <20220414205950.26406-1-zev@bewilderbeest.net>
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 11 May 2022 05:55:32 +0000
+Message-ID: <CACPK8Xdhx8PZBw3WeP7UuBKA9XD-ATtPgYHnp=SM2-OPFFnThw@mail.gmail.com>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] pinctrl: ast2400: add
+ support for RGMII2
+To: Zev Weiss <zev@bewilderbeest.net>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,129 +73,75 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: tmaimon77@gmail.com, devicetree@vger.kernel.org, tali.perry1@gmail.com,
- jsd@semihalf.com, krzysztof.kozlowski+dt@linaro.org, benjaminfair@google.com,
- openbmc@lists.ozlabs.org, JJLIU0@nuvoton.com, lukas.bulwahn@gmail.com,
- tomer.maimon@nuvoton.com, KWLIU@nuvoton.com, arnd@arndb.de, sven@svenpeter.dev,
- robh+dt@kernel.org, Avi.Fishman@nuvoton.com, semen.protsenko@linaro.org,
- avifishman70@gmail.com, venture@google.com, linux-kernel@vger.kernel.org,
- wsa@kernel.org, kfting@nuvoton.com, tali.perry@nuvoton.com,
- jarkko.nikula@linux.intel.com, olof@lixom.net, linux-i2c@vger.kernel.org
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Ryan Chen <ryan_chen@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Andy:
+On Thu, 14 Apr 2022 at 21:00, Zev Weiss <zev@bewilderbeest.net> wrote:
+>
+> The bits configured by this pinctrl group are set to the same values
+> as their reset defaults, so RGMII2 functionality would likely work
+> anyway, but it seems good to make it explicit instead of relying on
+> that.
+>
+> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
 
-Thank you for your comments and they will be addressed.
+This looks good. When reviewing I checked it against the datasheet,
+and I think it makes it clearer if we also add rgmii1:
 
-Andy Shevchenko <andriy.shevchenko@linux.intel.com> =E6=96=BC 2022=E5=B9=B4=
-5=E6=9C=8810=E6=97=A5 =E9=80=B1=E4=BA=8C =E4=B8=8B=E5=8D=886:15=E5=AF=AB=E9=
-=81=93=EF=BC=9A
+--- a/drivers/pinctrl/aspeed/pinctrl_ast2400.c
++++ b/drivers/pinctrl/aspeed/pinctrl_ast2400.c
+@@ -133,6 +133,10 @@ static struct aspeed_sig_desc rxd3_link[] = {
+        { 0x80, BIT(23), 0},
+ };
+
++static struct aspeed_sig_desc rgmii1_link[] = {
++       { 0xa0, GENMASK(17, 12) | GENMASK(5, 0), 1 },
++};
++
+ static struct aspeed_sig_desc rgmii2_link[] = {
+        { 0xa0, GENMASK(23, 18) | GENMASK(11, 6), 1 },
+ };
+@@ -160,6 +164,7 @@ static const struct aspeed_group_config ast2400_groups[] = {
+        { "SPI1CS1", 1, spi1cs1_link},
+        { "TXD3", 1, txd3_link },
+        { "RXD3", 1, rxd3_link },
++       { "RGMII1", 1, rgmii1_link },
+        { "RGMII2", 1, rgmii2_link },
+ };
+
+Can you resend with that squashed in, if it looks correct to you?
+
+
+> ---
+>  drivers/pinctrl/aspeed/pinctrl_ast2400.c | 5 +++++
+>  1 file changed, 5 insertions(+)
 >
-> On Tue, May 10, 2022 at 05:16:52PM +0800, Tyrone Ting wrote:
-> > From: Tali Perry <tali.perry1@gmail.com>
-> >
-> > On some platforms in rare cases (1 to 100,000 transactions),
-> > the i2c gets a spurious interrupt which means that we enter an interrup=
-t
-> > but in the interrupt handler we don't find any status bit that points t=
-o
-> > the reason we got this interrupt.
-> >
-> > This may be a case of a rare HW issue or signal integrity issue that is
-> > still under investigation.
-> >
-> > In order to overcome this we are doing the following:
-> > 1. Disable incoming interrupts in master mode only when slave mode is n=
-ot
-> >    enabled.
-> > 2. Clear end of busy (EOB) after every interrupt.
-> > 3. Clear other status bits (just in case since we found them cleared)
-> > 4. Return correct status during the interrupt that will finish the
-> >    transaction.
-> >
-> > On next xmit transaction if the bus is still busy the master will issue=
- a
-> > recovery process before issuing the new transaction.
+> diff --git a/drivers/pinctrl/aspeed/pinctrl_ast2400.c b/drivers/pinctrl/aspeed/pinctrl_ast2400.c
+> index a8a5ff517108..debe6b83d553 100644
+> --- a/drivers/pinctrl/aspeed/pinctrl_ast2400.c
+> +++ b/drivers/pinctrl/aspeed/pinctrl_ast2400.c
+> @@ -133,6 +133,10 @@ static struct aspeed_sig_desc rxd3_link[] = {
+>         { 0x80, BIT(23), 0},
+>  };
 >
-> ...
+> +static struct aspeed_sig_desc rgmii2_link[] = {
+> +       { 0xa0, GENMASK(23, 18) | GENMASK(11, 6), 1 },
+> +};
+> +
+>  static const struct aspeed_group_config ast2400_groups[] = {
+>         { "MAC1LINK", 1, mac1_link },
+>         { "MAC2LINK", 1, mac2_link },
+> @@ -156,6 +160,7 @@ static const struct aspeed_group_config ast2400_groups[] = {
+>         { "SPI1CS1", 1, spi1cs1_link},
+>         { "TXD3", 1, txd3_link },
+>         { "RXD3", 1, rxd3_link },
+> +       { "RGMII2", 1, rgmii2_link },
+>  };
 >
-> > +     /* clear status bits for spurious interrupts */
->
-> Clear
->
-> ...
->
-> > +     /*
-> > +      * if irq is not one of the above, make sure EOB is disabled and =
-all
->
-> If
->
-> > +      * status bits are cleared.
-> > +      */
->
-> ...
->
-> > +             /* verify no status bits are still set after bus is relea=
-sed */
->
-> Verify
->
-> ...
->
-> > +     /* check HW is OK: SDA and SCL should be high at this point. */
->
-> Check
->
-> ...
->
-> > +     if ((npcm_i2c_get_SDA(&bus->adap) =3D=3D 0) ||
-> > +         (npcm_i2c_get_SCL(&bus->adap) =3D=3D 0)) {
->
-> This fits one line
->
-> > +             dev_err(bus->dev, "I2C%d init fail: lines are low", bus->=
-num);
-> > +             dev_err(bus->dev, "SDA=3D%d SCL=3D%d", npcm_i2c_get_SDA(&=
-bus->adap),
-> > +                     npcm_i2c_get_SCL(&bus->adap));
->
-> No '\n' at the end of each?!
->
-> > +             return -ENXIO;
-> > +     }
->
-> ...
->
-> > +     /* clear status bits for spurious interrupts */
->
-> Clear
->
-> ...
->
-> > +     /* after any xfer, successful or not, stall and EOB must be disab=
-led */
->
-> After
->
-> ...
->
-> Maybe you chose the small letter for one-liner comments, but I see even i=
-n the
-> original code the inconsistent style. Please, add an explanation to the c=
-over
-> letter and follow it, assuming you add the patch at the end of the series=
- that
-> makes comment style consistent (for the one-liners, for the multi-line co=
-mments
-> we have a clear understanding about the style).
->
+>  static int ast2400_pinctrl_get_groups_count(struct udevice *dev)
 > --
-> With Best Regards,
-> Andy Shevchenko
+> 2.35.1
 >
->
-
-Best Regards,
-Tyrone
