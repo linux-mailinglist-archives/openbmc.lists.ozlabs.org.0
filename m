@@ -1,67 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 60CA5524495
-	for <lists+openbmc@lfdr.de>; Thu, 12 May 2022 06:55:18 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2D5B75247A9
+	for <lists+openbmc@lfdr.de>; Thu, 12 May 2022 10:11:33 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KzKGD27dbz3bYF
-	for <lists+openbmc@lfdr.de>; Thu, 12 May 2022 14:55:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KzPcf6v4Qz3bxt
+	for <lists+openbmc@lfdr.de>; Thu, 12 May 2022 18:11:30 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=NqGB+gD/;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=DhKAfynr;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::431;
- helo=mail-wr1-x431.google.com; envelope-from=joel.stan@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=NqGB+gD/; dkim-atps=neutral
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com
- [IPv6:2a00:1450:4864:20::431])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.93; helo=mga11.intel.com;
+ envelope-from=jiaqing.zhao@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
+ header.s=Intel header.b=DhKAfynr; dkim-atps=neutral
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KzKFs6N67z3bZB
- for <openbmc@lists.ozlabs.org>; Thu, 12 May 2022 14:54:56 +1000 (AEST)
-Received: by mail-wr1-x431.google.com with SMTP id m1so5533768wrb.8
- for <openbmc@lists.ozlabs.org>; Wed, 11 May 2022 21:54:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=aEyPPcgkZw0teL2AcjFWstAPzaqGbh2J/gYjTgbYIxA=;
- b=NqGB+gD/KI5JbG4OSOuWLTMlSbhHlLkBsfi1D+f8yx1aW7xGooWUVEneAuWlvAre3P
- pnoqUwdJfBjicRsPcJJ0SBA+7RZw6zcB7fSUFSu0cloM4MhJ/pVXOVZkAolzXsDuBIQB
- JUU8enN7f0G5v1kVI2kgDIdWs1niaqI+WyFwc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=aEyPPcgkZw0teL2AcjFWstAPzaqGbh2J/gYjTgbYIxA=;
- b=UGtTt2siYhvv+iFMHGe5PI4sv74imrNZkOjoXAT+kB3Kbi9L6cQkf+v3Bfh/Zmvhj9
- duZ1rUpRohLdIDwGLfJpq8BHtvjdFL/dLabHWm8y6w+KcmvaYrko7Ekc/Tigdv8rffcs
- Fqmz5Px5JIzOtNiagRt5RvmgR73yP2sOoP9C+jUmsblQCJ8MMbw7lqlmEedXSAVXc7qt
- 2UNuROWTgmnBNTK+lmX4N32S2B9FVo2+gZ3sdjKPe/S7u8sURYwy/1M4+rk5TGC48NzZ
- wTmOkg5UdNoRJvSGVHV4u5Uqn5FcLgRdu4HMnfDKCJC776GGJdv/CDieuAtn7+c0reNS
- MbqA==
-X-Gm-Message-State: AOAM532WF+db5q/QpAEIrVb53yMYr64tl1c8S86uvRdboc5D6Sl24unh
- OviLUBEkVblt22Qmzpm0ac5K3//SnubDU+27x64=
-X-Google-Smtp-Source: ABdhPJxzLW6o0pICZ7o8uBI+BJY1Ln+XVkNjbk7nvdY/pWZfGpNWk4iiClbjsGLhumDVxO1bUDtw2SLEby1B0YEzigU=
-X-Received: by 2002:a5d:6d05:0:b0:20c:64fd:f98a with SMTP id
- e5-20020a5d6d05000000b0020c64fdf98amr25409308wrq.474.1652331292235; Wed, 11
- May 2022 21:54:52 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KzPcC5H2sz3bZY
+ for <openbmc@lists.ozlabs.org>; Thu, 12 May 2022 18:11:04 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1652343067; x=1683879067;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=sNt/oo/daQ36rlp/elPqgg1JqGSFdZywkqf2Bgv/bR4=;
+ b=DhKAfynrynNjwYcm+unMRG4SD1RAWxMDxcu1WjoQyvtPbdY6MFabJ1WQ
+ FbNVTfe19gh55kWVuCt+tLrBVBqO2OjVUijXBvW+AAspp/R5d6UG3JWJc
+ 4cgpmdS3RBZH0/J8IlClI/WXcUBnpyWOKJF7eDCiD+pkrrdyieKfoD7Sb
+ B78z69IbNA2XBx6n1VlQJ1XhzTeybmGlFsEyUpu1HWc3T+RVRxzLoSvCZ
+ zQS1cMTZUb2vdpZ9glUMf2xO9hmrJILgU0ZEmUpLcKWE5LtOfHE4w/tN3
+ Hp7qBvpBiRlEo7uQL61oSZV+bKk7vhrRszGSXQY6SQYLarOu2HT+fLXmo w==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10344"; a="267515311"
+X-IronPort-AV: E=Sophos;i="5.91,219,1647327600"; d="scan'208";a="267515311"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+ by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 May 2022 01:10:00 -0700
+X-IronPort-AV: E=Sophos;i="5.91,219,1647327600"; d="scan'208";a="594554346"
+Received: from jiaqingz-mobl.ccr.corp.intel.com (HELO [10.249.197.41])
+ ([10.249.197.41])
+ by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 May 2022 01:09:59 -0700
+Message-ID: <56f4c504-cbb3-aafc-2e4e-e0b3f9439ade@linux.intel.com>
+Date: Thu, 12 May 2022 16:09:57 +0800
 MIME-Version: 1.0
-References: <20220511220542.4394-1-zev@bewilderbeest.net>
- <CACPK8XdYMzsEQXHYwdx7si9SBUhD9xeB+0D2eGgoR-LKosq4Tg@mail.gmail.com>
-In-Reply-To: <CACPK8XdYMzsEQXHYwdx7si9SBUhD9xeB+0D2eGgoR-LKosq4Tg@mail.gmail.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 12 May 2022 04:54:40 +0000
-Message-ID: <CACPK8Xe5EAxA8JxZBtqrkDKO3Vd4nCmuZ7sOityYXDF4wZ=CHg@mail.gmail.com>
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v2] ARM: dts: aspeed: add
- Delta AHE-50DC BMC
-To: Zev Weiss <zev@bewilderbeest.net>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: VLAN issue with NICEnabled property
+Content-Language: en-US
+To: Johnathan Mantey <johnathanx.mantey@intel.com>, openbmc@lists.ozlabs.org
+References: <93ff730f-ee5c-b5a1-9e14-873248ff969f@linux.intel.com>
+ <b64651cc-7da1-d8d4-eaa1-de4cd7555828@intel.com>
+From: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
+In-Reply-To: <b64651cc-7da1-d8d4-eaa1-de4cd7555828@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,64 +71,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Ryan Chen <ryan_chen@aspeedtech.com>
+Cc: wak@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 12 May 2022 at 04:40, Joel Stanley <joel@jms.id.au> wrote:
->
-> On Wed, 11 May 2022 at 22:05, Zev Weiss <zev@bewilderbeest.net> wrote:
-> >
-> > The Delta AHE-50DC Open19 power shelf uses a pair of AST1250 BMCs that
-> > are mostly compatible with the existing ast2400-evb device tree, with
-> > a couple small tweaks for the serial console UART and ethernet MACs.
-> >
-> > Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-> > ---
-> >
-> > Changes since v1 [0]:
-> >  - Disabled spi1, which this system doesn't use [Joel]
->
-> Thanks, applied.
+On 2022-05-12 04:31, Johnathan Mantey wrote:
+> On 4/15/22 05:28, Jiaqing Zhao wrote:
+>> Hi, all
+>>
+>> In phosphor-networkd, setting NICEnabled to false write "Unmanaged=yes" in network configuration file. There was an issue with this property and its VLAN. Reboot bmc after setting NICEnabled to false, its VLAN interfaces disappears, and if set it to true, all previously configured VLANs for this interfaces will be lost.
+>>
+>> The reason is, since the interface is set to Unmanaged in config file, systemd-networkd will not configure the interface on boot, including creating VLANs. On the phosphor-networkd side, it creates its interface list from getifaddrs(), as VLAN interfaces are not created, they will not be added to the list. When setting NICEnabled back to true, it rewrites the config file with the VLANs in that list, so no VLAN is written, essentially removes the previously configured VLAN from the system with dangling vlan netdev and config files.
+>>
+>> To solve this issue, my proposal is to write "ActivationPolicy=down" when NICEnabled is false, this option tells systemd-networkd not to bring up the interface on boot. But it is still managed, meaning that its VLAN interfaces will be created.
+> 
+> This control was the result of using the Unmanaged entry for disabling the NIC. The phosphor-network code needs to change to the ActivationPolicy configuration option, IMO.
 
-I have a script I use for testing:
-```
-#!/bin/bash
+Another issue I met is the MAC address specified in systemd.network config is also lost after reboot as it is Unmanaged by systemd. Using ActivationPolicy will also solve this.
 
-set -e
+>>
+>> But there is a question of this proposal, how to set nicEnabled property when creating the interface? Using "ActivationPolicy=down" still
+> 
+> What do you mean by "creating the interface"?
+> Are you referring to what the systemd-networkd service will do?
+> Are you referring to how phosphor-network captures the network configuration in the data structures used to manage systemd.network configuration files?
 
-OBJ=ast2400-obj
-CONFIG=evb-ast2400_defconfig
-: ${DTB:=ast2400-evb}
-IMG="$OBJ/test.img"
+I mean creating the EthernetInterface object in phosphor-networkd. The value on DBus is initialized by querying the org.freedesktop.network1 DBus to see if the interface's AdministrativeState is unmanaged. This is not applicable when using ActivationPolicy.
 
-make -j8 O="$OBJ" -s clean
-make -j8 O="$OBJ" -j8 -s $CONFIG
-CROSS_COMPILE=arm-linux-gnueabi- ARCH=arm make -j8 O="$OBJ"  -j8
-DEVICE_TREE="$DTB" -s
-size "$OBJ/u-boot"
+The Redfish spec says the InterfaceEnabled (NICEnabled mapped to) property is "An indication of whether this interface is enabled". I'm not sure which one will be better? Querying the IFF_UP flag or simply read the ActivationPolicy from config file?
 
-cp "$OBJ/u-boot.bin" "$OBJ/test.img"
-truncate -s 32M "$OBJ/test.img"
-
-echo "$CONFIG build complete"
-echo "qemu-system-arm -M palmetto-bmc -nographic -drive
-file=$IMG,if=mtd,format=raw"
-```
-
-DTB=ast2400-ahe-50dc ./build-ast2400.sh
-
-When I boot it in qemu, there's no output:
-qemu-system-arm -M palmetto-bmc -nographic -drive
-file=ast2400-obj/test.img,if=mtd,format=raw
-
-Have I missed something?
-
-ah, when I boot with -d guest_errors,unimp I see an infinite number of:
-
- aspeed_soc.io: unimplemented device read  (size 1, offset 0x18e014)
-
-That's UART3, which is your stdout for this board. I guess we can't
-boot test in qemu without some changes.
+>> has the issue mentioned inhttps://github.com/openbmc/phosphor-networkd/commit/26275a3f2ecffe62646b65646c00a9e56c75bff8, however, unlike Unmanaged interfaces will have is AdministrativeState==managed, a interface that is down has AdministrativeState==configuring, which is also a possible value for interfaces needs to be brought up on boot, though it will become "configured" when it is up.
+>>
+>> One idea I came up with is to us configParser to read the ActivationPolicy from config file. Any other ideas will be appreciated.
+>>
+>> Thanks,
+>> Jiaqing
+> 
