@@ -1,65 +1,59 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D5B75247A9
-	for <lists+openbmc@lfdr.de>; Thu, 12 May 2022 10:11:33 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id EAC775247EC
+	for <lists+openbmc@lfdr.de>; Thu, 12 May 2022 10:35:06 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KzPcf6v4Qz3bxt
-	for <lists+openbmc@lfdr.de>; Thu, 12 May 2022 18:11:30 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KzQ7r6HVfz3bb0
+	for <lists+openbmc@lfdr.de>; Thu, 12 May 2022 18:35:04 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=DhKAfynr;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=EImf0ftY;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=none (no SPF record) smtp.mailfrom=linux.intel.com
- (client-ip=192.55.52.93; helo=mga11.intel.com;
- envelope-from=jiaqing.zhao@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=DhKAfynr; dkim-atps=neutral
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab;
+ helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
+ header.a=rsa-sha256 header.s=thorn header.b=EImf0ftY; 
+ dkim-atps=neutral
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
+ [IPv6:2605:2700:0:5::4713:9cab])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4KzPcC5H2sz3bZY
- for <openbmc@lists.ozlabs.org>; Thu, 12 May 2022 18:11:04 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1652343067; x=1683879067;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=sNt/oo/daQ36rlp/elPqgg1JqGSFdZywkqf2Bgv/bR4=;
- b=DhKAfynrynNjwYcm+unMRG4SD1RAWxMDxcu1WjoQyvtPbdY6MFabJ1WQ
- FbNVTfe19gh55kWVuCt+tLrBVBqO2OjVUijXBvW+AAspp/R5d6UG3JWJc
- 4cgpmdS3RBZH0/J8IlClI/WXcUBnpyWOKJF7eDCiD+pkrrdyieKfoD7Sb
- B78z69IbNA2XBx6n1VlQJ1XhzTeybmGlFsEyUpu1HWc3T+RVRxzLoSvCZ
- zQS1cMTZUb2vdpZ9glUMf2xO9hmrJILgU0ZEmUpLcKWE5LtOfHE4w/tN3
- Hp7qBvpBiRlEo7uQL61oSZV+bKk7vhrRszGSXQY6SQYLarOu2HT+fLXmo w==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10344"; a="267515311"
-X-IronPort-AV: E=Sophos;i="5.91,219,1647327600"; d="scan'208";a="267515311"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
- by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 May 2022 01:10:00 -0700
-X-IronPort-AV: E=Sophos;i="5.91,219,1647327600"; d="scan'208";a="594554346"
-Received: from jiaqingz-mobl.ccr.corp.intel.com (HELO [10.249.197.41])
- ([10.249.197.41])
- by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 May 2022 01:09:59 -0700
-Message-ID: <56f4c504-cbb3-aafc-2e4e-e0b3f9439ade@linux.intel.com>
-Date: Thu, 12 May 2022 16:09:57 +0800
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KzQ7R3kPPz3bb0
+ for <openbmc@lists.ozlabs.org>; Thu, 12 May 2022 18:34:43 +1000 (AEST)
+Received: from hatter.bewilderbeest.net (174-21-163-222.tukw.qwest.net
+ [174.21.163.222])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: zev)
+ by thorn.bewilderbeest.net (Postfix) with ESMTPSA id EBFFB87E;
+ Thu, 12 May 2022 01:34:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+ s=thorn; t=1652344481;
+ bh=SJKIaEPn7eIdekh6AeGHKKv0XoOClHLZeVlLDOHSgtc=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=EImf0ftYMFAEVvhKBh+/9WFkz3RAWIcsdNJ7vXSS5gs5WuqPgupvM11PM+IfEiH+s
+ 6TJ8/0Wt1kGbjm1f04kczln4+vM/6j8xMBvTg91Bfav0C7YvailcKcNougC3p9+O6R
+ I7nCaah3S6Wvu+kPLi7FUMzLNsj2ASU1V3XSLCPQ=
+Date: Thu, 12 May 2022 01:34:37 -0700
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Joel Stanley <joel@jms.id.au>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v2] ARM: dts: aspeed: add
+ Delta AHE-50DC BMC
+Message-ID: <YnzGnWjkYdMUUNyM@hatter.bewilderbeest.net>
+References: <20220511220542.4394-1-zev@bewilderbeest.net>
+ <CACPK8XdYMzsEQXHYwdx7si9SBUhD9xeB+0D2eGgoR-LKosq4Tg@mail.gmail.com>
+ <CACPK8Xe5EAxA8JxZBtqrkDKO3Vd4nCmuZ7sOityYXDF4wZ=CHg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: VLAN issue with NICEnabled property
-Content-Language: en-US
-To: Johnathan Mantey <johnathanx.mantey@intel.com>, openbmc@lists.ozlabs.org
-References: <93ff730f-ee5c-b5a1-9e14-873248ff969f@linux.intel.com>
- <b64651cc-7da1-d8d4-eaa1-de4cd7555828@intel.com>
-From: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
-In-Reply-To: <b64651cc-7da1-d8d4-eaa1-de4cd7555828@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CACPK8Xe5EAxA8JxZBtqrkDKO3Vd4nCmuZ7sOityYXDF4wZ=CHg@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,39 +65,106 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: wak@google.com
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Ryan Chen <ryan_chen@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 2022-05-12 04:31, Johnathan Mantey wrote:
-> On 4/15/22 05:28, Jiaqing Zhao wrote:
->> Hi, all
->>
->> In phosphor-networkd, setting NICEnabled to false write "Unmanaged=yes" in network configuration file. There was an issue with this property and its VLAN. Reboot bmc after setting NICEnabled to false, its VLAN interfaces disappears, and if set it to true, all previously configured VLANs for this interfaces will be lost.
->>
->> The reason is, since the interface is set to Unmanaged in config file, systemd-networkd will not configure the interface on boot, including creating VLANs. On the phosphor-networkd side, it creates its interface list from getifaddrs(), as VLAN interfaces are not created, they will not be added to the list. When setting NICEnabled back to true, it rewrites the config file with the VLANs in that list, so no VLAN is written, essentially removes the previously configured VLAN from the system with dangling vlan netdev and config files.
->>
->> To solve this issue, my proposal is to write "ActivationPolicy=down" when NICEnabled is false, this option tells systemd-networkd not to bring up the interface on boot. But it is still managed, meaning that its VLAN interfaces will be created.
+On Wed, May 11, 2022 at 09:54:40PM PDT, Joel Stanley wrote:
+> On Thu, 12 May 2022 at 04:40, Joel Stanley <joel@jms.id.au> wrote:
+> >
+> > On Wed, 11 May 2022 at 22:05, Zev Weiss <zev@bewilderbeest.net> wrote:
+> > >
+> > > The Delta AHE-50DC Open19 power shelf uses a pair of AST1250 BMCs that
+> > > are mostly compatible with the existing ast2400-evb device tree, with
+> > > a couple small tweaks for the serial console UART and ethernet MACs.
+> > >
+> > > Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+> > > ---
+> > >
+> > > Changes since v1 [0]:
+> > >  - Disabled spi1, which this system doesn't use [Joel]
+> >
+> > Thanks, applied.
 > 
-> This control was the result of using the Unmanaged entry for disabling the NIC. The phosphor-network code needs to change to the ActivationPolicy configuration option, IMO.
-
-Another issue I met is the MAC address specified in systemd.network config is also lost after reboot as it is Unmanaged by systemd. Using ActivationPolicy will also solve this.
-
->>
->> But there is a question of this proposal, how to set nicEnabled property when creating the interface? Using "ActivationPolicy=down" still
+> I have a script I use for testing:
+> ```
+> #!/bin/bash
 > 
-> What do you mean by "creating the interface"?
-> Are you referring to what the systemd-networkd service will do?
-> Are you referring to how phosphor-network captures the network configuration in the data structures used to manage systemd.network configuration files?
-
-I mean creating the EthernetInterface object in phosphor-networkd. The value on DBus is initialized by querying the org.freedesktop.network1 DBus to see if the interface's AdministrativeState is unmanaged. This is not applicable when using ActivationPolicy.
-
-The Redfish spec says the InterfaceEnabled (NICEnabled mapped to) property is "An indication of whether this interface is enabled". I'm not sure which one will be better? Querying the IFF_UP flag or simply read the ActivationPolicy from config file?
-
->> has the issue mentioned inhttps://github.com/openbmc/phosphor-networkd/commit/26275a3f2ecffe62646b65646c00a9e56c75bff8, however, unlike Unmanaged interfaces will have is AdministrativeState==managed, a interface that is down has AdministrativeState==configuring, which is also a possible value for interfaces needs to be brought up on boot, though it will become "configured" when it is up.
->>
->> One idea I came up with is to us configParser to read the ActivationPolicy from config file. Any other ideas will be appreciated.
->>
->> Thanks,
->> Jiaqing
+> set -e
 > 
+> OBJ=ast2400-obj
+> CONFIG=evb-ast2400_defconfig
+> : ${DTB:=ast2400-evb}
+> IMG="$OBJ/test.img"
+> 
+> make -j8 O="$OBJ" -s clean
+> make -j8 O="$OBJ" -j8 -s $CONFIG
+> CROSS_COMPILE=arm-linux-gnueabi- ARCH=arm make -j8 O="$OBJ"  -j8
+> DEVICE_TREE="$DTB" -s
+> size "$OBJ/u-boot"
+> 
+> cp "$OBJ/u-boot.bin" "$OBJ/test.img"
+> truncate -s 32M "$OBJ/test.img"
+> 
+> echo "$CONFIG build complete"
+> echo "qemu-system-arm -M palmetto-bmc -nographic -drive
+> file=$IMG,if=mtd,format=raw"
+> ```
+> 
+> DTB=ast2400-ahe-50dc ./build-ast2400.sh
+> 
+> When I boot it in qemu, there's no output:
+> qemu-system-arm -M palmetto-bmc -nographic -drive
+> file=ast2400-obj/test.img,if=mtd,format=raw
+> 
+> Have I missed something?
+> 
+> ah, when I boot with -d guest_errors,unimp I see an infinite number of:
+> 
+>  aspeed_soc.io: unimplemented device read  (size 1, offset 0x18e014)
+> 
+> That's UART3, which is your stdout for this board. I guess we can't
+> boot test in qemu without some changes.
+
+Ah -- I'd never actually tried booting this one with qemu, but yeah, 
+that makes sense.
+
+After a little experimentation, with the below hacks to qemu it produces 
+the expected output -- I expect there's some better way to override the 
+default uart setting, but a qom-set (even with -S) was too late to take 
+effect (and apparently too early with --preconfig), and after spending a 
+few fruitless minutes trying to figure out a way to do it via a 
+command-line argument I gave up and hard-coded it, just for the sake of 
+an expedient proof of concept.
+
+
+Zev
+
+
+diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+index babf405777df..4bad40400007 100644
+--- a/hw/arm/aspeed.c
++++ b/hw/arm/aspeed.c
+@@ -1106,6 +1106,7 @@ static void aspeed_machine_palmetto_class_init(ObjectClass *oc, void *data)
+     amc->spi_model = "mx25l25635f";
+     amc->num_cs    = 1;
+     amc->i2c_init  = palmetto_bmc_i2c_init;
++    amc->uart_default = ASPEED_DEV_UART3;
+     mc->default_ram_size       = 256 * MiB;
+     mc->default_cpus = mc->min_cpus = mc->max_cpus =
+         aspeed_soc_num_cpus(amc->soc_name);
+diff --git a/hw/arm/aspeed_soc.c b/hw/arm/aspeed_soc.c
+index 198b6b7effed..6c1f18f7b42c 100644
+--- a/hw/arm/aspeed_soc.c
++++ b/hw/arm/aspeed_soc.c
+@@ -48,6 +48,7 @@ static const hwaddr aspeed_soc_ast2400_memmap[] = {
+     [ASPEED_DEV_ETH1]   = 0x1E660000,
+     [ASPEED_DEV_ETH2]   = 0x1E680000,
+     [ASPEED_DEV_UART1]  = 0x1E783000,
++    [ASPEED_DEV_UART3]  = 0x1E78e000,
+     [ASPEED_DEV_UART5]  = 0x1E784000,
+     [ASPEED_DEV_VUART]  = 0x1E787000,
+     [ASPEED_DEV_SDRAM]  = 0x40000000,
+
