@@ -2,130 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6FEDF525981
-	for <lists+openbmc@lfdr.de>; Fri, 13 May 2022 03:47:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F3D8D525A2A
+	for <lists+openbmc@lfdr.de>; Fri, 13 May 2022 05:35:53 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Kzs354Z3Dz3c7Y
-	for <lists+openbmc@lfdr.de>; Fri, 13 May 2022 11:47:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KzvS76PNbz3c8T
+	for <lists+openbmc@lfdr.de>; Fri, 13 May 2022 13:35:51 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=EZ5hh1mk;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=e5KSV/fr;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f400:feab::724;
- helo=apc01-sg2-obe.outbound.protection.outlook.com;
- envelope-from=dylan_hung@aspeedtech.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1032;
+ helo=mail-pj1-x1032.google.com; envelope-from=milkfafa@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com
- header.a=rsa-sha256 header.s=selector1 header.b=EZ5hh1mk; 
- dkim-atps=neutral
-Received: from APC01-SG2-obe.outbound.protection.outlook.com
- (mail-sgaapc01on20724.outbound.protection.outlook.com
- [IPv6:2a01:111:f400:feab::724])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=e5KSV/fr; dkim-atps=neutral
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com
+ [IPv6:2607:f8b0:4864:20::1032])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Kzs2W30hnz3bXD
- for <openbmc@lists.ozlabs.org>; Fri, 13 May 2022 11:46:58 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=cQI1z7SeKbvIga68oH9co76c87wE6VYV3k2xsxFowON5mBGPhUwsmReg/7uWiUyrO9iN/anxTu5qCxBlPqz5QQpFN03w4Y5dp3WJPcRvKcBKo4UBlqfQxtX+Q4hFCjWm6vXscKU6mZk/k6Fs9vLFGxvxhZ4PuVekFM8cm7BOkX1CXWLqC0IZtUDUilTUi/ppswnzfeNJY91VUmETpBSeEGRSPt6ObDK+xoMm3og3Tq1g39Ud9UTAuKTLx6KzpoF58xZ3MXwbViXRKTHqiOJXbRcAj4F1aFs45z9GQpBfVysskBxCeer3dqxb5/i47fh/ahP5tRY4J0qdYESQ/WQV5Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZcKbdraWt6Bbfw8nWmeH6b4QEsGNZp0tfxQsiFC5PQA=;
- b=Ys9T+ivLc/x/bR9YbLb3Uqq1lqMp5WSAl+BtEmCElkdRJsJDeO6zz2CQ2vOjkYkuOTDfG9yGlF0CYfTWUIVi5KTnT4hdnV05XRm5bneefKz5yEu+mgM+g7ycjWJWPZDwCh52E2XzNOyYnC4bTW6PatvtLNTRa0nN1eX+svLb59jEggjxkHNUP2NirHFHBRaZe7VNpfd0TogOGT+2TuODoXQAFseHQb9zSFiO2Ju70Wy70jZDStHA+SrvlqhnT1qSgGoenG1P14uHaPzUVh3cBQIkrg4J8WaOS9UCzBI+KCQ071SvbfkAV1J1XIB8zHln7+Kf0Hrb9UcudGMx420epw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZcKbdraWt6Bbfw8nWmeH6b4QEsGNZp0tfxQsiFC5PQA=;
- b=EZ5hh1mkcBTc9tyVRoF8uENmzwOxvykUvee6eqANzvrnx4OqFkzqboqLwpMEdxUpbSgdKtdjE0AUg5bGfSsX8sRILe7eml4mDFIKVjkwG4YIpXI5mn7x8jbETpwIIodwRFh3PpudkR6CsZ9d5uMwZZYFyVKWeNJTnrJuW3d6QrBcGMOlq0wWweO4anFH9TUycW5SpEO49QQA3LwbQZECGxSx2/rNBgryGki8fZx46RITrNQXowwW0zeTZWYmwB6jBi8lPJEa1NXEissii7uAdKI188npwfMwMXC1u9F9X/+83AhfJpzYnC5zqlN0w6+ApdPtCDJC6wRdcCHywQgaaA==
-Received: from HK0PR06MB2834.apcprd06.prod.outlook.com (2603:1096:203:5c::20)
- by SG2PR06MB2585.apcprd06.prod.outlook.com (2603:1096:4:60::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5227.23; Fri, 13 May
- 2022 01:46:39 +0000
-Received: from HK0PR06MB2834.apcprd06.prod.outlook.com
- ([fe80::4b4:4f33:eaec:c5bd]) by HK0PR06MB2834.apcprd06.prod.outlook.com
- ([fe80::4b4:4f33:eaec:c5bd%4]) with mapi id 15.20.5227.023; Fri, 13 May 2022
- 01:46:38 +0000
-From: Dylan Hung <dylan_hung@aspeedtech.com>
-To: Joel Stanley <joel@jms.id.au>, "David S . Miller" <davem@davemloft.net>,
- Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Benjamin
- Herrenschmidt <benh@kernel.crashing.org>, David Wilder <dwilder@us.ibm.com>
-Subject: RE: [PATCH net v2] net: ftgmac100: Disable hardware checksum on
- AST2600
-Thread-Topic: [PATCH net v2] net: ftgmac100: Disable hardware checksum on
- AST2600
-Thread-Index: AQHYZlbKaZPttnO0Y0uPh06RLKT9Ya0cCbKw
-Date: Fri, 13 May 2022 01:46:38 +0000
-Message-ID: <HK0PR06MB28341F811AD74F52ACA5D19B9CCA9@HK0PR06MB2834.apcprd06.prod.outlook.com>
-References: <20220512231938.228651-1-joel@jms.id.au>
-In-Reply-To: <20220512231938.228651-1-joel@jms.id.au>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: bdd04b01-8686-4fd8-d742-08da34826bec
-x-ms-traffictypediagnostic: SG2PR06MB2585:EE_
-x-microsoft-antispam-prvs: <SG2PR06MB25855B18893D205613C491A69CCA9@SG2PR06MB2585.apcprd06.prod.outlook.com>
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: DV3S3QSIB4hfn6WvBQcYCkjAgYxc+U+Bu309KFEt0X8roBQLvYfiyjdZpSQeW0vHI2oE9NwzseSw2IuDHCIGK59JePiAs1btEqXOLEQDrO0pC03L8BpPDBGfqYRWdaHo4PuucIRj67sPoVbOgmgNIsAwit0BXZUc7XA1XpmeYUAyOD3wGoxXwogTWy5IZCCfG9i4A1rkH5nG86KcDQAe3WW0vZO2SBHqYhPaTX3Huz1IeKI1GB74hnF4RCvvR53NZ4vaSvUoRpZm104km0SDcjTQeOq/SU24hIwQy0MPTL0gQbMT4BrXCTHIeOGiZlLsDRAErJwYIX/PgkJgJNDO4TdN3r2LrOAmHc/e+8j1LSHTX6XtLFysaxLBjzeWbZExajpt/JUdjXnQeJwBdqOJGlRn4RyinN26JCk7ole+w/rXj3+XfEzsiJn0Pl0fuGLjfwIyYcbZgixLWWBxUqHAiNviYqu5igys0aXDbgazS1KQjEGrDXcEcZ5ZQ69+hg9BiqfNRvMBe8B2CUz2kiicPtfCp4irI3NBut64f+aTpdoZkvFGkF/R3jkBiBGUXiyC/barVsSQYTJSM+Ma/VtvsrNy53tq7PqgUGcR1nPERm4PF4LMZDvgK3lpu1AMrvDnEf9lU8ADLAun1J/6qct3mOSgw/FJohOm7im8d69IYhwmTEkVAWqVhUnNsFvDI41ZDGJvPfHEXeMW4OBsTjpcbg==
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:HK0PR06MB2834.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230001)(366004)(346002)(136003)(396003)(376002)(39830400003)(508600001)(110136005)(54906003)(122000001)(71200400001)(2906002)(316002)(38100700002)(52536014)(4326008)(38070700005)(9686003)(26005)(7696005)(186003)(6506007)(53546011)(86362001)(55016003)(76116006)(5660300002)(7416002)(66556008)(66946007)(33656002)(8676002)(8936002)(64756008)(66476007)(66446008)(83380400001);
- DIR:OUT; SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?MGcZnDKKrRHln1omsf2ViKOsiGpF8QibWQ3mun1iwmspxOYCDgyJL9EYfVex?=
- =?us-ascii?Q?/UqGBZxxtisx1Xx/3SopI0d/6IOOnk5tJPStd2dgiIVgmvaFjUbrEW0KYMfD?=
- =?us-ascii?Q?vU9ay/HTYahppdFclYQnrWtijO8isRj5jy2UawXTANa7jnWxmTat6qvQ0PMv?=
- =?us-ascii?Q?jh3g1qIzT++VGQjq3kyYuIqyudWurCMe53NyHv9NQW5KFIsK0P4PAv/x403B?=
- =?us-ascii?Q?/+e1aPJmf04kn/8lrXisQsccEEyeyovRt/jf9jTaWRCauu7D4wRRL0ZgxUif?=
- =?us-ascii?Q?uRLVf26DxSi6fCPT6e2FgyEsxqBZZNpgIUIshXjZGrmKtdUlbt3XGMkEGkBk?=
- =?us-ascii?Q?PpyIYK1kyl5+lUl+hsdtiGq4QEwHFGqeQ+xaTiMg7Q47abG41ycMKeTJHlEb?=
- =?us-ascii?Q?b3BqHlkZDBeN991YWidQ0s5EdNoybpYKZ2unqCFh22PQDvoc4VAzAFVvmRY+?=
- =?us-ascii?Q?oDGlJAKL0TYnnoOD457AZAWXRdgsgRFGyhJP7PoQjrC8iot31Xb+a1skQyC0?=
- =?us-ascii?Q?kAIjVlhqyYY31rQaRaTKU2urfc94udm0zeatHxhwFWvkq4amHwqak0+smOE8?=
- =?us-ascii?Q?andbRwLyRtcN8P4Lc/Us1Fkg/Doas+v7qotg7TOgn9CmO1nPgHkBBs3A4sNQ?=
- =?us-ascii?Q?N0oetbccKSxkuqoUB2XJZQB8ZLjzDbKgL3BFKD7a3aPGJtTEkbGiA7vTeJxv?=
- =?us-ascii?Q?HJwUm9+0Q6kf7JARsoCPnP4YiDTm8nfJiVW0JSkEj/8ofpBmLYJeM7/0vmQx?=
- =?us-ascii?Q?Tlnsx9lPR6IjbooNRJ5J/oEKnfTZ1RNngSmXZdAXfdgSZIuqYrQ80+tExfWH?=
- =?us-ascii?Q?MP2pv/N+XW2m8h1Pw33wEUgZqxqSo3CH+FqwRMaixCIeer7kyUZT+38U1oRW?=
- =?us-ascii?Q?BB+6tiOKQ0Hw3NbW/6N6Kima7OrWoDg2KiVxskLmzkLYGZJjddirJqFpoeyY?=
- =?us-ascii?Q?gefuV47DBCxVHO7LekyLzGAuo/OvblnZQN9NGv7gqli0v+77rOFDR5F0bFFz?=
- =?us-ascii?Q?/53i78nMe8HD7sPM449Irg01yi/dbzepDg2RwVEQ/ChQ66H6jim3koPDfaaz?=
- =?us-ascii?Q?n66WuFNUalE22fps1nGiWNEsysi1NXT1wuAUL9j5LsdvTeHRugqya7fBZvcn?=
- =?us-ascii?Q?bKZjKViaP909GyU9SA+9xqSPm+QXmgmEy6spj6kixR9ODySZC8jWiiL+iMlC?=
- =?us-ascii?Q?dHHln6C7upO3muixJEFUYTT8Zo9oSoCU8f3DzpPY29GROkDUJWt6UUVomSqg?=
- =?us-ascii?Q?a1YnoiQX6xci49i1x3bo5du4tsQOdKGmKzr2ajvBxMWaeMgFA3UZUpY+6miw?=
- =?us-ascii?Q?LetCwca2Yidowpp2qfBGK4Qs8t7k/tdMaf3wPX3moyN7+3W0Cg3SEW2NHMAD?=
- =?us-ascii?Q?80WaF6CIA0tIg1rMEJqfZVVrCVclIKb1BWLGiu0lwWR14Yy8SknlcewrxptY?=
- =?us-ascii?Q?n104hQ1Kidh0IpNLYOPFfBxkcdjOUdeBJFfJO0ODFdNcm0iFNAWDTdJy0RM9?=
- =?us-ascii?Q?d8fhg6HhdNDe/Sn2gM7x4us8DPFK9+F+KQMB1xkBdTZjkNFVc+i6EmOP9dXP?=
- =?us-ascii?Q?15inPQ1b0Uu+jW/OtILfVJP6dUVWtfxO57r4VaHIB06ohXrnxbZt8Sb4lxik?=
- =?us-ascii?Q?jk6sS9ptwpflGMI0jrLdmBPhE0BYmv+evJZs8JTOGo6Ij3Je+7Vx6sRN73oW?=
- =?us-ascii?Q?aoyWrCwF57aLEylfgMPZYKpRk7P8D47J5WvgQxcjnaHpUabNyH7ifpJ+9MgJ?=
- =?us-ascii?Q?L0pemnuHs6lI0YwvoUuU24I9OFZTgUU=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: HK0PR06MB2834.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bdd04b01-8686-4fd8-d742-08da34826bec
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 May 2022 01:46:38.6798 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: g0DSHc4pmePT8wspfzkce7C/0RoXHQOPshwK8bbVDOaY/Vl66XbHqoUiuFbQSI51ekMQAZ/PeJbvmYKINHnH6GAilafZ9MSI9kI7aMuDmi8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR06MB2585
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KzvRm4bcMz3bfq
+ for <openbmc@lists.ozlabs.org>; Fri, 13 May 2022 13:35:31 +1000 (AEST)
+Received: by mail-pj1-x1032.google.com with SMTP id
+ l20-20020a17090a409400b001dd2a9d555bso6666744pjg.0
+ for <openbmc@lists.ozlabs.org>; Thu, 12 May 2022 20:35:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:to:cc:subject:date:message-id;
+ bh=xB3Nks/3PZ8n8YE9KWGnAkbqCqvpCjSbkXuUmVufMJE=;
+ b=e5KSV/frgL0y90h9WqaG4FkFK9FPt3hC1zgca8AjROj+zUJka/k48R426iC/Z+T8rl
+ HbMLuv5luVQb/LxqPQmj7ZvmAoK6HYQQJ8LfGaa0BJLx92RQNiNkUJrfWjUbGzMblwfI
+ ps5AidIQnesJSyVuioiiMJ0JHhfQVH1NTuyWkqIKUPq4nqHb/wgyHxX67+kOhB9FYD/M
+ +VyCgOIZSz9Eqj61XIWVtZIDMjybh0KHHh+rbrvKfw9IPBLDEurn+RN2m9s/xJL8ANNf
+ l+qv0p6f/QCX9cAHVspG7kbz0rIf/aWK+6MNsxX1mJROEgq/R7tn8SsGV77s+1ANri/Y
+ bmNg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id;
+ bh=xB3Nks/3PZ8n8YE9KWGnAkbqCqvpCjSbkXuUmVufMJE=;
+ b=LF2eIDZRs0F0WnM6VU+woPbrFAYleoRWwZDSktLYd03F10mclNUaEgvb36Yy64Jl53
+ cYslrupLhNloIjPtftpFnAAHIPcyWNlu5upEmp2/94dzeHi4nD/SyRajQVS8lEju06Gw
+ dds9a1+nGSKKUqNTCmZH1TqBwSff6l0YL28ajXmDSoMsGvkgtfyx6neP6sJYJRW5vpJ0
+ 9BwG1jDYx7Xf/BibAIqdOpKvGgKLMfWrGaOzTEfvjGrsU/pedYpp2Q4KCU6ij1tMNipi
+ vO1F35uo6/dxo3t7vvqkRtMMDVl1ZMpGwqAhoCBgssb0Rlaq0jiTyE8ww8hI0ix7g0j/
+ AsKA==
+X-Gm-Message-State: AOAM533Blx82KUCQTsnYEI5UvxqaZyjz/CU0wS4lRx4JR/vQOvNuJxfa
+ VEqwFdq3dPxl8zQDOr7ECkU=
+X-Google-Smtp-Source: ABdhPJzCPONrWkNJJNUxQjkZmdNVGTHsJlRIZRaZyXHsGPITgnOoKbCbu4Csf4TCy9A96bwXauu3xA==
+X-Received: by 2002:a17:902:eb88:b0:15e:967b:f934 with SMTP id
+ q8-20020a170902eb8800b0015e967bf934mr2859768plg.67.1652412927312; 
+ Thu, 12 May 2022 20:35:27 -0700 (PDT)
+Received: from localhost.localdomain (60-250-192-107.hinet-ip.hinet.net.
+ [60.250.192.107]) by smtp.gmail.com with ESMTPSA id
+ b7-20020a1709027e0700b0015e8d4eb1c7sm685133plm.17.2022.05.12.20.35.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 May 2022 20:35:16 -0700 (PDT)
+From: Marvin Lin <milkfafa@gmail.com>
+X-Google-Original-From: Marvin Lin <kflin@nuvoton.com>
+To: mchehab@kernel.org, linux-media@vger.kernel.org,
+ linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/5] Support Nuvoton NPCM Video Capture/Encode Engine
+Date: Fri, 13 May 2022 11:34:45 +0800
+Message-Id: <20220513033450.7038-1-kflin@nuvoton.com>
+X-Mailer: git-send-email 2.17.1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -137,117 +78,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- David Wilder <wilder@us.ibm.com>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Cc: kwliu@nuvoton.com, tmaimon77@gmail.com, avifishman70@gmail.com,
+ openbmc@lists.ozlabs.org, tali.perry1@gmail.com, kflin@nuvoton.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-> -----Original Message-----
-> From: joel.stan@gmail.com [mailto:joel.stan@gmail.com] On Behalf Of Joel
-> Stanley
-> Sent: Friday, May 13, 2022 7:20 AM
-> To: David S . Miller <davem@davemloft.net>; Jakub Kicinski
-> <kuba@kernel.org>; Paolo Abeni <pabeni@redhat.com>; Benjamin
-> Herrenschmidt <benh@kernel.crashing.org>; Dylan Hung
-> <dylan_hung@aspeedtech.com>; David Wilder <dwilder@us.ibm.com>
-> Cc: openbmc@lists.ozlabs.org; netdev@vger.kernel.org;
-> linux-kernel@vger.kernel.org; David Wilder <wilder@us.ibm.com>
-> Subject: [PATCH net v2] net: ftgmac100: Disable hardware checksum on
-> AST2600
->=20
-> The AST2600 when using the i210 NIC over NC-SI has been observed to
-> produce incorrect checksum results with specific MTU values. This was fir=
-st
-> observed when sending data across a long distance set of networks.
->=20
-> On a local network, the following test was performed using a 1MB file of
-> random data.
->=20
-> On the receiver run this script:
->=20
->  #!/bin/bash
->  while [ 1 ]; do
->         # Zero the stats
->         nstat -r  > /dev/null
->         nc -l 9899 > test-file
->         # Check for checksum errors
->         TcpInCsumErrors=3D$(nstat | grep TcpInCsumErrors)
->         if [ -z "$TcpInCsumErrors" ]; then
->                 echo No TcpInCsumErrors
->         else
->                 echo TcpInCsumErrors =3D $TcpInCsumErrors
->         fi
->  done
->=20
-> On an AST2600 system:
->=20
->  # nc <IP of  receiver host> 9899 < test-file
->=20
-> The test was repeated with various MTU values:
->=20
->  # ip link set mtu 1410 dev eth0
->=20
-> The observed results:
->=20
->  1500 - good
->  1434 - bad
->  1400 - good
->  1410 - bad
->  1420 - good
->=20
-> The test was repeated after disabling tx checksumming:
->=20
->  # ethtool -K eth0 tx-checksumming off
->=20
-> And all MTU values tested resulted in transfers without error.
->=20
-> An issue with the driver cannot be ruled out, however there has been no b=
-ug
-> discovered so far.
->=20
-> David has done the work to take the original bug report of slow data tran=
-sfer
-> between long distance connections and triaged it down to this test case.
->=20
-> The vendor suspects this this is a hardware issue when using NC-SI. The f=
-ixes
-> line refers to the patch that introduced AST2600 support.
->=20
-> Fixes: 39bfab8844a0 ("net: ftgmac100: Add support for DT phy-handle
-> property")
-> Reported-by: David Wilder <wilder@us.ibm.com>
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
-> ---
-> v2 updates the commit message with confirmation form the vendor that this=
- is
-> a hardware issue, and clarifes why the commit used in the fixes tag was
-> chosen.
->=20
->  drivers/net/ethernet/faraday/ftgmac100.c | 5 +++++
->  1 file changed, 5 insertions(+)
->=20
-> diff --git a/drivers/net/ethernet/faraday/ftgmac100.c
-> b/drivers/net/ethernet/faraday/ftgmac100.c
-> index caf48023f8ea..5231818943c6 100644
-> --- a/drivers/net/ethernet/faraday/ftgmac100.c
-> +++ b/drivers/net/ethernet/faraday/ftgmac100.c
-> @@ -1928,6 +1928,11 @@ static int ftgmac100_probe(struct platform_device
-> *pdev)
->  	/* AST2400  doesn't have working HW checksum generation */
->  	if (np && (of_device_is_compatible(np, "aspeed,ast2400-mac")))
->  		netdev->hw_features &=3D ~NETIF_F_HW_CSUM;
-> +
-> +	/* AST2600 tx checksum with NC-SI is broken */
-> +	if (priv->use_ncsi && of_device_is_compatible(np,
-> "aspeed,ast2600-mac"))
-> +		netdev->hw_features &=3D ~NETIF_F_HW_CSUM;
-> +
->  	if (np && of_get_property(np, "no-hw-checksum", NULL))
->  		netdev->hw_features &=3D ~(NETIF_F_HW_CSUM |
-> NETIF_F_RXCSUM);
->  	netdev->features |=3D netdev->hw_features;
-> --
-> 2.35.1
-Reviewed-by: Dylan Hung <dylan_hung@aspeedtech.com>
+Changes in v2: Add Hextile document and locate with vendor formats.
+
+This patch series add DTS node, dt-bindings document and drivers for Video
+Capture/Differentiation Engine (VCD) and Encoding Compression Engine (ECE)
+present on Nuvoton NPCM SoCs.
+
+VCD can capture/differentiate video data from digital or analog sources,
+then ECE will compress the data into HEXTILE format.
+
+HEXTILE compressed format is defined in Remote Framebuffer Protocol (RFC
+6143) and is used by VNC features, so we also add a patch to support it.
+
+Marvin Lin (5):
+  arm: dts: Add node for NPCM Video Capture/Encode Engine
+  dt-bindings: media: Add dt-bindings for NPCM Video Capture/Encode
+    Engine
+  dt-bindings: arm/npcm: Add dt-bindings for Graphics Core Information
+  media: Add HEXTILE compressed format
+  drivers: media: platform: Add NPCM Video Capture/Encode Engine driver
+
+ .../bindings/arm/npcm/nuvoton,gfxi.yaml       |   41 +
+ .../bindings/media/nuvoton,npcm-video.yaml    |   87 +
+ .../media/v4l/pixfmt-reserved.rst             |    7 +
+ arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi |   19 +
+ drivers/media/platform/Kconfig                |    1 +
+ drivers/media/platform/Makefile               |    1 +
+ drivers/media/platform/nuvoton/Kconfig        |   12 +
+ drivers/media/platform/nuvoton/Makefile       |    2 +
+ drivers/media/platform/nuvoton/npcm-video.c   | 2074 +++++++++++++++++
+ drivers/media/v4l2-core/v4l2-ioctl.c          |    1 +
+ include/uapi/linux/videodev2.h                |    1 +
+ 11 files changed, 2246 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/arm/npcm/nuvoton,gfxi.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/nuvoton,npcm-video.yaml
+ create mode 100644 drivers/media/platform/nuvoton/Kconfig
+ create mode 100644 drivers/media/platform/nuvoton/Makefile
+ create mode 100644 drivers/media/platform/nuvoton/npcm-video.c
+
+-- 
+2.17.1
+
