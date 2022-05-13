@@ -2,63 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 87508525FAF
-	for <lists+openbmc@lfdr.de>; Fri, 13 May 2022 12:33:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 09CFF5262ED
+	for <lists+openbmc@lfdr.de>; Fri, 13 May 2022 15:19:42 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L04js2Dypz3c9P
-	for <lists+openbmc@lfdr.de>; Fri, 13 May 2022 20:33:21 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L08Pl6DRVz3cBt
+	for <lists+openbmc@lfdr.de>; Fri, 13 May 2022 23:19:39 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Yvv+j9Am;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=pzvoBx+3;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=intel.com (client-ip=134.134.136.24; helo=mga09.intel.com;
- envelope-from=lkp@intel.com; receiver=<UNKNOWN>)
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::736;
+ helo=mail-qk1-x736.google.com; envelope-from=geissonator@gmail.com;
+ receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
- header.s=Intel header.b=Yvv+j9Am; dkim-atps=neutral
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=pzvoBx+3; dkim-atps=neutral
+Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com
+ [IPv6:2607:f8b0:4864:20::736])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L04jQ4ty6z3bpT
- for <openbmc@lists.ozlabs.org>; Fri, 13 May 2022 20:32:52 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1652437978; x=1683973978;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=ficTo4G11TLusKxmT+h3TM35Qpeg9CrvwxCZMgmXqDI=;
- b=Yvv+j9AmYx/9qt7SdYFpjxHCAFQ3udV67IsMIOoQH6nuHx238oIaKf7r
- T90hdt1GAwfh+7N4UQLxhWYwM05lDM9bXWzLZhO3W53ZYdNBTcr4qqCFW
- OTN/1iX7I9QaF9m2paePPHF7WadIxU4nGFNfkfFPjFzv5BOsr9W+luaNO
- Uw6CEZdgLvVxvcFX7tI/t0R9NLMeoVyXII9+Xn5Egi0/4sfPzyZpaRLSb
- 4cVLS2qznALbw3gXHTNZOe//WYYTK5LeFBKfbnSL2Dhu2Sbdt/lXPehPv
- Dvwt/5jy8swCV8jXHnzY9A12LT+ct9GiWz6hgaoAz3/umcTr+5N4FMPz4 A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10345"; a="269945119"
-X-IronPort-AV: E=Sophos;i="5.91,221,1647327600"; d="scan'208";a="269945119"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
- by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 May 2022 03:31:33 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,221,1647327600"; d="scan'208";a="595161151"
-Received: from lkp-server01.sh.intel.com (HELO 5056e131ad90) ([10.239.97.150])
- by orsmga008.jf.intel.com with ESMTP; 13 May 2022 03:31:31 -0700
-Received: from kbuild by 5056e131ad90 with local (Exim 4.95)
- (envelope-from <lkp@intel.com>) id 1npSa2-000Ld6-EH;
- Fri, 13 May 2022 10:31:30 +0000
-Date: Fri, 13 May 2022 18:30:53 +0800
-From: kernel test robot <lkp@intel.com>
-To: Marvin Lin <milkfafa@gmail.com>, mchehab@kernel.org,
- linux-media@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 5/5] drivers: media: platform: Add NPCM Video
- Capture/Encode Engine driver
-Message-ID: <202205131804.AMALhZXJ-lkp@intel.com>
-References: <20220513033450.7038-6-kflin@nuvoton.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220513033450.7038-6-kflin@nuvoton.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L08PJ0kCWz2xrZ
+ for <openbmc@lists.ozlabs.org>; Fri, 13 May 2022 23:19:15 +1000 (AEST)
+Received: by mail-qk1-x736.google.com with SMTP id m1so6994303qkn.10
+ for <openbmc@lists.ozlabs.org>; Fri, 13 May 2022 06:19:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=cB/SWGaqPb7fcgbEjqaLbbeGTvHdaM99nOXjzjSql34=;
+ b=pzvoBx+3WYsGjw5RAwj9xNaasv8H6kUQKRDOKMfgHMHgPir/AvMXWOXvdmfmHMvoho
+ dv6nlmMdbqXDQFkn+XguZyAHpob/Zej0crn7mO/kLTA4IrqmOwOyQhs5/MKGDKPvLYMJ
+ 8TON4Sl30IUceaiwH/6yXmrzaAQWD0zLOLz4FHtmxRHfsGmrUmH21e0VRuQAGr7D6sIh
+ rExjrkph/H9XTIZ40M9bg0rIYU7/JDnRhyjfBlD6TPP5UDdoTWXmXq7SnDy2fUiU7tzd
+ QFodrEnzw0K4nXqsUpxd7sHstAt2w3l+I/2cCrXTDBdcQTt3h9onx2oMjtprLzdSHwxG
+ Ad/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+ :content-transfer-encoding:message-id:references:to;
+ bh=cB/SWGaqPb7fcgbEjqaLbbeGTvHdaM99nOXjzjSql34=;
+ b=zHdzRgTKmPhPoozNXd/+j+IDJdxPRCjhpTWaShhVuh4lh7+hO9Q6Odk96D6pE0ypk+
+ CcPLSi19FX111r4hWfHqklAwPxzfaPU7iQZcDEC2EKHl6Kqe7a84svvNvQ3urzm/jXTZ
+ B9ZcQAcCZkzJJK4mrXQ5TLt3IyKCGHarLow+dtJmV2qJ50DB6T+6CYJrK7pVFAlR255o
+ Pfj0fq66NhXuOUlvDshQC6uqO+bLEYQPYgHoPBBj/xCrR0ku+dDusfKvxmXyGB7UD89q
+ SDPNrTupz08nBZLg1jzMCTaYZoyfR4bHhanGbmjAakotaH3n2xAf0br96wwWMFV1cddD
+ mzug==
+X-Gm-Message-State: AOAM5311uWiG0pTsY603MalYgecPKQ7vNsRQ7TBIXvuVgMIho2uhxRR3
+ TUaT36DTzKcopR+qHdedBNA=
+X-Google-Smtp-Source: ABdhPJz0YzAZ2IF2QqtfxSD8uOo1+BqZyljP39XiOtUxRVVgAOEE7m+yY2AqlIHNVpqrAQMAEJ1U8g==
+X-Received: by 2002:a37:6843:0:b0:6a0:e50b:520 with SMTP id
+ d64-20020a376843000000b006a0e50b0520mr3519374qkc.88.1652447950073; 
+ Fri, 13 May 2022 06:19:10 -0700 (PDT)
+Received: from smtpclient.apple (wsip-70-184-161-145.hr.hr.cox.net.
+ [70.184.161.145]) by smtp.gmail.com with ESMTPSA id
+ d81-20020a379b54000000b006a10aa7908dsm1180546qke.38.2022.05.13.06.19.08
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 13 May 2022 06:19:08 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: preventing chassis power-on until bmc Ready
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <CAPnigK=-OiqwEgoFtHazscEQzboSpseDNyvVJk41VxLJiKaUkw@mail.gmail.com>
+Date: Fri, 13 May 2022 09:19:07 -0400
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <3603FF65-D8A7-46E3-8D8A-9C5B2DC97656@gmail.com>
+References: <FE2B7C36-070C-4DCF-84C0-FB3A53EC0837@gmail.com>
+ <CAPnigK=-OiqwEgoFtHazscEQzboSpseDNyvVJk41VxLJiKaUkw@mail.gmail.com>
+To: William Kennington <wak@google.com>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,124 +84,89 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: kwliu@nuvoton.com, kbuild-all@lists.01.org, tmaimon77@gmail.com,
- avifishman70@gmail.com, openbmc@lists.ozlabs.org, tali.perry1@gmail.com,
- kflin@nuvoton.com
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Marvin,
-
-Thank you for the patch! Yet something to improve:
-
-[auto build test ERROR on robh/for-next]
-[also build test ERROR on linux/master linus/master v5.18-rc6]
-[cannot apply to media-tree/master next-20220512]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Marvin-Lin/Support-Nuvoton-NPCM-Video-Capture-Encode-Engine/20220513-113806
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-config: powerpc-allmodconfig (https://download.01.org/0day-ci/archive/20220513/202205131804.AMALhZXJ-lkp@intel.com/config)
-compiler: powerpc-linux-gcc (GCC) 11.3.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/7fa1f7750e7317479ce2c2c043b44fa19c46b1a8
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Marvin-Lin/Support-Nuvoton-NPCM-Video-Capture-Encode-Engine/20220513-113806
-        git checkout 7fa1f7750e7317479ce2c2c043b44fa19c46b1a8
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=powerpc SHELL=/bin/bash drivers/media/platform/nuvoton/
-
-If you fix the issue, kindly add following tag as appropriate
-Reported-by: kernel test robot <lkp@intel.com>
-
-All errors (new ones prefixed by >>):
-
-   drivers/media/platform/nuvoton/npcm-video.c: In function 'nuvoton_video_buf_queue':
-   drivers/media/platform/nuvoton/npcm-video.c:1776:13: warning: variable 'empty' set but not used [-Wunused-but-set-variable]
-    1776 |         int empty;
-         |             ^~~~~
-   drivers/media/platform/nuvoton/npcm-video.c: At top level:
->> drivers/media/platform/nuvoton/npcm-video.c:2060:1: error: expected ',' or ';' before 'static'
-    2060 | static struct platform_driver nuvoton_video_driver = {
-         | ^~~~~~
-   In file included from drivers/media/platform/nuvoton/npcm-video.c:24:
-   drivers/media/platform/nuvoton/npcm-video.c: In function 'nuvoton_video_driver_init':
->> drivers/media/platform/nuvoton/npcm-video.c:2069:24: error: 'nuvoton_video_driver' undeclared (first use in this function); did you mean 'nuvoton_video_probe'?
-    2069 | module_platform_driver(nuvoton_video_driver);
-         |                        ^~~~~~~~~~~~~~~~~~~~
-   include/linux/platform_device.h:222:36: note: in definition of macro 'platform_driver_register'
-     222 |         __platform_driver_register(drv, THIS_MODULE)
-         |                                    ^~~
-   include/linux/platform_device.h:252:9: note: in expansion of macro 'module_driver'
-     252 |         module_driver(__platform_driver, platform_driver_register, \
-         |         ^~~~~~~~~~~~~
-   drivers/media/platform/nuvoton/npcm-video.c:2069:1: note: in expansion of macro 'module_platform_driver'
-    2069 | module_platform_driver(nuvoton_video_driver);
-         | ^~~~~~~~~~~~~~~~~~~~~~
-   drivers/media/platform/nuvoton/npcm-video.c:2069:24: note: each undeclared identifier is reported only once for each function it appears in
-    2069 | module_platform_driver(nuvoton_video_driver);
-         |                        ^~~~~~~~~~~~~~~~~~~~
-   include/linux/platform_device.h:222:36: note: in definition of macro 'platform_driver_register'
-     222 |         __platform_driver_register(drv, THIS_MODULE)
-         |                                    ^~~
-   include/linux/platform_device.h:252:9: note: in expansion of macro 'module_driver'
-     252 |         module_driver(__platform_driver, platform_driver_register, \
-         |         ^~~~~~~~~~~~~
-   drivers/media/platform/nuvoton/npcm-video.c:2069:1: note: in expansion of macro 'module_platform_driver'
-    2069 | module_platform_driver(nuvoton_video_driver);
-         | ^~~~~~~~~~~~~~~~~~~~~~
-   In file included from include/linux/device.h:32,
-                    from drivers/media/platform/nuvoton/npcm-video.c:14:
-   drivers/media/platform/nuvoton/npcm-video.c: In function 'nuvoton_video_driver_exit':
->> drivers/media/platform/nuvoton/npcm-video.c:2069:24: error: 'nuvoton_video_driver' undeclared (first use in this function); did you mean 'nuvoton_video_probe'?
-    2069 | module_platform_driver(nuvoton_video_driver);
-         |                        ^~~~~~~~~~~~~~~~~~~~
-   include/linux/device/driver.h:267:24: note: in definition of macro 'module_driver'
-     267 |         __unregister(&(__driver) , ##__VA_ARGS__); \
-         |                        ^~~~~~~~
-   drivers/media/platform/nuvoton/npcm-video.c:2069:1: note: in expansion of macro 'module_platform_driver'
-    2069 | module_platform_driver(nuvoton_video_driver);
-         | ^~~~~~~~~~~~~~~~~~~~~~
-   drivers/media/platform/nuvoton/npcm-video.c: In function 'nuvoton_video_driver_init':
-   include/linux/device/driver.h:263:1: error: control reaches end of non-void function [-Werror=return-type]
-     263 | } \
-         | ^
-   include/linux/platform_device.h:252:9: note: in expansion of macro 'module_driver'
-     252 |         module_driver(__platform_driver, platform_driver_register, \
-         |         ^~~~~~~~~~~~~
-   drivers/media/platform/nuvoton/npcm-video.c:2069:1: note: in expansion of macro 'module_platform_driver'
-    2069 | module_platform_driver(nuvoton_video_driver);
-         | ^~~~~~~~~~~~~~~~~~~~~~
-   At top level:
-   drivers/media/platform/nuvoton/npcm-video.c:2030:12: warning: 'nuvoton_video_remove' defined but not used [-Wunused-function]
-    2030 | static int nuvoton_video_remove(struct platform_device *pdev)
-         |            ^~~~~~~~~~~~~~~~~~~~
-   drivers/media/platform/nuvoton/npcm-video.c:1954:12: warning: 'nuvoton_video_probe' defined but not used [-Wunused-function]
-    1954 | static int nuvoton_video_probe(struct platform_device *pdev)
-         |            ^~~~~~~~~~~~~~~~~~~
-   cc1: some warnings being treated as errors
 
 
-vim +2060 drivers/media/platform/nuvoton/npcm-video.c
+> On Apr 19, 2022, at 5:30 PM, William Kennington <wak@google.com> =
+wrote:
+>=20
+> I don't really like using multi-user.target to order host startup
+> because we may have lots of optional or non-critical services that
+> take a long time to become ready that just end up delaying the boot
+> time of the server (which is a critical amount of time to reduce for
+> our usecase).
 
-  2059	
-> 2060	static struct platform_driver nuvoton_video_driver = {
-  2061		.driver = {
-  2062			.name = DEVICE_NAME,
-  2063			.of_match_table = nuvoton_video_match,
-  2064		},
-  2065		.probe = nuvoton_video_probe,
-  2066		.remove = nuvoton_video_remove,
-  2067	};
-  2068	
-> 2069	module_platform_driver(nuvoton_video_driver);
-  2070	
+Yep, I agree, if you only have a few critical services needed to boot,
+waiting on multi-user.target is very inefficient.
 
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+
+> I can also see how different platforms probably have
+> different definitions of "critical" components based on what the
+> bootup firmware ends up querying the BMC for. But having some kind of
+> unit we can opt-in to ordering services against may be useful as we
+> have our own targets for this purpose on google BMCs.
+
+Yeah, I like this. An optional opt-in unit that systems owners can put =
+their
+services against.=20
+
+I took a first stab at a design up at:
+  https://gerrit.openbmc-project.xyz/c/openbmc/docs/+/53723=20
+
+>=20
+> On Tue, Apr 19, 2022 at 2:03 PM Andrew Geissler =
+<geissonator@gmail.com> wrote:
+>>=20
+>> Greetings,
+>>=20
+>> We at IBM have been finding cases where we wrote our services in a =
+way that they
+>> assume the BMC has reached "Ready" state prior to a chassis power on =
+and host
+>> firmware boot being allowed to start. For example, to power on the =
+chassis, you
+>> need to have collected all of the vpd associated with the VRM's and =
+power
+>> supplies. This vpd collection occurs on the way to BMC Ready, and =
+services
+>> in the power on target assume it's all been collected. We have other =
+scenarios
+>> like this and we're wondering if we continue to whack-a-mole by =
+fixing
+>> these individually with explicit service dependencies or do something =
+a bit
+>> more global to ensure our systems aren't allowed to power on until =
+the BMC
+>> has reached the "Ready" state. This state ensures all inventory and =
+other
+>> system data has been collected and created on d-bus.
+>>=20
+>> The BMC reaches the "Ready" state once all services within the =
+multi-user.target
+>> have successfully started running.
+>>=20
+>> I know in the past I've heard of servers that allow both the BMC and =
+Host
+>> to boot in parallel (which sounds awesome) but we're not there yet. =
+I'm
+>> contemplating an optional package in phosphor-state-manager that =
+could be
+>> installed and put in the obmc-chassis-poweron@.target and prevent
+>> any other services running until the BMC reached Ready.
+>>=20
+>> The obmc-chassis-poweron@.target does have a =
+"After=3Dmulti-user.target" within
+>> it but that doesn't control the services within the poweron target. =
+It just
+>> ensures systemd will not consider the obmc-chassis-poweron@.target =
+complete
+>> until multi-user.target has completed.
+>>=20
+>> Anyone else have a similar issue and/or thoughts on this problem?
+>>=20
+>> Thanks,
+>> Andrew
+
