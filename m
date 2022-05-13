@@ -1,75 +1,44 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92AA2525ABF
-	for <lists+openbmc@lfdr.de>; Fri, 13 May 2022 06:28:09 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 70CC4525AF5
+	for <lists+openbmc@lfdr.de>; Fri, 13 May 2022 07:11:51 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4KzwcR3n9gz3bpB
-	for <lists+openbmc@lfdr.de>; Fri, 13 May 2022 14:28:07 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256 header.s=facebook header.b=E9GA4CCr;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4KzxZs25K9z3cGB
+	for <lists+openbmc@lfdr.de>; Fri, 13 May 2022 15:11:49 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
- spf=pass (sender SPF authorized) smtp.mailfrom=fb.com
- (client-ip=67.231.153.30; helo=mx0b-00082601.pphosted.com;
- envelope-from=prvs=613212e35b=pdel@fb.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=fb.com header.i=@fb.com header.a=rsa-sha256
- header.s=facebook header.b=E9GA4CCr; dkim-atps=neutral
-X-Greylist: delayed 1365 seconds by postgrey-1.36 at boromir;
- Fri, 13 May 2022 14:27:50 AEST
-Received: from mx0b-00082601.pphosted.com (mx0b-00082601.pphosted.com
- [67.231.153.30])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
+ smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx1.molgen.mpg.de;
+ envelope-from=pmenzel@molgen.mpg.de; receiver=<UNKNOWN>)
+Received: from mx1.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4Kzwc62NJmz3bXD
- for <openbmc@lists.ozlabs.org>; Fri, 13 May 2022 14:27:44 +1000 (AEST)
-Received: from pps.filterd (m0148460.ppops.net [127.0.0.1])
- by mx0a-00082601.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 24CNMM3v013679
- for <openbmc@lists.ozlabs.org>; Thu, 12 May 2022 21:04:59 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fb.com;
- h=from : to : cc : subject
- : date : message-id : in-reply-to : references : content-type :
- content-transfer-encoding : mime-version; s=facebook;
- bh=unxFmsA21oO88hQqz1WTAO4u7MbdUrcf6MsuDEBoRA8=;
- b=E9GA4CCrHcLIOEdbwMe7xFGCI+4qCei0QvMo+iG1hNuQExupItMRVsXyo8C1leTd2a+w
- 168NbHtUYAndVjD+Lmfrp6mYjOGLESeutQ+DLUIpqF7ERf23xE93boplo7TsrYcB1NaQ
- EoAHu4uvbFCK7lSjyVsnWzQgIW9O6ALoXpY= 
-Received: from mail.thefacebook.com ([163.114.132.120])
- by mx0a-00082601.pphosted.com (PPS) with ESMTPS id 3g19w9t6yc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <openbmc@lists.ozlabs.org>; Thu, 12 May 2022 21:04:58 -0700
-Received: from snc-exhub201.TheFacebook.com (2620:10d:c085:21d::7) by
- snc-exhub102.TheFacebook.com (2620:10d:c085:11d::6) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Thu, 12 May 2022 21:04:57 -0700
-Received: from twshared6447.05.prn5.facebook.com (2620:10d:c085:208::f) by
- mail.thefacebook.com (2620:10d:c085:21d::7) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2375.24; Thu, 12 May 2022 21:04:57 -0700
-Received: by devvm9194.prn0.facebook.com (Postfix, from userid 385188)
- id C648762D7867; Thu, 12 May 2022 21:02:20 -0700 (PDT)
-From: Peter Delevoryas <pdel@fb.com>
-To: 
-Subject: [PATCH 2/2] hw: aspeed: Init all UART's with serial devices
-Date: Thu, 12 May 2022 21:02:20 -0700
-Message-ID: <20220513040220.3657135-3-pdel@fb.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20220513040220.3657135-1-pdel@fb.com>
-References: <20220513040220.3657135-1-pdel@fb.com>
-X-FB-Internal: Safe
-Content-Type: text/plain
-X-Proofpoint-ORIG-GUID: MmoGgIcGyifcCsVcNzzy_klcuz_tObRr
-X-Proofpoint-GUID: MmoGgIcGyifcCsVcNzzy_klcuz_tObRr
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4KzxZZ0Cclz3bqb
+ for <openbmc@lists.ozlabs.org>; Fri, 13 May 2022 15:11:31 +1000 (AEST)
+Received: from [192.168.0.2] (ip5f5aeb24.dynamic.kabel-deutschland.de
+ [95.90.235.36])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested) (Authenticated sender: pmenzel)
+ by mx.molgen.mpg.de (Postfix) with ESMTPSA id DBFB461EA1928;
+ Fri, 13 May 2022 07:11:25 +0200 (CEST)
+Message-ID: <b6da2e5a-eb85-d3cf-d4c3-ca9c0f0c04a4@molgen.mpg.de>
+Date: Fri, 13 May 2022 07:11:25 +0200
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.858,Hydra:6.0.486,FMLib:17.11.64.514
- definitions=2022-05-12_19,2022-05-12_01,2022-02-23_01
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: [PATCH net v2] net: ftgmac100: Disable hardware checksum on
+ AST2600
+Content-Language: en-US
+To: Joel Stanley <joel@jms.id.au>
+References: <20220512231938.228651-1-joel@jms.id.au>
+From: Paul Menzel <pmenzel@molgen.mpg.de>
+In-Reply-To: <20220512231938.228651-1-joel@jms.id.au>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,150 +50,125 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: peter.maydell@linaro.org, zev@bewilderbeest.net, andrew@aj.id.au,
- irischenlj@fb.com, openbmc@lists.ozlabs.org, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, clg@kaod.org, pdel@fb.com, joel@jms.id.au
+Cc: David Wilder <dwilder@us.ibm.com>, openbmc@lists.ozlabs.org,
+ David Wilder <wilder@us.ibm.com>, linux-kernel@vger.kernel.org,
+ netdev@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>,
+ Dylan Hung <dylan_hung@aspeedtech.com>, Paolo Abeni <pabeni@redhat.com>,
+ "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Usually, QEMU users just provide one serial device on the command line,
-either through "-nographic" or "-serial stdio -display none", or just using
-VNC and popping up a window. We try to match what the user expects, which is
-to connect the first (and usually only) serial device to the UART a board is
-using as serial0.
+Dear Joel,
 
-Most Aspeed machines in hw/arm/aspeed.c use UART5 for serial0 in their
-device tree, so we connect UART5 to the first serial device. Some machines
-use UART1 though, or UART3, so the uart_default property lets us specify
-that in a board definition.
 
-In order to specify a nonstandard serial0 UART, a user basically *must* add
-a new board definition in hw/arm/aspeed.c. There's no way to do this without
-recompiling QEMU, besides constructing the machine completely from scratch
-on the command line.
+Am 13.05.22 um 01:19 schrieb Joel Stanley:
+> The AST2600 when using the i210 NIC over NC-SI has been observed to
+> produce incorrect checksum results with specific MTU values. This was
+> first observed when sending data across a long distance set of networks.
+> 
+> On a local network, the following test was performed using a 1MB file of
+> random data.
+> 
+> On the receiver run this script:
+> 
+>   #!/bin/bash
+>   while [ 1 ]; do
+>          # Zero the stats
+>          nstat -r  > /dev/null
+>          nc -l 9899 > test-file
+>          # Check for checksum errors
+>          TcpInCsumErrors=$(nstat | grep TcpInCsumErrors)
+>          if [ -z "$TcpInCsumErrors" ]; then
+>                  echo No TcpInCsumErrors
+>          else
+>                  echo TcpInCsumErrors = $TcpInCsumErrors
+>          fi
+>   done
+> 
+> On an AST2600 system:
+> 
+>   # nc <IP of  receiver host> 9899 < test-file
+> 
+> The test was repeated with various MTU values:
+> 
+>   # ip link set mtu 1410 dev eth0
+> 
+> The observed results:
+> 
+>   1500 - good
+>   1434 - bad
+>   1400 - good
+>   1410 - bad
+>   1420 - good
 
-To provide more flexibility, we can also support the user specifying more
-serial devices, and connect them to the UART memory regions if possible.
-Even if a user doesn't specify any extra serial devices, it's useful to
-initialize these memory regions as UART's, so that they respond to the guest
-OS more naturally. At the moment, they will just always return zero's for
-everything, and some UART registers have a default non-zero state.
+Sort the values? As some MTUs are good, should a allow list for these 
+values be added?
 
-With this change, if a new OpenBMC image uses UART3 or some other
-nonstandard UART for serial0, you can still use it with the EVB without
-recompiling QEMU, even though uart-default=3DUART5 for the EVB.
+> The test was repeated after disabling tx checksumming:
+> 
+>   # ethtool -K eth0 tx-checksumming off
+> 
+> And all MTU values tested resulted in transfers without error.
+> 
+> An issue with the driver cannot be ruled out, however there has been no
+> bug discovered so far.
+> 
+> David has done the work to take the original bug report of slow data
+> transfer between long distance connections and triaged it down to this
+> test case.
+> 
+> The vendor suspects this this is a hardware issue when using NC-SI. The fixes line refers
+> to the patch that introduced AST2600 support.
 
-For example, Facebook's Wedge100 BMC uses UART3: you can fetch an image from
-Github[1] and get the serial console output even while running the palmetto
-machine type, because we explicitly specify that we want UART3 to be
-connected to stdio.
+Please wrap the line after 75 characters.
 
-    qemu-system-arm -machine palmetto-bmc \
-        -drive file=3Dwedge100.mtd,format=3Draw,if=3Dmtd \
-        -serial null -serial null -serial null -serial stdio -display none
+Can the problem be reproduced with QEMU?
 
-Similarly, you can boot a Fuji BMC image[2], which uses UART1, using the
-AST2600 EVB machine:
+> Fixes: 39bfab8844a0 ("net: ftgmac100: Add support for DT phy-handle property")
+> Reported-by: David Wilder <wilder@us.ibm.com>
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
 
-    qemu-system-arm -machine ast2600-evb \
-        -drive file=3Dfuji.mtd,format=3Draw,if=3Dmtd \
-        -serial null -serial stdio -display none
+Should the intel-wired-lan folks be put in Cc?
 
-This is kind of complicated, of course: it might be more natural to get rid
-of the uart_default attribute completely, and initialize UART's
-sequentially. But, keeping backward compatibility and the way most users
-know how to use QEMU in mind, this seems to make the most sense.
+> ---
+> v2 updates the commit message with confirmation form the vendor that
 
-[1] https://github.com/facebook/openbmc/releases/download/v2021.49.0/wedge1=
-00.mtd
-[2] https://github.com/facebook/openbmc/releases/download/v2021.49.0/fuji.m=
-td
+from
 
-Signed-off-by: Peter Delevoryas <pdel@fb.com>
----
- hw/arm/aspeed_ast10x0.c | 14 +++++++++++---
- hw/arm/aspeed_ast2600.c | 10 +++++++++-
- hw/arm/aspeed_soc.c     | 10 +++++++++-
- 3 files changed, 29 insertions(+), 5 deletions(-)
+> this is a hardware issue, and clarifes why the commit used in the fixes
 
-diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
-index f65dc139da..5e6f3a8fed 100644
---- a/hw/arm/aspeed_ast10x0.c
-+++ b/hw/arm/aspeed_ast10x0.c
-@@ -215,10 +215,18 @@ static void aspeed_soc_ast1030_realize(DeviceState *d=
-ev_soc, Error **errp)
-                        qdev_get_gpio_in(DEVICE(&s->armv7m),
-                                 sc->irqmap[ASPEED_DEV_KCS] + aspeed_lpc_kc=
-s_4));
-=20
--    /* UART5 - attach an 8250 to the IO space as our UART */
--    serial_mm_init(get_system_memory(), sc->memmap[ASPEED_DEV_UART5], 2,
--                   aspeed_soc_get_irq(s, ASPEED_DEV_UART5),
-+    /* UART - attach 8250's to the IO space for each UART */
-+    serial_mm_init(get_system_memory(), sc->memmap[s->uart_default], 2,
-+                   aspeed_soc_get_irq(s, s->uart_default),
-                    38400, serial_hd(0), DEVICE_LITTLE_ENDIAN);
-+    for (int i =3D 1, uart =3D ASPEED_DEV_UART1; i < 13; i++, uart++) {
-+        if (uart =3D=3D s->uart_default) {
-+            uart++;
-+        }
-+        serial_mm_init(get_system_memory(), sc->memmap[uart], 2,
-+                       aspeed_soc_get_irq(s, uart), 38400, serial_hd(i),
-+                       DEVICE_LITTLE_ENDIAN);
-+    }
-=20
-     /* Timer */
-     object_property_set_link(OBJECT(&s->timerctrl), "scu", OBJECT(&s->scu),
-diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
-index 1b72800682..cbeca7f655 100644
---- a/hw/arm/aspeed_ast2600.c
-+++ b/hw/arm/aspeed_ast2600.c
-@@ -372,10 +372,18 @@ static void aspeed_soc_ast2600_realize(DeviceState *d=
-ev, Error **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->adc), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_ADC));
-=20
--    /* UART - attach an 8250 to the IO space as our UART */
-+    /* UART - attach 8250's to the IO space for each UART */
-     serial_mm_init(get_system_memory(), sc->memmap[s->uart_default], 2,
-                    aspeed_soc_get_irq(s, s->uart_default), 38400,
-                    serial_hd(0), DEVICE_LITTLE_ENDIAN);
-+    for (int i =3D 1, uart =3D ASPEED_DEV_UART1; i < 13; i++, uart++) {
-+        if (uart =3D=3D s->uart_default) {
-+            uart++;
-+        }
-+        serial_mm_init(get_system_memory(), sc->memmap[uart], 2,
-+                       aspeed_soc_get_irq(s, uart), 38400, serial_hd(i),
-+                       DEVICE_LITTLE_ENDIAN);
-+    }
-=20
-     /* I2C */
-     object_property_set_link(OBJECT(&s->i2c), "dram", OBJECT(s->dram_mr),
-diff --git a/hw/arm/aspeed_soc.c b/hw/arm/aspeed_soc.c
-index 2cd03d49da..1fc1ed808d 100644
---- a/hw/arm/aspeed_soc.c
-+++ b/hw/arm/aspeed_soc.c
-@@ -303,10 +303,18 @@ static void aspeed_soc_realize(DeviceState *dev, Erro=
-r **errp)
-     sysbus_connect_irq(SYS_BUS_DEVICE(&s->adc), 0,
-                        aspeed_soc_get_irq(s, ASPEED_DEV_ADC));
-=20
--    /* UART - attach an 8250 to the IO space as our UART */
-+    /* UART - attach 8250's to the IO space for each UART */
-     serial_mm_init(get_system_memory(), sc->memmap[s->uart_default], 2,
-                    aspeed_soc_get_irq(s, s->uart_default), 38400,
-                    serial_hd(0), DEVICE_LITTLE_ENDIAN);
-+    for (int i =3D 1, uart =3D ASPEED_DEV_UART1; i < 5; i++, uart++) {
-+        if (uart =3D=3D s->uart_default) {
-+            uart++;
-+        }
-+        serial_mm_init(get_system_memory(), sc->memmap[uart], 2,
-+                       aspeed_soc_get_irq(s, uart), 38400, serial_hd(i),
-+                       DEVICE_LITTLE_ENDIAN);
-+    }
-=20
-     /* I2C */
-     object_property_set_link(OBJECT(&s->i2c), "dram", OBJECT(s->dram_mr),
---=20
-2.30.2
+clarifies
 
+> tag was chosen.
+> 
+>   drivers/net/ethernet/faraday/ftgmac100.c | 5 +++++
+>   1 file changed, 5 insertions(+)
+> 
+> diff --git a/drivers/net/ethernet/faraday/ftgmac100.c b/drivers/net/ethernet/faraday/ftgmac100.c
+> index caf48023f8ea..5231818943c6 100644
+> --- a/drivers/net/ethernet/faraday/ftgmac100.c
+> +++ b/drivers/net/ethernet/faraday/ftgmac100.c
+> @@ -1928,6 +1928,11 @@ static int ftgmac100_probe(struct platform_device *pdev)
+>   	/* AST2400  doesn't have working HW checksum generation */
+>   	if (np && (of_device_is_compatible(np, "aspeed,ast2400-mac")))
+>   		netdev->hw_features &= ~NETIF_F_HW_CSUM;
+> +
+> +	/* AST2600 tx checksum with NC-SI is broken */
+
+Does ASPEED have an internal bug for this, so should there be new 
+revisions of the AST2600, the bug can be fixed?
+
+> +	if (priv->use_ncsi && of_device_is_compatible(np, "aspeed,ast2600-mac"))
+> +		netdev->hw_features &= ~NETIF_F_HW_CSUM;
+> +
+
+I would fancy a note or even warning about this hardware issue.
+
+>   	if (np && of_get_property(np, "no-hw-checksum", NULL))
+>   		netdev->hw_features &= ~(NETIF_F_HW_CSUM | NETIF_F_RXCSUM);
+>   	netdev->features |= netdev->hw_features;
+
+
+Kind regards,
+
+Paul
