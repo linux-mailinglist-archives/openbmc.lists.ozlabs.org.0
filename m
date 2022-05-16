@@ -2,57 +2,56 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 40448527E8C
-	for <lists+openbmc@lfdr.de>; Mon, 16 May 2022 09:28:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B2541527E70
+	for <lists+openbmc@lfdr.de>; Mon, 16 May 2022 09:20:24 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L1rSx1KZXz3bym
-	for <lists+openbmc@lfdr.de>; Mon, 16 May 2022 17:28:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L1rHp4blXz3bqX
+	for <lists+openbmc@lfdr.de>; Mon, 16 May 2022 17:20:22 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kaod.org (client-ip=46.105.54.81;
- helo=smtpout3.mo529.mail-out.ovh.net; envelope-from=clg@kaod.org;
- receiver=<UNKNOWN>)
-X-Greylist: delayed 460 seconds by postgrey-1.36 at boromir;
- Mon, 16 May 2022 17:28:00 AEST
-Received: from smtpout3.mo529.mail-out.ovh.net
- (smtpout3.mo529.mail-out.ovh.net [46.105.54.81])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=kaod.org (client-ip=46.105.33.25; helo=7.mo548.mail-out.ovh.net;
+ envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
+Received: from 7.mo548.mail-out.ovh.net (7.mo548.mail-out.ovh.net
+ [46.105.33.25])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L1rSc2VwKz2ync
- for <openbmc@lists.ozlabs.org>; Mon, 16 May 2022 17:27:59 +1000 (AEST)
-Received: from mxplan5.mail.ovh.net (unknown [10.109.138.132])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id BE80D10028BA5;
- Mon, 16 May 2022 09:18:47 +0200 (CEST)
-Received: from kaod.org (37.59.142.102) by DAG4EX1.mxp5.local (172.16.2.31)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L1rHX2MN2z2ync
+ for <openbmc@lists.ozlabs.org>; Mon, 16 May 2022 17:20:06 +1000 (AEST)
+Received: from mxplan5.mail.ovh.net (unknown [10.109.138.84])
+ by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 46D9522E18;
+ Mon, 16 May 2022 07:19:59 +0000 (UTC)
+Received: from kaod.org (37.59.142.95) by DAG4EX1.mxp5.local (172.16.2.31)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.6; Mon, 16 May
- 2022 09:18:47 +0200
+ 2022 09:19:58 +0200
 Authentication-Results: garm.ovh; auth=pass
- (GARM-102R004414e1081-a4cc-42b5-a69a-8b30e13c60b0,
+ (GARM-95G0019ea08e22-5546-4010-8cbe-789ae0f0c085,
  182B8575423FAF1F37CDABDABB9637A2CFA4B440) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <b978e205-66f7-e585-4cf0-6f3946fd1050@kaod.org>
-Date: Mon, 16 May 2022 09:18:46 +0200
+Message-ID: <85c15d25-ed3f-65a7-0f94-d5d877e6ff75@kaod.org>
+Date: Mon, 16 May 2022 09:19:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
  Thunderbird/91.8.0
-Subject: Re: [PATCH v2 0/5] hw: aspeed: Init all UART's with serial devices
+Subject: Re: [PATCH v2 1/5] hw: aspeed: Add missing UART's
 Content-Language: en-US
 To: Peter Delevoryas <pdel@fb.com>
 References: <20220516062328.298336-1-pdel@fb.com>
+ <20220516062328.298336-2-pdel@fb.com>
 From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20220516062328.298336-1-pdel@fb.com>
+In-Reply-To: <20220516062328.298336-2-pdel@fb.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.102]
-X-ClientProxiedBy: DAG4EX2.mxp5.local (172.16.2.32) To DAG4EX1.mxp5.local
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.95]
+X-ClientProxiedBy: DAG2EX1.mxp5.local (172.16.2.11) To DAG4EX1.mxp5.local
  (172.16.2.31)
-X-Ovh-Tracer-GUID: 094042a1-8b3c-4f36-9b88-f7553e5c10c3
-X-Ovh-Tracer-Id: 18074915631893023666
+X-Ovh-Tracer-GUID: 64428277-d221-4a70-9f00-6cd19f6b1ed8
+X-Ovh-Tracer-Id: 18095181831742786482
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvfedrheeggdduvddtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepkfffgggfuffvvehfhfgjtgfgihesthejredttdefjeenucfhrhhomhepveorughrihgtpgfnvggpifhorghtvghruceotghlgheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpeeihedvvedtteeutdfgvedtudffveetueeiieefgfefkeehvdelhfeuvdfhjedthfenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhkvghrnhgvlhdrohhrghdpghhithhlrggsrdgtohhmnecukfhppedtrddtrddtrddtpdefjedrheelrddugedvrddutddvnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmohguvgepshhmthhpohhuthdphhgvlhhopehmgihplhgrnhehrdhmrghilhdrohhvhhdrnhgvthdpihhnvghtpedtrddtrddtrddtpdhmrghilhhfrhhomheptghlgheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopedupdhrtghpthhtohepjhgrmhhinhgplhhinhesrghsphgvvgguthgvtghhrdgtohhm
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvfedrheeggdduvddtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepkfffgggfuffvvehfhfgjtgfgihesthekredttdefjeenucfhrhhomhepveorughrihgtpgfnvggpifhorghtvghruceotghlgheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpeekteejtdelkeejvdevffduhfetteelieefgeefffeugffhfeekheffueefledujeenucfkpheptddrtddrtddrtddpfeejrdehledrudegvddrleehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmohguvgepshhmthhpohhuthdphhgvlhhopehmgihplhgrnhehrdhmrghilhdrohhvhhdrnhgvthdpihhnvghtpedtrddtrddtrddtpdhmrghilhhfrhhomheptghlgheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopedupdhrtghpthhtohepjhgrmhhinhgplhhinhesrghsphgvvgguthgvtghhrdgtohhm
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,69 +71,151 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On 5/16/22 08:23, Peter Delevoryas wrote:
-> v2:
-> - Rebased on Cedric's irq proposal. [1]
-> - Added "Introduce common UART init function" patch
-> - Added "Add uarts_num SoC attribute" patch
-> - Rewrote last commit's message for clarity
-
-Looks good to me.
-
-> I tried testing this by running acceptance tests, particularly the
-> boot_linux_console.py file, but I had to disable the raspi2_initrd case.
-> It's not related to my changes (A/B tested and it fails on upstream/master
-> too), but thought I would mention that.>
-> I also manually tested several machines:
+> This adds the missing UART memory and IRQ mappings for the AST2400, AST2500,
+> AST2600, and AST1030.
 > 
-> AST2400: https://github.com/facebook/openbmc/releases/download/v2021.49.0/wedge100.mtd
-> AST2500: https://github.com/facebook/openbmc/releases/download/v2021.49.0/fby3.mtd
-> AST2600: https://github.com/facebook/openbmc/releases/download/v2021.49.0/fuji.mtd
-> AST1030: https://github.com/peterdelevoryas/OpenBIC/releases/download/oby35-cl-2022.13.01/Y35BCL.elf
+> This also includes the new UART interfaces added in the AST2600 and AST1030
+> from UART6 to UART13. The addresses and interrupt numbers for these two
+> later chips are identical.
 > 
-> [1] https://lore.kernel.org/qemu-devel/20220516055620.2380197-1-clg@kaod.org/
-I have quite a few images which I run manually. OpenBMC is providing
-images, Aspeed also. Joel did a small tool for the IBM rainier :
+> Signed-off-by: Peter Delevoryas <pdel@fb.com>
 
-   https://github.com/shenki/qemu-boot-test
+Reviewed-by: Cédric Le Goater <clg@kaod.org>
 
-Having an automated framework for Aspeed machines pulling images
-from different places would be nice but we cannot put all under
-QEMU.
-
-
-I like the buildroot CI using the QEMU boards. See a pipeline example:
-
-   https://gitlab.com/legoater/buildroot/-/pipelines/539559209
-
-but that's buildroot only and integrating a custom uboot might be
-difficult.
-
-For my ppc needs, I did a quick-and-dirty non-regression test suite :
-
-   https://github.com/legoater/qemu-ppc-boot
-
-
-Anyway, I haven't found a solution nor spent much time on it but
-I am interested !
-
+Thanks,
 
 C.
 
 
-
-
+> ---
+>   hw/arm/aspeed_ast10x0.c     | 24 ++++++++++++++++++++++++
+>   hw/arm/aspeed_ast2600.c     | 19 +++++++++++++++++++
+>   hw/arm/aspeed_soc.c         |  6 ++++++
+>   include/hw/arm/aspeed_soc.h |  8 ++++++++
+>   4 files changed, 57 insertions(+)
 > 
-> Peter Delevoryas (5):
->    hw: aspeed: Add missing UART's
->    hw: aspeed: Add uarts_num SoC attribute
->    hw: aspeed: Ensure AST1030 respects uart-default
->    hw: aspeed: Introduce common UART init function
->    hw: aspeed: Init all UART's with serial devices
-> 
->   hw/arm/aspeed_ast10x0.c     | 32 +++++++++++++++++++++++++++-----
->   hw/arm/aspeed_ast2600.c     | 27 ++++++++++++++++++++++-----
->   hw/arm/aspeed_soc.c         | 33 +++++++++++++++++++++++++++++----
->   include/hw/arm/aspeed_soc.h | 10 ++++++++++
->   4 files changed, 88 insertions(+), 14 deletions(-)
-> 
+> diff --git a/hw/arm/aspeed_ast10x0.c b/hw/arm/aspeed_ast10x0.c
+> index 9ae9efaac1..fa2cc4406c 100644
+> --- a/hw/arm/aspeed_ast10x0.c
+> +++ b/hw/arm/aspeed_ast10x0.c
+> @@ -33,14 +33,38 @@ static const hwaddr aspeed_soc_ast1030_memmap[] = {
+>       [ASPEED_DEV_SBC]       = 0x7E6F2000,
+>       [ASPEED_DEV_GPIO]      = 0x7E780000,
+>       [ASPEED_DEV_TIMER1]    = 0x7E782000,
+> +    [ASPEED_DEV_UART1]     = 0x7E783000,
+> +    [ASPEED_DEV_UART2]     = 0x7E78D000,
+> +    [ASPEED_DEV_UART3]     = 0x7E78E000,
+> +    [ASPEED_DEV_UART4]     = 0x7E78F000,
+>       [ASPEED_DEV_UART5]     = 0x7E784000,
+> +    [ASPEED_DEV_UART6]     = 0x7E790000,
+> +    [ASPEED_DEV_UART7]     = 0x7E790100,
+> +    [ASPEED_DEV_UART8]     = 0x7E790200,
+> +    [ASPEED_DEV_UART9]     = 0x7E790300,
+> +    [ASPEED_DEV_UART10]    = 0x7E790400,
+> +    [ASPEED_DEV_UART11]    = 0x7E790500,
+> +    [ASPEED_DEV_UART12]    = 0x7E790600,
+> +    [ASPEED_DEV_UART13]    = 0x7E790700,
+>       [ASPEED_DEV_WDT]       = 0x7E785000,
+>       [ASPEED_DEV_LPC]       = 0x7E789000,
+>       [ASPEED_DEV_I2C]       = 0x7E7B0000,
+>   };
+>   
+>   static const int aspeed_soc_ast1030_irqmap[] = {
+> +    [ASPEED_DEV_UART1]     = 47,
+> +    [ASPEED_DEV_UART2]     = 48,
+> +    [ASPEED_DEV_UART3]     = 49,
+> +    [ASPEED_DEV_UART4]     = 50,
+>       [ASPEED_DEV_UART5]     = 8,
+> +    [ASPEED_DEV_UART6]     = 57,
+> +    [ASPEED_DEV_UART7]     = 58,
+> +    [ASPEED_DEV_UART8]     = 59,
+> +    [ASPEED_DEV_UART9]     = 60,
+> +    [ASPEED_DEV_UART10]    = 61,
+> +    [ASPEED_DEV_UART11]    = 62,
+> +    [ASPEED_DEV_UART12]    = 63,
+> +    [ASPEED_DEV_UART13]    = 64,
+>       [ASPEED_DEV_GPIO]      = 11,
+>       [ASPEED_DEV_TIMER1]    = 16,
+>       [ASPEED_DEV_TIMER2]    = 17,
+> diff --git a/hw/arm/aspeed_ast2600.c b/hw/arm/aspeed_ast2600.c
+> index 4161a0cc4b..f3ecc0f3b7 100644
+> --- a/hw/arm/aspeed_ast2600.c
+> +++ b/hw/arm/aspeed_ast2600.c
+> @@ -61,7 +61,18 @@ static const hwaddr aspeed_soc_ast2600_memmap[] = {
+>       [ASPEED_DEV_IBT]       = 0x1E789140,
+>       [ASPEED_DEV_I2C]       = 0x1E78A000,
+>       [ASPEED_DEV_UART1]     = 0x1E783000,
+> +    [ASPEED_DEV_UART2]     = 0x1E78D000,
+> +    [ASPEED_DEV_UART3]     = 0x1E78E000,
+> +    [ASPEED_DEV_UART4]     = 0x1E78F000,
+>       [ASPEED_DEV_UART5]     = 0x1E784000,
+> +    [ASPEED_DEV_UART6]     = 0x1E790000,
+> +    [ASPEED_DEV_UART7]     = 0x1E790100,
+> +    [ASPEED_DEV_UART8]     = 0x1E790200,
+> +    [ASPEED_DEV_UART9]     = 0x1E790300,
+> +    [ASPEED_DEV_UART10]    = 0x1E790400,
+> +    [ASPEED_DEV_UART11]    = 0x1E790500,
+> +    [ASPEED_DEV_UART12]    = 0x1E790600,
+> +    [ASPEED_DEV_UART13]    = 0x1E790700,
+>       [ASPEED_DEV_VUART]     = 0x1E787000,
+>       [ASPEED_DEV_I3C]       = 0x1E7A0000,
+>       [ASPEED_DEV_SDRAM]     = 0x80000000,
+> @@ -78,6 +89,14 @@ static const int aspeed_soc_ast2600_irqmap[] = {
+>       [ASPEED_DEV_UART3]     = 49,
+>       [ASPEED_DEV_UART4]     = 50,
+>       [ASPEED_DEV_UART5]     = 8,
+> +    [ASPEED_DEV_UART6]     = 57,
+> +    [ASPEED_DEV_UART7]     = 58,
+> +    [ASPEED_DEV_UART8]     = 59,
+> +    [ASPEED_DEV_UART9]     = 60,
+> +    [ASPEED_DEV_UART10]    = 61,
+> +    [ASPEED_DEV_UART11]    = 62,
+> +    [ASPEED_DEV_UART12]    = 63,
+> +    [ASPEED_DEV_UART13]    = 64,
+>       [ASPEED_DEV_VUART]     = 8,
+>       [ASPEED_DEV_FMC]       = 39,
+>       [ASPEED_DEV_SDMC]      = 0,
+> diff --git a/hw/arm/aspeed_soc.c b/hw/arm/aspeed_soc.c
+> index c339b5c74d..96bc060680 100644
+> --- a/hw/arm/aspeed_soc.c
+> +++ b/hw/arm/aspeed_soc.c
+> @@ -48,6 +48,9 @@ static const hwaddr aspeed_soc_ast2400_memmap[] = {
+>       [ASPEED_DEV_ETH1]   = 0x1E660000,
+>       [ASPEED_DEV_ETH2]   = 0x1E680000,
+>       [ASPEED_DEV_UART1]  = 0x1E783000,
+> +    [ASPEED_DEV_UART2]  = 0x1E78D000,
+> +    [ASPEED_DEV_UART3]  = 0x1E78E000,
+> +    [ASPEED_DEV_UART4]  = 0x1E78F000,
+>       [ASPEED_DEV_UART5]  = 0x1E784000,
+>       [ASPEED_DEV_VUART]  = 0x1E787000,
+>       [ASPEED_DEV_SDRAM]  = 0x40000000,
+> @@ -80,6 +83,9 @@ static const hwaddr aspeed_soc_ast2500_memmap[] = {
+>       [ASPEED_DEV_ETH1]   = 0x1E660000,
+>       [ASPEED_DEV_ETH2]   = 0x1E680000,
+>       [ASPEED_DEV_UART1]  = 0x1E783000,
+> +    [ASPEED_DEV_UART2]  = 0x1E78D000,
+> +    [ASPEED_DEV_UART3]  = 0x1E78E000,
+> +    [ASPEED_DEV_UART4]  = 0x1E78F000,
+>       [ASPEED_DEV_UART5]  = 0x1E784000,
+>       [ASPEED_DEV_VUART]  = 0x1E787000,
+>       [ASPEED_DEV_SDRAM]  = 0x80000000,
+> diff --git a/include/hw/arm/aspeed_soc.h b/include/hw/arm/aspeed_soc.h
+> index 3789f38603..709a78285b 100644
+> --- a/include/hw/arm/aspeed_soc.h
+> +++ b/include/hw/arm/aspeed_soc.h
+> @@ -105,6 +105,14 @@ enum {
+>       ASPEED_DEV_UART3,
+>       ASPEED_DEV_UART4,
+>       ASPEED_DEV_UART5,
+> +    ASPEED_DEV_UART6,
+> +    ASPEED_DEV_UART7,
+> +    ASPEED_DEV_UART8,
+> +    ASPEED_DEV_UART9,
+> +    ASPEED_DEV_UART10,
+> +    ASPEED_DEV_UART11,
+> +    ASPEED_DEV_UART12,
+> +    ASPEED_DEV_UART13,
+>       ASPEED_DEV_VUART,
+>       ASPEED_DEV_FMC,
+>       ASPEED_DEV_SPI1,
 
