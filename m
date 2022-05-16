@@ -1,71 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7C58C527B60
-	for <lists+openbmc@lfdr.de>; Mon, 16 May 2022 03:24:06 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E55A0527BF2
+	for <lists+openbmc@lfdr.de>; Mon, 16 May 2022 04:31:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L1hNh37vRz3byL
-	for <lists+openbmc@lfdr.de>; Mon, 16 May 2022 11:24:04 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L1jtS5V4qz3bym
+	for <lists+openbmc@lfdr.de>; Mon, 16 May 2022 12:31:28 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=jLxemqpw;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Qy577rTs;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::92a;
- helo=mail-ua1-x92a.google.com; envelope-from=warp5tw@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::135;
+ helo=mail-lf1-x135.google.com; envelope-from=medadyoung@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=jLxemqpw; dkim-atps=neutral
-Received: from mail-ua1-x92a.google.com (mail-ua1-x92a.google.com
- [IPv6:2607:f8b0:4864:20::92a])
+ header.s=20210112 header.b=Qy577rTs; dkim-atps=neutral
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com
+ [IPv6:2a00:1450:4864:20::135])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L1hNH5TwQz3bdB
- for <openbmc@lists.ozlabs.org>; Mon, 16 May 2022 11:23:41 +1000 (AEST)
-Received: by mail-ua1-x92a.google.com with SMTP id x11so5294550uao.2
- for <openbmc@lists.ozlabs.org>; Sun, 15 May 2022 18:23:41 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L1jt216qYz30QN
+ for <openbmc@lists.ozlabs.org>; Mon, 16 May 2022 12:31:05 +1000 (AEST)
+Received: by mail-lf1-x135.google.com with SMTP id j4so23460737lfh.8
+ for <openbmc@lists.ozlabs.org>; Sun, 15 May 2022 19:31:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :cc:content-transfer-encoding;
- bh=7wuXO57c0JtXqV5NdAvSdjaT7cOyGnW8IqIXRcho3Sc=;
- b=jLxemqpwDv3YIlAWxavQtM/R0fB+JS+RanuyHTfmcZVVq1IsYjB7/tbyLeXAnMlWtc
- t1ATdP3DVFy4V8JCbAObbLpC0n5K6OGz4aePehxPCYiKVRfzBB+lfEuxkFK7ziSxLA3X
- F/X1wg1G9xTIQevmNjxcApVZnbyVSnVuwbaUQoVEQXOtqcdB4jYIx4IxNKH7uGa48RTB
- OHXcEHP9GslvHInoVwaPl7bvXCeBJVCjo6DsFtqNZCoh0JMNoAMaFine049A86yv4yqn
- tKQq2RVNInTXx8wj2kycJW9+CBDKflXYyO4nF3cJKtmTJdJcUoiFmRZZy7xOXwd1k7gH
- eHjA==
+ bh=4s0OSmePhoJXuHiuMzZo1VwoeuQdSeAInIYJXLS5OyM=;
+ b=Qy577rTsVDyHwVUTciphWV+VNPU0RzZ4IdFO25T1sbgmjfn247DhYQoRqZJt/HbXFE
+ Zj8Mey1O+VdqkZZ75zH8Bm+J1PAP5/RrBud4ThJBNncM/Z42o929WNGKYOG4/MBvN2Nh
+ Q61UEZuPT1fm3yrTtQq9AQ+xgIQ39W8e1VCvdufdTFL0goCFzu7agfSiyJ3E/oqCjafc
+ Kk3PfZmbdiRqxvJfdvQaqQbSqvsIwc7cN0QFJqfI+srg1oLQV55jCxiOeM8dyAKl8olC
+ uwpBMzz7ZjXDprNlNz9GNVbpZF149gN4LpjWkkFxilg9y+WFyuiW58JfgXvtUl2ciLFw
+ H08w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc:content-transfer-encoding;
- bh=7wuXO57c0JtXqV5NdAvSdjaT7cOyGnW8IqIXRcho3Sc=;
- b=hlpH1tZb678kbHii9dm+lchOkPWitkzkmfwQVULxLlcAG7CjPItqUEVoDy72wnLI+G
- CeBYbtNxe5Kyslqor2+XMCTfFHi8yK+UrwsVgdXzP8TP3ZM+MQH3M0eXF4L+1FlMS7e6
- PINSK/9btn5g+XuxJ4xnaWsoZrrFrbCm2++gyr6YSIC21J41+Ksz7sVr8WhdKV6APsQl
- Pl3rG42hbHQWsQHI/TqUozhFZMvnCf02P3dDopD+1cEMUb0hIuwI1MmZknYWgAUxUfWE
- d5Fnz1ibIfBPySqXTX3n1lT0R55dTnps48nf25/1FQx2OzPOyR2hA/BlrEewV+US8+IR
- pUnA==
-X-Gm-Message-State: AOAM530t8zXEaHewDuFcVHwMBwlckRC/wLkwCbYgwVHumEJAhqPT5Zy4
- +d2Sg994gQF0w4JWAunLUHog8tKsAz7MNsbeLA==
-X-Google-Smtp-Source: ABdhPJwNLMRahavW5whCZBPGo059+0UY3efbiL9iQ4RtWbjJJpSVEhPXj0XzodbmI/P/D96ykhaUca+cEqub5JmtEXs=
-X-Received: by 2002:a9f:31ce:0:b0:360:4d8:3eeb with SMTP id
- w14-20020a9f31ce000000b0036004d83eebmr5136218uad.73.1652664217430; Sun, 15
- May 2022 18:23:37 -0700 (PDT)
+ bh=4s0OSmePhoJXuHiuMzZo1VwoeuQdSeAInIYJXLS5OyM=;
+ b=dtUnlPxDFVIRcjSlE799Qw7P+Z+oN51pMsHV9+CXs1Iv4BtKLPz7nb3vXHulrhrpeW
+ LZS5Huy38hMKdfNHrLDx+FSUMSXcp/8VPC30i+yFcmmU4FgCcZ+2BrY7VUuhmv9SdLx2
+ QbLMmLESDA9iVJslaAXrxC2xrpszExVPC2nFMJ7qgxlW/XTQxUr2SZjyYfhqOBhCGDTY
+ mwttAAfwtlcf5AIvf4WRdIDtA5+GChUF0+y29QJaMHPntWKqEBkWB6mrpuZn8Y2iXr1H
+ HrhdmBrHOnBGcbbq8GoZKn7tFsDVe1HxxF6iNugmCnt3odkRD4oVzwn4+8znKFNWv1gP
+ aMWQ==
+X-Gm-Message-State: AOAM532Y0POhJ8oWF5c1P6aj2GtAtkcq5sNebf3XPS3zCSo9sL+/x5N6
+ q83YqXDb0bi4hPR5XR7qYgpmtTGJKm6sOqhZuAc=
+X-Google-Smtp-Source: ABdhPJxZq6+lnoKQQOPMomvc/GGVcnlfK80rcb3L0qena45Z2EZ6GSg202Ym+IGA0gz340U5CzyhYcNIOBuICW8aYzY=
+X-Received: by 2002:a05:6512:c03:b0:447:7912:7e6b with SMTP id
+ z3-20020a0565120c0300b0044779127e6bmr11291271lfu.508.1652668259368; Sun, 15
+ May 2022 19:30:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220510091654.8498-1-warp5tw@gmail.com>
- <20220510091654.8498-9-warp5tw@gmail.com>
- <Yno8KMycNbJ+VGtc@smile.fi.intel.com>
- <CACD3sJYVyV_fFJu9zXJGL1ro02KnkHoeNNSNB8O46FRwd6=-BA@mail.gmail.com>
-In-Reply-To: <CACD3sJYVyV_fFJu9zXJGL1ro02KnkHoeNNSNB8O46FRwd6=-BA@mail.gmail.com>
-From: Tyrone Ting <warp5tw@gmail.com>
-Date: Mon, 16 May 2022 09:23:25 +0800
-Message-ID: <CACD3sJZxzs28Ruxifw1vjgKmOr0Z3WgC6SpciwjyvkRMZh8ykw@mail.gmail.com>
-Subject: Re: [PATCH v4 8/9] i2c: npcm: Remove own slave addresses 2:10
-To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+References: <20220510031056.1657-1-ctcchien@nuvoton.com>
+ <20220510031056.1657-3-ctcchien@nuvoton.com>
+ <8d46eeb8-7926-f842-6105-1975a5adc3fe@molgen.mpg.de>
+In-Reply-To: <8d46eeb8-7926-f842-6105-1975a5adc3fe@molgen.mpg.de>
+From: Medad Young <medadyoung@gmail.com>
+Date: Mon, 16 May 2022 10:30:48 +0800
+Message-ID: <CAHpyw9cvrEKMUpRBWYWp9hDZgA8ALHBkNAQr6ZDqjj4uH-MRTQ@mail.gmail.com>
+Subject: Re: [PATCH v9 2/3] dt-bindings: edac: nuvoton: add NPCM memory
+ controller
+To: Paul Menzel <pmenzel@molgen.mpg.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -79,104 +79,85 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: tmaimon77@gmail.com, devicetree@vger.kernel.org, tali.perry1@gmail.com,
- jsd@semihalf.com, krzysztof.kozlowski+dt@linaro.org, benjaminfair@google.com,
- openbmc@lists.ozlabs.org, JJLIU0@nuvoton.com, lukas.bulwahn@gmail.com,
- tomer.maimon@nuvoton.com, KWLIU@nuvoton.com, arnd@arndb.de, sven@svenpeter.dev,
- robh+dt@kernel.org, Avi.Fishman@nuvoton.com, semen.protsenko@linaro.org,
- avifishman70@gmail.com, venture@google.com, linux-kernel@vger.kernel.org,
- wsa@kernel.org, kfting@nuvoton.com, tali.perry@nuvoton.com,
- jarkko.nikula@linux.intel.com, olof@lixom.net, linux-i2c@vger.kernel.org
+Cc: KWLIU@nuvoton.com, tony.luck@intel.com, rric@kernel.org,
+ Benjamin Fair <benjaminfair@google.com>,
+ linux-edac <linux-edac@vger.kernel.org>, KFTING <KFTING@nuvoton.com>,
+ Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, JJLIU0@nuvoton.com,
+ ctcchien@nuvoton.com, Tali Perry <tali.perry1@gmail.com>,
+ devicetree <devicetree@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ Borislav Petkov <bp@alien8.de>, James Morse <james.morse@arm.com>,
+ YSCHU@nuvoton.com, Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Andy:
+Dear Paul,
 
-I would like to have your comments about the "Fancy indentation"
-because I'm not sure if I get the point.
+thanks for your comment.
 
-I remove extra empty lines and reformat the commit message.
-
-Please see the details below.
-
-Thank you.
-
-Tyrone Ting <warp5tw@gmail.com> =E6=96=BC 2022=E5=B9=B45=E6=9C=8811=E6=97=
-=A5 =E9=80=B1=E4=B8=89 =E4=B8=8A=E5=8D=889:39=E5=AF=AB=E9=81=93=EF=BC=9A
+Paul Menzel <pmenzel@molgen.mpg.de> =E6=96=BC 2022=E5=B9=B45=E6=9C=8810=E6=
+=97=A5 =E9=80=B1=E4=BA=8C =E4=B8=8B=E5=8D=882:14=E5=AF=AB=E9=81=93=EF=BC=9A
 >
-> Hi Andy:
+> Dear Medad,
 >
-> Thank you for your comments and they will be addressed.
 >
-> Andy Shevchenko <andriy.shevchenko@linux.intel.com> =E6=96=BC 2022=E5=B9=
-=B45=E6=9C=8810=E6=97=A5 =E9=80=B1=E4=BA=8C =E4=B8=8B=E5=8D=886:19=E5=AF=AB=
-=E9=81=93=EF=BC=9A
-> >
-> > On Tue, May 10, 2022 at 05:16:53PM +0800, Tyrone Ting wrote:
-> > > From: Tali Perry <tali.perry1@gmail.com>
-> > >
-> > > NPCM can support up to 10 own slave addresses.
-> > > In practice, only one address is actually being used.
-> > > In order to access addresses 2 and above, need to switch
-> > > register banks. The switch needs spinlock.
-> > > To avoid using spinlock for this useless feature
-> > > removed support of SA >=3D 2.
-> >
-> > > Also fix returned slave event enum.
-> > >
-> > > Remove some comment since the bank selection is not
-> > > required. The bank selection is not required since
-> > > the supported slave addresses are reduced.
-> >
-> > Fancy indentation. Please fix it in all your commit messages where it a=
-pplies.
-> >
-
-I modify the commit message as following:
-
-NPCM can support up to 10 own slave addresses. In practice, only one
-address is actually being used. In order to access addresses 2 and above,
-need to switch register banks. The switch needs spinlock.
-To avoid using spinlock for this useless feature removed support of SA >=3D
-2. Also fix returned slave event enum.
-
-Remove some comment since the bank selection is not required. The bank
-selection is not required since the supported slave addresses are reduced.
-
-> > ...
-> >
-> > > +     if (addr_type > I2C_SLAVE_ADDR2 && addr_type <=3D I2C_SLAVE_ADD=
-R10) {
-> > > +             dev_err(bus->dev,
-> > > +                     "try to enable more then 2 SA not supported\n")=
-;
-> >
-> > Make it one line and drop {}.
-> >
-> > > +     }
-> >
-> > ...
-> >
-> > > +     if (addr_type > I2C_SLAVE_ADDR2 && addr_type <=3D I2C_SLAVE_ADD=
-R10) {
-> > > +             dev_err(bus->dev,
-> > > +                     "get slave: try to use more then 2 slave addres=
-ses not supported\n");
-> >
-> > As per above be consistent with abbreviations ("SA" here, which makes l=
-ine
-> > shorter) and follow the above recommendation.
-> >
-> > > +     }
-> >
-> > --
-> > With Best Regards,
-> > Andy Shevchenko
-> >
-> >
+> Thank you for your patch.
 >
-> Best Regards,
-> Tyrone
+> Am 10.05.22 um 05:10 schrieb Medad CChien:
+> > Document devicetree bindings for the Nuvoton BMC NPCM memory controller=
+.
+> >
+> > Signed-off-by: Medad CChien <ctcchien@nuvoton.com>
+> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+> > ---
+> >   .../edac/nuvoton,npcm-memory-controller.yaml  | 61 ++++++++++++++++++=
++
+> >   1 file changed, 61 insertions(+)
+> >   create mode 100644 Documentation/devicetree/bindings/edac/nuvoton,npc=
+m-memory-controller.yaml
+> >
+> > diff --git a/Documentation/devicetree/bindings/edac/nuvoton,npcm-memory=
+-controller.yaml b/Documentation/devicetree/bindings/edac/nuvoton,npcm-memo=
+ry-controller.yaml
+> > new file mode 100644
+> > index 000000000000..6f37211796a3
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-contro=
+ller.yaml
+> > @@ -0,0 +1,61 @@
+> > +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/edac/nuvoton,npcm-memory-controller=
+.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Nuvoton NPCM Memory Controller
+> > +
+> > +maintainers:
+> > +  - Medad CChien <ctcchien@nuvoton.com>
+>
+> Just a side note, that in my experience functional like
+> <linux-npcm-memory-controller@nuvoton.com> instead of personal addresses
+> are useful, as you can configure on your side, who to deliver messages
+> to. For example, if you are on sick leave or vacation, you just
+> configure to deliver the message to a colleague of yours (or they get
+> messages in the first place anyway).
+>
+> Maybe you can bring that up at Nuvoton.
+>
 
-Best Regards,
-Tyrone
+I understand, but we do not have group email  address.
+so maybe I should add more maintainers?
+
+> [=E2=80=A6]
+>
+>
+> Kind regards,
+>
+> Paul
+
+B.R.
+Medad
