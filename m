@@ -1,70 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0E4B529E1B
-	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 11:33:05 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id E6EE8529EC5
+	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 12:05:47 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L2WBR5wndz3by6
-	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 19:33:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L2Ww968Qqz3brp
+	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 20:05:45 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Xf1tr9Fk;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=CN+dHXm2;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::42b;
- helo=mail-wr1-x42b.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=flex--suichen.bounces.google.com
+ (client-ip=2607:f8b0:4864:20::b49; helo=mail-yb1-xb49.google.com;
+ envelope-from=3yxodygckb3agiwqvsbuccuzs.qcacdsbpaqzwghg.cnzopg.cfu@flex--suichen.bounces.google.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=Xf1tr9Fk; dkim-atps=neutral
-Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com
- [IPv6:2a00:1450:4864:20::42b])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256
+ header.s=20210112 header.b=CN+dHXm2; dkim-atps=neutral
+Received: from mail-yb1-xb49.google.com (mail-yb1-xb49.google.com
+ [IPv6:2607:f8b0:4864:20::b49])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L2W945DpSz3byP
- for <openbmc@lists.ozlabs.org>; Tue, 17 May 2022 19:31:52 +1000 (AEST)
-Received: by mail-wr1-x42b.google.com with SMTP id h14so4229923wrc.6
- for <openbmc@lists.ozlabs.org>; Tue, 17 May 2022 02:31:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=2yHx6+NVMu0YCkAHCFn2TtOi64BMbKJtLjluDsT1uaY=;
- b=Xf1tr9FkWaUs0Xn7nbHvm+wFMf33Utc82BJgM3b2kFHTqjzOSY9QDpTj1K2xCl1J19
- PwKr2bwu8ynAZm9KVP5hBEePnqAaNEs5iVtG/7u33+RxBaqZAWDuf7s9FdVQr/NNM2ZT
- QM6KgzkC36yyx2xrYrhWUnQeilnF31PtjyyWo=
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L2Wvp2h72z30QN
+ for <openbmc@lists.ozlabs.org>; Tue, 17 May 2022 20:05:24 +1000 (AEST)
+Received: by mail-yb1-xb49.google.com with SMTP id
+ z39-20020a25a12a000000b0064dbcd526ffso3923639ybh.15
+ for <openbmc@lists.ozlabs.org>; Tue, 17 May 2022 03:05:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=20210112;
+ h=date:message-id:mime-version:subject:from:to:cc;
+ bh=ZA9V5lO/+F+bF8jz1FqVjCsKgJDekjpTcf5RC67Rb+U=;
+ b=CN+dHXm2PBRqvy1rf8fgS0o1jp5PYo7NivTVKQ/nKjhnlxSy7HON46mSOSXnbxnGt0
+ 0sM5TU3u1zBA21392OldZVr96LXY6KYit/jNYjk5EXR2CKoahlGMahwQ3FJUVseXyfI9
+ cjBk1AWdrStlRBMUoPYESDY747UFkaFerpdGd9zJn2SF9wswLfipINF+E48kcMMNxFzF
+ q4qSS/wz8gpL9dt631yseTk9m+wgmd+eNfv/jyPAJqke0+nnHbJavlK+Dqkq+5zr3Lw2
+ jkxf/YGWa6gjweNW4DGXn5BjStf5V4Q9H6pXaZnnq3VkYUYWaAXIH05H2Uc9MjHsoekj
+ DBNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=2yHx6+NVMu0YCkAHCFn2TtOi64BMbKJtLjluDsT1uaY=;
- b=0zrbr5tg29yFX+1KBqn2Z9GMk27ymjVhESK+Ywuumpq9Idk184V0LihfHeRraxpeR+
- GC8zSAR7xFXaAAS5j1KDGmQr3rwKeeKBtjbykylYiOG8n6nWirMFXuGrGrY/tIKVhwO4
- JUga0OGsUa7CT047BuKR5X3hBGYJOZwenIew/xmYq/LMMPkRJMqRZfThJfnrbkdETEE6
- /Kvxbgp2rYE5vTkpE/CAHbCT5zkf5XtTVlC/+v/JxMR9nyEZuwq+lGBEicCJfDgFiwsd
- XhUgUPcLzxYCiHvjzT3FM2DUpqu3iPhUGRMxR245dLtOs+5LEgOJAmooE6HblT90sgoQ
- b9Vw==
-X-Gm-Message-State: AOAM530oRzMzNj1TtbAAUc+yViobwBNJb+evgqAkG3xA/hKYQXTYDGDP
- 4JL4i7TGD/iyNjd/hdi6VfkzU5TPerufwshFNTM=
-X-Google-Smtp-Source: ABdhPJyLiH0QSB232tBxq8DS8gnVPeHv/pkRCK0w4YPm4165uEh5Y+hPoxw5ev8aPbV1Ei4+e3c9tPfL0YndCDPn7Ro=
-X-Received: by 2002:a5d:410c:0:b0:20d:382:3ff5 with SMTP id
- l12-20020a5d410c000000b0020d03823ff5mr10222572wrp.489.1652779908299; Tue, 17
- May 2022 02:31:48 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220517043825.26893-1-zev@bewilderbeest.net>
- <YoMpw1WrKC+RBez4@hatter.bewilderbeest.net>
- <CACPK8Xca-07ZnYjCUmxEA3H-WQLohD-JYVEp+hM+XaHPNGfmUQ@mail.gmail.com>
- <YoNqse+81EdwcguP@hatter.bewilderbeest.net>
-In-Reply-To: <YoNqse+81EdwcguP@hatter.bewilderbeest.net>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 17 May 2022 09:31:36 +0000
-Message-ID: <CACPK8Xdy1Y1Cb-aOBiJhsqe-ZJTWA9zPRU=gvGjy7MDzJUh1+w@mail.gmail.com>
-Subject: Re: [PATCH] ftgmac100: use bus name in mdio error messages
-To: Zev Weiss <zev@bewilderbeest.net>
+ h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+ bh=ZA9V5lO/+F+bF8jz1FqVjCsKgJDekjpTcf5RC67Rb+U=;
+ b=mC1MQxqCCpAGzQSq6miGJRQmxA51bhUZG4MMhrhBQNFhF+0B3q7V8hGnvUlnGqUh0n
+ a5ujBThcMTSOVC339mYxlmssFRS0QmEik/lXIUu4qhVKlDDr0laYe6dSySPTzOo2qiU3
+ joEKCSn5BivNwyyBu3ilAdXWJf481u2rW+veSPAeZT+tQV2Ed0crQX/KrlTiHbqiueU7
+ ewmNVZ6B9uGA/bwXwgcVpHoJcgksRnk1EFhe4HcxxfMy9Oa9whHX7ErSX/U9kWBVyALi
+ oEsydg585nzvYD6Rt6PvCnQa0rhXMR08ceuPubkZ/F/ftTG5FediJkYbJoKcOS2oi5Jf
+ r9lQ==
+X-Gm-Message-State: AOAM532aTeUh1Otg7YTNlDCFQER/F/vOU8VYAPmhCR3gSrC53yMqJ+Yd
+ Rc+R9VrT57Ru7s4UMZt3PSvCTdU4bQng
+X-Google-Smtp-Source: ABdhPJzMkGHc7O1/Q7FmKZm+eLOtBU+xuDYiFF/nyYQhd08PMvWlme4OLTlm9m4QdO//1tq2jicPIWNqvZsR
+X-Received: from suichen.svl.corp.google.com
+ ([2620:15c:2c5:13:ae7d:134a:180d:9b32])
+ (user=suichen job=sendgmr) by 2002:a25:6406:0:b0:64b:17e3:9dd with SMTP id
+ y6-20020a256406000000b0064b17e309ddmr21661588ybb.186.1652781921142; Tue, 17
+ May 2022 03:05:21 -0700 (PDT)
+Date: Tue, 17 May 2022 03:05:04 -0700
+Message-Id: <20220517100505.2569874-1-suichen@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.36.0.550.gb090851708-goog
+Subject: [RFC Patch v5 0/1] i2c: core: Adapter and client stats as sysfs
+ attributes
+From: Sui Chen <suichen@google.com>
+To: linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, wsa@kernel.org, 
+ openbmc@lists.ozlabs.org, tali.perry1@gmail.com
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,78 +78,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Ryan Chen <ryan_chen@aspeedtech.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Cc: andrew@aj.id.au, krellan@google.com, Sui Chen <suichen@google.com>,
+ joel@jms.id.au, benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 17 May 2022 at 09:28, Zev Weiss <zev@bewilderbeest.net> wrote:
->
-> On Mon, May 16, 2022 at 09:54:35PM PDT, Joel Stanley wrote:
-> > On Tue, 17 May 2022 at 04:51, Zev Weiss <zev@bewilderbeest.net> wrote:
-> > >
-> > > On Mon, May 16, 2022 at 09:38:25PM PDT, Zev Weiss wrote:
-> > > > Previously we'd been using a device name retrieved via
-> > > > ftgmac100_data->phydev, but the mdio read/write functions may be
-> > > > called before that member is initialized in ftgmac100_phy_init(),
-> > > > leading to a NULL pointer dereference while printing the error mess=
-age
-> > > > issued if the mdio access fails.  We can instead use bus->name, whi=
-ch
-> > > > is already available at that point.
-> > > >
-> > > > Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-> > > > Fixes: 538e75d3fc54 ("net: ftgmac100: add MDIO bus and phylib suppo=
-rt")
-> > > > ---
-> > > >  drivers/net/ftgmac100.c | 4 ++--
-> > > >  1 file changed, 2 insertions(+), 2 deletions(-)
-> > > >
-> > >
-> > > Sorry, forgot the subject-prefix tag on this one -- this is for u-boo=
-t
-> > > v2019.04-aspeed-openbmc in case it wasn't clear.
-> >
-> > Thanks, I figured that out :)
-> >
-> > How do you reproduce this one?
-> >
->
-> I'm in the process of trying to transition e3c246d4i off of the 2016
-> branch, and with the 2019 branch I'm finding u-boot spewing a bunch of
-> output like
->
->   : mdio read failed (phy:0 reg:2)
->   : mdio read failed (phy:1 reg:2)
->   : mdio read failed (phy:2 reg:2)
->   ...
->
-> (sometimes with some amount of garbage before the colon at the start of
-> the line, and with "eth1" instead after this patch.)
+This change adds statistics to the i2c_adapter structure as Wolfram
+previously suggested
+(https://lore.kernel.org/linux-i2c/YgEYEk355t8C4J1x@shikoro/).
+It also adds relevant statistics to the per-address i2c_clients where
+applicable.
 
-Interesting. Are all of the clocks turned on in the same way as the
-old branch? Dumping the SCU registers might give you a clue.
+The list of statistics are:
 
->
-> I'm currently experimenting with various Kconfig settings and dts tweaks
-> (on two different variants of the hardware) to try to narrow down the
-> underlying cause and hopefully eliminate the error spew entirely, but in
-> the meantime I figured we might as well get that error-reporting path
-> smoothed out a bit.
+- bus_errors
+- nacks
+- recovery_successes / recovery_failures (only applicable to
+  i2c_adapter)
+- timeouts
+- messages (only applicable to i2c_client)
+- transfers (only applicable to i2c_adapter)
 
-Thanks for the explanation.
+The statistics are located in /sys/class/i2c-adapter/i2c-x/stats and
+/sys/class/i2c-adapter/i2c-x/x-xxxx/stats respectively.
 
-I'll apply it to our tree now, but also send it to mainline when you
-get a chance.
+Since the counting is done in __i2c_transfer, where the number of
+messages transferred is not known upon error, the error counters are
+attributed to all unique addresses that appear in the message list
+passed into __i2c_transfer.
 
->
-> > I didn't realise we had downstream changes for this driver, we should
-> > ask aspeed to submit their downstream changes to u-boot mainline.
->
-> That sounds appropriate -- though as C=C3=A9dric pointed out, since the
-> relevant parts for this particular patch are already in mainline u-boot
-> I should probably send this upstream as well.
+Currently an rbtree is used to find the i2c_client located at a certain
+address. Would be happy to know if there is a better way of doing this.
 
-+1
+Thanks!
+
+Sui Chen (1):
+  i2c debug counters as sysfs attributes
+
+ drivers/i2c/i2c-core-base.c | 240 +++++++++++++++++++++++++++++++++++-
+ drivers/i2c/i2c-dev.c       |  94 ++++++++++++++
+ include/linux/i2c.h         |  41 ++++++
+ 3 files changed, 374 insertions(+), 1 deletion(-)
+
+-- 
+2.36.0.550.gb090851708-goog
+
