@@ -1,59 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59282529E01
-	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 11:28:47 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CCCA529E10
+	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 11:30:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L2W5T1PWyz3bxH
-	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 19:28:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L2W7F2RHpz3bsG
+	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 19:30:17 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=INKIPYW2;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=UOVO1Jua;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171;
- helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102f;
+ helo=mail-pj1-x102f.google.com; envelope-from=medadyoung@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net
- header.a=rsa-sha256 header.s=thorn header.b=INKIPYW2; 
- dkim-atps=neutral
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net
- [71.19.156.171])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=UOVO1Jua; dkim-atps=neutral
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com
+ [IPv6:2607:f8b0:4864:20::102f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L2W5425dHz3bbp
- for <openbmc@lists.ozlabs.org>; Tue, 17 May 2022 19:28:23 +1000 (AEST)
-Received: from hatter.bewilderbeest.net (174-21-163-222.tukw.qwest.net
- [174.21.163.222])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested) (Authenticated sender: zev)
- by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 6036248B;
- Tue, 17 May 2022 02:28:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
- s=thorn; t=1652779701;
- bh=nDy2BSOi6y8qqBGNi8u2fObDZksI9AXZU+tiOGkGDWI=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=INKIPYW2Yi/4JiM8SEm0IDjZIT7FJeWijiq6iikhi5Vvw3B7apw7AG8sMlrIhT69T
- WL1MxZ4I+O8Mm8IlWDN1HA1ukED7ZGbNddhk7luL/K5WiR5pS6mocO/WuJJMTyVzjr
- mLjUT1Xjo5a5tqtRqaJyMjBBc0mzk2SCusPXmnJE=
-Date: Tue, 17 May 2022 02:28:17 -0700
-From: Zev Weiss <zev@bewilderbeest.net>
-To: Joel Stanley <joel@jms.id.au>
-Subject: Re: [PATCH] ftgmac100: use bus name in mdio error messages
-Message-ID: <YoNqse+81EdwcguP@hatter.bewilderbeest.net>
-References: <20220517043825.26893-1-zev@bewilderbeest.net>
- <YoMpw1WrKC+RBez4@hatter.bewilderbeest.net>
- <CACPK8Xca-07ZnYjCUmxEA3H-WQLohD-JYVEp+hM+XaHPNGfmUQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CACPK8Xca-07ZnYjCUmxEA3H-WQLohD-JYVEp+hM+XaHPNGfmUQ@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L2W6t3Hk4z3bhK
+ for <openbmc@lists.ozlabs.org>; Tue, 17 May 2022 19:29:57 +1000 (AEST)
+Received: by mail-pj1-x102f.google.com with SMTP id
+ qe3-20020a17090b4f8300b001dc24e4da73so1483477pjb.1
+ for <openbmc@lists.ozlabs.org>; Tue, 17 May 2022 02:29:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=from:to:cc:subject:date:message-id;
+ bh=g/E3VZeeSx4dDu8xOt4mwfu7kFDlErlaUWZ6ZYy2iJw=;
+ b=UOVO1JuagN5fkOqvm1Vfy3AVFOBCw1JxX6OnVGhCSluKau7tPaGepitnU5YhrG7tJL
+ Op3DU7A+Yvb4zB9t2mX1kpJO5JsTWzVQSgaBk14JZj6Dy9Ludaz1/w7ZM+wVc+ywR/xo
+ 9QEjJ/kXok6b3uVmcIuXT3XNIEjJ19RyjAxfaMKrFCeegNkMmMB2YVRcoGoRTnZgNOvL
+ 6MoWjdtJOojboVq/zxmxMS7wuVEc7ojQGmJ0WZB/TgCipZXEvRHH0zsIsJq+yRhjK8kD
+ YOMOomvkhKLemPFTKf8JSJpWcBSwuMD43/Hqkm6dGyZKYmrDDO3eJ/mQo1qygmoP44dk
+ b3gA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:from:to:cc:subject:date:message-id;
+ bh=g/E3VZeeSx4dDu8xOt4mwfu7kFDlErlaUWZ6ZYy2iJw=;
+ b=ekCZacmZfNQU6FRowvh+d3+qktSGW+Lfs5qvi/sbvBMyWCaS0UNlWGwBO5cRWGCA9+
+ QfCCVOhfw2d/HWorjh8eAJYBUxPEoCOpq/3CaBniBgXUJZPm/Ybbr8yzlYc9w2FiFa30
+ X0U5hnjmWOVx2xuk4kQ7m1sC8PshPHP2nTvPhwVsXQBcoDVKThA2HdBDRMYf+qyNmzWU
+ CQy3BhRadMvHmnzjiqSz4mbSqg4Pg32PjQxWyR1BrjUw1DSlZzrRpvR7xcq0RqTE6F0l
+ 57o6FmjWukw9Uy9wtIZmAa9Ik1RPSdo/itrI/OkNDV11Rc5XpVjBf1IFjaR8Gkb8d4GT
+ WSow==
+X-Gm-Message-State: AOAM533Nr9v6oxpPqeajildq5qZuo5jQPByo8Wa15jZtuvXYzZNTJOSX
+ O7aByn7LPK750eBzf/80jxY=
+X-Google-Smtp-Source: ABdhPJxPA24MheatYMK3fvrNDnXIJtoCA2tqst7+IsHsKo/cdZGTnbPL6EGXUjwLJlWTmEiWdOLzDg==
+X-Received: by 2002:a17:902:d58f:b0:161:9abd:cff1 with SMTP id
+ k15-20020a170902d58f00b001619abdcff1mr4898522plh.135.1652779794666; 
+ Tue, 17 May 2022 02:29:54 -0700 (PDT)
+Received: from localhost.localdomain ([116.89.131.16])
+ by smtp.gmail.com with ESMTPSA id
+ h17-20020a62b411000000b0050df474e4d2sm8399720pfn.218.2022.05.17.02.29.50
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 May 2022 02:29:53 -0700 (PDT)
+From: Medad CChien <medadyoung@gmail.com>
+X-Google-Original-From: Medad CChien <ctcchien@nuvoton.com>
+To: benjaminfair@google.com, yuenn@google.com, venture@google.com,
+ tali.perry1@gmail.com, tmaimon77@gmail.com, avifishman70@gmail.com,
+ robh+dt@kernel.org, alexandre.belloni@bootlin.com, a.zummo@towertech.it,
+ KWLIU@nuvoton.com, YSCHU@nuvoton.com, JJLIU0@nuvoton.com,
+ KFTING@nuvoton.com, ctcchien@nuvoton.com
+Subject: [PATCH v2 0/3] RTC: nuvoton: Add nuvoton real time clock driver
+Date: Tue, 17 May 2022 17:29:23 +0800
+Message-Id: <20220517092927.19537-1-ctcchien@nuvoton.com>
+X-Mailer: git-send-email 2.17.1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,61 +81,36 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Ryan Chen <ryan_chen@aspeedtech.com>,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>
+Cc: linux-rtc@vger.kernel.org, devicetree@vger.kernel.org,
+ openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, May 16, 2022 at 09:54:35PM PDT, Joel Stanley wrote:
-> On Tue, 17 May 2022 at 04:51, Zev Weiss <zev@bewilderbeest.net> wrote:
-> >
-> > On Mon, May 16, 2022 at 09:38:25PM PDT, Zev Weiss wrote:
-> > > Previously we'd been using a device name retrieved via
-> > > ftgmac100_data->phydev, but the mdio read/write functions may be
-> > > called before that member is initialized in ftgmac100_phy_init(),
-> > > leading to a NULL pointer dereference while printing the error message
-> > > issued if the mdio access fails.  We can instead use bus->name, which
-> > > is already available at that point.
-> > >
-> > > Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-> > > Fixes: 538e75d3fc54 ("net: ftgmac100: add MDIO bus and phylib support")
-> > > ---
-> > >  drivers/net/ftgmac100.c | 4 ++--
-> > >  1 file changed, 2 insertions(+), 2 deletions(-)
-> > >
-> >
-> > Sorry, forgot the subject-prefix tag on this one -- this is for u-boot
-> > v2019.04-aspeed-openbmc in case it wasn't clear.
-> 
-> Thanks, I figured that out :)
-> 
-> How do you reproduce this one?
-> 
+Support Nuvoton NCT3018Y real time clock.
 
-I'm in the process of trying to transition e3c246d4i off of the 2016 
-branch, and with the 2019 branch I'm finding u-boot spewing a bunch of 
-output like
+Changes since version 2:
+ - Fix errors in rtc-nct3018y.c.
+ - Fix warnings in rtc-nct3018y.c.
 
-  : mdio read failed (phy:0 reg:2)
-  : mdio read failed (phy:1 reg:2)
-  : mdio read failed (phy:2 reg:2)
-  ...
+Changes since version 1:
+ - Add nuvoton,nct3018y property in NPCM devicetree.
+ - Add new property in rtc binding document.
+ - Add new driver for nuvoton real time clock driver.
 
-(sometimes with some amount of garbage before the colon at the start of 
-the line, and with "eth1" instead after this patch.)
+Medad CChien (3):
+  ARM: dts: nuvoton: Add nuvoton RTC3018Y node
+  dt-bindings: rtc: nuvoton: add NCT3018Y Real Time Clock
+  RTC: nuvoton: Add NCT3018Y real time clock driver
 
-I'm currently experimenting with various Kconfig settings and dts tweaks 
-(on two different variants of the hardware) to try to narrow down the 
-underlying cause and hopefully eliminate the error spew entirely, but in 
-the meantime I figured we might as well get that error-reporting path 
-smoothed out a bit.
+ .../bindings/rtc/nuvoton,nct3018y.yaml        |  44 ++
+ arch/arm/boot/dts/nuvoton-npcm750-evb.dts     |   6 +
+ drivers/rtc/Kconfig                           |  10 +
+ drivers/rtc/Makefile                          |   1 +
+ drivers/rtc/rtc-nct3018y.c                    | 592 ++++++++++++++++++
+ 5 files changed, 653 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/rtc/nuvoton,nct3018y.yaml
+ create mode 100644 drivers/rtc/rtc-nct3018y.c
 
-> I didn't realise we had downstream changes for this driver, we should
-> ask aspeed to submit their downstream changes to u-boot mainline.
-
-That sounds appropriate -- though as Cédric pointed out, since the 
-relevant parts for this particular patch are already in mainline u-boot 
-I should probably send this upstream as well.
+-- 
+2.17.1
 
