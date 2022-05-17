@@ -1,57 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4180C529920
-	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 07:45:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39847529942
+	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 08:04:52 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L2Q7h0fjwz3c7l
-	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 15:45:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L2QZB1DgPz3brp
+	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 16:04:50 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=QhDkSXzt;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kaod.org (client-ip=46.105.54.81;
- helo=smtpout3.mo529.mail-out.ovh.net; envelope-from=clg@kaod.org;
- receiver=<UNKNOWN>)
-Received: from smtpout3.mo529.mail-out.ovh.net
- (smtpout3.mo529.mail-out.ovh.net [46.105.54.81])
+ smtp.mailfrom=kernel.org (client-ip=145.40.68.75; helo=ams.source.kernel.org;
+ envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
+ header.s=k20201202 header.b=QhDkSXzt; 
+ dkim-atps=neutral
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L2Q7P6LBvz3bWG
- for <openbmc@lists.ozlabs.org>; Tue, 17 May 2022 15:45:02 +1000 (AEST)
-Received: from mxplan5.mail.ovh.net (unknown [10.109.146.27])
- by mo529.mail-out.ovh.net (Postfix) with ESMTPS id D64671008C797;
- Tue, 17 May 2022 07:44:55 +0200 (CEST)
-Received: from kaod.org (37.59.142.110) by DAG4EX1.mxp5.local (172.16.2.31)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.6; Tue, 17 May
- 2022 07:44:55 +0200
-Authentication-Results: garm.ovh; auth=pass
- (GARM-110S0049fbbfdd4-788d-493c-9712-a897233880ae,
- BB146B841C735870D6401592F5D215EFF71F43F0) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <ab0ef71d-8070-c358-1c75-2fbade20c727@kaod.org>
-Date: Tue, 17 May 2022 07:44:54 +0200
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L2QYj4MGNz3bpf
+ for <openbmc@lists.ozlabs.org>; Tue, 17 May 2022 16:04:25 +1000 (AEST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by ams.source.kernel.org (Postfix) with ESMTPS id 55D0DB81678;
+ Tue, 17 May 2022 06:04:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F0BC385B8;
+ Tue, 17 May 2022 06:04:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1652767460;
+ bh=FgE6LrLuJ3LeyvdaaxAW7dFJk8FTlG8i7HpgFaazl5c=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=QhDkSXztayy6bs5gf3G4/xyEiLlU5CZzhRwEXzrX24pHhEkIdDn06LO5VIwTuozP+
+ q8yhj+V/mKS36NtDJr8a0+LeE58nFyHFlObbQsJ3wc23P6d+6B2y9vlWNpGw8lxiHB
+ VvUPpV8B8ZhN5dAy/HYlUFva46wrAWZvrRscvw1eF/e9VbyxWoJPH82JuLi/47tUWv
+ PgLUKQWTyBLzHo4emDomwHq+N0jduMwBe+oANXk2RVfPquL5uSVWm6HT/vlaYIpi5V
+ DTg+Np+LPBPDAf0uRxS42t7LUX82JBVG3xaPeVz77dh2vznyXH1Mlg5QfsaVTfyL6N
+ iVIAK65zYkecw==
+Date: Tue, 17 May 2022 08:04:13 +0200
+From: Wolfram Sang <wsa@kernel.org>
+To: Tyrone Ting <warp5tw@gmail.com>
+Subject: Re: [PATCH v4 2/9] i2c: npcm: Change the way of getting GCR regmap
+Message-ID: <YoM63XoYZbFGJ8s7@kunai>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+ Tyrone Ting <warp5tw@gmail.com>, avifishman70@gmail.com,
+ tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com,
+ yuenn@google.com, benjaminfair@google.com, robh+dt@kernel.org,
+ krzysztof.kozlowski+dt@linaro.org,
+ andriy.shevchenko@linux.intel.com, jarkko.nikula@linux.intel.com,
+ semen.protsenko@linaro.org, sven@svenpeter.dev, jsd@semihalf.com,
+ lukas.bulwahn@gmail.com, olof@lixom.net, arnd@arndb.de,
+ tali.perry@nuvoton.com, Avi.Fishman@nuvoton.com,
+ tomer.maimon@nuvoton.com, KWLIU@nuvoton.com, JJLIU0@nuvoton.com,
+ kfting@nuvoton.com, openbmc@lists.ozlabs.org,
+ linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, krzysztof.kozlowski@canonical.com,
+ jie.deng@intel.com
+References: <20220510091654.8498-1-warp5tw@gmail.com>
+ <20220510091654.8498-3-warp5tw@gmail.com> <YoKqdfLSeJ69WFhi@kunai>
+ <CACD3sJa3koHGsC3PBbfZuBhTfVHhjF=3g3YysxZ0+TvQ1qwfyA@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.0
-Subject: Re: [PATCH] ftgmac100: use bus name in mdio error messages
-Content-Language: en-US
-To: Zev Weiss <zev@bewilderbeest.net>, Joel Stanley <joel@jms.id.au>,
- <openbmc@lists.ozlabs.org>
-References: <20220517043825.26893-1-zev@bewilderbeest.net>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20220517043825.26893-1-zev@bewilderbeest.net>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [37.59.142.110]
-X-ClientProxiedBy: DAG5EX2.mxp5.local (172.16.2.42) To DAG4EX1.mxp5.local
- (172.16.2.31)
-X-Ovh-Tracer-GUID: 8571cef0-d41d-467a-b0cf-d1161a1cf186
-X-Ovh-Tracer-Id: 3915598405153819555
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvfedrheeigdellecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkffggfgfuvfevfhfhjggtgfhisehtjeertddtfeejnecuhfhrohhmpeevrogurhhitggpnfgvpgfiohgrthgvrhcuoegtlhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepleelieeigfekfeeitddvieegteeuteekffekleehuefgteetgedvkefghefggfeknecukfhppedtrddtrddtrddtpdefjedrheelrddugedvrdduuddtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmohguvgepshhmthhpohhuthdphhgvlhhopehmgihplhgrnhehrdhmrghilhdrohhvhhdrnhgvthdpihhnvghtpedtrddtrddtrddtpdhmrghilhhfrhhomheptghlgheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopedupdhrtghpthhtoheprhihrghnpggthhgvnhesrghsphgvvgguthgvtghhrdgtohhm
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="ZD0WxnqJMfI4UMfN"
+Content-Disposition: inline
+In-Reply-To: <CACD3sJa3koHGsC3PBbfZuBhTfVHhjF=3g3YysxZ0+TvQ1qwfyA@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,53 +79,57 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, Ryan Chen <ryan_chen@aspeedtech.com>
+Cc: tmaimon77@gmail.com, devicetree@vger.kernel.org, tali.perry1@gmail.com,
+ jsd@semihalf.com, krzysztof.kozlowski+dt@linaro.org, benjaminfair@google.com,
+ krzysztof.kozlowski@canonical.com, openbmc@lists.ozlabs.org,
+ JJLIU0@nuvoton.com, lukas.bulwahn@gmail.com, tomer.maimon@nuvoton.com,
+ KWLIU@nuvoton.com, arnd@arndb.de, sven@svenpeter.dev, robh+dt@kernel.org,
+ Avi.Fishman@nuvoton.com, andriy.shevchenko@linux.intel.com,
+ semen.protsenko@linaro.org, jie.deng@intel.com, avifishman70@gmail.com,
+ venture@google.com, linux-kernel@vger.kernel.org, kfting@nuvoton.com,
+ tali.perry@nuvoton.com, jarkko.nikula@linux.intel.com, olof@lixom.net,
+ linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello Zev,
 
-On 5/17/22 06:38, Zev Weiss wrote:
-> Previously we'd been using a device name retrieved via
-> ftgmac100_data->phydev, but the mdio read/write functions may be
-> called before that member is initialized in ftgmac100_phy_init(),
-> leading to a NULL pointer dereference while printing the error message
-> issued if the mdio access fails.  We can instead use bus->name, which
-> is already available at that point.
-> 
-> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-> Fixes: 538e75d3fc54 ("net: ftgmac100: add MDIO bus and phylib support")
+--ZD0WxnqJMfI4UMfN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-You should send upstream.
 
-Thanks,
+> After reviewing these two links, we decided to keep only the author's
+> SoB for each commit.
+>=20
+> https://lore.kernel.org/lkml/YiCZlhJoXPLpQ6%2FD@smile.fi.intel.com/
+> https://lore.kernel.org/lkml/YiCb7LNY9tmMCZx7@smile.fi.intel.com/
 
-C.
+When Andy said "chain is wrong", he meant the order. You must add your
+SoB, otherwise I can't take the patches. But yours should be last. The
+SoBs need to be in the order people worked on it.
 
-> ---
->   drivers/net/ftgmac100.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/net/ftgmac100.c b/drivers/net/ftgmac100.c
-> index 999941de14ac..aa1d63880c8c 100644
-> --- a/drivers/net/ftgmac100.c
-> +++ b/drivers/net/ftgmac100.c
-> @@ -117,7 +117,7 @@ static int ftgmac100_mdio_read(struct mii_dev *bus, int phy_addr, int dev_addr,
->   				 FTGMAC100_MDIO_TIMEOUT_USEC);
->   	if (ret) {
->   		pr_err("%s: mdio read failed (phy:%d reg:%x)\n",
-> -		       priv->phydev->dev->name, phy_addr, reg_addr);
-> +		       bus->name, phy_addr, reg_addr);
->   		return ret;
->   	}
->   
-> @@ -149,7 +149,7 @@ static int ftgmac100_mdio_write(struct mii_dev *bus, int phy_addr, int dev_addr,
->   				 FTGMAC100_MDIO_TIMEOUT_USEC);
->   	if (ret) {
->   		pr_err("%s: mdio write failed (phy:%d reg:%x)\n",
-> -		       priv->phydev->dev->name, phy_addr, reg_addr);
-> +		       bus->name, phy_addr, reg_addr);
->   	}
->   
->   	return ret;
+Does that make sense to you?
 
+
+--ZD0WxnqJMfI4UMfN
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmKDOtkACgkQFA3kzBSg
+Kba2dQ/8DA/NMvr5xjTQrg+KZeVKu1FP8k7R6RkznvixaWJUaDTuRTuPXcFExLAu
+urIUfpDjZiVWqRQCqBKp2AGAh7yFnZU/V0GAEzhMI6OReamobsqq/TUPFdQ+TAgr
+ronrfnzaCMmjEFNzbZyhrcusCbtL0QczMxa1RIkfRzZSyYscuxVm8Nj8Ypy09r8k
+wd3UU+SHyow27742jNfoSYEVjC2J9r++Qb5ms4bjrW3JvsrTIHvP0FedPDBbJVrt
+fnXeEgOHkX6PYdopvaEVQb8/Dz1D04lgBtkZoqScHC3JHKskbaeNPoWkafRL9oKI
+AHuhRw1zebM82X+UpEfGzZDQprSikW1iKA780VwbI7xiR3ZTWTYPpRzqKayDWT5m
+X8cFQqWiaVXMOK2va2IdQT4hh8A1Y4kRlcV2w7u2Uk+K3qefl7PlN5xK2ysb+9Ij
+srbNuXUjeI0CXDg4CT20eHLiom5uhRQyd0ih8HZtkW+uddWXd/zaTfHxdFbXYUcj
+d/dpYAToxGjFPvyt9bbx8uGTs/NoEiNvTXyvgbCKR3wv9PhfQ0Duq7rPfH1BY1S0
+uNxh4nXMZeviqgx1Qu1ouL+5AJlGDp8hjW+58RzaIhvreLNn1GREPJ8X/s5vf+gb
+MG2K2pIS45sucLXqB5t+vWdYQDQigOx1IOt/x7YtUo2+IRqccVI=
+=71Iy
+-----END PGP SIGNATURE-----
+
+--ZD0WxnqJMfI4UMfN--
