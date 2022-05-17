@@ -2,72 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39847529942
-	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 08:04:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 58531529DC5
+	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 11:20:28 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L2QZB1DgPz3brp
-	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 16:04:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L2Vvt1jHgz3byG
+	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 19:20:26 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=QhDkSXzt;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=kiu/iECm;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=145.40.68.75; helo=ams.source.kernel.org;
- envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=k20201202 header.b=QhDkSXzt; 
- dkim-atps=neutral
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::32c;
+ helo=mail-wm1-x32c.google.com; envelope-from=joel.stan@gmail.com;
+ receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
+ header.s=google header.b=kiu/iECm; dkim-atps=neutral
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com
+ [IPv6:2a00:1450:4864:20::32c])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L2QYj4MGNz3bpf
- for <openbmc@lists.ozlabs.org>; Tue, 17 May 2022 16:04:25 +1000 (AEST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by ams.source.kernel.org (Postfix) with ESMTPS id 55D0DB81678;
- Tue, 17 May 2022 06:04:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22F0BC385B8;
- Tue, 17 May 2022 06:04:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1652767460;
- bh=FgE6LrLuJ3LeyvdaaxAW7dFJk8FTlG8i7HpgFaazl5c=;
- h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=QhDkSXztayy6bs5gf3G4/xyEiLlU5CZzhRwEXzrX24pHhEkIdDn06LO5VIwTuozP+
- q8yhj+V/mKS36NtDJr8a0+LeE58nFyHFlObbQsJ3wc23P6d+6B2y9vlWNpGw8lxiHB
- VvUPpV8B8ZhN5dAy/HYlUFva46wrAWZvrRscvw1eF/e9VbyxWoJPH82JuLi/47tUWv
- PgLUKQWTyBLzHo4emDomwHq+N0jduMwBe+oANXk2RVfPquL5uSVWm6HT/vlaYIpi5V
- DTg+Np+LPBPDAf0uRxS42t7LUX82JBVG3xaPeVz77dh2vznyXH1Mlg5QfsaVTfyL6N
- iVIAK65zYkecw==
-Date: Tue, 17 May 2022 08:04:13 +0200
-From: Wolfram Sang <wsa@kernel.org>
-To: Tyrone Ting <warp5tw@gmail.com>
-Subject: Re: [PATCH v4 2/9] i2c: npcm: Change the way of getting GCR regmap
-Message-ID: <YoM63XoYZbFGJ8s7@kunai>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
- Tyrone Ting <warp5tw@gmail.com>, avifishman70@gmail.com,
- tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com,
- yuenn@google.com, benjaminfair@google.com, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org,
- andriy.shevchenko@linux.intel.com, jarkko.nikula@linux.intel.com,
- semen.protsenko@linaro.org, sven@svenpeter.dev, jsd@semihalf.com,
- lukas.bulwahn@gmail.com, olof@lixom.net, arnd@arndb.de,
- tali.perry@nuvoton.com, Avi.Fishman@nuvoton.com,
- tomer.maimon@nuvoton.com, KWLIU@nuvoton.com, JJLIU0@nuvoton.com,
- kfting@nuvoton.com, openbmc@lists.ozlabs.org,
- linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
- linux-kernel@vger.kernel.org, krzysztof.kozlowski@canonical.com,
- jie.deng@intel.com
-References: <20220510091654.8498-1-warp5tw@gmail.com>
- <20220510091654.8498-3-warp5tw@gmail.com> <YoKqdfLSeJ69WFhi@kunai>
- <CACD3sJa3koHGsC3PBbfZuBhTfVHhjF=3g3YysxZ0+TvQ1qwfyA@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L2VvS3dT1z3bYy
+ for <openbmc@lists.ozlabs.org>; Tue, 17 May 2022 19:20:03 +1000 (AEST)
+Received: by mail-wm1-x32c.google.com with SMTP id
+ m2-20020a1ca302000000b003943bc63f98so911266wme.4
+ for <openbmc@lists.ozlabs.org>; Tue, 17 May 2022 02:20:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc; bh=5/To3q1iix39r0lCQ+hhuwUqkdpFvOMo3ijNMqcdH64=;
+ b=kiu/iECmQxpFDXj3H3uLLN100wIRqg8E8311/LlhcNSFiQmy18ebSvnt9ct+FVv6Zn
+ hSt+mkPDxQDPhd/o+oBS7Rw8YazWmLE3uvixG85ukYIZoONIipM3R24UIpQe6FcU4T09
+ oUqKxrJRbJ9J3YkxIT2iVYCSSYXqcsU2Z2Fjg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc;
+ bh=5/To3q1iix39r0lCQ+hhuwUqkdpFvOMo3ijNMqcdH64=;
+ b=4qHXR4CREv6WHEuz45nhlRWywR1ULgUq9WEVNuceFrpfeAckz7KBtrizmbbplIvLdz
+ kP+CLSWkCHuCWfufCxGn93m2YLlvY9Mjl1/KpLvwDJUDUnVT/CTG7JX2XlQC81HWdbQw
+ faAMukbmMmJ5DnExla2LtjdltemOLRgLmLA1ICTKcn2LxdrQNOD1/FrZnBVbl9kFmbDs
+ 6wO4IKyXnwepYPuZt1+i0rr366gnDOPGVqL0oQEc6BcqcmEWYa2eJyzmgmFH3jeIgB/E
+ 9MejJLYvhYKIWnwxkVZNBEvAu1VyLzuLYPrRmPs4l4ItttboESIMpK5TQlT/THMID8/b
+ emww==
+X-Gm-Message-State: AOAM531jJ0EU7G68ZqOyrnGUA5mp52Js2aFTTctbgQVWxgcpocugSrrQ
+ zOC5KvZmw7obtZuEesffC4pD/GvfqBacxUJzWtY=
+X-Google-Smtp-Source: ABdhPJy1rSqL48gyvRhmpjpN8GuHXjUytsXO0NGJntsr0tTAcsfAMsqLvBb8AQIyi9ayddqeP56N5IkuzIzJV/x8CEk=
+X-Received: by 2002:a7b:cd82:0:b0:389:77ef:66d7 with SMTP id
+ y2-20020a7bcd82000000b0038977ef66d7mr19878367wmj.171.1652779199500; Tue, 17
+ May 2022 02:19:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="ZD0WxnqJMfI4UMfN"
-Content-Disposition: inline
-In-Reply-To: <CACD3sJa3koHGsC3PBbfZuBhTfVHhjF=3g3YysxZ0+TvQ1qwfyA@mail.gmail.com>
+References: <20220512231938.228651-1-joel@jms.id.au>
+ <b6da2e5a-eb85-d3cf-d4c3-ca9c0f0c04a4@molgen.mpg.de>
+In-Reply-To: <b6da2e5a-eb85-d3cf-d4c3-ca9c0f0c04a4@molgen.mpg.de>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 17 May 2022 09:19:47 +0000
+Message-ID: <CACPK8XchZcjXjkhDEa=RnnbD3PycwM7Hu5x2tB3A4g0v4964_w@mail.gmail.com>
+Subject: Re: [PATCH net v2] net: ftgmac100: Disable hardware checksum on
+ AST2600
+To: Paul Menzel <pmenzel@molgen.mpg.de>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,57 +74,155 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: tmaimon77@gmail.com, devicetree@vger.kernel.org, tali.perry1@gmail.com,
- jsd@semihalf.com, krzysztof.kozlowski+dt@linaro.org, benjaminfair@google.com,
- krzysztof.kozlowski@canonical.com, openbmc@lists.ozlabs.org,
- JJLIU0@nuvoton.com, lukas.bulwahn@gmail.com, tomer.maimon@nuvoton.com,
- KWLIU@nuvoton.com, arnd@arndb.de, sven@svenpeter.dev, robh+dt@kernel.org,
- Avi.Fishman@nuvoton.com, andriy.shevchenko@linux.intel.com,
- semen.protsenko@linaro.org, jie.deng@intel.com, avifishman70@gmail.com,
- venture@google.com, linux-kernel@vger.kernel.org, kfting@nuvoton.com,
- tali.perry@nuvoton.com, jarkko.nikula@linux.intel.com, olof@lixom.net,
- linux-i2c@vger.kernel.org
+Cc: David Wilder <dwilder@us.ibm.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, David Wilder <wilder@us.ibm.com>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Networking <netdev@vger.kernel.org>, Jakub Kicinski <kuba@kernel.org>,
+ Dylan Hung <dylan_hung@aspeedtech.com>, Paolo Abeni <pabeni@redhat.com>,
+ "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Fri, 13 May 2022 at 05:11, Paul Menzel <pmenzel@molgen.mpg.de> wrote:
+>
+> Dear Joel,
+>
+>
+> Am 13.05.22 um 01:19 schrieb Joel Stanley:
+> > The AST2600 when using the i210 NIC over NC-SI has been observed to
+> > produce incorrect checksum results with specific MTU values. This was
+> > first observed when sending data across a long distance set of networks.
+> >
+> > On a local network, the following test was performed using a 1MB file of
+> > random data.
+> >
+> > On the receiver run this script:
+> >
+> >   #!/bin/bash
+> >   while [ 1 ]; do
+> >          # Zero the stats
+> >          nstat -r  > /dev/null
+> >          nc -l 9899 > test-file
+> >          # Check for checksum errors
+> >          TcpInCsumErrors=$(nstat | grep TcpInCsumErrors)
+> >          if [ -z "$TcpInCsumErrors" ]; then
+> >                  echo No TcpInCsumErrors
+> >          else
+> >                  echo TcpInCsumErrors = $TcpInCsumErrors
+> >          fi
+> >   done
+> >
+> > On an AST2600 system:
+> >
+> >   # nc <IP of  receiver host> 9899 < test-file
+> >
+> > The test was repeated with various MTU values:
+> >
+> >   # ip link set mtu 1410 dev eth0
+> >
+> > The observed results:
+> >
+> >   1500 - good
+> >   1434 - bad
+> >   1400 - good
+> >   1410 - bad
+> >   1420 - good
+>
+> Sort the values? As some MTUs are good, should a allow list for these
+> values be added?
 
---ZD0WxnqJMfI4UMfN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+No.
 
+>
+> > The test was repeated after disabling tx checksumming:
+> >
+> >   # ethtool -K eth0 tx-checksumming off
+> >
+> > And all MTU values tested resulted in transfers without error.
+> >
+> > An issue with the driver cannot be ruled out, however there has been no
+> > bug discovered so far.
+> >
+> > David has done the work to take the original bug report of slow data
+> > transfer between long distance connections and triaged it down to this
+> > test case.
+> >
+> > The vendor suspects this this is a hardware issue when using NC-SI. The fixes line refers
+> > to the patch that introduced AST2600 support.
+>
+> Please wrap the line after 75 characters.
+>
+> Can the problem be reproduced with QEMU?
 
-> After reviewing these two links, we decided to keep only the author's
-> SoB for each commit.
->=20
-> https://lore.kernel.org/lkml/YiCZlhJoXPLpQ6%2FD@smile.fi.intel.com/
-> https://lore.kernel.org/lkml/YiCb7LNY9tmMCZx7@smile.fi.intel.com/
+It can not. If you wanted to try you could modify the model to corrupt
+tx checksums, but I would consider this of limited value.
 
-When Andy said "chain is wrong", he meant the order. You must add your
-SoB, otherwise I can't take the patches. But yours should be last. The
-SoBs need to be in the order people worked on it.
+>
+> > Fixes: 39bfab8844a0 ("net: ftgmac100: Add support for DT phy-handle property")
+> > Reported-by: David Wilder <wilder@us.ibm.com>
+> > Signed-off-by: Joel Stanley <joel@jms.id.au>
+>
+> Should the intel-wired-lan folks be put in Cc?
 
-Does that make sense to you?
+No, as all evidence points towards this being an AST2600 problem.
 
+ASPEED did not report the issue relates to the i210 doing anything
+wrong. The issue is not seen from the host PCIe interface, and the
+i210 is in widespread use with other BMCs without issue.
 
---ZD0WxnqJMfI4UMfN
-Content-Type: application/pgp-signature; name="signature.asc"
+>
+> > ---
+> > v2 updates the commit message with confirmation form the vendor that
+>
+> from
+>
+> > this is a hardware issue, and clarifes why the commit used in the fixes
+>
+> clarifies
+>
+> > tag was chosen.
+> >
+> >   drivers/net/ethernet/faraday/ftgmac100.c | 5 +++++
+> >   1 file changed, 5 insertions(+)
+> >
+> > diff --git a/drivers/net/ethernet/faraday/ftgmac100.c b/drivers/net/ethernet/faraday/ftgmac100.c
+> > index caf48023f8ea..5231818943c6 100644
+> > --- a/drivers/net/ethernet/faraday/ftgmac100.c
+> > +++ b/drivers/net/ethernet/faraday/ftgmac100.c
+> > @@ -1928,6 +1928,11 @@ static int ftgmac100_probe(struct platform_device *pdev)
+> >       /* AST2400  doesn't have working HW checksum generation */
+> >       if (np && (of_device_is_compatible(np, "aspeed,ast2400-mac")))
+> >               netdev->hw_features &= ~NETIF_F_HW_CSUM;
+> > +
+> > +     /* AST2600 tx checksum with NC-SI is broken */
+>
+> Does ASPEED have an internal bug for this, so should there be new
+> revisions of the AST2600, the bug can be fixed?
 
------BEGIN PGP SIGNATURE-----
+There are no plans to fix it that I'm aware of.
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmKDOtkACgkQFA3kzBSg
-Kba2dQ/8DA/NMvr5xjTQrg+KZeVKu1FP8k7R6RkznvixaWJUaDTuRTuPXcFExLAu
-urIUfpDjZiVWqRQCqBKp2AGAh7yFnZU/V0GAEzhMI6OReamobsqq/TUPFdQ+TAgr
-ronrfnzaCMmjEFNzbZyhrcusCbtL0QczMxa1RIkfRzZSyYscuxVm8Nj8Ypy09r8k
-wd3UU+SHyow27742jNfoSYEVjC2J9r++Qb5ms4bjrW3JvsrTIHvP0FedPDBbJVrt
-fnXeEgOHkX6PYdopvaEVQb8/Dz1D04lgBtkZoqScHC3JHKskbaeNPoWkafRL9oKI
-AHuhRw1zebM82X+UpEfGzZDQprSikW1iKA780VwbI7xiR3ZTWTYPpRzqKayDWT5m
-X8cFQqWiaVXMOK2va2IdQT4hh8A1Y4kRlcV2w7u2Uk+K3qefl7PlN5xK2ysb+9Ij
-srbNuXUjeI0CXDg4CT20eHLiom5uhRQyd0ih8HZtkW+uddWXd/zaTfHxdFbXYUcj
-d/dpYAToxGjFPvyt9bbx8uGTs/NoEiNvTXyvgbCKR3wv9PhfQ0Duq7rPfH1BY1S0
-uNxh4nXMZeviqgx1Qu1ouL+5AJlGDp8hjW+58RzaIhvreLNn1GREPJ8X/s5vf+gb
-MG2K2pIS45sucLXqB5t+vWdYQDQigOx1IOt/x7YtUo2+IRqccVI=
-=71Iy
------END PGP SIGNATURE-----
+>
+> > +     if (priv->use_ncsi && of_device_is_compatible(np, "aspeed,ast2600-mac"))
+> > +             netdev->hw_features &= ~NETIF_F_HW_CSUM;
+> > +
+>
+> I would fancy a note or even warning about this hardware issue.
 
---ZD0WxnqJMfI4UMfN--
+I don't see the need to clutter up the kernel logs.
+
+We've had a similar workaround for the 2400 since support was added
+for the aspeed part. It doesn't affect the operation of the system; in
+fact it improves it as without this we see degraded throughput due to
+retransmissions.
+
+We have git history for detailed notes on why a change was made.
+
+>
+> >       if (np && of_get_property(np, "no-hw-checksum", NULL))
+> >               netdev->hw_features &= ~(NETIF_F_HW_CSUM | NETIF_F_RXCSUM);
+> >       netdev->features |= netdev->hw_features;
+>
+>
+> Kind regards,
+>
+> Paul
