@@ -1,69 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1940D5296FE
-	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 03:56:27 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A5D2D529796
+	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 05:00:03 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L2K3X6cz2z3bpf
-	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 11:56:24 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L2LSx4D0yz3bwZ
+	for <lists+openbmc@lfdr.de>; Tue, 17 May 2022 13:00:01 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=M+kFVvYw;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=O3G+JGx0;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62b;
- helo=mail-ej1-x62b.google.com; envelope-from=milkfafa@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::630;
+ helo=mail-ej1-x630.google.com; envelope-from=milkfafa@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=M+kFVvYw; dkim-atps=neutral
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com
- [IPv6:2a00:1450:4864:20::62b])
+ header.s=20210112 header.b=O3G+JGx0; dkim-atps=neutral
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com
+ [IPv6:2a00:1450:4864:20::630])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L2K356n4xz2yHB
- for <openbmc@lists.ozlabs.org>; Tue, 17 May 2022 11:56:00 +1000 (AEST)
-Received: by mail-ej1-x62b.google.com with SMTP id i27so31871273ejd.9
- for <openbmc@lists.ozlabs.org>; Mon, 16 May 2022 18:56:00 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L2LSZ0jCcz2xD3
+ for <openbmc@lists.ozlabs.org>; Tue, 17 May 2022 12:59:41 +1000 (AEST)
+Received: by mail-ej1-x630.google.com with SMTP id j6so32034133ejc.13
+ for <openbmc@lists.ozlabs.org>; Mon, 16 May 2022 19:59:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=YgBxFbatc44xZeVb7BCpn9bBMCWqFowgn6ucn53Dafw=;
- b=M+kFVvYwVOeSwDbzvU5qMLJ/t4vsAjAUm5lEiawrhXQqMHUO7raDEZe++x70BDsMO9
- qXDNLJc9MrSI6XltjRWoumXZgu2wfLn3KQI5JI6GlgQHypiFwB+SbNb42/XrPNWI8OyN
- VW+y1cCyMjZ6f7RqOSoKPAt/5ITmlm80f7d2hUCWhUXCZpONqjdYJYKwsjpjd3YCtuF3
- lwhez+491e7riTMO7+gTPAvNRBcKj3k2QfirJzJvpfxLU7rs/LEdWmn82dPB35CWTKES
- A9ApVDrBUw5V7c4g7+qHeD1RZw5nRXsQatXWIfLaEhH2rZip763x8vrL5/kUHB72s/7i
- d9zw==
+ :cc; bh=9L5Khg1CsV1mJj4HN4+8r3xoUYvqrWbbzNA2NHh1VS8=;
+ b=O3G+JGx0PAmlDvq2x9GpUet1v7PATfl8GsiiBhyyHIVm2O0mDrFI2cdDhutDtGfXT8
+ s3r8VvQON0eX5Ry7QThtY5Ty/xBOnsU2CETi0HmYP75sUk5hxbhWkNKbJQPcc7asysH3
+ rFyvtkqg5Cj6OOx9VMrGTPPNAaY9oJRqoFC0UVNzLO717fTxiLm5dB/MOUzkLaQA8Fva
+ doT2y8b/zS8FAyyKI3zXud6q0jC7BtPL8mUe2IfZQh3H2LoFDbzi0V9t+E4ACZRSJaUi
+ xJRlJYgRdYQGDP5Twb39VaBxrLp3Z9RvZKAqa0AfGcmqrRLkokLqlQF7ciRUY/KNqI7u
+ zJ7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=YgBxFbatc44xZeVb7BCpn9bBMCWqFowgn6ucn53Dafw=;
- b=FutpQC/AlROyN8uTTuiACE+XQaML3kH4YIe16NnhdymyADD+SM/sC3wFSGjDMFvvC7
- LUflxx8VdvvKvkOvbl93vB1KHSC/wBlEpWAkG9EakG6hajMZR8G3JPhvfZcLGvE8iPjZ
- MtRlsIoNuWTCP/cot78yEGUp90E1AR1hEJZ+9RFoe/aBIvKvtylzpH/nX0NiKkKo8cDZ
- +oeV6BW2mjkT6Cez89OIKnOhpsNop3MKq1Ss+ObAWvuDyASByDMB26FhvBfjYdZcQy0d
- gcCbTZ0QeEpm1TNavbRDyghaqabML+91k8TuNITXqXWZ8F/DhJJV4zdbajQcFx8OTPKr
- e9hA==
-X-Gm-Message-State: AOAM530OEnAn36WbYg21JnrY/Ca3fI2P2zyCFtofEfARjalvCCl6v6iK
- HmjlI92lCDemX9YdJBE5grANWzwqXkG85cI04io=
-X-Google-Smtp-Source: ABdhPJz7rc+erNWeLjGVy+TkCtqJz+van0FqEP98zM7Ha4CRfZsELxILBDnRwJ1ko3YUmePv9oxxJP75T3BFhTJo3gE=
-X-Received: by 2002:a17:907:8a21:b0:6f4:d2e5:4d17 with SMTP id
- sc33-20020a1709078a2100b006f4d2e54d17mr17972348ejc.196.1652752555296; Mon, 16
- May 2022 18:55:55 -0700 (PDT)
+ bh=9L5Khg1CsV1mJj4HN4+8r3xoUYvqrWbbzNA2NHh1VS8=;
+ b=7fM3aTpBAJb0TPW+kytUx8EvttFT+3OHp9r6rBxmZ1B/Y8qjbyY1P3mQAjfMT9/btW
+ lOx5Yu7fbgJlN5T8XMMmSVkritdo3LZzfa5vgFW12yMfGXBliagVKcQQwNp1Mhzbhm7X
+ jI/1H9hEeEGMzM47HnTg6VEGZWC0ZE3UDk+HPh8qfVYRa+MhPJ9sYacF4UyY0NNavfQn
+ UDfsNXW3LfsbX9j5TYL1khEgyRn6LVAiWaJYpnbaSS/Q9kKoMabR7r7Z/PbhMq65rq90
+ V88xoV695Y6ciJEmJ/sPrUHyXJKPQmYab33t4CoxJdxEdyWvSc3mTqIrANOhXehbACmX
+ 90yw==
+X-Gm-Message-State: AOAM533a1ra0vYdBZqaQ60DBq6KeQ7ocVtpYC+QJW443UN3Y8D/WzGtZ
+ 45WPyfJwOwOghe9zYU7MJmD7bCnAV3xb1aGTwGM=
+X-Google-Smtp-Source: ABdhPJxGJ63ltlhgS8LTmZoQvHocGvopjIvM3r608Z+Du6QZiZ0iqL/BN/4qmkWhOz/wCG85LCYzZecFk94mUosNgII=
+X-Received: by 2002:a17:906:6a1b:b0:6f4:a9b8:e027 with SMTP id
+ qw27-20020a1709066a1b00b006f4a9b8e027mr18063258ejc.222.1652756375444; Mon, 16
+ May 2022 19:59:35 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220513033450.7038-1-kflin@nuvoton.com>
- <20220513033450.7038-2-kflin@nuvoton.com>
- <5e1d0765-5428-b787-75ad-063a1fb051fc@molgen.mpg.de>
-In-Reply-To: <5e1d0765-5428-b787-75ad-063a1fb051fc@molgen.mpg.de>
+ <20220513033450.7038-6-kflin@nuvoton.com>
+ <b5361f08-f9eb-9384-f904-2625bae0fd9a@molgen.mpg.de>
+In-Reply-To: <b5361f08-f9eb-9384-f904-2625bae0fd9a@molgen.mpg.de>
 From: Kun-Fa Lin <milkfafa@gmail.com>
-Date: Tue, 17 May 2022 09:55:52 +0800
-Message-ID: <CADnNmFqFXxDv=+uEze2LjV2eMSVbMyCp=uiTnrm3Z7Hm6j8SHg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/5] arm: dts: Add node for NPCM Video Capture/Encode
- Engine
+Date: Tue, 17 May 2022 10:59:32 +0800
+Message-ID: <CADnNmFqfxDE3UbNQiyhwkLBugfZ1fSZYDbGDQFnRZdD_4q58+A@mail.gmail.com>
+Subject: Re: [PATCH v2 5/5] drivers: media: platform: Add NPCM Video
+ Capture/Encode Engine driver
 To: Paul Menzel <pmenzel@molgen.mpg.de>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -88,26 +88,214 @@ Dear Paul,
 
 Thanks for your review and comments.
 
-> Could you please add the datasheet name and revision to the commit message?
+> Please mention the datasheet name and revision used to implement this?
+> How can your patch be tested?
+>
+> For a over 2000 line patch, I would expect a longer commit message with
+> a summary of the hardware features, and implementation.
 
-It may not be appropriate since the datasheet is not public.
+Okay, I'll add more information to the commit message, but it may not
+be appropriate to add the datasheet name since it is not public.
+And I tested with openbmc/obmc-ikvm (with patches to support Hextile
+encoding that our driver used) and used VNC Viewer to verify the video
+result.
 
-> What board did you test this on?
-
-I tested on Nuvoton NPCM750 evaluation board.
-
+>
+> As the module author should you also be added to the file `MAINTAINERS`?
+> (Maybe even with a functional address <linux-npcm-video@nuvoton.com>?
 >
 > > Signed-off-by: Marvin Lin <kflin@nuvoton.com>
 >
-> As you sent this from your Google Mail account, that address is going to
-> be used in the author field. Is your Nuvoton address configured for git?
->
->      git config user.email
->
-> Then I would have thought, that that address is also in the files
-> generated by `git format-patch`.
+> Same comment as in 1/5 regarding the author email address.
 
-Thanks for the reminder. I'll change the address configuration.
+I'll add a new entry in MAINTAINERS.
+
+> > +++ b/drivers/media/platform/nuvoton/Kconfig
+> > @@ -0,0 +1,12 @@
+> > +# SPDX-License-Identifier: GPL-2.0-only
+> > +
+> > +comment "Nuvoton media platform drivers"
+> > +
+> > +config VIDEO_NUVOTON
+>
+> Is that driver going to support all Nuvoton devices or just NPCM? If
+> only NPCM, that should be part of the Kconfig config name?
+>
+> > +     tristate "Nuvoton NPCM Video Capture/Encode Engine driver"
+> > +     depends on V4L_PLATFORM_DRIVERS
+> > +     depends on VIDEO_DEV
+> > +     select VIDEOBUF2_DMA_CONTIG
+> > +     help
+> > +       Support for the Video Capture/Differentiation Engine (VCD) and
+> > +       Encoding Compression Engine (ECE) present on Nuvoton NPCM SoCs.
+>
+> Mention the module name?
+>
+>  > To compile this driver as a module, choose M here: the module will be
+> called XXX.
+
+The driver just supports NPCM. I'll change the config to
+VIDEO_NUVOTON_NPCM_VCD_ECE.
+
+> > +struct nuvoton_video_addr {
+> > +     unsigned int size;
+>
+> size_t?
+
+> > +struct rect_list_info {
+> > +     struct rect_list *list;
+> > +     struct rect_list *first;
+> > +     struct list_head *head;
+> > +     int index;
+> > +     int tile_perline;
+> > +     int tile_perrow;
+> > +     int offset_perline;
+> > +     int tile_size;
+> > +     int tile_cnt;
+>
+> Can all of these be unsigned?
+
+> > +     int frame_rate;
+> > +     int vb_index;
+>
+> Unsigned?
+>
+
+They will be addressed in the next patch.
+
+> > +     u32 bytesperline;
+> > +     u8 bytesperpixel;
+> > +     u32 rect_cnt;
+> > +     u8 num_buffers;
+> > +     struct list_head *list;
+> > +     u32 *rect;
+>
+> I would not limit the size?
+
+It's clearer to know that it stores u32 exactly.
+
+> > +static u32 nuvoton_video_ece_get_ed_size(struct nuvoton_video *video,
+> > +                                      u32 offset, void *addr)
+>
+> Use unsigned int as return value?
+
+Okay.
+
+> > +static void nuvoton_video_ece_enc_rect(struct nuvoton_video *video, u32 r_off_x,
+> > +                                    u32 r_off_y, u32 r_w, u32 r_h)
+> > +{
+> > +     struct regmap *ece = video->ece.regmap;
+> > +     u32 rect_offset = (r_off_y * video->bytesperline) + (r_off_x * 2);
+> > +     u32 temp;
+> > +     u32 w_tile;
+> > +     u32 h_tile;
+> > +     u32 w_size = ECE_TILE_W;
+> > +     u32 h_size = ECE_TILE_H;
+>
+> Any reason to fix the sizes?
+
+A "Hextile" is fixed to 16x16 pixels size, which is defined in Remote
+Framebuffer Protocol (RFC 6143, chapter 7.7.4 Hextile Encoding).
+
+> > +static void nuvoton_video_ece_ip_reset(struct nuvoton_video *video)
+> > +{
+> > +     reset_control_assert(video->ece.reset);
+> > +     msleep(100);
+> > +     reset_control_deassert(video->ece.reset);
+> > +     msleep(100);
+>
+> 100 ms is quite long. Please add a comment, where that is documented. Is
+> there a way to poll, if the device is done?
+
+I'll add a comment. It should be reduced to ~10 us (suggested in
+spec.) and there's no way to poll.
+
+> > +
+> > +static void nuvoton_video_free_diff_table(struct nuvoton_video *video)
+> > +{
+> > +     struct list_head *head, *pos, *nx;
+> > +     struct rect_list *tmp;
+> > +     int i;
+>
+> unsigned?
+>
+
+> > +static int nuvoton_video_find_rect(struct nuvoton_video *video,
+> > +                                struct rect_list_info *info, u32 offset)
+> > +{
+> > +     int i = info->index;
+> > +
+> > +     if (offset < info->tile_perline) {
+> > +             info->list = nuvoton_video_new_rect(video, offset, i);
+>
+> `i` is only used here, so use `info->index`?
+>
+
+> > +static int nuvoton_video_build_table(struct nuvoton_video *video,
+> > +                                  struct rect_list_info *info)
+> > +{
+> > +     int i = info->index;
+> > +     int j, ret, bit;
+>
+> Make `j` unsigned?
+>
+> > +     u32 value;
+> > +     struct regmap *vcd = video->vcd_regmap;
+> > +
+> > +     for (j = 0; j < info->offset_perline; j += 4) {
+> > +             regmap_read(vcd, VCD_DIFF_TBL + (j + i), &value);
+>
+> `i` is only used here, so use `info->index`?
+>
+
+> > +static void nuvoton_video_vcd_ip_reset(struct nuvoton_video *video)
+> > +{
+> > +     reset_control_assert(video->reset);
+> > +     msleep(100);
+> > +     reset_control_deassert(video->reset);
+> > +     msleep(100);
+>
+> 100 ms is quite long. Please add a comment, where that is documented. Is
+> there a way to poll, if the device is done?
+>
+
+> > +static int nuvoton_video_queue_setup(struct vb2_queue *q,
+> > +                                  unsigned int *num_buffers,
+> > +                                  unsigned int *num_planes,
+> > +                                  unsigned int sizes[],
+> > +                                  struct device *alloc_devs[])
+> > +{
+> > +     struct nuvoton_video *video = vb2_get_drv_priv(q);
+> > +     int i;
+>
+> unsigned?
+>
+
+> > +static void nuvoton_video_buf_queue(struct vb2_buffer *vb)
+> > +{
+> > +     int empty;
+> > +     struct nuvoton_video *video = vb2_get_drv_priv(vb->vb2_queue);
+> > +     struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
+> > +     struct nuvoton_video_buffer *nvb = to_nuvoton_video_buffer(vbuf);
+> > +     unsigned long flags;
+> > +
+> > +     dev_dbg(video->dev, "%s\n", __func__);
+> > +
+> > +     spin_lock_irqsave(&video->lock, flags);
+> > +     empty = list_empty(&video->buffers);
+>
+> Where is empty read later?
+>
+
+> > +     regs = devm_platform_ioremap_resource_byname(pdev, VCD_MODULE_NAME);
+> > +     if (IS_ERR(regs)) {
+> > +             dev_err(&pdev->dev, "Failed to get VCD regmap resource!\n");
+>
+> Can you help the user more by saying what to fix like check devicetree
+> or so?
+>
+
+Okay. All of them will be addressed in the next patch.
 
 Regards,
 Marvin
