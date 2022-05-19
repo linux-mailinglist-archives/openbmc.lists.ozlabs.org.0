@@ -1,74 +1,74 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0A1352D6FB
-	for <lists+openbmc@lfdr.de>; Thu, 19 May 2022 17:07:51 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id ADCD352D702
+	for <lists+openbmc@lfdr.de>; Thu, 19 May 2022 17:09:04 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L3tWn4Hfqz307F
-	for <lists+openbmc@lfdr.de>; Fri, 20 May 2022 01:07:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L3tYB4hXGz30RP
+	for <lists+openbmc@lfdr.de>; Fri, 20 May 2022 01:09:02 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=9elements.com header.i=@9elements.com header.a=rsa-sha256 header.s=google header.b=KXnjH2lu;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=9elements.com header.i=@9elements.com header.a=rsa-sha256 header.s=google header.b=TPh4rUjk;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=9elements.com (client-ip=2a00:1450:4864:20::62c;
- helo=mail-ej1-x62c.google.com; envelope-from=patrick.rudolph@9elements.com;
+ smtp.mailfrom=9elements.com (client-ip=2a00:1450:4864:20::633;
+ helo=mail-ej1-x633.google.com; envelope-from=patrick.rudolph@9elements.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  secure) header.d=9elements.com header.i=@9elements.com header.a=rsa-sha256
- header.s=google header.b=KXnjH2lu; dkim-atps=neutral
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com
- [IPv6:2a00:1450:4864:20::62c])
+ header.s=google header.b=TPh4rUjk; dkim-atps=neutral
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com
+ [IPv6:2a00:1450:4864:20::633])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L3tWQ622vz2yyQ
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L3tWQ65yvz2yyS
  for <openbmc@lists.ozlabs.org>; Fri, 20 May 2022 01:07:28 +1000 (AEST)
-Received: by mail-ej1-x62c.google.com with SMTP id ch13so10483767ejb.12
+Received: by mail-ej1-x633.google.com with SMTP id m20so10514963ejj.10
  for <openbmc@lists.ozlabs.org>; Thu, 19 May 2022 08:07:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=9elements.com; s=google;
  h=from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=QKE8+kZ8WAcpQ7POtReCXKZsAcUPlipiqVbYmV0+aVQ=;
- b=KXnjH2luqwCL7Zt0Uo+ob1m0nc1AUAjcekJjeLT+V454Fw2ipIF583SHnV8Jb1urfz
- KFy6rNxS3pdjzaNCnDDre6l17xowAblmEFZtD/XcAeBlZbd8iu2B0EmChKIrNpcQBVH1
- rZLjOggh1SMEofXEFscm+O36zojxA9dKo6YSrBfQF+yXsW6NK/D/Zroc206R342pV20Q
- 4XMQrr7bBzozs3p77PAH0Zx2hcD4JzxpR0AaoS6RA14uTd8fNR51dT2ZKEpciZ7DFqzw
- ilTyrcaZucWI8wPntoB0pGiLoU1PAzucavdjqjRGfAcQMX/a6l6VWx70ao1ekyL003mf
- VSGg==
+ bh=WYu785KFLkTYukc/eWijs94Lv5ingDis9elKLBjheWA=;
+ b=TPh4rUjkSZBRYx0ahIQ5E4G79jcMFMU9oDwkSXdPVfBAfGj9AcnSrYP4L5SEQiBEAg
+ oJIzH/X5JZ+isOgzi1EJb5wfrbpIKEK8fVDZZgvCPbZrZ4HdX14sLxbYVETxh40cIiYP
+ VkiEfcSlzvrnLcWj6WzsYUvqwKXCaUahEICs32eonx7ge20V2nOBtKFLkjBSobnDt6Jf
+ gC4IhSZ9gGgFC34h8K66KIFVXz7L49mFfNiiimGYdrfxsRB4n+NU7ki/4PExBP3p70cr
+ aRxPdYhDLfRb+0uh1cxLrQgJRDRYirOwvFT3j6eooIcpJlw73WOfLfj8p4U35grI59QW
+ SERA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=QKE8+kZ8WAcpQ7POtReCXKZsAcUPlipiqVbYmV0+aVQ=;
- b=7ID3dwDOlf4WHcxeoDv5u/V+hVI4YT4qyvzutqHf8Up/n37i8913L7i/6DV63H4FiS
- zJ03LrhV2jOHBjHW7AikWfaKK44YKtp5AKFlO6e00nVjzLdpKRmx3dgzHLAD9xFWzFGI
- CpqIyoyIzkKMaVBA8SLKQJBVngEwxZBZnPtNmyGChc7zCrxq3V7ZN8fA0SjSzvh5cSY2
- IDCn2gf3sHv+sKOXoIdGktxcnF0jkYn/ZEbXaQvfkos9l09U3P/dUHFFFuTogvFnOFA7
- FL7g+60nvPUyK+HH23Iigz8rx6jbpM70fU49k7Gf7fH9cN28J5ILDszCPbW9ZkXBi4wd
- eMqA==
-X-Gm-Message-State: AOAM532B636nkrPZenA+5D0FZBGRLiYybcK3ju2ybc24USuSule1Dfo0
- zZKVdO3P2LGYCxPYcQEEq80+SA==
-X-Google-Smtp-Source: ABdhPJyLqyv6wI7nNnldooW2j1qru6i9TZG4eys4NbdXsb1huhxGf8WdAhQLLVuok5HBK0jnMhOS4w==
-X-Received: by 2002:a17:907:1c82:b0:6f4:60e5:1ddd with SMTP id
- nb2-20020a1709071c8200b006f460e51dddmr4732713ejc.274.1652972842953; 
- Thu, 19 May 2022 08:07:22 -0700 (PDT)
+ bh=WYu785KFLkTYukc/eWijs94Lv5ingDis9elKLBjheWA=;
+ b=GB/mbZB5RfZE0+OKaIFbYCEyv6PK/N86O2KiGMsHhX0i9LnTVGUjQJcN5ELlTt+7hg
+ zFrY92jhW+DPVMaEn0zsLv+6yDup2rhsuT4AFKWfrY5xxZ6ydAdmCMWjBpJeqIHBY9iR
+ iRoHDEr3ORKhp1++5p8fu1XICh/s5Gf6YkPvf3w2G86+GVplO99IeBt9GfffvK6cSO5L
+ vQQb6DUkzag3r9BUZH8mvM7HPZsH9xXCEUtw73WF79IldLdE4fKXEZnIlOua64XwRzuC
+ k742aBQwaO8GA6gx8BiUfPBYL90cFx/86Eg0pEsKC7E6nI4t+Exd82XgveN+i8iYZ4UC
+ u0Iw==
+X-Gm-Message-State: AOAM531ilb6liS2s4b4Fknyf+Mg7UN9Eu5Mm5YKqKHXuxysufGwTrXzI
+ U9E+7lMVdDrEiYerw9PTlLI74w==
+X-Google-Smtp-Source: ABdhPJwE+e8FUHtSvUCP7Zu4OqgrEgAGHexuwIAOUh+0bmcojq+IDh8li2U72AXdeVHYcbtHtPyJTw==
+X-Received: by 2002:a17:906:19c6:b0:6ce:98a4:5ee6 with SMTP id
+ h6-20020a17090619c600b006ce98a45ee6mr4696248ejd.567.1652972843927; 
+ Thu, 19 May 2022 08:07:23 -0700 (PDT)
 Received: from fedora.sec.9e.network
  (ip-088-153-019-247.um27.pools.vodafone-ip.de. [88.153.19.247])
  by smtp.gmail.com with ESMTPSA id
- l3-20020a056402124300b0042617ba63d5sm2962263edw.95.2022.05.19.08.07.22
+ l3-20020a056402124300b0042617ba63d5sm2962263edw.95.2022.05.19.08.07.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 May 2022 08:07:22 -0700 (PDT)
+ Thu, 19 May 2022 08:07:23 -0700 (PDT)
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 To: joel@jms.id.au,
 	openbmc@lists.ozlabs.org
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc v3 1/3] arm/dts: Add Genesis3
- board
-Date: Thu, 19 May 2022 17:07:17 +0200
-Message-Id: <20220519150719.22338-2-patrick.rudolph@9elements.com>
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc v3 2/3] arm/mach-aspeed: Add
+ support for CONFIG_DRAM_UART_TO_UART1
+Date: Thu, 19 May 2022 17:07:18 +0200
+Message-Id: <20220519150719.22338-3-patrick.rudolph@9elements.com>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20220519150719.22338-1-patrick.rudolph@9elements.com>
 References: <20220519150719.22338-1-patrick.rudolph@9elements.com>
@@ -90,61 +90,34 @@ Cc: christian.walter@9elements.com, takken@us.ibm.com,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add devicetree source file. It uses the evb-ast2500 board files.
+Update the Kconfig and allow a board to use CONFIG_DRAM_UART_TO_UART1.
+The platform code already uses this Kconfig symbol, but it always
+evaluated to false.
+This is required on IBM/Genesis3 as it uses RDX1/TDX1 as debug uart.
 
 Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
+Reviewed-by: Joel Stanley <joel@jms.id.au>
 ---
- arch/arm/dts/Makefile                 |  1 +
- arch/arm/dts/ast2500-ibm-genesis3.dts | 28 +++++++++++++++++++++++++++
- 2 files changed, 29 insertions(+)
- create mode 100644 arch/arm/dts/ast2500-ibm-genesis3.dts
+ arch/arm/mach-aspeed/ast2500/Kconfig | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
-index a79f885f54..4b026296f0 100755
---- a/arch/arm/dts/Makefile
-+++ b/arch/arm/dts/Makefile
-@@ -677,6 +677,7 @@ dtb-$(CONFIG_ARCH_BCM6858) += \
- dtb-$(CONFIG_ARCH_ASPEED) += \
- 	ast2400-evb.dtb \
- 	ast2500-evb.dtb \
-+	ast2500-ibm-genesis3.dtb \
- 	ast2600a0-evb.dtb \
- 	ast2600a1-evb.dtb \
- 	ast2600-bletchley.dtb \
-diff --git a/arch/arm/dts/ast2500-ibm-genesis3.dts b/arch/arm/dts/ast2500-ibm-genesis3.dts
-new file mode 100644
-index 0000000000..932b598063
---- /dev/null
-+++ b/arch/arm/dts/ast2500-ibm-genesis3.dts
-@@ -0,0 +1,28 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+/*
-+ * IBM Genesis3
-+ *
-+ * Copyright (C) 2022 9elements GmbH
-+ */
+diff --git a/arch/arm/mach-aspeed/ast2500/Kconfig b/arch/arm/mach-aspeed/ast2500/Kconfig
+index 4f992f442d..e7ff00cdba 100644
+--- a/arch/arm/mach-aspeed/ast2500/Kconfig
++++ b/arch/arm/mach-aspeed/ast2500/Kconfig
+@@ -17,6 +17,12 @@ config TARGET_EVB_AST2500
+ 	  20 pin JTAG, pinouts for 14 I2Cs, 3 SPIs and eSPI, 8 PWMs.
+ endchoice
+ 
++config DRAM_UART_TO_UART1
++	bool
++	prompt "Route debug UART to UART1"
++	help
++	  Route debug UART to TXD1/RXD1 pins.
 +
-+#include "ast2500-evb.dts"
-+
-+/ {
-+	model = "IBM Genesis3";
-+	compatible = "ibm,genesis3-bmc", "aspeed,ast2500";
-+};
-+
-+&spi1 {
-+	status = "disabled";
-+};
-+
-+&fmc {
-+	flash@0 {
-+		compatible = "spi-flash", "spansion,s25fl256l";
-+	};
-+
-+	flash@1 {
-+		compatible = "spi-flash", "spansion,s25fl256l";
-+	};
-+};
-+
+ source "board/aspeed/evb_ast2500/Kconfig"
+ 
+ endif
 -- 
 2.35.3
 
