@@ -2,73 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADCD352D702
-	for <lists+openbmc@lfdr.de>; Thu, 19 May 2022 17:09:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4440F52D6FE
+	for <lists+openbmc@lfdr.de>; Thu, 19 May 2022 17:08:29 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L3tYB4hXGz30RP
-	for <lists+openbmc@lfdr.de>; Fri, 20 May 2022 01:09:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L3tXW1kqjz30D0
+	for <lists+openbmc@lfdr.de>; Fri, 20 May 2022 01:08:27 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=9elements.com header.i=@9elements.com header.a=rsa-sha256 header.s=google header.b=TPh4rUjk;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=9elements.com header.i=@9elements.com header.a=rsa-sha256 header.s=google header.b=SQ63Eey/;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=9elements.com (client-ip=2a00:1450:4864:20::633;
- helo=mail-ej1-x633.google.com; envelope-from=patrick.rudolph@9elements.com;
+ smtp.mailfrom=9elements.com (client-ip=2a00:1450:4864:20::634;
+ helo=mail-ej1-x634.google.com; envelope-from=patrick.rudolph@9elements.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  secure) header.d=9elements.com header.i=@9elements.com header.a=rsa-sha256
- header.s=google header.b=TPh4rUjk; dkim-atps=neutral
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com
- [IPv6:2a00:1450:4864:20::633])
+ header.s=google header.b=SQ63Eey/; dkim-atps=neutral
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com
+ [IPv6:2a00:1450:4864:20::634])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L3tWQ65yvz2yyS
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L3tWQ6Fykz2yyh
  for <openbmc@lists.ozlabs.org>; Fri, 20 May 2022 01:07:28 +1000 (AEST)
-Received: by mail-ej1-x633.google.com with SMTP id m20so10514963ejj.10
+Received: by mail-ej1-x634.google.com with SMTP id i19so10503387eja.11
  for <openbmc@lists.ozlabs.org>; Thu, 19 May 2022 08:07:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=9elements.com; s=google;
  h=from:to:cc:subject:date:message-id:in-reply-to:references
  :mime-version:content-transfer-encoding;
- bh=WYu785KFLkTYukc/eWijs94Lv5ingDis9elKLBjheWA=;
- b=TPh4rUjkSZBRYx0ahIQ5E4G79jcMFMU9oDwkSXdPVfBAfGj9AcnSrYP4L5SEQiBEAg
- oJIzH/X5JZ+isOgzi1EJb5wfrbpIKEK8fVDZZgvCPbZrZ4HdX14sLxbYVETxh40cIiYP
- VkiEfcSlzvrnLcWj6WzsYUvqwKXCaUahEICs32eonx7ge20V2nOBtKFLkjBSobnDt6Jf
- gC4IhSZ9gGgFC34h8K66KIFVXz7L49mFfNiiimGYdrfxsRB4n+NU7ki/4PExBP3p70cr
- aRxPdYhDLfRb+0uh1cxLrQgJRDRYirOwvFT3j6eooIcpJlw73WOfLfj8p4U35grI59QW
- SERA==
+ bh=GoTsVclPIS6mTCu1dG5Xb42sNV8zF1raq7z9vtB6rLI=;
+ b=SQ63Eey/mWNafU0M5lFSKDEw/Zwd7gUrhEE2dqkBqECh+QeRNB3IEL/N5KE9DROpYz
+ JeuoRx60n9S1bHsy+bwvXvb606qc+pKczwqyIUMx1AeZ8kDOA48PhtESQfsU+2gUjcs4
+ U9Dykt1OQRPLomUJwvb8mS/X5Qs9GbtFh/JmFEIcM52QP9SRDagmNg3j06/huZ7RDo6u
+ 5Oye9+d+A9KATwsdBG5LiZgeULuCogM7/Y231Rsh6wYV/iChV69FBEekMXpkDGJ4LWVf
+ NSH0LSvz8SqVI3WExwCuEBgpY2jDAL6SrDJSpnnawTiCPvHDtzLocTtx+rsULhvpavqW
+ O2Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
  :references:mime-version:content-transfer-encoding;
- bh=WYu785KFLkTYukc/eWijs94Lv5ingDis9elKLBjheWA=;
- b=GB/mbZB5RfZE0+OKaIFbYCEyv6PK/N86O2KiGMsHhX0i9LnTVGUjQJcN5ELlTt+7hg
- zFrY92jhW+DPVMaEn0zsLv+6yDup2rhsuT4AFKWfrY5xxZ6ydAdmCMWjBpJeqIHBY9iR
- iRoHDEr3ORKhp1++5p8fu1XICh/s5Gf6YkPvf3w2G86+GVplO99IeBt9GfffvK6cSO5L
- vQQb6DUkzag3r9BUZH8mvM7HPZsH9xXCEUtw73WF79IldLdE4fKXEZnIlOua64XwRzuC
- k742aBQwaO8GA6gx8BiUfPBYL90cFx/86Eg0pEsKC7E6nI4t+Exd82XgveN+i8iYZ4UC
- u0Iw==
-X-Gm-Message-State: AOAM531ilb6liS2s4b4Fknyf+Mg7UN9Eu5Mm5YKqKHXuxysufGwTrXzI
- U9E+7lMVdDrEiYerw9PTlLI74w==
-X-Google-Smtp-Source: ABdhPJwE+e8FUHtSvUCP7Zu4OqgrEgAGHexuwIAOUh+0bmcojq+IDh8li2U72AXdeVHYcbtHtPyJTw==
-X-Received: by 2002:a17:906:19c6:b0:6ce:98a4:5ee6 with SMTP id
- h6-20020a17090619c600b006ce98a45ee6mr4696248ejd.567.1652972843927; 
- Thu, 19 May 2022 08:07:23 -0700 (PDT)
+ bh=GoTsVclPIS6mTCu1dG5Xb42sNV8zF1raq7z9vtB6rLI=;
+ b=3b8BBZyehrxyjmtZWbHFxAqNj9a5Oqwquv/KEp8YWArP1qcHAMIHV5VnNA3dbrZWnj
+ QgXEiYZr5+kqw6iJbV4mKywpZyTy/xPXCaLF6tXq8laj3Nwb4uhH3APsz6UEikA1il8X
+ LltmV3esiEDizgZie1c1/qbfdHvkTIRMElD6HgLt/DEvKpAIAk7ujiw+/mhovELyhEgg
+ uXI57SYVjwdFumrQWVDNQmGV3tqK7LNrecGN9kfYQWhQXN64Z8GJahNGqA3HUZ5qrLqS
+ NDbST4sjkSKsYRBh7OiY3Tk+b/rtIEfWuqDuKqMg0Tftj1g0OtLwLqA0odisSBcMZEgi
+ qOKw==
+X-Gm-Message-State: AOAM530pWiKZJiXOKRGUAmnjTZ1MHXnpFcuCOg69aTErg12Ssx8ktq3U
+ Ak9vLD0e7eh+4fdi+Eqr8EcgTOGcfsl4Tg==
+X-Google-Smtp-Source: ABdhPJyz55mCIuC4inywRXn6IofWFFhVZzHC7+YjQVyzIAkmcvPNDN07fQAy1OfdMgo9qg2AZS1luA==
+X-Received: by 2002:a17:907:381:b0:6fe:9ca8:c4b4 with SMTP id
+ ss1-20020a170907038100b006fe9ca8c4b4mr2676457ejb.147.1652972844806; 
+ Thu, 19 May 2022 08:07:24 -0700 (PDT)
 Received: from fedora.sec.9e.network
  (ip-088-153-019-247.um27.pools.vodafone-ip.de. [88.153.19.247])
  by smtp.gmail.com with ESMTPSA id
- l3-20020a056402124300b0042617ba63d5sm2962263edw.95.2022.05.19.08.07.23
+ l3-20020a056402124300b0042617ba63d5sm2962263edw.95.2022.05.19.08.07.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 May 2022 08:07:23 -0700 (PDT)
+ Thu, 19 May 2022 08:07:24 -0700 (PDT)
 From: Patrick Rudolph <patrick.rudolph@9elements.com>
 To: joel@jms.id.au,
 	openbmc@lists.ozlabs.org
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc v3 2/3] arm/mach-aspeed: Add
- support for CONFIG_DRAM_UART_TO_UART1
-Date: Thu, 19 May 2022 17:07:18 +0200
-Message-Id: <20220519150719.22338-3-patrick.rudolph@9elements.com>
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc v3 3/3] configs: Add IBM
+ Genesis3 defconfig
+Date: Thu, 19 May 2022 17:07:19 +0200
+Message-Id: <20220519150719.22338-4-patrick.rudolph@9elements.com>
 X-Mailer: git-send-email 2.35.3
 In-Reply-To: <20220519150719.22338-1-patrick.rudolph@9elements.com>
 References: <20220519150719.22338-1-patrick.rudolph@9elements.com>
@@ -90,34 +90,100 @@ Cc: christian.walter@9elements.com, takken@us.ibm.com,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Update the Kconfig and allow a board to use CONFIG_DRAM_UART_TO_UART1.
-The platform code already uses this Kconfig symbol, but it always
-evaluated to false.
-This is required on IBM/Genesis3 as it uses RDX1/TDX1 as debug uart.
+Use the evb-ast2500_defconfig as reference to add support for the
+IBM genesis3 board.
+
+Changes compared to evb-ast2500_defconfig are:
+- Route debug uart to TXD1/RXD1
+- Disable MMC and I2C support
+- Use DTB ast2500-ibm-genesis3
 
 Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
-Reviewed-by: Joel Stanley <joel@jms.id.au>
 ---
- arch/arm/mach-aspeed/ast2500/Kconfig | 6 ++++++
- 1 file changed, 6 insertions(+)
+ configs/ibm_genesis3_defconfig | 74 ++++++++++++++++++++++++++++++++++
+ 1 file changed, 74 insertions(+)
+ create mode 100644 configs/ibm_genesis3_defconfig
 
-diff --git a/arch/arm/mach-aspeed/ast2500/Kconfig b/arch/arm/mach-aspeed/ast2500/Kconfig
-index 4f992f442d..e7ff00cdba 100644
---- a/arch/arm/mach-aspeed/ast2500/Kconfig
-+++ b/arch/arm/mach-aspeed/ast2500/Kconfig
-@@ -17,6 +17,12 @@ config TARGET_EVB_AST2500
- 	  20 pin JTAG, pinouts for 14 I2Cs, 3 SPIs and eSPI, 8 PWMs.
- endchoice
- 
-+config DRAM_UART_TO_UART1
-+	bool
-+	prompt "Route debug UART to UART1"
-+	help
-+	  Route debug UART to TXD1/RXD1 pins.
-+
- source "board/aspeed/evb_ast2500/Kconfig"
- 
- endif
+diff --git a/configs/ibm_genesis3_defconfig b/configs/ibm_genesis3_defconfig
+new file mode 100644
+index 0000000000..1a81b66c62
+--- /dev/null
++++ b/configs/ibm_genesis3_defconfig
+@@ -0,0 +1,74 @@
++CONFIG_SPI_BOOT=y
++CONFIG_FIT_VERBOSE=y
++CONFIG_LOG=y
++CONFIG_BOOTCOMMAND="bootm 20080000"
++CONFIG_BOOTARGS="console=ttyS4,115200n8 root=/dev/ram rw earlycon"
++# CONFIG_SYS_I2C_ASPEED is not set
++CONFIG_ASPEED_AHBC=y
++CONFIG_ARM=y
++CONFIG_ARCH_ASPEED=y
++CONFIG_SYS_TEXT_BASE=0x0
++CONFIG_SYS_MALLOC_F_LEN=0x2000
++CONFIG_ENV_SIZE=0x20000
++CONFIG_ENV_OFFSET=0x60000
++CONFIG_NR_DRAM_BANKS=1
++CONFIG_FIT=y
++CONFIG_USE_BOOTARGS=y
++CONFIG_USE_BOOTCOMMAND=y
++CONFIG_PRE_CONSOLE_BUFFER=y
++CONFIG_PRE_CON_BUF_ADDR=0x1e720000
++CONFIG_SYS_CONSOLE_ENV_OVERWRITE=y
++CONFIG_HUSH_PARSER=y
++# CONFIG_AUTO_COMPLETE is not set
++CONFIG_SYS_PROMPT="ast# "
++# CONFIG_CMD_IMI is not set
++# CONFIG_CMD_XIMG is not set
++CONFIG_CMD_MEMTEST=y
++CONFIG_SYS_ALT_MEMTEST=y
++CONFIG_CMD_CLK=y
++CONFIG_CMD_GPIO=y
++CONFIG_CMD_SF=y
++CONFIG_CMD_DHCP=y
++CONFIG_CMD_MII=y
++CONFIG_CMD_PING=y
++CONFIG_DEFAULT_DEVICE_TREE="ast2500-ibm-genesis3"
++CONFIG_ENV_IS_IN_SPI_FLASH=y
++CONFIG_USE_ENV_SPI_BUS=y
++CONFIG_ENV_SPI_BUS=0
++CONFIG_USE_ENV_SPI_CS=y
++CONFIG_ENV_SPI_CS=0
++CONFIG_USE_ENV_SPI_MAX_HZ=y
++CONFIG_ENV_SPI_MAX_HZ=50000000
++CONFIG_SF_DEFAULT_SPEED=50000000
++CONFIG_NET_RANDOM_ETHADDR=y
++CONFIG_REGMAP=y
++CONFIG_CLK=y
++CONFIG_DM_GPIO=y
++CONFIG_ASPEED_GPIO=y
++# CONFIG_DM_I2C is not set
++CONFIG_MISC=y
++# CONFIG_DM_MMC is not set
++# CONFIG_MMC is not set
++# CONFIG_CMD_MMC is not set
++# CONFIG_MMC_SDHCI is not set
++# CONFIG_MMC_SDHCI_ASPEED is not set
++# CONFIG_MMC_HW_PARTITIONING is not set
++CONFIG_SPI_FLASH_SFDP_SUPPORT=y
++CONFIG_DM_SPI_FLASH=y
++CONFIG_SPI_FLASH=y
++CONFIG_SPI_FLASH_SPANSION=y
++CONFIG_DM_ETH=y
++CONFIG_FTGMAC100=y
++# CONFIG_PHY is not set
++CONFIG_PINCTRL=y
++CONFIG_DM_SERIAL=y
++CONFIG_SYS_NS16550=y
++CONFIG_SPI=y
++CONFIG_DM_SPI=y
++CONFIG_SYSRESET=y
++CONFIG_TIMER=y
++CONFIG_WDT=y
++CONFIG_WDT_ASPEED=y
++# CONFIG_EFI_LOADER is not set
++CONFIG_DRAM_UART_TO_UART1=y
++CONFIG_FIRMWARE_2ND_BOOT=y
 -- 
 2.35.3
 
