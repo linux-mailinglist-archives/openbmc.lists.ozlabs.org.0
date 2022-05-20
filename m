@@ -2,65 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 26B4352E50A
-	for <lists+openbmc@lfdr.de>; Fri, 20 May 2022 08:31:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C30552E512
+	for <lists+openbmc@lfdr.de>; Fri, 20 May 2022 08:32:37 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L4H160JTwz3bkD
-	for <lists+openbmc@lfdr.de>; Fri, 20 May 2022 16:31:06 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L4H2q1Bkkz3blX
+	for <lists+openbmc@lfdr.de>; Fri, 20 May 2022 16:32:35 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=El5duAhi;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=ee+GBWhL;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::335;
- helo=mail-wm1-x335.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::433;
+ helo=mail-wr1-x433.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
  secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=El5duAhi; dkim-atps=neutral
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com
- [IPv6:2a00:1450:4864:20::335])
+ header.s=google header.b=ee+GBWhL; dkim-atps=neutral
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com
+ [IPv6:2a00:1450:4864:20::433])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L4H0g2fVbz2xTb
- for <openbmc@lists.ozlabs.org>; Fri, 20 May 2022 16:30:41 +1000 (AEST)
-Received: by mail-wm1-x335.google.com with SMTP id
- i82-20020a1c3b55000000b00397391910d5so269882wma.1
- for <openbmc@lists.ozlabs.org>; Thu, 19 May 2022 23:30:41 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L4H2Q5LXDz2yxT
+ for <openbmc@lists.ozlabs.org>; Fri, 20 May 2022 16:32:14 +1000 (AEST)
+Received: by mail-wr1-x433.google.com with SMTP id u3so10113932wrg.3
+ for <openbmc@lists.ozlabs.org>; Thu, 19 May 2022 23:32:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=0yerIfy5ZB6uavUARNoIN2dyKAeeTM7kWulFClNo35A=;
- b=El5duAhiKahsHHS/lkfbN56zjISLzJOdTGnZdz7X5Q3d8AFh1e8SqtVgpBeq2pygwR
- OQ+OKnQ+SquD536zCMBIjtSL3rYDgZCp5yYbej5o6Wkbk2EXIYWBaMohORTKedV/XMBH
- qeLv7oA0DMayVi1BNjwKypzssiTSRm7IJefNI=
+ :cc; bh=xOvFCtIE0zQL+phEOCuRnJnrNTTjlXVcMi2y7WRhquo=;
+ b=ee+GBWhLkS40qn7CYxtgJY6/Pt3t5gi2cxmIJ6CGmltnzV6dDw4zCCIxCNm4KVak5u
+ kTcjqvuc7tL1+EzCdJptxLf2zuVtlZrgJqoRqmTAVvADOo7yBx/VP0o8Q5SXw+Yc0XQ3
+ zLN0Kicric9qkWw3/OOOvoTeVf1AqTXAwASig=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc;
- bh=0yerIfy5ZB6uavUARNoIN2dyKAeeTM7kWulFClNo35A=;
- b=716n6Mixam9FIoBw678Dlqe8Fb2DTxGB29ZkF0nGZlvTCFzwiaLxu5rhOmqqaNshMb
- cmAeQXOSEFP84Bilg/vbo21aPr26zQhY4jt91AGXQGubsYBpwLIxnHA9mqHvwXRLJ/GX
- zAUiVVb1pAWRQ9OfsfyhoPRdfeVgY0hkbQqmUoUA3AudPhYLTFfTeVy1Stugta4uRDMP
- tsn+RJlp/95Urem2WmiJhr91B1uXx7haVK7OeXLfm6ztKjRQLc0HLbqNUU1adyzK+b7L
- kDGZLxGzrdc2hL5OI0sKIeYfs5uvp/x0OWPqwFzR6UwJtnj9kD+NwFw0EUMFcn4Ll2K9
- OWvQ==
-X-Gm-Message-State: AOAM531oS7pdKTqhlT9+qhe0kINN0DrvMczE3zyh+VJenkPXHhnsoKJ/
- czQF1ySNX6/CL0spWiPs8/W/Eu3Ej/SKkScIUvk/la1I
-X-Google-Smtp-Source: ABdhPJzSub2xQslJIhmzPe4195dkgc7jHlig09Jq3Ei4COtRA19W0FEpR4cozIbL/eV66HM0nGqBRKWFY5q9cgoDgiI=
-X-Received: by 2002:a05:600c:3cc:b0:397:337e:14ca with SMTP id
- z12-20020a05600c03cc00b00397337e14camr4528872wmd.10.1653028237814; Thu, 19
- May 2022 23:30:37 -0700 (PDT)
+ bh=xOvFCtIE0zQL+phEOCuRnJnrNTTjlXVcMi2y7WRhquo=;
+ b=dIXmxM6SvmVuL7js0M1kwioZSk5rAknI4H68lfKMhnYK/4vEmWiHWuNT+DFQhCg8Rz
+ O9+T//PnhImUD/w6W9KNProDz/52DTGAx/mtqiXoAtTS1EoxJdl2/PfI5vKRRNoSYRDi
+ EbPxUXmLTTcx2YMyOjnPlIBpE7EbJdjzF0OppHfTk2D9evvWOyBnhcnxp9eE1HyXBEOd
+ SxF+uxuBtCNdy4cCZZgt9AcQFb4qPpOTyyL3QwBjb7PaPjmAZ4T8dzFKhhhiGtwrODP8
+ +SXl8+iWRdJ68B/d/abVDOe/Io1NqghC9q1R37BM5jVpXpG9lON/uWWah/oZC0WEjdAL
+ 6h+Q==
+X-Gm-Message-State: AOAM530XWNzgFZpFUPim/kY7HtzevpxiVsMTinTqNaQsmHbQy3p+9zGW
+ K8BeSuAMMJdME7Zgi0l8H9YOrtwhPoEDlfxidWEgPYFH
+X-Google-Smtp-Source: ABdhPJwd7pnfcTfrZXEF7VmaPzQR7bd9Zfy70UO/Mh/UPlYTv78ECamwtLxVLwN5m8oYeUHKVtxAua6Q8ddYC1yfEns=
+X-Received: by 2002:adf:f1c8:0:b0:20d:d4e:3742 with SMTP id
+ z8-20020adff1c8000000b0020d0d4e3742mr6570543wro.3.1653028330634; Thu, 19 May
+ 2022 23:32:10 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220513170715.43475-1-eajames@linux.ibm.com>
- <20220513170715.43475-10-eajames@linux.ibm.com>
-In-Reply-To: <20220513170715.43475-10-eajames@linux.ibm.com>
+In-Reply-To: <20220513170715.43475-1-eajames@linux.ibm.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 20 May 2022 06:30:25 +0000
-Message-ID: <CACPK8XcE6JXxQ58_Z88gv8keC_oWkwOZ6L3Nm4wv-g3KsRr6xQ@mail.gmail.com>
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v2 9/9] board: ast2600-ibm:
- Add AST2600 BMC based POWER10+ servers
+Date: Fri, 20 May 2022 06:31:58 +0000
+Message-ID: <CACPK8XdscoJ5SpeaOP+bgPSVG6DFNn-SsaQ19fEQACQATjn6xw@mail.gmail.com>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v2 0/9] ast2600: Add I2C
+ TPMv2 driver
 To: Eddie James <eajames@linux.ibm.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -80,285 +78,71 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On Fri, 13 May 2022 at 17:07, Eddie James <eajames@linux.ibm.com> wrote:
 >
-> Support IBM-specific options for POWER10+ servers built on AST2600
-> BMC.
+> This series backports the addition of a TPM TIS core driver from
+> mainline u-boot. Then, add an I2C driver to talk to the NPCT75X
+> chip using the TPM TIS core.
+> Add the TPM to the Rainier/Everest devicetree.
+> Also, add new board code for IBM's systems that need to "poison"
+> the TPM during u-boot initialization.
+>
+> I tested this on Everest hardware and verified in Linux that the TPM PCR0
+> was extended. I also tested with the TPM at the wrong bus address to
+> verify that the code can handle a missing TPM, and I saw no errors.
+>
+> Changes since v1:
+>  - Use upstream core for I2C tpm driver. I initially couldn't get the
+>    core driver to work at all, but found a small bug in the ordering
+>    of operations in the core init. I also needed to force the locality
+>    to 0, like in the Linux NPCT75X driver.
+>  - Use new board init code for IBM's systems that need the TPM poisoning
 
-Enabling the TPM command and the TPM2_TIS_I2C option adds 32.6KB to
-the u-boot image, bringing the total to 406KB.
+I've merged patches 1-8.
 
+Patch 9 needs a little more discussion. If you repost, start a new
+series with just those changes (separating out the defconfig and
+device tree change).
 
 >
-> Signed-off-by: Eddie James <eajames@linux.ibm.com>
-> ---
->  arch/arm/mach-aspeed/ast2600/Kconfig |   7 ++
->  board/aspeed/ast2600_ibm/Kconfig     |  13 +++
+> Eddie James (5):
+>   tpm: core: Set timeouts before requesting locality
+>   i2c: ast_i2c: Remove SCL direct drive mode
+>   tpm: add support for TPMv2.x I2C chips
+>   arm: dts: ast2600-rainier: Add NPCT75X TPM
+>   board: ast2600-ibm: Add AST2600 BMC based POWER10+ servers
+>
+> Heinrich Schuchardt (1):
+>   tis: fix tpm_tis_remove()
+>
+> Ilias Apalodimas (1):
+>   tpm2: Introduce TIS tpm core
+>
+> Johannes Holland (1):
+>   tpm: add #ifndef to fix redeclaration build errors
+>
+> Simon Glass (1):
+>   tpm: Add more TPM2 definitions
+>
+>  arch/arm/dts/ast2600-rainier.dts     |  12 +-
+>  arch/arm/mach-aspeed/ast2600/Kconfig |   7 +
+>  board/aspeed/ast2600_ibm/Kconfig     |  13 +
 >  board/aspeed/ast2600_ibm/Makefile    |   1 +
->  board/aspeed/ast2600_ibm/ibm.c       |  46 +++++++++
->  configs/ast2600_ibm_defconfig        | 137 +++++++++++++++++++++++++++
->  5 files changed, 204 insertions(+)
+>  board/aspeed/ast2600_ibm/ibm.c       |  46 +++
+>  configs/ast2600_ibm_defconfig        | 137 ++++++++
+>  drivers/i2c/ast_i2c.c                |   2 +-
+>  drivers/tpm/Kconfig                  |   9 +
+>  drivers/tpm/Makefile                 |   1 +
+>  drivers/tpm/tpm2_tis_core.c          | 470 +++++++++++++++++++++++++++
+>  drivers/tpm/tpm2_tis_i2c.c           | 171 ++++++++++
+>  drivers/tpm/tpm_tis.h                | 138 ++++++++
+>  include/tpm-v2.h                     |  32 ++
+>  13 files changed, 1033 insertions(+), 6 deletions(-)
 >  create mode 100644 board/aspeed/ast2600_ibm/Kconfig
 >  create mode 100644 board/aspeed/ast2600_ibm/Makefile
 >  create mode 100644 board/aspeed/ast2600_ibm/ibm.c
 >  create mode 100644 configs/ast2600_ibm_defconfig
-
-I don't want to end up with defconfigs for every machine we support.
-Is there a way we can avoid that?
-
+>  create mode 100644 drivers/tpm/tpm2_tis_core.c
+>  create mode 100644 drivers/tpm/tpm2_tis_i2c.c
 >
-> diff --git a/arch/arm/mach-aspeed/ast2600/Kconfig b/arch/arm/mach-aspeed/ast2600/Kconfig
-> index fcdc425de5..412ea639ad 100644
-> --- a/arch/arm/mach-aspeed/ast2600/Kconfig
-> +++ b/arch/arm/mach-aspeed/ast2600/Kconfig
-> @@ -31,6 +31,12 @@ config TARGET_SLT_AST2600
->         help
->           SLT-AST2600 is Aspeed SLT board for AST2600 chip.
->
-> +config TARGET_AST2600_IBM
-> +       bool "AST2600-IBM"
-> +       depends on ASPEED_AST2600
-> +       help
-> +         AST2600-IBM is IBM boards for AST2600 BMC based P0WER10+ servers
-> +
->  config TARGET_AST2600_INTEL
->         bool "AST2600-INTEL"
->         depends on ASPEED_AST2600
-> @@ -43,6 +49,7 @@ endchoice
->  source "board/aspeed/evb_ast2600/Kconfig"
->  source "board/aspeed/fpga_ast2600/Kconfig"
->  source "board/aspeed/slt_ast2600/Kconfig"
-> +source "board/aspeed/ast2600_ibm/Kconfig"
->  source "board/aspeed/ast2600_intel/Kconfig"
->
->  endif
-> diff --git a/board/aspeed/ast2600_ibm/Kconfig b/board/aspeed/ast2600_ibm/Kconfig
-> new file mode 100644
-> index 0000000000..38ee579ed7
-> --- /dev/null
-> +++ b/board/aspeed/ast2600_ibm/Kconfig
-> @@ -0,0 +1,13 @@
-> +if TARGET_AST2600_IBM
-> +
-> +config SYS_BOARD
-> +       default "ast2600_ibm"
-> +
-> +config SYS_VENDOR
-> +       default "aspeed"
-> +
-> +config SYS_CONFIG_NAME
-> +       string "board configuration name"
-> +       default "ast2600_ibm"
-> +
-> +endif
-> diff --git a/board/aspeed/ast2600_ibm/Makefile b/board/aspeed/ast2600_ibm/Makefile
-> new file mode 100644
-> index 0000000000..ae1aded893
-> --- /dev/null
-> +++ b/board/aspeed/ast2600_ibm/Makefile
-> @@ -0,0 +1 @@
-> +obj-y += ibm.o
-> diff --git a/board/aspeed/ast2600_ibm/ibm.c b/board/aspeed/ast2600_ibm/ibm.c
-> new file mode 100644
-> index 0000000000..d9e06fafe0
-> --- /dev/null
-> +++ b/board/aspeed/ast2600_ibm/ibm.c
-> @@ -0,0 +1,46 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright 2022 IBM Corp.
-> + */
-> +
-> +#include <common.h>
-> +#if defined(CONFIG_TPM_V2)
-
-The headers will always exist, so this is unnecessary.
-
-Even better, we know this machine will always have a TPM, so can we select it in
-
-> +#include <dm/uclass.h>
-> +#include <tpm-common.h>
-> +#include <tpm-v2.h>
-> +#endif
-> +
-> +__weak int board_late_init(void)
-> +{
-> +#if defined(CONFIG_TPM_V2)
-> +       int rc;
-> +       struct udevice *dev;
-> +       /*
-> +        * The digest is just an arbitrary sequence for now to ensure that the
-> +        * TPM gets "poisoned."
-> +        */
-> +       unsigned char digest[32] = {
-
-const
-
-> +               0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f, 0x00, 0x01,
-> +               0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09,
-> +               0xa0, 0xb1, 0xc2, 0xd3, 0xe4, 0xf5, 0x06, 0x17,
-> +               0x28, 0x39, 0x4a, 0x5b, 0x6c, 0x7d, 0x8e, 0x9f
-> +       };
-> +
-> +       rc = uclass_first_device_err(UCLASS_TPM, &dev);
-> +       if (rc)
-> +               return 0;
-> +
-> +       rc = tpm_init(dev);
-> +       if (rc)
-> +               return 0;
-> +
-> +       rc = tpm2_startup(dev, TPM2_SU_CLEAR);
-> +       if (rc)
-> +               return 0;
-> +
-> +       rc = tpm2_pcr_extend(dev, 0, digest);
-> +       if (!rc)
-> +               printf("TPM: PCR0 extended.\n");
-> +#endif
-> +       return 0;
-> +}
-> diff --git a/configs/ast2600_ibm_defconfig b/configs/ast2600_ibm_defconfig
-> new file mode 100644
-> index 0000000000..3fe85bc57a
-> --- /dev/null
-> +++ b/configs/ast2600_ibm_defconfig
-> @@ -0,0 +1,137 @@
-> +CONFIG_ARM=y
-> +CONFIG_SYS_CONFIG_NAME="evb_ast2600_spl_emmc"
-> +CONFIG_SYS_DCACHE_OFF=y
-> +CONFIG_POSITION_INDEPENDENT=y
-> +CONFIG_SYS_THUMB_BUILD=y
-> +# CONFIG_SPL_USE_ARCH_MEMCPY is not set
-> +# CONFIG_SPL_USE_ARCH_MEMSET is not set
-> +CONFIG_SPL_LDSCRIPT="arch/$(ARCH)/mach-aspeed/ast2600/u-boot-spl.lds"
-> +CONFIG_ARCH_ASPEED=y
-> +CONFIG_SYS_TEXT_BASE=0x81000000
-> +CONFIG_ASPEED_AST2600=y
-> +# CONFIG_ASPEED_LOADERS is not set
-> +CONFIG_TARGET_AST2600_IBM=y
-> +CONFIG_DEFAULT_DEVICE_TREE="ast2600-rainier"
-> +CONFIG_SPL_GPIO_SUPPORT=y
-> +CONFIG_SPL_LIBCOMMON_SUPPORT=y
-> +CONFIG_SPL_LIBGENERIC_SUPPORT=y
-> +CONFIG_SYS_MALLOC_F_LEN=0x2000
-> +CONFIG_SPL_MMC_SUPPORT=y
-> +CONFIG_SPL_SERIAL_SUPPORT=y
-> +CONFIG_SPL_DRIVERS_MISC_SUPPORT=y
-> +CONFIG_ENV_SIZE=0x10000
-> +CONFIG_ENV_OFFSET=0x5000
-> +CONFIG_SPL_SYS_MALLOC_F_LEN=0x1000
-> +CONFIG_SPL=y
-> +CONFIG_SPL_STACK_R_ADDR=0x90300000
-> +CONFIG_ARMV7_BOOT_SEC_DEFAULT=y
-> +CONFIG_ARMV7_PSCI_NR_CPUS=2
-> +CONFIG_NR_DRAM_BANKS=1
-> +CONFIG_FIT=y
-> +CONFIG_FIT_ENABLE_SHA512_SUPPORT=y
-> +CONFIG_FIT_SIGNATURE=y
-> +CONFIG_SPL_FIT_SIGNATURE=y
-> +CONFIG_SPL_LOAD_FIT=y
-> +CONFIG_USE_BOOTARGS=y
-> +CONFIG_BOOTARGS="console=ttyS4,115200n8 root=/dev/ram rw"
-> +CONFIG_USE_BOOTCOMMAND=y
-> +CONFIG_BOOTCOMMAND="bootm 20100000"
-> +CONFIG_SYS_CONSOLE_ENV_OVERWRITE=y
-> +CONFIG_DISPLAY_BOARDINFO_LATE=y
-> +CONFIG_ARCH_EARLY_INIT_R=y
-> +CONFIG_BOARD_LATE_INIT=y
-> +CONFIG_SPL_BOARD_INIT=y
-> +# CONFIG_SPL_LEGACY_IMAGE_SUPPORT is not set
-> +CONFIG_SPL_SYS_MALLOC_SIMPLE=y
-> +CONFIG_SPL_STACK_R=y
-> +CONFIG_SPL_SEPARATE_BSS=y
-> +CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_USE_SECTOR=y
-> +CONFIG_SYS_MMCSD_RAW_MODE_U_BOOT_SECTOR=0x80
-> +CONFIG_SPL_SHA512_SUPPORT=y
-> +CONFIG_SPL_FIT_IMAGE_TINY=y
-> +CONFIG_SPL_DM_RESET=y
-> +CONFIG_SPL_RAM_SUPPORT=y
-> +CONFIG_SPL_RAM_DEVICE=y
-> +CONFIG_SPL_WATCHDOG_SUPPORT=y
-> +CONFIG_SPL_YMODEM_SUPPORT=y
-> +CONFIG_HUSH_PARSER=y
-> +# CONFIG_AUTO_COMPLETE is not set
-> +CONFIG_SYS_PROMPT="ast# "
-> +CONFIG_CMD_BOOTZ=y
-> +# CONFIG_CMD_ELF is not set
-> +# CONFIG_CMD_IMI is not set
-> +# CONFIG_CMD_XIMG is not set
-> +CONFIG_CMD_MEMTEST=y
-> +CONFIG_SYS_ALT_MEMTEST=y
-> +CONFIG_CMD_CLK=y
-> +CONFIG_CMD_GPIO=y
-> +CONFIG_CMD_GPT=y
-> +# CONFIG_RANDOM_UUID is not set
-> +CONFIG_CMD_I2C=y
-> +CONFIG_CMD_MMC=y
-> +CONFIG_CMD_PART=y
-> +CONFIG_CMD_SF=y
-> +CONFIG_CMD_DHCP=y
-> +CONFIG_CMD_MII=y
-> +CONFIG_CMD_PING=y
-> +CONFIG_CMD_NCSI=y
-> +CONFIG_CMD_EXT2=y
-> +CONFIG_CMD_EXT4=y
-> +CONFIG_CMD_EXT4_WRITE=y
-> +CONFIG_CMD_FAT=y
-> +CONFIG_CMD_FS_GENERIC=y
-> +CONFIG_CMD_MTDPARTS=y
-> +# CONFIG_SPL_DOS_PARTITION is not set
-> +# CONFIG_SPL_EFI_PARTITION is not set
-> +CONFIG_SPL_OF_CONTROL=y
-> +CONFIG_ENV_IS_IN_MMC=y
-> +CONFIG_USE_DEFAULT_ENV_FILE=y
-> +CONFIG_DEFAULT_ENV_FILE="board/aspeed/ast2600_openbmc_mmc.txt"
-> +CONFIG_NET_RANDOM_ETHADDR=y
-> +CONFIG_SPL_DM=y
-> +CONFIG_REGMAP=y
-> +CONFIG_SYSCON=y
-> +CONFIG_SPL_OF_TRANSLATE=y
-> +CONFIG_CLK=y
-> +CONFIG_SPL_CLK=y
-> +CONFIG_ASPEED_HACE_V1=y
-> +CONFIG_DM_GPIO=y
-> +CONFIG_SPL_GPIO_HOG=y
-> +CONFIG_ASPEED_GPIO=y
-> +CONFIG_DM_I2C=y
-> +CONFIG_SYS_I2C_ASPEED=y
-> +CONFIG_MISC=y
-> +CONFIG_ASPEED_AHBC=y
-> +CONFIG_DM_MMC=y
-> +CONFIG_SPL_MMC_TINY=y
-> +CONFIG_MMC_SDHCI=y
-> +CONFIG_MMC_SDHCI_ASPEED=y
-> +CONFIG_DM_SPI_FLASH=y
-> +CONFIG_SPI_FLASH=y
-> +CONFIG_SPI_FLASH_GIGADEVICE=y
-> +CONFIG_SPI_FLASH_MACRONIX=y
-> +CONFIG_SPI_FLASH_SPANSION=y
-> +CONFIG_SPI_FLASH_STMICRO=y
-> +CONFIG_SPI_FLASH_WINBOND=y
-> +CONFIG_PHY_BROADCOM=y
-> +CONFIG_PHY_REALTEK=y
-> +CONFIG_PHY_NCSI=y
-> +CONFIG_DM_ETH=y
-> +CONFIG_PHY_GIGE=y
-> +CONFIG_FTGMAC100=y
-> +CONFIG_MDIO=y
-> +CONFIG_PHY=y
-> +CONFIG_PINCTRL=y
-> +CONFIG_RAM=y
-> +CONFIG_SPL_RAM=y
-> +CONFIG_DM_SERIAL=y
-> +CONFIG_SYS_NS16550=y
-> +CONFIG_SPI=y
-> +CONFIG_DM_SPI=y
-> +CONFIG_SYSRESET=y
-> +CONFIG_WDT=y
-> +CONFIG_USE_TINY_PRINTF=y
-> +CONFIG_SPL_TINY_MEMSET=y
-> +CONFIG_TPM=y
-> +CONFIG_TPM2_TIS_I2C=y
-> +# CONFIG_EFI_LOADER is not set
 > --
 > 2.27.0
 >
