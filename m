@@ -2,14 +2,14 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E4DA52F4CC
-	for <lists+openbmc@lfdr.de>; Fri, 20 May 2022 23:11:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 516AF52F4D9
+	for <lists+openbmc@lfdr.de>; Fri, 20 May 2022 23:14:02 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L4fXv6hlwz3blt
-	for <lists+openbmc@lfdr.de>; Sat, 21 May 2022 07:11:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L4fbr1GFxz3blt
+	for <lists+openbmc@lfdr.de>; Sat, 21 May 2022 07:14:00 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=N1AEnPAf;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=Fj7BlJTf;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=YXZoom5q;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=To+ndcdb;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -19,78 +19,75 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=N1AEnPAf; 
+ header.s=fm2 header.b=YXZoom5q; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=Fj7BlJTf; 
+ header.a=rsa-sha256 header.s=fm1 header.b=To+ndcdb; 
  dkim-atps=neutral
 Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com
  [66.111.4.28])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L4fXM6Zq8z3bkx
- for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 07:10:57 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
- by mailout.nyi.internal (Postfix) with ESMTP id 12D4D5C0061;
- Fri, 20 May 2022 17:10:54 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute3.internal (MEProxy); Fri, 20 May 2022 17:10:54 -0400
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L4fbQ2bzDz3bk6
+ for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 07:13:38 +1000 (AEST)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+ by mailout.nyi.internal (Postfix) with ESMTP id 50E685C019D;
+ Fri, 20 May 2022 17:13:36 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+ by compute5.internal (MEProxy); Fri, 20 May 2022 17:13:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
  :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
  :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to; s=fm2; t=1653081054; x=1653167454; bh=wLA8dr1Duw
- 5SjJux2p4w+ZPfUvRoDpc4D4r3F4IKkJo=; b=N1AEnPAfKCnkSk17pqgL5Z1mwB
- ZAoqiMr+VP84cMoJ7Cs0U6XzAuh232QpLcHq9f73aYv3dZU8A8oPjh25EzYl+QEP
- nj4jctc/eWEvsidkw53oPBEt/z+ZFqahCB8x7Gte5NVolMyGh3kFpzgmOc/cDJAW
- kBm5a8yM1HV4bt+WOT275lX+ILboydFQzTXxk1Tmtg4W27SbGCpcyHm3gbW7sv17
- 3eXsyCl7WIijtSKW79EnOLI1BMNUCoQCzPrhSLm9gui6MME0QXQc66N/H920adU7
- bG5rWM/KY8v4vjILzb4+PpVkNf2gAydM+aHfaeitG9gl70Lo9hIRW2GowwEg==
+ :subject:to:to; s=fm2; t=1653081216; x=1653167616; bh=oE/9BNw/9A
+ YiohFLAv8h6wXSM9LZuZhfPcn9bQYbP1E=; b=YXZoom5q4Nb6cbIQAqzj9LH9Wi
+ G3sinnnQ39oHKzipTqKU0mWuRPHj1HOGSrBlYtajvsHfuTw+JQ3LMyVxEkSITOFo
+ AE8PkO1pT+m+mDlR1ujKAMvndDtcgZ9HqzmTX/oJXOAfCgGuhK5lBVyFoe2+DhBF
+ 1XQcHD9SV3bYqI1VCaAz11RG7Du3VHJrfmf6J4Yxe3TIorYu5eNV663YontdoYDr
+ F2CIUIKYkEbLPSqCbJ5dxryD8l91BGHmqV5UMPRFHHsql1vGdXxL/Pbx+zloK3/9
+ jp31om1kKXwwkaAoVn+PAVFuTlHrgvIzhe4W6F/cKYZJ4ZpbXJkM6BBUzCaw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
  :feedback-id:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:sender:subject:subject:to:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; t=1653081054; x=1653167454; bh=wLA8dr1Duw5SjJux2p4w+ZPfUvRo
- Dpc4D4r3F4IKkJo=; b=Fj7BlJTf7eGVYJPsfB43ClO+4slvyEFT6mX+d8BDn/HU
- SADuy4aEGKgMQWFP/LZwboZ+gIAuxWM3W/0CEw/yEtpSAYaPHOCvI6qcjCsq3St5
- jeUjzMIf29ZOkZnwqwwjPZk5i+Fd7itQ9shusrUA4v7dXMxrY5RmTUDvrEyULZY7
- tkH1okjba/NM4G2NN+mBhrSbEIy2oNm34enWXxSmPhf5faa0Qho/ul7ITvz01cHE
- /Fb9hTLBbEWaNoenEJ5BGbVbgBXQ3gN23nhput78+bJFDzj553mWSrhnlC2DC7rV
- 0ysoepWMoj5CJ7t6Q2hJJok0jx5ZDbFHDX8y5luBCA==
-X-ME-Sender: <xms:3QOIYh1kOsB_pOvOP9UtGIz088K7Jq98Q7SJLQ3v6WuAX371mLqayA>
- <xme:3QOIYoHKgAckWaktkP8X9PN5PjoYBJN3PCGfNQsISkdPGRyNBERaEys5b6QTdxNR7
- OqEf_6JdZ3U_aIckMU>
-X-ME-Received: <xmr:3QOIYh53EmyMooK40wwEoJlZR7PlyaKekWIiIkvgzlcNH58sLKGUGIFHdiW9-BwTyruZog1Ejo6vcs-zXu9Rt484H5MfyzE67z8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrieefgdduheehucetufdoteggodetrfdotf
+ fm1; t=1653081216; x=1653167616; bh=oE/9BNw/9AYiohFLAv8h6wXSM9LZ
+ uZhfPcn9bQYbP1E=; b=To+ndcdb8H8QdNuAWhq0vY6ru0sT/1pAjSWBSUkYAVKF
+ pMDp+O9aOZRwqE35huSw2kwa3Ba3a6XkVId0D67zIZB0T1lcxofaJIJ/9ttawMuH
+ q8Xiqr78GyiCPSfOuWi+/rH5wJCVWdhk5qc8/XuVJoG0rYgroJec9zx+9sXR+NbI
+ REZdLjYg+U4JKvGcmV29JPCVWMvp/1iUIZzTESwN0ErlIAhBzSE6BibKMANcsbl1
+ vvwOyLTQOKwBRpoDeW7eeQORZKFQdW7YjS8VQdF39+ENLT+/b2WdrbthlIhE4QwU
+ q4LnLPA70ZOIkrbPnvPvRqwiE/3oQwvkxYT5xvuLfQ==
+X-ME-Sender: <xms:gASIYq0BE4pmfyVPi__yuRW5wK8scqZSnF_ObmYsP-ED5HpfLXSK5A>
+ <xme:gASIYtFAC7e45PFc-TOYqEmM2gknuFqHo0pEM6I_7BtMPq0GVQXSzgU2DkF7H7Rm7
+ 81tvkpq0jU85BHxVps>
+X-ME-Received: <xmr:gASIYi63EgIynuL3fVWt7NdNINsr2Yxnqg6gfdfmQZfmXU3OLzUEm6foN5vpT4mTyeefIdVdyjTPNYq0vmu9vaw7bHmyy7afvUo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrieefgdduheeiucetufdoteggodetrfdotf
  fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
- uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfeehmdenucfjughrpeffhf
- fvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhitghkucghihhl
- lhhirghmshcuoehprghtrhhitghksehsthiftgigrdighiiiqeenucggtffrrghtthgvrh
- hnpeejgfdtleelvdeftdeggefffeeufeevgeejkeelgeeujeevveeufeeigfeivdejjeen
- ucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
- frrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:3QOIYu0XbbO6f34KTwKrXcLqmG-YGMF-HuBEB-1BnvIZf65gzz0Eiw>
- <xmx:3QOIYkHisTnumVZ0AdfCNsY-DRc27yfQeg8RUn87ayEKAwt7SyhMBA>
- <xmx:3QOIYv9X1tQUzzWinnHbTJQDyfFcRDTfIfILSOxpSxJnpW_qODZ2iw>
- <xmx:3gOIYpSWpLoL3VH_PJ6pClOswCVc18s3QJt3CaxV0vldSu17kgRoXg>
+ uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+ gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredt
+ tddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
+ hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeehfeejheeftdejiedvfeekffeh
+ ledukeduleelffekgfdtleduledvtdegtdehkeenucevlhhushhtvghrufhiiigvpedtne
+ curfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:gASIYr2-1rloXIhVv1X52n85zBXK-_1POR9Y1bbnBNkTvlJXnsv-8w>
+ <xmx:gASIYtHITAiieN1bhvJ3n8clbNZwHgZtBzityT6e3Gpm4s_0J-cxrg>
+ <xmx:gASIYk_jr2Qj5mqzVJ61GVGugi3M4kZ-8r1jDd3aUwAJ1LTUCA19hg>
+ <xmx:gASIYrMEzmRne3u2s2xigP1iEy1IC3cwYPTUtXXd-nZ7CIqp1ejKVw>
 Feedback-ID: i68a1478a:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 20 May 2022 17:10:53 -0400 (EDT)
-Date: Fri, 20 May 2022 16:10:51 -0500
+ 20 May 2022 17:13:35 -0400 (EDT)
+Date: Fri, 20 May 2022 16:13:35 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Subject: Re: Aspeed SPI driver upstreaming
-Message-ID: <YogD2/rKlWGUrBjH@heinlein.stwcx.org.github.beta.tailscale.net>
-References: <20200106232722.GB1233@patrickw3-mbp.dhcp.thefacebook.com>
- <31ec66fe-9ff9-b28b-3b83-a6c0a7959f30@kaod.org>
- <20200109164317.GE1233@patrickw3-mbp.dhcp.thefacebook.com>
- <20220516181824.ntp33kv75subztsa@cheese>
+To: Lei Yu <yulei.sh@bytedance.com>
+Subject: Re: The incomplete result of mapper GetSubTree/Paths
+Message-ID: <YogEf3WTYNBnBvP1@heinlein.stwcx.org.github.beta.tailscale.net>
+References: <CAGm54UHU9s0bTq-AR9tJunoX2Wa9tQ0PH_zWJ2QrYdR3SRqcvg@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="5j4NXv6SYd8RvaAv"
+ protocol="application/pgp-signature"; boundary="oLFLRu3PUKKUU79V"
 Content-Disposition: inline
-In-Reply-To: <20220516181824.ntp33kv75subztsa@cheese>
+In-Reply-To: <CAGm54UHU9s0bTq-AR9tJunoX2Wa9tQ0PH_zWJ2QrYdR3SRqcvg@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,76 +99,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: taoren@fb.com, openbmc@lists.ozlabs.org,
- =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>
+Cc: openbmc <openbmc@lists.ozlabs.org>, Ed Tanous <edtanous@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---5j4NXv6SYd8RvaAv
+--oLFLRu3PUKKUU79V
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 16, 2022 at 02:18:24PM -0400, Brad Bishop wrote:
-> Hi Patrick
->=20
-> On Thu, Jan 09, 2020 at 10:43:17AM -0600, Patrick Williams wrote:
-> >It looks like this patch set is still the MTD-only implementation, which
-> >is useful for SPI-NOR chips but not useful for non-flash devices such as
-> >TPMs.  Is there any work or thought into how we could do a generic SPI
-> >controller and then layer the MTD above it?
->=20
-> I wonder if it is "just" a matter of implementing one of the low level=20
-> controller methods described here:
-> https://www.kernel.org/doc/html/latest/spi/spi-summary.html?highlight=3Ds=
-pi#spi-master-methods
-> along side the spi-mem callbacks...
-
-I don't know the details here.  There was some dispute between the MTD
-maintainers and work that others were doing in this area that has made
-it difficult for us to get additional patches in until someone refactors
-the Aspeed driver how upstream wants.  (last I was aware)
-
-> >We have some system designs where we have both a NOR device and a TPM on
-> >the same SPI bus.  What we're currently doing is using the
-> >(non-upstream) aspeed-spi driver which lets us use both the TPM and
-> >MTD/SPI-NOR driver, but since it doesn't have the calibration routines
-> >the SPI-NOR runs at a slower speed than optimal.
->=20
-> Are you still using the aspeed-spi driver?  Have you had any issues with=
+On Fri, May 20, 2022 at 11:14:15AM +0800, Lei Yu wrote:
 =20
-> using it?
+> If mapper could not guarantee the stable result, the service calling
+> mapper will have to add more complex logic to make sure it gets the
+> "full and correct" result.
 
-I am not using the aspeed-spi driver in these conditions.  After
-initially setting this up we did some testing with the TPM driver and
-realized that it wasn't working.  It turns out that the Aspeed hardware
-is incapable of bi-directional transactions (bytes going out MOSI and in
-MISO at the same time), which is required by the TCG TPM protocol.
-We've ended up having to use the GPIO-SPI bitbang driver for talking
-with SPI-based TPMs.
+The issue here is around causality.  There really isn't any way to
+correctly kick this logic out to applications no matter how complex you
+make the implementation.
+
+The original mapper implementation was causally ordered but this was
+lost in the conversion to C/C++.  We should look at getting back to
+having mapper give causal order guarantees.
 
 --=20
 Patrick Williams
 
---5j4NXv6SYd8RvaAv
+--oLFLRu3PUKKUU79V
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmKIA9kACgkQqwNHzC0A
-wRmLERAAhne/7A909L1QwSbbj4BgnusTOdvJuUCo8lKI6IhkyWjNmDO3NoaeiNKl
-ZZZZR9Yn8oNuFZGJdC7E4WgXwReauTwSKITT1rV/c2wlvr2kW8fyx8U+xL9Bgy7G
-GZZFH10x7UL5tqWIIsfsktD1AOy4o5JvmE9lxs6CDTHdT78H5Tr7KpbCIrUwllq4
-JRpHIi1i7Tj5jq4/qQYrCaLzk5pZAVMxPnrA5XHA4q5mTwI8hSdbEcRcmY0zNMci
-T1RIwwGnURvqnUc0D5qXR312F1f+P9JtLNonShLh0zaD2+M45ANA6doLFgiygiji
-W2hK2/kVeP134thJPI9dLzY4zJbxaCZBrOnaDKKnAIVPugAZwQgaFSBYknPR5Whb
-VwrK6r0kWG6av6b83UVv3FOKq7Cxo1FWZQlJGngDIZ630KOyhFZC5gqbiA+Nze8a
-k70MoKPLYS3CXG8oRCWkGW67Zc7bJJsW+p45I0pQ8TttBvJPwVqPIzXyjblqgikl
-ScjVEsimEuhj+pxPUl9eXoDIMc05wfdwKyzYcLYDGZ8PoTJrTSvMyDRaeX1MlvbT
-htXfxzef0NLCcFrAuA5J7ioeCZJNPbTYKI1UWKdlrldMwllc89qfPreRnHFibb8n
-WMxm/4d45u3YshwxifI0wklz119OLeQ2IfcDg0xxGEutXqRWi4o=
-=rHx8
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmKIBH4ACgkQqwNHzC0A
+wRmzrA//ctd1zYQpabGoCNoxUtuAr0i3OeDp9I1VtsUgkKhAARA3LnG2XG7X83R6
+hUCaH3AAdHFFK1LZtlpwPSk4GAJvscPeN5gPy5xbr6Y6XQdogxQImt8Hhz9Nq/q8
+Xx6if8Om9Di+yIj/ILOQjOYbFEnu2JvBj2TvobNqUom07OufZjMa0MW4wFryBaRB
+zZCUZ8v7OvozBj83YtBAysZ4jgF+87PYt71B46YK+KNGUecLxsUkzm3exgsstJmk
+Rp+vD7d5SGlj97rLJf+vSdT+NUQVa9CaA+6juvN6Wvgyz574RlKBvdl3TfjeSLQ0
+YhzcaCcitAMbB49p0PiHA5VUF3Qfcw6E8fRVs/TA0DDzM0kJR5DVmkPKhBavakWj
+QNYDEcIOlR05+VlRwDZq7howbKv9R2et9RIVL8uX5g8b/sl52YuOmfGe0BpbHg4B
+etxKS83j+K/ubn34RIZrJ9owu/UNtWtefo4BisUOxF1FxffuRlwnxWpcMtWwtbYd
+O3dg0ESVlugdfPRita2T5CxjvzgBzEkvP1O8g2pMp3CFUQEgRXp/jhgco71UJJCU
+kKULhxk0+l9ozwZ80bMjblZspRXthol6gyqhVGJaB1iUMq8iGZZgWgMZFnSCS5GB
+q1m3olJrZNd8iLJGsEX2Ha2LATfQ0WTbOIOudKniQwTX3YU7qn0=
+=eYj9
 -----END PGP SIGNATURE-----
 
---5j4NXv6SYd8RvaAv--
+--oLFLRu3PUKKUU79V--
