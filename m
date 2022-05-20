@@ -1,75 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6F4B52EC09
-	for <lists+openbmc@lfdr.de>; Fri, 20 May 2022 14:25:07 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9241D52EC94
+	for <lists+openbmc@lfdr.de>; Fri, 20 May 2022 14:49:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L4QsY6NmMz3bqx
-	for <lists+openbmc@lfdr.de>; Fri, 20 May 2022 22:25:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L4RPS4h0Fz3blm
+	for <lists+openbmc@lfdr.de>; Fri, 20 May 2022 22:49:16 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=f19xTe4h;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=ZicmNgpJ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72d;
- helo=mail-qk1-x72d.google.com; envelope-from=geissonator@gmail.com;
- receiver=<UNKNOWN>)
+ smtp.mailfrom=intel.com (client-ip=134.134.136.31; helo=mga06.intel.com;
+ envelope-from=lkp@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=f19xTe4h; dkim-atps=neutral
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com
- [IPv6:2607:f8b0:4864:20::72d])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
+ header.s=Intel header.b=ZicmNgpJ; dkim-atps=neutral
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L4Qs72PXFz2xss
- for <openbmc@lists.ozlabs.org>; Fri, 20 May 2022 22:24:42 +1000 (AEST)
-Received: by mail-qk1-x72d.google.com with SMTP id x65so2483425qke.2
- for <openbmc@lists.ozlabs.org>; Fri, 20 May 2022 05:24:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=from:mime-version:subject:message-id:references:to:date;
- bh=Qw81m1rwlhtMqvSjiIJNpppkKKVqjR2LiJV28/XBhRc=;
- b=f19xTe4hD6jlohB1WNASw/OC4z3rGY3YvizhUnCUgeTt5AICVGX9rtA6sOe4w7MXqS
- q6VCw1KoV7oql0Z4euxZjARA8c7LkCMrdxUG3I/OlivrsUmQ+SJt1y20ym8FtVo1BdkC
- Fn0pNuBqJUp5sUk+zaCH3rEzm6yR7L2JebJnJBgtlIk4l8PXJS3LqkfV+qqq9avuCqeE
- pWWGq8WH+9kqCHD2+LHTHy210HwP8Nt45THCq48VhbP33zTVYwB0TsxdegUN6+PtyxdC
- 61L8zaBbCFPkUCOdJhN1kQ4W9jFMU0RYEHZMawmcMz98yaFlyg8Y0HhifQItWmRMZUlC
- LLzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:from:mime-version:subject:message-id:references
- :to:date;
- bh=Qw81m1rwlhtMqvSjiIJNpppkKKVqjR2LiJV28/XBhRc=;
- b=vqhPrA33S0NMQpWAnDeUFAWEE1dOIPKyO1DaPA43Tir7BQKFgXK0PuJDLgMMQz3GuT
- T+Fc8VxeBrVRXDmVD3b/qnrzucPhp/OTp2CWBmQcM3WHxnq6UE/rvuJIBnUd2buK5x7C
- b+rdc++kMnC6E6VLMSAGs0VacJ+AsA+9d7KPPlVgATI27V2ExXpU3d5j4jU8ErhpJXzj
- rT+dnlT+zy/FVJV5LA7Tz9injqvHo9bOTdJA0sgATjWPghwMmc3+rvjRmhzlLJouAjh8
- HxpEEVedX15GgKWPojdd/mhI6WJ7oQkdFNlpKkSl3eMPm4SHU8rFIpLm6mICYnmhGkTN
- BmdQ==
-X-Gm-Message-State: AOAM531OJq3O0Q0FkbxhbUt78W9+8SFm8+XQFMxZIsaWFMgpcahq0ZHN
- m2xCkDhzhYgKBlG34pAMq2i2C2LHIFs=
-X-Google-Smtp-Source: ABdhPJz08qh+Y9wykGQYOyKY60mxnVKkehpNs/MXkC9fo4jn5/+Q4Yh3z27lTbmTp92wZTvyb+0ylQ==
-X-Received: by 2002:a37:9204:0:b0:69b:f7ea:4638 with SMTP id
- u4-20020a379204000000b0069bf7ea4638mr6224438qkd.77.1653049478532; 
- Fri, 20 May 2022 05:24:38 -0700 (PDT)
-Received: from smtpclient.apple ([2600:6c60:0:586f:1822:f1be:f903:44d7])
- by smtp.gmail.com with ESMTPSA id
- e19-20020a05622a111300b002f90544c7ddsm3250490qty.50.2022.05.20.05.24.37
- for <openbmc@lists.ozlabs.org>
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Fri, 20 May 2022 05:24:38 -0700 (PDT)
-From: Andrew Geissler <geissonator@gmail.com>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_5A716C9C-A42B-41E2-B32E-E6A977718FEF"
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
-Subject: Fwd: Gerrit and Jenkins server transition May 20th (Today)
-Message-Id: <3E12FF01-9770-4281-B3E5-33A62426FF1B@gmail.com>
-References: <E6809659-C4B1-45FF-A19A-3DF59B598F2D@gmail.com>
-To: openBMC Maillist <openbmc@lists.ozlabs.org>
-Date: Fri, 20 May 2022 08:24:36 -0400
-X-Mailer: Apple Mail (2.3654.120.0.1.13)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L4RP06rPDz2yb6
+ for <openbmc@lists.ozlabs.org>; Fri, 20 May 2022 22:48:51 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1653050933; x=1684586933;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=RMCcUvf4lESFVE+KBBnXAEay0T2uWzyIBLfBOA+tar4=;
+ b=ZicmNgpJ7My9WCHpQoButTTKK5IXi5aSJnNV/PgipsUtcYHu9eRdC6FH
+ y+encMjfeY2oGD7NTa8QUOH9EkSLsdB15X9avKNd7yUzP6eHPvFLpxHIr
+ TyvgRJvZcIhcNffYAmZSwfdRKJTf+qZhJR4JkDarWZNne9g4SPkMilZwb
+ WK9SsvkfqmIN6txT+s1R8cmyXyRoNkzHZnh4cQSbfwqTkLRpnJz3doSUd
+ jvSkpalHd8FbC2xFemUwq82HFX4BzTZRSukHsWKHh+qrDrPHw9lmI9hIe
+ Yucy2pCN9pNfieum4/Y88dwMkhiZ9+u+yZRY92GaxURoOB+DCFUhy5+Vr A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10352"; a="333222775"
+X-IronPort-AV: E=Sophos;i="5.91,239,1647327600"; d="scan'208";a="333222775"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+ by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 20 May 2022 05:48:47 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,239,1647327600"; d="scan'208";a="674603101"
+Received: from lkp-server02.sh.intel.com (HELO 242b25809ac7) ([10.239.97.151])
+ by fmsmga002.fm.intel.com with ESMTP; 20 May 2022 05:48:44 -0700
+Received: from kbuild by 242b25809ac7 with local (Exim 4.95)
+ (envelope-from <lkp@intel.com>) id 1ns23g-0004ht-4I;
+ Fri, 20 May 2022 12:48:44 +0000
+Date: Fri, 20 May 2022 20:48:17 +0800
+From: kernel test robot <lkp@intel.com>
+To: Marvin Lin <milkfafa@gmail.com>, mchehab@kernel.org,
+ linux-media@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 5/5] drivers: media: platform: Add NPCM Video
+ Capture/Encode Engine driver
+Message-ID: <202205202038.PeQqCdhg-lkp@intel.com>
+References: <20220520024744.25655-6-milkfafa@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220520024744.25655-6-milkfafa@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,117 +70,56 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: kwliu@nuvoton.com, kbuild-all@lists.01.org, tmaimon77@gmail.com,
+ avifishman70@gmail.com, openbmc@lists.ozlabs.org, llvm@lists.linux.dev,
+ tali.perry1@gmail.com, Marvin Lin <milkfafa@gmail.com>, kflin@nuvoton.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Marvin,
 
---Apple-Mail=_5A716C9C-A42B-41E2-B32E-E6A977718FEF
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
+I love your patch! Yet something to improve:
 
-Reminder that Gerrit and Jenkins will be down today for server
-transfer and upgrades.
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on linux/master linus/master v5.18-rc7]
+[cannot apply to media-tree/master next-20220519]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-I=E2=80=99ll email the list when done. Gerrit may be up for periods of
-time as I test and get it working but no promises on any of
-the transactions done to it today being saved, so best to
-wait for the all-clear.
+url:    https://github.com/intel-lab-lkp/linux/commits/Marvin-Lin/Support-Nuvoton-NPCM-Video-Capture-Encode-Engine/20220520-104901
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+config: x86_64-allmodconfig (https://download.01.org/0day-ci/archive/20220520/202205202038.PeQqCdhg-lkp@intel.com/config)
+compiler: clang version 15.0.0 (https://github.com/llvm/llvm-project e00cbbec06c08dc616a0d52a20f678b8fbd4e304)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/56e41b3b4b1a54f2096e810eda12259da495c686
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Marvin-Lin/Support-Nuvoton-NPCM-Video-Capture-Encode-Engine/20220520-104901
+        git checkout 56e41b3b4b1a54f2096e810eda12259da495c686
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=x86_64 SHELL=/bin/bash drivers/media/platform/nuvoton/
 
-Andrew
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
 
-> Begin forwarded message:
->=20
-> From: Andrew Geissler <geissonator@gmail.com>
-> Subject: Gerrit and Jenkins server transition May 20th
-> Date: May 13, 2022 at 10:12:22 AM EDT
-> To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
->=20
-> Greetings,
->=20
-> The current gerrit/jenkins/opengrok software is running on a bare =
-metal server
-> which is reaching end of life (it was a great ~5 years).
->=20
-> A new server has already been created and some basic testing has =
-passed.
-> My tentative plan is to take gerrit/jenkins/opengrok offline next =
-Friday,
-> May 20th, to do the swap to the new server. This would start around
-> 8:00am US Central time.
->=20
-> As with all of these types of events, I have no idea how long it=E2=80=99=
-s going
-> to take :)  So plan on no access Fri-Sun.
->=20
-> I=E2=80=99ll send up a follow up email as we get closer and keep the =
-Infrastructure
-> channel in discord updated.
->=20
-> Andrew
+All errors (new ones prefixed by >>):
+
+>> drivers/media/platform/nuvoton/npcm-video.c:2048:45: error: expected ';' after top level declarator
+   MODULE_DEVICE_TABLE(of, nuvoton_video_match)
+                                               ^
+                                               ;
+   1 error generated.
 
 
---Apple-Mail=_5A716C9C-A42B-41E2-B32E-E6A977718FEF
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
+vim +2048 drivers/media/platform/nuvoton/npcm-video.c
 
-<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
-charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
--webkit-nbsp-mode: space; line-break: after-white-space;" =
-class=3D"">Reminder that Gerrit and Jenkins will be down today for =
-server<div class=3D"">transfer and upgrades.</div><div class=3D""><br =
-class=3D""></div><div class=3D"">I=E2=80=99ll email the list when done. =
-Gerrit may be up for periods of</div><div class=3D"">time as I test and =
-get it working but no promises on any of</div><div class=3D"">the =
-transactions done to it today being saved, so best to</div><div =
-class=3D"">wait for the all-clear.</div><div class=3D""><br =
-class=3D""></div><div class=3D"">Andrew<br class=3D""><div><br =
-class=3D""><blockquote type=3D"cite" class=3D""><div class=3D"">Begin =
-forwarded message:</div><br class=3D"Apple-interchange-newline"><div =
-style=3D"margin-top: 0px; margin-right: 0px; margin-bottom: 0px; =
-margin-left: 0px;" class=3D""><span style=3D"font-family: =
--webkit-system-font, Helvetica Neue, Helvetica, sans-serif; =
-color:rgba(0, 0, 0, 1.0);" class=3D""><b class=3D"">From: =
-</b></span><span style=3D"font-family: -webkit-system-font, Helvetica =
-Neue, Helvetica, sans-serif;" class=3D"">Andrew Geissler &lt;<a =
-href=3D"mailto:geissonator@gmail.com" =
-class=3D"">geissonator@gmail.com</a>&gt;<br class=3D""></span></div><div =
-style=3D"margin-top: 0px; margin-right: 0px; margin-bottom: 0px; =
-margin-left: 0px;" class=3D""><span style=3D"font-family: =
--webkit-system-font, Helvetica Neue, Helvetica, sans-serif; =
-color:rgba(0, 0, 0, 1.0);" class=3D""><b class=3D"">Subject: =
-</b></span><span style=3D"font-family: -webkit-system-font, Helvetica =
-Neue, Helvetica, sans-serif;" class=3D""><b class=3D"">Gerrit and =
-Jenkins server transition May 20th</b><br class=3D""></span></div><div =
-style=3D"margin-top: 0px; margin-right: 0px; margin-bottom: 0px; =
-margin-left: 0px;" class=3D""><span style=3D"font-family: =
--webkit-system-font, Helvetica Neue, Helvetica, sans-serif; =
-color:rgba(0, 0, 0, 1.0);" class=3D""><b class=3D"">Date: =
-</b></span><span style=3D"font-family: -webkit-system-font, Helvetica =
-Neue, Helvetica, sans-serif;" class=3D"">May 13, 2022 at 10:12:22 AM =
-EDT<br class=3D""></span></div><div style=3D"margin-top: 0px; =
-margin-right: 0px; margin-bottom: 0px; margin-left: 0px;" class=3D""><span=
- style=3D"font-family: -webkit-system-font, Helvetica Neue, Helvetica, =
-sans-serif; color:rgba(0, 0, 0, 1.0);" class=3D""><b class=3D"">To: =
-</b></span><span style=3D"font-family: -webkit-system-font, Helvetica =
-Neue, Helvetica, sans-serif;" class=3D"">OpenBMC Maillist &lt;<a =
-href=3D"mailto:openbmc@lists.ozlabs.org" =
-class=3D"">openbmc@lists.ozlabs.org</a>&gt;<br class=3D""></span></div><br=
- class=3D""><div class=3D""><div class=3D"">Greetings,<br class=3D""><br =
-class=3D"">The current gerrit/jenkins/opengrok software is running on a =
-bare metal server<br class=3D"">which is reaching end of life (it was a =
-great ~5 years).<br class=3D""><br class=3D"">A new server has already =
-been created and some basic testing has passed.<br class=3D"">My =
-tentative plan is to take gerrit/jenkins/opengrok offline next =
-Friday,<br class=3D"">May 20th, to do the swap to the new server. This =
-would start around<br class=3D"">8:00am US Central time.<br class=3D""><br=
- class=3D"">As with all of these types of events, I have no idea how =
-long it=E2=80=99s going<br class=3D"">to take :) &nbsp;So plan on no =
-access Fri-Sun.<br class=3D""><br class=3D"">I=E2=80=99ll send up a =
-follow up email as we get closer and keep the Infrastructure<br =
-class=3D"">channel in discord updated.<br class=3D""><br =
-class=3D"">Andrew</div></div></blockquote></div><br =
-class=3D""></div></body></html>=
+  2047	
+> 2048	MODULE_DEVICE_TABLE(of, nuvoton_video_match)
+  2049	
 
---Apple-Mail=_5A716C9C-A42B-41E2-B32E-E6A977718FEF--
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
