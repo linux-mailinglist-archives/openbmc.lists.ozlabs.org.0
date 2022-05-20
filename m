@@ -1,66 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4C30552E512
-	for <lists+openbmc@lfdr.de>; Fri, 20 May 2022 08:32:37 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 465DF52E526
+	for <lists+openbmc@lfdr.de>; Fri, 20 May 2022 08:42:02 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L4H2q1Bkkz3blX
-	for <lists+openbmc@lfdr.de>; Fri, 20 May 2022 16:32:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L4HFh1ZB2z3bkL
+	for <lists+openbmc@lfdr.de>; Fri, 20 May 2022 16:42:00 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=ee+GBWhL;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=pyCvAW1x;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::433;
- helo=mail-wr1-x433.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42e;
+ helo=mail-pf1-x42e.google.com; envelope-from=joel.stan@gmail.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=ee+GBWhL; dkim-atps=neutral
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com
- [IPv6:2a00:1450:4864:20::433])
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=pyCvAW1x; dkim-atps=neutral
+Received: from mail-pf1-x42e.google.com (mail-pf1-x42e.google.com
+ [IPv6:2607:f8b0:4864:20::42e])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L4H2Q5LXDz2yxT
- for <openbmc@lists.ozlabs.org>; Fri, 20 May 2022 16:32:14 +1000 (AEST)
-Received: by mail-wr1-x433.google.com with SMTP id u3so10113932wrg.3
- for <openbmc@lists.ozlabs.org>; Thu, 19 May 2022 23:32:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc; bh=xOvFCtIE0zQL+phEOCuRnJnrNTTjlXVcMi2y7WRhquo=;
- b=ee+GBWhLkS40qn7CYxtgJY6/Pt3t5gi2cxmIJ6CGmltnzV6dDw4zCCIxCNm4KVak5u
- kTcjqvuc7tL1+EzCdJptxLf2zuVtlZrgJqoRqmTAVvADOo7yBx/VP0o8Q5SXw+Yc0XQ3
- zLN0Kicric9qkWw3/OOOvoTeVf1AqTXAwASig=
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L4HFD5SGGz300x
+ for <openbmc@lists.ozlabs.org>; Fri, 20 May 2022 16:41:34 +1000 (AEST)
+Received: by mail-pf1-x42e.google.com with SMTP id p12so7026619pfn.0
+ for <openbmc@lists.ozlabs.org>; Thu, 19 May 2022 23:41:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=sender:from:to:subject:date:message-id:mime-version
+ :content-transfer-encoding;
+ bh=6QEmIrYY5IdX5D85mBQD00w2HlEaxQf+jQrRuaCMVaY=;
+ b=pyCvAW1xKB4MT0fWkkdhfT2sSKM7+iz7Rl2NhhCKM5oqt1cluHd07VX0H1Q+EwDOfu
+ rrz1+PLCwwtZvjhF54FeOAd0Ot/WpQnpFmPInyKNWOAvdMe+7UbrlI6gtC2Q5uNvxmce
+ 93t89XTIhOq5ShBscCR3xnCcrSaKjYr7w0V4scLqgG6zc05fYgWlK52dkQ4nmpGynjdJ
+ hiEqtJihlqdRFDZRYrHzApI2FniSsyymC1nYJTam9StUFDTvG2tvtmbN/23dio/ffa/N
+ JA1cxWYJAJFPAbPgxnIr6G/hF9SwJvBGgsBm6o6K6aX/5l1J5efiVTykquoZJOBEtlmL
+ 1FZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc;
- bh=xOvFCtIE0zQL+phEOCuRnJnrNTTjlXVcMi2y7WRhquo=;
- b=dIXmxM6SvmVuL7js0M1kwioZSk5rAknI4H68lfKMhnYK/4vEmWiHWuNT+DFQhCg8Rz
- O9+T//PnhImUD/w6W9KNProDz/52DTGAx/mtqiXoAtTS1EoxJdl2/PfI5vKRRNoSYRDi
- EbPxUXmLTTcx2YMyOjnPlIBpE7EbJdjzF0OppHfTk2D9evvWOyBnhcnxp9eE1HyXBEOd
- SxF+uxuBtCNdy4cCZZgt9AcQFb4qPpOTyyL3QwBjb7PaPjmAZ4T8dzFKhhhiGtwrODP8
- +SXl8+iWRdJ68B/d/abVDOe/Io1NqghC9q1R37BM5jVpXpG9lON/uWWah/oZC0WEjdAL
- 6h+Q==
-X-Gm-Message-State: AOAM530XWNzgFZpFUPim/kY7HtzevpxiVsMTinTqNaQsmHbQy3p+9zGW
- K8BeSuAMMJdME7Zgi0l8H9YOrtwhPoEDlfxidWEgPYFH
-X-Google-Smtp-Source: ABdhPJwd7pnfcTfrZXEF7VmaPzQR7bd9Zfy70UO/Mh/UPlYTv78ECamwtLxVLwN5m8oYeUHKVtxAua6Q8ddYC1yfEns=
-X-Received: by 2002:adf:f1c8:0:b0:20d:d4e:3742 with SMTP id
- z8-20020adff1c8000000b0020d0d4e3742mr6570543wro.3.1653028330634; Thu, 19 May
- 2022 23:32:10 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220513170715.43475-1-eajames@linux.ibm.com>
-In-Reply-To: <20220513170715.43475-1-eajames@linux.ibm.com>
+ h=x-gm-message-state:sender:from:to:subject:date:message-id
+ :mime-version:content-transfer-encoding;
+ bh=6QEmIrYY5IdX5D85mBQD00w2HlEaxQf+jQrRuaCMVaY=;
+ b=35BKVAS6Waw02XZTNP6fb+v9L6qBmTYyKzVaqvyzO5KunTpU6oNq9LE9rfNx6u6prQ
+ hfxO7eGUzMNWUtvSmkGlerlDdEmWKUozKtEGiY2zMjKa98qDjJuS7G606apK0jlMN1OT
+ PilVpZTf6wqwFkbqOGL/nUTmSYkk5YQMmJ1ssZYOmezM0JYchP4xkn0542EWREIptQL4
+ 8yBpeycBloe4EuEM3+iD9zkXUFXqNbOVrow0BrJqJjl/ZrBw0WCHdIn+ixC/bTYqP0h2
+ JvAbp4H7K/UiGWaWlO08z54Y2MistTXsgI8kcxlBEgh4NwuwZJF47TMrc5bD8YESZbog
+ Qbow==
+X-Gm-Message-State: AOAM5307th8S7V7nSyQQs+aoohy+E9X6GzlK/ofViqBFXplbTr2xxMw9
+ KBhxRYBxqDsHDoBi+MHDEGOXt8cQys0=
+X-Google-Smtp-Source: ABdhPJzOLOIXWXfxT/0hfCOAotaStebL2leTn3yPIN8KEoEoH046Zfb3AMDkveijcXvYge0i070onQ==
+X-Received: by 2002:aa7:9217:0:b0:518:367d:fa85 with SMTP id
+ 23-20020aa79217000000b00518367dfa85mr8401060pfo.9.1653028889466; 
+ Thu, 19 May 2022 23:41:29 -0700 (PDT)
+Received: from voyager.base64.com.au (ip14.cor1.adl1.base64.com.au.
+ [203.0.153.14]) by smtp.gmail.com with ESMTPSA id
+ w22-20020a1709026f1600b0016189ed82c4sm4823234plk.79.2022.05.19.23.41.27
+ for <openbmc@lists.ozlabs.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 May 2022 23:41:28 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 20 May 2022 06:31:58 +0000
-Message-ID: <CACPK8XdscoJ5SpeaOP+bgPSVG6DFNn-SsaQ19fEQACQATjn6xw@mail.gmail.com>
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v2 0/9] ast2600: Add I2C
- TPMv2 driver
-To: Eddie James <eajames@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc] configs: ast2600: Remove
+ redundant target option
+Date: Fri, 20 May 2022 16:11:22 +0930
+Message-Id: <20220520064122.692019-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,77 +81,111 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: cjengel@us.ibm.com, OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 13 May 2022 at 17:07, Eddie James <eajames@linux.ibm.com> wrote:
->
-> This series backports the addition of a TPM TIS core driver from
-> mainline u-boot. Then, add an I2C driver to talk to the NPCT75X
-> chip using the TPM TIS core.
-> Add the TPM to the Rainier/Everest devicetree.
-> Also, add new board code for IBM's systems that need to "poison"
-> the TPM during u-boot initialization.
->
-> I tested this on Everest hardware and verified in Linux that the TPM PCR0
-> was extended. I also tested with the TPM at the wrong bus address to
-> verify that the code can handle a missing TPM, and I saw no errors.
->
-> Changes since v1:
->  - Use upstream core for I2C tpm driver. I initially couldn't get the
->    core driver to work at all, but found a small bug in the ordering
->    of operations in the core init. I also needed to force the locality
->    to 0, like in the Linux NPCT75X driver.
->  - Use new board init code for IBM's systems that need the TPM poisoning
+All the defconfigs have CONFIG_TARGET_EVB_AST2600A1 which hasn't existed
+in the tree for some time. The boards still work as the default is
+TARGET_EVB_AST2600 (which doesn't appear in the defconfig as it's the
+default).
 
-I've merged patches 1-8.
+Clean up the defconfigs by removing this option.
 
-Patch 9 needs a little more discussion. If you repost, start a new
-series with just those changes (separating out the defconfig and
-device tree change).
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ configs/ast2600_openbmc_spl_defconfig    | 1 -
+ configs/evb-ast2600-cot_defconfig        | 1 -
+ configs/evb-ast2600-ecc_defconfig        | 1 -
+ configs/evb-ast2600a1-cot_defconfig      | 1 -
+ configs/evb-ast2600a1-ecc_defconfig      | 1 -
+ configs/evb-ast2600a1-emmc-cot_defconfig | 1 -
+ configs/evb-ast2600a1-emmc_defconfig     | 1 -
+ 7 files changed, 7 deletions(-)
 
->
-> Eddie James (5):
->   tpm: core: Set timeouts before requesting locality
->   i2c: ast_i2c: Remove SCL direct drive mode
->   tpm: add support for TPMv2.x I2C chips
->   arm: dts: ast2600-rainier: Add NPCT75X TPM
->   board: ast2600-ibm: Add AST2600 BMC based POWER10+ servers
->
-> Heinrich Schuchardt (1):
->   tis: fix tpm_tis_remove()
->
-> Ilias Apalodimas (1):
->   tpm2: Introduce TIS tpm core
->
-> Johannes Holland (1):
->   tpm: add #ifndef to fix redeclaration build errors
->
-> Simon Glass (1):
->   tpm: Add more TPM2 definitions
->
->  arch/arm/dts/ast2600-rainier.dts     |  12 +-
->  arch/arm/mach-aspeed/ast2600/Kconfig |   7 +
->  board/aspeed/ast2600_ibm/Kconfig     |  13 +
->  board/aspeed/ast2600_ibm/Makefile    |   1 +
->  board/aspeed/ast2600_ibm/ibm.c       |  46 +++
->  configs/ast2600_ibm_defconfig        | 137 ++++++++
->  drivers/i2c/ast_i2c.c                |   2 +-
->  drivers/tpm/Kconfig                  |   9 +
->  drivers/tpm/Makefile                 |   1 +
->  drivers/tpm/tpm2_tis_core.c          | 470 +++++++++++++++++++++++++++
->  drivers/tpm/tpm2_tis_i2c.c           | 171 ++++++++++
->  drivers/tpm/tpm_tis.h                | 138 ++++++++
->  include/tpm-v2.h                     |  32 ++
->  13 files changed, 1033 insertions(+), 6 deletions(-)
->  create mode 100644 board/aspeed/ast2600_ibm/Kconfig
->  create mode 100644 board/aspeed/ast2600_ibm/Makefile
->  create mode 100644 board/aspeed/ast2600_ibm/ibm.c
->  create mode 100644 configs/ast2600_ibm_defconfig
->  create mode 100644 drivers/tpm/tpm2_tis_core.c
->  create mode 100644 drivers/tpm/tpm2_tis_i2c.c
->
-> --
-> 2.27.0
->
+diff --git a/configs/ast2600_openbmc_spl_defconfig b/configs/ast2600_openbmc_spl_defconfig
+index 98aa3f160e74..ff2fff538a35 100644
+--- a/configs/ast2600_openbmc_spl_defconfig
++++ b/configs/ast2600_openbmc_spl_defconfig
+@@ -19,7 +19,6 @@ CONFIG_ASPEED_KERNEL_FIT_SPI_SIZE=0x1000000
+ CONFIG_ASPEED_KERNEL_FIT_MMC_BASE=0x800
+ CONFIG_ASPEED_KERNEL_FIT_MMC_SIZE=0x8000
+ CONFIG_ASPEED_KERNEL_FIT_DRAM_BASE=0x83000000
+-CONFIG_TARGET_EVB_AST2600A1=y
+ CONFIG_SPL_LIBCOMMON_SUPPORT=y
+ CONFIG_SPL_LIBGENERIC_SUPPORT=y
+ CONFIG_SYS_MALLOC_F_LEN=0x2000
+diff --git a/configs/evb-ast2600-cot_defconfig b/configs/evb-ast2600-cot_defconfig
+index f739593659e6..b656e528c855 100644
+--- a/configs/evb-ast2600-cot_defconfig
++++ b/configs/evb-ast2600-cot_defconfig
+@@ -17,7 +17,6 @@ CONFIG_ASPEED_KERNEL_FIT_SPI_SIZE=0x1000000
+ CONFIG_ASPEED_KERNEL_FIT_MMC_BASE=0x800
+ CONFIG_ASPEED_KERNEL_FIT_MMC_SIZE=0x8000
+ CONFIG_ASPEED_KERNEL_FIT_DRAM_BASE=0x83000000
+-CONFIG_TARGET_EVB_AST2600A1=y
+ CONFIG_SPL_LIBCOMMON_SUPPORT=y
+ CONFIG_SPL_LIBGENERIC_SUPPORT=y
+ CONFIG_SYS_MALLOC_F_LEN=0x800
+diff --git a/configs/evb-ast2600-ecc_defconfig b/configs/evb-ast2600-ecc_defconfig
+index 26f705c5e685..c637bac65472 100644
+--- a/configs/evb-ast2600-ecc_defconfig
++++ b/configs/evb-ast2600-ecc_defconfig
+@@ -3,7 +3,6 @@ CONFIG_SYS_DCACHE_OFF=y
+ CONFIG_ARCH_ASPEED=y
+ CONFIG_SYS_TEXT_BASE=0x0
+ CONFIG_ASPEED_AST2600=y
+-CONFIG_TARGET_EVB_AST2600A1=y
+ CONFIG_SYS_MALLOC_F_LEN=0x800
+ CONFIG_ENV_SIZE=0x10000
+ CONFIG_ENV_OFFSET=0xE0000
+diff --git a/configs/evb-ast2600a1-cot_defconfig b/configs/evb-ast2600a1-cot_defconfig
+index f739593659e6..b656e528c855 100644
+--- a/configs/evb-ast2600a1-cot_defconfig
++++ b/configs/evb-ast2600a1-cot_defconfig
+@@ -17,7 +17,6 @@ CONFIG_ASPEED_KERNEL_FIT_SPI_SIZE=0x1000000
+ CONFIG_ASPEED_KERNEL_FIT_MMC_BASE=0x800
+ CONFIG_ASPEED_KERNEL_FIT_MMC_SIZE=0x8000
+ CONFIG_ASPEED_KERNEL_FIT_DRAM_BASE=0x83000000
+-CONFIG_TARGET_EVB_AST2600A1=y
+ CONFIG_SPL_LIBCOMMON_SUPPORT=y
+ CONFIG_SPL_LIBGENERIC_SUPPORT=y
+ CONFIG_SYS_MALLOC_F_LEN=0x800
+diff --git a/configs/evb-ast2600a1-ecc_defconfig b/configs/evb-ast2600a1-ecc_defconfig
+index 26f705c5e685..c637bac65472 100644
+--- a/configs/evb-ast2600a1-ecc_defconfig
++++ b/configs/evb-ast2600a1-ecc_defconfig
+@@ -3,7 +3,6 @@ CONFIG_SYS_DCACHE_OFF=y
+ CONFIG_ARCH_ASPEED=y
+ CONFIG_SYS_TEXT_BASE=0x0
+ CONFIG_ASPEED_AST2600=y
+-CONFIG_TARGET_EVB_AST2600A1=y
+ CONFIG_SYS_MALLOC_F_LEN=0x800
+ CONFIG_ENV_SIZE=0x10000
+ CONFIG_ENV_OFFSET=0xE0000
+diff --git a/configs/evb-ast2600a1-emmc-cot_defconfig b/configs/evb-ast2600a1-emmc-cot_defconfig
+index f7f56fc30668..68ac56cf170c 100644
+--- a/configs/evb-ast2600a1-emmc-cot_defconfig
++++ b/configs/evb-ast2600a1-emmc-cot_defconfig
+@@ -17,7 +17,6 @@ CONFIG_ASPEED_KERNEL_FIT_SPI_SIZE=0x1000000
+ CONFIG_ASPEED_KERNEL_FIT_MMC_BASE=0x800
+ CONFIG_ASPEED_KERNEL_FIT_MMC_SIZE=0x8000
+ CONFIG_ASPEED_KERNEL_FIT_DRAM_BASE=0x83000000
+-CONFIG_TARGET_EVB_AST2600A1=y
+ CONFIG_SPL_LIBCOMMON_SUPPORT=y
+ CONFIG_SPL_LIBGENERIC_SUPPORT=y
+ CONFIG_SYS_MALLOC_F_LEN=0x800
+diff --git a/configs/evb-ast2600a1-emmc_defconfig b/configs/evb-ast2600a1-emmc_defconfig
+index 8dff76761ea0..ce3bd5e07dba 100644
+--- a/configs/evb-ast2600a1-emmc_defconfig
++++ b/configs/evb-ast2600a1-emmc_defconfig
+@@ -18,7 +18,6 @@ CONFIG_ASPEED_KERNEL_FIT_SPI_SIZE=0x1000000
+ CONFIG_ASPEED_KERNEL_FIT_MMC_BASE=0x800
+ CONFIG_ASPEED_KERNEL_FIT_MMC_SIZE=0x8000
+ CONFIG_ASPEED_KERNEL_FIT_DRAM_BASE=0x83000000
+-CONFIG_TARGET_EVB_AST2600A1=y
+ CONFIG_SPL_LIBCOMMON_SUPPORT=y
+ CONFIG_SPL_LIBGENERIC_SUPPORT=y
+ CONFIG_SYS_MALLOC_F_LEN=0x800
+-- 
+2.35.1
+
