@@ -1,14 +1,14 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id BEA1C5308D0
-	for <lists+openbmc@lfdr.de>; Mon, 23 May 2022 07:32:52 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B42115308D1
+	for <lists+openbmc@lfdr.de>; Mon, 23 May 2022 07:33:28 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L65ZV4zyFz2yb6
-	for <lists+openbmc@lfdr.de>; Mon, 23 May 2022 15:32:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L65bB3nWZz3blp
+	for <lists+openbmc@lfdr.de>; Mon, 23 May 2022 15:33:26 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=JUAHcif5;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Nnt4/klu;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
@@ -18,52 +18,52 @@ Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=JUAHcif5; dkim-atps=neutral
+ header.s=20210112 header.b=Nnt4/klu; dkim-atps=neutral
 Received: from mail-vs1-xe2c.google.com (mail-vs1-xe2c.google.com
  [IPv6:2607:f8b0:4864:20::e2c])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L53SP68L1z2ywR
- for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 22:53:56 +1000 (AEST)
-Received: by mail-vs1-xe2c.google.com with SMTP id h5so2722605vsq.5
- for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 05:53:56 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L53VD2pf0z308m
+ for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 22:55:32 +1000 (AEST)
+Received: by mail-vs1-xe2c.google.com with SMTP id m2so10693556vsr.8
+ for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 05:55:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :cc:content-transfer-encoding;
- bh=ppjd92OlVB/MwGNt1qmR+MgTYt3GgGkBdJL3bf51wdM=;
- b=JUAHcif5tx1tsh8a9gOkhHOqrYPFKfupYtbTdOzIJkq8DfYK0/Z21ySt2t1TfrpqEH
- KsGTrg8Iau6UiiyYg2+i94lQcE/fRGC7VJyWcjm9T6Bx34VKYryJWrkyPVs++2IThb9L
- sSXLTpUpWZgI3X1yvvBgb8mP5Hxz+VWJm/d67G5Gm/tY05/8pHWd7f4jXlygSouAtcyA
- 77vC70LozhWzjEl5r9JsSCPs7+U/Gj3nTJIGBzkmdlHmSoLsBY6bknQLmcqyq+/5oBgE
- W/KH4goKZkwIb6cvacuT/XBe/4HMHyjWlpdK3ShXvFgILx5kDFVGEH6IR1Qr9beu0toi
- BdLw==
+ bh=H2xHMxkjcpE6Uaeb37HMcK9VGfIbnF/CTq+aAJwqeQA=;
+ b=Nnt4/kluIb1bMHit+sR8kK3TADuPbS8W/h1yW7D9r+2OBn3yfQCIggFM29OUdOW99C
+ Qni+kPF678aDYKJm1lVt++Mh7skT+N5bh1KrXLt3I8vl9tFZCQvJ3J7JT5S1hBsb51//
+ bACnQz5K00WnqWxQ340RANSJ0kRukutfbqi4rxWT7d6ARQUntk6ya1N5THcNYto39pKx
+ hUnDK5/ABzwIO7szi1+3+5IZJQUkVAuJme1+G6ysAqAjC/CH1TsQbCdP7/MSCD1W/yJW
+ muxuYwMw+hC0wru1fZVqaPSMEsr7cbiO2/3oIXwil0sH/Y7VsTfdWShdUNpVTS0SJHkI
+ /dow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc:content-transfer-encoding;
- bh=ppjd92OlVB/MwGNt1qmR+MgTYt3GgGkBdJL3bf51wdM=;
- b=eTAojeKjTHfuM8gI59xJuEEux1ZHgEjoq+XwWWUk63KUIi5efNNf+TbSMZ2WmoQYhN
- z15yqsXv5hIDbQgq20snIe5B1bZHfAKuibT/xlGA5NbjwRlCYyxRTdGrgmA3Yt9Ykwdf
- H9hdmYEuhXoXdmdcDRaucBcbv5vvaH+Jb3zuz7NzSLwHWHBJCYZkiJDWIdiwx4vX3WEc
- BXXRVDYWQHnvjBH3SclMD33mJOFfKtig2dhJGsYHA7+yfHnZR0HU2aucxGuC+j++wPJv
- LFunN7cg+TeLIapbIApyY0SXFDYwwRRw6HWPL34pFmPQ6DcHcJrfS2KSJRX1p38qoPZX
- HKlg==
-X-Gm-Message-State: AOAM531GtEfDWmz/arcOchAMw+77GHQA5TOmWRWKi1EzzZUbQmsnSryX
- WRXOsrvxqf6PUi9+tbynZGwOqLeKwVbGLUsHYg==
-X-Google-Smtp-Source: ABdhPJwogOGnDsSgDr+VBYrBTjLQWEj688uoqfvwo2KbNQeayXtr4cwnf42U1VjjRzlgShtbdXe2UHFhH1TP4DRzzG4=
-X-Received: by 2002:a05:6102:3ec8:b0:335:d67e:7535 with SMTP id
- n8-20020a0561023ec800b00335d67e7535mr5759276vsv.47.1653137633399; Sat, 21 May
- 2022 05:53:53 -0700 (PDT)
+ bh=H2xHMxkjcpE6Uaeb37HMcK9VGfIbnF/CTq+aAJwqeQA=;
+ b=qMddwpu6aWmvAutet6N+8DJE8JDAEjN7X/Sj5szRuOve2oi1TomnjnImrEQ1czm92A
+ dxI5diDnNKF0QQyMAT1v83/tHVWznaAN6rcVctkB8IYtO0IoLN2Cyc0re2xkPxZz1/Tj
+ mofi5MfMcT8HkJdKhh5TWXTNwnVSsRKTqPkFBWAT+CcEWq7aJRH3wVZim3VBx4NMu217
+ lDBxcpZSxs//hCcva1dmoTM2RQzQphhQNhvnAnyDoPTJs+ihRBQsNxZuQMIdTZeUaz+3
+ 6RNmxQ4KZiGhNK9kSdIIm67QEUeg8AgkI74ru6WGsD0OYriCoMdtySaxaJSwW08GagdW
+ Iv9w==
+X-Gm-Message-State: AOAM533THB4tQUeRTmr7sK30Zq+kjoWkzEATMtWG7Y9klldmXdqlIWe3
+ pfok1IBXj/oAgAu25nAE+v2j49QqQDlT870f0A==
+X-Google-Smtp-Source: ABdhPJzQ2VfCqFP9LhoWMNuMbL7j9f/7je/mD/CUsRkDGjmqTFXaaGolpNH0JgmofFJ7a1BERDEpL2iUuEg6O6L3Sno=
+X-Received: by 2002:a67:d88c:0:b0:337:9a25:36c3 with SMTP id
+ f12-20020a67d88c000000b003379a2536c3mr813357vsj.84.1653137729800; Sat, 21 May
+ 2022 05:55:29 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220517101142.28421-1-warp5tw@gmail.com>
- <20220517101142.28421-4-warp5tw@gmail.com>
- <Yoh9208mogGeWPYe@shikoro>
-In-Reply-To: <Yoh9208mogGeWPYe@shikoro>
+ <20220517101142.28421-5-warp5tw@gmail.com>
+ <Yoh+CgMPJM/Qp2V+@shikoro>
+In-Reply-To: <Yoh+CgMPJM/Qp2V+@shikoro>
 From: Tyrone Ting <warp5tw@gmail.com>
-Date: Sat, 21 May 2022 20:53:41 +0800
-Message-ID: <CACD3sJa0adxqmzOV9OFz-XzYrtNUq-g=9E99mBWT=zo0RshwQQ@mail.gmail.com>
-Subject: Re: [PATCH v5 03/10] i2c: npcm: Remove unused variable clk_regmap
+Date: Sat, 21 May 2022 20:55:17 +0800
+Message-ID: <CACD3sJYdcCUuWY3oZTgowsk5ayQicu+50M996v3maAs_67JtDw@mail.gmail.com>
+Subject: Re: [PATCH v5 04/10] i2c: npcm: Fix timeout calculation
 To: Wolfram Sang <wsa@kernel.org>, Tyrone Ting <warp5tw@gmail.com>,
  avifishman70@gmail.com, 
  tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com, 
@@ -95,25 +95,26 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 Hi Wolfram:
 
-Thank you for your help and review.
+Thank you for your review.
 
 Wolfram Sang <wsa@kernel.org> =E6=96=BC 2022=E5=B9=B45=E6=9C=8821=E6=97=A5 =
-=E9=80=B1=E5=85=AD =E4=B8=8B=E5=8D=881:51=E5=AF=AB=E9=81=93=EF=BC=9A
+=E9=80=B1=E5=85=AD =E4=B8=8B=E5=8D=881:52=E5=AF=AB=E9=81=93=EF=BC=9A
 >
-> On Tue, May 17, 2022 at 06:11:35PM +0800, Tyrone Ting wrote:
+> On Tue, May 17, 2022 at 06:11:36PM +0800, Tyrone Ting wrote:
 > > From: Tali Perry <tali.perry1@gmail.com>
 > >
-> > Remove unused variable clk_regmap.
+> > Use adap.timeout for timeout calculation instead of hard-coded
+> > value of 35ms.
 > >
 > > Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller dri=
 ver")
 > > Signed-off-by: Tali Perry <tali.perry1@gmail.com>
 > > Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
-> > Reviewed-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
 >
 > Applied to for-next, thanks!
 >
-> I dropped the Fixes tag, doesn't look like a bugfix to me.
+> I dropped the Reported-by tag, doesn't look like test robot found this
+> issue.
 >
 
 Best Regards,
