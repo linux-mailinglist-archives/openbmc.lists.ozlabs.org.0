@@ -2,51 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF4FB52F90E
-	for <lists+openbmc@lfdr.de>; Sat, 21 May 2022 07:53:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2FE4552F912
+	for <lists+openbmc@lfdr.de>; Sat, 21 May 2022 07:54:06 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L4t7D4fV0z3bmk
-	for <lists+openbmc@lfdr.de>; Sat, 21 May 2022 15:53:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L4t7w0TsZz3bm9
+	for <lists+openbmc@lfdr.de>; Sat, 21 May 2022 15:54:04 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=XZ/ex17V;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=nhTtta1E;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=2604:1380:40e1:4800::1;
- helo=sin.source.kernel.org; envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
+ smtp.mailfrom=kernel.org (client-ip=145.40.68.75; helo=ams.source.kernel.org;
+ envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=k20201202 header.b=XZ/ex17V; 
+ header.s=k20201202 header.b=nhTtta1E; 
  dkim-atps=neutral
-Received: from sin.source.kernel.org (sin.source.kernel.org
- [IPv6:2604:1380:40e1:4800::1])
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L4t6T3lMKz3blZ
- for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 15:52:49 +1000 (AEST)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L4t723hsJz3blt
+ for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 15:53:18 +1000 (AEST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by sin.source.kernel.org (Postfix) with ESMTPS id 31F4FCE2D44;
- Sat, 21 May 2022 05:52:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD4AEC385A5;
- Sat, 21 May 2022 05:52:44 +0000 (UTC)
+ by ams.source.kernel.org (Postfix) with ESMTPS id B4B20B82F13;
+ Sat, 21 May 2022 05:53:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C4C3C385A5;
+ Sat, 21 May 2022 05:53:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1653112365;
- bh=jZcZhL3X9mmvJFsPPiWmyujX/hOqhXLpZSIvlMicpR4=;
+ s=k20201202; t=1653112393;
+ bh=iX9Pi2bth/V+RGM2dJYoBQ26QIhpiDtMo5DZsLehBgw=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=XZ/ex17VIVkQg3cSltZ7rBQnLNhUzy6aqZirn3yu4bvw0z2B61FStySUfiHR8hhic
- cB2nEqXw2DDqxDZgyB5s+INMrotYYoVCT+a1mPMRISWNA8cCp7jmxSBD1ZT0h++wu1
- GDL4MvDEBSOJqFPvLylvccKLBtLfyM16fXi6NyVz/QgVqJ6tWI2Iv40328XgU8zHOP
- FSD+cJOQgSkOVynjf65SZ771M9uprxU2InhljyHLkt6QXGD5z1ClU7C0YnUiBwb0eZ
- bE5NLGkWqp6LhIA57rwA1PllZtri0Eu2PEyocEfmmhCWndJNMWCkXpY2gTfU0BVFzO
- 7LFYW4oMxDAQQ==
-Date: Sat, 21 May 2022 07:52:41 +0200
+ b=nhTtta1ECsTEl46sn4g8fFZSIipDJsyCx1y++uNWWMyiaAFBTNYzscnPgFmdiX+k9
+ +G/ZWq6l+Ik5FA0OG19NT151bJiTfmptF3RzW1N/MH0TUA8BWmpeWs5hz9wjOO/24c
+ tfwLUGpQ2uHh1ynv16+j6Nwzeq4sV8LObL0XZYyFJnIU5dmgCN/C7J3lB04ITuT9y4
+ te2QmUVqER+R4Mtk2C+Ag4ERoHvJ+F4oRupw+Qz4nyOUJRH7N7jiVAK811w2IsfgK7
+ 4ExK3UuyBy4fIpaOK7EnLehM4nGy1tcghCDAjEETWjwRtEYW2GMfoFLXB/p0agBDtf
+ 0QDVt6WsgI1pA==
+Date: Sat, 21 May 2022 07:53:09 +0200
 From: Wolfram Sang <wsa@kernel.org>
 To: Tyrone Ting <warp5tw@gmail.com>
-Subject: Re: [PATCH v5 05/10] i2c: npcm: Add tx complete counter
-Message-ID: <Yoh+KYtRzzbdsB9M@shikoro>
+Subject: Re: [PATCH v5 06/10] i2c: npcm: Correct register access width
+Message-ID: <Yoh+RUTtmiQsrCg3@shikoro>
 Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
  Tyrone Ting <warp5tw@gmail.com>, avifishman70@gmail.com,
  tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com,
@@ -61,12 +60,12 @@ Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
  openbmc@lists.ozlabs.org, linux-i2c@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20220517101142.28421-1-warp5tw@gmail.com>
- <20220517101142.28421-6-warp5tw@gmail.com>
+ <20220517101142.28421-7-warp5tw@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="zcJ0vOC2Hk9d1kli"
+ protocol="application/pgp-signature"; boundary="Z0Rhw3MBZlF7sJ34"
 Content-Disposition: inline
-In-Reply-To: <20220517101142.28421-6-warp5tw@gmail.com>
+In-Reply-To: <20220517101142.28421-7-warp5tw@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,46 +90,49 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---zcJ0vOC2Hk9d1kli
-Content-Type: text/plain; charset=us-ascii
+--Z0Rhw3MBZlF7sJ34
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 17, 2022 at 06:11:37PM +0800, Tyrone Ting wrote:
-> From: Tali Perry <tali.perry1@gmail.com>
+On Tue, May 17, 2022 at 06:11:38PM +0800, Tyrone Ting wrote:
+> From: Tyrone Ting <kfting@nuvoton.com>
 >=20
-> tx_complete counter is used to indicate successful transaction
-> count.
-> Similar counters for failed tx were previously added.
+> The SMBnCTL3 register is 8-bit wide and the 32-bit access was always
+> incorrect, but simply didn't cause a visible error on the 32-bit machine.
+>=20
+> On the 64-bit machine, the kernel message reports that ESR value is
+> 0x96000021. Checking Arm Architecture Reference Manual Armv8 suggests that
+> it's the alignment fault.
+>=20
+> SMBnCTL3's address is 0xE.
 >=20
 > Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller drive=
 r")
-> Signed-off-by: Tali Perry <tali.perry1@gmail.com>
 > Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
+> Reviewed-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
 
 Applied to for-next, thanks!
 
-I dropped the Fixes tag, doesn't look like a bugfix to me.
 
-
---zcJ0vOC2Hk9d1kli
+--Z0Rhw3MBZlF7sJ34
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmKIfikACgkQFA3kzBSg
-KbYowA/+N3UTmwF4C9VAX8TTCnH/yJfoK+WmiMmINK6S/tQiBgJ14pBBrPCiQmnZ
-Lez5J1leVLau1QBYsPev6Qm/wE+0Xr/YGCToOf72bfS5vkQxeroeukHL46y5/4X5
-CrCeygDQ5X9gxMT2qINWNKb2LXGw8EyYHpU5Mw36nGVyhKuXXZjjMQZsEqxnmhEf
-oSzoPJROCs6Vdtb4GxEQqRKZZkyKAasxGMfAPJy6FDUi/ZcWpZd+7Gvlvwql4ekt
-c1VROwstFXca60XvEFwW1WP4PlcP8v78kNo5+23N2ISYtTC9yb0ytw8sRFsvFJos
-kycNiFqKsfuyAsZZVOuUGtsgwoGdJVyRpmpKvuYsfahSGUABlb0jIRdvLZjsFQsd
-RKZZPADtL5UM6WQhs4j8KwlzFMycFqDNQK19t8ToFl9M7UwvQahcUFxmMzDNNUUx
-4swmrOE1vjaO6+1Hf3bIMhBzQ/ZyVSN6mJJDn/avt0VQqdkpJo2nrKCa+gTFUM3J
-V6+/kMVVuBPynrDOodMPpBJIphWLQkjZ+Zgo35iWfTrRFXZa05Togv5o0rPjVrVF
-wS7gluBO7inAvH2fbPOyeFgp0uusKom1qpOzgwBFd4AEU8nj71HS2duqAYtMuhrf
-3LAS83oPh0yAiuaAFdtMzvrajhdaEs6K1pv020R5d94NxNTecss=
-=S0HZ
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmKIfkUACgkQFA3kzBSg
+Kba+/BAAtTezTQoSDncJg6b5TCsg7LsiGP++AO6as1MckJwdkhiRpKJ0lVs/2t5O
+YKubTbFDGRnVnPKLbvZO9xIKWfXCN/bM8p+91ZLAWI7AiFzJVgN2HSmZLs9a23LR
+tql7JXlUiCpmdtc7O2E1xwUhc6nvBIapZoIT1/U6eEsDG8m4SWenJ4kMlK8wR1/C
+UGc+Un6nmRDEWnC6yOX9NrQof+MuCyWyy21y02DHNASAJwpVNzHLDGeay5zOH1em
+72W5Gs3sOq98rOsH05ozyfBjZv7xtdjizoqPkeqYzdM9GHVHZNhZKGBFuvMGMmkE
+kzfC8J0L7j6VkB+1iRLxW3+soWaGrFwFsSpGsyRb/VcrGhnsu1R8o5xf3plL62JC
+DrXLHHY+2Jaxus2JgvWXGMVGY/sxX7WOenq+ZvpmFhsYsNGHPCdNJbNwNgXnxQq6
+hmd7mqunOm0yCCEeUwcDCXFN1z1Uy6fVSfv98vT34yG5r6u1r4sFSrl/xF6Kq8GK
+tGoKi9qlDTx01vXRMdTsNJAQ3j2m798PcyR4wLGt9qGup+H+QQHdu6mNCjJ/AltL
+Gz4PNrPfvYGGLun2vzhKdff/fZYchMj9+F6ibDTyHmLQ9hLLluYp6Dwm8w/VWIuk
+i6Gf4eQTOLYsglNZY/eY87lAGggc61xtVsWCWK+suT4rfzTGorc=
+=aLre
 -----END PGP SIGNATURE-----
 
---zcJ0vOC2Hk9d1kli--
+--Z0Rhw3MBZlF7sJ34--
