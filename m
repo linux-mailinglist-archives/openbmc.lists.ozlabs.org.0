@@ -1,69 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5DD4052FC93
-	for <lists+openbmc@lfdr.de>; Sat, 21 May 2022 15:10:44 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6AEE852FCD2
+	for <lists+openbmc@lfdr.de>; Sat, 21 May 2022 15:22:50 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L53qj269Kz3bnY
-	for <lists+openbmc@lfdr.de>; Sat, 21 May 2022 23:10:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L545h1l4Nz3bmQ
+	for <lists+openbmc@lfdr.de>; Sat, 21 May 2022 23:22:48 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=MMm10EHw;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=mKHk4Rof;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::92b;
- helo=mail-ua1-x92b.google.com; envelope-from=warp5tw@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e2a;
+ helo=mail-vs1-xe2a.google.com; envelope-from=warp5tw@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=MMm10EHw; dkim-atps=neutral
-Received: from mail-ua1-x92b.google.com (mail-ua1-x92b.google.com
- [IPv6:2607:f8b0:4864:20::92b])
+ header.s=20210112 header.b=mKHk4Rof; dkim-atps=neutral
+Received: from mail-vs1-xe2a.google.com (mail-vs1-xe2a.google.com
+ [IPv6:2607:f8b0:4864:20::e2a])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L53qG6P1Wz3bks
- for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 23:10:17 +1000 (AEST)
-Received: by mail-ua1-x92b.google.com with SMTP id q1so3809538uao.1
- for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 06:10:17 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L545H0xZNz3bks
+ for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 23:22:26 +1000 (AEST)
+Received: by mail-vs1-xe2a.google.com with SMTP id z6so10608108vsp.0
+ for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 06:22:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :content-transfer-encoding;
- bh=gY5YVxSZXZa4246xLEbiahVb0abGv5fP2xn0Bj47TQk=;
- b=MMm10EHw5NfVdmbzl5QnYyuVlnEypnTwmxnUjZrASRiX2RdolTkvhEPaQEtTnLzUcB
- ZPAuRWUOk+JmMv9bCijbs03VPBKqVtjZ7zq6h8L2C+h3o8rJT3OajJkR2cAaX5auDWCW
- +avBzKF5XDR+EziuGPLwVH/foFpjhWUxdS91ikc3apcg+i12qRKv9rzwBOjRNcNhBezU
- aYXJaFYNxGJXFmu0+EqfbFRLe+EaHYb4jbQ0NMowo3xV4VLAgCK54EguUwQZggvFLcMq
- 7QuXzDy12eydEhmCkozNV9kXSyckNYYMHmeIUyUOkCP5dJOC4OTWamw8CWnWFI4OsfMj
- OziQ==
+ bh=k83DVcIcffNjBmT+wlu9VAh4wJXwqJzexEQvALMCO7A=;
+ b=mKHk4RofXhQK4eLxHsDk3reXwyjiqEQbNfsXRsKBcRxL7PGJHEfGWrQ8bhweXz4jxG
+ uq+3+8pHy4BRpHyRFeRtZ0gukNg7qQ6O7sILCCMt58U483zdPWBKHp+ueWMB3r3hNIVi
+ 8VsP5a0g5Tevkx/KXwAhUwOCsSamPX0ltozwWgemNIDUlnehLD9A6Z+MOLWODO4kxKqN
+ +yLwWy1K675pz86c3DP780FZwasgG0lUh6T6jv871cdhEKFR5Xo8rVwjmyORMiBikx/7
+ 2ANja/zRSj6Y1f9ToeFivDSqScWMwSO+nI23R3B4z5xaT/XlIDwp0Bbx7CrAs3KZ8z0G
+ i4dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:content-transfer-encoding;
- bh=gY5YVxSZXZa4246xLEbiahVb0abGv5fP2xn0Bj47TQk=;
- b=sdD5OyiTyM/v6lOR6KSvjXzUR+JLuNCeaLvoL9wRKx2U/Qxf97xlyRu1kLE4X3Sfi+
- rUhYul5a6FNoVfLmBjWQ8GUMS16QJLpFzUm9pNLUPUpDQh0AZ0vwTA/ccjccH9z0DZDU
- hAuz9juGEduR0DxR2hOc3PVOfhejuHhlC4WHOjdzrmIkec/+BckNMQQS7hJSLWm4MSIP
- 2qk/APerhRwwI0o2ggU+DaWGb8jy055almBsKfhUXEVF499gjlL/ZobAOp8wYxMcIObi
- HaW6Dji5D2wCE5JlAG5Az8JRbDsi6yw6VK5N6IbqqxaYEJUzO8NNTjNqw5S9J14wW89o
- f3gg==
-X-Gm-Message-State: AOAM532YWSO65HFH8fiDesFMe7QH0Ir128QyydOsMz45pNov+V6p5eK/
- q+z1BHLffMuE51yR5ZfAmkCLM2WntP8o7g0/2A==
-X-Google-Smtp-Source: ABdhPJxMM64PIFeMevBuR5+/jP8tWbXAUSF3xQaHJhxiF1PXLUgVCD+aHXQWr5I9X4Fu4iz9yZN9yRf/dfAQ0K4A0Y4=
-X-Received: by 2002:ab0:2e90:0:b0:368:acd4:f2cd with SMTP id
- f16-20020ab02e90000000b00368acd4f2cdmr5227856uaa.116.1653138614398; Sat, 21
- May 2022 06:10:14 -0700 (PDT)
+ bh=k83DVcIcffNjBmT+wlu9VAh4wJXwqJzexEQvALMCO7A=;
+ b=Y1c5eogCy9BsLyNX4OfZd4Nro9zfsI4Fcy7fFf4JU7DQJsV0A66ZvTTkOmAz47hp/z
+ 7/oCb7DXPfc+c5SAnIMG1ChP5RsEKZhhNRetMnzfYkm+TzuZ9jiZNoX/n4h+3mGWevvT
+ IvH1jsUuoy9+utFyYZZLRRhWXqlHGKFVBMH4E4ZqoHwwwBaI0d9epPZMUnNdR8xhGclK
+ bzWuySMlS+sMpgb1AmfLhfPCVg/ewcqTVJHnDQBiL+Sxl1VwBxasL+r9rSVsAmkUQqJL
+ /IH+wrWtc/lcV5L3GFWFV9kD+Cfa4G8SFQbD0nS0Xtu2gvDgksbLfZzxv/8JuhcJq+Pv
+ IQ0g==
+X-Gm-Message-State: AOAM5336CZCL9frM0kqp9NxLVO/zz8/P5q2u7xPUpiRGbbaJE0TcZYWW
+ yXP9vB7wiDk0aXnzsnyED+T57VXldhUFsl+VVQ==
+X-Google-Smtp-Source: ABdhPJwdtT3lmW5L/ar4Qia93oyUEeZtSo6Wvd80aKSyRZZ7LHnsu45ANLywj2/NuRH/cy3ZSEbxXTtiwQ9Y6ncBtno=
+X-Received: by 2002:a67:cc02:0:b0:335:c5ac:96d7 with SMTP id
+ q2-20020a67cc02000000b00335c5ac96d7mr5905980vsl.50.1653139342676; Sat, 21 May
+ 2022 06:22:22 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220517101142.28421-1-warp5tw@gmail.com>
- <20220517101142.28421-10-warp5tw@gmail.com>
- <YoiAF3fcFJiH4nGP@shikoro>
-In-Reply-To: <YoiAF3fcFJiH4nGP@shikoro>
+ <20220517101142.28421-11-warp5tw@gmail.com>
+ <YoiAmI2wZz2Bkcm1@shikoro>
+In-Reply-To: <YoiAmI2wZz2Bkcm1@shikoro>
 From: Tyrone Ting <warp5tw@gmail.com>
-Date: Sat, 21 May 2022 21:10:02 +0800
-Message-ID: <CACD3sJb6OParLBQxe+JwcGRpnLfihFRLMOQWEwC_DJHrpzcr_w@mail.gmail.com>
-Subject: Re: [PATCH v5 09/10] i2c: npcm: Support NPCM845
+Date: Sat, 21 May 2022 21:22:11 +0800
+Message-ID: <CACD3sJb3ZBsZF=qtbvSikxUU8C-BLChZeHL2mG5JXKkx3QNWyw@mail.gmail.com>
+Subject: Re: [PATCH v5 10/10] i2c: npcm: Capitalize the one-line comment
 To: Wolfram Sang <wsa@kernel.org>, Tyrone Ting <warp5tw@gmail.com>,
  avifishman70@gmail.com, 
  tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com, 
@@ -93,22 +93,23 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 Hi Wolfram:
 
-Thank you for your reminder.
+Got it and thank you for your help.
 
 Wolfram Sang <wsa@kernel.org> =E6=96=BC 2022=E5=B9=B45=E6=9C=8821=E6=97=A5 =
-=E9=80=B1=E5=85=AD =E4=B8=8B=E5=8D=882:01=E5=AF=AB=E9=81=93=EF=BC=9A
-
+=E9=80=B1=E5=85=AD =E4=B8=8B=E5=8D=882:03=E5=AF=AB=E9=81=93=EF=BC=9A
 >
-> On Tue, May 17, 2022 at 06:11:41PM +0800, Tyrone Ting wrote:
+> On Tue, May 17, 2022 at 06:11:42PM +0800, Tyrone Ting wrote:
 > > From: Tyrone Ting <kfting@nuvoton.com>
 > >
-> > Add NPCM8XX I2C support.
-> > The NPCM8XX uses a similar i2c module as NPCM7XX.
-> > The internal HW FIFO is larger in NPCM8XX.
+> > Make the one-line comments capital in the driver to get the comment sty=
+le
+> > consistent.
 > >
+> > Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller dri=
+ver")
 > > Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
 >
-> Would be great to get an ack from one of the listed Nuvoton maintainers.
+> Needs to wait until comments to patches 8+9 are addressed.
 >
 
 Best Regards,
