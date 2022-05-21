@@ -1,51 +1,52 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 327BF52F900
-	for <lists+openbmc@lfdr.de>; Sat, 21 May 2022 07:52:20 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 77D8552F907
+	for <lists+openbmc@lfdr.de>; Sat, 21 May 2022 07:52:55 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L4t5t10dlz3bmQ
-	for <lists+openbmc@lfdr.de>; Sat, 21 May 2022 15:52:18 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L4t6Y2rlRz3bmD
+	for <lists+openbmc@lfdr.de>; Sat, 21 May 2022 15:52:53 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=RIB+ANSn;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Mx+EfyH4;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org;
- envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
+ smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1;
+ helo=dfw.source.kernel.org; envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256
- header.s=k20201202 header.b=RIB+ANSn; 
+ header.s=k20201202 header.b=Mx+EfyH4; 
  dkim-atps=neutral
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256
- bits)) (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L4t4y6Gtfz3bmk
- for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 15:51:30 +1000 (AEST)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org
+ [IPv6:2604:1380:4641:c500::1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L4t5t419Xz3bpT
+ for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 15:52:18 +1000 (AEST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by dfw.source.kernel.org (Postfix) with ESMTPS id CB75860B4E;
- Sat, 21 May 2022 05:51:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A7C8C385A9;
- Sat, 21 May 2022 05:51:27 +0000 (UTC)
+ by dfw.source.kernel.org (Postfix) with ESMTPS id 641E460BC1;
+ Sat, 21 May 2022 05:52:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A28E7C385A9;
+ Sat, 21 May 2022 05:52:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1653112288;
- bh=K2MHfb/cUJpXURo3lPofD9f0y9SQuR2AtarJHMSKeNQ=;
+ s=k20201202; t=1653112334;
+ bh=gqEk2G2c+0WQ6teafqOuUt9h21Krn5Oy3NvQ+/5GkBI=;
  h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
- b=RIB+ANSnROxwABAR0zcIRNR0crLoYKxOOqGsOAYfOq4y3RPeDJcDdFhQte80rCg45
- IieQb+mG9G0ucWb4kqkZfO36mKO9+ndJnyA/L/iVneQOLKfdh8aEWk/lOXPMJMRkXT
- +uBtJk9E1mwFuypAhts6PEF4jxxc3XC/iKm11yuV+t+2SQvFV7Jja9SG6tDDJ0fQii
- lQ3O1x1zerTrf5Rod59HEHSnyotz9cqBh46X22PYB7Za3vKnnISa+LgQduE2XSyXng
- rS8s6Yi9xPIb1LI3UPaLjkRcOxmcFc1uRkAis70vkAuikCYKJGNvYETnFOOSqQ+E2L
- F/B1Lx7hXAXhw==
-Date: Sat, 21 May 2022 07:51:23 +0200
+ b=Mx+EfyH416zuLYyavxesotOJIfbYbPbvJjEC0Kcvhj8hxbMUnoaLxbGgjsYBjyUJD
+ JcOGwdfbLoMsTzB0e6YMHhDmevmCrum8C4EQJUmF2hInbjP89LhqZFLpjteFhFwP9W
+ D0Spw/gYgHYyZ8eyYvWLBfpGtqWhALWU/pJUdyw5z8DdQwcpHEreDnDvfX3CO8r2vQ
+ HugOnQgnqE29hd+7AG1+Lj20UXvf8Bj0McRQQHiuvCTORTYc7UenkbM5VOtRPzN1Et
+ t50ZSGCJ0nZ/fb8iyAxZ8L7tFwh7IW6+1QMW/yq/qC9GfFyeqZyj+poIY5/KbCM9wW
+ a1vd845q35waw==
+Date: Sat, 21 May 2022 07:52:10 +0200
 From: Wolfram Sang <wsa@kernel.org>
 To: Tyrone Ting <warp5tw@gmail.com>
-Subject: Re: [PATCH v5 03/10] i2c: npcm: Remove unused variable clk_regmap
-Message-ID: <Yoh9208mogGeWPYe@shikoro>
+Subject: Re: [PATCH v5 04/10] i2c: npcm: Fix timeout calculation
+Message-ID: <Yoh+CgMPJM/Qp2V+@shikoro>
 Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
  Tyrone Ting <warp5tw@gmail.com>, avifishman70@gmail.com,
  tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com,
@@ -60,12 +61,12 @@ Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
  openbmc@lists.ozlabs.org, linux-i2c@vger.kernel.org,
  devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 References: <20220517101142.28421-1-warp5tw@gmail.com>
- <20220517101142.28421-4-warp5tw@gmail.com>
+ <20220517101142.28421-5-warp5tw@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="IH57joRUMFEhmIfc"
+ protocol="application/pgp-signature"; boundary="sr7GoX7S9ot2v/dV"
 Content-Disposition: inline
-In-Reply-To: <20220517101142.28421-4-warp5tw@gmail.com>
+In-Reply-To: <20220517101142.28421-5-warp5tw@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,45 +91,46 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---IH57joRUMFEhmIfc
-Content-Type: text/plain; charset=utf-8
+--sr7GoX7S9ot2v/dV
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 17, 2022 at 06:11:35PM +0800, Tyrone Ting wrote:
+On Tue, May 17, 2022 at 06:11:36PM +0800, Tyrone Ting wrote:
 > From: Tali Perry <tali.perry1@gmail.com>
 >=20
-> Remove unused variable clk_regmap.
+> Use adap.timeout for timeout calculation instead of hard-coded
+> value of 35ms.
 >=20
 > Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller drive=
 r")
 > Signed-off-by: Tali Perry <tali.perry1@gmail.com>
 > Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
-> Reviewed-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
 
 Applied to for-next, thanks!
 
-I dropped the Fixes tag, doesn't look like a bugfix to me.
+I dropped the Reported-by tag, doesn't look like test robot found this
+issue.
 
 
---IH57joRUMFEhmIfc
+--sr7GoX7S9ot2v/dV
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmKIfdsACgkQFA3kzBSg
-KbYV0g/+J6kw0YqKXl6ogOJ0Z9VJBIyF1Qdn2ujna4rpXeo8oN3dHcujBsksG1tG
-CdHOMTJFfdmV+7qXNBBI3LuzhCky3uV+MmulTUXuFZugS3ik+VUtYP3AHKEpXfKo
-rZiF6leA0oO9hAq2mm042B0WxjETC3Co0MoU7YjYT1PLRgjJMAOechSr6YqY9bI5
-zBy6q6aNYHs1hosyT+Ryhc2iBZJ6aHBzQnQkrK+cbwT7VbSQzoT+ENw7VWlonFSC
-v46gPpHdFsiZgRkl4dL+QIxoiklCcfDNqwJJ1FzzlEhHBgx5d5G8ss46CCK8PNfB
-les+Qj9bd7oJk6MmeG3e2HugD8cpC1euw21s20O2jYL51/f1P0pKFlVgz+KX/Mle
-Rbkk6+0DEHi8Nf2NmWdR5CNx8yCoXKZmnLvtf3g+5uv8Y3OVvPwIEZjIvC4aywtK
-crkJNKQhCdsR2XL5ktDk8RmUyKnCUynWmFjMZXAFpQ5plB6cf1TOvNiUyTFPC2/O
-HPrl0zzX3BFD0LX3hJUGxrtZvXlDc4PPfc/36u2Ks8TsiZL4SQKRI1s4gajAgZAh
-2f54h+2JUPLj4F6rjGBY9P2/jQ/AA4mAgOl7oHtc0Yj5FokFYBqUej36nIScrI4R
-IYvF8JJuIfQG0EgtzGhJ5je6MOXirO74AGqQsfT1ei+y1hA6rIE=
-=xb4T
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmKIfgoACgkQFA3kzBSg
+KbauVQ//ZUeQap9aumasQz94DsgHplMl1MEur+0lhsbMJnVScP9toqh9/SKoL4tJ
+aMH4pqaRYlEnQYoDF/9POi8/pdjSF7xbyhGQmx00Z/u+YdY0PX2QlFJ32Teaqdus
+syi9r4DFk09l2CKjQMKOEG7UdIiuNp/JhQzEGZBblHYVM2f0ph67dKV33i6CRoGt
+q5tjKkgiX8UPTjTDTW4OHSH+KogatMjX/xms1ZHN1PTjsZ6ZpTUD0EES62IQxw/N
+5a+pnqZ0cpOVLyqA5+wWp3CoSRD4oRCww/Rpn2bzwr/VkQxc8bw3laq60L+nrZM0
+53i88MW27DIkHt4SaJ4JSHISOiFJ/1pDW81/CUmHs3anTPQxLyQP5VHcnSWwYvu4
+zx5QYAUWrtul/lV1F5ErD+zT3R5kFvV1VjZRFbVm8HKLG0RiDGoLoP44++RscMTw
+zHTaSHTpazMCfWJ2JtZNKi/wSUVwqhb0GRN33NV5+lwy8NhENfsS8SxXhSEX3NGu
+RIr7SOhcquhv+20ar9zbLx3dX75IzdPe2DicM1/tWYL0wvubVZDj4gr/ofdUtPCj
+TwoZtZqf8YplpOMbBoG+8ziGZDSurdtYK8KHdiYIhfZTfbutBb6F/+JR9RoMkh51
+G1q/eyBlKc1DmycYOzPKaT0RFNe1dEQlN5oPA7ogwGZiIzmbhqs=
+=Un6H
 -----END PGP SIGNATURE-----
 
---IH57joRUMFEhmIfc--
+--sr7GoX7S9ot2v/dV--
