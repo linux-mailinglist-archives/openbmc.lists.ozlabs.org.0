@@ -1,69 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B42115308D1
-	for <lists+openbmc@lfdr.de>; Mon, 23 May 2022 07:33:28 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id D16545308D2
+	for <lists+openbmc@lfdr.de>; Mon, 23 May 2022 07:34:04 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L65bB3nWZz3blp
-	for <lists+openbmc@lfdr.de>; Mon, 23 May 2022 15:33:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L65bt5JB5z3bl0
+	for <lists+openbmc@lfdr.de>; Mon, 23 May 2022 15:34:02 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Nnt4/klu;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Q3TeCmuc;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e2c;
- helo=mail-vs1-xe2c.google.com; envelope-from=warp5tw@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::929;
+ helo=mail-ua1-x929.google.com; envelope-from=warp5tw@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=Nnt4/klu; dkim-atps=neutral
-Received: from mail-vs1-xe2c.google.com (mail-vs1-xe2c.google.com
- [IPv6:2607:f8b0:4864:20::e2c])
+ header.s=20210112 header.b=Q3TeCmuc; dkim-atps=neutral
+Received: from mail-ua1-x929.google.com (mail-ua1-x929.google.com
+ [IPv6:2607:f8b0:4864:20::929])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L53VD2pf0z308m
- for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 22:55:32 +1000 (AEST)
-Received: by mail-vs1-xe2c.google.com with SMTP id m2so10693556vsr.8
- for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 05:55:31 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L53XC1X68z3bbv
+ for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 22:57:15 +1000 (AEST)
+Received: by mail-ua1-x929.google.com with SMTP id n24so3790683uap.13
+ for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 05:57:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :cc:content-transfer-encoding;
- bh=H2xHMxkjcpE6Uaeb37HMcK9VGfIbnF/CTq+aAJwqeQA=;
- b=Nnt4/kluIb1bMHit+sR8kK3TADuPbS8W/h1yW7D9r+2OBn3yfQCIggFM29OUdOW99C
- Qni+kPF678aDYKJm1lVt++Mh7skT+N5bh1KrXLt3I8vl9tFZCQvJ3J7JT5S1hBsb51//
- bACnQz5K00WnqWxQ340RANSJ0kRukutfbqi4rxWT7d6ARQUntk6ya1N5THcNYto39pKx
- hUnDK5/ABzwIO7szi1+3+5IZJQUkVAuJme1+G6ysAqAjC/CH1TsQbCdP7/MSCD1W/yJW
- muxuYwMw+hC0wru1fZVqaPSMEsr7cbiO2/3oIXwil0sH/Y7VsTfdWShdUNpVTS0SJHkI
- /dow==
+ bh=v7lrzZz0TqmDNB8iA94k1xpruUt+qA1fWDXV+uIRpKk=;
+ b=Q3TeCmucO50s7J5M6a3xN+W+q61y8GAmoRzuhg6QJKfZL4uou5QBw6ij591vK2UqVA
+ B6XgyomQFok7CXOXdu2PYPd89cHEbxeHJlb5iAGj1tDA5zzBmUDKmWD0AiVFu563fFLi
+ ujv+a7etD0ShVX6rAPn2umQymv7TrkQGxcSONuZL1Y1aUG2sE196l5LdJyfWp9/rDBU9
+ 55Cmvmgsf/a8IslNkLCHcesXNmMDRkGE4uaGf2gwKYiGLzJb37ejRriZa+A2UCBoqLhU
+ FJD+GWiHRFtgZvqiuCdVOllb5avu0Q7l3XTndvHVnBhmtqb8LfIEMBCB51aGLKrGVK98
+ r9Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc:content-transfer-encoding;
- bh=H2xHMxkjcpE6Uaeb37HMcK9VGfIbnF/CTq+aAJwqeQA=;
- b=qMddwpu6aWmvAutet6N+8DJE8JDAEjN7X/Sj5szRuOve2oi1TomnjnImrEQ1czm92A
- dxI5diDnNKF0QQyMAT1v83/tHVWznaAN6rcVctkB8IYtO0IoLN2Cyc0re2xkPxZz1/Tj
- mofi5MfMcT8HkJdKhh5TWXTNwnVSsRKTqPkFBWAT+CcEWq7aJRH3wVZim3VBx4NMu217
- lDBxcpZSxs//hCcva1dmoTM2RQzQphhQNhvnAnyDoPTJs+ihRBQsNxZuQMIdTZeUaz+3
- 6RNmxQ4KZiGhNK9kSdIIm67QEUeg8AgkI74ru6WGsD0OYriCoMdtySaxaJSwW08GagdW
- Iv9w==
-X-Gm-Message-State: AOAM533THB4tQUeRTmr7sK30Zq+kjoWkzEATMtWG7Y9klldmXdqlIWe3
- pfok1IBXj/oAgAu25nAE+v2j49QqQDlT870f0A==
-X-Google-Smtp-Source: ABdhPJzQ2VfCqFP9LhoWMNuMbL7j9f/7je/mD/CUsRkDGjmqTFXaaGolpNH0JgmofFJ7a1BERDEpL2iUuEg6O6L3Sno=
-X-Received: by 2002:a67:d88c:0:b0:337:9a25:36c3 with SMTP id
- f12-20020a67d88c000000b003379a2536c3mr813357vsj.84.1653137729800; Sat, 21 May
- 2022 05:55:29 -0700 (PDT)
+ bh=v7lrzZz0TqmDNB8iA94k1xpruUt+qA1fWDXV+uIRpKk=;
+ b=WGa1sYw7+tfs1yLEffWUkzCgeeY5xD1ZZtwrgxDSR75T+4sruy0OkGmvezHmqZD4wn
+ aoEVbZmazd3jqAubXqxO2XeWEVffIaBDysmKf8PbqTVrsl2Fqzwnx9rxPs11ANF/zIx6
+ pz1jVEgr5gVG7PD1OmgBmavd1PsaZS4TssQvlohUy/znv3n9SucW/Lve7KWjQiCmvMpq
+ NfwE0y5smCVFea3gaoje0ojoKqnMR3Na4NfKGRBOaYEuQJgFTxFoCrREAsmZSpOp4CaX
+ AEpWkNWmRp+YglpLYnJDOMRmdftsBcCXh0RJC/W5wRTQ3yHdZJPMTVc0TqixoXoes6TW
+ aXMw==
+X-Gm-Message-State: AOAM530QE+giW0/Hs40ohbS5SKX8mmEqaderXlwbit6YsxjTFDFTNwRW
+ 7WfCvGCixFxopEITqvm65Et0DNd+D/hhOcTy5w==
+X-Google-Smtp-Source: ABdhPJwi1fjgS3MbDK+Zsx3uIqu1nMkDhsIcuffkfADCaBMWQnKsuU8847NRfSHjq0/iuOs8KnhQFNBcov83tKIqFl8=
+X-Received: by 2002:ab0:66c1:0:b0:35f:c5a8:8a2e with SMTP id
+ d1-20020ab066c1000000b0035fc5a88a2emr5047687uaq.98.1653137831733; Sat, 21 May
+ 2022 05:57:11 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220517101142.28421-1-warp5tw@gmail.com>
- <20220517101142.28421-5-warp5tw@gmail.com>
- <Yoh+CgMPJM/Qp2V+@shikoro>
-In-Reply-To: <Yoh+CgMPJM/Qp2V+@shikoro>
+ <20220517101142.28421-6-warp5tw@gmail.com>
+ <Yoh+KYtRzzbdsB9M@shikoro>
+In-Reply-To: <Yoh+KYtRzzbdsB9M@shikoro>
 From: Tyrone Ting <warp5tw@gmail.com>
-Date: Sat, 21 May 2022 20:55:17 +0800
-Message-ID: <CACD3sJYdcCUuWY3oZTgowsk5ayQicu+50M996v3maAs_67JtDw@mail.gmail.com>
-Subject: Re: [PATCH v5 04/10] i2c: npcm: Fix timeout calculation
+Date: Sat, 21 May 2022 20:57:00 +0800
+Message-ID: <CACD3sJYE9AEFrQ7MgXN3=P9W66cw4tDwNc5xch3vn9TJjL7bfg@mail.gmail.com>
+Subject: Re: [PATCH v5 05/10] i2c: npcm: Add tx complete counter
 To: Wolfram Sang <wsa@kernel.org>, Tyrone Ting <warp5tw@gmail.com>,
  avifishman70@gmail.com, 
  tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com, 
@@ -95,16 +95,17 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 Hi Wolfram:
 
-Thank you for your review.
+Thank you for your help and review.
 
 Wolfram Sang <wsa@kernel.org> =E6=96=BC 2022=E5=B9=B45=E6=9C=8821=E6=97=A5 =
 =E9=80=B1=E5=85=AD =E4=B8=8B=E5=8D=881:52=E5=AF=AB=E9=81=93=EF=BC=9A
 >
-> On Tue, May 17, 2022 at 06:11:36PM +0800, Tyrone Ting wrote:
+> On Tue, May 17, 2022 at 06:11:37PM +0800, Tyrone Ting wrote:
 > > From: Tali Perry <tali.perry1@gmail.com>
 > >
-> > Use adap.timeout for timeout calculation instead of hard-coded
-> > value of 35ms.
+> > tx_complete counter is used to indicate successful transaction
+> > count.
+> > Similar counters for failed tx were previously added.
 > >
 > > Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller dri=
 ver")
@@ -113,8 +114,7 @@ ver")
 >
 > Applied to for-next, thanks!
 >
-> I dropped the Reported-by tag, doesn't look like test robot found this
-> issue.
+> I dropped the Fixes tag, doesn't look like a bugfix to me.
 >
 
 Best Regards,
