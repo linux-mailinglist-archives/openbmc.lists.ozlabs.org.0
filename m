@@ -1,69 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 61E7A5308D3
-	for <lists+openbmc@lfdr.de>; Mon, 23 May 2022 07:34:40 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8FE215308D4
+	for <lists+openbmc@lfdr.de>; Mon, 23 May 2022 07:35:16 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L65cZ1SzFz2xX6
-	for <lists+openbmc@lfdr.de>; Mon, 23 May 2022 15:34:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L65dG3MmZz3bgC
+	for <lists+openbmc@lfdr.de>; Mon, 23 May 2022 15:35:14 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=gTDImOFg;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=dLYTDccX;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::a2d;
- helo=mail-vk1-xa2d.google.com; envelope-from=warp5tw@gmail.com;
+ smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e2f;
+ helo=mail-vs1-xe2f.google.com; envelope-from=warp5tw@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=gTDImOFg; dkim-atps=neutral
-Received: from mail-vk1-xa2d.google.com (mail-vk1-xa2d.google.com
- [IPv6:2607:f8b0:4864:20::a2d])
+ header.s=20210112 header.b=dLYTDccX; dkim-atps=neutral
+Received: from mail-vs1-xe2f.google.com (mail-vs1-xe2f.google.com
+ [IPv6:2607:f8b0:4864:20::e2f])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L53YY3cdnz3bgC
- for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 22:58:25 +1000 (AEST)
-Received: by mail-vk1-xa2d.google.com with SMTP id e7so5205995vkh.2
- for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 05:58:25 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L53cL6Klhz3bkg
+ for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 23:00:49 +1000 (AEST)
+Received: by mail-vs1-xe2f.google.com with SMTP id h5so2732527vsq.5
+ for <openbmc@lists.ozlabs.org>; Sat, 21 May 2022 06:00:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
  h=mime-version:references:in-reply-to:from:date:message-id:subject:to
  :cc:content-transfer-encoding;
- bh=bykWdl7RkLd7Jog7GhgIWoVbo/GRYcAx6n48qBmXwJQ=;
- b=gTDImOFg2B6vBdQngixeW/HBPTktxpECBn/wsKGgzGqvIB/rHUt2m6Lx8G2UhwbFR6
- eFHv+2FUP23EXjhF0JGO7oeZH9VWAWwPx+yH7evdpZuMu8ew1iTVo53uGCD0Ywz03b08
- 1Rb+j7cO8b99jzj5uYdBfnAw08STnAdQ0JQV5lp3sjiKzwyrkMgEkZmkeF+MjKjL0Pgd
- 98uyQnUMYaQrHP02V5PitoHKi6JBPLag0nQyoEJUWuFjRZkklusWihMRj6th0Xx83rKM
- 98UzlkRgsztjyb0ZklsrVWu4+aLKj3XECXsaTMG82pEfx9JO+WIe3Vdil8drO7OKMD4E
- WW0w==
+ bh=UiYBOOmE3B2tSMcIdam7Gz2hPUtw38sVw9m7ntvwfEA=;
+ b=dLYTDccXOF5vdOcM3oYWeoDuEOe54vEE4MBQ4R2N4kJ0igBgtDxgjrcTmNno4/JYpU
+ GCcDVEj5y1Xd0mFpJDTzwQCRcc0Fun+V4xGU8tybudQaPobtD5MQSknBJG47m9O4JNdY
+ RNonrsVcOwvBn7VZuvbazM4jE5m7PTDXznBFyXxXo4Brvh0SfIDMeXLIqfMo9OKuUctn
+ ksOd1CzhjJgaHIjm0ignljw8gatzaoNQmF8dL4/dPq+gSRntJCICTh3IOA9G5vElMjHR
+ 3jNsWJNJxDPlHyHne+ed8UIlgrT9eGAj2yIfLGO9hj900vbevMKLkh6CsUxU5SXc5GZ8
+ ZXIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20210112;
  h=x-gm-message-state:mime-version:references:in-reply-to:from:date
  :message-id:subject:to:cc:content-transfer-encoding;
- bh=bykWdl7RkLd7Jog7GhgIWoVbo/GRYcAx6n48qBmXwJQ=;
- b=pY56kUyGr7KQU6lrt1j7zo1OBcF2chWBa+izIT8znAbUKk3qhgEoSGtLkYo8TAGJS2
- vXyc3AZ8aetoR4TfDCthgzFNtjE3MY2+9eVhQCPaYLz6EF10+OZYCZJDj96s3vADM1UK
- DvbxEOM/PaQ0hGCi/zPHb8B2zvGlFAdsu0Ll1mS7kA9aOHdON3/l8wfH/bi7nW56zWCL
- 1XVeEWofsgrenguwSrgCj1bieWyPTeMXm98lAHakCN/50KLyz6GPNKloVJfo1VUO5Lzv
- Rms8KXA+FC43OzpyHHv9AFcZNtXCzqOkImpImy4UEbksKOn3fMKCunLSV93ZLjHVcCmP
- HJTQ==
-X-Gm-Message-State: AOAM532Sprxm1FFLVdtum6X+6sQ26MjGiy/SAVfjX/ts8GTKPmuYOVRy
- b8hQFgkNKaqGNpq5I2c810MyzXqiAZzUOElxAg==
-X-Google-Smtp-Source: ABdhPJw2hjnkCON9vjPf/cymYkRdWh75PM+u9FYDAz5c58fDuAVkVCoVnkqkOCnc/jPPILXIWW5ufceScMZiovqk4Os=
-X-Received: by 2002:a1f:3254:0:b0:34e:b02d:bdd7 with SMTP id
- y81-20020a1f3254000000b0034eb02dbdd7mr5659802vky.11.1653137902033; Sat, 21
- May 2022 05:58:22 -0700 (PDT)
+ bh=UiYBOOmE3B2tSMcIdam7Gz2hPUtw38sVw9m7ntvwfEA=;
+ b=TI0Zftt5bUrRBcPY43Lb/ZkL1XKgNcTjBtQpDR2NLcVchq5Wn7G7Tj0CHvTeMvcDTo
+ UszQDnBUwlnXKoXLiyqnKJkfAw6q9iOBVFi9kVo7qpaE7Op+3mdktr1SGcbErPYvTnSa
+ 38K956hcPo0HCUxtKh/54iycB0JLquTQYldYa0FD5qGvWlSEkn7os3sIMDveom5bI4rE
+ 9fUYBbtJVuzGgZN3eko4z4RFd5d/MHDExhwTu/D6dMlfyhrz8t+CsMEdx7RusZDS64LN
+ UOVQtvD944Hd2ez5Lhwrsu04maGBHFnmW5dljk6mjC6fJkOXYpo/ZJ1mjVxhgV6NHpiU
+ bskg==
+X-Gm-Message-State: AOAM531tIFp+iZnOPgTzKWqT9MBgi+e7Aoy+7nirG8w4RoJlHFg5vQxY
+ b7mWVbeEw9XBAJAi+I0b+Yc8UtvKXUFAWcp+6w==
+X-Google-Smtp-Source: ABdhPJwsVewjsXSGmqYnvos4AOWRr7OMnGYmuogma9c6Tmg7y3vgxiG6y6zNx3QmQQ8Cb58ZOP81bncQx7cAkIryqDk=
+X-Received: by 2002:a67:d88c:0:b0:337:9a25:36c3 with SMTP id
+ f12-20020a67d88c000000b003379a2536c3mr818585vsj.84.1653138046685; Sat, 21 May
+ 2022 06:00:46 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220517101142.28421-1-warp5tw@gmail.com>
- <20220517101142.28421-7-warp5tw@gmail.com>
- <Yoh+RUTtmiQsrCg3@shikoro>
-In-Reply-To: <Yoh+RUTtmiQsrCg3@shikoro>
+ <20220517101142.28421-8-warp5tw@gmail.com>
+ <Yoh+YZestxT7oG8B@shikoro>
+In-Reply-To: <Yoh+YZestxT7oG8B@shikoro>
 From: Tyrone Ting <warp5tw@gmail.com>
-Date: Sat, 21 May 2022 20:58:10 +0800
-Message-ID: <CACD3sJb1GOFNeXU3csDWR7mSeUEDqqNkT+JvKVavRL1Epik-zw@mail.gmail.com>
-Subject: Re: [PATCH v5 06/10] i2c: npcm: Correct register access width
+Date: Sat, 21 May 2022 21:00:35 +0800
+Message-ID: <CACD3sJbcOdCED24Fno-jd1z0T21KuJ_hTWNQcSHqhbxaZZaXwA@mail.gmail.com>
+Subject: Re: [PATCH v5 07/10] i2c: npcm: Handle spurious interrupts
 To: Wolfram Sang <wsa@kernel.org>, Tyrone Ting <warp5tw@gmail.com>,
  avifishman70@gmail.com, 
  tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com, 
@@ -95,29 +95,41 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 Hi Wolfram:
 
-Thank you for your help.
+Thank you for your review.
 
 Wolfram Sang <wsa@kernel.org> =E6=96=BC 2022=E5=B9=B45=E6=9C=8821=E6=97=A5 =
 =E9=80=B1=E5=85=AD =E4=B8=8B=E5=8D=881:53=E5=AF=AB=E9=81=93=EF=BC=9A
 >
-> On Tue, May 17, 2022 at 06:11:38PM +0800, Tyrone Ting wrote:
-> > From: Tyrone Ting <kfting@nuvoton.com>
+> On Tue, May 17, 2022 at 06:11:39PM +0800, Tyrone Ting wrote:
+> > From: Tali Perry <tali.perry1@gmail.com>
 > >
-> > The SMBnCTL3 register is 8-bit wide and the 32-bit access was always
-> > incorrect, but simply didn't cause a visible error on the 32-bit machin=
-e.
+> > On some platforms in rare cases (1 to 100,000 transactions),
+> > the i2c gets a spurious interrupt which means that we enter an interrup=
+t
+> > but in the interrupt handler we don't find any status bit that points t=
+o
+> > the reason we got this interrupt.
 > >
-> > On the 64-bit machine, the kernel message reports that ESR value is
-> > 0x96000021. Checking Arm Architecture Reference Manual Armv8 suggests t=
-hat
-> > it's the alignment fault.
+> > This may be a case of a rare HW issue or signal integrity issue that is
+> > still under investigation.
 > >
-> > SMBnCTL3's address is 0xE.
+> > In order to overcome this we are doing the following:
+> > 1. Disable incoming interrupts in master mode only when slave mode is n=
+ot
+> >    enabled.
+> > 2. Clear end of busy (EOB) after every interrupt.
+> > 3. Clear other status bits (just in case since we found them cleared)
+> > 4. Return correct status during the interrupt that will finish the
+> >    transaction.
+> >
+> > On next xmit transaction if the bus is still busy the master will issue=
+ a
+> > recovery process before issuing the new transaction.
 > >
 > > Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller dri=
 ver")
+> > Signed-off-by: Tali Perry <tali.perry1@gmail.com>
 > > Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
-> > Reviewed-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
 >
 > Applied to for-next, thanks!
 >
