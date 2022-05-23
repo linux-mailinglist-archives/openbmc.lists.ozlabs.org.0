@@ -2,60 +2,47 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 778F6530C43
-	for <lists+openbmc@lfdr.de>; Mon, 23 May 2022 11:06:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5D6D6530C58
+	for <lists+openbmc@lfdr.de>; Mon, 23 May 2022 11:35:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L6BKQ2mvDz3bkN
-	for <lists+openbmc@lfdr.de>; Mon, 23 May 2022 19:06:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L6By929qGz3bl7
+	for <lists+openbmc@lfdr.de>; Mon, 23 May 2022 19:35:13 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=VzeQybxf;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=dkim header.b=ebzCyRjl;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22e;
- helo=mail-lj1-x22e.google.com; envelope-from=medadyoung@gmail.com;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
- header.s=20210112 header.b=VzeQybxf; dkim-atps=neutral
-Received: from mail-lj1-x22e.google.com (mail-lj1-x22e.google.com
- [IPv6:2a00:1450:4864:20::22e])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ smtp.mailfrom=alien8.de (client-ip=2a01:4f8:190:11c2::b:1457;
+ helo=mail.skyhub.de; envelope-from=bp@alien8.de; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
+ unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256
+ header.s=dkim header.b=ebzCyRjl; dkim-atps=neutral
+Received: from mail.skyhub.de (mail.skyhub.de [IPv6:2a01:4f8:190:11c2::b:1457])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L6BK04SPwz305S
- for <openbmc@lists.ozlabs.org>; Mon, 23 May 2022 19:06:27 +1000 (AEST)
-Received: by mail-lj1-x22e.google.com with SMTP id m11so4960825ljc.1
- for <openbmc@lists.ozlabs.org>; Mon, 23 May 2022 02:06:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
- h=mime-version:references:in-reply-to:from:date:message-id:subject:to
- :cc:content-transfer-encoding;
- bh=c31VgxAPOxEUsROXeBcUQluD+gl7iW0O4zV+RmQn2l4=;
- b=VzeQybxfmt+mm9PPUb3UHtTpQKpSuDC/a9OVBfno9GR6vKLUGb4Pg4AjBLUNMWYTuy
- grgMIhNKERZ0dMKDNFL+KfdUIyK+8XxOh0w2JhcZ+MMjzatt8Wb10lxMces8JKUD2my8
- JdCgZHdUi4J0CdGGJfHcHaJXd7KvCpHpEDLm4sz+qmLjCR5rIHSsYWG5gfgU3Qcey6ym
- PJiciL2cQd+eRBmxKuE/OIc0mkdgtiyEhE+gdEZH7YfWX2wm1Cb3MVfldijAYlA2Tlj9
- Fz34w1fMiuZS9OsNY98EsFaBnu9lLEplLLp5wdpQou/0fSNnWTLkmCf+Oi12BjKoTlux
- sGcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:references:in-reply-to:from:date
- :message-id:subject:to:cc:content-transfer-encoding;
- bh=c31VgxAPOxEUsROXeBcUQluD+gl7iW0O4zV+RmQn2l4=;
- b=iDerVE8uGQEsMdNhswDKI2K8Wsjenvt6bO8WVYNhdZy/wZjfVPdkXn2JqoePI1w1ZL
- 0QtxlxHNRAzU6T7EXIJSStxb0Xct0XHa4RaJrf0pRvhM1GHyrrtUnfZNE3NmgoPYNkV9
- FgTf7aoToZKxhGgiIEzH0qp/Mx8PzVAs+uoxs75t9ViaxHuPImD5H5sVzEWU6sa1k62L
- tpVg61bzmx3wnhVXuMAx7QW9cibYKz8uNNPQsy6pfAPy+cvRLuEM/CxJCpXmJNDrKEVG
- gFhp0Qn2YiuN2PsdvKkg/LgMVFrQsfrcIbhxadtfNEFzP9QIrqNWbTvFAOQTMyHTlzY8
- NeOQ==
-X-Gm-Message-State: AOAM533yPFdM7gKTfE2Er8LaxJbi4O8L7rGEdVoASn65iWYZdoGTSmzm
- nWqOf/vDtRoHwZnBBFUDVhZPKendEFojz8+xi0U=
-X-Google-Smtp-Source: ABdhPJzQV4IXbyzcOthbMe7j41Fs7BnkjjlQ4eONXsKw18HGNDtmbpONBK22qWAVgeySQWNNUCwIXjvZj4PeAs2AJos=
-X-Received: by 2002:a2e:8691:0:b0:253:def8:ed29 with SMTP id
- l17-20020a2e8691000000b00253def8ed29mr8503892lji.423.1653296779214; Mon, 23
- May 2022 02:06:19 -0700 (PDT)
-MIME-Version: 1.0
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L6Bxk6SXVz2yph
+ for <openbmc@lists.ozlabs.org>; Mon, 23 May 2022 19:34:46 +1000 (AEST)
+Received: from zn.tnic (p200300ea974657b3329c23fffea6a903.dip0.t-ipconnect.de
+ [IPv6:2003:ea:9746:57b3:329c:23ff:fea6:a903])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id E65A01EC018C;
+ Mon, 23 May 2022 11:34:36 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+ t=1653298477;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+ bh=wfztkaByN97ueSWPSqUqhksXQIUMUHKpNYslfU+pPrg=;
+ b=ebzCyRjlW0zFUmL1cfxuMt0O5oJoWih0LGLxXewxEsVV0HwLlSAaeluWxaSLSeO8QNDjlX
+ RcOcKTTgh1zkPPm6FIe+5BQlCC9pN1+LFFgLzn53igTIFT5imcU7xC2Riu5Mj/+AFraVpv
+ uPGo0V8r+Ar0u93K+6/I7bDk6Lzm3r4=
+Date: Mon, 23 May 2022 11:34:31 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: Medad Young <medadyoung@gmail.com>
+Subject: Re: [PATCH v9 1/3] ARM: dts: nuvoton: Add memory controller node
+Message-ID: <YotVJ+ExcrQshM4A@zn.tnic>
 References: <20220510031056.1657-1-ctcchien@nuvoton.com>
  <20220510031056.1657-2-ctcchien@nuvoton.com>
  <YoUwe6Tj4Uh6ukc8@zn.tnic>
@@ -63,14 +50,11 @@ References: <20220510031056.1657-1-ctcchien@nuvoton.com>
  <YoYPGWreQuF9QZzc@zn.tnic>
  <CAHpyw9es-n+bW9SsGBmmr3ghBFk8Q8E6ZTbE42BpU-6p8LfHtw@mail.gmail.com>
  <YoeE8cBhUkF3K44/@zn.tnic>
-In-Reply-To: <YoeE8cBhUkF3K44/@zn.tnic>
-From: Medad Young <medadyoung@gmail.com>
-Date: Mon, 23 May 2022 17:06:07 +0800
-Message-ID: <CAHpyw9fAfNf8j++JtLhuudSWj6N1-KAxA_fxEGL998WNVXTPdQ@mail.gmail.com>
-Subject: Re: [PATCH v9 1/3] ARM: dts: nuvoton: Add memory controller node
-To: Borislav Petkov <bp@alien8.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+ <CAHpyw9fAfNf8j++JtLhuudSWj6N1-KAxA_fxEGL998WNVXTPdQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAHpyw9fAfNf8j++JtLhuudSWj6N1-KAxA_fxEGL998WNVXTPdQ@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,41 +80,59 @@ Cc: KWLIU@nuvoton.com, tony.luck@intel.com, rric@kernel.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Dear Borislav,
+On Mon, May 23, 2022 at 05:06:07PM +0800, Medad Young wrote:
+> I did do "git commit --amend",
+> I beleve the issue is about the mail server I used,
+> I use gmail to send the mail due to the mail server of my company
+> does't support smtp
+> so now I should sign the commit with my gmail account.
 
-thanks for your comments.
+No, you should supply --author too - I had forgotten about that.
 
-Borislav Petkov <bp@alien8.de> =E6=96=BC 2022=E5=B9=B45=E6=9C=8820=E6=97=A5=
- =E9=80=B1=E4=BA=94 =E4=B8=8B=E5=8D=888:09=E5=AF=AB=E9=81=93=EF=BC=9A
->
-> On Fri, May 20, 2022 at 10:31:05AM +0800, Medad Young wrote:
-> > for the second warning, I did upadate my .git/config according to your
-> > advise. but I thought I met orthe problem, I will try to fix it
->
-> You need to do "git commit --amend" on the patch so that it updates the
-> author.
+commit 0876b99e4aa2bf7113070c9c0f5d0ade7ad91697 (HEAD -> refs/heads/test)
+Author: Medad CChien <medadyoung@gmail.com>
+Date:   Tue May 10 11:10:54 2022 +0800
 
-I did do "git commit --amend",
-I beleve the issue is about the mail server I used,
-I use gmail to send the mail due to the mail server of my company
-does't support smtp
-so now I should sign the commit with my gmail account.
+    ARM: dts: nuvoton: Add memory controller node
+    
+    ECC must be configured in the BootBlock header.
+    Then, you can read error counts via the EDAC kernel framework.
+    
+    Signed-off-by: Medad CChien <ctcchien@nuvoton.com>
 
->
-> > for the first warning, did I really need to fix it?
->
-> Yes, you need to fix both.
->
-> Again, before you send, run checkpatch on your patches, one by one.
+$  git commit --amend --author="Medad CChien <ctcchien@nuvoton.com>"
+[test 5d6cd85171d1] ARM: dts: nuvoton: Add memory controller node
+ Author: Medad CChien <ctcchien@nuvoton.com>
+ Date: Tue May 10 11:10:54 2022 +0800
+ 1 file changed, 7 insertions(+)
+$ git log -p -1
+commit 5d6cd85171d14e67840e672e2f96a16981243424 (HEAD -> refs/heads/test)
+Author: Medad CChien <ctcchien@nuvoton.com>
+Date:   Tue May 10 11:10:54 2022 +0800
 
-OK
+    ARM: dts: nuvoton: Add memory controller node
+    
+    ECC must be configured in the BootBlock header.
+    Then, you can read error counts via the EDAC kernel framework.
+    
+    Signed-off-by: Medad CChien <ctcchien@nuvoton.com>
 
->
-> --
-> Regards/Gruss,
->     Boris.
->
-> https://people.kernel.org/tglx/notes-about-netiquette
+$ git format-patch -1 -o /tmp/
+/tmp/0001-ARM-dts-nuvoton-Add-memory-controller-node.patch
 
-B.R.
-Medad
+$ head /tmp/0001-ARM-dts-nuvoton-Add-memory-controller-node.patch
+From 5d6cd85171d14e67840e672e2f96a16981243424 Mon Sep 17 00:00:00 2001
+From: Medad CChien <ctcchien@nuvoton.com>
+		    ^^^^^^^^^^^^^^^^^^^^^^
+
+
+Don't hesitate to look at the manpages if a tool doesn't do what you
+expect it to do.
+
+HTH.
+
+-- 
+Regards/Gruss,
+    Boris.
+
+https://people.kernel.org/tglx/notes-about-netiquette
