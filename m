@@ -1,98 +1,78 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6ED57531F97
-	for <lists+openbmc@lfdr.de>; Tue, 24 May 2022 02:10:40 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id D2344532039
+	for <lists+openbmc@lfdr.de>; Tue, 24 May 2022 03:16:32 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L6ZNG29PRz3bly
-	for <lists+openbmc@lfdr.de>; Tue, 24 May 2022 10:10:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L6brG5Vwmz306l
+	for <lists+openbmc@lfdr.de>; Tue, 24 May 2022 11:16:30 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm2 header.b=vvAh8qAU;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=obz3h5ac;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=V9WvkSLF;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.27;
- helo=out3-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::235;
+ helo=mail-lj1-x235.google.com; envelope-from=medadyoung@gmail.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
- header.a=rsa-sha256 header.s=fm2 header.b=vvAh8qAU; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=obz3h5ac; 
- dkim-atps=neutral
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
- [66.111.4.27])
+ unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256
+ header.s=20210112 header.b=V9WvkSLF; dkim-atps=neutral
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com
+ [IPv6:2a00:1450:4864:20::235])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L6ZMn6Mc7z2ynL
- for <openbmc@lists.ozlabs.org>; Tue, 24 May 2022 10:10:13 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.nyi.internal (Postfix) with ESMTP id 1BC7A5C03EC;
- Mon, 23 May 2022 20:10:10 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Mon, 23 May 2022 20:10:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- fuzziesquirrel.com; h=cc:cc:content-type:date:date:from:from
- :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:sender:subject:subject:to:to; s=fm2; t=1653351010; x=
- 1653437410; bh=rb5KXPTtPVfw9Sv317xynMpf27mnMmIBoWWXKHvIj/U=; b=v
- vAh8qAUYEOLxiNwpXazfkovXS0hNZVPfoiSrNc9Og9UHzabB3h8MlqBQceoSJYYZ
- uzpqwP+j5inh02c+J7rCaETOik/ow9QnB1NGewaMx+kkDpvFsxlxpY0/8H5KiwWF
- 1A1ETQkST5j0pI8+f8TcvS+Fdget4KeQbmLncHrLwS1l4G6rn/Oo2Y2Ah6BzYq8o
- bgoYubN41ciELGuySkTl0FYpjaFoA05+eFOme6GkQTyVgoszSivUVWqwZ9UU6xYl
- ANpV+iYSUbA2qZhowtUg+x/axGGE762sUgby50Hw1lvutmi+IuOm1na2i5BY/2vq
- M5Va1LM/CcYdhoLg0rtRg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
- :feedback-id:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:sender:subject:subject:to:to
- :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; t=1653351010; x=1653437410; bh=rb5KXPTtPVfw9Sv317xynMpf27mn
- MmIBoWWXKHvIj/U=; b=obz3h5acxykzcAu9CJoHCpe4WTt97lvOSAJH1fKZnMM0
- YHg50u/kMVJnD4Qc+ZnyXieYRpi5q42Nf5Chg779r/eKr9oXnBavAfHe4XmJGjEb
- 9NmOdk9+h5xSVUJ5wpSMxrsnRDkspmQksUWHDTE8YXxPH+4ohdKTbZsE0s3Yz5V1
- 5L31AzalLcGQNXHo7Vchi+LLcoI88cSgwzVe2qz1+rS/9o0gLxmjeXPL3nut8bAi
- PMkNYIx+tFWb9zHT4uw6/Wyro5IwFKiu+TuKuvesRVjdWyyzEbs3SYzthDZVc4Xi
- lBqehfmYZYEW24zI8jn0CRcFJRoMbbH2cZvVyCUpOQ==
-X-ME-Sender: <xms:YSKMYlvdhFswdUOi57sZJToskMLPxBbIEYiXvzo1eN6oni4k2Qaicw>
- <xme:YSKMYucdTJjvholVqyS7u-jdTG-BsHNIdMKNmd4l3hRIpjSrswRSyKDQVsTzzbiNz
- e3I144HXNeaazU7EKk>
-X-ME-Received: <xmr:YSKMYoydmhVyU5JBHrXtE-qhQ4t-v5dFJ8DQQ2tQFNlqRnhH3Dtxo2mW>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrjedvgdefudcutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
- fjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeurhgrugcu
- uehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
- eqnecuggftrfgrthhtvghrnhepffdvleejtefgveelfedutdegheeutdfggfdvteevkeek
- leevieegjeeffeeuffejnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhush
- htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrhgrughlvgihsges
- fhhuiiiiihgvshhquhhirhhrvghlrdgtohhm
-X-ME-Proxy: <xmx:YSKMYsNIVAYRUjczUMwuV5VGKqQ2ei7wssI5npUTpu73-xZ87-UvUw>
- <xmx:YSKMYl_xSdXBlj6GwEki_yPu8QBcECb1aAWZc6XCdndkkaXvRgRqYQ>
- <xmx:YSKMYsW70aVDtayhejPrBjmBcS_mvS4xou3XiCwAu76AY1OkIOoa3A>
- <xmx:YiKMYnIr-Au_tZUQeTYvl4D4bhMJWha78C_h8GdfC_8lewumtqgxPA>
-Feedback-ID: i02c9470a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 May 2022 20:10:09 -0400 (EDT)
-Date: Mon, 23 May 2022 20:10:07 -0400
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: Patrick Williams <patrick@stwcx.xyz>
-Subject: Re: Aspeed SPI driver upstreaming
-Message-ID: <20220524001007.k7ujvebqis6qftgh@cheese>
-References: <20200106232722.GB1233@patrickw3-mbp.dhcp.thefacebook.com>
- <31ec66fe-9ff9-b28b-3b83-a6c0a7959f30@kaod.org>
- <20200109164317.GE1233@patrickw3-mbp.dhcp.thefacebook.com>
- <20220516181824.ntp33kv75subztsa@cheese>
- <YogD2/rKlWGUrBjH@heinlein.stwcx.org.github.beta.tailscale.net>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L6bqt6kMkz2yp0
+ for <openbmc@lists.ozlabs.org>; Tue, 24 May 2022 11:16:09 +1000 (AEST)
+Received: by mail-lj1-x235.google.com with SMTP id e4so18627824ljb.13
+ for <openbmc@lists.ozlabs.org>; Mon, 23 May 2022 18:16:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmail.com; s=20210112;
+ h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+ :cc:content-transfer-encoding;
+ bh=xfZDqs28oyhSqhq27xEhsDuOI5suqfnf7ndJ0VongrY=;
+ b=V9WvkSLF3IrBDVZuHj1fncXQbS4UZP8Bl4vGoQ4cP40GscD6acASvvt3KvV3y2kJbT
+ YRvKI1ek80h6KhZw+b+gzPB6B8GXVuEoXFrqSifxHKEspJKZw7sxwx4Gzoji8uY0Df0M
+ bOvd2jeiBvUM5bbTVTV8eZM2lk/AsAhU/EGkgD3Wh7WUffY6jyjRizHUgtPxZlDyGtsE
+ RiTWo0/o9HaUPCnfFmONEty2uj/HVqALZZwQfzAH1xSY6o44XeVndcsckzs1j7iIbytz
+ 4H4DyEiZYzHZCud6z92NKr0NeOT3ij5at8mzNzN6v8DFQ+ZGtsBS69occFDvNVFcII5r
+ hZ+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20210112;
+ h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+ :message-id:subject:to:cc:content-transfer-encoding;
+ bh=xfZDqs28oyhSqhq27xEhsDuOI5suqfnf7ndJ0VongrY=;
+ b=uZes8wI9W199FWIyqSp/qA0PBCdxcdDrOhvekcEl+oe48Oo2yCfdpvMgH6GCHfLi6E
+ co1fA198rNUq1w+h+u27Z3RDy/lEizi3Hy2eJazlB1h5XucsTrEn2cEDtJbTTtp4f83M
+ Ya4VRbNfPtoTEQSUV6/E+v6A//Tfdo8f4qpyg/Ss3LBdVv1Ty4dKbXxFG7PCmF6BzZ/Z
+ 99s9GvuZhjVz6gQvO0aG0g5PcU5Yo6RbDYBq17wmbF2WdsjPoczCq9AlFzMdAKvs1BUN
+ ArvSDahptyKSb8oaAYsdFgQJ95M9BQRU7OLeOeGx662Ck6L2N49zOplS8fhhhzSQJlev
+ Yd8Q==
+X-Gm-Message-State: AOAM532212Lv1v26uV0r7irgfg5jE2BxmWR0Uj3r3Jg3I/2x2eVoXQiP
+ ShHLZ8hJwPlIiGMoXRWEvl3mMs4EOT3LYPIUgWg=
+X-Google-Smtp-Source: ABdhPJyMUAWa9cyvBzye0KjjHaKA88ye8dYHy9GbuVdYLtpagId1ddjvvlKbtYqmSMfU8sIThkAM9ZCbSrzqE3dTMAc=
+X-Received: by 2002:a2e:a602:0:b0:253:d7e2:4d8a with SMTP id
+ v2-20020a2ea602000000b00253d7e24d8amr12468397ljp.284.1653354961223; Mon, 23
+ May 2022 18:16:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <YogD2/rKlWGUrBjH@heinlein.stwcx.org.github.beta.tailscale.net>
+References: <20220510031056.1657-1-ctcchien@nuvoton.com>
+ <20220510031056.1657-2-ctcchien@nuvoton.com>
+ <YoUwe6Tj4Uh6ukc8@zn.tnic>
+ <CAHpyw9fjThEP4NuU08aNJ_raHpq9-j9KgBb8YuZ_shXTjhm3JA@mail.gmail.com>
+ <YoYPGWreQuF9QZzc@zn.tnic>
+ <CAHpyw9es-n+bW9SsGBmmr3ghBFk8Q8E6ZTbE42BpU-6p8LfHtw@mail.gmail.com>
+ <YoeE8cBhUkF3K44/@zn.tnic>
+ <CAHpyw9fAfNf8j++JtLhuudSWj6N1-KAxA_fxEGL998WNVXTPdQ@mail.gmail.com>
+ <YotVJ+ExcrQshM4A@zn.tnic>
+In-Reply-To: <YotVJ+ExcrQshM4A@zn.tnic>
+From: Medad Young <medadyoung@gmail.com>
+Date: Tue, 24 May 2022 09:15:50 +0800
+Message-ID: <CAHpyw9eALo=39N15omAFLA28LySBfPom7ejCfOgW9aS5gTa3Lg@mail.gmail.com>
+Subject: Re: [PATCH v9 1/3] ARM: dts: nuvoton: Add memory controller node
+To: Borislav Petkov <bp@alien8.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,31 +84,86 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: taoren@fb.com, openbmc@lists.ozlabs.org,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
+Cc: KWLIU@nuvoton.com, tony.luck@intel.com, rric@kernel.org,
+ Benjamin Fair <benjaminfair@google.com>,
+ linux-edac <linux-edac@vger.kernel.org>, KFTING <KFTING@nuvoton.com>,
+ Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>, JJLIU0@nuvoton.com,
+ ctcchien@nuvoton.com, Tali Perry <tali.perry1@gmail.com>,
+ devicetree <devicetree@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
+ James Morse <james.morse@arm.com>, YSCHU@nuvoton.com,
+ Mauro Carvalho Chehab <mchehab@kernel.org>,
+ Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+ Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Thanks for the reply Patrick.
+Dear Borislav,
 
-On Fri, May 20, 2022 at 04:10:51PM -0500, Patrick Williams wrote:
->I don't know the details here.  There was some dispute between the MTD
->maintainers and work that others were doing in this area that has made
->it difficult for us to get additional patches in until someone refactors
->the Aspeed driver how upstream wants.  (last I was aware)
+thanks for your help.
 
-Right, this work has just recently been done: 
-https://lore.kernel.org/lkml/20220503060634.122722-1-clg@kaod.org/ 
-(thanks Cedric, IBM, and anyone else that helped!)
+Borislav Petkov <bp@alien8.de> =E6=96=BC 2022=E5=B9=B45=E6=9C=8823=E6=97=A5=
+ =E9=80=B1=E4=B8=80 =E4=B8=8B=E5=8D=885:34=E5=AF=AB=E9=81=93=EF=BC=9A
+>
+> On Mon, May 23, 2022 at 05:06:07PM +0800, Medad Young wrote:
+> > I did do "git commit --amend",
+> > I beleve the issue is about the mail server I used,
+> > I use gmail to send the mail due to the mail server of my company
+> > does't support smtp
+> > so now I should sign the commit with my gmail account.
+>
+> No, you should supply --author too - I had forgotten about that.
+>
+> commit 0876b99e4aa2bf7113070c9c0f5d0ade7ad91697 (HEAD -> refs/heads/test)
+> Author: Medad CChien <medadyoung@gmail.com>
+> Date:   Tue May 10 11:10:54 2022 +0800
+>
+>     ARM: dts: nuvoton: Add memory controller node
+>
+>     ECC must be configured in the BootBlock header.
+>     Then, you can read error counts via the EDAC kernel framework.
+>
+>     Signed-off-by: Medad CChien <ctcchien@nuvoton.com>
+>
+> $  git commit --amend --author=3D"Medad CChien <ctcchien@nuvoton.com>"
+> [test 5d6cd85171d1] ARM: dts: nuvoton: Add memory controller node
+>  Author: Medad CChien <ctcchien@nuvoton.com>
+>  Date: Tue May 10 11:10:54 2022 +0800
+>  1 file changed, 7 insertions(+)
+> $ git log -p -1
+> commit 5d6cd85171d14e67840e672e2f96a16981243424 (HEAD -> refs/heads/test)
+> Author: Medad CChien <ctcchien@nuvoton.com>
+> Date:   Tue May 10 11:10:54 2022 +0800
+>
+>     ARM: dts: nuvoton: Add memory controller node
+>
+>     ECC must be configured in the BootBlock header.
+>     Then, you can read error counts via the EDAC kernel framework.
+>
+>     Signed-off-by: Medad CChien <ctcchien@nuvoton.com>
+>
+> $ git format-patch -1 -o /tmp/
+> /tmp/0001-ARM-dts-nuvoton-Add-memory-controller-node.patch
+>
+> $ head /tmp/0001-ARM-dts-nuvoton-Add-memory-controller-node.patch
+> From 5d6cd85171d14e67840e672e2f96a16981243424 Mon Sep 17 00:00:00 2001
+> From: Medad CChien <ctcchien@nuvoton.com>
+>                     ^^^^^^^^^^^^^^^^^^^^^^
+>
+>
+> Don't hesitate to look at the manpages if a tool doesn't do what you
+> expect it to do.
 
->I am not using the aspeed-spi driver in these conditions.  After
->initially setting this up we did some testing with the TPM driver and
->realized that it wasn't working.  It turns out that the Aspeed hardware
->is incapable of bi-directional transactions (bytes going out MOSI and in
->MISO at the same time), which is required by the TCG TPM protocol.
->We've ended up having to use the GPIO-SPI bitbang driver for talking
->with SPI-based TPMs.
+OK, I will try to supply --author with my original mail server
 
-Good to know!  Thanks for the information,
+>
+> HTH.
+>
+> --
+> Regards/Gruss,
+>     Boris.
+>
+> https://people.kernel.org/tglx/notes-about-netiquette
 
-Brad
+B.R.
+Medad
