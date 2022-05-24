@@ -2,68 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C7EB5531F5C
-	for <lists+openbmc@lfdr.de>; Tue, 24 May 2022 01:48:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6ED57531F97
+	for <lists+openbmc@lfdr.de>; Tue, 24 May 2022 02:10:40 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L6YvF4MKFz3086
-	for <lists+openbmc@lfdr.de>; Tue, 24 May 2022 09:48:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L6ZNG29PRz3bly
+	for <lists+openbmc@lfdr.de>; Tue, 24 May 2022 10:10:38 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm2 header.b=T+RcZ88t;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=YjeBBFJH;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm2 header.b=vvAh8qAU;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=obz3h5ac;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=fuzziesquirrel.com (client-ip=64.147.123.20;
- helo=wout4-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
+ smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.27;
+ helo=out3-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com;
  receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
  unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com
- header.a=rsa-sha256 header.s=fm2 header.b=T+RcZ88t; 
+ header.a=rsa-sha256 header.s=fm2 header.b=vvAh8qAU; 
  dkim=pass (2048-bit key;
  unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=YjeBBFJH; 
+ header.a=rsa-sha256 header.s=fm1 header.b=obz3h5ac; 
  dkim-atps=neutral
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com
- [64.147.123.20])
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com
+ [66.111.4.27])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L6Ytn1QHsz2yny
- for <openbmc@lists.ozlabs.org>; Tue, 24 May 2022 09:48:32 +1000 (AEST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
- by mailout.west.internal (Postfix) with ESMTP id AD71232009D4;
- Mon, 23 May 2022 19:48:28 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
- by compute2.internal (MEProxy); Mon, 23 May 2022 19:48:29 -0400
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L6ZMn6Mc7z2ynL
+ for <openbmc@lists.ozlabs.org>; Tue, 24 May 2022 10:10:13 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+ by mailout.nyi.internal (Postfix) with ESMTP id 1BC7A5C03EC;
+ Mon, 23 May 2022 20:10:10 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+ by compute4.internal (MEProxy); Mon, 23 May 2022 20:10:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  fuzziesquirrel.com; h=cc:cc:content-type:date:date:from:from
  :in-reply-to:in-reply-to:message-id:mime-version:references
- :reply-to:sender:subject:subject:to:to; s=fm2; t=1653349708; x=
- 1653436108; bh=Xg9Ikcs6ZGCr7SzoeTMc0O+p7AOSo7oG0V4zquUrfps=; b=T
- +RcZ88ti/vgoXA6Vbqz1GcEru1Rrr4I0fRpSo4CujflK13rYWFisrUVY5xvK5bgQ
- nUEMbrUNmAau8RbuEx9mfOMedtjwPvW4wFy2dYg/fNWhDx3d4DdY8zWnw6e2pQ49
- jfvmjzE4NtFIMgk4+g2N5LF8tI/RiSuwMQSGJJVnirY4vY2xMZjJokpK3eN67sKP
- M2efsq5w2Bq97GeZ03Moi0B+J7mAA0uicG3bwknS//8G+RmZpL9Nf4j4vFOQEGuR
- P1Nl0b2eWiyVMm6MWCZJ+2DGkxWA63crk71NQpU916SAtYc2Vay6xOJjFruhiMg9
- wFobhEppdd3+F5x60ZFHw==
+ :reply-to:sender:subject:subject:to:to; s=fm2; t=1653351010; x=
+ 1653437410; bh=rb5KXPTtPVfw9Sv317xynMpf27mnMmIBoWWXKHvIj/U=; b=v
+ vAh8qAUYEOLxiNwpXazfkovXS0hNZVPfoiSrNc9Og9UHzabB3h8MlqBQceoSJYYZ
+ uzpqwP+j5inh02c+J7rCaETOik/ow9QnB1NGewaMx+kkDpvFsxlxpY0/8H5KiwWF
+ 1A1ETQkST5j0pI8+f8TcvS+Fdget4KeQbmLncHrLwS1l4G6rn/Oo2Y2Ah6BzYq8o
+ bgoYubN41ciELGuySkTl0FYpjaFoA05+eFOme6GkQTyVgoszSivUVWqwZ9UU6xYl
+ ANpV+iYSUbA2qZhowtUg+x/axGGE762sUgby50Hw1lvutmi+IuOm1na2i5BY/2vq
+ M5Va1LM/CcYdhoLg0rtRg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
  :feedback-id:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:sender:subject:subject:to:to
  :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; t=1653349708; x=1653436108; bh=Xg9Ikcs6ZGCr7SzoeTMc0O+p7AOS
- o7oG0V4zquUrfps=; b=YjeBBFJHku0M/GDi7QEO8EqfB7j3zgPGu9+xlRh9rbI3
- +8h+wIII5/vKe+ORD376RWzAuCbcXfBDbnpVdafvipIO6eeu09HYBSdX/gya8Bcl
- Qi+uaOy79qBNQCCuIWsHK8qaoZSck65xYrhn/1+q0IC66r1uNgYZT7zYTm1wra6+
- /EnzzgEI9JqU84E1+A1WrvWzx5LF9J96XjgI40Z5woSX77ySbmmQ237K/4bS6oDX
- BV0EzRAKHWuuFjgJG9PiZS2eCuLkVmx+aGYpNT1lYucyJ5HLpll1mCSUktrPXTTV
- LcEP3lPEAkicVKtxa6EsB3HoIof/t6TlJjef1qcx1w==
-X-ME-Sender: <xms:TB2MYjYeoJxnZNwceNGZ0gbLwi1pCOTAuYS8n8TzuCW5bMhQeKPLNQ>
- <xme:TB2MYiZ9D4EigQDJWqjlqKD7PBvbWC44JcaEasyHcFkAfBBPaEZaHfmmDzIK2lec2
- hKTRT6A9Sfg5WBB73s>
-X-ME-Received: <xmr:TB2MYl_FcCgUhj8wcMMJUaKbN1S8QrX1ABDpd8rYFFQPfmRZ4Sz6GUuM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrjedvgddvkecutefuodetggdotefrodftvf
+ fm1; t=1653351010; x=1653437410; bh=rb5KXPTtPVfw9Sv317xynMpf27mn
+ MmIBoWWXKHvIj/U=; b=obz3h5acxykzcAu9CJoHCpe4WTt97lvOSAJH1fKZnMM0
+ YHg50u/kMVJnD4Qc+ZnyXieYRpi5q42Nf5Chg779r/eKr9oXnBavAfHe4XmJGjEb
+ 9NmOdk9+h5xSVUJ5wpSMxrsnRDkspmQksUWHDTE8YXxPH+4ohdKTbZsE0s3Yz5V1
+ 5L31AzalLcGQNXHo7Vchi+LLcoI88cSgwzVe2qz1+rS/9o0gLxmjeXPL3nut8bAi
+ PMkNYIx+tFWb9zHT4uw6/Wyro5IwFKiu+TuKuvesRVjdWyyzEbs3SYzthDZVc4Xi
+ lBqehfmYZYEW24zI8jn0CRcFJRoMbbH2cZvVyCUpOQ==
+X-ME-Sender: <xms:YSKMYlvdhFswdUOi57sZJToskMLPxBbIEYiXvzo1eN6oni4k2Qaicw>
+ <xme:YSKMYucdTJjvholVqyS7u-jdTG-BsHNIdMKNmd4l3hRIpjSrswRSyKDQVsTzzbiNz
+ e3I144HXNeaazU7EKk>
+X-ME-Received: <xmr:YSKMYoydmhVyU5JBHrXtE-qhQ4t-v5dFJ8DQQ2tQFNlqRnhH3Dtxo2mW>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrjedvgdefudcutefuodetggdotefrodftvf
  curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
  uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
  fjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeurhgrugcu
@@ -72,27 +72,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrjedvgddvkecutefuodetggdote
  leevieegjeeffeeuffejnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhush
  htvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrhgrughlvgihsges
  fhhuiiiiihgvshhquhhirhhrvghlrdgtohhm
-X-ME-Proxy: <xmx:TB2MYprPziMMNiviI7zN2bj5qd1egjTYk7eAWe7s3XahushqIBE1_Q>
- <xmx:TB2MYuqEzjd2XUKQzMc87tHRiJBUrE9vQIW-L_HJBukXcJD6UvZ02g>
- <xmx:TB2MYvRv90JkWgkdbV9ZFxGbjMPElaRn0I7JulIXrMyprK17FJn-ug>
- <xmx:TB2MYl2Fyb7Uht6d11OsGjtKAmrYTordmYGbbS3kbFqVY7mTms_E2Q>
+X-ME-Proxy: <xmx:YSKMYsNIVAYRUjczUMwuV5VGKqQ2ei7wssI5npUTpu73-xZ87-UvUw>
+ <xmx:YSKMYl_xSdXBlj6GwEki_yPu8QBcECb1aAWZc6XCdndkkaXvRgRqYQ>
+ <xmx:YSKMYsW70aVDtayhejPrBjmBcS_mvS4xou3XiCwAu76AY1OkIOoa3A>
+ <xmx:YiKMYnIr-Au_tZUQeTYvl4D4bhMJWha78C_h8GdfC_8lewumtqgxPA>
 Feedback-ID: i02c9470a:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 23 May 2022 19:48:27 -0400 (EDT)
-Date: Mon, 23 May 2022 19:48:25 -0400
+ 23 May 2022 20:10:09 -0400 (EDT)
+Date: Mon, 23 May 2022 20:10:07 -0400
 From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: John Broadbent <jebr@google.com>
-Subject: Re: Proposing changes to the OpenBMC tree (to make upstreaming easier)
-Message-ID: <20220523234825.lcbgr2kljbf536cx@cheese>
-References: <CAH2-KxAJS_U8=meCxp8ue7n0bmnzeRpyZOPZpy0h1cFEbbz-HA@mail.gmail.com>
- <43a7fff2-2616-4f81-9c18-01454f0b30b2@www.fastmail.com>
- <CAEAQM=Lo9AcUrw1c2bT_pYNtG0LpT9w2=McMbx=RY=SP0V_4PA@mail.gmail.com>
- <CAH2-KxBqT-A91Jpj9ENTcajvgzO=oDRsTUPe=eLaOVBhVSjDqw@mail.gmail.com>
- <CAPw1Ef_dMf43e567LLAfMZp6khWWQAm=i63LHfOwWkyiSe-MFA@mail.gmail.com>
+To: Patrick Williams <patrick@stwcx.xyz>
+Subject: Re: Aspeed SPI driver upstreaming
+Message-ID: <20220524001007.k7ujvebqis6qftgh@cheese>
+References: <20200106232722.GB1233@patrickw3-mbp.dhcp.thefacebook.com>
+ <31ec66fe-9ff9-b28b-3b83-a6c0a7959f30@kaod.org>
+ <20200109164317.GE1233@patrickw3-mbp.dhcp.thefacebook.com>
+ <20220516181824.ntp33kv75subztsa@cheese>
+ <YogD2/rKlWGUrBjH@heinlein.stwcx.org.github.beta.tailscale.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <CAPw1Ef_dMf43e567LLAfMZp6khWWQAm=i63LHfOwWkyiSe-MFA@mail.gmail.com>
+In-Reply-To: <YogD2/rKlWGUrBjH@heinlein.stwcx.org.github.beta.tailscale.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -104,47 +104,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ed Tanous <edtanous@google.com>, Cody Smith <scody@google.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: taoren@fb.com, openbmc@lists.ozlabs.org,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, May 23, 2022 at 02:07:55PM -0700, John Broadbent wrote:
+Thanks for the reply Patrick.
 
->>  "I have no interest in making this easier for you (if it is worse in
->other ways for the project)."   - referring to downstream only features.
+On Fri, May 20, 2022 at 04:10:51PM -0500, Patrick Williams wrote:
+>I don't know the details here.  There was some dispute between the MTD
+>maintainers and work that others were doing in this area that has made
+>it difficult for us to get additional patches in until someone refactors
+>the Aspeed driver how upstream wants.  (last I was aware)
 
->This is the wrong way to view features the community does not want, 
+Right, this work has just recently been done: 
+https://lore.kernel.org/lkml/20220503060634.122722-1-clg@kaod.org/ 
+(thanks Cedric, IBM, and anyone else that helped!)
 
-Can you talk about what features the community does not want?  If I pick 
-on Google a little bit there is already a google-misc repo where Google 
-puts whatever features it wants.  There is the meta-google layer that 
-doesn't actually have any platforms in it.  There is the newly approved 
-Google SMM logging feature/repo.  There is an OEM Google REST API in 
-upstream bmcweb.  There are multiple Google OEM IPMI repositories.  And 
-to be fair, Google isn't alone here - IBM has an API in bmcweb and 
-layers without platforms too.  Where is the external (community) push 
-back on features?  The only one I am aware of is a feature IBM wanted to 
-contribute (which for the record, I am not convinced rejecting it was 
-appropriate):
-https://lore.kernel.org/openbmc/CAMhqiMoFAHcUk0nO_xoOubcZqF_dPDFweqsttTULRJK38o1Ung@mail.gmail.com/
+>I am not using the aspeed-spi driver in these conditions.  After
+>initially setting this up we did some testing with the TPM driver and
+>realized that it wasn't working.  It turns out that the Aspeed hardware
+>is incapable of bi-directional transactions (bytes going out MOSI and in
+>MISO at the same time), which is required by the TCG TPM protocol.
+>We've ended up having to use the GPIO-SPI bitbang driver for talking
+>with SPI-based TPMs.
 
-My point is, I am having trouble accepting that community pushback is 
-what causes downstream patches.
+Good to know!  Thanks for the information,
 
-> and features we would not be allowed to share. 
-
-This I can accept as a generator of downstream patches.  I actually 
-support the monorepo concept for the most part, but not with this as 
-motivation.  If IBM's pay-for-access feature (reference the thread I 
-linked above if that doesn't make sense) was counter to the spirit of 
-open source (again, I don't think it is), adding this kind of thinking 
-to our decision process is even more counter.
-
->There is a layer of complexity
->that we use to integrate with our data centers services that only we need.
->A better model would allow openbmc to be flexible enough to enable
->downstream features.
-
-And an even better model would be one where there is a path to getting 
-all features upstream?
+Brad
