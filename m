@@ -2,93 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4F1A65341EB
-	for <lists+openbmc@lfdr.de>; Wed, 25 May 2022 19:03:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E2C5534237
+	for <lists+openbmc@lfdr.de>; Wed, 25 May 2022 19:33:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L7cpB1YBVz3bl3
-	for <lists+openbmc@lfdr.de>; Thu, 26 May 2022 03:03:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L7dSn3sC1z3bkL
+	for <lists+openbmc@lfdr.de>; Thu, 26 May 2022 03:33:13 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=aTbRsS75;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=afSXkBhk;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5;
- helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
- receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+ spf=none (no SPF record) smtp.mailfrom=linux.intel.com
+ (client-ip=192.55.52.120; helo=mga04.intel.com;
+ envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
- header.s=pp1 header.b=aTbRsS75; dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com
- [148.163.158.5])
+ unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256
+ header.s=Intel header.b=afSXkBhk; dkim-atps=neutral
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
  (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L7cnk6JvYz30Hf
- for <openbmc@lists.ozlabs.org>; Thu, 26 May 2022 03:02:50 +1000 (AEST)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 24PFpC6V001456;
- Wed, 25 May 2022 17:02:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
- h=from : to : cc : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=pp1;
- bh=8RK1tSgxZfnncjQW7sejxM5uT0PRQeHZJXDzKf5mk4g=;
- b=aTbRsS75dCTo1Iy5b3axHdLlSKWVaqKOhHzbKEDOGPNT2yI7DiHrF5IHPL02qZvVWsvn
- HTdolbkGz2HLsHmHfFFgjsGk0BLES1io0WrPCU/zx+FMYkuF4SvXDTwFxyfLV7hIEgqv
- aEn5RSumlF2JCVLmmQ1B62RXlC8YNaO2BzMVfGm5RuXCOvBZKG3EMKe4j5HgdO9xqLWa
- 4hcbgBlLY4qZxcHcw2BHPEqI1GAl5w4UKgPlBAzGihcWTLLrchk5euDkogpbzWVFdKR/
- xqr8/Ml0MimlrDYcBvI6VjNdZQX4QDbHAI2PZZNg287U9/MKWTbfsggJgh57P//kj+0/ mA== 
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
- [169.62.189.11])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3g9nvpund9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 25 May 2022 17:02:48 +0000
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
- by ppma03dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 24PH27hc016892;
- Wed, 25 May 2022 17:02:47 GMT
-Received: from b03cxnp07028.gho.boulder.ibm.com
- (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
- by ppma03dal.us.ibm.com with ESMTP id 3g93uth5s3-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 25 May 2022 17:02:47 +0000
-Received: from b03ledav004.gho.boulder.ibm.com
- (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
- by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 24PH2kdN34996680
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 25 May 2022 17:02:46 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F2AE878067;
- Wed, 25 May 2022 17:02:45 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AABCA7805E;
- Wed, 25 May 2022 17:02:45 +0000 (GMT)
-Received: from v0005c16.aus.stglabs.ibm.com (unknown [9.211.60.201])
- by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
- Wed, 25 May 2022 17:02:45 +0000 (GMT)
-From: Eddie James <eajames@linux.ibm.com>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-5.15 2/2] spi: core: Display return code when
- failing to transfer message
-Date: Wed, 25 May 2022 12:02:40 -0500
-Message-Id: <20220525170240.33918-3-eajames@linux.ibm.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20220525170240.33918-1-eajames@linux.ibm.com>
-References: <20220525170240.33918-1-eajames@linux.ibm.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L7dSM1D2gz30Hf
+ for <openbmc@lists.ozlabs.org>; Thu, 26 May 2022 03:32:50 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1653499971; x=1685035971;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=zFfZG5aE64Sz5hHGHeaLLPFGzXoXwE70vbeN27URneg=;
+ b=afSXkBhkLJ7/V9PTiDmydGhlRcad8W2zEUYp5wDrxD/YGUVEZIkiWD3J
+ Th9GQX94hu67WSX8OUtMNWrFF5n5RgayUjdMvjnGoqqe70ugo6Yg955+J
+ 6ukoMBpnroYxZHzSlsEuMxqwonXenrAKC5Zb7I29acSI3Q+yEXcBOfi7Q
+ 5aSEc4cxDkAemdCGCO6qqe+obZh+7KZyZvCr+p2wKp9O9M+aijRRrs5ba
+ CQ74+4QoNxwla/r68Kxok9hdAzQrfpKs1lnP+Hs39CZ307TP5WVeq7A87
+ DtJzyX3IebXJh1RgLhrOA/7EYz7VWsh9n5IwsR+P5g/xYrNzQheGwtb/Q g==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10358"; a="272697140"
+X-IronPort-AV: E=Sophos;i="5.91,250,1647327600"; d="scan'208";a="272697140"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+ by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 May 2022 10:08:39 -0700
+X-IronPort-AV: E=Sophos;i="5.91,250,1647327600"; d="scan'208";a="609286483"
+Received: from smile.fi.intel.com ([10.237.72.54])
+ by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 25 May 2022 10:08:33 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.95)
+ (envelope-from <andriy.shevchenko@linux.intel.com>)
+ id 1ntuUn-000L4I-9o; Wed, 25 May 2022 20:08:29 +0300
+Date: Wed, 25 May 2022 20:08:28 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Tyrone Ting <warp5tw@gmail.com>
+Subject: Re: [PATCH v6 0/5] i2c: npcm: Bug fixes timeout, spurious interrupts
+Message-ID: <Yo5ijJ9mqXRNB7d8@smile.fi.intel.com>
+References: <20220525032341.3182-1-warp5tw@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: _FkHNJJYPeS8zUfXm6-PdiOI1RdtIU7a
-X-Proofpoint-ORIG-GUID: _FkHNJJYPeS8zUfXm6-PdiOI1RdtIU7a
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.874,Hydra:6.0.486,FMLib:17.11.64.514
- definitions=2022-05-25_04,2022-05-25_02,2022-02-23_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 spamscore=0 bulkscore=0 adultscore=0 mlxlogscore=999
- suspectscore=0 phishscore=0 impostorscore=0 clxscore=1015
- lowpriorityscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2204290000 definitions=main-2205250086
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220525032341.3182-1-warp5tw@gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,33 +70,111 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Eddie James <eajames@linux.ibm.com>, joel@jms.id.au
+Cc: tmaimon77@gmail.com, devicetree@vger.kernel.org, tali.perry1@gmail.com,
+ jsd@semihalf.com, krzysztof.kozlowski+dt@linaro.org, benjaminfair@google.com,
+ openbmc@lists.ozlabs.org, JJLIU0@nuvoton.com, lukas.bulwahn@gmail.com,
+ tomer.maimon@nuvoton.com, KWLIU@nuvoton.com, arnd@arndb.de, sven@svenpeter.dev,
+ robh+dt@kernel.org, Avi.Fishman@nuvoton.com, semen.protsenko@linaro.org,
+ jie.deng@intel.com, avifishman70@gmail.com, venture@google.com,
+ linux-kernel@vger.kernel.org, wsa@kernel.org, kfting@nuvoton.com,
+ tali.perry@nuvoton.com, jarkko.nikula@linux.intel.com, olof@lixom.net,
+ linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-All the other calls to the controller driver display the error
-return code. The return code is helpful to understand what went
-wrong, so include it when failing to transfer one message.
+On Wed, May 25, 2022 at 11:23:36AM +0800, Tyrone Ting wrote:
+> From: Tyrone Ting <kfting@nuvoton.com>
+> 
+> This patchset includes the following fixes:
+> 
+> - Add dt-bindings description for NPCM845.
+> - Bug fix for timeout calculation.
+> - Better handling of spurious interrupts.
+> - Fix for event type in slave mode.
+> - Removal of own slave addresses [2:10].
+> - Support for next gen BMC (NPCM845).
+> 
+> The NPCM I2C driver is tested on NPCM750 and NPCM845 evaluation boards.
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
----
- drivers/spi/spi.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+LGTM,
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-diff --git a/drivers/spi/spi.c b/drivers/spi/spi.c
-index d0bbf8f9414d..9bfaa6352b73 100644
---- a/drivers/spi/spi.c
-+++ b/drivers/spi/spi.c
-@@ -1616,7 +1616,8 @@ static void __spi_pump_messages(struct spi_controller *ctlr, bool in_kthread)
- 	ret = ctlr->transfer_one_message(ctlr, msg);
- 	if (ret) {
- 		dev_err(&ctlr->dev,
--			"failed to transfer one message from queue\n");
-+			"failed to transfer one message from queue: %d\n",
-+			ret);
- 		goto out;
- 	}
- 
+> Addressed comments from:
+>  - Wolfram Sang : https://lkml.org/lkml/2022/5/21/51
+> 
+> Changes since version 5:
+>  - Shorten npcm_i2caddr array since the number of supported i2c slave
+>    addresses is reduced.
+>  - Create a new patch from the original PATCH v5 08/10 to modify the slave
+>    transaction logic.
+> 
+> Changes since version 4:
+>  - Remove quotes around ref handle to nuvoton,sys-mgr in i2c binding
+>    document.
+>  - Keep the "longer line first" order.
+>  - Correct the SoB chain.
+>  - Modify the if statement in one line and add new line characters.
+>  - Modify the commit message format in the patch Remove own slave
+>    addresses 2:10. Correct the if statement in one line and shorten the
+>    debug messages.
+>  - Create a new patch to capitalize the one-line comment in the driver.
+> 
+> Changes since version 3:
+>  - Correct the const format in if condition in i2c binding document.
+>  - Add the oops message statement and register information in register
+>    access width patch.
+>  - Add the occurring rate of the i2c spurious interrupt issue and more
+>    details in driver's behavior to overcome this issue.
+>  - Address Andy's comments in the patch to support NPCM845.
+>  
+> Changes since version 2:
+>  - Keep old code as fallback, if getting nuvoton,sys-mgr property fails.
+>  - Fix the error reported by running 'make DT_CHECKER_FLAGS=-m 
+>    dt_binding_check'.
+>  - Make nuvoton,sys-mgr required for nuvoton,npcm845-i2c.
+>  - Correct the patch's subject about changing the way of getting GCR
+>    regmap and add the description about keeping old code as fallback
+>    if getting nuvoton,sys-mgr property fails.
+>  - Correct the patch title and description about removing the unused 
+>    variable clk_regmap.
+>  - Use the data field directly instead of the macros since macros are
+>    not constants anymore in this patch.
+>  
+> Changes since version 1:
+>  - Add nuvoton,sys-mgr property in NPCM devicetree.
+>  - Describe the commit message in imperative mood.
+>  - Modify the description in i2c binding document to cover NPCM series.
+>  - Add new property in i2c binding document.
+>  - Create a new patch for client address calculation.
+>  - Create a new patch for updating gcr property name.
+>  - Create a new patch for removing unused clock node.
+>  - Explain EOB in the commit description.
+>  - Create a new patch for correcting NPCM register access width.
+>  - Remove some comment since the corresponding logic no longer exists.
+>  - Remove fixes tag while the patch adds an additional feature.
+>  - Use devicetree data field to support NPCM845.
+> 
+> Tali Perry (2):
+>   i2c: npcm: Remove own slave addresses 2:10
+>   i2c: npcm: Correct slave role behavior
+> 
+> Tyrone Ting (3):
+>   dt-bindings: i2c: npcm: support NPCM845
+>   i2c: npcm: Support NPCM845
+>   i2c: npcm: Capitalize the one-line comment
+> 
+>  .../bindings/i2c/nuvoton,npcm7xx-i2c.yaml     |  25 ++-
+>  drivers/i2c/busses/Kconfig                    |   8 +-
+>  drivers/i2c/busses/Makefile                   |   2 +-
+>  drivers/i2c/busses/i2c-npcm7xx.c              | 176 ++++++++++--------
+>  4 files changed, 124 insertions(+), 87 deletions(-)
+> 
+> -- 
+> 2.17.1
+> 
+
 -- 
-2.27.0
+With Best Regards,
+Andy Shevchenko
+
 
