@@ -2,62 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7845953347A
-	for <lists+openbmc@lfdr.de>; Wed, 25 May 2022 02:52:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 15F4253349E
+	for <lists+openbmc@lfdr.de>; Wed, 25 May 2022 03:12:22 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L7CFg22l6z3blp
-	for <lists+openbmc@lfdr.de>; Wed, 25 May 2022 10:52:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L7Chz6WcCz3bkQ
+	for <lists+openbmc@lfdr.de>; Wed, 25 May 2022 11:12:19 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=UrGeW9rl;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=NEYvvIEm;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::336;
- helo=mail-wm1-x336.google.com; envelope-from=joel.stan@gmail.com;
+ smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1;
+ helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com;
  receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (1024-bit key;
- secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256
- header.s=google header.b=UrGeW9rl; dkim-atps=neutral
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com
- [IPv6:2a00:1450:4864:20::336])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
+ unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256
+ header.s=pp1 header.b=NEYvvIEm; dkim-atps=neutral
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com
+ [148.163.156.1])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L7CFD726Xz2yn2
- for <openbmc@lists.ozlabs.org>; Wed, 25 May 2022 10:51:43 +1000 (AEST)
-Received: by mail-wm1-x336.google.com with SMTP id
- m32-20020a05600c3b2000b0039756bb41f2so2410632wms.3
- for <openbmc@lists.ozlabs.org>; Tue, 24 May 2022 17:51:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jms.id.au; s=google;
- h=mime-version:from:date:message-id:subject:to:cc;
- bh=RX0lwd53tx5JrjzJI5gh2bS5NfJF9yk8xLekvSgEPFs=;
- b=UrGeW9rl+EozytofHvqnkeFLWjn/4flEP+VGm+UMqQ5C9vwsJOjelRcGocAFMOMoaI
- J+ilUfZQY0pXJkAmiz+m7sIvcpQzPcSyIeZOp8sz23E2p4mgH7fps6vy9JtZN0JTjOP3
- vfqg76gtszGYw70cPswjkv+bSCUzvPYb9LQ20=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20210112;
- h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
- bh=RX0lwd53tx5JrjzJI5gh2bS5NfJF9yk8xLekvSgEPFs=;
- b=SwD7Fa/zkiJWEYYLj/czKaKPcM0hky1t5RlotL8P2WIpth9ITxefO25hSn//N4F295
- Khzbu6nFLqFObVDPIurOOq5U7Jp/ViTXCfNWgpYOQFa8MvoJp46Dr/pVVXyHmYqcx50O
- F7bev9pjkWziAGJ8IUdjncz5XwZWH8+RSW7Lzsyn6brmrmIUDV6tGMR1FYRG7rOHK0tg
- HRZzHE9O7R3wHjjZtF8aZ+EPKbk0rcCb/Icsvvh6NCKM1xAiHQrBcoGRLqJZLBm/9k6g
- 7mzH+DK00NVLXe1ZdnaG9ax/Yneib2AaB0whqmRSwfUXuif/ok2r/NzRHm4VoerFR4IO
- SJPA==
-X-Gm-Message-State: AOAM532jAAYwsmg1dnGRouV7LVsVIRh9nxCiNZnE7rv6To+8Gi3BkcKf
- 6lLfU+5vhnkDVslNq7URmJtUwpYXfHWBBk+LOO2X0yiREN4=
-X-Google-Smtp-Source: ABdhPJzI+//lLTX5mloWb72AF+fniMTDj8KFM9ufXDlHFJi21lx64ZpBvi82MBjUw2JiBPMMCSkTrBFbs2ziJ+N/oAM=
-X-Received: by 2002:a7b:c001:0:b0:394:87bc:ad70 with SMTP id
- c1-20020a7bc001000000b0039487bcad70mr5979545wmb.147.1653439897953; Tue, 24
- May 2022 17:51:37 -0700 (PDT)
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L7ChV0cdkz2xMS
+ for <openbmc@lists.ozlabs.org>; Wed, 25 May 2022 11:11:53 +1000 (AEST)
+Received: from pps.filterd (m0098393.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 24P0o54Y032438;
+ Wed, 25 May 2022 01:11:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com;
+ h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=D5tbj+rFXvsnW2V9aJdAQf9c7kXHPeMqDRkmplEuGyE=;
+ b=NEYvvIEmXReqT9/ALLzlJCe5r5tGXEOEDnyYD/otRdx4py7hVFei9SrepzUHuzNyyFpt
+ 6mcL9bJOxkomg2A3YnJaEhKuwPX+CTTxRO/I5NKIfXhX/rdeLXaz4iZYwMXkX9xxpcQ7
+ 340WaEFMMCg3N4vCgLB4NWc+zYvm6UUmppHReMxe9bO4KUyxj0B0cVf+euD32XIm3zxK
+ zDtAKuz/wglw0VceddBFqGN1p8FeRwP2RElQ6HtM0M43E1S3+9x5U5X3yKflB+HF06En
+ stNGaguVMbXIfll5yG4QqpdiQTDVOqXEVsE5MrFByjmy2tJpxlI6VURYgO/xPERy6ZrI Ag== 
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com
+ [169.62.189.11])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3g9a8ugbhv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 25 May 2022 01:11:46 +0000
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+ by ppma03dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 24P17xrg008906;
+ Wed, 25 May 2022 01:11:45 GMT
+Received: from b03cxnp08026.gho.boulder.ibm.com
+ (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
+ by ppma03dal.us.ibm.com with ESMTP id 3g93utb72s-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 25 May 2022 01:11:44 +0000
+Received: from b03ledav003.gho.boulder.ibm.com
+ (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
+ by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 24P1BhRT26607886
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 25 May 2022 01:11:43 GMT
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7CE596A058;
+ Wed, 25 May 2022 01:11:43 +0000 (GMT)
+Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 34C796A051;
+ Wed, 25 May 2022 01:11:43 +0000 (GMT)
+Received: from v0005c16.aus.stglabs.ibm.com (unknown [9.211.119.82])
+ by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTP;
+ Wed, 25 May 2022 01:11:43 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.15] iio: si7020: Remove reset in probe
+Date: Tue, 24 May 2022 20:11:38 -0500
+Message-Id: <20220525011138.5882-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 25 May 2022 00:51:25 +0000
-Message-ID: <CACPK8Xe2131fjX-uidz9bBo3Luy789Twjpz9pMiCnu-=f01Hig@mail.gmail.com>
-Subject: eMMC ABR behavior
-To: Ryan Chen <ryan_chen@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 8OrH_41PzrpX9bg_zUEazU2XdirLUbEV
+X-Proofpoint-ORIG-GUID: 8OrH_41PzrpX9bg_zUEazU2XdirLUbEV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.874,Hydra:6.0.486,FMLib:17.11.64.514
+ definitions=2022-05-24_11,2022-05-23_01,2022-02-23_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0
+ malwarescore=0 mlxlogscore=999 mlxscore=0 spamscore=0 bulkscore=0
+ suspectscore=0 priorityscore=1501 adultscore=0 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2204290000 definitions=main-2205250006
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,29 +96,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Eddie James <eajames@linux.ibm.com>, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello Ryan,
+I2C commands issued after the SI7020 is starting up or after reset
+can potentially upset the startup sequence. Therefore, the host
+needs to wait for the startup sequence to finish before issuing
+further i2c commands. This is impractical in cases where the SI7020
+is on a shared bus or behind a mux, which may switch channels at
+any time (generating I2C traffic). Therefore, remove the device
+reset in the probe function.
 
-We are testing eMMC ABR by corrupting the u-boot image. When the eMMC
-ABR mode kicks in, we then boot as expected from the boot1 image. We
-then restore the working boot0 image, and reboot the system, which
-still boots into boot1. In order to boot from boot0 again we must
-power cycle the system.
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+---
+ drivers/iio/humidity/si7020.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-I see two scenarios:
+diff --git a/drivers/iio/humidity/si7020.c b/drivers/iio/humidity/si7020.c
+index ab6537f136ba..3c55b81ce984 100644
+--- a/drivers/iio/humidity/si7020.c
++++ b/drivers/iio/humidity/si7020.c
+@@ -115,13 +115,6 @@ static int si7020_probe(struct i2c_client *client,
+ 				     I2C_FUNC_SMBUS_READ_WORD_DATA))
+ 		return -EOPNOTSUPP;
+ 
+-	/* Reset device, loads default settings. */
+-	ret = i2c_smbus_write_byte(client, SI7020CMD_RESET);
+-	if (ret < 0)
+-		return ret;
+-	/* Wait the maximum power-up time after software reset. */
+-	msleep(15);
+-
+ 	indio_dev = devm_iio_device_alloc(&client->dev, sizeof(*data));
+ 	if (!indio_dev)
+ 		return -ENOMEM;
+-- 
+2.27.0
 
-1. This is expected. The BMC software is expected to recognise that
-the ABR mode switch has occurred, and based on policy, configure the
-ABR to go back to boot0 or raise an error.
-
-2. This is unexpected. The BMC should always try that boot0 image on
-each boot, from both a software reset or a power on reset. We should
-add code to the kernel watchdog driver to ensure the ABR mode is reset
-before system reboots.
-
-Cheers,
-
-Joel
