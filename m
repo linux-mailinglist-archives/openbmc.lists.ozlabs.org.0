@@ -2,93 +2,46 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AEF81533D63
-	for <lists+openbmc@lfdr.de>; Wed, 25 May 2022 15:12:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 13CEE533DFA
+	for <lists+openbmc@lfdr.de>; Wed, 25 May 2022 15:37:44 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L7Wh76zHdz3bqs
-	for <lists+openbmc@lfdr.de>; Wed, 25 May 2022 23:12:39 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=kZmjyxYE;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=wfXfxVC0;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L7XF16hgcz3bnh
+	for <lists+openbmc@lfdr.de>; Wed, 25 May 2022 23:37:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized)
- smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.25;
- helo=wout2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz;
- receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org; dkim=pass (2048-bit key;
- unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256
- header.s=fm2 header.b=kZmjyxYE; 
- dkim=pass (2048-bit key;
- unprotected) header.d=messagingengine.com header.i=@messagingengine.com
- header.a=rsa-sha256 header.s=fm1 header.b=wfXfxVC0; 
- dkim-atps=neutral
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com
- [64.147.123.25])
+ smtp.mailfrom=linux.alibaba.com (client-ip=115.124.30.57;
+ helo=out30-57.freemail.mail.aliyun.com;
+ envelope-from=guoheyi@linux.alibaba.com; receiver=<UNKNOWN>)
+X-Greylist: delayed 311 seconds by postgrey-1.36 at boromir;
+ Wed, 25 May 2022 23:37:24 AEST
+Received: from out30-57.freemail.mail.aliyun.com
+ (out30-57.freemail.mail.aliyun.com [115.124.30.57])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by lists.ozlabs.org (Postfix) with ESMTPS id 4L7Wf94Js8z3bl8
- for <openbmc@lists.ozlabs.org>; Wed, 25 May 2022 23:10:56 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
- by mailout.west.internal (Postfix) with ESMTP id 9544532001AB;
- Wed, 25 May 2022 09:10:51 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
- by compute4.internal (MEProxy); Wed, 25 May 2022 09:10:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
- :cc:content-type:date:date:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:sender:subject
- :subject:to:to; s=fm2; t=1653484251; x=1653570651; bh=XTElGPWSnf
- 3oPp4kqQyjeZ3Lh44Vp6HlP/IT7qeFuUk=; b=kZmjyxYEcVSHbQPJrDAUl9xNHY
- xAbssA9XXcgvppWgs6DBtwry8bQ7Xf0In49xO6SNuDnLEuNH9HHTWnGeJQBpTtBb
- QmD6tT5dp9ASVhNEVLhdfRLemKDfLDbtXK+QG47F6PM1UT3OOIwqrLhjk+DvTF5e
- 4OE5aGkShQ2BEXfQlSu7hJKQztNSfnHbspwbl33W8qq6of8Mc/2RZLA2O83gqnar
- vtdd96yl3cTv90mcpmEdpaP/v6Fz4IR8JTXsrmGX0QLfPvw0r/UcZTvYPe2tKiuG
- 9hhIL8pDPwWW9Y541n9OHwAIcmPC942ikTd9XaXdBpJt92CvqV2s5U1Z9OHQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
- :feedback-id:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:sender:subject:subject:to:to
- :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; t=1653484251; x=1653570651; bh=XTElGPWSnf3oPp4kqQyjeZ3Lh44V
- p6HlP/IT7qeFuUk=; b=wfXfxVC0IHqKpdHeEiY6mPiBk1uREczdoS06HVU42prm
- V+HqYJPYXTq0VA7q3xSvMN0DNOQ0li0c6PtzkeYkQaHMixOcNiW0xD52fR2z8PkG
- 5UCvw7g6GS0+HYBjNu4RJmx/iG20/nD2FCrkkGOzmt1jjctvYsl0+kiOzfankhVK
- cDIpqW6TX7Rekc9JvpXr2a2alj5CX/B61a5tPOUpNsLC3KmexO1sy3W9vLN8Q8Q6
- aNPJGcHtX5p+mQJj5J53iiVXV0teiyNdCROZt2sk/rbDWbCCtOnpimsVnWH9wJgo
- rea57TJukQmeVljvc7J4ERlhkMoqDNRTKJrehIrGHg==
-X-ME-Sender: <xms:2iqOYqS2JLbsVBZV7lP9NjMJ1qnsgG2hD8Cf9dMaU4VZS7saxV9zlA>
- <xme:2iqOYvw332hL4y2CgEcPAV1sW7nQzhb_zW_Iyo8ljkg6hQaNSvkoAf2CE8NZd6G_n
- 1TQi1EDrY8sRV0d7Gs>
-X-ME-Received: <xmr:2iqOYn2WB08T2BCFo6iDnWI8sZsZRyRw_KkZ5Pqv7ordyyfMCt4qWf21daKfATFkxavy4G2r5URM2-LBKgt3Lw-uHnc_Zo7fUzQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrjeehgdeitdcutefuodetggdotefrodftvf
- curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
- uegrihhlohhuthemuceftddtnecufghrlhcuvffnffculddvfedmnecujfgurhepfffhvf
- evuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhl
- ihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnh
- epgfevvddvgfejgeffvdelvdetheelkedthfehjeeliedtvdegteelfeduheduheefnecu
- ffhomhgrihhnpehfrhgvvgguvghskhhtohhprdhorhhgnecuvehluhhsthgvrhfuihiivg
- eptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiih
- ii
-X-ME-Proxy: <xmx:2iqOYmDNjt0p7Dpv_g4kxt3V8B-iOkW49HLDyjtxg-wOfaAuXCvWqA>
- <xmx:2iqOYjh2FXO2rTQ6IF24EIhkIGbTPon1FZvmrJHEEK8UiLK7Bl45qA>
- <xmx:2iqOYipC4FShuZg-HhM_eGE4UXnB_9rS9g1aMwxM-Lxmn0zdx9UrIg>
- <xmx:2yqOYjIm0HEqpkpYgmo749C-1zE3TKOnJSb6iXREmmIID-6T05Nq5Q>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 25 May 2022 09:10:50 -0400 (EDT)
-Date: Wed, 25 May 2022 08:10:49 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Prashant Badsheshi <prashantsbemail@gmail.com>
-Subject: Re: Need help in creating Namespace Journal logging
-Message-ID: <Yo4q2fyEkOp8ywDY@heinlein.stwcx.org.github.beta.tailscale.net>
-References: <CAD5wtF146Axtj5XCDMFY=EEXpDUE3sGRD_76kVyBq8jJ9RQOpQ@mail.gmail.com>
+ by lists.ozlabs.org (Postfix) with ESMTPS id 4L7XDh0lcvz301F
+ for <openbmc@lists.ozlabs.org>; Wed, 25 May 2022 23:37:23 +1000 (AEST)
+X-Alimail-AntiSpam: AC=PASS; BC=-1|-1; BR=01201311R141e4; CH=green; DM=||false|;
+ DS=||; FP=0|-1|-1|-1|0|-1|-1|-1; HT=e01e04426; MF=guoheyi@linux.alibaba.com;
+ NM=1; PH=DS; RN=4; SR=0; TI=SMTPD_---0VENhUJZ_1653485519; 
+Received: from B-90G6HV2H-2037.local(mailfrom:guoheyi@linux.alibaba.com
+ fp:SMTPD_---0VENhUJZ_1653485519) by smtp.aliyun-inc.com(127.0.0.1);
+ Wed, 25 May 2022 21:32:00 +0800
+From: Heyi Guo <guoheyi@linux.alibaba.com>
+Subject: Re: Proposing changes to the OpenBMC tree (to make upstreaming easier)
+To: Ed Tanous <edtanous@google.com>
+References: <CAH2-KxAJS_U8=meCxp8ue7n0bmnzeRpyZOPZpy0h1cFEbbz-HA@mail.gmail.com>
+ <baabb8ca-e1b2-049b-e112-cfe8e211c301@linux.alibaba.com>
+ <CAH2-KxDjU_S6Jdd_QpvnHbXh7KBjCRJ1vHxEfBiFZ1HoOPKAPQ@mail.gmail.com>
+Message-ID: <9deaad03-a625-b087-46ef-bc3ebed15974@linux.alibaba.com>
+Date: Wed, 25 May 2022 21:31:57 +0800
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.0; rv:68.0)
+ Gecko/20100101 Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="x+z39HsWxACdoZgj"
-Content-Disposition: inline
-In-Reply-To: <CAD5wtF146Axtj5XCDMFY=EEXpDUE3sGRD_76kVyBq8jJ9RQOpQ@mail.gmail.com>
+In-Reply-To: <CAH2-KxDjU_S6Jdd_QpvnHbXh7KBjCRJ1vHxEfBiFZ1HoOPKAPQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,53 +53,220 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: Andrew Jeffery <andrew@aj.id.au>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Brad Bishop <bradleyb@fuzziesquirrel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---x+z39HsWxACdoZgj
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+在 2022/5/24 上午12:27, Ed Tanous 写道:
+> On Tue, Apr 12, 2022 at 12:23 AM Heyi Guo<guoheyi@linux.alibaba.com>  wrote:
+>> I like the idea, for we don't utilize additional tools like repo to
+>> maintain the code, and it should make it easier for us to maintain
+>> multiple internal branches.
+>>
+> Hi Heyi,
+> Glad to see you on the project.  Do you think you could elaborate a
+> little about how you're hoping to use OpenBMC and its review process,
+> and if any of the changes being proposed here would help you?
 
-On Tue, May 24, 2022 at 11:43:45AM +0530, Prashant Badsheshi wrote:
-> I am working on a yocto based openbmc project, I am trying to add namespa=
-ce
-> journal logging.
+Hi Ed,
 
-Can you elaborate on what "namespace journal logging" is?
+The background is our team uses basic git commands to manage the 
+repositories of openbmc, so the current multi-repositories structure 
+costs extra effort for our code maintenance, including:
 
-If this is what you're talking about, I don't think we've leveraged this
-feature:
+1. Normally two commits are required for one single change, one for the 
+component repo and one for openbmc, for our internal release versions 
+are more frequent and the fixes are required to be merged ASAP. We also 
+created a script to check if openbmc has included the latest commits of 
+all component repos.
 
-    https://www.freedesktop.org/software/systemd/man/systemd-journald.servi=
-ce.html#Journal%20Namespaces
+2. Not easy to maintain stable branches, which require to have branches 
+for openbmc and the integrated components.
 
-You'd probably need to propose a design and add support to
-phosphor-logging.
+3. Not easy to search code across all the component repos; I'd like to 
+use "git grep" to search keyword in a single repo, but it doesn't work 
+here; and it is not easy to make generic fix for all repos, as you said.
 
---=20
-Patrick Williams
+I think monorepo will help to improve the situation, and it may help 
+prevent the division of the community.
 
---x+z39HsWxACdoZgj
-Content-Type: application/pgp-signature; name="signature.asc"
+The code review process is not difficult for us, for reviewers are 
+chosen automatically by gerrit.
 
------BEGIN PGP SIGNATURE-----
+If you also have better practice for the current multi-repo structure, 
+please advise and help us improve :)
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmKOKtcACgkQqwNHzC0A
-wRnl/Q/+JPGexPu2L3zn4biQLP2+g96kOKwzW5GK1j56qwy8wHzut1b6vhIF9iWH
-Dwu555yyIxBNx2kqG+GbZKbicnpDRR4YhUu0updaPlk1TT2p5MsO+WCW8hDhxX/K
-Kp9Z0tL87AP+u4G2g7FTEt4zZAhEqJJ5kP6fraEAM7yrXvn7Lpkp2BFakPm2cHbI
-GS7Auuqc/aGQbt9FPnME6XDSoBpWWFZfE79NwBJL4ONNZ7c9PfqrbQFgzKcToI3C
-6smZxteSwVMBbdw7jDHrge3FG4pVBjozDX6Zl3sulXyM8gW220MdLH6DHmVFu6bo
-wGOqUlJxeeT/BGpGAa9/9T1IcQTIrBIk1JsdbSUsIIoOKYiQT98SRhvAHn2YXL//
-nEtBVYFG2jXuZl+AUBQg6ucJYhVFMYw8TXJNWkJAyYkDV2z7zzsMptnEagjNe6sU
-4RDfv/tkXGIo/A1PdbkO7y3fyQsX9U6JsoJYfEVsFYEvDktA65wExBK+twy0txCx
-KZqWghKltq3NOrdRQRgluRH6uREu2FrcDsceJTmtb8820QussMWCniPNKQFBzYnl
-VphlQNTFM53zszzZ2a9Ikqq7RiinpfK4CC/ZGGRQLNL9unvCnsUB99VbwJrtx6QL
-xR3qSNifGUurgSXrh3N2GzkjQXsuscg3EB1olVAtDmnf5K0+Mrc=
-=l235
------END PGP SIGNATURE-----
+Thanks,
 
---x+z39HsWxACdoZgj--
+Heyi
+
+>
+>> Thanks,
+>>
+>> Heyi
+>>
+>> 在 2022/4/5 上午2:28, Ed Tanous 写道:
+>>> The OpenBMC development process as it stands is difficult for people
+>>> new to the project to understand, which severely limits our ability to
+>>> onboard new maintainers, developers, and groups which would otherwise
+>>> contribute major features to upstream, but don't have the technical
+>>> expertise to do so.  This initiative, much like others before it[1] is
+>>> attempting to reduce the toil and OpenBMC-specific processes of
+>>> passing changes amongst the community, and move things to being more
+>>> like other projects that have largely solved this problem already.
+>>>
+>>> To that end, I'd like to propose a change to the way we structure our
+>>> repositories within the project: specifically, putting (almost) all of
+>>> the Linux Foundation OpenBMC owned code into a single repo that we can
+>>> version as a single entity, rather than spreading out amongst many
+>>> repos.  In practice, this would have some significant advantages:
+>>>
+>>> - The tree would be easily shareable amongst the various people
+>>> working on OpenBMC, without having to rely on a single-source Gerrit
+>>> instance.  Git is designed to be distributed, but if our recipe files
+>>> point at other repositories, it largely defeats a lot of this
+>>> capability.  Today, if you want to share a tree that has a change in
+>>> it, you have to fork the main tree, then fork every single subproject
+>>> you've made modifications to, then update the main tree to point to
+>>> your forks.  This gets very onerous over time, especially for simple
+>>> commits.  Having maintained several different companies forks
+>>> personally, and spoken to many others having problems with the same,
+>>> adding major features are difficult to test and rebase because of
+>>> this.  Moving the code to a single tree makes a lot of the toil of
+>>> tagging and modifying local trees a lot more manageable, as a series
+>>> of well-documented git commands (generally git rebase[2]).  It also
+>>> increases the likelihood that someone pulls down the fork to test it
+>>> if it's highly likely that they can apply it to their own tree in a
+>>> single command.
+>>>
+>>> - There would be a reduction in reviews.  Today, anytime a person
+>>> wants to make a change that would involve any part of the tree,
+>>> there's at least 2 code reviews, one for the commit, and one for the
+>>> recipe bump.  Compared to a single tree, this at least doubles the
+>>> number of reviews we need to process.  For changes that want to make
+>>> any change to a few subsystems, as is the case when developing a
+>>> feature, they require 2 X <number of project changes> reviews, all of
+>>> which need to be synchronized.  There is a well documented problem
+>>> where we have no official way to synchronize merging of changes to
+>>> userspace applications within a bump without manual human
+>>> intervention.  This would largely render that problem moot.
+>>>
+>>> - It would allow most developers to not need to understand Yocto at
+>>> all to do their day to day work on existing applications.  No more
+>>> "devtool modify", and related SRCREV bumps.  This will help most of
+>>> the new developers on the project with a lower mental load, which will
+>>> mean people are able to ramp up faster..
+>>>
+>>> - It would give an opportunity for individuals and companies to "own"
+>>> well-supported public forks (ie Redhat) of the codebase, which would
+>>> increase participation in the project overall.  This already happens
+>>> quite a bit, but in practice, the forks that do it squash history,
+>>> making it nearly impossible to get their changes upstreamed from an
+>>> outside entity.
+>>>
+>>> - It would centralize the bug databases.  Today, bugs filed against
+>>> sub projects tend to not get answered.  Having all the bugs in
+>>> openbmc/openbmc would help in the future to avoid duplicating bugs
+>>> across projects.
+>>>
+>>> - Would increase the likelihood that someone contributes a patch,
+>>> especially a patch written by someone else.  If contributing a patch
+>>> was just a matter of cherry-picking a tree of commits and submitting
+>>> it to gerrit, it's a lot more likely that people would do it.
+>>>
+>>> - Greatly increases the ease with which stats are collected.
+>>> Questions like: How many patches were submitted last year?  How many
+>>> lines of code changed between commit A and commit B?  Where was this
+>>> regression injected (ie git bisect)?  How much of our codebase is C++?
+>>> How many users of the dbus Sensor.Value interface are there?  Are all
+>>> easily answered in one liner git commands once this change is done.
+>>>
+>>> - New features no longer require single-point-of-contact core
+>>> maintainer processes (ie, creating a repo for changes, setting up
+>>> maintainer groups, ect) and can just be submitted as a series of
+>>> patches to openbmc/openbmc.
+>>>
+>>> - Tree-wide changes (c++ standard, yocto updates, formatting, ect) are
+>>> much easier to accomplish in a small number of patches, or a series of
+>>> patches that is easy to pull and test as a unit.
+>>>
+>>> In terms of concretely how we would accomplish this, I've put together
+>>> what such a tree would look like, and I'm looking for input on how it
+>>> could be improved.  Some key points on what it represents:
+>>>
+>>> - All history for both openbmc and sub projects will be retained.
+>>> Commits are interleaved based on the date in which they were submitted
+>>> using custom tooling that was built on top of git fast-export and
+>>> fast-import.  All previously available tags will have similar tags in
+>>> the new repository pointing at their equivalent commits in the new
+>>> repository.
+>>>
+>>> - Inclusive guidelines: To make progress toward an unrelated but
+>>> important goal at the same time, I'm recommending that the
+>>> openbmc/master branch will be left as-is, and the newly-created sha1
+>>> will be pushed to the branch openbmc/openbmc:main, to retain peoples
+>>> links to previous commits on master, and retain the exact project
+>>> history while at the same time moving the project to having more
+>>> inclusive naming, as has been documented previously[3].  At some point
+>>> in the future the master branch could be renamed and deprecated, but
+>>> this is considered out of scope for this specific change.
+>>>
+>>> - Each individual sub-project will be given a folder within
+>>> openbmc/openbmc based on their current repository name.  While there
+>>> is an opportunity to reorganize in more specific ways (ie, put all
+>>> ipmi-oem handler repos in a folder) this proposal intentionally
+>>> doesn't, under the proposition that once this change is made, any sort
+>>> of folder rearranging will be much easier to accomplish, and to keep
+>>> the scope limited.
+>>>
+>>> - Yocto recipes will be changed to point to their path equivalent, and
+>>> inherit externalsrc bbclass[4].  This workflow is exactly the workflow
+>>> devtool uses to point to local repositories during a "devtool modify",
+>>> so it's unlikely we will have incremental build-consistency issues
+>>> with this approach, as was a concern in the past.
+>>>
+>>> - Places where we've forked other well supported projects (u-boot,
+>>> kernel, ect) will continue to point to the openbmc/<projectname> fork.
+>>> This is done to ensure that we don't inflict the same problem we're
+>>> attempting to solve in OpenBMC upon those working in the subproject
+>>> forks, and to reinforce to contributors that patches to these projects
+>>> should prefer submitting first to the relevant upstream.
+>>>
+>>> - Subprojects that are intended to be reused outside of OpenBMC (ex
+>>> sdbusplus) will retain their previous commit, history, and trees, such
+>>> that they are usable outside the project.  This is intended to make
+>>> sure that the code that should be reusable by others remains so.
+>>>
+>>> - The above intentionally makes no changes to our subtree update
+>>> process, which would remain the same process as is currently.  The
+>>> openbmc-specific autobump job in Jenkins would be disabled considering
+>>> it's no longer required in this approach.
+>>>
+>>> - Most Gerrit patches would now be submitted to openbmc/openbmc.
+>>>
+>>> My proposed version of this tree is pushed to a github fork here, and
+>>> is based on the tree from a few weeks ago:
+>>> https://github.com/edtanous/openbmc
+>>>
+>>> It implements all the above for the main branch.  This tree is based
+>>> on the output of the automated tooling, and in the case where this
+>>> proposal is accepted, the tooling would be re-run to capture the state
+>>> of the tree at the point where we chose to make this change.
+>>>
+>>> The tool I wrote to generate this tree is also published, if you're
+>>> interested in how this tree was built, and is quite interesting in its
+>>> use of git export/import [5], but functionally, I would not expect
+>>> that tooling to survive after this transition is made.
+>>>
+>>> Let me know what you think.
+>>>
+>>> -Ed
+>>>
+>>> [1]https://lore.kernel.org/openbmc/CACWQX821ADQCrekLj_bGAu=1SSLCv5pTee7jaoVo2Zs6havgnA@mail.gmail.com/
+>>> [2]https://git-scm.com/docs/git-rebase
+>>> [3]https://github.com/openbmc/docs/blob/master/CONTRIBUTING.md#inclusive-naming
+>>> [4]https://www.yoctoproject.org/docs/1.8/ref-manual/ref-manual.html#ref-classes-externalsrc
+>>> [5]https://github.com/edtanous/obmc-repo-combine/blob/main/combine
