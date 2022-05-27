@@ -2,87 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A54F53592C
-	for <lists+openbmc@lfdr.de>; Fri, 27 May 2022 08:14:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E116A5359EB
+	for <lists+openbmc@lfdr.de>; Fri, 27 May 2022 09:13:26 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L8ZJN16KGz3bkl
-	for <lists+openbmc@lfdr.de>; Fri, 27 May 2022 16:14:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L8bcg3WCtz3blp
+	for <lists+openbmc@lfdr.de>; Fri, 27 May 2022 17:13:23 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=JUte5ROe;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=lKuGZs5i;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::635; helo=mail-pl1-x635.google.com; envelope-from=medadyoung@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1129; helo=mail-yw1-x1129.google.com; envelope-from=srid.11486@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=JUte5ROe;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=lKuGZs5i;
 	dkim-atps=neutral
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+Received: from mail-yw1-x1129.google.com (mail-yw1-x1129.google.com [IPv6:2607:f8b0:4864:20::1129])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4L8ZG36Cp3z3bn4
-	for <openbmc@lists.ozlabs.org>; Fri, 27 May 2022 16:12:11 +1000 (AEST)
-Received: by mail-pl1-x635.google.com with SMTP id i1so3310520plg.7
-        for <openbmc@lists.ozlabs.org>; Thu, 26 May 2022 23:12:11 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4L8bcD6C3jz2ypD
+	for <openbmc@lists.ozlabs.org>; Fri, 27 May 2022 17:12:59 +1000 (AEST)
+Received: by mail-yw1-x1129.google.com with SMTP id 00721157ae682-2ff90e0937aso38345757b3.4
+        for <openbmc@lists.ozlabs.org>; Fri, 27 May 2022 00:12:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ZAlldb2wH2bL38lLFGDzvhlgJH9fckgtEngrU/7mnKQ=;
-        b=JUte5ROejFtPr4qcj9S5BngrYLpd98aiXliHpX+d4/ctRXhVkplCZ5C+ILFzDL+OeB
-         StZwgR3GjGUh/ikekEYPkxByrC+khZUXMQ3aSqK60yGXDD/oZWEGGKVn9R9atD9z/PRp
-         14JU7/fCj/sAHJqDdJ/gG9TUlWpdYkOSXMC2iNk6y+Afb5XDfLDlA5q4vS6b9fmn7GNW
-         16rC9PBNdA4HXVKH682gwJu42pn7ac9hChjE4dTKjDO0lB6qOWNsEQwxDaOxjWMW27lI
-         QOVz4ZZ59xFGbmXPF4qK79HbsHS7CFUuMQ6lpiqlyLQM43WjrksO2DMH/HDQSwcBeCDv
-         JeBA==
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=TIT3y3AHhHZBiMG+uMBWG0u27Uk2750cog5r1svBEnU=;
+        b=lKuGZs5iLORNakvh7k8iW8fXNEOi27g2RQQ+Pu4KRa0vU4zvav9lVYef8KHG/L4Ltn
+         HNfcI/eFHFOfCBS6gsuTS9daAjE8v2eQe5OF60V1sfb6MO7gVSYO872ZOuieHRYd7HqC
+         B9lAhD7bjGGLvL1UdQO4yerbr/kgADWB1+dJkxB2cul7Vno+yzFm036yi2PBq6t4vMGC
+         oqYXuoLDsR0ewrNj3BIg+Osii7uW7CMZqc+Z7wlUXwwwNTuW+TJZ1cFj10Whe3wVxM6Z
+         3buxq3AsVm2s1TSW2cS9w9t77cj9ZOxQk8cSb4Yop7YbRngNqaSkeiTUTT9BzxW6vnM/
+         vMqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ZAlldb2wH2bL38lLFGDzvhlgJH9fckgtEngrU/7mnKQ=;
-        b=JDdcGo2wBbydAlarNLbe+niKuNH8o5GaggqytUInjd62MHPeaC73+8SU2U0BQjbGqG
-         ctb5hPR90ofWyBeGw29DP4AMfHS34/3WjM/Npu5k4LMat39aN23oFUVs4fR1TyDw2nrh
-         U+Ox+5b0n+rEMwt5TM/2dHKV7gYOQL57DEaSm87nJrBdGIAT2gb11PKGFb11h6CItdrK
-         v2G9l2dI0/nP0+a5rZVg/J+sf4hSx7QKI+K7SAYooBVD/QpliFXSDRHEY/9JzWqmV5QN
-         k9M9BxXE8jMhG8aauRoVtczGvbk/VP01J3Vda2d6ds9lUw6jSGiu3/rhgo/AVtB0dvEE
-         5reQ==
-X-Gm-Message-State: AOAM53157oUtB5+B3DBzcA1gx3vO/Sdh4v1/toT89bT7WhM00whOC50H
-	+T0H9PFVnz9YxaeLqsMhnNo=
-X-Google-Smtp-Source: ABdhPJxey0GCdTYlVG9dNz8UlMSy7COIPK6OHN3MZarfjSP3vxb/SqLZLCqan9vfGYZy4t/qM5kqXw==
-X-Received: by 2002:a17:90b:3192:b0:1df:7b5a:2047 with SMTP id hc18-20020a17090b319200b001df7b5a2047mr6601246pjb.138.1653631931252;
-        Thu, 26 May 2022 23:12:11 -0700 (PDT)
-Received: from localhost.localdomain ([116.89.143.231])
-        by smtp.gmail.com with ESMTPSA id b10-20020a1709027e0a00b0015e8d4eb2c2sm2636306plm.268.2022.05.26.23.12.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 May 2022 23:12:10 -0700 (PDT)
-From: medadyoung@gmail.com
-X-Google-Original-From: ctcchien@nuvoton.com
-To: rric@kernel.org,
-	james.morse@arm.com,
-	tony.luck@intel.com,
-	mchehab@kernel.org,
-	bp@alien8.de,
-	robh+dt@kernel.org,
-	benjaminfair@google.com,
-	yuenn@google.com,
-	venture@google.com,
-	KWLIU@nuvoton.com,
-	YSCHU@nuvoton.com,
-	JJLIU0@nuvoton.com,
-	KFTING@nuvoton.com,
-	avifishman70@gmail.com,
-	tmaimon77@gmail.com,
-	tali.perry1@gmail.com,
-	ctcchien@nuvoton.com
-Subject: [PATCH v11 3/3] EDAC: nuvoton: Add NPCM memory controller driver
-Date: Fri, 27 May 2022 14:11:48 +0800
-Message-Id: <20220527061148.14948-4-ctcchien@nuvoton.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20220527061148.14948-1-ctcchien@nuvoton.com>
-References: <20220527061148.14948-1-ctcchien@nuvoton.com>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=TIT3y3AHhHZBiMG+uMBWG0u27Uk2750cog5r1svBEnU=;
+        b=iJXWHsr9sOQZ7uLvm2Jh6pjMOuGL1e0PFhzdIVvgb+KhPtQelavyA9QHWg1BvnDspv
+         HyY3yVFiD4W1LmcxSqWXUieNbYhvxBw00SLg1NYsTt0X1ffCkC3Kf96KeyB8TxX1vM3f
+         Scu+WPGvUCaE4bJMK33ir9+d2M6Z0dgRVe4yx6cpSUTXi953S1A8PkiV/CS7AT+vP1eq
+         HC2BqVPrTV+lAk5Jws0gPP2zRInm6st/Yf2cHOqfphI54nqd4OUjkowBmHau+MgOhAuL
+         GP09FJqDgpXDBIQLAQQv8qzXmj3SEztfShtz7QjXCgvpo5bGCFLnssRmAEXd91c9ooYb
+         5NBQ==
+X-Gm-Message-State: AOAM532T1aTSxOXSoILnz/ts7yCiYMPfGKApWq2g5oJVK5IVbsBz2gUK
+	QBwhqgvsYjleH/yM6r3ink6tU68A63kxsR7F8k446YmV5Ss=
+X-Google-Smtp-Source: ABdhPJyOnJPm/TdL8GpdYeQKn28Fdo8X91NSbPj1pnaKe/poizyQ8LPbibiUbs2fPS76i5Ku3j7+Rp7RZr+pYH6EAIc=
+X-Received: by 2002:a0d:cd04:0:b0:300:4784:caa3 with SMTP id
+ p4-20020a0dcd04000000b003004784caa3mr13930641ywd.231.1653635576150; Fri, 27
+ May 2022 00:12:56 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: Jayashree D <srid.11486@gmail.com>
+Date: Fri, 27 May 2022 12:42:45 +0530
+Message-ID: <CALXuKJetn8x+z0xrn_9WJEtt0NyZQa2-Br8irggi7Djk-U8Xmg@mail.gmail.com>
+Subject: Physical LED Design Proposal
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="0000000000001abfab05dff9099d"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,45 +68,130 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-edac@vger.kernel.org
+Cc: spinler@us.ibm.com, andrew@aj.id.au, jayashree-d@hcl.com, bradleyb@fuzziesquirrel.com, velumanit@hcl.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Medad CChien <ctcchien@nuvoton.com>
+--0000000000001abfab05dff9099d
+Content-Type: text/plain; charset="UTF-8"
 
-Add memory controller support for Nuvoton NPCM SoC.
+Hi Team,
 
-Note:
-    you can force an ecc event by writing a string to edac sysfs node
-    and remember to define CONFIG_EDAC_DEBUG to enable this feature
-    example: force a correctable event on checkcode bit 0
-    echo "CE checkcode 0" to below path
-    /sys/devices/system/edac/mc/mc0/forced_ecc_error
+Problem Description :
 
-Datasheet:
-    Cadence DDR Controller Register Reference Manual For DDR4 Memories
-    Chapter 2: Detailed Register Map
+In the existing phosphor-led-sysfs design, it exposes one service per LED.
+Therefore, multiple services will be created for multiple GPIO pins
+configured for LED. To abstract this method and also to create LEDs under a
+single service, a new implementation is proposed.
 
-Signed-off-by: Medad CChien <ctcchien@nuvoton.com>
----
- MAINTAINERS | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Existing Implementation :
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7f832e6ed4e5..8919fb83f485 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2372,9 +2372,9 @@ F:	arch/arm/boot/dts/nuvoton-npcm*
- F:	arch/arm/mach-npcm/
- F:	drivers/*/*npcm*
- F:	drivers/*/*/*npcm*
-+F:	drivers/edac/npcm_edac.c b/drivers/edac/npcm_edac.c
- F:	include/dt-bindings/clock/nuvoton,npcm7xx-clock.h
- 
--
- ARM/NUVOTON WPCM450 ARCHITECTURE
- M:	Jonathan Neuschäfer <j.neuschaefer@gmx.net>
- L:	openbmc@lists.ozlabs.org (moderated for non-subscribers)
--- 
-2.17.1
+1. Physical Leds are defined in the device tree under "leds" section.
+2. Corresponding GPIO pin are defined for the physical LEDs.
+3. "udev rules" are used to monitor the physical LEDs.
+4. Once the LED in initialized in device tree, udev event will be created
+and it will trigger a systemd service for that LED.
+5. Therefore, if multiple GPIO pins are configured for LEDs, then it will
+create a multiple systemd services
+(xyz.openbmc_project.led.controller@.service)
+for phosphor-led-sysfs based on the LED name.
 
+Example :
+
+busctl tree xyz.openbmc_project.LED.Controller.led1
+`-/xyz
+  `-/xyz/openbmc_project
+    `-/xyz/openbmc_project/led
+      `-/xyz/openbmc_project/led/physical
+        `-/xyz/openbmc_project/led/physical/led1
+
+busctl tree xyz.openbmc_project.LED.Controller.led2
+`-/xyz
+  `-/xyz/openbmc_project
+    `-/xyz/openbmc_project/led
+      `-/xyz/openbmc_project/led/physical
+        `-/xyz/openbmc_project/led/physical/led2
+
+
+
+New Implementation :
+
+1. Physical Leds are defined in the device tree under "leds" section.
+2. Corresponding GPIO pin are defined for the physical LEDs.
+3. "udev rules" are used to monitor the physical LEDs.
+4. Once the udev event is initialized for the LED, it will store those LED
+name using the script in udev instead of triggering systemd   service.
+5. Phosphor-led-sysfs will have a single systemd service
+(xyz.openbmc_project.led.controller.service) running by default at system
+startup.
+6. A dbus method call will be exposed from the service. udev will notify
+the LEDs detected in the driver.
+
+Example :
+
+busctl tree xyz.openbmc_project.LED.Controller
+`-/xyz
+  `-/xyz/openbmc_project
+    `-/xyz/openbmc_project/led
+      `-/xyz/openbmc_project/led/physical
+        `-/xyz/openbmc_project/led/physical/led1
+        `-/xyz/openbmc_project/led/physical/led2
+
+
+This was already discussed in the previous mail thread. Please refer to the
+below link.
+https://lists.ozlabs.org/pipermail/openbmc/2022-April/030272.html
+
+Please provide your suggestions on this new proposal.
+
+
+Thanks
+Jayashree
+
+--0000000000001abfab05dff9099d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi Team,</div><div><br></div><div>Problem Description=
+ :<br><br>In the existing phosphor-led-sysfs design, it exposes one service=
+ per LED. Therefore, multiple services will be created for multiple GPIO pi=
+ns configured for LED. To abstract this method and also to create LEDs unde=
+r a single service, a new implementation is proposed.</div><div><br></div><=
+div>Existing Implementation :<br>=C2=A0<br>1. Physical Leds are defined in =
+the device tree under &quot;leds&quot; section.<br>2. Corresponding GPIO pi=
+n are defined for the physical LEDs.<br>3. &quot;udev rules&quot; are used =
+to monitor the physical LEDs.<br>4. Once the LED in initialized in device t=
+ree, udev event will be created and it will trigger a systemd service for t=
+hat LED.<br>5. Therefore, if multiple GPIO pins are configured for LEDs, th=
+en it will create a multiple systemd services (xyz.openbmc_project.led.cont=
+roller@.service) for phosphor-led-sysfs based on the LED name.<br><br>Examp=
+le :<br><br>busctl tree xyz.openbmc_project.LED.Controller.led1<br>`-/xyz<b=
+r>=C2=A0 `-/xyz/openbmc_project<br>=C2=A0 =C2=A0 `-/xyz/openbmc_project/led=
+<br>=C2=A0 =C2=A0 =C2=A0 `-/xyz/openbmc_project/led/physical<br>=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 `-/xyz/openbmc_project/led/physical/led1<br><br>busctl tr=
+ee xyz.openbmc_project.LED.Controller.led2<br>`-/xyz<br>=C2=A0 `-/xyz/openb=
+mc_project<br>=C2=A0 =C2=A0 `-/xyz/openbmc_project/led<br>=C2=A0 =C2=A0 =C2=
+=A0 `-/xyz/openbmc_project/led/physical<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 `-/x=
+yz/openbmc_project/led/physical/led2 =C2=A0 =C2=A0 =C2=A0=C2=A0 <br><br><br=
+><br>New Implementation :<br><br>1. Physical Leds are defined in the device=
+ tree under &quot;leds&quot; section.<br>2. Corresponding GPIO pin are defi=
+ned for the physical LEDs.<br>3. &quot;udev rules&quot; are used to monitor=
+ the physical LEDs.<br>4. Once the udev event is initialized for the LED, i=
+t will store those LED name using the script in udev instead of triggering =
+systemd =C2=A0 service.<br>5. Phosphor-led-sysfs will have a single systemd=
+ service (xyz.openbmc_project.led.controller.service) running by default at=
+ system startup.<br>6. A dbus method call will be exposed from the service.=
+ udev will notify the LEDs detected in the driver.<br><br>Example :<br><br>=
+busctl tree xyz.openbmc_project.LED.Controller<br>`-/xyz<br>=C2=A0 `-/xyz/o=
+penbmc_project<br>=C2=A0 =C2=A0 `-/xyz/openbmc_project/led<br>=C2=A0 =C2=A0=
+ =C2=A0 `-/xyz/openbmc_project/led/physical<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+`-/xyz/openbmc_project/led/physical/led1<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 `-/=
+xyz/openbmc_project/led/physical/led2<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 <br>=
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 <br>This was already discussed in the previous =
+mail thread. Please refer to the below link.<br><a href=3D"https://lists.oz=
+labs.org/pipermail/openbmc/2022-April/030272.html">https://lists.ozlabs.org=
+/pipermail/openbmc/2022-April/030272.html</a><br><br>Please provide your su=
+ggestions on this new proposal.<br><br><br></div><div>Thanks</div><div>Jaya=
+shree<br></div></div>
+
+--0000000000001abfab05dff9099d--
