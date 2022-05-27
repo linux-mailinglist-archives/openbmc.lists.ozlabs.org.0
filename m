@@ -1,63 +1,78 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B6554535A43
-	for <lists+openbmc@lfdr.de>; Fri, 27 May 2022 09:24:51 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8225F535BD4
+	for <lists+openbmc@lfdr.de>; Fri, 27 May 2022 10:47:21 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4L8bss3qVvz30F8
-	for <lists+openbmc@lfdr.de>; Fri, 27 May 2022 17:24:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4L8dj32MsPz3bkl
+	for <lists+openbmc@lfdr.de>; Fri, 27 May 2022 18:47:19 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Z1eG2A3m;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=EkXFhzB6;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::32d; helo=mail-wm1-x32d.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62d; helo=mail-pl1-x62d.google.com; envelope-from=medadyoung@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Z1eG2A3m;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=EkXFhzB6;
 	dkim-atps=neutral
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4L8bsR51ynz2ypk
-	for <openbmc@lists.ozlabs.org>; Fri, 27 May 2022 17:24:27 +1000 (AEST)
-Received: by mail-wm1-x32d.google.com with SMTP id p5-20020a1c2905000000b003970dd5404dso2258224wmp.0
-        for <openbmc@lists.ozlabs.org>; Fri, 27 May 2022 00:24:27 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4L8dhj3FC5z3bhK
+	for <openbmc@lists.ozlabs.org>; Fri, 27 May 2022 18:47:00 +1000 (AEST)
+Received: by mail-pl1-x62d.google.com with SMTP id c2so3598419plh.2
+        for <openbmc@lists.ozlabs.org>; Fri, 27 May 2022 01:47:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jms.id.au; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=+3TvFwVNhYw+TCLR0KUn2X2eZLLvlPt0hWCl0s7fo1s=;
-        b=Z1eG2A3mWymXHOwc4ZmkxrspT4nnkOV+ALNVe8051i8VNt9YyIWZPMaugNG3mchOPE
-         KfuRcJ+VztVvJwbPYwOgf6U/Bq1NP0Qlt/eS/B4NOf+CHx8JEiwWollHfeP2ZcvKwWBk
-         ob4J2YzwhypInjxlnPlrIKusF4MijEptCAO9M=
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id;
+        bh=LT+QAOqNHX7ViHSsik7kvf3ypjWNwSuEN+rviPBBKVw=;
+        b=EkXFhzB6I2uejZeDOfwTivxzmkAjlXWQzgl7qS1XAqWQSsrMu3JAjkaSjsfaL51svU
+         uZBzGyfFzcwDbnNsjntpXEi6BKOUPzamrL5XX4vGVMPP4+9JI4cl2BQScVC5lNBlEoVm
+         rVtSgcMKqsbGqBzEOr6qb5QvJ0DnzQxDYdxoj5Q+KrmLGGK/IBiaAG5CubqkZ6JAURhh
+         fnHmldWC0iducAx6xhxoqiAVBoh/9AAR2nT6Io4ILBQT4AHvTXNf+j3PX7DjGPUMZ4lU
+         QElFZQaiz8IcjrdWNtptAUIMZpbTh4w4mlws44DvIwY+ZKdT6luOpK2CHcQGD7zgshyQ
+         6/yg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=+3TvFwVNhYw+TCLR0KUn2X2eZLLvlPt0hWCl0s7fo1s=;
-        b=rUZlxajYGcR6LaTiIxMsD5g1Byg3pdMzdsOkwXkbH9H48KSWqVkJiCGNVzP5MEWmxe
-         m9+7oQptNoNmPo6iohXKpdhHWfKI1/fQSmOvNV53/IkDg/dYBlQA3ET0eZ4Trmykvc4B
-         59LfdDxc6sxbfjdGHmWIyJ8eda10R4FSCxowxs5XhF8yKCEm6Mj64krGKtGuI8tsH8hd
-         IkLVsFg/K+EqzbvgE5Gggp/jHSg7S0kOqYndVxZMrswRcWeN46CY8+33A1NahnJXuh4U
-         1GTxKTadeEP+UvNTlul6d5T1kvdMSAhixuKnl/MaoO2GLaHIbDZ5udG2ctFxNRdJj/2l
-         ysHQ==
-X-Gm-Message-State: AOAM5307gQa0eCi3SHVcNnZskY2FW9n8KJDQbm6a1vIL0i0hg1KxYnEp
-	zIcvqOPF5DFiCYzwmNB3gfbolpMm02xz7Y1LW1EDxUhs
-X-Google-Smtp-Source: ABdhPJwacrIcfGfnW5Cmapq78OTQNx7+GMuBpl1+dnNmp8ZM6UqEjY0bIx35A0KeLVjGJFyG36lFqvSnjQRTj8KWDHE=
-X-Received: by 2002:a05:600c:3cc:b0:397:337e:14ca with SMTP id
- z12-20020a05600c03cc00b00397337e14camr5729093wmd.10.1653636263319; Fri, 27
- May 2022 00:24:23 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220525170240.33918-1-eajames@linux.ibm.com>
-In-Reply-To: <20220525170240.33918-1-eajames@linux.ibm.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 27 May 2022 07:24:10 +0000
-Message-ID: <CACPK8XesSxgbAQwnOKcPhUrxHZ3VaoO9B+xZXQzbnMa1q7XBCQ@mail.gmail.com>
-Subject: Re: [PATCH linux dev-5.15 0/2] spi: fsi: Fix spurious timeout
-To: Eddie James <eajames@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=LT+QAOqNHX7ViHSsik7kvf3ypjWNwSuEN+rviPBBKVw=;
+        b=Z0e3a/1ZNcsTFvPTS70ALxoQfhSi4W/jouql5GkUQlJ40JeCvTeFtDe4sUXg+xVwgy
+         Rh8Ht6uJ4dEPYV1F+6xu/I2grI0FtcyMaGst3uRq2pCXZB0syYIemjxXLZyKKK1Dj9Wd
+         fWU8p6Yd/V3lwqRbpDjvNW8J7fJY/gx7BfWj/xHj5+GhySy3jE0myHNz2pRmHWJbVJpU
+         RDsdAOfBjvMPf29U4H77iFa/LhJCT8+j0Ejyj3U0crrLGzvKag7F6WG0JUfpDhciynOn
+         UPMArqXKdL88Zjetqw2P8AP4rcZW0cTalmeny9EY+ubNdT3rfPhfbyZIv2mygqz519Ec
+         J6zg==
+X-Gm-Message-State: AOAM533zdxSSAhKPZAcwlfaz4wqc4oj9rSomB1hoJxS86kBeCUvQIhYp
+	WwKKjwcyHAZgmsB2hwZ09ow=
+X-Google-Smtp-Source: ABdhPJwbMVfPy1IMJtptgkrIf6LW9VDXVLIQ/vswb1KPSPLQl8dZBhbh32Dh0jzQbem2FdkY30ZOMw==
+X-Received: by 2002:a17:90a:5d03:b0:1e0:cc5b:4808 with SMTP id s3-20020a17090a5d0300b001e0cc5b4808mr7091366pji.180.1653641217105;
+        Fri, 27 May 2022 01:46:57 -0700 (PDT)
+Received: from localhost.localdomain ([116.89.143.231])
+        by smtp.gmail.com with ESMTPSA id k12-20020a170902d58c00b0015e8d4eb1ebsm3003254plh.53.2022.05.27.01.46.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 27 May 2022 01:46:56 -0700 (PDT)
+From: medadyoung@gmail.com
+X-Google-Original-From: ctcchien@nuvoton.com
+To: benjaminfair@google.com,
+	yuenn@google.com,
+	venture@google.com,
+	tali.perry1@gmail.com,
+	tmaimon77@gmail.com,
+	avifishman70@gmail.com,
+	robh+dt@kernel.org,
+	alexandre.belloni@bootlin.com,
+	a.zummo@towertech.it,
+	KWLIU@nuvoton.com,
+	YSCHU@nuvoton.com,
+	JJLIU0@nuvoton.com,
+	KFTING@nuvoton.com,
+	ctcchien@nuvoton.com
+Subject: [PATCH v3 0/3] RTC: nuvoton: Add nuvoton real time clock driver
+Date: Fri, 27 May 2022 16:46:44 +0800
+Message-Id: <20220527084647.30835-1-ctcchien@nuvoton.com>
+X-Mailer: git-send-email 2.17.1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,30 +84,42 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: linux-rtc@vger.kernel.org, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 25 May 2022 at 17:02, Eddie James <eajames@linux.ibm.com> wrote:
->
-> The driver may return a timeout error even if the status register
-> indicates that the transfer may proceed. Fix this by restructuring
-> the polling loop.
-> Also include a patch to display the error return code when failing
-> to transfer one message, which would have been very helpful in
-> debugging this issue.
->
-> Eddie James (2):
->   spi: fsi: Fix spurious timeout
->   spi: core: Display return code when failing to transfer message
+From: Medad CChien <ctcchien@nuvoton.com>
 
-Applied, thanks.
+Support Nuvoton NCT3018Y real time clock.
 
->
->  drivers/spi/spi-fsi.c | 12 ++++++------
->  drivers/spi/spi.c     |  3 ++-
->  2 files changed, 8 insertions(+), 7 deletions(-)
->
-> --
-> 2.27.0
->
+Changes since version 3:
+ - Add part number in Kconfig.
+ - Refactor rtc-nct3018y.c.
+
+Changes since version 2:
+ - Fix errors in rtc-nct3018y.c.
+ - Fix warnings in rtc-nct3018y.c.
+
+Changes since version 1:
+ - Add nuvoton,nct3018y property in NPCM devicetree.
+ - Add new property in rtc binding document.
+ - Add new driver for nuvoton real time clock driver.
+
+Medad CChien (3):
+  dt-bindings: rtc: nuvoton: add NCT3018Y Real Time Clock
+  ARM: dts: nuvoton: Add nuvoton RTC3018Y node
+  RTC: nuvoton: Add NCT3018Y real time clock driver
+
+ .../bindings/rtc/nuvoton,nct3018y.yaml        |  44 ++
+ MAINTAINERS                                   |   2 +
+ arch/arm/boot/dts/nuvoton-npcm750-evb.dts     |   6 +
+ drivers/rtc/Kconfig                           |  10 +
+ drivers/rtc/Makefile                          |   1 +
+ drivers/rtc/rtc-nct3018y.c                    | 560 ++++++++++++++++++
+ 6 files changed, 623 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/rtc/nuvoton,nct3018y.yaml
+ create mode 100644 drivers/rtc/rtc-nct3018y.c
+
+-- 
+2.17.1
+
