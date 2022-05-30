@@ -1,62 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4DF755377A7
-	for <lists+openbmc@lfdr.de>; Mon, 30 May 2022 11:26:53 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DB9F5399FF
+	for <lists+openbmc@lfdr.de>; Wed,  1 Jun 2022 01:18:42 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LBVRH2BFlz3bk4
-	for <lists+openbmc@lfdr.de>; Mon, 30 May 2022 19:26:51 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LCSrc1nJtz3bkm
+	for <lists+openbmc@lfdr.de>; Wed,  1 Jun 2022 09:18:40 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=EADepXHv;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=AKkizI5v;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::32c; helo=mail-ot1-x32c.google.com; envelope-from=gangadhar.ubuntu@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102c; helo=mail-pj1-x102c.google.com; envelope-from=potin.lai.pt@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=EADepXHv;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=AKkizI5v;
 	dkim-atps=neutral
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LBVQq1WhVz308b
-	for <openbmc@lists.ozlabs.org>; Mon, 30 May 2022 19:26:25 +1000 (AEST)
-Received: by mail-ot1-x32c.google.com with SMTP id l10-20020a9d7a8a000000b0060b151de434so7360653otn.2
-        for <openbmc@lists.ozlabs.org>; Mon, 30 May 2022 02:26:25 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LBYTF1yP5z30DC;
+	Mon, 30 May 2022 21:43:43 +1000 (AEST)
+Received: by mail-pj1-x102c.google.com with SMTP id qe11-20020a17090b4f8b00b001e3239b681bso308731pjb.0;
+        Mon, 30 May 2022 04:43:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=UyqVOlz00Bf7KtcaRdNqlGoZprQPeHSNbqmNCftC7Vg=;
-        b=EADepXHvNgZ9x5mKl8cnJIOYenR/pY75Ba2mxuNnWanR/3Y5IyY76AtnWbmjRLxLrX
-         6m4b3HTaQcB5jcs07rbVwIefJtS0vEgAFBLriHpitNahbFtJdSZ9D0rz9woYsEZQ5D8P
-         bLTfPUhNfA43tnH+A7/OQPEx1oHRdjQnr5Qx7uT/3gFILQiPDHBUhD83AWp84PXiF6mw
-         1yCIgWGex+LkIGHscka/pjUpIMcpOPwxsDb5wGX4U1BGmWUkNX3dKSEUK4lEf1chOF4K
-         iye+BZlGdC7+iQ5mkFqLdeez98emB5s6T2KP8HfKbEJtZk43ZI1FpGoIqR+g0GMkSDwo
-         r/ug==
+        h=from:to:cc:subject:date:message-id;
+        bh=1BvAlV75hXlmEW6H7NZj8m2+emc7pNPWivCpEN7QdQQ=;
+        b=AKkizI5vxdL5uQcfmsXWVkWdXI8Pq9JhYnyFP0MGpMimsx6reIaVisnHQEXGR52xZY
+         wxcGjJUMBWEq9eU3gQCY9ZNIey6s8Xd+jt09aZwkWby8RrmpXEC3olVVASmhX7omnVVq
+         f9OXP5KNAL5TxNuAhyUwDs12Cr+pMSULGKNyEe/pvJoAeLqw2rbAVFV5b8IIBNaoaX8q
+         yHlK9CB/JoHkSgMvc0+BF9zg2QRbGlDIqm2qGYVo4DmMDHAE8XLGNzvQFBeab+ux4gxo
+         X7OcuLR3x+woErt+qDtGgD+/CG2m3vkFsd8jc9O9WMvm/qzqtlGr2UYZr9a84t5CAyPl
+         xn/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=UyqVOlz00Bf7KtcaRdNqlGoZprQPeHSNbqmNCftC7Vg=;
-        b=imNA6p+sJ9m9qPRY7H2u65KEQQRmkBRIfFA7AACNj5/MJuNMnHO51vWXc4r/cOspWi
-         7Vv5NzkkpVcaI2ox5dHH4AF7IZkoQjdUHkCfJu532ohYg1HE3j+yGh/Eg714XAJYjByG
-         4rxLGHjlnKkfOg7JPdnDgSzrt9Qius0u91FcKksvM/sOsYF5jDDeTD9Q9dhieIOtH66N
-         CSK6Qf6UGS02YnyUxlMPoJYTfW/Wvzr4eUuS1KAGdYYRFKUHr9SNjXkLhYo1Y2vrSoOv
-         jM9TjU9INtFWNxDjGCyqp3sS3dilRQNoGjQXcWPbpQZkzCO3qIHR+vy8YzK4OmPKu23s
-         b1vQ==
-X-Gm-Message-State: AOAM533Rl9klXedEeJFIad+2OyWSPXB1jETc9wHfO+sUjb6KAkdpQKaj
-	cXsAnAea9frdoJlTDcpZlOmYv/teP4QylI7nPZA2BVbUf4nvYw==
-X-Google-Smtp-Source: ABdhPJxMt9L3C5VE1ROqKQdx7rEJga5gc6jktXCooPZd1K9DxaL7tViZv4f87dXk7vwLH5M3aDe5QF3oXc5VK6L5Dl0=
-X-Received: by 2002:a05:6830:2a16:b0:60a:f64d:ae2d with SMTP id
- y22-20020a0568302a1600b0060af64dae2dmr17407187otu.331.1653902781457; Mon, 30
- May 2022 02:26:21 -0700 (PDT)
-MIME-Version: 1.0
-From: Gangadhar N <gangadhar.ubuntu@gmail.com>
-Date: Mon, 30 May 2022 14:56:10 +0530
-Message-ID: <CAKxnL=hnWt8ZYL2eU8yaYMRTF7wMO8asb_YLmY2361CWddMkXg@mail.gmail.com>
-Subject: Usage of SHA384 signature for FIT image instead of SHA256
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="000000000000c8292005e0373ff2"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=1BvAlV75hXlmEW6H7NZj8m2+emc7pNPWivCpEN7QdQQ=;
+        b=rrP4uZPySccynQJO/lyE4mNlvWWRqv65tEsohAW8tY0KJ5+lMJ8pt3hTiUi+pj/TiT
+         Lh8zdZ/CglIl2FIYdsvRah24LpwvV7SYuIB/vApYV95829HMGMpmojlYxl60y90SVt9o
+         E44H08ke3YaJJByLNCaaHh/+qM8fpeQaGrNK+82zQFDYR3geQBC/ZL50Fim5SrJULwtQ
+         dKxxdvdJJ42dJs0ibW1lC+5cBgKXqDW978uOx6TtfMznWQix+UwD1sQ5x1VhwusJbajT
+         iJjdIumFoUj7xlT6Fm8J5as0DniFcBQue1Gtqbe6uGupOA3pqZhKu1Z/GOhP7kWsCfSr
+         Tp5A==
+X-Gm-Message-State: AOAM532v1T090c+vX4T+nxg6OK24NhhYaTeowkbPO0O75NtH2wZIX2QS
+	RCwFz9pvia51QvbdDv5k3js=
+X-Google-Smtp-Source: ABdhPJyBjD7ZjB9mqxCcZxSrR5aW0PfM7hAyksDSD984OOLHfR+h/OvSF/fOXgX4vDfty6M+7PqF0A==
+X-Received: by 2002:a17:902:8ecc:b0:15e:f63f:233f with SMTP id x12-20020a1709028ecc00b0015ef63f233fmr55548885plo.86.1653911020277;
+        Mon, 30 May 2022 04:43:40 -0700 (PDT)
+Received: from potin-quanta.dhcpserver.local (125-228-123-29.hinet-ip.hinet.net. [125.228.123.29])
+        by smtp.gmail.com with ESMTPSA id c10-20020a170902c2ca00b0015e8d4eb207sm8865069pla.81.2022.05.30.04.43.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 May 2022 04:43:39 -0700 (PDT)
+From: Potin Lai <potin.lai.pt@gmail.com>
+To: Brendan Higgins <brendanhiggins@google.com>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+	Joel Stanley <joel@jms.id.au>,
+	Andrew Jeffery <andrew@aj.id.au>
+Subject: [PATCH 1/1] aspeed: i2c: add manual clock setup feature
+Date: Mon, 30 May 2022 19:40:56 +0800
+Message-Id: <20220530114056.8722-1-potin.lai.pt@gmail.com>
+X-Mailer: git-send-email 2.17.1
+X-Mailman-Approved-At: Wed, 01 Jun 2022 09:18:21 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,127 +74,97 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Porin Lai <potin.lai.pt@gmail.com>, linux-i2c@vger.kernel.org, Porin Lai <potin.lai@quantatw.com>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000c8292005e0373ff2
-Content-Type: text/plain; charset="UTF-8"
+From: Porin Lai <potin.lai.pt@gmail.com>
 
-Hi All,
-I am facing an issue while using SHA384 signature for FIT image instead of
-SHA256. I get build errors.
+Add properties for manual tuning i2c clock timing register.
 
-ERROR: linux-obmc-5.8.17+gitAUTOINC+c26e1233f9-r0 do_assemble_fitimage:
-Execution of
-'/home/gangadhar/openbmc/build/tmp/work/linux-gnueabi/linux-obmc/5.8.17+gitAUTOINC+c26e1233f9-r0/temp/run.do_assemble_fitimage.17762'
-failed with exit code 255:
-none
-fit-image.its:8.26-20.19: Warning (unit_address_vs_reg): /images/kernel@1:
-node has a unit name, but no reg property
-fit-image.its:17.32-19.27: Warning (unit_address_vs_reg): /images/kernel@1
-/hash@1: node has a unit name, but no reg property
-fit-image.its:21.29-31.19: Warning (unit_address_vs_reg): /images/fdt@...:
-node has a unit name, but no reg property
-fit-image.its:28.32-30.27: Warning (unit_address_vs_reg): /images/fdt@
-.../hash@1: node has a unit name, but no reg property
-fit-image.its:36.30-50.19: Warning (unit_address_vs_reg):
-/configurations/conf@...: node has a unit name, but no reg property
-fit-image.its:42.32-44.27: Warning (unit_address_vs_reg):
-/configurations/conf@.../hash@1: node has a unit name, but no reg property
-fit-image.its:45.37-49.27: Warning (unit_address_vs_reg):
-/configurations/conf@.../signature@1: node has a unit name, but no reg
-property
-uboot-mkimage Can't add hashes to FIT blob: -93
-Unsupported hash algorithm (sha384) for 'hash@1' hash node in 'kernel@1'
-image node
-WARNING: exit code 255 from a shell command.
+* aspeed,i2c-manual-clk: Enable aspeed i2c clock manual setup
+* aspeed,i2c-base-clk-div: Base Clock divisor (tBaseClk)
+* aspeed,i2c-clk-high-cycle: Cycles of clock-high pulse (tClkHigh)
+* aspeed,i2c-clk-low-cycle: Cycles of clock-low pulse (tClkLow)
 
-Yocto changes that I have done,
+Signed-off-by: Potin Lai <potin.lai.pt@gmail.com>
+---
+ drivers/i2c/busses/i2c-aspeed.c | 55 ++++++++++++++++++++++++++++++++-
+ 1 file changed, 54 insertions(+), 1 deletion(-)
 
-diff --git a/poky/meta/classes/kernel-fitimage.bbclass
-b/poky/meta/classes/kernel-fitimage.bbclass
-index bb2f3c4cc..d4f9dddf2 100644
---- a/poky/meta/classes/kernel-fitimage.bbclass
-+++ b/poky/meta/classes/kernel-fitimage.bbclass
-@@ -51,13 +51,13 @@ python __anonymous () {
- UBOOT_MKIMAGE_DTCOPTS ??= ""
+diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
+index 67e8b97c0c95..1f4b5c4b5bf4 100644
+--- a/drivers/i2c/busses/i2c-aspeed.c
++++ b/drivers/i2c/busses/i2c-aspeed.c
+@@ -898,6 +898,56 @@ static int aspeed_i2c_init_clk(struct aspeed_i2c_bus *bus)
+ 	return 0;
+ }
+ 
++/* precondition: bus.lock has been acquired. */
++static int aspeed_i2c_manual_clk_setup(struct aspeed_i2c_bus *bus)
++{
++	u32 divisor, clk_high, clk_low, clk_reg_val;
++
++	if (device_property_read_u32(bus->dev, "aspeed,i2c-base-clk-div",
++				     &divisor) != 0) {
++		dev_err(bus->dev, "Could not read aspeed,i2c-base-clk-div\n");
++		return -EINVAL;
++	} else if (divisor > ASPEED_I2CD_TIME_BASE_DIVISOR_MASK) {
++		dev_err(bus->dev, "Invalid aspeed,i2c-base-clk-div: %u\n",
++			divisor);
++		return -EINVAL;
++	}
++
++	if (device_property_read_u32(bus->dev, "aspeed,i2c-clk-high-cycle",
++				     &clk_high) != 0) {
++		dev_err(bus->dev, "Could not read aspeed,i2c-clk-high-cycle\n");
++		return -EINVAL;
++	} else if (clk_high > ASPEED_I2CD_TIME_SCL_REG_MAX) {
++		dev_err(bus->dev, "Invalid aspeed,i2c-clk-high-cycle: %u\n",
++			clk_high);
++		return -EINVAL;
++	}
++
++	if (device_property_read_u32(bus->dev, "aspeed,i2c-clk-low-cycle",
++				     &clk_low) != 0) {
++		dev_err(bus->dev, "Could not read aspeed,i2c-clk-low-cycle\n");
++		return -EINVAL;
++	} else if (clk_low > ASPEED_I2CD_TIME_SCL_REG_MAX) {
++		dev_err(bus->dev, "Invalid aspeed,i2c-clk-low-cycle: %u\n",
++			clk_low);
++		return -EINVAL;
++	}
++
++	clk_reg_val = readl(bus->base + ASPEED_I2C_AC_TIMING_REG1);
++	clk_reg_val &= (ASPEED_I2CD_TIME_TBUF_MASK |
++			ASPEED_I2CD_TIME_THDSTA_MASK |
++			ASPEED_I2CD_TIME_TACST_MASK);
++	clk_reg_val |= (divisor & ASPEED_I2CD_TIME_BASE_DIVISOR_MASK)
++			| ((clk_high << ASPEED_I2CD_TIME_SCL_HIGH_SHIFT)
++			   & ASPEED_I2CD_TIME_SCL_HIGH_MASK)
++			| ((clk_low << ASPEED_I2CD_TIME_SCL_LOW_SHIFT)
++			   & ASPEED_I2CD_TIME_SCL_LOW_MASK);
++	writel(clk_reg_val, bus->base + ASPEED_I2C_AC_TIMING_REG1);
++	writel(ASPEED_NO_TIMEOUT_CTRL, bus->base + ASPEED_I2C_AC_TIMING_REG2);
++
++	return 0;
++}
++
+ /* precondition: bus.lock has been acquired. */
+ static int aspeed_i2c_init(struct aspeed_i2c_bus *bus,
+ 			     struct platform_device *pdev)
+@@ -908,7 +958,10 @@ static int aspeed_i2c_init(struct aspeed_i2c_bus *bus,
+ 	/* Disable everything. */
+ 	writel(0, bus->base + ASPEED_I2C_FUN_CTRL_REG);
+ 
+-	ret = aspeed_i2c_init_clk(bus);
++	if (of_property_read_bool(pdev->dev.of_node, "aspeed,i2c-manual-clk"))
++		ret = aspeed_i2c_manual_clk_setup(bus);
++	else
++		ret = aspeed_i2c_init_clk(bus);
+ 	if (ret < 0)
+ 		return ret;
+ 
+-- 
+2.17.1
 
- # fitImage Hash Algo
--FIT_HASH_ALG ?= "sha256"
-+FIT_HASH_ALG ?= "sha384"
-
- # fitImage Signature Algo
- FIT_SIGN_ALG ?= "rsa2048"
-
- # Generate keys for signing fitImage
--FIT_GENERATE_KEYS ?= "0"
-+FIT_GENERATE_KEYS ?= "1"
-
- # Size of private key in number of bits
- FIT_SIGN_NUMBITS ?= "2048"
-
-Thanks & Regards,
-Gangadhar
-
---000000000000c8292005e0373ff2
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi All,<div>I am facing an issue while using SHA384 signat=
-ure for FIT image instead of SHA256. I get build errors.</div><div><br></di=
-v><div><div style=3D"box-sizing:border-box;color:rgb(51,51,51);font-family:=
-&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px">ERROR=
-: linux-obmc-5.8.17+gitAUTOINC+c26e1233f9-r0 do_assemble_fitimage: Executio=
-n of &#39;/home/gangadhar/openbmc/build/tmp/work/linux-gnueabi/linux-obmc/5=
-.8.17+gitAUTOINC+c26e1233f9-r0/temp/run.do_assemble_fitimage.17762&#39; fai=
-led with exit code 255:<br style=3D"box-sizing:border-box">none<br style=3D=
-"box-sizing:border-box">fit-image.its:8.26-20.19: Warning (unit_address_vs_=
-reg): /images/kernel@1: node has a unit name, but no reg property<br style=
-=3D"box-sizing:border-box">fit-image.its:17.32-19.27: Warning (unit_address=
-_vs_reg): /images/kernel@1/hash@1: node has a unit name, but no reg propert=
-y<br style=3D"box-sizing:border-box">fit-image.its:21.29-31.19: Warning (un=
-it_address_vs_reg): /images/fdt@...: node has a unit name, but no reg prope=
-rty<br style=3D"box-sizing:border-box">fit-image.its:28.32-30.27: Warning (=
-unit_address_vs_reg): /images/fdt@.../hash@1: node has a unit name, but no =
-reg property<br style=3D"box-sizing:border-box">fit-image.its:36.30-50.19: =
-Warning (unit_address_vs_reg): /configurations/conf@...: node has a unit na=
-me, but no reg property<br style=3D"box-sizing:border-box">fit-image.its:42=
-.32-44.27: Warning (unit_address_vs_reg): /configurations/conf@.../hash@1: =
-node has a unit name, but no reg property<br style=3D"box-sizing:border-box=
-">fit-image.its:45.37-49.27: Warning (unit_address_vs_reg): /configurations=
-/conf@.../signature@1: node has a unit name, but no reg property<br style=
-=3D"box-sizing:border-box">uboot-mkimage Can&#39;t add hashes to FIT blob: =
--93<br style=3D"box-sizing:border-box">Unsupported hash algorithm (sha384) =
-for &#39;hash@1&#39; hash node in &#39;kernel@1&#39; image node<br style=3D=
-"box-sizing:border-box">WARNING: exit code 255 from a shell command.</div><=
-/div><div><br></div><div>Yocto changes that I have done,</div><div><br></di=
-v><div><div style=3D"box-sizing:border-box;color:rgb(51,51,51);font-family:=
-&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px">diff =
---git a/poky/meta/classes/kernel-fitimage.bbclass b/poky/meta/classes/kerne=
-l-fitimage.bbclass<br style=3D"box-sizing:border-box">index bb2f3c4cc..d4f9=
-dddf2 100644<br style=3D"box-sizing:border-box">--- a/poky/meta/classes/ker=
-nel-fitimage.bbclass<br style=3D"box-sizing:border-box">+++ b/poky/meta/cla=
-sses/kernel-fitimage.bbclass<br style=3D"box-sizing:border-box">@@ -51,13 +=
-51,13 @@ python __anonymous () {<br style=3D"box-sizing:border-box">=C2=A0U=
-BOOT_MKIMAGE_DTCOPTS ??=3D &quot;&quot;<br style=3D"box-sizing:border-box">=
-<br style=3D"box-sizing:border-box">=C2=A0# fitImage Hash Algo<br style=3D"=
-box-sizing:border-box">-FIT_HASH_ALG ?=3D &quot;sha256&quot;<br style=3D"bo=
-x-sizing:border-box">+FIT_HASH_ALG ?=3D &quot;sha384&quot;<br style=3D"box-=
-sizing:border-box"><br style=3D"box-sizing:border-box">=C2=A0# fitImage Sig=
-nature Algo<br style=3D"box-sizing:border-box">=C2=A0FIT_SIGN_ALG ?=3D &quo=
-t;rsa2048&quot;<br style=3D"box-sizing:border-box"><br style=3D"box-sizing:=
-border-box">=C2=A0# Generate keys for signing fitImage<br style=3D"box-sizi=
-ng:border-box">-FIT_GENERATE_KEYS ?=3D &quot;0&quot;<br style=3D"box-sizing=
-:border-box">+FIT_GENERATE_KEYS ?=3D &quot;1&quot;<br style=3D"box-sizing:b=
-order-box"><br style=3D"box-sizing:border-box">=C2=A0# Size of private key =
-in number of bits<br style=3D"box-sizing:border-box">=C2=A0FIT_SIGN_NUMBITS=
- ?=3D &quot;2048&quot;</div><div style=3D"box-sizing:border-box;color:rgb(5=
-1,51,51);font-family:&quot;Helvetica Neue&quot;,Helvetica,Arial,sans-serif;=
-font-size:14px"><br style=3D"box-sizing:border-box"></div><div style=3D"box=
--sizing:border-box;color:rgb(51,51,51);font-family:&quot;Helvetica Neue&quo=
-t;,Helvetica,Arial,sans-serif;font-size:14px">Thanks &amp; Regards,</div><d=
-iv style=3D"box-sizing:border-box;color:rgb(51,51,51);font-family:&quot;Hel=
-vetica Neue&quot;,Helvetica,Arial,sans-serif;font-size:14px">Gangadhar</div=
-></div></div>
-
---000000000000c8292005e0373ff2--
