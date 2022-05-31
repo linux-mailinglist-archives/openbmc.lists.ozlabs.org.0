@@ -2,85 +2,85 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B653D5391F6
-	for <lists+openbmc@lfdr.de>; Tue, 31 May 2022 15:45:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D008D5391FC
+	for <lists+openbmc@lfdr.de>; Tue, 31 May 2022 15:47:51 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LCD6n4MCmz3blj
-	for <lists+openbmc@lfdr.de>; Tue, 31 May 2022 23:45:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LCD9x50M7z3bmK
+	for <lists+openbmc@lfdr.de>; Tue, 31 May 2022 23:47:49 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=CzVU94Hk;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=IJo7b1rp;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=N52hijfp;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=y0LexLUk;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.24; helo=wout1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=CzVU94Hk;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=IJo7b1rp;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=N52hijfp;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=y0LexLUk;
 	dkim-atps=neutral
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LCD6J6VBVz2x9G
-	for <openbmc@lists.ozlabs.org>; Tue, 31 May 2022 23:44:39 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LCD9R4sxdz2yj3;
+	Tue, 31 May 2022 23:47:23 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.west.internal (Postfix) with ESMTP id C8D8F3200994;
-	Tue, 31 May 2022 09:44:34 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Tue, 31 May 2022 09:44:35 -0400
+	by mailout.west.internal (Postfix) with ESMTP id DEBE03200035;
+	Tue, 31 May 2022 09:47:20 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Tue, 31 May 2022 09:47:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
 	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm2; t=1654004674; x=1654091074; bh=jbSAZXb1H0
-	nakW5FPAOCFa3hBj01wtMk8v+4hdAAvRU=; b=CzVU94HkkyioQtA+AUNdKw+hBl
-	B9ha1EUXnDqnKPUEhecORn71A/DCFAubEVqL8G3q5kaiURFyMDmxMm3TjEThOfA2
-	TyMPIdLRlHGFVG0UCBFmjmaOhg2hsiv8XK/+74n4/LgHLfixVj88eXO2Rz+jFzrf
-	7puoyGjEwi8BECnSjSGYJj2f3sgoHlBU5M9nH0yVxB/Fdc3likSlJH5TR+yWwVId
-	WQGkelMWvbVxCMoNcVBmMeK2njo0tLWW5PCqVJc3xIHhMkOY5b8ZhEkalJJoXk2a
-	IzRvTlAaWB5vB/t5md4TrJ/w/NpAi8myM8hgKAGaVdSbmTZgphIqIzsLl80w==
+	:subject:to:to; s=fm2; t=1654004840; x=1654091240; bh=s8b8COO5Yb
+	Ga8xG5/i9yEEf+vE3uG78vIzviBYnAo1M=; b=N52hijfpV1UMRrhHBEsjZlBlof
+	doLJ+cEEVuVC54JKFV3kw7tnE9v3C8cO1Wt+0t7wRVY1tYWZpyfKd8Caxr5vd6ec
+	JpFTyqF8PYyiHrFnfJvcHYDB/Arzr9AFkaYy7gQsyrRi/0JT0GgCnlWydd9IagYJ
+	qrwoFtG4Rm43CY2v6G39mNz/KfRzpFnhSKDPu9GSp2Cu54I8M/+3Pi14pUmePLi2
+	wqN1CQuVTcplyDzrlS+tHZSS+oLdcpeOf6ABVntZE4MIA3WaQsJ75bJ58qlJT6Gw
+	nHLBBoPweRyZA1ZCMiTq/jQJKl5v3vIGAQfAKW6U1wfCaNzGW/BAp3v8QEKw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
 	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
 	:mime-version:references:reply-to:sender:subject:subject:to:to
 	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1654004674; x=1654091074; bh=jbSAZXb1H0nakW5FPAOCFa3hBj01
-	wtMk8v+4hdAAvRU=; b=IJo7b1rpMJFdjis+ZretijJ9ontx3p42TbOnEpkvQNMN
-	F2HGAlzvqI+qpLW/iXZsEilkY9G3R3PVAbqL54uieDL6nRZQwWG4Nm1TlPaZo6CW
-	gxMdkuH7rE+bJSSVYfMmLJMSMcstE29VwXHOVN0F5tp993lX2rCG4Tv59fL2WT2Z
-	KdFYGXRxWw+0bJOg40K2LwsgirATQABQNa6o3WdoNaq74co3drcG9v7TCnQPl72f
-	d4TpcuiNXKDEvQ+oEpWIETE6kM0uyTZG7CVnPuhoz0nL9ybwMkoAnKri2iTD3RW3
-	g5wJBQ2rWzcYRgVzD5anU9kZaON8QttpUL+FAcUZAw==
-X-ME-Sender: <xms:wRuWYq3byk6qSIOwoOPhzd8dUuSsPVqS8DzKGl7wIWXL9LrG7yh-4g>
-    <xme:wRuWYtESL59fi2MwyLi2a63MdaHaYW8ehgZeLEEEsK4HH01spIxN0CGzbZYefJ7M3
-    QDgURNyckyX4K8KsSs>
-X-ME-Received: <xmr:wRuWYi4h_5-ezTBK7USnC7HF0FAkCvjQCGO5eyjqM1emYkQ-EsvJibTbDpzEo_EDJ0gpGgUOzAZZ5tymSnOKdg3wbYYyu3tdyfI>
+	fm1; t=1654004840; x=1654091240; bh=s8b8COO5YbGa8xG5/i9yEEf+vE3u
+	G78vIzviBYnAo1M=; b=y0LexLUkBrU37DxqXCaEEErb5ht+9N5MV5M4VfIMEV1b
+	I+fn/jYy1h8qDjqRVfLUtTwm0pdnggWsfDmoww8Z5iU8+a+zPxlWdoNF/qTr6Y4w
+	kYTr9b9GRJPJJfUuGeZ2FXDYhVPDsjtk9EY/Sa2YW+rjxcxON/PCMWkzcfTBK0zv
+	NEyh4SKPZ3HWFlXmOu27SQdsIq/8HbZj8s3WkrcFf4O5K9PrjhczF9uSRtNlNfeQ
+	u9A09CvdAO23kFYDtwDpZ0JxhfUn/f5GHGXa2O7+UT2JivzRGYakabBIo6XdMZPZ
+	WBm1R0x2d2dAyQhnAy0KMueo7qoqdj9/ElTDgQJK6g==
+X-ME-Sender: <xms:ZxyWYmY8Qh1VZxpOy26rSI2cJxMVFaaxDaDlTTfCq6BxWkJJ0jukZA>
+    <xme:ZxyWYpZ3dWFBaiLd2xZBIXKgecGLJ-H5cSyk7vEcGcWABmRRgCxF6AXjkvhGBVkLr
+    2zUgcJB1vuYGzdX4Dc>
+X-ME-Received: <xmr:ZxyWYg8HHVL_n7RN5p0Vsi9JIzojqpAiBWubSVwHfH5RtKdv_H_zv7zsXOL_B7kcmJL5I4rdliXbvw8y6ffqftWqpFBUkVOz0Kg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrkeekgdeijecutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecufghrlhcuvffnffculdefhedmnecujfgurhepfffhvf
-    evuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhl
-    ihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnh
-    epheefjeehfedtjeeivdefkeffheeludekudelleffkefgtdeludelvddtgedtheeknecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrih
-    gtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:wRuWYr3guxa2AvqE6Mhtx1245Mp94wWZ5hjGS2aQCsFZwJfDmsVdLg>
-    <xmx:wRuWYtFCaMqTG1WeRTML-5EP3hz4gtHqC_WNN9CSUpCqHSSzSgYCvw>
-    <xmx:wRuWYk_V_jHYuO-tnvv-wxnyiiTaX34sEE4Vp4W1SsSz33rANda5Xw>
-    <xmx:whuWYgP2cZuRAcZeNeoOEbpg7f6n0Mmj-7otUtPToQYMZBIWEcByeA>
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+    hrlhcuvffnffculddvfedmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+    htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepheefjeehfedtjeeivdefkeffheel
+    udekudelleffkefgtdeludelvddtgedtheeknecuvehluhhsthgvrhfuihiivgepudenuc
+    frrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:ZxyWYornatPqLkQdmOBuIYSOEMpvBA4BGe1zPcfwo3qlrNwfG1Y39Q>
+    <xmx:ZxyWYhpWBmzgnbEuaJZPfpxWtYftXt53l8cIHN-o0kau3LP1fT7vHw>
+    <xmx:ZxyWYmSh7ByBNWghoeSCPk78S7TKf4VbwA9KxFTJkl3sN6BegI1D6g>
+    <xmx:aByWYs3-kEv5BUqz_2o6XvkhLxXOEw6c1y-I_r7zMBTjXMGt6UyHbQ>
 Feedback-ID: i68a1478a:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 31 May 2022 09:44:33 -0400 (EDT)
-Date: Tue, 31 May 2022 08:44:32 -0500
+ 31 May 2022 09:47:19 -0400 (EDT)
+Date: Tue, 31 May 2022 08:47:18 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: Gangadhar N <gangadhar.ubuntu@gmail.com>
-Subject: Re: Usage of SHA384 signature for FIT image instead of SHA256
-Message-ID: <YpYbwIAec+Fc+iaw@heinlein.stwcx.org.github.beta.tailscale.net>
-References: <CAKxnL=hnWt8ZYL2eU8yaYMRTF7wMO8asb_YLmY2361CWddMkXg@mail.gmail.com>
+To: Potin Lai <potin.lai.pt@gmail.com>
+Subject: Re: [PATCH 1/1] aspeed: i2c: add manual clock setup feature
+Message-ID: <YpYcZn+Zsz3g7xl+@heinlein.stwcx.org.github.beta.tailscale.net>
+References: <20220530114056.8722-1-potin.lai.pt@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="SsYEH7GpIJfqhCeD"
+	protocol="application/pgp-signature"; boundary="K2Ju2BjYugMc6h9r"
 Content-Disposition: inline
-In-Reply-To: <CAKxnL=hnWt8ZYL2eU8yaYMRTF7wMO8asb_YLmY2361CWddMkXg@mail.gmail.com>
+In-Reply-To: <20220530114056.8722-1-potin.lai.pt@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,51 +92,136 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>, Porin Lai <potin.lai@quantatw.com>, Brendan Higgins <brendanhiggins@google.com>, linux-kernel@vger.kernel.org, Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---SsYEH7GpIJfqhCeD
+--K2Ju2BjYugMc6h9r
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 30, 2022 at 02:56:10PM +0530, Gangadhar N wrote:
-> Hi All,
-> I am facing an issue while using SHA384 signature for FIT image instead of
-> SHA256. I get build errors.
-=2E..
+On Mon, May 30, 2022 at 07:40:56PM +0800, Potin Lai wrote:
+> From: Porin Lai <potin.lai.pt@gmail.com>
+>=20
+> Add properties for manual tuning i2c clock timing register.
+>=20
+> * aspeed,i2c-manual-clk: Enable aspeed i2c clock manual setup
+> * aspeed,i2c-base-clk-div: Base Clock divisor (tBaseClk)
+> * aspeed,i2c-clk-high-cycle: Cycles of clock-high pulse (tClkHigh)
+> * aspeed,i2c-clk-low-cycle: Cycles of clock-low pulse (tClkLow)
 
-> uboot-mkimage Can't add hashes to FIT blob: -93
-> Unsupported hash algorithm (sha384) for 'hash@1' hash node in 'kernel@1'
-> image node
+Do we need to add these to
+Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml ?
 
-This is reporting that the mkimage tool generated by u-boot doesn't
-support SHA384.  Which u-boot are you attempting to use?  It appears
-that v2016.07 doesn't support sha384 but v2019.04 likely does.
+>=20
+> Signed-off-by: Potin Lai <potin.lai.pt@gmail.com>
+> ---
+>  drivers/i2c/busses/i2c-aspeed.c | 55 ++++++++++++++++++++++++++++++++-
+>  1 file changed, 54 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-asp=
+eed.c
+> index 67e8b97c0c95..1f4b5c4b5bf4 100644
+> --- a/drivers/i2c/busses/i2c-aspeed.c
+> +++ b/drivers/i2c/busses/i2c-aspeed.c
+> @@ -898,6 +898,56 @@ static int aspeed_i2c_init_clk(struct aspeed_i2c_bus=
+ *bus)
+>  	return 0;
+>  }
+> =20
+> +/* precondition: bus.lock has been acquired. */
+> +static int aspeed_i2c_manual_clk_setup(struct aspeed_i2c_bus *bus)
+> +{
+> +	u32 divisor, clk_high, clk_low, clk_reg_val;
+> +
+> +	if (device_property_read_u32(bus->dev, "aspeed,i2c-base-clk-div",
+> +				     &divisor) !=3D 0) {
+> +		dev_err(bus->dev, "Could not read aspeed,i2c-base-clk-div\n");
+> +		return -EINVAL;
+> +	} else if (divisor > ASPEED_I2CD_TIME_BASE_DIVISOR_MASK) {
+> +		dev_err(bus->dev, "Invalid aspeed,i2c-base-clk-div: %u\n",
+> +			divisor);
+> +		return -EINVAL;
+> +	}
+> +
+> +	if (device_property_read_u32(bus->dev, "aspeed,i2c-clk-high-cycle",
+> +				     &clk_high) !=3D 0) {
+> +		dev_err(bus->dev, "Could not read aspeed,i2c-clk-high-cycle\n");
+> +		return -EINVAL;
+> +	} else if (clk_high > ASPEED_I2CD_TIME_SCL_REG_MAX) {
+> +		dev_err(bus->dev, "Invalid aspeed,i2c-clk-high-cycle: %u\n",
+> +			clk_high);
+> +		return -EINVAL;
+> +	}
+> +
+> +	if (device_property_read_u32(bus->dev, "aspeed,i2c-clk-low-cycle",
+> +				     &clk_low) !=3D 0) {
+> +		dev_err(bus->dev, "Could not read aspeed,i2c-clk-low-cycle\n");
+> +		return -EINVAL;
+> +	} else if (clk_low > ASPEED_I2CD_TIME_SCL_REG_MAX) {
+> +		dev_err(bus->dev, "Invalid aspeed,i2c-clk-low-cycle: %u\n",
+> +			clk_low);
+> +		return -EINVAL;
+> +	}
+> +
+> +	clk_reg_val =3D readl(bus->base + ASPEED_I2C_AC_TIMING_REG1);
+> +	clk_reg_val &=3D (ASPEED_I2CD_TIME_TBUF_MASK |
+> +			ASPEED_I2CD_TIME_THDSTA_MASK |
+> +			ASPEED_I2CD_TIME_TACST_MASK);
+> +	clk_reg_val |=3D (divisor & ASPEED_I2CD_TIME_BASE_DIVISOR_MASK)
+> +			| ((clk_high << ASPEED_I2CD_TIME_SCL_HIGH_SHIFT)
+> +			   & ASPEED_I2CD_TIME_SCL_HIGH_MASK)
+> +			| ((clk_low << ASPEED_I2CD_TIME_SCL_LOW_SHIFT)
+> +			   & ASPEED_I2CD_TIME_SCL_LOW_MASK);
+> +	writel(clk_reg_val, bus->base + ASPEED_I2C_AC_TIMING_REG1);
+> +	writel(ASPEED_NO_TIMEOUT_CTRL, bus->base + ASPEED_I2C_AC_TIMING_REG2);
+> +
+> +	return 0;
+> +}
+> +
+>  /* precondition: bus.lock has been acquired. */
+>  static int aspeed_i2c_init(struct aspeed_i2c_bus *bus,
+>  			     struct platform_device *pdev)
+> @@ -908,7 +958,10 @@ static int aspeed_i2c_init(struct aspeed_i2c_bus *bu=
+s,
+>  	/* Disable everything. */
+>  	writel(0, bus->base + ASPEED_I2C_FUN_CTRL_REG);
+> =20
+> -	ret =3D aspeed_i2c_init_clk(bus);
+> +	if (of_property_read_bool(pdev->dev.of_node, "aspeed,i2c-manual-clk"))
+> +		ret =3D aspeed_i2c_manual_clk_setup(bus);
+> +	else
+> +		ret =3D aspeed_i2c_init_clk(bus);
+>  	if (ret < 0)
+>  		return ret;
+> =20
+> --=20
+> 2.17.1
+>=20
 
 --=20
 Patrick Williams
 
---SsYEH7GpIJfqhCeD
+--K2Ju2BjYugMc6h9r
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmKWG74ACgkQqwNHzC0A
-wRk6FBAAj7mViv+iHs59j6EDAPzoUL9ugTzU7Lyl3ugHlNYJh4mBFrBG6Oe3oTMa
-WON8Zqm6DcJlQyGQxNOLuNPGwrCtLLHomoai8GwPuIVbtAgyUhe47VEf+g5ezkCl
-X8YE9ADQmdOWCXjHEJiUwvxBeBw4VRdAtReNIcBS9DLID38X/GEiPBoUaESPsbEk
-e1rquFUv9W550lyFyOhmCeq8XJPwtQRuehVgjF26cGOn+r5GUzOjuwovqyBLg71/
-r45zJHlSlfTFvkaFMnSDaolsthF/7nlBVTbZrdxq0kgsaT56v69c7GGZysXBAs0H
-fuZ9IA5s3Anm+NPNBR16UwDhiq+2tmVqoC7PV2N+Hdd4+bvXASPmFCMSvfqe/pPW
-aEW+18V4aC+PwfJ5BbJr52O+Nkfn6HWXHBnz0g4g9J7TcOLbzDLH/v0ohrtuddRb
-6R++mEQh0i/5XDWzefxl8GiqJ2zIO3EyHYT5zEaeQk+XVKfEkfNkpqLD1KOEBMfX
-XbVoEBJrj+oyLi5umjGADsXG+JoMN8mb3zNG4anNA1FWFdLGh20Zy5poQTcz5Lq1
-5vumUbZr8Uh/7+iOUIkwmm+VOlaLM4tFDaIUGZdhI/JQdeTDxZIkL7DtKW3/+CE4
-s7FjjUkCf5qQi60OwiCO5Rl/zvr7PGHcTpYVIZoJJUFXDCF4fDM=
-=nkPZ
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmKWHGYACgkQqwNHzC0A
+wRmniw//ReljGNV+Q4CIui/96gQHz615me2pPG7mqsYlvAJHQDt4GDYYEcJzl0l4
+KqYKK03DW5c7UGsk2MddvPOdHGLFt9Qxb8aqh+cTelPjzrezByNBYtuQC6zs+3Si
+VLYNjz1cXsrRPuVnsKhgEgCMpALC+6Js3luUMDBpW1FpZ83FIwQFlLk7oit9oHN2
+eZSQiQYlnsUx9ZV5BrI8VALrhNtbyfyC4sAMIeuIEtjCbgOv6LUIQl1PCFZOWM9O
+fsaLJhuaulKfHHYPrumt6VlFgXT4M7Bn+KvOoHGK36HmByKZVjy7K9mFmhsxrUXq
+6TeQzn0vixKO4myXxO/SbkVdRxquKCnFXicNT1BFt/P2M6HJ4GxjVaTbAptWNRHy
+QXSmI8py77yctldXfk2mPGGfhQ+KkuiNCtHJVCARMY93CQA0nYhLLrDNRhWx9wjp
+GGvCk/VZhmfr1TVeH15Lqxh1h+xVE3NItVumVYnu0xSccOwIRf5NOtDJc9MLXB1H
+Q5F4bSJNd5wgb3V/ULVqaxpys62jo7p+Ks0TSULVE8hJ7FfC8YMqJP7z8oPvmLoU
+u97WB7urZpQGjjTKZlPzFpPlSp1VjM3GV154FexUGKNMnASZZU8sdC5brXAotMsa
+BtSeHG788WBtHi6PWqSuSaqy9tyqUCSm/Je90yJ5PvX4ULfhAh0=
+=Z5+f
 -----END PGP SIGNATURE-----
 
---SsYEH7GpIJfqhCeD--
+--K2Ju2BjYugMc6h9r--
