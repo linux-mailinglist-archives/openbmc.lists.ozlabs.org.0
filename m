@@ -1,59 +1,54 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DF85539FDC
-	for <lists+openbmc@lfdr.de>; Wed,  1 Jun 2022 10:51:56 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DFA7153A083
+	for <lists+openbmc@lfdr.de>; Wed,  1 Jun 2022 11:34:18 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LCjZ21pqnz3bfr
-	for <lists+openbmc@lfdr.de>; Wed,  1 Jun 2022 18:51:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LCkVw5kmmz3bkD
+	for <lists+openbmc@lfdr.de>; Wed,  1 Jun 2022 19:34:16 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=zohocorp.com header.i=nikhil.vu@zohocorp.com header.a=rsa-sha256 header.s=admin header.b=ZFW48dKO;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bGGzdgsl;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=zohocorp.com (client-ip=136.143.188.12; helo=sender4-op-o12.zoho.com; envelope-from=nikhil.vu@zohocorp.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linuxfoundation.org (client-ip=145.40.68.75; helo=ams.source.kernel.org; envelope-from=gregkh@linuxfoundation.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=zohocorp.com header.i=nikhil.vu@zohocorp.com header.a=rsa-sha256 header.s=admin header.b=ZFW48dKO;
+	dkim=pass (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bGGzdgsl;
 	dkim-atps=neutral
-X-Greylist: delayed 906 seconds by postgrey-1.36 at boromir; Wed, 01 Jun 2022 18:51:30 AEST
-Received: from sender4-op-o12.zoho.com (sender4-op-o12.zoho.com [136.143.188.12])
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LCjYZ5dDBz2xnR
-	for <openbmc@lists.ozlabs.org>; Wed,  1 Jun 2022 18:51:30 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; t=1654072579; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=en9BZWImvoH13icfeRJtAZQ2Fl262cyJNm+Q2WI9CabjjpDV+HkzhDg5XgKcHOhmkWXCOzSeuVZK0IdrLQYmXLg3Bjsf24OOclERz3Rj+v/3zWPJW8s/ygFT0OI4WapqUqXJL9GauNYKG1EIC3f/KL9ukv7hnm+Aec6U+JH071o=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1654072579; h=Content-Type:Date:From:MIME-Version:Message-ID:Subject:To; 
-	bh=sCEQ2O/aQG/VqOJ3dQy65hGXMh0Ia79Sj9TjFHbRgjs=; 
-	b=mWULZZPUDqiYX0lfNbVCvxoslLSUX3MbiQZoZsnOH583gTToFzL5r/cIJDxMLCWIAX+upTmrRzCer476+rVtYoHSHLvuXc2vWQxsviYa5KzRbdN6hMuUr23BQ64BK2u22oV0ASyPv4OP1z+3vNB+yRAlllspWyYknKfJj+3fxdI=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=zohocorp.com;
-	spf=pass  smtp.mailfrom=nikhil.vu@zohocorp.com;
-	dmarc=pass header.from=<nikhil.vu@zohocorp.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1654072579;
-	s=admin; d=zohocorp.com; i=nikhil.vu@zohocorp.com;
-	h=Date:Date:From:From:To:To:Message-Id:Message-Id:In-Reply-To:Subject:Subject:MIME-Version:Content-Type:Reply-To:Cc;
-	bh=sCEQ2O/aQG/VqOJ3dQy65hGXMh0Ia79Sj9TjFHbRgjs=;
-	b=ZFW48dKOyNqWDJbgNU/3IhFDBu6iYe5WaBMn1aR0SudrZzf0Mv/WHU++O8y4QONK
-	q0NTkvhyEsHJOU4jZL9vb5NTNLk1173frlBsaqgeDydDRFPtX6PITK7+qaHKHMyAEFw
-	jSo7dYICfXyyV/qiE4cbMpcf3ePauTXvfuU3wU5w=
-Received: from mail.zoho.com by mx.zohomail.com
-	with SMTP id 1654072577665885.3130938710298; Wed, 1 Jun 2022 01:36:17 -0700 (PDT)
-Date: Wed, 01 Jun 2022 14:06:17 +0530
-From: Nikhil V <nikhil.vu@zohocorp.com>
-To: "openbmc" <openbmc@lists.ozlabs.org>
-Message-Id: <1811e688e68.f6b260b112172.7670613845716605077@zohocorp.com>
-In-Reply-To: 
-Subject: [ Entity Manager - Beaglebone Adc }
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LCkVW6FYWz3bYG
+	for <openbmc@lists.ozlabs.org>; Wed,  1 Jun 2022 19:33:54 +1000 (AEST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ams.source.kernel.org (Postfix) with ESMTPS id 021CFB8185D;
+	Wed,  1 Jun 2022 09:33:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7B4C385A5;
+	Wed,  1 Jun 2022 09:33:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1654076029;
+	bh=5T6DOvFw902lROs1sSAyrJ/DZ8vBhIwjqturHxstVd8=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=bGGzdgsl0yWRtC4tWhYShHmsSXAkbeeoS1eRaWgAuHlUB8ydG6LiQgI9ENIJpxdvi
+	 lI2Zh0dsTLjglJKNtjG3AJsMHdauUUCWmZMnJDlDaUW6FNuR9a/bnbZ2OsY9rYdlzs
+	 1s/mzxOUsVKKevlFm5kdHfOHd2SOWfgorHG4Rtuw=
+Date: Wed, 1 Jun 2022 11:33:29 +0200
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Quan Nguyen <quan@os.amperecomputing.com>
+Subject: Re: [PATCH v8 3/9] misc: smpro-errmon: Add Ampere's SMpro error
+ monitor driver
+Message-ID: <YpcyaTqqsfDJx7HG@kroah.com>
+References: <20220422024653.2199489-1-quan@os.amperecomputing.com>
+ <20220422024653.2199489-4-quan@os.amperecomputing.com>
+ <YmJJIb1DAIq5arCw@kroah.com>
+ <4f5d7746-3747-4a4d-525a-4fb69e706cd0@os.amperecomputing.com>
 MIME-Version: 1.0
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_38477_785283697.1654072577640"
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4f5d7746-3747-4a4d-525a-4fb69e706cd0@os.amperecomputing.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,154 +60,64 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, Jean Delvare <jdelvare@suse.com>, Phong Vo <phong@os.amperecomputing.com>, Arnd Bergmann <arnd@arndb.de>, Jonathan Corbet <corbet@lwn.net>, Dragan Cvetic <dragan.cvetic@xilinx.com>, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, "Thang Q . Nguyen" <thang@os.amperecomputing.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Derek Kiernan <derek.kiernan@xilinx.com>, Open Source Submission <patches@amperecomputing.com>, Lee Jones <lee.jones@linaro.org>, Thu Nguyen <thu@os.amperecomputing.com>, Guenter Roeck <linux@roeck-us.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_38477_785283697.1654072577640
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Wed, Jun 01, 2022 at 03:21:47PM +0700, Quan Nguyen wrote:
+> > > +	if (err_type & BIT(2)) {
+> > > +		/* Error with data type */
+> > > +		ret = regmap_read(errmon->regmap, err_info->err_data_low, &data_lo);
+> > > +		if (ret)
+> > > +			goto done;
+> > > +
+> > > +		ret = regmap_read(errmon->regmap, err_info->err_data_high, &data_hi);
+> > > +		if (ret)
+> > > +			goto done;
+> > > +
+> > > +		count = sysfs_emit(buf, "%01x%02x%01x%02x%04x%04x%04x\n",
+> > > +				   4, (ret_hi & 0xf000) >> 12, (ret_hi & 0x0800) >> 11,
+> > > +				   ret_hi & 0xff, ret_lo, data_hi, data_lo);
+> > > +		/* clear the read errors */
+> > > +		ret = regmap_write(errmon->regmap, err_info->err_type, BIT(2));
+> > > +
+> > > +	} else if (err_type & BIT(1)) {
+> > > +		/* Error type */
+> > > +		count = sysfs_emit(buf, "%01x%02x%01x%02x%04x%04x%04x\n",
+> > > +				   2, (ret_hi & 0xf000) >> 12, (ret_hi & 0x0800) >> 11,
+> > > +				   ret_hi & 0xff, ret_lo, data_hi, data_lo);
+> > > +		/* clear the read errors */
+> > > +		ret = regmap_write(errmon->regmap, err_info->err_type, BIT(1));
+> > > +
+> > > +	} else if (err_type & BIT(0)) {
+> > > +		/* Warning type */
+> > > +		count = sysfs_emit(buf, "%01x%02x%01x%02x%04x%04x%04x\n",
+> > > +				   1, (ret_hi & 0xf000) >> 12, (ret_hi & 0x0800) >> 11,
+> > > +				   ret_hi & 0xff, ret_lo, data_hi, data_lo);
+> 
+> Hi Greg,
+> 
+> Since the internal representation of the internal error is split into high
+> low chunks of the info and data values which need to be communicated
+> atomicly, I'm treating them as "one value" here.
 
-Hi ALL,
+That is a huge "one value", that's not what this really is, it needs to
+be parsed by userspace, right?
 
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 I have successfully =
-ported openbmc on beaglebone black. I have displayed LM75, and ADC result o=
-n webui.
+And why does this have to be atomic?  What happens if the values change
+right after you read them?  What is userspace going to do with them?
 
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Now I am doing the s=
-ame with Entity Manager. I have displayed LM75 result successfully, But una=
-ble to display ADC result through Entity Manager.
+> I could dump them in a
+> temporary array and print that, but it seems like additional complexity for
+> the same result. Can we consider this concatenated encoding as "an array of
+> the same type" for the purposes of this driver?"
 
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Below is my Config f=
-ile.
+That's really not a good idea as sysfs files should never need to be
+"parsed" like this.
 
-{
+Again, what are you trying to do here, and why does it have to be
+atomic?
 
-=C2=A0=C2=A0=C2=A0 "Exposes": [
+thanks,
 
-=C2=A0=C2=A0 =C2=A0{
-
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "Index":=
- 0,
-
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "Name": =
-"PSU 12 Volt",
-
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "ScaleFa=
-ctor": 0.1124,
-
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "Type": =
-"ADC"
-
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 },
-
-=C2=A0=C2=A0 =C2=A0{
-
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "Index":=
- 1,
-
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "Name": =
-"PSU 5 Volt",
-
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "ScaleFa=
-ctor": 1,
-
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "Type": =
-"ADC"
-
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 },
-
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 {
-
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "Address=
-": "0x48",
-
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "Bus": 2=
-,
-
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "Name": =
-"Ambient 0 Temp",
-
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 "Type": =
-"TMP75"
-
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
-
-=C2=A0=C2=A0=C2=A0 ],
-
-=C2=A0=C2=A0=C2=A0 "Name": "xplode",
-
-=C2=A0=C2=A0=C2=A0 "Probe": "True",
-
-=C2=A0=C2=A0=C2=A0 "Type": "Board"
-
-}
-
-
-
-1) How to display ADC value through entity manager
-
-2) I would like to control single pwm pin
-
-
-
-Any pointer would be helpful or what are the steps to display adc value/PWM=
- control
-
-
-
-
-
-Board used : Beaglebone Black
-
-
-
-Thanks & Regards,
-
-Nikhil Muley
-------=_Part_38477_785283697.1654072577640
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>=
-<meta content=3D"text/html;charset=3DUTF-8" http-equiv=3D"Content-Type"></h=
-ead><body ><div style=3D"font-family: Verdana, Arial, Helvetica, sans-serif=
-; font-size: 10pt;"><div>Hi ALL,<br></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp; I have successfully ported openbmc on beaglebone=
- black. I have displayed LM75, and ADC result on webui.<br></div><div>&nbsp=
-;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Now I am doing the same w=
-ith Entity Manager. I have displayed LM75 result successfully, But unable t=
-o display ADC result through Entity Manager.<br></div><div>&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Below is my Config file.<br></div><d=
-iv>{<br></div><div>&nbsp;&nbsp;&nbsp; "Exposes": [<br></div><div>&nbsp;&nbs=
-p; &nbsp;{<br></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp; "Index": 0,<br></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Name": "PSU 12 Volt",<br></div><div>&nb=
-sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "ScaleFacto=
-r": 0.1124,<br></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp; "Type": "ADC"<br></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
-;&nbsp;&nbsp; },<br></div><div>&nbsp;&nbsp; &nbsp;{<br></div><div>&nbsp;&nb=
-sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Index": 1,<br></=
-div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=
- "Name": "PSU 5 Volt",<br></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp; "ScaleFactor": 1,<br></div><div>&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Type": "ADC"<br></div=
-><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; },<br></div><div>&nbsp;&nb=
-sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Address": "0x48",<br></div><div>=
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Bus": 2=
-,<br></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
-;&nbsp; "Name": "Ambient 0 Temp",<br></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nb=
-sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Type": "TMP75"<br></div><div>&nbsp=
-;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br></div><div>&nbsp;&nbsp;&nbsp; ],=
-<br></div><div>&nbsp;&nbsp;&nbsp; "Name": "xplode",<br></div><div>&nbsp;&nb=
-sp;&nbsp; "Probe": "True",<br></div><div>&nbsp;&nbsp;&nbsp; "Type": "Board"=
-<br></div><div>}<br></div><div class=3D"zmail_signature_below"><div id=3D""=
- data-zbluepencil-ignore=3D"true" data-sigid=3D"58018000000014003"><div><br=
-></div><div>1) How to display ADC value through entity manager<br></div><di=
-v>2) I would like to control single pwm pin<br></div><div><br></div><div>An=
-y pointer would be helpful or what are the steps to display adc value/PWM c=
-ontrol<br></div></div></div><div><br></div><div>Board used : Beaglebone Bla=
-ck<br></div><div><br></div><div>Thanks &amp; Regards,<br></div><div>Nikhil =
-Muley<br></div></div><br></body></html>
-------=_Part_38477_785283697.1654072577640--
-
+greg k-h
