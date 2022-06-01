@@ -1,54 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFA7153A083
-	for <lists+openbmc@lfdr.de>; Wed,  1 Jun 2022 11:34:18 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3802D53A8EB
+	for <lists+openbmc@lfdr.de>; Wed,  1 Jun 2022 16:17:24 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LCkVw5kmmz3bkD
-	for <lists+openbmc@lfdr.de>; Wed,  1 Jun 2022 19:34:16 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LCrnZ0b8Mz3fkB
+	for <lists+openbmc@lfdr.de>; Thu,  2 Jun 2022 00:17:22 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bGGzdgsl;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=EphygKhl;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linuxfoundation.org (client-ip=145.40.68.75; helo=ams.source.kernel.org; envelope-from=gregkh@linuxfoundation.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::f36; helo=mail-qv1-xf36.google.com; envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=bGGzdgsl;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=EphygKhl;
 	dkim-atps=neutral
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-xf36.google.com (mail-qv1-xf36.google.com [IPv6:2607:f8b0:4864:20::f36])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LCkVW6FYWz3bYG
-	for <openbmc@lists.ozlabs.org>; Wed,  1 Jun 2022 19:33:54 +1000 (AEST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ams.source.kernel.org (Postfix) with ESMTPS id 021CFB8185D;
-	Wed,  1 Jun 2022 09:33:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F7B4C385A5;
-	Wed,  1 Jun 2022 09:33:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1654076029;
-	bh=5T6DOvFw902lROs1sSAyrJ/DZ8vBhIwjqturHxstVd8=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=bGGzdgsl0yWRtC4tWhYShHmsSXAkbeeoS1eRaWgAuHlUB8ydG6LiQgI9ENIJpxdvi
-	 lI2Zh0dsTLjglJKNtjG3AJsMHdauUUCWmZMnJDlDaUW6FNuR9a/bnbZ2OsY9rYdlzs
-	 1s/mzxOUsVKKevlFm5kdHfOHd2SOWfgorHG4Rtuw=
-Date: Wed, 1 Jun 2022 11:33:29 +0200
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Quan Nguyen <quan@os.amperecomputing.com>
-Subject: Re: [PATCH v8 3/9] misc: smpro-errmon: Add Ampere's SMpro error
- monitor driver
-Message-ID: <YpcyaTqqsfDJx7HG@kroah.com>
-References: <20220422024653.2199489-1-quan@os.amperecomputing.com>
- <20220422024653.2199489-4-quan@os.amperecomputing.com>
- <YmJJIb1DAIq5arCw@kroah.com>
- <4f5d7746-3747-4a4d-525a-4fb69e706cd0@os.amperecomputing.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4f5d7746-3747-4a4d-525a-4fb69e706cd0@os.amperecomputing.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LCrhf22d0z3gYV
+	for <openbmc@lists.ozlabs.org>; Thu,  2 Jun 2022 00:13:06 +1000 (AEST)
+Received: by mail-qv1-xf36.google.com with SMTP id cv1so1534810qvb.5
+        for <openbmc@lists.ozlabs.org>; Wed, 01 Jun 2022 07:13:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=2mrveSjBmQYRvMJMr8hQ24brKbV3xWcbAK6suJqgs6I=;
+        b=EphygKhl2kHWzZ6x1NVVCIZSWDapUBsKrPWSsOF9wIc8bwJN7TkmmZMKdcBWqPJA9b
+         FWTwo27knmuYM/yJIH5/WhoFcPJtks9cD+bRkexjl3idGMgEHePN1MiPHldT3W6h1cBn
+         OCBAcLaya1pY2TzbQCot9Kvt4peQbB/hV6gnwJXnnjSEzGY/gR4nWFNSjW/gNBa1/Zof
+         opJI7kXtt9wLBRnYGJzwPa6isMBR8I4K3DRka03nNFh9CSRtJdSo78N3Xmr9pMGMGTki
+         C67Nj9KxmKiSILc7WzmG2TIDwdzilFcu8IdoGWs4fcpqG2fY11PWuo8xqmrdti4NTct5
+         np5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:subject:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to;
+        bh=2mrveSjBmQYRvMJMr8hQ24brKbV3xWcbAK6suJqgs6I=;
+        b=zTIw9+vqVbQhFV0zdPAdTvly0SOSjsO7yZRFHro5133tscx9xxb26lvQVEbO+gVAzH
+         hPcdZMEYcXSJS5BpJU7AV2y0dnrqvpSe/6Oqxywfp52BgzMcqj0+cCz05QQFxzCQCQYe
+         5TsHd9fV3Wi4RKIZRJ2NE+QDs8pE1kx6wpu4j6lXhz27/QBSJzKsllKGhTxPQwEP5Ldm
+         kUAbiUrR2eAhVtIgBgUn/8rAehgrhvz/V+qsBwe5vnbsDZQE/x+nnj6rJ8Q/32P81lyH
+         bmYsawq05IYbAK3vyrySqNL88RgAsuQskRqVK2GEmX2d+t66WjI8GmZzLJkeAfI/In26
+         yCTw==
+X-Gm-Message-State: AOAM532vpPAgN7RHAiCCrZe6R32ni4mD7SveXk0J8bkeL9pph+f4xQU4
+	tPtgr533fEnLI/6SEYC5cGA=
+X-Google-Smtp-Source: ABdhPJxTDecE9+tcJi3HQDbvoa2vQFg+AVLxu8jq9kpSPPFDsRNnJ+j9G3aHp2bFSdWq2ITgWtrmIg==
+X-Received: by 2002:a05:6214:2a8e:b0:464:5b2f:76bf with SMTP id jr14-20020a0562142a8e00b004645b2f76bfmr9452932qvb.60.1654092782588;
+        Wed, 01 Jun 2022 07:13:02 -0700 (PDT)
+Received: from smtpclient.apple ([98.15.2.247])
+        by smtp.gmail.com with ESMTPSA id n79-20020a374052000000b0069fc13ce23dsm1295302qka.110.2022.06.01.07.13.01
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 01 Jun 2022 07:13:01 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: Updated links on dev-environment.md
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <Ypaf3wQAL2qxrqf9@heinlein.stwcx.org.github.beta.tailscale.net>
+Date: Wed, 1 Jun 2022 10:13:00 -0400
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <A2A27144-E639-462C-9079-42FBFBD5BCDC@gmail.com>
+References: <CAG3oxEfmZ2OsE=nGWXnD_4opkiKC7dMi7+wzqo_3dqN37aAT8g@mail.gmail.com>
+ <Ypaf3wQAL2qxrqf9@heinlein.stwcx.org.github.beta.tailscale.net>
+To: Patrick Williams <patrick@stwcx.xyz>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,64 +79,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, Jean Delvare <jdelvare@suse.com>, Phong Vo <phong@os.amperecomputing.com>, Arnd Bergmann <arnd@arndb.de>, Jonathan Corbet <corbet@lwn.net>, Dragan Cvetic <dragan.cvetic@xilinx.com>, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, "Thang Q . Nguyen" <thang@os.amperecomputing.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Derek Kiernan <derek.kiernan@xilinx.com>, Open Source Submission <patches@amperecomputing.com>, Lee Jones <lee.jones@linaro.org>, Thu Nguyen <thu@os.amperecomputing.com>, Guenter Roeck <linux@roeck-us.net>
+Cc: OpenBMC List <openbmc@lists.ozlabs.org>, Jonathan Arias <jonathanarias@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Jun 01, 2022 at 03:21:47PM +0700, Quan Nguyen wrote:
-> > > +	if (err_type & BIT(2)) {
-> > > +		/* Error with data type */
-> > > +		ret = regmap_read(errmon->regmap, err_info->err_data_low, &data_lo);
-> > > +		if (ret)
-> > > +			goto done;
-> > > +
-> > > +		ret = regmap_read(errmon->regmap, err_info->err_data_high, &data_hi);
-> > > +		if (ret)
-> > > +			goto done;
-> > > +
-> > > +		count = sysfs_emit(buf, "%01x%02x%01x%02x%04x%04x%04x\n",
-> > > +				   4, (ret_hi & 0xf000) >> 12, (ret_hi & 0x0800) >> 11,
-> > > +				   ret_hi & 0xff, ret_lo, data_hi, data_lo);
-> > > +		/* clear the read errors */
-> > > +		ret = regmap_write(errmon->regmap, err_info->err_type, BIT(2));
-> > > +
-> > > +	} else if (err_type & BIT(1)) {
-> > > +		/* Error type */
-> > > +		count = sysfs_emit(buf, "%01x%02x%01x%02x%04x%04x%04x\n",
-> > > +				   2, (ret_hi & 0xf000) >> 12, (ret_hi & 0x0800) >> 11,
-> > > +				   ret_hi & 0xff, ret_lo, data_hi, data_lo);
-> > > +		/* clear the read errors */
-> > > +		ret = regmap_write(errmon->regmap, err_info->err_type, BIT(1));
-> > > +
-> > > +	} else if (err_type & BIT(0)) {
-> > > +		/* Warning type */
-> > > +		count = sysfs_emit(buf, "%01x%02x%01x%02x%04x%04x%04x\n",
-> > > +				   1, (ret_hi & 0xf000) >> 12, (ret_hi & 0x0800) >> 11,
-> > > +				   ret_hi & 0xff, ret_lo, data_hi, data_lo);
-> 
-> Hi Greg,
-> 
-> Since the internal representation of the internal error is split into high
-> low chunks of the info and data values which need to be communicated
-> atomicly, I'm treating them as "one value" here.
 
-That is a huge "one value", that's not what this really is, it needs to
-be parsed by userspace, right?
 
-And why does this have to be atomic?  What happens if the values change
-right after you read them?  What is userspace going to do with them?
+> On May 31, 2022, at 7:08 PM, Patrick Williams <patrick@stwcx.xyz> =
+wrote:
+>=20
+> On Mon, May 30, 2022 at 12:56:54PM -0500, Jonathan Arias wrote:
+>=20
+> Hello Jonathan,
+>=20
+> Trimmed out a bit of your message and cc'd the ML.  It's best to use =
+the
+> ML for assistance.
+>=20
+>> Anyway, I  was following the guide here
+>> =
+https://github.com/openbmc/docs/blob/master/development/dev-environment.md=
 
-> I could dump them in a
-> temporary array and print that, but it seems like additional complexity for
-> the same result. Can we consider this concatenated encoding as "an array of
-> the same type" for the purposes of this driver?"
+>> But some of the links for the toolchains are broken, was hoping you =
+knew
+>> where I could find them?
+>>=20
+>> For example,  this toolchain link is broken below.
+>>=20
+>> wget
+>> =
+https://jenkins.openbmc.org/job/latest-master-sdk/label=3Ddocker-builder,t=
+arget=3Dromulus/lastSuccessfulBuild/artifact/deploy/sdk/oecore-x86_64-arm1=
+176jzs-toolchain-nodistro.0.sh
+>>=20
+>> I went to https://jenkins.openbmc.org/job/latest-master-sdk/ to look =
+for
+>> it, but that project is disabled, so no artifacts.
+>=20
+> It looks like Andrew disabled this on 2022-04-09.  I'm not sure the
+> reason why.  Hopefully he can elaborate.
 
-That's really not a good idea as sysfs files should never need to be
-"parsed" like this.
+oops, I had disabled during the prep for the server transition but never =
+re-enabled.
+It=E2=80=99s back up and running now.
 
-Again, what are you trying to do here, and why does it have to be
-atomic?
+>=20
+> --=20
+> Patrick Williams
 
-thanks,
-
-greg k-h
