@@ -1,135 +1,119 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B09ED53B635
-	for <lists+openbmc@lfdr.de>; Thu,  2 Jun 2022 11:39:19 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6573E53B6AA
+	for <lists+openbmc@lfdr.de>; Thu,  2 Jun 2022 12:11:28 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LDLZF3lp3z3bnJ
-	for <lists+openbmc@lfdr.de>; Thu,  2 Jun 2022 19:39:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LDMHG42GGz3bm3
+	for <lists+openbmc@lfdr.de>; Thu,  2 Jun 2022 20:11:22 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=kOuXWkDN;
+	dkim=pass (1024-bit key; unprotected) header.d=nuvoton.onmicrosoft.com header.i=@nuvoton.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-nuvoton-onmicrosoft-com header.b=VwD7SB3S;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:fe59::721; helo=nam12-dm6-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=nuvoton.com (client-ip=2a01:111:f400:feae::60a; helo=apc01-psa-obe.outbound.protection.outlook.com; envelope-from=chli30@nuvoton.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=kOuXWkDN;
+	dkim=pass (1024-bit key; unprotected) header.d=nuvoton.onmicrosoft.com header.i=@nuvoton.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-nuvoton-onmicrosoft-com header.b=VwD7SB3S;
 	dkim-atps=neutral
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on20721.outbound.protection.outlook.com [IPv6:2a01:111:f400:fe59::721])
+Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01on2060a.outbound.protection.outlook.com [IPv6:2a01:111:f400:feae::60a])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LDLYh6QBwz3bkZ;
-	Thu,  2 Jun 2022 19:38:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LDMGk4Tkdz3bbj
+	for <openbmc@lists.ozlabs.org>; Thu,  2 Jun 2022 20:10:52 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=dysr0h4RQopComgOC0mf5NLt8pezQMtDjo39JjG/heZf5toerQ65JIVLcA83xG94PmtaUynqH/HfsAKMm3pi1BH6poTOQTdLMBRv2bTiP4ezMyqU15sK2lhzk0+l3bSwUuNzmP90S2i++XaEpRVL3j17zUjVjH9GsX4kjtqDAk/vz4ApPvvOA3ltHOnH1FHDOApKqDW8HRnQS21PWWDAF94Np/UUN/W2d6eRhgiDB9ygzDaNYdBp6IhlOdJDstVb2/l8nHx1n4w5Kf3zcVmF7DEDo7qaHFr8OfnwXRmGhojG8Rhu0bJxrnymYrSF8k517wPBxHeeohDQjMUlj/TaYw==
+ b=aa4ZZpLUeudKGrRCm8wB07MaWQz4AK/KePEflvqoaOeCj4sUBIAa4w/pq4bd9aMUbyOp+axIkeMqFbl/jnaZSblhXx3XzkBtMM5S52hSsDQXLZ3LgSEUIhT99O0OXAkIxUM1HuXwJI5Sz4C8e68gyYeGrk7viZpPtPXm1KlXQwoLOlfU/yPzXoqySr69UCWUGByXSEnWB8ar5xNNODhnN1sAWYfRFz3RlPiyAvnCpAF+dLgqW7tw9D3iq0RBwkzVyxdbf/w73Nck72ceau+9e0weB69FzRJV7Y8Vmj7u/KOrbeSx3X5RvAMPg4tx+K2/CrLkaf263eW7XO0u+ioNAw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=X0SqOpPTtPfGAfAlQkWR6X0KyhTaxRms5p/wcg66Cco=;
- b=IUJVkYK/PG39yrBaNCG5fu8/e6Fk557GXPFobj8gc14yK+PJux3M7MiMPyipiKPbpLPHUhtQSpeox5m5UY0llxBP3SdxFS+XkS8XyvtwCpfzqnnI0OFhyCM99k2IYDmW3WvfSnLOCPLw5bPudpAjQogHZ1eJbI2pzlJpQIXOCPUWffSc+stgO/d1Sv4jyum77pg6aUsmWIFD6DUDkJ9tu0T8CpEO36/yps2nBaPF/amNOsn8I2REsGgJitosKoSVgRLgotBaMMIBkSqGU+X5mZlzGuJD/1tyJMdRboJjozsqeT9+zKu1ZLVZC0iag3WuyKBkwUp2xYfuxvwjzp3d6A==
+ bh=kUSqUHGipcpJH4w4kG7Or2+tbQPx4H0UCVqtZwVBoBQ=;
+ b=MUvFHHZkLgkzj8Jx4uzN/duGw4cW7sKsZfLFHz3Jw/OPpejfvl4/tF88b5VILjAuEgJNOUOU/6N3G1g13NKbJrWzCZdYycfpQGgVdTl3WDr8qbQdbXbKgC9ds+ROw8VzsyNfeRxPWLiXGk0y/fz56RlhshVadh6ZH4pF6JPGsl0OmmyNStHm2ohebCJsbtStJI/Ya/owBOXDkbkHvBbzcSIPwlQ6bSx7JjQT/e5tXJQb5tjAZfk+TBleI6Oe2CvZOXA4UeiJpnEtlXGYBl///yeUKGeTBg4OIl/bZUpcAEwUYY4zM+5amgJRs15hI/ChSZX79PJRl2uyvqQWOE4rPw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
+ smtp.mailfrom=nuvoton.com; dmarc=pass action=none header.from=nuvoton.com;
+ dkim=pass header.d=nuvoton.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
+ d=nuvoton.onmicrosoft.com; s=selector2-nuvoton-onmicrosoft-com;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=X0SqOpPTtPfGAfAlQkWR6X0KyhTaxRms5p/wcg66Cco=;
- b=kOuXWkDNz3W985uG1KLJmCNdTlvZ7jjM7AY8cg3YvzawILOb3RUHwo1WNm69Gmy+X01cqEVZulAudWEv6Q54d8B7evKIrkN9Bjnmp/MjM8epykQwor6AswnlpyJeaL3+sFtH0EgLw6VjjHJUu49kwihkeviNQN/+vgLTBVNeEbQ=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
-Received: from SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24) by
- MW4PR01MB6500.prod.exchangelabs.com (2603:10b6:303:72::20) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5314.12; Thu, 2 Jun 2022 09:38:30 +0000
-Received: from SJ0PR01MB7282.prod.exchangelabs.com
- ([fe80::e877:bfc6:92a5:d237]) by SJ0PR01MB7282.prod.exchangelabs.com
- ([fe80::e877:bfc6:92a5:d237%7]) with mapi id 15.20.5314.013; Thu, 2 Jun 2022
- 09:38:30 +0000
-Message-ID: <052469a4-1f0b-8615-7b4e-fa16159297a2@os.amperecomputing.com>
-Date: Thu, 2 Jun 2022 16:38:19 +0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.9.1
-Subject: Re: [Openipmi-developer] [PATCH v7 1/3] ipmi: ssif_bmc: Add SSIF BMC
- driver
+ bh=kUSqUHGipcpJH4w4kG7Or2+tbQPx4H0UCVqtZwVBoBQ=;
+ b=VwD7SB3SnmKvYQSxiEkodU2XEJKc/up3XVt2VjL8HPu5bZ2Ue3z6OVyse6S9pS3J6U05od1HFp+ZJoX7DkptjsKBEin6Gv3bnyMyNcHWzRYvk4H89/CLrd15jIyVWQrqyBhuUeh7vkir6Uyh3c2zT7dFDFMkmKP/fVWlDYO5Tnc=
+Received: from HK0PR03MB5090.apcprd03.prod.outlook.com (2603:1096:203:bf::11)
+ by KL1PR03MB4792.apcprd03.prod.outlook.com (2603:1096:820:15::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5314.13; Thu, 2 Jun
+ 2022 10:10:31 +0000
+Received: from HK0PR03MB5090.apcprd03.prod.outlook.com
+ ([fe80::154b:d390:51c5:ace6]) by HK0PR03MB5090.apcprd03.prod.outlook.com
+ ([fe80::154b:d390:51c5:ace6%6]) with mapi id 15.20.5314.013; Thu, 2 Jun 2022
+ 10:10:31 +0000
+From: "CHLI30@nuvoton.com" <CHLI30@nuvoton.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+	"CHLI30@nuvoton.com" <CHLI30@nuvoton.com>, Tim Lee <timlee660101@gmail.com>
+Subject: [phosphor-ipmi-host] static assertion be raised in aarch64 build
+Thread-Topic: [phosphor-ipmi-host] static assertion be raised in aarch64 build
+Thread-Index: Adh2Z9G2+bnxl2VkQTWfN7liTNyEBg==
+Date: Thu, 2 Jun 2022 10:10:31 +0000
+Message-ID:  <HK0PR03MB5090871797C500E962FC9550CFDE9@HK0PR03MB5090.apcprd03.prod.outlook.com>
+Accept-Language: zh-TW, en-US
 Content-Language: en-US
-To: minyard@acm.org
-References: <20220422040803.2524940-1-quan@os.amperecomputing.com>
- <20220422040803.2524940-2-quan@os.amperecomputing.com>
- <20220423015119.GE426325@minyard.net>
- <ec7b86ec-827f-da64-8fd2-eae09f802694@os.amperecomputing.com>
- <20220504120631.GE3767252@minyard.net>
- <ba084735-0781-7ca2-4d04-a70a4115729a@os.amperecomputing.com>
- <20220602003244.GK3767252@minyard.net>
-From: Quan Nguyen <quan@os.amperecomputing.com>
-In-Reply-To: <20220602003244.GK3767252@minyard.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SG2P153CA0047.APCP153.PROD.OUTLOOK.COM (2603:1096:4:c6::16)
- To SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24)
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nuvoton.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 6a224f30-a665-454d-f83b-08da44802082
+x-ms-traffictypediagnostic: KL1PR03MB4792:EE_
+x-microsoft-antispam-prvs:  <KL1PR03MB4792F298E7C68AB1187F86A1CFDE9@KL1PR03MB4792.apcprd03.prod.outlook.com>
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:  94Bgg4C9i1y9Gmh7Wpc0ro6t2a6yCYcYp1Fs21BN85Dq52DSDcZAeLFp02Z/jX3tzuFtcD7SizF8u83At2tAUYNWld1DImpGuauJEushDjFqyCPnAoXRKp6xFcCoaBxCk8ubtcEPmYroouz20tB0vfwa/MTYD4ob1pPQRh8mxVOSxf/dbSWTEOxLhuaoy8aD1Hs5kQzXfhCJ55C0vYVofVb1Ndp+ENN6KrsniwR6m+f20Y7IG4+0LIxsPyp0WxBJ1JbuOBQJDuhckMFcZNNuS9nP78QsTXnilmYSkZuSn1ISMVljdCQFJ6tEqWscmKPixaBT0YJCWWFFTbSbrHpLK6/2l01P8F1S+BqcP9b3oMb+hMy9PnD4uMg6VVRfqtB7M+uCdwtconRrRBI301jc9HRxtehb0m2y5HAgadXJ6/mO6sCLxKNV3qX/h7lHZxvD624Kg4BR4ndbY3jiIIDm/mLC4Y1GGXLG6DXvzs6ASQhPT59S1F8WXD3/DvsQ+e90UXQwlyOaWDR+Jf8WC6D6X6BJTH51uUpQtWnFwr0fOS5tJ71mxK9NUdaYAzGqWp5qMIkNov7cskgEOVLhlAmrUDDflCzMLDXJhMrDJzv88wftWl0G2uFBrZZsi9YUX3NiSsy+iqUgJA1Lq43f/iPVATDsf9nbc+B2W5d8rS5MJYlitzI7pf8bNWWx1GVjstiAkZgl8e5E653itcanNa3JXtWu4onF+tQVyX564IoDjdqXdJcQceCThncM8vPjev2iXLKDBKH9BI4I1HaDpzo/X26Il7I1BOImanr629ztLJWZjgACmJo3Tz7nh0y324Pp
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:HK0PR03MB5090.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(2906002)(316002)(38100700002)(83380400001)(8936002)(52536014)(9686003)(5660300002)(186003)(110136005)(8676002)(66556008)(64756008)(66476007)(66446008)(55016003)(71200400001)(76116006)(66946007)(508600001)(38070700005)(6506007)(7696005)(122000001)(33656002)(86362001)(414714003)(473944003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 2
+x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?w/eV+GfXeK8onn1ni4QjhzQnYkTKY8JRt5p0PIXSru38RcyFoPIxmNVnG4OX?=
+ =?us-ascii?Q?dgLYSL9UL429MRaHLDm6z/4bZ8izRbJVuS+S5sXq5Aoj8b+Qi7gqexqyl9aw?=
+ =?us-ascii?Q?A+jmzzzyawm1I2otpQpRgIe86oourZefvXFKV/Fon3NUpFPjH96Ik+U8r/YZ?=
+ =?us-ascii?Q?MPmHO8iohRuEpVopWanGcioZdwT2gQM+mheJ5rEW5yefbopNrLO/uefrYLq6?=
+ =?us-ascii?Q?1//UZaVUfw3yIlcrThkEJlvb58/VdTcS74/MbRGvl4Nkv3GTslE3E9yaJGLm?=
+ =?us-ascii?Q?tfS41dQFGYl6I4e0y+QucFIdmYo1EGty0UHr7pVWaedY7nziq/bD/3LXs78R?=
+ =?us-ascii?Q?GUCqZOWNsQj4IH9cdDiPqd5dFx1lKukww9452+RZ6sBLhyZ4CNh0R5RxqLnW?=
+ =?us-ascii?Q?JsrCJKczObC/fcfWL92lWLz+8IcoBo3B8B18xbViEgStIDrFE0zmcT4zF7Mw?=
+ =?us-ascii?Q?Wygah5lnQ9oUZSOe3SRtaNXsX3A9j7Cz2AHczWfAJpJx+ohTKLflw/9knKKl?=
+ =?us-ascii?Q?YWp63l8OOobhgBuOBs/TyxXd006Jxzth2ExnFA1KlekXbJxPAfMuHs450yGt?=
+ =?us-ascii?Q?DA/VedGn0N0tUQfqJE8/E+oRykn+hiZb5hW6YoCRufdQG8SAOefuPleuBIbU?=
+ =?us-ascii?Q?9qapU2eAbiWVG5D/k2uQd1IdwYNfyPi7NohHlPQ0sV4xUX4KMmCZD5AWVqn2?=
+ =?us-ascii?Q?cHIl1bq8Yt1tuDS4dKOEthTxLffF9mcm8nYD5GNgGrxbb0d5T41UIfMZfENT?=
+ =?us-ascii?Q?zoZGJqvnJiWdbtM47UhRVBHpcNpQ1HdIeiQ2tTFevFuAVlNaA3J1VecTImgd?=
+ =?us-ascii?Q?dGAsEDO0HVB/mioJcvCdjxLB14zBF2mDWQfBSaDMvHLsWgxgmo7erwwKaOBH?=
+ =?us-ascii?Q?1hqBnYp0IPqgjF84ZR8IJbacvzgzGBIziKWM5zAsMxvBgZ8Nvb++vWpXMDeB?=
+ =?us-ascii?Q?VIKmg6PpMyWH7gnXkIyiY4fmgQjCLCvgQn32gVY8Lx97heYjXi73vnLkCkR+?=
+ =?us-ascii?Q?5WroCUMLqM0UWm8qW6qXcW60chTTNZFnTzAKpjfkoDClHlv6BNOqiSDqsu2H?=
+ =?us-ascii?Q?uPQDaHThfsN5cP9/eUCJ23ZJD8ibyxAcUapd4uGrnSN+G1AREp3Kyyj45vJL?=
+ =?us-ascii?Q?qUtEHWRPhwGwI8LnzCxxae0dqgIq7euvPpM898hPdZXxEb70evxL8c/1y3Xp?=
+ =?us-ascii?Q?ndLwMNOHwCXT/lL4CDijmO4zmxzewPpN6vPLeM4NESkmycFeU2fy8hHQ31gl?=
+ =?us-ascii?Q?TNdTkpOiGZunh0XW00A9IfGtDZWBMC/iIqGD1KG1x1oZm8grauWu5TGMA22H?=
+ =?us-ascii?Q?8YsWJlkxpVXwDAk4IcNLm5cPJ6ygajnF41JAJN/BGo4VAihMaQ8QhgT0ZLnH?=
+ =?us-ascii?Q?k6g0Z/PIcLMdFpgDltVlFDBWgVPlSXpEMbk3/UOieFHzLaRfudmdeRJv/fNs?=
+ =?us-ascii?Q?9yVMHD+KYGzMj3m0tT3lh1KROPVxvHHGpk/xi7hKPoI+R3rglEKqAdTvFGIa?=
+ =?us-ascii?Q?jB9V9qO+1FVHRerCniFYdhRgVsdxoR5ucwkThgJIcDZANZRhr8xAsmCnBP4C?=
+ =?us-ascii?Q?9f4y1RZ2nuIQWK1ARO34WUH2j9qs67LuwubszEdKNZGGuJB+AEpRIUFDFy94?=
+ =?us-ascii?Q?xRlrQq0JQmq4mFWsP8rjIaNRYmJSjgEzoN0vY9S1uvrs7vnAOUhRjIoy3aiv?=
+ =?us-ascii?Q?BB4JJqaYjdnBG+KCgyE8zbTPa5aHy0RIWAiXX2rX0EV2EAuMvd0HUR8Aml2Q?=
+ =?us-ascii?Q?Bq/2y7XqtK+KeCuUmKhTqKvVPq9AqS81Ys3WRv1r34+hvu5hHNvoKqd4iNo8?=
+x-ms-exchange-antispam-messagedata-1: IeM1jVsPHu27WA==
+Content-Type: multipart/alternative;
+	boundary="_000_HK0PR03MB5090871797C500E962FC9550CFDE9HK0PR03MB5090apcp_"
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 1cbea329-f3dd-4f8e-ee21-08da447ba710
-X-MS-TrafficTypeDiagnostic: MW4PR01MB6500:EE_
-X-Microsoft-Antispam-PRVS: 	<MW4PR01MB6500BA66DFA975A5BBB7C814F2DE9@MW4PR01MB6500.prod.exchangelabs.com>
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	lGFHyzomHBF+YzqpU3JvdXr4+3afFwAhDBIxxs6SbcJ/Og+s3BnHdFE6Gk/HfNBtUJnbbohHvOKS1Ok6MhNnt/Q4WA5Mv05ZjlCzW/+lj42o3K4AC3S3+0vIj6UjNcUnclQzcpf/gkXV16hGZpwckNcC9108p/lle4WO6V5QxnbTmlNU2MGbPY5wCNh7zDTwIOlc/qqlATbclrQpoqNGm7ZMjRZ8zIMKjWLsOP49DERb84LH9V+zFq1vGVBiwYw4whz/4nSh9A6/uQygezYKvHbiNQ48XJ/9dyk/CTO3uN2A/frc1z5qmTdJaXiMUW8w1gYYgmZzbV+Xd8JStr2rbvGdrxFPSZllaH+GtlEtE58jzZ406xWWXVxcJjqCZHZcZ364RMjXjayJsi9xsSx6MYq+ykNw9oT3+xR9xq4MPJnulLuYhGlmgeNRoGD0NoQx/42ri4HLb3iJ2W2TyKVMJMoOUegLlGKlS1jwJ1KBn8o0PxAnoh5yeT6bwDfqJdWT6oZxqjhXxupo/h/jIQwXGaBadj976vSzl4YrtWLnQ7NAVqLITJ96sDlApyh+tPaTsYIZ4xBq78Mi4HwQUmYtmMjm3CvfE9TgueqH1c/4LrXRut7mtuENzYsRbb67caGad0qHPwLp0iaobqqa5W+cm06XRV011bxXivqhGsg2Pjzsc70UE49vibsCCH+hRbKEd/batzYC3pAJCm2/lat7GDj4KNU+LpKlnhqJXbVS4Hu66IEY8LM61ElpWTEL/e2z
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR01MB7282.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(186003)(7416002)(2616005)(66476007)(8936002)(83380400001)(6486002)(5660300002)(508600001)(2906002)(26005)(8676002)(4326008)(6506007)(66556008)(6916009)(66946007)(54906003)(38350700002)(38100700002)(52116002)(31686004)(53546011)(31696002)(86362001)(6666004)(316002)(6512007)(43740500002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?NEJmYS8wak5aYzBWQVcrdHJNYnk2bE40RndPTmF2TnZMa0xjL1kwcTJaUzhO?=
- =?utf-8?B?Q2g3QmQ4N3Fhb0c4bjlKUUpxT1ZPNWI4ZDRxa3daMDdESWE1Y3RqemZQVmZp?=
- =?utf-8?B?R1FFUUhKK3VLR1VXNXVKMkd5c1Y3Vk9zNnh5NS9RbFBnOWNoQXhWWGNHTzVa?=
- =?utf-8?B?dmZJNk9lZkVsM2w5b2V2cExpOGEwaFBHVzhJaFV1SHkxejQraDBKZ3ZNZzJx?=
- =?utf-8?B?ZjlsKytDbVEwenRUUEg5ZTJyckx4MDR1RWlZcGJoOW11Q0x0OFhTVnAyZ2ZJ?=
- =?utf-8?B?RGZYdHNEVkRRR1dkNzZBSUpaS1ZrbkRUVVliaFRCaDUzYlVneE9JNkZUdmdp?=
- =?utf-8?B?SnY3NnNWR3QrWG9ja0RaUGNNZS9PeFdMZFdDODdGS0JZZ2xQVThzMHZRTmFE?=
- =?utf-8?B?SFAvTE5NTWtXRW5PZnRBT1puTVB3UHpqNU5ZRFdFY2hRZjcxOFBCNU1tdjBv?=
- =?utf-8?B?ZHZac05PL0QwVnBHSE4rSXdiUnpaNHZlc2thQXJnbkY3ODJqTy9GVWthelE4?=
- =?utf-8?B?dmtmWjd5N2JrUkxLNC90QithdmM4R2E2WnJGYXM3amFNTHFzOW40Vk82Mi9v?=
- =?utf-8?B?a1FtRzNyekhleDQzRGtYT2d5Mys5aG8yNisyb1dWYVZhbGVMcUlCeE1KNTBs?=
- =?utf-8?B?Smd1V0VRTUlJa0xRZjhSdTVtUDFWbjNMYm54SjVTVW43UFdRd0s0WGR1bUtH?=
- =?utf-8?B?RGJ4TjRDMTJqR1dvaTMzTU1UNjYvaGl2SmdoNVRDTHFUcTRYWGlBbWhaOGwx?=
- =?utf-8?B?UUlTekx0a3FhdGhhbGloUzQ1WDE2Nk5sWGYwTnpndm42WDcrT2NXMGkrUTZq?=
- =?utf-8?B?YlBYQ3VGZDYreFhmMkpPbWU0dkc2US9nTzNlWFpOd21mV2hjeWVpMGxyQUV5?=
- =?utf-8?B?MUVyWFBWWGFGVnJoN0VDSXVqRldQZUZXejFHRFdadDJpcVF5MHl4aitmbmg0?=
- =?utf-8?B?a1JETXdNWWM3R3gxMG9VeHJwM2dsWGN3ZU1NNFNFcGZ4azhDZVYyNzBmeTBv?=
- =?utf-8?B?cnhxL2pJOTFHOG5rTURzNVFPYXd1TG5OZjEya01LVStEaDljVFYwWjE5QnNG?=
- =?utf-8?B?WmVrYTZaeFVSM1kvZHQvWVRLSTBycEp5NmtpRU9qL2wvcW5zTzl4UHM4dXpx?=
- =?utf-8?B?YlRBRkZ5aEZqL2Y1L2Z1SnllUnpCU08wSEdsVE15WWhaMWo4NElqcTBwV0Z1?=
- =?utf-8?B?SjdGTVB0Mzd4YnVteVpMUWhSTzRqUnhMZ0EveHZlcWRvSmVhZ01kVmZEL09N?=
- =?utf-8?B?L2k5VzhzaWtLRWF6c0JvanZtQUlSVWtQSXNOdGVmcEJ2YnBuMEtUeXEycmxB?=
- =?utf-8?B?bCtPZUtOWDA4di83SHk5WENzelY2NUJLVjVvR3lORDdmOHVZcjZkbXF3dllF?=
- =?utf-8?B?NXR1NlJyaHpoT2s5NnBhK2RnUmIwY201VXZ1L3YyVzFXUzB5MEl1V3dkSC9H?=
- =?utf-8?B?SURpaGdZeFNTaGVuNWZsdWMzNG9ZbTFpbjZUalZnYTFBMGJkT3dkYzJYMGJn?=
- =?utf-8?B?eTJsZHFERWJ1Q2R0T2swc05IcFZHSlgyeDJXS0tzTCtMVzF6TThkNjVwaG1m?=
- =?utf-8?B?TmlwRE1aZzlQRjBiOStlWi94bW5NbUVHamVoOEtWRkhhemVBT0FNVEJtSFF5?=
- =?utf-8?B?ZzJEZmRUcTlEYURGOVpXZFdadmRRODBabkhZancwek80Mkw0NitwdlpSWHNw?=
- =?utf-8?B?MW9sZnRUQncrT1FRVnNsTWVvdS95MnpNa0tIZUV6S0pMWHA0UTZJSkVwWVJx?=
- =?utf-8?B?Uy9LZ3EzNTg5eHNLM2M0VldBZjF5QzlBb2pFaXdCNG85TGkxM2YweFIrZy9C?=
- =?utf-8?B?cUJ3M2d2K05NeVJ5R0prRXF1T3lUdVIxK1MvZFpSUnV5Qi9UZTloSC9TcHoz?=
- =?utf-8?B?QUtxODBmT3FaQTJiMTdJM1BVQStGUzRhaUpPVFFVdElXdGpBekJLbGl2Rk11?=
- =?utf-8?B?Z3NZTU1JS0FoY1VpcGZsdC9RU2x5QjNiWnNadGlRbEI0NUFTQUdicmQ2bUFa?=
- =?utf-8?B?RlgySHRpOEtaNFVyTDZ3VjNueDdwQTdjdk95VXZNeGZqSXJmMkJFVnd0L0Fu?=
- =?utf-8?B?WW05ZCt3aHJFUXNxbkhucmxvSVBnMENkM25DcURpYjRFa1g5Q1VCcG1BL1VC?=
- =?utf-8?B?QjJKSDhtSm1UUkE0dmFwTTZOVTJidm9ZNzNKQmcwU2dEZ0pUNHh5RXhBNDRD?=
- =?utf-8?B?bEkxQVd3TFpPYmZFdmlSaHNENTdrekJteU5JV0tXQ1NrQ1pNcldwSG42NGJl?=
- =?utf-8?B?WjRabERpNGdoQ0l4MVFmbUIzcXRaMzM5TU9EeTlDNnZHSWttMXpnRjFCdGFM?=
- =?utf-8?B?UjRCenlRM1lUZzFzOTlhemMxYlducmw2OFNrcGRzVDJnMzNRQjB3endlcjIr?=
- =?utf-8?Q?2BY+LlHjEBgniDnqIg8BPPLGa/hGIf/hPaMxq?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1cbea329-f3dd-4f8e-ee21-08da447ba710
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR01MB7282.prod.exchangelabs.com
+X-OriginatorOrg: nuvoton.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2022 09:38:30.6854
+X-MS-Exchange-CrossTenant-AuthSource: HK0PR03MB5090.apcprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6a224f30-a665-454d-f83b-08da44802082
+X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Jun 2022 10:10:31.7990
  (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 4MVnFJAaGUvXzI0DNakhwdhN9dUunj8PmY4MNXkckCZvdbc9p2t0a+2BbNss/01P69NAZ4ccuMGOsA0dJoA/Cna0/EJ2b5aM3U7xGWHYXTc=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR01MB6500
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: a3f24931-d403-4b4a-94f1-7d83ac638e07
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: HfPGwihHCFjEbQJ/LKHWvyFX9mcZ6yzROOOPf5uRDfBekBCg3DiFB4R+Gx+eK1M2VBlQzyD6FBhsrkbkVR6hqg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR03MB4792
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -141,59 +125,382 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, "Thang Q . Nguyen" <thang@os.amperecomputing.com>, Brendan Higgins <brendanhiggins@google.com>, linux-kernel@vger.kernel.org, Phong Vo <phong@os.amperecomputing.com>, Wolfram Sang <wsa@kernel.org>, Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, openipmi-developer@lists.sourceforge.net, Open Source Submission <patches@amperecomputing.com>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 02/06/2022 07:32, Corey Minyard wrote:
-> On Wed, Jun 01, 2022 at 03:23:11PM +0700, Quan Nguyen wrote:
->> On 04/05/2022 19:06, Corey Minyard wrote:
->>> On Wed, May 04, 2022 at 01:45:03PM +0700, Quan Nguyen via Openipmi-developer wrote:
->>>>>
->>>>> I seem to remember mentioning this before, but there is no reason to
->>>>> pack the structures below.
->>>>>
->>>>
->>>> The packed structure is because we want to pick the len directly from user
->>>> space without worry about the padding byte.
->>>>
->>>> As we plan not to use the .h file in next version, I still would like to use
->>>> packed structure internally inside ssif_bmc.c file.
->>>
->>> Packed doesn't matter for the userspace API.  If you look at other
->>> structures in the userspace API, they are not packed, either.  The
->>> compiler will do the right thing on both ends.
->>>
->>>>
->>>>> And second, the following is a userspace API structures, so it needs to
->>>>> be in its own file in include/uapi/linux, along with any supporting
->>>>> things that users will need to use.  And your userspace code should be
->>>>> using that file.
->>>>>
->>>>
->>>> Meantime, I'd like not to use .h as I see there is no demand for sharing the
->>>> data structure between kernel and user space yet. But we may do it in the
->>>> future.
->>>
->>> If you have a userspace API, it needs to be in include/uapi/linux.
->>> You may not be the only user of this code.  In fact, you probably won't
->>> be.  You need to have a .h with the structures in it, you don't want the
->>> same structure in two places if you can help it.
->>>
->>
->> Dear Corey,
->>
->> Is it OK to push the structure definition into the
->> include/uapi/linux/ipmi_bmc.h ?
->>
->> Or should it need to be in separate new header file in uapi/linux ?
-> 
-> I think a different file, like ipmi_ssif_bmc, to match the file and
-> operation.  Unless you need the things in ipmi_bmc.h, which I don't
-> think is the case.
-> 
+--_000_HK0PR03MB5090871797C500E962FC9550CFDE9HK0PR03MB5090apcp_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Thanks Corey,
-Will add ipmi_ssif_bmc as you suggested.
+Hi All,
+Is anyone meet this kind of static_assert() be raised in "pack.hpp" and "un=
+pack.hpp"?
 
--- Quan
+We meet one compile error in "aarch64" platform with the newer commit (5d38=
+067).
+However, the same commit without this compile error in "arm" platform.
+I try to diff "arm" and "aarch64" compile options,
+Unfortunately, didn't find any clues to fix this build error in aarch64 pla=
+tform.
+
+Error message of log.do_compile:
+error: static assertion failed: Attempt to pack a type that has no IPMI unp=
+ack operation
+error: static assertion failed: Attempt to unpack a type that has no IPMI u=
+npack operation
+....
+cc1plus: all warnings being treated as errors
+Makefile:1344: recipe for target 'libipmi20_la-sensorhandler.lo' failed
+make[2]: Leaving directory '/home/tim/npcm-master/openbmc/build/evb-npcm845=
+/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067=
+181-r1/build'
+Makefile:1599: recipe for target 'all-recursive' failed
+make[2]: *** [libipmi20_la-sensorhandler.lo] Error 1
+make[1]: *** [all-recursive] Error 1
+make[1]: Leaving directory '/home/tim/npcm-master/openbmc/build/evb-npcm845=
+/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067=
+181-r1/build'
+ERROR: oe_runmake failed
+
+More messages in log.do_compile:
+/home/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-=
+linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build/../git/include/=
+ipmid/message/unpack.hpp: In instantiation of 'static int ipmi::message::de=
+tails::UnpackSingle<A>::op(ipmi::message::Payload&, T&) [with T =3D boost::=
+multiprecision::number<boost::multiprecision::backends::cpp_int_backend<24,=
+ 24, boost::multiprecision::unsigned_magnitude, boost::multiprecision::unch=
+ecked, void>, boost::multiprecision::et_off>]':
+/home/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-=
+linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build/../git/include/=
+ipmid/message.hpp:440:45:   required from 'int ipmi::message::Payload::unpa=
+ck(Arg&&, Args&& ...) [with Arg =3D boost::multiprecision::number<boost::mu=
+ltiprecision::backends::cpp_int_backend<24, 24, boost::multiprecision::unsi=
+gned_magnitude, boost::multiprecision::unchecked, void>, boost::multiprecis=
+ion::et_off>&; Args =3D {}]'
+../git/ipmid-new.cpp:300:37:   required from here
+/home/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-=
+linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build/../git/include/=
+ipmid/message/unpack.hpp:123:46: error: static assertion failed: Attempt to=
+ unpack a type that has no IPMI unpack operation
+  123 |                 utility::dependent_false<T>::value,
+      |                                              ^~~~~
+/home/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-=
+linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build/../git/include/=
+ipmid/message/unpack.hpp:123:46: note: 'std::integral_constant<bool, false>=
+::value' evaluates to false
+/home/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-=
+linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build/../git/include/=
+ipmid/message/unpack.hpp:126:5: error: no return statement in function retu=
+rning non-void [-Werror=3Dreturn-type]
+  126 |     }
+      |     ^
+......
+/home/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-=
+linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build/../git/include/=
+ipmid/message/pack.hpp: In instantiation of 'static int ipmi::message::deta=
+ils::PackSingle<A>::op(ipmi::message::Payload&, const T&) [with T =3D boost=
+::multiprecision::number<boost::multiprecision::backends::cpp_int_backend<2=
+4, 24, boost::multiprecision::unsigned_magnitude, boost::multiprecision::un=
+checked, void>, boost::multiprecision::et_off>]':
+/home/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-=
+linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build/../git/include/=
+ipmid/message.hpp:262:43:   required from 'int ipmi::message::Payload::pack=
+(Arg&&, Args&& ...) [with Arg =3D boost::multiprecision::number<boost::mult=
+iprecision::backends::cpp_int_backend<24, 24, boost::multiprecision::unsign=
+ed_magnitude, boost::multiprecision::unchecked, void>, boost::multiprecisio=
+n::et_off>&; Args =3D {}]'
+../git/ipmid-new.cpp:308:16:   required from here
+/home/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-=
+linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build/../git/include/=
+ipmid/message/pack.hpp:80:28: error: static assertion failed: Attempt to pa=
+ck a type that has no IPMI pack operation
+   80 |         static_assert(std::is_integral_v<T>,
+      |                       ~~~~~^~~~~~~~~~~~~~~~
+
+static_assert() in unpack.hpp:
+template <typename T>
+struct UnpackSingle
+{
+    static int op(Payload& p, T& t)
+    {
+            static_assert(
+                utility::dependent_false<T>::value,
+                "Attempt to unpack a type that has no IPMI unpack operation=
+");
+
+static_assert() in pack.hpp:
+template <typename T>
+struct PackSingle
+{
+    static int op(Payload& p, const T& t)
+    {
+        static_assert(std::is_integral_v<T>,
+                      "Attempt to pack a type that has no IPMI pack operati=
+on");
+
+Best regards,
+Tim
+________________________________
+The privileged confidential information contained in this email is intended=
+ for use only by the addressees as indicated by the original sender of this=
+ email. If you are not the addressee indicated in this email or are not res=
+ponsible for delivery of the email to such a person, please kindly reply to=
+ the sender indicating this fact and delete all copies of it from your comp=
+uter and network server immediately. Your cooperation is highly appreciated=
+. It is advised that any unauthorized use of confidential information of Nu=
+voton is strictly prohibited; and any information in this email irrelevant =
+to the official business of Nuvoton shall be deemed as neither given nor en=
+dorsed by Nuvoton.
+
+--_000_HK0PR03MB5090871797C500E962FC9550CFDE9HK0PR03MB5090apcp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 2 5 0 0 0 0 0 0 0;}
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:PMingLiU;
+	panose-1:2 1 6 1 0 1 1 1 1 1;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0cm;
+	margin-bottom:.0001pt;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:#954F72;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+/* Page Definitions */
+@page WordSection1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
+fy-trim:punctuation">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi All,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Is anyone meet this kind of sta=
+tic_assert() be raised in &quot;pack.hpp&quot; and &quot;unpack.hpp&quot;?<=
+o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">We meet one compile error in &q=
+uot;aarch64&quot; platform with the newer commit (5d38067).<o:p></o:p></spa=
+n></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">However, the same commit withou=
+t this compile error in &quot;arm&quot; platform.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">I try to diff &quot;arm&quot; a=
+nd &quot;aarch64&quot; compile options,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Unfortunately, didn't find any =
+clues to fix this build error in aarch64 platform.<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><b><span lang=3D"EN-US">Error message of log.do_comp=
+ile:<o:p></o:p></span></b></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">error: static assertion failed:=
+ Attempt to pack a type that has no IPMI unpack operation<o:p></o:p></span>=
+</p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">error: static assertion failed:=
+ Attempt to unpack a type that has no IPMI unpack operation<o:p></o:p></spa=
+n></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">....<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">cc1plus: all warnings being tre=
+ated as errors<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Makefile:1344: recipe for targe=
+t 'libipmi20_la-sensorhandler.lo' failed<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">make[2]: Leaving directory '/ho=
+me/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-lin=
+ux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build'<o:p></o:p></span>=
+</p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Makefile:1599: recipe for targe=
+t 'all-recursive' failed<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">make[2]: *** [libipmi20_la-sens=
+orhandler.lo] Error 1<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">make[1]: *** [all-recursive] Er=
+ror 1<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">make[1]: Leaving directory '/ho=
+me/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-lin=
+ux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build'<o:p></o:p></span>=
+</p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">ERROR: oe_runmake failed<o:p></=
+o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">More messages in log.do_compile=
+:<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">/home/tim/npcm-master/openbmc/b=
+uild/evb-npcm845/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gi=
+tAUTOINC+5d38067181-r1/build/../git/include/ipmid/message/unpack.hpp: In in=
+stantiation of 'static int ipmi::message::details::UnpackSingle&lt;A&gt;::o=
+p(ipmi::message::Payload&amp;,
+ T&amp;) [with T =3D boost::multiprecision::number&lt;boost::multiprecision=
+::backends::cpp_int_backend&lt;24, 24, boost::multiprecision::unsigned_magn=
+itude, boost::multiprecision::unchecked, void&gt;, boost::multiprecision::e=
+t_off&gt;]':<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">/home/tim/npcm-master/openbmc/b=
+uild/evb-npcm845/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gi=
+tAUTOINC+5d38067181-r1/build/../git/include/ipmid/message.hpp:440:45:&nbsp;=
+&nbsp; required from 'int ipmi::message::Payload::unpack(Arg&amp;&amp;,
+ Args&amp;&amp; ...) [with Arg =3D boost::multiprecision::number&lt;boost::=
+multiprecision::backends::cpp_int_backend&lt;24, 24, boost::multiprecision:=
+:unsigned_magnitude, boost::multiprecision::unchecked, void&gt;, boost::mul=
+tiprecision::et_off&gt;&amp;; Args =3D {}]'<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">../git/ipmid-new.cpp:300:37:&nb=
+sp;&nbsp; required from here<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">/home/tim/npcm-master/openbmc/b=
+uild/evb-npcm845/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gi=
+tAUTOINC+5d38067181-r1/build/..<b>/git/include/ipmid/message/unpack.hpp:123=
+:46: error: static assertion failed:
+ Attempt to unpack a type that has no IPMI unpack operation</b><o:p></o:p><=
+/span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp; 123 |&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p; utility::dependent_false&lt;T&gt;::value,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ^~~~~<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">/home/tim/npcm-master/openbmc/b=
+uild/evb-npcm845/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gi=
+tAUTOINC+5d38067181-r1/build/../git/include/ipmid/message/unpack.hpp:123:46=
+: note: 'std::integral_constant&lt;bool,
+ false&gt;::value' evaluates to false<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">/home/tim/npcm-master/openbmc/b=
+uild/evb-npcm845/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gi=
+tAUTOINC+5d38067181-r1/build/../git/include/ipmid/message/unpack.hpp:126:5:=
+ error: no return statement in function
+ returning non-void [-Werror=3Dreturn-type]<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp; 126 |&nbsp;&nbsp;&nbsp;&=
+nbsp; }<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+|&nbsp;&nbsp;&nbsp;&nbsp; ^<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">......<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">/home/tim/npcm-master/openbmc/b=
+uild/evb-npcm845/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gi=
+tAUTOINC+5d38067181-r1/build/../git/include/ipmid/message/pack.hpp: In inst=
+antiation of 'static int ipmi::message::details::PackSingle&lt;A&gt;::op(ip=
+mi::message::Payload&amp;,
+ const T&amp;) [with T =3D boost::multiprecision::number&lt;boost::multipre=
+cision::backends::cpp_int_backend&lt;24, 24, boost::multiprecision::unsigne=
+d_magnitude, boost::multiprecision::unchecked, void&gt;, boost::multiprecis=
+ion::et_off&gt;]':<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">/home/tim/npcm-master/openbmc/b=
+uild/evb-npcm845/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gi=
+tAUTOINC+5d38067181-r1/build/../git/include/ipmid/message.hpp:262:43:&nbsp;=
+&nbsp; required from 'int ipmi::message::Payload::pack(Arg&amp;&amp;,
+ Args&amp;&amp; ...) [with Arg =3D boost::multiprecision::number&lt;boost::=
+multiprecision::backends::cpp_int_backend&lt;24, 24, boost::multiprecision:=
+:unsigned_magnitude, boost::multiprecision::unchecked, void&gt;, boost::mul=
+tiprecision::et_off&gt;&amp;; Args =3D {}]'<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">../git/ipmid-new.cpp:308:16:&nb=
+sp;&nbsp; required from here<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">/home/tim/npcm-master/openbmc/b=
+uild/evb-npcm845/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gi=
+tAUTOINC+5d38067181-r1/build/..<b>/git/include/ipmid/message/pack.hpp:80:28=
+: error: static assertion failed: Attempt
+ to pack a type that has no IPMI pack operation</b><o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp; 80 |&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; static_assert(std::is_integral_v&lt;T&gt=
+;,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~~~~~^~~~~~~~~~~=
+~~~~~<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><b><span lang=3D"EN-US">static_assert() in unpack.hp=
+p:<o:p></o:p></span></b></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">template &lt;typename T&gt;<o:p=
+></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">struct UnpackSingle<o:p></o:p><=
+/span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">{<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp; static int o=
+p(Payload&amp; p, T&amp; t)<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp; {<o:p></o:p>=
+</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; static_assert(<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; utility::depend=
+ent_false&lt;T&gt;::value,<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;Attempt t=
+o unpack a type that has no IPMI unpack operation&quot;);<o:p></o:p></span>=
+</p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><b><span lang=3D"EN-US">static_assert() in pack.hpp:=
+<o:p></o:p></span></b></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">template &lt;typename T&gt;<o:p=
+></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">struct PackSingle<o:p></o:p></s=
+pan></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">{<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp; static int o=
+p(Payload&amp; p, const T&amp; t)<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp; {<o:p></o:p>=
+</span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; static_assert(std::is_integral_v&lt;T&gt;,<o:p></o:p></span></p=
+>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp; &quot;Attempt to pack a type that has no IPMI pack ope=
+ration&quot;);<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Best regards,<o:p></o:p></span>=
+</p>
+<p class=3D"MsoNormal"><span lang=3D"EN-US">Tim<o:p></o:p></span></p>
+</div>
+<hr align=3D"center" width=3D"100%">
+<span style=3D"font-size:12pt;line-height:0.7;font-family: 'Arial'; color:#=
+808080">The privileged confidential information contained in this email is =
+intended for use only by the addressees as indicated by the original sender=
+ of this email. If you are not the
+ addressee indicated in this email or are not responsible for delivery of t=
+he email to such a person, please kindly reply to the sender indicating thi=
+s fact and delete all copies of it from your computer and network server im=
+mediately. Your cooperation is highly
+ appreciated. It is advised that any unauthorized use of confidential infor=
+mation of Nuvoton is strictly prohibited; and any information in this email=
+ irrelevant to the official business of Nuvoton shall be deemed as neither =
+given nor endorsed by Nuvoton.
+</span>
+</body>
+</html>
+
+--_000_HK0PR03MB5090871797C500E962FC9550CFDE9HK0PR03MB5090apcp_--
