@@ -1,141 +1,59 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5197F53B370
-	for <lists+openbmc@lfdr.de>; Thu,  2 Jun 2022 08:23:29 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3418153B38D
+	for <lists+openbmc@lfdr.de>; Thu,  2 Jun 2022 08:28:14 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LDGDG3NrKz3bmL
-	for <lists+openbmc@lfdr.de>; Thu,  2 Jun 2022 16:23:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LDGKk2Lvdz3bkZ
+	for <lists+openbmc@lfdr.de>; Thu,  2 Jun 2022 16:28:10 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256 header.s=pps202002 header.b=kfTVXGw6;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=zohocorp.com header.i=nikhil.vu@zohocorp.com header.a=rsa-sha256 header.s=admin header.b=TXrV9Vsk;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=equinix.com (client-ip=148.163.159.192; helo=mx0b-00268f01.pphosted.com; envelope-from=prvs=9152f9d2ee=zweiss@equinix.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=zohocorp.com (client-ip=136.143.188.7; helo=sender4-zc7.zoho.com; envelope-from=nikhil.vu@zohocorp.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256 header.s=pps202002 header.b=kfTVXGw6;
+	dkim=pass (1024-bit key; unprotected) header.d=zohocorp.com header.i=nikhil.vu@zohocorp.com header.a=rsa-sha256 header.s=admin header.b=TXrV9Vsk;
 	dkim-atps=neutral
-Received: from mx0b-00268f01.pphosted.com (mx0b-00268f01.pphosted.com [148.163.159.192])
+Received: from sender4-zc7.zoho.com (sender4-zc7.zoho.com [136.143.188.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LDGCk6p5Sz307C
-	for <openbmc@lists.ozlabs.org>; Thu,  2 Jun 2022 16:22:55 +1000 (AEST)
-Received: from pps.filterd (m0165120.ppops.net [127.0.0.1])
-	by mx0b-00268f01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2525H3OV022109;
-	Thu, 2 Jun 2022 06:22:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=equinix.com; h=from : to : cc :
- subject : date : message-id : references : in-reply-to : content-type :
- content-id : content-transfer-encoding : mime-version; s=pps202002;
- bh=FSYqCAdoj4IJaUZIHO5JJrgCa3cqWntfSqmgjokg3/E=;
- b=kfTVXGw6uvfehV00Oakx8m2iH41KSy5lWTa7KMDOUPDnXuMx+Tb94xszPsCjumTWZuMs
- PHI+VWOmeduPU3R8V30B86Yzn3FHX6ux0Ep0vcd1E6MaiiHgqVuPeC3+UKHxOogQKMrH
- wMo5/TaiO77b5uQhsIRxB68p24MSWBRaiwxG4rrdirknxjYkLGn9pz+2Q1M4mkqM6wBu
- WXueRoPaEdFsHnAMm/dvUFdkNgPQeKeJ7L2MuHg4ZX+xAlZxPjrdlWU3kjxPNmC1NQAW
- m3y8G+Q5tXPgcA0MLt7Ih4l94E+UOte4Xi4CTYGvfPvwDhrBISczSfBX3yHzdVeRcdiC ug== 
-Received: from nam12-dm6-obe.outbound.protection.outlook.com (mail-dm6nam12lp2170.outbound.protection.outlook.com [104.47.59.170])
-	by mx0b-00268f01.pphosted.com (PPS) with ESMTPS id 3gedp59s64-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 02 Jun 2022 06:22:44 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=bYhm2JMcWvbYnMwG7tFFYCClpTZ3X3kH1z7RDu3U9u+LtNhVLaTRCIyYJGRBgZ1ToWGada7OeQdgIzkz7JW3v6XR8y492AZm/XU7dvMIYirMaa3zrBGa7LEuCA8l/GodfjyYcFQZ/X8quHUOiKhFb1DEQtFYNqDHURmTbSKRcdcjIklhVoiG2O8FG1fYAz+PPl1+PHDs4V8t5QA3ofSSHEAXsd2U01GVbypW6susI7DaNGMynbrAzVn++Nu1lYUrF9VquSxXxel4CNqjejVdD/Jh9GxfcllVRBlDwtpVZsqlMK9jkzHq7SraaoosHh1JdmDOCDxexM+KiNk0j//GMA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FSYqCAdoj4IJaUZIHO5JJrgCa3cqWntfSqmgjokg3/E=;
- b=izt0rTEydjotqzcaVWxvdr9ybttDTG4U/wnvT2CVWgrY42XSkYhm7DgiY70QlPcCaTjt3S/I5CBt9mX+XvpSmX2r21eO81TNuXT4/UyCxSI/o9nl8mvi+iAyoSBZ1cSoHWacDHuoQ/JqVmCcd+tt1z09b5GzVksK43y4rlVNjtz1+sFBwh8VShqVoymgeMgKoOY6lR4YdnmkNIQlAUGyttLB+qJMbPkTF7kH+GrSfaRdXbxt82DvXBGD7mNBzeNMwfqqvdA882KJJZ7XHUKsc1WO1b6bdM22ksmO4O4snXafsJJ0UetCpHVRVrg0VTBopUn5PTxKz3ZDjpB8eVgqxw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=equinix.com; dmarc=pass action=none header.from=equinix.com;
- dkim=pass header.d=equinix.com; arc=none
-Received: from DM8PR04MB8007.namprd04.prod.outlook.com (2603:10b6:5:314::20)
- by SN2PR04MB2208.namprd04.prod.outlook.com (2603:10b6:804:e::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5293.17; Thu, 2 Jun
- 2022 06:22:42 +0000
-Received: from DM8PR04MB8007.namprd04.prod.outlook.com
- ([fe80::3cb6:207c:de36:12f5]) by DM8PR04MB8007.namprd04.prod.outlook.com
- ([fe80::3cb6:207c:de36:12f5%6]) with mapi id 15.20.5314.013; Thu, 2 Jun 2022
- 06:22:42 +0000
-From: Zev Weiss <zweiss@equinix.com>
-To: Joel Stanley <joel@jms.id.au>
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] ARM: dts: Rename Rainier
- to P10 BMC
-Thread-Topic: [PATCH u-boot v2019.04-aspeed-openbmc] ARM: dts: Rename Rainier
- to P10 BMC
-Thread-Index: AQHYdkkq1/DNxQn040yPEuVV5wVDlQ==
-Date: Thu, 2 Jun 2022 06:22:41 +0000
-Message-ID: <20220602062241.GN11809@packtop>
-References: <20220602025030.90710-1-joel@jms.id.au>
-In-Reply-To: <20220602025030.90710-1-joel@jms.id.au>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: eb28ce26-2d6b-4a0b-e441-08da44604cb8
-x-ms-traffictypediagnostic: SN2PR04MB2208:EE_
-x-microsoft-antispam-prvs:  <SN2PR04MB22080AEA71F2455CE8F4069AC3DE9@SN2PR04MB2208.namprd04.prod.outlook.com>
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:  qb9VQaDjxiAYvB9d95tHpNnaBtJr+TOVvna6N+9iyl9q01dG3Kq6lJTvH5Bv97YJF5fqOXFK4f6OFQFfflGbkP6TA3nVl5aez+n4wXEGwe20FwpNCz/U7WRqmKvf39bxNOqVMouB4VDHdn72glEBiD9DWbMbiy/pHI76EZRNi+vb6UNy/UMTJbjy25uxC2sZyG2b+ZU5GSZRSI2FGECcExIAGwRLkZnuEl6p876ONbjl2VNW4RcpZ6W3x7NR7amkYlGNBV3HZJbBX0KqV9QLN/IadvpLf2WfzQQzsBs2i59DqMSWfSq5HEM2OaaEqJ4w0+E+cFpYa/XQao0fHZPFaZ/LYmyUPqLOay/qTVbgvInuYA9SOXkfdx0NkZTispnzRJTpySq2HY/c0IdSOa8/fCnuY2mdFaFVi3eScMMc/vF+5BTgLGJSB5ZokzriHAA84XlKzRZRAGYIJSEsytKIgZOckmhnieIRdB/o+mzhsRPbKvEGmDg6sF8hgRrzO02WjsgU+sKMJQGDYy/5E+/lCr8etd/ddbMYC6cAzE01S/qvLl6iivBNxneICNCMVJCPep+OmoRZrPFkPfUjwS4tw8c8dMzcJIQeaAjwHCerm5/MuAAvklQIall5O0Ji4RQjZqGgr4KVbWE2jw88O99Pra9sbMsdII0Y1mPPZ+6lvKzMkbWHDF4ThPsT3fBNYFER
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM8PR04MB8007.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(7916004)(4636009)(366004)(66946007)(6506007)(1076003)(38100700002)(33716001)(2906002)(4326008)(54906003)(66476007)(6512007)(38070700005)(66446008)(9686003)(8676002)(86362001)(83380400001)(26005)(186003)(316002)(66556008)(64756008)(6916009)(33656002)(8936002)(91956017)(76116006)(6486002)(508600001)(5660300002)(71200400001)(122000001);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?oOSR8k+NXMRZaDwZWFKQA86TL3CwxcdGi42FMT1gAjvZCC5mvqJ3w1QIUtpq?=
- =?us-ascii?Q?Nywha4L2gqZaAkqeSdvudzB8fiOlFDLkFVSoWUjqJhdG553UQai53OkrfOCN?=
- =?us-ascii?Q?xZA5xoDpxO0ZSPB8Uvxa+htfgNbmGkJ2SKUIsPCOBZdu1xJ+5ZO5HW/kzf+C?=
- =?us-ascii?Q?GQ4cbJR3GlnKd8sEEytcTDP/0fSWoEd4188t6fg+tXiT0YNA+NDbmGApKSJa?=
- =?us-ascii?Q?35ThgrmGOjE3KVh7daCXQnm4gPkuoi3yLCylMulQMHESADoyiyWGwWUqZodU?=
- =?us-ascii?Q?Gim2y+uVcXs4WRu72oe5SMTV0e834S2HsLBuTDRBT73pR+u5Qi6V5ec5RHXv?=
- =?us-ascii?Q?+ouIj0wKQcbJRvO2iOJALhIFRy70DHWNwlgPqyLEpg7uHfeTlkFmoaZc0m0Y?=
- =?us-ascii?Q?2GIAZFOj8+nVDlORjgef72HefCiFHYilYj2ySuGrt2eHPTsp+OXeD78o4PNZ?=
- =?us-ascii?Q?C5PWpQSG+/sZza59yar2jKHFmCtjZi15S1etTx9pKgUF4/IzX5AtuIaQXfDI?=
- =?us-ascii?Q?6/MY/BzztxFSmMJzY0MhWK7E8IVqwwZ+3bAGjBbbJjafm/QiwqrwtgjzfNlA?=
- =?us-ascii?Q?WK745GG4O4HfbaFiqWt/qkGl0iL5vy+ykr+dKdCAjo3gieckFrRG/69RdO9h?=
- =?us-ascii?Q?pNkn+fTSV7kiB+l0N1GG9NLwdh3Aq0MSJlTg0PRq5ZNEviC/9jc+rtcrW6oW?=
- =?us-ascii?Q?EvXEnypVx2DoTmnSNVvao858dMIaHYJzof59WUlVh/SezqCGn8gHyBAZZ22b?=
- =?us-ascii?Q?1LpysvdgplBbs/QQ0/XNVCgv/jSpjMcjlUyyCa3Gx0vx8GJIbJ1Z02nqkwM8?=
- =?us-ascii?Q?FgvOh2ggQkCUQUke8IoUk0mGe+QSSfVdwC/cyIXvlCVI5mOf+tHk40h0IrPe?=
- =?us-ascii?Q?V69TwOpe27cZoU+Y+Tn/QVETl1vsrSIqFnrsqXIeSKV+CwPMcN2cCrFiq1cr?=
- =?us-ascii?Q?tkEDiQZDtbEP83IwdNB3wFil4gCGAx1/JTjUgepmYrqWVWg9F0vC7a9a8v/v?=
- =?us-ascii?Q?hcdutt9bN42KfFK+biyRIwZ/hBlQptTMwTZLZfJ8/+WKhep6K/ymaS95NXJ/?=
- =?us-ascii?Q?j5YDJnjC0dut7YE6QuhLq0nz5oh2rCoGwIs/XssvBFSrxvvvMSkFq+tiuVRM?=
- =?us-ascii?Q?RHuHw5Q7soH8Y7CVoZ1OUEpU5ZI61GJsjFOuf3yRUB+a2tZmZ23K2ZFs7GtF?=
- =?us-ascii?Q?rA5C0iGqakyX5kQP+2bwqyuj8uh7g1Fc7shwYDWIdND592qASRUVfm478yyU?=
- =?us-ascii?Q?xfUqtLpzApL5Pn3nblcKQ3//wd3S2KnXm8L+M6L1akvsc2mO1Pjf/ZGUKXge?=
- =?us-ascii?Q?fQPr0NTPqwF4SLDmyfMVZbHR0NEOY7kW9kc4iopdH0NjQ94/GLFChdUz9552?=
- =?us-ascii?Q?tdCyu27J/kvqbwoZiMbGi6VbUY7OcRzRhWyucG5+3M6wM30KEHTBhHn3CvHt?=
- =?us-ascii?Q?6trFkLCVJnwPs+MlGrxmcSku6KScvwTeYb+sfgml22sgYvVmzeHMJBk2cDPK?=
- =?us-ascii?Q?lXzgIRlHBR6To/fU5TcdHCxPETuPq90+QvCFzL1rCBs5rC1U9XLanUz/dYSO?=
- =?us-ascii?Q?1xKLfOSI3vttXtbadp+6Nwl2HhsHmNhETbwbeZkLrdYI0Sep0WxWa0H+VCXN?=
- =?us-ascii?Q?8hf0H/qVEkLdth7Vue+XkKmfMc9gn3XUVE+CANPhXaetbPOFZBHtUZOvWEpF?=
- =?us-ascii?Q?ImENfxEI9l7SFmXNe9hUGrH6+a4B1XI9N8kynSaIXHm8nXeFzPdCfPNrkj4n?=
- =?us-ascii?Q?k+4nY57IPA=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <E7F33797E1AF2940928005FC2EAB1472@namprd04.prod.outlook.com>
-Content-Transfer-Encoding: quoted-printable
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LDGKJ0XMRz2xnP
+	for <openbmc@lists.ozlabs.org>; Thu,  2 Jun 2022 16:27:47 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; t=1654151262; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=HvMKRfeYsh6b9+ZjT4+Px+GhfZXXf8g10n2qzTsUasQHuPGd+aDrF3uMdkXl31uA4kuL+XY3jnCl47WQMuC0rpbMhYdCp/Y1iVqywm2NOImoEYwbcsErxwab4GMtSUZdZ/ze46vRutWXItmIO4gAz/xHBD9zxZxhtZJPpZCyEUQ=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1654151262; h=Content-Type:Cc:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To; 
+	bh=JSlbTtx2gq0Pah34szhAxGrMyddKO3dIZHEfdK1Jedk=; 
+	b=PxIm4Uem8iBMKyqdeHuoMUzLSkpDYphldegkSz40QX6cHVIRQFfFDZzHjItD37OtsWSS9aD0DvO0cqVYIINjmCZ0oaYJFzCjbgrlw1MAMOEqkitm3vlGhWUJqEQMvmxH5Omlr6+doryK956b0tnWdU421dDjqgyP1AomTWkGY5c=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=zohocorp.com;
+	spf=pass  smtp.mailfrom=nikhil.vu@zohocorp.com;
+	dmarc=pass header.from=<nikhil.vu@zohocorp.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1654151262;
+	s=admin; d=zohocorp.com; i=nikhil.vu@zohocorp.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-Id:Message-Id:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Reply-To;
+	bh=JSlbTtx2gq0Pah34szhAxGrMyddKO3dIZHEfdK1Jedk=;
+	b=TXrV9Vsk/cdWQzmZX6mQWTtiBETEDoj3GmJYkVvJE8f6f3upYlF4HI63/sf8MJQh
+	rMOABNVtiDchh6/Ni+vu8NOHEoDjdhWRgVQO962gBn5W2jJC84btBKKGajGJlfvrljV
+	RxsEEUwwZkDcDFMdW8l8CW6djiGBQizzpAuz6Tug=
+Received: from mail.zoho.com by mx.zohomail.com
+	with SMTP id 1654151260368405.78910246019075; Wed, 1 Jun 2022 23:27:40 -0700 (PDT)
+Date: Thu, 02 Jun 2022 11:57:40 +0530
+From: Nikhil V <nikhil.vu@zohocorp.com>
+To: "joel" <joel@jms.id.au>
+Message-Id: <181231928ab.1255e42e125354.8114584519815620257@zohocorp.com>
+In-Reply-To: <CACPK8XdtT9J6iX-bvrOX_hjnaaG6OoGVx0SPUd0waJCFsrzKEA@mail.gmail.com>
+References: <1811e688e68.f6b260b112172.7670613845716605077@zohocorp.com> <CACPK8XdtT9J6iX-bvrOX_hjnaaG6OoGVx0SPUd0waJCFsrzKEA@mail.gmail.com>
+Subject: Re: [ Entity Manager - Beaglebone Adc }
 MIME-Version: 1.0
-X-OriginatorOrg: equinix.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM8PR04MB8007.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: eb28ce26-2d6b-4a0b-e441-08da44604cb8
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 Jun 2022 06:22:42.0612
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72adb271-2fc7-4afe-a5ee-9de6a59f6bfb
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: cMeKwrzFcLoFndZAdcPqMsUSYsObY5dHRRtxMygzwEJyA8HK/ZkNEM3pAiuIC4J2aDqFk4svggvXwWEK6kjbtw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN2PR04MB2208
-X-Proofpoint-ORIG-GUID: YSxmbMrVHcS5VyD5AqRSahWcbmo6bbA0
-X-Proofpoint-GUID: YSxmbMrVHcS5VyD5AqRSahWcbmo6bbA0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.874,Hydra:6.0.517,FMLib:17.11.64.514
- definitions=2022-06-02_01,2022-06-01_01,2022-02-23_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxscore=0
- priorityscore=1501 adultscore=0 malwarescore=0 spamscore=0 impostorscore=0
- phishscore=0 mlxlogscore=877 suspectscore=0 clxscore=1011
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2204290000 definitions=main-2206020024
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_83134_2109507698.1654151260331"
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -147,63 +65,133 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "eajames@linux.ibm.com" <eajames@linux.ibm.com>
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Jun 01, 2022 at 07:50:29PM PDT, Joel Stanley wrote:
->The Rainier device tree is used for all IBM P10 BMCs, which includes
->both Rainier and Everest.
->
->Signed-off-by: Joel Stanley <joel@jms.id.au>
->---
-> arch/arm/dts/Makefile                                    | 2 +-
-> arch/arm/dts/{ast2600-rainier.dts =3D> ast2600-p10bmc.dts} | 4 ++--
-> 2 files changed, 3 insertions(+), 3 deletions(-)
-> rename arch/arm/dts/{ast2600-rainier.dts =3D> ast2600-p10bmc.dts} (93%)
->
->diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
->index 3515100c65ce..8d05d1e70310 100755
->--- a/arch/arm/dts/Makefile
->+++ b/arch/arm/dts/Makefile
->@@ -686,7 +686,7 @@ dtb-$(CONFIG_ARCH_ASPEED) +=3D \
-> 	ast2600-intel.dtb \
-> 	ast2600-ncsi.dtb \
-> 	ast2600-pfr.dtb \
->-	ast2600-rainier.dtb \
->+	ast2600-p10bmc.dtb \
+------=_Part_83134_2109507698.1654151260331
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Nit: to preserve the sorted order, should p10bmc be before pfr?  (s6q is
-before slt, anyway.)
+Hi joel,
 
-> 	ast2600-s6q.dtb \
-> 	ast2600-slt.dtb \
-> 	ast2600-tacoma.dtb
->diff --git a/arch/arm/dts/ast2600-rainier.dts b/arch/arm/dts/ast2600-p10bm=
-c.dts
->similarity index 93%
->rename from arch/arm/dts/ast2600-rainier.dts
->rename to arch/arm/dts/ast2600-p10bmc.dts
->index aa91b12ed399..d1d78d5c3545 100755
->--- a/arch/arm/dts/ast2600-rainier.dts
->+++ b/arch/arm/dts/ast2600-p10bmc.dts
->@@ -5,8 +5,8 @@
-> #include "ast2600-u-boot.dtsi"
+Do you have your patches on gerrit for review?=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
+
+I do not have patches on gerrit but i can attach required file here. Let me=
+ what files are required to be attached.
+
+
+
+Thanks & Regards,
+
+Nikhil Muley
+
+
+
+
+
+
+
+
+
+
+---- On Thu, 02 Jun 2022 11:29:23 +0530 Joel Stanley <joel@jms.id.au> wrote=
+ ----
+
+
+
+On Wed, 1 Jun 2022 at 08:51, Nikhil V <mailto:nikhil.vu@zohocorp.com> wrote=
+:=20
+>=20
+> Hi ALL,=20
+>           I have successfully ported openbmc on beaglebone black. I have =
+displayed LM75, and ADC result on webui.=20
+=20
+Neat. Do you have your patches on gerrit for review?=20
+=20
+>           Now I am doing the same with Entity Manager. I have displayed L=
+M75 result successfully, But unable to display ADC result through Entity Ma=
+nager.=20
+>           Below is my Config file.=20
+> {=20
+>     "Exposes": [=20
+>     {=20
+>             "Index": 0,=20
+>             "Name": "PSU 12 Volt",=20
+>             "ScaleFactor": 0.1124,=20
+>             "Type": "ADC"=20
+>         },=20
+>     {=20
+>             "Index": 1,=20
+>             "Name": "PSU 5 Volt",=20
+>             "ScaleFactor": 1,=20
+>             "Type": "ADC"=20
+>         },=20
+>         {=20
+>             "Address": "0x48",=20
+>             "Bus": 2,=20
+>             "Name": "Ambient 0 Temp",=20
+>             "Type": "TMP75"=20
+>         }=20
+>     ],=20
+>     "Name": "xplode",=20
+>     "Probe": "True",=20
+>     "Type": "Board"=20
+> }=20
+>=20
+> 1) How to display ADC value through entity manager=20
+> 2) I would like to control single pwm pin=20
+>=20
+> Any pointer would be helpful or what are the steps to display adc value/P=
+WM control=20
+>=20
+> Board used : Beaglebone Black=20
+>=20
+> Thanks & Regards,=20
+> Nikhil Muley=20
 >
-> / {
->-        model =3D "Rainier";
->-        compatible =3D "ibm,rainier-bmc", "aspeed,ast2600";
->+        model =3D "IBM P10 BMC";
->+        compatible =3D "ibm,everest-bmc", "ibm,rainier-bmc", "ibm,p10bmc"=
-, "aspeed,ast2600";
+------=_Part_83134_2109507698.1654151260331
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-It's a bit orthogonal to the rest of the patch, but I notice these lines
-are space indented instead of tabbed...could maybe fold that fixup into
-this, but it looks like that happened on a bunch of the ast2x00 dts
-files in commit ba6ce66262865, so a separate patch to fix them all might
-be better.=20
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>=
+<meta content=3D"text/html;charset=3DUTF-8" http-equiv=3D"Content-Type"></h=
+ead><body ><div style=3D"font-family: Verdana, Arial, Helvetica, sans-serif=
+; font-size: 10pt;"><div>Hi joel,<br></div><div>Do you have your patches on=
+ gerrit for review?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp; <br></div><div>I do not have patches on gerrit but i can attach requir=
+ed file here. Let me what files are required to be attached.<br></div><div>=
+<br></div><div>Thanks &amp; Regards,<br></div><div>Nikhil Muley<br></div><b=
+r><div id=3D"Zm-_Id_-Sgn" data-zbluepencil-ignore=3D"true" data-sigid=3D"58=
+018000000014003"><div><br></div></div><br><div class=3D"zmail_extra_hr" sty=
+le=3D"border-top: 1px solid rgb(204, 204, 204); height: 0px; margin-top: 10=
+px; margin-bottom: 10px; line-height: 0px;"><br></div><div class=3D"zmail_e=
+xtra" data-zbluepencil-ignore=3D"true"><div><br></div><div id=3D"Zm-_Id_-Sg=
+n1">---- On Thu, 02 Jun 2022 11:29:23 +0530 <b>Joel Stanley &lt;joel@jms.id=
+.au&gt;</b> wrote ----<br></div><div><br></div><blockquote style=3D"margin:=
+ 0px;"><div>On Wed, 1 Jun 2022 at 08:51, Nikhil V &lt;<a href=3D"mailto:nik=
+hil.vu@zohocorp.com" target=3D"_blank">nikhil.vu@zohocorp.com</a>&gt; wrote=
+: <br>&gt; <br>&gt; Hi ALL, <br>&gt;           I have successfully ported o=
+penbmc on beaglebone black. I have displayed LM75, and ADC result on webui.=
+ <br> <br>Neat. Do you have your patches on gerrit for review? <br> <br>&gt=
+;           Now I am doing the same with Entity Manager. I have displayed L=
+M75 result successfully, But unable to display ADC result through Entity Ma=
+nager. <br>&gt;           Below is my Config file. <br>&gt; { <br>&gt;     =
+"Exposes": [ <br>&gt;     { <br>&gt;             "Index": 0, <br>&gt;      =
+       "Name": "PSU 12 Volt", <br>&gt;             "ScaleFactor": 0.1124, <=
+br>&gt;             "Type": "ADC" <br>&gt;         }, <br>&gt;     { <br>&g=
+t;             "Index": 1, <br>&gt;             "Name": "PSU 5 Volt", <br>&=
+gt;             "ScaleFactor": 1, <br>&gt;             "Type": "ADC" <br>&g=
+t;         }, <br>&gt;         { <br>&gt;             "Address": "0x48", <b=
+r>&gt;             "Bus": 2, <br>&gt;             "Name": "Ambient 0 Temp",=
+ <br>&gt;             "Type": "TMP75" <br>&gt;         } <br>&gt;     ], <b=
+r>&gt;     "Name": "xplode", <br>&gt;     "Probe": "True", <br>&gt;     "Ty=
+pe": "Board" <br>&gt; } <br>&gt; <br>&gt; 1) How to display ADC value throu=
+gh entity manager <br>&gt; 2) I would like to control single pwm pin <br>&g=
+t; <br>&gt; Any pointer would be helpful or what are the steps to display a=
+dc value/PWM control <br>&gt; <br>&gt; Board used : Beaglebone Black <br>&g=
+t; <br>&gt; Thanks &amp; Regards, <br>&gt; Nikhil Muley <br>&gt; <br></div>=
+</blockquote></div><div><br></div></div><br></body></html>
+------=_Part_83134_2109507698.1654151260331--
 
->
-> 	memory { device_type =3D "memory";
->-- 2.35.1
->=
