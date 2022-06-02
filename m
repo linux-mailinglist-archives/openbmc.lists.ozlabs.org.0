@@ -1,69 +1,85 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71C8F53B1D5
-	for <lists+openbmc@lfdr.de>; Thu,  2 Jun 2022 04:51:11 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A002B53DEAA
+	for <lists+openbmc@lfdr.de>; Mon,  6 Jun 2022 00:39:36 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LD9WK2B5lz3bm9
-	for <lists+openbmc@lfdr.de>; Thu,  2 Jun 2022 12:51:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LGWlB3t0gz2ywM
+	for <lists+openbmc@lfdr.de>; Mon,  6 Jun 2022 08:39:34 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=KhiZJ3Bc;
+	dkim=permerror header.d=irrelevant.dk header.i=@irrelevant.dk header.a=rsa-sha1 header.s=fm3 header.b=aa+qR82W;
+	dkim=permerror header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha1 header.s=fm1 header.b=op4rbspC;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1034; helo=mail-pj1-x1034.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=irrelevant.dk (client-ip=66.111.4.28; helo=out4-smtp.messagingengine.com; envelope-from=its@irrelevant.dk; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=KhiZJ3Bc;
+	dkim=pass (2048-bit key; unprotected) header.d=irrelevant.dk header.i=@irrelevant.dk header.a=rsa-sha256 header.s=fm3 header.b=aa+qR82W;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=op4rbspC;
 	dkim-atps=neutral
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+X-Greylist: delayed 414 seconds by postgrey-1.36 at boromir; Thu, 02 Jun 2022 15:55:48 AEST
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LD9Vw4BWMz2x9p
-	for <openbmc@lists.ozlabs.org>; Thu,  2 Jun 2022 12:50:46 +1000 (AEST)
-Received: by mail-pj1-x1034.google.com with SMTP id gc3-20020a17090b310300b001e33092c737so3695646pjb.3
-        for <openbmc@lists.ozlabs.org>; Wed, 01 Jun 2022 19:50:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=svpEp9OJ9fzAKGwvxYUywKOxZ7ajEwoHxddGOf+QtKc=;
-        b=KhiZJ3Bcu5AYKJ6EayL+6m1IkAzYcRBAQ7b2i62RW7GYBdTYeYVuwFHQ8W8OVlKi8k
-         FDaWnuVlQS3W3QPhre19utTa+7kWNc8EyS1kiszgKNFLvzNmsIaHHr0TKTpDd/aIogNO
-         lcNzvg3vEwND++/OjLfYqdis9zNnMwDc7xyb3Gp/8/ZhRL0wjOTgx/C7F7sgGuyRhNRR
-         A1XKzgngyv+emGpZ8r8BvrL7RfFT7iiLMcFtoiStUIhCcHTe3UBiSY9DmWR9M+e5UuMW
-         Zy33HYgUVkJK9i5YKtVV9zUaEpqZ2VCQAS2RVrRAL5lrffMJ826TV0Y9clnch91LQohT
-         o95g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:from:to:subject:date:message-id
-         :mime-version:content-transfer-encoding;
-        bh=svpEp9OJ9fzAKGwvxYUywKOxZ7ajEwoHxddGOf+QtKc=;
-        b=6jrpYe3+r/q5+EqmuKW0b9nXi1dTVeTFKU52UGuGaL7Lw99lKL96tNoFk3RdTatfrY
-         giCtHIcSAxSb0LKmvAcffjh/RSd9fhorX6b1ciW10pL9Aj/aEF81q80EH1EtpMdxkQZ9
-         2DIQvQFnwiSif8Ph9vo/srZ3uOkr42g8GkiSiWrUnUTtFDrr5XCazz5VpjXW7w00qpgY
-         5IYPiSrLKLrxd0jWoiDQUTgBmDXeXsbUtQPhyaLY3PnP0soGDiOYZbkMuZ4p97yjD0Ny
-         xQoOyI4eS7058GdjwMZ9aqcDTZYiJbobdzShjNvZUlT+HmYN5mtE68Is4CQ7qZsET7xn
-         bS6A==
-X-Gm-Message-State: AOAM531K+gPlpd7yCp88WJ48+a3pzXL7g/ab2Hghwa7MG3WMfMzmsMSi
-	arlDUUIjgx2Z5AZC4/lF2iDoC1YOsYc=
-X-Google-Smtp-Source: ABdhPJzuNmbj0N8SpH6iDOAc4DrmLxhB77gtNF0VdD2jgphiTDvwnTb4dAbmU10QPjPWlyvzubdMew==
-X-Received: by 2002:a17:90a:1544:b0:1e0:66c5:4080 with SMTP id y4-20020a17090a154400b001e066c54080mr37719708pja.141.1654138241224;
-        Wed, 01 Jun 2022 19:50:41 -0700 (PDT)
-Received: from voyager.lan ([45.124.203.18])
-        by smtp.gmail.com with ESMTPSA id a12-20020a17090a740c00b001e2b19e6cfesm4656850pjg.12.2022.06.01.19.50.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Jun 2022 19:50:40 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: openbmc@lists.ozlabs.org,
-	eajames@linux.ibm.com
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc] ARM: dts: Rename Rainier to P10 BMC
-Date: Thu,  2 Jun 2022 12:20:29 +0930
-Message-Id: <20220602025030.90710-1-joel@jms.id.au>
-X-Mailer: git-send-email 2.35.1
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LDFcN0CYwz3bcW;
+	Thu,  2 Jun 2022 15:55:47 +1000 (AEST)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id A28D95C018C;
+	Thu,  2 Jun 2022 01:48:47 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Thu, 02 Jun 2022 01:48:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+	 h=cc:cc:content-transfer-encoding:date:date:from:from
+	:in-reply-to:message-id:mime-version:reply-to:sender:subject
+	:subject:to:to; s=fm3; t=1654148927; x=1654235327; bh=ZkWyiuMGaq
+	hYzjNzOrV/RtlVeW8kwzCl9Ncn1BIGaC8=; b=aa+qR82WJa1/b7eBx0E27Gq0nQ
+	mhW1I88Jx3jHQuA/NgaG3e0+It9i0mNXJnvIYdOBkH1jfsM1ZDGlh0HvYh4Lr/oY
+	y9oFauoMrmB3wOcDKSZYnaMHHZX9hkLvQRRAG9BiqrCx/qwe5wH+CJYyVml6pHgg
+	rqPGhZ7JwYLkh2lEHAsPGxqkVc2ekMqeKQLrR9IZfX3B4JXdRpoHZeaRbAd+Urxp
+	y4dsenCXNg80jMulda4pu7d+MSRhdm1R19BlyZp8WleJoOa6lyb9Mb9ohGbUb6dw
+	V2/zPW9c1DOaB/xrI4uHqiKQ35+4YRAr3T8YIyqxdym0tBOJPFFmlFb5bn8A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1654148927; x=1654235327; bh=ZkWyiuMGaqhYzjNzOrV/RtlVeW8kwzCl9Nc
+	n1BIGaC8=; b=op4rbspCGhxXAGklNZ+NAoUzZ8fJhc0zp7Y17aNbOTnHEuWHDwJ
+	MgMsmR9Zf+biBtHOScoc7X2gvZ+wM1dUnSVZasNJLJZ0V/oYuRSA2uCur596VGnJ
+	LwLXo5xFm/uxioGSi7wB5HW00Bq1H2tasrtWEiV7mSgFL3EgpDy8YaWKiPmnu+tP
+	wfhvZ46FNNzHgwV6eXXg8xS+1vodDhrIZM8eD+jK56ZUe2fG9R75sxkBCDNJoKGe
+	jCE95JGdKb9AVQdtOV67eN6srP0UZSHq1Tm3hwe+l4g9KSxiA4BdxE5ZNBLPY+iX
+	a6PsWyEUHsAFQnSsQIrcYD8NT5SxHnMLtwQ==
+X-ME-Sender: <xms:Pk-YYoEx-IwVmjlXsMOVtprieeO2TuziQUrP5zSiart8wSgeD442jQ>
+    <xme:Pk-YYhUWCctqIECKG1yQBnncHD2RQt6qFug2AYUzfu02QvMLOT611bIyVW6c4796a
+    wB5i10drcT-Bz2bRZU>
+X-ME-Received: <xmr:Pk-YYiKdcSXF3_X14_BUQjy0Y1NYiniN66fUpGSCnYY6SuU9JnEH2g9SyhTespBISx2A91CaMggJoGhKJ-z3>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrledugdelhecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefhvfevufffkffoggfgsedtkeertdertddtnecuhfhrohhmpefmlhgruhhsucfl
+    vghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtthgvrh
+    hnpedtleduhfegleehleeltdejffefjedtleeuvdfgteevffegtedvveekheeiieekteen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehithhsse
+    hirhhrvghlvghvrghnthdrughk
+X-ME-Proxy: <xmx:Pk-YYqHfx6DImBe0zMCShFo1uLiaaGs2mE6j_V1FYwqOVUxIYPN1Rg>
+    <xmx:Pk-YYuWhtAq3v55W-v3Nt-G_SL3v0x-E0hmSoAWuyesSG6VlKK2b6w>
+    <xmx:Pk-YYtNIXy5nCtdYo-KPk2Js84B-eDYSYwjipv0ROkztQdKjGMJpWA>
+    <xmx:P0-YYnN3S-3FgQyPeZPx06hAacFFbzy9naLt4BeLQJ_h2mK_A8bhUA>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 2 Jun 2022 01:48:44 -0400 (EDT)
+From: Klaus Jensen <its@irrelevant.dk>
+To: linux-kernel@vger.kernel.org
+Subject: [PATCH] i2c: aspeed: do not mask SLAVE_MATCH
+Date: Thu,  2 Jun 2022 07:48:42 +0200
+Message-Id: <20220602054842.122271-1-its@irrelevant.dk>
+X-Mailer: git-send-email 2.36.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-Mailman-Approved-At: Mon, 06 Jun 2022 08:39:16 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,50 +91,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, Brendan Higgins <brendanhiggins@google.com>, Wolfram Sang <wsa@kernel.org>, linux-i2c@vger.kernel.org, Klaus Jensen <k.jensen@samsung.com>, Klaus Jensen <its@irrelevant.dk>, linux-arm-kernel@lists.infradead.org, Joel Stanley <joel@jms.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The Rainier device tree is used for all IBM P10 BMCs, which includes
-both Rainier and Everest.
+From: Klaus Jensen <k.jensen@samsung.com>
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
+When commit f9eb91350bb2 ("i2c: aspeed: added slave support for Aspeed
+I2C driver") added slave mode support, the SLAVE_MATCH interrupt bit
+(bit 7) was not added to INTR_ALL and so will never be set by the Aspeed
+I2C controller.
+
+Fixes: f9eb91350bb2 ("i2c: aspeed: added slave support for Aspeed I2C driver")
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- arch/arm/dts/Makefile                                    | 2 +-
- arch/arm/dts/{ast2600-rainier.dts => ast2600-p10bmc.dts} | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
- rename arch/arm/dts/{ast2600-rainier.dts => ast2600-p10bmc.dts} (93%)
+I am working on slave mode in QEMU and noticed that the device would not
+generate the SLAVE_ADDR_RX_MATCH interrupt. This patch fixes it, but I
+do not have a spec sheet on the Aspeed, so I am not sure if this is the
+intended behavior?
 
-diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
-index 3515100c65ce..8d05d1e70310 100755
---- a/arch/arm/dts/Makefile
-+++ b/arch/arm/dts/Makefile
-@@ -686,7 +686,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	ast2600-intel.dtb \
- 	ast2600-ncsi.dtb \
- 	ast2600-pfr.dtb \
--	ast2600-rainier.dtb \
-+	ast2600-p10bmc.dtb \
- 	ast2600-s6q.dtb \
- 	ast2600-slt.dtb \
- 	ast2600-tacoma.dtb
-diff --git a/arch/arm/dts/ast2600-rainier.dts b/arch/arm/dts/ast2600-p10bmc.dts
-similarity index 93%
-rename from arch/arm/dts/ast2600-rainier.dts
-rename to arch/arm/dts/ast2600-p10bmc.dts
-index aa91b12ed399..d1d78d5c3545 100755
---- a/arch/arm/dts/ast2600-rainier.dts
-+++ b/arch/arm/dts/ast2600-p10bmc.dts
-@@ -5,8 +5,8 @@
- #include "ast2600-u-boot.dtsi"
- 
- / {
--        model = "Rainier";
--        compatible = "ibm,rainier-bmc", "aspeed,ast2600";
-+        model = "IBM P10 BMC";
-+        compatible = "ibm,everest-bmc", "ibm,rainier-bmc", "ibm,p10bmc", "aspeed,ast2600";
- 
- 	memory {
- 		device_type = "memory";
+ drivers/i2c/busses/i2c-aspeed.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
+index 771e53d3d197..7f432babcd72 100644
+--- a/drivers/i2c/busses/i2c-aspeed.c
++++ b/drivers/i2c/busses/i2c-aspeed.c
+@@ -86,6 +86,7 @@
+ #define ASPEED_I2CD_INTR_ALL						       \
+ 		(ASPEED_I2CD_INTR_SDA_DL_TIMEOUT |			       \
+ 		 ASPEED_I2CD_INTR_BUS_RECOVER_DONE |			       \
++		 ASPEED_I2CD_INTR_SLAVE_MATCH |				       \
+ 		 ASPEED_I2CD_INTR_SCL_TIMEOUT |				       \
+ 		 ASPEED_I2CD_INTR_ABNORMAL |				       \
+ 		 ASPEED_I2CD_INTR_NORMAL_STOP |				       \
 -- 
-2.35.1
+2.36.1
 
