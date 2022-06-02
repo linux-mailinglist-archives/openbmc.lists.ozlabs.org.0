@@ -2,32 +2,32 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 671E153B62D
-	for <lists+openbmc@lfdr.de>; Thu,  2 Jun 2022 11:37:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B09ED53B635
+	for <lists+openbmc@lfdr.de>; Thu,  2 Jun 2022 11:39:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LDLX91hX6z3bnd
-	for <lists+openbmc@lfdr.de>; Thu,  2 Jun 2022 19:37:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LDLZF3lp3z3bnJ
+	for <lists+openbmc@lfdr.de>; Thu,  2 Jun 2022 19:39:17 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=TnhVXVk2;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=kOuXWkDN;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:fe59::728; helo=nam12-dm6-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:fe59::721; helo=nam12-dm6-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=TnhVXVk2;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=kOuXWkDN;
 	dkim-atps=neutral
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on20728.outbound.protection.outlook.com [IPv6:2a01:111:f400:fe59::728])
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on20721.outbound.protection.outlook.com [IPv6:2a01:111:f400:fe59::721])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LDLWf12g9z3bkW
-	for <openbmc@lists.ozlabs.org>; Thu,  2 Jun 2022 19:37:00 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LDLYh6QBwz3bkZ;
+	Thu,  2 Jun 2022 19:38:48 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=F5vHIl2nxDF9jb4vu5bC73kYAFaD9bgdhWwTT2+Js/LllqAXyRJjhIdMJ9tmhWLlcTjNMFPLcKqRV1MlKSVbZUpoU5otyd3RclGr+mk9iKkNzB11bB7OJssptfIQabXFJZ1e9rDn4r1hOcSz9LiNwYUd6CcmVb1Sn+3OfZaZLLlDIoCNSoNrYJE+t7KfwxHWSWztfoX67QWkdeu/8R0o6yhG1wguSmiUa9q24POQv83uKEfieDqMdfLD0AoBsAnEwGIrEImpoW1ATeYXCdwxlzAdvWwbUj3bWfpTOc2geQ5zgfWDJGtDFeOQ3GHhVjY+z2vD3NAru4GpAGioZK7OZQ==
+ b=dysr0h4RQopComgOC0mf5NLt8pezQMtDjo39JjG/heZf5toerQ65JIVLcA83xG94PmtaUynqH/HfsAKMm3pi1BH6poTOQTdLMBRv2bTiP4ezMyqU15sK2lhzk0+l3bSwUuNzmP90S2i++XaEpRVL3j17zUjVjH9GsX4kjtqDAk/vz4ApPvvOA3ltHOnH1FHDOApKqDW8HRnQS21PWWDAF94Np/UUN/W2d6eRhgiDB9ygzDaNYdBp6IhlOdJDstVb2/l8nHx1n4w5Kf3zcVmF7DEDo7qaHFr8OfnwXRmGhojG8Rhu0bJxrnymYrSF8k517wPBxHeeohDQjMUlj/TaYw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=vsuwW5Mi7MWILTc27RLGlxmLVIZ8c/i2SDcmhEPD/5A=;
- b=kTh0M4qmjGjfhXsS3WjqZz9c9ionO8gzHops1MwIf6b/LjnO9KTfTwR8JguJXvJ8qqFMnuAelUb/zw/Hp/YK8QHHCoY7feAmrmDpCLc4luFEXOmmPCoGWCxo5TYCXqeIRvMTFYVF1FMBbRFMQjYqec5c7Lt3WzzEfidgooy4TdjEKaY4q/hzx+6TuU2Kzf0cAVdN/0v0kZiY65BVxiD0O8sVy3BN/KeTo2I6hYxY2A2K/LG15NG7X0uuf6oCl0XCJobgYK8V2ZlZ1SiaHZr8Z+SKfO3h/69pZNN1qkgfSPK26FgxL72tEr/XUxcMwCv38Ixet3WMaQxJuA3Nu0KWFA==
+ bh=X0SqOpPTtPfGAfAlQkWR6X0KyhTaxRms5p/wcg66Cco=;
+ b=IUJVkYK/PG39yrBaNCG5fu8/e6Fk557GXPFobj8gc14yK+PJux3M7MiMPyipiKPbpLPHUhtQSpeox5m5UY0llxBP3SdxFS+XkS8XyvtwCpfzqnnI0OFhyCM99k2IYDmW3WvfSnLOCPLw5bPudpAjQogHZ1eJbI2pzlJpQIXOCPUWffSc+stgO/d1Sv4jyum77pg6aUsmWIFD6DUDkJ9tu0T8CpEO36/yps2nBaPF/amNOsn8I2REsGgJitosKoSVgRLgotBaMMIBkSqGU+X5mZlzGuJD/1tyJMdRboJjozsqeT9+zKu1ZLVZC0iag3WuyKBkwUp2xYfuxvwjzp3d6A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
  header.from=os.amperecomputing.com; dkim=pass
@@ -35,98 +35,100 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=os.amperecomputing.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=vsuwW5Mi7MWILTc27RLGlxmLVIZ8c/i2SDcmhEPD/5A=;
- b=TnhVXVk2p3Nue67KsKoY8JiDYlGgJL3CUCcrmL8zr+8yBE3eWg6w25wezl86jPuQoPthABSSiLOxa065OplkdXwGLNAOlovmVg52mG/KAQWgZotBnPhrDECEUXM5dtB/l+9dUTvQq76bRQxPGQPf1MQrZXQf79FkDPS9V1HCcMc=
+ bh=X0SqOpPTtPfGAfAlQkWR6X0KyhTaxRms5p/wcg66Cco=;
+ b=kOuXWkDNz3W985uG1KLJmCNdTlvZ7jjM7AY8cg3YvzawILOb3RUHwo1WNm69Gmy+X01cqEVZulAudWEv6Q54d8B7evKIrkN9Bjnmp/MjM8epykQwor6AswnlpyJeaL3+sFtH0EgLw6VjjHJUu49kwihkeviNQN/+vgLTBVNeEbQ=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
 Received: from SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24) by
  MW4PR01MB6500.prod.exchangelabs.com (2603:10b6:303:72::20) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5314.12; Thu, 2 Jun 2022 09:36:36 +0000
+ 15.20.5314.12; Thu, 2 Jun 2022 09:38:30 +0000
 Received: from SJ0PR01MB7282.prod.exchangelabs.com
  ([fe80::e877:bfc6:92a5:d237]) by SJ0PR01MB7282.prod.exchangelabs.com
  ([fe80::e877:bfc6:92a5:d237%7]) with mapi id 15.20.5314.013; Thu, 2 Jun 2022
- 09:36:36 +0000
-Message-ID: <524c6acf-06a8-6e63-c9be-0bbf730fa693@os.amperecomputing.com>
-Date: Thu, 2 Jun 2022 16:36:22 +0700
+ 09:38:30 +0000
+Message-ID: <052469a4-1f0b-8615-7b4e-fa16159297a2@os.amperecomputing.com>
+Date: Thu, 2 Jun 2022 16:38:19 +0700
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
  Gecko/20100101 Thunderbird/91.9.1
-Subject: Re: [PATCH v8 3/9] misc: smpro-errmon: Add Ampere's SMpro error
- monitor driver
+Subject: Re: [Openipmi-developer] [PATCH v7 1/3] ipmi: ssif_bmc: Add SSIF BMC
+ driver
 Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-References: <20220422024653.2199489-1-quan@os.amperecomputing.com>
- <20220422024653.2199489-4-quan@os.amperecomputing.com>
- <YmJJIb1DAIq5arCw@kroah.com>
- <4f5d7746-3747-4a4d-525a-4fb69e706cd0@os.amperecomputing.com>
- <YpcyaTqqsfDJx7HG@kroah.com>
+To: minyard@acm.org
+References: <20220422040803.2524940-1-quan@os.amperecomputing.com>
+ <20220422040803.2524940-2-quan@os.amperecomputing.com>
+ <20220423015119.GE426325@minyard.net>
+ <ec7b86ec-827f-da64-8fd2-eae09f802694@os.amperecomputing.com>
+ <20220504120631.GE3767252@minyard.net>
+ <ba084735-0781-7ca2-4d04-a70a4115729a@os.amperecomputing.com>
+ <20220602003244.GK3767252@minyard.net>
 From: Quan Nguyen <quan@os.amperecomputing.com>
-In-Reply-To: <YpcyaTqqsfDJx7HG@kroah.com>
+In-Reply-To: <20220602003244.GK3767252@minyard.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SG2P153CA0045.APCP153.PROD.OUTLOOK.COM (2603:1096:4:c6::14)
+X-ClientProxiedBy: SG2P153CA0047.APCP153.PROD.OUTLOOK.COM (2603:1096:4:c6::16)
  To SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 7cffb52e-8892-47ba-9bef-08da447b631d
+X-MS-Office365-Filtering-Correlation-Id: 1cbea329-f3dd-4f8e-ee21-08da447ba710
 X-MS-TrafficTypeDiagnostic: MW4PR01MB6500:EE_
-X-Microsoft-Antispam-PRVS: 	<MW4PR01MB650055C3194D598CA0CE2B4DF2DE9@MW4PR01MB6500.prod.exchangelabs.com>
+X-Microsoft-Antispam-PRVS: 	<MW4PR01MB6500BA66DFA975A5BBB7C814F2DE9@MW4PR01MB6500.prod.exchangelabs.com>
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	jr02FCAZ8MSzCD66WU6TeqYAVKYW6nvZlvJN/on567UvC5XIvThbF+AdgUChP2vP5GRVDktUpCXIz0cRzK1vAD5aeH92DqXCP5N9ZikiD/fuy1wSalccmcdowfE7g5ITrWCoB0diWTJTclLKCJ/ffojQI3QYkgZcgq+oZ+s7fK+v04hpDdA5/gODnlx6kFsqgIzffzZATinFxAQI1SLaLoWK3OoZ1vcdtYJDnj0vgdCzFcodCqVZiFY3GZuCB3VEmz8fyHy5Uhp9AP1xx2IPa6YXjoTC9A+QAOpBl5vJJRkS3gnrfGIyxznTR3K6TZu4ZUo72cZBDLT0pRFGPaykOkZZWLbkQv8vXd+dsSKPpwpfgPHl/iUY0cENaPJ8/eHMKnd1KekMDWpFtMgPKUGZm+KjoHzN9g3UbxWLV5Ov81nWJKYaQivrTkpcJ8IPkTWjwp5w2Eo+KHm1+qmtk3va8uPo7TjQuVl/aQ631YY3EDDdBvFn2LdkS7+kKX2L5Fpj7mYBmT15+R8eQHEpyWpqOrwmzxdOoDrQR5MnzJUdJSqtFwOO4qGWlo80G7FHYJuOpppt3TJSRejlu8bhkqmf7TkH4cevpL7eHkdShdRrxyNzJN7fTLkZ+aNa0rOm3GPyr4GiRw4F+Nzu887sT/DMzxP8Nh53I0el7Q09PhE1D5GICzHRDdyIG4/UwuhsgW+NBqzys3/cryA90kIaPQmNUFHlefqLEMlMxLWuoQqn2d0=
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR01MB7282.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(66946007)(54906003)(38350700002)(66556008)(6916009)(38100700002)(53546011)(52116002)(31686004)(4326008)(26005)(8676002)(6506007)(6666004)(6512007)(316002)(31696002)(86362001)(66476007)(8936002)(186003)(107886003)(2616005)(7416002)(508600001)(5660300002)(2906002)(6486002)(83380400001)(43740500002);DIR:OUT;SFP:1102;
+X-Microsoft-Antispam-Message-Info: 	lGFHyzomHBF+YzqpU3JvdXr4+3afFwAhDBIxxs6SbcJ/Og+s3BnHdFE6Gk/HfNBtUJnbbohHvOKS1Ok6MhNnt/Q4WA5Mv05ZjlCzW/+lj42o3K4AC3S3+0vIj6UjNcUnclQzcpf/gkXV16hGZpwckNcC9108p/lle4WO6V5QxnbTmlNU2MGbPY5wCNh7zDTwIOlc/qqlATbclrQpoqNGm7ZMjRZ8zIMKjWLsOP49DERb84LH9V+zFq1vGVBiwYw4whz/4nSh9A6/uQygezYKvHbiNQ48XJ/9dyk/CTO3uN2A/frc1z5qmTdJaXiMUW8w1gYYgmZzbV+Xd8JStr2rbvGdrxFPSZllaH+GtlEtE58jzZ406xWWXVxcJjqCZHZcZ364RMjXjayJsi9xsSx6MYq+ykNw9oT3+xR9xq4MPJnulLuYhGlmgeNRoGD0NoQx/42ri4HLb3iJ2W2TyKVMJMoOUegLlGKlS1jwJ1KBn8o0PxAnoh5yeT6bwDfqJdWT6oZxqjhXxupo/h/jIQwXGaBadj976vSzl4YrtWLnQ7NAVqLITJ96sDlApyh+tPaTsYIZ4xBq78Mi4HwQUmYtmMjm3CvfE9TgueqH1c/4LrXRut7mtuENzYsRbb67caGad0qHPwLp0iaobqqa5W+cm06XRV011bxXivqhGsg2Pjzsc70UE49vibsCCH+hRbKEd/batzYC3pAJCm2/lat7GDj4KNU+LpKlnhqJXbVS4Hu66IEY8LM61ElpWTEL/e2z
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR01MB7282.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(186003)(7416002)(2616005)(66476007)(8936002)(83380400001)(6486002)(5660300002)(508600001)(2906002)(26005)(8676002)(4326008)(6506007)(66556008)(6916009)(66946007)(54906003)(38350700002)(38100700002)(52116002)(31686004)(53546011)(31696002)(86362001)(6666004)(316002)(6512007)(43740500002);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?YnM1UXdFR1lNODRyeG9uQi9CamhwZ29SVzdtdkJSUjMvTHgrOTNqYjdWM2Mv?=
- =?utf-8?B?bitXdVlyOGtaTDdoQWNlN2E3Nm1wRHJCWVB1ZnBXMGVRZ29TaWt4SXIvcGNC?=
- =?utf-8?B?T29BNU9ldnlKMWRuYittakt0Slk2WmxWaHYva0o2QWp1R21vdmh2NGNrK01T?=
- =?utf-8?B?TFEvdWVEUnRFa1ZueVZYWWF4UEI0MjIrL3d2N1lWNkNSbTBpcXh5NHlQNFVK?=
- =?utf-8?B?cmFXZDEyaEM1SGNTdEc1SFRLWjNpSVIxc1VES1BXNjZOWWd4Nmp0WlNjckd0?=
- =?utf-8?B?aHV0Ky9jVldxb0RXeUxpaUl0eWdVWHZzYW44cnVRUUVDWTRZVGFCWmZ2T1B6?=
- =?utf-8?B?NzltdWVTOGJWS3ZGZFpiWm9EUjVVckxzTjFMRmlwbitkWWJmNFRIUlcwY3J4?=
- =?utf-8?B?QW51ZUIyczlwSGdlbDlBOG4vQ3dIMHQxV0NPcmZhbDhyY3FMT1E3aEExVnhU?=
- =?utf-8?B?MWc1WjlRRXJKMEVoZlJnc2p5ZkwzTmtzN1NxWGVRK0NrbVNPV2R3bncwZFEy?=
- =?utf-8?B?ekFkd1lJWG5XR0RnZ3I4QkRuYk9NSzJTMU5MbVN5MlQyWEpudmhuWlMzZ0Q0?=
- =?utf-8?B?U25lZnF0VFZlWWgzMkRPMzF5Tm1CSUE1R2JQY0xuZzdackZEaTk1ZmxnVDJ3?=
- =?utf-8?B?YU9tVWNQY0t1OEZLdEN2NnBoZkR3ZFJDL1dHTlgwUVViVmxRMWRmckdnemxz?=
- =?utf-8?B?d3pEUkRpb2licG1qRWlOUnNrMG0wcklUQUZpNVFERmRCUUdHRnpEM0NsSjBn?=
- =?utf-8?B?NS9oc1hkVUZTRXJ4OE1KUk5YWTFPRTFJbnkva1VIUHo1WitYRU5aYzBKZDN3?=
- =?utf-8?B?MDJFcDlWdmdTdHNsNXZvQVp5b3lyVHNrSEpwU1FoMFVGWEJWazk4U2ZnZ2VP?=
- =?utf-8?B?blk2N05FeHBXaVF1NktGdldSZUpyVnFGUmNUODFhQ0I4VW9zSGxkeTBSUDBr?=
- =?utf-8?B?QUNpWCtlZXEzbXRtN0lRNG15MjhaWXNEdmFTZWo4b2g1WkVDZVZtc1dOdnBX?=
- =?utf-8?B?bW1XQXJLU2tQWTAxUE9PN0hBMXZuQnpkZjNNM1NFcytjM2JIdVd1VUJpeEZK?=
- =?utf-8?B?K2JhZmxlUlVWWlVUYlMxTENHem9hSEZGOXFOV0oyendLMUllRi9Ma0ZwUU1J?=
- =?utf-8?B?d3RPeVVrYU1zeHJuaVA0VUhZdHBiZDVSSERWbnlpK3luWi9BckRIMi8xVHVY?=
- =?utf-8?B?TFFFMTZGZUI2aEMvTkxJU3R0dlB0dWVUZkRYQnIyU3FSZXljSVZrajdmRGVP?=
- =?utf-8?B?NHAxekVrSmR6SlVLOG1iNXRKOCtyVlEvWFU2UlhoZDdzWVBwS0lqTk5yNStj?=
- =?utf-8?B?Q0l1NW5YWTBWZW9qMGY2bkx2N1k3aGVFNU5sdEZ5eTYrVnRmcTlMRGttclJu?=
- =?utf-8?B?ZTg0bVV4bUVjMHRuSG95OEdZN3kvY0RIK1dwRnROMjVYQmVmdTcvRkFNQ2R5?=
- =?utf-8?B?S2N4cSt0cVJBRXI2MVhVeG5ZUWdrTVlSajZia3lkS3lMcS95TC9yNTE3NVRi?=
- =?utf-8?B?blYrTUl6NG9vZHRpVERBK3JBU3B2WUtOZm5hZ3QzRGc3c0RteDlVckhzSHBw?=
- =?utf-8?B?NXFQbi9VS0txeXV6cVpoUXpmTGhUOHIzVDVBYlBXNWlwcjM5UE5YV00vRXV5?=
- =?utf-8?B?WXJUUzNiSE5lUHIvUWdRL3BlVUxuMjRsVDJWL2ZwZFdNckFIT1dCN2J1MFow?=
- =?utf-8?B?OVZyUFJOb2tKNEtwSzBkM1lvRjAweHhDa2QxU3ZReEZMRnRYcVV4NGZYZGxY?=
- =?utf-8?B?NWJSanZ2V3E5WUJXVzhuODAwQlZseW9RTDRCdDQveFYwcTZKT0F6R0JNWUZs?=
- =?utf-8?B?MG5pZW4wTDFEWmVkWEpBSUF4ZjVVcngrc2hoa0VhRkh5OWExczlEYkZCY3RD?=
- =?utf-8?B?M3NzbjZNaXV2L2grNmhtM3lUaHpqU3ozTlRoK2JDNlJkZFMrYmRJUVFYQklr?=
- =?utf-8?B?YnFNeS9vTTBWL2RSN1c5V1JoMStuMlRQL2tJbUtmdHM3cXlia3BGbEZWTDBL?=
- =?utf-8?B?ejZHalNsZ0RsdzBKSGlldDZMRk5VZlRYeGJPL3pMazhLeGcyWjU3QW1zbDBS?=
- =?utf-8?B?K0RqbmJmSFFpZzA1Z1o3bTVqdStyTzBBSU5MMXAyM2NHVVJQaEJDOWpjcS9I?=
- =?utf-8?B?NDNaWlZVTS80a0ZuS2JrdXl4ZGdsQ2N0VGJFd1kxU2tXODVpbXhNRWFCcWhw?=
- =?utf-8?B?SHhZN3N3WXI5dUt0UlRzRVY3TjJsTHBwUS9jbytRYlpack95LzAvUEg0dHdQ?=
- =?utf-8?B?VFNhUXd5NVlrczNvcXRNK1JBcnZHTCtPYnl2MVJRUTFiSE1wbk9nejVaZmFT?=
- =?utf-8?B?d28xSjNma2wraUVzbEwrZDBHVSt1WW52YlRZMWk5bUN3S3JZS1pXdHY0dFR0?=
- =?utf-8?Q?BpvCVbqvKk9Qxjsf0T7BuwxYYqsYmi8bMruSK?=
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?NEJmYS8wak5aYzBWQVcrdHJNYnk2bE40RndPTmF2TnZMa0xjL1kwcTJaUzhO?=
+ =?utf-8?B?Q2g3QmQ4N3Fhb0c4bjlKUUpxT1ZPNWI4ZDRxa3daMDdESWE1Y3RqemZQVmZp?=
+ =?utf-8?B?R1FFUUhKK3VLR1VXNXVKMkd5c1Y3Vk9zNnh5NS9RbFBnOWNoQXhWWGNHTzVa?=
+ =?utf-8?B?dmZJNk9lZkVsM2w5b2V2cExpOGEwaFBHVzhJaFV1SHkxejQraDBKZ3ZNZzJx?=
+ =?utf-8?B?ZjlsKytDbVEwenRUUEg5ZTJyckx4MDR1RWlZcGJoOW11Q0x0OFhTVnAyZ2ZJ?=
+ =?utf-8?B?RGZYdHNEVkRRR1dkNzZBSUpaS1ZrbkRUVVliaFRCaDUzYlVneE9JNkZUdmdp?=
+ =?utf-8?B?SnY3NnNWR3QrWG9ja0RaUGNNZS9PeFdMZFdDODdGS0JZZ2xQVThzMHZRTmFE?=
+ =?utf-8?B?SFAvTE5NTWtXRW5PZnRBT1puTVB3UHpqNU5ZRFdFY2hRZjcxOFBCNU1tdjBv?=
+ =?utf-8?B?ZHZac05PL0QwVnBHSE4rSXdiUnpaNHZlc2thQXJnbkY3ODJqTy9GVWthelE4?=
+ =?utf-8?B?dmtmWjd5N2JrUkxLNC90QithdmM4R2E2WnJGYXM3amFNTHFzOW40Vk82Mi9v?=
+ =?utf-8?B?a1FtRzNyekhleDQzRGtYT2d5Mys5aG8yNisyb1dWYVZhbGVMcUlCeE1KNTBs?=
+ =?utf-8?B?Smd1V0VRTUlJa0xRZjhSdTVtUDFWbjNMYm54SjVTVW43UFdRd0s0WGR1bUtH?=
+ =?utf-8?B?RGJ4TjRDMTJqR1dvaTMzTU1UNjYvaGl2SmdoNVRDTHFUcTRYWGlBbWhaOGwx?=
+ =?utf-8?B?UUlTekx0a3FhdGhhbGloUzQ1WDE2Nk5sWGYwTnpndm42WDcrT2NXMGkrUTZq?=
+ =?utf-8?B?YlBYQ3VGZDYreFhmMkpPbWU0dkc2US9nTzNlWFpOd21mV2hjeWVpMGxyQUV5?=
+ =?utf-8?B?MUVyWFBWWGFGVnJoN0VDSXVqRldQZUZXejFHRFdadDJpcVF5MHl4aitmbmg0?=
+ =?utf-8?B?a1JETXdNWWM3R3gxMG9VeHJwM2dsWGN3ZU1NNFNFcGZ4azhDZVYyNzBmeTBv?=
+ =?utf-8?B?cnhxL2pJOTFHOG5rTURzNVFPYXd1TG5OZjEya01LVStEaDljVFYwWjE5QnNG?=
+ =?utf-8?B?WmVrYTZaeFVSM1kvZHQvWVRLSTBycEp5NmtpRU9qL2wvcW5zTzl4UHM4dXpx?=
+ =?utf-8?B?YlRBRkZ5aEZqL2Y1L2Z1SnllUnpCU08wSEdsVE15WWhaMWo4NElqcTBwV0Z1?=
+ =?utf-8?B?SjdGTVB0Mzd4YnVteVpMUWhSTzRqUnhMZ0EveHZlcWRvSmVhZ01kVmZEL09N?=
+ =?utf-8?B?L2k5VzhzaWtLRWF6c0JvanZtQUlSVWtQSXNOdGVmcEJ2YnBuMEtUeXEycmxB?=
+ =?utf-8?B?bCtPZUtOWDA4di83SHk5WENzelY2NUJLVjVvR3lORDdmOHVZcjZkbXF3dllF?=
+ =?utf-8?B?NXR1NlJyaHpoT2s5NnBhK2RnUmIwY201VXZ1L3YyVzFXUzB5MEl1V3dkSC9H?=
+ =?utf-8?B?SURpaGdZeFNTaGVuNWZsdWMzNG9ZbTFpbjZUalZnYTFBMGJkT3dkYzJYMGJn?=
+ =?utf-8?B?eTJsZHFERWJ1Q2R0T2swc05IcFZHSlgyeDJXS0tzTCtMVzF6TThkNjVwaG1m?=
+ =?utf-8?B?TmlwRE1aZzlQRjBiOStlWi94bW5NbUVHamVoOEtWRkhhemVBT0FNVEJtSFF5?=
+ =?utf-8?B?ZzJEZmRUcTlEYURGOVpXZFdadmRRODBabkhZancwek80Mkw0NitwdlpSWHNw?=
+ =?utf-8?B?MW9sZnRUQncrT1FRVnNsTWVvdS95MnpNa0tIZUV6S0pMWHA0UTZJSkVwWVJx?=
+ =?utf-8?B?Uy9LZ3EzNTg5eHNLM2M0VldBZjF5QzlBb2pFaXdCNG85TGkxM2YweFIrZy9C?=
+ =?utf-8?B?cUJ3M2d2K05NeVJ5R0prRXF1T3lUdVIxK1MvZFpSUnV5Qi9UZTloSC9TcHoz?=
+ =?utf-8?B?QUtxODBmT3FaQTJiMTdJM1BVQStGUzRhaUpPVFFVdElXdGpBekJLbGl2Rk11?=
+ =?utf-8?B?Z3NZTU1JS0FoY1VpcGZsdC9RU2x5QjNiWnNadGlRbEI0NUFTQUdicmQ2bUFa?=
+ =?utf-8?B?RlgySHRpOEtaNFVyTDZ3VjNueDdwQTdjdk95VXZNeGZqSXJmMkJFVnd0L0Fu?=
+ =?utf-8?B?WW05ZCt3aHJFUXNxbkhucmxvSVBnMENkM25DcURpYjRFa1g5Q1VCcG1BL1VC?=
+ =?utf-8?B?QjJKSDhtSm1UUkE0dmFwTTZOVTJidm9ZNzNKQmcwU2dEZ0pUNHh5RXhBNDRD?=
+ =?utf-8?B?bEkxQVd3TFpPYmZFdmlSaHNENTdrekJteU5JV0tXQ1NrQ1pNcldwSG42NGJl?=
+ =?utf-8?B?WjRabERpNGdoQ0l4MVFmbUIzcXRaMzM5TU9EeTlDNnZHSWttMXpnRjFCdGFM?=
+ =?utf-8?B?UjRCenlRM1lUZzFzOTlhemMxYlducmw2OFNrcGRzVDJnMzNRQjB3endlcjIr?=
+ =?utf-8?Q?2BY+LlHjEBgniDnqIg8BPPLGa/hGIf/hPaMxq?=
 X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7cffb52e-8892-47ba-9bef-08da447b631d
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1cbea329-f3dd-4f8e-ee21-08da447ba710
 X-MS-Exchange-CrossTenant-AuthSource: SJ0PR01MB7282.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2022 09:36:36.6052
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2022 09:38:30.6854
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Ggbtl/0QJWgI2zemSGClzIiEEdEwx25fkOGixHcH0uUheOc33oVldHC7Cmpi+/5LNQAeY79jfqGvM0M4fxmP6x5pQ/ThGB8mo8uuzfW9Kwg=
+X-MS-Exchange-CrossTenant-UserPrincipalName: 4MVnFJAaGUvXzI0DNakhwdhN9dUunj8PmY4MNXkckCZvdbc9p2t0a+2BbNss/01P69NAZ4ccuMGOsA0dJoA/Cna0/EJ2b5aM3U7xGWHYXTc=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR01MB6500
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -139,94 +141,59 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, Jean Delvare <jdelvare@suse.com>, Phong Vo <phong@os.amperecomputing.com>, Arnd Bergmann <arnd@arndb.de>, Jonathan Corbet <corbet@lwn.net>, Dragan Cvetic <dragan.cvetic@xilinx.com>, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, "Thang Q . Nguyen" <thang@os.amperecomputing.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Derek Kiernan <derek.kiernan@xilinx.com>, Open Source Submission <patches@amperecomputing.com>, Lee Jones <lee.jones@linaro.org>, Thu Nguyen <thu@os.amperecomputing.com>, Guenter Roeck <linux@roeck-us.net>
+Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, "Thang Q . Nguyen" <thang@os.amperecomputing.com>, Brendan Higgins <brendanhiggins@google.com>, linux-kernel@vger.kernel.org, Phong Vo <phong@os.amperecomputing.com>, Wolfram Sang <wsa@kernel.org>, Rob Herring <robh+dt@kernel.org>, linux-i2c@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, openipmi-developer@lists.sourceforge.net, Open Source Submission <patches@amperecomputing.com>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 01/06/2022 16:33, Greg Kroah-Hartman wrote:
-> On Wed, Jun 01, 2022 at 03:21:47PM +0700, Quan Nguyen wrote:
->>>> +	if (err_type & BIT(2)) {
->>>> +		/* Error with data type */
->>>> +		ret = regmap_read(errmon->regmap, err_info->err_data_low, &data_lo);
->>>> +		if (ret)
->>>> +			goto done;
->>>> +
->>>> +		ret = regmap_read(errmon->regmap, err_info->err_data_high, &data_hi);
->>>> +		if (ret)
->>>> +			goto done;
->>>> +
->>>> +		count = sysfs_emit(buf, "%01x%02x%01x%02x%04x%04x%04x\n",
->>>> +				   4, (ret_hi & 0xf000) >> 12, (ret_hi & 0x0800) >> 11,
->>>> +				   ret_hi & 0xff, ret_lo, data_hi, data_lo);
->>>> +		/* clear the read errors */
->>>> +		ret = regmap_write(errmon->regmap, err_info->err_type, BIT(2));
->>>> +
->>>> +	} else if (err_type & BIT(1)) {
->>>> +		/* Error type */
->>>> +		count = sysfs_emit(buf, "%01x%02x%01x%02x%04x%04x%04x\n",
->>>> +				   2, (ret_hi & 0xf000) >> 12, (ret_hi & 0x0800) >> 11,
->>>> +				   ret_hi & 0xff, ret_lo, data_hi, data_lo);
->>>> +		/* clear the read errors */
->>>> +		ret = regmap_write(errmon->regmap, err_info->err_type, BIT(1));
->>>> +
->>>> +	} else if (err_type & BIT(0)) {
->>>> +		/* Warning type */
->>>> +		count = sysfs_emit(buf, "%01x%02x%01x%02x%04x%04x%04x\n",
->>>> +				   1, (ret_hi & 0xf000) >> 12, (ret_hi & 0x0800) >> 11,
->>>> +				   ret_hi & 0xff, ret_lo, data_hi, data_lo);
+On 02/06/2022 07:32, Corey Minyard wrote:
+> On Wed, Jun 01, 2022 at 03:23:11PM +0700, Quan Nguyen wrote:
+>> On 04/05/2022 19:06, Corey Minyard wrote:
+>>> On Wed, May 04, 2022 at 01:45:03PM +0700, Quan Nguyen via Openipmi-developer wrote:
+>>>>>
+>>>>> I seem to remember mentioning this before, but there is no reason to
+>>>>> pack the structures below.
+>>>>>
+>>>>
+>>>> The packed structure is because we want to pick the len directly from user
+>>>> space without worry about the padding byte.
+>>>>
+>>>> As we plan not to use the .h file in next version, I still would like to use
+>>>> packed structure internally inside ssif_bmc.c file.
+>>>
+>>> Packed doesn't matter for the userspace API.  If you look at other
+>>> structures in the userspace API, they are not packed, either.  The
+>>> compiler will do the right thing on both ends.
+>>>
+>>>>
+>>>>> And second, the following is a userspace API structures, so it needs to
+>>>>> be in its own file in include/uapi/linux, along with any supporting
+>>>>> things that users will need to use.  And your userspace code should be
+>>>>> using that file.
+>>>>>
+>>>>
+>>>> Meantime, I'd like not to use .h as I see there is no demand for sharing the
+>>>> data structure between kernel and user space yet. But we may do it in the
+>>>> future.
+>>>
+>>> If you have a userspace API, it needs to be in include/uapi/linux.
+>>> You may not be the only user of this code.  In fact, you probably won't
+>>> be.  You need to have a .h with the structures in it, you don't want the
+>>> same structure in two places if you can help it.
+>>>
 >>
->> Hi Greg,
+>> Dear Corey,
 >>
->> Since the internal representation of the internal error is split into high
->> low chunks of the info and data values which need to be communicated
->> atomicly, I'm treating them as "one value" here.
+>> Is it OK to push the structure definition into the
+>> include/uapi/linux/ipmi_bmc.h ?
+>>
+>> Or should it need to be in separate new header file in uapi/linux ?
 > 
-> That is a huge "one value", that's not what this really is, it needs to
-> be parsed by userspace, right?
+> I think a different file, like ipmi_ssif_bmc, to match the file and
+> operation.  Unless you need the things in ipmi_bmc.h, which I don't
+> think is the case.
 > 
-Thanks Greg for the review,
 
-User space needs all of this "one value" to know what exactly is the error.
+Thanks Corey,
+Will add ipmi_ssif_bmc as you suggested.
 
-In our latest version, we remove all the if...else and simplify the code 
-as below:
-/*
-  * The internal representation of the internal error is split into high
-  * low chunks of the info and data values. Rather than temporarily
-  * dumping these into an array and printing that, skip the intermediate
-  * step and print them using a concatenation encoding.
-  */
-count = sysfs_emit(buf, "%04x%04x%04x%04x\n", info_h, info_l, data_h, 
-data_l);
-
-/* clear the read error */
-ret = regmap_write(errmon->regmap, err_info->type, err_type);
-return ret ? ret : count;
-
-> And why does this have to be atomic?  What happens if the values change
-> right after you read them?  What is userspace going to do with them?
-> 
-Because the error is bigger than single register can hold so it is split 
-into small chunks to report via multiple separate registers.
-
-Firmware stores each error in a queue. As the error's chunks are stored 
-in separate registers. All of these registers will need to be read out 
-before the error is clear so that the next error in the queue can be 
-reported. That is why we say those chunks must be read out atomically.
-
-User space will need to parse these information themself.
-
->> I could dump them in a
->> temporary array and print that, but it seems like additional complexity for
->> the same result. Can we consider this concatenated encoding as "an array of
->> the same type" for the purposes of this driver?"
-> 
-> That's really not a good idea as sysfs files should never need to be
-> "parsed" like this.
-> > Again, what are you trying to do here, and why does it have to be
-> atomic?
-> 
-> thanks,
-> 
-> greg k-h
-
+-- Quan
