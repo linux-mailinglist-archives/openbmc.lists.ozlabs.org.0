@@ -1,88 +1,59 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5713353DEAB
-	for <lists+openbmc@lfdr.de>; Mon,  6 Jun 2022 00:40:11 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81BE853C4B8
+	for <lists+openbmc@lfdr.de>; Fri,  3 Jun 2022 08:02:40 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LGWls1ldkz3bcj
-	for <lists+openbmc@lfdr.de>; Mon,  6 Jun 2022 08:40:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LDsjj6KzWz3bm3
+	for <lists+openbmc@lfdr.de>; Fri,  3 Jun 2022 16:02:33 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=permerror header.d=irrelevant.dk header.i=@irrelevant.dk header.a=rsa-sha1 header.s=fm3 header.b=nYy0O1P4;
-	dkim=permerror header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha1 header.s=fm1 header.b=DWYLET/+;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=zohocorp.com header.i=nikhil.vu@zohocorp.com header.a=rsa-sha256 header.s=admin header.b=uAhxPAS0;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=irrelevant.dk (client-ip=66.111.4.29; helo=out5-smtp.messagingengine.com; envelope-from=its@irrelevant.dk; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=zohocorp.com (client-ip=136.143.188.7; helo=sender4.zoho.com; envelope-from=nikhil.vu@zohocorp.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=irrelevant.dk header.i=@irrelevant.dk header.a=rsa-sha256 header.s=fm3 header.b=nYy0O1P4;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=DWYLET/+;
+	dkim=pass (1024-bit key; unprotected) header.d=zohocorp.com header.i=nikhil.vu@zohocorp.com header.a=rsa-sha256 header.s=admin header.b=uAhxPAS0;
 	dkim-atps=neutral
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from sender4.zoho.com (sender4-zc7.zoho.com [136.143.188.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LDsQL1X7dz302D;
-	Fri,  3 Jun 2022 15:49:12 +1000 (AEST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id 4D2485C013C;
-	Fri,  3 Jun 2022 01:49:07 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Fri, 03 Jun 2022 01:49:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
-	 h=cc:cc:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1654235347; x=1654321747; bh=lI
-	jU4LaO1rApVvOShyS8GsBVRsoSsVXvjryTJrZtKjg=; b=nYy0O1P4Jg3wrrSfTQ
-	i1ZV2JXrHfgfVbbmBZe862UKfJaGUqdX3KZuUZnKHPsAiNp7fsYkCyJj395RHnna
-	NX8ziLucahVzPWgc3eV+EIBy6f5XnqRrdY3QY6OZyY8jLiVSlSptBu1NYNTKKlUg
-	wzli+cpj+QudXBh4uJqCBvKA8Kdd+N5BfJnEwBwTdvNIaO49gwdMfhQ/LOzpDEXM
-	Uyy65GIQqWBls0aVqyiU4Oz4DjMvfp35igT54Es2ef5MtYoq03nPd87EoOb4yDuh
-	5nLMDaYkvI9HvS6QOFV8eyvpPpAoWvjm0cFflfrgdqlikGx+4jgxIgGXyBfIEIvp
-	Vrtw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1654235347; x=1654321747; bh=lIjU4LaO1rApVvOShyS8GsBVRsoS
-	sVXvjryTJrZtKjg=; b=DWYLET/+XU0wgIpSjFaGJqNfUWigRsswi65wQSs1vnYS
-	zBmqyej4l+7Eyh3eOfJargM2gMrF8Ty9hUZBmIEnAUzfIdKCme9rQoN6z9H6HQxt
-	p5RuAQHXZNlZBNaIwCEJlDz8ldxjqbt+SsZtsxAVdEE2qsAWHyHwj4nrUVHNYlHg
-	qIMAOtpMEaFMyWBSx4uyv2BecJrpOfIeAMML3R8ek7N3IP8/I/D8BPEO8UzmOpAK
-	G1qq8FxEd3OMW6spsu3yk2apr/YJlX5eaUVM0jvBwT0QvAG9lTCs39jaBgrgZbsb
-	y3yqLw+f6f9IAfAQvwYjZWGztIR6IQYZGw+8e8qZcQ==
-X-ME-Sender: <xms:0qCZYmx_z6_DqH4Me6LAylQuyrsjgqyeTNi3FqNR3vhNCsw-k0JHNw>
-    <xme:0qCZYiRlWq-4IJNRYwf44fjmlXXzDHu2V5SRmkfEnLEmQDWaIGGV3EPyzwe-RpiVI
-    TfxtTbDYdtKKbyIsTY>
-X-ME-Received: <xmr:0qCZYoXA60zcQ31LtSBRgkprWwnkI8RgQGCwXCpxWCNjGoZXWuUjXvWSxGCLg1P1Hmkt7L2vvUE3yUj2iA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrleehgdellecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefmlhgruhhs
-    ucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtth
-    gvrhhnpeejgfejfeffvdeuhfeifefhgffgueelhedukeevjeevtdduudegieegteffffej
-    veenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehith
-    hssehirhhrvghlvghvrghnthdrughk
-X-ME-Proxy: <xmx:0qCZYsji16QNHoWnUZyivblJITBw7cfdpqBySyBx8Jpi-QPp7BQL0Q>
-    <xmx:0qCZYoADT-KyZuTywC0LYuIq19GkQ721risq-V9BStA_XTJqMUyCiQ>
-    <xmx:0qCZYtIZsBNGuASds4zG95lJRcHQN-rZRliBCaIHcLtsjKlsS_M_Mg>
-    <xmx:06CZYs51fTr8av9ucwhbWcQ0ev30R5OcwABGfGFsbxrxmG32wTT8uw>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Jun 2022 01:49:04 -0400 (EDT)
-Date: Fri, 3 Jun 2022 07:49:02 +0200
-From: Klaus Jensen <its@irrelevant.dk>
-To: linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] i2c: aspeed: do not mask SLAVE_MATCH
-Message-ID: <YpmgzroKbMO3TIsY@apples>
-References: <20220602054842.122271-1-its@irrelevant.dk>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LDsjG0xCZz301N
+	for <openbmc@lists.ozlabs.org>; Fri,  3 Jun 2022 16:02:09 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; t=1654236124; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=ZUgqIdWszCmd7mbty2Frj1133oGHDxfvmxBnjP77UEGLZsXVL5DOFXeVGIyMrCjsfkDXFszLFC4SBoEQx1qHz2nn7KfFnh8D/1RHc9hrNJOG+1XDdR0VTkJwR/4+YET0gZqGh9MxviDlGZaLB40Afy3iN+cKcTQIqxystZq7zKY=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1654236124; h=Content-Type:Cc:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To; 
+	bh=KVW3fR7R4Ne270YxlUBjMQ75pv0fPCJk+hosQQBVFQA=; 
+	b=LNWoUKHhFhTkuxqbKVNtECdbVPaLES+5s8k/rfoL2irGxGl5R2m/L7iM7WHoQbT2F378ZRSo7+7vxJO3aVR+34caZ1jYut8N5NEAlQmR7IBqFAr9N3/ZbqpFXATx2SM7Hh9+SWs4qv3Oswhb5EVTwvZU02A6BJHOOkT7vrsXyiM=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=zohocorp.com;
+	spf=pass  smtp.mailfrom=nikhil.vu@zohocorp.com;
+	dmarc=pass header.from=<nikhil.vu@zohocorp.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1654236124;
+	s=admin; d=zohocorp.com; i=nikhil.vu@zohocorp.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-Id:Message-Id:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Reply-To;
+	bh=KVW3fR7R4Ne270YxlUBjMQ75pv0fPCJk+hosQQBVFQA=;
+	b=uAhxPAS0EgJ7akvs4QAcd/i92JMSUsdLFpvMc9g3jBcS4u8/vPwYdzcad6wMvQXv
+	GqWuiuatc96D3EdlA36ePBCO1CoxuVL1eYb1nCQr1/PukQBGOgGA+fgWdsdUlGzYgNT
+	RDqfY7SaDXVcWEpCCpecKZJUM9QzR2ONsTgKYtXI=
+Received: from mail.zoho.com by mx.zohomail.com
+	with SMTP id 1654236123499297.1656373030577; Thu, 2 Jun 2022 23:02:03 -0700 (PDT)
+Date: Fri, 03 Jun 2022 11:32:03 +0530
+From: Nikhil V <nikhil.vu@zohocorp.com>
+To: "joel" <joel@jms.id.au>
+Message-Id: <1812828112c.fe9476eb5163.6646456422598811027@zohocorp.com>
+In-Reply-To: <181231928ab.1255e42e125354.8114584519815620257@zohocorp.com>
+References: <1811e688e68.f6b260b112172.7670613845716605077@zohocorp.com> <CACPK8XdtT9J6iX-bvrOX_hjnaaG6OoGVx0SPUd0waJCFsrzKEA@mail.gmail.com> <181231928ab.1255e42e125354.8114584519815620257@zohocorp.com>
+Subject: Re: [ Entity Manager - Beaglebone Adc }
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="H0uRup5aAnlYFzFn"
-Content-Disposition: inline
-In-Reply-To: <20220602054842.122271-1-its@irrelevant.dk>
-X-Mailman-Approved-At: Mon, 06 Jun 2022 08:39:16 +1000
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_16612_679760726.1654236123436"
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,69 +65,209 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, Brendan Higgins <brendanhiggins@google.com>, Wolfram Sang <wsa@kernel.org>, linux-i2c@vger.kernel.org, Klaus Jensen <k.jensen@samsung.com>, linux-arm-kernel@lists.infradead.org, Joel Stanley <joel@jms.id.au>
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
---H0uRup5aAnlYFzFn
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+------=_Part_16612_679760726.1654236123436
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Jun  2 07:48, Klaus Jensen wrote:
-> From: Klaus Jensen <k.jensen@samsung.com>
->=20
-> When commit f9eb91350bb2 ("i2c: aspeed: added slave support for Aspeed
-> I2C driver") added slave mode support, the SLAVE_MATCH interrupt bit
-> (bit 7) was not added to INTR_ALL and so will never be set by the Aspeed
-> I2C controller.
->=20
-> Fixes: f9eb91350bb2 ("i2c: aspeed: added slave support for Aspeed I2C dri=
-ver")
-> Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
-> ---
-> I am working on slave mode in QEMU and noticed that the device would not
-> generate the SLAVE_ADDR_RX_MATCH interrupt. This patch fixes it, but I
-> do not have a spec sheet on the Aspeed, so I am not sure if this is the
-> intended behavior?
->=20
->  drivers/i2c/busses/i2c-aspeed.c | 1 +
->  1 file changed, 1 insertion(+)
->=20
-> diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-asp=
-eed.c
-> index 771e53d3d197..7f432babcd72 100644
-> --- a/drivers/i2c/busses/i2c-aspeed.c
-> +++ b/drivers/i2c/busses/i2c-aspeed.c
-> @@ -86,6 +86,7 @@
->  #define ASPEED_I2CD_INTR_ALL						       \
->  		(ASPEED_I2CD_INTR_SDA_DL_TIMEOUT |			       \
->  		 ASPEED_I2CD_INTR_BUS_RECOVER_DONE |			       \
-> +		 ASPEED_I2CD_INTR_SLAVE_MATCH |				       \
->  		 ASPEED_I2CD_INTR_SCL_TIMEOUT |				       \
->  		 ASPEED_I2CD_INTR_ABNORMAL |				       \
->  		 ASPEED_I2CD_INTR_NORMAL_STOP |				       \
-> --=20
-> 2.36.1
->=20
+Hi,
 
-I've been informed that SLAVE_MATCH should always be generated,
-regardless of INTR_CTRL, so please ignore this patch.
+=C2=A0=C2=A0=C2=A0 I have displayed ADC and LM75 result through entity mana=
+ger on beaglebone black.
 
---H0uRup5aAnlYFzFn
-Content-Type: application/pgp-signature; name="signature.asc"
+=C2=A0=C2=A0=C2=A0 Now I want to control PWM fan on beaglebone black for th=
+at i am referring=C2=A0
 
------BEGIN PGP SIGNATURE-----
+=C2=A0=C2=A0=C2=A0 https://elixir.bootlin.com/linux/latest/source/Documenta=
+tion/devicetree/bindings/hwmon/pwm-fan.txt
 
-iQEzBAEBCAAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmKZoMwACgkQTeGvMW1P
-DemGlAf/aII/yHlSNHBjG7id0U5uz2uhWKpOBXclCdnrJdDhxNxlXN1R0rGlpUP4
-1PX6c9dlVwPdyO3xiu6egzUsvwJdQ8i28xjZZldVIYtNKC4ruvEaR/PCjCQGBRzh
-p5QaZAseo1PoAj1M5JJupcgrs20SSoVWs9Sr0X2qNEaCsCgQ3+E1NXS0qhf+0tp7
-DXfw6ICyofMrm8Qmjz6WX6f0+SedpmIKBnzxAgyG5W9a/6jC2tWxNEam/W3bozA9
-x412Op9vT2UtrN3jHy6gnJQR+mJfMUTk24kLTk1htmBWyY0HP0lRtFex65EVxozO
-uuQMHDRxT54gNlrroIl9Rx1qmS3LvQ==
-=6I9B
------END PGP SIGNATURE-----
+=C2=A0=C2=A0=C2=A0 I have updated device tree with=20
 
---H0uRup5aAnlYFzFn--
+
+
+=C2=A0=C2=A0=C2=A0 what are the steps required so that i can display FAN re=
+sult through entity manager ?
+
+=C2=A0=C2=A0 how do i check on command line that devicee has been successfu=
+lly patched for PWM Fan control.
+
+
+
+
+
+Thanks & Regards,
+
+Nikhil=20
+
+=C2=A0=C2=A0=20
+
+
+
+
+
+
+
+
+
+
+---- On Thu, 02 Jun 2022 11:57:40 +0530 Nikhil V <nikhil.vu@zohocorp.com> w=
+rote ----
+
+
+
+Hi joel,
+
+Do you have your patches on gerrit for review?=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=20
+
+I do not have patches on gerrit but i can attach required file here. Let me=
+ what files are required to be attached.
+
+
+
+Thanks & Regards,
+
+Nikhil Muley
+
+
+
+
+
+
+
+
+
+
+---- On Thu, 02 Jun 2022 11:29:23 +0530 Joel Stanley <mailto:joel@jms.id.au=
+> wrote ----
+
+
+
+
+
+
+
+
+
+
+
+On Wed, 1 Jun 2022 at 08:51, Nikhil V <mailto:nikhil.vu@zohocorp.com> wrote=
+:=20
+>=20
+> Hi ALL,=20
+>           I have successfully ported openbmc on beaglebone black. I have =
+displayed LM75, and ADC result on webui.=20
+=20
+Neat. Do you have your patches on gerrit for review?=20
+=20
+>           Now I am doing the same with Entity Manager. I have displayed L=
+M75 result successfully, But unable to display ADC result through Entity Ma=
+nager.=20
+>           Below is my Config file.=20
+> {=20
+>     "Exposes": [=20
+>     {=20
+>             "Index": 0,=20
+>             "Name": "PSU 12 Volt",=20
+>             "ScaleFactor": 0.1124,=20
+>             "Type": "ADC"=20
+>         },=20
+>     {=20
+>             "Index": 1,=20
+>             "Name": "PSU 5 Volt",=20
+>             "ScaleFactor": 1,=20
+>             "Type": "ADC"=20
+>         },=20
+>         {=20
+>             "Address": "0x48",=20
+>             "Bus": 2,=20
+>             "Name": "Ambient 0 Temp",=20
+>             "Type": "TMP75"=20
+>         }=20
+>     ],=20
+>     "Name": "xplode",=20
+>     "Probe": "True",=20
+>     "Type": "Board"=20
+> }=20
+>=20
+> 1) How to display ADC value through entity manager=20
+> 2) I would like to control single pwm pin=20
+>=20
+> Any pointer would be helpful or what are the steps to display adc value/P=
+WM control=20
+>=20
+> Board used : Beaglebone Black=20
+>=20
+> Thanks & Regards,=20
+> Nikhil Muley=20
+>
+------=_Part_16612_679760726.1654236123436
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>=
+<meta content=3D"text/html;charset=3DUTF-8" http-equiv=3D"Content-Type"></h=
+ead><body ><div style=3D"font-family: Verdana, Arial, Helvetica, sans-serif=
+; font-size: 10pt;"><div>Hi,<br></div><div>&nbsp;&nbsp;&nbsp; I have displa=
+yed ADC and LM75 result through entity manager on beaglebone black.<br></di=
+v><div>&nbsp;&nbsp;&nbsp; Now I want to control PWM fan on beaglebone black=
+ for that i am referring&nbsp;<br></div><div>&nbsp;&nbsp;&nbsp; <a target=
+=3D"_blank" href=3D"https://elixir.bootlin.com/linux/latest/source/Document=
+ation/devicetree/bindings/hwmon/pwm-fan.txt">https://elixir.bootlin.com/lin=
+ux/latest/source/Documentation/devicetree/bindings/hwmon/pwm-fan.txt</a><br=
+></div><div>&nbsp;&nbsp;&nbsp; I have updated device tree with <br></div><d=
+iv><br></div><div>&nbsp;&nbsp;&nbsp; what are the steps required so that i =
+can display FAN result through entity manager ?<br></div><div>&nbsp;&nbsp; =
+how do i check on command line that devicee has been successfully patched f=
+or PWM Fan control.<br></div><div><br></div><div><br></div><div>Thanks &amp=
+; Regards,<br></div><div>Nikhil <br></div><div>&nbsp;&nbsp; <br></div><br><=
+div id=3D"Zm-_Id_-Sgn" data-zbluepencil-ignore=3D"true" data-sigid=3D"58018=
+000000014003"><div><br></div></div><br><div class=3D"zmail_extra_hr" style=
+=3D"border-top: 1px solid rgb(204, 204, 204); height: 0px; margin-top: 10px=
+; margin-bottom: 10px; line-height: 0px;"><br></div><div class=3D"zmail_ext=
+ra" data-zbluepencil-ignore=3D"true"><div><br></div><div id=3D"Zm-_Id_-Sgn1=
+">---- On Thu, 02 Jun 2022 11:57:40 +0530 <b>Nikhil V &lt;nikhil.vu@zohocor=
+p.com&gt;</b> wrote ----<br></div><div><br></div><blockquote style=3D"margi=
+n: 0px;"><div><div style=3D"font-family :  Verdana,  Arial,  Helvetica,  sa=
+ns-serif; font-size :  10pt;"><div>Hi joel,<br></div><div>Do you have your =
+patches on gerrit for review?&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp; <br></div><div>I do not have patches on gerrit but i can att=
+ach required file here. Let me what files are required to be attached.<br><=
+/div><div><br></div><div>Thanks &amp; Regards,<br></div><div>Nikhil Muley<b=
+r></div><br><div id=3D"x_759725354Zm-_Id_-Sgn"><div><br></div></div><br><di=
+v class=3D"x_759725354zmail_extra_hr" style=3D"border-top :  1px solid rgb(=
+204, 204, 204); min-height:  0px; margin-top :  10px; margin-bottom :  10px=
+; line-height :  0px;"><br></div><div class=3D"x_759725354zmail_extra"><div=
+><br></div><div id=3D"x_759725354Zm-_Id_-Sgn1">---- On Thu, 02 Jun 2022 11:=
+29:23 +0530 <b>Joel Stanley &lt;<a href=3D"mailto:joel@jms.id.au" target=3D=
+"_blank">joel@jms.id.au</a>&gt;</b> wrote ----<br></div><div><br></div><div=
+ id=3D"zmail_block"><br></div></div><div><br></div></div><br></div><blockqu=
+ote style=3D"margin :  0px;"><div>On Wed, 1 Jun 2022 at 08:51, Nikhil V &lt=
+;<a href=3D"mailto:nikhil.vu@zohocorp.com" target=3D"_blank">nikhil.vu@zoho=
+corp.com</a>&gt; wrote: <br>&gt; <br>&gt; Hi ALL, <br>&gt;           I have=
+ successfully ported openbmc on beaglebone black. I have displayed LM75, an=
+d ADC result on webui. <br> <br>Neat. Do you have your patches on gerrit fo=
+r review? <br> <br>&gt;           Now I am doing the same with Entity Manag=
+er. I have displayed LM75 result successfully, But unable to display ADC re=
+sult through Entity Manager. <br>&gt;           Below is my Config file. <b=
+r>&gt; { <br>&gt;     "Exposes": [ <br>&gt;     { <br>&gt;             "Ind=
+ex": 0, <br>&gt;             "Name": "PSU 12 Volt", <br>&gt;             "S=
+caleFactor": 0.1124, <br>&gt;             "Type": "ADC" <br>&gt;         },=
+ <br>&gt;     { <br>&gt;             "Index": 1, <br>&gt;             "Name=
+": "PSU 5 Volt", <br>&gt;             "ScaleFactor": 1, <br>&gt;           =
+  "Type": "ADC" <br>&gt;         }, <br>&gt;         { <br>&gt;            =
+ "Address": "0x48", <br>&gt;             "Bus": 2, <br>&gt;             "Na=
+me": "Ambient 0 Temp", <br>&gt;             "Type": "TMP75" <br>&gt;       =
+  } <br>&gt;     ], <br>&gt;     "Name": "xplode", <br>&gt;     "Probe": "T=
+rue", <br>&gt;     "Type": "Board" <br>&gt; } <br>&gt; <br>&gt; 1) How to d=
+isplay ADC value through entity manager <br>&gt; 2) I would like to control=
+ single pwm pin <br>&gt; <br>&gt; Any pointer would be helpful or what are =
+the steps to display adc value/PWM control <br>&gt; <br>&gt; Board used : B=
+eaglebone Black <br>&gt; <br>&gt; Thanks &amp; Regards, <br>&gt; Nikhil Mul=
+ey <br>&gt; <br></div></blockquote></blockquote></div><div><br></div></div>=
+<br></body></html>
+------=_Part_16612_679760726.1654236123436--
+
