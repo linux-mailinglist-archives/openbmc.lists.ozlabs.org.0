@@ -1,45 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4DBB153F24B
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jun 2022 01:00:45 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23C6B53DFC6
+	for <lists+openbmc@lfdr.de>; Mon,  6 Jun 2022 04:43:01 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LH8923T9kz3blc
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jun 2022 09:00:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LGd8300nYz3bl2
+	for <lists+openbmc@lfdr.de>; Mon,  6 Jun 2022 12:42:58 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=QR1BrIRV;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kunluntech.com.cn (client-ip=103.74.28.24; helo=mail-m2824.qiye.163.com; envelope-from=xzcheng@kunluntech.com.cn; receiver=<UNKNOWN>)
-X-Greylist: delayed 528 seconds by postgrey-1.36 at boromir; Mon, 06 Jun 2022 12:25:19 AEST
-Received: from mail-m2824.qiye.163.com (mail-m2824.qiye.163.com [103.74.28.24])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62e; helo=mail-ej1-x62e.google.com; envelope-from=milkfafa@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=QR1BrIRV;
+	dkim-atps=neutral
+Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LGclg2NHPz30DC
-	for <openbmc@lists.ozlabs.org>; Mon,  6 Jun 2022 12:25:18 +1000 (AEST)
-Received: from kunluntech.com.cn (localhost [127.0.0.1])
-	by mail-m2824.qiye.163.com (Hmail) with ESMTP id 118EE6600C6;
-	Mon,  6 Jun 2022 10:16:11 +0800 (CST)
-Content-Type: multipart/alternative; BOUNDARY="=_Part_476220_1644032270.1654481771062"
-Message-ID: <ADcAWwCYIkAPjA1*LBfWfKqP.3.1654481771063.Hmail.xzcheng@kunluntech.com.cn>
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Subject: =?UTF-8?B?UmU6UmU6IE5ldyByZXBvIHJlcXVlc3Q6IGt1bmx1bi1pcG1pLW9lbQ==?=
-X-Priority: 3
-X-Mailer: HMail Webmail Server V2.0 Copyright (c) 2015-163.com
-X-Originating-IP: 2408:8207:1924:2650:aa6d:aaff:fe1a:8c90
-In-Reply-To: <20220509144144.7nlz4gandqx7rfqy@cheese>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LGd7b53GYz2y7V
+	for <openbmc@lists.ozlabs.org>; Mon,  6 Jun 2022 12:42:34 +1000 (AEST)
+Received: by mail-ej1-x62e.google.com with SMTP id kq6so13316432ejb.11
+        for <openbmc@lists.ozlabs.org>; Sun, 05 Jun 2022 19:42:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=1N3UQUBc3SITykVwo1DI11Mg5L1Q2wcvd0ubz4CZVpI=;
+        b=QR1BrIRVMMEg2pgbBohP2/arDirkXnP+tL4I5QMLHUWjiYDbuH6aIrxuPPxCPrWBpx
+         E7AeY+OCPrIOCSFxXu6077V46+Bknu5f1NrpoPF4TXfMtH+KH/ypkYQ9d3ME2aeDANp/
+         b3+bimiNl8MpeSYkBDFlBYwV0AQX3bB2Rd1WAT3/PB3IEBfpVaWO0HXtUsL80NX/V0r9
+         3YC26wLFLQHE1W8LV4p4sx00MCYjzwbdkBOq2YsZlKFZMHlEACQ8CcaAGLVWh/kQIlGU
+         g72pssLvO4y/Iwr9EgKi5wtbfPb5mxpRE7TeZ+NuXc0bq716HTfN7raiAr1TeA/4F3wx
+         DbMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=1N3UQUBc3SITykVwo1DI11Mg5L1Q2wcvd0ubz4CZVpI=;
+        b=SDV6f9ccS5G9QoAm4awoI5MrTLJGf9ff62b1dAWFetRZN8rrZXFbQBbB0Zeo4tdBT5
+         pTB5PjS72JmvPbrWqjMI8qU82OidfaYpiijrRsLkqxRYyrGMYEpa6CHwQN0tOLSS6EbJ
+         z8FkaOKwPkR0UPEOZwll7RVRutJOpOEJxPuISaUiFGe4etSxDMFIAvzmJCSl9bLD0HdJ
+         7MpvuLk7E2F9Hnj5M8f/cnIKRfOO1J4+9RrFw2ksc2xqMtr2m+Qw4k8NawE5Wkngfq6E
+         x74OniW7X3OirThbp8KQpcTZvYshBqNtPGlFXlJQYB54iLwFty55gAsmuC1A2gsG1Ef0
+         fG0Q==
+X-Gm-Message-State: AOAM532XqUW2s2nBRvSjCgyFuyJRDUQ5IDxo3YyHluZfDTE+HqVtLUl9
+	5puyLfXSZLLIcfs2vvQvXR7OYrfLkJSuMkuIEPo=
+X-Google-Smtp-Source: ABdhPJxkVMadKzZkp4603xDlsiXx/Hb59+1zjauQ6/hsxzM25KnSP9koqlSzgftzD42Y0SBSjP9JmAjC536SXaDMa24=
+X-Received: by 2002:a17:906:b294:b0:6fe:fdb9:5fb4 with SMTP id
+ q20-20020a170906b29400b006fefdb95fb4mr19414342ejz.179.1654483346371; Sun, 05
+ Jun 2022 19:42:26 -0700 (PDT)
 MIME-Version: 1.0
-Received: from xzcheng@kunluntech.com.cn( [2408:8207:1924:2650:aa6d:aaff:fe1a:8c90) ] by ajax-webmail ( [127.0.0.1] ) ; Mon, 6 Jun 2022 10:16:11 +0800 (GMT+08:00)
-From: =?UTF-8?B?5oiQ5L+u5rK7?= <xzcheng@kunluntech.com.cn>
-Date: Mon, 6 Jun 2022 10:16:11 +0800 (GMT+08:00)
-X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZCBgUCR5ZQVlLVUtZV1
-	kWDxoPAgseWUFZKDYvK1lXWShZQUlCN1dZLVlBSVdZDwkaFQgSH1lBWRodQkxWGEkYQhlMGE5LTk
-	weVRkRExYaEhckFA4PWVdZFhoPEhUdFFlBWVVLWQY+
-X-HM-Sender-Digest: e1kJHlYWEh9ZQUpPT0lITU5MQ0lIQzdXWQweGVlBDwkOHldZEh8eFQ9Z
-	QVlHOj8YOiwMOCIyEDorETpKUTc5HSwdMAorVUhVSk1OT09DSkxMSkxNS1UzFhoSF1UDARgTHhUc
-	OxAOFRcOFQ8eGBNVGBQWVRgVRVlXWRILWUFZSU9LQ0FDSUtMQUpCSU9BSU1OS0EaGk0fQRoaHR1B
-	HR5KGkFDGEJLWVdZCAFZQUxLQkg3V1kUCw8SFBUIWUFLNwY+
-X-HM-Tid: 0a8136c37a698412kuqw181135462fa
-X-Mailman-Approved-At: Tue, 07 Jun 2022 09:00:26 +1000
+References: <20220513033450.7038-1-kflin@nuvoton.com> <20220513033450.7038-6-kflin@nuvoton.com>
+ <b5361f08-f9eb-9384-f904-2625bae0fd9a@molgen.mpg.de> <CADnNmFqfxDE3UbNQiyhwkLBugfZ1fSZYDbGDQFnRZdD_4q58+A@mail.gmail.com>
+In-Reply-To: <CADnNmFqfxDE3UbNQiyhwkLBugfZ1fSZYDbGDQFnRZdD_4q58+A@mail.gmail.com>
+From: Kun-Fa Lin <milkfafa@gmail.com>
+Date: Mon, 6 Jun 2022 10:42:39 +0800
+Message-ID: <CADnNmFqzAmyxgc0jbXFXUy8ueb=6-RxoWWHP4A=iRUO1fx4zRA@mail.gmail.com>
+Subject: Re: [PATCH v2 5/5] drivers: media: platform: Add NPCM Video
+ Capture/Encode Engine driver
+To: Paul Menzel <pmenzel@molgen.mpg.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -51,81 +75,249 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: CS20 KWLiu <kwliu@nuvoton.com>, tmaimon77@gmail.com, avifishman70@gmail.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, mchehab@kernel.org, Marvin Lin <kflin@nuvoton.com>, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---=_Part_476220_1644032270.1654481771062
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+Dear Paul,
 
-SGkgQnJhZCAsCuWPkeS7tuS6uu+8mkJyYWQgQmlzaG9wIDxicmFkbGV5YkBmdXp6aWVzcXVpcnJl
-bC5jb20+CuWPkemAgeaXpeacn++8mjIwMjItMDUtMDkgMjI6NDE6NDQK5pS25Lu25Lq677yaIuaI
-kOS/ruayuyIgPHh6Y2hlbmdAemQtdGVjaC5jb20uY24+CuaKhOmAgeS6uu+8mm9wZW5ibWNAbGlz
-dHMub3psYWJzLm9yZywi6ZmI5bCP5pilIiA8eGNjaGVuQHpkLXRlY2guY29tLmNuPiwi55m955Co
-IiA8a2JhaUB6ZC10ZWNoLmNvbS5jbj4sIueOi+S6mua0siIgPHl6d2FuZ0B6ZC10ZWNoLmNvbS5j
-bj4K5Li76aKY77yaUmU6IE5ldyByZXBvIHJlcXVlc3Q6IGt1bmx1bi1pcG1pLW9lbT5PbiBNb24s
-IE1heSAwOSwgMjAyMiBhdCAxMTozODoxMUFNICswODAwLCDmiJDkv67msrsgd3JvdGU6Cj4+SGkg
-QnJhZCAsCj4+ICAgV291bGQgeW91IGxpa2UgdG8gaGVscCBtZSB0byBjcmVhdGUgYSBuZXcgcmVw
-byBrdW5sdW4taXBtaS1vZW0gZm9yIGt1bmx1biBvZW0gSVBNSSBjb21tYW5kIGhhbmRsaW5nPwo+
-Cj5IZWxsbyBYaXV6aGkKPgo+Q2FuIHlvdSBvcGVuIGFuIGlzc3VlIHdpdGggeW91ciBuZXcgcmVw
-b3NpdG9yeSByZXF1ZXN0IGhlcmU6Cj4KPmh0dHBzOi8vZ2l0aHViLmNvbS9vcGVuYm1jL3RlY2hu
-aWNhbC1vdmVyc2lnaHQtZm9ydW0vaXNzdWVzCj4KPkhlcmUgaXMgYW4gZXhhbXBsZSBvZiBhIHBy
-ZXZpb3VzIG5ldyByZXBvc2l0b3J5IHJlcXVlc3QgaXNzdWU6Cj4KPmh0dHBzOi8vZ2l0aHViLmNv
-bS9vcGVuYm1jL3RlY2huaWNhbC1vdmVyc2lnaHQtZm9ydW0vaXNzdWVzLzE0Cj4KSSBoYXZlIGNy
-ZWF0ZWQgYW4gaXNzdWUgTm8uMTU6CiAgICBodHRwczovL2dpdGh1Yi5jb20vb3BlbmJtYy90ZWNo
-bmljYWwtb3ZlcnNpZ2h0LWZvcnVtL2lzc3Vlcy8xNQpJcyBpdCByZWFkeSAgdG8gY3JlYXRlIHRo
-aXMgcmVwb3NpdG9yeSA/IG9yIG5lZWQgSSBkbyBhbnl0aGluZyBlbHNlIGZvciB0aGlzPwoKCiA+
-Pgo+Pgo+PkFuZCBwbGVhc2UgYWRkCj4+ICBrYmFpQHpkLXRlY2guY29tLmNuCj4+dG8gbXkgY29t
-cGFueSdzIENDTEEKPgo+QXBvbG9naWVzIGJ1dCBJIGNhbm5vdCBhZGQgbmV3IGRldmVsb3BlcnMg
-dG8geW91ciBDQ0xBLiAgVGhhdCBtdXN0IGJlIAo+ZG9uZSBieSBzb21lb25lIGFscmVhZHkgbGlz
-dGVkIHlvdXIgQ0NMQSwgYW5kIHRoZXkgbXVzdCBiZSBkZW5vdGVkIGFzIGEgCj5DTEEgTWFuYWdl
-ci4gIFBsZWFzZSBoYXZlIHNvbWVvbmUgbGlrZSB0aGF0IHNlbmQgYW4gdXBkYXRlZCBTY2hlZHVs
-ZSBBLCAKPmFuZCBJIHdpbGwgcmV2aWV3IGl0IGFuZCB1cGxvYWQgaXQgdG8gdGhlIEdvb2dsZSBk
-cml2ZSB3aGVyZSB3ZSBzdG9yZSAKPkNDTEFzLgo+Cj5UaGFua3MgLSBCcmFkCkJlc3QsClhpdXpo
-aQoKCg0KDQo=
---=_Part_476220_1644032270.1654481771062
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: base64
+These problems have been addressed in the new patch.
+Could you please help to review the new patch v4? Thanks.
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+SGkmbmJzcDtCcmFkICw8L2Rpdj48ZGl2PjxzcGFuIHN0
-eWxlPSJmb250LWZhbWlseTogYXJpYWw7IHdoaXRlLXNwYWNlOiBwcmUtd3JhcDsiPuWPkeS7tuS6
-uu+8mkJyYWQgQmlzaG9wICZsdDticmFkbGV5YkBmdXp6aWVzcXVpcnJlbC5jb20mZ3Q7PC9zcGFu
-PjwvZGl2PjxwcmU+5Y+R6YCB5pel5pyf77yaMjAyMi0wNS0wOSAyMjo0MTo0NArmlLbku7bkurrv
-vJoi5oiQ5L+u5rK7IiAmbHQ7eHpjaGVuZ0B6ZC10ZWNoLmNvbS5jbiZndDsK5oqE6YCB5Lq677ya
-b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnLCLpmYjlsI/mmKUiICZsdDt4Y2NoZW5AemQtdGVjaC5j
-b20uY24mZ3Q7LCLnmb3nkKgiICZsdDtrYmFpQHpkLXRlY2guY29tLmNuJmd0Oywi546L5Lqa5rSy
-IiAmbHQ7eXp3YW5nQHpkLXRlY2guY29tLmNuJmd0OwrkuLvpopjvvJpSZTogTmV3IHJlcG8gcmVx
-dWVzdDoga3VubHVuLWlwbWktb2VtJmd0O09uIE1vbiwgTWF5IDA5LCAyMDIyIGF0IDExOjM4OjEx
-QU0gKzA4MDAsIOaIkOS/ruayuyB3cm90ZToKJmd0OyZndDtIaSBCcmFkICwKJmd0OyZndDsgICBX
-b3VsZCB5b3UgbGlrZSB0byBoZWxwIG1lIHRvIGNyZWF0ZSBhIG5ldyByZXBvIGt1bmx1bi1pcG1p
-LW9lbSBmb3Iga3VubHVuIG9lbSBJUE1JIGNvbW1hbmQgaGFuZGxpbmc/CiZndDsKJmd0O0hlbGxv
-IFhpdXpoaQomZ3Q7CiZndDtDYW4geW91IG9wZW4gYW4gaXNzdWUgd2l0aCB5b3VyIG5ldyByZXBv
-c2l0b3J5IHJlcXVlc3QgaGVyZToKJmd0OwomZ3Q7aHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMv
-dGVjaG5pY2FsLW92ZXJzaWdodC1mb3J1bS9pc3N1ZXMKJmd0OwomZ3Q7SGVyZSBpcyBhbiBleGFt
-cGxlIG9mIGEgcHJldmlvdXMgbmV3IHJlcG9zaXRvcnkgcmVxdWVzdCBpc3N1ZToKJmd0OwomZ3Q7
-PGEgaHJlZj0iaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvdGVjaG5pY2FsLW92ZXJzaWdodC1m
-b3J1bS9pc3N1ZXMvMTQKPiIgX3NyYz0iaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvdGVjaG5p
-Y2FsLW92ZXJzaWdodC1mb3J1bS9pc3N1ZXMvMTQKPiI+aHR0cHM6Ly9naXRodWIuY29tL29wZW5i
-bWMvdGVjaG5pY2FsLW92ZXJzaWdodC1mb3J1bS9pc3N1ZXMvMTQKPC9hPjxkaXY+PGEgaHJlZj0i
-aHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvdGVjaG5pY2FsLW92ZXJzaWdodC1mb3J1bS9pc3N1
-ZXMvMTQKPiIgX3NyYz0iaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvdGVjaG5pY2FsLW92ZXJz
-aWdodC1mb3J1bS9pc3N1ZXMvMTQKPiI+Jmd0OzwvYT48L2Rpdj48ZGl2PkkgaGF2ZSBjcmVhdGVk
-IGFuIGlzc3VlIE5vLjE1OjwvZGl2PjxkaXY+ICZuYnNwOyAmbmJzcDs8YSBocmVmPSJodHRwczov
-L2dpdGh1Yi5jb20vb3BlbmJtYy90ZWNobmljYWwtb3ZlcnNpZ2h0LWZvcnVtL2lzc3Vlcy8xNSIg
-c3R5bGU9ImZvbnQtZmFtaWx5OiBBcmlhbDsgd2hpdGUtc3BhY2U6IG5vcm1hbDsiPmh0dHBzOi8v
-Z2l0aHViLmNvbS9vcGVuYm1jL3RlY2huaWNhbC1vdmVyc2lnaHQtZm9ydW0vaXNzdWVzLzE1PC9h
-PjwvZGl2PjxkaXY+SXMgaXQgcmVhZHkgIHRvIGNyZWF0ZSB0aGlzIHJlcG9zaXRvcnkgPyBvciBu
-ZWVkIEkgZG8gYW55dGhpbmcgZWxzZSBmb3IgdGhpcz88L2Rpdj48ZGl2PjxiciAvPjwvZGl2Pjxk
-aXY+Jm5ic3A7Jmd0OyZndDs8L2Rpdj4mZ3Q7Jmd0OwomZ3Q7Jmd0O0FuZCBwbGVhc2UgYWRkCiZn
-dDsmZ3Q7ICBrYmFpQHpkLXRlY2guY29tLmNuCiZndDsmZ3Q7dG8gbXkgY29tcGFueSdzIENDTEEK
-Jmd0OwomZ3Q7QXBvbG9naWVzIGJ1dCBJIGNhbm5vdCBhZGQgbmV3IGRldmVsb3BlcnMgdG8geW91
-ciBDQ0xBLiAgVGhhdCBtdXN0IGJlIAomZ3Q7ZG9uZSBieSBzb21lb25lIGFscmVhZHkgbGlzdGVk
-IHlvdXIgQ0NMQSwgYW5kIHRoZXkgbXVzdCBiZSBkZW5vdGVkIGFzIGEgCiZndDtDTEEgTWFuYWdl
-ci4gIFBsZWFzZSBoYXZlIHNvbWVvbmUgbGlrZSB0aGF0IHNlbmQgYW4gdXBkYXRlZCBTY2hlZHVs
-ZSBBLCAKJmd0O2FuZCBJIHdpbGwgcmV2aWV3IGl0IGFuZCB1cGxvYWQgaXQgdG8gdGhlIEdvb2ds
-ZSBkcml2ZSB3aGVyZSB3ZSBzdG9yZSAKJmd0O0NDTEFzLgomZ3Q7CjxkaXY+Jmd0O1RoYW5rcyAt
-IEJyYWQ8L2Rpdj48ZGl2PkJlc3QsPC9kaXY+PGRpdj5YaXV6aGk8L2Rpdj48L3ByZT48L2Rpdj48
-YnI+
---=_Part_476220_1644032270.1654481771062--
+Regards,
+Marvin
+
+Kun-Fa Lin <milkfafa@gmail.com> =E6=96=BC 2022=E5=B9=B45=E6=9C=8817=E6=97=
+=A5 =E9=80=B1=E4=BA=8C =E4=B8=8A=E5=8D=8810:59=E5=AF=AB=E9=81=93=EF=BC=9A
+>
+> Dear Paul,
+>
+> Thanks for your review and comments.
+>
+> > Please mention the datasheet name and revision used to implement this?
+> > How can your patch be tested?
+> >
+> > For a over 2000 line patch, I would expect a longer commit message with
+> > a summary of the hardware features, and implementation.
+>
+> Okay, I'll add more information to the commit message, but it may not
+> be appropriate to add the datasheet name since it is not public.
+> And I tested with openbmc/obmc-ikvm (with patches to support Hextile
+> encoding that our driver used) and used VNC Viewer to verify the video
+> result.
+>
+> >
+> > As the module author should you also be added to the file `MAINTAINERS`=
+?
+> > (Maybe even with a functional address <linux-npcm-video@nuvoton.com>?
+> >
+> > > Signed-off-by: Marvin Lin <kflin@nuvoton.com>
+> >
+> > Same comment as in 1/5 regarding the author email address.
+>
+> I'll add a new entry in MAINTAINERS.
+>
+> > > +++ b/drivers/media/platform/nuvoton/Kconfig
+> > > @@ -0,0 +1,12 @@
+> > > +# SPDX-License-Identifier: GPL-2.0-only
+> > > +
+> > > +comment "Nuvoton media platform drivers"
+> > > +
+> > > +config VIDEO_NUVOTON
+> >
+> > Is that driver going to support all Nuvoton devices or just NPCM? If
+> > only NPCM, that should be part of the Kconfig config name?
+> >
+> > > +     tristate "Nuvoton NPCM Video Capture/Encode Engine driver"
+> > > +     depends on V4L_PLATFORM_DRIVERS
+> > > +     depends on VIDEO_DEV
+> > > +     select VIDEOBUF2_DMA_CONTIG
+> > > +     help
+> > > +       Support for the Video Capture/Differentiation Engine (VCD) an=
+d
+> > > +       Encoding Compression Engine (ECE) present on Nuvoton NPCM SoC=
+s.
+> >
+> > Mention the module name?
+> >
+> >  > To compile this driver as a module, choose M here: the module will b=
+e
+> > called XXX.
+>
+> The driver just supports NPCM. I'll change the config to
+> VIDEO_NUVOTON_NPCM_VCD_ECE.
+>
+> > > +struct nuvoton_video_addr {
+> > > +     unsigned int size;
+> >
+> > size_t?
+>
+> > > +struct rect_list_info {
+> > > +     struct rect_list *list;
+> > > +     struct rect_list *first;
+> > > +     struct list_head *head;
+> > > +     int index;
+> > > +     int tile_perline;
+> > > +     int tile_perrow;
+> > > +     int offset_perline;
+> > > +     int tile_size;
+> > > +     int tile_cnt;
+> >
+> > Can all of these be unsigned?
+>
+> > > +     int frame_rate;
+> > > +     int vb_index;
+> >
+> > Unsigned?
+> >
+>
+> They will be addressed in the next patch.
+>
+> > > +     u32 bytesperline;
+> > > +     u8 bytesperpixel;
+> > > +     u32 rect_cnt;
+> > > +     u8 num_buffers;
+> > > +     struct list_head *list;
+> > > +     u32 *rect;
+> >
+> > I would not limit the size?
+>
+> It's clearer to know that it stores u32 exactly.
+>
+> > > +static u32 nuvoton_video_ece_get_ed_size(struct nuvoton_video *video=
+,
+> > > +                                      u32 offset, void *addr)
+> >
+> > Use unsigned int as return value?
+>
+> Okay.
+>
+> > > +static void nuvoton_video_ece_enc_rect(struct nuvoton_video *video, =
+u32 r_off_x,
+> > > +                                    u32 r_off_y, u32 r_w, u32 r_h)
+> > > +{
+> > > +     struct regmap *ece =3D video->ece.regmap;
+> > > +     u32 rect_offset =3D (r_off_y * video->bytesperline) + (r_off_x =
+* 2);
+> > > +     u32 temp;
+> > > +     u32 w_tile;
+> > > +     u32 h_tile;
+> > > +     u32 w_size =3D ECE_TILE_W;
+> > > +     u32 h_size =3D ECE_TILE_H;
+> >
+> > Any reason to fix the sizes?
+>
+> A "Hextile" is fixed to 16x16 pixels size, which is defined in Remote
+> Framebuffer Protocol (RFC 6143, chapter 7.7.4 Hextile Encoding).
+>
+> > > +static void nuvoton_video_ece_ip_reset(struct nuvoton_video *video)
+> > > +{
+> > > +     reset_control_assert(video->ece.reset);
+> > > +     msleep(100);
+> > > +     reset_control_deassert(video->ece.reset);
+> > > +     msleep(100);
+> >
+> > 100 ms is quite long. Please add a comment, where that is documented. I=
+s
+> > there a way to poll, if the device is done?
+>
+> I'll add a comment. It should be reduced to ~10 us (suggested in
+> spec.) and there's no way to poll.
+>
+> > > +
+> > > +static void nuvoton_video_free_diff_table(struct nuvoton_video *vide=
+o)
+> > > +{
+> > > +     struct list_head *head, *pos, *nx;
+> > > +     struct rect_list *tmp;
+> > > +     int i;
+> >
+> > unsigned?
+> >
+>
+> > > +static int nuvoton_video_find_rect(struct nuvoton_video *video,
+> > > +                                struct rect_list_info *info, u32 off=
+set)
+> > > +{
+> > > +     int i =3D info->index;
+> > > +
+> > > +     if (offset < info->tile_perline) {
+> > > +             info->list =3D nuvoton_video_new_rect(video, offset, i)=
+;
+> >
+> > `i` is only used here, so use `info->index`?
+> >
+>
+> > > +static int nuvoton_video_build_table(struct nuvoton_video *video,
+> > > +                                  struct rect_list_info *info)
+> > > +{
+> > > +     int i =3D info->index;
+> > > +     int j, ret, bit;
+> >
+> > Make `j` unsigned?
+> >
+> > > +     u32 value;
+> > > +     struct regmap *vcd =3D video->vcd_regmap;
+> > > +
+> > > +     for (j =3D 0; j < info->offset_perline; j +=3D 4) {
+> > > +             regmap_read(vcd, VCD_DIFF_TBL + (j + i), &value);
+> >
+> > `i` is only used here, so use `info->index`?
+> >
+>
+> > > +static void nuvoton_video_vcd_ip_reset(struct nuvoton_video *video)
+> > > +{
+> > > +     reset_control_assert(video->reset);
+> > > +     msleep(100);
+> > > +     reset_control_deassert(video->reset);
+> > > +     msleep(100);
+> >
+> > 100 ms is quite long. Please add a comment, where that is documented. I=
+s
+> > there a way to poll, if the device is done?
+> >
+>
+> > > +static int nuvoton_video_queue_setup(struct vb2_queue *q,
+> > > +                                  unsigned int *num_buffers,
+> > > +                                  unsigned int *num_planes,
+> > > +                                  unsigned int sizes[],
+> > > +                                  struct device *alloc_devs[])
+> > > +{
+> > > +     struct nuvoton_video *video =3D vb2_get_drv_priv(q);
+> > > +     int i;
+> >
+> > unsigned?
+> >
+>
+> > > +static void nuvoton_video_buf_queue(struct vb2_buffer *vb)
+> > > +{
+> > > +     int empty;
+> > > +     struct nuvoton_video *video =3D vb2_get_drv_priv(vb->vb2_queue)=
+;
+> > > +     struct vb2_v4l2_buffer *vbuf =3D to_vb2_v4l2_buffer(vb);
+> > > +     struct nuvoton_video_buffer *nvb =3D to_nuvoton_video_buffer(vb=
+uf);
+> > > +     unsigned long flags;
+> > > +
+> > > +     dev_dbg(video->dev, "%s\n", __func__);
+> > > +
+> > > +     spin_lock_irqsave(&video->lock, flags);
+> > > +     empty =3D list_empty(&video->buffers);
+> >
+> > Where is empty read later?
+> >
+>
+> > > +     regs =3D devm_platform_ioremap_resource_byname(pdev, VCD_MODULE=
+_NAME);
+> > > +     if (IS_ERR(regs)) {
+> > > +             dev_err(&pdev->dev, "Failed to get VCD regmap resource!=
+\n");
+> >
+> > Can you help the user more by saying what to fix like check devicetree
+> > or so?
+> >
+>
+> Okay. All of them will be addressed in the next patch.
+>
+> Regards,
+> Marvin
