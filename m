@@ -1,89 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id BC75C53E4C4
-	for <lists+openbmc@lfdr.de>; Mon,  6 Jun 2022 15:33:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AB54753E4E8
+	for <lists+openbmc@lfdr.de>; Mon,  6 Jun 2022 15:56:46 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LGvb05NcJz3blW
-	for <lists+openbmc@lfdr.de>; Mon,  6 Jun 2022 23:33:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LGw5S3dR3z3bk4
+	for <lists+openbmc@lfdr.de>; Mon,  6 Jun 2022 23:56:44 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=giZa5jrt;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=quicinc.com header.i=@quicinc.com header.a=rsa-sha256 header.s=qcdkim header.b=WCeEup1J;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=quicinc.com (client-ip=199.106.114.39; helo=alexa-out-sd-02.qualcomm.com; envelope-from=quic_jaehyoo@quicinc.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=giZa5jrt;
+	dkim=pass (1024-bit key; unprotected) header.d=quicinc.com header.i=@quicinc.com header.a=rsa-sha256 header.s=qcdkim header.b=WCeEup1J;
 	dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from alexa-out-sd-02.qualcomm.com (alexa-out-sd-02.qualcomm.com [199.106.114.39])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LGvYl6796z3blG
-	for <openbmc@lists.ozlabs.org>; Mon,  6 Jun 2022 23:32:43 +1000 (AEST)
-Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 256Cff7I006345;
-	Mon, 6 Jun 2022 13:32:40 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=FcfuuVdaGPY7iVjz7IxTjfavgoWVEpuevHhgS+HlHvw=;
- b=giZa5jrtsmehglMAsKqcrqFxzftwF4aFLOKPUV+KWEtSMHrkfhy3qwFufqNCxJGmakQS
- dhliolRcgeM06/dz5cDpLPWrXtRDf1G5sVrB6LEp/olH/8OrUqgcDiSbdzQIvg8zVB18
- mx8u8gpSrKqKP2lsxgBDwoBF2fGrFuoPgJs7IFu42XDlXLfkPfMnCjDzmczMhk21wsl4
- w0paBWHC3fTF1b3iSfrYEuXIMjYFRip7y4joazcLMdD7x2f3zKAFsQLLOHQBuucHMIXq
- FbRNkHDihuK25ulotLHjfVv73BVTiOCsSXcDxwEEgCin9+ta7Cz0cW9XVljjYeY6H5Vo lw== 
-Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com [169.63.121.186])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3gghes7y7k-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 06 Jun 2022 13:32:39 +0000
-Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
-	by ppma03wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 256DKC3m027607;
-	Mon, 6 Jun 2022 13:32:39 GMT
-Received: from b03cxnp07028.gho.boulder.ibm.com (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
-	by ppma03wdc.us.ibm.com with ESMTP id 3gfy19dtcq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 06 Jun 2022 13:32:39 +0000
-Received: from b03ledav005.gho.boulder.ibm.com (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
-	by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 256DWcIA26608024
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 6 Jun 2022 13:32:38 GMT
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 73D1FBE051;
-	Mon,  6 Jun 2022 13:32:38 +0000 (GMT)
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 12350BE04F;
-	Mon,  6 Jun 2022 13:32:38 +0000 (GMT)
-Received: from [9.160.184.8] (unknown [9.160.184.8])
-	by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTP;
-	Mon,  6 Jun 2022 13:32:37 +0000 (GMT)
-Message-ID: <11f761ee-256a-4925-9edb-da1cf874e6b6@linux.ibm.com>
-Date: Mon, 6 Jun 2022 08:32:37 -0500
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LGw501n9Qz3bc9
+	for <openbmc@lists.ozlabs.org>; Mon,  6 Jun 2022 23:56:18 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654523780; x=1686059780;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=lJD+pIVOhKvQB2S5R0GOVYOouamouC0xJ8eY8xhXCGc=;
+  b=WCeEup1JKnPat5K4GHVryCXVtwAyLsdzZLW6f11RnUNEVW+XjBU7EteB
+   582RVZSjOwSldgExgLYgzgtqXjhxPD/Fhl9esppsF9VhZF7ntYmX07uO3
+   RqJJWe6ADDzXZ3NzFM/U6dxcz9TatXCu9JO+rSRLbNCS0WaDe5zkjy6QK
+   o=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 06 Jun 2022 06:56:15 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Jun 2022 06:56:15 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Mon, 6 Jun 2022 06:56:14 -0700
+Received: from [10.110.78.146] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Mon, 6 Jun 2022
+ 06:56:13 -0700
+Message-ID: <a9798967-ab87-2469-a8cf-ab8ac237908a@quicinc.com>
+Date: Mon, 6 Jun 2022 06:56:02 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.9.1
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v2 2/2] ARM: dts: ast2600:
- Fix indentation
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v2] ARM: dts: aspeed: add
+ Qualcomm DC-SCM V1
 Content-Language: en-US
-To: Joel Stanley <joel@jms.id.au>, zweiss@equinix.com,
-        openbmc@lists.ozlabs.org
-References: <20220606000434.1399583-1-joel@jms.id.au>
- <20220606000434.1399583-3-joel@jms.id.au>
-From: Eddie James <eajames@linux.ibm.com>
-In-Reply-To: <20220606000434.1399583-3-joel@jms.id.au>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Joel Stanley <joel@jms.id.au>
+References: <20220519185318.62655-1-quic_jaehyoo@quicinc.com>
+From: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
+In-Reply-To: <20220519185318.62655-1-quic_jaehyoo@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: Ul5DhXB480YrGSF7JYaHdd0viF-Bz-zK
-X-Proofpoint-ORIG-GUID: Ul5DhXB480YrGSF7JYaHdd0viF-Bz-zK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.874,Hydra:6.0.517,FMLib:17.11.64.514
- definitions=2022-06-06_04,2022-06-03_01,2022-02-23_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 mlxlogscore=929
- spamscore=0 mlxscore=0 adultscore=0 clxscore=1015 malwarescore=0
- impostorscore=0 priorityscore=1501 phishscore=0 suspectscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2204290000 definitions=main-2206060060
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,102 +72,252 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org, Graeme Gregory <quic_ggregory@quicinc.com>, Jamie Iles <quic_jiles@quicinc.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Ping
 
-On 6/5/22 19:04, Joel Stanley wrote:
-> These lines were mistakenly added with space indentation instead of
-> tabs.
-
-
-Reviewed-by: Eddie James <eajames@linux.ibm.com>
-
-
->
-> Fixes: ba6ce6626286 ("aspeed: Add machine names")
-> Reported-by: Zev Weiss <zweiss@equinix.com>
-> Signed-off-by: Joel Stanley <joel@jms.id.au>
+On 5/19/2022 11:53 AM, Jae Hyun Yoo wrote:
+> From: Graeme Gregory <quic_ggregory@quicinc.com>
+> 
+> Add initial version of device tree for Qualcomm DC-SCM V1 BMC which is
+> equipped with Aspeed AST2600 BMC SoC.
+> 
+> Signed-off-by: Graeme Gregory <quic_ggregory@quicinc.com>
+> Signed-off-by: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
 > ---
->   arch/arm/dts/ast2600-evb.dts    | 4 ++--
->   arch/arm/dts/ast2600-fpga.dts   | 4 ++--
->   arch/arm/dts/ast2600-ncsi.dts   | 4 ++--
->   arch/arm/dts/ast2600-p10bmc.dts | 4 ++--
->   arch/arm/dts/ast2600-tacoma.dts | 4 ++--
->   5 files changed, 10 insertions(+), 10 deletions(-)
->
-> diff --git a/arch/arm/dts/ast2600-evb.dts b/arch/arm/dts/ast2600-evb.dts
-> index 3aeef78df22d..515afa83af69 100644
-> --- a/arch/arm/dts/ast2600-evb.dts
-> +++ b/arch/arm/dts/ast2600-evb.dts
-> @@ -3,8 +3,8 @@
->   #include "ast2600-u-boot.dtsi"
->   
->   / {
-> -        model = "AST2600 EVB";
-> -        compatible = "aspeed,ast2600-evb", "aspeed,ast2600";
-> +	model = "AST2600 EVB";
-> +	compatible = "aspeed,ast2600-evb", "aspeed,ast2600";
->   
->   	memory {
->   		device_type = "memory";
-> diff --git a/arch/arm/dts/ast2600-fpga.dts b/arch/arm/dts/ast2600-fpga.dts
-> index be0788d92473..069a41185597 100644
-> --- a/arch/arm/dts/ast2600-fpga.dts
-> +++ b/arch/arm/dts/ast2600-fpga.dts
-> @@ -3,8 +3,8 @@
->   #include "ast2600-u-boot.dtsi"
->   
->   / {
-> -        model = "AST2600 FPGA";
-> -        compatible = "aspeed,ast2600-fpga", "aspeed,ast2600";
-> +	model = "AST2600 FPGA";
-> +	compatible = "aspeed,ast2600-fpga", "aspeed,ast2600";
->   
->   	memory {
->   		device_type = "memory";
-> diff --git a/arch/arm/dts/ast2600-ncsi.dts b/arch/arm/dts/ast2600-ncsi.dts
-> index f55294cdf95e..dbe888a945e3 100644
-> --- a/arch/arm/dts/ast2600-ncsi.dts
-> +++ b/arch/arm/dts/ast2600-ncsi.dts
-> @@ -3,8 +3,8 @@
->   #include "ast2600-u-boot.dtsi"
->   
->   / {
-> -        model = "AST2600 EVB w/ NCSI";
-> -        compatible = "aspeed,ast2600-evb", "aspeed,ast2600";
-> +	model = "AST2600 EVB w/ NCSI";
-> +	compatible = "aspeed,ast2600-evb", "aspeed,ast2600";
->   
->   	memory {
->   		device_type = "memory";
-> diff --git a/arch/arm/dts/ast2600-p10bmc.dts b/arch/arm/dts/ast2600-p10bmc.dts
-> index d1d78d5c3545..aa9edcd66507 100755
-> --- a/arch/arm/dts/ast2600-p10bmc.dts
-> +++ b/arch/arm/dts/ast2600-p10bmc.dts
-> @@ -5,8 +5,8 @@
->   #include "ast2600-u-boot.dtsi"
->   
->   / {
-> -        model = "IBM P10 BMC";
-> -        compatible = "ibm,everest-bmc", "ibm,rainier-bmc", "ibm,p10bmc", "aspeed,ast2600";
-> +	model = "IBM P10 BMC";
-> +	compatible = "ibm,everest-bmc", "ibm,rainier-bmc", "ibm,p10bmc", "aspeed,ast2600";
->   
->   	memory {
->   		device_type = "memory";
-> diff --git a/arch/arm/dts/ast2600-tacoma.dts b/arch/arm/dts/ast2600-tacoma.dts
-> index 67b3e3013c6b..76f987052140 100755
-> --- a/arch/arm/dts/ast2600-tacoma.dts
-> +++ b/arch/arm/dts/ast2600-tacoma.dts
-> @@ -5,8 +5,8 @@
->   #include "ast2600-u-boot.dtsi"
->   
->   / {
-> -        model = "Tacoma";
-> -        compatible = "ibm,tacoma-bmc", "aspeed,ast2600";
-> +	model = "Tacoma";
-> +	compatible = "ibm,tacoma-bmc", "aspeed,ast2600";
->   
->   	memory {
->   		device_type = "memory";
+> Changes in v2:
+> * Changed vendor name from Nuvia to Qualcomm.
+> 
+>   arch/arm/dts/Makefile                   |   1 +
+>   arch/arm/dts/ast2600-qcom-dc-scm-v1.dts | 208 ++++++++++++++++++++++++
+>   2 files changed, 209 insertions(+)
+>   create mode 100644 arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
+> 
+> diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+> index 3515100c65ce..e86a6c0ed609 100755
+> --- a/arch/arm/dts/Makefile
+> +++ b/arch/arm/dts/Makefile
+> @@ -686,6 +686,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+>   	ast2600-intel.dtb \
+>   	ast2600-ncsi.dtb \
+>   	ast2600-pfr.dtb \
+> +	ast2600-qcom-dc-scm-v1.dts \
+>   	ast2600-rainier.dtb \
+>   	ast2600-s6q.dtb \
+>   	ast2600-slt.dtb \
+> diff --git a/arch/arm/dts/ast2600-qcom-dc-scm-v1.dts b/arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
+> new file mode 100644
+> index 000000000000..e966f739b708
+> --- /dev/null
+> +++ b/arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
+> @@ -0,0 +1,208 @@
+> +// SPDX-License-Identifier: GPL-2.0-or-later
+> +// Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> +/dts-v1/;
+> +
+> +#include "ast2600-u-boot.dtsi"
+> +
+> +/ {
+> +	model = "Qualcomm DC-SCM V1 BMC";
+> +	compatible = "qcom,dc-scm-v1-bmc", "aspeed,ast2600";
+> +
+> +	memory {
+> +		device_type = "memory";
+> +		reg = <0x80000000 0x40000000>;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = &uart5;
+> +	};
+> +
+> +	aliases {
+> +		spi0 = &fmc;
+> +		spi1 = &spi1;
+> +		spi2 = &spi2;
+> +	};
+> +
+> +	cpus {
+> +		cpu@0 {
+> +			clock-frequency = <800000000>;
+> +		};
+> +		cpu@1 {
+> +			clock-frequency = <800000000>;
+> +		};
+> +	};
+> +};
+> +
+> +&uart5 {
+> +	u-boot,dm-pre-reloc;
+> +	status = "okay";
+> +};
+> +
+> +&sdrammc {
+> +	clock-frequency = <400000000>;
+> +};
+> +
+> +&wdt1 {
+> +	status = "okay";
+> +};
+> +
+> +&wdt2 {
+> +	status = "okay";
+> +};
+> +
+> +&wdt3 {
+> +	status = "okay";
+> +};
+> +
+> +&mdio {
+> +	status = "okay";
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_mdio4_default>;
+> +	#address-cells = <1>;
+> +	#size-cells = <0>;
+> +
+> +	ethphy3: ethernet-phy@1 {
+> +		reg = <1>;
+> +	};
+> +};
+> +
+> +&mac2 {
+> +	status = "okay";
+> +	reg = <0x1e670000 0x180>, <0x1e650018 0x4>;
+> +	phy-mode = "rgmii";
+> +	phy-handle = <&ethphy3>;
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_rgmii3_default>;
+> +};
+> +
+> +&fmc {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_fmcquad_default>;
+> +
+> +	flash@0 {
+> +		compatible = "spi-flash", "sst,w25q256";
+> +		status = "okay";
+> +		spi-max-frequency = <133000000>;
+> +		spi-tx-bus-width = <4>;
+> +		spi-rx-bus-width = <4>;
+> +	};
+> +
+> +	flash@1 {
+> +		compatible = "spi-flash", "sst,w25q256";
+> +		status = "okay";
+> +		spi-max-frequency = <133000000>;
+> +		spi-tx-bus-width = <4>;
+> +		spi-rx-bus-width = <4>;
+> +	};
+> +};
+> +
+> +&spi1 {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_spi1_default &pinctrl_spi1abr_default
+> +			&pinctrl_spi1cs1_default &pinctrl_spi1wp_default
+> +			&pinctrl_spi1wp_default &pinctrl_spi1quad_default>;
+> +
+> +	flash@0 {
+> +		compatible = "spi-flash", "sst,w25q256";
+> +		status = "okay";
+> +		spi-max-frequency = <133000000>;
+> +		spi-tx-bus-width = <4>;
+> +		spi-rx-bus-width = <4>;
+> +	};
+> +};
+> +
+> +&i2c4 {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_i2c5_default>;
+> +};
+> +
+> +&i2c5 {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_i2c6_default>;
+> +};
+> +
+> +&i2c6 {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_i2c7_default>;
+> +};
+> +
+> +&i2c7 {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_i2c8_default>;
+> +};
+> +
+> +&i2c8 {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_i2c9_default>;
+> +};
+> +
+> +&i2c9 {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_i2c10_default>;
+> +};
+> +
+> +&i2c10 {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_i2c11_default>;
+> +};
+> +
+> +&i2c12 {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_i2c13_default>;
+> +};
+> +
+> +&i2c13 {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_i2c14_default>;
+> +};
+> +
+> +&i2c14 {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_i2c15_default>;
+> +};
+> +
+> +&i2c15 {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_i2c16_default>;
+> +};
+> +
+> +&scu {
+> +	mac0-clk-delay = <0x1d 0x1c
+> +			  0x10 0x17
+> +			  0x10 0x17>;
+> +	mac1-clk-delay = <0x1d 0x10
+> +			  0x10 0x10
+> +			  0x10 0x10>;
+> +	mac2-clk-delay = <0x0a 0x04
+> +			  0x08 0x04
+> +			  0x08 0x04>;
+> +	mac3-clk-delay = <0x0a 0x04
+> +			  0x08 0x04
+> +			  0x08 0x04>;
+> +};
