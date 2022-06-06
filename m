@@ -2,68 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23C6B53DFC6
-	for <lists+openbmc@lfdr.de>; Mon,  6 Jun 2022 04:43:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2902C53E095
+	for <lists+openbmc@lfdr.de>; Mon,  6 Jun 2022 06:58:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LGd8300nYz3bl2
-	for <lists+openbmc@lfdr.de>; Mon,  6 Jun 2022 12:42:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LGh886hP2z3bmM
+	for <lists+openbmc@lfdr.de>; Mon,  6 Jun 2022 14:58:16 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=QR1BrIRV;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=h6vTVLkR;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62e; helo=mail-ej1-x62e.google.com; envelope-from=milkfafa@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::436; helo=mail-wr1-x436.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=QR1BrIRV;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=h6vTVLkR;
 	dkim-atps=neutral
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LGd7b53GYz2y7V
-	for <openbmc@lists.ozlabs.org>; Mon,  6 Jun 2022 12:42:34 +1000 (AEST)
-Received: by mail-ej1-x62e.google.com with SMTP id kq6so13316432ejb.11
-        for <openbmc@lists.ozlabs.org>; Sun, 05 Jun 2022 19:42:34 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LGh7m0f6wz3036
+	for <openbmc@lists.ozlabs.org>; Mon,  6 Jun 2022 14:57:54 +1000 (AEST)
+Received: by mail-wr1-x436.google.com with SMTP id m26so6825438wrb.4
+        for <openbmc@lists.ozlabs.org>; Sun, 05 Jun 2022 21:57:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=jms.id.au; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=1N3UQUBc3SITykVwo1DI11Mg5L1Q2wcvd0ubz4CZVpI=;
-        b=QR1BrIRVMMEg2pgbBohP2/arDirkXnP+tL4I5QMLHUWjiYDbuH6aIrxuPPxCPrWBpx
-         E7AeY+OCPrIOCSFxXu6077V46+Bknu5f1NrpoPF4TXfMtH+KH/ypkYQ9d3ME2aeDANp/
-         b3+bimiNl8MpeSYkBDFlBYwV0AQX3bB2Rd1WAT3/PB3IEBfpVaWO0HXtUsL80NX/V0r9
-         3YC26wLFLQHE1W8LV4p4sx00MCYjzwbdkBOq2YsZlKFZMHlEACQ8CcaAGLVWh/kQIlGU
-         g72pssLvO4y/Iwr9EgKi5wtbfPb5mxpRE7TeZ+NuXc0bq716HTfN7raiAr1TeA/4F3wx
-         DbMg==
+         :cc;
+        bh=uUUyelooKx2zww2oweD1j6UKfBfHjt/gtmc8iPc0jrY=;
+        b=h6vTVLkRBfYRMcO5Am88mBgIfNXy/LTbAU2d0GUcvImEoo7NEuFw8qczVKfDeXUAWK
+         qfEqMmVW1O8JAKNglOWkZD97pzga/HwhtjTCzdqKm/0YzXn2iiovkWLCY7Mn+WKqQXVo
+         rBZktRnnyc3Pgb0yE/gHm/Dtx+6fSHK8/o1/I=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=1N3UQUBc3SITykVwo1DI11Mg5L1Q2wcvd0ubz4CZVpI=;
-        b=SDV6f9ccS5G9QoAm4awoI5MrTLJGf9ff62b1dAWFetRZN8rrZXFbQBbB0Zeo4tdBT5
-         pTB5PjS72JmvPbrWqjMI8qU82OidfaYpiijrRsLkqxRYyrGMYEpa6CHwQN0tOLSS6EbJ
-         z8FkaOKwPkR0UPEOZwll7RVRutJOpOEJxPuISaUiFGe4etSxDMFIAvzmJCSl9bLD0HdJ
-         7MpvuLk7E2F9Hnj5M8f/cnIKRfOO1J4+9RrFw2ksc2xqMtr2m+Qw4k8NawE5Wkngfq6E
-         x74OniW7X3OirThbp8KQpcTZvYshBqNtPGlFXlJQYB54iLwFty55gAsmuC1A2gsG1Ef0
-         fG0Q==
-X-Gm-Message-State: AOAM532XqUW2s2nBRvSjCgyFuyJRDUQ5IDxo3YyHluZfDTE+HqVtLUl9
-	5puyLfXSZLLIcfs2vvQvXR7OYrfLkJSuMkuIEPo=
-X-Google-Smtp-Source: ABdhPJxkVMadKzZkp4603xDlsiXx/Hb59+1zjauQ6/hsxzM25KnSP9koqlSzgftzD42Y0SBSjP9JmAjC536SXaDMa24=
-X-Received: by 2002:a17:906:b294:b0:6fe:fdb9:5fb4 with SMTP id
- q20-20020a170906b29400b006fefdb95fb4mr19414342ejz.179.1654483346371; Sun, 05
- Jun 2022 19:42:26 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=uUUyelooKx2zww2oweD1j6UKfBfHjt/gtmc8iPc0jrY=;
+        b=zqrHty6frYutgzrugqjL1nysYL+jNjyAei+V5SvxHWFJamTZTdqL56Nkedw/oXWUPc
+         FdLErLEus9ITq1nSGdcX1hph8h7xirHxG+5+3kW00BZlS1/ZY5Gp3Zro0hJLWqOjQ4mS
+         1zYfcrK4R+csxSnSo3wssdH+wrmofvShv9JUYzL+3jjQg1beHWaP52+nDq0ZR8D/GPaz
+         nvkSc+nCffwqPxngQzjCeu/Uarb4TMPokQkutxC1QjpyIbBdEJ1Tai48/LSvIwet/Tw1
+         LewLxBQ1/W2hVNef7I4OcKu5pE9Uf+WSbyG7EpQrO47cGBdbN/9uEs8QSL10l/04/8GR
+         Iwqw==
+X-Gm-Message-State: AOAM5337hq2l1nIl4OarinuF49bXG8EIcY+NOywMu15MRk3UsQOoJQNG
+	VPucwLCETO4gsBAxUbpesWgxiol8pOPJDG4rR/2gf8SV
+X-Google-Smtp-Source: ABdhPJx+T62q4SZ0kj2+kdAftngRH11wjcKqhcnaelrqCsD99aEL44tAM6JYFaq4Th+xC9YOEyr5hfDK5v52mYtEZ0Y=
+X-Received: by 2002:a5d:47c9:0:b0:20f:e7da:6a48 with SMTP id
+ o9-20020a5d47c9000000b0020fe7da6a48mr19901805wrc.315.1654491466649; Sun, 05
+ Jun 2022 21:57:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220513033450.7038-1-kflin@nuvoton.com> <20220513033450.7038-6-kflin@nuvoton.com>
- <b5361f08-f9eb-9384-f904-2625bae0fd9a@molgen.mpg.de> <CADnNmFqfxDE3UbNQiyhwkLBugfZ1fSZYDbGDQFnRZdD_4q58+A@mail.gmail.com>
-In-Reply-To: <CADnNmFqfxDE3UbNQiyhwkLBugfZ1fSZYDbGDQFnRZdD_4q58+A@mail.gmail.com>
-From: Kun-Fa Lin <milkfafa@gmail.com>
-Date: Mon, 6 Jun 2022 10:42:39 +0800
-Message-ID: <CADnNmFqzAmyxgc0jbXFXUy8ueb=6-RxoWWHP4A=iRUO1fx4zRA@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] drivers: media: platform: Add NPCM Video
- Capture/Encode Engine driver
-To: Paul Menzel <pmenzel@molgen.mpg.de>
+References: <SG2PR06MB2315D4EDA1E2C782AE5334B8E6FB9@SG2PR06MB2315.apcprd06.prod.outlook.com>
+ <HK0PR06MB37794BB30922645DE9A160BD91A29@HK0PR06MB3779.apcprd06.prod.outlook.com>
+In-Reply-To: <HK0PR06MB37794BB30922645DE9A160BD91A29@HK0PR06MB3779.apcprd06.prod.outlook.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Mon, 6 Jun 2022 04:57:33 +0000
+Message-ID: <CACPK8XeXJ5RT+vqO5t=eo_Tj4C6x69pKtazegUpspv_JWnDr_A@mail.gmail.com>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] configs: aspeed: Add SPL
+ FIT image loading support
+To: ChiaWei Wang <chiawei_wang@aspeedtech.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,249 +71,112 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: CS20 KWLiu <kwliu@nuvoton.com>, tmaimon77@gmail.com, avifishman70@gmail.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, mchehab@kernel.org, Marvin Lin <kflin@nuvoton.com>, linux-media@vger.kernel.org
+Cc: Howard Chiu <howard_chiu@aspeedtech.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Troy Lee <troy_lee@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Dear Paul,
+On Mon, 6 Jun 2022 at 01:45, ChiaWei Wang <chiawei_wang@aspeedtech.com> wrote:
+>
+> Gentle ping of this patch.
+>
+> Reviewed-by: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
 
-These problems have been addressed in the new patch.
-Could you please help to review the new patch v4? Thanks.
+Thanks for the reminder. The patch didn't apply, but I fixed it up and
+applied it.
 
-Regards,
-Marvin
+Cheers,
 
-Kun-Fa Lin <milkfafa@gmail.com> =E6=96=BC 2022=E5=B9=B45=E6=9C=8817=E6=97=
-=A5 =E9=80=B1=E4=BA=8C =E4=B8=8A=E5=8D=8810:59=E5=AF=AB=E9=81=93=EF=BC=9A
+Joel
+
 >
-> Dear Paul,
+> > From: Howard Chiu <howard_chiu@aspeedtech.com>
+> > Sent: Tuesday, April 26, 2022 5:44 PM
+> >
+> > 1. Disable ASPEED_LOADERS to instead use generic FIT image bootflow
+> > 2. Enable SPL_LOAD_FIT and FIT hash/signature verification
+> > 3. Enable SHA family support
+> > 4. Enable HACE/ACRY crypto engine
+> >
+> > Tested with AST2600-A3 EVB
+> >
+> > Signed-off-by: Howard Chiu <howard_chiu@aspeedtech.com>
+> > ---
+> >  configs/ast2600_openbmc_spl_defconfig | 30 +++++++++++++++------------
+> >  1 file changed, 17 insertions(+), 13 deletions(-)
+> >
+> > diff --git a/configs/ast2600_openbmc_spl_defconfig
+> > b/configs/ast2600_openbmc_spl_defconfig
+> > index 98aa3f160e..9025401e0c 100644
+> > --- a/configs/ast2600_openbmc_spl_defconfig
+> > +++ b/configs/ast2600_openbmc_spl_defconfig
+> > @@ -8,17 +8,7 @@
+> > CONFIG_SPL_LDSCRIPT="arch/$(ARCH)/mach-aspeed/ast2600/u-boot-spl.lds"
+> >  CONFIG_ARCH_ASPEED=y
+> >  CONFIG_SYS_TEXT_BASE=0x10000
+> >  CONFIG_ASPEED_AST2600=y
+> > -CONFIG_ASPEED_UBOOT_SPI_BASE=0x10000
+> > -CONFIG_ASPEED_UBOOT_SPI_SIZE=0xe0000
+> > -CONFIG_ASPEED_UBOOT_MMC_BASE=0x000000
+> > -CONFIG_ASPEED_UBOOT_MMC_SIZE=0x700
+> > -CONFIG_ASPEED_UBOOT_UART_SIZE=0xe0000
+> > -CONFIG_ASPEED_UBOOT_DRAM_BASE=0x81000000
+> > -CONFIG_ASPEED_KERNEL_FIT_SPI_BASE=0x20100000
+> > -CONFIG_ASPEED_KERNEL_FIT_SPI_SIZE=0x1000000
+> > -CONFIG_ASPEED_KERNEL_FIT_MMC_BASE=0x800
+> > -CONFIG_ASPEED_KERNEL_FIT_MMC_SIZE=0x8000
+> > -CONFIG_ASPEED_KERNEL_FIT_DRAM_BASE=0x83000000
+> > +# CONFIG_ASPEED_LOADERS is not set
+> >  CONFIG_TARGET_EVB_AST2600A1=y
+> >  CONFIG_SPL_LIBCOMMON_SUPPORT=y
+> >  CONFIG_SPL_LIBGENERIC_SUPPORT=y
+> > @@ -34,19 +24,30 @@ CONFIG_ARMV7_BOOT_SEC_DEFAULT=y
+> >  CONFIG_ARMV7_PSCI_NR_CPUS=2
+> >  CONFIG_NR_DRAM_BANKS=1
+> >  CONFIG_FIT=y
+> > +CONFIG_FIT_ENABLE_SHA384_SUPPORT=y
+> > +CONFIG_FIT_ENABLE_SHA512_SUPPORT=y
+> > +CONFIG_FIT_SIGNATURE=y
+> > +CONFIG_SPL_FIT_SIGNATURE=y
+> > +CONFIG_SPL_LOAD_FIT=y
+> > +CONFIG_IMAGE_FORMAT_LEGACY=y
+> >  CONFIG_USE_BOOTARGS=y
+> >  CONFIG_BOOTARGS="console=ttyS4,115200n8 root=/dev/ram rw"
+> >  CONFIG_USE_BOOTCOMMAND=y
+> > -CONFIG_BOOTCOMMAND="bootm 20100000"
+> > +CONFIG_BOOTCOMMAND="run bootspi"
+> >  CONFIG_SYS_CONSOLE_ENV_OVERWRITE=y
+> >  CONFIG_DISPLAY_BOARDINFO_LATE=y
+> >  CONFIG_ARCH_EARLY_INIT_R=y
+> >  CONFIG_BOARD_EARLY_INIT_F=y
+> > -# CONFIG_SPL_RAW_IMAGE_SUPPORT is not set
+> > +CONFIG_SPL_BOARD_INIT=y
+> >  # CONFIG_SPL_LEGACY_IMAGE_SUPPORT is not set
+> >  CONFIG_SPL_SYS_MALLOC_SIMPLE=y
+> >  CONFIG_SPL_STACK_R=y
+> >  CONFIG_SPL_SEPARATE_BSS=y
+> > +CONFIG_SPL_SHA1_SUPPORT=y
+> > +CONFIG_SPL_SHA256_SUPPORT=y
+> > +CONFIG_SPL_SHA384_SUPPORT=y
+> > +CONFIG_SPL_SHA512_SUPPORT=y
+> > +CONFIG_SPL_FIT_IMAGE_TINY=y
+> >  CONFIG_SPL_DM_RESET=y
+> >  CONFIG_SPL_RAM_SUPPORT=y
+> >  CONFIG_SPL_RAM_DEVICE=y
+> > @@ -95,6 +96,8 @@ CONFIG_SYSCON=y
+> >  CONFIG_SPL_OF_TRANSLATE=y
+> >  CONFIG_CLK=y
+> >  CONFIG_SPL_CLK=y
+> > +CONFIG_ASPEED_HACE=y
+> > +CONFIG_ASPEED_ACRY=y
+> >  CONFIG_DM_GPIO=y
+> >  CONFIG_ASPEED_GPIO=y
+> >  CONFIG_DM_I2C=y
+> > @@ -132,4 +135,5 @@ CONFIG_WDT=y
+> >  CONFIG_USE_TINY_PRINTF=y
+> >  CONFIG_TPM=y
+> >  CONFIG_SPL_TPM=y
+> > +CONFIG_SPL_TINY_MEMSET=y
+> >  # CONFIG_EFI_LOADER is not set
+> > --
+> > 2.25.1
 >
-> Thanks for your review and comments.
->
-> > Please mention the datasheet name and revision used to implement this?
-> > How can your patch be tested?
-> >
-> > For a over 2000 line patch, I would expect a longer commit message with
-> > a summary of the hardware features, and implementation.
->
-> Okay, I'll add more information to the commit message, but it may not
-> be appropriate to add the datasheet name since it is not public.
-> And I tested with openbmc/obmc-ikvm (with patches to support Hextile
-> encoding that our driver used) and used VNC Viewer to verify the video
-> result.
->
-> >
-> > As the module author should you also be added to the file `MAINTAINERS`=
-?
-> > (Maybe even with a functional address <linux-npcm-video@nuvoton.com>?
-> >
-> > > Signed-off-by: Marvin Lin <kflin@nuvoton.com>
-> >
-> > Same comment as in 1/5 regarding the author email address.
->
-> I'll add a new entry in MAINTAINERS.
->
-> > > +++ b/drivers/media/platform/nuvoton/Kconfig
-> > > @@ -0,0 +1,12 @@
-> > > +# SPDX-License-Identifier: GPL-2.0-only
-> > > +
-> > > +comment "Nuvoton media platform drivers"
-> > > +
-> > > +config VIDEO_NUVOTON
-> >
-> > Is that driver going to support all Nuvoton devices or just NPCM? If
-> > only NPCM, that should be part of the Kconfig config name?
-> >
-> > > +     tristate "Nuvoton NPCM Video Capture/Encode Engine driver"
-> > > +     depends on V4L_PLATFORM_DRIVERS
-> > > +     depends on VIDEO_DEV
-> > > +     select VIDEOBUF2_DMA_CONTIG
-> > > +     help
-> > > +       Support for the Video Capture/Differentiation Engine (VCD) an=
-d
-> > > +       Encoding Compression Engine (ECE) present on Nuvoton NPCM SoC=
-s.
-> >
-> > Mention the module name?
-> >
-> >  > To compile this driver as a module, choose M here: the module will b=
-e
-> > called XXX.
->
-> The driver just supports NPCM. I'll change the config to
-> VIDEO_NUVOTON_NPCM_VCD_ECE.
->
-> > > +struct nuvoton_video_addr {
-> > > +     unsigned int size;
-> >
-> > size_t?
->
-> > > +struct rect_list_info {
-> > > +     struct rect_list *list;
-> > > +     struct rect_list *first;
-> > > +     struct list_head *head;
-> > > +     int index;
-> > > +     int tile_perline;
-> > > +     int tile_perrow;
-> > > +     int offset_perline;
-> > > +     int tile_size;
-> > > +     int tile_cnt;
-> >
-> > Can all of these be unsigned?
->
-> > > +     int frame_rate;
-> > > +     int vb_index;
-> >
-> > Unsigned?
-> >
->
-> They will be addressed in the next patch.
->
-> > > +     u32 bytesperline;
-> > > +     u8 bytesperpixel;
-> > > +     u32 rect_cnt;
-> > > +     u8 num_buffers;
-> > > +     struct list_head *list;
-> > > +     u32 *rect;
-> >
-> > I would not limit the size?
->
-> It's clearer to know that it stores u32 exactly.
->
-> > > +static u32 nuvoton_video_ece_get_ed_size(struct nuvoton_video *video=
-,
-> > > +                                      u32 offset, void *addr)
-> >
-> > Use unsigned int as return value?
->
-> Okay.
->
-> > > +static void nuvoton_video_ece_enc_rect(struct nuvoton_video *video, =
-u32 r_off_x,
-> > > +                                    u32 r_off_y, u32 r_w, u32 r_h)
-> > > +{
-> > > +     struct regmap *ece =3D video->ece.regmap;
-> > > +     u32 rect_offset =3D (r_off_y * video->bytesperline) + (r_off_x =
-* 2);
-> > > +     u32 temp;
-> > > +     u32 w_tile;
-> > > +     u32 h_tile;
-> > > +     u32 w_size =3D ECE_TILE_W;
-> > > +     u32 h_size =3D ECE_TILE_H;
-> >
-> > Any reason to fix the sizes?
->
-> A "Hextile" is fixed to 16x16 pixels size, which is defined in Remote
-> Framebuffer Protocol (RFC 6143, chapter 7.7.4 Hextile Encoding).
->
-> > > +static void nuvoton_video_ece_ip_reset(struct nuvoton_video *video)
-> > > +{
-> > > +     reset_control_assert(video->ece.reset);
-> > > +     msleep(100);
-> > > +     reset_control_deassert(video->ece.reset);
-> > > +     msleep(100);
-> >
-> > 100 ms is quite long. Please add a comment, where that is documented. I=
-s
-> > there a way to poll, if the device is done?
->
-> I'll add a comment. It should be reduced to ~10 us (suggested in
-> spec.) and there's no way to poll.
->
-> > > +
-> > > +static void nuvoton_video_free_diff_table(struct nuvoton_video *vide=
-o)
-> > > +{
-> > > +     struct list_head *head, *pos, *nx;
-> > > +     struct rect_list *tmp;
-> > > +     int i;
-> >
-> > unsigned?
-> >
->
-> > > +static int nuvoton_video_find_rect(struct nuvoton_video *video,
-> > > +                                struct rect_list_info *info, u32 off=
-set)
-> > > +{
-> > > +     int i =3D info->index;
-> > > +
-> > > +     if (offset < info->tile_perline) {
-> > > +             info->list =3D nuvoton_video_new_rect(video, offset, i)=
-;
-> >
-> > `i` is only used here, so use `info->index`?
-> >
->
-> > > +static int nuvoton_video_build_table(struct nuvoton_video *video,
-> > > +                                  struct rect_list_info *info)
-> > > +{
-> > > +     int i =3D info->index;
-> > > +     int j, ret, bit;
-> >
-> > Make `j` unsigned?
-> >
-> > > +     u32 value;
-> > > +     struct regmap *vcd =3D video->vcd_regmap;
-> > > +
-> > > +     for (j =3D 0; j < info->offset_perline; j +=3D 4) {
-> > > +             regmap_read(vcd, VCD_DIFF_TBL + (j + i), &value);
-> >
-> > `i` is only used here, so use `info->index`?
-> >
->
-> > > +static void nuvoton_video_vcd_ip_reset(struct nuvoton_video *video)
-> > > +{
-> > > +     reset_control_assert(video->reset);
-> > > +     msleep(100);
-> > > +     reset_control_deassert(video->reset);
-> > > +     msleep(100);
-> >
-> > 100 ms is quite long. Please add a comment, where that is documented. I=
-s
-> > there a way to poll, if the device is done?
-> >
->
-> > > +static int nuvoton_video_queue_setup(struct vb2_queue *q,
-> > > +                                  unsigned int *num_buffers,
-> > > +                                  unsigned int *num_planes,
-> > > +                                  unsigned int sizes[],
-> > > +                                  struct device *alloc_devs[])
-> > > +{
-> > > +     struct nuvoton_video *video =3D vb2_get_drv_priv(q);
-> > > +     int i;
-> >
-> > unsigned?
-> >
->
-> > > +static void nuvoton_video_buf_queue(struct vb2_buffer *vb)
-> > > +{
-> > > +     int empty;
-> > > +     struct nuvoton_video *video =3D vb2_get_drv_priv(vb->vb2_queue)=
-;
-> > > +     struct vb2_v4l2_buffer *vbuf =3D to_vb2_v4l2_buffer(vb);
-> > > +     struct nuvoton_video_buffer *nvb =3D to_nuvoton_video_buffer(vb=
-uf);
-> > > +     unsigned long flags;
-> > > +
-> > > +     dev_dbg(video->dev, "%s\n", __func__);
-> > > +
-> > > +     spin_lock_irqsave(&video->lock, flags);
-> > > +     empty =3D list_empty(&video->buffers);
-> >
-> > Where is empty read later?
-> >
->
-> > > +     regs =3D devm_platform_ioremap_resource_byname(pdev, VCD_MODULE=
-_NAME);
-> > > +     if (IS_ERR(regs)) {
-> > > +             dev_err(&pdev->dev, "Failed to get VCD regmap resource!=
-\n");
-> >
-> > Can you help the user more by saying what to fix like check devicetree
-> > or so?
-> >
->
-> Okay. All of them will be addressed in the next patch.
->
-> Regards,
-> Marvin
