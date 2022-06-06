@@ -1,64 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 670D253DF06
-	for <lists+openbmc@lfdr.de>; Mon,  6 Jun 2022 01:59:05 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id AE7FB53DF0A
+	for <lists+openbmc@lfdr.de>; Mon,  6 Jun 2022 02:05:14 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LGYVs3HXwz3bY6
-	for <lists+openbmc@lfdr.de>; Mon,  6 Jun 2022 09:59:01 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LGYf04JWVz2ymg
+	for <lists+openbmc@lfdr.de>; Mon,  6 Jun 2022 10:05:12 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=PL+rET0q;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=FFMjmgBv;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::32d; helo=mail-wm1-x32d.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1030; helo=mail-pj1-x1030.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=PL+rET0q;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=FFMjmgBv;
 	dkim-atps=neutral
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LGYVT30Z8z2xD4
-	for <openbmc@lists.ozlabs.org>; Mon,  6 Jun 2022 09:58:40 +1000 (AEST)
-Received: by mail-wm1-x32d.google.com with SMTP id z9so80108wmf.3
-        for <openbmc@lists.ozlabs.org>; Sun, 05 Jun 2022 16:58:40 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LGYdZ4Z6gz2xRm
+	for <openbmc@lists.ozlabs.org>; Mon,  6 Jun 2022 10:04:49 +1000 (AEST)
+Received: by mail-pj1-x1030.google.com with SMTP id cx11so11520496pjb.1
+        for <openbmc@lists.ozlabs.org>; Sun, 05 Jun 2022 17:04:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jms.id.au; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=8/BF7x/NRPNj4ORmyfqoRGRvkKrCdAiCVwbB/tcTHbs=;
-        b=PL+rET0qlbwZP6BQaj/SBENaeemk0g0tVhoypIWvKW3to1xksnnekzQmUjgNzrHcdb
-         BbkawYJK+ku1c3xrgM0cWCvEQH3qqiLuqfEnN39xdrGNipw3yP2Tf6nazXi9gCKZTgBH
-         j9K+LusFkKZSq59HYwk1dNUnbDfSvFmK5YKh8=
+        d=gmail.com; s=20210112;
+        h=sender:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=5C6DTGsUHYkLNe+/lrP5kL1kFR1s9SM4C5g+nfJvvDo=;
+        b=FFMjmgBvoQl1pgxXYBOBzgZocqDiZBT2oiUaZmWyIm1whszwgcvyR+5uy/6Qn/3TRs
+         eULSqJkJddg+XI6KNdWwUqjboDRA2P6njrrgJXEeoggBFa+8VIwttuk5ZCdSwWU3AXSW
+         5+iRi+T4g2mCzT5u6gzLQ0WUer7B0XcFJBdONpau5lr4jxUebAF5dmGxSDe0etKrUlCY
+         2KNLUaj8cNaF8++BlnEoMqKjIu6Jc9I1cq/o9WXTEg4bckH++8Rd2hN8iN+v1J2t5u+q
+         GqnZ7kfc/YzM+4b9VviGRwEFxyAiCu8K2sEhlUt92RL4uTFHjqPfJH2qNSSzXUSjPjab
+         ojow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=8/BF7x/NRPNj4ORmyfqoRGRvkKrCdAiCVwbB/tcTHbs=;
-        b=KeYl+FzNRW4QSw2TxDjIRt9fCYjp+YrpLpt3zZACyXn2nh914mXXNcUSgItgOaNucE
-         1iZe3aJkaLf0OXJmQG4cB/IMKzVkkVSSXY/i7bPr71wLKYboU2uPEf+avAnPIwZQYCUe
-         JRihOetpgiqqrlHBRNOaGecGZEqSJuLJUssuBo3JakOeebIrl2x/O1Z3QJapMZmCGa+7
-         CiydAzoBPwvx5aKLb7w3L/jkdCKCcXFWNrRUkmU8+Xrx2Ivrqr7UB0jxsFqveYLoJtt2
-         PMMb0d8iNhTPsvQMSgAOR+b7VuCTUsUf6stlXXIno9zAs7+6OfBHG4MQE9K/9DmYNnPs
-         e3jQ==
-X-Gm-Message-State: AOAM530xKpP8asVK366WOMJO6ykKa1brpX9m2CVP6F4DW/5cC2wXxGcG
-	OurMw4sgKvv0UVzshYIii2L/4kFI088tmXv2XzY=
-X-Google-Smtp-Source: ABdhPJx/fNM07vFhL6ZDsQUC+iVns2Po8FvY5WtrYIAR8nSROY98/F8SHW256x/PWTgfTER4OS+kN2HsFJqBt6jiNAk=
-X-Received: by 2002:a05:600c:4e50:b0:39c:eeb:dabe with SMTP id
- e16-20020a05600c4e5000b0039c0eebdabemr35875550wmq.190.1654473515486; Sun, 05
- Jun 2022 16:58:35 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220602025030.90710-1-joel@jms.id.au> <20220602062241.GN11809@packtop>
-In-Reply-To: <20220602062241.GN11809@packtop>
+        h=x-gm-message-state:sender:from:to:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=5C6DTGsUHYkLNe+/lrP5kL1kFR1s9SM4C5g+nfJvvDo=;
+        b=zVuSVM0DQes+Q0HBOKroy6jb/jFMSlD8liVE4SO+m7cawCmli8HnGkSyRpCksmaYTv
+         huGY5JaFuuyR4b7+Wdtk2zHN5aj2BH9gFy49ECgWemWscSc2+PBq2j7sAFXe+EuC9+F0
+         ywEudVDot6kZ3/uMv0ZzZTWwZaRbvzSWZYOFmSn6BXsWL4Ryf7Y/kfbosuh5WV5W6s8y
+         9V7sfNn+NpaOr8E2Quaw6V02yCRN7rhMhK7URZUwUf43fx0CKYA0ly8WHMNuN+AxUQBW
+         ipQuITMuKGfBH8wOk+vMoHqtjj29owUML8Hh15tBiechJMy1NGJiesDF9XaqL7pa8ArR
+         uUrg==
+X-Gm-Message-State: AOAM530vuujNJYnkxK65Jcdn7rT3rtKEa/DBhDxC2q52JRDvPcNIMg51
+	9H9ioqgiHaKojLYgu5Pm8/s=
+X-Google-Smtp-Source: ABdhPJwd6VORGgrPNC/AI+j6LRiQDzDO1bc/8HRA6xwp9xgaIm21Lo/lWHwYv8kwkJZ6m/VfD61/Ew==
+X-Received: by 2002:a17:90b:4d12:b0:1e8:895c:e542 with SMTP id mw18-20020a17090b4d1200b001e8895ce542mr1319515pjb.128.1654473885651;
+        Sun, 05 Jun 2022 17:04:45 -0700 (PDT)
+Received: from localhost.localdomain ([45.124.203.18])
+        by smtp.gmail.com with ESMTPSA id g19-20020a170902869300b00163b65c9de2sm9187402plo.170.2022.06.05.17.04.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 05 Jun 2022 17:04:44 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
-Date: Sun, 5 Jun 2022 23:58:23 +0000
-Message-ID: <CACPK8Xf=kT_yU99dT2zsL-W5kua+BrsvbtkmC7wUw6SizwKMpA@mail.gmail.com>
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] ARM: dts: Rename Rainier
- to P10 BMC
-To: Zev Weiss <zweiss@equinix.com>
-Content-Type: text/plain; charset="UTF-8"
+To: zweiss@equinix.com,
+	eajames@linux.ibm.com,
+	openbmc@lists.ozlabs.org
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc v2 0/2] Rename Rainier to P10 BMC
+Date: Mon,  6 Jun 2022 09:34:32 +0930
+Message-Id: <20220606000434.1399583-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.35.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,69 +76,22 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "eajames@linux.ibm.com" <eajames@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 2 Jun 2022 at 06:22, Zev Weiss <zweiss@equinix.com> wrote:
->
-> On Wed, Jun 01, 2022 at 07:50:29PM PDT, Joel Stanley wrote:
-> >The Rainier device tree is used for all IBM P10 BMCs, which includes
-> >both Rainier and Everest.
-> >
-> >Signed-off-by: Joel Stanley <joel@jms.id.au>
-> >---
-> > arch/arm/dts/Makefile                                    | 2 +-
-> > arch/arm/dts/{ast2600-rainier.dts => ast2600-p10bmc.dts} | 4 ++--
-> > 2 files changed, 3 insertions(+), 3 deletions(-)
-> > rename arch/arm/dts/{ast2600-rainier.dts => ast2600-p10bmc.dts} (93%)
-> >
-> >diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
-> >index 3515100c65ce..8d05d1e70310 100755
-> >--- a/arch/arm/dts/Makefile
-> >+++ b/arch/arm/dts/Makefile
-> >@@ -686,7 +686,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
-> >       ast2600-intel.dtb \
-> >       ast2600-ncsi.dtb \
-> >       ast2600-pfr.dtb \
-> >-      ast2600-rainier.dtb \
-> >+      ast2600-p10bmc.dtb \
->
-> Nit: to preserve the sorted order, should p10bmc be before pfr?  (s6q is
-> before slt, anyway.)
+Joel Stanley (2):
+  ARM: dts: Rename Rainier to P10 BMC
+  ARM: dts: ast2600: Fix indentation
 
-Yep
+ arch/arm/dts/Makefile                                    | 2 +-
+ arch/arm/dts/ast2600-evb.dts                             | 4 ++--
+ arch/arm/dts/ast2600-fpga.dts                            | 4 ++--
+ arch/arm/dts/ast2600-ncsi.dts                            | 4 ++--
+ arch/arm/dts/{ast2600-rainier.dts => ast2600-p10bmc.dts} | 4 ++--
+ arch/arm/dts/ast2600-tacoma.dts                          | 4 ++--
+ 6 files changed, 11 insertions(+), 11 deletions(-)
+ rename arch/arm/dts/{ast2600-rainier.dts => ast2600-p10bmc.dts} (94%)
 
->
-> >       ast2600-s6q.dtb \
-> >       ast2600-slt.dtb \
-> >       ast2600-tacoma.dtb
-> >diff --git a/arch/arm/dts/ast2600-rainier.dts b/arch/arm/dts/ast2600-p10bmc.dts
-> >similarity index 93%
-> >rename from arch/arm/dts/ast2600-rainier.dts
-> >rename to arch/arm/dts/ast2600-p10bmc.dts
-> >index aa91b12ed399..d1d78d5c3545 100755
-> >--- a/arch/arm/dts/ast2600-rainier.dts
-> >+++ b/arch/arm/dts/ast2600-p10bmc.dts
-> >@@ -5,8 +5,8 @@
-> > #include "ast2600-u-boot.dtsi"
-> >
-> > / {
-> >-        model = "Rainier";
-> >-        compatible = "ibm,rainier-bmc", "aspeed,ast2600";
-> >+        model = "IBM P10 BMC";
-> >+        compatible = "ibm,everest-bmc", "ibm,rainier-bmc", "ibm,p10bmc", "aspeed,ast2600";
->
-> It's a bit orthogonal to the rest of the patch, but I notice these lines
-> are space indented instead of tabbed...could maybe fold that fixup into
-> this, but it looks like that happened on a bunch of the ast2x00 dts
-> files in commit ba6ce66262865, so a separate patch to fix them all might
-> be better.
+-- 
+2.35.1
 
-Thanks for pointing that out. I'll send a patch.
-
->
-> >
-> >       memory { device_type = "memory";
-> >-- 2.35.1
-> >
