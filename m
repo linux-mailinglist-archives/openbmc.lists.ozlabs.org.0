@@ -1,65 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 89E1753F32D
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jun 2022 03:05:56 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DD4353F6DB
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jun 2022 09:07:13 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LHBxZ2zZlz3blR
-	for <lists+openbmc@lfdr.de>; Tue,  7 Jun 2022 11:05:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LHLyQ3JKpz3bkv
+	for <lists+openbmc@lfdr.de>; Tue,  7 Jun 2022 17:07:10 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=azE/oHDL;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=HRFwjniT;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::42d; helo=mail-wr1-x42d.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::112e; helo=mail-yw1-x112e.google.com; envelope-from=srid.11486@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=azE/oHDL;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=HRFwjniT;
 	dkim-atps=neutral
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LHBx84xK3z2xDY
-	for <openbmc@lists.ozlabs.org>; Tue,  7 Jun 2022 11:05:30 +1000 (AEST)
-Received: by mail-wr1-x42d.google.com with SMTP id a15so13447121wrh.2
-        for <openbmc@lists.ozlabs.org>; Mon, 06 Jun 2022 18:05:30 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LHLy06JrCz2yRK
+	for <openbmc@lists.ozlabs.org>; Tue,  7 Jun 2022 17:06:47 +1000 (AEST)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-30c2f288f13so165361037b3.7
+        for <openbmc@lists.ozlabs.org>; Tue, 07 Jun 2022 00:06:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jms.id.au; s=google;
+        d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=NWFEfh7o2yNNi9zQzNdIcMpqQfe+TxeH1wCwj2n+IDc=;
-        b=azE/oHDLcjikppZ8YLSTPpWd6nlkuyMhw0myXH1rNj/gY5JOHwfPvWeimkxqYhIn+B
-         WudXO5z9tbkYekOsNgUpRfEF/fCulMGhWYBAJi5Alc/TngerXvKKKFJLlJYn0vcpetMp
-         oSSj2HTBVABWs8zitBmJIGmVOVMIaqEhq8jDY=
+         :cc;
+        bh=nYvY4FSgGyPJkEOz3erAyc4FH1veKBHmK5cSnkHYsa0=;
+        b=HRFwjniTZrJ49DQBaiK5DZGvw32uAWxbSEmrLChoMWlm1oqvpnvwlssP12i9JdTekN
+         /0504B2k6pSPZPsWAFk2zrRzhmCBiC2HQNfQ8zWVgKu4TnjY/7JU3cYIQ5OSN0R89hw8
+         cX5ILoAxbRO7UFBj9ehnaZQWomk5zadRmy0RCLoJTe+JeVlXK30U2kqDDkL4WbdZ454A
+         OM10e0a2dnjneJJqfy4S2NkSYpE0uVvZob+dQddL8I9upE8LBwVouOcx5Lb3aJWJBBh/
+         AiDzsmKbqZJMTt8dUL6I0lg3is2/ynqCPc5nPj1XZpFgOFAbLXFl5cTB1EC2I6oAzRn7
+         eMHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=NWFEfh7o2yNNi9zQzNdIcMpqQfe+TxeH1wCwj2n+IDc=;
-        b=N4GU22pwEZ+84bPq4NWzX8m0Nzipmz05/wDvbPMF+37quN3bH4tdha3O/wuC0tKxdb
-         ihwWshxMJztvafzy98ipn2f+fwwFqP4eneZUt9FtakWqbqry+FeY+6I0moLunjhoMM7U
-         aRvpGmubCTWQItreZmCnMIlyqgGc1FVPlEfscq/WZuOskJiohthBBojmb0TvWoy0KlWB
-         eVl/RWi28qS469NP2TwT95sbeMRSmE5OoyESLW3hjPsw2kIY26X1V3XginAD33JdAcG4
-         UPj+TkxytOcDTejTd1U3/2eOusckva4q/cmgli8Io3wBufwtQhnLGkyWMzdmoQsG46HG
-         2Egg==
-X-Gm-Message-State: AOAM533gjRSkL3928o+3nER5cnBCbE0/7xUdyN1Hn+kEDs/h0NEYAG9w
-	T5+J5JOd75Jsm8E6dlpVs5gz8KzcY0PBxO7TKKc=
-X-Google-Smtp-Source: ABdhPJz/t0lDUiI803+aM1OE9bb/bQm0lLsHqG4takWLcYhHwEv5gVqqg7cKqwehB6eXyYjBs173NGpCjtL9IV6faAw=
-X-Received: by 2002:a5d:47c9:0:b0:20f:e7da:6a48 with SMTP id
- o9-20020a5d47c9000000b0020fe7da6a48mr24930867wrc.315.1654563921796; Mon, 06
- Jun 2022 18:05:21 -0700 (PDT)
+         :message-id:subject:to:cc;
+        bh=nYvY4FSgGyPJkEOz3erAyc4FH1veKBHmK5cSnkHYsa0=;
+        b=PyjDX0LuyW9ajGjSZk6epZZAREwAaJz/D8msb/Ao8tTAMs+DsUpLumOFb6TEp9S09M
+         NrZ0a4rl39LT+ircds0LWJhYQtcGFLUtI65XkvX0AyXQTbOY1oInwkCHxy20msZqs7V1
+         Q9V/9AQp4wuw7YpTCeXwZoxh3UXl3OKF8IDpVYIA34i+8t4NClLPtFos1APwS8siC7Ea
+         uSKEyQPI+8olzazzp7yT9N0GYQIO4kRCdMp90Qze4RTruRG5c7WkGpHqerv/iSTrVjic
+         pg7FlLzcMcTN9jwseh3LTbPJ9IjqFpOIfdob5tokX+UmT2rMos6m+FEiSefK7hAFhlPj
+         oSNQ==
+X-Gm-Message-State: AOAM530tGO7Ptczr5RnN/ry89KXGzgbrg80BVut/jMIoIvARtcU1BTuC
+	VXOSHyImlU7LyvBgGJfn8Dq5mU5ASy7dDAiEVDvddy1y
+X-Google-Smtp-Source: ABdhPJxR50KLGxb48jZl8iXnfF9KN350Zw7XDtkeYTe55ESniN8eR44/LLQjPKsNUhhmtRBHvxSL40buHL7WMm5tvQA=
+X-Received: by 2002:a0d:cd04:0:b0:300:4784:caa3 with SMTP id
+ p4-20020a0dcd04000000b003004784caa3mr29880081ywd.231.1654585603337; Tue, 07
+ Jun 2022 00:06:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220519185318.62655-1-quic_jaehyoo@quicinc.com> <a9798967-ab87-2469-a8cf-ab8ac237908a@quicinc.com>
-In-Reply-To: <a9798967-ab87-2469-a8cf-ab8ac237908a@quicinc.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 7 Jun 2022 01:05:09 +0000
-Message-ID: <CACPK8Xf7Bqjk1A+qeJcrTCGL-PdFj5a2yBna+QvrSi5RpfLXsg@mail.gmail.com>
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v2] ARM: dts: aspeed: add
- Qualcomm DC-SCM V1
-To: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+References: <CALXuKJetn8x+z0xrn_9WJEtt0NyZQa2-Br8irggi7Djk-U8Xmg@mail.gmail.com>
+In-Reply-To: <CALXuKJetn8x+z0xrn_9WJEtt0NyZQa2-Br8irggi7Djk-U8Xmg@mail.gmail.com>
+From: Jayashree D <srid.11486@gmail.com>
+Date: Tue, 7 Jun 2022 12:36:30 +0530
+Message-ID: <CALXuKJetkkPPCWZT8T24LFkfkYhqJzOi7oPdtLDOTH2VROHf8Q@mail.gmail.com>
+Subject: Re: Physical LED Design Proposal
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="000000000000233f9705e0d63b6c"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,275 +72,148 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, Graeme Gregory <quic_ggregory@quicinc.com>, Jamie Iles <quic_jiles@quicinc.com>
+Cc: spinler@us.ibm.com, andrew@aj.id.au, jayashree-d@hcl.com, bradleyb@fuzziesquirrel.com, velumanit@hcl.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 6 Jun 2022 at 13:56, Jae Hyun Yoo <quic_jaehyoo@quicinc.com> wrote:
+--000000000000233f9705e0d63b6c
+Content-Type: text/plain; charset="UTF-8"
+
+Hi Team,
+
+Could you please provide your suggestions on the above design for LED.
+
+Thanks,
+Jayashree
+
+
+On Fri, May 27, 2022 at 12:42 PM Jayashree D <srid.11486@gmail.com> wrote:
+
+> Hi Team,
 >
-> Ping
+> Problem Description :
 >
-> On 5/19/2022 11:53 AM, Jae Hyun Yoo wrote:
-> > From: Graeme Gregory <quic_ggregory@quicinc.com>
-> >
-> > Add initial version of device tree for Qualcomm DC-SCM V1 BMC which is
-> > equipped with Aspeed AST2600 BMC SoC.
-> >
-> > Signed-off-by: Graeme Gregory <quic_ggregory@quicinc.com>
-> > Signed-off-by: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
-> > ---
-> > Changes in v2:
-> > * Changed vendor name from Nuvia to Qualcomm.
-> >
-> >   arch/arm/dts/Makefile                   |   1 +
-> >   arch/arm/dts/ast2600-qcom-dc-scm-v1.dts | 208 +++++++++++++++++++++++=
-+
-> >   2 files changed, 209 insertions(+)
-> >   create mode 100644 arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
-> >
-> > diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
-> > index 3515100c65ce..e86a6c0ed609 100755
-> > --- a/arch/arm/dts/Makefile
-> > +++ b/arch/arm/dts/Makefile
-> > @@ -686,6 +686,7 @@ dtb-$(CONFIG_ARCH_ASPEED) +=3D \
-> >       ast2600-intel.dtb \
-> >       ast2600-ncsi.dtb \
-> >       ast2600-pfr.dtb \
-> > +     ast2600-qcom-dc-scm-v1.dts \
-> >       ast2600-rainier.dtb \
-> >       ast2600-s6q.dtb \
-> >       ast2600-slt.dtb \
-> > diff --git a/arch/arm/dts/ast2600-qcom-dc-scm-v1.dts b/arch/arm/dts/ast=
-2600-qcom-dc-scm-v1.dts
-> > new file mode 100644
-> > index 000000000000..e966f739b708
-> > --- /dev/null
-> > +++ b/arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
-> > @@ -0,0 +1,208 @@
-> > +// SPDX-License-Identifier: GPL-2.0-or-later
-> > +// Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights=
- reserved.
-> > +/dts-v1/;
-> > +
-> > +#include "ast2600-u-boot.dtsi"
-> > +
-> > +/ {
-> > +     model =3D "Qualcomm DC-SCM V1 BMC";
-> > +     compatible =3D "qcom,dc-scm-v1-bmc", "aspeed,ast2600";
-> > +
-> > +     memory {
-> > +             device_type =3D "memory";
-> > +             reg =3D <0x80000000 0x40000000>;
-> > +     };
-> > +
-> > +     chosen {
-> > +             stdout-path =3D &uart5;
-> > +     };
-> > +
-> > +     aliases {
-> > +             spi0 =3D &fmc;
-> > +             spi1 =3D &spi1;
-> > +             spi2 =3D &spi2;
-> > +     };
-> > +
-> > +     cpus {
-> > +             cpu@0 {
-> > +                     clock-frequency =3D <800000000>;
-> > +             };
-> > +             cpu@1 {
-> > +                     clock-frequency =3D <800000000>;
-> > +             };
-> > +     };
-> > +};
-> > +
-> > +&uart5 {
-> > +     u-boot,dm-pre-reloc;
-> > +     status =3D "okay";
-> > +};
-> > +
-> > +&sdrammc {
-> > +     clock-frequency =3D <400000000>;
-> > +};
-> > +
-> > +&wdt1 {
-> > +     status =3D "okay";
-> > +};
-> > +
-> > +&wdt2 {
-> > +     status =3D "okay";
-> > +};
-> > +
-> > +&wdt3 {
-> > +     status =3D "okay";
-> > +};
-> > +
-> > +&mdio {
-> > +     status =3D "okay";
-> > +     pinctrl-names =3D "default";
-> > +     pinctrl-0 =3D <&pinctrl_mdio4_default>;
-> > +     #address-cells =3D <1>;
-> > +     #size-cells =3D <0>;
-> > +
-> > +     ethphy3: ethernet-phy@1 {
-> > +             reg =3D <1>;
-> > +     };
-> > +};
-> > +
-> > +&mac2 {
-> > +     status =3D "okay";
-> > +     reg =3D <0x1e670000 0x180>, <0x1e650018 0x4>;
-> > +     phy-mode =3D "rgmii";
-> > +     phy-handle =3D <&ethphy3>;
-> > +     pinctrl-names =3D "default";
-> > +     pinctrl-0 =3D <&pinctrl_rgmii3_default>;
-> > +};
-> > +
-> > +&fmc {
-> > +     status =3D "okay";
-> > +
-> > +     pinctrl-names =3D "default";
-> > +     pinctrl-0 =3D <&pinctrl_fmcquad_default>;
-> > +
-> > +     flash@0 {
-> > +             compatible =3D "spi-flash", "sst,w25q256";
+> In the existing phosphor-led-sysfs design, it exposes one service per LED.
+> Therefore, multiple services will be created for multiple GPIO pins
+> configured for LED. To abstract this method and also to create LEDs under a
+> single service, a new implementation is proposed.
+>
+> Existing Implementation :
+>
+> 1. Physical Leds are defined in the device tree under "leds" section.
+> 2. Corresponding GPIO pin are defined for the physical LEDs.
+> 3. "udev rules" are used to monitor the physical LEDs.
+> 4. Once the LED in initialized in device tree, udev event will be created
+> and it will trigger a systemd service for that LED.
+> 5. Therefore, if multiple GPIO pins are configured for LEDs, then it will
+> create a multiple systemd services (xyz.openbmc_project.led.controller@.service)
+> for phosphor-led-sysfs based on the LED name.
+>
+> Example :
+>
+> busctl tree xyz.openbmc_project.LED.Controller.led1
+> `-/xyz
+>   `-/xyz/openbmc_project
+>     `-/xyz/openbmc_project/led
+>       `-/xyz/openbmc_project/led/physical
+>         `-/xyz/openbmc_project/led/physical/led1
+>
+> busctl tree xyz.openbmc_project.LED.Controller.led2
+> `-/xyz
+>   `-/xyz/openbmc_project
+>     `-/xyz/openbmc_project/led
+>       `-/xyz/openbmc_project/led/physical
+>         `-/xyz/openbmc_project/led/physical/led2
+>
+>
+>
+> New Implementation :
+>
+> 1. Physical Leds are defined in the device tree under "leds" section.
+> 2. Corresponding GPIO pin are defined for the physical LEDs.
+> 3. "udev rules" are used to monitor the physical LEDs.
+> 4. Once the udev event is initialized for the LED, it will store those LED
+> name using the script in udev instead of triggering systemd   service.
+> 5. Phosphor-led-sysfs will have a single systemd service
+> (xyz.openbmc_project.led.controller.service) running by default at system
+> startup.
+> 6. A dbus method call will be exposed from the service. udev will notify
+> the LEDs detected in the driver.
+>
+> Example :
+>
+> busctl tree xyz.openbmc_project.LED.Controller
+> `-/xyz
+>   `-/xyz/openbmc_project
+>     `-/xyz/openbmc_project/led
+>       `-/xyz/openbmc_project/led/physical
+>         `-/xyz/openbmc_project/led/physical/led1
+>         `-/xyz/openbmc_project/led/physical/led2
+>
+>
+> This was already discussed in the previous mail thread. Please refer to
+> the below link.
+> https://lists.ozlabs.org/pipermail/openbmc/2022-April/030272.html
+>
+> Please provide your suggestions on this new proposal.
+>
+>
+> Thanks
+> Jayashree
+>
 
-Compatible strings should go from the most general to the most
-specific, so these are around the wrong way. I see you've probably
-just copied the ast2600-evb which makes the same mistake.
+--000000000000233f9705e0d63b6c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-In the dtsi we have jedec,spi-nor which you overwrite here.
+<div dir=3D"ltr"><div>Hi Team,</div><div><br></div><div>Could you please pr=
+ovide your suggestions on the above design for LED.</div><div><br></div><di=
+v>Thanks,</div><div>Jayashree<br></div><div><br></div></div><br><div class=
+=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, May 27, 2022=
+ at 12:42 PM Jayashree D &lt;<a href=3D"mailto:srid.11486@gmail.com">srid.1=
+1486@gmail.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" st=
+yle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padd=
+ing-left:1ex"><div dir=3D"ltr"><div>Hi Team,</div><div><br></div><div>Probl=
+em Description :<br><br>In the existing phosphor-led-sysfs design, it expos=
+es one service per LED. Therefore, multiple services will be created for mu=
+ltiple GPIO pins configured for LED. To abstract this method and also to cr=
+eate LEDs under a single service, a new implementation is proposed.</div><d=
+iv><br></div><div>Existing Implementation :<br>=C2=A0<br>1. Physical Leds a=
+re defined in the device tree under &quot;leds&quot; section.<br>2. Corresp=
+onding GPIO pin are defined for the physical LEDs.<br>3. &quot;udev rules&q=
+uot; are used to monitor the physical LEDs.<br>4. Once the LED in initializ=
+ed in device tree, udev event will be created and it will trigger a systemd=
+ service for that LED.<br>5. Therefore, if multiple GPIO pins are configure=
+d for LEDs, then it will create a multiple systemd services (xyz.openbmc_pr=
+oject.led.controller@.service) for phosphor-led-sysfs based on the LED name=
+.<br><br>Example :<br><br>busctl tree xyz.openbmc_project.LED.Controller.le=
+d1<br>`-/xyz<br>=C2=A0 `-/xyz/openbmc_project<br>=C2=A0 =C2=A0 `-/xyz/openb=
+mc_project/led<br>=C2=A0 =C2=A0 =C2=A0 `-/xyz/openbmc_project/led/physical<=
+br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 `-/xyz/openbmc_project/led/physical/led1<br>=
+<br>busctl tree xyz.openbmc_project.LED.Controller.led2<br>`-/xyz<br>=C2=A0=
+ `-/xyz/openbmc_project<br>=C2=A0 =C2=A0 `-/xyz/openbmc_project/led<br>=C2=
+=A0 =C2=A0 =C2=A0 `-/xyz/openbmc_project/led/physical<br>=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 `-/xyz/openbmc_project/led/physical/led2 =C2=A0 =C2=A0 =C2=A0=C2=
+=A0 <br><br><br><br>New Implementation :<br><br>1. Physical Leds are define=
+d in the device tree under &quot;leds&quot; section.<br>2. Corresponding GP=
+IO pin are defined for the physical LEDs.<br>3. &quot;udev rules&quot; are =
+used to monitor the physical LEDs.<br>4. Once the udev event is initialized=
+ for the LED, it will store those LED name using the script in udev instead=
+ of triggering systemd =C2=A0 service.<br>5. Phosphor-led-sysfs will have a=
+ single systemd service (xyz.openbmc_project.led.controller.service) runnin=
+g by default at system startup.<br>6. A dbus method call will be exposed fr=
+om the service. udev will notify the LEDs detected in the driver.<br><br>Ex=
+ample :<br><br>busctl tree xyz.openbmc_project.LED.Controller<br>`-/xyz<br>=
+=C2=A0 `-/xyz/openbmc_project<br>=C2=A0 =C2=A0 `-/xyz/openbmc_project/led<b=
+r>=C2=A0 =C2=A0 =C2=A0 `-/xyz/openbmc_project/led/physical<br>=C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 `-/xyz/openbmc_project/led/physical/led1<br>=C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 `-/xyz/openbmc_project/led/physical/led2<br>=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 <br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 <br>This was already discussed i=
+n the previous mail thread. Please refer to the below link.<br><a href=3D"h=
+ttps://lists.ozlabs.org/pipermail/openbmc/2022-April/030272.html" target=3D=
+"_blank">https://lists.ozlabs.org/pipermail/openbmc/2022-April/030272.html<=
+/a><br><br>Please provide your suggestions on this new proposal.<br><br><br=
+></div><div>Thanks</div><div>Jayashree<br></div></div>
+</blockquote></div>
 
-u-boot has spi-flash but Linux uses jedec,spi-nor. I wonder if we
-should update the aspeed driver to use that?
-
-C=C3=A9dric, do you have thoughts here?
-
-> > +             status =3D "okay";
-> > +             spi-max-frequency =3D <133000000>;
-> > +             spi-tx-bus-width =3D <4>;
-> > +             spi-rx-bus-width =3D <4>;
-> > +     };
-> > +
-> > +     flash@1 {
-> > +             compatible =3D "spi-flash", "sst,w25q256";
-> > +             status =3D "okay";
-> > +             spi-max-frequency =3D <133000000>;
-> > +             spi-tx-bus-width =3D <4>;
-> > +             spi-rx-bus-width =3D <4>;
-> > +     };
-> > +};
-> > +
-> > +&spi1 {
-> > +     status =3D "okay";
-> > +
-> > +     pinctrl-names =3D "default";
-> > +     pinctrl-0 =3D <&pinctrl_spi1_default &pinctrl_spi1abr_default
-> > +                     &pinctrl_spi1cs1_default &pinctrl_spi1wp_default
-> > +                     &pinctrl_spi1wp_default &pinctrl_spi1quad_default=
->;
-> > +
-> > +     flash@0 {
-> > +             compatible =3D "spi-flash", "sst,w25q256";
-> > +             status =3D "okay";
-> > +             spi-max-frequency =3D <133000000>;
-> > +             spi-tx-bus-width =3D <4>;
-> > +             spi-rx-bus-width =3D <4>;
-> > +     };
-> > +};
-> > +
-> > +&i2c4 {
-> > +     status =3D "okay";
-> > +
-> > +     pinctrl-names =3D "default";
-> > +     pinctrl-0 =3D <&pinctrl_i2c5_default>;
-
-All of the pinctrl properties are set in the dtsi as of f2b82fa4ba17
-("arm: dts: ast2600: Add I2C pinctrl"), so you can drop these.
-
-
-> > +};
-> > +
-> > +&i2c5 {
-> > +     status =3D "okay";
-> > +
-> > +     pinctrl-names =3D "default";
-> > +     pinctrl-0 =3D <&pinctrl_i2c6_default>;
-> > +};
-> > +
-> > +&i2c6 {
-> > +     status =3D "okay";
-> > +
-> > +     pinctrl-names =3D "default";
-> > +     pinctrl-0 =3D <&pinctrl_i2c7_default>;
-> > +};
-> > +
-> > +&i2c7 {
-> > +     status =3D "okay";
-> > +
-> > +     pinctrl-names =3D "default";
-> > +     pinctrl-0 =3D <&pinctrl_i2c8_default>;
-> > +};
-> > +
-> > +&i2c8 {
-> > +     status =3D "okay";
-> > +
-> > +     pinctrl-names =3D "default";
-> > +     pinctrl-0 =3D <&pinctrl_i2c9_default>;
-> > +};
-> > +
-> > +&i2c9 {
-> > +     status =3D "okay";
-> > +
-> > +     pinctrl-names =3D "default";
-> > +     pinctrl-0 =3D <&pinctrl_i2c10_default>;
-> > +};
-> > +
-> > +&i2c10 {
-> > +     status =3D "okay";
-> > +
-> > +     pinctrl-names =3D "default";
-> > +     pinctrl-0 =3D <&pinctrl_i2c11_default>;
-> > +};
-> > +
-> > +&i2c12 {
-> > +     status =3D "okay";
-> > +
-> > +     pinctrl-names =3D "default";
-> > +     pinctrl-0 =3D <&pinctrl_i2c13_default>;
-> > +};
-> > +
-> > +&i2c13 {
-> > +     status =3D "okay";
-> > +
-> > +     pinctrl-names =3D "default";
-> > +     pinctrl-0 =3D <&pinctrl_i2c14_default>;
-> > +};
-> > +
-> > +&i2c14 {
-> > +     status =3D "okay";
-> > +
-> > +     pinctrl-names =3D "default";
-> > +     pinctrl-0 =3D <&pinctrl_i2c15_default>;
-> > +};
-> > +
-> > +&i2c15 {
-> > +     status =3D "okay";
-> > +
-> > +     pinctrl-names =3D "default";
-> > +     pinctrl-0 =3D <&pinctrl_i2c16_default>;
-> > +};
-> > +
-> > +&scu {
-> > +     mac0-clk-delay =3D <0x1d 0x1c
-> > +                       0x10 0x17
-> > +                       0x10 0x17>;
-> > +     mac1-clk-delay =3D <0x1d 0x10
-> > +                       0x10 0x10
-> > +                       0x10 0x10>;
-> > +     mac2-clk-delay =3D <0x0a 0x04
-> > +                       0x08 0x04
-> > +                       0x08 0x04>;
-> > +     mac3-clk-delay =3D <0x0a 0x04
-> > +                       0x08 0x04
-> > +                       0x08 0x04>;
-> > +};
+--000000000000233f9705e0d63b6c--
