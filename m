@@ -1,67 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E7FE35427A7
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 09:46:01 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 12C245427BE
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 09:46:38 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LHzml5lfhz3btp
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 17:45:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LHznS0QMBz3bn5
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 17:46:36 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=nXjC5Wr7;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=WE84D5Cz;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62c; helo=mail-pl1-x62c.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1034; helo=mail-pj1-x1034.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=nXjC5Wr7;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=WE84D5Cz;
 	dkim-atps=neutral
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LHzl25T7gz2xn8
-	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 17:44:30 +1000 (AEST)
-Received: by mail-pl1-x62c.google.com with SMTP id d22so16918983plr.9
-        for <openbmc@lists.ozlabs.org>; Wed, 08 Jun 2022 00:44:30 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LHzl55vxRz3bl5
+	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 17:44:33 +1000 (AEST)
+Received: by mail-pj1-x1034.google.com with SMTP id w13-20020a17090a780d00b001e8961b355dso5863363pjk.5
+        for <openbmc@lists.ozlabs.org>; Wed, 08 Jun 2022 00:44:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=sender:from:to:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=KVm16Zmb3zcn++NUDdA1b0TN/kxtnE0dRfEgjhX/geo=;
-        b=nXjC5Wr7sopwG3jRPa6IPqPJYGSQX81/4tRq5NP3iuObsrj7g8f+HWVid4Qw2Io3IS
-         Uv4ebtH3Xw+W5gQqejxTELuUuAy7YECzg87U17M9EQ39qgBa7vuP2qWgFxvJ1TrXfuo7
-         VFbiWX5myAsIfjbLCLJqvTGh+bVcwneWyu7t7vpGVqsB+G2nqHWim0dayyCFEayyZkrY
-         TLz75OD9hhBjRP+jggeq0/LLOl9GWq0KOKDqLnKBLWrPrP2eMZaN2jRQNllTnyIBv5KH
-         pYRxT4MigsGRWBHND5C/Fx++vOR/1T67X9/keXz5AF8KAEWYKOExJM7FWeeGxvmWmBEf
-         UqCA==
+        bh=h9jRirq9eagzpWvFgkxNnqKOUce9E8KvkK0W6kIY+xw=;
+        b=WE84D5Cz2HgaqvNrlM9M9sCJuZiarWXpnFF9ucte033cs2nU7rmvvTbY6boMhGRYDc
+         OipblbrV2nDC1Vt11kQLfrfe4/WdmxlC/Ib3jabFcXjZw4xNsRdqzRAi0CIQbyHg+mqk
+         XTQis6G+qB6Reqrx7AnMtggHqsGfwGYG/3AY/F3BaQ3QaD0foDYtgekbbFaBxUu+DH48
+         C82nC9RQrIMZJJi/Nu43qmF8bhxIA+RPIYp4ilRwyW/dWJuvkZZV87nFl+KGaGU5uRJs
+         CyJUEXL3mxFqZynxdtIkt1tX7snW5bHefKpxDfIDwSd4AzdvDlTrGShj/RuOguz8k3CB
+         GCYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:sender:from:to:subject:date:message-id
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=KVm16Zmb3zcn++NUDdA1b0TN/kxtnE0dRfEgjhX/geo=;
-        b=M+tKXCDkIRnfoyKgShuGx5QMalgcEKdv3F9cDzHlHORuuIyZAlDJaqopOrgviN7/Bq
-         MStVbLNE4HfDVoDHSswLe/fxJmYYb77wdcHr1hYjllxLRanYYpVFgamMR5CGtRI5B2FX
-         WFIhpv1N29i/OfWDZm0/zXQle5UkukmbukHjLGGBnkE7cSQqEZBJXVYPP/JSJ3K3CBd6
-         1kAHM5IScvQ4EdaVxGuEJnfaEq3/4XUPaiJzJkVvw5MgOpNYisiAnOM1Ue/yXSPiKIQR
-         QeA01zy2B1YA0AD76qfy8rN9Q0Bgo7w6DjcVC2nB+XIT9JeyisRwSEOcV/qoIBswwD/w
-         2Wfg==
-X-Gm-Message-State: AOAM530kBP9+0PbWxMNK7GfArTLEbDqfgXUMlOTepbrdYfYZpUwOXG1Y
-	41HdmmkdAv3TgCgBcKzKfOf+21LHy9U=
-X-Google-Smtp-Source: ABdhPJztfRbGIXDbGsqw46AmYo4jsfjoYEptL4gVBQqEsf8w9UzehWg5E6C+DhdpALZ94zeTMSHusw==
-X-Received: by 2002:a17:902:bd05:b0:15f:19a0:95ed with SMTP id p5-20020a170902bd0500b0015f19a095edmr32667278pls.31.1654674267783;
-        Wed, 08 Jun 2022 00:44:27 -0700 (PDT)
+        bh=h9jRirq9eagzpWvFgkxNnqKOUce9E8KvkK0W6kIY+xw=;
+        b=eNVUW8ds5oCliduOn85UW3gDEXMZ7posZ8izM3oK6uYCUWKbALUg/iDy2EvA80XHAp
+         jCnzChEpvfgReoGguF1Fi7082TPQtVTd1OXbSRAAimP8GpTlm3h8wl63aDUPKkqmYcUS
+         6NWlsucWgpyQx4w6Ak0QqkHfxjXqhgS3uS+yLluCTcqon0VS0ne+iwi02EBsRYGkxphM
+         ZVPOGuiYtrj1qGhoHFkyjS/b+1rax89mKYicGa8AEXM2y4I9OQf2kPP3iOtIm8iuzv9H
+         6og5XO6uf84lJhAL4uBek9LXIQSnmKvhRqKVzjWwu6QBB/HREfpk66FTYgY6sfyG4J4b
+         SGvQ==
+X-Gm-Message-State: AOAM530oR6FHX2XBBXjs45aGA5DgZX1uWDVJEsE0he0rreDSP1ZkGgJE
+	KPwDsrPL2hPByY8hGgT8Lhp0SATtH/E=
+X-Google-Smtp-Source: ABdhPJwXgcWmCCoR93lqWjZjLR24yR9Nu0tgqCnEpLb81r9o+chkOsDuK1d21egYhCKx+CZ5y7jyfQ==
+X-Received: by 2002:a17:902:e788:b0:163:73fc:5140 with SMTP id cp8-20020a170902e78800b0016373fc5140mr32604871plb.88.1654674270865;
+        Wed, 08 Jun 2022 00:44:30 -0700 (PDT)
 Received: from localhost.localdomain ([45.124.203.18])
-        by smtp.gmail.com with ESMTPSA id i13-20020a170902c94d00b0016362da9a03sm13955693pla.245.2022.06.08.00.44.25
+        by smtp.gmail.com with ESMTPSA id i13-20020a170902c94d00b0016362da9a03sm13955693pla.245.2022.06.08.00.44.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jun 2022 00:44:27 -0700 (PDT)
+        Wed, 08 Jun 2022 00:44:30 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: openbmc@lists.ozlabs.org,
 	Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
 	Chia-Wei Wang <chiawei_wang@aspeedtech.com>
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc 2/3] dts: ast2600: Consolidate A0 device tree
-Date: Wed,  8 Jun 2022 17:14:01 +0930
-Message-Id: <20220608074402.1876079-3-joel@jms.id.au>
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc 3/3] dts: ast2600: Consolidate NCSI device tree
+Date: Wed,  8 Jun 2022 17:14:02 +0930
+Message-Id: <20220608074402.1876079-4-joel@jms.id.au>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220608074402.1876079-1-joel@jms.id.au>
 References: <20220608074402.1876079-1-joel@jms.id.au>
@@ -81,29 +81,25 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The AST2600A0 EVB device tree is the same as the AST2600, except for the
-removal of MAC0 which is broken on this revision.
+The AST2600 NCSI EVB device tree is the same as the AST2600, except for
+the configuration of the network devices.
 
 To reduce the maintenance required, include the AST2600 EVB device tree
 and modify the nodes as appropriate.
 
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- arch/arm/dts/ast2600a0-evb.dts | 264 +--------------------------------
- 1 file changed, 5 insertions(+), 259 deletions(-)
+ arch/arm/dts/ast2600-ncsi.dts | 294 +---------------------------------
+ 1 file changed, 4 insertions(+), 290 deletions(-)
 
-diff --git a/arch/arm/dts/ast2600a0-evb.dts b/arch/arm/dts/ast2600a0-evb.dts
-index 49fd4f29df1a..b940d26087dd 100644
---- a/arch/arm/dts/ast2600a0-evb.dts
-+++ b/arch/arm/dts/ast2600a0-evb.dts
-@@ -1,271 +1,17 @@
- /dts-v1/;
- 
--#include "ast2600-u-boot.dtsi"
-+#include "ast2600-evb.dts"
+diff --git a/arch/arm/dts/ast2600-ncsi.dts b/arch/arm/dts/ast2600-ncsi.dts
+index 4bb1dcf5dfb3..57890bbc5e89 100644
+--- a/arch/arm/dts/ast2600-ncsi.dts
++++ b/arch/arm/dts/ast2600-ncsi.dts
+@@ -4,102 +4,10 @@
  
  / {
--	model = "AST2600 EVB";
+ 	model = "AST2600 EVB w/ NCSI";
 -	compatible = "aspeed,ast2600-evb", "aspeed,ast2600";
 -
 -	memory {
@@ -114,21 +110,19 @@ index 49fd4f29df1a..b940d26087dd 100644
 -	chosen {
 -		stdout-path = &uart5;
 -	};
-+	model = "AST2600A0 EVB";
- 
- 	aliases {
+-
+-	aliases {
 -		mmc0 = &emmc_slot0;
 -		mmc1 = &sdhci_slot0;
 -		mmc2 = &sdhci_slot1;
 -		spi0 = &fmc;
 -		spi1 = &spi1;
 -		spi2 = &spi2;
--
- 		ethernet0 = &mac1;
- 		ethernet1 = &mac2;
- 		ethernet2 = &mac3;
-+		/delete-property/ethernet3;
- 	};
+-		ethernet0 = &mac0;
+-		ethernet1 = &mac1;
+-		ethernet2 = &mac2;
+-		ethernet3 = &mac3;
+-	};
 -
 -	cpus {
 -		cpu@0 {
@@ -150,24 +144,29 @@ index 49fd4f29df1a..b940d26087dd 100644
 -};
 -
 -&wdt1 {
--	u-boot,dm-pre-reloc;
 -	status = "okay";
 -};
 -
 -&wdt2 {
--	u-boot,dm-pre-reloc;
 -	status = "okay";
 -};
 -
 -&wdt3 {
--	u-boot,dm-pre-reloc;
 -	status = "okay";
 -};
 -
+-#if 0
 -&mdio {
 -	status = "okay";
+-	pinctrl-names = "default";
+-	pinctrl-0 = <	&pinctrl_mdio1_default &pinctrl_mdio2_default
+-			&pinctrl_mdio3_default &pinctrl_mdio4_default>;
 -	#address-cells = <1>;
 -	#size-cells = <0>;
+-	ethphy0: ethernet-phy@0 {
+-		reg = <0>;
+-	};
+-
 -	ethphy1: ethernet-phy@1 {
 -		reg = <0>;
 -	};
@@ -179,35 +178,41 @@ index 49fd4f29df1a..b940d26087dd 100644
 -	ethphy3: ethernet-phy@3 {
 -		reg = <0>;
 -	};
--
--	ethphy4: ethernet-phy@4 {
--		reg = <0>;
--	};
 -};
 -
--
+-&mac0 {
+-	status = "okay";
+-	phy-mode = "rgmii-rxid";
+-	phy-handle = <&ethphy0>;
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_rgmii1_default>;
+ };
+ 
 -&mac1 {
 -	status = "okay";
--	phy-mode = "rgmii";
--	phy-handle = <&ethphy2>;
+-	phy-mode = "rgmii-rxid";
+-	phy-handle = <&ethphy1>;
 -	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mac2link_default &pinctrl_mdio2_default>;
+-	pinctrl-0 = <&pinctrl_rgmii2_default>;
 -};
--
--&mac2 {
--	status = "okay";
--	phy-mode = "rgmii";
--	phy-handle = <&ethphy3>;
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_rgmii3_default &pinctrl_mac3link_default &pinctrl_mdio3_default>;	
--};
--
--&mac3 {
--	status = "okay";
--	phy-mode = "rgmii";
--	phy-handle = <&ethphy4>;
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_rgmii4_default &pinctrl_mac4link_default &pinctrl_mdio4_default>;	
+-#endif
++/delete-node/&mac0;
++/delete-node/&mac1;
+ 
+ &mac2 {
+ 	status = "okay";
+@@ -107,6 +15,7 @@
+ 	use-ncsi;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_rmii3_default>;
++	/delete-property/phy-handle;
+ };
+ 
+ &mac3 {
+@@ -115,200 +24,5 @@
+ 	use-ncsi;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_rmii4_default>;
 -};
 -
 -&fmc {
@@ -290,18 +295,22 @@ index 49fd4f29df1a..b940d26087dd 100644
 -	};
 -};
 -
--&emmc_slot0 {
--	status = "okay";
+-&emmc {
+-	u-boot,dm-pre-reloc;
+-	timing-phase = <0x700ff>;
+-};
 -
--#if 1
+-&emmc_slot0 {
+-	u-boot,dm-pre-reloc;
+-	status = "okay";
 -	bus-width = <4>;
 -	pinctrl-names = "default";
 -	pinctrl-0 = <&pinctrl_emmc_default>;
--#else
--	bus-width = <8>;
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_emmcg8_default>;
--#endif
+-	sdhci-drive-type = <1>;
+-};
+-
+-&sdhci {
+-	timing-phase = <0xc6ffff>;
 -};
 -
 -&sdhci_slot0 {
@@ -311,6 +320,7 @@ index 49fd4f29df1a..b940d26087dd 100644
 -	pwr-sw-gpios = <&gpio0 ASPEED_GPIO(V, 1) GPIO_ACTIVE_HIGH>;
 -	pinctrl-names = "default";
 -	pinctrl-0 = <&pinctrl_sd1_default>;
+-	sdhci-drive-type = <1>;
 -};
 -
 -&sdhci_slot1 {
@@ -320,8 +330,9 @@ index 49fd4f29df1a..b940d26087dd 100644
 -	pwr-sw-gpios = <&gpio0 ASPEED_GPIO(V, 3) GPIO_ACTIVE_HIGH>;
 -	pinctrl-names = "default";
 -	pinctrl-0 = <&pinctrl_sd2_default>;
- };
- 
+-	sdhci-drive-type = <1>;
+-};
+-
 -&i2c4 {
 -	status = "okay";
 -
@@ -357,7 +368,6 @@ index 49fd4f29df1a..b940d26087dd 100644
 -	pinctrl-0 = <&pinctrl_i2c9_default>;
 -};
 -
--
 -#if 0
 -&fsim0 {
 -	status = "okay";
@@ -371,8 +381,36 @@ index 49fd4f29df1a..b940d26087dd 100644
 -&ehci1 {
 -	status = "okay";
 -};
-+/* MAC0 is broken on A1 */
-+/delete-node/&mac0;
+-
+-&display_port {
+-	status = "okay";
+-};
+-
+-&scu {
+-	mac0-clk-delay = <0x10 0x0a
+-			  0x10 0x10
+-			  0x10 0x10>;
+-	mac1-clk-delay = <0x10 0x0a
+-			  0x10 0x10
+-			  0x10 0x10>;
+-	mac2-clk-delay = <0x08 0x04
+-			  0x08 0x04
+-			  0x08 0x04>;
+-	mac3-clk-delay = <0x08 0x04
+-			  0x08 0x04
+-			  0x08 0x04>;
+-};
+-
+-&hace {
+-	u-boot,dm-pre-reloc;
+-	status = "okay";
+-};
+-
+-&acry {
+-	u-boot,dm-pre-reloc;
+-	status = "okay";
++	/delete-property/phy-handle;
+ };
 -- 
 2.35.1
 
