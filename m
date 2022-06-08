@@ -1,67 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59857543246
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 16:13:35 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 174ED5435D3
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 17:02:34 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LJ8Mw30m7z30F8
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 00:13:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LJ9SR6n0Yz3blw
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 01:02:31 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=HHF4hd6U;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=GqJ+iPrL;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b2c; helo=mail-yb1-xb2c.google.com; envelope-from=srid.11486@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.55.52.151; helo=mga17.intel.com; envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=HHF4hd6U;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=GqJ+iPrL;
 	dkim-atps=neutral
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJ8MV2w33z308m
-	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 00:13:09 +1000 (AEST)
-Received: by mail-yb1-xb2c.google.com with SMTP id y188so7253485ybe.11
-        for <openbmc@lists.ozlabs.org>; Wed, 08 Jun 2022 07:13:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MtD90tjlD5CCTQ4eNRKuGdKWlmVAa9Ps4OOl7mjTutA=;
-        b=HHF4hd6URLzUWO8+ov7p4EJuap2C7/Z9tM5Ii4XdONbRdqLN3V/IGcWl2qkqfXvaZ3
-         2Ln4bnzxjXO8cZNnZyIuceLp7rp3azQNPk2HdK0Deh9xgySMIOExUfYv48MfseLvE6fh
-         YkO5ZS214W0Vb1y9UOCdP+rp7C0Mr/m5kayYnsE+lT5oVqeSAMAFhNX5EqF37OfZRcbb
-         MQC8tatpIFBGOpOfFdTgK1o4pbHYFKemoXeRJvd9bwl4IEdxjXmzIobJUG2bGrdWHAOJ
-         zK5RebpXm1ggdgXA2kE0+9tf8EMHz9v2HOjE35OGkuhPQjh9Xap0xInp8MAlPysOXi4P
-         pkdA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MtD90tjlD5CCTQ4eNRKuGdKWlmVAa9Ps4OOl7mjTutA=;
-        b=fZgA/im+HXsWTtLCkDcZt0y0EI+l9ftallZMVtqCPTACrNgEqpcUjB21HCWgKbqBXM
-         Cg30q/PTGR35Y2bJD4nHFEBkHoSF6/+1teLXoK5K/Vow930xxhhvoAA0o7TsKsvDYfbo
-         TJGhFUBA2e0pVXXREjijuoemrpRXrzPA47sdSosWnZzuih9SsYCAx3uwNdnpq3dRBr1y
-         pDjv1lucUFdcJRFx9vO4kqxZSjY8KWSdObfWYEKxWe333ZDYey3Sd3emWrmBbde06UvN
-         GI9A5OUpXdMuv2LLJJzplERb038bFRuYpRVvKwC0wQAhzLpDJEJpIS5Nw2v1vXL13BRd
-         Ee9Q==
-X-Gm-Message-State: AOAM532j9AnTEeknE73FRKyAw4kvnQoPkLabTJ28jqAKjLEjOu7WGg61
-	9Ry3xfKQH1XrBn5M/xeRpCQY4et+K3O8funFogs=
-X-Google-Smtp-Source: ABdhPJwxH8I+IRzIMK1vG+atPzdULVC2wYP/jNyNVPKxwZYL8Moup3RY/NS1Vm+vpCrEv3Dpv1qLFpzl/xZj0m4SWhU=
-X-Received: by 2002:a25:f506:0:b0:64d:f8a5:b2bd with SMTP id
- a6-20020a25f506000000b0064df8a5b2bdmr32901659ybe.610.1654697585984; Wed, 08
- Jun 2022 07:13:05 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJ9Rz2lXhz3blW
+	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 01:02:06 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1654700527; x=1686236527;
+  h=message-id:date:mime-version:subject:to:references:from:
+   in-reply-to:content-transfer-encoding;
+  bh=b+O4OzY68yd6Z/OEp9hkxYTP/R9S+bsWbEcPAmay3ug=;
+  b=GqJ+iPrLEgrEycvxKe+u/kjJfMr3+5EErz1Tpfjr8ITkJEAoj+6AfHVa
+   PfOy7L/Upo1XQDWUMCD/chgyJ4vlKYkU2jaLB1bf056RbGM0KaIY8zC7C
+   dXd8iCqN4b64A8X4tJYYEDvvCLtGZMgFxXhZzptWduOhOe4Ix4k0TMEYK
+   cqVW3lC/68bErESoK3QseWqOfBTKcFss8BbSoayCaCXRgMf7vONZHeEjU
+   6ynmj5tibmIeEoxuBFERyW9N27N+WpTdreZ08BdOmJ61Y0KvSnr6oHm/a
+   4PQJwD/HHJMKCP5blpV5xO3nA66moq3hqXEnjY7iXcUwQHWscc07o8B27
+   g==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10371"; a="257355280"
+X-IronPort-AV: E=Sophos;i="5.91,286,1647327600"; 
+   d="scan'208";a="257355280"
+Received: from fmsmga007.fm.intel.com ([10.253.24.52])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jun 2022 08:01:54 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.91,286,1647327600"; 
+   d="scan'208";a="584935536"
+Received: from linux.intel.com ([10.54.29.200])
+  by fmsmga007.fm.intel.com with ESMTP; 08 Jun 2022 08:01:54 -0700
+Received: from [10.212.63.139] (jmbills-MOBL.amr.corp.intel.com [10.212.63.139])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by linux.intel.com (Postfix) with ESMTPS id 09B2858094D
+	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 08:01:53 -0700 (PDT)
+Message-ID: <24b63477-119d-0d43-e494-4a79f0ad91fc@linux.intel.com>
+Date: Wed, 8 Jun 2022 09:01:53 -0600
 MIME-Version: 1.0
-References: <CALXuKJetn8x+z0xrn_9WJEtt0NyZQa2-Br8irggi7Djk-U8Xmg@mail.gmail.com>
- <CALXuKJetkkPPCWZT8T24LFkfkYhqJzOi7oPdtLDOTH2VROHf8Q@mail.gmail.com> <CAH2-KxCViS3py6bZ4EX1_V9HU2i8t3o47DG5dhUeE48s8VApAg@mail.gmail.com>
-In-Reply-To: <CAH2-KxCViS3py6bZ4EX1_V9HU2i8t3o47DG5dhUeE48s8VApAg@mail.gmail.com>
-From: Jayashree D <srid.11486@gmail.com>
-Date: Wed, 8 Jun 2022 19:42:54 +0530
-Message-ID: <CALXuKJdau-XHxs5AEG+s+Ffd8JjuBkBfsO=ticLjqKAkjgkYQg@mail.gmail.com>
-Subject: Re: Physical LED Design Proposal
-To: Ed Tanous <edtanous@google.com>
-Content-Type: multipart/alternative; boundary="000000000000d2c7d805e0f04d34"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.8.1
+Subject: Re: x86-power-control question: front panel buttons dont work
+Content-Language: en-US
+To: openbmc@lists.ozlabs.org
+References: <1790304102.3756861.1651157909253.ref@mail.yahoo.com>
+ <1790304102.3756861.1651157909253@mail.yahoo.com>
+ <MW3PR11MB4732097DE3322E07CD2F99C2A3FD9@MW3PR11MB4732.namprd11.prod.outlook.com>
+ <667725503.727721.1651325136829@mail.yahoo.com>
+ <93960ad8-105b-fc06-b5e8-a4f2c443c473@linux.intel.com>
+ <1672954866.3142932.1652256355764@mail.yahoo.com>
+From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+In-Reply-To: <1672954866.3142932.1652256355764@mail.yahoo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,264 +78,173 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: spinler@us.ibm.com, andrew@aj.id.au, openbmc@lists.ozlabs.org, jayashree-d@hcl.com, bradleyb@fuzziesquirrel.com, velumanit@hcl.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000d2c7d805e0f04d34
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Nikita,
 
-On Tue, Jun 7, 2022 at 9:41 PM Ed Tanous <edtanous@google.com> wrote:
+Sorry for the delay on this as I was on leave.  Did this get resolved?
 
-> On Tue, Jun 7, 2022 at 12:07 AM Jayashree D <srid.11486@gmail.com> wrote:
-> >
-> > Hi Team,
-> >
-> > Could you please provide your suggestions on the above design for LED.
-> >
-> > Thanks,
-> > Jayashree
-> >
-> >
-> > On Fri, May 27, 2022 at 12:42 PM Jayashree D <srid.11486@gmail.com>
-> wrote:
-> >>
-> >> Hi Team,
-> >>
-> >> Problem Description :
-> >>
-> >> In the existing phosphor-led-sysfs design, it exposes one service per
-> LED. Therefore, multiple services will be created for multiple GPIO pins
-> configured for LED. To abstract this method and also to create LEDs under=
- a
-> single service, a new implementation is proposed.
->
-> You've kind of jumped directly to a solution without spending any
-> details on why this design is necessary.  What are you trying to
-> achieve?  Why does the existing solution not work?  You allude to
-> multiple services being bad, but you don't really state why, or what's
-> preventing that from working.  This is a section labeled problem
-> description, it needs to describe the problem, ideally in much more
-> length than your solution itself.
->
->  The Yosemite V2 Platform combines a Power LED and a System Identificatio=
-n
-LED into a single bicolor blue-yellow LED per host.
-A total of 4 =C3=97 LEDs will be placed along the front edge of the board i=
-n a
-grid.
-The grid will be 2=C3=97rows of 2 =C3=97 LEDs to match the layout of the ca=
-rd slots.
+On 5/11/2022 2:05 AM, Nikita Pavlov wrote:
+> Hi Jason,
+> 
+> Front panel stop working from there until the next reboot even after 
+> stopping gpioset.
+It sounds like something in the pinctrl muxing is not behaving as expected.
 
-Based on each host status, blue or yellow led needs to be blink, OFF or ON.
-Therefore, bi-color led needs to be paired as a group and exposed in the
-userspace.
+Do you use Aspeed?  What version of Aspeed chip are you using? (This 
+will help find the pinctrl info in the kernel which is hardware-specific.)
 
-Based on the existing implementation in phopshor-led-sysfs, pairing groups
-will be difficult, since it exposes one service per LED.
-
-Therefore, refactoring the phosphor-led-sysfs repo to run under a single
-service and pair a group of LED which represents each host.
-
->>
-> >> Existing Implementation :
-> >>
-> >> 1. Physical Leds are defined in the device tree under "leds" section.
-> >> 2. Corresponding GPIO pin are defined for the physical LEDs.
-> >> 3. "udev rules" are used to monitor the physical LEDs.
-> >> 4. Once the LED in initialized in device tree, udev event will be
-> created and it will trigger a systemd service for that LED.
-> >> 5. Therefore, if multiple GPIO pins are configured for LEDs, then it
-> will create a multiple systemd services (xyz.openbmc_project.led.controll=
-er@.service)
-> for phosphor-led-sysfs based on the LED name.
-> >>
-> >> Example :
-> >>
-> >> busctl tree xyz.openbmc_project.LED.Controller.led1
-> >> `-/xyz
-> >>   `-/xyz/openbmc_project
-> >>     `-/xyz/openbmc_project/led
-> >>       `-/xyz/openbmc_project/led/physical
-> >>         `-/xyz/openbmc_project/led/physical/led1
-> >>
-> >> busctl tree xyz.openbmc_project.LED.Controller.led2
-> >> `-/xyz
-> >>   `-/xyz/openbmc_project
-> >>     `-/xyz/openbmc_project/led
-> >>       `-/xyz/openbmc_project/led/physical
-> >>         `-/xyz/openbmc_project/led/physical/led2
-> >>
-> >>
-> >>
-> >> New Implementation :
-> >>
-> >> 1. Physical Leds are defined in the device tree under "leds" section.
-> >> 2. Corresponding GPIO pin are defined for the physical LEDs.
-> >> 3. "udev rules" are used to monitor the physical LEDs.
-> >> 4. Once the udev event is initialized for the LED, it will store those
-> LED name using the script in udev instead of triggering systemd   service=
-.
-> >> 5. Phosphor-led-sysfs will have a single systemd service
-> (xyz.openbmc_project.led.controller.service) running by default at system
-> startup.
-> >> 6. A dbus method call will be exposed from the service. udev will
-> notify the LEDs detected in the driver.
-> >>
-> >> Example :
-> >>
-> >> busctl tree xyz.openbmc_project.LED.Controller
-> >> `-/xyz
-> >>   `-/xyz/openbmc_project
-> >>     `-/xyz/openbmc_project/led
-> >>       `-/xyz/openbmc_project/led/physical
-> >>         `-/xyz/openbmc_project/led/physical/led1
-> >>         `-/xyz/openbmc_project/led/physical/led2
-> >>
-> >>
-> >> This was already discussed in the previous mail thread. Please refer t=
-o
-> the below link.
-> >> https://lists.ozlabs.org/pipermail/openbmc/2022-April/030272.html
-> >>
-> >> Please provide your suggestions on this new proposal.
-> >>
-> >>
-> >> Thanks
-> >> Jayashree
->
-
---000000000000d2c7d805e0f04d34
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
-<div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jun 7, 2022 at 9:41 PM Ed Tan=
-ous &lt;<a href=3D"mailto:edtanous@google.com">edtanous@google.com</a>&gt; =
-wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
-px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Tue, J=
-un 7, 2022 at 12:07 AM Jayashree D &lt;<a href=3D"mailto:srid.11486@gmail.c=
-om" target=3D"_blank">srid.11486@gmail.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; Hi Team,<br>
-&gt;<br>
-&gt; Could you please provide your suggestions on the above design for LED.=
-<br>
-&gt;<br>
-&gt; Thanks,<br>
-&gt; Jayashree<br>
-&gt;<br>
-&gt;<br>
-&gt; On Fri, May 27, 2022 at 12:42 PM Jayashree D &lt;<a href=3D"mailto:sri=
-d.11486@gmail.com" target=3D"_blank">srid.11486@gmail.com</a>&gt; wrote:<br=
->
-&gt;&gt;<br>
-&gt;&gt; Hi Team,<br>
-&gt;&gt;<br>
-&gt;&gt; Problem Description :<br>
-&gt;&gt;<br>
-&gt;&gt; In the existing phosphor-led-sysfs design, it exposes one service =
-per LED. Therefore, multiple services will be created for multiple GPIO pin=
-s configured for LED. To abstract this method and also to create LEDs under=
- a single service, a new implementation is proposed.<br>
-<br>
-You&#39;ve kind of jumped directly to a solution without spending any<br>
-details on why this design is necessary.=C2=A0 What are you trying to<br>
-achieve?=C2=A0 Why does the existing solution not work?=C2=A0 You allude to=
-<br>
-multiple services being bad, but you don&#39;t really state why, or what&#3=
-9;s<br>
-preventing that from working.=C2=A0 This is a section labeled problem<br>
-description, it needs to describe the problem, ideally in much more<br>
-length than your solution itself.<br>
-<br></blockquote><div>=C2=A0The Yosemite V2 Platform combines a Power LED a=
-nd a System Identification LED into a single bicolor blue-yellow LED per ho=
-st. <br>A total of 4 =C3=97 LEDs will be placed along the front edge of the=
- board in a grid. <br>The grid will be 2=C3=97rows of 2 =C3=97 LEDs to matc=
-h the layout of the card slots.<br><br>Based on each host status, blue or y=
-ellow led needs to be blink, OFF or ON. Therefore, bi-color led needs to be=
- paired as a group and exposed in the userspace. <br></div><div><br></div><=
-div>Based on the existing implementation in phopshor-led-sysfs, pairing gro=
-ups will be difficult, since it exposes one service per LED. <br><br>Theref=
-ore, refactoring the phosphor-led-sysfs repo to run under a single service =
-and pair a group of LED which represents each host.</div><div><br></div><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
-t:1px solid rgb(204,204,204);padding-left:1ex">
-&gt;&gt;<br>
-&gt;&gt; Existing Implementation :<br>
-&gt;&gt;<br>
-&gt;&gt; 1. Physical Leds are defined in the device tree under &quot;leds&q=
-uot; section.<br>
-&gt;&gt; 2. Corresponding GPIO pin are defined for the physical LEDs.<br>
-&gt;&gt; 3. &quot;udev rules&quot; are used to monitor the physical LEDs.<b=
-r>
-&gt;&gt; 4. Once the LED in initialized in device tree, udev event will be =
-created and it will trigger a systemd service for that LED.<br>
-&gt;&gt; 5. Therefore, if multiple GPIO pins are configured for LEDs, then =
-it will create a multiple systemd services (xyz.openbmc_project.led.control=
-ler@.service) for phosphor-led-sysfs based on the LED name.<br>
-&gt;&gt;<br>
-&gt;&gt; Example :<br>
-&gt;&gt;<br>
-&gt;&gt; busctl tree xyz.openbmc_project.LED.Controller.led1<br>
-&gt;&gt; `-/xyz<br>
-&gt;&gt;=C2=A0 =C2=A0`-/xyz/openbmc_project<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led/physical<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led/physic=
-al/led1<br>
-&gt;&gt;<br>
-&gt;&gt; busctl tree xyz.openbmc_project.LED.Controller.led2<br>
-&gt;&gt; `-/xyz<br>
-&gt;&gt;=C2=A0 =C2=A0`-/xyz/openbmc_project<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led/physical<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led/physic=
-al/led2<br>
-&gt;&gt;<br>
-&gt;&gt;<br>
-&gt;&gt;<br>
-&gt;&gt; New Implementation :<br>
-&gt;&gt;<br>
-&gt;&gt; 1. Physical Leds are defined in the device tree under &quot;leds&q=
-uot; section.<br>
-&gt;&gt; 2. Corresponding GPIO pin are defined for the physical LEDs.<br>
-&gt;&gt; 3. &quot;udev rules&quot; are used to monitor the physical LEDs.<b=
-r>
-&gt;&gt; 4. Once the udev event is initialized for the LED, it will store t=
-hose LED name using the script in udev instead of triggering systemd=C2=A0 =
-=C2=A0service.<br>
-&gt;&gt; 5. Phosphor-led-sysfs will have a single systemd service (xyz.open=
-bmc_project.led.controller.service) running by default at system startup.<b=
-r>
-&gt;&gt; 6. A dbus method call will be exposed from the service. udev will =
-notify the LEDs detected in the driver.<br>
-&gt;&gt;<br>
-&gt;&gt; Example :<br>
-&gt;&gt;<br>
-&gt;&gt; busctl tree xyz.openbmc_project.LED.Controller<br>
-&gt;&gt; `-/xyz<br>
-&gt;&gt;=C2=A0 =C2=A0`-/xyz/openbmc_project<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led/physical<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led/physic=
-al/led1<br>
-&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led/physic=
-al/led2<br>
-&gt;&gt;<br>
-&gt;&gt;<br>
-&gt;&gt; This was already discussed in the previous mail thread. Please ref=
-er to the below link.<br>
-&gt;&gt; <a href=3D"https://lists.ozlabs.org/pipermail/openbmc/2022-April/0=
-30272.html" rel=3D"noreferrer" target=3D"_blank">https://lists.ozlabs.org/p=
-ipermail/openbmc/2022-April/030272.html</a><br>
-&gt;&gt;<br>
-&gt;&gt; Please provide your suggestions on this new proposal.<br>
-&gt;&gt;<br>
-&gt;&gt;<br>
-&gt;&gt; Thanks<br>
-&gt;&gt; Jayashree<br>
-</blockquote></div></div>
-
---000000000000d2c7d805e0f04d34--
+> 
+> I test it with getting POWER_OUT line value and then released line like 
+> this:
+> 
+> #include <gpiod.hpp>
+> 
+> #include <iostream>
+> 
+> int main(int argc, char** argv)
+> {
+>      gpiod::line line = gpiod::find_line("POWER_OUT");
+>      if (!line)
+>      {
+>          std::cerr << "find line error\n";
+>          return -1;
+>      }
+> 
+>      try
+>      {
+>          line.request({"pwr", gpiod::line_request::EVENT_BOTH_EDGES, {}});
+>      }
+>      catch (const std::exception& ec)
+>      {
+>          std::cerr << ec.what();
+>      }
+> 
+>      int state = line.get_value();
+>      std::cout << state << '\n';
+>      line.release();
+> 
+>      return 0;
+> }
+> 
+> 
+> But front panel button also doesnt work with getting value.
+> 
+> --
+> Best regards,
+> Nikita Pavlov,
+> NUST MISiS Student
+> 
+> 
+> 
+> понедельник, 2 мая 2022 г., 18:36:24 GMT+3, Bills, Jason M 
+> <jason.m.bills@linux.intel.com> написал(-а):
+> 
+> 
+> Hi Nikita,
+> 
+> On 4/30/2022 7:25 AM, Nikita Pavlov wrote:
+>  > Hi Jason, thank you for your response. In my platform I have
+>  > power-control gpios in GPIOD group like this:
+>  >
+>  > /*D0-D7*/ "POWER_BUTTON","POWER_OUT","RESET_BUTTON","RESET_OUT",
+>  >
+>  > Also I configurate pass-through mode in dts:
+>  >
+>  >          pinctrl-names = "pass-through";
+>  >          pinctrl-0 = <&pinctrl_gpid0_default
+>  >                              &pinctrl_gpid2_default>;
+> 
+> Could you please share what is your BMC hardware version?
+>  >
+>  > After update and reboot platform I have same problem - front panel
+>  > buttons dont enable (front panel buttons dont enable if I use
+>  > x86-power-control module or manually set gpio values by gpioset utility).
+>  > But if I dont use any impacts on gpio (disable x86-power-control module
+>  > and dont use gpio utilities like gpioset/get) front panel buttons 
+> work well.
+>  >
+>  > What are your assumptions about this ?
+> 
+> The pass-through is set up as a mux in pinctrl.  If I remember
+> correctly, the output pin has GPIO output and pass-through mode as two
+> different options in the pinctrl mux.
+> 
+> So, when you request the output pin using libgpiod, it automatically
+> configures the pinctrl to disable the pass-through. You should be able
+> to re-enable pass-through by simply releasing control of the output pin
+> in libgpiod.
+> 
+> For simplicity, let's work with just the gpioset utility and not use
+> x86-power-control.  So, when you initially boot, the pass-through is
+> working. You then use gpioset to change the output pin (which will
+> switch the pinctrl mux and disable pass-through mode causing the front
+> panel to stop working). When you stop gpioset, it should release the
+> gpio and switch the mux back to enable pass-through mode for the front
+> panel to work again.
+> 
+> In your test does the front panel start working again after stopping
+> gpioset? Or does the front panel stop working from there until the next
+> reboot even after stopping gpioset?
+> 
+> Thanks,
+> 
+> -Jason
+> 
+>  >
+>  >
+>  >
+>  > --
+>  > Best regards,
+>  > Nikita Pavlov,
+>  > NUST MISiS Student
+>  >
+>  >
+>  >
+>  > четверг, 28 апреля 2022 г., 23:01:13 GMT+3, Bills, Jason M
+>  > <jason.m.bills@intel.com <mailto:jason.m.bills@intel.com>> написал(-а):
+>  >
+>  >
+>  > Hi Nikita,
+>  >
+>  > In the hardware, we have the power button routed through a GPIO
+>  > pass-through on the Aspeed chip.  If that pass-through is disabled, it
+>  > will prevent the physical front panel button signal from getting past
+>  > the BMC.  That is the first thing I would check.
+>  >
+>  > Also, it is better to send these kinds of questions to the OpenBMC
+>  > mailing list as there may be others in the community in a similar 
+> situation.
+>  >
+>  > Thanks,
+>  >
+>  > -Jason
+>  >
+>  > *From:* Nikita Pavlov <niikita@yahoo.com <mailto:niikita@yahoo.com>>
+>  > *Sent:* Thursday, April 28, 2022 8:58 AM
+>  > *To:* Bills, Jason M <jason.m.bills@intel.com 
+> <mailto:jason.m.bills@intel.com>>; kuiying.wang@intel.com 
+> <mailto:kuiying.wang@intel.com>
+>  > *Subject:* x86-power-control question: front panel buttons dont work
+>  >
+>  > Hi, I user x86-power-control module for my test intel platform. Its
+>  > module works in webui but front panel physical buttons doesnt work. I
+>  > think that it interface describe in this fragment
+>  > 
+> https://github.com/openbmc/x86-power-control/blob/master/src/power_control.cpp#L3072 
+> <https://github.com/openbmc/x86-power-control/blob/master/src/power_control.cpp#L3072 
+>  >
+>  > 
+> <https://github.com/openbmc/x86-power-control/blob/master/src/power_control.cpp#L3072 
+> <https://github.com/openbmc/x86-power-control/blob/master/src/power_control.cpp#L3072>> but 
+> 
+>  > I cant understand this logic.
+>  >
+>  > Say me pls, why front panel buttons dont work ?
+>  >
+>  > --
+>  > Best regards,
+>  > Nikita Pavlov,
+>  > NUST MISiS Student
+>  >
