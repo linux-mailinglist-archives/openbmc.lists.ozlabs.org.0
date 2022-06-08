@@ -2,71 +2,126 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 174ED5435D3
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 17:02:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 43E7B543B1A
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 20:10:32 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LJ9SR6n0Yz3blw
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 01:02:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LJFdL0WkKz3bq5
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 04:10:30 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=GqJ+iPrL;
+	dkim=pass (1024-bit key; unprotected) header.d=ztsystems.com header.i=@ztsystems.com header.a=rsa-sha256 header.s=mimecast20210607 header.b=NfOLRNcC;
+	dkim=pass (1024-bit key) header.d=ztsystems.com header.i=@ztsystems.com header.a=rsa-sha256 header.s=mimecast20210607 header.b=ljWHOZiu;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.55.52.151; helo=mga17.intel.com; envelope-from=jason.m.bills@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=ztsystems.com (client-ip=170.10.133.115; helo=us-smtp-delivery-115.mimecast.com; envelope-from=jeff.friedman@ztsystems.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=GqJ+iPrL;
+	dkim=pass (1024-bit key; unprotected) header.d=ztsystems.com header.i=@ztsystems.com header.a=rsa-sha256 header.s=mimecast20210607 header.b=NfOLRNcC;
+	dkim=pass (1024-bit key) header.d=ztsystems.com header.i=@ztsystems.com header.a=rsa-sha256 header.s=mimecast20210607 header.b=ljWHOZiu;
 	dkim-atps=neutral
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+X-Greylist: delayed 64 seconds by postgrey-1.36 at boromir; Thu, 09 Jun 2022 04:10:03 AEST
+Received: from us-smtp-delivery-115.mimecast.com (us-smtp-delivery-115.mimecast.com [170.10.133.115])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJ9Rz2lXhz3blW
-	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 01:02:06 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1654700527; x=1686236527;
-  h=message-id:date:mime-version:subject:to:references:from:
-   in-reply-to:content-transfer-encoding;
-  bh=b+O4OzY68yd6Z/OEp9hkxYTP/R9S+bsWbEcPAmay3ug=;
-  b=GqJ+iPrLEgrEycvxKe+u/kjJfMr3+5EErz1Tpfjr8ITkJEAoj+6AfHVa
-   PfOy7L/Upo1XQDWUMCD/chgyJ4vlKYkU2jaLB1bf056RbGM0KaIY8zC7C
-   dXd8iCqN4b64A8X4tJYYEDvvCLtGZMgFxXhZzptWduOhOe4Ix4k0TMEYK
-   cqVW3lC/68bErESoK3QseWqOfBTKcFss8BbSoayCaCXRgMf7vONZHeEjU
-   6ynmj5tibmIeEoxuBFERyW9N27N+WpTdreZ08BdOmJ61Y0KvSnr6oHm/a
-   4PQJwD/HHJMKCP5blpV5xO3nA66moq3hqXEnjY7iXcUwQHWscc07o8B27
-   g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10371"; a="257355280"
-X-IronPort-AV: E=Sophos;i="5.91,286,1647327600"; 
-   d="scan'208";a="257355280"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jun 2022 08:01:54 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.91,286,1647327600"; 
-   d="scan'208";a="584935536"
-Received: from linux.intel.com ([10.54.29.200])
-  by fmsmga007.fm.intel.com with ESMTP; 08 Jun 2022 08:01:54 -0700
-Received: from [10.212.63.139] (jmbills-MOBL.amr.corp.intel.com [10.212.63.139])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by linux.intel.com (Postfix) with ESMTPS id 09B2858094D
-	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 08:01:53 -0700 (PDT)
-Message-ID: <24b63477-119d-0d43-e494-4a79f0ad91fc@linux.intel.com>
-Date: Wed, 8 Jun 2022 09:01:53 -0600
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJFcq5C5Kz2xTc
+	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 04:10:03 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ztsystems.com;
+	s=mimecast20210607; t=1654711800;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ezpZehK9Zzt/bCQK+JZckAiGDOv/fQSRMtYmjMAZSeY=;
+	b=NfOLRNcCU+P5na1RIpWauUawzuyt9WSrf7neZA3roddUN3IbLsZYoh0aMntr7ptoa54D3Z
+	5SapFR1LfjTkbQ5nfEBY1dKvGRtYT3/yKRjQ0N5MemJ8OPkD0ITV0MLAW/xgarYO92v2SY
+	wuFSW8ArdMs0wniXUYQaRT6OXwZ33Zo=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ztsystems.com;
+	s=mimecast20210607; t=1654711801;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ezpZehK9Zzt/bCQK+JZckAiGDOv/fQSRMtYmjMAZSeY=;
+	b=ljWHOZiuHH0ZLZM87fMtnrIAMDAdJiOP7F95lC/bjU6PPhCHsxYfpK/1KYjwMKJVTgpKI4
+	wEFUknF1sxInPR+k04zyArqZbJ4MY6CiAZscDCgbRas2qBSyGZY48Qu/jYiyC8KTeHCT4V
+	2C8w7QgMKkiqqYQU8O9oIg24s4xJ/wI=
+Received: from ztcsla-ex01.ztgroup.com (67.212.155.84.static.coresite.com
+ [67.212.155.84]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ us-mta-98-2tO0hZ7kNAW_8HXNRnBa_w-1; Wed, 08 Jun 2022 14:08:46 -0400
+X-MC-Unique: 2tO0hZ7kNAW_8HXNRnBa_w-1
+Received: from ztcsla-ex01.ztgroup.com (10.1.80.51) by ztcsla-ex01.ztgroup.com
+ (10.1.80.51) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2308.27; Wed, 8 Jun
+ 2022 11:08:43 -0700
+Received: from ztcsla-ex01.ztgroup.com ([fe80::f4f5:f679:b90b:d1a5]) by
+ ztcsla-ex01.ztgroup.com ([fe80::f4f5:f679:b90b:d1a5%5]) with mapi id
+ 15.01.2308.027; Wed, 8 Jun 2022 11:08:43 -0700
+From: Jeff Friedman <jeff.friedman@ztsystems.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: FW: Newbie question on Redfish URI resource names
+Thread-Topic: Newbie question on Redfish URI resource names
+Thread-Index: Adh7YaUQhINiiir+SKqIjbsJIX1DoQAAREzA
+Date: Wed, 8 Jun 2022 18:08:43 +0000
+Message-ID: <68063aedd81c42b39d1b343e3a0748b5@ztsystems.com>
+References: <1593fdf40a6046a7a614407f7d08be15@ztsystems.com>
+In-Reply-To: <1593fdf40a6046a7a614407f7d08be15@ztsystems.com>
+Accept-Language: en-US
+X-MS-Has-Attach: yes
+X-MS-TNEF-Correlator: 
+x-dg-ref: =?us-ascii?Q?PG1ldGE+PGF0IG5tPSJpbWFnZTAwMS5naWYiIHA9IiIgc3o9IjAiIHQ9IjAi?=
+ =?us-ascii?Q?IGg9IiIgaWQ9IiIgYmw9IjAiIGJvPSIwIi8+PGF0IG5tPSJib2R5Lmh0bWwi?=
+ =?us-ascii?Q?IHA9ImM6XHVzZXJzXGplZmYuZnJpZWRtYW5cYXBwZGF0YVxyb2FtaW5nXDA5?=
+ =?us-ascii?Q?ZDg0OWI2LTMyZDMtNGE0MC04NWVlLTZiODRiYTI5ZTM1Ylxtc2dzXG1zZy0w?=
+ =?us-ascii?Q?NjY1MzQ4Zi1lNzU2LTExZWMtYjYwNi1lNDVlMzczMzViOWRcYW1lLXRlc3Rc?=
+ =?us-ascii?Q?MDY2NTM0OTEtZTc1Ni0xMWVjLWI2MDYtZTQ1ZTM3MzM1YjlkYm9keS5odG1s?=
+ =?us-ascii?Q?IiBzej0iNTEzNCIgdD0iMTMyOTkxODUzMjEyNDIyMzI4IiBoPSJiQmxpWDhQ?=
+ =?us-ascii?Q?NTZWMHZSS2VXc3VnbjlneDBObzg9IiBpZD0iIiBibD0iMCIgYm89IjEiIGNp?=
+ =?us-ascii?Q?PSJjQUFBQUVSSFUxUlNSVUZOQ2dVQUFNSUVBQUM0VUwvSVludllBYUxXYWdx?=
+ =?us-ascii?Q?U3QrdThvdFpxQ3BLMzY3d0hBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBSEFB?=
+ =?us-ascii?Q?QUFCU0JBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBRUFBUUFCQUFBQU9zM1dP?=
+ =?us-ascii?Q?Z0FBQUFBQUFBQUFBQUFBQUo0QUFBQmhBR1FBWkFCeUFHVUFjd0J6QUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFFQUFBQUFBQUFBQWdBQUFB?=
+ =?us-ascii?Q?QUFuZ0FBQUdNQVl3QmZBR01BZFFCekFIUUFid0J0QUY4QVlRQnVBSGtBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBUUFBQUFBQUFBQUNBQUFBQUFDZUFBQUFZd0IxQUhN?=
+ =?us-ascii?Q?QWRBQnZBRzBBWHdCd0FHVUFjZ0J6QUc4QWJnQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFCQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QkFBQUFBQUFBQUFJQUFBQUFBSjRBQUFCakFIVUFjd0IwQUc4QWJRQmZBSEFB?=
+ =?us-ascii?Q?YUFCdkFHNEFaUUJ1QUhVQWJRQmlBR1VBY2dBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBRUFBQUFBQUFBQUFBQUFBQUVBQUFBQUFBQUFBZ0FB?=
+ =?us-ascii?Q?QUFBQW5nQUFBR01BZFFCekFIUUFid0J0QUY4QWN3QnpBRzRBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFRQUFBQUFBQUFBQ0FBQUFBQUNlQUFBQVpRQnRB?=
+ =?us-ascii?Q?R0VBYVFCc0FGOEFZUUJrQUdRQWNnQmxBSE1BY3dBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFCQUFBQUFBQUFBQUlBQUFBQUFKNEFBQUI2QUhRQVh3QmpBRzhBYmdCbUFH?=
+ =?us-ascii?Q?a0FaQUJsQUc0QWRBQnBBR0VBYkFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
+ =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBRUFBQUFBQUFBQUFn?=
+ =?us-ascii?Q?QUFBQUFBIi8+PC9tZXRhPg=3D=3D?=
+x-dg-rorf: true
+x-originating-ip: [10.1.80.38]
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.8.1
-Subject: Re: x86-power-control question: front panel buttons dont work
+Authentication-Results: relay.mimecast.com;
+	auth=pass smtp.auth=CUSA15A415 smtp.mailfrom=jeff.friedman@ztsystems.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: ztsystems.com
 Content-Language: en-US
-To: openbmc@lists.ozlabs.org
-References: <1790304102.3756861.1651157909253.ref@mail.yahoo.com>
- <1790304102.3756861.1651157909253@mail.yahoo.com>
- <MW3PR11MB4732097DE3322E07CD2F99C2A3FD9@MW3PR11MB4732.namprd11.prod.outlook.com>
- <667725503.727721.1651325136829@mail.yahoo.com>
- <93960ad8-105b-fc06-b5e8-a4f2c443c473@linux.intel.com>
- <1672954866.3142932.1652256355764@mail.yahoo.com>
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-In-Reply-To: <1672954866.3142932.1652256355764@mail.yahoo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/related;
+	boundary="_004_68063aedd81c42b39d1b343e3a0748b5ztsystemscom_";
+	type="multipart/alternative"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,170 +136,213 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Nikita,
+--_004_68063aedd81c42b39d1b343e3a0748b5ztsystemscom_
+Content-Type: multipart/alternative;
+	boundary="_000_68063aedd81c42b39d1b343e3a0748b5ztsystemscom_"
 
-Sorry for the delay on this as I was on leave.  Did this get resolved?
+--_000_68063aedd81c42b39d1b343e3a0748b5ztsystemscom_
+Content-Type: text/plain; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
 
-On 5/11/2022 2:05 AM, Nikita Pavlov wrote:
-> Hi Jason,
-> 
-> Front panel stop working from there until the next reboot even after 
-> stopping gpioset.
-It sounds like something in the pinctrl muxing is not behaving as expected.
+Hello all,
 
-Do you use Aspeed?  What version of Aspeed chip are you using? (This 
-will help find the pinctrl info in the kernel which is hardware-specific.)
+New to OpenBMC, and am not clear on one thing as pertaining to the Redfish =
+schema and URI resource names:
 
-> 
-> I test it with getting POWER_OUT line value and then released line like 
-> this:
-> 
-> #include <gpiod.hpp>
-> 
-> #include <iostream>
-> 
-> int main(int argc, char** argv)
-> {
->      gpiod::line line = gpiod::find_line("POWER_OUT");
->      if (!line)
->      {
->          std::cerr << "find line error\n";
->          return -1;
->      }
-> 
->      try
->      {
->          line.request({"pwr", gpiod::line_request::EVENT_BOTH_EDGES, {}});
->      }
->      catch (const std::exception& ec)
->      {
->          std::cerr << ec.what();
->      }
-> 
->      int state = line.get_value();
->      std::cout << state << '\n';
->      line.release();
-> 
->      return 0;
-> }
-> 
-> 
-> But front panel button also doesnt work with getting value.
-> 
-> --
-> Best regards,
-> Nikita Pavlov,
-> NUST MISiS Student
-> 
-> 
-> 
-> понедельник, 2 мая 2022 г., 18:36:24 GMT+3, Bills, Jason M 
-> <jason.m.bills@linux.intel.com> написал(-а):
-> 
-> 
-> Hi Nikita,
-> 
-> On 4/30/2022 7:25 AM, Nikita Pavlov wrote:
->  > Hi Jason, thank you for your response. In my platform I have
->  > power-control gpios in GPIOD group like this:
->  >
->  > /*D0-D7*/ "POWER_BUTTON","POWER_OUT","RESET_BUTTON","RESET_OUT",
->  >
->  > Also I configurate pass-through mode in dts:
->  >
->  >          pinctrl-names = "pass-through";
->  >          pinctrl-0 = <&pinctrl_gpid0_default
->  >                              &pinctrl_gpid2_default>;
-> 
-> Could you please share what is your BMC hardware version?
->  >
->  > After update and reboot platform I have same problem - front panel
->  > buttons dont enable (front panel buttons dont enable if I use
->  > x86-power-control module or manually set gpio values by gpioset utility).
->  > But if I dont use any impacts on gpio (disable x86-power-control module
->  > and dont use gpio utilities like gpioset/get) front panel buttons 
-> work well.
->  >
->  > What are your assumptions about this ?
-> 
-> The pass-through is set up as a mux in pinctrl.  If I remember
-> correctly, the output pin has GPIO output and pass-through mode as two
-> different options in the pinctrl mux.
-> 
-> So, when you request the output pin using libgpiod, it automatically
-> configures the pinctrl to disable the pass-through. You should be able
-> to re-enable pass-through by simply releasing control of the output pin
-> in libgpiod.
-> 
-> For simplicity, let's work with just the gpioset utility and not use
-> x86-power-control.  So, when you initially boot, the pass-through is
-> working. You then use gpioset to change the output pin (which will
-> switch the pinctrl mux and disable pass-through mode causing the front
-> panel to stop working). When you stop gpioset, it should release the
-> gpio and switch the mux back to enable pass-through mode for the front
-> panel to work again.
-> 
-> In your test does the front panel start working again after stopping
-> gpioset? Or does the front panel stop working from there until the next
-> reboot even after stopping gpioset?
-> 
-> Thanks,
-> 
-> -Jason
-> 
->  >
->  >
->  >
->  > --
->  > Best regards,
->  > Nikita Pavlov,
->  > NUST MISiS Student
->  >
->  >
->  >
->  > четверг, 28 апреля 2022 г., 23:01:13 GMT+3, Bills, Jason M
->  > <jason.m.bills@intel.com <mailto:jason.m.bills@intel.com>> написал(-а):
->  >
->  >
->  > Hi Nikita,
->  >
->  > In the hardware, we have the power button routed through a GPIO
->  > pass-through on the Aspeed chip.  If that pass-through is disabled, it
->  > will prevent the physical front panel button signal from getting past
->  > the BMC.  That is the first thing I would check.
->  >
->  > Also, it is better to send these kinds of questions to the OpenBMC
->  > mailing list as there may be others in the community in a similar 
-> situation.
->  >
->  > Thanks,
->  >
->  > -Jason
->  >
->  > *From:* Nikita Pavlov <niikita@yahoo.com <mailto:niikita@yahoo.com>>
->  > *Sent:* Thursday, April 28, 2022 8:58 AM
->  > *To:* Bills, Jason M <jason.m.bills@intel.com 
-> <mailto:jason.m.bills@intel.com>>; kuiying.wang@intel.com 
-> <mailto:kuiying.wang@intel.com>
->  > *Subject:* x86-power-control question: front panel buttons dont work
->  >
->  > Hi, I user x86-power-control module for my test intel platform. Its
->  > module works in webui but front panel physical buttons doesnt work. I
->  > think that it interface describe in this fragment
->  > 
-> https://github.com/openbmc/x86-power-control/blob/master/src/power_control.cpp#L3072 
-> <https://github.com/openbmc/x86-power-control/blob/master/src/power_control.cpp#L3072 
->  >
->  > 
-> <https://github.com/openbmc/x86-power-control/blob/master/src/power_control.cpp#L3072 
-> <https://github.com/openbmc/x86-power-control/blob/master/src/power_control.cpp#L3072>> but 
-> 
->  > I cant understand this logic.
->  >
->  > Say me pls, why front panel buttons dont work ?
->  >
->  > --
->  > Best regards,
->  > Nikita Pavlov,
->  > NUST MISiS Student
->  >
+The DMTF Redfish schema URIs are defined as:
+
+/redfish/v1/Chassis/{ChassisId}/
+/redfish/v1/Managers/{ManagerId}
+/redfish/v1/Systems/{ComputerSystemId}
+
+Vendors can use their own names for {ChassisId}, {ManagerId}, and {Computer=
+SystemId} as long as they conform to the syntax rules.
+
+Question: Does OpenBMC specify names for these resources as part of the Ope=
+nBMC spec? Or does OpenBMC just refer to the existing DMTF Redfish schemas?
+
+I ask because I have seen reference to the following names in examples for =
+Managers and Systems on the OpenBMC website:
+
+/redfish/v1/Chassis/{ChassisId}/
+/redfish/v1/Managers/bmc/
+/redfish/v1/Systems/system/
+
+In summary, does OpenBMC specify these resource names as part of their spec=
+, or does it refer to existing DMTF Redfish schema specs?
+
+Thank you!
+
+Jeff Friedman
+Sr. Field Systems Engineer | ZT Systems
+M: 206.819.2824
+[ZT Systems]<http://www.ztsystems.com/>
+
+This email and any files transmitted with it are privileged/confidential an=
+d intended solely for the use of the individual to whom they are addressed.=
+ If you have received this email in error, you are not authorized to distri=
+bute it in whole or in part. This communication does not constitute a contr=
+act offer, amendment, or acceptance of a contract offer, unless explicitly =
+stated.
+
+
+--_000_68063aedd81c42b39d1b343e3a0748b5ztsystemscom_
+Content-Type: text/html; charset=WINDOWS-1252
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<!--[if !mso]><style>v\:* {behavior:url(#default#VML);}
+o\:* {behavior:url(#default#VML);}
+w\:* {behavior:url(#default#VML);}
+.shape {behavior:url(#default#VML);}
+</style><![endif]--><style><!--
+/* Font Definitions */
+@font-face
+=09{font-family:"Cambria Math";
+=09panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+=09{font-family:Calibri;
+=09panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+=09{margin:0in;
+=09font-size:11.0pt;
+=09font-family:"Calibri",sans-serif;}
+.MsoChpDefault
+=09{mso-style-type:export-only;
+=09font-size:10.0pt;}
+@page WordSection1
+=09{size:8.5in 11.0in;
+=09margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+=09{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:=
+break-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">Hello all,<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">New to OpenBMC, and am not clear on one thing as per=
+taining to the Redfish schema and URI resource names:<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">The DMTF Redfish schema URIs are defined as:<o:p></o=
+:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">/redfish/v1/Chassis/{ChassisId}/<o:p></o:p></p>
+<p class=3D"MsoNormal">/redfish/v1/Managers/{ManagerId}<o:p></o:p></p>
+<p class=3D"MsoNormal">/redfish/v1/Systems/{ComputerSystemId}<o:p></o:p></p=
+>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Vendors can use their own names for {ChassisId}, {Ma=
+nagerId}, and {ComputerSystemId} as long as they conform to the syntax rule=
+s.
+<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Question: Does OpenBMC specify names for these resou=
+rces as part of the OpenBMC spec? Or does OpenBMC just refer to the existin=
+g DMTF Redfish schemas?<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">I ask because I have seen reference to the following=
+ names in examples for Managers and Systems on the OpenBMC website:<o:p></o=
+:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">/redfish/v1/Chassis/{ChassisId}/&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <o:p=
+></o:p></p>
+<p class=3D"MsoNormal">/redfish/v1/Managers/<b><i>bmc</i></b>/&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;
+<o:p></o:p></p>
+<p class=3D"MsoNormal">/redfish/v1/Systems/<b><i>system</i></b>/&nbsp;&nbsp=
+;&nbsp;&nbsp; <o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">In summary, does OpenBMC specify these resource name=
+s as part of their spec, or does it refer to existing DMTF Redfish schema s=
+pecs?<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Thank you!<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><b><span style=3D"color:#DF4826">Jeff Friedman</span=
+></b><span style=3D"font-size:9.0pt;color:#1F497D"><br>
+</span><span style=3D"font-size:9.0pt;color:gray">Sr. Field Systems Enginee=
+r | ZT Systems</span><span style=3D"font-size:9.0pt;color:#44546A"><o:p></o=
+:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:12.0pt"><span style=3D"font-s=
+ize:9.0pt;color:#7F7F7F">M: 206.819.2824<o:p></o:p></span></p>
+<p class=3D"MsoNormal" style=3D"margin-bottom:12.0pt"><a href=3D"http://www=
+.ztsystems.com/"><span style=3D"font-size:10.5pt;font-family:&quot;Arial&qu=
+ot;,sans-serif;color:#4A58AB;text-decoration:none"><img border=3D"0" width=
+=3D"115" height=3D"46" style=3D"width:1.1979in;height:.4791in" id=3D"Pictur=
+e_x0020_2" src=3D"cid:image001.gif@01D87B26.F8CE6840" alt=3D"ZT Systems"></=
+span></a><span style=3D"font-size:10.5pt;font-family:&quot;Arial&quot;,sans=
+-serif;color:#6D6E71"><br>
+<br>
+</span><span style=3D"font-size:7.0pt;font-family:&quot;Arial&quot;,sans-se=
+rif;color:#7F7F7F">This email and any files transmitted with it are privile=
+ged/confidential and intended solely for the use of the individual to whom =
+they are addressed. If you have received this
+ email in error, you are not authorized to distribute it in whole or in par=
+t. This communication does not constitute a contract offer, amendment, or a=
+cceptance of a contract offer, unless explicitly stated.</span><span style=
+=3D"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;color:#6D6E71=
+">&nbsp;</span><o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+</body>
+</html>
+
+--_000_68063aedd81c42b39d1b343e3a0748b5ztsystemscom_--
+
+--_004_68063aedd81c42b39d1b343e3a0748b5ztsystemscom_
+Content-Type: image/gif; name="image001.gif"
+Content-Description: image001.gif
+Content-Disposition: inline; filename="image001.gif"; size=1474;
+	creation-date="Wed, 08 Jun 2022 18:08:43 GMT";
+	modification-date="Wed, 08 Jun 2022 18:08:43 GMT"
+Content-ID: <image001.gif@01D87B26.F8CE6840>
+Content-Transfer-Encoding: base64
+
+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
+--_004_68063aedd81c42b39d1b343e3a0748b5ztsystemscom_--
+
