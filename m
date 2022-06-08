@@ -1,59 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C4490542174
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 08:33:14 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1EA9654216C
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 08:19:55 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LHy8m5Pxkz3brX
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 16:33:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LHxsN6yGSz3bnM
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 16:19:52 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=lhpcQWPY;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kaod.org (client-ip=188.165.49.222; helo=6.mo552.mail-out.ovh.net; envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
-X-Greylist: delayed 82171 seconds by postgrey-1.36 at boromir; Wed, 08 Jun 2022 16:32:55 AEST
-Received: from 6.mo552.mail-out.ovh.net (6.mo552.mail-out.ovh.net [188.165.49.222])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::432; helo=mail-wr1-x432.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=lhpcQWPY;
+	dkim-atps=neutral
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LHy8R2tYlz2xgX
-	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 16:32:52 +1000 (AEST)
-Received: from mxplan5.mail.ovh.net (unknown [10.109.143.159])
-	by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 8045F26EE5;
-	Wed,  8 Jun 2022 06:16:55 +0000 (UTC)
-Received: from kaod.org (37.59.142.98) by DAG4EX1.mxp5.local (172.16.2.31)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.9; Wed, 8 Jun 2022
- 08:16:54 +0200
-Authentication-Results: garm.ovh; auth=pass (GARM-98R002367af67d-ecf9-4667-b5d9-369efb58422c,
-                    54A3B2140384DD5702107EFE02B2448601CCACB1) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <f59e9e6b-1267-c667-9ef0-ac6968b0f728@kaod.org>
-Date: Wed, 8 Jun 2022 08:16:53 +0200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LHxs15JN9z2x9M
+	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 16:19:32 +1000 (AEST)
+Received: by mail-wr1-x432.google.com with SMTP id q15so18838089wrc.11
+        for <openbmc@lists.ozlabs.org>; Tue, 07 Jun 2022 23:19:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=jms.id.au; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=oxu/4o4zh+l/7RBxmos9nJg4f3iwHYI4l6I6CyisrAE=;
+        b=lhpcQWPYlE1Igw5ctUdKPE2IW5ez3i7V/lXFGJz465V9L3b3ViFBYf7KyUs9/Td35F
+         iDchtx6SyIhD5vgkCsdC34ySh6bWux0gQO95WWxFPh/pxgAs2e1kFy9ExPz/4dC1u/i5
+         EWcCZ/suiIl7HC9Q/k9FjDKH/TRPZ4sOafrXo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=oxu/4o4zh+l/7RBxmos9nJg4f3iwHYI4l6I6CyisrAE=;
+        b=L85uxoTzX+4Wd1pb7QsF15iBTiv9KgiREXlqbVGVph2aNbGCUM4T2DsBm8d0jHStQe
+         1CFj80rASd445alhCd6snGaShV2BgwwToUMG7hHM3xat+CRd9gdEKcYskKlYOCbMuzAb
+         R9YHTsHgFVj+VPp2oYHtIsLOmHOB2ebZnq5a2XO50EhlEZ629mPxl+ximZ5JFGpoKLfS
+         HdIhBPGqCFVC4+k9OiazGGgdQi8QjIjilI9Wt43ZwakNUU3uL6iidyRZUP1FOAUhdTJD
+         1bqyWqUqh2eKF9TJfDNS8mBd159fuCUjMX5ZqnR8LoxL9C03HoCn8FBKzsKlH8RH782U
+         y46w==
+X-Gm-Message-State: AOAM532cw6jKhipBmkcGEY+1b4lOgVoJEzJ+bfk+A+3q8gbzN/+2mHeq
+	curt5a90FxGDErausM1+xqTLsr1YvjjatjA3y6UzL7k5
+X-Google-Smtp-Source: ABdhPJwnGGbCNGuyMFcTERCIxWde4ptzAuR3mtKC4VNAtktwvWWQU/P9x24j7wvkS0/i0vvazy6cwvQssUTw5sh/UUY=
+X-Received: by 2002:a5d:47c9:0:b0:20f:e7da:6a48 with SMTP id
+ o9-20020a5d47c9000000b0020fe7da6a48mr31608584wrc.315.1654669168690; Tue, 07
+ Jun 2022 23:19:28 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v2] ARM: dts: aspeed: add
- Qualcomm DC-SCM V1
-Content-Language: en-US
-To: Joel Stanley <joel@jms.id.au>, Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
-References: <20220519185318.62655-1-quic_jaehyoo@quicinc.com>
- <a9798967-ab87-2469-a8cf-ab8ac237908a@quicinc.com>
- <CACPK8Xf7Bqjk1A+qeJcrTCGL-PdFj5a2yBna+QvrSi5RpfLXsg@mail.gmail.com>
- <dcf3bc8e-eaff-1469-e034-141aa0a4acf1@kaod.org>
- <09b467bf-2acc-1834-2143-e7e735a74b53@quicinc.com>
- <CACPK8XfP3T1gX_3-BWM3tZHrnwCqjNXz67nE9anxat-EfTmdaQ@mail.gmail.com>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <CACPK8XfP3T1gX_3-BWM3tZHrnwCqjNXz67nE9anxat-EfTmdaQ@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.98]
-X-ClientProxiedBy: DAG3EX2.mxp5.local (172.16.2.22) To DAG4EX1.mxp5.local
- (172.16.2.31)
-X-Ovh-Tracer-GUID: 80fff33b-beb9-43fc-b7db-ad00bbfc1362
-X-Ovh-Tracer-Id: 4528087951807777699
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvfedruddtiedguddtiecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkffggfgfuvfevfhfhjggtgfhisehtkeertddtfeejnecuhfhrohhmpeevrogurhhitggpnfgvpgfiohgrthgvrhcuoegtlhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepkeetjedtleekjedvveffudfhteetleeifeegfeffuefghfefkeehffeufeeludejnecukfhppedtrddtrddtrddtpdefjedrheelrddugedvrdelkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhhvghlohepmhigphhlrghnhedrmhgrihhlrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpegtlhhgsehkrghougdrohhrghdpnhgspghrtghpthhtohepuddprhgtphhtthhopehophgvnhgsmhgtsehlihhsthhsrdhoiihlrggsshdrohhrghdpoffvtefjohhsthepmhhoheehvd
+References: <20220608061455.365123-1-clg@kaod.org> <20220608061455.365123-2-clg@kaod.org>
+In-Reply-To: <20220608061455.365123-2-clg@kaod.org>
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 8 Jun 2022 06:19:16 +0000
+Message-ID: <CACPK8XfusuUoFsqhPiUk_KwbG==YOJjgAiEzLbiPEZ_KcPkX-Q@mail.gmail.com>
+Subject: Re: [PATCH 2/2] ARM: dts: aspeed: Remove "spi-flash" compatible
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,114 +70,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, Graeme Gregory <quic_ggregory@quicinc.com>, Jamie Iles <quic_jiles@quicinc.com>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, Jae Hyun Yoo <quic_jaehyoo@quicinc.com>, Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 6/8/22 05:05, Joel Stanley wrote:
-> On Tue, 7 Jun 2022 at 14:03, Jae Hyun Yoo <quic_jaehyoo@quicinc.com> wrote:
->>
->> On 6/7/2022 12:43 AM, Cédric Le Goater wrote:
->>> On 6/7/22 03:05, Joel Stanley wrote:
->>>> On Mon, 6 Jun 2022 at 13:56, Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
->>>> wrote:
->>>>>
->>>>> Ping
->>>>>
->>>>> On 5/19/2022 11:53 AM, Jae Hyun Yoo wrote:
->>>>>> From: Graeme Gregory <quic_ggregory@quicinc.com>
->>>>>>
->>>>>> Add initial version of device tree for Qualcomm DC-SCM V1 BMC which is
->>>>>> equipped with Aspeed AST2600 BMC SoC.
->>>>>>
->>>>>> Signed-off-by: Graeme Gregory <quic_ggregory@quicinc.com>
->>>>>> Signed-off-by: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
->>>>>> ---
->>>>>> Changes in v2:
->>>>>> * Changed vendor name from Nuvia to Qualcomm.
->>>>>>
->>>>>>     arch/arm/dts/Makefile                   |   1 +
->>>>>>     arch/arm/dts/ast2600-qcom-dc-scm-v1.dts | 208
->>>>>> ++++++++++++++++++++++++
->>>>>>     2 files changed, 209 insertions(+)
->>>>>>     create mode 100644 arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
->>>>>>
->>>>>> diff --git a/arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
->>>>>> b/arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
->>>>>> new file mode 100644
->>>>>> index 000000000000..e966f739b708
->>>>>> --- /dev/null
->>>>>> +++ b/arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
->>
->> [...]
->>
->>>>>> +&fmc {
->>>>>> +     status = "okay";
->>>>>> +
->>>>>> +     pinctrl-names = "default";
->>>>>> +     pinctrl-0 = <&pinctrl_fmcquad_default>;
->>>>>> +
->>>>>> +     flash@0 {
->>>>>> +             compatible = "spi-flash", "sst,w25q256";
->>>>
->>>> Compatible strings should go from the most general to the most
->>>> specific, so these are around the wrong way. I see you've probably
->>>> just copied the ast2600-evb which makes the same mistake.
->>>>
->>>> In the dtsi we have jedec,spi-nor which you overwrite here.
->>>>
->>>> u-boot has spi-flash but Linux uses jedec,spi-nor. I wonder if we
->>>> should update the aspeed driver to use that?
->>>>
->>>> Cédric, do you have thoughts here?
->>>
->>> Yes. The closer we are to the Linux DT the better.
->>>
->>> The "spi-flash" and "jedec,spi-nor" compatibles are equivalent for
->>> the SF driver in U-Boot. I think we can remove all the :
->>>
->>>      compatible = "spi-flash", "sst,w25q256";
->>>
->>> from the Aspeed dts files.
->>>
->>> This fits what the latest U-Boot does.
->>
->> I checked that it works without the compatible string. I'll drop the
->> line in v3.
-> 
-> Can you describe your test setup?
-> 
-> When I tested, using the ast2600-evb.dts, the driver reported:
-> 
-> ast# sf probe
-> aspeed_spi: flash-controller@1e620000 has no flash devices ?!
-> Invalid bus 0 (err=-19)
-> Failed to initialize SPI flash at 0:0 (error -19)
-> 
-> This is because the aspeed_spi.c driver counts the number of "spi-flash" nodes:
-> 
-> static int aspeed_spi_count_flash_devices(struct udevice *bus)
-> {
->          ofnode node;
->          int count = 0;
-> 
->          dev_for_each_subnode(node, bus) {
->                  if (ofnode_is_available(node) &&
->                      ofnode_device_is_compatible(node, "spi-flash"))
->                          count++;
->          }
-> 
->          return count;
-> }
+On Wed, 8 Jun 2022 at 06:15, C=C3=A9dric Le Goater <clg@kaod.org> wrote:
+>
+> The underlying SoC definitions use compatible "jedec,spi-nor", so does
+> the aspeed SPI driver, this to be in sync with Linux and the latest
+> U-Boot.
 
-This is only needed for the "sf" command. boot simply uses the mapping on
-0x20000000.
+> diff --git a/arch/arm/dts/ast2600-tacoma.dts b/arch/arm/dts/ast2600-tacom=
+a.dts
+> index 67b3e3013c6b..a29e7e7fa23a 100755
+> --- a/arch/arm/dts/ast2600-tacoma.dts
+> +++ b/arch/arm/dts/ast2600-tacoma.dts
+> @@ -65,7 +65,6 @@
+>
+>         flash@0 {
+>                 // TODO: what compatible strings should be here?
+> -               compatible =3D "spi-flash", "sst,w25q256";
 
-  
-> We need to fix that if we're going to remove the "spi-flash"
-> compatibles from the device tree.
+Thanks. I had a similar version that also removed these todos. I'll
+merge yours and remove the TODOs too.
 
-Just sent patches for it.
+Reviewed-by: Joel Stanley <joel@jms.id.au>
 
-Cheers,
-C.
+
+>                 status =3D "okay";
+>                 spi-max-frequency =3D <50000000>;
+>                 spi-tx-bus-width =3D <2>;
