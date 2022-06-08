@@ -2,83 +2,37 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 337895420EA
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 06:12:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CC9F3542168
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 08:15:22 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LHv2n1BjPz3bmC
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 14:12:49 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=n63RNhgn;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LHxm80mXvz3bsF
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 16:15:20 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=n63RNhgn;
-	dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LHv2H6pXBz2xbY
-	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 14:12:22 +1000 (AEST)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2583FZod020301
-	for <openbmc@lists.ozlabs.org>; Wed, 8 Jun 2022 04:12:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date : to :
- from : subject : content-type : content-transfer-encoding : mime-version;
- s=pp1; bh=LO14CxVgfcHwKW7ixI7XdZ1bdc/4vTPtVhrpVHeG9I0=;
- b=n63RNhgnp8DYu2SY1VHwdkk9mHbk0Pi2wko10c+9Xbvw5Eye1MLfOgc0iO/K2uSvPQN/
- jbi2D+IPPDcvR/b0ogq3auPBucHYDuEmQfjMPfE7hHHCHbgfv70wmZcbgKfNMBhAavsj
- SqLDL0zkUk140qJseb6rEwN+uoaiEicLp7xcfHGjAZR7CTUG08fZ+i/KYtByWimCQmNX
- WZFOyEUB1GECSTW1LtFElMNwTBNzvqkB/G9BvXDlYHLU1CZtAeCH3D3n/bp6IiS99et8
- 4KIzI+9B5eOOQ3Wg+nwwT3ZYW3mbyhPoX4cGmwLhkHUqFqpO1lib3JlbRI4in3uE5CQJ Dg== 
-Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com [169.63.214.131])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3gjkpurtk2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Wed, 08 Jun 2022 04:12:19 +0000
-Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
-	by ppma01dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 25846dCD017667
-	for <openbmc@lists.ozlabs.org>; Wed, 8 Jun 2022 04:12:18 GMT
-Received: from b03cxnp07027.gho.boulder.ibm.com (b03cxnp07027.gho.boulder.ibm.com [9.17.130.14])
-	by ppma01dal.us.ibm.com with ESMTP id 3gfy1a700d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Wed, 08 Jun 2022 04:12:18 +0000
-Received: from b03ledav005.gho.boulder.ibm.com (b03ledav005.gho.boulder.ibm.com [9.17.130.236])
-	by b03cxnp07027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 2584CH0E30867790
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
-	for <openbmc@lists.ozlabs.org>; Wed, 8 Jun 2022 04:12:17 GMT
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 0AB57BE04F
-	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 04:12:17 +0000 (GMT)
-Received: from b03ledav005.gho.boulder.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C57A0BE051
-	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 04:12:16 +0000 (GMT)
-Received: from [9.160.53.66] (unknown [9.160.53.66])
-	by b03ledav005.gho.boulder.ibm.com (Postfix) with ESMTPS
-	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 04:12:16 +0000 (GMT)
-Message-ID: <7abdb7d5-adc5-9bb9-ea82-5236241aa586@linux.ibm.com>
-Date: Tue, 7 Jun 2022 23:12:15 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.7.0
-Content-Language: en-US
-To: openbmc <openbmc@lists.ozlabs.org>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Security Working Group meeting - Wednesday June 8
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: xGnQ7ko1It_FWxSvA1zKg6pqTbfcpfSZ
-X-Proofpoint-ORIG-GUID: xGnQ7ko1It_FWxSvA1zKg6pqTbfcpfSZ
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LHxlw2SDKz30F8
+	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 16:15:08 +1000 (AEST)
+Received: from gandalf.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+	by gandalf.ozlabs.org (Postfix) with ESMTP id 4LHxlr1clBz4xR1;
+	Wed,  8 Jun 2022 16:15:04 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.ozlabs.org (Postfix) with ESMTPSA id 4LHxll3k9sz4xD9;
+	Wed,  8 Jun 2022 16:14:59 +1000 (AEST)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH 1/2] spi: aspeed: Use "jedec,spi-nor" compatible to count devices
+Date: Wed,  8 Jun 2022 08:14:54 +0200
+Message-Id: <20220608061455.365123-1-clg@kaod.org>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.874,Hydra:6.0.517,FMLib:17.11.64.514
- definitions=2022-06-08_01,2022-06-07_02,2022-02-23_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 clxscore=1015
- impostorscore=0 mlxlogscore=635 lowpriorityscore=0 spamscore=0 bulkscore=0
- priorityscore=1501 mlxscore=0 adultscore=0 phishscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2204290000
- definitions=main-2206080017
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,23 +44,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>, Jae Hyun Yoo <quic_jaehyoo@quicinc.com>, Joel Stanley <joel@jms.id.au>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a reminder of the OpenBMC Security Working Group meeting 
-scheduled for this Wednesday June 8 at 10:00am PDT.
+The SoC device trees use the "jedec,spi-nor" compatible property to
+describe the flash devices and the board device trees override this
+property with "spi-flash", "sst,w25q256". This comes from the initial
+driver which was first written when spi-nor support had not been
+merged in U-boot yet.
 
-We'll discuss the following items on the agenda 
-<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
-and anything else that comes up:
+"jedec,spi-nor" should be preferred since it is used by Linux and the
+latest U-boot. Use it to count devices. We will clean up the board
+device trees later.
 
-1. No topics.
+Cc: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
+Signed-off-by: Cédric Le Goater <clg@kaod.org>
+---
+ drivers/spi/aspeed_spi.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/spi/aspeed_spi.c b/drivers/spi/aspeed_spi.c
+index 65d69105e8e8..45f6a8dd6850 100644
+--- a/drivers/spi/aspeed_spi.c
++++ b/drivers/spi/aspeed_spi.c
+@@ -1241,7 +1241,8 @@ static int aspeed_spi_count_flash_devices(struct udevice *bus)
+ 
+ 	dev_for_each_subnode(node, bus) {
+ 		if (ofnode_is_available(node) &&
+-		    ofnode_device_is_compatible(node, "spi-flash"))
++		    (ofnode_device_is_compatible(node, "spi-flash") ||
++		     ofnode_device_is_compatible(node, "jedec,spi-nor")))
+ 			count++;
+ 	}
+ 
+-- 
+2.35.3
 
-
-
-Access, agenda and notes are in the wiki:
-https://github.com/openbmc/openbmc/wiki/Security-working-group 
-<https://github.com/openbmc/openbmc/wiki/Security-working-group>
-
-- Joseph
