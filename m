@@ -1,48 +1,48 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0815B543D30
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 22:03:47 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8904543D32
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 22:04:21 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LJJ806Jf1z3bwb
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 06:03:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LJJ8g4Km2z3bth
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 06:04:19 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=LimDepcG;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=TRi+X6IS;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=LimDepcG;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=TRi+X6IS;
 	dkim-atps=neutral
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJJ785qKxz3bnd
-	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 06:03:00 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJJ831fMHz3bn4
+	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 06:03:47 +1000 (AEST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id DC7B061C5B;
-	Wed,  8 Jun 2022 20:02:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B0494C34116;
-	Wed,  8 Jun 2022 20:02:57 +0000 (UTC)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id DFA0D61978;
+	Wed,  8 Jun 2022 20:03:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80088C34116;
+	Wed,  8 Jun 2022 20:03:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1654718578;
-	bh=Bp0cnGXVgFina4GDFPPH1yUOOzmqgYeaEbbSj4nOtZw=;
+	s=k20201202; t=1654718624;
+	bh=2YBOOzDcHV9YKatCnZg6tuDE1Z9gZ1Em1HcbE7wFvVQ=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=LimDepcGADFLM/UIhYLzlLIUiz7AYL2mIDMaEFTBs3VzwqOTkn4n5UPCIB+nC8cpd
-	 zkZfV9uyKT2TpYzP9/QCFcVYaH6LvPF/U+8w5pR9RctFWJLR87xbaB5MCivkSGwOPr
-	 UKOU3Y4yo2MMD6u6IG/lGVaNVgk/fmvGpsLxIirsLA/zsMGwOnEEeZvvUkhK4hVDvV
-	 nEkBSb+SnIIK+DIDjeSv/IFn1Cu1jnGR3XWiWNTLTnFYQ5mVK3Nyoan7aAItrN3E/D
-	 St5auU+hrkTgqHr2iCjTaqxxHQKVWrMv3vNF8/ttN76cwR8Tnc1i7QTEUhRCb9yIGs
-	 c5Kd67KRfVRcg==
-Date: Wed, 8 Jun 2022 22:02:54 +0200
+	b=TRi+X6ISAS2AYsUquXZb7ZS4tsHenGEw8J86GI+nJR/KEOep44TF2LCctaxL18sUF
+	 F8QmqEFVF75ymCbkgzWmj9tdgoufjXusPIdA2iky6WIfhf7OMsqnblWAISYD7mNtXV
+	 8GDwq/iOGJxz8AIr/yXRi6kfJ7y6Qut8wW7rM4m8erc9KwMKv3MZdN3Kp6jS+wh9Sb
+	 0mP9/nXGJGSrq4zR8DJTO3yo/Qpg6VvuxF0EMCBoVRZhOlaG1jbk3/PcSH7wVZqtRt
+	 tgWMnjGf1JgMEj4WbSBdlVG0I3ms0yWK9yeoo0dgus/N8GQfc998WfYVB025Xj50sF
+	 UBMP6lGBtG97w==
+Date: Wed, 8 Jun 2022 22:03:40 +0200
 From: Wolfram Sang <wsa@kernel.org>
 To: Tyrone Ting <warp5tw@gmail.com>
-Subject: Re: [PATCH v6 2/5] i2c: npcm: Remove own slave addresses 2:10
-Message-ID: <YqEAbm2T5zKmk/Nw@kunai>
+Subject: Re: [PATCH v6 3/5] i2c: npcm: Correct slave role behavior
+Message-ID: <YqEAnMTaHTbIDQq+@kunai>
 Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
 	Tyrone Ting <warp5tw@gmail.com>, avifishman70@gmail.com,
 	tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com,
@@ -57,12 +57,12 @@ Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
 	linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org
 References: <20220525032341.3182-1-warp5tw@gmail.com>
- <20220525032341.3182-3-warp5tw@gmail.com>
+ <20220525032341.3182-4-warp5tw@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="WJDYl7eghNYS++LO"
+	protocol="application/pgp-signature"; boundary="qo+XL6tbyZ/UK+9f"
 Content-Disposition: inline
-In-Reply-To: <20220525032341.3182-3-warp5tw@gmail.com>
+In-Reply-To: <20220525032341.3182-4-warp5tw@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,50 +79,43 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---WJDYl7eghNYS++LO
+--qo+XL6tbyZ/UK+9f
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 25, 2022 at 11:23:38AM +0800, Tyrone Ting wrote:
+On Wed, May 25, 2022 at 11:23:39AM +0800, Tyrone Ting wrote:
 > From: Tali Perry <tali.perry1@gmail.com>
 >=20
-> NPCM can support up to 10 own slave addresses. In practice, only one
-> address is actually being used. In order to access addresses 2 and above,
-> need to switch register banks. The switch needs spinlock.
-> To avoid using spinlock for this useless feature removed support of SA >=
-=3D
-> 2. Also fix returned slave event enum.
->=20
-> Remove some comment since the bank selection is not required. The bank
-> selection is not required since the supported slave addresses are reduced.
+> Correct the slave transaction logic to be compatible with the generic
+> slave backend driver.
 >=20
 > Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller drive=
 r")
 > Signed-off-by: Tali Perry <tali.perry1@gmail.com>
 > Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
 
-Applied to for-next, thanks!
+Much easier to review this way! Applied to for-next, thank you!
 
 
---WJDYl7eghNYS++LO
+--qo+XL6tbyZ/UK+9f
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmKhAG4ACgkQFA3kzBSg
-KbYjlw/+JxeYIE9NzBvLklncHaU5C/1IbJpAlfr8h4GbRD6nvkF2gBe6ALnUDO0d
-R2yS094ozPEr4y3AsfZn4ZmIRWjtDe7ns7hm2AogChPqlHeIExQl36ZomCvhtuj8
-Opb7tt9hoP5DvQjY1a/lujeCf1fVeR1uhoTJWPZ00rXJiUxPYxcbTkpcmZXmNh8S
-lUdu0ImKcioYLFIkWRD8nCcBdCeUFwCVNFmlG5o1Cq+Rhsu1jxOXVCgWP5DEioBl
-ZsWSYHz9a3mZtlNB57bD6doVps6DLcXRcVS21NaWEXPvyIRsKWDdNSMZWYozFGyF
-P1AfgamFYt0YVyqe0zsvERdLQPFTgcfC3cAM2cu6gox55blclVQk42oDyExI8s/8
-C2jOK49lRBQp3KnxAiIY7SexPAHdgO6fiikoGjpw47kaH6z7JcLcoBFSBCmgYQsU
-9hQ6wyZA0apBpOKCPA991Ri4FEunDWgi9IV3ZLGCkt0S3YAsWRJGfoCmU7wi4pVz
-/DR7TE1tH12U67ktdyFOJ2CcDeLn5D49wag6nvvQRekcufzogtwOofwUSRQSLYBg
-15cYRjFNps6L/3qaHJabDxNPKuu0CECHfzQuOGZnC/atw7dwdXNFF4p15LUDgpt4
-XRJdBZHel7c/LCeMJiT8ocdd2KiGzPA1H3hiwAFtq8A+ARwb+dY=
-=a6AF
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmKhAJwACgkQFA3kzBSg
+KbYgkw//faQJRCtPr8Tb8HKWy5/dYrz0v3Qn1W2bFsyOpkiK7ZGaagL1CWrcoA4B
+U/8cC3me3vdBzjcBhgOtOW10Af5Zlwt7TN58x/P6Lsr8fS/I/pGz1dLSo9mHlZuL
+juQY8dI/1GMt1k/AcuriTjclCosUbpAiikNq8iXPDr2xDmUVT+6sI3RsU3CouufJ
+id3tZPx1GKuAVz9tcqzPpEPNdmU/yBmQ6fKKJEWV0a7a/KFmXrjqjvqujhwa8Iwx
+GTXAhyDyfV59pI9fiYkL8E4w8f8HDqMInRyZFS+wPbIczvx69oasHGIdRS8nxQf1
+kSiN+tY58U2ux/ejw9k1xgOTnUgBu0SiF5Oqh2lBPK03MWiO6vIkwYE/k8Dgrwkt
+W2+5uxvH71m25M9SBoZ6sxuA5nzq0aNAqpQbgpZO4FmdTqMeOX0k/XtfiwoXjvTM
+Zw8sAEnSbCp4ekSs5XvP+L+IKvUmllH6rDQ2l1PpF+BvtYNO1Rb8smPTZy/5f2PT
+HW4HcYzzkDvG/qI42bsqNfRXVlrbMA4XRgPofR8Rj6Kty15BRyLwKM6O89nvqgfA
+UaI8CFP+zzIxeBqnKqmdYbOxWKoKLipX0DwegcxwpRm7126R+Ec/k2WinIpK9TyT
+Zbiozv7Nl+LEn63WRxEUONHrob5Vf0ADo5NUmPjoJgkyqKfs5Mk=
+=N9+I
 -----END PGP SIGNATURE-----
 
---WJDYl7eghNYS++LO--
+--qo+XL6tbyZ/UK+9f--
