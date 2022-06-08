@@ -1,68 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99955543D25
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 21:54:45 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3059543D2C
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 22:03:12 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LJHxb3HmLz3bph
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 05:54:43 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LJJ7L3Nblz3bn5
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 06:03:10 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=BYvXUppb;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=KpDtqJLF;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::32e; helo=mail-wm1-x32e.google.com; envelope-from=edtanous@google.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=BYvXUppb;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=KpDtqJLF;
 	dkim-atps=neutral
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJHxB583Tz3bd4
-	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 05:54:21 +1000 (AEST)
-Received: by mail-wm1-x32e.google.com with SMTP id l2-20020a05600c1d0200b0039c35ef94c4so9685326wms.4
-        for <openbmc@lists.ozlabs.org>; Wed, 08 Jun 2022 12:54:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=TrR134YMhz93w/BMV392xqnX8sbZBhVkwbLwkGjUZkY=;
-        b=BYvXUppbmOhIld4bYp+kxBZZac2ed6AltGlVrmvruFSRwQlg/n4fhqM0ysjhsNelQd
-         BcKrbZpPdxs+3HKag5IGtnfYCvOLSYdj31WhJuC9fNXT0hwQ9/9qaT0c9IdAEoLYJLoI
-         ePJM8XZSJ4Sy7GdFEDgFvbMEk4NByRWG0a0lOnbp299ebsaL9z0NxMvQ2KBitog9fyht
-         6eT6gx950qRFp5174B6rM8RNm3vP2RNiVwVj2y0+4ENtLnQ0lGqqNM1xwz9jIodaqAvF
-         KyhCgirwo786Zf0oCJW3mlgArOBx9XyyyjeL4W4yLbwexWOfSP5mQtJw+LTWhn4alRkg
-         QnjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=TrR134YMhz93w/BMV392xqnX8sbZBhVkwbLwkGjUZkY=;
-        b=rPyIqZbrhyYVLY/leWdA78V/x+w9oHvz2eFW9wzMCqD3Y2GBJxvGfHJGTT1YCw5UQ/
-         tpmBHFqWjkRk2MAX6f2SuTmqGWmHlnFJKtxBMKNl/vRzJPMOjtQ23fuFqyCbD1gYZiSs
-         ls6klQ0mhNCGgkTj/jMXSlTL3fg+uQR6K580iEbmtlHvbp9Bn/L9KKTO1D2ebzl2Wd8H
-         FPh6auh+KlLuYcS2RSdWMHFeUa296jwnCMIF8s/3l5yIil0jEC7qDVFCp+lXcjkjLasM
-         PZb7zYreF69i5H7kP+qWNT4TSzWqt/IpWzjA4GayMu40dh9Xqv6HQRNv5gLMmxSk2SLP
-         RMSA==
-X-Gm-Message-State: AOAM531ZxM3pv/Gne3UR05WcrthvvO1H1ILVTzf5uWk5ow+vPu+SP9BC
-	hWtFGxCHKOlRfjYgqVWkVTbEhzTT71DK9hWYLHrhHA==
-X-Google-Smtp-Source: ABdhPJzWJLKu5yl4PdUxO9ZDFgerMNF4ZPrVOxKWPLJs643F4gGZlczVEHmO2nr+UrMu6wWCNb9VBpTeuUPn4JoTMl8=
-X-Received: by 2002:a7b:cd83:0:b0:39c:46d2:6ebb with SMTP id
- y3-20020a7bcd83000000b0039c46d26ebbmr831022wmj.187.1654718053390; Wed, 08 Jun
- 2022 12:54:13 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJJ6y3NgDz2xgX
+	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 06:02:50 +1000 (AEST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id E4C5961C27;
+	Wed,  8 Jun 2022 20:02:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 896EBC34116;
+	Wed,  8 Jun 2022 20:02:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1654718567;
+	bh=fOeilYXwytop+oGSxZ1LqPitweKw68M3Rw2KIU8vzW0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=KpDtqJLFoIYj0hsVC8Ekj5EWaFS0g5ZLwt8d2tznwf1HudmIsPXYf8ZtLbxnoTSJj
+	 s9C7zzlEG/fxaeF/PtJtrlI8InnG2wAU9cQ7+dsH0h7+/xGuVlH2T4RPo4IffqgV1a
+	 OG8vwUe5pXdMRJmEZuZdUt2B4Cal8S+obznxqDwaIMx7r/Ltwy+qtrwxvQxbS8EZJv
+	 vY4PilVsyphA7hyGUxisisQITnOa0geUFOO3HGCIQB0k/vRrfxgLje0jGKf9S+w7js
+	 fUcqCz6j+au7l+yVXVO+26HYC25c3siZ9YvKsAL4klx+bkcdpN+1UQrLf65G8/IeFP
+	 ooT6J0ruZLnEQ==
+Date: Wed, 8 Jun 2022 22:02:43 +0200
+From: Wolfram Sang <wsa@kernel.org>
+To: Tyrone Ting <warp5tw@gmail.com>
+Subject: Re: [PATCH v6 1/5] dt-bindings: i2c: npcm: support NPCM845
+Message-ID: <YqEAY2jUQC8itp6h@kunai>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+	Tyrone Ting <warp5tw@gmail.com>, avifishman70@gmail.com,
+	tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com,
+	yuenn@google.com, benjaminfair@google.com, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	andriy.shevchenko@linux.intel.com, jarkko.nikula@linux.intel.com,
+	semen.protsenko@linaro.org, jie.deng@intel.com, jsd@semihalf.com,
+	sven@svenpeter.dev, lukas.bulwahn@gmail.com, olof@lixom.net,
+	arnd@arndb.de, tali.perry@nuvoton.com, Avi.Fishman@nuvoton.com,
+	tomer.maimon@nuvoton.com, KWLIU@nuvoton.com, JJLIU0@nuvoton.com,
+	kfting@nuvoton.com, openbmc@lists.ozlabs.org,
+	linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+References: <20220525032341.3182-1-warp5tw@gmail.com>
+ <20220525032341.3182-2-warp5tw@gmail.com>
 MIME-Version: 1.0
-References: <49220e5b-bc49-2cef-fff2-234e24015fc0@linux.ibm.com> <13bef4e2-e8ad-b158-d2fc-bbf55bec6850@linux.ibm.com>
-In-Reply-To: <13bef4e2-e8ad-b158-d2fc-bbf55bec6850@linux.ibm.com>
-From: Ed Tanous <edtanous@google.com>
-Date: Wed, 8 Jun 2022 12:54:01 -0700
-Message-ID: <CAH2-KxAuCf5JtuvTHongA74NGcFh+j71yyVo5qbJ9OxxY9cwMA@mail.gmail.com>
-Subject: Re: Security Working Group meeting - Wednesday June 8 - BMCWeb
- authority checks
-To: Joseph Reynolds <jrey@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="eOEfobvHUxMla7mI"
+Content-Disposition: inline
+In-Reply-To: <20220525032341.3182-2-warp5tw@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,239 +74,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Krzysztof Grobelny <krzysztof.grobelny@intel.com>, openbmc <openbmc@lists.ozlabs.org>, Gunnar Mills <gmills@linux.vnet.ibm.com>
+Cc: tmaimon77@gmail.com, devicetree@vger.kernel.org, tali.perry1@gmail.com, jsd@semihalf.com, krzysztof.kozlowski+dt@linaro.org, benjaminfair@google.com, openbmc@lists.ozlabs.org, JJLIU0@nuvoton.com, lukas.bulwahn@gmail.com, tomer.maimon@nuvoton.com, KWLIU@nuvoton.com, arnd@arndb.de, sven@svenpeter.dev, robh+dt@kernel.org, Avi.Fishman@nuvoton.com, andriy.shevchenko@linux.intel.com, semen.protsenko@linaro.org, jie.deng@intel.com, avifishman70@gmail.com, venture@google.com, linux-kernel@vger.kernel.org, kfting@nuvoton.com, tali.perry@nuvoton.com, jarkko.nikula@linux.intel.com, olof@lixom.net, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Jun 8, 2022 at 12:18 PM Joseph Reynolds <jrey@linux.ibm.com> wrote:
->
-> BMCWeb maintainers,
->
-> FYI, the security working group reviewed BMCWeb's basic authority
-> checking mechanisms, and I have summarized that discussion in the
-> meeting notes.  We are struggling to find ways to improve or tighten the
-> D-Bus API layer.
->
-> This email is for information only.  No action is needed.
->
-> Joseph
->
->
-> -------- Forwarded Message --------
-> Subject:        Re: Security Working Group meeting - Wednesday June 8 - r=
-esults
-> Date:   Wed, 8 Jun 2022 14:06:37 -0500
-> From:   Joseph Reynolds <jrey@linux.ibm.com>
-> To:     openbmc <openbmc@lists.ozlabs.org>
->
->
->
-> On 6/7/22 11:12 PM, Joseph Reynolds wrote:
-> > This is a reminder of the OpenBMC Security Working Group meeting
-> > scheduled for this Wednesday June 8 at 10:00am PDT.
-> >
-> > We'll discuss the following items on the agenda
-> > <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLx=
-xsDUWmAOI>,
-> > and anything else that comes up:
-> >
->
-> Attended: Joseph Reynolds, Yutaka, Ruud Haring, Dick from Phoenix,
-> Krishnan Sugavanam, Mark McCawley, Russel Wilson
->
->
-> The meeting went about 20 minutes over time (80 minutes total).
->
->
-> 1 Progress on SELinux gerrit review
-> https://gerrit.openbmc.org/c/openbmc/docs/+/53205
-> <https://gerrit.openbmc.org/c/openbmc/docs/+/53205>
->
-> Note the design is intended for BMC which have a larger flash image
-> size.  For example the OpenBMC witherspoon reference platform has a 64Mb
-> flash divided into 2 sides, with space for a 20Mb readonly filesystem,
-> so it is too small.  SELinux is intended for BMC with 256Mb SPI flash,
-> where SELinux adds  about  20Mb (initial guess).
->
->
-> Ruud is continuing to work on the design.  Discovering what config
-> changes are needed by enabling SElinux.  For example, SELinux adds a
-> `-Z` flag to many commands to show SELinux attributes. SELinux-enabled
-> busybox (-Z flag) exists.  Attempting to build from Yocto recipe.
->
-> Attempting to follow meta-selinux docs.  Debugging.  Reach out with
-> questions to the yocto community (perhaps via email list in
-> https://wiki.yoctoproject.org/wiki/Security).
->
->
-> We did a deep dive on BMCWeb authority checking by following a Redfish
-> API call:
->
-> *
->
-> After a Redfish session is created, that session has a role and a
-> set of privileges.
->
-> *
->
-> When that session is used to invoke an HTTP operation, that
-> operation=E2=80=99s  privileges are checked against the session=E2=80=99s=
- privileges.
->
-> *
->
-> The Redfish spec described this in DSP0266 > Security details >
-> Authorization.  We peeked at this spec.
->
-> *
->
-> We looked at the Redfish =E2=80=9Cdelete user=E2=80=9D API as implemented=
- by BMCWeb.
-> https://github.com/openbmc/bmcweb/blob/002d39b4a7a5ed7166e2acad84e0943c3d=
-ef9492/redfish-core/lib/account_service.hpp#L1941
-> <https://github.com/openbmc/bmcweb/blob/002d39b4a7a5ed7166e2acad84e0943c3=
-def9492/redfish-core/lib/account_service.hpp#L1941>
->
-> This defines:
->
-> o
->
-> the HTTP operation (DELETE
-> /redfish/v1/AccountService/Accounts/<str> where <str> is a
-> username).
->
-> o
->
-> along with the privileges required to perform that operation:
-> namely redfish::privileges::deleteManagerAccount, which only
-> Administrator users have.
->
-> o
->
-> The C++ code to implement the operation (which basically invoke
-> the phosphor-user-manager API via D-Bus system bus with parameters
->
-> +
->
-> Bus: xyz.openbmc_project.User.Manager
->
-> +
->
-> Object path: (as C++ variable userPath)
->
-> +
->
-> Interface: xyz.openbmc_project.Object.Delete
->
-> +
->
-> Method: Delete
->
-> *
->
-> We talked about, but did not look at BMCWeb=E2=80=99s router function, wh=
-ich
-> routes operations to their implementation (such as =E2=80=9Cdelete user=
-=E2=80=9D
-> above), and we talked about but did not look at the authority check
-> it performs.  That code is in the =E2=80=9Chandle=E2=80=9D method, here:
-> https://github.com/openbmc/bmcweb/blob/002d39b4a7a5ed7166e2acad84e0943c3d=
-ef9492/http/routing.hpp#L1236
-> <https://github.com/openbmc/bmcweb/blob/002d39b4a7a5ed7166e2acad84e0943c3=
-def9492/http/routing.hpp#L1236>
->
-> *
->
-> We looked at BMCWeb=E2=80=99s implementation of the Redfish privilege
-> registry.  Specifically, the generated header file here
-> https://github.com/openbmc/bmcweb/blob/master/redfish-core/include/regist=
-ries/privilege_registry.hpp
-> <https://github.com/openbmc/bmcweb/blob/master/redfish-core/include/regis=
-tries/privilege_registry.hpp>is
-> a translation of the redfish spec=E2=80=99s privilege registry.  The BMCW=
-eb
-> contributors maintain this file (runs as needed and checked in to
-> the repo), and the definitions are used within the operations
-> handlers (such as =E2=80=9Cdelete user=E2=80=9D).
->
->
-> A basic understanding is that OpenBMC=E2=80=99s authority checking (which=
- asks:
-> =E2=80=9Cam I allowed to perform this operation?=E2=80=9D) is handled by =
-BMCWeb, and
-> there is no authority checking at the D-Bus layer. (Currently anyone who
-> needs to use a D-Bus API must have root authority). This is a security
-> problem we are trying to solve. (TODO: articulate why this is a problem.)
->
-> Two approaches were briefly discussed (not necessarily as complete
-> solutions):
->
-> *
->
-> BMCWeb drops to the logged-in user (switch user command (su) or the
-> setuid kernel call).
->
-> *
->
-> SELinux labeling model.
->
->
-> For example, if desired, we can use SELinux to ensure the =E2=80=9Cdelete=
- user=E2=80=9D
-> dbus api can only be used by bmcweb and that it cannot be used by any
-> other service (like IPMI or by SSH/bash).  Then we can ensure only the
-> phosphor-user-manager service is allowed to modify the /etc/passwd &
-> shadow files.  Doing so will lock down who is allowed to perform BMC
-> user management.
->
->
-> Revisit some initial use cases for selinux (examples):
->
-> 1.
->
-> Limit what files bmcweb process can reach.  In my opinion (Joseph)
-> this would be an easy initial use case for SELinux because BMCWeb
-> only touches a small set of files,and has no reason to touch other
-> files.  Also phosphor-user-manager only touches a small set of files
-> (including /etc/shadow), and has no reason to touch other files or
-> to reach out to the network.
->
-> 2.
->
-> Control which D-Bus apis bmcweb is allowed to use. (All of them?)
->
->
-> Here is an attempt to state a security problem more clearly: How do we
-> limit specific dbus calls to specific users or to specific processes?
-> Alternatively: How do we push down the BMCWeb=E2=80=99s authority model i=
-nto the
-> D-Bus APIs?  And what additional security would this give us?
->
->
->
-> Joseph
->
-> >
-> >
-> >
-> >
-> > Access, agenda and notes are in the wiki:
-> > https://github.com/openbmc/openbmc/wiki/Security-working-group
-> > <https://github.com/openbmc/openbmc/wiki/Security-working-group>
-> >
-> > - Joseph
->
 
-ACK.  Considering how many people in the security working group seem
-to care about this stuff, it would help a lot if they could
-participate in reviews.  Even some of the files mentioned above
-(privilege registry specifically) have changed recently to try to
-improve this situation, but received very little feedback input on
-Gerrit, which is unfortunate given the amount of discussion I see
-going on above.
+--eOEfobvHUxMla7mI
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I support (at least in part) most of the experiments suggested above,
-and can't wait to see what the patchsets and designs look like so we
-can talk in the next level of detail.
+On Wed, May 25, 2022 at 11:23:37AM +0800, Tyrone Ting wrote:
+> From: Tyrone Ting <kfting@nuvoton.com>
+>=20
+> Add compatible and nuvoton,sys-mgr description for NPCM i2c module.
+>=20
+> Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
+> Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
 
--Ed
+Applied to for-next, thanks!
+
+
+--eOEfobvHUxMla7mI
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmKhAGMACgkQFA3kzBSg
+KbbPwA//TUBjvk1YsaJncMxAWQA5U+8iQHievylO34AceXllsye/+zAPEOTWm2mb
+N4kNNtvmOVHDiQrJF/tUJJCbp1PlxH5Lu5PA7sntMTiDb6l51IFtWe42eUDBbQcN
+cgc4vx9DLG+0qFV0cXcQ4F/V1AkhZFvoAmbLKr4vbjLSHjtkhTcOBWHBuClfZg++
+/B+9knOKF7+HbEv9aqK4huU6BoAf3j9eCHwqTu2OlrxQQ/oC3/ttDC6EOENpJf/I
+S43JXxY33G1nknOnWJBT74v64uCuuumjTHREqBUkmCF0v72Pfp9qW02AZ3t5ArJF
+Re2hPKn9Mq1NZECeD02D8hvFyFv0llD1vSSs8M6Y3L2y1PmWYxaHNyUqzzYP5voO
+sS9XyUWTjOTjHHSl0V7eORM84HGPXpunY3AM6qhM8ut8cgTw85Yz4zBfGliyeG21
+iX5iArRTy4rr0Aw+AntRSPgTk3BnZFHvPZUDtnQPeD18lT+MZlMcFYy4f3WzUfCQ
+RzlxhCAxegRNgrxQoEhYtONLMkRrgxfNvXv2GNKb8zXPc9B6N3ZhcW90JdkYZ4nS
+8YANTox5TOwJSfHu2VkW3IYS+ISFrvVXeeKLg9Fd6YmYoUUR1WFoPW380WurxnxF
+ABt/X1CT8zmP65TZk83v75V3m56QRF0VFkaTRZO0Wl0SPNU6iJ8=
+=r/Nu
+-----END PGP SIGNATURE-----
+
+--eOEfobvHUxMla7mI--
