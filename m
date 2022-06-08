@@ -2,39 +2,58 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8CECA542169
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 08:15:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C4490542174
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 08:33:14 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LHxmZ3fCcz3byX
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 16:15:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LHy8m5Pxkz3brX
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 16:33:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Received: from gandalf.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kaod.org (client-ip=188.165.49.222; helo=6.mo552.mail-out.ovh.net; envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
+X-Greylist: delayed 82171 seconds by postgrey-1.36 at boromir; Wed, 08 Jun 2022 16:32:55 AEST
+Received: from 6.mo552.mail-out.ovh.net (6.mo552.mail-out.ovh.net [188.165.49.222])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LHxly1DmGz3bXR
-	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 16:15:10 +1000 (AEST)
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
-	by gandalf.ozlabs.org (Postfix) with ESMTP id 4LHxlt4LPfz4xXF;
-	Wed,  8 Jun 2022 16:15:06 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail.ozlabs.org (Postfix) with ESMTPSA id 4LHxlr5Hrtz4xD9;
-	Wed,  8 Jun 2022 16:15:04 +1000 (AEST)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH 2/2] ARM: dts: aspeed: Remove "spi-flash" compatible
-Date: Wed,  8 Jun 2022 08:14:55 +0200
-Message-Id: <20220608061455.365123-2-clg@kaod.org>
-X-Mailer: git-send-email 2.35.3
-In-Reply-To: <20220608061455.365123-1-clg@kaod.org>
-References: <20220608061455.365123-1-clg@kaod.org>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LHy8R2tYlz2xgX
+	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 16:32:52 +1000 (AEST)
+Received: from mxplan5.mail.ovh.net (unknown [10.109.143.159])
+	by mo552.mail-out.ovh.net (Postfix) with ESMTPS id 8045F26EE5;
+	Wed,  8 Jun 2022 06:16:55 +0000 (UTC)
+Received: from kaod.org (37.59.142.98) by DAG4EX1.mxp5.local (172.16.2.31)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.9; Wed, 8 Jun 2022
+ 08:16:54 +0200
+Authentication-Results: garm.ovh; auth=pass (GARM-98R002367af67d-ecf9-4667-b5d9-369efb58422c,
+                    54A3B2140384DD5702107EFE02B2448601CCACB1) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <f59e9e6b-1267-c667-9ef0-ac6968b0f728@kaod.org>
+Date: Wed, 8 Jun 2022 08:16:53 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v2] ARM: dts: aspeed: add
+ Qualcomm DC-SCM V1
+Content-Language: en-US
+To: Joel Stanley <joel@jms.id.au>, Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
+References: <20220519185318.62655-1-quic_jaehyoo@quicinc.com>
+ <a9798967-ab87-2469-a8cf-ab8ac237908a@quicinc.com>
+ <CACPK8Xf7Bqjk1A+qeJcrTCGL-PdFj5a2yBna+QvrSi5RpfLXsg@mail.gmail.com>
+ <dcf3bc8e-eaff-1469-e034-141aa0a4acf1@kaod.org>
+ <09b467bf-2acc-1834-2143-e7e735a74b53@quicinc.com>
+ <CACPK8XfP3T1gX_3-BWM3tZHrnwCqjNXz67nE9anxat-EfTmdaQ@mail.gmail.com>
+From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <CACPK8XfP3T1gX_3-BWM3tZHrnwCqjNXz67nE9anxat-EfTmdaQ@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.98]
+X-ClientProxiedBy: DAG3EX2.mxp5.local (172.16.2.22) To DAG4EX1.mxp5.local
+ (172.16.2.31)
+X-Ovh-Tracer-GUID: 80fff33b-beb9-43fc-b7db-ad00bbfc1362
+X-Ovh-Tracer-Id: 4528087951807777699
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvfedruddtiedguddtiecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkffggfgfuvfevfhfhjggtgfhisehtkeertddtfeejnecuhfhrohhmpeevrogurhhitggpnfgvpgfiohgrthgvrhcuoegtlhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepkeetjedtleekjedvveffudfhteetleeifeegfeffuefghfefkeehffeufeeludejnecukfhppedtrddtrddtrddtpdefjedrheelrddugedvrdelkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhhvghlohepmhigphhlrghnhedrmhgrihhlrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpegtlhhgsehkrghougdrohhrghdpnhgspghrtghpthhtohepuddprhgtphhtthhopehophgvnhgsmhgtsehlihhsthhsrdhoiihlrggsshdrohhrghdpoffvtefjohhsthepmhhoheehvd
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -46,766 +65,114 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>, Jae Hyun Yoo <quic_jaehyoo@quicinc.com>, Joel Stanley <joel@jms.id.au>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, Graeme Gregory <quic_ggregory@quicinc.com>, Jamie Iles <quic_jiles@quicinc.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The underlying SoC definitions use compatible "jedec,spi-nor", so does
-the aspeed SPI driver, this to be in sync with Linux and the latest
-U-Boot.
+On 6/8/22 05:05, Joel Stanley wrote:
+> On Tue, 7 Jun 2022 at 14:03, Jae Hyun Yoo <quic_jaehyoo@quicinc.com> wrote:
+>>
+>> On 6/7/2022 12:43 AM, Cédric Le Goater wrote:
+>>> On 6/7/22 03:05, Joel Stanley wrote:
+>>>> On Mon, 6 Jun 2022 at 13:56, Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
+>>>> wrote:
+>>>>>
+>>>>> Ping
+>>>>>
+>>>>> On 5/19/2022 11:53 AM, Jae Hyun Yoo wrote:
+>>>>>> From: Graeme Gregory <quic_ggregory@quicinc.com>
+>>>>>>
+>>>>>> Add initial version of device tree for Qualcomm DC-SCM V1 BMC which is
+>>>>>> equipped with Aspeed AST2600 BMC SoC.
+>>>>>>
+>>>>>> Signed-off-by: Graeme Gregory <quic_ggregory@quicinc.com>
+>>>>>> Signed-off-by: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
+>>>>>> ---
+>>>>>> Changes in v2:
+>>>>>> * Changed vendor name from Nuvia to Qualcomm.
+>>>>>>
+>>>>>>     arch/arm/dts/Makefile                   |   1 +
+>>>>>>     arch/arm/dts/ast2600-qcom-dc-scm-v1.dts | 208
+>>>>>> ++++++++++++++++++++++++
+>>>>>>     2 files changed, 209 insertions(+)
+>>>>>>     create mode 100644 arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
+>>>>>>
+>>>>>> diff --git a/arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
+>>>>>> b/arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
+>>>>>> new file mode 100644
+>>>>>> index 000000000000..e966f739b708
+>>>>>> --- /dev/null
+>>>>>> +++ b/arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
+>>
+>> [...]
+>>
+>>>>>> +&fmc {
+>>>>>> +     status = "okay";
+>>>>>> +
+>>>>>> +     pinctrl-names = "default";
+>>>>>> +     pinctrl-0 = <&pinctrl_fmcquad_default>;
+>>>>>> +
+>>>>>> +     flash@0 {
+>>>>>> +             compatible = "spi-flash", "sst,w25q256";
+>>>>
+>>>> Compatible strings should go from the most general to the most
+>>>> specific, so these are around the wrong way. I see you've probably
+>>>> just copied the ast2600-evb which makes the same mistake.
+>>>>
+>>>> In the dtsi we have jedec,spi-nor which you overwrite here.
+>>>>
+>>>> u-boot has spi-flash but Linux uses jedec,spi-nor. I wonder if we
+>>>> should update the aspeed driver to use that?
+>>>>
+>>>> Cédric, do you have thoughts here?
+>>>
+>>> Yes. The closer we are to the Linux DT the better.
+>>>
+>>> The "spi-flash" and "jedec,spi-nor" compatibles are equivalent for
+>>> the SF driver in U-Boot. I think we can remove all the :
+>>>
+>>>      compatible = "spi-flash", "sst,w25q256";
+>>>
+>>> from the Aspeed dts files.
+>>>
+>>> This fits what the latest U-Boot does.
+>>
+>> I checked that it works without the compatible string. I'll drop the
+>> line in v3.
+> 
+> Can you describe your test setup?
+> 
+> When I tested, using the ast2600-evb.dts, the driver reported:
+> 
+> ast# sf probe
+> aspeed_spi: flash-controller@1e620000 has no flash devices ?!
+> Invalid bus 0 (err=-19)
+> Failed to initialize SPI flash at 0:0 (error -19)
+> 
+> This is because the aspeed_spi.c driver counts the number of "spi-flash" nodes:
+> 
+> static int aspeed_spi_count_flash_devices(struct udevice *bus)
+> {
+>          ofnode node;
+>          int count = 0;
+> 
+>          dev_for_each_subnode(node, bus) {
+>                  if (ofnode_is_available(node) &&
+>                      ofnode_device_is_compatible(node, "spi-flash"))
+>                          count++;
+>          }
+> 
+>          return count;
+> }
 
-Cc: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
-Signed-off-by: Cédric Le Goater <clg@kaod.org>
----
- arch/arm/dts/ast2400-evb.dts       | 4 ----
- arch/arm/dts/ast2400-palmetto.dts  | 4 ----
- arch/arm/dts/ast2500-evb.dts       | 4 ----
- arch/arm/dts/ast2600-bletchley.dts | 8 --------
- arch/arm/dts/ast2600-evb.dts       | 8 --------
- arch/arm/dts/ast2600-fpga.dts      | 2 --
- arch/arm/dts/ast2600-intel.dts     | 8 --------
- arch/arm/dts/ast2600-ncsi.dts      | 8 --------
- arch/arm/dts/ast2600-pfr.dts       | 8 --------
- arch/arm/dts/ast2600-rainier.dts   | 2 --
- arch/arm/dts/ast2600-s6q.dts       | 2 --
- arch/arm/dts/ast2600-slt.dts       | 8 --------
- arch/arm/dts/ast2600-tacoma.dts    | 2 --
- arch/arm/dts/ast2600a0-evb.dts     | 8 --------
- arch/arm/dts/ast2600a1-evb.dts     | 8 --------
- 15 files changed, 84 deletions(-)
+This is only needed for the "sf" command. boot simply uses the mapping on
+0x20000000.
 
-diff --git a/arch/arm/dts/ast2400-evb.dts b/arch/arm/dts/ast2400-evb.dts
-index 2ba15d17deda..402a1fa924a3 100644
---- a/arch/arm/dts/ast2400-evb.dts
-+++ b/arch/arm/dts/ast2400-evb.dts
-@@ -60,7 +60,6 @@
- &fmc {
- 	status = "okay";
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <2>;
-@@ -68,7 +67,6 @@
- 	};
- 
- 	flash@1 {
--                compatible = "spi-flash", "sst,w25q256";
-                 status = "okay";
-                 spi-max-frequency = <50000000>;
-                 spi-tx-bus-width = <2>;
-@@ -81,7 +79,6 @@
- 	flash@0 {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pinctrl_spi1_default>;
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <2>;
-@@ -90,7 +87,6 @@
- 	flash@1 {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pinctrl_spi1_default &pinctrl_spi1cs1_default>;
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <2>;
-diff --git a/arch/arm/dts/ast2400-palmetto.dts b/arch/arm/dts/ast2400-palmetto.dts
-index a512f602d2f1..db566f899f63 100644
---- a/arch/arm/dts/ast2400-palmetto.dts
-+++ b/arch/arm/dts/ast2400-palmetto.dts
-@@ -63,7 +63,6 @@
- &fmc {
- 	status = "okay";
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <2>;
-@@ -71,7 +70,6 @@
- 	};
- 
- 	flash@1 {
--                compatible = "spi-flash", "sst,w25q256";
-                 status = "okay";
-                 spi-max-frequency = <50000000>;
-                 spi-tx-bus-width = <2>;
-@@ -84,7 +82,6 @@
- 	flash@0 {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pinctrl_spi1_default>;
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <2>;
-@@ -93,7 +90,6 @@
- 	flash@1 {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pinctrl_spi1_default &pinctrl_spi1cs1_default>;
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <2>;
-diff --git a/arch/arm/dts/ast2500-evb.dts b/arch/arm/dts/ast2500-evb.dts
-index f668eec5c137..a6cd74d41c78 100644
---- a/arch/arm/dts/ast2500-evb.dts
-+++ b/arch/arm/dts/ast2500-evb.dts
-@@ -65,7 +65,6 @@
- &fmc {
- 	status = "okay";
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <2>;
-@@ -73,7 +72,6 @@
- 	};
- 
- 	flash@1 {
--                compatible = "spi-flash", "sst,w25q256";
-                 status = "okay";
-                 spi-max-frequency = <50000000>;
-                 spi-tx-bus-width = <2>;
-@@ -86,7 +84,6 @@
- 	flash@0 {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pinctrl_spi1_default>;
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <2>;
-@@ -95,7 +92,6 @@
- 	flash@1 {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&pinctrl_spi1_default &pinctrl_spi1cs1_default>;
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <2>;
-diff --git a/arch/arm/dts/ast2600-bletchley.dts b/arch/arm/dts/ast2600-bletchley.dts
-index 57ca845b94a7..bc907e213481 100644
---- a/arch/arm/dts/ast2600-bletchley.dts
-+++ b/arch/arm/dts/ast2600-bletchley.dts
-@@ -87,7 +87,6 @@
- 	pinctrl-0 = <&pinctrl_fmcquad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <2>;
-@@ -95,7 +94,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <2>;
-@@ -103,7 +101,6 @@
- 	};
- 
- 	flash@2 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <2>;
-@@ -120,7 +117,6 @@
- 			&pinctrl_spi1wp_default &pinctrl_spi1quad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -128,7 +124,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -144,7 +139,6 @@
- 			&pinctrl_spi2cs2_default &pinctrl_spi2quad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -152,7 +146,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -160,7 +153,6 @@
- 	};
- 
- 	flash@2 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-diff --git a/arch/arm/dts/ast2600-evb.dts b/arch/arm/dts/ast2600-evb.dts
-index 3aeef78df22d..14a001daee95 100644
---- a/arch/arm/dts/ast2600-evb.dts
-+++ b/arch/arm/dts/ast2600-evb.dts
-@@ -122,7 +122,6 @@
- 	pinctrl-0 = <&pinctrl_fmcquad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -130,7 +129,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -138,7 +136,6 @@
- 	};
- 
- 	flash@2 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "disabled";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -155,7 +152,6 @@
- 			&pinctrl_spi1wp_default &pinctrl_spi1quad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -163,7 +159,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "disabled";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -179,7 +174,6 @@
- 			&pinctrl_spi2cs2_default &pinctrl_spi2quad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -187,7 +181,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "disabled";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -195,7 +188,6 @@
- 	};
- 
- 	flash@2 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "disabled";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-diff --git a/arch/arm/dts/ast2600-fpga.dts b/arch/arm/dts/ast2600-fpga.dts
-index be0788d92473..5ff27b78a4de 100644
---- a/arch/arm/dts/ast2600-fpga.dts
-+++ b/arch/arm/dts/ast2600-fpga.dts
-@@ -76,7 +76,6 @@
- &fmc {
- 	status = "okay";
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <2>;
-@@ -84,7 +83,6 @@
- 	};
- 
- 	flash@1 {
--                compatible = "spi-flash", "sst,w25q256";
-                 status = "okay";
-                 spi-max-frequency = <50000000>;
-                 spi-tx-bus-width = <2>;
-diff --git a/arch/arm/dts/ast2600-intel.dts b/arch/arm/dts/ast2600-intel.dts
-index 19d19f6ef52a..d2c8bc2cd45f 100644
---- a/arch/arm/dts/ast2600-intel.dts
-+++ b/arch/arm/dts/ast2600-intel.dts
-@@ -123,7 +123,6 @@
- 	pinctrl-0 = <&pinctrl_fmcquad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -131,7 +130,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -139,7 +137,6 @@
- 	};
- 
- 	flash@2 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -156,7 +153,6 @@
- 			&pinctrl_spi1wp_default &pinctrl_spi1quad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -164,7 +160,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -180,7 +175,6 @@
- 			&pinctrl_spi2cs2_default &pinctrl_spi2quad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -188,7 +182,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -196,7 +189,6 @@
- 	};
- 
- 	flash@2 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-diff --git a/arch/arm/dts/ast2600-ncsi.dts b/arch/arm/dts/ast2600-ncsi.dts
-index f55294cdf95e..000fd796764f 100644
---- a/arch/arm/dts/ast2600-ncsi.dts
-+++ b/arch/arm/dts/ast2600-ncsi.dts
-@@ -124,7 +124,6 @@
- 	pinctrl-0 = <&pinctrl_fmcquad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -132,7 +131,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -140,7 +138,6 @@
- 	};
- 
- 	flash@2 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "disabled";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -157,7 +154,6 @@
- 			&pinctrl_spi1wp_default &pinctrl_spi1quad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -165,7 +161,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "disabled";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -181,7 +176,6 @@
- 			&pinctrl_spi2cs2_default &pinctrl_spi2quad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -189,7 +183,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "disabled";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -197,7 +190,6 @@
- 	};
- 
- 	flash@2 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "disabled";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-diff --git a/arch/arm/dts/ast2600-pfr.dts b/arch/arm/dts/ast2600-pfr.dts
-index 8596207f5463..e035a68e970f 100644
---- a/arch/arm/dts/ast2600-pfr.dts
-+++ b/arch/arm/dts/ast2600-pfr.dts
-@@ -124,7 +124,6 @@
- 	timing-calibration-disabled;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <25000000>;
- 		spi-tx-bus-width = <1>;
-@@ -132,7 +131,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <25000000>;
- 		spi-tx-bus-width = <1>;
-@@ -140,7 +138,6 @@
- 	};
- 
- 	flash@2 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "disabled";
- 		spi-max-frequency = <25000000>;
- 		spi-tx-bus-width = <1>;
-@@ -158,7 +155,6 @@
- 	timing-calibration-disabled;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <25000000>;
- 		spi-tx-bus-width = <1>;
-@@ -166,7 +162,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <25000000>;
- 		spi-tx-bus-width = <1>;
-@@ -183,7 +178,6 @@
- 	timing-calibration-disabled;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <25000000>;
- 		spi-tx-bus-width = <1>;
-@@ -191,7 +185,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "disabled";
- 		spi-max-frequency = <25000000>;
- 		spi-tx-bus-width = <1>;
-@@ -199,7 +192,6 @@
- 	};
- 
- 	flash@2 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "disabled";
- 		spi-max-frequency = <25000000>;
- 		spi-tx-bus-width = <1>;
-diff --git a/arch/arm/dts/ast2600-rainier.dts b/arch/arm/dts/ast2600-rainier.dts
-index aa91b12ed399..d1e99aa2d066 100755
---- a/arch/arm/dts/ast2600-rainier.dts
-+++ b/arch/arm/dts/ast2600-rainier.dts
-@@ -74,7 +74,6 @@
- 
- 	flash@0 {
- 		// TODO: what compatible strings should be here?
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <2>;
-@@ -82,7 +81,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <2>;
-diff --git a/arch/arm/dts/ast2600-s6q.dts b/arch/arm/dts/ast2600-s6q.dts
-index 52b620d3b4fe..b98cd8c980c2 100644
---- a/arch/arm/dts/ast2600-s6q.dts
-+++ b/arch/arm/dts/ast2600-s6q.dts
-@@ -92,7 +92,6 @@
- 	pinctrl-0 = <&pinctrl_fmcquad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -108,7 +107,6 @@
- 			&pinctrl_spi2cs2_default &pinctrl_spi2quad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-diff --git a/arch/arm/dts/ast2600-slt.dts b/arch/arm/dts/ast2600-slt.dts
-index 93c5d86ce379..332620dc1aec 100644
---- a/arch/arm/dts/ast2600-slt.dts
-+++ b/arch/arm/dts/ast2600-slt.dts
-@@ -122,7 +122,6 @@
- 	pinctrl-0 = <&pinctrl_fmcquad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -130,7 +129,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -138,7 +136,6 @@
- 	};
- 
- 	flash@2 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -155,7 +152,6 @@
- 			&pinctrl_spi1wp_default &pinctrl_spi1quad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -163,7 +159,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -179,7 +174,6 @@
- 			&pinctrl_spi2cs2_default &pinctrl_spi2quad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -187,7 +181,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -195,7 +188,6 @@
- 	};
- 
- 	flash@2 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-diff --git a/arch/arm/dts/ast2600-tacoma.dts b/arch/arm/dts/ast2600-tacoma.dts
-index 67b3e3013c6b..a29e7e7fa23a 100755
---- a/arch/arm/dts/ast2600-tacoma.dts
-+++ b/arch/arm/dts/ast2600-tacoma.dts
-@@ -65,7 +65,6 @@
- 
- 	flash@0 {
- 		// TODO: what compatible strings should be here?
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <2>;
-@@ -73,7 +72,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <2>;
-diff --git a/arch/arm/dts/ast2600a0-evb.dts b/arch/arm/dts/ast2600a0-evb.dts
-index b242215536a5..08b71ab29984 100644
---- a/arch/arm/dts/ast2600a0-evb.dts
-+++ b/arch/arm/dts/ast2600a0-evb.dts
-@@ -115,7 +115,6 @@
- 	pinctrl-0 = <&pinctrl_fmcquad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -123,7 +122,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -131,7 +129,6 @@
- 	};
- 
- 	flash@2 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "disabled";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -148,7 +145,6 @@
- 			&pinctrl_spi1wp_default &pinctrl_spi1quad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -156,7 +152,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "disabled";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -172,7 +167,6 @@
- 			&pinctrl_spi2cs2_default &pinctrl_spi2quad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -180,7 +174,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "disabled";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -188,7 +181,6 @@
- 	};
- 
- 	flash@2 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "disabled";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-diff --git a/arch/arm/dts/ast2600a1-evb.dts b/arch/arm/dts/ast2600a1-evb.dts
-index 6bd498d471e2..61decb539e6f 100644
---- a/arch/arm/dts/ast2600a1-evb.dts
-+++ b/arch/arm/dts/ast2600a1-evb.dts
-@@ -122,7 +122,6 @@
- 	pinctrl-0 = <&pinctrl_fmcquad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -130,7 +129,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -138,7 +136,6 @@
- 	};
- 
- 	flash@2 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "disabled";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -155,7 +152,6 @@
- 			&pinctrl_spi1wp_default &pinctrl_spi1quad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -163,7 +159,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "disabled";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -179,7 +174,6 @@
- 			&pinctrl_spi2cs2_default &pinctrl_spi2quad_default>;
- 
- 	flash@0 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "okay";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -187,7 +181,6 @@
- 	};
- 
- 	flash@1 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "disabled";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
-@@ -195,7 +188,6 @@
- 	};
- 
- 	flash@2 {
--		compatible = "spi-flash", "sst,w25q256";
- 		status = "disabled";
- 		spi-max-frequency = <50000000>;
- 		spi-tx-bus-width = <4>;
--- 
-2.35.3
+  
+> We need to fix that if we're going to remove the "spi-flash"
+> compatibles from the device tree.
 
+Just sent patches for it.
+
+Cheers,
+C.
