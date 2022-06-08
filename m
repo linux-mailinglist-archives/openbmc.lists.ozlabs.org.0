@@ -2,126 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 43E7B543B1A
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 20:10:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5C398543C5F
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 21:07:11 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LJFdL0WkKz3bq5
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 04:10:30 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LJGtj1Mnxz3bq2
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 05:07:09 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=ztsystems.com header.i=@ztsystems.com header.a=rsa-sha256 header.s=mimecast20210607 header.b=NfOLRNcC;
-	dkim=pass (1024-bit key) header.d=ztsystems.com header.i=@ztsystems.com header.a=rsa-sha256 header.s=mimecast20210607 header.b=ljWHOZiu;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=bJVyeXLj;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=ztsystems.com (client-ip=170.10.133.115; helo=us-smtp-delivery-115.mimecast.com; envelope-from=jeff.friedman@ztsystems.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=ztsystems.com header.i=@ztsystems.com header.a=rsa-sha256 header.s=mimecast20210607 header.b=NfOLRNcC;
-	dkim=pass (1024-bit key) header.d=ztsystems.com header.i=@ztsystems.com header.a=rsa-sha256 header.s=mimecast20210607 header.b=ljWHOZiu;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=bJVyeXLj;
 	dkim-atps=neutral
-X-Greylist: delayed 64 seconds by postgrey-1.36 at boromir; Thu, 09 Jun 2022 04:10:03 AEST
-Received: from us-smtp-delivery-115.mimecast.com (us-smtp-delivery-115.mimecast.com [170.10.133.115])
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJFcq5C5Kz2xTc
-	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 04:10:03 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ztsystems.com;
-	s=mimecast20210607; t=1654711800;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ezpZehK9Zzt/bCQK+JZckAiGDOv/fQSRMtYmjMAZSeY=;
-	b=NfOLRNcCU+P5na1RIpWauUawzuyt9WSrf7neZA3roddUN3IbLsZYoh0aMntr7ptoa54D3Z
-	5SapFR1LfjTkbQ5nfEBY1dKvGRtYT3/yKRjQ0N5MemJ8OPkD0ITV0MLAW/xgarYO92v2SY
-	wuFSW8ArdMs0wniXUYQaRT6OXwZ33Zo=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ztsystems.com;
-	s=mimecast20210607; t=1654711801;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=ezpZehK9Zzt/bCQK+JZckAiGDOv/fQSRMtYmjMAZSeY=;
-	b=ljWHOZiuHH0ZLZM87fMtnrIAMDAdJiOP7F95lC/bjU6PPhCHsxYfpK/1KYjwMKJVTgpKI4
-	wEFUknF1sxInPR+k04zyArqZbJ4MY6CiAZscDCgbRas2qBSyGZY48Qu/jYiyC8KTeHCT4V
-	2C8w7QgMKkiqqYQU8O9oIg24s4xJ/wI=
-Received: from ztcsla-ex01.ztgroup.com (67.212.155.84.static.coresite.com
- [67.212.155.84]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- us-mta-98-2tO0hZ7kNAW_8HXNRnBa_w-1; Wed, 08 Jun 2022 14:08:46 -0400
-X-MC-Unique: 2tO0hZ7kNAW_8HXNRnBa_w-1
-Received: from ztcsla-ex01.ztgroup.com (10.1.80.51) by ztcsla-ex01.ztgroup.com
- (10.1.80.51) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2308.27; Wed, 8 Jun
- 2022 11:08:43 -0700
-Received: from ztcsla-ex01.ztgroup.com ([fe80::f4f5:f679:b90b:d1a5]) by
- ztcsla-ex01.ztgroup.com ([fe80::f4f5:f679:b90b:d1a5%5]) with mapi id
- 15.01.2308.027; Wed, 8 Jun 2022 11:08:43 -0700
-From: Jeff Friedman <jeff.friedman@ztsystems.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: FW: Newbie question on Redfish URI resource names
-Thread-Topic: Newbie question on Redfish URI resource names
-Thread-Index: Adh7YaUQhINiiir+SKqIjbsJIX1DoQAAREzA
-Date: Wed, 8 Jun 2022 18:08:43 +0000
-Message-ID: <68063aedd81c42b39d1b343e3a0748b5@ztsystems.com>
-References: <1593fdf40a6046a7a614407f7d08be15@ztsystems.com>
-In-Reply-To: <1593fdf40a6046a7a614407f7d08be15@ztsystems.com>
-Accept-Language: en-US
-X-MS-Has-Attach: yes
-X-MS-TNEF-Correlator: 
-x-dg-ref: =?us-ascii?Q?PG1ldGE+PGF0IG5tPSJpbWFnZTAwMS5naWYiIHA9IiIgc3o9IjAiIHQ9IjAi?=
- =?us-ascii?Q?IGg9IiIgaWQ9IiIgYmw9IjAiIGJvPSIwIi8+PGF0IG5tPSJib2R5Lmh0bWwi?=
- =?us-ascii?Q?IHA9ImM6XHVzZXJzXGplZmYuZnJpZWRtYW5cYXBwZGF0YVxyb2FtaW5nXDA5?=
- =?us-ascii?Q?ZDg0OWI2LTMyZDMtNGE0MC04NWVlLTZiODRiYTI5ZTM1Ylxtc2dzXG1zZy0w?=
- =?us-ascii?Q?NjY1MzQ4Zi1lNzU2LTExZWMtYjYwNi1lNDVlMzczMzViOWRcYW1lLXRlc3Rc?=
- =?us-ascii?Q?MDY2NTM0OTEtZTc1Ni0xMWVjLWI2MDYtZTQ1ZTM3MzM1YjlkYm9keS5odG1s?=
- =?us-ascii?Q?IiBzej0iNTEzNCIgdD0iMTMyOTkxODUzMjEyNDIyMzI4IiBoPSJiQmxpWDhQ?=
- =?us-ascii?Q?NTZWMHZSS2VXc3VnbjlneDBObzg9IiBpZD0iIiBibD0iMCIgYm89IjEiIGNp?=
- =?us-ascii?Q?PSJjQUFBQUVSSFUxUlNSVUZOQ2dVQUFNSUVBQUM0VUwvSVludllBYUxXYWdx?=
- =?us-ascii?Q?U3QrdThvdFpxQ3BLMzY3d0hBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBSEFB?=
- =?us-ascii?Q?QUFCU0JBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBRUFBUUFCQUFBQU9zM1dP?=
- =?us-ascii?Q?Z0FBQUFBQUFBQUFBQUFBQUo0QUFBQmhBR1FBWkFCeUFHVUFjd0J6QUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFFQUFBQUFBQUFBQWdBQUFB?=
- =?us-ascii?Q?QUFuZ0FBQUdNQVl3QmZBR01BZFFCekFIUUFid0J0QUY4QVlRQnVBSGtBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBUUFBQUFBQUFBQUNBQUFBQUFDZUFBQUFZd0IxQUhN?=
- =?us-ascii?Q?QWRBQnZBRzBBWHdCd0FHVUFjZ0J6QUc4QWJnQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFCQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QkFBQUFBQUFBQUFJQUFBQUFBSjRBQUFCakFIVUFjd0IwQUc4QWJRQmZBSEFB?=
- =?us-ascii?Q?YUFCdkFHNEFaUUJ1QUhVQWJRQmlBR1VBY2dBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBRUFBQUFBQUFBQUFBQUFBQUVBQUFBQUFBQUFBZ0FB?=
- =?us-ascii?Q?QUFBQW5nQUFBR01BZFFCekFIUUFid0J0QUY4QWN3QnpBRzRBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFRQUFBQUFBQUFBQ0FBQUFBQUNlQUFBQVpRQnRB?=
- =?us-ascii?Q?R0VBYVFCc0FGOEFZUUJrQUdRQWNnQmxBSE1BY3dBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFCQUFBQUFBQUFBQUlBQUFBQUFKNEFBQUI2QUhRQVh3QmpBRzhBYmdCbUFH?=
- =?us-ascii?Q?a0FaQUJsQUc0QWRBQnBBR0VBYkFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFB?=
- =?us-ascii?Q?QUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBRUFBQUFBQUFBQUFn?=
- =?us-ascii?Q?QUFBQUFBIi8+PC9tZXRhPg=3D=3D?=
-x-dg-rorf: true
-x-originating-ip: [10.1.80.38]
-MIME-Version: 1.0
-Authentication-Results: relay.mimecast.com;
-	auth=pass smtp.auth=CUSA15A415 smtp.mailfrom=jeff.friedman@ztsystems.com
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: ztsystems.com
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJGtC3drfz3bmS
+	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 05:06:42 +1000 (AEST)
+Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 258Ilehx030705
+	for <openbmc@lists.ozlabs.org>; Wed, 8 Jun 2022 19:06:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
+ subject : from : to : references : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=mrCU31DT4ehgV7Hn+i+li1vllQwaEUiSKjybwxyKnaI=;
+ b=bJVyeXLjN4Cfi4+saF2ow+60IyKWBUrasB6BmBnB8K4CxEm0AehPOK6ASW7NnIhOz0Xg
+ cD2lxb2E4RZryOIxedLlz/leYs7kgs43kuNrMB9pR6+lRLvW/KhwyJ4r6hxBAVPYQZN2
+ PQpq0AZyCnsC2ptWhdg575orzBvrf3sRtlVDRgLoNW1fLI1y+mZay6NKvbXx7bQOdRkd
+ dW8C2PdJY9JRofJWeYLhhIt5Kvw4Yd52LMQ+jS+7ewmoyaW0+bq0GEWVeI2dUTsibViP
+ g3YBghuHa981cjSjZE2ktd89pttyT1teoJVnoWozywksBHeR29TeHWq7fufOne571mae yg== 
+Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com [169.55.85.253])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3gk1c18bqu-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 08 Jun 2022 19:06:39 +0000
+Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
+	by ppma01wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 258Ioh2a012872
+	for <openbmc@lists.ozlabs.org>; Wed, 8 Jun 2022 19:06:38 GMT
+Received: from b01cxnp23033.gho.pok.ibm.com (b01cxnp23033.gho.pok.ibm.com [9.57.198.28])
+	by ppma01wdc.us.ibm.com with ESMTP id 3gfy19w7th-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 08 Jun 2022 19:06:38 +0000
+Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com [9.57.199.107])
+	by b01cxnp23033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 258J6cDO20906284
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+	for <openbmc@lists.ozlabs.org>; Wed, 8 Jun 2022 19:06:38 GMT
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 435D8124054
+	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 19:06:38 +0000 (GMT)
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 1E03112405B
+	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 19:06:38 +0000 (GMT)
+Received: from [9.160.53.66] (unknown [9.160.53.66])
+	by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTPS
+	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 19:06:38 +0000 (GMT)
+Message-ID: <49220e5b-bc49-2cef-fff2-234e24015fc0@linux.ibm.com>
+Date: Wed, 8 Jun 2022 14:06:37 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.7.0
+Subject: Re: Security Working Group meeting - Wednesday June 8 - results
 Content-Language: en-US
-Content-Type: multipart/related;
-	boundary="_004_68063aedd81c42b39d1b343e3a0748b5ztsystemscom_";
-	type="multipart/alternative"
+From: Joseph Reynolds <jrey@linux.ibm.com>
+To: openbmc <openbmc@lists.ozlabs.org>
+References: <7abdb7d5-adc5-9bb9-ea82-5236241aa586@linux.ibm.com>
+In-Reply-To: <7abdb7d5-adc5-9bb9-ea82-5236241aa586@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 3qAvCvtJtYlXP-tJx3ITWh19KgzF9tpD
+X-Proofpoint-ORIG-GUID: 3qAvCvtJtYlXP-tJx3ITWh19KgzF9tpD
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.874,Hydra:6.0.517,FMLib:17.11.64.514
+ definitions=2022-06-08_05,2022-06-07_02,2022-02-23_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0 bulkscore=0
+ clxscore=1015 mlxlogscore=999 impostorscore=0 adultscore=0 spamscore=0
+ phishscore=0 suspectscore=0 mlxscore=0 lowpriorityscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2204290000 definitions=main-2206080074
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -136,213 +96,182 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_004_68063aedd81c42b39d1b343e3a0748b5ztsystemscom_
-Content-Type: multipart/alternative;
-	boundary="_000_68063aedd81c42b39d1b343e3a0748b5ztsystemscom_"
-
---_000_68063aedd81c42b39d1b343e3a0748b5ztsystemscom_
-Content-Type: text/plain; charset=WINDOWS-1252
-Content-Transfer-Encoding: quoted-printable
-
-Hello all,
-
-New to OpenBMC, and am not clear on one thing as pertaining to the Redfish =
-schema and URI resource names:
-
-The DMTF Redfish schema URIs are defined as:
-
-/redfish/v1/Chassis/{ChassisId}/
-/redfish/v1/Managers/{ManagerId}
-/redfish/v1/Systems/{ComputerSystemId}
-
-Vendors can use their own names for {ChassisId}, {ManagerId}, and {Computer=
-SystemId} as long as they conform to the syntax rules.
-
-Question: Does OpenBMC specify names for these resources as part of the Ope=
-nBMC spec? Or does OpenBMC just refer to the existing DMTF Redfish schemas?
-
-I ask because I have seen reference to the following names in examples for =
-Managers and Systems on the OpenBMC website:
-
-/redfish/v1/Chassis/{ChassisId}/
-/redfish/v1/Managers/bmc/
-/redfish/v1/Systems/system/
-
-In summary, does OpenBMC specify these resource names as part of their spec=
-, or does it refer to existing DMTF Redfish schema specs?
-
-Thank you!
-
-Jeff Friedman
-Sr. Field Systems Engineer | ZT Systems
-M: 206.819.2824
-[ZT Systems]<http://www.ztsystems.com/>
-
-This email and any files transmitted with it are privileged/confidential an=
-d intended solely for the use of the individual to whom they are addressed.=
- If you have received this email in error, you are not authorized to distri=
-bute it in whole or in part. This communication does not constitute a contr=
-act offer, amendment, or acceptance of a contract offer, unless explicitly =
-stated.
-
-
---_000_68063aedd81c42b39d1b343e3a0748b5ztsystemscom_
-Content-Type: text/html; charset=WINDOWS-1252
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+On 6/7/22 11:12 PM, Joseph Reynolds wrote:
+> This is a reminder of the OpenBMC Security Working Group meeting 
+> scheduled for this Wednesday June 8 at 10:00am PDT.
 >
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<!--[if !mso]><style>v\:* {behavior:url(#default#VML);}
-o\:* {behavior:url(#default#VML);}
-w\:* {behavior:url(#default#VML);}
-.shape {behavior:url(#default#VML);}
-</style><![endif]--><style><!--
-/* Font Definitions */
-@font-face
-=09{font-family:"Cambria Math";
-=09panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-=09{font-family:Calibri;
-=09panose-1:2 15 5 2 2 2 4 3 2 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-=09{margin:0in;
-=09font-size:11.0pt;
-=09font-family:"Calibri",sans-serif;}
-.MsoChpDefault
-=09{mso-style-type:export-only;
-=09font-size:10.0pt;}
-@page WordSection1
-=09{size:8.5in 11.0in;
-=09margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-=09{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:=
-break-word">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Hello all,<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">New to OpenBMC, and am not clear on one thing as per=
-taining to the Redfish schema and URI resource names:<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">The DMTF Redfish schema URIs are defined as:<o:p></o=
-:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">/redfish/v1/Chassis/{ChassisId}/<o:p></o:p></p>
-<p class=3D"MsoNormal">/redfish/v1/Managers/{ManagerId}<o:p></o:p></p>
-<p class=3D"MsoNormal">/redfish/v1/Systems/{ComputerSystemId}<o:p></o:p></p=
+> We'll discuss the following items on the agenda 
+> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
+> and anything else that comes up:
 >
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Vendors can use their own names for {ChassisId}, {Ma=
-nagerId}, and {ComputerSystemId} as long as they conform to the syntax rule=
-s.
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Question: Does OpenBMC specify names for these resou=
-rces as part of the OpenBMC spec? Or does OpenBMC just refer to the existin=
-g DMTF Redfish schemas?<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">I ask because I have seen reference to the following=
- names in examples for Managers and Systems on the OpenBMC website:<o:p></o=
-:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">/redfish/v1/Chassis/{ChassisId}/&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <o:p=
-></o:p></p>
-<p class=3D"MsoNormal">/redfish/v1/Managers/<b><i>bmc</i></b>/&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;
-<o:p></o:p></p>
-<p class=3D"MsoNormal">/redfish/v1/Systems/<b><i>system</i></b>/&nbsp;&nbsp=
-;&nbsp;&nbsp; <o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">In summary, does OpenBMC specify these resource name=
-s as part of their spec, or does it refer to existing DMTF Redfish schema s=
-pecs?<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Thank you!<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><b><span style=3D"color:#DF4826">Jeff Friedman</span=
-></b><span style=3D"font-size:9.0pt;color:#1F497D"><br>
-</span><span style=3D"font-size:9.0pt;color:gray">Sr. Field Systems Enginee=
-r | ZT Systems</span><span style=3D"font-size:9.0pt;color:#44546A"><o:p></o=
-:p></span></p>
-<p class=3D"MsoNormal" style=3D"margin-bottom:12.0pt"><span style=3D"font-s=
-ize:9.0pt;color:#7F7F7F">M: 206.819.2824<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"margin-bottom:12.0pt"><a href=3D"http://www=
-.ztsystems.com/"><span style=3D"font-size:10.5pt;font-family:&quot;Arial&qu=
-ot;,sans-serif;color:#4A58AB;text-decoration:none"><img border=3D"0" width=
-=3D"115" height=3D"46" style=3D"width:1.1979in;height:.4791in" id=3D"Pictur=
-e_x0020_2" src=3D"cid:image001.gif@01D87B26.F8CE6840" alt=3D"ZT Systems"></=
-span></a><span style=3D"font-size:10.5pt;font-family:&quot;Arial&quot;,sans=
--serif;color:#6D6E71"><br>
-<br>
-</span><span style=3D"font-size:7.0pt;font-family:&quot;Arial&quot;,sans-se=
-rif;color:#7F7F7F">This email and any files transmitted with it are privile=
-ged/confidential and intended solely for the use of the individual to whom =
-they are addressed. If you have received this
- email in error, you are not authorized to distribute it in whole or in par=
-t. This communication does not constitute a contract offer, amendment, or a=
-cceptance of a contract offer, unless explicitly stated.</span><span style=
-=3D"font-size:10.5pt;font-family:&quot;Arial&quot;,sans-serif;color:#6D6E71=
-">&nbsp;</span><o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-</div>
-</body>
-</html>
 
---_000_68063aedd81c42b39d1b343e3a0748b5ztsystemscom_--
+Attended: Joseph Reynolds, Yutaka, Ruud Haring, Dick from Phoenix, 
+Krishnan Sugavanam, Mark McCawley, Russel Wilson
 
---_004_68063aedd81c42b39d1b343e3a0748b5ztsystemscom_
-Content-Type: image/gif; name="image001.gif"
-Content-Description: image001.gif
-Content-Disposition: inline; filename="image001.gif"; size=1474;
-	creation-date="Wed, 08 Jun 2022 18:08:43 GMT";
-	modification-date="Wed, 08 Jun 2022 18:08:43 GMT"
-Content-ID: <image001.gif@01D87B26.F8CE6840>
-Content-Transfer-Encoding: base64
 
-R0lGODlhcwAuANU/AKmpqnd3d/r6+vT09O+mjurq6uBNKmVlZoSEhemGaPri1PjX0Ly8vFZWV7W1
-tdvb29XV1czMzfbItkdHSMTExOLi4ud6WuJVOPvq5ORkSNwpJv3w6N9KJfnUv99CJt0xJvnby52d
-npOTlPK4ouJdRd45KdsfJuiEX/728d9ELd9GMuyXed48KOqNceiAYfbMwfjVzfjWxt40KN9KKU9P
-UPDw8G5ub2BgYeVsUI6OjuFTJeNeQEJCQ////99HJf///yH5BAEAAD8ALAAAAABzAC4AAAb/QNxl
-Rywaj8jkEecivDa/qHRKrVqv2KwWe/F5v+CweEz2ZgiorXrNbkt35bg8nnm57/g7fM7v+wx2eYKD
-Vnt+h2UXGISMhIaIkGEJjZR4j5GYPguVnGuXmZAEnaNZn6CHk6SqVKanfRlpq7KtrnMGCrKztZEG
-MLmrtLtlBpu/pMHCY8TGx8mHy8ydyM5g0NGV02Uc2xy8xdeU2WIGLCbmJj7dz9/gjOJhJRctCQku
-Ph6I1u2OkBwmFj0CbkjxQV0fffsEvfviD2BABSlkGOSDMKGlMNwyatz2L2APiDIMrLPIz0u3DyhT
-qkwpwwQOjwo+mJDhYWKciiTbGOrGgkWJ/59Ag/784PBjRBY1D7LL6WYPBxkXOoDoQLWqVaoSQHhE
-QRWEBQ02yeBkqmaPAQ0XPKpdy3atCxNhlS0l68mLgQ8XNrBF0bbv27jj5tLdYhav3h4jErSwQEAt
-iHqNA2KYt2JHCaWDm9pF67GFuRIxPIJQYe7lw3MsRFIUnBmL03gjRkg4YeJD6IAoSMDt+DAiYLGC
-BUBgQKEAox7NTPr4oEEG8xFqLZgw0BCm75FUKgTgwZ1GCAF5InxP/gWfBxMr1HpOytuoROxSCjTg
-cUPEdh4i8ECYcEPVJQ4GmOCCWiOYwII67YH0m1xUMEDfAFGIwEMDNdRQAXhRDPCAcT9UEP9BBBwK
-EAIPNhSAYQ0RQIDhDxb+MEAED0RRQHFTvBhBBVH8ZwIsHr2gQQk6bONDgtf5gRAFPNDgAIcUUCBA
-DhOEEIUA2zHww4jdOfCDg9zxQMEPEdzAXQA4/hBAAwyIOQEDEUww4ZdgisldDgU8clYKGMCkggwl
-nDNkUQrCl6EN3QUAQA1RIEkDohDwMEENDgbAAABuPvDAfBPYUEEBboYgIYU/EMoDAgh0KUKpNAzA
-qZIMHMBDDobcJcMLW+nmwQ4uuGDBDAl6UIJqmFExQA40dNmAlj2I+eWICPyQw6vGVfAAhA6QCF6p
-UjrLAwBmjhqFq/kNUKylSapYAwR12nX/HnQC4WCCBiZE1sMFAsL0bglJrXZFAQzkgCmOAPAgpatf
-ttmdCGVG+oMA89mAQA6uBhAqD1Z2+2UNxaoo6gQBfLnHeel5tIIGKqhQQmQo0Dsgbi5o8EG+tizl
-AAIRxDcftw/QBwENDUDYoQjzcWelgza4ON8BATicA7eEakmllz8UUGzNPQDgKncIwMGBBniqFQMI
-CigAwmEbqLxWBzF8teAXCJXaAIcVFGtlD9u5yu0PFABQwAAVlFq0whNr2aGTgS+83ZdS84AuABBE
-XS0PWpOsQF9qpWxCWmzRtrZdSz3gZgOeFnsAoj88PkGMP5R6w4bbSemgdwVEkGSTbtbs36rThFrJ
-KQ8PNMqDAzVUe0PkKhxGeUAXwNsCX2r9pS8VEVzNnQ2ouyimDchFfR/WEBYgp5VYcjde0wvnHnXt
-PwBQLHcHQLAHCymckMAJ9Ndv//wz4GPCDisQ4P8KF7jM84RFAQawaUVRINTdpBABBzigZlKogAM5
-BAEHNi4KD2AABSmAKAFEgAI+qwADHMAACDllSOdIoQrRsY3zqDA1wVLDjCREAw5ZZCEY6YYHdpiP
-TWBgEVqQHXcWaJEuUKMPGFAADkawhQEAIAQQzIkQlEDFKlrRCENIYgsk0JotBAEAOw==
---_004_68063aedd81c42b39d1b343e3a0748b5ztsystemscom_--
+The meeting went about 20 minutes over time (80 minutes total).
+
+
+1 Progress on SELinux gerrit review 
+https://gerrit.openbmc.org/c/openbmc/docs/+/53205 
+<https://gerrit.openbmc.org/c/openbmc/docs/+/53205>
+
+Note the design is intended for BMC which have a larger flash image 
+size.  For example the OpenBMC witherspoon reference platform has a 64Mb 
+flash divided into 2 sides, with space for a 20Mb readonly filesystem, 
+so it is too small.  SELinux is intended for BMC with 256Mb SPI flash, 
+where SELinux adds  about  20Mb (initial guess).
+
+
+Ruud is continuing to work on the design.  Discovering what config 
+changes are needed by enabling SElinux.  For example, SELinux adds a 
+`-Z` flag to many commands to show SELinux attributes.  SELinux-enabled 
+busybox (-Z flag) exists.  Attempting to build from Yocto recipe.
+
+Attempting to follow meta-selinux docs.  Debugging.  Reach out with 
+questions to the yocto community (perhaps via email list in 
+https://wiki.yoctoproject.org/wiki/Security).
+
+
+We did a deep dive on BMCWeb authority checking by following a Redfish 
+API call:
+
+  *
+
+    After a Redfish session is created, that session has a role and a
+    set of privileges.
+
+  *
+
+    When that session is used to invoke an HTTP operation, that
+    operation’s  privileges are checked against the session’s privileges.
+
+  *
+
+    The Redfish spec described this in DSP0266 > Security details >
+    Authorization.  We peeked at this spec.
+
+  *
+
+    We looked at the Redfish “delete user” API as implemented by BMCWeb.
+    https://github.com/openbmc/bmcweb/blob/002d39b4a7a5ed7166e2acad84e0943c3def9492/redfish-core/lib/account_service.hpp#L1941
+    <https://github.com/openbmc/bmcweb/blob/002d39b4a7a5ed7166e2acad84e0943c3def9492/redfish-core/lib/account_service.hpp#L1941> 
+    This defines:
+
+      o
+
+        the HTTP operation (DELETE
+        /redfish/v1/AccountService/Accounts/<str> where <str> is a
+        username).
+
+      o
+
+        along with the privileges required to perform that operation:
+        namely redfish::privileges::deleteManagerAccount, which only
+        Administrator users have.
+
+      o
+
+        The C++ code to implement the operation (which basically invoke
+        the phosphor-user-manager API via D-Bus system bus with parameters
+
+          +
+
+            Bus: xyz.openbmc_project.User.Manager
+
+          +
+
+            Object path: (as C++ variable userPath)
+
+          +
+
+            Interface: xyz.openbmc_project.Object.Delete
+
+          +
+
+            Method: Delete
+
+  *
+
+    We talked about, but did not look at BMCWeb’s router function, which
+    routes operations to their implementation (such as “delete user”
+    above), and we talked about but did not look at the authority check
+    it performs.  That code is in the “handle” method, here:
+    https://github.com/openbmc/bmcweb/blob/002d39b4a7a5ed7166e2acad84e0943c3def9492/http/routing.hpp#L1236
+    <https://github.com/openbmc/bmcweb/blob/002d39b4a7a5ed7166e2acad84e0943c3def9492/http/routing.hpp#L1236>
+
+  *
+
+    We looked at BMCWeb’s implementation of the Redfish privilege
+    registry.  Specifically, the generated header file here
+    https://github.com/openbmc/bmcweb/blob/master/redfish-core/include/registries/privilege_registry.hpp
+    <https://github.com/openbmc/bmcweb/blob/master/redfish-core/include/registries/privilege_registry.hpp>is
+    a translation of the redfish spec’s privilege registry.  The BMCWeb
+    contributors maintain this file (runs as needed and checked in to
+    the repo), and the definitions are used within the operations
+    handlers (such as “delete user”).
+
+
+A basic understanding is that OpenBMC’s authority checking (which asks: 
+“am I allowed to perform this operation?”) is handled by BMCWeb, and 
+there is no authority checking at the D-Bus layer.  (Currently anyone 
+who needs to use a D-Bus API must have root authority). This is a 
+security problem we are trying to solve.  (TODO: articulate why this is 
+a problem.)
+
+Two approaches were briefly discussed (not necessarily as complete 
+solutions):
+
+  *
+
+    BMCWeb drops to the logged-in user (switch user command (su) or the
+    setuid kernel call).
+
+  *
+
+    SELinux labeling model.
+
+
+For example, if desired, we can use SELinux to ensure the “delete user” 
+dbus api can only be used by bmcweb and that it cannot be used by any 
+other service (like IPMI or by SSH/bash).  Then we can ensure only the 
+phosphor-user-manager service is allowed to modify the /etc/passwd & 
+shadow files.  Doing so will lock down who is allowed to perform BMC 
+user management.
+
+
+Revisit some initial use cases for selinux (examples):
+
+ 1.
+
+    Limit what files bmcweb process can reach.  In my opinion (Joseph)
+    this would be an easy initial use case for SELinux because BMCWeb
+    only touches a small set of files,and has no reason to touch other
+    files.  Also phosphor-user-manager only touches a small set of files
+    (including /etc/shadow), and has no reason to touch other files or
+    to reach out to the network.
+
+ 2.
+
+    Control which D-Bus apis bmcweb is allowed to use. (All of them?)
+
+
+Here is an attempt to state a security problem more clearly: How do we 
+limit specific dbus calls to specific users or to specific processes?  
+Alternatively: How do we push down the BMCWeb’s authority model into the 
+D-Bus APIs?  And what additional security would this give us?
+
+
+
+Joseph
+
+>
+>
+>
+>
+> Access, agenda and notes are in the wiki:
+> https://github.com/openbmc/openbmc/wiki/Security-working-group 
+> <https://github.com/openbmc/openbmc/wiki/Security-working-group>
+>
+> - Joseph
 
