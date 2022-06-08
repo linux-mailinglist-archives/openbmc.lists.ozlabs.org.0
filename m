@@ -1,60 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80AA2543D7A
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 22:17:38 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1891543D9F
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 22:35:35 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LJJS02RFnz3brt
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 06:17:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LJJrj3hf1z3brV
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 06:35:33 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=sPio/qZ9;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=quicinc.com header.i=@quicinc.com header.a=rsa-sha256 header.s=qcdkim header.b=sj/ESHCD;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=quicinc.com (client-ip=199.106.114.38; helo=alexa-out-sd-01.qualcomm.com; envelope-from=quic_jaehyoo@quicinc.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=sPio/qZ9;
+	dkim=pass (1024-bit key; unprotected) header.d=quicinc.com header.i=@quicinc.com header.a=rsa-sha256 header.s=qcdkim header.b=sj/ESHCD;
 	dkim-atps=neutral
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+Received: from alexa-out-sd-01.qualcomm.com (alexa-out-sd-01.qualcomm.com [199.106.114.38])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJJRd2sLZz3bmC
-	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 06:17:17 +1000 (AEST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id 6208D618F9;
-	Wed,  8 Jun 2022 20:17:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C972C3411C;
-	Wed,  8 Jun 2022 20:17:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1654719434;
-	bh=EquiZEmGpaGk9Hi66098V9Sqwcoq46fARusu9O2QJ/s=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sPio/qZ9D16pdwZJMpNek54aMJ+Dfem3MsatJLwYrtKgUdW/4gGd46VOeEXsAwTrH
-	 RqINva74s4v7sDjhdDqJQ4+nM/Dq6EWQD54OTvFkRid315TgGteGTUABv7APtTXjiR
-	 l1eMxUOfco9nj5ABFbOpi2rUS1ZWLZ6QVp1StXjp3a0O/WidERGkAT8YaVyYmuTcrf
-	 Pz9otFdc8uyOPrrip5m1zGEmrq9ITogvNfs+ghyCIBBmv2+tuLH4VI+s8wRRpWp2dC
-	 8FLhWW8C2gdQLqXLnl97/JBkDBhEbhCY1+vLHyr7u7X/cm/APwtNO6wxW3Ogl5SgYT
-	 eEjkwRS5XoBqA==
-Date: Wed, 8 Jun 2022 22:17:11 +0200
-From: Wolfram Sang <wsa@kernel.org>
-To: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Subject: Re: [PATCH] i2c: npcm7xx: barco-p50-gpio: Add check for
- platform_driver_register
-Message-ID: <YqEDx3S9z1y12mfS@kunai>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>, avifishman70@gmail.com,
-	tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com,
-	yuenn@google.com, benjaminfair@google.com, openbmc@lists.ozlabs.org,
-	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220526094100.1494193-1-jiasheng@iscas.ac.cn>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJJrK5httz2yL6
+	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 06:35:13 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654720514; x=1686256514;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=lS7NLP+OI7h8wB5VjxUrQ3Ia8yVZ5wCvZHOcmmr7wDg=;
+  b=sj/ESHCDnKCvUa5iKBa5lICsc3a9CsjlB7R5xJC8pK2GTA+FcfETgwfs
+   Of4fsNxndgQd8JU9Wor//RlGzetKV4i1PvLb1oTwifLuXOhXXX8zZf89t
+   DW57ImSjlxEKwx1cVVWUsTxgkZM/TY+3UhkfNIfa7FuObWcf1zMWdJcI7
+   Q=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 08 Jun 2022 13:35:10 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Jun 2022 13:35:10 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Wed, 8 Jun 2022 13:35:09 -0700
+Received: from [10.110.70.255] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 8 Jun 2022
+ 13:35:08 -0700
+Message-ID: <4f8f72fa-6dfc-1617-4e43-5715926f9d96@quicinc.com>
+Date: Wed, 8 Jun 2022 13:35:07 -0700
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ssq14js36jhNveXs"
-Content-Disposition: inline
-In-Reply-To: <20220526094100.1494193-1-jiasheng@iscas.ac.cn>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v3] ARM: dts: aspeed: add
+ Qualcomm DC-SCM V1
+Content-Language: en-US
+To: Joel Stanley <joel@jms.id.au>, =?UTF-8?Q?C=c3=a9dric_Le_Goater?=
+	<clg@kaod.org>
+References: <20220607142845.1123692-1-quic_jaehyoo@quicinc.com>
+From: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
+In-Reply-To: <20220607142845.1123692-1-quic_jaehyoo@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,47 +73,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: benjaminfair@google.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, linux-i2c@vger.kernel.org, tmaimon77@gmail.com
+Cc: openbmc@lists.ozlabs.org, Graeme Gregory <quic_ggregory@quicinc.com>, Jamie Iles <quic_jiles@quicinc.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 6/7/2022 7:28 AM, Jae Hyun Yoo wrote:
+> From: Graeme Gregory <quic_ggregory@quicinc.com>
+> 
+> Add initial version of device tree for Qualcomm DC-SCM V1 BMC which is
+> equipped with Aspeed AST2600 BMC SoC.
+> 
+> Signed-off-by: Graeme Gregory <quic_ggregory@quicinc.com>
+> Signed-off-by: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
+> ---
+> Changes in v3:
+> * Dropped compatible string of flash memory - Joel / Cedric
+> * Dropped I2C pinctrl settings - Joel
+> 
+> Changes in v2:
+> * Changed vendor name from Nuvia to Qualcomm.
+> 
+>   arch/arm/dts/Makefile                   |   1 +
+>   arch/arm/dts/ast2600-qcom-dc-scm-v1.dts | 172 ++++++++++++++++++++++++
+>   2 files changed, 173 insertions(+)
+>   create mode 100644 arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
+> 
+> diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+> index 8f876a0aa0d7..952c3d776adc 100755
+> --- a/arch/arm/dts/Makefile
+> +++ b/arch/arm/dts/Makefile
+> @@ -687,6 +687,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+>   	ast2600-ncsi.dtb \
+>   	ast2600-p10bmc.dtb \
+>   	ast2600-pfr.dtb \
+> +	ast2600-qcom-dc-scm-v1.dts \
 
---ssq14js36jhNveXs
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Please hold it off. It should have s/dts/dtb/
+Will submit v4.
 
-On Thu, May 26, 2022 at 05:41:00PM +0800, Jiasheng Jiang wrote:
-> As platform_driver_register() could fail, it should be better
-> to deal with the return value in order to maintain the code
-> consisitency.
->=20
-> Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller drive=
-r")
-> Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Thanks,
+Jae
 
-Applied to for-current, thanks! But what is with the "barco-p50-gpio:"
-in the $subject?
-
-
---ssq14js36jhNveXs
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmKhA8MACgkQFA3kzBSg
-KbYR8Q/+Kk7ypQngwMr+zLMeL4dcpbFw/Lwkywizw+7PgPtQNucwWQnhHz5Yc6gp
-8ukBBDb/Zfvu5BxQvrAnLxlJOvfUGg6sQbcexRfsDR16CEfVKTYBaM9WCp2KggHH
-xiO4vgHK656o5B6d84N3R0T/CXM3OmNQ0Cy60oNSczPC1xf8PwUWqXovX/Sl5USd
-0I6mUeYO6cGg+k56ECDLD+QdEK/neGPUKVU6WHmlaj4u7BXtE+TzLV1P3yNJB+lz
-aHILnAicIB8UuTeY7D9UCvMhCXKW4T7VoHW0lE5FhBK/uOGnJD/vbUXcsQM6r7zQ
-o7JyDbjliUqo/EkSBHwEACzWWAqH5Vjg/VSu2jM1B0GWetGuWhnUr/bQ4lwKITlu
-6lo4GqxPQwnFUerVtbuhQC9QPs/gr5WK8b1EB9FlXCDo6VfJDnA6TmH0T8aSl3vz
-c1Pe9Ut+6fbjiwcCME7GebC3gYh4EB2uGWA4jgn5v8leEkXBZZ6byaAPpRR/xDIo
-3SocXQBDdWFzXu4UdQYDq63y6x6CIswj08ZKHwW/AlQy/XY18pBnF7Y6cXi6Tb7E
-LdLsGhTW2vrC7dBcHgdfM5hXWDCX0twBwU/f2givvpWPehoYTUN/k8HQ8vZu6x/0
-RimrFe1hNRBCU4cv+DzJVb/EcssE4i+V51w3Oe0KKx3XO3w03+M=
-=ENlH
------END PGP SIGNATURE-----
-
---ssq14js36jhNveXs--
+[...]
