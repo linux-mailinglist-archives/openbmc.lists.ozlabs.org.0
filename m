@@ -1,54 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2621354314B
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 15:27:10 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 59857543246
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 16:13:35 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LJ7LN0vlRz3bmw
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 23:27:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LJ8Mw30m7z30F8
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 00:13:32 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=HHF4hd6U;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kaod.org (client-ip=178.32.121.110; helo=1.mo548.mail-out.ovh.net; envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
-X-Greylist: delayed 1081 seconds by postgrey-1.36 at boromir; Wed, 08 Jun 2022 23:26:50 AEST
-Received: from 1.mo548.mail-out.ovh.net (1.mo548.mail-out.ovh.net [178.32.121.110])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b2c; helo=mail-yb1-xb2c.google.com; envelope-from=srid.11486@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=HHF4hd6U;
+	dkim-atps=neutral
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJ7L2669Fz307B
-	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 23:26:47 +1000 (AEST)
-Received: from mxplan5.mail.ovh.net (unknown [10.109.146.59])
-	by mo548.mail-out.ovh.net (Postfix) with ESMTPS id 4D44021EC5;
-	Wed,  8 Jun 2022 13:08:40 +0000 (UTC)
-Received: from kaod.org (37.59.142.96) by DAG4EX1.mxp5.local (172.16.2.31)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.9; Wed, 8 Jun 2022
- 15:08:39 +0200
-Authentication-Results: garm.ovh; auth=pass (GARM-96R001c649a352-519d-4a15-8b27-ad31a683607c,
-                    54A3B2140384DD5702107EFE02B2448601CCACB1) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <4c2702c7-14ee-df07-5c5c-eca257947536@kaod.org>
-Date: Wed, 8 Jun 2022 15:08:39 +0200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJ8MV2w33z308m
+	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 00:13:09 +1000 (AEST)
+Received: by mail-yb1-xb2c.google.com with SMTP id y188so7253485ybe.11
+        for <openbmc@lists.ozlabs.org>; Wed, 08 Jun 2022 07:13:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MtD90tjlD5CCTQ4eNRKuGdKWlmVAa9Ps4OOl7mjTutA=;
+        b=HHF4hd6URLzUWO8+ov7p4EJuap2C7/Z9tM5Ii4XdONbRdqLN3V/IGcWl2qkqfXvaZ3
+         2Ln4bnzxjXO8cZNnZyIuceLp7rp3azQNPk2HdK0Deh9xgySMIOExUfYv48MfseLvE6fh
+         YkO5ZS214W0Vb1y9UOCdP+rp7C0Mr/m5kayYnsE+lT5oVqeSAMAFhNX5EqF37OfZRcbb
+         MQC8tatpIFBGOpOfFdTgK1o4pbHYFKemoXeRJvd9bwl4IEdxjXmzIobJUG2bGrdWHAOJ
+         zK5RebpXm1ggdgXA2kE0+9tf8EMHz9v2HOjE35OGkuhPQjh9Xap0xInp8MAlPysOXi4P
+         pkdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MtD90tjlD5CCTQ4eNRKuGdKWlmVAa9Ps4OOl7mjTutA=;
+        b=fZgA/im+HXsWTtLCkDcZt0y0EI+l9ftallZMVtqCPTACrNgEqpcUjB21HCWgKbqBXM
+         Cg30q/PTGR35Y2bJD4nHFEBkHoSF6/+1teLXoK5K/Vow930xxhhvoAA0o7TsKsvDYfbo
+         TJGhFUBA2e0pVXXREjijuoemrpRXrzPA47sdSosWnZzuih9SsYCAx3uwNdnpq3dRBr1y
+         pDjv1lucUFdcJRFx9vO4kqxZSjY8KWSdObfWYEKxWe333ZDYey3Sd3emWrmBbde06UvN
+         GI9A5OUpXdMuv2LLJJzplERb038bFRuYpRVvKwC0wQAhzLpDJEJpIS5Nw2v1vXL13BRd
+         Ee9Q==
+X-Gm-Message-State: AOAM532j9AnTEeknE73FRKyAw4kvnQoPkLabTJ28jqAKjLEjOu7WGg61
+	9Ry3xfKQH1XrBn5M/xeRpCQY4et+K3O8funFogs=
+X-Google-Smtp-Source: ABdhPJwxH8I+IRzIMK1vG+atPzdULVC2wYP/jNyNVPKxwZYL8Moup3RY/NS1Vm+vpCrEv3Dpv1qLFpzl/xZj0m4SWhU=
+X-Received: by 2002:a25:f506:0:b0:64d:f8a5:b2bd with SMTP id
+ a6-20020a25f506000000b0064df8a5b2bdmr32901659ybe.610.1654697585984; Wed, 08
+ Jun 2022 07:13:05 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH v2] ARM: dts: aspeed: Add a palmetto board (AST2400)
-Content-Language: en-US
-To: Zev Weiss <zweiss@equinix.com>
-References: <20220608082221.460166-1-clg@kaod.org>
- <20220608101727.GR11809@packtop>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20220608101727.GR11809@packtop>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.96]
-X-ClientProxiedBy: DAG1EX1.mxp5.local (172.16.2.1) To DAG4EX1.mxp5.local
- (172.16.2.31)
-X-Ovh-Tracer-GUID: ca1d157c-1cdd-4222-a993-a7207c7a1f79
-X-Ovh-Tracer-Id: 11481927253563378653
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvfedruddtjedgiedtucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuqfggjfdpvefjgfevmfevgfenuceurghilhhouhhtmecuhedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepkfffgggfuffvvehfhfgjtgfgihesthekredttdefjeenucfhrhhomhepveorughrihgtpgfnvggpifhorghtvghruceotghlgheskhgrohgurdhorhhgqeenucggtffrrghtthgvrhhnpeekteejtdelkeejvdevffduhfetteelieefgeefffeugffhfeekheffueefledujeenucfkpheptddrtddrtddrtddpfeejrdehledrudegvddrleeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmohguvgepshhmthhpohhuthdphhgvlhhopehmgihplhgrnhehrdhmrghilhdrohhvhhdrnhgvthdpihhnvghtpedtrddtrddtrddtpdhmrghilhhfrhhomheptghlgheskhgrohgurdhorhhgpdhnsggprhgtphhtthhopedupdhrtghpthhtohepjhhovghlsehjmhhsrdhiugdrrghupdfovfetjfhoshhtpehmohehgeek
+References: <CALXuKJetn8x+z0xrn_9WJEtt0NyZQa2-Br8irggi7Djk-U8Xmg@mail.gmail.com>
+ <CALXuKJetkkPPCWZT8T24LFkfkYhqJzOi7oPdtLDOTH2VROHf8Q@mail.gmail.com> <CAH2-KxCViS3py6bZ4EX1_V9HU2i8t3o47DG5dhUeE48s8VApAg@mail.gmail.com>
+In-Reply-To: <CAH2-KxCViS3py6bZ4EX1_V9HU2i8t3o47DG5dhUeE48s8VApAg@mail.gmail.com>
+From: Jayashree D <srid.11486@gmail.com>
+Date: Wed, 8 Jun 2022 19:42:54 +0530
+Message-ID: <CALXuKJdau-XHxs5AEG+s+Ffd8JjuBkBfsO=ticLjqKAkjgkYQg@mail.gmail.com>
+Subject: Re: Physical LED Design Proposal
+To: Ed Tanous <edtanous@google.com>
+Content-Type: multipart/alternative; boundary="000000000000d2c7d805e0f04d34"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,225 +73,264 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Joel Stanley <joel@jms.id.au>
+Cc: spinler@us.ibm.com, andrew@aj.id.au, openbmc@lists.ozlabs.org, jayashree-d@hcl.com, bradleyb@fuzziesquirrel.com, velumanit@hcl.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 6/8/22 12:17, Zev Weiss wrote:
-> On Wed, Jun 08, 2022 at 01:22:21AM PDT, Cédric Le Goater wrote:
->> Palmettos were the first OpenPOWER systems built by Tyan with the
->> product name: GN70-BP010. They contained an IBM POWER8 Turismo SCM
->> processor and an Aspeed AST2400 SoC.
+--000000000000d2c7d805e0f04d34
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Jun 7, 2022 at 9:41 PM Ed Tanous <edtanous@google.com> wrote:
+
+> On Tue, Jun 7, 2022 at 12:07 AM Jayashree D <srid.11486@gmail.com> wrote:
+> >
+> > Hi Team,
+> >
+> > Could you please provide your suggestions on the above design for LED.
+> >
+> > Thanks,
+> > Jayashree
+> >
+> >
+> > On Fri, May 27, 2022 at 12:42 PM Jayashree D <srid.11486@gmail.com>
+> wrote:
+> >>
+> >> Hi Team,
+> >>
+> >> Problem Description :
+> >>
+> >> In the existing phosphor-led-sysfs design, it exposes one service per
+> LED. Therefore, multiple services will be created for multiple GPIO pins
+> configured for LED. To abstract this method and also to create LEDs under=
+ a
+> single service, a new implementation is proposed.
+>
+> You've kind of jumped directly to a solution without spending any
+> details on why this design is necessary.  What are you trying to
+> achieve?  Why does the existing solution not work?  You allude to
+> multiple services being bad, but you don't really state why, or what's
+> preventing that from working.  This is a section labeled problem
+> description, it needs to describe the problem, ideally in much more
+> length than your solution itself.
+>
+>  The Yosemite V2 Platform combines a Power LED and a System Identificatio=
+n
+LED into a single bicolor blue-yellow LED per host.
+A total of 4 =C3=97 LEDs will be placed along the front edge of the board i=
+n a
+grid.
+The grid will be 2=C3=97rows of 2 =C3=97 LEDs to match the layout of the ca=
+rd slots.
+
+Based on each host status, blue or yellow led needs to be blink, OFF or ON.
+Therefore, bi-color led needs to be paired as a group and exposed in the
+userspace.
+
+Based on the existing implementation in phopshor-led-sysfs, pairing groups
+will be difficult, since it exposes one service per LED.
+
+Therefore, refactoring the phosphor-led-sysfs repo to run under a single
+service and pair a group of LED which represents each host.
+
 >>
->> The ast2400_openbmc_defconfig defconfig is based on the evb-ast2400
->> defconfig, plus these extras :
->>
->>   CONFIG_BOOTCOMMAND="bootm 20080000"
->>   CONFIG_DEFAULT_DEVICE_TREE="ast2400-palmetto"
->>   CONFIG_PHY_NCSI=y
->>
->> Cc: Joel Stanley <joel@jms.id.au>
->> Signed-off-by: Cédric Le Goater <clg@kaod.org>
->> ---
->>
->> Changes in v2 :
->>
->> - device tree cleanups to match HW
->> - renamed defconfig to ast2400_openbmc_defconfig
->>
->> arch/arm/dts/Makefile             |  1 +
->> arch/arm/dts/ast2400-palmetto.dts | 74 +++++++++++++++++++++++++++++++
->> configs/ast2400_openbmc_defconfig | 72 ++++++++++++++++++++++++++++++
->> 3 files changed, 147 insertions(+)
->> create mode 100644 arch/arm/dts/ast2400-palmetto.dts
->> create mode 100644 configs/ast2400_openbmc_defconfig
->>
->> diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
->> index 8f876a0aa0d7..1d523c5d5da0 100755
->> --- a/arch/arm/dts/Makefile
->> +++ b/arch/arm/dts/Makefile
->> @@ -676,6 +676,7 @@ dtb-$(CONFIG_ARCH_BCM6858) += \
->>
->> dtb-$(CONFIG_ARCH_ASPEED) += \
->> 	ast2400-evb.dtb \
->> +	ast2400-palmetto.dtb \
->> 	ast2400-ahe-50dc.dtb \
-> 
-> Sort?  (palmetto after ahe-50dc)
+> >> Existing Implementation :
+> >>
+> >> 1. Physical Leds are defined in the device tree under "leds" section.
+> >> 2. Corresponding GPIO pin are defined for the physical LEDs.
+> >> 3. "udev rules" are used to monitor the physical LEDs.
+> >> 4. Once the LED in initialized in device tree, udev event will be
+> created and it will trigger a systemd service for that LED.
+> >> 5. Therefore, if multiple GPIO pins are configured for LEDs, then it
+> will create a multiple systemd services (xyz.openbmc_project.led.controll=
+er@.service)
+> for phosphor-led-sysfs based on the LED name.
+> >>
+> >> Example :
+> >>
+> >> busctl tree xyz.openbmc_project.LED.Controller.led1
+> >> `-/xyz
+> >>   `-/xyz/openbmc_project
+> >>     `-/xyz/openbmc_project/led
+> >>       `-/xyz/openbmc_project/led/physical
+> >>         `-/xyz/openbmc_project/led/physical/led1
+> >>
+> >> busctl tree xyz.openbmc_project.LED.Controller.led2
+> >> `-/xyz
+> >>   `-/xyz/openbmc_project
+> >>     `-/xyz/openbmc_project/led
+> >>       `-/xyz/openbmc_project/led/physical
+> >>         `-/xyz/openbmc_project/led/physical/led2
+> >>
+> >>
+> >>
+> >> New Implementation :
+> >>
+> >> 1. Physical Leds are defined in the device tree under "leds" section.
+> >> 2. Corresponding GPIO pin are defined for the physical LEDs.
+> >> 3. "udev rules" are used to monitor the physical LEDs.
+> >> 4. Once the udev event is initialized for the LED, it will store those
+> LED name using the script in udev instead of triggering systemd   service=
+.
+> >> 5. Phosphor-led-sysfs will have a single systemd service
+> (xyz.openbmc_project.led.controller.service) running by default at system
+> startup.
+> >> 6. A dbus method call will be exposed from the service. udev will
+> notify the LEDs detected in the driver.
+> >>
+> >> Example :
+> >>
+> >> busctl tree xyz.openbmc_project.LED.Controller
+> >> `-/xyz
+> >>   `-/xyz/openbmc_project
+> >>     `-/xyz/openbmc_project/led
+> >>       `-/xyz/openbmc_project/led/physical
+> >>         `-/xyz/openbmc_project/led/physical/led1
+> >>         `-/xyz/openbmc_project/led/physical/led2
+> >>
+> >>
+> >> This was already discussed in the previous mail thread. Please refer t=
+o
+> the below link.
+> >> https://lists.ozlabs.org/pipermail/openbmc/2022-April/030272.html
+> >>
+> >> Please provide your suggestions on this new proposal.
+> >>
+> >>
+> >> Thanks
+> >> Jayashree
+>
 
-yes.
+--000000000000d2c7d805e0f04d34
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> 
->> 	ast2500-evb.dtb \
->> 	ast2600a0-evb.dtb \
->> diff --git a/arch/arm/dts/ast2400-palmetto.dts b/arch/arm/dts/ast2400-palmetto.dts
->> new file mode 100644
->> index 000000000000..2a49ded27b43
->> --- /dev/null
->> +++ b/arch/arm/dts/ast2400-palmetto.dts
->> @@ -0,0 +1,74 @@
->> +// SPDX-License-Identifier: GPL-2.0+
->> +/dts-v1/;
->> +
->> +#include "ast2400-u-boot.dtsi"
->> +
->> +/ {
->> +	model = "Palmetto BMC";
->> +	compatible = "tyan,palmetto-bmc", "aspeed,ast2400";
->> +
->> +	memory@40000000 {
->> +		device_type = "memory";
->> +		reg = <0x40000000 0x10000000>;
->> +	};
->> +
->> +	chosen {
->> +		stdout-path = &uart5;
->> +		bootargs = "console=ttyS4,115200 earlyprintk";
-> 
-> Does bootargs serve a particular purpose here?  (The other ast2x00
-> device-trees don't appear to include it.)
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jun 7, 2022 at 9:41 PM Ed Tan=
+ous &lt;<a href=3D"mailto:edtanous@google.com">edtanous@google.com</a>&gt; =
+wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0=
+px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Tue, J=
+un 7, 2022 at 12:07 AM Jayashree D &lt;<a href=3D"mailto:srid.11486@gmail.c=
+om" target=3D"_blank">srid.11486@gmail.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; Hi Team,<br>
+&gt;<br>
+&gt; Could you please provide your suggestions on the above design for LED.=
+<br>
+&gt;<br>
+&gt; Thanks,<br>
+&gt; Jayashree<br>
+&gt;<br>
+&gt;<br>
+&gt; On Fri, May 27, 2022 at 12:42 PM Jayashree D &lt;<a href=3D"mailto:sri=
+d.11486@gmail.com" target=3D"_blank">srid.11486@gmail.com</a>&gt; wrote:<br=
+>
+&gt;&gt;<br>
+&gt;&gt; Hi Team,<br>
+&gt;&gt;<br>
+&gt;&gt; Problem Description :<br>
+&gt;&gt;<br>
+&gt;&gt; In the existing phosphor-led-sysfs design, it exposes one service =
+per LED. Therefore, multiple services will be created for multiple GPIO pin=
+s configured for LED. To abstract this method and also to create LEDs under=
+ a single service, a new implementation is proposed.<br>
+<br>
+You&#39;ve kind of jumped directly to a solution without spending any<br>
+details on why this design is necessary.=C2=A0 What are you trying to<br>
+achieve?=C2=A0 Why does the existing solution not work?=C2=A0 You allude to=
+<br>
+multiple services being bad, but you don&#39;t really state why, or what&#3=
+9;s<br>
+preventing that from working.=C2=A0 This is a section labeled problem<br>
+description, it needs to describe the problem, ideally in much more<br>
+length than your solution itself.<br>
+<br></blockquote><div>=C2=A0The Yosemite V2 Platform combines a Power LED a=
+nd a System Identification LED into a single bicolor blue-yellow LED per ho=
+st. <br>A total of 4 =C3=97 LEDs will be placed along the front edge of the=
+ board in a grid. <br>The grid will be 2=C3=97rows of 2 =C3=97 LEDs to matc=
+h the layout of the card slots.<br><br>Based on each host status, blue or y=
+ellow led needs to be blink, OFF or ON. Therefore, bi-color led needs to be=
+ paired as a group and exposed in the userspace. <br></div><div><br></div><=
+div>Based on the existing implementation in phopshor-led-sysfs, pairing gro=
+ups will be difficult, since it exposes one service per LED. <br><br>Theref=
+ore, refactoring the phosphor-led-sysfs repo to run under a single service =
+and pair a group of LED which represents each host.</div><div><br></div><bl=
+ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
+t:1px solid rgb(204,204,204);padding-left:1ex">
+&gt;&gt;<br>
+&gt;&gt; Existing Implementation :<br>
+&gt;&gt;<br>
+&gt;&gt; 1. Physical Leds are defined in the device tree under &quot;leds&q=
+uot; section.<br>
+&gt;&gt; 2. Corresponding GPIO pin are defined for the physical LEDs.<br>
+&gt;&gt; 3. &quot;udev rules&quot; are used to monitor the physical LEDs.<b=
+r>
+&gt;&gt; 4. Once the LED in initialized in device tree, udev event will be =
+created and it will trigger a systemd service for that LED.<br>
+&gt;&gt; 5. Therefore, if multiple GPIO pins are configured for LEDs, then =
+it will create a multiple systemd services (xyz.openbmc_project.led.control=
+ler@.service) for phosphor-led-sysfs based on the LED name.<br>
+&gt;&gt;<br>
+&gt;&gt; Example :<br>
+&gt;&gt;<br>
+&gt;&gt; busctl tree xyz.openbmc_project.LED.Controller.led1<br>
+&gt;&gt; `-/xyz<br>
+&gt;&gt;=C2=A0 =C2=A0`-/xyz/openbmc_project<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led/physical<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led/physic=
+al/led1<br>
+&gt;&gt;<br>
+&gt;&gt; busctl tree xyz.openbmc_project.LED.Controller.led2<br>
+&gt;&gt; `-/xyz<br>
+&gt;&gt;=C2=A0 =C2=A0`-/xyz/openbmc_project<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led/physical<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led/physic=
+al/led2<br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; New Implementation :<br>
+&gt;&gt;<br>
+&gt;&gt; 1. Physical Leds are defined in the device tree under &quot;leds&q=
+uot; section.<br>
+&gt;&gt; 2. Corresponding GPIO pin are defined for the physical LEDs.<br>
+&gt;&gt; 3. &quot;udev rules&quot; are used to monitor the physical LEDs.<b=
+r>
+&gt;&gt; 4. Once the udev event is initialized for the LED, it will store t=
+hose LED name using the script in udev instead of triggering systemd=C2=A0 =
+=C2=A0service.<br>
+&gt;&gt; 5. Phosphor-led-sysfs will have a single systemd service (xyz.open=
+bmc_project.led.controller.service) running by default at system startup.<b=
+r>
+&gt;&gt; 6. A dbus method call will be exposed from the service. udev will =
+notify the LEDs detected in the driver.<br>
+&gt;&gt;<br>
+&gt;&gt; Example :<br>
+&gt;&gt;<br>
+&gt;&gt; busctl tree xyz.openbmc_project.LED.Controller<br>
+&gt;&gt; `-/xyz<br>
+&gt;&gt;=C2=A0 =C2=A0`-/xyz/openbmc_project<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led/physical<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led/physic=
+al/led1<br>
+&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0`-/xyz/openbmc_project/led/physic=
+al/led2<br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; This was already discussed in the previous mail thread. Please ref=
+er to the below link.<br>
+&gt;&gt; <a href=3D"https://lists.ozlabs.org/pipermail/openbmc/2022-April/0=
+30272.html" rel=3D"noreferrer" target=3D"_blank">https://lists.ozlabs.org/p=
+ipermail/openbmc/2022-April/030272.html</a><br>
+&gt;&gt;<br>
+&gt;&gt; Please provide your suggestions on this new proposal.<br>
+&gt;&gt;<br>
+&gt;&gt;<br>
+&gt;&gt; Thanks<br>
+&gt;&gt; Jayashree<br>
+</blockquote></div></div>
 
-
-It is useless indeed.
-
->> +	};
->> +
->> +	aliases {
->> +		spi0 = &fmc;
->> +		spi1 = &spi1;
->> +		ethernet0 = &mac0;
->> +	};
->> +};
->> +
->> +&uart5 {
->> +	u-boot,dm-pre-reloc;
->> +	status = "okay";
->> +};
->> +
->> +&sdrammc {
->> +	clock-frequency = <200000000>;
->> +};
->> +
->> +&wdt1 {
->> +	u-boot,dm-pre-reloc;
->> +	status = "okay";
->> +};
->> +
->> +&wdt2 {
->> +	u-boot,dm-pre-reloc;
->> +	status = "okay";
->> +};
->> +
->> +&mac0 {
->> +	status = "okay";
->> +	phy-mode = "rgmii";
->> +
->> +	pinctrl-names = "default";
->> +	pinctrl-0 = <&pinctrl_mac1link_default &pinctrl_mdio1_default>;
->> +};
->> +
->> +&fmc {
->> +	status = "okay";
->> +	flash@0 {
->> +		status = "okay";
->> +		spi-max-frequency = <50000000>;
->> +		spi-tx-bus-width = <2>;
->> +		spi-rx-bus-width = <2>;
->> +	};
->> +};
->> +
->> +&spi1 {
->> +	status = "okay";
->> +	flash@0 {
->> +		pinctrl-names = "default";
->> +		pinctrl-0 = <&pinctrl_spi1_default>;
->> +		status = "okay";
->> +		spi-max-frequency = <50000000>;
->> +		spi-tx-bus-width = <2>;
->> +		spi-rx-bus-width = <2>;
->> +	};
->> +};
->> diff --git a/configs/ast2400_openbmc_defconfig b/configs/ast2400_openbmc_defconfig
->> new file mode 100644
->> index 000000000000..d09358777304
->> --- /dev/null
->> +++ b/configs/ast2400_openbmc_defconfig
-> 
-> Is the implication here that the testing discussed in the v1 thread
-> (using the existing evb defconfig instead of an entirely new one) didn't
-> work out?
-
-No because of NCSI support. net_loop() would need some tweak to
-avoid configuring NCSI if the DT has no advertise support.
-
-Here is a tentative try below, tested on the AST2500 EVB.
-
-Thanks,
-
-C.
-
-
- From b621c15390719197357554f52f340aaa87dc80d4 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Date: Wed, 8 Jun 2022 15:06:53 +0200
-Subject: [PATCH] net: phy: ncsi: Add phy_interface_is_ncsi() helper
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-and use it to avoid configuring NCSI in net_loop() when the DT has no
-support for it.
-
-Signed-off-by: Cédric Le Goater <clg@kaod.org>
----
-  include/phy.h         | 2 ++
-  drivers/net/phy/phy.c | 7 +++++++
-  net/net.c             | 2 +-
-  3 files changed, 10 insertions(+), 1 deletion(-)
-
-diff --git a/include/phy.h b/include/phy.h
-index ed21775f3bbc..a759d04038a3 100644
---- a/include/phy.h
-+++ b/include/phy.h
-@@ -287,6 +287,8 @@ static inline bool phy_interface_is_sgmii(struct phy_device *phydev)
-  		phydev->interface <= PHY_INTERFACE_MODE_QSGMII;
-  }
-  
-+bool phy_interface_is_ncsi(void);
-+
-  /* PHY UIDs for various PHYs that are referenced in external code */
-  #define PHY_UID_CS4340  	0x13e51002
-  #define PHY_UID_CS4223  	0x03e57003
-diff --git a/drivers/net/phy/phy.c b/drivers/net/phy/phy.c
-index daea26c451fe..a0f7b7964464 100644
---- a/drivers/net/phy/phy.c
-+++ b/drivers/net/phy/phy.c
-@@ -988,3 +988,10 @@ int phy_get_interface_by_name(const char *str)
-  
-  	return -1;
-  }
-+
-+bool phy_interface_is_ncsi(void)
-+{
-+	struct eth_pdata *pdata = dev_get_platdata(eth_get_dev());
-+
-+	return pdata->phy_interface == PHY_INTERFACE_MODE_NCSI;
-+}
-diff --git a/net/net.c b/net/net.c
-index f0f9cd4d946b..8449445bf65c 100644
---- a/net/net.c
-+++ b/net/net.c
-@@ -409,7 +409,7 @@ int net_loop(enum proto_t protocol)
-  	debug_cond(DEBUG_INT_STATE, "--- net_loop Entry\n");
-  
-  #ifdef CONFIG_PHY_NCSI
--	if (protocol != NCSI && !ncsi_active()) {
-+	if (phy_interface_is_ncsi() && protocol != NCSI && !ncsi_active()) {
-  		printf("Configuring NCSI\n");
-  		if (net_loop(NCSI) < 0)
-  			return ret;
--- 
-2.35.3
-
-
-
+--000000000000d2c7d805e0f04d34--
