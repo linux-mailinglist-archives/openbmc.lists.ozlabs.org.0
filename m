@@ -2,88 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 656A45420BB
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 04:16:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A43C5420CE
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 05:05:51 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LHrRy2Cp0z3blc
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 12:15:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LHsYR6qTWz3bkH
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 13:05:47 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=iX6y9E5y;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Ukx+6jnz;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=wrightj@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::42c; helo=mail-wr1-x42c.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=iX6y9E5y;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Ukx+6jnz;
 	dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LHqLg5JTjz307B
-	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 11:26:19 +1000 (AEST)
-Received: from pps.filterd (m0098410.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2580etvq029390;
-	Wed, 8 Jun 2022 01:26:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- mime-version : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=BLSYBtd2JCoc94fafJOkMI05DxeX3/egbqcGkjxDcOk=;
- b=iX6y9E5yZn3qRzxD/mc0xplVa1Ekss14yrJSHTOflRZWtO/bTw+AOOLZ7KszytUOXRAE
- OpZzSrmBTo4BwRCJffBHFh0EBdHcbR4wvtT12jW9gKvruoowHxhYBL5pcl8EYxd+yafU
- 4WNMSMeslZmazLSQgLaCGuwrs5d6bNbKdwbNFk+gQRnNiFDd9gmdQZ5sraLQzn0B+ggA
- karo0FBkdg9arAM3Xlvud0Zla746eFj+cgtpjaqe+/amY1VmAfgpPemKjf8EP2G/+A1V
- 9xm3jfBExEOAFyjASzhQggg29RxthK11ar86tgTCM1Q7B0VwPoAMaJITR+9j7vcguBL0 HA== 
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com [169.62.189.11])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3gjhebrm6x-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 Jun 2022 01:26:14 +0000
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
-	by ppma03dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 2581L49x025796;
-	Wed, 8 Jun 2022 01:26:13 GMT
-Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com [9.57.198.25])
-	by ppma03dal.us.ibm.com with ESMTP id 3gfy1awvys-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 Jun 2022 01:26:13 +0000
-Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com [9.57.199.109])
-	by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 2581QDGF39584050
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 8 Jun 2022 01:26:13 GMT
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id E8846112064;
-	Wed,  8 Jun 2022 01:26:12 +0000 (GMT)
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 4D427112063;
-	Wed,  8 Jun 2022 01:26:12 +0000 (GMT)
-Received: from [9.211.120.23] (unknown [9.211.120.23])
-	by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP;
-	Wed,  8 Jun 2022 01:26:12 +0000 (GMT)
-Message-ID: <d50e6018-7b1b-6369-1ed2-1548841f7524@linux.ibm.com>
-Date: Tue, 7 Jun 2022 20:26:11 -0500
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LHsY13gmWz2yK2
+	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 13:05:25 +1000 (AEST)
+Received: by mail-wr1-x42c.google.com with SMTP id u3so26495794wrg.3
+        for <openbmc@lists.ozlabs.org>; Tue, 07 Jun 2022 20:05:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=jms.id.au; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=JA/2GViIMIAMPVvrNqDZJAQIOwb4dDIYKycMYLy6nwk=;
+        b=Ukx+6jnzP8R8ZO9foXPXfHugU/y6snzdO68g8n5qYzt7yy/ovqBxRoe1QQxquRFGxh
+         qF8Ih0MH/tV1af6rN4dwgfnYHBSvhZjuvqe4VKkHI9Jvl/lQ4U3iSDsy7Le+eOlxhKwF
+         53qwc1dUKTPBz2e6S2gOHZvoEqtMFvb6B6aII=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=JA/2GViIMIAMPVvrNqDZJAQIOwb4dDIYKycMYLy6nwk=;
+        b=BBULnzRuuUO2L71EwuA1SRlomppygT54IroabRvMq8l0wcFg0xOaqVfqegIewHY0JG
+         We/IwDjqfRV8GTEsFXtnOMHHTsdZEu9a5JfArpospILfbwtPRErQ3rqgLeYfZVL+XFsV
+         qjM/uwfQ7qJcJOEogNy7ycMR0hK8/j9UhiaIaLsYu6O9zEEDU1Ie3wFCO2FfMOH2JqkA
+         OX8R/9zJw+gUurgPGcaXiL8T1FJz8oEWCtEHmmpXMLyfxlPWIHrVIgYjx/rE1v1tgBor
+         8mtyUu33BIapF885XxTas+Bl8oQW5gjTZEn74kwquhyTJ0/XqVirgfpcmUKJ2aBb36cB
+         86gA==
+X-Gm-Message-State: AOAM533tAz0bjtKY9CAIifU/IYg+IhYgKnZ+EtzEleimUbLuSuIHMwQX
+	xibPmJI6+Z1D+oedSPHufVKy2w0R9AcQzsmIZICqC5ZnzMk=
+X-Google-Smtp-Source: ABdhPJyhrZwpdgqf740R/nq0ng9HfX+xL5+oz04m0plCgVcuNazh+Xmhv0pFGEdLaWo/5kE93bUTYZHobmi+67C4CR0=
+X-Received: by 2002:a5d:5686:0:b0:217:7da8:8c5a with SMTP id
+ f6-20020a5d5686000000b002177da88c5amr16384205wrv.3.1654657518624; Tue, 07 Jun
+ 2022 20:05:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH] hwmon: (ucd9000) Add voltage monitor types
-Content-Language: en-US
-To: Guenter Roeck <linux@roeck-us.net>, linux-hwmon@vger.kernel.org,
-        joel@jms.id.au, openbmc@lists.ozlabs.org
-References: <20220607205306.145636-1-wrightj@linux.ibm.com>
- <cf1a2ff9-59b3-fb2d-62fd-bdeac57bb9c0@roeck-us.net>
-From: Jim Wright <wrightj@linux.ibm.com>
-In-Reply-To: <cf1a2ff9-59b3-fb2d-62fd-bdeac57bb9c0@roeck-us.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ZJt0eOvmSr-lLUD_4LS6qfE6FZLsrrOD
-X-Proofpoint-ORIG-GUID: ZJt0eOvmSr-lLUD_4LS6qfE6FZLsrrOD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.874,Hydra:6.0.517,FMLib:17.11.64.514
- definitions=2022-06-07_11,2022-06-07_02,2022-02-23_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 bulkscore=0
- impostorscore=0 priorityscore=1501 mlxlogscore=986 suspectscore=0
- mlxscore=0 clxscore=1015 malwarescore=0 lowpriorityscore=0 adultscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2204290000 definitions=main-2206080003
-X-Mailman-Approved-At: Wed, 08 Jun 2022 12:14:59 +1000
+References: <20220519185318.62655-1-quic_jaehyoo@quicinc.com>
+ <a9798967-ab87-2469-a8cf-ab8ac237908a@quicinc.com> <CACPK8Xf7Bqjk1A+qeJcrTCGL-PdFj5a2yBna+QvrSi5RpfLXsg@mail.gmail.com>
+ <dcf3bc8e-eaff-1469-e034-141aa0a4acf1@kaod.org> <09b467bf-2acc-1834-2143-e7e735a74b53@quicinc.com>
+In-Reply-To: <09b467bf-2acc-1834-2143-e7e735a74b53@quicinc.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 8 Jun 2022 03:05:05 +0000
+Message-ID: <CACPK8XfP3T1gX_3-BWM3tZHrnwCqjNXz67nE9anxat-EfTmdaQ@mail.gmail.com>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v2] ARM: dts: aspeed: add
+ Qualcomm DC-SCM V1
+To: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,35 +73,112 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, Graeme Gregory <quic_ggregory@quicinc.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, Jamie Iles <quic_jiles@quicinc.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 6/7/2022 8:13 PM, Guenter Roeck wrote:
-> 
-> I don't think it makes sense to claim VOUT support if the chip is
-> configured to monitor input voltages. This should probably be something
-> like
-> 
-> ...
->  > +        case UCD9000_MON_VOLTAGE_AVS:
->  >               info->func[page] |= PMBUS_HAVE_VOUT
->  >                 | PMBUS_HAVE_STATUS_VOUT;
->  >               break;
->          case UCD9000_MON_INPUT_VOLTAGE:
->          case UCD9000_MON_INPUT_VOLTAGE_AVS:
->              info->func[page] |= PMBUS_HAVE_VIN;
->               break;
-> 
-> with appropriate mapping code to map the READ_VIN command for the
-> affected pages to READ_VOUT. Question is if the limit registers on
-> those pages are also reporting the limits using the vout limit
-> commands; if so, those should be mapped as well.
-> 
-> Guenter
+On Tue, 7 Jun 2022 at 14:03, Jae Hyun Yoo <quic_jaehyoo@quicinc.com> wrote:
+>
+> On 6/7/2022 12:43 AM, C=C3=A9dric Le Goater wrote:
+> > On 6/7/22 03:05, Joel Stanley wrote:
+> >> On Mon, 6 Jun 2022 at 13:56, Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
+> >> wrote:
+> >>>
+> >>> Ping
+> >>>
+> >>> On 5/19/2022 11:53 AM, Jae Hyun Yoo wrote:
+> >>>> From: Graeme Gregory <quic_ggregory@quicinc.com>
+> >>>>
+> >>>> Add initial version of device tree for Qualcomm DC-SCM V1 BMC which =
+is
+> >>>> equipped with Aspeed AST2600 BMC SoC.
+> >>>>
+> >>>> Signed-off-by: Graeme Gregory <quic_ggregory@quicinc.com>
+> >>>> Signed-off-by: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
+> >>>> ---
+> >>>> Changes in v2:
+> >>>> * Changed vendor name from Nuvia to Qualcomm.
+> >>>>
+> >>>>    arch/arm/dts/Makefile                   |   1 +
+> >>>>    arch/arm/dts/ast2600-qcom-dc-scm-v1.dts | 208
+> >>>> ++++++++++++++++++++++++
+> >>>>    2 files changed, 209 insertions(+)
+> >>>>    create mode 100644 arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
+> >>>>
+> >>>> diff --git a/arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
+> >>>> b/arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
+> >>>> new file mode 100644
+> >>>> index 000000000000..e966f739b708
+> >>>> --- /dev/null
+> >>>> +++ b/arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
+>
+> [...]
+>
+> >>>> +&fmc {
+> >>>> +     status =3D "okay";
+> >>>> +
+> >>>> +     pinctrl-names =3D "default";
+> >>>> +     pinctrl-0 =3D <&pinctrl_fmcquad_default>;
+> >>>> +
+> >>>> +     flash@0 {
+> >>>> +             compatible =3D "spi-flash", "sst,w25q256";
+> >>
+> >> Compatible strings should go from the most general to the most
+> >> specific, so these are around the wrong way. I see you've probably
+> >> just copied the ast2600-evb which makes the same mistake.
+> >>
+> >> In the dtsi we have jedec,spi-nor which you overwrite here.
+> >>
+> >> u-boot has spi-flash but Linux uses jedec,spi-nor. I wonder if we
+> >> should update the aspeed driver to use that?
+> >>
+> >> C=C3=A9dric, do you have thoughts here?
+> >
+> > Yes. The closer we are to the Linux DT the better.
+> >
+> > The "spi-flash" and "jedec,spi-nor" compatibles are equivalent for
+> > the SF driver in U-Boot. I think we can remove all the :
+> >
+> >     compatible =3D "spi-flash", "sst,w25q256";
+> >
+> > from the Aspeed dts files.
+> >
+> > This fits what the latest U-Boot does.
+>
+> I checked that it works without the compatible string. I'll drop the
+> line in v3.
 
-Hi Guenter,
+Can you describe your test setup?
 
-Thank you for the review. I'll drop adding the input voltage types and 
-resend the patch.
+When I tested, using the ast2600-evb.dts, the driver reported:
 
-Jim Wright
+ast# sf probe
+aspeed_spi: flash-controller@1e620000 has no flash devices ?!
+Invalid bus 0 (err=3D-19)
+Failed to initialize SPI flash at 0:0 (error -19)
+
+This is because the aspeed_spi.c driver counts the number of "spi-flash" no=
+des:
+
+static int aspeed_spi_count_flash_devices(struct udevice *bus)
+{
+        ofnode node;
+        int count =3D 0;
+
+        dev_for_each_subnode(node, bus) {
+                if (ofnode_is_available(node) &&
+                    ofnode_device_is_compatible(node, "spi-flash"))
+                        count++;
+        }
+
+        return count;
+}
+
+We need to fix that if we're going to remove the "spi-flash"
+compatibles from the device tree.
+
+
+>
+> Thanks,
+> Jae
+>
