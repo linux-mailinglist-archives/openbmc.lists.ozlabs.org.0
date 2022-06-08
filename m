@@ -1,68 +1,60 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9AFF9543D45
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 22:05:30 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 80AA2543D7A
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 22:17:38 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LJJB03SwVz3bqR
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 06:05:28 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LJJS02RFnz3brt
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 06:17:36 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Z7YFKWil;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=sPio/qZ9;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:40e1:4800::1; helo=sin.source.kernel.org; envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Z7YFKWil;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=sPio/qZ9;
 	dkim-atps=neutral
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJJ8R0Ct0z3bvZ
-	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 06:04:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJJRd2sLZz3bmC
+	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 06:17:17 +1000 (AEST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by sin.source.kernel.org (Postfix) with ESMTPS id 056B4CE2AA9;
-	Wed,  8 Jun 2022 20:04:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64005C34116;
-	Wed,  8 Jun 2022 20:04:02 +0000 (UTC)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id 6208D618F9;
+	Wed,  8 Jun 2022 20:17:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C972C3411C;
+	Wed,  8 Jun 2022 20:17:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1654718643;
-	bh=iEDtaw+UD7JzNvI4iPQwfWlhzPxIqIbseSeOPF4qN8k=;
+	s=k20201202; t=1654719434;
+	bh=EquiZEmGpaGk9Hi66098V9Sqwcoq46fARusu9O2QJ/s=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Z7YFKWilbACVLrz3oTq8C2wj6mXmEEBKQT2GY0+0j6yO81B/ZPe+/o2FcTN53QxyH
-	 MkNfXV/eI7FPT0Fftpqg+xF7qiuAApBdLfPOEBsHD7npaJ3qOIs/dpyyPGjnLW31IL
-	 JzLl+uZ4xOl8CSwO9lANxR2DnGVswsDdfU1sUuVYy6pgvb5dk06QWmsjwLnfcBOq4T
-	 sK8nqUMBKVffCOJSzT96UcY1J+xqSgSMbwYCwdXuvTemT/d/YeEkjl4LPZMbfaEdj3
-	 Tm+VhYWA10WjMhnO34EKvCHtqSi5Ygp3x9fYpBc5hPfarr0jI0Vv/ehpgTjja0tGKf
-	 /nKZO/PEC3Hng==
-Date: Wed, 8 Jun 2022 22:03:59 +0200
+	b=sPio/qZ9D16pdwZJMpNek54aMJ+Dfem3MsatJLwYrtKgUdW/4gGd46VOeEXsAwTrH
+	 RqINva74s4v7sDjhdDqJQ4+nM/Dq6EWQD54OTvFkRid315TgGteGTUABv7APtTXjiR
+	 l1eMxUOfco9nj5ABFbOpi2rUS1ZWLZ6QVp1StXjp3a0O/WidERGkAT8YaVyYmuTcrf
+	 Pz9otFdc8uyOPrrip5m1zGEmrq9ITogvNfs+ghyCIBBmv2+tuLH4VI+s8wRRpWp2dC
+	 8FLhWW8C2gdQLqXLnl97/JBkDBhEbhCY1+vLHyr7u7X/cm/APwtNO6wxW3Ogl5SgYT
+	 eEjkwRS5XoBqA==
+Date: Wed, 8 Jun 2022 22:17:11 +0200
 From: Wolfram Sang <wsa@kernel.org>
-To: Tyrone Ting <warp5tw@gmail.com>
-Subject: Re: [PATCH v6 5/5] i2c: npcm: Capitalize the one-line comment
-Message-ID: <YqEArxDJoUoPeiGY@kunai>
+To: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Subject: Re: [PATCH] i2c: npcm7xx: barco-p50-gpio: Add check for
+ platform_driver_register
+Message-ID: <YqEDx3S9z1y12mfS@kunai>
 Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
-	Tyrone Ting <warp5tw@gmail.com>, avifishman70@gmail.com,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>, avifishman70@gmail.com,
 	tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com,
-	yuenn@google.com, benjaminfair@google.com, robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org,
-	andriy.shevchenko@linux.intel.com, jarkko.nikula@linux.intel.com,
-	semen.protsenko@linaro.org, jie.deng@intel.com, jsd@semihalf.com,
-	sven@svenpeter.dev, lukas.bulwahn@gmail.com, olof@lixom.net,
-	arnd@arndb.de, tali.perry@nuvoton.com, Avi.Fishman@nuvoton.com,
-	tomer.maimon@nuvoton.com, KWLIU@nuvoton.com, JJLIU0@nuvoton.com,
-	kfting@nuvoton.com, openbmc@lists.ozlabs.org,
-	linux-i2c@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-References: <20220525032341.3182-1-warp5tw@gmail.com>
- <20220525032341.3182-6-warp5tw@gmail.com>
+	yuenn@google.com, benjaminfair@google.com, openbmc@lists.ozlabs.org,
+	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20220526094100.1494193-1-jiasheng@iscas.ac.cn>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="Mdk8kH3E0NmNboo9"
+	protocol="application/pgp-signature"; boundary="ssq14js36jhNveXs"
 Content-Disposition: inline
-In-Reply-To: <20220525032341.3182-6-warp5tw@gmail.com>
+In-Reply-To: <20220526094100.1494193-1-jiasheng@iscas.ac.cn>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,47 +66,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: tmaimon77@gmail.com, devicetree@vger.kernel.org, tali.perry1@gmail.com, jsd@semihalf.com, krzysztof.kozlowski+dt@linaro.org, benjaminfair@google.com, openbmc@lists.ozlabs.org, JJLIU0@nuvoton.com, lukas.bulwahn@gmail.com, tomer.maimon@nuvoton.com, KWLIU@nuvoton.com, arnd@arndb.de, sven@svenpeter.dev, robh+dt@kernel.org, Avi.Fishman@nuvoton.com, andriy.shevchenko@linux.intel.com, semen.protsenko@linaro.org, jie.deng@intel.com, avifishman70@gmail.com, venture@google.com, linux-kernel@vger.kernel.org, kfting@nuvoton.com, tali.perry@nuvoton.com, jarkko.nikula@linux.intel.com, olof@lixom.net, linux-i2c@vger.kernel.org
+Cc: benjaminfair@google.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, linux-i2c@vger.kernel.org, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---Mdk8kH3E0NmNboo9
+--ssq14js36jhNveXs
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 25, 2022 at 11:23:41AM +0800, Tyrone Ting wrote:
-> From: Tyrone Ting <kfting@nuvoton.com>
->=20
-> Make the one-line comments capital in the driver to get the comment style
-> consistent.
+On Thu, May 26, 2022 at 05:41:00PM +0800, Jiasheng Jiang wrote:
+> As platform_driver_register() could fail, it should be better
+> to deal with the return value in order to maintain the code
+> consisitency.
 >=20
 > Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller drive=
 r")
-> Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
+> Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-Applied to for-next, thanks!
+Applied to for-current, thanks! But what is with the "barco-p50-gpio:"
+in the $subject?
 
 
---Mdk8kH3E0NmNboo9
+--ssq14js36jhNveXs
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmKhAK8ACgkQFA3kzBSg
-KbZktBAAg4+RgB7rQfxMq+y8HenPl+BlvnnQCMGtUyisQ4K+bRaegHOAByUmSUam
-tdW7sicRzHSPpv1SjkAqhCu/U6OGiM8m2hmYGXH1DJmNoKG1l0OHaZhbxJP6FPS9
-fIx9j6Nv8UqK/cEoid28k49Yyl7ZaxtsWTbhKk1PNh3yaOkSHQ5NMq87gaUhbqn9
-1MAexC7g6Y1nfwCZTEvLAos6mZ/IhISS4Vp5GTb9KROAd2wClDzim3f1igqvOOdr
-iJ9taWl1HlCEzPP/HKuS50ZFRCWZQOsieSTzqAuXVImXEX379t5t0bklqVf/xw83
-f2i6cx0GSszch21T7XgnkjjXcavx672ZnZ/BmpRmiNXvgvGRt5CZACPPkJZphmJh
-Sm2PUqUMID4vJJQW+Rc08IlXry28TYbTacIQs9QdWjHVyL+VhSQ/d7DAz2NkQX2G
-RVO14tkAhPdk4cWS5wLjhSsy2ZzWmlO0kkR1hEyHwj/hYgx3xQdssT5z3+3JY4ls
-AAz8ftBFEwNoSPjoclGc7Oalby+9gQ9i+xqSTfyJAlfkD4XjQc60o7R3iuXARrUm
-QwXMYhvI7/iU1nt6sPHnV2OXGibbE6WzoI88sYKJfeRvTPOShYUdVEsh6Fo1QPBM
-bJ+Fq+AYOyT6VHOsq6HYSB/2uk3bZ9iS+iJBoBg5SQ2Hkx224sc=
-=RPDX
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmKhA8MACgkQFA3kzBSg
+KbYR8Q/+Kk7ypQngwMr+zLMeL4dcpbFw/Lwkywizw+7PgPtQNucwWQnhHz5Yc6gp
+8ukBBDb/Zfvu5BxQvrAnLxlJOvfUGg6sQbcexRfsDR16CEfVKTYBaM9WCp2KggHH
+xiO4vgHK656o5B6d84N3R0T/CXM3OmNQ0Cy60oNSczPC1xf8PwUWqXovX/Sl5USd
+0I6mUeYO6cGg+k56ECDLD+QdEK/neGPUKVU6WHmlaj4u7BXtE+TzLV1P3yNJB+lz
+aHILnAicIB8UuTeY7D9UCvMhCXKW4T7VoHW0lE5FhBK/uOGnJD/vbUXcsQM6r7zQ
+o7JyDbjliUqo/EkSBHwEACzWWAqH5Vjg/VSu2jM1B0GWetGuWhnUr/bQ4lwKITlu
+6lo4GqxPQwnFUerVtbuhQC9QPs/gr5WK8b1EB9FlXCDo6VfJDnA6TmH0T8aSl3vz
+c1Pe9Ut+6fbjiwcCME7GebC3gYh4EB2uGWA4jgn5v8leEkXBZZ6byaAPpRR/xDIo
+3SocXQBDdWFzXu4UdQYDq63y6x6CIswj08ZKHwW/AlQy/XY18pBnF7Y6cXi6Tb7E
+LdLsGhTW2vrC7dBcHgdfM5hXWDCX0twBwU/f2givvpWPehoYTUN/k8HQ8vZu6x/0
+RimrFe1hNRBCU4cv+DzJVb/EcssE4i+V51w3Oe0KKx3XO3w03+M=
+=ENlH
 -----END PGP SIGNATURE-----
 
---Mdk8kH3E0NmNboo9--
+--ssq14js36jhNveXs--
