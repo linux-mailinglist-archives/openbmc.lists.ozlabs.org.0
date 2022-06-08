@@ -1,118 +1,140 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 92CE15429A4
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 10:41:57 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 346B8542CFD
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 12:18:16 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LJ11H2xkwz3bgR
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 18:41:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LJ38P36Zfz3bm2
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 20:18:13 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=nuvoton.onmicrosoft.com header.i=@nuvoton.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-nuvoton-onmicrosoft-com header.b=QJsdW/EJ;
+	dkim=pass (2048-bit key; unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256 header.s=pps202002 header.b=JK1/cEdh;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=nuvoton.com (client-ip=2a01:111:f403:704b::62d; helo=apc01-tyz-obe.outbound.protection.outlook.com; envelope-from=chli30@nuvoton.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=equinix.com (client-ip=148.163.159.192; helo=mx0b-00268f01.pphosted.com; envelope-from=prvs=9158c48c14=zweiss@equinix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=nuvoton.onmicrosoft.com header.i=@nuvoton.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-nuvoton-onmicrosoft-com header.b=QJsdW/EJ;
+	dkim=pass (2048-bit key; unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256 header.s=pps202002 header.b=JK1/cEdh;
 	dkim-atps=neutral
-Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01on2062d.outbound.protection.outlook.com [IPv6:2a01:111:f403:704b::62d])
+Received: from mx0b-00268f01.pphosted.com (mx0b-00268f01.pphosted.com [148.163.159.192])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJ10l54qxz30F8
-	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 18:41:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJ37t1HGZz2ypV
+	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 20:17:41 +1000 (AEST)
+Received: from pps.filterd (m0165120.ppops.net [127.0.0.1])
+	by mx0b-00268f01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2585b5hk000943;
+	Wed, 8 Jun 2022 10:17:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=equinix.com; h=from : to : cc :
+ subject : date : message-id : references : in-reply-to : content-type :
+ content-id : content-transfer-encoding : mime-version; s=pps202002;
+ bh=8EgNJNYdyvCBnSmS8mFqr/WTO2BMVPGQAtZ8Aqh3yNA=;
+ b=JK1/cEdha5VwJOBs13NNQud3abPZcoOsDxB5jFrkcGVPTNNJez4CCEtcUOdhz25ZmPL9
+ Iv29iLhomL+TEKBy9sRLw2Os5NPCUCWRkmisBqsLrnmXdFUiBo8iGof2VQdnloIv71UY
+ f5Ygl2qlJ/OLkZpKVSjYFS0D+KFD/tmnS6nQ54rMR0PnfRucxYRLTZYidoTW6WxWRuVw
+ nBYbt+xSEe/N6qgYHqfsrtJEK4GQSTQNl7EIn5RzppWGhG2jThUTRcOpPDQI5V01uYH3
+ US9apby4DmQeUm4xckeFVubj2SVFY9G8SZbYMhZ5ft48w2umMF2RlWA57Ii7G93Cj4Rz fg== 
+Received: from nam12-dm6-obe.outbound.protection.outlook.com (mail-dm6nam12lp2173.outbound.protection.outlook.com [104.47.59.173])
+	by mx0b-00268f01.pphosted.com (PPS) with ESMTPS id 3gjnsd8r0b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 08 Jun 2022 10:17:30 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=YOUsOapbBn6WA8tzU3eieHbjksremOfi5X0E74Rlnx2OhsXH8sQPzA6r/ManBD6GfrGKWF3uDZTlwywynPonwMGx0E6Ew9pxawRY8OVVK5IbmYtmGYmkzpM/MevjYzGky1sZL0dM/EpfxsPN23c4gb9Xp6fDRVEUyNAMDk+A3hQuv042sqF7eGkZEQUAweiHHKOyu5QMy2FXYkXfEJctlTUTxmYbkWNA1Hp1QVJK7cxnVFe/qHl31VspJBSX2dl1FhKTgfIIa3do+OzgcFBc4NrHdK/DDwA8/atAJpCFcu5sZScpNp0bndbMm9Wx6AQWOAMRXS+4DAFGVmtTmsi9pA==
+ b=NelrMgI7DPwBt0K87He3KA6WRrRJHayaWpprXUBLF12bJnltMFIfrtjrzMd+P56m6+c5WfsZs/JOBGtje9hkw8nJS0FEi2USQ0/bU4iFz8zT6+vH+jDkDIkwgHOXXdeJ9h6HHLDcc5ME7HnNwhs60dXiY66+xSMcynIzBoj5F8pZKxupUiGTYbVOp1M1TL/eofZwK2V9LsYU4fElcCkM1WOZ4ZlHx5YM8C5B1nTuFcmPbaHeW6/5eBMCMx62PABd2/+w2LH5YxAH0k1hPCKQWAIfT1jgyik3ZbnnzsoAWxPXBBmTMdYLRMAVFDgNIz6S52RYnuOxfeF+PoM7cy96MA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kz1f9PWdK3j2qvzXe7bQvgDIDVwoVBch6P3M407AgKE=;
- b=OjremiZqIUsdneyyXj7cCZuN6EmZFjzWnez8ZkXaGOrrAwabpj4jA/LQebRwSYItEn+VGHKQORxuuCK6INUv8zmNZsxo4bSkPp3hl4fhavPkS/ja4PPjXJvSGGQ4aaUyMo/CzN0cG1szLPXz4hi7fvGebhGTrCazGCXUXwTtZpQIsv5hjIHUo0k7t6SQuEqslgC9jf4OVHXPlyDeQtkaU/6ipx19m6QVP5rC+Ceobw3cgMksaV1JAHAhBJOBaq+XrO2+cODIFV11jm9VJWtUEbC7UN5muAyKwBzu9mnLScAdvcn4/sbrMisptdIOS4eGNNaFGRpLL3SAf310HLc2QA==
+ bh=8EgNJNYdyvCBnSmS8mFqr/WTO2BMVPGQAtZ8Aqh3yNA=;
+ b=oT8TCoF/Dzx3emUzcHGpl8sdbyr679MwYOrJ+Se3k7jDqzDuWyyqRv4yhN3KW9heZ0z422GaWTqObJcHWfdrbMXv4aEvYfZXEz/j1Y25y+8ow/edkFe+lTMHoS0n9yjqShA0pEpC98zQIALhnUygToKN6OHNiX+B9wtXH7jlfuJGRTCabuErBBw0ZDe9TfvCwJzBlWHg2dJmzaWi8XKv8glNMyuLDKhxtEJ66tHwksdeG0o4la7/swE5ajdQbjOhu4CdFd0x4F08B/j1M2w+feV70cNZ8k8lGd1dy0Rm6LtCmjCgi5DDgKfbtcw+Wuuh6a+oh4n+Puvbu7kdc4Da7A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nuvoton.com; dmarc=pass action=none header.from=nuvoton.com;
- dkim=pass header.d=nuvoton.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=nuvoton.onmicrosoft.com; s=selector2-nuvoton-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=kz1f9PWdK3j2qvzXe7bQvgDIDVwoVBch6P3M407AgKE=;
- b=QJsdW/EJ9HgO+MUyL7WIrSaAbjzHohn0rQGQyk+QPyzeQJ/H+h7K7ZG6IHeNb37iQCGcdLsSOe8/wqGzOrnz0o5ZZVkFDgX5gD/MOAXyFCtXEKW6A0tm+4apeMCNjKe2/d4Lj1I4JU+E9sIphOmg8NCYqW5DuhDPKw6BO1ETdLA=
-Received: from HK0PR03MB5090.apcprd03.prod.outlook.com (2603:1096:203:bf::11)
- by SG2PR03MB4599.apcprd03.prod.outlook.com (2603:1096:4:81::14) with
+ smtp.mailfrom=equinix.com; dmarc=pass action=none header.from=equinix.com;
+ dkim=pass header.d=equinix.com; arc=none
+Received: from DM8PR04MB8007.namprd04.prod.outlook.com (2603:10b6:5:314::20)
+ by DM8PR04MB7863.namprd04.prod.outlook.com (2603:10b6:8:34::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5332.12; Wed, 8 Jun
- 2022 08:41:01 +0000
-Received: from HK0PR03MB5090.apcprd03.prod.outlook.com
- ([fe80::154b:d390:51c5:ace6]) by HK0PR03MB5090.apcprd03.prod.outlook.com
- ([fe80::154b:d390:51c5:ace6%6]) with mapi id 15.20.5332.010; Wed, 8 Jun 2022
- 08:41:01 +0000
-From: "CHLI30@nuvoton.com" <CHLI30@nuvoton.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Tim Lee
-	<timlee660101@gmail.com>, "CHLI30@nuvoton.com" <CHLI30@nuvoton.com>
-Subject: RE: [phosphor-ipmi-host] static assertion be raised in aarch64 build
-Thread-Topic: [phosphor-ipmi-host] static assertion be raised in aarch64 build
-Thread-Index: Adh7E1A0RBnDUQomT8akrW8kFEDvBA==
-Date: Wed, 8 Jun 2022 08:41:00 +0000
-Message-ID:  <HK0PR03MB5090481BE38DBC9CBC513F99CFA49@HK0PR03MB5090.apcprd03.prod.outlook.com>
-Accept-Language: zh-TW, en-US
+ 2022 10:17:28 +0000
+Received: from DM8PR04MB8007.namprd04.prod.outlook.com
+ ([fe80::3cb6:207c:de36:12f5]) by DM8PR04MB8007.namprd04.prod.outlook.com
+ ([fe80::3cb6:207c:de36:12f5%6]) with mapi id 15.20.5314.019; Wed, 8 Jun 2022
+ 10:17:28 +0000
+From: Zev Weiss <zweiss@equinix.com>
+To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>
+Subject: Re: [PATCH v2] ARM: dts: aspeed: Add a palmetto board (AST2400)
+Thread-Topic: [PATCH v2] ARM: dts: aspeed: Add a palmetto board (AST2400)
+Thread-Index: AQHYeyD00zlY1fd3OUqFfq+le18Eyw==
+Date: Wed, 8 Jun 2022 10:17:28 +0000
+Message-ID: <20220608101727.GR11809@packtop>
+References: <20220608082221.460166-1-clg@kaod.org>
+In-Reply-To: <20220608082221.460166-1-clg@kaod.org>
+Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nuvoton.com;
 x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: a6388bf1-c6b9-4b35-7282-08da492a9dbd
-x-ms-traffictypediagnostic: SG2PR03MB4599:EE_
-x-microsoft-antispam-prvs:  <SG2PR03MB4599DBF361EE26F93E39677ACFA49@SG2PR03MB4599.apcprd03.prod.outlook.com>
+x-ms-office365-filtering-correlation-id: 27f03bcd-8287-454b-11aa-08da4938174d
+x-ms-traffictypediagnostic: DM8PR04MB7863:EE_
+x-microsoft-antispam-prvs:  <DM8PR04MB78638FB7CDA5EB112753C811C3A49@DM8PR04MB7863.namprd04.prod.outlook.com>
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:  9ovltT+4K6w9AVlxYwSHjBOxUYnn1brbT3VJJCLGHNTfhRbp9IP3EA80l9BnwGeL+ms/36sSZ7d7nBbvzH3k8Fg73DbWNwqOnTnuPLousKoHf2poONOH9T0+GIzXbFmg3+VKkWUE/H2r/AWjyzPq1FGsXHPQUUgs5cJbxjXy+x67qVF82FkeVo0M4crukdV8bK2+UCNz5WQjLiGNpC+HXwkUoQbaVE/TugmbL1R7c+4PhwrfGRwv7HMW+J7phLtHrRCr6qjaL45K+5MDuwpoibbQG5HN/E8VEgKblrLk8SXuSfG7enfqqQFrdH45H9r44ZZ0S80zblgFAYzl/xcefICbwdmXNQlSh8EKHwZrPeH7FCocDlmK72N+k+gvzNBCgE2XH6WE+BhVl8FtAmkTXZaLlPV/qurNDqzYfH4roHYep0f/OsaBiIxeOGjvxLus05GlbWKBJUjcXxOnlH890HDlASUeQUS/NCzcmVGE1U4wtpCrEpSrAEZVUgRyimY8ndfOrT+xsUpP19YriCwo+UbhJuQ+35p4At2SwqM7dRygi9mnm4kBt5mer3reqpis2EDk/dAK0Sg0lQlCOhwViehDWanyVnEbQopQDfwP1wyj+0pQOvG8vInN+rqFQeFK4ZP+47+L1W8WJXB/8kMSy3Ep2e5G0MMSswlSnxfPCXktxDYzpOCABVP40dr/3UVMEQI/2/VP+y99AxsB2OOa2fV0wuwRk//n+OgpEk5ghW7tksaZu0wu3fgX9cXKAvh7MwXGyXx30YbqoON1FBwcZI4Um1E9tSZ9cyPsA+PxyZb4vv4+n7DwTdNrt/2IK9Uc
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:HK0PR03MB5090.apcprd03.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(4636009)(366004)(8676002)(2906002)(64756008)(66476007)(66946007)(66446008)(66556008)(33656002)(5660300002)(38100700002)(83380400001)(508600001)(26005)(52536014)(8936002)(76116006)(71200400001)(110136005)(316002)(122000001)(55016003)(186003)(7696005)(86362001)(6506007)(53546011)(9686003)(38070700005)(414714003)(473944003);DIR:OUT;SFP:1101;
+x-microsoft-antispam-message-info:  giEdEq/wTLXjhwCoZN04ot3bfUyc68hlkY9djs2jb564Pu4mZzzlLOHD/C6DFpfvaxlxmrus5ML4XMWaXrcUDg0EE3NXrBEYB1r7t0nAQWpMpCUSSXJ8fApZwoctlMB7+lzeNIggq8iA+ZTNSTBKkrHZm1ToQ/n0hiJMpn7HdXLTHp8/i/NejV1VpgQIZNDEdKwLbZtiArXnDaVI0feSepeIgAvgpnI7IhXdZ/TdubcQgEJslTrzJgA+GM0Ink+Y3dsL18WyeVfvVMfDb+33PX5KRzUXE8YhQ7+GirulmiQkozXa9ax+fSCDpYaD3sFkBAkbTTKJ9GiyH3b3pckl3+CPuWweodaFuhr3ducPhUqz/MRGXWVKSbDSU6tWVGpgUu8UtGmNJJH8CbELuZvTcE9VXMMzTTo9g43Gg+gD0eP+AxjgnGOoJm1qpEHxzIVmAip677K6jt3rxSN9H15YDEq94YsdOneRhbeUB96lXuVdSTtJDGtyLSOHhIsPmlfMwl+GVIZNCW8nW0zsEz+TGC7fLzcDerP7K/ZIcFqaomdpM7ICrsVsAhfMhARk4MQzdxbe1TRlpqI9E8ZeZeW22N4lPzu9nvQ/SaJF/MSJYeWK2fYFAvXNO8laGYxp47ZX6AdrUzN2Uppezoee56WHmWk7x9VMIxKXx9blzCW9gq1o8apUJsuun3R/bnXCZsZfDQF7UcB63maxz7+wbMLkow==
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM8PR04MB8007.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230001)(7916004)(4636009)(366004)(38100700002)(86362001)(1076003)(186003)(316002)(6506007)(6916009)(54906003)(9686003)(6512007)(26005)(4326008)(508600001)(122000001)(33656002)(8676002)(5660300002)(66556008)(38070700005)(91956017)(66946007)(66476007)(76116006)(71200400001)(33716001)(83380400001)(8936002)(64756008)(6486002)(66446008)(2906002);DIR:OUT;SFP:1102;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?z6oExh8zM4qq/JtTjOZnZaX9Qs7k0bbSt68ATA2YYbS006jMlDWHl8CwYkXx?=
- =?us-ascii?Q?6rDNeaQlypd3s5xnAldk8pkZLQ13hI1RukCn4eUn2XB4jPdwUcY8QRJH3Zjl?=
- =?us-ascii?Q?zE+w2krhvX5tVWNof2tn3cf6ZYUtO5WYWChrYgluu6ekPXHyGelBMTvYNNW1?=
- =?us-ascii?Q?SCpHKd65ORHHvkv5E+z8N7dEk/T1Z6RgVrsoQDTIe8R0I5fn4p2oWFr2jWdY?=
- =?us-ascii?Q?C4S+UTflFbVNZOl7p2eUjuxz6l+u+RsI73Zak2F0cYBnAhpdz52+ibp43OEa?=
- =?us-ascii?Q?oZa2/tPTaxxEs8T0N8t0x1jSXLqk/wtkE6Ze0f28G9Tn1ZT2j0ERkwGFKP06?=
- =?us-ascii?Q?02vUiKvqhxYOZ2RMLQMfHmmWo7tO5rer2hhPJ/9MaNC5jw9p8/h2o1mPIzug?=
- =?us-ascii?Q?fdxNddztHemw345k7RhwzMJDi/X0C+YCrsWK2sGpYxah4ByZuD49d2kN2uSC?=
- =?us-ascii?Q?gopqN/LoXgLe7Yybc0Wgy8J4wnu+TfrmCj5SGkxkThPCaov38pTvFNwsaUlu?=
- =?us-ascii?Q?mUgmifMVD499Yl0HehY4WNNWGQTvZ7PEuvnPQKgYoGJW+IKSggufo3Ml5bmz?=
- =?us-ascii?Q?c1VZ6jXb52UUYAHr9xNUaxzoh1leHUNzR0Hw1RLPnbizVrLXg+pnH3EDOIFi?=
- =?us-ascii?Q?fjO2JPYSv3DI+cq2LOMMlvTr6bza9behMOftaQ/BGXboAHAUxyuG+7m68AVQ?=
- =?us-ascii?Q?jmd7NrGNOLr+QdvkyYJ0QvcILXR+62KScy49hWKaueEAkAT1zrhgTeKRjX/I?=
- =?us-ascii?Q?1gIJbawsKoQvmfTFYgKsqT6ktaZiSnwbTBfexvFzTIiulv53JNXrBJQhQqHC?=
- =?us-ascii?Q?G7nQNeP3D2bulK8SeIEmn9RDuhIAGyYwBv+mnaDfmo0REDOeNmjnPXkOF7b1?=
- =?us-ascii?Q?UwXaFW7NSGLeW6TsboEUgEEiWzPaKzXqvQfNT0JDkxrfs7YJ9FnhgQHH4nkq?=
- =?us-ascii?Q?j+TKLfYeTFZMj6Zn8kmK+EKUiboAUsWjdcBWrjkTSZvoXi6qZ0HRmAzdTo53?=
- =?us-ascii?Q?+5JGuoER6WyRz2pASKll4WvBCCOp2zyu7Zo1uZyTsiZjqCeHuNcdi/IzyYcy?=
- =?us-ascii?Q?XRtIti453nV2/k5Iq1DSr7JF8r1N1Ytwe+R5cicgR9VKVtCG5tLnyy+AsKF5?=
- =?us-ascii?Q?Vno3VS31ydiizk6NIpgtXQDuGB04HuVxY4Y33G91J4ychE3wIPNHV7pU6oQk?=
- =?us-ascii?Q?RfZRRMRBWj6LPh8RyI04K6ZDl35wCmoKeTA4XLv6LMtY/AKDOTFI5wZDFrGp?=
- =?us-ascii?Q?Qsi1IdihFzUy+F63z7/UIRxfT3MOw5vUgd7+wJb4YzxORj+CkcHHzEjeveOq?=
- =?us-ascii?Q?uDR7GbA6Mcvso2SvgihhXasAvb+rdRE/pgoxxDZdvCLDCtn9nzUz2Z8nYb50?=
- =?us-ascii?Q?2P2I4g1UbnXV+RuS/dJncMAcEkGt/huXC11qIXc9NWzuRUnutGb7TjbTIqZm?=
- =?us-ascii?Q?s4SwJOY9jHyYBE9bRSUAxDzpuInJDBuDWojMmzCPM7Gc7qSb+EjOLRMG9NiT?=
- =?us-ascii?Q?Z7v78FQM+IjNtBVOSFHCzuL/81gq93cSv+Rm6OBO/CVVHDfw57WhcJZ4ksGH?=
- =?us-ascii?Q?hCm/KCa3csSPnwwGW497wNE69XaHBRSDWQvazAi6CP4CleTRerT13TlYB30m?=
- =?us-ascii?Q?qftieQKRYW7tlVD2MdwNr35h2vhZntfyYxNZdm0FyF9gDARec1q1hcaBdfFE?=
- =?us-ascii?Q?aC7sUzQ6Fhopve5YeWvfb9EUeMrVg1kbJJBep3wiQG6scXuwFwSvInbsr+ol?=
- =?us-ascii?Q?6hQXhD6awQ=3D=3D?=
-Content-Type: multipart/alternative;
-	boundary="_000_HK0PR03MB5090481BE38DBC9CBC513F99CFA49HK0PR03MB5090apcp_"
+x-ms-exchange-antispam-messagedata-0:  =?iso-8859-1?Q?ExaLFkMmB/qt8ew7CE6gLmyd9AkIOUyTVcv67djz8KA2k6iBnG61AP7mVa?=
+ =?iso-8859-1?Q?si537yySUBP6GQzOvOHq8Gz2H4g843PKrMb7kjP8O+bggIgUiudjBfDEdx?=
+ =?iso-8859-1?Q?ti3ii9Ybn0zFSLeC1Luw3G8r4XP26MQLXEde/ilGzLN6VYDZ/OextEUovs?=
+ =?iso-8859-1?Q?FQ+oLwJvI/vLF6OBdWDVHc1mE9v4jPQEvVAYzy7sGGayxTPoxGM2kMLwVf?=
+ =?iso-8859-1?Q?sdHzdVQR65KpTsciFCa8IMrFlXUlySbQ8LWqFtpWLYIC1AKy0HDwRWuFKp?=
+ =?iso-8859-1?Q?IZmo963ZQNg8aFQ7v12xYjelwIrptg9ntNrczPBv3WS7RHcaSxhqVX5z6I?=
+ =?iso-8859-1?Q?piuHNTK7vgSeP9ZcW5LCa4+qDEYmKzCenvslgdj/t0MpKFSxP8cFCjfZH4?=
+ =?iso-8859-1?Q?YYxhqts1jZMUaBJNmf0WJZQ+q4szDwY2/AzkCGb9te6jDAytowFZFxrwQv?=
+ =?iso-8859-1?Q?72FYQ8p9etnCMPbKp9DpMzIL08qXw0tuKg4gbMY3AC7eX0N36ziYlcCKXv?=
+ =?iso-8859-1?Q?f5GLc1e5ide2xDc0egMkoSmKA2BXzVEnUHhh/G4O0NPr70NxxmsYhINTNl?=
+ =?iso-8859-1?Q?2XntLIduPasAQlkObT1ewMygWSLVGRVMR3wogTnfDTq6zCg7BEEFEc3X68?=
+ =?iso-8859-1?Q?1MvgUGSeXlJqB+iZ8tLlL5/MpZp+2G98pEoAqjkgClORHg+eQm/b5e77v+?=
+ =?iso-8859-1?Q?QI7YV4g1vzQ+I5FOYy9pwv0+bQOh203zl29fvBIl/+fRr1to9tKFt0xWDp?=
+ =?iso-8859-1?Q?mU+t6+/+7OU/67pNYstL2ptQAR8VCDvahUtbiCb0io5DpuKSGC7KCvJv/J?=
+ =?iso-8859-1?Q?LfOxpDcwsDwNkCaXKod0nrl8dsTKnee4GP7OdVpVHoWjXQtp9oGvUsdGac?=
+ =?iso-8859-1?Q?G7aOeckYdPRLt7qb8bnVl2fepiuWavjG/Gzsejo1abD7e/tDYFy7GVphGY?=
+ =?iso-8859-1?Q?c/dPmfO4gSK3Ak0y0lOUA+NqGMMwkXpv8E4NLVNYb5dJ0pWxq8fgOoCp71?=
+ =?iso-8859-1?Q?G41Ugn3P8v5Blga0uN4qa7P3WQJAxMMRWeunoic49qOGnvKPva4ZlHn5vh?=
+ =?iso-8859-1?Q?/m+jsr0DVii/KJoVk7uyPNtVVm52SdvFjFndeiyGUuaGLsBHQXlpNMJ2lo?=
+ =?iso-8859-1?Q?pegBVvhrwYRVyoQOpPw8CF8XbslgcbtYj5iRCz12PIKaDP+MrhWDeZcVas?=
+ =?iso-8859-1?Q?jDUtQyY2cO/tsYAmrH+Hk+LcMf5dkI39UdcfrYfoHBk7QYe8R0VnZW/ZNs?=
+ =?iso-8859-1?Q?Dsq4RygmOvRLpQx6i57jwOkIJO/btYH7SQQpPRKvfo78H7NKULheSQXXe3?=
+ =?iso-8859-1?Q?tDmfku5+8+kpojbHZkMNcL4tNQKkW9ZbTippzmzf7iaVViIbUlt/8SJq8l?=
+ =?iso-8859-1?Q?EDR/ERPFjKS/A6lB5s/vhYnfY2hVtFobyxwDROtAuXrRKGDNzxIehQioPe?=
+ =?iso-8859-1?Q?riNhvlSBMBn4ZWRjlkHj5b9f0p78Xtlp+KNPd2HIS5af8s7kYks1lg2sw6?=
+ =?iso-8859-1?Q?witcOQDPxt73bsDBL1nPmwNaGbJznmRqhMyEAXgcV2UDVitkDdwKGJPKyT?=
+ =?iso-8859-1?Q?x2uExgtCXz9OqKwI5Kw23N4f+FEVo1Ty72qW8JE05PQtgwC1RBIiVZxckY?=
+ =?iso-8859-1?Q?tKGZBJUZZTkXNSIxAeC93EexPohN+IrzDdx3r2II20njvpTO6hOHXt5h6F?=
+ =?iso-8859-1?Q?uR4HwahLsRlxq1XYTXgjFlSPx3suT87NV/V20lKGmJ7AFSDwQ3H1IpV8lz?=
+ =?iso-8859-1?Q?Ge2E1gCvwFccyH0VRNgvq8ycbh2vSAE1nlBKGXA5/W1MINVjEaXsaf4mz7?=
+ =?iso-8859-1?Q?+ogQyPbgwe+UTGDzPwtBWguDGd+mMFc=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-ID: <B6831C1189A3D74EBCA665E565FBA8A2@namprd04.prod.outlook.com>
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-OriginatorOrg: nuvoton.com
+X-OriginatorOrg: equinix.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: HK0PR03MB5090.apcprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a6388bf1-c6b9-4b35-7282-08da492a9dbd
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Jun 2022 08:41:00.9770
+X-MS-Exchange-CrossTenant-AuthSource: DM8PR04MB8007.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 27f03bcd-8287-454b-11aa-08da4938174d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 Jun 2022 10:17:28.3644
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: a3f24931-d403-4b4a-94f1-7d83ac638e07
+X-MS-Exchange-CrossTenant-id: 72adb271-2fc7-4afe-a5ee-9de6a59f6bfb
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: qb6e2q68Y6UJU2ezUZG3VYvMdaT4ueJ3kVQqeKa/L/Rtj7JcftPx/LsL5jEywM1Of1HN/Xjsf75RL3W8M9QPaA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR03MB4599
+X-MS-Exchange-CrossTenant-userprincipalname: ZZiHpXSnK1h+yopgc+I9hmNRVImr3UYIbXNhHVrwnuf3sjD3f2hFiRP3SRVqbAnfo/gskSxRxBoLVbEYNhL0fA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR04MB7863
+X-Proofpoint-ORIG-GUID: 7i0szBZwh86k1-X1JjK6TRVJIJEyMScc
+X-Proofpoint-GUID: 7i0szBZwh86k1-X1JjK6TRVJIJEyMScc
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.874,Hydra:6.0.517,FMLib:17.11.64.514
+ definitions=2022-06-08_03,2022-06-07_02,2022-02-23_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1011
+ mlxlogscore=999 impostorscore=0 bulkscore=0 priorityscore=1501
+ suspectscore=0 phishscore=0 adultscore=0 malwarescore=0 lowpriorityscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2204290000 definitions=main-2206080045
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -124,469 +146,222 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Joel Stanley <joel@jms.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_HK0PR03MB5090481BE38DBC9CBC513F99CFA49HK0PR03MB5090apcp_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-Dear All,
-
-We have fixed this compile error of ipmid after we change boost version fro=
-m v1.79.0 to v1.78.0.
-(Using openbmc/poky/meta/recipes-support/boost/boost_1.78.0.bb instead of b=
-oost_1.79.0.bb)
-
-Previous boost v1.78.0 without this compile error in ipmid no matter arm or=
- aarch64 platform.
-But, the latest boost v1.79.0 meet this compile error in ipmid only aarch64=
- platform when we upgrade newer openbmc.
-Currently, we try to diff between v1.78.0 and v1.79.0 of boost. If there is=
- any finding, we will update it.
-
-If you have some suggestions or opinions, welcome provide it. Thanks in adv=
-ance.
-
-Best regards,
-Tim
-From: CS20 CHLi30 <CHLI30@nuvoton.com>
-Sent: Thursday, June 2, 2022 6:11 PM
-To: openbmc@lists.ozlabs.org; CS20 CHLi30 <CHLI30@nuvoton.com>; Tim Lee <ti=
-mlee660101@gmail.com>
-Subject: [phosphor-ipmi-host] static assertion be raised in aarch64 build
-
-Hi All,
-Is anyone meet this kind of static_assert() be raised in "pack.hpp" and "un=
-pack.hpp"?
-
-We meet one compile error in "aarch64" platform with the newer commit (5d38=
-067).
-However, the same commit without this compile error in "arm" platform.
-I try to diff "arm" and "aarch64" compile options,
-Unfortunately, didn't find any clues to fix this build error in aarch64 pla=
-tform.
-
-Error message of log.do_compile:
-error: static assertion failed: Attempt to pack a type that has no IPMI unp=
-ack operation
-error: static assertion failed: Attempt to unpack a type that has no IPMI u=
-npack operation
-....
-cc1plus: all warnings being treated as errors
-Makefile:1344: recipe for target 'libipmi20_la-sensorhandler.lo' failed
-make[2]: Leaving directory '/home/tim/npcm-master/openbmc/build/evb-npcm845=
-/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067=
-181-r1/build'
-Makefile:1599: recipe for target 'all-recursive' failed
-make[2]: *** [libipmi20_la-sensorhandler.lo] Error 1
-make[1]: *** [all-recursive] Error 1
-make[1]: Leaving directory '/home/tim/npcm-master/openbmc/build/evb-npcm845=
-/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067=
-181-r1/build'
-ERROR: oe_runmake failed
-
-More messages in log.do_compile:
-/home/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-=
-linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build/../git/include/=
-ipmid/message/unpack.hpp: In instantiation of 'static int ipmi::message::de=
-tails::UnpackSingle<A>::op(ipmi::message::Payload&, T&) [with T =3D boost::=
-multiprecision::number<boost::multiprecision::backends::cpp_int_backend<24,=
- 24, boost::multiprecision::unsigned_magnitude, boost::multiprecision::unch=
-ecked, void>, boost::multiprecision::et_off>]':
-/home/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-=
-linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build/../git/include/=
-ipmid/message.hpp:440:45:   required from 'int ipmi::message::Payload::unpa=
-ck(Arg&&, Args&& ...) [with Arg =3D boost::multiprecision::number<boost::mu=
-ltiprecision::backends::cpp_int_backend<24, 24, boost::multiprecision::unsi=
-gned_magnitude, boost::multiprecision::unchecked, void>, boost::multiprecis=
-ion::et_off>&; Args =3D {}]'
-../git/ipmid-new.cpp:300:37:   required from here
-/home/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-=
-linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build/../git/include/=
-ipmid/message/unpack.hpp:123:46: error: static assertion failed: Attempt to=
- unpack a type that has no IPMI unpack operation
-  123 |                 utility::dependent_false<T>::value,
-      |                                              ^~~~~
-/home/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-=
-linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build/../git/include/=
-ipmid/message/unpack.hpp:123:46: note: 'std::integral_constant<bool, false>=
-::value' evaluates to false
-/home/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-=
-linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build/../git/include/=
-ipmid/message/unpack.hpp:126:5: error: no return statement in function retu=
-rning non-void [-Werror=3Dreturn-type]
-  126 |     }
-      |     ^
-......
-/home/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-=
-linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build/../git/include/=
-ipmid/message/pack.hpp: In instantiation of 'static int ipmi::message::deta=
-ils::PackSingle<A>::op(ipmi::message::Payload&, const T&) [with T =3D boost=
-::multiprecision::number<boost::multiprecision::backends::cpp_int_backend<2=
-4, 24, boost::multiprecision::unsigned_magnitude, boost::multiprecision::un=
-checked, void>, boost::multiprecision::et_off>]':
-/home/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-=
-linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build/../git/include/=
-ipmid/message.hpp:262:43:   required from 'int ipmi::message::Payload::pack=
-(Arg&&, Args&& ...) [with Arg =3D boost::multiprecision::number<boost::mult=
-iprecision::backends::cpp_int_backend<24, 24, boost::multiprecision::unsign=
-ed_magnitude, boost::multiprecision::unchecked, void>, boost::multiprecisio=
-n::et_off>&; Args =3D {}]'
-../git/ipmid-new.cpp:308:16:   required from here
-/home/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-=
-linux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build/../git/include/=
-ipmid/message/pack.hpp:80:28: error: static assertion failed: Attempt to pa=
-ck a type that has no IPMI pack operation
-   80 |         static_assert(std::is_integral_v<T>,
-      |                       ~~~~~^~~~~~~~~~~~~~~~
-
-static_assert() in unpack.hpp:
-template <typename T>
-struct UnpackSingle
-{
-    static int op(Payload& p, T& t)
-    {
-            static_assert(
-                utility::dependent_false<T>::value,
-                "Attempt to unpack a type that has no IPMI unpack operation=
-");
-
-static_assert() in pack.hpp:
-template <typename T>
-struct PackSingle
-{
-    static int op(Payload& p, const T& t)
-    {
-        static_assert(std::is_integral_v<T>,
-                      "Attempt to pack a type that has no IPMI pack operati=
-on");
-
-Best regards,
-Tim
-________________________________
-The privileged confidential information contained in this email is intended=
- for use only by the addressees as indicated by the original sender of this=
- email. If you are not the addressee indicated in this email or are not res=
-ponsible for delivery of the email to such a person, please kindly reply to=
- the sender indicating this fact and delete all copies of it from your comp=
-uter and network server immediately. Your cooperation is highly appreciated=
-. It is advised that any unauthorized use of confidential information of Nu=
-voton is strictly prohibited; and any information in this email irrelevant =
-to the official business of Nuvoton shall be deemed as neither given nor en=
-dorsed by Nuvoton.
-
---_000_HK0PR03MB5090481BE38DBC9CBC513F99CFA49HK0PR03MB5090apcp_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+On Wed, Jun 08, 2022 at 01:22:21AM PDT, C=E9dric Le Goater wrote:
+>Palmettos were the first OpenPOWER systems built by Tyan with the
+>product name: GN70-BP010. They contained an IBM POWER8 Turismo SCM
+>processor and an Aspeed AST2400 SoC.
 >
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 2 5 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:PMingLiU;
-	panose-1:2 1 6 1 0 1 1 1 1 1;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0cm;
-	margin-bottom:.0001pt;
-	font-size:12.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:#954F72;
-	text-decoration:underline;}
-p.msonormal0, li.msonormal0, div.msonormal0
-	{mso-style-name:msonormal;
-	mso-margin-top-alt:auto;
-	margin-right:0cm;
-	mso-margin-bottom-alt:auto;
-	margin-left:0cm;
-	font-size:12.0pt;
-	font-family:"Times New Roman",serif;}
-span.EmailStyle18
-	{mso-style-type:personal;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-span.EmailStyle19
-	{mso-style-type:personal;
-	font-family:"Calibri",sans-serif;
-	color:#1F497D;}
-span.EmailStyle20
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-size:10.0pt;}
-@page WordSection1
-	{size:612.0pt 792.0pt;
-	margin:72.0pt 90.0pt 72.0pt 90.0pt;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"ZH-TW" link=3D"#0563C1" vlink=3D"#954F72" style=3D"text-justi=
-fy-trim:punctuation">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:#1F497D">Dear Al=
-l,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:#1F497D"><o:p>&n=
-bsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:#1F497D">We have=
- fixed this compile error of ipmid after we change boost version from v1.79=
-.0 to v1.78.0.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:#1F497D">(Using =
-openbmc/poky/meta/recipes-support/boost/boost_1.78.0.bb instead of boost_1.=
-79.0.bb)<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:#1F497D"><o:p>&n=
-bsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:#1F497D">Previou=
-s boost v1.78.0 without this compile error in ipmid no matter arm or aarch6=
-4 platform.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:#1F497D">But, th=
-e latest boost v1.79.0 meet this compile error in ipmid only aarch64 platfo=
-rm when we upgrade newer openbmc.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:#1F497D">Current=
-ly, we try to diff between v1.78.0 and v1.79.0 of boost. If there is any fi=
-nding, we will update it.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:#1F497D"><o:p>&n=
-bsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:#1F497D">If you =
-have some suggestions or opinions, welcome provide it. Thanks in advance.<o=
-:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:#1F497D"><o:p>&n=
-bsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:#1F497D">Best re=
-gards,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US" style=3D"color:#1F497D">Tim<o:p=
-></o:p></span></p>
-<div>
-<div style=3D"border:none;border-top:solid #E1E1E1 1.0pt;padding:3.0pt 0cm =
-0cm 0cm">
-<p class=3D"MsoNormal"><b><span lang=3D"EN-US" style=3D"font-size:11.0pt">F=
-rom:</span></b><span lang=3D"EN-US" style=3D"font-size:11.0pt"> CS20 CHLi30=
- &lt;CHLI30@nuvoton.com&gt;
-<br>
-<b>Sent:</b> Thursday, June 2, 2022 6:11 PM<br>
-<b>To:</b> openbmc@lists.ozlabs.org; CS20 CHLi30 &lt;CHLI30@nuvoton.com&gt;=
-; Tim Lee &lt;timlee660101@gmail.com&gt;<br>
-<b>Subject:</b> [phosphor-ipmi-host] static assertion be raised in aarch64 =
-build<o:p></o:p></span></p>
-</div>
-</div>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Hi All,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Is anyone meet this kind of sta=
-tic_assert() be raised in &quot;pack.hpp&quot; and &quot;unpack.hpp&quot;?<=
-o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">We meet one compile error in &q=
-uot;aarch64&quot; platform with the newer commit (5d38067).<o:p></o:p></spa=
-n></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">However, the same commit withou=
-t this compile error in &quot;arm&quot; platform.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">I try to diff &quot;arm&quot; a=
-nd &quot;aarch64&quot; compile options,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Unfortunately, didn't find any =
-clues to fix this build error in aarch64 platform.<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><b><span lang=3D"EN-US">Error message of log.do_comp=
-ile:<o:p></o:p></span></b></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">error: static assertion failed:=
- Attempt to pack a type that has no IPMI unpack operation<o:p></o:p></span>=
-</p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">error: static assertion failed:=
- Attempt to unpack a type that has no IPMI unpack operation<o:p></o:p></spa=
-n></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">....<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">cc1plus: all warnings being tre=
-ated as errors<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Makefile:1344: recipe for targe=
-t 'libipmi20_la-sensorhandler.lo' failed<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">make[2]: Leaving directory '/ho=
-me/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-lin=
-ux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build'<o:p></o:p></span>=
-</p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Makefile:1599: recipe for targe=
-t 'all-recursive' failed<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">make[2]: *** [libipmi20_la-sens=
-orhandler.lo] Error 1<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">make[1]: *** [all-recursive] Er=
-ror 1<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">make[1]: Leaving directory '/ho=
-me/tim/npcm-master/openbmc/build/evb-npcm845/tmp/work/cortexa35-openbmc-lin=
-ux/phosphor-ipmi-host/1.0+gitAUTOINC+5d38067181-r1/build'<o:p></o:p></span>=
-</p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">ERROR: oe_runmake failed<o:p></=
-o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">More messages in log.do_compile=
-:<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">/home/tim/npcm-master/openbmc/b=
-uild/evb-npcm845/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gi=
-tAUTOINC+5d38067181-r1/build/../git/include/ipmid/message/unpack.hpp: In in=
-stantiation of 'static int ipmi::message::details::UnpackSingle&lt;A&gt;::o=
-p(ipmi::message::Payload&amp;,
- T&amp;) [with T =3D boost::multiprecision::number&lt;boost::multiprecision=
-::backends::cpp_int_backend&lt;24, 24, boost::multiprecision::unsigned_magn=
-itude, boost::multiprecision::unchecked, void&gt;, boost::multiprecision::e=
-t_off&gt;]':<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">/home/tim/npcm-master/openbmc/b=
-uild/evb-npcm845/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gi=
-tAUTOINC+5d38067181-r1/build/../git/include/ipmid/message.hpp:440:45:&nbsp;=
-&nbsp; required from 'int ipmi::message::Payload::unpack(Arg&amp;&amp;,
- Args&amp;&amp; ...) [with Arg =3D boost::multiprecision::number&lt;boost::=
-multiprecision::backends::cpp_int_backend&lt;24, 24, boost::multiprecision:=
-:unsigned_magnitude, boost::multiprecision::unchecked, void&gt;, boost::mul=
-tiprecision::et_off&gt;&amp;; Args =3D {}]'<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">../git/ipmid-new.cpp:300:37:&nb=
-sp;&nbsp; required from here<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">/home/tim/npcm-master/openbmc/b=
-uild/evb-npcm845/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gi=
-tAUTOINC+5d38067181-r1/build/..<b>/git/include/ipmid/message/unpack.hpp:123=
-:46: error: static assertion failed:
- Attempt to unpack a type that has no IPMI unpack operation</b><o:p></o:p><=
-/span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp; 123 |&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p; utility::dependent_false&lt;T&gt;::value,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
-;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ^~~~~<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">/home/tim/npcm-master/openbmc/b=
-uild/evb-npcm845/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gi=
-tAUTOINC+5d38067181-r1/build/../git/include/ipmid/message/unpack.hpp:123:46=
-: note: 'std::integral_constant&lt;bool,
- false&gt;::value' evaluates to false<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">/home/tim/npcm-master/openbmc/b=
-uild/evb-npcm845/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gi=
-tAUTOINC+5d38067181-r1/build/../git/include/ipmid/message/unpack.hpp:126:5:=
- error: no return statement in function
- returning non-void [-Werror=3Dreturn-type]<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp; 126 |&nbsp;&nbsp;&nbsp;&=
-nbsp; }<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
-|&nbsp;&nbsp;&nbsp;&nbsp; ^<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">......<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">/home/tim/npcm-master/openbmc/b=
-uild/evb-npcm845/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gi=
-tAUTOINC+5d38067181-r1/build/../git/include/ipmid/message/pack.hpp: In inst=
-antiation of 'static int ipmi::message::details::PackSingle&lt;A&gt;::op(ip=
-mi::message::Payload&amp;,
- const T&amp;) [with T =3D boost::multiprecision::number&lt;boost::multipre=
-cision::backends::cpp_int_backend&lt;24, 24, boost::multiprecision::unsigne=
-d_magnitude, boost::multiprecision::unchecked, void&gt;, boost::multiprecis=
-ion::et_off&gt;]':<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">/home/tim/npcm-master/openbmc/b=
-uild/evb-npcm845/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gi=
-tAUTOINC+5d38067181-r1/build/../git/include/ipmid/message.hpp:262:43:&nbsp;=
-&nbsp; required from 'int ipmi::message::Payload::pack(Arg&amp;&amp;,
- Args&amp;&amp; ...) [with Arg =3D boost::multiprecision::number&lt;boost::=
-multiprecision::backends::cpp_int_backend&lt;24, 24, boost::multiprecision:=
-:unsigned_magnitude, boost::multiprecision::unchecked, void&gt;, boost::mul=
-tiprecision::et_off&gt;&amp;; Args =3D {}]'<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">../git/ipmid-new.cpp:308:16:&nb=
-sp;&nbsp; required from here<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">/home/tim/npcm-master/openbmc/b=
-uild/evb-npcm845/tmp/work/cortexa35-openbmc-linux/phosphor-ipmi-host/1.0+gi=
-tAUTOINC+5d38067181-r1/build/..<b>/git/include/ipmid/message/pack.hpp:80:28=
-: error: static assertion failed: Attempt
- to pack a type that has no IPMI pack operation</b><o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp; 80 |&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; static_assert(std::is_integral_v&lt;T&gt=
-;,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
-|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
-bsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~~~~~^~~~~~~~~~~=
-~~~~~<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><b><span lang=3D"EN-US">static_assert() in unpack.hp=
-p:<o:p></o:p></span></b></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">template &lt;typename T&gt;<o:p=
-></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">struct UnpackSingle<o:p></o:p><=
-/span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">{<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp; static int o=
-p(Payload&amp; p, T&amp; t)<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp; {<o:p></o:p>=
-</span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; static_assert(<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; utility::depend=
-ent_false&lt;T&gt;::value,<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &quot;Attempt t=
-o unpack a type that has no IPMI unpack operation&quot;);<o:p></o:p></span>=
-</p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><b><span lang=3D"EN-US">static_assert() in pack.hpp:=
-<o:p></o:p></span></b></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">template &lt;typename T&gt;<o:p=
-></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">struct PackSingle<o:p></o:p></s=
-pan></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">{<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp; static int o=
-p(Payload&amp; p, const T&amp; t)<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp; {<o:p></o:p>=
-</span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp; static_assert(std::is_integral_v&lt;T&gt;,<o:p></o:p></span></p=
+>The ast2400_openbmc_defconfig defconfig is based on the evb-ast2400
+>defconfig, plus these extras :
 >
-<p class=3D"MsoNormal"><span lang=3D"EN-US">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp; &quot;Attempt to pack a type that has no IPMI pack ope=
-ration&quot;);<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Best regards,<o:p></o:p></span>=
-</p>
-<p class=3D"MsoNormal"><span lang=3D"EN-US">Tim<o:p></o:p></span></p>
-</div>
-<hr align=3D"center" width=3D"100%">
-<span style=3D"font-size:12pt;line-height:0.7;font-family: 'Arial'; color:#=
-808080">The privileged confidential information contained in this email is =
-intended for use only by the addressees as indicated by the original sender=
- of this email. If you are not the
- addressee indicated in this email or are not responsible for delivery of t=
-he email to such a person, please kindly reply to the sender indicating thi=
-s fact and delete all copies of it from your computer and network server im=
-mediately. Your cooperation is highly
- appreciated. It is advised that any unauthorized use of confidential infor=
-mation of Nuvoton is strictly prohibited; and any information in this email=
- irrelevant to the official business of Nuvoton shall be deemed as neither =
-given nor endorsed by Nuvoton.
-</span>
-</body>
-</html>
+>  CONFIG_BOOTCOMMAND=3D"bootm 20080000"
+>  CONFIG_DEFAULT_DEVICE_TREE=3D"ast2400-palmetto"
+>  CONFIG_PHY_NCSI=3Dy
+>
+>Cc: Joel Stanley <joel@jms.id.au>
+>Signed-off-by: C=E9dric Le Goater <clg@kaod.org>
+>---
+>
+> Changes in v2 :
+>
+> - device tree cleanups to match HW
+> - renamed defconfig to ast2400_openbmc_defconfig
+>
+> arch/arm/dts/Makefile             |  1 +
+> arch/arm/dts/ast2400-palmetto.dts | 74 +++++++++++++++++++++++++++++++
+> configs/ast2400_openbmc_defconfig | 72 ++++++++++++++++++++++++++++++
+> 3 files changed, 147 insertions(+)
+> create mode 100644 arch/arm/dts/ast2400-palmetto.dts
+> create mode 100644 configs/ast2400_openbmc_defconfig
+>
+>diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+>index 8f876a0aa0d7..1d523c5d5da0 100755
+>--- a/arch/arm/dts/Makefile
+>+++ b/arch/arm/dts/Makefile
+>@@ -676,6 +676,7 @@ dtb-$(CONFIG_ARCH_BCM6858) +=3D \
+>
+> dtb-$(CONFIG_ARCH_ASPEED) +=3D \
+> 	ast2400-evb.dtb \
+>+	ast2400-palmetto.dtb \
+> 	ast2400-ahe-50dc.dtb \
 
---_000_HK0PR03MB5090481BE38DBC9CBC513F99CFA49HK0PR03MB5090apcp_--
+Sort?  (palmetto after ahe-50dc)
+
+> 	ast2500-evb.dtb \
+> 	ast2600a0-evb.dtb \
+>diff --git a/arch/arm/dts/ast2400-palmetto.dts b/arch/arm/dts/ast2400-palm=
+etto.dts
+>new file mode 100644
+>index 000000000000..2a49ded27b43
+>--- /dev/null
+>+++ b/arch/arm/dts/ast2400-palmetto.dts
+>@@ -0,0 +1,74 @@
+>+// SPDX-License-Identifier: GPL-2.0+
+>+/dts-v1/;
+>+
+>+#include "ast2400-u-boot.dtsi"
+>+
+>+/ {
+>+	model =3D "Palmetto BMC";
+>+	compatible =3D "tyan,palmetto-bmc", "aspeed,ast2400";
+>+
+>+	memory@40000000 {
+>+		device_type =3D "memory";
+>+		reg =3D <0x40000000 0x10000000>;
+>+	};
+>+
+>+	chosen {
+>+		stdout-path =3D &uart5;
+>+		bootargs =3D "console=3DttyS4,115200 earlyprintk";
+
+Does bootargs serve a particular purpose here?  (The other ast2x00
+device-trees don't appear to include it.)
+
+>+	};
+>+
+>+	aliases {
+>+		spi0 =3D &fmc;
+>+		spi1 =3D &spi1;
+>+		ethernet0 =3D &mac0;
+>+	};
+>+};
+>+
+>+&uart5 {
+>+	u-boot,dm-pre-reloc;
+>+	status =3D "okay";
+>+};
+>+
+>+&sdrammc {
+>+	clock-frequency =3D <200000000>;
+>+};
+>+
+>+&wdt1 {
+>+	u-boot,dm-pre-reloc;
+>+	status =3D "okay";
+>+};
+>+
+>+&wdt2 {
+>+	u-boot,dm-pre-reloc;
+>+	status =3D "okay";
+>+};
+>+
+>+&mac0 {
+>+	status =3D "okay";
+>+	phy-mode =3D "rgmii";
+>+
+>+	pinctrl-names =3D "default";
+>+	pinctrl-0 =3D <&pinctrl_mac1link_default &pinctrl_mdio1_default>;
+>+};
+>+
+>+&fmc {
+>+	status =3D "okay";
+>+	flash@0 {
+>+		status =3D "okay";
+>+		spi-max-frequency =3D <50000000>;
+>+		spi-tx-bus-width =3D <2>;
+>+		spi-rx-bus-width =3D <2>;
+>+	};
+>+};
+>+
+>+&spi1 {
+>+	status =3D "okay";
+>+	flash@0 {
+>+		pinctrl-names =3D "default";
+>+		pinctrl-0 =3D <&pinctrl_spi1_default>;
+>+		status =3D "okay";
+>+		spi-max-frequency =3D <50000000>;
+>+		spi-tx-bus-width =3D <2>;
+>+		spi-rx-bus-width =3D <2>;
+>+	};
+>+};
+>diff --git a/configs/ast2400_openbmc_defconfig b/configs/ast2400_openbmc_d=
+efconfig
+>new file mode 100644
+>index 000000000000..d09358777304
+>--- /dev/null
+>+++ b/configs/ast2400_openbmc_defconfig
+
+Is the implication here that the testing discussed in the v1 thread
+(using the existing evb defconfig instead of an entirely new one) didn't
+work out?
+
+>@@ -0,0 +1,72 @@
+>+CONFIG_ARM=3Dy
+>+CONFIG_ARCH_ASPEED=3Dy
+>+CONFIG_SYS_TEXT_BASE=3D0x0
+>+CONFIG_ASPEED_AST2400=3Dy
+>+CONFIG_SYS_MALLOC_F_LEN=3D0x2000
+>+CONFIG_ENV_SIZE=3D0x10000
+>+CONFIG_ENV_OFFSET=3D0xF0000
+>+CONFIG_NR_DRAM_BANKS=3D1
+>+CONFIG_FIT=3Dy
+>+CONFIG_USE_BOOTARGS=3Dy
+>+CONFIG_BOOTARGS=3D"console=3DttyS4,115200n8 root=3D/dev/ram rw"
+>+CONFIG_USE_BOOTCOMMAND=3Dy
+>+CONFIG_BOOTCOMMAND=3D"bootm 20080000"
+>+CONFIG_PRE_CONSOLE_BUFFER=3Dy
+>+CONFIG_PRE_CON_BUF_ADDR=3D0x1e720000
+>+CONFIG_SYS_CONSOLE_ENV_OVERWRITE=3Dy
+>+CONFIG_HUSH_PARSER=3Dy
+>+# CONFIG_AUTO_COMPLETE is not set
+>+CONFIG_SYS_PROMPT=3D"ast# "
+>+# CONFIG_CMD_IMI is not set
+>+# CONFIG_CMD_XIMG is not set
+>+CONFIG_CMD_MEMTEST=3Dy
+>+CONFIG_SYS_ALT_MEMTEST=3Dy
+>+CONFIG_CMD_CLK=3Dy
+>+CONFIG_CMD_GPIO=3Dy
+>+CONFIG_CMD_I2C=3Dy
+>+CONFIG_CMD_MMC=3Dy
+>+CONFIG_CMD_SF=3Dy
+>+CONFIG_CMD_DHCP=3Dy
+>+CONFIG_CMD_MII=3Dy
+>+CONFIG_CMD_PING=3Dy
+>+CONFIG_DEFAULT_DEVICE_TREE=3D"ast2400-palmetto"
+>+CONFIG_ENV_IS_IN_SPI_FLASH=3Dy
+>+CONFIG_USE_ENV_SPI_BUS=3Dy
+>+CONFIG_ENV_SPI_BUS=3D0
+>+CONFIG_USE_ENV_SPI_CS=3Dy
+>+CONFIG_ENV_SPI_CS=3D0
+>+CONFIG_USE_ENV_SPI_MAX_HZ=3Dy
+>+CONFIG_ENV_SPI_MAX_HZ=3D100000000
+>+CONFIG_NET_RANDOM_ETHADDR=3Dy
+>+CONFIG_REGMAP=3Dy
+>+CONFIG_CLK=3Dy
+>+CONFIG_DM_GPIO=3Dy
+>+CONFIG_ASPEED_GPIO=3Dy
+>+CONFIG_DM_I2C=3Dy
+>+CONFIG_SYS_I2C_ASPEED=3Dy
+>+CONFIG_MISC=3Dy
+>+CONFIG_DM_MMC=3Dy
+>+# CONFIG_MMC_HW_PARTITIONING is not set
+>+CONFIG_MMC_SDHCI=3Dy
+>+CONFIG_MMC_SDHCI_ASPEED=3Dy
+>+CONFIG_DM_SPI_FLASH=3Dy
+>+CONFIG_SPI_FLASH=3Dy
+>+CONFIG_SPI_FLASH_MACRONIX=3Dy
+>+CONFIG_SPI_FLASH_SPANSION=3Dy
+>+CONFIG_SPI_FLASH_STMICRO=3Dy
+>+CONFIG_SPI_FLASH_WINBOND=3Dy
+>+CONFIG_PHY_REALTEK=3Dy
+>+CONFIG_PHY_NCSI=3Dy
+>+CONFIG_DM_ETH=3Dy
+>+CONFIG_PHY_GIGE=3Dy
+>+CONFIG_FTGMAC100=3Dy
+>+CONFIG_PHY=3Dy
+>+CONFIG_PINCTRL=3Dy
+>+CONFIG_DM_SERIAL=3Dy
+>+CONFIG_SYS_NS16550=3Dy
+>+CONFIG_SPI=3Dy
+>+CONFIG_DM_SPI=3Dy
+>+CONFIG_SYSRESET=3Dy
+>+CONFIG_TIMER=3Dy
+>+CONFIG_WDT=3Dy
+>+# CONFIG_EFI_LOADER is not set
+>--=20
+>2.35.3
+>=
