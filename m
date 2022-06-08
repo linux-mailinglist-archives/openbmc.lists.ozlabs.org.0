@@ -2,53 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BB2BC54223D
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 08:46:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B09215424D0
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 08:53:14 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LHySQ4FFnz3bgC
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 16:46:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LHybr3pSCz3bgh
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 16:53:12 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=quicinc.com header.i=@quicinc.com header.a=rsa-sha256 header.s=qcdkim header.b=w4t0uhiR;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kaod.org (client-ip=178.32.96.117; helo=1.mo552.mail-out.ovh.net; envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
-X-Greylist: delayed 1768 seconds by postgrey-1.36 at boromir; Wed, 08 Jun 2022 16:46:31 AEST
-Received: from 1.mo552.mail-out.ovh.net (1.mo552.mail-out.ovh.net [178.32.96.117])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=quicinc.com (client-ip=129.46.98.28; helo=alexa-out.qualcomm.com; envelope-from=quic_jaehyoo@quicinc.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (1024-bit key; unprotected) header.d=quicinc.com header.i=@quicinc.com header.a=rsa-sha256 header.s=qcdkim header.b=w4t0uhiR;
+	dkim-atps=neutral
+Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LHyS72Z5hz2yRK
-	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 16:46:28 +1000 (AEST)
-Received: from mxplan5.mail.ovh.net (unknown [10.109.143.159])
-	by mo552.mail-out.ovh.net (Postfix) with ESMTPS id DF98A2706B;
-	Wed,  8 Jun 2022 06:46:25 +0000 (UTC)
-Received: from kaod.org (37.59.142.95) by DAG4EX1.mxp5.local (172.16.2.31)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.9; Wed, 8 Jun 2022
- 08:46:25 +0200
-Authentication-Results: garm.ovh; auth=pass (GARM-95G0019981e71a-da5a-4ed8-866c-4575dd85df64,
-                    F6758EC0BDD1914BC1EB5EB96E174B3D05CE0F96) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <689d0459-0c71-0261-895e-392502e4e8cd@kaod.org>
-Date: Wed, 8 Jun 2022 08:46:23 +0200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LHybS4331z2yn5
+	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 16:52:52 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1654671172; x=1686207172;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=vdLe9GL9SPZn1XDUinyr4GRnVlzJQANxQyASHfMXlOU=;
+  b=w4t0uhiRxcAawUfxoU7fnVT6jlhCZhPxtn5UDwp6g9YkRLu2TMQG/XdU
+   6oZiRINjExIvrAQuHBaG+o2JOfNTlDxPSnunkW9/N/2KlH5vuJGzZF+bh
+   jJQ7/XcbXD5fWJlAxvXelOrm9ZAtQvigkKw1l0tJvnGoLus4GOFYXUUat
+   U=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 07 Jun 2022 23:51:50 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Jun 2022 23:51:50 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.986.22; Tue, 7 Jun 2022 23:51:49 -0700
+Received: from [10.110.70.255] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Tue, 7 Jun 2022
+ 23:51:49 -0700
+Message-ID: <e3e0a6dd-b33c-7c9c-0e0b-dd988c6fb2ae@quicinc.com>
+Date: Tue, 7 Jun 2022 23:51:48 -0700
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.9.0
-Subject: Re: [PATCH] ARM: dts: aspeed: Add a palmetto board (AST2400)
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc v3] ARM: dts: aspeed: add
+ Qualcomm DC-SCM V1
 Content-Language: en-US
-To: Joel Stanley <joel@jms.id.au>
-References: <20220608062803.366909-1-clg@kaod.org>
- <CACPK8XcN6q7o5F+VZ_jpHxjn3kwZN_QsTpF+q4sX75oKO261iw@mail.gmail.com>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <CACPK8XcN6q7o5F+VZ_jpHxjn3kwZN_QsTpF+q4sX75oKO261iw@mail.gmail.com>
+To: Joel Stanley <joel@jms.id.au>, =?UTF-8?Q?C=c3=a9dric_Le_Goater?=
+	<clg@kaod.org>
+References: <20220607142845.1123692-1-quic_jaehyoo@quicinc.com>
+From: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
+In-Reply-To: <20220607142845.1123692-1-quic_jaehyoo@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.95]
-X-ClientProxiedBy: DAG1EX2.mxp5.local (172.16.2.2) To DAG4EX1.mxp5.local
- (172.16.2.31)
-X-Ovh-Tracer-GUID: 14c97412-dfd7-40be-995b-08f2f4961d66
-X-Ovh-Tracer-Id: 5026298661603150746
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvfedruddtiedgudduvdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkffggfgfuvfevfhfhjggtgfhisehtkeertddtfeejnecuhfhrohhmpeevrogurhhitggpnfgvpgfiohgrthgvrhcuoegtlhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepkeetjedtleekjedvveffudfhteetleeifeegfeffuefghfefkeehffeufeeludejnecukfhppedtrddtrddtrddtpdefjedrheelrddugedvrdelheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhhvghlohepmhigphhlrghnhedrmhgrihhlrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpegtlhhgsehkrghougdrohhrghdpnhgspghrtghpthhtohepuddprhgtphhtthhopehophgvnhgsmhgtsehlihhsthhsrdhoiihlrggsshdrohhrghdpoffvtefjohhsthepmhhoheehvd
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,266 +73,226 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org, Graeme Gregory <quic_ggregory@quicinc.com>, Jamie Iles <quic_jiles@quicinc.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 6/8/22 08:37, Joel Stanley wrote:
-> On Wed, 8 Jun 2022 at 06:28, Cédric Le Goater <clg@kaod.org> wrote:
->>
->> Palmettos were the first OpenPOWER systems built by Tyan with the
->> product name: GN70-BP010. They contained an IBM POWER8 Turismo SCM
->> processor and an Aspeed AST2400 SoC.
+On 6/7/2022 7:28 AM, Jae Hyun Yoo wrote:
+> From: Graeme Gregory <quic_ggregory@quicinc.com>
 > 
-> Good idea.
+> Add initial version of device tree for Qualcomm DC-SCM V1 BMC which is
+> equipped with Aspeed AST2600 BMC SoC.
 > 
->>
->> Cc: Joel Stanley <joel@jms.id.au>
->> Signed-off-by: Cédric Le Goater <clg@kaod.org>
->> ---
->>   arch/arm/dts/Makefile              |   1 +
->>   arch/arm/dts/ast2400-palmetto.dts  | 102 +++++++++++++++++++++++++++++
->>   configs/ast2400-palmetto_defconfig |  74 +++++++++++++++++++++
->>   3 files changed, 177 insertions(+)
->>   create mode 100644 arch/arm/dts/ast2400-palmetto.dts
->>   create mode 100644 configs/ast2400-palmetto_defconfig
->>
->> diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
->> index 3515100c65ce..4faf29d747bd 100755
->> --- a/arch/arm/dts/Makefile
->> +++ b/arch/arm/dts/Makefile
->> @@ -676,6 +676,7 @@ dtb-$(CONFIG_ARCH_BCM6858) += \
->>
->>   dtb-$(CONFIG_ARCH_ASPEED) += \
->>          ast2400-evb.dtb \
->> +       ast2400-palmetto.dtb \
->>          ast2400-ahe-50dc.dtb \
->>          ast2500-evb.dtb \
->>          ast2600a0-evb.dtb \
->> diff --git a/arch/arm/dts/ast2400-palmetto.dts b/arch/arm/dts/ast2400-palmetto.dts
->> new file mode 100644
->> index 000000000000..a512f602d2f1
->> --- /dev/null
->> +++ b/arch/arm/dts/ast2400-palmetto.dts
->> @@ -0,0 +1,102 @@
->> +// SPDX-License-Identifier: GPL-2.0+
->> +/dts-v1/;
->> +
->> +#include "ast2400-u-boot.dtsi"
->> +
->> +/ {
->> +       model = "Palmetto BMC";
->> +       compatible = "tyan,palmetto-bmc", "aspeed,ast2400";
->> +
->> +       memory@40000000 {
->> +               device_type = "memory";
->> +               reg = <0x40000000 0x10000000>;
->> +       };
->> +
->> +       chosen {
->> +               stdout-path = &uart5;
->> +               bootargs = "console=ttyS4,115200 earlyprintk";
->> +       };
->> +
->> +       aliases {
->> +               spi0 = &fmc;
->> +               spi1 = &spi1;
->> +               ethernet0 = &mac0;
->> +               ethernet1 = &mac1;
-> 
-> They only had one ethernet connection.
+> Signed-off-by: Graeme Gregory <quic_ggregory@quicinc.com>
+> Signed-off-by: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
+> ---
 
-ah yes.
-
-> 
->> +       };
->> +};
->> +
->> +&uart5 {
->> +       u-boot,dm-pre-reloc;
->> +       status = "okay";
->> +};
->> +
->> +&sdrammc {
->> +       clock-frequency = <200000000>;
->> +};
->> +
->> +&wdt1 {
->> +       u-boot,dm-pre-reloc;
->> +       status = "okay";
->> +};
->> +
->> +&wdt2 {
->> +       u-boot,dm-pre-reloc;
->> +       status = "okay";
->> +};
->> +
->> +&mac0 {
->> +       status = "okay";
->> +       phy-mode = "rgmii";
->> +
->> +       pinctrl-names = "default";
->> +       pinctrl-0 = <&pinctrl_mac1link_default &pinctrl_mdio1_default>;
->> +};
->> +
->> +&mac1 {
->> +       status = "okay";
->> +       phy-mode = "rgmii";
->> +       pinctrl-names = "default";
->> +       pinctrl-0 = <&pinctrl_mac2link_default &pinctrl_mdio2_default>;
->> +};
->> +
->> +
->> +&fmc {
->> +       status = "okay";
->> +       flash@0 {
->> +               compatible = "spi-flash", "sst,w25q256";
-> 
-> You just removed all of these :)
-
-oops. I might have included the palmetto in the previous patch I sent :)
-I shouldn't keep patches for so long.
-
-> 
->> +               status = "okay";
->> +               spi-max-frequency = <50000000>;
->> +               spi-tx-bus-width = <2>;
->> +               spi-rx-bus-width = <2>;
->> +       };
->> +
->> +       flash@1 {
->> +                compatible = "spi-flash", "sst,w25q256";
->> +                status = "okay";
->> +                spi-max-frequency = <50000000>;
->> +                spi-tx-bus-width = <2>;
->> +                spi-rx-bus-width = <2>;
->> +        };
->> +};
->> +
->> +&spi1 {
->> +       status = "okay";
->> +       flash@0 {
->> +               pinctrl-names = "default";
->> +               pinctrl-0 = <&pinctrl_spi1_default>;
->> +               compatible = "spi-flash", "sst,w25q256";
-> 
-> They only have one flash on each controller iirc.
-
-yes.
-
-> 
-> 
->> +               status = "okay";
->> +               spi-max-frequency = <50000000>;
->> +               spi-tx-bus-width = <2>;
->> +               spi-rx-bus-width = <2>;
->> +       };
->> +       flash@1 {
->> +               pinctrl-names = "default";
->> +               pinctrl-0 = <&pinctrl_spi1_default &pinctrl_spi1cs1_default>;
->> +               compatible = "spi-flash", "sst,w25q256";
->> +               status = "okay";
->> +               spi-max-frequency = <50000000>;
->> +               spi-tx-bus-width = <2>;
->> +               spi-rx-bus-width = <2>;
->> +       };
->> +};
->> diff --git a/configs/ast2400-palmetto_defconfig b/configs/ast2400-palmetto_defconfig
->> new file mode 100644
->> index 000000000000..8802323b4db8
->> --- /dev/null
->> +++ b/configs/ast2400-palmetto_defconfig
-> 
-> Do we need a separate defconfig from the one for the evb? If not, can
-> we adjust the evb defconfig to suit?
-> 
-> Hopefully we can just build it with DEVICE_TREE=ast2400-palmetto and
-> an existing defconfig.
-
-
-ok. I will give it a try on QEMU.
+Tested it again on a real hardware and QEMU.
+Worked with Cedric's patch:
+https://lore.kernel.org/openbmc/20220608061455.365123-1-clg@kaod.org/T/#t
 
 Thanks,
+Jae
 
-C.
-
+> Changes in v3:
+> * Dropped compatible string of flash memory - Joel / Cedric
+> * Dropped I2C pinctrl settings - Joel
 > 
->> @@ -0,0 +1,74 @@
->> +CONFIG_ARM=y
->> +CONFIG_ARCH_ASPEED=y
->> +CONFIG_SYS_TEXT_BASE=0x0
->> +CONFIG_ASPEED_AST2400=y
->> +CONFIG_SYS_MALLOC_F_LEN=0x800
->> +CONFIG_ENV_SIZE=0x10000
->> +CONFIG_ENV_OFFSET=0xF0000
->> +CONFIG_NR_DRAM_BANKS=1
->> +CONFIG_FIT=y
->> +CONFIG_USE_BOOTARGS=y
->> +CONFIG_BOOTARGS="console=ttyS4,115200n8 root=/dev/ram rw"
->> +CONFIG_USE_BOOTCOMMAND=y
->> +CONFIG_BOOTCOMMAND="bootm 20080000"
->> +CONFIG_PRE_CONSOLE_BUFFER=y
->> +CONFIG_PRE_CON_BUF_ADDR=0x1e720000
->> +CONFIG_SYS_CONSOLE_ENV_OVERWRITE=y
->> +CONFIG_HUSH_PARSER=y
->> +# CONFIG_AUTO_COMPLETE is not set
->> +CONFIG_SYS_PROMPT="ast# "
->> +CONFIG_CMD_MEMTEST=y
->> +CONFIG_SYS_ALT_MEMTEST=y
->> +CONFIG_CMD_CLK=y
->> +CONFIG_CMD_GPIO=y
->> +CONFIG_CMD_I2C=y
->> +CONFIG_CMD_MMC=y
->> +CONFIG_CMD_SF=y
->> +CONFIG_CMD_DHCP=y
->> +CONFIG_CMD_MII=y
->> +CONFIG_CMD_PING=y
->> +CONFIG_DEFAULT_DEVICE_TREE="ast2400-palmetto"
->> +CONFIG_ENV_IS_IN_SPI_FLASH=y
->> +CONFIG_USE_ENV_SPI_BUS=y
->> +CONFIG_ENV_SPI_BUS=0
->> +CONFIG_USE_ENV_SPI_CS=y
->> +CONFIG_ENV_SPI_CS=0
->> +CONFIG_USE_ENV_SPI_MAX_HZ=y
->> +CONFIG_ENV_SPI_MAX_HZ=100000000
->> +CONFIG_NET_RANDOM_ETHADDR=y
->> +CONFIG_REGMAP=y
->> +CONFIG_CLK=y
->> +CONFIG_DM_GPIO=y
->> +CONFIG_ASPEED_GPIO=y
->> +CONFIG_DM_I2C=y
->> +CONFIG_SYS_I2C_ASPEED=y
->> +CONFIG_MISC=y
->> +CONFIG_DM_MMC=y
->> +# CONFIG_MMC_HW_PARTITIONING is not set
->> +CONFIG_MMC_SDHCI=y
->> +CONFIG_MMC_SDHCI_ASPEED=y
->> +CONFIG_DM_SPI_FLASH=y
->> +CONFIG_SPI_FLASH=y
->> +CONFIG_SPI_FLASH_GIGADEVICE=y
->> +CONFIG_SPI_FLASH_MACRONIX=y
->> +CONFIG_SPI_FLASH_SPANSION=y
->> +CONFIG_SPI_FLASH_STMICRO=y
->> +CONFIG_SPI_FLASH_WINBOND=y
->> +CONFIG_PHY_REALTEK=y
->> +CONFIG_PHY_NCSI=y
->> +CONFIG_DM_ETH=y
->> +CONFIG_PHY_GIGE=y
->> +CONFIG_FTGMAC100=y
->> +CONFIG_PHY=y
->> +CONFIG_PINCTRL=y
->> +CONFIG_RAM=y
->> +CONFIG_DM_SERIAL=y
->> +CONFIG_SYS_NS16550=y
->> +CONFIG_SPI=y
->> +CONFIG_DM_SPI=y
->> +CONFIG_SYSRESET=y
->> +CONFIG_TIMER=y
->> +CONFIG_WDT=y
->> +CONFIG_DM_RESET=y
->> +# CONFIG_CMD_BOOTEFI is not set
->> +# CONFIG_EFI_LOADER is not set
->> --
->> 2.35.3
->>
-
+> Changes in v2:
+> * Changed vendor name from Nuvia to Qualcomm.
+> 
+>   arch/arm/dts/Makefile                   |   1 +
+>   arch/arm/dts/ast2600-qcom-dc-scm-v1.dts | 172 ++++++++++++++++++++++++
+>   2 files changed, 173 insertions(+)
+>   create mode 100644 arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
+> 
+> diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+> index 8f876a0aa0d7..952c3d776adc 100755
+> --- a/arch/arm/dts/Makefile
+> +++ b/arch/arm/dts/Makefile
+> @@ -687,6 +687,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+>   	ast2600-ncsi.dtb \
+>   	ast2600-p10bmc.dtb \
+>   	ast2600-pfr.dtb \
+> +	ast2600-qcom-dc-scm-v1.dts \
+>   	ast2600-s6q.dtb \
+>   	ast2600-slt.dtb \
+>   	ast2600-tacoma.dtb
+> diff --git a/arch/arm/dts/ast2600-qcom-dc-scm-v1.dts b/arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
+> new file mode 100644
+> index 000000000000..bbfb4c7e9e0d
+> --- /dev/null
+> +++ b/arch/arm/dts/ast2600-qcom-dc-scm-v1.dts
+> @@ -0,0 +1,172 @@
+> +// SPDX-License-Identifier: GPL-2.0-or-later
+> +// Copyright (c) 2021-2022 Qualcomm Innovation Center, Inc. All rights reserved.
+> +/dts-v1/;
+> +
+> +#include "ast2600-u-boot.dtsi"
+> +
+> +/ {
+> +	model = "Qualcomm DC-SCM V1 BMC";
+> +	compatible = "qcom,dc-scm-v1-bmc", "aspeed,ast2600";
+> +
+> +	memory {
+> +		device_type = "memory";
+> +		reg = <0x80000000 0x40000000>;
+> +	};
+> +
+> +	chosen {
+> +		stdout-path = &uart5;
+> +	};
+> +
+> +	aliases {
+> +		spi0 = &fmc;
+> +		spi1 = &spi1;
+> +		spi2 = &spi2;
+> +	};
+> +
+> +	cpus {
+> +		cpu@0 {
+> +			clock-frequency = <800000000>;
+> +		};
+> +		cpu@1 {
+> +			clock-frequency = <800000000>;
+> +		};
+> +	};
+> +};
+> +
+> +&uart5 {
+> +	u-boot,dm-pre-reloc;
+> +	status = "okay";
+> +};
+> +
+> +&sdrammc {
+> +	clock-frequency = <400000000>;
+> +};
+> +
+> +&wdt1 {
+> +	status = "okay";
+> +};
+> +
+> +&wdt2 {
+> +	status = "okay";
+> +};
+> +
+> +&wdt3 {
+> +	status = "okay";
+> +};
+> +
+> +&mdio {
+> +	status = "okay";
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_mdio4_default>;
+> +	#address-cells = <1>;
+> +	#size-cells = <0>;
+> +
+> +	ethphy3: ethernet-phy@1 {
+> +		reg = <1>;
+> +	};
+> +};
+> +
+> +&mac2 {
+> +	status = "okay";
+> +	reg = <0x1e670000 0x180>, <0x1e650018 0x4>;
+> +	phy-mode = "rgmii";
+> +	phy-handle = <&ethphy3>;
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_rgmii3_default>;
+> +};
+> +
+> +&fmc {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_fmcquad_default>;
+> +
+> +	flash@0 {
+> +		status = "okay";
+> +		spi-max-frequency = <133000000>;
+> +		spi-tx-bus-width = <4>;
+> +		spi-rx-bus-width = <4>;
+> +	};
+> +
+> +	flash@1 {
+> +		status = "okay";
+> +		spi-max-frequency = <133000000>;
+> +		spi-tx-bus-width = <4>;
+> +		spi-rx-bus-width = <4>;
+> +	};
+> +};
+> +
+> +&spi1 {
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_spi1_default &pinctrl_spi1abr_default
+> +			&pinctrl_spi1cs1_default &pinctrl_spi1wp_default
+> +			&pinctrl_spi1wp_default &pinctrl_spi1quad_default>;
+> +
+> +	flash@0 {
+> +		status = "okay";
+> +		spi-max-frequency = <133000000>;
+> +		spi-tx-bus-width = <4>;
+> +		spi-rx-bus-width = <4>;
+> +	};
+> +};
+> +
+> +&i2c4 {
+> +	status = "okay";
+> +};
+> +
+> +&i2c5 {
+> +	status = "okay";
+> +};
+> +
+> +&i2c6 {
+> +	status = "okay";
+> +};
+> +
+> +&i2c7 {
+> +	status = "okay";
+> +};
+> +
+> +&i2c8 {
+> +	status = "okay";
+> +};
+> +
+> +&i2c9 {
+> +	status = "okay";
+> +};
+> +
+> +&i2c10 {
+> +	status = "okay";
+> +};
+> +
+> +&i2c12 {
+> +	status = "okay";
+> +};
+> +
+> +&i2c13 {
+> +	status = "okay";
+> +};
+> +
+> +&i2c14 {
+> +	status = "okay";
+> +};
+> +
+> +&i2c15 {
+> +	status = "okay";
+> +};
+> +
+> +&scu {
+> +	mac0-clk-delay = <0x1d 0x1c
+> +			  0x10 0x17
+> +			  0x10 0x17>;
+> +	mac1-clk-delay = <0x1d 0x10
+> +			  0x10 0x10
+> +			  0x10 0x10>;
+> +	mac2-clk-delay = <0x0a 0x04
+> +			  0x08 0x04
+> +			  0x08 0x04>;
+> +	mac3-clk-delay = <0x0a 0x04
+> +			  0x08 0x04
+> +			  0x08 0x04>;
+> +};
