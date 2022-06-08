@@ -2,70 +2,36 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12C245427BE
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 09:46:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A15C54294F
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 10:22:44 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LHznS0QMBz3bn5
-	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 17:46:36 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=WE84D5Cz;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LJ0b63bN3z3bmJ
+	for <lists+openbmc@lfdr.de>; Wed,  8 Jun 2022 18:22:42 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1034; helo=mail-pj1-x1034.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=WE84D5Cz;
-	dkim-atps=neutral
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+Received: from gandalf.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LHzl55vxRz3bl5
-	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 17:44:33 +1000 (AEST)
-Received: by mail-pj1-x1034.google.com with SMTP id w13-20020a17090a780d00b001e8961b355dso5863363pjk.5
-        for <openbmc@lists.ozlabs.org>; Wed, 08 Jun 2022 00:44:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:from:to:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=h9jRirq9eagzpWvFgkxNnqKOUce9E8KvkK0W6kIY+xw=;
-        b=WE84D5Cz2HgaqvNrlM9M9sCJuZiarWXpnFF9ucte033cs2nU7rmvvTbY6boMhGRYDc
-         OipblbrV2nDC1Vt11kQLfrfe4/WdmxlC/Ib3jabFcXjZw4xNsRdqzRAi0CIQbyHg+mqk
-         XTQis6G+qB6Reqrx7AnMtggHqsGfwGYG/3AY/F3BaQ3QaD0foDYtgekbbFaBxUu+DH48
-         C82nC9RQrIMZJJi/Nu43qmF8bhxIA+RPIYp4ilRwyW/dWJuvkZZV87nFl+KGaGU5uRJs
-         CyJUEXL3mxFqZynxdtIkt1tX7snW5bHefKpxDfIDwSd4AzdvDlTrGShj/RuOguz8k3CB
-         GCYQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:from:to:subject:date:message-id
-         :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=h9jRirq9eagzpWvFgkxNnqKOUce9E8KvkK0W6kIY+xw=;
-        b=eNVUW8ds5oCliduOn85UW3gDEXMZ7posZ8izM3oK6uYCUWKbALUg/iDy2EvA80XHAp
-         jCnzChEpvfgReoGguF1Fi7082TPQtVTd1OXbSRAAimP8GpTlm3h8wl63aDUPKkqmYcUS
-         6NWlsucWgpyQx4w6Ak0QqkHfxjXqhgS3uS+yLluCTcqon0VS0ne+iwi02EBsRYGkxphM
-         ZVPOGuiYtrj1qGhoHFkyjS/b+1rax89mKYicGa8AEXM2y4I9OQf2kPP3iOtIm8iuzv9H
-         6og5XO6uf84lJhAL4uBek9LXIQSnmKvhRqKVzjWwu6QBB/HREfpk66FTYgY6sfyG4J4b
-         SGvQ==
-X-Gm-Message-State: AOAM530oR6FHX2XBBXjs45aGA5DgZX1uWDVJEsE0he0rreDSP1ZkGgJE
-	KPwDsrPL2hPByY8hGgT8Lhp0SATtH/E=
-X-Google-Smtp-Source: ABdhPJwXgcWmCCoR93lqWjZjLR24yR9Nu0tgqCnEpLb81r9o+chkOsDuK1d21egYhCKx+CZ5y7jyfQ==
-X-Received: by 2002:a17:902:e788:b0:163:73fc:5140 with SMTP id cp8-20020a170902e78800b0016373fc5140mr32604871plb.88.1654674270865;
-        Wed, 08 Jun 2022 00:44:30 -0700 (PDT)
-Received: from localhost.localdomain ([45.124.203.18])
-        by smtp.gmail.com with ESMTPSA id i13-20020a170902c94d00b0016362da9a03sm13955693pla.245.2022.06.08.00.44.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jun 2022 00:44:30 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: openbmc@lists.ozlabs.org,
-	Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>,
-	Chia-Wei Wang <chiawei_wang@aspeedtech.com>
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc 3/3] dts: ast2600: Consolidate NCSI device tree
-Date: Wed,  8 Jun 2022 17:14:02 +0930
-Message-Id: <20220608074402.1876079-4-joel@jms.id.au>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20220608074402.1876079-1-joel@jms.id.au>
-References: <20220608074402.1876079-1-joel@jms.id.au>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJ0Zq3FLPz2yMj
+	for <openbmc@lists.ozlabs.org>; Wed,  8 Jun 2022 18:22:27 +1000 (AEST)
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+	by gandalf.ozlabs.org (Postfix) with ESMTP id 4LJ0Zq2hqWz4xD5;
+	Wed,  8 Jun 2022 18:22:27 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mail.ozlabs.org (Postfix) with ESMTPSA id 4LJ0Zp0hJFz4xXF;
+	Wed,  8 Jun 2022 18:22:25 +1000 (AEST)
+From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH v2] ARM: dts: aspeed: Add a palmetto board (AST2400)
+Date: Wed,  8 Jun 2022 10:22:21 +0200
+Message-Id: <20220608082221.460166-1-clg@kaod.org>
+X-Mailer: git-send-email 2.35.3
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -78,339 +44,207 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Joel Stanley <joel@jms.id.au>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The AST2600 NCSI EVB device tree is the same as the AST2600, except for
-the configuration of the network devices.
+Palmettos were the first OpenPOWER systems built by Tyan with the
+product name: GN70-BP010. They contained an IBM POWER8 Turismo SCM
+processor and an Aspeed AST2400 SoC.
 
-To reduce the maintenance required, include the AST2600 EVB device tree
-and modify the nodes as appropriate.
+The ast2400_openbmc_defconfig defconfig is based on the evb-ast2400
+defconfig, plus these extras :
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
+  CONFIG_BOOTCOMMAND="bootm 20080000"
+  CONFIG_DEFAULT_DEVICE_TREE="ast2400-palmetto"
+  CONFIG_PHY_NCSI=y
+
+Cc: Joel Stanley <joel@jms.id.au>
+Signed-off-by: Cédric Le Goater <clg@kaod.org>
 ---
- arch/arm/dts/ast2600-ncsi.dts | 294 +---------------------------------
- 1 file changed, 4 insertions(+), 290 deletions(-)
 
-diff --git a/arch/arm/dts/ast2600-ncsi.dts b/arch/arm/dts/ast2600-ncsi.dts
-index 4bb1dcf5dfb3..57890bbc5e89 100644
---- a/arch/arm/dts/ast2600-ncsi.dts
-+++ b/arch/arm/dts/ast2600-ncsi.dts
-@@ -4,102 +4,10 @@
+ Changes in v2 :
+
+ - device tree cleanups to match HW
+ - renamed defconfig to ast2400_openbmc_defconfig
  
- / {
- 	model = "AST2600 EVB w/ NCSI";
--	compatible = "aspeed,ast2600-evb", "aspeed,ast2600";
--
--	memory {
--		device_type = "memory";
--		reg = <0x80000000 0x40000000>;
--	};
--
--	chosen {
--		stdout-path = &uart5;
--	};
--
--	aliases {
--		mmc0 = &emmc_slot0;
--		mmc1 = &sdhci_slot0;
--		mmc2 = &sdhci_slot1;
--		spi0 = &fmc;
--		spi1 = &spi1;
--		spi2 = &spi2;
--		ethernet0 = &mac0;
--		ethernet1 = &mac1;
--		ethernet2 = &mac2;
--		ethernet3 = &mac3;
--	};
--
--	cpus {
--		cpu@0 {
--			clock-frequency = <800000000>;
--		};
--		cpu@1 {
--			clock-frequency = <800000000>;
--		};
--	};
--};
--
--&uart5 {
--	u-boot,dm-pre-reloc;
--	status = "okay";
--};
--
--&sdrammc {
--	clock-frequency = <400000000>;
--};
--
--&wdt1 {
--	status = "okay";
--};
--
--&wdt2 {
--	status = "okay";
--};
--
--&wdt3 {
--	status = "okay";
--};
--
--#if 0
--&mdio {
--	status = "okay";
--	pinctrl-names = "default";
--	pinctrl-0 = <	&pinctrl_mdio1_default &pinctrl_mdio2_default
--			&pinctrl_mdio3_default &pinctrl_mdio4_default>;
--	#address-cells = <1>;
--	#size-cells = <0>;
--	ethphy0: ethernet-phy@0 {
--		reg = <0>;
--	};
--
--	ethphy1: ethernet-phy@1 {
--		reg = <0>;
--	};
--
--	ethphy2: ethernet-phy@2 {
--		reg = <0>;
--	};
--
--	ethphy3: ethernet-phy@3 {
--		reg = <0>;
--	};
--};
--
--&mac0 {
--	status = "okay";
--	phy-mode = "rgmii-rxid";
--	phy-handle = <&ethphy0>;
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_rgmii1_default>;
- };
+ arch/arm/dts/Makefile             |  1 +
+ arch/arm/dts/ast2400-palmetto.dts | 74 +++++++++++++++++++++++++++++++
+ configs/ast2400_openbmc_defconfig | 72 ++++++++++++++++++++++++++++++
+ 3 files changed, 147 insertions(+)
+ create mode 100644 arch/arm/dts/ast2400-palmetto.dts
+ create mode 100644 configs/ast2400_openbmc_defconfig
+
+diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
+index 8f876a0aa0d7..1d523c5d5da0 100755
+--- a/arch/arm/dts/Makefile
++++ b/arch/arm/dts/Makefile
+@@ -676,6 +676,7 @@ dtb-$(CONFIG_ARCH_BCM6858) += \
  
--&mac1 {
--	status = "okay";
--	phy-mode = "rgmii-rxid";
--	phy-handle = <&ethphy1>;
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_rgmii2_default>;
--};
--#endif
-+/delete-node/&mac0;
-+/delete-node/&mac1;
- 
- &mac2 {
- 	status = "okay";
-@@ -107,6 +15,7 @@
- 	use-ncsi;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii3_default>;
-+	/delete-property/phy-handle;
- };
- 
- &mac3 {
-@@ -115,200 +24,5 @@
- 	use-ncsi;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_rmii4_default>;
--};
--
--&fmc {
--	status = "okay";
--
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_fmcquad_default>;
--
--	flash@0 {
--		status = "okay";
--		spi-max-frequency = <50000000>;
--		spi-tx-bus-width = <4>;
--		spi-rx-bus-width = <4>;
--	};
--
--	flash@1 {
--		status = "okay";
--		spi-max-frequency = <50000000>;
--		spi-tx-bus-width = <4>;
--		spi-rx-bus-width = <4>;
--	};
--
--	flash@2 {
--		status = "disabled";
--		spi-max-frequency = <50000000>;
--		spi-tx-bus-width = <4>;
--		spi-rx-bus-width = <4>;
--	};
--};
--
--&spi1 {
--	status = "okay";
--
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_spi1_default &pinctrl_spi1abr_default
--			&pinctrl_spi1cs1_default &pinctrl_spi1wp_default
--			&pinctrl_spi1wp_default &pinctrl_spi1quad_default>;
--
--	flash@0 {
--		status = "okay";
--		spi-max-frequency = <50000000>;
--		spi-tx-bus-width = <4>;
--		spi-rx-bus-width = <4>;
--	};
--
--	flash@1 {
--		status = "disabled";
--		spi-max-frequency = <50000000>;
--		spi-tx-bus-width = <4>;
--		spi-rx-bus-width = <4>;
--	};
--};
--
--&spi2 {
--	status = "okay";
--
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_spi2_default &pinctrl_spi2cs1_default
--			&pinctrl_spi2cs2_default &pinctrl_spi2quad_default>;
--
--	flash@0 {
--		status = "okay";
--		spi-max-frequency = <50000000>;
--		spi-tx-bus-width = <4>;
--		spi-rx-bus-width = <4>;
--	};
--
--	flash@1 {
--		status = "disabled";
--		spi-max-frequency = <50000000>;
--		spi-tx-bus-width = <4>;
--		spi-rx-bus-width = <4>;
--	};
--
--	flash@2 {
--		status = "disabled";
--		spi-max-frequency = <50000000>;
--		spi-tx-bus-width = <4>;
--		spi-rx-bus-width = <4>;
--	};
--};
--
--&emmc {
--	u-boot,dm-pre-reloc;
--	timing-phase = <0x700ff>;
--};
--
--&emmc_slot0 {
--	u-boot,dm-pre-reloc;
--	status = "okay";
--	bus-width = <4>;
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_emmc_default>;
--	sdhci-drive-type = <1>;
--};
--
--&sdhci {
--	timing-phase = <0xc6ffff>;
--};
--
--&sdhci_slot0 {
--	status = "okay";
--	bus-width = <4>;
--	pwr-gpios = <&gpio0 ASPEED_GPIO(V, 0) GPIO_ACTIVE_HIGH>;
--	pwr-sw-gpios = <&gpio0 ASPEED_GPIO(V, 1) GPIO_ACTIVE_HIGH>;
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_sd1_default>;
--	sdhci-drive-type = <1>;
--};
--
--&sdhci_slot1 {
--	status = "okay";
--	bus-width = <4>;
--	pwr-gpios = <&gpio0 ASPEED_GPIO(V, 2) GPIO_ACTIVE_HIGH>;
--	pwr-sw-gpios = <&gpio0 ASPEED_GPIO(V, 3) GPIO_ACTIVE_HIGH>;
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_sd2_default>;
--	sdhci-drive-type = <1>;
--};
--
--&i2c4 {
--	status = "okay";
--
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_i2c5_default>;
--};
--
--&i2c5 {
--	status = "okay";
--
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_i2c6_default>;
--};
--
--&i2c6 {
--	status = "okay";
--
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_i2c7_default>;
--};
--
--&i2c7 {
--	status = "okay";
--
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_i2c8_default>;
--};
--
--&i2c8 {
--	status = "okay";
--
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_i2c9_default>;
--};
--
--#if 0
--&fsim0 {
--	status = "okay";
--};
--
--&fsim1 {
--	status = "okay";
--};
--#endif
--
--&ehci1 {
--	status = "okay";
--};
--
--&display_port {
--	status = "okay";
--};
--
--&scu {
--	mac0-clk-delay = <0x10 0x0a
--			  0x10 0x10
--			  0x10 0x10>;
--	mac1-clk-delay = <0x10 0x0a
--			  0x10 0x10
--			  0x10 0x10>;
--	mac2-clk-delay = <0x08 0x04
--			  0x08 0x04
--			  0x08 0x04>;
--	mac3-clk-delay = <0x08 0x04
--			  0x08 0x04
--			  0x08 0x04>;
--};
--
--&hace {
--	u-boot,dm-pre-reloc;
--	status = "okay";
--};
--
--&acry {
--	u-boot,dm-pre-reloc;
--	status = "okay";
-+	/delete-property/phy-handle;
- };
+ dtb-$(CONFIG_ARCH_ASPEED) += \
+ 	ast2400-evb.dtb \
++	ast2400-palmetto.dtb \
+ 	ast2400-ahe-50dc.dtb \
+ 	ast2500-evb.dtb \
+ 	ast2600a0-evb.dtb \
+diff --git a/arch/arm/dts/ast2400-palmetto.dts b/arch/arm/dts/ast2400-palmetto.dts
+new file mode 100644
+index 000000000000..2a49ded27b43
+--- /dev/null
++++ b/arch/arm/dts/ast2400-palmetto.dts
+@@ -0,0 +1,74 @@
++// SPDX-License-Identifier: GPL-2.0+
++/dts-v1/;
++
++#include "ast2400-u-boot.dtsi"
++
++/ {
++	model = "Palmetto BMC";
++	compatible = "tyan,palmetto-bmc", "aspeed,ast2400";
++
++	memory@40000000 {
++		device_type = "memory";
++		reg = <0x40000000 0x10000000>;
++	};
++
++	chosen {
++		stdout-path = &uart5;
++		bootargs = "console=ttyS4,115200 earlyprintk";
++	};
++
++	aliases {
++		spi0 = &fmc;
++		spi1 = &spi1;
++		ethernet0 = &mac0;
++	};
++};
++
++&uart5 {
++	u-boot,dm-pre-reloc;
++	status = "okay";
++};
++
++&sdrammc {
++	clock-frequency = <200000000>;
++};
++
++&wdt1 {
++	u-boot,dm-pre-reloc;
++	status = "okay";
++};
++
++&wdt2 {
++	u-boot,dm-pre-reloc;
++	status = "okay";
++};
++
++&mac0 {
++	status = "okay";
++	phy-mode = "rgmii";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_mac1link_default &pinctrl_mdio1_default>;
++};
++
++&fmc {
++	status = "okay";
++	flash@0 {
++		status = "okay";
++		spi-max-frequency = <50000000>;
++		spi-tx-bus-width = <2>;
++		spi-rx-bus-width = <2>;
++	};
++};
++
++&spi1 {
++	status = "okay";
++	flash@0 {
++		pinctrl-names = "default";
++		pinctrl-0 = <&pinctrl_spi1_default>;
++		status = "okay";
++		spi-max-frequency = <50000000>;
++		spi-tx-bus-width = <2>;
++		spi-rx-bus-width = <2>;
++	};
++};
+diff --git a/configs/ast2400_openbmc_defconfig b/configs/ast2400_openbmc_defconfig
+new file mode 100644
+index 000000000000..d09358777304
+--- /dev/null
++++ b/configs/ast2400_openbmc_defconfig
+@@ -0,0 +1,72 @@
++CONFIG_ARM=y
++CONFIG_ARCH_ASPEED=y
++CONFIG_SYS_TEXT_BASE=0x0
++CONFIG_ASPEED_AST2400=y
++CONFIG_SYS_MALLOC_F_LEN=0x2000
++CONFIG_ENV_SIZE=0x10000
++CONFIG_ENV_OFFSET=0xF0000
++CONFIG_NR_DRAM_BANKS=1
++CONFIG_FIT=y
++CONFIG_USE_BOOTARGS=y
++CONFIG_BOOTARGS="console=ttyS4,115200n8 root=/dev/ram rw"
++CONFIG_USE_BOOTCOMMAND=y
++CONFIG_BOOTCOMMAND="bootm 20080000"
++CONFIG_PRE_CONSOLE_BUFFER=y
++CONFIG_PRE_CON_BUF_ADDR=0x1e720000
++CONFIG_SYS_CONSOLE_ENV_OVERWRITE=y
++CONFIG_HUSH_PARSER=y
++# CONFIG_AUTO_COMPLETE is not set
++CONFIG_SYS_PROMPT="ast# "
++# CONFIG_CMD_IMI is not set
++# CONFIG_CMD_XIMG is not set
++CONFIG_CMD_MEMTEST=y
++CONFIG_SYS_ALT_MEMTEST=y
++CONFIG_CMD_CLK=y
++CONFIG_CMD_GPIO=y
++CONFIG_CMD_I2C=y
++CONFIG_CMD_MMC=y
++CONFIG_CMD_SF=y
++CONFIG_CMD_DHCP=y
++CONFIG_CMD_MII=y
++CONFIG_CMD_PING=y
++CONFIG_DEFAULT_DEVICE_TREE="ast2400-palmetto"
++CONFIG_ENV_IS_IN_SPI_FLASH=y
++CONFIG_USE_ENV_SPI_BUS=y
++CONFIG_ENV_SPI_BUS=0
++CONFIG_USE_ENV_SPI_CS=y
++CONFIG_ENV_SPI_CS=0
++CONFIG_USE_ENV_SPI_MAX_HZ=y
++CONFIG_ENV_SPI_MAX_HZ=100000000
++CONFIG_NET_RANDOM_ETHADDR=y
++CONFIG_REGMAP=y
++CONFIG_CLK=y
++CONFIG_DM_GPIO=y
++CONFIG_ASPEED_GPIO=y
++CONFIG_DM_I2C=y
++CONFIG_SYS_I2C_ASPEED=y
++CONFIG_MISC=y
++CONFIG_DM_MMC=y
++# CONFIG_MMC_HW_PARTITIONING is not set
++CONFIG_MMC_SDHCI=y
++CONFIG_MMC_SDHCI_ASPEED=y
++CONFIG_DM_SPI_FLASH=y
++CONFIG_SPI_FLASH=y
++CONFIG_SPI_FLASH_MACRONIX=y
++CONFIG_SPI_FLASH_SPANSION=y
++CONFIG_SPI_FLASH_STMICRO=y
++CONFIG_SPI_FLASH_WINBOND=y
++CONFIG_PHY_REALTEK=y
++CONFIG_PHY_NCSI=y
++CONFIG_DM_ETH=y
++CONFIG_PHY_GIGE=y
++CONFIG_FTGMAC100=y
++CONFIG_PHY=y
++CONFIG_PINCTRL=y
++CONFIG_DM_SERIAL=y
++CONFIG_SYS_NS16550=y
++CONFIG_SPI=y
++CONFIG_DM_SPI=y
++CONFIG_SYSRESET=y
++CONFIG_TIMER=y
++CONFIG_WDT=y
++# CONFIG_EFI_LOADER is not set
 -- 
-2.35.1
+2.35.3
 
