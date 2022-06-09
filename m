@@ -1,69 +1,46 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5DF13544130
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 03:52:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A0FA054456F
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 10:14:54 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LJRtk23wsz3bdF
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 11:52:46 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=m0P34Jkx;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LJcMb5GVnz3btb
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 18:14:51 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62e; helo=mail-pl1-x62e.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=m0P34Jkx;
-	dkim-atps=neutral
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJRtH49HNz2xtt
-	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 11:52:22 +1000 (AEST)
-Received: by mail-pl1-x62e.google.com with SMTP id o17so19139468pla.6
-        for <openbmc@lists.ozlabs.org>; Wed, 08 Jun 2022 18:52:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:from:to:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=0WVAcy0BQkf0tixTBJrI/efh/H6IhNiySwBw+gAxzdg=;
-        b=m0P34JkxywUW8RP357iw3TAParbxefepCepmDK+vf4iR0pNjB2l4Liy8ZVEg49gChb
-         KdwktIz3sMzYi+8jwprfiQT2sDPZOPUcAjd3zld3UDVC1EBu9qd2h41pG6qCfJhZhm26
-         tv7qZl6N325rZP2el70BYHR3tNwRLCQy3dOfIyEtoGSoHchT5/po58vQwJYrxfdBQaIR
-         jbjFwTH4H7bb66mcgSzOS0iIKejm6Y4ql+YaSMyuGd1QbBiN1zF3vf8LgAn54MaxKZwL
-         G53OBqutRR0v9AUsC4YyomBOZuBDsZ1duu3c3VRtje2HgFlyA7gFpIQc5QfAv2G6pXPF
-         TfFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:from:to:subject:date:message-id
-         :mime-version:content-transfer-encoding;
-        bh=0WVAcy0BQkf0tixTBJrI/efh/H6IhNiySwBw+gAxzdg=;
-        b=j1dsqBAPxLm1WOppTd1/kellRvi17QFdvPis7uXr3mDM1UZDXnoPTte39cv3ADgafW
-         ulAO/2aCbfqFyEV2MfGFu+fj+cQ7v900GAcyG+nGoHy+tmz4fCak8H5JORK/drQvoSaL
-         L+HSR/kafYin+IzmKvSUL0mq4fAa/c6TK7UrmqkzEQmPnvQhmG5U35iv4Lys2FStcvgx
-         XhUzCeU7N8BAFkeo27dvvpBaYBu0P6+vwtUzAYnnxKqkp3O88KP2j2HFFfQXUVgg/XxG
-         TpKmn1v5LQLt38P35L0mbgD/uUPEyuN24LOjCWX5hvjxh1yh6Rmk5nUs54HkJveOa/XH
-         dHWQ==
-X-Gm-Message-State: AOAM532yPzXYgu8TcT39Z6Z69MH900w2Li+UF4tsbJBEL8hAtxLcsAXz
-	hiBc2NxhckyzJVOFKgSDi/2XCKJgVnE=
-X-Google-Smtp-Source: ABdhPJwwHQKzK+2trrXq3M11m6+o5gXhXhbS9qcyHipmXVFYbIUh2OEkr2UduKJJaQyC8SmhMky+0Q==
-X-Received: by 2002:a17:90b:1c07:b0:1e3:c8c:d4fa with SMTP id oc7-20020a17090b1c0700b001e30c8cd4famr896267pjb.157.1654739538943;
-        Wed, 08 Jun 2022 18:52:18 -0700 (PDT)
-Received: from localhost.localdomain ([45.124.203.18])
-        by smtp.gmail.com with ESMTPSA id d9-20020a656b89000000b003fd7e217686sm7961202pgw.57.2022.06.08.18.52.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Jun 2022 18:52:18 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: openbmc@lists.ozlabs.org,
-	eajames@linux.ibm.com
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc] ARM: dts: p10bmc: Remove flash controller
-Date: Thu,  9 Jun 2022 11:22:07 +0930
-Message-Id: <20220609015207.1914540-1-joel@jms.id.au>
-X-Mailer: git-send-email 2.35.1
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=iscas.ac.cn (client-ip=159.226.251.84; helo=cstnet.cn; envelope-from=jiasheng@iscas.ac.cn; receiver=<UNKNOWN>)
+Received: from cstnet.cn (smtp84.cstnet.cn [159.226.251.84])
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LJcMG3yqGz3bk6
+	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 18:14:31 +1000 (AEST)
+Received: from localhost.localdomain (unknown [124.16.138.126])
+	by APP-05 (Coremail) with SMTP id zQCowAAXxuzUq6FiP9XrAA--.42380S2;
+	Thu, 09 Jun 2022 16:14:25 +0800 (CST)
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+To: wsa@kernel.org
+Subject: Re: Re: [PATCH] i2c: npcm7xx: barco-p50-gpio: Add check for platform_driver_register
+Date: Thu,  9 Jun 2022 16:14:09 +0800
+Message-Id: <20220609081409.3582764-1-jiasheng@iscas.ac.cn>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: zQCowAAXxuzUq6FiP9XrAA--.42380S2
+X-Coremail-Antispam: 1UD129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
+	VFW2AGmfu7bjvjm3AaLaJ3UjIYCTnIWjp_UUUYh7AC8VAFwI0_Gr0_Xr1l1xkIjI8I6I8E
+	6xAIw20EY4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28Cjx
+	kF64kEwVA0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW5JVW7JwA2z4x0Y4vE2Ix0cI8I
+	cVCY1x0267AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIE14v26F4UJVW0owA2z4x0Y4vEx4A2js
+	IEc7CjxVAFwI0_GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqx4xG64xvF2IEw4CE
+	5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v26r1j6r4UMcvjeV
+	CFs4IE7xkEbVWUJVW8JwACjcxG0xvY0x0EwIxGrwACjI8F5VA0II8E6IAqYI8I648v4I1l
+	FIxGxcIEc7CjxVA2Y2ka0xkIwI1lc2xSY4AK67AK6r43MxAIw28IcxkI7VAKI48JMxC20s
+	026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_
+	JrI_JrWlx4CE17CEb7AF67AKxVWUtVW8ZwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14
+	v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AKxVW8JVWxJwCI42IY6xAIw20EY4v20xva
+	j40_WFyUJVCq3wCI42IY6I8E87Iv67AKxVWUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r
+	4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjfUeHUDDUUUU
+X-Originating-IP: [124.16.138.126]
+X-CM-SenderInfo: pmld2xxhqjqxpvfd2hldfou0/
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,58 +52,25 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: benjaminfair@google.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, Jiasheng Jiang <jiasheng@iscas.ac.cn>, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, linux-i2c@vger.kernel.org, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-P10 BMC systems used SPI NOR only for early revisions, but are now
-exclusively using eMMC.
+On Thu, June 9, 2022 at 04:17:11AM +0800, Wolfram Sang wrote:
+>> As platform_driver_register() could fail, it should be better
+>> to deal with the return value in order to maintain the code
+>> consisitency.
+>> 
+>> Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller driver")
+>> Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+> 
+> Applied to for-current, thanks! But what is with the "barco-p50-gpio:"
+> in the $subject?
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- arch/arm/dts/ast2600-p10bmc.dts | 23 -----------------------
- 1 file changed, 23 deletions(-)
+Sorry, that's my fault.
+The title should be "i2c: npcm7xx: Add check for platform_driver_register".
+Need I submit a v2 to change the patch?
 
-diff --git a/arch/arm/dts/ast2600-p10bmc.dts b/arch/arm/dts/ast2600-p10bmc.dts
-index 6c1794dd1432..c4f104552747 100755
---- a/arch/arm/dts/ast2600-p10bmc.dts
-+++ b/arch/arm/dts/ast2600-p10bmc.dts
-@@ -19,8 +19,6 @@
- 
- 	aliases {
- 		mmc0 = &emmc_slot0;
--		spi0 = &fmc;
--		spi1 = &spi1;
- 	};
- 
- 	cpus {
-@@ -66,27 +64,6 @@
- 	pinctrl-0 = <&pinctrl_rmii4_default &pinctrl_rmii4rclk_default>;
- };
- 
--&fmc {
--	status = "okay";
--
--	pinctrl-names = "default";
--	pinctrl-0 = <&pinctrl_fmcquad_default>;
--
--	flash@0 {
--		status = "okay";
--		spi-max-frequency = <50000000>;
--		spi-tx-bus-width = <2>;
--		spi-rx-bus-width = <2>;
--	};
--
--	flash@1 {
--		status = "okay";
--		spi-max-frequency = <50000000>;
--		spi-tx-bus-width = <2>;
--		spi-rx-bus-width = <2>;
--	};
--};
--
- &emmc {
- 	u-boot,dm-pre-reloc;
- 	timing-phase = <0x700ff>;
--- 
-2.35.1
+Thanks,
+Jiang
 
