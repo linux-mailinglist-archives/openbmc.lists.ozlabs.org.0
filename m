@@ -1,60 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0A0E154460B
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 10:38:56 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 38EC9544CC8
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 14:58:57 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LJcvK6fXsz3blV
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 18:38:53 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LJkgH5fdFz3bsK
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 22:58:51 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Rn8tuogv;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Ay9wSBt6;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::112e; helo=mail-yw1-x112e.google.com; envelope-from=warp5tw@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Rn8tuogv;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Ay9wSBt6;
 	dkim-atps=neutral
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-x112e.google.com (mail-yw1-x112e.google.com [IPv6:2607:f8b0:4864:20::112e])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJctx21rKz30D8
-	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 18:38:33 +1000 (AEST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id 3F3426173A;
-	Thu,  9 Jun 2022 08:38:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D254DC34114;
-	Thu,  9 Jun 2022 08:38:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1654763909;
-	bh=rqdfJh6xPKhl8T+EneX0C8sQ9ZT1h27ePNG036/Imb0=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Rn8tuogvppo6Sr42DVEuylyvO5K/d5ffaKvWL5+6xzgrjfovejum42P7zcpQQz3FR
-	 qE5B00wIiNiesDik4Kv4wVqEpKrfKBK2TfqDqkZ2mOagyB8pawxpVXVKJsCygv96Cn
-	 CC0G33ljHJj41SRY7vvYVqebJjap7+HMyur2V8jh8pE9jAmBUH5JtYR3K+bhZMUl/T
-	 bIKQCT3oi5mTKDSS3zfnt0Y0sG8mJ14cgUjxhntiN8ZBXEUDmr2Y7S6CUJkt2Ko1JP
-	 rbP+n55omhXWeNn+pOWpR7o/uLuex9O+kunkxoP02UbGEc8wklLfWkOEb3l0quOJCo
-	 rfbnPjkQTZ1nw==
-Date: Thu, 9 Jun 2022 10:38:24 +0200
-From: Wolfram Sang <wsa@kernel.org>
-To: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Subject: Re: Re: [PATCH] i2c: npcm7xx: barco-p50-gpio: Add check for
- platform_driver_register
-Message-ID: <YqGxgAHzV7CvtD2c@shikoro>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>, avifishman70@gmail.com,
-	tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com,
-	yuenn@google.com, benjaminfair@google.com, openbmc@lists.ozlabs.org,
-	linux-i2c@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20220609081409.3582764-1-jiasheng@iscas.ac.cn>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJkft268jz3bmJ
+	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 22:58:28 +1000 (AEST)
+Received: by mail-yw1-x112e.google.com with SMTP id 00721157ae682-31336535373so89212307b3.2
+        for <openbmc@lists.ozlabs.org>; Thu, 09 Jun 2022 05:58:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=iD6McwKwIghg6BHWgeKWaQ5MVkxCurltdSVwKmXM4W0=;
+        b=Ay9wSBt6/1FosjTchjqFRaOXNnxcSgSjhy148/OJkjEi2ezSAJkxy8QBigj35N26KT
+         YrXCPaCXqBdW01cEHCjRZOd3ZrsaVhd9JjOJqXs+3WHog5ILCEewhryknksUqAeLFMzn
+         IGkTdf9foXozaSN0SdrREZd7DLlHGJhC18AFA0nAGhoyZYzASZMHRYOYOmlub34uCcLm
+         qYC7xtX+1SCbhNxTr1NeBDqzT5Is4bzgznpa+KDkJsoG2B8YIgk4etJMkRuazEgV5gYB
+         O8dPFe9/geqE1+3gSInrglUhfwRBjuGNqqakfdZjebuczOFbzlt71nnkCASlYW028yRL
+         Tcww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:content-transfer-encoding;
+        bh=iD6McwKwIghg6BHWgeKWaQ5MVkxCurltdSVwKmXM4W0=;
+        b=cwfEFB/WvMABCnhsWCDc2kdo1qTMQLBeBa+th7KeyXv4dXABJj2kygM0lYYALIAoRj
+         gWnAg+N/VL8429zMMbohIuwHNSy7TZdK/zsQUqq7+LAklkrxEHftvSPDFMiOX/iHGz5t
+         ywxGC4JshwSdwKIPwIs8JPq2Hiks2rR0CeH/mX+VmwbLG+CFKuIXW2aSKectINBKdhc+
+         mEjXAtMs2Ex+OtvblePLegKxSJoG54BznP95YYURKjgtS2piAC29MeLKSzkPXC6llguB
+         y4EDTzSMYgnAglmoNnmgWuZNXGGjiBH6bLYPDXuCKlW4i1i/oBZWu4l1fLCD8EcS2Lla
+         M6lw==
+X-Gm-Message-State: AOAM532KGdj/HnFmzsa83D5dds8HOI+o59vY8q22yf+f0C3wQXc8oWSd
+	vRVDc1VbADtJLsoi2ojAY96L35TlkEAL9v2GRg==
+X-Google-Smtp-Source: ABdhPJzHr6p91v8bPwlBk8HOqVwk0g7+lCi/t9+Eyex87Yig6dRIrzVd8Xgn/Htk12Bx8Z1hnf1cz8sjT5E846Mh+ic=
+X-Received: by 2002:a05:690c:58c:b0:30c:1fe9:af8 with SMTP id
+ bo12-20020a05690c058c00b0030c1fe90af8mr44909325ywb.403.1654779503515; Thu, 09
+ Jun 2022 05:58:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="PpyMwTpO/hHIKfHN"
-Content-Disposition: inline
-In-Reply-To: <20220609081409.3582764-1-jiasheng@iscas.ac.cn>
+References: <20220525032341.3182-1-warp5tw@gmail.com> <20220525032341.3182-2-warp5tw@gmail.com>
+ <YqEAY2jUQC8itp6h@kunai>
+In-Reply-To: <YqEAY2jUQC8itp6h@kunai>
+From: Tyrone Ting <warp5tw@gmail.com>
+Date: Thu, 9 Jun 2022 20:58:12 +0800
+Message-ID: <CACD3sJag7h6Xq1Dcy_hZ3XQy2EhKK6DkqADt0__c9X6RqLuy-g@mail.gmail.com>
+Subject: Re: [PATCH v6 1/5] dt-bindings: i2c: npcm: support NPCM845
+To: Wolfram Sang <wsa@kernel.org>, Tyrone Ting <warp5tw@gmail.com>, avifishman70@gmail.com, 
+	tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com, 
+	yuenn@google.com, benjaminfair@google.com, robh+dt@kernel.org, 
+	krzysztof.kozlowski+dt@linaro.org, andriy.shevchenko@linux.intel.com, 
+	jarkko.nikula@linux.intel.com, semen.protsenko@linaro.org, jsd@semihalf.com, 
+	sven@svenpeter.dev, lukas.bulwahn@gmail.com, olof@lixom.net, arnd@arndb.de, 
+	tali.perry@nuvoton.com, Avi.Fishman@nuvoton.com, tomer.maimon@nuvoton.com, 
+	KWLIU@nuvoton.com, JJLIU0@nuvoton.com, kfting@nuvoton.com, 
+	openbmc@lists.ozlabs.org, linux-i2c@vger.kernel.org, 
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,41 +83,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: benjaminfair@google.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, linux-i2c@vger.kernel.org, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Wolfram:
 
---PpyMwTpO/hHIKfHN
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Thank you for your review and comments.
 
+Wolfram Sang <wsa@kernel.org> =E6=96=BC 2022=E5=B9=B46=E6=9C=889=E6=97=A5 =
+=E9=80=B1=E5=9B=9B =E4=B8=8A=E5=8D=884:02=E5=AF=AB=E9=81=93=EF=BC=9A
+>
+> On Wed, May 25, 2022 at 11:23:37AM +0800, Tyrone Ting wrote:
+> > From: Tyrone Ting <kfting@nuvoton.com>
+> >
+> > Add compatible and nuvoton,sys-mgr description for NPCM i2c module.
+> >
+> > Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
+> > Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> > Reviewed-by: Rob Herring <robh@kernel.org>
+>
+> Applied to for-next, thanks!
+>
 
-> Sorry, that's my fault.
-> The title should be "i2c: npcm7xx: Add check for platform_driver_register".
-> Need I submit a v2 to change the patch?
-
-Not needed, I already fixed it.
-
-
---PpyMwTpO/hHIKfHN
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmKhsX0ACgkQFA3kzBSg
-KbZNzBAAtKYEtrKIxNiPg7VFv4K3pDVav17+5g9+noHxUKtfb5O8MTOSwfKWHhis
-let+U5P3BTw89Sm+uMb6rKig2uTnjgblwWY+mhnkWVEZqfmiVQqExQKHN9tN9RK2
-AdEIm2KrGZQMlDpiiBIT/uo8fltbP3+vfcDz6FhuHNEoYq/nv5oluIlFmz2PtQop
-JQDvpF20Xv49PhqDaAO7Lma+mVZpaq/q8WUlqVaIGFEoIaZWQ2HlY+3/d4DxB0Ty
-sNapLXz2SLca05mnbKVAeqTuHTx5bI1Emsh2z4AiwoZAEVE96hSch+BRd6+OIsE7
-G38VibJk9drZVp/kBWyz/VQUS7ovCPbeKpsAlGOLPvGhZ3ZTOYBoJ7lkx8oY7hwu
-bIRyMcD07AFhrJEMrqjy7reycaQgYVTg0K65URDF5pBD28oA3zgqdQQpoNGVtCg2
-Q48k1ZySJ1cSxC3UI6tbHWT35k5H/putGMuOSf0hVkcX1tNgZmfq3BgGgFQIP+P/
-8WvaYnQWePjrZAdcJvooIaRaTq52x2UhjHbR+lvJDdvY86FZULap6SMH1RYs/ixL
-TrdOJXM150ByyiKfE/ASZ8gNmjEF18cuOUQGqqBVTAmPG38LwHIzYihM+iYpHNT6
-0CMY6je5CGFE/dj0J7mBNdY2OmEknYAgx+Nt4xeVYycaEYkClvg=
-=ZuEt
------END PGP SIGNATURE-----
-
---PpyMwTpO/hHIKfHN--
+Best Regards,
+Tyrone
