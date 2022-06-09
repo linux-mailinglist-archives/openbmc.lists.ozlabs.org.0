@@ -2,89 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E07AA543FDB
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 01:27:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DF13544130
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 03:52:49 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LJNgD4xjJz3brS
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 09:27:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LJRtk23wsz3bdF
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 11:52:46 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=SM4nlJJU;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=m0P34Jkx;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=wrightj@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62e; helo=mail-pl1-x62e.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=SM4nlJJU;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=m0P34Jkx;
 	dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJJr56MVJz2xTc
-	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 06:35:01 +1000 (AEST)
-Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 258Ig5wI032709;
-	Wed, 8 Jun 2022 20:34:57 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- mime-version : subject : from : to : references : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=J0aVri+cNbjQ0E9ixx2jgKJngPTCK7IYxBcL3VFucWM=;
- b=SM4nlJJUcami5mGVksZqw4jwiA+bzgFthfowmkI8mq6gQQN/nHlWBZ1xAzx2J7GlZT0o
- 2MyYqbIJZ1syhL3IcOTYMW29kSdOdyQYZEqeXTTXt0TEg9WkGtI4IzOGvUdKg0lgygG7
- iRBzi5VmVYSxXuJ0iU5OtFNoSH18waBAeQ6FGfxDvB/25ziuqtKfesGMtJMswT3iyK+D
- 9YMsS+33oObGB8CMhECfEQoHtkj9QgGcEASVqZbiGK9HEPt4ZY9/nUZZ0zmHkITS3B2X
- BhjGKrb+BuDTfeQSyM3PgA1k5+rd6SZIcZk1QgfwxjcvvPuoivRJEdv4KiyiF6o198oV gQ== 
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com [169.53.41.122])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3gk198a30w-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 Jun 2022 20:34:57 +0000
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
-	by ppma04dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 258K5Evc017742;
-	Wed, 8 Jun 2022 20:34:56 GMT
-Received: from b01cxnp22035.gho.pok.ibm.com (b01cxnp22035.gho.pok.ibm.com [9.57.198.25])
-	by ppma04dal.us.ibm.com with ESMTP id 3gfy1ad092-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 08 Jun 2022 20:34:56 +0000
-Received: from b01ledav004.gho.pok.ibm.com (b01ledav004.gho.pok.ibm.com [9.57.199.109])
-	by b01cxnp22035.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 258KYtC732965076
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 8 Jun 2022 20:34:55 GMT
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C841B112062;
-	Wed,  8 Jun 2022 20:34:55 +0000 (GMT)
-Received: from b01ledav004.gho.pok.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 3959B112061;
-	Wed,  8 Jun 2022 20:34:55 +0000 (GMT)
-Received: from [9.211.120.23] (unknown [9.211.120.23])
-	by b01ledav004.gho.pok.ibm.com (Postfix) with ESMTP;
-	Wed,  8 Jun 2022 20:34:55 +0000 (GMT)
-Message-ID: <b175efd2-e985-c35b-3baf-c2a217979f4c@linux.ibm.com>
-Date: Wed, 8 Jun 2022 15:34:53 -0500
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJRtH49HNz2xtt
+	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 11:52:22 +1000 (AEST)
+Received: by mail-pl1-x62e.google.com with SMTP id o17so19139468pla.6
+        for <openbmc@lists.ozlabs.org>; Wed, 08 Jun 2022 18:52:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=sender:from:to:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0WVAcy0BQkf0tixTBJrI/efh/H6IhNiySwBw+gAxzdg=;
+        b=m0P34JkxywUW8RP357iw3TAParbxefepCepmDK+vf4iR0pNjB2l4Liy8ZVEg49gChb
+         KdwktIz3sMzYi+8jwprfiQT2sDPZOPUcAjd3zld3UDVC1EBu9qd2h41pG6qCfJhZhm26
+         tv7qZl6N325rZP2el70BYHR3tNwRLCQy3dOfIyEtoGSoHchT5/po58vQwJYrxfdBQaIR
+         jbjFwTH4H7bb66mcgSzOS0iIKejm6Y4ql+YaSMyuGd1QbBiN1zF3vf8LgAn54MaxKZwL
+         G53OBqutRR0v9AUsC4YyomBOZuBDsZ1duu3c3VRtje2HgFlyA7gFpIQc5QfAv2G6pXPF
+         TfFw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:sender:from:to:subject:date:message-id
+         :mime-version:content-transfer-encoding;
+        bh=0WVAcy0BQkf0tixTBJrI/efh/H6IhNiySwBw+gAxzdg=;
+        b=j1dsqBAPxLm1WOppTd1/kellRvi17QFdvPis7uXr3mDM1UZDXnoPTte39cv3ADgafW
+         ulAO/2aCbfqFyEV2MfGFu+fj+cQ7v900GAcyG+nGoHy+tmz4fCak8H5JORK/drQvoSaL
+         L+HSR/kafYin+IzmKvSUL0mq4fAa/c6TK7UrmqkzEQmPnvQhmG5U35iv4Lys2FStcvgx
+         XhUzCeU7N8BAFkeo27dvvpBaYBu0P6+vwtUzAYnnxKqkp3O88KP2j2HFFfQXUVgg/XxG
+         TpKmn1v5LQLt38P35L0mbgD/uUPEyuN24LOjCWX5hvjxh1yh6Rmk5nUs54HkJveOa/XH
+         dHWQ==
+X-Gm-Message-State: AOAM532yPzXYgu8TcT39Z6Z69MH900w2Li+UF4tsbJBEL8hAtxLcsAXz
+	hiBc2NxhckyzJVOFKgSDi/2XCKJgVnE=
+X-Google-Smtp-Source: ABdhPJwwHQKzK+2trrXq3M11m6+o5gXhXhbS9qcyHipmXVFYbIUh2OEkr2UduKJJaQyC8SmhMky+0Q==
+X-Received: by 2002:a17:90b:1c07:b0:1e3:c8c:d4fa with SMTP id oc7-20020a17090b1c0700b001e30c8cd4famr896267pjb.157.1654739538943;
+        Wed, 08 Jun 2022 18:52:18 -0700 (PDT)
+Received: from localhost.localdomain ([45.124.203.18])
+        by smtp.gmail.com with ESMTPSA id d9-20020a656b89000000b003fd7e217686sm7961202pgw.57.2022.06.08.18.52.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Jun 2022 18:52:18 -0700 (PDT)
+From: Joel Stanley <joel@jms.id.au>
+To: openbmc@lists.ozlabs.org,
+	eajames@linux.ibm.com
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc] ARM: dts: p10bmc: Remove flash controller
+Date: Thu,  9 Jun 2022 11:22:07 +0930
+Message-Id: <20220609015207.1914540-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.10.0
-Subject: Re: [PATCH] hwmon: (ucd9000) Add voltage monitor types
-Content-Language: en-US
-From: Jim Wright <wrightj@linux.ibm.com>
-To: Guenter Roeck <linux@roeck-us.net>, linux-hwmon@vger.kernel.org,
-        joel@jms.id.au, openbmc@lists.ozlabs.org
-References: <20220607205306.145636-1-wrightj@linux.ibm.com>
- <cf1a2ff9-59b3-fb2d-62fd-bdeac57bb9c0@roeck-us.net>
- <d50e6018-7b1b-6369-1ed2-1548841f7524@linux.ibm.com>
-In-Reply-To: <d50e6018-7b1b-6369-1ed2-1548841f7524@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: DfYtctDHPYXKjCqIGvHiHt16amVkGQ-s
-X-Proofpoint-ORIG-GUID: DfYtctDHPYXKjCqIGvHiHt16amVkGQ-s
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.874,Hydra:6.0.517,FMLib:17.11.64.514
- definitions=2022-06-08_05,2022-06-07_02,2022-02-23_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 phishscore=0
- mlxscore=0 adultscore=0 mlxlogscore=999 malwarescore=0 priorityscore=1501
- bulkscore=0 impostorscore=0 clxscore=1015 lowpriorityscore=0
- suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2204290000 definitions=main-2206080078
-X-Mailman-Approved-At: Thu, 09 Jun 2022 09:26:36 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,38 +78,55 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 6/7/2022 8:26 PM, Jim Wright wrote:
-> On 6/7/2022 8:13 PM, Guenter Roeck wrote:
->>
->> I don't think it makes sense to claim VOUT support if the chip is
->> configured to monitor input voltages. This should probably be something
->> like
->>
->> ...
->>  > +        case UCD9000_MON_VOLTAGE_AVS:
->>  >               info->func[page] |= PMBUS_HAVE_VOUT
->>  >                 | PMBUS_HAVE_STATUS_VOUT;
->>  >               break;
->>          case UCD9000_MON_INPUT_VOLTAGE:
->>          case UCD9000_MON_INPUT_VOLTAGE_AVS:
->>              info->func[page] |= PMBUS_HAVE_VIN;
->>               break;
->>
->> with appropriate mapping code to map the READ_VIN command for the
->> affected pages to READ_VOUT. Question is if the limit registers on
->> those pages are also reporting the limits using the vout limit
->> commands; if so, those should be mapped as well.
->>
->> Guenter
-> 
-> Hi Guenter,
-> 
-> Thank you for the review. I'll drop adding the input voltage types and 
-> resend the patch.
-> 
-> Jim Wright
-After a second look, it's the input voltage type that I need. Will 
-revise as suggested and resubmit.
+P10 BMC systems used SPI NOR only for early revisions, but are now
+exclusively using eMMC.
 
-Thanks,
-Jim Wright
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ arch/arm/dts/ast2600-p10bmc.dts | 23 -----------------------
+ 1 file changed, 23 deletions(-)
+
+diff --git a/arch/arm/dts/ast2600-p10bmc.dts b/arch/arm/dts/ast2600-p10bmc.dts
+index 6c1794dd1432..c4f104552747 100755
+--- a/arch/arm/dts/ast2600-p10bmc.dts
++++ b/arch/arm/dts/ast2600-p10bmc.dts
+@@ -19,8 +19,6 @@
+ 
+ 	aliases {
+ 		mmc0 = &emmc_slot0;
+-		spi0 = &fmc;
+-		spi1 = &spi1;
+ 	};
+ 
+ 	cpus {
+@@ -66,27 +64,6 @@
+ 	pinctrl-0 = <&pinctrl_rmii4_default &pinctrl_rmii4rclk_default>;
+ };
+ 
+-&fmc {
+-	status = "okay";
+-
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_fmcquad_default>;
+-
+-	flash@0 {
+-		status = "okay";
+-		spi-max-frequency = <50000000>;
+-		spi-tx-bus-width = <2>;
+-		spi-rx-bus-width = <2>;
+-	};
+-
+-	flash@1 {
+-		status = "okay";
+-		spi-max-frequency = <50000000>;
+-		spi-tx-bus-width = <2>;
+-		spi-rx-bus-width = <2>;
+-	};
+-};
+-
+ &emmc {
+ 	u-boot,dm-pre-reloc;
+ 	timing-phase = <0x700ff>;
+-- 
+2.35.1
+
