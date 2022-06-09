@@ -2,76 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD5EB544D19
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 15:08:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DF66154509A
+	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 17:21:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LJktJ59Jxz3bpJ
-	for <lists+openbmc@lfdr.de>; Thu,  9 Jun 2022 23:08:24 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LJnr35Ngtz3brb
+	for <lists+openbmc@lfdr.de>; Fri, 10 Jun 2022 01:21:39 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=AvOl4xBJ;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=CIbdp4Qy;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b2a; helo=mail-yb1-xb2a.google.com; envelope-from=warp5tw@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.17.21; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=AvOl4xBJ;
+	dkim=pass (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=CIbdp4Qy;
 	dkim-atps=neutral
-Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJksv27CZz3bmJ
-	for <openbmc@lists.ozlabs.org>; Thu,  9 Jun 2022 23:08:03 +1000 (AEST)
-Received: by mail-yb1-xb2a.google.com with SMTP id r82so41618557ybc.13
-        for <openbmc@lists.ozlabs.org>; Thu, 09 Jun 2022 06:08:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=Gfktszpwr3FPrB93OMpoU20SlFs9qNN/2hDsqmlef5k=;
-        b=AvOl4xBJ6PnwNdqiF2CKMUAGTcWvqboIOllVEQ5C9KnjMuMolhKVFOT56tSfI4Lros
-         e5iFVGtxosHS8uzp2SM1qfNWqqvxfH7CG2ROKj5f0X1yL2or3MsbsHjFhn0e9Wlv5/Jf
-         /zbtE2t4beFBLcZxEuFuV/PYmkPLjVtd3Nbt46j4BACWUpws35POMp+bmWZgyo9ShLjr
-         eWtF6eB1mMOMHdyc5f+27IhzVEn/3w8gYU9qJLJ1NAQY6fN0Z58l04GZ+eXFug+LZSX8
-         SiFACc6u5T3ahUq6m03kIUZ7G1w81czG2RkCNhi/dnuB9h+OaN4EKcRL7s9IjO57wcIf
-         r4YA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:content-transfer-encoding;
-        bh=Gfktszpwr3FPrB93OMpoU20SlFs9qNN/2hDsqmlef5k=;
-        b=5EBLJMYStNyqrO1NqTIPgCtI9fl34/xw/oVlS38WKkLz/OlCHLrStvo/kZpFEybano
-         yJxu6gmf3quw02Age1xYcydwOJM1L6wWDV1BWJ1VPk1ewaLHdL6IOylQ5Fn+HF7aK8Nz
-         8gxNxU7riK3yipYREWZBclF6OPgBssYefrJVfpqKmzF6SV7CySz5tyi1idLZ40StdRA1
-         iks4P7/B601bDnA5r/vXuYv+kphL2Ku8kJScTlHrR0W1g+9Rnay9MMgUvRIJX8ejnApr
-         2QvgbcmucvvlMNWexmiThd86JDeSmhz3+2xRDGqbJ3P5b/LB/SQmhHIZCL9seP6PTr5V
-         ejJg==
-X-Gm-Message-State: AOAM5321fczwTm2uGqx0xJZ9wyaAFQWDGNfEYMF+HHtOqqTUBBYXvZU0
-	G+iUw95rJYbTR/gH9jcCrY3Qd27p2LDSbCqvSw==
-X-Google-Smtp-Source: ABdhPJxKIWoo2Bn5OL7cz4byjE9SyenNt+2UbaGDu6sWH+o+y9J0RqD6ys/c9I1Gax4iquiL4SI9x2tvzNZDOZ5Is+Q=
-X-Received: by 2002:a05:6902:84:b0:63d:4a3d:eb5 with SMTP id
- h4-20020a056902008400b0063d4a3d0eb5mr39339883ybs.145.1654780079760; Thu, 09
- Jun 2022 06:07:59 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LJnqZ45JGz3bks
+	for <openbmc@lists.ozlabs.org>; Fri, 10 Jun 2022 01:21:12 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+	s=badeba3b8450; t=1654788056;
+	bh=0Dt6SZaRlaEh3ePnun+pU3+JfubZBckoFXyh5O+eia4=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=CIbdp4QyABpKXKO5WNjVsQEw+xisecrHd9VV61jJwdj/ZrEgfeIbOGG4QQiaK/nsi
+	 +TAbhA6UDUROo0+gq0GUrQ/JkOoYRtvVyUi9SpnCWAtBz7iYcMTPQk0vt3QnaDX1B0
+	 3yA+X0fBQgxjOJ/k+Kur6ZaJ7t+h0kImeei+tiJw=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from longitude ([5.146.195.3]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MNbkp-1oNJnQ46QN-00P9rC; Thu, 09
+ Jun 2022 17:20:56 +0200
+Date: Thu, 9 Jun 2022 17:20:54 +0200
+From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2 04/48] dt-bindings: pinctrl: nuvoton,wpcm450-pinctrl:
+ align key node name
+Message-ID: <YqIP1vYuLztSQR+n@latitude>
+References: <20220609113721.379932-1-krzysztof.kozlowski@linaro.org>
+ <20220609113911.380368-3-krzysztof.kozlowski@linaro.org>
 MIME-Version: 1.0
-References: <20220525032341.3182-1-warp5tw@gmail.com> <20220525032341.3182-6-warp5tw@gmail.com>
- <YqEArxDJoUoPeiGY@kunai>
-In-Reply-To: <YqEArxDJoUoPeiGY@kunai>
-From: Tyrone Ting <warp5tw@gmail.com>
-Date: Thu, 9 Jun 2022 21:07:49 +0800
-Message-ID: <CACD3sJaHwh2uvdrFYwRB84ZM94S7iGW9oFhWb6GrYGkNAU6K9g@mail.gmail.com>
-Subject: Re: [PATCH v6 5/5] i2c: npcm: Capitalize the one-line comment
-To: Wolfram Sang <wsa@kernel.org>, Tyrone Ting <warp5tw@gmail.com>, avifishman70@gmail.com, 
-	tmaimon77@gmail.com, tali.perry1@gmail.com, venture@google.com, 
-	yuenn@google.com, benjaminfair@google.com, robh+dt@kernel.org, 
-	krzysztof.kozlowski+dt@linaro.org, andriy.shevchenko@linux.intel.com, 
-	jarkko.nikula@linux.intel.com, semen.protsenko@linaro.org, jsd@semihalf.com, 
-	sven@svenpeter.dev, lukas.bulwahn@gmail.com, olof@lixom.net, arnd@arndb.de, 
-	tali.perry@nuvoton.com, Avi.Fishman@nuvoton.com, tomer.maimon@nuvoton.com, 
-	KWLIU@nuvoton.com, JJLIU0@nuvoton.com, kfting@nuvoton.com, 
-	openbmc@lists.ozlabs.org, linux-i2c@vger.kernel.org, 
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="esvF/QK4g1mSKhTH"
+Content-Disposition: inline
+In-Reply-To: <20220609113911.380368-3-krzysztof.kozlowski@linaro.org>
+X-Provags-ID: V03:K1:xvlw3Yufw4vkqgLcwcYvYrGxPvtGaNJT2LdX2lY7zPeFAgWdJX0
+ lv+0H+PaCO/q6wcma2IPmsvG8awp0MY3q3AfCFUvY44Qnqk1C5AMj2ALXzMNE2bbENvggID
+ nZK/XKWYCOcsXTrh/7iseF7jLvUEO1CgNakVGGOI8Idht6t3x3UxMsuOMpXuBxoPb3+bpz2
+ D51Hc9krhhrr2gf1fqJFA==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:NF6caO1+EnQ=:u/nkQjyIxfW7l+oL8nTGg1
+ Vk5SXrZ5FFy+S0OBI8hLoI8Um0COTCVfL3K9jxtys7hyaztSlTxx5O3u9KIKbJkcE3EgzbFwt
+ /A0Ngy8etnUCr9oLVjg2NALGmGh1STowMEHfjSRZgHGwQgfvVD/65F5AO1qd/g9KW5iOuPukT
+ p4LmYsUw4ZAWhe/Clo5h5jIHe8rdaC1IMWQo8DNO7ID9QKOPp7Nme30zWBWQ9Iayonj91AmfD
+ Rl0sJCgyBdJ8lQqY60Md0VHj/g2+AgInF6kGQJpoGo3YU5m+99os1e7QBC8clWUMYtMDegpR1
+ MXZVP7B/6E+g/REhgDiTmeTo3dKt5k1J+fQMgY6Fg0xGpn0w7DWgaDVuKkaXW2GGqeIWOgiHU
+ Gek3QM7YZSunM3wTOc9G5JpnrpSiwpjCfB4qOk4sRmKmMM+ATVvnK4Dvu8cOgFGER3G+xwV+d
+ 2vXpQEtBP97naEY7bHyZPMsHDJJzXju89YDNu8zUL8LIf8Y8M0o9rXFFe6Dcvs361AAReRxE5
+ MEv69dyTPl/D0wCm7SkL5RrHhXNQU2KektGJTcdMVmzlrLNndj4fPuIIrdO6Qxvt/lMLvD8Rg
+ iSBcQdrIrs1VwhJKHLrZ19wqZx9r06gVNrcqO4B8XfnC1xlTAUpB95a4jhKcjd2Uj54YTCxPX
+ /FUcYD/fl0qyCsa4k5ZcpZOfYRT0OYXSNAFMhZaFogvtyLjJhM1Z5O974Th1vtkpHUkEx5Z3X
+ HBJ37YdrSOINJya1FV8Ej8ogtRBZ6RPbwND+e0dh4LWJnIIunSTp4xRFUO7nCqqDLmC28Dp3Q
+ fv4E2RuBXT9XL3M6XZhcmysBuHNLwaf4uFHG6Nu6u4ftXJNEuSxWEvHUITfKwvW6kHaqg7U2K
+ 8dZplLDWvNkZUtOZe9Dqbnv1nJeqrGErS7MIhWKPKwQXMxBXJe56F0yxaKcNz3exgWtQZNZUB
+ oQ1q+6VEjlhXxgltJxGrwfcTt7fYHa/QiK3Vm3Gh1udIoR3RIcmtwW8wmM3BuDM1IKzbncBlr
+ yyLnrxb1BuVRiFSmw6WVDREZMQfrm8YJEuzLvMw7uejSJHISs+iBxf5GkJwCz71y0JblYOo+B
+ coYjkhq1zqUpfNGVyuBP7PLZhDSpGvGS7DPxY64ZWoSiWl+Teri3zbxrg==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,29 +79,66 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>, Linus Walleij <linus.walleij@linaro.org>, Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, soc@kernel.org, arm@kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Olof Johansson <olof@lixom.net>, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Wolfram:
 
-Thank you for your review and comments for this whole patch set.
+--esvF/QK4g1mSKhTH
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Wolfram Sang <wsa@kernel.org> =E6=96=BC 2022=E5=B9=B46=E6=9C=889=E6=97=A5 =
-=E9=80=B1=E5=9B=9B =E4=B8=8A=E5=8D=884:04=E5=AF=AB=E9=81=93=EF=BC=9A
->
-> On Wed, May 25, 2022 at 11:23:41AM +0800, Tyrone Ting wrote:
-> > From: Tyrone Ting <kfting@nuvoton.com>
-> >
-> > Make the one-line comments capital in the driver to get the comment sty=
-le
-> > consistent.
-> >
-> > Fixes: 56a1485b102e ("i2c: npcm7xx: Add Nuvoton NPCM I2C controller dri=
-ver")
-> > Signed-off-by: Tyrone Ting <kfting@nuvoton.com>
->
-> Applied to for-next, thanks!
->
+On Thu, Jun 09, 2022 at 01:39:06PM +0200, Krzysztof Kozlowski wrote:
+> gpio-keys schema requires keys to have more generic name.
+>=20
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+> ---
+>  .../devicetree/bindings/pinctrl/nuvoton,wpcm450-pinctrl.yaml    | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/Documentation/devicetree/bindings/pinctrl/nuvoton,wpcm450-pi=
+nctrl.yaml b/Documentation/devicetree/bindings/pinctrl/nuvoton,wpcm450-pinc=
+trl.yaml
+> index 47a56b83a610..4c7691c38b10 100644
+> --- a/Documentation/devicetree/bindings/pinctrl/nuvoton,wpcm450-pinctrl.y=
+aml
+> +++ b/Documentation/devicetree/bindings/pinctrl/nuvoton,wpcm450-pinctrl.y=
+aml
+> @@ -152,7 +152,7 @@ examples:
+>        pinctrl-names =3D "default";
+>        pinctrl-0 =3D <&pinctrl_uid>, <&pinmux_uid>;
+> =20
+> -      uid {
+> +      switch-uid {
 
-Best Regards,
-Tyrone
+In this example, and more importantly the original copy in
+nuvoton-wpcm450-supermicro-x9sci-ln4f.dts, I think button-uid fits
+slightly better, because it's a momentary push button. (Still arguably a
+switch, but not one that would stay in both the on and off position.)
+
+
+Thanks,
+Jonathan
+
+--esvF/QK4g1mSKhTH
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmKiD7EACgkQCDBEmo7z
+X9snhxAAknzEyrKCSN7rjNKyP88u2Tkm4hoqsO6+zpWTQ2E6/0qSwhjhk7MjV1eS
+2LWJEbWS4hPTPHe2pb8VytTDYmpjijpHIfGsT0euLbjh4YMY7KldVmaxtSxl8F3Q
+OoSdpQeJje2KtfOaTDxQpYG/k6f+OyYbgIh2gvGpRls/FtgT3HFMKi5zLWk/hZt/
+7bbIJGyDGUXc6ZUlMleOw2ea+sF4ch3bBrz1cma0B6xAA/o3ymLvhZw9NS3h2CFA
+ETLd9vfWSXLd6Cuy5qtrk1edITIZyWzg/148GNp4HjwgYYCjxRp2JjSousFbEvwb
+mmRwRjWSqu9zs8gyFO7DO4Yiw/D7F/d9PHJjIDCyeVIJS7hFrEAQPNAkkhWRMRdv
+p/RXiCwEIlFU7ueesiLmLNgNi3FdJmGqaZ2uKtgTYt/ABqM06UwynRft2M1BocEM
+M6NCtde82eBsMvd2E24vEPbZG7QUzyqcA85XoXhBfrLcLPUeuZ/+6TAWpnB4GqBx
+V/Y0z70yfbvCBdWR2Lye0k0B+Byoasnane7/Hb+bwYvFqYVL33lmDPyEbg4qsGE7
+7J3xEEnuxgeypTTnBygegioy4CBZRvRfrSntuxRz1CAy/KPtGt+BU+7fxPXjYxcF
+aeIoba1WUgI8E7DnYHxiIrF9bmEvk4JC9XlySKy8QI3/cZAv9I4=
+=i3Fi
+-----END PGP SIGNATURE-----
+
+--esvF/QK4g1mSKhTH--
