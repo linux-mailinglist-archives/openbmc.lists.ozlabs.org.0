@@ -2,47 +2,47 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B147546B3C
-	for <lists+openbmc@lfdr.de>; Fri, 10 Jun 2022 19:05:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CA1F1546B45
+	for <lists+openbmc@lfdr.de>; Fri, 10 Jun 2022 19:06:43 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LKS5h2cVqz3bwg
-	for <lists+openbmc@lfdr.de>; Sat, 11 Jun 2022 03:05:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LKS6n4kLlz3c1g
+	for <lists+openbmc@lfdr.de>; Sat, 11 Jun 2022 03:06:41 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=LKtZEpJ6;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=mbCVM6s0;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=134.134.136.100; helo=mga07.intel.com; envelope-from=jiaqing.zhao@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=LKtZEpJ6;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=mbCVM6s0;
 	dkim-atps=neutral
 Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LKS3g38T2z2xZR
-	for <openbmc@lists.ozlabs.org>; Sat, 11 Jun 2022 03:03:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LKS3j41Lyz3bxY
+	for <openbmc@lists.ozlabs.org>; Sat, 11 Jun 2022 03:04:01 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1654880639; x=1686416639;
+  t=1654880641; x=1686416641;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=n2DHPKG6LELctv9GPHh5MdlgXeZF+xfpjUKtxgbPNOI=;
-  b=LKtZEpJ64QCoZdbWCorC8DNOkxW+txUFjSqj4BtIeNw1iQK2Z0ni5iMV
-   iJRSGHpI0qz6JdL3BiVItmBqRhFMVACUywALzvCnAPXhxOCbUHGkXpspi
-   tKgQtC/STMryWigsvqHuYUWgZXpDsnqml4tg7TaRGsJXf/bkCO6sQAhRV
-   uNx0cCGUC1KDn9gyARA72fvuTWOOr5xqVKrCltVcCmkE/xlpKhXd3l/+N
-   Fi8273be3OguiE3tlaTCQBwTTLH9hXKfmmTD/qUEH87nd9IuG8+5QwtQ7
-   QkSHCDt+O7vFbvdmfyYXS6U0Jv1sSTEvxwA0fgetC/Ot/cxsHruosMNkW
+  bh=nS9jBzEdJm76RP0LAjTlMRfAbVC9/X57Mw2W3mH7Yrc=;
+  b=mbCVM6s0CgSVpeZXWapyxg+BzDLeoHOSAdGkxL9Q5R1Pq7x6nLOBMSVw
+   qwBbYlLiZrYpOQcQaBGE9MmrPuYek/4lc0ru7GcZFJa2sJMqKsRX1+Uyh
+   SM+u02mA/ALJLRdg+uitlgtkJP1N0T1tqu7TF/VAbdO8vP0jqU8+/qdgL
+   P5W8ITrG8RJuxqsMIRXnb1yT1ere8tGy24flL1kqSGOiwrzQLhyoFncU5
+   7D864K180D56kp9LqCudVVR+Qzwhk9JRIMz2SaJhZvYRXP519Cfnb6h02
+   LACjBNCQYjEac2vib4gnX9IrZ6ETiY/nPwYkyxU2rnH+H0jIRGAA/dBF/
    g==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10374"; a="341743822"
+X-IronPort-AV: E=McAfee;i="6400,9594,10374"; a="341743832"
 X-IronPort-AV: E=Sophos;i="5.91,290,1647327600"; 
-   d="scan'208";a="341743822"
+   d="scan'208";a="341743832"
 Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2022 10:03:59 -0700
+  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2022 10:04:01 -0700
 X-IronPort-AV: E=Sophos;i="5.91,290,1647327600"; 
-   d="scan'208";a="638218765"
+   d="scan'208";a="638218788"
 Received: from unknown (HELO jiaqingz-server.sh.intel.com) ([10.239.48.171])
-  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2022 10:03:57 -0700
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Jun 2022 10:03:59 -0700
 From: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
 To: Samuel Mendoza-Jonas <sam@mendozajonas.com>,
 	"David S . Miller" <davem@davemloft.net>,
@@ -50,9 +50,9 @@ To: Samuel Mendoza-Jonas <sam@mendozajonas.com>,
 	devicetree@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	openbmc@lists.ozlabs.org
-Subject: [PATCH v2 2/6] net/ncsi: Rename NCSI_CAP_VLAN_NO to NCSI_CAP_VLAN_FILTERED
-Date: Sat, 11 Jun 2022 00:59:36 +0800
-Message-Id: <20220610165940.2326777-3-jiaqing.zhao@linux.intel.com>
+Subject: [PATCH v2 3/6] net/ncsi: Enable VLAN filtering when callback is registered
+Date: Sat, 11 Jun 2022 00:59:37 +0800
+Message-Id: <20220610165940.2326777-4-jiaqing.zhao@linux.intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20220610165940.2326777-1-jiaqing.zhao@linux.intel.com>
 References: <20220610165940.2326777-1-jiaqing.zhao@linux.intel.com>
@@ -73,43 +73,32 @@ Cc: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The NCSI_CAP_VLAN_NO actually stands for the "VLAN + non-VLAN" mode
-defined in NCSI spec, which accepts both VLAN-tagged packets that match
-the enabled VLAN filter settings and non-VLAN-tagged packets. It would
-be more clear to rename it to NCSI_CAP_VLAN_FILTERED.
+Sets NETIF_F_HW_VLAN_CTAG_FILTER flag to enable hardware VLAN filtering
+of NCSI when the ndo_vlan_rx_{add,kill}_vid callbacks are registered to
+the NCSI handlers. Previously it was done in the mac driver, this patch
+puts it to the NCSI drvier to make it more general.
 
 Signed-off-by: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
 ---
- net/ncsi/internal.h    | 2 +-
- net/ncsi/ncsi-manage.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/ncsi/ncsi-manage.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/net/ncsi/internal.h b/net/ncsi/internal.h
-index bc4a00e41695..7f384f841019 100644
---- a/net/ncsi/internal.h
-+++ b/net/ncsi/internal.h
-@@ -46,7 +46,7 @@ enum {
- 	NCSI_CAP_AEN_HDS                 = 0x04, /* HNC driver status        */
- 	NCSI_CAP_AEN_MASK                = 0x07,
- 	NCSI_CAP_VLAN_ONLY               = 0x01, /* Filter VLAN packet only  */
--	NCSI_CAP_VLAN_NO                 = 0x02, /* Filter VLAN and non-VLAN */
-+	NCSI_CAP_VLAN_FILTERED           = 0x02, /* Filter VLAN and non-VLAN */
- 	NCSI_CAP_VLAN_ANY                = 0x03, /* Filter Any-and-non-VLAN  */
- 	NCSI_CAP_VLAN_MASK               = 0x07
- };
 diff --git a/net/ncsi/ncsi-manage.c b/net/ncsi/ncsi-manage.c
-index 78814417d753..a8f7a2ff52a0 100644
+index a8f7a2ff52a0..3fb95f29e3e2 100644
 --- a/net/ncsi/ncsi-manage.c
 +++ b/net/ncsi/ncsi-manage.c
-@@ -1098,7 +1098,7 @@ static void ncsi_configure_channel(struct ncsi_dev_priv *ndp)
- 				nca.type = NCSI_PKT_CMD_DV;
- 			} else {
- 				nca.type = NCSI_PKT_CMD_EV;
--				nca.bytes[3] = NCSI_CAP_VLAN_NO;
-+				nca.bytes[3] = NCSI_CAP_VLAN_FILTERED;
- 			}
- 			nd->state = ncsi_dev_state_config_sma;
- 		} else if (nd->state == ncsi_dev_state_config_sma) {
+@@ -1807,6 +1807,11 @@ struct ncsi_dev *ncsi_register_dev(struct net_device *dev,
+ 			ndp->mlx_multi_host = true;
+ 	}
+ 
++	/* Enable hardware VLAN filtering */
++	if (dev->netdev_ops->ndo_vlan_rx_add_vid == ncsi_vlan_rx_add_vid &&
++	    dev->netdev_ops->ndo_vlan_rx_kill_vid == ncsi_vlan_rx_kill_vid)
++		dev->hw_features |= NETIF_F_HW_VLAN_CTAG_FILTER;
++
+ 	return nd;
+ }
+ EXPORT_SYMBOL_GPL(ncsi_register_dev);
 -- 
 2.34.1
 
