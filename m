@@ -1,66 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6013B545E19
-	for <lists+openbmc@lfdr.de>; Fri, 10 Jun 2022 10:03:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 46B27545E1B
+	for <lists+openbmc@lfdr.de>; Fri, 10 Jun 2022 10:04:20 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LKD3r1N8kz3c8p
-	for <lists+openbmc@lfdr.de>; Fri, 10 Jun 2022 18:03:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LKD4y1K9Hz3brj
+	for <lists+openbmc@lfdr.de>; Fri, 10 Jun 2022 18:04:18 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=JyD4TxQz;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=XrBLaRYl;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::530; helo=mail-pg1-x530.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::52a; helo=mail-pg1-x52a.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=JyD4TxQz;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=XrBLaRYl;
 	dkim-atps=neutral
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LKD1Z572mz30Lk
-	for <openbmc@lists.ozlabs.org>; Fri, 10 Jun 2022 18:01:22 +1000 (AEST)
-Received: by mail-pg1-x530.google.com with SMTP id e66so24065692pgc.8
-        for <openbmc@lists.ozlabs.org>; Fri, 10 Jun 2022 01:01:22 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LKD1f3dsWz3blR
+	for <openbmc@lists.ozlabs.org>; Fri, 10 Jun 2022 18:01:26 +1000 (AEST)
+Received: by mail-pg1-x52a.google.com with SMTP id 129so24105542pgc.2
+        for <openbmc@lists.ozlabs.org>; Fri, 10 Jun 2022 01:01:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=PTOrXvR8al75cebbXzwt+0SU+d9UFvmeDXRcexGPv6A=;
-        b=JyD4TxQzDBDU6LJUrDgsO7MlwG7Ig6AnlFPXuQqK5e52Q1LAIKYb/WSfoA9B72BlVL
-         FLnNYGqv5hY5HVCzVKZCwkLcUjLfF8/JoM5M6BO9xUSQS6SI+uboQrEFi9szXj4fs181
-         zATycr0hkIufd/mRh/OTCOaisj2CdqhNL9q05Xmp/lW4r4QECaa2XmE/V/TQ2dw4p4Kl
-         YiVEPClVRQ5+2vcQuFdM1kgPwq+mgubjaW808qMUn6wAMndgAb/FYblqM7gze62KC3od
-         kqHQzfUC8oOq017SD+DSgyt+Ku8iR8hIwCJFIuGaWeyvHRxFR8k9BxA19QT7OOoq2f18
-         ONow==
+        bh=HS0T8DF/puBFQpQ7Nf2JujCFHXT/b8CJvMKWAj0HBks=;
+        b=XrBLaRYlkD3LyzNzpy1+fEJ6bnTYTxS77T/Qf7+rJet6lQpH6ZePlXT1kEY4eoOX9r
+         bDQSY+VlFI4OVioFB+zpx3lnqP2sh4T4jW0uS7a+TrVA3dCgvlekf4rnKOysE23G3IVi
+         QmlekUtlfd9PG/0iUMQRfrfB0zu2bUcrLlkK7LTDzlHRIuU+dWtiJlJz5sRqvXfx4QYs
+         sJLe48myGZ+XKytSl/8AGqGXQsGxQ1YgyBSalHhWlGk4YguO0uL+NbykqLAduLYqNrbk
+         jQxU/kNVK3uILVTpEaqga2z22IZKkxJ59j+0C9WQSjHk8od9i5t7tm70yFHpTiTV+N3g
+         hI8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=PTOrXvR8al75cebbXzwt+0SU+d9UFvmeDXRcexGPv6A=;
-        b=vwrdyo4FqPB4bpXQTp/vkyYsWWcT4BnxVGTg7F+kq1X9xUK01A9OVaVoqNTJqCpC8u
-         +CpV8eZlxcCjD+JxAGkBt+nMFN8hGo+lxY4dhCll+VQKiF2VJ+GByjdLjxeJsyDzM6fM
-         BC1SNSKbNGDmavWKZ6p0NUeGyySTodtfv0lnYC5vt3AvGAYaHyQnbm0JCHw9Z+DjjkpP
-         n0k6Fhcq3OUrcPpBTGUiTSNSogVu4vmxbFn6fY5T63VOuczKg/gUrOHNfHaSREIbG0YV
-         dkTli1e3iDEhW0kUzMFELKLm0Q6yZv3S5ncQzIUDd4TUTD1lilBFeeJqLBbIRAuovFNf
-         5vFQ==
-X-Gm-Message-State: AOAM532DXXJXcdT7Sye4oSqB5miE0DApqGg3zt8boqPid7vaUcgXtGpA
-	cuW6A0GvKCYhdM4jWJCzkai8fkQ1n9E=
-X-Google-Smtp-Source: ABdhPJx4U/RzD+HwkJVGlmmMbFIaKqJS7SeUPJjEaXRcSGhMJdYEAtf5y5FRujvLMUGSgp6P9+D+yA==
-X-Received: by 2002:a65:6d87:0:b0:3fd:a62e:dc0a with SMTP id bc7-20020a656d87000000b003fda62edc0amr23295145pgb.286.1654848079794;
-        Fri, 10 Jun 2022 01:01:19 -0700 (PDT)
+        bh=HS0T8DF/puBFQpQ7Nf2JujCFHXT/b8CJvMKWAj0HBks=;
+        b=skn7EoTaW4gxjT6MqYqww4cS9aqNxtQERbeO/NSDYjBRMMl1lFsSKztjzeWANBkdUg
+         j/QzNY6tZtK2BxI6A4OmnmETsROlHXqUl2UnhBMhh0FXFVMtl+D3IYnAZZsU6VQ8+vkI
+         v8I1nYpwkM29qSywYtDeRppQT5uZI7Esa/5Gds4dIog2cRE98vKHwIkgVbcDy1q576uX
+         7L3pA/DkXf3Z/Fi0mmHT3Pj0GD1h0Rm9C3UqLJVqTC9kLV7L3XRlz2Zha3wHAmf2FA66
+         7V/3knvvN5ic6PA+uJdESFWfJD+brel+dXeTmQDdiUmmO6Jtc4itwKLCi2Aa4aONIJ9O
+         QL7Q==
+X-Gm-Message-State: AOAM533BlPDOXbKlOTEkCZEhNdZj+UYAbr7IN+OZHW4+6yMlLuaJruL1
+	s/QM72CF5k5j17dU30MpP2AtXwwrxhc=
+X-Google-Smtp-Source: ABdhPJz/ghJByGl3HuE3cyHFZTzf3wdKmHi9LqRfC9bL9oCSO13dHM1j2G6kcB01PVn24Wq8xiHH5A==
+X-Received: by 2002:a62:6407:0:b0:519:3571:903e with SMTP id y7-20020a626407000000b005193571903emr49731715pfb.30.1654848083406;
+        Fri, 10 Jun 2022 01:01:23 -0700 (PDT)
 Received: from localhost.localdomain ([45.124.203.18])
-        by smtp.gmail.com with ESMTPSA id k16-20020aa79d10000000b0050dc7628162sm18830661pfp.60.2022.06.10.01.01.16
+        by smtp.gmail.com with ESMTPSA id k16-20020aa79d10000000b0050dc7628162sm18830661pfp.60.2022.06.10.01.01.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jun 2022 01:01:18 -0700 (PDT)
+        Fri, 10 Jun 2022 01:01:22 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: openbmc@lists.ozlabs.org,
 	=?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc 3/4] ftgmac100: Simplify NCSI detection
-Date: Fri, 10 Jun 2022 17:30:58 +0930
-Message-Id: <20220610080059.2333501-4-joel@jms.id.au>
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc 4/4] config: aspeed: Enable NCSI support
+Date: Fri, 10 Jun 2022 17:30:59 +0930
+Message-Id: <20220610080059.2333501-5-joel@jms.id.au>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220610080059.2333501-1-joel@jms.id.au>
 References: <20220610080059.2333501-1-joel@jms.id.au>
@@ -81,92 +81,234 @@ Cc: BMC-SW@aspeedtech.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-We don't need priv->ncsi_mode as we already have priv->phy_mode.
+Now that NCSI can be enabled without breaking non-NCSI systems, enable
+it in all defconfigs.
 
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- drivers/net/ftgmac100.c | 17 +++++------------
- 1 file changed, 5 insertions(+), 12 deletions(-)
+ configs/ast2600-pfr_defconfig            | 1 +
+ configs/ast2600_openbmc_defconfig        | 1 +
+ configs/evb-ast2400_defconfig            | 1 +
+ configs/evb-ast2500-spl_defconfig        | 1 +
+ configs/evb-ast2500_defconfig            | 1 +
+ configs/evb-ast2600-cot_defconfig        | 1 +
+ configs/evb-ast2600_defconfig            | 1 +
+ configs/evb-ast2600a0-cot_defconfig      | 1 +
+ configs/evb-ast2600a0-spl_defconfig      | 1 +
+ configs/evb-ast2600a0_defconfig          | 1 +
+ configs/evb-ast2600a1-cot_defconfig      | 1 +
+ configs/evb-ast2600a1-ecc_defconfig      | 1 +
+ configs/evb-ast2600a1-emmc-cot_defconfig | 1 +
+ configs/evb-ast2600a1-emmc_defconfig     | 1 +
+ configs/evb-ast2600a1-spl-ecc_defconfig  | 1 +
+ configs/evb-ast2600a1-spl_defconfig      | 1 +
+ configs/evb-ast2600a1_defconfig          | 1 +
+ 17 files changed, 17 insertions(+)
 
-diff --git a/drivers/net/ftgmac100.c b/drivers/net/ftgmac100.c
-index aa1d63880c8c..92170f52434e 100644
---- a/drivers/net/ftgmac100.c
-+++ b/drivers/net/ftgmac100.c
-@@ -18,7 +18,6 @@
- #include <wait_bit.h>
- #include <linux/io.h>
- #include <linux/iopoll.h>
--#include <net/ncsi.h>
- 
- #include "ftgmac100.h"
- #include "aspeed_mdio.h"
-@@ -85,7 +84,6 @@ struct ftgmac100_data {
- 	struct mii_dev *bus;
- 	u32 phy_mode;
- 	u32 max_speed;
--	bool ncsi_mode;
- 
- 	struct clk_bulk clks;
- 
-@@ -192,7 +190,7 @@ static int ftgmac100_phy_adjust_link(struct ftgmac100_data *priv)
- 	struct phy_device *phydev = priv->phydev;
- 	u32 maccr;
- 
--	if (!phydev->link && !priv->ncsi_mode) {
-+	if (!phydev->link && priv->phy_mode != PHY_INTERFACE_MODE_NCSI) {
- 		dev_err(phydev->dev, "No link\n");
- 		return -EREMOTEIO;
- 	}
-@@ -228,7 +226,7 @@ static int ftgmac100_phy_init(struct udevice *dev)
- 	if (!phydev)
- 		return -ENODEV;
- 
--	if (!priv->ncsi_mode)
-+	if (priv->phy_mode != PHY_INTERFACE_MODE_NCSI)
- 		phydev->supported &= PHY_GBIT_FEATURES;
- 	if (priv->max_speed) {
- 		ret = phy_set_supported(phydev, priv->max_speed);
-@@ -287,7 +285,7 @@ static void ftgmac100_stop(struct udevice *dev)
- 
- 	writel(0, &ftgmac100->maccr);
- 
--	if (!priv->ncsi_mode)
-+	if (priv->phy_mode != PHY_INTERFACE_MODE_NCSI)
- 		phy_shutdown(priv->phydev);
- }
- 
-@@ -581,13 +579,8 @@ static int ftgmac100_probe(struct udevice *dev)
- {
- 	struct eth_pdata *pdata = dev_get_platdata(dev);
- 	struct ftgmac100_data *priv = dev_get_priv(dev);
--	const char *phy_mode;
- 	int ret;
- 
--	phy_mode = dev_read_string(dev, "phy-mode");
--	priv->ncsi_mode = dev_read_bool(dev, "use-ncsi") ||
--		(phy_mode && strcmp(phy_mode, "NC-SI") == 0);
--
- 	priv->iobase = (struct ftgmac100 *)pdata->iobase;
- 	priv->phy_mode = pdata->phy_interface;
- 	priv->max_speed = pdata->max_speed;
-@@ -596,7 +589,7 @@ static int ftgmac100_probe(struct udevice *dev)
- 	if (ret)
- 		goto out;
- 
--	if (priv->ncsi_mode) {
-+	if (priv->phy_mode == PHY_INTERFACE_MODE_NCSI) {
- 		printf("%s - NCSI detected\n", __func__);
- 	} else {
- 		ret = ftgmac100_mdio_init(dev);
-@@ -624,7 +617,7 @@ static int ftgmac100_remove(struct udevice *dev)
- {
- 	struct ftgmac100_data *priv = dev_get_priv(dev);
- 
--	if (!priv->ncsi_mode) {
-+	if (priv->phy_mode != PHY_INTERFACE_MODE_NCSI) {
- 		free(priv->phydev);
- 		mdio_unregister(priv->bus);
- 		mdio_free(priv->bus);
+diff --git a/configs/ast2600-pfr_defconfig b/configs/ast2600-pfr_defconfig
+index 398e55d0f3d4..dbe87e35a635 100644
+--- a/configs/ast2600-pfr_defconfig
++++ b/configs/ast2600-pfr_defconfig
+@@ -120,6 +120,7 @@ CONFIG_SPI_FLASH_STMICRO=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_PHY_BROADCOM=y
+ CONFIG_PHY_REALTEK=y
++CONFIG_PHY_NCSI=y
+ CONFIG_DM_ETH=y
+ CONFIG_PHY_GIGE=y
+ CONFIG_FTGMAC100=y
+diff --git a/configs/ast2600_openbmc_defconfig b/configs/ast2600_openbmc_defconfig
+index de8fca770674..4565c2953460 100644
+--- a/configs/ast2600_openbmc_defconfig
++++ b/configs/ast2600_openbmc_defconfig
+@@ -116,6 +116,7 @@ CONFIG_SPI_FLASH_STMICRO=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_PHY_BROADCOM=y
+ CONFIG_PHY_REALTEK=y
++CONFIG_PHY_NCSI=y
+ CONFIG_DM_ETH=y
+ CONFIG_PHY_GIGE=y
+ CONFIG_FTGMAC100=y
+diff --git a/configs/evb-ast2400_defconfig b/configs/evb-ast2400_defconfig
+index f92dbfd668cd..46f9a9467929 100644
+--- a/configs/evb-ast2400_defconfig
++++ b/configs/evb-ast2400_defconfig
+@@ -56,6 +56,7 @@ CONFIG_SPI_FLASH_SPANSION=y
+ CONFIG_SPI_FLASH_STMICRO=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_PHY_REALTEK=y
++CONFIG_PHY_NCSI=y
+ CONFIG_DM_ETH=y
+ CONFIG_PHY_GIGE=y
+ CONFIG_FTGMAC100=y
+diff --git a/configs/evb-ast2500-spl_defconfig b/configs/evb-ast2500-spl_defconfig
+index 0f6780b5e4e8..3467ae6cda2d 100644
+--- a/configs/evb-ast2500-spl_defconfig
++++ b/configs/evb-ast2500-spl_defconfig
+@@ -70,6 +70,7 @@ CONFIG_SPI_FLASH_MACRONIX=y
+ CONFIG_SPI_FLASH_SPANSION=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_PHY_REALTEK=y
++CONFIG_PHY_NCSI=y
+ CONFIG_DM_ETH=y
+ CONFIG_PHY_GIGE=y
+ CONFIG_FTGMAC100=y
+diff --git a/configs/evb-ast2500_defconfig b/configs/evb-ast2500_defconfig
+index 91921cf76e62..d692a0811109 100644
+--- a/configs/evb-ast2500_defconfig
++++ b/configs/evb-ast2500_defconfig
+@@ -57,6 +57,7 @@ CONFIG_SPI_FLASH_SPANSION=y
+ CONFIG_SPI_FLASH_STMICRO=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_PHY_REALTEK=y
++CONFIG_PHY_NCSI=y
+ CONFIG_DM_ETH=y
+ CONFIG_PHY_GIGE=y
+ CONFIG_FTGMAC100=y
+diff --git a/configs/evb-ast2600-cot_defconfig b/configs/evb-ast2600-cot_defconfig
+index b656e528c855..06fc84b139a4 100644
+--- a/configs/evb-ast2600-cot_defconfig
++++ b/configs/evb-ast2600-cot_defconfig
+@@ -105,6 +105,7 @@ CONFIG_SPI_FLASH_STMICRO=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_PHY_BROADCOM=y
+ CONFIG_PHY_REALTEK=y
++CONFIG_PHY_NCSI=y
+ CONFIG_DM_ETH=y
+ CONFIG_PHY_GIGE=y
+ CONFIG_FTGMAC100=y
+diff --git a/configs/evb-ast2600_defconfig b/configs/evb-ast2600_defconfig
+index 3e302e51ef2f..d0d867adb0e8 100644
+--- a/configs/evb-ast2600_defconfig
++++ b/configs/evb-ast2600_defconfig
+@@ -75,6 +75,7 @@ CONFIG_SPI_FLASH_STMICRO=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_PHY_BROADCOM=y
+ CONFIG_PHY_REALTEK=y
++CONFIG_PHY_NCSI=y
+ CONFIG_DM_ETH=y
+ CONFIG_PHY_GIGE=y
+ CONFIG_FTGMAC100=y
+diff --git a/configs/evb-ast2600a0-cot_defconfig b/configs/evb-ast2600a0-cot_defconfig
+index 1a377736ea4a..826e7b34e22a 100644
+--- a/configs/evb-ast2600a0-cot_defconfig
++++ b/configs/evb-ast2600a0-cot_defconfig
+@@ -91,6 +91,7 @@ CONFIG_SPI_FLASH_STMICRO=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_PHY_BROADCOM=y
+ CONFIG_PHY_REALTEK=y
++CONFIG_PHY_NCSI=y
+ CONFIG_DM_ETH=y
+ CONFIG_PHY_GIGE=y
+ CONFIG_FTGMAC100=y
+diff --git a/configs/evb-ast2600a0-spl_defconfig b/configs/evb-ast2600a0-spl_defconfig
+index 69548bcddeda..a88a14411f7b 100644
+--- a/configs/evb-ast2600a0-spl_defconfig
++++ b/configs/evb-ast2600a0-spl_defconfig
+@@ -92,6 +92,7 @@ CONFIG_SPI_FLASH_STMICRO=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_PHY_BROADCOM=y
+ CONFIG_PHY_REALTEK=y
++CONFIG_PHY_NCSI=y
+ CONFIG_DM_ETH=y
+ CONFIG_PHY_GIGE=y
+ CONFIG_FTGMAC100=y
+diff --git a/configs/evb-ast2600a0_defconfig b/configs/evb-ast2600a0_defconfig
+index 51cf6ac3ca35..358c31511297 100644
+--- a/configs/evb-ast2600a0_defconfig
++++ b/configs/evb-ast2600a0_defconfig
+@@ -69,6 +69,7 @@ CONFIG_SPI_FLASH_STMICRO=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_PHY_BROADCOM=y
+ CONFIG_PHY_REALTEK=y
++CONFIG_PHY_NCSI=y
+ CONFIG_DM_ETH=y
+ CONFIG_PHY_GIGE=y
+ CONFIG_FTGMAC100=y
+diff --git a/configs/evb-ast2600a1-cot_defconfig b/configs/evb-ast2600a1-cot_defconfig
+index b656e528c855..06fc84b139a4 100644
+--- a/configs/evb-ast2600a1-cot_defconfig
++++ b/configs/evb-ast2600a1-cot_defconfig
+@@ -105,6 +105,7 @@ CONFIG_SPI_FLASH_STMICRO=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_PHY_BROADCOM=y
+ CONFIG_PHY_REALTEK=y
++CONFIG_PHY_NCSI=y
+ CONFIG_DM_ETH=y
+ CONFIG_PHY_GIGE=y
+ CONFIG_FTGMAC100=y
+diff --git a/configs/evb-ast2600a1-ecc_defconfig b/configs/evb-ast2600a1-ecc_defconfig
+index c637bac65472..cda88addfa43 100644
+--- a/configs/evb-ast2600a1-ecc_defconfig
++++ b/configs/evb-ast2600a1-ecc_defconfig
+@@ -70,6 +70,7 @@ CONFIG_SPI_FLASH_STMICRO=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_PHY_BROADCOM=y
+ CONFIG_PHY_REALTEK=y
++CONFIG_PHY_NCSI=y
+ CONFIG_DM_ETH=y
+ CONFIG_PHY_GIGE=y
+ CONFIG_FTGMAC100=y
+diff --git a/configs/evb-ast2600a1-emmc-cot_defconfig b/configs/evb-ast2600a1-emmc-cot_defconfig
+index 68ac56cf170c..552bb6b104a3 100644
+--- a/configs/evb-ast2600a1-emmc-cot_defconfig
++++ b/configs/evb-ast2600a1-emmc-cot_defconfig
+@@ -101,6 +101,7 @@ CONFIG_SPI_FLASH_STMICRO=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_PHY_BROADCOM=y
+ CONFIG_PHY_REALTEK=y
++CONFIG_PHY_NCSI=y
+ CONFIG_DM_ETH=y
+ CONFIG_PHY_GIGE=y
+ CONFIG_FTGMAC100=y
+diff --git a/configs/evb-ast2600a1-emmc_defconfig b/configs/evb-ast2600a1-emmc_defconfig
+index ce3bd5e07dba..b7e4e9df9646 100644
+--- a/configs/evb-ast2600a1-emmc_defconfig
++++ b/configs/evb-ast2600a1-emmc_defconfig
+@@ -102,6 +102,7 @@ CONFIG_SPI_FLASH_STMICRO=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_PHY_BROADCOM=y
+ CONFIG_PHY_REALTEK=y
++CONFIG_PHY_NCSI=y
+ CONFIG_DM_ETH=y
+ CONFIG_PHY_GIGE=y
+ CONFIG_FTGMAC100=y
+diff --git a/configs/evb-ast2600a1-spl-ecc_defconfig b/configs/evb-ast2600a1-spl-ecc_defconfig
+index 245dee329eb7..530199913d28 100644
+--- a/configs/evb-ast2600a1-spl-ecc_defconfig
++++ b/configs/evb-ast2600a1-spl-ecc_defconfig
+@@ -119,6 +119,7 @@ CONFIG_SPI_FLASH_STMICRO=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_PHY_BROADCOM=y
+ CONFIG_PHY_REALTEK=y
++CONFIG_PHY_NCSI=y
+ CONFIG_DM_ETH=y
+ CONFIG_PHY_GIGE=y
+ CONFIG_FTGMAC100=y
+diff --git a/configs/evb-ast2600a1-spl_defconfig b/configs/evb-ast2600a1-spl_defconfig
+index be6a1d8a2328..4be5b6c95b41 100644
+--- a/configs/evb-ast2600a1-spl_defconfig
++++ b/configs/evb-ast2600a1-spl_defconfig
+@@ -119,6 +119,7 @@ CONFIG_SPI_FLASH_STMICRO=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_PHY_BROADCOM=y
+ CONFIG_PHY_REALTEK=y
++CONFIG_PHY_NCSI=y
+ CONFIG_DM_ETH=y
+ CONFIG_PHY_GIGE=y
+ CONFIG_FTGMAC100=y
+diff --git a/configs/evb-ast2600a1_defconfig b/configs/evb-ast2600a1_defconfig
+index 68ff5547b789..c0db1d56db26 100644
+--- a/configs/evb-ast2600a1_defconfig
++++ b/configs/evb-ast2600a1_defconfig
+@@ -73,6 +73,7 @@ CONFIG_SPI_FLASH_STMICRO=y
+ CONFIG_SPI_FLASH_WINBOND=y
+ CONFIG_PHY_BROADCOM=y
+ CONFIG_PHY_REALTEK=y
++CONFIG_PHY_NCSI=y
+ CONFIG_DM_ETH=y
+ CONFIG_PHY_GIGE=y
+ CONFIG_FTGMAC100=y
 -- 
 2.35.1
 
