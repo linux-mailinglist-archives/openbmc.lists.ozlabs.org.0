@@ -2,74 +2,55 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E0B0554D84D
-	for <lists+openbmc@lfdr.de>; Thu, 16 Jun 2022 04:26:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 987D654D850
+	for <lists+openbmc@lfdr.de>; Thu, 16 Jun 2022 04:27:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LNmJq56qvz3f03
-	for <lists+openbmc@lfdr.de>; Thu, 16 Jun 2022 12:26:51 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LNmKX3Bgbz3f08
+	for <lists+openbmc@lfdr.de>; Thu, 16 Jun 2022 12:27:28 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=CwmfAF6X;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=kXEFWai8;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::329; helo=mail-wm1-x329.google.com; envelope-from=noname.nuno@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=jic23@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=CwmfAF6X;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=kXEFWai8;
 	dkim-atps=neutral
-Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LKX8x71nbz3btT
-	for <openbmc@lists.ozlabs.org>; Sat, 11 Jun 2022 06:08:47 +1000 (AEST)
-Received: by mail-wm1-x329.google.com with SMTP id x6-20020a1c7c06000000b003972dfca96cso163581wmc.4
-        for <openbmc@lists.ozlabs.org>; Fri, 10 Jun 2022 13:08:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=message-id:subject:from:to:cc:date:in-reply-to:references
-         :user-agent:mime-version:content-transfer-encoding;
-        bh=EYdxdXjqZnMfe3vNUEt1qvnu5edzLozRvBmutng2gcs=;
-        b=CwmfAF6XHzbKO8jEH1gk+bM/1vpPQGL/FBas2sxdEfvaPOWCrmy31A4DGlV+qRbNLh
-         EhE7R/0Apge67rflwIqv8xb8iI3MVz4tH/cjgvlR0njUgo8D/mQ1I7jC3EKVSvYMwwcI
-         sbxI1wxllvZ09BnK2w2SbAc5pxLTidgyMANYo96BcCZ/obK1SZsjQnLrn4I8/dPp07XC
-         G1yQR1Yy0wNiRGatiMcWPC3BBg8FGpQTCb/lIQdyvipx939yxhZ6fvPdX3cj8ChHvy5k
-         k6USF7TyLBfpolWfhPNfaJpv5ZIkxehFF9XkoRvK3oVX5QPgU1PKY2VQfWO+6rp3rB/o
-         VRhA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:subject:from:to:cc:date:in-reply-to
-         :references:user-agent:mime-version:content-transfer-encoding;
-        bh=EYdxdXjqZnMfe3vNUEt1qvnu5edzLozRvBmutng2gcs=;
-        b=KyBUZ6fKRhsuFqKHsPoYrI6GwiCnWq7c3nsXHE1ZMg8gGpdoq17e5uTMvEHkxczlvr
-         aSOCpMAYm8/TJ+oIBvHG7FWIWSQxeSyxinQHypQRsWhdSBxUiPz1rC3Y0B7fTshSk8jD
-         SbyfZOdeZlzdLpqzOvI4oiQIrDxXn9u7RygwV2pE5vJQR9sZnDx+i9kyyMnZ3tIZKKpV
-         8bhaWqb494iklIVcj3KlZvte+VtNhOAxTxlLwi8BuIWpz9849wswXxpr1jRuG6+Eytue
-         YcZYSNLICkzJFv/EFl9wllVxuW7CaYvcInq31MSDXEA4WB8hI9gI8kOAh/cr0vnVX3UV
-         v8KQ==
-X-Gm-Message-State: AOAM531p322FmF6k5YcMEDgUNs8iOMgQIJY4kVWFTJUFkKyzxF4uaoHK
-	gJ50SC9IaXCqjXD+j48g1Kw=
-X-Google-Smtp-Source: ABdhPJzFMI/kZj6Y7ZsIIRkgwHejQ91g4pjv9UVjVQoEdMHpUhK/4CORgOZeBhdrhfbjPGUylvA40Q==
-X-Received: by 2002:a1c:f704:0:b0:39c:6684:b375 with SMTP id v4-20020a1cf704000000b0039c6684b375mr1346597wmh.66.1654891724476;
-        Fri, 10 Jun 2022 13:08:44 -0700 (PDT)
-Received: from ?IPv6:2001:a61:136e:3c01:8bd4:cf6f:76f1:a861? ([2001:a61:136e:3c01:8bd4:cf6f:76f1:a861])
-        by smtp.gmail.com with ESMTPSA id e10-20020a5d4e8a000000b00210320d9fbfsm436482wru.18.2022.06.10.13.08.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 10 Jun 2022 13:08:44 -0700 (PDT)
-Message-ID: <ef73aa5801ae1c8078e6a930f22feb6214038176.camel@gmail.com>
-Subject: Re: [PATCH 20/34] iio: inkern: only relase the device node when
- done with it
-From: Nuno =?ISO-8859-1?Q?S=E1?= <noname.nuno@gmail.com>
-To: Andy Shevchenko <andy.shevchenko@gmail.com>, Nuno =?ISO-8859-1?Q?S=E1?=
-	 <nuno.sa@analog.com>
-Date: Fri, 10 Jun 2022 22:08:41 +0200
-In-Reply-To: <CAHp75VcdwjTYDF2c-StsL7-pLKtV3vGxinX8+1nJydqB_WNXiA@mail.gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LKzjb4fhwz3bwr
+	for <openbmc@lists.ozlabs.org>; Sat, 11 Jun 2022 23:50:11 +1000 (AEST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id 2298660F16;
+	Sat, 11 Jun 2022 13:50:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E49FDC34116;
+	Sat, 11 Jun 2022 13:49:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1654955407;
+	bh=axWYZgHjU+vWL39otfQyFw7n1cGND5pHaeO608w9aDQ=;
+	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+	b=kXEFWai8vIb/IcKUCUsY5h6FQ5HgBYwoNoO6x0MjQtdX9+M+TxIqv68GybTf+JOgW
+	 q/rV4SV3/m1/STeXQ+UhMBbZQgylp8pVkzRVphpH0I9ytGjY804Yv+Hfj7kFzrY8FN
+	 dQ5Bsv9xQ4YGPIVB0zHbP6oKxuv28f0GR5JQljdn7j5Hm/k4wwQwu/0bq5LIzb7kGO
+	 qiRF8DBvDKq57IzKjPeCW9Uc/oQWQ/I3eyGpG4r9iA19/4Xzgt4xaW5KPrZqH+YdYX
+	 CvRdaHxByHiYYFDF3o0LpHQcmqIK+hK/B8HUt9XKFV7g3A47bKyk80WnlHX4RfshFk
+	 IyGi7XrE4Zc2A==
+Date: Sat, 11 Jun 2022 14:59:05 +0100
+From: Jonathan Cameron <jic23@kernel.org>
+To: Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>
+Subject: Re: [PATCH 01/34] iio: adc: ad7606: explicitly add proper header
+ files
+Message-ID: <20220611145905.55e9b074@jic23-huawei>
+In-Reply-To: <20220610084545.547700-2-nuno.sa@analog.com>
 References: <20220610084545.547700-1-nuno.sa@analog.com>
-	 <20220610084545.547700-21-nuno.sa@analog.com>
-	 <CAHp75VcdwjTYDF2c-StsL7-pLKtV3vGxinX8+1nJydqB_WNXiA@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-User-Agent: Evolution 3.42.4 (3.42.4-2.fc35) 
+	<20220610084545.547700-2-nuno.sa@analog.com>
+X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 X-Mailman-Approved-At: Thu, 16 Jun 2022 12:05:36 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -82,39 +63,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>, Daniel Lezcano <daniel.lezcano@linaro.org>, Tomer Maimon <tmaimon77@gmail.com>, "Rafael J. Wysocki" <rafael@kernel.org>, linux-iio <linux-iio@vger.kernel.org>, Linus Walleij <linus.walleij@linaro.org>, Amit Kucheria <amitk@kernel.org>, Alexandre Torgue <alexandre.torgue@foss.st.com>, Tali Perry <tali.perry1@gmail.com>, Paul Cercueil <paul@crapouillou.net>, Miquel Raynal <miquel.raynal@bootlin.com>, Guenter Roeck <groeck@chromium.org>, Fabio Estevam <festevam@gmail.com>, linux-stm32@st-md-mailman.stormreply.com, chrome-platform@lists.linux.dev, Lars-Peter Clausen <lars@metafoo.de>, Benjamin Fair <benjaminfair@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Jishnu Prakash <quic_jprakash@quicinc.com>, Haibo Chen <haibo.chen@nxp.com>, Andy Gross <agross@kernel.org>, dl-linux-imx <linux-imx@nxp.com>, Olivier Moysan <olivier.moysan@foss.st.com>, Zhang Rui <rui.zhang@intel.com>, Christophe Branchereau <cbranchereau@gmail.com>,
-  Saravanan Sekar <sravanhome@gmail.com>, Michael Hennerich <Michael.Hennerich@analog.com>, linux-arm-msm <linux-arm-msm@vger.kernel.org>, Sascha Hauer <s.hauer@pengutronix.de>, Nicolas Ferre <nicolas.ferre@microchip.com>, Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, Fabrice Gasnier <fabrice.gasnier@foss.st.com>, "moderated
- list:ARM/Mediatek SoC support" <linux-mediatek@lists.infradead.org>, Eugen Hristev <eugen.hristev@microchip.com>, Matthias Brugger <matthias.bgg@gmail.com>, Gwendal Grignou <gwendal@chromium.org>, Bjorn Andersson <bjorn.andersson@linaro.org>, Benson Leung <bleung@chromium.org>, Pengutronix Kernel Team <kernel@pengutronix.de>, linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>, Lorenzo Bianconi <lorenzo@kernel.org>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, "open list:BROADCOM NVRAM DRIVER" <linux-mips@vger.kernel.org>, Thara Gopinath <thara.gopinath@linaro.org>, Linux-Renesas <linux-renesas-soc@vger.kernel.org>, Arnd Bergmann <arnd@arndb.de>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Cai Huoqing <cai.huoqing@linux.dev>, Shawn Guo <shawnguo@kernel.org>, Claudiu Beznea <claudiu.beznea@microchip.com>, Jonathan Cameron <jic23@kernel.org>
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>, Daniel Lezcano <daniel.lezcano@linaro.org>, Tomer Maimon <tmaimon77@gmail.com>, "Rafael J. Wysocki" <rafael@kernel.org>, linux-iio@vger.kernel.org, Linus Walleij <linus.walleij@linaro.org>, Amit Kucheria <amitk@kernel.org>, Alexandre Torgue <alexandre.torgue@foss.st.com>, Tali Perry <tali.perry1@gmail.com>, Paul Cercueil <paul@crapouillou.net>, Miquel Raynal <miquel.raynal@bootlin.com>, Guenter Roeck <groeck@chromium.org>, Fabio Estevam <festevam@gmail.com>, linux-stm32@st-md-mailman.stormreply.com, chrome-platform@lists.linux.dev, Lars-Peter Clausen <lars@metafoo.de>, Benjamin Fair <benjaminfair@google.com>, openbmc@lists.ozlabs.org, Jishnu Prakash <quic_jprakash@quicinc.com>, Haibo Chen <haibo.chen@nxp.com>, Andy Shevchenko <andy.shevchenko@gmail.com>, Andy Gross <agross@kernel.org>, linux-imx@nxp.com, Olivier Moysan <olivier.moysan@foss.st.com>, Zhang Rui <rui.zhang@intel.com>, Christophe Branchereau <cbranchereau@gmail.com>, 
+ Saravanan Sekar <sravanhome@gmail.com>, Michael Hennerich <Michael.Hennerich@analog.com>, linux-arm-msm@vger.kernel.org, Sascha Hauer <s.hauer@pengutronix.de>, Nicolas Ferre <nicolas.ferre@microchip.com>, Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>, Fabrice Gasnier <fabrice.gasnier@foss.st.com>, linux-mediatek@lists.infradead.org, Eugen Hristev <eugen.hristev@microchip.com>, Matthias Brugger <matthias.bgg@gmail.com>, Gwendal Grignou <gwendal@chromium.org>, Bjorn Andersson <bjorn.andersson@linaro.org>, Benson Leung <bleung@chromium.org>, Pengutronix Kernel Team <kernel@pengutronix.de>, linux-arm-kernel@lists.infradead.org, Lorenzo Bianconi <lorenzo@kernel.org>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, linux-mips@vger.kernel.org, Thara Gopinath <thara.gopinath@linaro.org>, linux-renesas-soc@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Cai Huoqing <cai.huoqing@linux.dev>, Shawn Guo <shawnguo@
+ kernel.org>, Claudiu Beznea <claudiu.beznea@microchip
+
+.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 2022-06-10 at 16:56 +0200, Andy Shevchenko wrote:
-> On Fri, Jun 10, 2022 at 10:48 AM Nuno Sá <nuno.sa@analog.com> wrote:
-> > 
-> > 'of_node_put()' can potentially release the memory pointed to by
-> > 'iiospec.np' which would leave us with an invalid pointer (and we
-> > would
-> > still pass it in 'of_xlate()'). As such, we can only release the
-> > node
-> > after we are done with it.
-> 
-> The question you should answer in the commit message is the
-> following:
-> "Can an OF node, attached to a struct device, be gone before the
-> device itself?" If it so, then patch is good, otherwise there is no
-> point in this patch in the first place.
-> 
+On Fri, 10 Jun 2022 10:45:12 +0200
+Nuno S=C3=A1 <nuno.sa@analog.com> wrote:
 
-Yeah, I might be wrong but from a quick look... yes, I think the node
-can be gone before the device. Take a look on the spi or i2c of_notify
-handling and you can see that the nodes are get/put on the add/remove
-notifcation. Meaning that the node lifespan is not really attached to
-the device lifespan. If it was, I would expect to see of_node_put() on
-the device release() function...
+> Do not trust the fact that iio.h includes of.h which in turn includes
+> all the headers we are relying on.
+>=20
+> The ultimate goal is to actually drop of.h from iio.h.
+>=20
+> Signed-off-by: Nuno S=C3=A1 <nuno.sa@analog.com>
+Hi Nuno,
 
-Again, I might be wrong and I admit I was not sure about including this
-patch because it's a very unlikely scenario even though I think, in
-theory, a possible one.
+Not sure how far I'll get through the series, but to try and
+reduce the noise / traffic for any future versions I'm going to
+pick up as many of these precursor patches as possible.
 
-- Nuno Sá
+Applied to the togreg branch of iio.git (which just got rebased
+on v5.19-rc1) and pushed out as testing for 0-day to take a quick
+look and see if we missed anything.
+
+Thanks,
+
+Jonathan
+
+
+> ---
+>  drivers/iio/adc/ad7606.c | 1 +
+>  1 file changed, 1 insertion(+)
+>=20
+> diff --git a/drivers/iio/adc/ad7606.c b/drivers/iio/adc/ad7606.c
+> index 3b193dc26438..ba24f99523e0 100644
+> --- a/drivers/iio/adc/ad7606.c
+> +++ b/drivers/iio/adc/ad7606.c
+> @@ -12,6 +12,7 @@
+>  #include <linux/interrupt.h>
+>  #include <linux/kernel.h>
+>  #include <linux/module.h>
+> +#include <linux/property.h>
+>  #include <linux/regulator/consumer.h>
+>  #include <linux/sched.h>
+>  #include <linux/slab.h>
 
