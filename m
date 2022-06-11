@@ -1,52 +1,52 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id AEF0354D85D
-	for <lists+openbmc@lfdr.de>; Thu, 16 Jun 2022 04:32:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 84ACB54D85E
+	for <lists+openbmc@lfdr.de>; Thu, 16 Jun 2022 04:33:25 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LNmRg4Vqhz3fK5
-	for <lists+openbmc@lfdr.de>; Thu, 16 Jun 2022 12:32:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LNmSM2WLZz3dxD
+	for <lists+openbmc@lfdr.de>; Thu, 16 Jun 2022 12:33:23 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=sOydrQcb;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=s/NwO96u;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.68.75; helo=ams.source.kernel.org; envelope-from=jic23@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=jic23@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=sOydrQcb;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=s/NwO96u;
 	dkim-atps=neutral
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LL02B1D9pz3bw4
-	for <openbmc@lists.ozlabs.org>; Sun, 12 Jun 2022 00:04:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LL03r3zjHz3bxY
+	for <openbmc@lists.ozlabs.org>; Sun, 12 Jun 2022 00:06:00 +1000 (AEST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by ams.source.kernel.org (Postfix) with ESMTPS id D023CB816AD;
-	Sat, 11 Jun 2022 14:04:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DDF2C34116;
-	Sat, 11 Jun 2022 14:04:16 +0000 (UTC)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id A95F560F31;
+	Sat, 11 Jun 2022 14:05:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF9E0C34116;
+	Sat, 11 Jun 2022 14:05:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1654956270;
-	bh=d9D7e+WZkIA/adW/2EztrhviBrUsEZ6lldHRAkcxlLg=;
+	s=k20201202; t=1654956358;
+	bh=OmUfGkRF4xL7PgWSrSTnTjbph9RD9p9o9gWv8vjGSHg=;
 	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=sOydrQcbKBjQgzE3F72Iyppe4CDIF8AEAAEHeB2f+bUpQggh+8WsvmpbzbNyY5xoc
-	 yOjsuLsual44D+Z2b/doMw9J662ELtE69RKLE91Pa5kSnKP4FPy55NkL02x3HnJzWF
-	 w4Ir64yV0/kKMcSVXhyDt5pNv5oHiyHnbu9ZLl4yKwmSA0mdQcDVEzFxNK/Sh8q8LV
-	 OZFNyLG3gXv0ETKQx7QHLu5OvW70lG4SH0Sm9018pQTd246Z/g5P9kl6/22VKgjqDR
-	 CJxQPvJMmNVUApYMYMVjGtjnOoDha+ymqkmCmfZH+xfbJUAVk2dtoWP8VEIc88R93h
-	 zA+hemHCKyhyw==
-Date: Sat, 11 Jun 2022 15:13:28 +0100
+	b=s/NwO96uBMX+o2nM9eGSnt7eVSX4jqvSEZqkM27RqMGCzysNXsmCNSfHKYk+2w1DX
+	 xW62AVOwiXdjLZYAD4tkKKX1EOq8YmkjNrD09fdjwNuWfawr0w9HEgLV0u11un8IoI
+	 jiXlPZJ/OoqzgbhcnXWXzKJ1Al9KVFSJxpZaUaRMO3rYoB8DtHOQhRTmIqJF5Wq1Ls
+	 DHdq9fD+W0XqUUNJdDNRMkgK/FuVBkEolBiw1uQzLdoAsIaasmVFhCt0fIophTyLSD
+	 XbSJyDSBJ91XzayfJgSHvIrQYXIIoFAU7WtAnId+BDpo4Md91AZg3TKvCuxbHrz1aG
+	 YELoLDy88lQ7g==
+Date: Sat, 11 Jun 2022 15:14:56 +0100
 From: Jonathan Cameron <jic23@kernel.org>
 To: Nuno =?UTF-8?B?U8Oh?= <nuno.sa@analog.com>
-Subject: Re: [PATCH 10/34] iio: adc: rzg2l_adc: explicitly add proper header
- files
-Message-ID: <20220611151328.2c7eb7db@jic23-huawei>
-In-Reply-To: <20220610084545.547700-11-nuno.sa@analog.com>
+Subject: Re: [PATCH 11/34] iio: common: cros_ec_lid_angle: explicitly add
+ proper header files
+Message-ID: <20220611151456.24c66aa2@jic23-huawei>
+In-Reply-To: <20220610084545.547700-12-nuno.sa@analog.com>
 References: <20220610084545.547700-1-nuno.sa@analog.com>
-	<20220610084545.547700-11-nuno.sa@analog.com>
+	<20220610084545.547700-12-nuno.sa@analog.com>
 X-Mailer: Claws Mail 4.1.0 (GTK 3.24.34; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -69,7 +69,7 @@ Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>, Daniel Lezcano <daniel.le
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 10 Jun 2022 10:45:21 +0200
+On Fri, 10 Jun 2022 10:45:22 +0200
 Nuno S=C3=A1 <nuno.sa@analog.com> wrote:
 
 > Do not trust the fact that iio.h includes of.h which in turn includes
@@ -79,20 +79,22 @@ Nuno S=C3=A1 <nuno.sa@analog.com> wrote:
 >=20
 > Signed-off-by: Nuno S=C3=A1 <nuno.sa@analog.com>
 Applied.
+
 > ---
->  drivers/iio/adc/rzg2l_adc.c | 1 +
+>  drivers/iio/common/cros_ec_sensors/cros_ec_lid_angle.c | 1 +
 >  1 file changed, 1 insertion(+)
 >=20
-> diff --git a/drivers/iio/adc/rzg2l_adc.c b/drivers/iio/adc/rzg2l_adc.c
-> index bee5f9861acb..c9403ab520d8 100644
-> --- a/drivers/iio/adc/rzg2l_adc.c
-> +++ b/drivers/iio/adc/rzg2l_adc.c
-> @@ -18,6 +18,7 @@
+> diff --git a/drivers/iio/common/cros_ec_sensors/cros_ec_lid_angle.c b/dri=
+vers/iio/common/cros_ec_sensors/cros_ec_lid_angle.c
+> index af801e203623..9f780fafaed9 100644
+> --- a/drivers/iio/common/cros_ec_sensors/cros_ec_lid_angle.c
+> +++ b/drivers/iio/common/cros_ec_sensors/cros_ec_lid_angle.c
+> @@ -20,6 +20,7 @@
+>  #include <linux/iio/triggered_buffer.h>
+>  #include <linux/iio/trigger_consumer.h>
+>  #include <linux/kernel.h>
+> +#include <linux/mod_devicetable.h>
 >  #include <linux/module.h>
+>  #include <linux/platform_data/cros_ec_commands.h>
 >  #include <linux/platform_device.h>
->  #include <linux/pm_runtime.h>
-> +#include <linux/property.h>
->  #include <linux/reset.h>
-> =20
->  #define DRIVER_NAME		"rzg2l-adc"
 
