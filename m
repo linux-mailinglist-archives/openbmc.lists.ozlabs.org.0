@@ -1,75 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76EA254B17D
-	for <lists+openbmc@lfdr.de>; Tue, 14 Jun 2022 14:55:59 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E004054C167
+	for <lists+openbmc@lfdr.de>; Wed, 15 Jun 2022 07:59:25 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LMpMd302Cz3c8W
-	for <lists+openbmc@lfdr.de>; Tue, 14 Jun 2022 22:55:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LNF4W5Wcfz3c7P
+	for <lists+openbmc@lfdr.de>; Wed, 15 Jun 2022 15:59:23 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Cf3aKaJS;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=mLAo8J3Z;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::530; helo=mail-pg1-x530.google.com; envelope-from=logananth13.hcl@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::42d; helo=mail-wr1-x42d.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Cf3aKaJS;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=mLAo8J3Z;
 	dkim-atps=neutral
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LMpMF3RlXz3bmr;
-	Tue, 14 Jun 2022 22:55:36 +1000 (AEST)
-Received: by mail-pg1-x530.google.com with SMTP id z14so4296691pgh.0;
-        Tue, 14 Jun 2022 05:55:36 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LNF482L08z3bnr
+	for <openbmc@lists.ozlabs.org>; Wed, 15 Jun 2022 15:59:02 +1000 (AEST)
+Received: by mail-wr1-x42d.google.com with SMTP id h5so13915902wrb.0
+        for <openbmc@lists.ozlabs.org>; Tue, 14 Jun 2022 22:59:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:date:to:cc:subject:message-id:mime-version:content-disposition
-         :user-agent;
-        bh=PXdAipzTvt3rG1BHsoqxaq3VWKbvzJuF2FmNeakRABE=;
-        b=Cf3aKaJSQSmInGCMy07llaiKqiO9WRoLEov1RalN7yhG5GQmzwZvHSuuBZJM6EpYKy
-         PK7bU1bXEScRdz1w/5oIbBvf1ZkSEl4XZJZxuF2aTac1AiQwZX0knQybzzQeO/tng98i
-         hY7N09PSDXC1gmYIImSLR5zl77CDnjM7TTZl/cQcFv9kFd1fsf7quKiyojPO3NotuGZQ
-         ARq8549fUb9G95WUzUlP+wfSfK2rdwPxY3b5vR/54DC2jZZtFBXTPcF1Bvli1xi8t+vB
-         QQRc6Eu6Fg5yNgAoWyfoipDct5CFJYJECjMhsc9Zl5llgfvTZPSVhvyOZBVoloTTTtXF
-         4lAA==
+        d=jms.id.au; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=G6awAmusFetGYRJytf/eMOr2lEzaAumiZBrndz+RrRw=;
+        b=mLAo8J3ZYAKNp5Vw61pbK5CnPHi/TcAi3LdnTP2i57jVaqV5pQjrXpU9TN3TXSAaxc
+         bgg09NzvMrpq7b7b9UHgYJ1Gn+1OrYSgDpNtxUTO26z/FokRZHWV1bQpZrH9ZgQ9OdY1
+         VhCO+KiLGAeUy3A8VYjmC0o9mDSvwGDYoU05Y=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:date:to:cc:subject:message-id:mime-version
-         :content-disposition:user-agent;
-        bh=PXdAipzTvt3rG1BHsoqxaq3VWKbvzJuF2FmNeakRABE=;
-        b=unofP7mxyhgvst+8LPwjaTFlluyweSa80c70ND5Lcz1kHeHIn/3aDKC5f2vI5rwp0n
-         9MwC/e9wuO0AljWIR6nKmys53wjKOol577R5vvJLlz+85z8vP13P7ZWoSuuj7MnhFxmY
-         AYb8zpbBWaRAy6hWy2Sy5/3kftu1jK4lsFDwOVl9I7ZF++v0M3rk2mIbCHVjC6+whEPv
-         oAv0cmJciKpmgGGlefzZwfl1upgHCdNuEE0rrhWlHlNejN+V/M9sFKZ71hppGG6mQuXh
-         AtezX0kJ019eGuTH1vxwm2KSsc61O5wrSuWOm3Iy8RFoTh4+80aip9N5Qea/oTGk58rd
-         Tkcw==
-X-Gm-Message-State: AOAM531ymzTeHIxb/joIRkQsLydMcP/zOn+HET/kSwT5hgNVcJt0pjWr
-	4PmNrUiCzRIchpLyM1QtJKM=
-X-Google-Smtp-Source: AGRyM1vzRQjcyqlWiljfDjQG5K7Cm0ROx2HTjB3YW8jdPh9lXswLfsv2yCAGEFAc+K/N3vZ4NOSZ6w==
-X-Received: by 2002:a05:6a00:2392:b0:51b:fe0e:2b8 with SMTP id f18-20020a056a00239200b0051bfe0e02b8mr4371363pfc.84.1655211333665;
-        Tue, 14 Jun 2022 05:55:33 -0700 (PDT)
-Received: from logan-ThinkPad-T14-Gen-1 ([117.213.143.139])
-        by smtp.gmail.com with ESMTPSA id d190-20020a6368c7000000b003fd4bd3befesm7751167pgc.55.2022.06.14.05.55.28
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Tue, 14 Jun 2022 05:55:32 -0700 (PDT)
-From: Logananth Sundararaj <logananth13.hcl@gmail.com>
-X-Google-Original-From: Logananth Sundararaj <logananth_s@hcl.com>
-Date: Tue, 14 Jun 2022 18:25:25 +0530
-To: Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-	soc@kernel.org, Rob Herring <robh+dt@kernel.org>,
-	Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
-	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
-	openbmc@lists.ozlabs.org
-Subject: [PATCH] ARM: dts: aspeed: Adding Facebook Yosemite V3 BMC
-Message-ID: <20220614125525.GA3629@logan-ThinkPad-T14-Gen-1>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=G6awAmusFetGYRJytf/eMOr2lEzaAumiZBrndz+RrRw=;
+        b=KXJxXg4k9jTZBFeh9ZAvu13sDlbG3iITIs8DY/EgLzxf1KibY8u5we8wFNMl3ns/kq
+         YtY2Ev/0xVYYwN4NoT25P0K1tRcJs7UCBSCUDus8NyfMknTG/lALtL0q3e7n3efM6+1M
+         xv85JU44ZE5/Z93piiFZuDJPygyGTp9keMQ0aOgFc9pYfaQk0zcW7np7Zjlnm44yDY7H
+         v/a/VsQ7sAVy/4J9VJgwbNOOncRIS0leYacl+0PGbFi+YK3sKC5nZYyUB9WI7Aqm/XMn
+         vivjAIhneOAefEa/x7ZQJiQqrULdQmohIJnq0AYcAAIsVlF/Hr0ywWfQJgvL2PnN7p2F
+         D9xw==
+X-Gm-Message-State: AJIora9IaTTKF/DgLeh90WwG+uCpi98XxANRJ/9PIjNk7eFU2nraeqyf
+	4rKZaFozunPfJoXJKmuOcoUubAACwTaHU9l6nCU=
+X-Google-Smtp-Source: AGRyM1seZ9SObrS03tKaBKbMAkbaYeDzLECiwcJO6XxxeZDC293S19k4hGjRD8XQ73Si3n2BEsPRZ7a5wJoTgNvW2Sk=
+X-Received: by 2002:a5d:6510:0:b0:216:f04d:3c50 with SMTP id
+ x16-20020a5d6510000000b00216f04d3c50mr7972615wru.628.1655272734534; Tue, 14
+ Jun 2022 22:58:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <20220610080059.2333501-1-joel@jms.id.au> <20220610080059.2333501-5-joel@jms.id.au>
+ <6c3afc64-f046-6708-1248-980202cedff1@kaod.org>
+In-Reply-To: <6c3afc64-f046-6708-1248-980202cedff1@kaod.org>
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 15 Jun 2022 05:58:42 +0000
+Message-ID: <CACPK8Xfpcn7p55ygtszEwbOzGRxMjX3cOzQgwJhgout5gd3pGA@mail.gmail.com>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc 4/4] config: aspeed: Enable
+ NCSI support
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,295 +72,269 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: thangavel.k@hcl.com, garnermic@gmail.com, naveen.mosess@hcl.com
+Cc: BMC-SW <BMC-SW@aspeedtech.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The Yosemite V3 is a facebook multi-node server
-platform that host four OCP server. The BMC
-in the Yosemite V3 platform based on AST2600 SoC.
+On Fri, 10 Jun 2022 at 09:31, C=C3=A9dric Le Goater <clg@kaod.org> wrote:
+>
+> On 6/10/22 10:00, Joel Stanley wrote:
+> > Now that NCSI can be enabled without breaking non-NCSI systems, enable
+> > it in all defconfigs.
+> >
+> > Signed-off-by: Joel Stanley <joel@jms.id.au>
+>
+> You should add :
+>
+> CONFIG_CMD_NCSI=3Dy
 
-This patch adds linux device tree entry related to
-Yosemite V3 specific devices connected to BMC SoC.
+Was this required, or just something that helps for testing?
 
-Signed-off-by: Logananth Sundararaj <logananth_s@hcl.com>
----
---- v1 - Initial draft.
----
- arch/arm/boot/dts/Makefile                    |   1 +
- .../boot/dts/aspeed-bmc-facebook-fby35.dts    | 251 ++++++++++++++++++
- 2 files changed, 252 insertions(+)
- create mode 100644 arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts
+Note that you can trigger the same code to run by using any network
+command, such as 'dhcp', 'tftp' or 'ping'.
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 7e0934180724..58add093e5fb 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -1465,6 +1465,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	aspeed-bmc-facebook-cloudripper.dtb \
- 	aspeed-bmc-facebook-cmm.dtb \
- 	aspeed-bmc-facebook-elbert.dtb \
-+	aspeed-bmc-facebook-fby35.dtb \
- 	aspeed-bmc-facebook-fuji.dtb \
- 	aspeed-bmc-facebook-galaxy100.dtb \
- 	aspeed-bmc-facebook-minipack.dtb \
-diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts
-new file mode 100644
-index 000000000000..7ddf2d442c22
---- /dev/null
-+++ b/arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts
-@@ -0,0 +1,251 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+// Copyright (c) 2020 Facebook Inc.
-+
-+/dts-v1/;
-+
-+#include "aspeed-g6.dtsi"
-+#include <dt-bindings/gpio/aspeed-gpio.h>
-+
-+/ {
-+	model = "Facebook fby35";
-+	compatible = "facebook,fby35", "aspeed,ast2600";
-+
-+	aliases {
-+		serial4 = &uart5;
-+	};
-+
-+	chosen {
-+		stdout-path = &uart5;
-+		bootargs = "console=ttyS4,57600n8 root=/dev/ram rw vmalloc=384M";
-+	};
-+
-+	memory@80000000 {
-+		device_type = "memory";
-+		reg = <0x80000000 0x80000000>;
-+	};
-+
-+	iio-hwmon {
-+		compatible = "iio-hwmon";
-+		io-channels = <&adc0 0>, <&adc0 1>, <&adc0 2>, <&adc0 3>,
-+			<&adc0 4>, <&adc0 5>, <&adc0 6>, <&adc0 7>,
-+			<&adc1 0>, <&adc1 1>, <&adc1 2>, <&adc1 3>,
-+			<&adc1 4>, <&adc1 5>, <&adc1 6>;
-+	};
-+	spi_gpio: spi-gpio {
-+		status = "okay";
-+		compatible = "spi-gpio";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		gpio-sck = <&gpio0 ASPEED_GPIO(X, 3) GPIO_ACTIVE_HIGH>;
-+		gpio-mosi = <&gpio0 ASPEED_GPIO(X, 4) GPIO_ACTIVE_HIGH>;
-+		gpio-miso = <&gpio0 ASPEED_GPIO(X, 5) GPIO_ACTIVE_HIGH>;
-+		num-chipselects = <1>;
-+		cs-gpios = <&gpio0 ASPEED_GPIO(X, 0) GPIO_ACTIVE_LOW>;
-+
-+		tpmdev@0 {
-+			compatible = "tcg,tpm_tis-spi";
-+			spi-max-frequency = <33000000>;
-+			reg = <0>;
-+		};
-+	};
-+
-+};
-+
-+&mac3 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rmii4_default>;
-+	no-hw-checksum;
-+	use-ncsi;
-+	mlx,multi-host;
-+	ncsi-ctrl,start-redo-probe;
-+	ncsi-ctrl,no-channel-monitor;
-+	ncsi-package = <1>;
-+	ncsi-channel = <1>;
-+	ncsi-rexmit = <1>;
-+	ncsi-timeout = <2>;
-+};
-+
-+&uart1 {
-+	status = "okay";
-+};
-+
-+&uart2 {
-+	status = "okay";
-+};
-+
-+&uart3 {
-+	status = "okay";
-+};
-+
-+&uart4 {
-+	status = "okay";
-+};
-+
-+&uart5 {
-+	status = "okay";
-+	/* Workaround for AST2600 A0 */
-+	compatible = "snps,dw-apb-uart";
-+};
-+
-+&wdt1 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_wdtrst1_default>;
-+	aspeed,reset-type = "soc";
-+	aspeed,external-signal;
-+	aspeed,ext-push-pull;
-+	aspeed,ext-active-high;
-+	aspeed,ext-pulse-duration = <256>;
-+};
-+
-+&rtc {
-+	status = "okay";
-+};
-+
-+&fmc {
-+	status = "okay";
-+	reg = <0x1e620000 0xc4>, <0x20000000 0x8000000>;
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "spi0.1";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <2>;
-+		spi-rx-bus-width = <2>;
-+		#include "openbmc-flash-layout-64.dtsi"
-+	};
-+};
-+
-+&spi1 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_spi1_default>;
-+
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "pnor";
-+		spi-rx-bus-width = <4>;
-+		spi-max-frequency = <100000000>;
-+	};
-+};
-+
-+&i2c0 {
-+	multi-master;
-+	bus-frequency = <400000>;
-+	aspeed,hw-timeout-ms = <1000>;
-+	status = "okay";
-+};
-+
-+&i2c1 {
-+	multi-master;
-+	bus-frequency = <400000>;
-+	aspeed,hw-timeout-ms = <1000>;
-+	status = "okay";
-+};
-+
-+&i2c2 {
-+	multi-master;
-+	bus-frequency = <400000>;
-+	aspeed,hw-timeout-ms = <1000>;
-+	status = "okay";
-+};
-+
-+&i2c3 {
-+	multi-master;
-+	bus-frequency = <400000>;
-+	aspeed,hw-timeout-ms = <1000>;
-+	status = "okay";
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+};
-+
-+&i2c5 {
-+	status = "okay";
-+};
-+
-+&i2c6 {
-+	status = "okay";
-+};
-+
-+&i2c7 {
-+	status = "okay";
-+};
-+
-+&i2c8 {
-+	status = "okay";
-+};
-+
-+&i2c9 {
-+	multi-master;
-+	bus-frequency = <100000>;
-+	aspeed,hw-timeout-ms = <1000>;
-+	status = "okay";
-+};
-+
-+&i2c10 {
-+	status = "okay";
-+};
-+
-+&i2c11 {
-+	status = "okay";
-+	//FRU EEPROM
-+	eeprom@51 {
-+		compatible = "atmel,24c64";
-+		reg = <0x51>;
-+		pagesize = <32>;
-+	};
-+};
-+
-+&i2c12 {
-+	status = "okay";
-+	//INLET TEMP
-+	tmp75@4e {
-+		compatible = "ti,tmp75";
-+		reg = <0x4e>;
-+	};
-+	//OUTLET TEMP
-+	tmp75@4f {
-+		compatible = "ti,tmp75";
-+		reg = <0x4f>;
-+	};
-+};
-+
-+&i2c13 {
-+	status = "okay";
-+};
-+
-+&adc0 {
-+	ref_voltage = <2500>;
-+	status = "okay";
-+
-+	pinctrl-0 = <&pinctrl_adc0_default &pinctrl_adc1_default
-+		&pinctrl_adc2_default &pinctrl_adc3_default
-+		&pinctrl_adc4_default &pinctrl_adc5_default
-+		&pinctrl_adc6_default &pinctrl_adc7_default>;
-+};
-+
-+&adc1 {
-+	ref_voltage = <2500>;
-+	status = "okay";
-+
-+	pinctrl-0 = <&pinctrl_adc8_default &pinctrl_adc9_default
-+		&pinctrl_adc10_default &pinctrl_adc11_default
-+		&pinctrl_adc12_default &pinctrl_adc13_default>;
-+};
-+&ehci0 {
-+	status = "okay";
-+};
-+
-+&ehci1 {
-+	status = "okay";
-+};
-+
-+&uhci {
-+	status = "okay";
-+};
--- 
-2.17.1
-
+>
+> C.
+>
+> > ---
+> >   configs/ast2600-pfr_defconfig            | 1 +
+> >   configs/ast2600_openbmc_defconfig        | 1 +
+> >   configs/evb-ast2400_defconfig            | 1 +
+> >   configs/evb-ast2500-spl_defconfig        | 1 +
+> >   configs/evb-ast2500_defconfig            | 1 +
+> >   configs/evb-ast2600-cot_defconfig        | 1 +
+> >   configs/evb-ast2600_defconfig            | 1 +
+> >   configs/evb-ast2600a0-cot_defconfig      | 1 +
+> >   configs/evb-ast2600a0-spl_defconfig      | 1 +
+> >   configs/evb-ast2600a0_defconfig          | 1 +
+> >   configs/evb-ast2600a1-cot_defconfig      | 1 +
+> >   configs/evb-ast2600a1-ecc_defconfig      | 1 +
+> >   configs/evb-ast2600a1-emmc-cot_defconfig | 1 +
+> >   configs/evb-ast2600a1-emmc_defconfig     | 1 +
+> >   configs/evb-ast2600a1-spl-ecc_defconfig  | 1 +
+> >   configs/evb-ast2600a1-spl_defconfig      | 1 +
+> >   configs/evb-ast2600a1_defconfig          | 1 +
+> >   17 files changed, 17 insertions(+)
+> >
+> > diff --git a/configs/ast2600-pfr_defconfig b/configs/ast2600-pfr_defcon=
+fig
+> > index 398e55d0f3d4..dbe87e35a635 100644
+> > --- a/configs/ast2600-pfr_defconfig
+> > +++ b/configs/ast2600-pfr_defconfig
+> > @@ -120,6 +120,7 @@ CONFIG_SPI_FLASH_STMICRO=3Dy
+> >   CONFIG_SPI_FLASH_WINBOND=3Dy
+> >   CONFIG_PHY_BROADCOM=3Dy
+> >   CONFIG_PHY_REALTEK=3Dy
+> > +CONFIG_PHY_NCSI=3Dy
+> >   CONFIG_DM_ETH=3Dy
+> >   CONFIG_PHY_GIGE=3Dy
+> >   CONFIG_FTGMAC100=3Dy
+> > diff --git a/configs/ast2600_openbmc_defconfig b/configs/ast2600_openbm=
+c_defconfig
+> > index de8fca770674..4565c2953460 100644
+> > --- a/configs/ast2600_openbmc_defconfig
+> > +++ b/configs/ast2600_openbmc_defconfig
+> > @@ -116,6 +116,7 @@ CONFIG_SPI_FLASH_STMICRO=3Dy
+> >   CONFIG_SPI_FLASH_WINBOND=3Dy
+> >   CONFIG_PHY_BROADCOM=3Dy
+> >   CONFIG_PHY_REALTEK=3Dy
+> > +CONFIG_PHY_NCSI=3Dy
+> >   CONFIG_DM_ETH=3Dy
+> >   CONFIG_PHY_GIGE=3Dy
+> >   CONFIG_FTGMAC100=3Dy
+> > diff --git a/configs/evb-ast2400_defconfig b/configs/evb-ast2400_defcon=
+fig
+> > index f92dbfd668cd..46f9a9467929 100644
+> > --- a/configs/evb-ast2400_defconfig
+> > +++ b/configs/evb-ast2400_defconfig
+> > @@ -56,6 +56,7 @@ CONFIG_SPI_FLASH_SPANSION=3Dy
+> >   CONFIG_SPI_FLASH_STMICRO=3Dy
+> >   CONFIG_SPI_FLASH_WINBOND=3Dy
+> >   CONFIG_PHY_REALTEK=3Dy
+> > +CONFIG_PHY_NCSI=3Dy
+> >   CONFIG_DM_ETH=3Dy
+> >   CONFIG_PHY_GIGE=3Dy
+> >   CONFIG_FTGMAC100=3Dy
+> > diff --git a/configs/evb-ast2500-spl_defconfig b/configs/evb-ast2500-sp=
+l_defconfig
+> > index 0f6780b5e4e8..3467ae6cda2d 100644
+> > --- a/configs/evb-ast2500-spl_defconfig
+> > +++ b/configs/evb-ast2500-spl_defconfig
+> > @@ -70,6 +70,7 @@ CONFIG_SPI_FLASH_MACRONIX=3Dy
+> >   CONFIG_SPI_FLASH_SPANSION=3Dy
+> >   CONFIG_SPI_FLASH_WINBOND=3Dy
+> >   CONFIG_PHY_REALTEK=3Dy
+> > +CONFIG_PHY_NCSI=3Dy
+> >   CONFIG_DM_ETH=3Dy
+> >   CONFIG_PHY_GIGE=3Dy
+> >   CONFIG_FTGMAC100=3Dy
+> > diff --git a/configs/evb-ast2500_defconfig b/configs/evb-ast2500_defcon=
+fig
+> > index 91921cf76e62..d692a0811109 100644
+> > --- a/configs/evb-ast2500_defconfig
+> > +++ b/configs/evb-ast2500_defconfig
+> > @@ -57,6 +57,7 @@ CONFIG_SPI_FLASH_SPANSION=3Dy
+> >   CONFIG_SPI_FLASH_STMICRO=3Dy
+> >   CONFIG_SPI_FLASH_WINBOND=3Dy
+> >   CONFIG_PHY_REALTEK=3Dy
+> > +CONFIG_PHY_NCSI=3Dy
+> >   CONFIG_DM_ETH=3Dy
+> >   CONFIG_PHY_GIGE=3Dy
+> >   CONFIG_FTGMAC100=3Dy
+> > diff --git a/configs/evb-ast2600-cot_defconfig b/configs/evb-ast2600-co=
+t_defconfig
+> > index b656e528c855..06fc84b139a4 100644
+> > --- a/configs/evb-ast2600-cot_defconfig
+> > +++ b/configs/evb-ast2600-cot_defconfig
+> > @@ -105,6 +105,7 @@ CONFIG_SPI_FLASH_STMICRO=3Dy
+> >   CONFIG_SPI_FLASH_WINBOND=3Dy
+> >   CONFIG_PHY_BROADCOM=3Dy
+> >   CONFIG_PHY_REALTEK=3Dy
+> > +CONFIG_PHY_NCSI=3Dy
+> >   CONFIG_DM_ETH=3Dy
+> >   CONFIG_PHY_GIGE=3Dy
+> >   CONFIG_FTGMAC100=3Dy
+> > diff --git a/configs/evb-ast2600_defconfig b/configs/evb-ast2600_defcon=
+fig
+> > index 3e302e51ef2f..d0d867adb0e8 100644
+> > --- a/configs/evb-ast2600_defconfig
+> > +++ b/configs/evb-ast2600_defconfig
+> > @@ -75,6 +75,7 @@ CONFIG_SPI_FLASH_STMICRO=3Dy
+> >   CONFIG_SPI_FLASH_WINBOND=3Dy
+> >   CONFIG_PHY_BROADCOM=3Dy
+> >   CONFIG_PHY_REALTEK=3Dy
+> > +CONFIG_PHY_NCSI=3Dy
+> >   CONFIG_DM_ETH=3Dy
+> >   CONFIG_PHY_GIGE=3Dy
+> >   CONFIG_FTGMAC100=3Dy
+> > diff --git a/configs/evb-ast2600a0-cot_defconfig b/configs/evb-ast2600a=
+0-cot_defconfig
+> > index 1a377736ea4a..826e7b34e22a 100644
+> > --- a/configs/evb-ast2600a0-cot_defconfig
+> > +++ b/configs/evb-ast2600a0-cot_defconfig
+> > @@ -91,6 +91,7 @@ CONFIG_SPI_FLASH_STMICRO=3Dy
+> >   CONFIG_SPI_FLASH_WINBOND=3Dy
+> >   CONFIG_PHY_BROADCOM=3Dy
+> >   CONFIG_PHY_REALTEK=3Dy
+> > +CONFIG_PHY_NCSI=3Dy
+> >   CONFIG_DM_ETH=3Dy
+> >   CONFIG_PHY_GIGE=3Dy
+> >   CONFIG_FTGMAC100=3Dy
+> > diff --git a/configs/evb-ast2600a0-spl_defconfig b/configs/evb-ast2600a=
+0-spl_defconfig
+> > index 69548bcddeda..a88a14411f7b 100644
+> > --- a/configs/evb-ast2600a0-spl_defconfig
+> > +++ b/configs/evb-ast2600a0-spl_defconfig
+> > @@ -92,6 +92,7 @@ CONFIG_SPI_FLASH_STMICRO=3Dy
+> >   CONFIG_SPI_FLASH_WINBOND=3Dy
+> >   CONFIG_PHY_BROADCOM=3Dy
+> >   CONFIG_PHY_REALTEK=3Dy
+> > +CONFIG_PHY_NCSI=3Dy
+> >   CONFIG_DM_ETH=3Dy
+> >   CONFIG_PHY_GIGE=3Dy
+> >   CONFIG_FTGMAC100=3Dy
+> > diff --git a/configs/evb-ast2600a0_defconfig b/configs/evb-ast2600a0_de=
+fconfig
+> > index 51cf6ac3ca35..358c31511297 100644
+> > --- a/configs/evb-ast2600a0_defconfig
+> > +++ b/configs/evb-ast2600a0_defconfig
+> > @@ -69,6 +69,7 @@ CONFIG_SPI_FLASH_STMICRO=3Dy
+> >   CONFIG_SPI_FLASH_WINBOND=3Dy
+> >   CONFIG_PHY_BROADCOM=3Dy
+> >   CONFIG_PHY_REALTEK=3Dy
+> > +CONFIG_PHY_NCSI=3Dy
+> >   CONFIG_DM_ETH=3Dy
+> >   CONFIG_PHY_GIGE=3Dy
+> >   CONFIG_FTGMAC100=3Dy
+> > diff --git a/configs/evb-ast2600a1-cot_defconfig b/configs/evb-ast2600a=
+1-cot_defconfig
+> > index b656e528c855..06fc84b139a4 100644
+> > --- a/configs/evb-ast2600a1-cot_defconfig
+> > +++ b/configs/evb-ast2600a1-cot_defconfig
+> > @@ -105,6 +105,7 @@ CONFIG_SPI_FLASH_STMICRO=3Dy
+> >   CONFIG_SPI_FLASH_WINBOND=3Dy
+> >   CONFIG_PHY_BROADCOM=3Dy
+> >   CONFIG_PHY_REALTEK=3Dy
+> > +CONFIG_PHY_NCSI=3Dy
+> >   CONFIG_DM_ETH=3Dy
+> >   CONFIG_PHY_GIGE=3Dy
+> >   CONFIG_FTGMAC100=3Dy
+> > diff --git a/configs/evb-ast2600a1-ecc_defconfig b/configs/evb-ast2600a=
+1-ecc_defconfig
+> > index c637bac65472..cda88addfa43 100644
+> > --- a/configs/evb-ast2600a1-ecc_defconfig
+> > +++ b/configs/evb-ast2600a1-ecc_defconfig
+> > @@ -70,6 +70,7 @@ CONFIG_SPI_FLASH_STMICRO=3Dy
+> >   CONFIG_SPI_FLASH_WINBOND=3Dy
+> >   CONFIG_PHY_BROADCOM=3Dy
+> >   CONFIG_PHY_REALTEK=3Dy
+> > +CONFIG_PHY_NCSI=3Dy
+> >   CONFIG_DM_ETH=3Dy
+> >   CONFIG_PHY_GIGE=3Dy
+> >   CONFIG_FTGMAC100=3Dy
+> > diff --git a/configs/evb-ast2600a1-emmc-cot_defconfig b/configs/evb-ast=
+2600a1-emmc-cot_defconfig
+> > index 68ac56cf170c..552bb6b104a3 100644
+> > --- a/configs/evb-ast2600a1-emmc-cot_defconfig
+> > +++ b/configs/evb-ast2600a1-emmc-cot_defconfig
+> > @@ -101,6 +101,7 @@ CONFIG_SPI_FLASH_STMICRO=3Dy
+> >   CONFIG_SPI_FLASH_WINBOND=3Dy
+> >   CONFIG_PHY_BROADCOM=3Dy
+> >   CONFIG_PHY_REALTEK=3Dy
+> > +CONFIG_PHY_NCSI=3Dy
+> >   CONFIG_DM_ETH=3Dy
+> >   CONFIG_PHY_GIGE=3Dy
+> >   CONFIG_FTGMAC100=3Dy
+> > diff --git a/configs/evb-ast2600a1-emmc_defconfig b/configs/evb-ast2600=
+a1-emmc_defconfig
+> > index ce3bd5e07dba..b7e4e9df9646 100644
+> > --- a/configs/evb-ast2600a1-emmc_defconfig
+> > +++ b/configs/evb-ast2600a1-emmc_defconfig
+> > @@ -102,6 +102,7 @@ CONFIG_SPI_FLASH_STMICRO=3Dy
+> >   CONFIG_SPI_FLASH_WINBOND=3Dy
+> >   CONFIG_PHY_BROADCOM=3Dy
+> >   CONFIG_PHY_REALTEK=3Dy
+> > +CONFIG_PHY_NCSI=3Dy
+> >   CONFIG_DM_ETH=3Dy
+> >   CONFIG_PHY_GIGE=3Dy
+> >   CONFIG_FTGMAC100=3Dy
+> > diff --git a/configs/evb-ast2600a1-spl-ecc_defconfig b/configs/evb-ast2=
+600a1-spl-ecc_defconfig
+> > index 245dee329eb7..530199913d28 100644
+> > --- a/configs/evb-ast2600a1-spl-ecc_defconfig
+> > +++ b/configs/evb-ast2600a1-spl-ecc_defconfig
+> > @@ -119,6 +119,7 @@ CONFIG_SPI_FLASH_STMICRO=3Dy
+> >   CONFIG_SPI_FLASH_WINBOND=3Dy
+> >   CONFIG_PHY_BROADCOM=3Dy
+> >   CONFIG_PHY_REALTEK=3Dy
+> > +CONFIG_PHY_NCSI=3Dy
+> >   CONFIG_DM_ETH=3Dy
+> >   CONFIG_PHY_GIGE=3Dy
+> >   CONFIG_FTGMAC100=3Dy
+> > diff --git a/configs/evb-ast2600a1-spl_defconfig b/configs/evb-ast2600a=
+1-spl_defconfig
+> > index be6a1d8a2328..4be5b6c95b41 100644
+> > --- a/configs/evb-ast2600a1-spl_defconfig
+> > +++ b/configs/evb-ast2600a1-spl_defconfig
+> > @@ -119,6 +119,7 @@ CONFIG_SPI_FLASH_STMICRO=3Dy
+> >   CONFIG_SPI_FLASH_WINBOND=3Dy
+> >   CONFIG_PHY_BROADCOM=3Dy
+> >   CONFIG_PHY_REALTEK=3Dy
+> > +CONFIG_PHY_NCSI=3Dy
+> >   CONFIG_DM_ETH=3Dy
+> >   CONFIG_PHY_GIGE=3Dy
+> >   CONFIG_FTGMAC100=3Dy
+> > diff --git a/configs/evb-ast2600a1_defconfig b/configs/evb-ast2600a1_de=
+fconfig
+> > index 68ff5547b789..c0db1d56db26 100644
+> > --- a/configs/evb-ast2600a1_defconfig
+> > +++ b/configs/evb-ast2600a1_defconfig
+> > @@ -73,6 +73,7 @@ CONFIG_SPI_FLASH_STMICRO=3Dy
+> >   CONFIG_SPI_FLASH_WINBOND=3Dy
+> >   CONFIG_PHY_BROADCOM=3Dy
+> >   CONFIG_PHY_REALTEK=3Dy
+> > +CONFIG_PHY_NCSI=3Dy
+> >   CONFIG_DM_ETH=3Dy
+> >   CONFIG_PHY_GIGE=3Dy
+> >   CONFIG_FTGMAC100=3Dy
+>
