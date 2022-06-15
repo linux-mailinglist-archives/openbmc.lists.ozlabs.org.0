@@ -2,63 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E73F54D897
-	for <lists+openbmc@lfdr.de>; Thu, 16 Jun 2022 04:45:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9F62154D898
+	for <lists+openbmc@lfdr.de>; Thu, 16 Jun 2022 04:46:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LNmkV41Rnz3dx0
-	for <lists+openbmc@lfdr.de>; Thu, 16 Jun 2022 12:45:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LNml94T8Zz3btV
+	for <lists+openbmc@lfdr.de>; Thu, 16 Jun 2022 12:46:13 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=qz4+2/j3;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=M0lG3b8v;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::112f; helo=mail-yw1-x112f.google.com; envelope-from=linus.walleij@linaro.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::b34; helo=mail-yb1-xb34.google.com; envelope-from=linus.walleij@linaro.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=qz4+2/j3;
+	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=M0lG3b8v;
 	dkim-atps=neutral
-Received: from mail-yw1-x112f.google.com (mail-yw1-x112f.google.com [IPv6:2607:f8b0:4864:20::112f])
+Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LNSLK2XbZz2xD4
-	for <openbmc@lists.ozlabs.org>; Thu, 16 Jun 2022 00:27:03 +1000 (AEST)
-Received: by mail-yw1-x112f.google.com with SMTP id 00721157ae682-31336535373so63146867b3.2
-        for <openbmc@lists.ozlabs.org>; Wed, 15 Jun 2022 07:27:03 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LNSM60Q4rz3035
+	for <openbmc@lists.ozlabs.org>; Thu, 16 Jun 2022 00:27:45 +1000 (AEST)
+Received: by mail-yb1-xb34.google.com with SMTP id t32so20746421ybt.12
+        for <openbmc@lists.ozlabs.org>; Wed, 15 Jun 2022 07:27:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=xMSeDjVBl8Op1MiME+3ol3t5KwHqA10J2T41KnFjWVI=;
-        b=qz4+2/j3HuKLbz8sDkEIpH8ZLP9Jo8DhJ+Q2ht5CP+YvOT59Zf+re5Tujl0ZB6ZFPL
-         6eIRF/MkMH9d8XYNP4+51SwLnjpzBos7nFmTYB8Ul+O4d2U6PeoLZ7QjQijKEZ8jLm95
-         SELWUDdWwSs1Mh2zeOOA3+M0iUdmkybKKFT7IjVpsD5/9ncX5E7fGGraLMKtF7YFOE15
-         3ZsziFepyBJtS+OHCqnLHN05xHlLU+0K7/YCV5W8FlGwHDwuOBWTMVvTFAoqv5pVaZxz
-         Rpqrs1a41xszHea5Bvl2plED3iCFlGdMsfyTuDfKIA63BBNAp8s43G582spKqlDGmWXf
-         4qPw==
+        bh=fsun78rWieFnLaLeD83Q2xWjxjOs241/wdwG/0QCsic=;
+        b=M0lG3b8vfMcZ/7Ka36O1ZxSsUemkOvvlFAQXkpVQ4QpCs+1BTt67QSw4HKiQD5WOcb
+         52snuFlKH/21oU1OKHImIEHhsr/qfhoQOlanFV+m4TeEl8ICjJe2Sd491tUIQIDSw5Bq
+         xHExXe7XqUhLlIhXKD4i9kKCqB5PLrMMw5aIrSuv673UinrPE2m5a9fMdvB5OZ6CYFIq
+         /u1FbiRcfzMPM33M1qWbZlUZBeX0dAiMnD8nksss+jrH8U5wAD3bdbqxbououS4Wce5+
+         si5vaEILsaJTJRlA5Tvc5IU5RHPyGLfiWb4X0xjPRiEJMgOmZeod+1F/8J2LCdxK/urt
+         bp3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=xMSeDjVBl8Op1MiME+3ol3t5KwHqA10J2T41KnFjWVI=;
-        b=UfHb8oJ+352u9/Mvw0Khf+mvjM/jus395obEOicrFaA94OHQvKLjUft8oh++clRXgC
-         kTBU2TwgYT2fv1T6eLUxMikbnDe7k3qjv0kK/2qjgZkafv6xjSZrKFEUMjuWAhZxrTl5
-         lW4nL/FvPk+ZBtP4IIRvphAYFECkeKQVGExj/uZ6wlw4+ibO3SsPWBmlBCZBmQgWhH0O
-         9oicab2IWEbbbFFnTV5SeaWootEjsx1yxZUE3fc7YJnfLfo/JQAUmmLVvgdoo8mTbePZ
-         opn63jY+B4M/59e+PO/zwos6z+pyibj4nMGBeP50X9LL4huQWki0dU+PZVndQnEGBfVp
-         xC3w==
-X-Gm-Message-State: AJIora8eoSlkJkoxtTeISL/j9fz84AGRjw4pz6mpvwQ1ftwaNPRmfLcH
-	jwO7lTR7TURvFGMmcLqR8Y1+zDdyTP/zcYI8hE+q4Q==
-X-Google-Smtp-Source: AGRyM1uf8yFhBnEUo8jDPf5ukxxTZvvQvwcMTtNGMVxYlbJA7mSO+23X9N9/rXSOE+V75SpZAwzwan4QnL+Hc3y01yY=
-X-Received: by 2002:a0d:e246:0:b0:30c:5e77:7104 with SMTP id
- l67-20020a0de246000000b0030c5e777104mr12571722ywe.448.1655303218482; Wed, 15
- Jun 2022 07:26:58 -0700 (PDT)
+        bh=fsun78rWieFnLaLeD83Q2xWjxjOs241/wdwG/0QCsic=;
+        b=Kw2YG4F35nWtyUPOi69peINIrkmbxj37vCw5K1VohTzHLGcSyt4vMTF4ymWOolSzJy
+         HJZBM8qIC1Gv3H68ekaVXD6Ll5YxO/tPDi5Iw0Y7khczrfdydlwYpQz5KSOa51s2i82L
+         i0umzsP4OtoE52VsB7fVRzlg4foLy/+ywh+bBXE7EivYG0HCEQguKjHo3ToA1n/0NF5t
+         WfGO2GQCd6Ot6zPaz+D/UsyF/QwZ2JQTzweWfyP52DhrK8XwP7ri2wOFvmrq550YjaOU
+         +rcefX2KbOgh/yBekMMKUmaWWRxGuogLHhx8IunGsNP0ltxCY3NrdsAuTxKA8LBziAkN
+         dAAQ==
+X-Gm-Message-State: AJIora+naxm90BvwyAr1iHHwqOdv5CZbI8KluCQVAZXbzZB++haj+x0f
+	qMbiPlaPhfT6n6k6IV0PjDSPKRHJzgJ59uqxT5HlSg==
+X-Google-Smtp-Source: AGRyM1t0twq2NH5TwVMffJ95BCvjUqTPe1/bY9PSUuCjeVYRJKVWPPGecH5Bnr87yp5uioRcTcWI/9qkOUV49rzlV5c=
+X-Received: by 2002:a25:8387:0:b0:664:7589:27b9 with SMTP id
+ t7-20020a258387000000b00664758927b9mr86691ybk.291.1655303263361; Wed, 15 Jun
+ 2022 07:27:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220610084545.547700-1-nuno.sa@analog.com> <20220610084545.547700-28-nuno.sa@analog.com>
-In-Reply-To: <20220610084545.547700-28-nuno.sa@analog.com>
+References: <20220610084545.547700-1-nuno.sa@analog.com> <20220610084545.547700-30-nuno.sa@analog.com>
+In-Reply-To: <20220610084545.547700-30-nuno.sa@analog.com>
 From: Linus Walleij <linus.walleij@linaro.org>
-Date: Wed, 15 Jun 2022 16:26:47 +0200
-Message-ID: <CACRpkdYVqsEdDDHLSkfJzMDPbPgkVihxa+ukLg1XnoyGghcdoA@mail.gmail.com>
-Subject: Re: [PATCH 27/34] iio: adc: ab8500-gpadc: convert to device properties
+Date: Wed, 15 Jun 2022 16:27:32 +0200
+Message-ID: <CACRpkdYtBY9bWevrWNL+mXz8LbsdDEFmGvrmPQ85Mn=yZ=FyHg@mail.gmail.com>
+Subject: Re: [PATCH 29/34] iio: adc: qcom-pm8xxx-xoadc: convert to device properties
 To: =?UTF-8?B?TnVubyBTw6E=?= <nuno.sa@analog.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
@@ -80,7 +80,7 @@ Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>, Daniel Lezcano <daniel.le
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Jun 10, 2022 at 10:48 AM Nuno S=C3=A1 <nuno.sa@analog.com> wrote:
+On Fri, Jun 10, 2022 at 10:49 AM Nuno S=C3=A1 <nuno.sa@analog.com> wrote:
 
 > Make the conversion to firmware agnostic device properties. As part of
 > the conversion the IIO inkern interface 'of_xlate()' is also converted to
