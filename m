@@ -1,62 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD25754E0E6
-	for <lists+openbmc@lfdr.de>; Thu, 16 Jun 2022 14:36:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id E786D54E0E9
+	for <lists+openbmc@lfdr.de>; Thu, 16 Jun 2022 14:38:23 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LP1qx4b82z3bkG
-	for <lists+openbmc@lfdr.de>; Thu, 16 Jun 2022 22:36:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LP1tP5zMyz3bkW
+	for <lists+openbmc@lfdr.de>; Thu, 16 Jun 2022 22:38:21 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=LUFawDm6;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=OPxRkc7P;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::433; helo=mail-wr1-x433.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::331; helo=mail-wm1-x331.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=LUFawDm6;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=OPxRkc7P;
 	dkim-atps=neutral
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LP1qX44KGz2yL2
-	for <openbmc@lists.ozlabs.org>; Thu, 16 Jun 2022 22:35:50 +1000 (AEST)
-Received: by mail-wr1-x433.google.com with SMTP id g4so1685216wrh.11
-        for <openbmc@lists.ozlabs.org>; Thu, 16 Jun 2022 05:35:49 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LP1sz4kKJz3bZc
+	for <openbmc@lists.ozlabs.org>; Thu, 16 Jun 2022 22:37:59 +1000 (AEST)
+Received: by mail-wm1-x331.google.com with SMTP id n185so693071wmn.4
+        for <openbmc@lists.ozlabs.org>; Thu, 16 Jun 2022 05:37:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=jms.id.au; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc:content-transfer-encoding;
-        bh=7/7qZw9XQ/FHjKZ+++V8ZdO/WveaS5DOaagRvVbzcZw=;
-        b=LUFawDm68Ytn+MzL/odFf8DKVvQtMAJbYBaPDLTwD9kplxkt8WHLsCLYFYh+jEUKfl
-         2b+cJ7nX5yPR62KoulVxmJANFGUWUUg1VzASTxYiz6PNjHU6cBv+/cHnyMqqRtDyMFaw
-         wBpd+53Hf1+iyw5cncHtKW18z4iO9H5LovsYo=
+        bh=57ksFhbU8S0ngaLinpUFfZGBIWAYfzQmiw4BGe3+V/E=;
+        b=OPxRkc7PkSdywehrPkFH0QAGIRcVF6KZtiM5Mkxu1NMSjfg/BqniBc72W3GDcE5yKi
+         EQpKEW63G0pShmArGA744bnN4t1s/rFkFL2RCNwT1jRVdRXY8ZP6hbV3/x394eRzt7X+
+         cQB1SmZK01obGaT+0QHf6Nqk+ssM79hEz1X1s=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc:content-transfer-encoding;
-        bh=7/7qZw9XQ/FHjKZ+++V8ZdO/WveaS5DOaagRvVbzcZw=;
-        b=U9dIQTFt6oll5B6a4S5eYQG7EpjWIAcCxk2LNT5F2Fv5wU6vNpGBJfL0OL5HRWB9mf
-         bxMWRmEt2E4PzYVkYwp4/x8Eip/xhWDRl/F8PrwNlBWIu035NbcouGOvvbx+6+wBQjyR
-         DrKKdwV9zZLseGGs3ESouEUGqRrdOSX58bZe2V7sP2dtyoCPV5rPMeP0RgSXnix5agkP
-         sHvRk1TLByfDMBasLwYhCWRozOPgmSPF9THY8CVn4j/2Tmb1KsWDR8UAv3FPiTJTm/HO
-         x6jtboP9206JMuecw/w8na/ZuaBG5VgYL9Rhrbw75ICQEILPDwyFnX9jRfn8eUkN8fm3
-         dRww==
-X-Gm-Message-State: AJIora/6K52RUL+5t+Tf1tGzmGxZl9ifM9woS4wnsslTBxZtR1qbM0gG
-	BfKImRTTergUDyQyMAwkRqPIUhxuN8ABZbLr1Dw=
-X-Google-Smtp-Source: AGRyM1v5ww4JKfVxD3KM5LJKnZDaZb+h5Zs5o7eYSFQ6kidd6PDGWF2Jf1ZzGcBMkqGGFWhxq8LDD0DGIEKTkwGkGco=
-X-Received: by 2002:a5d:5686:0:b0:217:7da8:8c5a with SMTP id
- f6-20020a5d5686000000b002177da88c5amr4288217wrv.3.1655382942359; Thu, 16 Jun
- 2022 05:35:42 -0700 (PDT)
+        bh=57ksFhbU8S0ngaLinpUFfZGBIWAYfzQmiw4BGe3+V/E=;
+        b=0BeatQK7QXV/cbFmgbSD0o0+teA2nY2ZLHWG3gIlesOwCW5vDYbieESkg6d711aCpu
+         nUso0AwKaIbsK70esXp6qG3A11F+L2nmk6NWb2tJGj4Z638DJH0NTOYVdq16tLt8T1iE
+         5ruXTfx6tNLTB6SBi7eP4jxgKbPp32U13kVsW9YCPUDRVvPJNd1B0VlV7D0pF8draGqd
+         ZbCwBv5Qo08t3LUPhJDI1qqNlZSf/LwEzrpCUBaUi573dUXxKdYdWswJ8eumvYgzvLtk
+         Zgf1SrMy4m08fFVw208mg/xvo4GxZRBJ4rIDPqsInD1kI1HDI9gfDrOq4MJRGB+jyU/v
+         kxFg==
+X-Gm-Message-State: AOAM533ETqnCSBTyjXs4iPWnDVmieO6bZLgxDTzeSPoBczBQyv+ktYK3
+	nkgFLg0bBi6Q61SNk0ly3rEh+a5156FPRckPCD7C/3lb
+X-Google-Smtp-Source: ABdhPJzJqGgSeRLp/VcPPmfCb8n1iUsfuYw/hFP5+sV2Yh4dWYYAZjJWmAY65lnqUfb/RN1zVjmsL6OVGZqMrw4FOHs=
+X-Received: by 2002:a05:600c:1990:b0:39c:81f0:a882 with SMTP id
+ t16-20020a05600c199000b0039c81f0a882mr15358231wmq.72.1655383075400; Thu, 16
+ Jun 2022 05:37:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220608061455.365123-1-clg@kaod.org> <20220608061455.365123-2-clg@kaod.org>
- <CACPK8XfusuUoFsqhPiUk_KwbG==YOJjgAiEzLbiPEZ_KcPkX-Q@mail.gmail.com>
-In-Reply-To: <CACPK8XfusuUoFsqhPiUk_KwbG==YOJjgAiEzLbiPEZ_KcPkX-Q@mail.gmail.com>
+References: <20220610080059.2333501-1-joel@jms.id.au> <20220610080059.2333501-3-joel@jms.id.au>
+ <47a4d682-99e9-e597-6998-9ab167c7b394@kaod.org>
+In-Reply-To: <47a4d682-99e9-e597-6998-9ab167c7b394@kaod.org>
 From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 16 Jun 2022 12:35:30 +0000
-Message-ID: <CACPK8XesFxZ=Wmf0RSW-DBsLG7i1eu7EzUDyqctqcT=GDyUTDQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] ARM: dts: aspeed: Remove "spi-flash" compatible
+Date: Thu, 16 Jun 2022 12:37:43 +0000
+Message-ID: <CACPK8XeUo5NHNt3cAFTQzharEYDgM+EzheDLb2JRAE=1mzJ88Q@mail.gmail.com>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc 2/4] phy: Only create NCSI
+ PHY when it's present
 To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
@@ -71,38 +72,22 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, Jae Hyun Yoo <quic_jaehyoo@quicinc.com>, Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
+Cc: BMC-SW <BMC-SW@aspeedtech.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 8 Jun 2022 at 06:19, Joel Stanley <joel@jms.id.au> wrote:
+On Fri, 10 Jun 2022 at 08:37, C=C3=A9dric Le Goater <clg@kaod.org> wrote:
 >
-> On Wed, 8 Jun 2022 at 06:15, C=C3=A9dric Le Goater <clg@kaod.org> wrote:
+> On 6/10/22 10:00, Joel Stanley wrote:
+> > phy_connect would unconditionally create a NCSI PHY device if the drive=
+r
+> > was configured.
 > >
-> > The underlying SoC definitions use compatible "jedec,spi-nor", so does
-> > the aspeed SPI driver, this to be in sync with Linux and the latest
-> > U-Boot.
->
-> > diff --git a/arch/arm/dts/ast2600-tacoma.dts b/arch/arm/dts/ast2600-tac=
-oma.dts
-> > index 67b3e3013c6b..a29e7e7fa23a 100755
-> > --- a/arch/arm/dts/ast2600-tacoma.dts
-> > +++ b/arch/arm/dts/ast2600-tacoma.dts
-> > @@ -65,7 +65,6 @@
+> > By detecting what the phy type is at runtime we can support NCSI and
+> > non-NCSI system with the same defconfig,
 > >
-> >         flash@0 {
-> >                 // TODO: what compatible strings should be here?
-> > -               compatible =3D "spi-flash", "sst,w25q256";
+> > Signed-off-by: Joel Stanley <joel@jms.id.au>
 >
-> Thanks. I had a similar version that also removed these todos. I'll
-> merge yours and remove the TODOs too.
->
-> Reviewed-by: Joel Stanley <joel@jms.id.au>
+> Reviewed-by: C=C3=A9dric Le Goater <clg@kaod.org>
 
-I have applied these two, thanks.
-
->
->
-> >                 status =3D "okay";
-> >                 spi-max-frequency =3D <50000000>;
-> >                 spi-tx-bus-width =3D <2>;
+Merged, thanks.
