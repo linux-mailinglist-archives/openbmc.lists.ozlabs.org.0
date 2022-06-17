@@ -2,42 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9370D54F2C0
-	for <lists+openbmc@lfdr.de>; Fri, 17 Jun 2022 10:23:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3273A54F445
+	for <lists+openbmc@lfdr.de>; Fri, 17 Jun 2022 11:29:25 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LPX9T37CJz3c9g
-	for <lists+openbmc@lfdr.de>; Fri, 17 Jun 2022 18:23:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LPYdv0M7Kz3by1
+	for <lists+openbmc@lfdr.de>; Fri, 17 Jun 2022 19:29:23 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=ZlqpuQJA;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kunluntech.com.cn (client-ip=103.74.28.24; helo=mail-m2824.qiye.163.com; envelope-from=xzcheng@kunluntech.com.cn; receiver=<UNKNOWN>)
-Received: from mail-m2824.qiye.163.com (mail-m2824.qiye.163.com [103.74.28.24])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.17.20; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=ZlqpuQJA;
+	dkim-atps=neutral
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LPX9B2dlPz3bkP
-	for <openbmc@lists.ozlabs.org>; Fri, 17 Jun 2022 18:22:46 +1000 (AEST)
-Received: from kunluntech.com.cn (unknown [127.0.0.1])
-	by mail-m2824.qiye.163.com (Hmail) with ESMTP id 047ED6601C2;
-	Fri, 17 Jun 2022 16:22:40 +0800 (CST)
-Content-Type: multipart/alternative; BOUNDARY="=_Part_187942_1407664891.1655454160009"
-Message-ID: <ADgA1gAIIsxUEvI8yonNy4qg.3.1655454160009.Hmail.xzcheng@kunluntech.com.cn>
-To: John Broadbent <jebr@google.com>
-Subject: =?UTF-8?B?UmU6UmU6IEhvdyB0byBwb3N0IHBhdGNoZXMgZm9yIHJldmlldyB0byBHZXJyaXQ/?=
-X-Priority: 3
-X-Mailer: HMail Webmail Server V2.0 Copyright (c) 2015-163.com
-X-Originating-IP: 218.247.145.3
-In-Reply-To: <CAPw1Ef_VJv1ZmgKf4XYt5oeOVXi084yPV9dimH-aozdDDZMzZg@mail.gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LPYdQ6fc3z3bl3
+	for <openbmc@lists.ozlabs.org>; Fri, 17 Jun 2022 19:28:57 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+	s=badeba3b8450; t=1655458097;
+	bh=lxm3FN8DBM/LQtAAtZ4qd37cIBuRAbivab/rs+t/ymE=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=ZlqpuQJAolicMh3LZlgrPD6chXcZthFRCP5qGBAgODb7giVx8rvPats3h73/cgqDG
+	 TvfqXndH5gYbgFqzdvMerrvcTUfM8Tnu3DI9CP4lHzL4GAPRBsBCnVustVTuzW4P98
+	 Cs6x/keV9kaQO9EcGwJt2HqYYznZDw51pkWbtKrM=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from longitude ([5.146.195.3]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MwfWU-1nnMbr2fkY-00yAum; Fri, 17
+ Jun 2022 11:28:17 +0200
+Date: Fri, 17 Jun 2022 11:28:14 +0200
+From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: Arnd Bergmann <arnd@arndb.de>
+Subject: Re: [PATCH v4] soc: nuvoton: Add SoC info driver for WPCM450
+Message-ID: <YqxJLhkCQ2WcHdAp@latitude>
+References: <20220609213513.88479-1-j.neuschaefer@gmx.net>
+ <CAK8P3a0-m1iQ2bP+dsoGTPZGMNBKqB5a6315jdgaT3tuR4WfTw@mail.gmail.com>
 MIME-Version: 1.0
-Received: from xzcheng@kunluntech.com.cn( [218.247.145.3) ] by ajax-webmail ( [127.0.0.1] ) ; Fri, 17 Jun 2022 16:22:40 +0800 (GMT+08:00)
-From: Xiuzhi Cheng <xzcheng@kunluntech.com.cn>
-Date: Fri, 17 Jun 2022 16:22:40 +0800 (GMT+08:00)
-X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFJQjdXWS1ZQUlXWQ8JGhUIEh9ZQVkaTkwaVk8dQ0pLHU4eHU9DH1UZERMWGhIXJBQOD1
-	lXWRgSC1lBWUlKQ1VJT0xVSk9OVUhZV1kWGg8SFR0UWUFZT0tIVUpKS0hKQ1VLWQY+
-X-HM-Sender-Digest: e1kJHlYWEh9ZQUpPTEhOSUNJSE1DSDdXWQweGVlBDwkOHldZEh8eFQ9Z
-	QVlHOj8cOkocOjIyCAMuPg0yQwIUFTUCTwocVUhVSk1OTk9OT0pNS0lDQ1UzFhoSF1UDARgTHhUc
-	OxAOFRcOFQ8eGBNVGBQWVRgVRVlXWRILWUFZSUpDVUlPTFVKT05VSFlXWQgBWUFMSE9MN1dZFAsP
-	EhQVCFlBSzcG
-X-HM-Tid: 0a8170c00af98412kuqw181670f1976
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="jKjRAf+U0chs2ccJ"
+Content-Disposition: inline
+In-Reply-To: <CAK8P3a0-m1iQ2bP+dsoGTPZGMNBKqB5a6315jdgaT3tuR4WfTw@mail.gmail.com>
+X-Provags-ID: V03:K1:AbjFIQKAkPkfwuEeVxt0fDYDtem8sVSjnt2fM1vuQjcZZXp7GEi
+ J8SjMxC5qB6gXxWXqb59WqaGeGFHk3xwNQ27Bs6TaPBrxPfk3HXw8NdgPgUcAnhAOdmo1NR
+ 9yjvHT5JUm8NI4HsBrCehSqvKk7SOQ4xLTj52/WBFgJrjfeUlR29yfTcilD3GUt4T1mXMbV
+ NbWeUSzgihFBMwoYu8muA==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:5d/Y/aZVbeU=:ADtktXYRoO7EKquC0v3A9k
+ uuoI6bKXECBeHvo0MertvMpAWl7dO6GEJM5B9WjORcl79+Fa60x4M78+3vJcykHrWqaQVWzz4
+ 70L4UD7Sh+wV1lAldnh8kk9T7X4qGrjCFkaJBqq3Yo/Kk6DkVL0NBcyNoufhx0aP1t2c+e5Z8
+ hx63anC7e1SmJ7hq1NFAimKT4pQuo8MBoO6+HjAdny/0hgBz7NjFkAQ13vOUNvENYswqC4OmL
+ 6c/Qo4Tt773H+UJLe8EUurz73by1y1Z9VAtKljZbg61FxXEVz6qD7YmCo00AoMGDvGQc5YwfL
+ Y9QfcXXSnkk6U/ZNwfFIJGF5+gfnLnKbH3NrUpz0L6n95XoMPIxq3AKNQyPgMvSaA2aGBqhfH
+ pnOD3NgUGdgejkxRfeNBFODqnhnO5nJ2i/GGjkE9adQupqwOm5bF1mO7lDhZaMamhGfA8HRaM
+ Ljz+jqVW4QhVr3Dbc2piGWn7JGRcvL+Llnv6pZJII6lI4dew+vQ2zhbK2ijzaLPpm8sdcNoYx
+ My41ZkUzvHvQqxSGASyBMsk36QK3oKAt4WVTRlTPSjk+eQaH391kgyMgaMw7QDydhlGl7Y5JN
+ nGf25AYZcbi2UPN/Qf/fHNyHmil0uORW5LfhhKiUN6i6A29USrRDd0n0XHm375Rf2vqoUTp8Y
+ 0H1DBYMOiSJMRjFDabOLTovGWiuQHy6rKuJE/Smk6BqK3VmxhlQIM9MBXCz+n9aSSRUuJ5Trw
+ G11bEk2kfQ02EiVfdnhVV5ccXUKzWyTkQXlyxvvyPu3sMg+AswciocoeoRbITlX7xUa3rO8q2
+ /PoUqeWV75GhXlHQWr6ywr5zWlxzUTkqoKnf1x7obnC11KPRBUWT2zXujlyIFS+F+xJBR5QJm
+ IRIK7h0fI0qZf/VZsQkiqRRHsNYcs/D9RnRJx1jGxZVIo6Sg/8q8NOJ4YJklyr5yUQtns6O/e
+ e6i0D/fU40s3qyZrIGYeCmm6qGVFgi0GuZ/4Y27sbXxfwCWmHq4Q/kNTNaXnf2vf2qQOJvhrA
+ QvYmcD5pODJXqvMpJLNkW2aNeXErv7ZZLllRX+OVvLc/fFfnpi/f2C85GaLw+2hviEmz/pS/c
+ mCzGX4fIxbNCzfpKUJ0M1cCA1QLqj93LR0a6gl2onXZVQqbu4TYc3DFjQ==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -49,84 +78,72 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: Paul Menzel <pmenzel@molgen.mpg.de>, Brian Norris <briannorris@chromium.org>, Heiko Stuebner <heiko@sntech.de>, Sven Peter <sven@svenpeter.dev>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Hector Martin <marcan@marcan.st>, Nicolas Ferre <nicolas.ferre@microchip.com>, Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, Lubomir Rintel <lkundrak@v3.sk>, Conor Dooley <conor.dooley@microchip.com>, Joel Stanley <joel@jms.id.au>, Robert Jarzmik <robert.jarzmik@free.fr>, Linus Walleij <linus.walleij@linaro.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---=_Part_187942_1407664891.1655454160009
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
 
-CuWPkeS7tuS6uu+8mkpvaG4gQnJvYWRiZW50IDxqZWJyQGdvb2dsZS5jb20+CuWPkemAgeaXpeac
-n++8mjIwMjItMDYtMTYgMTA6NTU6MzAK5pS25Lu25Lq677yaIuaIkOS/ruayuyIgPHh6Y2hlbmdA
-a3VubHVudGVjaC5jb20uY24+CuaKhOmAgeS6uu+8mk9wZW5CTUMgTWFpbGxpc3QgPG9wZW5ibWNA
-bGlzdHMub3psYWJzLm9yZz4K5Li76aKY77yaUmU6IEhvdyB0byBwb3N0IHBhdGNoZXMgZm9yIHJl
-dmlldyB0byBHZXJyaXQ/PkNhbiB5b3UgdHJ5Ogo+ICAkIGdpdCBwdXNoIG9yaWdpbiBIRUFEOnJl
-ZnMvZm9yL21hc3Rlcgo+Cml0IHdvcmtzIG5vdyBieSB0aGlzIGNvbWFuZC5UaGFua3MuClhpdXpo
-aQo+aWYgdGhhdCBkb2VzIG5vdCB3b3JrIHRyeSBzb21ldGhpbmcgbGlrZSB0aGlzOgo+ICAgJCBn
-aXQgcHVzaCBzc2g6Ly94aXV6aGkxMUBnZXJyaXQub3BlbmJtYy5vcmc6Mjk0MTgvb3BlbmJtYy9r
-dW5sdW4taXBtaS1vZW0KPkhFQUQ6cmVmcy9mb3IvbWFzdGVyIC12dnYKPgo+VGhlcmUgYXJlIGlu
-c3RydWN0aW9ucyBoZXJlIHdpdGggYSBzYW1wbGUgcHVzaCBjb21tYW5kCj5odHRwczovL2dpdGh1
-Yi5jb20vb3BlbmJtYy9kb2NzL2Jsb2IvbWFzdGVyL2RldmVsb3BtZW50L2dlcnJpdC1zZXR1cC5t
-ZCNwdXNoLWNvZGUtY2hhbmdlLXRvLWdlcnJpdAo+Cj5MZXQgdXMga25vdyBpZiB5b3UgaGF2ZSBh
-bnkgaXNzdWVzLgo+Cj4KPk9uIFdlZCwgSnVuIDE1LCAyMDIyIGF0IDc6MDUgUE0g5oiQ5L+u5rK7
-IDx4emNoZW5nQGt1bmx1bnRlY2guY29tLmNuPiB3cm90ZToKPj4KPj4gSGkgLAo+PiAgIEkgd2Fu
-dCB0byBwb3N0IGEgcGF0Y2ggdG8gb3BlbmJtYy9rdW5sdW4taXBtaS1vZW0gZ2Vycml0IHNlcnZl
-ciBmb3IgcmV2aWV3LAo+PiAgaHR0cHM6Ly9nZXJyaXQub3BlbmJtYy5vcmcvYWRtaW4vcmVwb3Mv
-b3BlbmJtYy9rdW5sdW4taXBtaS1vZW0sZ2VuZXJhbAo+Pgo+PiBJIGNsb25lZCBpdCBieSA6Cj4+
-ICAgIGdpdCBjbG9uZSAic3NoOi8veGl1emhpMTFAZ2Vycml0Lm9wZW5ibWMub3JnOjI5NDE4L29w
-ZW5ibWMva3VubHVuLWlwbWktb2VtIgo+PiB0aGUgY29tbWFuZCA6Z2l0IHJlbW90ZSAtdiBpczoK
-Pj4gb3JpZ2luIHNzaDovL3hpdXpoaTExQGdlcnJpdC5vcGVuYm1jLm9yZzoyOTQxOC9vcGVuYm1j
-L2t1bmx1bi1pcG1pLW9lbSAoZmV0Y2gpCj4+IG9yaWdpbiBzc2g6Ly94aXV6aGkxMUBnZXJyaXQu
-b3BlbmJtYy5vcmc6Mjk0MTgvb3BlbmJtYy9rdW5sdW4taXBtaS1vZW0gKHB1c2gpCj4+IEkgY2Fu
-bm90IG5vdCBmaW5kIHRoZSBuZXcgcGF0Y2ggb24gZ2Vycml0IHdoZW4gSSB1c2UgY29tbWFuZDoK
-Pj4gICAgIGdpdCBwdXNoIG9yaWdpbiBtYWluCj4+IGl0IG1lcmdlZCB0byB0aGUgcmVwbyBodHRw
-czovL2dpdGh1Yi5jb20vb3BlbmJtYy9rdW5sdW4taXBtaS1vZW0gZGlyZWN0bHkuCj4+IHdoeT8K
-Pj4gWGl1emhpCj4+Cj4+IC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLQo+Pgo+PiAtLQo+PiBYaXV6aGkgQ2hlbmcKPj4gQk1DIEZpcm13YXJlIFRlYW0K
-Pj4gS3VubHVuIFRlY2hub2xvZ3kgKEJlaWppbmcpIENvLiBMdGQuCj4+IFRhaWppIGJ1aWxkaW5n
-LCBOby4yMTEsIEJlaXNpaHVhbiBNaWRkbGUgUm9hZCwgSGFpZGlhbiBEaXN0cmljdCwgQmVpamlu
-ZyxDaGluYS4KPj4gVEVMOiA4NjEwLTg5MDU2MjkwCj4+IHd3dy56ZC10ZWNoLmNvbS5jbgo+Pgo+
-PgoKCg0KDQo=
---=_Part_187942_1407664891.1655454160009
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: base64
+--jKjRAf+U0chs2ccJ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxwcmU+PGJyIC8+5Y+R5Lu25Lq677yaSm9obiBCcm9hZGJlbnQg
-Jmx0O2plYnJAZ29vZ2xlLmNvbSZndDsK5Y+R6YCB5pel5pyf77yaMjAyMi0wNi0xNiAxMDo1NToz
-MArmlLbku7bkurrvvJoi5oiQ5L+u5rK7IiAmbHQ7eHpjaGVuZ0BrdW5sdW50ZWNoLmNvbS5jbiZn
-dDsK5oqE6YCB5Lq677yaT3BlbkJNQyBNYWlsbGlzdCAmbHQ7b3BlbmJtY0BsaXN0cy5vemxhYnMu
-b3JnJmd0OwrkuLvpopjvvJpSZTogSG93IHRvIHBvc3QgcGF0Y2hlcyBmb3IgcmV2aWV3IHRvIEdl
-cnJpdD8mZ3Q7Q2FuIHlvdSB0cnk6CiZndDsgICQgZ2l0IHB1c2ggb3JpZ2luIEhFQUQ6cmVmcy9m
-b3IvbWFzdGVyCjxkaXY+Jmd0OzwvZGl2PjxkaXY+aXQgd29ya3Mgbm93IGJ5IHRoaXMgY29tYW5k
-LlRoYW5rcy48L2Rpdj48ZGl2PlhpdXpoaTwvZGl2PjxkaXY+Jmd0O2lmIHRoYXQgZG9lcyBub3Qg
-d29yayB0cnkgc29tZXRoaW5nIGxpa2UgdGhpczo8L2Rpdj4mZ3Q7ICAgJCBnaXQgcHVzaCBzc2g6
-Ly94aXV6aGkxMUBnZXJyaXQub3BlbmJtYy5vcmc6Mjk0MTgvb3BlbmJtYy9rdW5sdW4taXBtaS1v
-ZW0KJmd0O0hFQUQ6cmVmcy9mb3IvbWFzdGVyIC12dnYKJmd0OwomZ3Q7VGhlcmUgYXJlIGluc3Ry
-dWN0aW9ucyBoZXJlIHdpdGggYSBzYW1wbGUgcHVzaCBjb21tYW5kCiZndDtodHRwczovL2dpdGh1
-Yi5jb20vb3BlbmJtYy9kb2NzL2Jsb2IvbWFzdGVyL2RldmVsb3BtZW50L2dlcnJpdC1zZXR1cC5t
-ZCNwdXNoLWNvZGUtY2hhbmdlLXRvLWdlcnJpdAomZ3Q7CiZndDtMZXQgdXMga25vdyBpZiB5b3Ug
-aGF2ZSBhbnkgaXNzdWVzLgo8ZGl2PiZndDs8L2Rpdj4mZ3Q7CiZndDtPbiBXZWQsIEp1biAxNSwg
-MjAyMiBhdCA3OjA1IFBNIOaIkOS/ruayuyAmbHQ7eHpjaGVuZ0BrdW5sdW50ZWNoLmNvbS5jbiZn
-dDsgd3JvdGU6CiZndDsmZ3Q7CiZndDsmZ3Q7IEhpICwKJmd0OyZndDsgICBJIHdhbnQgdG8gcG9z
-dCBhIHBhdGNoIHRvIG9wZW5ibWMva3VubHVuLWlwbWktb2VtIGdlcnJpdCBzZXJ2ZXIgZm9yIHJl
-dmlldywKJmd0OyZndDsgIGh0dHBzOi8vZ2Vycml0Lm9wZW5ibWMub3JnL2FkbWluL3JlcG9zL29w
-ZW5ibWMva3VubHVuLWlwbWktb2VtLGdlbmVyYWwKJmd0OyZndDsKJmd0OyZndDsgSSBjbG9uZWQg
-aXQgYnkgOgomZ3Q7Jmd0OyAgICBnaXQgY2xvbmUgInNzaDovL3hpdXpoaTExQGdlcnJpdC5vcGVu
-Ym1jLm9yZzoyOTQxOC9vcGVuYm1jL2t1bmx1bi1pcG1pLW9lbSIKJmd0OyZndDsgdGhlIGNvbW1h
-bmQgOmdpdCByZW1vdGUgLXYgaXM6CiZndDsmZ3Q7IG9yaWdpbiBzc2g6Ly94aXV6aGkxMUBnZXJy
-aXQub3BlbmJtYy5vcmc6Mjk0MTgvb3BlbmJtYy9rdW5sdW4taXBtaS1vZW0gKGZldGNoKQomZ3Q7
-Jmd0OyBvcmlnaW4gc3NoOi8veGl1emhpMTFAZ2Vycml0Lm9wZW5ibWMub3JnOjI5NDE4L29wZW5i
-bWMva3VubHVuLWlwbWktb2VtIChwdXNoKQomZ3Q7Jmd0OyBJIGNhbm5vdCBub3QgZmluZCB0aGUg
-bmV3IHBhdGNoIG9uIGdlcnJpdCB3aGVuIEkgdXNlIGNvbW1hbmQ6CiZndDsmZ3Q7ICAgICBnaXQg
-cHVzaCBvcmlnaW4gbWFpbgomZ3Q7Jmd0OyBpdCBtZXJnZWQgdG8gdGhlIHJlcG8gaHR0cHM6Ly9n
-aXRodWIuY29tL29wZW5ibWMva3VubHVuLWlwbWktb2VtIGRpcmVjdGx5LgomZ3Q7Jmd0OyB3aHk/
-CiZndDsmZ3Q7IFhpdXpoaQomZ3Q7Jmd0OwomZ3Q7Jmd0OyAtLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0KJmd0OyZndDsKJmd0OyZndDsgLS0KJmd0OyZn
-dDsgWGl1emhpIENoZW5nCiZndDsmZ3Q7IEJNQyBGaXJtd2FyZSBUZWFtCiZndDsmZ3Q7IEt1bmx1
-biBUZWNobm9sb2d5IChCZWlqaW5nKSBDby4gTHRkLgomZ3Q7Jmd0OyBUYWlqaSBidWlsZGluZywg
-Tm8uMjExLCBCZWlzaWh1YW4gTWlkZGxlIFJvYWQsIEhhaWRpYW4gRGlzdHJpY3QsIEJlaWppbmcs
-Q2hpbmEuCiZndDsmZ3Q7IFRFTDogODYxMC04OTA1NjI5MAomZ3Q7Jmd0OyB3d3cuemQtdGVjaC5j
-b20uY24KJmd0OyZndDsKJmd0OyZndDsKPC9wcmU+PC9kaXY+PGJyPg==
---=_Part_187942_1407664891.1655454160009--
+On Wed, Jun 15, 2022 at 04:00:17PM +0200, Arnd Bergmann wrote:
+> On Thu, Jun 9, 2022 at 11:35 PM Jonathan Neusch=C3=A4fer
+> <j.neuschaefer@gmx.net> wrote:
+> >
+> > Add a SoC information driver for Nuvoton WPCM450 SoCs. It provides
+> > information such as the SoC revision.
+> >
+> > Usage example:
+> >
+> >   # grep . /sys/devices/soc0/*
+> >   /sys/devices/soc0/family:Nuvoton NPCM
+> >   /sys/devices/soc0/revision:A3
+> >   /sys/devices/soc0/soc_id:WPCM450
+> >
+> > Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+> > Reviewed-by: Joel Stanley <joel@jms.id.au>
+> > Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+>=20
+> Looks good overall.
+>=20
+> > +menuconfig WPCM450_SOC
+> > +       bool "Nuvoton WPCM450 SoC driver"
+> > +       default y if ARCH_WPCM450
+>=20
+> It would be nice to make this a tristate option, as we generally
+> like to keep optional drivers out of the allmodconfig vmlinux file,
+> even if this is a tiny one.
+
+Ok.
+
+> Just add the trivial cleanup function and MODULE_LICENSE() etc tags.
+
+The right thing to do seems to be to unregister the SoC device in the
+cleanup function. Is that what you mean?
+
+
+Jonathan
+
+--jKjRAf+U0chs2ccJ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmKsSQoACgkQCDBEmo7z
+X9v7ag//ULZktidbg2z7RnwVy6ePYuuYsXSdl2wtC3kdzVwdJwgt+0M/BezrQ1/6
+lHXqtAcjtyaRtAJ5yw8fRtCEx9zdz1jL0bdgFA6CxcaHPP9Nr9NHTOSWNevFIg4w
+7lj6RvlbkLie8799JAmgZDVQBzsMByQaZueA2dXcFddaANmqGTQP0RdKu2SqF1eR
+IJEq78QnqjguDz+wLrnqcU4j+WWVTmZw6VCUImmQvur1X9wmJ9CvikZt0GCMhmw/
+7QjTpAMGrGl/iN+b9OZrdtytbHj+YsNBlZGuTFoPLtN6hItyxb1ISLaiEKRVCVtQ
+egswr9lXGrMqwK9A7435DdcmrWoYdQ/7VlbXSVwbDYNsPjZRbAy7rGsWXOsiM1fA
+RPbYmoxxi2ZrLeINT900xtXHovtRM4ICWbj5uJPdLJu/IJNvRfYmYlJKisnr+xU1
+RGp+97USsPZTn3pnqEKH7nAkLV3zO7LPXWsaDRAvhn1a9E5KTrKhg/yqWj6RTMOJ
+trsl9UB8kKeekcP8Z3/DAjF9g8H7dR5pnpmLXSRMVBH3L08P22Ot8S8BTmELpt+F
+yAZenVbFBhnVQ3huJTd6QTzAvW+q3DxCR+1eE+PYJzghYfcae1jDl8hm9zFfbn3d
+rw0B0QUEf9m3aXP+lZlOrZfNKEgpQWG4napZVoPxvGtlkUV6u9M=
+=8EJF
+-----END PGP SIGNATURE-----
+
+--jKjRAf+U0chs2ccJ--
