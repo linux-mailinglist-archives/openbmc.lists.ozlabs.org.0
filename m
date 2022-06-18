@@ -1,72 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A38155039F
-	for <lists+openbmc@lfdr.de>; Sat, 18 Jun 2022 11:07:38 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 96E4955043F
+	for <lists+openbmc@lfdr.de>; Sat, 18 Jun 2022 13:37:54 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LQ96J0TMRz3bpY
-	for <lists+openbmc@lfdr.de>; Sat, 18 Jun 2022 19:07:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LQDRh3YD8z3bwg
+	for <lists+openbmc@lfdr.de>; Sat, 18 Jun 2022 21:37:52 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=IEaKO/iZ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=L9AVPnOx;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=flex--davidgow.bounces.google.com (client-ip=2607:f8b0:4864:20::64a; helo=mail-pl1-x64a.google.com; envelope-from=3-zstyggkb_qzwrezcksckkcha.ykiklajxiyheopo.kvhwxo.knc@flex--davidgow.bounces.google.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=134.134.136.31; helo=mga06.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=IEaKO/iZ;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=L9AVPnOx;
 	dkim-atps=neutral
-Received: from mail-pl1-x64a.google.com (mail-pl1-x64a.google.com [IPv6:2607:f8b0:4864:20::64a])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LQ92314nSz3cCP
-	for <openbmc@lists.ozlabs.org>; Sat, 18 Jun 2022 19:03:54 +1000 (AEST)
-Received: by mail-pl1-x64a.google.com with SMTP id b13-20020a170902e94d00b001692fd82122so3114021pll.14
-        for <openbmc@lists.ozlabs.org>; Sat, 18 Jun 2022 02:03:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
-         :cc;
-        bh=myIlMYs7Kh5+xez48ocTcxFM1TIOp6h9g401FLEKFqU=;
-        b=IEaKO/iZsLdPyJZ1LpJt4u+iLPMLa/M2HCAGnsppDn3A9MBSKBCVvZkH89wA7XifFt
-         1yeZwF9Hq10m5fOKe63/QT58BXP03zeFTrKw4p9JhgTZg4In+OAHIAyVpgwcbULCBzST
-         M/1jBrC/A3e2hcPWIcVx2w4pA0YHNV6h71fmSZ3XCiZASlg13Zth0fH8YOBpTpv94PKE
-         QtxW4nGTlIVDFTryEGftNifeYuYFwUOm1NpslFOsMKptUqou0b5sA858ijDk7sR32+rj
-         Mty1Gy1+ge2JfBX2XdqstVojlDrq1BzN9RZcgEo0YyHajWndO946UT7fQUxblM36JnP7
-         /1rg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=myIlMYs7Kh5+xez48ocTcxFM1TIOp6h9g401FLEKFqU=;
-        b=63AnIW3tO+avbRVE12LdSurICq8jGEdjWer8bDNVPa01QRIZhyqz1luM3rKaBSNBwg
-         YhM8YXrIAmfGXvs6u8tWxO+O46YEYJOFO7ITmSKIsWKOv97+vQ2jt2fauR+clPDDhA8K
-         mixMbrrsMoA2kxbJRgfVRj28FAbGDYTP4km2kc5i5/qyAgInIJwrffdS9W2XinUk3An3
-         MZrZMDeY69rlPSKV2qVhGKa9b9NCvf54OR2e+L2/SOidbzKnhVq+5ONI1dZ7tKcotzRk
-         c5UhvgJM8g/jgU2RuVlHcWqbAub1wK2Uwh7kuM9wxkUu3hVgh6jF6sgdR7lATIw4RdyE
-         jCZA==
-X-Gm-Message-State: AJIora8QzB5fPURPcgw1lttdonZyMR/exKPkFc/fSU9jWWsrDpLK8gDt
-	R8AJIIcT5fEaA5uSkgaqQttgffQi1cOUxg==
-X-Google-Smtp-Source: AGRyM1t9gG0ITBwjDzCGfVnRzUa4o4t3RyG/S7Wdnx7K6hex62KCdZbIOx7EIntyed7oeD+RzX1j54h7Te2odg==
-X-Received: from slicestar.c.googlers.com ([fda3:e722:ac3:cc00:4f:4b78:c0a8:20a1])
- (user=davidgow job=sendgmr) by 2002:a17:90b:4c0e:b0:1e8:859c:6b56 with SMTP
- id na14-20020a17090b4c0e00b001e8859c6b56mr25861123pjb.121.1655543033024; Sat,
- 18 Jun 2022 02:03:53 -0700 (PDT)
-Date: Sat, 18 Jun 2022 17:03:10 +0800
-In-Reply-To: <20220618090310.1174932-1-davidgow@google.com>
-Message-Id: <20220618090310.1174932-6-davidgow@google.com>
-Mime-Version: 1.0
-References: <20220618090310.1174932-1-davidgow@google.com>
-X-Mailer: git-send-email 2.36.1.476.g0c4daa206d-goog
-Subject: [PATCH 5/5] mmc: sdhci-of-aspeed: test: Use kunit_test_suite() macro
-From: David Gow <davidgow@google.com>
-To: Brendan Higgins <brendanhiggins@google.com>, Luis Chamberlain <mcgrof@kernel.org>, 
-	Jeremy Kerr <jk@codeconstruct.com.au>, Daniel Latypov <dlatypov@google.com>, 
-	Shuah Khan <skhan@linuxfoundation.org>, Andrew Jeffery <andrew@aj.id.au>, 
-	Mika Westerberg <mika.westerberg@linux.intel.com>, Andra Paraschiv <andraprs@amazon.com>, 
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LQDRC51b6z3bkY;
+	Sat, 18 Jun 2022 21:37:26 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1655552248; x=1687088248;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=trJevHg9pw/ezRiw4PuJjXBPnKq5vd9v7IT0hWBUmjs=;
+  b=L9AVPnOx0GESO4EEwPTBEbl1KVEJayaXNL7eP72GECy3UdNcDrAfbAbm
+   1YLomMrMM4HoUMSr+VKA9AF/wj5DCQGGE00foCeMVUYr3e+LbG/FuSJB2
+   vjpczt2tQBbylTMvIMbkovNsZ40/5szLfC99LTBLrHOMS2JdPK9nV+HH/
+   Y5IQEsq8CT4BB/P+9Yxy2KBYmoA1dKKVs0riNRjkadQX2Abh7hCHqMZLJ
+   SoFqkoxTG5TzAUZAtvr7q6EzPk1FGOLFBcjicsKUiDWlfZSRUfPsWMZIg
+   RC+c+e/NSs/+zvehCIVkaXzspkyeznb0uC9UKzKTTZSMx0b0Gj1R2EtJE
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10380"; a="341333075"
+X-IronPort-AV: E=Sophos;i="5.92,306,1650956400"; 
+   d="scan'208";a="341333075"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 18 Jun 2022 04:37:20 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.92,306,1650956400"; 
+   d="scan'208";a="912969164"
+Received: from lkp-server01.sh.intel.com (HELO 60dabacc1df6) ([10.239.97.150])
+  by fmsmga005.fm.intel.com with ESMTP; 18 Jun 2022 04:37:16 -0700
+Received: from kbuild by 60dabacc1df6 with local (Exim 4.95)
+	(envelope-from <lkp@intel.com>)
+	id 1o2WlP-000QHv-Cp;
+	Sat, 18 Jun 2022 11:37:15 +0000
+Date: Sat, 18 Jun 2022 19:36:18 +0800
+From: kernel test robot <lkp@intel.com>
+To: David Gow <davidgow@google.com>,
+	Brendan Higgins <brendanhiggins@google.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
+	Daniel Latypov <dlatypov@google.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Andrew Jeffery <andrew@aj.id.au>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Andra Paraschiv <andraprs@amazon.com>,
 	Longpeng <longpeng2@huawei.com>
-Content-Type: text/plain; charset="UTF-8"
+Subject: Re: [PATCH 1/5] kunit: unify module and builtin suite definitions
+Message-ID: <202206181950.qNG3jcE8-lkp@intel.com>
+References: <20220618090310.1174932-2-davidgow@google.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220618090310.1174932-2-davidgow@google.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,118 +78,69 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: David Gow <davidgow@google.com>, linux-aspeed@lists.ozlabs.org, =?UTF-8?q?Ma=C3=ADra=20Canal?= <maira.canal@usp.br>, openbmc@lists.ozlabs.org, linux-usb@vger.kernel.org, linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org, Matt Johnston <matt@codeconstruct.com.au>, linux-modules@vger.kernel.org, kunit-dev@googlegroups.com
+Cc: kbuild-all@lists.01.org, David Gow <davidgow@google.com>, linux-aspeed@lists.ozlabs.org, =?iso-8859-1?Q?Ma=EDra?= Canal <maira.canal@usp.br>, openbmc@lists.ozlabs.org, linux-usb@vger.kernel.org, linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org, Matt Johnston <matt@codeconstruct.com.au>, linux-modules@vger.kernel.org, kunit-dev@googlegroups.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The kunit_test_suite() macro is no-longer incompatible with module_add,
-so its use can be reinstated.
+Hi David,
 
-Since this fixes parsing with builtins and kunit_tool, also enable the
-test by default when KUNIT_ALL_TESTS is enabled.
+I love your patch! Yet something to improve:
 
-The test can now be run via kunit_tool with:
-	./tools/testing/kunit/kunit.py run --arch=x86_64 \
-	--kconfig_add CONFIG_OF=y --kconfig_add CONFIG_OF_ADDRESS=y \
-	--kconfig_add CONFIG_MMC=y --kconfig_add CONFIG_MMC_SDHCI=y \
-	--kconfig_add CONFIG_MMC_SDHCI_PLTFM=y \
-	--kconfig_add CONFIG_MMC_SDHCI_OF_ASPEED=y \
-	'sdhci-of-aspeed'
+[auto build test ERROR on linus/master]
+[cannot apply to mcgrof/modules-next joel-aspeed/for-next ulf-hansson-mmc-mirror/next]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch]
 
-(It may be worth adding a .kunitconfig at some point, as there are
-enough dependencies to make that command scarily long.)
+url:    https://github.com/intel-lab-lkp/linux/commits/David-Gow/Rework-KUnit-test-execution-in-modules/20220618-170653
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git 4b35035bcf80ddb47c0112c4fbd84a63a2836a18
+config: s390-allmodconfig (https://download.01.org/0day-ci/archive/20220618/202206181950.qNG3jcE8-lkp@intel.com/config)
+compiler: s390-linux-gcc (GCC) 11.3.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/14ff6ae01a41e301f1409874dd5aa38f73bc96f5
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review David-Gow/Rework-KUnit-test-execution-in-modules/20220618-170653
+        git checkout 14ff6ae01a41e301f1409874dd5aa38f73bc96f5
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-11.3.0 make.cross W=1 O=build_dir ARCH=s390 SHELL=/bin/bash lib/kunit/
 
-Signed-off-by: David Gow <davidgow@google.com>
----
- drivers/mmc/host/Kconfig                |  5 +++--
- drivers/mmc/host/sdhci-of-aspeed-test.c |  8 +-------
- drivers/mmc/host/sdhci-of-aspeed.c      | 27 -------------------------
- 3 files changed, 4 insertions(+), 36 deletions(-)
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
 
-diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
-index d6144978e32d..10c563999d3d 100644
---- a/drivers/mmc/host/Kconfig
-+++ b/drivers/mmc/host/Kconfig
-@@ -169,8 +169,9 @@ config MMC_SDHCI_OF_ASPEED
- 	  If unsure, say N.
- 
- config MMC_SDHCI_OF_ASPEED_TEST
--	bool "Tests for the ASPEED SDHCI driver"
--	depends on MMC_SDHCI_OF_ASPEED && KUNIT=y
-+	bool "Tests for the ASPEED SDHCI driver" if !KUNIT_ALL_TESTS
-+	depends on MMC_SDHCI_OF_ASPEED && KUNIT
-+	default KUNIT_ALL_TESTS
- 	help
- 	  Enable KUnit tests for the ASPEED SDHCI driver. Select this
- 	  option only if you will boot the kernel for the purpose of running
-diff --git a/drivers/mmc/host/sdhci-of-aspeed-test.c b/drivers/mmc/host/sdhci-of-aspeed-test.c
-index 1ed4f86291f2..ecb502606c53 100644
---- a/drivers/mmc/host/sdhci-of-aspeed-test.c
-+++ b/drivers/mmc/host/sdhci-of-aspeed-test.c
-@@ -96,10 +96,4 @@ static struct kunit_suite aspeed_sdhci_test_suite = {
- 	.test_cases = aspeed_sdhci_test_cases,
- };
- 
--static struct kunit_suite *aspeed_sdc_test_suite_array[] = {
--	&aspeed_sdhci_test_suite,
--	NULL,
--};
--
--static struct kunit_suite **aspeed_sdc_test_suites
--	__used __section(".kunit_test_suites") = aspeed_sdc_test_suite_array;
-+kunit_test_suite(aspeed_sdhci_test_suite);
-diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
-index 6e4e132903a6..c10367946bc7 100644
---- a/drivers/mmc/host/sdhci-of-aspeed.c
-+++ b/drivers/mmc/host/sdhci-of-aspeed.c
-@@ -606,25 +606,6 @@ static struct platform_driver aspeed_sdc_driver = {
- 
- #if defined(CONFIG_MMC_SDHCI_OF_ASPEED_TEST)
- #include "sdhci-of-aspeed-test.c"
--
--static inline int aspeed_sdc_tests_init(void)
--{
--	return __kunit_test_suites_init(aspeed_sdc_test_suites);
--}
--
--static inline void aspeed_sdc_tests_exit(void)
--{
--	__kunit_test_suites_exit(aspeed_sdc_test_suites);
--}
--#else
--static inline int aspeed_sdc_tests_init(void)
--{
--	return 0;
--}
--
--static inline void aspeed_sdc_tests_exit(void)
--{
--}
- #endif
- 
- static int __init aspeed_sdc_init(void)
-@@ -639,12 +620,6 @@ static int __init aspeed_sdc_init(void)
- 	if (rc < 0)
- 		goto cleanup_sdhci;
- 
--	rc = aspeed_sdc_tests_init();
--	if (rc < 0) {
--		platform_driver_unregister(&aspeed_sdc_driver);
--		goto cleanup_sdhci;
--	}
--
- 	return 0;
- 
- cleanup_sdhci:
-@@ -656,8 +631,6 @@ module_init(aspeed_sdc_init);
- 
- static void __exit aspeed_sdc_exit(void)
- {
--	aspeed_sdc_tests_exit();
--
- 	platform_driver_unregister(&aspeed_sdc_driver);
- 	platform_driver_unregister(&aspeed_sdhci_driver);
- }
+All errors (new ones prefixed by >>):
+
+   lib/kunit/test.c: In function 'kunit_module_init':
+>> lib/kunit/test.c:618:28: error: 'struct module' has no member named 'num_kunit_suites'
+     618 |         for (i = 0; i < mod->num_kunit_suites; i++)
+         |                            ^~
+>> lib/kunit/test.c:619:45: error: 'struct module' has no member named 'kunit_suites'
+     619 |                 __kunit_test_suites_init(mod->kunit_suites[i]);
+         |                                             ^~
+   lib/kunit/test.c: In function 'kunit_module_exit':
+   lib/kunit/test.c:626:28: error: 'struct module' has no member named 'num_kunit_suites'
+     626 |         for (i = 0; i < mod->num_kunit_suites; i++)
+         |                            ^~
+   lib/kunit/test.c:627:45: error: 'struct module' has no member named 'kunit_suites'
+     627 |                 __kunit_test_suites_exit(mod->kunit_suites[i]);
+         |                                             ^~
+
+
+vim +618 lib/kunit/test.c
+
+   612	
+   613	#ifdef CONFIG_MODULES
+   614	static void kunit_module_init(struct module *mod)
+   615	{
+   616		unsigned int i;
+   617	
+ > 618		for (i = 0; i < mod->num_kunit_suites; i++)
+ > 619			__kunit_test_suites_init(mod->kunit_suites[i]);
+   620	}
+   621	
+
 -- 
-2.36.1.476.g0c4daa206d-goog
-
+0-DAY CI Kernel Test Service
+https://01.org/lkp
