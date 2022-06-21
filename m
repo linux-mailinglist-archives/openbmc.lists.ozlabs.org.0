@@ -2,47 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 582AB552AE8
-	for <lists+openbmc@lfdr.de>; Tue, 21 Jun 2022 08:16:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D316C552D75
+	for <lists+openbmc@lfdr.de>; Tue, 21 Jun 2022 10:54:22 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LRx9t1Bndz3bs5
-	for <lists+openbmc@lfdr.de>; Tue, 21 Jun 2022 16:16:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LS0gc5c9tz3c95
+	for <lists+openbmc@lfdr.de>; Tue, 21 Jun 2022 18:54:20 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=Mf+BQVdz;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=Ogsxr29v;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=163.com (client-ip=220.181.13.102; helo=m13102.mail.163.com; envelope-from=junhengdi@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=flex--davidgow.bounces.google.com (client-ip=2607:f8b0:4864:20::449; helo=mail-pf1-x449.google.com; envelope-from=3iiexyggkbxeurczux5dx55x2v.t5356v4s3t2z9a9.5g2rs9.58x@flex--davidgow.bounces.google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=Mf+BQVdz;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=Ogsxr29v;
 	dkim-atps=neutral
-Received: from m13102.mail.163.com (m13102.mail.163.com [220.181.13.102])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LRx9L5d8Kz3059
-	for <openbmc@lists.ozlabs.org>; Tue, 21 Jun 2022 16:16:17 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=Date:From:Subject:MIME-Version:Message-ID; bh=kFn0K
-	GOY8HSGXBRqzNLbvHY3jdePZLCQETQbNir1VB0=; b=Mf+BQVdzP8ts4y2Av6WGN
-	QIGZhgH5PTCLrg5N7Wz0/Tf8q2HZ94HS+jpsaHiURy7W4okBRSUmhfY690lcAPIt
-	CokcoaGqg10rmirvW3BLUHYoAYJT10p0lVDTqGuuLo/7lRIcQG4LZbEMfFUwOETE
-	x9u/mGX5MCEWhxTySeeCBU=
-Received: from junhengdi$163.com ( [202.96.123.226] ) by
- ajax-webmail-wmsvr102 (Coremail) ; Tue, 21 Jun 2022 14:16:06 +0800 (CST)
-X-Originating-IP: [202.96.123.226]
-Date: Tue, 21 Jun 2022 14:16:06 +0800 (CST)
-From: =?GBK?B?srvT7w==?= <junhengdi@163.com>
-To: openbmc@lists.ozlabs.org
-Subject: How to config sol uart/serial io addr on ast2500?
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.13 build 20220113(9671e152)
- Copyright (c) 2002-2022 www.mailtech.cn 163com
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_57107_1226754072.1655792166541"
-MIME-Version: 1.0
-Message-ID: <4dc827d0.3c15.18184e7668d.Coremail.junhengdi@163.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: ZsGowADXtIUnYrFiu4wjAA--.20708W
-X-CM-SenderInfo: xmxqxvpqjgxqqrwthudrp/xtbBPRcnf2AZBKfUVAACsq
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
+Received: from mail-pf1-x449.google.com (mail-pf1-x449.google.com [IPv6:2607:f8b0:4864:20::449])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LS0gB1J1Qz2xbY
+	for <openbmc@lists.ozlabs.org>; Tue, 21 Jun 2022 18:53:56 +1000 (AEST)
+Received: by mail-pf1-x449.google.com with SMTP id br7-20020a056a00440700b00522d222b51bso5166658pfb.22
+        for <openbmc@lists.ozlabs.org>; Tue, 21 Jun 2022 01:53:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=date:message-id:mime-version:subject:from:to:cc;
+        bh=nf95HhrfWFUahqXSIitMKY23Se4rd+JJ9W9asuRVrfE=;
+        b=Ogsxr29vx7siAKBfxHcDd5vtA34uCszdFjp4M0pFwM3VCiNoCHpKhuGE5wgAtGqqHl
+         aCbOy32LCBU1l6SioJ723Ij5R8zHkMv6Ki0aQhFeYBWTMupd7de4Yq4HKQEgTBvLeYFY
+         qfTvVI3VxufEyM+pOkc9/Y0+8xQt6AYeRLNmovW+8Nn7Ai7EnB7tqpMZ0cplADz6SWN3
+         4WRDtNJUjqYiW80yyV3yZ+tn7w0CUK29zSyHR1iRT5yuA1kTdYdl4fVhmLRy0APOiM7m
+         EvlxApHEF4iDoOVP0PaNNrl7zYefWUgZo5Bou5AAzguAE+BIysGEnbHAffq1DWjcIYWq
+         qeoA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:message-id:mime-version:subject:from:to:cc;
+        bh=nf95HhrfWFUahqXSIitMKY23Se4rd+JJ9W9asuRVrfE=;
+        b=bRJWhR34KCvc13QLlol4eqVvQBf30devgS7bynZt7l8LbzriIAl7d2sDX+4tq+SQe/
+         zZZXDlpJRyTzNqhTKiHkLBFaS8v/zK6qrrWaT7nnqyTp2PdWektMpyWbPaaaAphMgpBD
+         HxpsFVqsiK67v/8bYMpszsrbTp6Wl8SwFBsH2JHrdzVZ3YAcCto6sX6Q6LCuVvdkOu79
+         rTn4LBqlXOERTwaKpGPiZiNzhr4/1NBjX+Czdm6qaR4GiEHv65xox93FpZDco6JwOVeX
+         BsIWajh59BbtupHwY2pSOtyp7LhBt4ZjG46jmod1q43km+FMM3bZJozDFvhXGL0E+kH0
+         r0Hg==
+X-Gm-Message-State: AJIora8DM5NtpQgnmnyHXVDp01MgJ5PiUUJ7yDWrsVdU8QyFsW0sI9AV
+	UUavIpl7bYBhUZlrRFF0eKYHszR2nYu1tA==
+X-Google-Smtp-Source: AGRyM1vm7uKvTRSoy8DBny3ZH2I/R3zY1c/M5lzSFFKf5zbsgHT5nrh/r0nP22nRH6TvP9voZc09YjHiLsB5UA==
+X-Received: from slicestar.c.googlers.com ([fda3:e722:ac3:cc00:4f:4b78:c0a8:20a1])
+ (user=davidgow job=sendgmr) by 2002:a17:90a:4a97:b0:1ea:fa24:467c with SMTP
+ id f23-20020a17090a4a9700b001eafa24467cmr694965pjh.1.1655801632812; Tue, 21
+ Jun 2022 01:53:52 -0700 (PDT)
+Date: Tue, 21 Jun 2022 16:53:40 +0800
+Message-Id: <20220621085345.603820-1-davidgow@google.com>
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.37.0.rc0.104.g0611611a94-goog
+Subject: [PATCH v2 0/5] Rework KUnit test execution in modules
+From: David Gow <davidgow@google.com>
+To: Brendan Higgins <brendanhiggins@google.com>, Luis Chamberlain <mcgrof@kernel.org>, 
+	Jeremy Kerr <jk@codeconstruct.com.au>, Daniel Latypov <dlatypov@google.com>, 
+	Shuah Khan <skhan@linuxfoundation.org>, Andrew Jeffery <andrew@aj.id.au>, 
+	Mika Westerberg <mika.westerberg@linux.intel.com>, Andra Paraschiv <andraprs@amazon.com>, 
+	Longpeng <longpeng2@huawei.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,59 +74,82 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: David Gow <davidgow@google.com>, linux-aspeed@lists.ozlabs.org, =?UTF-8?q?Ma=C3=ADra=20Canal?= <maira.canal@usp.br>, openbmc@lists.ozlabs.org, linux-usb@vger.kernel.org, linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org, Christophe Leroy <christophe.leroy@csgroup.eu>, linux-kselftest@vger.kernel.org, Matt Johnston <matt@codeconstruct.com.au>, Paraschiv@google.com, linux-modules@vger.kernel.org, kunit-dev@googlegroups.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_57107_1226754072.1655792166541
-Content-Type: text/plain; charset=GBK
-Content-Transfer-Encoding: base64
+This patch series makes two changes to how KUnit test suites are stored
+and executed:
+- The .kunit_test_suites section is now used for tests in modules (in
+  lieu of a module_init funciton), as well as for built-in tests. The
+  module loader will now trigger test execution. This frees up the
+  module_init function for other uses.
+- Instead of storing an array of arrays of suites, have the
+  kunit_test_suite() and kunit_test_suites() macros append to one global
+  (or per-module) list of test suites. This removes a needless layer of
+  indirection, and removes the need to NULL-terminate suite_sets.
 
-RGVhciBvcGVuYm1jZXIsCgpBcyBJIGtub3cgYnkgZGVmYXVsdCAsIGFzdDI1MDAgb24gZXNwaSBv
-ciBscGMgaXMgSU8gc2xhdmUgd2l0aCBiYXNlIGlvIGFkZHIgMHgzZjggLiBDcHUgY29uc29sZSBz
-ZW5kIHVhcnQvY29tIGRhdGEgdG8gYXN0MjUwMCBieSBhY2Nlc3MgaW8gYWRkciAweDNmOCB3aGlj
-aCBpcyBtYXBwZWQgdG8gZXNwaSBvciBscGMuVGhlbiBhc3QyNTAwIGdldCB0aGUgZGF0YSBhbmQg
-c2VuZCB0byBvbmUgb2YgdWFydC4KCkkgaGF2ZSBzZXZlcmFsIHF1ZXN0aW9ucyBhYm91dCB0aGUg
-cmVhbGl6YXRpb24gb3Igb3BlcmF0aW9uIGFzIGZvbGxvd3M6CgoxICBJIHdhbnQgdG8ga25vdyB0
-aGUgZnVuY3Rpb24gb2YgZXNwaSBzbGF2ZSAweDNmOCBvbiBhc3QyNTAwIGlzIHJlYWxpemF0aW9u
-IGJ5IHNvbWUga2VybmVsIGRyaXZlcnMgb3Igc29saWRpZmllZCBvbiB0aGUgY2hpcCByb20/Cgog
-ICAgICAgICAgICAgICAgMiAgSG93IHRvIGNvbmZpZyB0aGUgdWFydC9zZXJpYWwgYmFzZSBpbyBh
-ZGRyIHN1Y2ggYXMgIDB4MmY4ICwweDJlOCBieSBhc3QyNTAwIHJlZ2lzdGVyPyAKCjMgIEhvdyB0
-byBjb25maWcgd2hpY2ggYXN0MjUwMCB1YXJ0IHdpbGwgaW50ZXJhY3RpdmUgd2l0aCAweDNmOCBi
-eSBhc3QyNTAwIHJlZ2lzdGVyPyAKCkFueSBhZHZpY2Ugd2lsbCBiZSBhcHByZWNpYXRlZC4KClRo
-YW5rcywKCkp1bkhlbmc=
-------=_Part_57107_1226754072.1655792166541
-Content-Type: text/html; charset=GBK
-Content-Transfer-Encoding: base64
+The upshot of this is that it should now be possible to use the
+kunit_test_suite() and kunit_test_suites() macros to register test
+suites even from within modules which otherwise had module_init
+functions. This was proving to be quite a common issue, resulting in
+several modules calling into KUnit's private suite execution functions
+to run their tests (often introducing incompatibilities with the KUnit
+tooling).
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxwIHN0eWxlPSJtYXJnaW46MDsiPkRlYXIgb3BlbmJtY2VyLDwv
-cD48cCBzdHlsZT0ibWFyZ2luOjA7Ij48c3BhbiBjbGFzcz0iQXBwbGUtdGFiLXNwYW4iIHN0eWxl
-PSJ3aGl0ZS1zcGFjZTpwcmUiPgkJPC9zcGFuPkFzIEkga25vdyBieSBkZWZhdWx0ICwgYXN0MjUw
-MCBvbiBlc3BpIG9yIGxwYyBpcyBJTyBzbGF2ZSB3aXRoIGJhc2UgaW8gYWRkciAweDNmOCAuIENw
-dSBjb25zb2xlIHNlbmQgdWFydC9jb20gZGF0YSB0byBhc3QyNTAwIGJ5IGFjY2VzcyBpbyBhZGRy
-IDB4M2Y4IHdoaWNoIGlzIG1hcHBlZCB0byBlc3BpIG9yIGxwYy5UaGVuIGFzdDI1MDAgZ2V0IHRo
-ZSBkYXRhIGFuZCBzZW5kIHRvIG9uZSBvZiB1YXJ0LjwvcD48cCBzdHlsZT0ibWFyZ2luOjA7Ij48
-c3BhbiBjbGFzcz0iQXBwbGUtdGFiLXNwYW4iIHN0eWxlPSJ3aGl0ZS1zcGFjZTpwcmUiPgkJPC9z
-cGFuPkkgaGF2ZSBzZXZlcmFsIHF1ZXN0aW9ucyBhYm91dCB0aGUgcmVhbGl6YXRpb24gb3Igb3Bl
-cmF0aW9uIGFzIGZvbGxvd3M6PC9wPjxwIHN0eWxlPSJtYXJnaW46MDsiPjxzcGFuIGNsYXNzPSJB
-cHBsZS10YWItc3BhbiIgc3R5bGU9IndoaXRlLXNwYWNlOnByZSI+CQk8L3NwYW4+MSAmbmJzcDtJ
-IHdhbnQgdG8ga25vdyB0aGUgZnVuY3Rpb24gb2YgZXNwaSBzbGF2ZSAweDNmOCBvbiBhc3QyNTAw
-IGlzIHJlYWxpemF0aW9uIGJ5IHNvbWUga2VybmVsIGRyaXZlcnMgb3Igc29saWRpZmllZCBvbiB0
-aGUgY2hpcCByb20/PC9wPjxwIHN0eWxlPSJtYXJnaW46MDsiPiZuYnNwOyAmbmJzcDsgJm5ic3A7
-ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgMiAmbmJzcDtIb3cgdG8gY29uZmln
-IHRoZSB1YXJ0L3NlcmlhbCBiYXNlIGlvIGFkZHIgc3VjaCBhcyAmbmJzcDsweDJmOCAsMHgyZTgg
-YnkgYXN0MjUwMCByZWdpc3Rlcj8mbmJzcDs8L3A+PHAgc3R5bGU9Im1hcmdpbjowOyI+PHNwYW4g
-Y2xhc3M9IkFwcGxlLXRhYi1zcGFuIiBzdHlsZT0id2hpdGUtc3BhY2U6cHJlIj4JCTwvc3Bhbj4z
-ICZuYnNwO0hvdyB0byBjb25maWcgd2hpY2ggYXN0MjUwMCB1YXJ0IHdpbGwgaW50ZXJhY3RpdmUg
-d2l0aCAweDNmOCBieSBhc3QyNTAwIHJlZ2lzdGVyPyZuYnNwOzwvcD48cCBzdHlsZT0ibWFyZ2lu
-OjA7Ij48c3BhbiBjbGFzcz0iQXBwbGUtdGFiLXNwYW4iIHN0eWxlPSJ3aGl0ZS1zcGFjZTpwcmUi
-PgkJPC9zcGFuPjwvcD48cCBzdHlsZT0ibWFyZ2luOjA7Ij48c3BhbiBjbGFzcz0iQXBwbGUtdGFi
-LXNwYW4iIHN0eWxlPSJ3aGl0ZS1zcGFjZTpwcmUiPgkJPC9zcGFuPkFueSBhZHZpY2Ugd2lsbCBi
-ZSBhcHByZWNpYXRlZC48L3A+PHAgc3R5bGU9Im1hcmdpbjowOyI+PHNwYW4gY2xhc3M9IkFwcGxl
-LXRhYi1zcGFuIiBzdHlsZT0id2hpdGUtc3BhY2U6cHJlIj4JCTwvc3Bhbj48L3A+PHAgc3R5bGU9
-Im1hcmdpbjowOyI+PHNwYW4gY2xhc3M9IkFwcGxlLXRhYi1zcGFuIiBzdHlsZT0id2hpdGUtc3Bh
-Y2U6cHJlIj4JCTwvc3Bhbj5UaGFua3MsPC9wPjxwIHN0eWxlPSJtYXJnaW46MDsiPjxzcGFuIGNs
-YXNzPSJBcHBsZS10YWItc3BhbiIgc3R5bGU9IndoaXRlLXNwYWNlOnByZSI+CQk8L3NwYW4+SnVu
-SGVuZzwvcD48L2Rpdj4=
-------=_Part_57107_1226754072.1655792166541--
+This series also fixes the thunderbolt, nitro_enclaves, and
+sdhci-of-aspeed tests to use kunit_test_suite() now that it works. This
+is required, as otherwise the first two patches may break these tests
+entirely.
+
+Huge thanks to Jeremy Kerr, who designed and implemented the module
+loader changes, and to Daniel Latypov for pushing the simplification of
+the nested arrays in .kunit_test_suites.
+
+I've tested this series both with builtin tests, and with modules on
+x86_64, but there's always the possibility that there's something subtle
+and nasty on another architecture, so please test!
+
+Cheers,
+-- David
+
+Changes since v1:
+https://lore.kernel.org/linux-kselftest/20220618090310.1174932-1-davidgow@google.com/
+- Fix a compile issue when CONFIG_KUNIT=m (Thanks Christophe)
+- No longer NULL-terminate suite_sets.
+- Move the thunderbird Kconfig to the correct patch (Thanks Andra)
+- Add all the Tested-by and Acked-by tags.
+
+---
+Daniel Latypov (1):
+  kunit: flatten kunit_suite*** to kunit_suite** in .kunit_test_suites
+
+David Gow (3):
+  thunderbolt: test: Use kunit_test_suite() macro
+  nitro_enclaves: test: Use kunit_test_suite() macro
+  mmc: sdhci-of-aspeed: test: Use kunit_test_suite() macro
+
+Jeremy Kerr (1):
+  kunit: unify module and builtin suite definitions
+
+ drivers/mmc/host/Kconfig                      |   5 +-
+ drivers/mmc/host/sdhci-of-aspeed-test.c       |   8 +-
+ drivers/mmc/host/sdhci-of-aspeed.c            |  27 ----
+ drivers/thunderbolt/Kconfig                   |   5 +-
+ drivers/thunderbolt/domain.c                  |   3 -
+ drivers/thunderbolt/tb.h                      |   8 -
+ drivers/thunderbolt/test.c                    |  12 +-
+ drivers/virt/nitro_enclaves/Kconfig           |   5 +-
+ drivers/virt/nitro_enclaves/ne_misc_dev.c     |  27 ----
+ .../virt/nitro_enclaves/ne_misc_dev_test.c    |   5 +-
+ include/kunit/test.h                          |  60 ++------
+ include/linux/module.h                        |   5 +
+ kernel/module/main.c                          |   6 +
+ lib/kunit/executor.c                          | 115 ++++----------
+ lib/kunit/executor_test.c                     | 144 +++++-------------
+ lib/kunit/test.c                              |  54 ++++++-
+ 16 files changed, 152 insertions(+), 337 deletions(-)
+
+-- 
+2.37.0.rc0.104.g0611611a94-goog
 
