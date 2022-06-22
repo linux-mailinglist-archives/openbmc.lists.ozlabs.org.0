@@ -2,61 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1C658554564
-	for <lists+openbmc@lfdr.de>; Wed, 22 Jun 2022 12:51:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5CC2E554EF4
+	for <lists+openbmc@lfdr.de>; Wed, 22 Jun 2022 17:19:32 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LSgCs6WZfz3btT
-	for <lists+openbmc@lfdr.de>; Wed, 22 Jun 2022 20:51:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LSn9Z1LpZz3bsv
+	for <lists+openbmc@lfdr.de>; Thu, 23 Jun 2022 01:19:30 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=KFOCBbbo;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=V6GH7Y2b;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d2a; helo=mail-io1-xd2a.google.com; envelope-from=raviteja28031990@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=KFOCBbbo;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=V6GH7Y2b;
 	dkim-atps=neutral
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LSgCV1mHTz2yMk
-	for <openbmc@lists.ozlabs.org>; Wed, 22 Jun 2022 20:50:44 +1000 (AEST)
-Received: by mail-io1-xd2a.google.com with SMTP id s17so10841242iob.7
-        for <openbmc@lists.ozlabs.org>; Wed, 22 Jun 2022 03:50:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=bGHlAbbnWwIPNYSUQJ0AILCcdYqs3d3Q3lCKh+v2cTc=;
-        b=KFOCBbboS5E6KZqYV8oU+RjPIHibNtBc/PreTnrb4iEMoIpbfk48NWcPG1ZX0dBrb9
-         66p27knFL8Uy1vj71oKZ5HaptqZqyzjKUsZLDCoDecF8UDtpL5InKe8KHJrLw1xDrx7f
-         p4plx5m7LhEgijuX6B9vK5UW36fjeqCT8sDir3DOZHfCZmKhVDeynQvXSxAPnYP8k8DK
-         xE6979ttnQy9s4AG5tvHGnJPRygQM5sm/i/llPCU1uM+DMp4+3wvTrigfChavPfGXCZe
-         ifZBck2SMHe/kRKNPf6Wf09rM98BHYruAfUY2fxjETxVPIQ0UdRp2mEOPEI2Vt2jwKYI
-         yv9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=bGHlAbbnWwIPNYSUQJ0AILCcdYqs3d3Q3lCKh+v2cTc=;
-        b=eftT6z8pwhnWGi2KvIhkRZPssy7Al5m3kAMUTT9Lt9LqbZx/gRMZdEo3aGzyYxKXPa
-         Fz19d7y/bRyfrFniH1iz7o489btl7A+vewX0yFJv73a7ShtuOhKf9gf5CtYXOuIURpjo
-         lS51XzIQVYTtsGWMGePRhWAw9jzSCJqpI0o9KYb33p1ChuzWJTWuncWfRnpcPd/YqpZR
-         dv5bKudlptXfkjl+zqMn89E89kiclQ5V+nog+MkzFUCWYdl/oUu9Rg05q51HEyLufiU8
-         +kuNCD0KR/mzufAuM/xfcyepmTwf8aRScgi7G5ZbN7eAbv8ddiIk7TMd2n5CMFhVQrsr
-         gW5g==
-X-Gm-Message-State: AJIora+0u8y6Aq88XCnVrN8dXAP+7qf6sFqLF5d3Nywgy8YIaZPmJz9O
-	2Yy9qKD9m2cb0SCSXFajciEwcgLxgZQDQnE8KYxRkVd78j4=
-X-Google-Smtp-Source: AGRyM1sKwTgRufpz9DDlCRS9144hCyK5eKTnyf8/l71tl0cpC083jauF7Z6RTHItu6wsBASLeItGTluTOkAGYMOw4YI=
-X-Received: by 2002:a05:6602:160b:b0:669:d8c0:4be6 with SMTP id
- x11-20020a056602160b00b00669d8c04be6mr1551264iow.43.1655895040885; Wed, 22
- Jun 2022 03:50:40 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LSn975MgGz2ywr
+	for <openbmc@lists.ozlabs.org>; Thu, 23 Jun 2022 01:19:07 +1000 (AEST)
+Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 25MEpGEv018528
+	for <openbmc@lists.ozlabs.org>; Wed, 22 Jun 2022 15:19:04 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date : to :
+ from : subject : content-type : content-transfer-encoding : mime-version;
+ s=pp1; bh=dJh0Gy/WJwdCJn5gzwGxnw85iXMWbCmVsr3badBGd7Q=;
+ b=V6GH7Y2bZJegdoKc2Dcb4cZ1QJSuoYnwUOolNR/ok3PZjjTp7akqHcGiHr2NguzCB7eH
+ q9uy5rSszGjg25wOnr9M3Lg1jL/pZv8bBwv0mBphlhWZ9jPrzchqFgTDi5PNYDKTn3LI
+ mOqMXjnOzbve7wndvTn5VH4D6lPBIyE8CGgItnBzwXJLuE0fZ2n5xpkZjoqcR6PlM+7h
+ oP54dNBWJ92M+MUhnfdr5RYwR+Zufv2H32/ToxXAYDe46sqssf0nVRpgVM6MOIKBbyNy
+ 7t/ByQuKRlTERTOf5mvkI12hNqc/Rcxdw1cnP8V+CtF2+Nyg9HLd8CFY7e0BLi3TD6Q4 Zw== 
+Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com [169.55.85.253])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3gv56x8tbp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 22 Jun 2022 15:19:04 +0000
+Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
+	by ppma01wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 25MF6eI7010839
+	for <openbmc@lists.ozlabs.org>; Wed, 22 Jun 2022 15:19:02 GMT
+Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com [9.57.198.24])
+	by ppma01wdc.us.ibm.com with ESMTP id 3gv5cjr1dv-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 22 Jun 2022 15:19:02 +0000
+Received: from b01ledav002.gho.pok.ibm.com (b01ledav002.gho.pok.ibm.com [9.57.199.107])
+	by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 25MFJ20E64750012
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+	for <openbmc@lists.ozlabs.org>; Wed, 22 Jun 2022 15:19:02 GMT
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 55C1F124054
+	for <openbmc@lists.ozlabs.org>; Wed, 22 Jun 2022 15:19:02 +0000 (GMT)
+Received: from b01ledav002.gho.pok.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 28BB3124052
+	for <openbmc@lists.ozlabs.org>; Wed, 22 Jun 2022 15:19:02 +0000 (GMT)
+Received: from [9.77.148.104] (unknown [9.77.148.104])
+	by b01ledav002.gho.pok.ibm.com (Postfix) with ESMTPS
+	for <openbmc@lists.ozlabs.org>; Wed, 22 Jun 2022 15:19:02 +0000 (GMT)
+Message-ID: <4ca4257d-58f1-abc7-a85e-34e9904d4602@linux.ibm.com>
+Date: Wed, 22 Jun 2022 10:19:01 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.10.0
+Content-Language: en-US
+To: openbmc <openbmc@lists.ozlabs.org>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Security Working Group meeting - Wednesday June 22
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: L8-_CFOYiiq-mL9cWwEofuGw6JL_b4j4
+X-Proofpoint-GUID: L8-_CFOYiiq-mL9cWwEofuGw6JL_b4j4
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-From: raviteja bailapudi <raviteja28031990@gmail.com>
-Date: Wed, 22 Jun 2022 16:20:29 +0530
-Message-ID: <CAM4DKZkkKx_MPVv_R7WqOhnKA+hRYWU4GK=DqbqqSVj_CtMtMg@mail.gmail.com>
-Subject: OpenBMC Network Route Management: Metric and Static Route config support
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="000000000000b2865005e2071bc0"
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-06-22_04,2022-06-22_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ spamscore=0 clxscore=1015 impostorscore=0 mlxlogscore=540 bulkscore=0
+ lowpriorityscore=0 adultscore=0 mlxscore=0 phishscore=0 malwarescore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2204290000 definitions=main-2206220075
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,69 +93,19 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000b2865005e2071bc0
-Content-Type: text/plain; charset="UTF-8"
+This is a reminder of the OpenBMC Security Working Group meeting 
+scheduled for this Wednesday June 22 at 10:00am PDT.
 
-Hi Team
+We'll discuss the following items on the agenda 
+<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
+and anything else that comes up:
 
-We have hit network routing issues while using Static IPv4 addresses on
-both eth0 and eth1,  as both default gateways at the interfaces were of the
-same metric value. To solve this problem we are planning to provide an
-interface for admins to set the metric value for the gateway while setting
-up the Static IPv4 network on BMC.
-
-
-To enable users to connect from outside-subnet clients, we also need to
-support static routes on BMC.
+1. Cancel July 6 meeting?
+2. Continue discussion securing Linux internals (like with SELinux).
 
 
-I have started a thread in redfish forum as well
+Access, agenda and notes are in the wiki:
+https://github.com/openbmc/openbmc/wiki/Security-working-group 
+<https://github.com/openbmc/openbmc/wiki/Security-working-group>
 
-https://redfishforum.com/thread/683/network-routing-table-management-support
-
-
-Please share your views on the same.
-
-
-
-Regards,
-
-Raviteja
-
---000000000000b2865005e2071bc0
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Hi Team<div><br></div><div><p style=3D"margin:0px;font-str=
-etch:normal;font-size:13px;line-height:normal;font-family:&quot;Helvetica N=
-eue&quot;">We have hit network routing issues while using Static IPv4 addre=
-sses on both eth0 and eth1,=C2=A0 as both default gateways at the interface=
-s were of the same metric value. To solve this problem we are planning to p=
-rovide an interface for admins to set the metric value for the gateway whil=
-e setting up the Static IPv4 network on BMC.</p><p style=3D"margin:0px;font=
--stretch:normal;font-size:13px;line-height:normal;font-family:&quot;Helveti=
-ca Neue&quot;"><br></p>
-<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
-l;font-family:&quot;Helvetica Neue&quot;">To enable users=C2=A0to connect f=
-rom outside-subnet clients, we also need to support static routes on BMC.</=
-p><p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:nor=
-mal;font-family:&quot;Helvetica Neue&quot;"><br></p><p style=3D"margin:0px;=
-font-stretch:normal;font-size:13px;line-height:normal;font-family:&quot;Hel=
-vetica Neue&quot;">I have started a thread in redfish forum as well</p><p s=
-tyle=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:normal;fo=
-nt-family:&quot;Helvetica Neue&quot;;color:rgb(220,161,13)"><a href=3D"http=
-s://redfishforum.com/thread/683/network-routing-table-management-support">h=
-ttps://redfishforum.com/thread/683/network-routing-table-management-support=
-</a></p></div><div><p style=3D"margin:0px;font-stretch:normal;font-size:13p=
-x;line-height:normal;font-family:&quot;Helvetica Neue&quot;"><br></p><p sty=
-le=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:normal;font=
--family:&quot;Helvetica Neue&quot;">Please share your views on the same.</p=
-><p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norm=
-al;font-family:&quot;Helvetica Neue&quot;"><br></p><p style=3D"margin:0px;f=
-ont-stretch:normal;font-size:13px;line-height:normal;font-family:&quot;Helv=
-etica Neue&quot;"><br></p><p style=3D"margin:0px;font-stretch:normal;font-s=
-ize:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;">Regards=
-,</p><p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:=
-normal;font-family:&quot;Helvetica Neue&quot;">Raviteja<br></p></div></div>
-
---000000000000b2865005e2071bc0--
+- Joseph
