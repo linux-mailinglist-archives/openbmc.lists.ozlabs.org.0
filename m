@@ -2,66 +2,42 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C56BB554547
-	for <lists+openbmc@lfdr.de>; Wed, 22 Jun 2022 12:27:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4C1F655454F
+	for <lists+openbmc@lfdr.de>; Wed, 22 Jun 2022 12:34:39 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LSfhV4wGzz3bqt
-	for <lists+openbmc@lfdr.de>; Wed, 22 Jun 2022 20:27:22 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=HSqzpI56;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LSfrs1GdHz3cBV
+	for <lists+openbmc@lfdr.de>; Wed, 22 Jun 2022 20:34:37 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::529; helo=mail-ed1-x529.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=HSqzpI56;
-	dkim-atps=neutral
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx1.molgen.mpg.de; envelope-from=pmenzel@molgen.mpg.de; receiver=<UNKNOWN>)
+Received: from mx1.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LSfh51gtHz2ypR;
-	Wed, 22 Jun 2022 20:27:00 +1000 (AEST)
-Received: by mail-ed1-x529.google.com with SMTP id z19so6392432edb.11;
-        Wed, 22 Jun 2022 03:27:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=37rSlhRpHHWymSWDtV1LKUaah1wVrGYKsjIbHejy7lI=;
-        b=HSqzpI56Wd/maCsUqAm6GW+vL3gDlxXpbeI5QmlV2sj6irWKRsz51o7VAbYl1Wpn7u
-         9Qvs50rqTlPfin6a86lUOvc2lOY1nAAwv0y+4iOmYDOd0x5QutPpPYamxVm6TgPELYmi
-         gzCgiliyXbrOuvFzQa4gIqPdvnpa8kEENRl1NiSetyJHJ7s5F81a4xyM1HKRhbhxAyJf
-         VniU9LZPctrAhCMMfajUERbfulXQabhYVLoue398el8ZQgWqWiiGg560nHtTFI4rtuvQ
-         zAIy5xLcytDz1ZutL5bs3KTPb5FK91rPHo6D2lBA0kgj5CEwk59d7KwiaVNiW2o2eyy2
-         r6Lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=37rSlhRpHHWymSWDtV1LKUaah1wVrGYKsjIbHejy7lI=;
-        b=HQ+W8YB5Gz9RnWwqbH+3tBUgephAhZohgXSAFngPg2lVrhEQp2PXUVf3Cg5BuL5cEK
-         Kkgub3qDxoljGoNP/WrF80ToJ19BqBDOKsJXIg/9mZ8dtTTYQUVWBDAcevgWnzfjMbSF
-         Nv60g0WjCLS//OPwrAjfvnYjw9q0XpeWMTp+2yYCmEabw6DJrcRDq3BlOWccBQQTKzUt
-         8yjsGF5lo3ZBboMMxbrYGYxwbVGIQziRuRewqXiC5fu5USeb7S9s+Ss3YsMhim1+F0xd
-         01g2NBXhA3DeTQypVVxkYd3bLw3L87lPLZJH7gW6ChNbNadtKNtt6RdnkViN7u2X9+VZ
-         Xvvg==
-X-Gm-Message-State: AJIora+4qkAseX6B3FYGK1ejCAATaPI85wglAP9iN2R2yqsh5MJE1gWW
-	BJhcZStbQA2JO2gffsPzSDCIXgLMD9aBRFQn51c=
-X-Google-Smtp-Source: AGRyM1v4azWWigiOn++l1Dtbx1fdOaa+R6QIGQ/aTOrCshjNUsBD3TDZWJE10f1vEBfdq0j3iu2c+b/URbfaYfSI9+k=
-X-Received: by 2002:a05:6402:f8d:b0:435:6df2:68a with SMTP id
- eh13-20020a0564020f8d00b004356df2068amr3330060edb.209.1655893616422; Wed, 22
- Jun 2022 03:26:56 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LSfrW371yz30LC;
+	Wed, 22 Jun 2022 20:34:18 +1000 (AEST)
+Received: from [141.14.220.45] (g45.guest.molgen.mpg.de [141.14.220.45])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: pmenzel)
+	by mx.molgen.mpg.de (Postfix) with ESMTPSA id AF7B461EA1928;
+	Wed, 22 Jun 2022 12:34:13 +0200 (CEST)
+Message-ID: <babc9b4e-7f6c-6ca2-1132-b4571f524eb8@molgen.mpg.de>
+Date: Wed, 22 Jun 2022 12:34:12 +0200
 MIME-Version: 1.0
-References: <20220622094233.3681843-1-clg@kaod.org> <20220622094233.3681843-2-clg@kaod.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.10.0
+Subject: Re: [PATCH v2 1/2] spi: aspeed: Add pr_debug in
+ aspeed_spi_dirmap_create()
+Content-Language: en-US
+To: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
+References: <20220622094233.3681843-1-clg@kaod.org>
+ <20220622094233.3681843-2-clg@kaod.org>
+From: Paul Menzel <pmenzel@molgen.mpg.de>
 In-Reply-To: <20220622094233.3681843-2-clg@kaod.org>
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Wed, 22 Jun 2022 12:26:19 +0200
-Message-ID: <CAHp75VdBO1yPVH6NCEj8ZSYF2-6q0soE=8qNGrh7G=t7adRBZw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] spi: aspeed: Add pr_debug in aspeed_spi_dirmap_create()
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,19 +49,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, linux-spi <linux-spi@vger.kernel.org>, Mark Brown <broonie@kernel.org>, Joel Stanley <joel@jms.id.au>, Pratyush Yadav <p.yadav@ti.com>, linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>
+Cc: linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org, Mark Brown <broonie@kernel.org>, Joel Stanley <joel@jms.id.au>, Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>, Pratyush Yadav <p.yadav@ti.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Jun 22, 2022 at 11:46 AM C=C3=A9dric Le Goater <clg@kaod.org> wrote=
-:
->
+Dear Cédric,
+
+
+Am 22.06.22 um 11:42 schrieb Cédric Le Goater:
 > It helps to analyze the default setting of the control register.
 
-Replace "It" with a slightly more descriptive "what is it?".
+Maybe paste the new log line to the commit message.
 
-Also make the subject aligned with the contents of the patch.
+> Signed-off-by: Cédric Le Goater <clg@kaod.org>
+> ---
+>   drivers/spi/spi-aspeed-smc.c | 8 ++++++++
+>   1 file changed, 8 insertions(+)
+> 
+> diff --git a/drivers/spi/spi-aspeed-smc.c b/drivers/spi/spi-aspeed-smc.c
+> index 496f3e1e9079..ac64be289e59 100644
+> --- a/drivers/spi/spi-aspeed-smc.c
+> +++ b/drivers/spi/spi-aspeed-smc.c
+> @@ -558,6 +558,14 @@ static int aspeed_spi_dirmap_create(struct spi_mem_dirmap_desc *desc)
+>   	u32 ctl_val;
+>   	int ret = 0;
+>   
+> +	dev_dbg(aspi->dev,
 
---=20
-With Best Regards,
-Andy Shevchenko
+The commit message summary says `pr_debug()`.
+
+> +		"CE%d %s dirmap [ 0x%.8llx - 0x%.8llx ] OP %#x mode:%d.%d.%d.%d naddr:%#x ndummies:%#x\n",
+> +		chip->cs, op->data.dir == SPI_MEM_DATA_IN ? "read" : "write",
+> +		desc->info.offset, desc->info.offset + desc->info.length,
+> +		op->cmd.opcode, op->cmd.buswidth, op->addr.buswidth,
+> +		op->dummy.buswidth, op->data.buswidth,
+> +		op->addr.nbytes, op->dummy.nbytes);
+> +
+>   	chip->clk_freq = desc->mem->spi->max_speed_hz;
+>   
+>   	/* Only for reads */
+
+Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+
+
+Kind regards,
+
+Paul
