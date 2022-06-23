@@ -1,67 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1BF35557A40
-	for <lists+openbmc@lfdr.de>; Thu, 23 Jun 2022 14:25:00 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AC6A0557D14
+	for <lists+openbmc@lfdr.de>; Thu, 23 Jun 2022 15:33:04 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LTKFk0Q6Sz3c8h
-	for <lists+openbmc@lfdr.de>; Thu, 23 Jun 2022 22:24:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LTLmD6mhmz3c7s
+	for <lists+openbmc@lfdr.de>; Thu, 23 Jun 2022 23:33:00 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ZGAwRzzE;
+	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=uVHtg403;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2001:4860:4864:20::29; helo=mail-oa1-x29.google.com; envelope-from=ulf.hansson@linaro.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bytedance.com (client-ip=2a00:1450:4864:20::229; helo=mail-lj1-x229.google.com; envelope-from=zhangjian.3032@bytedance.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=ZGAwRzzE;
+	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=uVHtg403;
 	dkim-atps=neutral
-Received: from mail-oa1-x29.google.com (mail-oa1-x29.google.com [IPv6:2001:4860:4864:20::29])
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LTKFL6w6Vz3brx
-	for <openbmc@lists.ozlabs.org>; Thu, 23 Jun 2022 22:24:36 +1000 (AEST)
-Received: by mail-oa1-x29.google.com with SMTP id 586e51a60fabf-1013ecaf7e0so26357946fac.13
-        for <openbmc@lists.ozlabs.org>; Thu, 23 Jun 2022 05:24:36 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LTLlt6Gwpz2yn3
+	for <openbmc@lists.ozlabs.org>; Thu, 23 Jun 2022 23:32:41 +1000 (AEST)
+Received: by mail-lj1-x229.google.com with SMTP id q9so5314675ljp.4
+        for <openbmc@lists.ozlabs.org>; Thu, 23 Jun 2022 06:32:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qcOFv+gUkOUIJJ72OOZ9NseYxv0LoGb9wAQ/jFJ2Dk8=;
-        b=ZGAwRzzE8VL85qRDYfMIvCrIHJkVRiIYei98dO36+lgVyF3FWJUe7hqqUrsTwy639Y
-         fc+W8/1hfo7JZohSBn0BmrXgCAuBJ5vCaJB2sAWPRSGsx6O74BR4aBhFhTsdrI8SVpw6
-         yHYggGBjd/sq0CYiDjkFfZkeqRUmrn4J7Dg4e7iicPa2yWiHeuY+8e+bLsDAiI4i8pyr
-         EV80OclS5ilc1yqKp6AG1B401ALvhV3exYBeb2IeV0OW8rpAFVov8Ge0ATahc3RcmxRF
-         4FFQUAnzOwhEN6/m8cyLiVsmXun+S618Er5jfz5mSVTteervSKejh8lx4MtRyhHmQCtR
-         ZssA==
+        d=bytedance-com.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to;
+        bh=mqBaNhzaiIYheAQaBEKpUJPWJvZo1BawrZkS7tsT8Qo=;
+        b=uVHtg403qemVPU6g9U7+pJCtYRFedZJAEfeTxAS4reNdCwgy/o9UISLg3reHAqZgfb
+         N6+EYRyq+IxKo63PAvYJVQUEgO9BQmxr/uLjidroaHeIvXtPFr726CBW3xecBJcxWxhl
+         s58NlguYfQdFOEM1smWQYktYSLD9ycdHJplkZt8GwtBLsHGUvX5MPI+5DJQaqKh5QnYy
+         thEBWGkELsGMzYmPdqIhpPw17tPiPc/gcSuQ6KJpm1mPdHzNuolcrWwy9mXP4tpibSQD
+         BFx1REoga9hvdaSsXeQQgZNxJD0vyBEFg9eJjLGkmXyzVogz9yMnlyu7pDJ45grmv1de
+         UcZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qcOFv+gUkOUIJJ72OOZ9NseYxv0LoGb9wAQ/jFJ2Dk8=;
-        b=2yq5NwuLoNn98rFIis+BgMGRS5M2xVjU9e2Ud76HQZz4AOeyKXtj5G74AfCuZ7QtYp
-         Zf6DlpbAtl2z/sD3w2oHAo8+Uw4xP+ebaGuT1k+41WGq/lZHi6ZWRAIWA++SQ7L7zDOg
-         +uW274TGNWtO5vuVktju63laOawb7aZJA8oTozKl4OksixY9nMwR786L18Msc7H07qFD
-         6S1KhBhXUSj/LzpqBcZu5+COFlXnOgBkbGzc3NLqeejL3nGp4bPa8lUdPclcO6wuCLZf
-         Na6CDlscFOwuqZD1SGfrx9MIMEFQLKbOvmDlaMpfP4+TYmR/PAGc/LFKzVzN2lsbAu4d
-         ZRTA==
-X-Gm-Message-State: AJIora/MiTVsODYdSR8/dIRUZs/ykAfexiSucNIXAG78UyMBGCohPDmn
-	sEUHmQX1Sqlq06Vf5CWp68P5s7ZtLqtcuiuDA6ZDQA==
-X-Google-Smtp-Source: AGRyM1tolYit2qOF13LQll2M1apYzVAPtBssHfNXvX79yFs+qX/QdnWSuZSn9LvvuTfowIJzogE5Gto6i2wMUvkyN5I=
-X-Received: by 2002:a05:6870:33a9:b0:f2:c44c:d054 with SMTP id
- w41-20020a05687033a900b000f2c44cd054mr2317236oae.70.1655987073368; Thu, 23
- Jun 2022 05:24:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220621085345.603820-1-davidgow@google.com> <20220621085345.603820-6-davidgow@google.com>
- <CAGS_qxp6ZK9K0Sy1JcuU-SGqChOyr6-+5HDxgesOpxjxvDkiXQ@mail.gmail.com>
-In-Reply-To: <CAGS_qxp6ZK9K0Sy1JcuU-SGqChOyr6-+5HDxgesOpxjxvDkiXQ@mail.gmail.com>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Thu, 23 Jun 2022 14:23:57 +0200
-Message-ID: <CAPDyKFq0cTX5pfTLxTa9SEUBiiEcMuiEeDi3OPfMjFuBWca_jw@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] mmc: sdhci-of-aspeed: test: Use kunit_test_suite() macro
-To: David Gow <davidgow@google.com>, Daniel Latypov <dlatypov@google.com>
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
+        bh=mqBaNhzaiIYheAQaBEKpUJPWJvZo1BawrZkS7tsT8Qo=;
+        b=eLxve2G9Qe/KoNDyfSPm3hwa/nxE5+LTvE4dOHEFAd7C4sKCneyjHE+2l2z1MjWUSi
+         KWdkz0j40gqY3rwfahqhFgzGdnNOe9xJv3EP2mNt2Xx/ECI1AY7ENN0FHEsuCTk6IaVV
+         zy4mQJAne5bHVh+D/QqxOpoEMX+8hxjJqXp7hAtcQLe1rWC6zLnoPPRxEXYhXSnOj+Eh
+         41OfyiL9yAnzOxQTZWFm3YY2WU1aKEMERgoCBIZP2cWIXl84U574kkHd3/2ApoEiqXhC
+         rvw0dBCf8x0NfQH4mW+2VxwPgdH6nev8subogDpjIHK7PfT4cl46bq3/2aYY3t4LSzX9
+         etww==
+X-Gm-Message-State: AJIora885qqgP5mo9p4h16pN2wm/tefyvluLASmJGaIfsoRxEkdcBFX7
+	4bYDLMUktcej4GsPFiJHyYJkc5yP6zb0DYp06RCKwsvWzPs=
+X-Google-Smtp-Source: AGRyM1seCvMtbpkhePdmtLfu+aIbcacDuGMYizlCLUSRZ2O2EBOFT0V5Zjxp4X4rHLK56N8DE2wXqGPk2a5tu659heI=
+X-Received: by 2002:a2e:a374:0:b0:25a:666c:d02e with SMTP id
+ i20-20020a2ea374000000b0025a666cd02emr4695104ljn.67.1655991156116; Thu, 23
+ Jun 2022 06:32:36 -0700 (PDT)
+Received: from 349319672217 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 23 Jun 2022 06:32:35 -0700
+Mime-Version: 1.0
+From: Jian Zhang <zhangjian.3032@bytedance.com>
+Date: Thu, 23 Jun 2022 06:32:35 -0700
+Message-ID: <CA+J-oUtjpD=1Dk_SKviYcj5i5Ybj5_YW8XAuqc1euo-rV+o49w@mail.gmail.com>
+Subject: web-vue sol console escape sequences
+To: openbmc <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="0000000000009d1ca105e21d7c1c"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,68 +70,95 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Matt Johnston <matt@codeconstruct.com.au>, Andra Paraschiv <andraprs@amazon.com>, linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>, =?UTF-8?B?TWHDrXJhIENhbmFs?= <maira.canal@usp.br>, linux-mmc@vger.kernel.org, linux-usb@vger.kernel.org, Brendan Higgins <brendanhiggins@google.com>, linux-kernel@vger.kernel.org, Christophe Leroy <christophe.leroy@csgroup.eu>, Luis Chamberlain <mcgrof@kernel.org>, linux-kselftest@vger.kernel.org, Shuah Khan <skhan@linuxfoundation.org>, Jeremy Kerr <jk@codeconstruct.com.au>, Longpeng <longpeng2@huawei.com>, kunit-dev@googlegroups.com, Mika Westerberg <mika.westerberg@linux.intel.com>, openbmc@lists.ozlabs.org, linux-modules@vger.kernel.org, Paraschiv@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 22 Jun 2022 at 00:19, Daniel Latypov <dlatypov@google.com> wrote:
->
->  On Tue, Jun 21, 2022 at 1:54 AM David Gow <davidgow@google.com> wrote:
-> >
-> > The kunit_test_suite() macro is no-longer incompatible with module_add,
-> > so its use can be reinstated.
-> >
-> > Since this fixes parsing with builtins and kunit_tool, also enable the
-> > test by default when KUNIT_ALL_TESTS is enabled.
-> >
-> > The test can now be run via kunit_tool with:
-> >         ./tools/testing/kunit/kunit.py run --arch=x86_64 \
-> >         --kconfig_add CONFIG_OF=y --kconfig_add CONFIG_OF_ADDRESS=y \
-> >         --kconfig_add CONFIG_MMC=y --kconfig_add CONFIG_MMC_SDHCI=y \
-> >         --kconfig_add CONFIG_MMC_SDHCI_PLTFM=y \
-> >         --kconfig_add CONFIG_MMC_SDHCI_OF_ASPEED=y \
-> >         'sdhci-of-aspeed'
-> >
-> > (It may be worth adding a .kunitconfig at some point, as there are
-> > enough dependencies to make that command scarily long.)
-> >
-> > Signed-off-by: David Gow <davidgow@google.com>
->
-> Acked-by: Daniel Latypov <dlatypov@google.com>
->
-> Minor, optional suggestion below.
->
-> >  static int __init aspeed_sdc_init(void)
-> > @@ -639,12 +620,6 @@ static int __init aspeed_sdc_init(void)
-> >         if (rc < 0)
-> >                 goto cleanup_sdhci;
-> >
-> > -       rc = aspeed_sdc_tests_init();
-> > -       if (rc < 0) {
-> > -               platform_driver_unregister(&aspeed_sdc_driver);
-> > -               goto cleanup_sdhci;
-> > -       }
-> > -
-> >         return 0;
-> >
-> >  cleanup_sdhci:
->
-> This goto was added in 4af307f57426 ("mmc: sdhci-of-aspeed: Fix
-> kunit-related build error") to allow for this extra call to
-> aspeed_sdc_tests_init().
->
-> This could now be reverted back to what is
->         rc = platform_driver_register(&aspeed_sdc_driver);
->         if (rc < 0)
->                platform_driver_unregister(&aspeed_sdhci_driver);
->
->         return rc;
->
-> but let's see what the maintainers think.
+--0000000000009d1ca105e21d7c1c
+Content-Type: text/plain; charset="UTF-8"
 
-I don't have a strong opinion on this, feel free to pick any of the options.
+Hi team;
+   On the web view, I use the sol console, I hit an issue, the terminal
+cannot determine the key (F5-F12) that I pressed.
+   From the host console, I use the "showkey -a" command to capture the
+keys that pressed.
+Here are some results,  F1-F4 are normal, but F5-F12 are the same
+```
+^[P      27 0033 0x1b  ==> f1
+         80 0120 0x50
+^[Q      27 0033 0x1b   ==> f2
+         81 0121 0x51
+^[R      27 0033 0x1b.  ==> f3
+         82 0122 0x52
+^[S      27 0033 0x1b. ==> f4
+         83 0123 0x53
+^[~      27 0033 0x1b. ==> f5
+        126 0176 0x7e
+^[~      27 0033 0x1b. ==> f6
+        126 0176 0x7e
+^[~      27 0033 0x1b. == >f7
+        126 0176 0x7e
+``
+ In putty, the result is the same at the beginning. After setting up the
+keypod, they are different, and the result is what I want.
+It might relate to `xterm.js  escape sequences`, but I don't know how to do
+it, do you know? Thanks.
 
-Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
+Thanks a lot.
 
-Kind regards
-Uffe
+--0000000000009d1ca105e21d7c1c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div id=3D"editor_version_1.12.1_V7fPaEyl" style=3D"word-break:break-word">=
+<div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">Hi team;</d=
+iv><div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">=C2=A0=
+=C2=A0 On the web view, I use the sol console, I hit an issue, the terminal=
+ cannot determine the key (F5-F12) that I pressed.</div><div style=3D"margi=
+n-top:4px;margin-bottom:4px;line-height:1.6">=C2=A0=C2=A0 From the host con=
+sole, I use the &quot;showkey -a&quot; command to capture the keys that pre=
+ssed.</div><div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">=
+Here are some results, =C2=A0F1-F4 are normal, but F5-F12 are the same</div=
+><div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">```</div><=
+div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">^[P =C2=A0=
+=C2=A0=C2=A0=C2=A0 27 0033 0x1b =C2=A0=3D=3D&gt; f1</div><div style=3D"marg=
+in-top:4px;margin-bottom:4px;line-height:1.6">=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 80 0120 0x50</div><div style=3D"margin-top:4px;margin=
+-bottom:4px;line-height:1.6">^[Q =C2=A0=C2=A0=C2=A0=C2=A0 27 0033 0x1b =C2=
+=A0 =3D=3D&gt; f2</div><div style=3D"margin-top:4px;margin-bottom:4px;line-=
+height:1.6">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 81 0121 0x51</=
+div><div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">^[R =C2=
+=A0=C2=A0=C2=A0=C2=A0 27 0033 0x1b. =C2=A0=3D=3D&gt; f3</div><div style=3D"=
+margin-top:4px;margin-bottom:4px;line-height:1.6">=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 82 0122 0x52</div><div style=3D"margin-top:4px;mar=
+gin-bottom:4px;line-height:1.6">^[S =C2=A0=C2=A0=C2=A0=C2=A0 27 0033 0x1b. =
+=3D=3D&gt; f4</div><div style=3D"margin-top:4px;margin-bottom:4px;line-heig=
+ht:1.6">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 83 0123 0x53</div>=
+<div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">^[~ =C2=A0=
+=C2=A0=C2=A0=C2=A0 27 0033 0x1b. =3D=3D&gt; f5</div><div style=3D"margin-to=
+p:4px;margin-bottom:4px;line-height:1.6">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 126 0176 0x7e</div><div style=3D"margin-top:4px;margin-bottom:4px=
+;line-height:1.6">^[~ =C2=A0=C2=A0=C2=A0=C2=A0 27 0033 0x1b. =3D=3D&gt; f6<=
+/div><div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 126 0176 0x7e</div><div style=3D"margi=
+n-top:4px;margin-bottom:4px;line-height:1.6">^[~ =C2=A0=C2=A0=C2=A0=C2=A0 2=
+7 0033 0x1b. =3D=3D &gt;f7</div><div style=3D"margin-top:4px;margin-bottom:=
+4px;line-height:1.6">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 126 0176 0x=
+7e</div><div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">``<=
+/div><div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">=C2=A0=
+In putty, the result is the same at the beginning. After setting up the key=
+pod, they are different, and the result is what I want.</div><div style=3D"=
+margin-top:4px;margin-bottom:4px;line-height:1.6"><span style=3D"font-weigh=
+t:400"><span style=3D"font-size:14px"><span style=3D"font-family:LarkEmojiF=
+ont,LarkChineseQuote,-apple-system,system-ui,Tahoma,&quot;PingFang SC&quot;=
+,Arial,sans-serif"><span style=3D"color:rgb(31,35,41)"><span style=3D"backg=
+round-color:rgb(255,255,255)">It might relate to `xterm.js =C2=A0escape seq=
+uences`, </span></span></span></span></span>but I don&#39;t know how to do =
+it, do you know? Thanks.</div><div style=3D"margin-top:4px;margin-bottom:4p=
+x;line-height:1.6"><br></div><div style=3D"margin-top:4px;margin-bottom:4px=
+;line-height:1.6"><span style=3D"font-weight:400"><span style=3D"font-size:=
+14px"><span style=3D"font-family:LarkEmojiFont,LarkChineseQuote,-apple-syst=
+em,system-ui,Tahoma,&quot;PingFang SC&quot;,Arial,sans-serif"><span style=
+=3D"color:rgb(31,35,41)"><span style=3D"background-color:rgb(255,255,255)">=
+Thanks a lot.</span></span></span></span></span></div></div>
+
+--0000000000009d1ca105e21d7c1c--
