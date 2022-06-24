@@ -1,64 +1,92 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC6A0557D14
-	for <lists+openbmc@lfdr.de>; Thu, 23 Jun 2022 15:33:04 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 79F63558C2E
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jun 2022 02:18:32 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LTLmD6mhmz3c7s
-	for <lists+openbmc@lfdr.de>; Thu, 23 Jun 2022 23:33:00 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LTd522k3xz3brj
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jun 2022 10:18:30 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=uVHtg403;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qchLALtr;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bytedance.com (client-ip=2a00:1450:4864:20::229; helo=mail-lj1-x229.google.com; envelope-from=zhangjian.3032@bytedance.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=uVHtg403;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qchLALtr;
 	dkim-atps=neutral
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LTLlt6Gwpz2yn3
-	for <openbmc@lists.ozlabs.org>; Thu, 23 Jun 2022 23:32:41 +1000 (AEST)
-Received: by mail-lj1-x229.google.com with SMTP id q9so5314675ljp.4
-        for <openbmc@lists.ozlabs.org>; Thu, 23 Jun 2022 06:32:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance-com.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=mqBaNhzaiIYheAQaBEKpUJPWJvZo1BawrZkS7tsT8Qo=;
-        b=uVHtg403qemVPU6g9U7+pJCtYRFedZJAEfeTxAS4reNdCwgy/o9UISLg3reHAqZgfb
-         N6+EYRyq+IxKo63PAvYJVQUEgO9BQmxr/uLjidroaHeIvXtPFr726CBW3xecBJcxWxhl
-         s58NlguYfQdFOEM1smWQYktYSLD9ycdHJplkZt8GwtBLsHGUvX5MPI+5DJQaqKh5QnYy
-         thEBWGkELsGMzYmPdqIhpPw17tPiPc/gcSuQ6KJpm1mPdHzNuolcrWwy9mXP4tpibSQD
-         BFx1REoga9hvdaSsXeQQgZNxJD0vyBEFg9eJjLGkmXyzVogz9yMnlyu7pDJ45grmv1de
-         UcZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=mqBaNhzaiIYheAQaBEKpUJPWJvZo1BawrZkS7tsT8Qo=;
-        b=eLxve2G9Qe/KoNDyfSPm3hwa/nxE5+LTvE4dOHEFAd7C4sKCneyjHE+2l2z1MjWUSi
-         KWdkz0j40gqY3rwfahqhFgzGdnNOe9xJv3EP2mNt2Xx/ECI1AY7ENN0FHEsuCTk6IaVV
-         zy4mQJAne5bHVh+D/QqxOpoEMX+8hxjJqXp7hAtcQLe1rWC6zLnoPPRxEXYhXSnOj+Eh
-         41OfyiL9yAnzOxQTZWFm3YY2WU1aKEMERgoCBIZP2cWIXl84U574kkHd3/2ApoEiqXhC
-         rvw0dBCf8x0NfQH4mW+2VxwPgdH6nev8subogDpjIHK7PfT4cl46bq3/2aYY3t4LSzX9
-         etww==
-X-Gm-Message-State: AJIora885qqgP5mo9p4h16pN2wm/tefyvluLASmJGaIfsoRxEkdcBFX7
-	4bYDLMUktcej4GsPFiJHyYJkc5yP6zb0DYp06RCKwsvWzPs=
-X-Google-Smtp-Source: AGRyM1seCvMtbpkhePdmtLfu+aIbcacDuGMYizlCLUSRZ2O2EBOFT0V5Zjxp4X4rHLK56N8DE2wXqGPk2a5tu659heI=
-X-Received: by 2002:a2e:a374:0:b0:25a:666c:d02e with SMTP id
- i20-20020a2ea374000000b0025a666cd02emr4695104ljn.67.1655991156116; Thu, 23
- Jun 2022 06:32:36 -0700 (PDT)
-Received: from 349319672217 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 23 Jun 2022 06:32:35 -0700
-Mime-Version: 1.0
-From: Jian Zhang <zhangjian.3032@bytedance.com>
-Date: Thu, 23 Jun 2022 06:32:35 -0700
-Message-ID: <CA+J-oUtjpD=1Dk_SKviYcj5i5Ybj5_YW8XAuqc1euo-rV+o49w@mail.gmail.com>
-Subject: web-vue sol console escape sequences
-To: openbmc <openbmc@lists.ozlabs.org>
-Content-Type: multipart/alternative; boundary="0000000000009d1ca105e21d7c1c"
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LTd4Z58gVz3bkG
+	for <openbmc@lists.ozlabs.org>; Fri, 24 Jun 2022 10:18:05 +1000 (AEST)
+Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 25NNpeNr038039;
+	Fri, 24 Jun 2022 00:18:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=cKHvB8kxqvW+Lws1piS1+7o1sMpUxK/cH/Nh2sH5Joo=;
+ b=qchLALtrUqbXNu1psYSRBBEGV59t4AI5+Zxbo9OKg20iKIZ+c+2ikTRIgwoTfbOHHH9P
+ sNPfNHvG8WY19uzLXAXUDJUTR8OEI1oeo/yjY8eyuWEaZm2BnujqSfRIKbwQJb32fuok
+ 7FvCgTOwnLtUgsuUXc8ZrYZZ6BVAADV4L9Sk8y7bK/89o/QiKUB5/SSXINkBTD4WDQcZ
+ B9nAVUUwmTnXRA9poZuJkQ3rjru7OnA4zSGXghu0HFWiXleo5hLDLTRAid31iZqCE4Qu
+ rf1PiW97LHX+lapIOHESSTJqMPS3c+/1ZyOcgt4Arhx0OZgeAHN+oidX24vTrEOFzwSN CQ== 
+Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com [169.55.85.253])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3gw27a0gyc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 Jun 2022 00:18:02 +0000
+Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
+	by ppma01wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 25O06hZH007599;
+	Fri, 24 Jun 2022 00:18:01 GMT
+Received: from b03cxnp08027.gho.boulder.ibm.com (b03cxnp08027.gho.boulder.ibm.com [9.17.130.19])
+	by ppma01wdc.us.ibm.com with ESMTP id 3gv5ck35hg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 24 Jun 2022 00:18:01 +0000
+Received: from b03ledav004.gho.boulder.ibm.com (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+	by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 25O0I0cY14353148
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 24 Jun 2022 00:18:00 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 8DB287805F;
+	Fri, 24 Jun 2022 00:18:00 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 370A47805C;
+	Fri, 24 Jun 2022 00:18:00 +0000 (GMT)
+Received: from [9.160.179.107] (unknown [9.160.179.107])
+	by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTPS;
+	Fri, 24 Jun 2022 00:18:00 +0000 (GMT)
+Message-ID: <a136f639-ce78-1958-b1d4-e00e7a81f792@linux.ibm.com>
+Date: Thu, 23 Jun 2022 19:17:59 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.10.0
+Subject: Re: Security Working Group meeting - Wednesday June 22 - results -
+ BMC-attached TPM
+Content-Language: en-US
+To: Patrick Williams <patrick@stwcx.xyz>
+References: <4ca4257d-58f1-abc7-a85e-34e9904d4602@linux.ibm.com>
+ <bda71881-1a64-ad19-6fb1-fbb328975935@linux.ibm.com>
+ <YrN6lkOgNMNCoJdM@heinlein.stwcx.org.github.beta.tailscale.net>
+ <cd907039-8b9e-51b3-a672-c079f3e49233@linux.ibm.com>
+ <YrOUpSSbSjvMkN+m@heinlein.stwcx.org.github.beta.tailscale.net>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+In-Reply-To: <YrOUpSSbSjvMkN+m@heinlein.stwcx.org.github.beta.tailscale.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 2MBnsaZ9MsnZCH0v0RFbzO7veq6s4CQR
+X-Proofpoint-GUID: 2MBnsaZ9MsnZCH0v0RFbzO7veq6s4CQR
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-06-23_11,2022-06-23_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
+ malwarescore=0 lowpriorityscore=0 mlxscore=0 phishscore=0 bulkscore=0
+ adultscore=0 priorityscore=1501 clxscore=1015 suspectscore=0
+ mlxlogscore=887 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2204290000 definitions=main-2206230093
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,95 +98,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000009d1ca105e21d7c1c
-Content-Type: text/plain; charset="UTF-8"
+On 6/22/22 5:16 PM, Patrick Williams wrote:
+> On Wed, Jun 22, 2022 at 04:23:41PM -0500, Joseph Reynolds wrote:
+>> On 6/22/22 3:24 PM, Patrick Williams wrote:
+>>> On Wed, Jun 22, 2022 at 01:20:48PM -0500, Joseph Reynolds wrote:
+>>>> On 6/22/22 10:19 AM, Joseph Reynolds wrote:
+>>>> 3 Measured boot
+>>>>       Enable network agents (like keylime server, possibly the host
+>>>>       system) to get measurements from TPM.  Note the measurements are
+>>>>       digitally signed by the TPM to ensure their integrity.
+>>> Is there any work going on to define some kind of measurement schema in
+>>> Redfish?  Last I knew this was absent.
+>> Thanks for the reminder.  I started a thread for this:
+>> https://redfishforum.com/thread/685/support-bmc-attached-tpm
+> Sounds good.
+>
+> You mentioned there the "TrustedModules" type.  It doesn't seem like
+> this exposes measurements currently?  Am I misunderstanding?  That seems
+> pretty important for our use case.
 
-Hi team;
-   On the web view, I use the sol console, I hit an issue, the terminal
-cannot determine the key (F5-F12) that I pressed.
-   From the host console, I use the "showkey -a" command to capture the
-keys that pressed.
-Here are some results,  F1-F4 are normal, but F5-F12 are the same
-```
-^[P      27 0033 0x1b  ==> f1
-         80 0120 0x50
-^[Q      27 0033 0x1b   ==> f2
-         81 0121 0x51
-^[R      27 0033 0x1b.  ==> f3
-         82 0122 0x52
-^[S      27 0033 0x1b. ==> f4
-         83 0123 0x53
-^[~      27 0033 0x1b. ==> f5
-        126 0176 0x7e
-^[~      27 0033 0x1b. ==> f6
-        126 0176 0x7e
-^[~      27 0033 0x1b. == >f7
-        126 0176 0x7e
-``
- In putty, the result is the same at the beginning. After setting up the
-keypod, they are different, and the result is what I want.
-It might relate to `xterm.js  escape sequences`, but I don't know how to do
-it, do you know? Thanks.
+Thanks.  I've edited/appended the post to clarify that we need to 
+enhance the TrustedModule schema so we can GET the TPM's measurements.
 
-Thanks a lot.
+-Joseph
 
---0000000000009d1ca105e21d7c1c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div id=3D"editor_version_1.12.1_V7fPaEyl" style=3D"word-break:break-word">=
-<div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">Hi team;</d=
-iv><div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">=C2=A0=
-=C2=A0 On the web view, I use the sol console, I hit an issue, the terminal=
- cannot determine the key (F5-F12) that I pressed.</div><div style=3D"margi=
-n-top:4px;margin-bottom:4px;line-height:1.6">=C2=A0=C2=A0 From the host con=
-sole, I use the &quot;showkey -a&quot; command to capture the keys that pre=
-ssed.</div><div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">=
-Here are some results, =C2=A0F1-F4 are normal, but F5-F12 are the same</div=
-><div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">```</div><=
-div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">^[P =C2=A0=
-=C2=A0=C2=A0=C2=A0 27 0033 0x1b =C2=A0=3D=3D&gt; f1</div><div style=3D"marg=
-in-top:4px;margin-bottom:4px;line-height:1.6">=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0 80 0120 0x50</div><div style=3D"margin-top:4px;margin=
--bottom:4px;line-height:1.6">^[Q =C2=A0=C2=A0=C2=A0=C2=A0 27 0033 0x1b =C2=
-=A0 =3D=3D&gt; f2</div><div style=3D"margin-top:4px;margin-bottom:4px;line-=
-height:1.6">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 81 0121 0x51</=
-div><div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">^[R =C2=
-=A0=C2=A0=C2=A0=C2=A0 27 0033 0x1b. =C2=A0=3D=3D&gt; f3</div><div style=3D"=
-margin-top:4px;margin-bottom:4px;line-height:1.6">=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 82 0122 0x52</div><div style=3D"margin-top:4px;mar=
-gin-bottom:4px;line-height:1.6">^[S =C2=A0=C2=A0=C2=A0=C2=A0 27 0033 0x1b. =
-=3D=3D&gt; f4</div><div style=3D"margin-top:4px;margin-bottom:4px;line-heig=
-ht:1.6">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 83 0123 0x53</div>=
-<div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">^[~ =C2=A0=
-=C2=A0=C2=A0=C2=A0 27 0033 0x1b. =3D=3D&gt; f5</div><div style=3D"margin-to=
-p:4px;margin-bottom:4px;line-height:1.6">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 126 0176 0x7e</div><div style=3D"margin-top:4px;margin-bottom:4px=
-;line-height:1.6">^[~ =C2=A0=C2=A0=C2=A0=C2=A0 27 0033 0x1b. =3D=3D&gt; f6<=
-/div><div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 126 0176 0x7e</div><div style=3D"margi=
-n-top:4px;margin-bottom:4px;line-height:1.6">^[~ =C2=A0=C2=A0=C2=A0=C2=A0 2=
-7 0033 0x1b. =3D=3D &gt;f7</div><div style=3D"margin-top:4px;margin-bottom:=
-4px;line-height:1.6">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 126 0176 0x=
-7e</div><div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">``<=
-/div><div style=3D"margin-top:4px;margin-bottom:4px;line-height:1.6">=C2=A0=
-In putty, the result is the same at the beginning. After setting up the key=
-pod, they are different, and the result is what I want.</div><div style=3D"=
-margin-top:4px;margin-bottom:4px;line-height:1.6"><span style=3D"font-weigh=
-t:400"><span style=3D"font-size:14px"><span style=3D"font-family:LarkEmojiF=
-ont,LarkChineseQuote,-apple-system,system-ui,Tahoma,&quot;PingFang SC&quot;=
-,Arial,sans-serif"><span style=3D"color:rgb(31,35,41)"><span style=3D"backg=
-round-color:rgb(255,255,255)">It might relate to `xterm.js =C2=A0escape seq=
-uences`, </span></span></span></span></span>but I don&#39;t know how to do =
-it, do you know? Thanks.</div><div style=3D"margin-top:4px;margin-bottom:4p=
-x;line-height:1.6"><br></div><div style=3D"margin-top:4px;margin-bottom:4px=
-;line-height:1.6"><span style=3D"font-weight:400"><span style=3D"font-size:=
-14px"><span style=3D"font-family:LarkEmojiFont,LarkChineseQuote,-apple-syst=
-em,system-ui,Tahoma,&quot;PingFang SC&quot;,Arial,sans-serif"><span style=
-=3D"color:rgb(31,35,41)"><span style=3D"background-color:rgb(255,255,255)">=
-Thanks a lot.</span></span></span></span></span></div></div>
-
---0000000000009d1ca105e21d7c1c--
