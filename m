@@ -1,92 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79F63558C2E
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jun 2022 02:18:32 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 99A7E559687
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jun 2022 11:29:03 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LTd522k3xz3brj
-	for <lists+openbmc@lfdr.de>; Fri, 24 Jun 2022 10:18:30 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LTsJF2xtqz3cCF
+	for <lists+openbmc@lfdr.de>; Fri, 24 Jun 2022 19:29:01 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qchLALtr;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Zc6Qvr54;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::530; helo=mail-ed1-x530.google.com; envelope-from=ratankgupta31@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qchLALtr;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Zc6Qvr54;
 	dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LTd4Z58gVz3bkG
-	for <openbmc@lists.ozlabs.org>; Fri, 24 Jun 2022 10:18:05 +1000 (AEST)
-Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 25NNpeNr038039;
-	Fri, 24 Jun 2022 00:18:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- subject : to : cc : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=cKHvB8kxqvW+Lws1piS1+7o1sMpUxK/cH/Nh2sH5Joo=;
- b=qchLALtrUqbXNu1psYSRBBEGV59t4AI5+Zxbo9OKg20iKIZ+c+2ikTRIgwoTfbOHHH9P
- sNPfNHvG8WY19uzLXAXUDJUTR8OEI1oeo/yjY8eyuWEaZm2BnujqSfRIKbwQJb32fuok
- 7FvCgTOwnLtUgsuUXc8ZrYZZ6BVAADV4L9Sk8y7bK/89o/QiKUB5/SSXINkBTD4WDQcZ
- B9nAVUUwmTnXRA9poZuJkQ3rjru7OnA4zSGXghu0HFWiXleo5hLDLTRAid31iZqCE4Qu
- rf1PiW97LHX+lapIOHESSTJqMPS3c+/1ZyOcgt4Arhx0OZgeAHN+oidX24vTrEOFzwSN CQ== 
-Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com [169.55.85.253])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3gw27a0gyc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Jun 2022 00:18:02 +0000
-Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
-	by ppma01wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 25O06hZH007599;
-	Fri, 24 Jun 2022 00:18:01 GMT
-Received: from b03cxnp08027.gho.boulder.ibm.com (b03cxnp08027.gho.boulder.ibm.com [9.17.130.19])
-	by ppma01wdc.us.ibm.com with ESMTP id 3gv5ck35hg-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 24 Jun 2022 00:18:01 +0000
-Received: from b03ledav004.gho.boulder.ibm.com (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
-	by b03cxnp08027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 25O0I0cY14353148
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 24 Jun 2022 00:18:00 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 8DB287805F;
-	Fri, 24 Jun 2022 00:18:00 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 370A47805C;
-	Fri, 24 Jun 2022 00:18:00 +0000 (GMT)
-Received: from [9.160.179.107] (unknown [9.160.179.107])
-	by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTPS;
-	Fri, 24 Jun 2022 00:18:00 +0000 (GMT)
-Message-ID: <a136f639-ce78-1958-b1d4-e00e7a81f792@linux.ibm.com>
-Date: Thu, 23 Jun 2022 19:17:59 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.10.0
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LTsH96qJ9z3bmr
+	for <openbmc@lists.ozlabs.org>; Fri, 24 Jun 2022 19:28:03 +1000 (AEST)
+Received: by mail-ed1-x530.google.com with SMTP id cf14so2584054edb.8
+        for <openbmc@lists.ozlabs.org>; Fri, 24 Jun 2022 02:28:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=EKFeHrX7nM7VLvsB+AMf9QiUJfxjBQBbcH3a21sRzM4=;
+        b=Zc6Qvr549dSIz4uiOEvouN+iztSB5+02+2H5q/WKzJnf+9DaXan77xoIj2rffCzjZJ
+         hH8XQx4kXnRMZdx7ykpjR8tlHjBIhlm5mpgXSGq1S1sZnHqzrFdO2RIlB6pRS3/p4Xyz
+         ueM+a/Ktf5pcVhZgGj44wWywYjPM/qiLYo24q6XTPOpgNEvy4qLwW3I4FkfLJtpFXk5j
+         qT8IdFhBmz0po47+1arsr9DmqIr5ukLcp0t9NEr8KN8lGPPrYO+ALFh22b+056JlvvDv
+         YF7DKLRgOENko/oOD3y9yBk7Sb+Q1OEY5kLGxnRNIlNYGal5Z8zp+K7O9QThI2RZ90lZ
+         4ePg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=EKFeHrX7nM7VLvsB+AMf9QiUJfxjBQBbcH3a21sRzM4=;
+        b=LJMAFac6dwsQzp+WL6Xl6+M2LYFilFResfw02qcMETnGNoOS/xrrxzt3lqx6YLREVx
+         +QFro8nb1qY4tv/4zJGG5XnOc6t5syRQrB1Uw2iKkbW5vNKfp9gxI13YEIQmssWa3sCm
+         eSkvTOCpJMSZSMpY/NP0EnjelppCHezh2tRFZy2Jk7+CwNs2OjPYU/HHCd2zbQjONmT3
+         dG7NMITWhgJqdl60ZfR7VdOcCYlhesZgiCbGKXwntKlReuBYOcP77Bax8XT95r2aSPeN
+         3tf3/zd2aaDjaJj54jFV7D9AflAMTI5mfMYiuLNoN5gaQGEZJPqxt13kPtEQFwdWFfiU
+         J86w==
+X-Gm-Message-State: AJIora9hq4GoZHfIhLtASOgsGKO75eVwMv4BIMmQiKMmsxds4YnU7o0i
+	I4LLAW44mCYQKKDo5rWGqXTBKxYcCM20prui4cA=
+X-Google-Smtp-Source: AGRyM1s9bbgFCmr1sLmJ7/go05F4YrtXGGMLlVcxRz3rD+FYKyHfD4UlySn2TCSOdxm+H3vS4jS5lILo6t3uxHBtuoc=
+X-Received: by 2002:a05:6402:27cf:b0:435:dae6:26aa with SMTP id
+ c15-20020a05640227cf00b00435dae626aamr7556516ede.323.1656062878636; Fri, 24
+ Jun 2022 02:27:58 -0700 (PDT)
+MIME-Version: 1.0
+References: <4ca4257d-58f1-abc7-a85e-34e9904d4602@linux.ibm.com>
+ <bda71881-1a64-ad19-6fb1-fbb328975935@linux.ibm.com> <YrN6lkOgNMNCoJdM@heinlein.stwcx.org.github.beta.tailscale.net>
+ <cd907039-8b9e-51b3-a672-c079f3e49233@linux.ibm.com> <YrOUpSSbSjvMkN+m@heinlein.stwcx.org.github.beta.tailscale.net>
+ <a136f639-ce78-1958-b1d4-e00e7a81f792@linux.ibm.com>
+In-Reply-To: <a136f639-ce78-1958-b1d4-e00e7a81f792@linux.ibm.com>
+From: Ratan Gupta <ratankgupta31@gmail.com>
+Date: Fri, 24 Jun 2022 14:57:47 +0530
+Message-ID: <CAMhqiMoNftcFkRifr3E79O0PT0NCVA08Y=MMTJXe69A8j7C7Bw@mail.gmail.com>
 Subject: Re: Security Working Group meeting - Wednesday June 22 - results -
  BMC-attached TPM
-Content-Language: en-US
-To: Patrick Williams <patrick@stwcx.xyz>
-References: <4ca4257d-58f1-abc7-a85e-34e9904d4602@linux.ibm.com>
- <bda71881-1a64-ad19-6fb1-fbb328975935@linux.ibm.com>
- <YrN6lkOgNMNCoJdM@heinlein.stwcx.org.github.beta.tailscale.net>
- <cd907039-8b9e-51b3-a672-c079f3e49233@linux.ibm.com>
- <YrOUpSSbSjvMkN+m@heinlein.stwcx.org.github.beta.tailscale.net>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-In-Reply-To: <YrOUpSSbSjvMkN+m@heinlein.stwcx.org.github.beta.tailscale.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 2MBnsaZ9MsnZCH0v0RFbzO7veq6s4CQR
-X-Proofpoint-GUID: 2MBnsaZ9MsnZCH0v0RFbzO7veq6s4CQR
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
-MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-06-23_11,2022-06-23_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 impostorscore=0
- malwarescore=0 lowpriorityscore=0 mlxscore=0 phishscore=0 bulkscore=0
- adultscore=0 priorityscore=1501 clxscore=1015 suspectscore=0
- mlxlogscore=887 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2204290000 definitions=main-2206230093
+To: Joseph Reynolds <jrey@linux.ibm.com>
+Content-Type: multipart/alternative; boundary="0000000000009b5e4d05e22e2f34"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,27 +80,93 @@ Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 6/22/22 5:16 PM, Patrick Williams wrote:
-> On Wed, Jun 22, 2022 at 04:23:41PM -0500, Joseph Reynolds wrote:
->> On 6/22/22 3:24 PM, Patrick Williams wrote:
->>> On Wed, Jun 22, 2022 at 01:20:48PM -0500, Joseph Reynolds wrote:
->>>> On 6/22/22 10:19 AM, Joseph Reynolds wrote:
->>>> 3 Measured boot
->>>>       Enable network agents (like keylime server, possibly the host
->>>>       system) to get measurements from TPM.  Note the measurements are
->>>>       digitally signed by the TPM to ensure their integrity.
->>> Is there any work going on to define some kind of measurement schema in
->>> Redfish?  Last I knew this was absent.
->> Thanks for the reminder.  I started a thread for this:
->> https://redfishforum.com/thread/685/support-bmc-attached-tpm
-> Sounds good.
+--0000000000009b5e4d05e22e2f34
+Content-Type: text/plain; charset="UTF-8"
+
+Hi Joseph,
+
+Did you check the
+https://redfish.dmtf.org/schemas/ComponentIntegrity.v1_1_0.json?
+
+Regards
+Ratan Gupta
+
+On Fri, Jun 24, 2022 at 5:48 AM Joseph Reynolds <jrey@linux.ibm.com> wrote:
+
+> On 6/22/22 5:16 PM, Patrick Williams wrote:
+> > On Wed, Jun 22, 2022 at 04:23:41PM -0500, Joseph Reynolds wrote:
+> >> On 6/22/22 3:24 PM, Patrick Williams wrote:
+> >>> On Wed, Jun 22, 2022 at 01:20:48PM -0500, Joseph Reynolds wrote:
+> >>>> On 6/22/22 10:19 AM, Joseph Reynolds wrote:
+> >>>> 3 Measured boot
+> >>>>       Enable network agents (like keylime server, possibly the host
+> >>>>       system) to get measurements from TPM.  Note the measurements are
+> >>>>       digitally signed by the TPM to ensure their integrity.
+> >>> Is there any work going on to define some kind of measurement schema in
+> >>> Redfish?  Last I knew this was absent.
+> >> Thanks for the reminder.  I started a thread for this:
+> >> https://redfishforum.com/thread/685/support-bmc-attached-tpm
+> > Sounds good.
+> >
+> > You mentioned there the "TrustedModules" type.  It doesn't seem like
+> > this exposes measurements currently?  Am I misunderstanding?  That seems
+> > pretty important for our use case.
 >
-> You mentioned there the "TrustedModules" type.  It doesn't seem like
-> this exposes measurements currently?  Am I misunderstanding?  That seems
-> pretty important for our use case.
+> Thanks.  I've edited/appended the post to clarify that we need to
+> enhance the TrustedModule schema so we can GET the TPM's measurements.
+>
+> -Joseph
+>
+>
 
-Thanks.  I've edited/appended the post to clarify that we need to 
-enhance the TrustedModule schema so we can GET the TPM's measurements.
+--0000000000009b5e4d05e22e2f34
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
--Joseph
+<div dir=3D"ltr"><div dir=3D"ltr">Hi Joseph,<div><br></div><div>Did you che=
+ck the=C2=A0<a href=3D"https://redfish.dmtf.org/schemas/ComponentIntegrity.=
+v1_1_0.json">https://redfish.dmtf.org/schemas/ComponentIntegrity.v1_1_0.jso=
+n</a>?=C2=A0</div><div><br></div><div>Regards</div><div>Ratan Gupta</div></=
+div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_at=
+tr">On Fri, Jun 24, 2022 at 5:48 AM Joseph Reynolds &lt;<a href=3D"mailto:j=
+rey@linux.ibm.com">jrey@linux.ibm.com</a>&gt; wrote:<br></div><blockquote c=
+lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
+d rgb(204,204,204);padding-left:1ex">On 6/22/22 5:16 PM, Patrick Williams w=
+rote:<br>
+&gt; On Wed, Jun 22, 2022 at 04:23:41PM -0500, Joseph Reynolds wrote:<br>
+&gt;&gt; On 6/22/22 3:24 PM, Patrick Williams wrote:<br>
+&gt;&gt;&gt; On Wed, Jun 22, 2022 at 01:20:48PM -0500, Joseph Reynolds wrot=
+e:<br>
+&gt;&gt;&gt;&gt; On 6/22/22 10:19 AM, Joseph Reynolds wrote:<br>
+&gt;&gt;&gt;&gt; 3 Measured boot<br>
+&gt;&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0Enable network agents (like keyl=
+ime server, possibly the host<br>
+&gt;&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0system) to get measurements from=
+ TPM.=C2=A0 Note the measurements are<br>
+&gt;&gt;&gt;&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0digitally signed by the TPM to e=
+nsure their integrity.<br>
+&gt;&gt;&gt; Is there any work going on to define some kind of measurement =
+schema in<br>
+&gt;&gt;&gt; Redfish?=C2=A0 Last I knew this was absent.<br>
+&gt;&gt; Thanks for the reminder.=C2=A0 I started a thread for this:<br>
+&gt;&gt; <a href=3D"https://redfishforum.com/thread/685/support-bmc-attache=
+d-tpm" rel=3D"noreferrer" target=3D"_blank">https://redfishforum.com/thread=
+/685/support-bmc-attached-tpm</a><br>
+&gt; Sounds good.<br>
+&gt;<br>
+&gt; You mentioned there the &quot;TrustedModules&quot; type.=C2=A0 It does=
+n&#39;t seem like<br>
+&gt; this exposes measurements currently?=C2=A0 Am I misunderstanding?=C2=
+=A0 That seems<br>
+&gt; pretty important for our use case.<br>
+<br>
+Thanks.=C2=A0 I&#39;ve edited/appended the post to clarify that we need to =
+<br>
+enhance the TrustedModule schema so we can GET the TPM&#39;s measurements.<=
+br>
+<br>
+-Joseph<br>
+<br>
+</blockquote></div>
 
+--0000000000009b5e4d05e22e2f34--
