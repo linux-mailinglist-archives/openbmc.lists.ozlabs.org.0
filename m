@@ -1,71 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 974EB55A72A
-	for <lists+openbmc@lfdr.de>; Sat, 25 Jun 2022 07:14:54 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 448FA55AD8E
+	for <lists+openbmc@lfdr.de>; Sun, 26 Jun 2022 01:29:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LVMcX3dgCz304J
-	for <lists+openbmc@lfdr.de>; Sat, 25 Jun 2022 15:14:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LVqvJ3R4Qz3bts
+	for <lists+openbmc@lfdr.de>; Sun, 26 Jun 2022 09:29:16 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=ZnYxgZ7W;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=N4D4Xi/Z;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=flex--davidgow.bounces.google.com (client-ip=2607:f8b0:4864:20::649; helo=mail-pl1-x649.google.com; envelope-from=35zi2yggkbw4ro9wru2au22uzs.q2023s1p0qzw676.2dzop6.25u@flex--davidgow.bounces.google.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::1136; helo=mail-yw1-x1136.google.com; envelope-from=linus.walleij@linaro.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=ZnYxgZ7W;
+	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=N4D4Xi/Z;
 	dkim-atps=neutral
-Received: from mail-pl1-x649.google.com (mail-pl1-x649.google.com [IPv6:2607:f8b0:4864:20::649])
+Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LVMX90rc0z3chP
-	for <openbmc@lists.ozlabs.org>; Sat, 25 Jun 2022 15:11:04 +1000 (AEST)
-Received: by mail-pl1-x649.google.com with SMTP id o9-20020a170902d4c900b0016a629e2f1bso2283957plg.20
-        for <openbmc@lists.ozlabs.org>; Fri, 24 Jun 2022 22:11:04 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LVqts3Qc3z3bdF
+	for <openbmc@lists.ozlabs.org>; Sun, 26 Jun 2022 09:28:50 +1000 (AEST)
+Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-3178acf2a92so55121267b3.6
+        for <openbmc@lists.ozlabs.org>; Sat, 25 Jun 2022 16:28:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=date:in-reply-to:message-id:mime-version:references:subject:from:to
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=rVO2p/4gWmOyb4ep6RqSpRHzECQ50xC37PSaOv1SUGw=;
-        b=ZnYxgZ7WqalP2dGkVphlbAjbjTTwDrWhD3RAM4V8o6/4InFeKP/4fGh9nmuKlyAEvo
-         oKBc3t8krwimc05NLMyCHViXO4A+w6+YsDo8b4CVr4LSG+mLmKz2pA2pe2zjAb1cJ6H/
-         jaoeav2d7SWqkbw5WcEyh4WTNEuMEQYzcCSOTK7q3hfcEnQ9xVm8hYFPtL1wb+JG794S
-         7Ua4nSkKwOPkLvqgcU+sR2WWAX0aCCZfNetn+bckdI9KhaloJ63hrQo0IsbYsbBAj14f
-         03k70sCmEYyFHwzJ40aHjS4YgKpS01/1TW15oVuFATsCHtlepIt02aV2Uauk1+rNeD9w
-         hKow==
+        bh=2ZHbHCzgoQABSLSyZg/clIwjQ3dcNnkQ5dXPgPYxATQ=;
+        b=N4D4Xi/ZkS3g3tlO204tZ0mkKhnIOSd0acgAfI4W+ZQommQ6v+6ziiA9vaKLZB1zm3
+         ylk5U6EcbKo2nBk3LV4euELboUgU97u10+M1vva8j1SQ9NaOUirt1OsOICRsZxACg39f
+         lgjgv0snIW55QwjgLDiw+ocE7KVu13CPv/p2Qtk6lVq6Ub5vFMo9cuwQoJE4N06H78Hm
+         tGRrQnvm18hSZ4Z4tIHIAyTHJz2gIfo/cPqp9gfycDseZ35TW5OgJ3cGaPs6XzYWAJSC
+         LR1o3zCklx/ZCZPlE4JK6uVQOh1UlN9XUpSz9K7shEAVGA8y9CmkSSZoICDXatuWfoqw
+         2LRg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:in-reply-to:message-id:mime-version
-         :references:subject:from:to:cc;
-        bh=rVO2p/4gWmOyb4ep6RqSpRHzECQ50xC37PSaOv1SUGw=;
-        b=dBbe6k/GYofs5x3FI5wXrneudyiO73klQeDdWdj7/KpQHGkQBnNkdi7YFsSDqqST1y
-         MrW9XIaXxUwjxN9awW4lVfJ4gdQUIg7igFuCyk9eIgJ51AMPoWpUTk+xOzyNN68FKQ0/
-         11qShBt28uCO212J+eXyxpX9RI3IhOuT8Y46tZpJbl1ASbbS0oH3m6LPRQeZmij2BVJY
-         rC8PbcXZPdPDaTmj5lF4OYWt74+gFsRO0/WrBY6T0KOJ2J62siKEp3i3JVOVBjFt/RSL
-         fhyuYSZtBaaZciYEONHkCGrFYdtgZmHFvW0TvaTO+yMnH/yT7aNsTrlViuDomoxdanOi
-         f//g==
-X-Gm-Message-State: AJIora9FfhMBgxMcy5mp7lwZAOgJpUeTNiS6532TP9mjEt2+p0Mk2h4P
-	KjoSmKxTtrgyJX7qPYX41okXi/nN+X1mqQ==
-X-Google-Smtp-Source: AGRyM1vSgWc7GnZSpUv1n7qCzLhhitXpo2LTAKE1+91FirTZI0V7zE22wJcwEw3RTwL8dSDR+tYk87aSCL5uPw==
-X-Received: from slicestar.c.googlers.com ([fda3:e722:ac3:cc00:4f:4b78:c0a8:20a1])
- (user=davidgow job=sendgmr) by 2002:a17:90a:249:b0:1e0:a8a3:3c6c with SMTP id
- t9-20020a17090a024900b001e0a8a33c6cmr438311pje.0.1656133861539; Fri, 24 Jun
- 2022 22:11:01 -0700 (PDT)
-Date: Sat, 25 Jun 2022 13:08:39 +0800
-In-Reply-To: <20220625050838.1618469-1-davidgow@google.com>
-Message-Id: <20220625050838.1618469-6-davidgow@google.com>
-Mime-Version: 1.0
-References: <20220625050838.1618469-1-davidgow@google.com>
-X-Mailer: git-send-email 2.37.0.rc0.161.g10f37bed90-goog
-Subject: [PATCH v3 5/5] mmc: sdhci-of-aspeed: test: Use kunit_test_suite() macro
-From: David Gow <davidgow@google.com>
-To: Brendan Higgins <brendanhiggins@google.com>, Luis Chamberlain <mcgrof@kernel.org>, 
-	Jeremy Kerr <jk@codeconstruct.com.au>, Daniel Latypov <dlatypov@google.com>, 
-	Shuah Khan <skhan@linuxfoundation.org>, Andrew Jeffery <andrew@aj.id.au>, 
-	Mika Westerberg <mika.westerberg@linux.intel.com>, Andra Paraschiv <andraprs@amazon.com>, 
-	Longpeng <longpeng2@huawei.com>, Greg KH <gregkh@linuxfoundation.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=2ZHbHCzgoQABSLSyZg/clIwjQ3dcNnkQ5dXPgPYxATQ=;
+        b=npjHfyHdAxsUOgpb+xhaEy149LzkO1irtFH5uwoTh4Kn2vOCTuZewB22Eem79CksMm
+         bcdPsNEwKx63CQIltGg9DFfZpOJD5B4HGMayq5o/wSwa/OqFEYMm9fhhKZb/EriWiswo
+         Ywzl9vcH7Hh3bcPJ1ZDUPKBO5c4kvrzIG3wnw/drNOmaWTFU6JCNi2wdUULjIdM8e2Gw
+         CJU7eitBhRFuTRNj6BFm/bE7tNI/+lj+yMJFJm9LpZ7L7HiAWxpOW3/lxrHHV25SZR4S
+         aNHjKuCsK2QGIZDpZEzR2x0QIDP4Lui/duA6XuMjolC/yDpOqCE2upBEdw3A7JhWNCqI
+         4F0g==
+X-Gm-Message-State: AJIora/njsXsKdm2h/ziVS1t+hTv7EIcz86JQQQu64VdUo3Owf8fLJI2
+	8iMwd2c0cjoVu6HTzXk+JeQPQclPRZBEuUVgXoLKLg==
+X-Google-Smtp-Source: AGRyM1spnHk4DL1GaXxVekSrkt1iH996cdrejY3FYGxU0SDg1CbcxSaWPwj2DH8lacg9auY41J3Ys1RDyCcjq6nVpWg=
+X-Received: by 2002:a0d:e20a:0:b0:317:ce36:a3a0 with SMTP id
+ l10-20020a0de20a000000b00317ce36a3a0mr6969123ywe.448.1656199726318; Sat, 25
+ Jun 2022 16:28:46 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220616005224.18391-1-krzysztof.kozlowski@linaro.org> <20220616005333.18491-4-krzysztof.kozlowski@linaro.org>
+In-Reply-To: <20220616005333.18491-4-krzysztof.kozlowski@linaro.org>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Sun, 26 Jun 2022 01:28:35 +0200
+Message-ID: <CACRpkdYVPeEtKKA9xdiSAP6oJrX5eAKoOVaLnrELTv_ZQOEMUw@mail.gmail.com>
+Subject: Re: [PATCH v3 04/40] dt-bindings: pinctrl: nuvoton,wpcm450-pinctrl:
+ align key node name
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -78,138 +73,19 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>, David Gow <davidgow@google.com>, linux-aspeed@lists.ozlabs.org, =?UTF-8?q?Ma=C3=ADra=20Canal?= <maira.canal@usp.br>, openbmc@lists.ozlabs.org, linux-usb@vger.kernel.org, linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org, linux-kselftest@vger.kernel.org, Matt Johnston <matt@codeconstruct.com.au>, linux-modules@vger.kernel.org, kunit-dev@googlegroups.com
+Cc: devicetree@vger.kernel.org, arm@kernel.org, Arnd Bergmann <arnd@arndb.de>, openbmc@lists.ozlabs.org, =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, soc@kernel.org, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Olof Johansson <olof@lixom.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The kunit_test_suite() macro is no-longer incompatible with module_add,
-so its use can be reinstated.
+On Thu, Jun 16, 2022 at 2:54 AM Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 
-Since this fixes parsing with builtins and kunit_tool, also enable the
-test by default when KUNIT_ALL_TESTS is enabled.
+> gpio-keys schema requires keys to have more generic name.
+>
+> Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-The test can now be run via kunit_tool with:
-	./tools/testing/kunit/kunit.py run --arch=x86_64 \
-	--kconfig_add CONFIG_OF=y --kconfig_add CONFIG_OF_ADDRESS=y \
-	--kconfig_add CONFIG_MMC=y --kconfig_add CONFIG_MMC_SDHCI=y \
-	--kconfig_add CONFIG_MMC_SDHCI_PLTFM=y \
-	--kconfig_add CONFIG_MMC_SDHCI_OF_ASPEED=y \
-	'sdhci-of-aspeed'
+OK, do you want me to apply this one patch to the pinctrl tree or
+will you collect a series?
 
-(It may be worth adding a .kunitconfig at some point, as there are
-enough dependencies to make that command scarily long.)
-
-Acked-by: Daniel Latypov <dlatypov@google.com>
-Acked-by: Ulf Hansson <ulf.hansson@linaro.org>
-Signed-off-by: David Gow <davidgow@google.com>
----
-
-Changes since v2:
-https://lore.kernel.org/linux-kselftest/20220621085345.603820-6-davidgow@google.com/
-- Clean up the aspeed_sdc_init() function to get rid of an obsolete goto
-  (Thanks Daniel)
-- Add Daniel and Ulf's Acked-by tags.
-
-No changes since v1:
-https://lore.kernel.org/linux-kselftest/20220618090310.1174932-6-davidgow@google.com/
-
----
- drivers/mmc/host/Kconfig                |  5 ++--
- drivers/mmc/host/sdhci-of-aspeed-test.c |  8 +-----
- drivers/mmc/host/sdhci-of-aspeed.c      | 34 +------------------------
- 3 files changed, 5 insertions(+), 42 deletions(-)
-
-diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
-index d6144978e32d..10c563999d3d 100644
---- a/drivers/mmc/host/Kconfig
-+++ b/drivers/mmc/host/Kconfig
-@@ -169,8 +169,9 @@ config MMC_SDHCI_OF_ASPEED
- 	  If unsure, say N.
- 
- config MMC_SDHCI_OF_ASPEED_TEST
--	bool "Tests for the ASPEED SDHCI driver"
--	depends on MMC_SDHCI_OF_ASPEED && KUNIT=y
-+	bool "Tests for the ASPEED SDHCI driver" if !KUNIT_ALL_TESTS
-+	depends on MMC_SDHCI_OF_ASPEED && KUNIT
-+	default KUNIT_ALL_TESTS
- 	help
- 	  Enable KUnit tests for the ASPEED SDHCI driver. Select this
- 	  option only if you will boot the kernel for the purpose of running
-diff --git a/drivers/mmc/host/sdhci-of-aspeed-test.c b/drivers/mmc/host/sdhci-of-aspeed-test.c
-index 1ed4f86291f2..ecb502606c53 100644
---- a/drivers/mmc/host/sdhci-of-aspeed-test.c
-+++ b/drivers/mmc/host/sdhci-of-aspeed-test.c
-@@ -96,10 +96,4 @@ static struct kunit_suite aspeed_sdhci_test_suite = {
- 	.test_cases = aspeed_sdhci_test_cases,
- };
- 
--static struct kunit_suite *aspeed_sdc_test_suite_array[] = {
--	&aspeed_sdhci_test_suite,
--	NULL,
--};
--
--static struct kunit_suite **aspeed_sdc_test_suites
--	__used __section(".kunit_test_suites") = aspeed_sdc_test_suite_array;
-+kunit_test_suite(aspeed_sdhci_test_suite);
-diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
-index 6e4e132903a6..ba6677bf7372 100644
---- a/drivers/mmc/host/sdhci-of-aspeed.c
-+++ b/drivers/mmc/host/sdhci-of-aspeed.c
-@@ -606,25 +606,6 @@ static struct platform_driver aspeed_sdc_driver = {
- 
- #if defined(CONFIG_MMC_SDHCI_OF_ASPEED_TEST)
- #include "sdhci-of-aspeed-test.c"
--
--static inline int aspeed_sdc_tests_init(void)
--{
--	return __kunit_test_suites_init(aspeed_sdc_test_suites);
--}
--
--static inline void aspeed_sdc_tests_exit(void)
--{
--	__kunit_test_suites_exit(aspeed_sdc_test_suites);
--}
--#else
--static inline int aspeed_sdc_tests_init(void)
--{
--	return 0;
--}
--
--static inline void aspeed_sdc_tests_exit(void)
--{
--}
- #endif
- 
- static int __init aspeed_sdc_init(void)
-@@ -637,18 +618,7 @@ static int __init aspeed_sdc_init(void)
- 
- 	rc = platform_driver_register(&aspeed_sdc_driver);
- 	if (rc < 0)
--		goto cleanup_sdhci;
--
--	rc = aspeed_sdc_tests_init();
--	if (rc < 0) {
--		platform_driver_unregister(&aspeed_sdc_driver);
--		goto cleanup_sdhci;
--	}
--
--	return 0;
--
--cleanup_sdhci:
--	platform_driver_unregister(&aspeed_sdhci_driver);
-+		platform_driver_unregister(&aspeed_sdhci_driver);
- 
- 	return rc;
- }
-@@ -656,8 +626,6 @@ module_init(aspeed_sdc_init);
- 
- static void __exit aspeed_sdc_exit(void)
- {
--	aspeed_sdc_tests_exit();
--
- 	platform_driver_unregister(&aspeed_sdc_driver);
- 	platform_driver_unregister(&aspeed_sdhci_driver);
- }
--- 
-2.37.0.rc0.161.g10f37bed90-goog
-
+Yours,
+Linus Walleij
