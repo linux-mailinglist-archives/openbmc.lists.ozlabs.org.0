@@ -2,66 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D743C55E5CD
-	for <lists+openbmc@lfdr.de>; Tue, 28 Jun 2022 17:49:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D1DA55E5D2
+	for <lists+openbmc@lfdr.de>; Tue, 28 Jun 2022 17:52:20 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LXTYj5YMBz3cFH
-	for <lists+openbmc@lfdr.de>; Wed, 29 Jun 2022 01:49:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LXTcf2hVdz3c9W
+	for <lists+openbmc@lfdr.de>; Wed, 29 Jun 2022 01:52:18 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=bGysnWrN;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=ZPMmeXYb;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::534; helo=mail-pg1-x534.google.com; envelope-from=wltu@google.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::12e; helo=mail-il1-x12e.google.com; envelope-from=brandonkim@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=bGysnWrN;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=ZPMmeXYb;
 	dkim-atps=neutral
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
+Received: from mail-il1-x12e.google.com (mail-il1-x12e.google.com [IPv6:2607:f8b0:4864:20::12e])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LXTYF0HwGz2ywV
-	for <openbmc@lists.ozlabs.org>; Wed, 29 Jun 2022 01:49:20 +1000 (AEST)
-Received: by mail-pg1-x534.google.com with SMTP id 184so12562752pga.12
-        for <openbmc@lists.ozlabs.org>; Tue, 28 Jun 2022 08:49:20 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LXTcD3jWTz3brm
+	for <openbmc@lists.ozlabs.org>; Wed, 29 Jun 2022 01:51:55 +1000 (AEST)
+Received: by mail-il1-x12e.google.com with SMTP id p9so8151301ilj.7
+        for <openbmc@lists.ozlabs.org>; Tue, 28 Jun 2022 08:51:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=google.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=BdxtqUQdiWt3Y59sl3V0JAb8kLlIOeZvOi6BXuzJ248=;
-        b=bGysnWrNNR5SE/rqfXZ4mu2TQLsU3iyjQTN+8CIZ+yYLcHdAWxMfci0MdyCd6us2O9
-         +mWc903ThfnqPieQOkkbjLbF/2ryCxQmQUXqCG1FFmtUPvVXQX08sEHSk4tzGT2YU49F
-         0PxCtUXs/ZenOEWGSBpXhjge2eJhiyygJ6f1Lq1k/tIvHaYZU/NV3SRXUCjn7ULduhXG
-         VUAa+gcgvlZjA71Ey1frMykkeEm+O3j3W8fp7oEboS8RdE5wpkw2rfef+N+R42uNId3x
-         cFvZ/40il2FRDYrh0fvYMu7wFh24svW+BGj3st9t7vuneoD7EZV90mnUqzwAz4NfH/a9
-         tw8A==
+        bh=q8z9kpBHLUVewvym/4Uy093fsTTexEE47z5rhz1A2LI=;
+        b=ZPMmeXYbQ25ddaSM8Eulno4Uu5HTh3KIpfKj7SM350uy615qurumv7JYk3iapXUr57
+         aGhStiR6oToyaIaMl6IxX/wBQTnY3/RERQEyC4aPdBWkbxlIWhFoK4i+XVkmSBEy9sAq
+         4P2EShSCgWGmIbSR66Sv6CYF1IS/evUXSJZ6WSwJHZzjgLTCfTyU6V6eWbeKzWQDzhk+
+         b5gjO0MjpO/orL/CE1Hm+hHFTNQNAjxFqi5zXKNG9zvU/Lmj2u88cERkv6NBObHFKKFV
+         BPnRmOdWRR+vbKEFN+dqzoMy+t/3/FGBrNWhZMU/M7jFkSpUB9arfojqqMfPjh2o5kTw
+         MLFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=BdxtqUQdiWt3Y59sl3V0JAb8kLlIOeZvOi6BXuzJ248=;
-        b=2XYns9vOjST9KaENRsrTC2emaQKPXeDqz9yDyCnoYoNlSI3XhCWqnh+L5/4u0vFWR+
-         HWhcCNmV0p7OKzC+vwFG8Xyj8EHvTM5JOt+HiycZVicixKtLwFv16DFZn7NCq2pBCCoy
-         w+Bu63wDzULzvUyvuXG5v7w0cqga45vEDhGhD4UIbI+Sd5qwuUagZBbTVGBEAg7RPuL3
-         Y3MHQh3fj2QCs9TmUULv4CWICVkbmW1k79SLSWmYqTMZY5WATpfVk+B7uctf5VUJLVj6
-         nCXABN+T61wZkhqv/oona87MbcKzMx2SxgEMHIwDAtsB6scpfPh+gusr0J2dQesIfnqP
-         vCjQ==
-X-Gm-Message-State: AJIora9C8sC8uvSJ8QJWmMM+2vndtRR4n+85jtOjkPX7DGIPKGJ9sczq
-	je1kV8RmBplOK8quraWDbGWgDaehTsLqdBe0DZJaRA==
-X-Google-Smtp-Source: AGRyM1soovmRC2BCocERmgK6dI9IH19zi5qw0un3QRNmF1a0EFEvXMoidfjhb9eIKBq7HpG4ibhcWYZoszNBEVkXdXw=
-X-Received: by 2002:a63:68f:0:b0:40d:f0c7:6da3 with SMTP id
- 137-20020a63068f000000b0040df0c76da3mr10685717pgg.126.1656431357006; Tue, 28
- Jun 2022 08:49:17 -0700 (PDT)
+        bh=q8z9kpBHLUVewvym/4Uy093fsTTexEE47z5rhz1A2LI=;
+        b=7reGy5ZwpytUCCpi3ImB2KxrIE+Mfw93mngM8SVY1tLFikmr7qZjFkEdDzgtnaBcz1
+         s4rqt/k1PBc4lOD2p5ybO3MM4SRUSM1WjDgvh+i+cBOhItrSgk1M9ONq69/cTgHpcy7I
+         QHqi5k0oCMnFBLLTApdNMT7APiovBwtjlvUT2H/ZZFPrCDf6FMNY9/0VUx1w7Yaw6gmS
+         8j6DKb58H1PEYN/MQT7OByXBgy1JqwQYvZt+NFiwnFmHJrqdm300CqROiS8ASHmq57RA
+         ouuUkX+aZhl24MnM6UipLuvKGdG75lX1hP6tqrL9qaWLa/sFDVa1cyS+AFHLnG5lepdF
+         ZH7A==
+X-Gm-Message-State: AJIora9/N+Yey4BMYZxo0tmQw0Tm0yIHEGtbEIT1DfBZ214fid84J6Cc
+	MonZOyENrV+R0Qyxop3fU3WiSvb/cNmwGlwYAoaWmrsXJG24E0Yn
+X-Google-Smtp-Source: AGRyM1uhNucDNxaKRI+7T5Yy2wvT6DxOriM0EOHbYbij1rps9z4dNc0fltHq29EUwCjiSmx8jyeezYDHoE8ShD+FmcI=
+X-Received: by 2002:a05:6e02:1749:b0:2da:9a89:3961 with SMTP id
+ y9-20020a056e02174900b002da9a893961mr5240759ill.258.1656431512397; Tue, 28
+ Jun 2022 08:51:52 -0700 (PDT)
 MIME-Version: 1.0
 References: <DM6PR08MB5514E14B450A17E9CA173B4CDCB89@DM6PR08MB5514.namprd08.prod.outlook.com>
 In-Reply-To: <DM6PR08MB5514E14B450A17E9CA173B4CDCB89@DM6PR08MB5514.namprd08.prod.outlook.com>
-From: Willy Tu <wltu@google.com>
-Date: Tue, 28 Jun 2022 08:49:06 -0700
-Message-ID: <CAHwn2XmjYaiW=BTUodLPi2Z_cUZria9qJTeJ67+jF_0rJs067g@mail.gmail.com>
+From: Brandon Kim <brandonkim@google.com>
+Date: Tue, 28 Jun 2022 08:51:41 -0700
+Message-ID: <CALGRKGO0Y6FGTYu1rqH-YJCZgKXsPBHjjERmU7_5tOa0xg3M=A@mail.gmail.com>
 Subject: Re: [phosphor-ipmi-flash]: stdplus build failed before building the
  host-tool on the Host
-To: "Chris Chen (TPI)" <Chris.Chen3@flex.com>
-Content-Type: multipart/alternative; boundary="000000000000a1e9b605e283fad5"
+To: "Chris Chen (TPI)" <Chris.Chen3@flex.com>, Willy Tu <wltu@google.com>
+Content-Type: multipart/alternative; boundary="000000000000e4973105e28403f6"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,39 +77,34 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000a1e9b605e283fad5
+--000000000000e4973105e28403f6
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-Hi Chris,
+Ah, it seems like the email chains were broken up for some reason - seeing
+this now after I replied to the other email chain.
 
-Are you building these locally? I would recommend using the docker that
-setup all the required environments for the build.
+It is totally possible that our instructions in the README is not up to
+date anymore, but just to make sure - are you building each of the
+components as specified by
+https://github.com/openbmc/phosphor-ipmi-flash#building-the-host-tool ?
 
-See
-https://github.com/openbmc/openbmc-build-scripts/blob/master/scripts/build-=
-unit-test-docker
-for
-reference.
+It details the commands to use for each of the dependencies.
 
-If you insist to build locally,
+Good point on the burn_my_bmc command in the README description not being
+not up to date and still using automake (
+https://github.com/openbmc/phosphor-ipmi-flash#building-the-host-tool) -
+I'll try to run this to verify when I get time later today, but in the
+meantime perhaps @Willy Tu <wltu@google.com> may know the command off the
+top of his head as he performed the big meson migration. As a first glance
+the command looks correct.
 
-For
-```
-configure.ac:38: error: invalid first argument `20' to AX_CXX_COMPILE_STDCX=
-X
-/usr/share/aclocal/ax_cxx_compile_stdcxx.m4:50: AX_CXX_COMPILE_STDCXX is
-expanded from...
-configure.ac:38: the top level
-```, you will need to setup with the command in
-https://github.com/openbmc/openbmc-build-scripts/commit/3ea4cd7e18d607de59f=
-edc5eae4f3e536e0632a4
+Willy recently also migrated phospohr-host-ipmid to meson, so he may know
+more about the PAM dependency as well.
 
-For the `pam ` issue, you will need to install `libpam0g-dev`.
+Thanks,
+Brandon
 
-Best,
-
-Willy Tu
 
 On Tue, Jun 28, 2022 at 8:04 AM Chris Chen (TPI) <Chris.Chen3@flex.com>
 wrote:
@@ -287,36 +282,34 @@ t
 > this message!
 >
 
---000000000000a1e9b605e283fad5
+--000000000000e4973105e28403f6
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hi=C2=A0Chris,<div><br></div><div>Are you building these l=
-ocally? I would recommend=C2=A0using the docker that setup all the required=
- environments for the build.</div><div><br></div><div>See=C2=A0<a href=3D"h=
-ttps://github.com/openbmc/openbmc-build-scripts/blob/master/scripts/build-u=
-nit-test-docker">https://github.com/openbmc/openbmc-build-scripts/blob/mast=
-er/scripts/build-unit-test-docker</a>=C2=A0for reference.</div><div><br></d=
-iv><div>If you insist to build locally,=C2=A0</div><div><br></div><div>For=
-=C2=A0</div><div>```</div><div><div style=3D"color:rgb(0,0,0);font-family:C=
-alibri,Arial,Helvetica,sans-serif;font-size:16px"><a href=3D"http://configu=
-re.ac:38/" target=3D"_blank">configure.ac:38</a>: error: invalid first argu=
-ment `20&#39; to AX_CXX_COMPILE_STDCXX</div><div style=3D"color:rgb(0,0,0);=
-font-family:Calibri,Arial,Helvetica,sans-serif;font-size:16px">/usr/share/a=
-clocal/ax_cxx_compile_stdcxx.m4:50: AX_CXX_COMPILE_STDCXX is expanded from.=
-..</div><div style=3D"color:rgb(0,0,0);font-family:Calibri,Arial,Helvetica,=
-sans-serif;font-size:16px"><a href=3D"http://configure.ac:38/" target=3D"_b=
-lank">configure.ac:38</a>: the top level</div></div><div>```, you will need=
- to setup with the command in=C2=A0<a href=3D"https://github.com/openbmc/op=
-enbmc-build-scripts/commit/3ea4cd7e18d607de59fedc5eae4f3e536e0632a4">https:=
-//github.com/openbmc/openbmc-build-scripts/commit/3ea4cd7e18d607de59fedc5ea=
-e4f3e536e0632a4</a></div><div><br></div><div>For the `pam ` issue, you will=
- need to install `libpam0g-dev`.</div><div><br></div><div>Best,</div><div><=
-br></div><div>Willy Tu</div></div><br><div class=3D"gmail_quote"><div dir=
-=3D"ltr" class=3D"gmail_attr">On Tue, Jun 28, 2022 at 8:04 AM Chris Chen (T=
-PI) &lt;<a href=3D"mailto:Chris.Chen3@flex.com">Chris.Chen3@flex.com</a>&gt=
-; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px=
- 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+<div dir=3D"ltr">Ah, it seems like the email chains were broken up for some=
+ reason - seeing this now after I replied to the other email chain.<br><br>=
+It is totally possible that our instructions in the README is not up to dat=
+e anymore, but just to make sure - are you building each of the components =
+as specified by <a href=3D"https://github.com/openbmc/phosphor-ipmi-flash#b=
+uilding-the-host-tool">https://github.com/openbmc/phosphor-ipmi-flash#build=
+ing-the-host-tool</a> ?<div><br></div><div>It details the commands to use f=
+or each of the dependencies.</div><div><br></div><div>Good point on the bur=
+n_my_bmc command in the README description not being not up to date and sti=
+ll using automake (<a href=3D"https://github.com/openbmc/phosphor-ipmi-flas=
+h#building-the-host-tool">https://github.com/openbmc/phosphor-ipmi-flash#bu=
+ilding-the-host-tool</a>) - I&#39;ll try to run this to verify when I get t=
+ime later today, but in the meantime=C2=A0perhaps=C2=A0<a class=3D"gmail_pl=
+usreply" id=3D"plusReplyChip-1" href=3D"mailto:wltu@google.com" tabindex=3D=
+"-1">@Willy Tu</a>=C2=A0may know the command off the top of his head as he =
+performed the big meson migration. As a first glance the command looks corr=
+ect.</div><div><br></div><div>Willy recently also migrated phospohr-host-ip=
+mid to meson, so he may know more about the PAM dependency as well.</div><d=
+iv><br></div><div>Thanks,</div><div>Brandon</div></div><br><br><div class=
+=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jun 28, 2022=
+ at 8:04 AM Chris Chen (TPI) &lt;<a href=3D"mailto:Chris.Chen3@flex.com">Ch=
+ris.Chen3@flex.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote=
+" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
+padding-left:1ex">
 
 
 
@@ -547,4 +540,4 @@ please immediately notify the sender and delete or destroy any copy of this=
 
 </blockquote></div>
 
---000000000000a1e9b605e283fad5--
+--000000000000e4973105e28403f6--
