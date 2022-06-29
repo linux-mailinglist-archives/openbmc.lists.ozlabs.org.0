@@ -1,58 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ED3C056075B
-	for <lists+openbmc@lfdr.de>; Wed, 29 Jun 2022 19:28:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 376835608D8
+	for <lists+openbmc@lfdr.de>; Wed, 29 Jun 2022 20:16:33 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LY7j062J2z3cgg
-	for <lists+openbmc@lfdr.de>; Thu, 30 Jun 2022 03:28:20 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=pBPcDs7Z;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LY8mb15wYz3cj4
+	for <lists+openbmc@lfdr.de>; Thu, 30 Jun 2022 04:16:31 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4601:e00::1; helo=ams.source.kernel.org; envelope-from=broonie@kernel.org; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=pBPcDs7Z;
-	dkim-atps=neutral
-Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kaod.org (client-ip=178.32.121.110; helo=1.mo548.mail-out.ovh.net; envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
+Received: from 1.mo548.mail-out.ovh.net (1.mo548.mail-out.ovh.net [178.32.121.110])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LY7hW1cyLz3bqr;
-	Thu, 30 Jun 2022 03:27:55 +1000 (AEST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ams.source.kernel.org (Postfix) with ESMTPS id CCCB9B81F16;
-	Wed, 29 Jun 2022 17:27:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ED50C34114;
-	Wed, 29 Jun 2022 17:27:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1656523669;
-	bh=x0EesMyFaiSD8rylLmQqTGs3zzcIl/WKMbvu1LL/AV4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=pBPcDs7ZbJTPSInPM7tyCB+0SAxPf6O8wnPrY5bQ5hRcG4wj0bJhBAyLc+KNDe6H8
-	 BfgwTzTPSlzVSvZLpfo4x+chPeMxywDFj6xQe3nbAYrZWGgEqRy3woZ0OkgcdvLe4H
-	 Ad+Ni3xu4hsPYt9WeMy7doyJbTIccWokzoOXS8HQPttWMDEyueU6zlzIqy7p9SN4my
-	 I+3ACBSudHDC2Br/wXSfR9TFqWe6iTHpECDA9v1F+scmxqE4aDOMixSxWvsuOkEMgM
-	 UVvzq3MhzMlLPoJTpWGWNkJzL8hI34sIW/A2CdP1/4IHGw7HB2yIV0YJo4GDv152Qu
-	 nTlqF0xa2Y9Ow==
-Date: Wed, 29 Jun 2022 18:27:43 +0100
-From: Mark Brown <broonie@kernel.org>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>
-Subject: Re: [PATCH v3 2/2] spi: aspeed: Fix division by zero
-Message-ID: <YryLj6iWVkqWowDg@sirena.org.uk>
-References: <20220622161617.3719096-1-clg@kaod.org>
- <20220622161617.3719096-3-clg@kaod.org>
- <YryHVsrqNlhdwKzq@sirena.org.uk>
- <59b82730-f09f-f7e5-0e2f-4ad1765f0f6e@kaod.org>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LY8mK4G9Gz3blW
+	for <openbmc@lists.ozlabs.org>; Thu, 30 Jun 2022 04:16:17 +1000 (AEST)
+Received: from mxplan5.mail.ovh.net (unknown [10.108.20.177])
+	by mo548.mail-out.ovh.net (Postfix) with ESMTPS id A8D0B20747;
+	Wed, 29 Jun 2022 18:07:45 +0000 (UTC)
+Received: from kaod.org (37.59.142.96) by DAG4EX1.mxp5.local (172.16.2.31)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.9; Wed, 29 Jun
+ 2022 20:07:44 +0200
+Authentication-Results: garm.ovh; auth=pass (GARM-96R00198260963-dde8-461b-8c1a-012665a8672e,
+                    DF7F9948BD89912A9BBE6A4903E17E70B6709CC1) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <d272ce4b-c338-c3ea-3770-6c85ddf60ec5@kaod.org>
+Date: Wed, 29 Jun 2022 20:07:39 +0200
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="VkJUd9CeU3kUqltG"
-Content-Disposition: inline
-In-Reply-To: <59b82730-f09f-f7e5-0e2f-4ad1765f0f6e@kaod.org>
-X-Cookie: Booths for two or more.
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.9.0
+Subject: Re: [PATCH v3 2/2] spi: aspeed: Fix division by zero
+Content-Language: en-US
+To: Mark Brown <broonie@kernel.org>
+References: <20220622161617.3719096-1-clg@kaod.org>
+ <20220622161617.3719096-3-clg@kaod.org> <YryHVsrqNlhdwKzq@sirena.org.uk>
+ <59b82730-f09f-f7e5-0e2f-4ad1765f0f6e@kaod.org>
+ <YryLj6iWVkqWowDg@sirena.org.uk>
+From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
+In-Reply-To: <YryLj6iWVkqWowDg@sirena.org.uk>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [37.59.142.96]
+X-ClientProxiedBy: DAG8EX1.mxp5.local (172.16.2.71) To DAG4EX1.mxp5.local
+ (172.16.2.31)
+X-Ovh-Tracer-GUID: 3fc20af5-91b9-41c4-b2e6-732ae46bea70
+X-Ovh-Tracer-Id: 10732359387039697912
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvfedrudegledguddvtdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkffggfgfuvfevfhfhjggtgfhisehtkeertddtfeejnecuhfhrohhmpeevrogurhhitggpnfgvpgfiohgrthgvrhcuoegtlhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepkeetjedtleekjedvveffudfhteetleeifeegfeffuefghfefkeehffeufeeludejnecukfhppedtrddtrddtrddtpdefjedrheelrddugedvrdelieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhhouggvpehsmhhtphhouhhtpdhhvghlohepmhigphhlrghnhedrmhgrihhlrdhovhhhrdhnvghtpdhinhgvtheptddrtddrtddrtddpmhgrihhlfhhrohhmpegtlhhgsehkrghougdrohhrghdpnhgspghrtghpthhtohepuddprhgtphhtthhopehifiholhhoshgthhesrghkrghmrghirdgtohhmpdfovfetjfhoshhtpehmohehgeek
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,37 +65,20 @@ Cc: linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>, openbmc@lis
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On 6/29/22 19:27, Mark Brown wrote:
+> On Wed, Jun 29, 2022 at 07:21:08PM +0200, Cédric Le Goater wrote:
+>> On 6/29/22 19:09, Mark Brown wrote:
+>>> On Wed, Jun 22, 2022 at 06:16:17PM +0200, Cédric Le Goater wrote:
+>>>
+>>>> Fixes: 54613fc6659b ("spi: aspeed: Add support for direct mapping")
+>>>
+>>> This commit isn't in mainline.
+> 
+>> drat. It's the OpenBMC kernel. I will resend. Sorry about that.
+> 
+> It's OK, I fixed it up locally.
 
---VkJUd9CeU3kUqltG
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, Jun 29, 2022 at 07:21:08PM +0200, C=E9dric Le Goater wrote:
-> On 6/29/22 19:09, Mark Brown wrote:
-> > On Wed, Jun 22, 2022 at 06:16:17PM +0200, C=E9dric Le Goater wrote:
-> >=20
-> > > Fixes: 54613fc6659b ("spi: aspeed: Add support for direct mapping")
-> >=20
-> > This commit isn't in mainline.
+Thanks,
 
-> drat. It's the OpenBMC kernel. I will resend. Sorry about that.
-
-It's OK, I fixed it up locally.
-
---VkJUd9CeU3kUqltG
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEyBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmK8i48ACgkQJNaLcl1U
-h9D0+gf4tcfx+ldgEy2Wvrii45VbLbXw8yUXIxKQWcg1Ekf6E/5WrCYwVz5ZzRyj
-DwH03bKdCTk598u1GbdxhugIaqvp76wQNbHJZ1kxVZd7a2i0cocCFjwaLlLQmdcv
-BM0VmWsVJgA77QfAcdZJGdBtkqeObaAp7Uf/TZyg7Lq73fBK83hv9YyDp0JLSNla
-TLwlT9Z7ot5cLFfBMOGiYRAsoPI/+6uf2u0zptUsnM105ArmVcC6WiOgbDB8eeDf
-p9fFawvvtYgH5/pvK3WJjRehd+/KW/O2AAjJQmy2yhCMTsty3/4NCyUl/XFH7ymV
-j8kcUIm7NlXWxsi45lGgDn2KlMNq
-=K6NB
------END PGP SIGNATURE-----
-
---VkJUd9CeU3kUqltG--
+C.
