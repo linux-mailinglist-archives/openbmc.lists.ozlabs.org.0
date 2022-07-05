@@ -2,142 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D52AA566168
-	for <lists+openbmc@lfdr.de>; Tue,  5 Jul 2022 04:46:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F2ED566361
+	for <lists+openbmc@lfdr.de>; Tue,  5 Jul 2022 08:48:42 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LcRrV4dTgz3bnd
-	for <lists+openbmc@lfdr.de>; Tue,  5 Jul 2022 12:46:18 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LcYD64lNPz3bt2
+	for <lists+openbmc@lfdr.de>; Tue,  5 Jul 2022 16:48:38 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=GumkVZdp;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=A7coXkTv;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.92.91; helo=nam10-bn7-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::42c; helo=mail-wr1-x42c.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=GumkVZdp;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=A7coXkTv;
 	dkim-atps=neutral
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2091.outbound.protection.outlook.com [40.107.92.91])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LcRqx2dHvz2ywV;
-	Tue,  5 Jul 2022 12:45:47 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=CK06wdyCPte0TULSDHW2NT/O827cNRMOLkTpoeDtVFkgjm8U1cealTnapCNlgGQqsLI6AYL20CdfpcbCW80l77j+GeC8j93V5Y5LSV2Whc0balCJYrl/e0+l3x+MzunFnG5XIT6axud/j6uMB/5EFWaUAV0vdU+Nu2Tq5Y2DPt3QqjPOpBDC2GqdlS2q0SBbv5jLLX1px5Tu8sOBbxZjS9SvBUDmPMtqKa9fvfXVO7qcN962H4ya+KVQsqe9Ns0nWBWusYpjG5jEZARKj8o4WroieBdcQLUj5c+WviwLdBqncyGzrepO50LFdGp7b5PWAeV7EJchsQPW3w2HVRmoLw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=D2wQKYfGYj0Z1ot2IY13ErX0c3h6VTsplYzGatKRLSQ=;
- b=aqItT83KW0Malv8PbvXj4GcJcXvz5Y3ybaPM8jrhuqUXIPzaHEJd0pcLNoPpEQLe0XN22ET7G13feDTgVb674kQ621BB8c0xudL6foPOs4RPMYkrBMBHt01LGrxEHxbsjEGBsdvYEw4ybCBBrZQwDHYAwRmZ0nZVhxeJiWACOY3nkGQGku7uUrvuPX/jyQjsTeoJ/Kd6VMtjBmIQa8IzyBr6V0S2FwhEphpaACVpT8CaTGNd+LvNCRXd8rNJ2SU56dLm6kgZZFaMhaz3GM/z8EnSv25axuiqBMG2x1UrSCguFu+yP0jt/+1i8XqBocMo09v73mB6d+SLdRe09FW+gA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LcYCf6PDQz2yn5
+	for <openbmc@lists.ozlabs.org>; Tue,  5 Jul 2022 16:48:13 +1000 (AEST)
+Received: by mail-wr1-x42c.google.com with SMTP id s1so16066328wra.9
+        for <openbmc@lists.ozlabs.org>; Mon, 04 Jul 2022 23:48:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=D2wQKYfGYj0Z1ot2IY13ErX0c3h6VTsplYzGatKRLSQ=;
- b=GumkVZdpruzWQbyu7YwYuDsbfzVKgGZf+QKeWc73mW7fRKwss63Pa6XfVEV2E/A+QsVEbjdm/xPMORL1D10LO1P7xIYucg4jc4bw4VlH99wIp5cpgFuD5YkegZPWx5PsUXUdRySWTXCTgCf4l0YzcG4Q868yvJ9BR16mYCKhOXE=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
-Received: from SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24) by
- MW2PR0102MB3404.prod.exchangelabs.com (2603:10b6:302:3::16) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5395.18; Tue, 5 Jul 2022 02:45:24 +0000
-Received: from SJ0PR01MB7282.prod.exchangelabs.com
- ([fe80::7535:773:f979:893e]) by SJ0PR01MB7282.prod.exchangelabs.com
- ([fe80::7535:773:f979:893e%8]) with mapi id 15.20.5395.021; Tue, 5 Jul 2022
- 02:45:24 +0000
-Message-ID: <556fa9e1-c54b-8370-4de7-c2d3ec7d6906@os.amperecomputing.com>
-Date: Tue, 5 Jul 2022 09:45:11 +0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.0
-Subject: Re: [PATCH v7 3/3] i2c: aspeed: Assert NAK when slave is busy
-Content-Language: en-CA
-From: Quan Nguyen <quan@os.amperecomputing.com>
-To: Wolfram Sang <wsa@kernel.org>, Corey Minyard <minyard@acm.org>,
- Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
- Andrew Jeffery <andrew@aj.id.au>, Brendan Higgins
- <brendanhiggins@google.com>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
- openipmi-developer@lists.sourceforge.net, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
- openbmc@lists.ozlabs.org,
- Open Source Submission <patches@amperecomputing.com>,
- Phong Vo <phong@os.amperecomputing.com>,
- "Thang Q . Nguyen" <thang@os.amperecomputing.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-References: <20220422040803.2524940-1-quan@os.amperecomputing.com>
- <20220422040803.2524940-4-quan@os.amperecomputing.com>
- <Yn+9QBoPdH8fMm/m@shikoro>
- <fc422a06-c035-f6e5-231b-74ea6afe8467@os.amperecomputing.com>
- <YqpB8A2uBi+4epHM@shikoro>
- <bf001ece-e981-3a06-53fe-6a8b637d69fe@os.amperecomputing.com>
- <YqsiRW78NAL9rX9S@shikoro>
- <27f5999e-40a6-311f-20f1-331a0f4447da@os.amperecomputing.com>
-In-Reply-To: <27f5999e-40a6-311f-20f1-331a0f4447da@os.amperecomputing.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SG2PR04CA0173.apcprd04.prod.outlook.com (2603:1096:4::35)
- To SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24)
+        d=jms.id.au; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8VN+9i3H/qvn2fuAxOp9IjnVj+nRznL01vb2QrP6PHA=;
+        b=A7coXkTvipeCCo9tyIMbyTYCFbw/x3dxl5WNCb7/Fs4ZrqQR9U8s342VBXTkTVLv+j
+         Y8hvC7CZTFwaIqF3WSPpP1N++Wh+x9xr77YKD6UBuW+MEBizfWEJIgZPaKhJZuPW3gcJ
+         iuCeiqFrfCLvrzsF9PBHyn4A2wb07EAw2TG78=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8VN+9i3H/qvn2fuAxOp9IjnVj+nRznL01vb2QrP6PHA=;
+        b=w+xr1vPcl2SEy21n1zGAMncd6S/QrXZOwypBvQOntXRcpVPu6u+3lnDOl/wflwIFxi
+         h26vqZgjhkgtHB/qY07XDDNO6i6EkwP/LO/mgOkeHMVtd2k/ZUaOyn9JapRkXDiZZksr
+         98lEQrJElHYIp5CLnTyY6Y3QjOcM9kbkyNtljewxJyYuePmDIBNNJlgIyfTHX0mY2ae4
+         Yc9U5rQqudjZYMgpLohvGEHfENzjxKI0DN2Q+upENwfHn31QuOk/cMewswIvZ73B9y7A
+         pBXisOm8tykf2nHRnzemj09hwf6pbu/sA6ovifLSgcMryidMjI4HFjAgpqyLS3v7CiM+
+         mVkg==
+X-Gm-Message-State: AJIora9FcbIeQsED4ffs0emm4ys8RVPHAaA/HtlM9okCjbgMuJw2Gh86
+	BaaDDFuiADggleWIjde1TCIsbzZ8hmpHK28tZwQ=
+X-Google-Smtp-Source: AGRyM1uX8BC2jw7D3VMTV7iiuhdWlHd3NZ0bgfaG+xCXhwkU2qUYkLbO/hUeTZm58tgHJmecSpQdi+uOEWFQzXwLgtA=
+X-Received: by 2002:a05:6000:1869:b0:21d:6e78:3f4d with SMTP id
+ d9-20020a056000186900b0021d6e783f4dmr4627656wri.549.1657003687747; Mon, 04
+ Jul 2022 23:48:07 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: 1bcd87bc-17ef-4c12-d6a5-08da5e306900
-X-MS-TrafficTypeDiagnostic: MW2PR0102MB3404:EE_
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	tFN+cysuqhLkWHManmgIliKSssTIjLkO0zTDOp6RirCXwcMvjM7rwAn8No48XP+UKuGbqUN7vUNafAyuJYDAfsvRGHEMgE+vF9wJknOqJpI1W7Soi39Zps+rJNi3HDgj8+WRgPzE9+QXa9CJuqMScPJB6ed2Al40VxX1m0QVdvup2PsHLa7gQG196Eeb6GQsu/GxGMk18VDvSeS8GziOh/xIL6O7K3yVMsQW6LqSlmjGIXauM9iH4d6FOBIIDgB4qptxiuu4pK8dDnrzMl/BfLxqtFEJ47Qdl/Ad4wMNT8AuLETjkpaqGAhcy+PBFIUyI+J6LU0viXgGMaMjLphwV6UjZOE7OU1+oaHQkMKezfY5hRmXQahmzNhRX3smQD0OAiPX04GwdN7sHYHisONycvR5lkeu0on15dcEgVBvgUzHYuxWXUbzL0QFaywsTUL1AxE6Ouf6SlN6/wRDiBE0nc4dCyjb3855eMC9St/EYc0q3IuQPCA5QsqE91KVuQk11IsieZRm4SlCXYzYKhnF7Cg+inj/IWwfLFtOr0iwIle8OCzj5+QkbRFISQ8mCl4aY1yvQ8I0vGTObpd5ff26HZIZLnviJCuGT3FlDNhSIfT+ol522yTmL+culngQX+/ZBASAXXeT01I3L7J9yAHpOp5v9Z7TH/eLK9CWePAUpIEYCkrn47/DbdWLcbHmLBt9BjQQGg4SQlWXF4YIc9u+MGVQ69txdCMx7GhKCYe+rOGz97tSBlNH7jno8LkLVc6SK6P4lvGL14n1tuDMP0Ad7UfaIh2T1NBbMVSUC+tzmjSNJlSBnzETSY/PGc0PQY8eqk6Y3wTcprviH4bzzEChiO1FZGOMX5KaRPYAVnhZ3uc=
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR01MB7282.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(396003)(366004)(346002)(376002)(136003)(39840400004)(8676002)(66946007)(66556008)(66476007)(2906002)(86362001)(31696002)(38100700002)(38350700002)(5660300002)(921005)(7416002)(8936002)(41300700001)(83380400001)(26005)(53546011)(52116002)(2616005)(6512007)(186003)(6666004)(6506007)(316002)(110136005)(6486002)(478600001)(31686004)(43740500002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?aUZkMU1tbVkvWHBMa2lKdElPN3dDTEpyV08zanlLNjkwcTVGeHFQSkEvbHhO?=
- =?utf-8?B?bXlLM00wSXJicjNEdU5XRzRPWm9ETXE1SzdmUVlNbG5FaW1KVGUrcDRnNHRF?=
- =?utf-8?B?QjdvQVZkcWRYTWVMNDg0SUZsV1dLU0RFbGNiOWVnYnhHVjdIajBaVjNaZHZB?=
- =?utf-8?B?RUwrVjFwYWd3aEJuSi8vdVc4ejBKckNLZ3ZVVVV4a3kvL1lBOG84a1dBc0Vx?=
- =?utf-8?B?Y2Y4UURGNjgzYWNtSDllTTBqQ2RRRGpnMVdNWDhnYlExcFdzeVBUVTk1Z1M4?=
- =?utf-8?B?U3RQTG0xeE1Bb2tXY1FKK2RuT3hzMWxzVnZHZ3ZMY3E5Yi9laXNxeER6VWhS?=
- =?utf-8?B?eDFBZ0ZrZzcxMkpQNDFpTnpmbEVTWGtNbVBqRmZlVzBDUGtHdk1PSTRvVjNP?=
- =?utf-8?B?SWZBQ3ZxZmtCQzloeHFkVndicnMrTituaVA5d1Nja2RheTlFL3FlZEV1cUp5?=
- =?utf-8?B?ZGwzdXNhOEUyeGtzc0FYTkdQMlJZSjd0cGlxaUQrZ3NydDlLTHJmWjBpYUFr?=
- =?utf-8?B?RFVsT0luYTZaOEFwR0JMaTJkbmdEdktUeHVRU1RQUkVsY1hCTWdHRTA3UTdY?=
- =?utf-8?B?Z01WTVR3Ymk3NmMyaThXdzhiWUJnRzhQUjVEeWdGRS9aV0xHM3dIWlpPNndo?=
- =?utf-8?B?dGdYRlRJV2FONXhsa1pJZEo3bURvMGovK2J4UjQrdFNSWktyTkxJaGZQSitP?=
- =?utf-8?B?b0pYNFgzYUxYMjJUbmF2YSs1dDg4K05tc1N3SndySmNoSXpVU2JiUHo5Lzhw?=
- =?utf-8?B?YzdaMklSOXhFTVRjbGoya3NwbFRlZ2ZvQ2R0U2ZBOTJSY3dqbEIxV1FrSHNt?=
- =?utf-8?B?WTRlSW4weko5c2UrRjBzUUdSdENFU0FKQ2dFMFJGVXVDeDJwTDFuZWJ4OTc1?=
- =?utf-8?B?MEc0U2F6bmlTWlY5VExJdkdONUtPTzJHdHgzK3lNNktCckttZ3ZnVVpJcHVE?=
- =?utf-8?B?YWFUQWpKeWdubGJkdk1XdCtuMFRtMWhIcGNoT1djc2dhb0xtMXp0MTJaaXZZ?=
- =?utf-8?B?UGZoenB5OU1UWW5aVW0xSHJ5azAyc0hrRnBadWhLU2lVaHVCcUcvZ2tnNG9K?=
- =?utf-8?B?c2REUU0vaFRiVm5nUi9qUXpkV2FRNVpQNlRIL1F0TUg4TERaZ1I3Kzk5M3pD?=
- =?utf-8?B?K1lwNHBKTnlWdVo1N0ZVVlVieFlrcDhCbGEzRThJVUlOMVdDcmwrQXdwa25S?=
- =?utf-8?B?bTBKR3B6T1NoM0lyODVHMWdTWFpicjFTWEFFeEx2V1JaaTk5S05HY1c1c1hp?=
- =?utf-8?B?cnpIUEI5RTh4VnhSYmgxK0kvK2F6SWFRbjR4ckpsZjhHWmdraUJaMHZ6TDgw?=
- =?utf-8?B?QU4vdXNFUklEQ3BTaVBqblRYYUdFaHhKY05UWi9nUjFvOUNBRjR6SEhBNzky?=
- =?utf-8?B?T25mTXVGZUlqbzBOTFZpNFVzRWt3TC93bHQ4YmRKQ3dNZ1VsVzVMTE44T3FM?=
- =?utf-8?B?ZHI0MUI3WEN1SlhXYjVDV2JRVnFFaXhNMTB1aUlvcUFDMnVvY2JkMURTZHVv?=
- =?utf-8?B?dkVreFlPN3ZnNk1sOFdPZnVHUU5WQU1KSFZ1RHB3Nno2VHBZMTQ3NDllODRW?=
- =?utf-8?B?SlZlWE9PMUZ0S1htY0xoY0ZrdVBtaWV6cEIrdThMdjJjUzl4YzhNZG8yenIr?=
- =?utf-8?B?Y3ZaK0tLTFVrL204MGd2YzVDNmxIbmF2WlVHQkd4NmVaK1JaUWRjRGpDcEEx?=
- =?utf-8?B?R0FmaTZkZzZ2VzN5UVZQQm4xdVZDWDRvek5VV0ZJUjJaS0hDKzdaLzJpQWtO?=
- =?utf-8?B?VWpITFI0MGlnN1A4NUlWUGlSY29UMWFWQmtic1M3MTNBdDlQZXplR0YvL1Vu?=
- =?utf-8?B?ZDVzOEZ4aTZzTDYyNHFjZGxMS2wvbVFnVVFFRVFOMHY5dXdkME1sV1Y2djBR?=
- =?utf-8?B?WkJWNHVoOUxUQU5ESGl4SzcwUU5SRVFSSElqQUFtc1pZMGFpek9pdlFZME9J?=
- =?utf-8?B?SUVpUEJwNTRIM2ErQlcrZEZzMm5sbTh2clN4RXBqU1M4a0tDNzB5Y0ZIN0ht?=
- =?utf-8?B?a2FvS2pKOHh2MUJ4MkVndlJ3NXU2MzUvaEo0VGR6T3pYYWJBcnQzWTIwaks1?=
- =?utf-8?B?eGRVSWtjN25tUUZ3RUUrOWRyU2FPZkpyQWV6eWpQWFJrSWZCMUdHMGVvM3Ay?=
- =?utf-8?B?Sy9mT2JyS1Nxdm5PM1dkWEVCeU0wN1cvVVZxanpxWEhqeHIydGliMzdseHhi?=
- =?utf-8?Q?Qdhc8kzdS5XhQiH7bic7Xto=3D?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1bcd87bc-17ef-4c12-d6a5-08da5e306900
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR01MB7282.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jul 2022 02:45:24.6011
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: AalGmpKBciwJEVkesT3Il4zEyKMBLEygIqbaFPR0QJXzYUdZR9uhY+natSI5rlGvhugbHcZFLlrh8Ktc27wR2Rc2WEJJlHgfGC46JXryrVU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW2PR0102MB3404
+References: <20220630200227.2292079-1-quic_jaehyoo@quicinc.com> <20220630200227.2292079-2-quic_jaehyoo@quicinc.com>
+In-Reply-To: <20220630200227.2292079-2-quic_jaehyoo@quicinc.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 5 Jul 2022 06:47:54 +0000
+Message-ID: <CACPK8XcJPs5vcs_+r=hmRX475CzfLo+LdofdAtrpoE5bnEbchg@mail.gmail.com>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc 1/3] configs: ast2600: add
+ Qualcomm DC-SCM V1 defconfig
+To: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -149,115 +70,150 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, Graeme Gregory <quic_ggregory@quicinc.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, Jamie Iles <quic_jiles@quicinc.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Thu, 30 Jun 2022 at 20:02, Jae Hyun Yoo <quic_jaehyoo@quicinc.com> wrote:
+>
+> Add Qualcomm DC-SCM V1 defconfig which is equipped with AST2600.
 
+In your commit message you need to justify why your board needs its
+own defconfig.
 
-On 17/06/2022 14:08, Quan Nguyen wrote:
-> On 16/06/2022 19:29, Wolfram Sang wrote:
->> Hi Quan,
->>
->>> On the first occurrence of I2C_SLAVE_WRITE_REQUESTED, the address is 
->>> already
->>> received with ACK. So if slave return -EBUSY, the NAK will occur on 
->>> the next
->>> Rx byte (on I2C_SLAVE_WRITE_RECEIVED event).
->>
->> This is exactly why I2C_SLAVE_WRITE_RECEIVED allows for an error code.
->>  From the docs:
->>
->> ===
->>
->> * I2C_SLAVE_WRITE_RECEIVED (mandatory)
->>
->>    'val': bus driver delivers received byte
->>
->>    'ret': 0 if the byte should be acked, some errno if the byte should 
->> be nacked
->>
->> Another I2C master has sent a byte to us which needs to be set in 
->> 'val'. If 'ret'
->> is zero, the bus driver should ack this byte. If 'ret' is an errno, 
->> then the byte
->> should be nacked.
->>
->> ===
->>
->> 'ret' is used to ACK/NACK the current byte in 'val'. That's exactly what
->> you need, or? Does the aspeed driver not support acking the current
->> byte?
->>
-> 
-> It is true that aspeed driver does not support acking the current byte. 
-> Setting ASPEED_I2CD_M_S_RX_CMD_LAST will take effect on the next Rx byte 
-> as per my observation.
-> 
-> S-> Aw(ACK)-> RxD(ACK)-> Sr-> Ar-> TxD(ACK)-> ... -> TxD(NAK)-> P
->       (1)        (2)
-> 
-> Currently, setting ASPEED_I2CD_M_S_RX_CMD_LAST in (1), on 
-> I2C_SLAVE_WRITE_REQUESTED event, will make the NAK happen in (2) and 
-> make the read stop.
-> 
-> If setting ASPEED_I2CD_M_S_RX_CMD_LAST on (2), ie: on 
-> I2C_SLAVE_WRITE_RECEIVED event, the read from Master is never NAK 
-> because there is no next Rx byte and Master is already switch to read 
-> from Slave.
-> 
-> I understands that the return of
-> i2c_slave_event(slave, I2C_SLAVE_WRITE_REQUESTED, &value) is always 0 as 
-> in Documentation/i2c/slave-interface.rst. But with this case, this is 
-> the way to NAK on the first byte and I'm wonder if this particular case 
-> would be supported somehow.
-> 
+Preferably we would use a generic openbmc defconfig and you select the
+device tree for your board at build time.
 
-Dear Wolfram,
-
- From my particular case, as it seems not to be able to nak on the 
-current byte on I2C_SLAVE_WRITE_RECEIVED event (i2c-aspeed), is it 
-possible to somehow allow slave to return some errno on the 
-I2C_SLAVE_WRITE_REQUESTED event so that bus driver knows what to do for 
-the next incoming byte if slave is busy?
-
-As from the docs:
-
-===
-
-* I2C_SLAVE_WRITE_REQUESTED (mandatory)
-
-   'val': unused
-
-   'ret': always 0
-
-Another I2C master wants to write data to us. This event should be sent once
-our own address and the write bit was detected. The data did not arrive 
-yet, so
-there is nothing to process or return. Wakeup or initialization probably 
-needs
-to be done, though.
-
-===
-
-As the "Wakeup or initialization probably needs to be done" in the slave 
-side, in case slave is fail to either wake up or initialization or busy 
-in this particular case, there is no way for slave to let the bus driver 
-know the status if the 'ret' is always 0.
-
-I'm also agree that it should be always ack on I2C_SLAVE_WRITE_REQUESTED 
-event (when the slave address matched and the write bit detected). But 
-if slave know it is fail to either wakeup or initialization or busy, the 
-bus driver should be able to automatically to nak on the first write 
-incoming byte.
-
-Hence, my thinking is to change the above:
-
-   'ret': always 0
-
-to:
-
-   'ret': 0 otherwise some errno if slave is busy or fail to wakeup or 
-initialization
-
-Thank you and best regards,
-- Quan
+>
+> Signed-off-by: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
+> ---
+>  configs/ast2600_qcom_dc_scm_v1_defconfig | 117 +++++++++++++++++++++++
+>  1 file changed, 117 insertions(+)
+>  create mode 100644 configs/ast2600_qcom_dc_scm_v1_defconfig
+>
+> diff --git a/configs/ast2600_qcom_dc_scm_v1_defconfig b/configs/ast2600_qcom_dc_scm_v1_defconfig
+> new file mode 100644
+> index 000000000000..353882deed26
+> --- /dev/null
+> +++ b/configs/ast2600_qcom_dc_scm_v1_defconfig
+> @@ -0,0 +1,117 @@
+> +CONFIG_ARM=y
+> +CONFIG_SYS_DCACHE_OFF=y
+> +CONFIG_ARCH_ASPEED=y
+> +CONFIG_SYS_TEXT_BASE=0x0
+> +CONFIG_ASPEED_AST2600=y
+> +CONFIG_TARGET_AST2600_QUALCOMM_DC_SCM_V1=y
+> +CONFIG_SYS_MALLOC_F_LEN=0x800
+> +CONFIG_ENV_SIZE=0x10000
+> +CONFIG_ENV_OFFSET=0xE0000
+> +CONFIG_ARMV7_BOOT_SEC_DEFAULT=y
+> +CONFIG_NR_DRAM_BANKS=1
+> +CONFIG_FIT=y
+> +CONFIG_USE_BOOTARGS=y
+> +CONFIG_BOOTARGS="console=ttyS4,115200n8 root=/dev/ram rw"
+> +CONFIG_USE_BOOTCOMMAND=y
+> +CONFIG_BOOTCOMMAND="bootm 20100000"
+> +CONFIG_SYS_CONSOLE_ENV_OVERWRITE=y
+> +CONFIG_BOARD_LATE_INIT=y
+> +CONFIG_DISPLAY_BOARDINFO_LATE=y
+> +CONFIG_ARCH_EARLY_INIT_R=y
+> +CONFIG_BOARD_EARLY_INIT_F=y
+> +CONFIG_HUSH_PARSER=y
+> +# CONFIG_AUTO_COMPLETE is not set
+> +CONFIG_SYS_PROMPT="ast# "
+> +CONFIG_CMD_BOOTZ=y
+> +# CONFIG_CMD_BOOTEFI is not set
+> +# CONFIG_CMD_ELF is not set
+> +# CONFIG_CMD_IMI is not set
+> +# CONFIG_CMD_XIMG is not set
+> +# CONFIG_CMD_NVEDIT_EFI is not set
+> +CONFIG_CMD_CRC32=y
+> +CONFIG_CRC32_VERIFY=y
+> +# CONFIG_LOOPW is not set
+> +CONFIG_CMD_MD5SUM=y
+> +CONFIG_MD5SUM_VERIFY=y
+> +CONFIG_CMD_MEMINFO=y
+> +CONFIG_CMD_MEMORY=y
+> +CONFIG_CMD_MEMTEST=y
+> +CONFIG_SYS_ALT_MEMTEST=y
+> +CONFIG_CMD_MX_CYCLIC=y
+> +CONFIG_CMD_SHA1SUM=y
+> +CONFIG_SHA1SUM_VERIFY=y
+> +CONFIG_CMD_STRINGS=y
+> +CONFIG_CMD_CLK=y
+> +CONFIG_CMD_GPIO=y
+> +CONFIG_CMD_I2C=y
+> +CONFIG_CMD_MMC=y
+> +CONFIG_CMD_PART=y
+> +CONFIG_CMD_PCI=y
+> +CONFIG_CMD_SF=y
+> +CONFIG_CMD_USB=y
+> +CONFIG_CMD_DHCP=y
+> +CONFIG_CMD_MII=y
+> +CONFIG_CMD_PING=y
+> +CONFIG_CMD_NCSI=y
+> +CONFIG_CMD_EXT2=y
+> +CONFIG_CMD_EXT4=y
+> +CONFIG_CMD_EXT4_WRITE=y
+> +CONFIG_CMD_FAT=y
+> +CONFIG_CMD_FS_GENERIC=y
+> +CONFIG_CMD_MTDPARTS=y
+> +CONFIG_EFI_PARTITION=y
+> +CONFIG_ENV_IS_IN_SPI_FLASH=y
+> +CONFIG_USE_ENV_SPI_BUS=y
+> +CONFIG_ENV_SPI_BUS=0
+> +CONFIG_USE_ENV_SPI_CS=y
+> +CONFIG_ENV_SPI_CS=0
+> +CONFIG_USE_ENV_SPI_MAX_HZ=y
+> +CONFIG_ENV_SPI_MAX_HZ=100000000
+> +CONFIG_NET_RANDOM_ETHADDR=y
+> +CONFIG_REGMAP=y
+> +CONFIG_SYSCON=y
+> +CONFIG_CLK=y
+> +CONFIG_DM_GPIO=y
+> +CONFIG_ASPEED_GPIO=y
+> +CONFIG_DM_I2C=y
+> +CONFIG_SYS_I2C_ASPEED=y
+> +CONFIG_MISC=y
+> +CONFIG_ASPEED_AHBC=y
+> +CONFIG_ASPEED_H2X=y
+> +CONFIG_DM_MMC=y
+> +CONFIG_MMC_SDHCI=y
+> +CONFIG_MMC_SDHCI_ASPEED=y
+> +CONFIG_DM_SPI_FLASH=y
+> +CONFIG_SPI_FLASH=y
+> +CONFIG_SPI_FLASH_GIGADEVICE=y
+> +CONFIG_SPI_FLASH_MACRONIX=y
+> +CONFIG_SPI_FLASH_SPANSION=y
+> +CONFIG_SPI_FLASH_STMICRO=y
+> +CONFIG_SPI_FLASH_WINBOND=y
+> +CONFIG_PHY_BROADCOM=y
+> +CONFIG_PHY_MICREL=y
+> +CONFIG_PHY_MICREL_KSZ90X1=y
+> +CONFIG_PHY_REALTEK=y
+> +CONFIG_PHY_NCSI=y
+> +CONFIG_DM_ETH=y
+> +CONFIG_PHY_GIGE=y
+> +CONFIG_FTGMAC100=y
+> +CONFIG_MDIO=y
+> +CONFIG_PCI=y
+> +CONFIG_DM_PCI=y
+> +CONFIG_PCIE_ASPEED=y
+> +CONFIG_PHY=y
+> +CONFIG_PINCTRL=y
+> +CONFIG_RAM=y
+> +CONFIG_DM_SERIAL=y
+> +CONFIG_SYS_NS16550=y
+> +CONFIG_SPI=y
+> +CONFIG_DM_SPI=y
+> +CONFIG_SYSRESET=y
+> +CONFIG_USB=y
+> +CONFIG_DM_USB=y
+> +CONFIG_USB_EHCI_HCD=y
+> +CONFIG_USB_STORAGE=y
+> +CONFIG_WDT=y
+> +CONFIG_HEXDUMP=y
+> +# CONFIG_GENERATE_SMBIOS_TABLE is not set
+> --
+> 2.25.1
+>
