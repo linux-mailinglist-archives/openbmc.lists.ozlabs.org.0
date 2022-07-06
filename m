@@ -2,65 +2,126 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0AE8D567B3E
-	for <lists+openbmc@lfdr.de>; Wed,  6 Jul 2022 03:03:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FD86567D0D
+	for <lists+openbmc@lfdr.de>; Wed,  6 Jul 2022 06:22:40 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Ld1Vs70xsz3c29
-	for <lists+openbmc@lfdr.de>; Wed,  6 Jul 2022 11:03:01 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Ld5xB2J4mz3c03
+	for <lists+openbmc@lfdr.de>; Wed,  6 Jul 2022 14:22:38 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=aKjQP74w;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=Nw6JlShd;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::32c; helo=mail-wm1-x32c.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.244.106; helo=nam12-mw2-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=aKjQP74w;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=Nw6JlShd;
 	dkim-atps=neutral
-Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2106.outbound.protection.outlook.com [40.107.244.106])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Ld1VR5ZmBz2yMk
-	for <openbmc@lists.ozlabs.org>; Wed,  6 Jul 2022 11:02:39 +1000 (AEST)
-Received: by mail-wm1-x32c.google.com with SMTP id j7so7976650wmp.2
-        for <openbmc@lists.ozlabs.org>; Tue, 05 Jul 2022 18:02:39 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Ld5wZ3JtVz300x;
+	Wed,  6 Jul 2022 14:22:04 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=CnmjlRP2pL4W9uG20j/xN+41mTmq8K5SQqygueR60M3Myr+ar8qkUW4hMH6Q8w28aTCkDvEEaQxHeFxO4FdBtXbJyGejpN4GCEF8lRACCwPY26DDKbIn5W1SP9ixb/QM/btugc3XaXhgCgnYrbvbeZgWHa7WPWwSvdC8wgX1+THUWJH4WhIa4CXd4TH8nV5Xurk6X7h7gcuDRkwC0VtToSZKogB0h39D1roc6fbXsvgbLF/mnHZRSkrhWi1+zamz4eRA1RUGPAFPkpQBWmcVV+qcLuPEKDrwRC0uUe+Ele9lsSS2G+vFLHHFY91FKUW4ffIYyG6W5xRwnjkoLrDZRQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=S7VL3IgyFLKTjem93FjW19WJUJFv3PTFAMzp2hIbEPo=;
+ b=cr0AOnn7y7M9u6Pj5+wlLTUu8aVfU6ysL4ZV/KzYOwF+jEAQAb0XMX3JY7BsSSdeMPkx4FfuDr1NqFHF7lGmNmM+AffqpEr7f22mN8zjtLfPsrv8e+qbGhhMrE+/b9WPKqebuhn8tIm0/SZO1NLbpFKAyVXmwMIOgALHIPDpCCcXcivRFyGB1B2Hr3l40V6WbVvXGGZ3H7Zwa4uBB7KaADAi1+HiNTIGazMWtdjri0Q8BPFGm1MjFIynB1D9knVglDa5h8p8Bx3xu3nnZCc3LCIJXmlMCerBAmTR7a8DQ4basBoXoVDPf8F2Sn2c1jVfrYqubZLe74A++Z1SxJgnUw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jms.id.au; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3ymvhyiJVhxnULa/V3RfIbd3Sj/K0ZxVUOOb+hjWBfA=;
-        b=aKjQP74w606nhmA/QN0lJDzveUdwCvdoNsFK4+I1+IMpPdaE1udf3JMg620lYiPTc2
-         h5LFJ6cAD6VS0VY0NWETdsQBbxQOghHzUjt1uMK8UoRpJ+B7Q8bdeGFDCPEvH6qOcUd2
-         hHzPLUYWozMPCgGRrirva+mwwg3yEKQQEqETw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3ymvhyiJVhxnULa/V3RfIbd3Sj/K0ZxVUOOb+hjWBfA=;
-        b=etHUyrPKwZ+rjuRASvcRS/hfpA6vv6rh5Ebu7JA/AnilW4R8re7tsY3bYMZs9QaF+9
-         aMB8yVulC+6qb1oTtqozLl9WilOKHbb8hC//dsPoTaHa4NNcxRdA5zMleZuHq5JeFKMh
-         Vh1dpO4fBNmSGWlAvjOVok+Rg3UH61vDhL6jIoRN7oyeKJGpJRjkSzvAlcx0ZIRuWALl
-         a2I2ijx5j38iQYutoq6TVasbYeT19VzBP9gugwI5xrHUmyWItpiHmibh1b8RVxs57VVy
-         hWcBJv5NLz6Qvt3H2PAf1NCGfAXkXKWdRZevZ7S8UQO/MV8iax4s7ShF98fJHvMyNyur
-         xiig==
-X-Gm-Message-State: AJIora8klzykjlvSxHb4DZ6Pz8LQ0ZraqhM3WAM9EkvkYb1I5oe5Le46
-	w5jwLz9lbrCpGqmrnrV31quO6rx1cXCMHA6wN274wEsY
-X-Google-Smtp-Source: AGRyM1ueqyfhoa942JO9QeouXB70fK5eDzTEn1ocDcOHKODreVRTGAtVIlL5HW4G3Suj6lPtYePGAdem4f8krYSAD6E=
-X-Received: by 2002:a05:600c:2315:b0:3a1:772e:b9a6 with SMTP id
- 21-20020a05600c231500b003a1772eb9a6mr36070154wmo.34.1657069355465; Tue, 05
- Jul 2022 18:02:35 -0700 (PDT)
+ d=os.amperecomputing.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=S7VL3IgyFLKTjem93FjW19WJUJFv3PTFAMzp2hIbEPo=;
+ b=Nw6JlShdtVrtuw1+QpdMJF+3AAi38h4sTdnH7dQ7RCEeVXYg5rVF2Yd4zHOFr7MciwUgls/TwLJlZqG292rwbbZSdbNUTMowmW/5S6drW98MbeAuLwiiIbE/t5j8iDIJTPoX2UomkGXqjT2Kqip8S8abugNcE38PgPSsHXY7CV8=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
+Received: from SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24) by
+ BL0PR01MB5299.prod.exchangelabs.com (2603:10b6:208:31::23) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5395.17; Wed, 6 Jul 2022 04:21:41 +0000
+Received: from SJ0PR01MB7282.prod.exchangelabs.com
+ ([fe80::7535:773:f979:893e]) by SJ0PR01MB7282.prod.exchangelabs.com
+ ([fe80::7535:773:f979:893e%8]) with mapi id 15.20.5395.022; Wed, 6 Jul 2022
+ 04:21:41 +0000
+Message-ID: <01bcd315-4d28-6854-3c6e-0a755b37824a@os.amperecomputing.com>
+Date: Wed, 6 Jul 2022 11:21:28 +0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.0
+Subject: Re: [PATCH v1 0/5] Enable second flash, update gpios pin and merge
+ adc channels
+Content-Language: en-CA
+To: Joel Stanley <joel@jms.id.au>
+References: <20220228000242.1884-1-quan@os.amperecomputing.com>
+ <CACPK8XfCskh7KPhXJqOR9ZLnoBdd64SL9D1z5HoDC+_VVs4LCg@mail.gmail.com>
+From: Quan Nguyen <quan@os.amperecomputing.com>
+In-Reply-To: <CACPK8XfCskh7KPhXJqOR9ZLnoBdd64SL9D1z5HoDC+_VVs4LCg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SG2PR02CA0059.apcprd02.prod.outlook.com
+ (2603:1096:4:54::23) To SJ0PR01MB7282.prod.exchangelabs.com
+ (2603:10b6:a03:3f2::24)
 MIME-Version: 1.0
-References: <20220630200227.2292079-1-quic_jaehyoo@quicinc.com>
- <20220630200227.2292079-2-quic_jaehyoo@quicinc.com> <CACPK8XcJPs5vcs_+r=hmRX475CzfLo+LdofdAtrpoE5bnEbchg@mail.gmail.com>
- <8bbe2c65-e928-c40d-3ab1-9cbf41b5c3d8@quicinc.com>
-In-Reply-To: <8bbe2c65-e928-c40d-3ab1-9cbf41b5c3d8@quicinc.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 6 Jul 2022 01:02:23 +0000
-Message-ID: <CACPK8XcM578K41_3FHaFKTnq07pUowORjiW7_8gR=JW1NuzUcA@mail.gmail.com>
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc 1/3] configs: ast2600: add
- Qualcomm DC-SCM V1 defconfig
-To: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
-Content-Type: text/plain; charset="UTF-8"
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: d764f443-6692-4d44-410d-08da5f0706ab
+X-MS-TrafficTypeDiagnostic: BL0PR01MB5299:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 	qviMmCATCwluuhgqp/IDuqbwvQmO0AhETKnsqlXOwCXMuDV0rtZdABpQ2rOrvqCBn/VW0wGU1erknZ8xm2iqAurcAYaedBnr78egwx0BSWDHG5zH0KhvYERAFIZeuYPAIihNNZuUR+NeyLKlzg0cPDqyVJCAnra78DnwDmOGpfU6bFuSfLAsqqLqmOaJW5YX1NjzNxWesshqOrfGXG2wATwqaDeOmBvOUrPpP45jFaEoGvnDxdDvHakrmlpx5JGjF3XcNPPeen3hWxLNk5PS+3kGnPsLec0qHITjwl69c2Isr5JqucUe5OLV9yDv9oAEaL7//J8y0ElniZSLGmja9T7peA3G/bpHfKFiFfuPV1nJ5aP0irENeRSMS2Zn/BcmlqyfD2vvOY4M5cBznZua5G7FpkyAfHx5ToWrO2vrzkeo4lqO550rtN+QbgpwozrYpI+0v7a/5bNMKCA8HQa4dt83IlBLcY6dAV1Cdu+6fZU2pGSyp+RsS3uEfTYNZ0RPnbkGVNKl44og0X1JBGMaDTEPkjJg7TJwAF0+HFjnd1K9lVH+eYbPDcrDb30GWg0eMxDPxtAJoLRXUix0s7LKl6wp2xwnpKSUbnFGnhpONwhLkqrboEzzak5twGxPbwseeZ6kTMAEt0XIspMLvMRUadm4G4S0cGoblsxku5BH1Tu+efTXRbaZP4zEMh91VtAm6yapCdZdzeZWZ2cb3UKjK8ENaXdbT8bt+6Zi0vZmnDm2yfdMS7GZfItpHKUYxWB5uvT/BjBzU7MoNk25UWS41ORQXZn8uW/nxJj0ArJeZKksHBz7Vt0eg4FHTjSeYJloVVFs909/VkLtp32O2ckW72bFbbCWLZ3U3PR3DcM5Z7iP18Nx56JHvwJtyqWMqnF3fCOE0W4t+8TfmD+HeMe33w==
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR01MB7282.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(39850400004)(136003)(396003)(346002)(376002)(366004)(38350700002)(107886003)(38100700002)(66946007)(8676002)(4326008)(66556008)(66476007)(6506007)(5660300002)(2906002)(86362001)(31696002)(15650500001)(52116002)(53546011)(8936002)(2616005)(6486002)(6666004)(478600001)(41300700001)(83380400001)(54906003)(6916009)(316002)(186003)(6512007)(26005)(31686004)(449214003)(43740500002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?eXNCR0Njc3FhR2pEQktUZWtHRC85bDI4dkU3d0VFbkNpRk14STBVcXBVNUxp?=
+ =?utf-8?B?aWdxcTVieTc4SG5XMFEraUlrS0tPRy9GNS9DOTVTKzNyZm5KTndxZm5rRTBy?=
+ =?utf-8?B?SXJhcWxHVlJoRXBIQ01KRGd5a3hDbmtuN2JsZzllenFNWnlmRXg2S1ZiSTRX?=
+ =?utf-8?B?WTlCUlcrdCtNYXc4YlpFb1lmR0Vqa21hUWZtK3JCZlFXcTZ1eWs1WWxWMkJP?=
+ =?utf-8?B?bWRnZUVBSENUcjc1SjQydytYdlVGdzVPbW5GNURlSmFlOXhwbmljelVrNlVR?=
+ =?utf-8?B?Z3NrNk82VitEWE5LYU5aR21NU2h0cDJQWER1QXNaZGFrYXFwbzlpOGJQNFUv?=
+ =?utf-8?B?aENPY3hBUGZscmVYZy9OQjdBRUYrSTV0Zmg4NkhIaW9ENlVTL21PR1owK1dY?=
+ =?utf-8?B?cnVmYlRqSnZzblI0ZkdNTFd5di9tQUpEM21Xc3hEOEZsSlRXWW1OWUJnK205?=
+ =?utf-8?B?RVVOa0I1TE9CWTRKTlZZOWZWM2lLZGJ6YWZuRVVIOG9lZ3ZUa2FjTmFodDRL?=
+ =?utf-8?B?WkJtbmhrUDk2UGdSVFNCaDFIUFB1dUhDUUNoRUxQR3VRMlFmMUh2RXFPT0li?=
+ =?utf-8?B?TFptQWMvVGpGSVVQUTFSbWw0aHJXQVRwYTVVZHhnQ3F3ZTNQc0E2YXdEeGhY?=
+ =?utf-8?B?NnFwNkhidlQ0SE13Um5rRFRXdDFJSStFeW1kZ0NPZzlkZm95TlVwK09xN3li?=
+ =?utf-8?B?U3hnRWtNU1FDclBiLzRKSkFIWm51clpGSkk0YjJuOU9JS3JVVzhPRnppTHBF?=
+ =?utf-8?B?cVdVQzN5V3VZS0pyOEl4TmtZMmZjK1VnVlV5Sm4rYmFHUmFQSjNBTllHSG80?=
+ =?utf-8?B?QnhPWTQ2ekhCbzVSc200VzVSSGI4YWFRS1lKdlJ3UVFwY1lFNlo3aWtYUGY5?=
+ =?utf-8?B?UXRwb3BmZkZ3aDZ4Z2EvdXpTTEU4czNxaEtCTDJIWXVJc1grNktaeDFzZkRT?=
+ =?utf-8?B?TFd2ZGlFSGRPSkV1MmRRRWhaWnNTeWM2RnA0Ky8yaHN4OWEzVzRpN05zVDdW?=
+ =?utf-8?B?SUY1dUxJNkdNSTk4NExNSjRSMVBlWkdGMit3MzJINC9PY0IzOWRROWgyVWZ4?=
+ =?utf-8?B?RXJKbjg4VDVEdWNlU1FNdGRqR0MyZnRRWThTNEtWdmR2L2FWSkdZemxVQVRK?=
+ =?utf-8?B?YkZwTWVPSmNHREwvR01XYTdCY0gxRXY4YnE1eWVaREttWWpueDJHVGlGK2x0?=
+ =?utf-8?B?VWhNdjN0UStvSEJYNmxVVW1WZ3BWWHpidmQwa0g4cUZxZ2hCTkVrY0F2azRa?=
+ =?utf-8?B?aldTRlZLSUtpUUFWMEI3TjVGelBmYUI5d2FlS3Z3WGRXb2FOOEtJSWU5S1Vu?=
+ =?utf-8?B?NThlTUovYzhldllXVURTdDdlU2MwcnNlbzBLbkxva2pQRWRDVGxwVm5iMWoy?=
+ =?utf-8?B?cmxlNHc1eVFLWG1ydnNZRVlObllDVm9DRlI4c3J5eDBmQ3l3VSs5RXdCekdM?=
+ =?utf-8?B?OXozZEdwenRVRC9WRVhOcUxPWWozQ1BBL0FucFhTNGZhaURGcFVodldOZU0x?=
+ =?utf-8?B?anc1ME1jcERScXYxdlYrRjB5WnEydlFnN1k3Q0p1ckg1b09KL084ZHF0ZXhi?=
+ =?utf-8?B?aytIWjFXWFMzcklhclRxcmVud3IvaE9CK1dlZ3gvS0w0ay9WWjg0UzlDZy9L?=
+ =?utf-8?B?ZWh4b0hmdkdzaC9LQVNzQVpmbkhrTmM3RU0zL3k2dlJlWkpwd090SHMvN0c2?=
+ =?utf-8?B?S2c2UGpQdEZDcVRSdWx3SXpDbWtDV3hIZ3BNeHlNZHJhcVNTWnc2Q3JHK240?=
+ =?utf-8?B?bFdNQTNWa1dTekJtdWlHMDcwNnlSWkQ3bUkyVURRT1cwelpZTzJ6VXg0YlpX?=
+ =?utf-8?B?QS9qVGYvUWNZRjh1c2pqNnJWMzVqQzdYOUhvRmxpeGlQY0R4elR3RFAwbVZ6?=
+ =?utf-8?B?Yk95YTNtbUdkNHRzVVlxa25sZmkrWkhlTEtkVFhLa2dCbGVOS0U1NldyanM0?=
+ =?utf-8?B?OWllc2JFU01lVVBOTzdMN25DbWhWUUt6aXVyUmlidXFSaWRPdFFobEhTVXhP?=
+ =?utf-8?B?NjM0TzVQZTNpZFdPeWZGVjlxRjZScWYzN3lWOEpsU2hxY0ZSWUJ3L0syZE5C?=
+ =?utf-8?B?MVFGaHoyVFF3amxUZTZ5L2daWnJqTW9nTU1rM3dmOTFHN21HVGRHL2ZJM2Jz?=
+ =?utf-8?B?TTh1SUtyaThIay9rbGtKL2tqVW1tRXRabnZFODRlZ2l2bUQ5U0k1WGdQc0Rw?=
+ =?utf-8?Q?+2i03DJlbAGkDZWbk4R/two=3D?=
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d764f443-6692-4d44-410d-08da5f0706ab
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR01MB7282.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jul 2022 04:21:41.2967
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: isFGHV1IoXiyijWCgDJWamFs2qKZ604DUU64M0PYF6sHzqCu6tmblIG7Nj7CAeiaSmN2acpgw+KKRaD4XN9FE4ByUfZwx9n+lXOJE6z3n0E=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR01MB5299
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,181 +133,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, Graeme Gregory <quic_ggregory@quicinc.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, Jamie Iles <quic_jiles@quicinc.com>
+Cc: devicetree <devicetree@vger.kernel.org>, linux-aspeed <linux-aspeed@lists.ozlabs.org>, Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>, Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, "Thang Q . Nguyen" <thang@os.amperecomputing.com>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Phong Vo <phong@os.amperecomputing.com>, Rob Herring <robh+dt@kernel.org>, Open Source Submission <patches@amperecomputing.com>, Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 5 Jul 2022 at 14:18, Jae Hyun Yoo <quic_jaehyoo@quicinc.com> wrote:
->
-> Hello Joel,
->
-> On 7/4/2022 11:47 PM, Joel Stanley wrote:
-> > On Thu, 30 Jun 2022 at 20:02, Jae Hyun Yoo <quic_jaehyoo@quicinc.com> wrote:
-> >>
-> >> Add Qualcomm DC-SCM V1 defconfig which is equipped with AST2600.
-> >
-> > In your commit message you need to justify why your board needs its
-> > own defconfig.
-> >
-> > Preferably we would use a generic openbmc defconfig and you select the
-> > device tree for your board at build time.
->
-> I expected 'ast2600_openbmc_defconfig' could be used for my non-spl
-> u-boot but currently the file has been modified for SPL boot too so both
-> 'ast2600_openbmc_defconfig' and 'ast2600_openbmc_spl_defconfig' have SPL
-> boot configs. Since the 'ast2600_openbmc_defconfig' is being used for
-> other machines, I can't change the file directly for non-spl defconfig
-> so it's the reason why I'm trying to upstream this machine specific
-> defconfig.
+Dear Joel,
 
-Okay. That's suspicious, if there's a requirement to have non-SPL then
-we should revert the change that added SPL to the non-SPL config.
+Thanks for applying this patchset for v5.18.
 
-Alternatively, could you use the SPL configuration for your board?
-This would simplify testing, as we would only need to verify that the
-SPL build works for the 2600 when making u-boot changes.
+Would it be also possible to apply them to OpenBMC kernel dev-5.15 
+branch as well?
 
->
-> Should I use a patch file in 'openbmc/meta-qualcomm/recipe-bsp' to
-> modify the 'ast2600_openbmc_defconfig' at build time instead?
+Thanks,
+- Quan
 
-That's an option, but this would limit testing coverage, as we would
-only build that configuration when doing an OpenBMC image build.
-
->
-> Thanks,
-> Jae
->
-> >>
-> >> Signed-off-by: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
-> >> ---
-> >>   configs/ast2600_qcom_dc_scm_v1_defconfig | 117 +++++++++++++++++++++++
-> >>   1 file changed, 117 insertions(+)
-> >>   create mode 100644 configs/ast2600_qcom_dc_scm_v1_defconfig
-> >>
-> >> diff --git a/configs/ast2600_qcom_dc_scm_v1_defconfig b/configs/ast2600_qcom_dc_scm_v1_defconfig
-> >> new file mode 100644
-> >> index 000000000000..353882deed26
-> >> --- /dev/null
-> >> +++ b/configs/ast2600_qcom_dc_scm_v1_defconfig
-> >> @@ -0,0 +1,117 @@
-> >> +CONFIG_ARM=y
-> >> +CONFIG_SYS_DCACHE_OFF=y
-> >> +CONFIG_ARCH_ASPEED=y
-> >> +CONFIG_SYS_TEXT_BASE=0x0
-> >> +CONFIG_ASPEED_AST2600=y
-> >> +CONFIG_TARGET_AST2600_QUALCOMM_DC_SCM_V1=y
-> >> +CONFIG_SYS_MALLOC_F_LEN=0x800
-> >> +CONFIG_ENV_SIZE=0x10000
-> >> +CONFIG_ENV_OFFSET=0xE0000
-> >> +CONFIG_ARMV7_BOOT_SEC_DEFAULT=y
-> >> +CONFIG_NR_DRAM_BANKS=1
-> >> +CONFIG_FIT=y
-> >> +CONFIG_USE_BOOTARGS=y
-> >> +CONFIG_BOOTARGS="console=ttyS4,115200n8 root=/dev/ram rw"
-> >> +CONFIG_USE_BOOTCOMMAND=y
-> >> +CONFIG_BOOTCOMMAND="bootm 20100000"
-> >> +CONFIG_SYS_CONSOLE_ENV_OVERWRITE=y
-> >> +CONFIG_BOARD_LATE_INIT=y
-> >> +CONFIG_DISPLAY_BOARDINFO_LATE=y
-> >> +CONFIG_ARCH_EARLY_INIT_R=y
-> >> +CONFIG_BOARD_EARLY_INIT_F=y
-> >> +CONFIG_HUSH_PARSER=y
-> >> +# CONFIG_AUTO_COMPLETE is not set
-> >> +CONFIG_SYS_PROMPT="ast# "
-> >> +CONFIG_CMD_BOOTZ=y
-> >> +# CONFIG_CMD_BOOTEFI is not set
-> >> +# CONFIG_CMD_ELF is not set
-> >> +# CONFIG_CMD_IMI is not set
-> >> +# CONFIG_CMD_XIMG is not set
-> >> +# CONFIG_CMD_NVEDIT_EFI is not set
-> >> +CONFIG_CMD_CRC32=y
-> >> +CONFIG_CRC32_VERIFY=y
-> >> +# CONFIG_LOOPW is not set
-> >> +CONFIG_CMD_MD5SUM=y
-> >> +CONFIG_MD5SUM_VERIFY=y
-> >> +CONFIG_CMD_MEMINFO=y
-> >> +CONFIG_CMD_MEMORY=y
-> >> +CONFIG_CMD_MEMTEST=y
-> >> +CONFIG_SYS_ALT_MEMTEST=y
-> >> +CONFIG_CMD_MX_CYCLIC=y
-> >> +CONFIG_CMD_SHA1SUM=y
-> >> +CONFIG_SHA1SUM_VERIFY=y
-> >> +CONFIG_CMD_STRINGS=y
-> >> +CONFIG_CMD_CLK=y
-> >> +CONFIG_CMD_GPIO=y
-> >> +CONFIG_CMD_I2C=y
-> >> +CONFIG_CMD_MMC=y
-> >> +CONFIG_CMD_PART=y
-> >> +CONFIG_CMD_PCI=y
-> >> +CONFIG_CMD_SF=y
-> >> +CONFIG_CMD_USB=y
-> >> +CONFIG_CMD_DHCP=y
-> >> +CONFIG_CMD_MII=y
-> >> +CONFIG_CMD_PING=y
-> >> +CONFIG_CMD_NCSI=y
-> >> +CONFIG_CMD_EXT2=y
-> >> +CONFIG_CMD_EXT4=y
-> >> +CONFIG_CMD_EXT4_WRITE=y
-> >> +CONFIG_CMD_FAT=y
-> >> +CONFIG_CMD_FS_GENERIC=y
-> >> +CONFIG_CMD_MTDPARTS=y
-> >> +CONFIG_EFI_PARTITION=y
-> >> +CONFIG_ENV_IS_IN_SPI_FLASH=y
-> >> +CONFIG_USE_ENV_SPI_BUS=y
-> >> +CONFIG_ENV_SPI_BUS=0
-> >> +CONFIG_USE_ENV_SPI_CS=y
-> >> +CONFIG_ENV_SPI_CS=0
-> >> +CONFIG_USE_ENV_SPI_MAX_HZ=y
-> >> +CONFIG_ENV_SPI_MAX_HZ=100000000
-> >> +CONFIG_NET_RANDOM_ETHADDR=y
-> >> +CONFIG_REGMAP=y
-> >> +CONFIG_SYSCON=y
-> >> +CONFIG_CLK=y
-> >> +CONFIG_DM_GPIO=y
-> >> +CONFIG_ASPEED_GPIO=y
-> >> +CONFIG_DM_I2C=y
-> >> +CONFIG_SYS_I2C_ASPEED=y
-> >> +CONFIG_MISC=y
-> >> +CONFIG_ASPEED_AHBC=y
-> >> +CONFIG_ASPEED_H2X=y
-> >> +CONFIG_DM_MMC=y
-> >> +CONFIG_MMC_SDHCI=y
-> >> +CONFIG_MMC_SDHCI_ASPEED=y
-> >> +CONFIG_DM_SPI_FLASH=y
-> >> +CONFIG_SPI_FLASH=y
-> >> +CONFIG_SPI_FLASH_GIGADEVICE=y
-> >> +CONFIG_SPI_FLASH_MACRONIX=y
-> >> +CONFIG_SPI_FLASH_SPANSION=y
-> >> +CONFIG_SPI_FLASH_STMICRO=y
-> >> +CONFIG_SPI_FLASH_WINBOND=y
-> >> +CONFIG_PHY_BROADCOM=y
-> >> +CONFIG_PHY_MICREL=y
-> >> +CONFIG_PHY_MICREL_KSZ90X1=y
-> >> +CONFIG_PHY_REALTEK=y
-> >> +CONFIG_PHY_NCSI=y
-> >> +CONFIG_DM_ETH=y
-> >> +CONFIG_PHY_GIGE=y
-> >> +CONFIG_FTGMAC100=y
-> >> +CONFIG_MDIO=y
-> >> +CONFIG_PCI=y
-> >> +CONFIG_DM_PCI=y
-> >> +CONFIG_PCIE_ASPEED=y
-> >> +CONFIG_PHY=y
-> >> +CONFIG_PINCTRL=y
-> >> +CONFIG_RAM=y
-> >> +CONFIG_DM_SERIAL=y
-> >> +CONFIG_SYS_NS16550=y
-> >> +CONFIG_SPI=y
-> >> +CONFIG_DM_SPI=y
-> >> +CONFIG_SYSRESET=y
-> >> +CONFIG_USB=y
-> >> +CONFIG_DM_USB=y
-> >> +CONFIG_USB_EHCI_HCD=y
-> >> +CONFIG_USB_STORAGE=y
-> >> +CONFIG_WDT=y
-> >> +CONFIG_HEXDUMP=y
-> >> +# CONFIG_GENERATE_SMBIOS_TABLE is not set
-> >> --
-> >> 2.25.1
-> >>
+On 28/02/2022 11:21, Joel Stanley wrote:
+> On Mon, 28 Feb 2022 at 00:03, Quan Nguyen <quan@os.amperecomputing.com> wrote:
+>>
+>> This patchset adds the second flash support, merge all ADC channels to
+>> single iio-hwmon node and update various gpios pin name.
+>>
+>> Link:https://github.com/openbmc/docs/blob/master/designs/device-tree-gpio-naming.md
+>>
+>> Quan Nguyen (5):
+>>    ARM: dts: aspeed: mtjade: Enable secondary flash
+>>    ARM: dts: aspeed: mtjade: Update rtc-battery-voltage-read-enable pin
+>>    ARM: dts: aspeed: mtjade: Update host0-ready pin
+>>    ARM: dts: aspeed: mtjade: Rename GPIO hog nodes to match schema.
+>>    ARM: dts: aspeed: mtjade: Move all adc sensors into iio-hwmon node
+> 
+> These look good.
+> 
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
+> 
+> I'll apply them for v5.18.
+> 
+>>
+>>   .../arm/boot/dts/aspeed-bmc-ampere-mtjade.dts | 26 +++++++++----------
+>>   1 file changed, 12 insertions(+), 14 deletions(-)
+>>
+>> --
+>> 2.28.0
+>>
