@@ -1,56 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADF1E569C2A
-	for <lists+openbmc@lfdr.de>; Thu,  7 Jul 2022 09:52:58 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4632C56A35D
+	for <lists+openbmc@lfdr.de>; Thu,  7 Jul 2022 15:21:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LdpYN4FqQz3c5y
-	for <lists+openbmc@lfdr.de>; Thu,  7 Jul 2022 17:52:56 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Ldxrb1nVnz3c38
+	for <lists+openbmc@lfdr.de>; Thu,  7 Jul 2022 23:21:35 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=gm1 header.b=F5qIWeZE;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=qj1jUTa+;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bootlin.com (client-ip=2001:4b98:dc4:8::221; helo=relay1-d.mail.gandi.net; envelope-from=alexandre.belloni@bootlin.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::533; helo=mail-pg1-x533.google.com; envelope-from=logananth13.hcl@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=gm1 header.b=F5qIWeZE;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=qj1jUTa+;
 	dkim-atps=neutral
-Received: from relay1-d.mail.gandi.net (relay1-d.mail.gandi.net [IPv6:2001:4b98:dc4:8::221])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LdpXz33kcz3bvX
-	for <openbmc@lists.ozlabs.org>; Thu,  7 Jul 2022 17:52:35 +1000 (AEST)
-Received: (Authenticated sender: alexandre.belloni@bootlin.com)
-	by mail.gandi.net (Postfix) with ESMTPSA id 7A0C624000F;
-	Thu,  7 Jul 2022 07:52:14 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1657180337;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=XlhJMe5eaAfucFNFw5DBnfmQ57zoA/G09jp+D3Ly4pU=;
-	b=F5qIWeZE6+voZZFvqFrGd6OTrFVjxy6GGTxVWW1otoWxpwHffWNwiS9yg6YliSWJ6oOmE0
-	Pn9TobsV410XCrOqt2b7FUl5efbnf4DLJqx1ysYOtLEaTSfMw0UFt7J4HGlPt9z4OKtJpk
-	6HSz+YzU+eZ7zNk6AVHmXEo5NWvFQiahHafGm47iXkpAEg8vK63HMqFSwAGlZRlkgKG2Pn
-	RtbZKViwdSU3C6lB7QJ7UMxcB8ioZdI+jzYhcaXhvfSZMueHxPR1eNlpmEVdb6B2zILmW0
-	235E7rDpjU4wYMa5zTh3OinBuzjxplR5pM/gSykulsdT74x43pKR2k6GlWNj3g==
-Date: Thu, 7 Jul 2022 09:52:14 +0200
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
-To: Mining Lin <mimi05633@gmail.com>
-Subject: Re: [PATCH v3 3/3] RTC: nuvoton: Add NCT3018Y real time clock driver
-Message-ID: <YsaQrksj8jBhJYGP@mail.local>
-References: <20220527084647.30835-1-ctcchien@nuvoton.com>
- <20220527084647.30835-4-ctcchien@nuvoton.com>
- <YrYd+FkiFPz84twJ@mail.local>
- <CAHpyw9cdmCSZEE4ZbpnehpyvFhpPWA+_E5zXzJerNX9xqYet5Q@mail.gmail.com>
- <CAL3ZnpzSm7f1L2MMuDr9_vg3TQuk3PSr46fwmJTMz4sA2sdCJg@mail.gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Ldxr36pn1z3c1n;
+	Thu,  7 Jul 2022 23:21:07 +1000 (AEST)
+Received: by mail-pg1-x533.google.com with SMTP id 145so18466349pga.12;
+        Thu, 07 Jul 2022 06:21:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:date:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=+caqaU2jwST9KjN/1/t0QJXzQd9mk2HRl/4WLQkOIpE=;
+        b=qj1jUTa+a16S+5xt1vMAZXARDDSWN3npWT1MmERzCIpdpE0MhmAmf89PevNTj8wnPr
+         OTp0d19UaiaslgInZDHUP8H7KYzAd9fbJUM3xFvljQ3Iiolk9wq09ehO9PT6VAf+h1RD
+         6WSTOpO4u19LbmRxRK9x2P/j3v99EmAo9OtZqe+4oW05en50lj9tE8E88ieMZT++4eez
+         knS8pxOGzkol+8+/hBKQWHh4UevAPec8NCZzpy4992MU8naUC8KAY4bYRusf7lbCJmrY
+         eu8cpOWV9XpbJOwP6cfdtLVUWKZ5fwl3ySspU+V0zCIcjaCDLupOWuVg7dI1p4TGiLCL
+         P9eA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=+caqaU2jwST9KjN/1/t0QJXzQd9mk2HRl/4WLQkOIpE=;
+        b=nEh4w6Y3mjzkOMD8HjuOGjkDd0EGpuWWg6DHWbBrWCJMiszmTHjtE0QOgNR6yuCs2I
+         zKIzASXJMP2NvSSLHf1nHZmf0HMZQPJziPxa7zDoJ1XlxQL76ufanMlPEJt7s2LqEIT6
+         UG36RvEReL10dke8xgox1FzfcnpYAy9eXOuXGTBfW+mbWvLKF8leOS2OmqRKRB1SbhVL
+         y6pQzg9WCQ7rS4ymtBw717pI7JSf2nWvylAt+uQtK9DpNI1+fOoAHwLf4tr4F8BKNdPw
+         +sL/rN6dfgSbFAe708YBB9ltBLpXdU/MHzbWvA6F4S//7GwkijdUddIDSIhKAVW82T7E
+         MGEQ==
+X-Gm-Message-State: AJIora8AeqUUpwvmEUYGtjcAH+xkVZfC2g1IBkuv2OWS7YuwdrnAuNM+
+	7djZANg020hddz1v7D8Q/uk=
+X-Google-Smtp-Source: AGRyM1s3wvKu78PUF+WXF3NMQ9GECIokSiccqeMC9d7E21f6skakUIT71qtz1xi8mB6rHtSMVnrRVw==
+X-Received: by 2002:a05:6a00:240a:b0:528:5bbc:aa1b with SMTP id z10-20020a056a00240a00b005285bbcaa1bmr25954547pfh.70.1657200063324;
+        Thu, 07 Jul 2022 06:21:03 -0700 (PDT)
+Received: from logan-ThinkPad-T14-Gen-1 ([117.253.178.206])
+        by smtp.gmail.com with ESMTPSA id bk21-20020aa78315000000b005254e44b748sm26633625pfb.84.2022.07.07.06.20.57
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Thu, 07 Jul 2022 06:21:02 -0700 (PDT)
+From: Logananth Sundararaj <logananth13.hcl@gmail.com>
+X-Google-Original-From: Logananth Sundararaj <logananth_s@hcl.com>
+Date: Thu, 7 Jul 2022 18:50:54 +0530
+To: Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+	soc@kernel.org, Rob Herring <robh+dt@kernel.org>,
+	Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+	openbmc@lists.ozlabs.org
+Subject: [PATCH v3] The Yosemite V3.5 is a facebook multi-node server
+ platform that host four OCP server. The BMC in the Yosemite V3.5 platform
+ based on AST2600 SoC.
+Message-ID: <20220707132054.GA10610@logan-ThinkPad-T14-Gen-1>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAL3ZnpzSm7f1L2MMuDr9_vg3TQuk3PSr46fwmJTMz4sA2sdCJg@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,99 +83,310 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-rtc@vger.kernel.org, a.zummo@towertech.it, CS20 MYLin1 <mylin1@nuvoton.com>, YSCHU@nuvoton.com, Tomer Maimon <tmaimon77@gmail.com>, KWLIU@nuvoton.com, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, KFTING <KFTING@nuvoton.com>, JJLIU0@nuvoton.com, ctcchien@nuvoton.com, Tali Perry <tali.perry1@gmail.com>, devicetree <devicetree@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>, Medad Young <medadyoung@gmail.com>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Benjamin Fair <benjaminfair@google.com>
+Cc: thangavel.k@hcl.com, garnermic@gmail.com, velumanit@hcl.com, naveen.mosess@hcl.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 07/07/2022 15:17:28+0800, Mining Lin wrote:
-> Dear Alexandre,
-> 
-> Thank you for your comments.
-> I will refine and reply below.
-> 
-> Thanks.
-> Best Regards,
-> Mia
-> 
-> Medad Young <medadyoung@gmail.com> 於 2022年7月7日 週四 下午1:31寫道：
-> >
-> > Hello Alexandre,
-> >
-> > Thanks for your comments.
-> > I add Mining Lin <mimi05633@gmail.com> into this mail thread,
-> > and she is going to follow up this RTC driver.
-> > She will be in charge of maintaining this driver.
-> >
-> > Alexandre Belloni <alexandre.belloni@bootlin.com> 於 2022年6月25日 週六 凌晨4:26寫道：
-> > >
-> > > Hello,
-> > >
-> > > Please run ./scripts/checkpatch.pl --strict on your patch, there are a
-> > > bunch of issues.
-> > >
-> [Mia] I will run ./scripts/checkpatch.pl --strict on my patch to fix issues.
-> 
-> > > On 27/05/2022 16:46:47+0800, medadyoung@gmail.com wrote:
-> > > > +static int nct3018y_set_alarm_mode(struct i2c_client *client, bool on)
-> > > > +{
-> > > > +     int err, flags;
-> > > > +
-> > > > +     dev_dbg(&client->dev, "%s:on:%d\n", __func__, on);
-> > > > +
-> > > > +     flags =  i2c_smbus_read_byte_data(client, NCT3018Y_REG_CTRL);
-> > > > +     if (flags < 0) {
-> > > > +             dev_err(&client->dev,
-> > > > +                     "Failed to read NCT3018Y_REG_CTRL\n");
-> > >
-> > > You should cut down on the number of error messages, they are usually
-> > > not useful as the user doesn't have any specific action after getting
-> > > one of them apart from trying the action once again. Also, this will
-> > > make your code shorter. dev_dbg is fine.
-> > >
-> [Mia] I will modify dev_err to dev_dbg if there is an error and nothing to do.
-> 
-> > > > +/*
-> > > > + * In the routines that deal directly with the nct3018y hardware, we use
-> > > > + * rtc_time -- month 0-11, hour 0-23, yr = calendar year-epoch.
-> > > > + */
-> > > > +static int nct3018y_rtc_read_time(struct device *dev, struct rtc_time *tm)
-> > > > +{
-> > > > +     struct i2c_client *client = to_i2c_client(dev);
-> > > > +     unsigned char buf[10];
-> > > > +     int err;
-> > > > +
-> > >
-> > > You should still return an error if the time is invalid there but without
-> > > an error message.
-> > >
-> [Mia] I will verify the time by rtc_valid_tm(tm).
-> 
+This patch adds linux device tree entry related to
+Yosemite V3.5 specific devices connected to BMC SoC.
 
-No, I meant checking NCT3018Y_REG_ST as was done in the previous
-revisions of the series
+Signed-off-by: Logananth Sundararaj <logananth_s@hcl.com>
 
-> > > > +static struct clk *nct3018y_clkout_register_clk(struct nct3018y *nct3018y)
-> > > > +{
-> > > > +     struct i2c_client *client = nct3018y->client;
-> > > > +     struct device_node *node = client->dev.of_node;
-> > > > +     struct clk *clk;
-> > > > +     struct clk_init_data init;
-> > > > +     int flags, err;
-> > > > +
-> > > > +     /* disable the clkout output */
-> > > > +     flags = 0;
-> > > > +     err = i2c_smbus_write_byte_data(client, NCT3018Y_REG_CLKO, flags);
-> > >
-> > > BTW, this introduces a glitch in the clock output if the clock is
-> > > actually used. Maybe you could just rely on the CCF core to disable this
-> > > clock when there are no users.
-> > >
-> [Mia] Do you mean there is no need to disable the clock output here?
-> 
+---
+--- v3 - addressed v2 patch comments.
+--- v2 - Enabled i2c drivers.
+--- v1 - Initial draft.
+---
+---
+ arch/arm/boot/dts/Makefile                    |   1 +
+ .../boot/dts/aspeed-bmc-facebook-fby35.dts    | 266 ++++++++++++++++++
+ 2 files changed, 267 insertions(+)
+ create mode 100644 arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts
 
-The CCF will disable the clock at boot time if there are no users
-
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index 7e0934180724..58add093e5fb 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -1465,6 +1465,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+ 	aspeed-bmc-facebook-cloudripper.dtb \
+ 	aspeed-bmc-facebook-cmm.dtb \
+ 	aspeed-bmc-facebook-elbert.dtb \
++	aspeed-bmc-facebook-fby35.dtb \
+ 	aspeed-bmc-facebook-fuji.dtb \
+ 	aspeed-bmc-facebook-galaxy100.dtb \
+ 	aspeed-bmc-facebook-minipack.dtb \
+diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts
+new file mode 100644
+index 000000000000..32262cf1d9ea
+--- /dev/null
++++ b/arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts
+@@ -0,0 +1,266 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++// Copyright (c) 2020 Facebook Inc.
++
++/dts-v1/;
++
++#include "aspeed-g6.dtsi"
++#include <dt-bindings/gpio/aspeed-gpio.h>
++#include <dt-bindings/i2c/i2c.h>
++
++/ {
++	model = "Facebook fby35";
++	compatible = "facebook,fby35", "aspeed,ast2600";
++
++	aliases {
++		serial4 = &uart5;
++	};
++
++	chosen {
++		stdout-path = &uart5;
++		bootargs = "console=ttyS4,57600n8 root=/dev/ram rw vmalloc=384M";
++	};
++
++	memory@80000000 {
++		device_type = "memory";
++		reg = <0x80000000 0x80000000>;
++	};
++
++	iio-hwmon {
++		compatible = "iio-hwmon";
++		io-channels = <&adc0 0>, <&adc0 1>, <&adc0 2>, <&adc0 3>,
++			<&adc0 4>, <&adc0 5>, <&adc0 6>, <&adc0 7>,
++			<&adc1 0>, <&adc1 1>, <&adc1 2>, <&adc1 3>,
++			<&adc1 4>, <&adc1 5>, <&adc1 6>;
++	};
++	spi_gpio: spi-gpio {
++		status = "okay";
++		compatible = "spi-gpio";
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		gpio-sck = <&gpio0 ASPEED_GPIO(X, 3) GPIO_ACTIVE_HIGH>;
++		gpio-mosi = <&gpio0 ASPEED_GPIO(X, 4) GPIO_ACTIVE_HIGH>;
++		gpio-miso = <&gpio0 ASPEED_GPIO(X, 5) GPIO_ACTIVE_HIGH>;
++		num-chipselects = <1>;
++		cs-gpios = <&gpio0 ASPEED_GPIO(X, 0) GPIO_ACTIVE_LOW>;
++
++		tpmdev@0 {
++			compatible = "tcg,tpm_tis-spi";
++			spi-max-frequency = <33000000>;
++			reg = <0>;
++		};
++	};
++
++};
++
++&mac3 {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rmii4_default>;
++	no-hw-checksum;
++	use-ncsi;
++	mlx,multi-host;
++	ncsi-ctrl,start-redo-probe;
++	ncsi-ctrl,no-channel-monitor;
++	ncsi-package = <1>;
++	ncsi-channel = <1>;
++	ncsi-rexmit = <1>;
++	ncsi-timeout = <2>;
++};
++
++&uart1 {
++	status = "okay";
++};
++
++&uart2 {
++	status = "okay";
++};
++
++&uart3 {
++	status = "okay";
++};
++
++&uart4 {
++	status = "okay";
++};
++
++&uart5 {
++	status = "okay";
++	compatible = "snps,dw-apb-uart";
++};
++
++&wdt1 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_wdtrst1_default>;
++	aspeed,reset-type = "soc";
++	aspeed,external-signal;
++	aspeed,ext-push-pull;
++	aspeed,ext-active-high;
++	aspeed,ext-pulse-duration = <256>;
++};
++
++&rtc {
++	status = "okay";
++};
++
++&fmc {
++	status = "okay";
++	flash@0 {
++		status = "okay";
++		m25p,fast-read;
++		label = "spi0.1";
++		spi-max-frequency = <50000000>;
++		#include "openbmc-flash-layout-128.dtsi"
++	};
++	flash@1 {
++		status = "okay";
++		m25p,fast-read;
++		label = "spi0.0";
++		spi-max-frequency = <50000000>;
++		#include "openbmc-flash-layout.dtsi"
++	};
++};
++
++&i2c0 {
++	//Host1 IPMB bus
++	status = "okay";
++	multi-master;
++	ipmb0@10 {
++		compatible = "ipmb-dev";
++		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
++		i2c-protocol;
++	};
++};
++
++&i2c1 {
++	//Host2 IPMB bus
++	status = "okay";
++	multi-master;
++	ipmb1@10 {
++		compatible = "ipmb-dev";
++		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
++		i2c-protocol;
++	};
++};
++
++&i2c2 {
++	//Host3 IPMB bus
++	status = "okay";
++	multi-master;
++	ipmb2@10 {
++		compatible = "ipmb-dev";
++		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
++		i2c-protocol;
++	};
++};
++
++&i2c3 {
++	//Host1 IPMB bus
++	status = "okay";
++	multi-master;
++	ipmb3@10 {
++		compatible = "ipmb-dev";
++		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
++		i2c-protocol;
++	};
++};
++
++&i2c4 {
++	status = "okay";
++};
++
++&i2c5 {
++	status = "okay";
++};
++
++&i2c6 {
++	status = "okay";
++};
++
++&i2c7 {
++	status = "okay";
++};
++
++&i2c8 {
++	//NIC SENSOR TEMP
++	status = "okay";
++	tmp421@1f {
++		compatible = "ti,tmp421";
++		reg = <0x1f>;
++	};
++};
++
++&i2c9 {
++	// Debug-Card IPMB bus
++	status = "okay";
++	multi-master;
++	ipmb9@30 {
++		compatible = "ipmb-dev";
++		reg = <(0x30 | I2C_OWN_SLAVE_ADDRESS)>;
++		i2c-protocol;
++	};
++};
++
++&i2c10 {
++	status = "okay";
++};
++
++&i2c11 {
++	status = "okay";
++	//FRU EEPROM
++	eeprom@51 {
++		compatible = "atmel,24c64";
++		reg = <0x51>;
++		pagesize = <32>;
++	};
++};
++
++&i2c12 {
++	status = "okay";
++	//INLET TEMP
++	tmp75@4e {
++		compatible = "ti,tmp75";
++		reg = <0x4e>;
++	};
++	//OUTLET TEMP
++	tmp75@4f {
++		compatible = "ti,tmp75";
++		reg = <0x4f>;
++	};
++};
++
++&i2c13 {
++	status = "okay";
++};
++
++&adc0 {
++	ref_voltage = <2500>;
++	status = "okay";
++
++	pinctrl-0 = <&pinctrl_adc0_default &pinctrl_adc1_default
++		&pinctrl_adc2_default &pinctrl_adc3_default
++		&pinctrl_adc4_default &pinctrl_adc5_default
++		&pinctrl_adc6_default &pinctrl_adc7_default>;
++};
++
++&adc1 {
++	ref_voltage = <2500>;
++	status = "okay";
++
++	pinctrl-0 = <&pinctrl_adc8_default &pinctrl_adc9_default
++		&pinctrl_adc10_default &pinctrl_adc11_default
++		&pinctrl_adc12_default &pinctrl_adc13_default>;
++};
++&ehci0 {
++	status = "okay";
++};
++
++&ehci1 {
++	status = "okay";
++};
++
++&uhci {
++	status = "okay";
++};
 -- 
-Alexandre Belloni, co-owner and COO, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+2.17.1
+
