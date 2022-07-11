@@ -2,66 +2,51 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95BF6570538
-	for <lists+openbmc@lfdr.de>; Mon, 11 Jul 2022 16:17:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id A31E0570997
+	for <lists+openbmc@lfdr.de>; Mon, 11 Jul 2022 19:55:46 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LhQtr3277z3c38
-	for <lists+openbmc@lfdr.de>; Tue, 12 Jul 2022 00:17:08 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=X0asbNSZ;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LhWl442yHz3c3V
+	for <lists+openbmc@lfdr.de>; Tue, 12 Jul 2022 03:55:44 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b29; helo=mail-yb1-xb29.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=X0asbNSZ;
-	dkim-atps=neutral
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.166.49; helo=mail-io1-f49.google.com; envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
+Received: from mail-io1-f49.google.com (mail-io1-f49.google.com [209.85.166.49])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LhQtS6zp9z3bnV
-	for <openbmc@lists.ozlabs.org>; Tue, 12 Jul 2022 00:16:48 +1000 (AEST)
-Received: by mail-yb1-xb29.google.com with SMTP id e69so8949810ybh.2
-        for <openbmc@lists.ozlabs.org>; Mon, 11 Jul 2022 07:16:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=vf+VTyyTWGsnZnHhl+GAHyRGdszNXCGk/WkrL9vpyfI=;
-        b=X0asbNSZ/Y7jCOKEBpas/c4n4OwC80T9tb9l/BhDwIDJpeLk0iTbLxlHcXvyemkXSU
-         OJC2nqFEO6p9/XMcyD4JBTnH4BLCtqV0Rol9+upzxpISvgbdEUWVeOWm31YoyL4bOj82
-         mcgv4yXSZeCV0Y/ks8U0t8DyeDtJ0evxZplTay+u+RbCd1MufmfaA2VLTCAiG94333e7
-         dtCNNyGUEd0k58gRIqkDdPIRMR3v2vfZPo711l4OtghEihiQLjPb7PtK5LYelUnO5hFD
-         rhueqr7PJ7fqo/L9PZufFXYNU9h/eUX3nxNRYtSbqCpzv66JG96Hzna4Q9UDDxU2LoBu
-         IAGA==
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LhWkl234Gz3051
+	for <openbmc@lists.ozlabs.org>; Tue, 12 Jul 2022 03:55:26 +1000 (AEST)
+Received: by mail-io1-f49.google.com with SMTP id v185so5599396ioe.11
+        for <openbmc@lists.ozlabs.org>; Mon, 11 Jul 2022 10:55:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=vf+VTyyTWGsnZnHhl+GAHyRGdszNXCGk/WkrL9vpyfI=;
-        b=PsFEXAeecAvAOps8Y1vlQaYZEjXWRezyxAowLN0r3gXWtknRRmOd1Vn1ox0V8SWiQ+
-         puiTyseG0URAk6+GMcZmMXlCot04blHy+Q45ApsK7BdoWsioGhXTZr9UlLXw+qG87RGS
-         0M+Lr9EbGy+VSJP9Hbs3+NBK9qmL+x2xCS6C+ykpk3YISjRe4hjF69a2L2a8V1OSgbwP
-         +jKvHr042kBdBlG0oAu8QTs4xDLAIxH1DugfM/4BbSgVVgjFU16p1ni/bWkN6SxqL/Im
-         z0btAVgXHprjtrnkENkOfqNGMxosJGiz/aegHbDk1SHSTCOvGeWWXmZusplFFGmhIBMF
-         QEAA==
-X-Gm-Message-State: AJIora+ai1JkbGc4ZaAxHvBfIwXJDtHWSxd4v6FWP9ZIrDUA4T61xkBP
-	FrKnlB2n7J++n4HpNm2XmLVxnZaxn+/1iZMZaqs=
-X-Google-Smtp-Source: AGRyM1tjs3lX/e7/uuqpiknfoZcI/CSEGGAMIL8sSGkCYSy5OiaTV9RyVK7prX3xacTNgQEQOM7zwicT+muV5R/LniQ=
-X-Received: by 2002:a05:6902:10c9:b0:668:e27c:8f7 with SMTP id
- w9-20020a05690210c900b00668e27c08f7mr17319442ybu.128.1657549005246; Mon, 11
- Jul 2022 07:16:45 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220711134312.234268-1-tmaimon77@gmail.com> <20220711134312.234268-3-tmaimon77@gmail.com>
- <CAHp75VdXsiH9ityqopznRpjxvwOboS_Zbi9iO6nRZ03TuKxTtg@mail.gmail.com>
-In-Reply-To: <CAHp75VdXsiH9ityqopznRpjxvwOboS_Zbi9iO6nRZ03TuKxTtg@mail.gmail.com>
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Mon, 11 Jul 2022 16:16:08 +0200
-Message-ID: <CAHp75VeCPRVUMHYdNWgPja2eWeStokRDSogW-7ALz10_yEaDMA@mail.gmail.com>
-Subject: Re: [PATCH v1 2/2] iio: adc: npcm: Add NPCM8XX support
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=zQYfTc7ETRTCZIgWWYw80Iww1nESA3imnUOHAbZNink=;
+        b=OEMVrNL/YM9qa2xLa0GPwWSDo9vP7BgnGAZm5pN4yAvwhdVmj9K/uFhSArDfg5hi7e
+         CkeDP+RhjJ3uu+rHRDZ2eSI46pXxeoEULEfRk41Zwt7Y8M8iKmZyEjhvTW8w/8sim6Or
+         Fgnh1RvFnz8FfUruUgfxdtTjNbGIEm1wt3JO9qxDB/O2OmcuJ4KnH1l9KchLaAzUrE4l
+         NAhQiTN7RfvBoX/VoV2Y37/8blkmbIgXVlxlp7/Ww0Ncn9i7ormc0KSbnzhJNKcoss6B
+         +vNmqw+GRl3RNkHPZdsXJdaKA/a30bhFt11q9963ekf2lEoS62UV1xFUHphpJyk53gha
+         olTA==
+X-Gm-Message-State: AJIora/2bJEmUUkF1yryw123izr2oCN0T0JwO8su7HPZTgVnOVEpPdrx
+	FanFOTDq5oVqSG+ipfMZyw==
+X-Google-Smtp-Source: AGRyM1uE9R2fPsn1VUU8DOTLoa3jlkmDcdWazULz/mhKIHwM2a2Mr0Dxk1I9Ka1+ZBiBywhlw3BqfQ==
+X-Received: by 2002:a05:6638:1651:b0:33c:a8d2:71a6 with SMTP id a17-20020a056638165100b0033ca8d271a6mr11256299jat.165.1657562121188;
+        Mon, 11 Jul 2022 10:55:21 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id z17-20020a056638215100b0033eda79403bsm3170853jaj.9.2022.07.11.10.55.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Jul 2022 10:55:20 -0700 (PDT)
+Received: (nullmailer pid 4172124 invoked by uid 1000);
+	Mon, 11 Jul 2022 17:55:19 -0000
+From: Rob Herring <robh@kernel.org>
 To: Tomer Maimon <tmaimon77@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20220711134312.234268-2-tmaimon77@gmail.com>
+References: <20220711134312.234268-1-tmaimon77@gmail.com> <20220711134312.234268-2-tmaimon77@gmail.com>
+Subject: Re: [PATCH v1 1/2] dt-bindings: iio: adc: npcm: Add npcm845 compatible string
+Date: Mon, 11 Jul 2022 11:55:19 -0600
+Message-Id: <1657562119.172361.4172123.nullmailer@robh.at.kernel.org>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,42 +58,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>, Lars-Peter Clausen <lars@metafoo.de>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Benjamin Fair <benjaminfair@google.com>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, linux-iio <linux-iio@vger.kernel.org>, Tali Perry <tali.perry1@gmail.com>, zhengbin13@huawei.com, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Jonathan Cameron <jic23@kernel.org>
+Cc: devicetree@vger.kernel.org, lars@metafoo.de, linux-kernel@vger.kernel.org, benjaminfair@google.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, j.neuschaefer@gmx.net, linux-iio@vger.kernel.org, tali.perry1@gmail.com, zhengbin13@huawei.com, robh+dt@kernel.org, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, jic23@kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Jul 11, 2022 at 4:14 PM Andy Shevchenko
-<andy.shevchenko@gmail.com> wrote:
-> On Mon, Jul 11, 2022 at 3:59 PM Tomer Maimon <tmaimon77@gmail.com> wrote:
+On Mon, 11 Jul 2022 16:43:10 +0300, Tomer Maimon wrote:
+> Add a compatible string for Nuvoton BMC NPCM845 ADC.
+> 
+> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> ---
+>  .../devicetree/bindings/iio/adc/nuvoton,npcm750-adc.yaml     | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
 
-...
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-> >         struct device *dev = &pdev->dev;
-> > +       const struct of_device_id *match;
+yamllint warnings/errors:
 
-> > +       match = of_match_node(npcm_adc_match, pdev->dev.of_node);
-> > +       if (!match || !match->data) {
-> > +               dev_err(dev, "Failed getting npcm_adc_data\n");
-> > +               return -ENODEV;
-> > +       }
-> >
-> > +       info->data = (struct npcm_adc_info *)match->data;
->
-> Instead of above
->
->   info->data = device_get_match_data(dev);
->   if (!info->data)
+dtschema/dtc warnings/errors:
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/iio/adc/nuvoton,npcm750-adc.example.dtb: adc@f000c000: compatible: 'oneOf' conditional failed, one must be fixed:
+	['nuvoton,npcm750-adc'] is too short
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/iio/adc/nuvoton,npcm750-adc.yaml
 
+doc reference errors (make refcheckdocs):
 
->     return -ENODEV;
+See https://patchwork.ozlabs.org/patch/
 
-Or
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
 
-  return dev_err_probe(dev, -EINVAL, "...\n");
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
 
-if you want that message to be issued.
+pip3 install dtschema --upgrade
 
+Please check and re-submit.
 
--- 
-With Best Regards,
-Andy Shevchenko
