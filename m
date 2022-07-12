@@ -1,66 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 01C4E5718A6
-	for <lists+openbmc@lfdr.de>; Tue, 12 Jul 2022 13:34:28 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E97435718AB
+	for <lists+openbmc@lfdr.de>; Tue, 12 Jul 2022 13:35:32 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LhzDd6njMz3c3W
-	for <lists+openbmc@lfdr.de>; Tue, 12 Jul 2022 21:34:25 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LhzFt5SRVz3c4N
+	for <lists+openbmc@lfdr.de>; Tue, 12 Jul 2022 21:35:30 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=B94TP6/5;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=qSZV1HIT;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::131; helo=mail-lf1-x131.google.com; envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::129; helo=mail-lf1-x129.google.com; envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=B94TP6/5;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=qSZV1HIT;
 	dkim-atps=neutral
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LhzDC4DSNz3c0H
-	for <openbmc@lists.ozlabs.org>; Tue, 12 Jul 2022 21:34:02 +1000 (AEST)
-Received: by mail-lf1-x131.google.com with SMTP id n18so11730925lfq.1
-        for <openbmc@lists.ozlabs.org>; Tue, 12 Jul 2022 04:34:01 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LhzFS2S14z3bl6
+	for <openbmc@lists.ozlabs.org>; Tue, 12 Jul 2022 21:35:08 +1000 (AEST)
+Received: by mail-lf1-x129.google.com with SMTP id bp17so5596036lfb.3
+        for <openbmc@lists.ozlabs.org>; Tue, 12 Jul 2022 04:35:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=mFS8JB0UQ6xgQkj9Rzj42NMAdqopVPu680nzosVGwF8=;
-        b=B94TP6/5NYcsh1kjS6L0IQ2Cs09IyR4Fq71YX87aWaquDjhBOEIfiyqgCM3UhSmZGz
-         sqwD0fQqdvgazjO18tTdQ2lJVB53oNBTdNljnhnabTc4R4bevlcj33/9wKdiSmvf+Q5u
-         7FKsBFDVzOSlOJN0OSP/vQOq0HNYcn83s+xc0WazlKE4U+iGTIdI9P8Jp7/048MtG2O1
-         UpVm7qC8jH7XntHlNQWmmZ5N4WZHKvaOhwMLgKgqejfh45oZ1ZIbgN8LPhd8+bfg+DJM
-         j5LfIYYCzb6GTNllziEQOiqE+d33hUQ6oIZfbEIF5jDP9JLw+sXm2BMB6SDgupNqRYnB
-         UiLA==
+        bh=CAogKIT73o6WsGNfWbcRAMtgA4sSrigPm6Y2Wj+ZIcw=;
+        b=qSZV1HITDQyra3oc8/Oct9IzQ3sM8J+s9EtxXRlZ/MQIe5FVJxIrUL14RFtKJwwhqH
+         M+oPvCc14LE/E+dTXMIe5VNJUrWornG2dgBWYqkTgZrlC0/RPnGYJJLxEpdoMfx1Og8/
+         YBmVAp9iRPVjrqWSHnQxw6klk70DohWWLKOxd72zv9XfYobIbk7wmVMC2qQCqPeDFg1R
+         hVJLMG6PEO4Ksd626xiB1Gs2GZ9SeFienidPedvCIj/y3ldJPkI04wQ6duxbwvgKjHFt
+         dXPcMHCWi9reAIB141hZFIkaYYovI9Y8ycx4lLB/eJVp/x02Njt2O8TbMivWRn/x2Dwc
+         NRYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=mFS8JB0UQ6xgQkj9Rzj42NMAdqopVPu680nzosVGwF8=;
-        b=09LwyT1WnH1pMyfD2D6N8A+KfiuDKgjpqRvJLkXw57ZcwNpNe+fzMzbKWuvn5Hvisz
-         JULuf6/we9m4dV+vAxAC9g8D4mmQUGtLfIZZQvUgZR6RqMgQAMVR9l7r/bE+3sm5zqXR
-         hTRe8hnl/549s5HPWx1usLYKB5Yvszb83PMQI8VIWs13KR2AoL1keya5YtmFq0NZ9JVq
-         LUXwf2Bjnj4IEhgo9RU/7HOVFWmwq2RnU5LT5ogFWv62wLfDwjvYRKKFkzwQWs3ww9f7
-         rZws2/n5Q61LWQuvRZkSk1RfCz80fL3NsFI9S/gTkBEdKP86XwS68QmqZ3fkQKs3UFjc
-         aCWg==
-X-Gm-Message-State: AJIora/hhMdT1E6Ha4TsO+VpuWXbVlqn/srIiGBrl/qcGPDwSE1sQMNk
-	n3y3SIdpH0EWN8fUHrYS0AqMQs7wQzUOvQUaKaM=
-X-Google-Smtp-Source: AGRyM1tc0SELbn9X0+KPLJzY1o8LJcXQepVQgHClsuGUcgfWG7CUoznbetwz39UD40tGDfz4VaHBvGKJHVpFokzIJmw=
-X-Received: by 2002:a05:6512:3103:b0:489:cdd7:b360 with SMTP id
- n3-20020a056512310300b00489cdd7b360mr11087202lfb.111.1657625633985; Tue, 12
- Jul 2022 04:33:53 -0700 (PDT)
+        bh=CAogKIT73o6WsGNfWbcRAMtgA4sSrigPm6Y2Wj+ZIcw=;
+        b=BmMsOCx+jeq86dV66ND9ZycNpVC+bmivpLBpYxunMvJTrGzxBYuEgkwhhb1QxZEen+
+         6XdnwGHedvbmyo9NfJI1XO6/7nYBiML3nRYdTASr/lPPQmqjcDk0vBSIVzuxwETsBTtO
+         KUUIcqZXt7v9cXnRett8dkQ+9S2/nBdLx1/6KPvawypMRT0jDsH0GdYxIMPMc+w3rEON
+         IQuqyJxH9vHNjxmsNJIHDNA8a9GQ2Sq8uYbT/i1lcfGLVZWvti9rPO9F9NiPuQ3lcYlS
+         A3xBJuJHlSpnhrrCdyEwLzHyNegMWNkA8jDvQ3R/hC0jYJcymgq7hB+2h0qEiAs++c6S
+         S5Cw==
+X-Gm-Message-State: AJIora8QgtNti5PMm1cvcMZcU+wiFCrENVy8xYmWUFnbunZCP+hfTrP1
+	hsO9i8lGRWI0VoWO9NkFKOkGJgWgWUCrz5dp8WI=
+X-Google-Smtp-Source: AGRyM1u25zmSsKgmzNKlKp3f5zvdI6W3e74UTp2OHlKEAXvvMqdmUpMqS1A3mQZX0T2H0c71x9pVprhZe5mBHdElQZg=
+X-Received: by 2002:a05:6512:3f84:b0:489:3345:c459 with SMTP id
+ x4-20020a0565123f8400b004893345c459mr14908703lfa.576.1657625704786; Tue, 12
+ Jul 2022 04:35:04 -0700 (PDT)
 MIME-Version: 1.0
 References: <20220710102110.39748-1-tmaimon77@gmail.com> <20220710102110.39748-3-tmaimon77@gmail.com>
- <CAHp75VdaT8WjoHYgmUY+mKVaUivLGGeaRJAkwfRjHspPAmw_XQ@mail.gmail.com>
-In-Reply-To: <CAHp75VdaT8WjoHYgmUY+mKVaUivLGGeaRJAkwfRjHspPAmw_XQ@mail.gmail.com>
+ <95d12b72-be9d-5503-c4ea-801303bb7776@linaro.org>
+In-Reply-To: <95d12b72-be9d-5503-c4ea-801303bb7776@linaro.org>
 From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Tue, 12 Jul 2022 14:33:42 +0300
-Message-ID: <CAP6Zq1iQL2R67dbdQiXW_JUWrGne9xp-9yQ97vQOb4RveQE7Yw@mail.gmail.com>
+Date: Tue, 12 Jul 2022 14:34:53 +0300
+Message-ID: <CAP6Zq1h=JjODnmPjwwEbrThGU8kQOX08Z1NipaJx_Gcwg1s1FQ@mail.gmail.com>
 Subject: Re: [PATCH v1 2/2] pinctrl: nuvoton: add NPCM8XX pinctrl and GPIO driver
-To: Andy Shevchenko <andy.shevchenko@gmail.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -77,282 +77,103 @@ Cc: devicetree <devicetree@vger.kernel.org>, Benjamin Fair <benjaminfair@google.
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Andy,
+HI Krzysztof,
 
-Thanks for your comments
+Thanks for your comment, they will be addressed next version,
 
-On Sun, 10 Jul 2022 at 22:36, Andy Shevchenko <andy.shevchenko@gmail.com> wrote:
+On Tue, 12 Jul 2022 at 12:50, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 >
-> On Sun, Jul 10, 2022 at 12:44 PM Tomer Maimon <tmaimon77@gmail.com> wrote:
-> >
+> On 10/07/2022 12:21, Tomer Maimon wrote:
 > > Add pinctrl and GPIO controller driver support to Arbel BMC NPCM8XX SoC.
 > >
 > > Arbel BMC NPCM8XX pinctrl driver based on Poleg NPCM7XX, except the
 > > pin mux mapping difference the NPCM8XX GPIO supports adjust debounce
 > > period time.
+> >
+> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 >
-> Below my comments from a very brief review.
+> (...)
 >
-> ...
->
-> Looking at the length of it, and noticing some debug prints I believe
-> you may reduce the LoC amount by ~5-10% easily, starting from removing
-> debug prints (like in IRQ set type callback). Also some lines look
-> split by two where it's fine to have at one (with container_of() in
-> them, for example). Besides that read the latest examples on how to
-> provide constant IRQ chip description and what the proper IRQ data
-> accessors should be used.
-> Additionally pay attention to the headers the driver uses, for example
-> it misses bits.h (or bitops.h depending on the code, I haven't looked
-> deeply).
-I will try to reduce lines as possible
->
-> ...
->
-> > +#define DRIVE_STRENGTH_MASK            0x0000FF00
->
-> Why not GENMASK()?
->
-> ...
->
-> > +#define DSLO(x)                (((x) >> DRIVE_STRENGTH_LO_SHIFT) & 0xF)
-> > +#define DSHI(x)                (((x) >> DRIVE_STRENGTH_HI_SHIFT) & 0xF)
->
-> Ditto.
->
-> ...
->
-> > +#define GPI            0x1 /* Not GPO */
-> > +#define GPO            0x2 /* Not GPI */
-> > +#define SLEW           0x4 /* Has Slew Control, NPCM8XX_GP_N_OSRC */
-> > +#define SLEWLPC                0x8 /* Has Slew Control, SRCNT.3 */
->
-> Why not BIT(x) for them?
->
-> ...
->
-> > +                               regmap_update_bits(gcr_regmap, cfg->reg0,
-> > +                                                  BIT(cfg->bit0),
-> > +                                                  !!(cfg->fn0 == mode) ?
-> > +                                                  BIT(cfg->bit0) : 0);
->
-> What the purpose of '!!(x)' in all similar lines? Why wouldn't 'x' simply work?
-taken by mistake, 'x' will work.
->
-> ...
->
-> > +       if (pincfg[pin].flag & SLEWLPC) {
-> > +               switch (arg) {
-> > +               case 0:
-> > +                       regmap_update_bits(gcr_regmap, NPCM8XX_GCR_SRCNT,
-> > +                                          SRCNT_ESPI, 0);
-> > +                       return 0;
-> > +               case 1:
-> > +                       regmap_update_bits(gcr_regmap, NPCM8XX_GCR_SRCNT,
-> > +                                          SRCNT_ESPI, SRCNT_ESPI);
-> > +                       return 0;
-> > +               default:
-> > +                       return -EINVAL;
-> > +               }
-> > +       }
 > > +
-> > +       return -EINVAL;
->
-> Why not to use usual pattern, i.e.
->
->   if (error_condition)
->     return -EINVAL;
-What do you mean? like if (arg>1) return -EINVAL? It just seems more readable.
->
-> here and everywhere in the similar cases?
-can you point me to which more cases you mean?
->
-> ...
->
-> > +               val = ioread32(bank->base + NPCM8XX_GP_N_ODSC)
-> > +               & pinmask;
->
-> What was happened to indentation? Check entire file for indentation to be okay.
-Sorry, I didn't understand, could you explain the comment again?
->
-> ...
->
-> > +       int v;
-> > +       struct npcm8xx_gpio *bank =
-> > +               &npcm->gpio_bank[pin / NPCM8XX_GPIO_PER_BANK];
-> > +       int gpio = BIT(pin % bank->gc.ngpio);
->
-> Keep it ordered in reversed xmas tree manner.
-O.K.
->
-> ...
->
-> > +       if (DSLO(v) == nval) {
-> > +               dev_dbg(bank->gc.parent,
-> > +                       "setting pin %d to low strength [%d]\n", pin, nval);
-> > +               npcm_gpio_clr(&bank->gc, bank->base + NPCM8XX_GP_N_ODSC, gpio);
-> > +               return 0;
-> > +       } else if (DSHI(v) == nval) {
->
-> Redundant 'else'. Check entire file for the similar pattern and drop redundancy.
-O.K.
->
-> > +               dev_dbg(bank->gc.parent,
-> > +                       "setting pin %d to high strength [%d]\n", pin, nval);
-> > +               npcm_gpio_set(&bank->gc, bank->base + NPCM8XX_GP_N_ODSC, gpio);
-> > +               return 0;
-> > +       }
->
-> ...
->
-> > +static void npcm8xx_pin_dbg_show(struct pinctrl_dev *pctldev,
-> > +                                struct seq_file *s, unsigned int offset)
+> > +static int npcm8xx_pinctrl_probe(struct platform_device *pdev)
 > > +{
-> > +       seq_printf(s, "pinctrl_ops.dbg: %d", offset);
-> > +}
->
-> Not sure it brings any additional information to what pin control core
-> issues on debug.
->
-> ...
->
-> > +       dev_dbg(npcm->dev, "group size: %d\n", (int)ARRAY_SIZE(npcm8xx_groups));
->
-> Drop this noise. It's production. Or not? If not, why bother with
-> submitting not yet ready material?
->
-> ...
->
-> > +                       } else if ((nanosecs > 1640) && (nanosecs <= 2280)) {
-> > +                               iowrite32(0x20, bank->base + NPCM8XX_GP_N_DBNCP0 + (i * 4));
-> > +                       } else if ((nanosecs > 2280) && (nanosecs <= 2700)) {
-> > +                               iowrite32(0x30, bank->base + NPCM8XX_GP_N_DBNCP0 + (i * 4));
-> > +                       } else if ((nanosecs > 2700) && (nanosecs <= 2856)) {
-> > +                               iowrite32(0x40, bank->base + NPCM8XX_GP_N_DBNCP0 + (i * 4));
-> > +                       } else if ((nanosecs > 2856) && (nanosecs <= 3496)) {
-> > +                               iowrite32(0x50, bank->base + NPCM8XX_GP_N_DBNCP0 + (i * 4));
-> > +                       } else if ((nanosecs > 3496) && (nanosecs <= 4136)) {
-> > +                               iowrite32(0x60, bank->base + NPCM8XX_GP_N_DBNCP0 + (i * 4));
-> > +                       } else if ((nanosecs > 4136) && (nanosecs <= 5025)) {
-> > +                               iowrite32(0x70, bank->base + NPCM8XX_GP_N_DBNCP0 + (i * 4));
->
-> With switch-case with ranges it will be much more visible what's going
-> on. Also think about it, maybe you can use some formula instead? Or
-> table (array of integers) approach where index will show the lowest
-> range value.
-There it can be described in a formula. Will be done with switch-case
-
-
->
-> ...
->
-> > +               struct device_node *np = to_of_node(child);
->
-> Why?!
-Will remove and replaced with fwnode functions.
->
-> > +               ret = of_address_to_resource(np, 0, &res);
-> > +               if (ret < 0) {
-> > +                       dev_err(dev, "Resource fail for GPIO bank %u\n", id);
-> > +                       return ret;
-> > +               }
+> > +     struct npcm8xx_pinctrl *pctrl;
+> > +     int ret;
 > > +
-> > +               pctrl->gpio_bank[id].base = ioremap(res.start, resource_size(&res));
+> > +     pctrl = devm_kzalloc(&pdev->dev, sizeof(*pctrl), GFP_KERNEL);
+> > +     if (!pctrl)
+> > +             return -ENOMEM;
+> > +
+> > +     pctrl->dev = &pdev->dev;
+> > +     dev_set_drvdata(&pdev->dev, pctrl);
+> > +
+> > +     pctrl->gcr_regmap =
+> > +             syscon_regmap_lookup_by_compatible("nuvoton,npcm845-gcr");
 >
-> fwnode_iomap()
+> No. Use property. By this patchset, I would expect that you learnt from
+> previous mistakes around this. Why repeating the same trouble second time?
 >
-> ...
+> > +     if (IS_ERR(pctrl->gcr_regmap)) {
+> > +             dev_err(pctrl->dev, "didn't find nuvoton,npcm845-gcr\n");
+> > +             return PTR_ERR(pctrl->gcr_regmap);
+> > +     }
+> > +
+> > +     ret = npcm8xx_gpio_of(pctrl);
+> > +     if (ret < 0) {
+> > +             dev_err(pctrl->dev, "Failed to gpio dt-binding %u\n", ret);
+> > +             return ret;
+> > +     }
+> > +
+> > +     pctrl->pctldev = devm_pinctrl_register(&pdev->dev,
+> > +                                            &npcm8xx_pinctrl_desc, pctrl);
+> > +     if (IS_ERR(pctrl->pctldev)) {
+> > +             dev_err(&pdev->dev, "Failed to register pinctrl device\n");
+> > +             return PTR_ERR(pctrl->pctldev);
+> > +     }
+> > +
+> > +     ret = npcm8xx_gpio_register(pctrl);
+> > +     if (ret < 0) {
+> > +             dev_err(pctrl->dev, "Failed to register gpio %u\n", ret);
+> > +             return ret;
+> > +     }
+> > +
+> > +     pr_info("npcm8xx Pinctrl driver probed\n");
 >
-> > +               if (ret) {
-> > +                       dev_err(dev, "bgpio_init() failed\n");
-> > +                       return ret;
-> > +               }
 >
-> Use
+> No pr_ in devices. No success debug messages.
 >
->   return dev_err_probe(...)
-Why it is better to use dev_err_probe?
-I am not sure that the error will be EPROBE_DEFER, all the failure
-cases the driver returned the
-error in the code.
->
-> In ->probe() and satellite functions.
->
-> ...
->
-> > +               ret = irq_of_parse_and_map(np, 0);
->
-> fwnode_irq_get()
->
-> > +               if (!ret) {
-> > +                       dev_err(dev, "No IRQ for GPIO bank %u\n", id);
-> > +                       return -EINVAL;
-> > +               }
->
-> ...
->
-> > +               girq->num_parents = 1;
-> > +               girq->parents = devm_kcalloc(pctrl->dev, 1,
->
-> Replace 1 with girq->num_parents
->
-> > +                                            sizeof(*girq->parents),
-> > +                                            GFP_KERNEL);
-> > +               if (!girq->parents) {
-> > +                       ret = -ENOMEM;
-> > +                       goto err_register;
-> > +               }
->
-> ...
->
-> > +               ret = gpiochip_add_pin_range(&pctrl->gpio_bank[id].gc,
-> > +                                            dev_name(pctrl->dev),
-> > +                                            pctrl->gpio_bank[id].pinctrl_id,
-> > +                                            pctrl->gpio_bank[id].gc.base,
-> > +                                            pctrl->gpio_bank[id].gc.ngpio);
-> > +               if (ret < 0) {
-> > +                       dev_err(pctrl->dev, "Failed to add GPIO bank %u\n", id);
-> > +                       gpiochip_remove(&pctrl->gpio_bank[id].gc);
-> > +                       goto err_register;
-> > +               }
-> > +       }
->
-> We have a callback for ranges, can you use it?
-Yes,
->
-> ...
->
-> > +err_register:
-> > +       for (; id > 0; id--)
->
-> while(id--)
->
-> > +               gpiochip_remove(&pctrl->gpio_bank[id - 1].gc);
->
-> But why not devm_gpiochip_add_... in the first place?
-using, devm_gpiochip_add_data, will remove gpiochip_remove.
->
-> ...
->
-> > +       dev_set_drvdata(&pdev->dev, pctrl);
->
-> platform_set_drv_data() ?
-O.K.
->
-> ...
->
+> > +     return 0;
+> > +}
+> > +
 > > +static const struct of_device_id npcm8xx_pinctrl_match[] = {
-> > +       { .compatible = "nuvoton,npcm845-pinctrl" },
-> > +       { },
->
-> No comma for terminator entry.
-O.K.
->
+> > +     { .compatible = "nuvoton,npcm845-pinctrl" },
+> > +     { },
 > > +};
+> > +MODULE_DEVICE_TABLE(of, npcm8xx_pinctrl_match);
+> > +
+> > +static struct platform_driver npcm8xx_pinctrl_driver = {
+> > +     .probe = npcm8xx_pinctrl_probe,
+> > +     .driver = {
+> > +             .name = "npcm8xx-pinctrl",
+> > +             .of_match_table = npcm8xx_pinctrl_match,
+> > +             .suppress_bind_attrs = true,
+> > +     },
+> > +};
+> > +
+> > +static int __init npcm8xx_pinctrl_register(void)
+> > +{
+> > +     return platform_driver_register(&npcm8xx_pinctrl_driver);
+> > +}
+> > +arch_initcall(npcm8xx_pinctrl_register);
+> > +
+> > +MODULE_LICENSE("GPL v2");
+> > +MODULE_AUTHOR("tomer.maimon@nuvoton.com");
+> > +MODULE_DESCRIPTION("Nuvoton NPCM8XX Pinctrl and GPIO driver");
 >
-> --
-> With Best Regards,
-> Andy Shevchenko
+>
+> Best regards,
+> Krzysztof
 
 Best regards,
 
