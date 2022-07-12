@@ -2,51 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C497570F6D
-	for <lists+openbmc@lfdr.de>; Tue, 12 Jul 2022 03:25:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 66143571237
+	for <lists+openbmc@lfdr.de>; Tue, 12 Jul 2022 08:25:29 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Lhjjp1synz3c2S
-	for <lists+openbmc@lfdr.de>; Tue, 12 Jul 2022 11:25:18 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LhrN41kfbz3c5Z
+	for <lists+openbmc@lfdr.de>; Tue, 12 Jul 2022 16:25:24 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=fQpWy4SL;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=9elements.com header.i=@9elements.com header.a=rsa-sha256 header.s=google header.b=bglWgpu+;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=126.com (client-ip=123.126.96.5; helo=mail-m965.mail.126.com; envelope-from=wangmin_phy@126.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=9elements.com (client-ip=2607:f8b0:4864:20::1032; helo=mail-pj1-x1032.google.com; envelope-from=patrick.rudolph@9elements.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=fQpWy4SL;
+	dkim=pass (2048-bit key; secure) header.d=9elements.com header.i=@9elements.com header.a=rsa-sha256 header.s=google header.b=bglWgpu+;
 	dkim-atps=neutral
-Received: from mail-m965.mail.126.com (mail-m965.mail.126.com [123.126.96.5])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LhjjK43JQz3brk;
-	Tue, 12 Jul 2022 11:24:51 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=YED4X
-	OFMfSQUREuGAuFmq6pq8tLgCjzUozBrrXGL4+A=; b=fQpWy4SLELQNSQdVyNwxH
-	rCmUsHuLnmAEGaPDRKfAxxA6JXXawyYuN0Y/L0rF9uf5KuCIFo9YKHknrnXXVJq9
-	pzwXmiFREb9DxUvVMjFfIOEUFrs+nWckrcg8SATSyqVFPHa/4GRjGB4UDn1E1q3C
-	bZ6H+Ew7yp25cibZivVrp0=
-Received: from localhost.localdomain (unknown [120.55.36.104])
-	by smtp10 (Coremail) with SMTP id NuRpCgBnhoIpzcxi3zHIGQ--.8524S3;
-	Tue, 12 Jul 2022 09:23:54 +0800 (CST)
-From: wangmin_phy@126.com
-To: openbmc@lists.ozlabs.org,
-	linux-aspeed@lists.ozlabs.org,
-	joel@jms.id.au
-Subject: [PATCH 1/1] ARM: dts: aspeed: Add device tree for Phytium's BMC
-Date: Tue, 12 Jul 2022 09:23:53 +0800
-Message-Id: <20220712012353.386887-2-wangmin_phy@126.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20220712012353.386887-1-wangmin_phy@126.com>
-References: <20220712012353.386887-1-wangmin_phy@126.com>
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LhrMf4dsnz3bmD
+	for <openbmc@lists.ozlabs.org>; Tue, 12 Jul 2022 16:25:00 +1000 (AEST)
+Received: by mail-pj1-x1032.google.com with SMTP id s21so6744839pjq.4
+        for <openbmc@lists.ozlabs.org>; Mon, 11 Jul 2022 23:25:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=9elements.com; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=JdFTalYpxr4lbbDMmWLhKdx23pl3T3U3CpkShm/RMtk=;
+        b=bglWgpu+PvhG8W9dLdZVKmXSJVBHurs7uPiN9gn0DkbZIsPN98RusL2r9ULz+5JblS
+         clXkBuBbv4K8NKsjyraoCDIOi/8auN0EWQP7s9Helqot7Aa53Zh71QAfC8uRImUSltYE
+         Fv20hB7rG9mVQ8uFHufCRzqwlYhB3AoQe0IV8v39Q37TiAejmgFXvCkRS9UgJRbhh3p4
+         XVhGrZyPJ38Nu8cv75BB4Fjz9UEywg5VW2ycq7ZO9XWzdFdvtIIPivThvGP8vhcBJYyg
+         SZnKdcD3ByhETKPQMzwsVNfwHeXPocI2cNGhuY4Xq5+WQUlpCiit9mzCyo9g96PIqccI
+         WQeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=JdFTalYpxr4lbbDMmWLhKdx23pl3T3U3CpkShm/RMtk=;
+        b=k7gC5qOKGg9qnx951aurWbfatpSI/EONeECRXa3daSL3nagFlMLmlUUM/9kD1mAtWz
+         vbnv7ORCbhL1HHCHWVyjzOLl5kHAJH5jH+AdItg0ijcxu9VgivPh3jVr+CowQQETEsNg
+         6qzyK8NEo+0xU2/0MfjOMgB0HGthi/lMj8WcHIRyUiW5f71BZs2QJx7r+sW5aKllcieN
+         GNGm+fEy1OMbGFmC8PJ4y5tw6ZVujK3eGOt0MyAbhD2Pisuc2wsYwo8fI5vxPN2XHiCi
+         Z73DlWa+Jpwfb4LlaJkUuFNEdLj+isvrkGx6oCnAmTHukI/DNX2+C/GmBKyriartmF7p
+         7k7Q==
+X-Gm-Message-State: AJIora9xyiiOXD+vB5lOLnEI/T1RGtHl5rI7eYin9kWLKkmYQNm+QdTa
+	VRJGLiGtHHtv9vjwxxYQOxWiMEkEyKIU9o/Z+PrbDyE0dvg=
+X-Google-Smtp-Source: AGRyM1uGGt7J0zGTluDNtmW3N6X41PDLYQYtoGXIQVCqsqWgTK1TTY53vbFJ1g3fa1kH7kLh8jZzlNDH9qFYySclMxk=
+X-Received: by 2002:a17:903:244d:b0:16c:52f1:ceb with SMTP id
+ l13-20020a170903244d00b0016c52f10cebmr5466521pls.120.1657607098204; Mon, 11
+ Jul 2022 23:24:58 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: NuRpCgBnhoIpzcxi3zHIGQ--.8524S3
-X-Coremail-Antispam: 1Uf129KBjvJXoW3AFW7AF47tw47Aw1rZFW3GFg_yoW7Kr17pa
-	y7uFWrGFWfXw4YgasxAFyvkF1rGw1rGFWIkrnFkFyUGrZI9as0v3y8KryxAr1DXFWUJw45
-	JFWrXr9rWFsrXw7anT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07U_5rxUUUUU=
-X-Originating-IP: [120.55.36.104]
-X-CM-SenderInfo: 5zdqwzhlqb1xb16rjloofrz/1tbiYAo8pVpEIRncBgABsO
+References: <20220630110745.345705-1-patrick.rudolph@9elements.com>
+In-Reply-To: <20220630110745.345705-1-patrick.rudolph@9elements.com>
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Tue, 12 Jul 2022 08:24:46 +0200
+Message-ID: <CALNFmy26F4Pu_SDQ3c_M_f7ZE56utxPhwfCr-h9TU0WXwSiPcQ@mail.gmail.com>
+Subject: Re: [RESEND][PATCH u-boot v2019.04-aspeed-openbmc v5 0/2] Add support
+ for IBM Genesis3
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="0000000000004418f905e395ba59"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,341 +73,179 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: wangmin@phytium.com.cn
+Cc: christian.walter@9elements.com, takken@us.ibm.com, joel@jms.id.au, zweiss@equinix.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Min Wang <wangmin@phytium.com.cn>
+--0000000000004418f905e395ba59
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-The Phytium's BMC card is an ASPEED AST2500-based BMC for the
-hardware reference platform with Phytium's Processors Family.
+Hi, can you please review this patch series? There was no feedback within
+the last 6 weeks.
 
-Signed-off-by: Min Wang <wangmin@phytium.com.cn>
----
- arch/arm/boot/dts/Makefile                    |   3 +-
- .../boot/dts/aspeed-bmc-phytium-pomelo.dts    | 302 ++++++++++++++++++
- 2 files changed, 304 insertions(+), 1 deletion(-)
- create mode 100644 arch/arm/boot/dts/aspeed-bmc-phytium-pomelo.dts
+Regards,
+Patrick Rudolph
+B.Sc. Electrical Engineering
+System Firmware Developer
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 7e0934180724..e02cd800d45a 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -1497,4 +1497,5 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	aspeed-bmc-opp-zaius.dtb \
- 	aspeed-bmc-portwell-neptune.dtb \
- 	aspeed-bmc-quanta-q71l.dtb \
--	aspeed-bmc-supermicro-x11spi.dtb
-+	aspeed-bmc-supermicro-x11spi.dtb \
-+	aspeed-bmc-phytium-pomelo.dtb
-diff --git a/arch/arm/boot/dts/aspeed-bmc-phytium-pomelo.dts b/arch/arm/boot/dts/aspeed-bmc-phytium-pomelo.dts
-new file mode 100644
-index 000000000000..a75017f22140
---- /dev/null
-+++ b/arch/arm/boot/dts/aspeed-bmc-phytium-pomelo.dts
-@@ -0,0 +1,302 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+/dts-v1/;
-+
-+#include "aspeed-g5.dtsi"
-+#include <dt-bindings/gpio/aspeed-gpio.h>
-+
-+/ {
-+	model = "Phytium AST2500 BMC";
-+	compatible = "aspeed,ast2500";
-+
-+	aliases {
-+		serial4 = &uart5;
-+	};
-+
-+	chosen {
-+		stdout-path = &uart5;
-+		bootargs = "console=tty0 console=ttyS4,115200 earlyprintk";
-+	};
-+
-+	memory@80000000 {
-+		device_type = "memory";
-+		reg = <0x80000000 0x20000000>;
-+	};
-+
-+	reserved-memory {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
-+
-+		vga_memory: framebuffer@9c000000 {
-+			no-map;
-+			reg = <0x9c000000 0x04000000>; /* 64M */
-+		};
-+
-+		video_engine_memory: jpegbuffer {
-+			size = <0x02000000>;	/* 32M */
-+			alignment = <0x01000000>;
-+			compatible = "shared-dma-pool";
-+			reusable;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		id-button {
-+			label = "id-button";
-+			gpios = <&gpio  ASPEED_GPIO(S, 2)  GPIO_ACTIVE_LOW>;
-+		};
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+		identify {
-+			gpios = <&gpio ASPEED_GPIO(C, 6) GPIO_ACTIVE_LOW>;
-+		};
-+		fault {
-+			gpios = <&gpio ASPEED_GPIO(C, 7) GPIO_ACTIVE_LOW>;
-+		};
-+	};
-+
-+	iio-hwmon {
-+		compatible = "iio-hwmon";
-+		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
-+		      <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>,
-+		      <&adc 8>, <&adc 9>, <&adc 10>, <&adc 11>,
-+		      <&adc 12>, <&adc 13>, <&adc 14>, <&adc 15>;
-+	};
-+};
-+
-+&adc {
-+	status = "okay";
-+};
-+
-+&fmc {
-+	status = "okay";
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "bmc";
-+		spi-max-frequency = <50000000>;
-+#include "openbmc-flash-layout.dtsi"
-+	};
-+};
-+
-+&spi1 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_spi1_default>;
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "pnor";
-+		spi-max-frequency = <100000000>;
-+	};
-+};
-+
-+&spi2 {
-+	status = "okay";
-+};
-+
-+&uart5 {
-+	status = "okay";
-+};
-+
-+&uart1 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_txd1_default
-+			&pinctrl_rxd1_default
-+			&pinctrl_nrts1_default
-+			&pinctrl_ndtr1_default
-+			&pinctrl_ndsr1_default
-+			&pinctrl_ncts1_default
-+			&pinctrl_ndcd1_default
-+			&pinctrl_nri1_default>;
-+
-+};
-+
-+&lpc_snoop {
-+	status = "okay";
-+	snoop-ports = <0x80>;
-+};
-+
-+&kcs3 {
-+	status = "okay";
-+	aspeed,lpc-io-reg = <0xCA2>;
-+};
-+
-+&kcs2 {
-+	status = "okay";
-+	aspeed,lpc-io-reg = <0xCA8>;
-+};
-+
-+&mac0 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rmii1_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-+		 <&syscon ASPEED_CLK_MAC1RCLK>;
-+	clock-names = "MACCLK", "RCLK";
-+	use-ncsi;
-+};
-+
-+&mac1 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
-+};
-+
-+&i2c1 {
-+	status = "okay";
-+	psu1@58 {
-+		compatible = "pmbus";
-+		reg = <0x58>;
-+	};
-+	psu2@59 {
-+		compatible = "pmbus";
-+		reg = <0x59>;
-+	};
-+};
-+
-+&i2c2 {
-+	status = "okay";
-+};
-+
-+&i2c3 {
-+	status = "okay";
-+
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+	rtc@68 {
-+		compatible = "dallas,ds1339";
-+		reg = <0x68>;
-+	};
-+};
-+
-+&i2c5 {
-+	status = "okay";
-+};
-+
-+
-+&i2c6 {
-+	status = "okay";
-+};
-+
-+&i2c7 {
-+	status = "okay";
-+};
-+
-+&i2c8 {
-+	status = "okay";
-+	lm75@48 {
-+		compatible = "ti,tmp100";
-+		reg = <0x48>;
-+	};
-+	lm75@49 {
-+		compatible = "ti,tmp100";
-+		reg = <0x49>;
-+	};
-+	lm75@4a {
-+		compatible = "ti,tmp100";
-+		reg = <0x4a>;
-+	};
-+	lm75@4c {
-+		compatible = "ti,tmp100";
-+		reg = <0x4c>;
-+	};
-+	lm75@4d {
-+		compatible = "ti,tmp100";
-+		reg = <0x4d>;
-+	};
-+	lm75@4e {
-+		compatible = "ti,tmp100";
-+		reg = <0x4e>;
-+	};
-+
-+};
-+
-+&i2c0 {
-+	status = "okay";
-+};
-+
-+
-+/*
-+ * Enable port A as device (via the virtual hub) and port B as
-+ * host by default on the eval board. This can be easily changed
-+ * by replacing the override below with &ehci0 { ... } to enable
-+ * host on both ports.
-+ */
-+&vhub {
-+	status = "okay";
-+};
-+
-+&ehci1 {
-+	status = "okay";
-+};
-+
-+&uhci {
-+	status = "okay";
-+};
-+
-+&pwm_tacho {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_pwm0_default
-+		     &pinctrl_pwm1_default
-+		     &pinctrl_pwm2_default
-+		     &pinctrl_pwm3_default
-+		     &pinctrl_pwm4_default
-+		     &pinctrl_pwm5_default
-+		     &pinctrl_pwm6_default
-+		     &pinctrl_pwm7_default>;
-+
-+	fan@0 {
-+		reg = <0x00>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x0>;
-+	};
-+
-+	fan@1 {
-+		reg = <0x01>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x1>;
-+	};
-+
-+	fan@2 {
-+		reg = <0x02>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x2>;
-+	};
-+
-+	fan@3 {
-+		reg = <0x03>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x3>;
-+	};
-+
-+	fan@4 {
-+		reg = <0x04>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x4>;
-+	};
-+
-+	fan@5 {
-+		reg = <0x05>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x5>;
-+	};
-+
-+	fan@6 {
-+		reg = <0x06>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x6>;
-+	};
-+
-+	fan@7 {
-+		reg = <0x07>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x7>;
-+	};
-+};
-+
-+&video {
-+	status = "okay";
-+	memory-region = <&video_engine_memory>;
-+};
--- 
-2.27.0
+9elements GmbH, Kortumstra=C3=9Fe 19-21, 44787 Bochum, Germany
+Email: patrick.rudolph@9elements.com
+Phone:  *+49 234 68 94 188 <+492346894188>*
 
+Sitz der Gesellschaft: Bochum
+Handelsregister: Amtsgericht Bochum, HRB 17519
+Gesch=C3=A4ftsf=C3=BChrung: Sebastian Deutsch, Eray Basar
+
+Datenschutzhinweise nach Art. 13 DSGVO <https://9elements.com/privacy>
+
+
+On Thu, Jun 30, 2022 at 1:07 PM Patrick Rudolph <
+patrick.rudolph@9elements.com> wrote:
+
+> v5:
+>   - Rename Kconfig and don't depend on ASPEED_ALLOW_DANGEROUS_BACKDOORS
+>
+> v4:
+>   - Rebase on upstream
+>   - Drop defconfig and add it on openbmc instead
+>   - Rename Kconfig for debug uart
+>
+> v3:
+>   - Drop FIRMWARE_2ND_BOOT patch
+>   - Include reference board DTS instead of copying it
+>   - Rename DTS to ast2500-<boardname>
+>   - Describe defconfig changes in commit message
+>
+> v2:
+>   - Fix whitespace and compatible in DTS
+>   - Remove board stub
+>   - Improve commit message
+>   - Rewrite FIRMWARE_2ND_BOOT support
+>   - Update defconfig
+>
+> Patrick Rudolph (2):
+>   arm/dts: Add IBM Genesis3 board
+>   arm/mach-aspeed: Add support for CONFIG_ASPEED_ROUTE_UART5_TO_UART1
+>
+>  arch/arm/dts/Makefile                   |  1 +
+>  arch/arm/dts/ast2500-genesis3.dts       | 28 +++++++++++++++++++++++++
+>  arch/arm/mach-aspeed/Kconfig            |  6 ++++++
+>  arch/arm/mach-aspeed/ast2500/platform.S |  2 +-
+>  4 files changed, 36 insertions(+), 1 deletion(-)
+>  create mode 100644 arch/arm/dts/ast2500-genesis3.dts
+>
+> --
+> 2.35.3
+>
+>
+
+--0000000000004418f905e395ba59
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Hi, can you please review this patch series? There wa=
+s no feedback within the last 6 weeks.<br></div><div><br></div><div>Regards=
+,<br></div><div><div><div dir=3D"ltr" data-smartmail=3D"gmail_signature"><d=
+iv dir=3D"ltr"><div>Patrick Rudolph<br>B.Sc. Electrical Engineering<br>Syst=
+em Firmware Developer</div><div><br></div><div><div>
+    <div style=3D"color:rgb(34,34,34);font-family:arial,sans-serif;font-siz=
+e:12.8px">
+      <span style=3D"font-family:Helvetica;font-size:11px">
+        <font color=3D"#000000">9elements GmbH, Kortumstra=C3=9Fe 19-21, 44=
+787 Bochum, Germany</font>
+        </span>
+    </div>
+    <div>
+      <font style=3D"color:rgb(34,34,34);font-family:arial,sans-serif;font-=
+size:12.8px" face=3D"Helvetica" color=3D"#000000">
+        <span style=3D"font-size:11px">
+          Email: </span></font><font style=3D"color:rgb(34,34,34);font-fami=
+ly:arial,sans-serif;font-size:12.8px" face=3D"Helvetica" color=3D"#000000">=
+<span style=3D"font-size:11px"><a href=3D"mailto:patrick.rudolph@9elements.=
+com" target=3D"_blank">patrick.rudolph@9elements.com</a>
+        </span>
+      </font>
+      <div>
+        <span style=3D"color:rgb(34,34,34);font-family:Helvetica;font-size:=
+11px">
+          <font color=3D"#000000">Phone:=C2=A0</font>
+        </span>
+        <font face=3D"Helvetica" color=3D"#1155cc">
+          <span style=3D"font-size:11px">
+            <u><a href=3D"tel:+492346894188" target=3D"_blank">+49 234 68 9=
+4 188</a></u>
+          </span>
+        </font>
+      </div>
+     =20
+    </div>
+  </div>
+
+<br>
+<div style=3D"color:rgb(34,34,34);font-family:Helvetica;background-color:rg=
+b(255,255,255);line-height:11px">
+  <div>
+    <font size=3D"1" color=3D"#B4B7B8">Sitz der Gesellschaft: Bochum</font>
+  </div>
+  <div>
+    <font size=3D"1" color=3D"#B4B7B8">Handelsregister: Amtsgericht Bochum,=
+ HRB 17519</font>
+  </div>
+  <div>
+    <font size=3D"1" color=3D"#B4B7B8">Gesch=C3=A4ftsf=C3=BChrung: Sebastia=
+n Deutsch, Eray Basar</font>
+  </div>
+  <div>
+    <br>
+    <a href=3D"https://9elements.com/privacy" target=3D"_blank"><font size=
+=3D"1" color=3D"#B4B7B8">Datenschutzhinweise nach Art. 13 DSGVO</font></a>
+  </div>
+</div></div></div></div></div><br></div></div><br><div class=3D"gmail_quote=
+"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jun 30, 2022 at 1:07 PM Pat=
+rick Rudolph &lt;<a href=3D"mailto:patrick.rudolph@9elements.com" target=3D=
+"_blank">patrick.rudolph@9elements.com</a>&gt; wrote:<br></div><blockquote =
+class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
+id rgb(204,204,204);padding-left:1ex">v5:<br>
+=C2=A0 - Rename Kconfig and don&#39;t depend on ASPEED_ALLOW_DANGEROUS_BACK=
+DOORS<br>
+<br>
+v4:<br>
+=C2=A0 - Rebase on upstream<br>
+=C2=A0 - Drop defconfig and add it on openbmc instead<br>
+=C2=A0 - Rename Kconfig for debug uart<br>
+<br>
+v3:<br>
+=C2=A0 - Drop FIRMWARE_2ND_BOOT patch<br>
+=C2=A0 - Include reference board DTS instead of copying it<br>
+=C2=A0 - Rename DTS to ast2500-&lt;boardname&gt;<br>
+=C2=A0 - Describe defconfig changes in commit message<br>
+<br>
+v2:<br>
+=C2=A0 - Fix whitespace and compatible in DTS<br>
+=C2=A0 - Remove board stub<br>
+=C2=A0 - Improve commit message<br>
+=C2=A0 - Rewrite FIRMWARE_2ND_BOOT support<br>
+=C2=A0 - Update defconfig<br>
+<br>
+Patrick Rudolph (2):<br>
+=C2=A0 arm/dts: Add IBM Genesis3 board<br>
+=C2=A0 arm/mach-aspeed: Add support for CONFIG_ASPEED_ROUTE_UART5_TO_UART1<=
+br>
+<br>
+=C2=A0arch/arm/dts/Makefile=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0|=C2=A0 1 +<br>
+=C2=A0arch/arm/dts/ast2500-genesis3.dts=C2=A0 =C2=A0 =C2=A0 =C2=A0| 28 ++++=
++++++++++++++++++++++<br>
+=C2=A0arch/arm/mach-aspeed/Kconfig=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ |=C2=A0 6 ++++++<br>
+=C2=A0arch/arm/mach-aspeed/ast2500/platform.S |=C2=A0 2 +-<br>
+=C2=A04 files changed, 36 insertions(+), 1 deletion(-)<br>
+=C2=A0create mode 100644 arch/arm/dts/ast2500-genesis3.dts<br>
+<br>
+-- <br>
+2.35.3<br>
+<br>
+</blockquote></div>
+
+--0000000000004418f905e395ba59--
