@@ -1,51 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B20B957375E
-	for <lists+openbmc@lfdr.de>; Wed, 13 Jul 2022 15:28:00 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BFD8E57378B
+	for <lists+openbmc@lfdr.de>; Wed, 13 Jul 2022 15:36:27 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LjdjB4hWPz3c3f
-	for <lists+openbmc@lfdr.de>; Wed, 13 Jul 2022 23:27:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Ljdtx4WQsz3c3S
+	for <lists+openbmc@lfdr.de>; Wed, 13 Jul 2022 23:36:25 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=h9bIngDN;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=softfail (domain owner discourages use of this host) smtp.mailfrom=nuvoton.com (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
-Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::136; helo=mail-lf1-x136.google.com; envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=h9bIngDN;
+	dkim-atps=neutral
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LjdhM6mBlz3c23
-	for <openbmc@lists.ozlabs.org>; Wed, 13 Jul 2022 23:27:13 +1000 (AEST)
-Received: from NTILML01.nuvoton.com (ntil-fw [212.199.177.25])
-	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 26DDR6c5029395
-	for <openbmc@lists.ozlabs.org>; Wed, 13 Jul 2022 16:27:07 +0300
-Received: from NTHCCAS03.nuvoton.com (10.1.20.28) by NTILML01.nuvoton.com
- (10.190.1.46) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Wed, 13 Jul
- 2022 16:27:06 +0300
-Received: from NTHCCAS04.nuvoton.com (10.1.8.29) by NTHCCAS03.nuvoton.com
- (10.1.20.28) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.1847.3; Wed, 13 Jul
- 2022 21:27:04 +0800
-Received: from taln60.nuvoton.co.il (10.191.1.180) by NTHCCAS04.nuvoton.com
- (10.1.12.25) with Microsoft SMTP Server id 15.1.2176.2 via Frontend
- Transport; Wed, 13 Jul 2022 21:27:04 +0800
-Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
-	id 631E163A23; Wed, 13 Jul 2022 16:27:03 +0300 (IDT)
-From: Tomer Maimon <tmaimon77@gmail.com>
-To: <avifishman70@gmail.com>, <tali.perry1@gmail.com>, <joel@jms.id.au>,
-        <venture@google.com>, <yuenn@google.com>, <benjaminfair@google.com>,
-        <jic23@kernel.org>, <lars@metafoo.de>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <j.neuschaefer@gmx.net>,
-        <zhengbin13@huawei.com>
-Subject: [PATCH v3 2/2] iio: adc: npcm: Add NPCM8XX support
-Date: Wed, 13 Jul 2022 16:26:40 +0300
-Message-ID: <20220713132640.215916-3-tmaimon77@gmail.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20220713132640.215916-1-tmaimon77@gmail.com>
-References: <20220713132640.215916-1-tmaimon77@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LjdtW4GbQz3000
+	for <openbmc@lists.ozlabs.org>; Wed, 13 Jul 2022 23:36:02 +1000 (AEST)
+Received: by mail-lf1-x136.google.com with SMTP id r9so11099651lfp.10
+        for <openbmc@lists.ozlabs.org>; Wed, 13 Jul 2022 06:36:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=OYKoXtQBi+UHHvlNJzsiB51zZLZoDshebAIvkG4Ze80=;
+        b=h9bIngDNE7y+/fKX/oHw7+azOdfnTz2i7MgBHs5a3O0NBQRb9Jhkr8NN2D43RoxyaQ
+         JfUUqNxRf2r2xyx2nr4o8UNpakeH0ch8O8dWrBQI6SYIqEOWBlqDbVQ3TBs4GPXW6srI
+         p5ZXpOypyN4OimKhc5jlB186gygVDd4N0/Qii6mfN6TSSuKSh/11YEtz9bf/yameG/xy
+         iC6f3xvZ8U3eAj68RJBuEiLDxNrnb0yGrSf/Qbvq9YIypvHGX/XJ+oApN9+olMdZ0pQA
+         sSJA4NHPhXzcg87Q+SzqCMW0+e0mS4OdDvc7z5y6nJuyk6I2OyYTaAh7tLbCfJJadw7b
+         srWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=OYKoXtQBi+UHHvlNJzsiB51zZLZoDshebAIvkG4Ze80=;
+        b=yPez5psEc2OpHvq/GHF0WhzWsTRif9YNCNyef1/ADuvDiSjSOB0veQktoQNsCNemfp
+         OdZAXMW3mI2M4jm4CfOWEG3BZuw8Uxe34COCmAdZ1NUZXGLO8yK3rylFXFsjYyvGTM9/
+         4mMiD4pdMVIJWZlZncBQoUdXYg6dq4o8U+ufwTeH28kLh3PRUoZ3iOj9bYIXLgjOjRMt
+         gnbUn+LnxDFp3Mz3Ysn4fZ45gegaHUcaJCTO+7zCSPar0Uwt4kgIOWz1V3IYeTA4WN9B
+         2kC5b3RxQNOU9xE8MhfbWi9UNLasjLuPRMW4RlU8gLpdjJRMt5zIA2XXutVETUnZGjy4
+         8Udg==
+X-Gm-Message-State: AJIora8hcS5NqwNom3P6o9YCzCXKxZyb+e3TUzIzrJO9l9MCtcJ2WC0Y
+	EZ/7lxbhP+JGN4R2Hfgg/brlQUpxZlvbnUd245k=
+X-Google-Smtp-Source: AGRyM1vZwX/9j0zxDeNWK/kUwAPgULFU7qG8J/00nPnrZg/qF45PRYUI3V3dq8xEhcBmSYrsRfjR+Ysv5M0gTCzqdeo=
+X-Received: by 2002:a05:6512:2382:b0:48a:24d:51cc with SMTP id
+ c2-20020a056512238200b0048a024d51ccmr1936006lfv.108.1657719355396; Wed, 13
+ Jul 2022 06:35:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+References: <20220710102110.39748-1-tmaimon77@gmail.com> <20220710102110.39748-3-tmaimon77@gmail.com>
+ <95d12b72-be9d-5503-c4ea-801303bb7776@linaro.org>
+In-Reply-To: <95d12b72-be9d-5503-c4ea-801303bb7776@linaro.org>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Wed, 13 Jul 2022 16:35:43 +0300
+Message-ID: <CAP6Zq1geFJsKrdQEN5Vqjw6e8bsiArDe1tzJ-jkQm-2XT-0KyQ@mail.gmail.com>
+Subject: Re: [PATCH v1 2/2] pinctrl: nuvoton: add NPCM8XX pinctrl and GPIO driver
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,115 +73,111 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-iio@vger.kernel.org, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>
+Cc: devicetree <devicetree@vger.kernel.org>, Benjamin Fair <benjaminfair@google.com>, "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, Linus Walleij <linus.walleij@linaro.org>, =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, Tali Perry <tali.perry1@gmail.com>, zhengbin13@huawei.com, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Adding ADC NPCM8XX support to NPCM ADC driver.
-ADC NPCM8XX uses a different resolution and voltage reference.
+Hi Krzysztof,
 
-As part of adding NPCM8XX support:
-- Add NPCM8XX specific compatible string.
-- Add data to handle architecture-specific ADC parameters.
+Thanks for your comments.
 
-Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
----
- drivers/iio/adc/npcm_adc.c | 35 ++++++++++++++++++++++++++++-------
- 1 file changed, 28 insertions(+), 7 deletions(-)
+On Tue, 12 Jul 2022 at 12:50, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 10/07/2022 12:21, Tomer Maimon wrote:
+> > Add pinctrl and GPIO controller driver support to Arbel BMC NPCM8XX SoC.
+> >
+> > Arbel BMC NPCM8XX pinctrl driver based on Poleg NPCM7XX, except the
+> > pin mux mapping difference the NPCM8XX GPIO supports adjust debounce
+> > period time.
+> >
+> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+>
+> (...)
+>
+> > +
+> > +static int npcm8xx_pinctrl_probe(struct platform_device *pdev)
+> > +{
+> > +     struct npcm8xx_pinctrl *pctrl;
+> > +     int ret;
+> > +
+> > +     pctrl = devm_kzalloc(&pdev->dev, sizeof(*pctrl), GFP_KERNEL);
+> > +     if (!pctrl)
+> > +             return -ENOMEM;
+> > +
+> > +     pctrl->dev = &pdev->dev;
+> > +     dev_set_drvdata(&pdev->dev, pctrl);
+> > +
+> > +     pctrl->gcr_regmap =
+> > +             syscon_regmap_lookup_by_compatible("nuvoton,npcm845-gcr");
+>
+> No. Use property. By this patchset, I would expect that you learnt from
+> previous mistakes around this. Why repeating the same trouble second time?
+You suggest to use phandle property like nuvoton,sysgcr even that the
+NPCM8XX pin controller driver is used only NPCM8XX SoC, so the only
+GCR node in the NPCM8XX SoC is nuvoton,npcm845-gcr?
+>
+> > +     if (IS_ERR(pctrl->gcr_regmap)) {
+> > +             dev_err(pctrl->dev, "didn't find nuvoton,npcm845-gcr\n");
+> > +             return PTR_ERR(pctrl->gcr_regmap);
+> > +     }
+> > +
+> > +     ret = npcm8xx_gpio_of(pctrl);
+> > +     if (ret < 0) {
+> > +             dev_err(pctrl->dev, "Failed to gpio dt-binding %u\n", ret);
+> > +             return ret;
+> > +     }
+> > +
+> > +     pctrl->pctldev = devm_pinctrl_register(&pdev->dev,
+> > +                                            &npcm8xx_pinctrl_desc, pctrl);
+> > +     if (IS_ERR(pctrl->pctldev)) {
+> > +             dev_err(&pdev->dev, "Failed to register pinctrl device\n");
+> > +             return PTR_ERR(pctrl->pctldev);
+> > +     }
+> > +
+> > +     ret = npcm8xx_gpio_register(pctrl);
+> > +     if (ret < 0) {
+> > +             dev_err(pctrl->dev, "Failed to register gpio %u\n", ret);
+> > +             return ret;
+> > +     }
+> > +
+> > +     pr_info("npcm8xx Pinctrl driver probed\n");
+>
+>
+> No pr_ in devices. No success debug messages.
+>
+> > +     return 0;
+> > +}
+> > +
+> > +static const struct of_device_id npcm8xx_pinctrl_match[] = {
+> > +     { .compatible = "nuvoton,npcm845-pinctrl" },
+> > +     { },
+> > +};
+> > +MODULE_DEVICE_TABLE(of, npcm8xx_pinctrl_match);
+> > +
+> > +static struct platform_driver npcm8xx_pinctrl_driver = {
+> > +     .probe = npcm8xx_pinctrl_probe,
+> > +     .driver = {
+> > +             .name = "npcm8xx-pinctrl",
+> > +             .of_match_table = npcm8xx_pinctrl_match,
+> > +             .suppress_bind_attrs = true,
+> > +     },
+> > +};
+> > +
+> > +static int __init npcm8xx_pinctrl_register(void)
+> > +{
+> > +     return platform_driver_register(&npcm8xx_pinctrl_driver);
+> > +}
+> > +arch_initcall(npcm8xx_pinctrl_register);
+> > +
+> > +MODULE_LICENSE("GPL v2");
+> > +MODULE_AUTHOR("tomer.maimon@nuvoton.com");
+> > +MODULE_DESCRIPTION("Nuvoton NPCM8XX Pinctrl and GPIO driver");
+>
+>
+> Best regards,
+> Krzysztof
 
-diff --git a/drivers/iio/adc/npcm_adc.c b/drivers/iio/adc/npcm_adc.c
-index f7bc0bb7f112..4c7ebcd57b88 100644
---- a/drivers/iio/adc/npcm_adc.c
-+++ b/drivers/iio/adc/npcm_adc.c
-@@ -16,6 +16,12 @@
- #include <linux/uaccess.h>
- #include <linux/reset.h>
- 
-+struct npcm_adc_info {
-+	u32 data_mask;
-+	u32 internal_vref;
-+	u32 res_bits;
-+};
-+
- struct npcm_adc {
- 	bool int_status;
- 	u32 adc_sample_hz;
-@@ -34,6 +40,7 @@ struct npcm_adc {
- 	 * has finished.
- 	 */
- 	struct mutex lock;
-+	const struct npcm_adc_info *data;
- };
- 
- /* ADC registers */
-@@ -52,13 +59,21 @@ struct npcm_adc {
- #define NPCM_ADCCON_CH(x)		((x) << 24)
- #define NPCM_ADCCON_DIV_SHIFT		1
- #define NPCM_ADCCON_DIV_MASK		GENMASK(8, 1)
--#define NPCM_ADC_DATA_MASK(x)		((x) & GENMASK(9, 0))
- 
- #define NPCM_ADC_ENABLE		(NPCM_ADCCON_ADC_EN | NPCM_ADCCON_ADC_INT_EN)
- 
- /* ADC General Definition */
--#define NPCM_RESOLUTION_BITS		10
--#define NPCM_INT_VREF_MV		2000
-+static const struct npcm_adc_info npxm7xx_adc_info = {
-+	.data_mask = GENMASK(9, 0),
-+	.internal_vref = 2048,
-+	.res_bits = 10,
-+};
-+
-+static const struct npcm_adc_info npxm8xx_adc_info = {
-+	.data_mask = GENMASK(11, 0),
-+	.internal_vref = 1229,
-+	.res_bits = 12,
-+};
- 
- #define NPCM_ADC_CHAN(ch) {					\
- 	.type = IIO_VOLTAGE,					\
-@@ -129,7 +144,8 @@ static int npcm_adc_read(struct npcm_adc *info, int *val, u8 channel)
- 	if (ret < 0)
- 		return ret;
- 
--	*val = NPCM_ADC_DATA_MASK(ioread32(info->regs + NPCM_ADCDATA));
-+	*val = ioread32(info->regs + NPCM_ADCDATA);
-+	*val &= info->data->data_mask;
- 
- 	return 0;
- }
-@@ -157,9 +173,9 @@ static int npcm_adc_read_raw(struct iio_dev *indio_dev,
- 			vref_uv = regulator_get_voltage(info->vref);
- 			*val = vref_uv / 1000;
- 		} else {
--			*val = NPCM_INT_VREF_MV;
-+			*val = info->data->internal_vref;
- 		}
--		*val2 = NPCM_RESOLUTION_BITS;
-+		*val2 = info->data->res_bits;
- 		return IIO_VAL_FRACTIONAL_LOG2;
- 	case IIO_CHAN_INFO_SAMP_FREQ:
- 		*val = info->adc_sample_hz;
-@@ -176,7 +192,8 @@ static const struct iio_info npcm_adc_iio_info = {
- };
- 
- static const struct of_device_id npcm_adc_match[] = {
--	{ .compatible = "nuvoton,npcm750-adc", },
-+	{ .compatible = "nuvoton,npcm750-adc", .data = &npxm7xx_adc_info},
-+	{ .compatible = "nuvoton,npcm845-adc", .data = &npxm8xx_adc_info},
- 	{ /* sentinel */ }
- };
- MODULE_DEVICE_TABLE(of, npcm_adc_match);
-@@ -196,6 +213,10 @@ static int npcm_adc_probe(struct platform_device *pdev)
- 		return -ENOMEM;
- 	info = iio_priv(indio_dev);
- 
-+	info->data = device_get_match_data(dev);
-+	if (!info->data)
-+		return -EINVAL;
-+
- 	mutex_init(&info->lock);
- 
- 	info->dev = &pdev->dev;
--- 
-2.33.0
+Best regards,
 
+Tomer
