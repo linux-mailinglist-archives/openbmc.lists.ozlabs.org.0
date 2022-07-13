@@ -2,52 +2,48 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AEBB8577E3D
-	for <lists+openbmc@lfdr.de>; Mon, 18 Jul 2022 11:03:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BC37A577E47
+	for <lists+openbmc@lfdr.de>; Mon, 18 Jul 2022 11:04:29 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LmbbY4N0Hz3c3k
-	for <lists+openbmc@lfdr.de>; Mon, 18 Jul 2022 19:03:21 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=iQz/MPES;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Lmbcq537tz3c8Z
+	for <lists+openbmc@lfdr.de>; Mon, 18 Jul 2022 19:04:27 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=126.com (client-ip=123.126.96.3; helo=mail-m963.mail.126.com; envelope-from=wangmin_phy@126.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=iQz/MPES;
-	dkim-atps=neutral
-X-Greylist: delayed 1886 seconds by postgrey-1.36 at boromir; Mon, 11 Jul 2022 22:55:21 AEST
-Received: from mail-m963.mail.126.com (mail-m963.mail.126.com [123.126.96.3])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LhP4T63ysz3bw7;
-	Mon, 11 Jul 2022 22:55:09 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=YED4X
-	OFMfSQUREuGAuFmq6pq8tLgCjzUozBrrXGL4+A=; b=iQz/MPES+tTtCKWON0xWf
-	qnBW78o8qvx/zZ3Hk02Z65fp2gTX+A+9quy9y/cDVIkMK9mRu4RfqL+qZHSCP1vu
-	58uo9lKxaNV+EsSde970818H3VjohrHVta7nudVNIlUuaXjJtE1CIO611WMN+o58
-	UCMZBEaU7R7wrA4xNkP8X0=
-Received: from localhost.localdomain (unknown [120.55.36.104])
-	by smtp8 (Coremail) with SMTP id NORpCgCHj3NFFsxifBzKHg--.10313S3;
-	Mon, 11 Jul 2022 20:23:34 +0800 (CST)
-From: wangmin_phy@126.com
-To: openbmc@lists.ozlabs.org,
-	linux-aspeed@lists.ozlabs.org,
-	joel@jms.id.au
-Subject: [PATCH 1/1] ARM: dts: aspeed: Add device tree for Phytium's BMC
-Date: Mon, 11 Jul 2022 20:23:33 +0800
-Message-Id: <20220711122333.385730-2-wangmin_phy@126.com>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20220711122333.385730-1-wangmin_phy@126.com>
-References: <20220711122333.385730-1-wangmin_phy@126.com>
+Authentication-Results: lists.ozlabs.org; spf=softfail (domain owner discourages use of this host) smtp.mailfrom=nuvoton.com (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
+Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LjTD41QZPz3bqT
+	for <openbmc@lists.ozlabs.org>; Wed, 13 Jul 2022 17:05:38 +1000 (AEST)
+Received: from NTILML01.nuvoton.com (ntil-fw [212.199.177.25])
+	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 26D75PNC020380
+	for <openbmc@lists.ozlabs.org>; Wed, 13 Jul 2022 10:05:26 +0300
+Received: from NTHCML01B.nuvoton.com (10.1.8.178) by NTILML01.nuvoton.com
+ (10.190.1.46) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Wed, 13 Jul
+ 2022 10:05:24 +0300
+Received: from NTHCCAS04.nuvoton.com (10.1.8.29) by NTHCML01B.nuvoton.com
+ (10.1.8.178) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2176.2; Wed, 13 Jul
+ 2022 15:05:21 +0800
+Received: from taln60.nuvoton.co.il (10.191.1.180) by NTHCCAS04.nuvoton.com
+ (10.1.12.25) with Microsoft SMTP Server id 15.1.2176.2 via Frontend
+ Transport; Wed, 13 Jul 2022 15:05:21 +0800
+Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
+	id A65BE63A23; Wed, 13 Jul 2022 10:05:19 +0300 (IDT)
+From: Tomer Maimon <tmaimon77@gmail.com>
+To: <avifishman70@gmail.com>, <tali.perry1@gmail.com>, <joel@jms.id.au>,
+        <venture@google.com>, <yuenn@google.com>, <benjaminfair@google.com>,
+        <jic23@kernel.org>, <lars@metafoo.de>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <j.neuschaefer@gmx.net>,
+        <zhengbin13@huawei.com>
+Subject: [PATCH v2 0/2] iio: adc: npcm: add Arbel NPCM8XX support
+Date: Wed, 13 Jul 2022 10:05:15 +0300
+Message-ID: <20220713070517.172852-1-tmaimon77@gmail.com>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: NORpCgCHj3NFFsxifBzKHg--.10313S3
-X-Coremail-Antispam: 1Uf129KBjvJXoW3AFW7AF47tw47Aw1rZFW3GFg_yoW7Kr17pa
-	y7uFWrGFWfXw4YgasxAFyvkF1rGw1rGFWIkrnFkFyUGrZI9as0v3y8KryxAr1DXFWUJw45
-	JFWrXr9rWFsrXw7anT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jVdgAUUUUU=
-X-Originating-IP: [120.55.36.104]
-X-CM-SenderInfo: 5zdqwzhlqb1xb16rjloofrz/1tbiLQY7pVpD+0YdKwAAsn
+Content-Type: text/plain
 X-Mailman-Approved-At: Mon, 18 Jul 2022 18:59:27 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -60,341 +56,34 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: liuyongpeng@phytium.com.cn, shuyiqi@phytium.com.cn, wangmin@phytium.com.cn
+Cc: linux-iio@vger.kernel.org, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Min Wang <wangmin@phytium.com.cn>
+This patch set adds Arbel NPCM8XX Analog-to-Digital Converter (ADC) support 
+to ADC NPCM driver.
 
-The Phytium's BMC card is an ASPEED AST2500-based BMC for the
-hardware reference platform with Phytium's Processors Family.
+The NPCM8XX ADC is a 12-bit converter for eight channel inputs.
 
-Signed-off-by: Min Wang <wangmin@phytium.com.cn>
----
- arch/arm/boot/dts/Makefile                    |   3 +-
- .../boot/dts/aspeed-bmc-phytium-pomelo.dts    | 302 ++++++++++++++++++
- 2 files changed, 304 insertions(+), 1 deletion(-)
- create mode 100644 arch/arm/boot/dts/aspeed-bmc-phytium-pomelo.dts
+The NPCM ADC driver tested on NPCM845 evaluation board.
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 7e0934180724..e02cd800d45a 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -1497,4 +1497,5 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	aspeed-bmc-opp-zaius.dtb \
- 	aspeed-bmc-portwell-neptune.dtb \
- 	aspeed-bmc-quanta-q71l.dtb \
--	aspeed-bmc-supermicro-x11spi.dtb
-+	aspeed-bmc-supermicro-x11spi.dtb \
-+	aspeed-bmc-phytium-pomelo.dtb
-diff --git a/arch/arm/boot/dts/aspeed-bmc-phytium-pomelo.dts b/arch/arm/boot/dts/aspeed-bmc-phytium-pomelo.dts
-new file mode 100644
-index 000000000000..a75017f22140
---- /dev/null
-+++ b/arch/arm/boot/dts/aspeed-bmc-phytium-pomelo.dts
-@@ -0,0 +1,302 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+/dts-v1/;
-+
-+#include "aspeed-g5.dtsi"
-+#include <dt-bindings/gpio/aspeed-gpio.h>
-+
-+/ {
-+	model = "Phytium AST2500 BMC";
-+	compatible = "aspeed,ast2500";
-+
-+	aliases {
-+		serial4 = &uart5;
-+	};
-+
-+	chosen {
-+		stdout-path = &uart5;
-+		bootargs = "console=tty0 console=ttyS4,115200 earlyprintk";
-+	};
-+
-+	memory@80000000 {
-+		device_type = "memory";
-+		reg = <0x80000000 0x20000000>;
-+	};
-+
-+	reserved-memory {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
-+
-+		vga_memory: framebuffer@9c000000 {
-+			no-map;
-+			reg = <0x9c000000 0x04000000>; /* 64M */
-+		};
-+
-+		video_engine_memory: jpegbuffer {
-+			size = <0x02000000>;	/* 32M */
-+			alignment = <0x01000000>;
-+			compatible = "shared-dma-pool";
-+			reusable;
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		id-button {
-+			label = "id-button";
-+			gpios = <&gpio  ASPEED_GPIO(S, 2)  GPIO_ACTIVE_LOW>;
-+		};
-+	};
-+
-+	leds {
-+		compatible = "gpio-leds";
-+		identify {
-+			gpios = <&gpio ASPEED_GPIO(C, 6) GPIO_ACTIVE_LOW>;
-+		};
-+		fault {
-+			gpios = <&gpio ASPEED_GPIO(C, 7) GPIO_ACTIVE_LOW>;
-+		};
-+	};
-+
-+	iio-hwmon {
-+		compatible = "iio-hwmon";
-+		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
-+		      <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>,
-+		      <&adc 8>, <&adc 9>, <&adc 10>, <&adc 11>,
-+		      <&adc 12>, <&adc 13>, <&adc 14>, <&adc 15>;
-+	};
-+};
-+
-+&adc {
-+	status = "okay";
-+};
-+
-+&fmc {
-+	status = "okay";
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "bmc";
-+		spi-max-frequency = <50000000>;
-+#include "openbmc-flash-layout.dtsi"
-+	};
-+};
-+
-+&spi1 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_spi1_default>;
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "pnor";
-+		spi-max-frequency = <100000000>;
-+	};
-+};
-+
-+&spi2 {
-+	status = "okay";
-+};
-+
-+&uart5 {
-+	status = "okay";
-+};
-+
-+&uart1 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_txd1_default
-+			&pinctrl_rxd1_default
-+			&pinctrl_nrts1_default
-+			&pinctrl_ndtr1_default
-+			&pinctrl_ndsr1_default
-+			&pinctrl_ncts1_default
-+			&pinctrl_ndcd1_default
-+			&pinctrl_nri1_default>;
-+
-+};
-+
-+&lpc_snoop {
-+	status = "okay";
-+	snoop-ports = <0x80>;
-+};
-+
-+&kcs3 {
-+	status = "okay";
-+	aspeed,lpc-io-reg = <0xCA2>;
-+};
-+
-+&kcs2 {
-+	status = "okay";
-+	aspeed,lpc-io-reg = <0xCA8>;
-+};
-+
-+&mac0 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rmii1_default>;
-+	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-+		 <&syscon ASPEED_CLK_MAC1RCLK>;
-+	clock-names = "MACCLK", "RCLK";
-+	use-ncsi;
-+};
-+
-+&mac1 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
-+};
-+
-+&i2c1 {
-+	status = "okay";
-+	psu1@58 {
-+		compatible = "pmbus";
-+		reg = <0x58>;
-+	};
-+	psu2@59 {
-+		compatible = "pmbus";
-+		reg = <0x59>;
-+	};
-+};
-+
-+&i2c2 {
-+	status = "okay";
-+};
-+
-+&i2c3 {
-+	status = "okay";
-+
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+	rtc@68 {
-+		compatible = "dallas,ds1339";
-+		reg = <0x68>;
-+	};
-+};
-+
-+&i2c5 {
-+	status = "okay";
-+};
-+
-+
-+&i2c6 {
-+	status = "okay";
-+};
-+
-+&i2c7 {
-+	status = "okay";
-+};
-+
-+&i2c8 {
-+	status = "okay";
-+	lm75@48 {
-+		compatible = "ti,tmp100";
-+		reg = <0x48>;
-+	};
-+	lm75@49 {
-+		compatible = "ti,tmp100";
-+		reg = <0x49>;
-+	};
-+	lm75@4a {
-+		compatible = "ti,tmp100";
-+		reg = <0x4a>;
-+	};
-+	lm75@4c {
-+		compatible = "ti,tmp100";
-+		reg = <0x4c>;
-+	};
-+	lm75@4d {
-+		compatible = "ti,tmp100";
-+		reg = <0x4d>;
-+	};
-+	lm75@4e {
-+		compatible = "ti,tmp100";
-+		reg = <0x4e>;
-+	};
-+
-+};
-+
-+&i2c0 {
-+	status = "okay";
-+};
-+
-+
-+/*
-+ * Enable port A as device (via the virtual hub) and port B as
-+ * host by default on the eval board. This can be easily changed
-+ * by replacing the override below with &ehci0 { ... } to enable
-+ * host on both ports.
-+ */
-+&vhub {
-+	status = "okay";
-+};
-+
-+&ehci1 {
-+	status = "okay";
-+};
-+
-+&uhci {
-+	status = "okay";
-+};
-+
-+&pwm_tacho {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_pwm0_default
-+		     &pinctrl_pwm1_default
-+		     &pinctrl_pwm2_default
-+		     &pinctrl_pwm3_default
-+		     &pinctrl_pwm4_default
-+		     &pinctrl_pwm5_default
-+		     &pinctrl_pwm6_default
-+		     &pinctrl_pwm7_default>;
-+
-+	fan@0 {
-+		reg = <0x00>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x0>;
-+	};
-+
-+	fan@1 {
-+		reg = <0x01>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x1>;
-+	};
-+
-+	fan@2 {
-+		reg = <0x02>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x2>;
-+	};
-+
-+	fan@3 {
-+		reg = <0x03>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x3>;
-+	};
-+
-+	fan@4 {
-+		reg = <0x04>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x4>;
-+	};
-+
-+	fan@5 {
-+		reg = <0x05>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x5>;
-+	};
-+
-+	fan@6 {
-+		reg = <0x06>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x6>;
-+	};
-+
-+	fan@7 {
-+		reg = <0x07>;
-+		aspeed,fan-tach-ch = /bits/ 8 <0x7>;
-+	};
-+};
-+
-+&video {
-+	status = "okay";
-+	memory-region = <&video_engine_memory>;
-+};
+Addressed comments from:
+ - Rob Herring : https://www.spinics.net/lists/kernel/msg4433755.html
+ - Krzysztof Kozlowski: https://www.spinics.net/lists/kernel/msg4434546.html
+ - Andy Shevchenko : https://www.spinics.net/lists/devicetree/msg516844.html
+
+Changes since version 1:
+ - Modify dt-binding compatible property.
+ - Use device_get_match_data function instead of_match_node function.
+
+Tomer Maimon (2):
+  dt-bindings: iio: adc: npcm: Add npcm845 compatible string
+  iio: adc: npcm: Add NPCM8XX support
+
+ .../bindings/iio/adc/nuvoton,npcm750-adc.yaml |  7 ++--
+ drivers/iio/adc/npcm_adc.c                    | 35 +++++++++++++++----
+ 2 files changed, 33 insertions(+), 9 deletions(-)
+
 -- 
-2.27.0
+2.33.0
 
