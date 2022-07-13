@@ -2,60 +2,60 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80EAA573550
-	for <lists+openbmc@lfdr.de>; Wed, 13 Jul 2022 13:25:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 041ED5735AF
+	for <lists+openbmc@lfdr.de>; Wed, 13 Jul 2022 13:39:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LjZzy6L2Wz3c4L
-	for <lists+openbmc@lfdr.de>; Wed, 13 Jul 2022 21:25:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LjbHz72JHz3c3r
+	for <lists+openbmc@lfdr.de>; Wed, 13 Jul 2022 21:39:27 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=HwXzXKKj;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=HjpVfW5+;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=JDM/lacx;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=bToL/Pvk;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.26; helo=out2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=HwXzXKKj;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=HjpVfW5+;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=JDM/lacx;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=bToL/Pvk;
 	dkim-atps=neutral
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LjZzR55LJz3c2W
-	for <openbmc@lists.ozlabs.org>; Wed, 13 Jul 2022 21:25:05 +1000 (AEST)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id ACF105C01B9;
-	Wed, 13 Jul 2022 07:24:58 -0400 (EDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LjbHZ2lG7z3by8
+	for <openbmc@lists.ozlabs.org>; Wed, 13 Jul 2022 21:39:06 +1000 (AEST)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id 55EEA5C01B6;
+	Wed, 13 Jul 2022 07:39:04 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Wed, 13 Jul 2022 07:24:58 -0400
+  by compute5.internal (MEProxy); Wed, 13 Jul 2022 07:39:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
 	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm1; t=1657711498; x=1657797898; bh=nJEOdYr6ZZ
-	yi+ubPuyg89qmIqgFxeTcywr1xsDT9Rkw=; b=HwXzXKKjaZBq9cQ+ek8VBdG5lI
-	QYQeE9ZuvMaNrIn3SvrNm6mVeQj2yHDGLGNxKTmfxMBfH4gDZCjiS9VZk0f5zy/6
-	3D7HFhV5yKOdp/VkfhdHvFvXDRNtqJkZlHAAtY0NPPuhPSlKL9uwcoyyggAnEw3y
-	j8zQl8vwqyzK+LaGuWKW8+mNqrp5DSxOJqSnNyAg4h1Obfv5A5VgLf0dUKHj9fZJ
-	F1sQl6Vyu6peWLAvQF6PmMghhpkoTMQE7R1ZjPGi01ZFfl0dwNDlmrbv76MmNXO1
-	phQ2CxrnsHZ8yx1bfJJIFmA8fEWlNq8xmJXuZ6sW+EJPS7RbUbM/FI9PO2zw==
+	:subject:to:to; s=fm1; t=1657712344; x=1657798744; bh=a7laY8M3xK
+	BqEOg/vObmUV84b7Gpb8OnCU9kczRztrg=; b=JDM/lacx0k5oKXOvbuQAdSOO/g
+	Wv26Ju9MhJb4QxhEMYzu8wgCva5Q6JDOhkmDhHPybT/ryaDAybrdGMtq3yBo2OrH
+	GCUd9Aafg1n/icUsEjWxs11FkMqfg+UXTG8apA6pLGe555kdbHICo8m3i0WJvJsC
+	z7uTY3IbKdCfqQ0mFQvrgtmNUp/dGPuxVEd72V3VT/S/1XR5hsd7sxLs2m9FeJTE
+	t/6UBGARX75Iq//SQY1NOFRDIozlrU+ior8ehlkw6jrwL9jdo/JaGr7/G3g3koaw
+	HbWqjPK6kh4Dyytn7hdO02wE/x9ahlATBdva5I2Jeh9GAVN/YwP4RVREUMxQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
 	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
 	:mime-version:references:reply-to:sender:subject:subject:to:to
 	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1657711498; x=1657797898; bh=nJEOdYr6ZZyi+ubPuyg89qmIqgFx
-	eTcywr1xsDT9Rkw=; b=HjpVfW5+OaMqKuYkRmbi7oPf4K9LmqIlKspti2j2CSFa
-	pnPz4LA6TEGwORG0g6767rhjHfqI+qHE5UOHJ+GBPfSR4kwoQom9DfVeEAaHeEa2
-	jYzxRi3TzPamMy8kkqjOIhlBxXka2IdcELawKIxgoa9PpmleaaHVU1LbdVpPOtYT
-	ueLeaHP0BjSF1dCkHI0E1LHoIFHfefsDqH4+li2OvKQ7IdMGftvHnhSkj+NHDWtV
-	qIxu3q7u1x65ZdwMPEUrAngcMfoN2DVYO0EG3KyXCsRAdqPYbVX+pVBa6TZ636ag
-	A72jNWSVsAc5qUCuLHWbcTGiPC4Lv0aVBSfUpXVLrg==
-X-ME-Sender: <xms:iqvOYpRcZSmzI3ZokpmaT-7KJuUhrZ_Zvhs7hhKuUTts31LSnZJIrQ>
-    <xme:iqvOYix_u6m-i6VYa1fFBuZpCkWvFxr8kHKRqQtf9gXVDj9sw3WCR-QmD7ifuFgSO
-    m5lZ36eqhUQ1yl9wrM>
-X-ME-Received: <xmr:iqvOYu0FBxV3q4BmbCVPDpEDZkJIkOYzEfDZk360W5Zclu6mPjF1Xtry8NfeVgW1xon4R1X4eWQvU2iAwXwybrArOOutjYdf>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudejjedgfeekucetufdoteggodetrfdotf
+	fm3; t=1657712344; x=1657798744; bh=a7laY8M3xKBqEOg/vObmUV84b7Gp
+	b8OnCU9kczRztrg=; b=bToL/PvkQ8SOIMmdpc2DbwgHyK5RunlRW4XsN3VaLF1t
+	KLx2/Rvz5w09hK9JKz+q6pB+APooQ+3u7aqmCKWW3MlvGIKIBEGgkwFRab8mxWvX
+	q3u1MiawFmgryne0A1gnwZuDg825ZtjpBT637idrMqrftQcno1SksJi6Vzw31PpJ
+	bEneQ6J0839XLQV0B2PKR/UUseapzqNtohg2SHdsVRRelwgl8nHvy/882FEmtRGZ
+	AIxBQKukGyGoT1mJrCvw2HPtSDNb5rck2Xlu5eXa3ziek7GEUSx5qSzmiwIwHf6R
+	HnpgxJ5cBkVvDkh5DkAWr81id7yLz++LKwzpj39rxg==
+X-ME-Sender: <xms:2K7OYm77O4lwtXYqjgZoS9SeTfeQihYmf6NCYj8Lvt5aAxzt9xkSFw>
+    <xme:2K7OYv79zMfz-2mo8TQa-4woneqnwFJ0oisCnKqv8dwU468nzu8RUItBqzPagQfeM
+    PGHezg-FvQ0WkFKjzs>
+X-ME-Received: <xmr:2K7OYlexAqCyrPRUQfqqNbuuqA63-_4rGG21GHD7Lf0ZRRPoS8kPPlbDTZN947ISETYDqUrshFAVXfkIhT3nfvq5iB-2rmz2>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudejjedggedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredt
@@ -63,24 +63,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudejjedgfeekucetufdoteggod
     hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeehfeejheeftdejiedvfeekffeh
     ledukeduleelffekgfdtleduledvtdegtdehkeenucevlhhushhtvghrufhiiigvpedtne
     curfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:iqvOYhDgr4Seq8cFYFGpCAzXuufMPcGS0nmBW4AnuGjiRnuJKwgaPw>
-    <xmx:iqvOYiiLNC2FQQyBddMLFFDPKKpmhlcJv8dUPw8xB6oOypWoKVkyzA>
-    <xmx:iqvOYlrMK-7YAJ1nYhgojQTXQfV5vxU5URUubjw37jUgVQhj9DnbrA>
-    <xmx:iqvOYlvVxidaWJKFlH3TU5kP1ZYNuOUawujBYtwwHntQ16dnfiCuSw>
+X-ME-Proxy: <xmx:2K7OYjIYkb9TMF8Do0FIFtpXGzdFbwBnjPqYocTXpElt80-7eGNgpQ>
+    <xmx:2K7OYqL939IFwwswI8ZYIavE6MC2geWDGzhdzE9I-5xLotBsPP8Qdg>
+    <xmx:2K7OYkwmfdX0wMeGEaspgck1EcNJ8hwFfzanVSh_Yy8Pq8Zwy1k8cw>
+    <xmx:2K7OYkwCXh8Uckw79tQjVihjaEPECv8e9nhFZRkkFoOz0ZX7JnvZxg>
 Feedback-ID: i68a1478a:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 13 Jul 2022 07:24:58 -0400 (EDT)
-Date: Wed, 13 Jul 2022 06:24:56 -0500
+ 13 Jul 2022 07:39:03 -0400 (EDT)
+Date: Wed, 13 Jul 2022 06:39:03 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: Ed Tanous <edtanous@google.com>
-Subject: Re: DBus ObjectManager Interface usages within the project
-Message-ID: <Ys6riEnZm5SP8v76@heinlein.stwcx.org.github.beta.tailscale.net>
+To: Alexander Amelkin <a.amelkin@yadro.com>
+Subject: Re: dbus prefixes (was: DBus ObjectManager Interface usages within
+ the project)
+Message-ID: <Ys6u143YCgQwujIP@heinlein.stwcx.org.github.beta.tailscale.net>
 References: <CAH2-KxBmFwVmF4cr+_eTFrwdz9-he--PPfRvW=cN6oNGf4KA_A@mail.gmail.com>
+ <adb35a4e-718e-03b2-a562-2c2c6d59f3b0@yadro.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="ChTB4/r4nBVNIPLe"
+	protocol="application/pgp-signature"; boundary="w3IJx2KrRoNBszWy"
 Content-Disposition: inline
-In-Reply-To: <CAH2-KxBmFwVmF4cr+_eTFrwdz9-he--PPfRvW=cN6oNGf4KA_A@mail.gmail.com>
+In-Reply-To: <adb35a4e-718e-03b2-a562-2c2c6d59f3b0@yadro.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,101 +94,103 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, Brad Bishop <bradleyb@fuzziesquirrel.com>, Nan Zhou <nanzhou@google.com>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---ChTB4/r4nBVNIPLe
+--w3IJx2KrRoNBszWy
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Jul 12, 2022 at 11:48:31AM -0700, Ed Tanous wrote:
-> We've had a couple cases in the project where patches have needed to be
-> slowed down because of inconsistencies in our use of object manager, so
-> IMO, the time has come to make our usage of ObjectManager consistent,
-> documented, and drop support for the (not upstream) daemons that don't
-> follow the rules.  As part of this, we will port forward all the upstream
-> daemons to be consistent, and do our best to avoid bugs, but this email is
-> intended to inform those that have non-upstream daemons about the change =
-so
-> they can resolve their implementations.
-
-There isn't much in the dbus spec that puts requirements on where the
-object manager is, but that certainly doesn't mean we can't add our own
-design requirements on top of it.  Thanks for starting this.
-
-> The basics:
-> ObjectManager DBus interface will now be required for any daemon
-> implementing a Sensor.Value interface or Inventory.Item interface.
+On Wed, Jul 13, 2022 at 01:17:10PM +0300, Alexander Amelkin wrote:
+> As a side note to this discussion, have we considered using shorter and=
+=20
+> more convenient paths for dbus?
 >=20
-> Daemons producing sensors will be required to place their ObjectManager at
-> /xyz/openbmc_project/sensors
-> Daemons producing inventory items will be required to place their
-> ObjectManager at /xyz/openbmc_project/inventory.
->=20
-> Both of these interfaces will be required to be published before claiming=
- a
-> well known name on dbus, to allow for the possibility of caching
-> implementations at some point in future.
+> I don't see any real reason for the project to be using this long and=20
+> cumbersome /xyz/openbmc_project/ prefix.
+> Why not use just '/obmc/' or `/phosphor/` ? I believe that would be more=
+=20
+> than enough to separate all our services from any third-party ones on d-b=
+us.
 
-This means we can end up having N object managers in a single daemon if
-it is hosting multiple namespaces?  Why not just host it at
-/xyz/openbmc_project?
+FWIW, it isn't required but it is encouraged to use a reverse-domain prefix=
+ on
+paths by the dbus spec itself.
 
-> This was discussed pretty heavily on discord in the #development topic, a=
-nd
-> some of the nitty gritty details on why this is needed is available there,
-> as well as I'm happy to discuss here.  This is one of those nasty
-> spaghetti-code things that we've lived with for a while;  Hopefully if we
-> can get this behind us, we can get some good real world performance
-> improvements.
+>> Object paths are often namespaced by starting with a reversed domain
+>> name...
 
-I see the background being discussed when I read through the history on
-#development, but I don't see the rationale on why this was chosen.  I see =
-one
-comment that placing the OM at / is "wrong" but I don't see any justificati=
-on.
-Why is ".../sensors" right but "/" or "/xyz/openbmc_project" is not?
+> I understand why this prefixing is for in 'big' open desktop or server=20
+> systems where there on d-bus can be any number of software from any=20
+> number of vendors. In an embedded system, such as OpenBMC, on the=20
+> contrary, the set of software using d-bus is strictly limited and we=20
+> always know beforehand what prefixes are used. I'm pretty sure none of=20
+> the software included into OpenBMC builds will ever use '/obmc' prefix.=
+=20
+> So why continue using the inconvenient long prefixes when it is safe to=
+=20
+> use short ones? I would even propose dropping all prefixes at all, but=20
+> ok, let's pretend that there can be some other 3rd-party 'Inventory'=20
+> than '/obmc/' ('/xyz/openbmc_project/').
 
-We had a good chunk of this discussion about 6 months back in
-phosphor-virtual-sensors where some Redfish code was broken against that
-daemon because it _was_ using "/xyz/openbmc_project/sensors" and there
-was a patch to move it to "/" which ended up getting merged.
-Fundamentally, I think it boiled down to neither being in opposition to
-the standard and there was a bunch of code that already implied "/" so
-it was the simplest way forward to achieve compatibility.
+Generally speaking, isn't the content in a single process pretty well
+known no matter the type of system the daemon is installed on?  I think
+it is pretty rare for a shared library to create its own dbus objects
+and if it did it'd probably create its own bus-connection too.  I'm not
+sure what is unique about a desktop vs embedded system in this
+discussion.
+
+What are we saving by switching to something shorter?  Can you
+elaborate?  It seems like it is mostly just typing...
 
 >=20
-> Thoughts?
+> Am I wrong or missing anything? What's stopping us from switching to a=20
+> shorter prefix, aside from the existing code that will need to be=20
+> changed to it?
+>=20
+> The same proposal/question actually applies to service names (e.g.=20
+> xyz.openbmc_project.ObjectMapper could easily become just=20
+> obmc.ObjectMapper or phosphor.ObjectMapper), let alone just 'ObjectMapper=
+'.
 
-I do think that moving the OM lower in the hierarchy is probably better
-because it allows us to have parts of the hierarchy which do not emit
-signals, where having it on "/" does not.  I'm just trying to understand
-(and hopefully document more) the rationale on why this choice was made.
+Service names and interface names have a strong statement w.r.t
+reverse-domain prefixes.
+
+>> Interface names should start with the reversed DNS domain name of the
+>> author of the interface (in lower-case), like interface names in
+>> Java.
+
+>> Like interface names, well-known bus names should start with the
+>> reversed DNS domain name of the author of the interface (in
+>> lower-case)...
+
+Assuming the typical use of "should" it means "this should be done
+unless you have a good reason not to".
 
 --=20
 Patrick Williams
 
---ChTB4/r4nBVNIPLe
+--w3IJx2KrRoNBszWy
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmLOq4YACgkQqwNHzC0A
-wRnd7w/+NfgIP3/sKlYRc7flzmYoyZ9JapPBoJT+7SR/kG/g3+ZGU5DznAR8/oBn
-a4s9gugZEVFJm+DYcz0hkWYzNRtee8pYO/EYgW3lm4mwol+e390sROMiLeJ5oHRy
-wyJssOIqtSJLjR1fPQDe12bYDXF2taArQI/YYeOZtNCK2w24rcEVYFPwuV518d/R
-hJ2zuFSSuJwZwrZfyt5RS/G/1/0U3lCi9WiMGbMoEsUltoYAEkC2D8xH1iBKTjVG
-WlPt6xQ0hjyX0p8JNgLouTLyux8ny/LlN6hztYkJqufpCWLtyQpofbkD5qYRDlhH
-mZRhF4o5EhCdwK6SpAxSrL+Z0IgajJOE7CUECAV8vWjHNOF19Ggvk9WUUc/uL3j4
-E/I0/hs/nk6d8CAcdJ304WvfSfawSuMaP1O2iUHjc8aqxSaTv1gGeD1fuNpQ4siC
-zLh5kmHuaNmSjCUaUb2NtbGgQxhZCw8bVlT9qxZnYZl6zl4Hau4PqaKD/WaYg/Cx
-1x9xtnqrEELELwxjiHbka4FwJY4XYhTKc4bENE+1YuDdRp950YXiR8gRJaDOa4hf
-dT8zOgakxsafz+udjxpQXpfP8vYgRk0kdVQ8XyE3tlHKrYyeu+5vI8elIFoBjDKr
-BfBVSHj5XiE6QYnQg9w8Jn3nGfHhNkQmulxxgEtGNL1/Daqq1ok=
-=9fc3
+iQIyBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmLOrtUACgkQqwNHzC0A
+wRmx3Q/475xRyeXDsmpq3wSqsAxlSKx1LFQMzWQqtYjd6ck4ZdaqhQ04kHB2ZBHy
+W6wyoui3NgKk5EvBeSM2bFuq46LYqSX/oT9xibpbtvOa6BYrMD/ul9FRpcUaeo0M
+klSgH8FPX+CZwfOtCO9Uy+HdkCNlJ77c0gZBz6IJCM13Mum9rFaQ/5NK3EuZOXzP
++jJxMqOInVYd+nx8nZxpvTGEMiO8hGz+J8De4q5Q1B64JwLZFzpSsReKxUaO/pU2
+3ODMg4dxh0+xAsaJjapWkZmscfj+fUusngZbWdZV/2WzWAyOnoZy+ECdut9ZxA2O
++1ENdyfueOBPm8/k3XNfDFSJ7QoSksoyBBpCVUdi3M1RbGX8QoqiitdMxvT7MQIA
+jKd5iC56xL1+D6rj1Wpl5tQN3K32GBTG0949iRywon8eRF1swlJU4CtrA/G5Ndf2
+LNKLK1QVihVk8X+/KaFLPclML7TuglLhxEBMs8hGiWZn+sz/dysfEMlO0Ibdu6Tl
+YlPycEwkpaLTVwiMMOTgGTjV4jrqAiKX9JJL1TtuWS12uPRrlS36dRRGbYaPv2bp
+Dd1JSQLWc8c198Ro8BujdfcxAqfBXM0W1DFrJQZIJs/LFdPD1azdQZuOME/+UChM
+0gpmvU4ritNZo12NqJW1UCVtc1UbJLPSLA55KIxYxHcmpOIBtw==
+=oc+n
 -----END PGP SIGNATURE-----
 
---ChTB4/r4nBVNIPLe--
+--w3IJx2KrRoNBszWy--
