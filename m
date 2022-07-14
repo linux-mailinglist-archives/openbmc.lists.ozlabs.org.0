@@ -2,91 +2,113 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id ADD7E57565F
-	for <lists+openbmc@lfdr.de>; Thu, 14 Jul 2022 22:30:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A3C957573E
+	for <lists+openbmc@lfdr.de>; Thu, 14 Jul 2022 23:53:48 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LkR2R4ftSz3c46
-	for <lists+openbmc@lfdr.de>; Fri, 15 Jul 2022 06:30:39 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LkStL0NZCz3c5f
+	for <lists+openbmc@lfdr.de>; Fri, 15 Jul 2022 07:53:46 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=pjd.dev header.i=@pjd.dev header.a=rsa-sha256 header.s=fm1 header.b=yFA/Q6JO;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=EOgzC6sj;
+	dkim=pass (1024-bit key; unprotected) header.d=microsoft.com header.i=@microsoft.com header.a=rsa-sha256 header.s=selector2 header.b=iL7eRQ2H;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=pjd.dev (client-ip=64.147.123.17; helo=wnew3-smtp.messagingengine.com; envelope-from=peter@pjd.dev; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=microsoft.com (client-ip=40.107.94.103; helo=nam10-mw2-obe.outbound.protection.outlook.com; envelope-from=arvindna@microsoft.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=pjd.dev header.i=@pjd.dev header.a=rsa-sha256 header.s=fm1 header.b=yFA/Q6JO;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=EOgzC6sj;
+	dkim=pass (1024-bit key; unprotected) header.d=microsoft.com header.i=@microsoft.com header.a=rsa-sha256 header.s=selector2 header.b=iL7eRQ2H;
 	dkim-atps=neutral
-Received: from wnew3-smtp.messagingengine.com (wnew3-smtp.messagingengine.com [64.147.123.17])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2103.outbound.protection.outlook.com [40.107.94.103])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LkR1z37Btz2xKq;
-	Fri, 15 Jul 2022 06:30:15 +1000 (AEST)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailnew.west.internal (Postfix) with ESMTP id 158CD2B05AC2;
-	Thu, 14 Jul 2022 16:30:12 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Thu, 14 Jul 2022 16:30:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pjd.dev; h=cc:cc
-	:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm1; t=1657830611; x=1657834211; bh=A0UPaGfIQl
-	teEMIT9M1cG19ug+wy+THz1cJHr43LHH0=; b=yFA/Q6JOYrck0XdDItDjkZvGC4
-	ZyUfQUX/weG5I7DtiGOWZk8WN1bSRXdwMfHVWjm2SBnp+HoI1mMNRIk04n1J3JCm
-	MtJLAItFz+AB0T/tSzKgRzZQaJvWB0gp39V/Rx+D7356FZDu8kZb5PDGEnDi4RfW
-	WfEbSnnbIMM9AyXxs0inq0zTauBtMQh63GmqPkrv6KF/eQOcMrvSHdeqaBlZhOVi
-	Yr6c4d+F/nBzmhH0BscMTM1POdD1EjKZjdALqHOfA26G0oak8lTJurymSRpefX/b
-	6EhneKBLrHP/PPJm1UIAxjjhNTZXKYBG9aDKf7rH/i9hEJLXbHXCLK+Uz00Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1657830611; x=1657834211; bh=A0UPaGfIQlteEMIT9M1cG19ug+wy
-	+THz1cJHr43LHH0=; b=EOgzC6sjJGpgTgUh4BizKgSvrAPewkIQd7gOn+EJTNuc
-	gmHcADbUjw30mlqDjrw8craNgR1XXlvnApTDM1hKRZENwZHkQESumewpLnwB57eT
-	pWMKCaiLapfAhL5jtOXivRWUJKTJ1tUEOcSOFBv3XGNPYvahs31d7m6Sgb86/PpO
-	m/igR/ka3KJ2JM5ndhZzMRktOHvTOz7X7GQXvb36rDr20fYAk3Wg5G2K65OVtsXi
-	qIh4iA+MN4M9BJ75WnJ1sPL8aL//uzAT9UaCW0amGfH42sTcrJ2tcTbjN/lytIFw
-	Zr/KzAlSHCKfcS2tjaXi8/78rWwbei/tUCSZHHiHKw==
-X-ME-Sender: <xms:0nzQYhhoCqBmIQ43r6H5-81638aTyOEQd45hprZCGb1xtYSvft0KiA>
-    <xme:0nzQYmD-CYxZjsPegDKl5sRqvtqWcThNpn17Lt3QSdyZs1BgRCY37JIOC2U-_iNWM
-    ZyFqcYPzVnBwuT9EQA>
-X-ME-Received: <xmr:0nzQYhHnq1IuN-oMBYf-9r-NDCcK9kDk_z-n1Le22G7B2XdIvRZUhCCLOwtW3KkmxjjBLagKKty32pK3eqgWxwJE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudejledgudehudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrvght
-    vghrucffvghlvghvohhrhigrshcuoehpvghtvghrsehpjhgurdguvghvqeenucggtffrrg
-    htthgvrhhnpeejudfgfedvhffhffeiudefvdffhfegffegjefffedtheekgfehgfefveeh
-    feejteenucffohhmrghinhepohhpvghntghomhhpuhhtvgdrohhrghdpkhgvrhhnvghlrd
-    horhhgpdhgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgr
-    mhepmhgrihhlfhhrohhmpehpvghtvghrsehpjhgurdguvghv
-X-ME-Proxy: <xmx:0nzQYmQUWqvf1Lth6eDbubZZDlVKI2VPNi0OWDefextRwAsuAd_n7g>
-    <xmx:0nzQYuxKIKSE5wEfeOpl5CVMDHuWvS6SAp8D-W2JvojPQO42H0wgPg>
-    <xmx:0nzQYs6Khh_UCx3BEYiskAGjFLVp3jvnCDM-nkj0P5o95y1JDp9Gyg>
-    <xmx:03zQYjKd5rZaD5p4VqzqOiQ5rFF-mcII3U7Me-LHuGvAfRU7O9KUTKvdmZ8>
-Feedback-ID: i9e814621:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 14 Jul 2022 16:30:08 -0400 (EDT)
-Date: Thu, 14 Jul 2022 13:30:06 -0700
-From: Peter Delevoryas <peter@pjd.dev>
-To: Arnd Bergmann <arnd@arndb.de>
-Subject: Re: [PATCH v3] The Yosemite V3.5 is a facebook multi-node server
- platform that host four OCP server. The BMC in the Yosemite V3.5 platform
- based on AST2600 SoC.
-Message-ID: <YtB8zjhjwlUXp4Mw@pdel-mbp.dhcp.thefacebook.com>
-References: <20220707132054.GA10610@logan-ThinkPad-T14-Gen-1>
- <CAK8P3a0P2u+LdXcU7As=dfNbg_J2eWfhgB9TT1-xVyH0v6OM5Q@mail.gmail.com>
- <YtBazSo/uJzFeF+L@pdel-mbp>
- <CAK8P3a1juHV6N2QtXaEcobWs6kQHBqqUn9MynvobyJtFFyOsfg@mail.gmail.com>
- <YtB7mw1YSahFg0xI@pdel-mbp.dhcp.thefacebook.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LkSst1jFjz2x9T
+	for <openbmc@lists.ozlabs.org>; Fri, 15 Jul 2022 07:53:20 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=aa2VTsEdN3JAmA7lDwKlW9f7b3jb2ST7GMlSEIRUvC0lOVXvo8AJCqR517SFCyG3bCgrtOIcKHzfympI+LchL8j+maZc+NkKuulr60W+ervfCfhVJdjjfwf5gMLYoswiLnA3LPEg1z2niNyb8kX3ZK8+kewjeW8wwu4dc+nM8QCqGOb0rBiagW7o/kRlpjtYgAdEns4OZxQ1JMGR23f5DIPHy2VTnI2spWHH/r4QCbGvNsuoYR4njLKYRFUSWaxCzs71Fp4xmhpHutrk0uICXVFK949rAqRS1Vee4buOCAGvswigzux6pUpz9VbQxIq0O6Tely54LPBz5UaTSYNTqw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=QkxxmPG7zlbr1Ps4ybpzNBrTIkZiRlN7PxZMwyccibM=;
+ b=dyC3SgmXssLcXSWdHxu87ugB8+Us2jVbyeB2ZlPM5dbK52eNa9nx9A/P3+3olNrO/LdqV+nKjs6WSLyaXBSgTcqy+0aI+zIsxkgVuC4QWvZXGdJxwaoxEmP9x9Qj/4pI2u0uawGPmO/UgSmu5TELRQCN0Cj0NFPqDw5mr2n7WNzLfSrL90g0vLD3Vx9NdOWBXFTBNbE5HzU5kTbceH9BNz8u2t2wVArvv3YLm93XGjaYIMl1xmUKMNpTOdXcJqhmTB8CYlMn8Le7RCqc2/kvv6G3v6eXqka8LRwIRa5gSA+jg/f7VyMeMmh0tMbdYWPuhEtkkO82yh3d+zX31WkFrQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microsoft.com; dmarc=pass action=none
+ header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=QkxxmPG7zlbr1Ps4ybpzNBrTIkZiRlN7PxZMwyccibM=;
+ b=iL7eRQ2HNoaJmpDnTY9cG2u9zv+YC64UQQYE/rRlO8kk+/Sy+ZTBJZkd7dIOEo2woluVtuMapCg96BZLqlo1jPIKl4SqqXCm/9qENLKkuhBuoT1YiMNAGshMekEXPIwnyl1TcnnKDlYrGzwEePRStTySnx/pN45SrwB+CBrZn28=
+Received: from MN2PR21MB1184.namprd21.prod.outlook.com (2603:10b6:208:38::15)
+ by SA1PR21MB1317.namprd21.prod.outlook.com (2603:10b6:806:1f0::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5458.10; Thu, 14 Jul
+ 2022 21:52:58 +0000
+Received: from MN2PR21MB1184.namprd21.prod.outlook.com
+ ([fe80::853b:2fdf:911c:bae8]) by MN2PR21MB1184.namprd21.prod.outlook.com
+ ([fe80::853b:2fdf:911c:bae8%5]) with mapi id 15.20.5458.010; Thu, 14 Jul 2022
+ 21:52:57 +0000
+From: Arvind Nandanahosur Ramesh <arvindna@microsoft.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Extending phosphor-gpio-monitor to expose gpio objects on dbus
+Thread-Topic: Extending phosphor-gpio-monitor to expose gpio objects on dbus
+Thread-Index: AdiXzA4VNB77pjd7Rh6NqdUNlePIsQ==
+Date: Thu, 14 Jul 2022 21:52:57 +0000
+Message-ID:  <MN2PR21MB118426E5D86B645A1ADF887AC8889@MN2PR21MB1184.namprd21.prod.outlook.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels:  MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ActionId=d19094cf-7876-456d-8806-37626ed6c790;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=true;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=Internal;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2022-07-14T21:50:52Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=microsoft.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 77a6acfd-d900-44b2-5f15-08da65e336e2
+x-ms-traffictypediagnostic: SA1PR21MB1317:EE_
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:  VEh5+910xL+tyI/8n3pHegfxa8JH3v2te1HpOmHixpgD0spEn9ktOr1hpqGsQ6O8khvE/15Q4Tp9x9LYtUujNX0BDoheKi3EKeelP+U/4rIC1UyWpJ5QrQXKEMNsYknHPlq6F4LKd0SEk8ZI60p+9UrLUf3VHXL6Pvu9ooIG0dnBpTz1NzQGS1enl5mEZPF+jbat0ELJnpTC0Gg+DI05dGJP5GhbK0AQ2UuWnLoP4CUxWxRykYX4HsRPfm9EYdiiHWotqm6HYoezHKLdal4ifdn8q8nOWJuDfUr5lbDexuFa8SKYjlDKD493nTEGaO7UZ/N2ApQeMf8L5XKbIrs5RVjYeYNpm9WhcBUo+lBiJzVNl/DKGo9XJ9yneBYG0owC6osZVtgwsYqTJb/7TJy8HNXak835vQlpsKoIf0lZKIQu6BTkh+zU3Es1j1mG4Ox3jGyhGik3JtmOVk/eVtaulU7YJxpe6rkmIdRVLvRvKo0ZHlWNyODsNpRIbUMxijvrc69qNO1i7I5+K9s40W+gzhJskbrmTkFyKYsosQojWODBckQPE1xI9yhjXR6JgQ6vcv4Ra15vRFP75E+mBP+GA6YZ99wXXSj2HawxUOvTg994Q4mcsZyu4b5Z+7mEp1DVgNkT1PMjTCP4ydAIOYcfigfotUj4f637Tjrv9WkErl8363aethJXpCX1GXd7wz+yWeytQ1soU8pSGCrWkIzQ/u6DPvdOY0bcm1BrPQL57f4vYPGellyaS533kqMBiL0oGA58TTJ+NKXYVOmsQTHAbmbyoyZc5Muwmp+8VoaAliczkYq7uG77R3d5z+CS4xJPqxnEksVlLt6tNPAfdxG1gT/53Ut8HtkuXEdKg1w6hWmfHW1uMUkJwwsQvB4ThmnU
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MN2PR21MB1184.namprd21.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(136003)(366004)(346002)(376002)(39860400002)(396003)(451199009)(41300700001)(7696005)(6506007)(2906002)(5660300002)(55016003)(9326002)(8936002)(52536014)(9686003)(8990500004)(478600001)(122000001)(38100700002)(66556008)(8676002)(64756008)(66446008)(76116006)(66946007)(82950400001)(6916009)(316002)(71200400001)(10290500003)(186003)(4744005)(38070700005)(33656002)(66476007)(82960400001)(86362001);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?SqAT0t95gGJsa+SCYPn4UuV1AoCQ7tm0oOX4PKrWv1h8KB4i18V0s9SQlkkc?=
+ =?us-ascii?Q?Gwe0A7JOHGinuC+EGhl2vKw1ojgNYQkLAZ31RhGH2Qd0BJcqL+zxD+AjqjPt?=
+ =?us-ascii?Q?b/tYPbAVPsjWJ76kh6aA5FoPH+l/lRdP7fwCliMrv0CnhSD+K/7lHl0LR+2S?=
+ =?us-ascii?Q?90Lpf5edofCIUDHCp0N8dJvzqOtQ67OkaQQybkibgmZBK2DakcBbdoa1Yl7E?=
+ =?us-ascii?Q?r9+9llbo+3Pbwslt3+OLciBdcWVE3x+CVtHx27xX582HhlVANh2hwuTYJLav?=
+ =?us-ascii?Q?Kge9Z1241KD/Q6kXixcOdxTWeT2tifEdQJzHAa69wXxEDsWFL26QUz6BDpHh?=
+ =?us-ascii?Q?CzRajWN6ozwrjShQYq01LHq45oLjsqQT4bQCAHoOp9Gv4P1xMMMukyCAhk7E?=
+ =?us-ascii?Q?q5ra3tJYFQeWsvm1qrfzMrhnbZxLfGKl3n9dE3H2vudckVHbAZRtYL2K/VYr?=
+ =?us-ascii?Q?F4pctoTow9qsJtQPg9MeLQJ8IHFUBXOyGFs3OmpDjOUdNdxGn1otXC3vdNss?=
+ =?us-ascii?Q?8c6vSuW8cuwOrxrtJ1BwsPZ1ckJ7w+G4Ybwsn4TAtgL3X/+rivQUqIOPsW7e?=
+ =?us-ascii?Q?7UQEnC2loAeFxpYN2HT4T0aodVkmE8HGtZO1C9XZAq7uqvRUlwG+CSazT0m9?=
+ =?us-ascii?Q?OlTDo8CMsU2xU/nFcEtQh/jxpMvdCWr7aYqeDtengTLrPWSbAX6hQ8k8i1L6?=
+ =?us-ascii?Q?8eBCpHR131/3Bc+bHAzNeKedduo7izEwEY1y4nwmuDtZyXdM/HE+J4Nd+3Nv?=
+ =?us-ascii?Q?6AlecyHx79U1Qn7xiJcnJaH0pow4xdka0+/b5SCGA0KTrOowD+zlScvFV0Aa?=
+ =?us-ascii?Q?45ouYkhWuAtlK6Klyyyml/bYlZrJm+8K0y9CxpOHRpIqbQMge0xgTczWS3cs?=
+ =?us-ascii?Q?jjfzqWKBUTr9Vwezhh74gRezihvic0MiiMdcoOC/Et/sns3/RcwG1LhlJKVv?=
+ =?us-ascii?Q?BMNvV9J5exIFo9oexI0F4Gcu4lfCL4Zol7FS/ThIeLEkW8SIpgX8N6kJrHm9?=
+ =?us-ascii?Q?J4kFxFbz95Y+5poo/kAnIPpu3P4gQi334+p0/zqN8Bi2t234/gH1kf7mrADV?=
+ =?us-ascii?Q?t/Vc/UMgNkF3AYl4cUDbt0QQxc090qP+k+YN5btBPAYSchBBgWyb2jPGvLrM?=
+ =?us-ascii?Q?Ew9wmK8gwEzDWE7f2TEsqbdroOYdkm3oabuLnrXD0pbLvKxwpyLIH1SrUj95?=
+ =?us-ascii?Q?rnLCr4JKh+ng5St4+TJsXJbVPm5A0z1Lswi69WlhVXcr8q+3nVTgysV/UqK8?=
+ =?us-ascii?Q?DP1lUtrJWfllKrnqI27oI8vFCBD2XWvMsUGg5ySJLaVs0omSLbGVJhtiOtEq?=
+ =?us-ascii?Q?JtcmihMxvmDxIh5iPoOdrO/uhoUPEb313DPCLqv5vBmpqPU2Eby9oWuDMZSd?=
+ =?us-ascii?Q?OPedv7UJVSJNaMGlIkhrte77joA+C2+fJcyH/6JZxu/LLiTIUxTlYcAM4LyW?=
+ =?us-ascii?Q?DnrAdD+hZYOkdQUXjpkBWqtFDCccLv9yM07UiOPt7Epf5sMf9gTgTwa0FAjX?=
+ =?us-ascii?Q?UYP0xrqNrcLEjW91wFxJsOuLjhQhcXw0g1DZ3eWo+Ju3nSH8PLigAG68mPHa?=
+ =?us-ascii?Q?0w635ySlb3JmM8ECebf/Fak3Jsn78IX7LGfW7dfh?=
+Content-Type: multipart/alternative;
+	boundary="_000_MN2PR21MB118426E5D86B645A1ADF887AC8889MN2PR21MB1184namp_"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YtB7mw1YSahFg0xI@pdel-mbp.dhcp.thefacebook.com>
+X-OriginatorOrg: microsoft.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: MN2PR21MB1184.namprd21.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 77a6acfd-d900-44b2-5f15-08da65e336e2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Jul 2022 21:52:57.8820
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: BaeV5aTapL4DRwDPlU4E5PJVj1DBCYPYE95WXIV39op0Fx73U8l27BgV+LicSQBqcqUrwfEv+dDx34aaiLE6OA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR21MB1317
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,84 +120,97 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: DTML <devicetree@vger.kernel.org>, linux-aspeed <linux-aspeed@lists.ozlabs.org>, Logananth Sundararaj <logananth13.hcl@gmail.com>, Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, naveen.mosess@hcl.com, thangavel.k@hcl.com, SoC Team <soc@kernel.org>, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Olof Johansson <olof@lixom.net>, garnermic@gmail.com, velumanit@hcl.com, Linux ARM <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Jul 14, 2022 at 01:24:59PM -0700, Peter Delevoryas wrote:
-> On Thu, Jul 14, 2022 at 10:15:15PM +0200, Arnd Bergmann wrote:
-> > On Thu, Jul 14, 2022 at 8:05 PM Peter Delevoryas <peter@pjd.dev> wrote:
-> > > On Thu, Jul 07, 2022 at 03:33:48PM +0200, Arnd Bergmann wrote:
-> > > > > +       model = "Facebook fby35";
-> > > > > +       compatible = "facebook,fby35", "aspeed,ast2600";
-> > > > > +
-> > > > > +       aliases {
-> > > > > +               serial4 = &uart5;
-> > > > > +       };
-> > > >
-> > > > Why not start at serial0 here?
-> > >
-> > > Hey, Facebook person jumping in here (using a personal email):
-> > >
-> > > I think you're right, it should be like this:
-> > >
-> > >         aliases {
-> > >                 serial0 = &uart5;
-> > >                 serial1 = &uart1;
-> > >                 serial2 = &uart2;
-> > >                 serial3 = &uart3;
-> > >                 serial4 = &uart4;
-> > >         };
-> > 
-> > Are you actually using all five uarts though?
-> 
-> Actually yes, I should have mentioned this in my previous message.
-> 
-> YosemiteV3.5 is similar to YosemiteV3, which you can see here:
-> 
-> https://www.opencompute.org/products/423/wiwynn-yosemite-v3-server
-> 
-> This dts is for the BMC on the sled baseboard, and it manages the 4 slots in the
-> sled. Each slot has a "Bridge Interconnect" (BIC) (an AST1030) that manages the
-> slot CPU/etc. uart1 is connected to a uart on slot1's BIC, uart2 to slot2, etc.
-> 
-> We also have a work-in-progress QEMU model for this:
-> 
-> https://lore.kernel.org/qemu-devel/20220714154456.2565189-1-clg@kaod.org/
-> 
-> > 
-> > > > > +       chosen {
-> > > > > +               stdout-path = &uart5;
-> > > > > +               bootargs = "console=ttyS4,57600n8 root=/dev/ram rw vmalloc=384M";
-> > > > > +       };
-> > >
-> > > Also: if we do serial0 = &uart5, it should be console=ttyS0, not ttyS4.
-> > >
-> > > >
-> > > > The bootargs should really come from the boot loader.
-> > >
-> > > What if we want to boot the kernel by itself with QEMU? It's kinda annoying to
-> > > have to specify '-append "console=ttyS0,57600n8...' everytime, or to have to use
-> > > a wrapper script. But, it's also a source of bugs: I realized yesterday the
-> > > dts we were using here:
-> > >
-> > > https://github.com/facebook/openbmc-linux/blob/e26c76992e0761d9e440ff514538009384c094b4/arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts
-> > >
-> > > Has the wrong console setting.
-> > 
-> > You can encode the uart settings like
-> > 
-> >            stdout-path = "serial0:115200n8"
-> > 
-> > the rest really should be passed on the command line, not in
-> > the DT shipped with the kernel.
+--_000_MN2PR21MB118426E5D86B645A1ADF887AC8889MN2PR21MB1184namp_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Oh sorry, I missed this comment:
+Hi Everyone,
 
-That sounds good, I'm fine with that. We should remove the bootargs then.
+We have been toying with the idea of extending the phosphor-gpio-monitor to=
+ expose the the gpio objects it manages on dbus in addition to its current =
+functionality of executing a specified systemd target. This additional func=
+tionality can be enabled by an additional parameter in the phosphor-multi-g=
+pio-monitor.json file. Before going down the path of implementing this and =
+upstreaming the changes, I wanted to get a sense on if this is a good or a =
+bad idea. Essentially this would be useful for other services to query the =
+current GPIO value of input signals over dbus or react to changes in its va=
+lue. What did you all think ?
 
-Thanks,
-Peter
+Thanks
+Arvind
 
-> > 
-> >         Arnd
+
+--_000_MN2PR21MB118426E5D86B645A1ADF887AC8889MN2PR21MB1184namp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ligatures:standardcontextual;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;
+	mso-ligatures:standardcontextual;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:=
+break-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">Hi Everyone, <o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">We have been toying with the idea of extending the p=
+hosphor-gpio-monitor to expose the the gpio objects it manages on dbus in a=
+ddition to its current functionality of executing a specified systemd targe=
+t. This additional functionality can
+ be enabled by an additional parameter in the phosphor-multi-gpio-monitor.j=
+son file. Before going down the path of implementing this and upstreaming t=
+he changes, I wanted to get a sense on if this is a good or a bad idea. Ess=
+entially this would be useful for
+ other services to query the current GPIO value of input signals over dbus =
+or react to changes in its value. What did you all think ?
+<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Thanks<o:p></o:p></p>
+<p class=3D"MsoNormal">Arvind <o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+</body>
+</html>
+
+--_000_MN2PR21MB118426E5D86B645A1ADF887AC8889MN2PR21MB1184namp_--
