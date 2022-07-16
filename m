@@ -1,63 +1,140 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1B7F576B66
-	for <lists+openbmc@lfdr.de>; Sat, 16 Jul 2022 05:01:53 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A9E7576D30
+	for <lists+openbmc@lfdr.de>; Sat, 16 Jul 2022 11:48:20 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LlCgH6WtNz3c7y
-	for <lists+openbmc@lfdr.de>; Sat, 16 Jul 2022 13:01:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LlNhJ5BfJz3bkr
+	for <lists+openbmc@lfdr.de>; Sat, 16 Jul 2022 19:48:16 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=IJuh8PdW;
+	dkim=pass (2048-bit key; unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256 header.s=pps202002 header.b=fHLeT3tU;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.55.52.43; helo=mga05.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=equinix.com (client-ip=148.163.159.192; helo=mx0b-00268f01.pphosted.com; envelope-from=prvs=0196a270f4=zweiss@equinix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=IJuh8PdW;
+	dkim=pass (2048-bit key; unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256 header.s=pps202002 header.b=fHLeT3tU;
 	dkim-atps=neutral
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+X-Greylist: delayed 2316 seconds by postgrey-1.36 at boromir; Sat, 16 Jul 2022 19:47:48 AEST
+Received: from mx0b-00268f01.pphosted.com (mx0b-00268f01.pphosted.com [148.163.159.192])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LlCfq1BvPz3c12
-	for <openbmc@lists.ozlabs.org>; Sat, 16 Jul 2022 13:01:15 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1657940483; x=1689476483;
-  h=date:from:to:cc:subject:message-id:mime-version:
-   content-transfer-encoding;
-  bh=T/cGF5Nkf4YWawUFDvRxQd3G489QI1/mvWEiFyBeprw=;
-  b=IJuh8PdWZpQS+qm6CglVhW/Ey8JYmZx6YD4uJC2t0rvnnYnXMg8u56Dq
-   RhlTsfulTDPLYO+emB++1Wkl41n4MF8ItHp0Aa3wFo+RSe6vgjOPd32JR
-   znBo9hl1c3COWvgXFNukCWISlUYcFgcSOl/Fjrms7fyOjOqbZEcGLRyHE
-   wTZuu/N2Ka4Mau8Q20fDnObqIe6KSCPzwCunttRhg1HQcolcWAdM0wKdU
-   Lj8WYwwMJEcWEqimgxLXyIRE9igHFF83gAOrRrgy65c7Yow27uD3m3L32
-   vVFteOzS1HLzlJLBX9j2oL0jAw665nQlcpFMbP1gdZGjKG2ukaHIDRjDZ
-   A==;
-X-IronPort-AV: E=McAfee;i="6400,9594,10409"; a="372254285"
-X-IronPort-AV: E=Sophos;i="5.92,275,1650956400"; 
-   d="scan'208";a="372254285"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2022 20:01:04 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.92,275,1650956400"; 
-   d="scan'208";a="596679266"
-Received: from lkp-server02.sh.intel.com (HELO ff137eb26ff1) ([10.239.97.151])
-  by orsmga002.jf.intel.com with ESMTP; 15 Jul 2022 20:01:00 -0700
-Received: from kbuild by ff137eb26ff1 with local (Exim 4.95)
-	(envelope-from <lkp@intel.com>)
-	id 1oCY35-00014O-2o;
-	Sat, 16 Jul 2022 03:00:55 +0000
-Date: Sat, 16 Jul 2022 11:00:05 +0800
-From: kernel test robot <lkp@intel.com>
-To: Andrew Morton <akpm@linux-foundation.org>
-Subject: [linux-next:master] BUILD REGRESSION
- 6014cfa5bf32cf8c5c58b3cfd5ee0e1542c8a825
-Message-ID: <62d229b5.vqqoX60YvzB2JbT+%lkp@intel.com>
-User-Agent: Heirloom mailx 12.5 6/20/10
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LlNgm4Jrzz3bdM
+	for <openbmc@lists.ozlabs.org>; Sat, 16 Jul 2022 19:47:41 +1000 (AEST)
+Received: from pps.filterd (m0165120.ppops.net [127.0.0.1])
+	by mx0b-00268f01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 26G7HwL7004315;
+	Sat, 16 Jul 2022 09:08:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=equinix.com; h=from : to : cc :
+ subject : date : message-id : references : in-reply-to : content-type :
+ content-id : content-transfer-encoding : mime-version; s=pps202002;
+ bh=Xxn/9qL7qLru3zA2Y8jgz2IsmaDLhQF0H01TTfgLS5g=;
+ b=fHLeT3tUF6mgEIJ5KMFRhpznIX9d9Wejlslz+XK7ldzN9bt3xyixLw5sZTAH3OsUMq+G
+ 8jX+VPM23CLYtYPXshMwISpxUXLDBG47Jl1okhKadfO10ugFvu5fgYhJz3Ql0FM0cvGY
+ XHMZqRbXDbwtC4BAB1oFaEbTb8WK6MXPS4exmi6vL6UcCDU9uWhXUanpRiUfSdvqdkVm
+ xNeiK1MfktfC6AFRH7+hJwQTOyKs3FASXtA5yOm54TvH0mzvKzkz6C96w4zBti/IgOc4
+ ZmugiwX1cs9TuU2trxJxOSEXVPuA31sPn5Qo3LT54v5OzTKvj6WOXFE6FR1r38xE72zv jA== 
+Received: from nam11-bn8-obe.outbound.protection.outlook.com (mail-bn8nam11lp2169.outbound.protection.outlook.com [104.47.58.169])
+	by mx0b-00268f01.pphosted.com (PPS) with ESMTPS id 3hbrtq03hp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Sat, 16 Jul 2022 09:08:51 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=EnUVg3sn7FS82lZEcY55jOjZN4k947Oo67/h3+y4CflvwiQZDFUHzDjj3O9IkLmmyR7wPtYOut+Fh6wBxqg4cJyEBruig7bQj+12hlh5TwCXsaZmA17zzUgwC7T8didn27alcZsAwlxLJHbOZKun4rTyzYqsRGjVdyYSKbdinv92vAVLnEWE9NBbxYQp6TuJYOo8vnm3smFdlNkCBasEfUFIjbuBVJ+3IK/5UTOZoiTt4Z36L0UcufnF5oqx9LvtqazzCOXdoG4KFpJ4epHZaS2LU8Refm101ZLgB5M1E8iI72UeK0PeqQlWL9wAF4eP1yRLJHbqmNsy71qPFrt7tw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Xxn/9qL7qLru3zA2Y8jgz2IsmaDLhQF0H01TTfgLS5g=;
+ b=EAlOowhvjTGF2nJZiSkvS7URrTMMeLBl6ldLYD4HxbItO8pNAkovVZzywDGMTfdCrEJGGPqxbKKH0lLq808tN0vtUgieZwn1cTu6L4qehTgV92lcE7o6Bhc7nMMwLXv2+guXDt86vTVWCR9aG5p7Oam+p2LluJAyxaRu+m22ZfexsJUYgOXNqB5ndnJ8i8JoNSzWFaFUE07T7G8AY8EeZIazmbTWfJ1y04hjBDKnvqssXwzsRkecVaL2T+JDGMhKbr8gMHeKpA0QZPVrkGzDKwV8VeoEWpd9yAVSHXXYrc+kgyf2LdQlLATTKQlIXyn1NO6ldfpzD+poziHUwMejqg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=equinix.com; dmarc=pass action=none header.from=equinix.com;
+ dkim=pass header.d=equinix.com; arc=none
+Received: from DM8PR04MB8007.namprd04.prod.outlook.com (2603:10b6:5:314::20)
+ by PH0PR04MB7191.namprd04.prod.outlook.com (2603:10b6:510:1c::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5438.12; Sat, 16 Jul
+ 2022 09:08:47 +0000
+Received: from DM8PR04MB8007.namprd04.prod.outlook.com
+ ([fe80::9890:b657:c8a:cffe]) by DM8PR04MB8007.namprd04.prod.outlook.com
+ ([fe80::9890:b657:c8a:cffe%7]) with mapi id 15.20.5438.020; Sat, 16 Jul 2022
+ 09:08:47 +0000
+From: Zev Weiss <zweiss@equinix.com>
+To: Joel Stanley <joel@jms.id.au>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] otp: Reduce size of struct
+ otpkey
+Thread-Topic: [PATCH u-boot v2019.04-aspeed-openbmc] otp: Reduce size of
+ struct otpkey
+Thread-Index: AQHYmPOoAenLh4/HD0+f/fGQiXiXgg==
+Date: Sat, 16 Jul 2022 09:08:47 +0000
+Message-ID: <20220716090847.GC9659@packtop>
+References: <20220714074552.818306-1-joel@jms.id.au>
+In-Reply-To: <20220714074552.818306-1-joel@jms.id.au>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 35a7af96-4855-4b13-8c72-08da670acaeb
+x-ms-traffictypediagnostic: PH0PR04MB7191:EE_
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:  Wd6nvDupRrJkZ3WiBWRSw58/IAEtmbORz0WDjOS7L999t7bLtFARa2nO3B1C/171j08H/aaGHIbOcyuimRRG9u0McRL+1rxfzXtpTbCdCeQyl8tK0k0wsCHuG1enxY5aq1o2ngdF1oDCUAym+BSlw9IBIF5udEcsic7jfdW3IxNJixL6M+37fpDO18tPSZacHmyO8zXBA76vQ3fcTbytiQemlfnOQmKRSZCCjCg0sKsWoabutv/sz/C9RvKpt/gWpwy99xmqWUHYS5O3E31fcCLvlHCSaQs4kDFJNDcDTQDYzjaOEt2SZmW4o68KMBnIPat0Ps3FK6w4uteCfXKARBfI/ZzyXHz4ybK/DXbYIAA9KdSwDydvROEWLdtfpQv4QmcO4L3q4DbbfWbg5MsPCRckJwbz5BDEMKUFRKAZhLPk5CXOkr3CbZNYlhULsZazonTfLwaZ+pT6rLON3QDmYjJ9LUHL3eQwpYi5a+3dXv0z4YunAkevGCbav2SnaocKKZSryteBY4UewY4hv5XwssUXMye7sC3BB5aNg/gkVEKIllstDwwDUl7UDE3s/xTx1uQm2aiRr6C1pmponKwIWSSL0PHBfHmNW1ljKlJoGGs633BcmNbvMlMizzEXCdJ3rtx5s57Vd1L0FKs7RimmmOBIoajM84fOJsij4l2EFB0mxMqmf4WW94hFqeKlxYVMNNIzjwRhhOjoPy0VjH2XamigfRZMvvXBoobULS358AXcY+1doe7gabjXLUh3NWJn6sUDWXmHuLtcrmpN9aRlG68bsMCUHnwnYrGNyJ+YBpgCwt691NDH04zQO2k4Xram
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM8PR04MB8007.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(7916004)(376002)(346002)(39860400002)(136003)(396003)(366004)(2906002)(26005)(478600001)(91956017)(76116006)(5660300002)(33716001)(41300700001)(8936002)(6512007)(6486002)(6506007)(66446008)(9686003)(83380400001)(33656002)(186003)(38100700002)(316002)(66476007)(54906003)(86362001)(4326008)(1076003)(71200400001)(8676002)(64756008)(66556008)(66946007)(6916009)(122000001)(38070700005);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:  =?iso-8859-1?Q?Ux5jbPqzQMQNbHjeWHQgbSTsj2CwR/bVkicAsFTukPdgW6Xt0lPLPqw1d5?=
+ =?iso-8859-1?Q?rSulNBDuZecg8+psspJKw8Wv38cq2mHHAL2fEvs0OLM0ea49JqQA1RT7MI?=
+ =?iso-8859-1?Q?Bbb8gW5MKraNnNmGeiAB6Ot/cw0yXSxoUkh2HJrc6gnG1U+aehfasRtjG2?=
+ =?iso-8859-1?Q?bbVRENEl4FJFssidlpF8hWtfgL3Z+8E0vpbPfi1eCyK/DjukQHV49VGn16?=
+ =?iso-8859-1?Q?j+8JTCFScOHOFdmrf36jzBXskOB8tmZI+jOchhYh3jR4JBK2Q0p3ZwRPu+?=
+ =?iso-8859-1?Q?FwXgWIOD0FuP3ayEildpU98p8l/7A+9gG5ZDGlT3NJ/FrzBSR91UOjsQop?=
+ =?iso-8859-1?Q?vOriKiIltQQHp1lxcm1jgBORfzZhbDG3q/gM7/ztMNcdX/ERo20PUsNYBi?=
+ =?iso-8859-1?Q?J47OnBan4yM69/BwE9ROG+M2Rsrc+QyzNMH38bKKnirIGMvB/Gw77hpSEv?=
+ =?iso-8859-1?Q?YweSSXMcy/KCRg2bphXQRiLHyQHwakBZ3Si/U8i735wLQNsglTZyobe8aN?=
+ =?iso-8859-1?Q?thYrly8gKaIZQwtPs3mC67hjYSpw63kd/KfzsAgWMZbbwWd201DIZ1iC5O?=
+ =?iso-8859-1?Q?jvSrtF3E7CI8IsCT5sIDZjVByjTOuKJBHgKPPSOCUprcOJLfTeUelCYUHJ?=
+ =?iso-8859-1?Q?0AVhQEhib6UhpPteaMungM/TK1PVz3B6l4qeO7cH8RVjlw4FRYDzT5BEu+?=
+ =?iso-8859-1?Q?QdYh2WrHacq1blhnozxsnZeH8YmUBZLJp3pFR4V4jk1mJpnUE8H9GkQncm?=
+ =?iso-8859-1?Q?mnjwBqk1/BzVAaE7YVJCcxYUa58FHsCJie4l2cqvCJEX8QweQNa+CCBA4n?=
+ =?iso-8859-1?Q?61HU+Bpl7kO/w6Ck65Nkv2iX+MbNiXQ7vSBegcJw4umgddHGfLEfTlOde7?=
+ =?iso-8859-1?Q?TB9h+4VeU5F73JpVxMhU+KRgiB6Zx+QTkI2wtll0JlorVt2B/sB27xIvR8?=
+ =?iso-8859-1?Q?kYWc8VKPukVOFjaSYG746EFy0gh+tu1HPWwZBIngiW2BlCnv0CRmNA0M6Q?=
+ =?iso-8859-1?Q?/qDcEm6ZCnhr2ngU0eXhbPfETjDU/zTCnb102amFuHJnSN2B2PsgnRLzwR?=
+ =?iso-8859-1?Q?Nexun9nB1+0ePO5GYICkaZFo53Nui558q5WOhVBOreUd89EI+xOHIRVray?=
+ =?iso-8859-1?Q?jvLFL2VJi9WvwSz9joUHGxxiRkfpotE27VAM+GyDuTtEo+1y4K5+wn2weT?=
+ =?iso-8859-1?Q?gADu+oPcuP/u0TIO6TH7oLRqeGr2XmJyLAazlE6dMs3g91Io8aLvq5KzW4?=
+ =?iso-8859-1?Q?9A/+YTRaFUg9TJOBZjem6kNgh6TWFLKmfQUgQ7abLsa4mwlvAfCXTxPjSe?=
+ =?iso-8859-1?Q?Z1Mp36V4+POan73o/aIZlBk69Ro9Ad+VVaTCGGmRL3HgiWpngTVfZF7CXd?=
+ =?iso-8859-1?Q?hP1GIg2ptjPmvAE7gr5rH6uPi+6DaovsNksrhbWajIkW8h+pGyi7XVrNhJ?=
+ =?iso-8859-1?Q?jgmQFq3k39ilRcQCFEmciPh2aQE3hWL/zcD3jhOfh5IhTfaAn+fEK997X1?=
+ =?iso-8859-1?Q?dy64Gw/KrSqgJj4T6tP93T+qmwGqVjKgFXFP8rXdqzUFE37ch5rtI5w1Xa?=
+ =?iso-8859-1?Q?5Afd6dY6p/JBx3fCHe4MZ5G9QSU4Bgq31ReW7ynX6oWo/YlHV4sr+j3lCU?=
+ =?iso-8859-1?Q?HQJ+F0nISgilVNmFXbj48blV0twDpPW/yZnGkQqHP0FraXOda5cLuLRA?=
+ =?iso-8859-1?Q?=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-ID: <4D801536D7E19046A03D369D167AAEDA@namprd04.prod.outlook.com>
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+X-OriginatorOrg: equinix.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM8PR04MB8007.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 35a7af96-4855-4b13-8c72-08da670acaeb
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Jul 2022 09:08:47.7490
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 72adb271-2fc7-4afe-a5ee-9de6a59f6bfb
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: LXvlQh/T+pfxjD2ZwUrSwgXERZ4TdEnc4MRhncMaA3BRKpQTYX+tSlmteyF5ctsi548+xO/NZ3IQufPIF6+APA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR04MB7191
+X-Proofpoint-ORIG-GUID: GlBtWLDzVKs5YCkzguVqmxJcZOtykSoi
+X-Proofpoint-GUID: GlBtWLDzVKs5YCkzguVqmxJcZOtykSoi
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-07-16_06,2022-07-15_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 spamscore=0 clxscore=1011 adultscore=0 mlxscore=0
+ malwarescore=0 suspectscore=0 lowpriorityscore=0 impostorscore=0
+ bulkscore=0 mlxlogscore=961 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2206140000 definitions=main-2207160035
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,274 +146,54 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: apparmor@lists.ubuntu.com, kvm@vger.kernel.org, linux-scsi@vger.kernel.org, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-wireless@vger.kernel.org, linux-can@vger.kernel.org, Linux Memory Management List <linux-mm@kvack.org>, linux-mediatek@lists.infradead.org, linux-pci@vger.kernel.org, linux-fsdevel@vger.kernel.org, ntfs3@lists.linux.dev, linux-arm-kernel@lists.infradead.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
-branch HEAD: 6014cfa5bf32cf8c5c58b3cfd5ee0e1542c8a825  Add linux-next specific files for 20220715
+On Thu, Jul 14, 2022 at 12:45:52AM PDT, Joel Stanley wrote:
+>Don't store more information than is used.
+>
+>  Function                                     old     new   delta
+>  _otp_print_key                               540     580     +40
+>  otp_verify_boot_image                       1336    1328      -8
+>  a2_key_type                                  640      40    -600
+>  a1_key_type                                  640      40    -600
+>  a3_key_type                                 1024      64    -960
+>  a0_key_type                                 1024      64    -960
+>  Total: Before=3D279318, After=3D276230, chg -1.11%
+>
+>Signed-off-by: Joel Stanley <joel@jms.id.au>
+>---
+> cmd/otp.c | 10 +++++-----
+> 1 file changed, 5 insertions(+), 5 deletions(-)
+>
+>diff --git a/cmd/otp.c b/cmd/otp.c
+>index 049c217d6048..6dd2d2bdfb17 100644
+>--- a/cmd/otp.c
+>+++ b/cmd/otp.c
+>@@ -133,11 +133,11 @@ struct otpstrap_status {
+> };
+>
+> struct otpkey_type {
+>-	int value;
+>-	int key_type;
+>-	int order;
+>-	int need_id;
+>-	char information[110];
+>+	int value: 4;
+>+	int key_type: 4;
+>+	int order: 1;
+>+	int need_id: 1;
 
-Error/Warning reports:
+I'm not sure if there's any chance it could lead to any actual problems
+here, but I think some static analyzers get unhappy about single-bit
+signed bitfields...perhaps these (maybe all four?) should be unsigned
+instead?
 
-https://lore.kernel.org/linux-doc/202207021352.PpKTUY8V-lkp@intel.com
-https://lore.kernel.org/linux-doc/202207031437.qIh6LFcx-lkp@intel.com
-https://lore.kernel.org/linux-doc/202207051821.3f0eRIsL-lkp@intel.com
-https://lore.kernel.org/linux-mm/202206292052.LsFui3zO-lkp@intel.com
-https://lore.kernel.org/linux-mm/202207160452.HPLSlqzA-lkp@intel.com
-https://lore.kernel.org/llvm/202207160039.bfW3l3uk-lkp@intel.com
-
-Error/Warning: (recently discovered and may have been fixed)
-
-Documentation/PCI/endpoint/pci-vntb-function.rst:82: WARNING: Unexpected indentation.
-Documentation/PCI/endpoint/pci-vntb-howto.rst:131: WARNING: Title underline too short.
-Documentation/virt/kvm/api.rst:8265: WARNING: Title underline too short.
-Documentation/virt/kvm/api.rst:8272: WARNING: Unexpected indentation.
-aarch64-linux-ld: Unexpected GOT/PLT entries detected!
-aarch64-linux-ld: Unexpected run-time procedure linkages detected!
-drivers/net/wireless/mac80211_hwsim.c:1431:37: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
-drivers/pci/endpoint/functions/pci-epf-vntb.c:1247: undefined reference to `ntb_register_device'
-drivers/pci/endpoint/functions/pci-epf-vntb.c:174: undefined reference to `ntb_link_event'
-drivers/pci/endpoint/functions/pci-epf-vntb.c:262: undefined reference to `ntb_db_event'
-drivers/pci/endpoint/functions/pci-epf-vntb.c:975:5: warning: no previous prototype for 'pci_read' [-Wmissing-prototypes]
-drivers/pci/endpoint/functions/pci-epf-vntb.c:984:5: warning: no previous prototype for 'pci_write' [-Wmissing-prototypes]
-drivers/vfio/vfio_iommu_type1.c:2141:35: warning: cast to smaller integer type 'enum iommu_cap' from 'void *' [-Wvoid-pointer-to-enum-cast]
-fs/nfsd/nfsctl.c:1504:17: error: use of undeclared identifier 'NFS4_CLIENTS_PER_GB'
-security/apparmor/policy_ns.c:83:20: warning: no previous prototype for 'alloc_unconfined' [-Wmissing-prototypes]
-security/apparmor/policy_ns.c:83:20: warning: no previous prototype for function 'alloc_unconfined' [-Wmissing-prototypes]
-
-Unverified Error/Warning (likely false positive, please contact us if interested):
-
-arch/x86/kernel/cpu/rdrand.c:36 x86_init_rdrand() error: uninitialized symbol 'prev'.
-drivers/devfreq/mtk-cci-devfreq.c:135 mtk_ccifreq_target() warn: variable dereferenced before check 'drv' (see line 130)
-drivers/gpio/gpio-xilinx.c:709:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/gpio/gpiolib-cdev.c:2563:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/gpio/gpiolib.c:2215:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/gpu/drm/amd/amdgpu/../display/dc/bios/bios_parser2.c:2994:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/gpu/drm/drm_mipi_dbi.c:876:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/hid/hid-input.c:2276:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/i2c/busses/i2c-designware-master.c:165:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/i2c/busses/i2c-jz4780.c:359:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/i2c/busses/i2c-mt65xx.c:927:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/i2c/busses/i2c-npcm7xx.c:639 npcm_i2c_slave_enable() error: buffer overflow 'npcm_i2caddr' 2 <= 9
-drivers/i2c/busses/i2c-s3c2410.c:746:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/i2c/busses/i2c-xiic.c:540:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/iio/industrialio-buffer.c:927:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/md/dm-mpath.c:1681:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/media/cec/i2c/ch7322.c:332:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/mfd/da9062-core.c:323:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/misc/habanalabs/gaudi2/gaudi2.c:8728:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/mmc/host/dw_mmc.c:989:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/net/can/slcan/slcan-core.c:601:14: sparse:    void *
-drivers/net/can/slcan/slcan-core.c:601:14: sparse:    void [noderef] __rcu *
-drivers/net/can/slcan/slcan-core.c:601:14: sparse: sparse: incompatible types in comparison expression (different address spaces):
-drivers/net/phy/phylink.c:887 phylink_change_inband_advert() error: we previously assumed 'pl->pcs' could be null (see line 870)
-drivers/nfc/trf7970a.c:631:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/pinctrl/core.c:2093:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/pinctrl/stm32/pinctrl-stm32.c:1627:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/power/supply/bq24190_charger.c:1944:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/power/supply/bq24257_charger.c:1078:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/power/supply/bq25890_charger.c:847:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/power/supply/bq27xxx_battery.c:1123:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/power/supply/rt9455_charger.c:1055:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/power/supply/sbs-battery.c:355:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/regulator/core.c:5171:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/regulator/s2mps11.c:1226:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/regulator/slg51000-regulator.c:436:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/scsi/qla2xxx/qla_os.c:336:5: sparse: sparse: symbol 'ql2xdelay_before_pci_error_handling' was not declared. Should it be static?
-drivers/target/target_core_device.c:1013:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/tty/n_gsm.c:1526:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/usb/gadget/composite.c:1080:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-drivers/video/fbdev/sh_mobile_lcdcfb.c:2505:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-fs/ext4/extents.c:1293:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-fs/kernel_read_file.c:61 kernel_read_file() warn: impossible condition '(i_size > (((~0) >> 1))) => (s64min-s64max > s64max)'
-include/linux/bits.h:9:41: warning: shift by negative count ('-1') [-Wanalyzer-shift-count-negative]
-include/linux/libata.h:2052:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-kernel/params.c:214:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-lib/842/842_decompress.c:210:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-lib/kobject.c:683:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-net/bluetooth/aosp.c:114:1: internal compiler error: in arc_ccfsm_record_condition, at config/arc/arc.cc:5500
-net/bluetooth/hci_request.c:2029:1: internal compiler error: in arc_ccfsm_record_condition, at config/arc/arc.cc:5500
-net/caif/cfctrl.c:583:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
-
-Error/Warning ids grouped by kconfigs:
-
-gcc_recent_errors
-|-- alpha-allyesconfig
-|   |-- drivers-pci-endpoint-functions-pci-epf-vntb.c:warning:no-previous-prototype-for-pci_read
-|   |-- drivers-pci-endpoint-functions-pci-epf-vntb.c:warning:no-previous-prototype-for-pci_write
-|   `-- security-apparmor-policy_ns.c:warning:no-previous-prototype-for-alloc_unconfined
-|-- alpha-randconfig-c004-20220716
-|   |-- drivers-pci-endpoint-functions-pci-epf-vntb.c:warning:no-previous-prototype-for-pci_read
-|   `-- drivers-pci-endpoint-functions-pci-epf-vntb.c:warning:no-previous-prototype-for-pci_write
-|-- arc-allyesconfig
-|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-bios-bios_parser2.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-misc-habanalabs-gaudi2-gaudi2.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-net-wireless-mac80211_hwsim.c:warning:cast-to-pointer-from-integer-of-different-size
-|   |-- drivers-pci-endpoint-functions-pci-epf-vntb.c:warning:no-previous-prototype-for-pci_read
-|   |-- drivers-pci-endpoint-functions-pci-epf-vntb.c:warning:no-previous-prototype-for-pci_write
-|   |-- drivers-target-target_core_device.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   `-- security-apparmor-policy_ns.c:warning:no-previous-prototype-for-alloc_unconfined
-|-- arc-randconfig-m031-20220716
-|   |-- drivers-devfreq-mtk-cci-devfreq.c-mtk_ccifreq_target()-warn:variable-dereferenced-before-check-drv-(see-line-)
-|   `-- drivers-i2c-busses-i2c-npcm7xx.c-npcm_i2c_slave_enable()-error:buffer-overflow-npcm_i2caddr
-|-- arc-randconfig-r013-20220715
-|   |-- drivers-usb-gadget-composite.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- net-bluetooth-aosp.c:internal-compiler-error:in-arc_ccfsm_record_condition-at-config-arc-arc.cc
-|   `-- net-bluetooth-hci_request.c:internal-compiler-error:in-arc_ccfsm_record_condition-at-config-arc-arc.cc
-|-- arc-randconfig-r032-20220715
-|   |-- drivers-gpio-gpio-xilinx.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-gpio-gpiolib-cdev.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-gpio-gpiolib.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-gpu-drm-drm_mipi_dbi.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-hid-hid-input.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-i2c-busses-i2c-designware-master.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-i2c-busses-i2c-jz4780.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-i2c-busses-i2c-mt65xx.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-i2c-busses-i2c-s3c2410.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-i2c-busses-i2c-xiic.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-iio-industrialio-buffer.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-md-dm-mpath.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-media-cec-i2c-ch7322.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-mfd-da9062-core.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-mmc-host-dw_mmc.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-nfc-trf7970a.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-pinctrl-core.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-pinctrl-stm32-pinctrl-stm32.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-power-supply-bq24190_charger.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-power-supply-bq24257_charger.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-power-supply-bq25890_charger.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-power-supply-bq27xxx_battery.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-power-supply-rt9455_charger.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-power-supply-sbs-battery.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-regulator-core.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-regulator-s2mps11.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-|   |-- drivers-regulator-slg51000-regulator.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
-clang_recent_errors
-|-- arm-versatile_defconfig
-|   `-- fs-nfsd-nfsctl.c:error:use-of-undeclared-identifier-NFS4_CLIENTS_PER_GB
-|-- i386-randconfig-a015
-|   `-- fs-nfsd-nfsctl.c:error:use-of-undeclared-identifier-NFS4_CLIENTS_PER_GB
-|-- powerpc-mvme5100_defconfig
-|   `-- fs-nfsd-nfsctl.c:error:use-of-undeclared-identifier-NFS4_CLIENTS_PER_GB
-|-- x86_64-randconfig-a001
-|   `-- drivers-vfio-vfio_iommu_type1.c:warning:cast-to-smaller-integer-type-enum-iommu_cap-from-void
-|-- x86_64-randconfig-a005
-|   |-- drivers-vfio-vfio_iommu_type1.c:warning:cast-to-smaller-integer-type-enum-iommu_cap-from-void
-|   `-- security-apparmor-policy_ns.c:warning:no-previous-prototype-for-function-alloc_unconfined
-|-- x86_64-randconfig-a012
-|   `-- drivers-vfio-vfio_iommu_type1.c:warning:cast-to-smaller-integer-type-enum-iommu_cap-from-void
-|-- x86_64-randconfig-a016
-|   `-- security-apparmor-policy_ns.c:warning:no-previous-prototype-for-function-alloc_unconfined
-`-- x86_64-randconfig-k001
-    `-- drivers-vfio-vfio_iommu_type1.c:warning:cast-to-smaller-integer-type-enum-iommu_cap-from-void
-
-elapsed time: 725m
-
-configs tested: 98
-configs skipped: 4
-
-gcc tested configs:
-arm                                 defconfig
-arm                              allyesconfig
-arm64                            allyesconfig
-i386                          randconfig-c001
-sh                        sh7785lcr_defconfig
-powerpc                    sam440ep_defconfig
-arm                           h3600_defconfig
-mips                         cobalt_defconfig
-sparc                             allnoconfig
-arm                     eseries_pxa_defconfig
-xtensa                generic_kc705_defconfig
-arm                           sama5_defconfig
-sh                         ap325rxa_defconfig
-arm                          gemini_defconfig
-m68k                        stmark2_defconfig
-mips                         rt305x_defconfig
-arm                             rpc_defconfig
-powerpc                      pasemi_defconfig
-sh                        sh7763rdp_defconfig
-mips                    maltaup_xpa_defconfig
-xtensa                              defconfig
-sh                           se7721_defconfig
-arm                           viper_defconfig
-sh                        edosk7705_defconfig
-alpha                             allnoconfig
-powerpc                 mpc8540_ads_defconfig
-nios2                         3c120_defconfig
-powerpc                     ep8248e_defconfig
-riscv                               defconfig
-riscv                             allnoconfig
-riscv                    nommu_virt_defconfig
-i386                              debian-10.3
-riscv                    nommu_k210_defconfig
-riscv                          rv32_defconfig
-i386                   debian-10.3-kselftests
-x86_64                        randconfig-c001
-ia64                             allmodconfig
-csky                              allnoconfig
-arc                               allnoconfig
-m68k                             allmodconfig
-arc                              allyesconfig
-alpha                            allyesconfig
-m68k                             allyesconfig
-powerpc                           allnoconfig
-sh                               allmodconfig
-mips                             allyesconfig
-powerpc                          allmodconfig
-i386                                defconfig
-i386                             allyesconfig
-x86_64                        randconfig-a004
-x86_64                        randconfig-a002
-x86_64                        randconfig-a006
-i386                          randconfig-a001
-i386                          randconfig-a003
-i386                          randconfig-a005
-x86_64                        randconfig-a013
-x86_64                        randconfig-a011
-x86_64                        randconfig-a015
-i386                          randconfig-a014
-i386                          randconfig-a012
-i386                          randconfig-a016
-arc                  randconfig-r043-20220715
-um                             i386_defconfig
-um                           x86_64_defconfig
-x86_64                              defconfig
-x86_64                               rhel-8.3
-x86_64                           allyesconfig
-x86_64                          rhel-8.3-func
-x86_64                         rhel-8.3-kunit
-x86_64                    rhel-8.3-kselftests
-x86_64                           rhel-8.3-syz
-
-clang tested configs:
-powerpc                     kmeter1_defconfig
-powerpc                  mpc885_ads_defconfig
-powerpc                    mvme5100_defconfig
-arm                       versatile_defconfig
-arm                              alldefconfig
-powerpc                  mpc866_ads_defconfig
-mips                     cu1830-neo_defconfig
-arm                            dove_defconfig
-arm                   milbeaut_m10v_defconfig
-powerpc                      obs600_defconfig
-x86_64                        randconfig-k001
-x86_64                        randconfig-a005
-x86_64                        randconfig-a001
-x86_64                        randconfig-a003
-i386                          randconfig-a002
-i386                          randconfig-a004
-i386                          randconfig-a006
-x86_64                        randconfig-a016
-x86_64                        randconfig-a012
-x86_64                        randconfig-a014
-i386                          randconfig-a013
-i386                          randconfig-a015
-i386                          randconfig-a011
-hexagon              randconfig-r045-20220715
-hexagon              randconfig-r041-20220715
-s390                 randconfig-r044-20220715
-riscv                randconfig-r042-20220715
-
--- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+>+	char *information;
+> };
+>
+> struct otp_pro_sts {
+>--=20
+>2.35.1
+>=
