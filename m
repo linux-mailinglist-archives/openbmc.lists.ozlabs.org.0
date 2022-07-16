@@ -1,71 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9228B576487
-	for <lists+openbmc@lfdr.de>; Fri, 15 Jul 2022 17:37:04 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A1B7F576B66
+	for <lists+openbmc@lfdr.de>; Sat, 16 Jul 2022 05:01:53 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LkwTB3K1Gz3c75
-	for <lists+openbmc@lfdr.de>; Sat, 16 Jul 2022 01:37:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LlCgH6WtNz3c7y
+	for <lists+openbmc@lfdr.de>; Sat, 16 Jul 2022 13:01:47 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=pw2c5yRl;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=IJuh8PdW;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::f2e; helo=mail-qv1-xf2e.google.com; envelope-from=brandonkim@google.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.55.52.43; helo=mga05.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=pw2c5yRl;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=IJuh8PdW;
 	dkim-atps=neutral
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LkwSn28Zdz3c1c
-	for <openbmc@lists.ozlabs.org>; Sat, 16 Jul 2022 01:36:40 +1000 (AEST)
-Received: by mail-qv1-xf2e.google.com with SMTP id g9so3932559qvq.7
-        for <openbmc@lists.ozlabs.org>; Fri, 15 Jul 2022 08:36:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=3GudFec2PSI8NRqfjVFj/f6oYNQQh2mVFhP32pW0rB4=;
-        b=pw2c5yRlAt5DDhZ/mGksBIn9XGB9SjctqCDmvoh9KMlG+Zff1HwVy5yTB9jYkVV468
-         7YG/cifwq440B+1o3ct5Gp+JFzrgH53UJSbK+9Ed3T+7c+P2/n3mpu3tccHWQWvzfp0r
-         YpckE3mQLBpWh0E7iRvK6e5v+OU8Zdd9auJXnkkNovieBz3QnxVeRwmXamL0AxmNpEKZ
-         SmZiWSWo4mdQSUx/Ib7aZ4QalbeatA+rT9Q2x6dPmu6MA/iD9vtttJ9lWs9u4aFoBuPZ
-         dBckD+W4rHRAxSOq/ZGABmn0rblgkDFnkGt9i2fRH6tJ3hQRaGg32qjsYKk3YQDNPzQg
-         Jd9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=3GudFec2PSI8NRqfjVFj/f6oYNQQh2mVFhP32pW0rB4=;
-        b=RZztxWn2TWHjlLXSRMnxsqjE+uPwu8X31dRRE1ood6uW6/8dQokfSNrsbYGyc9Ieni
-         BT/a9t262SUIWjHenib1CEsLN9Hn5J0gmoo8Z+vovXz9iKme9qheWy4QJ/OHuHmHwtzi
-         ku7NuFUp+nilIhqEEBiLHH9auwxPsiLIh1DZ7bvXPppqcQce/VM+GjOw0dkIU8HC+UNE
-         uSbrYAtn4JwulHaeYpeGpgVEjmPOwY14tbCIShzzC+Xsup2U57GqDIMsN7ZH2Rrnf7Pf
-         BluC4SNJmXuWBsDWO7wTjIymhZ02lQmxSGLWC445oeKr2+R+n2oWNHieV7h36q1xJWrX
-         odAw==
-X-Gm-Message-State: AJIora+epLo6fAZepOLCb63fX4kY22LytqFqWGJE9nq1i2KQRrcGUDws
-	c3lIM8e0Kefgveuutfy3hcnCTwFikQaVZnDrfuEnTA==
-X-Google-Smtp-Source: AGRyM1uBYFtM6BPRgzZg+QfThjZi9whDHXLeNPqP5ctVLupHFlPMERm+3uldowhisn2EHBEw/QzlpwbKIWf+EtwYVA8=
-X-Received: by 2002:ad4:57ae:0:b0:473:8181:b484 with SMTP id
- g14-20020ad457ae000000b004738181b484mr12481309qvx.82.1657899395006; Fri, 15
- Jul 2022 08:36:35 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LlCfq1BvPz3c12
+	for <openbmc@lists.ozlabs.org>; Sat, 16 Jul 2022 13:01:15 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1657940483; x=1689476483;
+  h=date:from:to:cc:subject:message-id:mime-version:
+   content-transfer-encoding;
+  bh=T/cGF5Nkf4YWawUFDvRxQd3G489QI1/mvWEiFyBeprw=;
+  b=IJuh8PdWZpQS+qm6CglVhW/Ey8JYmZx6YD4uJC2t0rvnnYnXMg8u56Dq
+   RhlTsfulTDPLYO+emB++1Wkl41n4MF8ItHp0Aa3wFo+RSe6vgjOPd32JR
+   znBo9hl1c3COWvgXFNukCWISlUYcFgcSOl/Fjrms7fyOjOqbZEcGLRyHE
+   wTZuu/N2Ka4Mau8Q20fDnObqIe6KSCPzwCunttRhg1HQcolcWAdM0wKdU
+   Lj8WYwwMJEcWEqimgxLXyIRE9igHFF83gAOrRrgy65c7Yow27uD3m3L32
+   vVFteOzS1HLzlJLBX9j2oL0jAw665nQlcpFMbP1gdZGjKG2ukaHIDRjDZ
+   A==;
+X-IronPort-AV: E=McAfee;i="6400,9594,10409"; a="372254285"
+X-IronPort-AV: E=Sophos;i="5.92,275,1650956400"; 
+   d="scan'208";a="372254285"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Jul 2022 20:01:04 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.92,275,1650956400"; 
+   d="scan'208";a="596679266"
+Received: from lkp-server02.sh.intel.com (HELO ff137eb26ff1) ([10.239.97.151])
+  by orsmga002.jf.intel.com with ESMTP; 15 Jul 2022 20:01:00 -0700
+Received: from kbuild by ff137eb26ff1 with local (Exim 4.95)
+	(envelope-from <lkp@intel.com>)
+	id 1oCY35-00014O-2o;
+	Sat, 16 Jul 2022 03:00:55 +0000
+Date: Sat, 16 Jul 2022 11:00:05 +0800
+From: kernel test robot <lkp@intel.com>
+To: Andrew Morton <akpm@linux-foundation.org>
+Subject: [linux-next:master] BUILD REGRESSION
+ 6014cfa5bf32cf8c5c58b3cfd5ee0e1542c8a825
+Message-ID: <62d229b5.vqqoX60YvzB2JbT+%lkp@intel.com>
+User-Agent: Heirloom mailx 12.5 6/20/10
 MIME-Version: 1.0
-References: <DM6PR08MB5514B0E05D21D8F96A11EDB2DC899@DM6PR08MB5514.namprd08.prod.outlook.com>
- <CAHwn2X=5L2uSgYBnbpC-trK1Tw-+chnwXd19WBiSd_9-vbwe=Q@mail.gmail.com>
- <CALGRKGM5o1S2G+qcd-Npmp3N+ESLAzhxb7rUFb8cwwgkfN8Tng@mail.gmail.com>
- <DM6PR08MB5514BE54A6F41DF8F621DFDEDC889@DM6PR08MB5514.namprd08.prod.outlook.com>
- <CALGRKGMe7cNLxTrf0On1b2cFFLWWxR5sdexJj8t8pJ=eMf0fWA@mail.gmail.com> <DM6PR08MB5514B0979322C3C07F8A3A9BDC8B9@DM6PR08MB5514.namprd08.prod.outlook.com>
-In-Reply-To: <DM6PR08MB5514B0979322C3C07F8A3A9BDC8B9@DM6PR08MB5514.namprd08.prod.outlook.com>
-From: Brandon Kim <brandonkim@google.com>
-Date: Fri, 15 Jul 2022 08:36:24 -0700
-Message-ID: <CALGRKGMmurcQO-1Q3Va=Bu6KGX_oYpJwB2RWU708kU4oQqEa2A@mail.gmail.com>
-Subject: Re: [phosphor-ipmi-flash]: Question about in-band update of BMC firmware
-To: "Chris Chen (TPI)" <Chris.Chen3@flex.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,506 +69,274 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "chris6906@gmail.com" <chris6906@gmail.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, William Kennington <wak@google.com>, Willy Tu <wltu@google.com>
+Cc: apparmor@lists.ubuntu.com, kvm@vger.kernel.org, linux-scsi@vger.kernel.org, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-wireless@vger.kernel.org, linux-can@vger.kernel.org, Linux Memory Management List <linux-mm@kvack.org>, linux-mediatek@lists.infradead.org, linux-pci@vger.kernel.org, linux-fsdevel@vger.kernel.org, ntfs3@lists.linux.dev, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Chris,
+tree/branch: https://git.kernel.org/pub/scm/linux/kernel/git/next/linux-next.git master
+branch HEAD: 6014cfa5bf32cf8c5c58b3cfd5ee0e1542c8a825  Add linux-next specific files for 20220715
 
-The network connection is actually referring to the BMC to host
-in-band network so no network port on the motherboard is necessary as
-long as there is a suitable network connection between the 2.
+Error/Warning reports:
 
-Thanks,
-Brandon
+https://lore.kernel.org/linux-doc/202207021352.PpKTUY8V-lkp@intel.com
+https://lore.kernel.org/linux-doc/202207031437.qIh6LFcx-lkp@intel.com
+https://lore.kernel.org/linux-doc/202207051821.3f0eRIsL-lkp@intel.com
+https://lore.kernel.org/linux-mm/202206292052.LsFui3zO-lkp@intel.com
+https://lore.kernel.org/linux-mm/202207160452.HPLSlqzA-lkp@intel.com
+https://lore.kernel.org/llvm/202207160039.bfW3l3uk-lkp@intel.com
 
-On Thu, Jul 14, 2022 at 11:25 PM Chris Chen (TPI) <Chris.Chen3@flex.com> wr=
-ote:
->
-> Hi Brandon,
->
-> Understood. Thank you for the information.
->
-> Just one more question would like to confirm with you, the README.md in t=
-he phosphor-ipmi-flash repo mentioned using net data transfer mechanism, th=
-is is not an in-band update, it is through the network connection, that mea=
-ns I can't use it if there is no network port on the motherboard, am I corr=
-ect?
->
-> Regards,
-> Chris Chen
->
-> -----Original Message-----
-> From: Brandon Kim <brandonkim@google.com>
-> Sent: Thursday, July 14, 2022 11:58 PM
-> To: Chris Chen (TPI) <Chris.Chen3@flex.com>
-> Cc: Willy Tu <wltu@google.com>; William Kennington <wak@google.com>; open=
-bmc@lists.ozlabs.org; chris6906@gmail.com
-> Subject: Re: [phosphor-ipmi-flash]: Question about in-band update of BMC =
-firmware
->
-> Hi Chris,
->
-> I'm unfortunately not familiar with the BIOS side of things - but I just =
-know that we worked with the BIOS engineers to "reserve" some space at an a=
-rbitrary location for this MMIO and enable some flag to mark this as a shar=
-ed location. To check if it works, I would encourage you use a mem write to=
- the memory from the BIOS to the shared region to verify the change can be =
-read back from the BIOS + BMC. To do this manually, you may also have to lo=
-ok through the Intel's PCH documentation regarding eSPI or LPC - and set th=
-e registers up using setpci commands (this should be done automatically by =
-the burn_my_bmc tool).
->
-> Looking through our internal codebase, we have not tested with Aspeed LPC=
- in a very long time so it's also possible that there were some regression =
-introduced, if you were able to successfully do a manual write to this shar=
-ed region.
->
-> Thanks,
-> Brandon
->
-> On Thu, Jul 14, 2022 at 4:39 AM Chris Chen (TPI) <Chris.Chen3@flex.com> w=
-rote:
-> >
-> > Hi Brandon and Willy,
-> >
-> > The host platform I'm using is Intel eagle stream with Aspeed 2600-A1.
-> >
-> > I am able to read/write to the dram memory on the BMC 0x98000000. Here =
-is my result.
-> > =3D=3D=3D=3D=3D
-> > root@hudsonbay-obmc:~# devmem 0x98000000 32 0xFFFFFFFF
-> > root@hudsonbay-obmc:~# devmem 0x98000000 32 0x55AA66BB
-> > root@hudsonbay-obmc:~# root@hudsonbay-obmc:~# devmem 0x98000000 32
-> > 0x55AA66BB =3D=3D=3D=3D=3D
-> >
-> > In addition, I found the "bmc-image" and "bmc.sig" files are with part =
-of 0x55AA66BB after I finished the upper commands. It looks like that LPC/e=
-SPI MMIO is not working in my case as you mentioned. So I am thinking is it=
- possible that you could share how to set BIOS with me?
-> >
-> > Thank you.
-> >
-> > Regards,
-> > Chris Chen
-> >
-> > ________________________________
-> > =E5=AF=84=E4=BB=B6=E8=80=85: Brandon Kim <brandonkim@google.com>
-> > =E5=AF=84=E4=BB=B6=E6=97=A5=E6=9C=9F: 2022=E5=B9=B47=E6=9C=8814=E6=97=
-=A5 =E4=B8=8A=E5=8D=88 12:45
-> > =E6=94=B6=E4=BB=B6=E8=80=85: Willy Tu <wltu@google.com>
-> > =E5=89=AF=E6=9C=AC: Chris Chen (TPI) <Chris.Chen3@flex.com>; William Ke=
-nnington
-> > <wak@google.com>; openbmc@lists.ozlabs.org <openbmc@lists.ozlabs.org>;
-> > chris6906@gmail.com <chris6906@gmail.com>
-> > =E4=B8=BB=E6=97=A8: Re: [phosphor-ipmi-flash]: Question about in-band u=
-pdate of BMC
-> > firmware
-> >
-> > Hi Chris,
-> >
-> > The region you choose on both the BMC and the BIOS IS important as the
-> > BMC and the BIOS usually has a dedicated address for such a shared
-> > MMIO. I am not a BIOS expert so I had to ask the BIOS team for the
-> > address that is dedicated for LPC / eSPI (if you plan on using LPC /
-> > eSPI) and had to refer to the BMC's datasheet for the region (I
-> > believe it's defaulted to the Nuvoton region currently). As Willy
-> > pointed out, my guess is that a manual write to the memory won't work
-> > for you.
-> >
-> > Which BMC are you using if you don't mind me asking? Nuvoton vs. Aspeed=
-?
-> >
-> > Thanks,
-> > Brandon
-> >
-> > On Wed, Jul 13, 2022 at 9:40 AM Willy Tu <wltu@google.com> wrote:
-> > >
-> > > Hi Chris,
-> > >
-> > > I think you were able to set it up correctly. Can you check if you ca=
-n read/write to the flash memory on the BMC 0x98000000? I am also wondering=
- if that address is correct  or not. Like if that address is mapped to the =
-BMC's memory. I have hit an issue where the image transferred does not matc=
-h because the BIOS didn't set that up properly. I am unsure how to set that=
- up.
-> > >
-> > > Willy Tu
-> > >
-> > > On Wed, Jul 13, 2022 at 1:15 AM Chris Chen (TPI) <Chris.Chen3@flex.co=
-m> wrote:
-> > >>
-> > >> Hi Brandon and William,
-> > >>
-> > >>
-> > >>
-> > >> As you know, I have already built the "burn_my_bmc" on my Host (Eagl=
-e Stream with Aspeed 2600). I for now tried to use it to do the in-band upd=
-ate of BMC firmware, the debug messages of the "burn_my_bmc" look good and =
-I also got "bmc-image" and "bmc.sig" file in the "/run/initramfs" and "/tmp=
-" directory respectively via LPC data transfer mechanism on the BMC. Howeve=
-r, one thing is strange which is the content of the "bmcimage" and "bmc.sig=
-" file are all 0xff. I think this should not be the normal case, perhaps I =
-made a mistake. Following are my steps/changes on the Host-side and BMC-sid=
-e, could you please take a look at it, is there anything wrong? Or do you h=
-ave any suggestions for enabling the feature? Thanks.
-> > >>
-> > >>
-> > >>
-> > >> Host-side
-> > >>
-> > >> =3D=3D=3D=3D=3D
-> > >>
-> > >> The e820 map of the Host system (just choose one area randomly,
-> > >> should I need to reserve a specific area for this??) ####
-> > >> archer@archer-ArcherCityM:mtd.all$ sudo dmesg | grep e820
-> > >>
-> > >> [    0.000000] BIOS-e820: [mem 0x0000000000000000-0x000000000009dfff=
-] usable
-> > >>
-> > >> [    0.000000] BIOS-e820: [mem 0x000000000009e000-0x000000000009efff=
-] reserved
-> > >>
-> > >> [    0.000000] BIOS-e820: [mem 0x000000000009f000-0x000000000009ffff=
-] usable
-> > >>
-> > >> [    0.000000] BIOS-e820: [mem 0x00000000000a0000-0x00000000000fffff=
-] reserved                   <-- choose this area.
-> > >>
-> > >> [    0.000000] BIOS-e820: [mem 0x0000000000100000-0x000000006d8effff=
-] usable
-> > >>
-> > >> [    0.000000] BIOS-e820: [mem 0x000000006d8f0000-0x000000006f9effff=
-] reserved
-> > >>
-> > >> [    0.000000] BIOS-e820: [mem 0x000000006f9f0000-0x00000000702effff=
-] ACPI data
-> > >>
-> > >> [    0.000000] BIOS-e820: [mem 0x00000000702f0000-0x0000000072c2ffff=
-] ACPI NVS
-> > >>
-> > >> [    0.000000] BIOS-e820: [mem 0x0000000072c30000-0x00000000777fefff=
-] reserved
-> > >>
-> > >> [    0.000000] BIOS-e820: [mem 0x00000000777ff000-0x00000000777fffff=
-] usable
-> > >>
-> > >> [    0.000000] BIOS-e820: [mem 0x0000000077800000-0x000000008fffffff=
-] reserved
-> > >>
-> > >> [    0.000000] BIOS-e820: [mem 0x00000000fe010000-0x00000000fe010fff=
-] reserved
-> > >>
-> > >> [    0.000000] BIOS-e820: [mem 0x00000000ff000000-0x00000000ffffffff=
-] reserved
-> > >>
-> > >> [    0.000000] BIOS-e820: [mem 0x0000000100000000-0x000000047fffffff=
-] usable
-> > >>
-> > >> [    0.000000] e820: update [mem 0x624a8018-0x624b0057] usable =3D=
-=3D> usable
-> > >>
-> > >> [    0.000000] e820: update [mem 0x624a8018-0x624b0057] usable =3D=
-=3D> usable
-> > >>
-> > >> [    0.000022] e820: update [mem 0x00000000-0x00000fff] usable =3D=
-=3D> reserved
-> > >>
-> > >> [    0.000027] e820: remove [mem 0x000a0000-0x000fffff] usable
-> > >>
-> > >> [    0.003943] e820: update [mem 0x80000000-0xffffffff] usable =3D=
-=3D> reserved
-> > >>
-> > >> [    0.017281] e820: update [mem 0x69d87000-0x69d87fff] usable =3D=
-=3D> reserved
-> > >>
-> > >> [    0.017300] e820: update [mem 0x686c6000-0x686c6fff] usable =3D=
-=3D> reserved
-> > >>
-> > >> [    5.045333] e820: reserve RAM buffer [mem 0x0009e000-0x0009ffff]
-> > >>
-> > >> [    5.045336] e820: reserve RAM buffer [mem 0x624a8018-0x63ffffff]
-> > >>
-> > >> [    5.045338] e820: reserve RAM buffer [mem 0x686c6000-0x6bffffff]
-> > >>
-> > >> [    5.045340] e820: reserve RAM buffer [mem 0x69d87000-0x6bffffff]
-> > >>
-> > >> [    5.045341] e820: reserve RAM buffer [mem 0x6d8f0000-0x6fffffff]
-> > >>
-> > >> [    5.045342] e820: reserve RAM buffer [mem 0x77800000-0x77ffffff]
-> > >>
-> > >> [   33.565052] systemd[1]: Mounting Mount unit for e820-bios, revisi=
-on 9...
-> > >>
-> > >> [   33.702641] systemd[1]: Mounted Mount unit for e820-bios, revisio=
-n 9.
-> > >> ####
-> > >>
-> > >> The executed command and its result.
-> > >> ####
-> > >> archer@archer-ArcherCityM:mtd.all$ time sudo burn_my_bmc \
-> > >>
-> > >> --command update \
-> > >>
-> > >>                                                             --interf=
-ace ipmilpc
-> > >>                                                             --image =
-./image-bmc \
-> > >>                                                             --sig ./=
-image-bmc.sig \
-> > >>                                                             --type i=
-mage \
-> > >>                                                             --addres=
-s 0x000a0000 \
-> > >>
-> > >> --length 0x10000
-> > >>
-> > >> Sending over the firmware image.
-> > >>
-> > >> sending writeMeta
-> > >>
-> > >> writemeta sent
-> > >>
-> > >> Progress: 100.00%
-> > >>
-> > >> Sending over the hash file.
-> > >>
-> > >> sending writeMeta
-> > >>
-> > >> writemeta sent
-> > >>
-> > >> Progress: 100.00%
-> > >>
-> > >> Opening the verification file
-> > >>
-> > >> Committing to /flash/verify to trigger service
-> > >>
-> > >> Calling stat on /flash/verify session to check status
-> > >>
-> > >> success
-> > >>
-> > >> succeeded
-> > >>
-> > >> Opening the update file
-> > >>
-> > >> Committing to /flash/update to trigger service
-> > >>
-> > >> Calling stat on /flash/update session to check status
-> > >>
-> > >> success
-> > >>
-> > >> succeeded
-> > >>
-> > >>
-> > >>
-> > >> real=E2=80=82=E2=80=820m17.616s
-> > >>
-> > >> user=E2=80=82=E2=80=820m0.046s
-> > >>
-> > >> sys=E2=80=82=E2=80=82=E2=80=820m0.147s
-> > >>
-> > >> ####
-> > >>
-> > >> =3D=3D=3D=3D=3D
-> > >>
-> > >>
-> > >>
-> > >> BMC-side
-> > >>
-> > >> =3D=3D=3D=3D=3D
-> > >>
-> > >> Code changes
-> > >>
-> > >> Add to install "phosphor-ipmi-flash" and "phosphor-ipmi-blobs" these=
- two packages in packagegroup recipe.
-> > >>
-> > >> ####
-> > >> SUMMARY:${PN}-system =3D "Flex Ltd System"
-> > >>
-> > >> RDEPENDS:${PN}-system =3D " \
-> > >>
-> > >>         phosphor-ipmi-blobs \
-> > >>
-> > >>         phosphor-ipmi-flash \
-> > >>
-> > >>         "
-> > >>
-> > >> ####
-> > >>
-> > >> Add "phosphor-impi-flash_%.bbapend" recipe with these lines(Bold).
-> > >>
-> > >> ####
-> > >> SRCREV =3D "c277935e6fe0cdcf8aefc45b53d11bd6ca20f964"
-> > >>
-> > >>
-> > >>
-> > >> PACKAGECONFIG:append =3D " static-bmc"
-> > >>
-> > >> PACKAGECONFIG:append =3D " aspeed-lpc"
-> > >>
-> > >> PACKAGECONFIG:append =3D " reboot-update"
-> > >>
-> > >> IPMI_FLASH_BMC_ADDRESS =3D "0x98000000"
-> > >>
-> > >> ####
-> > >>
-> > >> Remove ",-Dupdate-type=3Dnone" in the phosphor-ipmi-flash_git.bb rec=
-ipe as below, because the "Enabled Firmware Update Features" and "config-st=
-atic-bmc-reboot.json" are not be included. This seems the "update-type" wou=
-ld always pass "none" to "phosphor-impi-flash" package without this change,=
- but I'm not sure??
-> > >>
-> > >> ####
-> > >> PACKAGECONFIG[static-bmc] =3D "-Dupdate-type=3Dstatic-layout"
-> > >> ####
-> > >>
-> > >> Add these lines(Bold). in Kernel dts file
-> > >>
-> > >> ####
-> > >>
-> > >> reserved-memory {
-> > >>
-> > >> #address-cells =3D <1>;
-> > >>
-> > >> #size-cells =3D <1>;
-> > >>
-> > >> ranges;
-> > >>
-> > >>
-> > >>
-> > >> video_engine_memory: video {
-> > >>
-> > >> size =3D <0x04000000>;
-> > >>
-> > >> alignment =3D <0x01000000>;
-> > >>
-> > >> compatible =3D "shared-dma-pool";
-> > >>
-> > >> reusable;
-> > >>
-> > >> };
-> > >>
-> > >>
-> > >>
-> > >> /* LPC FW cycle bridge region requires natural alignment */
-> > >>
-> > >> flash_memory: region@98000000 {
-> > >>
-> > >> no-map;
-> > >>
-> > >> reg =3D <0x98000000 0x04000000>; /* 64M */
-> > >>
-> > >> };
-> > >>
-> > >> };
-> > >>
-> > >> &lpc_ctrl {
-> > >>
-> > >> status =3D "okay";
-> > >>
-> > >> memory-region =3D <&flash_memory>;
-> > >>
-> > >> };
-> > >>
-> > >> ####
-> > >>
-> > >> BMC console
-> > >>
-> > >> Manually modify "config-static-bmc-reboot.json" to skip "preparation=
-", "verification", and "update" actions because I want to make sure image f=
-ile transfer is okay first.
-> > >> ####
-> > >> root@hudsonbay-obmc:~# cat
-> > >> /usr/share/phosphor-ipmi-flash/config-static-bmc-reboot.json
-> > >>
-> > >> [{
-> > >>
-> > >>         "blob": "/flash/image",
-> > >>
-> > >>         "handler": {
-> > >>
-> > >>                 "type": "file",
-> > >>
-> > >>                 "path": "/run/initramfs/bmc-image"
-> > >>
-> > >>         },
-> > >>
-> > >>         "actions": {
-> > >>
-> > >>                 "preparation": {
-> > >>
-> > >>                         "type": "skip"
-> > >>
-> > >>                 },
-> > >>
-> > >>                 "verification": {
-> > >>
-> > >>                         "type": "skip"
-> > >>
-> > >>                 },
-> > >>
-> > >>                 "update": {
-> > >>
-> > >>                         "type": "skip"
-> > >>
-> > >>                 }
-> > >>
-> > >>         }
-> > >>
-> > >> }]
-> > >> ####
-> > >>
-> > >> Create "/run/initramfs" directory manually.
-> > >> ####
-> > >> root@hudsonbay-obmc:~# mkdir /run/initramfs
-> > >>
-> > >> ####
-> > >>
-> > >> Result after executing burn_my_bmc command. (the content of
-> > >> bmc-image and bmc.sig are all 0xff) ####
-> > >>
-> > >> root@hudsonbay-obmc:~# ls -al /run/initramfs/bmc-image
-> > >> -rw-r--r--    1 root     root      67108864 Jan  1 01:47 /run/initra=
-mfs/bmc-image
-> > >>
-> > >> root@hudsonbay-obmc:~# hexdump -C /run/initramfs/bmc-image
-> > >>
-> > >> 00000000  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff
-> > >> |................|
-> > >>
-> > >> *
-> > >>
-> > >> 04000000
-> > >>
-> > >> root@hudsonbay-obmc:~# ls -al /tmp/bmc.sig
-> > >>
-> > >> -rw-r--r--    1 root     root           128 Jan  1 01:47 /tmp/bmc.si=
-g
-> > >>
-> > >> root@hudsonbay-obmc:~# hexdump -C /tmp/bmc.sig
-> > >>
-> > >> 00000000  ff ff ff ff ff ff ff ff  ff ff ff ff ff ff ff ff
-> > >> |................|
-> > >>
-> > >> *
-> > >>
-> > >> 00000080
-> > >> ####
-> > >>
-> > >> =3D=3D=3D=3D=3D
-> > >>
-> > >>
-> > >>
-> > >> Regards,
-> > >>
-> > >> Chris Chen
-> > >>
-> > >> Legal Disclaimer :
-> > >> The information contained in this message may be privileged and conf=
-idential.
-> > >> It is intended to be read only by the individual or entity to whom
-> > >> it is addressed or by their designee. If the reader of this message
-> > >> is not the intended recipient, you are on notice that any
-> > >> distribution of this message, in any form, is strictly prohibited.
-> > >> If you have received this message in error, please immediately notif=
-y the sender and delete or destroy any copy of this message!
+Error/Warning: (recently discovered and may have been fixed)
+
+Documentation/PCI/endpoint/pci-vntb-function.rst:82: WARNING: Unexpected indentation.
+Documentation/PCI/endpoint/pci-vntb-howto.rst:131: WARNING: Title underline too short.
+Documentation/virt/kvm/api.rst:8265: WARNING: Title underline too short.
+Documentation/virt/kvm/api.rst:8272: WARNING: Unexpected indentation.
+aarch64-linux-ld: Unexpected GOT/PLT entries detected!
+aarch64-linux-ld: Unexpected run-time procedure linkages detected!
+drivers/net/wireless/mac80211_hwsim.c:1431:37: warning: cast to pointer from integer of different size [-Wint-to-pointer-cast]
+drivers/pci/endpoint/functions/pci-epf-vntb.c:1247: undefined reference to `ntb_register_device'
+drivers/pci/endpoint/functions/pci-epf-vntb.c:174: undefined reference to `ntb_link_event'
+drivers/pci/endpoint/functions/pci-epf-vntb.c:262: undefined reference to `ntb_db_event'
+drivers/pci/endpoint/functions/pci-epf-vntb.c:975:5: warning: no previous prototype for 'pci_read' [-Wmissing-prototypes]
+drivers/pci/endpoint/functions/pci-epf-vntb.c:984:5: warning: no previous prototype for 'pci_write' [-Wmissing-prototypes]
+drivers/vfio/vfio_iommu_type1.c:2141:35: warning: cast to smaller integer type 'enum iommu_cap' from 'void *' [-Wvoid-pointer-to-enum-cast]
+fs/nfsd/nfsctl.c:1504:17: error: use of undeclared identifier 'NFS4_CLIENTS_PER_GB'
+security/apparmor/policy_ns.c:83:20: warning: no previous prototype for 'alloc_unconfined' [-Wmissing-prototypes]
+security/apparmor/policy_ns.c:83:20: warning: no previous prototype for function 'alloc_unconfined' [-Wmissing-prototypes]
+
+Unverified Error/Warning (likely false positive, please contact us if interested):
+
+arch/x86/kernel/cpu/rdrand.c:36 x86_init_rdrand() error: uninitialized symbol 'prev'.
+drivers/devfreq/mtk-cci-devfreq.c:135 mtk_ccifreq_target() warn: variable dereferenced before check 'drv' (see line 130)
+drivers/gpio/gpio-xilinx.c:709:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/gpio/gpiolib-cdev.c:2563:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/gpio/gpiolib.c:2215:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/gpu/drm/amd/amdgpu/../display/dc/bios/bios_parser2.c:2994:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/gpu/drm/drm_mipi_dbi.c:876:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/hid/hid-input.c:2276:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/i2c/busses/i2c-designware-master.c:165:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/i2c/busses/i2c-jz4780.c:359:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/i2c/busses/i2c-mt65xx.c:927:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/i2c/busses/i2c-npcm7xx.c:639 npcm_i2c_slave_enable() error: buffer overflow 'npcm_i2caddr' 2 <= 9
+drivers/i2c/busses/i2c-s3c2410.c:746:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/i2c/busses/i2c-xiic.c:540:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/iio/industrialio-buffer.c:927:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/md/dm-mpath.c:1681:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/media/cec/i2c/ch7322.c:332:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/mfd/da9062-core.c:323:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/misc/habanalabs/gaudi2/gaudi2.c:8728:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/mmc/host/dw_mmc.c:989:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/net/can/slcan/slcan-core.c:601:14: sparse:    void *
+drivers/net/can/slcan/slcan-core.c:601:14: sparse:    void [noderef] __rcu *
+drivers/net/can/slcan/slcan-core.c:601:14: sparse: sparse: incompatible types in comparison expression (different address spaces):
+drivers/net/phy/phylink.c:887 phylink_change_inband_advert() error: we previously assumed 'pl->pcs' could be null (see line 870)
+drivers/nfc/trf7970a.c:631:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/pinctrl/core.c:2093:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/pinctrl/stm32/pinctrl-stm32.c:1627:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/power/supply/bq24190_charger.c:1944:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/power/supply/bq24257_charger.c:1078:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/power/supply/bq25890_charger.c:847:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/power/supply/bq27xxx_battery.c:1123:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/power/supply/rt9455_charger.c:1055:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/power/supply/sbs-battery.c:355:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/regulator/core.c:5171:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/regulator/s2mps11.c:1226:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/regulator/slg51000-regulator.c:436:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/scsi/qla2xxx/qla_os.c:336:5: sparse: sparse: symbol 'ql2xdelay_before_pci_error_handling' was not declared. Should it be static?
+drivers/target/target_core_device.c:1013:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/tty/n_gsm.c:1526:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/usb/gadget/composite.c:1080:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+drivers/video/fbdev/sh_mobile_lcdcfb.c:2505:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+fs/ext4/extents.c:1293:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+fs/kernel_read_file.c:61 kernel_read_file() warn: impossible condition '(i_size > (((~0) >> 1))) => (s64min-s64max > s64max)'
+include/linux/bits.h:9:41: warning: shift by negative count ('-1') [-Wanalyzer-shift-count-negative]
+include/linux/libata.h:2052:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+kernel/params.c:214:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+lib/842/842_decompress.c:210:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+lib/kobject.c:683:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+net/bluetooth/aosp.c:114:1: internal compiler error: in arc_ccfsm_record_condition, at config/arc/arc.cc:5500
+net/bluetooth/hci_request.c:2029:1: internal compiler error: in arc_ccfsm_record_condition, at config/arc/arc.cc:5500
+net/caif/cfctrl.c:583:1: internal compiler error: in arc_ifcvt, at config/arc/arc.cc:9642
+
+Error/Warning ids grouped by kconfigs:
+
+gcc_recent_errors
+|-- alpha-allyesconfig
+|   |-- drivers-pci-endpoint-functions-pci-epf-vntb.c:warning:no-previous-prototype-for-pci_read
+|   |-- drivers-pci-endpoint-functions-pci-epf-vntb.c:warning:no-previous-prototype-for-pci_write
+|   `-- security-apparmor-policy_ns.c:warning:no-previous-prototype-for-alloc_unconfined
+|-- alpha-randconfig-c004-20220716
+|   |-- drivers-pci-endpoint-functions-pci-epf-vntb.c:warning:no-previous-prototype-for-pci_read
+|   `-- drivers-pci-endpoint-functions-pci-epf-vntb.c:warning:no-previous-prototype-for-pci_write
+|-- arc-allyesconfig
+|   |-- drivers-gpu-drm-amd-amdgpu-..-display-dc-bios-bios_parser2.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-misc-habanalabs-gaudi2-gaudi2.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-net-wireless-mac80211_hwsim.c:warning:cast-to-pointer-from-integer-of-different-size
+|   |-- drivers-pci-endpoint-functions-pci-epf-vntb.c:warning:no-previous-prototype-for-pci_read
+|   |-- drivers-pci-endpoint-functions-pci-epf-vntb.c:warning:no-previous-prototype-for-pci_write
+|   |-- drivers-target-target_core_device.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   `-- security-apparmor-policy_ns.c:warning:no-previous-prototype-for-alloc_unconfined
+|-- arc-randconfig-m031-20220716
+|   |-- drivers-devfreq-mtk-cci-devfreq.c-mtk_ccifreq_target()-warn:variable-dereferenced-before-check-drv-(see-line-)
+|   `-- drivers-i2c-busses-i2c-npcm7xx.c-npcm_i2c_slave_enable()-error:buffer-overflow-npcm_i2caddr
+|-- arc-randconfig-r013-20220715
+|   |-- drivers-usb-gadget-composite.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- net-bluetooth-aosp.c:internal-compiler-error:in-arc_ccfsm_record_condition-at-config-arc-arc.cc
+|   `-- net-bluetooth-hci_request.c:internal-compiler-error:in-arc_ccfsm_record_condition-at-config-arc-arc.cc
+|-- arc-randconfig-r032-20220715
+|   |-- drivers-gpio-gpio-xilinx.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-gpio-gpiolib-cdev.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-gpio-gpiolib.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-gpu-drm-drm_mipi_dbi.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-hid-hid-input.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-i2c-busses-i2c-designware-master.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-i2c-busses-i2c-jz4780.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-i2c-busses-i2c-mt65xx.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-i2c-busses-i2c-s3c2410.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-i2c-busses-i2c-xiic.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-iio-industrialio-buffer.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-md-dm-mpath.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-media-cec-i2c-ch7322.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-mfd-da9062-core.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-mmc-host-dw_mmc.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-nfc-trf7970a.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-pinctrl-core.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-pinctrl-stm32-pinctrl-stm32.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-power-supply-bq24190_charger.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-power-supply-bq24257_charger.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-power-supply-bq25890_charger.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-power-supply-bq27xxx_battery.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-power-supply-rt9455_charger.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-power-supply-sbs-battery.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-regulator-core.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-regulator-s2mps11.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+|   |-- drivers-regulator-slg51000-regulator.c:internal-compiler-error:in-arc_ifcvt-at-config-arc-arc.cc
+clang_recent_errors
+|-- arm-versatile_defconfig
+|   `-- fs-nfsd-nfsctl.c:error:use-of-undeclared-identifier-NFS4_CLIENTS_PER_GB
+|-- i386-randconfig-a015
+|   `-- fs-nfsd-nfsctl.c:error:use-of-undeclared-identifier-NFS4_CLIENTS_PER_GB
+|-- powerpc-mvme5100_defconfig
+|   `-- fs-nfsd-nfsctl.c:error:use-of-undeclared-identifier-NFS4_CLIENTS_PER_GB
+|-- x86_64-randconfig-a001
+|   `-- drivers-vfio-vfio_iommu_type1.c:warning:cast-to-smaller-integer-type-enum-iommu_cap-from-void
+|-- x86_64-randconfig-a005
+|   |-- drivers-vfio-vfio_iommu_type1.c:warning:cast-to-smaller-integer-type-enum-iommu_cap-from-void
+|   `-- security-apparmor-policy_ns.c:warning:no-previous-prototype-for-function-alloc_unconfined
+|-- x86_64-randconfig-a012
+|   `-- drivers-vfio-vfio_iommu_type1.c:warning:cast-to-smaller-integer-type-enum-iommu_cap-from-void
+|-- x86_64-randconfig-a016
+|   `-- security-apparmor-policy_ns.c:warning:no-previous-prototype-for-function-alloc_unconfined
+`-- x86_64-randconfig-k001
+    `-- drivers-vfio-vfio_iommu_type1.c:warning:cast-to-smaller-integer-type-enum-iommu_cap-from-void
+
+elapsed time: 725m
+
+configs tested: 98
+configs skipped: 4
+
+gcc tested configs:
+arm                                 defconfig
+arm                              allyesconfig
+arm64                            allyesconfig
+i386                          randconfig-c001
+sh                        sh7785lcr_defconfig
+powerpc                    sam440ep_defconfig
+arm                           h3600_defconfig
+mips                         cobalt_defconfig
+sparc                             allnoconfig
+arm                     eseries_pxa_defconfig
+xtensa                generic_kc705_defconfig
+arm                           sama5_defconfig
+sh                         ap325rxa_defconfig
+arm                          gemini_defconfig
+m68k                        stmark2_defconfig
+mips                         rt305x_defconfig
+arm                             rpc_defconfig
+powerpc                      pasemi_defconfig
+sh                        sh7763rdp_defconfig
+mips                    maltaup_xpa_defconfig
+xtensa                              defconfig
+sh                           se7721_defconfig
+arm                           viper_defconfig
+sh                        edosk7705_defconfig
+alpha                             allnoconfig
+powerpc                 mpc8540_ads_defconfig
+nios2                         3c120_defconfig
+powerpc                     ep8248e_defconfig
+riscv                               defconfig
+riscv                             allnoconfig
+riscv                    nommu_virt_defconfig
+i386                              debian-10.3
+riscv                    nommu_k210_defconfig
+riscv                          rv32_defconfig
+i386                   debian-10.3-kselftests
+x86_64                        randconfig-c001
+ia64                             allmodconfig
+csky                              allnoconfig
+arc                               allnoconfig
+m68k                             allmodconfig
+arc                              allyesconfig
+alpha                            allyesconfig
+m68k                             allyesconfig
+powerpc                           allnoconfig
+sh                               allmodconfig
+mips                             allyesconfig
+powerpc                          allmodconfig
+i386                                defconfig
+i386                             allyesconfig
+x86_64                        randconfig-a004
+x86_64                        randconfig-a002
+x86_64                        randconfig-a006
+i386                          randconfig-a001
+i386                          randconfig-a003
+i386                          randconfig-a005
+x86_64                        randconfig-a013
+x86_64                        randconfig-a011
+x86_64                        randconfig-a015
+i386                          randconfig-a014
+i386                          randconfig-a012
+i386                          randconfig-a016
+arc                  randconfig-r043-20220715
+um                             i386_defconfig
+um                           x86_64_defconfig
+x86_64                              defconfig
+x86_64                               rhel-8.3
+x86_64                           allyesconfig
+x86_64                          rhel-8.3-func
+x86_64                         rhel-8.3-kunit
+x86_64                    rhel-8.3-kselftests
+x86_64                           rhel-8.3-syz
+
+clang tested configs:
+powerpc                     kmeter1_defconfig
+powerpc                  mpc885_ads_defconfig
+powerpc                    mvme5100_defconfig
+arm                       versatile_defconfig
+arm                              alldefconfig
+powerpc                  mpc866_ads_defconfig
+mips                     cu1830-neo_defconfig
+arm                            dove_defconfig
+arm                   milbeaut_m10v_defconfig
+powerpc                      obs600_defconfig
+x86_64                        randconfig-k001
+x86_64                        randconfig-a005
+x86_64                        randconfig-a001
+x86_64                        randconfig-a003
+i386                          randconfig-a002
+i386                          randconfig-a004
+i386                          randconfig-a006
+x86_64                        randconfig-a016
+x86_64                        randconfig-a012
+x86_64                        randconfig-a014
+i386                          randconfig-a013
+i386                          randconfig-a015
+i386                          randconfig-a011
+hexagon              randconfig-r045-20220715
+hexagon              randconfig-r041-20220715
+s390                 randconfig-r044-20220715
+riscv                randconfig-r042-20220715
+
+-- 
+0-DAY CI Kernel Test Service
+https://01.org/lkp
