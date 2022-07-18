@@ -1,65 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id ACABD577DF4
-	for <lists+openbmc@lfdr.de>; Mon, 18 Jul 2022 10:50:34 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 86011577DF9
+	for <lists+openbmc@lfdr.de>; Mon, 18 Jul 2022 10:51:11 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LmbJm4WRfz2y8Q
-	for <lists+openbmc@lfdr.de>; Mon, 18 Jul 2022 18:50:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LmbKT4KQZz3c3L
+	for <lists+openbmc@lfdr.de>; Mon, 18 Jul 2022 18:51:09 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=OS4dBJZd;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Bck3INmc;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::52e; helo=mail-pg1-x52e.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::430; helo=mail-pf1-x430.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=OS4dBJZd;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Bck3INmc;
 	dkim-atps=neutral
-Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LmbFh45Sdz3c5h
-	for <openbmc@lists.ozlabs.org>; Mon, 18 Jul 2022 18:47:52 +1000 (AEST)
-Received: by mail-pg1-x52e.google.com with SMTP id 23so9964465pgc.8
-        for <openbmc@lists.ozlabs.org>; Mon, 18 Jul 2022 01:47:52 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LmbFl16cQz3bkd
+	for <openbmc@lists.ozlabs.org>; Mon, 18 Jul 2022 18:47:54 +1000 (AEST)
+Received: by mail-pf1-x430.google.com with SMTP id c139so3712406pfc.2
+        for <openbmc@lists.ozlabs.org>; Mon, 18 Jul 2022 01:47:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=gGTNzPjEZYpLT4vW76g3OPKhcCsIvw3YoUWlJme06UI=;
-        b=OS4dBJZd6Su+QhDeXDmADUCzoS+jsVW2HA1v8BWUQwrAVPfLywK+UMrEmQ1dgPp2l+
-         osSh+Xr6sXTDvPsNX/uN2cLVofOLDBhkmkL12QOm2OZ1FJ2yYegIzugBDZulV95su6in
-         bb3UrQh+I9mio2pxjyey5H3fD7smV7KLqflXKED/p57w+AcWFelHqFaE/jKht/41j/KE
-         ZbaBfCXQa+o7Zoto5GKHV9Qq/8P07KrDOO/4OVmBPg9KdlZMgp3y0voJmw8NciEf9a1w
-         PNAOh70vFi1WyvIRIAWtKvmuClJx4QIz2qFv4JrcP2GqEF/l8lf945/YzU+imb3sgdJc
-         MoYg==
+        bh=tTsaJi/aBfMLOUcGWJTKcmgimxno0ovagRBeaRXx9y4=;
+        b=Bck3INmcAU6tBIJ1BFvx4k9lHO7OP+tek5Gy44OIvfRWUrX0zMT3MEMmhMEnvL3H3Z
+         Ob+TUJ0txgxj7zc8G+ZZk4pYgBEs6OdkDk89pfvP6C49Nc63embxrttFzGTuZX1yeD/w
+         nj9GBmGk+xD13IMKqaRug94VXG4MABe5wMazabB7PT02jJQL8TfMjLpU36YQAPuPmD4I
+         LExo/lE0iNAgE6v/sCnr0uGGtJgbKxsmMFx0CWMlZnZ4x22r5Gi+aALcD5Ho43w392em
+         yuAtDrxM3gp4USTSemCDZvdovzrVe5H/SZwjAFOjfgVX60/tu4NzqNOuywZhNFBlekeb
+         1Mrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
          :in-reply-to:references:mime-version:content-transfer-encoding;
-        bh=gGTNzPjEZYpLT4vW76g3OPKhcCsIvw3YoUWlJme06UI=;
-        b=7bQWrqEQ30WYzH11yKdhsOl882mIg3hn3HYGtdiTDCAMd4jK1AJ55imQ3LOWfmKZj6
-         V3eip9mqc+B4qJoJq7RPKAGvoSSSzypps3TvUx5VdNpo7WXEtHuDp9/uekgpA73gfHYH
-         3BcS9UTquOJQy1pcWbxNQrtYzKkxin/89sPGghdoJu+X06aNoRWvrTNmzL/ol337BfiG
-         zUHaYkf+QD0twjVI/t7R5Chbe4oSaJZLa5t6zAExeIhdxhx1caLphDS5WnuN5xz9SR3M
-         NK8cTHkP3GV176V0yVhUF3gBPJNMkboAgE2MUIk7brSnCCytSTyLEMwufRDeOVc0jfPh
-         nYFQ==
-X-Gm-Message-State: AJIora+Fcv8X8TBKtJ5KKWZEgrL3JadF5TRgISigxTkwtc6wLjb1s2VA
-	dqCJL3086FY0SrLzem2i5weMzf4FW5M=
-X-Google-Smtp-Source: AGRyM1twgx12QOOdRHdzxu16oPB836sd4SbrT8ro2XapNG/Oq3PrxCByAhNw5luBT+GmgvRYulywMg==
-X-Received: by 2002:a05:6a00:1703:b0:52b:39a4:4632 with SMTP id h3-20020a056a00170300b0052b39a44632mr16845001pfc.29.1658134069399;
-        Mon, 18 Jul 2022 01:47:49 -0700 (PDT)
+        bh=tTsaJi/aBfMLOUcGWJTKcmgimxno0ovagRBeaRXx9y4=;
+        b=a9l+4XlG86IWFCirj+5JwZSSmUdRa6lQ/yCIz44yKEB9+atczW+1B6kR1r4LRjVPSY
+         nlgHmEGGGpd2xTE7Y+H84s5troy1kth2qwJQP2QAnQM22riFBiEmmziAOogKnaBiJfEP
+         oVD1BeTUJfZz4i1GHjyTei/s/qIgDe2x3GJxZTjkw0DF/kjjClsJhmnUv4pDpsGAQC+g
+         OsQlOM9looNPSnbbrA9+HnY0wprXLpelRlenfMb7CGQOe00RiIyzoKq0so3UDYe9r2qZ
+         ol82k71tToyeN+a752XgqiWOALSJWbEYMeCv7SX7KjvYybWypWf8y/LrTt0e7iWOAh6D
+         DP4A==
+X-Gm-Message-State: AJIora+YbniqMLoCV1mxTITe0VPceA0ykSBPTx8LKQydVaId421v1oZh
+	RiVtJmeVNBG2t1Oh8xol+3QO3Y9dLso=
+X-Google-Smtp-Source: AGRyM1tqQoKDSqhX3qpnBVurJz2HVXfNJbMVJxYn45QV5Vx6hQ/pPKIK4gnbfeu+3q/kPpMExMCZFg==
+X-Received: by 2002:a05:6a00:1a92:b0:52b:ac3:7964 with SMTP id e18-20020a056a001a9200b0052b0ac37964mr26755785pfv.31.1658134071935;
+        Mon, 18 Jul 2022 01:47:51 -0700 (PDT)
 Received: from localhost.localdomain ([45.124.203.18])
-        by smtp.gmail.com with ESMTPSA id i28-20020a056a00225c00b005289521b656sm8806095pfu.92.2022.07.18.01.47.47
+        by smtp.gmail.com with ESMTPSA id i28-20020a056a00225c00b005289521b656sm8806095pfu.92.2022.07.18.01.47.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jul 2022 01:47:48 -0700 (PDT)
+        Mon, 18 Jul 2022 01:47:51 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc 4/5] cmd/otp: Use hashing API
-Date: Mon, 18 Jul 2022 18:17:27 +0930
-Message-Id: <20220718084728.1140108-5-joel@jms.id.au>
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc 5/5] cmd/otp: Reduce size of otpkey
+Date: Mon, 18 Jul 2022 18:17:28 +0930
+Message-Id: <20220718084728.1140108-6-joel@jms.id.au>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220718084728.1140108-1-joel@jms.id.au>
 References: <20220718084728.1140108-1-joel@jms.id.au>
@@ -80,107 +80,47 @@ Cc: Zev Weiss <zweiss@equinix.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Instead of calling the hashing functions directly, which uses the
-software implementation of the algorithms, use the hash API which
-allows the use of the HACE driver.
+Don't store more information than is used. Saves 3KB.
 
-Saves 12.5KB:
-
- Before=279327, After=266547, chg -4.58%
+  Function                                     old     new   delta
+  _otp_print_key                               540     580     +40
+  otp_verify_boot_image                       1276    1268      -8
+  a2_key_type                                  640      40    -600
+  a1_key_type                                  640      40    -600
+  a3_key_type                                 1024      64    -960
+  a0_key_type                                 1024      64    -960
+  Total: Before=266547, After=263459, chg -1.16%
 
 Signed-off-by: Joel Stanley <joel@jms.id.au>
 ---
- cmd/otp.c | 49 +++++++++++++++++--------------------------------
- 1 file changed, 17 insertions(+), 32 deletions(-)
+This patch includes Zev's suggestion to make the bitfields unsigned:
+
+ https://lore.kernel.org/openbmc/20220716090847.GC9659@packtop/
+
+ cmd/otp.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/cmd/otp.c b/cmd/otp.c
-index 049c217d6048..add70c841405 100644
+index add70c841405..2df410dfd024 100644
 --- a/cmd/otp.c
 +++ b/cmd/otp.c
-@@ -305,33 +305,6 @@ static int get_rid_num(u32 *rid)
- 	return rid_num;
- }
+@@ -133,11 +133,11 @@ struct otpstrap_status {
+ };
  
--static void sb_sha256(u8 *src, u32 len, u8 *digest_ret)
--{
--	sha256_context ctx;
--
--	sha256_starts(&ctx);
--	sha256_update(&ctx, src, len);
--	sha256_finish(&ctx, digest_ret);
--}
--
--static void sb_sha384(u8 *src, u32 len, u8 *digest_ret)
--{
--	sha512_context ctx;
--
--	sha384_starts(&ctx);
--	sha384_update(&ctx, src, len);
--	sha384_finish(&ctx, digest_ret);
--}
--
--static void sb_sha512(u8 *src, u32 len, u8 *digest_ret)
--{
--	sha512_context ctx;
--
--	sha512_starts(&ctx);
--	sha512_update(&ctx, src, len);
--	sha512_finish(&ctx, digest_ret);
--}
--
- static u32 chip_version(void)
- {
- 	u32 revid0, revid1;
-@@ -1912,6 +1885,18 @@ static int otp_check_scu_image(struct otp_image_layout *image_layout, u32 *scu_p
- 	return OTP_SUCCESS;
- }
+ struct otpkey_type {
+-	int value;
+-	int key_type;
+-	int order;
+-	int need_id;
+-	char information[110];
++	unsigned int value: 4;
++	unsigned int key_type: 4;
++	unsigned int order: 1;
++	unsigned int need_id: 1;
++	char *information;
+ };
  
-+static void do_hash(const void *data, int data_len, const char *algo_name, uint8_t *value)
-+{
-+        struct hash_algo *algo;
-+
-+        if (hash_lookup_algo(algo_name, &algo)) {
-+                debug("Unsupported hash alogrithm\n");
-+                return;
-+        }
-+
-+        algo->hash_func_ws(data, data_len, value, algo->chunk_size);
-+}
-+
- static int otp_verify_image(u8 *src_buf, u32 length, u8 *digest_buf, int version)
- {
- 	u8 digest_ret[48];
-@@ -1919,11 +1904,11 @@ static int otp_verify_image(u8 *src_buf, u32 length, u8 *digest_buf, int version
- 
- 	switch (version) {
- 	case 1:
--		sb_sha256(src_buf, length, digest_ret);
-+		do_hash(src_buf, length, "sha256", digest_ret);
- 		digest_len = 32;
- 		break;
- 	case 2:
--		sb_sha384(src_buf, length, digest_ret);
-+		do_hash(src_buf, length, "sha384", digest_ret);
- 		digest_len = 48;
- 		break;
- 	default:
-@@ -2549,13 +2534,13 @@ static int sb_sha(struct sb_info *si, u8 *sec_image, u32 sign_image_size, u8 *di
- 		printf("otp verify does not support SHA224\n");
- 		return OTP_FAILURE;
- 	case 256:
--		sb_sha256(sec_image, sign_image_size, digest_ret);
-+		do_hash(sec_image, sign_image_size, "sha256", digest_ret);
- 		break;
- 	case 384:
--		sb_sha384(sec_image, sign_image_size, digest_ret);
-+		do_hash(sec_image, sign_image_size, "sha384", digest_ret);
- 		break;
- 	case 512:
--		sb_sha512(sec_image, sign_image_size, digest_ret);
-+		do_hash(sec_image, sign_image_size, "sha512", digest_ret);
- 		break;
- 	default:
- 		printf("SHA Algorithm is invalid\n");
+ struct otp_pro_sts {
 -- 
 2.35.1
 
