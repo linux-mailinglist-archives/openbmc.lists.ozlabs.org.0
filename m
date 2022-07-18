@@ -1,66 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EB45577E08
-	for <lists+openbmc@lfdr.de>; Mon, 18 Jul 2022 10:56:01 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F916577E0C
+	for <lists+openbmc@lfdr.de>; Mon, 18 Jul 2022 10:56:38 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LmbR33GBMz3c69
-	for <lists+openbmc@lfdr.de>; Mon, 18 Jul 2022 18:55:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LmbRm2xDkz3c31
+	for <lists+openbmc@lfdr.de>; Mon, 18 Jul 2022 18:56:36 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=l6z2Yq5H;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=cFVdC5ux;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62e; helo=mail-pl1-x62e.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102a; helo=mail-pj1-x102a.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=l6z2Yq5H;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=cFVdC5ux;
 	dkim-atps=neutral
-Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LmbQd6p3bz2xKw
-	for <openbmc@lists.ozlabs.org>; Mon, 18 Jul 2022 18:55:37 +1000 (AEST)
-Received: by mail-pl1-x62e.google.com with SMTP id z1so8432658plb.1
-        for <openbmc@lists.ozlabs.org>; Mon, 18 Jul 2022 01:55:37 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LmbQg2xkVz2xKw
+	for <openbmc@lists.ozlabs.org>; Mon, 18 Jul 2022 18:55:39 +1000 (AEST)
+Received: by mail-pj1-x102a.google.com with SMTP id 89-20020a17090a09e200b001ef7638e536so17514598pjo.3
+        for <openbmc@lists.ozlabs.org>; Mon, 18 Jul 2022 01:55:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=sender:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=P/CnAcVGR6QgeBzxsMF+OJyQWoQLNSbauK86SVVwQfw=;
-        b=l6z2Yq5H5TjhuGYJxDFkKP2c0UxXs9yZ8WZoqCuZ5aBc3RKoFry8JIpY63WpIUz51t
-         kVGUwvIs+Wl0GtlfmH/taNA3jYnqJ2Au/c13kI/KABxQDWG65pY0jKIP8WVzXOIl09MV
-         5Dlggy8ksO0FH39cIeHjlHr3ecGw2PC46UU0mSYs4uRjp8FfpgzOndMnSUhZmLM5nRVn
-         w0qWVcTarybapiQwnPVmJ0X3qJtERN+iAUEqYEqMZMtgnEWFXqkLns1+70dY4ed3LFYs
-         b/NUNi0HQZvYQhCzP9DHDSgm3Azm396KKf1gxjo5TuxjADjhwwn2OxeFBkaFjXHDzP8T
-         ZiQg==
+        h=sender:from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=KJ6i0PtKjIaFU87xSgWB0nyKQUt/3TSs5WSfQO0PzeA=;
+        b=cFVdC5uxLlAjMRb61uAvAL41tgTPe1A97ywiHvtJTYuuD1lkLKhQfdeLaaKH/pVais
+         5kKcPCm5tPJJoTq3eS8bWUNezz51dtIH6weDuQXuTkTS65PswgaC/MKCGJFtZ/vSq1+v
+         uLYosqzy/h0JrrBl09YUO/q5PIvh2jnzmuKuOv4TCh5Zh/cmraqcjdqIdLhmUvVcdByh
+         yvQ56zGazKHVamU7jhsF9LKcXkGeUFM6y/iJV0BcxN5LUtSP70kySv6jdQKiZ3PidbUL
+         3LpKpecT1gBcm8kLJJEqKEa3WfpeTqExHqfZvSgslDTyJ/avxBgE3+GSzjwuZ9IH4opf
+         WNSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:sender:from:to:cc:subject:date:message-id
-         :mime-version:content-transfer-encoding;
-        bh=P/CnAcVGR6QgeBzxsMF+OJyQWoQLNSbauK86SVVwQfw=;
-        b=f6VMEJDrEksxsmuiRNyc58nhnQeGpQxsJRHmDgB30HCHpO+5PjWD47QqD9OnBC4G1I
-         v5gzD2WBhMaCMVbKdxZajd30YHK4pDgHAFbNKHWvs+OwJbNN2DRg4QBt8zuJ4/z3dNT/
-         O6hnwJRbXyak739M9raJrZDBHHd2u0GSDumYO8QKiOdtTUHU+EKwufXj58a2rsM+gxOr
-         a8hhtfhwX6aGac2EUXmr443+FR6B67YFe5+iuYxKdbFTvHC/d4aVzc2RCvpH3KAQxhPM
-         TtY26cUK0+eTDrMwtH/QR1hSxXFXocSAQx9TEui0FeVr0rjaog+e7mAfW1hr09/TKe9D
-         2gYA==
-X-Gm-Message-State: AJIora9HaUUlYK/VLkKU5kh0j2GuyJ/yudsjTITP8FbiQ+D2TVsS8hk3
-	U4UkuOuAEbkEW/w51F/DITn7Hr2pPT8=
-X-Google-Smtp-Source: AGRyM1tULBuZdUzEDHXKFpqRHOkSKGUSmyPekqs0cYqITbVGh7rXKCC8k2FImA4/f23X1E2v0uu+BQ==
-X-Received: by 2002:a17:902:d642:b0:16b:d5b7:1117 with SMTP id y2-20020a170902d64200b0016bd5b71117mr26132223plh.167.1658134533708;
-        Mon, 18 Jul 2022 01:55:33 -0700 (PDT)
+         :in-reply-to:references:mime-version:content-transfer-encoding;
+        bh=KJ6i0PtKjIaFU87xSgWB0nyKQUt/3TSs5WSfQO0PzeA=;
+        b=jJAX5+k0aiv2RqlJFWrZvLzvoJt/JMQ40vZgQ1FmVZS9rNVQ+AoE2EhkDTRz6vR8eC
+         HjzdpIqopoBRAkMysI8a9QmyQ2zhbEq5wb/bOyf8SypOPpcF343TZnod7UqvpPcOqcmM
+         GNNb3COIbpEeI03BYZdylSmctHa3rg4oSH1qrEyzdfGhqTgcj52T8x8qvvFj19TQZknj
+         2hE/SaVGHNSF38s5BDWgjpXEoR6G3B6CYvT0AMrvupbHnGW+HI2aw3eGpftk7wa4A0MB
+         hVlmCvTyt6vYPjsm7CAmzS9v044BOdgA3g3+yYyl8snzcR3woW9rWKRSoYXrCYOsNDIr
+         3vbg==
+X-Gm-Message-State: AJIora8igRm+lSPBQBG2Mohwj06UVKuzfNAYyOIN8oL8O0Ymhq+LOY4W
+	NDY8PLgwymnbNUUAh0sVddIWt5kCEIQ=
+X-Google-Smtp-Source: AGRyM1tqyPhX8NMVZB2ZOREAiI8TZtXH8wrT70UymGBXj8xIeXSF9mvWlgIiGr5eFUFJ6CymRUxrxQ==
+X-Received: by 2002:a17:902:d405:b0:16b:f1ee:27c0 with SMTP id b5-20020a170902d40500b0016bf1ee27c0mr26586427ple.10.1658134536778;
+        Mon, 18 Jul 2022 01:55:36 -0700 (PDT)
 Received: from localhost.localdomain ([45.124.203.18])
-        by smtp.gmail.com with ESMTPSA id r11-20020a170903410b00b0016c5306917fsm8750575pld.53.2022.07.18.01.55.31
+        by smtp.gmail.com with ESMTPSA id r11-20020a170903410b00b0016c5306917fsm8750575pld.53.2022.07.18.01.55.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 18 Jul 2022 01:55:32 -0700 (PDT)
+        Mon, 18 Jul 2022 01:55:35 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc 0/2] I2C Fixes
-Date: Mon, 18 Jul 2022 18:25:21 +0930
-Message-Id: <20220718085523.1140566-1-joel@jms.id.au>
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc 1/2] ARM: dts: ast2600: Undo I2C hacks
+Date: Mon, 18 Jul 2022 18:25:22 +0930
+Message-Id: <20220718085523.1140566-2-joel@jms.id.au>
 X-Mailer: git-send-email 2.35.1
+In-Reply-To: <20220718085523.1140566-1-joel@jms.id.au>
+References: <20220718085523.1140566-1-joel@jms.id.au>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -78,29 +80,175 @@ Cc: Zev Weiss <zweiss@equinix.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This series restores the "old" mode I2C driver for the AST2600. The new
-mode driver can still be enabled if desired.
+The device tree matches Linux, and shouldn't be changed.
 
-This series applies to the v0.4.11 SDK tree.
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+---
+ drivers/i2c/ast2600_i2c.c |  2 +-
+ arch/arm/dts/ast2600.dtsi | 32 ++++++++++++++++----------------
+ 2 files changed, 17 insertions(+), 17 deletions(-)
 
-Enabling the new mode driver in u-boot will break operation under Linux,
-where the new driver is not yet supported. Jamin has a series on the
-list that needs review before it can be merged:
-
- https://lore.kernel.org/linux-i2c/20210617094424.27123-1-jamin_lin@aspeedtech.com/
-
-Qemu 7.1 supports the new mode, so I encourage anyone who wishes to use
-the new mode under Linux to help review.
-
-Joel Stanley (2):
-  ARM: dts: ast2600: Undo I2C hacks
-  i2c/aspeed: Use new mode only when driver is enabled
-
- drivers/i2c/aspeed_i2c_global.c |  3 ++-
- drivers/i2c/ast2600_i2c.c       |  2 +-
- arch/arm/dts/ast2600.dtsi       | 32 ++++++++++++++++----------------
- 3 files changed, 19 insertions(+), 18 deletions(-)
-
+diff --git a/drivers/i2c/ast2600_i2c.c b/drivers/i2c/ast2600_i2c.c
+index f1aebe0b733f..5eda2909c661 100644
+--- a/drivers/i2c/ast2600_i2c.c
++++ b/drivers/i2c/ast2600_i2c.c
+@@ -385,7 +385,7 @@ static const struct dm_i2c_ops ast2600_i2c_ops = {
+ };
+ 
+ static const struct udevice_id ast2600_i2c_ids[] = {
+-	{ .compatible = "aspeed,ast2600-i2c" },
++	{ .compatible = "aspeed,ast2600-i2c-bus" },
+ 	{},
+ };
+ 
+diff --git a/arch/arm/dts/ast2600.dtsi b/arch/arm/dts/ast2600.dtsi
+index 7b39bbbd20b7..72f21c834bf0 100644
+--- a/arch/arm/dts/ast2600.dtsi
++++ b/arch/arm/dts/ast2600.dtsi
+@@ -796,7 +796,7 @@
+ 		#interrupt-cells = <1>;
+ 
+ 		reg = <0x80 0x80 0xC00 0x20>;
+-		compatible = "aspeed,ast2600-i2c";
++		compatible = "aspeed,ast2600-i2c-bus";
+ 		bus-frequency = <100000>;
+ 		interrupts = <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&scu ASPEED_CLK_APB2>;
+@@ -811,7 +811,7 @@
+ 		#interrupt-cells = <1>;
+ 
+ 		reg = <0x100 0x80 0xC20 0x20>;
+-		compatible = "aspeed,ast2600-i2c";
++		compatible = "aspeed,ast2600-i2c-bus";
+ 		bus-frequency = <100000>;
+ 		interrupts = <GIC_SPI 111 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&scu ASPEED_CLK_APB2>;
+@@ -826,7 +826,7 @@
+ 		#interrupt-cells = <1>;
+ 
+ 		reg = <0x180 0x80 0xC40 0x20>;
+-		compatible = "aspeed,ast2600-i2c";
++		compatible = "aspeed,ast2600-i2c-bus";
+ 		bus-frequency = <100000>;
+ 		interrupts = <GIC_SPI 112 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&scu ASPEED_CLK_APB2>;
+@@ -840,7 +840,7 @@
+ 		#interrupt-cells = <1>;
+ 
+ 		reg = <0x200 0x40 0xC60 0x20>;
+-		compatible = "aspeed,ast2600-i2c";
++		compatible = "aspeed,ast2600-i2c-bus";
+ 		bus-frequency = <100000>;
+ 		interrupts = <GIC_SPI 113 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&scu ASPEED_CLK_APB2>;
+@@ -854,7 +854,7 @@
+ 		#interrupt-cells = <1>;
+ 
+ 		reg = <0x280 0x80 0xC80 0x20>;
+-		compatible = "aspeed,ast2600-i2c";
++		compatible = "aspeed,ast2600-i2c-bus";
+ 		bus-frequency = <100000>;
+ 		interrupts = <GIC_SPI 114 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&scu ASPEED_CLK_APB2>;
+@@ -868,7 +868,7 @@
+ 		#interrupt-cells = <1>;
+ 
+ 		reg = <0x300 0x40 0xCA0 0x20>;
+-		compatible = "aspeed,ast2600-i2c";
++		compatible = "aspeed,ast2600-i2c-bus";
+ 		bus-frequency = <100000>;
+ 		interrupts = <GIC_SPI 115 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&scu ASPEED_CLK_APB2>;
+@@ -882,7 +882,7 @@
+ 		#interrupt-cells = <1>;
+ 
+ 		reg = <0x380 0x80 0xCC0 0x20>;
+-		compatible = "aspeed,ast2600-i2c";
++		compatible = "aspeed,ast2600-i2c-bus";
+ 		bus-frequency = <100000>;
+ 		interrupts = <GIC_SPI 116 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&scu ASPEED_CLK_APB2>;
+@@ -896,7 +896,7 @@
+ 		#interrupt-cells = <1>;
+ 
+ 		reg = <0x400 0x80 0xCE0 0x20>;
+-		compatible = "aspeed,ast2600-i2c";
++		compatible = "aspeed,ast2600-i2c-bus";
+ 		bus-frequency = <100000>;
+ 		interrupts = <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&scu ASPEED_CLK_APB2>;
+@@ -910,7 +910,7 @@
+ 		#interrupt-cells = <1>;
+ 
+ 		reg = <0x480 0x80 0xD00 0x20>;
+-		compatible = "aspeed,ast2600-i2c";
++		compatible = "aspeed,ast2600-i2c-bus";
+ 		bus-frequency = <100000>;
+ 		interrupts = <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&scu ASPEED_CLK_APB2>;
+@@ -924,7 +924,7 @@
+ 		#interrupt-cells = <1>;
+ 
+ 		reg = <0x500 0x80 0xD20 0x20>;
+-		compatible = "aspeed,ast2600-i2c";
++		compatible = "aspeed,ast2600-i2c-bus";
+ 		bus-frequency = <100000>;
+ 		interrupts = <GIC_SPI 119 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&scu ASPEED_CLK_APB2>;
+@@ -939,7 +939,7 @@
+ 		#interrupt-cells = <1>;
+ 
+ 		reg = <0x580 0x80 0xD40 0x20>;
+-		compatible = "aspeed,ast2600-i2c";
++		compatible = "aspeed,ast2600-i2c-bus";
+ 		bus-frequency = <100000>;
+ 		interrupts = <GIC_SPI 120 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&scu ASPEED_CLK_APB2>;
+@@ -954,7 +954,7 @@
+ 		#interrupt-cells = <1>;
+ 
+ 		reg = <0x600 0x80 0xD60 0x20>;
+-		compatible = "aspeed,ast2600-i2c";
++		compatible = "aspeed,ast2600-i2c-bus";
+ 		bus-frequency = <100000>;
+ 		interrupts = <GIC_SPI 121 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&scu ASPEED_CLK_APB2>;
+@@ -969,7 +969,7 @@
+ 		#interrupt-cells = <1>;
+ 
+ 		reg = <0x680 0x80 0xD80 0x20>;
+-		compatible = "aspeed,ast2600-i2c";
++		compatible = "aspeed,ast2600-i2c-bus";
+ 		bus-frequency = <100000>;
+ 		interrupts = <GIC_SPI 122 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&scu ASPEED_CLK_APB2>;
+@@ -984,7 +984,7 @@
+ 		#interrupt-cells = <1>;
+ 
+ 		reg = <0x700 0x80 0xDA0 0x20>;
+-		compatible = "aspeed,ast2600-i2c";
++		compatible = "aspeed,ast2600-i2c-bus";
+ 		bus-frequency = <100000>;
+ 		interrupts = <GIC_SPI 123 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&scu ASPEED_CLK_APB2>;
+@@ -999,7 +999,7 @@
+ 		#interrupt-cells = <1>;
+ 
+ 		reg = <0x780 0x80 0xDC0 0x20>;
+-		compatible = "aspeed,ast2600-i2c";
++		compatible = "aspeed,ast2600-i2c-bus";
+ 		bus-frequency = <100000>;
+ 		interrupts = <GIC_SPI 124 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&scu ASPEED_CLK_APB2>;
+@@ -1014,7 +1014,7 @@
+ 		#interrupt-cells = <1>;
+ 
+ 		reg = <0x800 0x80 0xDE0 0x20>;
+-		compatible = "aspeed,ast2600-i2c";
++		compatible = "aspeed,ast2600-i2c-bus";
+ 		bus-frequency = <100000>;
+ 		interrupts = <GIC_SPI 125 IRQ_TYPE_LEVEL_HIGH>;
+ 		clocks = <&scu ASPEED_CLK_APB2>;
 -- 
 2.35.1
 
