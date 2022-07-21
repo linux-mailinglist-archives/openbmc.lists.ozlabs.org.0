@@ -1,136 +1,95 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5329557C0BF
-	for <lists+openbmc@lfdr.de>; Thu, 21 Jul 2022 01:17:38 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5031857C20D
+	for <lists+openbmc@lfdr.de>; Thu, 21 Jul 2022 04:03:14 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LpBSJ1NxTz3c2g
-	for <lists+openbmc@lfdr.de>; Thu, 21 Jul 2022 09:17:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LpG7M4tyZz3bqx
+	for <lists+openbmc@lfdr.de>; Thu, 21 Jul 2022 12:03:11 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256 header.s=pps202002 header.b=mvY5D9vK;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=IHcKb6VM;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=nZmgCo0o;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=equinix.com (client-ip=148.163.159.192; helo=mx0b-00268f01.pphosted.com; envelope-from=prvs=020080160e=zweiss@equinix.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aj.id.au (client-ip=66.111.4.25; helo=out1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256 header.s=pps202002 header.b=mvY5D9vK;
+	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=IHcKb6VM;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=nZmgCo0o;
 	dkim-atps=neutral
-Received: from mx0b-00268f01.pphosted.com (mx0b-00268f01.pphosted.com [148.163.159.192])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LpBRl5vmCz2xkS
-	for <openbmc@lists.ozlabs.org>; Thu, 21 Jul 2022 09:17:06 +1000 (AEST)
-Received: from pps.filterd (m0165121.ppops.net [127.0.0.1])
-	by mx0b-00268f01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 26KN0E7I002687;
-	Wed, 20 Jul 2022 23:16:34 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=equinix.com; h=from : to : cc :
- subject : date : message-id : references : in-reply-to : content-type :
- content-id : content-transfer-encoding : mime-version; s=pps202002;
- bh=pQQcu4Ck6drl0VpE5lb16AiJ8yqFwhEXVcpo6olWCQ4=;
- b=mvY5D9vKWSlt3nGRYsvmvTpvktAzUEmOyZ7XDtj7DPRIDmvd3WiBW+5ecxVQnAzVh+YA
- cbbutP34ipxTIsA3j8t+gcBQPnocvDqtlhUc0WhUbd8Qkbr4XSoub81mN2aa92N8zJOL
- Jk0qmlW0ayPetgPXcR6hSfT7FaYjHY/8+U0TOMdJE/pwxEvxKFCa0DVxIsED37ZxbePv
- OaHDnj2fi0UBJwCP+K2lUuetF3UbDcTPXJoFMyg2YNOVTAwfwum4jgecqOXKfE77Uoqy
- YQs/9WIWfFeyIK+qrbs4AVxpPcAP96QjBEUhqFsHFi7d11Gkgmx6l+Zm0U7KgilLQ5Fq sg== 
-Received: from nam10-bn7-obe.outbound.protection.outlook.com (mail-bn7nam10lp2104.outbound.protection.outlook.com [104.47.70.104])
-	by mx0b-00268f01.pphosted.com (PPS) with ESMTPS id 3hemx69869-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 20 Jul 2022 23:16:34 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ZImg3/kjSsgqWnyEv+8+mqkClZOqt0icbr+IomUhmp71Cqtx/AV6U2lGIpl5Lrbk1nN0MXcgobFZi+kdTKkkM6i/M/aYJxR+kpqOMFxboTVP/kYtlVDaO/bLRPiDVUQJdySS5VdhRHJAsrlrWRntbfQdYnpMu1ZU9dRLc7tCD6JBZXuZ7cMuYfwlBBNSxWgfFmC23ljZOjOI2jxLT/TYhrcaGotiGsjr21ll1JyFVlClzKvfEBD8Ms43QHxACzlADOYLrT0egPBBUHOegJKnu/7dwOAF2yE7+LSMC3Z/pACxJtwVZEr3aQlNUhOqwIwurswgFGph7iYst4SrD6xe0g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pQQcu4Ck6drl0VpE5lb16AiJ8yqFwhEXVcpo6olWCQ4=;
- b=P6ZVlEMmwuDFdNVpM4rLAkidBwAp4T87JgDQk6Gz4xp4mHh55XTdb1m8JJ8vDqj3CLJzAUXZQtG88gztL7C6KasKKj65Cv0pqihWB7+W6iAgjfRlv6QDd6zyjELI+tgpZuLNkrqiPakz66PMW/ksDsYSJCiuLsgIn2W2cH+4fhx6VvLVqvnO9G/ey7tTmnGi2vgJGOiHyQwGJCx+TCOqrSR536Q5KELiHp/zkCfgcnODlFM73UQCEOEhVHVYVWED7Rck6T1hZ6y4bfjPQuVRi88884wYpyMhaf6p1fBOhAhQjbhgqGBvvhk/OYf3aBNAUcsTugqck/dt0sy1Y6I4Xw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=equinix.com; dmarc=pass action=none header.from=equinix.com;
- dkim=pass header.d=equinix.com; arc=none
-Received: from DM8PR04MB8007.namprd04.prod.outlook.com (2603:10b6:5:314::20)
- by SN6PR04MB5230.namprd04.prod.outlook.com (2603:10b6:805:f9::26) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5438.22; Wed, 20 Jul
- 2022 23:16:31 +0000
-Received: from DM8PR04MB8007.namprd04.prod.outlook.com
- ([fe80::9890:b657:c8a:cffe]) by DM8PR04MB8007.namprd04.prod.outlook.com
- ([fe80::9890:b657:c8a:cffe%7]) with mapi id 15.20.5438.024; Wed, 20 Jul 2022
- 23:16:31 +0000
-From: Zev Weiss <zweiss@equinix.com>
-To: Logananth Sundararaj <logananth13.hcl@gmail.com>
-Subject: Re: [PATCH v4] ARM: dts: aspeed: Adding Facebook Yosemite V3.5 BMC
-Thread-Topic: [PATCH v4] ARM: dts: aspeed: Adding Facebook Yosemite V3.5 BMC
-Thread-Index: AQHYnI6+U8uG9DI9MU63PhVdLCGfIg==
-Date: Wed, 20 Jul 2022 23:16:31 +0000
-Message-ID: <20220720231605.GA30806@packtop>
-References: <20220720105331.GA23472@logan-ThinkPad-T14-Gen-1>
-In-Reply-To: <20220720105331.GA23472@logan-ThinkPad-T14-Gen-1>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: bee171b3-19d0-44f9-0bd4-08da6aa5e1a4
-x-ms-traffictypediagnostic: SN6PR04MB5230:EE_
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:  wmH6UKLWUZ5H+iMkPGvdFP8I6PZBaDp8ydaCCwNqV/ziSSqkTnSk45Ttt7xoctgX7z25pbRsHhTkHgrCYvrnwjnXNwnx+Clb9vZlCdwhyLGsDjeYRE4JOIrI1tJs1BYcWk3LmACNqXMElPlW/xA0QQgPPKcH61r0XkpgFfoEA4+OG4ypD3lU1gdI/sDLpDF9+Oad2XcIMasf7ToPkZ0nFtyBUbQ5JEvLiRVkL8qnCf5jfWZ0EElTF/jxG8qoOVebdcoJELGOuPVx3/Clxwi56cC83VuQk6KjJkdN2NVo5RqEFpJmfYXi8NvBZiQJrHTPTaz5qi0tLZkOIFJ/wEZN3thFLtcNre4dfbSlE9xDbFLvIY6DMnQABV1dR9RsPzuYhTHHl6sr39+INbKP1Zt480E0vfUc1d8vCd0NYyaxeZ+ThbvsccdR2U5MphaOaxvxXJQyxM91AgNxYSQhXbeTXFYDWT5vPv+WhctAfXGb66S8U6IbcVswoTDCZKtcCogVMPtGMr3nEI+ROqWbE3Hbi2cAOCRlNowFKqBELLlKRtc4XQZ/8wo18aAuv4gHr19uNw/VsJ5mUpOvXdYI2OPWXgcypJhAF/nUm9iSTLHhbQ1umC946eq27dqx+w5rbAmGu8aqSeyhu09+2rdkZU0vbe3nlHtpuZffFv9th99b2jCq6kjGS62hDcmRN9HMW2JapEjHl+K4pVs2oCDE1pferZ2FDc4DaZW18fr6pnPjHucnwpH3oQYKIygf2dgnQ6/SadJ3plZL25tA6xdVTg4xupCsRlnA6OEPwYgZZXuUv7QQ++3gdNrIIJWm+wxacMXf
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM8PR04MB8007.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(7916004)(39860400002)(346002)(136003)(366004)(376002)(396003)(47680400002)(8936002)(122000001)(7416002)(5660300002)(38070700005)(38100700002)(6506007)(6512007)(478600001)(26005)(1076003)(6916009)(316002)(54906003)(9686003)(8676002)(66556008)(71200400001)(6486002)(2906002)(66446008)(64756008)(76116006)(4326008)(66946007)(66476007)(91956017)(186003)(33656002)(41300700001)(86362001)(33716001);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?ZURFkXNLFZp/RCW72qJbcBKMipP/bNmKRBebNQ7cjobCV+BjcGiYiXZ3jSfS?=
- =?us-ascii?Q?VMkbR8kJ14bmdvE7sDy+ebIsT51RouGA8ZikQ0qD2PymQ9VYVcHuvznk6BJQ?=
- =?us-ascii?Q?4A6KMNgBNzx6GBS6wiosxQBofbd5jv/vEEPzMIuGvFxwfCKKK2xtfrxGQ4sS?=
- =?us-ascii?Q?LxqLezNlJTquqJy8rYxxqqufdq8mtwRm7Z3yIGT3ni4z1YOO68KQ3eESYRww?=
- =?us-ascii?Q?M+agFArJjRdgGPQTI78FQqQ4/+ZrDhX5Cgz2kf48M+LIl5sn6at/K9MNaVoa?=
- =?us-ascii?Q?JZb2caQjqHkPTQ+Ckxvm7kC2rVlQeuStp1+/QPSk0Tzgm9moJkvfzeNAmW6H?=
- =?us-ascii?Q?lwkl5bHetvPxl7F7k+atHBivl7d/nEbItmwxnnu1j7HjHmR9BiY/u0KxfbFh?=
- =?us-ascii?Q?IaHnYtD5shTWAfhldCoDEXuEzATduD6P4mUN8znkB7e/GB3xNWQmtPzwlvd0?=
- =?us-ascii?Q?yRqWcHn5Lw5xH/aGxN4KEjx/mYWZAw3xauoUkPcAT2KlmkGLaHNw6EQwX514?=
- =?us-ascii?Q?3zZgz9KtwZudMvweYjnCoosIJdWlnYxXjrAgE1kXjxFkorBkSHbxWS7li2CI?=
- =?us-ascii?Q?CWQTTR9e33l+7p/bmEeetQ9ns1tjKgY4L5tt+mLsCVGSRRGYdDhXwMym8Kia?=
- =?us-ascii?Q?bdGSf7kkXD9+IsASiDeZ+87MznX1UMjEc0zlcA/1zJch3Gv5ZBGLkVyOkbEh?=
- =?us-ascii?Q?1Z4P1xCingz52jsO89BS4TgFfKQJT3tu+R3BeOtGXBO1URIrmNT6C2iOVclS?=
- =?us-ascii?Q?DaZlYvp9ZLEePtIQN9O6fjNrToIMoLcH3cw6cjR3xG14smZn2ykNF2k1mj5s?=
- =?us-ascii?Q?MEAuxlajrPMWMdnQiTECMNJwT8D/jbRuu3HO9ctBdlIMw2C4hChC5Mt0OAyJ?=
- =?us-ascii?Q?5HhKuuslnOHEomS54MXwthpydIl02F+pC1UHBZIN6UFxmHhjPTihcdKkJha4?=
- =?us-ascii?Q?1lfp+wKcAZ/yTDNcwJ8zXqsYrH8i2YRBuFgmAHpH/7OEvwgz1b9AK15BF01a?=
- =?us-ascii?Q?8/+dk0hW0g6lZd+UngY3LKdQeMVTY2xl5hqiN7ZGbo6TgBqiy089rVaZiJkJ?=
- =?us-ascii?Q?eo02fiJYPI+D5Tb9Fs8gm1HdfTwt9KyqGOIaH+J7j8CtgSI3zxhJ5X1eSw/x?=
- =?us-ascii?Q?PPrpIXb6WB+AdTwg3BKlcJJqt0CvJNOHcZ0h/yp1aLHx74dsC+0Z/do5GqGi?=
- =?us-ascii?Q?sE9prrq9JEroxQCIImEdfKOfoA4dbsfbcapX6HjbdnmpJ0dJ3gUkz3mp+DB1?=
- =?us-ascii?Q?UIwl+5HraibzOS8+yP+E2WmHaunjY/W7RNM0uqVOuFSpBkO+z/pAlVojO+7x?=
- =?us-ascii?Q?v9H2Q/46+N2mFJYFpEITtzCmXlF3SXWkxeuflf8ugc5JFi67LhYBt1kFzM3X?=
- =?us-ascii?Q?UkC8fNKsTZuEYXA1s6zAOCq0FLD7cFzVeSiQJKtgDC29xZYjGX9SLPSYwrLD?=
- =?us-ascii?Q?G87Bmq2kVKwhcCad6Wnv7OVABcV5Fokf6JMTNDc+HWUOjssmzdtAArQMrkHF?=
- =?us-ascii?Q?RZEk4B219wQ2rlrRAsAba+ZypiuXlkYqWZZhwxQVmvOw3+W1MPpDWH+ToQ9O?=
- =?us-ascii?Q?6/5W7hzRlcPQCs6AKtpaWR2esEfaoz3vUzzLjG/S8tZZ20KtPizit8JAndcs?=
- =?us-ascii?Q?sQ=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <7D972B41ABEB0844A1D1F7A458235263@namprd04.prod.outlook.com>
-Content-Transfer-Encoding: quoted-printable
-MIME-Version: 1.0
-X-OriginatorOrg: equinix.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM8PR04MB8007.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bee171b3-19d0-44f9-0bd4-08da6aa5e1a4
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Jul 2022 23:16:31.3962
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72adb271-2fc7-4afe-a5ee-9de6a59f6bfb
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: uttH3aYhQfGBsTpkJ2WAHYPiJdXCpc0qcpueEJVdxX1kl1+eb7txRwfiyqgPmM8qDRlqKfdJZB1yUHgGT2onJA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR04MB5230
-X-Proofpoint-GUID: hSxpeyguU42IL41FAutE6R35yADKV5-c
-X-Proofpoint-ORIG-GUID: hSxpeyguU42IL41FAutE6R35yADKV5-c
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-07-20_12,2022-07-20_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1011 impostorscore=0
- mlxlogscore=999 lowpriorityscore=0 malwarescore=0 bulkscore=0 phishscore=0
- spamscore=0 priorityscore=1501 adultscore=0 suspectscore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2206140000
- definitions=main-2207200094
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LpG6r5Cmzz2xkG
+	for <openbmc@lists.ozlabs.org>; Thu, 21 Jul 2022 12:02:43 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 338575C00A9;
+	Wed, 20 Jul 2022 22:02:39 -0400 (EDT)
+Received: from imap50 ([10.202.2.100])
+  by compute3.internal (MEProxy); Wed, 20 Jul 2022 22:02:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
+	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm2; t=1658368959; x=1658455359; bh=r3+JDGTNJO
+	gzSGE4CA0LUBJwMoqknUY8ZAPkLJyv/aI=; b=IHcKb6VM/FHUK/ZiL6aLfp1ZgK
+	+1IWdRC8tVYa8/zTnalp6tsYI43GMzdcv71wOKc19LfwLbMyPh/NdyCs2JcnJV9Q
+	87or2BWcsQp8gPq/Q8jG7dd6aytWRmqCw9FVx1ujT407bEJpu+YsmPPD/HI20P7+
+	cIzrcHASAv08P3JSLUGblaME2Y2EsON8ZHdd9BSxZ5mXH6Ze4odk2LpDSfCpJet+
+	ZAaDeK4h6QXSpDCfgLdmOf9LQ92Pm6yuG3snjq2txbD/9kl4r83I/Y1ihHDUH5A2
+	jZDZjC+FdebQuMoR/mW27GCTNXA0koYYP477DVth7kIJBRvNpLnO/3wPx8OA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1658368959; x=1658455359; bh=r3+JDGTNJOgzSGE4CA0LUBJwMoqk
+	nUY8ZAPkLJyv/aI=; b=nZmgCo0oCvdVGK65dppsqi3/cNei8EibmbZqC8sn/5YP
+	oqZD0ivETcqziuQyb1SE8UstptkErnPvtdIKcDsQZibIEIB2jHoyQvU2PU8Z66oe
+	JGP7xHTLmf+Iyo7TRuO74hYXF3V/qJlIOah7D6o3Ci6FrMnQlPLPqdO8kw4rMDOy
+	xpyuDQyId2+pVSpL/j0G/EWYeICZPj03vABcpTQyY2r6V7QLQPBKKqIfjjS2bAch
+	c7AR0eYPrFKESeaUDHDvnAerkBRRqRXj2h/lZLeXOAvAoBRoHrDB94V1FwUjVblB
+	arCSnhTyS0TKM+OW5BNSYwERyhHDhP4ZUY1SKrIlwg==
+X-ME-Sender: <xms:vrPYYv3ExOWdzJH9hGEbfmQfWbKbORZ8Ix6d-mdh5VC034xJY_0QAA>
+    <xme:vrPYYuFJ9eQGz_rE3dKJk2S6allYbN3a5QEhMgdiTbUw2fyB90R-NGoQvDZ63cEPV
+    AmFjRVWtQ98tADGzA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudelfedgfedtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehn
+    ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtf
+    frrghtthgvrhhnpeeuuddugfdtfeekffffudffgedvffetjeeiieefteevteejiedtteek
+    ffeiieekvdenucffohhmrghinhepohhpvghnsghmtgdrohhrghdpkhgvrhhnvghlrdhorh
+    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghn
+    ughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:vrPYYv7ynA2scC_DjNr2grqtCWR6EYSOBbs6ItPo3cmuwyqgM2eeAw>
+    <xmx:vrPYYk0WL1lBHkB9-avDokMlUhnhyKVxnSSo3fWNuMXz3M429yKbrw>
+    <xmx:vrPYYiFxVdhx_R7_KE_esJBgSVGq9IRYONk-Vl5NrAfQrJzJ_4TZ7w>
+    <xmx:v7PYYpetxx6-dHhk3F8AUfYvaXMcJQ3UUvNSBrEbk_cKcngPM2H2OQ>
+Feedback-ID: idfb84289:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 7B77C170007E; Wed, 20 Jul 2022 22:02:38 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-755-g3e1da8b93f-fm-20220708.002-g3e1da8b9
+Mime-Version: 1.0
+Message-Id: <5848e2d7-33e1-4093-b70f-b52ef9068083@www.fastmail.com>
+In-Reply-To: <20220720085230.3801945-3-quan@os.amperecomputing.com>
+References: <20220720085230.3801945-1-quan@os.amperecomputing.com>
+ <20220720085230.3801945-3-quan@os.amperecomputing.com>
+Date: Thu, 21 Jul 2022 11:32:18 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Quan Nguyen" <quan@os.amperecomputing.com>, openbmc@lists.ozlabs.org,
+ "Arnd Bergmann" <arnd@arndb.de>, "Olof Johansson" <olof@lixom.net>,
+ soc@kernel.org, "Rob Herring" <robh+dt@kernel.org>,
+ "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+ "Joel Stanley" <joel@jms.id.au>, linux-arm-kernel@lists.infradead.org,
+ devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+ linux-aspeed@lists.ozlabs.org,
+ "Open Source Submission" <patches@amperecomputing.com>
+Subject: Re: [PATCH v2 2/2] ARM: dts: aspeed: Add device tree for Ampere's Mt. Mitchell
+ BMC
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -142,328 +101,659 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, Arnd Bergmann <arnd@arndb.de>, Andrew Jeffery <andrew@aj.id.au>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "naveen.mosess@hcl.com" <naveen.mosess@hcl.com>, "thangavel.k@hcl.com" <thangavel.k@hcl.com>, "soc@kernel.org" <soc@kernel.org>, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Olof Johansson <olof@lixom.net>, "garnermic@gmail.com" <garnermic@gmail.com>, "velumanit@hcl.com" <velumanit@hcl.com>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
+Cc: "Thang Q . Nguyen" <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Jul 20, 2022 at 03:53:31AM PDT, Logananth Sundararaj wrote:
->The Yosemite V3.5 is a facebook multi-node server
->platform that host four OCP server. The BMC
->in the Yosemite V3.5 platform based on AST2600 SoC.
+Hello,
+
+On Wed, 20 Jul 2022, at 18:22, Quan Nguyen wrote:
+> The Mt. Mitchell BMC is an ASPEED AST2600-based BMC for the Mt. Mitchell
+> hardware reference platform with AmpereOne(TM) processor.
 >
->This patch adds linux device tree entry related to
->Yosemite V3.5 specific devices connected to BMC SoC.
+> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+> Signed-off-by: Phong Vo <phong@os.amperecomputing.com>
+> Signed-off-by: Thang Q. Nguyen <thang@os.amperecomputing.com>
+> ---
+> v2 :
+>   + Remove bootargs                                       [Krzysztof]
+>   + Fix gpio-keys nodes name to conform with device tree binding
+>   documents                                               [Krzysztof]
+>   + Fix some nodes to use generic name                    [Krzysztof]
+>   + Remove unnecessary blank line                         [Krzysztof]
+>   + Fix typo "LTC" to "LLC" in license info and corrected license
+>   info to GPL-2.0-only
 >
->Signed-off-by: Logananth Sundararaj <logananth_s@hcl.com>
+>  arch/arm/boot/dts/Makefile                    |   1 +
+>  .../boot/dts/aspeed-bmc-ampere-mtmitchell.dts | 577 ++++++++++++++++++
+>  2 files changed, 578 insertions(+)
+>  create mode 100644 arch/arm/boot/dts/aspeed-bmc-ampere-mtmitchell.dts
 >
->---
->--- v4 - Bootagrs and memory removed.
->--- v3 - Addressed v2 patch comments.
->--- v2 - Enabled i2c drivers.
->--- v1 - Initial draft.
->---
->---
-> arch/arm/boot/dts/Makefile                    |   1 +
-> .../boot/dts/aspeed-bmc-facebook-fby35.dts    | 260 ++++++++++++++++++
-> 2 files changed, 261 insertions(+)
-> create mode 100644 arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts
->
->diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
->index 7e0934180724..58add093e5fb 100644
->--- a/arch/arm/boot/dts/Makefile
->+++ b/arch/arm/boot/dts/Makefile
->@@ -1465,6 +1465,7 @@ dtb-$(CONFIG_ARCH_ASPEED) +=3D \
-> 	aspeed-bmc-facebook-cloudripper.dtb \
-> 	aspeed-bmc-facebook-cmm.dtb \
-> 	aspeed-bmc-facebook-elbert.dtb \
->+	aspeed-bmc-facebook-fby35.dtb \
-> 	aspeed-bmc-facebook-fuji.dtb \
-> 	aspeed-bmc-facebook-galaxy100.dtb \
-> 	aspeed-bmc-facebook-minipack.dtb \
->diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts b/arch/arm/bo=
-ot/dts/aspeed-bmc-facebook-fby35.dts
->new file mode 100644
->index 000000000000..05efba7117a8
->--- /dev/null
->+++ b/arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts
->@@ -0,0 +1,260 @@
->+// SPDX-License-Identifier: GPL-2.0-or-later
->+// Copyright (c) 2020 Facebook Inc.
->+
->+/dts-v1/;
->+
->+#include "aspeed-g6.dtsi"
->+#include <dt-bindings/gpio/aspeed-gpio.h>
->+#include <dt-bindings/i2c/i2c.h>
->+
->+/ {
->+	model =3D "Facebook fby35";
->+	compatible =3D "facebook,fby35", "aspeed,ast2600";
->+
->+	aliases {
->+		serial4 =3D &uart5;
->+	};
->+
->+	chosen {
->+		stdout-path =3D &uart5;
->+	};
->+
->+	iio-hwmon {
->+		compatible =3D "iio-hwmon";
->+		io-channels =3D <&adc0 0>, <&adc0 1>, <&adc0 2>, <&adc0 3>,
->+			<&adc0 4>, <&adc0 5>, <&adc0 6>, <&adc0 7>,
->+			<&adc1 0>, <&adc1 1>, <&adc1 2>, <&adc1 3>,
->+			<&adc1 4>, <&adc1 5>, <&adc1 6>;
->+	};
+> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+> index f9484f5ef126..ecb9dafb8f1a 100644
+> --- a/arch/arm/boot/dts/Makefile
+> +++ b/arch/arm/boot/dts/Makefile
+> @@ -1573,6 +1573,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+>  	aspeed-ast2600-evb.dtb \
+>  	aspeed-bmc-amd-ethanolx.dtb \
+>  	aspeed-bmc-ampere-mtjade.dtb \
+> +	aspeed-bmc-ampere-mtmitchell.dtb \
+>  	aspeed-bmc-arm-centriq2400-rep.dtb \
+>  	aspeed-bmc-arm-stardragon4800-rep2.dtb \
+>  	aspeed-bmc-asrock-e3c246d4i.dtb \
+> diff --git a/arch/arm/boot/dts/aspeed-bmc-ampere-mtmitchell.dts 
+> b/arch/arm/boot/dts/aspeed-bmc-ampere-mtmitchell.dts
+> new file mode 100644
+> index 000000000000..2e68f5264bb1
+> --- /dev/null
+> +++ b/arch/arm/boot/dts/aspeed-bmc-ampere-mtmitchell.dts
+> @@ -0,0 +1,577 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +// Copyright (c) 2022, Ampere Computing LLC
+> +
+> +/dts-v1/;
+> +
+> +#include "aspeed-g6.dtsi"
+> +#include <dt-bindings/gpio/aspeed-gpio.h>
+> +
+> +/ {
+> +	model = "Ampere Mt.Mitchell BMC";
+> +	compatible = "ampere,mtmitchell-bmc", "aspeed,ast2600";
+> +
+> +	chosen {
+> +		stdout-path = &uart5;
+> +	};
+> +
+> +	memory@80000000 {
+> +		device_type = "memory";
+> +		reg = <0x80000000 0x80000000>;
 
-A blank line here would be nice for formatting consistency...
+This is 2GB of memory
 
->+	spi_gpio: spi-gpio {
->+		status =3D "okay";
->+		compatible =3D "spi-gpio";
->+		#address-cells =3D <1>;
->+		#size-cells =3D <0>;
->+
->+		gpio-sck =3D <&gpio0 ASPEED_GPIO(X, 3) GPIO_ACTIVE_HIGH>;
->+		gpio-mosi =3D <&gpio0 ASPEED_GPIO(X, 4) GPIO_ACTIVE_HIGH>;
->+		gpio-miso =3D <&gpio0 ASPEED_GPIO(X, 5) GPIO_ACTIVE_HIGH>;
->+		num-chipselects =3D <1>;
->+		cs-gpios =3D <&gpio0 ASPEED_GPIO(X, 0) GPIO_ACTIVE_LOW>;
->+
->+		tpmdev@0 {
->+			compatible =3D "tcg,tpm_tis-spi";
->+			spi-max-frequency =3D <33000000>;
->+			reg =3D <0>;
->+		};
->+	};
->+
+> +	};
+> +
+> +	reserved-memory {
+> +		#address-cells = <1>;
+> +		#size-cells = <1>;
+> +		ranges;
+> +
+> +		gfx_memory: framebuffer {
+> +			size = <0x01000000>;
+> +			alignment = <0x01000000>;
+> +			compatible = "shared-dma-pool";
+> +			reusable;
+> +		};
+> +
+> +		video_engine_memory: video {
+> +			size = <0x04000000>;
+> +			alignment = <0x01000000>;
+> +			compatible = "shared-dma-pool";
+> +			reusable;
+> +		};
+> +
+> +		/* 1GB memory */
 
-...and this one could be removed.
+But you say 1GB of memory here
 
->+};
->+
->+&mac3 {
->+	status =3D "okay";
->+
->+	pinctrl-names =3D "default";
->+	pinctrl-0 =3D <&pinctrl_rmii4_default>;
->+	no-hw-checksum;
->+	use-ncsi;
->+	mlx,multi-host;
->+	ncsi-ctrl,start-redo-probe;
->+	ncsi-ctrl,no-channel-monitor;
->+	ncsi-package =3D <1>;
->+	ncsi-channel =3D <1>;
->+	ncsi-rexmit =3D <1>;
->+	ncsi-timeout =3D <2>;
->+};
->+
->+&uart1 {
->+	status =3D "okay";
->+};
->+
->+&uart2 {
->+	status =3D "okay";
->+};
->+
->+&uart3 {
->+	status =3D "okay";
->+};
->+
->+&uart4 {
->+	status =3D "okay";
->+};
->+
->+&uart5 {
->+	status =3D "okay";
->+	compatible =3D "snps,dw-apb-uart";
->+};
->+
->+&wdt1 {
->+	status =3D "okay";
->+	pinctrl-names =3D "default";
->+	pinctrl-0 =3D <&pinctrl_wdtrst1_default>;
->+	aspeed,reset-type =3D "soc";
->+	aspeed,external-signal;
->+	aspeed,ext-push-pull;
->+	aspeed,ext-active-high;
->+	aspeed,ext-pulse-duration =3D <256>;
->+};
->+
->+&rtc {
->+	status =3D "okay";
->+};
->+
->+&fmc {
->+	status =3D "okay";
->+	flash@0 {
->+		status =3D "okay";
->+		m25p,fast-read;
->+		label =3D "spi0.1";
->+		spi-max-frequency =3D <50000000>;
->+		#include "openbmc-flash-layout-128.dtsi"
->+	};
->+	flash@1 {
->+		status =3D "okay";
->+		m25p,fast-read;
->+		label =3D "spi0.0";
->+		spi-max-frequency =3D <50000000>;
->+		#include "openbmc-flash-layout.dtsi"
->+	};
+> +		vga_memory: region@bf000000 {
+> +			no-map;
+> +			compatible = "shared-dma-pool";
+> +			reg = <0xbf000000 0x01000000>;  /* 16M */
 
-The labels on these look backwards from what I'd guess was probably
-intended (flash@0 is spi0.1 and flash@1 is spi0.0).
+And this makes sense for 1GB.
 
->+};
->+
->+&i2c0 {
->+	//Host1 IPMB bus
+So I think your memory node has the wrong length in reg?
 
-While it's not currently 100% consistent, I think the generally
-preferred style is to put a space after '//' (here and elsewhere).
+> +		};
+> +	};
+> +
+> +	gpio-keys {
+> +		compatible = "gpio-keys";
+> +
+> +		s0-overtemp-event {
+> +			label = "S0_OVERTEMP";
+> +			gpios = <&gpio0 ASPEED_GPIO(V, 7) GPIO_ACTIVE_LOW>;
+> +			linux,code = <ASPEED_GPIO(V, 7)>;
+> +		};
+> +
+> +		s0-hightemp-event {
+> +			label = "S0_HIGHTEMP";
+> +			gpios = <&gpio0 ASPEED_GPIO(V, 0) GPIO_ACTIVE_LOW>;
+> +			linux,code = <ASPEED_GPIO(V, 0)>;
+> +		};
+> +
+> +		s1-overtemp-event {
+> +			label = "S1_OVERTEMP";
+> +			gpios = <&gpio0 ASPEED_GPIO(X, 6) GPIO_ACTIVE_LOW>;
+> +			linux,code = <ASPEED_GPIO(X, 6)>;
+> +		};
+> +
+> +		s1-hightemp-event {
+> +			label = "S1_HIGHTEMP";
+> +			gpios = <&gpio0 ASPEED_GPIO(X, 3) GPIO_ACTIVE_LOW>;
+> +			linux,code = <ASPEED_GPIO(X, 3)>;
+> +		};
+> +	};
 
->+	status =3D "okay";
->+	multi-master;
->+	ipmb0@10 {
->+		compatible =3D "ipmb-dev";
->+		reg =3D <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
->+		i2c-protocol;
->+	};
->+};
->+
->+&i2c1 {
->+	//Host2 IPMB bus
->+	status =3D "okay";
->+	multi-master;
->+	ipmb1@10 {
->+		compatible =3D "ipmb-dev";
->+		reg =3D <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
->+		i2c-protocol;
->+	};
->+};
->+
->+&i2c2 {
->+	//Host3 IPMB bus
->+	status =3D "okay";
->+	multi-master;
->+	ipmb2@10 {
->+		compatible =3D "ipmb-dev";
->+		reg =3D <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
->+		i2c-protocol;
->+	};
->+};
->+
->+&i2c3 {
->+	//Host1 IPMB bus
->+	status =3D "okay";
->+	multi-master;
->+	ipmb3@10 {
->+		compatible =3D "ipmb-dev";
->+		reg =3D <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
->+		i2c-protocol;
->+	};
->+};
->+
->+&i2c4 {
->+	status =3D "okay";
->+};
->+
->+&i2c5 {
->+	status =3D "okay";
->+};
->+
->+&i2c6 {
->+	status =3D "okay";
->+};
->+
->+&i2c7 {
->+	status =3D "okay";
->+};
->+
->+&i2c8 {
->+	//NIC SENSOR TEMP
->+	status =3D "okay";
->+	tmp421@1f {
->+		compatible =3D "ti,tmp421";
->+		reg =3D <0x1f>;
->+	};
->+};
->+
->+&i2c9 {
->+	// Debug-Card IPMB bus
->+	status =3D "okay";
->+	multi-master;
->+	ipmb9@30 {
->+		compatible =3D "ipmb-dev";
->+		reg =3D <(0x30 | I2C_OWN_SLAVE_ADDRESS)>;
->+		i2c-protocol;
->+	};
->+};
->+
->+&i2c10 {
->+	status =3D "okay";
->+};
->+
->+&i2c11 {
->+	status =3D "okay";
->+	//FRU EEPROM
->+	eeprom@51 {
->+		compatible =3D "atmel,24c64";
->+		reg =3D <0x51>;
->+		pagesize =3D <32>;
->+	};
->+};
->+
->+&i2c12 {
->+	status =3D "okay";
->+	//INLET TEMP
->+	tmp75@4e {
->+		compatible =3D "ti,tmp75";
->+		reg =3D <0x4e>;
->+	};
->+	//OUTLET TEMP
->+	tmp75@4f {
->+		compatible =3D "ti,tmp75";
->+		reg =3D <0x4f>;
->+	};
->+};
->+
->+&i2c13 {
->+	status =3D "okay";
->+};
->+
->+&adc0 {
->+	ref_voltage =3D <2500>;
->+	status =3D "okay";
->+
->+	pinctrl-0 =3D <&pinctrl_adc0_default &pinctrl_adc1_default
->+		&pinctrl_adc2_default &pinctrl_adc3_default
->+		&pinctrl_adc4_default &pinctrl_adc5_default
->+		&pinctrl_adc6_default &pinctrl_adc7_default>;
->+};
->+
->+&adc1 {
->+	ref_voltage =3D <2500>;
->+	status =3D "okay";
->+
->+	pinctrl-0 =3D <&pinctrl_adc8_default &pinctrl_adc9_default
->+		&pinctrl_adc10_default &pinctrl_adc11_default
->+		&pinctrl_adc12_default &pinctrl_adc13_default>;
->+};
+I really want us to stop using GPIO keys and just poll the GPIO in userspace if necessary.
 
-Missing blank line.
+The discussion here might help, eventually:
 
->+&ehci0 {
->+	status =3D "okay";
->+};
->+
->+&ehci1 {
->+	status =3D "okay";
->+};
->+
->+&uhci {
->+	status =3D "okay";
->+};
->--=20
->2.17.1
->=
+https://gerrit.openbmc.org/c/openbmc/dbus-sensors/+/54740
+
+> +
+> +	voltage_mon_reg: voltage-mon-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "ltc2497_reg";
+> +		regulator-min-microvolt = <3300000>;
+> +		regulator-max-microvolt = <3300000>;
+> +		regulator-always-on;
+> +	};
+> +
+> +	gpioI5mux: mux-controller {
+> +		compatible = "gpio-mux";
+> +		#mux-control-cells = <0>;
+> +		mux-gpios = <&gpio0 ASPEED_GPIO(I, 5) GPIO_ACTIVE_HIGH>;
+> +	};
+> +
+> +	adc0mux: adc0mux {
+> +		compatible = "io-channel-mux";
+> +		io-channels = <&adc0 0>;
+> +		#io-channel-cells = <1>;
+> +		io-channel-names = "parent";
+> +		mux-controls = <&gpioI5mux>;
+> +		channels = "s0", "s1";
+> +	};
+> +
+> +	adc1mux: adc1mux {
+> +		compatible = "io-channel-mux";
+> +		io-channels = <&adc0 1>;
+> +		#io-channel-cells = <1>;
+> +		io-channel-names = "parent";
+> +		mux-controls = <&gpioI5mux>;
+> +		channels = "s0", "s1";
+> +	};
+> +
+> +	adc2mux: adc2mux {
+> +		compatible = "io-channel-mux";
+> +		io-channels = <&adc0 2>;
+> +		#io-channel-cells = <1>;
+> +		io-channel-names = "parent";
+> +		mux-controls = <&gpioI5mux>;
+> +		channels = "s0", "s1";
+> +	};
+> +
+> +	adc3mux: adc3mux {
+> +		compatible = "io-channel-mux";
+> +		io-channels = <&adc0 3>;
+> +		#io-channel-cells = <1>;
+> +		io-channel-names = "parent";
+> +		mux-controls = <&gpioI5mux>;
+> +		channels = "s0", "s1";
+> +	};
+> +
+> +	adc4mux: adc4mux {
+> +		compatible = "io-channel-mux";
+> +		io-channels = <&adc0 4>;
+> +		#io-channel-cells = <1>;
+> +		io-channel-names = "parent";
+> +		mux-controls = <&gpioI5mux>;
+> +		channels = "s0", "s1";
+> +	};
+> +
+> +	adc5mux: adc5mux {
+> +		compatible = "io-channel-mux";
+> +		io-channels = <&adc0 5>;
+> +		#io-channel-cells = <1>;
+> +		io-channel-names = "parent";
+> +		mux-controls = <&gpioI5mux>;
+> +		channels = "s0", "s1";
+> +	};
+> +
+> +	adc6mux: adc6mux {
+> +		compatible = "io-channel-mux";
+> +		io-channels = <&adc0 6>;
+> +		#io-channel-cells = <1>;
+> +		io-channel-names = "parent";
+> +		mux-controls = <&gpioI5mux>;
+> +		channels = "s0", "s1";
+> +	};
+> +
+> +	adc7mux: adc7mux {
+> +		compatible = "io-channel-mux";
+> +		io-channels = <&adc0 7>;
+> +		#io-channel-cells = <1>;
+> +		io-channel-names = "parent";
+> +		mux-controls = <&gpioI5mux>;
+> +		channels = "s0", "s1";
+> +	};
+> +
+> +	adc8mux: adc8mux {
+> +		compatible = "io-channel-mux";
+> +		io-channels = <&adc1 0>;
+> +		#io-channel-cells = <1>;
+> +		io-channel-names = "parent";
+> +		mux-controls = <&gpioI5mux>;
+> +		channels = "s0", "s1";
+> +	};
+> +
+> +	adc9mux: adc9mux {
+> +		compatible = "io-channel-mux";
+> +		io-channels = <&adc1 1>;
+> +		#io-channel-cells = <1>;
+> +		io-channel-names = "parent";
+> +		mux-controls = <&gpioI5mux>;
+> +		channels = "s0", "s1";
+> +	};
+> +
+> +	adc10mux: adc10mux {
+> +		compatible = "io-channel-mux";
+> +		io-channels = <&adc1 2>;
+> +		#io-channel-cells = <1>;
+> +		io-channel-names = "parent";
+> +		mux-controls = <&gpioI5mux>;
+> +		channels = "s0", "s1";
+> +	};
+> +
+> +	adc11mux: adc11mux {
+> +		compatible = "io-channel-mux";
+> +		io-channels = <&adc1 3>;
+> +		#io-channel-cells = <1>;
+> +		io-channel-names = "parent";
+> +		mux-controls = <&gpioI5mux>;
+> +		channels = "s0", "s1";
+> +	};
+> +
+> +	adc12mux: adc12mux {
+> +		compatible = "io-channel-mux";
+> +		io-channels = <&adc1 4>;
+> +		#io-channel-cells = <1>;
+> +		io-channel-names = "parent";
+> +		mux-controls = <&gpioI5mux>;
+> +		channels = "s0", "s1";
+> +	};
+> +
+> +	adc13mux: adc13mux {
+> +		compatible = "io-channel-mux";
+> +		io-channels = <&adc1 5>;
+> +		#io-channel-cells = <1>;
+> +		io-channel-names = "parent";
+> +		mux-controls = <&gpioI5mux>;
+> +		channels = "s0", "s1";
+> +	};
+> +
+> +	adc14mux: adc14mux {
+> +		compatible = "io-channel-mux";
+> +		io-channels = <&adc1 6>;
+> +		#io-channel-cells = <1>;
+> +		io-channel-names = "parent";
+> +		mux-controls = <&gpioI5mux>;
+> +		channels = "s0", "s1";
+> +	};
+> +
+> +	adc15mux: adc15mux {
+> +		compatible = "io-channel-mux";
+> +		io-channels = <&adc1 7>;
+> +		#io-channel-cells = <1>;
+> +		io-channel-names = "parent";
+> +		mux-controls = <&gpioI5mux>;
+> +		channels = "s0", "s1";
+> +	};
+> +
+> +	iio-hwmon {
+> +		compatible = "iio-hwmon";
+> +		io-channels = <&adc0mux 0>, <&adc0mux 1>,
+> +			<&adc1mux 0>, <&adc1mux 1>,
+> +			<&adc2mux 0>, <&adc2mux 1>,
+> +			<&adc3mux 0>, <&adc3mux 1>,
+> +			<&adc4mux 0>, <&adc4mux 1>,
+> +			<&adc5mux 0>, <&adc5mux 1>,
+> +			<&adc6mux 0>, <&adc6mux 1>,
+> +			<&adc7mux 0>, <&adc7mux 1>,
+> +			<&adc8mux 0>, <&adc8mux 1>,
+> +			<&adc9mux 0>, <&adc9mux 1>,
+> +			<&adc10mux 0>, <&adc10mux 1>,
+> +			<&adc11mux 0>, <&adc11mux 1>,
+> +			<&adc12mux 0>, <&adc12mux 1>,
+> +			<&adc13mux 0>, <&adc13mux 1>,
+> +			<&adc14mux 0>, <&adc14mux 1>,
+> +			<&adc15mux 0>, <&adc15mux 1>,
+> +			<&adc_i2c 0>, <&adc_i2c 1>,
+> +			<&adc_i2c 2>, <&adc_i2c 3>,
+> +			<&adc_i2c 4>, <&adc_i2c 5>,
+> +			<&adc_i2c 6>, <&adc_i2c 7>,
+> +			<&adc_i2c 8>, <&adc_i2c 9>,
+> +			<&adc_i2c 10>, <&adc_i2c 11>,
+> +			<&adc_i2c 12>, <&adc_i2c 13>,
+> +			<&adc_i2c 14>, <&adc_i2c 15>;
+> +	};
+> +};
+> +
+> +&mdio0 {
+> +	status = "okay";
+> +
+> +	ethphy0: ethernet-phy@0 {
+> +		compatible = "ethernet-phy-ieee802.3-c22";
+> +		reg = <0>;
+> +	};
+> +};
+> +
+> +&mac0 {
+> +	status = "okay";
+> +
+> +	phy-mode = "rgmii";
+> +	phy-handle = <&ethphy0>;
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_rgmii1_default>;
+> +};
+> +
+> +&fmc {
+> +	status = "okay";
+> +	flash@0 {
+> +		status = "okay";
+> +		m25p,fast-read;
+> +		label = "bmc";
+> +		spi-max-frequency = <50000000>;
+> +#include "openbmc-flash-layout-64.dtsi"
+> +	};
+> +
+> +	flash@1 {
+> +		status = "okay";
+> +		m25p,fast-read;
+> +		label = "alt-bmc";
+> +		spi-max-frequency = <50000000>;
+> +#include "openbmc-flash-layout-64-alt.dtsi"
+> +	};
+> +};
+> +
+> +&spi1 {
+> +	status = "okay";
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_spi1_default>;
+> +
+> +	flash@0 {
+> +		status = "okay";
+> +		m25p,fast-read;
+> +		label = "pnor";
+> +		spi-max-frequency = <20000000>;
+> +	};
+> +};
+> +
+> +&uart1 {
+> +	status = "okay";
+> +};
+> +
+> +&uart2 {
+> +	status = "okay";
+> +};
+> +
+> +&uart3 {
+> +	status = "okay";
+> +};
+> +
+> +&uart4 {
+> +	status = "okay";
+> +};
+> +
+> +&i2c0 {
+> +	status = "okay";
+> +
+> +	temperature-sensor@2e {
+> +		compatible = "adi,adt7490";
+> +		reg = <0x2e>;
+> +	};
+> +};
+> +
+> +&i2c1 {
+> +	status = "okay";
+> +};
+> +
+> +&i2c2 {
+> +	status = "okay";
+> +
+> +	psu@58 {
+> +		compatible = "pmbus";
+> +		reg = <0x58>;
+> +	};
+> +
+> +	psu@59 {
+> +		compatible = "pmbus";
+> +		reg = <0x59>;
+> +	};
+> +};
+> +
+> +&i2c3 {
+> +	status = "okay";
+> +};
+> +
+> +&i2c4 {
+> +	status = "okay";
+> +
+> +	adc_i2c: adc-i2c@16 {
+> +		compatible = "lltc,ltc2497";
+> +		reg = <0x16>;
+> +		vref-supply = <&voltage_mon_reg>;
+> +		#io-channel-cells = <1>;
+> +		status = "okay";
+> +	 };
+> +
+> +	eeprom@50 {
+> +		compatible = "atmel,24c64";
+> +		reg = <0x50>;
+> +		pagesize = <32>;
+> +	};
+> +
+> +	i2c-mux@70 {
+> +		compatible = "nxp,pca9545";
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		reg = <0x70>;
+> +		i2c-mux-idle-disconnect;
+> +
+> +		i2c4_bus70_chn0: i2c@0 {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			reg = <0x0>;
+> +
+> +			outlet_temp1: temperature-sensor@48 {
+> +				compatible = "ti,tmp75";
+> +				reg = <0x48>;
+> +			};
+> +			psu1_inlet_temp2: temperature-sensor@49 {
+> +				compatible = "ti,tmp75";
+> +				reg = <0x49>;
+> +			};
+> +		};
+> +
+> +		i2c4_bus70_chn1: i2c@1 {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			reg = <0x1>;
+> +
+> +			pcie_zone_temp1: temperature-sensor@48 {
+> +				compatible = "ti,tmp75";
+> +				reg = <0x48>;
+> +			};
+> +			psu0_inlet_temp2: temperature-sensor@49 {
+> +				compatible = "ti,tmp75";
+> +				reg = <0x49>;
+> +			};
+> +		};
+> +
+> +		i2c4_bus70_chn2: i2c@2 {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			reg = <0x2>;
+> +
+> +			pcie_zone_temp2: temperature-sensor@48 {
+> +				compatible = "ti,tmp75";
+> +				reg = <0x48>;
+> +			};
+> +			outlet_temp2: temperature-sensor@49 {
+> +				compatible = "ti,tmp75";
+> +				reg = <0x49>;
+> +			};
+> +		};
+> +
+> +		i2c4_bus70_chn3: i2c@3 {
+> +			#address-cells = <1>;
+> +			#size-cells = <0>;
+> +			reg = <0x3>;
+> +
+> +			mb_inlet_temp1: temperature-sensor@7c {
+> +				compatible = "microchip,emc1413";
+> +				reg = <0x7c>;
+> +			};
+> +			mb_inlet_temp2: temperature-sensor@4c {
+> +				compatible = "microchip,emc1413";
+> +				reg = <0x4c>;
+> +			};
+> +		};
+> +	};
+> +};
+> +
+> +&i2c5 {
+> +	status = "okay";
+> +
+> +	i2c-mux@70 {
+> +		compatible = "nxp,pca9548";
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		reg = <0x70>;
+> +		i2c-mux-idle-disconnect;
+> +	};
+> +};
+> +
+> +&i2c6 {
+> +	status = "okay";
+> +	rtc@51 {
+> +		compatible = "nxp,pcf85063a";
+> +		reg = <0x51>;
+> +	};
+> +};
+> +
+> +&i2c7 {
+> +	status = "okay";
+> +};
+> +
+> +&i2c9 {
+> +	status = "okay";
+> +};
+> +
+> +&i2c11 {
+> +	status = "okay";
+> +};
+> +
+> +&i2c14 {
+> +	status = "okay";
+> +	eeprom@50 {
+> +		compatible = "atmel,24c64";
+> +		reg = <0x50>;
+> +		pagesize = <32>;
+> +	};
+> +
+> +	bmc_ast2600_cpu: temperature-sensor@35 {
+> +		compatible = "ti,tmp175";
+> +		reg = <0x35>;
+> +	};
+> +};
+> +
+> +&adc0 {
+> +	ref_voltage = <2500>;
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_adc0_default &pinctrl_adc1_default
+> +		&pinctrl_adc2_default &pinctrl_adc3_default
+> +		&pinctrl_adc4_default &pinctrl_adc5_default
+> +		&pinctrl_adc6_default &pinctrl_adc7_default>;
+> +};
+> +
+> +&adc1 {
+> +	ref_voltage = <2500>;
+> +	status = "okay";
+> +
+> +	pinctrl-names = "default";
+> +	pinctrl-0 = <&pinctrl_adc8_default &pinctrl_adc9_default
+> +		&pinctrl_adc10_default &pinctrl_adc11_default
+> +		&pinctrl_adc12_default &pinctrl_adc13_default
+> +		&pinctrl_adc14_default &pinctrl_adc15_default>;
+> +};
+> +
+> +&vhub {
+> +	status = "okay";
+> +};
+> +
+> +&video {
+> +	status = "okay";
+> +	memory-region = <&video_engine_memory>;
+> +};
+> +
+> +&gpio0 {
+> +	gpio-line-names =
+> +	/*A0-A7*/	"","","","","","i2c2-reset-n","i2c6-reset-n","i2c4-reset-n",
+> +	/*B0-B7*/	"","","","","host0-sysreset-n","host0-pmin-n","","",
+> +	/*C0-C7*/	"s0-vrd-fault-n","s1-vrd-fault-n","bmc-debug-mode","",
+
+Mildly interested in the functionality of "bmc-debug-mode" :)
+
+> +			"irq-n","","vrd-sel","spd-sel",
+> +	/*D0-D7*/	"presence-ps0","presence-ps1","hsc-12vmain-alt2-n","ext-high-temp-n",
+> +			"","bmc-ncsi-txen","","",
+
+Is "bmc-ncsi-txen" something that should be associated with the MAC?
+
+> +	/*E0-E7*/	"eth-phy-rst-n","eth-phy-int-n","clk50m-bmc-ncsi","","","","","",
+
+Same question for eth-phy-rst-n and eth-phy-int-n.
+
+> +	/*F0-F7*/	"s0-pcp-oc-warn-n","s1-pcp-oc-warn-n","power-chassis-control",
+> +			"cpu-bios-recover","cpld-done","hs-scout-proc-hot",
+> +			"s0-vr-hot-n","s1-vr-hot-n",
+> +	/*G0-G7*/	"","","hsc-12vmain-alt1-n","bmc-salt12-s0-ssif-n","","","","",
+> +	/*H0-H7*/	"","fpga-program-b","wd-disable-n","power-chassis-good","","","","",
+> +	/*I0-I7*/	"","","","","","adc-sw","power-button","rtc-battery-voltage-read-enable",
+> +	/*J0-J7*/	"","","","","","","","",
+> +	/*K0-K7*/	"","","","","","","","",
+> +	/*L0-L7*/	"","","","","","","","",
+> +	/*M0-M7*/	"bmc-uart-cts1","s0-ddr-save","soc-spi-nor-access","presence-cpu0",
+> +			"s0-rtc-lock","","","",
+
+Why isn't "bmc-uart-cts1" muxed into the associated UART? Why is it a GPIO?
+
+> +	/*N0-N7*/	"hpm-fw-recovery","hpm-stby-rst-n","jtag-sel-s0","led-sw-hb",
+> +			"jtag-dbgr-prsnt-n","","","",
+> +	/*O0-O7*/	"","","","","","","","",
+> +	/*P0-P7*/	"ps0-ac-loss-n","ps1-ac-loss-n","","",
+> +			"led-fault","cpld-user-mode","jtag-srst-n","led-bmc-hb",
+> +	/*Q0-Q7*/	"","","","","","","","",
+> +	/*R0-R7*/	"","","","","","","","",
+> +	/*S0-S7*/	"","","identify-button","led-identify",
+> +			"s1-ddr-save","spi-nor-access","sys-pgood","presence-cpu1",
+> +	/*T0-T7*/	"","","","","","","","",
+> +	/*U0-U7*/	"","","","","","","","",
+> +	/*V0-V7*/	"s0-hightemp-n","s0-fault-alert","s0-sys-auth-failure-n",
+> +			"host0-reboot-ack-n","host0-ready","host0-shd-req-n",
+> +			"host0-shd-ack-n","s0-overtemp-n",
+> +	/*W0-W7*/	"ocp-aux-pwren","ocp-main-pwren","ocp-pgood","",
+> +			"bmc-ok","bmc-ready","spi0-program-sel","spi0-backup-sel",
+> +	/*X0-X7*/	"i2c-backup-sel","s1-fault-alert","s1-fw-boot-ok",
+> +			"s1-hightemp-n","s0-spi-auth-fail-n","s1-sys-auth-failure-n",
+> +			"s1-overtemp-n","cpld-s1-spi-auth-fail-n",
+> +	/*Y0-Y7*/	"","","","","","","bmc-spi-fm-boot-abr-pd","host0-special-boot",
+> +	/*Z0-Z7*/	"reset-button","ps0-pgood","ps1-pgood","","","","","";
+> +};
+> +
+> +&gpio1 {
+> +	gpio-line-names =
+> +	/*18A0-18A7*/	"","","","","","","","",
+> +	/*18B0-18B7*/	"","","","","emmc-rst-n","","s0-soc-pgood","",
+
+"emmc-rst-n" should be specified as part of mmc-pwrseq-emmc, right?
+
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/devicetree/bindings/mmc/mmc-pwrseq-emmc.yaml?h=v5.19-rc7
+
+Cheers,
+
+Andrew
