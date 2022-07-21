@@ -1,55 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2820F57CA4D
-	for <lists+openbmc@lfdr.de>; Thu, 21 Jul 2022 14:10:17 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C695457CA8D
+	for <lists+openbmc@lfdr.de>; Thu, 21 Jul 2022 14:20:01 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LpWbl0vphz3cF8
-	for <lists+openbmc@lfdr.de>; Thu, 21 Jul 2022 22:10:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LpWq34WLkz3cBw
+	for <lists+openbmc@lfdr.de>; Thu, 21 Jul 2022 22:19:59 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=iG7EuUC2;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=tWtei2IC;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=broonie@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.68.75; helo=ams.source.kernel.org; envelope-from=broonie@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=iG7EuUC2;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=tWtei2IC;
 	dkim-atps=neutral
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LpWbK2xn7z3bnV
-	for <openbmc@lists.ozlabs.org>; Thu, 21 Jul 2022 22:09:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LpWpc4ZpGz3bf9
+	for <openbmc@lists.ozlabs.org>; Thu, 21 Jul 2022 22:19:36 +1000 (AEST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id 4A1D761D4F;
-	Thu, 21 Jul 2022 12:09:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCBBBC3411E;
-	Thu, 21 Jul 2022 12:09:42 +0000 (UTC)
+	by ams.source.kernel.org (Postfix) with ESMTPS id A230BB82296;
+	Thu, 21 Jul 2022 12:19:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61BA7C3411E;
+	Thu, 21 Jul 2022 12:19:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1658405385;
-	bh=Is1b7K1zP/3u0FK9rRtUZbsH5NcbGby4sQBDfEtE5P0=;
+	s=k20201202; t=1658405970;
+	bh=90w2BUPeykw3L6eLJY+/iA8CSo+mOdpNtZFfyxQV4f0=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=iG7EuUC2eFEtuAh9lO7Gdb5CUn8qCMad1EgCcxOwxHzuvUoEM0rb9jyJKnagNwX4e
-	 x14GZunev8iP+CVXaIXKY+Jd2fUKr64cDGB96MzonyMGUo2jhq+50mgaBU35MDTp3e
-	 k10+toz3abomP3mzXn0H+Ksr7uLRyeTIjh7HU0sJO5pbTJ2WhHdnEZE7QuwwI82fKF
-	 laLspgKV1boLi+I3YAW/ndz+nbYv2Uo+SLNLijH5g0/P3lXjYM9jAmP82gcsu6zhR2
-	 /Cg4u83F7TDCzt4pqBdVzfSvBW11AcX8/wHLTyIeXD9hb3VuBBMN4VDUUQGAg/T/6X
-	 ZAZJn755a82Pg==
-Date: Thu, 21 Jul 2022 13:09:38 +0100
+	b=tWtei2IC7LLKMGuWx7OGmZgtYIVw4sviob/MPlLdZgzbvwsFiP/8QcIl4G3V+Jvho
+	 EMkotHCrFkkBqURuWz6tyy4e0rBs0ijIZBiOy8NOcA5fZk0JYz28r2x1Y/qTJs8dFi
+	 48859ytlpZ9sB6o4XpUx8xz42gNEGucfsNaeKrenBeK0gckaR9rJ4SC8jN2B/BHIsp
+	 dvdcJzDw70LRng0iclAuYiZiVmOXJz0hG9jlFrmhJ89tzmsojekCLxUayku0d+EkVp
+	 TBUnYrXukoA1iQ2z0YnXsXC/B6KVtUgOtbTL/zQr/bc7now+6sRMymqX1AjdcSlqab
+	 RM2EviGUa5vlw==
+Date: Thu, 21 Jul 2022 13:19:23 +0100
 From: Mark Brown <broonie@kernel.org>
 To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH v1 2/2] dt-binding: spi: npcm-pspi: Add npcm845 compatible
-Message-ID: <YtlCAvJK/pb4PbJ6@sirena.org.uk>
+Subject: Re: [PATCH v1 0/2] spi: npcm-pspi: add Arbel NPCM8XX and full duplex
+ support
+Message-ID: <YtlES7MX6nJr8l+L@sirena.org.uk>
 References: <20220721101556.118568-1-tmaimon77@gmail.com>
- <20220721101556.118568-3-tmaimon77@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="fAOdgDIIiCA86x/O"
+	protocol="application/pgp-signature"; boundary="O7bov1l8TjWxvFne"
 Content-Disposition: inline
-In-Reply-To: <20220721101556.118568-3-tmaimon77@gmail.com>
+In-Reply-To: <20220721101556.118568-1-tmaimon77@gmail.com>
 X-Cookie: Exercise caution in your daily affairs.
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -67,33 +67,41 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---fAOdgDIIiCA86x/O
+--O7bov1l8TjWxvFne
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Thu, Jul 21, 2022 at 01:15:56PM +0300, Tomer Maimon wrote:
+On Thu, Jul 21, 2022 at 01:15:54PM +0300, Tomer Maimon wrote:
 
->  Required properties:
-> - - compatible : "nuvoton,npcm750-pspi" for NPCM7XX BMC
-> + - compatible : "nuvoton,npcm750-pspi" for Poleg NPCM7XX.
-> +				"nuvoton,npcm845-pspi" for Arbel NPCM8XX.
+> Tomer Maimon (2):
+>   spi: npcm-pspi: add full duplex support
+>   dt-binding: spi: npcm-pspi: Add npcm845 compatible
 
-You've not updated the driver to accept this compatible and this doesn't
-say anything about fallbacks.
+It is not obvious why these are a series, they appear to be entirely
+orthogonal.  If there's no relationship between patches it's generally
+better to send them separately, that way problems with one patch won't
+hold up unrelated patches and reviewers aren't left wondering about why
+things are grouped.
 
---fAOdgDIIiCA86x/O
+Please submit patches using subject lines reflecting the style for the
+subsystem, this makes it easier for people to identify relevant patches.
+Look at what existing commits in the area you're changing are doing and
+make sure your subject lines visually resemble what they're doing.
+There's no need to resubmit to fix this alone.
+
+--O7bov1l8TjWxvFne
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmLZQgIACgkQJNaLcl1U
-h9BwuQf+MgqHMK5RNzIBd69yNdZ64oCneh+BsjdFstytLx4t07xWCOv5+XBZ68ct
-cDoz13GzxwS2bysHegbH30+oUEmGQBb6LRB3+IGyLc5XGFWIzf4idBGXQI4c25zK
-jEz8cK7i9q548YD+pwtpVzPyPW5DC2+llPoyKFIzECn8+UmaxR3OTTrFDabmV0+m
-KonNrnoWCLggYz+t/DVkVLdECAnQwbatCXOKKwSn5atkrGpzd3kHTNGzXv+FB/qp
-9pSPrfNMRFXl9tRuUISkFx0iqhiyCpMlVoJx00jZYq9Vw7Y5ZW1y/4/nRrQkqR1j
-KGsll59OiewC/YZvU8L2dM8Z9DWYCQ==
-=Pul1
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmLZREsACgkQJNaLcl1U
+h9DmJQf+M5sCikLx8XCc5AhzopEJBxC42hfe5IBR6mlpIWp/dv3JYI8Q+8rvNl/F
+7lXeQgGxQHJoFGE0RihkSSZYdEFw6Rb8OXhyodqQbyI8iukuiSTL8NzA0JbpzCTu
+tZm+JRU3zWu39jyFdRGST22mgJHxfrSWxEdAm0T+0AOYY4GNAn4cquIHVH9wwU/g
+bPqOsc+nDa0B0aZrDrdrndq2iBFKuHkKt+Ig8vGmsn/U1eyIFK6Rr+SXEqS6zQnS
+mEdWhyIyEWkz9+61h+bzkTvtmlaLgIAoWjA+Kc/3droutXOp9BK9inOEcgA0u1Av
+P3IrCNU8vqB0vHqWtrNU+S3lXuOolA==
+=wHf8
 -----END PGP SIGNATURE-----
 
---fAOdgDIIiCA86x/O--
+--O7bov1l8TjWxvFne--
