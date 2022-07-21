@@ -1,87 +1,136 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id DFE8257C23C
-	for <lists+openbmc@lfdr.de>; Thu, 21 Jul 2022 04:26:29 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2A1DC57C26D
+	for <lists+openbmc@lfdr.de>; Thu, 21 Jul 2022 04:47:23 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LpGfC5YGQz3bXR
-	for <lists+openbmc@lfdr.de>; Thu, 21 Jul 2022 12:26:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LpH6J6lF1z3c7s
+	for <lists+openbmc@lfdr.de>; Thu, 21 Jul 2022 12:47:20 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=o5m4fMW5;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=LXxNFNNW;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=Kc8uZrfN;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aj.id.au (client-ip=66.111.4.25; helo=out1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7eab::707; helo=nam11-co1-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=o5m4fMW5;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=LXxNFNNW;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=Kc8uZrfN;
 	dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on20707.outbound.protection.outlook.com [IPv6:2a01:111:f400:7eab::707])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LpGdk36znz2y8F;
-	Thu, 21 Jul 2022 12:26:02 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 842FA5C00CD;
-	Wed, 20 Jul 2022 22:26:00 -0400 (EDT)
-Received: from imap50 ([10.202.2.100])
-  by compute3.internal (MEProxy); Wed, 20 Jul 2022 22:26:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm2; t=1658370360; x=1658456760; bh=IY22mRWqSo
-	8usiXkyL4SonvPzNqw0Y/i8axysexlkIk=; b=o5m4fMW5ti19M9MiQ3TgGkzY3y
-	VyN6cAbT+kn1b1CVFxP1DucRivwZY+/D72Xm5NSojvC44M4V7D+ewhjUWxxVuviL
-	SbBDiHBJ6QvqiNtZjZpD8YarAxptH5AXta306iSS+piw1iXJRdZhvc1R2h6Hb5Qk
-	tT8H1LjLbuTvSXvzs/oz2yGMEArTUsmokOOivdLxPpaALxmVg3AtuYqRWKrP+OQY
-	VgbKJ0Uoun3AhRjde+/DhXxQramxR4T0TE7pTjI9NbMDKW/gJDeEGGl0BZaJOcwh
-	MQegPqz+HnbYNpMaySK4HyM28NWM5rX4a+b34zaXd8tGef8FeVQ4UfAEwprQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1658370360; x=1658456760; bh=IY22mRWqSo8usiXkyL4SonvPzNqw
-	0Y/i8axysexlkIk=; b=LXxNFNNWLDfDfpMDhvANk0njkT+II2tX06UQZQPIjzWX
-	Pov2uLsDGDxJxs7Sv2CKtytMjVAKP19wp/IkTAn2tFUAGM9dEQKPK9IdWJtW/E/1
-	KO5D9WjZa1OAwF/Ll3G76qGObE9M491tPwNNszsOD+GvU8rMxDWOi3bKxpyFkw/K
-	Cv0AWiwvQfNq/1CQOpcOuM9NM8ckc9fLwYVLtTmKmC9gxPg4DGvq+VyjVhgtUQ7I
-	t4QDJCXQxbMozgZsKNYewd3j+285NOiSFnDly5jbcF3jV9jIuYcRGyQnU6zEQYw2
-	RwtyX/lfrQNz6WIoOgUe1tV2wSSazOfn7ST/agTuwA==
-X-ME-Sender: <xms:OLnYYg0nne9cfqfBw2fqW_XHZrzukhmsp9QOOGqhN9FPQQT-ZgZ1Fw>
-    <xme:OLnYYrFq8cS7UnHe1BgQkipHTA9M8HT2vzNFFIoX2bn-DWrM4C3aL63MOHsvSwfho
-    K1uKXDV7OpVU7IC9w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrudelfedgfedtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehn
-    ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtf
-    frrghtthgvrhhnpeekvdekjeekgfejudffteetgeejkeetteduvedtffdtledutdfhheev
-    feetkeeiteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
-    hmpegrnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:OLnYYo7LMZGMAOEVIJk4HzI56ObVXnm2JMdB31ALYLvrGoZh39RQdw>
-    <xmx:OLnYYp2r4J4XVRP9WKRQ6jSi4kZjBNTsTU1rzeTQs_oYEBPprCIVOg>
-    <xmx:OLnYYjHk1xYs89btstFxodfBpEKJbxZCXr3nlLPpdJdCXuXB8X3wHg>
-    <xmx:OLnYYoTmbi_H6JJUgt4-xdAUlvbA8xWGtPEkhiAGgRGwrGuDXrlFEA>
-Feedback-ID: idfb84289:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 32644170007E; Wed, 20 Jul 2022 22:26:00 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-755-g3e1da8b93f-fm-20220708.002-g3e1da8b9
-Mime-Version: 1.0
-Message-Id: <9340007a-b9c0-4657-8279-51892f963e5e@www.fastmail.com>
-In-Reply-To: <20220712012353.386887-2-wangmin_phy@126.com>
-References: <20220712012353.386887-1-wangmin_phy@126.com>
- <20220712012353.386887-2-wangmin_phy@126.com>
-Date: Thu, 21 Jul 2022 11:55:39 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: wangmin_phy <wangmin_phy@126.com>, openbmc@lists.ozlabs.org,
- linux-aspeed@lists.ozlabs.org, "Joel Stanley" <joel@jms.id.au>
-Subject: Re: [PATCH 1/1] ARM: dts: aspeed: Add device tree for Phytium's BMC
-Content-Type: text/plain
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LpH5n32Fvz2yxF;
+	Thu, 21 Jul 2022 12:46:52 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=SyWU5pPAFv5Xl8Cm/PMouD/iEty4oCpFaoEwnuMGXSBR4+lhbuUO853J4GVb1khVDu/I1HouPEnJlM1DClh4/D3Gjd46qvS7FugBC9U541i0xqt7vv6rq7uzqGmIcDGCIdZGGoWYLRa+xRpIdEUeC/Lc/5VSVJlYm8tb2w4Bq7yq8DFGx6X4CtYvealXb4foz8NsrSG3FHjsYQLQfF8Z/Dv1f5Ayn13FmCmAa01laUstmO/sUZ7JzTyPERzmIqAwVs9aA+Rc2w1GwbnUDXMariwg6/Sad7Vlnh4QGdITf8QZIJeNdDEafxanWMXv12wExKaFOlvP1LgLIsfKrmsneA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=uyk7zFcJPwv8UJK+/6SJhuJznSKY4hWn0sZ69jpxb8c=;
+ b=nl680NJ9986WOX2wpm1U+hXMyWyimD2XWmSmelcThmX6sA/YXRZujoBXrKB9ETgg+rzR1YhIxxlWeeLzS7K0zvkxe1cSkOgUm++mHbMWaHq1GrROy0dVRYRHI5s68NOtz1var2fYJubYPgjxiVJWDYUTMa+nPicfb9t3E4Bm4IqRj646hhYNUKVuITqASVXZjHQTioMds+lVddF/oT7EFiudjB/mEM0WMUH8z3yKR3Diga67sTJsT9GrMU7UJKcZ0yzDFM9SDUJTTfIOpsqmu8atdBjEQg3u+bzb5HzXIK4ZLJ6Az4SUo7tk7QnOq986Fq8eDzZOxmHbY4xKbhXTHA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=os.amperecomputing.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uyk7zFcJPwv8UJK+/6SJhuJznSKY4hWn0sZ69jpxb8c=;
+ b=Kc8uZrfNQEDmcofcX5xBDZIhg2wn/6kwOv1DubGvUTo94Mvhn0RnUMSSysvFA9Gozc+XusYtdxR0/BtbkdoCjf3s9DgBhN/AmRpVenN+9Vh0rtdm7h3ClIO6lQ5We1qhy8Kk1q0XfI7/1S6rFlpAT5O7HfJMp7nQmaBQ5LERP/M=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
+Received: from SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24) by
+ DM5PR01MB2668.prod.exchangelabs.com (2603:10b6:3:f3::10) with Microsoft SMTP
+ Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5458.18; Thu, 21 Jul 2022 02:46:27 +0000
+Received: from SJ0PR01MB7282.prod.exchangelabs.com
+ ([fe80::7535:773:f979:893e]) by SJ0PR01MB7282.prod.exchangelabs.com
+ ([fe80::7535:773:f979:893e%9]) with mapi id 15.20.5438.023; Thu, 21 Jul 2022
+ 02:46:27 +0000
+Message-ID: <878f9889-0255-96d8-77c8-19b0542932f4@os.amperecomputing.com>
+Date: Thu, 21 Jul 2022 09:46:10 +0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.0.2
+Subject: Re: [PATCH v2 2/2] ARM: dts: aspeed: Add device tree for Ampere's Mt.
+ Mitchell BMC
+Content-Language: en-CA
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+ openbmc@lists.ozlabs.org, Arnd Bergmann <arnd@arndb.de>,
+ Olof Johansson <olof@lixom.net>, soc@kernel.org,
+ Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+ linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+ Open Source Submission <patches@amperecomputing.com>
+References: <20220720085230.3801945-1-quan@os.amperecomputing.com>
+ <20220720085230.3801945-3-quan@os.amperecomputing.com>
+ <ab78f85c-dd0a-9176-103f-8e4abe01b8f9@linaro.org>
+From: Quan Nguyen <quan@os.amperecomputing.com>
+In-Reply-To: <ab78f85c-dd0a-9176-103f-8e4abe01b8f9@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SG2PR02CA0003.apcprd02.prod.outlook.com
+ (2603:1096:3:17::15) To SJ0PR01MB7282.prod.exchangelabs.com
+ (2603:10b6:a03:3f2::24)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 1ef0cb55-be58-445c-9d3a-08da6ac3351e
+X-MS-TrafficTypeDiagnostic: DM5PR01MB2668:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 	Al3xa+uT/8SWPw2oEOLYPyo0WDJ2tNXeeBIMbRKi0MHYJ2Z/Gt32eYP/so5ZE0TnQ5JWyvURLtfx6UHzys8efr8+DyK0NmvA5Gg1mVkPjAgDRXPe3CSqgcFV+eg0zkVyoiGKWYqeif5HeBxeaS5LDx3GMtXOSavWr7gV5SU3lwQgmSFmk/PSgZvVsiX/5hAJ/y5VUoe4LQ/9XoZjU2tsVTUQFImK6PLR1h1kBSr8kn2tWVM6VHMSXv8R6267cnMDMcls64qBuOwV2ct2B+5RfGAmHcYnZS0+Wmewg7KFji6jNYWtB3hM0WR7cR2t1z7QOy4iObk9LLds2V7NUkzFJxLKjZFiKK6fA4PiAw49BQbA8Z3RJejkQGuKA0nzLVXNEezCvqr8d40Xm/CIMPbtSxlUI0yIs3fcxOHKY0jWsMOqI+tbXc/zxLBFmTeoTaMIXvrq/02y9+1qqm1GJh63H24gXNhrEje+q8N7JyIrxX9mjb0+FkrK2sKNfi/wTtzoDQOgCoSt+ANL7BUMG2U9EXLqYfPXzW5N9FXB1bSNyFEndoRIefw5Bfju3A2gG9St2Tqx7swMswzZhaIzikUBoAxw9EOYoXxzj38vFTDCAzGHegv/X8+WlEI6XMWU+iV0KpZs0bCLsELMn4gHx3nXD4xD7SBg/i9mndEGdlzBShmBbxOHDu6wspFhtBrGwEsQiDFfwhvWpIgyZ0ywcKBfgWwoljRyB/11wg9/nKbhI24ZFnUguoRb37acQuH/TtG9LfJMImQv0g5K84COLeWFFx8Z9DV7WQ9wtEg18CDwZFsigvLFwkXCJQOuaIW36t/5qlvJbBlhEGwELkkHBdKGADXi+T6tywHcyCLVB32CYCc=
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR01MB7282.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(39850400004)(396003)(136003)(366004)(346002)(376002)(7416002)(8676002)(8936002)(5660300002)(4326008)(66946007)(66556008)(66476007)(2906002)(83380400001)(86362001)(38350700002)(38100700002)(6486002)(921005)(6506007)(6512007)(316002)(107886003)(2616005)(110136005)(52116002)(66574015)(478600001)(26005)(186003)(41300700001)(31686004)(31696002)(53546011)(6666004)(43740500002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?L0drSUtidmQ5U3ZzYjVmektmZmE1UXZHNjlCOVoxL000Rk1VQkV4QlFLbkNP?=
+ =?utf-8?B?TWdkSDVIb1VrY0NpL2t5V1FFRzJCTU9McmxHZkh2LzdOeFhaRGpja2JPc0Y2?=
+ =?utf-8?B?eHU1RTdlaVhja1VBNk8wTUFmekZ4ZFFXTXNkOWRPdHMwYVVOejBEOGVLRURQ?=
+ =?utf-8?B?MXhvMHpmSyt5encxWjh3Z242SzM1OFBDOTZmc2NSNm1JbEhVT2ZEQU1IejNk?=
+ =?utf-8?B?WFpORGFlOWFGUmpCWUIwREY2cFlVQUlFTktGbHppcDYzVkZsdGV5WWtVN2VS?=
+ =?utf-8?B?MmlXdmwwYzdITEFOUm5QMHdlUlBkZGhKWERLRTZlbHpMRllJaEU0WnhjSkZZ?=
+ =?utf-8?B?bEtlUnVpLzdsY05iWG80N0xKMWx4eWhENEVmWnVRb3ljR3YyUFJiTDdYaURa?=
+ =?utf-8?B?bHE5U0ZlMkFObms4aUZjUEhzdm5KTzY2ZEJYTlIvMWUxV29TQ3haSm1IME9S?=
+ =?utf-8?B?dDM1aURnbFdqKzA5Q01nU3VhcWs4R2lpbEcrSU42MWg5K1hHbUV5cWVEcjNW?=
+ =?utf-8?B?OVhkdlN5eUNqK2ZNMnFtck5TMWJwSEZlRjJOZy9NM0RQWm9vMitzdjl2cUtr?=
+ =?utf-8?B?QjFjRkppcHIyRDdISHpvVHFac0g3UG0vNHdWVEkrL015cW9jdi9hWitQalBN?=
+ =?utf-8?B?RjVZdmRTZUxMWEtic05jVHU4Kzd3c1NaaVRVUW1qdnlIVmw1Y3pKcVFqaEsw?=
+ =?utf-8?B?MDVXSHRJLzVIRDVUaW5OaEZ0ZTZscWV1VDBoS0laQlhFRjFQQ0g1SUtiQnRp?=
+ =?utf-8?B?aVJqeW9VOEFldi9TU3J5MWpERVJSRENYZVdKU2NOQm9ZcnFXaWk0dXNSK3RP?=
+ =?utf-8?B?dVhPbWhlNDg1QnhoRzJGc2N4V2RabnBuck9NZCtFYkJBMkg4STJadTNuQVdO?=
+ =?utf-8?B?WFYzeEVQc0Ixa1QvQXpFcG5iSEtpdU5mZHh0TmRnNWtWRXo2eWY4eWRWL1NR?=
+ =?utf-8?B?djdScGNLbEhwT1BFbWpXOVdMcmxpTHJuTlZScXRReE0veWJYajdWdWVCdmtE?=
+ =?utf-8?B?WVdZem0yek4ra3VBRjd5WUxWdDFzcU1ja1YxR2lwWlNrc3JQS2Q5NVQ4TnZJ?=
+ =?utf-8?B?WnNPenFVWVRJUlFOaTdheWhES1VsMHc2N1ZOZ2VhRGhCc2xYNlhQcjZMV2g2?=
+ =?utf-8?B?YkRmUkFVNTRlY3FMUTcydHhTNzR3czNoOWtYMHVrZDRNQ2ozNmtTYWpHMEJD?=
+ =?utf-8?B?TUpxNkM2SkpTakx4b2pGaTRGMXhNS2VPU1dNRjdFY1BZZUcwRkt4SmwySFQ2?=
+ =?utf-8?B?NFB2U09Fb3Z1cWEwblIyVGd3OGpPNXJpczdEU2JycktGYWNiOE5nS0lnZEFI?=
+ =?utf-8?B?ZmpGdWJDODZuOW9UWU9kU002VFdONDBnQkk0K2xWR25vd2t0UXI1SmlMYWw3?=
+ =?utf-8?B?VzNUdXJjajA1dWF2QmZGOGpiYjRja0xnWTVyaVpXSERpd0lLVUpPd29FZkRR?=
+ =?utf-8?B?TXFlSkVMSG8rZDhPUU5JR3VBVUZOa2twZGF6ZGZkL0NSL2diQXlFUVVBcmZR?=
+ =?utf-8?B?RjRxcXRXTERxUzM2Slh6ZmJzV0wyZlRCRXk4R2Y5SDhBVE5hUnJvWnRiNkg2?=
+ =?utf-8?B?a2JJRGVNUTJ4SjhrOHBPb2FlRDdUOFlLL2hRWUZkL1ZVUUs5L01xNjI2Z04w?=
+ =?utf-8?B?VksrSEV1VWpuVlJWRXFNeHIwOVRFY2VZM2Q4TXVzSmxPZWRoUXkrTGFIKzJn?=
+ =?utf-8?B?d2kraUFEeFhSSE12MmUrMnlmc0xVUFFMZlptcFFEY3VpSmxUWmk5Nll3dVRH?=
+ =?utf-8?B?aHpwdURsK1N4R3lLTEwyekFXalp1Z1hZc3FwR2lSbWE4TUdZbHZ5U3FOQWdF?=
+ =?utf-8?B?aDAxaG50Y2UrYURiNG9tVHYxaHVTKzMrYkJSVU95WWVwT0I0UGtwYXJZNEsw?=
+ =?utf-8?B?UWdMSG4ycnZyOHZGWlVNYXVTTUFFMTYwUVg1L1k4RVFBbjdndnNubmJrV0Q2?=
+ =?utf-8?B?MHlYRXRFRWhlYTBaOVhwK0lJOGhvWHA3MlpYMmYvdVE3Uk1BY0N3OFA5Nldz?=
+ =?utf-8?B?MFdQeVlFdkh2cVB6ZEdIRGt3REJWNzUxMVlzK3pDSTNwSzFYUVpYMjZ2Rmhs?=
+ =?utf-8?B?TitKVWNHU0EvZUVXcklpcHFOU3BRV2JrNmhpR1NLc0c5bFZQNTNCdG1WVVls?=
+ =?utf-8?B?NWREWFhCNXBWaW9oMENpNEJyRWJNYjc4Q2Z6N3ZOQXlMbG50U2YzNkV1THAx?=
+ =?utf-8?Q?zsTK1u66DIOOsJex+e0riSo=3D?=
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1ef0cb55-be58-445c-9d3a-08da6ac3351e
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR01MB7282.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Jul 2022 02:46:27.3555
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: qCHY19RCpVpK6q/DHbT5gi9NXagbndByBRukwjJ/fxI1410a+MPKsCc8jL2PXRcohA/HRSDO8l0D9vXRffdPMChYDDwgiNr7C8SoBhvFw+c=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM5PR01MB2668
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,290 +142,89 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: wangmin@phytium.com.cn
+Cc: thang@os.amperecomputing.com, Phong Vo <phong@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On Tue, 12 Jul 2022, at 10:53, wangmin_phy@126.com wrote:
-> From: Min Wang <wangmin@phytium.com.cn>
->
-> The Phytium's BMC card is an ASPEED AST2500-based BMC for the
-> hardware reference platform with Phytium's Processors Family.
->
-> Signed-off-by: Min Wang <wangmin@phytium.com.cn>
-> ---
->  arch/arm/boot/dts/Makefile                    |   3 +-
->  .../boot/dts/aspeed-bmc-phytium-pomelo.dts    | 302 ++++++++++++++++++
->  2 files changed, 304 insertions(+), 1 deletion(-)
->  create mode 100644 arch/arm/boot/dts/aspeed-bmc-phytium-pomelo.dts
->
-> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-> index 7e0934180724..e02cd800d45a 100644
-> --- a/arch/arm/boot/dts/Makefile
-> +++ b/arch/arm/boot/dts/Makefile
-> @@ -1497,4 +1497,5 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
->  	aspeed-bmc-opp-zaius.dtb \
->  	aspeed-bmc-portwell-neptune.dtb \
->  	aspeed-bmc-quanta-q71l.dtb \
-> -	aspeed-bmc-supermicro-x11spi.dtb
-> +	aspeed-bmc-supermicro-x11spi.dtb \
-> +	aspeed-bmc-phytium-pomelo.dtb
+On 20/07/2022 17:36, Krzysztof Kozlowski wrote:
+> On 20/07/2022 10:52, Quan Nguyen wrote:
+>> The Mt. Mitchell BMC is an ASPEED AST2600-based BMC for the Mt. Mitchell
+>> hardware reference platform with AmpereOne(TM) processor.
+>>
+>> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+>> Signed-off-by: Phong Vo <phong@os.amperecomputing.com>
+>> Signed-off-by: Thang Q. Nguyen <thang@os.amperecomputing.com>
+>> ---
+>> v2 :
+>>    + Remove bootargs                                       [Krzysztof]
+>>    + Fix gpio-keys nodes name to conform with device tree binding
+>>    documents                                               [Krzysztof]
+>>    + Fix some nodes to use generic name                    [Krzysztof]
+>>    + Remove unnecessary blank line                         [Krzysztof]
+>>    + Fix typo "LTC" to "LLC" in license info and corrected license
+>>    info to GPL-2.0-only
+>>
+>>   arch/arm/boot/dts/Makefile                    |   1 +
+>>   .../boot/dts/aspeed-bmc-ampere-mtmitchell.dts | 577 ++++++++++++++++++
+>>   2 files changed, 578 insertions(+)
+>>   create mode 100644 arch/arm/boot/dts/aspeed-bmc-ampere-mtmitchell.dts
+>>
+> 
+> (...)
+> 
+>> +
+>> +&i2c3 {
+>> +	status = "okay";
+>> +};
+>> +
+>> +&i2c4 {
+>> +	status = "okay";
+>> +
+>> +	adc_i2c: adc-i2c@16 {
+> 
+> Node name: just "adc"
+> 
 
-Please keep the list in alphabetical order.
+Thanks, will fix.
 
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-phytium-pomelo.dts 
-> b/arch/arm/boot/dts/aspeed-bmc-phytium-pomelo.dts
-> new file mode 100644
-> index 000000000000..a75017f22140
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/aspeed-bmc-phytium-pomelo.dts
-> @@ -0,0 +1,302 @@
-> +// SPDX-License-Identifier: GPL-2.0+
-> +/dts-v1/;
-> +
-> +#include "aspeed-g5.dtsi"
-> +#include <dt-bindings/gpio/aspeed-gpio.h>
-> +
-> +/ {
-> +	model = "Phytium AST2500 BMC";
-> +	compatible = "aspeed,ast2500";
-> +
-> +	aliases {
-> +		serial4 = &uart5;
-> +	};
-> +
-> +	chosen {
-> +		stdout-path = &uart5;
-> +		bootargs = "console=tty0 console=ttyS4,115200 earlyprintk";
+>> +		compatible = "lltc,ltc2497";
+>> +		reg = <0x16>;
+>> +		vref-supply = <&voltage_mon_reg>;
+>> +		#io-channel-cells = <1>;
+>> +		status = "okay";
+> 
+> Isn't this new node? Why do you need status here?
+> 
+Thanks for the comment. The drivers/iio/adc/ltc2497.c does not check for 
+the status indeed. Will remove it.
 
-I think we're in favour of dropping bootargs from the devicetree now. 
-This is handled in other ways (u-boot).
-
-> +	};
-> +
-> +	memory@80000000 {
-> +		device_type = "memory";
-> +		reg = <0x80000000 0x20000000>;
-> +	};
-> +
-> +	reserved-memory {
-> +		#address-cells = <1>;
-> +		#size-cells = <1>;
-> +		ranges;
-> +
-> +		vga_memory: framebuffer@9c000000 {
-> +			no-map;
-> +			reg = <0x9c000000 0x04000000>; /* 64M */
-> +		};
-> +
-> +		video_engine_memory: jpegbuffer {
-> +			size = <0x02000000>;	/* 32M */
-> +			alignment = <0x01000000>;
-> +			compatible = "shared-dma-pool";
-> +			reusable;
-> +		};
-> +	};
-> +
-> +	gpio-keys {
-> +		compatible = "gpio-keys";
-> +		id-button {
-> +			label = "id-button";
-> +			gpios = <&gpio  ASPEED_GPIO(S, 2)  GPIO_ACTIVE_LOW>;
-> +		};
-> +	};
-> +
-> +	leds {
-> +		compatible = "gpio-leds";
-> +		identify {
-> +			gpios = <&gpio ASPEED_GPIO(C, 6) GPIO_ACTIVE_LOW>;
-> +		};
-> +		fault {
-> +			gpios = <&gpio ASPEED_GPIO(C, 7) GPIO_ACTIVE_LOW>;
-> +		};
-> +	};
-> +
-> +	iio-hwmon {
-> +		compatible = "iio-hwmon";
-> +		io-channels = <&adc 0>, <&adc 1>, <&adc 2>, <&adc 3>,
-> +		      <&adc 4>, <&adc 5>, <&adc 6>, <&adc 7>,
-> +		      <&adc 8>, <&adc 9>, <&adc 10>, <&adc 11>,
-> +		      <&adc 12>, <&adc 13>, <&adc 14>, <&adc 15>;
-> +	};
-> +};
-> +
-> +&adc {
-> +	status = "okay";
-
-I recommend you mux the ADC lines to avoid them being 'stolen' by 
-userspace accidentally requesting the wrong GPIOs.
-
-> +};
-> +
-> +&fmc {
-> +	status = "okay";
-> +	flash@0 {
-> +		status = "okay";
-> +		m25p,fast-read;
-> +		label = "bmc";
-> +		spi-max-frequency = <50000000>;
-> +#include "openbmc-flash-layout.dtsi"
-> +	};
-> +};
-> +
-> +&spi1 {
-> +	status = "okay";
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pinctrl_spi1_default>;
-> +	flash@0 {
-> +		status = "okay";
-> +		m25p,fast-read;
-> +		label = "pnor";
-> +		spi-max-frequency = <100000000>;
-> +	};
-> +};
-> +
-> +&spi2 {
-> +	status = "okay";
-> +};
-> +
-> +&uart5 {
-> +	status = "okay";
-> +};
-> +
-> +&uart1 {
-> +	status = "okay";
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pinctrl_txd1_default
-> +			&pinctrl_rxd1_default
-> +			&pinctrl_nrts1_default
-> +			&pinctrl_ndtr1_default
-> +			&pinctrl_ndsr1_default
-> +			&pinctrl_ncts1_default
-> +			&pinctrl_ndcd1_default
-> +			&pinctrl_nri1_default>;
-> +
-> +};
-> +
-> +&lpc_snoop {
-> +	status = "okay";
-> +	snoop-ports = <0x80>;
-> +};
-> +
-> +&kcs3 {
-> +	status = "okay";
-> +	aspeed,lpc-io-reg = <0xCA2>;
-> +};
-> +
-> +&kcs2 {
-> +	status = "okay";
-> +	aspeed,lpc-io-reg = <0xCA8>;
-> +};
-> +
-> +&mac0 {
-> +	status = "okay";
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pinctrl_rmii1_default>;
-> +	clocks = <&syscon ASPEED_CLK_GATE_MAC1CLK>,
-> +		 <&syscon ASPEED_CLK_MAC1RCLK>;
-> +	clock-names = "MACCLK", "RCLK";
-> +	use-ncsi;
-> +};
-> +
-> +&mac1 {
-> +	status = "okay";
-> +
-> +	pinctrl-names = "default";
-> +	pinctrl-0 = <&pinctrl_rgmii2_default &pinctrl_mdio2_default>;
-> +};
-> +
-> +&i2c1 {
-> +	status = "okay";
-> +	psu1@58 {
-> +		compatible = "pmbus";
-> +		reg = <0x58>;
-> +	};
-> +	psu2@59 {
-> +		compatible = "pmbus";
-> +		reg = <0x59>;
-> +	};
-> +};
-> +
-> +&i2c2 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c3 {
-> +	status = "okay";
-> +
-> +};
-> +
-> +&i2c4 {
-> +	status = "okay";
-> +	rtc@68 {
-> +		compatible = "dallas,ds1339";
-> +		reg = <0x68>;
-> +	};
-> +};
-> +
-> +&i2c5 {
-> +	status = "okay";
-> +};
-> +
-> +
-> +&i2c6 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c7 {
-> +	status = "okay";
-> +};
-> +
-> +&i2c8 {
-> +	status = "okay";
-> +	lm75@48 {
-> +		compatible = "ti,tmp100";
-> +		reg = <0x48>;
-> +	};
-> +	lm75@49 {
-> +		compatible = "ti,tmp100";
-> +		reg = <0x49>;
-> +	};
-> +	lm75@4a {
-> +		compatible = "ti,tmp100";
-> +		reg = <0x4a>;
-> +	};
-> +	lm75@4c {
-> +		compatible = "ti,tmp100";
-> +		reg = <0x4c>;
-> +	};
-> +	lm75@4d {
-> +		compatible = "ti,tmp100";
-> +		reg = <0x4d>;
-> +	};
-> +	lm75@4e {
-> +		compatible = "ti,tmp100";
-> +		reg = <0x4e>;
-> +	};
-> +
-> +};
-> +
-> +&i2c0 {
-> +	status = "okay";
-> +};
-> +
-> +
-> +/*
-> + * Enable port A as device (via the virtual hub) and port B as
-> + * host by default on the eval board. This can be easily changed
-> + * by replacing the override below with &ehci0 { ... } to enable
-> + * host on both ports.
-> + */
-
-Drop this comment as it's not the EVB?
-
-Cheers,
-
-Andrew
+>> +	 };
+>> +
+>> +	eeprom@50 {
+>> +		compatible = "atmel,24c64";
+>> +		reg = <0x50>;
+>> +		pagesize = <32>;
+>> +	};
+>> +
+> 
+> (...)
+> 
+>> +
+>> +&gpio1 {
+>> +	gpio-line-names =
+>> +	/*18A0-18A7*/	"","","","","","","","",
+>> +	/*18B0-18B7*/	"","","","","emmc-rst-n","","s0-soc-pgood","",
+>> +	/*18C0-18C7*/	"uart1-mode0","uart1-mode1","uart2-mode0","uart2-mode1",
+>> +			"uart3-mode0","uart3-mode1","uart4-mode0","uart4-mode1",
+>> +	/*18D0-18D7*/	"","","","","","","","",
+>> +	/*18E0-18E3*/	"","","","";
+>> +};
+>> +
+> 
+> You have a trailing line error.
+> 
+> 
+Thanks, will fix
+- Quan
