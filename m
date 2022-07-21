@@ -2,55 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 540D257CC77
-	for <lists+openbmc@lfdr.de>; Thu, 21 Jul 2022 15:47:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 23A6657CDC6
+	for <lists+openbmc@lfdr.de>; Thu, 21 Jul 2022 16:36:43 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LpYlg1Bvpz3053
-	for <lists+openbmc@lfdr.de>; Thu, 21 Jul 2022 23:47:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LpZrj3H1Rz3c8X
+	for <lists+openbmc@lfdr.de>; Fri, 22 Jul 2022 00:36:37 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=QPdX1inL;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=ZtPDqAPN;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=broonie@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::135; helo=mail-lf1-x135.google.com; envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=QPdX1inL;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=ZtPDqAPN;
 	dkim-atps=neutral
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LpYlD4Q1vz3053
-	for <openbmc@lists.ozlabs.org>; Thu, 21 Jul 2022 23:46:48 +1000 (AEST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id E5D7561F2E;
-	Thu, 21 Jul 2022 13:46:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B17C3411E;
-	Thu, 21 Jul 2022 13:46:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1658411204;
-	bh=b8gG2bCPlj2x4Xkb//2x1j95onaGj9Tc/6iMX2KqQyg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=QPdX1inLAlzEf+AVLSF8qSECPFUBNdfpxXbaLxP1D7/LfY3lWSJyStkFGIdiA2yL3
-	 5uU4aKBPoLTzCQ6rxWif/Z5QCRqOtXrmUP3wV4zP0yHUiYKm4U+0id02wWX83Eeslw
-	 HH4iTsYSkWxeu9vTJzujmH/rq0DBaXK5MDY2z674k51PmkEiRZO6Kzq1NGJn3sJZKT
-	 i5fR3C9CQLr5ijj56WpXEt655wZiKp3++Ue0DFas6LAcPMrpYckvYzFisw0IxkU7mt
-	 BQRemM9ieRGqiWTqDwkUYHF3+goBN/Rne0Ko7cqf+aZbJqxIygWp4KiiVF+6ao2J60
-	 6h66mtbaF64VQ==
-Date: Thu, 21 Jul 2022 14:46:31 +0100
-From: Mark Brown <broonie@kernel.org>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH v1 1/2] spi: npcm-pspi: add full duplex support
-Message-ID: <YtlYt/5VKIblUHBP@sirena.org.uk>
-References: <20220721101556.118568-1-tmaimon77@gmail.com>
- <20220721101556.118568-2-tmaimon77@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LpZrL4gHvz2xk0
+	for <openbmc@lists.ozlabs.org>; Fri, 22 Jul 2022 00:36:17 +1000 (AEST)
+Received: by mail-lf1-x135.google.com with SMTP id n18so3138790lfq.1
+        for <openbmc@lists.ozlabs.org>; Thu, 21 Jul 2022 07:36:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=a45XGYjGqJj1SQDNhpIFTnsS1sN/Pvl1ei9cqTikBdo=;
+        b=ZtPDqAPNcLI5BmGpzis11nE5xbKaJSqYBdhdLVwZSA9MIrBTenSJl984+CJg2un54E
+         0vOQ9dVDtygBYd2OWxt0jt320O9/Cfz5DmAre28h5pFNYVpyjnnyWq0mOd1kxYA/wQDb
+         Nk8uVDwav760RHf7Re6a4/p6aREx/utu7K/v8xQvupb6Nvdp6pLi9grUtIqDJNUC/2lk
+         TVSJ4PZPO1LxcpuZSqldEfoGfaPUbS5jXm6dPfX87s45ZNYXduJo+A2CnUyEOB6FPIVy
+         5eG5O2MPHt/BMI7s3vo5BhVu0vZsAh34ZHRP8rBvLXTcHFiq8r9dro2jAi6SIuuphkLz
+         YyTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=a45XGYjGqJj1SQDNhpIFTnsS1sN/Pvl1ei9cqTikBdo=;
+        b=aiQI5gz9Ho4O5JCsbKcsOcUN6xe3qJcR64lb1wFp8j2IWpo/otxqKqdLE969z/FHUm
+         DDwPYxaTkXv1h0OBIWB54Bm7v19CtxrGZjJS09fZLWsqPgm+L4jvZ4geGZrEcZw1AImM
+         CyH81R0VM4vF1jZMXwvL6isB4wOFAq9A1ex9LxO8VDtX5s6VMFQ9TSO8ODEsq9o3s1qK
+         gbLk6b2jlzJTxaFHNvXxgPDOKoky9i7kOM1eB9ZHk9/khaK3o7grqHqgH5U8Y1vdC8aZ
+         WcH6rB93qrRLKhEB1JKDAMaqBPDdrc3bQl7Ti+MpTuD746hFFpErMGVAzkKviFSc9Jbl
+         vTHg==
+X-Gm-Message-State: AJIora8+3E3420aZphSyFVS+l8Me7x9MCAhc7kLjNFnt9+FqNWycn2I7
+	xp78+eKMxzmvxD4GeR8hdvxQhHySHgItj+iUwkU=
+X-Google-Smtp-Source: AGRyM1tJveEikQFTfSBOWxKIFmbqGzdQVmYaRXPZa7hYzIom8WOv8CXPxQnNyXC+Eclmf8Z12KA3a8w8w+W0bZdh2FU=
+X-Received: by 2002:ac2:4897:0:b0:489:f2ad:1191 with SMTP id
+ x23-20020ac24897000000b00489f2ad1191mr21118185lfc.25.1658414169880; Thu, 21
+ Jul 2022 07:36:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="5SDnULtcW3k8gJQC"
-Content-Disposition: inline
-In-Reply-To: <20220721101556.118568-2-tmaimon77@gmail.com>
-X-Cookie: Exercise caution in your daily affairs.
+References: <20220721101556.118568-1-tmaimon77@gmail.com> <YtlES7MX6nJr8l+L@sirena.org.uk>
+In-Reply-To: <YtlES7MX6nJr8l+L@sirena.org.uk>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Thu, 21 Jul 2022 17:35:58 +0300
+Message-ID: <CAP6Zq1gB1yrqNDJROf8xyjYiCv6H-rW=Qa7J17AoFo3mv5hsLA@mail.gmail.com>
+Subject: Re: [PATCH v1 0/2] spi: npcm-pspi: add Arbel NPCM8XX and full duplex support
+To: Mark Brown <broonie@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,85 +72,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, benjaminfair@google.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, robh+dt@kernel.org, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, linux-spi@vger.kernel.org
+Cc: devicetree <devicetree@vger.kernel.org>, Benjamin Fair <benjaminfair@google.com>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, linux-spi@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Mark,
 
---5SDnULtcW3k8gJQC
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Thanks for your comment, next version I will make sure to send two
+separate patches
 
-On Thu, Jul 21, 2022 at 01:15:55PM +0300, Tomer Maimon wrote:
+On Thu, 21 Jul 2022 at 15:19, Mark Brown <broonie@kernel.org> wrote:
+>
+> On Thu, Jul 21, 2022 at 01:15:54PM +0300, Tomer Maimon wrote:
+>
+> > Tomer Maimon (2):
+> >   spi: npcm-pspi: add full duplex support
+> >   dt-binding: spi: npcm-pspi: Add npcm845 compatible
+>
+> It is not obvious why these are a series, they appear to be entirely
+> orthogonal.  If there's no relationship between patches it's generally
+> better to send them separately, that way problems with one patch won't
+> hold up unrelated patches and reviewers aren't left wondering about why
+> things are grouped.
+>
+> Please submit patches using subject lines reflecting the style for the
+> subsystem, this makes it easier for people to identify relevant patches.
+> Look at what existing commits in the area you're changing are doing and
+> make sure your subject lines visually resemble what they're doing.
+> There's no need to resubmit to fix this alone.
 
-> The NPCM PSPI handler, on TX-buffer not null, would perform a dummy read
-> but did not save the rx-data, this was valid only for half duplex.
+Best regards,
 
-> This patch adds full duplex support for NPCM PSPI driver by storing all
-> rx-data when the Rx-buffer is defined also for TX-buffer handling.
-
-This doesn't seem to entirely correspond to what the patch does, nor to
-what the driver currently does?  I can't see any dummy read code in the
-current driver.
-
->  static void npcm_pspi_send(struct npcm_pspi *priv)
->  {
->  	int wsize;
-> -	u16 val;
-> +	u16 val =3D 0;
-> =20
->  	wsize =3D min(bytes_per_word(priv->bits_per_word), priv->tx_bytes);
->  	priv->tx_bytes -=3D wsize;
-> =20
-> -	if (!priv->tx_buf)
-> -		return;
-> -
->  	switch (wsize) {
->  	case 1:
-> -		val =3D *priv->tx_buf++;
-> +		if (priv->tx_buf)
-> +			val =3D *priv->tx_buf++;
->  		iowrite8(val, NPCM_PSPI_DATA + priv->base);
->  		break;
-
-These changes appaear to be trying to ensure that when _send() is called
-we now always write something out, even if there was no transmit buffer.
-Since the device has been supporting half duplex transfers it is not
-clear why we'd want to do that, it's adding overhead to the PIO which
-isn't great.  This also isn't what the changelog said, the changelog
-said we were adding reading of data when there's a transmit buffer.
-Similar issues apply on the read side.
-
-AFAICT the bulk of what the change is doing is trying make the driver
-unconditionally do both read and writes to the hardware when it would
-previously have only read or written data if there was a buffer
-provided.  That's basically open coding SPI_CONTROLLER_MUST_TX and
-SPI_CONTROLLER_MUST_RX, if that's what the hardware needs then you
-should just set those flags and let the core fix things up.
-
-> +       /*
-> +        * first we do the read since if we do the write we previous read=
- might
-> +        * be lost (indeed low chances)
-> +        */
-
-This reordering sounds like it might be needed but should have been
-mentioned in the changelog and is a separate patch.
-
---5SDnULtcW3k8gJQC
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmLZWLYACgkQJNaLcl1U
-h9A4AQf9F0Ou6ruUsB2l9FBA8z/dhz178MbimOt9osjMD/omwua1unnf5WZyjUak
-oknbfxdzONnxJ5jKFsMSkILGJhu9PPjZlrHfemFI6oc+K3CftKWOJ4yx3ICwgb6B
-KCna1abwEAMAaPqZH6G/mOl4JtVv9o5ne8WQCdJroHW1jUTGJE4gRPSG9hxjp9vy
-n1RhgLiOsvpMCDH4jmi1fwoyej2tWkq/PEpIzIAga+T7OR/Qcd4dhyrQRdnxDTOb
-RLRi7egoVTZ3/I6wIytwA2+vBZE1UgYdMktPGJ0NRFa7F4j62miVk/lWI5Zwlj7/
-zRq/nEIMVxUjXEB67rDSegd0erDq8w==
-=rN1K
------END PGP SIGNATURE-----
-
---5SDnULtcW3k8gJQC--
+Tomer
