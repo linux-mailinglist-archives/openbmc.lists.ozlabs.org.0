@@ -2,65 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 29B9957E870
-	for <lists+openbmc@lfdr.de>; Fri, 22 Jul 2022 22:39:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4286757F42B
+	for <lists+openbmc@lfdr.de>; Sun, 24 Jul 2022 10:45:12 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LqLs06t6rz30Qc
-	for <lists+openbmc@lfdr.de>; Sat, 23 Jul 2022 06:39:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LrGvm5KyJz3bmT
+	for <lists+openbmc@lfdr.de>; Sun, 24 Jul 2022 18:45:08 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=QvX5Z7qQ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=XMKD8Nu+;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::102a; helo=mail-pj1-x102a.google.com; envelope-from=edtanous@google.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::129; helo=mail-lf1-x129.google.com; envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=QvX5Z7qQ;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=XMKD8Nu+;
 	dkim-atps=neutral
-Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LqLrZ0rkfz2yWr
-	for <openbmc@lists.ozlabs.org>; Sat, 23 Jul 2022 06:39:08 +1000 (AEST)
-Received: by mail-pj1-x102a.google.com with SMTP id o5-20020a17090a3d4500b001ef76490983so5160740pjf.2
-        for <openbmc@lists.ozlabs.org>; Fri, 22 Jul 2022 13:39:08 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LrGvM6qtLz305M
+	for <openbmc@lists.ozlabs.org>; Sun, 24 Jul 2022 18:44:47 +1000 (AEST)
+Received: by mail-lf1-x129.google.com with SMTP id t22so7440972lfg.1
+        for <openbmc@lists.ozlabs.org>; Sun, 24 Jul 2022 01:44:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
+        d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Y/cLAAUgm6uZuDe2dLw/cJx2F0GhsZIn5H/0YtI6nXk=;
-        b=QvX5Z7qQhNUMEe5AU2c+gjp3m0opEuVcXeVPUbXCcWWtqe5PhsZaMl+/66O21ofQZK
-         iCjYEdJS2dI1FJ+57bPuCBaZj40wZe2mHqXkL8ghGn2clsJPm3D7LO42nWXKxkmk1+1J
-         6HezEDDQhUU4/V1prpnbzzkxDNfd4OD3U/IqVIcaWfYcffNYdLsvPruof88D26toExDj
-         TY/WeDAiVyT4MKiHpuNcYZc9Wsuo8FaVIO8AvQgpoOYa9/ssGC5kocISUt1fIx/NqhJg
-         RmqBoyQCd/2HE5jJjCsRNCW2WhDD7Um/nnqex5quUPSz0OHmQUW6Ac9T9A3DtMsWdlZF
-         woUw==
+        bh=lv3zYQALgYY1iSSRJ6c3vQT0Or5W0piyPXsF6s1qXTo=;
+        b=XMKD8Nu+jwF+epSxh759innZceuNK2Bbw9dU7ztnxIx45oOakZqPaox2OvzAs013QZ
+         Nh6gNZg7PGK3ONX/9CrIxeNtTjC66xDS6dT7ETZjZzOaowbI+d/6Y8+44v937IVGkSd+
+         KMPZybjD5f7ACQR7H+9/BPfgLeKXBvOGUrjrfhPB5NxftKUyig+bivm0nk3z8IUqQKu4
+         QFELteaFI5z8iPfUqizJi8x/E+Er7goe3ih38q7ECzw/OXJ0DzW3bv5xNsHdlQZ7o+1H
+         ckgRUpJAWzOWvFfHjm0IwTVnJHW51Y4aQKrZdAKWK30cLmo+zgKoKtSlnnXqKZ8WeOZh
+         Uxzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Y/cLAAUgm6uZuDe2dLw/cJx2F0GhsZIn5H/0YtI6nXk=;
-        b=3VBaG9BoWjxZ89faoPsmGspTXad4jKtketqaE09oQVva+NJeg8uGf0RHrz73FNqd4s
-         I0sqWAzVpuamDmvp4etjkfKa/fxfiREuEYe3woIgLHQmCzsMZmdOwCpPM7pMzscxV+Lh
-         7bYj3UUQzZe6hOIZE6MTeKCUsOhC/8RgSC1RLQH2ergV0sko9b1DlC9RQG3/KiWUeYUB
-         efLm0YBnFV2Ic0LOH8zrnSql0yR/NluwMwJsdJzHNbUSrQA07I2nq7Tvos8/7SG0YgDA
-         i4ygijiLb3h60+raquCQ+2/h5cbiMTZZLSmOQ3kq6HoaANszhX+MZF1Jtm16z3GnLvP9
-         +ljA==
-X-Gm-Message-State: AJIora8N4UByTnJ0L4S1eHQLAMI6rpq789o6TbOJjNH8UWdl9varLiCo
-	+hpqLjaySDGRYSj0JhQCt/vyJorNTtWAIVfeHabP2A==
-X-Google-Smtp-Source: AGRyM1swLh5cxQxnJdPkhWacS/vCzZi/PJhAH+JI2lnO/t3z6TMLTFkIAjYQSWc6JqLCgDoE+mo9pe+Z1sSz9Kv9QpE=
-X-Received: by 2002:a17:90b:17c9:b0:1f0:5678:5142 with SMTP id
- me9-20020a17090b17c900b001f056785142mr1474722pjb.205.1658522343969; Fri, 22
- Jul 2022 13:39:03 -0700 (PDT)
+        bh=lv3zYQALgYY1iSSRJ6c3vQT0Or5W0piyPXsF6s1qXTo=;
+        b=NrkAcAPI/EbPBLKPcnikSo0QyXdWVRZLUFYYdPr6/JZzJt5zRH/gziOgvQ3s13jouT
+         gGISuRa2Hq+VPJ3ESjEP5JhZbkJvFHkOFBxz25KmTQ8fL8fieEnGv1ariAzWgt6OLZz5
+         GgiPICMGPvSBHn/xqgUFuRWW+Vp47HVf8Apr06bbdVyZFDGUqPj3gEo4xqd1Fl3SLK/Y
+         CobScaj7MO5dkRl0c6tkwiLlLB91HCA0H9KkiNtDGr3u/avE+/qebvHsuOfPMpcI9/KU
+         YlnwfSCMm5AaKthz31lEKjH0a7KSskUULcmJkOPz7aOBrTkz3EzDwZHTMbfuiJZLYr6X
+         GnBA==
+X-Gm-Message-State: AJIora/sTLN54Q41PEjFuWmFZkTHwx9JXYM4Hlga1MfCkl+4Osxktt1K
+	d+sqlq8wm2w56Oxe+xuQU+MHgWD3WPq/9qjqkbc=
+X-Google-Smtp-Source: AGRyM1sMjnyjs4vQ7R5Dp7jQ1b/Q/TvIyjqqZKfRGL4+99ObRiyjPqebsPomLEK3FjhrAd+IKrP3ZH2PFUr+abpBM40=
+X-Received: by 2002:a19:6d0d:0:b0:48a:8b3c:e28 with SMTP id
+ i13-20020a196d0d000000b0048a8b3c0e28mr304341lfc.265.1658652280751; Sun, 24
+ Jul 2022 01:44:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <fcf6043c-1d69-9681-6dea-629ad4dffade@linux.ibm.com>
-In-Reply-To: <fcf6043c-1d69-9681-6dea-629ad4dffade@linux.ibm.com>
-From: Ed Tanous <edtanous@google.com>
-Date: Fri, 22 Jul 2022 13:38:51 -0700
-Message-ID: <CAH2-KxBuPhrv3bBu3ihr1AW6jpLXWvhr3pY0a4zqdFw0eFKkbw@mail.gmail.com>
-Subject: Re: BMCWeb support new HTTP headers Referrer-Policy and
- Feature-Policy renamed to Permissions-Policy
-To: Joseph Reynolds <jrey@linux.ibm.com>
+References: <20220722114136.251415-1-tmaimon77@gmail.com> <20220722114136.251415-3-tmaimon77@gmail.com>
+ <afae04e0-76a3-1bcb-5b47-9944fa9ab2c0@linaro.org> <YtrvyyMGm64hFG5j@sirena.org.uk>
+ <0c8688d5-b0c1-8cc1-ec27-292acbb38dfc@linaro.org> <YtrzF9BFJrXfxiz0@sirena.org.uk>
+In-Reply-To: <YtrzF9BFJrXfxiz0@sirena.org.uk>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Sun, 24 Jul 2022 11:44:29 +0300
+Message-ID: <CAP6Zq1iRowFv4qg=AqdVmBRRx5p4-5AaC1G-aZs=2LnOAOELXA@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] spi: npcm-pspi: Add NPCM845 peripheral SPI support
+To: Mark Brown <broonie@kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -73,64 +74,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Krzysztof Grobelny <krzysztof.grobelny@intel.com>, openbmc <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>, nanzhoumails@gmail.com, Gunnar Mills <gmills@linux.vnet.ibm.com>
+Cc: devicetree <devicetree@vger.kernel.org>, Benjamin Fair <benjaminfair@google.com>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Tali Perry <tali.perry1@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, linux-spi@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Jul 22, 2022 at 1:32 PM Joseph Reynolds <jrey@linux.ibm.com> wrote:
+Hi Mark and Krzysztof,
+
+Thanks for your reply,
+
+On Fri, 22 Jul 2022 at 21:57, Mark Brown <broonie@kernel.org> wrote:
 >
-> BMCWeb maintainers,
+> On Fri, Jul 22, 2022 at 08:47:24PM +0200, Krzysztof Kozlowski wrote:
+> > On 22/07/2022 20:43, Mark Brown wrote:
 >
-> This is a request to add new HTTP headers.  Some of the newer dynamic
-> security scanners are looking for the "new" HTTP headers and complain if
-> they are not present.  The headers include:
-> - Referrer-Policy
-> - Permissions-Policy
-> - Feature-Policy renamed to Permissions-Policy
+> > > ...with a fallback list required by the bindings so the driver actually
+> > > binds.  Note that bindings are currently not in YAML format so there'd
+> > > be even less enforcement of that than normal, and as they're currently
+> > > written the bindings don't require fallback.
 >
-> Should we support these in BMCWeb?
-
-The answer to this is already documented in the bmcweb developing
-guide.  We follow OWASP guidelines here, so I suspect the answer to
-your question is "yes", but I haven't looked at the relevant
-documentation for those headers specifically.
-
-> Maybe as hard-coded response header.
-
-Yep, this is how we do all the other security headers today.
-
-> For example, for the Permissions-Policy, would we ever need to
-> accelerometer or microphone?
-
-"would we ever" doesn't matter here.  If we need them in the future,
-we can change the permissions headers to allow them, the only thing we
-care about is "do we use them today" for which the answer is no.
-Because we don't have a valid use, those features can be disabled.
-
-> When selecting the Referrer-Policy we should select secure default
-> values, and also consider the Web GUI development scenario when the Web
-> site is hosted off of the BMC.
-
-While we should support the latter where we can, we have build options
-that the development process uses, and the webui proxy is fully
-capable of stripping headers where required.  With that said, I don't
-think any of these would have an effect on running the webui remotely,
-but certainly something to try.
-
+> > Yes, the bindings document should be rephrased but we were living like
+> > that for few years. :)
 >
-> I am not an expert on HTTP headers and I do not know what values to
-> use.
+> The binding document as it stands only has one compatible, there's no
+> existing problem with it other than the YAML conversion.  If we're
+> adding something new that requires a fallback we should be explicit
+> about that rather than have something that's actively misleading where
+> previously things were clear.  I don't mind if we add the compatible to
+> the driver or document the requirement for the fallback but we should do
+> one of the two.
 
-Nor are the bmcweb maintainers (mostly speaking for myself here);  We
-start by reading the documentation provided by the relevant security
-authorities and we follow the advice they give us
+is V2 good enough? adding the compatible to the driver and the document?
+Or should we use fallback?
+If fallback is choosen, can you explain how I should do it?
 
->  My purpose is to determine if these headers are useful (I believe
-> they are) and update BMCWeb to set some sane values.
+Best regards,
 
-
-Cool, looking forward to the relevant documentation and the patch.
-
->
-> Joseph
->
+Tomer
