@@ -1,67 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17E3257F476
-	for <lists+openbmc@lfdr.de>; Sun, 24 Jul 2022 11:36:17 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17C9D57FD99
+	for <lists+openbmc@lfdr.de>; Mon, 25 Jul 2022 12:35:25 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LrJ2k0gNzz3brF
-	for <lists+openbmc@lfdr.de>; Sun, 24 Jul 2022 19:36:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LrxJW0jZDz3bnM
+	for <lists+openbmc@lfdr.de>; Mon, 25 Jul 2022 20:35:23 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=ANtyF2mK;
+	dkim=pass (2048-bit key; unprotected) header.d=yahoo.com header.i=@yahoo.com header.a=rsa-sha256 header.s=s2048 header.b=nCnUnJxl;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12f; helo=mail-lf1-x12f.google.com; envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=yahoo.com (client-ip=77.238.177.30; helo=sonic310-57.consmr.mail.ir2.yahoo.com; envelope-from=niikita@yahoo.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=ANtyF2mK;
+	dkim=pass (2048-bit key; unprotected) header.d=yahoo.com header.i=@yahoo.com header.a=rsa-sha256 header.s=s2048 header.b=nCnUnJxl;
 	dkim-atps=neutral
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+Received: from sonic310-57.consmr.mail.ir2.yahoo.com (sonic310-57.consmr.mail.ir2.yahoo.com [77.238.177.30])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LrJ2L0psPz30Ly
-	for <openbmc@lists.ozlabs.org>; Sun, 24 Jul 2022 19:35:53 +1000 (AEST)
-Received: by mail-lf1-x12f.google.com with SMTP id t22so7525626lfg.1
-        for <openbmc@lists.ozlabs.org>; Sun, 24 Jul 2022 02:35:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=kY/2lDsjH8rvyR9vI13gtj+VtHAX6pqqtYSZIT34gMQ=;
-        b=ANtyF2mKb++gC6/Y0D4BWpKx7diw7+EEqMUgh3n2P/HJ6uj8iZMx80qEQv5EMBVQOe
-         8LiZubbCg+DNm8jTrkbkv3ySYcxjjVH2DwZOdLZv1VDnYbSk6eg7BSmJF0hBg4ARvKec
-         l2cC7rPy8IhAbQStVEDF4iUsJLYL/tOcxyrL2j0u3WrMHj6P+8NlnDSjnz7vK6nNRlIA
-         wk8tRQ/ezcoNCcl3YdNwTV86qIPIPcP2MzQcIOa0nHa+Qqije50JNR2Hw39vLJUZr6rO
-         LdnlgPn94kxJrvqpIfCUGnwNtjHKyH0wgph1/du6/kjONK1CtPra9Zd1eQppoNy4ps5c
-         +HVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=kY/2lDsjH8rvyR9vI13gtj+VtHAX6pqqtYSZIT34gMQ=;
-        b=bxg+O+PRSThbltPmw1sZ5uwvUpS+DRs5nTzXRSMRQvN6x5I3DCAln8ysswIFxfwIE3
-         nrD3MY7RZ1GoXbLAt5bDWEuhnHBGoPlBirrGW2RMv6vbCagFFEu23eUxSkICnjyNsLRY
-         6UvZZcKs3KBc6lCJo5rb542JLdMehnt2DTY3q1FS3y5mISg9Oel1HQHTkkeK2/YV+XmA
-         yWhw4IrNvGkvhv7mtV8ODLFuk+bCx4nDFoGyKQZVjD1Wb1VP0WnKOqgo7CEPCs6XgALD
-         t0fBdGaZ174Sx+NEL3RMr33PGdcq/RR9Ur+XFziqaznTtEaF6exasr1bW0c2LO7rv0/J
-         0ocg==
-X-Gm-Message-State: AJIora+kg9JRt+iNNVIfGh0ctZNxmljPngY/8FDNAzXfyy3KrdpzSuDT
-	VdWafwB+yU8t5qDrnXC1xSY6+4dmFWHZnoETkVo=
-X-Google-Smtp-Source: AGRyM1ttd4MQTqOMMfzH0Y37+KPEPMu8Aswiq+gjP4iO8JKTk6mNJSA0L8DCpp4Ma/G/aSrXXw+S1m4GvlnoYIE2Jy0=
-X-Received: by 2002:a05:6512:1190:b0:48a:19d5:ef23 with SMTP id
- g16-20020a056512119000b0048a19d5ef23mr2732227lfr.401.1658655348919; Sun, 24
- Jul 2022 02:35:48 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LrxJ25yJXz3bXZ
+	for <openbmc@lists.ozlabs.org>; Mon, 25 Jul 2022 20:34:56 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1658745290; bh=0KZuVeT1CSZQGVSbEfttrhQDWo0BhO18dM8vWd2HJZY=; h=Date:From:To:Subject:References:From:Subject:Reply-To; b=nCnUnJxl9Ietf5bgwAGGfLxMx8lLiDAjwEUJKn/6PeybDyAOCi242VtStrKTwogJoslQ9zkRSQezOZbI/JvlnoURRwrfW+ZaIhxdDR/fsGnbpwGIlsWds62yxPpjYS0l29TKTrvBhbRYshtNwqW14KHb5LgrP+vwefkCfzwUUYpj+C4hD2ElM+fJ2qQMm6YUlzAG/UMl7+3Suqq1lSqvo6gQbmYYA6bnafyE11NWGtLFWTc6Vl67iSM440q9F7fc0Dme/Juw1t4jUrV+BckF3gyzFUFX5anBlCpF6r/kCYLJ1xPkXCG8h31ArTzNaeSqzkJRtF6h6hRlU0sllvsHjQ==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1658745290; bh=Ky3oL0JIDmxOc1/kB8HnjM228VDg8+3pvNLeFmCFXC+=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=pEr1YY3LKyyVlCRccjQYGkHqy/UoHCCOC9naOp7JvNFG134cZIYMZF1QLnvL0DhHWYHTusbO+wd0VWscB6/NeuvXw1iQhVar/VpI6Q+RVCKyYA6uDMu6g918eVp5sT7b9J7kSviSuBMRYJQYemT4HX/nanD5JDvWvptSQzLXMzVFfaJuzYC1rBFoWxdeDdUgETwhp10YfO2augm8rUgrCNHQJNSN55IuKMynYEOWU8PvbQzQiwcC4b/COlh8Xmvw0Mkswq2NXFeHW4zoQW2t8uvwgi+5Ale8frqZlSqMS1gFTag4eQVP0x9mwc9/wqMBcIgDOEB/HbYSk5nxerkjsg==
+X-YMail-OSG: EIvO20AVM1nJqbwyCabVbk1frV65SZCJ3_NZ0zGj6GuJ4gjEc7ENAJOGpKimEoD
+ nmja1_uiph2v6AS55AqSW9r04GqC.uGTujvtssnmvDjeeYSllLqNvqrvgvkNysoOVtJbWQzIfjTd
+ oO2aaBVimGiolFP.8qVk90whWEW3SPdLqUDaKhxFBl8b_9fQ1pmR26updkqYt5gcAMDm8hJ0sbOj
+ Fm0_spQl56kwNoPJf8Ioxa1fdIbhBWiviyB4iDLvoSEwNSmGkczeaFjl7sqh3aNRolHCsQRcA_Bf
+ tq6.UrfBZjs3kEBuptJsM5.XCL7tKCPXwqvV9RQojbvN5nKUqWI.19VFcPf5OwXBuqaKg.N7ctBm
+ Rgvg2Q0EmbVeLkRoE7WmzKxREAsGl9J6WFu1piV35Qjfpzpl3Dy9Dohafsj0Cya0xUZ5tRM68Sa2
+ MRWQKleO_TBVYgvYXGKEQ0UmqeAZLCxQ8nehvHxhh_DLh8JdpPxzsBV5XBpnaErDGmBbN8eMugke
+ hylxkGy0IuAUOa.gJrxUn3vJsygOmic82HK8l0sOiKyYAAsIdoQUBlR7B1Nhlhs1kobVAlNJUxDZ
+ RIzMV8sCgdGwRc1b9kqXM5lPB4YjLGRqYCkCMbSyWZ4T2ivx.Z_BnihiZV9zbYk39QgZkd0invm4
+ zwi3zZCxvkw5HzouqtxVVlcXEUkxgxk8ZeesFwVD0FItKF07Ird1M46pCel_pKqnQyzcNTXSKTrW
+ tVpsHtKFbYKLb7Ay8s6a_RF5yECFNTKaxrOYL9XVSKa2FHV77KQ0jpMoEazf_P_bR.3UAwTTmbOp
+ EjfDZa0vSL08Pl6yGSka4f74TYAV7Lm9ezBdinAhoh5SnlIcza54_lYDeNUqoCtK.EPrv6RaVzTI
+ rV12VeKXLMnaICzGG.WEK1MwbPp4x_9BMsmhcjpx_vZ0OfWEADRXW75BKa_lqhOJ.5xEhRMcFR.4
+ QdJMv2lmDyv1ILkrZ43HywQKA7mBrEQwoqMSaa6YFMY6mvQZ8tkDWYZ.qwTXKNjSHtdsdGQOpZ8T
+ clrjJkJpjN7JQs6TIGIbruY0D5Kkn.wUkUE5JwsvbKhyKr0FQxPZ0VEZGPcwjSmcot4cngWHCpPK
+ nfhSocb0cbWhTnaIIyFD49oG_f1.QbpHcqa2eysCLiVJG3Et.unS9N8BqqAyfNp_OYM1E32mfjkh
+ 0UPy_SMxCEjVaPcMfYJ6.jYfXJmViucACKh5eyodRkQoYd5kNj3Anx3.Wjjp.ZkltkPPqDH.VM_a
+ SWuzAMcXPe18cDeiOcnRa5INy8Y9SwCvBOCjYg5G0EvLDCRMrR4qgFZW.pukQK8mbWkKuUeGESdW
+ zhtma9xrZnMl9tpJdMDigMRHjoJ8YdorEUjLtE75p_K5pksNcG4VfLJPTtiSiFsqbX67Hge5vGL6
+ ds_iyAXnJNV8o4qvaYh3jXHsB7Uzkz3.uZawT_K0FxM2myHAP3aKUT8_JE1wSQrqMcxVswiNf3I4
+ 2q3YOj9GNy.rI4nzPuhdz2X4oHIKaQbP8HUhQD95QbvobLPboGQSEJGz0Wnp566I.r2arA4eA9kh
+ iOl9BTC2npEfi2GdyELjCRYv_Hfa2M5praJgQucdyxcCZGSRGHf8KkuZH2jqjfU4Ur_apGAqU3pf
+ JKYbHv_UZ532rErAFn5J4dCXsD8gd.Xrsdk7.rBOqtHlvp2IhSCS1kQlwqn3NOcM6O0rMXXQSNNN
+ MmgxUhWgd3g75Gvcmlm6HlsW9Rg1xqRWXhgme5FMbbT3oVSYhe7.8J82m.SacvWj9a_DrVeI1vRR
+ ODmhcqCGe7lp9FkSSBgXbfMinwo7iPProMBuNMZh9KkXuERS_caZM2LB3XUSP0BAMXfC_Li6zdSK
+ YcQULWeclf75PtaaZzZGN18HwohsoNOiZEsY1OlVaIoGC2FIrxkjAqGAz7LzaQvu01I5iuBNS_0C
+ KeMN9wC6pFy2bCZukq8aF99XGoo4od_NAtIYVsPsjwibnWUIxMYFKyOln37GRUUBSQRlRZuKgZCm
+ vtvOmDt2AWl.2mQJsEY6JkQ3fxbk1z9z7m4A3KC4SX80U41_V9TWdvGKHgG8z1E4FndyspaL6A97
+ gHrh0tWB.zl5IEqcdJUC1KAMbYx5SK9TZb7qKBQ2gmCTejeHA0n5OIKZcFYSRsSYEBoI-
+X-Sonic-MF: <niikita@yahoo.com>
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic310.consmr.mail.ir2.yahoo.com with HTTP; Mon, 25 Jul 2022 10:34:50 +0000
+Date: Mon, 25 Jul 2022 10:34:38 +0000 (UTC)
+From: Nikita Pavlov <niikita@yahoo.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Message-ID: <800107506.2442690.1658745278973@mail.yahoo.com>
+Subject: problem with displayed peci temperature sensors in webui
 MIME-Version: 1.0
-References: <20220721101556.118568-1-tmaimon77@gmail.com> <20220721101556.118568-2-tmaimon77@gmail.com>
- <YtlYt/5VKIblUHBP@sirena.org.uk>
-In-Reply-To: <YtlYt/5VKIblUHBP@sirena.org.uk>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Sun, 24 Jul 2022 12:35:37 +0300
-Message-ID: <CAP6Zq1hu4GtFrLa5O_7gyszXwpfijJF=XU0hdw8FBbvj3Bk8Hg@mail.gmail.com>
-Subject: Re: [PATCH v1 1/2] spi: npcm-pspi: add full duplex support
-To: Mark Brown <broonie@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_2442689_1701921993.1658745278972"
+References: <800107506.2442690.1658745278973.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.20447 YMailNorrin
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,87 +76,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>, Benjamin Fair <benjaminfair@google.com>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, linux-spi@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Mark,
+------=_Part_2442689_1701921993.1658745278972
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for your detailed explanation!
-
-On Thu, 21 Jul 2022 at 16:46, Mark Brown <broonie@kernel.org> wrote:
->
-> On Thu, Jul 21, 2022 at 01:15:55PM +0300, Tomer Maimon wrote:
->
-> > The NPCM PSPI handler, on TX-buffer not null, would perform a dummy read
-> > but did not save the rx-data, this was valid only for half duplex.
->
-> > This patch adds full duplex support for NPCM PSPI driver by storing all
-> > rx-data when the Rx-buffer is defined also for TX-buffer handling.
->
-> This doesn't seem to entirely correspond to what the patch does, nor to
-> what the driver currently does?  I can't see any dummy read code in the
-> current driver.
->
-In the current handler file, in the handler function.
-static irqreturn_t npcm_pspi_handler(int irq, void *dev_id)
-....
--       if (priv->tx_buf) {
--               if (stat & NPCM_PSPI_STAT_RBF) {
--                       ioread8(NPCM_PSPI_DATA + priv->base);
-the read above doing a dummy read
--                       if (priv->tx_bytes == 0) {
--                               npcm_pspi_disable(priv);
--                               complete(&priv->xfer_done);
--                               return IRQ_HANDLED;
--                       }
--               }
-
-
-> >  static void npcm_pspi_send(struct npcm_pspi *priv)
-> >  {
-> >       int wsize;
-> > -     u16 val;
-> > +     u16 val = 0;
-> >
-> >       wsize = min(bytes_per_word(priv->bits_per_word), priv->tx_bytes);
-> >       priv->tx_bytes -= wsize;
-> >
-> > -     if (!priv->tx_buf)
-> > -             return;
-> > -
-> >       switch (wsize) {
-> >       case 1:
-> > -             val = *priv->tx_buf++;
-> > +             if (priv->tx_buf)
-> > +                     val = *priv->tx_buf++;
-> >               iowrite8(val, NPCM_PSPI_DATA + priv->base);
-> >               break;
->
-> These changes appaear to be trying to ensure that when _send() is called
-> we now always write something out, even if there was no transmit buffer.
-> Since the device has been supporting half duplex transfers it is not
-> clear why we'd want to do that, it's adding overhead to the PIO which
-> isn't great.  This also isn't what the changelog said, the changelog
-> said we were adding reading of data when there's a transmit buffer.
-> Similar issues apply on the read side.
->
-> AFAICT the bulk of what the change is doing is trying make the driver
-> unconditionally do both read and writes to the hardware when it would
-> previously have only read or written data if there was a buffer
-> provided.  That's basically open coding SPI_CONTROLLER_MUST_TX and
-> SPI_CONTROLLER_MUST_RX, if that's what the hardware needs then you
-> should just set those flags and let the core fix things up.
-We will try to use SPI_CONTROLLER_MUST_TX and SPI_CONTROLLER_MUST_RX
->
-> > +       /*
-> > +        * first we do the read since if we do the write we previous read might
-> > +        * be lost (indeed low chances)
-> > +        */
->
-> This reordering sounds like it might be needed but should have been
-> mentioned in the changelog and is a separate patch.
-
+Hi,I have problem with display temperature sensors in webui.=C2=A0 On hwmon=
+ dbus bus I have some sensors like ambient, inlet and etc. and this sensors=
+ displayed in webui. Also I have peci sensors. Hwmon read peci files and se=
+t values on dbus. But peci values are not displayed in webui. As a result, =
+all sensors except the peci are displayed in the webui.=C2=A0How I can debu=
+g this or=C2=A0maybe someone faced this problem ?=C2=A0 =C2=A0 =C2=A0=C2=A0
+--
 Best regards,
+Nikita Pavlov
+NUST MISiS studentniikita@yahoo.com
 
-Tomer
+
+------=_Part_2442689_1701921993.1658745278972
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+<html><head></head><body><div class=3D"ydp30de8b9byahoo-style-wrap" style=
+=3D"font-family:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:16px=
+;"><div dir=3D"ltr" data-setdir=3D"false">Hi,</div><div dir=3D"ltr" data-se=
+tdir=3D"false">I have problem with display temperature sensors in webui.&nb=
+sp; On hwmon dbus bus I have some sensors like ambient, inlet and etc. and =
+this sensors displayed in webui. Also I have peci sensors. Hwmon read peci =
+files and set values on dbus. But peci values are not displayed in webui. A=
+<span>s a result, all sensors except the peci are displayed in the webui.&n=
+bsp;</span>How I can debug this or&nbsp;<span>maybe someone faced this prob=
+lem ?</span>&nbsp; &nbsp; &nbsp;&nbsp;</div><div><br></div><div class=3D"yd=
+p30de8b9bsignature"><div dir=3D"ltr" style=3D"font-family:Helvetica, Arial,=
+ sans-serif;font-size:16px;"><div><span style=3D"font-family:Helvetica, Ari=
+al, sans-serif;">--</span><br clear=3D"none" style=3D"font-family:Helvetica=
+, Arial, sans-serif;"><span style=3D"font-family:Helvetica, Arial, sans-ser=
+if;">Best regards,</span><br clear=3D"none" style=3D"font-family:Helvetica,=
+ Arial, sans-serif;"><span style=3D"font-family:Helvetica, Arial, sans-seri=
+f;">Nikita Pavlov</span><br clear=3D"none" style=3D"font-family:Helvetica, =
+Arial, sans-serif;">NUST MISiS student</div><div dir=3D"ltr"><span><span st=
+yle=3D"color:rgb(0, 0, 0);font-family:Arial, sans-serif;font-size:14px;whit=
+e-space:nowrap;">niikita@yahoo.com</span></span><br></div><br></div></div><=
+/div></body></html>
+------=_Part_2442689_1701921993.1658745278972--
