@@ -2,72 +2,84 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5382157FFB4
-	for <lists+openbmc@lfdr.de>; Mon, 25 Jul 2022 15:20:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CC54C580274
+	for <lists+openbmc@lfdr.de>; Mon, 25 Jul 2022 18:08:36 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Ls0zG1nBRz3bgC
-	for <lists+openbmc@lfdr.de>; Mon, 25 Jul 2022 23:20:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Ls4hy4v6yz3c3L
+	for <lists+openbmc@lfdr.de>; Tue, 26 Jul 2022 02:08:34 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=L1u1LLUJ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=ttM48RBa;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=yPhctgDt;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::132; helo=mail-lf1-x132.google.com; envelope-from=fercerpav@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25; helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=L1u1LLUJ;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=ttM48RBa;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=yPhctgDt;
 	dkim-atps=neutral
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Ls0yq2mKGz305M
-	for <openbmc@lists.ozlabs.org>; Mon, 25 Jul 2022 23:20:17 +1000 (AEST)
-Received: by mail-lf1-x132.google.com with SMTP id d17so15907232lfa.12
-        for <openbmc@lists.ozlabs.org>; Mon, 25 Jul 2022 06:20:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:subject:message-id:mime-version:content-disposition;
-        bh=3HE3Z+wYW9J/mTO1RKqA6GADmJwZy8TVvv3KgQsZUd8=;
-        b=L1u1LLUJ5GsN3kdqViGsiofAdi5lnMqoaPyvmZTXRzTu6hkD7HqJ3yEAY25iiV3jiG
-         owY9APJGS6x/dGl8yD3k++Xf+BJwt0Q85EVN1tVKyE8HQVHU3tR0j4lIdxNcmkB9Spz+
-         Lf+fRqCKvrR7AhCK/cj6qBf3swok7sn5rxgN0hBOvyznGLHQhsahUJJTUG1r9T0lhro8
-         z60ypBS1mUX9wLuo+8UFv5XFUtyy0OxM5/b32zCuw1ODgjHq+HVbsv0XPuy0Et6H2H90
-         Wtn5vHWMc6kyB+sCwEmyhEgEutRedcbgZ5eMkKkT50m03qE2f25X2buO1dbHrbbMxtBD
-         sSbw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:subject:message-id:mime-version
-         :content-disposition;
-        bh=3HE3Z+wYW9J/mTO1RKqA6GADmJwZy8TVvv3KgQsZUd8=;
-        b=RwNqUfGthR2Kw9p/cuD1WSgXvBf41Uvk3qxIM8iTYOhBzb0Ffek+hkvxQzKXbgcOjb
-         4LQl2c4BndJXKMgZInjgv6X34ZuDGHqC/FSY5lcuA2S/Wzaiyd3K5yeFWcF8elNRzy3X
-         vSdO/bwh8GJ4uaN8cV6jjtDvOW+6rwG1XoAXuOJioWEeamCR8FhGS5aZeEJwqWv+n20A
-         9/IFuE8XBtIczBxus4mTY4xGTevTos4KIAtXxW2Lu4+s7GHtOCWoe6YGUuJ8fNBSOEx6
-         0aaLuOPIc3iaLEYJdpI2QYiL281g3Jqemnyc1WUzx4eao4uQKZYAxHADzvPq+hr8J69n
-         odlA==
-X-Gm-Message-State: AJIora/upcnNRTR+D2LBQWm+J7tkYQDbgyN0atmWj0sI3baYfOXTz0Xb
-	GsP+VfQYOlvppFGAnuoty5rZKQlAhcI=
-X-Google-Smtp-Source: AGRyM1t+TdExhnnMI+mLfiAkiTPl8LWQ3Y1CWOWVm+aHxYvxPrlPfazeV7lXTU8dcPREu0/et5Bt2Q==
-X-Received: by 2002:a05:6512:31c8:b0:48a:9c62:9270 with SMTP id j8-20020a05651231c800b0048a9c629270mr261853lfe.221.1658755208243;
-        Mon, 25 Jul 2022 06:20:08 -0700 (PDT)
-Received: from home.paul.comp (paulfertser.info. [2001:470:26:54b:226:9eff:fe70:80c2])
-        by smtp.gmail.com with ESMTPSA id v15-20020a2e87cf000000b0025de6edd4a0sm1093894ljj.83.2022.07.25.06.20.07
-        for <openbmc@lists.ozlabs.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 25 Jul 2022 06:20:07 -0700 (PDT)
-Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
-	by home.paul.comp (8.15.2/8.15.2/Debian-22) with ESMTP id 26PDK4WT016291
-	for <openbmc@lists.ozlabs.org>; Mon, 25 Jul 2022 16:20:05 +0300
-Received: (from paul@localhost)
-	by home.paul.comp (8.15.2/8.15.2/Submit) id 26PDK487016290
-	for openbmc@lists.ozlabs.org; Mon, 25 Jul 2022 16:20:04 +0300
-Date: Mon, 25 Jul 2022 16:20:04 +0300
-From: Paul Fertser <fercerpav@gmail.com>
-To: openbmc@lists.ozlabs.org
-Subject: IPMI sensor names with VMware ESXi
-Message-ID: <Yt6YhAPcHfmEFtUz@home.paul.comp>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Ls4hT0lYpz2yJQ
+	for <openbmc@lists.ozlabs.org>; Tue, 26 Jul 2022 02:08:07 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 7F6E65C0194
+	for <openbmc@lists.ozlabs.org>; Mon, 25 Jul 2022 12:08:02 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Mon, 25 Jul 2022 12:08:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+	:content-type:date:date:from:from:in-reply-to:message-id
+	:mime-version:reply-to:sender:subject:subject:to:to; s=fm1; t=
+	1658765282; x=1658851682; bh=7WuK8pBqmEh/SwHS2GHXzWjTaJj3P0Iy+de
+	kz2tbK9M=; b=ttM48RBaJIusu6931w8ipFpYe6Z489mwQWBIXP/LZgiNdIFz6aH
+	9x5yWGzjZhXXsjZrnE0x9FgxbiUjoxc4rbZlgoB7YmVdZwDkRCQR9LTb5gtzbtaF
+	x0G1sxrRBhaop0xTT9F8c/1/ea1R2DjYG7fr7lqEYdJEsT8W9aYU45fxH3VnDLGO
+	1IYuS05w5Nm2EBdMAWHbM+xpErkyIX1HMrnPp9cWSndAtRlFYh6u/IaLTk6DKs0Q
+	vmRUBRD6aVe6MDWv57IU3ueuY1F/Yx1kTL9gomhRkuJack/iTJq5/G/cHGtTu9mU
+	FPM9pxj8BAQDzeogZONszCvLhpNUUEcCiqg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:message-id:mime-version
+	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1658765282; x=
+	1658851682; bh=7WuK8pBqmEh/SwHS2GHXzWjTaJj3P0Iy+dekz2tbK9M=; b=y
+	PhctgDtKQ2KRBHtLyvpZ4+QyoVBNADC6dUE3ucWBVM0tfouxwxAbtUo0mtaIxxjH
+	4r2qKFkhAHLvpEZqAWkzHP7mW4m94sLSuhkE//tYQggfezt8OaOyGSa+eaR+MGeY
+	m2HDuWcxLiOAogKz3A0e4hU9HJrm8B2AUw0TPWsc64EAMXWOkRqgm/8CDlTSmLiR
+	KJKpvBHQzUNe9bMTCTr9j/xwguMYfMI9/tj9NKPSOGubaWfuXowo1KuNq42Z1mIv
+	U+2Z98T8KDQBIkhN+Hu3zafsPozaHGZJphT0uTOl36YJbpePyHRmETW1T6oB3rbp
+	Iyga188ptRJl6XbGHfIvg==
+X-ME-Sender: <xms:4r_eYl_w0AHIH8HM19mRMQ1mvuCen0u-ssS8t5Yw9ShOU9-tfRbirA>
+    <xme:4r_eYpvOdb8plYIq5zxErMSng6rfxARzP_hDIZon83GJvSGBcI6jPHihh9jDz4UwA
+    jqsWZfghpBtT7CqyfU>
+X-ME-Received: <xmr:4r_eYjCSDDV88yewfxPzOUciVR0HqbSHj_8hfAZ0SWvgUzBnst46CiCr2cWQeq2c6O3x8vTvgPYH2a3jAAP-cxfZ5mRr58eQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvddtkedgleehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    gfrhhlucfvnfffucdlvdefmdenucfjughrpeffhffvuffkgggtugesghdtreertddtvden
+    ucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhesshhtfi
+    gtgidrgiihiieqnecuggftrfgrthhtvghrnhepudetleegudfgueeiieefudevfeekffei
+    fedvteffveehgfdtffegieefvdfhhffhnecuffhomhgrihhnpegthhhrohhmihhumhdroh
+    hrghdpghhoohhglhgvshhouhhrtggvrdgtohhmpdgtohhnfhhighdrmhgunecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhessh
+    htfigtgidrgiihii
+X-ME-Proxy: <xmx:4r_eYpfK1IqCCHZkXHYsL8EyloV7FrvzoF5OeZiqbaJVNAdDbM4mAA>
+    <xmx:4r_eYqOwFTyyH8fWlAioq9qDMsB7u42JuLRQUF0JXZcNr2VYgpCjWA>
+    <xmx:4r_eYrlDGcP4YeOEbD5AYM4OidoFpLYmsH7CNCJBwOKrmP-8CUnDhQ>
+    <xmx:4r_eYtYZrWoHQHNPGJKcqV6TbY_9eB6ygfOrfw67TOuUbQsPn-m5VA>
+Feedback-ID: i68a1478a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <openbmc@lists.ozlabs.org>; Mon, 25 Jul 2022 12:08:02 -0400 (EDT)
+Date: Mon, 25 Jul 2022 11:08:01 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: OpenBMC List <openbmc@lists.ozlabs.org>
+Subject: CI: Automated reviewers
+Message-ID: <Yt6/4Qw1BChrXXu9@heinlein.stwcx.org.github.beta.tailscale.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="W9yvHdcQjDBsgYo6"
 Content-Disposition: inline
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -83,41 +95,101 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+
+--W9yvHdcQjDBsgYo6
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
 Hello,
 
-We're facing what might be an interoperability issue between OpenBMC
-sensors exposed via IPMI to the host system and VMware ESXi (version
-7.0u2).
+TL;DR: You should now see Jenkins automatically adding reviewers to your
+commits based on the files you touched!  We also have a new way to sign
+up for automatic notifications on pending changes.
 
-The official document[0] states "All hardware sensors that conform to
-the IPMI standard are collected. Third parties do not need to add
-software providers to take advantage of this functionality."
+---
 
-And indeed they are collected but the web-interface, WBEM via https
-and "esxcli hardware ipmi sdr list" all give "Unspecified 1" for all
-the IPMI sensors "captions". At the same time "/opt/ipmitool/ipmitool
-sdr list" from https://vswitchzero.com/ipmitool-vib/ shows all the
-names properly.
+Gerrit use to automatically add reviewers to commits based on
+information present in the OWNERS files in each repository.  About a
+month ago, we did an upgrade to Gerrit and this plugin stopped
+working[1].  I recently added support to one of our Jenkins scripts to
+re-enable this support (outside of the Gerrit plugin).
 
-When the M.2 SSD with this system is removed from our server and
-installed into a very similar Wiwynn Tioga Pass board running AMI
-MegaRAC and their UEFI implementation, all the sensor names appear
-without any tweaks.
+# How does it work?
 
+In the openbmc-build-scripts is a new `tools/owners` script, which can
+compare the files touched by a git commit against the information in the
+repository's OWNERS file(s).  This generates a list of 'owners' and
+'reviewers' for each commit.  Jenkins calls back to Gerrit in the
+`userid-validation` phase to add these reviewers.
 
-I'm having hard time trying to obtain any related documentation or
-source code, can't for the life of me find any clue about their CIM
-configuration. Is it using some undocumented SMBIOS entries (I see a
-bunch (117) of "type 192, 23 bytes" but no idea if that's related)? Or
-probably some ACPI tables? Or something specific it doesn't like about
-OpenBMC's IPMI implementation?
+# Why did we write our own tool?
 
+Two reasons:
 
-Surely it's not the first time OpenBMC is used with ESXi so please
-share your hints.
+- Writing, building, and (especially) testing a Gerrit plugin is hard
+  the people around this project, but modifying a Python script is
+  significantly easier.
 
+- We've enhanced the OWNERS file format with our own 'reviewers' field,
+  which allows people who are not maintainers to indicate that they'd
+  like to be informed of changes to a repository and/or set of files
+  within a repository.
 
-[0] http://www.vmware.com/files/pdf/techpaper/hwhm41_technote.pdf
--- 
-Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
-mailto:fercerpav@gmail.com
+# What should I do about it?
+
+Typically nothing.  Jenkins will automatically add appropriate
+reviewers, so you don't have to anymore.  You're more than welcome to add
+_additional_ reviewers as you see fit.
+
+Now that we have automation that honors both 'owners' and 'reviewers', I
+would encourage us to add more 'reviewers' to our OWNERS files.  In the
+past, 'reviewers' was "for human consumption only" and often not
+followed.  Now, it is fully supported within the tool.
+
+Signing up to review some or all of the repository is a great way to:
+   - Be informed of changes to code you care about.
+   - Help the project by relieving review burden on the maintainers and
+     speed up the review process overall.
+   - Show interest in a repository and learn what the maintainers tend to l=
+ook
+     out for so that you can become a maintainer.
+
+If you are interested in this, submit a change to the OWNERS file for a
+repository you are interested in by adding yourself to the 'reviewers'
+list.  If you want to only subscribe to a subset of the repository you
+need to create an appropriate 'matchers' entry to identify the files you
+want to monitor[2].
+
+We generally have a pretty significant shortage of both reviewers and
+maintainers.  Reviewing commits is an easy way to get more involved in
+the project with low effort and commitment.
+
+1. https://bugs.chromium.org/p/gerrit/issues/detail?id=3D16069
+2. https://gerrit.googlesource.com/plugins/owners/+/refs/heads/master/confi=
+g.md
+
+--=20
+Patrick Williams
+
+--W9yvHdcQjDBsgYo6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmLev98ACgkQqwNHzC0A
+wRmLzQ/9FJ6R2muG1lKE8eEP6EFpH4AkiWznoYZLvzQALsp1xBBeinaGVoem3HHH
+XOFnQBei69penN5qzbTVvjwD7B+9tOd3JBi35O+qoZEEr20Or94g+zL4euUKzALQ
+JL3Zv8gPUTgPUWq27xbq31E6VXyzBasSRC4fHP6x7R/s696UQzJmfxRV+9bpgkZG
+jhF3Lj2nu+eQpJkUDuOJ1KSJhZvcXdZxVExygJxwgraDk6CPSF0L3AUYCbQjZ8j6
+EdUloluiCwhiyc0aBbUb0VxCgf03FuDJh2PVoUU8cxOdIMWymEP8ABNSSKms0ofD
+lwaURzwzSmg6cxKDG+xTw7m3R2PY7QBCFEGvBjh5nLPImJhbb1TIbGlVcm3+luPB
+GIRSX1BlEeXAO3HpWLwkE/dIGarp0y1BRhaJbjCLR5ob2fMpGdw7aFoUGQ+2U/B4
+5ibsnP+oAlGsiJJOGCd8C81QYbgymwTE7qP/9rZbLPkc67DlBHZouzillkb0CiSt
+gWMxfZkwVt1bVFDaj/KNvxePH2Glq8+rwD65mL2GW6zCk/uXwZ2DpdjdhGGdIc5b
+RMt5tfHIP7zfwgusgluFYIz++Ewi/Mog0w1ukuDpmD5L130MHqJ3H8Vx7pf/jQox
+ZyRzXuEmd/HD//sMrIx/Gh5M/vgnuUi7v4R3xJkBLdC/Frow9Dk=
+=+JAy
+-----END PGP SIGNATURE-----
+
+--W9yvHdcQjDBsgYo6--
