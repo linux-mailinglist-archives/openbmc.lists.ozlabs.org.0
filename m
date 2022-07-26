@@ -2,65 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 557185813D6
-	for <lists+openbmc@lfdr.de>; Tue, 26 Jul 2022 15:07:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 91B6C581418
+	for <lists+openbmc@lfdr.de>; Tue, 26 Jul 2022 15:25:24 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Lscds1nxvz3c2v
-	for <lists+openbmc@lfdr.de>; Tue, 26 Jul 2022 23:07:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Lsd2B3JgRz3c1s
+	for <lists+openbmc@lfdr.de>; Tue, 26 Jul 2022 23:25:22 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=auvi3aVZ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=fNIxcMiJ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42f; helo=mail-pf1-x42f.google.com; envelope-from=logananth13.hcl@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::52f; helo=mail-pg1-x52f.google.com; envelope-from=logananth13.hcl@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=auvi3aVZ;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=fNIxcMiJ;
 	dkim-atps=neutral
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LscdG67KQz30LS;
-	Tue, 26 Jul 2022 23:07:12 +1000 (AEST)
-Received: by mail-pf1-x42f.google.com with SMTP id w205so9832990pfc.8;
-        Tue, 26 Jul 2022 06:07:12 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Lsd1l5Plfz3bgR;
+	Tue, 26 Jul 2022 23:24:57 +1000 (AEST)
+Received: by mail-pg1-x52f.google.com with SMTP id f65so13112808pgc.12;
+        Tue, 26 Jul 2022 06:24:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=AYnTicV7YhiJhZ5zJUtgk+2kyMXJ+WN1kn3VWj6vYfw=;
-        b=auvi3aVZA+ye5Xdi51jWUr3woiY990y7uPwyvQVFKIdp6aMWuA754pO9LPVzItKwPr
-         NwKtEqC5W6gewX1RiHF6iAlSCdqjJIcCVWhaSHpdaFZR8xRDJfDBIG6XrpcsoH4Zy+0T
-         7Rk4Gl+79FilEqAGA/TMjY5tVZMTj7Ucl8M1rcrFduQfK+ZaQHdm/UD21CEaKNsLuWeg
-         zWpE6qahdG23MDrgH+PsJ/7exRZMg/kLl6xFxuuhtvqYhLALvC57A084FBU7MSLXV+QY
-         VYcvK9DJa44THsbQqz7n2sNamqIc0FIL8TBkIovIz/M8fw2PXllEilgbl1lDacuybcU8
-         4z7Q==
+        h=from:date:to:cc:subject:message-id:mime-version:content-disposition
+         :user-agent;
+        bh=IrFDtxgAaduvoUdhvGWeyiNBzh8yHroFXXWTqHTAHIQ=;
+        b=fNIxcMiJKW+W5fH5ldVegy7d3gemWlU0e5euW0jxwhZpRDhDbrwMtnYsARATMRh4ZP
+         0I3DwElZaa6Mcw0pbdHsPOazD9Z3esbP2r4ZHp1F263D/aMH9NGnvzSd2XSMol9C6tlB
+         4/C56q/9iw89ZFY0oNmH6pEO8JkqnbR0SvieKDX0+jETd7AjLxIEJYFo9qW/LyEiOipS
+         r4U8kF6rPzw3YATEGcP9Xlcv08NSljuCw8rD098t8TS+yEGn/xSbLAQ3PWnKnz6YYYgv
+         Atnx+hZuyWFsa8IM+ezq+zOx5pJhKicyk+jcworCXMvMVMijSsUnFeZrcQbxL5U8ug02
+         UDxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=AYnTicV7YhiJhZ5zJUtgk+2kyMXJ+WN1kn3VWj6vYfw=;
-        b=wPkv+TVkq+0+LSqgwOK1zBMveMGiz37aqJ4hakXyBrlL/VLGtK1YG1tJ0IMraXuL1A
-         9iON6ulKFCuyjLKWmyzXF8C1EHrzfFiKeNYgQLiTR6Y7ioUiKUTABRvV/XqKdoHC4tMy
-         HmEW6yljCz0eefDugsAjlz2QmQ7SaycOrpFfzuhAUK9GGF+fsEty43OHJRV6PuWRnTDg
-         4Kd4SVN1A1GPsTwO6cDX1LwoLJeuFjE/Q9ya29H2GcX7+IRuVAlnZTsk4VvjzA4+SW0r
-         iJ/ghSXOs2cfk0VPCcAzcwNykyw/jp9Vl8ew0RnPw8pzskCIE6kLAzCrHatUqHkzMePb
-         5D4A==
-X-Gm-Message-State: AJIora9feFhg6yLxyOm9R5Vx0AfLOLyT4JFUK9FHB3S+N1fdm9tSV/Ep
-	uZh/HC2NW/rfH3j+6qBYE6lgG+sCS03gSdamv8o=
-X-Google-Smtp-Source: AGRyM1tlzfVIVfnvy5VZgT7QJWP6gqDOzk28dyKA3xu3qdLE9V8Cn3Jibn//tqCc59V+W+Pakhz7a/GkU1Kk0+0WsiU=
-X-Received: by 2002:a63:81c2:0:b0:415:d873:ec18 with SMTP id
- t185-20020a6381c2000000b00415d873ec18mr14584987pgd.501.1658840829052; Tue, 26
- Jul 2022 06:07:09 -0700 (PDT)
+        h=x-gm-message-state:from:date:to:cc:subject:message-id:mime-version
+         :content-disposition:user-agent;
+        bh=IrFDtxgAaduvoUdhvGWeyiNBzh8yHroFXXWTqHTAHIQ=;
+        b=UFa2JatncFxeweERS8xbT/1wiUGYP3v9wMn1oVVTLzNx1k+Tqvefk3IuHKKAZ06tJH
+         pA7R6R3SRLYL7v/td/vBBkz8cQHiFWjZ33/Iu/QUkcAxkARSEmkyTfYpk9YvosrvS5BA
+         6IkxxagInisITQza2nuut22foulRoa1PWv0GVPpAd53Z9Zi75bZnWIBuGcFTJvGAczwi
+         heZbuJUxHUYC1fIGYFg5qMJYaVc99675gbPHKS5tC21sFdePCFC0e/4fWC0I7CAaXBr0
+         lkmyIenMvM3ceXATlkbVQPlMkz2C3ARs57835oeaTsx/0rqTw8MDtEyFbmdWZOJHd3lJ
+         mMxw==
+X-Gm-Message-State: AJIora/QnMzcVT5dTHZQxn9ZaN4FaFHwkqJgp7FPhzZzejtSnAy5LUYA
+	qAljB79HKkQRee68B//4pdc=
+X-Google-Smtp-Source: AGRyM1vzji5IeXYT5V0ZThuSRg6t9bm/F+/+vinugM6yULQlMMLdDqGmt27BgQSivVn1fD3tAi//Rw==
+X-Received: by 2002:a63:43c2:0:b0:41a:9dea:5dac with SMTP id q185-20020a6343c2000000b0041a9dea5dacmr14559542pga.585.1658841894228;
+        Tue, 26 Jul 2022 06:24:54 -0700 (PDT)
+Received: from logan-ThinkPad-T14-Gen-1 ([117.213.133.171])
+        by smtp.gmail.com with ESMTPSA id 23-20020a17090a0b9700b001ece32cbec9sm13256339pjr.24.2022.07.26.06.24.48
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Tue, 26 Jul 2022 06:24:53 -0700 (PDT)
+From: Logananth Sundararaj <logananth13.hcl@gmail.com>
+X-Google-Original-From: Logananth Sundararaj <logananth_s@hcl.com>
+Date: Tue, 26 Jul 2022 18:54:45 +0530
+To: Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
+	soc@kernel.org, Rob Herring <robh+dt@kernel.org>,
+	Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+	linux-kernel@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
+	openbmc@lists.ozlabs.org
+Subject: [PATCH v5] ARM: dts: aspeed: Adding Facebook Yosemite V3.5 BMC
+Message-ID: <20220726132445.GA22389@logan-ThinkPad-T14-Gen-1>
 MIME-Version: 1.0
-References: <20220616120707.GA22590@logan-ThinkPad-T14-Gen-1> <Yqyu+y9ms/DmFCbJ@heinlein.stwcx.org.github.beta.tailscale.net>
-In-Reply-To: <Yqyu+y9ms/DmFCbJ@heinlein.stwcx.org.github.beta.tailscale.net>
-From: logananth hcl <logananth13.hcl@gmail.com>
-Date: Tue, 26 Jul 2022 18:36:56 +0530
-Message-ID: <CAGpPFEFUKxRQSZtToysgeGXQquE4y2sx=3XJdCKfQfLfHEO0Xg@mail.gmail.com>
-Subject: Re: [PATCH v2] ARM: dts: aspeed: Adding Facebook Yosemite V3.5 BMC
-To: Patrick Williams <patrick@stwcx.xyz>
-Content-Type: multipart/alternative; boundary="0000000000005ac9b105e4b4fada"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,230 +81,309 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, Arnd Bergmann <arnd@arndb.de>, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, naveen.mosess@hcl.com, thangavel.k@hcl.com, soc@kernel.org, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Olof Johansson <olof@lixom.net>, garnermic@gmail.com
+Cc: thangavel.k@hcl.com, garnermic@gmail.com, velumanit@hcl.com, naveen.mosess@hcl.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000005ac9b105e4b4fada
-Content-Type: text/plain; charset="UTF-8"
+The Yosemite V3.5 is a facebook multi-node server
+platform that host four OCP server. The BMC
+in the Yosemite V3.5 platform based on AST2600 SoC.
 
-The comments have been addressed and the new patch has been added,
+This patch adds linux device tree entry related to
+Yosemite V3.5 specific devices connected to BMC SoC.
 
-On Fri, Jun 17, 2022 at 10:12 PM Patrick Williams <patrick@stwcx.xyz> wrote:
+Signed-off-by: Logananth Sundararaj <logananth_s@hcl.com>
 
-> On Thu, Jun 16, 2022 at 05:37:07PM +0530, Logananth Sundararaj wrote:
-> > The Yosemite V3.5 is a facebook multi-node server
-> > platform that host four OCP server. The BMC
-> > in the Yosemite V3.5 platform based on AST2600 SoC.
-> >
-> > This patch adds linux device tree entry related to
-> > Yosemite V3.5 specific devices connected to BMC SoC.
-> >
-> > Signed-off-by: Logananth Sundararaj <logananth_s@hcl.com>
-> >
-> > ---
-> > --- v2 - Enabled i2c drivers.
-> > --- v1 - Initial draft.
-> > ---
-> >  arch/arm/boot/dts/Makefile                    |   1 +
-> >  .../boot/dts/aspeed-bmc-facebook-fby35.dts    | 277 ++++++++++++++++++
-> >  2 files changed, 278 insertions(+)
-> >  create mode 100644 arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts
->
-> A few comments below.
->
-> ...
-> > +&uart5 {
-> > +     status = "okay";
-> > +     /* Workaround for AST2600 A0 */
-> > +     compatible = "snps,dw-apb-uart";
-> > +};
->
-> Is this comment accurate?  Are we using A0 hardware on this system?
->
->
-Done.
+---
+--- v4 - Bootagrs and memory removed.
+--- v3 - Addressed v2 patch comments.
+--- v2 - Enabled i2c drivers.
+--- v1 - Initial draft.
+---
+---
+ arch/arm/boot/dts/Makefile                    |   1 +
+ .../boot/dts/aspeed-bmc-facebook-fby35.dts    | 260 ++++++++++++++++++
+ 2 files changed, 261 insertions(+)
+ create mode 100644 arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts
 
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index 7e0934180724..58add093e5fb 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -1465,6 +1465,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+ 	aspeed-bmc-facebook-cloudripper.dtb \
+ 	aspeed-bmc-facebook-cmm.dtb \
+ 	aspeed-bmc-facebook-elbert.dtb \
++	aspeed-bmc-facebook-fby35.dtb \
+ 	aspeed-bmc-facebook-fuji.dtb \
+ 	aspeed-bmc-facebook-galaxy100.dtb \
+ 	aspeed-bmc-facebook-minipack.dtb \
+diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts
+new file mode 100644
+index 000000000000..5eeff52f6c08
+--- /dev/null
++++ b/arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts
+@@ -0,0 +1,260 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++// Copyright (c) 2020 Facebook Inc.
++
++/dts-v1/;
++
++#include "aspeed-g6.dtsi"
++#include <dt-bindings/gpio/aspeed-gpio.h>
++#include <dt-bindings/i2c/i2c.h>
++
++/ {
++	model = "Facebook fby35";
++	compatible = "facebook,fby35", "aspeed,ast2600";
++
++	aliases {
++		serial4 = &uart5;
++	};
++
++	chosen {
++		stdout-path = &uart5;
++	};
++
++	iio-hwmon {
++		compatible = "iio-hwmon";
++		io-channels = <&adc0 0>, <&adc0 1>, <&adc0 2>, <&adc0 3>,
++			<&adc0 4>, <&adc0 5>, <&adc0 6>, <&adc0 7>,
++			<&adc1 0>, <&adc1 1>, <&adc1 2>, <&adc1 3>,
++			<&adc1 4>, <&adc1 5>, <&adc1 6>;
++	};
++
++	spi_gpio: spi-gpio {
++		status = "okay";
++		compatible = "spi-gpio";
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		gpio-sck = <&gpio0 ASPEED_GPIO(X, 3) GPIO_ACTIVE_HIGH>;
++		gpio-mosi = <&gpio0 ASPEED_GPIO(X, 4) GPIO_ACTIVE_HIGH>;
++		gpio-miso = <&gpio0 ASPEED_GPIO(X, 5) GPIO_ACTIVE_HIGH>;
++		num-chipselects = <1>;
++		cs-gpios = <&gpio0 ASPEED_GPIO(X, 0) GPIO_ACTIVE_LOW>;
++
++		tpmdev@0 {
++			compatible = "tcg,tpm_tis-spi";
++			spi-max-frequency = <33000000>;
++			reg = <0>;
++		};
++	};
++};
++
++&mac3 {
++	status = "okay";
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rmii4_default>;
++	no-hw-checksum;
++	use-ncsi;
++	mlx,multi-host;
++	ncsi-ctrl,start-redo-probe;
++	ncsi-ctrl,no-channel-monitor;
++	ncsi-package = <1>;
++	ncsi-channel = <1>;
++	ncsi-rexmit = <1>;
++	ncsi-timeout = <2>;
++};
++
++&uart1 {
++	status = "okay";
++};
++
++&uart2 {
++	status = "okay";
++};
++
++&uart3 {
++	status = "okay";
++};
++
++&uart4 {
++	status = "okay";
++};
++
++&uart5 {
++	status = "okay";
++	compatible = "snps,dw-apb-uart";
++};
++
++&wdt1 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_wdtrst1_default>;
++	aspeed,reset-type = "soc";
++	aspeed,external-signal;
++	aspeed,ext-push-pull;
++	aspeed,ext-active-high;
++	aspeed,ext-pulse-duration = <256>;
++};
++
++&rtc {
++	status = "okay";
++};
++
++&fmc {
++	status = "okay";
++	flash@0 {
++		status = "okay";
++		m25p,fast-read;
++		label = "spi0.0";
++		spi-max-frequency = <50000000>;
++		#include "openbmc-flash-layout-128.dtsi"
++	};
++	flash@1 {
++		status = "okay";
++		m25p,fast-read;
++		label = "spi0.1";
++		spi-max-frequency = <50000000>;
++	};
++};
++
++&i2c0 {
++	// Host1 IPMB bus
++	status = "okay";
++	multi-master;
++	ipmb0@10 {
++		compatible = "ipmb-dev";
++		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
++		i2c-protocol;
++	};
++};
++
++&i2c1 {
++	// Host2 IPMB bus
++	status = "okay";
++	multi-master;
++	ipmb1@10 {
++		compatible = "ipmb-dev";
++		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
++		i2c-protocol;
++	};
++};
++
++&i2c2 {
++	// Host3 IPMB bus
++	status = "okay";
++	multi-master;
++	ipmb2@10 {
++		compatible = "ipmb-dev";
++		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
++		i2c-protocol;
++	};
++};
++
++&i2c3 {
++	// Host1 IPMB bus
++	status = "okay";
++	multi-master;
++	ipmb3@10 {
++		compatible = "ipmb-dev";
++		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
++		i2c-protocol;
++	};
++};
++
++&i2c4 {
++	status = "okay";
++};
++
++&i2c5 {
++	status = "okay";
++};
++
++&i2c6 {
++	status = "okay";
++};
++
++&i2c7 {
++	status = "okay";
++};
++
++&i2c8 {
++	// NIC SENSOR TEMP
++	status = "okay";
++	tmp421@1f {
++		compatible = "ti,tmp421";
++		reg = <0x1f>;
++	};
++};
++
++&i2c9 {
++	// Debug-Card IPMB bus
++	status = "okay";
++	multi-master;
++	ipmb9@30 {
++		compatible = "ipmb-dev";
++		reg = <(0x30 | I2C_OWN_SLAVE_ADDRESS)>;
++		i2c-protocol;
++	};
++};
++
++&i2c10 {
++	status = "okay";
++};
++
++&i2c11 {
++	// FRU EEPROM
++	status = "okay";
++	eeprom@51 {
++		compatible = "atmel,24c64";
++		reg = <0x51>;
++		pagesize = <32>;
++	};
++};
++
++&i2c12 {
++	status = "okay";
++	// INLET TEMP
++	tmp75@4e {
++		compatible = "ti,tmp75";
++		reg = <0x4e>;
++	};
++	// OUTLET TEMP
++	tmp75@4f {
++		compatible = "ti,tmp75";
++		reg = <0x4f>;
++	};
++};
++
++&i2c13 {
++	status = "okay";
++};
++
++&adc0 {
++	ref_voltage = <2500>;
++	status = "okay";
++
++	pinctrl-0 = <&pinctrl_adc0_default &pinctrl_adc1_default
++		&pinctrl_adc2_default &pinctrl_adc3_default
++		&pinctrl_adc4_default &pinctrl_adc5_default
++		&pinctrl_adc6_default &pinctrl_adc7_default>;
++};
++
++&adc1 {
++	ref_voltage = <2500>;
++	status = "okay";
++
++	pinctrl-0 = <&pinctrl_adc8_default &pinctrl_adc9_default
++		&pinctrl_adc10_default &pinctrl_adc11_default
++		&pinctrl_adc12_default &pinctrl_adc13_default>;
++};
++
++&ehci0 {
++	status = "okay";
++};
++
++&ehci1 {
++	status = "okay";
++};
++
++&uhci {
++	status = "okay";
++};
+-- 
+2.17.1
 
-> > +&fmc {
-> > +     status = "okay";
-> > +     reg = <0x1e620000 0xc4>, <0x20000000 0x8000000>;
-> > +     flash@0 {
-> > +             status = "okay";
-> > +             m25p,fast-read;
-> > +             label = "spi0.1";
-> > +             spi-max-frequency = <50000000>;
-> > +             spi-tx-bus-width = <2>;
-> > +             spi-rx-bus-width = <2>;
-> > +             #include "openbmc-flash-layout-64.dtsi"
-> > +     };
-> > +};
->
-> Aren't there two SPI flashes?  It seems like it based on:
->
-> https://github.com/facebook/openbmc-linux/blob/dev-5.10/arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts#L162
->
->
-yes, two flashes have been added.
-
-
-> > +
-> > +&spi1 {
-> > +     status = "okay";
-> > +     pinctrl-names = "default";
-> > +     pinctrl-0 = <&pinctrl_spi1_default>;
-> > +
-> > +     flash@0 {
-> > +             status = "okay";
-> > +             m25p,fast-read;
-> > +             label = "pnor";
-> > +             spi-rx-bus-width = <4>;
-> > +             spi-max-frequency = <100000000>;
-> > +     };
-> > +};
->
-> What is SPI1 used for?  I don't see it in the facebook/openbmc-linux
-> DTS.
->
->
-Done.
-
-
-> > --
-> > 2.17.1
-> >
->
-> Are we missing the pwm/tach support?  Or is that still not upstream from
-> Aspeed?
->
->
-yes, pwm/tach support is haven't been upstream from the Aspeed for ast2600.
-
-
-> --
-> Patrick Williams
->
-
-Sorry for the late reply Patrick, missed replying.
-Thanks.
-Logananth
-
---0000000000005ac9b105e4b4fada
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>The comments have been addressed and the new patch ha=
-s been added,<br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" clas=
-s=3D"gmail_attr">On Fri, Jun 17, 2022 at 10:12 PM Patrick Williams &lt;<a h=
-ref=3D"mailto:patrick@stwcx.xyz">patrick@stwcx.xyz</a>&gt; wrote:<br></div>=
-<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
-left:1px solid rgb(204,204,204);padding-left:1ex">On Thu, Jun 16, 2022 at 0=
-5:37:07PM +0530, Logananth Sundararaj wrote:<br>
-&gt; The Yosemite V3.5 is a facebook multi-node server<br>
-&gt; platform that host four OCP server. The BMC<br>
-&gt; in the Yosemite V3.5 platform based on AST2600 SoC.<br>
-&gt; <br>
-&gt; This patch adds linux device tree entry related to<br>
-&gt; Yosemite V3.5 specific devices connected to BMC SoC.<br>
-&gt; <br>
-&gt; Signed-off-by: Logananth Sundararaj &lt;<a href=3D"mailto:logananth_s@=
-hcl.com" target=3D"_blank">logananth_s@hcl.com</a>&gt;<br>
-&gt; <br>
-&gt; ---<br>
-&gt; --- v2 - Enabled i2c drivers.<br>
-&gt; --- v1 - Initial draft.<br>
-&gt; ---<br>
-&gt;=C2=A0 arch/arm/boot/dts/Makefile=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A01 +<br>
-&gt;=C2=A0 .../boot/dts/aspeed-bmc-facebook-fby35.dts=C2=A0 =C2=A0 | 277 ++=
-++++++++++++++++<br>
-&gt;=C2=A0 2 files changed, 278 insertions(+)<br>
-&gt;=C2=A0 create mode 100644 arch/arm/boot/dts/aspeed-bmc-facebook-fby35.d=
-ts<br>
-<br>
-A few comments below.<br>
-<br>
-...<br>
-&gt; +&amp;uart5 {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0status =3D &quot;okay&quot;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0/* Workaround for AST2600 A0 */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0compatible =3D &quot;snps,dw-apb-uart&quot;;<br>
-&gt; +};<br>
-<br>
-Is this comment accurate?=C2=A0 Are we using A0 hardware on this system?<br=
->
-<br></blockquote><div><br></div><div>Done.<br></div><div>=C2=A0</div><block=
-quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
-px solid rgb(204,204,204);padding-left:1ex">
-&gt; +&amp;fmc {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0status =3D &quot;okay&quot;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0reg =3D &lt;0x1e620000 0xc4&gt;, &lt;0x20000000 0=
-x8000000&gt;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0flash@0 {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0status =3D &quot;okay=
-&quot;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0m25p,fast-read;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0label =3D &quot;spi0.=
-1&quot;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0spi-max-frequency =3D=
- &lt;50000000&gt;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0spi-tx-bus-width =3D =
-&lt;2&gt;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0spi-rx-bus-width =3D =
-&lt;2&gt;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0#include &quot;openbm=
-c-flash-layout-64.dtsi&quot;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0};<br>
-&gt; +};<br>
-<br>
-Aren&#39;t there two SPI flashes?=C2=A0 It seems like it based on:<br>
-<a href=3D"https://github.com/facebook/openbmc-linux/blob/dev-5.10/arch/arm=
-/boot/dts/aspeed-bmc-facebook-fby35.dts#L162" rel=3D"noreferrer" target=3D"=
-_blank">https://github.com/facebook/openbmc-linux/blob/dev-5.10/arch/arm/bo=
-ot/dts/aspeed-bmc-facebook-fby35.dts#L162</a><br>
-<br></blockquote><div><br></div><div>yes, two flashes have been added.<br><=
-/div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
- 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-&gt; +<br>
-&gt; +&amp;spi1 {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0status =3D &quot;okay&quot;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0pinctrl-names =3D &quot;default&quot;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0pinctrl-0 =3D &lt;&amp;pinctrl_spi1_default&gt;;<=
-br>
-&gt; +<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0flash@0 {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0status =3D &quot;okay=
-&quot;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0m25p,fast-read;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0label =3D &quot;pnor&=
-quot;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0spi-rx-bus-width =3D =
-&lt;4&gt;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0spi-max-frequency =3D=
- &lt;100000000&gt;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0};<br>
-&gt; +};<br>
-<br>
-What is SPI1 used for?=C2=A0 I don&#39;t see it in the facebook/openbmc-lin=
-ux<br>
-DTS.<br>
-<br></blockquote><div><br></div><div>Done.<br></div><div>=C2=A0</div><block=
-quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
-px solid rgb(204,204,204);padding-left:1ex">
-&gt; -- <br>
-&gt; 2.17.1<br>
-&gt; <br>
-<br>
-Are we missing the pwm/tach support?=C2=A0 Or is that still not upstream fr=
-om<br>
-Aspeed?<br>
-<br></blockquote><div><br></div><div>yes, pwm/tach support is haven&#39;t b=
-een upstream from the Aspeed for ast2600.<br></div><div>=C2=A0</div><blockq=
-uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
-x solid rgb(204,204,204);padding-left:1ex">
--- <br>
-Patrick Williams<br></blockquote><div><br></div><div>Sorry for the late rep=
-ly Patrick, missed replying.</div><div>Thanks.<br></div><div>Logananth<br><=
-/div></div></div>
-
---0000000000005ac9b105e4b4fada--
