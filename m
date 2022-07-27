@@ -1,84 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 90B23581D0E
-	for <lists+openbmc@lfdr.de>; Wed, 27 Jul 2022 03:23:07 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C98BE581F98
+	for <lists+openbmc@lfdr.de>; Wed, 27 Jul 2022 07:39:49 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LswyK3pdCz304J
-	for <lists+openbmc@lfdr.de>; Wed, 27 Jul 2022 11:23:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Lt2fW4jPZz3c3N
+	for <lists+openbmc@lfdr.de>; Wed, 27 Jul 2022 15:39:47 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=gvgJlWrN;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=1eZNdr6/;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=NztSDmjZ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aj.id.au (client-ip=64.147.123.21; helo=wout5-smtp.messagingengine.com; envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::134; helo=mail-lf1-x134.google.com; envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=gvgJlWrN;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=1eZNdr6/;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=NztSDmjZ;
 	dkim-atps=neutral
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Lswxr3M8Yz2yL6
-	for <openbmc@lists.ozlabs.org>; Wed, 27 Jul 2022 11:22:39 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id C86463200971;
-	Tue, 26 Jul 2022 21:22:34 -0400 (EDT)
-Received: from imap50 ([10.202.2.100])
-  by compute3.internal (MEProxy); Tue, 26 Jul 2022 21:22:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:message-id
-	:mime-version:reply-to:sender:subject:subject:to:to; s=fm2; t=
-	1658884954; x=1658971354; bh=23P9kq4SSDaQiA/IkLvEcux9Qd8eNYSljBy
-	TYhgCMDo=; b=gvgJlWrNJJhuWVQuCGDD/c5yXB7/bYC7NnLMjy6GAdZzUY9yrMn
-	k56Co7PsGxdrbh+aGtkYtgSspYUNILW7kB8tepalMZz+kcnzADV7VcdKbk6TlFH0
-	A1ZaxtMhjShQRNvP6X4eUyF2Zdfu02tU3wRpX8VAkuzpxc7r29lKmpL5Y8aQmHGc
-	Q4j/6hRSiOoxKoWwUUnA8Lj59bpPvA9xuTM5ndmehTJhyL7QP6bMJQfavZY+97DA
-	Xg+vQ6EmT5BMUBfT7OO89yhpXyKvOkUQweFKde4bsNpmoXSdZKt9wEs9ROF6NWYH
-	qdD64fLExTKuukjcfJqwd/u+N8d9pJJS8vA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:message-id:mime-version
-	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1658884954; x=
-	1658971354; bh=23P9kq4SSDaQiA/IkLvEcux9Qd8eNYSljByTYhgCMDo=; b=1
-	eZNdr6/Qc79xucXHu7rI7/n312QqNAo1iA/kW5DtHKMTmWP/nBez4xgNFIzMKy2a
-	k4okalrcRSlVBBOgTr4ZHks+4+E78EbYpUXVUgetpRAxH69cFldLR9FYF6jEtvXo
-	ew3GGbtElYb0J/3QLOgntO1+vFQzNPvyuYyick1nsSaS8gy0nh9kPFs+TzIxKR7u
-	NhF5ISOsbmHb/lcJbTgziUSsw3V/BN3EQd/AUrhyGgr8NDuOrN/xkCdqQ4WQ39oO
-	UAQ9VcjfUCuO42rF494L3JbgP2p6RzVbMSsfxe5OLAyg9wzpipSflieObu6ATTOf
-	Z7EQTcvKGYjA6JfM/hwrA==
-X-ME-Sender: <xms:WZPgYs1cE-Si1FvCZKAgoDlaytLcM-t51a9IuUSbB4RWJC-j4_VVwg>
-    <xme:WZPgYnHNkByedlMANF8fzZhjb7lAuf9lee1cUSsNhRuJUnmTe_Ib8tZaWA0qjmgOg
-    f_WSXiow8Klp05kAg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdduuddggeejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkfffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehnughr
-    vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
-    htthgvrhhnpeevgefgieelheeffeffkeelgffgteffjeeiieevueeitefgfefghfduhfek
-    ffehffenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhgihhthhhusgdrtghomhenuc
-    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgv
-    fiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:WZPgYk5Xx5sEoEqnLnbWDs4ev2VxP0TFmHkaImNZLVZ-pp_VPPvJRg>
-    <xmx:WZPgYl2sG9HjfVRQRe4wrUDiAcG66rulJeZdFhoBNf4kp7U-EZNGww>
-    <xmx:WZPgYvG1o62qh6mC-Y0VKIq9eDE15GPxHYR8lvo6gllAXYrPfCRadg>
-    <xmx:WpPgYgP_RojPUA7rdV2tvhGVbj5uxJ2inzkJqq80TlqCo_gkSjqVOw>
-Feedback-ID: idfb84289:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 58604170007E; Tue, 26 Jul 2022 21:22:33 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-757-gc3ad9c75d3-fm-20220722.001-gc3ad9c75
-Mime-Version: 1.0
-Message-Id: <3df049fc-e5ec-449e-b696-a2ca86c37ed3@www.fastmail.com>
-Date: Wed, 27 Jul 2022 10:52:04 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: openbmc@lists.ozlabs.org
-Subject: Can we improve the experience of working on OpenBMC?
-Content-Type: text/plain
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Lt2f750Y2z2x9J
+	for <openbmc@lists.ozlabs.org>; Wed, 27 Jul 2022 15:39:27 +1000 (AEST)
+Received: by mail-lf1-x134.google.com with SMTP id y11so25418452lfs.6
+        for <openbmc@lists.ozlabs.org>; Tue, 26 Jul 2022 22:39:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=TiljjiRdL3J7XgA9lRW8mh7Q8UMy2rckFdpaiD+6ujw=;
+        b=NztSDmjZzcPZTSmd5mq8HZlLFMGzHBXihUfv2sk5AX6Sm+oTSk2v97ABQJmVcRKGCr
+         nI7dnqm4kSht8qcX+gw4Q8cSGhYGf1bjKvSyIlN9SlgqU59J9Ul56QJLCovYcBnfmJRD
+         q6aLBlqsk7zmebygt0OPCeF5TLKGokvEcikOnaCurlpsi+kPxbBWQrZuG1kqY21lmCcZ
+         3xF9QLcn1wTH5Aw6y8NGMxumMK6ob4Yp4Odcw9uoMz45IJ5PJAb6xDLzXVmKOb/f79pv
+         oVNGbJSXYKtNM4EOmduPLzVooWUbOD9Ly63UwrLi11GBnoMikbrVq7T5U6J/Xx64KBWO
+         fmdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=TiljjiRdL3J7XgA9lRW8mh7Q8UMy2rckFdpaiD+6ujw=;
+        b=qLIOfQMEthGxe0/A9IO70Oc9QdqT3ZdzdYMtdq3D3jUOw8wIZSzD0TsORIU1ICcqeh
+         Qi9ySoZS/dK+O3k4MCcVFc/1LneHpvH3ABCJVQPyaeFvaduP1UOH/Eu1wb4ToYfRsf4/
+         T/GICbn0ZmrCiOplwCKnpdZli8cnI4e0J/iPktxoQPnLxIJlZMUS6+yTcO2VErYu1jH2
+         t/EcFMG6pNKBRPP7W4ckh/eUgVSHcE2h69MK2iQ4/32tT8HgPBOBurk9ugLBxJSFK3Hv
+         T4p3xlq9fyfpA0duJjxV3FDH0q1b5b7NQ1jJpVuC6cYpOHdxAjFfaSlq+iSA0J5WMHPd
+         esKA==
+X-Gm-Message-State: AJIora+kiFFKDdKQ9XFADkfJQW5iEf/e2mzdsIn0/i+ZF0JRMuy/DRC+
+	30wmuxP4AkS9llAX9mPtLbYzz/N/wfacCQmGQMY=
+X-Google-Smtp-Source: AGRyM1sj7CHKLLCJA3ZngRRcjw+xywD9YKDbSReMjh5p7lbqdpuRzGLay2un7mt8GHo/w/Z9ge1Msi88eyTx3z6We6w=
+X-Received: by 2002:a19:6d0d:0:b0:48a:8b3c:e28 with SMTP id
+ i13-20020a196d0d000000b0048a8b3c0e28mr4826021lfc.265.1658900360081; Tue, 26
+ Jul 2022 22:39:20 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220717121124.154734-1-tmaimon77@gmail.com> <20220718125155.GA40038@minyard.net>
+ <CAP6Zq1haOErfj2HZkqKwXZKr3+QvWP2VYK6QQOH5cjHYJ2rV0w@mail.gmail.com> <20220726194708.GO3834@minyard.net>
+In-Reply-To: <20220726194708.GO3834@minyard.net>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Wed, 27 Jul 2022 08:39:08 +0300
+Message-ID: <CAP6Zq1hHXiZw2a6+o30N-GUhcA_ZJoYH+wZa8AzLu3NmYST+kw@mail.gmail.com>
+Subject: Re: [PATCH v1 0/2] char: ipmi: kcs: add Arbel NPCM8XX support
+To: minyard@acm.org
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,72 +73,61 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Benjamin Fair <benjaminfair@google.com>, Ed Tanous <edtanous@google.com>, Brad Bishop <bradleyb@fuzziesquirrel.com>, Heyi Guo <guoheyi@linux.alibaba.com>, jebr@google.com, scody@google.com
+Cc: devicetree <devicetree@vger.kernel.org>, Benjamin Fair <benjaminfair@google.com>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, openipmi-developer@lists.sourceforge.net, Jonathan Cameron <jic23@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello everyone,
+Hi Corey,
 
-A few months back Ed kicked off a thread about changing how we work on OpenBMC
-with the aim to improve the development rate and make it easier to on-board
-people to the project:
+On Tue, 26 Jul 2022 at 22:47, Corey Minyard <minyard@acm.org> wrote:
+>
+> On Tue, Jul 26, 2022 at 10:41:38PM +0300, Tomer Maimon wrote:
+> > Hi Corey,
+> >
+> >
+> > On Mon, 18 Jul 2022 at 15:51, Corey Minyard <minyard@acm.org> wrote:
+> > >
+> > > On Sun, Jul 17, 2022 at 03:11:22PM +0300, Tomer Maimon wrote:
+> > > > This patch set adds Arbel NPCM8XX Keyboard Controller Style (KCS) support to
+> > > > KCS NPCM driver.
+> > > >
+> > > > The NPCM KCS driver tested on NPCM845 evaluation board.
+> > >
+> > > This seems reasonable, I've pulled it into my tree.  If anyone has any
+> > > issues with this, please respond.
+> > >
+> > > -corey
+> > >
+> > > >
+> > > > Tomer Maimon (2):
+> > > >   dt-bindings: ipmi: Add npcm845 compatible
+> > > >   char: ipmi: modify NPCM KCS configuration
+> > > >
+> > > >  Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt | 5 +++--
+> > > >  drivers/char/ipmi/Kconfig                                  | 6 +++---
+> > > >  2 files changed, 6 insertions(+), 5 deletions(-)
+> > > >
+> > > > --
+> > > > 2.33.0
+> > > >
+> >
+> > Sorry but I need to do a little fix in the document file.
+> >
+> > Can I do it or have you already applied the patches?
+>
+> At this point I'd prefer a patch on top of what is there.  5.19 isn't
+> released yet, so the window isn't open, but that will happen soon and I
+> don't want to rebase at this point.
+O.K. thanks,
+I will wait until 5.19 is released and then I will send the patch.
+>
+> -corey
+>
+> >
+> > Thanks,
+> >
+> > Tomer
 
-https://lore.kernel.org/openbmc/CAH2-KxAJS_U8=meCxp8ue7n0bmnzeRpyZOPZpy0h1cFEbbz-HA@mail.gmail.com/
+Best regards,
 
-I felt that discussion splintered a bit, with a lot of back-and-forth about
-details well down in the weeds. I found this hard to follow, and so put in some
-work to try synthesise the discussion into desires for improving how we work,
-and practical problems with what we do currently.
-
-Below are the lists of these desires and problems. I think it would be good to
-treat this as a survey to understand who feels strongly about what.
-
-If you want to express support for a point then add a +1 below it. Feel free to
-suggest new items for either list, or to further discuss a particular item
-below its entry.
-
-I feel that with information on what people feel strongly about we can
-prioritise what we need address and work forwards from there.
-
-For the record, the mind map that I used to generate these lists is here, which
-contains further quotes and references to the original discussion thread:
-
-https://github.com/amboar/openbmc-monorepo-discussion
-
-Some of these might be closely related or considered duplicates of other list
-items, but based on the discussions referenced above I felt they were distinct
-enough to warrant separate entries.
-
-# Desires
-
-1. Easy sharing of a broad set of application and distro changes
-2. Minimise reviews required to get a given feature or fix integrated into the distro build
-3. Make fork maintenance easy
-4. Provide one place to report bugs across the entire project
-5. Minimise effort collecting project statistics
-6. Make it easy to add new applications
-7. Make it easy to refactor across the entire project
-8. Support inclusive naming
-
-# Problems
-
-1. Yocto is hard
-    1. Managing patch stacks is hard
-    2. Yocto-specific tooling is hard
-    3. Finding the right recipe file to inspect/modify is hard
-    4. Yocto has too much documentation
-2. OpenBMC has too much documentation
-3. Querying design/implementation/bug properties across the project is hard
-4. Coordinating breaking changes is hard
-5. Coordinating tree-wide changes is hard
-6. Identifying the right repo to file a bug against is hard
-7. Transferring bugs between repos is hard
-8. Bug reports are duplicated across repos
-9. Bug reports are ignored
-10. Working out where to submit a patch is hard
-11. Getting patches reviewed is hard
-12. New repo requests are bottle-necked
-
-Cheers,
-
-Andrew
+Tomer
