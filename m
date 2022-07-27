@@ -2,76 +2,85 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E23535829F1
-	for <lists+openbmc@lfdr.de>; Wed, 27 Jul 2022 17:47:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 243B558354D
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jul 2022 00:22:00 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LtJ7m0n7Qz3c4f
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jul 2022 01:47:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LtStr4YGWz3bc3
+	for <lists+openbmc@lfdr.de>; Thu, 28 Jul 2022 08:21:56 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=VoB86KfU;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=pAj5tXVm;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::831; helo=mail-qt1-x831.google.com; envelope-from=tcminyard@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=VoB86KfU;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=pAj5tXVm;
 	dkim-atps=neutral
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LtJ7J6g0lz3bxC
-	for <openbmc@lists.ozlabs.org>; Thu, 28 Jul 2022 01:47:07 +1000 (AEST)
-Received: by mail-qt1-x831.google.com with SMTP id x11so12865030qts.13
-        for <openbmc@lists.ozlabs.org>; Wed, 27 Jul 2022 08:47:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=sender:date:from:to:cc:subject:message-id:reply-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=rKRkz1r3/CKmoOGWsptt41HcBfvgNG2KAxM3cUlyRgg=;
-        b=VoB86KfUBj/OZpm9xIVznbBQgZc4uhxKvVqM6lBqGHVxY4BRsFuuc3xlU3sMxZvcWa
-         4b8ibsPfgRsNd5aIAwrY7NssOu/jUVv3lLJDGVPa6vRidh5+LMt14tCMnn1XwZLBFp+O
-         HQ+Tj+xaYFKZ7w8ImT5JLW2a/FZn2lAizet0UGek3kuZgKbaK7WyoezQ8YGBsO8CqdJ1
-         EjYv/CNb2NbNMBeCTv9ZteUxUViXcld1dSsU03u5kcWMpLMWMZYO0GH+RqTQJOpRT0K7
-         sWi/+E8fjLR9kw8t4Qs+GVWY5Hcq0BKNIHpf3iWNYd5XZjYbecqJl8L+vRAphnxKscDy
-         E1FQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:sender:date:from:to:cc:subject:message-id
-         :reply-to:references:mime-version:content-disposition:in-reply-to;
-        bh=rKRkz1r3/CKmoOGWsptt41HcBfvgNG2KAxM3cUlyRgg=;
-        b=Ymdiz5OAiG+c6Ryuncvg2iVWjO6a8FFB8ShUWrmej5rm3hJA52odfHo/yXTEpzK4b+
-         S02EI2GvnY9bmKhbV/mHIdGmTAapvaMmUxjZCzsLc4UNOOnyGPrHFi7OfUacW0QjRW6e
-         DMoL4i4+Q7M5uFY9y2RI65+P883N/QBIk1JPiLaOYN9Ayah3bEH6H07RGqDUUiOa4aWk
-         8HKXbkfHYapyOBwN5M/q61HTFD1on8Yo7PlE3+svx4m69WPuYLYE5MqwCSGYgCI3Brxu
-         zBnURQfeb0JHvpn9kCgUz6dzvU9asZBN8JYpmyWq7fJ1F2lIhO5Pw42llRwrcI2GFF/D
-         fd0w==
-X-Gm-Message-State: AJIora9u6D9A4qAI2Er3iFFv1UzsAuz94jLoMhJfElDX+eZTZYx91HYB
-	0HOfBO+vPX4a6qri0naiNg==
-X-Google-Smtp-Source: AGRyM1syoHp48BJmUDOkb6xY/O5snpMs1dVQsCfX28eSSiv/YiQUo0sVB6pmKfpcMiJUw10Xvbbbnw==
-X-Received: by 2002:a05:622a:1316:b0:31e:f3b4:1c8c with SMTP id v22-20020a05622a131600b0031ef3b41c8cmr19396972qtk.339.1658936823961;
-        Wed, 27 Jul 2022 08:47:03 -0700 (PDT)
-Received: from serve.minyard.net ([47.184.144.75])
-        by smtp.gmail.com with ESMTPSA id de39-20020a05620a372700b006b568bdd7d5sm14091459qkb.71.2022.07.27.08.47.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 27 Jul 2022 08:47:03 -0700 (PDT)
-Received: from minyard.net (unknown [IPv6:2001:470:b8f6:1b:495f:ee54:913c:d540])
-	by serve.minyard.net (Postfix) with ESMTPSA id AF322180052;
-	Wed, 27 Jul 2022 15:47:01 +0000 (UTC)
-Date: Wed, 27 Jul 2022 10:47:00 -0500
-From: Corey Minyard <minyard@acm.org>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH v1 0/2] char: ipmi: kcs: add Arbel NPCM8XX support
-Message-ID: <20220727154700.GS3834@minyard.net>
-References: <20220717121124.154734-1-tmaimon77@gmail.com>
- <20220718125155.GA40038@minyard.net>
- <CAP6Zq1haOErfj2HZkqKwXZKr3+QvWP2VYK6QQOH5cjHYJ2rV0w@mail.gmail.com>
- <20220726194708.GO3834@minyard.net>
- <CAP6Zq1hHXiZw2a6+o30N-GUhcA_ZJoYH+wZa8AzLu3NmYST+kw@mail.gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LtStM27Lqz2xjf
+	for <openbmc@lists.ozlabs.org>; Thu, 28 Jul 2022 08:21:30 +1000 (AEST)
+Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 26RMBmiM013786;
+	Wed, 27 Jul 2022 22:21:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date : from
+ : subject : to : content-type : content-transfer-encoding : mime-version;
+ s=pp1; bh=qOY/CPnppjrXH3EuvApdmsk/6dubyE9OJ4VTBW7/7MI=;
+ b=pAj5tXVm4q56XeLC4jYTsBj8qy28x7PGV/eZTIo0MSvaWJPVs+ySamYQPCAeKWtOlOcL
+ 8ghelIw5xXGH0pX7dPfqfVmOhIZlRma3vRwHTGrQYfwAEBvbn+2WvWN+6tts2HBgocx9
+ cg/Igv+aFlfuvRZyZECkGMg4F8znEOlYMcTlz8x+G6U7N0plFuOeGE3m2eHE6B55Jx1T
+ plU7xl2cX46ljV7SGL6K0XcV3eqIEv9Yix9pfwjZxELMnbKHYssa527YmTdomqO7enqu
+ mKZMLPukMl6Clfk7U0TEf/ApJYjWsRwhFo7gcoc5gJPF0HgDr8lMnJCRFTDuBSsH/CjJ SA== 
+Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com [169.47.144.27])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3hkdxq86gq-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 27 Jul 2022 22:21:13 +0000
+Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
+	by ppma05wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 26RML8uq032044;
+	Wed, 27 Jul 2022 22:21:12 GMT
+Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com [9.57.198.24])
+	by ppma05wdc.us.ibm.com with ESMTP id 3hg943kurc-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 27 Jul 2022 22:21:12 +0000
+Received: from b01ledav006.gho.pok.ibm.com (b01ledav006.gho.pok.ibm.com [9.57.199.111])
+	by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 26RMLBI59110230
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 27 Jul 2022 22:21:11 GMT
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id BAC22AC05E;
+	Wed, 27 Jul 2022 22:21:11 +0000 (GMT)
+Received: from b01ledav006.gho.pok.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6D137AC059;
+	Wed, 27 Jul 2022 22:21:11 +0000 (GMT)
+Received: from [9.65.221.58] (unknown [9.65.221.58])
+	by b01ledav006.gho.pok.ibm.com (Postfix) with ESMTPS;
+	Wed, 27 Jul 2022 22:21:11 +0000 (GMT)
+Message-ID: <f52f9a67-b515-8e4d-f904-6ef73346e599@linux.ibm.com>
+Date: Wed, 27 Jul 2022 17:21:10 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.10.0
+Content-Language: en-US
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Change to write GitHub security advisories - attention repo
+ maintainers
+To: openbmc <openbmc@lists.ozlabs.org>, "Mihm, James" <james.mihm@intel.com>,
+        dphadke@linux.microsoft.com
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: -QzNFecICUPT-K3kdJaOPd_QtJlhim68
+X-Proofpoint-ORIG-GUID: -QzNFecICUPT-K3kdJaOPd_QtJlhim68
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAP6Zq1hHXiZw2a6+o30N-GUhcA_ZJoYH+wZa8AzLu3NmYST+kw@mail.gmail.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-07-27_08,2022-07-27_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ priorityscore=1501 impostorscore=0 lowpriorityscore=0 adultscore=0
+ mlxlogscore=710 spamscore=0 mlxscore=0 suspectscore=0 clxscore=1011
+ bulkscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2206140000 definitions=main-2207270097
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,58 +92,21 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: minyard@acm.org
-Cc: devicetree <devicetree@vger.kernel.org>, Benjamin Fair <benjaminfair@google.com>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, openipmi-developer@lists.sourceforge.net, Jonathan Cameron <jic23@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Jul 27, 2022 at 08:39:08AM +0300, Tomer Maimon wrote:
-> Hi Corey,
-> 
-> On Tue, 26 Jul 2022 at 22:47, Corey Minyard <minyard@acm.org> wrote:
-> >
-> > On Tue, Jul 26, 2022 at 10:41:38PM +0300, Tomer Maimon wrote:
-> > > Hi Corey,
-> > >
-> > >
-> > > On Mon, 18 Jul 2022 at 15:51, Corey Minyard <minyard@acm.org> wrote:
-> > > >
-> > > > On Sun, Jul 17, 2022 at 03:11:22PM +0300, Tomer Maimon wrote:
-> > > > > This patch set adds Arbel NPCM8XX Keyboard Controller Style (KCS) support to
-> > > > > KCS NPCM driver.
-> > > > >
-> > > > > The NPCM KCS driver tested on NPCM845 evaluation board.
-> > > >
-> > > > This seems reasonable, I've pulled it into my tree.  If anyone has any
-> > > > issues with this, please respond.
-> > > >
-> > > > -corey
-> > > >
-> > > > >
-> > > > > Tomer Maimon (2):
-> > > > >   dt-bindings: ipmi: Add npcm845 compatible
-> > > > >   char: ipmi: modify NPCM KCS configuration
-> > > > >
-> > > > >  Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt | 5 +++--
-> > > > >  drivers/char/ipmi/Kconfig                                  | 6 +++---
-> > > > >  2 files changed, 6 insertions(+), 5 deletions(-)
-> > > > >
-> > > > > --
-> > > > > 2.33.0
-> > > > >
-> > >
-> > > Sorry but I need to do a little fix in the document file.
-> > >
-> > > Can I do it or have you already applied the patches?
-> >
-> > At this point I'd prefer a patch on top of what is there.  5.19 isn't
-> > released yet, so the window isn't open, but that will happen soon and I
-> > don't want to rebase at this point.
-> O.K. thanks,
-> I will wait until 5.19 is released and then I will send the patch.
+OpenBMC community and technical oversight committee,
 
-Oh, sorry I wasn't clear.  You can send it now, I just don't want to
-rebase what I have already.  Just a new patch on top of it, and I'll get
-it in to 5.19.
+The security response team has been working to improve the process we 
+use to respond to security vulnerabilities.  In short, we propose using 
+GitHub security advisories, one per repository.  This better aligns with 
+industry standards, and it means owners and maintainers will have a 
+greater role.
 
--corey
+I pushed a gerrit review to preview the details.  Please take a look.  
+We are still working out the details and will continue to discuss before 
+implementing this change.
+https://gerrit.openbmc.org/c/openbmc/docs/+/55974
+
+- Joseph
+
