@@ -2,89 +2,85 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC8875849C2
-	for <lists+openbmc@lfdr.de>; Fri, 29 Jul 2022 04:29:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 134C25849D9
+	for <lists+openbmc@lfdr.de>; Fri, 29 Jul 2022 04:38:28 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LvBKt65fkz2xkT
-	for <lists+openbmc@lfdr.de>; Fri, 29 Jul 2022 12:29:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LvBXL05Rqz2xjw
+	for <lists+openbmc@lfdr.de>; Fri, 29 Jul 2022 12:38:26 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=CV1+kb4O;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=DRkTB/VZ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=mImxyGLE;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=q/prQ8ep;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aj.id.au (client-ip=66.111.4.29; helo=out5-smtp.messagingengine.com; envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aj.id.au (client-ip=64.147.123.21; helo=wout5-smtp.messagingengine.com; envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=CV1+kb4O;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=DRkTB/VZ;
+	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=mImxyGLE;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=q/prQ8ep;
 	dkim-atps=neutral
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LvBKR2YvTz2xHf;
-	Fri, 29 Jul 2022 12:28:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LvBWt71Q4z2xHZ;
+	Fri, 29 Jul 2022 12:38:02 +1000 (AEST)
 Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 48E885C0131;
-	Thu, 28 Jul 2022 22:28:56 -0400 (EDT)
+	by mailout.west.internal (Postfix) with ESMTP id 210843200947;
+	Thu, 28 Jul 2022 22:38:00 -0400 (EDT)
 Received: from imap50 ([10.202.2.100])
-  by compute3.internal (MEProxy); Thu, 28 Jul 2022 22:28:56 -0400
+  by compute3.internal (MEProxy); Thu, 28 Jul 2022 22:38:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
 	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm2; t=1659061736; x=1659148136; bh=iM6rPyrBSS
-	v1gLxYpyLmgkE2Xy8DoM8IAvlqobbDAXc=; b=CV1+kb4OZ1C7Wm9O6iLUtPTOIl
-	zmskcBwCvUteypiQ8aL60+UYIViyoFa4W9WtXGHJQ/JJeB+4EPhdPUtbps3cE2p0
-	4vO+hjlPPHKdWQaPw7qJHAaz+IPlNpnVebtCO4YFC2IyrHKxKm0ADDk3LzNtaI5a
-	KUXeVECr4jECJWSfIWT9voeFOU4K9sr5AzY+OLhlrrZWA05t5SORhxpdmqPfiZM5
-	9rKT2iyp8cwKbipXPbZFrehQAuo5Xu68e9lJEELQ1HPYq/R6qIhrg4/nJTg3OgKR
-	zslV9DhUTcX6RvexiEVXp/H7tSgsdSva/NVbALVnvtqBkSKC1zoLHB8yf99Q==
+	:subject:to:to; s=fm2; t=1659062279; x=1659148679; bh=aaUG1mcxXt
+	LJd6pJT4Mmr22bhPN8UW3nBoduqUAhorI=; b=mImxyGLELzdD7jJHUUBF3Gj4qh
+	rlz5Fhm0uibFRRSfzHRTQ/FaY2LhJOcl5WMYVDlApzE6hDzSxn3GIISPHcZLN47b
+	s8JNtNip7qccGKCFznnQuP1W6fGnefsD/gcrRH8OqPZsj/6gUI/6LWB090LOOXj1
+	ElFvtCpqzDcFAJl1E2I1NFglXACoyviYzJj1WCFwpcPCz/9fqaiZ9AMfTfRpYayD
+	+bG38jRDEzHgcpCtc98Qs9t9oS8HjbMS1fEpYfuUFWNU74osX02UHZXtg4f/R75Y
+	NJoZvKou2GfSpytooovJTBIze4mb5c7tLzqeRTetg3/IAv+S9jsj4JF16E3w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
 	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
 	:mime-version:references:reply-to:sender:subject:subject:to:to
 	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1659061736; x=1659148136; bh=iM6rPyrBSSv1gLxYpyLmgkE2Xy8D
-	oM8IAvlqobbDAXc=; b=DRkTB/VZ0ruLb6K7zvJIhVX53t4JvtxE06k/xe2d2Xvb
-	mf+W5KWfA6n1K12sGCb4HNeUJ+xKd3bxR+SMpJH1FEaL/PLXJIZobO5ufjI44h9Y
-	V+ptcYRB0kb9FIR01nrJZKIjHmr0qNh8Nu+vBCtgVfn9l9xnT2L8w9y+BmVGJjX8
-	0rUXKsFzCquuxwBfFJZgKEsZmHZY9WlEAwpgVQBDBcvy5y+gJF8tbuQVWxIy6eI6
-	man3aXDCKTYYT84CS5RlvMsrYMzoneLoYG8F/V+ZvkehykeI6KvbvSosaZWX5EYu
-	mxFd/iLSJ5kLxQxD1UlmJAcKOg00trEuXZDsL4pIZA==
-X-ME-Sender: <xms:5kXjYvwinAztIsoF7Q49KjKk_PO5sILzcrcp8oAdV6-CmPOu1481RQ>
-    <xme:5kXjYnRpL7bKKFXnhMq4-2hFS51Bt3FM6DkK-UmfkklSRlUi8I35zvOT_aTCYrSqt
-    VD-arREmvI-MVxkDQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdduiedgtdegucetufdoteggodetrfdotf
+	fm3; t=1659062279; x=1659148679; bh=aaUG1mcxXtLJd6pJT4Mmr22bhPN8
+	UW3nBoduqUAhorI=; b=q/prQ8epZ9Qewn+WWlYrl+kyFsw0agNBcIPxZFs7u1zy
+	u//U1XrLIGJ9cG6h22PBoiqPjGC8uGR6WJvu7ERfvk/0YoxpXtvxxY72OLHycfnf
+	uMIgVyT/Hyx2O/gKTUQZievzR4BMTHqt/VtD5ck0hMianwxs9Gx+j/R6g3RGYPSJ
+	SgcDnGzN9vIuCfxk0MXHW5R6wjwwMESI4es5swRsCTgVhoLUvTQ2lVsmsQ+RQL8b
+	CbAkJ201vq28wSZmp9MNuZI/DzYvQQplhIJpM5zHCSD9nQShRm/Fja1VtdPZNCOw
+	Hmiwj8MIp+9qwbP2LlQvDiTkyc39wyQmDAq6c3DsAQ==
+X-ME-Sender: <xms:B0jjYgOrJycyyjnFZ_TTROgwG23dByHtixnqgOpiI8ASobf3FpWRiQ>
+    <xme:B0jjYm-eQtjiu5dt3aHZ7a6QYsNpy0-c9z6ZDvQGK6WLdZOY3yAMpEZJi9sEDr0dw
+    Qe8J0cQwI_3CzaTLg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdduiedgtdeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehn
     ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtf
-    frrghtthgvrhhnpeeffeejgfefieetueeffeeiiedthffghefhtdffveegudegffduuddt
-    hfelleeludenucffohhmrghinhepuggvvhhitggvthhrvggvrdhorhhgnecuvehluhhsth
-    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghnughrvgifsegrjhdr
-    ihgurdgruh
-X-ME-Proxy: <xmx:50XjYpV2PvEX1I69SZspf0zpOT9Ght_02gzjetItDc6YVuY5hSEtpw>
-    <xmx:50XjYpjHYaIUFaf7lM-12ild0CM78H2x0nw1kg5_3sFVdYF7no1FNg>
-    <xmx:50XjYhBQWAmPfCuXXdaJv51s1_raVlU_tVPOBiH1uevSHAI5VbieUQ>
-    <xmx:6EXjYk4lumkIxQqy4gxLzMG1fZVrlOWxBSSb4o0Oazw8S7xHBnYtog>
+    frrghtthgvrhhnpeekvdekjeekgfejudffteetgeejkeetteduvedtffdtledutdfhheev
+    feetkeeiteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpegrnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:B0jjYnSHaTZbMHBPNqDww-5R_DvrFx8qxjPSIAe19rgGzCM_vx652Q>
+    <xmx:B0jjYotQdLac_0ijgykjgG14Z7LXmDWDRb5PxitBO3We8F0yaoQ92Q>
+    <xmx:B0jjYofxSjZrzSfq-iWb7SZwZiM91VECDoyNKvULkHxQwQPsM8Yg8w>
+    <xmx:B0jjYmui3MpcCVacr6fDqnUO71MaaMQOiNRD2Iy_5z5kk-9Fpj9bHw>
 Feedback-ID: idfb84289:Fastmail
 Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id DCEE21700083; Thu, 28 Jul 2022 22:28:54 -0400 (EDT)
+	id 647541700083; Thu, 28 Jul 2022 22:37:59 -0400 (EDT)
 X-Mailer: MessagingEngine.com Webmail Interface
 User-Agent: Cyrus-JMAP/3.7.0-alpha0-758-ge0d20a54e1-fm-20220729.001-ge0d20a54
 Mime-Version: 1.0
-Message-Id: <5d863bc1-4f27-48b6-89ab-c3f02bc09057@www.fastmail.com>
-In-Reply-To: <20220516064900.30517-3-ryan_chen@aspeedtech.com>
-References: <20220516064900.30517-1-ryan_chen@aspeedtech.com>
- <20220516064900.30517-3-ryan_chen@aspeedtech.com>
-Date: Fri, 29 Jul 2022 11:58:34 +0930
+Message-Id: <62143648-8a90-4ff4-bfe1-f311b40cd50c@www.fastmail.com>
+In-Reply-To: <20220501105644.355062-1-zhangjian.3032@bytedance.com>
+References: <20220501105644.355062-1-zhangjian.3032@bytedance.com>
+Date: Fri, 29 Jul 2022 12:07:39 +0930
 From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Ryan Chen" <ryan_chen@aspeedtech.com>, "Joel Stanley" <joel@jms.id.au>,
- "Philipp Zabel" <p.zabel@pengutronix.de>,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org
-Subject: Re: [PATCH v3 2/3] dt-bindings: i2c-ast2600: Add bindings for AST2600 i2C
- driver
+To: "Jian Zhang" <zhangjian.3032@bytedance.com>, openbmc@lists.ozlabs.org,
+ "Joel Stanley" <joel@jms.id.au>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Subject: Re: [PATCH linux dev-5.15] soc: aspeed: abr: Add sysfs attrs for flash toggle
 Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -97,121 +93,24 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: BMC-SW@aspeedtech.com
+Cc: zhangjian_linux@163.com, "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>, open list <linux-kernel@vger.kernel.org>, "open list:SPI SUBSYSTEM" <linux-spi@vger.kernel.org>, Mark Brown <broonie@kernel.org>, "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Ryan,
+Hi Jian Zhang,
 
-On Mon, 16 May 2022, at 16:18, ryan_chen wrote:
-> AST2600 support new register set for I2C controller, add bindings document
-> to support driver of i2c new register mode controller
->
-> Signed-off-by: ryan_chen <ryan_chen@aspeedtech.com>
-> ---
->  .../bindings/i2c/aspeed,i2c-ast2600.ymal      | 78 +++++++++++++++++++
->  1 file changed, 78 insertions(+)
->  create mode 100644 
-> Documentation/devicetree/bindings/i2c/aspeed,i2c-ast2600.ymal
->
-> diff --git 
-> a/Documentation/devicetree/bindings/i2c/aspeed,i2c-ast2600.ymal 
-> b/Documentation/devicetree/bindings/i2c/aspeed,i2c-ast2600.ymal
-> new file mode 100644
-> index 000000000000..7c75f5bac24f
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/i2c/aspeed,i2c-ast2600.ymal
-> @@ -0,0 +1,78 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/i2c/aspeed,i2c-ast2600.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: AST2600 I2C Controller on the AST26XX SoCs Device Tree Bindings
-> +
-> +maintainers:
-> +  - Ryan Chen <ryan_chen@aspeedtech.com>
-> +
-> +allOf:
-> +  - $ref: /schemas/i2c/i2c-controller.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - aspeed,ast2600-i2c
+On Sun, 1 May 2022, at 20:26, Jian Zhang wrote:
+> Implement the flash toggle function in soc ast2600.
+> Add two sysfs attrs named "access_primary" and "access_backup"
 
-The original driver uses e.g. aspeed,ast2500-i2c-bus for the 
-subordinate controllers. While the register layout changes, I'd prefer 
-we try to use the existing compatibles rather than introducing a new set
-and causing some confusion.
+If you're proposing this patch for upstream then it needs to be based on
+an upstream kernel tree, not the OpenBMC kernel tree. You also should
+not use e.g. `linux dev-5.15` in the patch subject prefix, as that would
+be inappropriate for an upstream patch.
 
-Further, what you're proposing here is effectively being used to select 
-the driver implementation, which isn't the purpose of the devicetree.
+As you're adding sysfs attributes you'll also need to add the
+corresponding ABI documentation.
 
-My preference would be to reuse the existing compatibles and instead 
-select the driver implementation via Kconfig. Or, if we can figure out 
-some way to do so, support both register interfaces in the one driver 
-implementation and fall back to the old register interface where the 
-new one isn't available (I don't think this is feasible though).
-
-> +
-> +  reg:
-> +    minItems: 1
-> +    items:
-> +      - description: address offset and range of bus
-> +      - description: address offset and range of bus buffer
-> +
-> +  interrupts:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 1
-> +    description:
-> +      root clock of bus, should reference the APB
-> +      clock in the second cell
-> +
-> +  resets:
-> +    maxItems: 1
-> +
-> +  bus-frequency:
-> +    minimum: 500
-> +    maximum: 2000000
-> +    default: 100000
-> +    description: frequency of the bus clock in Hz defaults to 100 kHz 
-> when not
-> +      specified
-> +
-> +  multi-master:
-> +    type: boolean
-> +    description:
-> +      states that there is another master active on this bus
-> +
-> +required:
-> +  - reg
-> +  - compatible
-> +  - clocks
-> +  - resets
-> +
-> +unevaluatedProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/clock/ast2600-clock.h>
-> +
-> +    i2c_gr: i2c-global-regs@0 {
-> +      compatible = "aspeed,ast2600-i2c-global", "syscon";
-> +      reg = <0x0 0x20>;
-> +      resets = <&syscon ASPEED_RESET_I2C>;
-> +    };
-> +
-> +    i2c0: i2c-bus@80 {
-> +      #address-cells = <1>;
-> +      #size-cells = <0>;
-> +      #interrupt-cells = <1>;
-> +      compatible = "aspeed,ast2600-i2c-bus";
-
-This isn't quite right with respect to your binding description above :)
+Cheers,
 
 Andrew
