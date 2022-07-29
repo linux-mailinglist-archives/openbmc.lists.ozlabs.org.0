@@ -1,87 +1,90 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 134C25849D9
-	for <lists+openbmc@lfdr.de>; Fri, 29 Jul 2022 04:38:28 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42CE05849E8
+	for <lists+openbmc@lfdr.de>; Fri, 29 Jul 2022 04:50:08 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LvBXL05Rqz2xjw
-	for <lists+openbmc@lfdr.de>; Fri, 29 Jul 2022 12:38:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LvBnp0nY2z2xkc
+	for <lists+openbmc@lfdr.de>; Fri, 29 Jul 2022 12:50:06 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=mImxyGLE;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=q/prQ8ep;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=pjd.dev header.i=@pjd.dev header.a=rsa-sha256 header.s=fm1 header.b=rX62mcnW;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=u3nztMBs;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aj.id.au (client-ip=64.147.123.21; helo=wout5-smtp.messagingengine.com; envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=pjd.dev (client-ip=66.111.4.230; helo=new4-smtp.messagingengine.com; envelope-from=peter@pjd.dev; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm2 header.b=mImxyGLE;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=q/prQ8ep;
+	dkim=pass (2048-bit key; unprotected) header.d=pjd.dev header.i=@pjd.dev header.a=rsa-sha256 header.s=fm1 header.b=rX62mcnW;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=u3nztMBs;
 	dkim-atps=neutral
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
+Received: from new4-smtp.messagingengine.com (new4-smtp.messagingengine.com [66.111.4.230])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LvBWt71Q4z2xHZ;
-	Fri, 29 Jul 2022 12:38:02 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id 210843200947;
-	Thu, 28 Jul 2022 22:38:00 -0400 (EDT)
-Received: from imap50 ([10.202.2.100])
-  by compute3.internal (MEProxy); Thu, 28 Jul 2022 22:38:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm2; t=1659062279; x=1659148679; bh=aaUG1mcxXt
-	LJd6pJT4Mmr22bhPN8UW3nBoduqUAhorI=; b=mImxyGLELzdD7jJHUUBF3Gj4qh
-	rlz5Fhm0uibFRRSfzHRTQ/FaY2LhJOcl5WMYVDlApzE6hDzSxn3GIISPHcZLN47b
-	s8JNtNip7qccGKCFznnQuP1W6fGnefsD/gcrRH8OqPZsj/6gUI/6LWB090LOOXj1
-	ElFvtCpqzDcFAJl1E2I1NFglXACoyviYzJj1WCFwpcPCz/9fqaiZ9AMfTfRpYayD
-	+bG38jRDEzHgcpCtc98Qs9t9oS8HjbMS1fEpYfuUFWNU74osX02UHZXtg4f/R75Y
-	NJoZvKou2GfSpytooovJTBIze4mb5c7tLzqeRTetg3/IAv+S9jsj4JF16E3w==
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LvBnK0GV8z2x9d
+	for <openbmc@lists.ozlabs.org>; Fri, 29 Jul 2022 12:49:39 +1000 (AEST)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailnew.nyi.internal (Postfix) with ESMTP id BCF0F580981;
+	Thu, 28 Jul 2022 22:49:36 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Thu, 28 Jul 2022 22:49:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pjd.dev; h=cc:cc
+	:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to; s=fm1; t=1659062976; x=
+	1659066576; bh=1+e9ZMFNrtpPNaA9JLCNU1bzaKyVAAQNJCaf430RzLc=; b=r
+	X62mcnWE8A5dSoiVbpX8Wjj1mgH4jz/9xF2v4FKcZYfa1/xwS0dPNyuKvf6UL4Ti
+	+EfGtVh+PrfS9BAArMrvMHT5VJmCRPujviyuduAFjAbNE2nWwPizZaPEpYUyfFtE
+	AW3MvTtStYksUj1XNjB9v5/leV6Qu428SNLVTZ9iGvggKQkiatYJDOSbRSkMnFgS
+	ZNZuF1kz+nC3SDkcFyGNpBHN6KThutSgIrw3N6/936eoimaFmBrmq4liKPhizWjE
+	5jv0DkdXbHCEVkwxKCgIEoKM/leYHNdZ2F0tVvrt9b82rBekNYa+ZDrB6COvHrH7
+	ChE2C2Zvm+LBWh+rDQleQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1659062279; x=1659148679; bh=aaUG1mcxXtLJd6pJT4Mmr22bhPN8
-	UW3nBoduqUAhorI=; b=q/prQ8epZ9Qewn+WWlYrl+kyFsw0agNBcIPxZFs7u1zy
-	u//U1XrLIGJ9cG6h22PBoiqPjGC8uGR6WJvu7ERfvk/0YoxpXtvxxY72OLHycfnf
-	uMIgVyT/Hyx2O/gKTUQZievzR4BMTHqt/VtD5ck0hMianwxs9Gx+j/R6g3RGYPSJ
-	SgcDnGzN9vIuCfxk0MXHW5R6wjwwMESI4es5swRsCTgVhoLUvTQ2lVsmsQ+RQL8b
-	CbAkJ201vq28wSZmp9MNuZI/DzYvQQplhIJpM5zHCSD9nQShRm/Fja1VtdPZNCOw
-	Hmiwj8MIp+9qwbP2LlQvDiTkyc39wyQmDAq6c3DsAQ==
-X-ME-Sender: <xms:B0jjYgOrJycyyjnFZ_TTROgwG23dByHtixnqgOpiI8ASobf3FpWRiQ>
-    <xme:B0jjYm-eQtjiu5dt3aHZ7a6QYsNpy0-c9z6ZDvQGK6WLdZOY3yAMpEZJi9sEDr0dw
-    Qe8J0cQwI_3CzaTLg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdduiedgtdeiucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1659062976; x=
+	1659066576; bh=1+e9ZMFNrtpPNaA9JLCNU1bzaKyVAAQNJCaf430RzLc=; b=u
+	3nztMBs2Sg8SBgTwjLwYQQuOMay5wajSbUTy6xEYME2sqNLvtJICIcFvJgN+7dY9
+	UjiQ+mNDMmo2Zhn+cWo8/h2BM7pA1a9q+4t5mEJbvxXf4pSlgfu6JgeoZkgHmOMl
+	HFdqpxMHHkMkcR/3T/exAU5j2l3gZ2gPHzZ1wpiv8Gxue+rgczanv6GGmGzTYNqI
+	M+f1RSNmyuxuXOL31dfJfbkOPUhCPqlu5S+4koMe1fEOGCFoZ9MKiuQif37r2NCz
+	IP/cZYHZb/OwtjrTFBnkILmNrMjREbg4E1/K3/mZbQHRqNZU7tt3XUjiuy4FTKbo
+	7vNuKH6jUVMN3wKc0Aa2g==
+X-ME-Sender: <xms:wErjYhJ5XmX7B-TnOkxxYIpZbN8B6vHTJozkwkdmOBTJML8b7EK09A>
+    <xme:wErjYtLUjYo9Mt6aI834oDHvLjhkNRRwKJnJbOpJnKThXL7OHoqMB-mVnfcUgpoP6
+    KBaCf_peJapiH3ZuyI>
+X-ME-Received: <xmr:wErjYpuhkLDuhu2erreaZp475_mq3tV-sDsC6JqBcwvws-8Oqhj3tEABw6wB>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdduiedgtdelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehn
-    ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtf
-    frrghtthgvrhhnpeekvdekjeekgfejudffteetgeejkeetteduvedtffdtledutdfhheev
-    feetkeeiteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
-    hmpegrnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:B0jjYnSHaTZbMHBPNqDww-5R_DvrFx8qxjPSIAe19rgGzCM_vx652Q>
-    <xmx:B0jjYotQdLac_0ijgykjgG14Z7LXmDWDRb5PxitBO3We8F0yaoQ92Q>
-    <xmx:B0jjYofxSjZrzSfq-iWb7SZwZiM91VECDoyNKvULkHxQwQPsM8Yg8w>
-    <xmx:B0jjYmui3MpcCVacr6fDqnUO71MaaMQOiNRD2Iy_5z5kk-9Fpj9bHw>
-Feedback-ID: idfb84289:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 647541700083; Thu, 28 Jul 2022 22:37:59 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-758-ge0d20a54e1-fm-20220729.001-ge0d20a54
-Mime-Version: 1.0
-Message-Id: <62143648-8a90-4ff4-bfe1-f311b40cd50c@www.fastmail.com>
-In-Reply-To: <20220501105644.355062-1-zhangjian.3032@bytedance.com>
-References: <20220501105644.355062-1-zhangjian.3032@bytedance.com>
-Date: Fri, 29 Jul 2022 12:07:39 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Jian Zhang" <zhangjian.3032@bytedance.com>, openbmc@lists.ozlabs.org,
- "Joel Stanley" <joel@jms.id.au>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Subject: Re: [PATCH linux dev-5.15] soc: aspeed: abr: Add sysfs attrs for flash toggle
-Content-Type: text/plain
+    cujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefrvght
+    vghrucffvghlvghvohhrhigrshcuoehpvghtvghrsehpjhgurdguvghvqeenucggtffrrg
+    htthgvrhhnpefhgeeigefhuedutedvlefgheegffegteettdeileevffehfffhgedtgeef
+    ieevieenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhkvghrnhgvlhdrohhrghenuc
+    evlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpvghtvghr
+    sehpjhgurdguvghv
+X-ME-Proxy: <xmx:wErjYiZ9jchOJjvKfax627-OmyVAfhbw0TMMtPDmqLdzyPzUw__ccQ>
+    <xmx:wErjYoYx-hHKEaP3Rv0kP8y0KQx4TNQAErxLMuvgCOgWBN4uwve0bA>
+    <xmx:wErjYmAWdMz1X3VM-wPYu3tAIsEHOdCGtVa9Avi_RWPot3MguA3lZw>
+    <xmx:wErjYjzHzIZ5Xo_vW2HIrznQ0vt0ns2z7KjjYWNIw228W97XF75Mlw>
+Feedback-ID: i9e814621:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 28 Jul 2022 22:49:35 -0400 (EDT)
+Date: Thu, 28 Jul 2022 19:49:34 -0700
+From: Peter Delevoryas <peter@pjd.dev>
+To: Joel Stanley <joel@jms.id.au>
+Subject: Re: [PATCH 0/1] tpm_tis_i2c: Fix -Wdeclaration-after-statement
+Message-ID: <YuNEo1KvNFCdaNoF@devvm1684.prn0.facebook.com>
+References: <20220725225151.393384-1-peter@pjd.dev>
+ <CACPK8XeM-foqPGD5yF4r_a9ZmdJRCwOC7yvY3eUAH0zsrkUheA@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CACPK8XeM-foqPGD5yF4r_a9ZmdJRCwOC7yvY3eUAH0zsrkUheA@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,24 +96,83 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: zhangjian_linux@163.com, "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>, open list <linux-kernel@vger.kernel.org>, "open list:SPI SUBSYSTEM" <linux-spi@vger.kernel.org>, Mark Brown <broonie@kernel.org>, "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-arm-kernel@lists.infradead.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Jian Zhang,
+On Fri, Jul 29, 2022 at 12:21:31AM +0000, Joel Stanley wrote:
+> Hi Peter,
+> 
+> On Mon, 25 Jul 2022 at 22:51, Peter Delevoryas <peter@pjd.dev> wrote:
+> >
+> > Hey Joel,
+> >
+> > I've been trying to build fby35 from https://github.com/openbmc/openbmc, and I
+> > noticed that the TPM TIS I2C file seems to emit a warning that causes a
+> > compilation error:
+> >
+> > ../drivers/char/tpm/tpm_tis_i2c.c: In function ‘tpm_tis_i2c_write_bytes’:
+> > ../drivers/char/tpm/tpm_tis_i2c.c:114:17: warning: ISO C90 forbids mixed declarations and code [-Wdeclaration-after-statement]
+> >   114 |                 struct i2c_msg msgs[] = {
+> >       |                 ^~~~~~
+> >
+> > I'm sending this patch as a fix for the warning, to avoid the compilation error.
+> 
+> Thanks for trying to fix this.
+> 
+> >
+> > Normally I think I would send this to the upstream kernel mailing list, but
+> > this file doesn't actually seem to be in the upstream at any point:
+> >
+> >     drivers/char/tpm/tpm_tis_i2c.c
+> >
+> > It looks like it was added by Nuvoton and never upstreamed successfully? Perhaps
+> > we should get rid of it at this point? fby35 doesn't actually use the TPM TIS
+> > I2C interface, it uses the SPI one. Bletchley doesn't use the I2C one either.
+> > Only older FB platforms did.
+> 
+> The i2c driver was added for the IBM P10 platforms.
 
-On Sun, 1 May 2022, at 20:26, Jian Zhang wrote:
-> Implement the flash toggle function in soc ast2600.
-> Add two sysfs attrs named "access_primary" and "access_backup"
+I see, thanks for pointing that out, I didn't do a proper survey.
 
-If you're proposing this patch for upstream then it needs to be based on
-an upstream kernel tree, not the OpenBMC kernel tree. You also should
-not use e.g. `linux dev-5.15` in the patch subject prefix, as that would
-be inappropriate for an upstream patch.
+> 
+> > Actually, doing a quick search on lore.kernel.org: It looks like maybe there's
+> > a new version submitted by Infineon in June:
+> >
+> >     https://lore.kernel.org/all/20220608173113.9232-1-Alexander.Steffen@infineon.com/
+> >
+> > If fby35 wants to avoid this error, should we fix the driver, remove it from the
+> > kernel, pull in the new driver from upstream, or maybe just disable it in the
+> > linux-aspeed tpm2 distro feature Kconfig?
+> 
+> The upstream maintainer has been reluctant to merge this code. Nuvoton
+> told me off-list they had abandoned plans to upstream it. Since then
+> Infineon have picked it up and made some submissions. It looks like
+> it's been queued for merging in v5.20.
 
-As you're adding sysfs attributes you'll also need to add the
-corresponding ABI documentation.
+Oh great, nice that Infineon did that.
 
-Cheers,
+> 
+> I'd be happy moving to the latest version of the patch in the openbmc
+> tree. Either as a revert+new driver, or as a diff, whichever you think
+> makes sense. They inexplicably removed the compatible strings in the
+> latest submission, so we would need to add them back:
 
-Andrew
+That's great! I think revert + new driver would make most sense to me,
+are you planning on just pulling the diffs from that mailing list thread
+and applying the compatible string change on top of that? Let me know if
+I can help somehow.
+
+Thanks,
+Peter
+
+> 
+>  static const struct of_device_id of_tis_i2c_match[] = {
+> -       { .compatible = "nuvoton,npct75x", },
+> -       { .compatible = "tcg,tpm-tis-i2c", },
+> +       { .compatible = "infineon,slb9673", },
+> 
+> 
+> Cheers,
+> 
+> Joel
