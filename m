@@ -2,48 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AC2DB58389F
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jul 2022 08:17:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 62E2F584904
+	for <lists+openbmc@lfdr.de>; Fri, 29 Jul 2022 02:21:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LtgR53ny0z305d
-	for <lists+openbmc@lfdr.de>; Thu, 28 Jul 2022 16:17:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Lv7V127WYz2xkl
+	for <lists+openbmc@lfdr.de>; Fri, 29 Jul 2022 10:21:13 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm1 header.b=OyBqqJOm;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=tnKpBL+I;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=softfail (domain owner discourages use of this host) smtp.mailfrom=nuvoton.com (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
-Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.26; helo=out2-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm1 header.b=OyBqqJOm;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=tnKpBL+I;
+	dkim-atps=neutral
+X-Greylist: delayed 581 seconds by postgrey-1.36 at boromir; Fri, 29 Jul 2022 10:20:47 AEST
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Lq6wk41Zhz2xk0
-	for <openbmc@lists.ozlabs.org>; Fri, 22 Jul 2022 21:41:53 +1000 (AEST)
-Received: from NTILML01.nuvoton.com (ntil-fw [212.199.177.25])
-	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 26MBfhjK008240
-	for <openbmc@lists.ozlabs.org>; Fri, 22 Jul 2022 14:41:43 +0300
-Received: from NTHCCAS03.nuvoton.com (10.1.20.28) by NTILML01.nuvoton.com
- (10.190.1.56) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Fri, 22 Jul
- 2022 14:41:42 +0300
-Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTHCCAS03.nuvoton.com
- (10.1.20.28) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.1847.3; Fri, 22 Jul
- 2022 19:41:40 +0800
-Received: from taln60.nuvoton.co.il (10.191.1.180) by NTHCCAS01.nuvoton.com
- (10.1.12.25) with Microsoft SMTP Server id 15.1.2375.7 via Frontend
- Transport; Fri, 22 Jul 2022 19:41:40 +0800
-Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
-	id 9538663A20; Fri, 22 Jul 2022 14:41:39 +0300 (IDT)
-From: Tomer Maimon <tmaimon77@gmail.com>
-To: <avifishman70@gmail.com>, <tali.perry1@gmail.com>, <joel@jms.id.au>,
-        <venture@google.com>, <yuenn@google.com>, <benjaminfair@google.com>,
-        <broonie@kernel.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>
-Subject: [PATCH v2 0/2] spi: npcm-pspi: add Arbel NPCM8XX support 
-Date: Fri, 22 Jul 2022 14:41:34 +0300
-Message-ID: <20220722114136.251415-1-tmaimon77@gmail.com>
-X-Mailer: git-send-email 2.33.0
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Lv7TX02HQz2xJ4
+	for <openbmc@lists.ozlabs.org>; Fri, 29 Jul 2022 10:20:47 +1000 (AEST)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 3C5A45C00D3;
+	Thu, 28 Jul 2022 20:11:02 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Thu, 28 Jul 2022 20:11:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	fuzziesquirrel.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm1; t=1659053462; x=1659139862; bh=vBWX9/TWSM
+	Cv6RKUx+ZjtamB4Bnbv0vnDJzPbXEkK6s=; b=OyBqqJOm3MMqh2o3592AEoW312
+	OF/2MLenfvtIb/8n4oLZSy7kmIcXhC4uODpAfkTxdm3eX6TYPINgIhxgQ6dtZ0Ay
+	quf2FxaEC27nOchHq+NrBtnkzVKbq0PYKtIMfRAJNXwj2POKa0IuZdZXn+Dkv1jM
+	AnizLfUC3iwTIjKgV4JNurPjC0WylblCsV5ZgdCl4bUXCyGm3lM3NydGXL3GXVSf
+	Mk8ST5t1oMK0XhVhh5nH1dQpxvp6e1TAib7PTvX1huQDu9rdT6c033bygXgVpkwq
+	lWFE1dFmEVDVvJipXb4T9kBuRXKHV02UMx2os/DV05e1r/MAyk6fLK5XSvNg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1659053462; x=
+	1659139862; bh=vBWX9/TWSMCv6RKUx+ZjtamB4Bnbv0vnDJzPbXEkK6s=; b=t
+	nKpBL+IHvyL7QFoJ0se/iKkVJ/uJj+37904IWkb6uBxZT2X0dd1bf/y59JkbGsUu
+	cyfJlPA3u7NBD+0tnxz2k/PvFKLmYvUsxvyvWFluWiEOqUkCupzJ4/UdA+mYczP6
+	uZGWasf40L+ZjMWmLRpfdEb62TGaCM4eb5Ky2qK6NPdmHzYNNDaS9mVWzI5qar5u
+	yUtcry1niE9Dp07gQafYRVuZIW+QA7q1EHLVq/xooHhRcwwDmkpuFyjdvB+2xCFj
+	/yXK0fbmUoXVYrUrgftNajOfgmup28/W2X6I4Or7+yuzYrpqBXluAb6HNtTdRx62
+	yDhZg26Ww7INKYoamalow==
+X-ME-Sender: <xms:lSXjYtTAgEWKxiuMQe-F1ZLpoPE6YoPktnvNMAMCj7o2cDt-VsNrew>
+    <xme:lSXjYmyudigxYm-jskh5Tl045CUD_PHipl9b3kgP246FeQebD1KZDMCIARVgPidni
+    lfzgbHD4KjIGb2Towk>
+X-ME-Received: <xmr:lSXjYi2kLUavSRNBy-wD0Kxg6IX3wOJZu5M8LlivsQG7rdBASFIBMkJ->
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdduhedgudefiecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomhepuehr
+    rgguuceuihhshhhophcuoegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeethfdtgffftddtfeeuvdffvdfhkefhvefffeeu
+    leegtddtheelleeukeeuhfelhfenucffohhmrghinhepkhgvrhhnvghlrdhorhhgpdhgih
+    hthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
+    fhhrohhmpegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrdgtohhm
+X-ME-Proxy: <xmx:lSXjYlDBTodl6rgdyM_g0RwqepAvlwR4hRiK-svVZlvOJ3On6MAsAg>
+    <xmx:lSXjYmjzOTCHJLViOcZWD6zUOrVznM1EK90cAlwH-R2Y5Patg5T-ng>
+    <xmx:lSXjYpqvIq72TQpTuHvWYqvamaCz4n3AL0lsHOVhcVrIQ-q6aYo9hA>
+    <xmx:liXjYoZxO6ae3CNAPI7SEiqKItZq_bgX4hmX5yKz2ooAgKGUp-Zvfw>
+Feedback-ID: i02c9470a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 28 Jul 2022 20:11:00 -0400 (EDT)
+Date: Thu, 28 Jul 2022 20:10:58 -0400
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Andrew Jeffery <andrew@aj.id.au>
+Subject: Re: Can we improve the experience of working on OpenBMC?
+Message-ID: <20220729001058.ec2fpmjrrkn75bf7@cheese>
+References: <3df049fc-e5ec-449e-b696-a2ca86c37ed3@www.fastmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Mailman-Approved-At: Thu, 28 Jul 2022 16:16:26 +1000
+In-Reply-To: <3df049fc-e5ec-449e-b696-a2ca86c37ed3@www.fastmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,32 +96,102 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, Tomer Maimon <tmaimon77@gmail.com>, linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org
+Cc: Benjamin Fair <benjaminfair@google.com>, openbmc@lists.ozlabs.org, Ed Tanous <edtanous@google.com>, Heyi Guo <guoheyi@linux.alibaba.com>, jebr@google.com, scody@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This patch set adds Arbel NPCM8XX Peripheral SPI (PSPI) support to PSPI NPCM
-driver.
+Hi Andrew, thanks for poking at this.
 
-This patch set was separated from the full duplex patch.
-https://lore.kernel.org/lkml/YtlES7MX6nJr8l+L@sirena.org.uk/
+On Wed, Jul 27, 2022 at 10:52:04AM +0930, Andrew Jeffery wrote:
+>Hello everyone,
+>
+>A few months back Ed kicked off a thread about changing how we work on OpenBMC
+>with the aim to improve the development rate and make it easier to on-board
+>people to the project:
+>
+>https://lore.kernel.org/openbmc/CAH2-KxAJS_U8=meCxp8ue7n0bmnzeRpyZOPZpy0h1cFEbbz-HA@mail.gmail.com/
+>
+>I felt that discussion splintered a bit, with a lot of back-and-forth about
+>details well down in the weeds. I found this hard to follow, and so put in some
+>work to try synthesise the discussion into desires for improving how we work,
+>and practical problems with what we do currently.
+>
+>Below are the lists of these desires and problems. I think it would be good to
+>treat this as a survey to understand who feels strongly about what.
+>
+>If you want to express support for a point then add a +1 below it. Feel free to
+>suggest new items for either list, or to further discuss a particular item
+>below its entry.
+>
+>I feel that with information on what people feel strongly about we can
+>prioritise what we need address and work forwards from there.
+>
+>For the record, the mind map that I used to generate these lists is here, which
+>contains further quotes and references to the original discussion thread:
+>
+>https://github.com/amboar/openbmc-monorepo-discussion
+>
+>Some of these might be closely related or considered duplicates of other list
+>items, but based on the discussions referenced above I felt they were distinct
+>enough to warrant separate entries.
+>
+># Desires
+>
+>1. Easy sharing of a broad set of application and distro changes
 
-Addressed comments from:
- - Mark Brown : https://www.spinics.net/lists/kernel/msg4447178.html
++1
 
-Changes since version 1:
- - Adding comptible npcm845 in the driver. 
+>2. Minimise reviews required to get a given feature or fix integrated into the distro build
 
-The NPCM PSPI driver tested on NPCM845 evaluation board.
++1
 
-Tomer Maimon (2):
-  dt-binding: spi: npcm-pspi: Add npcm845 compatible
-  spi: npcm-pspi: Add NPCM845 peripheral SPI support
+>3. Make fork maintenance easy
 
- Documentation/devicetree/bindings/spi/nuvoton,npcm-pspi.txt | 3 ++-
- drivers/spi/spi-npcm-pspi.c                                 | 1 +
- 2 files changed, 3 insertions(+), 1 deletion(-)
++1
 
--- 
-2.33.0
+>4. Provide one place to report bugs across the entire project
+>5. Minimise effort collecting project statistics
+>6. Make it easy to add new applications
+>7. Make it easy to refactor across the entire project
 
++1
+
+>8. Support inclusive naming
+
++1
+
+>
+># Problems
+>
+>1. Yocto is hard
+>    1. Managing patch stacks is hard
+>    2. Yocto-specific tooling is hard
+>    3. Finding the right recipe file to inspect/modify is hard
+>    4. Yocto has too much documentation
+>2. OpenBMC has too much documentation
+
+🙂 Really? 
+
+>3. Querying design/implementation/bug properties across the project is hard
+
++1
+
+>4. Coordinating breaking changes is hard
+
++1
+
+>5. Coordinating tree-wide changes is hard
+
++1
+
+>6. Identifying the right repo to file a bug against is hard
+>7. Transferring bugs between repos is hard
+>8. Bug reports are duplicated across repos
+>9. Bug reports are ignored
+>10. Working out where to submit a patch is hard
+>11. Getting patches reviewed is hard
+>12. New repo requests are bottle-necked
+>
+>Cheers,
+>
+>Andrew
