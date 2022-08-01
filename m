@@ -1,88 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5500E5871BF
-	for <lists+openbmc@lfdr.de>; Mon,  1 Aug 2022 21:50:46 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B2219587356
+	for <lists+openbmc@lfdr.de>; Mon,  1 Aug 2022 23:28:14 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LxTHx09dXz30Lb
-	for <lists+openbmc@lfdr.de>; Tue,  2 Aug 2022 05:50:37 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LxWSV6XGdz3054
+	for <lists+openbmc@lfdr.de>; Tue,  2 Aug 2022 07:28:10 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=V3kHXqkf;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=f2Maep85;
+	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=wCO5V57l;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25; helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com; envelope-from=a.amelkin@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=V3kHXqkf;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=f2Maep85;
+	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=wCO5V57l;
 	dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LxTHP73v8z2xJ1
-	for <openbmc@lists.ozlabs.org>; Tue,  2 Aug 2022 05:50:08 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id EB7D15C01AB;
-	Mon,  1 Aug 2022 15:50:04 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Mon, 01 Aug 2022 15:50:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm1; t=1659383404; x=1659469804; bh=hzTypHJ8gC
-	GGwoncGdZauugWheV4tg/iJsN/POVycdI=; b=V3kHXqkf/iU/BJqK3QYExXNdOb
-	EpXC0KMgohPmXh4wOV7JMbiXJZO7n8ulfLA0XYy4zK6dis16zILDtYS7y08EnDgU
-	Aj3EFW3bMoKW8zYqEOfW6/2I07HQJzmpysQqHuHG5fApsOdqUiXPuIIh/a/3Q3cf
-	suZKztosdaZ/NNVFBAsYdr2kqrxG0XsNbgL/zkPlUKCOIMTwWLHPyiekeQg4PoJQ
-	OZSx0y2D+Ik+SGXm81gBTpHCX9eZcNeofieACqstRUOVSqzR36rGeD3Lr8+tiGRa
-	+BeKQwglGe3pAxUSeBVDea1jUZGpF93eeRpv1ovHQkXcerJ3DIimjL+2oVpw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1659383404; x=1659469804; bh=hzTypHJ8gCGGwoncGdZauugWheV4
-	tg/iJsN/POVycdI=; b=f2Maep85ZXJzJffAnyaBUgi63ZjTZsPHQ6uv2qAYYK//
-	Tvs6Z2YIYrJuTN0JCSpJWgHf0+K6Afk200jEjMw+Pdz1PDWl1H95Q2gNmizmZclI
-	c1AZTTR2nrIVsO+q53InNGG4j43lwgVTiSKqhFWVfM9y9TCEZ4tHqZ5c6Mg6LGl5
-	DjEXA+2MFRX3tnPqjXHYl94uaFQMOx2R8IJHk8Baxko4jxcfpSvaTjX0YOKEcUZL
-	NHngrSrWAs3Cpmo5+gaOcA/m2512ck9zrCTGq9Dm90gK9Upw8/WTEQhAVmH/4i3Y
-	59Gpx3KgrV+QP2SZWB7YqNRdzdVW4zN9gZE0Mxx3zQ==
-X-ME-Sender: <xms:bC7oYsu7mg5ZwD9_AfYY0v39K9T0L2mzvXFTff6xbxisrLKKBVzObQ>
-    <xme:bC7oYpdztK3hf2E1IfcwE_MnAusevOvHD4udry0u0ERyvyGGBorGJvgqYwZ_0htqM
-    VC7lg3QRbcgCWh3Jj4>
-X-ME-Received: <xmr:bC7oYnw5Q45WuRIVCmyF5458L-v2gOgrCz5Yb9L1JgX_wHteO6Froe7vt9O5_q1aoFDzPylfrnZAwaHze4HsaEX_dcNcI403>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvddvfedgudegvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enfghrlhcuvffnffculddvfedmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreer
-    tddtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkh
-    esshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepfeekvddvtdelleejvddttdeh
-    leetudduhefhudejffeijeelheduvedvhfeuheehnecuffhomhgrihhnpeihohgtthhoph
-    hrohhjvggtthdrohhrghdpohhpvghnsghmtgdrohhrghenucevlhhushhtvghrufhiiigv
-    pedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighi
-    ii
-X-ME-Proxy: <xmx:bC7oYvNNeMNtXGkY2xEad8SLHVinMJ3d_lQeBVETZqiSjnRExDT_pA>
-    <xmx:bC7oYs9GiSKn7ipLh1SooyFap7-w77_aspNTyObcAtLgAJ_FHJ9nwA>
-    <xmx:bC7oYnW8y1MT3Tw7NqGWZT52r1G-vh9wQtNSizSKd5YibRBr_7lQGg>
-    <xmx:bC7oYrZb4ST4MUP7aZADbLbb8w90zx6MctODWvOU6GdeIXqn3t1Fcg>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 1 Aug 2022 15:50:04 -0400 (EDT)
-Date: Mon, 1 Aug 2022 14:50:03 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Benjamin Fair <benjaminfair@google.com>
-Subject: Re: Request to add Yocto meta-arm to OpenBMC
-Message-ID: <YuguawbhVP+y4jAv@heinlein.stwcx.org.github.beta.tailscale.net>
-References: <CADKL2t6YYHWfw_4jt5Z+QbEV+x+bZeVB7OnQh7cceRh=VvFEPA@mail.gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LxWS42NZyz2xk9
+	for <openbmc@lists.ozlabs.org>; Tue,  2 Aug 2022 07:27:48 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+	by mta-01.yadro.com (Postfix) with ESMTP id 1E49F40888;
+	Mon,  1 Aug 2022 21:27:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+	content-transfer-encoding:content-type:content-type:in-reply-to
+	:organization:from:from:references:content-language:subject
+	:subject:user-agent:mime-version:date:date:message-id:received
+	:received:received:received; s=mta-01; t=1659389262; x=
+	1661203663; bh=MsBGI2JvYqHKSHPMncINOcmnqosQZa9SDKUAZBbolcc=; b=w
+	CO5V57l4ing1z8nkt7IIWjUULrKZyJ+Gko/BD7A4iMqTwCWHm671XX2/eHYJzuR0
+	duBnFAQDzSYz03CSy8DaEzOzlYQFvELzN86j/un203qxgl73VJ6Fm9xdL5XuFpf7
+	I+Fbnr328HNStqKpTlx9oXAnoYBC+Y/QgMEkeOdUpc=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+	by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 3pqtbbPJJG5F; Tue,  2 Aug 2022 00:27:42 +0300 (MSK)
+Received: from T-EXCH-01.corp.yadro.com (t-exch-01.corp.yadro.com [172.17.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mta-01.yadro.com (Postfix) with ESMTPS id DA1AD40311;
+	Tue,  2 Aug 2022 00:27:41 +0300 (MSK)
+Received: from T-EXCH-08.corp.yadro.com (172.17.11.58) by
+ T-EXCH-01.corp.yadro.com (172.17.10.101) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
+ 15.1.669.32; Tue, 2 Aug 2022 00:27:41 +0300
+Received: from [10.199.0.99] (10.199.0.99) by T-EXCH-08.corp.yadro.com
+ (172.17.11.58) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1118.9; Tue, 2 Aug 2022
+ 00:27:40 +0300
+Message-ID: <7f80cb3f-def3-f9ca-58f2-eebe053dfd89@yadro.com>
+Date: Tue, 2 Aug 2022 00:27:40 +0300
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="cJ/BGcm7NQ/uebO8"
-Content-Disposition: inline
-In-Reply-To: <CADKL2t6YYHWfw_4jt5Z+QbEV+x+bZeVB7OnQh7cceRh=VvFEPA@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: Can we improve the experience of working on OpenBMC?
+Content-Language: en-US
+To: Andrew Jeffery <andrew@aj.id.au>, <openbmc@lists.ozlabs.org>
+References: <3df049fc-e5ec-449e-b696-a2ca86c37ed3@www.fastmail.com>
+From: Alexander Amelkin <a.amelkin@yadro.com>
+Organization: YADRO
+In-Reply-To: <3df049fc-e5ec-449e-b696-a2ca86c37ed3@www.fastmail.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.199.0.99]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-08.corp.yadro.com (172.17.11.58)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,52 +78,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: timlee660101@gmail.com, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Brad Bishop <bradleyb@fuzziesquirrel.com>, peter@pjd.dev
+Cc: Benjamin Fair <benjaminfair@google.com>, Ed Tanous <edtanous@google.com>, Brad Bishop <bradleyb@fuzziesquirrel.com>, Heyi Guo <guoheyi@linux.alibaba.com>, jebr@google.com, scody@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Andrew!
 
---cJ/BGcm7NQ/uebO8
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+27.07.2022 04:22, Andrew Jeffery пишет:
+> # Problems
+>
+> 1. Yocto is hard
+>      1. Managing patch stacks is hard
+>      2. Yocto-specific tooling is hard
+>      3. Finding the right recipe file to inspect/modify is hard
+>      4. Yocto has too much documentation
+> 2. OpenBMC has too much documentation
+> 3. Querying design/implementation/bug properties across the project is hard
+> 4. Coordinating breaking changes is hard
+> 5. Coordinating tree-wide changes is hard
+> 6. Identifying the right repo to file a bug against is hard
+> 7. Transferring bugs between repos is hard
+> 8. Bug reports are duplicated across repos
+> 9. Bug reports are ignored
+> 10. Working out where to submit a patch is hard
+> 11. Getting patches reviewed is hard
+> 12. New repo requests are bottle-necked
 
-On Mon, Aug 01, 2022 at 10:37:20AM -0700, Benjamin Fair wrote:
-> In order to support ARMv8 SoCs, we will need recipes from the meta-arm
-> layer in Yocto[0] such as OP-TEE[1] and ARM Trusted Firmware[2]. Can
-> this layer be added as a subtree to openbmc/openbmc?
->=20
-> [0] https://git.yoctoproject.org/meta-arm/tree/meta-arm
-> [1] https://gerrit.openbmc.org/c/openbmc/openbmc/+/55235
-> [2] https://gerrit.openbmc.org/c/openbmc/openbmc/+/55234
+To the list of the problems I would add:
 
-Seems to me like it is reasonably well-maintained, so we should be able
-to pull it in.
+13. D-Bus is hard for newcomers not familiar with it, best practices are 
+not described,
+inter-process synchronization when accessing large d-bus objects (like 
+network interfaces)
+is not inherent to d-bus, and auxiliary synchronization using standard 
+POSIX means is neither
+explicitly requested/advised, nor controlled/enforced. All that may lead 
+(and have previously led) to
+races and various other problems. Add to that the long and inconvenient 
+prefixing that we've
+discussed earlier in another thread where Brad has supported my point of 
+those being useless
+to the project.
 
-Brad, I don't recall the magic to do this and don't see it documented.
-Can you start the steps to get it done?
+14. D-Bus may become a bottleneck or a slowing factor (due to the 
+context switching overhead) for
+the situations when two processes are communicating actively. A standard 
+POSIX IPC like pipes,
+mq or shm could become a solution (with d-bus or any other method used 
+as an aid to negotiate
+names, keys, or whatever other credentials needed to access a common IPC).
 
---=20
-Patrick Williams
+WBR, Alexander
 
---cJ/BGcm7NQ/uebO8
-Content-Type: application/pgp-signature; name="signature.asc"
+P.S. All in all, I think d-bus wasn't a good choice of IPC for a system 
+running on a low-performance single-core ARM chip.
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmLoLmkACgkQqwNHzC0A
-wRninQ//ccCv6dsjjlDJij1i4lwiXcPV0+8oRdltoyFa0Gsd+u2fdPcU79KWX8as
-1F2/AuNa8oL2JD4qwhHn/oO75oy9JjtNigvI9ZV57lCaIP9m5ETp+oRJo3K7R6Se
-vAlXl7yTOVgVUlM9lgsFmQ50bEdbtHYvhY3KEYfHD/EIlb5KtCz8U8A6e/FUHklX
-Qa3PXoBfoJHg0F3m8BfUSwS0taVBYzFQ6ZLr4QJLMF9+yOqpzSK7ZMEDZr9B0gqR
-pCFsfqO0QCdoE0dmYjBmgtW0ragjoJgp7nCfWYeaSfeL/KyIe4LdaLrrVqnyCPP6
-SdC2ENlSGIzFQEueoj4dBnBQLmlR73CcAH33GwwedFCLTkKprivPyANKrls2ahXH
-sC0P86pZ3eqwfNiOwUDnGNpJumyhiTDYYr7UiKC+VxiPA8B5Ro7pfEL8ru1KqBO+
-4SkOO27SULq8Oivpo/8RA2R0LnVviai7UyEcbDgGwxHSh0jrGWtCiHXlEW+YPe9z
-I8ok4YbYLoiNVxwbPZgh6brcl5lSyk7k1W0AZT1gRUKvJoQB1rALwhPBUlwQJuNq
-598IGOXAAS3iEWOgTyEl5eSVmKlUg9D5lozg0VXp+3L5waobSpsWiSr+TvfDnUNb
-InNZ55cisUkKuka2i8ShEREsMfEIpDyaUfUd6gWglB3Ra/jeeQc=
-=mRya
------END PGP SIGNATURE-----
-
---cJ/BGcm7NQ/uebO8--
