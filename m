@@ -1,63 +1,63 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E5C02588F80
-	for <lists+openbmc@lfdr.de>; Wed,  3 Aug 2022 17:37:26 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23447588F8B
+	for <lists+openbmc@lfdr.de>; Wed,  3 Aug 2022 17:39:48 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LybZk0my4z30BP
-	for <lists+openbmc@lfdr.de>; Thu,  4 Aug 2022 01:37:18 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LybdZ0G3hz306m
+	for <lists+openbmc@lfdr.de>; Thu,  4 Aug 2022 01:39:46 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=quicinc.com header.i=@quicinc.com header.a=rsa-sha256 header.s=qcdkim header.b=PK3meVYV;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=quicinc.com header.i=@quicinc.com header.a=rsa-sha256 header.s=qcdkim header.b=MvwhNV0Z;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=quicinc.com (client-ip=129.46.98.28; helo=alexa-out.qualcomm.com; envelope-from=quic_jaehyoo@quicinc.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=quicinc.com header.i=@quicinc.com header.a=rsa-sha256 header.s=qcdkim header.b=PK3meVYV;
+	dkim=pass (1024-bit key; unprotected) header.d=quicinc.com header.i=@quicinc.com header.a=rsa-sha256 header.s=qcdkim header.b=MvwhNV0Z;
 	dkim-atps=neutral
 Received: from alexa-out.qualcomm.com (alexa-out.qualcomm.com [129.46.98.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LybZJ6M1qz2xrj
-	for <openbmc@lists.ozlabs.org>; Thu,  4 Aug 2022 01:36:51 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Lybd85W96z2xkh
+	for <openbmc@lists.ozlabs.org>; Thu,  4 Aug 2022 01:39:23 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1659541017; x=1691077017;
+  t=1659541165; x=1691077165;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=heiP5n1LPaqrxH5/hHPi/vlKLuxPnUuu8Niy2caYly8=;
-  b=PK3meVYVv86qWzbU6VZe6BHB4X98HNE2ZWPgYsDdvmnyQw9xHwQ9YNAW
-   XaQwu+EgBTuaT5zUCdb7mXwUmFsygNzxQfJIOD2DYk6nWJvG0X1zJJ8Nf
-   e4IzmfF3PIliKxj342aiowXOy1dvB6ZoMQOD/tRUUzm3Rxt67yVxvCsP0
-   E=;
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 03 Aug 2022 08:35:48 -0700
+  bh=Lxoy1rbiFrupj1X3zBCjF4+0KHIB5JMqIsQ+6/7akSg=;
+  b=MvwhNV0ZG8QcMVpXw9KXnZkk2VeDJr0p265lXQVInnqvfIHMCz3vuF68
+   HCU7L5gm35rJZzCzzzm7UuhXZpb13FiNaPnqpzt+7ea3e9hIfLIEFeq/r
+   P5a110znJkNH0pg+1DmryGZTjf+6YhGmPYavjxYgTUqKv0e4SCbZOa6VF
+   4=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 03 Aug 2022 08:38:22 -0700
 X-QCInternal: smtphost
 Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Aug 2022 08:35:48 -0700
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Aug 2022 08:38:22 -0700
 Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
  nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.22; Wed, 3 Aug 2022 08:35:48 -0700
+ 15.2.986.22; Wed, 3 Aug 2022 08:38:22 -0700
 Received: from [10.110.49.168] (10.80.80.8) by nalasex01a.na.qualcomm.com
  (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.22; Wed, 3 Aug 2022
- 08:35:47 -0700
-Message-ID: <a931446a-42ce-3af7-9244-a9fa6abfbe9a@quicinc.com>
-Date: Wed, 3 Aug 2022 08:35:45 -0700
+ 08:38:20 -0700
+Message-ID: <f78ee206-2011-685d-8256-e78020a95b7b@quicinc.com>
+Date: Wed, 3 Aug 2022 08:38:19 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
  Thunderbird/91.11.0
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] mtd: spi-nor-ids: add
- winbond w25q512nw family support
+Subject: Re: [PATCH dev-5.15] ARM: dts: aspeed: nuvia: rename vendor nuvia to
+ qcom
 Content-Language: en-US
 To: Joel Stanley <joel@jms.id.au>
-References: <20220719205856.2232070-1-quic_jaehyoo@quicinc.com>
+References: <20220708142529.2727969-1-quic_jaehyoo@quicinc.com>
 From: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
-In-Reply-To: <20220719205856.2232070-1-quic_jaehyoo@quicinc.com>
+In-Reply-To: <20220708142529.2727969-1-quic_jaehyoo@quicinc.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 X-Originating-IP: [10.80.80.8]
 X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
  nalasex01a.na.qualcomm.com (10.47.209.196)
@@ -78,40 +78,65 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 Gentle ping...
 
-On 7/19/2022 1:58 PM, Jae Hyun Yoo wrote:
-> Add Winbond w25q512nwq/n and w25q512nwm support.
+On 7/8/2022 7:25 AM, Jae Hyun Yoo wrote:
+> Nuvia has been acquired by Qualcomm and the vendor name 'nuvia' will
+> not be used anymore so rename aspeed-bmc-nuvia-dc-scm.dts to
+> aspeed-bmc-qcom-dc-scm-v1.dts and change 'nuvia' to 'qcom' as its vendor
+> name in the file.
 > 
-> datasheet:
-> https://www.winbond.com/resource-files/W25Q512NW%20RevB%2007192021.pdf
-> 
+> Fixes: 7b46aa7c008d ("ARM: dts: aspeed: Add Nuvia DC-SCM BMC")
 > Signed-off-by: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
-> Reviewed-by: Cédric Le Goater <clg@kaod.org>
-> Reviewed-by: Jagan Teki <jagan@amarulasolutions.com>
+> Signed-off-by: Joel Stanley <joel@jms.id.au>
+> Link: https://lore.kernel.org/r/20220523175640.60155-1-quic_jaehyoo@quicinc.com
+> Link: https://lore.kernel.org/r/20220624070511.4070659-1-joel@jms.id.au'
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 > ---
-> This is backport of 47ed8b22fd561b65e8541919becc76ab3d86f7a3 from the u-boot
-> upstream.
+> It's a backporting patch from upstream. Please apply it as it's needed for
+> making a bitbake machine target in OpenBMC yocto build.
 > 
->   drivers/mtd/spi/spi-nor-ids.c | 10 ++++++++++
->   1 file changed, 10 insertions(+)
+> Thanks,
+> Jae
 > 
-> diff --git a/drivers/mtd/spi/spi-nor-ids.c b/drivers/mtd/spi/spi-nor-ids.c
-> index 5882eab2e3fc..53e352d8656e 100644
-> --- a/drivers/mtd/spi/spi-nor-ids.c
-> +++ b/drivers/mtd/spi/spi-nor-ids.c
-> @@ -334,6 +334,16 @@ const struct flash_info spi_nor_ids[] = {
->   			SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ |
->   			SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB)
->   	},
-> +	{
-> +		INFO("w25q512nwq", 0xef6020, 0, 64 * 1024, 1024,
-> +			SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ |
-> +			SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB)
-> +	},
-> +	{
-> +		INFO("w25q512nwm", 0xef8020, 0, 64 * 1024, 1024,
-> +			SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ |
-> +			SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB)
-> +	},
->   	{
->   		INFO("w25q01jv", 0xef4021, 0, 64 * 1024, 2048,
->   			SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ |
+>   arch/arm/boot/dts/Makefile                                    | 2 +-
+>   ...eed-bmc-nuvia-dc-scm.dts => aspeed-bmc-qcom-dc-scm-v1.dts} | 4 ++--
+>   2 files changed, 3 insertions(+), 3 deletions(-)
+>   rename arch/arm/boot/dts/{aspeed-bmc-nuvia-dc-scm.dts => aspeed-bmc-qcom-dc-scm-v1.dts} (97%)
+> 
+> diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+> index dc225e354791..134cdcdec271 100644
+> --- a/arch/arm/boot/dts/Makefile
+> +++ b/arch/arm/boot/dts/Makefile
+> @@ -1487,7 +1487,6 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+>   	aspeed-bmc-lenovo-hr630.dtb \
+>   	aspeed-bmc-lenovo-hr855xg2.dtb \
+>   	aspeed-bmc-microsoft-olympus.dtb \
+> -	aspeed-bmc-nuvia-dc-scm.dtb \
+>   	aspeed-bmc-opp-lanyang.dtb \
+>   	aspeed-bmc-opp-mihawk.dtb \
+>   	aspeed-bmc-opp-mowgli.dtb \
+> @@ -1500,6 +1499,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+>   	aspeed-bmc-opp-witherspoon.dtb \
+>   	aspeed-bmc-opp-zaius.dtb \
+>   	aspeed-bmc-portwell-neptune.dtb \
+> +	aspeed-bmc-qcom-dc-scm-v1.dtb \
+>   	aspeed-bmc-quanta-q71l.dtb \
+>   	aspeed-bmc-quanta-s6q.dtb \
+>   	aspeed-bmc-supermicro-x11spi.dtb \
+> diff --git a/arch/arm/boot/dts/aspeed-bmc-nuvia-dc-scm.dts b/arch/arm/boot/dts/aspeed-bmc-qcom-dc-scm-v1.dts
+> similarity index 97%
+> rename from arch/arm/boot/dts/aspeed-bmc-nuvia-dc-scm.dts
+> rename to arch/arm/boot/dts/aspeed-bmc-qcom-dc-scm-v1.dts
+> index f4a97cfb0f23..259ef3f54c5c 100644
+> --- a/arch/arm/boot/dts/aspeed-bmc-nuvia-dc-scm.dts
+> +++ b/arch/arm/boot/dts/aspeed-bmc-qcom-dc-scm-v1.dts
+> @@ -6,8 +6,8 @@
+>   #include "aspeed-g6.dtsi"
+>   
+>   / {
+> -	model = "Nuvia DC-SCM BMC";
+> -	compatible = "nuvia,dc-scm-bmc", "aspeed,ast2600";
+> +	model = "Qualcomm DC-SCM V1 BMC";
+> +	compatible = "qcom,dc-scm-v1-bmc", "aspeed,ast2600";
+>   
+>   	aliases {
+>   		serial4 = &uart5;
