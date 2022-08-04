@@ -1,87 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5AF9589293
-	for <lists+openbmc@lfdr.de>; Wed,  3 Aug 2022 21:06:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 154E858963C
+	for <lists+openbmc@lfdr.de>; Thu,  4 Aug 2022 04:42:54 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LyhCn45tjz3bXg
-	for <lists+openbmc@lfdr.de>; Thu,  4 Aug 2022 05:06:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LytLg1XRFz30Qc
+	for <lists+openbmc@lfdr.de>; Thu,  4 Aug 2022 12:42:51 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=XvY1miL3;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=BD+fxaAy;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::329; helo=mail-wm1-x329.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=XvY1miL3;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=BD+fxaAy;
 	dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4LyhCM5T8rz2xJ7
-	for <openbmc@lists.ozlabs.org>; Thu,  4 Aug 2022 05:05:51 +1000 (AEST)
-Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
-	by mx0b-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 273HroMa031136
-	for <openbmc@lists.ozlabs.org>; Wed, 3 Aug 2022 19:05:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- subject : from : to : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=LDSatLATSKmp9CgnE8kN8qqq/IEflqE+IZpilsmQyHs=;
- b=XvY1miL3rdMQLcKo5EbvU88D88OVOZoVdzs1PsM5n9PZ4W5OLj+CIz8wYiTAoKihahC5
- Jj00KccPiP5w8BzmfWRAYeXlzekj4MAutXV7LQe3MBttz++roDhJ0wbKJDkjpspvEDlz
- 1xthGhhl/t6i7YcbQM9fJvrfBRSIPPgQ8iYx2gn4EKoxLZqugUvWGG5q41B5jn9vF4Bn
- LxE0tcRWMIMsViGiH7NhnrzM2kwbRbFfMmPQ2iBwO1S0peUHEmbwEGgeIxuW+v9cguFt
- gwD/u3QvLKOOz06dhtwrujinJzQxBKi6fhnqzZuxMLs2HYBkyJRns/w2bD2DiWxzA5vZ /w== 
-Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com [169.47.144.26])
-	by mx0b-001b2d01.pphosted.com (PPS) with ESMTPS id 3hqwtca2n2-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Wed, 03 Aug 2022 19:05:48 +0000
-Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
-	by ppma04wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 273Ir92u020890
-	for <openbmc@lists.ozlabs.org>; Wed, 3 Aug 2022 19:05:47 GMT
-Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com [9.57.198.27])
-	by ppma04wdc.us.ibm.com with ESMTP id 3hmv99sxux-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Wed, 03 Aug 2022 19:05:47 +0000
-Received: from b01ledav001.gho.pok.ibm.com (b01ledav001.gho.pok.ibm.com [9.57.199.106])
-	by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 273J5ldp3408502
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
-	for <openbmc@lists.ozlabs.org>; Wed, 3 Aug 2022 19:05:47 GMT
-Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 52D4228058
-	for <openbmc@lists.ozlabs.org>; Wed,  3 Aug 2022 19:05:47 +0000 (GMT)
-Received: from b01ledav001.gho.pok.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 266E728059
-	for <openbmc@lists.ozlabs.org>; Wed,  3 Aug 2022 19:05:47 +0000 (GMT)
-Received: from [9.65.221.58] (unknown [9.65.221.58])
-	by b01ledav001.gho.pok.ibm.com (Postfix) with ESMTPS
-	for <openbmc@lists.ozlabs.org>; Wed,  3 Aug 2022 19:05:47 +0000 (GMT)
-Message-ID: <8c79b178-0abb-5f9f-037e-bff9931fd887@linux.ibm.com>
-Date: Wed, 3 Aug 2022 14:05:46 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.10.0
-Subject: Re: Security Working Group meeting - Wednesday August 3 - results
-Content-Language: en-US
-From: Joseph Reynolds <jrey@linux.ibm.com>
-To: openbmc <openbmc@lists.ozlabs.org>
-References: <1bb24451-1407-75e1-ec02-d8d9a90ddb13@linux.ibm.com>
-In-Reply-To: <1bb24451-1407-75e1-ec02-d8d9a90ddb13@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: WCNBcIDNjHcr5X4v9Vj1DFj1o1RiZAIb
-X-Proofpoint-GUID: WCNBcIDNjHcr5X4v9Vj1DFj1o1RiZAIb
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LytLF3tPfz2xjn
+	for <openbmc@lists.ozlabs.org>; Thu,  4 Aug 2022 12:42:27 +1000 (AEST)
+Received: by mail-wm1-x329.google.com with SMTP id v5so9640063wmj.0
+        for <openbmc@lists.ozlabs.org>; Wed, 03 Aug 2022 19:42:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=jms.id.au; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=PCMHa/d5v1356bafcLDZi+B1VzxgJGp1VCxkVlKl0lQ=;
+        b=BD+fxaAy7eOWfKO9B/4Jp3fO5nu4x2TTf7DCo00QgVNz/5E4YQ8DXmg3NpvwZ62z/d
+         iD+0JS91jLbyT6IvFG/gbJs8hW7z1KSRn/PwGeh1swt64I4DyPeS1oLrXjvK1r3Aybz2
+         9bAWsi5wJMgTSpi4MB61VhNLgcEUZg6+QMFBs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=PCMHa/d5v1356bafcLDZi+B1VzxgJGp1VCxkVlKl0lQ=;
+        b=qBmnzgt4Sr8C56KHytYFd4AHIU37NuMpf09y7+LmpOivUUjbOe66cLloRX9PBVuMWd
+         1uiun13K89nuAALsuYN/CS5VZzKXawXce0ZuiHdkliZkNwLuakVmHXMPgFGdY8l41x1y
+         WSSw5DidKw0SB4NrL7tu54qIbIWhSccfOVzyf/nkrc3OV/Js2vQnWk1Mv8rFQAvR+o5o
+         VGF9l1zaOPlim5gBmpf8qSCv9Gb3WcSa30P6rol1eNwbVRIMySS7Z+lpZnP1dM+gu6LN
+         B8s80DJiswfccTYqBLVfORE4Y9p8jfqnVvItT76hhXdniTxEIsoIAnWEfwXTPcdRCvup
+         RN8g==
+X-Gm-Message-State: ACgBeo0iHKU7eiO4zwDHWuhRsH52AVkT9etLa09u2ETxba6O3mpUHsnp
+	awil68mepDE78c+0YQIZHW+cgbFw1YEHqTJzI4or9bWI
+X-Google-Smtp-Source: AA6agR7EKJHLwXXsvgH3gvVscRHasnejoVidl+bYhiTme1UAElaxKaYqP4AED8PlTJTHcuHxTXQzwBLiaDQeDzQLlQ0=
+X-Received: by 2002:a05:600c:502b:b0:3a3:22c1:ca61 with SMTP id
+ n43-20020a05600c502b00b003a322c1ca61mr4449900wmr.10.1659580940604; Wed, 03
+ Aug 2022 19:42:20 -0700 (PDT)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-03_06,2022-08-02_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 mlxlogscore=999
- suspectscore=0 impostorscore=0 mlxscore=0 bulkscore=0 clxscore=1015
- lowpriorityscore=0 spamscore=0 adultscore=0 malwarescore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2206140000 definitions=main-2208030081
+References: <20220719205856.2232070-1-quic_jaehyoo@quicinc.com>
+In-Reply-To: <20220719205856.2232070-1-quic_jaehyoo@quicinc.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Thu, 4 Aug 2022 02:42:07 +0000
+Message-ID: <CACPK8XfXEnyDU6qns9z2hH5JjpKr3mv+B1C7Kc-Ajo9S2uEYNw@mail.gmail.com>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] mtd: spi-nor-ids: add
+ winbond w25q512nw family support
+To: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,170 +71,54 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org, Graeme Gregory <quic_ggregory@quicinc.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, Jamie Iles <quic_jiles@quicinc.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-
-On 8/3/22 7:21 AM, Joseph Reynolds wrote:
-> This is a reminder of the OpenBMC Security Working Group meeting 
-> scheduled for this Wednesday August 3 at 10:00am PDT.
+On Tue, 19 Jul 2022 at 20:59, Jae Hyun Yoo <quic_jaehyoo@quicinc.com> wrote=
+:
 >
-> We'll discuss the following items on the agenda 
-> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
-> and anything else that comes up:
+> Add Winbond w25q512nwq/n and w25q512nwm support.
 >
-> 1. Continue discussing CVE response, SELinux, and Measured Boot
+> datasheet:
+> https://www.winbond.com/resource-files/W25Q512NW%20RevB%2007192021.pdf
 >
-> 2. Recommend http header values per email dated 2022-07-22 with 
-> subject: BMCWeb support new HTTP headers Referrer-Policy and 
-> Feature-Policy renamed to Permissions-Policy
->
-> 3. Consider increasing the TLS DH keysize from 1024 to 2048 bits per 
-> best practice (reference needed).
->
-> 4. Consider migrating this meeting access to Discord > Voice channels 
-> >  Security.
->
->
-Attended:Joseph Reynolds, Russel Wilson, Yutaka Sugawara, Ruud Haring, 
-James Mihm, Dhananjay, Krishnan Sugavanam, Sandhya Koteshwara, James 
-Bottomley, Dick from Phoenix, Chris Engel, Gheorge Almas, Alda Ohmacht.
+> Signed-off-by: Jae Hyun Yoo <quic_jaehyoo@quicinc.com>
+> Reviewed-by: C=C3=A9dric Le Goater <clg@kaod.org>
+> Reviewed-by: Jagan Teki <jagan@amarulasolutions.com>
+> ---
+> This is backport of 47ed8b22fd561b65e8541919becc76ab3d86f7a3 from the u-b=
+oot
+> upstream.
 
-
-1 Continue discussing CVE response, SELinux, and Measured Boot
-
-DISCUSSION: (We skipped over the first topic and went to the second topic.)
-
-
-2 Recommend http header values per email dated 2022-07-22 with subject: 
-BMCWeb support new HTTP headers Referrer-Policy and Feature-Policy 
-renamed to Permissions-Policy.
-
-DISCUSSION:
-
-No discussion.  The email archive is 
-https://lore.kernel.org/openbmc/CAH2-KxBuPhrv3bBu3ihr1AW6jpLXWvhr3pY0a4zqdFw0eFKkbw@mail.gmail.com/ 
-<https://lore.kernel.org/openbmc/CAH2-KxBuPhrv3bBu3ihr1AW6jpLXWvhr3pY0a4zqdFw0eFKkbw@mail.gmail.com/>
-
-
-3 Consider increasing the TLS DH session keysize from 1024 to 2048 bits 
-per best practice (reference needed).
-
-DISCUSSION:
-
-BMCWeb references the  OWASP guidelines.
-
-Reference: NIST SP 800-131A recommends DH keysize 2048 bits.  This is to 
-protect against a supercomputer cracking the session key.
-
-An alternative defense is to disallow the Diffie Hellman (DH) algorithm 
-and use Elliptic Curve (ECDH).
-
-Note that removing support for DH will break older browsers which don’t 
-support ECDH.    Can we increase keysize?  Yes, will take more of the 
-limited BMC compute power.
-
-
-Two of the places which use SSL: BMCWeb, dropbear SSH.  To change these 
-would need a configuration or code change to update the key size.  Note 
-the BMC creates other SSL connections which also may need similar 
-configuration.  See 
-https://github.com/openbmc/docs/blob/master/architecture/interface-overview.md 
-<https://github.com/openbmc/docs/blob/master/architecture/interface-overview.md>.
-
-
-Tangentially-related topic: Use the AST2600 BMC’s Hash and crypto engine 
-(HACE) engine?
-
-Kernel patch series for AST2600 crypto engine: 
-https://lore.kernel.org/linux-crypto/?q=s%3Ahace 
-<https://lore.kernel.org/linux-crypto/?q=s%3Ahace>; note just has HACE 
-(AES/SHA), no ACRY yet.  ASpeed is working on Kernel driver for the ACRY 
-engine for RSA, etc.
-
-
-New topic: Enhance OpenBMC to enable compliance with NIST FIPS 
-compliance?  IBM and Intel are interested in this.  Add to applicable 
-standards 
-https://github.com/openbmc/openbmc/wiki/Security-working-group#applicable-standards 
-<https://github.com/openbmc/openbmc/wiki/Security-working-group#applicable-standards>.  
-Next steps: Articulate what FIPS compliance means, and document how the 
-FIPS requirements apply to OpenBMC. Perhaps a design or security doc?
-
-
-4 Consider migrating this meeting to Discord > Voice channels >  Security.
-
-DISCUSSION:
-
-Three responses were: Why?  Seems okay.  Don’t like Discord.
-
-Access question: Can a web client access the discord voice session?
-
-Also, let’s use the discord #security channel.
-
-The direct link is 
-https://discord.com/channels/775381525260664832/1002376534377635860 
-<https://discord.com/channels/775381525260664832/1002376534377635860>
-
-
-We went back to the first topic:
-
-1 Continue discussing CVE response, SELinux, and Measured Boot
-
-DISCUSSION: We only had time for the “CVE Response” subtopic.
-
-Email: Change the OpenBMC project to use github security advisories: 
-https://lore.kernel.org/openbmc/f52f9a67-b515-8e4d-f904-6ef73346e599@linux.ibm.com/ 
-<https://lore.kernel.org/openbmc/f52f9a67-b515-8e4d-f904-6ef73346e599@linux.ibm.com/>with 
-gerrit review here: https://gerrit.openbmc.org/c/openbmc/docs/+/55974 
-<https://gerrit.openbmc.org/c/openbmc/docs/+/55974>
-
-
-New sub-sub-topic: to help with static scanning tools (scanning either 
-the firmware image file or scan the source code), there is a desire for 
-all OpenBMC repos to have versioning numbers (versus using git 
-commitID).  This helps the static source code scan tools report 
-version.  Specifically, it helps a security-vulnerability-responder to 
-map from a BMC firmware version back to the list of source 
-package+version used to create that version.  This is related to the 
-software bill of materials (SBOM) concept.
-
-
-The request for repo maintainers is to periodically increment the 
-package version (bitbake PV variable) (either within the recipe or the 
-recipe filename) per best practices (need reference).  Examples:
-
-  *
-
-    Uboot has the package version as part of the recipe filename:
-    https://github.com/openbmc/openbmc/tree/master/poky/meta/recipes-bsp/u-boot
-    <https://github.com/openbmc/openbmc/tree/master/poky/meta/recipes-bsp/u-boot>
-
-  *
-
-    BMCWeb has no branches or tags
-    (https://github.com/openbmc/bmcweb/tags
-    <https://github.com/openbmc/bmcweb/tags>) and specifies a generic
-    package version (PV = "1.0+git${SRCPV}") within its recipe
-    (https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-phosphor/interfaces/bmcweb_git.bb
-    <https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-phosphor/interfaces/bmcweb_git.bb>)
-    which merely references the latest bmcweb commit.
-
-James and the security response team to drive this.  Is this a question 
-for the Technical Oversight Forum (TOF)?
-
-
-Next meeting, please cover the Measured boot topic.
-
-
-
-
+Thanks, applied.
 
 >
-> Access, agenda and notes are in the wiki:
-> https://github.com/openbmc/openbmc/wiki/Security-working-group 
-> <https://github.com/openbmc/openbmc/wiki/Security-working-group>
+>  drivers/mtd/spi/spi-nor-ids.c | 10 ++++++++++
+>  1 file changed, 10 insertions(+)
 >
-> - Joseph
-
+> diff --git a/drivers/mtd/spi/spi-nor-ids.c b/drivers/mtd/spi/spi-nor-ids.=
+c
+> index 5882eab2e3fc..53e352d8656e 100644
+> --- a/drivers/mtd/spi/spi-nor-ids.c
+> +++ b/drivers/mtd/spi/spi-nor-ids.c
+> @@ -334,6 +334,16 @@ const struct flash_info spi_nor_ids[] =3D {
+>                         SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ |
+>                         SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB)
+>         },
+> +       {
+> +               INFO("w25q512nwq", 0xef6020, 0, 64 * 1024, 1024,
+> +                       SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ |
+> +                       SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB)
+> +       },
+> +       {
+> +               INFO("w25q512nwm", 0xef8020, 0, 64 * 1024, 1024,
+> +                       SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ |
+> +                       SPI_NOR_HAS_LOCK | SPI_NOR_HAS_TB)
+> +       },
+>         {
+>                 INFO("w25q01jv", 0xef4021, 0, 64 * 1024, 2048,
+>                         SECT_4K | SPI_NOR_DUAL_READ | SPI_NOR_QUAD_READ |
+> --
+> 2.25.1
+>
