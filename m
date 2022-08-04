@@ -2,64 +2,47 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E75A15897B5
-	for <lists+openbmc@lfdr.de>; Thu,  4 Aug 2022 08:21:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AA48589DF5
+	for <lists+openbmc@lfdr.de>; Thu,  4 Aug 2022 16:56:04 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LyzBL52WFz3bXg
-	for <lists+openbmc@lfdr.de>; Thu,  4 Aug 2022 16:20:58 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=PO9ZbFpP;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4LzBcf1jbsz3bkn
+	for <lists+openbmc@lfdr.de>; Fri,  5 Aug 2022 00:56:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::32d; helo=mail-wm1-x32d.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=PO9ZbFpP;
-	dkim-atps=neutral
-Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized) smtp.mailfrom=nuvoton.com (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
+Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Lyz9z606Kz2xHq
-	for <openbmc@lists.ozlabs.org>; Thu,  4 Aug 2022 16:20:38 +1000 (AEST)
-Received: by mail-wm1-x32d.google.com with SMTP id p8-20020a05600c05c800b003a50311d75cso1496872wmd.4
-        for <openbmc@lists.ozlabs.org>; Wed, 03 Aug 2022 23:20:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jms.id.au; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=T7tSv0xfFySR9BOXqYydrDSzUvS8yZUY9ip/73tWYkw=;
-        b=PO9ZbFpP0y7dg1pZB3T1e+8zYOlMW7OQHkH2z09bGncO2IkqZ+5bFp60t+7B8rylgA
-         QZbpu3Gbk5eg8dIXFF6UHeY48KGn670U2g/XXNcimZ2Zeedu9LbWri+ezYTQeyRXEoIl
-         2vdCdJbbQAVJ4jCj42J/ofMOWAwhQr831v6E0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=T7tSv0xfFySR9BOXqYydrDSzUvS8yZUY9ip/73tWYkw=;
-        b=nYeh99zYjPOL/ja8QKxlod2Xd2c28TxK/rMyqdC4WjdearLSy+7FyR2LlZdycZsOTX
-         HWwU+zTKFoa/2OgqkpB/5AtNBLTdyQAaqZhO4ezRwQIT2jy0kUbvDUAFrlnpVLtRG96A
-         DiXf2HEF5FwkfT94KTGQc6bHaNOASNoJi/BveB1Rm5zd3IpUjobHaZ2UnAXF2qFj675a
-         fAOgZL7yzfzm0NAa5gZbN1roQpkzRCJjlAFkfZIRQVSlXklxtZwPy1/BhSS3mMp/wsFb
-         AttDH1Z0QMmh7cziReasEFE5d/HHlNZRjP7qw33FQ8MK7iMK5LyjkL5RqBIkNBa2OjeF
-         qXsQ==
-X-Gm-Message-State: ACgBeo3WCxMHnINe74gYCwk1xSIkiDPQXR8g3CeVs5Fs0eizQph2Kgxi
-	H7/8l7Fw38YKLIjH/WmyPA8EmjfRhGPF+5cRDSklnT9oNaw=
-X-Google-Smtp-Source: AA6agR4UZsrVVvZN/VqGYJ6tQZZ0oXHCM7WV/Dvz17BajIO2UJAAD93vhOh/FVEHVyxCvqW0u4znjCmv/u5QrJ1Jj6k=
-X-Received: by 2002:a05:600c:1993:b0:3a3:3eb0:9102 with SMTP id
- t19-20020a05600c199300b003a33eb09102mr5167652wmq.72.1659594035739; Wed, 03
- Aug 2022 23:20:35 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LzBcH5FThz2yK2
+	for <openbmc@lists.ozlabs.org>; Fri,  5 Aug 2022 00:55:39 +1000 (AEST)
+Received: from NTILML01.nuvoton.com (ntil-fw [212.199.177.25])
+	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 274EtTkM016571
+	for <openbmc@lists.ozlabs.org>; Thu, 4 Aug 2022 17:55:29 +0300
+Received: from NTHCCAS03.nuvoton.com (10.1.20.28) by NTILML01.nuvoton.com
+ (10.190.1.46) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Thu, 4 Aug
+ 2022 17:55:29 +0300
+Received: from NTHCCAS04.nuvoton.com (10.1.8.29) by NTHCCAS03.nuvoton.com
+ (10.1.20.28) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.1847.3; Thu, 4 Aug 2022
+ 22:55:27 +0800
+Received: from taln60.nuvoton.co.il (10.191.1.180) by NTHCCAS04.nuvoton.com
+ (10.1.12.25) with Microsoft SMTP Server id 15.1.2176.2 via Frontend
+ Transport; Thu, 4 Aug 2022 22:55:26 +0800
+Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
+	id 23FBE62EFD; Thu,  4 Aug 2022 17:55:26 +0300 (IDT)
+From: Tomer Maimon <tmaimon77@gmail.com>
+To: <avifishman70@gmail.com>, <tali.perry1@gmail.com>, <joel@jms.id.au>,
+        <venture@google.com>, <yuenn@google.com>, <benjaminfair@google.com>,
+        <jic23@kernel.org>, <minyard@acm.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>
+Subject: [PATCH v1] dt-binding: ipmi: add fallback to npcm845 compatible
+Date: Thu, 4 Aug 2022 17:55:16 +0300
+Message-ID: <20220804145516.217482-1-tmaimon77@gmail.com>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-References: <20220804035504.92900-1-joel@jms.id.au> <b1e6cec2-32f0-a316-ad4e-0dff839260ea@kaod.org>
-In-Reply-To: <b1e6cec2-32f0-a316-ad4e-0dff839260ea@kaod.org>
-From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 4 Aug 2022 06:20:23 +0000
-Message-ID: <CACPK8Xe5Ds_wmh_vJQ+Nv2VwoPngNep0+13qrYTp+xqCOQrU3A@mail.gmail.com>
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] ARM: dts: aspeed: Add a
- Romulus board (AST2500)
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,40 +54,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, Tomer Maimon <tmaimon77@gmail.com>, openipmi-developer@lists.sourceforge.net, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 4 Aug 2022 at 06:16, C=C3=A9dric Le Goater <clg@kaod.org> wrote:
->
-> On 8/4/22 05:55, Joel Stanley wrote:
-> > Romulus was the OpenPOWER reference platform for the IBM Power9,
-> > containing an ASPEED AST2500.
-> >
-> > It was designed by IBM and built by SuperMicro. This reference platform
-> > was sold as the Raptor Computing Systems Tallos II.
-> >
-> > The machine used one 32MB SPI NOR for the BMC, a second SPI NOR flash
-> > for the host firmware, and the Broadcom BCM5719 attached via NC-SI.
-> >
-> > Signed-off-by: Joel Stanley <joel@jms.id.au>
->
-> I have been using a similar patch for a while (QEMU purpose only)
->
-> Reviewed-by: C=C3=A9dric Le Goater <clg@kaod.org>
+Add to npcm845 KCS compatible string a fallback to npcm750 KCS compatible
+string.
 
-Thanks!
+Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+---
+ Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
->
-> Which defconfig are you using ?
+diff --git a/Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt b/Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt
+index cbc10a68ddef..4fda76e63396 100644
+--- a/Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt
++++ b/Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt
+@@ -7,7 +7,7 @@ used to perform in-band IPMI communication with their host.
+ Required properties:
+ - compatible : should be one of
+     "nuvoton,npcm750-kcs-bmc"
+-    "nuvoton,npcm845-kcs-bmc"
++    "nuvoton,npcm845-kcs-bmc", "nuvoton,npcm750-kcs-bmc"
+ - interrupts : interrupt generated by the controller
+ - kcs_chan : The KCS channel number in the controller
+ 
+-- 
+2.33.0
 
-the evb-ast2500_defconfig in the openbmc tree worked for me. I tested
-an openbmc build using this patch:
-
-https://gerrit.openbmc.org/c/openbmc/openbmc/+/56133
-
-I haven't double checked the environment yet. It appeared to work at
-runtime, but I'm not sure if it's at the correct location
-
-OpenBMC doesn't seem to correctly program an environment into the
-flash image for the 2500 like we do for the p10bmc eMMC image.
