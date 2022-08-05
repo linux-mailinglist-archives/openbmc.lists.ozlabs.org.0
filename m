@@ -1,63 +1,74 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4460E58A466
-	for <lists+openbmc@lfdr.de>; Fri,  5 Aug 2022 03:13:51 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C10DE58AA6E
+	for <lists+openbmc@lfdr.de>; Fri,  5 Aug 2022 13:59:02 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LzSKT1S5sz2xH2
-	for <lists+openbmc@lfdr.de>; Fri,  5 Aug 2022 11:13:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Lzkdw4CjHz304j
+	for <lists+openbmc@lfdr.de>; Fri,  5 Aug 2022 21:59:00 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=pavotek.com.tr header.i=@pavotek.com.tr header.a=rsa-sha256 header.s=mail1 header.b=QpKsKv8m;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=VT9RgJ+o;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=pavotek.com.tr (client-ip=213.74.56.236; helo=pavotekmailgw.pavotek.com.tr; envelope-from=oguzhan.caglar@pavotek.com.tr; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::82e; helo=mail-qt1-x82e.google.com; envelope-from=tcminyard@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=pavotek.com.tr header.i=@pavotek.com.tr header.a=rsa-sha256 header.s=mail1 header.b=QpKsKv8m;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=VT9RgJ+o;
 	dkim-atps=neutral
-X-Greylist: delayed 944 seconds by postgrey-1.36 at boromir; Thu, 04 Aug 2022 18:23:04 AEST
-Received: from pavotekmailgw.pavotek.com.tr (mail1.pavotek.com.tr [213.74.56.236])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Lz1vD3h5Vz2xjw
-	for <openbmc@lists.ozlabs.org>; Thu,  4 Aug 2022 18:23:03 +1000 (AEST)
-Received: from Exchange2016.pavotek.com.tr (unknown [192.168.66.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-	(No client certificate requested)
-	by Forcepoint Email with ESMTPS id B55FEEB20CCB837F15AD
-	for <openbmc@lists.ozlabs.org>; Thu,  4 Aug 2022 11:07:11 +0300 (+03)
-Content-Language: tr-TR
-Content-Type: multipart/alternative;
-	boundary="_000_6fbe1a4cf05a483b86986e1cdf5f53aapavotekcomtr_"
-DKIM-Signature: v=1; a=rsa-sha256; d=pavotek.com.tr; s=mail1;
-	c=relaxed/relaxed; t=1659600431; h=from:subject:to:date:message-id;
-	bh=iwV/s0jav4Am59HmT/4QfB3FgmTzpHX5PEkuVGYgnw8=;
-	b=QpKsKv8m3avB94Q0yKTJ+gBWITwURjN+ZanZNnACqTf9pkleI206PShPwZtotA7eKNFvalic9w+
-	ssogt62j9f3UbX2Y+C1yS6F4dUwkSM5bH0/MonTLQoPZBnFIwAz4ATh1dF8ohqWPXykjbhfz27xHK
-	O/By0V1vtdIxEy/4/1iNrfFw+mV6kLasWSq4V9oeIQO6OsCjZIgf4F/TN9vS7I/AymnjPzwf6Bzpb
-	XofcCY2vRVUJTIbzmziH5D+WgHNZR15elMQNdJop2TKoYTF2ldntmX2HmRUr2oFcz5MtnjSv3Fp8B
-	W/AVCvhBPAq2bP9w5DpdQlLOXhvtGQp4ZWeA==
-Received: from Exchange2016.pavotek.com.tr (192.168.66.180) by
- Exchange2016.pavotek.com.tr (192.168.66.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.2507.6; Thu, 4 Aug 2022 11:07:11 +0300
-Received: from Exchange2016.pavotek.com.tr ([::1]) by
- Exchange2016.pavotek.com.tr ([::1]) with mapi id 15.01.2507.006; Thu, 4 Aug
- 2022 11:07:11 +0300
-From: =?iso-8859-9?Q?O=F0uzhan_=C7A=D0LAR?= <oguzhan.caglar@pavotek.com.tr>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Adding Inventory
-Thread-Topic: Adding Inventory
-Thread-Index: AQHYp9i2xlvHHPf9DkStj7/J201olQ==
-Date: Thu, 4 Aug 2022 08:07:11 +0000
-Message-ID: <6fbe1a4cf05a483b86986e1cdf5f53aa@pavotek.com.tr>
-Accept-Language: tr-TR, en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.61.1.176]
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4LzkdT6x2Cz2xH3
+	for <openbmc@lists.ozlabs.org>; Fri,  5 Aug 2022 21:58:35 +1000 (AEST)
+Received: by mail-qt1-x82e.google.com with SMTP id b18so1801682qtq.13
+        for <openbmc@lists.ozlabs.org>; Fri, 05 Aug 2022 04:58:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:reply-to
+         :message-id:subject:cc:to:from:date:sender:from:to:cc;
+        bh=12EUweBf0CXLW8+gSAKKg9xplGZSYosR37oZCD2Y1Eg=;
+        b=VT9RgJ+oVb09HdRQa6Lq62UkO+czbOAM9zhFz3mQzPOunpvHA/Dup3iDIDNBrSTcRg
+         ISw6ghOW+btNX/HqH0k2wNgSXpUg9bL7XcttzO3HDDNNozk+y3dM1mVPrsLCuGG1wDEB
+         zPDESdIoCLKl87M3ZHZOLwvWZcZCGfdRYxSeLVkv1UokGzv1nB/bnYzWf+ZQw+cvxeeO
+         puAKsVq9rrDGTJ2pP8KskFUBBm5iQIXGPWMPTn0Fzqb9UMJ5bQb/k0gtuQPFCBlS4+N1
+         kK6jb8sG7doAKbDSIiJhVitTkmnihXzpan+QM+ytoVxdChvksAv2+bOnb1FKMbKjMQbE
+         tC4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:reply-to
+         :message-id:subject:cc:to:from:date:sender:x-gm-message-state:from
+         :to:cc;
+        bh=12EUweBf0CXLW8+gSAKKg9xplGZSYosR37oZCD2Y1Eg=;
+        b=gY1MXiWCHUX6aGMLWw+LvgvlIIxyLIS1bMWiH/wm1fXYZ15Wy7/zgiXUSDnXrIThif
+         Wp2Cb5ms7kZsurilrO2uKPTlBLUkHjo0ATPpmDR9DvX0MiP29aT9nstYfYZ5Nhlfqmyq
+         ktmm+OIB9XVtLZbPiJHgE29dVCJEzKn08o3DvH2IgKG0jAmsYqRLLkObk0jjjaDIZVgp
+         j2bfG/xg7vf1yqBcvotiEzRqGwcz//HCoW2/vHsNSPnfTCMMs/JK15VDds0qvaptQ5Xk
+         QzH7bHJ/1RNJBBXMCnI9VyWF6Caf7wL74KnS65JNw4XWN3rgotfs3GCPfW7nzN7EQfU/
+         vfIg==
+X-Gm-Message-State: ACgBeo23gxaHrXv8wgmWfd5GAMpRxh1SlG9dGwmUThuhIVKNFvz/+lzE
+	nKkuVhzu5eoybXOu8cMAbw==
+X-Google-Smtp-Source: AA6agR4yn9VOrQApcMy/JIE89HsYzBMvrpAkEphl5ssbELPYZNrOf1zrKpwK4oe95pmrgYf1HSEKPA==
+X-Received: by 2002:a05:622a:346:b0:31f:c40:eac0 with SMTP id r6-20020a05622a034600b0031f0c40eac0mr5373701qtw.326.1659700711064;
+        Fri, 05 Aug 2022 04:58:31 -0700 (PDT)
+Received: from serve.minyard.net (serve.minyard.net. [2001:470:b8f6:1b::1])
+        by smtp.gmail.com with ESMTPSA id c8-20020ac85188000000b0031eb51dd72csm2491484qtn.85.2022.08.05.04.58.30
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 05 Aug 2022 04:58:30 -0700 (PDT)
+Received: from minyard.net (unknown [IPv6:2001:470:b8f6:1b:8c5c:a823:f5bd:8751])
+	by serve.minyard.net (Postfix) with ESMTPSA id 4CFC71800FA;
+	Fri,  5 Aug 2022 11:58:29 +0000 (UTC)
+Date: Fri, 5 Aug 2022 06:58:27 -0500
+From: Corey Minyard <minyard@acm.org>
+To: Tomer Maimon <tmaimon77@gmail.com>
+Subject: Re: [PATCH v2] dt-binding: ipmi: add fallback to npcm845 compatible
+Message-ID: <20220805115827.GG3834@minyard.net>
+References: <20220804181800.235368-1-tmaimon77@gmail.com>
 MIME-Version: 1.0
-X-Mailman-Approved-At: Fri, 05 Aug 2022 11:13:04 +1000
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220804181800.235368-1-tmaimon77@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,243 +80,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Reply-To: minyard@acm.org
+Cc: devicetree@vger.kernel.org, benjaminfair@google.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, robh+dt@kernel.org, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, openipmi-developer@lists.sourceforge.net, jic23@kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_6fbe1a4cf05a483b86986e1cdf5f53aapavotekcomtr_
-Content-Type: text/plain; charset="iso-8859-9"
-Content-Transfer-Encoding: quoted-printable
+On Thu, Aug 04, 2022 at 09:18:00PM +0300, Tomer Maimon wrote:
+> Add to npcm845 KCS compatible string a fallback to npcm750 KCS compatible
+> string becuase NPCM845 and NPCM750 BMCs are using identical KCS modules.
+> 
+> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> ---
+>  Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt b/Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt
+> index cbc10a68ddef..4fda76e63396 100644
+> --- a/Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt
+> +++ b/Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt
+> @@ -7,7 +7,7 @@ used to perform in-band IPMI communication with their host.
+>  Required properties:
+>  - compatible : should be one of
+>      "nuvoton,npcm750-kcs-bmc"
+> -    "nuvoton,npcm845-kcs-bmc"
+> +    "nuvoton,npcm845-kcs-bmc", "nuvoton,npcm750-kcs-bmc"
 
-Hello,
+This is just wrong.  The compatible is supposed to identify the device,
+not the board the device is on.  I think compatible here should be
+"npcm7xx-kcs-bmc", and just use that everywhere.  It's fine if that is
+used on a board named npcm845.
 
+-corey
 
-I'm working on openbmc for ast2500 bmc. I want to add inventory such as CPU=
- and DIMM etc. I added the chassis from .json file but I couldn't add the C=
-PU and DIMM. I know this is to related with entity-manager. How can I add t=
-hese inventory on WEBUI? Can you give some information about this issue?
-
-
-Regards.
-
-O=F0uzhan =C7a=F0lar
-Software Design Engineer
-
-
-
-[X]
-
-
-
-
-
-[X]
-
-Pavo Tasar=FDm =DCretim Elektronik Tic. A.=DE.
-Teknopark =DDstanbul, Kurtk=F6y Pendik =DDSTANBUL
-
-
-       [X] <http://pavotek.com.tr/>
-
-Tel             : +90 (216) 354 72 86
-
-Faks         : +90 (216) 354 76 77
-
-Gsm          : +90 (507) 585 10 60
-
-oguzhan.caglar@pavotek.com.tr<mailto:oguzhan.caglar@pavotek.com.tr>
-
-
-
-www.pavotek.com.tr<http://www.pavotek.com.tr/>
-
-
-
---_000_6fbe1a4cf05a483b86986e1cdf5f53aapavotekcomtr_
-Content-Type: text/html; charset="iso-8859-9"
-Content-Transfer-Encoding: quoted-printable
-
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
-9">
-<style type=3D"text/css" style=3D"display:none;"><!-- P {margin-top:0;margi=
-n-bottom:0;} --></style>
-</head>
-<body dir=3D"ltr">
-<div id=3D"divtagdefaultwrapper" style=3D"font-size:12pt;color:#000000;font=
--family:Calibri,Helvetica,sans-serif;" dir=3D"ltr">
-<p>Hello,</p>
-<p><br>
-</p>
-<p>I'm working on openbmc for ast2500 bmc. I want to add inventory such as =
-CPU and DIMM etc. I added the chassis from&nbsp;.json file but I couldn't a=
-dd the CPU and DIMM. I know this is to related with entity-manager.&nbsp;Ho=
-w can I add these inventory on WEBUI? Can
- you give some information about this issue?</p>
-<p><br>
-</p>
-<p>Regards.</p>
-<p><br>
-</p>
-<div id=3D"Signature">
-<div id=3D"divtagdefaultwrapper" dir=3D"ltr" style=3D"font-size: 12pt; colo=
-r: rgb(0, 0, 0); font-family: Calibri, Helvetica, sans-serif, EmojiFont, &q=
-uot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, NotoColorEmoji, &q=
-uot;Segoe UI Symbol&quot;, &quot;Android Emoji&quot;, EmojiSymbols;">
-<span id=3D"ms-rterangepaste-start"></span>
-<table class=3D"MsoTableGrid" border=3D"0" cellspacing=3D"0" cellpadding=3D=
-"0" style=3D"border-collapse:collapse; border:none">
-<tbody>
-<tr>
-<td width=3D"549" colspan=3D"3" valign=3D"top" style=3D"width:453.1pt; padd=
-ing:0in 5.4pt 0in 5.4pt">
-<p class=3D"MsoNormal" style=3D"margin-bottom:0in; margin-bottom:.0001pt; l=
-ine-height:normal">
-<b><span lang=3D"TR" style=3D"font-size:9.0pt; font-family:&quot;Arial&quot=
-;,sans-serif">O=F0uzhan =C7a=F0lar</span></b></p>
-<p class=3D"MsoNormal" style=3D"margin-bottom:0in; margin-bottom:.0001pt; l=
-ine-height:normal">
-<span lang=3D"TR" style=3D"font-size:9.0pt; font-family:&quot;Arial&quot;,s=
-ans-serif">Software Design Engineer</span><span lang=3D"TR"></span></p>
-</td>
-<td width=3D"0" style=3D"border:none">
-<p class=3D"MsoNormal">&nbsp;</p>
-</td>
-</tr>
-<tr>
-<td width=3D"549" colspan=3D"3" valign=3D"top" style=3D"width:453.1pt; padd=
-ing:0in 5.4pt 0in 5.4pt">
-<p class=3D"MsoNormal" style=3D"margin-bottom:0in; margin-bottom:.0001pt; l=
-ine-height:normal">
-<img width=3D"535" height=3D"9" style=3D"user-select: none;" src=3D"file://=
-/C:/Users/OGUZHA~1.CAG/AppData/Local/Temp/msohtmlclip1/01/clip_image002.png=
-"><span lang=3D"TR"></span></p>
-</td>
-<td width=3D"0" style=3D"border:none">
-<p class=3D"MsoNormal">&nbsp;</p>
-</td>
-</tr>
-<tr style=3D"height:25.05pt">
-<td width=3D"170" valign=3D"top" style=3D"width:127.35pt; padding:0in 5.4pt=
- 0in 5.4pt; height:25.05pt">
-<p class=3D"MsoNormal" style=3D"margin-bottom:0in; margin-bottom:.0001pt; l=
-ine-height:normal">
-<b><span lang=3D"TR">&nbsp;</span></b></p>
-</td>
-<td width=3D"31" rowspan=3D"7" valign=3D"top" style=3D"width:14.15pt; paddi=
-ng:0in 5.4pt 0in 5.4pt; height:25.05pt">
-<p class=3D"MsoNormal" style=3D"margin-bottom:0in; margin-bottom:.0001pt; l=
-ine-height:normal">
-<img width=3D"17" height=3D"127" style=3D"user-select: none;" src=3D"file:/=
-//C:/Users/OGUZHA~1.CAG/AppData/Local/Temp/msohtmlclip1/01/clip_image004.pn=
-g"><span lang=3D"TR"></span></p>
-</td>
-<td width=3D"348" rowspan=3D"2" valign=3D"top" style=3D"width:311.6pt; padd=
-ing:0in 5.4pt 0in 5.4pt; height:25.05pt">
-<p class=3D"MsoNormal" style=3D"margin-bottom:0in; margin-bottom:.0001pt; l=
-ine-height:normal">
-<b><span lang=3D"TR" style=3D"font-size:9.0pt; font-family:&quot;Arial&quot=
-;,sans-serif">Pavo Tasar=FDm =DCretim Elektronik Tic. A.=DE.</span></b><b><=
-span lang=3D"TR" style=3D"font-family:&quot;Arial&quot;,sans-serif"></span>=
-</b></p>
-<p class=3D"MsoNormal" style=3D"margin-bottom:0in; margin-bottom:.0001pt; l=
-ine-height:normal">
-<span lang=3D"TR" style=3D"font-size:8.0pt; font-family:&quot;Arial&quot;,s=
-ans-serif">Teknopark =DDstanbul, Kurtk=F6y Pendik =DDSTANBUL</span><span la=
-ng=3D"TR" style=3D"font-size:10.0pt; font-family:&quot;Arial&quot;,sans-ser=
-if"></span></p>
-</td>
-<td width=3D"0" height=3D"50" style=3D"height:25.05pt; border:none"></td>
-</tr>
-<tr style=3D"height:13.45pt">
-<td width=3D"170" rowspan=3D"5" valign=3D"top" style=3D"width:127.35pt; pad=
-ding:0in 5.4pt 0in 5.4pt; height:13.45pt">
-<p class=3D"MsoNormal" style=3D"margin-bottom:0in; margin-bottom:.0001pt; l=
-ine-height:normal">
-<b><span lang=3D"TR" style=3D"font-size:8.0pt">&nbsp;</span></b></p>
-<p class=3D"MsoNormal" style=3D"margin-bottom:0in; margin-bottom:.0001pt; l=
-ine-height:normal">
-<b><span lang=3D"TR">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></b><span =
-lang=3D"TR"><a href=3D"http://pavotek.com.tr/" id=3D"LPNoLP"><b><span lang=
-=3D"EN-US" style=3D"color:windowtext"><img border=3D"0" width=3D"131" heigh=
-t=3D"23" style=3D"user-select: none;" src=3D"file:///C:/Users/OGUZHA~1.CAG/=
-AppData/Local/Temp/msohtmlclip1/01/clip_image006.png"></span></b></a><b></b=
-></span></p>
-</td>
-<td width=3D"0" height=3D"27" style=3D"height:13.45pt; border:none"></td>
-</tr>
-<tr style=3D"height:9.2pt">
-<td width=3D"348" valign=3D"top" style=3D"width:311.6pt; padding:0in 5.4pt =
-0in 5.4pt; height:9.2pt">
-<p class=3D"MsoNormal" style=3D"margin-bottom:0in; margin-bottom:.0001pt; l=
-ine-height:normal">
-<span lang=3D"TR" style=3D"font-size:8.0pt; font-family:&quot;Arial&quot;,s=
-ans-serif">Tel&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp; : &#43;90 (216) 354 72 86</span></p>
-</td>
-<td width=3D"0" height=3D"18" style=3D"height:9.2pt; border:none"></td>
-</tr>
-<tr style=3D"height:8.85pt">
-<td width=3D"348" valign=3D"top" style=3D"width:311.6pt; padding:0in 5.4pt =
-0in 5.4pt; height:8.85pt">
-<p class=3D"MsoNormal" style=3D"margin-bottom:0in; margin-bottom:.0001pt; l=
-ine-height:normal">
-<span lang=3D"TR" style=3D"font-size:8.0pt; font-family:&quot;Arial&quot;,s=
-ans-serif">Faks&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &#43;90 (=
-216) 354 76 77</span></p>
-</td>
-<td width=3D"0" height=3D"18" style=3D"height:8.85pt; border:none"></td>
-</tr>
-<tr style=3D"height:5.75pt">
-<td width=3D"348" valign=3D"top" style=3D"width:311.6pt; padding:0in 5.4pt =
-0in 5.4pt; height:5.75pt">
-<p class=3D"MsoNormal" style=3D"margin-bottom:0in; margin-bottom:.0001pt; l=
-ine-height:normal">
-<span lang=3D"TR" style=3D"font-size:8.0pt; font-family:&quot;Arial&quot;,s=
-ans-serif">Gsm&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : &#43=
-;90 (507) 585 10 60
-</span></p>
-</td>
-<td width=3D"0" height=3D"12" style=3D"height:5.75pt; border:none"></td>
-</tr>
-<tr style=3D"height:2.9pt">
-<td width=3D"348" valign=3D"top" style=3D"width:311.6pt; padding:0in 5.4pt =
-0in 5.4pt; height:2.9pt">
-<p class=3D"MsoNormal" style=3D"margin-bottom:0in; margin-bottom:.0001pt; l=
-ine-height:normal">
-<span lang=3D"TR" style=3D"font-size:8.0pt; font-family:&quot;Arial&quot;,s=
-ans-serif"><a href=3D"mailto:oguzhan.caglar@pavotek.com.tr" id=3D"LPNoLP">o=
-guzhan.caglar@pavotek.com.tr</a><span style=3D"color:#0050DC"></span></span=
-></p>
-</td>
-<td width=3D"0" height=3D"6" style=3D"height:2.9pt; border:none"></td>
-</tr>
-<tr style=3D"height:6.7pt">
-<td width=3D"170" valign=3D"top" style=3D"width:127.35pt; padding:0in 5.4pt=
- 0in 5.4pt; height:6.7pt">
-<p class=3D"MsoNormal" style=3D"margin-bottom:0in; margin-bottom:.0001pt; l=
-ine-height:normal">
-<span lang=3D"TR">&nbsp;</span></p>
-</td>
-<td width=3D"348" valign=3D"top" style=3D"width:311.6pt; padding:0in 5.4pt =
-0in 5.4pt; height:6.7pt">
-<p class=3D"MsoNormal" style=3D"margin-bottom:0in; margin-bottom:.0001pt; l=
-ine-height:normal">
-<span lang=3D"TR"><a href=3D"http://www.pavotek.com.tr/" id=3D"LPNoLP"><spa=
-n style=3D"font-size:8.0pt; font-family:&quot;Arial&quot;,sans-serif; color=
-:#0050DC">www.pavotek.com.tr</span></a></span><span lang=3D"TR" style=3D"fo=
-nt-size:8.0pt; font-family:&quot;Arial&quot;,sans-serif; color:#0050DC"></s=
-pan></p>
-</td>
-<td width=3D"0" height=3D"13" style=3D"height:6.7pt; border:none"></td>
-</tr>
-</tbody>
-</table>
-<p class=3D"MsoNormal"><span lang=3D"TR">&nbsp;</span></p>
-<span id=3D"ms-rterangepaste-end"></span></div>
-</div>
-</div>
-</body>
-</html>
-
---_000_6fbe1a4cf05a483b86986e1cdf5f53aapavotekcomtr_--
+>  - interrupts : interrupt generated by the controller
+>  - kcs_chan : The KCS channel number in the controller
+>  
+> -- 
+> 2.33.0
+> 
