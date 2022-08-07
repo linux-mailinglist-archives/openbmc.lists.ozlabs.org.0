@@ -2,50 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9920258B0CE
-	for <lists+openbmc@lfdr.de>; Fri,  5 Aug 2022 22:20:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CAF7B58BA20
+	for <lists+openbmc@lfdr.de>; Sun,  7 Aug 2022 09:52:26 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Lzxmg04nGz3052
-	for <lists+openbmc@lfdr.de>; Sat,  6 Aug 2022 06:20:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4M0s4R5P8hz3053
+	for <lists+openbmc@lfdr.de>; Sun,  7 Aug 2022 17:52:23 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=GzIev/yW;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=XGMyyc5W;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.microsoft.com (client-ip=13.77.154.182; helo=linux.microsoft.com; envelope-from=dphadke@linux.microsoft.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12e; helo=mail-lf1-x12e.google.com; envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=GzIev/yW;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=XGMyyc5W;
 	dkim-atps=neutral
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4LzxmD2g4Vz2xrk
-	for <openbmc@lists.ozlabs.org>; Sat,  6 Aug 2022 06:20:12 +1000 (AEST)
-Received: from [192.168.87.140] (unknown [50.47.106.71])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 243DF20FFE37;
-	Fri,  5 Aug 2022 13:19:40 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 243DF20FFE37
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1659730780;
-	bh=xCZdqRSzikkK6tGn2IQ1d3y7nCx9H/G7gGW8BKUQyaU=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=GzIev/yWbirhN5hdnlixlMxVWJsSz0T0CzgQGJI9wr4yYuGBxl8hmjcRq5zlPKK/p
-	 7JMduT357w1+3L7Zi6ya/FL0k3kDtyMoLuR8EnBjbyYwEZtrPTRF6HRL9M8RpnGXPo
-	 E3MYqHVuXCytCJ+tKVLL3td1TBSchMOcJ8V+//co=
-Message-ID: <b090805f-0387-26dc-0274-eebf0f28c432@linux.microsoft.com>
-Date: Fri, 5 Aug 2022 13:19:40 -0700
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4M0s434qj1z2xjl
+	for <openbmc@lists.ozlabs.org>; Sun,  7 Aug 2022 17:52:02 +1000 (AEST)
+Received: by mail-lf1-x12e.google.com with SMTP id v2so149514lfi.6
+        for <openbmc@lists.ozlabs.org>; Sun, 07 Aug 2022 00:52:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=dJ6lR10UqT/svxgk5HLkzmMbK4zBIcx20Yej7ar36t8=;
+        b=XGMyyc5WU146GHv0QrCf1AOo0rhlUQXkxD5+jlAka0Bl8ngJ94avjqdprGhCdYBQty
+         X4KVU0dP4rvH57xfRRxOQY3zGO9bsi+etLPvDmEL4tXXGTVRJZ0Fswh/dSdRMzqs3/GG
+         JBylky7KzNCyMi1ZOHFlVVFWKBwMq183rp9iWKLiHRJsezL89FRtEpXNhaSEBK+lrXZv
+         mTe2OjnX8x7qQ8olcn2Mo+BWzcQJiQWY0IQFedy9t0dF44zN5oQ19aBZhmYPVZ3wGRjE
+         GfcN4Of7upv2NgEC2wSF0tC912tAGHTKW4BRue6Aecbj5OC46OhxoIJQViLQNs8gnp6o
+         SoKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=dJ6lR10UqT/svxgk5HLkzmMbK4zBIcx20Yej7ar36t8=;
+        b=ifV7C1O7xrMdWaBKBopfwxJ4tL7XNgEwWoCLCZguRXRIfF2xVWJi3v5mxuJ9leYhEx
+         /76r5jmXj7dDPA24V47qnShxZSZk9qn7XdifIrQc9Lt5n+8QRErejylPRfSnyCEutMWi
+         I0gkTdG7oJR71fqA4XO47T3S/KMkCz67W8E0LfMLGRNszuNIQhIxHiFnAXVNl1FRwziS
+         mW9OIIC92VmTZNNErnQEqUevaZnj0KKMQ5vo0rWAR2ZenKTjCQm3+YynaDOBjH0kK7pR
+         p0Lv+hKGM36jHsA8TSvp0X+kVal+ZJ/ki4rf6RsvdoR6AjiXbOFcX6SSxlAJDo7jx7QG
+         3qdg==
+X-Gm-Message-State: ACgBeo3ioGsNbdm7EQbSCzhbQYI5JcqwIy/z5wWYmklV2ztEk1q9MTSh
+	II39FSx8hUB99VML+qPOOHpKFaRPUuy2Zt2tNP0=
+X-Google-Smtp-Source: AA6agR4V/VrijA2jOsVzxZ7/8/SHHrOYwWX5/nci78brP/zjC9MoIstaGIPRY80wqK73i0+0xJA+/s0BVB0qXfOMxlI=
+X-Received: by 2002:a19:6d0d:0:b0:48a:8b3c:e28 with SMTP id
+ i13-20020a196d0d000000b0048a8b3c0e28mr4190351lfc.265.1659858716318; Sun, 07
+ Aug 2022 00:51:56 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: Security Working Group meeting - Wednesday August 3 - results
-Content-Language: en-US
-To: Andrew Jeffery <andrew@aj.id.au>, Joseph Reynolds <jrey@linux.ibm.com>,
- openbmc <openbmc@lists.ozlabs.org>
-References: <1bb24451-1407-75e1-ec02-d8d9a90ddb13@linux.ibm.com>
- <8c79b178-0abb-5f9f-037e-bff9931fd887@linux.ibm.com>
- <9922163c-3d64-48ff-a808-b4b8dcfcb32d@www.fastmail.com>
-From: Dhananjay Phadke <dphadke@linux.microsoft.com>
-In-Reply-To: <9922163c-3d64-48ff-a808-b4b8dcfcb32d@www.fastmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+References: <20220804181800.235368-1-tmaimon77@gmail.com> <10e93907-49ef-a3e6-e0b4-0b3e5f236f44@linaro.org>
+In-Reply-To: <10e93907-49ef-a3e6-e0b4-0b3e5f236f44@linaro.org>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Sun, 7 Aug 2022 10:51:45 +0300
+Message-ID: <CAP6Zq1ju4=PSiCuDaCi2NQTniaXBwmv5Qn6LoLayGmiayDCvYg@mail.gmail.com>
+Subject: Re: [PATCH v2] dt-binding: ipmi: add fallback to npcm845 compatible
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,61 +72,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree <devicetree@vger.kernel.org>, Benjamin Fair <benjaminfair@google.com>, minyard@acm.org, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, openipmi-developer@lists.sourceforge.net, Jonathan Cameron <jic23@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 8/3/2022 8:01 PM, Andrew Jeffery wrote:
-> 
-> 
-> On Thu, 4 Aug 2022, at 04:35, Joseph Reynolds wrote:
->>
->> 4 Consider migrating this meeting to Discord > Voice channels >  Security.
->>
->> DISCUSSION:
->>
->> Three responses were: Why?  Seems okay.  Don’t like Discord.
->>
->> Access question: Can a web client access the discord voice session?
-> 
-> Yes, the web client can access voice sessions. I use the web client
-> exclusively on my work machine.
-> 
->>
->> Also, let’s use the discord #security channel.
->>
->> The direct link is
->> https://discord.com/channels/775381525260664832/1002376534377635860
->> <https://discord.com/channels/775381525260664832/1002376534377635860>
-> 
-> So from this the outcome of the discussion is a bit unclear.
-> 
-> For better or worse, discord is where a lot of OpenBMC activity takes
-> place. I think something fundamental that the security working group
-> needs to develop is better traction with the OpenBMC (maintainer)
-> community. Problems that are discussed by the Security WG often have
-> direct impacts on maintenance of the software that makes up OpenBMC,
-> most of which the WG attendees are not responsible for.
+Hi Krzysztof,
 
-Absolutely, one of the discussions around CVE / GH advisories workflow
-requires repo maintainers to be involved.
+Thanks for your review.
 
-> 
-> Migrating the security WG calls to discord will increase regularity of
-> use among WG attendees and hopefully increase interaction with other
-> parts of the OpenBMC community where they need influence.
+On Fri, 5 Aug 2022 at 09:36, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 04/08/2022 20:18, Tomer Maimon wrote:
+> > Add to npcm845 KCS compatible string a fallback to npcm750 KCS compatible
+> > string becuase NPCM845 and NPCM750 BMCs are using identical KCS modules.
+> >
+> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+>
+> Your previous commit adding that compatible was simply wrong and not
+> matching the driver and it is not the first time. I think all Nuvoton
+> patches need much more careful review :(
+Will do and sorry about all the mess...
+>
+> You forgot the fixes tag:
+>
+> Fixes: 84261749e58a ("dt-bindings: ipmi: Add npcm845 compatible")
+Will add the tag next version.
+>
+>
+>
+>
+> Best regards,
+> Krzysztof
 
-+1
+Best regards,
 
-> 
-> We already hold weekly Technical Oversight Forum meetings and
-> fortnightly PMCI get-togethers on the respective discord voice channels
-> and it works very well.
-> 
-> IMO Joseph, you should just start hosting the calls on discord. People
-> will move to it if they wish to continue to attend.
-
-Another issue is current Webex setup is, messages are not accessible 
-after meeting ends, discord channel would solve this offline access?
-
-Thanks,
-Dhananjay
+Tomer
