@@ -1,68 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8205E58C368
-	for <lists+openbmc@lfdr.de>; Mon,  8 Aug 2022 08:40:51 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EF17558C443
+	for <lists+openbmc@lfdr.de>; Mon,  8 Aug 2022 09:41:42 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4M1RRP3DJjz3bbj
-	for <lists+openbmc@lfdr.de>; Mon,  8 Aug 2022 16:40:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4M1SnL4nsBz30DP
+	for <lists+openbmc@lfdr.de>; Mon,  8 Aug 2022 17:41:26 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=I4vcOZhf;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=JqTFHcQR;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62d; helo=mail-ej1-x62d.google.com; envelope-from=medadyoung@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12d; helo=mail-lf1-x12d.google.com; envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=I4vcOZhf;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=JqTFHcQR;
 	dkim-atps=neutral
-Received: from mail-ej1-x62d.google.com (mail-ej1-x62d.google.com [IPv6:2a00:1450:4864:20::62d])
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4M1RQz1QfGz2xZB
-	for <openbmc@lists.ozlabs.org>; Mon,  8 Aug 2022 16:40:26 +1000 (AEST)
-Received: by mail-ej1-x62d.google.com with SMTP id dc19so14727422ejb.12
-        for <openbmc@lists.ozlabs.org>; Sun, 07 Aug 2022 23:40:26 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4M1Smv3YrWz2xGn
+	for <openbmc@lists.ozlabs.org>; Mon,  8 Aug 2022 17:41:01 +1000 (AEST)
+Received: by mail-lf1-x12d.google.com with SMTP id x19so3180247lfq.7
+        for <openbmc@lists.ozlabs.org>; Mon, 08 Aug 2022 00:41:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc;
-        bh=4PB9dWeFFs7okMUHgyH7NuITCUpW/nF++sHaYJTEdl0=;
-        b=I4vcOZhf0FsVzp3vJ8zDM6UWJfW9Tq9wbl8HCoVEOgvMh41kFHaIOLkNLtsyN//FoD
-         bKS8ABO9PE78sVCKfMY9B3tCnz3KsWdeWalgquPtkPoWSzWX5fKLpscMP4VW0mGSLX2z
-         avXoOSZSBooxU5zEZAOE+HrqnHxc8vm7n+as4tdoP/EpQji70Q4M+cJDeOIGvaV7nA48
-         FSWFhz6dV2JRuAMcTDkybMR4WSkv98o2oraOemRy4R7juFcX+AzA/k12VxyURlNTWRuS
-         Up65jsWKjxNQb9qAsfYzDbxnGICm1UYMVmXs1IUQ5MaGDSmdaBrMZ+7+58YG8PkySp+f
-         UGOg==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc;
+        bh=FjsHMZLmb/GlaNd8HwMmgPgxm5PKMOsuOi0WmrXGSlA=;
+        b=JqTFHcQRg/bGHymFtU2WjDYJSsnpJgc/Lp7I7n/hQQeWcePrxqiIQR5cNxhPg2h1ut
+         htB15WfjEEwuKWc7sdDDXmbzTmofeYlFPANeBKqdk1VHR9uCXwElMoM0JklCoaI3qWMN
+         gQhsmb9JzoLTr87eW3W3c6OVDvF9zO3haq79hyuHy/VE9xQ8Y6yVf9y42YItsUMDAqQ9
+         166ZC3NW5xtzZ3OFRejKhc26XmPizgB+upAILwR/A0sP4+vySjIucPwLU2tVdCjE4tLu
+         DvpMnJl3Rc2MaeO665FBi39ofY2m5oUeJHsqE795Bb0l+ezONdj9U0TuWpJkC8vVUpO3
+         nj4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
-        bh=4PB9dWeFFs7okMUHgyH7NuITCUpW/nF++sHaYJTEdl0=;
-        b=i2jEb5dRhSpstbogiqvaklBFaJn+2s2AbZxh5mm80avWmIhDcaGW+wBuSf44coR/Aw
-         pRO6TdINxHT36qSHqe/kPOzYDsWgxX44Ms0tiieqhesL/yxdWgANQu8OHz6FY9xviKEX
-         xahAb8439UZEb2ZMcI50eFYcXWZpvhfnwjJyyXEwmwYoNc/9l4zm+ut+7zzGzitocW46
-         CCkrjeVCNHm4gGXYrUFVSsd1NCWrhbJDIAlleRLIL+wFtPEKLZuZggD8UYvrjPzHTQE6
-         +VKK6ZpJZkyUNGcBHJUgwq6T2V1oMpsNiMDOwkqXfIKWJKOjwZcvmFZGb3QQud9uomyh
-         eV3g==
-X-Gm-Message-State: ACgBeo2Rz1jE7vm/B4MrKRN9aCZWG/KiYJ3VP3X1YG0ZIDmJBL2D3UWL
-	f+9ctfJJdy3GvaXL28A28N3w44ejQLGMLeFY8ww=
-X-Google-Smtp-Source: AA6agR6y6giseEiiXpJKKy0/mCQgNYSFlwjFaxmFRHZe5VLTgiCCnUWW4JFzu/n0UJgvLBjkJfKFwM4QjR+FStuH5Ok=
-X-Received: by 2002:a17:907:2815:b0:730:9ec7:9fa1 with SMTP id
- eb21-20020a170907281500b007309ec79fa1mr12343365ejc.567.1659940821469; Sun, 07
- Aug 2022 23:40:21 -0700 (PDT)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc;
+        bh=FjsHMZLmb/GlaNd8HwMmgPgxm5PKMOsuOi0WmrXGSlA=;
+        b=XDxSznMFGK3xWyRX3T2GXLjlKZtf0NgZ1RKlTonxaLjdGtu+rMb0+6MkXqb+kTb8fk
+         LKx2FdKaBVfM3mIVcb0Jc0P5r/C7FuxyK3WQNLgsa1MBCBE5AzQKpnvPswdXGytA8nbK
+         MG4jOyFs1EduKqwRB06PfwF6FdeMa60FlMODE2RBu/29GWYVIDv1nJOiavm3er+Fo3RN
+         2cWrpuszDRpfUa1cqav4Y1jHN99UhCHugGBfsTqqKkiXl78m6RgZfWVBER0Eva1qeFfx
+         WrIBxWV4cxrpBlbI3KBDLr9ZcpW0NBBuXp20MEaPT2w0IhIHaUiu/1EIpuk/zP+yP+li
+         9U1w==
+X-Gm-Message-State: ACgBeo3vFhSgWT+lf4j1F6jntz7ZdkhUzQAQ015yJHIPgbIwaJ41wsdC
+	woVFXMc+DZC630odotho5hCtw5OziQPk1/zD/LY=
+X-Google-Smtp-Source: AA6agR40Oh1NkhpUPn/DplmuJHV4cYNWsZv3q3H5l9lDrB6jd+rIc9i/qlub2Q8awNxbIRVZPkwwKYyjZAZB/NCm7Rw=
+X-Received: by 2002:ac2:5f77:0:b0:48b:3886:5d55 with SMTP id
+ c23-20020ac25f77000000b0048b38865d55mr5402059lfc.668.1659944454775; Mon, 08
+ Aug 2022 00:40:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220610084340.2268-1-ctcchien@nuvoton.com> <20220610084340.2268-2-ctcchien@nuvoton.com>
- <YrCi1fg+mUPwZ7sX@zn.tnic>
-In-Reply-To: <YrCi1fg+mUPwZ7sX@zn.tnic>
-From: Medad Young <medadyoung@gmail.com>
-Date: Mon, 8 Aug 2022 14:40:10 +0800
-Message-ID: <CAHpyw9dkE65vUiyG-=gvQHGCZ-=nm1AX2EwANGPDAJmfn7sZkQ@mail.gmail.com>
-Subject: Re: [PATCH v12 1/3] dt-bindings: edac: nuvoton: add NPCM memory controller
-To: Borislav Petkov <bp@alien8.de>
+References: <20220804181800.235368-1-tmaimon77@gmail.com> <10e93907-49ef-a3e6-e0b4-0b3e5f236f44@linaro.org>
+ <CAP6Zq1ju4=PSiCuDaCi2NQTniaXBwmv5Qn6LoLayGmiayDCvYg@mail.gmail.com> <83bbcb33-1f6e-47cc-54bc-e0a5444c3609@linaro.org>
+In-Reply-To: <83bbcb33-1f6e-47cc-54bc-e0a5444c3609@linaro.org>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Mon, 8 Aug 2022 10:40:43 +0300
+Message-ID: <CAP6Zq1ggN_ep7nVLVc3d7D9Jnu2aaBTKmZnvO38-+m7gSvpMDw@mail.gmail.com>
+Subject: Re: [PATCH v2] dt-binding: ipmi: add fallback to npcm845 compatible
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,48 +73,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: KWLIU@nuvoton.com, tony.luck@intel.com, rric@kernel.org, Benjamin Fair <benjaminfair@google.com>, linux-edac <linux-edac@vger.kernel.org>, KFTING <KFTING@nuvoton.com>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, JJLIU0@nuvoton.com, ctcchien@nuvoton.com, Tali Perry <tali.perry1@gmail.com>, devicetree <devicetree@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>, James Morse <james.morse@arm.com>, milkfafa@gmail.com, YSCHU@nuvoton.com, Mauro Carvalho Chehab <mchehab@kernel.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Tomer Maimon <tmaimon77@gmail.com>
+Cc: devicetree <devicetree@vger.kernel.org>, Benjamin Fair <benjaminfair@google.com>, minyard@acm.org, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, openipmi-developer@lists.sourceforge.net, Jonathan Cameron <jic23@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello Borislav,
+Hi Krzysztof,
 
-Thanks for your comments.
-I add milkfafa@gmail.com into this mail thread,
-and he is going to follow up this EDAC driver.
-He will be in charge of maintaining this driver.
-thanks
+Thanks for your reply.
 
-Borislav Petkov <bp@alien8.de> =E6=96=BC 2022=E5=B9=B46=E6=9C=8821=E6=97=A5=
- =E9=80=B1=E4=BA=8C =E5=87=8C=E6=99=A812:40=E5=AF=AB=E9=81=93=EF=BC=9A
+
+On Mon, 8 Aug 2022 at 09:26, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 >
-> On Fri, Jun 10, 2022 at 04:43:38PM +0800, medadyoung@gmail.com wrote:
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index 4383949ff654..7f832e6ed4e5 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -2367,12 +2367,14 @@ L:    openbmc@lists.ozlabs.org (moderated for n=
-on-subscribers)
-> >  S:   Supported
-> >  F:   Documentation/devicetree/bindings/*/*/*npcm*
-> >  F:   Documentation/devicetree/bindings/*/*npcm*
-> > +F:   Documentation/devicetree/bindings/*/npcm-memory-controller.yaml
-> >  F:   arch/arm/boot/dts/nuvoton-npcm*
-> >  F:   arch/arm/mach-npcm/
-> >  F:   drivers/*/*npcm*
-> >  F:   drivers/*/*/*npcm*
-> >  F:   include/dt-bindings/clock/nuvoton,npcm7xx-clock.h
+> On 07/08/2022 09:51, Tomer Maimon wrote:
+> > Hi Krzysztof,
 > >
-> > +
+> > Thanks for your review.
+> >
+> > On Fri, 5 Aug 2022 at 09:36, Krzysztof Kozlowski
+> > <krzysztof.kozlowski@linaro.org> wrote:
+> >>
+> >> On 04/08/2022 20:18, Tomer Maimon wrote:
+> >>> Add to npcm845 KCS compatible string a fallback to npcm750 KCS compatible
+> >>> string becuase NPCM845 and NPCM750 BMCs are using identical KCS modules.
+> >>>
+> >>> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> >>
+> >> Your previous commit adding that compatible was simply wrong and not
+> >> matching the driver and it is not the first time. I think all Nuvoton
+> >> patches need much more careful review :(
+> > Will do and sorry about all the mess...
+> >>
+> >> You forgot the fixes tag:
+> >>
+> >> Fixes: 84261749e58a ("dt-bindings: ipmi: Add npcm845 compatible")
+> > Will add the tag next version.
 >
-> That looks like it went in when committing. You can remove it in case
-> you have to resend v13.
+> You received a bit different review from Corey, so to be clear:
+> 1. Your approach is correct, assuming the devices are really compatible.
+> 2. Add a fixes tag and send a v3, to get my ack.
+Will do.
 >
-> --
-> Regards/Gruss,
->     Boris.
->
-> https://people.kernel.org/tglx/notes-about-netiquette
+> Best regards,
+> Krzysztof
 
-B.R.
-Medad
+Best regards,
+
+Tomer
