@@ -1,78 +1,89 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BBAA158BBC6
-	for <lists+openbmc@lfdr.de>; Sun,  7 Aug 2022 18:06:24 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 99FD058BE73
+	for <lists+openbmc@lfdr.de>; Mon,  8 Aug 2022 02:25:55 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4M142M38pXz2yjC
-	for <lists+openbmc@lfdr.de>; Mon,  8 Aug 2022 02:06:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4M1H6n42yFz2yMk
+	for <lists+openbmc@lfdr.de>; Mon,  8 Aug 2022 10:25:53 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=EvHSbDNc;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=N+W8XF3F;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=jDKGmU17;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::729; helo=mail-qk1-x729.google.com; envelope-from=tcminyard@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aj.id.au (client-ip=66.111.4.27; helo=out3-smtp.messagingengine.com; envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=EvHSbDNc;
+	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=N+W8XF3F;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=jDKGmU17;
 	dkim-atps=neutral
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4M141y61YZz2xX6
-	for <openbmc@lists.ozlabs.org>; Mon,  8 Aug 2022 02:05:56 +1000 (AEST)
-Received: by mail-qk1-x729.google.com with SMTP id a2so5012717qkk.2
-        for <openbmc@lists.ozlabs.org>; Sun, 07 Aug 2022 09:05:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:reply-to
-         :message-id:subject:cc:to:from:date:sender:from:to:cc;
-        bh=7uXlWgTEohYxQ85BoECVY/ep9kMm6DW6Jlta0tAZuF8=;
-        b=EvHSbDNccf0snsRpgwYGhmLSWdQMVy+oeswA9ebG69tnbHOwO9NlY3PoOLjQT4BkGH
-         /r3PLj7ywbrZeOhzqI6eH5Gmu7SBMh8hgvdV5q6c9rqjvnbvgJEk/1Uut0XQqAILbesQ
-         SVXEJnwo2j3qbSkO0fkLZb4JkHKyqJ/DcDTqJAj2SgckTgnmQa4feQR76mxYwd0fN99P
-         AulCq3TQx/wqxuYUg/VK+VxEu/tzkKeHD59iEX6uyek43aRXBqIc3lp5ZKJ2rLWBwdjc
-         qDtKH2lEgi+YAxwyYDV+FlevhWc7bGMUeSYt3DOUO5mhPmS8lxiZbau4GvzyQTtENsWP
-         1MXg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:reply-to
-         :message-id:subject:cc:to:from:date:sender:x-gm-message-state:from
-         :to:cc;
-        bh=7uXlWgTEohYxQ85BoECVY/ep9kMm6DW6Jlta0tAZuF8=;
-        b=qH4P0T53UYiapgz4mn1/YJ/uUSRZUSx9+R6qJVBRPdAWeYbn1f7WsIJpvChWXmdtup
-         Vscm6H4TkoNjnZoNA1F4+iTjz0BoIwAR8qeoZtjc3apOISleGG1TASGxSchhQx4w6Vwt
-         h7/hZXTRBlDrlGuytUc3KOdMj35h2DWc8Xr7MOdzWdZt+3IdFH8MF1IdC2l1BQ9qU2m7
-         0SVbXlpVDrfUL8aJZ8J9isFx1le4BdR7TLocVtoua7Q3LeF4QPzdioCEyAde+eBpBz+A
-         Dm0K31xoijkEXD3AAM82ffbmJl/0rE3pKkdMR6zZHOkw5+tSn5h7qAZa3C5Yb0at9pH9
-         AqgA==
-X-Gm-Message-State: ACgBeo2aa7jZhckISJaNRvIJyU/K+Ov9pNhvqeG2Zv+FZuynOfCFBZhW
-	XBVYGosvKK6TqL0vF9JSCg==
-X-Google-Smtp-Source: AA6agR7W0fL0etBw0UI6nbPmKvtMZORG9mGYM35ublkn8y6s3O213D9Bej3/lrThwHkRKLA3SQFEPA==
-X-Received: by 2002:a05:620a:4103:b0:6b9:3ee8:ed41 with SMTP id j3-20020a05620a410300b006b93ee8ed41mr3820288qko.264.1659888348837;
-        Sun, 07 Aug 2022 09:05:48 -0700 (PDT)
-Received: from serve.minyard.net (serve.minyard.net. [2001:470:b8f6:1b::1])
-        by smtp.gmail.com with ESMTPSA id m22-20020ac866d6000000b0031f229d4427sm6206958qtp.96.2022.08.07.09.05.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 07 Aug 2022 09:05:48 -0700 (PDT)
-Received: from minyard.net (unknown [IPv6:2001:470:b8f6:1b:18ee:4123:89ce:5c5d])
-	by serve.minyard.net (Postfix) with ESMTPSA id 0563E1800BB;
-	Sun,  7 Aug 2022 16:05:47 +0000 (UTC)
-Date: Sun, 7 Aug 2022 11:05:45 -0500
-From: Corey Minyard <minyard@acm.org>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH v2] dt-binding: ipmi: add fallback to npcm845 compatible
-Message-ID: <20220807160545.GM3834@minyard.net>
-References: <20220804181800.235368-1-tmaimon77@gmail.com>
- <20220805115827.GG3834@minyard.net>
- <CAP6Zq1gfvEpUF-TKhA8EdJqBtwaVvJR3qxtn=8Li4swHB6sDYQ@mail.gmail.com>
- <20220807121138.GL3834@minyard.net>
- <CAP6Zq1iL7okjGU8_-CnrBnRUzjLKPD8FNw_oYso-jbthbeR1iQ@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAP6Zq1iL7okjGU8_-CnrBnRUzjLKPD8FNw_oYso-jbthbeR1iQ@mail.gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4M1H6G53htz2xGf
+	for <openbmc@lists.ozlabs.org>; Mon,  8 Aug 2022 10:25:25 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id BF18E5C00DA;
+	Sun,  7 Aug 2022 20:25:20 -0400 (EDT)
+Received: from imap50 ([10.202.2.100])
+  by compute3.internal (MEProxy); Sun, 07 Aug 2022 20:25:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
+	:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm3; t=1659918320; x=1660004720; bh=7YOFe4vwF0
+	urE3XokQdpVPe6yv4mvSrMjRoCtJ9bgF0=; b=N+W8XF3FU+tXMhJafpp4R6fEwM
+	mToLm3nhGoepmbBp+5IrGLoYuVdPFY4OInRKRUdQfarJCjoH4F3VF+3CwGr+ZFc+
+	wW/YaPQvMXM4whBdgaegrIRS+4kI81mmePME3gnxnuP5y6dmjMhvd3ncAXJf/+Me
+	ISTGGNb+vy1NQmB4aHDsTij0BLfw+NK7LwCWxVYFHtnbh8/PgBfE/eaYPNenGc3x
+	VwPFHxRrosnlCClS4zSN1UVktfGtgJqBqjJOLgVQgGISKDG3HXbilphDC9/Rx9tf
+	uJa75t0ykqk6pFSAEwdHMq8tXJnbPIwKl6iCuxj7GmjqYi54ec0I3M5ZClZQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1659918320; x=1660004720; bh=7YOFe4vwF0urE3XokQdpVPe6yv4m
+	vSrMjRoCtJ9bgF0=; b=jDKGmU17886/vjIbusvydyco7vkKqMskJgU8Mz2hIqiM
+	+NiT/tAu5kfWemz2R4K2bww524F7TpCRlfpsUkDMCsDBkJT5+hRFBuspK+VPikjV
+	HQgN/RXpJY9h5MN8D5xF6GUb912SlKe4+J/704z92TnXMnPgaRqO9u1aJwSB+ig2
+	jP0b8cVgFO7M+nsqJ7C6k21gvLJOW1c2yDopueUvIv+xjWTCQho9WxPWHJO7V7GD
+	RXI7nv+DfVcHc97o/ffPyz9oXp/cemFOzJfkMtVUrTeTC2e9tXLmFdHbIqTqiQHH
+	j22w8+X+m1RI6VctgOsCpklassyhNS815VsX/nMQtQ==
+X-ME-Sender: <xms:8FfwYuAgZoBTg1APAxtjJdLV7sgRd4kdM29UrV5hDBxtJ9lqWUy_fw>
+    <xme:8FfwYohbe0PPurX4ftECIxXWSDjoN9gnJhQ9RLFSIbQqeXjrSj5YdnNs-pHq0Dq5E
+    9YWUhjCok0YOULfWQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdefjedgfedvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+    rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
+    grthhtvghrnhephefhfeekgfekudevheffheeihedujeefjeevjeefudfgfeeutdeuvdeh
+    hfevueffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+    eprghnughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:8FfwYhmBgtiMU4LRiBa5A8B8dB8dH6-XC-V6D3C3_LTG94mjirmHvg>
+    <xmx:8FfwYszZfGVzkn3bg50zuCom-LaHQQGhI9weMRengaLLIsEU7164Aw>
+    <xmx:8FfwYjTIKU72JcfMDiDg55jFjJ1rr-ipkCvedbJ8uWiBiVLeXcXN_A>
+    <xmx:8FfwYk5I605FcDYcOxRq1KrQlD1O8Aemaj-Fp290pI2gjRzwH_anTg>
+Feedback-ID: idfb84289:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 37F73170007E; Sun,  7 Aug 2022 20:25:20 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-758-ge0d20a54e1-fm-20220729.001-ge0d20a54
+Mime-Version: 1.0
+Message-Id: <d147bf3e-6140-441f-8393-9677e25d8d82@www.fastmail.com>
+In-Reply-To: <b090805f-0387-26dc-0274-eebf0f28c432@linux.microsoft.com>
+References: <1bb24451-1407-75e1-ec02-d8d9a90ddb13@linux.ibm.com>
+ <8c79b178-0abb-5f9f-037e-bff9931fd887@linux.ibm.com>
+ <9922163c-3d64-48ff-a808-b4b8dcfcb32d@www.fastmail.com>
+ <b090805f-0387-26dc-0274-eebf0f28c432@linux.microsoft.com>
+Date: Mon, 08 Aug 2022 09:55:00 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Dhananjay Phadke" <dphadke@linux.microsoft.com>,
+ "Joseph Reynolds" <jrey@linux.ibm.com>, openbmc <openbmc@lists.ozlabs.org>
+Subject: Re: Security Working Group meeting - Wednesday August 3 - results
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,121 +95,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: minyard@acm.org
-Cc: devicetree <devicetree@vger.kernel.org>, Benjamin Fair <benjaminfair@google.com>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Tali Perry <tali.perry1@gmail.com>, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, openipmi-developer@lists.sourceforge.net, Jonathan Cameron <jic23@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sun, Aug 07, 2022 at 05:54:28PM +0300, Tomer Maimon wrote:
-> On Sun, 7 Aug 2022 at 15:11, Corey Minyard <minyard@acm.org> wrote:
-> >
-> > On Sun, Aug 07, 2022 at 11:03:56AM +0300, Tomer Maimon wrote:
-> > > Hi Corey,
-> > >
-> > > Thanks for your comment.
-> > >
-> > > On Fri, 5 Aug 2022 at 14:58, Corey Minyard <minyard@acm.org> wrote:
-> > > >
-> > > > On Thu, Aug 04, 2022 at 09:18:00PM +0300, Tomer Maimon wrote:
-> > > > > Add to npcm845 KCS compatible string a fallback to npcm750 KCS compatible
-> > > > > string becuase NPCM845 and NPCM750 BMCs are using identical KCS modules.
-> > > > >
-> > > > > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-> > > > > ---
-> > > > >  Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt | 2 +-
-> > > > >  1 file changed, 1 insertion(+), 1 deletion(-)
-> > > > >
-> > > > > diff --git a/Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt b/Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt
-> > > > > index cbc10a68ddef..4fda76e63396 100644
-> > > > > --- a/Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt
-> > > > > +++ b/Documentation/devicetree/bindings/ipmi/npcm7xx-kcs-bmc.txt
-> > > > > @@ -7,7 +7,7 @@ used to perform in-band IPMI communication with their host.
-> > > > >  Required properties:
-> > > > >  - compatible : should be one of
-> > > > >      "nuvoton,npcm750-kcs-bmc"
-> > > > > -    "nuvoton,npcm845-kcs-bmc"
-> > > > > +    "nuvoton,npcm845-kcs-bmc", "nuvoton,npcm750-kcs-bmc"
-> > > >
-> > > > This is just wrong.  The compatible is supposed to identify the device,
-> > > > not the board the device is on.  I think compatible here should be
-> > > > "npcm7xx-kcs-bmc", and just use that everywhere.  It's fine if that is
-> > > > used on a board named npcm845.
-> > > The NPCM8XX is not a board, The Nuvoton NPCM8XX is a fourth-generation
-> > > BMC SoC device family.
-> >
-> > Ok, but same principle applies.
-> >
-> > If the device is exactly the same, then you would only use one of the
-> > "npcm7xx-kcs-bmc" and put that in both device trees.  You can use
-> > "nuvoton,npcm750-kcs-bmc", it's really not that important.  Or even
-> > "nuvoton,npcm-kcs-bmc"
-> If we use "nuvoton, npcm-kcs-bmc" we should take care of backward dts
-> compatibility, and I am not sure we like to change NPCM KCS driver.
-> >
-> > If the device has a minor difference that can be expressed in a
-> > parameter, then create a parameter for it.
-> >
-> > If the device has enough differences that a parameter or two doesn't
-> > cover it, then you put either nuvoton,npcm750-kcs-bmc or
-> > nuvoton,npcm750-kcs-bmc in the device tree.  Not both.  Then you need
-> > two entries in the of_device_id array and you use the data field or
-> > something to express the difference.
-> >
-> > Since there appears to be no difference, just put
-> > "nuvoton,npcm750-kcs-bmc" in the npcm845 and I will drop the patch
-> > adding all this.  Then a patch can be added saying it applies to both
-> > the 7xx and 8xx series of BMC SOCs.  If you want to change the name,
-> > then a patch will be needed for that, but then you will need multiple
-> > entries in your device tree, but you would not document it as such, as
-> > there would only be one that applies for this kernel.
-> 
-> It little bit confusing to use nuvoton,npcm750-kcs-bmc that are
-> related to NPCM7XX for NPCM8XX KCS.
 
-A little, but it's not unusual.
 
-> We can use the generic name "nuvoton, npcm-kcs-bmc" as you suggested
-> above but we should take care of backward dts compatibility, and I am
-> not sure we like to change NPCM KCS driver.
-> 
-> We had a disscation with Arnd, Arnd asked us to use a fallback as we
-> did here if NPCM8XX device module is similar to NPCM7XX module:
-> https://lore.kernel.org/lkml/20220522155046.260146-5-tmaimon77@gmail.com/
-> 
-> I think we should use a fallback to describe the NPCM8XX KCS in the
-> dt-binding document.
+On Sat, 6 Aug 2022, at 05:49, Dhananjay Phadke wrote:
+> On 8/3/2022 8:01 PM, Andrew Jeffery wrote:
+>> 
+>> We already hold weekly Technical Oversight Forum meetings and
+>> fortnightly PMCI get-togethers on the respective discord voice channels
+>> and it works very well.
+>> 
+>> IMO Joseph, you should just start hosting the calls on discord. People
+>> will move to it if they wish to continue to attend.
+>
+> Another issue is current Webex setup is, messages are not accessible 
+> after meeting ends, discord channel would solve this offline access?
+>
 
-I'm ok with that option.  I guess I should have mentioned it.  Add
-nuvoton,npcm-kcs-bmc to the driver's of_device_id table.  Then use that
-in that compatible string in the device tree.  Leave the 750 compatible
-string in the table for backwards compatibility.
+Yeah I think it would based on a quick glance at Joseph having 
+commented in the Security voice channel, though I haven't used the 
+voice channel chat feature yet myself.
 
-There's no point in having a bunch of those strings if they are all the
-same.  If a new one comes out that is different, we can handle that when
-the time comes.
-
--corey
-
-> >
-> > I'm pretty sure the only reason to have muliple compatible entries in a
-> > device tree is to cover multiple kernels where the name changed.
-> >
-> > -corey
-> >
-> > > >
-> > > > -corey
-> > > >
-> > > > >  - interrupts : interrupt generated by the controller
-> > > > >  - kcs_chan : The KCS channel number in the controller
-> > > > >
-> > > > > --
-> > > > > 2.33.0
-> > > > >
-> > >
-> > > Best regards,
-> > >
-> > > Tomer
-> 
-> Best regards,
-> 
-> Tomer
+Andrew
