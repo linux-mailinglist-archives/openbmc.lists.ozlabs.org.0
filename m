@@ -2,88 +2,84 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D19E58D005
-	for <lists+openbmc@lfdr.de>; Tue,  9 Aug 2022 00:10:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E68658D008
+	for <lists+openbmc@lfdr.de>; Tue,  9 Aug 2022 00:11:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4M1r3X4F7dz2xGk
-	for <lists+openbmc@lfdr.de>; Tue,  9 Aug 2022 08:10:00 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4M1r510KWLz3bZY
+	for <lists+openbmc@lfdr.de>; Tue,  9 Aug 2022 08:11:17 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=pjd.dev header.i=@pjd.dev header.a=rsa-sha256 header.s=fm2 header.b=hXHzswZh;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=NjleArE2;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=pjd.dev header.i=@pjd.dev header.a=rsa-sha256 header.s=fm2 header.b=iPVKYkrR;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=QWGKRoc/;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=pjd.dev (client-ip=66.111.4.224; helo=new2-smtp.messagingengine.com; envelope-from=peter@pjd.dev; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=pjd.dev header.i=@pjd.dev header.a=rsa-sha256 header.s=fm2 header.b=hXHzswZh;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=NjleArE2;
+	dkim=pass (2048-bit key; unprotected) header.d=pjd.dev header.i=@pjd.dev header.a=rsa-sha256 header.s=fm2 header.b=iPVKYkrR;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=QWGKRoc/;
 	dkim-atps=neutral
 Received: from new2-smtp.messagingengine.com (new2-smtp.messagingengine.com [66.111.4.224])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4M1r2K3PbJz2xGk
-	for <openbmc@lists.ozlabs.org>; Tue,  9 Aug 2022 08:08:55 +1000 (AEST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailnew.nyi.internal (Postfix) with ESMTP id 8A0585815F3;
-	Mon,  8 Aug 2022 18:08:52 -0400 (EDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4M1r2K3S01z2xGr
+	for <openbmc@lists.ozlabs.org>; Tue,  9 Aug 2022 08:08:56 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailnew.nyi.internal (Postfix) with ESMTP id 8D22A5815F4;
+	Mon,  8 Aug 2022 18:08:54 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Mon, 08 Aug 2022 18:08:52 -0400
+  by compute3.internal (MEProxy); Mon, 08 Aug 2022 18:08:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pjd.dev; h=cc:cc
-	:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to; s=fm2; t=1659996532; x=
-	1660000132; bh=EpLPn7T857RRZQMkmbajXU/vKyJG2sXII7PkgKssnfc=; b=h
-	XHzswZhuP5jPzy+L/Ls2ykSfu2UItIrdmYCYxEW3LxYmAjc1nRGk21NNU/RYicMH
-	fUfTkT4VjiLWtstdO1FaR/n93XRNXxYn1YiCei8+06SZGV8uIlA6RxUuYVl7LDuv
-	AIdIFyIILmfUQcCBuz8bvSvoVNDTBP+FUnPFz/wZGWNtN8waqufY31dx7cdTB0mD
-	IY5c8UdM7wugR7YKwNwBKb/NQsBVaVSCgBArx+xGhiDFlYLM3ssBfxA0GGckLmKm
-	pkSOtht9UD8HZkpT/Pr8PENNKVwuXq/FtHRnlnCv2TcXtkB7fWD4fXBdVJsR72I5
-	bYkKXvU0sVy60clO9MMeg==
+	:content-transfer-encoding:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm2; t=1659996534; x=1660000134; bh=6L
+	e5dw3ZMMhsCphJhgIGwVqGcvmegpsz96T/larvV/4=; b=iPVKYkrREoV+dip+NU
+	HOpVwYyWiUNM01BxrMJPHLMz8uoj9mpc1ocP8bTUFOaP0wyjmnDXcLMQcwVJ88rO
+	7i630m7LrQFroOAaS5ZdT6NnCv4XCp2ZIqygnLRzxlrtwO19HCw48sBzMSbdRr9+
+	h0kjKuW3akeuYSTYq35jHiba4EPZHurBfOvm+PvNSPN83unNn99qH0nortozeMra
+	8OXPzEgPMaSFtWDbHpM7uFnZFNbtUeqIrEHYtJIBS1b6ZkfujeibwzkE5HFaOWEn
+	I2fkPJNW0mWjXHa9wSK9IrkF8ge7ND1J4XjKeNCs4hBnINBdoH3eVCOrZB6Bmku0
+	7jyg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1659996532; x=
-	1660000132; bh=EpLPn7T857RRZQMkmbajXU/vKyJG2sXII7PkgKssnfc=; b=N
-	jleArE2DgtnGJJHN3gxHyz/p7s19x0MSwLwpdzbVjtURjY7vjrPW1wNF/CGur/7K
-	Rtt003kVi/DO/uHu8JYB3mfvcO5AigLveEIs7CrKI7Kf03nTvBiYrm6Vnfk5nZw9
-	EzK+ke3SC/eUCWrXP6BDur6Ch3LAWHI1ncmY6LJC5O6S/WZgNus0KQt8rBwMi9Po
-	1eSFdf3nqsPGKCTAu27Q0HYGaWqDMYGjCBmA/m+ViEXJBtIwktVvrnZgIV26XNw6
-	XXGuzFSKrD7TZaBuT+99yAqhk0PgbRTXf37aJ1J2atOABxBShMkRqX/abC6kD7JI
-	xjmsS74arXJ1PsSrJPjoQ==
-X-ME-Sender: <xms:dInxYvArF7OHLcQu6BKm4fRlgaGBSNUWlB1XcfJvXTYwTtNQFTWTYQ>
-    <xme:dInxYlhxjfvOIcazgr9rnG683gHd7xsPPis4URMyftAuELbn0711dZisDiVnRowDz
-    vtKdbI6bFTw5-dCN8A>
-X-ME-Received: <xmr:dInxYqmqjvNlg2HnyqCsbFn8tZpJq5rU5S71S35ArnKCelfs-OeoxVEo5HnzkQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdefledgtdekucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-transfer-encoding:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm1; t=1659996534; x=1660000134; bh=6Le5dw3ZMMhsC
+	phJhgIGwVqGcvmegpsz96T/larvV/4=; b=QWGKRoc/+/5+YmXZ+cmxohZxVcr1S
+	6oToEAy88XgIB812QFsTiqpLOD+C65UlZGaWcJcdgsDGlUfUmgk355jqVGs/Ybk4
+	PpxfWuHQa8Jaw8m9k6uOk/h6Lt1n/stUA0URPFNELSjRuWiDEHmcNSZ05w9Tlknt
+	oKPG91ZUf07X+0rRKVDlXzuekzwhHWYCfhW6vrSgveItzbv7ZGS+UnsASw/z0KGS
+	qPPB3kqOKsFmk+3fnoUn6UzfCzA+154Tw1WPRq1QGlonWxGyTEpVh5NSd3iL0WLU
+	rgaty8RtKGuERC4IKRTFVEWGyEgOPkjPnWp0SzeEmfId+KwOji573NixA==
+X-ME-Sender: <xms:dYnxYtDoufswHulQ_UJ7gspsQB2OLYG8lDU51bEbwMeyPPqFrXcWCw>
+    <xme:dYnxYrgcCX1U7HV6D7TouODoHoSWlBOB8-6pq_3mJhFLfmytEVr_pCpPiAGOTYUv0
+    S7sHfIuF8ArWneNqbY>
+X-ME-Received: <xmr:dYnxYonirm1CAQ3U8TTH1wRciHBvbI_xTEBguHX5Mn4r06Fnb_l9-6z7NU_OXQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdefledgtdejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenuchmihhsshhinhhgucfvqfcufhhivghlugculdeftd
-    dmnegoteeftdduqddtudculdduhedmnecujfgurhephffvvefufffkofgjfhggtgfgseht
-    keertdertdejnecuhfhrohhmpefrvghtvghrucffvghlvghvohhrhigrshcuoehpvghtvg
-    hrsehpjhgurdguvghvqeenucggtffrrghtthgvrhhnpeektdethfdvheegtdegteeuueeu
-    geehtdehveeukeekjeetueetieeludetveelffenucffohhmrghinhepkhgvrhhnvghlrd
-    horhhgpdhtrhhushhtvggutghomhhpuhhtihhnghhgrhhouhhprdhorhhgnecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgvthgvrhesphhjug
-    druggvvh
-X-ME-Proxy: <xmx:dInxYhzswQfWpwwgw9uoJQrKhbLdaIBwxssJn9HnxREvtkHKOFOA1A>
-    <xmx:dInxYkR0xrUM0Swv0GIbEWFB1fk4l-7KgmgUnv7-N8buHi5EZyA9lg>
-    <xmx:dInxYkY1i1kJZWFz-2yVYmuQylvS9j5VSz8piwkZF2woAwKLKSjPqw>
-    <xmx:dInxYqe9zhMnr4UEpoRc3MIp6E1N_pFP4xSqpy66SOd2AW5gPf4jTg>
+    dmnegoteeftdduqddtudculdduhedmnecujfgurhephffvvefufffkofgjfhgggfestdek
+    redtredttdenucfhrhhomheprfgvthgvrhcuffgvlhgvvhhorhihrghsuceophgvthgvrh
+    esphhjugdruggvvheqnecuggftrfgrthhtvghrnhepteelgfeuleeffffffeekiefghfej
+    uefgtdfgteeigeekvdefffevieekvdelteevnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepphgvthgvrhesphhjugdruggvvh
+X-ME-Proxy: <xmx:dYnxYnz2LLxEf0gS7CBaHQhQgdRNHK0-j23vBXcyC6ivSVN3tlV3Mg>
+    <xmx:dYnxYiQfLIO9Xknd4KOLlNIpbrsx6FP76bp4rAPp_cBjCdt3E43CCQ>
+    <xmx:dYnxYqY22uvXdu32Rr25z3w9hKQVatEliRHCemiht0lwQTDcjltDpg>
+    <xmx:donxYgeLuNRjMkL6rMvgsTGWBTHLLKkJPe1g8xXNFPw7mfdJ1f7CTQ>
 Feedback-ID: i9e814621:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 8 Aug 2022 18:08:51 -0400 (EDT)
+ 8 Aug 2022 18:08:53 -0400 (EDT)
 From: Peter Delevoryas <peter@pjd.dev>
 To: 
-Subject: [PATCH 1/7] Revert "tpm: tpm_tis: Add tpm_tis_i2c driver"
-Date: Mon,  8 Aug 2022 15:08:33 -0700
-Message-Id: <20220808220839.1006341-2-peter@pjd.dev>
+Subject: [PATCH 2/7] tpm: Remove read16/read32/write32 calls from tpm_tis_phy_ops
+Date: Mon,  8 Aug 2022 15:08:34 -0700
+Message-Id: <20220808220839.1006341-3-peter@pjd.dev>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20220808220839.1006341-1-peter@pjd.dev>
 References: <20220808220839.1006341-1-peter@pjd.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -100,223 +96,294 @@ Cc: Alexander.Steffen@infineon.com, peter@pjd.dev, joel@jms.id.au, openbmc@lists
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This reverts commit 1caa2f764dc9d49d5a85eef9585fc6d2717c28bb.
+From: Johannes Holland <johannes.holland@infineon.com>
 
-Nuvoton is not planning on maintaining this driver, and Infineon has
-submitted a new version, so we'll remove this one and add Infineon's.
+Only tpm_tis and tpm_tis_synquacer have a dedicated way to access
+multiple bytes at once, every other driver will just fall back to
+read_bytes/write_bytes. Therefore, remove the read16/read32/write32
+calls and move their logic to read_bytes/write_bytes.
 
-See this mail thread for more details:
-
-https://lore.kernel.org/openbmc/20220725225151.393384-1-peter@pjd.dev/
-
+Suggested-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Johannes Holland <johannes.holland@infineon.com>
+Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Peter Delevoryas <peter@pjd.dev>
 ---
- drivers/char/tpm/Kconfig       |  12 --
- drivers/char/tpm/Makefile      |   1 -
- drivers/char/tpm/tpm_tis_i2c.c | 263 ---------------------------------
- 3 files changed, 276 deletions(-)
- delete mode 100644 drivers/char/tpm/tpm_tis_i2c.c
+ drivers/char/tpm/tpm_tis.c           | 67 +++++++++----------
+ drivers/char/tpm/tpm_tis_core.h      | 58 ++++++++++++----
+ drivers/char/tpm/tpm_tis_spi.h       |  4 --
+ drivers/char/tpm/tpm_tis_spi_cr50.c  |  7 +-
+ drivers/char/tpm/tpm_tis_spi_main.c  | 45 +------------
+ drivers/char/tpm/tpm_tis_synquacer.c | 98 +++++++++++-----------------
+ 6 files changed, 118 insertions(+), 161 deletions(-)
 
-diff --git a/drivers/char/tpm/Kconfig b/drivers/char/tpm/Kconfig
-index f07ae63298ec..d6ba644f6b00 100644
---- a/drivers/char/tpm/Kconfig
-+++ b/drivers/char/tpm/Kconfig
-@@ -86,18 +86,6 @@ config TCG_TIS_SYNQUACER
- 	  To compile this driver as a module, choose  M here;
- 	  the module will be called tpm_tis_synquacer.
+diff --git a/drivers/char/tpm/tpm_tis.c b/drivers/char/tpm/tpm_tis.c
+index d3f2e5364c27..bcff6429e0b4 100644
+--- a/drivers/char/tpm/tpm_tis.c
++++ b/drivers/char/tpm/tpm_tis.c
+@@ -153,50 +153,46 @@ static int check_acpi_tpm2(struct device *dev)
+ #endif
  
--config TCG_TIS_I2C
--	tristate "TPM I2C Interface Specification"
--	depends on I2C
--	select CRC_CCITT
--	select TCG_TIS_CORE
--	help
--	  If you have a TPM security chip, compliant with the TCG TPM PTP
--	  (I2C interface) specification and connected to an I2C bus master,
--	  say Yes and it will be accessible from within Linux.
--	  To compile this driver as a module, choose M here;
--	  the module will be called tpm_tis_i2c.
+ static int tpm_tcg_read_bytes(struct tpm_tis_data *data, u32 addr, u16 len,
+-			      u8 *result)
++			      u8 *result, enum tpm_tis_io_mode io_mode)
+ {
+ 	struct tpm_tis_tcg_phy *phy = to_tpm_tis_tcg_phy(data);
 -
- config TCG_TIS_I2C_CR50
- 	tristate "TPM Interface Specification 2.0 Interface (I2C - CR50)"
- 	depends on I2C
-diff --git a/drivers/char/tpm/Makefile b/drivers/char/tpm/Makefile
-index 0222b1ddb310..66d39ea6bd10 100644
---- a/drivers/char/tpm/Makefile
-+++ b/drivers/char/tpm/Makefile
-@@ -29,7 +29,6 @@ tpm_tis_spi-$(CONFIG_TCG_TIS_SPI_CR50) += tpm_tis_spi_cr50.o
+-	while (len--)
+-		*result++ = ioread8(phy->iobase + addr);
++	__le16 result_le16;
++	__le32 result_le32;
++
++	switch (io_mode) {
++	case TPM_TIS_PHYS_8:
++		while (len--)
++			*result++ = ioread8(phy->iobase + addr);
++		break;
++	case TPM_TIS_PHYS_16:
++		result_le16 = cpu_to_le16(ioread16(phy->iobase + addr));
++		memcpy(result, &result_le16, sizeof(u16));
++		break;
++	case TPM_TIS_PHYS_32:
++		result_le32 = cpu_to_le32(ioread32(phy->iobase + addr));
++		memcpy(result, &result_le32, sizeof(u32));
++		break;
++	}
  
- obj-$(CONFIG_TCG_TIS_I2C_CR50) += tpm_tis_i2c_cr50.o
+ 	return 0;
+ }
  
--obj-$(CONFIG_TCG_TIS_I2C) += tpm_tis_i2c.o
- obj-$(CONFIG_TCG_TIS_I2C_ATMEL) += tpm_i2c_atmel.o
- obj-$(CONFIG_TCG_TIS_I2C_INFINEON) += tpm_i2c_infineon.o
- obj-$(CONFIG_TCG_TIS_I2C_NUVOTON) += tpm_i2c_nuvoton.o
-diff --git a/drivers/char/tpm/tpm_tis_i2c.c b/drivers/char/tpm/tpm_tis_i2c.c
-deleted file mode 100644
-index 12984a3be327..000000000000
---- a/drivers/char/tpm/tpm_tis_i2c.c
-+++ /dev/null
-@@ -1,263 +0,0 @@
--// SPDX-License-Identifier: GPL-2.0
--/*
-- * Copyright (c) 2014-2021 Nuvoton Technology corporation
-- *
-- * TPM TIS I2C Device Driver Interface for devices that implement the TPM
-- * I2C Interface defined by "TCG PC Client Platform TPM Profile (PTP)
-- * Specification version 01.05 r14" and "TCG PC Client Device Driver
-- * Design Principles version 1.0 r27" for TPM 2.0 at
-- * www.trustedcomputinggroup.org
-- */
--
--#include <linux/init.h>
--#include <linux/module.h>
--#include <linux/moduleparam.h>
--#include <linux/slab.h>
--#include <linux/interrupt.h>
--#include <linux/wait.h>
--#include <linux/acpi.h>
--#include <linux/freezer.h>
--
--#include <linux/module.h>
--#include <linux/i2c.h>
--#include <linux/gpio.h>
--#include <linux/of_irq.h>
--#include <linux/of_gpio.h>
--#include <linux/tpm.h>
--#include "tpm_tis_core.h"
--
--#define TPM_LOC_SEL			0x04
--#define TPM_I2C_INTERFACE_CAPABILITY	0x30
--#define TPM_I2C_DEVICE_ADDRESS		0x38
--#define TPM_DATA_CSUM_ENABLE		0x40
--#define TPM_I2C_DID_VID			0x48
--#define TPM_I2C_RID			0x4C
--
--struct tpm_tis_i2c_phy {
--	struct tpm_tis_data priv;
--	struct i2c_client *i2c_client;
--	u8 *iobuf;
--};
--
--static inline struct tpm_tis_i2c_phy *to_tpm_tis_i2c_phy(struct tpm_tis_data *data)
--{
--	return container_of(data, struct tpm_tis_i2c_phy, priv);
--}
--
--static u8 address_to_register(u32 addr)
--{
--	addr &= 0xFFF;
--
--	switch (addr) {
--		// adapt register addresses that have changed compared to
--		// older TIS versions
--	case TPM_ACCESS(0):
--		return 0x04;
--	case TPM_LOC_SEL:
--		return 0x00;
--	case TPM_DID_VID(0):
--		return 0x48;
--	case TPM_RID(0):
--		return 0x4C;
--	default:
--		return addr;
--	}
--}
--
--static int tpm_tis_i2c_read_bytes(struct tpm_tis_data *data, u32 addr, u16 len, u8 *result)
--{
--	struct tpm_tis_i2c_phy *phy = to_tpm_tis_i2c_phy(data);
--	u8 reg = address_to_register(addr);
--	int ret;
--	int i = 0;
--	struct i2c_msg msgs[] = {
--		{
--			.addr = phy->i2c_client->addr,
--			.len = sizeof(reg),
--			.buf = &reg,
--		},
--		{
--			.addr = phy->i2c_client->addr,
--			.len = len,
--			.buf = result,
--			.flags = I2C_M_RD,
--		},
--	};
--
--	do {
--		ret = i2c_transfer(phy->i2c_client->adapter, msgs,
--				   ARRAY_SIZE(msgs));
--		usleep_range(250, 300); // wait default GUARD_TIME of 250µs
--
--	} while (ret < 0 && i++ < TPM_RETRY);
--
--	if (ret < 0)
--		return ret;
+ static int tpm_tcg_write_bytes(struct tpm_tis_data *data, u32 addr, u16 len,
+-			       const u8 *value)
++			       const u8 *value, enum tpm_tis_io_mode io_mode)
+ {
+ 	struct tpm_tis_tcg_phy *phy = to_tpm_tis_tcg_phy(data);
+ 
+-	while (len--)
+-		iowrite8(*value++, phy->iobase + addr);
 -
 -	return 0;
 -}
 -
--static int tpm_tis_i2c_write_bytes(struct tpm_tis_data *data, u32 addr,
+-static int tpm_tcg_read16(struct tpm_tis_data *data, u32 addr, u16 *result)
+-{
+-	struct tpm_tis_tcg_phy *phy = to_tpm_tis_tcg_phy(data);
+-
+-	*result = ioread16(phy->iobase + addr);
+-
+-	return 0;
+-}
+-
+-static int tpm_tcg_read32(struct tpm_tis_data *data, u32 addr, u32 *result)
+-{
+-	struct tpm_tis_tcg_phy *phy = to_tpm_tis_tcg_phy(data);
+-
+-	*result = ioread32(phy->iobase + addr);
+-
+-	return 0;
+-}
+-
+-static int tpm_tcg_write32(struct tpm_tis_data *data, u32 addr, u32 value)
+-{
+-	struct tpm_tis_tcg_phy *phy = to_tpm_tis_tcg_phy(data);
+-
+-	iowrite32(value, phy->iobase + addr);
++	switch (io_mode) {
++	case TPM_TIS_PHYS_8:
++		while (len--)
++			iowrite8(*value++, phy->iobase + addr);
++		break;
++	case TPM_TIS_PHYS_16:
++		return -EINVAL;
++	case TPM_TIS_PHYS_32:
++		iowrite32(le32_to_cpu(*((__le32 *)value)), phy->iobase + addr);
++		break;
++	}
+ 
+ 	return 0;
+ }
+@@ -204,9 +200,6 @@ static int tpm_tcg_write32(struct tpm_tis_data *data, u32 addr, u32 value)
+ static const struct tpm_tis_phy_ops tpm_tcg = {
+ 	.read_bytes = tpm_tcg_read_bytes,
+ 	.write_bytes = tpm_tcg_write_bytes,
+-	.read16 = tpm_tcg_read16,
+-	.read32 = tpm_tcg_read32,
+-	.write32 = tpm_tcg_write32,
+ };
+ 
+ static int tpm_tis_init(struct device *dev, struct tpm_info *tpm_info)
+diff --git a/drivers/char/tpm/tpm_tis_core.h b/drivers/char/tpm/tpm_tis_core.h
+index 3be24f221e32..6c203f36b8a1 100644
+--- a/drivers/char/tpm/tpm_tis_core.h
++++ b/drivers/char/tpm/tpm_tis_core.h
+@@ -104,54 +104,88 @@ struct tpm_tis_data {
+ 	unsigned int timeout_max; /* usecs */
+ };
+ 
++/*
++ * IO modes to indicate how many bytes should be read/written at once in the
++ * tpm_tis_phy_ops read_bytes/write_bytes calls. Use TPM_TIS_PHYS_8 to
++ * receive/transmit byte-wise, TPM_TIS_PHYS_16 for two bytes etc.
++ */
++enum tpm_tis_io_mode {
++	TPM_TIS_PHYS_8,
++	TPM_TIS_PHYS_16,
++	TPM_TIS_PHYS_32,
++};
++
+ struct tpm_tis_phy_ops {
++	/* data is passed in little endian */
+ 	int (*read_bytes)(struct tpm_tis_data *data, u32 addr, u16 len,
+-			  u8 *result);
++			  u8 *result, enum tpm_tis_io_mode mode);
+ 	int (*write_bytes)(struct tpm_tis_data *data, u32 addr, u16 len,
+-			   const u8 *value);
+-	int (*read16)(struct tpm_tis_data *data, u32 addr, u16 *result);
+-	int (*read32)(struct tpm_tis_data *data, u32 addr, u32 *result);
+-	int (*write32)(struct tpm_tis_data *data, u32 addr, u32 src);
++			   const u8 *value, enum tpm_tis_io_mode mode);
+ };
+ 
+ static inline int tpm_tis_read_bytes(struct tpm_tis_data *data, u32 addr,
+ 				     u16 len, u8 *result)
+ {
+-	return data->phy_ops->read_bytes(data, addr, len, result);
++	return data->phy_ops->read_bytes(data, addr, len, result,
++					 TPM_TIS_PHYS_8);
+ }
+ 
+ static inline int tpm_tis_read8(struct tpm_tis_data *data, u32 addr, u8 *result)
+ {
+-	return data->phy_ops->read_bytes(data, addr, 1, result);
++	return data->phy_ops->read_bytes(data, addr, 1, result, TPM_TIS_PHYS_8);
+ }
+ 
+ static inline int tpm_tis_read16(struct tpm_tis_data *data, u32 addr,
+ 				 u16 *result)
+ {
+-	return data->phy_ops->read16(data, addr, result);
++	__le16 result_le;
++	int rc;
++
++	rc = data->phy_ops->read_bytes(data, addr, sizeof(u16),
++				       (u8 *)&result_le, TPM_TIS_PHYS_16);
++	if (!rc)
++		*result = le16_to_cpu(result_le);
++
++	return rc;
+ }
+ 
+ static inline int tpm_tis_read32(struct tpm_tis_data *data, u32 addr,
+ 				 u32 *result)
+ {
+-	return data->phy_ops->read32(data, addr, result);
++	__le32 result_le;
++	int rc;
++
++	rc = data->phy_ops->read_bytes(data, addr, sizeof(u32),
++				       (u8 *)&result_le, TPM_TIS_PHYS_32);
++	if (!rc)
++		*result = le32_to_cpu(result_le);
++
++	return rc;
+ }
+ 
+ static inline int tpm_tis_write_bytes(struct tpm_tis_data *data, u32 addr,
+ 				      u16 len, const u8 *value)
+ {
+-	return data->phy_ops->write_bytes(data, addr, len, value);
++	return data->phy_ops->write_bytes(data, addr, len, value,
++					  TPM_TIS_PHYS_8);
+ }
+ 
+ static inline int tpm_tis_write8(struct tpm_tis_data *data, u32 addr, u8 value)
+ {
+-	return data->phy_ops->write_bytes(data, addr, 1, &value);
++	return data->phy_ops->write_bytes(data, addr, 1, &value,
++					  TPM_TIS_PHYS_8);
+ }
+ 
+ static inline int tpm_tis_write32(struct tpm_tis_data *data, u32 addr,
+ 				  u32 value)
+ {
+-	return data->phy_ops->write32(data, addr, value);
++	__le32 value_le;
++	int rc;
++
++	value_le = cpu_to_le32(value);
++	rc =  data->phy_ops->write_bytes(data, addr, sizeof(u32),
++					 (u8 *)&value_le, TPM_TIS_PHYS_32);
++	return rc;
+ }
+ 
+ static inline bool is_bsw(void)
+diff --git a/drivers/char/tpm/tpm_tis_spi.h b/drivers/char/tpm/tpm_tis_spi.h
+index bba73979c368..d0f66f6f1931 100644
+--- a/drivers/char/tpm/tpm_tis_spi.h
++++ b/drivers/char/tpm/tpm_tis_spi.h
+@@ -31,10 +31,6 @@ extern int tpm_tis_spi_init(struct spi_device *spi, struct tpm_tis_spi_phy *phy,
+ extern int tpm_tis_spi_transfer(struct tpm_tis_data *data, u32 addr, u16 len,
+ 				u8 *in, const u8 *out);
+ 
+-extern int tpm_tis_spi_read16(struct tpm_tis_data *data, u32 addr, u16 *result);
+-extern int tpm_tis_spi_read32(struct tpm_tis_data *data, u32 addr, u32 *result);
+-extern int tpm_tis_spi_write32(struct tpm_tis_data *data, u32 addr, u32 value);
+-
+ #ifdef CONFIG_TCG_TIS_SPI_CR50
+ extern int cr50_spi_probe(struct spi_device *spi);
+ #else
+diff --git a/drivers/char/tpm/tpm_tis_spi_cr50.c b/drivers/char/tpm/tpm_tis_spi_cr50.c
+index ea759af25634..6d3092e2df46 100644
+--- a/drivers/char/tpm/tpm_tis_spi_cr50.c
++++ b/drivers/char/tpm/tpm_tis_spi_cr50.c
+@@ -206,13 +206,13 @@ static int tpm_tis_spi_cr50_transfer(struct tpm_tis_data *data, u32 addr, u16 le
+ }
+ 
+ static int tpm_tis_spi_cr50_read_bytes(struct tpm_tis_data *data, u32 addr,
+-				       u16 len, u8 *result)
++				       u16 len, u8 *result, enum tpm_tis_io_mode io_mode)
+ {
+ 	return tpm_tis_spi_cr50_transfer(data, addr, len, result, NULL);
+ }
+ 
+ static int tpm_tis_spi_cr50_write_bytes(struct tpm_tis_data *data, u32 addr,
+-					u16 len, const u8 *value)
++					u16 len, const u8 *value, enum tpm_tis_io_mode io_mode)
+ {
+ 	return tpm_tis_spi_cr50_transfer(data, addr, len, NULL, value);
+ }
+@@ -220,9 +220,6 @@ static int tpm_tis_spi_cr50_write_bytes(struct tpm_tis_data *data, u32 addr,
+ static const struct tpm_tis_phy_ops tpm_spi_cr50_phy_ops = {
+ 	.read_bytes = tpm_tis_spi_cr50_read_bytes,
+ 	.write_bytes = tpm_tis_spi_cr50_write_bytes,
+-	.read16 = tpm_tis_spi_read16,
+-	.read32 = tpm_tis_spi_read32,
+-	.write32 = tpm_tis_spi_write32,
+ };
+ 
+ static void cr50_print_fw_version(struct tpm_tis_data *data)
+diff --git a/drivers/char/tpm/tpm_tis_spi_main.c b/drivers/char/tpm/tpm_tis_spi_main.c
+index aaa59a00eeae..d0920c3c400f 100644
+--- a/drivers/char/tpm/tpm_tis_spi_main.c
++++ b/drivers/char/tpm/tpm_tis_spi_main.c
+@@ -141,55 +141,17 @@ int tpm_tis_spi_transfer(struct tpm_tis_data *data, u32 addr, u16 len,
+ }
+ 
+ static int tpm_tis_spi_read_bytes(struct tpm_tis_data *data, u32 addr,
+-				  u16 len, u8 *result)
++				  u16 len, u8 *result, enum tpm_tis_io_mode io_mode)
+ {
+ 	return tpm_tis_spi_transfer(data, addr, len, result, NULL);
+ }
+ 
+ static int tpm_tis_spi_write_bytes(struct tpm_tis_data *data, u32 addr,
 -				   u16 len, const u8 *value)
--{
--	struct tpm_tis_i2c_phy *phy = to_tpm_tis_i2c_phy(data);
--	int ret = 0;
--	int i = 0;
--
--	if (phy->iobuf) {
--		if (len > TPM_BUFSIZE - 1)
--			return -EIO;
--
--		phy->iobuf[0] = address_to_register(addr);
--		memcpy(phy->iobuf + 1, value, len);
--
--		struct i2c_msg msgs[] = {
--			{
--				.addr = phy->i2c_client->addr,
--				.len = len + 1,
--				.buf = phy->iobuf,
--			},
--		};
--
--		do {
--			ret = i2c_transfer(phy->i2c_client->adapter,
--					   msgs, ARRAY_SIZE(msgs));
--			// wait default GUARD_TIME of 250µs
--			usleep_range(250, 300);
--		} while (ret < 0 && i++ < TPM_RETRY);
--	} else {
--		u8 reg = address_to_register(addr);
--
--		struct i2c_msg msgs[] = {
--			{
--				.addr = phy->i2c_client->addr,
--				.len = sizeof(reg),
--				.buf = &reg,
--			},
--			{
--				.addr = phy->i2c_client->addr,
--				.len = len,
--				.buf = (u8 *)value,
--				.flags = I2C_M_NOSTART,
--			},
--		};
--
--		do {
--			ret = i2c_transfer(phy->i2c_client->adapter, msgs,
--					   ARRAY_SIZE(msgs));
--			// wait default GUARD_TIME of 250µs
--			usleep_range(250, 300);
--		} while (ret < 0 && i++ < TPM_RETRY);
--	}
--
--	if (ret < 0)
--		return ret;
--
--	return 0;
--}
--
--int tpm_tis_i2c_read16(struct tpm_tis_data *data, u32 addr, u16 *result)
++				   u16 len, const u8 *value, enum tpm_tis_io_mode io_mode)
+ {
+ 	return tpm_tis_spi_transfer(data, addr, len, NULL, value);
+ }
+ 
+-int tpm_tis_spi_read16(struct tpm_tis_data *data, u32 addr, u16 *result)
 -{
 -	__le16 result_le;
 -	int rc;
@@ -329,7 +396,7 @@ index 12984a3be327..000000000000
 -	return rc;
 -}
 -
--int tpm_tis_i2c_read32(struct tpm_tis_data *data, u32 addr, u32 *result)
+-int tpm_tis_spi_read32(struct tpm_tis_data *data, u32 addr, u32 *result)
 -{
 -	__le32 result_le;
 -	int rc;
@@ -342,85 +409,156 @@ index 12984a3be327..000000000000
 -	return rc;
 -}
 -
--int tpm_tis_i2c_write32(struct tpm_tis_data *data, u32 addr, u32 value)
+-int tpm_tis_spi_write32(struct tpm_tis_data *data, u32 addr, u32 value)
 -{
 -	__le32 value_le;
 -	int rc;
 -
 -	value_le = cpu_to_le32(value);
--
 -	rc = data->phy_ops->write_bytes(data, addr, sizeof(u32),
 -					(u8 *)&value_le);
 -
 -	return rc;
 -}
 -
--static SIMPLE_DEV_PM_OPS(tpm_tis_pm, tpm_pm_suspend, tpm_tis_resume);
+ int tpm_tis_spi_init(struct spi_device *spi, struct tpm_tis_spi_phy *phy,
+ 		     int irq, const struct tpm_tis_phy_ops *phy_ops)
+ {
+@@ -205,9 +167,6 @@ int tpm_tis_spi_init(struct spi_device *spi, struct tpm_tis_spi_phy *phy,
+ static const struct tpm_tis_phy_ops tpm_spi_phy_ops = {
+ 	.read_bytes = tpm_tis_spi_read_bytes,
+ 	.write_bytes = tpm_tis_spi_write_bytes,
+-	.read16 = tpm_tis_spi_read16,
+-	.read32 = tpm_tis_spi_read32,
+-	.write32 = tpm_tis_spi_write32,
+ };
+ 
+ static int tpm_tis_spi_probe(struct spi_device *dev)
+diff --git a/drivers/char/tpm/tpm_tis_synquacer.c b/drivers/char/tpm/tpm_tis_synquacer.c
+index e47bdd272704..679196c61401 100644
+--- a/drivers/char/tpm/tpm_tis_synquacer.c
++++ b/drivers/char/tpm/tpm_tis_synquacer.c
+@@ -35,72 +35,53 @@ static inline struct tpm_tis_synquacer_phy *to_tpm_tis_tcg_phy(struct tpm_tis_da
+ }
+ 
+ static int tpm_tis_synquacer_read_bytes(struct tpm_tis_data *data, u32 addr,
+-					u16 len, u8 *result)
++					u16 len, u8 *result,
++					enum tpm_tis_io_mode io_mode)
+ {
+ 	struct tpm_tis_synquacer_phy *phy = to_tpm_tis_tcg_phy(data);
 -
--static const struct tpm_tis_phy_ops tpm_i2c_phy_ops = {
--	.read_bytes = tpm_tis_i2c_read_bytes,
--	.write_bytes = tpm_tis_i2c_write_bytes,
--	.read16 = tpm_tis_i2c_read16,
--	.read32 = tpm_tis_i2c_read32,
--	.write32 = tpm_tis_i2c_write32,
--};
+-	while (len--)
+-		*result++ = ioread8(phy->iobase + addr);
++	switch (io_mode) {
++	case TPM_TIS_PHYS_8:
++		while (len--)
++			*result++ = ioread8(phy->iobase + addr);
++		break;
++	case TPM_TIS_PHYS_16:
++		result[1] = ioread8(phy->iobase + addr + 1);
++		result[0] = ioread8(phy->iobase + addr);
++		break;
++	case TPM_TIS_PHYS_32:
++		result[3] = ioread8(phy->iobase + addr + 3);
++		result[2] = ioread8(phy->iobase + addr + 2);
++		result[1] = ioread8(phy->iobase + addr + 1);
++		result[0] = ioread8(phy->iobase + addr);
++		break;
++	}
+ 
+ 	return 0;
+ }
+ 
+ static int tpm_tis_synquacer_write_bytes(struct tpm_tis_data *data, u32 addr,
+-					 u16 len, const u8 *value)
++					 u16 len, const u8 *value,
++					 enum tpm_tis_io_mode io_mode)
+ {
+ 	struct tpm_tis_synquacer_phy *phy = to_tpm_tis_tcg_phy(data);
 -
--static int tpm_tis_i2c_probe(struct i2c_client *dev, const struct i2c_device_id *id)
--{
--	struct tpm_tis_i2c_phy *phy;
--	const u8 loc_init = 0;
--	int rc;
+-	while (len--)
+-		iowrite8(*value++, phy->iobase + addr);
 -
--	phy = devm_kzalloc(&dev->dev, sizeof(struct tpm_tis_i2c_phy),
--			   GFP_KERNEL);
--	if (!phy)
--		return -ENOMEM;
--
--	phy->i2c_client = dev;
--
--	if (!i2c_check_functionality(dev->adapter, I2C_FUNC_NOSTART)) {
--		phy->iobuf = devm_kmalloc(&dev->dev, TPM_BUFSIZE, GFP_KERNEL);
--		if (!phy->iobuf)
--			return -ENOMEM;
--	}
--
--	/*select locality 0 (the driver will access only via locality 0)*/
--	rc = tpm_tis_i2c_write_bytes(&phy->priv, TPM_LOC_SEL, 1, &loc_init);
--	if (rc < 0)
--		return rc;
--
--	return tpm_tis_core_init(&dev->dev, &phy->priv, -1, &tpm_i2c_phy_ops,
--					NULL);
+-	return 0;
 -}
 -
--static const struct i2c_device_id tpm_tis_i2c_id[] = {
--	{"tpm_tis_i2c", 0},
--	{}
--};
--MODULE_DEVICE_TABLE(i2c, tpm_tis_i2c_id);
+-static int tpm_tis_synquacer_read16_bw(struct tpm_tis_data *data,
+-				       u32 addr, u16 *result)
+-{
+-	struct tpm_tis_synquacer_phy *phy = to_tpm_tis_tcg_phy(data);
 -
--static const struct of_device_id of_tis_i2c_match[] = {
--	{ .compatible = "nuvoton,npct75x", },
--	{ .compatible = "tcg,tpm-tis-i2c", },
--	{}
--};
--MODULE_DEVICE_TABLE(of, of_tis_i2c_match);
+-	/*
+-	 * Due to the limitation of SPI controller on SynQuacer,
+-	 * 16/32 bits access must be done in byte-wise and descending order.
+-	 */
+-	*result = (ioread8(phy->iobase + addr + 1) << 8) |
+-		  (ioread8(phy->iobase + addr));
 -
--static struct i2c_driver tpm_tis_i2c_driver = {
--	.driver = {
--		.owner = THIS_MODULE,
--		.name = "tpm_tis_i2c",
--		.pm = &tpm_tis_pm,
--		.of_match_table = of_match_ptr(of_tis_i2c_match),
--	},
--	.probe = tpm_tis_i2c_probe,
--	.id_table = tpm_tis_i2c_id,
--};
+-	return 0;
+-}
 -
--module_i2c_driver(tpm_tis_i2c_driver);
+-static int tpm_tis_synquacer_read32_bw(struct tpm_tis_data *data,
+-				       u32 addr, u32 *result)
+-{
+-	struct tpm_tis_synquacer_phy *phy = to_tpm_tis_tcg_phy(data);
 -
--MODULE_DESCRIPTION("TPM Driver");
--MODULE_LICENSE("GPL");
+-	/*
+-	 * Due to the limitation of SPI controller on SynQuacer,
+-	 * 16/32 bits access must be done in byte-wise and descending order.
+-	 */
+-	*result = (ioread8(phy->iobase + addr + 3) << 24) |
+-		  (ioread8(phy->iobase + addr + 2) << 16) |
+-		  (ioread8(phy->iobase + addr + 1) << 8) |
+-		  (ioread8(phy->iobase + addr));
+-
+-	return 0;
+-}
+-
+-static int tpm_tis_synquacer_write32_bw(struct tpm_tis_data *data,
+-					u32 addr, u32 value)
+-{
+-	struct tpm_tis_synquacer_phy *phy = to_tpm_tis_tcg_phy(data);
+-
+-	/*
+-	 * Due to the limitation of SPI controller on SynQuacer,
+-	 * 16/32 bits access must be done in byte-wise and descending order.
+-	 */
+-	iowrite8(value >> 24, phy->iobase + addr + 3);
+-	iowrite8(value >> 16, phy->iobase + addr + 2);
+-	iowrite8(value >> 8, phy->iobase + addr + 1);
+-	iowrite8(value, phy->iobase + addr);
++	switch (io_mode) {
++	case TPM_TIS_PHYS_8:
++		while (len--)
++			iowrite8(*value++, phy->iobase + addr);
++		break;
++	case TPM_TIS_PHYS_16:
++		return -EINVAL;
++	case TPM_TIS_PHYS_32:
++		/*
++		 * Due to the limitation of SPI controller on SynQuacer,
++		 * 16/32 bits access must be done in byte-wise and descending order.
++		 */
++		iowrite8(value[3], phy->iobase + addr + 3);
++		iowrite8(value[2], phy->iobase + addr + 2);
++		iowrite8(value[1], phy->iobase + addr + 1);
++		iowrite8(value[0], phy->iobase + addr);
++		break;
++	}
+ 
+ 	return 0;
+ }
+@@ -108,9 +89,6 @@ static int tpm_tis_synquacer_write32_bw(struct tpm_tis_data *data,
+ static const struct tpm_tis_phy_ops tpm_tcg_bw = {
+ 	.read_bytes	= tpm_tis_synquacer_read_bytes,
+ 	.write_bytes	= tpm_tis_synquacer_write_bytes,
+-	.read16		= tpm_tis_synquacer_read16_bw,
+-	.read32		= tpm_tis_synquacer_read32_bw,
+-	.write32	= tpm_tis_synquacer_write32_bw,
+ };
+ 
+ static int tpm_tis_synquacer_init(struct device *dev,
 -- 
 2.37.1
 
