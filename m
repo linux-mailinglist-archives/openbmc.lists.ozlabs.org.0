@@ -2,87 +2,42 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 033ED58D269
-	for <lists+openbmc@lfdr.de>; Tue,  9 Aug 2022 05:43:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6364058D3F7
+	for <lists+openbmc@lfdr.de>; Tue,  9 Aug 2022 08:42:57 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4M1zSM5nKVz306r
-	for <lists+openbmc@lfdr.de>; Tue,  9 Aug 2022 13:43:31 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=sgnSuwqh;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=cqbrdtkh;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4M23RM25D8z3blQ
+	for <lists+openbmc@lfdr.de>; Tue,  9 Aug 2022 16:42:55 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aj.id.au (client-ip=64.147.123.25; helo=wout2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=sgnSuwqh;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=cqbrdtkh;
-	dkim-atps=neutral
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx1.molgen.mpg.de; envelope-from=pmenzel@molgen.mpg.de; receiver=<UNKNOWN>)
+Received: from mx1.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4M1zRs4SZvz2xGx
-	for <openbmc@lists.ozlabs.org>; Tue,  9 Aug 2022 13:43:05 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id BE5E032008C0;
-	Mon,  8 Aug 2022 23:43:01 -0400 (EDT)
-Received: from imap50 ([10.202.2.100])
-  by compute3.internal (MEProxy); Mon, 08 Aug 2022 23:43:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm3; t=1660016581; x=1660102981; bh=ElXk4KBItU
-	Yfm+wr85Cn0Gn1spjtq3AioEeFPmARxKU=; b=sgnSuwqh743+fAO5o3Gi8wfbdC
-	fwA334MI87t0s1Zogfnk77++i/7uorIpDY5gPwO/J0RuXxNSSXDZOmVvy/3mtFMs
-	jZeGT6+Uu0LwrrAzU1Y+cc/YVQCPxlqiFArfjCTHP5BqcUxkISmshhPmg0yz9iEp
-	LcO2qYQN4pCrRv6JeqeTi/UYTppGM5oDTxFgcjSXrJ9xYWq6kPMJDQFLTWzQ5KVh
-	4ZuiYlwDVGXGyUnMMwUtP4ZJDF6dAIQ5RYtF5yU8J8Pvfy3l7wl0sEHU5ITH/kTw
-	pr9F1WXdgYBCMGfGu8PAE4ovM6+TCPk5LKxBTwj2iU2TRFF0F5ihDhENCNBA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1660016581; x=1660102981; bh=ElXk4KBItUYfm+wr85Cn0Gn1spjt
-	q3AioEeFPmARxKU=; b=cqbrdtkhMBr9aOpqH4eYolBk5O2fOs26T0iaPgk1KqK5
-	uI7lPGxq9rTM4q6mFERCAyUsfmBrGf6kaj1YR1B+HJCN2rXk9NE5Mz1uJNJOvl7W
-	6Bwa4E6XiTWiT1OBEMiMzlC3UO14yWykUUZzauQRDLLg2GndO8Pa3ncmCR/bmqnW
-	6Sw99edHCbXn4ytKHMRTg5pmM1r9OPVCGUEB95lBtfjgzwFkri+oFYl7FyVAl+dA
-	stV9kUSQNYCOyWWL15w4l3oE0lTcjBB7D8CXp/gEJ+aX03xoomq5dvhNVwklN5OY
-	L4HWW7GhcinRyMaSMinh7t67RPusok2y9aI3kyAuSA==
-X-ME-Sender: <xms:xNfxYrsPcdlZHYdBt26iNDRfCUEHcs7FeEtBSVSP3MATcBEgYrDLAw>
-    <xme:xNfxYsfQnxs2nTBWfERCk0Vz583-xS-0sYf4zXQw9014J6NdyZ3Ur27SqxkAVvS2_
-    XzvVJ_qDt1b_8j1gw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdefledgjeehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehn
-    ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtf
-    frrghtthgvrhhnpeekvdekjeekgfejudffteetgeejkeetteduvedtffdtledutdfhheev
-    feetkeeiteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
-    hmpegrnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:xNfxYuwGc1mz9ORR45joAAizcfQIdT4im-b-aWHA8y-V4V83uel0Cw>
-    <xmx:xNfxYqNmpbyimuamLnm7p_6rCxCa2Mk-OMG4Si55wtmE3TjjtNFakg>
-    <xmx:xNfxYr_pKiE2DMhPYgYHh438lUMxJY7tz8X5ZSu-LxLGMM9MgjyfOg>
-    <xmx:xdfxYmmGTJS5qSzB095Y6sCT-x1pdyOPznBfstmJmtWzCeM5WifhQQ>
-Feedback-ID: idfb84289:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id CAF951700086; Mon,  8 Aug 2022 23:43:00 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-758-ge0d20a54e1-fm-20220729.001-ge0d20a54
-Mime-Version: 1.0
-Message-Id: <0fcf0cf5-e7b0-484d-a3d9-27f288884685@www.fastmail.com>
-In-Reply-To:  <CAH2-KxAWTgmc_C_vEkB-zObOG9La-u5H0=_8YdauCkunaVsefg@mail.gmail.com>
-References: <3df049fc-e5ec-449e-b696-a2ca86c37ed3@www.fastmail.com>
- <7f80cb3f-def3-f9ca-58f2-eebe053dfd89@yadro.com>
- <CAH2-KxAWTgmc_C_vEkB-zObOG9La-u5H0=_8YdauCkunaVsefg@mail.gmail.com>
-Date: Tue, 09 Aug 2022 13:12:38 +0930
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Ed Tanous" <edtanous@google.com>,
- "Alexander Amelkin" <a.amelkin@yadro.com>
-Subject: Re: Can we improve the experience of working on OpenBMC?
-Content-Type: text/plain
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4M23R40HRrz2xH8
+	for <openbmc@lists.ozlabs.org>; Tue,  9 Aug 2022 16:42:37 +1000 (AEST)
+Received: from [192.168.0.2] (ip5f5aecbd.dynamic.kabel-deutschland.de [95.90.236.189])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	(No client certificate requested)
+	(Authenticated sender: pmenzel)
+	by mx.molgen.mpg.de (Postfix) with ESMTPSA id D747D61EA192A;
+	Tue,  9 Aug 2022 08:42:29 +0200 (CEST)
+Message-ID: <6d1576c9-f105-2aff-4497-2c2e7bed2f3b@molgen.mpg.de>
+Date: Tue, 9 Aug 2022 08:42:29 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.1.1
+Subject: Referencing non-public datasheets in commit messages (was: [PATCH v12
+ 3/3] EDAC: nuvoton: Add NPCM memory controller driver)
+To: Borislav Petkov <bp@alien8.de>
+References: <20220610084340.2268-1-ctcchien@nuvoton.com>
+ <20220610084340.2268-4-ctcchien@nuvoton.com> <YrDIimW0gW1j03WG@zn.tnic>
+Content-Language: en-US
+From: Paul Menzel <pmenzel@molgen.mpg.de>
+In-Reply-To: <YrDIimW0gW1j03WG@zn.tnic>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,43 +49,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Benjamin Fair <benjaminfair@google.com>, openbmc@lists.ozlabs.org, Brad Bishop <bradleyb@fuzziesquirrel.com>, Heyi Guo <guoheyi@linux.alibaba.com>, jebr@google.com, scody@google.com
+Cc: KWLIU@nuvoton.com, tony.luck@intel.com, rric@kernel.org, benjaminfair@google.com, devicetree@vger.kernel.org, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, JJLIU0@nuvoton.com, linux-kernel@vger.kernel.org, robh+dt@kernel.org, tali.perry1@gmail.com, KFTING@nuvoton.com, ctcchien@nuvoton.com, james.morse@arm.com, medadyoung@gmail.com, YSCHU@nuvoton.com, mchehab@kernel.org, tmaimon77@gmail.com, linux-edac@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Dear Borislav,
 
 
-On Tue, 2 Aug 2022, at 07:09, Ed Tanous wrote:
-> On Mon, Aug 1, 2022 at 2:27 PM Alexander Amelkin <a.amelkin@yadro.com> wrote:
->>
->> 14. D-Bus may become a bottleneck or a slowing factor (due to the
->> context switching overhead) for
->> the situations when two processes are communicating actively. A standard
->> POSIX IPC like pipes,
->> mq or shm could become a solution (with d-bus or any other method used
->> as an aid to negotiate
->> names, keys, or whatever other credentials needed to access a common IPC).
->
-> FWIW, in the original context of "a single repo would help with these
-> things" I don't think either of these would be helped with a
-> rearrangement of code.
->
-> With that said, lots of people dislike dbus.  There are performance
-> critical things (SOL, KVM, Virtual media) that have completely avoided
-> it.  If you have a proposal for something better, I'd highly recommend
-> writing up a design doc.
+Am 20.06.22 um 21:20 schrieb Borislav Petkov:
+> On Fri, Jun 10, 2022 at 04:43:40PM +0800, medadyoung@gmail.com wrote:
 
-Yep, fixing this requires addressing specific concerns. Patches or 
-design docs would be helpful, or even just a list of specific things 
-that we think are a concern.
+[…]
 
->
->>
->> WBR, Alexander
->>
->> P.S. All in all, I think d-bus wasn't a good choice of IPC for a system
->> running on a low-performance single-core ARM chip.
+>> Datasheet:
+>>      Cadence DDR Controller Register Reference Manual For DDR4 Memories
+>>      Chapter 2: Detailed Register Map
+> 
+> If that datasheet is not public, no need to mention it here. At least a
+> quick web search cannot find something relevant.
 
-u-bmc might be something to look at here?
+Maybe it could be denoted, that is not public (and also the version), 
+but even mentioning non-public datasheets is useful, as they could be 
+made public in the future, and allows everyone to contact people with 
+access to these datasheets to take a look into the specific datasheet.
 
-Andrew
+
+Kind regards,
+
+Paul
