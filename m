@@ -1,43 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6364058D3F7
-	for <lists+openbmc@lfdr.de>; Tue,  9 Aug 2022 08:42:57 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id AED2958D50F
+	for <lists+openbmc@lfdr.de>; Tue,  9 Aug 2022 10:00:51 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4M23RM25D8z3blQ
-	for <lists+openbmc@lfdr.de>; Tue,  9 Aug 2022 16:42:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4M259C0czBz306m
+	for <lists+openbmc@lfdr.de>; Tue,  9 Aug 2022 18:00:47 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=dkim header.b=AvQLi8gZ;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx1.molgen.mpg.de; envelope-from=pmenzel@molgen.mpg.de; receiver=<UNKNOWN>)
-Received: from mx1.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=alien8.de (client-ip=5.9.137.197; helo=mail.skyhub.de; envelope-from=bp@alien8.de; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (1024-bit key; unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=dkim header.b=AvQLi8gZ;
+	dkim-atps=neutral
+X-Greylist: delayed 581 seconds by postgrey-1.36 at boromir; Tue, 09 Aug 2022 18:00:21 AEST
+Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4M23R40HRrz2xH8
-	for <openbmc@lists.ozlabs.org>; Tue,  9 Aug 2022 16:42:37 +1000 (AEST)
-Received: from [192.168.0.2] (ip5f5aecbd.dynamic.kabel-deutschland.de [95.90.236.189])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4M258j6DqLz2xKf
+	for <openbmc@lists.ozlabs.org>; Tue,  9 Aug 2022 18:00:21 +1000 (AEST)
+Received: from zn.tnic (p200300ea971b98cb329c23fffea6a903.dip0.t-ipconnect.de [IPv6:2003:ea:971b:98cb:329c:23ff:fea6:a903])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	(Authenticated sender: pmenzel)
-	by mx.molgen.mpg.de (Postfix) with ESMTPSA id D747D61EA192A;
-	Tue,  9 Aug 2022 08:42:29 +0200 (CEST)
-Message-ID: <6d1576c9-f105-2aff-4497-2c2e7bed2f3b@molgen.mpg.de>
-Date: Tue, 9 Aug 2022 08:42:29 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.1.1
-Subject: Referencing non-public datasheets in commit messages (was: [PATCH v12
- 3/3] EDAC: nuvoton: Add NPCM memory controller driver)
-To: Borislav Petkov <bp@alien8.de>
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 4E3531EC01B7;
+	Tue,  9 Aug 2022 09:50:19 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
+	t=1660031419;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
+	bh=CKTlBpVle+EMNM4GbiovFuYDC+EYIUhi9bVoDaoM+Hc=;
+	b=AvQLi8gZPjJNC3y51S/pIeAEhLII8w6paYpTN+JUqd9cUaE2N2FI0oHRgYPY6cFtKd2Lmk
+	/dgDyrdHauhZhn1SmxKfipFMlQ7JmgNEwsKsvWzBHMo8/vqDiHeONG/xahO6CpQfZWZhwp
+	uaenCxHLp/HYxjUiIruj9w08iTmswZQ=
+Date: Tue, 9 Aug 2022 09:50:18 +0200
+From: Borislav Petkov <bp@alien8.de>
+To: Paul Menzel <pmenzel@molgen.mpg.de>
+Subject: Re: Referencing non-public datasheets in commit messages (was:
+ [PATCH v12 3/3] EDAC: nuvoton: Add NPCM memory controller driver)
+Message-ID: <YvIRusXsZvdiFRzS@zn.tnic>
 References: <20220610084340.2268-1-ctcchien@nuvoton.com>
- <20220610084340.2268-4-ctcchien@nuvoton.com> <YrDIimW0gW1j03WG@zn.tnic>
-Content-Language: en-US
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <YrDIimW0gW1j03WG@zn.tnic>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+ <20220610084340.2268-4-ctcchien@nuvoton.com>
+ <YrDIimW0gW1j03WG@zn.tnic>
+ <6d1576c9-f105-2aff-4497-2c2e7bed2f3b@molgen.mpg.de>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <6d1576c9-f105-2aff-4497-2c2e7bed2f3b@molgen.mpg.de>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -53,27 +65,27 @@ Cc: KWLIU@nuvoton.com, tony.luck@intel.com, rric@kernel.org, benjaminfair@google
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Dear Borislav,
+On Tue, Aug 09, 2022 at 08:42:29AM +0200, Paul Menzel wrote:
+> Maybe it could be denoted, that is not public (and also the version), but
+> even mentioning non-public datasheets is useful, as they could be made
+> public in the future, and allows everyone to contact people with access to
+> these datasheets to take a look into the specific datasheet.
 
+If you're going to contact people to get you certain information, you
+don't need the datasheet - you simply need to ask the question.
 
-Am 20.06.22 um 21:20 schrieb Borislav Petkov:
-> On Fri, Jun 10, 2022 at 04:43:40PM +0800, medadyoung@gmail.com wrote:
+But whatever, if a document is mentioned, the text should state that it
+is not public so that people are aware not to go looking for it. Or, if
+it is public, how to find it.
 
-[…]
+And no, a company website URL is not a good idea because those change
+pretty frequently in practice. Uploading to our bugzilla and adding the
+link to it is much better.
 
->> Datasheet:
->>      Cadence DDR Controller Register Reference Manual For DDR4 Memories
->>      Chapter 2: Detailed Register Map
-> 
-> If that datasheet is not public, no need to mention it here. At least a
-> quick web search cannot find something relevant.
+Thx.
 
-Maybe it could be denoted, that is not public (and also the version), 
-but even mentioning non-public datasheets is useful, as they could be 
-made public in the future, and allows everyone to contact people with 
-access to these datasheets to take a look into the specific datasheet.
+-- 
+Regards/Gruss,
+    Boris.
 
-
-Kind regards,
-
-Paul
+https://people.kernel.org/tglx/notes-about-netiquette
