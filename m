@@ -2,67 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D8FF59052F
-	for <lists+openbmc@lfdr.de>; Thu, 11 Aug 2022 18:56:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 98C0E590706
+	for <lists+openbmc@lfdr.de>; Thu, 11 Aug 2022 21:36:47 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4M3Xyb3DxCz3bjX
-	for <lists+openbmc@lfdr.de>; Fri, 12 Aug 2022 02:56:39 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4M3cWD6Jw6z3bYy
+	for <lists+openbmc@lfdr.de>; Fri, 12 Aug 2022 05:36:40 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=bY6Z46A2;
+	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=sO5h9OFp;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::a2e; helo=mail-vk1-xa2e.google.com; envelope-from=davidgow@google.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com; envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=bY6Z46A2;
+	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=sO5h9OFp;
 	dkim-atps=neutral
-Received: from mail-vk1-xa2e.google.com (mail-vk1-xa2e.google.com [IPv6:2607:f8b0:4864:20::a2e])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+X-Greylist: delayed 472 seconds by postgrey-1.36 at boromir; Fri, 12 Aug 2022 05:36:16 AEST
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4M3Xy76K0jz2xX6
-	for <openbmc@lists.ozlabs.org>; Fri, 12 Aug 2022 02:56:14 +1000 (AEST)
-Received: by mail-vk1-xa2e.google.com with SMTP id t64so3230172vkb.12
-        for <openbmc@lists.ozlabs.org>; Thu, 11 Aug 2022 09:56:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc;
-        bh=G0jqPx9rziCQX4VfMuTReGksQVA2TXCq4FcbporBUUE=;
-        b=bY6Z46A2sYDi7bnO93xe0wKNlM2kWwf1rZ8WXR+o0b9U0kcPZQvX/b6U7wJuCkJ0ra
-         OtVWeOHzn2C13uh/TAQVBKdSyMwxAlLY5vMkRXrVW0tXv57ai1ksQg9RI5TbRzp4x43d
-         Fj94pCnbuUVMLnlRNzV+CFBDUDJq1DUFhFZ+dmA7JCHH1VtL9Pb1qqG4go1GIUX/eEI5
-         YJD83lNAz8S4xiiVJOTKCFPgDPPb+huEJLkUpLeFiYvFq7I9xUEE9WIbxNS6s1A3s6E8
-         jKZc55buqasK/K1J0cmf7ct7U3d3VMbV/D0iKvTzJkuJegb7KftZAFJI4Io+ZEU5R0qc
-         3qgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc;
-        bh=G0jqPx9rziCQX4VfMuTReGksQVA2TXCq4FcbporBUUE=;
-        b=bxDDIZy6N9CIMWfx4Z8L9bMj/HcYsbB2Tyvy1VFNoZo3hDNq73OZpxGY/wBmLtjN9q
-         bTKXW8vjf8BePNaYfI57AoLbWtbLfPlbHagbqwua39NH0o9yUFLd5DeS4Kumz1irVPwQ
-         ewjqU9cTsw3cLvbFvnJ+z1nx5pq51glWDa5lVK3GkoVGxGmLADW15qjAizOCQYnkgla4
-         X2m1pPGHq/IcyLTfZDaUiOI0ufSoBn9pkpTtopgaBUyr4JNJQteRHFuqRfkL2wDogzJM
-         iZEV7z+fhz+0YJODK9hFl3UVceGdvlc4g1SlEfXlDVeIN5KgjhBKpzR/NReMKtD8BLxc
-         f7Cw==
-X-Gm-Message-State: ACgBeo3zrFcH2R2NjE1mgY/9vynZ7NhACYEClcT+Omcnfvhyy4WZ5Qk7
-	pDBSRWtFuNn1Q+GkEPSr1slu1QzGbqkafYeKSSSdxQ==
-X-Google-Smtp-Source: AA6agR7OdJBDdsv27oJWMCBkG7w1cww7Zf3DnUJ98jysy8HZ/Q85KSrXHjt06FJo0I8HQr0pnWwdZYA6hlRaWORya6g=
-X-Received: by 2002:a1f:dac3:0:b0:377:8cb:4544 with SMTP id
- r186-20020a1fdac3000000b0037708cb4544mr12084vkg.7.1660236969573; Thu, 11 Aug
- 2022 09:56:09 -0700 (PDT)
-MIME-Version: 1.0
-References: <20220709032001.819487-1-davidgow@google.com> <20220709032001.819487-2-davidgow@google.com>
- <CAMuHMdUdvGyMFyDSX3cSGDz9x3Q0+z1e0nQB5cB0GFazyPcK3A@mail.gmail.com>
-In-Reply-To: <CAMuHMdUdvGyMFyDSX3cSGDz9x3Q0+z1e0nQB5cB0GFazyPcK3A@mail.gmail.com>
-From: David Gow <davidgow@google.com>
-Date: Fri, 12 Aug 2022 00:55:58 +0800
-Message-ID: <CABVgOSk_Y-eEoqH1xbbXfK5TN3P188JFeuZn3ZgV59Bs3Ds4Hg@mail.gmail.com>
-Subject: Re: [PATCH v4 1/5] kunit: unify module and builtin suite definitions
-To: Geert Uytterhoeven <geert@linux-m68k.org>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4M3cVm5Cwtz2xX6
+	for <openbmc@lists.ozlabs.org>; Fri, 12 Aug 2022 05:36:16 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+	by mta-01.yadro.com (Postfix) with ESMTP id DB71341391;
+	Thu, 11 Aug 2022 19:28:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+	mime-version:user-agent:content-transfer-encoding:content-type
+	:content-type:organization:references:in-reply-to:date:date:from
+	:from:subject:subject:message-id:received:received:received
+	:received; s=mta-01; t=1660246098; x=1662060499; bh=hxpZPLpgzB5h
+	+MSO4wt6KalD6e5MAjziFzthRkvEoFY=; b=sO5h9OFpLX7MJq4fPQeSx0VckCTI
+	NV80Pt5m6ACifDdnrTPkNYgrYT5OrG7P27Zny0oTjbisEvhqgm+MLMA3v2kVBgQ6
+	gn7JTC5vFJIDr+PVR/CKjGiArd/4g2FPC1XFwEwdC54d46t3578LCbEnruIXeYan
+	pCinv+f63ybxcJc=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+	by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id X21tDdm-KfKC; Thu, 11 Aug 2022 22:28:18 +0300 (MSK)
+Received: from T-EXCH-01.corp.yadro.com (t-exch-01.corp.yadro.com [172.17.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mta-01.yadro.com (Postfix) with ESMTPS id 920C34138F;
+	Thu, 11 Aug 2022 22:28:18 +0300 (MSK)
+Received: from T-EXCH-09.corp.yadro.com (172.17.11.59) by
+ T-EXCH-01.corp.yadro.com (172.17.10.101) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
+ 15.1.669.32; Thu, 11 Aug 2022 22:28:18 +0300
+Received: from [10.199.0.26] (10.199.0.26) by T-EXCH-09.corp.yadro.com
+ (172.17.11.59) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1118.9; Thu, 11 Aug
+ 2022 22:28:17 +0300
+Message-ID: <794cf20fd781d5a28746800c05b41b866c099483.camel@yadro.com>
+Subject: Re: Adding Inventory
+From: Andrei Kartashev <a.kartashev@yadro.com>
+To: =?UTF-8?Q?O=C4=9Fuzhan_=C3=87A=C4=9ELAR?= <oguzhan.caglar@pavotek.com.tr>,
+	"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Date: Thu, 11 Aug 2022 22:28:16 +0300
+In-Reply-To: <6fbe1a4cf05a483b86986e1cdf5f53aa@pavotek.com.tr>
+References: <6fbe1a4cf05a483b86986e1cdf5f53aa@pavotek.com.tr>
+Organization: YADRO
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.44.2 
+MIME-Version: 1.0
+X-Originating-IP: [10.199.0.26]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-09.corp.yadro.com (172.17.11.59)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,81 +78,61 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Linux MMC List <linux-mmc@vger.kernel.org>, Matt Johnston <matt@codeconstruct.com.au>, Andra Paraschiv <andraprs@amazon.com>, linux-aspeed <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>, Greg KH <gregkh@linuxfoundation.org>, Daniel Latypov <dlatypov@google.com>, USB list <linux-usb@vger.kernel.org>, Brendan Higgins <brendanhiggins@google.com>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, =?UTF-8?B?TWHDrXJhIENhbmFs?= <maira.canal@usp.br>, Luis Chamberlain <mcgrof@kernel.org>, "open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>, Shuah Khan <skhan@linuxfoundation.org>, Jeremy Kerr <jk@codeconstruct.com.au>, Longpeng <longpeng2@huawei.com>, Mika Westerberg <mika.westerberg@linux.intel.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, linux-modules@vger.kernel.org, KUnit Development <kunit-dev@googlegroups.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Aug 11, 2022 at 9:49 PM Geert Uytterhoeven <geert@linux-m68k.org> w=
-rote:
->
-> Hi David, Jeremy,
->
-> On Sat, Jul 9, 2022 at 5:21 AM David Gow <davidgow@google.com> wrote:
-> > From: Jeremy Kerr <jk@codeconstruct.com.au>
-> >
-> > Currently, KUnit runs built-in tests and tests loaded from modules
-> > differently. For built-in tests, the kunit_test_suite{,s}() macro adds =
-a
-> > list of suites in the .kunit_test_suites linker section. However, for
-> > kernel modules, a module_init() function is used to run the test suites=
-.
-> >
-> > This causes problems if tests are included in a module which already
-> > defines module_init/exit_module functions, as they'll conflict with the
-> > kunit-provided ones.
-> >
-> > This change removes the kunit-defined module inits, and instead parses
-> > the kunit tests from their own section in the module. After module init=
-,
-> > we call __kunit_test_suites_init() on the contents of that section,
-> > which prepares and runs the suite.
-> >
-> > This essentially unifies the module- and non-module kunit init formats.
-> >
-> > Tested-by: Ma=C3=ADra Canal <maira.canal@usp.br>
-> > Reviewed-by: Brendan Higgins <brendanhiggins@google.com>
-> > Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
-> > Signed-off-by: Daniel Latypov <dlatypov@google.com>
-> > Signed-off-by: David Gow <davidgow@google.com>
->
-> Thanks for your patch, which is now commit 3d6e44623841c8b8 ("kunit:
-> unify module and builtin suite definitions") upstream.
->
-> Since this commit, modular kunit tests are no longer run at all.
->
-> Before:
->
->     # insmod lib/kunit/kunit.ko
->     # insmod lib/test_hash.ko
->     test_hash: loading test module taints kernel.
->         # Subtest: hash
->         1..2
->         ok 1 - test_string_or
->         ok 2 - test_hash_or
->     # hash: pass:2 fail:0 skip:0 total:2
->     # Totals: pass:2 fail:0 skip:0 total:2
->     ok 1 - hash
->
-> After:
->
->     # insmod lib/kunit/kunit.ko
->     # insmod lib/test_hash.ko
->     test_hash: loading test module taints kernel.
->
-> The actual test code (and test init code, if it exists) is not run.
->
-> Reverting commits e5857d396f35e59e ("kunit: flatten kunit_suite***
-> to kunit_suite** in .kunit_test_suites") and 3d6e44623841c8b8 ("kunit:
-> unify module and builtin suite definitions") fixes the issue.
+Hello Oguzhan,
 
-Thanks Geert,
+This is a very common question for newcomers, I believe is was already
+answered somewhere in the list.
+BMC out of the box don't have any knowledge on host's equipment (CPU,
+DIMM, Drive, AIC, etc) - it is up to you to deliver this information
+from host to BMC. As for now the most common way to feed BMC the
+information regarding CPU and DIMM is to transfer smbios tables via
+ipmi. You can implement any other mechanism but any way, you need to
+have some code in your BIOS.
 
-This is a known issue. There's a patch to fix it here, which just
-missed the pull request:
-https://patchwork.kernel.org/project/linux-kselftest/patch/20220713005221.1=
-926290-1-davidgow@google.com/
+As soon as you have the CPU/DIMM information on BMC it can be shown in
+bmcweb by implementing corresponding dbus interfaces
+(xyz.openbmc_project.Inventory.Item.Cpu and
+xyz.openbmc_project.Inventory.Item.Dimm). smbiosmdrv2 daemon do this,
+but you also can add EntityManager configuration files for this or
+write your own daemon to expose the interfaces.
 
-We'll try to get it merged as soon as possible.
+On Thu, 2022-08-04 at 08:07 +0000, O=C4=9Fuzhan =C3=87A=C4=9ELAR wrote:
+> Hello,
+>=20
+> I'm working on openbmc for ast2500 bmc. I want to add inventory such
+> as CPU and DIMM etc. I added the chassis from=C2=A0.json file but I
+> couldn't add the CPU and DIMM. I know this is to related with entity-
+> manager.=C2=A0How can I add these inventory on WEBUI? Can you give some
+> information about this issue?
+>=20
+> Regards.
+>=20
+> O=C4=9Fuzhan =C3=87a=C4=9Flar
+> Software Design Engineer
+> =C2=A0
+> =C2=A0
+> =C2=A0
+> Pavo Tasar=C4=B1m =C3=9Cretim Elektronik Tic. A.=C5=9E.
+> Teknopark =C4=B0stanbul, Kurtk=C3=B6y Pendik =C4=B0STANBUL
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> Tel=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 : +90 (216) 354 72 86
+> Faks=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 : +90 (216) 354 76 7=
+7
+> Gsm=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 : +90 (507) 585=
+ 10 60
+> oguzhan.caglar@pavotek.com.tr
+> =C2=A0
+> www.pavotek.com.tr
+>=20
+> =C2=A0
 
-Cheers,
--- David
+--=20
+Best regards,
+Andrei Kartashev,
+Lead BMC Developer
+
