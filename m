@@ -2,72 +2,44 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D45C15915D1
-	for <lists+openbmc@lfdr.de>; Fri, 12 Aug 2022 21:15:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A03A5928DE
+	for <lists+openbmc@lfdr.de>; Mon, 15 Aug 2022 06:39:06 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4M4D0L5c04z3c5w
-	for <lists+openbmc@lfdr.de>; Sat, 13 Aug 2022 05:15:30 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=i7YhVY6x;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4M5hPh27jnz3bkh
+	for <lists+openbmc@lfdr.de>; Mon, 15 Aug 2022 14:39:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com; envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=i7YhVY6x;
-	dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=hj-micro.com (client-ip=115.236.127.44; helo=mail-m12744.qiye.163.com; envelope-from=roy.zhang@hj-micro.com; receiver=<UNKNOWN>)
+Received: from mail-m12744.qiye.163.com (mail-m12744.qiye.163.com [115.236.127.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4M4CzY19Mrz3bvZ
-	for <openbmc@lists.ozlabs.org>; Sat, 13 Aug 2022 05:14:48 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
-	by mta-01.yadro.com (Postfix) with ESMTP id E74AF413AB;
-	Fri, 12 Aug 2022 19:14:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
-	mime-version:user-agent:content-transfer-encoding:content-type
-	:content-type:organization:references:in-reply-to:date:date:from
-	:from:subject:subject:message-id:received:received:received
-	:received; s=mta-01; t=1660331680; x=1662146081; bh=O8C6Rrf925QL
-	0hlV6Dlsog6YXXDA78MO/HtCuB6xDSc=; b=i7YhVY6xh81fzh9nbPxhAKxDNuiB
-	4YiBfF8zRIwTNGE2xKd/pOuGFi0HYSbMDw4SkQlB5qDAW6/99SHUCJZybJ/sRSlc
-	ZpGuXzM5dBj9Td8RbmTmuZc4Yv3qgAtkRxtiM0bU3VgLtF5uJCVtr3wWFA9AySv2
-	PcSqEwNi0FNoG1w=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
-	by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id hVOZVfZahW87; Fri, 12 Aug 2022 22:14:40 +0300 (MSK)
-Received: from T-EXCH-01.corp.yadro.com (t-exch-01.corp.yadro.com [172.17.10.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mta-01.yadro.com (Postfix) with ESMTPS id EA232413A8;
-	Fri, 12 Aug 2022 22:14:39 +0300 (MSK)
-Received: from T-EXCH-09.corp.yadro.com (172.17.11.59) by
- T-EXCH-01.corp.yadro.com (172.17.10.101) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.669.32; Fri, 12 Aug 2022 22:14:39 +0300
-Received: from [10.199.0.23] (10.199.0.23) by T-EXCH-09.corp.yadro.com
- (172.17.11.59) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1118.9; Fri, 12 Aug
- 2022 22:14:38 +0300
-Message-ID: <e10b60146c5a120eb615be8a4513f9a9f9a91756.camel@yadro.com>
-Subject: Re: Ynt: (External) Re: Adding Inventory
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: =?UTF-8?Q?O=C4=9Fuzhan_=C3=87A=C4=9ELAR?= <oguzhan.caglar@pavotek.com.tr>,
-	"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Date: Fri, 12 Aug 2022 22:14:38 +0300
-In-Reply-To: <dbe33b3b957344ae9efa8c56e4c6a554@pavotek.com.tr>
-References: <6fbe1a4cf05a483b86986e1cdf5f53aa@pavotek.com.tr>
-	,<794cf20fd781d5a28746800c05b41b866c099483.camel@yadro.com>
-	 <dbe33b3b957344ae9efa8c56e4c6a554@pavotek.com.tr>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.2 
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4M37mv1nr1z2xHB
+	for <openbmc@lists.ozlabs.org>; Thu, 11 Aug 2022 11:01:40 +1000 (AEST)
+Received: from hj-micro.com (localhost [127.0.0.1])
+	by mail-m12744.qiye.163.com (Hmail) with ESMTP id B39D010022D;
+	Thu, 11 Aug 2022 09:01:29 +0800 (CST)
+Content-Type: multipart/alternative; BOUNDARY="=_Part_500126_203155001.1660179689710"
+Message-ID: <AAYAqACcFBvXx6NfGBs2hKrI.3.1660179689710.Hmail.roy.zhang@hj-micro.com>
+To: Patrick Williams <patrick@stwcx.xyz>
+Subject: =?UTF-8?B?UmU6UmU6IE9wZW5CTUMgY29tcGlsZSBmYWlsZWQgaXNzdWXvvIh1cmdlbmN577yJ?=
+X-Priority: 3
+X-Mailer: HMail Webmail Server V2.0 Copyright (c) 2016-163.com
+X-Originating-IP: 218.76.22.224
+In-Reply-To: <YvP4f0jXDrwV+Ht7@heinlein.stwcx.org.github.beta.tailscale.net>
+References: <YvP4f0jXDrwV+Ht7@heinlein.stwcx.org.github.beta.tailscale.net>
 MIME-Version: 1.0
-X-Originating-IP: [10.199.0.23]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-09.corp.yadro.com (172.17.11.59)
+Received: from roy.zhang@hj-micro.com( [218.76.22.224) ] by ajax-webmail ( [127.0.0.1] ) ; Thu, 11 Aug 2022 09:01:29 +0800 (GMT+08:00)
+From: Roy Zhang <roy.zhang@hj-micro.com>
+Date: Thu, 11 Aug 2022 09:01:29 +0800 (GMT+08:00)
+X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
+	tZV1koWUFITzdXWS1ZQUlXWQ8JGhUIEh9ZQVkaSBpJVkhIGR4YTE4eTBlMSlUTARMWGhIXJBQOD1
+	lXWRgSC1lBWUlKQ1VMTVVJSVVJSU9ZV1kWGg8SFR0UWUFZT0tIVUpKS0hKQ1VLWQY+
+X-HM-Sender-Digest: e1kJHlYWEh9ZQUNCTkpPTk5NQ01DN1dZDB4ZWUEPCQ4eV1kSHx4VD1lB
+	WUc6OiI6Cjo4GD05DSMDTTUdPDkISRMwCTJVSFVKTU1LSkxCTUJLS09KVTMWGhIXVQkUAlUBExoV
+	HDsTEVYWEhgJFFUYFBZFWVdZEgtZQVlJSkNVTE1VSUlVSUlPWVdZCAFZQUpLSE9DN1dZFAsPEhQV
+	CFlBSzcG
+X-HM-Tid: 0a828a5e3680b217kuuu1825e25c8f2
+X-Mailman-Approved-At: Mon, 15 Aug 2022 14:38:52 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,142 +51,121 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-I have no idea on what do you mean saying "added the CPU and DIMM
-configuration files within the .yaml files", but I guess you are trying
-to hardcode this information, which I believe not what ou actually
-expect to get.
-You probably should learn how the OpenBMC works inside. You can use
-busctl tool for that.
+--=_Part_500126_203155001.1660179689710
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 
-Regarding compilation error of smbios-mdr daemon, I can say nothing
-without knowing the issue. There should not be any special
-configuration files for this smbios-mdr recipe but probably you trying
-to build CPUInfo part of the recipe without having PECI library. You
-likely should disable cpuinfo app.
+CkhlbGxvIFBhdHJpY2ssCgoKMS5iZWxvdyBpcyBteSBidWlsZCBtYWNoaW5lIGluZm9yIO+8mgpi
+bWNAZG9ja2VyOi9ob21lL29wZW5ibWMvYnVpbGQvbXRqYWRlL2NvbmYkIHVuYW1lIC1yIAo1LjQu
+MTk2LTEuZWw3LmVscmVwby54ODZfNjQKYm1jQGRvY2tlcjovaG9tZS9vcGVuYm1jL2J1aWxkL210
+amFkZS9jb25mJCB1bmFtZSAtYQpMaW51eCBkb2NrZXIgNS40LjE5Ni0xLmVsNy5lbHJlcG8ueDg2
+XzY0ICMxIFNNUCBUdWUgTWF5IDI0IDEyOjQ5OjIwIEVEVCAyMDIyIHg4Nl82NCB4ODZfNjQgeDg2
+XzY0IEdOVS9MaW51eApibWNAZG9ja2VyOi9ob21lL29wZW5ibWMvYnVpbGQvbXRqYWRlL2NvbmYk
+IAoKCjIuIEkganVzdCBmb2xsb3cgdGhlIG9wZWJtYyBidWlsZCBzdGVwcyB0byBidWlsZCB0aGUg
+aW1hZ2Ug4oCcaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvb3BlbmJtY+KAnS4KCgoKClJveQoK
+5Y+R5Lu25Lq677yaUGF0cmljayBXaWxsaWFtcyA8cGF0cmlja0BzdHdjeC54eXo+CuWPkemAgeaX
+peacn++8mjIwMjItMDgtMTEgMDI6Mjc6MTEK5pS25Lu25Lq677yaUm95IFpoYW5nIDxyb3kuemhh
+bmdAaGotbWljcm8uY29tPgrmioTpgIHkurrvvJpvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcK5Li7
+6aKY77yaUmU6IE9wZW5CTUMgY29tcGlsZSBmYWlsZWQgaXNzdWXvvIh1cmdlbmN577yJPk9uIFR1
+ZSwgQXVnIDA5LCAyMDIyIGF0IDA0OjU5OjMwUE0gKzA4MDAsIFJveSBaaGFuZyB3cm90ZToKPj4g
+SGVsbG/vvIwKPj4gCj4+IAo+PiB3aGVuIGkgY29tcGlsZSB0aGUgIG9wZW5ibWMgaW1hZ2UgZm9y
+ICJldmItYXN0MjYwMCIsIGl0IGNvbXBpbGVkIGZhaWxlZCBhcyBiZWxvdyBlcnJvciA6Cj4KPj4g
+RGV0YWlsIGNvbXBpbGUgbG9nIGFzIGJlbG93Ogo+PiBibWNAZG9ja2VyOi9ob21lL29wZW5ibWMv
+YnVpbGQvZXZiLWFzdDI2MDAkIGNhdCAvaG9tZS9vcGVuYm1jL2J1aWxkL2V2Yi1hc3QyNjAwL3Rt
+cC93b3JrL2FybXY3YWhmLXZmcHY0ZDE2LW9wZW5ibWMtbGludXgtZ251ZWFiaS9nbGliLTIuMC8x
+XzIuNzIuMy1yMC9idWlsZC9tZXNvbi1sb2dzL21lc29uLWxvZy50eHQKPi4uLgo+PiAuLi9nbGli
+LTIuNzIuMy9tZXNvbi5idWlsZDoxOjA6IEVSUk9SOiBFeGVjdXRhYmxlcyBjcmVhdGVkIGJ5IGMg
+Y29tcGlsZXIgYXJtLW9wZW5ibWMtbGludXgtZ251ZWFiaS1nY2MgLW1hcmNoPWFybXY3LWEgLW1m
+cHU9dmZwdjQtZDE2IC1tZmxvYXQtYWJpPWhhcmQgLWZzdGFjay1wcm90ZWN0b3Itc3Ryb25nIC1P
+MiAtRF9GT1JUSUZZX1NPVVJDRT0yIC1XZm9ybWF0IC1XZm9ybWF0LXNlY3VyaXR5IC1XZXJyb3I9
+Zm9ybWF0LXNlY3VyaXR5IC0tc3lzcm9vdD0vaG9tZS9vcGVuYm1jL2J1aWxkL2V2Yi1hc3QyNjAw
+L3RtcC93b3JrL2FybXY3YWhmLXZmcHY0ZDE2LW9wZW5ibWMtbGludXgtZ251ZWFiaS9nbGliLTIu
+MC8xXzIuNzIuMy1yMC9yZWNpcGUtc3lzcm9vdCBhcmUgbm90IHJ1bm5hYmxlLgo+Cj4+IHwgTk9U
+RTogRXhlY3V0aW5nIG1lc29uIC1EZ3RrX2RvYz1mYWxzZSAtRGR0cmFjZT1mYWxzZSAtRGZhbT1m
+YWxzZSAtRHN5c3RlbXRhcD1mYWxzZSAtRGJfbHRvPXRydWUgLURsaWJtb3VudD1lbmFibGVkIC1E
+bWFuPWZhbHNlIC1Ec2VsaW51eD1kaXNhYmxlZCAtRGluc3RhbGxlZF90ZXN0cz1mYWxzZSAtLWNy
+b3NzLWZpbGU9L2hvbWUvb3BlbmJtYy9tZXRhL3JlY2lwZXMtY29yZS9nbGliLTIuMC9nbGliLTIu
+MC9tZXNvbi5jcm9zcy5kL2NvbW1vbi1saW51eCAtLWNyb3NzLWZpbGU9L2hvbWUvb3BlbmJtYy9t
+ZXRhL3JlY2lwZXMtY29yZS9nbGliLTIuMC9nbGliLTIuMC9tZXNvbi5jcm9zcy5kL2NvbW1vbi1n
+bGliYyAtLWNyb3NzLWZpbGU9L2hvbWUvb3BlbmJtYy9tZXRhL3JlY2lwZXMtY29yZS9nbGliLTIu
+MC9nbGliLTIuMC9tZXNvbi5jcm9zcy5kL2NvbW1vbi4uLgo+PiB8IHFlbXUtYXJtOiBVbmFibGUg
+dG8gcmVzZXJ2ZSAweGZmZmYwMDAwIGJ5dGVzIG9mIHZpcnR1YWwgYWRkcmVzcyBzcGFjZSBhdCAw
+eDEwMDAgKFN1Y2Nlc3MpIGZvciB1c2UgYXMgZ3Vlc3QgYWRkcmVzcyBzcGFjZSAoY2hlY2sgeW91
+ciB2aXJ0dWFsIG1lbW9yeSB1bGltaXQgc2V0dGluZywgbWluX21tYXBfYWRkciBvciByZXNlcnZl
+IGxlc3MgdXNpbmcgLVIgb3B0aW9uKQo+Cj5XZSBjZXJ0YWlubHkgcmVndWxhcmx5IGJ1aWxkIHN5
+c3RlbWQgaW4gQ0kuICBJIHRoaW5rIHRoZXJlJ2QgYmUgYSBwcmV0dHkKPmJpZyB1cHJvYXIgaWYg
+bWFzdGVyIHdlcmUgY29tcGxldGVseSBicm9rZW4sIHNvIEkgaGlnaGx5IHN1c3BlY3QgdGhpcyBp
+cwo+c29tZXRoaW5nIHdpdGggeW91ciBlbnZpcm9ubWVudC4KPgo+SXQgbG9va3MgbGlrZSB5b3Un
+cmUgYnVpbGRpbmcgaW5zaWRlIERvY2tlciBvbiBhbiB4ODZfNjQgbWFjaGluZSwgYnV0Cj5zb21l
+aG93IHFlbXUtYXJtIGlzIGJlaW5nIGludm9rZWQ/ICBEbyB5b3UgaGF2ZSBhbnkgaWRlYSB3aGVy
+ZSB0aGlzCj5xZW11LWFybSBpcyBjb21pbmcgZnJvbT8KPgo+Q2FuIHlvdSBmdWxseSBkZXNjcmli
+ZSB0aGUgZW52aXJvbm1lbnQgeW91J3ZlIHNldCB1cCBmb3IgZG9pbmcgdGhpcwo+YnVpbGQ/ICBJ
+ZiB5b3UncmUgcnVubmluZyBpbnNpZGUgYSB2aXJ0dWFsIG1hY2hpbmUgb3IgY29udGFpbmVyCj5p
+dCBtaWdodCBiZSB0aGF0IHlvdSd2ZSBub3QgYWxsb2NhdGVkIGVub3VnaCBtZW1vcnkgdG8gdGhl
+IGNvbnRhaW5lciwKPndoaWNoIGNhbiBjYXVzZSBpdCB0byByZXBvcnQgbm9uLW9idmlvdXMgY29t
+cGlsZSBmYWlsdXJlcy4KPgo+LS0gCj5QYXRyaWNrIFdpbGxpYW1zCgoKDQoNCg==
+--=_Part_500126_203155001.1660179689710
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: base64
 
-On Fri, 2022-08-12 at 06:50 +0000, O=C4=9Fuzhan =C3=87A=C4=9ELAR wrote:
-> Hi Andrei,
->=20
-> Thank you for your information. I have already added the=C2=A0CPU and DIM=
-M
-> configuration files within the .yaml files. When I added these
-> files(related to the path:=C2=A0xyz.openbmc_project.Inventory.Item.Cpu
-> and=C2=A0xyz.openbmc_project.Inventory.Item.Dimm), I see=C2=A0the CPU and=
- DIMM
-> entries over WebUI. However, In this way, I add the properties such
-> as (PartNumber,=C2=A0SerialNumber, etc.) on my own.=C2=A0I have already
-> generated a .bin file that has FRU information (chassis, board etc.)
-> and I included this in BMC's image file. In addition, I see the
-> properties related to Chassis, Board on WebUI.
->=20
-> I have already checked the smbios-mdr daemon in openbmc. However,
-> when I include this daemon in my yocto image, the bitbake shows=C2=A0some
-> errors that are related to smbios-mdr's .cpp files. I guess I have to
-> create some configuration files before doing it. Is it wrong? What
-> should I do?
->=20
-> I guess I have to need some code in BIOS. Is there any example to do
-> this? I don't know where I should start.=C2=A0
->=20
-> Thank you.
->=20
-> O=C4=9Fuzhan =C3=87a=C4=9Flar
-> Software Design Engineer
-> =C2=A0
-> =C2=A0
-> =C2=A0
-> Pavo Tasar=C4=B1m =C3=9Cretim Elektronik Tic. A.=C5=9E.
-> Teknopark =C4=B0stanbul, Kurtk=C3=B6y Pendik =C4=B0STANBUL
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
-> Tel=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 : +90 (216) 354 72 86
-> Faks=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 : +90 (216) 354 76 7=
-7
-> Gsm=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 : +90 (507) 585=
- 10 60
-> oguzhan.caglar@pavotek.com.tr
-> =C2=A0
-> www.pavotek.com.tr
->=20
-> =C2=A0
-> G=C3=B6nderen: Andrei Kartashev <a.kartashev@yadro.com>
-> G=C3=B6nderildi: 11 A=C4=9Fustos 2022 Per=C5=9Fembe 22:28:16
-> Kime: O=C4=9Fuzhan =C3=87A=C4=9ELAR; openbmc@lists.ozlabs.org
-> Konu: (External) Re: Adding Inventory
-> =C2=A0
->=20
-> Warning: This e-mail came from an external source. If you do not
-> trust the sender or if there is anything suspicious in the content of
-> the e-mail, please inform the IT department.
->=20
->=20
->=20
-> Hello Oguzhan,
->=20
-> This is a very common question for newcomers, I believe is was
-> already
-> answered somewhere in the list.
-> BMC out of the box don't have any knowledge on host's equipment (CPU,
-> DIMM, Drive, AIC, etc) - it is up to you to deliver this information
-> from host to BMC. As for now the most common way to feed BMC the
-> information regarding CPU and DIMM is to transfer smbios tables via
-> ipmi. You can implement any other mechanism but any way, you need to
-> have some code in your BIOS.
->=20
-> As soon as you have the CPU/DIMM information on BMC it can be shown
-> in
-> bmcweb by implementing corresponding dbus interfaces
-> (xyz.openbmc_project.Inventory.Item.Cpu and
-> xyz.openbmc_project.Inventory.Item.Dimm). smbiosmdrv2 daemon do this,
-> but you also can add EntityManager configuration files for this or
-> write your own daemon to expose the interfaces.
->=20
-> On Thu, 2022-08-04 at 08:07 +0000, O=C4=9Fuzhan =C3=87A=C4=9ELAR wrote:
-> > Hello,
-> >=20
-> > I'm working on openbmc for ast2500 bmc. I want to add inventory
-> > such
-> > as CPU and DIMM etc. I added the chassis from .json file but I
-> > couldn't add the CPU and DIMM. I know this is to related with
-> > entity-
-> > manager. How can I add these inventory on WEBUI? Can you give some
-> > information about this issue?
-> >=20
-> > Regards.
-> >=20
-> > O=C4=9Fuzhan =C3=87a=C4=9Flar
-> > Software Design Engineer
-> >=20
-> >=20
-> >=20
-> > Pavo Tasar=C4=B1m =C3=9Cretim Elektronik Tic. A.=C5=9E.
-> > Teknopark =C4=B0stanbul, Kurtk=C3=B6y Pendik =C4=B0STANBUL
-> >=20
-> >=20
-> > Tel=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 : +90 (216) 354 72 86
-> > Faks=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 : +90 (216) 354 76=
- 77
-> > Gsm=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 : +90 (507) 5=
-85 10 60
-> > oguzhan.caglar@pavotek.com.tr
-> >=20
-> > www.pavotek.com.tr
-> >=20
-> >=20
->=20
-> --
-> Best regards,
-> Andrei Kartashev,
-> Lead BMC Developer
->=20
-
---=20
-Best regards,
-Andrei Kartashev,
-Lead BMC Developer
-
+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
+Zm9udC1mYW1pbHk6QXJpYWwiPjxicj5IZWxsbyBQYXRyaWNrLDxicj48ZGl2Pjxicj48L2Rpdj48
+ZGl2PjEuYmVsb3cgaXMgbXkgYnVpbGQgbWFjaGluZSBpbmZvciDvvJo8L2Rpdj48ZGl2PmJtY0Bk
+b2NrZXI6L2hvbWUvb3BlbmJtYy9idWlsZC9tdGphZGUvY29uZiQgdW5hbWUgLXImbmJzcDs8L2Rp
+dj48ZGl2PjUuNC4xOTYtMS5lbDcuZWxyZXBvLng4Nl82NDwvZGl2PjxkaXY+Ym1jQGRvY2tlcjov
+aG9tZS9vcGVuYm1jL2J1aWxkL210amFkZS9jb25mJCB1bmFtZSAtYTwvZGl2PjxkaXY+TGludXgg
+ZG9ja2VyIDUuNC4xOTYtMS5lbDcuZWxyZXBvLng4Nl82NCAjMSBTTVAgVHVlIE1heSAyNCAxMjo0
+OToyMCBFRFQgMjAyMiB4ODZfNjQgeDg2XzY0IHg4Nl82NCBHTlUvTGludXg8L2Rpdj48ZGl2PmJt
+Y0Bkb2NrZXI6L2hvbWUvb3BlbmJtYy9idWlsZC9tdGphZGUvY29uZiQmbmJzcDs8L2Rpdj48ZGl2
+Pjxicj48L2Rpdj48ZGl2PjIuIEkganVzdCBmb2xsb3cgdGhlIG9wZWJtYyBidWlsZCBzdGVwcyB0
+byBidWlsZCB0aGUgaW1hZ2Ug4oCcaHR0cHM6Ly9naXRodWIuY29tL29wZW5ibWMvb3BlbmJtY+KA
+nS48L2Rpdj48ZGl2Pjxicj48L2Rpdj48YnI+PGRpdiAgc3R5bGU9InBvc2l0aW9uOnJlbGF0aXZl
+O3pvb206MSI+PC9kaXY+Um95PGJyPjxwcmU+PGJyPuWPkeS7tuS6uu+8mlBhdHJpY2sgV2lsbGlh
+bXMgJmx0O3BhdHJpY2tAc3R3Y3gueHl6Jmd0Owrlj5HpgIHml6XmnJ/vvJoyMDIyLTA4LTExIDAy
+OjI3OjExCuaUtuS7tuS6uu+8mlJveSBaaGFuZyAmbHQ7cm95LnpoYW5nQGhqLW1pY3JvLmNvbSZn
+dDsK5oqE6YCB5Lq677yab3BlbmJtY0BsaXN0cy5vemxhYnMub3JnCuS4u+mimO+8mlJlOiBPcGVu
+Qk1DIGNvbXBpbGUgZmFpbGVkIGlzc3Vl77yIdXJnZW5jee+8iSZndDtPbiBUdWUsIEF1ZyAwOSwg
+MjAyMiBhdCAwNDo1OTozMFBNICswODAwLCBSb3kgWmhhbmcgd3JvdGU6CiZndDsmZ3Q7IEhlbGxv
+77yMCiZndDsmZ3Q7IAomZ3Q7Jmd0OyAKJmd0OyZndDsgd2hlbiBpIGNvbXBpbGUgdGhlICBvcGVu
+Ym1jIGltYWdlIGZvciAiZXZiLWFzdDI2MDAiLCBpdCBjb21waWxlZCBmYWlsZWQgYXMgYmVsb3cg
+ZXJyb3IgOgomZ3Q7CiZndDsmZ3Q7IERldGFpbCBjb21waWxlIGxvZyBhcyBiZWxvdzoKJmd0OyZn
+dDsgYm1jQGRvY2tlcjovaG9tZS9vcGVuYm1jL2J1aWxkL2V2Yi1hc3QyNjAwJCBjYXQgL2hvbWUv
+b3BlbmJtYy9idWlsZC9ldmItYXN0MjYwMC90bXAvd29yay9hcm12N2FoZi12ZnB2NGQxNi1vcGVu
+Ym1jLWxpbnV4LWdudWVhYmkvZ2xpYi0yLjAvMV8yLjcyLjMtcjAvYnVpbGQvbWVzb24tbG9ncy9t
+ZXNvbi1sb2cudHh0CiZndDsuLi4KJmd0OyZndDsgLi4vZ2xpYi0yLjcyLjMvbWVzb24uYnVpbGQ6
+MTowOiBFUlJPUjogRXhlY3V0YWJsZXMgY3JlYXRlZCBieSBjIGNvbXBpbGVyIGFybS1vcGVuYm1j
+LWxpbnV4LWdudWVhYmktZ2NjIC1tYXJjaD1hcm12Ny1hIC1tZnB1PXZmcHY0LWQxNiAtbWZsb2F0
+LWFiaT1oYXJkIC1mc3RhY2stcHJvdGVjdG9yLXN0cm9uZyAtTzIgLURfRk9SVElGWV9TT1VSQ0U9
+MiAtV2Zvcm1hdCAtV2Zvcm1hdC1zZWN1cml0eSAtV2Vycm9yPWZvcm1hdC1zZWN1cml0eSAtLXN5
+c3Jvb3Q9L2hvbWUvb3BlbmJtYy9idWlsZC9ldmItYXN0MjYwMC90bXAvd29yay9hcm12N2FoZi12
+ZnB2NGQxNi1vcGVuYm1jLWxpbnV4LWdudWVhYmkvZ2xpYi0yLjAvMV8yLjcyLjMtcjAvcmVjaXBl
+LXN5c3Jvb3QgYXJlIG5vdCBydW5uYWJsZS4KJmd0OwomZ3Q7Jmd0OyB8IE5PVEU6IEV4ZWN1dGlu
+ZyBtZXNvbiAtRGd0a19kb2M9ZmFsc2UgLURkdHJhY2U9ZmFsc2UgLURmYW09ZmFsc2UgLURzeXN0
+ZW10YXA9ZmFsc2UgLURiX2x0bz10cnVlIC1EbGlibW91bnQ9ZW5hYmxlZCAtRG1hbj1mYWxzZSAt
+RHNlbGludXg9ZGlzYWJsZWQgLURpbnN0YWxsZWRfdGVzdHM9ZmFsc2UgLS1jcm9zcy1maWxlPS9o
+b21lL29wZW5ibWMvbWV0YS9yZWNpcGVzLWNvcmUvZ2xpYi0yLjAvZ2xpYi0yLjAvbWVzb24uY3Jv
+c3MuZC9jb21tb24tbGludXggLS1jcm9zcy1maWxlPS9ob21lL29wZW5ibWMvbWV0YS9yZWNpcGVz
+LWNvcmUvZ2xpYi0yLjAvZ2xpYi0yLjAvbWVzb24uY3Jvc3MuZC9jb21tb24tZ2xpYmMgLS1jcm9z
+cy1maWxlPS9ob21lL29wZW5ibWMvbWV0YS9yZWNpcGVzLWNvcmUvZ2xpYi0yLjAvZ2xpYi0yLjAv
+bWVzb24uY3Jvc3MuZC9jb21tb24uLi4KJmd0OyZndDsgfCBxZW11LWFybTogVW5hYmxlIHRvIHJl
+c2VydmUgMHhmZmZmMDAwMCBieXRlcyBvZiB2aXJ0dWFsIGFkZHJlc3Mgc3BhY2UgYXQgMHgxMDAw
+IChTdWNjZXNzKSBmb3IgdXNlIGFzIGd1ZXN0IGFkZHJlc3Mgc3BhY2UgKGNoZWNrIHlvdXIgdmly
+dHVhbCBtZW1vcnkgdWxpbWl0IHNldHRpbmcsIG1pbl9tbWFwX2FkZHIgb3IgcmVzZXJ2ZSBsZXNz
+IHVzaW5nIC1SIG9wdGlvbikKJmd0OwomZ3Q7V2UgY2VydGFpbmx5IHJlZ3VsYXJseSBidWlsZCBz
+eXN0ZW1kIGluIENJLiAgSSB0aGluayB0aGVyZSdkIGJlIGEgcHJldHR5CiZndDtiaWcgdXByb2Fy
+IGlmIG1hc3RlciB3ZXJlIGNvbXBsZXRlbHkgYnJva2VuLCBzbyBJIGhpZ2hseSBzdXNwZWN0IHRo
+aXMgaXMKJmd0O3NvbWV0aGluZyB3aXRoIHlvdXIgZW52aXJvbm1lbnQuCiZndDsKJmd0O0l0IGxv
+b2tzIGxpa2UgeW91J3JlIGJ1aWxkaW5nIGluc2lkZSBEb2NrZXIgb24gYW4geDg2XzY0IG1hY2hp
+bmUsIGJ1dAomZ3Q7c29tZWhvdyBxZW11LWFybSBpcyBiZWluZyBpbnZva2VkPyAgRG8geW91IGhh
+dmUgYW55IGlkZWEgd2hlcmUgdGhpcwomZ3Q7cWVtdS1hcm0gaXMgY29taW5nIGZyb20/CiZndDsK
+Jmd0O0NhbiB5b3UgZnVsbHkgZGVzY3JpYmUgdGhlIGVudmlyb25tZW50IHlvdSd2ZSBzZXQgdXAg
+Zm9yIGRvaW5nIHRoaXMKJmd0O2J1aWxkPyAgSWYgeW91J3JlIHJ1bm5pbmcgaW5zaWRlIGEgdmly
+dHVhbCBtYWNoaW5lIG9yIGNvbnRhaW5lcgomZ3Q7aXQgbWlnaHQgYmUgdGhhdCB5b3UndmUgbm90
+IGFsbG9jYXRlZCBlbm91Z2ggbWVtb3J5IHRvIHRoZSBjb250YWluZXIsCiZndDt3aGljaCBjYW4g
+Y2F1c2UgaXQgdG8gcmVwb3J0IG5vbi1vYnZpb3VzIGNvbXBpbGUgZmFpbHVyZXMuCiZndDsKJmd0
+Oy0tIAomZ3Q7UGF0cmljayBXaWxsaWFtcwo8L3ByZT48L2Rpdj48YnI+
+--=_Part_500126_203155001.1660179689710--
