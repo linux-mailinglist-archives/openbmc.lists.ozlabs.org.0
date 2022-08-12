@@ -1,72 +1,86 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98C0E590706
-	for <lists+openbmc@lfdr.de>; Thu, 11 Aug 2022 21:36:47 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6B45D590C06
+	for <lists+openbmc@lfdr.de>; Fri, 12 Aug 2022 08:37:51 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4M3cWD6Jw6z3bYy
-	for <lists+openbmc@lfdr.de>; Fri, 12 Aug 2022 05:36:40 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4M3vB52ZCJz3bXZ
+	for <lists+openbmc@lfdr.de>; Fri, 12 Aug 2022 16:37:49 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=sO5h9OFp;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=pjd.dev header.i=@pjd.dev header.a=rsa-sha256 header.s=fm2 header.b=pNz1Risy;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=GeuIiFQu;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com; envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=pjd.dev (client-ip=66.111.4.26; helo=out2-smtp.messagingengine.com; envelope-from=peter@pjd.dev; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=sO5h9OFp;
+	dkim=pass (2048-bit key; unprotected) header.d=pjd.dev header.i=@pjd.dev header.a=rsa-sha256 header.s=fm2 header.b=pNz1Risy;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=GeuIiFQu;
 	dkim-atps=neutral
-X-Greylist: delayed 472 seconds by postgrey-1.36 at boromir; Fri, 12 Aug 2022 05:36:16 AEST
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4M3cVm5Cwtz2xX6
-	for <openbmc@lists.ozlabs.org>; Fri, 12 Aug 2022 05:36:16 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
-	by mta-01.yadro.com (Postfix) with ESMTP id DB71341391;
-	Thu, 11 Aug 2022 19:28:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
-	mime-version:user-agent:content-transfer-encoding:content-type
-	:content-type:organization:references:in-reply-to:date:date:from
-	:from:subject:subject:message-id:received:received:received
-	:received; s=mta-01; t=1660246098; x=1662060499; bh=hxpZPLpgzB5h
-	+MSO4wt6KalD6e5MAjziFzthRkvEoFY=; b=sO5h9OFpLX7MJq4fPQeSx0VckCTI
-	NV80Pt5m6ACifDdnrTPkNYgrYT5OrG7P27Zny0oTjbisEvhqgm+MLMA3v2kVBgQ6
-	gn7JTC5vFJIDr+PVR/CKjGiArd/4g2FPC1XFwEwdC54d46t3578LCbEnruIXeYan
-	pCinv+f63ybxcJc=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
-	by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id X21tDdm-KfKC; Thu, 11 Aug 2022 22:28:18 +0300 (MSK)
-Received: from T-EXCH-01.corp.yadro.com (t-exch-01.corp.yadro.com [172.17.10.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mta-01.yadro.com (Postfix) with ESMTPS id 920C34138F;
-	Thu, 11 Aug 2022 22:28:18 +0300 (MSK)
-Received: from T-EXCH-09.corp.yadro.com (172.17.11.59) by
- T-EXCH-01.corp.yadro.com (172.17.10.101) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.669.32; Thu, 11 Aug 2022 22:28:18 +0300
-Received: from [10.199.0.26] (10.199.0.26) by T-EXCH-09.corp.yadro.com
- (172.17.11.59) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1118.9; Thu, 11 Aug
- 2022 22:28:17 +0300
-Message-ID: <794cf20fd781d5a28746800c05b41b866c099483.camel@yadro.com>
-Subject: Re: Adding Inventory
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: =?UTF-8?Q?O=C4=9Fuzhan_=C3=87A=C4=9ELAR?= <oguzhan.caglar@pavotek.com.tr>,
-	"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Date: Thu, 11 Aug 2022 22:28:16 +0300
-In-Reply-To: <6fbe1a4cf05a483b86986e1cdf5f53aa@pavotek.com.tr>
-References: <6fbe1a4cf05a483b86986e1cdf5f53aa@pavotek.com.tr>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.2 
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4M3v9Y5vwQz2xGM
+	for <openbmc@lists.ozlabs.org>; Fri, 12 Aug 2022 16:37:20 +1000 (AEST)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id AAC4D5C013A;
+	Fri, 12 Aug 2022 02:37:13 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Fri, 12 Aug 2022 02:37:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pjd.dev; h=cc:cc
+	:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm2; t=1660286233; x=1660372633; bh=GuEmN8I7qf
+	YDZFGmUjcf/0nxIVgSMJTDNtj/laYDm1I=; b=pNz1RisyP83nylpKpuhnZBEaJx
+	PRK3/ljVQ6gW3zu8GvrNFO/Tsymu24TKtpPXO1S0/TxWJX7aPtQucR4VjmeQ2PIr
+	TecK7fAymT6tLA2e86KIAikgfS3y8Lpcedo/52tFCTYXlMnnrwNY2V6wtIJ7VooL
+	vjG1VRrFN9C1nEk6iaYSb45mDaUKjqVESFChCz5Q07ONdk9QZYJpg72N69DBjlE8
+	g7x1VHbm8aEWopSQCADrYPuRnWh8xZu550xBg1BenIJE+u3pKhpKDkZK//COLiSu
+	DjeZSOyzBOCOUk/O0mrriIBPDa6/ELBX8W1pWPf5a+xbY5eUBITH5EOpC9Dw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1660286233; x=1660372633; bh=GuEmN8I7qfYDZFGmUjcf/0nxIVgS
+	MJTDNtj/laYDm1I=; b=GeuIiFQulPO38QblcC+/31mYY0mZZ56179VkFmR3rFOO
+	XU6u3DrC3n2QQz2F+CpqAVvZBJn019Y/9S/mZx185A2Ns+xnasfAdiz6aWOEJ/FP
+	K22RyEUylVcZt635fO+aTaQTmSFhLG/CQNltgxUoHEg+ohb2LGj+vtZAeN7TzHDm
+	NE1Kdi51lb+ouogfrioZ7AFUf5zZaops/rdhvBLP6fCKp8D5JX1DJsBnbuRhZ38W
+	yeQCnZCHrxK4h7nKGJM5Xx+HP1eLYDuuGfJr3UARG/AO1XYmI2+Uq4C9THl/jQzC
+	dgkkaSznm3GSSKErXY3nWkmtow1qOubXIXgbFB8eOg==
+X-ME-Sender: <xms:GPX1YtjdN7QgmH3NaKFOb8uRt9OdYkyPtVMZdHI6SJ4SXN96pHIp7w>
+    <xme:GPX1YiChLwjVNraNukeOMajwjjlgOPRYcG3L30AdlvcOzrlriN_6wYlnr7k0FqLFn
+    TnfWnIoVQI4_LdpQLo>
+X-ME-Received: <xmr:GPX1YtGy6ocTVXiiclCpjm34IaCQNCyrd_0drPO8z1_R0_OYMnEHEfgh-dQywT1-uGTs878CMBeC_DwrKl3uiQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdeghedgudduudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrvght
+    vghrucffvghlvghvohhrhigrshcuoehpvghtvghrsehpjhgurdguvghvqeenucggtffrrg
+    htthgvrhhnpeeftedufffgueeiuedtgeehtdevteefueeiieegvdeuudeggfejkefffefh
+    vefgveenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivg
+    eptdenucfrrghrrghmpehmrghilhhfrhhomhepphgvthgvrhesphhjugdruggvvh
+X-ME-Proxy: <xmx:GPX1YiRVJRdWdPBKV6AfmMrXK79XVfjd74DrZolSbdxz-a9dbSm8Sg>
+    <xmx:GPX1Yqxc11ac19yxpePsba9lLl2_Ss9eOdMICCpVZUrOPWRCnl17_g>
+    <xmx:GPX1Yo6Za47vbBc1i4EW9u04l3wHvuPT5dd7otHhRlgjg1eqz2SQNQ>
+    <xmx:GfX1Yu9ibHnrkxdl94aK8MOvylhlaWjKbASjTPdo7NYlYs7Y0asZxw>
+Feedback-ID: i9e814621:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 12 Aug 2022 02:37:11 -0400 (EDT)
+Date: Thu, 11 Aug 2022 23:37:09 -0700
+From: Peter Delevoryas <peter@pjd.dev>
+To: Billy Tsai <billy_tsai@aspeedtech.com>
+Subject: Re: TODO items for the AST2600 PWM driver
+Message-ID: <YvX1Fan6RtBYUTwg@pdel-mbp.dhcp.thefacebook.com>
+References: <YvQfGlro4tKsZ4T5@pdel-mbp.dhcp.thefacebook.com>
+ <6A82FD4A-73CC-44C8-AF23-3CADB2A49C5F@aspeedtech.com>
 MIME-Version: 1.0
-X-Originating-IP: [10.199.0.26]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-09.corp.yadro.com (172.17.11.59)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6A82FD4A-73CC-44C8-AF23-3CADB2A49C5F@aspeedtech.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,61 +92,61 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "garnermic@gmail.com" <garnermic@gmail.com>, "joel@jms.id.au" <joel@jms.id.au>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello Oguzhan,
+On Thu, Aug 11, 2022 at 10:55:34AM +0000, Billy Tsai wrote:
+> Hi Peter,
+> 
+> Thanks for your organization.
+> 
+> On 2022/8/11, 5:12 AM, "Peter Delevoryas" <peter@pjd.dev> wrote:
+> 
+>     > Hey Joel and Billy,
+>   
+>     > I was looking at this thread from 2021, and I'm trying to figure out
+>     > what we need to change to get the driver accepted upstream.
+>   
+>     > CACPK8XfM4C7v3keXaxMs9SkqNzb8XWbZ6QvcZXWcy3ZKJCrvWQ@mail.gmail.com <https://lore.kernel.org/lkml/<a href=>/">https://lore.kernel.org/lkml/CACPK8XfM4C7v3keXaxMs9SkqNzb8XWbZ6QvcZXWcy3ZKJCrvWQ@mail.gmail.com/
+>   
+>     > It seems like there's a few major things:
+>   
+>     > 1. Use one device tree binding, and one driver file.
+>     > 2. Should be a hwmon driver and not a pwm driver.
+>     > 3. Don't use regmap.
+> 
+> I agree to use one device tree binding and don't use regmap.
+> I will fix these in the next patch.
 
-This is a very common question for newcomers, I believe is was already
-answered somewhere in the list.
-BMC out of the box don't have any knowledge on host's equipment (CPU,
-DIMM, Drive, AIC, etc) - it is up to you to deliver this information
-from host to BMC. As for now the most common way to feed BMC the
-information regarding CPU and DIMM is to transfer smbios tables via
-ipmi. You can implement any other mechanism but any way, you need to
-have some code in your BIOS.
+Ok great, thanks.
 
-As soon as you have the CPU/DIMM information on BMC it can be shown in
-bmcweb by implementing corresponding dbus interfaces
-(xyz.openbmc_project.Inventory.Item.Cpu and
-xyz.openbmc_project.Inventory.Item.Dimm). smbiosmdrv2 daemon do this,
-but you also can add EntityManager configuration files for this or
-write your own daemon to expose the interfaces.
+> But, I am still confused by treating the PWM device to be a hwmon driver and not a PWM driver.
+> As I menthion in https://lore.kernel.org/lkml/ADD1E8B8-60F0-442A-BEF1-1AA304454963@aspeedtech.com/
+> I will try to add the reason, why I want to treat the driver as PWM driver instead of hwmon driver, as the link above in the next patch.
 
-On Thu, 2022-08-04 at 08:07 +0000, O=C4=9Fuzhan =C3=87A=C4=9ELAR wrote:
-> Hello,
->=20
-> I'm working on openbmc for ast2500 bmc. I want to add inventory such
-> as CPU and DIMM etc. I added the chassis from=C2=A0.json file but I
-> couldn't add the CPU and DIMM. I know this is to related with entity-
-> manager.=C2=A0How can I add these inventory on WEBUI? Can you give some
-> information about this issue?
->=20
-> Regards.
->=20
-> O=C4=9Fuzhan =C3=87a=C4=9Flar
-> Software Design Engineer
-> =C2=A0
-> =C2=A0
-> =C2=A0
-> Pavo Tasar=C4=B1m =C3=9Cretim Elektronik Tic. A.=C5=9E.
-> Teknopark =C4=B0stanbul, Kurtk=C3=B6y Pendik =C4=B0STANBUL
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
-> Tel=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 : +90 (216) 354 72 86
-> Faks=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 : +90 (216) 354 76 7=
-7
-> Gsm=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 : +90 (507) 585=
- 10 60
-> oguzhan.caglar@pavotek.com.tr
-> =C2=A0
-> www.pavotek.com.tr
->=20
-> =C2=A0
+Ok, cc peter@pjd.dev
 
---=20
-Best regards,
-Andrei Kartashev,
-Lead BMC Developer
+> If you have any advice, please let me know.
 
+I'm still not 100% up to speed on this series, but it seems like having
+a different kind of driver than the ast2500 is a sticking point. I would
+guess that the upstream would prefer if we changed the ast2500 driver to
+pwm too, or put the ast2600 driver in hwmon, but they might not like
+having the ast2500 in hwmon and the ast2600 in pwm. I still don't
+understand the full context of this though, maybe I'm misunderstanding.
+
+Thanks,
+Peter
+
+> 
+> Thanks,
+> Billy
+> 
+> 
+>     > And, is anybody working on this at the moment? Can someone else pick this up?
+>   
+>     > Thanks,
+>     > Peter
+>   
+> 
