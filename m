@@ -2,81 +2,88 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E69B59127D
-	for <lists+openbmc@lfdr.de>; Fri, 12 Aug 2022 16:48:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5DBA659135E
+	for <lists+openbmc@lfdr.de>; Fri, 12 Aug 2022 17:58:46 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4M464Y0cxMz3bYd
-	for <lists+openbmc@lfdr.de>; Sat, 13 Aug 2022 00:48:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4M47dJ2jQxz3bd4
+	for <lists+openbmc@lfdr.de>; Sat, 13 Aug 2022 01:58:44 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=aBWH05Od;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=BihLiXC4;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=Wr0caW8l;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=Tz4uEnni;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aj.id.au (client-ip=64.147.123.24; helo=wout1-smtp.messagingengine.com; envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.28; helo=out4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=aBWH05Od;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=BihLiXC4;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=Wr0caW8l;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=Tz4uEnni;
 	dkim-atps=neutral
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4M46406zMGz2xGg;
-	Sat, 13 Aug 2022 00:48:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4M47cm5Twtz30Hf
+	for <openbmc@lists.ozlabs.org>; Sat, 13 Aug 2022 01:58:14 +1000 (AEST)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.west.internal (Postfix) with ESMTP id 047E532007F0;
-	Fri, 12 Aug 2022 10:48:09 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Fri, 12 Aug 2022 10:48:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
-	:cc:content-transfer-encoding:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:sender:subject:subject:to:to;
-	 s=fm3; t=1660315689; x=1660402089; bh=nFAyZba+rUSSpa4dMw5jpMYFE
-	bkfzVnF4ksUNlmVM3A=; b=aBWH05Od0HQ74QiuPgre2ttFPk/yRPqxtG7J3wILw
-	pN9tIc6SYBKLJjQ6KHnvN18/vLLxbNhfDuaEUw+4Vj29AxsLDMOf+s5LGZPmOvdY
-	K0tEsG2JW/ITmwGyIRngtZiHkYjao0cug5P+tDPlUn4pTD/anny5mIdAh3gaEJOq
-	sXcwIyY0/Nay1ajcFPpHMN3qGT48oXkEkoFkiSOCHvejBTBMKhjjSVeTy5wTEUke
-	gReJsmeJPDisCQr4N7ObzUl/KEFJqBa3D9qD3AP/I2fd9tm7L0LfMcFuPWzs6rSe
-	wDNOCG3f1SnqbmewhS1FzyV/p+BTSnuDN8TdNySipohBQ==
+	by mailout.nyi.internal (Postfix) with ESMTP id 6D0FB5C00EA;
+	Fri, 12 Aug 2022 11:58:10 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Fri, 12 Aug 2022 11:58:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm3; t=1660319890; x=1660406290; bh=VqC2OzLFOe
+	aYVMeepszVHvKhNP5s/FroSOqEolo3pxs=; b=Wr0caW8llFJJ7mBYyor8JnQfpn
+	32NTKwkXFJwkOU4eUHddsrK/prj+XgAdb+AqzVTyNOF6ooAK8vhDDwdrsDEW2K2V
+	1Drn3NxU3isX5NNpRrzhlqeGSVrV2WpyLyaa1yQLMMYdO37txce0N7LwxAW3wWZH
+	16Sg5mOvOb3bACltsOGefOeQ+wg4V9fTEF9Jw2eVgpWnfJV46fhmPKmSvrK+TKoo
+	VApfNZECs+xz18gVlxjKVA/1qeDlIFnYHqZNamuX2OJn5Dc30xTMGFjJiGkk/otd
+	2akubcdbzv8lBwiozjAhi/vZUJUz3rIXRae8oRq8jYsLkVKuwPzWbY8jA8BA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1660315689; x=1660402089; bh=nFAyZba+rUSSpa4dMw5jpMYFEbkfzVnF4ks
-	UNlmVM3A=; b=BihLiXC4PtN2SfU+VBV4DM4mEGnvTGkeAlF76WFLDpPtsdd6EyW
-	e37t73EA8IFPtt3fToOOP+B/ifL4pxW9mDcVzHonzNgLr33xrvY6qMlH7lrYaK9i
-	mSCg7OtX4wdzNtWiC2HJeSNv8b+LHwus+ZyQz1CG7ctYzz9Q4cA6Xkwsu9aIWBin
-	5iyyveb1gQUWPlncAJZjadHrXvRqSwhDYqd1bG2zlwSL+7MNxD290cqWXcVKy9J8
-	teZQDNLC/l+zbEZVPuSvrV0aTLbbnCp7NnTxJBQDuCzqbZ0gBm5a3JOCUDvqfV5f
-	8NWdUYnmmIefT41RTs9uDzXZPb8H4V0aUjw==
-X-ME-Sender: <xms:KGj2YhGpHq2WIrq7pE725XRiIoCZuPX54xRzi2tLqVvtG7iikGyE-w>
-    <xme:KGj2YmVelSMbeOLBszGJHZvx_j8xIk1zEkiDmSirizDm8MEUHlGH6wf_EbxdNG9lx
-    VyEg0KOd87nXpowuQ>
-X-ME-Received: <xmr:KGj2YjJH5Ou5yStvqlggt-3S3VPopiDVqGkaU3UvtJont5VMnoETjhPeFiXp47p5MIIbl9pQsT94gh5XWiJTCHJjy3CJipVCHoNWDbR8-sdcgSiNd40Z_8tNxbSLtEehX88>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdegiedgkeduucetufdoteggodetrfdotf
+	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1660319890; x=1660406290; bh=VqC2OzLFOeaYVMeepszVHvKhNP5s
+	/FroSOqEolo3pxs=; b=Tz4uEnniWL94TuCLHKbTPz5z4TUOL4tgjn+DaSqO6rxx
+	Se8Io+F+S+Pi7ZBx+IlkS66+ZAz+qVywBnSAuR6r/+F3R3pKH8t0drHvllWhD629
+	17Rn6gWbPE0bHOpMSwr7Jz7a+mGCwiepGc5lTK56+SVNpP92pWKqcMOWu/CJHHh+
+	iHW1RzlbK4dzJF9gI3gWYzlFbv9JLegQUaq46drGzlid9HOaElQyIBk3AW1216sv
+	QIDfXJVli/RA6qSE3EMF5gBbOH69RBFZq7yGK1mTydW2bjZYqZTddBxFplJT5G/G
+	76REpm1kzbwo0agv1fFS41ZjPpcQ7VMvBU/J+knDEA==
+X-ME-Sender: <xms:kHj2YlQ5pNG1fCijCBfPX-m69j3JiNh3-xUDr4DYtBr6BMgxIvobCg>
+    <xme:kHj2Yuz808cpOIoTO_inuwQePhmJ98b_He_Opw3z964XjxmmhU0ZqxaBrfq5bBoLC
+    kWnspZk4pKUJ7fGcsU>
+X-ME-Received: <xmr:kHj2Yq0Qb1OZmAdNAdnr6Ns_RDgq0seYfJt63PB9PZd1fGaZcgdl62LUkGXr8ggU3HON5IpwfvF6WPsG_afTV7E0pGTRtQC9>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdegiedgleehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefhvfevufffkffoggfgsedtkeertd
-    ertddtnecuhfhrohhmpeetnhgurhgvficulfgvfhhfvghrhicuoegrnhgurhgvfiesrghj
-    rdhiugdrrghuqeenucggtffrrghtthgvrhhnpefhfefghfdtteehvddufefgtdelfeehge
-    ekvddthfehgedvkeevvddutdehgeefieenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:KGj2YnGoJMsaWvT6ybbpz7J_NwW1p2UPp55Jkc6ri5GLO5h8Dl1fqw>
-    <xmx:KGj2YnUCYfC1CLewAtzjPcceTe6yPk9DYzGxXV4dBvh-zinJel4LlQ>
-    <xmx:KGj2YiPGRbwDLiLwb-4PJMzLr7vyvceKoXb7jG0z5vn0yuS2f4SoDA>
-    <xmx:KWj2Ytd-LzVJnPfa4mOq4QVSvWXfHt3jFAsYW6FPwB_XzLWRruUe_Q>
-Feedback-ID: idfb84289:Fastmail
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    gfrhhlucfvnfffucdlvdefmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredt
+    tdejnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
+    hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeevvedvjeettedtheeuhfeitdfh
+    gffguefhvdfggfefteelkefgleekffevheejkeenucffohhmrghinhephihotghtohhprh
+    hojhgvtghtrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
+    lhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:kHj2YtDzpPl0RjfvJkbk7-UrWN4MNigZ0qnPVH0P6WgR5wwsvrtWYw>
+    <xmx:kHj2YuhzTN5vxORHjS_YwGORzUy4nx2Rs8uOCp6oGt-GYCzLUW1zRQ>
+    <xmx:kHj2YhpmduH-KbbhMUE0VTziheiKZsv5UTetSss4e06hbSFIjO4LNA>
+    <xmx:knj2YmK2-sCn1Sr_EVFS5pBB3dZ51bGa5ZZanhKPEpBF-JK8EiVzaA>
+Feedback-ID: i68a1478a:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Aug 2022 10:48:05 -0400 (EDT)
-From: Andrew Jeffery <andrew@aj.id.au>
-To: openipmi-developer@lists.sourceforge.net
-Subject: [PATCH] ipmi: kcs: Poll OBF briefly to reduce OBE latency
-Date: Sat, 13 Aug 2022 00:17:41 +0930
-Message-Id: <20220812144741.240315-1-andrew@aj.id.au>
-X-Mailer: git-send-email 2.34.1
+ 12 Aug 2022 11:58:08 -0400 (EDT)
+Date: Fri, 12 Aug 2022 10:58:07 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Roy Zhang <roy.zhang@hj-micro.com>
+Subject: Re: Re: OpenBMC compile failed =?utf-8?Q?i?=
+ =?utf-8?B?c3N1Ze+8iHVyZ2VuY3nvvIk=?=
+Message-ID: <YvZ4jwprW4wrKNkq@heinlein.stwcx.org.github.beta.tailscale.net>
+References: <YvP4f0jXDrwV+Ht7@heinlein.stwcx.org.github.beta.tailscale.net>
+ <AAYAqACcFBvXx6NfGBs2hKrI.3.1660179689710.Hmail.roy.zhang@hj-micro.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="NjjckO6YH35IMh7o"
+Content-Disposition: inline
+In-Reply-To: <AAYAqACcFBvXx6NfGBs2hKrI.3.1660179689710.Hmail.roy.zhang@hj-micro.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -88,64 +95,59 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: minyard@acm.org, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, joel@jms.id.au, linux-arm-kernel@lists.infradead.org
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The ASPEED KCS devices don't provide a BMC-side interrupt for the host
-reading the output data register (ODR). The act of the host reading ODR
-clears the output buffer full (OBF) flag in the status register (STR),
-informing the BMC it can transmit a subsequent byte.
 
-On the BMC side the KCS client must enable the OBE event *and* perform a
-subsequent read of STR anyway to avoid races - the polling provides a
-window for the host to read ODR if data was freshly written while
-minimising BMC-side latency.
+--NjjckO6YH35IMh7o
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Andrew Jeffery <andrew@aj.id.au>
----
- drivers/char/ipmi/kcs_bmc_aspeed.c | 24 +++++++++++++++++++++---
- 1 file changed, 21 insertions(+), 3 deletions(-)
+On Thu, Aug 11, 2022 at 09:01:29AM +0800, Roy Zhang wrote:
+>=20
+> Hello Patrick,
+>=20
+>=20
+> 1.below is my build machine infor =EF=BC=9A
+> bmc@docker:/home/openbmc/build/mtjade/conf$ uname -r=20
+> 5.4.196-1.el7.elrepo.x86_64
+> bmc@docker:/home/openbmc/build/mtjade/conf$ uname -a
+> Linux docker 5.4.196-1.el7.elrepo.x86_64 #1 SMP Tue May 24 12:49:20 EDT 2=
+022 x86_64 x86_64 x86_64 GNU/Linux
+> bmc@docker:/home/openbmc/build/mtjade/conf$=20
 
-diff --git a/drivers/char/ipmi/kcs_bmc_aspeed.c b/drivers/char/ipmi/kcs_bmc_aspeed.c
-index cdc88cde1e9a..417e5a3ccfae 100644
---- a/drivers/char/ipmi/kcs_bmc_aspeed.c
-+++ b/drivers/char/ipmi/kcs_bmc_aspeed.c
-@@ -399,13 +399,31 @@ static void aspeed_kcs_check_obe(struct timer_list *timer)
- static void aspeed_kcs_irq_mask_update(struct kcs_bmc_device *kcs_bmc, u8 mask, u8 state)
- {
- 	struct aspeed_kcs_bmc *priv = to_aspeed_kcs_bmc(kcs_bmc);
-+	int rc;
-+	u8 str;
- 
- 	/* We don't have an OBE IRQ, emulate it */
- 	if (mask & KCS_BMC_EVENT_TYPE_OBE) {
--		if (KCS_BMC_EVENT_TYPE_OBE & state)
--			mod_timer(&priv->obe.timer, jiffies + OBE_POLL_PERIOD);
--		else
-+		if (KCS_BMC_EVENT_TYPE_OBE & state) {
-+			/*
-+			 * Given we don't have an OBE IRQ, delay by polling briefly to see if we can
-+			 * observe such an event before returning to the caller. This is not
-+			 * incorrect because OBF may have already become clear before enabling the
-+			 * IRQ if we had one, under which circumstance no event will be propagated
-+			 * anyway.
-+			 *
-+			 * The onus is on the client to perform a race-free check that it hasn't
-+			 * missed the event.
-+			 */
-+			rc = read_poll_timeout_atomic(aspeed_kcs_inb, str,
-+						      !(str & KCS_BMC_STR_OBF), 1, 100, false,
-+						      &priv->kcs_bmc, priv->kcs_bmc.ioreg.str);
-+			/* Time for the slow path? */
-+			if (rc == -ETIMEDOUT)
-+				mod_timer(&priv->obe.timer, jiffies + OBE_POLL_PERIOD);
-+		} else {
- 			del_timer(&priv->obe.timer);
-+		}
- 	}
- 
- 	if (mask & KCS_BMC_EVENT_TYPE_IBF) {
--- 
-2.34.1
+What is 'docker'?  Are you running under Docker or did you just name
+your system 'docker'?  This is very confusing.
 
+I'm guessing you're running some variant of CentOS 7 due to the "EL7" in
+your kernel name.  Please make sure you've installed everything listed
+in the Yocto documentation for your distro:
+
+https://docs.yoctoproject.org/singleindex.html#centos-7-packages
+
+--=20
+Patrick Williams
+
+--NjjckO6YH35IMh7o
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmL2eI0ACgkQqwNHzC0A
+wRlzRA/+Jb0BrlAn0nlN1osl4PZywdbnupEOgTg2fhSQFhTkn+Je/NSkpKdjjwUT
+o/5A0SlJqIJwo0ocdL3NqSeH1ZNzkhHa1mnPGbNVJgSxg5dBlUkidzrYrHE2RvDt
+X5fcXSKwuJs9TC2z5728tjCVp97o9/OlaDP6nYnzHUc0MxZq0FVsFCKNcqB+YNgL
+clfEfflFUUU8ZZJX/f9Ast8W5fMSZYYeE29kiecneBt4nT8S+qZa+4QCgNYRHgya
+o9lRw0TfDoZOCn4cwFDZ0bqSHuzt3pB7ruEGIih2M6kEyhbxCcnM76ZGiJsQfgVE
+9F+Hc7GjLkAg9zTPqNfXNPiaquGhuBJub2ijkC09IXajmCAe1sXmTfeciy9agFoS
+zD1HLOjIrKf5fG9ylCc3F6hw1CBPCoUPpuYm/w3u1VUzo6pLn++YTl7r5L4rY4Tn
+7K78io6UO+BZKdYuIaJboNhBkVCfQ+GdJs0WQBGNa8Wghz/tJT84kr0uC0oxBmXj
+0/JWpZ76PWcocWvWm5YoWtgts4JIL/Rc7ie/iTFtV2Ng/ooDS9frpJW16+P3FXeH
++1O8bklC75ni13Ye+QHSweU1qjQ7fOEa/0KpDNZoDMBgE1xrpTWfRNz9aanpP6sg
+2OAjFM9xgnBdxMyg6E415bDwkWBxq92oPiOTqqxTV+nFA4SgKlM=
+=a/se
+-----END PGP SIGNATURE-----
+
+--NjjckO6YH35IMh7o--
