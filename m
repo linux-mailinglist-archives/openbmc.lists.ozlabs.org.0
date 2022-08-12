@@ -2,88 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5DBA659135E
-	for <lists+openbmc@lfdr.de>; Fri, 12 Aug 2022 17:58:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D45C15915D1
+	for <lists+openbmc@lfdr.de>; Fri, 12 Aug 2022 21:15:32 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4M47dJ2jQxz3bd4
-	for <lists+openbmc@lfdr.de>; Sat, 13 Aug 2022 01:58:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4M4D0L5c04z3c5w
+	for <lists+openbmc@lfdr.de>; Sat, 13 Aug 2022 05:15:30 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=Wr0caW8l;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=Tz4uEnni;
+	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=i7YhVY6x;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.28; helo=out4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com; envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=Wr0caW8l;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=Tz4uEnni;
+	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=i7YhVY6x;
 	dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4M47cm5Twtz30Hf
-	for <openbmc@lists.ozlabs.org>; Sat, 13 Aug 2022 01:58:14 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 6D0FB5C00EA;
-	Fri, 12 Aug 2022 11:58:10 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Fri, 12 Aug 2022 11:58:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm3; t=1660319890; x=1660406290; bh=VqC2OzLFOe
-	aYVMeepszVHvKhNP5s/FroSOqEolo3pxs=; b=Wr0caW8llFJJ7mBYyor8JnQfpn
-	32NTKwkXFJwkOU4eUHddsrK/prj+XgAdb+AqzVTyNOF6ooAK8vhDDwdrsDEW2K2V
-	1Drn3NxU3isX5NNpRrzhlqeGSVrV2WpyLyaa1yQLMMYdO37txce0N7LwxAW3wWZH
-	16Sg5mOvOb3bACltsOGefOeQ+wg4V9fTEF9Jw2eVgpWnfJV46fhmPKmSvrK+TKoo
-	VApfNZECs+xz18gVlxjKVA/1qeDlIFnYHqZNamuX2OJn5Dc30xTMGFjJiGkk/otd
-	2akubcdbzv8lBwiozjAhi/vZUJUz3rIXRae8oRq8jYsLkVKuwPzWbY8jA8BA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1660319890; x=1660406290; bh=VqC2OzLFOeaYVMeepszVHvKhNP5s
-	/FroSOqEolo3pxs=; b=Tz4uEnniWL94TuCLHKbTPz5z4TUOL4tgjn+DaSqO6rxx
-	Se8Io+F+S+Pi7ZBx+IlkS66+ZAz+qVywBnSAuR6r/+F3R3pKH8t0drHvllWhD629
-	17Rn6gWbPE0bHOpMSwr7Jz7a+mGCwiepGc5lTK56+SVNpP92pWKqcMOWu/CJHHh+
-	iHW1RzlbK4dzJF9gI3gWYzlFbv9JLegQUaq46drGzlid9HOaElQyIBk3AW1216sv
-	QIDfXJVli/RA6qSE3EMF5gBbOH69RBFZq7yGK1mTydW2bjZYqZTddBxFplJT5G/G
-	76REpm1kzbwo0agv1fFS41ZjPpcQ7VMvBU/J+knDEA==
-X-ME-Sender: <xms:kHj2YlQ5pNG1fCijCBfPX-m69j3JiNh3-xUDr4DYtBr6BMgxIvobCg>
-    <xme:kHj2Yuz808cpOIoTO_inuwQePhmJ98b_He_Opw3z964XjxmmhU0ZqxaBrfq5bBoLC
-    kWnspZk4pKUJ7fGcsU>
-X-ME-Received: <xmr:kHj2Yq0Qb1OZmAdNAdnr6Ns_RDgq0seYfJt63PB9PZd1fGaZcgdl62LUkGXr8ggU3HON5IpwfvF6WPsG_afTV7E0pGTRtQC9>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdegiedgleehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    gfrhhlucfvnfffucdlvdefmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredt
-    tdejnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
-    hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeevvedvjeettedtheeuhfeitdfh
-    gffguefhvdfggfefteelkefgleekffevheejkeenucffohhmrghinhephihotghtohhprh
-    hojhgvtghtrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
-    lhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:kHj2YtDzpPl0RjfvJkbk7-UrWN4MNigZ0qnPVH0P6WgR5wwsvrtWYw>
-    <xmx:kHj2YuhzTN5vxORHjS_YwGORzUy4nx2Rs8uOCp6oGt-GYCzLUW1zRQ>
-    <xmx:kHj2YhpmduH-KbbhMUE0VTziheiKZsv5UTetSss4e06hbSFIjO4LNA>
-    <xmx:knj2YmK2-sCn1Sr_EVFS5pBB3dZ51bGa5ZZanhKPEpBF-JK8EiVzaA>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 12 Aug 2022 11:58:08 -0400 (EDT)
-Date: Fri, 12 Aug 2022 10:58:07 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Roy Zhang <roy.zhang@hj-micro.com>
-Subject: Re: Re: OpenBMC compile failed =?utf-8?Q?i?=
- =?utf-8?B?c3N1Ze+8iHVyZ2VuY3nvvIk=?=
-Message-ID: <YvZ4jwprW4wrKNkq@heinlein.stwcx.org.github.beta.tailscale.net>
-References: <YvP4f0jXDrwV+Ht7@heinlein.stwcx.org.github.beta.tailscale.net>
- <AAYAqACcFBvXx6NfGBs2hKrI.3.1660179689710.Hmail.roy.zhang@hj-micro.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4M4CzY19Mrz3bvZ
+	for <openbmc@lists.ozlabs.org>; Sat, 13 Aug 2022 05:14:48 +1000 (AEST)
+Received: from localhost (unknown [127.0.0.1])
+	by mta-01.yadro.com (Postfix) with ESMTP id E74AF413AB;
+	Fri, 12 Aug 2022 19:14:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
+	mime-version:user-agent:content-transfer-encoding:content-type
+	:content-type:organization:references:in-reply-to:date:date:from
+	:from:subject:subject:message-id:received:received:received
+	:received; s=mta-01; t=1660331680; x=1662146081; bh=O8C6Rrf925QL
+	0hlV6Dlsog6YXXDA78MO/HtCuB6xDSc=; b=i7YhVY6xh81fzh9nbPxhAKxDNuiB
+	4YiBfF8zRIwTNGE2xKd/pOuGFi0HYSbMDw4SkQlB5qDAW6/99SHUCJZybJ/sRSlc
+	ZpGuXzM5dBj9Td8RbmTmuZc4Yv3qgAtkRxtiM0bU3VgLtF5uJCVtr3wWFA9AySv2
+	PcSqEwNi0FNoG1w=
+X-Virus-Scanned: amavisd-new at yadro.com
+Received: from mta-01.yadro.com ([127.0.0.1])
+	by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id hVOZVfZahW87; Fri, 12 Aug 2022 22:14:40 +0300 (MSK)
+Received: from T-EXCH-01.corp.yadro.com (t-exch-01.corp.yadro.com [172.17.10.101])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by mta-01.yadro.com (Postfix) with ESMTPS id EA232413A8;
+	Fri, 12 Aug 2022 22:14:39 +0300 (MSK)
+Received: from T-EXCH-09.corp.yadro.com (172.17.11.59) by
+ T-EXCH-01.corp.yadro.com (172.17.10.101) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
+ 15.1.669.32; Fri, 12 Aug 2022 22:14:39 +0300
+Received: from [10.199.0.23] (10.199.0.23) by T-EXCH-09.corp.yadro.com
+ (172.17.11.59) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1118.9; Fri, 12 Aug
+ 2022 22:14:38 +0300
+Message-ID: <e10b60146c5a120eb615be8a4513f9a9f9a91756.camel@yadro.com>
+Subject: Re: Ynt: (External) Re: Adding Inventory
+From: Andrei Kartashev <a.kartashev@yadro.com>
+To: =?UTF-8?Q?O=C4=9Fuzhan_=C3=87A=C4=9ELAR?= <oguzhan.caglar@pavotek.com.tr>,
+	"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Date: Fri, 12 Aug 2022 22:14:38 +0300
+In-Reply-To: <dbe33b3b957344ae9efa8c56e4c6a554@pavotek.com.tr>
+References: <6fbe1a4cf05a483b86986e1cdf5f53aa@pavotek.com.tr>
+	,<794cf20fd781d5a28746800c05b41b866c099483.camel@yadro.com>
+	 <dbe33b3b957344ae9efa8c56e4c6a554@pavotek.com.tr>
+Organization: YADRO
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.44.2 
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="NjjckO6YH35IMh7o"
-Content-Disposition: inline
-In-Reply-To: <AAYAqACcFBvXx6NfGBs2hKrI.3.1660179689710.Hmail.roy.zhang@hj-micro.com>
+X-Originating-IP: [10.199.0.23]
+X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
+ T-EXCH-09.corp.yadro.com (172.17.11.59)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,59 +79,142 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+I have no idea on what do you mean saying "added the CPU and DIMM
+configuration files within the .yaml files", but I guess you are trying
+to hardcode this information, which I believe not what ou actually
+expect to get.
+You probably should learn how the OpenBMC works inside. You can use
+busctl tool for that.
 
---NjjckO6YH35IMh7o
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Regarding compilation error of smbios-mdr daemon, I can say nothing
+without knowing the issue. There should not be any special
+configuration files for this smbios-mdr recipe but probably you trying
+to build CPUInfo part of the recipe without having PECI library. You
+likely should disable cpuinfo app.
 
-On Thu, Aug 11, 2022 at 09:01:29AM +0800, Roy Zhang wrote:
+On Fri, 2022-08-12 at 06:50 +0000, O=C4=9Fuzhan =C3=87A=C4=9ELAR wrote:
+> Hi Andrei,
 >=20
-> Hello Patrick,
+> Thank you for your information. I have already added the=C2=A0CPU and DIM=
+M
+> configuration files within the .yaml files. When I added these
+> files(related to the path:=C2=A0xyz.openbmc_project.Inventory.Item.Cpu
+> and=C2=A0xyz.openbmc_project.Inventory.Item.Dimm), I see=C2=A0the CPU and=
+ DIMM
+> entries over WebUI. However, In this way, I add the properties such
+> as (PartNumber,=C2=A0SerialNumber, etc.) on my own.=C2=A0I have already
+> generated a .bin file that has FRU information (chassis, board etc.)
+> and I included this in BMC's image file. In addition, I see the
+> properties related to Chassis, Board on WebUI.
+>=20
+> I have already checked the smbios-mdr daemon in openbmc. However,
+> when I include this daemon in my yocto image, the bitbake shows=C2=A0some
+> errors that are related to smbios-mdr's .cpp files. I guess I have to
+> create some configuration files before doing it. Is it wrong? What
+> should I do?
+>=20
+> I guess I have to need some code in BIOS. Is there any example to do
+> this? I don't know where I should start.=C2=A0
+>=20
+> Thank you.
+>=20
+> O=C4=9Fuzhan =C3=87a=C4=9Flar
+> Software Design Engineer
+> =C2=A0
+> =C2=A0
+> =C2=A0
+> Pavo Tasar=C4=B1m =C3=9Cretim Elektronik Tic. A.=C5=9E.
+> Teknopark =C4=B0stanbul, Kurtk=C3=B6y Pendik =C4=B0STANBUL
+> =C2=A0
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+> Tel=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0 : +90 (216) 354 72 86
+> Faks=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 : +90 (216) 354 76 7=
+7
+> Gsm=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 : +90 (507) 585=
+ 10 60
+> oguzhan.caglar@pavotek.com.tr
+> =C2=A0
+> www.pavotek.com.tr
+>=20
+> =C2=A0
+> G=C3=B6nderen: Andrei Kartashev <a.kartashev@yadro.com>
+> G=C3=B6nderildi: 11 A=C4=9Fustos 2022 Per=C5=9Fembe 22:28:16
+> Kime: O=C4=9Fuzhan =C3=87A=C4=9ELAR; openbmc@lists.ozlabs.org
+> Konu: (External) Re: Adding Inventory
+> =C2=A0
+>=20
+> Warning: This e-mail came from an external source. If you do not
+> trust the sender or if there is anything suspicious in the content of
+> the e-mail, please inform the IT department.
 >=20
 >=20
-> 1.below is my build machine infor =EF=BC=9A
-> bmc@docker:/home/openbmc/build/mtjade/conf$ uname -r=20
-> 5.4.196-1.el7.elrepo.x86_64
-> bmc@docker:/home/openbmc/build/mtjade/conf$ uname -a
-> Linux docker 5.4.196-1.el7.elrepo.x86_64 #1 SMP Tue May 24 12:49:20 EDT 2=
-022 x86_64 x86_64 x86_64 GNU/Linux
-> bmc@docker:/home/openbmc/build/mtjade/conf$=20
-
-What is 'docker'?  Are you running under Docker or did you just name
-your system 'docker'?  This is very confusing.
-
-I'm guessing you're running some variant of CentOS 7 due to the "EL7" in
-your kernel name.  Please make sure you've installed everything listed
-in the Yocto documentation for your distro:
-
-https://docs.yoctoproject.org/singleindex.html#centos-7-packages
+>=20
+> Hello Oguzhan,
+>=20
+> This is a very common question for newcomers, I believe is was
+> already
+> answered somewhere in the list.
+> BMC out of the box don't have any knowledge on host's equipment (CPU,
+> DIMM, Drive, AIC, etc) - it is up to you to deliver this information
+> from host to BMC. As for now the most common way to feed BMC the
+> information regarding CPU and DIMM is to transfer smbios tables via
+> ipmi. You can implement any other mechanism but any way, you need to
+> have some code in your BIOS.
+>=20
+> As soon as you have the CPU/DIMM information on BMC it can be shown
+> in
+> bmcweb by implementing corresponding dbus interfaces
+> (xyz.openbmc_project.Inventory.Item.Cpu and
+> xyz.openbmc_project.Inventory.Item.Dimm). smbiosmdrv2 daemon do this,
+> but you also can add EntityManager configuration files for this or
+> write your own daemon to expose the interfaces.
+>=20
+> On Thu, 2022-08-04 at 08:07 +0000, O=C4=9Fuzhan =C3=87A=C4=9ELAR wrote:
+> > Hello,
+> >=20
+> > I'm working on openbmc for ast2500 bmc. I want to add inventory
+> > such
+> > as CPU and DIMM etc. I added the chassis from .json file but I
+> > couldn't add the CPU and DIMM. I know this is to related with
+> > entity-
+> > manager. How can I add these inventory on WEBUI? Can you give some
+> > information about this issue?
+> >=20
+> > Regards.
+> >=20
+> > O=C4=9Fuzhan =C3=87a=C4=9Flar
+> > Software Design Engineer
+> >=20
+> >=20
+> >=20
+> > Pavo Tasar=C4=B1m =C3=9Cretim Elektronik Tic. A.=C5=9E.
+> > Teknopark =C4=B0stanbul, Kurtk=C3=B6y Pendik =C4=B0STANBUL
+> >=20
+> >=20
+> > Tel=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 : +90 (216) 354 72 86
+> > Faks=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 : +90 (216) 354 76=
+ 77
+> > Gsm=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 : +90 (507) 5=
+85 10 60
+> > oguzhan.caglar@pavotek.com.tr
+> >=20
+> > www.pavotek.com.tr
+> >=20
+> >=20
+>=20
+> --
+> Best regards,
+> Andrei Kartashev,
+> Lead BMC Developer
+>=20
 
 --=20
-Patrick Williams
+Best regards,
+Andrei Kartashev,
+Lead BMC Developer
 
---NjjckO6YH35IMh7o
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmL2eI0ACgkQqwNHzC0A
-wRlzRA/+Jb0BrlAn0nlN1osl4PZywdbnupEOgTg2fhSQFhTkn+Je/NSkpKdjjwUT
-o/5A0SlJqIJwo0ocdL3NqSeH1ZNzkhHa1mnPGbNVJgSxg5dBlUkidzrYrHE2RvDt
-X5fcXSKwuJs9TC2z5728tjCVp97o9/OlaDP6nYnzHUc0MxZq0FVsFCKNcqB+YNgL
-clfEfflFUUU8ZZJX/f9Ast8W5fMSZYYeE29kiecneBt4nT8S+qZa+4QCgNYRHgya
-o9lRw0TfDoZOCn4cwFDZ0bqSHuzt3pB7ruEGIih2M6kEyhbxCcnM76ZGiJsQfgVE
-9F+Hc7GjLkAg9zTPqNfXNPiaquGhuBJub2ijkC09IXajmCAe1sXmTfeciy9agFoS
-zD1HLOjIrKf5fG9ylCc3F6hw1CBPCoUPpuYm/w3u1VUzo6pLn++YTl7r5L4rY4Tn
-7K78io6UO+BZKdYuIaJboNhBkVCfQ+GdJs0WQBGNa8Wghz/tJT84kr0uC0oxBmXj
-0/JWpZ76PWcocWvWm5YoWtgts4JIL/Rc7ie/iTFtV2Ng/ooDS9frpJW16+P3FXeH
-+1O8bklC75ni13Ye+QHSweU1qjQ7fOEa/0KpDNZoDMBgE1xrpTWfRNz9aanpP6sg
-2OAjFM9xgnBdxMyg6E415bDwkWBxq92oPiOTqqxTV+nFA4SgKlM=
-=a/se
------END PGP SIGNATURE-----
-
---NjjckO6YH35IMh7o--
