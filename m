@@ -2,74 +2,54 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF694592B68
-	for <lists+openbmc@lfdr.de>; Mon, 15 Aug 2022 12:24:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A53D593253
+	for <lists+openbmc@lfdr.de>; Mon, 15 Aug 2022 17:45:21 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4M5r3s26tgz305M
-	for <lists+openbmc@lfdr.de>; Mon, 15 Aug 2022 20:24:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4M5zBR2Nw7z3bl4
+	for <lists+openbmc@lfdr.de>; Tue, 16 Aug 2022 01:45:19 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=SFkAEgEg;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=ETeBHPMc;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com; envelope-from=a.kartashev@yadro.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=broonie@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=SFkAEgEg;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=ETeBHPMc;
 	dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4M5r3Q0JqVz2xbC
-	for <openbmc@lists.ozlabs.org>; Mon, 15 Aug 2022 20:23:45 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
-	by mta-01.yadro.com (Postfix) with ESMTP id DBA32412E5;
-	Mon, 15 Aug 2022 10:23:40 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
-	mime-version:user-agent:content-transfer-encoding:content-type
-	:content-type:organization:references:in-reply-to:date:date:from
-	:from:subject:subject:message-id:received:received:received
-	:received; s=mta-01; t=1660559017; x=1662373418; bh=Pcb21t+RVHjF
-	e1MBHwoCZU0sKIveN7FteANWAtSkdO0=; b=SFkAEgEgI4ShNraipzEJW2XI1TbY
-	8C9oH+qa+9vLzsxRUpPVPbBkooM7wxiKeRp3uwWZK6zy9j2xZ5z0/pN+CVlmzzBx
-	J9tLpFZXpSA2sbE/X/g3fXaaRnmd1wGiAebjE6YrOmXwN/0L2o7QqTC1DKn9JjXU
-	IVlrWnS43zLDkMA=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
-	by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id xWpF2OLhvp-q; Mon, 15 Aug 2022 13:23:37 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com [172.17.10.102])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4M5zB404N2z2xG8
+	for <openbmc@lists.ozlabs.org>; Tue, 16 Aug 2022 01:44:59 +1000 (AEST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mta-01.yadro.com (Postfix) with ESMTPS id B3FBA412EE;
-	Mon, 15 Aug 2022 13:23:34 +0300 (MSK)
-Received: from T-EXCH-09.corp.yadro.com (172.17.11.59) by
- T-EXCH-02.corp.yadro.com (172.17.10.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.669.32; Mon, 15 Aug 2022 13:23:34 +0300
-Received: from [10.199.0.19] (10.199.0.19) by T-EXCH-09.corp.yadro.com
- (172.17.11.59) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1118.9; Mon, 15 Aug
- 2022 13:23:33 +0300
-Message-ID: <fe14142bd0ce01238f87262c107b5c71425c3ab8.camel@yadro.com>
-Subject: Re: Ynt: Ynt: (External) Re: Adding Inventory
-From: Andrei Kartashev <a.kartashev@yadro.com>
-To: =?UTF-8?Q?O=C4=9Fuzhan_=C3=87A=C4=9ELAR?= <oguzhan.caglar@pavotek.com.tr>,
-	"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Date: Mon, 15 Aug 2022 13:23:33 +0300
-In-Reply-To: <b46a5098aabb470b8515c16aa1ef9f65@pavotek.com.tr>
-References: <6fbe1a4cf05a483b86986e1cdf5f53aa@pavotek.com.tr>
-	 ,<794cf20fd781d5a28746800c05b41b866c099483.camel@yadro.com>
-	 <dbe33b3b957344ae9efa8c56e4c6a554@pavotek.com.tr>
-	,<e10b60146c5a120eb615be8a4513f9a9f9a91756.camel@yadro.com>
-	 <b46a5098aabb470b8515c16aa1ef9f65@pavotek.com.tr>
-Organization: YADRO
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.2 
+	by dfw.source.kernel.org (Postfix) with ESMTPS id 6400F61132;
+	Mon, 15 Aug 2022 15:44:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1BECC433C1;
+	Mon, 15 Aug 2022 15:44:54 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1660578297;
+	bh=OkFapyn4xOtZLGADcDAUVjgBIurU3qGxIAY1Mkf6qoE=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=ETeBHPMcFW3ZDtXQq936zJ20nAAFxeqmLmaRBQ78pLjnmCtE+wKyAxpr/vEsbTF32
+	 U6alnnwfxlxSjV0KG/bUUB+PkFp5Hyjc1sEmQZhTZ+YaEwrcsqJMQwAcI/A+b8j8dN
+	 CwzmcDtCRPQCzHSdBEqd2FloiDNc6hjuTt3fgCxCYHjAw7ZdEutqYvWFOoxpTzmqTC
+	 +NV2Szgwgp47qSg477gWDW05sQV0bYufwwxhc7I70kLH6cFPOV1u6AGN346hRU7WTL
+	 6f57hy60QsKe4PF2JAVwnWRAADqEgrqMGd0QE+t3O0TLVjFnw0/sE/v7A1G3dfgZRB
+	 wSREOaVjJMj5Q==
+From: Mark Brown <broonie@kernel.org>
+To: venture@google.com, avifishman70@gmail.com, krzysztof.kozlowski+dt@linaro.org, Tomer Maimon <tmaimon77@gmail.com>,
+ yuenn@google.com, benjaminfair@google.com, tali.perry1@gmail.com, robh+dt@kernel.org, joel@jms.id.au
+In-Reply-To: <20220722114136.251415-1-tmaimon77@gmail.com>
+References: <20220722114136.251415-1-tmaimon77@gmail.com>
+Subject: Re: [PATCH v2 0/2] spi: npcm-pspi: add Arbel NPCM8XX support
+Message-Id: <166057829444.697678.15497743196363589755.b4-ty@kernel.org>
+Date: Mon, 15 Aug 2022 16:44:54 +0100
 MIME-Version: 1.0
-X-Originating-IP: [10.199.0.19]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-09.corp.yadro.com (172.17.11.59)
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.10.0-dev-fe10a
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,225 +61,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-As I assumed, it is PCUInfo issue:
+On Fri, 22 Jul 2022 14:41:34 +0300, Tomer Maimon wrote:
+> This patch set adds Arbel NPCM8XX Peripheral SPI (PSPI) support to PSPI NPCM
+> driver.
+> 
+> This patch set was separated from the full duplex patch.
+> https://lore.kernel.org/lkml/YtlES7MX6nJr8l+L@sirena.org.uk/
+> 
+> Addressed comments from:
+>  - Mark Brown : https://www.spinics.net/lists/kernel/msg4447178.html
+> 
+> [...]
 
-|
-/home/pavo/oguz/pavoopenbmc/aspeedopenbmc/openbmc/build/epca/tmp/work/a
-rm1176jzs-openbmc-linux-gnueabi/smbios-mdr/1.0+gitAUTOINC+e4ea37716d-
-r1/git/src/cpuinfo_main.cpp:407:14: error: 'icxd' was not declared in
-this scope; did you mean 'icx'?
-|   407 |         case icxd:
-|       |              ^~~~
-|       |              icx
-|
-/home/pavo/oguz/pavoopenbmc/aspeedopenbmc/openbmc/build/epca/tmp/work/a
-rm1176jzs-openbmc-linux-gnueabi/smbios-mdr/1.0+gitAUTOINC+e4ea37716d-
-r1/git/src/cpuinfo_main.cpp:408:14: error: 'spr' was not declared in
-this scope
-|   408 |         case spr:
-|       |              ^~~
+Applied to
 
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
-Turn it off in you bbappend with `PACKAGECONFIG:remove =3D " cpuinfo"`
+Thanks!
 
-=20
+[1/2] dt-binding: spi: npcm-pspi: Add npcm845 compatible
+      commit: ac2c55e2260e0ae019119e1b2a52dda138039841
+[2/2] spi: npcm-pspi: Add NPCM845 peripheral SPI support
+      commit: 6db8595a3e1996654a130760d363912cdd28706d
 
-On Mon, 2022-08-15 at 07:25 +0000, O=C4=9Fuzhan =C3=87A=C4=9ELAR wrote:
->=20
-> I'm sharing with you that my yocto errors are related to smbios-
-> mdr=C2=A0in the .txt file.=C2=A0
->=20
-> I don't understand, How can the CPU information match with entity-
-> manager configuration files? I saw your comment in openbmc list about
-> PCIe. It probes only with=C2=A0xyz.openbmc_project.FruDevice.=C2=A0
->=20
->=20
-> O=C4=9Fuzhan =C3=87a=C4=9Flar
-> Software Design Engineer
-> =C2=A0
-> =C2=A0
-> =C2=A0
-> Pavo Tasar=C4=B1m =C3=9Cretim Elektronik Tic. A.=C5=9E.
-> Teknopark =C4=B0stanbul, Kurtk=C3=B6y Pendik =C4=B0STANBUL
-> =C2=A0
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
-> Tel=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0 : +90 (216) 354 72 86
-> Faks=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 : +90 (216) 354 76 7=
-7
-> Gsm=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 : +90 (507) 585=
- 10 60
-> oguzhan.caglar@pavotek.com.tr
-> =C2=A0
-> www.pavotek.com.tr
->=20
-> =C2=A0
-> G=C3=B6nderen: Andrei Kartashev <a.kartashev@yadro.com>
-> G=C3=B6nderildi: 12 A=C4=9Fustos 2022 Cuma 22:14:38
-> Kime: O=C4=9Fuzhan =C3=87A=C4=9ELAR; openbmc@lists.ozlabs.org
-> Konu: Re: Ynt: (External) Re: Adding Inventory
-> =C2=A0
->=20
-> Warning: This e-mail came from an external source. If you do not
-> trust the sender or if there is anything suspicious in the content of
-> the e-mail, please inform the IT department.
->=20
->=20
->=20
-> I have no idea on what do you mean saying "added the CPU and DIMM
-> configuration files within the .yaml files", but I guess you are
-> trying
-> to hardcode this information, which I believe not what ou actually
-> expect to get.
-> You probably should learn how the OpenBMC works inside. You can use
-> busctl tool for that.
->=20
-> Regarding compilation error of smbios-mdr daemon, I can say nothing
-> without knowing the issue. There should not be any special
-> configuration files for this smbios-mdr recipe but probably you
-> trying
-> to build CPUInfo part of the recipe without having PECI library. You
-> likely should disable cpuinfo app.
->=20
-> On Fri, 2022-08-12 at 06:50 +0000, O=C4=9Fuzhan =C3=87A=C4=9ELAR wrote:
-> > Hi Andrei,
-> >=20
-> > Thank you for your information. I have already added the CPU and
-> > DIMM
-> > configuration files within the .yaml files. When I added these
-> > files(related to the path: xyz.openbmc_project.Inventory.Item.Cpu
-> > and xyz.openbmc_project.Inventory.Item.Dimm), I see the CPU and
-> > DIMM
-> > entries over WebUI. However, In this way, I add the properties such
-> > as (PartNumber, SerialNumber, etc.) on my own. I have already
-> > generated a .bin file that has FRU information (chassis, board
-> > etc.)
-> > and I included this in BMC's image file. In addition, I see the
-> > properties related to Chassis, Board on WebUI.
-> >=20
-> > I have already checked the smbios-mdr daemon in openbmc. However,
-> > when I include this daemon in my yocto image, the bitbake shows
-> > some
-> > errors that are related to smbios-mdr's .cpp files. I guess I have
-> > to
-> > create some configuration files before doing it. Is it wrong? What
-> > should I do?
-> >=20
-> > I guess I have to need some code in BIOS. Is there any example to
-> > do
-> > this? I don't know where I should start.
-> >=20
-> > Thank you.
-> >=20
-> > O=C4=9Fuzhan =C3=87a=C4=9Flar
-> > Software Design Engineer
-> >=20
-> >=20
-> >=20
-> > Pavo Tasar=C4=B1m =C3=9Cretim Elektronik Tic. A.=C5=9E.
-> > Teknopark =C4=B0stanbul, Kurtk=C3=B6y Pendik =C4=B0STANBUL
-> >=20
-> >=20
-> > Tel=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 : +90 (216) 354 72 86
-> > Faks=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 : +90 (216) 354 76=
- 77
-> > Gsm=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 : +90 (507) 5=
-85 10 60
-> > oguzhan.caglar@pavotek.com.tr
-> >=20
-> > www.pavotek.com.tr
-> >=20
-> >=20
-> > G=C3=B6nderen: Andrei Kartashev <a.kartashev@yadro.com>
-> > G=C3=B6nderildi: 11 A=C4=9Fustos 2022 Per=C5=9Fembe 22:28:16
-> > Kime: O=C4=9Fuzhan =C3=87A=C4=9ELAR; openbmc@lists.ozlabs.org
-> > Konu: (External) Re: Adding Inventory
-> >=20
-> >=20
-> > Warning: This e-mail came from an external source. If you do not
-> > trust the sender or if there is anything suspicious in the content
-> > of
-> > the e-mail, please inform the IT department.
-> >=20
-> >=20
-> >=20
-> > Hello Oguzhan,
-> >=20
-> > This is a very common question for newcomers, I believe is was
-> > already
-> > answered somewhere in the list.
-> > BMC out of the box don't have any knowledge on host's equipment
-> > (CPU,
-> > DIMM, Drive, AIC, etc) - it is up to you to deliver this
-> > information
-> > from host to BMC. As for now the most common way to feed BMC the
-> > information regarding CPU and DIMM is to transfer smbios tables via
-> > ipmi. You can implement any other mechanism but any way, you need
-> > to
-> > have some code in your BIOS.
-> >=20
-> > As soon as you have the CPU/DIMM information on BMC it can be shown
-> > in
-> > bmcweb by implementing corresponding dbus interfaces
-> > (xyz.openbmc_project.Inventory.Item.Cpu and
-> > xyz.openbmc_project.Inventory.Item.Dimm). smbiosmdrv2 daemon do
-> > this,
-> > but you also can add EntityManager configuration files for this or
-> > write your own daemon to expose the interfaces.
-> >=20
-> > On Thu, 2022-08-04 at 08:07 +0000, O=C4=9Fuzhan =C3=87A=C4=9ELAR wrote:
-> > > Hello,
-> > >=20
-> > > I'm working on openbmc for ast2500 bmc. I want to add inventory
-> > > such
-> > > as CPU and DIMM etc. I added the chassis from .json file but I
-> > > couldn't add the CPU and DIMM. I know this is to related with
-> > > entity-
-> > > manager. How can I add these inventory on WEBUI? Can you give
-> > > some
-> > > information about this issue?
-> > >=20
-> > > Regards.
-> > >=20
-> > > O=C4=9Fuzhan =C3=87a=C4=9Flar
-> > > Software Design Engineer
-> > >=20
-> > >=20
-> > >=20
-> > > Pavo Tasar=C4=B1m =C3=9Cretim Elektronik Tic. A.=C5=9E.
-> > > Teknopark =C4=B0stanbul, Kurtk=C3=B6y Pendik =C4=B0STANBUL
-> > >=20
-> > >=20
-> > > Tel=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 : +90 (216) 354 72 86
-> > > Faks=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 : +90 (216) 354 =
-76 77
-> > > Gsm=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 : +90 (507)=
- 585 10 60
-> > > oguzhan.caglar@pavotek.com.tr
-> > >=20
-> > > www.pavotek.com.tr
-> > >=20
-> > >=20
-> >=20
-> > --
-> > Best regards,
-> > Andrei Kartashev,
-> > Lead BMC Developer
-> >=20
->=20
-> --
-> Best regards,
-> Andrei Kartashev,
-> Lead BMC Developer
->=20
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
---=20
-Best regards,
-Andrei Kartashev,
-Lead BMC Developer
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
 
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
