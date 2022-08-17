@@ -1,84 +1,85 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5A5945967A8
-	for <lists+openbmc@lfdr.de>; Wed, 17 Aug 2022 05:08:27 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BF5DC596861
+	for <lists+openbmc@lfdr.de>; Wed, 17 Aug 2022 07:12:24 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4M6tJ91hYSz3blV
-	for <lists+openbmc@lfdr.de>; Wed, 17 Aug 2022 13:08:25 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4M6x3B411dz3bgC
+	for <lists+openbmc@lfdr.de>; Wed, 17 Aug 2022 15:12:22 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=cI+A9WaX;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=Yn6ehUCT;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=kow2z6oL;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aj.id.au (client-ip=66.111.4.28; helo=out4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=cI+A9WaX;
+	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=Yn6ehUCT;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=kow2z6oL;
 	dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4M6tHf2LwMz2xHw
-	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 13:07:57 +1000 (AEST)
-Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27H2H0uL003204
-	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 03:07:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date : to :
- from : subject : content-type : content-transfer-encoding : mime-version;
- s=pp1; bh=WQHvckD182y6fxMVgEuHO6u09kjvI0B+COyfSXOmOvA=;
- b=cI+A9WaXKgwJ7wW5URhyEk3AkXnbbkpiVi6UN++XlpEkP5U3qZ35Fuby9t/uXTXcDgxX
- JD5j9kGTAItJt7gAE5TOJPPr/mvCLPz+6YH0HiCdQlx1Wr0wsp0yww1g6cEHMaSpxegc
- NV+7FB1YQq83LZn0H4Dktz2mtVIYwwAsLKZ8J044jwDZ5S3Dk79Hrz/PglU7eLVdnL24
- 0obTOo+L0ymHezBO6GqZF8xYnug638pImjtpA+B1JRSybvaa8y+L0VI3Rc/tFgRxwV2X
- eiKvsW6SZ8kH2rXasEhv7MhV2JRvvNmr5+RrAXnffg9Od9N4qVfNMLhYuq6N1MmLgm/p 4g== 
-Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com [169.47.144.26])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3j0pxask8c-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 03:07:54 +0000
-Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
-	by ppma04wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 27H36ePR001798
-	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 03:07:54 GMT
-Received: from b03cxnp08025.gho.boulder.ibm.com (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
-	by ppma04wdc.us.ibm.com with ESMTP id 3hx3k9ny6e-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 03:07:54 +0000
-Received: from b03ledav004.gho.boulder.ibm.com (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
-	by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 27H37raw55574920
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
-	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 03:07:53 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 885C27805F
-	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 03:07:53 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 4C66078063
-	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 03:07:53 +0000 (GMT)
-Received: from [9.160.40.68] (unknown [9.160.40.68])
-	by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTPS
-	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 03:07:53 +0000 (GMT)
-Message-ID: <772c9b0d-c06e-e4bc-b114-45a413926092@linux.ibm.com>
-Date: Tue, 16 Aug 2022 22:07:52 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.10.0
-Content-Language: en-US
-To: openbmc <openbmc@lists.ozlabs.org>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Security Working Group meeting - Wednesday August 17
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: tLLg8Ntya1B5ymgPMaa5_fZ0KxGtMMrE
-X-Proofpoint-GUID: tLLg8Ntya1B5ymgPMaa5_fZ0KxGtMMrE
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
-MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-17_02,2022-08-16_02,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- mlxscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0 spamscore=0
- clxscore=1015 impostorscore=0 mlxlogscore=742 phishscore=0 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2207270000
- definitions=main-2208170011
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4M6x2l6Mv2z2xG8
+	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 15:11:59 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id AF8CF5C00C7;
+	Wed, 17 Aug 2022 01:11:57 -0400 (EDT)
+Received: from imap50 ([10.202.2.100])
+  by compute3.internal (MEProxy); Wed, 17 Aug 2022 01:11:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
+	:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm3; t=1660713117; x=1660799517; bh=FfpxuAmVi6
+	X/23fxe5GsECt2krLU1VWK9iaB0+2+71k=; b=Yn6ehUCTpmdPjS088mqVyT32aV
+	Kfb1mgX74eaPF7KAb9xpWpPagtGP01WV01AMu6sReggZoFSKfNNh+dOKywTtm7iK
+	+ylcfQf8poRvFExeV5ANYNy4eEkae0th9v3ns7lgnsupiU3XVPjoD8g42IvojDc+
+	Pa1Bxu9EQEzJD+8JHS8QFvtVNFR8930Bq2WW7ncaT1KYCpTuqdHxtpM1iaHikTjh
+	jRvjOIoTHrphdZjIKpONXvQAhmOmR9aAPQFYD/B0Pb0qvtgJblW/mi9IH0fUx7kS
+	XsQDbNCgU8AyeoJER1OdrylkxWKp9OKzOmL84ijHTmR9YbxnDVp+QRGbEUyA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1660713117; x=1660799517; bh=FfpxuAmVi6X/23fxe5GsECt2krLU
+	1VWK9iaB0+2+71k=; b=kow2z6oLU48nIDhnfu6kKF/4wsVJUL+O1PVld7IHoOuo
+	w9Ff6eg2T8luK2+9fpsVYk2+orlNcQ//rSHdT1aTmvuhMq8vX8mc0kgbIbguEaWd
+	CWtq0GtVMRRwQ48pVRauEdvSuZL/mYqxWnwN3G1VVdqP/WALWjAZJu3IId1jt+U0
+	XdrS0PBw8KjbmM9VGIb1fmGqp1eE+ZCLJ3RlJAyc+3E8hG7LaEoqC0U/OPKGMi3E
+	rI8q09Cq2q86z2kpeU3EZz34cxSubT08EHaGh1svQ7rdJ1Of2nX4F8e+aNMPVcp9
+	fJDVTKaHBz10wxhDegjGdQpIvIpxoZTswmQFz7p8Tw==
+X-ME-Sender: <xms:nXj8YjVc06V_8UKD3XOGYb_3KpXX-W7ob2NiVAudTDAuZAbmqpctoA>
+    <xme:nXj8Yrn8p75811_tQgHDa9eVkoiZZLZbuNzyYZNpLeJZ_bI7OcOMGBSoWUyTEO6IE
+    bVHnCrYFJdZQyN1hA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdehhedgleefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvffutgesthdtredtreertdenucfhrhhomhepfdetnhgu
+    rhgvficulfgvfhhfvghrhidfuceorghnughrvgifsegrjhdrihgurdgruheqnecuggftrf
+    grthhtvghrnhephefhfeekgfekudevheffheeihedujeefjeevjeefudfgfeeutdeuvdeh
+    hfevueffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
+    eprghnughrvgifsegrjhdrihgurdgruh
+X-ME-Proxy: <xmx:nXj8YvYogXptLuPqJLxrcboh_dAFVY8z3Lkx1M0IzvlJnriw3DiU0g>
+    <xmx:nXj8YuXgdo-Zu2Bmv-DcpFDtsHXgu-SsDhWt1kjk3sFcMR9MKTaTfA>
+    <xmx:nXj8YtlDCwmjumlpqgQIZiQVZ8bHXYSXJCp2pa2iEf-_SW7eqQcZHg>
+    <xmx:nXj8YrStH8fXszjrhPrxXxyW4k6nYGwyjeMG-Dl9blV2tLQ_tVqWeQ>
+Feedback-ID: idfb84289:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 726391700082; Wed, 17 Aug 2022 01:11:57 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-841-g7899e99a45-fm-20220811.002-g7899e99a
+Mime-Version: 1.0
+Message-Id: <61158439-f152-4399-86f8-a4f730dd967b@www.fastmail.com>
+In-Reply-To: <772c9b0d-c06e-e4bc-b114-45a413926092@linux.ibm.com>
+References: <772c9b0d-c06e-e4bc-b114-45a413926092@linux.ibm.com>
+Date: Wed, 17 Aug 2022 14:41:37 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Joseph Reynolds" <jrey@linux.ibm.com>, openbmc <openbmc@lists.ozlabs.org>
+Subject: Re: Security Working Group meeting - Wednesday August 17
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,27 +94,12 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a reminder of the OpenBMC Security Working Group meeting 
-scheduled for this Wednesday August 17 at 10:00am PDT.
-
-We'll discuss the following items on the agenda 
-<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
-and anything else that comes up:
-1. Continue discussing Measured Boot.
-
-2. Continue discussing CVE response.
-
-3. BMC FIPS compliance.
-
-4. Add guidance to 
-https://github.com/openbmc/docs/blob/master/security/how-to-report-a-security-vulnerability.md 
-<https://github.com/openbmc/docs/blob/master/security/how-to-report-a-security-vulnerability.md>for 
-submitting proof-of-concept exploits.
 
 
+On Wed, 17 Aug 2022, at 12:37, Joseph Reynolds wrote:
+> This is a reminder of the OpenBMC Security Working Group meeting 
+> scheduled for this Wednesday August 17 at 10:00am PDT.
 
-Access, agenda and notes are in the wiki:
-https://github.com/openbmc/openbmc/wiki/Security-working-group 
-<https://github.com/openbmc/openbmc/wiki/Security-working-group>
+Given the discussion from last meeting, is this on Discord?
 
-- Joseph
+Andrew
