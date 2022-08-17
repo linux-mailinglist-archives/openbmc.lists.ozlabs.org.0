@@ -1,65 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05D325967A7
-	for <lists+openbmc@lfdr.de>; Wed, 17 Aug 2022 05:07:38 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A5945967A8
+	for <lists+openbmc@lfdr.de>; Wed, 17 Aug 2022 05:08:27 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4M6tHC5h94z3bsK
-	for <lists+openbmc@lfdr.de>; Wed, 17 Aug 2022 13:07:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4M6tJ91hYSz3blV
+	for <lists+openbmc@lfdr.de>; Wed, 17 Aug 2022 13:08:25 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=CJc5UPhs;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=cI+A9WaX;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::335; helo=mail-wm1-x335.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=CJc5UPhs;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=cI+A9WaX;
 	dkim-atps=neutral
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4M6tGr0zqRz2xHw
-	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 13:07:15 +1000 (AEST)
-Received: by mail-wm1-x335.google.com with SMTP id ay39-20020a05600c1e2700b003a5503a80cfso316689wmb.2
-        for <openbmc@lists.ozlabs.org>; Tue, 16 Aug 2022 20:07:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jms.id.au; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=zDTL+kUX5fx414q/QBwIPLzV+/9CrZKRvj8AMk7fNQc=;
-        b=CJc5UPhs5xFmXL0feCw7GfUzQi4yadiv66HBKviHBEKggz9WzEw416gPlgkxYr19h1
-         WzEb/7LxRnRCwp94mrqw2TuVvJ+Y/YCaebLKgSphn6xQdMYIPrDSrnjBdDz/RdJNw/wd
-         DavytKVTVrfweopA4/e/HtD/36r2yVBCYIigg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=zDTL+kUX5fx414q/QBwIPLzV+/9CrZKRvj8AMk7fNQc=;
-        b=WchFTULdrzRnsAdRAUIfUNE1kofHvJUmFJ4j9ZRBE8SlOAyMUfmpRQpcOxC0NTiklg
-         5tWLA+VvtQTvhjI2jBKz+zxHYW5i0+KUc+IfWTEK3daX9wWNg3VMfBpIbsrqiWmTlKBm
-         sN0fq27MntIQi4Vf/Lgf/SV+BtKfGgHJm0gZGBKZkmvdmaWJt9h9z96IcWvAQKZ2Tl0n
-         g0dBAzb0HoBE7GO2C/kT+TCnTzN376xDXTtyeNH9IK2DbFeDtStBLl02oekVeAT5qa0j
-         8UXfqNphm8DkC6H/A7THNlbrSdfL7s6Qb2NxLs9dYAm/3d0vlwEabYaCrs4Ku70m3ITE
-         UlrA==
-X-Gm-Message-State: ACgBeo2KzMU80nTmxhK06w40Qpcmwd2+EHo8E84rlOd+Knqwg1anVYRL
-	wGNkbahEDhh0N9y9MO+rT+6QLdKEFi+o2L1Upj4=
-X-Google-Smtp-Source: AA6agR7VC9JDDgv1doD2k9gjLUG2vQvZJLWtsgzy1I8hlTJhzLnfc3CH/a0jo0nh/drF0TnMkw2EdZcYcIUjqU6KpBg=
-X-Received: by 2002:a05:600c:5010:b0:3a6:804:5b08 with SMTP id
- n16-20020a05600c501000b003a608045b08mr715619wmr.10.1660705629756; Tue, 16 Aug
- 2022 20:07:09 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4M6tHf2LwMz2xHw
+	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 13:07:57 +1000 (AEST)
+Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27H2H0uL003204
+	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 03:07:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date : to :
+ from : subject : content-type : content-transfer-encoding : mime-version;
+ s=pp1; bh=WQHvckD182y6fxMVgEuHO6u09kjvI0B+COyfSXOmOvA=;
+ b=cI+A9WaXKgwJ7wW5URhyEk3AkXnbbkpiVi6UN++XlpEkP5U3qZ35Fuby9t/uXTXcDgxX
+ JD5j9kGTAItJt7gAE5TOJPPr/mvCLPz+6YH0HiCdQlx1Wr0wsp0yww1g6cEHMaSpxegc
+ NV+7FB1YQq83LZn0H4Dktz2mtVIYwwAsLKZ8J044jwDZ5S3Dk79Hrz/PglU7eLVdnL24
+ 0obTOo+L0ymHezBO6GqZF8xYnug638pImjtpA+B1JRSybvaa8y+L0VI3Rc/tFgRxwV2X
+ eiKvsW6SZ8kH2rXasEhv7MhV2JRvvNmr5+RrAXnffg9Od9N4qVfNMLhYuq6N1MmLgm/p 4g== 
+Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com [169.47.144.26])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3j0pxask8c-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 03:07:54 +0000
+Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
+	by ppma04wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 27H36ePR001798
+	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 03:07:54 GMT
+Received: from b03cxnp08025.gho.boulder.ibm.com (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
+	by ppma04wdc.us.ibm.com with ESMTP id 3hx3k9ny6e-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 03:07:54 +0000
+Received: from b03ledav004.gho.boulder.ibm.com (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+	by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 27H37raw55574920
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 03:07:53 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 885C27805F
+	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 03:07:53 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4C66078063
+	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 03:07:53 +0000 (GMT)
+Received: from [9.160.40.68] (unknown [9.160.40.68])
+	by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTPS
+	for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 03:07:53 +0000 (GMT)
+Message-ID: <772c9b0d-c06e-e4bc-b114-45a413926092@linux.ibm.com>
+Date: Tue, 16 Aug 2022 22:07:52 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.10.0
+Content-Language: en-US
+To: openbmc <openbmc@lists.ozlabs.org>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Security Working Group meeting - Wednesday August 17
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: tLLg8Ntya1B5ymgPMaa5_fZ0KxGtMMrE
+X-Proofpoint-GUID: tLLg8Ntya1B5ymgPMaa5_fZ0KxGtMMrE
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-References: <20220817015949.16946-1-joel@jms.id.au> <20220817015949.16946-2-joel@jms.id.au>
- <f4a037ce-c775-df5a-171c-0752dc65dcc8@linux.microsoft.com>
-In-Reply-To: <f4a037ce-c775-df5a-171c-0752dc65dcc8@linux.microsoft.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 17 Aug 2022 03:06:57 +0000
-Message-ID: <CACPK8XfDuvY0pT-gOBCkh-BsQ6m+SvXNu+tm8LQruKKTrDjQrg@mail.gmail.com>
-Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc 1/2] aspeed/sdram: Use
- device tree to configure ECC
-To: Dhananjay Phadke <dphadke@linux.microsoft.com>
-Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.883,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-17_02,2022-08-16_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
+ mlxscore=0 lowpriorityscore=0 priorityscore=1501 adultscore=0 spamscore=0
+ clxscore=1015 impostorscore=0 mlxlogscore=742 phishscore=0 malwarescore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2207270000
+ definitions=main-2208170011
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,40 +90,30 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Dylan Hung <dylan_hung@aspeedtech.com>, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 17 Aug 2022 at 03:04, Dhananjay Phadke
-<dphadke@linux.microsoft.com> wrote:
->
-> On 8/16/2022 6:59 PM, Joel Stanley wrote:
-> > Instead of configuring ECC based on the build config, use a device tree
-> > property to selectively enable ECC at runtime.
-> >
-> > There are two properties:
-> >
-> >    aspeed,ecc-enabled;
-> >    aspeed,ecc-size = "512";
-> >
-> > The enabled property is a boolean that enables ECC if it is present.
-> >
-> > The size is the number of MB that should be covered by ECC. Setting it
-> > to zero, or omitting it, defaults the ECC size to "auto detect".
->
-> What's the use case for enabling ECC only on part of the DRAM or not
-> using max possible DRAM space?
+This is a reminder of the OpenBMC Security Working Group meeting 
+scheduled for this Wednesday August 17 at 10:00am PDT.
 
-I don't know. I have wondered the same, it's a good question for aspeed.
+We'll discuss the following items on the agenda 
+<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
+and anything else that comes up:
+1. Continue discussing Measured Boot.
 
-The objective of this patchset is to support the existing options with
-runtime configuration, I think any change in functionality is a
-separate issue.
+2. Continue discussing CVE response.
 
-> Couldn't this be just simple update based on what DTS memory node has?
->
-> /* Update available size */
-> info->info.size = (((info->info.size / 9) * 8) >> 20) << 20;
->
-> Regards,
-> Dhananjay
+3. BMC FIPS compliance.
+
+4. Add guidance to 
+https://github.com/openbmc/docs/blob/master/security/how-to-report-a-security-vulnerability.md 
+<https://github.com/openbmc/docs/blob/master/security/how-to-report-a-security-vulnerability.md>for 
+submitting proof-of-concept exploits.
+
+
+
+Access, agenda and notes are in the wiki:
+https://github.com/openbmc/openbmc/wiki/Security-working-group 
+<https://github.com/openbmc/openbmc/wiki/Security-working-group>
+
+- Joseph
