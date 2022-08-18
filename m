@@ -2,60 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4737A597C86
-	for <lists+openbmc@lfdr.de>; Thu, 18 Aug 2022 05:58:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 83C1A597EBA
+	for <lists+openbmc@lfdr.de>; Thu, 18 Aug 2022 08:40:36 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4M7WMH1Kgsz3c6b
-	for <lists+openbmc@lfdr.de>; Thu, 18 Aug 2022 13:58:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4M7ZyV3K2Wz3c8s
+	for <lists+openbmc@lfdr.de>; Thu, 18 Aug 2022 16:40:34 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=fPqYVR/o;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=BvMfSdmw;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.55.52.115; helo=mga14.intel.com; envelope-from=jiaqing.zhao@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1033; helo=mail-pj1-x1033.google.com; envelope-from=stanley.chuys@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=fPqYVR/o;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=BvMfSdmw;
 	dkim-atps=neutral
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4M7WLs53Lhz3035
-	for <openbmc@lists.ozlabs.org>; Thu, 18 Aug 2022 13:57:55 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1660795077; x=1692331077;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=eSA1RXaTniG3j4k0D+WHaVBruam4SxmwsY+/nW9/fz4=;
-  b=fPqYVR/o0UuVgt8X6ab1FOnpGYqOHcIp7lkwNFC2tO8mFkI2+TJoqbK2
-   HsQg/rHQZ+F9bXPFPb9oyoercNJHXqiAt8H8Y8u2J9N8Vx7Ru4Rh7IO1U
-   3mlgtOAPK85fhDM+YGsOulCocbdblLN1iu8njiDDp2rBJInBZCUlb8y4I
-   NJH3DTukonYYlJs4xktYPg9Z0XEWmkCfaYmQmyQHEi7LBQJ+MgbfP2E2m
-   16kdKVJnfr8bsdIH19/skY8k6kRHr7xdW8dCJJ8MofKZMb48xqFYvQC75
-   TBYC5hwX22wJ9rtk7PM729I2OKwI8+Y/IiSEwSGxuZFfEWiKK66YEIQND
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10442"; a="292657259"
-X-IronPort-AV: E=Sophos;i="5.93,245,1654585200"; 
-   d="scan'208";a="292657259"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Aug 2022 20:57:52 -0700
-X-IronPort-AV: E=Sophos;i="5.93,245,1654585200"; 
-   d="scan'208";a="935635556"
-Received: from jiaqingz-mobl.ccr.corp.intel.com (HELO [10.255.31.154]) ([10.255.31.154])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Aug 2022 20:57:51 -0700
-Message-ID: <1d9222dc-da75-a976-e1c6-8f00354b76b3@linux.intel.com>
-Date: Thu, 18 Aug 2022 11:57:46 +0800
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.1.2
-Subject: Re: Event Logs in Redfish
-To: zehra.ozdemir@inventron.com.tr, openbmc@lists.ozlabs.org
-References: <000001d8b21c$9b095c60$d11c1520$@inventron.com.tr>
-Content-Language: en-US
-From: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
-In-Reply-To: <000001d8b21c$9b095c60$d11c1520$@inventron.com.tr>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4M7Zy60rKGz2yxF
+	for <openbmc@lists.ozlabs.org>; Thu, 18 Aug 2022 16:40:11 +1000 (AEST)
+Received: by mail-pj1-x1033.google.com with SMTP id s31-20020a17090a2f2200b001faaf9d92easo3808745pjd.3
+        for <openbmc@lists.ozlabs.org>; Wed, 17 Aug 2022 23:40:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=message-id:date:subject:cc:to:from:from:to:cc;
+        bh=+EcI+M0jWu532uLt2hWLsV8GCbNtP175QZTSaPB/QA8=;
+        b=BvMfSdmw9slIi35AIn8wGFxNkfDYUocvSo+SlQ0NfdlYNFn11rychFwPs0vlryPCks
+         Z+OUU2DVqM/1/fCOomT0ONx/WQ67vc8vok3an/XzPlLWSg/TFwObOiUOkpDBIYIZ6rli
+         EXGYVmtznhOUolrv9zV9sqNVMyjtBvW8vrpIwO8byVqucFA5ck6GvK34aWdIOAmQfP37
+         mlLM6g0Yv4Hhzj5crCw4e16nTrske6O+WIu2IHLMs+UNsdrGRkZke1e0Mv70DiDE6nhW
+         fsAhD0HboNQFHWlG1D+YBvo8pMjB96bf5s0PGlSohz4he1pkn2y1LAcRJAUxiaDLuB9H
+         Ul1A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc;
+        bh=+EcI+M0jWu532uLt2hWLsV8GCbNtP175QZTSaPB/QA8=;
+        b=UjDC4CxhYZljbsNHrkTppvjvDGcpQkduZSFEgV6YRtaRvHBl5fFHnCY1OruonAU/ox
+         ScAkZ/cdIovLDnUpo/5truzx9nqHjiEadBKR52hCMqYk8PDiG10QgmsjQ6pkvLEUVgbI
+         zoGA1hck+va6eRIGA0GAnEBNWxBGbwcdBtI4ETp6l1YQwG5TkfMOge2LKkWydrvv6p5/
+         NqEVI+SLk6dHfWnNvvascGcgd5rxba0smXm5l1TGd48089FF8VnseacIh+R7m4ypILGc
+         ZWZQlO9j5SGQipU9K0h/3oZdcRXc9UL2ATINtQ4GgsyfLbQ7Fnx76vbWifOQWg9jTc6I
+         Zkow==
+X-Gm-Message-State: ACgBeo2i2DkYs1aSGawFEZg3WnxAo+RDdBYRW9rUg62W+i3idxsiLHyD
+	Dd8jKLMYQW/XjNh+JP+QMw/AbfArrfsVgA==
+X-Google-Smtp-Source: AA6agR4r/zVH8Ddd0rlEd/4oxnkTcVVfqPHnRejyXGoIRgJQt6DsxTSBow5arBaAoSU1uvulQk44YQ==
+X-Received: by 2002:a17:902:aa01:b0:172:b0dc:ba40 with SMTP id be1-20020a170902aa0100b00172b0dcba40mr1387808plb.101.1660804808843;
+        Wed, 17 Aug 2022 23:40:08 -0700 (PDT)
+Received: from localhost.localdomain ([180.217.158.143])
+        by smtp.gmail.com with ESMTPSA id a9-20020a170902ecc900b0016bf4428586sm553188plh.208.2022.08.17.23.40.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 17 Aug 2022 23:40:08 -0700 (PDT)
+From: Stanley Chu <stanley.chuys@gmail.com>
+X-Google-Original-From: Stanley Chu <yschu@nuvoton.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.15 v1 0/3] Add NPCM8xx JTAG master driver
+Date: Thu, 18 Aug 2022 14:39:48 +0800
+Message-Id: <20220818063951.12629-1-yschu@nuvoton.com>
+X-Mailer: git-send-email 2.17.1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,89 +71,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "'M. Erhan Yigitbasi'" <erhan.yigitbasi@inventron.com.tr>
+Cc: andrew@aj.id.au, yschu@nuvoton.com, joel@jms.id.au, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-There are 2 kinds of logging backend implemented in bmcweb, DBus-based and
-journal-based. By default the journal-based one is used. To switch to the
-DBus-based logging backend, add `EXTRA_OEMESON += "-Dredfish-dbus-log='enabled'"`
-to your bmcweb bbappend file.
+This patch set add DTS node, dt-bindings document and driver for
+JTAG master controller present on Nuvoton NPCM8xx SoCs.
 
-On 2022-08-17 17:34, zehra.ozdemir@inventron.com.tr wrote:
-> Hello,
-> 
->  
-> 
-> I am trying to get an event log and I created a sample log by calling
-> logging create dbus interface as down below:
-> 
->  
-> 
-> busctl call xyz.openbmc_project.Logging /xyz/openbmc_project/logging
-> xyz.openbmc_project.Logging.Create Create ssa{ss} "Hata olustu"
-> "xyz.openbmc_project.Logging.Entry.Level.Critical" 1 "CALLOUT_GPIO_NUM" "5"
-> 
->  
-> 
-> It seems to created successfully when I viewed "GetManagedObjects" object of
-> the interface :
-> 
->  
-> 
-> busctl call xyz.openbmc_project.Logging /xyz/openbmc_project/logging
-> org.freedesktop.DBus.ObjectManager GetManagedObjects
-> 
->  
-> 
-> output:
-> 
->  
-> 
-> a{oa{sa{sv}}} 2 "/xyz/openbmc_project/logging/entry/1" 8
-> "org.freedesktop.DBus.Peer" 0 "org.freedesktop.DBus.Introspectable" 0
-> "org.freedesktop.DBus.Properties" 0 "xyz.openbmc_project.Common.FilePath" 1
-> "Path" s "/var/lib/phosphor-logging/errors/1"
-> "xyz.openbmc_project.Software.Version" 2 "Version" s "0.1.0" "Purpose" s
-> "xyz.openbmc_project.Software.Version.VersionPurpose.BMC"
-> "xyz.openbmc_project.Association.Definitions" 1 "Associations" a(sss) 0
-> "xyz.openbmc_project.Object.Delete" 0 "xyz.openbmc_project.Logging.Entry" 10
-> "Id" u 1 "Timestamp" t 1660660714372 "Severity" s
-> "xyz.openbmc_project.Logging.Entry.Level.Critical" "Message" s "Hata olustu"
-> "EventId" s "" "AdditionalData" as 1 "CALLOUT_GPIO_NUM=5" "Resolution" s ""
-> "Resolved" b false "ServiceProviderNotify" b false "UpdateTimestamp" t
-> 1660660714372 "/xyz/openbmc_project/logging/internal/manager" 4
-> "org.freedesktop.DBus.Peer" 0 "org.freedesktop.DBus.Introspectable" 0
-> "org.freedesktop.DBus.Properties" 0
-> "xyz.openbmc_project.Logging.Internal.Manager" 0
-> 
->  
-> 
-> However, no data is displayed in the web-ui.  So, I examined the bmcweb
-> method which deals with getting event log requests from dbus and nothing
-> seems wrong. When I call this bmcweb method with redfish api, count returns
-> zero.:
-> 
->  
-> 
-> curl -c cjar -b cjar -k
-> https://{$bmc}/redfish/v1/Systems/system/LogServices/EventLog/Entries
-> <https://%7b$bmc%7d/redfish/v1/Systems/system/LogServices/EventLog/Entries/>
-> 
-> {
->   "@odata.id": "/redfish/v1/Systems/system/LogServices/EventLog/Entries",
->   "@odata.type": "#LogEntryCollection.LogEntryCollection",
->   "Description": "Collection of System Event Log Entries",
->   "Members": [],
->   "Members@odata.count": 0,
->   "Name": "System Event Log Entries"
-> 
->  
-> 
-> In short, what exactly do I need to do to view these event logs in the web
-> ui?
-> 
->  
-> 
-> Thank you.
-> 
+Stanley Chu (3):
+  arm: dts: nuvoton: Add node for JTAG master controller
+  dt-binding: bmc: add NPCM8XX JTAG master documentation
+  misc: Add NPCM845 jtag master driver
+
+ .../bindings/bmc/npcm8xx-jtag-master.txt      |  29 +
+ .../dts/nuvoton/nuvoton-common-npcm8xx.dtsi   |  28 +
+ drivers/misc/Kconfig                          |   6 +
+ drivers/misc/Makefile                         |   1 +
+ drivers/misc/npcm8xx-jtag-master.c            | 902 ++++++++++++++++++
+ 5 files changed, 966 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/bmc/npcm8xx-jtag-master.txt
+ create mode 100644 drivers/misc/npcm8xx-jtag-master.c
+
+-- 
+2.17.1
+
