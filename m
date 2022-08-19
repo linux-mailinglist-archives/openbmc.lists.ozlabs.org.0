@@ -2,70 +2,85 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2CF50599B40
-	for <lists+openbmc@lfdr.de>; Fri, 19 Aug 2022 13:45:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 11694599EEC
+	for <lists+openbmc@lfdr.de>; Fri, 19 Aug 2022 18:19:25 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4M8Kgl6sD2z3cfF
-	for <lists+openbmc@lfdr.de>; Fri, 19 Aug 2022 21:45:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4M8Rlt08p0z3dsG
+	for <lists+openbmc@lfdr.de>; Sat, 20 Aug 2022 02:19:22 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=LBXZTKao;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=pjd.dev header.i=@pjd.dev header.a=rsa-sha256 header.s=fm2 header.b=D6fnkq5n;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=N1hg9b0E;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::433; helo=mail-pf1-x433.google.com; envelope-from=groeck7@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=pjd.dev (client-ip=64.147.123.19; helo=wout3-smtp.messagingengine.com; envelope-from=peter@pjd.dev; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=LBXZTKao;
+	dkim=pass (2048-bit key; unprotected) header.d=pjd.dev header.i=@pjd.dev header.a=rsa-sha256 header.s=fm2 header.b=D6fnkq5n;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=N1hg9b0E;
 	dkim-atps=neutral
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4M8KgD5XmLz3cMq;
-	Fri, 19 Aug 2022 21:44:55 +1000 (AEST)
-Received: by mail-pf1-x433.google.com with SMTP id a22so4107592pfg.3;
-        Fri, 19 Aug 2022 04:44:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc;
-        bh=UCWqtLC1yYug912P/xJZXTJO6IcyX8bpF1RM7XJlaA4=;
-        b=LBXZTKaoBUH+ULwwdTRqW7STUr819eXN+/NMdPNxP+5tEbdZ6FxlaikH6UCkpr72XN
-         dXX0LxEt5egGP1IXKhQc84rS+ZgQHD+ve58/pw7tsfdQwf0BAozP+jWQjvfG8QvE8oDK
-         +wkS0I1D4u//cpAXd06OVcrRleAS0TXi2042Fgmmx5oF71mncxDjNy/8Ff7oSzrDvrx5
-         liSSJQAn80C4GdCiNuBYVVzjSpIf5af5RoueihAyt/AHUJbBltK7D5HEKBIBBMCb5mwk
-         RjKZE/7nNP/3xb9sQ+vz778brQVkboSN5YVQAd12n40WZMxnvOSvIdqq6FHzsyLvM3hh
-         2duw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc;
-        bh=UCWqtLC1yYug912P/xJZXTJO6IcyX8bpF1RM7XJlaA4=;
-        b=j8eaBzRjR9Ittse+n0SnJCE4TeatIUiYHGYmPuT9ARUHAnV3ePesWOX+b5NHmJd4Rq
-         b6I43gCmvM+SXg9xAMzUvhy/ETB0nzZhH6CQVP55Cy+J4wP/AFDXAXw3JTiCcgJmNB7e
-         +rhDajQFs+T7p/9PgySfsGXIKkyk90kp6hcB95UoamgCgr9kmtORwBK84hApQpVMlMFX
-         JaXClsxpFFUPhHZmjcEe0Sg9rWLgxXJvWtKmh8EgFr5fb4yMDrH8bLmSjXnLPJH38lOh
-         IKpZ8yCqqwdMYxGHX6s/2TtgzXStI/4jklS+2figkmKGfU6pk2HteFy0oFSUYU2t1/KC
-         n3lw==
-X-Gm-Message-State: ACgBeo13SbSOvVJbxMxVhpmpm1GgWeT+zCFpqCgkvUnw9xoKjqKyEcCm
-	3Ps1ujbixo6B2zfwgxvzdPw=
-X-Google-Smtp-Source: AA6agR7CbiVFbWALuy4dvNt5DjW422IoGaxOs/+ufjJr9mtOmCjJQ90/G+ZsrjghuJAhrL0WMIqN0A==
-X-Received: by 2002:a65:6d1a:0:b0:3fb:2109:7b87 with SMTP id bf26-20020a656d1a000000b003fb21097b87mr5869447pgb.127.1660909491496;
-        Fri, 19 Aug 2022 04:44:51 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id q62-20020a17090a1b4400b001f4cc17b451sm5030849pjq.5.2022.08.19.04.44.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 19 Aug 2022 04:44:50 -0700 (PDT)
-Date: Fri, 19 Aug 2022 04:44:49 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
-Subject: Re: [PATCH] watchdog: aspeed_wdt: Reorder output signal register
- configuration
-Message-ID: <20220819114449.GF3106213@roeck-us.net>
-References: <20220819094905.1962513-1-chin-ting_kuo@aspeedtech.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4M8RlP1yhmz3cf9
+	for <openbmc@lists.ozlabs.org>; Sat, 20 Aug 2022 02:18:56 +1000 (AEST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.west.internal (Postfix) with ESMTP id 8A0E132007F9;
+	Fri, 19 Aug 2022 12:18:51 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Fri, 19 Aug 2022 12:18:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pjd.dev; h=cc:cc
+	:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm2; t=1660925931; x=1661012331; bh=6oMEs5QQrU
+	eEo5uIL+Pxvifgye62PSWPs6A9eFaHhj0=; b=D6fnkq5nF0Hp/708CB0Ixypoe5
+	yBC5Mm1GbIM05zm6Gad43PB9/8ICzuvzSCP+QdbSq9RV4gZMrSrnHmjG34/XE/dT
+	RkB+50wjP2S3i052CCaH6iVCN/zTLGQ1uxWQJxaUbmcUqga57D7jF3Tzc6i1BHT6
+	1F3v+u98GodFDJngULC+MoY6quOuaJH1wkVQl5nd+4bzI3QECSf+80Rdx5+MBnZS
+	JlzPYxMCLvzNuXQDdFLHhxaKSvEigUQKUASdCtD5mtAOeWW34v/bZvf10rPW7zX+
+	ULCQOKx5pAxRxVbLXcJ548ifuPa2Zay+4JbBw2ONV+goZ5GPAId77nvKkvuw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1660925931; x=1661012331; bh=6oMEs5QQrUeEo5uIL+Pxvifgye62
+	PSWPs6A9eFaHhj0=; b=N1hg9b0EiKde3voJ+dFWkGpdtpk8NJ+uF+OOA2l/pQk9
+	CYhuq2+zwff5VuLz+PBTbGrwddEK89C5PgKbwi3maJoX7y92fma6omjcbRP39guh
+	chPev3UayVqB1T1nyan6A2vtZWHJ/pQrVyJyVxBzaexfe92xzCLrDcDjxpYbMr02
+	lxebRqrvssRysZ/WSte0IBaNCg/+zPfVIstr0XpRRokd7bmuRUidjmTYSygKYPaL
+	rXEliDEnWh+0e35jiOnNRCcCsGQoaofD+91gdwTdku6IwW9bV4L3RwbTtPx8hyoI
+	nI34CMQOh0pZWDhJcmibVfcVGtiqRpLGDZ2SnS7eLw==
+X-ME-Sender: <xms:6rf_Yvw8n-6T8q9FzSUfrJ1jAziWKYQxo8UUuBQCe32Fd1fL1JdPaQ>
+    <xme:6rf_YnR73bKAUTLh0T8RXrtxTeNzHkluGwd4-NG5Ao72LwjTxy5ZE6nTM_TflB_eP
+    hiiwLcEDOJRB0V7YAw>
+X-ME-Received: <xmr:6rf_YpUgiIO-8OHyuQ1ICml2ksYIT43Ecw78Jwdz3M9NyGbRsJJxgvLrRTpAiq2pe2b_jfTkFnW5>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdeiuddguddtvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrvght
+    vghrucffvghlvghvohhrhigrshcuoehpvghtvghrsehpjhgurdguvghvqeenucggtffrrg
+    htthgvrhhnpeduteeihfffleeuveekgedugfeffeehtdeguefffffhleehgfduueejjeek
+    feeukeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hpvghtvghrsehpjhgurdguvghv
+X-ME-Proxy: <xmx:6rf_Ypgpe9LlD_3m-UCSZCi7Qs-9sJid_q2UlYq7SrgveGIapayQjw>
+    <xmx:6rf_YhAKM6qIyMxlEpvS1XnFnVIbloGdnOjW5Pc1GBCVDZBYSmbKOQ>
+    <xmx:6rf_YiJFbPruUbKJ_Zo9mDlRVCBoca1hiWlGPm4tEju2W3j_aQGmuQ>
+    <xmx:67f_YkNJ78TDjwjWlsQSfmuLfE4q-U8213yiLvXEp-UwTFJBynSzUg>
+Feedback-ID: i9e814621:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 19 Aug 2022 12:18:49 -0400 (EDT)
+Date: Fri, 19 Aug 2022 09:18:48 -0700
+From: Peter Delevoryas <peter@pjd.dev>
+To: Alexander Steffen <Alexander.Steffen@infineon.com>
+Subject: Re: [PATCH 0/7] tpm: Pull tpm_tis_phy_ops and tpm_tis_i2c updates
+Message-ID: <Yv+36LewgqZwIaAF@pdel-fedora-MJ0HJWH9>
+References: <20220808220839.1006341-1-peter@pjd.dev>
+ <fe96bfc2-9317-fb51-920b-6d041bc7c2f7@infineon.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220819094905.1962513-1-chin-ting_kuo@aspeedtech.com>
+In-Reply-To: <fe96bfc2-9317-fb51-920b-6d041bc7c2f7@infineon.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,54 +92,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: BMC-SW@aspeedtech.com, linux-watchdog@vger.kernel.org, linux-aspeed@lists.ozlabs.org, andrew@aj.id.au, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, joel@jms.id.au, wim@linux-watchdog.org
+Cc: openbmc@lists.ozlabs.org, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Aug 19, 2022 at 05:49:05PM +0800, Chin-Ting Kuo wrote:
-> If the output driving type is push-pull mode, the output
-> polarity should be selected in advance. Otherwise, an unexpected
-> value will be output at the moment of changing to push-pull mode.
-> Thus, output polarity, WDT18[31], must be configured before
-> changing driving type, WDT18[30].
+On Fri, Aug 19, 2022 at 04:18:00PM +0200, Alexander Steffen wrote:
+> Hi Peter,
 > 
-> Signed-off-by: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
+> sorry for the late response.
 
-Reviewed-by: Guenter Roeck <linux@roeck-us.net>
+No problem! We unblocked our development on this issue by just disabling
+the TPM I2C driver in our kernel config, so there's no particular rush
+for us.
 
-> ---
->  drivers/watchdog/aspeed_wdt.c | 12 ++++++------
->  1 file changed, 6 insertions(+), 6 deletions(-)
+In fact, if Joel wants to just avoid figuring this out and merge the
+5.19 kernel, that would probably be fine. But, that might still break
+the machines he referenced, that are using an I2C TPM interface.
+
 > 
-> diff --git a/drivers/watchdog/aspeed_wdt.c b/drivers/watchdog/aspeed_wdt.c
-> index 436571b6fc79..a03e4ff812a2 100644
-> --- a/drivers/watchdog/aspeed_wdt.c
-> +++ b/drivers/watchdog/aspeed_wdt.c
-> @@ -325,18 +325,18 @@ static int aspeed_wdt_probe(struct platform_device *pdev)
->  		u32 reg = readl(wdt->base + WDT_RESET_WIDTH);
->  
->  		reg &= config->ext_pulse_width_mask;
-> -		if (of_property_read_bool(np, "aspeed,ext-push-pull"))
-> -			reg |= WDT_PUSH_PULL_MAGIC;
-> +		if (of_property_read_bool(np, "aspeed,ext-active-high"))
-> +			reg |= WDT_ACTIVE_HIGH_MAGIC;
->  		else
-> -			reg |= WDT_OPEN_DRAIN_MAGIC;
-> +			reg |= WDT_ACTIVE_LOW_MAGIC;
->  
->  		writel(reg, wdt->base + WDT_RESET_WIDTH);
->  
->  		reg &= config->ext_pulse_width_mask;
-> -		if (of_property_read_bool(np, "aspeed,ext-active-high"))
-> -			reg |= WDT_ACTIVE_HIGH_MAGIC;
-> +		if (of_property_read_bool(np, "aspeed,ext-push-pull"))
-> +			reg |= WDT_PUSH_PULL_MAGIC;
->  		else
-> -			reg |= WDT_ACTIVE_LOW_MAGIC;
-> +			reg |= WDT_OPEN_DRAIN_MAGIC;
->  
->  		writel(reg, wdt->base + WDT_RESET_WIDTH);
->  	}
-> -- 
-> 2.25.1
+> On 09.08.22 00:08, Peter Delevoryas wrote:
+> > Alexander didn't include the compatible strings from the old driver,
+> > even though it should be compatible, so I've included a patch at the end
+> > which fixes that. I did it as a separate patch so that we maintain a
+> > patch series closer to what the upstream will be.
 > 
+> There were some objections to add them and/or to document them in
+> trivial-devices.yaml, so I left them out to get at least the driver code
+> merged. Makes sense to add them back if they are already in use.
+
+I see, thanks for explaining the context.
+
+> 
+> I still plan to clean up the TPM compatibles and their documentation, to
+> make it easier to manage them in the future, and then also add back the
+> missing compatibles.
+
+Oh that would be great, thanks.
+
+> 
+> > cc'ing Alexander on this thread too to see if he has any suggestions, or
+> > thinks I missed anything.
+> 
+> Looks good to me.
+> 
+> Alexander
