@@ -1,61 +1,61 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09F5759B555
-	for <lists+openbmc@lfdr.de>; Sun, 21 Aug 2022 18:03:18 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BEE359B559
+	for <lists+openbmc@lfdr.de>; Sun, 21 Aug 2022 18:07:24 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4M9gJM686cz2xHW
-	for <lists+openbmc@lfdr.de>; Mon, 22 Aug 2022 02:03:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4M9gP61z69z3bnr
+	for <lists+openbmc@lfdr.de>; Mon, 22 Aug 2022 02:07:22 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=nLoVU14h;
+	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=ErtsHsH6;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com; envelope-from=i.kononenko@yadro.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=nLoVU14h;
+	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=ErtsHsH6;
 	dkim-atps=neutral
 Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4M9gFr5Mjfz3bXn;
-	Mon, 22 Aug 2022 02:01:04 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4M9gNh5Vcxz2xFx;
+	Mon, 22 Aug 2022 02:07:00 +1000 (AEST)
 Received: from localhost (unknown [127.0.0.1])
-	by mta-01.yadro.com (Postfix) with ESMTP id 0C51C41370;
-	Sun, 21 Aug 2022 15:54:51 +0000 (UTC)
+	by mta-01.yadro.com (Postfix) with ESMTP id 8CEE141272;
+	Sun, 21 Aug 2022 16:06:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
 	content-type:content-type:content-transfer-encoding:mime-version
 	:references:in-reply-to:x-mailer:message-id:date:date:subject
 	:subject:from:from:received:received:received:received; s=
-	mta-01; t=1661097289; x=1662911690; bh=38/mpMH/WKYIqy39p1O3ZnjWk
-	UwjWz1Pf/Gj+eAFiF0=; b=nLoVU14h9w6sZNG5zs/W6EcREd+D0PSM2B7J07aqu
-	c0lmHrqJkH0dg1B5JuZVieCheZlaRzIJGq5USAyja1BlE4R9XRdsI3fpQej2pKbV
-	O0srJcF/OA1251OSC54G4DNeRTN4Lx87N+4JLjBk5fCuDt4ol7WYdIb6GVbnga8S
-	fE=
+	mta-01; t=1661098016; x=1662912417; bh=EDMeCebtw7Q8ly9RrC4wTiDHn
+	Fqy4AVVnqwydJj8XOM=; b=ErtsHsH6nrYVQehnygCpR4/eBG+I+EuaoE70sS4xy
+	tvqwgjgglLqPigihBr+qV9nX99OT4cAgcl7iEyJC+iJlk4Z97WHbaI2Nsu3HkpGv
+	FfDt9SPkbnSbwa7VrfzgamBp9suvu0vnObeLGg3vdzeNYrl4XGALn9ROj4zewLAM
+	nA=
 X-Virus-Scanned: amavisd-new at yadro.com
 Received: from mta-01.yadro.com ([127.0.0.1])
 	by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id KZ4spSCFBqGf; Sun, 21 Aug 2022 18:54:49 +0300 (MSK)
+	with ESMTP id yfnT42Bb7SJd; Sun, 21 Aug 2022 19:06:56 +0300 (MSK)
 Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com [172.17.10.102])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mta-01.yadro.com (Postfix) with ESMTPS id A1E08412D6;
-	Sun, 21 Aug 2022 18:54:48 +0300 (MSK)
+	by mta-01.yadro.com (Postfix) with ESMTPS id 0C1684124A;
+	Sun, 21 Aug 2022 19:06:55 +0300 (MSK)
 Received: from T-EXCH-08.corp.yadro.com (172.17.11.58) by
  T-EXCH-02.corp.yadro.com (172.17.10.102) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.669.32; Sun, 21 Aug 2022 18:54:48 +0300
+ 15.1.669.32; Sun, 21 Aug 2022 19:06:55 +0300
 Received: from ik-yadro.yadro.com (10.199.18.154) by T-EXCH-08.corp.yadro.com
  (172.17.11.58) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1118.9; Sun, 21 Aug
- 2022 18:54:43 +0300
+ 2022 19:06:51 +0300
 From: Igor Kononenko <i.kononenko@yadro.com>
 To: Corey Minyard <minyard@acm.org>, Joel Stanley <joel@jms.id.au>, "Andrew
  Jeffery" <andrew@aj.id.au>
-Subject: [PATCH 1/3] ipmi:kcs_bmc: Add cleanup regmap(interrupt-regs) on a shutdown.
-Date: Sun, 21 Aug 2022 18:54:09 +0300
-Message-ID: <fb81dda34f9db0b9f743b247a2464576dcccd7c9.1661094034.git.i.kononenko@yadro.com>
+Subject: [PATCH 0/3] aspeed:lpc: Fix lpc-snoop probe exception
+Date: Sun, 21 Aug 2022 19:06:30 +0300
+Message-ID: <cover.1661094034.git.i.kononenko@yadro.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <cover.1661094034.git.i.kononenko@yadro.com>
 References: <cover.1661094034.git.i.kononenko@yadro.com>
@@ -81,17 +81,13 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 The bmc might be rebooted while the host is still reachable and the host
-might send requests through configured lpc-kcs channels. That leads to
-raise lpc-snoop interrupts that haven't adjusted IRQ handlers on next
-early kernel boot, because on the aspeed-chip reboot it might keep
-unclear registers on a state that is configured on the last boot.
+might send requests through configured lpc-kcs channels in same time.
+That leads to raise lpc-snoop/lpc-kcs interrupts that haven't adjusted IRQ
+handlers yet on next early kernel boot, because on the aspeed-chip reboot
+might keep lpc-registers on a unclean state that is configured on the last
+boot.
 
-The described case get a `nobody cared` warning about more than 100.000
-requests when another one driver configures the same shared IRQ(e.g. 35)
-and the interrupt will be passed through for lpc-kcs IRQ handler by
-`IRQ_NONE` state flag.
-
-The kernel output of described way is bellow:
+The described way might raise the next exception:
 ```
 [    1.360110] irq 35: nobody cared (try booting with the "irqpoll" option)
 [    1.360145] CPU: 0 PID: 1 Comm: swapper Not tainted 5.4.43-c109de3-24cc5b6 #1
@@ -165,47 +161,35 @@ The kernel output of described way is bellow:
 
 ```
 
-Note:
- * The lpc-snoop driver found on the same 1e789080 address and have
-same IRQ#35 as for lpc-kcs
- * The lpc-snoop initizalied earlier than lpc-kcs.
+Main caught of that state is the lpc-snoop driver found on the same
+1e789080 address and have same IRQ#35 as for lpc-kcs, and lpc-snoop
+registering earlier than lpc-kcs. So, on the lpc-snoop initialization
+the lpc-snoop IRQ will be registried for IRQ#35, but it will
+passthrough it for the LPC KCS handlers that is not registried yet.
 
-The patch brings a way to masking lpc-kcs interrupt all through
-a bmc-rebooting time.
+Summary we got the `nobody cared` warning about more 100.000 unhandled
+IRQ#35
 
-Tested on the YADRO VEGMAN N110 stand.
+Steps to reproduce:
+* Turn-on BMC
+* Turn-on HOST
+* Run `watch 'ipmitool sensor'` on the host that is configured to pass
+  requests via kcs-channel(3,4)
+* Reboot BMC.
+* On the next BMC boot kernel(BMC) dmesg have exception mentioned above.
 
-Signed-off-by: Igor Kononenko <i.kononenko@yadro.com>
----
- drivers/char/ipmi/kcs_bmc_aspeed.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+The following patchset aims to fixup described issue.
 
-diff --git a/drivers/char/ipmi/kcs_bmc_aspeed.c b/drivers/char/ipmi/kcs_bmc_aspeed.c
-index cdc88cde1e9a..440f31d96bd3 100644
---- a/drivers/char/ipmi/kcs_bmc_aspeed.c
-+++ b/drivers/char/ipmi/kcs_bmc_aspeed.c
-@@ -636,6 +636,13 @@ static int aspeed_kcs_remove(struct platform_device *pdev)
- 	return 0;
- }
- 
-+static void aspeed_kcs_shutdown(struct platform_device *pdev)
-+{
-+	struct kcs_bmc *kcs_bmc = dev_get_drvdata(&pdev->dev);
-+
-+	aspeed_kcs_irq_mask_update(kcs_bmc, (KCS_BMC_EVENT_TYPE_IBF), 0);
-+}
-+
- static const struct of_device_id ast_kcs_bmc_match[] = {
- 	{ .compatible = "aspeed,ast2400-kcs-bmc-v2" },
- 	{ .compatible = "aspeed,ast2500-kcs-bmc-v2" },
-@@ -651,6 +658,7 @@ static struct platform_driver ast_kcs_bmc_driver = {
- 	},
- 	.probe  = aspeed_kcs_probe,
- 	.remove = aspeed_kcs_remove,
-+	.shutdown = aspeed_kcs_shutdown,
- };
- module_platform_driver(ast_kcs_bmc_driver);
- 
+Igor Kononenko (3):
+  ipmi:kcs_bmc: Add cleanup regmap(interrupt-regs) on a shutdown.
+  drivers/misc: (aspeed-lpc-snoop): Add regmap cleanup on a shutdown.
+  drivers/misc: (aspeed-lpc-snoop): Fix platform_get_irq() error
+    checking
+
+ drivers/char/ipmi/kcs_bmc_aspeed.c    |  8 +++++
+ drivers/soc/aspeed/aspeed-lpc-snoop.c | 46 ++++++++++++++++++++++++++-
+ 2 files changed, 53 insertions(+), 1 deletion(-)
+
 -- 
 2.25.1
 
