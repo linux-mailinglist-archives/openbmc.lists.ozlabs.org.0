@@ -2,69 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5BEE359B559
-	for <lists+openbmc@lfdr.de>; Sun, 21 Aug 2022 18:07:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 268BD59B62B
+	for <lists+openbmc@lfdr.de>; Sun, 21 Aug 2022 21:47:42 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4M9gP61z69z3bnr
-	for <lists+openbmc@lfdr.de>; Mon, 22 Aug 2022 02:07:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4M9mHJ1twjz3bc9
+	for <lists+openbmc@lfdr.de>; Mon, 22 Aug 2022 05:47:40 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=ErtsHsH6;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=m9TJnM70;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com; envelope-from=i.kononenko@yadro.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.55.52.43; helo=mga05.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=ErtsHsH6;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=m9TJnM70;
 	dkim-atps=neutral
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4M9gNh5Vcxz2xFx;
-	Mon, 22 Aug 2022 02:07:00 +1000 (AEST)
-Received: from localhost (unknown [127.0.0.1])
-	by mta-01.yadro.com (Postfix) with ESMTP id 8CEE141272;
-	Sun, 21 Aug 2022 16:06:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
-	content-type:content-type:content-transfer-encoding:mime-version
-	:references:in-reply-to:x-mailer:message-id:date:date:subject
-	:subject:from:from:received:received:received:received; s=
-	mta-01; t=1661098016; x=1662912417; bh=EDMeCebtw7Q8ly9RrC4wTiDHn
-	Fqy4AVVnqwydJj8XOM=; b=ErtsHsH6nrYVQehnygCpR4/eBG+I+EuaoE70sS4xy
-	tvqwgjgglLqPigihBr+qV9nX99OT4cAgcl7iEyJC+iJlk4Z97WHbaI2Nsu3HkpGv
-	FfDt9SPkbnSbwa7VrfzgamBp9suvu0vnObeLGg3vdzeNYrl4XGALn9ROj4zewLAM
-	nA=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
-	by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id yfnT42Bb7SJd; Sun, 21 Aug 2022 19:06:56 +0300 (MSK)
-Received: from T-EXCH-02.corp.yadro.com (t-exch-02.corp.yadro.com [172.17.10.102])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mta-01.yadro.com (Postfix) with ESMTPS id 0C1684124A;
-	Sun, 21 Aug 2022 19:06:55 +0300 (MSK)
-Received: from T-EXCH-08.corp.yadro.com (172.17.11.58) by
- T-EXCH-02.corp.yadro.com (172.17.10.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.669.32; Sun, 21 Aug 2022 19:06:55 +0300
-Received: from ik-yadro.yadro.com (10.199.18.154) by T-EXCH-08.corp.yadro.com
- (172.17.11.58) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1118.9; Sun, 21 Aug
- 2022 19:06:51 +0300
-From: Igor Kononenko <i.kononenko@yadro.com>
-To: Corey Minyard <minyard@acm.org>, Joel Stanley <joel@jms.id.au>, "Andrew
- Jeffery" <andrew@aj.id.au>
-Subject: [PATCH 0/3] aspeed:lpc: Fix lpc-snoop probe exception
-Date: Sun, 21 Aug 2022 19:06:30 +0300
-Message-ID: <cover.1661094034.git.i.kononenko@yadro.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <cover.1661094034.git.i.kononenko@yadro.com>
-References: <cover.1661094034.git.i.kononenko@yadro.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4M9mGq1ZgTz2xGh;
+	Mon, 22 Aug 2022 05:47:09 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1661111235; x=1692647235;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Xgq5pV8NmzafHjaVV82jPIGbVdCuhC2gTgsrPRjWnRk=;
+  b=m9TJnM70NlJgPWAtkRkms3qTtvZQXGMzq9yVnUCrkbKYxDGwtBsd+O5V
+   QzocEeUotY9kHixMQk60rirh4SCkeDDKvk72ijKT4d/+2DemWgVKVc19l
+   Cl2RdQ2ZQlmaiA+Y8cBUNaIQB0PHDyIFiqjYx8XF7QBqWYYWJIwk0Fxf5
+   71O4r5ZODvOvlw1s3BtHH2I3rx7pg2ptP3IyRggof4m+7rt7hoQ+SIclo
+   Qf0ufyazwbco/qp6T+k4HYhnjJwRW6FAbrp2RtKpwR6KNA75ASfqRkcUp
+   BD0oy4l16bgmHFfKdGJQT04/MbPfJoLD8dIpnVW+JJweD3qtOhGCvaFeO
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10446"; a="379568699"
+X-IronPort-AV: E=Sophos;i="5.93,253,1654585200"; 
+   d="scan'208";a="379568699"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Aug 2022 12:47:04 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.93,253,1654585200"; 
+   d="scan'208";a="559496311"
+Received: from lkp-server01.sh.intel.com (HELO 44b6dac04a33) ([10.239.97.150])
+  by orsmga003.jf.intel.com with ESMTP; 21 Aug 2022 12:47:01 -0700
+Received: from kbuild by 44b6dac04a33 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1oPquS-0004QP-2M;
+	Sun, 21 Aug 2022 19:47:00 +0000
+Date: Mon, 22 Aug 2022 03:46:33 +0800
+From: kernel test robot <lkp@intel.com>
+To: Igor Kononenko <i.kononenko@yadro.com>, Corey Minyard <minyard@acm.org>,
+	Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>
+Subject: Re: [PATCH 1/3] ipmi:kcs_bmc: Add cleanup regmap(interrupt-regs) on
+ a shutdown.
+Message-ID: <202208220317.cROZCTcB-lkp@intel.com>
+References: <fb81dda34f9db0b9f743b247a2464576dcccd7c9.1661094034.git.i.kononenko@yadro.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.199.18.154]
-X-ClientProxiedBy: T-EXCH-02.corp.yadro.com (172.17.10.102) To
- T-EXCH-08.corp.yadro.com (172.17.11.58)
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <fb81dda34f9db0b9f743b247a2464576dcccd7c9.1661094034.git.i.kononenko@yadro.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,120 +71,113 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Igor Kononenko <i.kononenko@yadro.com>, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, openipmi-developer@lists.sourceforge.net, linux-arm-kernel@lists.infradead.org
+Cc: Igor Kononenko <i.kononenko@yadro.com>, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, llvm@lists.linux.dev, linux-kernel@vger.kernel.org, kbuild-all@lists.01.org, openipmi-developer@lists.sourceforge.net, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The bmc might be rebooted while the host is still reachable and the host
-might send requests through configured lpc-kcs channels in same time.
-That leads to raise lpc-snoop/lpc-kcs interrupts that haven't adjusted IRQ
-handlers yet on next early kernel boot, because on the aspeed-chip reboot
-might keep lpc-registers on a unclean state that is configured on the last
-boot.
+Hi Igor,
 
-The described way might raise the next exception:
-```
-[    1.360110] irq 35: nobody cared (try booting with the "irqpoll" option)
-[    1.360145] CPU: 0 PID: 1 Comm: swapper Not tainted 5.4.43-c109de3-24cc5b6 #1
-[    1.360158] Hardware name: Generic DT based system
-[    1.360168] Backtrace:
-[    1.360228] [<80107f5c>] (dump_backtrace) from [<80108184>] (show_stack+0x20/0x24)
-[    1.360250]  r7:00000023 r6:00000000 r5:00000000 r4:9d12d560
-[    1.360283] [<80108164>] (show_stack) from [<8084ae54>] (dump_stack+0x20/0x28)
-[    1.360316] [<8084ae34>] (dump_stack) from [<80156790>] (__report_bad_irq+0x40/0xc0)
-[    1.360344] [<80156750>] (__report_bad_irq) from [<801566c0>] (note_interrupt+0x238/0x290)
-[    1.360366]  r9:9d0ae000 r8:9d00c600 r7:00000023 r6:00000000 r5:00000000 r4:9d12d560
-[    1.360408] [<80156488>] (note_interrupt) from [<80153594>] (handle_irq_event+0xb4/0xc4)
-[    1.360429]  r10:00000000 r9:9d0ae000 r8:9d00c600 r7:00000001 r6:00000000 r5:00000000
-[    1.360440]  r4:9d12d560 r3:00000000
-[    1.360466] [<801534e0>] (handle_irq_event) from [<8015788c>] (handle_level_irq+0xac/0x180)
-[    1.360480]  r5:80c7d35c r4:9d12d560
-[    1.360503] [<801577e0>] (handle_level_irq) from [<80152a5c>] (__handle_domain_irq+0x6c/0xc8)
-[    1.360519]  r5:80c7d35c r4:9d12d560
-[    1.360545] [<801529f0>] (__handle_domain_irq) from [<801021cc>] (avic_handle_irq+0x68/0x70)
-[    1.360568]  r9:9d0ae000 r8:9d12d608 r7:9d0afc84 r6:ffffffff r5:9d0afc50 r4:9d002380
-[    1.360587] [<80102164>] (avic_handle_irq) from [<80101a6c>] (__irq_svc+0x6c/0x90)
-[    1.360603] Exception stack(0x9d0afc50 to 0x9d0afc98)
-[    1.360620] fc40:                                     00000000 00000100 00000000 00000000
-[    1.360640] fc60: 9d12d560 98bbd0c0 00000000 00000023 9d12d608 60000053 00000000 9d0afcd4
-[    1.360657] fc80: 9d0afc80 9d0afca0 801570ec 80154cdc 40000053 ffffffff
-[    1.360670]  r5:40000053 r4:80154cdc
-[    1.360693] [<801549e0>] (__setup_irq) from [<801555e4>] (request_threaded_irq+0xdc/0x15c)
-[    1.360715]  r9:98bbb340 r8:00000023 r7:9d12d570 r6:9d12d560 r5:00000000 r4:98bbd0c0
-[    1.360741] [<80155508>] (request_threaded_irq) from [<801589d8>] (devm_request_threaded_irq+0x70/0xc4)
-[    1.360762]  r10:80a7353c r9:00000000 r8:98bbb340 r7:9d130e10 r6:00000023 r5:804f4a70
-[    1.360774]  r4:98bbd020 r3:00000080
-[    1.360800] [<80158968>] (devm_request_threaded_irq) from [<804f4ebc>] (aspeed_lpc_snoop_probe+0x100/0x2ac)
-[    1.360821]  r10:00000000 r9:9d130e10 r8:98bbd040 r7:00000000 r6:9d130e00 r5:98bbb340
-[    1.360830]  r4:00000000
-[    1.360851] [<804f4dbc>] (aspeed_lpc_snoop_probe) from [<8056a5c4>] (platform_drv_probe+0x44/0x80)
-[    1.360873]  r9:80c5ef90 r8:00000000 r7:80cc2938 r6:00000000 r5:80c5ef90 r4:9d130e10
-[    1.360910] [<8056a580>] (platform_drv_probe) from [<80568420>] (really_probe+0x26c/0x498)
-[    1.360924]  r5:80cc282c r4:9d130e10
-[    1.360949] [<805681b4>] (really_probe) from [<80568c28>] (driver_probe_device+0x138/0x184)
-[    1.360970]  r10:80b0050c r9:80adadb0 r8:00000007 r7:80c5ef90 r6:9d130e10 r5:00000000
-[    1.360981]  r4:80c5ef90
-[    1.361004] [<80568af0>] (driver_probe_device) from [<80568fe4>] (device_driver_attach+0xb8/0xc0)
-[    1.361020]  r7:80c5ef90 r6:9d130e54 r5:00000000 r4:9d130e10
-[    1.361046] [<80568f2c>] (device_driver_attach) from [<80569070>] (__driver_attach+0x84/0x16c)
-[    1.361063]  r7:80c61128 r6:9d130e10 r5:00000001 r4:80c5ef90
-[    1.361088] [<80568fec>] (__driver_attach) from [<80566068>] (bus_for_each_dev+0x84/0xcc)
-[    1.361106]  r7:80c61128 r6:80568fec r5:80c5ef90 r4:00000000
-[    1.361130] [<80565fe4>] (bus_for_each_dev) from [<80569180>] (driver_attach+0x28/0x30)
-[    1.361147]  r6:00000000 r5:9d1a3d40 r4:80c5ef90
-[    1.361169] [<80569158>] (driver_attach) from [<80566a08>] (bus_add_driver+0x114/0x200)
-[    1.361195] [<805668f4>] (bus_add_driver) from [<80569814>] (driver_register+0x98/0x128)
-[    1.361214]  r7:00000000 r6:80ca0ca0 r5:00000000 r4:80c5ef90
-[    1.361241] [<8056977c>] (driver_register) from [<8056b528>] (__platform_driver_register+0x40/0x54)
-[    1.361256]  r5:000000b8 r4:80b2575c
-[    1.361294] [<8056b4e8>] (__platform_driver_register) from [<80b2577c>] (aspeed_lpc_snoop_driver_init+0x20/0x28)
-[    1.361331] [<80b2575c>] (aspeed_lpc_snoop_driver_init) from [<80b01318>] (do_one_initcall+0x84/0x184)
-[    1.361356] [<80b01294>] (do_one_initcall) from [<80b01540>] (kernel_init_freeable+0x128/0x1ec)
-[    1.361375]  r7:80b3f858 r6:80ca0ca0 r5:000000b8 r4:80b61914
-[    1.361412] [<80b01418>] (kernel_init_freeable) from [<80864060>] (kernel_init+0x18/0x11c)
-[    1.361435]  r10:00000000 r9:00000000 r8:00000000 r7:00000000 r6:00000000 r5:80864048
-[    1.361444]  r4:00000000
-[    1.361470] [<80864048>] (kernel_init) from [<801010e8>] (ret_from_fork+0x14/0x2c)
-[    1.361483] Exception stack(0x9d0affb0 to 0x9d0afff8)
-[    1.361500] ffa0:                                     00000000 00000000 00000000 00000000
-[    1.361518] ffc0: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
-[    1.361535] ffe0: 00000000 00000000 00000000 00000000 00000013 00000000
-[    1.361547]  r5:80864048 r4:00000000
-[    1.361555] handlers:
-[    1.361592] [<(ptrval)>] aspeed_lpc_snoop_irq
-[    1.361609] Disabling IRQ #35
+Thank you for the patch! Yet something to improve:
 
-```
+[auto build test ERROR on cminyard-ipmi/for-next]
+[also build test ERROR on soc/for-next linus/master v6.0-rc1 next-20220819]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-Main caught of that state is the lpc-snoop driver found on the same
-1e789080 address and have same IRQ#35 as for lpc-kcs, and lpc-snoop
-registering earlier than lpc-kcs. So, on the lpc-snoop initialization
-the lpc-snoop IRQ will be registried for IRQ#35, but it will
-passthrough it for the LPC KCS handlers that is not registried yet.
+url:    https://github.com/intel-lab-lkp/linux/commits/Igor-Kononenko/aspeed-lpc-Fix-lpc-snoop-probe-exception/20220822-000836
+base:   https://github.com/cminyard/linux-ipmi for-next
+config: riscv-randconfig-r042-20220821 (https://download.01.org/0day-ci/archive/20220822/202208220317.cROZCTcB-lkp@intel.com/config)
+compiler: clang version 16.0.0 (https://github.com/llvm/llvm-project 01ffe31cbb54bfd8e38e71b3cf804a1d67ebf9c1)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install riscv cross compiling tool for clang build
+        # apt-get install binutils-riscv64-linux-gnu
+        # https://github.com/intel-lab-lkp/linux/commit/9c523bc00c11d0e9499bf6e3d3c5cc2fcf3fff8f
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Igor-Kononenko/aspeed-lpc-Fix-lpc-snoop-probe-exception/20220822-000836
+        git checkout 9c523bc00c11d0e9499bf6e3d3c5cc2fcf3fff8f
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=riscv SHELL=/bin/bash
 
-Summary we got the `nobody cared` warning about more 100.000 unhandled
-IRQ#35
+If you fix the issue, kindly add following tag where applicable
+Reported-by: kernel test robot <lkp@intel.com>
 
-Steps to reproduce:
-* Turn-on BMC
-* Turn-on HOST
-* Run `watch 'ipmitool sensor'` on the host that is configured to pass
-  requests via kcs-channel(3,4)
-* Reboot BMC.
-* On the next BMC boot kernel(BMC) dmesg have exception mentioned above.
+All errors (new ones prefixed by >>):
 
-The following patchset aims to fixup described issue.
+   In file included from drivers/char/ipmi/kcs_bmc_aspeed.c:10:
+   In file included from include/linux/interrupt.h:11:
+   In file included from include/linux/hardirq.h:11:
+   In file included from ./arch/riscv/include/generated/asm/hardirq.h:1:
+   In file included from include/asm-generic/hardirq.h:17:
+   In file included from include/linux/irq.h:20:
+   In file included from include/linux/io.h:13:
+   In file included from arch/riscv/include/asm/io.h:136:
+   include/asm-generic/io.h:464:31: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           val = __raw_readb(PCI_IOBASE + addr);
+                             ~~~~~~~~~~ ^
+   include/asm-generic/io.h:477:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           val = __le16_to_cpu((__le16 __force)__raw_readw(PCI_IOBASE + addr));
+                                                           ~~~~~~~~~~ ^
+   include/uapi/linux/byteorder/little_endian.h:37:51: note: expanded from macro '__le16_to_cpu'
+   #define __le16_to_cpu(x) ((__force __u16)(__le16)(x))
+                                                     ^
+   In file included from drivers/char/ipmi/kcs_bmc_aspeed.c:10:
+   In file included from include/linux/interrupt.h:11:
+   In file included from include/linux/hardirq.h:11:
+   In file included from ./arch/riscv/include/generated/asm/hardirq.h:1:
+   In file included from include/asm-generic/hardirq.h:17:
+   In file included from include/linux/irq.h:20:
+   In file included from include/linux/io.h:13:
+   In file included from arch/riscv/include/asm/io.h:136:
+   include/asm-generic/io.h:490:61: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           val = __le32_to_cpu((__le32 __force)__raw_readl(PCI_IOBASE + addr));
+                                                           ~~~~~~~~~~ ^
+   include/uapi/linux/byteorder/little_endian.h:35:51: note: expanded from macro '__le32_to_cpu'
+   #define __le32_to_cpu(x) ((__force __u32)(__le32)(x))
+                                                     ^
+   In file included from drivers/char/ipmi/kcs_bmc_aspeed.c:10:
+   In file included from include/linux/interrupt.h:11:
+   In file included from include/linux/hardirq.h:11:
+   In file included from ./arch/riscv/include/generated/asm/hardirq.h:1:
+   In file included from include/asm-generic/hardirq.h:17:
+   In file included from include/linux/irq.h:20:
+   In file included from include/linux/io.h:13:
+   In file included from arch/riscv/include/asm/io.h:136:
+   include/asm-generic/io.h:501:33: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           __raw_writeb(value, PCI_IOBASE + addr);
+                               ~~~~~~~~~~ ^
+   include/asm-generic/io.h:511:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           __raw_writew((u16 __force)cpu_to_le16(value), PCI_IOBASE + addr);
+                                                         ~~~~~~~~~~ ^
+   include/asm-generic/io.h:521:59: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           __raw_writel((u32 __force)cpu_to_le32(value), PCI_IOBASE + addr);
+                                                         ~~~~~~~~~~ ^
+   include/asm-generic/io.h:1024:55: warning: performing pointer arithmetic on a null pointer has undefined behavior [-Wnull-pointer-arithmetic]
+           return (port > MMIO_UPPER_LIMIT) ? NULL : PCI_IOBASE + port;
+                                                     ~~~~~~~~~~ ^
+>> drivers/char/ipmi/kcs_bmc_aspeed.c:643:29: error: incompatible pointer types passing 'struct kcs_bmc *' to parameter of type 'struct kcs_bmc_device *' [-Werror,-Wincompatible-pointer-types]
+           aspeed_kcs_irq_mask_update(kcs_bmc, (KCS_BMC_EVENT_TYPE_IBF), 0);
+                                      ^~~~~~~
+   drivers/char/ipmi/kcs_bmc_aspeed.c:399:63: note: passing argument to parameter 'kcs_bmc' here
+   static void aspeed_kcs_irq_mask_update(struct kcs_bmc_device *kcs_bmc, u8 mask, u8 state)
+                                                                 ^
+   7 warnings and 1 error generated.
 
-Igor Kononenko (3):
-  ipmi:kcs_bmc: Add cleanup regmap(interrupt-regs) on a shutdown.
-  drivers/misc: (aspeed-lpc-snoop): Add regmap cleanup on a shutdown.
-  drivers/misc: (aspeed-lpc-snoop): Fix platform_get_irq() error
-    checking
 
- drivers/char/ipmi/kcs_bmc_aspeed.c    |  8 +++++
- drivers/soc/aspeed/aspeed-lpc-snoop.c | 46 ++++++++++++++++++++++++++-
- 2 files changed, 53 insertions(+), 1 deletion(-)
+vim +643 drivers/char/ipmi/kcs_bmc_aspeed.c
+
+   638	
+   639	static void aspeed_kcs_shutdown(struct platform_device *pdev)
+   640	{
+   641		struct kcs_bmc *kcs_bmc = dev_get_drvdata(&pdev->dev);
+   642	
+ > 643		aspeed_kcs_irq_mask_update(kcs_bmc, (KCS_BMC_EVENT_TYPE_IBF), 0);
+   644	}
+   645	
 
 -- 
-2.25.1
-
+0-DAY CI Kernel Test Service
+https://01.org/lkp
