@@ -1,87 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C545759CC5F
-	for <lists+openbmc@lfdr.de>; Tue, 23 Aug 2022 01:44:16 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F61459CC61
+	for <lists+openbmc@lfdr.de>; Tue, 23 Aug 2022 01:44:56 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MBTTp5493z2xjd
-	for <lists+openbmc@lfdr.de>; Tue, 23 Aug 2022 09:44:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MBTVZ2tvbz2xjd
+	for <lists+openbmc@lfdr.de>; Tue, 23 Aug 2022 09:44:54 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=WFmCL/o8;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Bh9C60Ti;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=wrightj@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42c; helo=mail-pf1-x42c.google.com; envelope-from=pkarthikeyan1509@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=WFmCL/o8;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Bh9C60Ti;
 	dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4M8Ssd4ZCfz3bm9
-	for <openbmc@lists.ozlabs.org>; Sat, 20 Aug 2022 03:09:24 +1000 (AEST)
-Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27JGxP5m012380;
-	Fri, 19 Aug 2022 17:09:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=ZQLKMbTFe43FFBhFr8hovTsIBu4eTNlGTUIHVp2i5Fc=;
- b=WFmCL/o8Q5FGd/p+QSoHRiBrYiqbbBO5AODWoZDKekXgz5hIU9A6Ims+viWoZMnvOCba
- 4arOTYx/meKl2czdiYKLS3LImEPTj3WT9wLppAdvwfDqhSP/EqfL0QDjmxS560q3U+/a
- xei8FfaxZeQ17G8g+42ZoeTG9bNmhZ58PObIXbKWmasbjNT/3a5NrTAF+XRqzYc2BUq5
- GuoX22iYyHiDQ0UGcR7Bfq0DLyOfuPPDS1VzSGlmmxnKJTP2Meu4QHpLSd/SA9bt3e+R
- eSL36D32UsxU4GeY59NQHGYUMaH3typsbGspsMmHidu681XDlr38i97v9hBC/sZUjfdz jg== 
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com [169.53.41.122])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3j2eh0gb73-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 19 Aug 2022 17:09:20 +0000
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
-	by ppma04dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 27JH6ldw016499;
-	Fri, 19 Aug 2022 17:09:19 GMT
-Received: from b03cxnp07028.gho.boulder.ibm.com (b03cxnp07028.gho.boulder.ibm.com [9.17.130.15])
-	by ppma04dal.us.ibm.com with ESMTP id 3hx3kaq9yw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 19 Aug 2022 17:09:19 +0000
-Received: from b03ledav003.gho.boulder.ibm.com (b03ledav003.gho.boulder.ibm.com [9.17.130.234])
-	by b03cxnp07028.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 27JH9IpR46399946
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 19 Aug 2022 17:09:18 GMT
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 54CD76A051;
-	Fri, 19 Aug 2022 17:09:18 +0000 (GMT)
-Received: from b03ledav003.gho.boulder.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id DFEE26A04D;
-	Fri, 19 Aug 2022 17:09:17 +0000 (GMT)
-Received: from [9.211.40.181] (unknown [9.211.40.181])
-	by b03ledav003.gho.boulder.ibm.com (Postfix) with ESMTP;
-	Fri, 19 Aug 2022 17:09:17 +0000 (GMT)
-Message-ID: <6acbddee-fba8-b6ba-f709-9f4aff5a34e0@linux.ibm.com>
-Date: Fri, 19 Aug 2022 12:09:16 -0500
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MB3Ff4lZMz305d;
+	Mon, 22 Aug 2022 17:02:12 +1000 (AEST)
+Received: by mail-pf1-x42c.google.com with SMTP id w29so3904872pfj.3;
+        Mon, 22 Aug 2022 00:02:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=user-agent:content-disposition:mime-version:message-id:subject:to
+         :from:date:from:to:cc;
+        bh=9hTAXsgJD7aCEY0rX6FQ88fQXTYtB+TZMr3M3hDpDQs=;
+        b=Bh9C60Tipnjy4vQntS579AMJ7qus7uhE7WRdika4d6MXyFhZsyhzIMsO4lkmHxDzQN
+         0EkhLYKwgtviqmo57z6FZv2v2Gip37RKn5hu+S3cDn1D+ZLDBjBs0hHjab9cKCE7WbNI
+         txbd5VNcZdAIbJU9ZaOOwlPJ89Gt2H0Yuy4jYm8F8IDvWn9PHEvI7+/zcAFXRPhCZqGL
+         B4C7WWtJwVPVnkHVMTnWcDGsk9SVTODBniCD0XknithZjZfCf9RCIJ2CdAioGR2EEQsB
+         1cUgkFFSZLRLDiTayq1eoQlDZpGfzSbSlR31bfo6w4KOk+rzypufZFF4f01IX12PB94v
+         fSvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=user-agent:content-disposition:mime-version:message-id:subject:to
+         :from:date:x-gm-message-state:from:to:cc;
+        bh=9hTAXsgJD7aCEY0rX6FQ88fQXTYtB+TZMr3M3hDpDQs=;
+        b=pE/oZctq9WRTT0DM+e8KwKvmGGYqK4BnIMKcHv3vXdYXxZYcL60vPLbOPxS35pZ9UW
+         h88ADaMhP5qVOrM4tHY0/+sFs/hta0Nrq+axlrpyYPaEXrv8Jg4QXppli2ELZ9wvpuLk
+         Eo62VuNcKN5nQLbuXFvfpLka1Fu6bsMMASPuqdWfsRT6UB42oeMnmiPXs3fA4HsMygFt
+         0gO/UhFhOfNF21TVT1e4hCtiAoLCmL2RU3+sXs8aIk2VeKDa/MPI3Gp+fR621iLPiRYD
+         sE0tijq3QLWPOGztdk5920f7yK7C5uGVNmlcnx8lIzhhCXPLT7fW4OZvUP0l0RENtDjC
+         ymTA==
+X-Gm-Message-State: ACgBeo2QvqTPKKp/rwzvQICAJ6RqEbF03/ZRQ92bxDGnEif0jPoiUeZK
+	nM9msAUA0tpTEHXGeeQtGJ8=
+X-Google-Smtp-Source: AA6agR7U3qFwf7orYVDL/jYnFH1t9Vxflu/2FRsdQF9Y1so78REeNwwZ0D5NjlnvNiAYID8EU666iw==
+X-Received: by 2002:a63:5f49:0:b0:41d:85a1:c4da with SMTP id t70-20020a635f49000000b0041d85a1c4damr15897132pgb.366.1661151729430;
+        Mon, 22 Aug 2022 00:02:09 -0700 (PDT)
+Received: from hcl-ThinkPad-T495 ([2401:4900:1ce3:34a6:18fb:c516:b109:2b8d])
+        by smtp.gmail.com with ESMTPSA id x128-20020a626386000000b00535ffd27552sm6098788pfb.51.2022.08.22.00.02.06
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 22 Aug 2022 00:02:09 -0700 (PDT)
+Date: Mon, 22 Aug 2022 12:32:04 +0530
+From: Karthikeyan Pasupathi <pkarthikeyan1509@gmail.com>
+To: Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
+	Andrew Jeffery <andrew@aj.id.au>, devicetree@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+	linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org
+Subject: [PATCH v1] ARM: dts: aspeed: Update for Facebook Yosemite V2 BMC
+Message-ID: <20220822070204.GA6110@hcl-ThinkPad-T495>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.12.0
-Subject: Re: [PATCH linux dev-5.15 v2] ARM: dts: aspeed: Add IBM Bonnell
- system BMC devicetree
-Content-Language: en-US
-To: Eddie James <eajames@linux.ibm.com>, openbmc@lists.ozlabs.org
-References: <20220818202422.741275-1-eajames@linux.ibm.com>
-From: Jim Wright <wrightj@linux.ibm.com>
-In-Reply-To: <20220818202422.741275-1-eajames@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: NjojAYUrLgD3G7p0iaEqQaWFT4DOBLQx
-X-Proofpoint-GUID: NjojAYUrLgD3G7p0iaEqQaWFT4DOBLQx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-19_08,2022-08-18_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0
- mlxlogscore=882 adultscore=0 mlxscore=0 malwarescore=0 suspectscore=0
- spamscore=0 bulkscore=0 lowpriorityscore=0 clxscore=1015 phishscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2208190062
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+User-Agent: Mutt/1.9.4 (2018-02-28)
 X-Mailman-Approved-At: Tue, 23 Aug 2022 09:39:56 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -94,17 +79,89 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 8/18/2022 3:24 PM, Eddie James wrote:
-> Add a devicetree for the new Bonnell system.
-> 
-> Signed-off-by: Eddie James <eajames@linux.ibm.com>
-> ---
-> Changes since v1:
->   - Add UCD90160 on I2C bus 2
+This patch includes the following updates for Yosemite V2
+BMC.
 
-LGTM -
-Reviewed-by: Jim Wright <wrightj@linux.ibm.com>
+1) Updated GPIO configuration for power control.
+2) Added IPMB-13 channel for Debug Card communication.
+3) Removed EEPROM driver IPMB-12 channel and keeping it as
+   "status ok".
+
+Signed-off-by: Karthikeyan Pasupathi <pkarthikeyan1509@gmail.com>
+---
+ .../dts/aspeed-bmc-facebook-yosemitev2.dts    | 49 +++++++++++++++++--
+ 1 file changed, 44 insertions(+), 5 deletions(-)
+
+diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
+index 8864e9c312a8..4d2ff7eb6740 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
+@@ -119,6 +119,40 @@
+ 			&pinctrl_adc15_default>;
+ };
+ 
++&gpio {
++	status = "okay";
++	gpio-line-names =
++	/*A0-A7*/   "","","","","","","","",
++	/*B0-B7*/   "","","","","","","","",
++	/*C0-C7*/   "","","","","","","","",
++	/*D0-D7*/   "POWER_BUTTON","POWER_OUT1","","POWER_OUT2","","POWER_OUT3","","POWER_OUT4",
++	/*E0-E7*/   "DEBUG_UART_SEL0","DEBUG_UART_SEL1","DEBUG_UART_SEL2","DEBUG_UART_RX_SEL_N","","","","",
++	/*F0-F7*/   "","","","","","","","",
++	/*G0-G7*/   "LED_POST_CODE_0","LED_POST_CODE_1","LED_POST_CODE_2","LED_POST_CODE_3","","","","",
++	/*H0-H7*/   "","","","","","","","",
++	/*I0-I7*/   "SLOT1_POWER_OK","SLOT2_POWER_OK","SLOT3_POWER_OK","SLOT4_POWER_OK","","","","",
++	/*J0-J7*/   "","","","","","","","",
++	/*K0-K7*/   "","","","","","","","",
++	/*L0-L7*/   "","","","","","","","",
++	/*M0-M7*/   "","","","","","","","",
++	/*N0-N7*/   "","","I2C_SLOT1","I2C_SLOT2","I2C_SLOT3","I2C_SLOT4","","",
++	/*O0-O7*/   "","","","SELECTOR_BUTTON","SLOT1_POWER","SLOT2_POWER","SLOT3_POWER","SLOT4_POWER",
++	/*P0-P7*/   "","","","","LED_POST_CODE_4","LED_POST_CODE_5","LED_POST_CODE_6","LED_POST_CODE_7",
++	/*Q0-Q7*/   "","","","","","","","",
++	/*R0-R7*/   "","","","GPIO_DBG_CARD_PRSNT","","","","",
++	/*S0-S7*/   "RESET_OUT1","RESET_OUT2","RESET_OUT3","RESET_OUT4","","","","",
++	/*T0-T7*/   "","","","","","","","",
++	/*U0-U7*/   "","","","","","","","",
++	/*V0-V7*/   "","","","","","","","",
++	/*W0-W7*/   "","","","","","","","",
++	/*X0-X7*/   "","","","","","","","",
++	/*Y0-Y7*/   "","","","","","","","",
++	/*Z0-Z7*/   "POST_COMPLETE","POST_COMPLETE2","POST_COMPLETE3","POST_COMPLETE4","","","","",
++	/*AA0-AA7*/ "","","","","HAND_SW1","HAND_SW2","HAND_SW3","HAND_SW4",
++	/*AB0-AB7*/ "RESET_BUTTON","","","","","","","",
++		/*AC0-AC7*/ "","","","","","","","";
++};
++
+ &i2c1 {
+ 	//Host1 IPMB bus
+ 	status = "okay";
+@@ -207,11 +241,16 @@
+ 
+ &i2c12 {
+ 	status = "okay";
+-	//MEZZ_FRU
+-	eeprom@51 {
+-		compatible = "atmel,24c64";
+-		reg = <0x51>;
+-		pagesize = <32>;
++};
++
++&i2c13 {
++	status = "okay";
++	// Debug Card
++	multi-master;
++	ipmb13@10 {
++		compatible = "ipmb-dev";
++		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
++		i2c-protocol;
+ 	};
+ };
+ 
+-- 
+2.17.1
+
