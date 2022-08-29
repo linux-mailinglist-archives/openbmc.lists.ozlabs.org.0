@@ -2,72 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 034C35A456D
-	for <lists+openbmc@lfdr.de>; Mon, 29 Aug 2022 10:49:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C9EBD5A4FFD
+	for <lists+openbmc@lfdr.de>; Mon, 29 Aug 2022 17:16:37 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MGPHv6fRcz3btQ
-	for <lists+openbmc@lfdr.de>; Mon, 29 Aug 2022 18:49:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MGYtq5Dq3z3bmP
+	for <lists+openbmc@lfdr.de>; Tue, 30 Aug 2022 01:16:35 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=YSKJY0it;
+	dkim=pass (1024-bit key; unprotected) header.d=ti.com header.i=@ti.com header.a=rsa-sha256 header.s=ti-com-17Q1 header.b=KB2g+qIj;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.15.18; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=ti.com (client-ip=198.47.19.141; helo=fllv0015.ext.ti.com; envelope-from=spatton@ti.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=YSKJY0it;
+	dkim=pass (1024-bit key; unprotected) header.d=ti.com header.i=@ti.com header.a=rsa-sha256 header.s=ti-com-17Q1 header.b=KB2g+qIj;
 	dkim-atps=neutral
-X-Greylist: delayed 309 seconds by postgrey-1.36 at boromir; Mon, 29 Aug 2022 18:48:51 AEST
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from fllv0015.ext.ti.com (fllv0015.ext.ti.com [198.47.19.141])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MGPHR71K8z2xjh
-	for <openbmc@lists.ozlabs.org>; Mon, 29 Aug 2022 18:48:51 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-	s=badeba3b8450; t=1661762928;
-	bh=x79yWCbuNLXEU/1zCdsg1A5pjnyEe/t3/mrJeXUW4SY=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=YSKJY0it/W+HnzGvYhZKzzKqrJQYbU8dBK1rHHPAc8Q1emSHZdNr5J96l934XTxOI
-	 7RtBxTznPe3vnqK/nf0CdBrqOsfl30jCzId5fHA7u9RwHupZoPRMZMED2y4TgneSNn
-	 XDS9Zh1fXsjFQ3xtruSn5V40/eDlD4UlDmeN567g=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from probook ([95.223.44.149]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MXp5a-1otx0Q2QLE-00YC5h; Mon, 29
- Aug 2022 10:43:30 +0200
-Date: Mon, 29 Aug 2022 10:43:29 +0200
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: AKASH G J <akashgj91@gmail.com>
-Subject: Re: Read CPU memory from BMC.
-Message-ID: <Ywx8MZ/vih+W+ujY@probook>
-References: <CAE33tLF5KTW8-gCq9bn_AsKmfaMUrV9faERzWQzL6s38F2O-DA@mail.gmail.com>
- <328645f5-9bd7-99d0-8b1c-511175d3d94f@linux.ibm.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MGYtL6lhjz3bXZ
+	for <openbmc@lists.ozlabs.org>; Tue, 30 Aug 2022 01:16:09 +1000 (AEST)
+Received: from lelv0266.itg.ti.com ([10.180.67.225])
+	by fllv0015.ext.ti.com (8.15.2/8.15.2) with ESMTP id 27TFFm2t105906
+	for <openbmc@lists.ozlabs.org>; Mon, 29 Aug 2022 10:15:48 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+	s=ti-com-17Q1; t=1661786148;
+	bh=yyNMGVm1UFPbwalNz/MP3bhGFsaYvXp72LDXZjOpt3w=;
+	h=From:To:Subject:Date;
+	b=KB2g+qIjxCPbMoBKNsZwT4CTMbsTHbZJC96+c+m8F2bpMZ4kprBfl3P4ArH+/fmys
+	 URvwgb+yFP/Mnbu0AyPe4dSYJtLpG1i/gHPbYTtABuxqNLB6sTLaOgHCMDM4MK3oNv
+	 WMU43khh734QxEzpr0guHyDZ5dviNURc9a7RrGrA=
+Received: from DLEE102.ent.ti.com (dlee102.ent.ti.com [157.170.170.32])
+	by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 27TFFmrt100439
+	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL)
+	for <openbmc@lists.ozlabs.org>; Mon, 29 Aug 2022 10:15:48 -0500
+Received: from DLEE102.ent.ti.com (157.170.170.32) by DLEE102.ent.ti.com
+ (157.170.170.32) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.6; Mon, 29
+ Aug 2022 10:15:48 -0500
+Received: from DLEE102.ent.ti.com ([fe80::2cde:e57d:8075:c010]) by
+ DLEE102.ent.ti.com ([fe80::2cde:e57d:8075:c010%17]) with mapi id
+ 15.01.2507.006; Mon, 29 Aug 2022 10:15:48 -0500
+From: "Patton, Schuyler" <spatton@ti.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: new port seeing ipmid exiting with seg fault
+Thread-Topic: new port seeing ipmid exiting with seg fault
+Thread-Index: Adi7uig+46mXlu/cTLeuedYC8FAEiA==
+Date: Mon, 29 Aug 2022 15:15:48 +0000
+Message-ID: <66a2cce533124f56b60f68f9f0b807af@ti.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.249.35.203]
+x-exclaimer-md-config: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
+Content-Type: multipart/alternative;
+	boundary="_000_66a2cce533124f56b60f68f9f0b807afticom_"
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="ByIadL/5AI18gBnY"
-Content-Disposition: inline
-In-Reply-To: <328645f5-9bd7-99d0-8b1c-511175d3d94f@linux.ibm.com>
-X-Provags-ID: V03:K1:RepSYPrNWkfiW3FWbcYQ+4dWZeUsEMvOwDPFuFIgUHFlOos7pil
- bqQpO1mFL00wM/laNfT5J5Kc2ns2efUU8Off3QA7Yi2kdg22WsqZN9dNWIL21u3VY42ThxY
- iKZOyhZCR4oC/ixmzkyaKA+OEYhHjFneFxpYNjhmC6qvNs3GbJFNf7qFhe0RDIXx4jBa7Ir
- emLC+C/ja58/bNytn2geA==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:95a2AMA7jOc=:LRQKUD21NhnYNzM9h0yscl
- 5vORAKIGgXiCiMo/V9ToqSm/uBfxX5ZsXdUQvfnGwz+4K8DSAxcSinqZEzNN7ZDpx3hfhgYPc
- zV2JS3OYoRvlnFAs1bQ3wRSSCnTY7xM8k219m4gFFwJ4oWIO34NlW5QOGX2RYBvOmYj2I27OM
- aaJ59m07Zux91LDkO1RPb6t4EbFLVIbGHsR12GbLQihKT0qy8ckHwOA0g29HhmfTFoHRVnFWE
- 1oS23ThKrlxbSX28k1Jpkp5ip8CgLpLn0pJYchertgkxIpeYERGe7eWE6fti2gbV5TPJmZcvx
- uxE7uasDhAniKqA2al30QVDwzEqvVOSf8CWH7YFbS7fu7a/WfnHWlhF6Wsy64dOLVKnS2QWkZ
- jj6iPPOp9HR4r+Cv+Dc7Kwzju/IA520lxfVksQ+8rb5hmENiF8AqCzMghc8Tnl4hs+jTJYwak
- lpnyXhFIQ0s+j14ZR5XcWz+TlxwegI7uFUdnu6cipLKwdEoS8s4Oon6/OqRWNBGjsSDbkcmfq
- iL1HDGO1infs46N5E2OuWUMUHQ6C3DT/Aylbykl3hX7UW9JBXtlF+5Qlnwl29N6OOtr9mDY6u
- ZV/kyaKUVFcOj7d+eQdsZDvgzM3dE96ax3N2pJWZjSYxJ+ZKgEx79vcD5qPh3QzXf6fFCk7zB
- EyL31hMzXiXgpDDCaNcD9AQD7CEchyE69ar5bMkkicJcaSUVunvrPVturOtO779NqFi0f7qIX
- dakaQb9XeuUeqieaLVB0yRKxgfwe07g1gPKOFnVSJZXR2wGiDVHMd/WiLpxxjKnNZXSD+4CJB
- cP4QI1gpcWo6J/AbztRa7AEG2ZKxfBQOEASLBLS1tE4UflYZll/LB1oA1VOFcFYttea3RlRl/
- cfVkAgCVSYOlnmS0x0RvAtWAQ4ZkJ1+wuzEN3K54/OxblUHBg5m94b0Xfi+MoNcsxzk8GTwDw
- Ze7PPfZ3/nTNfHhJoGE5OE+fA8OAJNOCDT/tw9Sv3OCYTBNh14/0RL4h8c+e4UsQmy49MKXLg
- Wn1rMyIvxY9j274EVOaaYVBiH0dwCBlsm6tml5r0BPThC9nO3iNsMD8rp7uQ7MYtlF/r1an6A
- 6515endSwI4jmiJOuQ9ejujp+nJMg56chgebRlZXFY926N4Y+D7mC6FpA==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,66 +69,263 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Joseph Reynolds <jrey@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
---ByIadL/5AI18gBnY
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+--_000_66a2cce533124f56b60f68f9f0b807afticom_
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
 
-On Sun, Aug 28, 2022 at 08:30:54PM -0500, Joseph Reynolds wrote:
-> On 8/26/22 11:42 AM, AKASH G J wrote:
-> > Hello Team,
-> >=20
-> > Is it possible to read CPU memory space from the BMC?
-> > If PCIe connection is available from BMC to the chipset, can we do DMA
-> > from BMC ?
->=20
-> Akash,
->=20
-> I hope not.=C2=A0 I assume you are asking about how to read the host's me=
-mory
-> from the BMC.
+Hi all,
 
-Hello Akash and Joseph,
+In our port the ipmid is exiting with a seg fault.  Does anyone have any su=
+ggestions on what to look at or what the problem might be? I have included =
+some info I collected from systemctl and journalctl. Thanks in advance for =
+any pointers, suggestions.
 
-At least HP iLO BMC hardware has this feature (as documented by Airbus
-security lab[1]).
+root@evb-am62xx:~# systemctl status phosphor-ipmi-host
+x phosphor-ipmi-host.service - Phosphor Inband IPMI
+     Loaded: loaded (/lib/systemd/system/phosphor-ipmi-host.service; enable=
+d; vendor preset: enabled)
+    Drop-In: /lib/systemd/system/phosphor-ipmi-host.service.d
+             `-10-override.conf
+     Active: failed (Result: core-dump) since Mon 2022-08-29 15:01:40 UTC; =
+3min 8s ago
+   Duration: 1.163s
+    Process: 368 ExecStart=3D/usr/bin/env ipmid (code=3Ddumped, signal=3DSE=
+GV)
+   Main PID: 368 (code=3Ddumped, signal=3DSEGV)
 
-In other case, the reverse is possible: Reading/writing BMC memory from
-the host[2].
+Aug 29 15:01:40 evb-am62xx systemd[1]: phosphor-ipmi-host.service: Schedule=
+d restart job, restart counter is at 2.
+Aug 29 15:01:40 evb-am62xx systemd[1]: Stopped Phosphor Inband IPMI.
+Aug 29 15:01:40 evb-am62xx systemd[1]: phosphor-ipmi-host.service: Start re=
+quest repeated too quickly.
+Aug 29 15:01:40 evb-am62xx systemd[1]: phosphor-ipmi-host.service: Failed w=
+ith result 'core-dump'.
+Aug 29 15:01:40 evb-am62xx systemd[1]: Failed to start Phosphor Inband IPMI=
+.
 
 
-In any case, before OpenBMC can support reading/writing host memory, the
-hardware has to support it. Which BMC hardware platform are you working wit=
-h?
+root@evb-am62xx:~# journalctl | grep ipmi
+Jan 01 00:00:04 evb-am62xx systemd[1]: /lib/systemd/system/phosphor-ipmi-ne=
+t@.socket:3: Invalid interface name, ignoring: sys-subsystem-net-devices-%i=
+.device
+Jan 01 00:00:04 evb-am62xx systemd[1]: Created slice Slice /system/phosphor=
+-ipmi-net.
+Aug 29 15:01:19 evb-am62xx systemd[1]: Listening on phosphor-ipmi-net@eth0.=
+socket.
+Aug 29 15:01:21 evb-am62xx ipmid[329]: JSON file not found
+Aug 29 15:01:22 evb-am62xx systemd-coredump[339]: Process 334 (netipmid) of=
+ user 0 dumped core.
+Aug 29 15:01:22 evb-am62xx systemd[1]: phosphor-ipmi-net@eth0.service: Main=
+ process exited, code=3Ddumped, status=3D11/SEGV
+Aug 29 15:01:22 evb-am62xx systemd[1]: phosphor-ipmi-net@eth0.service: Fail=
+ed with result 'core-dump'.
+Aug 29 15:01:23 evb-am62xx systemd-coredump[338]: Process 329 (ipmid) of us=
+er 0 dumped core.
+Aug 29 15:01:23 evb-am62xx systemd[1]: phosphor-ipmi-host.service: Main pro=
+cess exited, code=3Ddumped, status=3D11/SEGV
+Aug 29 15:01:23 evb-am62xx systemd[1]: phosphor-ipmi-host.service: Failed w=
+ith result 'core-dump'.
+Aug 29 15:01:38 evb-am62xx systemd[1]: phosphor-ipmi-net@eth0.service: Sche=
+duled restart job, restart counter is at 1.
+Aug 29 15:01:38 evb-am62xx systemd[1]: phosphor-ipmi-host.service: Schedule=
+d restart job, restart counter is at 1.
+Aug 29 15:01:39 evb-am62xx systemd-coredump[373]: Process 370 (netipmid) of=
+ user 0 dumped core.
+Aug 29 15:01:39 evb-am62xx systemd[1]: phosphor-ipmi-net@eth0.service: Main=
+ process exited, code=3Ddumped, status=3D11/SEGV
+Aug 29 15:01:39 evb-am62xx systemd[1]: phosphor-ipmi-net@eth0.service: Fail=
+ed with result 'core-dump'.
+Aug 29 15:01:39 evb-am62xx systemd-coredump[371]: Process 368 (ipmid) of us=
+er 0 dumped core.
+Aug 29 15:01:39 evb-am62xx systemd[1]: phosphor-ipmi-host.service: Main pro=
+cess exited, code=3Ddumped, status=3D11/SEGV
+Aug 29 15:01:39 evb-am62xx systemd[1]: phosphor-ipmi-host.service: Failed w=
+ith result 'core-dump'.
+Aug 29 15:01:40 evb-am62xx systemd[1]: phosphor-ipmi-net@eth0.service: Sche=
+duled restart job, restart counter is at 2.
+Aug 29 15:01:40 evb-am62xx systemd[1]: phosphor-ipmi-host.service: Schedule=
+d restart job, restart counter is at 2.
+Aug 29 15:01:40 evb-am62xx systemd[1]: phosphor-ipmi-host.service: Start re=
+quest repeated too quickly.
+Aug 29 15:01:40 evb-am62xx systemd[1]: phosphor-ipmi-host.service: Failed w=
+ith result 'core-dump'.
+Aug 29 15:01:40 evb-am62xx systemd[1]: phosphor-ipmi-net@eth0.service: Job =
+phosphor-ipmi-net@eth0.service/start failed with result 'dependency'.
+
+Regards,
+Schuyler Patton
+Sitara MPU System Applications
+Texas Instruments
 
 
-Greetings,
-Jonathan
+--_000_66a2cce533124f56b60f68f9f0b807afticom_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+>
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:blue;
+	text-decoration:underline;}
+a:visited, span.MsoHyperlinkFollowed
+	{mso-style-priority:99;
+	color:purple;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"blue" vlink=3D"purple">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">Hi all,<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">In our port the ipmid is exiting with a seg fault. &=
+nbsp;Does anyone have any suggestions on what to look at or what the proble=
+m might be? I have included some info I collected from systemctl and journa=
+lctl. Thanks in advance for any pointers,
+ suggestions.<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">root@evb-am62xx:~# systemctl status phosphor-ipmi-ho=
+st<o:p></o:p></p>
+<p class=3D"MsoNormal">x phosphor-ipmi-host.service - Phosphor Inband IPMI<=
+o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; Loaded: loaded (/lib/system=
+d/system/phosphor-ipmi-host.service; enabled; vendor preset: enabled)<o:p><=
+/o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; Drop-In: /lib/systemd/system/phos=
+phor-ipmi-host.service.d<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp; `-10-override.conf<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp; Active: failed (Result: cor=
+e-dump) since Mon 2022-08-29 15:01:40 UTC; 3min 8s ago<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp; Duration: 1.163s<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp; Process: 368 ExecStart=3D/usr/bin=
+/env ipmid (code=3Ddumped, signal=3DSEGV)<o:p></o:p></p>
+<p class=3D"MsoNormal">&nbsp;&nbsp; Main PID: 368 (code=3Ddumped, signal=3D=
+SEGV)<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:40 evb-am62xx systemd[1]: phosphor-ipmi=
+-host.service: Scheduled restart job, restart counter is at 2.<o:p></o:p></=
+p>
+<p class=3D"MsoNormal">Aug 29 15:01:40 evb-am62xx systemd[1]: Stopped Phosp=
+hor Inband IPMI.<o:p></o:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:40 evb-am62xx systemd[1]: phosphor-ipmi=
+-host.service: Start request repeated too quickly.<o:p></o:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:40 evb-am62xx systemd[1]: phosphor-ipmi=
+-host.service: Failed with result 'core-dump'.<o:p></o:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:40 evb-am62xx systemd[1]: Failed to sta=
+rt Phosphor Inband IPMI.<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">root@evb-am62xx:~# journalctl | grep ipmi<o:p></o:p>=
+</p>
+<p class=3D"MsoNormal">Jan 01 00:00:04 evb-am62xx systemd[1]: /lib/systemd/=
+system/phosphor-ipmi-net@.socket:3: Invalid interface name, ignoring: sys-s=
+ubsystem-net-devices-%i.device<o:p></o:p></p>
+<p class=3D"MsoNormal">Jan 01 00:00:04 evb-am62xx systemd[1]: Created slice=
+ Slice /system/phosphor-ipmi-net.<o:p></o:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:19 evb-am62xx systemd[1]: Listening on =
+phosphor-ipmi-net@eth0.socket.<o:p></o:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:21 evb-am62xx ipmid[329]: JSON file not=
+ found<o:p></o:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:22 evb-am62xx systemd-coredump[339]: Pr=
+ocess 334 (netipmid) of user 0 dumped core.<o:p></o:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:22 evb-am62xx systemd[1]: phosphor-ipmi=
+-net@eth0.service: Main process exited, code=3Ddumped, status=3D11/SEGV<o:p=
+></o:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:22 evb-am62xx systemd[1]: phosphor-ipmi=
+-net@eth0.service: Failed with result 'core-dump'.<o:p></o:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:23 evb-am62xx systemd-coredump[338]: Pr=
+ocess 329 (ipmid) of user 0 dumped core.<o:p></o:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:23 evb-am62xx systemd[1]: phosphor-ipmi=
+-host.service: Main process exited, code=3Ddumped, status=3D11/SEGV<o:p></o=
+:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:23 evb-am62xx systemd[1]: phosphor-ipmi=
+-host.service: Failed with result 'core-dump'.<o:p></o:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:38 evb-am62xx systemd[1]: phosphor-ipmi=
+-net@eth0.service: Scheduled restart job, restart counter is at 1.<o:p></o:=
+p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:38 evb-am62xx systemd[1]: phosphor-ipmi=
+-host.service: Scheduled restart job, restart counter is at 1.<o:p></o:p></=
+p>
+<p class=3D"MsoNormal">Aug 29 15:01:39 evb-am62xx systemd-coredump[373]: Pr=
+ocess 370 (netipmid) of user 0 dumped core.<o:p></o:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:39 evb-am62xx systemd[1]: phosphor-ipmi=
+-net@eth0.service: Main process exited, code=3Ddumped, status=3D11/SEGV<o:p=
+></o:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:39 evb-am62xx systemd[1]: phosphor-ipmi=
+-net@eth0.service: Failed with result 'core-dump'.<o:p></o:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:39 evb-am62xx systemd-coredump[371]: Pr=
+ocess 368 (ipmid) of user 0 dumped core.<o:p></o:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:39 evb-am62xx systemd[1]: phosphor-ipmi=
+-host.service: Main process exited, code=3Ddumped, status=3D11/SEGV<o:p></o=
+:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:39 evb-am62xx systemd[1]: phosphor-ipmi=
+-host.service: Failed with result 'core-dump'.<o:p></o:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:40 evb-am62xx systemd[1]: phosphor-ipmi=
+-net@eth0.service: Scheduled restart job, restart counter is at 2.<o:p></o:=
+p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:40 evb-am62xx systemd[1]: phosphor-ipmi=
+-host.service: Scheduled restart job, restart counter is at 2.<o:p></o:p></=
+p>
+<p class=3D"MsoNormal">Aug 29 15:01:40 evb-am62xx systemd[1]: phosphor-ipmi=
+-host.service: Start request repeated too quickly.<o:p></o:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:40 evb-am62xx systemd[1]: phosphor-ipmi=
+-host.service: Failed with result 'core-dump'.<o:p></o:p></p>
+<p class=3D"MsoNormal">Aug 29 15:01:40 evb-am62xx systemd[1]: phosphor-ipmi=
+-net@eth0.service: Job phosphor-ipmi-net@eth0.service/start failed with res=
+ult 'dependency'.<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><span style=3D"color:black">Regards,<o:p></o:p></spa=
+n></p>
+<p class=3D"MsoNormal"><span style=3D"color:black">Schuyler Patton<o:p></o:=
+p></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:black">Sitara MPU System Applic=
+ations<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"color:black">Texas Instruments<o:p></=
+o:p></span></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+</div>
+</body>
+</html>
 
-[1]: https://airbus-seclab.github.io/ilo/RECONBRX2018-Slides-Subverting_you=
-r_server_through_its_BMC_the_HPE_iLO4_case-perigaud-gazet-czarny.pdf
-[2]: https://www.flamingspork.com/blog/2019/01/23/cve-2019-6260:-gaining-co=
-ntrol-of-bmc-from-the-host-processor/
-
---ByIadL/5AI18gBnY
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEhh3Clxs0Y2wkh8R0lF/c9L3bh38FAmMMfDEACgkQlF/c9L3b
-h3+rowgAhsXFEhK74WLvj3PYsSRuudrFEauEPSVTKHkC0te58UpbnWuX9ai/nJYS
-PwksOhpVKJNBsNl2WMoJsx2321a+I0gWH8m3a80+CNeppLvlcYfnDj1kUXqsYrv7
-a88H6a6HV15aP5WlBsYDq2WK5GC2jAU8gzLR352kYmtVvtbScyvltoRHHjT5610q
-vjzjbErLjxxPOvmxmRi41q1EplbrtjYuHJB0yo0P9jQ7DaJZ2kDJIfR38VwNEnfh
-m4kQxuVexZ5dZ82lcs4+2t/Lce/puHdd7OoMvl6Gbwh3v9sBw3iTfGkC9pj3Fi58
-AheSQURVONV+/p2OcskO4PZG6s8LMQ==
-=djTm
------END PGP SIGNATURE-----
-
---ByIadL/5AI18gBnY--
+--_000_66a2cce533124f56b60f68f9f0b807afticom_--
