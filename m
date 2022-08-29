@@ -2,67 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id DCF815A419C
-	for <lists+openbmc@lfdr.de>; Mon, 29 Aug 2022 05:53:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 034C35A456D
+	for <lists+openbmc@lfdr.de>; Mon, 29 Aug 2022 10:49:23 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MGGks6061z3bl6
-	for <lists+openbmc@lfdr.de>; Mon, 29 Aug 2022 13:53:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MGPHv6fRcz3btQ
+	for <lists+openbmc@lfdr.de>; Mon, 29 Aug 2022 18:49:15 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=EbOKh9LM;
+	dkim=pass (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=YSKJY0it;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::52b; helo=mail-ed1-x52b.google.com; envelope-from=milkfafa@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.15.18; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=EbOKh9LM;
+	dkim=pass (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=YSKJY0it;
 	dkim-atps=neutral
-Received: from mail-ed1-x52b.google.com (mail-ed1-x52b.google.com [IPv6:2a00:1450:4864:20::52b])
+X-Greylist: delayed 309 seconds by postgrey-1.36 at boromir; Mon, 29 Aug 2022 18:48:51 AEST
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MGGk30Fcnz3bkb
-	for <openbmc@lists.ozlabs.org>; Mon, 29 Aug 2022 13:52:58 +1000 (AEST)
-Received: by mail-ed1-x52b.google.com with SMTP id b16so8581675edd.4
-        for <openbmc@lists.ozlabs.org>; Sun, 28 Aug 2022 20:52:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc;
-        bh=i3P9yvcZ5w9JMjlHaA5/F93BbKF3hEM1ahs4PE9M3sU=;
-        b=EbOKh9LMbPDhquOkY6YMTz7GEGWR8BQdmUe/hFPRalUfSmCBlFoBUeVaRDfwPdTYaV
-         tW0Ke+svFy/1TG35d4XkmsssGORHSWaWeQSJGYLARCGoyZekbQVmVCzkyKsJUs8Kbz50
-         13OVjkFXLZiHB/zBnBRgwyiBwb0DGcWicq0vxESy5yojgC5M+ig19TPHSHLQZ5BOVW98
-         i5XBk/IOxwBBpBz6cQ2j/GDO00HBpM/Z7aWO8iJ4mTvN2IJb+bzs/m9cKSr8hDXeC9eK
-         1jihznrGnU21jYVBlVrhl/WnVScOON0o8Yd2PtBg7CqNE70hpQn1y4ifwYZVvYXVRe9e
-         +3PA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc;
-        bh=i3P9yvcZ5w9JMjlHaA5/F93BbKF3hEM1ahs4PE9M3sU=;
-        b=pSt1+YUbsB2R2H3iOvQpw6vPsqlBd/aLk9JkWzaIqtreTqNSa+5Ttlx3cqWIL6OQ7o
-         9gbzlRnx8h9YbyejC+Mb5ODVWgGmcYKP4iptCOvPn16Oh5n7ibHYq5qqPqZZ2Kjj0JSN
-         clDtzzYE8nOF9XK8j3yC0CyrqF7ZfymnOgl6efKYLLSl4wCAVvrV66mqNc6Jky4l1siE
-         41VYQkh+Y9py0RtHIjAz/Ci+HziCFelYEi5G9dBfFO6JwIJQC3E6EILojLLbcctnSwRH
-         aZjcC1P53twnLe6SdgzUzRS3hU/CnbHj1V7malYlwopEpxF38shSS7RGlvJo2H0TstN7
-         il6A==
-X-Gm-Message-State: ACgBeo1YVJPo75CvXsaq8tsWx0ox/TaV84jRflozGselALLKttQNlNd7
-	TPhlNdq6l2VwCCc8MBJvPRYxCtYmtHgnr3dam14=
-X-Google-Smtp-Source: AA6agR7gHwwO7J0rRiChvfQJve8VQ06faGb/93y5NKqE+1wlyC2GzzLvQxic3/P0jIdT/P1vktF+OzV/JS5XKJ3fcFI=
-X-Received: by 2002:a05:6402:34cd:b0:448:8286:23f0 with SMTP id
- w13-20020a05640234cd00b00448828623f0mr1259550edc.40.1661745173471; Sun, 28
- Aug 2022 20:52:53 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MGPHR71K8z2xjh
+	for <openbmc@lists.ozlabs.org>; Mon, 29 Aug 2022 18:48:51 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+	s=badeba3b8450; t=1661762928;
+	bh=x79yWCbuNLXEU/1zCdsg1A5pjnyEe/t3/mrJeXUW4SY=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=YSKJY0it/W+HnzGvYhZKzzKqrJQYbU8dBK1rHHPAc8Q1emSHZdNr5J96l934XTxOI
+	 7RtBxTznPe3vnqK/nf0CdBrqOsfl30jCzId5fHA7u9RwHupZoPRMZMED2y4TgneSNn
+	 XDS9Zh1fXsjFQ3xtruSn5V40/eDlD4UlDmeN567g=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from probook ([95.223.44.149]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MXp5a-1otx0Q2QLE-00YC5h; Mon, 29
+ Aug 2022 10:43:30 +0200
+Date: Mon, 29 Aug 2022 10:43:29 +0200
+From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: AKASH G J <akashgj91@gmail.com>
+Subject: Re: Read CPU memory from BMC.
+Message-ID: <Ywx8MZ/vih+W+ujY@probook>
+References: <CAE33tLF5KTW8-gCq9bn_AsKmfaMUrV9faERzWQzL6s38F2O-DA@mail.gmail.com>
+ <328645f5-9bd7-99d0-8b1c-511175d3d94f@linux.ibm.com>
 MIME-Version: 1.0
-References: <20220816094641.8484-1-milkfafa@gmail.com> <20220816094641.8484-3-milkfafa@gmail.com>
- <20220818144442.GB1829017-robh@kernel.org>
-In-Reply-To: <20220818144442.GB1829017-robh@kernel.org>
-From: Kun-Fa Lin <milkfafa@gmail.com>
-Date: Mon, 29 Aug 2022 11:52:42 +0800
-Message-ID: <CADnNmFqPmr7Af1ROALPbfoj73p5d1bKjhYV+MuO9KhCQMk=FAQ@mail.gmail.com>
-Subject: Re: [PATCH v13 2/3] dt-bindings: edac: nuvoton: Add document for NPCM
- memory controller
-To: Rob Herring <robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ByIadL/5AI18gBnY"
+Content-Disposition: inline
+In-Reply-To: <328645f5-9bd7-99d0-8b1c-511175d3d94f@linux.ibm.com>
+X-Provags-ID: V03:K1:RepSYPrNWkfiW3FWbcYQ+4dWZeUsEMvOwDPFuFIgUHFlOos7pil
+ bqQpO1mFL00wM/laNfT5J5Kc2ns2efUU8Off3QA7Yi2kdg22WsqZN9dNWIL21u3VY42ThxY
+ iKZOyhZCR4oC/ixmzkyaKA+OEYhHjFneFxpYNjhmC6qvNs3GbJFNf7qFhe0RDIXx4jBa7Ir
+ emLC+C/ja58/bNytn2geA==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:95a2AMA7jOc=:LRQKUD21NhnYNzM9h0yscl
+ 5vORAKIGgXiCiMo/V9ToqSm/uBfxX5ZsXdUQvfnGwz+4K8DSAxcSinqZEzNN7ZDpx3hfhgYPc
+ zV2JS3OYoRvlnFAs1bQ3wRSSCnTY7xM8k219m4gFFwJ4oWIO34NlW5QOGX2RYBvOmYj2I27OM
+ aaJ59m07Zux91LDkO1RPb6t4EbFLVIbGHsR12GbLQihKT0qy8ckHwOA0g29HhmfTFoHRVnFWE
+ 1oS23ThKrlxbSX28k1Jpkp5ip8CgLpLn0pJYchertgkxIpeYERGe7eWE6fti2gbV5TPJmZcvx
+ uxE7uasDhAniKqA2al30QVDwzEqvVOSf8CWH7YFbS7fu7a/WfnHWlhF6Wsy64dOLVKnS2QWkZ
+ jj6iPPOp9HR4r+Cv+Dc7Kwzju/IA520lxfVksQ+8rb5hmENiF8AqCzMghc8Tnl4hs+jTJYwak
+ lpnyXhFIQ0s+j14ZR5XcWz+TlxwegI7uFUdnu6cipLKwdEoS8s4Oon6/OqRWNBGjsSDbkcmfq
+ iL1HDGO1infs46N5E2OuWUMUHQ6C3DT/Aylbykl3hX7UW9JBXtlF+5Qlnwl29N6OOtr9mDY6u
+ ZV/kyaKUVFcOj7d+eQdsZDvgzM3dE96ax3N2pJWZjSYxJ+ZKgEx79vcD5qPh3QzXf6fFCk7zB
+ EyL31hMzXiXgpDDCaNcD9AQD7CEchyE69ar5bMkkicJcaSUVunvrPVturOtO779NqFi0f7qIX
+ dakaQb9XeuUeqieaLVB0yRKxgfwe07g1gPKOFnVSJZXR2wGiDVHMd/WiLpxxjKnNZXSD+4CJB
+ cP4QI1gpcWo6J/AbztRa7AEG2ZKxfBQOEASLBLS1tE4UflYZll/LB1oA1VOFcFYttea3RlRl/
+ cfVkAgCVSYOlnmS0x0RvAtWAQ4ZkJ1+wuzEN3K54/OxblUHBg5m94b0Xfi+MoNcsxzk8GTwDw
+ Ze7PPfZ3/nTNfHhJoGE5OE+fA8OAJNOCDT/tw9Sv3OCYTBNh14/0RL4h8c+e4UsQmy49MKXLg
+ Wn1rMyIvxY9j274EVOaaYVBiH0dwCBlsm6tml5r0BPThC9nO3iNsMD8rp7uQ7MYtlF/r1an6A
+ 6515endSwI4jmiJOuQ9ejujp+nJMg56chgebRlZXFY926N4Y+D7mC6FpA==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,13 +79,66 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: CS20 KWLiu <KWLIU@nuvoton.com>, tony.luck@intel.com, rric@kernel.org, Benjamin Fair <benjaminfair@google.com>, devicetree <devicetree@vger.kernel.org>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, JJLIU0@nuvoton.com, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Tomer Maimon <tmaimon77@gmail.com>, Tali Perry <tali.perry1@gmail.com>, KFTING <KFTING@nuvoton.com>, YSCHU@nuvoton.com, Borislav Petkov <bp@alien8.de>, ctcchien@nuvoton.com, James Morse <james.morse@arm.com>, Mauro Carvalho Chehab <mchehab@kernel.org>, Marvin Lin <kflin@nuvoton.com>, linux-edac <linux-edac@vger.kernel.org>
+Cc: openbmc@lists.ozlabs.org, Joseph Reynolds <jrey@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Rob,
 
-Thanks for the review.
+--ByIadL/5AI18gBnY
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Regards,
-Marvin
+On Sun, Aug 28, 2022 at 08:30:54PM -0500, Joseph Reynolds wrote:
+> On 8/26/22 11:42 AM, AKASH G J wrote:
+> > Hello Team,
+> >=20
+> > Is it possible to read CPU memory space from the BMC?
+> > If PCIe connection is available from BMC to the chipset, can we do DMA
+> > from BMC ?
+>=20
+> Akash,
+>=20
+> I hope not.=C2=A0 I assume you are asking about how to read the host's me=
+mory
+> from the BMC.
+
+Hello Akash and Joseph,
+
+At least HP iLO BMC hardware has this feature (as documented by Airbus
+security lab[1]).
+
+In other case, the reverse is possible: Reading/writing BMC memory from
+the host[2].
+
+
+In any case, before OpenBMC can support reading/writing host memory, the
+hardware has to support it. Which BMC hardware platform are you working wit=
+h?
+
+
+Greetings,
+Jonathan
+
+
+[1]: https://airbus-seclab.github.io/ilo/RECONBRX2018-Slides-Subverting_you=
+r_server_through_its_BMC_the_HPE_iLO4_case-perigaud-gazet-czarny.pdf
+[2]: https://www.flamingspork.com/blog/2019/01/23/cve-2019-6260:-gaining-co=
+ntrol-of-bmc-from-the-host-processor/
+
+--ByIadL/5AI18gBnY
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEhh3Clxs0Y2wkh8R0lF/c9L3bh38FAmMMfDEACgkQlF/c9L3b
+h3+rowgAhsXFEhK74WLvj3PYsSRuudrFEauEPSVTKHkC0te58UpbnWuX9ai/nJYS
+PwksOhpVKJNBsNl2WMoJsx2321a+I0gWH8m3a80+CNeppLvlcYfnDj1kUXqsYrv7
+a88H6a6HV15aP5WlBsYDq2WK5GC2jAU8gzLR352kYmtVvtbScyvltoRHHjT5610q
+vjzjbErLjxxPOvmxmRi41q1EplbrtjYuHJB0yo0P9jQ7DaJZ2kDJIfR38VwNEnfh
+m4kQxuVexZ5dZ82lcs4+2t/Lce/puHdd7OoMvl6Gbwh3v9sBw3iTfGkC9pj3Fi58
+AheSQURVONV+/p2OcskO4PZG6s8LMQ==
+=djTm
+-----END PGP SIGNATURE-----
+
+--ByIadL/5AI18gBnY--
