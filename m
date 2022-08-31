@@ -1,71 +1,87 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0038F5A7E28
-	for <lists+openbmc@lfdr.de>; Wed, 31 Aug 2022 15:00:25 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4FF5E5A8516
+	for <lists+openbmc@lfdr.de>; Wed, 31 Aug 2022 20:09:49 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MHkml5Nr4z3bjX
-	for <lists+openbmc@lfdr.de>; Wed, 31 Aug 2022 23:00:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MHsdl1gRTz3bqn
+	for <lists+openbmc@lfdr.de>; Thu,  1 Sep 2022 04:09:47 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=hDQQe12Y;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=krGqAr++;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::834; helo=mail-qt1-x834.google.com; envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=hDQQe12Y;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=krGqAr++;
 	dkim-atps=neutral
-Received: from mail-qt1-x834.google.com (mail-qt1-x834.google.com [IPv6:2607:f8b0:4864:20::834])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MHkmK6LhDz2xJ2
-	for <openbmc@lists.ozlabs.org>; Wed, 31 Aug 2022 23:00:00 +1000 (AEST)
-Received: by mail-qt1-x834.google.com with SMTP id j17so10821665qtp.12
-        for <openbmc@lists.ozlabs.org>; Wed, 31 Aug 2022 06:00:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:from:to:cc;
-        bh=GDUD/OJVLcpVB0fDPrKHsgMRdcKP1+Nd+CJsgTX3gvk=;
-        b=hDQQe12Y9JKscZImw8cKSw6gTgTPE8qBSQCz0xsZnLCAO0MU2PJFU9pxHCsLaGRgDW
-         QZtSNqx84yu3/xcjxXAO6zjbo+KotkVe27hNWL1tL7I49kZuArQqJdKi6apB3F3QwSe3
-         b96X8v9eyWKWcl/wrvn0Q5B7wdsQIDAUwpvbp6d++G+vuZoP15sTu/p3ZPdKxx2OIpy9
-         c4kRTg6U/neG+wNEj4hz3ZjMp2vVAjqk6NPhg2Pyzbsa+6mrwGt6yNtdon2jDqrZu07u
-         epviqwrW16c24f6cYVB6YidHTkrcF9RLJDLgmS4QiQA+9IIkV388XvktkplkqdQda3w/
-         jM7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:x-gm-message-state:from:to:cc;
-        bh=GDUD/OJVLcpVB0fDPrKHsgMRdcKP1+Nd+CJsgTX3gvk=;
-        b=mWEeaPpEDhvF/7rL7VU5tLkRTTCROcLESr9tLACm3EikSz8etvYbEuZ/t2cafRlSpF
-         nFS1RWV0qYZ3x0AGMLvw5L2bQmab2+bUxZRAAJnPXeSIdgIL6YQ+cUc7qAkXUVcoTEcN
-         HDxf9+hG7R8ZVRhitBMLmdk/wJ2U1CpZiz130HfXbdA/nf6veeuFIUAtFYOmZxJUBDN0
-         tldXVSWbomyhhGy6O4PNGVxUJVC9Uzz1FT3ZRWMgB69wFg4j2W3dHBykKzdEKcYQrQsC
-         r8lzmOV1f5LkrUxPm67UvsR5oVGfx2Hm+jSz854Hn+OVitGPFCf4QnEO8Ku9vWkkXn88
-         aJQQ==
-X-Gm-Message-State: ACgBeo21tjPRQithEWol0FEmkfbfuXyhRwY4aQ+HBBgTjo3m644e/k/j
-	k8nHWq533RWErQ+Os0jPBkvRIed2qMQ=
-X-Google-Smtp-Source: AA6agR69elZVLjgSoYnSO/iKh+ejjoKjbJdnIXiCIwPoP9r98qW/zn1mBySz/LDMzClpRuk5dHObHQ==
-X-Received: by 2002:a05:622a:c7:b0:343:2e72:8416 with SMTP id p7-20020a05622a00c700b003432e728416mr19343317qtw.92.1661950796748;
-        Wed, 31 Aug 2022 05:59:56 -0700 (PDT)
-Received: from smtpclient.apple (2603-7080-92f0-8130-915d-461e-b7ec-e53c.res6.spectrum.com. [2603:7080:92f0:8130:915d:461e:b7ec:e53c])
-        by smtp.gmail.com with ESMTPSA id z129-20020a37b087000000b006b9b7879964sm9445398qke.28.2022.08.31.05.59.54
-        for <openbmc@lists.ozlabs.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 31 Aug 2022 05:59:55 -0700 (PDT)
-From: Andrew Geissler <geissonator@gmail.com>
-Content-Type: text/plain;
-	charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
-Subject: multi-bmc openbmc systems
-Message-Id: <6497C254-2BB5-4545-B251-A87AE6A5B503@gmail.com>
-Date: Wed, 31 Aug 2022 08:59:53 -0400
-To: OpenBMC List <openbmc@lists.ozlabs.org>
-X-Mailer: Apple Mail (2.3654.120.0.1.13)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MHsdB4qrYz2xGf
+	for <openbmc@lists.ozlabs.org>; Thu,  1 Sep 2022 04:09:17 +1000 (AEST)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27VHwHER017107
+	for <openbmc@lists.ozlabs.org>; Wed, 31 Aug 2022 18:09:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
+ subject : from : to : references : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=fMcB2ahpfJM/GJghv2+d2Te3gnNllR45jgZUXVoKVIU=;
+ b=krGqAr++k32yOIBNEBHCttB3wAitPltIOMRNr4QclVqKgilQXPoZ8ZmLQDAcyacrcd/F
+ vgEW2Mn+bE60UtXPQLCVpcCtUnpEJ0XsAMV8+WQul+jc9Da5d743/vRAabpVsckb7+3B
+ EZO8vCRSK1P+162rXJxHbCXj7JfZlBqbmEaxdCbjfpsb3n66ij8JzSdAO7b/bbBPuiB0
+ cnBXvfrsQp40HYmou0xYCTwHtsnatIQOhVDg9Xmga/+rLcHQpNB1CS1IESJs5PPjVZRr
+ f3XZJ5+v8+mpKklsRN44nzeemVIuz3FLNBW3k9GaozMgVVVG0x4LAUVlvFZe7LFfQIUv cg== 
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com [169.53.41.122])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3jacgvgkj8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 31 Aug 2022 18:09:13 +0000
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+	by ppma04dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 27VI5FBU010670
+	for <openbmc@lists.ozlabs.org>; Wed, 31 Aug 2022 18:09:13 GMT
+Received: from b03cxnp07027.gho.boulder.ibm.com (b03cxnp07027.gho.boulder.ibm.com [9.17.130.14])
+	by ppma04dal.us.ibm.com with ESMTP id 3j7awa2xvs-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 31 Aug 2022 18:09:13 +0000
+Received: from b03ledav002.gho.boulder.ibm.com (b03ledav002.gho.boulder.ibm.com [9.17.130.233])
+	by b03cxnp07027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 27VI9CsS1638922
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+	for <openbmc@lists.ozlabs.org>; Wed, 31 Aug 2022 18:09:12 GMT
+Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C87C2136051
+	for <openbmc@lists.ozlabs.org>; Wed, 31 Aug 2022 18:09:11 +0000 (GMT)
+Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 8D4E413604F
+	for <openbmc@lists.ozlabs.org>; Wed, 31 Aug 2022 18:09:11 +0000 (GMT)
+Received: from [9.77.157.23] (unknown [9.77.157.23])
+	by b03ledav002.gho.boulder.ibm.com (Postfix) with ESMTPS
+	for <openbmc@lists.ozlabs.org>; Wed, 31 Aug 2022 18:09:11 +0000 (GMT)
+Message-ID: <c0f6cc7e-6c7e-fe22-498d-2c3cb7851b73@linux.ibm.com>
+Date: Wed, 31 Aug 2022 13:09:10 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.12.0
+Subject: Re: Security Working Group meeting - Wednesday August 31 - results
+Content-Language: en-US
+From: Joseph Reynolds <jrey@linux.ibm.com>
+To: openbmc <openbmc@lists.ozlabs.org>
+References: <e093dea2-ca08-fd8d-3151-2e858164f633@linux.ibm.com>
+In-Reply-To: <e093dea2-ca08-fd8d-3151-2e858164f633@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: MzYJdg4MvIqznOb4IrtgArqW1B-yEzqO
+X-Proofpoint-ORIG-GUID: MzYJdg4MvIqznOb4IrtgArqW1B-yEzqO
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
+ definitions=2022-08-31_10,2022-08-31_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ phishscore=0 spamscore=0 impostorscore=0 adultscore=0 suspectscore=0
+ lowpriorityscore=0 mlxlogscore=999 malwarescore=0 priorityscore=1501
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2208310086
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,91 +96,79 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Greetings,
 
-Last week, the IBM team held an internal workshop discussing some =
-potential future designs. One interesting design point is a single =
-=E2=80=9Csystem" that contains multiple compute sleds within it, each =
-with their own BMC. The host portion of each sled would be cabled via =
-Symmetric MultiProcessing cables (SMP) to the others. Each sled host =
-would boot in in parallel, managed by its BMC. The host firmware would =
-initially be booting in each compute sled independently until it reaches =
-a point where it trains and starts the SMP. At that point the host =
-firmware merges into a single instance across all of the cabled compute =
-sleds, giving a system where multiple BMCs are associated with a single =
-host. Further, there is no rack controller BMC in the current system =
-design.
 
-This design bring a lot of interesting technical challenges. A few that =
-jumped out:
-- Providing a consistent external interface (Redfish) to a client that =
-allows them to manage the entire system.
-- Electing a BMC from the pool as the "system coordinator", that will =
-act as the point-of-contact for the whole system and deal with the =
-details of the BMC-to-BMC communication
-- Keeping common data like BIOS consistent across the BMC=E2=80=99s (one =
-design point we=E2=80=99d like is that the host firmware is abstracted =
-from the system coordinator BMC and can query it=E2=80=99s data from its =
-own (pre-SMP) or any (post-SMP) BMC)
-- Handling the failure of a BMC (removal from system, reconfiguration of =
-SMP)
-- Handling the failure of the BMC acting as the system coordinator (fail =
-over to another BMC, service IP address to potentially follow)
-- OpenBMC applications that will need to know the system configuration =
-and execute commands on other BMC=E2=80=99s
-- Debug tools like obmcutil that currently operate on a single BMC =
-system concept
+On 8/30/22 8:08 PM, Joseph Reynolds wrote:
+> This is a reminder of the OpenBMC Security Working Group meeting 
+> scheduled for this Wednesday August 31 at 10:00am PDT.
+>
+>
+> ATTNTION - Venue Change.  The meeting moved to Discord voice, 
+> beginning with this meeting.  Please update your calendars.
+>
+> === MEETING ACCESS ON DISCORD VOICE starting on Aug 31, 2022  ===
+>
+> Discord > OpenBMC > Voice channels >  Security ~ 
+> https://discord.com/channels/775381525260664832/1002376534377635860 
+> <https://discord.com/channels/775381525260664832/1002376534377635860>
+>
+>
+>
+> We'll discuss the following items on the agenda 
+> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
+> and anything else that comes up:
 
-There has been some great work going on within bmcweb recently that =
-starts to solve some of these issues. This [commit][1] introduced the =
-idea of =E2=80=9Csatellite=E2=80=9D BMC=E2=80=99s. bmcweb looks for some =
-entity manager hosted objects that indicate configuration and login =
-information for other BMC=E2=80=99s. If bmcweb sees those objects, it =
-queries those BMC=E2=80=99s and return the appropriate data to the =
-Redfish query.
+Attendees (as Discord screen names): josephreynolds, galmasi, alda, 
+ddaniil, dsp, fnichols3, jiangz, pgc, Rob, RussWilson, 
+skotheshwara,YutakaSugawara.
 
-Redfish has the concept of a [composable system][2] which is something =
-that appears to make a lot of sense on us implementing (allowing a user =
-to add/removed BMC sleds and perform common operations on system).
 
-One design point we=E2=80=99d really like is that all communication from =
-BMC to BMC is via Redfish, although for leader election and data =
-consistency we were looking into something like [etcd][3].
+0 We took about 15 minutes to try out the new Discord voice access and 
+to escort folks from the old Webex meeting.
 
-As we walked through the different OpenBMC applications that would be =
-affected by this system design (state management, host firmware =
-failures, logging, code update, LED, SMP cable validation, =E2=80=A6) we =
-found some functions that could probably just be handled within bmcweb. =
-But other functions, for example one to validate the SMP cabling is =
-plugged properly, would contain a lot of very specific business logic =
-that doesn't seem to belong within bmcweb. This logic would need to talk =
-with all BMCs, read ID bits and GPIOs to ensure the SMP cables are =
-plugged correctly. Should bmcweb provide D-Bus objects that this =
-application could operate against to talk with other BMCs? Should the =
-application do direct Redfish to the other BMCs? Should we just bury all =
-the logic within bmcweb itself?
+1 Continue Measured Boot discussion
 
-Whether the system coordinator implementation is one application or =
-more, it felt like a reasonable design point was to isolate the code =
-from the general BMC implementation. We called this isolated code the =
-"System Coordinator Application" (SCA). The fact the SCA must be =
-"mobile" in order to handle fail over scenarios started to lead us down =
-design a point where the system coordinator logic is not within the =
-regular bmcweb instance. Possibly a separate bmcweb-like application? =
-Not sure here but a differentiation between bmcweb, which runs on all =
-BMC=E2=80=99s, and a system coordinator application that only runs on =
-one felt better (although it very well could just be another application =
-within the bmcweb repo that utilizes some of the same files as bmcweb). =
-When we discussed this on discord, it was a wait and see what the code =
-looks like type direction.
+DISCUSSION: Create two separate designs for:
 
-This is a =E2=80=9Cwhat we=E2=80=99re thinking=E2=80=9D type email and =
-not meant to be a =E2=80=9Cthis is the way it shall be=E2=80=9D. We=E2=80=99=
-re interested in any feedback from anyone who might have similar designs =
-in the pipeline. Our goal is to start rolling out some design documents =
-and work on some of the simpler code pieces to assess feasibility and =
-things we have not thought of.
+  *
 
-[1]: https://gerrit.openbmc.org/c/openbmc/bmcweb/+/53310=20
-[2]: https://redfish.dmtf.org/redfish/mockups/v1/1151
-[3]: https://etcd.io/=
+    Enable measured boot.
+
+  *
+
+    Enable Keylime Agent.  Direction is for the keylime agent to open
+    the BMC network port (using systemd, sort of like how SSH works). 
+    The intention is to engage with Redfish for how to configure the
+    Keylime Agent: certificates, start/stop the application, etc.
+
+
+2  Proposal for dynamic changes to Redfish authorization rules 
+https://gerrit.openbmc.org/c/openbmc/docs/+/56401 
+<https://gerrit.openbmc.org/c/openbmc/docs/+/56401>
+
+No discussion.
+
+
+3 Proposal to change the meeting time so folks from other time zones can 
+better participate.
+
+We are also looking for alternate (non voice) ways to cover the material.
+
+We looked at recording the call, but Discord does not have a record button.
+
+We proposed alternating meeting times to cover time zones in California, 
+US Central, Europe, India, China, and Australia.  (So, pretty much the 
+whole world.)
+
+TODO: Joseph to create a poll, suggest alternate meeting times: 9am CDT 
+& 5pm CDT or 8am Australia.
+
+
+
+>
+> Access, agenda and notes are in the wiki:
+> https://github.com/openbmc/openbmc/wiki/Security-working-group 
+> <https://github.com/openbmc/openbmc/wiki/Security-working-group>
+>
+> - Joseph
+
