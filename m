@@ -2,86 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4FF5E5A8516
-	for <lists+openbmc@lfdr.de>; Wed, 31 Aug 2022 20:09:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 40CC15A87AF
+	for <lists+openbmc@lfdr.de>; Wed, 31 Aug 2022 22:46:10 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MHsdl1gRTz3bqn
-	for <lists+openbmc@lfdr.de>; Thu,  1 Sep 2022 04:09:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MHx656Pwtz3bmW
+	for <lists+openbmc@lfdr.de>; Thu,  1 Sep 2022 06:46:05 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=krGqAr++;
+	dkim=pass (1024-bit key; unprotected) header.d=privafy.com header.i=@privafy.com header.a=rsa-sha256 header.s=google header.b=hz1Nuo5x;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=privafy.com (client-ip=2607:f8b0:4864:20::32a; helo=mail-ot1-x32a.google.com; envelope-from=anthony.jenkins@privafy.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=krGqAr++;
+	dkim=pass (1024-bit key; unprotected) header.d=privafy.com header.i=@privafy.com header.a=rsa-sha256 header.s=google header.b=hz1Nuo5x;
 	dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MHsdB4qrYz2xGf
-	for <openbmc@lists.ozlabs.org>; Thu,  1 Sep 2022 04:09:17 +1000 (AEST)
-Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 27VHwHER017107
-	for <openbmc@lists.ozlabs.org>; Wed, 31 Aug 2022 18:09:14 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- subject : from : to : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=fMcB2ahpfJM/GJghv2+d2Te3gnNllR45jgZUXVoKVIU=;
- b=krGqAr++k32yOIBNEBHCttB3wAitPltIOMRNr4QclVqKgilQXPoZ8ZmLQDAcyacrcd/F
- vgEW2Mn+bE60UtXPQLCVpcCtUnpEJ0XsAMV8+WQul+jc9Da5d743/vRAabpVsckb7+3B
- EZO8vCRSK1P+162rXJxHbCXj7JfZlBqbmEaxdCbjfpsb3n66ij8JzSdAO7b/bbBPuiB0
- cnBXvfrsQp40HYmou0xYCTwHtsnatIQOhVDg9Xmga/+rLcHQpNB1CS1IESJs5PPjVZRr
- f3XZJ5+v8+mpKklsRN44nzeemVIuz3FLNBW3k9GaozMgVVVG0x4LAUVlvFZe7LFfQIUv cg== 
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com [169.53.41.122])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3jacgvgkj8-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Wed, 31 Aug 2022 18:09:13 +0000
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
-	by ppma04dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 27VI5FBU010670
-	for <openbmc@lists.ozlabs.org>; Wed, 31 Aug 2022 18:09:13 GMT
-Received: from b03cxnp07027.gho.boulder.ibm.com (b03cxnp07027.gho.boulder.ibm.com [9.17.130.14])
-	by ppma04dal.us.ibm.com with ESMTP id 3j7awa2xvs-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Wed, 31 Aug 2022 18:09:13 +0000
-Received: from b03ledav002.gho.boulder.ibm.com (b03ledav002.gho.boulder.ibm.com [9.17.130.233])
-	by b03cxnp07027.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 27VI9CsS1638922
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
-	for <openbmc@lists.ozlabs.org>; Wed, 31 Aug 2022 18:09:12 GMT
-Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C87C2136051
-	for <openbmc@lists.ozlabs.org>; Wed, 31 Aug 2022 18:09:11 +0000 (GMT)
-Received: from b03ledav002.gho.boulder.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 8D4E413604F
-	for <openbmc@lists.ozlabs.org>; Wed, 31 Aug 2022 18:09:11 +0000 (GMT)
-Received: from [9.77.157.23] (unknown [9.77.157.23])
-	by b03ledav002.gho.boulder.ibm.com (Postfix) with ESMTPS
-	for <openbmc@lists.ozlabs.org>; Wed, 31 Aug 2022 18:09:11 +0000 (GMT)
-Message-ID: <c0f6cc7e-6c7e-fe22-498d-2c3cb7851b73@linux.ibm.com>
-Date: Wed, 31 Aug 2022 13:09:10 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.12.0
-Subject: Re: Security Working Group meeting - Wednesday August 31 - results
-Content-Language: en-US
-From: Joseph Reynolds <jrey@linux.ibm.com>
-To: openbmc <openbmc@lists.ozlabs.org>
-References: <e093dea2-ca08-fd8d-3151-2e858164f633@linux.ibm.com>
-In-Reply-To: <e093dea2-ca08-fd8d-3151-2e858164f633@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: MzYJdg4MvIqznOb4IrtgArqW1B-yEzqO
-X-Proofpoint-ORIG-GUID: MzYJdg4MvIqznOb4IrtgArqW1B-yEzqO
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MHx5h0ydjz2xHv
+	for <openbmc@lists.ozlabs.org>; Thu,  1 Sep 2022 06:45:41 +1000 (AEST)
+Received: by mail-ot1-x32a.google.com with SMTP id y25-20020a056830109900b0063b3c1fe018so3749718oto.2
+        for <openbmc@lists.ozlabs.org>; Wed, 31 Aug 2022 13:45:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=privafy.com; s=google;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date;
+        bh=97awj2V5SWpb4kfQEoLLMwAzF/ZQpTBYWRSkFes67dc=;
+        b=hz1Nuo5xIhXxcfekT242IRaGHpoDiqtZbfLfMD46pJwUWPcxIvmT0Bxabq8e7x/t6J
+         8MJZ83rxGxHCFMC3HyLK+uuUOUoqQHNt932PF6y71NzJsWgKJje1+hLeilOocsoCSH64
+         KeFhcBQVKHeroWfh8M8VEeq4vgqxSyY46aTAk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:organization:from:references
+         :to:content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=97awj2V5SWpb4kfQEoLLMwAzF/ZQpTBYWRSkFes67dc=;
+        b=ynNYeJB1V3IF6b4wRyPHpH4OUehFnVbBUD2aXAC7BUo/s+qDsxlz6SX4mibi7fhngU
+         uQ8hnAqCQyHny37SGzETNTwhNeBK8i8A2jGZqCe3DURBigLK5cP/8G+HPkOMZf1/v1YG
+         bsCZa+CCsgHuhNbxEYZyp//qdkYhYwuC9bMe32M5ZiEaGIl08FmYnpCk0htj5rEVt6PM
+         X7whrmcJnAvroIQDh8zZniHCENtA7/op/zjMb/85t0Ec46mNWNuj3DZMMdNQSz3BNEC9
+         ZyS0TaACDyFhVUu/huQ5MpW2ehIzTdwdyNGgVlxCEEoxJipCXXlOmpoDS9uxezqi9Xrk
+         9ufw==
+X-Gm-Message-State: ACgBeo36kn34cRnK5HnO+a1v/QmvcS55bzTR7yVxtuZM3VopAt7YqowP
+	F9Xm0FkVujJIw24T4hAAnfb62Q==
+X-Google-Smtp-Source: AA6agR4BQniAOHocUumc4Q0Oi99xzA2vv37dhZ/cVlG1kepPg3+8o8m9wEoAwPVVdegBUQdhcY5ffg==
+X-Received: by 2002:a9d:7583:0:b0:639:1b2a:17d4 with SMTP id s3-20020a9d7583000000b006391b2a17d4mr11135315otk.164.1661978736892;
+        Wed, 31 Aug 2022 13:45:36 -0700 (PDT)
+Received: from [192.168.1.152] ([76.205.202.86])
+        by smtp.gmail.com with ESMTPSA id b5-20020a056870d1c500b0011f1920321bsm4785697oac.47.2022.08.31.13.45.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 31 Aug 2022 13:45:36 -0700 (PDT)
+Message-ID: <d646d7a3-2bb3-21ac-8492-b00619dc8e10@privafy.com>
+Date: Wed, 31 Aug 2022 16:45:35 -0400
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.517,FMLib:17.11.122.1
- definitions=2022-08-31_10,2022-08-31_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- phishscore=0 spamscore=0 impostorscore=0 adultscore=0 suspectscore=0
- lowpriorityscore=0 mlxlogscore=999 malwarescore=0 priorityscore=1501
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2208310086
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.11.0
+Subject: Re: Fwd: [ANNOUNCE] QEMU 7.1.0 is now available
+Content-Language: en-US
+To: Joel Stanley <joel@jms.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <166190001339.271991.6991052484622099743@amd.com>
+ <CACPK8XfYKRYO3fdqjN7H-C-KZwoQFDGOcnL=OZgvjGQVXgisCg@mail.gmail.com>
+From: Anthony Jenkins <anthony.jenkins@privafy.com>
+Organization: Privafy, Inc.
+In-Reply-To: <CACPK8XfYKRYO3fdqjN7H-C-KZwoQFDGOcnL=OZgvjGQVXgisCg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,79 +83,85 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Thanks for the announcement!
 
+Do you happen to know if there is any Arm TrustZone/TEE emulation in the 
+new release?  I believe the Aspeed  AST2600 supports Arm TrustZone.
 
-On 8/30/22 8:08 PM, Joseph Reynolds wrote:
-> This is a reminder of the OpenBMC Security Working Group meeting 
-> scheduled for this Wednesday August 31 at 10:00am PDT.
+Thanks,
+Anthony Jenkins
+Privafy, Inc.
+
+On 8/30/22 21:21, Joel Stanley wrote:
+> The new qemu release includes some good stuff from many openbmc
+> contriubtors, in particular for the AST2600 family of SoCs.
+>
+> Thanks to everyone who has worked on that, in particular to Cedric for
+> his careful review and maintainer work.
+>
+> ---------- Forwarded message ---------
+> From: Michael Roth <michael.roth@amd.com>
+> Date: Tue, 30 Aug 2022 at 23:01
+> Subject: [ANNOUNCE] QEMU 7.1.0 is now available
+> To: <qemu-devel@nongnu.org>
+> Cc: Richard Henderson <richard.henderson@linaro.org>
 >
 >
-> ATTNTION - Venue Change.  The meeting moved to Discord voice, 
-> beginning with this meeting.  Please update your calendars.
+> Hello,
 >
-> === MEETING ACCESS ON DISCORD VOICE starting on Aug 31, 2022  ===
+> On behalf of the QEMU Team, I'd like to announce the availability of
+> the QEMU 7.1.0 release. This release contains 2800+ commits from 238
+> authors.
 >
-> Discord > OpenBMC > Voice channels >  Security ~ 
-> https://discord.com/channels/775381525260664832/1002376534377635860 
-> <https://discord.com/channels/775381525260664832/1002376534377635860>
+> You can grab the tarball from our download page here:
 >
+>    https://www.qemu.org/download/#source
 >
+> The full list of changes are available at:
 >
-> We'll discuss the following items on the agenda 
-> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
-> and anything else that comes up:
-
-Attendees (as Discord screen names): josephreynolds, galmasi, alda, 
-ddaniil, dsp, fnichols3, jiangz, pgc, Rob, RussWilson, 
-skotheshwara,YutakaSugawara.
-
-
-0 We took about 15 minutes to try out the new Discord voice access and 
-to escort folks from the old Webex meeting.
-
-1 Continue Measured Boot discussion
-
-DISCUSSION: Create two separate designs for:
-
-  *
-
-    Enable measured boot.
-
-  *
-
-    Enable Keylime Agent.  Direction is for the keylime agent to open
-    the BMC network port (using systemd, sort of like how SSH works). 
-    The intention is to engage with Redfish for how to configure the
-    Keylime Agent: certificates, start/stop the application, etc.
-
-
-2  Proposal for dynamic changes to Redfish authorization rules 
-https://gerrit.openbmc.org/c/openbmc/docs/+/56401 
-<https://gerrit.openbmc.org/c/openbmc/docs/+/56401>
-
-No discussion.
-
-
-3 Proposal to change the meeting time so folks from other time zones can 
-better participate.
-
-We are also looking for alternate (non voice) ways to cover the material.
-
-We looked at recording the call, but Discord does not have a record button.
-
-We proposed alternating meeting times to cover time zones in California, 
-US Central, Europe, India, China, and Australia.  (So, pretty much the 
-whole world.)
-
-TODO: Joseph to create a poll, suggest alternate meeting times: 9am CDT 
-& 5pm CDT or 8am Australia.
-
-
-
+>    https://wiki.qemu.org/ChangeLog/7.1
 >
-> Access, agenda and notes are in the wiki:
-> https://github.com/openbmc/openbmc/wiki/Security-working-group 
-> <https://github.com/openbmc/openbmc/wiki/Security-working-group>
+> Highlights include:
 >
-> - Joseph
+>   * Live migration: support for zero-copy-send on Linux
+>   * QMP: new options for exporting NBD images with dirty bitmaps via
+>     'block-export-add' command
+>   * QMP: new 'query-stats' and 'query-stats-schema' commands for
+>     retrieving statistics from various QEMU subsystems
+>   * QEMU guest agent: improved Solaris support, new commands
+>     'guest-get-diskstats'/'guest-get-cpustats', 'guest-get-disks' now
+>     reports NVMe SMART information, and 'guest-get-fsinfo' now reports
+>     NVMe bus-type
+>
+>   * ARM: emulation support for new machine types: Aspeed AST1030 SoC,
+>     Qaulcomm, and fby35 (AST2600 / AST1030)
+>   * ARM: emulation support for Cortex-A76 and Neoverse-N1 CPUs
+>   * ARM: emulation support for Scalable Matrix Extensions, cache
+>     speculation control, RAS, and many other CPU extensions
+>   * ARM: 'virt' board now supports emulation of GICv4.0
+>   * HPPA: new SeaBIOS v6 firmware with support for PS/2 keyboard in
+>     boot menu when running with GTK UI, improved serial port emulation,
+>     and additional STI text fonts
+>   * LoongArch: initial support for LoongArch64 architecture, Loongson
+>     3A5000 multiprocessor SoC, and the Loongson 7A1000 host bridge
+>   * MIPS: Nios2 board (-machine 10m50-ghrd) now support Vectored
+>     Interrupt Controller, shadow register sets, and improved exception
+>     handling
+>   * OpenRISC: 'or1k-sim' machine now support 4 16550A UART serial devices
+>     instead of 1
+>   * RISC-V: new ISA extensions with support for privileged spec version
+>     1.12.0, software access to MIP SEIP, Sdtrig extension, vector
+>     extension improvements, native debug, PMU improvements, and many
+>     other features and miscellaneous fixes/improvements
+>   * RISC-V: 'virt' board now supports TPM
+>   * RISC-V: 'OpenTitan' board now supports Ibex SPI
+>   * s390x: emulation support for s390x Vector-Enhancements Facility 2
+>   * s390x: s390-ccw BIOS now supports booting from drives with non-512
+>     sector sizes
+>   * x86: virtualization support for architectural LBRs
+>   * Xtensa: support for lx106 core and cache testing opcodes
+>
+>   * and lots more...
+>
+> Thank you to everyone involved!
 
