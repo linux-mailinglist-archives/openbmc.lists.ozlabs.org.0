@@ -2,89 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7BD615AD95B
-	for <lists+openbmc@lfdr.de>; Mon,  5 Sep 2022 21:05:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 011635AD975
+	for <lists+openbmc@lfdr.de>; Mon,  5 Sep 2022 21:14:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MLydk24gjz30Bl
-	for <lists+openbmc@lfdr.de>; Tue,  6 Sep 2022 05:05:30 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MLyr3680zz30DP
+	for <lists+openbmc@lfdr.de>; Tue,  6 Sep 2022 05:14:27 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=lZ5dfRTx;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=SGiy0xGA;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.55.52.120; helo=mga04.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=lZ5dfRTx;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=SGiy0xGA;
 	dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MLydD6XCnz2xG8
-	for <openbmc@lists.ozlabs.org>; Tue,  6 Sep 2022 05:05:04 +1000 (AEST)
-Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 285IgORO014173;
-	Mon, 5 Sep 2022 19:05:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=hgdsQOtTgoZ0WiEYLcC7TDNgOJyt7uZh5CT7Xrwxurg=;
- b=lZ5dfRTxmGB/Y5CTESLFSWAUjhD2XY6e09RlUxXbUWX9NqRCenVntH3DgZtxFDXRCrP6
- NZhFYno1xWVDVDyHXRA4I8EonvmyzgmGJfBqdfJBLeK3EMJqg6ttHuM33nKP8N0uM8OU
- +pgZOotZwjtdXeCtoQSB4/kAHxnJiOv7ble7zwG2WBKDD9ITGOtiY6yNmCYvTQu8mVOT
- ya/yIhNDRokP5pTyZtoJE2urryDwovGBwI5M4+v7nnTgmy6bPlbU4ZFxwquNJIiiqu1Q
- w+kSWFoY68+Tlu1IVyGVt8FTOoJmoe1uyrd88O6K6qu7sMFhhW0f5bSkbRnX8fEOFR1C IA== 
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com [169.47.144.27])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3jdpmargju-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 05 Sep 2022 19:04:59 +0000
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
-	by ppma05wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 285IoE6B008636;
-	Mon, 5 Sep 2022 19:04:58 GMT
-Received: from b01cxnp22036.gho.pok.ibm.com (b01cxnp22036.gho.pok.ibm.com [9.57.198.26])
-	by ppma05wdc.us.ibm.com with ESMTP id 3jbxj9pm2d-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 05 Sep 2022 19:04:58 +0000
-Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com [9.57.199.110])
-	by b01cxnp22036.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 285J4wGV16843660
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 5 Sep 2022 19:04:58 GMT
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 01007AE062;
-	Mon,  5 Sep 2022 19:04:58 +0000 (GMT)
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id A6FD0AE060;
-	Mon,  5 Sep 2022 19:04:57 +0000 (GMT)
-Received: from [9.160.52.140] (unknown [9.160.52.140])
-	by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTPS;
-	Mon,  5 Sep 2022 19:04:57 +0000 (GMT)
-Message-ID: <4fdfcba0-cbee-a8ea-6d3e-33f2a0ec3349@linux.ibm.com>
-Date: Mon, 5 Sep 2022 14:04:56 -0500
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MLyqb6jYRz2ywr
+	for <openbmc@lists.ozlabs.org>; Tue,  6 Sep 2022 05:14:02 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1662405244; x=1693941244;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=ATRm0xw22WfFaEoiYkPnoJTK/cXHL3nSucFclcwn+Ac=;
+  b=SGiy0xGAL9pafnWMOiPmqKSjrlSOnk0OmH6tQXV6SOhWNjxFxt+YTt8A
+   1j6arxz+vXQ3mzWLEs7J0el5uRWVYAZ8fsOJFzr30FSWHTqTZ3pjfgEZd
+   Uvcw53vbSKuYwQqeJTPadpphrT1t93a5+oz+sHiSlRZPKCSwd5B0L7Zd0
+   A7YTXizijrWK0YTnH5NDN6sxzx6yc5MP3BziQseOzmA+r6FGGWqchm5hj
+   MuUKVcG6RqSzdiwicJPY0VrzOnCBmPRsZcYYTpsUthfyuHLPRWuiYPF0H
+   elr+WGGEMx033w707kiQbH2eq9Aq/fAbNU7vpAuj8BJWlQghhzgUuU49c
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10461"; a="295180850"
+X-IronPort-AV: E=Sophos;i="5.93,292,1654585200"; 
+   d="scan'208";a="295180850"
+Received: from orsmga007.jf.intel.com ([10.7.209.58])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Sep 2022 12:13:59 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.93,292,1654585200"; 
+   d="scan'208";a="609738990"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by orsmga007.jf.intel.com with ESMTP; 05 Sep 2022 12:13:58 -0700
+Received: by black.fi.intel.com (Postfix, from userid 1003)
+	id 92687101; Mon,  5 Sep 2022 22:14:13 +0300 (EEST)
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	openbmc@lists.ozlabs.org,
+	linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v1 1/1] pinctrl: wpcm450: Correct the fwnode_irq_get() return value check
+Date: Mon,  5 Sep 2022 22:14:08 +0300
+Message-Id: <20220905191408.73794-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.12.0
-Subject: Re: Security Working Group meeting - Wednesday August 31 - results
-Content-Language: en-US
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>,
-        Patrick Williams <patrick@stwcx.xyz>
-References: <e093dea2-ca08-fd8d-3151-2e858164f633@linux.ibm.com>
- <c0f6cc7e-6c7e-fe22-498d-2c3cb7851b73@linux.ibm.com>
- <YxCWpNZ+O89B+ulA@heinlein.stwcx.org.github.beta.tailscale.net>
- <20220901124153.ofhmyymhcra34akr@cheese>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-In-Reply-To: <20220901124153.ofhmyymhcra34akr@cheese>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: l-4N2bplNwVGv2KaIHTj36XLSTIIgvi8
-X-Proofpoint-ORIG-GUID: l-4N2bplNwVGv2KaIHTj36XLSTIIgvi8
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-05_14,2022-09-05_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0 bulkscore=0
- clxscore=1015 adultscore=0 mlxlogscore=999 priorityscore=1501
- impostorscore=0 mlxscore=0 phishscore=0 spamscore=0 lowpriorityscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2209050093
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,31 +69,38 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
+Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 9/1/22 7:41 AM, Brad Bishop wrote:
-> On Thu, Sep 01, 2022 at 06:25:24AM -0500, Patrick Williams wrote:
->
->> written entirely in Python, which makes it very difficult for us to 
->> support
->> on any of the NOR-based systems (all of them except IBM's latest).
->
-> Is the suggestion that they rewrite it in C++ and contribute that?  If 
-> it is, why would they invest in building a project and community from 
-> scratch as opposed to using an existing one just because all the other 
-> in-tree servers are hyper-cost optimized?
+fwnode_irq_get() may return all possible signed values, such as Linux
+error code. Fix the code to handle this properly.
 
-I read "applicability" into Patrick's question.  My first thought was 
-someone asking why IBM is proposing to put complex and space-consuming 
-features into the project, and who else needs them?
+Fixes: a1d1e0e3d80a ("pinctrl: nuvoton: Add driver for WPCM450")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+---
+ drivers/pinctrl/nuvoton/pinctrl-wpcm450.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-I recall from the meeting, but didn't put into the minutes, that the 
-Keylime project is creating an implementation based on the Rust language.
-The OpenBMC project discussed Rust some years ago, as a language which 
-adds additional safety guarantees.  But I am aware of no discussion or 
-progress since then, and I didn't find any Rust support in the 
-OpenEmbedded/bitbake project (but I think it would be welcome).
+diff --git a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
+index 0dbeb91f0bf2..8193b92da403 100644
+--- a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
++++ b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
+@@ -1081,10 +1081,13 @@ static int wpcm450_gpio_register(struct platform_device *pdev,
+ 
+ 		girq->num_parents = 0;
+ 		for (i = 0; i < WPCM450_NUM_GPIO_IRQS; i++) {
+-			int irq = fwnode_irq_get(child, i);
++			int irq;
+ 
++			irq = fwnode_irq_get(child, i);
+ 			if (irq < 0)
+ 				break;
++			if (!irq)
++				continue;
+ 
+ 			girq->parents[i] = irq;
+ 			girq->num_parents++;
+-- 
+2.35.1
 
-Joseph
