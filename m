@@ -1,78 +1,130 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC9305AAB6A
-	for <lists+openbmc@lfdr.de>; Fri,  2 Sep 2022 11:30:43 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA8105ACF14
+	for <lists+openbmc@lfdr.de>; Mon,  5 Sep 2022 11:46:47 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MJt1s6TnLz3c7N
-	for <lists+openbmc@lfdr.de>; Fri,  2 Sep 2022 19:30:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MLkF14Hy4z2ywN
+	for <lists+openbmc@lfdr.de>; Mon,  5 Sep 2022 19:46:45 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=hGjb0T/c;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=ZnfwFQzX;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102e; helo=mail-pj1-x102e.google.com; envelope-from=milkfafa@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.102.92; helo=nam04-dm6-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=hGjb0T/c;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=ZnfwFQzX;
 	dkim-atps=neutral
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from NAM04-DM6-obe.outbound.protection.outlook.com (mail-dm6nam04on2092.outbound.protection.outlook.com [40.107.102.92])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MJsyW3yGHz300V
-	for <openbmc@lists.ozlabs.org>; Fri,  2 Sep 2022 19:27:47 +1000 (AEST)
-Received: by mail-pj1-x102e.google.com with SMTP id mj6so1493333pjb.1
-        for <openbmc@lists.ozlabs.org>; Fri, 02 Sep 2022 02:27:46 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MLkDR6bgKz2xHK;
+	Mon,  5 Sep 2022 19:46:14 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=Sz7GIbxOD50T9TjW8Fc+h6BLpDayf6vUqZEg4xVEO6IFxAQcD4ark6RtLQ+oYqqG/s1P8C7pyLkMrI+B+O2d1XA1oDpwvg1WQZnGbsLQPEbP6E8fs2IRQLKi8N5GducsFgWhaJgMpIYuchn9M30H8Y3ZoxEu2DwCQdETxRoHW8YMv7mT5UxLH0cZCBrrGUJu4xBQpG3xyGRmBgfe6V6SEhafFbhct0nhqP3mxm1U/DIUmvUQ+GInHYEHDzRMufu5mbOreG338M4ZYzyyCIua6nSCKSuWeYEz/NcUI7v8OF2b0JnaUemJfs6EUA4jRcqzNp7Wrd5WVt7mxnufNCs/5Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8uaPe1x8UmzRRp8hIuGMX2AGNtu34DYSfcGNzi6aINI=;
+ b=WGZqydKAPX+pbX3EIPMR7ZbnCgVvYEo+wCmmBiV5SMZz2XT33w1zOKUjD0PPKRbhoU55IIPG0B7c2Fy1+rEdoDJqw94DAZG6z3HIpRzb441q38hzd3U4zeCixmNOVvmeJyfR6KXxWyhMWUznxjbny2al7KqaKIZgVYEyuOctgs1eh3hC6b7IGyXQ/rJA6KshtfJNxC7cy1NFLYtI/T8MsxvRl6KlIEYUE6/+jd7TAHSm5W8ahifkmnQKOewfOcjwsjNrxMKG/99sHqekcP5igJmrDv2/b7eCZBsCVuJSLqdc9/FZU9cMBbspoodDR92zEAPRx0Buz8AmmNfZeCaPdQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date;
-        bh=aTZcPMnqQap7msGPwB2F81Hly7ZiLQh5jI3JEQfy7wQ=;
-        b=hGjb0T/cRtKgF3hHdzlzBfDQ9Cs0czLK4UCivLGN+lpcWFl0oD35G1WXv7aD3yraTG
-         Kkf1qqP6OjHS4kU6ZuB3dDdXnHJ6yQC6RY1m+E/RGzHSEY8fuHLvmw4t/ejsGLfuVZyQ
-         og67ot7k54MGDPk9kQ+v1y8/sudKhQ4DwHBDV6YvVUt+lf7HsVK3hWHluy1I9k+s0nAo
-         moHarLEBv58Z4Nb2pmmzqHXsKmzLZ+ddIJx3BLQVyaf2ZCDTwGBBRiXsyM2TV7LzeE9n
-         rUZOaWlFP6MPYwXmp1yHtd3okt41Lt96O751UrmboIbTVnJFth0wCCzg7DQBFe9zIcdk
-         a1Yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=aTZcPMnqQap7msGPwB2F81Hly7ZiLQh5jI3JEQfy7wQ=;
-        b=SnEngGZ9e5mvwOFxM1cyPRlXEnxnucPe3PE5z1c5jxb9fBShBaa6QyAdi104F5Hxpp
-         FzXuObdbaoK7hcOwwx2qv+zx1SPe8M2t6SyToW7l/T3dANPNY+db3bHU5ZP6gP6CZiw5
-         zSgNhtcilelJTqklJQj2MTgjPKcazWrRVrfPZ/D7qvRcFM/kL4lA8mryxaBNmxOJkHw8
-         l8ItideVEWnlEx7tdWlAjBfMW/3c0Fh3mq5S4N0+laEiWCcGL9cnRo04/eT5nh6RDebi
-         Wa/prJRaGBQjUa54q3vCjNSv5AERO3grWLKWE8iuivaD28CIIpqGhFqGo7z3qxrrIKe6
-         3Fww==
-X-Gm-Message-State: ACgBeo2wDp8EvL1ezs56fsApY7htxXIhgBF/n6YDZIy61/Ioy6LoDfne
-	1B2A+pYVLmyXHlPuU4C3+58=
-X-Google-Smtp-Source: AA6agR42M+iKtrU9SkhRt2GZDF0MSKlEtHEUpHx+nDudWQ9ye8M4y49/s0V5HmWfMch8QHzP0pWKyg==
-X-Received: by 2002:a17:902:d591:b0:172:689f:1059 with SMTP id k17-20020a170902d59100b00172689f1059mr35061193plh.121.1662110865135;
-        Fri, 02 Sep 2022 02:27:45 -0700 (PDT)
-Received: from hcdev-d520mt2.. (60-250-192-107.hinet-ip.hinet.net. [60.250.192.107])
-        by smtp.gmail.com with ESMTPSA id s62-20020a625e41000000b005350ea966c7sm1169315pfb.154.2022.09.02.02.27.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 Sep 2022 02:27:44 -0700 (PDT)
-From: Marvin Lin <milkfafa@gmail.com>
-To: linux-edac@vger.kernel.org,
-	rric@kernel.org,
-	james.morse@arm.com,
-	tony.luck@intel.com,
-	mchehab@kernel.org,
-	bp@alien8.de,
-	robh+dt@kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v15 3/3] EDAC/nuvoton: Add NPCM memory controller driver
-Date: Fri,  2 Sep 2022 17:27:14 +0800
-Message-Id: <20220902092714.3683980-4-milkfafa@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20220902092714.3683980-1-milkfafa@gmail.com>
-References: <20220902092714.3683980-1-milkfafa@gmail.com>
+ d=os.amperecomputing.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8uaPe1x8UmzRRp8hIuGMX2AGNtu34DYSfcGNzi6aINI=;
+ b=ZnfwFQzXDnJLfr2Lj24APDpGatKHVsesKrHaFK2surb9HEmUjbdMlEvbBoYWCrWj0+GJ/0nMODEsl2fWLoy7Eb1G+JnA5KuCZDhrrkZQPCOBeQ4pdgtkf6UQYGJH0bnTw6jDPf8nRyQ5uywUKyGiemnVnAK8S/PwilNROjCLjos=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
+Received: from SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24) by
+ BL3PR01MB6868.prod.exchangelabs.com (2603:10b6:208:353::6) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5588.10; Mon, 5 Sep 2022 09:45:54 +0000
+Received: from SJ0PR01MB7282.prod.exchangelabs.com
+ ([fe80::48f7:ac49:a2f8:614e]) by SJ0PR01MB7282.prod.exchangelabs.com
+ ([fe80::48f7:ac49:a2f8:614e%6]) with mapi id 15.20.5588.015; Mon, 5 Sep 2022
+ 09:45:54 +0000
+Message-ID: <396a3c24-2a86-0d1c-07f9-386a0de1d473@os.amperecomputing.com>
+Date: Mon, 5 Sep 2022 16:45:45 +0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.1.2
+Subject: Re: [PATCH v3 2/2] ARM: dts: aspeed: Add device tree for Ampere's Mt.
+ Mitchell BMC
+Content-Language: en-CA
+To: Arnd Bergmann <arnd@arndb.de>, Joel Stanley <joel@jms.id.au>
+References: <20220817071539.176110-1-quan@os.amperecomputing.com>
+ <20220817071539.176110-3-quan@os.amperecomputing.com>
+ <CACPK8XdDpG3ONM1=-E6qvHL1FgMNWSMPoL_sVGJK6BmmnT3w_w@mail.gmail.com>
+ <CAK8P3a2LZKfZpdTQ-R4o9mJ6dk52VRF+Bxj=PJEx-1MA4yH8+w@mail.gmail.com>
+ <673e200f-f458-7866-f956-3d5bd7160a49@os.amperecomputing.com>
+ <CAK8P3a3MU7shuBpcpRNC5L6xxQmSy8FXCX1jvYXhv-NT3PMYOw@mail.gmail.com>
+From: Quan Nguyen <quan@os.amperecomputing.com>
+In-Reply-To: <CAK8P3a3MU7shuBpcpRNC5L6xxQmSy8FXCX1jvYXhv-NT3PMYOw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SGXP274CA0018.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b8::30)
+ To SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 1a0364ea-7f3b-4715-5af7-08da8f236ce7
+X-MS-TrafficTypeDiagnostic: BL3PR01MB6868:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 	H9Yq8BFj0318ith82gYvZgYSpYo7heayx2C6hkxCo2PcfFrC6w6tsLi6nX53OcxDar9vXZFVNFTv9GHcqC1PiGUa2DRHGxb2RoEz+sRrbTGdyz3cC692OOWEPaD2tiZBkNyvmNC2Qr6XhjM3v2j58X7IptbCWmnXP9qq1ErEUCKRZPomjGGAKE8WDGoBZR722IiaVVLCqAJz0URF5+PAFVaf6IANXeO3fSRisDDo+j9F3SNturir3KDqZw/h2YwoIb5n/PnwdGiS0DgK++GUJa61JfGHxmR/Ne2jedjBRoraqEPCNyxXfMRb75xmJbOhyvpkZZQWbXDK6QzO1XDZhd7CWrWV43Alljv4EZ7Ni/33v6FyDfFgMYIKUxys0usIjEyeF9nhjXSb7xxgvtmPtIWQsCK/sOWA8isvOj0Leby8D8wsQH9Uwr121xom2x1jmBuVyqPlrQHSB8gKH342fISowwIabrkE2xWaSIi2frU3b36jTGkd1uz/BVXYoEq52RaaLWNpmsvB6XZoKuVztLrTyjOU+Fw3Ifka7yS2ENt+nELOwfw2pMJHHGoUPBtofoG9axgvExObr7AVSA1TuIHw25toAOs+Jst4XstUbfZ2FWiaesHBH0aJzqft4ehOfEWg9kxRfpdW7zfIYFR5Ksql4VDCDhiiFnMQc5Tl9wQee6CxgCOWbEcWdLEk7T7xJBYHqsiwsiDloqMytcFxgvcFPom3bylxiV2NRsnb8gful941isgTTRy0GUCwQhdkRiq5pRj1mIfLZHRM71JzGyXTsMl+PSlngYjxx+6Iqgo=
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR01MB7282.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(346002)(39850400004)(136003)(366004)(376002)(396003)(2906002)(4744005)(7416002)(8936002)(5660300002)(38350700002)(38100700002)(478600001)(53546011)(52116002)(6486002)(6506007)(6666004)(41300700001)(107886003)(110136005)(54906003)(8676002)(4326008)(66476007)(66946007)(66556008)(316002)(6512007)(186003)(26005)(2616005)(31696002)(31686004)(86362001)(43740500002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?MFlneHN2WVRxcHJKVzBQZkZFQ0NqSTZmek8yd2ZOTTVxYlVodmZrLys3K0VL?=
+ =?utf-8?B?K1Jtb3dpWVFjRHJXU1pLS3hLR2NIOGNLb3RueWdLSHhTMURHclNOQmVrKysv?=
+ =?utf-8?B?ZEEvTVBiRkNuNkkxM0Q5dnN3TGpCZU5aVDJVc1BPSG4wUTRhbjlwYi9ja1ht?=
+ =?utf-8?B?V1FFcDNPOTdWRGpJaE1YaDI2MkVHRnRydjI3YUlZWWE4VHlBaVhxN1lmc0Vr?=
+ =?utf-8?B?Z1FkTUZ5cEdXbXY0ZU1FVkFVNHNWeEhCS1dqYmN1cTdIZnE0aUt6ZVNzUWJs?=
+ =?utf-8?B?U0c4SEoxY2EwS1ZocXorZUZxN0M3NUlRYloyZmZZd1krRGt4ZkFzallLbnlp?=
+ =?utf-8?B?dnFZeG5UL2hiV0J3em13ZUo2VW9FM2hGL0trYTJ4RWtDcDVxcm42ZUhuZEtH?=
+ =?utf-8?B?S000QXhZeFFmc1JxbUFuYkVDb1JVRklxTVk5OVN0eEs5VEpsL3hXbVVWTndL?=
+ =?utf-8?B?VkxwOXA1bVluZ3Q1ZStHT21SM1ZiVUhia0pJOC9KS0lPV25tQWltNW45R0NV?=
+ =?utf-8?B?aWhhczJZaVYwdElRYTBFWFZpOXdzRm50NDArV0R5RXdxRTZVZDlXYzNldzZY?=
+ =?utf-8?B?cVdnL2VobnlmRjBiVFYxVDlQU09RZnRwcGo5NXR5ZXUyeVYrNFNkMDhXY1Nm?=
+ =?utf-8?B?TjFtZzNFQzhCRm5kUnVSeEVWMzhSYllHSWZtbmxDTjFmUkVRZnZGQlB0U3dj?=
+ =?utf-8?B?M0RPZGZIZDhId3Y1NDl0VFZOYWd3Y3o3Y0VldzVFMmpsNzdvWi9VT2RqeUhK?=
+ =?utf-8?B?MEpjVmxxakRCdWV0blFJUzRPMFFOTC9mb0lIenRUdVU3WUcyWmw4SVVkVkNh?=
+ =?utf-8?B?WFA5c1N5a0I1MHRnamtsU3ZWeS9pZ24rWW5PdjFoV3NvTTdybGxKbzZYd2ZK?=
+ =?utf-8?B?UDlUYTlCa2lhVUVaUm1QbHp3ZS9QZy8wYnRkOXhCdVQ2UEFwOTRJdnpKSnhW?=
+ =?utf-8?B?blhnMDZORzVsek4vQW5OWUNhNWV1RGJIOHhaeklsb1dtMWxGdWY4MjAvVXBs?=
+ =?utf-8?B?R1RQRmNISlRsbndsQWlwMXZYZWpROUdXVjhNemt0Q2M4YUM1NFVrNW43VkU1?=
+ =?utf-8?B?OHBYN1BicW1RMGhVMUdOc1VXTzZndEsrYWxNdFBBbS90TlU0NkZZMFVPeVVX?=
+ =?utf-8?B?QnFIeFlBeEJqamRMeDMzYTZVWHRxMG9Na1JQbTdoeDVsbWFpNjZ5cnpaQzV0?=
+ =?utf-8?B?UjhzUlFUeUJXWmNhQ1FzZHRFMVg4Yi9TVTBOZlpsMmRzVGYvOXhOSlNsWDkx?=
+ =?utf-8?B?RkQ2MDZZRk9vMTNTVnU1emlLazdnWk5nUjYxOEVsTTRSMXpKS2x0R2hFY1dO?=
+ =?utf-8?B?RXZaM1Q3MWNoYTY4MUZ6U2NjZlNIeGlLUTl4SCtCNTBQUmk3eVlDdlVueGFx?=
+ =?utf-8?B?R0xyT01JbWsrY3ZKNWk2ZS9PcnBWbE1Jd0U5ZjJtSVF3Y3dBeE9iQkM2RWZO?=
+ =?utf-8?B?bHVZU3ZEMUF0RS9KbFFOaFVCSWFkdVZOaVBSSHlRKytUMnRMbzRIbVY0anZB?=
+ =?utf-8?B?TXgyVHdNeVl0aE5rZ2MxV2I4QlZLZUFBQ0FldjdKMXJxYzJSd3VON1kzN1dk?=
+ =?utf-8?B?d0ZyUk9GTkNlMlpyZy9uUTQwdElkRnQzVTBlVUVyd0krSDVNSHUyMVgrZDBi?=
+ =?utf-8?B?THdjSnpWbU9rcE1EYi8yUmdFSDU1Z21kVW4wd0ozQ0VTRTNjdWphVktVd0NH?=
+ =?utf-8?B?bFFDVGVtRWFVallzOVpWUEtRd2RybXNZOWFxU1RRMlphYmp0MHJTbEcvb0Rv?=
+ =?utf-8?B?L1NhSnUwUTlnWlRQbVF0NWdGa2d4Y3ZEZG9iYm9vcHd3b0xnZ1BDbmQ5WXFB?=
+ =?utf-8?B?SmF2aGQrcmM3USs0RFpSbTE4a2t6UmpEQTA2NWR4WExQOVhqWURkNFI5Nzhl?=
+ =?utf-8?B?TWZ3dnh1M0JiQWFKZjh5ZVl1ejFQSm9WTTZoU1JvU0Z5T0ZBT3M0L3pPZGpk?=
+ =?utf-8?B?RFFhK3krR1FMY2c5L1NBODllNERJZGhrd1pWOVlTYlNLczB4eXBVc1hGc01W?=
+ =?utf-8?B?bkdDNVJ6Nk1uYWRmRnVYc2o1MnRLRTA2U09tWTBnaW9Pcm5oa2RtZ3RYc1M0?=
+ =?utf-8?B?Tk1ZOE5xT0R4clBkVjJuQTJITGRVaTdMSXJFY2pBd2l0ZjgzOE1FQ0JKamFW?=
+ =?utf-8?B?dW5WS1ZuT1hWeFpLMGkvNytMWlpScm1lS1lFcGJrU2d1elBESDZwV0MyU0lL?=
+ =?utf-8?Q?c+su9Fi3h/yw6+akkcHMfMs=3D?=
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1a0364ea-7f3b-4715-5af7-08da8f236ce7
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR01MB7282.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Sep 2022 09:45:54.3668
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: E9nTPhYltf4mNp8qgXg6vObL7hk+uhSHTEpVzbOgKdZKZc6JKjXtEat1iguPNX+44WolLVcdCAwxdiG1NxAvxDOlR4/Q7PV0vPZmkkt9D8Q=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL3PR01MB6868
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -84,592 +136,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: KWLIU@nuvoton.com, YSCHU@nuvoton.com, Marvin Lin <milkfafa@gmail.com>, benjaminfair@google.com, devicetree@vger.kernel.org, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, KFTING@nuvoton.com, JJLIU0@nuvoton.com, tali.perry1@gmail.com, ctcchien@nuvoton.com, kflin@nuvoton.com, tmaimon77@gmail.com
+Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, thang@os.amperecomputing.com, linux-kernel@vger.kernel.org, Phong Vo <phong@os.amperecomputing.com>, soc@kernel.org, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Olof Johansson <olof@lixom.net>, Open Source Submission <patches@amperecomputing.com>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add driver for memory controller present on Nuvoton NPCM SoCs. The memory
-controller supports single bit error correction and double bit error
-detection.
 
-Signed-off-by: Marvin Lin <milkfafa@gmail.com>
----
- MAINTAINERS              |   7 +
- drivers/edac/Kconfig     |  11 +
- drivers/edac/Makefile    |   1 +
- drivers/edac/npcm_edac.c | 516 +++++++++++++++++++++++++++++++++++++++
- 4 files changed, 535 insertions(+)
- create mode 100644 drivers/edac/npcm_edac.c
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 868bbf31603d..dde5b3e647ce 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -7409,6 +7409,13 @@ L:	linux-edac@vger.kernel.org
- S:	Maintained
- F:	drivers/edac/mpc85xx_edac.[ch]
- 
-+EDAC-NPCM
-+M:	Marvin Lin <kflin@nuvoton.com>
-+L:	linux-edac@vger.kernel.org
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/edac/nuvoton,npcm-memory-controller.yaml
-+F:	drivers/edac/npcm_edac.c
-+
- EDAC-PASEMI
- M:	Egor Martovetsky <egor@pasemi.com>
- L:	linux-edac@vger.kernel.org
-diff --git a/drivers/edac/Kconfig b/drivers/edac/Kconfig
-index 17562cf1fe97..69b92dff7dbb 100644
---- a/drivers/edac/Kconfig
-+++ b/drivers/edac/Kconfig
-@@ -541,4 +541,15 @@ config EDAC_DMC520
- 	  Support for error detection and correction on the
- 	  SoCs with ARM DMC-520 DRAM controller.
- 
-+config EDAC_NPCM
-+	tristate "Nuvoton NPCM DDR Memory Controller"
-+	depends on (ARCH_NPCM || COMPILE_TEST)
-+	help
-+	  Support for error detection and correction on the Nuvoton NPCM DDR
-+	  memory controller.
-+
-+	  The memory controller supports single bit error correction, double bit
-+	  error detection (in-line ECC in which a section 1/8th of the memory
-+	  device used to store data is used for ECC storage).
-+
- endif # EDAC
-diff --git a/drivers/edac/Makefile b/drivers/edac/Makefile
-index 2d1641a27a28..db3c59d3ad84 100644
---- a/drivers/edac/Makefile
-+++ b/drivers/edac/Makefile
-@@ -84,3 +84,4 @@ obj-$(CONFIG_EDAC_QCOM)			+= qcom_edac.o
- obj-$(CONFIG_EDAC_ASPEED)		+= aspeed_edac.o
- obj-$(CONFIG_EDAC_BLUEFIELD)		+= bluefield_edac.o
- obj-$(CONFIG_EDAC_DMC520)		+= dmc520_edac.o
-+obj-$(CONFIG_EDAC_NPCM)			+= npcm_edac.o
-diff --git a/drivers/edac/npcm_edac.c b/drivers/edac/npcm_edac.c
-new file mode 100644
-index 000000000000..a68ba7357369
---- /dev/null
-+++ b/drivers/edac/npcm_edac.c
-@@ -0,0 +1,516 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+// Copyright (c) 2022 Nuvoton Technology Corporation
-+
-+#include <linux/debugfs.h>
-+#include <linux/iopoll.h>
-+#include <linux/of_device.h>
-+#include <linux/regmap.h>
-+#include "edac_module.h"
-+
-+#define EDAC_MOD_NAME	"npcm-edac"
-+#define EDAC_MSG_SIZE	256
-+
-+/* chip serials */
-+#define NPCM7XX_CHIP	BIT(0)
-+#define NPCM8XX_CHIP	BIT(1)
-+
-+/* syndrome values */
-+#define UE_SYNDROME	0x03
-+
-+static char data_synd[] = {
-+	0xf4, 0xf1, 0xec, 0xea, 0xe9, 0xe6, 0xe5, 0xe3,
-+	0xdc, 0xda, 0xd9, 0xd6, 0xd5, 0xd3, 0xce, 0xcb,
-+	0xb5, 0xb0, 0xad, 0xab, 0xa8, 0xa7, 0xa4, 0xa2,
-+	0x9d, 0x9b, 0x98, 0x97, 0x94, 0x92, 0x8f, 0x8a,
-+	0x75, 0x70, 0x6d, 0x6b, 0x68, 0x67, 0x64, 0x62,
-+	0x5e, 0x5b, 0x58, 0x57, 0x54, 0x52, 0x4f, 0x4a,
-+	0x34, 0x31, 0x2c, 0x2a, 0x29, 0x26, 0x25, 0x23,
-+	0x1c, 0x1a, 0x19, 0x16, 0x15, 0x13, 0x0e, 0x0b
-+};
-+
-+static struct regmap *npcm_regmap;
-+
-+struct npcm_platform_data {
-+	/* chip serials */
-+	int chip;
-+
-+	/* memory controller registers */
-+	u32 ctl_ecc_en;
-+	u32 ctl_int_status;
-+	u32 ctl_int_ack;
-+	u32 ctl_int_mask_master;
-+	u32 ctl_int_mask_ecc;
-+	u32 ctl_ce_addr_l;
-+	u32 ctl_ce_addr_h;
-+	u32 ctl_ce_data_l;
-+	u32 ctl_ce_data_h;
-+	u32 ctl_ce_synd;
-+	u32 ctl_ue_addr_l;
-+	u32 ctl_ue_addr_h;
-+	u32 ctl_ue_data_l;
-+	u32 ctl_ue_data_h;
-+	u32 ctl_ue_synd;
-+	u32 ctl_source_id;
-+	u32 ctl_controller_busy;
-+	u32 ctl_xor_check_bits;
-+
-+	/* masks and shifts */
-+	u32 ecc_en_mask;
-+	u32 int_status_ce_mask;
-+	u32 int_status_ue_mask;
-+	u32 int_ack_ce_mask;
-+	u32 int_ack_ue_mask;
-+	u32 int_mask_master_non_ecc_mask;
-+	u32 int_mask_master_global_mask;
-+	u32 int_mask_ecc_non_event_mask;
-+	u32 ce_addr_h_mask;
-+	u32 ce_synd_mask;
-+	u32 ce_synd_shift;
-+	u32 ue_addr_h_mask;
-+	u32 ue_synd_mask;
-+	u32 ue_synd_shift;
-+	u32 source_id_ce_mask;
-+	u32 source_id_ce_shift;
-+	u32 source_id_ue_mask;
-+	u32 source_id_ue_shift;
-+	u32 controller_busy_mask;
-+	u32 xor_check_bits_mask;
-+	u32 xor_check_bits_shift;
-+	u32 writeback_en_mask;
-+	u32 fwc_mask;
-+};
-+
-+struct priv_data {
-+	void __iomem *reg;
-+	char message[EDAC_MSG_SIZE];
-+	const struct npcm_platform_data *pdata;
-+
-+	/* error injection */
-+	struct dentry *debugfs;
-+	u8 error_type;
-+	u8 location;
-+	u8 bit;
-+};
-+
-+static void handle_ce(struct mem_ctl_info *mci)
-+{
-+	struct priv_data *priv = mci->pvt_info;
-+	const struct npcm_platform_data *pdata = priv->pdata;
-+	u64 addr = 0;
-+	u64 data = 0;
-+	u32 val_h = 0;
-+	u32 val_l, id, synd;
-+
-+	regmap_read(npcm_regmap, pdata->ctl_ce_addr_l, &val_l);
-+	if (pdata->chip == NPCM8XX_CHIP) {
-+		regmap_read(npcm_regmap, pdata->ctl_ce_addr_h, &val_h);
-+		val_h &= pdata->ce_addr_h_mask;
-+	}
-+	addr = ((addr | val_h) << 32) | val_l;
-+
-+	regmap_read(npcm_regmap, pdata->ctl_ce_data_l, &val_l);
-+	if (pdata->chip == NPCM8XX_CHIP)
-+		regmap_read(npcm_regmap, pdata->ctl_ce_data_h, &val_h);
-+	data = ((data | val_h) << 32) | val_l;
-+
-+	regmap_read(npcm_regmap, pdata->ctl_source_id, &id);
-+	id = (id & pdata->source_id_ce_mask) >> pdata->source_id_ce_shift;
-+
-+	regmap_read(npcm_regmap, pdata->ctl_ce_synd, &synd);
-+	synd = (synd & pdata->ce_synd_mask) >> pdata->ce_synd_shift;
-+
-+	snprintf(priv->message, EDAC_MSG_SIZE,
-+		 "addr = 0x%llx, data = 0x%llx, id = 0x%x", addr, data, id);
-+
-+	edac_mc_handle_error(HW_EVENT_ERR_CORRECTED, mci, 1, addr >> PAGE_SHIFT,
-+			     addr & ~PAGE_MASK, synd, 0, 0, -1, priv->message, "");
-+}
-+
-+static void handle_ue(struct mem_ctl_info *mci)
-+{
-+	struct priv_data *priv = mci->pvt_info;
-+	const struct npcm_platform_data *pdata = priv->pdata;
-+	u64 addr = 0;
-+	u64 data = 0;
-+	u32 val_h = 0;
-+	u32 val_l, id, synd;
-+
-+	regmap_read(npcm_regmap, pdata->ctl_ue_addr_l, &val_l);
-+	if (pdata->chip == NPCM8XX_CHIP) {
-+		regmap_read(npcm_regmap, pdata->ctl_ue_addr_h, &val_h);
-+		val_h &= pdata->ue_addr_h_mask;
-+	}
-+	addr = ((addr | val_h) << 32) | val_l;
-+
-+	regmap_read(npcm_regmap, pdata->ctl_ue_data_l, &val_l);
-+	if (pdata->chip == NPCM8XX_CHIP)
-+		regmap_read(npcm_regmap, pdata->ctl_ue_data_h, &val_h);
-+	data = ((data | val_h) << 32) | val_l;
-+
-+	regmap_read(npcm_regmap, pdata->ctl_source_id, &id);
-+	id = (id & pdata->source_id_ue_mask) >> pdata->source_id_ue_shift;
-+
-+	regmap_read(npcm_regmap, pdata->ctl_ue_synd, &synd);
-+	synd = (synd & pdata->ue_synd_mask) >> pdata->ue_synd_shift;
-+
-+	snprintf(priv->message, EDAC_MSG_SIZE,
-+		 "addr = 0x%llx, data = 0x%llx, id = 0x%x", addr, data, id);
-+
-+	edac_mc_handle_error(HW_EVENT_ERR_UNCORRECTED, mci, 1, addr >> PAGE_SHIFT,
-+			     addr & ~PAGE_MASK, synd, 0, 0, -1, priv->message, "");
-+}
-+
-+static irqreturn_t edac_ecc_isr(int irq, void *dev_id)
-+{
-+	struct mem_ctl_info *mci = dev_id;
-+	struct priv_data *priv = mci->pvt_info;
-+	const struct npcm_platform_data *pdata = priv->pdata;
-+	u32 status;
-+
-+	regmap_read(npcm_regmap, pdata->ctl_int_status, &status);
-+	if (status & pdata->int_status_ce_mask) {
-+		handle_ce(mci);
-+
-+		/* acknowledge the CE interrupt */
-+		regmap_write(npcm_regmap, pdata->ctl_int_ack,
-+			     pdata->int_ack_ce_mask);
-+		return IRQ_HANDLED;
-+	} else if (status & pdata->int_status_ue_mask) {
-+		handle_ue(mci);
-+
-+		/* acknowledge the UE interrupt */
-+		regmap_write(npcm_regmap, pdata->ctl_int_ack,
-+			     pdata->int_ack_ue_mask);
-+		return IRQ_HANDLED;
-+	}
-+
-+	return IRQ_NONE;
-+}
-+
-+static ssize_t force_ecc_error(struct file *file, const char __user *data,
-+				    size_t count, loff_t *ppos)
-+{
-+	struct device *dev = file->private_data;
-+	struct mem_ctl_info *mci = to_mci(dev);
-+	struct priv_data *priv = mci->pvt_info;
-+	const struct npcm_platform_data *pdata = priv->pdata;
-+	int ret;
-+	u32 val, syndrome;
-+
-+	/*
-+	 * error_type - 0: CE, 1: UE
-+	 * location   - 0: data, 1: checkcode
-+	 * bit        - 0 ~ 63 for data and 0 ~ 7 for checkcode
-+	 */
-+	edac_printk(KERN_INFO, EDAC_MOD_NAME,
-+		    "force an ECC error, type = %d, location = %d, bit = %d\n",
-+		    priv->error_type, priv->location, priv->bit);
-+
-+	/* ensure no pending writes */
-+	ret = regmap_read_poll_timeout(npcm_regmap, pdata->ctl_controller_busy,
-+				       val, !(val & pdata->controller_busy_mask),
-+				       1000, 10000);
-+	if (ret) {
-+		edac_printk(KERN_INFO, EDAC_MOD_NAME,
-+			    "wait pending writes timeout\n");
-+		return count;
-+	}
-+
-+	regmap_read(npcm_regmap, pdata->ctl_xor_check_bits, &val);
-+	val &= ~pdata->xor_check_bits_mask;
-+
-+	/* write syndrome to XOR_CHECK_BITS */
-+	if (priv->error_type == 0) {
-+		if (priv->location == 0 && priv->bit > 63) {
-+			edac_printk(KERN_INFO, EDAC_MOD_NAME,
-+				    "data bit should not exceed 63\n");
-+			return count;
-+		}
-+
-+		if (priv->location == 1 && priv->bit > 7) {
-+			edac_printk(KERN_INFO, EDAC_MOD_NAME,
-+				    "checkcode bit should not exceed 7\n");
-+			return count;
-+		}
-+
-+		syndrome = priv->location ? 1 << priv->bit :
-+			   data_synd[priv->bit];
-+
-+		regmap_write(npcm_regmap, pdata->ctl_xor_check_bits,
-+			     val | (syndrome << pdata->xor_check_bits_shift) |
-+			     pdata->writeback_en_mask);
-+	} else if (priv->error_type == 1) {
-+		regmap_write(npcm_regmap, pdata->ctl_xor_check_bits,
-+			     val | (UE_SYNDROME << pdata->xor_check_bits_shift));
-+	}
-+
-+	/* force write check */
-+	regmap_update_bits(npcm_regmap, pdata->ctl_xor_check_bits,
-+			   pdata->fwc_mask, pdata->fwc_mask);
-+
-+	return count;
-+}
-+
-+static const struct file_operations force_ecc_error_fops = {
-+	.open = simple_open,
-+	.write = force_ecc_error,
-+	.llseek = generic_file_llseek,
-+};
-+
-+static void setup_debugfs(struct mem_ctl_info *mci)
-+{
-+	struct priv_data *priv = mci->pvt_info;
-+
-+	priv->debugfs = edac_debugfs_create_dir(mci->mod_name);
-+	if (!priv->debugfs)
-+		return;
-+
-+	edac_debugfs_create_x8("error_type", 0644, priv->debugfs, &priv->error_type);
-+	edac_debugfs_create_x8("location", 0644, priv->debugfs, &priv->location);
-+	edac_debugfs_create_x8("bit", 0644, priv->debugfs, &priv->bit);
-+	edac_debugfs_create_file("force_ecc_error", 0200, priv->debugfs,
-+				 &mci->dev, &force_ecc_error_fops);
-+}
-+
-+static int setup_irq(struct mem_ctl_info *mci, struct platform_device *pdev)
-+{
-+	struct priv_data *priv = mci->pvt_info;
-+	const struct npcm_platform_data *pdata = priv->pdata;
-+	int ret, irq;
-+
-+	irq = platform_get_irq(pdev, 0);
-+	if (irq < 0) {
-+		edac_printk(KERN_ERR, EDAC_MOD_NAME, "IRQ not defined in DTS\n");
-+		return irq;
-+	}
-+
-+	ret = devm_request_irq(&pdev->dev, irq, edac_ecc_isr, 0,
-+			       dev_name(&pdev->dev), mci);
-+	if (ret < 0) {
-+		edac_printk(KERN_ERR, EDAC_MOD_NAME, "failed to request IRQ\n");
-+		return ret;
-+	}
-+
-+	/* enable the functional group of ECC and mask the others */
-+	regmap_write(npcm_regmap, pdata->ctl_int_mask_master,
-+		     pdata->int_mask_master_non_ecc_mask);
-+
-+	if (pdata->chip == NPCM8XX_CHIP)
-+		regmap_write(npcm_regmap, pdata->ctl_int_mask_ecc,
-+			     pdata->int_mask_ecc_non_event_mask);
-+
-+	return 0;
-+}
-+
-+static const struct regmap_config npcm_regmap_cfg = {
-+	.reg_bits	= 32,
-+	.reg_stride	= 4,
-+	.val_bits	= 32,
-+};
-+
-+static int edac_probe(struct platform_device *pdev)
-+{
-+	const struct npcm_platform_data *pdata;
-+	struct device *dev = &pdev->dev;
-+	struct edac_mc_layer layers[1];
-+	struct mem_ctl_info *mci;
-+	struct priv_data *priv;
-+	void __iomem *reg;
-+	int rc;
-+	u32 val;
-+
-+	reg = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(reg))
-+		return PTR_ERR(reg);
-+
-+	npcm_regmap = devm_regmap_init_mmio(dev, reg, &npcm_regmap_cfg);
-+	if (IS_ERR(npcm_regmap))
-+		return PTR_ERR(npcm_regmap);
-+
-+	pdata = of_device_get_match_data(dev);
-+	if (!pdata)
-+		return -EINVAL;
-+
-+	/* bail out if ECC is not enabled */
-+	regmap_read(npcm_regmap, pdata->ctl_ecc_en, &val);
-+	if (!(val & pdata->ecc_en_mask)) {
-+		edac_printk(KERN_ERR, EDAC_MOD_NAME, "ECC is not enabled\n");
-+		return -EPERM;
-+	}
-+
-+	edac_op_state = EDAC_OPSTATE_INT;
-+
-+	layers[0].type = EDAC_MC_LAYER_ALL_MEM;
-+	layers[0].size = 1;
-+
-+	mci = edac_mc_alloc(0, ARRAY_SIZE(layers), layers,
-+			    sizeof(struct priv_data));
-+	if (!mci)
-+		return -ENOMEM;
-+
-+	mci->pdev = &pdev->dev;
-+	priv = mci->pvt_info;
-+	priv->reg = reg;
-+	priv->pdata = pdata;
-+	platform_set_drvdata(pdev, mci);
-+
-+	mci->mtype_cap = MEM_FLAG_DDR4;
-+	mci->edac_ctl_cap = EDAC_FLAG_SECDED;
-+	mci->scrub_cap = SCRUB_FLAG_HW_SRC;
-+	mci->scrub_mode = SCRUB_HW_SRC;
-+	mci->edac_cap = EDAC_FLAG_SECDED;
-+	mci->ctl_name = "npcm_ddr_controller";
-+	mci->dev_name = dev_name(&pdev->dev);
-+	mci->mod_name = EDAC_MOD_NAME;
-+	mci->ctl_page_to_phys = NULL;
-+
-+	rc = setup_irq(mci, pdev);
-+	if (rc)
-+		goto free_edac_mc;
-+
-+	rc = edac_mc_add_mc(mci);
-+	if (rc)
-+		goto free_edac_mc;
-+
-+	if (IS_ENABLED(CONFIG_EDAC_DEBUG) && pdata->chip == NPCM8XX_CHIP)
-+		setup_debugfs(mci);
-+
-+	return rc;
-+
-+free_edac_mc:
-+	edac_mc_free(mci);
-+	return rc;
-+}
-+
-+static int edac_remove(struct platform_device *pdev)
-+{
-+	struct mem_ctl_info *mci = platform_get_drvdata(pdev);
-+	struct priv_data *priv = mci->pvt_info;
-+	const struct npcm_platform_data *pdata = priv->pdata;
-+
-+	regmap_write(npcm_regmap, pdata->ctl_int_mask_master,
-+		     pdata->int_mask_master_global_mask);
-+	regmap_update_bits(npcm_regmap, pdata->ctl_ecc_en, pdata->ecc_en_mask,
-+			   0);
-+
-+	edac_mc_del_mc(&pdev->dev);
-+	edac_mc_free(mci);
-+
-+	if (IS_ENABLED(CONFIG_EDAC_DEBUG) && pdata->chip == NPCM8XX_CHIP)
-+		edac_debugfs_remove_recursive(priv->debugfs);
-+
-+	return 0;
-+}
-+
-+static const struct npcm_platform_data npcm750_edac = {
-+	.chip				= NPCM7XX_CHIP,
-+
-+	/* memory controller registers */
-+	.ctl_ecc_en			= 0x174,
-+	.ctl_int_status			= 0x1d0,
-+	.ctl_int_ack			= 0x1d4,
-+	.ctl_int_mask_master		= 0x1d8,
-+	.ctl_ce_addr_l			= 0x188,
-+	.ctl_ce_data_l			= 0x190,
-+	.ctl_ce_synd			= 0x18c,
-+	.ctl_ue_addr_l			= 0x17c,
-+	.ctl_ue_data_l			= 0x184,
-+	.ctl_ue_synd			= 0x180,
-+	.ctl_source_id			= 0x194,
-+
-+	/* masks and shifts */
-+	.ecc_en_mask			= BIT(24),
-+	.int_status_ce_mask		= GENMASK(4, 3),
-+	.int_status_ue_mask		= GENMASK(6, 5),
-+	.int_ack_ce_mask		= GENMASK(4, 3),
-+	.int_ack_ue_mask		= GENMASK(6, 5),
-+	.int_mask_master_non_ecc_mask	= GENMASK(30, 7) | GENMASK(2, 0),
-+	.int_mask_master_global_mask	= BIT(31),
-+	.ce_synd_mask			= GENMASK(6, 0),
-+	.ce_synd_shift			= 0,
-+	.ue_synd_mask			= GENMASK(6, 0),
-+	.ue_synd_shift			= 0,
-+	.source_id_ce_mask		= GENMASK(29, 16),
-+	.source_id_ce_shift		= 16,
-+	.source_id_ue_mask		= GENMASK(13, 0),
-+	.source_id_ue_shift		= 0,
-+};
-+
-+static const struct npcm_platform_data npcm845_edac = {
-+	.chip =				NPCM8XX_CHIP,
-+
-+	/* memory controller registers */
-+	.ctl_ecc_en			= 0x16c,
-+	.ctl_int_status			= 0x228,
-+	.ctl_int_ack			= 0x244,
-+	.ctl_int_mask_master		= 0x220,
-+	.ctl_int_mask_ecc		= 0x260,
-+	.ctl_ce_addr_l			= 0x18c,
-+	.ctl_ce_addr_h			= 0x190,
-+	.ctl_ce_data_l			= 0x194,
-+	.ctl_ce_data_h			= 0x198,
-+	.ctl_ce_synd			= 0x190,
-+	.ctl_ue_addr_l			= 0x17c,
-+	.ctl_ue_addr_h			= 0x180,
-+	.ctl_ue_data_l			= 0x184,
-+	.ctl_ue_data_h			= 0x188,
-+	.ctl_ue_synd			= 0x180,
-+	.ctl_source_id			= 0x19c,
-+	.ctl_controller_busy		= 0x20c,
-+	.ctl_xor_check_bits		= 0x174,
-+
-+	/* masks and shifts */
-+	.ecc_en_mask			= GENMASK(17, 16),
-+	.int_status_ce_mask		= GENMASK(1, 0),
-+	.int_status_ue_mask		= GENMASK(3, 2),
-+	.int_ack_ce_mask		= GENMASK(1, 0),
-+	.int_ack_ue_mask		= GENMASK(3, 2),
-+	.int_mask_master_non_ecc_mask	= GENMASK(30, 3) | GENMASK(1, 0),
-+	.int_mask_master_global_mask	= BIT(31),
-+	.int_mask_ecc_non_event_mask	= GENMASK(8, 4),
-+	.ce_addr_h_mask			= GENMASK(1, 0),
-+	.ce_synd_mask			= GENMASK(15, 8),
-+	.ce_synd_shift			= 8,
-+	.ue_addr_h_mask			= GENMASK(1, 0),
-+	.ue_synd_mask			= GENMASK(15, 8),
-+	.ue_synd_shift			= 8,
-+	.source_id_ce_mask		= GENMASK(29, 16),
-+	.source_id_ce_shift		= 16,
-+	.source_id_ue_mask		= GENMASK(13, 0),
-+	.source_id_ue_shift		= 0,
-+	.controller_busy_mask		= BIT(0),
-+	.xor_check_bits_mask		= GENMASK(23, 16),
-+	.xor_check_bits_shift		= 16,
-+	.writeback_en_mask		= BIT(24),
-+	.fwc_mask			= BIT(8),
-+};
-+
-+static const struct of_device_id npcm_edac_of_match[] = {
-+	{
-+		.compatible = "nuvoton,npcm750-memory-controller",
-+		.data = &npcm750_edac
-+	},
-+	{
-+		.compatible = "nuvoton,npcm845-memory-controller",
-+		.data = &npcm845_edac
-+	},
-+	{},
-+};
-+
-+MODULE_DEVICE_TABLE(of, npcm_edac_of_match);
-+
-+static struct platform_driver npcm_edac_driver = {
-+	.driver = {
-+		.name = "npcm-edac",
-+		.of_match_table = npcm_edac_of_match,
-+	},
-+	.probe = edac_probe,
-+	.remove = edac_remove,
-+};
-+
-+module_platform_driver(npcm_edac_driver);
-+
-+MODULE_AUTHOR("Medad CChien <medadyoung@gmail.com>");
-+MODULE_AUTHOR("Marvin Lin <kflin@nuvoton.com>");
-+MODULE_DESCRIPTION("Nuvoton NPCM EDAC Driver");
-+MODULE_LICENSE("GPL");
--- 
-2.34.1
+On 25/08/2022 19:35, Arnd Bergmann wrote:
+> On Tue, Aug 23, 2022 at 10:27 AM Quan Nguyen
+> <quan@os.amperecomputing.com> wrote:
+>> On 18/08/2022 19:06, Arnd Bergmann wrote:
+>>
+>> Thanks Arnd for the comment.
+>>
+>> I think adding -append could solve the issue.
+>>
+>> But as the bootargs still exist in all other
+>> arch/arm/boot/dts/aspeed-bmc-*.dts should we still keep bootargs for
+>> this dts?
+> 
+> I think it should still be removed. Only 238 of 2547 set the console using
+> bootargs, so that would make it more consistent with the other files.
+> 
+> Changing the files that have the same issue is a separate matter.
+> 
 
+Hi Joel,
+
+In the meantime, I'm just wonder if you could help to test the patch 
+with -append and get it merged.
+
+Thank you and best regards,
+- Quan
