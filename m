@@ -1,113 +1,159 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 606E05AEF40
-	for <lists+openbmc@lfdr.de>; Tue,  6 Sep 2022 17:47:47 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 619EB5AEF74
+	for <lists+openbmc@lfdr.de>; Tue,  6 Sep 2022 17:54:07 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MMVC526Vhz3br0
-	for <lists+openbmc@lfdr.de>; Wed,  7 Sep 2022 01:47:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MMVLP36HTz3bc3
+	for <lists+openbmc@lfdr.de>; Wed,  7 Sep 2022 01:54:05 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=Mbr2PyKb;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=N0zHTQos;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=nvidia.com (client-ip=40.107.237.79; helo=nam12-bn8-obe.outbound.protection.outlook.com; envelope-from=ropai@nvidia.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=permerror (SPF Permanent Error: Two or more type TXT spf records found.) smtp.mailfrom=intel.com (client-ip=192.55.52.136; helo=mga12.intel.com; envelope-from=johnathanx.mantey@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=Mbr2PyKb;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=N0zHTQos;
 	dkim-atps=neutral
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2079.outbound.protection.outlook.com [40.107.237.79])
+Received: from mga12.intel.com (mga12.intel.com [192.55.52.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MMVB04DgLz2yp5
-	for <openbmc@lists.ozlabs.org>; Wed,  7 Sep 2022 01:46:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MMVKs0TRPz2yKD
+	for <openbmc@lists.ozlabs.org>; Wed,  7 Sep 2022 01:53:31 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1662479618; x=1694015618;
+  h=message-id:date:subject:to:references:from:in-reply-to:
+   mime-version;
+  bh=xWomLtavW5CBBgYvY73XUkY9Q4b7jcCdDU3XuC2JYGk=;
+  b=N0zHTQosMGBVm7aPw8J9YtVdkuDlZxJK0jvML8WiUgrVs+z+Q+SNywRn
+   9t6wZuwJ1AaRfuER8ZSq+D4Xq+elZ3bp89mLhBRNkSXh7WJxXlr82qj7H
+   l2TMrVx4zOZ/pqieVkHWLOzxyVG+TWvJK/BG4WkMeH2+F5akzwF7dyjwn
+   VKs1eR+UAcvAy2yOsI/KhPQwBzYYG19P9r0mCQcUVEAJe50ohVadq0jDi
+   rX5buK8VaOT/Opzy+jskBmHqIKFApANauu768bv7ouKsRD+jSpRCUFYnW
+   lEAvIrZf6xj3gCS2xjfK2z3bf+nax2YE/msEvA58H3rUSK/BbAaNtbU3i
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10462"; a="276367910"
+X-IronPort-AV: E=Sophos;i="5.93,294,1654585200"; 
+   d="scan'208,217";a="276367910"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Sep 2022 08:53:28 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.93,294,1654585200"; 
+   d="scan'208,217";a="644219075"
+Received: from fmsmsx601.amr.corp.intel.com ([10.18.126.81])
+  by orsmga008.jf.intel.com with ESMTP; 06 Sep 2022 08:53:25 -0700
+Received: from fmsmsx607.amr.corp.intel.com (10.18.126.87) by
+ fmsmsx601.amr.corp.intel.com (10.18.126.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Tue, 6 Sep 2022 08:53:15 -0700
+Received: from fmsmsx611.amr.corp.intel.com (10.18.126.91) by
+ fmsmsx607.amr.corp.intel.com (10.18.126.87) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31; Tue, 6 Sep 2022 08:53:14 -0700
+Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
+ fmsmsx611.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2375.31 via Frontend Transport; Tue, 6 Sep 2022 08:53:14 -0700
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.170)
+ by edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2375.31; Tue, 6 Sep 2022 08:53:14 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=hyi1Bt8e5eRmbcHWjZ+vcPk26zWfvS6BhisuqBRclbAtxu2WK00Dw2UXCVNqTcK4HJlO1D0Yn8dzCYcrUGrNk1gY/jr3IT0PYTUOsehjAzebScA78nDh4GF+kExTORCOXusX+z1I8QS/yW2W01jxOQiTZYEFRh59gVNMtwb3J9TmPtQjrm4CZ+KbbdRMeHP8PxcIJzLWIBsBxteSZzyXK3BMBjv6XXI24f3I1KwDdh+VvD9f+NoBM5Xyy7l7G4Zo/UDyvzFb07Vn7aIg8AoWbRxjiiPkzfdjJ92z/tIlxC9dG2f/mCdTGqTrHEVVofCIfbLaGuLLV1QQslml9zyNMA==
+ b=hmJ8kwD3jtPcK3jdGvkx16gVzLYeLVJVpAxKI32bNFs6uXNXUmfmnvTf9XdYydxVFwhkjFMtWn/+FsHJiaT9XUexfmfBqdO2srRyHmhUO2BfeZCBGTOCXz8kyoYQhTEoShDOtcvD1GIxW9k/5sfNPT04UBm9+rF5YBjtKcyXxhTZ8HaZfYydL59tWKLZnxIOZS5pdcCftagUE7WhfNlqOLVAN1aec2h96LtHUnmsSmAlFa3A/qxQ3Uboblf54IIfHsXmQEo+GTwZHP3U08j7Iqg4wR28JRjEfWnCylLYWNC89QHlZlXsNcQZgVyk4kROOope1IyZcuScJ9RX60eQGg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=q86+Ivhav2HlMC6b35P5l3rJg+CX8EGHnJO5UjfmcWU=;
- b=UaXRvcXHaUGQjP0M4BDxxYAvbdmyKLp4fAhMMyd5JY6uRXaKjBc1BiZtN0ygSA71ClB8ju+2N8sueZHuEQKeEQnwxFcFfqQGB4YP1hmf1akHEy+e6n+xzk2alPoadShSqSQB1ZSHmWX9Zmv1hfdn4evOFUlJ5CCBp34DSfXlujITYGdsrQNCNBVhPqYrexwGAzQcjNz1MufwpWRFWyqYIxtYtcU7Iq+JYOeP94jKiFhnc0i+7cpixjT6CJXCwIMY7u4dV5QRQccaXnRly1LNXyXfzzxXzPLYGdpbAXDmRP4bhOJOCCS5Cui84dKUTs17ZgGdq0SZQ8y8E7luLTiajA==
+ bh=W8qRExeXz8eDfJal8gXypurXiLV70xRuTNmvd75kzAg=;
+ b=BrRI4VbAXGQQK8j47apoFuzb4hPQa03mizTlzl2jZpz1twCB1DkzRkg6hCJlwQYZi5yD0usKok1ORde//PtE7CxTwbilzoi8bW62wyLS96Hvu1KWQNhQC7BD0q1wNb/RhC3WwozCQ6qVCzVo9BS11sc4p5ko24KSPph/VAUfwEDgpBHJwvwHRIQh8OPCf7cLFP07jV8rsWLmpXav42QHIA8yAwYu9gxbGpiOe77hM7Z94g3skh2ev7OkktzgzKZoM8lrE2HCIVcB4sPPBSP4sN+TqMmarvaEavZDNvrtOXiBMjkW9ZnekJ30d6tqlW3D7LHglfVgjglCFYPBQbbWXQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=q86+Ivhav2HlMC6b35P5l3rJg+CX8EGHnJO5UjfmcWU=;
- b=Mbr2PyKbCI5CXJKrjLGnqO1TrKGjpgiArLDWws63qB7YdIG3ivJBUO/ic4wDBQIqi6qd5DgPKTZq5i+qyZwSn6xwEchR6oYDkR0HE2hFGeSM8ZzJm/If8G8Y8EinHTIqq8fY0YeTWhE+FX8wYZQ2MywQOE4WOILSjSPvoQcLbgD/5fNuxOlCbe9wnScrsVTkXJZzj7qvxeqkgzxr0kjTvXXOgF6WuNAKf/OkGNIJqcwUM23KM0BMul8zCi9q/t2cDBq1xcGpzFAWGDJt1NpNbdDQx+bY0oqexUlufs/CmY6UGCqGz0Y2K7sxqDm+WnW2qcuLdN2OFpIr/6x7JMAtNA==
-Received: from LV2PR12MB6014.namprd12.prod.outlook.com (2603:10b6:408:170::18)
- by BL1PR12MB5779.namprd12.prod.outlook.com (2603:10b6:208:392::9) with
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from BL1PR11MB5978.namprd11.prod.outlook.com (2603:10b6:208:385::18)
+ by IA1PR11MB7271.namprd11.prod.outlook.com (2603:10b6:208:429::12) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5612.12; Tue, 6 Sep
- 2022 15:46:25 +0000
-Received: from LV2PR12MB6014.namprd12.prod.outlook.com
- ([fe80::e4d6:a1d5:5b5e:5c50]) by LV2PR12MB6014.namprd12.prod.outlook.com
- ([fe80::e4d6:a1d5:5b5e:5c50%3]) with mapi id 15.20.5588.010; Tue, 6 Sep 2022
- 15:46:25 +0000
-From: Rohit Pai <ropai@nvidia.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Handling State Sensor Association in Bmcweb
-Thread-Topic: Handling State Sensor Association in Bmcweb
-Thread-Index: AdjB/3Z5qu4nyvBTTdqC+4WTQn3fDw==
-Date: Tue, 6 Sep 2022 15:46:25 +0000
-Message-ID:  <LV2PR12MB6014694AB12A5A82EED51FCDCD7E9@LV2PR12MB6014.namprd12.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: c377163c-9235-491f-ddcd-08da901ef4d7
-x-ms-traffictypediagnostic: BL1PR12MB5779:EE_
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:  NPdc+NRsFFo8Zful6yRwvzd7ZrT4UFQxcJOAyDMv+9Z6YroqXYbCU8dlNlZ4aJ8IV/7VcazgfMBZ/ViKYJeHOPeD9OpahM1601P8nxOfPoqL+fOzMd1hZSDui4sGXT/cpgZe/L0HlKHIDRWxoyU3YbPslKAXKDSKFOMwMgm7GoQ32SFstjID2BVKO1ZGZTkPXgW4PKRAjvuwnCSgRgTAQbr4dFFsO7mHgQ2e0O+26sKjMGWf2V8CGAz4DCs94axOyZZAGjjs/hsnYNkNIgoEZtK+PJiekiGbrUNaE9iJ0K6skTKxEZd21MwpdM7eKQXxvZHhQdd7FCC9PIi/82bJaz/9WCTuvVl08dkdqfsbdJ2sr80yATklQBnS2XVyr+M94+JSSOAifLWmeX+waSEg3FaKDxGXTULgzYA+CYMlB8RSuThhn+V0cQJX7imsAXpRiK5eg4YMbwOuxiBONGqNnMBLcjGVb06K5kpn0aHnjgVRPXeuyuqNfTX9xSMna7hW9poZE7CANTJJneSjy2eySYxYWonU3rc4Ouk4PMyA3VxhYzSyx9CsppHIDyFSH0iVcVSTmd5QzK3aI7OcUfGTJVHnGbrLShAiEKhWWlLYzI982H/jdzD26GJy6j6/qZOmTytJrnuNiVCSRiihDcK43oLnA70qBpnMNqmbkD7nabPji841o0eu+HTOJFDCXpMlAQZSdEoXbFK/DO7rp+Ztpuy6rimwu8Ku2yCUeiMoFkYo4OqDR0z/Qg2sb5ficAyqIP1F4gzpOX4LPlqq5AdIrQ==
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB6014.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(4636009)(346002)(136003)(366004)(376002)(39860400002)(396003)(316002)(122000001)(38100700002)(71200400001)(55016003)(41300700001)(6916009)(33656002)(66946007)(66556008)(38070700005)(6506007)(7696005)(478600001)(64756008)(8676002)(66446008)(76116006)(66476007)(9326002)(86362001)(8936002)(52536014)(186003)(26005)(2906002)(5660300002)(9686003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?4CVsm3h9xPGmRSThBeWCkLnL7k9S/9Et6ozgUauRvL1bbrHhg3+u0fyjWesQ?=
- =?us-ascii?Q?i6NXuzXh9MpYsYLfYwQSC3ha2DDInFeO42u5tNzm1+XluihudgtX542w0Blo?=
- =?us-ascii?Q?CctzanjNdKLbtD+jwTE/psDALUoWfbh8UPfbNWI5a6/z2dvTeba367zp9y+0?=
- =?us-ascii?Q?RvY+XKwd9388LGK7fhCy/XO1fq0ZX0NFDBMrQTVX/lktlhHcqL8a83pRIXwQ?=
- =?us-ascii?Q?FejD84SNTOa5p8urzuO5LRTPhwwsipwVkfqvYa+CrLkMM7mFfxg81kDYxnI7?=
- =?us-ascii?Q?5KgsrLYb19eQj/vMW+gSXhADiJg+GhI51+WxwXPbWQI8z58Aj1J5xRMkLQt0?=
- =?us-ascii?Q?/I3vq5ZaFqEMHRIas4BuDCTvQrwyHbA7501++olzlt/9LZAOo265wocu727n?=
- =?us-ascii?Q?HnzX2BxmWMyOjg6tzvt8cgb/x8jOT4NgKJewZ3FloFuGZB26FHmHpaG9Fggx?=
- =?us-ascii?Q?Ti77gKoqbtMrZH1CWwFci2+C2LQ2XuwmcMBkcKNKM9OLTepQYxka75d1msVW?=
- =?us-ascii?Q?m2nFGQ/d0gGY87789k2XKRhE5aFjgBMufam4hsvKRMgfTG7OAoPOO+Fu1ay0?=
- =?us-ascii?Q?+Un6MP+RBpF4AjwyOsIIlnPqEnV4ySP79aUOt3PWfLPzSz6pCueCNjJLUtie?=
- =?us-ascii?Q?HJ+Kntbi7rg0zJHcDB5IQ7GjRQuv4a6h167+Rm9zLooEbzcAbzp5VUdl0kNd?=
- =?us-ascii?Q?Dp0ri/F+gTErBniaA3DhSBjLfO7fLb2mBD3zb9zE8n5peKK/ArOhZyd5oqRm?=
- =?us-ascii?Q?w5F3wrZ/bEdhgwtkO81V4kNiHu6i3kOB/o/U0mFyiaIMkQNnAtKfbRZEN/w7?=
- =?us-ascii?Q?2B2So5s1OZAvnm4nytnfDalDOOSQaikjuWJRMsuRc4fnXKS9sKY7erY60llb?=
- =?us-ascii?Q?txWtRfW6+XjuZLzbDuGq6vt/7FT/cfk3dZia25pNs2/i1Lz8oRDxIVds07qa?=
- =?us-ascii?Q?XztXgKHERZuWgsw7uVfIYU7Cd4AW7vGJFkylLL2dfzyQ4f/F5D+Sh45XRAHg?=
- =?us-ascii?Q?8Ug4191NLdOieyF5/iNk4IafqL7T0PKI5+6Ao/9JhEibsrbw0XN/FLvFVDnd?=
- =?us-ascii?Q?cI2fQ4KjRzUClbMV2qBaEPnRG9ODYS1XkI54FoiAa690V8hQO/2owIEiYPmu?=
- =?us-ascii?Q?kIcNY5yP2xLRZ+NlASq82NzCv2mAtt0FVVtBho0faJN2kok/5P5bN6TV0yqF?=
- =?us-ascii?Q?0zl9SBamOKU3d9zh7fi19i1PeRXJWrqieJt69a/NXDLxPDgvWhZ16kGlB5m6?=
- =?us-ascii?Q?OVquFkw4nHftDYct+Kb/HxqyUI7Q6ZTl2NNo1B/b+kcVq1dJM0XRkvfH2p59?=
- =?us-ascii?Q?Tyj4xAXqZr4/fkwVa5ytM4JNoj9us8N+SQ+WcFtjmv4H31o1Z000KWGakDll?=
- =?us-ascii?Q?jON6i1ozvbalUKFNl1OpjhzdHwZuyLeenHNt4l2bZdx3o9ZjFUdJJJXC58gN?=
- =?us-ascii?Q?0N+Q81C9lbZBDHZnPRvI5qwTP4lEcoHtGhMKvOtCFJx0KVoaUgxyVIbWQRB8?=
- =?us-ascii?Q?19s1WrdYwlEunr6IN71qMCLGXlRDrkdOB3Z1thyOX3ZvqHCczZvkf61oPgTE?=
- =?us-ascii?Q?sKdG5dbIwKztO8oOvIw=3D?=
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5566.14; Tue, 6 Sep
+ 2022 15:53:12 +0000
+Received: from BL1PR11MB5978.namprd11.prod.outlook.com
+ ([fe80::fce1:b229:d351:a708]) by BL1PR11MB5978.namprd11.prod.outlook.com
+ ([fe80::fce1:b229:d351:a708%9]) with mapi id 15.20.5588.015; Tue, 6 Sep 2022
+ 15:53:12 +0000
 Content-Type: multipart/alternative;
-	boundary="_000_LV2PR12MB6014694AB12A5A82EED51FCDCD7E9LV2PR12MB6014namp_"
+	boundary="------------BgC6SfOQafozHhkdgzXV0L2Z"
+Message-ID: <2cdb6ea6-fc85-9835-d410-01195148a3eb@intel.com>
+Date: Tue, 6 Sep 2022 08:53:09 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.12.0
+Subject: Re: SATA hotplug notifications for BMC inventory updates
+Content-Language: en-US
+To: Paul Fertser <fercerpav@gmail.com>, <openbmc@lists.ozlabs.org>
+References: <YxXZeFQhJWDSHSVf@home.paul.comp>
+From: Johnathan Mantey <johnathanx.mantey@intel.com>
+In-Reply-To: <YxXZeFQhJWDSHSVf@home.paul.comp>
+X-ClientProxiedBy: BY5PR13CA0013.namprd13.prod.outlook.com
+ (2603:10b6:a03:180::26) To BL1PR11MB5978.namprd11.prod.outlook.com
+ (2603:10b6:208:385::18)
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: b41f8182-6908-4d2b-ea8f-08da901fe734
+X-MS-TrafficTypeDiagnostic: IA1PR11MB7271:EE_
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: dJi34JZO0JhwBVa+rV0y4F5MNa7roXfbL8/ajJsoIs09Hn4YOAvOwQbKNsKs5WDEj0P8ngc9ohPky7RHd9q/ZcxBxS5yYqoumSSU15CuiEc2UrBYteIW9vgNotz1NTKw17t38REG6pphzxqWuL/bw1fZfffcyMpUoXH2uLGTVp9eaFyWCq9BCqI9Uqkfl1iOwmjgINnw/Q9CWKAARGRSXEBjg9aHTRoCAbUuTBhBNm7cVXSGYTLgcHIFRcI1+rriuxVj7hRWtA+IqIJP5LgVtci0+iXecRV6hkNzsukeyHi8XCaq4Y19LOVtfyxdU2+mHoM4u5Ru0pVSjI8B7CBhUujQ8TV+HuUD7qozIJKlofA7x1ONQYGpQtv6Jm/SpoezfUmDqspTJyzCDH6uZKpFinQC0/tdAwOTlJa3RQJjiRcRzQ7cWXG6Ty0rxAJ8UNNLsiIpcHsBJNqCbVqd+ak6eV/C7Ac0Razbr6EIKj1vUT6VXsVW3eQD6KHS1IOddKaXx6MIG0tO1JZI5shGqOIuCq3yUiNfq5MqMo++KBoZjFj+jK/gEJsreUQvotlhk6MYjDpChsQ+JVeWJqnMnXzcV5j1Eo9BqIVBHGpOoMxE+ToyfU2wf0nhD9yTiwHkWjf63d7qXI2/b1CEyvhfXu6QFwv3INkDAYO9rC87wsyRcgdyf7xxufNWm6i748H4bMkz8so3nYMp4aXivPBFeK2WGmeShSON63ZN6Fhild2gkOtpsUPO3TD1YJJUlMi5G13+NQk4Uz2zwK9LapbNL+OkDEHAocbztHnxMET9cIra+o8=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR11MB5978.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230016)(346002)(39860400002)(376002)(366004)(136003)(396003)(66556008)(82960400001)(38100700002)(66476007)(8676002)(66946007)(316002)(2906002)(83380400001)(5660300002)(53546011)(36756003)(2616005)(8936002)(186003)(26005)(6512007)(6486002)(478600001)(6666004)(41300700001)(6506007)(33964004)(40140700001)(31696002)(86362001)(31686004)(45980500001)(43740500002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?VTdobEgydDJDQW56dUJDL2tEZjg3eFg4Rk52a2c2RVpLbzRFSndUR0VuZXF6?=
+ =?utf-8?B?Zi9RQThhVnFmcWFYb204NXhqcDd5NllteVh2aHhieDVLb3UyK2ViMGtMVDRi?=
+ =?utf-8?B?d2NUc05POW83Q3RsdlNDUW1lMldpZmxTeWx4R3BvVTFRd1ZtdkwxNWJuVk9H?=
+ =?utf-8?B?VzdSM1phS2s0QmlHMkFGQ0dRQ0l5M0MvY1pVeVlyZHlUM2FSSHV5NzJPTy9p?=
+ =?utf-8?B?UEpVQUtXNDh2OWtIbFVOTlNxZllrZWsxYWhCRkJoUnJlblBUcG4yaVV4S2dB?=
+ =?utf-8?B?NnVjeXR3QWpSYXlqcFp6TVI4d1lUQWx5VW15VlVYU0RMK2lrYjlpbUpkdG15?=
+ =?utf-8?B?YkVTQjVURGxWQ21iaTdxTTVLVWlEOXN3V0dSbXJ4NjU2TytpL0tsanFZZWRF?=
+ =?utf-8?B?Yzd2SGFGMURVaGpsSk1QRHpMaFRtT0d1L1RxSm5ta0lFY3RGeVVHWUd4NDBM?=
+ =?utf-8?B?cE9mekFpNENmaG9mQ3RGNDQ3d2VNYXEvV2JJY29jcjRKU0hZeUxhMkdTYWsy?=
+ =?utf-8?B?bDZKYUs5SWwxWTh1N3JpK0hDZlUyZGFsQzEza3lmclRSa3FnbmxFZDV4dEpj?=
+ =?utf-8?B?WXFpbTlacE1xbm5icFhBMzI4V08wVjFTT3hLRE1MT2VCdlIzZ2c1cFhKWE5p?=
+ =?utf-8?B?WmthU1BWd1B1VkwzaWt2Y2JrOVQ1QUd3N04yOWFUYngvVEpFTElYMjNaWERX?=
+ =?utf-8?B?akJkVE12b0p2b3pQZ0hWeHNrOGp2ZDNRSjRaVGhXNFpoYTIvZDNTNjk2dDdW?=
+ =?utf-8?B?TXNwQzJpc0g0YUpTQ1A0bTNobEpmTVpHTFQ2aXlwaEJDeDhsMjZhekhKRG9I?=
+ =?utf-8?B?RmJoNU13U2l5ME5PYUdKSDU1TTd0VHJselh2SEV4cG90RmVxK2g1T0w0aTRZ?=
+ =?utf-8?B?Mi9iUFlsc0liV0o3OEh4THZrb1BaK0pwMWFSWXNubnNhMmhZQ0QyRUlJWkdK?=
+ =?utf-8?B?NVA5d0Rpb213OSt2TndXVzBQNzNnS3dQMnVkYUpnc2V2UzNTTTh2YkRaRE1l?=
+ =?utf-8?B?TnozaVYwdzhURkY2QlJWRmV3ZTRGd3YybG9DbVlaRnE5VVBld09MY1NvSjl5?=
+ =?utf-8?B?VlFoT1ppajZqMTNjdmdDOFdWS1BxWXhKUFQ0aDJLbWlmanl6VU9WSDhuajAx?=
+ =?utf-8?B?YkIwZGNZTTZ0cWtja1B0Ri94clhXVXozS0hqQmNiS3RKSmhzdG5JdmFSK3lE?=
+ =?utf-8?B?cWYzK1hUdWV6NFdqMEhRLzNhUis2aTE1Lzl6Z25YZW9EZlppVUVBRmdEbWti?=
+ =?utf-8?B?NXY3R1R1NHc1WVM2Tm5tRlcxTW16T0xUY1ZVWFZUZTg2ODFNcHU0aGNJOXhy?=
+ =?utf-8?B?Vkxtc2l1aE1KbTZqODkzRWV5TjVEOFB0dzk5dG12dkkveEZqZGdQVFl4RWw1?=
+ =?utf-8?B?Qk5EcElCRlhsQmd3b3hFUDhWdUIzdG1peGx6K0U3cEhvQnc1MXd4YURmWXZE?=
+ =?utf-8?B?UTlmWlU5U0VXc0RVeDcvWklobDVkakc5c3BoSGhwWU0yUUZtcEtHcTRiUUdU?=
+ =?utf-8?B?RFZ1QkhxUWQ2N21tMU8rUTE3cUlWdGVIR09CS1dwLzBlSWQwVXdpS0t5N3pR?=
+ =?utf-8?B?UExGS2k0aVZ1N0x6cVJScU14SGlyZ2RVVWFmNG5aV2VLNEViUDJiYlBUVU5W?=
+ =?utf-8?B?eitYNStTd2lqRFlrYmNjUHhrazFFRDZLVC9oUysxek5KKzhtUHFJWWVEei9T?=
+ =?utf-8?B?VmJOOWxmN1QxNnptME84cFBmNTZRM1l6TEpCRWVhUkJJV3hEMWhhR1dtUkVU?=
+ =?utf-8?B?VnJlZ0NYNFVvWHUrZElYaVhIaHhrcFpQcE5qR0QvRzY0a1ZEQzFDQ2VuMXZB?=
+ =?utf-8?B?OXlUS3VTcGJqKytqcm5SU2kwQ1diem9aa1VqTFl5TG92a01mZnNGc0pWS1Uw?=
+ =?utf-8?B?TXYzS2tPS2pnZlpySWo1N2VmQmRnR0UyUnAwZHU0QXRRMENjdk5hNWQ5NGtu?=
+ =?utf-8?B?bytaKzZpZGZPcWhlanRZZDZ4VHN3RGtWSHJualVudkR0dlphVllkNDZVMTZy?=
+ =?utf-8?B?aHlMTEx4UWpFeUdFVHFzaXBlZE9CSXViUHErOG92ZlliL1kzQTdTUkxWb2FY?=
+ =?utf-8?B?UG81R29JbVRHOW9pWklOckJRUW1PempqeWRvcTF3T1BnWi9wamtTcG5hZzlz?=
+ =?utf-8?B?Tmd6NlVoY2RzYWNzbloxS1RlYkdUd0VuelpDS2htcDFUdDZOekl3VWVKWjlW?=
+ =?utf-8?B?d1E9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: b41f8182-6908-4d2b-ea8f-08da901fe734
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR11MB5978.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB6014.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c377163c-9235-491f-ddcd-08da901ef4d7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Sep 2022 15:46:25.6927
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Sep 2022 15:53:12.5455
  (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: z9w/lwx2BmgB7zfTwUHU2MWtRqaThA276pvVodz/OBi7S4Q29CF6Tdz/hHmij+ibyZj6eifKaYCKuDqJGJEDfw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL1PR12MB5779
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Nrbayg/n1Vi48v9XcoHM/2x5EsEeyR8omJWAZz890T1hxAoHbAofX6/QU97e0YxKYhXuekk358KKEiH0jOjQ1tK/zv1wcuJEvv4Int2u8uY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB7271
+X-OriginatorOrg: intel.com
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -122,349 +168,114 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_LV2PR12MB6014694AB12A5A82EED51FCDCD7E9LV2PR12MB6014namp_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+--------------BgC6SfOQafozHhkdgzXV0L2Z
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Hello Team,
-
-This email is to discuss the implementation details regarding state sensors=
- association with inventory objects when multiple applications are involved=
-.
-
-On our platform, we have a service that populates different inventory objec=
-ts like CPU, GPU, Power Supply, Memory, etc.
-For example, let's say there is a CPU instance that is represented over dbu=
-s like below
-
-  *   /xyz/openbmc_project/inventory/system/processors/CPU0
-
-
-Then we have another application that hosts state sensor information relate=
-d to this CPU0 instance.
-To be more specific the second application is the pldm daemon which reads a=
-ll the state sensor information related to this CPU.
-These are discrete sensors that are represented using unique dbus interface=
-s.
-Example (dbus interface)
-
-  *   CPU throttle state (xyz.openbmc_project.State.ProcessorPerformance)
-  *   CPU power supply reg state (xyz.openbmc_project.State.Decorator.Power=
-SystemInputs)
-
-Now in the above case if I must associate the state sensor (from Pldm) with=
- the inventory object (from a different app) then what would be a preferred=
- way?
-My end goal is to get these state sensors over redfish and association will=
- help me identify the relation between the entities and the sensor data.
-
-Few thoughts which are in my mind
-Option 1: Both applications use the exact same dbus object path
-App1 :
-   - /xyz/openbmc_project/inventory/system/processors/CPU0
-        - xyz.openbmc_project.Inventory.Item.Cpu
-            App2 (pldmd) :
-
-   - /xyz/openbmc_project/inventory/system/processors/CPU0
-
-        - xyz.openbmc_project.State.ProcessorPerformance
-               Bmcweb uses the object mapper to get the object path which i=
-mplements the required dbus interface and then will identity the CPU0 insta=
-nce from the object path.
-
-               Option 2: There will be an explicit association defined betw=
-een the inventory object and the state sensor object
-App1 :
-   - /xyz/openbmc_project/inventory/system/processors/CPU0
-        - xyz.openbmc_project.Inventory.Item.Cpu
-        - .Associations
-              - all_states
-                     - /xyz/openbmc_project/State/CPU0_Performance
-            App2 (pldmd) :
-
-   - /xyz/openbmc_project/State/CPU0_Performance
-
-        - xyz.openbmc_project.State.ProcessorPerformance
-               New keyword 'all_states'  is used as an association string.
-               Bmcweb will use this association to find the object path of =
-the state sensor which implements the state sensor which belongs to the CPU=
-0 instance.
-               This pattern is very similar to how the numeric sensor code =
-is working today.
-
-Please provide your thoughts/preferences regarding the options.
-Comment If there are other ways to solve the same problem.
-
-Thanks and Regards,
-Rohit PAI
-
---_000_LV2PR12MB6014694AB12A5A82EED51FCDCD7E9LV2PR12MB6014namp_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+On 9/5/22 04:11, Paul Fertser wrote:
+> Hi,
 >
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:Wingdings;
-	panose-1:5 0 0 0 0 0 0 0 0 0;}
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"Abadi Extra Light";}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-p.MsoListParagraph, li.MsoListParagraph, div.MsoListParagraph
-	{mso-style-priority:34;
-	margin-top:0in;
-	margin-right:0in;
-	margin-bottom:0in;
-	margin-left:.5in;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
-/* List Definitions */
-@list l0
-	{mso-list-id:819734257;
-	mso-list-type:hybrid;
-	mso-list-template-ids:-1779634242 -2075639068 67698691 67698693 67698689 6=
-7698691 67698693 67698689 67698691 67698693;}
-@list l0:level1
-	{mso-level-start-at:0;
-	mso-level-number-format:bullet;
-	mso-level-text:-;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:"Calibri",sans-serif;
-	mso-fareast-font-family:Calibri;}
-@list l0:level2
-	{mso-level-number-format:bullet;
-	mso-level-text:o;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:"Courier New";}
-@list l0:level3
-	{mso-level-number-format:bullet;
-	mso-level-text:\F0A7;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Wingdings;}
-@list l0:level4
-	{mso-level-number-format:bullet;
-	mso-level-text:\F0B7;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Symbol;}
-@list l0:level5
-	{mso-level-number-format:bullet;
-	mso-level-text:o;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:"Courier New";}
-@list l0:level6
-	{mso-level-number-format:bullet;
-	mso-level-text:\F0A7;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Wingdings;}
-@list l0:level7
-	{mso-level-number-format:bullet;
-	mso-level-text:\F0B7;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Symbol;}
-@list l0:level8
-	{mso-level-number-format:bullet;
-	mso-level-text:o;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:"Courier New";}
-@list l0:level9
-	{mso-level-number-format:bullet;
-	mso-level-text:\F0A7;
-	mso-level-tab-stop:none;
-	mso-level-number-position:left;
-	text-indent:-.25in;
-	font-family:Wingdings;}
-ol
-	{margin-bottom:0in;}
-ul
-	{margin-bottom:0in;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:=
-break-word">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Hello Team, <o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;<o:p></o:p></p>
-<p class=3D"MsoNormal">This email is to discuss the implementation details =
-regarding
-<u>state sensors</u> association with <u>inventory objects</u> when multipl=
-e applications are involved.
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">On our platform, we have a service that populates di=
-fferent inventory objects like CPU, GPU, Power Supply, Memory, etc.
-<o:p></o:p></p>
-<p class=3D"MsoNormal">For example, let&#8217;s say there is a CPU instance=
- that is represented over dbus like below
-<o:p></o:p></p>
-<ul style=3D"margin-top:0in" type=3D"disc">
-<li class=3D"MsoListParagraph" style=3D"margin-left:0in;mso-list:l0 level1 =
-lfo1">/xyz/openbmc_project/inventory/system/processors/CPU0<o:p></o:p></li>=
-</ul>
-<p class=3D"MsoListParagraph"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Then we have another application that hosts state se=
-nsor information related to this CPU0 instance.
-<o:p></o:p></p>
-<p class=3D"MsoNormal">To be more specific the second application is the pl=
-dm daemon which reads all the state sensor information related to this CPU.
-<o:p></o:p></p>
-<p class=3D"MsoNormal">These are discrete sensors that are represented usin=
-g unique dbus interfaces.
-<o:p></o:p></p>
-<p class=3D"MsoNormal">Example (dbus interface)<o:p></o:p></p>
-<ul style=3D"margin-top:0in" type=3D"disc">
-<li class=3D"MsoListParagraph" style=3D"margin-left:0in;mso-list:l0 level1 =
-lfo1">CPU throttle state (xyz.openbmc_project.State.ProcessorPerformance)
-<o:p></o:p></li><li class=3D"MsoListParagraph" style=3D"margin-left:0in;mso=
--list:l0 level1 lfo1">CPU power supply reg state (xyz.openbmc_project.State=
-.Decorator.PowerSystemInputs) &nbsp;&nbsp;<o:p></o:p></li></ul>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Now in the above case if I must associate the state =
-sensor (from Pldm) with the inventory object (from a different app) then wh=
-at would be a preferred way?
-<o:p></o:p></p>
-<p class=3D"MsoNormal">My end goal is to get these state sensors over redfi=
-sh and association will help me identify the relation between the entities =
-and the sensor data.
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Few thoughts which are in my mind <o:p></o:p></p>
-<p class=3D"MsoNormal" style=3D"text-indent:.5in"><b>Option 1: Both applica=
-tions use the exact same dbus object path &nbsp;</b><span style=3D"font-fam=
-ily:&quot;Abadi Extra Light&quot;,sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
-;&nbsp;&nbsp;
-</span><b><o:p></o:p></b></p>
-<p class=3D"MsoNormal" style=3D"text-indent:.5in"><span style=3D"font-famil=
-y:&quot;Abadi Extra Light&quot;,sans-serif">App1 :<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"margin-left:.5in"><span style=3D"font-famil=
-y:&quot;Abadi Extra Light&quot;,sans-serif">&nbsp;&nbsp; - /xyz/openbmc_pro=
-ject/inventory/system/processors/CPU0<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"margin-left:.5in"><span style=3D"font-famil=
-y:&quot;Abadi Extra Light&quot;,sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp; - xyz.openbmc_project.Inventory.Item.Cpu<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
-uot;,sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp; App2 (pldmd) :<o:p></o:p></span></p>
-<p class=3D"MsoListParagraph"><span style=3D"font-family:&quot;Abadi Extra =
-Light&quot;,sans-serif">&nbsp;&nbsp; - /xyz/openbmc_project/inventory/syste=
-m/processors/CPU0<o:p></o:p></span></p>
-<p class=3D"MsoListParagraph"><span style=3D"font-family:&quot;Abadi Extra =
-Light&quot;,sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - xyz.op=
-enbmc_project.State.ProcessorPerformance<o:p></o:p></span></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Bmcweb uses the object mapper to get the o=
-bject path which implements the required dbus interface and then will ident=
-ity the CPU0 instance from the object path. &nbsp;<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>Option 2</b>: <b>There will be an expli=
-cit association defined between the inventory object and the state sensor o=
-bject</b><span style=3D"font-family:&quot;Abadi Extra Light&quot;,sans-seri=
-f">
-<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"text-indent:.5in"><span style=3D"font-famil=
-y:&quot;Abadi Extra Light&quot;,sans-serif">App1 :<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"margin-left:.5in"><span style=3D"font-famil=
-y:&quot;Abadi Extra Light&quot;,sans-serif">&nbsp;&nbsp; - /xyz/openbmc_pro=
-ject/inventory/system/processors/CPU0<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"margin-left:.5in"><span style=3D"font-famil=
-y:&quot;Abadi Extra Light&quot;,sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp; - xyz.openbmc_project.Inventory.Item.Cpu<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"margin-left:.5in"><span style=3D"font-famil=
-y:&quot;Abadi Extra Light&quot;,sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp; - .Associations<o:p></o:p></span></p>
-<p class=3D"MsoNormal" style=3D"margin-left:.5in"><span style=3D"font-famil=
-y:&quot;Abadi Extra Light&quot;,sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - all_states<o:p></o:p></sp=
-an></p>
-<p class=3D"MsoNormal" style=3D"margin-left:.5in"><span style=3D"font-famil=
-y:&quot;Abadi Extra Light&quot;,sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
-nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp; - /xyz/openbmc_project/State/CPU0_Performance<o:p></o:p></sp=
-an></p>
-<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
-uot;,sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp; App2 (pldmd) :<o:p></o:p></span></p>
-<p class=3D"MsoListParagraph"><span style=3D"font-family:&quot;Abadi Extra =
-Light&quot;,sans-serif">&nbsp;&nbsp; - /xyz/openbmc_project/State/CPU0_Perf=
-ormance<o:p></o:p></span></p>
-<p class=3D"MsoListParagraph"><span style=3D"font-family:&quot;Abadi Extra =
-Light&quot;,sans-serif">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - xyz.op=
-enbmc_project.State.ProcessorPerformance<o:p></o:p></span></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; New keyword &#8216;all_states&#8217; &nbsp=
-;is used as an association string.
-<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bmcweb will use this association to f=
-ind the object path of the state sensor which implements the state sensor w=
-hich belongs to the CPU0 instance.
-<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
-p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This pattern is very similar to how t=
-he numeric sensor code is working today.
-<o:p></o:p></p>
-<p class=3D"MsoNormal">&nbsp;<o:p></o:p></p>
-<p class=3D"MsoNormal">Please provide your thoughts/preferences regarding t=
-he options.
-<o:p></o:p></p>
-<p class=3D"MsoNormal">Comment If there are other ways to solve the same pr=
-oblem. <o:p>
-</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Thanks and Regards,<o:p></o:p></p>
-<p class=3D"MsoNormal">Rohit PAI <o:p></o:p></p>
-</div>
-</body>
+> An OCP Tioga Pass platform features up to 4 drive bays for SATA
+> storage accessible from the front and fully hot-pluggable. The
+> backplane is usually connected directly to Intel C620 PCH (aka
+> Lewisburg).
+>
+> It would be nice to have information about the currently attached
+> devices (model and serial number) available in BMC inventory but what
+> are the ways to get this information?
+
+Intel systems only get drive mdl/sn from NVMe devices that provide that 
+information via MCTP over SMBus. SAS/SATA drives, to my current 
+knowledge, don't supply this info in that mode.
+
+The insertion/removal events are also managed from the BMC via I2C to a 
+FPGA solution residing on the Hot Swap Backplane. The FPGA provides 
+registers that allow the BMC to query the PRSTn/IFDETn pins.
+
+>
+> Is it possible there's some additional module in the all-mighty ME
+> that can supply BMC with the current state of PCH SATA controller? Or
+> is there some other sensible mechanism other than talking to UEFI on
+> startup (which would mean BMC is showing stale and thus misleading
+> data till the next reboot)?
+>
+> Even though the question is quite specific we'd appreciate any related
+> insights on the topic; there must be some side-channels to RAID
+> controllers and such for BMC to be obtaining essential information but
+> so far I wasn't able to find any documentation about this.
+RAID solutions are outside of scope for the Intel BMC.
+
+-- 
+Johnathan Mantey
+Senior Software Engineer
+*azad te**chnology partners*
+Contributing to Technology Innovation since 1992
+Phone: (503) 712-6764
+Email: johnathanx.mantey@intel.com
+
+--------------BgC6SfOQafozHhkdgzXV0L2Z
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    <div class="moz-cite-prefix">On 9/5/22 04:11, Paul Fertser wrote:<br>
+    </div>
+    <blockquote type="cite" cite="mid:YxXZeFQhJWDSHSVf@home.paul.comp">
+      <pre class="moz-quote-pre" wrap="">Hi,
+
+An OCP Tioga Pass platform features up to 4 drive bays for SATA
+storage accessible from the front and fully hot-pluggable. The
+backplane is usually connected directly to Intel C620 PCH (aka
+Lewisburg).
+
+It would be nice to have information about the currently attached
+devices (model and serial number) available in BMC inventory but what
+are the ways to get this information?</pre>
+    </blockquote>
+    <p>Intel systems only get drive mdl/sn from NVMe devices that
+      provide that information via MCTP over SMBus. SAS/SATA drives, to
+      my current knowledge, don't supply this info in that mode.<br>
+    </p>
+    <p>The insertion/removal events are also managed from the BMC via
+      I2C to a FPGA solution residing on the Hot Swap Backplane. The
+      FPGA provides registers that allow the BMC to query the
+      PRSTn/IFDETn pins.<br>
+    </p>
+    <blockquote type="cite" cite="mid:YxXZeFQhJWDSHSVf@home.paul.comp">
+      <pre class="moz-quote-pre" wrap="">
+
+Is it possible there's some additional module in the all-mighty ME
+that can supply BMC with the current state of PCH SATA controller? Or
+is there some other sensible mechanism other than talking to UEFI on
+startup (which would mean BMC is showing stale and thus misleading
+data till the next reboot)?
+
+Even though the question is quite specific we'd appreciate any related
+insights on the topic; there must be some side-channels to RAID
+controllers and such for BMC to be obtaining essential information but
+so far I wasn't able to find any documentation about this.
+</pre>
+    </blockquote>
+    RAID solutions are outside of scope for the Intel BMC.<br>
+    <pre class="moz-quote-pre" wrap="">
+</pre>
+    <div class="moz-signature">-- <br>
+      
+      <title></title>
+      <font color="#1F497D"><font face="Century Gothic">Johnathan Mantey<br>
+          <small>Senior Software Engineer</small><br>
+          <big><font color="#555555"><small><b>azad te</b><b>chnology
+                  partners</b></small><br>
+              <small><font color="#1F497D"><small>Contributing to
+                    Technology Innovation since 1992</small></font><small><br>
+                  <font color="#1F497D">Phone: (503) 712-6764<br>
+                    Email: <a href="mailto:johnathanx.mantey@intel.com" class="moz-txt-link-freetext">johnathanx.mantey@intel.com</a></font></small><br>
+                <br>
+              </small></font></big></font></font> </div>
+  </body>
 </html>
 
---_000_LV2PR12MB6014694AB12A5A82EED51FCDCD7E9LV2PR12MB6014namp_--
+--------------BgC6SfOQafozHhkdgzXV0L2Z--
