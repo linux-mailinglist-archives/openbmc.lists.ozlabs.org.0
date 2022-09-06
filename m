@@ -2,89 +2,90 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98E005AE91B
-	for <lists+openbmc@lfdr.de>; Tue,  6 Sep 2022 15:09:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9FFE45AE922
+	for <lists+openbmc@lfdr.de>; Tue,  6 Sep 2022 15:11:05 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MMQhm34MCz2yQl
-	for <lists+openbmc@lfdr.de>; Tue,  6 Sep 2022 23:09:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MMQkH3VDWz3bWM
+	for <lists+openbmc@lfdr.de>; Tue,  6 Sep 2022 23:11:03 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=XmCeBGHo;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=xCOKpRwc;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=k9A+NKGJ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=c+VMu74y;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.26; helo=out2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=XmCeBGHo;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=xCOKpRwc;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=k9A+NKGJ;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=c+VMu74y;
 	dkim-atps=neutral
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MMQhM4cCnz2xG8
-	for <openbmc@lists.ozlabs.org>; Tue,  6 Sep 2022 23:09:23 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 9D6B75C00FD;
-	Tue,  6 Sep 2022 09:09:21 -0400 (EDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MMQjt0NKRz2xHM
+	for <openbmc@lists.ozlabs.org>; Tue,  6 Sep 2022 23:10:42 +1000 (AEST)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 26E5C5C0102;
+	Tue,  6 Sep 2022 09:10:40 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Tue, 06 Sep 2022 09:09:21 -0400
+  by compute1.internal (MEProxy); Tue, 06 Sep 2022 09:10:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
 	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm1; t=1662469761; x=1662556161; bh=sVOujPRAth
-	uEYKlxf6oJ/Fdu4k3GMSqVmeURG3lTVtY=; b=XmCeBGHoys6boSdKw/R/7JvD4a
-	HN/Z7p7gt3DJjMYFwZaJytNhV98Xdh3rWBHDjt/QM+ghEMWN0l5JMhNSfG/9hDbx
-	OxTDd5ZxmL88eH1Ad38zlbLgshWdk5njj1uOZx7u2pr/Bts28+U9tXHxGhCltjDg
-	n8MJmUjeQMnaiWxgIc6Y1VlFPM4HshmNHrVbbhXz8q6/ZiR4QFo2XK4uuO+2/H2z
-	Ls7x2gChieAJZQ5kjhG0rEOXDRmFI1px89sPPAEUtulnXut1LcM/Ai2Jbi3tZGDA
-	Djrb5UfrXWpRZL4EVxvDzGn4xV3+JOjiKj81WSsLBE1sy2tBqQhxx89PUCWg==
+	:subject:to:to; s=fm1; t=1662469840; x=1662556240; bh=Uy6W5lQ/9t
+	RzurkZCSsHBZGBT4wPVl5Bkmx5xCpOoHU=; b=k9A+NKGJgxd18KLcttKQBRqeHa
+	sDLFZG4QWwQ+8hm0COXtycl8g+Uzu5g7b8JsJZv5Vxx7xyI6TMKNAdaR/bMSp0uQ
+	JPhuOBWGHXMBJLDvsoj51fqfmGfPRHzY0KynigHXvU7deVp7gyPlZpzpvHhVYP8t
+	As3/MECCmtuz1f2+D8JusYAg/7PmIJzm1XJ+jkoAiiNn7kf/3uxKXUZI8IcDSXU9
+	HV38fWFw2Q/45GvG1lCEteqjVh0Okl1pggZB1JlZhIxgieV5oR43SlNbN8x4mbP6
+	wUOvKChjNHUhAcZyE2ALI+/MbEyFgZFm5BdJHl62Vpir3Mfkj8Hp88HZlkhQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
 	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
 	:mime-version:references:reply-to:sender:subject:subject:to:to
 	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1662469761; x=1662556161; bh=sVOujPRAthuEYKlxf6oJ/Fdu4k3G
-	MSqVmeURG3lTVtY=; b=xCOKpRwchBIX4QznZxOsTweFOunp/v3SQ0FMtw4rsaRB
-	+OHN+mcKGe9qiAzul+kcbF8VJuxeEuDrsy1IgGukubEWjNfxqX4dc8QRVQNC72rd
-	zb2mh+saZrDHv4qdBr28SP4D6ftxHyO4wVU8ifkI1o4fw5/jCep0Q1mPymHbDWIC
-	fHb5AKm8RJMLkf81AS6mY4mD1bM9QxJN8DppQ7Uc6m/4u0g7jA42XE1GY/THkiLu
-	X0tOerBza19Z1XjHGAm4TOpFt2LRIeZ+Q3fXu1+//brj2FrMLs+YcJNITW7vZDWQ
-	MYNJIJKUMPDWijpBve6jMvxLQMuhJTfSzW2m0cPRNw==
-X-ME-Sender: <xms:gUYXYwiOis_M4NekC407dD8eYTNg2dl2tXY09v4gpN8bW1Rh6zhwSg>
-    <xme:gUYXY5DF7wCtD07qgswt2bX2rbKE9rp0t0NFbvSukGC8mi7CpeYD8BurN2_Jd3RPT
-    CA22K9lfwH6ybkUBw4>
-X-ME-Received: <xmr:gUYXY4HWtsnjkezJqcFh4Jh0U4hxV6x5JUlCJn_mW5x2uzEVYBxUwroOdTgceh4-8gdfKdW0YaBZyIW3AdK4LvTmava2y--D>
+	fm2; t=1662469840; x=1662556240; bh=Uy6W5lQ/9tRzurkZCSsHBZGBT4wP
+	Vl5Bkmx5xCpOoHU=; b=c+VMu74yu0r110X/rjdkI0E/uLU/dDF1Dgs3AP7cPlRn
+	Ff+5ufIFh/gidwmjQheGJJR4/SpTQfimsOaO3w1JGHnJclJwcpo7NqOo+h6xNVSL
+	Q5uRwbI/qpJgThLiMq3CfPUlC77qqWyyHGBkW+VXF8oZddTwMBeptIvg3iwYo62P
+	9WmvvUxUUMBOgX820OQt8O8m/5PB779oJBgBz5CuBsEpJYewXpX1f8TqVDajSc3E
+	Ct1E166E3oMRFRRZGqMu5032Q3gM4pX5lhO6q5YJH2VczqnjCjaA7VdI4re+CCsp
+	MfUKczpemB9ln5Un1/XojiegUGOPTyh02I9MZjRyIA==
+X-ME-Sender: <xms:z0YXY1rcsppe_voHh2NiCoWj2aqjQYec-mIaaSL6HGv7G5DW4qvKkg>
+    <xme:z0YXY3rKDgeOjlpBSDDVpsLS02UTlZSdvK3Kz7JHp6I9ieonMMvw0GF6Bo7bY6rZs
+    LE7vktSCJNNw9SGhAM>
+X-ME-Received: <xmr:z0YXYyMqDredj8H_WqI73DMX3Ep24og5B7eqqCty8fs1Anu6YwxYqdee9NyyHOOzkrY9SK51ZtwHrWFReoz6BSBnECDUHMiw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdelkedgiedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     gfrhhlucfvnfffucdlvdefmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredt
     tddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
-    hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeehfeejheeftdejiedvfeekffeh
-    ledukeduleelffekgfdtleduledvtdegtdehkeenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:gUYXYxSnYAn2ttv9gxAI7BzJjYxsCRPVj8ZGMEGRFlTEdzpHURcAyw>
-    <xmx:gUYXY9zf9m5GslJYrFdgEOBuCVLRZ0pMmwwNXDOrWui0VzkHt2b24Q>
-    <xmx:gUYXY_6U87MU8DbOPeuZGUBT-bSRUunn-xHWS9fsitiixG1TKXWSlw>
-    <xmx:gUYXY-oAduqJVAgq_htQCp3ag7a4cUU4a3kLL4MnkbT-vKdyZ8ajkg>
+    hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeejjeetleehleeijedutddufffh
+    ueeufefhfeelheevgedviefgffehudelheelhfenucffohhmrghinhepghhithhhuhgsrd
+    gtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
+    phgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:z0YXYw7PCiI40ItkHIZEkpETIo6u-F4eIipf8DFIFr8MYGjsHY_3KA>
+    <xmx:z0YXY06BzHXWFU9B-3RC7lkUJz84pioeOhd7xG0he1axRg7xGIksog>
+    <xmx:z0YXY4i-DT0DKo9dX2Cotw6Yt9pdgnnHYqkNjalf1z_SOJb31b6-AQ>
+    <xmx:0EYXY0EqvRJE6TxldAqRXPJAbR-6J8Kl6LS4rb-8FhWcfF0AzB2PkA>
 Feedback-ID: i68a1478a:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Sep 2022 09:09:21 -0400 (EDT)
-Date: Tue, 6 Sep 2022 08:09:20 -0500
+ 6 Sep 2022 09:10:39 -0400 (EDT)
+Date: Tue, 6 Sep 2022 08:10:38 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: Michael Richardson <mcr+ietf@sandelman.ca>
+To: Thore Sommer <mail@thson.de>
 Subject: Re: Security Working Group meeting - Wednesday August 31 - results
-Message-ID: <YxdGgDLWXs9Li5dA@heinlein.stwcx.org.github.beta.tailscale.net>
+Message-ID: <YxdGzrpB1jKSQnXI@heinlein.stwcx.org.github.beta.tailscale.net>
 References: <e093dea2-ca08-fd8d-3151-2e858164f633@linux.ibm.com>
  <c0f6cc7e-6c7e-fe22-498d-2c3cb7851b73@linux.ibm.com>
  <YxCWpNZ+O89B+ulA@heinlein.stwcx.org.github.beta.tailscale.net>
- <5723faf6-66c3-1793-699d-ffbf61bf3268@linux.ibm.com>
- <32094.1662451519@dooku>
+ <16276.1662067381@localhost>
+ <CALYC-5TDj4Vas=Z6VooCWFKi+XFWwdTqe0tQmiyWaiLXYyV4Sw@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="kmODjvhdEl88C++I"
+	protocol="application/pgp-signature"; boundary="H1tEnD0e/y2o5B7o"
 Content-Disposition: inline
-In-Reply-To: <32094.1662451519@dooku>
+In-Reply-To: <CALYC-5TDj4Vas=Z6VooCWFKi+XFWwdTqe0tQmiyWaiLXYyV4Sw@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,51 +97,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>, Joseph Reynolds <jrey@linux.ibm.com>
+Cc: openbmc <openbmc@lists.ozlabs.org>, Michael Richardson <mcr@sandelman.ca>, Joseph Reynolds <jrey@linux.ibm.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---kmODjvhdEl88C++I
+--H1tEnD0e/y2o5B7o
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 06, 2022 at 04:05:19AM -0400, Michael Richardson wrote:
-> Joseph Reynolds <jrey@linux.ibm.com> wrote:
->     > We did not discuss any
->     > difficulties in image size increase due to Python or in getting the=
- Rust
->     > language environment ported to bitbake.
+On Fri, Sep 02, 2022 at 07:07:58PM +0300, Thore Sommer wrote:
+> > My understanding is that keylime is being rewritten in Rust.
 >=20
-> I imagine that the bitbake recipe is probably the critical path, but I al=
-so
-> suspect that Rust is being used somewhere with bitbake.
+> The Keylime agent is rewritten in Rust and the plan is that it will
+> become the official agent over the next couple of months.
+> The tracking issue can be found here:
+> https://github.com/keylime/keylime/issues/986
+>=20
+> The server components are in Python and there is currently no plan to
+> change that.
 
-Yes, there is already Rust support in bitbake/Yocto.  It has been
-available since probably Dunfell.
+Thank you for the info Thore.  The agent is the most important piece to
+us on this effort.  The server side (verifier) typically has a lot more
+flexibility in what software stack it can run.
 
 --=20
 Patrick Williams
 
---kmODjvhdEl88C++I
+--H1tEnD0e/y2o5B7o
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmMXRoAACgkQqwNHzC0A
-wRl1uQ/+O3CB9i9yeuHihC7psDxYjotZ2HZUnXN1ZqjCr9aUaMXcnD7jnltSzJQc
-luOXNvmxAuqVs32Nf1WtXv/z7tfF+F4RwkpKnVhb8yJjJUOLCkHzDzrmcAaixrR0
-sYLEq9FRh7Oy6oX6O5sfqVlrgkpIDc7+gW4OfoBcetqqz9cxIMqAXQ/OzRKqS3Cc
-vxPS3h5RmNz3oWPltrnRDEtoqorCCDiF8ZTOnzHit1wxCONmOqauQt1tW1e2e6uB
-0fuZT276TH3Zeu5cygleVnR/rvxjrmPlX0FaPWm8i6/9VoDuhqS3U9Oe44tz3JkH
-ltJhOxaJ1ltr6ll1MKoAt4Oorny499MVWNSL8X0651lSSWbCHVwh69Gmg6OnYUMF
-2AprPe22DauFz3cPCmQwqlQqYDB+VBYpHEEWOGh+1cQLQJg6I5ElES9V9HuD3isB
-XDVO6nP/2q/l40kFMzFFw4CsW8XTK/Cjo//yM/VvmenqerFSD9pBKXSyTo/AT1zu
-ksH4EdP3W7r9QticEq3OC/IhepF6p5r31mjBC2fSbVQGdM1Rn6IpmSZjfWWcBNE9
-EbF7u3ICjZD9/QqutrLA2PgxfMX5uxhSESnOZvFfjYL8qI3BLc9vdBmr6+Seb8AX
-Xc150RUP03OOKF/eUFptXRRhsdIkbrdD6aZ1rVuW0Wb6tAoDF18=
-=h5/b
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmMXRs4ACgkQqwNHzC0A
+wRkOCBAAgbQzjG/l3hzusQnjXjoJIygOJ5fTYg1PrX+HOUBD23Y1uQenlK0TWuSK
+7GudakILCK09z5wqNEU/nHTBN0dTHyZ0Qth6rRDQLTiaDyAeSoMbv1N8rN6A+wY2
+ybW3JDgQSlItJYF62SBC/cCjCGhUWPDhmpLTasiXiCG7y/10R9t+VQTqUWo/b8W6
+dHWBq0+ZZx9HmbCzyxEHIHzs7DR/CPhWY5CsOg+CTMqxVCrLQ1Vr5pRbuqa6Wr7W
+A3ZKee4eZ8roAncWNY68z29TR3aocQO3LJh0TM99FrtFIFhgZgBUwe4iL+nDj0Xc
+FIzZ5mREiwYfOiXaqj+nNSCYBPet+4YicSCYi3tsKdrepOfPN4vrDa63EmX6nJGo
+cgkkLufZQdmlFXSvDHxVDLYWY3+xoY/dckART71RjsIrbFf2c905SryRpN3617U1
+QxUStHz3TWi0lnR4RJhMmSEeEiXCZS+J6f9FweCaKBURPSEDshBLOCfhN6k7cPCw
+Ky1IuUCy0Wgbnp8bbfYmpq5OZWXudyW7KZ4/lw2yDHTDl4fNVqb2MUDyM3kdq98v
+EyVoTvEFHS6myZXXPS5xcZGIJ4TPu2eigybhMZfJkIwaN7K5Uia7XkcxbpUiLqjK
+Vp25vD/juieKiUHDX4wv0v5zqAgLPHwKGCqrvqosKJl8tAzKhQk=
+=2fke
 -----END PGP SIGNATURE-----
 
---kmODjvhdEl88C++I--
+--H1tEnD0e/y2o5B7o--
