@@ -1,90 +1,86 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE6745AF5AA
-	for <lists+openbmc@lfdr.de>; Tue,  6 Sep 2022 22:17:45 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B26E75AF5C2
+	for <lists+openbmc@lfdr.de>; Tue,  6 Sep 2022 22:22:17 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MMcBC5SQ3z3bc8
-	for <lists+openbmc@lfdr.de>; Wed,  7 Sep 2022 06:17:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MMcHq4MmKz3bY8
+	for <lists+openbmc@lfdr.de>; Wed,  7 Sep 2022 06:22:15 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=lMb+hoPJ;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=URSGRGaI;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=SxhSNL+2;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=p3XZaAWf;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.27; helo=out3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=lMb+hoPJ;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=URSGRGaI;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=SxhSNL+2;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=p3XZaAWf;
 	dkim-atps=neutral
 Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MMc9h6SGmz2xn5
-	for <openbmc@lists.ozlabs.org>; Wed,  7 Sep 2022 06:16:55 +1000 (AEST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id 19D675C0105;
-	Tue,  6 Sep 2022 16:16:50 -0400 (EDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MMcHQ6cN4z2yJ5
+	for <openbmc@lists.ozlabs.org>; Wed,  7 Sep 2022 06:21:54 +1000 (AEST)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id DE2F35C00C0;
+	Tue,  6 Sep 2022 16:21:52 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Tue, 06 Sep 2022 16:16:50 -0400
+  by compute3.internal (MEProxy); Tue, 06 Sep 2022 16:21:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
 	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm1; t=1662495410; x=1662581810; bh=Cqw8qFnSZi
-	zYQVIDrvDC4k229veTAXJaS0do6DjiSjA=; b=lMb+hoPJO9HdmzJcBB+hLAW/IG
-	T1BvfDLjO2kZTb6gQg0xESy8EeIASjjLDSUwFeZVZJfgPRdtOmbojGh9BycPMcFQ
-	vwG4GYty0m5gKzW31NcysKY7u8Se6agEcro7GOuUJ6N1vIs6viUjaA9uhYoq94MJ
-	2rHzGv4/LIYXatbWC/pmii9dilKUTFqj5BNdKnx6XiXBiN8Eb2hH0hAVyQcjosiO
-	IAed++NfM3uMwo7cSF08/tTxcqE1usBqZKk00Vhx+38sJGJnf9OY4Ku5YEpeqv6o
-	eWgacJfN1Yn44ykrayh6t44ub3GMejAknqs1RNXW1kVR5IABHmLBvB2BSyrA==
+	:subject:to:to; s=fm1; t=1662495712; x=1662582112; bh=ahDiQO3Kfj
+	fnwxVq+UcGSz85XlAFxH84D80J/LtT9rU=; b=SxhSNL+23sQVMrXACydRtSKB0m
+	i6YqGhX+TPEiHmA2pjANTpvz+q8JzO/5DNGgB6Jzz+TJe7PORmHgJxhffTGqrMTt
+	p7yplo1mGxoYob7rRlutHB8Z6n1xJjQUr5WH6ZmK3GbKbMT2OnR2NLJWuvneuE38
+	AgsoDKsDTphKsgVuikSjz6EUNorsBnywdpWmUngWR02eWX9Q8USiyMlPn7h+ZIkH
+	4TuwY54WgSJ9zKdnJlc/UKBhTwJVDw2wmxJByRbpiaaU7KxN1k4pH+LgJ4Rhnvpk
+	9gXEiH88YfQlZagVIdCNhwLq7CP95R9EOMP+lDz1/taH8FICbJ/3pW0te+3Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
 	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
 	:mime-version:references:reply-to:sender:subject:subject:to:to
 	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1662495410; x=1662581810; bh=Cqw8qFnSZizYQVIDrvDC4k229veT
-	AXJaS0do6DjiSjA=; b=URSGRGaIObz0hLvp2AvRBJXMQfXbFo3y261cYNr724wT
-	wN3JIDXWp/Rwm9zKn+aFEPz+M027+pk8ovdwegv5HeaBxe835NvAqXsclTm3iRa4
-	eQiAKQguP74FyYhxQSScpM9COJtZFUIgh+LIhEeeQkBK3F037PYJzqPI36Ju75lS
-	uajlRQGKSKShe0vgLelWV9BbqEWSXwZ1GmeAlTcCt9EfxafKcAi3ijzK1nWth8NO
-	1FMukNEMaAGMM6SoeAvbOUXCT8kMkQF24mnNPCug/kAhk+1+0iuYN/r2D6n8EnQZ
-	aCZ/DsqfcEwgsqFpgtzk2tQqZPOo4WKg9hmvtRBS0Q==
-X-ME-Sender: <xms:saoXY1eov8q-NNhZPjA3sgCovl1oBtxUMO307Y4K1lH7JM_5EkRGIw>
-    <xme:saoXYzPzAm9E1pr9I3Dy8eFkquFIheGBXZzf3NK6Ifv1WrEpZARJz3jROoQVkE_Zh
-    UxEPiDqVAwhtadZkM8>
-X-ME-Received: <xmr:saoXY-i2JU9NCiXyhvv508-Mmh8mDRsIhpCMjVEv3x8PWdAOBHgZUsf9PkQOLBLZ2-xckon1gNpLWzwmGcZypDEVwejN56oA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdelkedgudegkecutefuodetggdotefrod
+	fm2; t=1662495712; x=1662582112; bh=ahDiQO3KfjfnwxVq+UcGSz85XlAF
+	xH84D80J/LtT9rU=; b=p3XZaAWfVP0+P7TAS7xoS7FIFGwzrRKxNLYrsx0czeA1
+	J/w//JRf2Oke6L62XxHqukxXwenIxYitX1K4+/ZLfnepTRjlrdkehU56+MQKhYZ0
+	AyPvXoglsg/to9WzNe8DYyZyixWoEHl2ok9myZjSsWJY78UoXrClZ/Bsst2GNo8V
+	xfel0YA9Lc+SxHVmbxLCTPE2uGS5oKM9ZAAvQ9P6CkndNul4jo5t0kBN4d8wJevK
+	lxKYwgM0toueV94Osjfx7d7+NIWa84fDJE+z0HCiOczLJ4YouSq6diTVhKoPr+BZ
+	IH9ZqSQZ0XlBFAP510NVa7HaJsHOYojuQ5b0uCv+Lg==
+X-ME-Sender: <xms:4KsXY_CEwLnKqXTTCmX3r6E4XAk5Coa4cOwgSFxVdxYNrDg7EiGbgQ>
+    <xme:4KsXY1hWngPSWtVEPqyJR0iqtMcUviH5G_kYWS7_CkM2TLBnf1q5pHvhpFf8cIQld
+    1neg5AgtZbvzR4ZRq4>
+X-ME-Received: <xmr:4KsXY6krfqypiWdFI7IxV3XXRyfW6jhrgK7OQEGIVL3gXhNZauCw2NIqFQXpK1O54zg-ygXi5W-8yitjjK640hWPofYyUWJA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrvdelkedgudeglecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enfghrlhcuvffnffculddvfedmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreer
-    tddtudenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkh
-    esshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgedthfehgeeljeeigfevhfdu
-    kedtjeejhfeuheeigeevvddtgfekiefhjedtleelnecuffhomhgrihhnpehophgvnhgsmh
-    gtrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
-    mhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:saoXY--8JqhyUYe4Dh-MhmnF4fs92FSfVNok-cHYlzv3yd7IYk_jDQ>
-    <xmx:saoXYxvw1BDWNx5KLp9xnXnpOmG2CQHFmFKgNvOqiv4zqUFkk_Jg4g>
-    <xmx:saoXY9EZLb6J_Nr5B39L0B6TUOgryDIuOdWC7-Z0VJBZnvBHs_1WMA>
-    <xmx:sqoXY_3IS1C1xGdPBlnI1uMuTWTiLm4U2Cm14yRWun5JlcwxbkBiJw>
+    enfghrlhcuvffnffculdefhedmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreer
+    tddtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkh
+    esshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepheefjeehfedtjeeivdefkeff
+    heeludekudelleffkefgtdeludelvddtgedtheeknecuvehluhhsthgvrhfuihiivgeptd
+    enucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:4KsXYxzZod_Mc1OjVvBgZ0y0V83eFJGUOc4akNFHA5akwOIoKgX-YQ>
+    <xmx:4KsXY0RdDEtTY8aTTqlfS-Xj6aqj0v-6pCT_NFzQ6MTZ-lfT2t8hRQ>
+    <xmx:4KsXY0ZqpYMKmZEreaaAUVOTVDAQsKMQfokmwn9kFWogmUfWUmRNgw>
+    <xmx:4KsXY960GwgHVXmgJz3siYfi88x2F1OBn-tnl1yaQFbtbsWlIN8vZA>
 Feedback-ID: i68a1478a:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 Sep 2022 16:16:49 -0400 (EDT)
-Date: Tue, 6 Sep 2022 15:16:48 -0500
+ 6 Sep 2022 16:21:52 -0400 (EDT)
+Date: Tue, 6 Sep 2022 15:21:51 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: Joseph Reynolds <jrey@linux.ibm.com>
-Subject: Re: Security Working Group meeting - Wednesday August 31 - results
-Message-ID: <YxeqsBYrDMFEVIF4@heinlein.stwcx.org.github.beta.tailscale.net>
-References: <e093dea2-ca08-fd8d-3151-2e858164f633@linux.ibm.com>
- <c0f6cc7e-6c7e-fe22-498d-2c3cb7851b73@linux.ibm.com>
- <YxCXBocd0Uz0u1D7@heinlein.stwcx.org.github.beta.tailscale.net>
- <3ffc663e-82d9-1ba8-9a47-9b5876ab2dc7@linux.ibm.com>
+To: Rohit Pai <ropai@nvidia.com>
+Subject: Re: Handling State Sensor Association in Bmcweb
+Message-ID: <Yxer3wVzCQVZS7Uv@heinlein.stwcx.org.github.beta.tailscale.net>
+References: <LV2PR12MB6014694AB12A5A82EED51FCDCD7E9@LV2PR12MB6014.namprd12.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="1aKXMd00iPOm/Okn"
+	protocol="application/pgp-signature"; boundary="Y7eMrXGuAumsLOnu"
 Content-Disposition: inline
-In-Reply-To: <3ffc663e-82d9-1ba8-9a47-9b5876ab2dc7@linux.ibm.com>
+In-Reply-To: <LV2PR12MB6014694AB12A5A82EED51FCDCD7E9@LV2PR12MB6014.namprd12.prod.outlook.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,68 +92,69 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---1aKXMd00iPOm/Okn
-Content-Type: text/plain; charset=iso-8859-1
+--Y7eMrXGuAumsLOnu
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Sep 05, 2022 at 01:59:56PM -0500, Joseph Reynolds wrote:
-> On 9/1/22 6:27 AM, Patrick Williams wrote:
-> > On Wed, Aug 31, 2022 at 01:09:10PM -0500, Joseph Reynolds wrote:
-> >
-> >> 2=A0 Proposal for dynamic changes to Redfish authorization rules
-> >> https://gerrit.openbmc.org/c/openbmc/docs/+/56401
-> >> <https://gerrit.openbmc.org/c/openbmc/docs/+/56401>
-> >>
-> >> No discussion.
-> > Does "no discussion" mean?
-> >     - This topic was not covered.
-> >     - Nobody present seemed to have an opinion.
-> >     - Everyone present was onboard with it as-is.
-> >
-> > I'm trying to gauge where consensus is at.
+On Tue, Sep 06, 2022 at 03:46:25PM +0000, Rohit Pai wrote:
+>                Option 2: There will be an explicit association defined be=
+tween the inventory object and the state sensor object
+> App1 :
+>    - /xyz/openbmc_project/inventory/system/processors/CPU0
+>         - xyz.openbmc_project.Inventory.Item.Cpu
+>         - .Associations
+>               - all_states
+>                      - /xyz/openbmc_project/State/CPU0_Performance
+>             App2 (pldmd) :
 >=20
-> I use "no discussion" when the topic was introduces and described, but=20
-> nobody expressed any interest or asked any questions.=A0 I think someone=
-=20
-> asked for the review link, which was already in the agenda. <-- Is there=
-=20
-> a better way I could say this in the meeting minutes?
-> When an agenda item is skipped or omitted from the meeting, I'll put=20
-> something like "the following topics were not covered" with the reason wh=
-y.
+>    - /xyz/openbmc_project/State/CPU0_Performance
+>=20
+>         - xyz.openbmc_project.State.ProcessorPerformance
+>                New keyword 'all_states'  is used as an association string.
+>                Bmcweb will use this association to find the object path o=
+f the state sensor which implements the state sensor which belongs to the C=
+PU0 instance.
+>                This pattern is very similar to how the numeric sensor cod=
+e is working today.
+>=20
+> Please provide your thoughts/preferences regarding the options.
+> Comment If there are other ways to solve the same problem.
 
-Thank you for the clarification.
+Associations would be the preference.  The inventory tree should be
+[mostly] static and non-changing.  Signals from this tree should be
+relatively infrequent.
 
-I assumed it was either 2 or 3 from my list above.  Sounds like you are
-using "no discussion" to mean 2.
+Generally, I think associations should be named using past participle
+forms of speech.  So, 'all_states' probably isn't a name in line with
+this.
 
 --=20
 Patrick Williams
 
---1aKXMd00iPOm/Okn
+--Y7eMrXGuAumsLOnu
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmMXqq4ACgkQqwNHzC0A
-wRkB+g/+NYhieWI/HW3b3aWUdXRT4u+HvZXZ7nFPhY/EAYWVU0BzeTazVWC3PtP2
-IrHjAeaFQF4QTPcO5ClnqUCPYiG/EXH8ITuUgIJpR3T1i8Fv/Ic5gUloPQ2jLL4f
-X+ISlYyNzrvLEDXAMJdBdOJDevdEwKozGi6U4Bsc6W5nYTSbI3ZQxrWglLWqqbdk
-3zWef8XG96FAkl7Eqr+NAFzHG1lMH5l5R27g62lGeGd2xvsDC/80TeQw4Yk/ISLf
-UkxQ/kQ9/Du/pp1LJF90A0idPmKa5I4rRYBJMWoLrINjf8DwfAjH5Yv7tjDzCevk
-5kVgzlU1EB0OBkxH461wo9hFaj8d66secbXVft3hdgkLbOTUq3A3vwAygnJmelR/
-2Yw5dKg6CtCqhMq9QMNVYI9zHnwZR54SWb/wrEK1moMDjVq3Sv6pwwkTGDqASjXG
-xreobQutjJyjJENzzpvpN9ORMz4hoGT94s92BNxQ3udtOGGHvH7Ion8J3O+ShB8f
-F1aivqyRHEBp1f6l+b59R9x+DU67fRiT4eMmd4DKmVnthRJWV4uPPTA6yhVZdlHz
-exiD2Tb308/s7DPc41R7OG7WZYmen3O3oBeJA8qQrA4f1qLJ+77Njc1I63YhsAIQ
-8l4NngPNdwT3LnzrJviQjuPfqFZw4hE0oXXRjt79rN9BVoEhZuU=
-=Nl3v
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmMXq98ACgkQqwNHzC0A
+wRkWzg/8DNIiBCfhomkxDa9S4AmTYK/rHKU/jx6QV598Ry0cldPES3IH0srf7oy/
+sYINHETOIyw2otbUA1Ur1hsoowrzPg/VEXK3t0i6Z1MHSdQ4Fh1/EdK7QQq+lXR8
+GdCZ241YqFiGovcboRu8BGXl6+vc/OYaVYWHXLgf6NVC7CXGAMYTOmDBdoEJZdAV
+rqB3yGmhWliL2ilOsdmA5QCwIE2uyQyJi5x8hNwRiljt7PoZOulsjCnXnLUmcpEC
+0LProislQNiazJujh9QJVp5gXB7kI45g4Slk//WaowhcJWdhKGtPgnsWjCoQYKf9
+fBZPpoVdYCCPJWg0qLkiGYdgPlqsBRblMuVmBDjObjg4N46MH/53DM3m2NZJwVJ3
+mox7wHcF+7V3v5ZfefSGRxaJ8rQvmqiIC9HZ/o6W8FFzD/9qju55GAd5pjtBi+qH
+itzW0PcRo/utvJp3dzve9Afcx/k2h98NOQpASqC5pxPkJ51S6fkKEW1T+XfHKhAA
+jzG15/ikC77a+Ef2oLP6e0PAP8YCcyvNlgyfV/XnTMN0FSDkHbGe9ERlPFoW3th3
+gqBYyKhYRgrer1i1/anPb1h14Ym4oyUcxQjHEGar5ExaM7GnfLakl6vquIH0JPIz
+kZU8e3V6aUNpW33pqxzSUAaZdl5F/zddN9T/7T7BjvcYTWjtmNM=
+=5ZDk
 -----END PGP SIGNATURE-----
 
---1aKXMd00iPOm/Okn--
+--Y7eMrXGuAumsLOnu--
