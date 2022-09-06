@@ -1,67 +1,46 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 607605B5A58
-	for <lists+openbmc@lfdr.de>; Mon, 12 Sep 2022 14:44:52 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CAA45B5A74
+	for <lists+openbmc@lfdr.de>; Mon, 12 Sep 2022 14:50:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MR5sF746pz30DP
-	for <lists+openbmc@lfdr.de>; Mon, 12 Sep 2022 22:44:49 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=QzGJ4K2u;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MR5zm2R3Jz30Ly
+	for <lists+openbmc@lfdr.de>; Mon, 12 Sep 2022 22:50:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::a36; helo=mail-vk1-xa36.google.com; envelope-from=pkarthikeyan1509@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=QzGJ4K2u;
-	dkim-atps=neutral
-Received: from mail-vk1-xa36.google.com (mail-vk1-xa36.google.com [IPv6:2607:f8b0:4864:20::a36])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=sandelman.ca (client-ip=2a01:7e00:e000:2bb::1; helo=relay.sandelman.ca; envelope-from=mcr+ietf@sandelman.ca; receiver=<UNKNOWN>)
+X-Greylist: delayed 388 seconds by postgrey-1.36 at boromir; Tue, 06 Sep 2022 18:12:10 AEST
+Received: from relay.sandelman.ca (relay.cooperix.net [IPv6:2a01:7e00:e000:2bb::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MMHBp1QYtz2xD3;
-	Tue,  6 Sep 2022 17:31:44 +1000 (AEST)
-Received: by mail-vk1-xa36.google.com with SMTP id s11so904928vkb.5;
-        Tue, 06 Sep 2022 00:31:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=v8jjPnQbyQhdmUR0CkT9JoQA+mxLTEDlQbLuNU3+6c8=;
-        b=QzGJ4K2ud0goqEVb8quHuKLgWdOTP0uxW7ygcirJMQtA5k1idxR3v/8Te8j6V1xGNz
-         A2bq6vGjjScXthDNt8OfOQSgwkgeveOIaJYI0K45xDsvMvk9Tt3nGmeqkupNUG8vj256
-         5YsfAwt9XzGtn7RdqhnPoICwkka9V/ZdNmdQTjADBs03c0ogtjDAUXhx8oltjYSmCXlB
-         jHzkV2f2h8TP+Cbzr0yz19d3NnCQ+0N2StTNzS7BF7ozefHWJ7vPUqiNiUg0qfaEQj34
-         bnpV41fWYB8YgRJIV4OeiVDOJsloSEa5bVtbtYMJLCC/PpdLEVgMs674no9DrbUV1+cX
-         A1PA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=v8jjPnQbyQhdmUR0CkT9JoQA+mxLTEDlQbLuNU3+6c8=;
-        b=uygNe0W9bAnsyknIahZaYa3PfGNQYfsRjTvCv0MqOmBtxHfcd5pN8m1WFB1tkI/JwU
-         C1kWLWJPLejy490AZKAavBEQImtuIAT2WBf/mDDBsB03AES35o6dEi3ffOy3pkV8SMNs
-         VigER9HrKMsBy0/IQDSBiPKzxrUJ+0KYiZuUVqoioZX82+tt4HhN2slVAINAv0Mj+iSO
-         G45CsAheHtBh/XdYhWomwHn6vFOYfobS4b4trzWredKm7JxrNBcgzkoZDyXug7MssuZ4
-         QbWh1Gk8mDyfAxfaNrgz/SNlg9X2OzrukTx/TAoKyBXeQ3xQopYl1ZUyp/4SLCfhlGIy
-         CudQ==
-X-Gm-Message-State: ACgBeo0gTeL04Oj4vR8aRwrLsK14DSzqu9b070mJQbYdfRo5M2quXWO5
-	nppEfaywCcAzCrbAX6gm/FqGaNJ99kpZYaqTRVM=
-X-Google-Smtp-Source: AA6agR6a16gEwVM4J3Vll7qXITKtRkUS8hjt8L/dHfUHtjOuoJ/nFQEu7XU3cpZuYKckCs4VswCfeZDNL8xIxYbxDYY=
-X-Received: by 2002:a1f:d7c5:0:b0:38b:77e8:8efa with SMTP id
- o188-20020a1fd7c5000000b0038b77e88efamr14660577vkg.7.1662449500526; Tue, 06
- Sep 2022 00:31:40 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MMJ5Q1KZBz2xKV
+	for <openbmc@lists.ozlabs.org>; Tue,  6 Sep 2022 18:12:08 +1000 (AEST)
+Received: from dooku.sandelman.ca (ws117.exhibition.haw-hamburg.de [141.22.222.117])
+	by relay.sandelman.ca (Postfix) with ESMTPS id 472191F47B;
+	Tue,  6 Sep 2022 08:05:29 +0000 (UTC)
+Received: by dooku.sandelman.ca (Postfix, from userid 179)
+	id 196A01A0246; Tue,  6 Sep 2022 04:05:19 -0400 (EDT)
+Received: from dooku (localhost [127.0.0.1])
+	by dooku.sandelman.ca (Postfix) with ESMTP id 17AC61A0245;
+	Tue,  6 Sep 2022 04:05:19 -0400 (EDT)
+From: Michael Richardson <mcr+ietf@sandelman.ca>
+To: Joseph Reynolds <jrey@linux.ibm.com>,
+    Patrick Williams <patrick@stwcx.xyz>,
+    openbmc <openbmc@lists.ozlabs.org>
+Subject: Re: Security Working Group meeting - Wednesday August 31 - results
+In-reply-to: <5723faf6-66c3-1793-699d-ffbf61bf3268@linux.ibm.com>
+References: <e093dea2-ca08-fd8d-3151-2e858164f633@linux.ibm.com> <c0f6cc7e-6c7e-fe22-498d-2c3cb7851b73@linux.ibm.com> <YxCWpNZ+O89B+ulA@heinlein.stwcx.org.github.beta.tailscale.net> <5723faf6-66c3-1793-699d-ffbf61bf3268@linux.ibm.com>
+Comments: In-reply-to Joseph Reynolds <jrey@linux.ibm.com>
+   message dated "Mon, 05 Sep 2022 13:56:39 -0500."
+X-Mailer: MH-E 8.6+git; nmh 1.7+dev; GNU Emacs 27.1
 MIME-Version: 1.0
-References: <20220906050702.GA10565@hcl-ThinkPad-T495> <YxboXspF+0Y/+spD@taoren-fedora-PC23YAB4>
-In-Reply-To: <YxboXspF+0Y/+spD@taoren-fedora-PC23YAB4>
-From: karthikeyan P <pkarthikeyan1509@gmail.com>
-Date: Tue, 6 Sep 2022 13:01:28 +0530
-Message-ID: <CA+ezb7hdon3duH_oOLdGJGv_6HxCqa=HB6Tu0stbSuj2tMaSeQ@mail.gmail.com>
-Subject: Re: [PATCH v1] Update for Facebook yosemite V2 BMC.
-To: Tao Ren <rentao.bupt@gmail.com>
-Content-Type: multipart/alternative; boundary="000000000000ef9c6805e7fd2f38"
-X-Mailman-Approved-At: Mon, 12 Sep 2022 22:41:37 +1000
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Tue, 06 Sep 2022 04:05:19 -0400
+Message-ID: <32094.1662451519@dooku>
+X-Mailman-Approved-At: Mon, 12 Sep 2022 22:41:54 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,133 +52,102 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000ef9c6805e7fd2f38
-Content-Type: text/plain; charset="UTF-8"
-
-Noted.
-
-On Tue, Sep 6, 2022 at 11:57 AM Tao Ren <rentao.bupt@gmail.com> wrote:
-
-> Hi Karthikeyan,
->
-> I don't have much experience with ipmb-dev, but I'd suggest updating the
-> patch tile so it's consistent with other dts patches. For example:
->
-> "ARM: dts: aspeed: yosemitev2: Enable i2c13 controller"
->
->
-> Cheers,
->
-> - Tao
->
-> On Tue, Sep 06, 2022 at 10:37:02AM +0530, Karthikeyan Pasupathi wrote:
-> > Added IPMB-13 channel for Debug Card communication.
-> >
-> > ---
-> > --- v1 - Initial draft.
-> > ---
-> >
-> > Signed-off-by: Karthikeyan Pasupathi <pkarthikeyan1509@gmail.com>
-> > ---
-> >  arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts | 11 +++++++++++
-> >  1 file changed, 11 insertions(+)
-> >
-> > diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
-> b/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
-> > index 8864e9c312a8..84236df522dc 100644
-> > --- a/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
-> > +++ b/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
-> > @@ -215,6 +215,17 @@
-> >       };
-> >  };
-> >
-> > +&i2c13 {
-> > +     status = "okay";
-> > +     // Debug Card
-> > +     multi-master;
-> > +     ipmb13@10 {
-> > +             compatible = "ipmb-dev";
-> > +             reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
-> > +             i2c-protocol;
-> > +     };
-> > +};
-> > +
-> >  &pwm_tacho {
-> >       status = "okay";
-> >       //FSC
-> > --
-> > 2.17.1
-> >
->
-
---000000000000ef9c6805e7fd2f38
-Content-Type: text/html; charset="UTF-8"
+--=-=-=
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Noted. <br></div><br><div class=3D"gmail_quote"><div dir=
-=3D"ltr" class=3D"gmail_attr">On Tue, Sep 6, 2022 at 11:57 AM Tao Ren &lt;<=
-a href=3D"mailto:rentao.bupt@gmail.com">rentao.bupt@gmail.com</a>&gt; wrote=
-:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.=
-8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Hi Karthikeyan=
-,<br>
-<br>
-I don&#39;t have much experience with ipmb-dev, but I&#39;d suggest updatin=
-g the<br>
-patch tile so it&#39;s consistent with other dts patches. For example:<br>
-<br>
-&quot;ARM: dts: aspeed: yosemitev2: Enable i2c13 controller&quot;<br>
-<br>
-<br>
-Cheers,<br>
-<br>
-- Tao<br>
-<br>
-On Tue, Sep 06, 2022 at 10:37:02AM +0530, Karthikeyan Pasupathi wrote:<br>
-&gt; Added IPMB-13 channel for Debug Card communication.<br>
-&gt; <br>
-&gt; ---<br>
-&gt; --- v1 - Initial draft.<br>
-&gt; ---<br>
-&gt; <br>
-&gt; Signed-off-by: Karthikeyan Pasupathi &lt;<a href=3D"mailto:pkarthikeya=
-n1509@gmail.com" target=3D"_blank">pkarthikeyan1509@gmail.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts | 11 ++++++=
-+++++<br>
-&gt;=C2=A0 1 file changed, 11 insertions(+)<br>
-&gt; <br>
-&gt; diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts b/ar=
-ch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts<br>
-&gt; index 8864e9c312a8..84236df522dc 100644<br>
-&gt; --- a/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts<br>
-&gt; +++ b/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts<br>
-&gt; @@ -215,6 +215,17 @@<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0};<br>
-&gt;=C2=A0 };<br>
-&gt;=C2=A0 <br>
-&gt; +&amp;i2c13 {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0status =3D &quot;okay&quot;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0// Debug Card<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0multi-master;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0ipmb13@10 {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0compatible =3D &quot;=
-ipmb-dev&quot;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0reg =3D &lt;(0x10 | I=
-2C_OWN_SLAVE_ADDRESS)&gt;;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0i2c-protocol;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0};<br>
-&gt; +};<br>
-&gt; +<br>
-&gt;=C2=A0 &amp;pwm_tacho {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0status =3D &quot;okay&quot;;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0//FSC<br>
-&gt; -- <br>
-&gt; 2.17.1<br>
-&gt; <br>
-</blockquote></div>
 
---000000000000ef9c6805e7fd2f38--
+Joseph Reynolds <jrey@linux.ibm.com> wrote:
+    > In my limited comprehension, the end-to-end flow is:
+    > 1. The BMC boots up and extends measurements into its TPM.
+=20=20=20=20
+    > 2. the BMC admin configures the BMC's Keylime Agent.=C2=A0 That is, s=
+tarts the
+    > "Keylime Agent service", and provisions certificates, etc.
+
+Number 2 has to occur, but only once, while you have put it into a regular =
+flow.
+
+    > 3. A network agent (a "Keylime Verifier") contacts the BMC's Keylime =
+Agent
+    > and asks for the measurements.=C2=A0 The Agent that queries the TPM a=
+nd provides
+    > the measurements.
+
+Yes, but maybe not for anyone that asks.
+The measurement (Evidence) needs to be signed by the TPM (that's part of th=
+e protocol).
+There is a freshness requirement, for instance the Verifier can provide a
+nonce through the protocol to be included in the signed Evidence.  Another
+way is to use a TLS Extractor (TLS-Unique in TLS <1.3) to get a key.
+
+You can read more about the architecture at:
+    https://www.ietf.org/archive/id/draft-ietf-rats-architecture-21.html#na=
+me-architectural-overview
+(Yes, I'm a lead author)
+I've been really busy on Wednesdays, so I haven't joined lately, but I could
+if you want to talk more about this stuff.
+
+    > Redfish has specs for getting server TPM measurements, but does not h=
+ave any
+    > specs for getting BMC TPM measurements.
+    > Because of this, the group doing the work is proposing for the BMC's =
+Keylime
+    > Agent service to open a separate port, and to not use Redfish to get =
+the
+    > actual measurements.=C2=A0 In support of this view: there are Keylime=
+ verifiers
+    > already available to use this new port, but there are no Keylime veri=
+fiers to
+    > use Redfish.
+
+Sounds accurate, but it seems like doing it through redfish is entirely
+reasonable to me.
+
+    > It should be clear from the paragraphs above that the intended use ca=
+se is
+    > for a client server model, not a network of peers.=C2=A0 The Keylime =
+Verifier
+    > client running on the BMC's management network contacts the Keylime A=
+gent
+    > running on the BMC.=C2=A0 The mutual-TLS method is used for authentic=
+ation.
+
+    > Keylime is written in Python.=C2=A0 I think the the idea was to eithe=
+r port that
+    > version, or to use the new implementation in Rust.=C2=A0 We did not d=
+iscuss any
+    > difficulties in image size increase due to Python or in getting the R=
+ust
+    > language environment ported to bitbake.
+
+I imagine that the bitbake recipe is probably the critical path, but I also
+suspect that Rust is being used somewhere with bitbake.
+
+
+
+=2D-=20
+Michael Richardson <mcr+IETF@sandelman.ca>, Sandelman Software Works
+ -=3D IPv6 IoT consulting =3D-
+
+
+
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEERK+9HEcJHTJ9UqTMlUzhVv38QpAFAmMW/z4ACgkQlUzhVv38
+QpCuFggAmS48XLxFEmjzXa21lICGOe20eMQBVV9cCSOgY4ukrcd8a1XvXbtaAu49
+QmLfejthiy+Yxu07KVcnqdyOzTL4GyU6NlJfaere5mB9MuiQb6qDa84nRflqGHWt
+5ZPzLR1NBaCOmMW8NYXn0xUNOkFV2UURk9UEtSM+H44ep5VWJWEIaNNqeFPYNqCs
+TLe5HknwriTxu6nlXoaIQzJmsF9PL2F9pYhf0TgCW2SLMH42j80j5NyfOWdUkl4S
+j/12Am0JMMbz/SrA1rn8ytaeEfrbYhc+lD6w2fm1L+KpVQoZiAVrvRrl9EvPvhBz
+RIKDaQtwXE+BPw/+gQLFwGFq+Cz12A==
+=BUso
+-----END PGP SIGNATURE-----
+--=-=-=--
