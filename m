@@ -2,67 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB3365B5A65
-	for <lists+openbmc@lfdr.de>; Mon, 12 Sep 2022 14:46:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 60E2B5B5A66
+	for <lists+openbmc@lfdr.de>; Mon, 12 Sep 2022 14:46:38 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MR5tc4qggz30B1
-	for <lists+openbmc@lfdr.de>; Mon, 12 Sep 2022 22:46:00 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MR5vJ1Q7sz3blJ
+	for <lists+openbmc@lfdr.de>; Mon, 12 Sep 2022 22:46:36 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=UkhX3bpF;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=ZAMD8mIt;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::52a; helo=mail-pg1-x52a.google.com; envelope-from=pkarthikeyan1509@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42b; helo=mail-pf1-x42b.google.com; envelope-from=pkarthikeyan1509@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=UkhX3bpF;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=ZAMD8mIt;
 	dkim-atps=neutral
-Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MN1y52KqYz2yZ8;
-	Wed,  7 Sep 2022 22:38:19 +1000 (AEST)
-Received: by mail-pg1-x52a.google.com with SMTP id q9so13441987pgq.6;
-        Wed, 07 Sep 2022 05:38:19 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MN2DQ56cvz3bSS;
+	Wed,  7 Sep 2022 22:50:44 +1000 (AEST)
+Received: by mail-pf1-x42b.google.com with SMTP id j12so2081710pfi.11;
+        Wed, 07 Sep 2022 05:50:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=user-agent:content-disposition:mime-version:message-id:subject:to
          :from:date:from:to:cc:subject:date;
-        bh=8cuwNYIM2dG7qV14HGILvNfaTFOpaJjLv1WCC2bShi8=;
-        b=UkhX3bpFkQrjMW+BsNFr1MJu7SAmDhU0caxX+kK4YCJkjBPmqM9WDLQZgpzoPX4CiB
-         oZPp868wFyz6ukxUb8HqSYMbWyHQjLwc4SzKJtrTLIAXHMIeAjXi7IN3wZRQcIqmvEFD
-         SF7B5MQ7r/aoenPzG91VDTBpW86c7dg2oxQBGLHbTQGnLjTY8IMg0djV1++EJwWaFe4+
-         DsXPsXZSaJJhc6JbcgR2cqbQwst5l9kP14WJlTRfRb5XKdr+tzzYl5AGKH+FRIO0oh1k
-         eWFRy+XWGR14SD6quBdhJMbR0msPoinGowtKDnuOB9TQG5Hhx+d0kOO4syhP1Fv7viVG
-         fnTA==
+        bh=jPyKiHK9Z1f/mDgcNl32AxqjgUc4Ptqqz+HyhxKfYq4=;
+        b=ZAMD8mItqJ7YqDQ3bHcwDY/4B6fkAILhnL2e+pz66KKPOOfXtKhThy+IvJrsL+fV0D
+         8Iffyu6DNtCG9aFafbX7HOsZnYXYDY2W2B2A/5eBzzKxZNJXa1kK73Uv1GLSiTb8SLn3
+         gn3PIIYfJd5/ubD7E3EGesaQaCBk9EJbqpgwnK2VqaCRzFNWB0U0A0YttBLYdUIf475C
+         DsVWovp/Gv+xDYy9R86dagC4WH8FBlBg86mYLdLJYaUU52bzC90dN3sCSyesAL+toXYN
+         sJaSz7l+Kz0N5yOiLI/5a6JzydcSFLzclETpmVHhjDMkvYj1UNNsRJKbOMWAATqjAji5
+         Oxyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=user-agent:content-disposition:mime-version:message-id:subject:to
          :from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=8cuwNYIM2dG7qV14HGILvNfaTFOpaJjLv1WCC2bShi8=;
-        b=tMMM0aOWnV5MAR3BLeIHmJweFxhtuYxbi6rkIk9HMyE/tK70CaY8g0YUU9aScqgdcn
-         L6qLHcZQ85kzrhxGGrwy7JaGeTD3BVtdZ3RraF1t9z4fLPFTJh/4Bh/mwlKkCiGymF2r
-         uYVpgHjBjlscvvfkshtGVZaPBWdMQ8+LhjJ7ffdCBm+Hm6TTDXRt1POyo/vTzZI5Yw95
-         oH4dX5H+k2ybSu6FO97StQkBwwmgUNlBSy+FbRgUr5mkhaNHHdNS1XFpESPgg0jqVjf8
-         rarm3wKig3N+3RNCl19QegA+NhYUjAKzm41NfgFfkZM9Ay/ZXj5YQbp/T1+G/tXPCkMy
-         DYdg==
-X-Gm-Message-State: ACgBeo3pJmgMM5tK7ruZ28ItIyNi0uGpMR9JvLP4Ra2vlLlmWNevSZ87
-	yyzho5Om+0DVh9o8+vz7yp4=
-X-Google-Smtp-Source: AA6agR5V4+MCEuwU9j7UzU+tBSQs2nsdqQxak8nCNwdUh9g82yM2EIQhKa0rCZSTmGaM0mYVjVUrZQ==
-X-Received: by 2002:a63:a501:0:b0:434:ff77:1fda with SMTP id n1-20020a63a501000000b00434ff771fdamr1114702pgf.310.1662554296397;
-        Wed, 07 Sep 2022 05:38:16 -0700 (PDT)
+        bh=jPyKiHK9Z1f/mDgcNl32AxqjgUc4Ptqqz+HyhxKfYq4=;
+        b=WtiylSomprFcGK/3duUIRe970q37Yf9PbJ4xTTL5GgV9G53+fN/YA57wSn86xIriuj
+         qlqbkVW0exciBXUbnHcfWuaWi3x6QPaZHAYUJOX+gIceeD9B1x8n5apjvnychseq9szO
+         TvReQHMa/pXlHNUIpzgxvOHWXseMRevtzD5yDmifFNz5PL+G3AzWxn9naRalHSURtXQ4
+         a8r44JzS1YWFyLhjXTbNHUXCZyh2S0PhOp5KggfkJpTG9JEr23DQUlQH2yc3sCtRG689
+         gwmkLcyv1S7qqqcyFNmuhJMC8YozRTaKoOnPenKH8urluSCLLmmm9W7XMfNgmL6sMIFq
+         mMmw==
+X-Gm-Message-State: ACgBeo1AyJOcdRLL2VrUVR+5Zl0A76/bQN06/QBHG7mUxTNNa+4VxRk1
+	PIOg1uyV+emr3sslgqLfDoA=
+X-Google-Smtp-Source: AA6agR6wqTSiC4quRaCw4iH7eVY9qz1KHmrlAlH7dE8ysQ1Msha5l8j12ZXgbQ5wEWXPGl9od6MaGg==
+X-Received: by 2002:a05:6a00:e85:b0:52b:5db8:f3df with SMTP id bo5-20020a056a000e8500b0052b5db8f3dfmr3966989pfb.14.1662555041806;
+        Wed, 07 Sep 2022 05:50:41 -0700 (PDT)
 Received: from hcl-ThinkPad-T495 ([2401:4900:1ce1:13f0:48c4:2ac5:ccad:657d])
-        by smtp.gmail.com with ESMTPSA id jf15-20020a170903268f00b00176ca533ea0sm4476231plb.90.2022.09.07.05.38.12
+        by smtp.gmail.com with ESMTPSA id bj9-20020a056a02018900b0041bcd8f3958sm10450967pgb.44.2022.09.07.05.50.38
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 07 Sep 2022 05:38:16 -0700 (PDT)
-Date: Wed, 7 Sep 2022 18:08:10 +0530
+        Wed, 07 Sep 2022 05:50:41 -0700 (PDT)
+Date: Wed, 7 Sep 2022 18:20:35 +0530
 From: Karthikeyan Pasupathi <pkarthikeyan1509@gmail.com>
 To: Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>,
 	Andrew Jeffery <andrew@aj.id.au>, devicetree@vger.kernel.org,
 	linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
 	linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org
-Subject: [PATCH v2] ARM: dts: aspeed: yosemitev2: Enable i2c13 controller
-Message-ID: <20220907123810.GA27621@hcl-ThinkPad-T495>
+Subject: [PATCH v2] ARM: dts: aspeed: yosemit V2: Update for Facebook
+ Yosemite V2 BMC
+Message-ID: <20220907125035.GA28461@hcl-ThinkPad-T495>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
@@ -82,43 +83,39 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Added IPMB-13 channel for Debug Card communication.
+Removed NIC EEPROM driver IPMB-12 channel and keeping it as
+"status ok".
 
 ---
---- v2-Updated the title
+--- v2- Updated the title
 ---
 
 ---
---- v1 - Initial draft.
+--- v1- Initial draft
 ---
 
 Signed-off-by: Karthikeyan Pasupathi <pkarthikeyan1509@gmail.com>
 ---
- arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts | 6 ------
+ 1 file changed, 6 deletions(-)
 
 diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
-index 8864e9c312a8..84236df522dc 100644
+index 8864e9c312a8..2293f10e94d6 100644
 --- a/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
 +++ b/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
-@@ -215,6 +215,17 @@
- 	};
+@@ -207,12 +207,6 @@
+ 
+ &i2c12 {
+ 	status = "okay";
+-	//MEZZ_FRU
+-	eeprom@51 {
+-		compatible = "atmel,24c64";
+-		reg = <0x51>;
+-		pagesize = <32>;
+-	};
  };
  
-+&i2c13 {
-+	status = "okay";
-+	// Debug Card
-+	multi-master;
-+	ipmb13@10 {
-+		compatible = "ipmb-dev";
-+		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
-+		i2c-protocol;
-+	};
-+};
-+
  &pwm_tacho {
- 	status = "okay";
- 	//FSC
 -- 
 2.17.1
 
