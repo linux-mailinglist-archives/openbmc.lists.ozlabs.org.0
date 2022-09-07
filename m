@@ -2,76 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B387B5B0641
-	for <lists+openbmc@lfdr.de>; Wed,  7 Sep 2022 16:17:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3CE5E5B067E
+	for <lists+openbmc@lfdr.de>; Wed,  7 Sep 2022 16:26:40 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MN48T4lZCz3bhf
-	for <lists+openbmc@lfdr.de>; Thu,  8 Sep 2022 00:17:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MN4Lw57Qgz3bk8
+	for <lists+openbmc@lfdr.de>; Thu,  8 Sep 2022 00:26:32 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=qq2xcCE7;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=G+ZUaNVh;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::233; helo=mail-lj1-x233.google.com; envelope-from=fercerpav@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12c; helo=mail-lf1-x12c.google.com; envelope-from=fercerpav@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=qq2xcCE7;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=G+ZUaNVh;
 	dkim-atps=neutral
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MN4811xf5z2yxG
-	for <openbmc@lists.ozlabs.org>; Thu,  8 Sep 2022 00:17:04 +1000 (AEST)
-Received: by mail-lj1-x233.google.com with SMTP id z20so16159103ljq.3
-        for <openbmc@lists.ozlabs.org>; Wed, 07 Sep 2022 07:17:04 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MN4LW6sDvz2yyT
+	for <openbmc@lists.ozlabs.org>; Thu,  8 Sep 2022 00:26:09 +1000 (AEST)
+Received: by mail-lf1-x12c.google.com with SMTP id q21so8485070lfo.0
+        for <openbmc@lists.ozlabs.org>; Wed, 07 Sep 2022 07:26:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=izoVtEQI3AorFoVIV2jH2nl8Mtygz9NI3KRAZPi16U4=;
-        b=qq2xcCE7cMpaXbBm/DCr7TmIH09c/tyruyYuJ874jGkGH2C6rS8xb9f/Fin40GWC0d
-         G+1W9dDWEOHMESr30Sdaitr3RHTDvccuxYgHFAxbSNbOglUqXaPHIxMOlRLl2RBI0gaI
-         9uk0eCuumOC0CquOHDdZ+NwXaNhaQVK5XS3WnG/neUxGwREyY8aLVcP40m+HO0n5ND9t
-         0ODydyYe5bdxvnObStMpboJo0bFz3pzwPkSyMX/Q6Venj2M8fg4pv3/kkgQk7SL8ERtr
-         HUKNwYEhtWKNMgoyO1kgzbH9ZJ5IBWQ/x/uCN4KY/pxYIZmDos1lKWuVKMcbPPGHEHrZ
-         xbaA==
+        bh=XOUwC+I40829NSnpzJFcF1IpTMdwv/YhNTX7f2j0TwI=;
+        b=G+ZUaNVh/XJocdaBCpHfJ1TXJoWNfqaFY1pQcNuTmTojCjmJyHl+zYEUW3xgjMVU9h
+         xZyAb6vi6lUZzN86MFzWQHHNwrP0FxrOyVT4FtpdaiMitub8GS62GmKeQGgit7ZG0Exg
+         SfjtijPKO//L4JF2yJfQJ9RmGf18B8cC/1SCzHIlH9PYgbSAXW+nxUG6vHA2/Dupfm6S
+         2tIAl14/zkxQMshDXK8ucwhgENzgLR0gzY1pG/KEQ1e+aUghJJqJWPeIcDCFnIwlB6DQ
+         z5dypmiUX0hd8DMDNzVMXo6U8nqiJLBjAXvkvu2gydSGGW2LjzHxJZlJIU3czQo8EWUQ
+         Rz3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=izoVtEQI3AorFoVIV2jH2nl8Mtygz9NI3KRAZPi16U4=;
-        b=5WW6gK3VK9dve2Jhgj36G6LeReQK8A6iq8mpzCqBBiHcWS1RREUjFYnKijGagL5mup
-         2SADkzT8eJAUj5VNHfVfd3IvldTgETgvHD0PAAQHktugYgcVENOfq8R70L/M/j5B9/75
-         KTKwdqaR5p3BA9VvMr4hXxJt4qBUh9RaWjfuFQTwXYzWIhiJTkt2Js1rcy6IHPoFu6qX
-         IMH6aA4vAaEfCFUHIXBjGGK1TScvdYCv+W29TxAj1+BSowZl67OASQrIda5XoMbkXH5f
-         jLbo8X5hBremBKhcy8xQ19YPLxdleZT3cTTVKk5LgNNQgIcZaASOVJb8IXx2TRpbUbrX
-         xPcw==
-X-Gm-Message-State: ACgBeo0YgGXpC5iutUCU2YYBSMBfw9D1ncTd2CfKt0AJuSkJSUWnw73g
-	DiU4gZ2Q4ljRfuXbTogp8RE=
-X-Google-Smtp-Source: AA6agR5b+rvRvBkfSNy9SuhiGAOK5QdBPpsGW7YeGaEMdTCO3FaSzuHiZx7dVOao5RVy4/S34Aq8vw==
-X-Received: by 2002:a2e:391b:0:b0:26a:c75c:ff6e with SMTP id g27-20020a2e391b000000b0026ac75cff6emr1013759lja.99.1662560216033;
-        Wed, 07 Sep 2022 07:16:56 -0700 (PDT)
+        bh=XOUwC+I40829NSnpzJFcF1IpTMdwv/YhNTX7f2j0TwI=;
+        b=PrDo8jgursGVxAjtQ0yBobnVuylwcw+9S93i4J8ndayzkGL37CM6Vl2zz3G61BqKzQ
+         8UrTPrwBDKGDLGXezgwpB3wBwbJUoU1YqiBFEHR/fKJAjdGrFKnRPZFUr6LFemDNzVfN
+         4g8BIZXQQh+BaXk4JjUJNxoS6FiV7eblvU+f1b+7RelcVhf/ugy2ANjTAQk2K5KURQBW
+         +JiNhMmAXSSKF9yUOQXXIp6Z+jnbdU3TeEHV+EJeYUwZ3UhUppnKMMxzfDGXX7rWEpYd
+         vVfmPHuj3g+QLXxRACxx16z99/0itLs/T2dUhwBB2rUdMqJi7UNU6BJ1X4DAQocJKsgr
+         xH1g==
+X-Gm-Message-State: ACgBeo0MJRcNBkn9jJBub5XN1E0BCZ5zZw3QulFE0tFs5kVa7osDrW6N
+	SVYBhDscDkKQSQvP9EJUXj0=
+X-Google-Smtp-Source: AA6agR7TMhbLQje0Trp7Ju4Y4t8ihAy+RJ4cp5tonx1WrAKKaiV6yNfIIpqLYX/Ns2kH1MHEeZ+2eg==
+X-Received: by 2002:a05:6512:b01:b0:48b:a065:2a8b with SMTP id w1-20020a0565120b0100b0048ba0652a8bmr1121195lfu.401.1662560765678;
+        Wed, 07 Sep 2022 07:26:05 -0700 (PDT)
 Received: from home.paul.comp (paulfertser.info. [2001:470:26:54b:226:9eff:fe70:80c2])
-        by smtp.gmail.com with ESMTPSA id k5-20020ac257c5000000b004946e72711bsm2507518lfo.76.2022.09.07.07.16.54
+        by smtp.gmail.com with ESMTPSA id n20-20020ac242d4000000b00494813c689dsm2515474lfl.219.2022.09.07.07.26.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Sep 2022 07:16:55 -0700 (PDT)
+        Wed, 07 Sep 2022 07:26:05 -0700 (PDT)
 Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
-	by home.paul.comp (8.15.2/8.15.2/Debian-22) with ESMTP id 287EGqsj016353;
-	Wed, 7 Sep 2022 17:16:53 +0300
+	by home.paul.comp (8.15.2/8.15.2/Debian-22) with ESMTP id 287EQ27W016385;
+	Wed, 7 Sep 2022 17:26:03 +0300
 Received: (from paul@localhost)
-	by home.paul.comp (8.15.2/8.15.2/Submit) id 287EGplf016352;
-	Wed, 7 Sep 2022 17:16:51 +0300
-Date: Wed, 7 Sep 2022 17:16:51 +0300
+	by home.paul.comp (8.15.2/8.15.2/Submit) id 287EQ1iX016384;
+	Wed, 7 Sep 2022 17:26:01 +0300
+Date: Wed, 7 Sep 2022 17:26:01 +0300
 From: Paul Fertser <fercerpav@gmail.com>
 To: Johnathan Mantey <johnathanx.mantey@intel.com>
 Subject: Re: SATA hotplug notifications for BMC inventory updates
-Message-ID: <Yxin03RwpUvVPsAy@home.paul.comp>
+Message-ID: <Yxip+Yyd8TPWhRft@home.paul.comp>
 References: <YxXZeFQhJWDSHSVf@home.paul.comp>
  <2cdb6ea6-fc85-9835-d410-01195148a3eb@intel.com>
+ <17841662532977@mail.yandex-team.ru>
+ <a18faae2-7efe-42ab-4a85-215afbaaf89b@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2cdb6ea6-fc85-9835-d410-01195148a3eb@intel.com>
+In-Reply-To: <a18faae2-7efe-42ab-4a85-215afbaaf89b@intel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,62 +85,30 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Konstantin Klubnichkin <kitsok@yandex-team.ru>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello Johnathan,
+(skipped discussion about SMI, as I guess an SMI handler can't
+meaningfully communicate with the BMC anyway since that would add an
+unacceptable delay to the host operation; I can imagine SMI sending
+data to ME and then BMC retrieving it via IPMB but, again, I can't
+find any good reference about ME facilities...)
 
-Thank you for answering, please see inline.
+On Wed, Sep 07, 2022 at 07:04:48AM -0700, Johnathan Mantey wrote:
+> A back of envelope thought I had is perhaps the host side could interact with
+> the BMC via a mailbox. The issue being you'd have to have SW running during the
+> BIOS time, and when the OS was in control an OS helper app pushing the data. I'm
+> not sure how feasible that idea is.
 
-On Tue, Sep 06, 2022 at 08:53:09AM -0700, Johnathan Mantey wrote:
-> On 9/5/22 04:11, Paul Fertser wrote:
-> 
->  Hi,
-> 
->  An OCP Tioga Pass platform features up to 4 drive bays for SATA
->  storage accessible from the front and fully hot-pluggable. The
->  backplane is usually connected directly to Intel C620 PCH (aka
->  Lewisburg).
-> 
->  It would be nice to have information about the currently attached
->  devices (model and serial number) available in BMC inventory but what
->  are the ways to get this information?
-> 
-> Intel systems only get drive mdl/sn from NVMe devices that provide that
-> information via MCTP over SMBus. SAS/SATA drives, to my current knowledge, don't
-> supply this info in that mode.
+Some kind of agent running on host can certainly do that. But
+apparently no popular GNU/Linux distros package anything like that, so
+it must be a rare need.
 
-Indeed, NVMe provides this additional side-channel over SMBus
-specifically for management, alas nothing like that is present in
-SAS/SATA standards.
-
-> The insertion/removal events are also managed from the BMC via I2C to a FPGA
-> solution residing on the Hot Swap Backplane. The FPGA provides registers that
-> allow the BMC to query the PRSTn/IFDETn pins.
-
-I can also imagine I2C GPIO expanders doing the job, yes, this seems
-to be reasonably straightforward.
-
->  Is it possible there's some additional module in the all-mighty ME
->  that can supply BMC with the current state of PCH SATA controller? Or
->  is there some other sensible mechanism other than talking to UEFI on
->  startup (which would mean BMC is showing stale and thus misleading
->  data till the next reboot)?
-> 
->  Even though the question is quite specific we'd appreciate any related
->  insights on the topic; there must be some side-channels to RAID
->  controllers and such for BMC to be obtaining essential information but
->  so far I wasn't able to find any documentation about this.
-> 
-> RAID solutions are outside of scope for the Intel BMC.
-
-Intel VROC too? Why? We'd be willing to contribute some development
-effort into bringing RAID monitoring and management to OpenBMC,
-wouldn't the community benefit from that? Many other vendors currently
-offer this feature, why shouldn't OpenBMC? The problem seems to be
-with the documentation availability; can you please tell where the
-relevant hardware and protocols are described?
+I asked experienced VMWare ESXi admins and they told me even SATA
+drives show in BMC properly without any additional vendor "vibs"
+installed on the host system so there must be some side channel
+present on many production server systems. 
 
 -- 
 Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
