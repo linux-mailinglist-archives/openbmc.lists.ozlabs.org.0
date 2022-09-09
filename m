@@ -2,85 +2,87 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D21A95B3CA0
-	for <lists+openbmc@lfdr.de>; Fri,  9 Sep 2022 18:06:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EC6605B3F04
+	for <lists+openbmc@lfdr.de>; Fri,  9 Sep 2022 20:49:49 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MPLTH5tvXz3brh
-	for <lists+openbmc@lfdr.de>; Sat, 10 Sep 2022 02:06:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MPQ5l6xslz3bgC
+	for <lists+openbmc@lfdr.de>; Sat, 10 Sep 2022 04:49:47 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=ffpewoyP;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=gUaDfA2v;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=tq0k9JRY;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.21; helo=wout5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=gheorghe@linux.vnet.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=ffpewoyP;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=gUaDfA2v;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=tq0k9JRY;
 	dkim-atps=neutral
-X-Greylist: delayed 431 seconds by postgrey-1.36 at boromir; Sat, 10 Sep 2022 02:05:58 AEST
-Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MPLSk6b5lz309f
-	for <openbmc@lists.ozlabs.org>; Sat, 10 Sep 2022 02:05:58 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.west.internal (Postfix) with ESMTP id F17C3320093A
-	for <openbmc@lists.ozlabs.org>; Fri,  9 Sep 2022 11:58:41 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Fri, 09 Sep 2022 11:58:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:content-type:date:date:from:from:in-reply-to:message-id
-	:mime-version:reply-to:sender:subject:subject:to:to; s=fm1; t=
-	1662739121; x=1662825521; bh=cuGORHt/vNBGECMMS+2DXYq3V5LWU8SiNxD
-	5cq9U8Dc=; b=ffpewoyPuJa6TUFVug1kq8l3djZplQ+R2UELqRYMBN3+iFsn6bC
-	iTKWxd3UzBrNLNy52ETZ3k/yNuSJPWNt/qApYjpiTPeybwtCNcmlPcSNQwEuL929
-	Ci8my8UWxnpe54jNYLZpjfupt17QVDAwahZHAD8SbRHBXqFaz96tiDFkUhimf4QM
-	4yi65h7EPV72+J9ncwCUQV1QWbwW0I/d2B1GdOTgrsgIUfpOn71H34SxhVSVloj7
-	XOvx1kN6o3Z+u9NMQCDYOBAu2KUbGqZMmB8izHacKytijzyE8WJkWSFhBcis2ZTr
-	WNJfmVXxUPnv72gv4GmBo/kZfYyPbSIZYsg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:message-id:mime-version
-	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1662739121; x=
-	1662825521; bh=cuGORHt/vNBGECMMS+2DXYq3V5LWU8SiNxD5cq9U8Dc=; b=g
-	UaDfA2vSoxs+zgqagcAH4du53BgmEqgfAJQ0QkIP9xMzWVpDol6E/sYa0DLympH6
-	lslSFvu6dOUiHlVgwtPSa/G+Vc4QJ/z+kQwjRov8SQDZOUO8or1kcDa/L10HnfLv
-	2z+FQ1HCIuCg1XeFaUQJrZATqIIMB45bFg86jKcq/U6QIR5aGLwAaAT3Irg80DIs
-	qavn0vZ1kcEEbcT8HE60UZyJBfNKWLGaiDva+X4OHjGYsc48idu7Ht80QYLDTYxq
-	LLeczlmZ1RLWe8MVQzD21kGf4Tx71Hey2eMsEavhANnMVHQX8yrmjhqhdyg+OWmC
-	DmcXkCxrjjOrQmVKsJD3Q==
-X-ME-Sender: <xms:sWIbY24A9QhbtB_jgj61WgksOAZjnvnSnxy10qES1y0cwcP6U6-02A>
-    <xme:sWIbY_4eEgBD8C_eQle7qv5aiRJXsAvQBHDQxJ8SVms2LvzUB1W-14KvO0yKf2IVY
-    yygreBMenEjRKXUe4A>
-X-ME-Received: <xmr:sWIbY1e-Fx3CrZRF4KIKHhc8JTPjucASDPtxSIM1CmpWmUYRQuZg3qIbXr_FCa0cMcxI7XmwoTVHW3GB9HR8TJdqLrUJd2IZ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfedthedgleejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    gfrhhlucfvnfffucdlvdefmdenucfjughrpeffhffvuffkgggtugesghdtreertddtvden
-    ucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhesshhtfi
-    gtgidrgiihiieqnecuggftrfgrthhtvghrnhepffehgfdtudektdetuddvkeetgeehlefh
-    vddtieffueejffeiteekvefhjefhueeknecuffhomhgrihhnpehophgvnhgsmhgtrdhorh
-    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgr
-    thhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:sWIbYzKhNedigHpOUFf9gPWIqQbw86ULD58GuifM96zU-0bmRgnoWw>
-    <xmx:sWIbY6JSBNMlC6Z92rjnPElmAsI3Dc7xROZuBxGB7u3v5td2qDHdpA>
-    <xmx:sWIbY0xXU-WBK0RRoUFuDUzxjYRnq6P2DTQEkyejCu06aFWXrzPt4w>
-    <xmx:sWIbY5nzD_BLPqEmbsftn2bKEO5RBaAOsWvcHnS9-gtQosi-DNs2ig>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <openbmc@lists.ozlabs.org>; Fri, 9 Sep 2022 11:58:41 -0400 (EDT)
-Date: Fri, 9 Sep 2022 10:58:39 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: OpenBMC List <openbmc@lists.ozlabs.org>
-Subject: Yocto changes to TEMPLATECONF location.
-Message-ID: <Yxtir+PEKipZyPXU@heinlein.stwcx.org.github.beta.tailscale.net>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MPQ5F6GLKz30D0
+	for <openbmc@lists.ozlabs.org>; Sat, 10 Sep 2022 04:49:21 +1000 (AEST)
+Received: from pps.filterd (m0187473.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 289Ig370033341;
+	Fri, 9 Sep 2022 18:49:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
+ mime-version : reply-to : subject : to : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=YeLmPAuDmgJ4Thqt5BLByxHgrNh56hqGgIMzo6XVgn4=;
+ b=tq0k9JRY0SAxK08fD6eSpk2z35mXi1fSbrUMfyj93lnq2oFWh61fMTd6BJqoqjtWSq0K
+ uVZgR4TCefbEpO9N0D/8LkvaMtToqtp2l9Jir/d8Hwg1tT8hqi/hlyTmH3UDygoU1mJu
+ LEhLlVig4U0Vj4px8zelwBnBZ+XJ8+DA/pKctbc92VL8eURK/Dk8U3ZU2CgNBtaR/fPb
+ Y5swTSXdQLwJgOXCIZereCdYJjKNbl/LLnR4RGEV7cR+/euKYvDMXBKre3hR5TiseVCy
+ qUhC342W6+aXmug5a7L13kJ2UVqcueAlocFXn2LhuovXNe5xq2hicgTG9dAhE28ASrb1 Iw== 
+Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com [169.53.41.122])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3jgb0585pp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 09 Sep 2022 18:49:17 +0000
+Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
+	by ppma04dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 289ILes4022120;
+	Fri, 9 Sep 2022 18:49:16 GMT
+Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com [9.57.198.24])
+	by ppma04dal.us.ibm.com with ESMTP id 3jbxjajnu4-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 09 Sep 2022 18:49:16 +0000
+Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com [9.57.199.108])
+	by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 289InF9X10093082
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 9 Sep 2022 18:49:16 GMT
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E0E4FB2064;
+	Fri,  9 Sep 2022 18:49:15 +0000 (GMT)
+Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id BB37FB205F;
+	Fri,  9 Sep 2022 18:49:15 +0000 (GMT)
+Received: from [9.160.177.223] (unknown [9.160.177.223])
+	by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTP;
+	Fri,  9 Sep 2022 18:49:15 +0000 (GMT)
+Message-ID: <20f2bb8a-ef2f-3ead-ca24-8d70caeebebb@linux.vnet.ibm.com>
+Date: Fri, 9 Sep 2022 14:49:15 -0400
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="pbA7V8oDJQz7+NkG"
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.2.2
+Subject: Re: Security Working Group meeting - Wednesday August 31 - results
+Content-Language: en-US
+To: Michael Richardson <mcr@sandelman.ca>, openbmc@lists.ozlabs.org
+References: <b9bda737-8e4f-62d3-1000-c42b3326239e@linux.vnet.ibm.com>
+ <101586.1662709990@dooku>
+From: George Almasi <gheorghe@linux.vnet.ibm.com>
+Organization: IBM
+In-Reply-To: <101586.1662709990@dooku>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: VwUxCRTefuS3W4v918lWnYWSszzAKWtK
+X-Proofpoint-ORIG-GUID: VwUxCRTefuS3W4v918lWnYWSszzAKWtK
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-09_08,2022-09-09_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ malwarescore=0 adultscore=0 impostorscore=0 mlxscore=0 bulkscore=0
+ suspectscore=0 spamscore=0 mlxlogscore=999 phishscore=0 lowpriorityscore=0
+ clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2207270000 definitions=main-2209090065
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,70 +94,85 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Reply-To: gheorghe@linux.vnet.ibm.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---pbA7V8oDJQz7+NkG
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-Hello,
+On 9/9/22 3:53 AM, Michael Richardson wrote:
+> Thank you for the post.
+> I'm interested in understanding how you will do provisioning of the TPM keys.
+Hi Michael. I'm going to describe the standard keylime agent 
+registration process in a bit more detail -- but not too much, or this 
+will be a very long post indeed.
 
-An upstream Yocto changes is causing us to move the location of the
-template config files in our machine layers.  These are the
-`bblayers.conf.sample` and `local.conf.sample` locations.
+1. EK certificate.
 
-I have made all the necessary changes (basically just file moves) in
-our tree[1] and some minor changes to the `setup` script.  If you happen
-to use `openbmc-env` to set up your environment, you will need to
-adjust the TEMPLATECONF environment variable accordingly (look at
-`setup` for an example).
+What this is for: The EK certificate on each TPM is verifiable against 
+the root CA of the manufacturer, which gives us confidence that the TPM 
+is the genuine article and not a counterfeit.
 
-I have also updated any references in docs[2] to avoid usage of
-`openbmc-env` and `TEMPLATECONF` and switch instead to recommend `setup`
-workflows.
+Keylime makes the assumption that the TPM device's EK certificate is 
+available on the device. While the
+EK certificate can be deleted from the TPM by the end user, devices 
+[ought to] ship with it from the TPM manufacturer.
 
-If you have any machines in a downstream fork you may also need to make
-similar file location changes once we pull in the next subtree update.
-These might be helpful for you:
+It is possible to use self-signed EK certificates for TPM devices. But 
+that weakens the chain of trust provided by keylime, since it involves 
+you -- the creator of said certs -- in the process, instead of using the 
+likes of Infineon or Nuvoton for the purpose. We think it is *always* 
+better to use the manufacturer's key if it is available, rather than 
+create our own keys and headaches. Keylime comes with a pre-populated 
+list of manufacturer certificates it will accept, and said list includes 
+the most widely used manufacturers of TPM devices. FWIW our AST2600 EVBs 
+have Nuvoton devices, whereas my Raspberry Pi has an Infineon Optiga :)
 
-```
-   $ git ls-files "**/*.sample" | \
-     grep -v -e poky -e meta-security -e meta-openembedded | \
-     xargs -n1 dirname | sed 's#$#/templates/default#' | \
-     sort | uniq | xargs mkdir -p
-   $ git ls-files "**/*.sample" | \
-     grep -v -e poky -e meta-security -e meta-openembedded | \
-     sed 's#\(.*\)/conf/\(.*\)#\1/conf/\2 \1/conf/templates/default/\2#' | \
-     xargs -n2 git mv -f
-```
+2. Public EK (endorsement key)
 
-1. https://gerrit.openbmc.org/c/openbmc/openbmc/+/57049
-2. https://gerrit.openbmc.org/c/openbmc/docs/+/57050
+What this is for: This key defines the identity of the TPM device, and 
+is used as such by keylime. It is signed by the EK certificate. To some 
+degree of approximation this key pair is "burned into the device" -- not 
+literally true, but can be re-generated at will from seeds that *are* 
+burned into the device.
 
---=20
-Patrick Williams
 
---pbA7V8oDJQz7+NkG
-Content-Type: application/pgp-signature; name="signature.asc"
+The keylime agent usually (re)generates the EK and sends the public part 
+(the only part available to anyone outside the device) to the keylime 
+registrar, together with the EK certificate. The registrar can then make 
+a decision about whether the keylime agent has a genuine TPM device in 
+possession, and whether the message coming from network address X and 
+hostname Y really corresponds to the correct EK. This guards against say 
+spoofing an entire node with keylime.
 
------BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmMbYq4ACgkQqwNHzC0A
-wRkHjBAAoRfyPIkaBLyTDNUfrDlD+kPa65EFoPTe/0U0XgZgOQCzBrpU+ZcOhmYm
-of81wOv4lJrYxrL9/voKUbsF6xMD6jK1Z/1RNGvNmaVJ+xYw8l2/UOEPDnMN4hBr
-yLLnRo2chD40cxVUts+kGSa9qzqkxN6V4E8V/h/HympWG4PLIj5PcCXZX+LTFlma
-HiTQPcT4yKS8kpk6NVCxVK2z1JxYA9AqDLMUVnm8ilbv74qioAJ8d4wG05UQzW1E
-C7sVJ9SEquOSVRoKmcm6BZlmxp0aJNo8F0nYvGbezzLfPJeEEm1+TAT1yYTucAQb
-HL+iVdhrIRq+LOhd/joXQZ+ZRbt+/+lzVzaKuSr9HZkhDlMy1f68/H/bzNbPh80m
-1dH+g7opC+TNF9amLkLYDoKE6eGgYMLURC35hsZpCPKRNm/Y2LFXlBYhdaFqH7LD
-Judy4YJVITIIiq2x9V8pJbN1jusCy+PClPCFbhszq3NRVwXtgm7d0h6o3Tgh6qz/
-2IM/hjQhf/TYf/yN85TkY3EGYn9g8J2JIRcfHSJw5hrH0pM3Z4uSo8wjMkVcJgI4
-kSdtmZ16ZEsQ/W4FUnK6hTOHOwGy5XryniymufdnsNZy7ooyEBwFqUKIda1XDM3Z
-Bu9UW31prcO54dcG1KIYryR+6k8YkKeYL5o8LHUQky5jSaFSYjs=
-=vLY3
------END PGP SIGNATURE-----
+3. AK (attestation key)
 
---pbA7V8oDJQz7+NkG--
+What this is for: the attestation key is the key pair the TPM device 
+will use for signing its reports ("quotes") when asked to do so by the 
+keylime agent.
+
+The attestation key is established and authenticated cooperatively 
+between the TPM device, the keylime agent and the keylime registrar 
+using a very careful choreography. The keylime agent must guard against 
+someone spoofing the registrar (we use a pre-established server TLS cert 
+for this purpose, much like your browser does when it decides to trust 
+e.g. ibm.com). The keylime registrar decides whether to trust the 
+keylime agent sending it the EK pubkey and certificate as described above.
+
+I will not describe the roundtrip process to establish and activate the 
+attestation key.
+
+But *once this roundtrip is complete*, the TPM is "tied" to the keylime 
+registrar and will be able to respond to quote requests in a manner that 
+is not susceptible to MitM attacks ... which is the goal of the exercise.
+
+That's it. There are additional keys used by keylime for the purpose of 
+establishing direct connection between the agent and third parties 
+(called "tenants"), but those keys do not involve the TPM device so I'm 
+not going to describe them here.
+
+
+-- George
+
+
