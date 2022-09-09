@@ -1,88 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC6605B3F04
-	for <lists+openbmc@lfdr.de>; Fri,  9 Sep 2022 20:49:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42F535B413F
+	for <lists+openbmc@lfdr.de>; Fri,  9 Sep 2022 23:06:47 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MPQ5l6xslz3bgC
-	for <lists+openbmc@lfdr.de>; Sat, 10 Sep 2022 04:49:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MPT7m72zPz3bsy
+	for <lists+openbmc@lfdr.de>; Sat, 10 Sep 2022 07:06:44 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=tq0k9JRY;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=K5PWynNu;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=gheorghe@linux.vnet.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.17.20; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=tq0k9JRY;
+	dkim=pass (1024-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=badeba3b8450 header.b=K5PWynNu;
 	dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+X-Greylist: delayed 323 seconds by postgrey-1.36 at boromir; Sat, 10 Sep 2022 07:06:19 AEST
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MPQ5F6GLKz30D0
-	for <openbmc@lists.ozlabs.org>; Sat, 10 Sep 2022 04:49:21 +1000 (AEST)
-Received: from pps.filterd (m0187473.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 289Ig370033341;
-	Fri, 9 Sep 2022 18:49:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- mime-version : reply-to : subject : to : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=YeLmPAuDmgJ4Thqt5BLByxHgrNh56hqGgIMzo6XVgn4=;
- b=tq0k9JRY0SAxK08fD6eSpk2z35mXi1fSbrUMfyj93lnq2oFWh61fMTd6BJqoqjtWSq0K
- uVZgR4TCefbEpO9N0D/8LkvaMtToqtp2l9Jir/d8Hwg1tT8hqi/hlyTmH3UDygoU1mJu
- LEhLlVig4U0Vj4px8zelwBnBZ+XJ8+DA/pKctbc92VL8eURK/Dk8U3ZU2CgNBtaR/fPb
- Y5swTSXdQLwJgOXCIZereCdYJjKNbl/LLnR4RGEV7cR+/euKYvDMXBKre3hR5TiseVCy
- qUhC342W6+aXmug5a7L13kJ2UVqcueAlocFXn2LhuovXNe5xq2hicgTG9dAhE28ASrb1 Iw== 
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com [169.53.41.122])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3jgb0585pp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 09 Sep 2022 18:49:17 +0000
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
-	by ppma04dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 289ILes4022120;
-	Fri, 9 Sep 2022 18:49:16 GMT
-Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com [9.57.198.24])
-	by ppma04dal.us.ibm.com with ESMTP id 3jbxjajnu4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 09 Sep 2022 18:49:16 +0000
-Received: from b01ledav003.gho.pok.ibm.com (b01ledav003.gho.pok.ibm.com [9.57.199.108])
-	by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 289InF9X10093082
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 9 Sep 2022 18:49:16 GMT
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id E0E4FB2064;
-	Fri,  9 Sep 2022 18:49:15 +0000 (GMT)
-Received: from b01ledav003.gho.pok.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id BB37FB205F;
-	Fri,  9 Sep 2022 18:49:15 +0000 (GMT)
-Received: from [9.160.177.223] (unknown [9.160.177.223])
-	by b01ledav003.gho.pok.ibm.com (Postfix) with ESMTP;
-	Fri,  9 Sep 2022 18:49:15 +0000 (GMT)
-Message-ID: <20f2bb8a-ef2f-3ead-ca24-8d70caeebebb@linux.vnet.ibm.com>
-Date: Fri, 9 Sep 2022 14:49:15 -0400
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MPT7H2w38z2xJ2
+	for <openbmc@lists.ozlabs.org>; Sat, 10 Sep 2022 07:06:18 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+	s=badeba3b8450; t=1662757574;
+	bh=JLntwPoctWAoCyoxRVHbtaxMdOR9afywA5kpPqKGx+Q=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=K5PWynNu+N1d5ILTFWqPekIMYAtT4vNxWvMt3UwLW89vL4K8wbwjOut1FA2EYoEoB
+	 lCAF6sThd/xkVY0Xo0+DCwgZFCR8ZSUYFLezJ0UKwMfjmLqik4dKFstrZw2VvDSSop
+	 dPHavz7qicPuYPdmYzvjt3405MrjJtcx7DbKJgyQ=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from probook ([87.78.200.132]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Ml6m4-1pDTqL1i4C-00lR5z; Fri, 09
+ Sep 2022 23:00:21 +0200
+Date: Fri, 9 Sep 2022 23:00:19 +0200
+From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: Re: [PATCH v1 1/1] pinctrl: wpcm450: Correct the fwnode_irq_get()
+ return value check
+Message-ID: <YxupY5MGWddiY2mq@probook>
+References: <20220905191408.73794-1-andriy.shevchenko@linux.intel.com>
+ <YxkHaBKtiO9zVuKM@probook>
+ <Yxm9fB/5IJS3MXGu@smile.fi.intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.2.2
-Subject: Re: Security Working Group meeting - Wednesday August 31 - results
-Content-Language: en-US
-To: Michael Richardson <mcr@sandelman.ca>, openbmc@lists.ozlabs.org
-References: <b9bda737-8e4f-62d3-1000-c42b3326239e@linux.vnet.ibm.com>
- <101586.1662709990@dooku>
-From: George Almasi <gheorghe@linux.vnet.ibm.com>
-Organization: IBM
-In-Reply-To: <101586.1662709990@dooku>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: VwUxCRTefuS3W4v918lWnYWSszzAKWtK
-X-Proofpoint-ORIG-GUID: VwUxCRTefuS3W4v918lWnYWSszzAKWtK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-09_08,2022-09-09_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- malwarescore=0 adultscore=0 impostorscore=0 mlxscore=0 bulkscore=0
- suspectscore=0 spamscore=0 mlxlogscore=999 phishscore=0 lowpriorityscore=0
- clxscore=1011 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2207270000 definitions=main-2209090065
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="T4S0blP9/51qK21U"
+Content-Disposition: inline
+In-Reply-To: <Yxm9fB/5IJS3MXGu@smile.fi.intel.com>
+X-Provags-ID: V03:K1:r0wpIjMElmEi0hqV8F0RnUamSKCv8L6GjZxaIVBmve/tIxeyEb6
+ f3uFy7LBihUBoL1b59/bEm5igYVc+pPV3r746gI4FXNZQPBfYiGC/1JVM2t0DGqiyHPlcvF
+ tlqWEDCuEqV+AuOWwBUClSr4xvChsWpcjWWcCGBjS2F8XNaN/Uh68Es1eQBw2fNsJ4ouUpx
+ 2iOfzmpJXFdcsop/93O8Q==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:SjX9vNNbYWI=:XgOI8cvfkQqLqrHHYBy8/T
+ O17h+tGY6nyGGvNcUmciaoIjfV3KLr1rSznQv4zG6cmwbJ8iJguRGIpattiVCsIcW7Q/YJzPq
+ 6DOtXT3NUS5B1ov5ve8g7uKQ914Dy8QUheLv3dUaWactUpf7aTVuHvIuwIWPNQFVNZtf/Qyc/
+ +UD0wdsYVmrvED9UfnxsOtosvaD7NgRUbyjmEy3G0hcVGOLmIsT27PhZ1QDt4fqHU39JNmvUs
+ AXssZcfJsaJbEe/90H0L9i8jPs4e+/YYFirZTg4s8G0SlJzt+1nfhRfgTiocgQmYC9M+egey9
+ +Mz/+b0rbR2w/fqMIIEMJRgPwQ3COIt9pAjxXZ1xE3b8505cULkIEYd5oJoKewLZO+eZ7tgN+
+ FGB31TtGjy4JzIcSUU8sl3BmxGPMblwKIM8sXkX4QGlZeUxPWevoQDBI+2PBIQQWOwz/mOcpQ
+ Pg6WhxPqTAeaInYPJbJU7eVVo/MQ8ra7KtaQCtGP6HiKwl3zjYfCzKGPkaDOzgBsHV2Wb0Znp
+ W9MgSG2JY9JfdA2idb9Ul7Y4e1FVCYRUq6W313TFYsDAPa8Sb46CIn8Ffghc8Sd0AdNz6bAK4
+ nka8rVTcxg+EjAHINDJCYFze7sc46r11RJEXc9Z06ycqASISp0hX5MycHYjHodPfw+wDszopw
+ E8kXKEwqWk6hbXYCk4UiovdIduDIUYCjYG94WxVlQTxmmRVteT0jycvukDvJ3b2A9pz8ducF0
+ m9kFfxqGObCUk1PuEZ1d+MVus4fACnR0B4THsGibqcdyWFvAagZUt3yK/6V1BZYK5xr4L+P6h
+ XNoQQYD+C5mNKZyai60bDI/H3S1s2lTpKMSdjtrnvXvgIzOdd29BC36JkvTKHSvbkYmHRej82
+ RuStbnQCl/2Yjhj2vgldDny/+y2W/8+G1F48tmpMIhpbFHpz1QhQccDmQuUvvDWlskTOperzy
+ yqxcI9LqMZc0yfsVcOGqXu+m3TzKd5YVb5vB5wiBV1qiqD8Dmkw/TyqoT9EVU0CupfZruQ3Qe
+ isfRiFLGmJnl0uURHqGWIiFDs4x9DnXVqh0HGCAnl7t0jsA7QW7G36Q+KOcOU8D7SwnAYKpZA
+ Bfl/9YIvosw+53A6OhU1ZkV0bywUGJkNX1zL9EgraRBgGjNJnsJO5dF3dIFQJQkGo64opO67+
+ 6iVO76z+5aa680PuW804l0CSIl
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,85 +82,127 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: gheorghe@linux.vnet.ibm.com
+Cc: linux-gpio@vger.kernel.org, Linus Walleij <linus.walleij@linaro.org>, Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
+--T4S0blP9/51qK21U
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 9/9/22 3:53 AM, Michael Richardson wrote:
-> Thank you for the post.
-> I'm interested in understanding how you will do provisioning of the TPM keys.
-Hi Michael. I'm going to describe the standard keylime agent 
-registration process in a bit more detail -- but not too much, or this 
-will be a very long post indeed.
-
-1. EK certificate.
-
-What this is for: The EK certificate on each TPM is verifiable against 
-the root CA of the manufacturer, which gives us confidence that the TPM 
-is the genuine article and not a counterfeit.
-
-Keylime makes the assumption that the TPM device's EK certificate is 
-available on the device. While the
-EK certificate can be deleted from the TPM by the end user, devices 
-[ought to] ship with it from the TPM manufacturer.
-
-It is possible to use self-signed EK certificates for TPM devices. But 
-that weakens the chain of trust provided by keylime, since it involves 
-you -- the creator of said certs -- in the process, instead of using the 
-likes of Infineon or Nuvoton for the purpose. We think it is *always* 
-better to use the manufacturer's key if it is available, rather than 
-create our own keys and headaches. Keylime comes with a pre-populated 
-list of manufacturer certificates it will accept, and said list includes 
-the most widely used manufacturers of TPM devices. FWIW our AST2600 EVBs 
-have Nuvoton devices, whereas my Raspberry Pi has an Infineon Optiga :)
-
-2. Public EK (endorsement key)
-
-What this is for: This key defines the identity of the TPM device, and 
-is used as such by keylime. It is signed by the EK certificate. To some 
-degree of approximation this key pair is "burned into the device" -- not 
-literally true, but can be re-generated at will from seeds that *are* 
-burned into the device.
+Hello,
 
 
-The keylime agent usually (re)generates the EK and sends the public part 
-(the only part available to anyone outside the device) to the keylime 
-registrar, together with the EK certificate. The registrar can then make 
-a decision about whether the keylime agent has a genuine TPM device in 
-possession, and whether the message coming from network address X and 
-hostname Y really corresponds to the correct EK. This guards against say 
-spoofing an entire node with keylime.
+On Thu, Sep 08, 2022 at 01:01:32PM +0300, Andy Shevchenko wrote:
+> On Wed, Sep 07, 2022 at 11:04:40PM +0200, Jonathan Neusch=C3=A4fer wrote:
+> > On Mon, Sep 05, 2022 at 10:14:08PM +0300, Andy Shevchenko wrote:
+> > > fwnode_irq_get() may return all possible signed values, such as Linux
+> > > error code. Fix the code to handle this properly.
+> >=20
+> > It would be good to note explicitly here what a return value of zero
+> > means, i.e., as the documentation of of_irq_get says, "IRQ mapping
+> > failure", and why it should result in skipping this IRQ.
+>=20
+> Not that I'm fun of duplicating documentation in the commit message,
+> but it won't take much in this case.
+
+My problem with the description is that handling "all possible signed
+values" is fairly meaningless: The code arguably did that already, it
+did *something* for every possible value. The significant change of
+your patch is that the value zero is handled differently.
+
+IOW, what I miss is something along the lines of: "fwnode_irq_get can
+return zero to indicate some errors. Handle this case like other errors."
+
+> ...
+>=20
+> > >  		for (i =3D 0; i < WPCM450_NUM_GPIO_IRQS; i++) {
+> > > -			int irq =3D fwnode_irq_get(child, i);
+> > > +			int irq;
+> > > =20
+> > > +			irq =3D fwnode_irq_get(child, i);
+>=20
+> > (Unneccesary churn, but I'll allow it)
+>=20
+> The point here is to see that we actually check something that we just got
+> from somewhere else. It's slightly better for reading and maintaining the
+> code as I explained in [1].
+>=20
+> And there is a difference to the cases like
+>=20
+> static int foo(struct platform_device *pdev, ...)
+> {
+> 	struct device *dev =3D &pdev->dev;
+> 	...
+> }
+>=20
+> when we know ahead that if pdev is NULL, something is _so_ wrong that
+> it's not even our issue.
+>=20
+> [1]: https://lore.kernel.org/lkml/CAHp75Vda5KX5pVrNeueQEODoEy405eTb9SYJtt=
+s-Lm9jMNocHQ@mail.gmail.com/
+
+Ok, fair enough.
 
 
-3. AK (attestation key)
+>=20
+> > >  			if (irq < 0)
+> > >  				break;
+> > > +			if (!irq)
+> > > +				continue;
+> >=20
+> > Since irq =3D=3D 0 seems to be an error condition, the following seems =
+fine
+> > to me, and simpler:
+> >=20
+> > -			if (irq < 0)
+> > +			if (irq <=3D 0)
+> >  				break;
+>=20
+> Not sure it's the same by two reasons:
+>  1) break !=3D continue;
 
-What this is for: the attestation key is the key pair the TPM device 
-will use for signing its reports ("quotes") when asked to do so by the 
-keylime agent.
+Right, hence why I asked for reasoning why zero should be handled
+the way you propose to handle it.
 
-The attestation key is established and authenticated cooperatively 
-between the TPM device, the keylime agent and the keylime registrar 
-using a very careful choreography. The keylime agent must guard against 
-someone spoofing the registrar (we use a pre-established server TLS cert 
-for this purpose, much like your browser does when it decides to trust 
-e.g. ibm.com). The keylime registrar decides whether to trust the 
-keylime agent sending it the EK pubkey and certificate as described above.
+>  2) we might need to convert 0 to error if we ever go to report this
 
-I will not describe the roundtrip process to establish and activate the 
-attestation key.
+Good point.
 
-But *once this roundtrip is complete*, the TPM is "tied" to the keylime 
-registrar and will be able to respond to quote requests in a manner that 
-is not susceptible to MitM attacks ... which is the goal of the exercise.
+>=20
+> So, to me mapping error shouldn't be fatal to continue, but I would
+> like to hear your interpretation since you know this case much better
+> than me.
 
-That's it. There are additional keys used by keylime for the purpose of 
-establishing direct connection between the agent and third parties 
-(called "tenants"), but those keys do not involve the TPM device so I'm 
-not going to describe them here.
+However: In wpcm450_gpio_register, there is currently no reporting for
+mapping errors in this loop.
+
+I'm fine with either break or continue.
 
 
--- George
+Thanks,
+Jonathan
 
+--T4S0blP9/51qK21U
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmMbqUMACgkQCDBEmo7z
+X9vPTg//W68gSOfDJBQZ2/UeuyNZ5V9lnHuvyi6tBr+qM77qU9qZoqss1lcSbVq9
+vhtvGEPdFIvPKb61wU0qYM70Kr3TXHpsFHK9lUo25WZybUq32OJMFZYY0go0IQ2X
+FZ8VpUlb7lMOy0jwPu6ARQhyuVN1I5Cr6EnzWs8bhxAIJANqAMeqD85hsXmel3O8
+4IM+oa+26i5otyGZLeLQPAJO1ABWAExemevWsmfsghTcbSt1fTc34dbnyCCXrAE7
+d09YYaIu9SVHt584aIDMMdGwpXDxF1a4ObaRXvv6atMC07Ezs4zU12hATe+GVGx7
+0MCD+bh4RxjSCrAAKRDItN1nJqMFhZTTB0ugmneDAKzORoiV3iDCxCsABxsH1ds4
+u+yI+JAulbWdHsUOXfuns/qQqaTDPbLYdXE3asunOIRNlvTw+DwzuyJ5sIJfBclJ
+6FuIyv+DjjcEt9YRlKtZzkgMxGw0Z13ZvlVlZb9RS9A176xFO04J1m22Vy2Kj+TF
+5UouBkVh0OU9zkLHa+KRmcT88uvVgzK6YqvATSFBvcYGSV2r1Y3v2HlRWCrNxygy
+vqsgWN/d9dqeVLyj5vVUz3ksveKlFEJ8mhPAwHGxSiQUyOLQ/s6YS88GiMioBlFG
+hRoetTp8LXl9SbQyqmuuVzJsaFocIQ271MtXjOIWJou5+k8YN+o=
+=HFeK
+-----END PGP SIGNATURE-----
+
+--T4S0blP9/51qK21U--
