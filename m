@@ -1,70 +1,49 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B56A05B76C1
-	for <lists+openbmc@lfdr.de>; Tue, 13 Sep 2022 18:52:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6746F5B7B54
+	for <lists+openbmc@lfdr.de>; Tue, 13 Sep 2022 21:35:02 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MRqJw3QYNz3bbj
-	for <lists+openbmc@lfdr.de>; Wed, 14 Sep 2022 02:52:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MRtw443kfz3bc3
+	for <lists+openbmc@lfdr.de>; Wed, 14 Sep 2022 05:35:00 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=l3pW7udo;
+	dkim=pass (1024-bit key; unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=J6yyXrRU;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::630; helo=mail-ej1-x630.google.com; envelope-from=nanzhou@google.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.microsoft.com (client-ip=13.77.154.182; helo=linux.microsoft.com; envelope-from=dphadke@linux.microsoft.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=l3pW7udo;
+	dkim=pass (1024-bit key; unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=J6yyXrRU;
 	dkim-atps=neutral
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MRqJW1gTyz2y6N
-	for <openbmc@lists.ozlabs.org>; Wed, 14 Sep 2022 02:52:25 +1000 (AEST)
-Received: by mail-ej1-x630.google.com with SMTP id y17so23903221ejo.6
-        for <openbmc@lists.ozlabs.org>; Tue, 13 Sep 2022 09:52:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=UfjPK0us6r5SqOK7CHsz/d9V0odXmBKfa07yTmENprQ=;
-        b=l3pW7udoIaYcPOu1be+h+Kj01Nb9MdcXdStDcNdPbRAdKGgAWIe86rxtZGv0G5QG/X
-         XZ1DuTdnl008v6ZTkp0k0pY27pO/h8NPpHSXRhhyPfTjMjK86QuSqQ4KIKpA+wIN/k0G
-         jN4dwVvqykxeFwKgeMEXFptxFG44sjAIgLMHlS3lO0dgM/Kqd+110ZJxJiy97m7aYzZl
-         ZN4FDhlalG1oLztYkIO9WjhdhN8Ce0zt3mIA8mUNEduIfnbbmLQgQah+bp3grJ5rewrn
-         ISSlJ+dI3fayN/si9jaWgzkxoSLP+tF+5W2Nkc4rreG6L+xKc8mBkX1ZKlc0l/AZZ/bz
-         lT5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=UfjPK0us6r5SqOK7CHsz/d9V0odXmBKfa07yTmENprQ=;
-        b=u9dqwAV+VF6Z7mAV984PDLoj/cymSc5qDQD5RXUaEoWvVLD7CWq6foEac0y3RgN4Na
-         VoSnh9SjO2fEChg1A5SdELKgm0Aek6ID8k7gjuO7e4m/rFLZV7dSFeoGNdsugeKlpaag
-         9FotdfxYNA0B5lqgV7R9x2yeBagzlCYCncDnQMjp2vVCgjr+awqDmOx1xzfL3TxSx8BZ
-         1k7o+oDmtctd/tOzvtr40nDE/6EC23BqaM3MXhfLJe8fS6A1IAMYbXYPVod0Et3VHx+6
-         FDcmOtmTL7n3giZUS+sMSa+NWYxQiC7AB57EuDcIkL+DtxRyvm+523JPh0I4jCSgaLtB
-         8JrQ==
-X-Gm-Message-State: ACgBeo2Q2ZeU6lrEoJd4fXYJN3eVmeDlLo/D41iOOy6h6FHzk0FeRXhL
-	+VxfjbQY2acoCip1jOva3j2B+5bQWOKmEl/yjM4DOg==
-X-Google-Smtp-Source: AA6agR7NLrvYTgiK11MXH1TjKeJinMYkJbzJq0Kaa+6Dh0w443ee5a+9NNmmKCj99Deho7n+8Kg08hoAIf9B1i6/Yvc=
-X-Received: by 2002:a17:906:fe04:b0:777:b13d:30a6 with SMTP id
- wy4-20020a170906fe0400b00777b13d30a6mr17619029ejb.248.1663087937619; Tue, 13
- Sep 2022 09:52:17 -0700 (PDT)
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MRtvd31Wkz2y2F
+	for <openbmc@lists.ozlabs.org>; Wed, 14 Sep 2022 05:34:37 +1000 (AEST)
+Received: from [192.168.87.140] (unknown [50.35.69.86])
+	by linux.microsoft.com (Postfix) with ESMTPSA id 07E50204A5AA;
+	Tue, 13 Sep 2022 12:34:04 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 07E50204A5AA
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1663097644;
+	bh=fKjZnUSneqt9YETGvTCVYkz60NMw85shEJVCFMxyArw=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=J6yyXrRUnJ6IXnDfU2qZTVJnZfBjnMW36nKihKYYo7HdPMd//kLWA/qmUXTHNzaTO
+	 nHif48UM10Ug14UyTyrrUGkBW1OfL8sIK2gBlvdw6mfhEvLa18y1pgJrI1BtZ1vWFD
+	 YarLBDrH7+EwBVF2iN2chLoSpkE8I09Y7oLn0eAw=
+Message-ID: <03ad3fe7-af48-05ce-6846-be0e92735030@linux.microsoft.com>
+Date: Tue, 13 Sep 2022 12:34:04 -0700
 MIME-Version: 1.0
-References: <CAH2-KxBmFwVmF4cr+_eTFrwdz9-he--PPfRvW=cN6oNGf4KA_A@mail.gmail.com>
- <Ys6riEnZm5SP8v76@heinlein.stwcx.org.github.beta.tailscale.net>
- <CAH2-KxBYyg240d48oNRbhNyRK+JkdWrzOcjrxs2JU959=NGP+A@mail.gmail.com>
- <CAOLfGj4fje3YBb+RTwXOPEpcNVf4O9bZ4CZhpe=Ai=J8baSf_Q@mail.gmail.com>
- <CAOLfGj6Rxi6+cVoSVqY=GPUV48wNNq8FFEy0mk_zVHrNab+oSw@mail.gmail.com> <A17313F9-E043-4949-AD49-5953AECCDA48@fuzziesquirrel.com>
-In-Reply-To: <A17313F9-E043-4949-AD49-5953AECCDA48@fuzziesquirrel.com>
-From: Nan Zhou <nanzhou@google.com>
-Date: Tue, 13 Sep 2022 09:52:06 -0700
-Message-ID: <CAOLfGj7OieRNHxH_kgZMJxWuVSSbiW_W1iHsJ7UMwFjH6t11sQ@mail.gmail.com>
-Subject: Re: DBus ObjectManager Interface usages within the project
-To: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Content-Type: multipart/alternative; boundary="000000000000c14aca05e891d5a2"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: OpenBMC Boot time improvements
+Content-Language: en-US
+To: Patrick Williams <patrick@stwcx.xyz>, Ed Tanous <edtanous@google.com>
+References: <CAH2-KxCPOjWm8KeLFJTa7ZdTD-yZ5Bit_Ua3Hb=0X+O+89t3+w@mail.gmail.com>
+ <Yx+rDhB4v8qDkGrU@heinlein.stwcx.org.github.beta.tailscale.net>
+From: Dhananjay Phadke <dphadke@linux.microsoft.com>
+In-Reply-To: <Yx+rDhB4v8qDkGrU@heinlein.stwcx.org.github.beta.tailscale.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,56 +55,83 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ed Tanous <edtanous@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000c14aca05e891d5a2
-Content-Type: text/plain; charset="UTF-8"
 
-Oh, yeah, wrong URL. I meant
-https://github.com/search?l=C%2B%2B&q=org%3Aopenbmc+DIMM&type=Code.
+On 9/12/2022 2:56 PM, Patrick Williams wrote:
+ > On Mon, Sep 12, 2022 at 01:32:19PM -0700, Ed Tanous wrote:
+ >
+ >> Decompressing the dtb, initramfs, and kernel images is seconds 5-14.  If
+ >> there's a way to optimize that better that u-bmc has implemented 
+ahead of
+ >> us, that seems like an area for improvement that we could pull in.
+ >
+ > I switched some systems to use zstd instead of xz.  I'm not sure if that
+ > was done as a default or not, but it is significantly faster for
+ > decompression.
 
-Thanks for your correction.
+ > Kernel starts at ~20 seconds, then 3.5 seconds of dead air... not sure
+ > what's going on there.
 
-On Tue, Sep 13, 2022 at 8:46 AM Brad Bishop <bradleyb@fuzziesquirrel.com>
-wrote:
+Uhh, no. There's no decompression in u-boot, and kernel doesn't even
+start until 19s. Much of the time is spent by u-boot in loading FIT
+from flash.
 
->
->
-> > On Sep 12, 2022, at 12:54 PM, Nan Zhou <nanzhou@google.com> wrote:
-> >
-> > I searched all the DIMM daemons in the org.
-> https://github.com/openbmc/openpower-vpd-parser/search?q=DIMM
->
-> For what it is worth, this link is not searching the entire org, just the
-> openpower-vpd-parser repository.
->
+-- 
+[5.043504 0.000782]      Type:         Kernel Image
+[5.044270 0.000766]      Compression:  uncompressed
 
---000000000000c14aca05e891d5a2
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+[11.636475 0.000980]      Type:         RAMDisk Image
+[11.637248 0.000773]      Compression:  uncompressed
 
-<div dir=3D"ltr">Oh, yeah, wrong URL. I meant=C2=A0<a href=3D"https://githu=
-b.com/search?l=3DC%2B%2B&amp;q=3Dorg%3Aopenbmc+DIMM&amp;type=3DCode">https:=
-//github.com/search?l=3DC%2B%2B&amp;q=3Dorg%3Aopenbmc+DIMM&amp;type=3DCode<=
-/a>.<div><br></div><div>Thanks for your correction.</div></div><br><div cla=
-ss=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 13, 20=
-22 at 8:46 AM Brad Bishop &lt;<a href=3D"mailto:bradleyb@fuzziesquirrel.com=
-">bradleyb@fuzziesquirrel.com</a>&gt; wrote:<br></div><blockquote class=3D"=
-gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
-4,204,204);padding-left:1ex"><br>
-<br>
-&gt; On Sep 12, 2022, at 12:54 PM, Nan Zhou &lt;<a href=3D"mailto:nanzhou@g=
-oogle.com" target=3D"_blank">nanzhou@google.com</a>&gt; wrote:<br>
-&gt; <br>
-&gt; I searched all the DIMM daemons in the org. <a href=3D"https://github.=
-com/openbmc/openpower-vpd-parser/search?q=3DDIMM" rel=3D"noreferrer" target=
-=3D"_blank">https://github.com/openbmc/openpower-vpd-parser/search?q=3DDIMM=
-</a><br>
-<br>
-For what it is worth, this link is not searching the entire org, just the o=
-penpower-vpd-parser repository.<br>
-</blockquote></div>
+[19.914196 0.000063] Starting kernel ...
+-- 
 
---000000000000c14aca05e891d5a2--
+While enabling compression in FIT image can reduce flash read time, 
+based on my experimentation arm32 doesn't do well with decompression so 
+that time is somewhat compensated.
+
+Further,
+
+(1) Don't know what u-boot code you're running, but if you have
+following patch series included, I hoped spi-mem might work better
+by using spi-mem, where Aspeed's SPI controller's command mode
+implicitly generates command and address based and CPU accesses,
+instead of driver.
+
+https://lore.kernel.org/u-boot/20220819090115.1854805-1-chin-ting_kuo@aspeedtech.com/
+
+
+---
+[13.909357 2.254427] ## Loading fdt from FIT Image at 20080000 ...
+---
+
+(2) I found that libfdt in u-boot (loading FIT) and crypto lib don't
+perform well while booting directly from flash. I've a proposal which
+I'll send patch for is to do read out FIT image into RAM and then
+run bootm on mem address.
+
+In fact, there's infra in upstream u-boot [see
+cmd/disk.c:common_diskboot()] that reads FIT header to determine total
+size and reads that to memory.
+
+ > First serial line printed to u-boot "hit any key" startup init is 3
+ > seconds
+ > 3 seconds of countdown for "hit any key to stop autoboot".  I'm sure
+ > u-boot has a way to disable that, so there's 3 seconds right there.
+
+Default should be to allow shell for debug, while prod builds can turn
+it off just like gbmc already does?
+
+meta-google/conf/distro/gbmc.conf,
+- meta-phosphor/recipes-bsp/u-boot/u-boot-obmc.inc
+   - meta-phosphor/recipes-bsp/u-boot/files/disable-u-boot-shell.cfg
+     -> CONFIG_BOOTDELAY=-2
+
+
+I've some more thoughts on boot optimization, will post some changes.
+
+Regards,
+Dhananjay
