@@ -2,66 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4E6A5B91FB
-	for <lists+openbmc@lfdr.de>; Thu, 15 Sep 2022 03:05:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id C2AF15B91FC
+	for <lists+openbmc@lfdr.de>; Thu, 15 Sep 2022 03:05:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MSfBQ1hYXz3bXg
-	for <lists+openbmc@lfdr.de>; Thu, 15 Sep 2022 11:05:02 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MSfC7626Vz308b
+	for <lists+openbmc@lfdr.de>; Thu, 15 Sep 2022 11:05:39 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=apbvr37Q;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=jvdTS9Po;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e29; helo=mail-vs1-xe29.google.com; envelope-from=pkarthikeyan1509@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22c; helo=mail-lj1-x22c.google.com; envelope-from=pkarthikeyan1509@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=apbvr37Q;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=jvdTS9Po;
 	dkim-atps=neutral
-Received: from mail-vs1-xe29.google.com (mail-vs1-xe29.google.com [IPv6:2607:f8b0:4864:20::e29])
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MRfGf5Nfcz2xYy;
-	Tue, 13 Sep 2022 20:05:12 +1000 (AEST)
-Received: by mail-vs1-xe29.google.com with SMTP id 67so11831848vsv.2;
-        Tue, 13 Sep 2022 03:05:12 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MRfHW6ltzz2y6N;
+	Tue, 13 Sep 2022 20:05:59 +1000 (AEST)
+Received: by mail-lj1-x22c.google.com with SMTP id bn9so13726781ljb.6;
+        Tue, 13 Sep 2022 03:05:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date;
-        bh=H2GPXKvSx3sZyJASz8yHW4ewCUCpl9rAFhOHArq7AKk=;
-        b=apbvr37QxWB5aTCX9oc852/gmiihE3p7KxM/8xYsCWh1nrI9KhB6Z0g3r+vskWbe3K
-         5JTcQ+LhU4Lwzsc+DvmNWcKVlfBuYnTFfkGX74iclzo1oEBUXUtddRFZd+Lh/mYc8Mby
-         1/JKFwUeTUVIox4UnVsOfY1ab4vUj+wmpGts1t3o2HhsUJaIxU1+lVo6qJbwmWDDhpOI
-         5h2xxzbWvq0oRQb5ZPoFe6n5HEYsaEt0bd4IH9Vvt8vhcOTOAJrTbPl1nvX9HBgRcJMo
-         9J2L2RFA8J5Z4mnkIgBI44LchNE4WC3tP4qAstFXuAqA3JrPhCSqcvpPwxvufU9mPzFu
-         96iw==
+        bh=rlCYIezKXUB1wEtMepw03QU0c1WLv0X3vNaHwX8TlU4=;
+        b=jvdTS9PobM27JWSl7WbBN2SYEV4wqfagQxNCctvUe1EYJkXNMs1oP1UvxNIc9TtzDh
+         /su2jcKEl2rA/aAf3XHVpxj/G9jR9ozjTJW91lf7lNIhUMMo9cMCUshq0PcI/R602poc
+         HnUKuOz19xEkWxlxjQ7BJQNJJJo0mRnjEmhozgutPWyBjdfMr7WP87lkuzzVu798IKDl
+         iSM8/Vhpzwctm+kwPxbc32/ln5diDCyc4P1FBcZgEiWmWcNoVOmsLODh8Uddvu+yxzNO
+         9Nyv/iwg3XUqjHb48786DL6YEoHFr5Rr0+9MWjS13wYeY/PLBPJej/aSxEHZCKTllh2P
+         GKyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=H2GPXKvSx3sZyJASz8yHW4ewCUCpl9rAFhOHArq7AKk=;
-        b=3g3GoQ69YyJUaSUSgCcA/keESLicjD+e8aLK1/eiTB2dfm6zRSGRNc2ZSTm8f7c36D
-         JxBOYJd+53qdMYgsyTL+qKGd1tSqtxIKDmxFiNod4delUg/2N7nbLXHd6+Hq2VhqxsuV
-         DEIB4S2bn4OTqabykFYZ9rGp2LzVAwGDVKkXYqZruSl7u/JMGLXSEGPAJS7P5S4e3zVF
-         EI98J3PLKtxQ48JrnYhSFRQT/tD/EmR+wVAQE1/HkGbRynmCDwzfl3/tE8d1NNrPxC9l
-         JwdcZE9BSOIR5bDY0yo+3MsPF5tZP3dNrYzV1v4WeJRUHjoLpHahaT3IBa2ElUsZNeC9
-         QZhA==
-X-Gm-Message-State: ACgBeo2RLSxRBK9iSbGANSb9ODE/+rq8i284I0VLMW8tIUtowZFrdAy0
-	Eig97iBNm975rYUdb0ZTHDbhv4jzAylfnDwm3Xo=
-X-Google-Smtp-Source: AA6agR4oLhV6uYVniP7HPMf9G4ll61n9UNgRugIdm/xfeSVB1WcbXL0dAboBL3giGgZUjEJc7UDwoMXZ6aAI0pAUt/Y=
-X-Received: by 2002:a67:af12:0:b0:398:1072:47af with SMTP id
- v18-20020a67af12000000b00398107247afmr8618254vsl.39.1663063508087; Tue, 13
- Sep 2022 03:05:08 -0700 (PDT)
+        bh=rlCYIezKXUB1wEtMepw03QU0c1WLv0X3vNaHwX8TlU4=;
+        b=1bjbT429q7APYr/wXPgFCBEMm3gDmHKm3O+2KZadpiE48+DLTTL/TWqfnoErzKgBac
+         i000kL2AnTkZW4TS8blbRM1IHKh+kQts4z3MLSkyrqRKtrmT1LXxp+SfA5hCqjVFnNW/
+         P3izCChuFp0WZR2owvGh4mojRjn8jdqK4dS2YgcFPpjKznP9e+VmV4QHssryp+EEuD+o
+         pPALgZRjYdxa0rLhbtzgATX/Q45Xa9mfXhpD5QdNqQTOIfzquyapmI35nIl+qUN1jltf
+         HQ5dlRzmrSmf0xXOXsu+UTQh4Rm/AdFaxZnlF7+qSxuduhgTA/lohQZRdF2/VVQELtUH
+         LT7A==
+X-Gm-Message-State: ACgBeo1hhpkkbGzHBHc5UGeHq8hAzNY/80Q+sFwAO5LAk7ojS6E8u3H1
+	4/Gyb/A+2vj1IOgMpfp2Qw7pBj2O60v0OJ9FvkU=
+X-Google-Smtp-Source: AA6agR4LVExiTG4jc6yRVCVnbNT/PwWhJ8Y8ISBmMHbZpm1VuNoUOwvlM+4EOpIgTMo1Oxf2mvaWtojI6X4ng385cQs=
+X-Received: by 2002:a2e:8957:0:b0:261:d3c7:4d92 with SMTP id
+ b23-20020a2e8957000000b00261d3c74d92mr1317963ljk.23.1663063552187; Tue, 13
+ Sep 2022 03:05:52 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220907125035.GA28461@hcl-ThinkPad-T495> <Yx+zYP5qTuDrjP10@heinlein.stwcx.org.github.beta.tailscale.net>
-In-Reply-To: <Yx+zYP5qTuDrjP10@heinlein.stwcx.org.github.beta.tailscale.net>
+References: <20220907123810.GA27621@hcl-ThinkPad-T495> <Yx+zrEViePskgaWq@heinlein.stwcx.org.github.beta.tailscale.net>
+In-Reply-To: <Yx+zrEViePskgaWq@heinlein.stwcx.org.github.beta.tailscale.net>
 From: karthikeyan P <pkarthikeyan1509@gmail.com>
-Date: Tue, 13 Sep 2022 15:34:55 +0530
-Message-ID: <CA+ezb7iEFDPPv0MAv78U8j6wSy9AqExTTE=wK2rojm9Qyv4W9Q@mail.gmail.com>
-Subject: Re: [PATCH v2] ARM: dts: aspeed: yosemit V2: Update for Facebook
- Yosemite V2 BMC
+Date: Tue, 13 Sep 2022 15:35:37 +0530
+Message-ID: <CA+ezb7h91jZ7g_p_vzQipW70=_dLrSLKz18xBXLTRddEPaO86w@mail.gmail.com>
+Subject: Re: [PATCH v2] ARM: dts: aspeed: yosemitev2: Enable i2c13 controller
 To: Patrick Williams <patrick@stwcx.xyz>
-Content-Type: multipart/alternative; boundary="000000000000a3795a05e88c2554"
+Content-Type: multipart/alternative; boundary="0000000000004460d405e88c2885"
 X-Mailman-Approved-At: Thu, 15 Sep 2022 11:04:43 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -78,53 +77,57 @@ Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, Andrew Jeffery <a
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000a3795a05e88c2554
+--0000000000004460d405e88c2885
 Content-Type: text/plain; charset="UTF-8"
 
-Done.
+Yes, I agree.
 
-On Tue, Sep 13, 2022 at 4:02 AM Patrick Williams <patrick@stwcx.xyz> wrote:
+On Tue, Sep 13, 2022 at 4:03 AM Patrick Williams <patrick@stwcx.xyz> wrote:
 
-> On Wed, Sep 07, 2022 at 06:20:35PM +0530, Karthikeyan Pasupathi wrote:
+> On Wed, Sep 07, 2022 at 06:08:10PM +0530, Karthikeyan Pasupathi wrote:
+> > Added IPMB-13 channel for Debug Card communication.
 >
-> Please improve the title and commit message here.  "Update" is
-> insufficient for a title.  There is no description of _why_ in the commit
+> Wouldn't this be better to be the title?  'enable OCP debug card'  Might
+> need some reference to what an "OCP debug card" is in the commit
 > message.
 >
-> > Removed NIC EEPROM driver IPMB-12 channel and keeping it as
-> > "status ok".
 > >
 > > ---
-> > --- v2- Updated the title
+> > --- v2-Updated the title
 > > ---
 > >
 > > ---
-> > --- v1- Initial draft
+> > --- v1 - Initial draft.
 > > ---
 > >
 > > Signed-off-by: Karthikeyan Pasupathi <pkarthikeyan1509@gmail.com>
 > > ---
-> >  arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts | 6 ------
-> >  1 file changed, 6 deletions(-)
+> >  arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts | 11 +++++++++++
+> >  1 file changed, 11 insertions(+)
 > >
 > > diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
 > b/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
-> > index 8864e9c312a8..2293f10e94d6 100644
+> > index 8864e9c312a8..84236df522dc 100644
 > > --- a/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
 > > +++ b/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
-> > @@ -207,12 +207,6 @@
-> >
-> >  &i2c12 {
-> >       status = "okay";
-> > -     //MEZZ_FRU
-> > -     eeprom@51 {
-> > -             compatible = "atmel,24c64";
-> > -             reg = <0x51>;
-> > -             pagesize = <32>;
-> > -     };
+> > @@ -215,6 +215,17 @@
+> >       };
 > >  };
 > >
+> > +&i2c13 {
+> > +     status = "okay";
+> > +     // Debug Card
+> > +     multi-master;
+> > +     ipmb13@10 {
+> > +             compatible = "ipmb-dev";
+> > +             reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
+> > +             i2c-protocol;
+> > +     };
+> > +};
+> > +
 > >  &pwm_tacho {
+> >       status = "okay";
+> >       //FSC
 > > --
 > > 2.17.1
 > >
@@ -133,62 +136,65 @@ On Tue, Sep 13, 2022 at 4:02 AM Patrick Williams <patrick@stwcx.xyz> wrote:
 > Patrick Williams
 >
 
---000000000000a3795a05e88c2554
+--0000000000004460d405e88c2885
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Done. <br></div><br><div class=3D"gmail_quote"><div dir=3D=
-"ltr" class=3D"gmail_attr">On Tue, Sep 13, 2022 at 4:02 AM Patrick Williams=
- &lt;<a href=3D"mailto:patrick@stwcx.xyz">patrick@stwcx.xyz</a>&gt; wrote:<=
-br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
-x;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Wed, Sep 07, =
-2022 at 06:20:35PM +0530, Karthikeyan Pasupathi wrote:<br>
+<div dir=3D"ltr">Yes, I agree. <br></div><br><div class=3D"gmail_quote"><di=
+v dir=3D"ltr" class=3D"gmail_attr">On Tue, Sep 13, 2022 at 4:03 AM Patrick =
+Williams &lt;<a href=3D"mailto:patrick@stwcx.xyz">patrick@stwcx.xyz</a>&gt;=
+ wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
+0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Wed, =
+Sep 07, 2022 at 06:08:10PM +0530, Karthikeyan Pasupathi wrote:<br>
+&gt; Added IPMB-13 channel for Debug Card communication.<br>
 <br>
-Please improve the title and commit message here.=C2=A0 &quot;Update&quot; =
-is<br>
-insufficient for a title.=C2=A0 There is no description of _why_ in the com=
-mit<br>
+Wouldn&#39;t this be better to be the title?=C2=A0 &#39;enable OCP debug ca=
+rd&#39;=C2=A0 Might<br>
+need some reference to what an &quot;OCP debug card&quot; is in the commit<=
+br>
 message.<br>
 <br>
-&gt; Removed NIC EEPROM driver IPMB-12 channel and keeping it as<br>
-&gt; &quot;status ok&quot;.<br>
 &gt; <br>
 &gt; ---<br>
-&gt; --- v2- Updated the title<br>
+&gt; --- v2-Updated the title<br>
 &gt; ---<br>
 &gt; <br>
 &gt; ---<br>
-&gt; --- v1- Initial draft<br>
+&gt; --- v1 - Initial draft.<br>
 &gt; ---<br>
 &gt; <br>
 &gt; Signed-off-by: Karthikeyan Pasupathi &lt;<a href=3D"mailto:pkarthikeya=
 n1509@gmail.com" target=3D"_blank">pkarthikeyan1509@gmail.com</a>&gt;<br>
 &gt; ---<br>
-&gt;=C2=A0 arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts | 6 ------<=
-br>
-&gt;=C2=A0 1 file changed, 6 deletions(-)<br>
+&gt;=C2=A0 arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts | 11 ++++++=
++++++<br>
+&gt;=C2=A0 1 file changed, 11 insertions(+)<br>
 &gt; <br>
 &gt; diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts b/ar=
 ch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts<br>
-&gt; index 8864e9c312a8..2293f10e94d6 100644<br>
+&gt; index 8864e9c312a8..84236df522dc 100644<br>
 &gt; --- a/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts<br>
 &gt; +++ b/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts<br>
-&gt; @@ -207,12 +207,6 @@<br>
-&gt;=C2=A0 <br>
-&gt;=C2=A0 &amp;i2c12 {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0status =3D &quot;okay&quot;;<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0//MEZZ_FRU<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0eeprom@51 {<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0compatible =3D &quot;=
-atmel,24c64&quot;;<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0reg =3D &lt;0x51&gt;;=
-<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0pagesize =3D &lt;32&g=
-t;;<br>
-&gt; -=C2=A0 =C2=A0 =C2=A0};<br>
+&gt; @@ -215,6 +215,17 @@<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0};<br>
 &gt;=C2=A0 };<br>
 &gt;=C2=A0 <br>
+&gt; +&amp;i2c13 {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0status =3D &quot;okay&quot;;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0// Debug Card<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0multi-master;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0ipmb13@10 {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0compatible =3D &quot;=
+ipmb-dev&quot;;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0reg =3D &lt;(0x10 | I=
+2C_OWN_SLAVE_ADDRESS)&gt;;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0i2c-protocol;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0};<br>
+&gt; +};<br>
+&gt; +<br>
 &gt;=C2=A0 &amp;pwm_tacho {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0status =3D &quot;okay&quot;;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0//FSC<br>
 &gt; -- <br>
 &gt; 2.17.1<br>
 &gt; <br>
@@ -197,4 +203,4 @@ t;;<br>
 Patrick Williams<br>
 </blockquote></div>
 
---000000000000a3795a05e88c2554--
+--0000000000004460d405e88c2885--
