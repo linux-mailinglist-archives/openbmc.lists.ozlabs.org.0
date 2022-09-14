@@ -1,48 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6746F5B7B54
-	for <lists+openbmc@lfdr.de>; Tue, 13 Sep 2022 21:35:02 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BB6205B7E22
+	for <lists+openbmc@lfdr.de>; Wed, 14 Sep 2022 03:11:34 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MRtw443kfz3bc3
-	for <lists+openbmc@lfdr.de>; Wed, 14 Sep 2022 05:35:00 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MS2NM2P4yz30Bb
+	for <lists+openbmc@lfdr.de>; Wed, 14 Sep 2022 11:11:31 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=J6yyXrRU;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=jRwPwmol;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.microsoft.com (client-ip=13.77.154.182; helo=linux.microsoft.com; envelope-from=dphadke@linux.microsoft.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=134.134.136.20; helo=mga02.intel.com; envelope-from=jiaqing.zhao@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=J6yyXrRU;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=jRwPwmol;
 	dkim-atps=neutral
-Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MRtvd31Wkz2y2F
-	for <openbmc@lists.ozlabs.org>; Wed, 14 Sep 2022 05:34:37 +1000 (AEST)
-Received: from [192.168.87.140] (unknown [50.35.69.86])
-	by linux.microsoft.com (Postfix) with ESMTPSA id 07E50204A5AA;
-	Tue, 13 Sep 2022 12:34:04 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 07E50204A5AA
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
-	s=default; t=1663097644;
-	bh=fKjZnUSneqt9YETGvTCVYkz60NMw85shEJVCFMxyArw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=J6yyXrRUnJ6IXnDfU2qZTVJnZfBjnMW36nKihKYYo7HdPMd//kLWA/qmUXTHNzaTO
-	 nHif48UM10Ug14UyTyrrUGkBW1OfL8sIK2gBlvdw6mfhEvLa18y1pgJrI1BtZ1vWFD
-	 YarLBDrH7+EwBVF2iN2chLoSpkE8I09Y7oLn0eAw=
-Message-ID: <03ad3fe7-af48-05ce-6846-be0e92735030@linux.microsoft.com>
-Date: Tue, 13 Sep 2022 12:34:04 -0700
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MS2Mv625dz2yxd
+	for <openbmc@lists.ozlabs.org>; Wed, 14 Sep 2022 11:11:06 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1663117868; x=1694653868;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=4hhTqP0/V+vCzPJZLXM7LRMMWx5tpU/aTziqBSnlTo8=;
+  b=jRwPwmolaZeEtAw8Fh+C8nF+RogeEcdjXLq04BIGxsRXFUGkSca6Ogwp
+   PQdoOhcNPMhGK7A2xv1dJDkJN+qkOUA4jSb+r22YlMJoMxFPmtMxzt1q7
+   tipykv0s/o/2BmnrDAXheW3USOkcGhOZEUZfl0ial1bSU/uq7bE0YCUSn
+   fqMzc3Ta5RL/bQCS75HajSeQuvKd9iRnVwcUC6iQB9npYxHFeM+38DDlq
+   gkmtCkHMAyW+l2Q7+o78RXNJcC/TUPLfm8dr0n1bHgCFLm4MiTxIpTDe8
+   HM5RS9VlxRQ4bUFDEiVyTaWn2JzqDJ7DEOY9XOnh4qa4jKOTajGAptri7
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10469"; a="285341489"
+X-IronPort-AV: E=Sophos;i="5.93,313,1654585200"; 
+   d="scan'208";a="285341489"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Sep 2022 18:11:01 -0700
+X-IronPort-AV: E=Sophos;i="5.93,313,1654585200"; 
+   d="scan'208";a="567809005"
+Received: from jiaqingz-mobl.ccr.corp.intel.com (HELO [10.255.29.56]) ([10.255.29.56])
+  by orsmga003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Sep 2022 18:10:59 -0700
+Message-ID: <5346c9f6-1b7e-3c65-80a7-b06408bd95f3@linux.intel.com>
+Date: Wed, 14 Sep 2022 09:10:57 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: OpenBMC Boot time improvements
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH] net/ncsi: Add Intel OS2BMC OEM command
 Content-Language: en-US
-To: Patrick Williams <patrick@stwcx.xyz>, Ed Tanous <edtanous@google.com>
-References: <CAH2-KxCPOjWm8KeLFJTa7ZdTD-yZ5Bit_Ua3Hb=0X+O+89t3+w@mail.gmail.com>
- <Yx+rDhB4v8qDkGrU@heinlein.stwcx.org.github.beta.tailscale.net>
-From: Dhananjay Phadke <dphadke@linux.microsoft.com>
-In-Reply-To: <Yx+rDhB4v8qDkGrU@heinlein.stwcx.org.github.beta.tailscale.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Sam Mendoza-Jonas <sam@mendozajonas.com>,
+ Paul Fertser <fercerpav@gmail.com>
+References: <20220909025716.2610386-1-jiaqing.zhao@linux.intel.com>
+ <YxrWPfErV7tKRjyQ@home.paul.comp>
+ <8eabb29b-7302-d0a2-5949-d7aa6bc59809@linux.intel.com>
+ <Yxrun9LRcFv2QntR@home.paul.comp>
+ <36c12486-57d4-c11d-474f-f26a7de8e59a@linux.intel.com>
+ <F7F5AD32-901B-440A-8B1D-30C4283F18CD@mendozajonas.com>
+From: Jiaqing Zhao <jiaqing.zhao@linux.intel.com>
+In-Reply-To: <F7F5AD32-901B-440A-8B1D-30C4283F18CD@mendozajonas.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -55,83 +73,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Eric Dumazet <edumazet@google.com>, Paolo Abeni <pabeni@redhat.com>, "David S. Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
-On 9/12/2022 2:56 PM, Patrick Williams wrote:
- > On Mon, Sep 12, 2022 at 01:32:19PM -0700, Ed Tanous wrote:
- >
- >> Decompressing the dtb, initramfs, and kernel images is seconds 5-14.  If
- >> there's a way to optimize that better that u-bmc has implemented 
-ahead of
- >> us, that seems like an area for improvement that we could pull in.
- >
- > I switched some systems to use zstd instead of xz.  I'm not sure if that
- > was done as a default or not, but it is significantly faster for
- > decompression.
 
- > Kernel starts at ~20 seconds, then 3.5 seconds of dead air... not sure
- > what's going on there.
+On 2022-09-13 21:35, Sam Mendoza-Jonas wrote:
+> On September 13, 2022 3:12:06 AM GMT+01:00, Jiaqing Zhao <jiaqing.zhao@linux.intel.com> wrote:
+>>
+>>
+>> On 2022-09-09 15:43, Paul Fertser wrote:
+>>> Hello,
+>>>
+>>> On Fri, Sep 09, 2022 at 03:34:53PM +0800, Jiaqing Zhao wrote:
+>>>>> Can you please outline some particular use cases for this feature?
+>>>>>
+>>>> It enables access between host and BMC when BMC shares the network connection
+>>>> with host using NCSI, like accessing BMC via HTTP or SSH from host. 
+>>>
+>>> Why having a compile time kernel option here more appropriate than
+>>> just running something like "/usr/bin/ncsi-netlink --package 0
+>>> --channel 0 --index 3 --oem-payload 00000157200001" (this example uses
+>>> another OEM command) on BMC userspace startup?
+>>>
+>>
+>> Using ncsi-netlink is one way, but the package and channel id is undetermined
+>> as it is selected at runtime. Calling the netlink command on a nonexistent
+>> package/channel may lead to kernel panic.
+> 
+> If so, that would be a bug :)
 
-Uhh, no. There's no decompression in u-boot, and kernel doesn't even
-start until 19s. Much of the time is spent by u-boot in loading FIT
-from flash.
+Yes but I haven't found the root cause so far, it only panics with some specific
+NICs I remember.
 
--- 
-[5.043504 0.000782]      Type:         Kernel Image
-[5.044270 0.000766]      Compression:  uncompressed
+>>
+>> Why I prefer the kernel option is that it applies the config to all ncsi
+>> devices by default when setting up them. This reduces the effort and keeps
+>> compatibility. Lots of things in current ncsi kernel driver can be done via
+>> commands from userspace, but I think it is not a good idea to have a driver
+>> resides on both kernel and userspace.
+> 
+> BMCs are of course in their own world and there's already some examples of the config option, but how would a system owner be able to disable this without reflashing the BMC?
 
-[11.636475 0.000980]      Type:         RAMDisk Image
-[11.637248 0.000773]      Compression:  uncompressed
-
-[19.914196 0.000063] Starting kernel ...
--- 
-
-While enabling compression in FIT image can reduce flash read time, 
-based on my experimentation arm32 doesn't do well with decompression so 
-that time is somewhat compensated.
-
-Further,
-
-(1) Don't know what u-boot code you're running, but if you have
-following patch series included, I hoped spi-mem might work better
-by using spi-mem, where Aspeed's SPI controller's command mode
-implicitly generates command and address based and CPU accesses,
-instead of driver.
-
-https://lore.kernel.org/u-boot/20220819090115.1854805-1-chin-ting_kuo@aspeedtech.com/
-
-
----
-[13.909357 2.254427] ## Loading fdt from FIT Image at 20080000 ...
----
-
-(2) I found that libfdt in u-boot (loading FIT) and crypto lib don't
-perform well while booting directly from flash. I've a proposal which
-I'll send patch for is to do read out FIT image into RAM and then
-run bootm on mem address.
-
-In fact, there's infra in upstream u-boot [see
-cmd/disk.c:common_diskboot()] that reads FIT header to determine total
-size and reads that to memory.
-
- > First serial line printed to u-boot "hit any key" startup init is 3
- > seconds
- > 3 seconds of countdown for "hit any key to stop autoboot".  I'm sure
- > u-boot has a way to disable that, so there's 3 seconds right there.
-
-Default should be to allow shell for debug, while prod builds can turn
-it off just like gbmc already does?
-
-meta-google/conf/distro/gbmc.conf,
-- meta-phosphor/recipes-bsp/u-boot/u-boot-obmc.inc
-   - meta-phosphor/recipes-bsp/u-boot/files/disable-u-boot-shell.cfg
-     -> CONFIG_BOOTDELAY=-2
-
-
-I've some more thoughts on boot optimization, will post some changes.
-
-Regards,
-Dhananjay
+Given that ncsi driver is a driver binding to the PHY driver, it seems to be unable
+to make it a module and have some module options. So far build option seems to be
+the only way. Maybe in future sysfs entries can be added to make it configurable at
+runtime.
