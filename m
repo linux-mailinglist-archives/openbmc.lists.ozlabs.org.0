@@ -2,74 +2,80 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A5F345B9BDA
-	for <lists+openbmc@lfdr.de>; Thu, 15 Sep 2022 15:31:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 598F35B9E1C
+	for <lists+openbmc@lfdr.de>; Thu, 15 Sep 2022 17:05:46 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MSylj2XBcz3bvZ
-	for <lists+openbmc@lfdr.de>; Thu, 15 Sep 2022 23:31:29 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MT0rR595qz3bkl
+	for <lists+openbmc@lfdr.de>; Fri, 16 Sep 2022 01:05:43 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=diPv9eE8;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=dUdvHsM0;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::536; helo=mail-pg1-x536.google.com; envelope-from=logananth13.hcl@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::230; helo=mail-lj1-x230.google.com; envelope-from=fercerpav@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=diPv9eE8;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=dUdvHsM0;
 	dkim-atps=neutral
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MSyl96Nynz3bYG;
-	Thu, 15 Sep 2022 23:31:00 +1000 (AEST)
-Received: by mail-pg1-x536.google.com with SMTP id s206so17352067pgs.3;
-        Thu, 15 Sep 2022 06:31:00 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MT0qy0mYNz2xJD
+	for <openbmc@lists.ozlabs.org>; Fri, 16 Sep 2022 01:05:17 +1000 (AEST)
+Received: by mail-lj1-x230.google.com with SMTP id a21so6450798ljq.7
+        for <openbmc@lists.ozlabs.org>; Thu, 15 Sep 2022 08:05:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=user-agent:content-disposition:mime-version:message-id:subject:cc
-         :to:date:from:from:to:cc:subject:date;
-        bh=zoTspqWd5bEUesqew89wekkGeLmxDKVtWg/6vWPEcVA=;
-        b=diPv9eE8ZrjRMgwOHQWjWF7Z3I+kFUmpzeiv6mqpxAgU4cEEX1w2q7V+jd97klVSCN
-         +JNMReRmpwdKOwCsOfk2qlyQ9yuXGnxa6bmo7ULGWFjMjwCbuGTG2wMv9ZB44tdkwp8G
-         V4XHzlQvSaUl6l1jnC0yut0SW42DfqWy6kkrcsJb6TzbnhclFeM4pm8lmN8IHlixOboI
-         35wwCP2tbRIdT11qQYFA30qAaLcgpL6FUug9a44EufETzK+2ARUOXutidYAFks248RCt
-         cBbQfK0pWiFqIf+Ot9rEJZM1LlhXYkGT3Vu2+H8dqAmQhbDoVKGj91TTen8o4rNMQPq/
-         eHbQ==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=KrMOMSoAx+6s+xHyFyZE//WnQrsueNlEf69eU+DK7ZM=;
+        b=dUdvHsM00x9jGXPw2NCeivZQzsbupYObv0uhJnQgWGxXMtDfSBI59g/wut8dq4ETZK
+         orQszUVNoghirKRpNTUeXJf8ZeLveXy29xaEScg/i6Z0WoNCNRsUSgKuxhcTg3C5A3OI
+         +vr7j2iK0mjIT6jCBGIeGEdtf1ZQR7+K9u+cP43swc2px0+UssKwvn7uoiXlh5qAIVNW
+         I2ebSFUIrjjWXrhlfIa1mb203H1+yiBWSk9SGXvpkRqFmdCR6mi5qZtmEIaxoIqrR+bf
+         A7FfsNxoLraHWMPewc2RrpnxB5fP2SBp7KLki+SCxqEsTXr1CKOUl1mnEkrbn7sNxEgh
+         IDjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=user-agent:content-disposition:mime-version:message-id:subject:cc
-         :to:date:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=zoTspqWd5bEUesqew89wekkGeLmxDKVtWg/6vWPEcVA=;
-        b=B16atsxRxIHVaKqGQg3eWt9f/VdU+jd1AAmmw3wSb1dRhy0vDEbmT13Bi2xC34mO7m
-         VQUgqSMRa+sYnCzn4fXMXDSXJd1KsKcRnVkGTSrVvMG0Cfz9V+7+d7wivZeezSfUbvMS
-         YasiyYikFSWVqDy7bC+onBd/2ZiqhV5GgsuIHQp1ZI/hxakqCkGsseKVwWIm8jO35gbJ
-         pQ7uK3ALZFyrGOw+l+dNOZQr1uj7m368LUyp8NtsgxEjSxsK8WrW9O6glI3is/Cvc8c5
-         QrOf8rht2LTP+6Jr0RMqTsBehuUPQrxwcX/1wOp+QgWXkuL1n5Y7XIafENzkFxuKADdF
-         PZMA==
-X-Gm-Message-State: ACgBeo3POzbTyEmJgOFJMcZ4KkamOAx/jMTXXPRsHZDZ415RRWhnRhlZ
-	i2Dv9HJDMYii2QejgBMlbrQ=
-X-Google-Smtp-Source: AA6agR4bMIf/3jAPwqIs8t1E4svX1XsycKqQB3/V+I5xeEwg3OdKocTDsW3R1hzYfIzaamKTuHcK7g==
-X-Received: by 2002:a65:5941:0:b0:41d:a203:c043 with SMTP id g1-20020a655941000000b0041da203c043mr35592296pgu.483.1663248658051;
-        Thu, 15 Sep 2022 06:30:58 -0700 (PDT)
-Received: from logan-ThinkPad-T14-Gen-1 ([117.241.76.28])
-        by smtp.gmail.com with ESMTPSA id u1-20020a17090341c100b00176ba091cd3sm9464771ple.196.2022.09.15.06.30.52
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Thu, 15 Sep 2022 06:30:57 -0700 (PDT)
-From: Logananth Sundararaj <logananth13.hcl@gmail.com>
-X-Google-Original-From: Logananth Sundararaj <logananth_s@hcl.com>
-Date: Thu, 15 Sep 2022 19:00:49 +0530
-To: Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-	soc@kernel.org, Rob Herring <robh+dt@kernel.org>,
-	Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
-	linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-	linux-kernel@vger.kernel.org, linux-aspeed@lists.ozlabs.org,
-	openbmc@lists.ozlabs.org
-Subject: [PATCH v6] ARM: dts: aspeed: Adding Facebook Yosemite V3.5 BMC
-Message-ID: <20220915133049.GA9319@logan-ThinkPad-T14-Gen-1>
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=KrMOMSoAx+6s+xHyFyZE//WnQrsueNlEf69eU+DK7ZM=;
+        b=XIFTlf8iWUBNZ3BzzkCa0Nl01t4vAGPaonHIl1294qNCDS3j7cCKs6Az9RApsLdesv
+         mM39KwqxIe7VJVyERbdcyeYNetpbT/msvuCe68Mjcf4hAmXDlp9NoxvI+ahv1p3w9YtF
+         8DiGv1hOd7NCsaWK7Js+t0ivciAPYMLslcYUmacN0eI6j8rdblA7nqe14kpRo5pUwyjX
+         9K7bOQW6ku8RRUMjdNm6ihCG+kKgniGI9BN4DMtyrqpLENrJjXdnDmSypdrJr6CJ6FYm
+         Fq76Gv/aED3pQfOMKxWuz9zpHgQ2elhOt2lg39h5vGQN0w6sAzlez0sGAXxNbAWm6u7h
+         3zWQ==
+X-Gm-Message-State: ACrzQf3pc87aX9DdhZ1LXRBvZKBjD50toACpuICIW2TKcN3FhHYZGuxk
+	DpSdPIkoZgMVesQuKd4/pfg=
+X-Google-Smtp-Source: AMsMyM4QIJk3UMyJTjNusHD91hpUvRMcoX2DUCzi0vGh8IGcTjIBhunYINHfScNcSa7zZApRGC2b9A==
+X-Received: by 2002:a2e:a0d4:0:b0:26b:ee65:261a with SMTP id f20-20020a2ea0d4000000b0026bee65261amr56423ljm.83.1663254310437;
+        Thu, 15 Sep 2022 08:05:10 -0700 (PDT)
+Received: from home.paul.comp (paulfertser.info. [2001:470:26:54b:226:9eff:fe70:80c2])
+        by smtp.gmail.com with ESMTPSA id g7-20020a056512118700b0048a921664e8sm3016402lfr.37.2022.09.15.08.05.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 15 Sep 2022 08:05:09 -0700 (PDT)
+Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
+	by home.paul.comp (8.15.2/8.15.2/Debian-22) with ESMTP id 28FF56Oh021860;
+	Thu, 15 Sep 2022 18:05:07 +0300
+Received: (from paul@localhost)
+	by home.paul.comp (8.15.2/8.15.2/Submit) id 28FF55xY021859;
+	Thu, 15 Sep 2022 18:05:05 +0300
+Date: Thu, 15 Sep 2022 18:05:05 +0300
+From: Paul Fertser <fercerpav@gmail.com>
+To: Johnathan Mantey <johnathanx.mantey@intel.com>
+Subject: Re: SATA hotplug notifications for BMC inventory updates
+Message-ID: <YyM/IcDAWX4l1r5U@home.paul.comp>
+References: <YxXZeFQhJWDSHSVf@home.paul.comp>
+ <2cdb6ea6-fc85-9835-d410-01195148a3eb@intel.com>
+ <Yxin03RwpUvVPsAy@home.paul.comp>
+ <2f56b77e-a7a2-3577-c868-90fa6226f483@intel.com>
+ <Yxr6OmHDrzQVSaYr@home.paul.comp>
+ <89592b7f-784c-d94c-8a81-57cb49a3bcce@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <89592b7f-784c-d94c-8a81-57cb49a3bcce@intel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,312 +87,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: thangavel.k@hcl.com, velumanit@hcl.com, naveen.mosess@hcl.com
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The Yosemite V3.5 is a facebook multi-node server
-platform that host four OCP server. The BMC
-in the Yosemite V3.5 platform based on AST2600 SoC.
+Hello Johnathan,
 
-This patch adds linux device tree entry related to
-Yosemite V3.5 specific devices connected to BMC SoC.
+On Fri, Sep 09, 2022 at 07:12:21AM -0700, Johnathan Mantey wrote:
+> What I'm trying to convey is that as a contract worker I have access to some
+> information I may not be authorized to divulge. This is a public forum, and I
+> need to tread carefully so that I don't divulge information that impacts my
+> employment.
 
-Signed-off-by: Logananth Sundararaj <logananth_s@hcl.com>
+Thank you for the reply, it's now all pretty clear to me, much
+appreciated.
 
----
---- v6 - commit and version updated.
---- v5 - Aligned and formatted.
---- v4 - Bootagrs and memory removed.
---- v3 - Addressed v2 patch comments.
---- v2 - Enabled i2c drivers.
---- v1 - Initial draft.
----
+> The starting point for this conversation was HDD insertion/removal event
+> detection.
+> Which then evolved to HDD MFR/Model Num access.
 
----
- arch/arm/boot/dts/Makefile                    |   1 +
- .../boot/dts/aspeed-bmc-facebook-fby35.dts    | 260 ++++++++++++++++++
- 2 files changed, 261 insertions(+)
- create mode 100644 arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts
+Manufacturer, model and serial number are all needed for proper
+inventory. I mentioned hotplug events because cold plug is not
+problematic at all: UEFI can enumerate all the devices and send
+information via IPMB to BMC on startup.
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 7e0934180724..58add093e5fb 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -1465,6 +1465,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	aspeed-bmc-facebook-cloudripper.dtb \
- 	aspeed-bmc-facebook-cmm.dtb \
- 	aspeed-bmc-facebook-elbert.dtb \
-+	aspeed-bmc-facebook-fby35.dtb \
- 	aspeed-bmc-facebook-fuji.dtb \
- 	aspeed-bmc-facebook-galaxy100.dtb \
- 	aspeed-bmc-facebook-minipack.dtb \
-diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts
-new file mode 100644
-index 000000000000..f2164c69cbb1
---- /dev/null
-+++ b/arch/arm/boot/dts/aspeed-bmc-facebook-fby35.dts
-@@ -0,0 +1,260 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+// Copyright (c) 2020 Facebook Inc.
-+
-+/dts-v1/;
-+
-+#include "aspeed-g6.dtsi"
-+#include <dt-bindings/gpio/aspeed-gpio.h>
-+#include <dt-bindings/i2c/i2c.h>
-+
-+/ {
-+	model = "Facebook fby35";
-+	compatible = "facebook,fby35", "aspeed,ast2600";
-+
-+	aliases {
-+		serial4 = &uart5;
-+	};
-+
-+	chosen {
-+		stdout-path = &uart5;
-+	};
-+
-+	iio-hwmon {
-+		compatible = "iio-hwmon";
-+		io-channels = <&adc0 0>, <&adc0 1>, <&adc0 2>, <&adc0 3>,
-+			<&adc0 4>, <&adc0 5>, <&adc0 6>, <&adc0 7>,
-+			<&adc1 0>, <&adc1 1>, <&adc1 2>, <&adc1 3>,
-+			<&adc1 4>, <&adc1 5>, <&adc1 6>;
-+	};
-+
-+	spi_gpio: spi-gpio {
-+		status = "okay";
-+		compatible = "spi-gpio";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		gpio-sck = <&gpio0 ASPEED_GPIO(X, 3) GPIO_ACTIVE_HIGH>;
-+		gpio-mosi = <&gpio0 ASPEED_GPIO(X, 4) GPIO_ACTIVE_HIGH>;
-+		gpio-miso = <&gpio0 ASPEED_GPIO(X, 5) GPIO_ACTIVE_HIGH>;
-+		num-chipselects = <1>;
-+		cs-gpios = <&gpio0 ASPEED_GPIO(X, 0) GPIO_ACTIVE_LOW>;
-+
-+		tpmdev@0 {
-+			compatible = "tcg,tpm_tis-spi";
-+			spi-max-frequency = <33000000>;
-+			reg = <0>;
-+		};
-+	};
-+};
-+
-+&mac3 {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rmii4_default>;
-+	no-hw-checksum;
-+	use-ncsi;
-+	mlx,multi-host;
-+	ncsi-ctrl,start-redo-probe;
-+	ncsi-ctrl,no-channel-monitor;
-+	ncsi-package = <1>;
-+	ncsi-channel = <1>;
-+	ncsi-rexmit = <1>;
-+	ncsi-timeout = <2>;
-+};
-+
-+&uart1 {
-+	status = "okay";
-+};
-+
-+&uart2 {
-+	status = "okay";
-+};
-+
-+&uart3 {
-+	status = "okay";
-+};
-+
-+&uart4 {
-+	status = "okay";
-+};
-+
-+&uart5 {
-+	status = "okay";
-+	compatible = "snps,dw-apb-uart";
-+};
-+
-+&wdt1 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_wdtrst1_default>;
-+	aspeed,reset-type = "soc";
-+	aspeed,external-signal;
-+	aspeed,ext-push-pull;
-+	aspeed,ext-active-high;
-+	aspeed,ext-pulse-duration = <256>;
-+};
-+
-+&rtc {
-+	status = "okay";
-+};
-+
-+&fmc {
-+	status = "okay";
-+	flash@0 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "spi0.0";
-+		spi-max-frequency = <50000000>;
-+		#include "openbmc-flash-layout-128.dtsi"
-+	};
-+	flash@1 {
-+		status = "okay";
-+		m25p,fast-read;
-+		label = "spi0.1";
-+		spi-max-frequency = <50000000>;
-+	};
-+};
-+
-+&i2c0 {
-+	// Host1 IPMB bus
-+	status = "okay";
-+	multi-master;
-+	ipmb0@10 {
-+		compatible = "ipmb-dev";
-+		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
-+		i2c-protocol;
-+	};
-+};
-+
-+&i2c1 {
-+	// Host2 IPMB bus
-+	status = "okay";
-+	multi-master;
-+	ipmb1@10 {
-+		compatible = "ipmb-dev";
-+		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
-+		i2c-protocol;
-+	};
-+};
-+
-+&i2c2 {
-+	// Host3 IPMB bus
-+	status = "okay";
-+	multi-master;
-+	ipmb2@10 {
-+		compatible = "ipmb-dev";
-+		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
-+		i2c-protocol;
-+	};
-+};
-+
-+&i2c3 {
-+	// Host4 IPMB bus
-+	status = "okay";
-+	multi-master;
-+	ipmb3@10 {
-+		compatible = "ipmb-dev";
-+		reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
-+		i2c-protocol;
-+	};
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+};
-+
-+&i2c5 {
-+	status = "okay";
-+};
-+
-+&i2c6 {
-+	status = "okay";
-+};
-+
-+&i2c7 {
-+	status = "okay";
-+};
-+
-+&i2c8 {
-+	// NIC SENSOR TEMP
-+	status = "okay";
-+	tmp421@1f {
-+		compatible = "ti,tmp421";
-+		reg = <0x1f>;
-+	};
-+};
-+
-+&i2c9 {
-+	// Debug-Card IPMB bus
-+	status = "okay";
-+	multi-master;
-+	ipmb9@30 {
-+		compatible = "ipmb-dev";
-+		reg = <(0x30 | I2C_OWN_SLAVE_ADDRESS)>;
-+		i2c-protocol;
-+	};
-+};
-+
-+&i2c10 {
-+	status = "okay";
-+};
-+
-+&i2c11 {
-+	// FRU EEPROM
-+	status = "okay";
-+	eeprom@51 {
-+		compatible = "atmel,24c64";
-+		reg = <0x51>;
-+		pagesize = <32>;
-+	};
-+};
-+
-+&i2c12 {
-+	status = "okay";
-+	// INLET TEMP
-+	tmp75@4e {
-+		compatible = "ti,tmp75";
-+		reg = <0x4e>;
-+	};
-+	// OUTLET TEMP
-+	tmp75@4f {
-+		compatible = "ti,tmp75";
-+		reg = <0x4f>;
-+	};
-+};
-+
-+&i2c13 {
-+	status = "okay";
-+};
-+
-+&adc0 {
-+	ref_voltage = <2500>;
-+	status = "okay";
-+
-+	pinctrl-0 = <&pinctrl_adc0_default &pinctrl_adc1_default
-+		&pinctrl_adc2_default &pinctrl_adc3_default
-+		&pinctrl_adc4_default &pinctrl_adc5_default
-+		&pinctrl_adc6_default &pinctrl_adc7_default>;
-+};
-+
-+&adc1 {
-+	ref_voltage = <2500>;
-+	status = "okay";
-+
-+	pinctrl-0 = <&pinctrl_adc8_default &pinctrl_adc9_default
-+		&pinctrl_adc10_default &pinctrl_adc11_default
-+		&pinctrl_adc12_default &pinctrl_adc13_default>;
-+};
-+
-+&ehci0 {
-+	status = "okay";
-+};
-+
-+&ehci1 {
-+	status = "okay";
-+};
-+
-+&uhci {
-+	status = "okay";
-+};
+> Which then evolved into RAID controllers.
+
+That also follows naturally as when the storage is attached to a RAID
+controller, or an HBA in non-RAID mode, or handled by Intel VROC the
+BMC might need to communicate with them to show accurate
+inventory. And if we're talking to a controller anyway it's nice to
+implement RAID management as well. And I know that's working with
+other BMCs, so the hardware connections must be there already, we just
+need to write software to make use of them.
+
 -- 
-2.17.1
-
+Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
+mailto:fercerpav@gmail.com
