@@ -1,72 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 084F75BC399
-	for <lists+openbmc@lfdr.de>; Mon, 19 Sep 2022 09:45:47 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 39DA45BC39D
+	for <lists+openbmc@lfdr.de>; Mon, 19 Sep 2022 09:47:00 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MWGtv51G1z3bWM
-	for <lists+openbmc@lfdr.de>; Mon, 19 Sep 2022 17:45:43 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MWGwJ16Xhz2yP8
+	for <lists+openbmc@lfdr.de>; Mon, 19 Sep 2022 17:46:56 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Ejrsy+9l;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=WqJhRC6J;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::42e; helo=mail-wr1-x42e.google.com; envelope-from=pbrobinson@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::629; helo=mail-ej1-x629.google.com; envelope-from=pbrobinson@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Ejrsy+9l;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=WqJhRC6J;
 	dkim-atps=neutral
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MTXH91kBfz30Qc;
-	Fri, 16 Sep 2022 21:42:11 +1000 (AEST)
-Received: by mail-wr1-x42e.google.com with SMTP id b5so35568137wrr.5;
-        Fri, 16 Sep 2022 04:42:11 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MTXbG1bNrz2yxG;
+	Fri, 16 Sep 2022 21:56:09 +1000 (AEST)
+Received: by mail-ej1-x629.google.com with SMTP id u9so48964808ejy.5;
+        Fri, 16 Sep 2022 04:56:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date;
-        bh=fbzru9oHx+TSiEWcFp9fwWwozXKgV6W0npBCadl+J1g=;
-        b=Ejrsy+9lIaUA+qm8DjWAbq3S2+Q9a1WDr96qLnv8boxXDLxt7EIyP+16PJJVOZhxQW
-         X6/90B8plL4Eb5W5tn64iJHBmeVlAALlXZvSPI4r+2QuaUh8BhU5pNc1ro07vM2kcMZq
-         2I9BfRj4B+Kbum1PrfjkQCi1FxOXkOOKlV0tcOlpOGAnu9084a2D4IoIzKPeYWAiARx4
-         Gf2PPLZ1eVG7IuCqKxy4hXLI2WUbH5K6r70lSa5jO9MGjRwtqwOqvN1jxOLAIP/6b80+
-         41x9sOiaO++6DbfDl3obVOIN/ZjaQOixbahSQTLy2AiKfKcLFyCqqo6DopKBRzGp06ES
-         zkUw==
+        bh=x14L5nWN4Vy/JiW326iHsOtIjJf1QJbgmD95EAtZRbE=;
+        b=WqJhRC6Jhe9fMZsv5wEIKkEdPLGutrQ7JDTdPexz21O9E3nlaIMpQp6Fp4z2ZVD4pf
+         3s7AQByd87b9QM7mkv9RuGz1mwYFXtPe3FBW0/GqyQ9Zh/526EJzoperb/IZV8m4tCTJ
+         P+wNPKWgPno/0UhunQqWXGMe97HUhNm5bIey+RCKlNIPmij4Gihfg6GUYAJMhO0LWZOy
+         lnzyfrIoWiVfeAzKkvtnaFUvvKx2eVcMHtaLDr3CbAUIhiOUZJvyoeDe7eU/bCF1kXnJ
+         uVb/CBJyp0yyzvuisZ/nqwQA6a6FQDHF2U/taSpIByq1MfTL0bPQhDm1tVKjjujjG86u
+         z2xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=fbzru9oHx+TSiEWcFp9fwWwozXKgV6W0npBCadl+J1g=;
-        b=5hK9/3ZthY/niFq0WxU3Jtr1z7u72tW5Uxq4KBCYcosf8HXbuDpnN2j27uZ6eTBPf2
-         rALjGubiMMHz0dzap5nyQmSv+ytBebchopVbA0/C6Lf4l6tHchsiXFUzJY4qMV6Nemet
-         BsaDoCy2RJn5BGnzz53lndN3QMxKWHABpHoGO7JO+1tzeYUvW2L4jsCQp13HlTu7xucb
-         YA5JIScHMg8OUPAJL8G+gMtpAf5MVSKeIR7lDX07Pp5BK7K9p2QwkDjzZo6KG4k8l0HU
-         u64PaXPcwHK2ZAtXdOX8eE87QtydLeUTYKAXJq0C8u3ebSnwu4GIQiNLqubPV1zFsJu/
-         4/dg==
-X-Gm-Message-State: ACrzQf1WV+PWSuO/B4sjqd/BHyWICSO0N0XZ/3+PYpv42VlcJ3VIRO6c
-	ms+15c7blHUo8dgJvqN8gHw=
-X-Google-Smtp-Source: AMsMyM6UknjgktM0D2TTi3h6bBytobpcf5izrZirHXjgyjHzRW07O+0m+lmv7ERYSUYwIFmxFi5XiA==
-X-Received: by 2002:a5d:6808:0:b0:22a:c437:5b36 with SMTP id w8-20020a5d6808000000b0022ac4375b36mr2581813wru.459.1663328522170;
-        Fri, 16 Sep 2022 04:42:02 -0700 (PDT)
+        bh=x14L5nWN4Vy/JiW326iHsOtIjJf1QJbgmD95EAtZRbE=;
+        b=p7B+kXUcXIYTIRIO1/38ZmduL0X0uzG3set1HDOr5A8SAedvfPv2hzakIkQStD99qy
+         85kNgDuf3r7uVNr/E9HHC7ewUkK5DFBJvn1xa9rYj1J3dhRZphqRBsNleV5T07XQGjWo
+         g+/+JAfNA+QJvLXmlCZd+kg/VdM6tw44Av93QHRukiZYdODrQAR8nERFGyeO62KrG4Pp
+         398B6rW/mX/MX6ASNVlQjY/LE6bvg/2AusSmQ6ZfU6rEZtxYPbb8pE7tq7md8bGAoIS5
+         DSi5tYFZhL2aGDCw0kDtNA877mRRxHDvne7bs3S7kONSWPfFsnrpGI03UVzaNNR14ofV
+         AcWg==
+X-Gm-Message-State: ACrzQf12W/BuLhZzJzs2EoB7i39x0LySpAWaVTSLIlZGSBTZW9FOezPe
+	iqw3UQz6byCG+63/0VlAtEw=
+X-Google-Smtp-Source: AMsMyM6kx6YpswciT5Yyc8j/z70Y0Qnb361JxWuJQ94VG8037dOBAvvfWi8mN91Wd6Bgw8hIV6sT+Q==
+X-Received: by 2002:a17:907:2e02:b0:77c:405e:e740 with SMTP id ig2-20020a1709072e0200b0077c405ee740mr3228298ejc.139.1663329365113;
+        Fri, 16 Sep 2022 04:56:05 -0700 (PDT)
 Received: from morpheus.home.roving-it.com (3.e.2.0.0.0.0.0.0.0.0.0.0.0.0.0.1.8.6.2.1.1.b.f.0.b.8.0.1.0.0.2.ip6.arpa. [2001:8b0:fb11:2681::2e3])
-        by smtp.googlemail.com with ESMTPSA id a2-20020a05600c348200b003b492b30822sm1987864wmq.2.2022.09.16.04.42.00
+        by smtp.googlemail.com with ESMTPSA id w21-20020a1709064a1500b0077a1dd3e7b7sm10233407eju.102.2022.09.16.04.56.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Sep 2022 04:42:00 -0700 (PDT)
+        Fri, 16 Sep 2022 04:56:04 -0700 (PDT)
 From: Peter Robinson <pbrobinson@gmail.com>
-To: Eddie James <eajames@linux.ibm.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	Joel Stanley <joel@jms.id.au>,
+To: Ulf Hansson <ulf.hansson@linaro.org>,
+	linux-mmc@vger.kernel.org,
 	Andrew Jeffery <andrew@aj.id.au>,
-	linux-media@vger.kernel.org,
-	openbmc@lists.ozlabs.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-aspeed@lists.ozlabs.org
-Subject: [PATCH] Add dependency on ARCH_ASPEED
-Date: Fri, 16 Sep 2022 12:41:57 +0100
-Message-Id: <20220916114157.367094-1-pbrobinson@gmail.com>
+	linux-aspeed@lists.ozlabs.org,
+	openbmc@lists.ozlabs.org
+Subject: [PATCH] mmc: sdhci-of-aspeed: Add dependency on ARCH_ASPEED
+Date: Fri, 16 Sep 2022 12:56:02 +0100
+Message-Id: <20220916115602.370003-1-pbrobinson@gmail.com>
 X-Mailer: git-send-email 2.37.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -86,26 +83,26 @@ Cc: Peter Robinson <pbrobinson@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The VIDEO_ASPEED is part of the Aspeed silicon so it makes
+The MMC_SDHCI_OF_ASPEED is part of the Aspeed silicon so it makes
 sense to depend on ARCH_ASPEED and for compile testing.
 
 Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
 ---
- drivers/media/platform/aspeed/Kconfig | 1 +
+ drivers/mmc/host/Kconfig | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/media/platform/aspeed/Kconfig b/drivers/media/platform/aspeed/Kconfig
-index c871eda33570..16c5d8913488 100644
---- a/drivers/media/platform/aspeed/Kconfig
-+++ b/drivers/media/platform/aspeed/Kconfig
-@@ -4,6 +4,7 @@ comment "Aspeed media platform drivers"
+diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
+index e63608834411..f324daadaf70 100644
+--- a/drivers/mmc/host/Kconfig
++++ b/drivers/mmc/host/Kconfig
+@@ -157,6 +157,7 @@ config MMC_SDHCI_OF_ARASAN
  
- config VIDEO_ASPEED
- 	tristate "Aspeed AST2400 and AST2500 Video Engine driver"
+ config MMC_SDHCI_OF_ASPEED
+ 	tristate "SDHCI OF support for the ASPEED SDHCI controller"
 +	depends on ARCH_ASPEED || COMPILE_TEST
- 	depends on V4L_PLATFORM_DRIVERS
- 	depends on VIDEO_DEV
- 	select VIDEOBUF2_DMA_CONTIG
+ 	depends on MMC_SDHCI_PLTFM
+ 	depends on OF && OF_ADDRESS
+ 	select MMC_SDHCI_IO_ACCESSORS
 -- 
 2.37.3
 
