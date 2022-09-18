@@ -1,83 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 448EB5BB30E
-	for <lists+openbmc@lfdr.de>; Fri, 16 Sep 2022 21:56:20 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A242C5BBF4E
+	for <lists+openbmc@lfdr.de>; Sun, 18 Sep 2022 20:29:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MTlFC6ZLYz3bmc
-	for <lists+openbmc@lfdr.de>; Sat, 17 Sep 2022 05:56:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MVxDM46FNz30M8
+	for <lists+openbmc@lfdr.de>; Mon, 19 Sep 2022 04:29:39 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=BK6ak24V;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=ole8W+kr;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=anoo@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::133; helo=mail-lf1-x133.google.com; envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=BK6ak24V;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=ole8W+kr;
 	dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MTlDk1h48z3bf5
-	for <openbmc@lists.ozlabs.org>; Sat, 17 Sep 2022 05:55:49 +1000 (AEST)
-Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28GJhQtw035618;
-	Fri, 16 Sep 2022 19:55:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : cc : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=pp1;
- bh=o7AQCSR5lvrlu+n83PuEk2IDFV47E1+juONyy0A4l3U=;
- b=BK6ak24VNQmjd5nMnFW4p0HfuJK/DnCtf04gpsj6AdsFmc+AVWQMe5RrNJ+yJd+L0dls
- bL3emmlZbqkJevhnteH66McT5u20irORmkJoW6xVhV1fYU1iPfXIe9mL1l4fAFq78879
- H47W4EoK5z8NWYGGqltj7fORlcDqL3LTguKiGw/StKR7oXvem5Zu63elHwDUH5s787bK
- vW9IQF8UowKAXCMUlFYBZcj5l1On6ZRmMIH1wvkpeUlSt2IeHuu8X8AEVtN5DGadFMCJ
- 8VQsquam8apYKkFvZfvzulVC7TtNE3T6GhgeC8Kd2mur4szNoper09y7KUxG2CF6xmgz fQ== 
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com [169.62.189.10])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3jmyj1raf1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Sep 2022 19:55:39 +0000
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
-	by ppma02dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 28GJopWY012517;
-	Fri, 16 Sep 2022 19:55:38 GMT
-Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com [9.57.198.24])
-	by ppma02dal.us.ibm.com with ESMTP id 3jm9178jdh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Sep 2022 19:55:38 +0000
-Received: from b01ledav005.gho.pok.ibm.com (b01ledav005.gho.pok.ibm.com [9.57.199.110])
-	by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 28GJtbfN11535046
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 16 Sep 2022 19:55:37 GMT
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 9B06AAE060;
-	Fri, 16 Sep 2022 19:55:37 +0000 (GMT)
-Received: from b01ledav005.gho.pok.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 42CC1AE05C;
-	Fri, 16 Sep 2022 19:55:37 +0000 (GMT)
-Received: from gfwa826.aus.stglabs.ibm.com (unknown [9.3.84.13])
-	by b01ledav005.gho.pok.ibm.com (Postfix) with ESMTP;
-	Fri, 16 Sep 2022 19:55:37 +0000 (GMT)
-From: Adriana Kobylak <anoo@linux.ibm.com>
-To: joel@jms.id.au, andrew@aj.id.au, openbmc@lists.ozlabs.org
-Subject: [PATCH v2] ARM: dts: rainier,everest: Move reserved memory regions
-Date: Fri, 16 Sep 2022 14:55:35 -0500
-Message-Id: <20220916195535.1020185-1-anoo@linux.ibm.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <4a2f1f13-cd98-4a0f-8e4a-b297cb81a382@www.fastmail.com>
-References: <4a2f1f13-cd98-4a0f-8e4a-b297cb81a382@www.fastmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MVxCy57jBz2xHW
+	for <openbmc@lists.ozlabs.org>; Mon, 19 Sep 2022 04:29:17 +1000 (AEST)
+Received: by mail-lf1-x133.google.com with SMTP id u18so43461919lfo.8
+        for <openbmc@lists.ozlabs.org>; Sun, 18 Sep 2022 11:29:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=WA3909OkPlGQ2DqJkniN7gPfMblXDPfE9yZdpVr0YiU=;
+        b=ole8W+krjxvE9MZCDv41ZKiVanU59Kf76tIKgueiSoEVqzSG9ue6OqZnFslBFG+qFj
+         r0yW6jG+/RO6FjDNuixVeXWEtC6vJZPgt6UpdFvrlZGnw/W3cNduGBuR7XjS+vxUL747
+         kH6t4c2rPE2NWmxLQfkyPCsVk2LVZhiTdKm7S3SmVbzSfhth5ePNhoHqa/CuBKc8AlUr
+         duZ1dj3BNq0oSb7FL+PVc6KX6rpvskIBJq+ZK6whvlGJk+zDQB/sUzbSaU2iQ6rhUrMM
+         uXEoOIMlDqv93Bz8cPjM+uuLmIWHNG8E3+nvlqQI9U6pvKxFM4rmo9OtP6S6wYplIGx6
+         EoEA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=WA3909OkPlGQ2DqJkniN7gPfMblXDPfE9yZdpVr0YiU=;
+        b=da1yAmBoukSWk1GblCzUrlwrCIL7mK7KPW93ddR1KbcQogQ+F9ULx6aqStvf0eBwcx
+         udi/1okM6tiKaLsieCNf1g0okGD7isGEQAXRh0GgEyOE875iC4XFbf3YWy9VcDkHU+cv
+         eOjWghJRfs64Ogsf1MjsNXvLwkMrtkpKLjb3KoFxdG9lQOJViaHMsO71B1KHc/ApGW9J
+         p2Ayyi1DMM3LBTEtOt9VOTNHAO2HDfCjFRs/PpPcHKgI/RmOx8vjrxQlubP3HN7P+zZm
+         geRQdz19431IiY9J+T64qEv18/Q7ovHOC64YWL9kp+xebZiw5VME+NCPfz3ktSsH/A6y
+         ngKw==
+X-Gm-Message-State: ACrzQf33NszkXMAKXm42+HgTyhLIgaqJbZ5pPlom5VE7WH8Psl8BK9mg
+	9PRlg26GLBLoqpqbM3enByAqD/QLnVpGgEUfoL0=
+X-Google-Smtp-Source: AMsMyM5ZhObwU1v6wtX7DkaBvz8M9Gqw0K7XRrt7OcA3paEWSzLhcYG167feZG7HisdunSOAsJoDLRBbmqX3I68trH8=
+X-Received: by 2002:a05:6512:eaa:b0:497:a1ed:6fa5 with SMTP id
+ bi42-20020a0565120eaa00b00497a1ed6fa5mr4728843lfb.108.1663525749385; Sun, 18
+ Sep 2022 11:29:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: K-fWv5I3OaprAEF8pSw8HNY-3uKCmG70
-X-Proofpoint-ORIG-GUID: K-fWv5I3OaprAEF8pSw8HNY-3uKCmG70
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-16_12,2022-09-16_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
- mlxlogscore=842 mlxscore=0 lowpriorityscore=0 suspectscore=0
- impostorscore=0 clxscore=1015 bulkscore=0 spamscore=0 malwarescore=0
- adultscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2209160140
+References: <20220714122322.63663-1-tmaimon77@gmail.com> <20220714122322.63663-2-tmaimon77@gmail.com>
+ <20220718211046.GA3547663-robh@kernel.org>
+In-Reply-To: <20220718211046.GA3547663-robh@kernel.org>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Sun, 18 Sep 2022 21:28:57 +0300
+Message-ID: <CAP6Zq1hQ5m2kkQOKaYsKhPQhCW+vdsdyPRxxb_yRGMB=gJCPdw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] dt-binding: pinctrl: Add NPCM8XX pinctrl and GPIO documentation
+To: Rob Herring <robh@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,119 +73,250 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Adriana Kobylak <anoo@us.ibm.com>
+Cc: devicetree <devicetree@vger.kernel.org>, Benjamin Fair <benjaminfair@google.com>, "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, Linus Walleij <linus.walleij@linaro.org>, =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, Tali Perry <tali.perry1@gmail.com>, zhengbin13@huawei.com, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Adriana Kobylak <anoo@us.ibm.com>
+Hi Rob,
 
-Move the reserved regions to account for a decrease in DRAM when ECC is
-enabled. ECC takes 1/9th of memory.
+Thanks for your comment and sorry for the late reply.
 
-Running on HW with ECC off, u-boot prints:
-DRAM:  already initialized, 1008 MiB (capacity:1024 MiB, VGA:16 MiB, ECC:off)
+On Tue, 19 Jul 2022 at 00:10, Rob Herring <robh@kernel.org> wrote:
+>
+> On Thu, Jul 14, 2022 at 03:23:21PM +0300, Tomer Maimon wrote:
+> > Added device tree binding documentation for Nuvoton Arbel BMC NPCM8XX
+> > pinmux and GPIO controller.
+> >
+> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> > ---
+> >  .../pinctrl/nuvoton,npcm845-pinctrl.yaml      | 213 ++++++++++++++++++
+> >  1 file changed, 213 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/pinctrl/nuvoton,npcm845-pinctrl.yaml
+> >
+> > diff --git a/Documentation/devicetree/bindings/pinctrl/nuvoton,npcm845-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/nuvoton,npcm845-pinctrl.yaml
+> > new file mode 100644
+> > index 000000000000..104766f7acc5
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/pinctrl/nuvoton,npcm845-pinctrl.yaml
+> > @@ -0,0 +1,213 @@
+> > +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/pinctrl/nuvoton,npcm845-pinctrl.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Nuvoton NPCM845 Pin Controller and GPIO
+> > +
+> > +maintainers:
+> > +  - Tomer Maimon <tmaimon77@gmail.com>
+> > +
+> > +description:
+> > +  The Nuvoton BMC NPCM8XX Pin Controller multi-function routed through
+> > +  the multiplexing block, Each pin supports GPIO functionality (GPIOx)
+> > +  and multiple functions that directly connect the pin to different
+> > +  hardware blocks.
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: nuvoton,npcm845-pinctrl
+> > +
+> > +  ranges:
+> > +    maxItems: 1
+> > +
+> > +  '#address-cells':
+> > +    const: 1
+> > +
+> > +  '#size-cells':
+> > +    const: 1
+> > +
+> > +  nuvoton,sysgcr:
+> > +    $ref: /schemas/types.yaml#/definitions/phandle
+> > +    description: a phandle to access GCR registers.
+> > +
+> > +patternProperties:
+> > +  "^gpio@":
+> > +    type: object
+> > +
+> > +    description:
+> > +      Eight GPIO banks that each contain between 32 GPIOs.
+>
+> 'each contain between 32'?
+will be fixed net version.
+>
+> > +
+> > +    properties:
+> > +      gpio-controller: true
+> > +
+> > +      '#gpio-cells':
+> > +        const: 2
+> > +
+> > +      reg:
+> > +        maxItems: 1
+> > +
+> > +      interrupts:
+> > +        maxItems: 1
+> > +
+> > +      gpio-ranges:
+> > +        maxItems: 1
+> > +
+> > +    required:
+> > +      - gpio-controller
+> > +      - '#gpio-cells'
+> > +      - reg
+> > +      - interrupts
+> > +      - gpio-ranges
+> > +
+> > +  "-mux":
+>
+> '-mux$'? Something like 'foo-muxbar' is needed?
+No.
+>
+> > +    $ref: pinmux-node.yaml#
+> > +
+> > +    properties:
+> > +      groups:
+> > +        description:
+> > +          One or more groups of pins to mux to a certain function
+> > +        items:
+> > +          enum: [ iox1, iox2, smb1d, smb2d, lkgpo1, lkgpo2, ioxh, gspi,
+> > +                  smb5b, smb5c, lkgpo0, pspi2, jm1, jm2, smb4den, smb4b,
+> > +                  smb4c, smb15, smb16, smb17, smb18, smb19, smb20, smb21,
+> > +                  smb22, smb23, smb4d, smb14, smb5, smb4, smb3, spi0cs1,
+> > +                  spi0cs2, spi0cs3, smb3c, smb3b, bmcuart0a, uart1, jtag2,
+> > +                  bmcuart1, uart2, bmcuart0b, r1err, r1md, r1oen, r2oen,
+> > +                  rmii3, r3oen, smb3d, fanin0, fanin1, fanin2, fanin3, fanin4,
+> > +                  fanin5, fanin6, fanin7, fanin8, fanin9, fanin10, fanin11,
+> > +                  fanin12, fanin13, fanin14, fanin15, pwm0, pwm1, pwm2, pwm3,
+> > +                  r2, r2err, r2md, r3rxer, ga20kbc, smb5d, lpc, espi, rg1,
+> > +                  rg1mdio, rg2, ddr, i3c0, i3c1, i3c2, i3c3, i3c4, i3c5,
+> > +                  smb0, smb1, smb2, smb2c, smb2b, smb1c, smb1b, smb8, smb9,
+> > +                  smb10, smb11, sd1, sd1pwr, pwm4, pwm5, pwm6, pwm7, pwm8,
+> > +                  pwm9, pwm10, pwm11, mmc8, mmc, mmcwp, mmccd, mmcrst, clkout,
+> > +                  serirq, lpcclk, scipme, sci, smb6, smb7, spi1, faninx, r1,
+> > +                  spi3, spi3cs1, spi3quad, spi3cs2, spi3cs3, nprd_smi, smb0b,
+> > +                  smb0c, smb0den, smb0d, ddc, rg2mdio, wdog1, wdog2, smb12,
+> > +                  smb13, spix, spixcs1, clkreq, hgpio0, hgpio1, hgpio2, hgpio3,
+> > +                  hgpio4, hgpio5, hgpio6, hgpio7 ]
+> > +
+> > +      function:
+> > +        description:
+> > +          The function that a group of pins is muxed to
+> > +        enum: [ iox1, iox2, smb1d, smb2d, lkgpo1, lkgpo2, ioxh, gspi,
+> > +                smb5b, smb5c, lkgpo0, pspi2, jm1, jm2, smb4den, smb4b,
+> > +                smb4c, smb15, smb16, smb17, smb18, smb19, smb20, smb21,
+> > +                smb22, smb23, smb4d, smb14, smb5, smb4, smb3, spi0cs1,
+> > +                spi0cs2, spi0cs3, smb3c, smb3b, bmcuart0a, uart1, jtag2,
+> > +                bmcuart1, uart2, bmcuart0b, r1err, r1md, r1oen, r2oen,
+> > +                rmii3, r3oen, smb3d, fanin0, fanin1, fanin2, fanin3, fanin4,
+> > +                fanin5, fanin6, fanin7, fanin8, fanin9, fanin10, fanin11,
+> > +                fanin12, fanin13, fanin14, fanin15, pwm0, pwm1, pwm2, pwm3,
+> > +                r2, r2err, r2md, r3rxer, ga20kbc, smb5d, lpc, espi, rg1,
+> > +                rg1mdio, rg2, ddr, i3c0, i3c1, i3c2, i3c3, i3c4, i3c5,
+> > +                smb0, smb1, smb2, smb2c, smb2b, smb1c, smb1b, smb8, smb9,
+> > +                smb10, smb11, sd1, sd1pwr, pwm4, pwm5, pwm6, pwm7, pwm8,
+> > +                pwm9, pwm10, pwm11, mmc8, mmc, mmcwp, mmccd, mmcrst, clkout,
+> > +                serirq, lpcclk, scipme, sci, smb6, smb7, spi1, faninx, r1,
+> > +                spi3, spi3cs1, spi3quad, spi3cs2, spi3cs3, nprd_smi, smb0b,
+> > +                smb0c, smb0den, smb0d, ddc, rg2mdio, wdog1, wdog2, smb12,
+> > +                smb13, spix, spixcs1, clkreq, hgpio0, hgpio1, hgpio2, hgpio3,
+> > +                hgpio4, hgpio5, hgpio6, hgpio7 ]
+> > +
+> > +    dependencies:
+> > +      groups: [ function ]
+> > +      function: [ groups ]
+> > +
+> > +    additionalProperties: false
+> > +
+> > +  "^pin":
+> > +    $ref: pincfg-node.yaml#
+> > +
+> > +    properties:
+> > +      pins:
+> > +        description:
+> > +          A list of pins to configure in certain ways, such as enabling
+> > +          debouncing
+> > +
+> > +      bias-disable: true
+> > +
+> > +      bias-pull-up: true
+> > +
+> > +      bias-pull-down: true
+> > +
+> > +      input-enable: true
+> > +
+> > +      output-low: true
+> > +
+> > +      output-high: true
+> > +
+> > +      drive-push-pull: true
+> > +
+> > +      drive-open-drain: true
+> > +
+> > +      input-debounce:
+> > +        description:
+> > +          Debouncing periods in microseconds, one period per interrupt
+> > +          bank found in the controller
+> > +        $ref: /schemas/types.yaml#/definitions/uint32-array
+> > +        minItems: 1
+> > +        maxItems: 4
+> > +
+> > +      slew-rate:
+> > +        description: |
+> > +          0: Low rate
+> > +          1: High rate
+> > +        $ref: /schemas/types.yaml#/definitions/uint32
+> > +        enum: [0, 1]
+> > +
+> > +      drive-strength:
+> > +        enum: [ 0, 1, 2, 4, 8, 12 ]
+> > +
+> > +    additionalProperties: false
+> > +
+> > +allOf:
+> > +  - $ref: "pinctrl.yaml#"
+> > +
+> > +required:
+> > +  - compatible
+> > +  - ranges
+> > +  - '#address-cells'
+> > +  - '#size-cells'
+> > +  - nuvoton,sysgcr
+> > +
+> > +additionalProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> > +    #include <dt-bindings/gpio/gpio.h>
+> > +
+> > +    soc {
+> > +      #address-cells = <2>;
+> > +      #size-cells = <2>;
+> > +
+> > +      pinctrl: pinctrl@f0800000 {
+> > +        compatible = "nuvoton,npcm845-pinctrl";
+> > +        ranges = <0x0 0x0 0xf0010000 0x8000>;
+> > +        #address-cells = <1>;
+> > +        #size-cells = <1>;
+> > +        nuvoton,sysgcr = <&gcr>;
+> > +
+> > +        gpio0: gpio@f0010000 {
+>
+> gpio@0
+>
+> Is this really a child block of the pinctrl? Doesn't really look like it
+> based on addressess. Where are the pinctrl registers? In the sysgcr? If
+> so, then pinctrl should be a child of it. But that doesn't really work
+> too well with gpio child nodes...
+the pin controller mux is handled by sysgcr this is why the sysgcr in
+the mother node,
+and the pin configuration are handled by the GPIO registers.  each
+GPIO bank (child) contains 32 GPIO.
+this is why the GPIO is the child node.
 
-And with ECC on, u-boot prints:
-DRAM:  already initialized, 896 MiB (capacity:1024 MiB, VGA:16 MiB, ECC:on, ECC size:896 MiB)
+>
+> Rob
 
-This implies that MCR54 is configured for ECC to be bounded at the
-bottom of a 16MiB VGA memory region:
+Best regards,
 
-1024MiB - 16MiB (VGA) = 1008MiB
-1008MiB / 9 (for ECC) = 112MiB
-1008MiB - 112MiB = 896MiB (available DRAM)
-
-The flash_memory region currently starts at offset 896MiB:
-0xb8000000 (flash_memory offset) - 0x80000000 (base memory address) = 0x38000000 = 896MiB
-
-This is the end of the available DRAM with ECC enabled and therefore it
-needs to be moved.
-
-Since the flash_memory is 64MiB in size and needs to be 64MiB aligned,
-it can just be moved up by 64MiB and would sit right at the end of the
-available DRAM buffer.
-
-The ramoops region currently follows the flash_memory, but it can be
-moved to sit above flash_memory which would minimize the address-space
-fragmentation.
-
-Signed-off-by: Adriana Kobylak <anoo@us.ibm.com>
----
- arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 17 ++++++++---------
- arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 16 +++++++++-------
- 2 files changed, 17 insertions(+), 16 deletions(-)
-
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-index 1bba5ad7378e..3bdd79506704 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
-@@ -162,16 +162,9 @@ reserved-memory {
- 		#size-cells = <1>;
- 		ranges;
- 
--		/* LPC FW cycle bridge region requires natural alignment */
--		flash_memory: region@b8000000 {
--			no-map;
--			reg = <0xb8000000 0x04000000>; /* 64M */
--		};
--
--		/* 48MB region from the end of flash to start of vga memory */
--		ramoops@bc000000 {
-+		ramoops@b3e00000 {
- 			compatible = "ramoops";
--			reg = <0xbc000000 0x200000>; /* 16 * (4 * 0x8000) */
-+			reg = <0xb3e00000 0x200000>; /* 16 * (4 * 0x8000) */
- 			record-size = <0x8000>;
- 			console-size = <0x8000>;
- 			ftrace-size = <0x8000>;
-@@ -179,6 +172,12 @@ ramoops@bc000000 {
- 			max-reason = <3>; /* KMSG_DUMP_EMERG */
- 		};
- 
-+		/* LPC FW cycle bridge region requires natural alignment */
-+		flash_memory: region@b4000000 {
-+			no-map;
-+			reg = <0xb4000000 0x04000000>; /* 64M */
-+		};
-+
- 		/* VGA region is dictated by hardware strapping */
- 		vga_memory: region@bf000000 {
- 			no-map;
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-index 8bd2f441b159..e1cb3c88368a 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
-@@ -95,14 +95,9 @@ reserved-memory {
- 		#size-cells = <1>;
- 		ranges;
- 
--		flash_memory: region@b8000000 {
--			no-map;
--			reg = <0xb8000000 0x04000000>; /* 64M */
--		};
--
--		ramoops@bc000000 {
-+		ramoops@b3e00000 {
- 			compatible = "ramoops";
--			reg = <0xbc000000 0x200000>; /* 16 * (4 * 0x8000) */
-+			reg = <0xb3e00000 0x200000>; /* 16 * (4 * 0x8000) */
- 			record-size = <0x8000>;
- 			console-size = <0x8000>;
- 			ftrace-size = <0x8000>;
-@@ -110,6 +105,13 @@ ramoops@bc000000 {
- 			max-reason = <3>; /* KMSG_DUMP_EMERG */
- 		};
- 
-+		/* LPC FW cycle bridge region requires natural alignment */
-+		flash_memory: region@b4000000 {
-+			no-map;
-+			reg = <0xb4000000 0x04000000>; /* 64M */
-+		};
-+
-+		/* VGA region is dictated by hardware strapping */
- 		vga_memory: region@bf000000 {
- 			no-map;
- 			compatible = "shared-dma-pool";
--- 
-2.25.1
-
+Tomer
