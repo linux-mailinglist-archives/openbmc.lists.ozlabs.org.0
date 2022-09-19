@@ -2,70 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 730D05BCCB0
-	for <lists+openbmc@lfdr.de>; Mon, 19 Sep 2022 15:13:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7BC0D5BCEEB
+	for <lists+openbmc@lfdr.de>; Mon, 19 Sep 2022 16:32:42 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MWQ9C42mWz3bbm
-	for <lists+openbmc@lfdr.de>; Mon, 19 Sep 2022 23:13:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MWRwP6ZrQz3bl3
+	for <lists+openbmc@lfdr.de>; Tue, 20 Sep 2022 00:32:37 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=jMG8Rgx8;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=oCY3SQQ0;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::632; helo=mail-pl1-x632.google.com; envelope-from=groeck7@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12d; helo=mail-lf1-x12d.google.com; envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=jMG8Rgx8;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=oCY3SQQ0;
 	dkim-atps=neutral
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MWQ8k0rHGz2xJ8;
-	Mon, 19 Sep 2022 23:13:09 +1000 (AEST)
-Received: by mail-pl1-x632.google.com with SMTP id b21so27871075plz.7;
-        Mon, 19 Sep 2022 06:13:09 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MWRw13kKxz30R7
+	for <openbmc@lists.ozlabs.org>; Tue, 20 Sep 2022 00:32:16 +1000 (AEST)
+Received: by mail-lf1-x12d.google.com with SMTP id w8so47247379lft.12
+        for <openbmc@lists.ozlabs.org>; Mon, 19 Sep 2022 07:32:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date;
-        bh=0SWMd1/dw8viGWJFir8vLYI252YhXo7+413gv8lkrKM=;
-        b=jMG8Rgx8ILPtFbAjdCC4Oe0jdG8QNs3SVz0BOWN+HAc9kuR5OgpDh0ltIcULvcKhLu
-         w4l9YzHCmEeKMToMayC2GPlTy2by5Lhq+5Rvj30ROI2IQV4tO0767bceYwZcV5Aq4WaZ
-         Y4O8qSnweUBXAqrq1/CVjLfsjoHJJNstfTQ9sPJ5/cUMlQ1toH743LwszvLC4X/oLA3T
-         2Mv+4flaRZYOgxQPetntXpf7kmTvLA9cRr2Zj/pANw0SGna44AwiXrmOAuptz1onbSJ5
-         R6DNI3+DTFI7iZ8ZyE4Hb9brVJDZ1OfWvFCEowHFgHd5TeTkoTwC+VzhDQSvRPmpOO3J
-         Dlrw==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=fbOtVx32xD0An1BP4gF5wsbpUuDHf0RuAIKgzeGlyw8=;
+        b=oCY3SQQ06GI1T0nc3vcegfw92SJwkc8GhNmDuFea6YzJroQA1iJ/C0VGdrJSgUz9jx
+         mApqMR+9XBUm/uurHE2l+5JQHn2ITXWeQV9bcFU0CNL9s/AsShY84T7chTNmXJLWe4wu
+         WCP+4EKr9Nr34D7du1LtLHoiWh7Br/ERUuvDz1gBnykah2JOscL2r/aUjHsOHwb9ltbJ
+         la5S4xmdhcWePibJaIj099rNjvZPOikrYSFMzzIMFFgI8RfwnlpHlXHB52MRUmJUBjs+
+         SdqxwySj5lN9Am7atnFcJv1SQm1DdpFDiYichNtnI6qxbj8CBO8UxKyxH1InjVj1eEj4
+         8Rzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date;
-        bh=0SWMd1/dw8viGWJFir8vLYI252YhXo7+413gv8lkrKM=;
-        b=UfTpTyCLe4b3dmtolAJG4LRqVbPHNMxa1qxf/OQ8vrt38DD2XsDGh8wlT6GUZqqsgQ
-         phVXYgrB6H7aUbu23zjijhAW/gHOah1xNcpm9eL3WYGOXCWeJlEk32qgIGZLDqzPBiYq
-         VqtbnSf2LajcXlmHJuROCzu9hfTuauNDJu3zf5+XKBRR33W5UabdBNrrejo5faO3gnUW
-         wH/0njaNOHcoSkeqXxZ2KL0teoHi2dP/b4HEoRW0JXAttofLw/L+M1+Wg/QYC5447Js2
-         AiwWL7XeAJXyFjYVp6uQRRknJCqSni1tyoOEELucm6G5pR8N7uY/vbJoNyJfQym5kvFL
-         nNDw==
-X-Gm-Message-State: ACrzQf13XybW66thcbHlWT80xNjLTJZoyqPDLRGdmAcQPidBJ2zs4vpz
-	MjWA0mIFCpjGAKAJceIjBGg=
-X-Google-Smtp-Source: AMsMyM5KLPsJwaIa/7tRyTleFbZdQl88/wKqOzR2JZQawM2ZKcrErncGQOcA/vlHqwiyYs+Qzw5CDw==
-X-Received: by 2002:a17:902:e550:b0:177:f115:1646 with SMTP id n16-20020a170902e55000b00177f1151646mr13183688plf.112.1663593186365;
-        Mon, 19 Sep 2022 06:13:06 -0700 (PDT)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id e2-20020a170902784200b001754cfb5e21sm20625912pln.96.2022.09.19.06.13.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Sep 2022 06:13:05 -0700 (PDT)
-Date: Mon, 19 Sep 2022 06:13:05 -0700
-From: Guenter Roeck <linux@roeck-us.net>
-To: Peter Robinson <pbrobinson@gmail.com>
-Subject: Re: [PATCH] hwmon: (aspeed-pwm-tacho): Add dependency on ARCH_ASPEED
-Message-ID: <20220919131305.GA3545921@roeck-us.net>
-References: <20220916120936.372591-1-pbrobinson@gmail.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=fbOtVx32xD0An1BP4gF5wsbpUuDHf0RuAIKgzeGlyw8=;
+        b=0lxr3fStjxGZ6WyOA8PuzS5BMxMV3qRuYEu0EaCUo4CCrTF62oheuLclPUaRwzG7bF
+         /l+CpE9D6iJ6g9O7ZBNAxHVRjFeSbSfUKrdJspa9Re3BfWBEkbLigsxyLidovKNCqHpE
+         f/BxI8Ozzbp6iMc6YFdqTLlkOp0Zm15RQP3OYRbp95376v4uwfla2J/UE1MNtoSVA8dQ
+         yeamFyoZxKEDv/+N9DM+I7wKs6CRlleZDRcYLRfcnHWubKiggYmoqet+h/eieUU5p/aP
+         KQ/HZMnvOik+wZiWMDV/d+csqgtjG9TRlX+JhjB1EQChVyVfjBq8bYY//tukz6LJaXxL
+         kCDg==
+X-Gm-Message-State: ACrzQf34qL0xxo8cO9jRvlWB+wkWvwH6/SIFWI15tXOV3pXuIu51n4vn
+	TAMLXpd2+IbmCxK4nNedWTdkk+rT4qzpQHJ9Gu0=
+X-Google-Smtp-Source: AMsMyM4TvhQ+C6HD/ZV0YS/n8Apo8lVG6faXAtccFQUMj9KOsAXpl4UCFWGvBlxtGV9MQYWcekd+O4B2UpHaNWuzNlw=
+X-Received: by 2002:a05:6512:eaa:b0:497:a1ed:6fa5 with SMTP id
+ bi42-20020a0565120eaa00b00497a1ed6fa5mr6073634lfb.108.1663597928023; Mon, 19
+ Sep 2022 07:32:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220916120936.372591-1-pbrobinson@gmail.com>
+References: <20220714122322.63663-1-tmaimon77@gmail.com> <20220714122322.63663-2-tmaimon77@gmail.com>
+ <20220718211046.GA3547663-robh@kernel.org> <CAP6Zq1hQ5m2kkQOKaYsKhPQhCW+vdsdyPRxxb_yRGMB=gJCPdw@mail.gmail.com>
+ <3981e6e8-d4bb-b13d-7aaa-7aea83ffaad9@linaro.org>
+In-Reply-To: <3981e6e8-d4bb-b13d-7aaa-7aea83ffaad9@linaro.org>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Mon, 19 Sep 2022 17:31:56 +0300
+Message-ID: <CAP6Zq1gp1ph1wixgb6nL+2R8We2YJ2HQM2iC05itq_XWd2Cwig@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] dt-binding: pinctrl: Add NPCM8XX pinctrl and GPIO documentation
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,17 +74,70 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, Jaghathiswari Rankappagounder Natarajan <jaghu@google.com>, openbmc@lists.ozlabs.org, Jean Delvare <jdelvare@suse.com>, linux-aspeed@lists.ozlabs.org
+Cc: Rob Herring <robh@kernel.org>, Benjamin Fair <benjaminfair@google.com>, "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, Linus Walleij <linus.walleij@linaro.org>, =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, Tali Perry <tali.perry1@gmail.com>, zhengbin13@huawei.com, devicetree <devicetree@vger.kernel.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Sep 16, 2022 at 01:09:36PM +0100, Peter Robinson wrote:
-> The SENSORS_ASPEED is part of the Aspeed silicon so it makes
-> sense to depend on ARCH_ASPEED and for compile testing.
-> 
-> Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
+Hi Krzysztof,
 
-Applied.
+Sorry but I didn't understand,
 
-Thanks,
-Guenter
+On Mon, 19 Sept 2022 at 09:56, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 18/09/2022 20:28, Tomer Maimon wrote:
+> > Hi Rob,
+> >
+> > Thanks for your comment and sorry for the late reply.
+>
+> Two months... we are out of the context and this will not help your
+> patchset.
+>
+> >
+> > On Tue, 19 Jul 2022 at 00:10, Rob Herring <robh@kernel.org> wrote:
+> >>
+>
+> (...)
+>
+> >>> +examples:
+> >>> +  - |
+> >>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> >>> +    #include <dt-bindings/gpio/gpio.h>
+> >>> +
+> >>> +    soc {
+> >>> +      #address-cells = <2>;
+> >>> +      #size-cells = <2>;
+> >>> +
+> >>> +      pinctrl: pinctrl@f0800000 {
+> >>> +        compatible = "nuvoton,npcm845-pinctrl";
+> >>> +        ranges = <0x0 0x0 0xf0010000 0x8000>;
+> >>> +        #address-cells = <1>;
+> >>> +        #size-cells = <1>;
+> >>> +        nuvoton,sysgcr = <&gcr>;
+> >>> +
+> >>> +        gpio0: gpio@f0010000 {
+> >>
+> >> gpio@0
+> >>
+> >> Is this really a child block of the pinctrl? Doesn't really look like it
+> >> based on addressess. Where are the pinctrl registers? In the sysgcr? If
+> >> so, then pinctrl should be a child of it. But that doesn't really work
+> >> too well with gpio child nodes...
+> > the pin controller mux is handled by sysgcr this is why the sysgcr in
+> > the mother node,
+> > and the pin configuration are handled by the GPIO registers.  each
+> > GPIO bank (child) contains 32 GPIO.
+> > this is why the GPIO is the child node.
+>
+> Then maybe pinctrl should be the sysgcr and expose regmap for other devices?
+The pin controller using the sysgcr to handle the pinmux, this is why
+the sysgcr is in the mother node, is it problematic?
+
+>
+>
+> Best regards,
+> Krzysztof
+
+Best regards,
+
+Tomer
