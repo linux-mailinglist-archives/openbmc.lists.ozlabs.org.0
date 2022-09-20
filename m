@@ -1,70 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96F4C5BE026
-	for <lists+openbmc@lfdr.de>; Tue, 20 Sep 2022 10:32:48 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A3B465BE0BF
+	for <lists+openbmc@lfdr.de>; Tue, 20 Sep 2022 10:50:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MWvtk0hvYz3blV
-	for <lists+openbmc@lfdr.de>; Tue, 20 Sep 2022 18:32:46 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MWwGs4LVnz3bXy
+	for <lists+openbmc@lfdr.de>; Tue, 20 Sep 2022 18:50:13 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=NBYAJFzZ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=PKgTgwAE;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12b; helo=mail-lf1-x12b.google.com; envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102b; helo=mail-pj1-x102b.google.com; envelope-from=kumarthangavel.hcl@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=NBYAJFzZ;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=PKgTgwAE;
 	dkim-atps=neutral
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MWvtG5XkGz302k
-	for <openbmc@lists.ozlabs.org>; Tue, 20 Sep 2022 18:32:21 +1000 (AEST)
-Received: by mail-lf1-x12b.google.com with SMTP id k10so2563579lfm.4
-        for <openbmc@lists.ozlabs.org>; Tue, 20 Sep 2022 01:32:21 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MWwGT0gWKz2xBF
+	for <openbmc@lists.ozlabs.org>; Tue, 20 Sep 2022 18:49:52 +1000 (AEST)
+Received: by mail-pj1-x102b.google.com with SMTP id y11so2287360pjv.4
+        for <openbmc@lists.ozlabs.org>; Tue, 20 Sep 2022 01:49:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=+/OUZiYO0SDMAPBkbc+dxN7K0Ghz3UX1HgPLq26TwY8=;
-        b=NBYAJFzZKAUXo9Iojo5wexxgw0TKAuBYfXYzNcSiw7qZqMR+0vZNwnQpIsfUXZjrpW
-         R87x/rjzcv+MrXy/YZQSXk9h3ESJLYWmIwyDGYyCPVV57J30cPmwy4l4W9Nf3BfK2dxJ
-         XSNZZOvsWvjpmiDXXJ74IfxzHW76bT0M9MuibSzsRQUphmGkWWIC0VbhDXArlBg45Jc0
-         f7a5xZyHziAUJL3o5t67zam2yoLhVnsbRyQAq61EJXEbM4AkKBBvjo//j4WSvqsJaKpY
-         Yj+sV0/ClglPqQ2FqLj9fMJr0OTpZzw9U9FGYsuZRnxgyC6zs3PPtj2iXht0e55zz9jQ
-         8tpQ==
+        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date;
+        bh=yT+Qkq2ztS0ThS6JysD3Psj4oU9q4NKtvkU3ViiP8W8=;
+        b=PKgTgwAEcyOjr2ItrjGIff9tTcaPZitj5khjwJ91xNvxuju80Sw2CMQryiirsOVmJz
+         ho2omH50JiPqufcu9y5kpcJNuxQEEpYk7xwgmzrlRTurPb0Q0nmQv7DToGOE2FFAMNaz
+         pV9Z8pdMUJ+Zhn8QtfjsZ591n48mgpLDorBOGW2cL7m5S1uwdviBRjzdCBtapOtvXRcg
+         zpn6DOlG6foqjQadoLCThN56Cn6CdwJsM35viabkw9lI9WKP+1an1kBFNy1tuocXokvA
+         9CegWE2yQ8DgM175l+U0RO/1NdvmASZRLQHsAyHGq77/Kb9k892gsPh0qvqvemxcWzwu
+         Bsow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=+/OUZiYO0SDMAPBkbc+dxN7K0Ghz3UX1HgPLq26TwY8=;
-        b=Ulsung7ZSBZ7vYMNRexvMoeDVvwhPGHN7h5uugLutXrMZQvkjaE023edIiyyQd4hDo
-         xJq1nlo0rtmMaVJepgl0Z76QHQ4wpN8c4kJzD8ji1/QdoQ8XxG1ZH9uv7ER2z/rNmtQO
-         9WkHp0sxKAWIQs/QG85jbGJkMOGahuh/atHD+tOpMuymm7/piDK5wMMetxP3YLh9sfOq
-         jugaSAmnDd7BwJgp3uWIk6ea8m5iGk7CUXv1EH3v1XwOSrNaTw6sn6bW/v5sd3CgSNp1
-         3TnVlyXW7RvjEn2OTIVeENa9SlhTdlndspYeuJewJ6HbiTvEaNQut3sKEyXrmAGva3Ia
-         s2qQ==
-X-Gm-Message-State: ACrzQf2pogJ3mQAjgk+IDHuJIbLoWpwY2bDWMMU1rjeHY1GQnMWDlJfj
-	gyy5dgbnHC6X1tyuNa8mC0F8KqnGHUw8SPWiyWw=
-X-Google-Smtp-Source: AMsMyM6R/zVvN7o1HLVOVBoRNZstsmoJ+m6sB78Wu1iewEJzZKmtLmXBalE8SjQYaEgEiTk+pdNoySHCq/kbebX1bFU=
-X-Received: by 2002:a05:6512:b1d:b0:49f:59da:c706 with SMTP id
- w29-20020a0565120b1d00b0049f59dac706mr6078557lfu.668.1663662737989; Tue, 20
- Sep 2022 01:32:17 -0700 (PDT)
+        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date;
+        bh=yT+Qkq2ztS0ThS6JysD3Psj4oU9q4NKtvkU3ViiP8W8=;
+        b=xXYdOl6phKK+ItzK/fIcspbK+kr6E6u74wWD60jJdfA3kB1rqR2NOsSvpf+LMrDKu+
+         P/6j/h1mwrFvHC/hMBVRBS+HeiGFziWQ8mzIyFS1rQCV9FJ+635VZpyiVDZ+wGKmE7TX
+         mcJWrhROENTe93kx5W46vj0FzaLYPQqIJcM5rd2zGEbzYiFQHQEsTQiZhmV4po77Hgw7
+         1QYRNh0Z47c0ASaJAMscAIUCJEbRXospzTExyRcZmeFqmmSPT6MixfKiIOF7oLaZYWD2
+         f9fAp6SqjNHBEX835qsbHH6tTQGAjFY6eFkJI/9aWVwVQmj20HpvRa3eKM+f13KPvKx/
+         FhHw==
+X-Gm-Message-State: ACrzQf16eXshd9T3DA0rS1v2dGXiQLbw9ft7/1KHHOz1OV6qDw40wKfp
+	GFwvauLuHzvpOog2nmN1AOS+aUWsEuTF6hYgnQFz8J9y3o8=
+X-Google-Smtp-Source: AMsMyM6dOkWIy/TC+iqCG1QQbypcssuRRcmTTKKZC1FKjPjodWY2INxbJrmA0BxIkSpER7mwgJXpsHHCNyRYdoaY7SE=
+X-Received: by 2002:a17:90a:cb83:b0:203:a244:832c with SMTP id
+ a3-20020a17090acb8300b00203a244832cmr2650317pju.97.1663663789828; Tue, 20 Sep
+ 2022 01:49:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220714122322.63663-1-tmaimon77@gmail.com> <20220714122322.63663-2-tmaimon77@gmail.com>
- <20220718211046.GA3547663-robh@kernel.org> <CAP6Zq1hQ5m2kkQOKaYsKhPQhCW+vdsdyPRxxb_yRGMB=gJCPdw@mail.gmail.com>
- <3981e6e8-d4bb-b13d-7aaa-7aea83ffaad9@linaro.org> <CAP6Zq1gp1ph1wixgb6nL+2R8We2YJ2HQM2iC05itq_XWd2Cwig@mail.gmail.com>
- <bfca0379-7346-13e7-a18f-66740c5871b3@linaro.org> <CAP6Zq1gyDW8ZwwAZ1jyfNEZa09WN-biZZJY8tBmW_gzMzpj3ZA@mail.gmail.com>
- <2b0e6e33-ef76-4bd4-8894-53f9a3fe68b4@linaro.org>
-In-Reply-To: <2b0e6e33-ef76-4bd4-8894-53f9a3fe68b4@linaro.org>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Tue, 20 Sep 2022 11:32:06 +0300
-Message-ID: <CAP6Zq1iwW6HvvfM684VLG0ZT-0OLKT0udW4bHxsZsTMEypo2sg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] dt-binding: pinctrl: Add NPCM8XX pinctrl and GPIO documentation
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+From: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
+Date: Tue, 20 Sep 2022 14:19:38 +0530
+Message-ID: <CAA7TbcsX-+EWCVjNMoB3n4qRWp1_1fOLWkM_8qK1UTXqQ-GgSw@mail.gmail.com>
+Subject: Rescan busses for FRU device removal/unplug
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="00000000000037f10405e917e9ec"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,69 +70,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Rob Herring <robh@kernel.org>, Benjamin Fair <benjaminfair@google.com>, "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, Linus Walleij <linus.walleij@linaro.org>, =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, Tali Perry <tali.perry1@gmail.com>, zhengbin13@huawei.com, devicetree <devicetree@vger.kernel.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Cc: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, Vernon Mauery <vernon.mauery@linux.intel.com>, Ed Tanous <ed@tanous.net>, Amithash Prasad <amithash@fb.com>, velumani.hcl@gmail.com, garnermic@gmail.com, velumanit@hcl.com, patrickw3@fb.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 20 Sept 2022 at 11:21, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 20/09/2022 09:59, Tomer Maimon wrote:
-> >>>>>>> +      pinctrl: pinctrl@f0800000 {
-> >>>>>>> +        compatible = "nuvoton,npcm845-pinctrl";
-> >>>>>>> +        ranges = <0x0 0x0 0xf0010000 0x8000>;
-> >>>>>>> +        #address-cells = <1>;
-> >>>>>>> +        #size-cells = <1>;
-> >>>>>>> +        nuvoton,sysgcr = <&gcr>;
-> >>>>>>> +
-> >>>>>>> +        gpio0: gpio@f0010000 {
-> >>>>>>
-> >>>>>> gpio@0
-> >>>>>>
-> >>>>>> Is this really a child block of the pinctrl? Doesn't really look like it
-> >>>>>> based on addressess. Where are the pinctrl registers? In the sysgcr? If
-> >>>>>> so, then pinctrl should be a child of it. But that doesn't really work
-> >>>>>> too well with gpio child nodes...
-> >>>>> the pin controller mux is handled by sysgcr this is why the sysgcr in
-> >>>>> the mother node,
-> >>>>> and the pin configuration are handled by the GPIO registers.  each
-> >>>>> GPIO bank (child) contains 32 GPIO.
-> >>>>> this is why the GPIO is the child node.
-> >>>>
-> >>>> Then maybe pinctrl should be the sysgcr and expose regmap for other devices?
-> >>> The pin controller using the sysgcr to handle the pinmux, this is why
-> >>> the sysgcr is in the mother node, is it problematic?
-> >>
-> >> You said pin-controller mux registers are in sysgcr, so it should not be
-> >> used via syscon.
-> > Sorry but maybe I missed something.
-> > the sysgcr is used for miscellaneous features and not only for the pin
-> > controller mux, this is why it used syscon and defined in the dtsi:
-> >                 gcr: system-controller@f0800000 {
-> >                         compatible = "nuvoton,npcm845-gcr", "syscon";
-> >                         reg = <0x0 0xf0800000 0x0 0x1000>;
-> >                 };
-> >>
-> >> Please provide address map description to convince us that this is
-> >> correct HW representation.
-> > GCR (sysgcr) registers 0xf0800000-0xf0801000 - used for miscellaneous
-> > features, not only pin mux.
-> > GPIO0 0xf0010000-0xf0011000
-> > GPIO1 0xf0011000-0xf0012000
-> > ...
-> > GPIO7 0xf0017000-0xf0018000
-> >>
->
-> Then why your pinctrl is in sysgcr IO range? (pinctrl@f0800000)
-you suggest using pinctrl@0 or pinctrl@f0010000 and not
-pinctrl@f0800000 because 0xf0800000 is the GCR address that serve
-miscellaneous features and not only pinmux controller ?
->
-> Your map looks quite different from what you described in example.
->
-> Best regards,
-> Krzysztof
+--00000000000037f10405e917e9ec
+Content-Type: text/plain; charset="UTF-8"
 
-Best regards,
+Hi All,
 
-Tomer
+Whenever Rescan function is called, it is removing all fru devices and
+their interfaces from dbus and scans all busses and adding all other
+devices and dbus interfaces.
+
+If ReScan function is called, incase of removing/unplugging only one FRU
+device from the system, then it will remove all fru devices from the system
+and their interfaces instead of removing one device. So, all the FRU's and
+associated sensors and their dbus interfaces were also removed. Then scans
+all buses and adds newly scanned devices and dbus interfaces.
+
+Ex : If a system has 5 FRU devices, then one FRU device is
+removed/unplugged, it will remove all devices and scan all buses and
+recreate the 4 FRU devices.
+
+I think Some additional removal of other FRU devices and adding/recreating
+other FRU devices is happening here. So, to avoid this issue, We can keep
+both old and new scanning lists and compare the devices in the list and
+remove only the unplugged FRU devices and their dbus interfaces and keep
+other FRU devices as it is. This is also applicable for adding(plug) new
+FRU to the system.
+
+Please share your thoughts on this.
+
+--00000000000037f10405e917e9ec
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hi All,<div><br></div><div>Whenever Rescan function is cal=
+led, it is removing all fru devices and their interfaces from dbus and scan=
+s all busses and adding all other devices and dbus interfaces.<br><br>If Re=
+Scan function is called, incase of removing/unplugging only one FRU device =
+from the system, then it will remove all fru devices from the system and th=
+eir interfaces instead of removing one device. So, all the FRU&#39;s and as=
+sociated sensors and their dbus interfaces were also removed. Then scans al=
+l buses and adds newly scanned devices and dbus interfaces.<br><br>Ex : If =
+a system has 5 FRU devices, then one FRU device is removed/unplugged, it wi=
+ll remove all devices and scan all buses and recreate the 4 FRU devices. <b=
+r><br>I think Some additional removal of other FRU devices and adding/recre=
+ating other FRU devices is happening here. So, to avoid this issue, We can =
+keep both old and new scanning lists and compare the devices in the list an=
+d remove only the unplugged FRU devices and their dbus interfaces and keep =
+other FRU devices as it is. This is also applicable for adding(plug) new FR=
+U to the system. <br><br>Please share your thoughts on this.<br></div></div=
+>
+
+--00000000000037f10405e917e9ec--
