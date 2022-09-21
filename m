@@ -2,70 +2,48 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A5FE5BFBA7
-	for <lists+openbmc@lfdr.de>; Wed, 21 Sep 2022 11:49:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D6A205BFBA9
+	for <lists+openbmc@lfdr.de>; Wed, 21 Sep 2022 11:51:34 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MXYYF2hlLz3blj
-	for <lists+openbmc@lfdr.de>; Wed, 21 Sep 2022 19:49:53 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=FYTjeEIe;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MXYb84zhpz3bkk
+	for <lists+openbmc@lfdr.de>; Wed, 21 Sep 2022 19:51:32 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=134.134.136.20; helo=mga02.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=FYTjeEIe;
-	dkim-atps=neutral
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized) smtp.mailfrom=nuvoton.com (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
+Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MXYXn2KYGz2yxw;
-	Wed, 21 Sep 2022 19:49:27 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1663753769; x=1695289769;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=g+ycbsDZhHfXkdCOof/o/4T49/1Rwk3h7cJgpX3bUcY=;
-  b=FYTjeEIeOtuuJCsrQ2412aIbf4vVV6Z3nSRKdm0pDY9KG9RmNYAQxpC8
-   I+pOL80Brkyz97cQm1a2Awfki76tBba8pnpXsToSASXi2mgWDuZB9MSUs
-   gpnJLC985GNBh/IWfj1UH4rFm+8meZEHvnRp1ys1RQJwF7um0xaIodisV
-   mHO73xdBvMFQ+GIk7Nv8WdyRR4ENRolVyf2VFDzqzzUF/4MRVnCg9XyhG
-   MWhRsKsTRe4P+Pf4zRGiQt8firi1TKUSYlBvjxVoWL67iUFWUITIBRkbp
-   qSSQeu0n3c8IN7x4LkqCvaowSS6BHPOFZ+znwU5So5NUaZcX1ypk3sT5x
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10476"; a="287027612"
-X-IronPort-AV: E=Sophos;i="5.93,333,1654585200"; 
-   d="scan'208";a="287027612"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Sep 2022 02:49:25 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.93,333,1654585200"; 
-   d="scan'208";a="744890039"
-Received: from lkp-server01.sh.intel.com (HELO c0a60f19fe7e) ([10.239.97.150])
-  by orsmga004.jf.intel.com with ESMTP; 21 Sep 2022 02:49:20 -0700
-Received: from kbuild by c0a60f19fe7e with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1oawLz-0003UN-0V;
-	Wed, 21 Sep 2022 09:49:15 +0000
-Date: Wed, 21 Sep 2022 17:48:40 +0800
-From: kernel test robot <lkp@intel.com>
-To: Jammy Huang <jammy_huang@aspeedtech.com>, eajames@linux.ibm.com,
-	mchehab@kernel.org, joel@jms.id.au, andrew@aj.id.au,
-	linux-media@vger.kernel.org, openbmc@lists.ozlabs.org,
-	linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
-	linux-kernel@vger.kernel.org, hverkuil-cisco@xs4all.nl,
-	ezequiel@vanguardiasur.com.ar, nicolas.dufresne@collabora.com,
-	stanimir.varbanov@linaro.org, laurent.pinchart@ideasonboard.com,
-	sakari.ailus@linux.intel.com, ribalda@chromium.org
-Subject: Re: [PATCH v9 3/4] media: aspeed: Support aspeed mode to reduce
- compressed data
-Message-ID: <202209211741.XHu8zd6f-lkp@intel.com>
-References: <20220921025112.13150-4-jammy_huang@aspeedtech.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MXYZq4SxKz2xgN
+	for <openbmc@lists.ozlabs.org>; Wed, 21 Sep 2022 19:51:11 +1000 (AEST)
+Received: from NTILML01.nuvoton.com (ntil-fw [212.199.177.25])
+	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 28L9ow0O009078
+	for <openbmc@lists.ozlabs.org>; Wed, 21 Sep 2022 12:50:58 +0300
+Received: from NTHCCAS03.nuvoton.com (10.1.20.28) by NTILML01.nuvoton.com
+ (10.190.1.56) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Wed, 21 Sep
+ 2022 12:50:57 +0300
+Received: from NTHCCAS04.nuvoton.com (10.1.8.29) by NTHCCAS03.nuvoton.com
+ (10.1.20.28) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.1847.3; Wed, 21 Sep
+ 2022 17:50:55 +0800
+Received: from taln60.nuvoton.co.il (10.191.1.180) by NTHCCAS04.nuvoton.com
+ (10.1.12.25) with Microsoft SMTP Server id 15.1.2176.2 via Frontend
+ Transport; Wed, 21 Sep 2022 17:50:55 +0800
+Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
+	id 8241A62EFD; Wed, 21 Sep 2022 12:50:54 +0300 (IDT)
+From: Tomer Maimon <tmaimon77@gmail.com>
+To: <avifishman70@gmail.com>, <tali.perry1@gmail.com>, <joel@jms.id.au>,
+        <venture@google.com>, <yuenn@google.com>, <benjaminfair@google.com>,
+        <linus.walleij@linaro.org>, <robh+dt@kernel.org>,
+        <krzysztof.kozlowski+dt@linaro.org>, <j.neuschaefer@gmx.net>,
+        <zhengbin13@huawei.com>
+Subject: [PATCH v3 0/2] pinctrl: nuvoton: add pinmux and GPIO driver for NPCM8XX
+Date: Wed, 21 Sep 2022 12:50:51 +0300
+Message-ID: <20220921095053.88658-1-tmaimon77@gmail.com>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20220921025112.13150-4-jammy_huang@aspeedtech.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,63 +55,79 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: llvm@lists.linux.dev, kbuild-all@lists.01.org
+Cc: linux-gpio@vger.kernel.org, openbmc@lists.ozlabs.org, Tomer Maimon <tmaimon77@gmail.com>, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Jammy,
+This patch set adds pinmux and GPIO controller for the Arbel NPCM8XX 
+Baseboard Management Controller (BMC).
 
-Thank you for the patch! Perhaps something to improve:
+Arbel BMC NPCM8XX pinctrl driver based on Poleg NPCM7XX, except the
+pin mux mapping difference the NPCM8XX GPIO supports adjust debounce
+period time.
 
-[auto build test WARNING on media-tree/master]
-[also build test WARNING on next-20220920]
-[cannot apply to linus/master v6.0-rc6]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Arbel BMC NPCM8XX Pinmux functions accessible only for pin groups 
+and pin configuration parameters available only for individual pins.
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Jammy-Huang/add-aspeed-jpeg-support-for-aspeed-video/20220921-105350
-base:   git://linuxtv.org/media_tree.git master
-config: arm-multi_v5_defconfig (https://download.01.org/0day-ci/archive/20220921/202209211741.XHu8zd6f-lkp@intel.com/config)
-compiler: clang version 16.0.0 (https://github.com/llvm/llvm-project 791a7ae1ba3efd6bca96338e10ffde557ba83920)
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # install arm cross compiling tool for clang build
-        # apt-get install binutils-arm-linux-gnueabi
-        # https://github.com/intel-lab-lkp/linux/commit/99c2bf6f1dccc310cb9b2d9916292766f00ffb4f
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Jammy-Huang/add-aspeed-jpeg-support-for-aspeed-video/20220921-105350
-        git checkout 99c2bf6f1dccc310cb9b2d9916292766f00ffb4f
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash drivers/media/platform/aspeed/
+Arbel BMC NPCM8XX has eight identical GPIO modules,
+each module has 32 GPIO ports.
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
+Most of the GPIO ports are multiplexed with other system functions.
 
-All warnings (new ones prefixed by >>):
+The NPCM8XX pinctrl and GPIO driver were tested on NPCM845 evaluation board.
 
->> drivers/media/platform/aspeed/aspeed-video.c:487:27: warning: unused variable 'compress_scheme_str' [-Wunused-const-variable]
-   static const char * const compress_scheme_str[] = {"DCT Only",
-                             ^
-   In file included from drivers/media/platform/aspeed/aspeed-video.c:24:
-   In file included from include/linux/videodev2.h:61:
-   include/uapi/linux/videodev2.h:1776:2: warning: field  within 'struct v4l2_ext_control' is less aligned than 'union v4l2_ext_control::(anonymous at include/uapi/linux/videodev2.h:1776:2)' and is usually due to 'struct v4l2_ext_control' being packed, which can lead to unaligned accesses [-Wunaligned-access]
-           union {
-           ^
-   2 warnings generated.
+Addressed comments from:
+ - Andy Shevchenko: https://lkml.org/lkml/2022/7/14/1218
+ - Rob Herring: https://lkml.org/lkml/2022/7/18/1165
+ - Krzysztof Kozlowski: https://lkml.org/lkml/2022/9/19/68
+			https://lkml.org/lkml/2022/7/14/757
 
+Changes since version 2:
+- Pin controller driver
+        - Modify kernel configuration.
+        - Adding and removing include files.
+        - Using the same register format size.
+        - Reducing lines by command combination.
+        - Remove unnecessary parentheses use.
+        - Use GENMASK and BIT macros.
+        - Using traditional patterns.
 
-vim +/compress_scheme_str +487 drivers/media/platform/aspeed/aspeed-video.c
+ - Pin controller dt-binding
+        - Modify GPIO description.
+        - pintcrtl node name, Sorry, I know we have a long discussion about it.
+          Still, I think the best header pinctrl node name is pinctrl@f0800000. 
+          because the pin mux is handled through the GCR.
+	  BTW, same pinctrl header name is used in the NPCM7XX pinctrl version.
+	  https://elixir.bootlin.com/linux/v6.0-rc6/source/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi#L560
 
-   486	
- > 487	static const char * const compress_scheme_str[] = {"DCT Only",
-   488		"DCT VQ mix 2-color", "DCT VQ mix 4-color"};
-   489	static const char * const format_str[] = {"Standard JPEG",
-   490		"Aspeed JPEG"};
-   491	
+Changes since version 1:
+ - Pin controller driver
+	- Remove unnecessary debug prints and comments.
+	- Use fwnode functions.
+	- Remove Redundant 'else'.
+	- Use switch case instead of else if.
+	- Use GENMASK and BIT macros.
+	- Use dev_err_probe in probe error.
+	- Use callback GPIO range.
+	- Add GCR phandle property.
+	- Parameter order in reversed xmas
+
+ - Pin controller dt-binding
+	- Modify name from pin to mux.
+	- Add phandle property.
+
+Tomer Maimon (2):
+  dt-binding: pinctrl: Add NPCM8XX pinctrl and GPIO documentation
+  pinctrl: nuvoton: add NPCM8XX pinctrl and GPIO driver
+
+ .../pinctrl/nuvoton,npcm845-pinctrl.yaml      |  213 ++
+ drivers/pinctrl/nuvoton/Kconfig               |   14 +
+ drivers/pinctrl/nuvoton/Makefile              |    1 +
+ drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c     | 2485 +++++++++++++++++
+ 4 files changed, 2713 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/nuvoton,npcm845-pinctrl.yaml
+ create mode 100644 drivers/pinctrl/nuvoton/pinctrl-npcm8xx.c
 
 -- 
-0-DAY CI Kernel Test Service
-https://01.org/lkp
+2.33.0
+
