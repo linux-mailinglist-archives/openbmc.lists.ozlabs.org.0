@@ -1,66 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EBDFF5BFE55
-	for <lists+openbmc@lfdr.de>; Wed, 21 Sep 2022 14:49:43 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2BC455E560F
+	for <lists+openbmc@lfdr.de>; Thu, 22 Sep 2022 00:09:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MXdXj30Plz3bqv
-	for <lists+openbmc@lfdr.de>; Wed, 21 Sep 2022 22:49:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MXsyL582nz3c2j
+	for <lists+openbmc@lfdr.de>; Thu, 22 Sep 2022 08:09:14 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=kQLHGhz6;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=U1enjqI2;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::42e; helo=mail-wr1-x42e.google.com; envelope-from=ulf.hansson@linaro.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102a; helo=mail-pj1-x102a.google.com; envelope-from=rentao.bupt@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=kQLHGhz6;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=U1enjqI2;
 	dkim-atps=neutral
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MXdXG5wqZz2yxQ
-	for <openbmc@lists.ozlabs.org>; Wed, 21 Sep 2022 22:49:18 +1000 (AEST)
-Received: by mail-wr1-x42e.google.com with SMTP id r7so9746642wrm.2
-        for <openbmc@lists.ozlabs.org>; Wed, 21 Sep 2022 05:49:18 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MXsxv704pz2xZV
+	for <openbmc@lists.ozlabs.org>; Thu, 22 Sep 2022 08:08:50 +1000 (AEST)
+Received: by mail-pj1-x102a.google.com with SMTP id a5-20020a17090aa50500b002008eeb040eso4293548pjq.1
+        for <openbmc@lists.ozlabs.org>; Wed, 21 Sep 2022 15:08:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=F5Aj6UsKXonhXjaCbwszX18YbRfjkPa5U1IrmdLJ2uo=;
-        b=kQLHGhz6TByVsMUoQtSqGzC9Gc6weBfXxZgUqnPeF6B+9iyhqtsMtlKJLp01S4SWjQ
-         CpoLlS1cA1v9dVJPgWykPwFQz1rCczudnjTMoc+s9EJ0ztBwUv3a6xJhIUKUHKgbZQRQ
-         17JnKX7bU0kICHqYMUYT18XiXr1cjdwvmXTeM8HicMtVhkcFh1mOLyQopKe97FYaNAgT
-         KB4g+8RaGaw+76p1fD2+L9aNL6xbSUNNieZDO1+hdHowrtxnN38u5SlvA4HQQfMhulyl
-         BbeQLNbCqDmgCBbF74WxUWWDccehDfsn1PGvwZOIvjTqjpri5eDxLHUspeUsG5Yg8yFP
-         9EXw==
+        d=gmail.com; s=20210112;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date;
+        bh=E2CNlSFLA0zwggDwr29u6+GLBcpiTg5yerCM9i1vjXM=;
+        b=U1enjqI2vKm2pSS57jBB6kJlbD5aIk41B0NUZzWhrT3OEH7OJKg7CznBqBbs9yZ1w0
+         U7aRPowCGfhAGUlXeZunWC/Yb9pHbAVCVVKYOV3xlIe9H7lGypGOhjf3PLcGRMI1v2kd
+         txAcLeVToI8JjMQQdjf9vy8vPic/tahYX5ntLqKsGvjednLA8XuFji70n6q9WfhzAk6k
+         Z8035EKJr33JkVE4K0M7hmO1vEh00rLsdjTuGtZj2dJEjkF1KRwcweFdfABVz138XYPN
+         0nGf2AO6hH7yOJ9OD1Na0AUkgjaUPrH3vjmmq2Wwr/gN3Oh+VctNs3vdbjIXeoECkM4K
+         P/KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=F5Aj6UsKXonhXjaCbwszX18YbRfjkPa5U1IrmdLJ2uo=;
-        b=j38JmLN5geWmP8z5r4MQV7yrGO87s3ZXNAWd9jrJItnSauET4cEt7BmKYLaApGm8Dp
-         s3588ykUMdwgj8UY8Fg1mdw9jCw45PPvFjyLGYhXQE+MYCHzbOzDPvZGUswbY8J6Uy6Q
-         G/diGePlTHQYp+wQXw2oE5N1VF1zPQlhLTK4kmgkWU05hCsVBOZb3CHuNfr9AzHkonWW
-         FNHhWXhk0Y4H8kPDEYW48iIxn1ul0t/GzMCvguNE+fsjY1ovCAarr2IerhX+fWHflf9v
-         MNDCVrZ9wuj3r7T+mihebJP94fAEIHAzUi3kAfWQI1/a07R0WYmOMjMCgdYeDqmksKxp
-         gx9w==
-X-Gm-Message-State: ACrzQf17AyYp35XIc769RL1CSga6GS+s1/mtwu0xPdalgWsU8THlu6Ni
-	gy6qROeKnG6Ex1KaaGrdRVo/t3fGO0dO2ZbK7aZn8Q==
-X-Google-Smtp-Source: AMsMyM5FKzTNmyylU3xPPxJYhH/SCtTxGMS0wL4PqMMujFXMXANNrm34bY1b+dRJoKk9gq76vmB+V1SFcep8mi+/4tI=
-X-Received: by 2002:a5d:588f:0:b0:22b:5cc:e1d3 with SMTP id
- n15-20020a5d588f000000b0022b05cce1d3mr7784825wrf.142.1663764553759; Wed, 21
- Sep 2022 05:49:13 -0700 (PDT)
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date;
+        bh=E2CNlSFLA0zwggDwr29u6+GLBcpiTg5yerCM9i1vjXM=;
+        b=Yu93onQapXgvQUA8T0B4mEZWPnCOyQ07MRegG4uoeT3zsjxqVz9+rdbNKeqqzHpjPn
+         u+lCDxloTqELQZOs+xz/rbJu3zK+nTcrFlYSW/XUBrivzM1A8esEiE37zflK7RCzvVOb
+         //5X1Yj2GzUp2SHVnhn7ub6pMCnEtSFR3LwWpBB6zR7mgVSRo+MAVckvIstQa6lmZhsO
+         /SEQz954rb0Uvl+IydwqfJ+bCJOHsb6UsNnr9B5vinhY+pHHqg0TICwMNIx6z4IRHcZM
+         lTJE8scclNSmNBTtJqRJQ1Wx0paWUjGZW591m1e7TEJpWlM1qKHFy7MPU50qAWc6Hum2
+         yG0w==
+X-Gm-Message-State: ACrzQf1JQSdqerTPEtigepDoUPOt87FDIsz2mOAJgU3TtDBv0/CWmRcW
+	STjk5T3xl+AhmB8KO673uAYtCZxAwFM=
+X-Google-Smtp-Source: AMsMyM7W/8v0nYyMeqzFnNH0OHUFSZTMIO13aoCvgS952NseqfC3X6fvqJKb8GhRqYZuM0WtEZdFgg==
+X-Received: by 2002:a17:902:7883:b0:178:9faa:627f with SMTP id q3-20020a170902788300b001789faa627fmr306124pll.65.1663798127516;
+        Wed, 21 Sep 2022 15:08:47 -0700 (PDT)
+Received: from taoren-fedora-PC23YAB4 ([76.132.249.1])
+        by smtp.gmail.com with ESMTPSA id z16-20020aa79e50000000b00537d7cc774bsm2634497pfq.139.2022.09.21.15.08.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Sep 2022 15:08:47 -0700 (PDT)
+Date: Wed, 21 Sep 2022 15:08:42 -0700
+From: Tao Ren <rentao.bupt@gmail.com>
+To: openbmc@lists.ozlabs.org
+Subject: Wedge400 (AST2520) OpenBMC stuck at reboot
+Message-ID: <YyuLaigEAyiYpl+B@taoren-fedora-PC23YAB4>
 MIME-Version: 1.0
-References: <20220916115602.370003-1-pbrobinson@gmail.com>
-In-Reply-To: <20220916115602.370003-1-pbrobinson@gmail.com>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Wed, 21 Sep 2022 14:48:37 +0200
-Message-ID: <CAPDyKFr8Y+ChTK2-AdioYr5zYuxx_d-gwUBppGJcR5X7M2+SSQ@mail.gmail.com>
-Subject: Re: [PATCH] mmc: sdhci-of-aspeed: Add dependency on ARCH_ASPEED
-To: Peter Robinson <pbrobinson@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,39 +74,38 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, linux-mmc@vger.kernel.org, linux-aspeed@lists.ozlabs.org
+Cc: taoren@fb.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 16 Sept 2022 at 13:56, Peter Robinson <pbrobinson@gmail.com> wrote:
->
-> The MMC_SDHCI_OF_ASPEED is part of the Aspeed silicon so it makes
-> sense to depend on ARCH_ASPEED and for compile testing.
->
-> Signed-off-by: Peter Robinson <pbrobinson@gmail.com>
+Hi there,
 
-Applied for next, thanks!
+Recently I noticed a few Wedge400 (AST2520A2) units stuck after "reboot"
+command. It's hard to reproduce (affecting ~1 out of 1,000 units), but
+once it happens, I have to power cycle the chassis to recover OpenBMC.
 
-Kind regards
-Uffe
+I checked aspeed_wdt.c and manually played with watchdog registers, but
+everything looks normal to me. Did anyone hit the similar error before?
+Any suggestions which area I should look into?
+
+Below are the last few lines of logs before OpenBMC hangs:
+
+bmc-oob login:
+INIT: Sending processes configured via /etc/inittab the TERM signal
+Stopping OpenBSD Secure Shell server: sshdstopped /usr/sbin/sshd (pid 7397 1189)
+Stopping ntpd: done
+stopping rsyslogd ... done
+Stopping random number generator daemon.
+Deconfiguring network interfaces... done.
+Sending all processes the TERM signal...
+rackmond[1747]: Got request exit[  528.383133] watchdog: watchdog0: watchdog did not stop!
+Sending all processes the KILL signal...
+Unmounting remote filesystems...
+Deactivating swap...
+Unmounting local filesystems...
+Rebooting... [  529.725009] reboot: Restarting system
 
 
-> ---
->  drivers/mmc/host/Kconfig | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
-> index e63608834411..f324daadaf70 100644
-> --- a/drivers/mmc/host/Kconfig
-> +++ b/drivers/mmc/host/Kconfig
-> @@ -157,6 +157,7 @@ config MMC_SDHCI_OF_ARASAN
->
->  config MMC_SDHCI_OF_ASPEED
->         tristate "SDHCI OF support for the ASPEED SDHCI controller"
-> +       depends on ARCH_ASPEED || COMPILE_TEST
->         depends on MMC_SDHCI_PLTFM
->         depends on OF && OF_ADDRESS
->         select MMC_SDHCI_IO_ACCESSORS
-> --
-> 2.37.3
->
+Cheers,
+
+Tao
