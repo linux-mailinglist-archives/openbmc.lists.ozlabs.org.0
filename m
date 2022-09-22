@@ -2,56 +2,47 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0F1905E5CD1
-	for <lists+openbmc@lfdr.de>; Thu, 22 Sep 2022 10:01:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D9AFF5E650C
+	for <lists+openbmc@lfdr.de>; Thu, 22 Sep 2022 16:22:59 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MY7683k6nz3c6F
-	for <lists+openbmc@lfdr.de>; Thu, 22 Sep 2022 18:01:52 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru header.a=rsa-sha256 header.s=default header.b=GDHnQka/;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MYHYs6JYrz3c7C
+	for <lists+openbmc@lfdr.de>; Fri, 23 Sep 2022 00:22:57 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=yandex-team.ru (client-ip=2a02:6b8:0:1619::183; helo=forwardcorp1j.mail.yandex.net; envelope-from=kitsok@yandex-team.ru; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru header.a=rsa-sha256 header.s=default header.b=GDHnQka/;
-	dkim-atps=neutral
-X-Greylist: delayed 107 seconds by postgrey-1.36 at boromir; Thu, 22 Sep 2022 18:01:25 AEST
-Received: from forwardcorp1j.mail.yandex.net (forwardcorp1j.mail.yandex.net [IPv6:2a02:6b8:0:1619::183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized) smtp.mailfrom=nuvoton.com (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
+Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MY75d5ZX3z3bZs
-	for <openbmc@lists.ozlabs.org>; Thu, 22 Sep 2022 18:01:25 +1000 (AEST)
-Received: from vla1-f615dbed14ca.qloud-c.yandex.net (vla1-f615dbed14ca.qloud-c.yandex.net [IPv6:2a02:6b8:c0d:3183:0:640:f615:dbed])
-	by forwardcorp1j.mail.yandex.net (Yandex) with ESMTP id 1F8E42E1AA8
-	for <openbmc@lists.ozlabs.org>; Thu, 22 Sep 2022 10:59:12 +0300 (MSK)
-Received: from 2a02:6b8:c1f:6255:0:640:95c3:0 (2a02:6b8:c1f:6255:0:640:95c3:0 [2a02:6b8:c1f:6255:0:640:95c3:0])
-	by vla1-f615dbed14ca.qloud-c.yandex.net (mxbackcorp/Yandex) with HTTP id uwd2GD1J28c1-xCJCdeNM;
-	Thu, 22 Sep 2022 10:59:12 +0300
-X-Yandex-Fwd: 2
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru; s=default;
-	t=1663833552; bh=c97O/CCEETtLeDKvzdWHG5EdvAp6O/bFgTIacmDM0/0=;
-	h=Message-Id:Subject:In-Reply-To:Date:References:To:From;
-	b=GDHnQka/rUElCq9+jK/hgfGur5hLzP/NTkQsiDOPQST9pRyHOkmriHBM36B9lfm6h
-	 PP3ocscOOj+kE5VJLEPfUCv6qoq31CpfjYBRhvLjnwMC5ZCvA8Jo4x6BYYYDFDdpAE
-	 tsVkrPfeZRHTpe1lPxmMqWoU3V8BCvkEPi6l6WB8=
-Authentication-Results: vla1-f615dbed14ca.qloud-c.yandex.net; dkim=pass header.i=@yandex-team.ru
-Received: from xxsl4l6ndgil2oud.iva.yp-c.yandex.net (xxsl4l6ndgil2oud.iva.yp-c.yandex.net [2a02:6b8:c0c:6123:0:640:6548:0])
-	by iva5-51baefb7689f.qloud-c.yandex.net (mxbackcorp/Yandex) with HTTP id Owdk6n1KbmI1-o9wpAV76
-	for <kitsok@yandex-team.ru>; Thu, 22 Sep 2022 10:59:02 +0300
-Received: by xxsl4l6ndgil2oud.iva.yp-c.yandex.net with HTTP;
-	Thu, 22 Sep 2022 10:59:02 +0300
-From: Konstantin Klubnichkin <kitsok@yandex-team.ru>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-In-Reply-To: <YyuLaigEAyiYpl+B@taoren-fedora-PC23YAB4>
-References: <YyuLaigEAyiYpl+B@taoren-fedora-PC23YAB4>
-Subject: Re: Wedge400 (AST2520) OpenBMC stuck at reboot
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MYHYW5XWkz3bZ4
+	for <openbmc@lists.ozlabs.org>; Fri, 23 Sep 2022 00:22:39 +1000 (AEST)
+Received: from NTILML01.nuvoton.com (ntil-fw [212.199.177.25])
+	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 28MEMYYf010623
+	for <openbmc@lists.ozlabs.org>; Thu, 22 Sep 2022 17:22:34 +0300
+Received: from NTHCCAS02.nuvoton.com (10.1.9.121) by NTILML01.nuvoton.com
+ (10.190.1.46) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Thu, 22 Sep
+ 2022 17:22:33 +0300
+Received: from NTHCCAS04.nuvoton.com (10.1.8.29) by NTHCCAS02.nuvoton.com
+ (10.1.9.121) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2176.2; Thu, 22 Sep
+ 2022 22:22:19 +0800
+Received: from taln60.nuvoton.co.il (10.191.1.180) by NTHCCAS04.nuvoton.com
+ (10.1.12.25) with Microsoft SMTP Server id 15.1.2176.2 via Frontend
+ Transport; Thu, 22 Sep 2022 22:22:19 +0800
+Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
+	id A394E637C4; Thu, 22 Sep 2022 17:22:18 +0300 (IDT)
+From: Tomer Maimon <tmaimon77@gmail.com>
+To: <avifishman70@gmail.com>, <tali.perry1@gmail.com>, <joel@jms.id.au>,
+        <venture@google.com>, <yuenn@google.com>, <benjaminfair@google.com>,
+        <olivia@selenic.com>, <herbert@gondor.apana.org.au>,
+        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>
+Subject: [PATCH v1 0/2] rng: npcm: add Arbel NPCM8XX support
+Date: Thu, 22 Sep 2022 17:22:14 +0300
+Message-ID: <20220922142216.17581-1-tmaimon77@gmail.com>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
-Date: Thu, 22 Sep 2022 10:59:12 +0300
-Message-Id: <217031663833427@mail.yandex-team.ru>
-Content-Transfer-Encoding: base64
-Content-Type: text/html; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,135 +54,25 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, Tomer Maimon <tmaimon77@gmail.com>, linux-crypto@vger.kernel.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-PGRpdj4tINCy0YHQtTwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PkhlbGxvITwvZGl2PjxkaXY+wqA8
-L2Rpdj48ZGl2PkkndmUgZmFjZWQgdGhpcyBpc3N1ZS48L2Rpdj48ZGl2PkZpbmFsbHkgbXkgc29s
-dXRpb24gd2FzIHRvIG1vZGlmeSBzaHV0ZG93biBzY3JpcHQ6PC9kaXY+PGRpdj7CoDwvZGl2Pjxk
-aXY+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PC9kaXY+PGRpdj48ZGl2PiMgdGNzYXR0cih0dHksIFRJT0NEUkFJTiwgbW9kZSkgdG8gZHJhaW4g
-dHR5IG1lc3NhZ2VzIHRvIGNvbnNvbGUgwqDCoDwvZGl2PjxkaXY+dGVzdCAtdCAxICZhbXA7JmFt
-cDsgc3R0eSBjb29rZWQgMCZsdDsmYW1wOzEgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqA8L2Rpdj48ZGl2PsKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgPC9kaXY+PGRpdj5lY2hvICJTeW5jaW5nLi4uIiDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoDwvZGl2PjxkaXY+c3luYyB8fCA6IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgPC9kaXY+PGRpdj5zeW5jIHx8
-IDogwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqA8L2Rpdj48ZGl2PnN5bmMg
-fHwgOiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoMKgPC9kaXY+PGRpdj7C
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oDwvZGl2PjxkaXY+ZWNobyAiU3RvcHBpbmcgV0RUcy4uLiIgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqA8L2Rpdj48
-ZGl2PnJldj0kKGFzdF9nZXRyZXYgfHwgOikgwqAgwqAgwqAgwqAgwqAgwqAgwqA8L2Rpdj48ZGl2
-PmlmIFsgIiRyZXYiID0gIkc1IiBdOyB0aGVuIMKgIMKgIMKgIMKgIMKgwqA8L2Rpdj48ZGl2PsKg
-IMKgIMKgIMKgIGRldm1lbSAweDFlNzg1MDBjIDMyIDAgfHwgOiDCoCDCoCDCoCDCoCDCoCDCoCDC
-oDwvZGl2PjxkaXY+wqAgwqAgwqAgwqAgZGV2bWVtIDB4MWU3ODUwMmMgMzIgMCB8fCA6IMKgPC9k
-aXY+PGRpdj7CoCDCoCDCoCDCoCBkZXZtZW0gMHgxZTc4NTA0YyAzMiAwIHx8IDogwqAgwqAgwqAg
-wqAgwqAgwqA8L2Rpdj48ZGl2PmZpIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgwqA8L2Rpdj48ZGl2PmlmIFsgIiRyZXYiID0g
-Ikc2IiBdOyB0aGVuIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgwqA8L2Rpdj48ZGl2PsKgIMKgIMKgIMKgIGRldm1lbSAweDFlNzg1MDBj
-IDMyIDAgfHwgOiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oDwvZGl2PjxkaXY+wqAgwqAgwqAgwqAgZGV2bWVtIDB4MWU3ODUwNGMgMzIgMCB8fCA6IMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgPC9kaXY+PGRpdj7CoCDC
-oCDCoCDCoCBkZXZtZW0gMHgxZTc4NTA4YyAzMiAwIHx8IDogwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqA8L2Rpdj48ZGl2PsKgIMKgIMKgIMKgIGRldm1lbSAw
-eDFlNzg1MGNjIDMyIDAgfHwgOiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoDwvZGl2PjxkaXY+wqAgwqAgwqAgwqAgZGV2bWVtIDB4MWU3ODUxMGMgMzIgMCB8
-fCA6IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgPC9kaXY+
-PGRpdj7CoCDCoCDCoCDCoCBkZXZtZW0gMHgxZTc4NTE0YyAzMiAwIHx8IDogwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqA8L2Rpdj48ZGl2PsKgIMKgIMKgIMKg
-IGRldm1lbSAweDFlNzg1MThjIDMyIDAgfHwgOiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoDwvZGl2PjxkaXY+wqAgwqAgwqAgwqAgZGV2bWVtIDB4MWU3ODUx
-Y2MgMzIgMCB8fCA6IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgPC9kaXY+PGRpdj5maSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoMKg
-PC9kaXY+PGRpdj7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoDwv
-ZGl2PjxkaXY+c2xlZF9oYl9oYiB8fCA6IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgPC9kaXY+PGRpdj7C
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoDwvZGl2PjxkaXY+ZWNo
-byAiU2V0dGluZyB1cCBXRFQxIGZvciBBUk0gcmVib290IiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoDwvZGl2PjxkaXY+IyBTZXQgdGltZW91dCB0byA1IHNlY29u
-ZHMgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqDCoDwvZGl2PjxkaXY+ZGV2bWVtIDB4MWU3ODUwMDQgMzIgMHg0YzRiNDAgfHwgOiDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoMKgPC9kaXY+PGRpdj4j
-IExvYWQgY291bnRlciByZWxvYWQgdmFsdWUgdG8gY291bnRlciByZWdpc3RlciDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoDwvZGl2PjxkaXY+ZGV2bWVtIDB4MWU3ODUwMDggMzIgMHg0NzU1
-IHx8IDogwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqDC
-oDwvZGl2PjxkaXY+IyBFbmFibGUgV0RUMSwgcmVzZXQgQVJNIGNvcmUgb25seSwgdXNlIGZpcnN0
-IGZsYXNoIChBU1QyNTAwIG9ubHkpLDwvZGl2PjxkaXY+IyBkaXNhYmxlIGludGVycnVwdCwgwqB1
-c2UgMU1IeiBjbG9jayAoQVNUMjUwMCBvbmx5KTwvZGl2PjxkaXY+ZGV2bWVtIDB4MWU3ODUwMGMg
-MzIgMHg1MyB8fCA6IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgPC9kaXY+
-PGRpdj7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoMKgPC9kaXY+PGRpdj5lY2hvIC1uICJXRFQxQ1IgIiB8fCA6IMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgPC9kaXY+PGRpdj5kZXZtZW0gMHgxZTc4NTAwYyB8fCA6
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgPC9kaXY+PGRpdj7CoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoMKgPC9k
-aXY+PGRpdj5lY2hvICJMYXN0IGhlYXJ0IGJlYXRzIGZvbGxvd2luZy4uLiIgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqA8L2Rpdj48ZGl2PsKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgwqA8L2Rpdj48ZGl2PndoaWxlIHRydWU7IGRvIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgPC9kaXY+PGRpdj7CoCDCoCDCoCDCoCBlY2hvICJLTk9DSyBrbm9jay4uLiIgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqDCoDwvZGl2Pjxk
-aXY+wqAgwqAgwqAgwqAgc2xlZXAgMSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoMKgPC9kaXY+PGRpdj5kb25lIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgwqA8L2Rpdj48ZGl2PsKgPC9kaXY+PGRpdj5l
-Y2hvICJXQVJOSU5HISEhISBaT01CSUUgQVRUQUNLISEhIsKgPC9kaXY+PGRpdj7CoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoMKgPC9kaXY+PGRpdj4jIEV4ZWN1dGUgdGhlIGNvbW1h
-bmQgc3lzdGVtZCB0b2xkIHVzIHRvIC4uLiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoDwv
-ZGl2PjxkaXY+aWYgdGVzdCAtZCAvb2xkcm9vdCDCoCZhbXA7JmFtcDsgdGVzdCAiJDEiIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgwqA8L2Rpdj48ZGl2PnRoZW4g
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqA8L2Rpdj48ZGl2PsKgIMKgIMKgIMKgIGlm
-IHRlc3QgIiQxIiA9IGtleGVjIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgPC9kaXY+PGRpdj7CoCDCoCDCoCDCoCB0aGVuIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgPC9kaXY+PGRpdj7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCAkMSAtZiAtZSDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoDwvZGl2
-PjxkaXY+wqAgwqAgwqAgwqAgZWxzZSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoDwvZGl2PjxkaXY+wqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgJDEgLWYgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqDCoDwvZGl2PjxkaXY+wqAgwqAgwqAgwqAg
-ZmkgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqA8L2Rpdj48ZGl2PmZpIMKgIMKgPC9kaXY+PC9kaXY+
-PGRpdj48ZGl2Pj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
-PT09PT09PTwvZGl2PjwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PjIyLjA5LjIwMjIsIDAxOjA5LCAi
-VGFvIFJlbiIgJmx0O3JlbnRhby5idXB0QGdtYWlsLmNvbSZndDs6PC9kaXY+PGJsb2NrcXVvdGU+
-PHA+SGkgdGhlcmUsPGJyIC8+PGJyIC8+UmVjZW50bHkgSSBub3RpY2VkIGEgZmV3IFdlZGdlNDAw
-IChBU1QyNTIwQTIpIHVuaXRzIHN0dWNrIGFmdGVyICJyZWJvb3QiPGJyIC8+Y29tbWFuZC4gSXQn
-cyBoYXJkIHRvIHJlcHJvZHVjZSAoYWZmZWN0aW5nIH4xIG91dCBvZiAxLDAwMCB1bml0cyksIGJ1
-dDxiciAvPm9uY2UgaXQgaGFwcGVucywgSSBoYXZlIHRvIHBvd2VyIGN5Y2xlIHRoZSBjaGFzc2lz
-IHRvIHJlY292ZXIgT3BlbkJNQy48YnIgLz48YnIgLz5JIGNoZWNrZWQgYXNwZWVkX3dkdC5jIGFu
-ZCBtYW51YWxseSBwbGF5ZWQgd2l0aCB3YXRjaGRvZyByZWdpc3RlcnMsIGJ1dDxiciAvPmV2ZXJ5
-dGhpbmcgbG9va3Mgbm9ybWFsIHRvIG1lLiBEaWQgYW55b25lIGhpdCB0aGUgc2ltaWxhciBlcnJv
-ciBiZWZvcmU/PGJyIC8+QW55IHN1Z2dlc3Rpb25zIHdoaWNoIGFyZWEgSSBzaG91bGQgbG9vayBp
-bnRvPzxiciAvPjxiciAvPkJlbG93IGFyZSB0aGUgbGFzdCBmZXcgbGluZXMgb2YgbG9ncyBiZWZv
-cmUgT3BlbkJNQyBoYW5nczo8YnIgLz48YnIgLz5ibWMtb29iIGxvZ2luOjxiciAvPklOSVQ6IFNl
-bmRpbmcgcHJvY2Vzc2VzIGNvbmZpZ3VyZWQgdmlhIC9ldGMvaW5pdHRhYiB0aGUgVEVSTSBzaWdu
-YWw8YnIgLz5TdG9wcGluZyBPcGVuQlNEIFNlY3VyZSBTaGVsbCBzZXJ2ZXI6IHNzaGRzdG9wcGVk
-IC91c3Ivc2Jpbi9zc2hkIChwaWQgNzM5NyAxMTg5KTxiciAvPlN0b3BwaW5nIG50cGQ6IGRvbmU8
-YnIgLz5zdG9wcGluZyByc3lzbG9nZCAuLi4gZG9uZTxiciAvPlN0b3BwaW5nIHJhbmRvbSBudW1i
-ZXIgZ2VuZXJhdG9yIGRhZW1vbi48YnIgLz5EZWNvbmZpZ3VyaW5nIG5ldHdvcmsgaW50ZXJmYWNl
-cy4uLiBkb25lLjxiciAvPlNlbmRpbmcgYWxsIHByb2Nlc3NlcyB0aGUgVEVSTSBzaWduYWwuLi48
-YnIgLz5yYWNrbW9uZFsxNzQ3XTogR290IHJlcXVlc3QgZXhpdFsgNTI4LjM4MzEzM10gd2F0Y2hk
-b2c6IHdhdGNoZG9nMDogd2F0Y2hkb2cgZGlkIG5vdCBzdG9wITxiciAvPlNlbmRpbmcgYWxsIHBy
-b2Nlc3NlcyB0aGUgS0lMTCBzaWduYWwuLi48YnIgLz5Vbm1vdW50aW5nIHJlbW90ZSBmaWxlc3lz
-dGVtcy4uLjxiciAvPkRlYWN0aXZhdGluZyBzd2FwLi4uPGJyIC8+VW5tb3VudGluZyBsb2NhbCBm
-aWxlc3lzdGVtcy4uLjxiciAvPlJlYm9vdGluZy4uLiBbIDUyOS43MjUwMDldIHJlYm9vdDogUmVz
-dGFydGluZyBzeXN0ZW08YnIgLz48YnIgLz48YnIgLz5DaGVlcnMsPGJyIC8+PGJyIC8+VGFvPC9w
-PjwvYmxvY2txdW90ZT48ZGl2PsKgPC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+LS3CoDwvZGl2Pjxk
-aXY+QmVzdCByZWdhcmRzLDwvZGl2PjxkaXY+S29uc3RhbnRpbiBLbHVibmljaGtpbiw8L2Rpdj48
-ZGl2PmxlYWQgZmlybXdhcmUgZW5naW5lZXIsPC9kaXY+PGRpdj5zZXJ2ZXIgaGFyZHdhcmUgUiZh
-bXA7RCBncm91cCw8L2Rpdj48ZGl2PllhbmRleCBNb3Njb3cgb2ZmaWNlLjwvZGl2PjxkaXY+dGVs
-OiArNy05MDMtNTEwLTMzLTMzPC9kaXY+PGRpdj7CoDwvZGl2Pg==
+This patch set adds Arbel NPCM8XX Random Number Generator(RNG) support 
+to RNG NPCM driver.
+
+The NPCM8XX RNG uses different prescalar clock value.
+
+The NPCM RNG driver was tested on the NPCM845 evaluation board.
+
+Tomer Maimon (2):
+  dt-bindings: rng: nuvoton,npcm-rng: Add npcm845 compatible string
+  hwrng: npcm: Add NPCM8XX support
+
+ .../bindings/rng/nuvoton,npcm-rng.yaml        |  4 +++-
+ drivers/char/hw_random/npcm-rng.c             | 21 ++++++++++++-------
+ 2 files changed, 17 insertions(+), 8 deletions(-)
+
+-- 
+2.33.0
+
