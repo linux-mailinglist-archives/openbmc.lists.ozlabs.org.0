@@ -1,71 +1,57 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 54C165E5B42
-	for <lists+openbmc@lfdr.de>; Thu, 22 Sep 2022 08:22:01 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0F1905E5CD1
+	for <lists+openbmc@lfdr.de>; Thu, 22 Sep 2022 10:01:55 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MY4tt2wq6z306m
-	for <lists+openbmc@lfdr.de>; Thu, 22 Sep 2022 16:21:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MY7683k6nz3c6F
+	for <lists+openbmc@lfdr.de>; Thu, 22 Sep 2022 18:01:52 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=JhubN6vA;
+	dkim=pass (1024-bit key; unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru header.a=rsa-sha256 header.s=default header.b=GDHnQka/;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42b; helo=mail-pf1-x42b.google.com; envelope-from=rentao.bupt@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=yandex-team.ru (client-ip=2a02:6b8:0:1619::183; helo=forwardcorp1j.mail.yandex.net; envelope-from=kitsok@yandex-team.ru; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=JhubN6vA;
+	dkim=pass (1024-bit key; unprotected) header.d=yandex-team.ru header.i=@yandex-team.ru header.a=rsa-sha256 header.s=default header.b=GDHnQka/;
 	dkim-atps=neutral
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+X-Greylist: delayed 107 seconds by postgrey-1.36 at boromir; Thu, 22 Sep 2022 18:01:25 AEST
+Received: from forwardcorp1j.mail.yandex.net (forwardcorp1j.mail.yandex.net [IPv6:2a02:6b8:0:1619::183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MY4tQ131hz301m
-	for <openbmc@lists.ozlabs.org>; Thu, 22 Sep 2022 16:21:31 +1000 (AEST)
-Received: by mail-pf1-x42b.google.com with SMTP id e5so8314998pfl.2
-        for <openbmc@lists.ozlabs.org>; Wed, 21 Sep 2022 23:21:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date;
-        bh=Z+PID1IguXrR32Sm0xAPoaOjuHf2SYVeP9iLGNhXLxI=;
-        b=JhubN6vArKJKTP6jo+i5TWRlA22D7tOJ6Otcl01icAOGlUleLHoiy6QIkAP3YymeMb
-         30sG7ozA6x0B4QeBkAgRxu2fDPXDX/ERF4sVWiKIK71K4bil+ZNZOHZ4n0wGZ6kN1b6j
-         nrJNAPFvtX0OwkHfP2ZJylzlWiqnDIXbOaOyitqIAgObjB4jskFcoNBtn0N9YvKMZDCR
-         x9HPIo0TQTbj/kVLpUI4iktTj1gfHfP2LBdXoJvL77/KmRucAFf7zkcwKaUM+RN7qpuo
-         VVCD6SM9rgU63lDIeYcfuVEFmHm5Ge5PJaSWQvYr8fIcDOsxvjStXIcEhPeo0tJj6JIR
-         yVog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
-        bh=Z+PID1IguXrR32Sm0xAPoaOjuHf2SYVeP9iLGNhXLxI=;
-        b=GiXZpgi9L2GL4Qtck5EzBQv4NoNbrsKBdkK494zaF8VT18m+ZpAcUGVZWvPtWvDePR
-         I+0EPvfD5xrtju6eccY42xC7ecHupdo4T4OUe0eU8G6Bj+Lv9kOB1P0cNFDHqr86j6o2
-         yEj8+Rt9eitZc31gx81wSMW2VvzTdu5MMRYuLz38yS4n1qxJAyGjS+IrZSdd9gLaULcO
-         94Tilh230AeQYW+fFEMqugp9Gr208T9kB/K0jBQijyrNNeKZS6HAJnOaGfm/RmezvoLW
-         kXrnSlqA0NynCttX+nFdh+nFh+E9iZEexyi5Zd8hJo7ZINhLnIkv4ct3Pa8VfrycYAGT
-         L04Q==
-X-Gm-Message-State: ACrzQf0OQi9v6DXJ/yPNojB1djaHhcr7k+zdPMrY1IHmvqTEhvQuKegG
-	LM5pTBWUc807lRzfB+ZuzRM=
-X-Google-Smtp-Source: AMsMyM5kbef0GcWlkq6yDhy++nJd3NxzEkdlWLLaTuY/I4H8KBrWRnmp7sb1WEkAtKg6cdczqc+4Rg==
-X-Received: by 2002:aa7:80d0:0:b0:52d:f9c6:bb14 with SMTP id a16-20020aa780d0000000b0052df9c6bb14mr1848558pfn.57.1663827688933;
-        Wed, 21 Sep 2022 23:21:28 -0700 (PDT)
-Received: from taoren-fedora-PC23YAB4 ([76.132.249.1])
-        by smtp.gmail.com with ESMTPSA id e16-20020a056a0000d000b0053b208b55d1sm3386398pfj.85.2022.09.21.23.21.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Sep 2022 23:21:28 -0700 (PDT)
-Date: Wed, 21 Sep 2022 23:21:24 -0700
-From: Tao Ren <rentao.bupt@gmail.com>
-To: Lei Yu <yulei.sh@bytedance.com>
-Subject: Re: Wedge400 (AST2520) OpenBMC stuck at reboot
-Message-ID: <Yyv+5GCp0A5WNE89@taoren-fedora-PC23YAB4>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MY75d5ZX3z3bZs
+	for <openbmc@lists.ozlabs.org>; Thu, 22 Sep 2022 18:01:25 +1000 (AEST)
+Received: from vla1-f615dbed14ca.qloud-c.yandex.net (vla1-f615dbed14ca.qloud-c.yandex.net [IPv6:2a02:6b8:c0d:3183:0:640:f615:dbed])
+	by forwardcorp1j.mail.yandex.net (Yandex) with ESMTP id 1F8E42E1AA8
+	for <openbmc@lists.ozlabs.org>; Thu, 22 Sep 2022 10:59:12 +0300 (MSK)
+Received: from 2a02:6b8:c1f:6255:0:640:95c3:0 (2a02:6b8:c1f:6255:0:640:95c3:0 [2a02:6b8:c1f:6255:0:640:95c3:0])
+	by vla1-f615dbed14ca.qloud-c.yandex.net (mxbackcorp/Yandex) with HTTP id uwd2GD1J28c1-xCJCdeNM;
+	Thu, 22 Sep 2022 10:59:12 +0300
+X-Yandex-Fwd: 2
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru; s=default;
+	t=1663833552; bh=c97O/CCEETtLeDKvzdWHG5EdvAp6O/bFgTIacmDM0/0=;
+	h=Message-Id:Subject:In-Reply-To:Date:References:To:From;
+	b=GDHnQka/rUElCq9+jK/hgfGur5hLzP/NTkQsiDOPQST9pRyHOkmriHBM36B9lfm6h
+	 PP3ocscOOj+kE5VJLEPfUCv6qoq31CpfjYBRhvLjnwMC5ZCvA8Jo4x6BYYYDFDdpAE
+	 tsVkrPfeZRHTpe1lPxmMqWoU3V8BCvkEPi6l6WB8=
+Authentication-Results: vla1-f615dbed14ca.qloud-c.yandex.net; dkim=pass header.i=@yandex-team.ru
+Received: from xxsl4l6ndgil2oud.iva.yp-c.yandex.net (xxsl4l6ndgil2oud.iva.yp-c.yandex.net [2a02:6b8:c0c:6123:0:640:6548:0])
+	by iva5-51baefb7689f.qloud-c.yandex.net (mxbackcorp/Yandex) with HTTP id Owdk6n1KbmI1-o9wpAV76
+	for <kitsok@yandex-team.ru>; Thu, 22 Sep 2022 10:59:02 +0300
+Received: by xxsl4l6ndgil2oud.iva.yp-c.yandex.net with HTTP;
+	Thu, 22 Sep 2022 10:59:02 +0300
+From: Konstantin Klubnichkin <kitsok@yandex-team.ru>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+In-Reply-To: <YyuLaigEAyiYpl+B@taoren-fedora-PC23YAB4>
 References: <YyuLaigEAyiYpl+B@taoren-fedora-PC23YAB4>
- <CAGm54UHu3wFdXTwd=cpe7bn3WVBf5rPA3Fi8mAtc4pJADOU5TQ@mail.gmail.com>
+Subject: Re: Wedge400 (AST2520) OpenBMC stuck at reboot
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAGm54UHu3wFdXTwd=cpe7bn3WVBf5rPA3Fi8mAtc4pJADOU5TQ@mail.gmail.com>
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
+Date: Thu, 22 Sep 2022 10:59:12 +0300
+Message-Id: <217031663833427@mail.yandex-team.ru>
+Content-Transfer-Encoding: base64
+Content-Type: text/html; charset=utf-8
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,70 +63,135 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: taoren@fb.com, openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Lei,
-
-Thank you for the quick response! The symptom is quite similar to my
-Wedge400 problem, but CONFIG_VIDEO_ASPEED is not enabled in my kconfig,
-so it might be caused by different component(s) in my environment..
-
-
-Cheers,
-
-Tao
-
-On Thu, Sep 22, 2022 at 10:10:01AM +0800, Lei Yu wrote:
-> We hit a similar but different issue about BMC stuck.
-> It occurs when running host DC cycle test, and when the issue occurs:
-> 1. The BMC hangs, and the aspeed's heartbeat is off
-> 2. If the wdt2 is enabled, the wdt2 will fire and aspeed chip will
-> reset and reboot into the seconds flash.
-> 3. If the wdt2 is disabled, the BMC just hangs and we have to power
-> cycle the chassis.
-> 
-> We could not find the root cause, but it's likely related to a patch:
-> https://lore.kernel.org/openbmc/20201221223225.14723-2-jae.hyun.yoo@linux.intel.com/
-> If we revert the patch, the issue could not be reproduced anymore.
-> 
-> On Thu, Sep 22, 2022 at 6:09 AM Tao Ren <rentao.bupt@gmail.com> wrote:
-> >
-> > Hi there,
-> >
-> > Recently I noticed a few Wedge400 (AST2520A2) units stuck after "reboot"
-> > command. It's hard to reproduce (affecting ~1 out of 1,000 units), but
-> > once it happens, I have to power cycle the chassis to recover OpenBMC.
-> >
-> > I checked aspeed_wdt.c and manually played with watchdog registers, but
-> > everything looks normal to me. Did anyone hit the similar error before?
-> > Any suggestions which area I should look into?
-> >
-> > Below are the last few lines of logs before OpenBMC hangs:
-> >
-> > bmc-oob login:
-> > INIT: Sending processes configured via /etc/inittab the TERM signal
-> > Stopping OpenBSD Secure Shell server: sshdstopped /usr/sbin/sshd (pid 7397 1189)
-> > Stopping ntpd: done
-> > stopping rsyslogd ... done
-> > Stopping random number generator daemon.
-> > Deconfiguring network interfaces... done.
-> > Sending all processes the TERM signal...
-> > rackmond[1747]: Got request exit[  528.383133] watchdog: watchdog0: watchdog did not stop!
-> > Sending all processes the KILL signal...
-> > Unmounting remote filesystems...
-> > Deactivating swap...
-> > Unmounting local filesystems...
-> > Rebooting... [  529.725009] reboot: Restarting system
-> >
-> >
-> > Cheers,
-> >
-> > Tao
-> 
-> 
-> 
-> -- 
-> BRs,
-> Lei YU
+PGRpdj4tINCy0YHQtTwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PkhlbGxvITwvZGl2PjxkaXY+wqA8
+L2Rpdj48ZGl2PkkndmUgZmFjZWQgdGhpcyBpc3N1ZS48L2Rpdj48ZGl2PkZpbmFsbHkgbXkgc29s
+dXRpb24gd2FzIHRvIG1vZGlmeSBzaHV0ZG93biBzY3JpcHQ6PC9kaXY+PGRpdj7CoDwvZGl2Pjxk
+aXY+PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PC9kaXY+PGRpdj48ZGl2PiMgdGNzYXR0cih0dHksIFRJT0NEUkFJTiwgbW9kZSkgdG8gZHJhaW4g
+dHR5IG1lc3NhZ2VzIHRvIGNvbnNvbGUgwqDCoDwvZGl2PjxkaXY+dGVzdCAtdCAxICZhbXA7JmFt
+cDsgc3R0eSBjb29rZWQgMCZsdDsmYW1wOzEgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqA8L2Rpdj48ZGl2PsKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgPC9kaXY+PGRpdj5lY2hvICJTeW5jaW5nLi4uIiDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoDwvZGl2PjxkaXY+c3luYyB8fCA6IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgPC9kaXY+PGRpdj5zeW5jIHx8
+IDogwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqA8L2Rpdj48ZGl2PnN5bmMg
+fHwgOiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoMKgPC9kaXY+PGRpdj7C
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oDwvZGl2PjxkaXY+ZWNobyAiU3RvcHBpbmcgV0RUcy4uLiIgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqA8L2Rpdj48
+ZGl2PnJldj0kKGFzdF9nZXRyZXYgfHwgOikgwqAgwqAgwqAgwqAgwqAgwqAgwqA8L2Rpdj48ZGl2
+PmlmIFsgIiRyZXYiID0gIkc1IiBdOyB0aGVuIMKgIMKgIMKgIMKgIMKgwqA8L2Rpdj48ZGl2PsKg
+IMKgIMKgIMKgIGRldm1lbSAweDFlNzg1MDBjIDMyIDAgfHwgOiDCoCDCoCDCoCDCoCDCoCDCoCDC
+oDwvZGl2PjxkaXY+wqAgwqAgwqAgwqAgZGV2bWVtIDB4MWU3ODUwMmMgMzIgMCB8fCA6IMKgPC9k
+aXY+PGRpdj7CoCDCoCDCoCDCoCBkZXZtZW0gMHgxZTc4NTA0YyAzMiAwIHx8IDogwqAgwqAgwqAg
+wqAgwqAgwqA8L2Rpdj48ZGl2PmZpIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgwqA8L2Rpdj48ZGl2PmlmIFsgIiRyZXYiID0g
+Ikc2IiBdOyB0aGVuIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgwqA8L2Rpdj48ZGl2PsKgIMKgIMKgIMKgIGRldm1lbSAweDFlNzg1MDBj
+IDMyIDAgfHwgOiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oDwvZGl2PjxkaXY+wqAgwqAgwqAgwqAgZGV2bWVtIDB4MWU3ODUwNGMgMzIgMCB8fCA6IMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgPC9kaXY+PGRpdj7CoCDC
+oCDCoCDCoCBkZXZtZW0gMHgxZTc4NTA4YyAzMiAwIHx8IDogwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqA8L2Rpdj48ZGl2PsKgIMKgIMKgIMKgIGRldm1lbSAw
+eDFlNzg1MGNjIDMyIDAgfHwgOiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoDwvZGl2PjxkaXY+wqAgwqAgwqAgwqAgZGV2bWVtIDB4MWU3ODUxMGMgMzIgMCB8
+fCA6IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgPC9kaXY+
+PGRpdj7CoCDCoCDCoCDCoCBkZXZtZW0gMHgxZTc4NTE0YyAzMiAwIHx8IDogwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqA8L2Rpdj48ZGl2PsKgIMKgIMKgIMKg
+IGRldm1lbSAweDFlNzg1MThjIDMyIDAgfHwgOiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoDwvZGl2PjxkaXY+wqAgwqAgwqAgwqAgZGV2bWVtIDB4MWU3ODUx
+Y2MgMzIgMCB8fCA6IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgPC9kaXY+PGRpdj5maSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoMKg
+PC9kaXY+PGRpdj7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoDwv
+ZGl2PjxkaXY+c2xlZF9oYl9oYiB8fCA6IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgPC9kaXY+PGRpdj7C
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoDwvZGl2PjxkaXY+ZWNo
+byAiU2V0dGluZyB1cCBXRFQxIGZvciBBUk0gcmVib290IiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoDwvZGl2PjxkaXY+IyBTZXQgdGltZW91dCB0byA1IHNlY29u
+ZHMgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqDCoDwvZGl2PjxkaXY+ZGV2bWVtIDB4MWU3ODUwMDQgMzIgMHg0YzRiNDAgfHwgOiDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoMKgPC9kaXY+PGRpdj4j
+IExvYWQgY291bnRlciByZWxvYWQgdmFsdWUgdG8gY291bnRlciByZWdpc3RlciDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoDwvZGl2PjxkaXY+ZGV2bWVtIDB4MWU3ODUwMDggMzIgMHg0NzU1
+IHx8IDogwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqDC
+oDwvZGl2PjxkaXY+IyBFbmFibGUgV0RUMSwgcmVzZXQgQVJNIGNvcmUgb25seSwgdXNlIGZpcnN0
+IGZsYXNoIChBU1QyNTAwIG9ubHkpLDwvZGl2PjxkaXY+IyBkaXNhYmxlIGludGVycnVwdCwgwqB1
+c2UgMU1IeiBjbG9jayAoQVNUMjUwMCBvbmx5KTwvZGl2PjxkaXY+ZGV2bWVtIDB4MWU3ODUwMGMg
+MzIgMHg1MyB8fCA6IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgPC9kaXY+
+PGRpdj7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoMKgPC9kaXY+PGRpdj5lY2hvIC1uICJXRFQxQ1IgIiB8fCA6IMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgPC9kaXY+PGRpdj5kZXZtZW0gMHgxZTc4NTAwYyB8fCA6
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgPC9kaXY+PGRpdj7CoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoMKgPC9k
+aXY+PGRpdj5lY2hvICJMYXN0IGhlYXJ0IGJlYXRzIGZvbGxvd2luZy4uLiIgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqA8L2Rpdj48ZGl2PsKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgwqA8L2Rpdj48ZGl2PndoaWxlIHRydWU7IGRvIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgPC9kaXY+PGRpdj7CoCDCoCDCoCDCoCBlY2hvICJLTk9DSyBrbm9jay4uLiIgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqDCoDwvZGl2Pjxk
+aXY+wqAgwqAgwqAgwqAgc2xlZXAgMSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoMKgPC9kaXY+PGRpdj5kb25lIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgwqA8L2Rpdj48ZGl2PsKgPC9kaXY+PGRpdj5l
+Y2hvICJXQVJOSU5HISEhISBaT01CSUUgQVRUQUNLISEhIsKgPC9kaXY+PGRpdj7CoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoMKgPC9kaXY+PGRpdj4jIEV4ZWN1dGUgdGhlIGNvbW1h
+bmQgc3lzdGVtZCB0b2xkIHVzIHRvIC4uLiDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoDwv
+ZGl2PjxkaXY+aWYgdGVzdCAtZCAvb2xkcm9vdCDCoCZhbXA7JmFtcDsgdGVzdCAiJDEiIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgwqA8L2Rpdj48ZGl2PnRoZW4g
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqA8L2Rpdj48ZGl2PsKgIMKgIMKgIMKgIGlm
+IHRlc3QgIiQxIiA9IGtleGVjIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgPC9kaXY+PGRpdj7CoCDCoCDCoCDCoCB0aGVuIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
+IMKgIMKgPC9kaXY+PGRpdj7CoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCAkMSAtZiAtZSDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoDwvZGl2
+PjxkaXY+wqAgwqAgwqAgwqAgZWxzZSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
+oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoDwvZGl2PjxkaXY+wqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgJDEgLWYgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqDCoDwvZGl2PjxkaXY+wqAgwqAgwqAgwqAg
+ZmkgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
+wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqA8L2Rpdj48ZGl2PmZpIMKgIMKgPC9kaXY+PC9kaXY+
+PGRpdj48ZGl2Pj09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09
+PT09PT09PTwvZGl2PjwvZGl2PjxkaXY+wqA8L2Rpdj48ZGl2PjIyLjA5LjIwMjIsIDAxOjA5LCAi
+VGFvIFJlbiIgJmx0O3JlbnRhby5idXB0QGdtYWlsLmNvbSZndDs6PC9kaXY+PGJsb2NrcXVvdGU+
+PHA+SGkgdGhlcmUsPGJyIC8+PGJyIC8+UmVjZW50bHkgSSBub3RpY2VkIGEgZmV3IFdlZGdlNDAw
+IChBU1QyNTIwQTIpIHVuaXRzIHN0dWNrIGFmdGVyICJyZWJvb3QiPGJyIC8+Y29tbWFuZC4gSXQn
+cyBoYXJkIHRvIHJlcHJvZHVjZSAoYWZmZWN0aW5nIH4xIG91dCBvZiAxLDAwMCB1bml0cyksIGJ1
+dDxiciAvPm9uY2UgaXQgaGFwcGVucywgSSBoYXZlIHRvIHBvd2VyIGN5Y2xlIHRoZSBjaGFzc2lz
+IHRvIHJlY292ZXIgT3BlbkJNQy48YnIgLz48YnIgLz5JIGNoZWNrZWQgYXNwZWVkX3dkdC5jIGFu
+ZCBtYW51YWxseSBwbGF5ZWQgd2l0aCB3YXRjaGRvZyByZWdpc3RlcnMsIGJ1dDxiciAvPmV2ZXJ5
+dGhpbmcgbG9va3Mgbm9ybWFsIHRvIG1lLiBEaWQgYW55b25lIGhpdCB0aGUgc2ltaWxhciBlcnJv
+ciBiZWZvcmU/PGJyIC8+QW55IHN1Z2dlc3Rpb25zIHdoaWNoIGFyZWEgSSBzaG91bGQgbG9vayBp
+bnRvPzxiciAvPjxiciAvPkJlbG93IGFyZSB0aGUgbGFzdCBmZXcgbGluZXMgb2YgbG9ncyBiZWZv
+cmUgT3BlbkJNQyBoYW5nczo8YnIgLz48YnIgLz5ibWMtb29iIGxvZ2luOjxiciAvPklOSVQ6IFNl
+bmRpbmcgcHJvY2Vzc2VzIGNvbmZpZ3VyZWQgdmlhIC9ldGMvaW5pdHRhYiB0aGUgVEVSTSBzaWdu
+YWw8YnIgLz5TdG9wcGluZyBPcGVuQlNEIFNlY3VyZSBTaGVsbCBzZXJ2ZXI6IHNzaGRzdG9wcGVk
+IC91c3Ivc2Jpbi9zc2hkIChwaWQgNzM5NyAxMTg5KTxiciAvPlN0b3BwaW5nIG50cGQ6IGRvbmU8
+YnIgLz5zdG9wcGluZyByc3lzbG9nZCAuLi4gZG9uZTxiciAvPlN0b3BwaW5nIHJhbmRvbSBudW1i
+ZXIgZ2VuZXJhdG9yIGRhZW1vbi48YnIgLz5EZWNvbmZpZ3VyaW5nIG5ldHdvcmsgaW50ZXJmYWNl
+cy4uLiBkb25lLjxiciAvPlNlbmRpbmcgYWxsIHByb2Nlc3NlcyB0aGUgVEVSTSBzaWduYWwuLi48
+YnIgLz5yYWNrbW9uZFsxNzQ3XTogR290IHJlcXVlc3QgZXhpdFsgNTI4LjM4MzEzM10gd2F0Y2hk
+b2c6IHdhdGNoZG9nMDogd2F0Y2hkb2cgZGlkIG5vdCBzdG9wITxiciAvPlNlbmRpbmcgYWxsIHBy
+b2Nlc3NlcyB0aGUgS0lMTCBzaWduYWwuLi48YnIgLz5Vbm1vdW50aW5nIHJlbW90ZSBmaWxlc3lz
+dGVtcy4uLjxiciAvPkRlYWN0aXZhdGluZyBzd2FwLi4uPGJyIC8+VW5tb3VudGluZyBsb2NhbCBm
+aWxlc3lzdGVtcy4uLjxiciAvPlJlYm9vdGluZy4uLiBbIDUyOS43MjUwMDldIHJlYm9vdDogUmVz
+dGFydGluZyBzeXN0ZW08YnIgLz48YnIgLz48YnIgLz5DaGVlcnMsPGJyIC8+PGJyIC8+VGFvPC9w
+PjwvYmxvY2txdW90ZT48ZGl2PsKgPC9kaXY+PGRpdj7CoDwvZGl2PjxkaXY+LS3CoDwvZGl2Pjxk
+aXY+QmVzdCByZWdhcmRzLDwvZGl2PjxkaXY+S29uc3RhbnRpbiBLbHVibmljaGtpbiw8L2Rpdj48
+ZGl2PmxlYWQgZmlybXdhcmUgZW5naW5lZXIsPC9kaXY+PGRpdj5zZXJ2ZXIgaGFyZHdhcmUgUiZh
+bXA7RCBncm91cCw8L2Rpdj48ZGl2PllhbmRleCBNb3Njb3cgb2ZmaWNlLjwvZGl2PjxkaXY+dGVs
+OiArNy05MDMtNTEwLTMzLTMzPC9kaXY+PGRpdj7CoDwvZGl2Pg==
