@@ -2,129 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 450C75E9B87
-	for <lists+openbmc@lfdr.de>; Mon, 26 Sep 2022 10:03:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6FA705E9C5B
+	for <lists+openbmc@lfdr.de>; Mon, 26 Sep 2022 10:47:33 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MbZyd6BFxz3cdf
-	for <lists+openbmc@lfdr.de>; Mon, 26 Sep 2022 18:03:53 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Mbbwx73NKz2yph
+	for <lists+openbmc@lfdr.de>; Mon, 26 Sep 2022 18:47:29 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=L/PyRDyk;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=l3FyNT3Z;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.212.114; helo=nam02-bn1-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::632; helo=mail-pl1-x632.google.com; envelope-from=kumarthangavel.hcl@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=L/PyRDyk;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=l3FyNT3Z;
 	dkim-atps=neutral
-Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam07on2114.outbound.protection.outlook.com [40.107.212.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MbZxJ4Qwvz3dsp;
-	Mon, 26 Sep 2022 18:02:43 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=K1YlTRVDG+1TSS+PhGPAR3ikxmqMg1nHV5kKVxgYcVIIXnh5qWeDM3JIqZD0EinFNj9O6kAvYMSCMFH3gxPL7xwTMCK3opIT4VoL5XR0mWiUUhuqPAa/FH/DESiYW9jDk04U559FEY1KcVxhiTKo1dGDMJzKlvuJBxRtjTM1q5nYJyQM2zJdbizIpuAW9v06oq8v8d5AzsJqzD4H59csXcF14OMOP1DM0EqDIdl80dLLBoULT6HLgGBx3aRJsF30/iK8SiAUvcTPa2bZkNqfgDEx+g++GxGSiWEDUTzeg59JVdI4+ib8yhHqK3+exKmffGAAKHs7BGs48AuzsTsDeQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=9p4LfnPfs7bFw5FmlZauOFB4lbXby0RUPJrAqMR4Gvs=;
- b=YhOMWjT057LJ8v2DwF8gS5hjKfzHNY7xL3BW87jGNZ5nrqvWMI/YXbXH1B//IH967zNXJNCDbwLDvM4lP3s3t8A9Fd7GmGl1EhGrCNJiUPgcaEcw7M80uKD82fclSOmdtQ3Ve/AYukK8PFKSAjQ+9f/dRV9n+VYC0nBGaB1bN5h2VKULAkc+q9XXY2xVdaCEjv3XwXE5/7yCMaO3ZBknbgt4SetlXQm7SrvOCWu6/m2YnHOHPupBNTQmUCfJXdP5rUg8M0ltoo844SRzKwa2NL598YmwWhYUJWMOuZD4iF+DBiUMAkPIB9XPn4bxLZnwYtg/aAdRBbE2F5gMrnvamg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MbbwV0W0zz2xsL
+	for <openbmc@lists.ozlabs.org>; Mon, 26 Sep 2022 18:47:04 +1000 (AEST)
+Received: by mail-pl1-x632.google.com with SMTP id d24so5610202pls.4
+        for <openbmc@lists.ozlabs.org>; Mon, 26 Sep 2022 01:47:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=9p4LfnPfs7bFw5FmlZauOFB4lbXby0RUPJrAqMR4Gvs=;
- b=L/PyRDykgpwzKL4fWyodWl5KQJwSB9+nQH8SXWeHcfZdvevVMJ15MAyKyYdyYiY7Y+aql5qViggd8BTRjzsa9pJrncVNBNFhI56HCTy5XHa3LDdLeeJ1hBVLJ4nM/zSLjXbdDZviCo/PwheqrxPzWdU2xs6G+dtPinRSOuh5JqI=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
-Received: from SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24) by
- BYAPR01MB5079.prod.exchangelabs.com (2603:10b6:a03:7c::24) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5654.24; Mon, 26 Sep 2022 08:02:24 +0000
-Received: from SJ0PR01MB7282.prod.exchangelabs.com
- ([fe80::7d50:e907:8e2e:1ff0]) by SJ0PR01MB7282.prod.exchangelabs.com
- ([fe80::7d50:e907:8e2e:1ff0%3]) with mapi id 15.20.5654.025; Mon, 26 Sep 2022
- 08:02:24 +0000
-Message-ID: <9a5699a1-0649-808a-ff5b-e37c1e299418@os.amperecomputing.com>
-Date: Mon, 26 Sep 2022 15:02:08 +0700
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.3.0
-Subject: Re: [PATCH] ARM: dts: aspeed: mtjade: Remove gpio-keys entries
-To: Rob Herring <robh+dt@kernel.org>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
- openbmc@lists.ozlabs.org, devicetree@vger.kernel.org,
- linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
- linux-kernel@vger.kernel.org
-References: <20220915080828.2894070-1-quan@os.amperecomputing.com>
-Content-Language: en-CA
-From: Quan Nguyen <quan@os.amperecomputing.com>
-In-Reply-To: <20220915080828.2894070-1-quan@os.amperecomputing.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SI2PR02CA0010.apcprd02.prod.outlook.com
- (2603:1096:4:194::15) To SJ0PR01MB7282.prod.exchangelabs.com
- (2603:10b6:a03:3f2::24)
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=230UMlm5jzN6DFBSFjvBJIxBbXFnPfiSY3vNvPJxuCs=;
+        b=l3FyNT3ZsHJcmzd7eqRw2nQul9JCQcMAZixYuu1eyPu/WTJ1kKTRk8r1Y2JenEWd70
+         /UsXfuuIqi+1+ibhf2egQ2L9gPKIh/3xceIsa2XMt0Gq/HXWcS2Zbq6eu9XpbSjFQJCG
+         fMVSC0PnzhXZlWyfZyNSFwrtamw4dQyprIALHXW6JSzdcDjJHfSFbDjr6WQPdvX1K/Qc
+         aL9zGcPXKg+DLJL9N6NtN1WyAjtwB87jnPHWrmubmBVxNDvBs4uQtuTjcnLuAclWUkkX
+         XVafx/dCsQEEMZ7A2v7wGzkZ0IHy6KQILRKs7P0bFCdyQ5G42p3uZePgKyr8oot7kwGH
+         8ZPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=230UMlm5jzN6DFBSFjvBJIxBbXFnPfiSY3vNvPJxuCs=;
+        b=OhXEXx0IfkJnQX6HnnWSwXJqa9wxCRejvlqlcOGCpbOajuP5WqiLZGNeLNPYDIF36I
+         2P9/eLEaoTC1+d1HA1R/PjOCGvAstDZggeVcXKmBqUiOQYR0TUAsjQoUTEonMQGjx58M
+         phYVFp160fZmfWWU/TjpXVA8QE07ilxqnGaB0mCzxcuh6rtRlGxbvbUAd2W/1qpWi6F+
+         MxPhi8pWtMC1IMvjue79mkTri06Sfck3mtEhGndRzYn2ftzIuaa82WSIpN0ZgESYoTs5
+         bZAiCB1btCn5V2s3bIlkjoUXxiNbtOL5vM+cJlH+vXPncXaTAMllVuB21cNxPTfCNETp
+         BTpw==
+X-Gm-Message-State: ACrzQf0JUgoycjSqd6NyDDAGkJqxlVJY5ka3Ly8Nr4Vu64whzYYMRtyG
+	lO6Swrl0Yqwo/1A7qTHQlAgOvCCnZzJmgq37trs=
+X-Google-Smtp-Source: AMsMyM69NH83PQp7uoKK8sB6Eu088vkx2PUWWuNgWUMyacf/0fVcdlD739qdmwrMz6p1RxNIxHJhhQ4aPIX1j47mBjs=
+X-Received: by 2002:a17:902:d355:b0:176:cd80:5b32 with SMTP id
+ l21-20020a170902d35500b00176cd805b32mr21417927plk.68.1664182022820; Mon, 26
+ Sep 2022 01:47:02 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SJ0PR01MB7282:EE_|BYAPR01MB5079:EE_
-X-MS-Office365-Filtering-Correlation-Id: 49b1e242-895b-43c1-d8b4-08da9f957249
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	5Jnp4T10AA5qHCPn4gri6/OxsL0Q/BDQB5mJLK42sQQAIrQIaVExii1RYnsYCQtpswWpnXEXrZ130thiRe/axjPh5JKPS3DIKWkIqgY2lih0y95299xCYvHXuXfsz+TYszkcdRYOCi/VNLKRfHhf62Vvot6VInvlwdNXNhjKgaLYxmgjd3Vsu1tp50PNGx/Ad0eARw3HCACPMMpY89Okz9oh6PjcYH72qgxQAVHnaGbyG8TXrlXCkXLXsjH4sk1XMcfKDnXMq0Cyvy0v9jsle+ceOOfSEwvK2MVTAAseIYZOB8LOlQd+BIUMBC7ZJOm0KQI2txRso8H0ezWjS4UwZRNZklzlATCPsW53Bw29CUWKeufq3ckwMt+lDDcw/0Er5bGiS5W7+n+j8/03vY9/rpaZlFDzWrktI9osOKuVR3whzkEwFppGZSY8LfrJpgdiMSmGrEb+jyC4ZPEu3SPzCVWehb0x59OyS+OZ24rUp/BdQ1ylnnP50rTPoThONRKk38VWDDenrBPwCfHwLZusIvF1yPVbNRXs63mOlhTK521BFV8ahrKjqacCr09tHJG0bkXOvx0VLOgtwVQEBWhsHWwdJhNqo5l6OSJodftEHku1WZD45b3JfJ2plMuCR7yNnPHvffB4kw/3sgNWY+XFXsCVkbjb8gaSAsdkrkzq5znTr4gkBt5hTO5vh7PhMr4pCFOhDwaPk8TbKrRVwm0vCHFXfiFWoserHIBBOoXjRF78k4YQYCHMlaEdxvMz2iG4SlvkMjMdcqLFuKZxeDqaKoaq/KzKpGCV2v7fmX9n4CI=
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR01MB7282.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(39840400004)(396003)(366004)(136003)(346002)(376002)(451199015)(186003)(6506007)(110136005)(2616005)(54906003)(52116002)(53546011)(26005)(6666004)(6486002)(6512007)(478600001)(107886003)(38350700002)(38100700002)(31696002)(86362001)(83380400001)(31686004)(8936002)(2906002)(316002)(41300700001)(5660300002)(66946007)(66556008)(66476007)(4326008)(8676002)(43740500002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?VnoxdUpRMU9xM0ZaOGtpOGRQYW9rRENtR0xHRjhjc29Ua3JyK1VNSkpEZ3hp?=
- =?utf-8?B?NnQzMmZWbFZBNGNwaWlUcFBsM3NWYnFrWlpkTWNvdnhEU2ZyNlcrWEJ6dkFt?=
- =?utf-8?B?dmRkWUlWTWJuRDdDMkRyVGgyZmNib0srS0lTWjhkTmpJQ2NBN2RRRkoxVDdh?=
- =?utf-8?B?MmVCd21LRWxHMnBwL2Z4dUI2WEdwcnp0WXFwclI3ejZiaDRaNUZ1WXpwMTY5?=
- =?utf-8?B?REF1ZHo0MDNLeDRJMXRDK3c5b1NZRVJkOHZHMytHY0FOUmFCQ0FJeVFtWkM0?=
- =?utf-8?B?b3E4U1M5Yk5GU3d4eHN1Q2RTWk1qQmdSeGdjSjdaVzNLdy8xcnA5U0gwLzZ0?=
- =?utf-8?B?Um9XSkI3UEQ0ZFJ2alZwVXBQMUtuMUlrTmFVdGFLM3Z4SHRHd0I4VEU2QUhz?=
- =?utf-8?B?M1lXTEN3R3Z2VFBWNGlWc1F2am9aZzhWWkFUSFlaT3RCcFNhWVFOK0oya0Ny?=
- =?utf-8?B?SEF4Nlo0bTNDYnllZCtRdityRUxNUlBUQUhiOGlwREdTRmtDdUMwYjErL2pX?=
- =?utf-8?B?QWRTeHc2S2x1SmxtaU4zSzFhS3pUekMvNjVKUGExL0V5NU9UYzY5bHc0NU9o?=
- =?utf-8?B?Szc2ZGZ6eTJZd0NsdmVKSG9JRS9sV1RBRmRhWE9SaTMzVE11ZW9UeGhqbW9a?=
- =?utf-8?B?QmZoamZVWWprRURKYWZ1YVhyM0lpNndKaWNleTVJbmgvUHR0MFVjdkZyODdv?=
- =?utf-8?B?Wi9Bc0pIUUdQUGR5dnJGWThEbVpOL3BLdGpxMHBkd2haRDhRaE54aEJZMnA0?=
- =?utf-8?B?VGtDZkc3bXJBYXdKZWRlRGtvc1BjcmFuUW5leThjZmlva1RnMUNOWUxyWkd2?=
- =?utf-8?B?S3dQWDBqZ0d3UGJqVkgxSTI1dXBvaVpNdi8zUE5KeldpTDRzZWNOMWM0bHJ2?=
- =?utf-8?B?TDdreVFQUlZNVFF4aGc1RXYwTHNIeEVsNXF2TlV2dnFLUktSV3A4UzlhZVIw?=
- =?utf-8?B?bDhON3dzd2lhYXd1ZkhIL3Z6WURLZUNaajlGZWxKSDBJbmVtWmR4dW5ZZVo3?=
- =?utf-8?B?aWlEOVROZ3ljMkpnK1p4WWxIeThBY3ovaytpNHN0Nkx4UEx0anlHV01JaERE?=
- =?utf-8?B?LzhwMktSdnkzN1BPTGhsbXd0dUJHcHp6emtKMVdONElyU2R5SGdSbWY5N3kx?=
- =?utf-8?B?RHlQZ3d6WHdCRjk1TU4vL0Rjd1M3VElXelpYSGRDZ2tXanlQNkJhOTZnNDlH?=
- =?utf-8?B?VEZnS1FLUnRnMUlTdVM2bFdJVjdsdzRQOWZuaG5ibmIwODZFY3RvMzVDZ3lL?=
- =?utf-8?B?UnRXcTFNdk9FT3IzOUJzYVRlWms5NUQwS2xWZlJCd2piUWtXY0ZlYXd0WmFU?=
- =?utf-8?B?VHJJVzA5bFBTRUtFZXVYM3R6UmNMcXNWRE9GMnQ4ZVpBN2ZDQ004c3BQNS9o?=
- =?utf-8?B?ZXNod3hTT0FSTXQvdDhWRzFGemRkMG5aaFJKaFpWQ29kNmt4Q2l0QmE1YkVl?=
- =?utf-8?B?WHJKNE1CZlVQbzdwRFFuUnozMXJxSGNZYUJrUENxOGNsZFZPL1JRdjVKZEph?=
- =?utf-8?B?SndvcTNmTEFFNHVtNGFKZGhqbmN5NGJKSmRNUlliaGwyQlNtbzZrY0t3elNy?=
- =?utf-8?B?cTlZYWUvL0FZSWRaVnk0aW1ZYU1hWE5xVlJSWGlVQlkwSWxmcnJzU0REbVJ2?=
- =?utf-8?B?Q2FxNnNqU1BnSllybi9Ob3YxWEt0RWVjQkozVWk5T0JRcDB5TmhCMW5DT3ha?=
- =?utf-8?B?aHd1b05UVGhnd1NmdjJpVm8vdWNVUEpQWUYwR28vMUJxb09RaTc4Vm8yR09x?=
- =?utf-8?B?QS9FUkIyMk5VWnRSQ200cENPT1R0OE04b0ZqL0U3KzdNNElCM01QSTk2Q0ZM?=
- =?utf-8?B?eEZUSzRQVVhGN2tuZk42RklPWmtvN0tIWCt3a3JNeDFFdnptN0VsTTVXZEVU?=
- =?utf-8?B?MXllQTZEWDVkMUtEclBSeWhSS1hvUnBBQ25jVlFuaXlFVE13b2RaY2NuOU5K?=
- =?utf-8?B?Sy9WWncrQm04QVlwMHpQSjBlMDBiRklCS0d0NWFXOXlMVWpjcDhnNGljSm1n?=
- =?utf-8?B?Si9maUd3S0FUcE9OTWxnUjRCYUtOb3Bvc1YvZm9CcTc0RUNNd1JoZ2ZvL2RH?=
- =?utf-8?B?bkErWUFYdTNubW5ZeUR0TzBLeXJoNDlzTDdJemN0cS9uUmliVjFxaE44OVFV?=
- =?utf-8?B?N1V0MW5KazljQklRbSs5ak9zZjF6RHlJZ1RpL3V5blRPSHNkcjErS3BxZm0x?=
- =?utf-8?Q?5vGGjgneUPpuNAW2WIlXIK8=3D?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 49b1e242-895b-43c1-d8b4-08da9f957249
-X-MS-Exchange-CrossTenant-AuthSource: SJ0PR01MB7282.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 26 Sep 2022 08:02:24.4919
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 0sz0ehgVoQryU+XmJZOO92ydI9+Ih8QdoIPiqktfgRC40BpnT7FzsjvEzZ1jjuElFCLzn2FqR9X2sMvxR6W5cUoGY4DHDTt7kraes300AMA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR01MB5079
+References: <CAA7TbcsX-+EWCVjNMoB3n4qRWp1_1fOLWkM_8qK1UTXqQ-GgSw@mail.gmail.com>
+ <Yy4p8vbQfOq/jxWe@heinlein>
+In-Reply-To: <Yy4p8vbQfOq/jxWe@heinlein>
+From: Kumar Thangavel <kumarthangavel.hcl@gmail.com>
+Date: Mon, 26 Sep 2022 14:16:51 +0530
+Message-ID: <CAA7TbcukOUXgrXXxOh7MDZg8KazC4ZCUD7nMY8nveVgn9OKdKg@mail.gmail.com>
+Subject: Re: Rescan busses for FRU device removal/unplug
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: multipart/alternative; boundary="0000000000004fd5e905e9909205"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -136,129 +73,135 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Open Source Submission <patches@amperecomputing.com>, Thang Nguyen <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>
+Cc: Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, Vernon Mauery <vernon.mauery@linux.intel.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>, Amithash Prasad <amithash@fb.com>, velumani.hcl@gmail.com, garnermic@gmail.com, velumanit@hcl.com, patrickw3@fb.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Dear reviewers,
-Just a gentle ping for the patch.
+--0000000000004fd5e905e9909205
+Content-Type: text/plain; charset="UTF-8"
 
-Thank you,
-- Quan
+On Sat, Sep 24, 2022 at 3:19 AM Patrick Williams <patrick@stwcx.xyz> wrote:
 
-On 15/09/2022 15:08, Quan Nguyen wrote:
-> Remove the gpio-keys entries from the Ampere's Mt. Jade BMC device
-> tree. The user space applications are going to change from using
-> libevdev to libgpiod.
-> 
-> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
-> ---
->   .../arm/boot/dts/aspeed-bmc-ampere-mtjade.dts | 95 -------------------
->   1 file changed, 95 deletions(-)
-> 
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-ampere-mtjade.dts b/arch/arm/boot/dts/aspeed-bmc-ampere-mtjade.dts
-> index 82a6f14a45f0..d127cbcc7998 100644
-> --- a/arch/arm/boot/dts/aspeed-bmc-ampere-mtjade.dts
-> +++ b/arch/arm/boot/dts/aspeed-bmc-ampere-mtjade.dts
-> @@ -97,101 +97,6 @@ identify {
->   		};
->   	};
->   
-> -	gpio-keys {
-> -		compatible = "gpio-keys";
-> -
-> -		event-shutdown-ack {
-> -			label = "SHUTDOWN_ACK";
-> -			gpios = <&gpio ASPEED_GPIO(G, 2) GPIO_ACTIVE_LOW>;
-> -			linux,code = <ASPEED_GPIO(G, 2)>;
-> -		};
-> -
-> -		event-reboot-ack {
-> -			label = "REBOOT_ACK";
-> -			gpios = <&gpio ASPEED_GPIO(J, 3) GPIO_ACTIVE_LOW>;
-> -			linux,code = <ASPEED_GPIO(J, 3)>;
-> -		};
-> -
-> -		event-s0-overtemp {
-> -			label = "S0_OVERTEMP";
-> -			gpios = <&gpio ASPEED_GPIO(G, 3) GPIO_ACTIVE_LOW>;
-> -			linux,code = <ASPEED_GPIO(G, 3)>;
-> -		};
-> -
-> -		event-s0-hightemp {
-> -			label = "S0_HIGHTEMP";
-> -			gpios = <&gpio ASPEED_GPIO(J, 0) GPIO_ACTIVE_LOW>;
-> -			linux,code = <ASPEED_GPIO(J, 0)>;
-> -		};
-> -
-> -		event-s0-cpu-fault {
-> -			label = "S0_CPU_FAULT";
-> -			gpios = <&gpio ASPEED_GPIO(J, 1) GPIO_ACTIVE_HIGH>;
-> -			linux,code = <ASPEED_GPIO(J, 1)>;
-> -		};
-> -
-> -		event-s0-scp-auth-fail {
-> -			label = "S0_SCP_AUTH_FAIL";
-> -			gpios = <&gpio ASPEED_GPIO(J, 2) GPIO_ACTIVE_LOW>;
-> -			linux,code = <ASPEED_GPIO(J, 2)>;
-> -		};
-> -
-> -		event-s1-scp-auth-fail {
-> -			label = "S1_SCP_AUTH_FAIL";
-> -			gpios = <&gpio ASPEED_GPIO(Z, 5) GPIO_ACTIVE_LOW>;
-> -			linux,code = <ASPEED_GPIO(Z, 5)>;
-> -		};
-> -
-> -		event-s1-overtemp {
-> -			label = "S1_OVERTEMP";
-> -			gpios = <&gpio ASPEED_GPIO(Z, 6) GPIO_ACTIVE_LOW>;
-> -			linux,code = <ASPEED_GPIO(Z, 6)>;
-> -		};
-> -
-> -		event-s1-hightemp {
-> -			label = "S1_HIGHTEMP";
-> -			gpios = <&gpio ASPEED_GPIO(AB, 0) GPIO_ACTIVE_LOW>;
-> -			linux,code = <ASPEED_GPIO(AB, 0)>;
-> -		};
-> -
-> -		event-s1-cpu-fault {
-> -			label = "S1_CPU_FAULT";
-> -			gpios = <&gpio ASPEED_GPIO(Z, 1) GPIO_ACTIVE_HIGH>;
-> -			linux,code = <ASPEED_GPIO(Z, 1)>;
-> -		};
-> -
-> -		event-id {
-> -			label = "ID_BUTTON";
-> -			gpios = <&gpio ASPEED_GPIO(Q, 5) GPIO_ACTIVE_LOW>;
-> -			linux,code = <ASPEED_GPIO(Q, 5)>;
-> -		};
-> -
-> -		event-psu1-vin-good {
-> -			label = "PSU1_VIN_GOOD";
-> -			gpios = <&gpio ASPEED_GPIO(H, 4) GPIO_ACTIVE_LOW>;
-> -			linux,code = <ASPEED_GPIO(H, 4)>;
-> -		};
-> -
-> -		event-psu2-vin-good {
-> -			label = "PSU2_VIN_GOOD";
-> -			gpios = <&gpio ASPEED_GPIO(H, 5) GPIO_ACTIVE_LOW>;
-> -			linux,code = <ASPEED_GPIO(H, 5)>;
-> -		};
-> -
-> -		event-psu1-present {
-> -			label = "PSU1_PRESENT";
-> -			gpios = <&gpio ASPEED_GPIO(I, 0) GPIO_ACTIVE_LOW>;
-> -			linux,code = <ASPEED_GPIO(I, 0)>;
-> -		};
-> -
-> -		event-psu2-present {
-> -			label = "PSU2_PRESENT";
-> -			gpios = <&gpio ASPEED_GPIO(I, 1) GPIO_ACTIVE_LOW>;
-> -			linux,code = <ASPEED_GPIO(I, 1)>;
-> -		};
-> -
-> -	};
-> -
->   	gpioA0mux: mux-controller {
->   		compatible = "gpio-mux";
->   		#mux-control-cells = <0>;
+> On Tue, Sep 20, 2022 at 02:19:38PM +0530, Kumar Thangavel wrote:
+> > Hi All,
+> >
+> > Whenever Rescan function is called, it is removing all fru devices and
+> > their interfaces from dbus and scans all busses and adding all other
+> > devices and dbus interfaces.
+> >
+> > If ReScan function is called, incase of removing/unplugging only one FRU
+> > device from the system, then it will remove all fru devices from the
+> system
+> > and their interfaces instead of removing one device. So, all the FRU's
+> and
+> > associated sensors and their dbus interfaces were also removed. Then
+> scans
+> > all buses and adds newly scanned devices and dbus interfaces.
+> >
+> > Ex : If a system has 5 FRU devices, then one FRU device is
+> > removed/unplugged, it will remove all devices and scan all buses and
+> > recreate the 4 FRU devices.
+> >
+> > I think Some additional removal of other FRU devices and
+> adding/recreating
+> > other FRU devices is happening here. So, to avoid this issue, We can keep
+> > both old and new scanning lists and compare the devices in the list and
+> > remove only the unplugged FRU devices and their dbus interfaces and keep
+> > other FRU devices as it is. This is also applicable for adding(plug) new
+> > FRU to the system.
+> >
+> > Please share your thoughts on this.
+>
+> Isn't there a 'ReScanBus' call also?  Does this do what you need?
+>
+> No. You mean rescanOneBus function ?  It scans one specific bus based on
+the busNum parameter.
+This rescanOneBus also removes that particular bus Fru and their dbus
+interface completely and rescanning
+the bus.
+What I am proposing is, Instead of removing already scanned devices and
+dbus operations and rescan the bus and devices,          The already
+scanned devices list and its information is not to be cleared and it would
+be compared with new scan information and      updated in the dbus
+accordingly.
+
+    This saves some additional removal of scanned devices and dbus
+operations. we may need to refactor some portions of code in the
+FruDevice.cpp file.
+
+ Thanks & Regards,
+ Kumar.
+
+
+> --
+> Patrick Williams
+>
+
+--0000000000004fd5e905e9909205
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Sat, Sep 24, 2022 at 3:19 AM Patri=
+ck Williams &lt;<a href=3D"mailto:patrick@stwcx.xyz">patrick@stwcx.xyz</a>&=
+gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0=
+px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Tu=
+e, Sep 20, 2022 at 02:19:38PM +0530, Kumar Thangavel wrote:<br>
+&gt; Hi All,<br>
+&gt; <br>
+&gt; Whenever Rescan function is called, it is removing all fru devices and=
+<br>
+&gt; their interfaces from dbus and scans all busses and adding all other<b=
+r>
+&gt; devices and dbus interfaces.<br>
+&gt; <br>
+&gt; If ReScan function is called, incase of removing/unplugging only one F=
+RU<br>
+&gt; device from the system, then it will remove all fru devices from the s=
+ystem<br>
+&gt; and their interfaces instead of removing one device. So, all the FRU&#=
+39;s and<br>
+&gt; associated sensors and their dbus interfaces were also removed. Then s=
+cans<br>
+&gt; all buses and adds newly scanned devices and dbus interfaces.<br>
+&gt; <br>
+&gt; Ex : If a system has 5 FRU devices, then one FRU device is<br>
+&gt; removed/unplugged, it will remove all devices and scan all buses and<b=
+r>
+&gt; recreate the 4 FRU devices.<br>
+&gt; <br>
+&gt; I think Some additional removal of other FRU devices and adding/recrea=
+ting<br>
+&gt; other FRU devices is happening here. So, to avoid this issue, We can k=
+eep<br>
+&gt; both old and new scanning lists and compare the devices in the list an=
+d<br>
+&gt; remove only the unplugged FRU devices and their dbus interfaces and ke=
+ep<br>
+&gt; other FRU devices as it is. This is also applicable for adding(plug) n=
+ew<br>
+&gt; FRU to the system.<br>
+&gt; <br>
+&gt; Please share your thoughts on this.<br>
+<br>
+Isn&#39;t there a &#39;ReScanBus&#39; call also?=C2=A0 Does this do what yo=
+u need?<br>
+<br></blockquote><div>No. You mean rescanOneBus function ?=C2=A0 It scans o=
+ne specific bus based on the busNum parameter.</div><div>This rescanOneBus =
+also removes that particular bus Fru and their dbus interface completely an=
+d rescanning</div><div>the bus.=C2=A0=C2=A0<br>What I am proposing is, Inst=
+ead of removing already scanned devices and dbus operations and rescan the =
+bus and devices,=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 The already scanned devi=
+ces list and its information is not to be cleared and it would be compared =
+with new scan information and=C2=A0 =C2=A0 =C2=A0 updated in the dbus accor=
+dingly.=C2=A0</div><div><br></div><div>=C2=A0 =C2=A0 This saves some additi=
+onal removal of scanned devices and dbus operations. we may need to refacto=
+r some portions of code in the FruDevice.cpp file.</div><div><br></div><div=
+>=C2=A0Thanks &amp; Regards,</div><div>=C2=A0Kumar.</div><div>=C2=A0</div><=
+blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
+eft:1px solid rgb(204,204,204);padding-left:1ex">
+-- <br>
+Patrick Williams<br>
+</blockquote></div></div>
+
+--0000000000004fd5e905e9909205--
