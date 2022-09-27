@@ -2,62 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2CBC65EBEDE
-	for <lists+openbmc@lfdr.de>; Tue, 27 Sep 2022 11:44:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EB3E55EC210
+	for <lists+openbmc@lfdr.de>; Tue, 27 Sep 2022 14:06:05 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4McF8c4rQKz3c41
-	for <lists+openbmc@lfdr.de>; Tue, 27 Sep 2022 19:44:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4McJHb4M33z3c3V
+	for <lists+openbmc@lfdr.de>; Tue, 27 Sep 2022 22:06:03 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=YHI8pKkM;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=G+gMsz+4;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::142; helo=mail-lf1-x142.google.com; envelope-from=liuxiwei1013@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::435; helo=mail-wr1-x435.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=YHI8pKkM;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=G+gMsz+4;
 	dkim-atps=neutral
-Received: from mail-lf1-x142.google.com (mail-lf1-x142.google.com [IPv6:2a00:1450:4864:20::142])
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4McF8B0gtjz2yfq
-	for <openbmc@lists.ozlabs.org>; Tue, 27 Sep 2022 19:44:23 +1000 (AEST)
-Received: by mail-lf1-x142.google.com with SMTP id j16so14889444lfg.1
-        for <openbmc@lists.ozlabs.org>; Tue, 27 Sep 2022 02:44:23 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4McJH45G9cz3088;
+	Tue, 27 Sep 2022 22:05:35 +1000 (AEST)
+Received: by mail-wr1-x435.google.com with SMTP id cc5so14665156wrb.6;
+        Tue, 27 Sep 2022 05:05:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date;
-        bh=PRh7WEW8KTWsCVaZJ9mlxbRcAjUbvGzVW+/F07utfaM=;
-        b=YHI8pKkM69ZfeyqCHwfCT8G3QmlqC923EIfCQtxoop8h+L82iHpa5LaXHcywqr7dKd
-         Puql3qKy1b2tCm8FjbMUMONg7quksy3pg2fNpycYxnwua469iHq1lfyjInqj7UcrtICU
-         MwcjV0lyBslEpg/PUgTqhzomETJ35XJH4ZjoiXfEVpvq0jzZs4JOU/ICm7gsmBtsk54b
-         HHadDNFExccK4hOUqmSiC9YYRH/JqL6TLaKEQOzzwHFWtNIHUymkpTwZfSkztKo94AxW
-         ly3Ee8aBZPbiqA15k1HUGMM8GPpzXzKrBaWcnZwBXUNg62QhNS6wooScTysFsKc6tuf9
-         c57w==
+        d=jms.id.au; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=aMFz74PifNUSu/W0zEbEDzLNbyXt9EcYY4KaI+IEVt0=;
+        b=G+gMsz+4fAGkT5Px+9K2xvQvfj9D9TKBj+P18qWucd+8pQw+U/rOWuTlHv5B+ULWgT
+         5y7QcT8rOOYXt6E2TDNxd5r7cd86ngoHaw5Qxuxys3fzcgGygoE0f++c7fNDk1eXEYl1
+         6Z/wo+8NHwi1sqwA5Z3kjzgK1LP2QNOmlaO0g=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=PRh7WEW8KTWsCVaZJ9mlxbRcAjUbvGzVW+/F07utfaM=;
-        b=Seyhp3fbeNsU1ZHgxivhsHF45SrqrATTtKajgFArz11G8BYoqcztX1J1+0q29mIMb7
-         RC+mrbUxwGynBxrnk2dwffViScGid6ern1FrdCWW8cUBzZCBcbqoBm5pEnGomJxeHxLn
-         rNDkrMeLz/isqRLFtdtMou3NU2LkIeurK0NN+3+KXsGce76Jtr1oTCChJNgq/A2HyEYv
-         bMHhjaGjmDg9/VlrPl97WAudDt39TIGxVp3/5OOKPfzv/3R4UHAqVSP+t6qW1vaoHDhm
-         iI1u3RTqteyBqYBRUij34fh3wzT2JkYiiyROV+PvjmkMcV+koXaSkkx5Mwcjfe9i6mg6
-         CSaQ==
-X-Gm-Message-State: ACrzQf3tawOlZvuk7LrT5dX57XdmfL9eMWzCK+1JxG52JlJUEn4RwWxJ
-	W2vW+A4qy0iM8OhJOvlogDT+zMWlvqhVSexTtC5ve2iYT8I=
-X-Google-Smtp-Source: AMsMyM6ZmExN67jb5fl+LBUebuXOlvGwnl9VkxDsRj/Jvn+4g9Rxn1mq7AGKZZUit95y7voK94mH9DwIJJMZRYZRDgQ=
-X-Received: by 2002:a05:6512:2396:b0:499:159d:ac6a with SMTP id
- c22-20020a056512239600b00499159dac6amr9985357lfv.185.1664271854931; Tue, 27
- Sep 2022 02:44:14 -0700 (PDT)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=aMFz74PifNUSu/W0zEbEDzLNbyXt9EcYY4KaI+IEVt0=;
+        b=FB0A3l3fa8tPxGaRRLwqdlfEoAM97pGuShA4lGhbmBipmPwSEB3WBtR6nmu88Hnjt4
+         H1uy3iYzs52PmfljDANkhwuqvf3AzjUQCxYGw3XEA8pn17JNtaYzRT2E8PCLDRt0IP8Q
+         l0HK4pBP36HgxhnKI9NffINnTlMDCQ7Hw2XZvdnh5X1qm6WfidoXmEhIX0BSqfb1zpRP
+         WWlazFDOgxQLW82uqSoj0A5cvcMluPaWCKlYw349BoLCqRz+s1m6gPF/hdU3yquaQRut
+         mDoA1e+Pwji+J206IZpre4XyFWbEvm+o27NapHFFcPGvrrVnthMhHHK/NN+tgb8wIqyU
+         nGdA==
+X-Gm-Message-State: ACrzQf08Ahgzqkr3aqyZDThVchV2DKyaZdqTOf11BY1BzSe1YjMDseWn
+	F7/wmJ6DdEuvFLhsbvgSO0jMbR1FEu/r/ENOhZw=
+X-Google-Smtp-Source: AMsMyM7nMLB0IrCPb2M/nxRoglUKQkXLXDTvev/T6b71kPxYN6T7MwuZB65wnFvN2X+RV+DTVJ2yZoF81QdnU8NDvZ8=
+X-Received: by 2002:a5d:4bc3:0:b0:22a:4b7a:6f60 with SMTP id
+ l3-20020a5d4bc3000000b0022a4b7a6f60mr16447585wrt.549.1664280326958; Tue, 27
+ Sep 2022 05:05:26 -0700 (PDT)
 MIME-Version: 1.0
-From: George Liu <liuxiwei1013@gmail.com>
-Date: Tue, 27 Sep 2022 17:44:03 +0800
-Message-ID: <CANFuQ7BJBX2dZyrYAvxfuZ2sjnWLR-iAbu6_iCQHBFg7--0X-A@mail.gmail.com>
-Subject: Enhanced sensor monitor
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+References: <20220927114515.GA22344@hcl-ThinkPad-T495>
+In-Reply-To: <20220927114515.GA22344@hcl-ThinkPad-T495>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 27 Sep 2022 12:05:14 +0000
+Message-ID: <CACPK8XdHaExSzdHpCXNzSEK7L-QDDSkz2rud3OynBC-KhEApFA@mail.gmail.com>
+Subject: Re: [PATCH v6] ARM: dts: aspeed: Yosemite V2: Enable OCP debug card
+To: Karthikeyan Pasupathi <pkarthikeyan1509@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -70,60 +69,70 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi, all:
-  I am working at Inspur and we're investigating a feature related to
-sensor monitoring.
+On Tue, 27 Sept 2022 at 11:45, Karthikeyan Pasupathi
+<pkarthikeyan1509@gmail.com> wrote:
+>
+> Added IPMB-13 channel for Debug Card communication.
+> which improves the readability of the machine and makes
+> it easier to debug the server and it will display some
+> pieces of information about the server like "system info",
+> "Critical sensors" and "critical sel".
+>
+> Signed-off-by: Karthikeyan Pasupathi <pkarthikeyan1509@gmail.com>
 
-  As far as I know, the OpenBMC community will only trigger LED alarms
-when the parsing FRU/VPD fails or is not in place. The lack of the
-function of triggering the corresponding Sensor fault light for the
-fault status (Warning/Critical) of the sensors, including
-threshold-type sensors and discrete-type sensors.
+Thanks, I've queued this.
 
-  For threshold-type sensors, this function has been implemented in
-the Intel warehouse [1], I think this should be a general function,
-and even many companies have implemented it downstream, so can we push
-this function upstream?
-  For discrete-type sensors, it is only implemented in the
-sensor.yaml[2] of the phosphor-ipmi-hostd, and we found that the
-present state is simply implemented. I think it is necessary for us to
-improve the discrete function and support all types and offsets.
+Thanks Zev for your help reviewing.
 
-  In addition: For the SEL function, the phosphor-sel-logger has
-implemented threshold-type sensor alarms and records SEL, and I hope
-to also integrate discrete-type functions, and be able to get all
-sensor information through `ipmitool sel elist`.
-
-  So we currently have an idea, we hope to create a
-phosphor-sensor-monitor repository and implement the following
-functions:
-  1. Provide a PDI interface (eg:
-xyz.openbmc_project.Discrete.Sensor.Value) to record discrete states
-  2. Provide a way to monitor threshold sensor status -> trigger LED
--> log SEL (the function of logging SEL has been implemented in
-phosphor-sel-logger, I hope the two repositories can be merged in the
-future)
-  3. Provide a way to monitor discrete sensor status
-      a. If it is the data on the Host side, trigger the PDI interface
-through the ipmiStorageAddSEL method of phosphor-host-ipmid -> trigger
-LED -> record SEL
-      b. If it is the data on the BMC side (eg: PSU, OCC, etc.), it
-should inherit this PDI interface in the respective daemon, and the
-phosphor-sensor-monitor only needs to monitor the property value of
-the PDI interface -> trigger LED -> record SEL
-  4. Flexible JSON configuration file, ideally, when adding or
-deleting sensors, you do not need to change the code, just update the
-JSON
-
-  There may be many situations here that we have not considered.
-Welcome to ask questions. If the current proposal is accepted, I will
-push a design document, thanks!
-
-[1]: https://github.com/Intel-BMC/provingground/tree/master/callback-manager
-[2]: https://github.com/openbmc/phosphor-host-ipmid/blob/master/scripts/sensor-example.yaml
-
-BRs
-George Liu
+> ---
+> v6:
+>  -Fix the commit format
+>
+> v5:
+>  -Updated commit message
+>
+> v4:
+>  -Resolved syntax error
+>
+> v3:
+>  -Updated the title and commit
+>
+> v2:
+>  -Updated the title
+>
+> v1:
+>  - Initial draft
+> ---
+> ---
+>  arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
+>
+> diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
+> index 8864e9c312a8..84236df522dc 100644
+> --- a/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
+> +++ b/arch/arm/boot/dts/aspeed-bmc-facebook-yosemitev2.dts
+> @@ -215,6 +215,17 @@
+>         };
+>  };
+>
+> +&i2c13 {
+> +       status = "okay";
+> +       // Debug Card
+> +       multi-master;
+> +       ipmb13@10 {
+> +               compatible = "ipmb-dev";
+> +               reg = <(0x10 | I2C_OWN_SLAVE_ADDRESS)>;
+> +               i2c-protocol;
+> +       };
+> +};
+> +
+>  &pwm_tacho {
+>         status = "okay";
+>         //FSC
+> --
+> 2.17.1
+>
