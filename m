@@ -2,69 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1162B5EDC09
-	for <lists+openbmc@lfdr.de>; Wed, 28 Sep 2022 13:52:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 23D4E5EE4B6
+	for <lists+openbmc@lfdr.de>; Wed, 28 Sep 2022 21:01:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Mcvxz64pnz3bqW
-	for <lists+openbmc@lfdr.de>; Wed, 28 Sep 2022 21:52:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Md5Sf6sR3z3c38
+	for <lists+openbmc@lfdr.de>; Thu, 29 Sep 2022 05:01:38 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=NhmuAFNF;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=YviKxnwB;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62c; helo=mail-pl1-x62c.google.com; envelope-from=potin.lai.pt@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=NhmuAFNF;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=YviKxnwB;
 	dkim-atps=neutral
-Received: from mail-pl1-x62c.google.com (mail-pl1-x62c.google.com [IPv6:2607:f8b0:4864:20::62c])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mcr5k74cJz301Z
-	for <openbmc@lists.ozlabs.org>; Wed, 28 Sep 2022 18:59:21 +1000 (AEST)
-Received: by mail-pl1-x62c.google.com with SMTP id jm5so11219622plb.13
-        for <openbmc@lists.ozlabs.org>; Wed, 28 Sep 2022 01:59:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date;
-        bh=5FzK05U8rhKY3zF0cJV4Zw2qpBxX80pF51+0rIiqaCw=;
-        b=NhmuAFNFrqAfJoAfum6AZwkmuVkGuWdH5z2YRTk3Jza8EtgWrq15ntnNStEGwNcPwx
-         BoNLNUP6NznSeSWHIdjEByyDy/IbyIpblxV6apMqfChmIAO8iH4vvULO4iZy+MFSt2x0
-         0AE9uhkIutHhlEI5ODBmhsTgV+HUs8DYQf59nxqaMSSBbOcFeEyG8HqxXbnP0XhW5d4e
-         oBZIlvbtAl97StmupHPCoWAex+G2F17WX9t4gy5rFPExgSS90khlZncSvCpkY4DqN+Fj
-         9F8jGwDdRFCEgshxDSRCw/f8qTaCG8UPNtkgykda6/Sbk85w9TkktzuTlCy0SUxaFi1R
-         D0Fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date;
-        bh=5FzK05U8rhKY3zF0cJV4Zw2qpBxX80pF51+0rIiqaCw=;
-        b=cSNYUuAEkSynVFavMNzWK4r6X9IFW/u+iBxFl1dU04oBf3JW598+r2Yv/YuZ15fhHh
-         C1gYFn80dqzYxmvNrVfDRaCpJUrVJTGTsOWPZyeGrd776Fqua/2Bt3GMZTIbtpRDaOhs
-         Plbx+StYJzRyqDn6YO3HLS6TdyDcqM9duIl7ZkJaU0kZYobhzbeOAt8mvIYa4/cGoPsm
-         4yOFrYqQ41mADR8aAPGDdhKjhDu98JeNZlbQ6L6M6hpCYf3i6sltdK2UWgAJaH7oWHcH
-         4gCp+aKKS2iSJ3brkUpXDL2kY0VxvsqXpZ02FrPlz0enLCE/W+QW1Q4WFfZYOlqykvVv
-         tVIQ==
-X-Gm-Message-State: ACrzQf3E3f9F/aypXDxVSFX/RpZuErgK4WN1p3j9XDVX8Fm5AS2idhtB
-	HUbf4VLsuXbE5B+hETyNoCE2gHDTz18=
-X-Google-Smtp-Source: AMsMyM7c5f+cjOj3N9ihSd58BFyCKQyv0glawxGbyVb5sVylFSHT6SO7VJBGNOiG3CVvcigQG6qmvg==
-X-Received: by 2002:a17:902:7598:b0:178:3f96:4ffc with SMTP id j24-20020a170902759800b001783f964ffcmr32182287pll.53.1664355558082;
-        Wed, 28 Sep 2022 01:59:18 -0700 (PDT)
-Received: from localhost.localdomain (125-228-123-29.hinet-ip.hinet.net. [125.228.123.29])
-        by smtp.gmail.com with ESMTPSA id g4-20020a170902d1c400b00176ad86b213sm3035832plb.259.2022.09.28.01.59.17
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Sep 2022 01:59:17 -0700 (PDT)
-From: Potin Lai <potin.lai.pt@gmail.com>
-To: openbmc@lists.ozlabs.org,
-	joel@jms.id.au
-Subject: [PATCH linux dev-5.15 1/1] leds: pca955x: fix return value checking of smbus block read
-Date: Wed, 28 Sep 2022 16:57:01 +0800
-Message-Id: <20220928085701.1822967-1-potin.lai.pt@gmail.com>
-X-Mailer: git-send-email 2.31.1
-MIME-Version: 1.0
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Md5SF1q2rz2xb4
+	for <openbmc@lists.ozlabs.org>; Thu, 29 Sep 2022 05:01:16 +1000 (AEST)
+Received: from pps.filterd (m0098421.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28SHEAnj020403
+	for <openbmc@lists.ozlabs.org>; Wed, 28 Sep 2022 19:01:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date : to :
+ from : subject : content-type : content-transfer-encoding : mime-version;
+ s=pp1; bh=5i4cmijYpHAaV3tnwjxnt+6hepAD23mIOy0RTGMqyZY=;
+ b=YviKxnwBA6U19KPR0pLaHRBjGqBd0PrJa8mAE9UtV26Y7Wz4Oitnc3BZKEzen+h+VV9K
+ sNiucZCRqnTZyV5zrOr6AUgXKtPepnwXE2x/PDhN7z96MvrymCafmfPCqbovzNGpRuhC
+ xRyW1io76g/inXi3aUFK0R/pKfHs38CZtQe+/xqrGNHMtVqcQ5fK1s1WQno5wKKyppeF
+ Si6rJq1LT4jUEnmUVJ58ryWa7Qx5JZlGkwbY+2g89kgwhUA1AjQxOrfkYt7ZnVnVw5d3
+ yjjZe6VJtT/ps38BkN41jenXBNeJYF6QKZ5jsoOfEQvCZkAcURx/Ug4/X10p4SKXN1lR Yw== 
+Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com [169.47.144.27])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3jvsa65882-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 28 Sep 2022 19:01:07 +0000
+Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
+	by ppma05wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 28SIpFC9009638
+	for <openbmc@lists.ozlabs.org>; Wed, 28 Sep 2022 19:01:07 GMT
+Received: from b01cxnp23034.gho.pok.ibm.com (b01cxnp23034.gho.pok.ibm.com [9.57.198.29])
+	by ppma05wdc.us.ibm.com with ESMTP id 3jssh9vy6j-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 28 Sep 2022 19:01:07 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com ([9.208.128.114])
+	by b01cxnp23034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 28SJ16Qx3408556
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+	for <openbmc@lists.ozlabs.org>; Wed, 28 Sep 2022 19:01:06 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 977DC58081
+	for <openbmc@lists.ozlabs.org>; Wed, 28 Sep 2022 19:01:05 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 575735805F
+	for <openbmc@lists.ozlabs.org>; Wed, 28 Sep 2022 19:01:05 +0000 (GMT)
+Received: from [9.65.232.132] (unknown [9.65.232.132])
+	by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTPS
+	for <openbmc@lists.ozlabs.org>; Wed, 28 Sep 2022 19:01:05 +0000 (GMT)
+Message-ID: <aae9113e-ad6d-d435-1b90-bbf558588065@linux.ibm.com>
+Date: Wed, 28 Sep 2022 14:01:04 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
+ Gecko/20100101 Thunderbird/91.13.1
+Content-Language: en-US
+To: openbmc <openbmc@lists.ozlabs.org>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Security Working Group meeting - Wednesday September 28 - results
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: YOdCXNndZPu_KqV4XQ8enTzSyo3XTfOC
+X-Proofpoint-ORIG-GUID: YOdCXNndZPu_KqV4XQ8enTzSyo3XTfOC
 Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Wed, 28 Sep 2022 21:52:36 +1000
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+MIME-Version: 1.0
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-28_07,2022-09-28_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ priorityscore=1501 adultscore=0 impostorscore=0 suspectscore=0 bulkscore=0
+ clxscore=1015 mlxlogscore=999 spamscore=0 mlxscore=0 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2209280109
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,35 +90,78 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Potin Lai <potin.lai.pt@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-In i2c_smbus_read_i2c_block_data(), it returns negtive value for error
-code, otherwise returns data length of reading.
-Change the if statement to "if (err < 0)" to indicate the real error
-returned by i2c_smbus_read_i2c_block_data().
+There was no reminder for the Sep 28 meeting.  Here are the results 
+as-if that reminder was sent.
 
-LORE Link: https://lore.kernel.org/all/20220928084709.1822312-1-potin.lai.pt@gmail.com/
+> This is a reminder of the OpenBMC Security Working Group meeting 
+> scheduled for this Wednesday September 18 at 10:00am PDT.
+>
+>
+> ATTENTION - Venue Change.  The meeting recently moved to Discord 
+> voice.  Please update your calendars.
+>
+> === MEETING ACCESS ON DISCORD VOICE  ===
+> First, join Discord via https://discord.gg/69Km47zH98 
+> <https://discord.gg/69Km47zH98> and confirm via email.
+> Then, to join: navigate Discord > OpenBMC > Voice channels >  Security 
+> ~ https://discord.com/channels/775381525260664832/1002376534377635860 
+> <https://discord.com/channels/775381525260664832/1002376534377635860>
+>
+>
+> We'll discuss the following items on the agenda 
+> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
+> and anything else that comes up:
+>
 
-Signed-off-by: Potin Lai <potin.lai.pt@gmail.com>
----
- drivers/leds/leds-pca955x.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Meeting held 2022-09-28
+Attendees: Joseph Reynolds, Dick Wilkins, krishnan, russWilson, ddaniil, 
+RuudHaring, dsp, YutakaSugawara, edtanous, skoteshwara, radsquirrel.
 
-diff --git a/drivers/leds/leds-pca955x.c b/drivers/leds/leds-pca955x.c
-index cf0a9fe20086a..cba9876b11872 100644
---- a/drivers/leds/leds-pca955x.c
-+++ b/drivers/leds/leds-pca955x.c
-@@ -689,7 +689,7 @@ static int pca955x_probe(struct i2c_client *client)
- 	err = i2c_smbus_read_i2c_block_data(client,
- 					    0x10 | (pca955x_num_input_regs(chip->bits) + 4), nls,
- 					    ls1);
--	if (err)
-+	if (err < 0)
- 		return err;
- 
- 	for (i = 0; i < nls; ++i)
--- 
-2.31.1
+1 Question about user management over interfaces: Redfish, IPMI, SSH.  
+And related password management (change expired password with same 
+password).
+DISCUSSION:
+https://github.com/openbmc/docs/blob/master/architecture/user-management.md 
+<https://github.com/openbmc/docs/blob/master/architecture/user-management.md>
+https://github.com/openbmc/docs/blob/master/security/network-security-considerations.md 
+<https://github.com/openbmc/docs/blob/master/security/network-security-considerations.md>
+Please followup by re-asking in public forum: email, discord…
+Please push changes for better project docs.
 
+2 Measured boot.
+DISCUSSION:
+Port Facebook Measured boot to openbmc
+Also need work from uboot community , and  revisit openbmc’s uboot fork 
+(and update to newer version) -or- use uefi boot
+Follow Up in gerrit review.
+
+3 General issue: firmware image size limits. New features require more 
+space.  There is an ongoing need and effort to reduce image size by 
+removing unused pieces.  New features which consume image size must be 
+configurable (out of image by default).
+To help find how much space a change takes up, see 
+https://github.com/openbmc/openbmc-tools/tree/master/rootfs_size 
+<https://github.com/openbmc/openbmc-tools/tree/master/rootfs_size>
+
+4 (Joseph:) Can BMCWeb require additional authentication for sensitive 
+operations (like changing a password)?
+DISCUSSION:
+See Redfish public discussion: 
+https://redfishforum.com/thread/540/additional-auth-sensitive-operations 
+<https://redfishforum.com/thread/540/additional-auth-sensitive-operations>
+See previous discussions in discord, email list.  Example: 
+https://lore.kernel.org/openbmc/959CAFA1E282D14FB901BE9A7BF4E7724E51562F@shsmsx102.ccr.corp.intel.com/ 
+<https://lore.kernel.org/openbmc/959CAFA1E282D14FB901BE9A7BF4E7724E51562F@shsmsx102.ccr.corp.intel.com/>
+
+
+Joseph
+
+>
+> Access, agenda and notes are in the wiki:
+> https://github.com/openbmc/openbmc/wiki/Security-working-group 
+> <https://github.com/openbmc/openbmc/wiki/Security-working-group>
+>
+> - Joseph
