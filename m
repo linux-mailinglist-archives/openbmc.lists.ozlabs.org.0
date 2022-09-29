@@ -1,64 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1F515EEDD4
-	for <lists+openbmc@lfdr.de>; Thu, 29 Sep 2022 08:22:29 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5F5EA5EEDE5
+	for <lists+openbmc@lfdr.de>; Thu, 29 Sep 2022 08:29:55 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MdNZC4Fgxz3c7t
-	for <lists+openbmc@lfdr.de>; Thu, 29 Sep 2022 16:22:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MdNkn1x54z3c1x
+	for <lists+openbmc@lfdr.de>; Thu, 29 Sep 2022 16:29:53 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=ti.com header.i=@ti.com header.a=rsa-sha256 header.s=ti-com-17Q1 header.b=zIY6F9C6;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=9elements.com header.i=@9elements.com header.a=rsa-sha256 header.s=google header.b=Smds3S9X;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=ti.com (client-ip=198.47.23.248; helo=lelv0143.ext.ti.com; envelope-from=spatton@ti.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=9elements.com (client-ip=2a00:1450:4864:20::630; helo=mail-ej1-x630.google.com; envelope-from=patrick.rudolph@9elements.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=ti.com header.i=@ti.com header.a=rsa-sha256 header.s=ti-com-17Q1 header.b=zIY6F9C6;
+	dkim=pass (2048-bit key; secure) header.d=9elements.com header.i=@9elements.com header.a=rsa-sha256 header.s=google header.b=Smds3S9X;
 	dkim-atps=neutral
-X-Greylist: delayed 874 seconds by postgrey-1.36 at boromir; Thu, 29 Sep 2022 16:21:37 AEST
-Received: from lelv0143.ext.ti.com (lelv0143.ext.ti.com [198.47.23.248])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MdNYF25c2z3c6q
-	for <openbmc@lists.ozlabs.org>; Thu, 29 Sep 2022 16:21:35 +1000 (AEST)
-Received: from lelv0266.itg.ti.com ([10.180.67.225])
-	by lelv0143.ext.ti.com (8.15.2/8.15.2) with ESMTP id 28T66uFW107034
-	for <openbmc@lists.ozlabs.org>; Thu, 29 Sep 2022 01:06:56 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
-	s=ti-com-17Q1; t=1664431616;
-	bh=7VylOBmIAGfOgM9/9SjuVdwubf3Xa9DpxAOWFTUrU04=;
-	h=From:To:Subject:Date;
-	b=zIY6F9C6WZ+XYtBbLnlvJYaZVa2T/cQzBt6D4eG9yOkvsEk3WXVf2ixGjVx3PlGOz
-	 Fm1LrK8eTqQl8W8WVe355Clp+tzbchhYd3iEkcdgaJq6ACdT113m13xQHNmzV+kwIx
-	 GpjzagFj14Klz/oP8td0y5DXcbpfTF7IoNEGJ+Eg=
-Received: from DLEE107.ent.ti.com (dlee107.ent.ti.com [157.170.170.37])
-	by lelv0266.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 28T66uOs065057
-	(version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL)
-	for <openbmc@lists.ozlabs.org>; Thu, 29 Sep 2022 01:06:56 -0500
-Received: from DLEE102.ent.ti.com (157.170.170.32) by DLEE107.ent.ti.com
- (157.170.170.37) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2507.6; Thu, 29
- Sep 2022 01:06:56 -0500
-Received: from DLEE102.ent.ti.com ([fe80::2cde:e57d:8075:c010]) by
- DLEE102.ent.ti.com ([fe80::2cde:e57d:8075:c010%17]) with mapi id
- 15.01.2507.006; Thu, 29 Sep 2022 01:06:56 -0500
-From: "Patton, Schuyler" <spatton@ti.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: ipmitool reading i2c devices
-Thread-Topic: ipmitool reading i2c devices
-Thread-Index: AdjTyIvw5AQl0I/+RQy/GsbYbFlRZQ==
-Date: Thu, 29 Sep 2022 06:06:55 +0000
-Message-ID: <ddf0d5f853c443e285b986581b01bd75@ti.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.249.36.49]
-x-exclaimer-md-config: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
-Content-Type: multipart/alternative;
-	boundary="_000_ddf0d5f853c443e285b986581b01bd75ticom_"
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MdNkP1gP9z2yZd
+	for <openbmc@lists.ozlabs.org>; Thu, 29 Sep 2022 16:29:31 +1000 (AEST)
+Received: by mail-ej1-x630.google.com with SMTP id rk17so740132ejb.1
+        for <openbmc@lists.ozlabs.org>; Wed, 28 Sep 2022 23:29:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=9elements.com; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date;
+        bh=9sMUB+ufmO/jB91L+Cnkm2YRBNvfPUGNsKA+nqPeMho=;
+        b=Smds3S9XWiIBc98H2XCEGckTjhx/FBf1xzTVoxJqjvdxbov9Zg4ycsowcLPDcUScM0
+         NI/E7gh0g0jf4rjXTY55tBUfle+7azTt6UETy1ZrthkrKwFskTdJ3T9+7uToDdoCgVJk
+         y5gKkkzUZLrIyq/9U1SMchrSQDKaA0mcUEv2tvLLJcXX2/Wu+Q8zzpdnrNkXQBPVNo65
+         8N0GInKtZctPo6ADCU4/Gqi+Oj6lEKRuxHEX/KjHivtk1qlA/erg3F7FRGCLljU/xgAf
+         W6JetwSWMFg+i2NaTA9I6pyDgVcxF17uBcxFfdAVvuYVY+L4ZKYBSSUTtTqR3RbHhcZb
+         t/Qg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date;
+        bh=9sMUB+ufmO/jB91L+Cnkm2YRBNvfPUGNsKA+nqPeMho=;
+        b=PvbUT7FIkDQ0EpY7HV9S1yAFSw9DY61WoRbYxAwSzUQ9wP1ewOXm5b/IpF68hvEJs4
+         uYIEtcMsLvWKkSyz0Ma7Rmbs9ycga8b3C5oMk8Qw9V+4wZZTnzlKcpLrztMCy3WBmJcM
+         HEec5tC3xKghMR5xdYy93B4E8jTzlHoqVrXBPBr6Igp8makjP03yM9+hHImfEUuIyi0D
+         d7paBCbVRgD4Ql1BV0VjvL61oFkBN2rpaO2UCLqSR0V+lLYh10jIoAf+6x6q12Afd0yK
+         dMl/A7mHr8aDcUDIOG/Jot6zmvxMxl/rNND7exMC0dAJ1Rq6JFwaQbh1m25ufM0ytW6U
+         T8tg==
+X-Gm-Message-State: ACrzQf2li/dZcL/CnhYrIT8CcdO26g0iRtB0qGeBAqUhIJ3iFCqwQPWu
+	dAhDWTiRHLYH7qsdTGejjR7e61JddKJqDlSlAnG2RA==
+X-Google-Smtp-Source: AMsMyM5ZtREGqxKZKOpbmXG+0pP6ay1c4N1+fNX5kP26dzgQ5hEt5obAeIIeMF0AAim5INRGtCyTdjPD/2tdO9yci7s=
+X-Received: by 2002:a17:907:a05:b0:77b:b538:6476 with SMTP id
+ bb5-20020a1709070a0500b0077bb5386476mr1430811ejc.324.1664432962669; Wed, 28
+ Sep 2022 23:29:22 -0700 (PDT)
 MIME-Version: 1.0
+References: <20220925220319.12572-1-zev@bewilderbeest.net>
+In-Reply-To: <20220925220319.12572-1-zev@bewilderbeest.net>
+From: Patrick Rudolph <patrick.rudolph@9elements.com>
+Date: Thu, 29 Sep 2022 08:29:19 +0200
+Message-ID: <CALNFmy1tnrJWKwGjdGOjjqB9XDS2DhAPq1rcDPgMdY3xXNoXAw@mail.gmail.com>
+Subject: Re: [PATCH 0/3] regulator: Add DT support for regulator-output connectors
+To: Zev Weiss <zev@bewilderbeest.net>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,113 +72,79 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org, Mark Brown <broonie@kernel.org>, Laxman Dewangan <ldewangan@nvidia.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Naresh Solanki <naresh.solanki@9elements.com>, Mike Rapoport <rppt@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_ddf0d5f853c443e285b986581b01bd75ticom_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+Hi Zev,
+Thanks for picking this up.
+I cannot answer the first question, but the second:
+It's sufficient for us to just have one supply per userspace-consumer instance.
 
-Hi all,
-I am trying to use an ipmitool running on a Linux PC and trying to read the=
- i2c bus on a board running openbmc. This is the command I am using:
-Ipmitool -v -I lanplus -H <ip address> -C 17 -U root -P 0penBmc i2c bus=3D1=
- 0x40 2
+The optional property is fine and could be useful in the future.
 
-Looking at the apphandler.cpp code I see that a white list is required. I a=
-dded one based on the format described in the cpp source file. This is the =
-error I am seeing:
+Regards,
+Patrick
 
-I2C Master Write-Read command failed: Invalid command.
-
-Othe ipmitool commands work such as bmc info.  Is there additional config t=
-hat I need to do to be able to read a device on an I2C bus?
-
-Thanks and Regards,
-Schuyler Patton
-
-
---_000_ddf0d5f853c443e285b986581b01bd75ticom_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+On Mon, Sep 26, 2022 at 12:04 AM Zev Weiss <zev@bewilderbeest.net> wrote:
 >
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:blue;
-	text-decoration:underline;}
-a:visited, span.MsoHyperlinkFollowed
-	{mso-style-priority:99;
-	color:purple;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"blue" vlink=3D"purple">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Hi all,<o:p></o:p></p>
-<p class=3D"MsoNormal">I am trying to use an ipmitool running on a Linux PC=
- and trying to read the i2c bus on a board running openbmc. This is the com=
-mand I am using:<o:p></o:p></p>
-<p class=3D"MsoNormal">Ipmitool -v -I lanplus -H &lt;ip address&gt; -C 17 -=
-U root -P 0penBmc i2c bus=3D1 0x40 2<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Looking at the apphandler.cpp code I see that a whit=
-e list is required. I added one based on the format described in the cpp so=
-urce file. This is the error I am seeing:<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">I2C Master Write-Read command failed: Invalid comman=
-d.<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Othe ipmitool commands work such as bmc info. &nbsp;=
-Is there additional config that I need to do to be able to read a device on=
- an I2C bus?
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><span style=3D"color:black">Thanks and Regards,<o:p>=
-</o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"color:black">Schuyler Patton<o:p></o:=
-p></span></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-</div>
-</body>
-</html>
-
---_000_ddf0d5f853c443e285b986581b01bd75ticom_--
+> Hello,
+>
+> This series is another attempt at implementing support for
+> userspace-controlled regulator-supplied power outputs.  This is an
+> important feature for some kinds of BMC (baseboard management
+> controller) systems where the BMC provides an operator with manual
+> control of a set of DC power outputs.
+>
+> As in a broadly similar patchset that was recently almost merged [0],
+> this takes the approach of providing support by extending the existing
+> userspace-consumer regulator driver.  A couple questions about the
+> userspace-consumer driver came up along the way, however.
+>
+> First, how (if at all) is it currently being used?  It appears the
+> last in-tree use of it was removed a bit over two years ago in commit
+> 9d3239147d6d ("ARM: pxa: remove Compulab pxa2xx boards").  Aside from
+> just adding DT support I've made a couple small tweaks to the driver
+> in patch 3 that I hope are compatible with any current usage, but
+> without any extant examples to look at it's kind of hard to say.
+>
+> Second, how critical is its support for controlling multiple
+> regulators?  (i.e. its use of regulator_bulk_data and friends instead
+> of a single struct regulator.)  As far as I can see every in-tree use
+> of it that's ever existed has used num_supplies = 1.  If it's not
+> important to retain, patch 1 of this series could be supplanted by one
+> that instead simplifies the driver slightly by removing that
+> functionality.
+>
+> The DT binding added in patch 2 is very similar to one I posted in a
+> previous patchset that had an R-B from Rob [1], but has had some minor
+> rewording and gained one new (optional) property.
+>
+> Laxman, Naresh, Patrick -- please let me know if there are any aspects
+> of this implementation that would be incompatible with your needs.
+>
+>
+> Thanks,
+> Zev
+>
+> [0] https://lore.kernel.org/all/20220707081826.953449-4-Naresh.Solanki@9elements.com/
+> [1] https://lore.kernel.org/linux-kernel/20220505232557.10936-2-zev@bewilderbeest.net/
+>
+> Zev Weiss (3):
+>   regulator: devres: Add devm_regulator_bulk_get_exclusive()
+>   dt-bindings: regulator: Add regulator-output binding
+>   regulator: userspace-consumer: Handle regulator-output DT nodes
+>
+>  .../bindings/regulator/regulator-output.yaml  | 47 +++++++++++++
+>  drivers/regulator/core.c                      | 42 +++++++-----
+>  drivers/regulator/devres.c                    | 66 ++++++++++++++-----
+>  drivers/regulator/internal.h                  |  2 +
+>  drivers/regulator/userspace-consumer.c        | 43 ++++++++++--
+>  include/linux/regulator/consumer.h            |  2 +
+>  include/linux/regulator/userspace-consumer.h  |  1 +
+>  7 files changed, 162 insertions(+), 41 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/regulator/regulator-output.yaml
+>
+> --
+> 2.37.3
+>
