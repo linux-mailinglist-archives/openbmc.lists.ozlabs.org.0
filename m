@@ -1,96 +1,56 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 356FF5EFED1
-	for <lists+openbmc@lfdr.de>; Thu, 29 Sep 2022 22:43:11 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E0E245EFF00
+	for <lists+openbmc@lfdr.de>; Thu, 29 Sep 2022 23:07:38 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MdlgK11vCz3brh
-	for <lists+openbmc@lfdr.de>; Fri, 30 Sep 2022 06:43:09 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=FnPTaF2/;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MdmCW6zJCz3c6s
+	for <lists+openbmc@lfdr.de>; Fri, 30 Sep 2022 07:07:35 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=FnPTaF2/;
-	dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.167.169; helo=mail-oi1-f169.google.com; envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
+Received: from mail-oi1-f169.google.com (mail-oi1-f169.google.com [209.85.167.169])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mdlft46q4z3bSX
-	for <openbmc@lists.ozlabs.org>; Fri, 30 Sep 2022 06:42:46 +1000 (AEST)
-Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28TKQtCk016220;
-	Thu, 29 Sep 2022 20:42:41 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- subject : to : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=0LooiAJLXAE2kprFJptm7Y21WrdQncsUSbwmgprNmx4=;
- b=FnPTaF2/1uwesGTTErg4JbNFrRnvJgqzVSrbuxir7N6rq8JDKNxiD590Vj/sxlJz2oHT
- FfEs9/OHFMeC5BWzW/E72Y/7nHfl+lHttVLbyvmLtCAkE8J+fE9sR9gnGmjcGKu8Wtss
- 3VPoTXA0Ash9MkCZnuO6KaNTlM4eTicL3hCbOffMKstVYtsJxteUb1fwaHewUZSSCVGB
- ZOIgzUPiB7S+KzD4uJYrLpj6B8FMMmvNQ/cIhxJ4mh2o/Tc7RigR6WeoicjhR2wcf3UV
- Z8kFUWmiYJxedPcrt2wYBoSqnxP6QJyP3YSRvjwn+XT7Oex7jP1dKre1Me6yoB3Ixt0v 3g== 
-Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3jwjdk0juu-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Sep 2022 20:42:41 +0000
-Received: from m0098404.ppops.net (m0098404.ppops.net [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 28TKSXeI026016;
-	Thu, 29 Sep 2022 20:42:40 GMT
-Received: from ppma04dal.us.ibm.com (7a.29.35a9.ip4.static.sl-reverse.com [169.53.41.122])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3jwjdk0juc-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Sep 2022 20:42:40 +0000
-Received: from pps.filterd (ppma04dal.us.ibm.com [127.0.0.1])
-	by ppma04dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 28TKaVkb027847;
-	Thu, 29 Sep 2022 20:42:40 GMT
-Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com [9.57.198.24])
-	by ppma04dal.us.ibm.com with ESMTP id 3jsshbdh14-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 29 Sep 2022 20:42:40 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com ([9.208.128.115])
-	by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 28TKgc4d6357682
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 29 Sep 2022 20:42:39 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 991BD58062;
-	Thu, 29 Sep 2022 20:42:38 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 2315E58055;
-	Thu, 29 Sep 2022 20:42:38 +0000 (GMT)
-Received: from [9.77.146.111] (unknown [9.77.146.111])
-	by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Thu, 29 Sep 2022 20:42:37 +0000 (GMT)
-Message-ID: <38531b37-adb4-f77d-e40b-b2e703a5943d@linux.ibm.com>
-Date: Thu, 29 Sep 2022 15:40:26 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.0
-Subject: Re: [PATCH linux dev-5.15 1/1] leds: pca955x: fix return value
- checking of smbus block read
-Content-Language: en-US
-To: Potin Lai <potin.lai.pt@gmail.com>, openbmc@lists.ozlabs.org,
-        joel@jms.id.au
-References: <20220928085701.1822967-1-potin.lai.pt@gmail.com>
-From: Eddie James <eajames@linux.ibm.com>
-In-Reply-To: <20220928085701.1822967-1-potin.lai.pt@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: fa5hw_BNXkIEme-2HZMWfTFyuUHF2OnN
-X-Proofpoint-GUID: cUM-WQS3CDmSpzKdG21SLgZT1EJkAoCu
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MdmCD5Ycyz30JR
+	for <openbmc@lists.ozlabs.org>; Fri, 30 Sep 2022 07:07:20 +1000 (AEST)
+Received: by mail-oi1-f169.google.com with SMTP id g130so2831150oia.13
+        for <openbmc@lists.ozlabs.org>; Thu, 29 Sep 2022 14:07:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=u3B4AXMno9nb8iZf5zQNwk767aQTUKKU1v3oIRo2uIY=;
+        b=sjjqLgYlmF7n6MkwKGgGxmoknc8BR1q01InXR3ZGEIn7qltuQjImjEiemKost89Oli
+         kiE6WLA+dCs0OgXdyTSJ+3xw4jhhYu36oYyoPdjpw72nfWtl76FwRrRQfS/WRKRcUgbQ
+         yp16lD2neKmkXkdpk8KkjiwLRpQWJ9einNTg4h9eRpkd5VaJVbo/useGzmC54STf7dfP
+         7txFp6dH1frKj74kC7HASN/DV/lRjgxGpfTFBkkiDPg2z1PS1//cN+v26df4iSlpjzh4
+         i0OMixKhpQnKVTsDuhJAnr6Yo5Bo/SXApDzD024TS2oPkPCGKAVwmtLRiqnbXZS9AAbn
+         /94w==
+X-Gm-Message-State: ACrzQf2JakUCVSFCNEkyqmI3GL6hFNZLsAeN2SUXvLC2NVVhgyrMVnjt
+	uUvYYGpw9LXCjjCT79Zv5Q==
+X-Google-Smtp-Source: AMsMyM6TwJd0hAEFLH56WIO6Yzur03lHZly+x+08QITWC4ObpNv661/Odx7T56khaPygTvhv1Bdp5w==
+X-Received: by 2002:a05:6808:bd3:b0:350:e312:9abf with SMTP id o19-20020a0568080bd300b00350e3129abfmr8019360oik.78.1664485635979;
+        Thu, 29 Sep 2022 14:07:15 -0700 (PDT)
+Received: from macbook.herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id bx21-20020a056830601500b0065689e13f52sm165192otb.71.2022.09.29.14.07.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Sep 2022 14:07:15 -0700 (PDT)
+Received: (nullmailer pid 2721310 invoked by uid 1000);
+	Thu, 29 Sep 2022 21:07:14 -0000
+Date: Thu, 29 Sep 2022 16:07:14 -0500
+From: Rob Herring <robh@kernel.org>
+To: Zev Weiss <zev@bewilderbeest.net>
+Subject: Re: [PATCH 2/3] dt-bindings: regulator: Add regulator-output binding
+Message-ID: <20220929210714.GA2684335-robh@kernel.org>
+References: <20220925220319.12572-1-zev@bewilderbeest.net>
+ <20220925220319.12572-3-zev@bewilderbeest.net>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
- definitions=2022-09-29_11,2022-09-29_03,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
- priorityscore=1501 malwarescore=0 impostorscore=0 suspectscore=0
- bulkscore=0 mlxscore=0 clxscore=1015 lowpriorityscore=0 mlxlogscore=999
- spamscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2209130000 definitions=main-2209290129
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20220925220319.12572-3-zev@bewilderbeest.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,42 +62,62 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, Liam Girdwood <lgirdwood@gmail.com>, Naresh Solanki <naresh.solanki@9elements.com>, Mark Brown <broonie@kernel.org>, Laxman Dewangan <ldewangan@nvidia.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Patrick Rudolph <patrick.rudolph@9elements.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-On 9/28/22 03:57, Potin Lai wrote:
-> In i2c_smbus_read_i2c_block_data(), it returns negtive value for error
-> code, otherwise returns data length of reading.
-> Change the if statement to "if (err < 0)" to indicate the real error
-> returned by i2c_smbus_read_i2c_block_data().
-
-
-Thanks! My mistake here.
-
-Reviewed-by: Eddie James <eajames@linux.ibm.com>
-
-Tested-by: Eddie James <eajames@linux.ibm.com>
-
-
->
-> LORE Link: https://lore.kernel.org/all/20220928084709.1822312-1-potin.lai.pt@gmail.com/
->
-> Signed-off-by: Potin Lai <potin.lai.pt@gmail.com>
+On Sun, Sep 25, 2022 at 03:03:18PM -0700, Zev Weiss wrote:
+> This describes a power output supplied by a regulator, such as a
+> power outlet on a power distribution unit (PDU).
+> 
+> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
 > ---
->   drivers/leds/leds-pca955x.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/leds/leds-pca955x.c b/drivers/leds/leds-pca955x.c
-> index cf0a9fe20086a..cba9876b11872 100644
-> --- a/drivers/leds/leds-pca955x.c
-> +++ b/drivers/leds/leds-pca955x.c
-> @@ -689,7 +689,7 @@ static int pca955x_probe(struct i2c_client *client)
->   	err = i2c_smbus_read_i2c_block_data(client,
->   					    0x10 | (pca955x_num_input_regs(chip->bits) + 4), nls,
->   					    ls1);
-> -	if (err)
-> +	if (err < 0)
->   		return err;
->   
->   	for (i = 0; i < nls; ++i)
+>  .../bindings/regulator/regulator-output.yaml  | 47 +++++++++++++++++++
+>  1 file changed, 47 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/regulator/regulator-output.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/regulator/regulator-output.yaml b/Documentation/devicetree/bindings/regulator/regulator-output.yaml
+> new file mode 100644
+> index 000000000000..40953ec48e9e
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/regulator/regulator-output.yaml
+> @@ -0,0 +1,47 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +
+> +$id: http://devicetree.org/schemas/regulator/regulator-output.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Regulator output connector
+> +
+> +maintainers:
+> +  - Zev Weiss <zev@bewilderbeest.net>
+> +
+> +description: |
+> +  This describes a power output connector supplied by a regulator,
+> +  such as a power outlet on a power distribution unit (PDU).  The
+> +  connector may be standalone or merely one channel or set of pins
+> +  within a ganged physical connector carrying multiple independent
+> +  power outputs.
+> +
+> +properties:
+> +  compatible:
+> +    const: regulator-output
+> +
+> +  vout-supply:
+> +    description:
+> +      Phandle of the regulator supplying the output.
+> +
+> +  regulator-leave-on:
+> +    description: |
+> +      If the regulator is enabled when software relinquishes control
+> +      of it (such as when shutting down) it should be left enabled
+> +      instead of being turned off.
+> +    type: boolean
+
+I'm not too sure about this one as there could be various times when 
+control is relinquished. It is userspace closing its access? 
+driver unbind? module unload? Does a bootloader pay attention to this?
+
+Rob
