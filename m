@@ -2,51 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 239BB5EF2CF
-	for <lists+openbmc@lfdr.de>; Thu, 29 Sep 2022 11:56:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6EDF45EF2D5
+	for <lists+openbmc@lfdr.de>; Thu, 29 Sep 2022 11:56:55 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MdTJx74VZz3c3w
-	for <lists+openbmc@lfdr.de>; Thu, 29 Sep 2022 19:56:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MdTKd3XCgz3c69
+	for <lists+openbmc@lfdr.de>; Thu, 29 Sep 2022 19:56:53 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sD44uY+u;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ctxRBx4C;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linuxfoundation.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=gregkh@linuxfoundation.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linuxfoundation.org (client-ip=145.40.68.75; helo=ams.source.kernel.org; envelope-from=gregkh@linuxfoundation.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=sD44uY+u;
+	dkim=pass (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ctxRBx4C;
 	dkim-atps=neutral
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MdTJX0RS0z3blw
-	for <openbmc@lists.ozlabs.org>; Thu, 29 Sep 2022 19:55:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MdTK732fSz3c6f
+	for <openbmc@lists.ozlabs.org>; Thu, 29 Sep 2022 19:56:27 +1000 (AEST)
 Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id E711360EC9;
-	Thu, 29 Sep 2022 09:55:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C598DC433D6;
-	Thu, 29 Sep 2022 09:55:51 +0000 (UTC)
+	by ams.source.kernel.org (Postfix) with ESMTPS id 5E7BCB823C1;
+	Thu, 29 Sep 2022 09:56:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FADDC433D6;
+	Thu, 29 Sep 2022 09:56:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1664445352;
-	bh=n00c4eeAjMCSUOYpZjK2HcCQN9bxyNQChU/4UPcuT58=;
+	s=korg; t=1664445381;
+	bh=upFGcV6kX6erz0a207wkFQ+MRfQh+tRT2Z6zBaX++jM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sD44uY+uXt+HgoIFBUjwnCKOBKC1bgtPcVmAVtP0XWaYvB0H+OlwLkenCEsPESrWg
-	 6g+U6RIDZUKZqT9SYcC3PZF/Ib7ZmpQI7Ykc6tynbrqizVJcROODUl+pxM0w6AxCiW
-	 UBTj2a50d5A4IFEZk+rFA4tk+MfZbYdzdqd6USRg=
-Date: Thu, 29 Sep 2022 11:55:49 +0200
+	b=ctxRBx4CIAlYjZ/7EpGnprUk8+hC0LFQs+0bYqIR10bip14uZssMKut5T3gFZMbiq
+	 4mRzx7E1HKCXg/Yfh8Gkf5KDjI+FaLDBL8a/EZfYZ98zD0iDa5/mpJcQ/quiVe6Qvi
+	 qIATTTZmtJ3dLDh2su6w4PgLhyH1zpIisF70KVWc=
+Date: Thu, 29 Sep 2022 11:56:18 +0200
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: Quan Nguyen <quan@os.amperecomputing.com>
-Subject: Re: [PATCH v9 5/9] misc: smpro-misc: Add Ampere's Altra SMpro misc
- driver
-Message-ID: <YzVrpT6BD6qmu5ZG@kroah.com>
+Subject: Re: [PATCH v9 6/9] docs: misc-devices: (smpro-misc) Add documentation
+Message-ID: <YzVrwo5oUTx/0cxl@kroah.com>
 References: <20220929094321.770125-1-quan@os.amperecomputing.com>
- <20220929094321.770125-6-quan@os.amperecomputing.com>
+ <20220929094321.770125-7-quan@os.amperecomputing.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20220929094321.770125-6-quan@os.amperecomputing.com>
+In-Reply-To: <20220929094321.770125-7-quan@os.amperecomputing.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,153 +61,135 @@ Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, Jean Delvare <jdelv
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Sep 29, 2022 at 04:43:17PM +0700, Quan Nguyen wrote:
-> This commit adds driver support for accessing various information
-> reported by Ampere's SMpro co-processor such as Boot Progress and
-> other miscellaneous data.
+On Thu, Sep 29, 2022 at 04:43:18PM +0700, Quan Nguyen wrote:
+> Adds documentation for the Ampere(R)'s Altra(R) SMpro misc driver.
 > 
+> Signed-off-by: Thu Nguyen <thu@os.amperecomputing.com>
 > Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
 > ---
 > Changes in v9:
->   + Update SPDX licence                                     [Greg]
->   + Use ATTRIBUTE_GROUPS()                                  [Greg]
->   + Use dev_groups instead of sysfs_create_group() to avoid
->   racing issue with user space                              [Greg]
->   + Refactor code to avoid clever encoding issue            [Quan]
+>   + Update SPDX licence                          [Greg]
 > 
 > Changes in v8:
->   + Update wording for SMPRO_MISC in Kconfig file           [Quan]
->   + Switch to use sysfs_emit()                              [Quan]
+>   + Update to reflect single value per sysfs     [Quan]
 > 
 > Changes in v7:
->   + Fix wrong return type of *_show/store()
->   functions                                    [kernel robot test]
->   + Adjust patch order to remove dependence with
->   smpro-mfd                                            [Lee Jones]
+>   + None
 > 
 > Changes in v6:
 >   + First introduced in v6 [Quan]
 > 
->  drivers/misc/Kconfig      |  10 +++
->  drivers/misc/Makefile     |   1 +
->  drivers/misc/smpro-misc.c | 145 ++++++++++++++++++++++++++++++++++++++
->  3 files changed, 156 insertions(+)
->  create mode 100644 drivers/misc/smpro-misc.c
+>  Documentation/misc-devices/index.rst      |  1 +
+>  Documentation/misc-devices/smpro-misc.rst | 82 +++++++++++++++++++++++
+>  2 files changed, 83 insertions(+)
+>  create mode 100644 Documentation/misc-devices/smpro-misc.rst
 > 
-> diff --git a/drivers/misc/Kconfig b/drivers/misc/Kconfig
-> index b9ceee949dab..9947b7892bd5 100644
-> --- a/drivers/misc/Kconfig
-> +++ b/drivers/misc/Kconfig
-> @@ -188,6 +188,16 @@ config SMPRO_ERRMON
->  	  To compile this driver as a module, say M here. The driver will be
->  	  called smpro-errmon.
->  
-> +config SMPRO_MISC
-> +	tristate "Ampere Computing SMPro miscellaneous driver"
-> +	depends on MFD_SMPRO || COMPILE_TEST
-> +	help
-> +	  Say Y here to get support for the SMpro error miscellalenous function
-> +	  provided by Ampere Computing's Altra and Altra Max SoCs.
-> +
-> +	  To compile this driver as a module, say M here. The driver will be
-> +	  called smpro-misc.
-> +
->  config CS5535_MFGPT
->  	tristate "CS5535/CS5536 Geode Multi-Function General Purpose Timer (MFGPT) support"
->  	depends on MFD_CS5535
-> diff --git a/drivers/misc/Makefile b/drivers/misc/Makefile
-> index bbe24d4511a3..87b54a4a4422 100644
-> --- a/drivers/misc/Makefile
-> +++ b/drivers/misc/Makefile
-> @@ -24,6 +24,7 @@ obj-$(CONFIG_KGDB_TESTS)	+= kgdbts.o
->  obj-$(CONFIG_SGI_XP)		+= sgi-xp/
->  obj-$(CONFIG_SGI_GRU)		+= sgi-gru/
->  obj-$(CONFIG_SMPRO_ERRMON)	+= smpro-errmon.o
-> +obj-$(CONFIG_SMPRO_MISC)	+= smpro-misc.o
->  obj-$(CONFIG_CS5535_MFGPT)	+= cs5535-mfgpt.o
->  obj-$(CONFIG_GEHC_ACHC)		+= gehc-achc.o
->  obj-$(CONFIG_HP_ILO)		+= hpilo.o
-> diff --git a/drivers/misc/smpro-misc.c b/drivers/misc/smpro-misc.c
+> diff --git a/Documentation/misc-devices/index.rst b/Documentation/misc-devices/index.rst
+> index b74b3b34a235..b40cd1b402f7 100644
+> --- a/Documentation/misc-devices/index.rst
+> +++ b/Documentation/misc-devices/index.rst
+> @@ -28,6 +28,7 @@ fit into other categories.
+>     oxsemi-tornado
+>     pci-endpoint-test
+>     smpro-errmon
+> +   smpro-misc
+>     spear-pcie-gadget
+>     uacce
+>     xilinx_sdfec
+> diff --git a/Documentation/misc-devices/smpro-misc.rst b/Documentation/misc-devices/smpro-misc.rst
 > new file mode 100644
-> index 000000000000..6c427141e51b
+> index 000000000000..d21be4a09e69
 > --- /dev/null
-> +++ b/drivers/misc/smpro-misc.c
-> @@ -0,0 +1,145 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Ampere Computing SoC's SMpro Misc Driver
-> + *
-> + * Copyright (c) 2022, Ampere Computing LLC
-> + */
-> +#include <linux/mod_devicetable.h>
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/regmap.h>
+> +++ b/Documentation/misc-devices/smpro-misc.rst
+> @@ -0,0 +1,82 @@
+> +.. SPDX-License-Identifier: GPL-2.0-only
 > +
-> +/* Boot Stage/Progress Registers */
-> +#define BOOTSTAGE	0xB0
-> +#define BOOTSTAGE_LO	0xB1
-> +#define CUR_BOOTSTAGE	0xB2
-> +#define BOOTSTAGE_HI	0xB3
+> +Kernel driver Ampere(R) Altra(R) SMpro miscellaneous
+> +====================================================
 > +
-> +/* SOC State Registers */
-> +#define SOC_POWER_LIMIT		0xE5
+> +Supported chips:
 > +
-> +struct smpro_misc {
-> +	struct regmap *regmap;
-> +};
+> +  * Ampere(R) Altra(R)
 > +
-> +static ssize_t boot_progress_show(struct device *dev, struct device_attribute *da, char *buf)
-> +{
-> +	struct smpro_misc *misc = dev_get_drvdata(dev);
-> +	u16 boot_progress[3] = { 0 };
-> +	u32 bootstage;
-> +	u8 boot_stage;
-> +	u8 cur_stage;
-> +	u32 reg_lo;
-> +	u32 reg;
-> +	int ret;
+> +    Prefix: 'smpro'
 > +
-> +	/* Read current boot stage */
-> +	ret = regmap_read(misc->regmap, CUR_BOOTSTAGE, &reg);
-> +	if (ret)
-> +		return ret;
+> +    Reference: Altra SoC BMC Interface Specification
 > +
-> +	cur_stage = reg & 0xff;
+> +Author: Thu Nguyen <thu@os.amperecomputing.com>
 > +
-> +	ret = regmap_read(misc->regmap, BOOTSTAGE, &bootstage);
-> +	if (ret)
-> +		return ret;
+> +Description
+> +-----------
 > +
-> +	boot_stage = (bootstage >> 8) & 0xff;
+> +This driver support the monitoring and configuration of various miscellaneous
+> +data provided by Ampere(R) Altra(R) SMpro processor.
+> +At this time, these include:
 > +
-> +	if (boot_stage > cur_stage)
-> +		return -EINVAL;
+> +  * Reading Boot Progress information
+> +  * Configuring SoC Power Limit
 > +
-> +	ret = regmap_read(misc->regmap,	BOOTSTAGE_LO, &reg_lo);
-> +	if (!ret)
-> +		ret = regmap_read(misc->regmap, BOOTSTAGE_HI, &reg);
-> +	if (ret)
-> +		return ret;
+> +Sysfs entries
+> +-------------
 > +
-> +	/* Firmware to report new boot stage next time */
-> +	if (boot_stage < cur_stage) {
-> +		ret = regmap_write(misc->regmap, BOOTSTAGE, ((bootstage & 0xff00) | 0x1));
-> +		if (ret)
-> +			return ret;
-> +	}
+> +1) Boot progress
 > +
-> +	boot_progress[0] = bootstage;
-> +	boot_progress[1] = swab16(reg);
-> +	boot_progress[2] = swab16(reg_lo);
+> +SMpro misc driver creates the sysfs files ``boot_progress``.
+> +The format of ``boot_progress`` file is as below::
 > +
-> +	return sysfs_emit(buf, "%*phN\n", (int)sizeof(boot_progress), boot_progress);
-> +}
+> +<boot stage><boot status><boot progress>
+> +
+> +Where:
+> +
+> +* Boot stage::
+> +
+> +    0: SMpro firmware booting.
+> +    1: PMpro firmware booting.
+> +    2: ATF BL1 firmware booting.
+> +    3: DDR initialization.
+> +    4: DDR training report status.
+> +    5: ATF BL2 firmware booting.
+> +    6: ATF BL31 firmware booting.
+> +    7: ATF BL32 firmware booting.
+> +    8: UEFI firmware booting.
+> +    9: OS booting.
+> +
+> +* Boot status::
+> +
+> +    0: Not started.
+> +    1: Started.
+> +    2: Complete without error.
+> +    3: Failure.
+> +
+> +* boot progress: 32 bits boot progress code
+> +
+> +The sysfs ``boot_progress`` only reports the boot state when the host is booting.
+> +If the host is already booted, it returns latest state.
+> +
+> +Example::
+> +
+> +    #cat boot_progress
+> +    0102808454A8
+> +
+> +2) SoC Power Limit
+> +
+> +SMpro misc driver creates the sysfs file ``soc_power_limit`` to get/set the SoC Power Limit.
+> +
+> +Reading this sysfs return the current setting of SoC Power Limit (W) in decimal string.
+> +Writing the desired value in decimal string to set the SoC Power Limit in Watt (W).
+> +The range of SoC Power Limit is 90-500(W) and will be ignored if out of range.
+> +
+> +Example::
+> +
+> +    #cat soc_power_limit
+> +    90
+> +    #echo 95 > soc_power_limit
+> +    #cat soc_power_limit
+> +    95
+> -- 
+> 2.35.1
+> 
 
-Again, please put the Documentation/ABI/ entries in this commit so that
-we can verify they are all correct.  Putting them at the end of the
-series makes it pretty impossible to review.  Would you want to have to
-match them all up the way you sent them?
+Why is this file needed at all if you have the correct
+Documentation/ABI/ entries instead?
 
 thanks,
 
