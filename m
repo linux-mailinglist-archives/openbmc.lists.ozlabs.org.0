@@ -2,87 +2,88 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3538A5EFEA8
-	for <lists+openbmc@lfdr.de>; Thu, 29 Sep 2022 22:33:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3C1A85EFEB7
+	for <lists+openbmc@lfdr.de>; Thu, 29 Sep 2022 22:37:33 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MdlS715HRz3c6K
-	for <lists+openbmc@lfdr.de>; Fri, 30 Sep 2022 06:33:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MdlXq113Mz3c2q
+	for <lists+openbmc@lfdr.de>; Fri, 30 Sep 2022 06:37:31 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=LeFYCHPy;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=VxkVmctj;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ZMi6SwK8;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.26; helo=out2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=LeFYCHPy;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=VxkVmctj;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ZMi6SwK8;
 	dkim-atps=neutral
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MdlRc4JG1z3bSX
-	for <openbmc@lists.ozlabs.org>; Fri, 30 Sep 2022 06:32:59 +1000 (AEST)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id 2BEDD5C0127;
-	Thu, 29 Sep 2022 16:32:55 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Thu, 29 Sep 2022 16:32:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm1; t=1664483575; x=1664569975; bh=Q+uMOvHkSZ
-	zburJBKEfVTBtBWJnv7xWvs6jZ1M5gquI=; b=LeFYCHPypX92h+R13XWpdFN7P3
-	IEbQZ186pO9VWnuKWacc2mIEpgzyDRmaz2m60zdnKaV50NhIGxP5Fr9RWdh+BNjo
-	ir6/nB/BMxuD3/vgoiLXaaQURZOq5DFywrHPvNj2iAt2ZwWCYgVWozRIFAJY3mho
-	bauIp3mAh6fX5qSzGt5yIMFwDROLBdccYlPTJ7ioZEmnWEqVmKYjJxQlOnDsGn/h
-	wg2llLrfQMLeqXO7E55AeFB9SQUBsOZfljSv5XRbx+iSfsdrNIXWd0JpoJJNi4lp
-	6Cd18D30RaXMKjm5sRHKio3I0jDxdkticVMysJg1qTDTrVzmHCwj26CPi+NA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1664483575; x=1664569975; bh=Q+uMOvHkSZzburJBKEfVTBtBWJnv
-	7xWvs6jZ1M5gquI=; b=VxkVmctj9AoCGrro2tsOOXlvAMfua/bwke/v+qrJFeIT
-	szsj1yJcYWtN2Lf1CrLNzeJopYK5ctGoPUiGMmLvzRN4rBFlX91/enULDfGG7LHG
-	HmPUWPT12jXKwSfBuaL7VmKbl78169ueVnt3BgRoGjg5q6Xz8tnDT749dYiG7uuU
-	RpjGsfnz9XUCPVw8Inlu+Jk+DJHR28uH7CeAxbSbS8nNkKw4rkc/d31/3q6QhKhm
-	5o+Umc9GuC6kwV9cyuT9qF1YrkcmQls4uj3GMA/EZlyvET6be6DONee7FTyC4O05
-	IMtba6FqbKSgF29Mx2VEJZV+qIsxhNQ+8inPtsl1NQ==
-X-ME-Sender: <xms:9gA2Y4swohZ1xYvc6LtAfD1I3nAwmr3tJfElonXQR8c7sl5wogKBhw>
-    <xme:9gA2Y1epxex6u7FK1ruLT20HuF2QLgYWGUtSivvpfV6QH52zxogpnz98cVp710Zg6
-    G1_Ygfsmza07Z3M2GI>
-X-ME-Received: <xmr:9gA2Yzyc4es_xXrpHd81JuOZWVeYp-XxKsioa70eVFR4ZMXxtugvwlYxBiX-wqgeIfjdlubVrFXtDd69Mz0Q_qWMP5XZqPkk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfeehtddgudehvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enfghrlhcuvffnffculddvfedmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreer
-    tddtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkh
-    esshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepjefgtdelledvfedtgeegffef
-    ueefveegjeekleegueejveevueefiefgiedvjeejnecuffhomhgrihhnpehkvghrnhgvlh
-    drohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
-    pehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:9gA2Y7PZoHVFcC94cZkVITHOiRW2ox-Q1BGeyrae1jRaGjFDS0MrHw>
-    <xmx:9gA2Y49HW8BaWEa6Jg0I4UeSM5dwVRFnelMwXyZmYvccVaBZ70K0Eg>
-    <xmx:9gA2YzWO4mOwGqj3B4-98HRnPGaIpPAzK6QwkQungTlR4FGD5EcGpA>
-    <xmx:9wA2Y2lIKNBBtLknYrc-dh3Ce2EHhWKr8IOx060GSsQmtagnJ6RG-A>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 Sep 2022 16:32:54 -0400 (EDT)
-Date: Thu, 29 Sep 2022 15:32:52 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Eddie James <eajames@linux.ibm.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MdlXN0200z2yT0
+	for <openbmc@lists.ozlabs.org>; Fri, 30 Sep 2022 06:37:07 +1000 (AEST)
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28TKVkXh001283;
+	Thu, 29 Sep 2022 20:36:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=t/KRCAiNWGphrGWAEqwN29srVxoZRf3ojozpikldDls=;
+ b=ZMi6SwK8aH+t06ftNKmfr3O6ZtEL9GHPv+/nOY7GAYANl9wPTPYxhdCNdQ0hr0Ya5itR
+ g7gDcWrYeCPm7T8JWtZl2GVhbiC/3vVo/3uRViGp+6KyTUTeus4ysVab6IwR4He4pDdJ
+ WhTg8nlI1JG8fMArYZY9H4aBr+pAxQFnUR0xQMVD3xsqt8hiN9Mt++QDvfIP9wD11iOm
+ 0OZ67phV7Kg8CEfF157JD6CUZc0Iozh/eiwfybz+ojEopvVsgRvdkg7VUgh9W24OGdIa
+ Q8GY/KgkBrZyIajc+BUpJY0nwkMo3tb2nf5f6ZH1IFy7NXdG5RKurahhJ2CA7PBTHJA1 Hw== 
+Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com [169.47.144.26])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3jwjfsg67b-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 29 Sep 2022 20:36:58 +0000
+Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
+	by ppma04wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 28TKaZoo010482;
+	Thu, 29 Sep 2022 20:36:57 GMT
+Received: from b03cxnp07029.gho.boulder.ibm.com (b03cxnp07029.gho.boulder.ibm.com [9.17.130.16])
+	by ppma04wdc.us.ibm.com with ESMTP id 3jssh9vegh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 29 Sep 2022 20:36:57 +0000
+Received: from smtpav01.dal12v.mail.ibm.com ([9.208.128.133])
+	by b03cxnp07029.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 28TKatt444237134
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 29 Sep 2022 20:36:56 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 5923C58058;
+	Thu, 29 Sep 2022 20:36:56 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E88FD58057;
+	Thu, 29 Sep 2022 20:36:55 +0000 (GMT)
+Received: from [9.77.146.111] (unknown [9.77.146.111])
+	by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Thu, 29 Sep 2022 20:36:55 +0000 (GMT)
+Message-ID: <affe95f4-1313-db61-23f9-e01b4a9842a7@linux.ibm.com>
+Date: Thu, 29 Sep 2022 15:36:55 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
 Subject: Re: [PATCH linux dev-5.15] leds: pca955x: Fix
  i2c_smbus_read_i2c_block_data return code check
-Message-ID: <YzYA9MoKr8BwSpJx@heinlein>
+Content-Language: en-US
+To: Patrick Williams <patrick@stwcx.xyz>
 References: <20220929191848.247164-1-eajames@linux.ibm.com>
+ <YzYA9MoKr8BwSpJx@heinlein>
+From: Eddie James <eajames@linux.ibm.com>
+In-Reply-To: <YzYA9MoKr8BwSpJx@heinlein>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: C9idPXXP88u_10JGNmA4hlLFxHUpYCbQ
+X-Proofpoint-ORIG-GUID: C9idPXXP88u_10JGNmA4hlLFxHUpYCbQ
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="OVpYX6REZYE3Z8o/"
-Content-Disposition: inline
-In-Reply-To: <20220929191848.247164-1-eajames@linux.ibm.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-29_11,2022-09-29_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ phishscore=0 mlxlogscore=999 clxscore=1011 impostorscore=0 suspectscore=0
+ bulkscore=0 adultscore=0 malwarescore=0 priorityscore=1501 mlxscore=0
+ spamscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2209290129
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,65 +100,43 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---OVpYX6REZYE3Z8o/
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 9/29/22 15:32, Patrick Williams wrote:
+> On Thu, Sep 29, 2022 at 02:18:48PM -0500, Eddie James wrote:
+>> The function returns either a negative errno or the number of bytes
+>> successfully read. So, only return for a negative return code.
+>>
+>> Fixes: c9fb275212da ("leds: pca955x: Add HW blink support")
+>> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+>> ---
+>>   drivers/leds/leds-pca955x.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/leds/leds-pca955x.c b/drivers/leds/leds-pca955x.c
+>> index cf0a9fe20086..cba9876b1187 100644
+>> --- a/drivers/leds/leds-pca955x.c
+>> +++ b/drivers/leds/leds-pca955x.c
+>> @@ -689,7 +689,7 @@ static int pca955x_probe(struct i2c_client *client)
+>>   	err = i2c_smbus_read_i2c_block_data(client,
+>>   					    0x10 | (pca955x_num_input_regs(chip->bits) + 4), nls,
+>>   					    ls1);
+>> -	if (err)
+>> +	if (err < 0)
+>>   		return err;
+>>   
+>>   	for (i = 0; i < nls; ++i)
+>> -- 
+>> 2.31.1
+>>
+> I think Potin sent this same patch 2 days ago:
+>      https://lore.kernel.org/openbmc/20220928085701.1822967-1-potin.lai.pt@gmail.com/
+>
+> Would you mind sending a Reviewed-By / Tested-By for his patch?
 
-On Thu, Sep 29, 2022 at 02:18:48PM -0500, Eddie James wrote:
-> The function returns either a negative errno or the number of bytes
-> successfully read. So, only return for a negative return code.
->=20
-> Fixes: c9fb275212da ("leds: pca955x: Add HW blink support")
-> Signed-off-by: Eddie James <eajames@linux.ibm.com>
-> ---
->  drivers/leds/leds-pca955x.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->=20
-> diff --git a/drivers/leds/leds-pca955x.c b/drivers/leds/leds-pca955x.c
-> index cf0a9fe20086..cba9876b1187 100644
-> --- a/drivers/leds/leds-pca955x.c
-> +++ b/drivers/leds/leds-pca955x.c
-> @@ -689,7 +689,7 @@ static int pca955x_probe(struct i2c_client *client)
->  	err =3D i2c_smbus_read_i2c_block_data(client,
->  					    0x10 | (pca955x_num_input_regs(chip->bits) + 4), nls,
->  					    ls1);
-> -	if (err)
-> +	if (err < 0)
->  		return err;
-> =20
->  	for (i =3D 0; i < nls; ++i)
-> --=20
-> 2.31.1
->=20
 
-I think Potin sent this same patch 2 days ago:
-    https://lore.kernel.org/openbmc/20220928085701.1822967-1-potin.lai.pt@g=
-mail.com/
+Ah, thanks. Missed that. Will do.
 
-Would you mind sending a Reviewed-By / Tested-By for his patch?
 
---=20
-Patrick Williams
+Eddie
 
---OVpYX6REZYE3Z8o/
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmM2APIACgkQqwNHzC0A
-wRnceRAAicC+UYUm86SCmh5F2gWKHEenPlutSWcKPZwSPG9iPqJFreKDvlfWonPi
-eNamUgVniVE7u2SiLqZ5oisR4s5E2jPjQb5LYqvGun4i1kVi+HKu53zZc8jdMRjp
-U7OMtN+u2IkC8Tp/1ZXmFKtUIU9pHAerxU/IqvXmu+LZ8fs0pnmyvkeOMI9E0jRj
-WU6C5pl3Z4WefWg9syUe5XLdSVi1mJWfP0Xzul0IN+hjAeMlOk0oPLFyz93AwPXq
-NbX5eNIJDMkEWgMaZzYEozWNzc3VMaozgOkKAAqNjkX6GXP+6PAvcjPyKMdCDmze
-fMfpwkX6RigibuI9QiOhP7Ni26y0Q1E7xoLKDxmbnre9RqF89WeMe+blwKCDzEYn
-YMnFV5ph89qtwa7khiOqfaopIDQGgUWom1+Nvj20wTF6OR3izrsQDi/tveTb5dcZ
-cg+mwltszazDwzF7bM43nvBxUA7Ukwa48wauCpwZ+baGGS9Kn7K8cESYPJeaH3GP
-Orwenx9qGod1dHICh5aTdCaKPbDZ6NHBlM1FgLeYHv+i75cvY1m5J0lJDpaJBL4b
-CocNuq+l/4pFVrFjaWxZ+cwRZIo1JRR6A+pI6hq9dhyke+ueOZm5lOR8kMzLD2x6
-WEjq7NGFzmpiCwdP/jjN516dhfYaH//+I/Yfr9GYYssFU9+5nLU=
-=Jzv/
------END PGP SIGNATURE-----
-
---OVpYX6REZYE3Z8o/--
+>
