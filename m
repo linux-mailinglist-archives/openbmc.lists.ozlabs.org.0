@@ -2,90 +2,79 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B64E35EF7BF
-	for <lists+openbmc@lfdr.de>; Thu, 29 Sep 2022 16:38:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8896D5EFDCD
+	for <lists+openbmc@lfdr.de>; Thu, 29 Sep 2022 21:19:33 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MdbYz4BLkz3c6N
-	for <lists+openbmc@lfdr.de>; Fri, 30 Sep 2022 00:37:59 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Mdjpl1jYyz3c4K
+	for <lists+openbmc@lfdr.de>; Fri, 30 Sep 2022 05:19:27 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=PVsLbysE;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=jVI56nH2;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=V1ixrJ/l;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.27; helo=out3-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=PVsLbysE;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=jVI56nH2;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=V1ixrJ/l;
 	dkim-atps=neutral
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MdbYV14P8z2xs1
-	for <openbmc@lists.ozlabs.org>; Fri, 30 Sep 2022 00:37:33 +1000 (AEST)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id B15155C0175;
-	Thu, 29 Sep 2022 10:37:28 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Thu, 29 Sep 2022 10:37:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	fuzziesquirrel.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm3; t=1664462248; x=1664548648; bh=ZgTU/ZlfGZ
-	IZoqUAu6Cr099YFcJ5po/GBlhQz9M+xGs=; b=PVsLbysEEGGP6qR1fqYXcKwFIF
-	LD81NFj8iAM3V0Y3XI8quP7Ip1V4+ZHrevsL0ajm/74YEXiZnd0lmFyXWM+w+jjJ
-	tOpoeNHkIyfKSB/X508rjtNVGXcn4W0zXE8nNTtQ7++MMzhtHo4cW8GYkAmitmJ5
-	pKYWXb45FUiDeEGPY3KLlFSQyniJq2IwYPqC6ToFI56sEnd3ITyFr91cSj8bJnzt
-	4UH853vL9kRJtVy9lgJ/BXTh+ewZVQyIQ4ILxRQ9t5+38T8pNf7PZOZyf1L8LQtu
-	UgQaJMoiOgCpSgF1NLmsTHsDypyz566eWDHnaiiX7IqytX//qHKqJdxLxwfA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1664462248; x=
-	1664548648; bh=ZgTU/ZlfGZIZoqUAu6Cr099YFcJ5po/GBlhQz9M+xGs=; b=j
-	VI56nH2O0/PqMEge9ZJE+ndZgi0Ic1iu7qRjHQTVQ4m3KHQXS0cnG38WB/qTIWYO
-	NbKe+n9fV43kZze2WGn73R3bk67Ud71WX1gsUCIPwPaCszRl1ss5Dn0fgT7Ow941
-	u1O51pP+PhY93c2x0EbaAaboG/KUY3W4oF+IHrx0HNzuxYH8Mg3oDs6Zy2j1kHRV
-	FxWTZzh/PSyfxPOFJAohhfOimtOzRT9EdSz2n4e1owfmh8LkO/zB1vit1mWl64Q6
-	tvjrbv6WhbEafa2W+AAxA+txbcAU/n+1TZuQLIfeiUf/OwZk0d9RxrqYmENVU6yG
-	Nj9pLmJjm3MEStv7A1v0A==
-X-ME-Sender: <xms:qK01YxRQ10ZWDk1t58ecu1Rj6zfM9Y0tQesVhLs2WM_JQs66qxjvBg>
-    <xme:qK01Y6wsBQ75ZCIzxRBqo2m4PkBI1emoSzn0K1jwiCJT30FpsVqdtFpgRw48ehE7j
-    pvC9nLrs9FYgnmemak>
-X-ME-Received: <xmr:qK01Y23lRuzaxHu2tZN7T1pYBd6UHCFJ5uCDgvc8BVy8RREdyOFTPwJKrSObZ28dJuF_xY0eRrx-SeqVn0uE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfeehtddgjeelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepkffuhffvveffjghftgfgfgggsehtqhertddtreejnecuhfhrohhmpeeurhgr
-    ugcuuehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtg
-    homheqnecuggftrfgrthhtvghrnhepgeetkedufeetjeehveefheektdeifedvhfeilefh
-    ieehvdehvddtudfguefgieetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepsghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtgho
-    mh
-X-ME-Proxy: <xmx:qK01Y5AJr5ezstb8MdGG7JvVbAKEO77p9nVSidwclylO0hU1fXYprg>
-    <xmx:qK01Y6g2IsXplXz1trqZQSih3wzpobTECi0VG0vbnLnynVMXICxWxw>
-    <xmx:qK01Y9rRckDlClAKp2pyArzkhTmglNa4DSzWmZ9agZmW0fLmpIU35w>
-    <xmx:qK01Y-a2pzGaMoBF6Gy60VcT1L9FEXV9mv4wR5rejJfKYpNT3kDRJA>
-Feedback-ID: i02c9470a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 Sep 2022 10:37:28 -0400 (EDT)
-Message-ID: <2c5f9b5ec9589fe531e771e4c8c8a13f77cec977.camel@fuzziesquirrel.com>
-Subject: Re: Wiwynn's updated CCLA 20220927
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: Delphine Chiu/WYHQ/Wiwynn <DELPHINE_CHIU@wiwynn.com>, 
-	"openbmc@lists.ozlabs.org"
-	 <openbmc@lists.ozlabs.org>
-Date: Thu, 29 Sep 2022 10:37:27 -0400
-In-Reply-To: <HK0PR04MB3348E51D857FFA157A24750AFA559@HK0PR04MB3348.apcprd04.prod.outlook.com>
-References: 	<HK0PR04MB3348E51D857FFA157A24750AFA559@HK0PR04MB3348.apcprd04.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4 
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MdjpG36JHz2xmw
+	for <openbmc@lists.ozlabs.org>; Fri, 30 Sep 2022 05:19:01 +1000 (AEST)
+Received: from pps.filterd (m0187473.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28TJG1YL038496;
+	Thu, 29 Sep 2022 19:18:55 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=4pIGcKQXbrlKMND2es+RMAE4mep4F9B/AWRsVy2OwsA=;
+ b=V1ixrJ/lbMkgt3Hj3pEMml/yafotdJGIknQ0ycXqtB9FbFBuVHm/RvR//8I8U3M0UxBX
+ 0hfy9G4XqTZtMiorGWyVf68lOtLpKjb3r62BxsdLC8dAitT+UYWR9qp+aFZ7LQ+cIUvH
+ toRWrTm+oPVw56kXK3SxPeIhHWBWDjGhJOcbNFOZzA191MpP6nampjta/uzisdOP6xsa
+ 2gTjKVcqnoMV2LYnrDV+C/JBNT1tJ5EWhebe+z+QvRYqTfYkGvmIOiid2h6/afy6Tvo8
+ rDcCfcGYlL2xjNzKMEOFYJOx60utHTz8haG6WyoJVJMZSXURNh4g8t1YDl2s4jO/g3cZ 1Q== 
+Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com [169.47.144.27])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3jwh18rm0c-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 29 Sep 2022 19:18:55 +0000
+Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
+	by ppma05wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 28TJDInK009375;
+	Thu, 29 Sep 2022 19:18:53 GMT
+Received: from b01cxnp22034.gho.pok.ibm.com (b01cxnp22034.gho.pok.ibm.com [9.57.198.24])
+	by ppma05wdc.us.ibm.com with ESMTP id 3jssha43t8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 29 Sep 2022 19:18:53 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com ([9.208.128.115])
+	by b01cxnp22034.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 28TJIqc464881048
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 29 Sep 2022 19:18:53 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 7BCE358055;
+	Thu, 29 Sep 2022 19:18:52 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id D173058054;
+	Thu, 29 Sep 2022 19:18:51 +0000 (GMT)
+Received: from slate16.aus.stglabs.ibm.com (unknown [9.77.146.111])
+	by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Thu, 29 Sep 2022 19:18:51 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-5.15] leds: pca955x: Fix i2c_smbus_read_i2c_block_data return code check
+Date: Thu, 29 Sep 2022 14:18:48 -0500
+Message-Id: <20220929191848.247164-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: _Gqt6vSVt4fhFLqi6YF34946Wkmp_ypt
+X-Proofpoint-ORIG-GUID: _Gqt6vSVt4fhFLqi6YF34946Wkmp_ypt
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.528,FMLib:17.11.122.1
+ definitions=2022-09-29_11,2022-09-29_03,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
+ adultscore=0 bulkscore=0 spamscore=0 clxscore=1015 priorityscore=1501
+ suspectscore=0 phishscore=0 mlxlogscore=999 lowpriorityscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2209290120
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,23 +86,32 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Aldofo Lin/WYHQ/Wiwynn <ALDOFO_LIN@wiwynn.com>
+Cc: Eddie James <eajames@linux.ibm.com>, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Delphine
+The function returns either a negative errno or the number of bytes
+successfully read. So, only return for a negative return code.
 
-On Tue, 2022-09-27 at 02:41 +0000, Delphine Chiu/WYHQ/Wiwynn wrote:
-> Hi,
->=20
-> Please find the updated schedule A from Wiwynn attached.
->=20
->=20
-> Thanks,
-> Delphine
+Fixes: c9fb275212da ("leds: pca955x: Add HW blink support")
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+---
+ drivers/leds/leds-pca955x.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-I've put this in the CLA repository, but there is a "OBMC Wiwynner"
-listed in Sched A.  Can you send another with that removed?
+diff --git a/drivers/leds/leds-pca955x.c b/drivers/leds/leds-pca955x.c
+index cf0a9fe20086..cba9876b1187 100644
+--- a/drivers/leds/leds-pca955x.c
++++ b/drivers/leds/leds-pca955x.c
+@@ -689,7 +689,7 @@ static int pca955x_probe(struct i2c_client *client)
+ 	err = i2c_smbus_read_i2c_block_data(client,
+ 					    0x10 | (pca955x_num_input_regs(chip->bits) + 4), nls,
+ 					    ls1);
+-	if (err)
++	if (err < 0)
+ 		return err;
+ 
+ 	for (i = 0; i < nls; ++i)
+-- 
+2.31.1
 
-Thanks,
-Brad
