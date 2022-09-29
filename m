@@ -2,32 +2,32 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 407635EF29D
-	for <lists+openbmc@lfdr.de>; Thu, 29 Sep 2022 11:49:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 887CD5EF2AB
+	for <lists+openbmc@lfdr.de>; Thu, 29 Sep 2022 11:50:30 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MdT8z5gK2z3bxp
-	for <lists+openbmc@lfdr.de>; Thu, 29 Sep 2022 19:49:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MdTBD2mJSz3bsS
+	for <lists+openbmc@lfdr.de>; Thu, 29 Sep 2022 19:50:28 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=k2si6vyK;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=iQhGllRc;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.94.125; helo=nam10-mw2-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.94.109; helo=nam10-mw2-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=k2si6vyK;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=iQhGllRc;
 	dkim-atps=neutral
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2125.outbound.protection.outlook.com [40.107.94.125])
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2109.outbound.protection.outlook.com [40.107.94.109])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MdT3F36xnz3c6K
-	for <openbmc@lists.ozlabs.org>; Thu, 29 Sep 2022 19:44:25 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MdT3Z6XVXz3c2g
+	for <openbmc@lists.ozlabs.org>; Thu, 29 Sep 2022 19:44:42 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=V9xDSoZXcKoE8Q6W71d4RoYRsuYK89FLyy3iJEJjzXcntH1ncw2DQ4+7pty/0k0tXvJm7yZqcPvZo+Xhtpud/PI3YGxI6njuFRDHE1o+C5zjeYTGq7iai/aB3HdrF5U30sgk2RVMbBIJ7C0gbkikymCLS7Wg1sYD8XEvFjXKWICJwtaX0bAJ2hKodF6jx+4ETk+bXi22qjCibha83kKTFa8Yb0/lgicuBvpYvnkqXqzRojT6GUmn0dM1vyUtrtgya3LdN98U7IrsWl29oZT+XF0r/lC9uvMeVOrXxZ+BB5rAGuBdrXO23XJ7AaczjvY/4Y8HJjEAWL0cQ/aJLMY1wg==
+ b=XRwbIYXgZcO/6yKoeJksfAY7eHHN4z+8foJxcfLeUH/O1cIaNME+SRutBkxltYyGM67eWKdnT+e68UrDmjwZX/JQvpOsazTDfecIYQcD/rpAYP3DwlprbUP+EArtAlM6iXgOqM97lGdOau12tK/7AjAwSlpuU17NxHFHZYhE0RkEYEHHJ2TFDYc3IA+/d/LkfcY+T1W5QV9jelfrN0afaUZH0lPI02RlhO3cLaGiFWLTC5pIjvoXJIT8yyw/3Rzklz8h7OvjkA27AVHucLnih/E8cDUY1WWdScvgQeTXbunHV/ATsXucFIgINgImRqoMLMmERdS7m28/6dz8USgpdw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CvER1QptHrDi9CZrnYx+sa9GYAX7FsotnibH1e/FLbA=;
- b=VQ4Jf4QWsHniQ/LQBvkQHLjl7LdHLAj+Ok70GkV95xhxIcmiw1++qaeFhDZFrLYN9i7eym9lmTEw8WoCMH0Yf3rylNwEZzLqCR6tUy0TkbKiN5imZeZBuGChK5+IJtLfshHqiQhMJ2lcbl6r+Te/FmXPBzL5QfEX0vCqlpOuD6rfXHbdP+p2wH3/r4P/lRgn2FaVBRDd1FxLAm2k4UTU6/FsMPBaTYyUd3I8STM74BF0tlppzFsfDMa/P/MRc2Ej9ioluhq5vwucaXyOwB7VVUScaxnvLDSgH0ZE1ZXekNfgjeF/vSkXuJ/+8foJX0qK8njm7UwmgjYMkID1EnvMgQ==
+ bh=M2pKKBbAFeSWafqjLWF1Kgy+yNGfTi9YzV/7SyfIs1A=;
+ b=ZgFJ+po8rsXhuLxBD9gnF7kEYtHMGU/RsNQynTu1nHrNnfNGD9iDESRuxeUde46WBHVn0rqJ0jvaw87ewvnqz5MqoF6EGsQFXFzH7VWUp0X11gRNhN2/dIyFmFGgtu3VVFqNTcq9AMZqNZ5Wxvw6yuO0T6yAz8GO4tcPxDaETtAJz9c6Z66iEwWZindBKPnV312YOS/PNa1cahmRHFUazbtyWqbQzCkuLcdN0hw73xwDin3QBAlanluFmfVO5kkJxDXFcgxFm95gg85fECykEEDKleY6tXY2e2du5hYxrRqPZwJa0kBxcEAyPQXauv7RgB2HfpVzYZly4qKn8T8Aig==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
  header.from=os.amperecomputing.com; dkim=pass
@@ -35,18 +35,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=os.amperecomputing.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CvER1QptHrDi9CZrnYx+sa9GYAX7FsotnibH1e/FLbA=;
- b=k2si6vyK5USLz3HzYrdtEsgtWTgXKXovt4K+MUBbYmxvgrsQldw/a5n/yEE/eoFAmt5sjNzIif904KvD6oedb3NLeQJ7QroyN1LrdssaMik4xcBvKpPTnT8Abr43VZirDYwM3Pk/AgoRPLoRE5+mtI5N5VSSHOZZWm7OwJOIhm4=
+ bh=M2pKKBbAFeSWafqjLWF1Kgy+yNGfTi9YzV/7SyfIs1A=;
+ b=iQhGllRcIgOD7mLH5+vekoxYJSbnRHQ8oCC24E8MuPalRW0egsLM/ZXQnRBrWKJDcdiYCpZejvr26ANFg+OwapAlMfXGfq9OM98ssVSaaPQ37ZjkG/neM9OhfyPum3O2Y2O3n2dEf6qiePZJ0vNUU2R3RwoOBGtN/pgbfIT/B1M=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
 Received: from SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24) by
  SN6PR01MB4798.prod.exchangelabs.com (2603:10b6:805:d5::10) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5676.19; Thu, 29 Sep 2022 09:44:18 +0000
+ 15.20.5676.19; Thu, 29 Sep 2022 09:44:24 +0000
 Received: from SJ0PR01MB7282.prod.exchangelabs.com
  ([fe80::7d50:e907:8e2e:1ff0]) by SJ0PR01MB7282.prod.exchangelabs.com
  ([fe80::7d50:e907:8e2e:1ff0%3]) with mapi id 15.20.5676.017; Thu, 29 Sep 2022
- 09:44:18 +0000
+ 09:44:24 +0000
 From: Quan Nguyen <quan@os.amperecomputing.com>
 To: macro@orcam.me.uk,
 	Lee Jones <lee@kernel.org>,
@@ -68,9 +68,9 @@ To: macro@orcam.me.uk,
 	linux-doc@vger.kernel.org,
 	OpenBMC Maillist <openbmc@lists.ozlabs.org>,
 	Open Source Submission <patches@amperecomputing.com>
-Subject: [PATCH v9 6/9] docs: misc-devices: (smpro-misc) Add documentation
-Date: Thu, 29 Sep 2022 16:43:18 +0700
-Message-Id: <20220929094321.770125-7-quan@os.amperecomputing.com>
+Subject: [PATCH v9 7/9] dt-bindings: mfd: Add bindings for Ampere Altra SMPro MFD driver
+Date: Thu, 29 Sep 2022 16:43:19 +0700
+Message-Id: <20220929094321.770125-8-quan@os.amperecomputing.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20220929094321.770125-1-quan@os.amperecomputing.com>
 References: <20220929094321.770125-1-quan@os.amperecomputing.com>
@@ -82,51 +82,51 @@ X-ClientProxiedBy: SG2PR01CA0178.apcprd01.prod.exchangelabs.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SJ0PR01MB7282:EE_|SN6PR01MB4798:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8ac40aac-b81d-433e-274b-08daa1ff2ddd
+X-MS-Office365-Filtering-Correlation-Id: c46a8a0b-2565-4f5e-b3cb-08daa1ff3156
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	Tm1VM2VftdKoMbYtFWIa6kfKd0k9CU4cRfFpZD3DLDxXkCSW04H4ePbCCgp34r751TB+hevpWPbGsnb/UxUCjwo0T1+IXZGsE/5qbiT/Y9thMsndXbtTmLTzS1w1t5X64xOgncaBA6+p3xVT0UkvW6oUchVSM54uyuqik/JxrPAdGMP9Ci9Xn58xfERC7NegwGR6ktugyTkROkyg4yrFis84V7pNYUlaaO422JOKkc/u4LeniQ8RXEVGweAJ13tkypilGbFNA+JioNiPBSj+7tRcZM5SiwAqF1uBC2wo9+vjSHHoYgQEGQFECalL7UQcRLVZuxAsAfKhe1nvkZ1+9QQPlGuJ8Ih6VxcIUBFnAXqJy1ZZfSRZlgoBiQh7ToXZUrjAFvZbe+VFgPW3YZhRWnC/VESPk7Azm1Gq0API//Shl8XokRiBfawxA0vFCv4dDbfvAxf6CysioJdYPBeZfJnD1MUAjetuX30U/1oklQ0OdJQuYRfB7IWkIVygVzEwHV6nCl813fT0oM9Prkfb4CAzeDAQCfWPeFivMZrhivQovtpgaoD1gZT+CNYdg8bzuQGzlFfcmoOWmyXpUXYWoaAzQG0V8nAP2AtFJdbLdx/QmsgLVzHbZdo2sAZkJO70kSIiIMU9nfibd63sh1/3z+8KUdilKx87OaVjo7I1tEyMFc1NCQ6NwsBfZtUui1123Hh0uLrmyVmUolg8l7Th92VQe3Xu2LlTmAKjLsRch8AYpLxZgkiUVvKbGVwuvYKj4f+TwzS+QHVuN1xJLF47W2qR2zhW4YciJ1zjbW93Hec=
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR01MB7282.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(136003)(396003)(376002)(346002)(366004)(39850400004)(451199015)(921005)(66476007)(66946007)(66556008)(8676002)(4326008)(83380400001)(110136005)(478600001)(6512007)(6506007)(2906002)(26005)(52116002)(41300700001)(316002)(38350700002)(38100700002)(86362001)(8936002)(6486002)(1076003)(107886003)(5660300002)(2616005)(7416002)(186003);DIR:OUT;SFP:1102;
+X-Microsoft-Antispam-Message-Info: 	1/O2wCV9vu97mAfWpnWRl+78PT083596ScFjg3yQ1/XFoNY4id66zyEHRkbaLDhFAm4rEWB6v4CppMqB2MV7ICk9nvoL0C2WlkS1O3jwB7QwJyPzmkv9miVl/l3KasgWfoOETHbBk1AY93eREwzozc/Knt1Bf+WRzL8g5cnwrkawK0pWOnsf4mq85O7ZHYgkQPAcjDjSg99sc9cVmqRSimJ9n1Kz41ndA3EpvK453fbB27HqM9k01rfdsLhze1VnYBpNByfYbVo4J6CPUFREYMFBmUy+h9WMm3tMYJL2liMgmwJUOaO74MCJNTNufxHYwxQ3pRNKe2kqcRvaDf9hhNqJuce0WGzFGHMIQkQw9SWTAYSrSh7bhERjVIqSJgtVOzFyk1SC+D9HOnenVaHRKMULRX6xGJVOijPrWHb5isdskRH3qS/MY66KUVQy1dCBvHTqrtM9q1paroBNCjcqb2y/TkOfHVqMOiq+j10uaOVRsEAdnjudKGsj3h0Y1On+5ChcaVSQIzqJfrjCrJnfj9+Ir/CS/La3tG0+Z2HGruKYizzInumi8JJa/+6pjnrLCzZlYavn5qhXdfvy58Njco/DSYI44gd43uZnRXPu1zv0H2jKL9rAqJIZjYWDdOUfYHxyKZSS1vcQT1chZ1JE9QAjdj8Y7LW+yPGie3r8XEwBCViJnyR0wKEf5ODZY+29YfWH0C/kudTjNkmjecbM5RXQDB2vztzGW/6pt5/ikhfDIeb6YD3Uyr3JURcHJBdiguYQmUxxUH5b9xKLoz3m8U08wa5uiOrO+aHkoUyiIkDWE4+VeYGZuw153cwzhI8YDTaZSefEIJO6zCVRs+7pPZZr+FWN0eTDkLt1Lqx7JVQ=
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR01MB7282.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(136003)(396003)(376002)(346002)(366004)(39850400004)(451199015)(921005)(66476007)(66946007)(66556008)(8676002)(4326008)(83380400001)(110136005)(478600001)(6666004)(6512007)(6506007)(2906002)(26005)(52116002)(41300700001)(316002)(54906003)(38350700002)(38100700002)(86362001)(8936002)(6486002)(966005)(1076003)(5660300002)(2616005)(7416002)(186003);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?us-ascii?Q?1VPApfgMHe/81+8JrDCcNuOfDBT+gdCDBt4SRZK4e2OEBQ+YeY9YXaMxbMtE?=
- =?us-ascii?Q?5yjTsQqI1hImngwkBjmk11Ljuq6eCxbp/ZZuqsKoGviI2Tfgl3sHywE3AWr3?=
- =?us-ascii?Q?rIcydKng7e2TRWZBFGj0W5SgPsgALXP4ToEds++AAhxv7UFGlbL9d20EnTRC?=
- =?us-ascii?Q?lWsNKmeDPEVUmWesGvBe1yHvMBXgNe/As9Oo+c4P4xJtzpWancZB0nAw3A78?=
- =?us-ascii?Q?2Jo22ih4Hd6inB+khcOgn2+xZYm5E4QqWPWTbABrUQ5L0SG0RXG2LbRNxUfO?=
- =?us-ascii?Q?bC0q7lRoMQmX6PGrHGRzD15oN5asbla/tgDA8YtoKkYpRJEN8darTN/BwO3x?=
- =?us-ascii?Q?XGKWrAY1SGNKmrGaXnBf/002maT+6dOA7OqTo/YNq1lMXWvTJP+NUsNPKLaX?=
- =?us-ascii?Q?vHTIwuPqSw6qxpuTFBohADPYyi8RwaDkyPi3BJIQsYmNLIuj6n7mcFkk2PSJ?=
- =?us-ascii?Q?uQ8nCSyqi9xGC90x7GT1U39OqBnzQAJeIfj8vZfYFOnnzZ8ZfvBwRSbHbYVe?=
- =?us-ascii?Q?gVld/ZMcgo0dh6VdYVWgklSAjtQls/R632w+taGkIc/d3jMIOBzsMHxu9uiG?=
- =?us-ascii?Q?Ykvh9YWEm+FwgQy7XgtIwu5KiqxmRJvZekQAsdMT/CzFsLm/RKmlrCpeMJq8?=
- =?us-ascii?Q?XR/vIKCAvr2qYewA7+oQ/CVATqwZND7WoLJJcrRlHN+LVoh8tTaSl3coCvAA?=
- =?us-ascii?Q?Is1ZaLr0jdGXNrn67HOdqwOO73QWaJPue4dhn913adGPMmb12hYtUiIB7fIt?=
- =?us-ascii?Q?5UhKBaZLTgOas1I6Y8G5/sB3fviGK4tvRPbGZE941nu64iPYASCLa6Cm0UMr?=
- =?us-ascii?Q?j8Pr4266sejf+/liOqeiYWu5MWyLbHqnvbSKsC0TxWZeB8GHk9KOAcNasLq0?=
- =?us-ascii?Q?a7gCWINJkZEVeRfjj8kASbWtSTbRKYD08UW232yNTZ500C+talTjGDxk3QWc?=
- =?us-ascii?Q?StxrLq6BU9/Q+/GUhqiBxXln/fU0L5E/skcVj4oIT6UmmmyFmnxg+27jqmL0?=
- =?us-ascii?Q?fsTFhTRV6bnRaky6hzLnTZ2uYVRWs4Tltb2zRGx2dq/4uG/rV3fTE9gGQ/k/?=
- =?us-ascii?Q?glJ61YNnGHqfl49mfD7Ysvt3gKHP59MRNZPYIPUFmnStJeSdvNnPG8dtFDfp?=
- =?us-ascii?Q?p911+5FsY9QHsTNxR5E0rtrkdlMoGsAg4kmUwWdYSrHbQmioFsu/8YgbU9J7?=
- =?us-ascii?Q?PFMnKZDr+dxD5CvnQPNLIqttImLJ2c/kjg4cC5sS7pO74XyvMNx7z/iQwuSo?=
- =?us-ascii?Q?VZLOU0LcLgsl5yFNSJf5LszPB6YIy3mf0FziQldWY0s3WCJAExW1b6FIIMfz?=
- =?us-ascii?Q?yZJh8ADwD+QhMb05Ytoox40IkmnzKbwgwLl+FxHLXB+sKOZgyhulNV3OZuJ7?=
- =?us-ascii?Q?tlwzo2m4w9hX3e2MqD7joU5h7JtintvRtt1PqJe8ocpKRY2JN5P4GWKjzfQN?=
- =?us-ascii?Q?CwdMDVL3/sTDTshybbErLd8WY4B70UX7TluhVy9YnId0ElZyPDgChOry4xyS?=
- =?us-ascii?Q?78wYgs/dtdq2rFQnC1UNEQJGZlvjECFoY/pBwkv89bNIAhpOm2hfnX+hDljH?=
- =?us-ascii?Q?lz7C9HIp4GxSEt/IlBJRP7GKR/JZ6XL5h/AYi7GzuTZfLFqBB9V1WWl1mYsq?=
- =?us-ascii?Q?H2StBgijd5ZlZud/AHAsexc=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?us-ascii?Q?k2Qk7Bwj2+32YT7SiXZB3tbqnRWRrM6gVDxVoeuJ58kG0lD6pOkYmuk8P/Fo?=
+ =?us-ascii?Q?oxfRDpUl4obyOqYVIH7uE8MEjHQMOqF3bZsXL7QVQjuuRIwLb6uah0lmfeeO?=
+ =?us-ascii?Q?q1qB6NA26KMPE3YTclUSx2dowG5f/fmM9xzEJ+aR9pRJuhKrjiewmNfSXG/5?=
+ =?us-ascii?Q?vV1ET/jfKTctW92rAqvyQ9D9hlWw88Q2OS7D0PO5SI5Dd3TRITgkmnwQoHeq?=
+ =?us-ascii?Q?/5nKBCtsFhdwLNRisy5l6kGGAurFkjCII6MM9Vc6m8h3AGqohUBkB9syiso0?=
+ =?us-ascii?Q?Nvlezuv7WfhxFzCykeYE5TYpk+HSCrUYTfI1UVesyQFOxuJjJePgH9R0xTlz?=
+ =?us-ascii?Q?7lHrJjWvH5utvtopA1Je7xUyqLM2KWR6nW0DGOe2SSUCl8mH8whT8WWvnzVT?=
+ =?us-ascii?Q?8BIrxLdwOf1Ep8C/uyXgA7yPDg6V7c8EVJJHkxlaGY/uYsCiorfVu0HNGkhh?=
+ =?us-ascii?Q?e2SjTIFTMmh/RChbIYSoZTTrMN9QDBPoHEBu2XvxQ4BnGWJYzOIawHg87kEd?=
+ =?us-ascii?Q?/y2nGpsw1vAJ/Bd5cxVuU983U6WFsfkbrrOG0jz4ujnsROyFm4nxrM7JAvOU?=
+ =?us-ascii?Q?6ZbLCz0BpXKcIxTmLqtw3ElgrhLTawDlFIJl8Aokl2Y+iWvEqnSm5Gt9xK4C?=
+ =?us-ascii?Q?jD3Rk5JgRUNcp2PSUSFOMZAeDTy/TF8DrwmoKpma1b2X3gYkBjX9bHi0EdSW?=
+ =?us-ascii?Q?pV4kfVfqlPqXANs57qX3kU497BA9E6fT1Ach7ofpyHTl44UBeScY3cn36Hz+?=
+ =?us-ascii?Q?FRsCMGERWBMm9y7u28iPAZia5/pqbbq/Pbq6yLgO+0E+oWssOGkMkmBHc7Hd?=
+ =?us-ascii?Q?VTWyEdeBGUqg1VrhMYmUg5xP/BH3syIXj87cJBFkqiRlufui6pseuO8Z48GM?=
+ =?us-ascii?Q?x/Pp7lSByNnGpvo2s113uS0fM+AMAjDrR8CDU2HC92+EyNK735w2YHqEYEgA?=
+ =?us-ascii?Q?fPSXAWBY3qtZkgnhyXKRgGElPHEFNXwOfb3412RGHHVk2IpBSXWwzjPXQzHB?=
+ =?us-ascii?Q?u5HmomnWQd8NrDvq/qF9bSrPK2iAs+YtNs0fRtyr8pLiUitZuKZqFpYcdaVM?=
+ =?us-ascii?Q?l6DjfG35L+FmywURqLFCZw/jE/vGM3GezyuhhWWrHpiC/WcQGRFSOPgCKwBa?=
+ =?us-ascii?Q?gG82qb97qjikPJdDavfpd1oPFiMqzwYlRAKG2GexBbu3tUnaTPxMXUZVedH7?=
+ =?us-ascii?Q?2XvHWxiO6tzebUh5vfE8qTxjOU51H3wuyWoMMRMRxVqOztAAPS4SGQ9kkomx?=
+ =?us-ascii?Q?7qm7CkfJ2ad25UV3MYzHL24fx3lbftMKLGbGvqTltHt1D27Ec83rfbzIRFUM?=
+ =?us-ascii?Q?TUzCTKgA4P04qE1E78zeijhH4tbUEIWpLHC5p1vRCGHk0ZWBB1HPs5ILGsqY?=
+ =?us-ascii?Q?eAtWzwgUezUBZhrAl9DMlDb6Y+jLPTJRYJRA39gaaRmF5Vbk9AVNcyP+k0/V?=
+ =?us-ascii?Q?S0UXcxC+agoYEjpnWzMno5G8ZXv+Vs3zc+oaRyccb3d9QTYP9b1SDaas5FwC?=
+ =?us-ascii?Q?MqsMpmRWfmEFTjkKTCl1zn+jC7rdS3eMGDGTFx4rrHWLnS66xlGzRULMw5Uh?=
+ =?us-ascii?Q?sdtd1oJW9Tv9jsbxa/NdytbvmcdKL24OrHdSwKiVncU88/UYQypUnZpfpRN6?=
+ =?us-ascii?Q?AkVwTKEl6pn8wM2tTK6jZxo=3D?=
 X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8ac40aac-b81d-433e-274b-08daa1ff2ddd
+X-MS-Exchange-CrossTenant-Network-Message-Id: c46a8a0b-2565-4f5e-b3cb-08daa1ff3156
 X-MS-Exchange-CrossTenant-AuthSource: SJ0PR01MB7282.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2022 09:44:18.7983
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Sep 2022 09:44:24.6597
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 72HQDg9hEVgf8Ba9SmKSyR6ht0GfMAmnRcHMr4N3kN13YYvD9fPnmOzVd7effT08l8Np8JnFFlcQ+Xc2IVyB8UT8LShonTcI0AXo5nGpWWo=
+X-MS-Exchange-CrossTenant-UserPrincipalName: t25muwaw4YLhZ9XlfgjPFc0zOwMimotY+gFkfeMgsAjdtD3+9MhnuIrn/6Ds9awWRoF4hAcEecjEUOr/m9YuFNXrkGsFILlmGXsmiu9mk9Q=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR01MB4798
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -139,132 +139,84 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: thang@os.amperecomputing.com, Phong Vo <phong@os.amperecomputing.com>
+Cc: Rob Herring <robh@kernel.org>, thang@os.amperecomputing.com, Phong Vo <phong@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Adds documentation for the Ampere(R)'s Altra(R) SMpro misc driver.
+Adds device tree bindings for SMPro MFD driver found on the Mt.Jade
+hardware reference platform with Ampere's Altra Processor family.
 
-Signed-off-by: Thu Nguyen <thu@os.amperecomputing.com>
+The SMpro co-processor on Ampere Altra processor family is to monitor
+and report various data included hwmon-related info, RAS errors, and
+other miscellaneous information.
+
 Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+Reviewed-by: Rob Herring <robh@kernel.org>
 ---
 Changes in v9:
-  + Update SPDX licence                          [Greg]
+  + Update SPDX license                                       [Greg]
 
 Changes in v8:
-  + Update to reflect single value per sysfs     [Quan]
+  + Removed unused #*_cells                              [Krzysztof]
 
 Changes in v7:
   + None
 
 Changes in v6:
-  + First introduced in v6 [Quan]
+  + None
 
- Documentation/misc-devices/index.rst      |  1 +
- Documentation/misc-devices/smpro-misc.rst | 82 +++++++++++++++++++++++
- 2 files changed, 83 insertions(+)
- create mode 100644 Documentation/misc-devices/smpro-misc.rst
+ .../devicetree/bindings/mfd/ampere,smpro.yaml | 42 +++++++++++++++++++
+ 1 file changed, 42 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/mfd/ampere,smpro.yaml
 
-diff --git a/Documentation/misc-devices/index.rst b/Documentation/misc-devices/index.rst
-index b74b3b34a235..b40cd1b402f7 100644
---- a/Documentation/misc-devices/index.rst
-+++ b/Documentation/misc-devices/index.rst
-@@ -28,6 +28,7 @@ fit into other categories.
-    oxsemi-tornado
-    pci-endpoint-test
-    smpro-errmon
-+   smpro-misc
-    spear-pcie-gadget
-    uacce
-    xilinx_sdfec
-diff --git a/Documentation/misc-devices/smpro-misc.rst b/Documentation/misc-devices/smpro-misc.rst
+diff --git a/Documentation/devicetree/bindings/mfd/ampere,smpro.yaml b/Documentation/devicetree/bindings/mfd/ampere,smpro.yaml
 new file mode 100644
-index 000000000000..d21be4a09e69
+index 000000000000..c442c3cdffed
 --- /dev/null
-+++ b/Documentation/misc-devices/smpro-misc.rst
-@@ -0,0 +1,82 @@
-+.. SPDX-License-Identifier: GPL-2.0-only
++++ b/Documentation/devicetree/bindings/mfd/ampere,smpro.yaml
+@@ -0,0 +1,42 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/mfd/ampere,smpro.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+Kernel driver Ampere(R) Altra(R) SMpro miscellaneous
-+====================================================
++title: Ampere Altra SMPro firmware driver
 +
-+Supported chips:
++maintainers:
++  - Quan Nguyen <quan@os.amperecomputing.com>
 +
-+  * Ampere(R) Altra(R)
++description: |
++  Ampere Altra SMPro firmware may contain different blocks like hardware
++  monitoring, error monitoring and other miscellaneous features.
 +
-+    Prefix: 'smpro'
++properties:
++  compatible:
++    enum:
++      - ampere,smpro
 +
-+    Reference: Altra SoC BMC Interface Specification
++  reg:
++    description:
++      I2C device address.
++    maxItems: 1
 +
-+Author: Thu Nguyen <thu@os.amperecomputing.com>
++required:
++  - compatible
++  - reg
 +
-+Description
-+-----------
++additionalProperties: false
 +
-+This driver support the monitoring and configuration of various miscellaneous
-+data provided by Ampere(R) Altra(R) SMpro processor.
-+At this time, these include:
++examples:
++  - |
++    i2c {
++        #address-cells = <1>;
++        #size-cells = <0>;
 +
-+  * Reading Boot Progress information
-+  * Configuring SoC Power Limit
-+
-+Sysfs entries
-+-------------
-+
-+1) Boot progress
-+
-+SMpro misc driver creates the sysfs files ``boot_progress``.
-+The format of ``boot_progress`` file is as below::
-+
-+<boot stage><boot status><boot progress>
-+
-+Where:
-+
-+* Boot stage::
-+
-+    0: SMpro firmware booting.
-+    1: PMpro firmware booting.
-+    2: ATF BL1 firmware booting.
-+    3: DDR initialization.
-+    4: DDR training report status.
-+    5: ATF BL2 firmware booting.
-+    6: ATF BL31 firmware booting.
-+    7: ATF BL32 firmware booting.
-+    8: UEFI firmware booting.
-+    9: OS booting.
-+
-+* Boot status::
-+
-+    0: Not started.
-+    1: Started.
-+    2: Complete without error.
-+    3: Failure.
-+
-+* boot progress: 32 bits boot progress code
-+
-+The sysfs ``boot_progress`` only reports the boot state when the host is booting.
-+If the host is already booted, it returns latest state.
-+
-+Example::
-+
-+    #cat boot_progress
-+    0102808454A8
-+
-+2) SoC Power Limit
-+
-+SMpro misc driver creates the sysfs file ``soc_power_limit`` to get/set the SoC Power Limit.
-+
-+Reading this sysfs return the current setting of SoC Power Limit (W) in decimal string.
-+Writing the desired value in decimal string to set the SoC Power Limit in Watt (W).
-+The range of SoC Power Limit is 90-500(W) and will be ignored if out of range.
-+
-+Example::
-+
-+    #cat soc_power_limit
-+    90
-+    #echo 95 > soc_power_limit
-+    #cat soc_power_limit
-+    95
++        smpro@4f {
++            compatible = "ampere,smpro";
++            reg = <0x4f>;
++        };
++    };
 -- 
 2.35.1
 
