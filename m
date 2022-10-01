@@ -2,71 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6AD435F2976
-	for <lists+openbmc@lfdr.de>; Mon,  3 Oct 2022 09:19:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FF235F297D
+	for <lists+openbmc@lfdr.de>; Mon,  3 Oct 2022 09:20:21 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MgsfQ3Gs3z3bY8
-	for <lists+openbmc@lfdr.de>; Mon,  3 Oct 2022 18:19:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Mgsg70qN1z3bkR
+	for <lists+openbmc@lfdr.de>; Mon,  3 Oct 2022 18:20:19 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=verizon.com header.i=@verizon.com header.a=rsa-sha256 header.s=corp header.b=gbyFSMhF;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=mwHdTkcA;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=verizon.com (client-ip=148.163.153.92; helo=mx0b-0024a201.pphosted.com; envelope-from=mruthyunjaya.rao.havaligi@verizon.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62f; helo=mail-pl1-x62f.google.com; envelope-from=bagasdotme@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=verizon.com header.i=@verizon.com header.a=rsa-sha256 header.s=corp header.b=gbyFSMhF;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=mwHdTkcA;
 	dkim-atps=neutral
-X-Greylist: delayed 2833 seconds by postgrey-1.36 at boromir; Sat, 01 Oct 2022 04:52:27 AEST
-Received: from mx0b-0024a201.pphosted.com (mx0b-0024a201.pphosted.com [148.163.153.92])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MfK976D5gz3c61
-	for <openbmc@lists.ozlabs.org>; Sat,  1 Oct 2022 04:52:23 +1000 (AEST)
-Received: from pps.filterd (m0098282.ppops.net [127.0.0.1])
-	by mx0a-0024a201.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 28UFn1GS008172
-	for <openbmc@lists.ozlabs.org>; Fri, 30 Sep 2022 14:05:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=verizon.com; h=mime-version : from
- : date : message-id : subject : to : content-type; s=corp;
- bh=HiR1tX3Orq60SHxFQIezp9CXrFaeoHP1LERmy9l7DJc=;
- b=gbyFSMhFFoFoQ0d+i2zCGcEZZiHlFXP1fqQO8kxbxVJ+RUFG58MQd+LiTyt89K8ULBZH
- 9rZORqBtOvGsNxx3911v5NqAqgdBfu2EkmyRyXsOaLY/fEFudMJFyKFCZXkiojEGTAgz
- Q3xL+sT22o0XTwcLFi+Un5JoiOuHHt/ajoY= 
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com [209.85.210.199])
-	by mx0a-0024a201.pphosted.com (PPS) with ESMTPS id 3jwk3n1s55-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Fri, 30 Sep 2022 14:05:05 -0400
-Received: by mail-pf1-f199.google.com with SMTP id z6-20020aa78886000000b005470014dc57so3164418pfe.1
-        for <openbmc@lists.ozlabs.org>; Fri, 30 Sep 2022 11:05:04 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MfYZJ5NJWz30Dp
+	for <openbmc@lists.ozlabs.org>; Sat,  1 Oct 2022 14:11:35 +1000 (AEST)
+Received: by mail-pl1-x62f.google.com with SMTP id x1so5507269plv.5
+        for <openbmc@lists.ozlabs.org>; Fri, 30 Sep 2022 21:11:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date;
+        bh=OSv7SDIGCVEG314+BzEZq4WXeWqQBm4mHIqqx0BP8u0=;
+        b=mwHdTkcA1tHAUfCcwsrvYGERtpdrG4RMnvKmYCTjX15LrwOYgVEtmVMbfqrVfhHakj
+         7g4ftx6CetZsFng+iOI1q36bEhi9Cp6b2zzqkzRWHV0xA/3d4eEvRddPSJcnKPwVanr2
+         z7Om/zQ0sB4VC0OZPjqGhbysth6zx37my4dFgOuPoi0Iwq4CiW+z5OWZR8BNvEY2q7nC
+         cCubav/qpG+PQN5ZHd+r4w4QLSZwxmiP21gxbAz70sgvgjeoeRgqhr+cTjmmTgN4qIzm
+         5sjs9soqW4ai993zQIP0ylhAJ4NcBgB/S6pJ6pYDA8iWLrmemXGwQGRLPgj4lTRHCcM9
+         VwuA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date;
-        bh=HiR1tX3Orq60SHxFQIezp9CXrFaeoHP1LERmy9l7DJc=;
-        b=6aGArdh1jPlk3NKaKhFa/3vzm+pvPZ4dAnAz0ZIlx5z/6OETM+jb6JjW/CP/bt8Kw/
-         032lhqhAM3uWgQSumbkfRKdTAlzvoK27HsEAShjyuI0oNuPEJdvJlBvCygFstinXOb5h
-         xHZL0kS7HBV7Sj+yxZf8JxQUu+Ol5vSL6tA5dw97Vxo0p2fN4/LODDO83heGJz2+OBpi
-         BALoXM3h7Ca97To4zqTVg6snegsGNXddrR31CIO+04gsDQnPCaMxrGq9dVWMI6WNNm0s
-         jm0Mt9/AvpcN+w6NQEKxwCZYvjHwoG1Q92zxCu8cLiBTRQR9CP2H1VuZxYoV8TP2vEyx
-         U8qg==
-X-Gm-Message-State: ACrzQf3YKo4XgRuCYElQGBnntoEys1t0J47+n4Tn3GFGxrNWvAz1RgqN
-	WJ8hWgspQRzpK7iustGZ+PqHEPmC3gnUpel+8hQaPTY34YTfs4W4K3uCFJfQj/2ALbj78HDlIU0
-	yYnXYIkA1nmEHtQASCQRSj0X/JuSONhWJajo=
-X-Received: by 2002:a63:441b:0:b0:439:103b:25a4 with SMTP id r27-20020a63441b000000b00439103b25a4mr8333423pga.487.1664561103382;
-        Fri, 30 Sep 2022 11:05:03 -0700 (PDT)
-X-Google-Smtp-Source: AMsMyM6b1ouyfLuEztIH+bYQVYSRGZ1SKIxKxaYCLqII8FgXgPp8q1JeSqPTkwQHItnnMNxorMLaAQsJfA8bwru4pYo=
-X-Received: by 2002:a63:441b:0:b0:439:103b:25a4 with SMTP id
- r27-20020a63441b000000b00439103b25a4mr8333374pga.487.1664561102607; Fri, 30
- Sep 2022 11:05:02 -0700 (PDT)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date;
+        bh=OSv7SDIGCVEG314+BzEZq4WXeWqQBm4mHIqqx0BP8u0=;
+        b=BnaUr0ZQXzIk5nUYi1j0Qy4SRRdd3Z2UpNNbAExFIDQrwoNezjHlL3QyjLgdy976tZ
+         TKGd7cTFlBZc4C8P5dvNy60a9vfborW0fAGjuIq7+BvUbqpQAV6VkENdoKxkMnjFDxkL
+         sl3znSrLgyykLgowfRd3Qz6CWpdbTVeUsUTCJf0fDDw3/Gw2phAu2sHg/2Er2noaqJVZ
+         OILcxg4J3U3d7CybUJSZXeDjg4bMMM6p1leT8cKBHrJCa/KRlsnDTsLCUSF+hxRA0sQv
+         ULg7XtxLEXVVjhut+teTaOKb0gYC+G+Y+G8AEilGDC3V/BJyCQTJ0n7SWd4aFbW9eVqo
+         xm8w==
+X-Gm-Message-State: ACrzQf38hPiUeQPnbYJUcW1zAyBzoLEjA04A9urcaRwevBRHQtmNreMx
+	+ninMH5cBCAcrEFXHxjCBMc=
+X-Google-Smtp-Source: AMsMyM7bN9tAhIY4k9a7/S9pez9PmFy400BkzIrhaakxm4+6Obe+6Nd6DZjTA5R0T/f/fCPIEXJ/tQ==
+X-Received: by 2002:a17:902:a707:b0:178:bd1e:e8be with SMTP id w7-20020a170902a70700b00178bd1ee8bemr11997820plq.167.1664597493786;
+        Fri, 30 Sep 2022 21:11:33 -0700 (PDT)
+Received: from debian.me (subs02-180-214-232-5.three.co.id. [180.214.232.5])
+        by smtp.gmail.com with ESMTPSA id z186-20020a6265c3000000b0055fc0a132aasm175757pfb.92.2022.09.30.21.11.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Sep 2022 21:11:32 -0700 (PDT)
+Received: by debian.me (Postfix, from userid 1000)
+	id 831731005BB; Sat,  1 Oct 2022 11:11:29 +0700 (WIB)
+Date: Sat, 1 Oct 2022 11:11:28 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Quan Nguyen <quan@os.amperecomputing.com>
+Subject: Re: [PATCH v9 6/9] docs: misc-devices: (smpro-misc) Add documentation
+Message-ID: <Yze98CgmGuNA0uGr@debian.me>
+References: <20220929094321.770125-1-quan@os.amperecomputing.com>
+ <20220929094321.770125-7-quan@os.amperecomputing.com>
 MIME-Version: 1.0
-From: "Havaligi, Mruthyunjaya Rao (Jay)" <mruthyunjaya.rao.havaligi@verizon.com>
-Date: Fri, 30 Sep 2022 14:04:50 -0400
-Message-ID: <CAO4fCV5bieMHTmcO=G0zWR26B1kJ9U=H3HUpNpNWh+VN7BOsbg@mail.gmail.com>
-Subject: How to stream Name and Reading using streaming telemetry
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="0000000000003a754305e9e8d564"
-X-mailroute: internal
-X-Proofpoint-ORIG-GUID: n5Jo_KntThS92KI179XPDZMz00EKW7tX
-X-Proofpoint-GUID: n5Jo_KntThS92KI179XPDZMz00EKW7tX
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="zsOt5hDHQ+A0q34n"
+Content-Disposition: inline
+In-Reply-To: <20220929094321.770125-7-quan@os.amperecomputing.com>
 X-Mailman-Approved-At: Mon, 03 Oct 2022 18:17:26 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -79,122 +81,290 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, Jean Delvare <jdelvare@suse.com>, Phong Vo <phong@os.amperecomputing.com>, Arnd Bergmann <arnd@arndb.de>, Jonathan Corbet <corbet@lwn.net>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Dragan Cvetic <dragan.cvetic@xilinx.com>, Lee Jones <lee@kernel.org>, linux-doc@vger.kernel.org, linux-kernel@vger.kernel.org, thang@os.amperecomputing.com, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Derek Kiernan <derek.kiernan@xilinx.com>, Open Source Submission <patches@amperecomputing.com>, Thu Nguyen <thu@os.amperecomputing.com>, Guenter Roeck <linux@roeck-us.net>, macro@orcam.me.uk
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000003a754305e9e8d564
-Content-Type: text/plain; charset="UTF-8"
+
+--zsOt5hDHQ+A0q34n
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+On Thu, Sep 29, 2022 at 04:43:18PM +0700, Quan Nguyen wrote:
+> Adds documentation for the Ampere(R)'s Altra(R) SMpro misc driver.
+>=20
 
-I am trying to setup streaming telemetry on OpenBmc and I am not able to
-create a metric report if I use a string value as part of the metric report
-definition as shown below:
+s/Adds/Add/
 
+> Signed-off-by: Thu Nguyen <thu@os.amperecomputing.com>
+> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
 
-      "@odata.id": "/redfish/v1/Chassis/AC_Baseboard/Power#/Voltages/16",
-      "@odata.type": "#Power.v1_0_0.Voltage",
-      "LowerThresholdCritical": 0.729,
-      "LowerThresholdNonCritical": 0.752,
-      "MaxReadingRange": 2.4140596060291633,
-      "MemberId": "PVCCINFAON_CPU2",
-      "MinReadingRange": 0.0,
-      "Name": "PVCCINFAON CPU2",
-      "ReadingVolts": 1.0583,
+Does this patch originally authored by Thu? If so, add From: line before
+the patch description.
 
-I am trying to stream the orange fields together with the metric report def
-below:
+> diff --git a/Documentation/misc-devices/index.rst b/Documentation/misc-de=
+vices/index.rst
+> index b74b3b34a235..b40cd1b402f7 100644
+> --- a/Documentation/misc-devices/index.rst
+> +++ b/Documentation/misc-devices/index.rst
+> @@ -28,6 +28,7 @@ fit into other categories.
+>     oxsemi-tornado
+>     pci-endpoint-test
+>     smpro-errmon
+> +   smpro-misc
+>     spear-pcie-gadget
+>     uacce
+>     xilinx_sdfec
+> diff --git a/Documentation/misc-devices/smpro-misc.rst b/Documentation/mi=
+sc-devices/smpro-misc.rst
+> new file mode 100644
+> index 000000000000..d21be4a09e69
+> --- /dev/null
+> +++ b/Documentation/misc-devices/smpro-misc.rst
+> @@ -0,0 +1,82 @@
+> +.. SPDX-License-Identifier: GPL-2.0-only
+> +
+> +Kernel driver Ampere(R) Altra(R) SMpro miscellaneous
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D
+> +
+> +Supported chips:
+> +
+> +  * Ampere(R) Altra(R)
+> +
+> +    Prefix: 'smpro'
+> +
+> +    Reference: Altra SoC BMC Interface Specification
+> +
+> +Author: Thu Nguyen <thu@os.amperecomputing.com>
+> +
+> +Description
+> +-----------
+> +
+> +This driver support the monitoring and configuration of various miscella=
+neous
+> +data provided by Ampere(R) Altra(R) SMpro processor.
+> +At this time, these include:
+> +
+> +  * Reading Boot Progress information
+> +  * Configuring SoC Power Limit
+> +
+> +Sysfs entries
+> +-------------
+> +
+> +1) Boot progress
+> +
+> +SMpro misc driver creates the sysfs files ``boot_progress``.
+> +The format of ``boot_progress`` file is as below::
+> +
+> +<boot stage><boot status><boot progress>
+> +
+> +Where:
+> +
+> +* Boot stage::
+> +
+> +    0: SMpro firmware booting.
+> +    1: PMpro firmware booting.
+> +    2: ATF BL1 firmware booting.
+> +    3: DDR initialization.
+> +    4: DDR training report status.
+> +    5: ATF BL2 firmware booting.
+> +    6: ATF BL31 firmware booting.
+> +    7: ATF BL32 firmware booting.
+> +    8: UEFI firmware booting.
+> +    9: OS booting.
+> +
+> +* Boot status::
+> +
+> +    0: Not started.
+> +    1: Started.
+> +    2: Complete without error.
+> +    3: Failure.
+> +
+> +* boot progress: 32 bits boot progress code
+> +
+> +The sysfs ``boot_progress`` only reports the boot state when the host is=
+ booting.
+> +If the host is already booted, it returns latest state.
+> +
+> +Example::
+> +
+> +    #cat boot_progress
+> +    0102808454A8
+> +
+> +2) SoC Power Limit
+> +
+> +SMpro misc driver creates the sysfs file ``soc_power_limit`` to get/set =
+the SoC Power Limit.
+> +
+> +Reading this sysfs return the current setting of SoC Power Limit (W) in =
+decimal string.
+> +Writing the desired value in decimal string to set the SoC Power Limit i=
+n Watt (W).
+> +The range of SoC Power Limit is 90-500(W) and will be ignored if out of =
+range.
+> +
+> +Example::
+> +
+> +    #cat soc_power_limit
+> +    90
+> +    #echo 95 > soc_power_limit
+> +    #cat soc_power_limit
+> +    95
 
- POST https://$BMCIP/redfish/v1/TelemetryService/MetricReportDefinitions -H
-"Content-Type: application/json"  -d
-'{"Id":"Temperatures","Metrics":[{"MetricId":"tempeadings","MetricPropertie=
-s":["/redfish/v1/Chassis/AC_Baseboard/Thermal#/Temperatures/1/Name","/redfi=
-sh/v1/Chassis/AC_Baseboard/Thermal#/Temperatures/1/ReadingCelsius"]}],"Metr=
-icReportDefinitionType":"Periodic","ReportActions":["RedfishEvent"],"Schedu=
-le":{"RecurrenceInterval":"PT0H5M0S"}}'
-{
-  "MetricProperties/0@Message.ExtendedInfo": [
-    {
-      "@odata.type": "#Message.v1_1_1.Message",
-      "Message": "The value
-/redfish/v1/Chassis/AC_Baseboard/Thermal#/Temperatures/1/Name for the
-property MetricProperties/0 is not in the list of acceptable values.",
-      "MessageArgs": [
-        "/redfish/v1/Chassis/AC_Baseboard/Thermal#/Temperatures/1/Name",
-        "MetricProperties/0"
-      ],
-      "MessageId": "Base.1.8.1.PropertyValueNotInList",
-      "MessageSeverity": "Warning",
-      "Resolution": "Choose a value from the enumeration list that the
-implementation can support and resubmit the request if the operation
-failed."
-    }
-  ]
+The documentation above can be improved (both grammatical and
+formatting):
 
-The metric report is created if I remove the Name field. The issue is that
-without the name of the sensor, the collecting system will not have any way
-to associate the sensor name and its value. How do I get this working?
+---- >8 ----
 
+diff --git a/Documentation/misc-devices/smpro-misc.rst b/Documentation/misc=
+-devices/smpro-misc.rst
+index d21be4a09e69c4..f33466152ac402 100644
+--- a/Documentation/misc-devices/smpro-misc.rst
++++ b/Documentation/misc-devices/smpro-misc.rst
+@@ -7,76 +7,77 @@ Supported chips:
+=20
+   * Ampere(R) Altra(R)
+=20
+-    Prefix: 'smpro'
++    Prefix: ``smpro``
+=20
+-    Reference: Altra SoC BMC Interface Specification
++    Reference: `Altra SoC BMC Interface Specification`
+=20
+ Author: Thu Nguyen <thu@os.amperecomputing.com>
+=20
+ Description
+ -----------
+=20
+-This driver support the monitoring and configuration of various miscellane=
+ous
+-data provided by Ampere(R) Altra(R) SMpro processor.
+-At this time, these include:
++The smpro-misc driver supports monitoring and configuration of various
++miscellaneous data provided by Ampere(R) Altra(R) SMpro processor.
++Currently, the driver supports:
+=20
+-  * Reading Boot Progress information
+-  * Configuring SoC Power Limit
++  * reading boot progress information
++  * configuring SoC power limit
+=20
+ Sysfs entries
+ -------------
+=20
+ 1) Boot progress
+=20
+-SMpro misc driver creates the sysfs files ``boot_progress``.
+-The format of ``boot_progress`` file is as below::
++   The driver creates ``boot_progress`` sysfs file. Its format is described
++   as::
+=20
+-<boot stage><boot status><boot progress>
++     <boot stage><boot status><boot progress>
+=20
+-Where:
++   where:
+=20
+-* Boot stage::
++   * ``<boot stage>`` can be:
+=20
+-    0: SMpro firmware booting.
+-    1: PMpro firmware booting.
+-    2: ATF BL1 firmware booting.
+-    3: DDR initialization.
+-    4: DDR training report status.
+-    5: ATF BL2 firmware booting.
+-    6: ATF BL31 firmware booting.
+-    7: ATF BL32 firmware booting.
+-    8: UEFI firmware booting.
+-    9: OS booting.
++     * 0: SMpro firmware booting.
++     * 1: PMpro firmware booting.
++     * 2: ATF BL1 firmware booting.
++     * 3: DDR initialization.
++     * 4: DDR training report status.
++     * 5: ATF BL2 firmware booting.
++     * 6: ATF BL31 firmware booting.
++     * 7: ATF BL32 firmware booting.
++     * 8: UEFI firmware booting.
++     * 9: OS booting.
+=20
+-* Boot status::
++  * ``<boot status>`` can be:
+=20
+-    0: Not started.
+-    1: Started.
+-    2: Complete without error.
+-    3: Failure.
++     * 0: Not started.
++     * 1: Started.
++     * 2: Complete without error.
++     * 3: Failure.
+=20
+-* boot progress: 32 bits boot progress code
++  * ``<boot progress>``: 32-bit boot progress code
+=20
+-The sysfs ``boot_progress`` only reports the boot state when the host is b=
+ooting.
+-If the host is already booted, it returns latest state.
++  The sysfs file  only reports the boot state when the host is booting. If
++  the host is already booted, it returns the latest state.
+=20
+-Example::
++  Example::
+=20
+     #cat boot_progress
+     0102808454A8
+=20
+-2) SoC Power Limit
++2) SoC power limit
+=20
+-SMpro misc driver creates the sysfs file ``soc_power_limit`` to get/set th=
+e SoC Power Limit.
++   The driver creates ``soc_power_limit`` sysfs file to get/set the SoC
++   power limit.
+=20
+-Reading this sysfs return the current setting of SoC Power Limit (W) in de=
+cimal string.
+-Writing the desired value in decimal string to set the SoC Power Limit in =
+Watt (W).
+-The range of SoC Power Limit is 90-500(W) and will be ignored if out of ra=
+nge.
++   Reading the file returns the current limit. Write the desired value in
++   decimal to set the limit (in watts).  The valid limit range is 90-500 W.
++   If the value is out of range, it will be ignored.
+=20
+-Example::
++   Example::
+=20
+-    #cat soc_power_limit
+-    90
+-    #echo 95 > soc_power_limit
+-    #cat soc_power_limit
+-    95
++     #cat soc_power_limit
++     90
++     #echo 95 > soc_power_limit
++     #cat soc_power_limit
++     95
 
-Thanks,
-Jay
+Thanks.
 
---0000000000003a754305e9e8d564
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--=20
+An old man doll... just what I always wanted! - Clara
 
-<div dir=3D"ltr">Hi,<div><br></div><div>I am trying to setup=C2=A0streaming=
- telemetry on OpenBmc and I am not able to create a metric report if I use =
-a string value as part of the metric report definition as shown below:<div =
-dir=3D"ltr" class=3D"gmail_signature" data-smartmail=3D"gmail_signature"><d=
-iv dir=3D"ltr"><div><div></div></div></div></div><input name=3D"virtru-meta=
-data" type=3D"hidden" value=3D"{&quot;email-policy&quot;:{&quot;disableCopy=
-Paste&quot;:false,&quot;disablePrint&quot;:false,&quot;disableForwarding&qu=
-ot;:false,&quot;enableNoauth&quot;:false,&quot;expandedWatermarking&quot;:f=
-alse,&quot;expires&quot;:false,&quot;sms&quot;:false,&quot;expirationNum&qu=
-ot;:1,&quot;expirationUnit&quot;:&quot;days&quot;,&quot;isManaged&quot;:fal=
-se,&quot;persistentProtection&quot;:false},&quot;attachments&quot;:{},&quot=
-;compose-id&quot;:&quot;4&quot;,&quot;compose-window&quot;:{&quot;secure&qu=
-ot;:false}}"></div><div><br></div><div><br class=3D"gmail-Apple-interchange=
--newline">=C2=A0 =C2=A0 =C2=A0 &quot;@<a href=3D"http://odata.id/" target=
-=3D"_blank">odata.id</a>&quot;: &quot;/redfish/v1/Chassis/AC_Baseboard/Powe=
-r#/Voltages/16&quot;,<br>=C2=A0 =C2=A0 =C2=A0 &quot;@odata.type&quot;: &quo=
-t;#Power.v1_0_0.Voltage&quot;,<br>=C2=A0 =C2=A0 =C2=A0 &quot;LowerThreshold=
-Critical&quot;: 0.729,<br>=C2=A0 =C2=A0 =C2=A0 &quot;LowerThresholdNonCriti=
-cal&quot;: 0.752,<br>=C2=A0 =C2=A0 =C2=A0 &quot;MaxReadingRange&quot;: 2.41=
-40596060291633,<br>=C2=A0 =C2=A0 =C2=A0 &quot;MemberId&quot;: &quot;PVCCINF=
-AON_CPU2&quot;,<br>=C2=A0 =C2=A0 =C2=A0 &quot;MinReadingRange&quot;: 0.0,<b=
-r>=C2=A0 =C2=A0 =C2=A0 &quot;<font color=3D"#ff9900">Name</font>&quot;: &qu=
-ot;PVCCINFAON CPU2&quot;,<br>=C2=A0 =C2=A0 =C2=A0 &quot;<font color=3D"#ff9=
-900">ReadingVolts</font>&quot;: 1.0583,<br></div><div><br></div><div>I am t=
-rying to stream the orange fields together with the metric report=C2=A0def =
-below:</div><div><br></div><div>=C2=A0POST https://$BMCIP/redfish/v1/Teleme=
-tryService/MetricReportDefinitions -H &quot;Content-Type: application/json&=
-quot; =C2=A0-d &#39;{&quot;Id&quot;:&quot;Temperatures&quot;,&quot;Metrics&=
-quot;:[{&quot;MetricId&quot;:&quot;tempeadings&quot;,&quot;MetricProperties=
-&quot;:[&quot;/redfish/v1/Chassis/AC_Baseboard/Thermal#/Temperatures/1/Name=
-&quot;,&quot;/redfish/v1/Chassis/AC_Baseboard/Thermal#/Temperatures/1/Readi=
-ngCelsius&quot;]}],&quot;MetricReportDefinitionType&quot;:&quot;Periodic&qu=
-ot;,&quot;ReportActions&quot;:[&quot;RedfishEvent&quot;],&quot;Schedule&quo=
-t;:{&quot;RecurrenceInterval&quot;:&quot;PT0H5M0S&quot;}}&#39;<br>{<br>=C2=
-=A0 &quot;MetricProperties/0@Message.ExtendedInfo&quot;: [<br>=C2=A0 =C2=A0=
- {<br>=C2=A0 =C2=A0 =C2=A0 &quot;@odata.type&quot;: &quot;#Message.v1_1_1.M=
-essage&quot;,<br>=C2=A0 =C2=A0 =C2=A0 &quot;Message&quot;: &quot;The value =
-/redfish/v1/Chassis/AC_Baseboard/Thermal#/Temperatures/1/Name for the prope=
-rty MetricProperties/0 is not in the list of acceptable values.&quot;,<br>=
-=C2=A0 =C2=A0 =C2=A0 &quot;MessageArgs&quot;: [<br>=C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 &quot;/redfish/v1/Chassis/AC_Baseboard/Thermal#/Temperatures/1/Name&quo=
-t;,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;MetricProperties/0&quot;<br>=C2=A0=
- =C2=A0 =C2=A0 ],<br>=C2=A0 =C2=A0 =C2=A0 &quot;MessageId&quot;: &quot;Base=
-.1.8.1.PropertyValueNotInList&quot;,<br>=C2=A0 =C2=A0 =C2=A0 &quot;MessageS=
-everity&quot;: &quot;Warning&quot;,<br>=C2=A0 =C2=A0 =C2=A0 &quot;Resolutio=
-n&quot;: &quot;Choose a value from the enumeration list that the implementa=
-tion can support and resubmit the request if the operation failed.&quot;<br=
->=C2=A0 =C2=A0 }<br>=C2=A0 ]<br></div><div><br></div><div>The=C2=A0metric r=
-eport is created if I remove the Name field. The issue is that without the =
-name of the sensor, the collecting system will not have any way to associat=
-e the sensor name and its value. How do I get this working?</div><div><br><=
-/div><div><br></div><div>Thanks,</div><div>Jay</div><div><br></div></div>
+--zsOt5hDHQ+A0q34n
+Content-Type: application/pgp-signature; name="signature.asc"
 
---0000000000003a754305e9e8d564--
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCYze96AAKCRD2uYlJVVFO
+owcpAP0SzTkhr29W2c7tfiTwIYHWalYjmZY5EzVRjxQmi/J9sAD/WNg/Verj9bSP
+Po+V7JVmI96xpkLGdOLqpermfOky3Q8=
+=qEoH
+-----END PGP SIGNATURE-----
+
+--zsOt5hDHQ+A0q34n--
