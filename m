@@ -1,70 +1,47 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4495E5F207E
-	for <lists+openbmc@lfdr.de>; Sun,  2 Oct 2022 00:55:43 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 583545F2384
+	for <lists+openbmc@lfdr.de>; Sun,  2 Oct 2022 16:13:56 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Mg2WJ5qqDz3bln
-	for <lists+openbmc@lfdr.de>; Sun,  2 Oct 2022 09:55:40 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=YT/Ih2Hp;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MgQtn6zcNz3blV
+	for <lists+openbmc@lfdr.de>; Mon,  3 Oct 2022 01:13:53 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.68.75; helo=ams.source.kernel.org; envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=YT/Ih2Hp;
-	dkim-atps=neutral
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized) smtp.mailfrom=nuvoton.com (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
+Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mg2Vn2N61z2xBV;
-	Sun,  2 Oct 2022 09:55:13 +1100 (AEDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ams.source.kernel.org (Postfix) with ESMTPS id BEB5EB80C01;
-	Sat,  1 Oct 2022 22:55:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D07AEC433D6;
-	Sat,  1 Oct 2022 22:55:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1664664906;
-	bh=XXrUTnO/jGDvrU3xZMl4EIcYRbQHHkKeA6gIDbBw3ts=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YT/Ih2HpM9PZUXELCietG1opxKRPTU/fq3SfDqEG7oyuI+ujvcG64lrsq4Vjpkcjf
-	 sAz4X5c7Wn8u6VJFm5dqoqXdbLNIyWfrXTF4Mf05DHPZej4MWnEL/tIVrWDTz/K8zk
-	 lCbV4kqwGgL8mfpED1TqVKUNEDNfk9uv89KNpH8BKG1YFKBFqL1IiWKOA/I7y2tD/m
-	 gmCONOOBIy2RmoEJ9GRNdski5/c1Bc71NR/LGe53OPHVyCX11duNZ/OJmJqrpvu6cC
-	 JY6lgmXKu+MsxF0JbMf9XmeJAPySRFVlQaFfXrhNRTgFU5SQjGI1PTjAMJlspTH6xx
-	 jofzzx5igcGug==
-Date: Sun, 2 Oct 2022 00:55:02 +0200
-From: Wolfram Sang <wsa@kernel.org>
-To: Quan Nguyen <quan@os.amperecomputing.com>
-Subject: Re: [PATCH v9 3/3] i2c: aspeed: Assert NAK when slave is busy
-Message-ID: <YzjFRrCRZBAaSRBL@shikoro>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
-	Quan Nguyen <quan@os.amperecomputing.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Corey Minyard <minyard@acm.org>, Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-	Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
-	openipmi-developer@lists.sourceforge.net,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-i2c@vger.kernel.org, openbmc@lists.ozlabs.org,
-	linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
-	Open Source Submission <patches@amperecomputing.com>,
-	Phong Vo <phong@os.amperecomputing.com>,
-	thang@os.amperecomputing.com
-References: <20220929080326.752907-1-quan@os.amperecomputing.com>
- <20220929080326.752907-4-quan@os.amperecomputing.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MgQtV1Rs4z2xmw
+	for <openbmc@lists.ozlabs.org>; Mon,  3 Oct 2022 01:13:34 +1100 (AEDT)
+Received: from NTILML01.nuvoton.com (ntil-fw [212.199.177.25])
+	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 292EDLET028124
+	for <openbmc@lists.ozlabs.org>; Sun, 2 Oct 2022 17:13:22 +0300
+Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTILML01.nuvoton.com
+ (10.190.1.46) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Sun, 2 Oct
+ 2022 17:13:20 +0300
+Received: from NTHCCAS04.nuvoton.com (10.1.8.29) by NTHCCAS01.nuvoton.com
+ (10.1.8.28) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2375.7; Sun, 2 Oct 2022
+ 22:13:17 +0800
+Received: from taln60.nuvoton.co.il (10.191.1.180) by NTHCCAS04.nuvoton.com
+ (10.1.12.25) with Microsoft SMTP Server id 15.1.2176.2 via Frontend
+ Transport; Sun, 2 Oct 2022 22:13:16 +0800
+Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
+	id 0C381637C4; Sun,  2 Oct 2022 17:13:16 +0300 (IDT)
+From: Tomer Maimon <tmaimon77@gmail.com>
+To: <mturquette@baylibre.com>, <sboyd@kernel.org>, <avifishman70@gmail.com>,
+        <tali.perry1@gmail.com>, <joel@jms.id.au>, <venture@google.com>,
+        <yuenn@google.com>, <benjaminfair@google.com>
+Subject: [PATCH v12 0/1] Introduce Nuvoton Arbel NPCM8XX BMC SoC
+Date: Sun, 2 Oct 2022 17:13:12 +0300
+Message-ID: <20221002141313.179514-1-tmaimon77@gmail.com>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="IxEzN7Ip5LYkgIP5"
-Content-Disposition: inline
-In-Reply-To: <20220929080326.752907-4-quan@os.amperecomputing.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,43 +53,120 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, thang@os.amperecomputing.com, linux-aspeed@lists.ozlabs.org, Corey Minyard <minyard@acm.org>, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org, Phong Vo <phong@os.amperecomputing.com>, Brendan Higgins <brendan.higgins@linux.dev>, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, openipmi-developer@lists.sourceforge.net, Open Source Submission <patches@amperecomputing.com>, linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org
+Cc: openbmc@lists.ozlabs.org, Tomer Maimon <tmaimon77@gmail.com>, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This patchset adds clock support for the Nuvoton 
+Arbel NPCM8XX Board Management controller (BMC) SoC family.
+ 
+This patchset cover letter is based from the initial support for NPCM8xx BMC to
+keep tracking the version history.
+ 
+all the other initial support patches had been applied to Linux kernel 6.0.
 
---IxEzN7Ip5LYkgIP5
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+This patchset was tested on the Arbel NPCM8XX evaluation board.
 
+Addressed comments from:
+ - Paul Menzel: https://www.spinics.net/lists/linux-clk/msg75413.html
 
-> +		if (ret == -EBUSY)
+Changes since version 11:
+ - NPCM8XX clock driver
+	- Modify Kconfig help.
+	- Modify loop variable to unsigned int.
 
-Since we documented this:
+Changes since version 10:
+ - NPCM8XX clock driver
+	- Fix const warning.
 
-"+  'ret': 0 if the backend is ready, otherwise some errno"
+Changes since version 9:
+ - NPCM8XX clock driver
+	- Move configuration place.
+	- Using clk_parent_data instead of parent_name
+	- using devm_ioremap instead of ioremap. deeply sorry, I know we had
+	 a long discussion on what should the driver use, from other examples 
+	 (also in other clock drivers) I see the combination of 
+	 platform_get_resource and devm_ioremap are commonly used and it answer
+	 the reset and clock needs.
 
-the code above should be '(ret < 0)'
+Changes since version 8:
+ - NPCM8XX clock driver
+	- Move configuration place.
+	- Add space before and aftre '{' '}'.
+	- Handle devm_of_clk_add_hw_provider function error.
 
+Changes since version 7:
+ - NPCM8XX clock driver
+	- The clock and reset registers using the same memory region, 
+	  due to it the clock driver should claim the ioremap directly 
+	  without checking the memory region.
 
---IxEzN7Ip5LYkgIP5
-Content-Type: application/pgp-signature; name="signature.asc"
+Changes since version 6:
+ - NPCM reset driver
+	- Modify warning message.
+ - dt-bindings: serial: 8250: Add npcm845 compatible string patch accepted, due
+   to it the patch removed from the patchset.
 
------BEGIN PGP SIGNATURE-----
+Changes since version 5:
+ - NPCM8XX clock driver
+	- Remove refclk if devm_of_clk_add_hw_provider function failed.
+ - NPCM8XX clock source driver
+	- Remove NPCM8XX TIMER_OF_DECLARE support, using the same as NPCM7XX.
 
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmM4xUYACgkQFA3kzBSg
-KbZdkhAAqUK8dp016LtVTkYRjmSJrym+/WMeAvZxlaB6ZEcEyi3XNOWPIt3v02lQ
-8zs6VMgNd4FwbNmdaRxmsc8kNZEYmUcY5oPhkugt/6QcEKYxcjaqEdn26Rd26Ro8
-C01y93rYoDlPfBvAxxnsdnUtmyeKEz653skr5v7W3HGnUyEhq3CpQfBFVEmhb5dQ
-HpCYACbDMG6Sq3g5PxJdRxAbFfogiWDBfuay86w7D1UYl2h8qG8c3IR/pn35xDPO
-n33QwX3XoNCRceYOulMJ49ZSBI+Ikb4MgX00SKxhuUCdCpC8OGVHS7fcmUMnyIh8
-9W2RDloFDGZIbnPtvB7XmpC3Pmzf3atkGvZxHNpw6KFJdxvBONObgkE7+lPLzO6h
-I2I+vbdkFQeJ8b9xyncnaDH9Kil10BE/DPBRQd9H8Okh+YnzitNjcXNOCehZFU4z
-aRaYJQh3VY5d+/vUqQU0xj35TF7IndzgiMM2HX/XxL08QqNmqpbb24ush/U/Sa26
-WiPaBbDF8O1wCLEMqUjYpbRecP8vJNAWF3uzRUrBjXWVYgMerL2o9Q5MHChi0Ng1
-/RBW/2VZPSJXSQrcGv9EBXKTbjEmkrkFRznjLj/IxPye53k4TnzOqqhyfhridGBC
-VXc1UXhtbxn/ycsVNy3FU2JXf6np6S2f4Xso8uFyTUsshK5vtDI=
-=e9CN
------END PGP SIGNATURE-----
+Changes since version 4:
+ - NPCM8XX clock driver
+	- Use the same quote in the dt-binding file.
 
---IxEzN7Ip5LYkgIP5--
+Changes since version 3:
+ - NPCM8XX clock driver
+	- Rename NPCM8xx clock dt-binding header file.
+	- Remove unused structures.
+	- Improve Handling the clocks registration.
+ - NPCM reset driver
+	- Add ref phandle to dt-binding.
+
+Changes since version 2:
+ - Remove NPCM8xx WDT compatible patch.
+ - Remove NPCM8xx UART compatible patch.
+ - NPCM8XX clock driver
+	- Add debug new line.
+	- Add 25M fixed rate clock.
+	- Remove unused clocks and clock name from dt-binding.
+ - NPCM reset driver
+	- Revert to npcm7xx dt-binding.
+	- Skip dt binding quotes.
+	- Adding DTS backward compatibility.
+	- Remove NPCM8xx binding include file.
+	- Warp commit message.
+- NPCM8XX device tree:
+	- Remove unused clock nodes (used in the clock driver)
+	- Modify gcr and rst node names.
+
+Changes since version 1:
+ - NPCM8XX clock driver
+	- Modify dt-binding.
+	- Remove unsed definition and include.
+	- Include alphabetically.
+	- Use clock devm.
+ - NPCM reset driver
+	- Modify dt-binding.
+	- Modify syscon name.
+	- Add syscon support to NPCM7XX dts reset node.
+	- use data structure.
+ - NPCM8XX device tree:
+	- Modify evb compatible name.
+	- Add NPCM7xx compatible.
+	- Remove disable nodes from the EVB DTS.
+
+Tomer Maimon (1):
+  clk: npcm8xx: add clock controller
+
+ drivers/clk/Kconfig       |   8 +
+ drivers/clk/Makefile      |   1 +
+ drivers/clk/clk-npcm8xx.c | 590 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 599 insertions(+)
+ create mode 100644 drivers/clk/clk-npcm8xx.c
+
+-- 
+2.33.0
+
