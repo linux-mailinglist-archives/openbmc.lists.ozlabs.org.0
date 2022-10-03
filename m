@@ -1,87 +1,138 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E3DE05F2515
-	for <lists+openbmc@lfdr.de>; Sun,  2 Oct 2022 21:12:18 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 989915F27A3
+	for <lists+openbmc@lfdr.de>; Mon,  3 Oct 2022 04:07:54 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MgYW45R1Zz3bsS
-	for <lists+openbmc@lfdr.de>; Mon,  3 Oct 2022 06:12:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Mgkkc3ZtHz3bmL
+	for <lists+openbmc@lfdr.de>; Mon,  3 Oct 2022 13:07:52 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=tA01ssaT;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=nGDDG6Pv;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=MVHD9lkz;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.24; helo=wout1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.93.121; helo=nam10-dm6-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=tA01ssaT;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=nGDDG6Pv;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=MVHD9lkz;
 	dkim-atps=neutral
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2121.outbound.protection.outlook.com [40.107.93.121])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MgYVZ0JZ9z3bP1
-	for <openbmc@lists.ozlabs.org>; Mon,  3 Oct 2022 06:11:48 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.west.internal (Postfix) with ESMTP id 0F1D332003CE;
-	Sun,  2 Oct 2022 15:11:44 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Sun, 02 Oct 2022 15:11:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm1; t=1664737904; x=1664824304; bh=6CHU0LMaDo
-	uzcTNPmfFtfspljWT13wvShhCV/mLjKBw=; b=tA01ssaTpewq76ugBjiE04usWp
-	jS59D7YmRV6TGFWf5eiBW+OtaNZRy1rnUlOBWDTqOpEEps+Z00takZjX68/TRJIZ
-	+9C/SckMgGqClxwOCL5U4h3yKJtcop92sTJL9hRFCE2KQnITdyBJviKi9dOJWKe2
-	gMmkxlA/G9zWuhdWxrsc9FA2cP2jHBPejv0GS7aPpyMqIQmC8caE+DzYvnNPYaDY
-	9RLD0wQDM6+d1DRXTFyCc7t+k4liSF9r4FdlN+Bkhe4CNCOEfi//lpSPwb7L85Sb
-	PVJVUGlgDpnz768pDFRAFjT/d6pdmq9CEhcCqdfeKztNL+IQbpmR0iIoUB1A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1664737904; x=1664824304; bh=6CHU0LMaDouzcTNPmfFtfspljWT1
-	3wvShhCV/mLjKBw=; b=nGDDG6PvwJDNzYFgU3fLETU46actdkbpLhxKjAaCzt06
-	JZhCwmSWG2sGDFEX1se+/xWximySS1AHXu8Wg6TyQeWZoyJriT70a4kilbQLJWDV
-	d6TGQ5fim/kl3J/EFd0tUgl9kOa2ZgGTNCqZeR8sffbB3vrLo6SwCTDpwinyqJRy
-	QaDM8GnT6fbUf979YXP3Om56wSh6LhBpMs8iQfdut39ywH+H21qvm786vtmJAnDB
-	2YY8RRaagIlhdTuP2+ZNenQ8Bi2fp6YK0x2fHqK3iF9End4ivr+JdpFIrZmt/2Yf
-	lqgVREv7B5SqFHRRZZndZw22rZ2mg8iCKj7YAlUyCA==
-X-ME-Sender: <xms:cOI5YxJjKEcovdaNjQwFNjGfaoYTbssaHcjR8XaWAwOLYj7Y7WU0og>
-    <xme:cOI5Y9J2ws3UE2-WjloGfuR7qOsYyBegFsA4_xCTNcqOrKxGQ3rYBuIUWiAu1Zc7w
-    arNZMO3_ve1ARWzKRc>
-X-ME-Received: <xmr:cOI5Y5ubhe8KQZIBTt2sJ4b6LphIoraxkOUG25VHi7-FAgK5vOVwzqOy7HYY68we6btYsiTewFRZGWAxJxmxceLJO4rzwm_Z>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfeehjedgudefgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enfghrlhcuvffnffculddvfedmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreer
-    tddtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkh
-    esshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepleekhefhffejffehhfeuheef
-    feekueetteduhfeugfevudevheehieeuhfejveejnecuffhomhgrihhnpehkvghrnhgvlh
-    drohhrghdpghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:cOI5YybvdycNBPvw0vDjJx5sJc5_1qfBHpB9W4i6sd5O6zmkmCajcQ>
-    <xmx:cOI5Y4a7ODZ0N7tVJXqpzHbLeoWLpj0SQrkCm4zDXODyyuGmLKpbgA>
-    <xmx:cOI5Y2DYEKPePE43Cre-tjdUB3ovsAVzyUpkrAj0Xqq6M5C8d41baA>
-    <xmx:cOI5YxBxksbhGHJ2UU8GvYxfqFp1e7wYHWht6j6PyHETeKuX4vx_xw>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 2 Oct 2022 15:11:43 -0400 (EDT)
-Date: Sun, 2 Oct 2022 14:11:42 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: George Liu <liuxiwei1013@gmail.com>
-Subject: Re: Enhanced sensor monitor
-Message-ID: <YznibmIQxFIRa+mf@heinlein>
-References: <CANFuQ7BJBX2dZyrYAvxfuZ2sjnWLR-iAbu6_iCQHBFg7--0X-A@mail.gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mgkk23y6nz2xKV;
+	Mon,  3 Oct 2022 13:07:20 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=KVUGOZA2Aj2BLlEsXeqPPukUv1B0k7gm6Xupia8A0cLFqVbxO72NRuJUT/Fp5hgA3Ad/2tIDqmeg/+k2leGkRE2kmK2a7Xn7b0MsAyTzhdoLYklOn6aj8JR4t44BLeZeHZsOMW48eNUf5u0xnSwIvtqXT85/vBgxKoPps5OS95+6uTv5NSihSACsyJQf9SjGTlZ3skNc92AgPuCVmXzfN6A0EQs6l4zcubkylvWMas9nporPpuNTTthuhk38XMVQjVYmyPudl/jDf1PvgcwWktEXkVDoueU8RTZuuYda1953FlGTQlGUNn4VxH3+NyqiUtL2EDLALXxCyhqA056tng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=DJF7lEU29hulWOvjccvil+fYO0JjpejxOmTyumoNdbo=;
+ b=AGTdC/GTAxqBekv6M/djp7t97yJkJaitcCEwxC9sgwuen6boetBp5OBM9IvquELQGkYgqKe/A3J64+ms4CA85xwwBc5ZAWlhxKU0NIMnQ97rSBO9LiJ3Mr6h4Bg6jdxsgxEFQqxdMqeBddDLh5lYguDraV7W6S4j8GolniW5a1glk6nwCOt7xaZBx3Trf8U7MbTTRIyuL5uwuS8Ycy44xZlMf5tkFa0y7LQnkbXBAuUzaXL8KWn66UqcQfjLTlkWwZHQAaSpjp8Y0dTpVsVct2JF4fD5ye7N0p3k/aF4OxEuLf37N6isq7FmsWU24+GsJ5o9PZ7VxAwPzMLvm8bfMA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=os.amperecomputing.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=DJF7lEU29hulWOvjccvil+fYO0JjpejxOmTyumoNdbo=;
+ b=MVHD9lkzP8dbRH5dSM9xKB4MN3+XJmWuV6ac7eSrbudv0RsKA505DPYIhY/1vbzSuxBibeqwzPS4U5iTg9zVzOT0hVQq1fQrUtWjGkQ5myq8l+TCdTPLxMGrfQMGSAFSGSNhcN6UXyp94px+XNfIpptCnReM0d8fctn4WBGBL9k=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
+Received: from SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24) by
+ MN2PR01MB5776.prod.exchangelabs.com (2603:10b6:208:191::17) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5676.17; Mon, 3 Oct 2022 02:06:58 +0000
+Received: from SJ0PR01MB7282.prod.exchangelabs.com
+ ([fe80::7d50:e907:8e2e:1ff0]) by SJ0PR01MB7282.prod.exchangelabs.com
+ ([fe80::7d50:e907:8e2e:1ff0%3]) with mapi id 15.20.5676.028; Mon, 3 Oct 2022
+ 02:06:57 +0000
+Message-ID: <b35f756d-08e7-6eed-5992-ad63ee419e1f@os.amperecomputing.com>
+Date: Mon, 3 Oct 2022 09:06:46 +0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.3.0
+Subject: Re: [PATCH v9 3/3] i2c: aspeed: Assert NAK when slave is busy
+Content-Language: en-CA
+To: Wolfram Sang <wsa@kernel.org>, Randy Dunlap <rdunlap@infradead.org>,
+ Corey Minyard <minyard@acm.org>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Brendan Higgins <brendan.higgins@linux.dev>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+ openipmi-developer@lists.sourceforge.net, devicetree@vger.kernel.org,
+ linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org,
+ openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
+ linux-aspeed@lists.ozlabs.org,
+ Open Source Submission <patches@amperecomputing.com>,
+ Phong Vo <phong@os.amperecomputing.com>, thang@os.amperecomputing.com
+References: <20220929080326.752907-1-quan@os.amperecomputing.com>
+ <20220929080326.752907-4-quan@os.amperecomputing.com>
+ <YzjFRrCRZBAaSRBL@shikoro>
+From: Quan Nguyen <quan@os.amperecomputing.com>
+In-Reply-To: <YzjFRrCRZBAaSRBL@shikoro>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SG2PR02CA0004.apcprd02.prod.outlook.com
+ (2603:1096:3:17::16) To SJ0PR01MB7282.prod.exchangelabs.com
+ (2603:10b6:a03:3f2::24)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="yvzBJjxpm3jzIuWL"
-Content-Disposition: inline
-In-Reply-To: <CANFuQ7BJBX2dZyrYAvxfuZ2sjnWLR-iAbu6_iCQHBFg7--0X-A@mail.gmail.com>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ0PR01MB7282:EE_|MN2PR01MB5776:EE_
+X-MS-Office365-Filtering-Correlation-Id: 1490bbca-1b1b-44cc-8ddd-08daa4e3f312
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 	fgsekCKofs+++yhDCMllUAGltlP4IMItFEhAImraOsg3FBdMdx1YTiuL3ESPkofEb8341n2KfQzFFbu/SdiMZWUfKNwJ7G0x76liEcCGlNP0C98KxhVXSgAGMTM07NbaJFbAl7OqjmS3YOARRvCnP2Cijk5PyRMFgbHARITLL4kXqoCiLqeuxKnWq99Abvaj1qgIIoL6coxl588R00tDkWm323GHR1HBsITvz63++fDHlCY/UV+I8hpQNRENuU2BE+/w7qrzn1W4/N4lP4UCi5S+ZP7G67FxWn6Rb74M2lkXCgpjx9NAL3gMAg+hZp0XdJoLZvVE81XAz81ydhwSgKJ3aybiqQ7tGngDBlIDQtNaghkSqZAuG9QPzmxTUrMXYZUTiekrxk6j4Ly7ZfBw8Vy/JMqqd+RShHekbig01TN0IXHNThC8Tm/nrHYP8LFcEvV8HhCRJL6LCx3LzSutIp+yMcwQX7uMW5ZZxltOzfbvZ8AlQ1MqjOiBuzkqD+wwfPriAGy2vFeB+qvrU/AjrhuOEhDfRHFCmh6elNag48r1/Uwe0Tu6wbMu9diULpJNeI0gHRP+ED+XTkjeAoGaaAlX7prlD/Y5we5XuKbwtFSbTkmMS/BBF53GRNCTFY+vhuKpvN5pQ7zuRKhFf2TJtDlQGMOQlN60qA5t/pMNH1pcw5+JJ+AdSPhM9RZeGAGDl85ucn6ee1ThXkqBlK/Vj3BZfRWiJq+wwqAsSIZw/NDJkaUBQkuBwd67OKEkDLSv8nvHfcUeP3+4uEGs3W2sgQ+gnLKNSDj7cXNr2aov7yfcSnJe7kr3Lo4ujXEVZ17U
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR01MB7282.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(39850400004)(376002)(346002)(366004)(136003)(396003)(451199015)(31686004)(2906002)(41300700001)(7416002)(8936002)(5660300002)(110136005)(478600001)(66556008)(66476007)(38100700002)(31696002)(38350700002)(86362001)(8676002)(6512007)(26005)(6666004)(2616005)(53546011)(52116002)(66946007)(6506007)(316002)(6636002)(6486002)(921005)(558084003)(186003)(83380400001)(43740500002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?WTlHbzZKWnVXdFZ5ZDlBbFcvR1lNekY4NVd3REl6cE1jR08rcGo2bGFneFZP?=
+ =?utf-8?B?ZTFrTy96Smc3UHFBU05OV1JxazZXT3dGT3IwS0p3RXo0RlpmWHZLOHR4OUg1?=
+ =?utf-8?B?VmlubFQ2M3hlcW5xc05EdnBiOWt1V1RJNU9YT3JsUkZRTHM5aVFrVDhxRTRG?=
+ =?utf-8?B?Ymp2YTFpb2NyaHcrdVFLVW5QVlVTU0RYSVFlay9JMzhrTmZVb05PTkR5NDVi?=
+ =?utf-8?B?MytKbCsvK0lzeHZ4SElvbi9WckFXMTBXU1o1dnFaZGx3Y2oxVHNSbVdtanpq?=
+ =?utf-8?B?VTFid3NjRnExR3c1Tk9rZjg0ZU0rQ0dXTHNpNXN1cG1ac2RrVWZmUTEwQStW?=
+ =?utf-8?B?aERRQ2I2a2NnclI4UnJHQXhSVS9CaHFBbStUQ2l3WUl6dklGWG9JK3d6RHha?=
+ =?utf-8?B?OWQwdWozVDRySTcwL1REZGozYW8xZ1F6c21EcFYvalYzMHJjclFjVHlHSXhV?=
+ =?utf-8?B?eUtBYVZpMzc4blNjNSt4RW1Takx3RXF6K0VackdZZjhCdktXTlN1VzZsOEhj?=
+ =?utf-8?B?K1pBNFdCeVllUTJ0bWU2dXZXcGx4eW1ENE5FZ1FhdTdZdjV6eEZLRGNnNmFK?=
+ =?utf-8?B?UThsQnNUQTVsaGlrS2RBUm14OTRhdHNLM1B2M0hMYWpYS0ZsSDF0UWo0STBs?=
+ =?utf-8?B?VjFOaEN5SEZoWW5lYm9JOEw3MWdpWExMNXdZQmg0ejkyd3d6OXFqcGh4NGxE?=
+ =?utf-8?B?cU8yV2ZrNFd6NTdLUnpEYlhjWUxuMzA0N0RrSFU5QUc3MU1hVUxyMlJDOHVR?=
+ =?utf-8?B?UzY0SW94MEJUdFdqTTVDZ2VTQ1N1QTJndklrUHc4SG9Md0gxV0ZQWFdJeHp1?=
+ =?utf-8?B?WjZCSjVsYnZ4VE9QL2JPWm9HOEtkUTd0Z04yT2hQMTFlckZ5dnlmdWx4ZEg2?=
+ =?utf-8?B?UjFFR3hZR3dRTjk2SEZ2SDByM0cvaEMxVWRNNGx3S3lDMXZEc0VKWndBUVBz?=
+ =?utf-8?B?TWRrS3dYL1dZZ0dEakg2Y3lvNVdERWdybDJCeWt0THZDQ2tBL3lWQUsyVnZr?=
+ =?utf-8?B?TWZ4WU5YaERpOUxvb05rTTJlRDVPOE11djFrTHBPMmVVVnkybG16M3FWQzZD?=
+ =?utf-8?B?cWR3QWFXT01rbnFFR0hVSExnWkJ5L1gzckNaQW1FVS9kbHIzTVJQeTdnL2hO?=
+ =?utf-8?B?bkFwb0Y5RDhWOTNnUEhJQXhVc1dka0J1RFczdFd2VlZHLzYzU21HaEd4M0Fs?=
+ =?utf-8?B?RFcyckxiYjJjeGVVQmtDSkY5MEtlUDd4aVM1YTBIRU8wT2RpL1BGWlZsd2pz?=
+ =?utf-8?B?WC9jKzkrSTcvcWR4RGVDdmkrOVVSQmRTNWRSZEkvVlIxNnE0cHNjdFRsS3NQ?=
+ =?utf-8?B?c1BQUDZTNVVHUE11L09NQW5FWHpRNk5Ec3I2WWVIOFpwTXRkZzltMXEyRHJh?=
+ =?utf-8?B?NXNYYVd3aEpQL2JNYTcyQWlyYjBWZytwQ1RLcW5OSWtjbnovUVNRQ2VqekRG?=
+ =?utf-8?B?OCtyTFVJdGUzSzdqSWgxVVpjbHN5eEFGOHFYcHRFcWFCVUd2d0N2eExLcUx6?=
+ =?utf-8?B?WWhhY3VicmJXQXBMT1AySHZER2VmL2lreG9FMlBPVUdkd09wdERiVDlhbVll?=
+ =?utf-8?B?MndpcGVhV0pnbWo0WmtoeHIwL2J6MWZHRzhpMld1eFBzRW0yQnc5Q2N5RGtL?=
+ =?utf-8?B?b1kxcjVhOHAyQ1JnY1ZBN3BqSitQb3hwTUwzbzJkVzI5RlRLMDdPc2FXdW5s?=
+ =?utf-8?B?YkhCNlZDQjhPZTRkUUFkM3JnaHZQK0h2ajlVelAxZGlGekV0aHJabmxPZnd5?=
+ =?utf-8?B?Nkwwb2hBY2Z5bUF5akVleVN3eU4zRmZFMFh0Q1BSaUtEaHd4Y3czbjU1TXJQ?=
+ =?utf-8?B?YVAxVzgzQXdOSCtZVElSU2FuVWhYYmo4cm11dWtHSHdpd3VMTXV6cTVaNk5y?=
+ =?utf-8?B?MVdnWlNDVjhvTGo0RUZyaUlYYXp4ZUZyY0FUcFBnOEZzWml1bzBFRUNZS0M2?=
+ =?utf-8?B?cmhqSDZjNVA2Uy9CVU05SU5CMU1pbjBVTXplQnJFM2lFcGw5QmJRcUFZNnNB?=
+ =?utf-8?B?cWZNUWkwWGRGendLRXZYNjkvUy9kMGgwQlc4VE1iWGVNc2E5WTNjb3VDUExz?=
+ =?utf-8?B?a1lBOU9udnp4TmY4dldwZk9DL0ZKLy92RHEyWFJhNWhMU25TR2NMZ1E0K2xB?=
+ =?utf-8?B?ZkgvVHllZGtvdXIwa3U2SGpQWG5aWGRDbEsrSmtJa3lFNTdzK0NxRFZvYzd4?=
+ =?utf-8?Q?I+9o9dOAtyO4OZC4xFXBghQ=3D?=
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1490bbca-1b1b-44cc-8ddd-08daa4e3f312
+X-MS-Exchange-CrossTenant-AuthSource: SJ0PR01MB7282.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Oct 2022 02:06:57.3644
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: sHYOweJKfXXSqA6xmj9OR7zcYXRnhtWyowJ4eH446Z5FtYN2k1dz5bxLLAtOqx7hZ8bXZOzPjd/OELqPN8sxV2jZGn/LZVHsRY1rj0ECQUg=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR01MB5776
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,123 +144,23 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---yvzBJjxpm3jzIuWL
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Tue, Sep 27, 2022 at 05:44:03PM +0800, George Liu wrote:
-> Hi, all:
->   I am working at Inspur and we're investigating a feature related to
-> sensor monitoring.
->=20
->   As far as I know, the OpenBMC community will only trigger LED alarms
-> when the parsing FRU/VPD fails or is not in place. The lack of the
-> function of triggering the corresponding Sensor fault light for the
-> fault status (Warning/Critical) of the sensors, including
-> threshold-type sensors and discrete-type sensors.
->=20
->   For threshold-type sensors, this function has been implemented in
-> the Intel warehouse [1], I think this should be a general function,
-> and even many companies have implemented it downstream, so can we push
-> this function upstream?
->   For discrete-type sensors, it is only implemented in the
-> sensor.yaml[2] of the phosphor-ipmi-hostd, and we found that the
-> present state is simply implemented. I think it is necessary for us to
-> improve the discrete function and support all types and offsets.
+On 02/10/2022 05:55, Wolfram Sang wrote:
+> 
+>> +		if (ret == -EBUSY)
+> 
+> Since we documented this:
+> 
+> "+  'ret': 0 if the backend is ready, otherwise some errno"
+> 
+> the code above should be '(ret < 0)'
+> 
 
-Shouldn't this be reported as an Event of some sort and have an action
-based of the Event?  I thought we already had the ability for
-phosphor-logging errors to affect LEDs.
+Will update.
+Thanks a lot for the review.
 
->   In addition: For the SEL function, the phosphor-sel-logger has
-> implemented threshold-type sensor alarms and records SEL, and I hope
-> to also integrate discrete-type functions, and be able to get all
-> sensor information through `ipmitool sel elist`.
->=20
->   So we currently have an idea, we hope to create a
-> phosphor-sensor-monitor repository and implement the following
-> functions:
->   1. Provide a PDI interface (eg:
-> xyz.openbmc_project.Discrete.Sensor.Value) to record discrete states
-
-I've previously written about "Discrete Sensors" here:
-    https://lore.kernel.org/openbmc/YAl32I0oGFi5i7Cl@heinlein/
-
-In my opinion a Dbus interface for "Discrete.Sensor" doesn't fit our
-architecture.   As far as I can tell it is only relevant to IPMI and I don't
-see any indication from Redfish of such a concept.  While modeling
-everything as a "Discrete Sensor" might make the IPMI providers simpler,
-it is an overall worse design.
-
->   2. Provide a way to monitor threshold sensor status -> trigger LED
-> -> log SEL (the function of logging SEL has been implemented in
-> phosphor-sel-logger, I hope the two repositories can be merged in the
-> future)
-
-I would definitely like to see a more converged event/error infrastructure.
-The current "sel-logger" and similarly constructed Redfish message
-structure is, as I've previously remarked, kind of a complex Rube
-Goldberg machinery:
-    https://lore.kernel.org/openbmc/YhY9lX6a8RDGcY2K@heinlein/
-
->   3. Provide a way to monitor discrete sensor status
->       a. If it is the data on the Host side, trigger the PDI interface
-> through the ipmiStorageAddSEL method of phosphor-host-ipmid -> trigger
-> LED -> record SEL
->       b. If it is the data on the BMC side (eg: PSU, OCC, etc.), it
-> should inherit this PDI interface in the respective daemon, and the
-> phosphor-sensor-monitor only needs to monitor the property value of
-> the PDI interface -> trigger LED -> record SEL
->   4. Flexible JSON configuration file, ideally, when adding or
-> deleting sensors, you do not need to change the code, just update the
-> JSON
-
-I'm having a bit of trouble visualizing all of this, especially
-considering what I've said above about Discrete Sensors.  We certainly
-have a spectrum of real-code vs JSON-as-code in various implementations,
-but I think we're generally moving more away from JSON-as-code.  A
-simple (Condition A -> Condition B) is probably acceptable but we should
-not be coming up with another JSON-as-scripting-language.
-
->   There may be many situations here that we have not considered.
-> Welcome to ask questions. If the current proposal is accepted, I will
-> push a design document, thanks!
->=20
-> [1]: https://github.com/Intel-BMC/provingground/tree/master/callback-mana=
-ger
-> [2]: https://github.com/openbmc/phosphor-host-ipmid/blob/master/scripts/s=
-ensor-example.yaml
->=20
-> BRs
-> George Liu
-
---=20
-Patrick Williams
-
---yvzBJjxpm3jzIuWL
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmM54mwACgkQqwNHzC0A
-wRmY2RAAoUzzKYcDR0iFQafbTs0H43/fX9930Mj/ZkprtsGxDjo7RZ8BcryjuKvk
-i5ygDz0a1UszjjrRnlTV/PDHoEjPBwAMVo/q3QBudg3zME9m9iMyJ1UmuMGVDrL9
-ODHfFi4I8PVHBuB3qbnegvASJixn+KS2vsrDWat2Rrx523Va168Lnn63SNbjBAiy
-3CaIF6l0zvSshgQuGdDRiMjmAlhGJz9MHq3UfgPBSJG3937Nn2tCgkk27/y1A6TF
-nRJBKdGT6XyQ2EbwSvt6zIp6Y0uCSvo0oytb3ZNuVkFzZThTBp4IeCOKoJFEo4qX
-IGHnoy02PrHHnF536DzFRGvCCtOEu6lR/SGv9s/wtH/DD5fIg5NmIehqnMVTsuVO
-069uVGgd2INKEJxEpdbLYpdKi2Y4HgdhlBSjJyjPbuHZTas2qHJgvesI/xafAwJr
-hcBQhWPTQdgpr57VY8r8dbisWEL6Rew5IVc571MspJUvtmWrzp4mEeHaGUMZOUBs
-MqNYiOHtpmEaVnaHi/fTfC9Z8xovkkizQ8Cn+O3E1t8ix9WSd0FO/aRVrh2BCm7v
-vG+s5ufBZsOhGg1d7yj4iog90FamtkinMED+AJYjtzd5zC/Vul9v/1PAhhmNj5Sn
-x0bJM4l1tCO1pOG3Yc5HfuYxSnoolY7D2dc4K+98TwGbMEdH+oU=
-=EWEj
------END PGP SIGNATURE-----
-
---yvzBJjxpm3jzIuWL--
+- Quan
