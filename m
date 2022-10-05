@@ -1,92 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3499D5F55C6
-	for <lists+openbmc@lfdr.de>; Wed,  5 Oct 2022 15:45:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E1D95F5A5A
+	for <lists+openbmc@lfdr.de>; Wed,  5 Oct 2022 21:06:47 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MjG6z2jm6z3c1n
-	for <lists+openbmc@lfdr.de>; Thu,  6 Oct 2022 00:45:47 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MjPFG0wv4z3blw
+	for <lists+openbmc@lfdr.de>; Thu,  6 Oct 2022 06:06:42 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=KKo0C5R8;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=bDODzCnQ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Qg03rLPp;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.25; helo=out1-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.68.75; helo=ams.source.kernel.org; envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=KKo0C5R8;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=bDODzCnQ;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=Qg03rLPp;
 	dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MjG6L125mz3bNj
-	for <openbmc@lists.ozlabs.org>; Thu,  6 Oct 2022 00:45:13 +1100 (AEDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id CEBFF5C0130;
-	Wed,  5 Oct 2022 09:45:08 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Wed, 05 Oct 2022 09:45:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	fuzziesquirrel.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm3; t=1664977508; x=1665063908; bh=v/qp5/oW1V
-	ML8Aq+UEAsRncv1SG9HKVWWJB1lR4ONS4=; b=KKo0C5R8tSZSrEze8/PpsBTaUS
-	nHMraQTDXoGuGwBpobvkTZdUz3y8o/4lN1vgbfWHlAiZxRzBO1m8Ka3aRvDU3mhs
-	MZWgK+L2JXqXVoiZv8T2We1H+pJ76ep2pl4uV1+LFm4DLiKpi93+3b1AKD3e8/Vd
-	YaQ4RLTuI/5BC+d/+a6lSGcsDC7VFVEb3fXEwtauAeQRVvrukScrlaRYITRGK/G4
-	127o9uF0gePmybYWHg/srme4NVvUbbluDLdj5U/P9/zYu9wMRoOG050DxERE50AI
-	8l2hVvrvwuth43+AztZFuXvZcCtHtRqb8YeZzWJiE1I5goo22C28GgjA7wlA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1664977508; x=
-	1665063908; bh=v/qp5/oW1VML8Aq+UEAsRncv1SG9HKVWWJB1lR4ONS4=; b=b
-	DODzCnQle+yApH0+4BCRd+56tULQ8k2y2IF8zFvTI6CoJ2gqiS1mA2T8rKU0cvYR
-	zJ7lQ7U6Geqr5ef0wk2Y2X0TcdVsaZWJ3HRxQ2dO8VS6jVKUddSfqu43WtzqLYvS
-	k8x63I03HpQ+Tl8vA9MrklLHa3ADnYBghH4kbeJglJIi4pxOf/3C4Ap+B8rBtZrV
-	D2RIl7ymQlFmxZKHSUiC1eeFFX7QN0VE5BVq1N0Bg5vgRFsySa2pM18qcvo9tBko
-	EilRuIBJO8k1NxPUqWEm3ONw1S8BvUnBRLQonwPSdy7gjDj2BuEY04rU2UgxDSIb
-	UzErJmxPAfVL77jU+7grg==
-X-ME-Sender: <xms:ZIo9Y-nzpZK2ucQT4ZH7qw09VuZfixsOzRO31tEvFkfHM5GDmoxJjw>
-    <xme:ZIo9Y11Mjrq9YmW-YqEgHbF-3QXsfMQZrELhmujwq9mTTa0QfTOCDSPZqdhEbquW_
-    fXOv1LsVKRWkivwKxQ>
-X-ME-Received: <xmr:ZIo9Y8ppTkqfnm72B8BecVdwHg6nY6-H4ZBG5RFINx6uXam8bpO22IFEeGDyXgm3PUEYVE3BTBmFbayHtxTO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfeeifedgieejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepkffuhffvveffjghftgfgfgggsehtqhertddtreejnecuhfhrohhmpeeurhgr
-    ugcuuehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtg
-    homheqnecuggftrfgrthhtvghrnhepgeetkedufeetjeehveefheektdeifedvhfeilefh
-    ieehvdehvddtudfguefgieetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepsghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtgho
-    mh
-X-ME-Proxy: <xmx:ZIo9YynziQ2UaXVcsHCkZhWlQx5J79uaDGENWaeQnMytkEZR5JjdRA>
-    <xmx:ZIo9Y80iQ6jcWMjtVv9giSDoJuLnJoVS8iqNKB0jcNWPqKW-ttXmgA>
-    <xmx:ZIo9Y5ubvFHam2LkZ-VwcomjpfEoXqnL8i_emhSD3w9J4O4ShBI-hA>
-    <xmx:ZIo9Y5_aEiT_aIGQJelGsi3U2VacCs8sp4l87pTUiFG5QB3rFPtA5w>
-Feedback-ID: i02c9470a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 5 Oct 2022 09:45:08 -0400 (EDT)
-Message-ID: <501627f287423382af7e7346be5a0e17f6eda714.camel@fuzziesquirrel.com>
-Subject: Re: Wiwynn's updated CCLA 20221004
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: Delphine Chiu/WYHQ/Wiwynn <DELPHINE_CHIU@wiwynn.com>, 
-	"openbmc@lists.ozlabs.org"
-	 <openbmc@lists.ozlabs.org>
-Date: Wed, 05 Oct 2022 09:45:07 -0400
-In-Reply-To: <HK0PR04MB33485A097A9877ADB07D9F10FA5A9@HK0PR04MB3348.apcprd04.prod.outlook.com>
-References: 	<HK0PR04MB3348E51D857FFA157A24750AFA559@HK0PR04MB3348.apcprd04.prod.outlook.com>
-	 <HK0PR04MB33485A097A9877ADB07D9F10FA5A9@HK0PR04MB3348.apcprd04.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4 
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MjPDh2s6dz2xHN;
+	Thu,  6 Oct 2022 06:06:12 +1100 (AEDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ams.source.kernel.org (Postfix) with ESMTPS id E804CB81DE9;
+	Wed,  5 Oct 2022 19:06:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E786DC433D6;
+	Wed,  5 Oct 2022 19:06:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1664996766;
+	bh=qZOYdCT1aCe/JZjmiQhjcaPpLA57KvbcqFM3TGd0KYo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Qg03rLPpbYIdisynjImLpdYkJO/sEMunrsh0dpMnd0msNKM4q0kwSn9oYsEkYyuoX
+	 RsSS3sZyqYQJRRR1IrpPXdANdbfCfehXhdmGhrYuQO3LIkr5VNd8jT0d+EjGP+P2Ed
+	 GFpOL3ADwr16c/4Ad0PTCYiNsIu6SuZa5PNluanuFkHkI2ZZAhaLL07kMIDcjNhx33
+	 VTm/sxf0RICxP5JnMhRPjFNiYtbYWgVVykluIoecv2Dh7WEsFrF37e121miiJId13X
+	 QqPVEx5p/xT0sRv3o+iMP4DlRHIUgYvEatArxXRRPQ1TqCcTXJxfHqWsD3NHrxTj20
+	 b5B48nBs9QVvQ==
+Date: Wed, 5 Oct 2022 21:06:01 +0200
+From: Wolfram Sang <wsa@kernel.org>
+To: Quan Nguyen <quan@os.amperecomputing.com>
+Subject: Re: [PATCH v10 3/3] i2c: aspeed: Assert NAK when slave is busy
+Message-ID: <Yz3VmWCqdolKg5sm@shikoro>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+	Quan Nguyen <quan@os.amperecomputing.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Corey Minyard <minyard@acm.org>, Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+	Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+	openipmi-developer@lists.sourceforge.net,
+	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+	linux-i2c@vger.kernel.org, openbmc@lists.ozlabs.org,
+	linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+	Open Source Submission <patches@amperecomputing.com>,
+	Phong Vo <phong@os.amperecomputing.com>,
+	thang@os.amperecomputing.com
+References: <20221004093106.1653317-1-quan@os.amperecomputing.com>
+ <20221004093106.1653317-4-quan@os.amperecomputing.com>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="SJMSzPuygRaHqOAa"
+Content-Disposition: inline
+In-Reply-To: <20221004093106.1653317-4-quan@os.amperecomputing.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,13 +76,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Aldofo Lin/WYHQ/Wiwynn <ALDOFO_LIN@wiwynn.com>
+Cc: devicetree@vger.kernel.org, thang@os.amperecomputing.com, linux-aspeed@lists.ozlabs.org, Corey Minyard <minyard@acm.org>, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org, Phong Vo <phong@os.amperecomputing.com>, Brendan Higgins <brendan.higgins@linux.dev>, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, openipmi-developer@lists.sourceforge.net, Open Source Submission <patches@amperecomputing.com>, linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 2022-10-04 at 14:15 +0000, Delphine Chiu/WYHQ/Wiwynn wrote:
-> Hi,
->=20
-> Please find the updated schedule A from Wiwynn attached.
 
-CCLA updated, thanks Delphine!
+--SJMSzPuygRaHqOAa
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Oct 04, 2022 at 04:31:06PM +0700, Quan Nguyen wrote:
+> On I2C_SLAVE_WRITE_REQUESTED event, Slave already ACK'ed on the address
+> phase. But as the backend driver is busy and unable to process any
+> request from Master, issue RxCmdLast for Slave to auto send NACK on
+> next incoming byte.
+>=20
+> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+
+Applied to for-current, thanks!
+
+
+--SJMSzPuygRaHqOAa
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmM91ZkACgkQFA3kzBSg
+KbYyDQ/9HuJtmUfec7mVOzYN9yOLKYOWOR5hIQd4A3+vP+K+7P1jObIubesRu2Xn
+4OTZ9aEZMgumnmIWX7dGG9seW67U8FDCXjmRTVXZK1SLasgoL+0FRJbzfvLIqLUY
+/dThu2R6w4xXOScan+snd98o5xj2gJIiRRUdNH0nNP7CioU5aWdxUykvqjoKYdzK
+EVP2nDsPTfLp36vBt2+edcZpJFV2wXtPGhzV7hcypWURm7F7+Phao9vsWphXdPt2
+aLZTFMNrjhkzE/M4PK4HVR11630Xan6D318KoJ3QcSWv0EAax+uxChijf03OYctM
+sz2oXSExvYUGpdgCiErUX3a/3to4HgJZSq6Gqjy4IuScNnpWV55teyW/rWs4gTK9
+yJF3O4Tn2Jq6hBN4WeDs4R79mR3rrAyVSddLzh+9DRQyISYBvVkqyJ5JQ6au+Ps9
+HJsIKXC8G/yq7dd9vop+fBSR6743sLE0Sge67fhxrv4h8tr4xZnXvgr5eRgwMJZW
+Jc/RDTPQGNZVrmiJYvKnUclNRLEbgnKrtryINWGt5nrRLMLu3gVjJGZxhESQqt8b
+C5uVsf1wyyw+K02minkivCVbD0un6hafek5bpILCzjZzLjh1HYoOGY0x6Xcog0uX
+tG4tTm/fOBqpHkJy4WbMBjuT5belbMyNwVrZNkNYjMK1WVRjZwc=
+=U+bJ
+-----END PGP SIGNATURE-----
+
+--SJMSzPuygRaHqOAa--
