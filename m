@@ -1,33 +1,33 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5C7225F6215
-	for <lists+openbmc@lfdr.de>; Thu,  6 Oct 2022 09:52:33 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED7F75F621A
+	for <lists+openbmc@lfdr.de>; Thu,  6 Oct 2022 09:53:29 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MjkDv2cbbz3bq5
-	for <lists+openbmc@lfdr.de>; Thu,  6 Oct 2022 18:52:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MjkFz4STFz304J
+	for <lists+openbmc@lfdr.de>; Thu,  6 Oct 2022 18:53:27 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=A/F9/OHt;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=qEnLqLvx;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.94.105; helo=nam10-mw2-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.94.102; helo=nam10-mw2-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=A/F9/OHt;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=qEnLqLvx;
 	dkim-atps=neutral
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2105.outbound.protection.outlook.com [40.107.94.105])
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2102.outbound.protection.outlook.com [40.107.94.102])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mjk7Q0H6tz3c38
-	for <openbmc@lists.ozlabs.org>; Thu,  6 Oct 2022 18:47:46 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mjk7p5yZdz3c6v
+	for <openbmc@lists.ozlabs.org>; Thu,  6 Oct 2022 18:48:06 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=gQcz/8htferT+xZwc+evlhoRH+oVwuaz3IL31j6mMz/0Jg2uR+hAfmJ9vPZzPinWFxKf7t8Fw5Q4YZM8VrUic5bcS04b8gJB9Yde495sCl+E7rHeQjEX0xQrsJ+WC7MOix+0WcwPQBwAj04i91QCIhGSYJPPaoOHHdu+j2AGmrR3JMZZ3JKdsleP8FPqKHIEgRuyllnMiHmPs/JB8VOilW9KdAaZP6eBWqFVfwPsOwxHIOg+nccBBI/0Nf9XXzr04lDo/231OIJRqIYo/FPzUFwWGnwIsAYBHaO63BzHSHM02MYAwZBEuivVFZMuZ+ofZXvw6allh0ExfW0Vezh1xA==
+ b=Tao2y5Ghc18gWQ8qm3S+vfyZS4IFSZll4t/X89NRA6txsCaIhdiUtlKxOp5afrdExZVWs/13i6n88Dzz6GCu98JR1Wpv+NtjaHWTgv2Tpq4i+P3cPzf9PLku9wN+0POQd4Zo0OWeFUhZqAjIHqKxcOOYkh6aA16Z8A2IcDRlZcjWzQjDYicIgJF7Dl1HOLpoJLDb//N4pM8jW4F29y2sTFDXcrpz3oDeF9Rec1wKRWtzBD5ztek3C0mcInZdBOIdf15TO9IG/zXCZ8l4D9hgoR1+shm2QVuGi28E7Kt338HAG0fOV2wKzIzlmee+mvVhWR6eLkRR23MU7+kd0hh4IQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=enczcvdx0nyhMukYWzqc3bZ+Oi0yC5V6r4NxR4F5BqE=;
- b=lpL9D9D6A5rRArQ3hNkXO1tDhDfx7zciSrLaX4os/k51xQMP6yegiZgwvzBi4Hg1pIwJ+0HI5oZDUBZx9BKr0vzRySXMVCmtUmkwwNlYGGtInEBSb8jdkp+1p3KKFDpalFWTZPMG1oOgZgnSgjXG1qZ4I+NQmk1Ed+upbUyUhVFx69cxRVMHqEJP0JgzHOwdO93jcw3+BM9Aasc9agsYOgoWDEVlSJD2RCNZLPHuVijS1kb9P9u7SK2dzmCNsgEjKLcNUdscZ6WJ/UBC3jB1T2TAeDxSTVM8zBtjXJHM2z3ENGxXFBDMcXHDJtOVCUkqoL/V8SzvJTss0WjcREFBUw==
+ bh=eu8nsreIZ9IGjJDl/7K2/kQz5QWp/sVzhMLKYcqbedA=;
+ b=hgp3j1cF5TVyLOqjFPcy/eX/0UJapBo11cB/GATe8MNqMJ8BTITiAWIXlkeIX4Nk9GWYy4BHj/XX1q2GK54+3zuVH49uaha6mOu4Uk5nz/MKIL31YU/dekFMOhoQPY/MOrOxQN+PZhCwuLrR3TTPo90Z1mmLqW+j4xwNLHQ5wWtqvTZuoTvfoQbteF+Cik4W0CTLuRyJUXaE8bZvHSphG7dYYHMTB2jJao8uhkug+zvwp3QrFXJj76vKPGbvURtfrPNRCDbmCpT4geQNl75EAXHuZSzLhG1Lc5ARwWl+yb3woF1h22d4zHYczvE2mYw5Kb4nCBa3oi/jBH/0weqh6g==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
  header.from=os.amperecomputing.com; dkim=pass
@@ -35,91 +35,91 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=os.amperecomputing.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=enczcvdx0nyhMukYWzqc3bZ+Oi0yC5V6r4NxR4F5BqE=;
- b=A/F9/OHtpMniPF/zDHw0q/wHmKr8zMLBujlWmDly3yxL1MwKgPPZKCxYABytmrPwr5HrOAvxtZWN2ElzxgCQyBJenSjhjqtyeBotvtVoBMwnBREr8mAn8z5T38ninqhTKvXb0ORpfuLpHgHLwv7ACnsDyJPDU7K7qJw7s9L+QLk=
+ bh=eu8nsreIZ9IGjJDl/7K2/kQz5QWp/sVzhMLKYcqbedA=;
+ b=qEnLqLvxdcFMdIR1TVqx0FAfLdj6Z+jPzVAkU+cHuLC064uo/lA//xgwUbZ2hcxlTBU8s7r3wEcKIpR38dT4YJ5WGHtAvrw06fNfAaewoixMKR5MRuet7sGEQEZUYp3xvebtd2cvVGh9chXCLWjaP3ZWvthcgqAgOnwiCnP7OaY=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
 Received: from SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24) by
  BY5PR01MB5796.prod.exchangelabs.com (2603:10b6:a03:1be::33) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5654.20; Thu, 6 Oct 2022 07:47:28 +0000
+ 15.20.5654.20; Thu, 6 Oct 2022 07:47:48 +0000
 Received: from SJ0PR01MB7282.prod.exchangelabs.com
  ([fe80::7d50:e907:8e2e:1ff0]) by SJ0PR01MB7282.prod.exchangelabs.com
  ([fe80::7d50:e907:8e2e:1ff0%3]) with mapi id 15.20.5676.032; Thu, 6 Oct 2022
- 07:47:28 +0000
-Message-ID: <53807596-4e18-2d64-121c-64716982fcb2@os.amperecomputing.com>
-Date: Thu, 6 Oct 2022 14:47:17 +0700
+ 07:47:48 +0000
+Message-ID: <7c0d3614-f501-d398-e023-5754e2ec9528@os.amperecomputing.com>
+Date: Thu, 6 Oct 2022 14:47:36 +0700
 User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
  Gecko/20100101 Thunderbird/102.3.0
-Subject: Re: [PATCH v9 6/9] docs: misc-devices: (smpro-misc) Add documentation
+Subject: Re: [PATCH v9 2/9] docs: hwmon: (smpro-hwmon) Add documentation
 Content-Language: en-CA
 To: Bagas Sanjaya <bagasdotme@gmail.com>
 References: <20220929094321.770125-1-quan@os.amperecomputing.com>
- <20220929094321.770125-7-quan@os.amperecomputing.com>
- <Yze98CgmGuNA0uGr@debian.me>
+ <20220929094321.770125-3-quan@os.amperecomputing.com>
+ <Yzg5GM97kM6/Hw82@debian.me>
 From: Quan Nguyen <quan@os.amperecomputing.com>
-In-Reply-To: <Yze98CgmGuNA0uGr@debian.me>
+In-Reply-To: <Yzg5GM97kM6/Hw82@debian.me>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SGBP274CA0021.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b0::33)
+X-ClientProxiedBy: SGBP274CA0004.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b0::16)
  To SJ0PR01MB7282.prod.exchangelabs.com (2603:10b6:a03:3f2::24)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SJ0PR01MB7282:EE_|BY5PR01MB5796:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6311a72f-1683-496d-d18d-08daa76f03e9
+X-MS-Office365-Filtering-Correlation-Id: 96fca50a-84f2-418c-20a4-08daa76f105a
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	tcdY01ja9RtZC+BdaZGEu/j3ESEqqXGezfTt3Ej4odwUsG9uovf4j2DPQzgYytbk8EhbZ9gTu92BgyOUvwTV5EVPls52Q5c7IGGBFmhxSN2ViesK5hjQWnNln0/IrYAjdYHkbA0ElAD+1K+Dp/5lQUzbdApgh9VwOfujfSs8FJUojZOPM5ZLLSRBQL2Pl1EiC+bKP5JgAGMIA0KxTZyMevU1eJjyQctVlziat7mmaF2o+UftcwFdny2bcUvpnhbOx4hgE/5yXtyqA5hg/9ZfBKi0gCOPS/ygIEpY2JcGyXtc/q52ZVEKsofw4SSfNr6r88ctZmXYjj2Ywx80YzM6E1WOCRODt7IkYg+LlB/UeDC0XRCsSZNwcF6D8bKBmFrZHVdCLIaExlRcZa9Bap0fGtCpCIg29LHG2jfjbSmJRRYjtTMjYrA6AIoIKHcLNWLEYujZPiCTaT1wvCx87ZEmAx8HDJC9GRoefenQJokNtxL+lvdBpUpl/Zu2M+DGtkg9lGJONSHd3GGC3z1T9+aIXbD+wwIvdbLktjhoqOqc2FGXczN7BCDQ7i6X9BSheqE+82m4U0qJSDw7SQZCCYBknGRc1jQ2yUbZc0FWPjBOxk9UZfMMWIbz5jrsVLC++x4i9IpSMsQl5OLxd9N1P36BiyAnDmxQhfO8Qg+5UQXQRqTnnRr93JXVmq7CP1p1RZfRzUI7fyVw3VTBmqnFmLqmTvFHlU/GIqXCa78PrRe0bMDoe2IVstSbfKCjNdIw/RZw5qLuspFgekIG0dl1c4DO5B12My23q2Z9iFhH/KiCFXg=
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR01MB7282.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(136003)(346002)(396003)(39850400004)(376002)(366004)(451199015)(38350700002)(31686004)(186003)(478600001)(38100700002)(6486002)(54906003)(31696002)(7416002)(83380400001)(66556008)(41300700001)(316002)(66476007)(2616005)(8676002)(6666004)(6916009)(107886003)(86362001)(6512007)(8936002)(26005)(5660300002)(53546011)(66946007)(52116002)(4326008)(6506007)(2906002)(43740500002);DIR:OUT;SFP:1102;
+X-Microsoft-Antispam-Message-Info: 	P3fVxQsvSVa+b9SCBPN0fRG8iRUqhph+DhV46nEs+TSyE+FeT3FlAToRSwB+jCpCiVm2SoQTKs3D0VIX9aE4VE5ny2C3PhCTAi2k3Nc3lP/mGMdZq+KLLHNVvgHFdyLipj2CtQERxl5PkcEI7x+Y/0AI0sxdYhDie4PXzCwcAnZg2LV19DleUJpC++1Za7Tik1S4/43QqwWd5SQW5Xnnrby/8DVvVNGH0JlbtaWHQlU5X7ZWW9xKp5ymIJfFJRni+Lwf7J5rDDmfwjXlBbpW/EEkVJJg+ILMfnNrY9vxXf4WqrK/VJ3EYKKI/yARXCGZXfBB2I8GOu3oUJ8fTE+LNBUTkaCETgtyBNE79osbR1p8T0bj7gSW4GGdWPbBiIW95IlwmxRinfW2wl14UMowlzCoarFUycNpNyE46LD5yYC+5+Jj8ibn2R1eDgjjVlHdWOEdNSNQMfQ31K6Lcv5Gg+UBUdZiRRYVvZXHKHJ2z9Qbr3BxRkcH/3CQjT9cOMTqm/cQOUo+vH2c+JCqDcAbLhQE6ujnwVlvzG3pAYdP4BxLfAuHFWAhIoRA/uqLxu1+SrbVeDp53QINDnmG2QLQfs/YDLISz9XAEMrAetb+PQdXFKTMqK1dJci9cvxKUNZvH2y+MyZKaakJeRiaq8w68+4+nWOGY3vlXcg+vjfOCM0el2oe7VKYC7gOulEjf/TFeQVjDtMvOIUN42J3fLtCElhuhfcBFo5NJf7SummKxcjLcYlqW1nAF3JrXYsa7b1KT75VbNzODFN6MaNm4zA9LAsM5S+cB9qWrEfaw3rE+QU=
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ0PR01MB7282.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(136003)(346002)(396003)(39850400004)(376002)(366004)(451199015)(38350700002)(31686004)(186003)(478600001)(38100700002)(6486002)(54906003)(31696002)(30864003)(7416002)(83380400001)(66556008)(41300700001)(316002)(66476007)(2616005)(8676002)(6666004)(6916009)(107886003)(86362001)(6512007)(8936002)(26005)(5660300002)(53546011)(66946007)(52116002)(4326008)(6506007)(2906002)(43740500002);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?WXVZV2txTnV5cTcwMFZPbGllOVVQQ09CbGVzNUF6RUt3RmFwdndBQVQwRm9l?=
- =?utf-8?B?RmxROWxIWlNHMkdreUxxRVR0alZsOFJka2RBdFBWMmlwdmVhTVlGMnZSUlRx?=
- =?utf-8?B?L1gwVWNjZEh3c2JZK0lBeWtmRVl0eFpMdk5PdFZheHdMTHlseTFyNU9yTFQ1?=
- =?utf-8?B?MUhZS283VmxWZW82RzIxb2E3aS9TLzNya1RpRTJHQ3ozYXlnSW01TXJDdWhK?=
- =?utf-8?B?ZmZiWWVPR1NOUGtpNDhFMHBFOVdUUlpGTlpGSkZVZHZMdDlTc2pCMktIYy9L?=
- =?utf-8?B?U3dxL3NlTXgrUXB0ZUJOZ2hVVzkzVE1tbkJRWnhUTmFmMm9iS1c3RG1hVUlI?=
- =?utf-8?B?N0dsa3JZZ2RjaklGTXdMd1h0NTJGclZWZ2Z1ZTFIN0tGMGNsbmdYZnB2amlO?=
- =?utf-8?B?aGJMYjF5WnJqaU9qVXVsTHRsMkdmM0dLWjh5eDVtNnFRTUkyalNGUW5hUTNN?=
- =?utf-8?B?K3N2OEVjd1VHRkd1VmtlV1hoejNEc21OWjJmWVlXWjFGUnFyb3kvZUx2dVVj?=
- =?utf-8?B?TjlTVCtQclRWQ0RqRjFDaHAyTjBJckFyOHlRQXJEdVk3Ly9OcGtzS0lhM3J4?=
- =?utf-8?B?QkxCM0dNWkFoQ1k1MHhMUjFRejRmN1RLMWc2OVNTMnBiYkNuSmZGUVNlQ2U2?=
- =?utf-8?B?cndZK2dBcWJGUTVrZkxMRkR5Nm9wekhCb1Rwc1lpcTBsQUhlYnZtSVAwaklT?=
- =?utf-8?B?cllIR2ZhY2hvZlpYbFc5NWJ0R2sxT1VXWkx4cE9mYUc3cUszNENFZHJUVFJI?=
- =?utf-8?B?K25UNlM3ZWU3SThsK1pkRVNaTmJFR3FrZDRWUEROaCtKQ3A5TERwRFpYVXVs?=
- =?utf-8?B?WS9xa2ZmYUZHT2VSdXMycUFQanlyWEFZaUZ6bENQVTZJV0Q5WWhXNzBpR29k?=
- =?utf-8?B?SVpNSlA2RUxpclJENHdOcGlVMEFnRnZwUGM5SzloQXlqSVNyZmNUSTU3TDVQ?=
- =?utf-8?B?dFZUbUhLa0g0bGNkY2VXZWJsWG5RYUFWNjVXcW9QZEcyTjBuV2VmTVliT1ZF?=
- =?utf-8?B?UmRyd1B5ajV4bWk0QXFBdkJEaDBjREh5b1doNE1uWGhEaXFrVzVtL1QrOEtm?=
- =?utf-8?B?Z24wZGgzeHBGL2NkdXZpTTRnUUlsV05ic3FrWHREeCtldnNYcGxBYm40VWZZ?=
- =?utf-8?B?MHI0WjdWMVFnbi9IK2c4dWU1cWlJUUVLbTRmU3BkWkNIQURyd285djhsUXYr?=
- =?utf-8?B?Yi9CcE53MVNSSTNPTXZmdHlpcForR3E5WVZ5RFVoZXNNeGRGUXd0VFgrSlpY?=
- =?utf-8?B?RUp2NnhWcGN4cFVWMHVZdDhOMXpCL0d4NDlFbnlrVDh6d0M0N2JHdnR1YkNI?=
- =?utf-8?B?N3IyeE13ck9MZW5jcTlDZzRxeWM2WmlpWldCcnlLSGt0MURyaHk3cUM2SmNk?=
- =?utf-8?B?V1Y0OWN5V2lkcEZZWHlnUW5UVVVXTE9QNldIVlFMcjluR3IyWVV2R1AwNnFD?=
- =?utf-8?B?eWkxL01BUkdoTFBvS1UyU1lobFQ3cmJOVDVxTkVKNSs4S1RSUzQvWXlSL2dK?=
- =?utf-8?B?azZhS2NYUDY4VVlMdm1FVDlwd09tREg0cG1kbTVJTFI5UHBtZWZvZGNJc1h4?=
- =?utf-8?B?dUhQN2psb0dsbTcwc0VIalpXYVNvY1hOUFFFY0M2ZitaakRIWE9QMXRkWmtk?=
- =?utf-8?B?WTVvanl5OFROUUsvaEY0UGVRRFdZNUFWVGE5RUlDeUVabS9RaTN4NFgzYlFG?=
- =?utf-8?B?ZnZmZW1Ma004cVI2MTNzb1RUQnZTWCtubnBVRWh1bzdOdmZHUzJrc2ZUcTlO?=
- =?utf-8?B?SHpIa0Q0MTgxU0E2TE12c2xOaDFIRENIWlJPaDlmeWNBVnN6cTE0OXhZYmIy?=
- =?utf-8?B?NlN1Z0F4NkUwc29TemZQQ2lrK0d1RGk5UFRjZ3FJaExkbE5TUUR6NHhXNWhn?=
- =?utf-8?B?V21ZbGJMZU1jN1c2S290REZ1Z1RlcmU2WjlHZ3RXRENZencyZm93R2ppYnlq?=
- =?utf-8?B?eFhSU0s5c3hIcWprQjZWcTlCSkROUXFMU0ZCODdncHdBNndGNmhxdHFsd2No?=
- =?utf-8?B?R3lvR0s5bE50bGlGWWdkbUtseTZlMUJ0YVoyb1VnV1Y5V0Z0Qk54eXZ0NDk4?=
- =?utf-8?B?bGRzR0xFMmFiMG1oMFhyaE9SdHFBaTNHeUtseTRvTVJaSE5VMWNPZWtWcW51?=
- =?utf-8?B?dWM1SkN6cENxTEVqNUJDWTlBaktPNjF1K3FNaTlQWUhicFlqcWs1U2Jzc09C?=
- =?utf-8?Q?sz9OniHKEEAwgYt9yjzK82Y=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?SVlKSFQ4NWwwWmM3UWRQdGh0aFQvQXI0Sk5QN09VRVFaZUxLN2lVMW9qQmxS?=
+ =?utf-8?B?NkJIWDFHNXdpWEZLRW1Ta29JMS9iNUJIK3BoR3BaSms1cEwxWEw3LzNhLzMr?=
+ =?utf-8?B?S1Y0ZldWR0w3aHY3dDBGamNBeklIUjlHY28wMGhMbFM1a3REeFJSTWxvRjRp?=
+ =?utf-8?B?cS9Bek5yZ25NeENyaGY1UFZDL0c3Z0dzYjBxRXBDRTBBdjBIQmkxajlqUUFZ?=
+ =?utf-8?B?S2VadFNjUitBbXdmMXJyYTNPeC9RWEdoMjBBU1U1bmdFN2VPcEZQdVdMSU5L?=
+ =?utf-8?B?RFIwby9QVTN1RDY5clhkQ1hkOTB0NnhyR0pCR3l3NTE5VGhaeWltQUdvMzZ5?=
+ =?utf-8?B?SG12WGthRkMwTHd2Mnc0WjJqc2lvOGhLZmgrb3lxdVVrdys0RTZxZ0Iwcmpr?=
+ =?utf-8?B?WnhENGkwSllVek1Bc1B0alRiczNaSWJia3E5dG1HQkxSNWVMTkRjc3RJdHJx?=
+ =?utf-8?B?bWNtcWtXZlBBM2ZudDZYM01Bdks5MHBwL1RVWC84NGgzcjdCTDU1Z2EvRVNh?=
+ =?utf-8?B?ZzRMSFZ2S1drankzTXg1V0Z1ajk4VmFvczZLVnI3bEd2c3dBZGQvMWNIell6?=
+ =?utf-8?B?MWx4OGtEa2Y3WHY4b2p6Q3o0Vy9qYkFYdHI5NDB0VFFmUnNWZEo2eTYxZGQv?=
+ =?utf-8?B?YW9zcFo1TllDMjZhbHRmbkVOZzFqYnNNcW9NUjJQSHJLRmJsa3pxQU9USVZX?=
+ =?utf-8?B?NTlySkgxQm5uOERJblFzdytFV3d0NGYrb2lPdEdEVTFHV1FjRVJGVE9hdk1t?=
+ =?utf-8?B?eUtTZ2lZTnlCQ1R1NWcvNktXcFhibUFmdnZXYitqUThmTDdhUFBBZWR4cjlB?=
+ =?utf-8?B?WlRUc3dkRC83T0JBMSs4OTg0MDRaNmFSdktKODYxMnJxU2VGcDE1cGo4TGxm?=
+ =?utf-8?B?WGFwdnVKRW1nMVRBc2g0a0J1VlQrdUlpc1VoaWU0K3dDSVdXQ0Z3MTNyR1dE?=
+ =?utf-8?B?cXhLUHNybmxXOWtWRHVBNmg3RDIwTUtOR1ZZSFNGd1VPeXlHRTRmOVJsdlVv?=
+ =?utf-8?B?L3NxNVk5ekpsOCtTaW5mUW04emwyRXNGUGFmRTF3UDdFazgyLytOeDZ3M1VP?=
+ =?utf-8?B?WlRBaXhwZkg4UjFiL3UrZnRyN2VLTXFOTDdwY3pvYnhzMVlYZmRtTlFlZHNF?=
+ =?utf-8?B?aHRIZ1dsOTFhaGxySHY3QkdhbStKbFUvTGJrUWowdjBHeEh2YjhXcWNTdVV3?=
+ =?utf-8?B?QlJvSlpyK09Ld1lKOUpqRXBRTjhOZ3Z2WmxJWlBqNzdxK2hWSnNHTG95bTc5?=
+ =?utf-8?B?RGQ5MW5oMVBMUlNrcUluVFhkREN2R2k1Z3ZxMTNFRHFUWVVlNHlrNjVxU01G?=
+ =?utf-8?B?ak5lK2lkc0ViSUpuVDlMVGk1aVRDN1JqU0U5QzhrUERtOGpoRkVOdmcydE1u?=
+ =?utf-8?B?RTl3blJ2aGR0V0F5Z203L2JVUWJEcUVuTDhSMkd5MFNjUkFPcjV2WkhTc0tX?=
+ =?utf-8?B?aVZnenJJallYdHVrUTRjenBIdDNJa3BJM0Z6T3Y5K3dOUHV0R2d6UGxDMm5z?=
+ =?utf-8?B?bUhZUlRaUnJiVWJMeVJFNEZsNHNxMnV1ZC9XakVaZk1IMHhnY1J5U2RWclpj?=
+ =?utf-8?B?cjB5ek1HbFUxeFZtU0dvOFBQK3hVcGtGMDJLNDJiNHp3M3ZNOTlUalNlT0Y1?=
+ =?utf-8?B?SmRqL3hsRHBBait0dDVkeVQ5REJadFczbkcySWc0eGU1WWNFaldOdWV6aHRM?=
+ =?utf-8?B?MzJqVzgvSUlHQ3BJUm80M2FCeEZiWkpTU0Z4dHh6TDRPOUw3ZGZmazl4N2F5?=
+ =?utf-8?B?WlZZRklDbGJmZXFiU3JTZHcxdnhBRVVzYnp3a2tRNXpOVm81OG5YNk1TaGFj?=
+ =?utf-8?B?QzRLOCtJT1d2RWx6QVVwM0Qvb3Nic0l1Q1dEekpnRkNzZ2lmczBXK08zRVVZ?=
+ =?utf-8?B?MFhUeUJvWHRQYVA3RElhclVQQmp1RTltNEJzWC9KbktxSGtVcnd3MmNLeVBz?=
+ =?utf-8?B?OGJVZ0FqRG5wOHJ5Q0hqcUE3VXlLdVBrNlZkZDF0akJYZktGMVBvU21Zczgy?=
+ =?utf-8?B?akJOY1VkZWp3dmhvcHhVQjY3M2xkSW1NSm9PSmlucE44TkhaZENLWlVMd21F?=
+ =?utf-8?B?RExKYlpobnRpWngvVkZUMWZDeDcyWTNQeHphZUJwcnJEektla2FoVUFnekhR?=
+ =?utf-8?B?ZUxlWGUxSjlsTDU5blhBV1NJZTBFdkNBY3lNMTNxb0FrUG43aWlOSDJ2dmlY?=
+ =?utf-8?Q?odWtFQ9Z4HWXxPinVKwx10I=3D?=
 X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6311a72f-1683-496d-d18d-08daa76f03e9
+X-MS-Exchange-CrossTenant-Network-Message-Id: 96fca50a-84f2-418c-20a4-08daa76f105a
 X-MS-Exchange-CrossTenant-AuthSource: SJ0PR01MB7282.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2022 07:47:27.8803
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Oct 2022 07:47:48.7489
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: wRUBAq5MYf/ri/OYpS5ILjuupoCv7qC0iCkIk/mjigKdj1DWco7/much82KdlOh1z1Rhli/aU6gyFjnBbZIqlEFW6/yZ2gTk7JczL6xVXtU=
+X-MS-Exchange-CrossTenant-UserPrincipalName: qYpP7632uCVbUQ/X1UbsbVspKeO6WUauDJc5rODxtUXqN0rVE+njfo1TB1qyV5v6cmeylzRHYs9/wzZVbBLO8TNIVVz6RNWnExFw+z3Pfec=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY5PR01MB5796
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -138,41 +138,18 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On 01/10/2022 11:11, Bagas Sanjaya wrote:
-> On Thu, Sep 29, 2022 at 04:43:18PM +0700, Quan Nguyen wrote:
->> Adds documentation for the Ampere(R)'s Altra(R) SMpro misc driver.
->>
-> 
-> s/Adds/Add/
-> 
->> Signed-off-by: Thu Nguyen <thu@os.amperecomputing.com>
->> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
-> 
-> Does this patch originally authored by Thu? If so, add From: line before
-> the patch description.
-> 
->> diff --git a/Documentation/misc-devices/index.rst b/Documentation/misc-devices/index.rst
->> index b74b3b34a235..b40cd1b402f7 100644
->> --- a/Documentation/misc-devices/index.rst
->> +++ b/Documentation/misc-devices/index.rst
->> @@ -28,6 +28,7 @@ fit into other categories.
->>      oxsemi-tornado
->>      pci-endpoint-test
->>      smpro-errmon
->> +   smpro-misc
->>      spear-pcie-gadget
->>      uacce
->>      xilinx_sdfec
->> diff --git a/Documentation/misc-devices/smpro-misc.rst b/Documentation/misc-devices/smpro-misc.rst
+On 01/10/2022 19:56, Bagas Sanjaya wrote:
+> On Thu, Sep 29, 2022 at 04:43:14PM +0700, Quan Nguyen wrote:
+>> diff --git a/Documentation/hwmon/smpro-hwmon.rst b/Documentation/hwmon/smpro-hwmon.rst
 >> new file mode 100644
->> index 000000000000..d21be4a09e69
+>> index 000000000000..3a9b14dacf89
 >> --- /dev/null
->> +++ b/Documentation/misc-devices/smpro-misc.rst
->> @@ -0,0 +1,82 @@
+>> +++ b/Documentation/hwmon/smpro-hwmon.rst
+>> @@ -0,0 +1,101 @@
 >> +.. SPDX-License-Identifier: GPL-2.0-only
 >> +
->> +Kernel driver Ampere(R) Altra(R) SMpro miscellaneous
->> +====================================================
+>> +Kernel driver Ampere(R)'s Altra(R) SMpro hwmon
+>> +==============================================
 >> +
 >> +Supported chips:
 >> +
@@ -186,82 +163,100 @@ On 01/10/2022 11:11, Bagas Sanjaya wrote:
 >> +
 >> +Description
 >> +-----------
+>> +This driver supports hardware monitoring for Ampere(R) Altra(R) SoC's based on the
+>> +SMpro co-processor (SMpro).
+>> +The following sensor types are supported by the driver:
 >> +
->> +This driver support the monitoring and configuration of various miscellaneous
->> +data provided by Ampere(R) Altra(R) SMpro processor.
->> +At this time, these include:
+>> +  * temperature
+>> +  * voltage
+>> +  * current
+>> +  * power
 >> +
->> +  * Reading Boot Progress information
->> +  * Configuring SoC Power Limit
+>> +The SMpro interface provides the registers to query the various sensors and
+>> +their values which are then exported to userspace by this driver.
+>> +
+>> +Usage Notes
+>> +-----------
+>> +
+>> +SMpro hwmon driver creates at least two sysfs files for each sensor.
+>> +
+>> +* File ``<sensor_type><idx>_label`` reports the sensor label.
+>> +* File ``<sensor_type><idx>_input`` returns the sensor value.
+>> +
+>> +The sysfs files are allocated in the SMpro root fs folder.
+>> +There is one root folder for each SMpro instance.
+>> +
+>> +When the SoC is turned off, the driver will fail to read registers
+>> +and return -ENXIO.
 >> +
 >> +Sysfs entries
 >> +-------------
 >> +
->> +1) Boot progress
+>> +The following sysfs files are supported:
 >> +
->> +SMpro misc driver creates the sysfs files ``boot_progress``.
->> +The format of ``boot_progress`` file is as below::
+>> +* Ampere(R) Altra(R):
 >> +
->> +<boot stage><boot status><boot progress>
->> +
->> +Where:
->> +
->> +* Boot stage::
->> +
->> +    0: SMpro firmware booting.
->> +    1: PMpro firmware booting.
->> +    2: ATF BL1 firmware booting.
->> +    3: DDR initialization.
->> +    4: DDR training report status.
->> +    5: ATF BL2 firmware booting.
->> +    6: ATF BL31 firmware booting.
->> +    7: ATF BL32 firmware booting.
->> +    8: UEFI firmware booting.
->> +    9: OS booting.
->> +
->> +* Boot status::
->> +
->> +    0: Not started.
->> +    1: Started.
->> +    2: Complete without error.
->> +    3: Failure.
->> +
->> +* boot progress: 32 bits boot progress code
->> +
->> +The sysfs ``boot_progress`` only reports the boot state when the host is booting.
->> +If the host is already booted, it returns latest state.
->> +
->> +Example::
->> +
->> +    #cat boot_progress
->> +    0102808454A8
->> +
->> +2) SoC Power Limit
->> +
->> +SMpro misc driver creates the sysfs file ``soc_power_limit`` to get/set the SoC Power Limit.
->> +
->> +Reading this sysfs return the current setting of SoC Power Limit (W) in decimal string.
->> +Writing the desired value in decimal string to set the SoC Power Limit in Watt (W).
->> +The range of SoC Power Limit is 90-500(W) and will be ignored if out of range.
+>> +============    =============   ======  ===============================================
+>> +Name            Unit            Perm    Description
+>> +temp1_input     milli Celsius   RO      SoC temperature
+>> +temp2_input     milli Celsius   RO      Max temperature reported among SoC VRDs
+>> +temp2_crit      milli Celsius   RO      SoC VRD HOT Threshold temperature
+>> +temp3_input     milli Celsius   RO      Max temperature reported among DIMM VRDs
+>> +temp4_input     milli Celsius   RO      Max temperature reported among Core VRDs
+>> +temp5_input     milli Celsius   RO      Temperature of DIMM0 on CH0
+>> +temp5_crit      milli Celsius   RO      MEM HOT Threshold for all DIMMs
+>> +temp6_input     milli Celsius   RO      Temperature of DIMM0 on CH1
+>> +temp6_crit      milli Celsius   RO      MEM HOT Threshold for all DIMMs
+>> +temp7_input     milli Celsius   RO      Temperature of DIMM0 on CH2
+>> +temp7_crit      milli Celsius   RO      MEM HOT Threshold for all DIMMs
+>> +temp8_input     milli Celsius   RO      Temperature of DIMM0 on CH3
+>> +temp8_crit      milli Celsius   RO      MEM HOT Threshold for all DIMMs
+>> +temp9_input     milli Celsius   RO      Temperature of DIMM0 on CH4
+>> +temp9_crit      milli Celsius   RO      MEM HOT Threshold for all DIMMs
+>> +temp10_input    milli Celsius   RO      Temperature of DIMM0 on CH5
+>> +temp10_crit     milli Celsius   RO      MEM HOT Threshold for all DIMMs
+>> +temp11_input    milli Celsius   RO      Temperature of DIMM0 on CH6
+>> +temp11_crit     milli Celsius   RO      MEM HOT Threshold for all DIMMs
+>> +temp12_input    milli Celsius   RO      Temperature of DIMM0 on CH7
+>> +temp12_crit     milli Celsius   RO      MEM HOT Threshold for all DIMMs
+>> +temp13_input    milli Celsius   RO      Max temperature reported among RCA VRDs
+>> +in0_input       milli Volts     RO      Core voltage
+>> +in1_input       milli Volts     RO      SoC voltage
+>> +in2_input       milli Volts     RO      DIMM VRD1 voltage
+>> +in3_input       milli Volts     RO      DIMM VRD2 voltage
+>> +in4_input       milli Volts     RO      RCA VRD voltage
+>> +cur1_input      milli Amperes   RO      Core VRD current
+>> +cur2_input      milli Amperes   RO      SoC VRD current
+>> +cur3_input      milli Amperes   RO      DIMM VRD1 current
+>> +cur4_input      milli Amperes   RO      DIMM VRD2 current
+>> +cur5_input      milli Amperes   RO      RCA VRD current
+>> +power1_input    micro Watts     RO      Core VRD power
+>> +power2_input    micro Watts     RO      SoC VRD power
+>> +power3_input    micro Watts     RO      DIMM VRD1 power
+>> +power4_input    micro Watts     RO      DIMM VRD2 power
+>> +power5_input    micro Watts     RO      RCA VRD power
+>> +============    =============   ======  ===============================================
 >> +
 >> +Example::
 >> +
->> +    #cat soc_power_limit
->> +    90
->> +    #echo 95 > soc_power_limit
->> +    #cat soc_power_limit
->> +    95
-> 
-> The documentation above can be improved (both grammatical and
-> formatting):
+>> +    # cat in0_input
+>> +    830
+>> +    # cat temp1_input
+>> +    37000
+>> +    # cat curr1_input
+>> +    9000
+>> +    # cat power5_input
+>> +    19500000
+>   
+> The documentation above can be improved (both grammar and formatting):
 > 
 > ---- >8 ----
 > 
-> diff --git a/Documentation/misc-devices/smpro-misc.rst b/Documentation/misc-devices/smpro-misc.rst
-> index d21be4a09e69c4..f33466152ac402 100644
-> --- a/Documentation/misc-devices/smpro-misc.rst
-> +++ b/Documentation/misc-devices/smpro-misc.rst
-> @@ -7,76 +7,77 @@ Supported chips:
+> diff --git a/Documentation/hwmon/smpro-hwmon.rst b/Documentation/hwmon/smpro-hwmon.rst
+> index 3a9b14dacf8975..fb7b3665735bba 100644
+> --- a/Documentation/hwmon/smpro-hwmon.rst
+> +++ b/Documentation/hwmon/smpro-hwmon.rst
+> @@ -7,39 +7,39 @@ Supported chips:
 >   
 >     * Ampere(R) Altra(R)
 >   
@@ -275,115 +270,137 @@ On 01/10/2022 11:11, Bagas Sanjaya wrote:
 >   
 >   Description
 >   -----------
+> -This driver supports hardware monitoring for Ampere(R) Altra(R) SoC's based on the
+> -SMpro co-processor (SMpro).
+> -The following sensor types are supported by the driver:
+> +The smpro-hwmon driver supports hardware monitoring for Ampere(R) Altra(R)
+> +SoCs based on the SMpro co-processor (SMpro).  The following sensor metrics
+> +are supported by the driver:
 >   
-> -This driver support the monitoring and configuration of various miscellaneous
-> -data provided by Ampere(R) Altra(R) SMpro processor.
-> -At this time, these include:
-> +The smpro-misc driver supports monitoring and configuration of various
-> +miscellaneous data provided by Ampere(R) Altra(R) SMpro processor.
-> +Currently, the driver supports:
+>     * temperature
+>     * voltage
+>     * current
+>     * power
 >   
-> -  * Reading Boot Progress information
-> -  * Configuring SoC Power Limit
-> +  * reading boot progress information
-> +  * configuring SoC power limit
+> -The SMpro interface provides the registers to query the various sensors and
+> +The interface provides the registers to query the various sensors and
+>   their values which are then exported to userspace by this driver.
+>   
+>   Usage Notes
+>   -----------
+>   
+> -SMpro hwmon driver creates at least two sysfs files for each sensor.
+> +The driver creates at least two sysfs files for each sensor.
+>   
+> -* File ``<sensor_type><idx>_label`` reports the sensor label.
+> -* File ``<sensor_type><idx>_input`` returns the sensor value.
+> +* ``<sensor_type><idx>_label`` reports the sensor label.
+> +* ``<sensor_type><idx>_input`` returns the sensor value.
+>   
+> -The sysfs files are allocated in the SMpro root fs folder.
+> -There is one root folder for each SMpro instance.
+> +The sysfs files are allocated in the SMpro rootfs folder, with one root
+> +directory for each instance.
+>   
+> -When the SoC is turned off, the driver will fail to read registers
+> -and return -ENXIO.
+> +When the SoC is turned off, the driver will fail to read registers and
+> +return ``-ENXIO``.
 >   
 >   Sysfs entries
 >   -------------
+> @@ -48,48 +48,49 @@ The following sysfs files are supported:
 >   
->   1) Boot progress
+>   * Ampere(R) Altra(R):
 >   
-> -SMpro misc driver creates the sysfs files ``boot_progress``.
-> -The format of ``boot_progress`` file is as below::
-> +   The driver creates ``boot_progress`` sysfs file. Its format is described
-> +   as::
->   
-> -<boot stage><boot status><boot progress>
-> +     <boot stage><boot status><boot progress>
->   
-> -Where:
-> +   where:
->   
-> -* Boot stage::
-> +   * ``<boot stage>`` can be:
->   
-> -    0: SMpro firmware booting.
-> -    1: PMpro firmware booting.
-> -    2: ATF BL1 firmware booting.
-> -    3: DDR initialization.
-> -    4: DDR training report status.
-> -    5: ATF BL2 firmware booting.
-> -    6: ATF BL31 firmware booting.
-> -    7: ATF BL32 firmware booting.
-> -    8: UEFI firmware booting.
-> -    9: OS booting.
-> +     * 0: SMpro firmware booting.
-> +     * 1: PMpro firmware booting.
-> +     * 2: ATF BL1 firmware booting.
-> +     * 3: DDR initialization.
-> +     * 4: DDR training report status.
-> +     * 5: ATF BL2 firmware booting.
-> +     * 6: ATF BL31 firmware booting.
-> +     * 7: ATF BL32 firmware booting.
-> +     * 8: UEFI firmware booting.
-> +     * 9: OS booting.
->   
-> -* Boot status::
-> +  * ``<boot status>`` can be:
->   
-> -    0: Not started.
-> -    1: Started.
-> -    2: Complete without error.
-> -    3: Failure.
-> +     * 0: Not started.
-> +     * 1: Started.
-> +     * 2: Complete without error.
-> +     * 3: Failure.
->   
-> -* boot progress: 32 bits boot progress code
-> +  * ``<boot progress>``: 32-bit boot progress code
->   
-> -The sysfs ``boot_progress`` only reports the boot state when the host is booting.
-> -If the host is already booted, it returns latest state.
-> +  The sysfs file  only reports the boot state when the host is booting. If
-> +  the host is already booted, it returns the latest state.
+> -============    =============   ======  ===============================================
+> -Name            Unit            Perm    Description
+> -temp1_input     milli Celsius   RO      SoC temperature
+> -temp2_input     milli Celsius   RO      Max temperature reported among SoC VRDs
+> -temp2_crit      milli Celsius   RO      SoC VRD HOT Threshold temperature
+> -temp3_input     milli Celsius   RO      Max temperature reported among DIMM VRDs
+> -temp4_input     milli Celsius   RO      Max temperature reported among Core VRDs
+> -temp5_input     milli Celsius   RO      Temperature of DIMM0 on CH0
+> -temp5_crit      milli Celsius   RO      MEM HOT Threshold for all DIMMs
+> -temp6_input     milli Celsius   RO      Temperature of DIMM0 on CH1
+> -temp6_crit      milli Celsius   RO      MEM HOT Threshold for all DIMMs
+> -temp7_input     milli Celsius   RO      Temperature of DIMM0 on CH2
+> -temp7_crit      milli Celsius   RO      MEM HOT Threshold for all DIMMs
+> -temp8_input     milli Celsius   RO      Temperature of DIMM0 on CH3
+> -temp8_crit      milli Celsius   RO      MEM HOT Threshold for all DIMMs
+> -temp9_input     milli Celsius   RO      Temperature of DIMM0 on CH4
+> -temp9_crit      milli Celsius   RO      MEM HOT Threshold for all DIMMs
+> -temp10_input    milli Celsius   RO      Temperature of DIMM0 on CH5
+> -temp10_crit     milli Celsius   RO      MEM HOT Threshold for all DIMMs
+> -temp11_input    milli Celsius   RO      Temperature of DIMM0 on CH6
+> -temp11_crit     milli Celsius   RO      MEM HOT Threshold for all DIMMs
+> -temp12_input    milli Celsius   RO      Temperature of DIMM0 on CH7
+> -temp12_crit     milli Celsius   RO      MEM HOT Threshold for all DIMMs
+> -temp13_input    milli Celsius   RO      Max temperature reported among RCA VRDs
+> -in0_input       milli Volts     RO      Core voltage
+> -in1_input       milli Volts     RO      SoC voltage
+> -in2_input       milli Volts     RO      DIMM VRD1 voltage
+> -in3_input       milli Volts     RO      DIMM VRD2 voltage
+> -in4_input       milli Volts     RO      RCA VRD voltage
+> -cur1_input      milli Amperes   RO      Core VRD current
+> -cur2_input      milli Amperes   RO      SoC VRD current
+> -cur3_input      milli Amperes   RO      DIMM VRD1 current
+> -cur4_input      milli Amperes   RO      DIMM VRD2 current
+> -cur5_input      milli Amperes   RO      RCA VRD current
+> -power1_input    micro Watts     RO      Core VRD power
+> -power2_input    micro Watts     RO      SoC VRD power
+> -power3_input    micro Watts     RO      DIMM VRD1 power
+> -power4_input    micro Watts     RO      DIMM VRD2 power
+> -power5_input    micro Watts     RO      RCA VRD power
+> -============    =============   ======  ===============================================
+> +  ============    =============  ======  ===============================================
+> +  Name            Unit           Perm    Description
+> +  ============    =============  ======  ===============================================
+> +  temp1_input     millicelsius   RO      SoC temperature
+> +  temp2_input     millicelsius   RO      Max temperature reported among SoC VRDs
+> +  temp2_crit      millicelsius   RO      SoC VRD HOT Threshold temperature
+> +  temp3_input     millicelsius   RO      Max temperature reported among DIMM VRDs
+> +  temp4_input     millicelsius   RO      Max temperature reported among Core VRDs
+> +  temp5_input     millicelsius   RO      Temperature of DIMM0 on CH0
+> +  temp5_crit      millicelsius   RO      MEM HOT Threshold for all DIMMs
+> +  temp6_input     millicelsius   RO      Temperature of DIMM0 on CH1
+> +  temp6_crit      millicelsius   RO      MEM HOT Threshold for all DIMMs
+> +  temp7_input     millicelsius   RO      Temperature of DIMM0 on CH2
+> +  temp7_crit      millicelsius   RO      MEM HOT Threshold for all DIMMs
+> +  temp8_input     millicelsius   RO      Temperature of DIMM0 on CH3
+> +  temp8_crit      millicelsius   RO      MEM HOT Threshold for all DIMMs
+> +  temp9_input     millicelsius   RO      Temperature of DIMM0 on CH4
+> +  temp9_crit      millicelsius   RO      MEM HOT Threshold for all DIMMs
+> +  temp10_input    millicelsius   RO      Temperature of DIMM0 on CH5
+> +  temp10_crit     millicelsius   RO      MEM HOT Threshold for all DIMMs
+> +  temp11_input    millicelsius   RO      Temperature of DIMM0 on CH6
+> +  temp11_crit     millicelsius   RO      MEM HOT Threshold for all DIMMs
+> +  temp12_input    millicelsius   RO      Temperature of DIMM0 on CH7
+> +  temp12_crit     millicelsius   RO      MEM HOT Threshold for all DIMMs
+> +  temp13_input    millicelsius   RO      Max temperature reported among RCA VRDs
+> +  in0_input       millivolts     RO      Core voltage
+> +  in1_input       millivolts     RO      SoC voltage
+> +  in2_input       millivolts     RO      DIMM VRD1 voltage
+> +  in3_input       millivolts     RO      DIMM VRD2 voltage
+> +  in4_input       millivolts     RO      RCA VRD voltage
+> +  cur1_input      milliamperes   RO      Core VRD current
+> +  cur2_input      milliamperes   RO      SoC VRD current
+> +  cur3_input      milliamperes   RO      DIMM VRD1 current
+> +  cur4_input      milliamperes   RO      DIMM VRD2 current
+> +  cur5_input      milliamperes   RO      RCA VRD current
+> +  power1_input    microwatts     RO      Core VRD power
+> +  power2_input    microwatts     RO      SoC VRD power
+> +  power3_input    microwatts     RO      DIMM VRD1 power
+> +  power4_input    microwatts     RO      DIMM VRD2 power
+> +  power5_input    microwatts     RO      RCA VRD power
+> +  ============    =============  ======  ===============================================
 >   
 > -Example::
 > +  Example::
 >   
->       #cat boot_progress
->       0102808454A8
->   
-> -2) SoC Power Limit
-> +2) SoC power limit
->   
-> -SMpro misc driver creates the sysfs file ``soc_power_limit`` to get/set the SoC Power Limit.
-> +   The driver creates ``soc_power_limit`` sysfs file to get/set the SoC
-> +   power limit.
->   
-> -Reading this sysfs return the current setting of SoC Power Limit (W) in decimal string.
-> -Writing the desired value in decimal string to set the SoC Power Limit in Watt (W).
-> -The range of SoC Power Limit is 90-500(W) and will be ignored if out of range.
-> +   Reading the file returns the current limit. Write the desired value in
-> +   decimal to set the limit (in watts).  The valid limit range is 90-500 W.
-> +   If the value is out of range, it will be ignored.
->   
-> -Example::
-> +   Example::
->   
-> -    #cat soc_power_limit
-> -    90
-> -    #echo 95 > soc_power_limit
-> -    #cat soc_power_limit
-> -    95
-> +     #cat soc_power_limit
-> +     90
-> +     #echo 95 > soc_power_limit
-> +     #cat soc_power_limit
-> +     95
+>       # cat in0_input
+>       830
 > 
-Thank you Bagas but as per Greg's comment, this file might be dropped 
-and move to Documentation/ABI in next version.
 
-Thanks a lot for the detail change.
+Thank you Bagas, will apply in next version.
 - Quan
