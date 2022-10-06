@@ -1,64 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83ADD5F62C9
-	for <lists+openbmc@lfdr.de>; Thu,  6 Oct 2022 10:34:48 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A67475F62E2
+	for <lists+openbmc@lfdr.de>; Thu,  6 Oct 2022 10:38:26 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Mjl9f3VD7z3c8C
-	for <lists+openbmc@lfdr.de>; Thu,  6 Oct 2022 19:34:46 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MjlFr2XDWz3c6t
+	for <lists+openbmc@lfdr.de>; Thu,  6 Oct 2022 19:38:24 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=mDec0KAZ;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=GVGS7BPD;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::432; helo=mail-wr1-x432.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::42a; helo=mail-wr1-x42a.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=mDec0KAZ;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=GVGS7BPD;
 	dkim-atps=neutral
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mjl945sWcz2yhy
-	for <openbmc@lists.ozlabs.org>; Thu,  6 Oct 2022 19:34:15 +1100 (AEDT)
-Received: by mail-wr1-x432.google.com with SMTP id b4so1561628wrs.1
-        for <openbmc@lists.ozlabs.org>; Thu, 06 Oct 2022 01:34:15 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MjlFH60trz2xVr
+	for <openbmc@lists.ozlabs.org>; Thu,  6 Oct 2022 19:37:54 +1100 (AEDT)
+Received: by mail-wr1-x42a.google.com with SMTP id j16so1559616wrh.5
+        for <openbmc@lists.ozlabs.org>; Thu, 06 Oct 2022 01:37:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=jms.id.au; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date;
-        bh=FPNUTNTpcv6j/KbpOG6QdRUrs1ERz5AvzNn4LNwyhvQ=;
-        b=mDec0KAZY9RKJBCzqOoD++x6l9Ig0HXruY3mZ025wJ8aEWVsN0iSAtx8IrldqK9nJ3
-         jp526VlYA8KPU//FZB52ZGVclkec5zoeYh1FxkEgBJP6eM6pV93XNtKtz6dLTGfOGJpL
-         ZL+90Qf++q9PFQdf3kLcPnNBnjJgl5/1wmsjw=
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date;
+        bh=Oyp8a7gYttyk9yqG8gurRvmwZmgd02RBL0mXOJ9mGKY=;
+        b=GVGS7BPDf0xCQhr1wmZalLEfcNl/floVlfyvEDauKdacXBbd58I9Q8OifMUMkXWcGD
+         zGOsYnwVApUx6vlV8kUsm6xQ1pVlUcpxR+9v63pz9uwsrx5pkIjtiXYvlM1nmyov4jk5
+         DCqVnwsSKrW2Mx32owkf/Fa4BB4aBsetbLg7Q=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date;
-        bh=FPNUTNTpcv6j/KbpOG6QdRUrs1ERz5AvzNn4LNwyhvQ=;
-        b=Id8cFHXxl0lsmtgXRQYJhELKdWof9QvPFZrs7V8ucI9ehL3WxD0CmFyv9B3YRk+AC3
-         iAeNLsI6b+xr7RpZVJKiez5O5Ax/hJv3pWN788zQv9iyyS9mGQFmwRTraiZepHUUKHsh
-         b4aaHkviuoTI7sXVA5sV4s4fRXfCXOCj/9UI+6EG0lVFniSyL01LF0r0PrYSfukhZW1y
-         2IqeT0ygZmWThT3cffvZxTs/7YeGkL9yJiqYcsmycC97mIUAv8MF6RPWxqGutpxMbhFt
-         FR7I6lqmSl+ABxxxSaE/aLQ/qzSFw15Zu1/+30fJzXS++beWAD74T1iuSylFmGrJe5ZT
-         iaYA==
-X-Gm-Message-State: ACrzQf0RIqZx8smQziXfEupP0E4dKi7AJ7K3R3id6EIPc4bWXrxS4O/5
-	9T3eTEUGkfLyBqD8n/F8Xjj3PnD1iMys8rtrLqM1CvKD
-X-Google-Smtp-Source: AMsMyM7CfFlJkqi+KnvowYMXiy5ePzNo4FAdGJw/aFHSCvdCdtOe3NpWDMwYgenKxfxasfSY9AM7YITRaTYYKl7Bzeg=
-X-Received: by 2002:a5d:52c9:0:b0:22c:c9e0:8547 with SMTP id
- r9-20020a5d52c9000000b0022cc9e08547mr2240724wrv.3.1665045247727; Thu, 06 Oct
- 2022 01:34:07 -0700 (PDT)
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date;
+        bh=Oyp8a7gYttyk9yqG8gurRvmwZmgd02RBL0mXOJ9mGKY=;
+        b=YbEKq2NO/VJKIuuV0uDlDEwK72eN6kq0xRO6R+5zhesNLA8quxPtvj18GAXtm+DvfI
+         KY/SIz9UV6wZGQF828Pf1iqOGI8dSgv33A6BM3hcYqfifFeWsNwkpRZjwNM8zXbhIVkg
+         fhPB6EnopJKeHeSQqRqTm8HgP49EicIjh5j5XH/RJOFS7ts1X8zXg/WOvh/1T9yJQ3Ob
+         sOVugbhH/TqNcLvS04zYH2MKj/Sx7VWyw8piAUrzrNRKxdhRcThVSDoLfhLjaF86lhq0
+         vTuNnav34S66JItDrIoo5EtzGdfiRZk9kajON0zIFvWVWPhiDwEqPuXLOm1S4sg77zXH
+         cr9w==
+X-Gm-Message-State: ACrzQf3jQ9ygRYCaRPklMs1d9S2uYzdF0lgB1AZO5caFxLMYxWyorQV2
+	uifolSBqAnFerMOp1BcUd3sYtJ1+HpzPFDdTV71RrbZCDLs=
+X-Google-Smtp-Source: AMsMyM7mMgjYYYpsX7J02YlvMvCfgaRb17hdyJJjc0ugNJ8P6y91w+3RKH2sQd5JAheUuj3Fgt7rc97aVyokDc5mub8=
+X-Received: by 2002:a5d:490f:0:b0:22e:4bae:c06d with SMTP id
+ x15-20020a5d490f000000b0022e4baec06dmr2230718wrq.549.1665045470304; Thu, 06
+ Oct 2022 01:37:50 -0700 (PDT)
 MIME-Version: 1.0
 References: <CACPK8XdERea0Mt+3o1z2TwbN_NXJ-FDYf8mxUEAWe5Lp7oFRmg@mail.gmail.com>
- <CACPK8XfrECvJtwZ8AR1EgsVHpSnkKCVp2LovCXCyFXBpjeBbfQ@mail.gmail.com> <Yz5MGyM9yXFPz1Er@heinlein>
-In-Reply-To: <Yz5MGyM9yXFPz1Er@heinlein>
+ <CACPK8XfrECvJtwZ8AR1EgsVHpSnkKCVp2LovCXCyFXBpjeBbfQ@mail.gmail.com> <27257597-8068-ab59-ec5d-99deb66065e2@os.amperecomputing.com>
+In-Reply-To: <27257597-8068-ab59-ec5d-99deb66065e2@os.amperecomputing.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 6 Oct 2022 08:33:55 +0000
-Message-ID: <CACPK8Xd_p1_aS-zU_=fTrPKm_ZhfqL3Rs8icexC7=94EeDm2HQ@mail.gmail.com>
+Date: Thu, 6 Oct 2022 08:37:38 +0000
+Message-ID: <CACPK8XeOV71erRYS9YkkKJqjUnAPTucC4t1Ltfke6+jkVTrmvA@mail.gmail.com>
 Subject: Re: Linux kernel updates and v6.0
-To: Patrick Williams <patrick@stwcx.xyz>
+To: Quan Nguyen <quan@os.amperecomputing.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,22 +76,56 @@ Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 6 Oct 2022 at 03:31, Patrick Williams <patrick@stwcx.xyz> wrote:
+On Thu, 6 Oct 2022 at 07:04, Quan Nguyen <quan@os.amperecomputing.com> wrot=
+e:
 >
-> On Thu, Oct 06, 2022 at 01:26:13AM +0000, Joel Stanley wrote:
-> > On Wed, 28 Sept 2022 at 06:34, Joel Stanley <joel@jms.id.au> wrote:
-> > > Please address any future patches to the dev-6.0 tree.
+>
+> >
+> >> Please address any future patches to the dev-6.0 tree.
 > >
 > > If you have pending patches then please let me know that you want them
 > > merged to the dev-6.0 branch. Otherwise, rebase and re-send them to
 > > the list.
+> >
 >
 > Hi Joel,
 >
-> We'd like to have this series applied to your tree and backported to
-> dev-6.0.
+> Could you help to pick this patchset to the dev-6.0 branch ?
 >
-> https://lore.kernel.org/lkml/20220929013130.1916525-1-potin.lai.pt@gmail.com/
+> https://lore.kernel.org/lkml/20221004093106.1653317-4-quan@os.amperecompu=
+ting.com/
 
-I've merged to dev-6.0. This missed the merge window for 6.1; I'll try
-to remember to apply it once 6.1-rc1 comes out for 6.2.
+I merged this but it caused a build error:
+
+drivers/char/ipmi/ssif_bmc.c:864:27: error: initialization of =E2=80=98int
+(*)(struct i2c_client *)=E2=80=99 from incompatible pointer type =E2=80=98v=
+oid
+(*)(struct i2c_client *)=E2=80=99 [-Werror=3Dincompatible-pointer-types]
+  864 |         .remove         =3D ssif_bmc_remove,
+      |                           ^~~~~~~~~~~~~~~
+
+I think in 6.1 the i2c drivers will return void in their remove
+callbacks, but before then they still need to return an int. I have
+updated your change with this patch:
+
+--- a/drivers/char/ipmi/ssif_bmc.c
++++ b/drivers/char/ipmi/ssif_bmc.c
+@@ -835,12 +835,14 @@ static int ssif_bmc_probe(struct i2c_client
+*client, const struct i2c_device_id
+        return ret;
+ }
+
+-static void ssif_bmc_remove(struct i2c_client *client)
++static int ssif_bmc_remove(struct i2c_client *client)
+ {
+        struct ssif_bmc_ctx *ssif_bmc =3D i2c_get_clientdata(client);
+
+        i2c_slave_unregister(client);
+        misc_deregister(&ssif_bmc->miscdev);
++
++       return 0;
+ }
+
+Cheers,
+
+Joel
