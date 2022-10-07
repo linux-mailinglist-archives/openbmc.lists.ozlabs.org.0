@@ -2,71 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A16E05F6AB0
-	for <lists+openbmc@lfdr.de>; Thu,  6 Oct 2022 17:33:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 184CB5F72EB
+	for <lists+openbmc@lfdr.de>; Fri,  7 Oct 2022 04:55:46 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MjwTJ4DN6z3cfB
-	for <lists+openbmc@lfdr.de>; Fri,  7 Oct 2022 02:33:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MkCc007YHz2xy6
+	for <lists+openbmc@lfdr.de>; Fri,  7 Oct 2022 13:55:44 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=dqylxaX+;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=QoAudtpw;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.68.75; helo=ams.source.kernel.org; envelope-from=wsa@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::52a; helo=mail-pg1-x52a.google.com; envelope-from=milkfafa@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=dqylxaX+;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=QoAudtpw;
 	dkim-atps=neutral
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MjwSc0Gkwz3bjy;
-	Fri,  7 Oct 2022 02:33:19 +1100 (AEDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ams.source.kernel.org (Postfix) with ESMTPS id 9AF18B82067;
-	Thu,  6 Oct 2022 15:33:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2208C433D7;
-	Thu,  6 Oct 2022 15:33:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1665070393;
-	bh=b5fz2Faps9g6VlZUHemqmOjeGlkHE/XuO+Ju+7K214A=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=dqylxaX+JXllTIj8yLEPkVZBqPOA8RVrx3AnU9xEinCebuNlOnMyggpT2Y80GCOKD
-	 jn8iiFVa+0tWfLJIarZ3gsc9/5t0tmhNFVpZDSmYTxEm3+VkTnm0l0SUpgjsEB63l2
-	 CggpubewSFAbm+eamVnZO4CyMN9gRy+UD59XmmVr4BYO4qxyiS9KmAjYRaSobvpfXz
-	 DnSX30IFKdyjSNgEeCssZktyaIUkNxCpFB7k0Lc+SXVgkoMAgW8m2BDe1NFSnP52GJ
-	 X4HbSOH8Yj7yBUvZLDbotfkDUcHGpOI7PFo5Ulpg6CEjrH0C7sa5mARjW+j67nRLWp
-	 XjHxO0UAdVaJw==
-Date: Thu, 6 Oct 2022 17:33:10 +0200
-From: Wolfram Sang <wsa@kernel.org>
-To: Quan Nguyen <quan@os.amperecomputing.com>
-Subject: Re: [PATCH v10 3/3] i2c: aspeed: Assert NAK when slave is busy
-Message-ID: <Yz71NjbmLZeRpmM2@shikoro>
-Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
-	Quan Nguyen <quan@os.amperecomputing.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Corey Minyard <minyard@acm.org>, Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-	Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
-	openipmi-developer@lists.sourceforge.net,
-	devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-	linux-i2c@vger.kernel.org, openbmc@lists.ozlabs.org,
-	linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
-	Open Source Submission <patches@amperecomputing.com>,
-	Phong Vo <phong@os.amperecomputing.com>,
-	thang@os.amperecomputing.com
-References: <20221004093106.1653317-1-quan@os.amperecomputing.com>
- <20221004093106.1653317-4-quan@os.amperecomputing.com>
- <Yz3VmWCqdolKg5sm@shikoro>
- <c8c774c5-b274-a6f9-303b-e84c50800b5c@os.amperecomputing.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MkCbM4bqTz2ywm
+	for <openbmc@lists.ozlabs.org>; Fri,  7 Oct 2022 13:55:10 +1100 (AEDT)
+Received: by mail-pg1-x52a.google.com with SMTP id a23so3453737pgi.10
+        for <openbmc@lists.ozlabs.org>; Thu, 06 Oct 2022 19:55:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1t1lgGSkCV/fbIs2kuR7yhjBJKzOBf1B0SWabinchi4=;
+        b=QoAudtpwG6sMTU4xgzk3grcK2BAKOCbEdKjZFeOGkJijWrdxnNk3FDzAEhKVi14TW1
+         XSdbvHgRqtmOhR62MTGBxKpFrXgl8UYC+E6B5ij95Raqp62XSY5WdoTrPXtT8H+lsW5D
+         O1liYB6Ogg6VxfNkfPrPn79f8WcBYHpiPHsDmhZuj0dFRTtYMDlSwDgeA1Xty9JN05uB
+         t5PwbLtuhS2YC3+dvmAdJVsHSfW+SrLBn7t7gk6yx9uszhZJP6LfrVvioVSN0KSjIQuy
+         NqLBNsDQSrHPkwGvBIvBsR0ZfU1h4jbsfYB6y3d4BbRgwxfNpFWJTEiIKoyc0pklTvR6
+         JycQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1t1lgGSkCV/fbIs2kuR7yhjBJKzOBf1B0SWabinchi4=;
+        b=j4pq4TFc2pVs23U22WqXMHVDVotjb47y5evjyltnvKa//bH3QoSPjsmCmEmHB/qGUP
+         Y7uJvskXscm3S5Y4FddyLmR3nSJ0cppNuAYu2yNWSkQWJEGb/8lWbY0TSUt/vFwcyvXa
+         yXMzIQMOX++HMGY2Fk1Gh2tfhLmhe8wMcJsReuI+YLWKeM29XPnXQjtKXauDr7UZVLRM
+         MBDi/N/bU2nXxP9u6X+ofEr0knJrWHCT0fEgivn0bcenugtkGlkBrgv6iLj+1LfkdP+W
+         eibO0Y1xnLSTjIrKXRlgHHwP2lPpb4budiTSVvtkWMbTysgWq6Xqp3A7Ob2SgTV0/07s
+         IaYw==
+X-Gm-Message-State: ACrzQf1qEaiT2CAMof0+HFRopRaPKQI5BJFevPGkZ8tiBVRJkqe+vR5P
+	Mwico9nOjq8pz+fHO91mILYHZVE90Ds=
+X-Google-Smtp-Source: AMsMyM5unW/otYae8tUOGWtaUXDPcotFxOtgouXYYvzkqzHVNdgvJkDEkhUVGry7euP+g8dsMxufgA==
+X-Received: by 2002:a65:64d9:0:b0:43b:f6e1:335e with SMTP id t25-20020a6564d9000000b0043bf6e1335emr2596468pgv.210.1665111308257;
+        Thu, 06 Oct 2022 19:55:08 -0700 (PDT)
+Received: from hcdev-d520mt2.. (60-250-192-107.hinet-ip.hinet.net. [60.250.192.107])
+        by smtp.gmail.com with ESMTPSA id h12-20020a63574c000000b0041c0c9c0072sm476944pgm.64.2022.10.06.19.55.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 06 Oct 2022 19:55:07 -0700 (PDT)
+From: Marvin Lin <milkfafa@gmail.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH v1 0/5] Support Nuvoton NPCM Video Capture/Encode Engine
+Date: Fri,  7 Oct 2022 10:54:08 +0800
+Message-Id: <20221007025413.3549628-1-milkfafa@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="+SCqpgtCPKo+UDYP"
-Content-Disposition: inline
-In-Reply-To: <c8c774c5-b274-a6f9-303b-e84c50800b5c@os.amperecomputing.com>
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,40 +75,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, thang@os.amperecomputing.com, linux-aspeed@lists.ozlabs.org, Corey Minyard <minyard@acm.org>, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, Randy Dunlap <rdunlap@infradead.org>, linux-kernel@vger.kernel.org, Phong Vo <phong@os.amperecomputing.com>, Brendan Higgins <brendan.higgins@linux.dev>, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, openipmi-developer@lists.sourceforge.net, Open Source Submission <patches@amperecomputing.com>, linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org
+Cc: andrew@aj.id.au, kflin@nuvoton.com, Marvin Lin <milkfafa@gmail.com>, joel@jms.id.au, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This patch series add DTS node, dt-bindings document and drivers for Video
+Capture/Differentiation Engine (VCD) and Encoding Compression Engine (ECE)
+present on Nuvoton NPCM SoCs.
 
---+SCqpgtCPKo+UDYP
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+VCD can capture/differentiate video data from digital or analog sources,
+then the ECE will compress the data into HEXTILE format.
 
+HEXTILE compressed format is defined in Remote Framebuffer Protocol (RFC
+6143) and is used by VNC features, so we also add a patch to support it.
 
-> Thank you for your patience with me through many versions.
+Marvin Lin (5):
+  arm64: dts: nuvoton: Add node for NPCM Video Capture/Encode Engine
+  dt-bindings: media: Add dt-bindings for NPCM Video Capture/Encode
+    Engine
+  dt-bindings: arm/npcm: Add dt-bindings for Graphics Core Information
+  media: Add HEXTILE compressed format
+  drivers: media: platform: Add NPCM Video Capture/Encode Engine driver
 
-You are welcome. In the end, I think the update of the target interface
-is an improvement, in deed. So, thank you for that!
+ .../bindings/arm/npcm/nuvoton,gfxi.yaml       |   41 +
+ .../bindings/media/nuvoton,npcm-video.yaml    |   87 +
+ .../media/v4l/pixfmt-reserved.rst             |    8 +
+ MAINTAINERS                                   |    1 +
+ .../dts/nuvoton/nuvoton-common-npcm8xx.dtsi   |   19 +
+ .../boot/dts/nuvoton/nuvoton-npcm845-evb.dts  |   18 +
+ drivers/media/platform/Kconfig                |    1 +
+ drivers/media/platform/Makefile               |    1 +
+ drivers/media/platform/nuvoton/Kconfig        |    9 +
+ drivers/media/platform/nuvoton/Makefile       |    2 +
+ drivers/media/platform/nuvoton/npcm-video.c   | 2095 +++++++++++++++++
+ drivers/media/v4l2-core/v4l2-ioctl.c          |    1 +
+ include/uapi/linux/videodev2.h                |    1 +
+ 13 files changed, 2284 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/arm/npcm/nuvoton,gfxi.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/nuvoton,npcm-video.yaml
+ create mode 100644 drivers/media/platform/nuvoton/Kconfig
+ create mode 100644 drivers/media/platform/nuvoton/Makefile
+ create mode 100644 drivers/media/platform/nuvoton/npcm-video.c
 
+-- 
+2.34.1
 
---+SCqpgtCPKo+UDYP
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmM+9TYACgkQFA3kzBSg
-KbYACw/9E3V2Y6ViQwRZW439rY0GLtJGPos89UPLB3b8h2XUl/8KWQBrU4MDD46d
-6VEho+Ae8+5OHpqczwMiXkgc+Z/Yc0OtfOUXCqEr339KH09Z2k930RdTb20dZf6t
-UZbq+wAaD9xn4nXBMEBM3YoBDbncbhTEamK0mKkh5lHmD2fZqXXRqpbBtwSZXN5s
-Y+Oshsl9cuGEkqde5gVhRR1DWJrOesWHmg51VhBvq0E74sSlWc3D4ByKYJ2K95qw
-w0gd48NMY5vtSvM8e2X2SqA/1rwYYi91bn5xFCM0hSXWmAU+hKhEW6O0rQrbZPu1
-9mwoOHEvTanaLpYiWCsnevEgEsLifpiKMlojSmQZIQLeFLTg69K36Gdyb57mNzD1
-4+Mb5QP4yjHkjA9uwr03qJv08xDKmQtnQhO/dkjz0iAE3uxdpGYb3XB0chL+YI7p
-rJV9CIETC+HFpzrKiOu9XGRNnLzu7dJ6Jx489UKzS+d2cofL+gZMTsAkeu1WXBEj
-UY8cqIm1rxaOJgy8SBotNJssqRS7TGL/TYtXFgFtQIJ2pISQHB1Yc9FdZSRdXHLF
-5wRpQZlTnIS9/wL/K29aAvePtLJHbDhUgaDIqU0JgNEdA1wA9wUj0RK0FrQyHBP0
-W96sDicwz7oVBGNZuX1lQHtfYGZqdBPIllgG8XaGlwNlwgRCiyg=
-=WHBN
------END PGP SIGNATURE-----
-
---+SCqpgtCPKo+UDYP--
