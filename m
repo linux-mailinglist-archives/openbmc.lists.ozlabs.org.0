@@ -1,67 +1,56 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id F26305F9F09
-	for <lists+openbmc@lfdr.de>; Mon, 10 Oct 2022 15:02:18 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DE4605F9FF9
+	for <lists+openbmc@lfdr.de>; Mon, 10 Oct 2022 16:13:29 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MmJwS6vpNz3dqV
-	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 00:02:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MmLVZ4bhSz3dqp
+	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 01:13:26 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=ebX7d6St;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=rS+ol3nl;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62a; helo=mail-ej1-x62a.google.com; envelope-from=milkfafa@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=broonie@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=ebX7d6St;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=rS+ol3nl;
 	dkim-atps=neutral
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MmJvs4ypMz3c5G
-	for <openbmc@lists.ozlabs.org>; Tue, 11 Oct 2022 00:01:43 +1100 (AEDT)
-Received: by mail-ej1-x62a.google.com with SMTP id q9so20199933ejd.0
-        for <openbmc@lists.ozlabs.org>; Mon, 10 Oct 2022 06:01:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=E8Jjr1RJl+ZdRt0o4JcYHzYyppV5ZU4L+MLr7qEV0+g=;
-        b=ebX7d6StlNsgXLP2HmfTJ00C+dB3uaaJS7q8fhrsUBcOn0mz4qOZm/xTvKfp6eFl2B
-         Q9YdDh3gZbm/zAyT8PHS366S0tmIlYtSNIeNj8aynG1AVxPoWyf+RZ/xdjjtJP3nZVlF
-         E4ktcpmfWYskopVt3gzHBvAh8dOsY3RFpQm4jiPMnfDfrqT3wPpIbqITzy8YqI0mJ97Q
-         R501TJ5ESB/U4GqeckRS1KgYP/yODUsN4zf/vyrwTMTnpxK2kwhViNgXw0My/5PFtmAa
-         KiCdFOLHUo9ZcbMj7pK8yftTUqQJ3m5T1KrS94EjdfdJYdzFnZPqSG9LAtfZliSxmqaS
-         V+cg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=E8Jjr1RJl+ZdRt0o4JcYHzYyppV5ZU4L+MLr7qEV0+g=;
-        b=U1HSjbfI6DhjNacYmIjkBTJmkmum0G2jCLpcK06QXb3w7P3Ewt78FOHnVaTjcCr7jc
-         Gmmkn6EQzzO1wqlz1L/8xyHRGejveRPTJz30AFnAamtz1BrQ4/gSnwtUV9X+/dVD+j5e
-         pAwNIz8aimVhEnhXmFeeL3QeEXcEh1sj7zSpUzZWtounmZLVC74sWny43ChY90shq0GD
-         HuC/7VOOJs9WvKcHKXeazOEHWjCR2sCHvaijXJrJgyms25PG6MrjHD2lOSRdYZrEPROo
-         GyTcad12eEJsGIQl1XgVEYG01p3bXyU85DqyGbBc1lLd9H9msGAew/xoiFXE2Y2zI4qg
-         jsRg==
-X-Gm-Message-State: ACrzQf0tZjAH1O0Cpoe9RBiXIi7wi5K9nYwKGofxMUTYz8Gz3P9iLaqY
-	Xkgh/H4I7h3iugJ9Qn5KaJOUDMmjL/A+jwmvsDFmCrYg2Cw=
-X-Google-Smtp-Source: AMsMyM4o+Rsee0DxPNe44lFARn7fZ24Cw7raR/9gK5qapvTlsdvlXqxJqfAbpdlWSKKSBe/4aPhA9/Ctbqkcpzu8Duk=
-X-Received: by 2002:a17:907:60cb:b0:785:4ec0:551f with SMTP id
- hv11-20020a17090760cb00b007854ec0551fmr14480369ejc.179.1665406896767; Mon, 10
- Oct 2022 06:01:36 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MmLTy03rcz3bjp;
+	Tue, 11 Oct 2022 01:12:53 +1100 (AEDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id F305260F5E;
+	Mon, 10 Oct 2022 14:12:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77F16C433D7;
+	Mon, 10 Oct 2022 14:12:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1665411170;
+	bh=i+nTuecqo88xOxtIonJejeCxD46J/wAXbJ3XX3wP5tw=;
+	h=From:To:In-Reply-To:References:Subject:Date:From;
+	b=rS+ol3nlPgDNrGzZR/PNfnMdXZvGHsaHmgOA1Gz93bGvDnK2IhTxXPVHnLnqDMUE9
+	 o3/AC4GtBt9o1NJGSx4URHMVdqxp45kb0Ts2HUSv6v9J2UC5ZH/BTwnx3jJ8hjjAOG
+	 +7lITAlCddVy7QUyGqcJ62avRFPaI2Ou3ftEyKoCUBWarFM3c4+Bo1U5lxkUzDYVRQ
+	 2Hd05bSUnsor230vY1GU7p/eMlUiVRbLpT2+ftdoKumEnRv+u3jBcOq25Djgd7iVCj
+	 yDkZhLDnD4XDs8gdt65kMgMkSH9cP9HkzwBdz1mLpXGITPL1rGoVOjFudiqGbUvsJK
+	 YfK5xEFuNf1rg==
+From: Mark Brown <broonie@kernel.org>
+To: linux-spi@vger.kernel.org, clg@kaod.org, joel@jms.id.au, steven_lee@aspeedtech.com, linux-aspeed@lists.ozlabs.org,
+ openbmc@lists.ozlabs.org, andrew@aj.id.au, linux-kernel@vger.kernel.org, BMC-SW@aspeedtech.com,
+ Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
+In-Reply-To: <20221005083209.222272-1-chin-ting_kuo@aspeedtech.com>
+References: <20221005083209.222272-1-chin-ting_kuo@aspeedtech.com>
+Subject: Re: [v2] spi: aspeed: Fix typo in mode_bits field for AST2600 platform
+Message-Id: <166541116820.121778.9566592036880610465.b4-ty@kernel.org>
+Date: Mon, 10 Oct 2022 15:12:48 +0100
 MIME-Version: 1.0
-References: <20221007025413.3549628-1-milkfafa@gmail.com> <Y0AsbVvZA+VQVfcP@probook>
-In-Reply-To: <Y0AsbVvZA+VQVfcP@probook>
-From: Kun-Fa Lin <milkfafa@gmail.com>
-Date: Mon, 10 Oct 2022 21:01:25 +0800
-Message-ID: <CADnNmFq-_pVFSDRFJ07HAt0Z+=CMwbHaiSPamaJiUXOU9haD-g@mail.gmail.com>
-Subject: Re: [PATCH v1 0/5] Support Nuvoton NPCM Video Capture/Encode Engine
-To: =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.10.0-dev-fc921
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,16 +62,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: andrew@aj.id.au, openbmc@lists.ozlabs.org, tmaimon77@gmail.com, kflin@nuvoton.com, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Jonathan,
+On Wed, 5 Oct 2022 16:32:09 +0800, Chin-Ting Kuo wrote:
+> Both quad SPI TX and RX modes can be supported on AST2600.
+> Correct typo in mode_bits field in both ast2600_fmc_data
+> and ast2600_spi_data structs.
+> 
+> 
 
-Previous patchset was aimed for torvalds/linux and we would also like
-to upstream to openbmc/llinux.
-So this new v1 patchset is specifically aimed for openbmc/linux branch dev-6.0.
-https://github.com/openbmc/linux/tree/dev-6.0
+Applied to
 
-Regards,
-Marvin
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+
+Thanks!
+
+[1/1] spi: aspeed: Fix typo in mode_bits field for AST2600 platform
+      commit: 5302e1ff315b40dfc9bb3f08911f5a788cc1de01
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
