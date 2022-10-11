@@ -2,69 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C3D15FB260
-	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 14:25:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6ADA55FB34D
+	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 15:22:06 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Mmw3G2Z4cz3bgC
-	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 23:25:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MmxJr2L7fz3bht
+	for <lists+openbmc@lfdr.de>; Wed, 12 Oct 2022 00:22:04 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=BkGCT6jw;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=nuznLHsZ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=yadro.com (client-ip=89.207.88.252; helo=mta-01.yadro.com; envelope-from=n.chegodaev@yadro.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62b; helo=mail-ej1-x62b.google.com; envelope-from=milkfafa@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-01 header.b=BkGCT6jw;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=nuznLHsZ;
 	dkim-atps=neutral
-X-Greylist: delayed 581 seconds by postgrey-1.36 at boromir; Tue, 11 Oct 2022 23:24:41 AEDT
-Received: from mta-01.yadro.com (mta-02.yadro.com [89.207.88.252])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mmw2d2KBTz2xfm
-	for <openbmc@lists.ozlabs.org>; Tue, 11 Oct 2022 23:24:41 +1100 (AEDT)
-Received: from localhost (unknown [127.0.0.1])
-	by mta-01.yadro.com (Postfix) with ESMTP id 8796F40418
-	for <openbmc@lists.ozlabs.org>; Tue, 11 Oct 2022 12:14:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=yadro.com; h=
-	content-transfer-encoding:content-type:content-type:subject
-	:subject:from:from:content-language:user-agent:mime-version:date
-	:date:message-id:received:received:received:received; s=mta-01;
-	 t=1665490491; x=1667304892; bh=JcgFpaOsU6i0JmUsE29cNvn+erypJuZU
-	HYORqwOQ0FU=; b=BkGCT6jwWZ0EggRH2ya7bK/GsDsQAkgeV91Cn4F+zE4byRK3
-	Icu0dAZh6sWaHCpxabCqYSc6slOVfot40a8rqaWN9MnBYnYOGEzL+mcVqE1ONfYm
-	tNYJmpla3RyBlGGQKCJeJyfwC7t6nl6doA11pPB0MS5xvQ1fGACOXwSVXbk=
-X-Virus-Scanned: amavisd-new at yadro.com
-Received: from mta-01.yadro.com ([127.0.0.1])
-	by localhost (mta-01.yadro.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id Kt-Cl-KQnvpT for <openbmc@lists.ozlabs.org>;
-	Tue, 11 Oct 2022 15:14:51 +0300 (MSK)
-Received: from T-EXCH-01.corp.yadro.com (T-EXCH-01.corp.yadro.com [172.17.10.101])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mta-01.yadro.com (Postfix) with ESMTPS id DC1F840311
-	for <openbmc@lists.ozlabs.org>; Tue, 11 Oct 2022 15:14:51 +0300 (MSK)
-Received: from T-EXCH-08.corp.yadro.com (172.17.11.58) by
- T-EXCH-01.corp.yadro.com (172.17.10.101) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384_P384) id
- 15.1.669.32; Tue, 11 Oct 2022 15:14:51 +0300
-Received: from [10.199.24.215] (10.199.24.215) by T-EXCH-08.corp.yadro.com
- (172.17.11.58) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.1118.9; Tue, 11 Oct
- 2022 15:14:51 +0300
-Message-ID: <c0a6d816-5567-941a-b280-93acde717916@yadro.com>
-Date: Tue, 11 Oct 2022 15:14:50 +0300
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MmxHk3668z3blj
+	for <openbmc@lists.ozlabs.org>; Wed, 12 Oct 2022 00:21:06 +1100 (AEDT)
+Received: by mail-ej1-x62b.google.com with SMTP id b2so31339037eja.6
+        for <openbmc@lists.ozlabs.org>; Tue, 11 Oct 2022 06:21:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=bQ1YybhaFsgjhj87KrtTMSAD9Wi9BEJSVTkvF+F7y/s=;
+        b=nuznLHsZqSeHuNxBxIVla0dDPblNggjGFRbxm10ehr+xmolbPCWnWq/W0fyT+Lg9Am
+         MXGMQSYWfzwz35XuRx9bEYH4Yrdj5Df+tgCTROcAffB6PsA13FeqD2IzFSlqrVbIVK5R
+         VJ2mjX1J6op982N2yuDgfYcvYcE/UP77Bfn62Z0S+9ew/vj4heE96ug4HVTbwp6Z0Xal
+         OW/ySDGBL3VNJMq3U9pSb6unekMF2GRSiIRUstjQxViOfe0IvS0E6lGl2FUwB/vIxSdf
+         ParT2JDanOzC0EAJk1bHui23SChLyyajsF4CwFcbJPOSTPXKuTWid5p9PC8rtiqebIpD
+         /8jQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=bQ1YybhaFsgjhj87KrtTMSAD9Wi9BEJSVTkvF+F7y/s=;
+        b=mTFvxxqxsf1F3KWtpAKK/H8ZjrjNVKKDApOkVQmbVGwOpLZ2yrVSeo05o30QGK0umb
+         SuNwWeLJ8NlfQO2lneGhqH1oHIg2/mGvY+rJ25ODJ6w1ZMerh8Boj8DLM1aCwjKOWFO0
+         tHOtQIVyaZvHSf+rB5H7f7AlNjwqjmYNPx4H37cK6jRdkRZe+tSSPner4RvMd3Dub4Pi
+         7Ryb38kZTPET8Pxd0edQieHi3b7Wwv65xLV2tdtRNttmuRCaLQfLq6NnyUfKHrV2QFjF
+         5Y5hdiNsDjlDtBz4JyS6PFMAT3AGoHnCWwNyKlcMudJ/rPPNo1orFaZsNB3qJymg6jUK
+         Ay0w==
+X-Gm-Message-State: ACrzQf1Egzeq/Dt6OmJ3aF97zReECZQ4HCxJVR8eQwlHElFk2SJafDMD
+	PKy7alZQPpmrmCSIYX3Y62TxdHTZoydUhhv1aj4=
+X-Google-Smtp-Source: AMsMyM5hAMcYG/VzOBuNtn7wHnD73H+Ff56cR1xaZtRAMXDIeKzOamf11UeMKH2VYebWzu/xOMRgE84kj7CnU+SkQGM=
+X-Received: by 2002:a17:907:728a:b0:78d:2b4b:e7f7 with SMTP id
+ dt10-20020a170907728a00b0078d2b4be7f7mr19149176ejc.269.1665494459061; Tue, 11
+ Oct 2022 06:20:59 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
- Thunderbird/91.11.0
-Content-Language: en-US
-From: Nikolay Chegodaev <n.chegodaev@yadro.com>
-Subject: Webui-vue: table multisort feature.
-To: <openbmc@lists.ozlabs.org>
+References: <20221007025413.3549628-1-milkfafa@gmail.com> <Y0AsbVvZA+VQVfcP@probook>
+ <CADnNmFq-_pVFSDRFJ07HAt0Z+=CMwbHaiSPamaJiUXOU9haD-g@mail.gmail.com> <Y0RW7rOfUrvWXgdv@probook>
+In-Reply-To: <Y0RW7rOfUrvWXgdv@probook>
+From: Kun-Fa Lin <milkfafa@gmail.com>
+Date: Tue, 11 Oct 2022 21:20:50 +0800
+Message-ID: <CADnNmFqix6goZTu-vHEP73e3QumaxPnSXecdfqLvZ0ux2z3vAA@mail.gmail.com>
+Subject: Re: [PATCH v1 0/5] Support Nuvoton NPCM Video Capture/Encode Engine
+To: =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.199.24.215]
-X-ClientProxiedBy: T-EXCH-01.corp.yadro.com (172.17.10.101) To
- T-EXCH-08.corp.yadro.com (172.17.11.58)
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,46 +76,22 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: i.kononenko@yadro.com
+Cc: andrew@aj.id.au, openbmc@lists.ozlabs.org, tmaimon77@gmail.com, kflin@nuvoton.com, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Good day OpenBMC Community,
+Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net> =E6=96=BC 2022=E5=B9=B410=
+=E6=9C=8811=E6=97=A5 =E9=80=B1=E4=BA=8C =E5=87=8C=E6=99=A81:31=E5=AF=AB=E9=
+=81=93=EF=BC=9A
+>
+> Ah, I missed that, thank you for the explanation!
+>
+> To avoid such confusion, I'd suggest perhaps indicating the branch in the
+> subject line, e.g. using [PATCH openbmc-6.0 v1 0/5] or similar instead of
+> [PATCH v1 0/5]. "git format-patch" can do this with the --subject-prefix =
+option.
 
-My name is Nikolay, I working with the project that is based upon the OpenBMC - https://github.com/openbmc/openbmc - and its WebUI-vue part in particular. 
+Got it, sorry for the confusion and thanks for the suggestion!
 
-It seems like that to continue to use the BoostrapVue table component(or b-tables for short) as part of OpenBMC WebUI-vue part, it needs multi sorting to be enabled
-on BoostrapVue table component, but this issue is not yet implemented as part of b-tables main package and remains in-progress.
-
-As per author comments by this link https://github.com/bootstrap-vue/bootstrap-vue/issues/2068#issuecomment-629342977 it is still in the works.
-The same goes to the PR/Commit with this new feature in BoostrapVue table component repository https://github.com/bootstrap-vue/bootstrap-vue/pull/4242
-
-Our recent changes involve the multi-sorting features to be already present, but there are none, unfortunately.
-
-1) If you have more information on when this feature will be available as part of the package, would you mind to share it?
-
-2) And afterwards the aforementioned commit would be merged for BoostrapVue table component, would it be possible to update the OpenBMC WebUI-vue upstream with this change and how long does it take?
-
-In the meanwhile, I have an instructions to discuss the proposal to change the BoostrapVue table component to the vue-tables-2-premium globally for the whole WebUI-vue part of OpenBMC project.
-The manual for the component is here: https://matanya.gitbook.io/vue-tables-2/ it seems that the component is supporting the muritsorting feeature already and it works.
-
-Beyond the multi-sorting feature the vue-tables-2-premium can propose the following interesting features(pros) - most notable of which are the following:
-- There two modes included - direct request (using the Axios or Server-table) and existing data usage mode (from some Vuex/Pinia storage perhaps, Client-table),
-  which, in theory, may enable us to use Thunk-like (a technology from Redux to pre-load data to say it in a simple way) access to server, if we would need it some day
-- The component includes grouping feature named child rows, which would allow us to implement a table-within-table - in short, when you click on some row,
-  it will expand to some more rows or web-links hidden under the parent-row in a folder-like manner
-- It also includes Virtual pagination, which can load additional data while we scroll the table and allow us to clean the screen of page-list components
-
-The component also several not so great features(cons):
-- It is written by one-man team, yes, it is written to best possible level of excellence, but there are still flaw, which does prevent us from accessing the headers of table columns in a unified way
-  like we do BoostrapVue table component - while on b-tables we do `<template #head(column_name)>` on vue-tables-2-premium we would need to do this on low level render way like so `<template #h__column_name>`
-  there also necessities to change some CSS Designs to make the vue-tables-2-premium table to look in the same way as BoostrapVue table component, but those are quite minor.
- 
-3) At the moment, we need to change BoostrapVue table component on one of the WebUI-vue page/views(where we desperately need it) to vue-tables-2-premium (or maybe some other component), temporarily until 
-BoostrapVue table component will support multi-sorting feature as an integrate part, but if the community would approve the change from BoostrapVue table component to vue-tables-2-premium -
-vue-tables-2-premium could be changed on every page on constant basis (or until we get the multi-sorting support for the BoostrapVue table). So, what do you think?
-
-Thanks.
--- 
-Yours sincerely,
-Nikolay Chegodaev
+Regards,
+Marvin
