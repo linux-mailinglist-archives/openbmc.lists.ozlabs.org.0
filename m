@@ -2,66 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D92F35FAC37
-	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 08:09:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CE51C5FAC3B
+	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 08:10:21 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Mmljd5nLgz2xYy
-	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 17:09:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Mmlkg5Fd0z3c38
+	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 17:10:19 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=KwUpf67l;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Q3qMJjd7;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::535; helo=mail-ed1-x535.google.com; envelope-from=tali.perry1@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::633; helo=mail-ej1-x633.google.com; envelope-from=tali.perry1@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=KwUpf67l;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Q3qMJjd7;
 	dkim-atps=neutral
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mmlj06LZvz2xWx
-	for <openbmc@lists.ozlabs.org>; Tue, 11 Oct 2022 17:08:50 +1100 (AEDT)
-Received: by mail-ed1-x535.google.com with SMTP id a13so18687911edj.0
-        for <openbmc@lists.ozlabs.org>; Mon, 10 Oct 2022 23:08:50 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MmljK5CMvz3bk8
+	for <openbmc@lists.ozlabs.org>; Tue, 11 Oct 2022 17:09:09 +1100 (AEDT)
+Received: by mail-ej1-x633.google.com with SMTP id a26so29116611ejc.4
+        for <openbmc@lists.ozlabs.org>; Mon, 10 Oct 2022 23:09:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rokH8SB+fCVwoXBK5lTt7JbvkpAPiYRJUy9ay8afCHU=;
-        b=KwUpf67ltK43D03SBE66eNPRpn7yhhdgS0Skz2Q8eUtoxcLKXkoUeqbIZVN+lWc1dj
-         JfPMLQaYl+haeC/kgnIsr8xBTvrPBWzFgG2x2QdjOw83/2mPI/BpupFV7sdAcUOs0yEz
-         nrB0C/ABWbjxYs6iUQNmX45REPjrqsKAuA03OSHNNDxfsWdM4nifhqZLngMmdV1GcI6E
-         m2Vr2n9W4l/ZoMZVHjZiYrYT5tSpGihFZsB+zzEb6IqxrRBAMLrB41wG243jrZjPHFud
-         ERWtI5dNzhjI/lGyTkjo2y5uREdGECrQpB6bIbA1QqEIg4axK2rBlPCLf/xIYU2eZqBy
-         2TqQ==
+        bh=d+9XNPifPhFMInlVJCwLX4AaVIIMRwa+RQbkGTlKlhM=;
+        b=Q3qMJjd7UgAEdf0Kg6Ll7geYQmJHPmTLWNNj643z/+bllr9PhTCyJIELDlBvE6xank
+         KHeqMCApaX7rtEE2B6HEeAhjn7OGOH8Bx3WYNDkxVUWpxm3+jgYfCbHX2sas4PLYZPrP
+         k1xWSJZDtGF1uf7rXinOupmPJBJGDRyME2uydH36hJH4sQ/vQr6gdJzZ7Y1jA5+CtKvY
+         6jdG1F+0qgNTOfnbGR2jh0w0yXvwOKpKiuLHNrKrqbUg6bG340dqoAMIpDyVmrbMvATq
+         hYH665wWe8sE6Nl+9qPx8N9o9w3u+1MXgTVCo2iPa0XQ112BzAGhdpkBENZC/MvYTv2n
+         YwWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rokH8SB+fCVwoXBK5lTt7JbvkpAPiYRJUy9ay8afCHU=;
-        b=mz1v6FKh2x8EL9PlbB4csbmiVO5wMU+8u0m8jghDojndEv8fFnwzBs1viskEw622B2
-         T+ocRJazy3zTdhJA+Ev6r8SijK2U+BsCsXz6mvqo3NxQStv37KFxQepaUL9821eViM8X
-         IgrfwqG6DEigkeNotyTP3BFCffclaAMEvkwxRUcwJYUy72b77Rzt9ChnpOBiOXrlmr5O
-         b9ChmtY+vFpo+dOxN/VRIPjoDtvlium5j4vTWxs9Ohgu5ml87Po+dhQC2AWtRbuA6QbK
-         P5F6rDHs22jtKwIufiJXlVLbczbMyYyP6O4bTosrJFTIUniUByQn+Xa0q6vXTGGGV1f5
-         tWow==
-X-Gm-Message-State: ACrzQf1ldEha9OQapbgcQfyo2NT6uxEkPqBFBTlmUk05nZb7RHrkf4RW
-	UB9uj8jBY/ImwrI2CoaU2EdmZxCVmf2mvwF0wKw=
-X-Google-Smtp-Source: AMsMyM6HVsyRffxQA7dMiK2jhsqxPvCxPtElUDFPLF2FvR33Fk4NXJOV0Bsc6fwANmLFMObV0IEKU3AHsusQnwYwVKs=
-X-Received: by 2002:a05:6402:4411:b0:437:b723:72 with SMTP id
- y17-20020a056402441100b00437b7230072mr21426449eda.38.1665468523541; Mon, 10
- Oct 2022 23:08:43 -0700 (PDT)
+        bh=d+9XNPifPhFMInlVJCwLX4AaVIIMRwa+RQbkGTlKlhM=;
+        b=BWuhK5O7s3PdvhL/e86EcwZRFZFXSTG2LBx0enAgArr643h2fWytpIOqe3F4iFd21t
+         w2IJ/c4y842ZtCD4XTkQoe462BJGrTcOymftuIBXBbOtiUCFXR75XRG6THugXS+IKMoJ
+         4EzIrYniX9LzfOcC2ElPZgqG8+eySH8auavfaTp50pD6t1GzLvnRCvAOUIsgW02taOTL
+         HMeYs0jU27wuz2NLpuF8tV55KZ0B7JRNM2w3iUSu9CvDPJjrcR96bCtXEXGFWy7bFIHe
+         Qezn3Qp7lEErx0CqtP7NJC66Ejs7SVEElPHPFxQBjuPyP/ICecFp/4564b5H/dx9kkxz
+         81jw==
+X-Gm-Message-State: ACrzQf1LMoulOeBTkCapR1VK7rmZZ10AYcqqrdbffBXprqjdN1ZVzu+/
+	dfTS+qNyW40eakniCCAuOSrHZUHL0fHEtzCs51M=
+X-Google-Smtp-Source: AMsMyM61TmlrbQ7ijBCqkJmNRbO2NMDrIkg20Na2jKpNofM4d4cA31RPB6PBDIjWucVwwnLIgc+8wbv+BixIlr7YWZE=
+X-Received: by 2002:a17:907:7fa1:b0:782:7c58:5341 with SMTP id
+ qk33-20020a1709077fa100b007827c585341mr17609058ejc.368.1665468546180; Mon, 10
+ Oct 2022 23:09:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <20221008125924.1220203-1-j.neuschaefer@gmx.net> <20221008125924.1220203-2-j.neuschaefer@gmx.net>
-In-Reply-To: <20221008125924.1220203-2-j.neuschaefer@gmx.net>
+References: <20221008125924.1220203-1-j.neuschaefer@gmx.net>
+In-Reply-To: <20221008125924.1220203-1-j.neuschaefer@gmx.net>
 From: Tali Perry <tali.perry1@gmail.com>
-Date: Tue, 11 Oct 2022 09:08:32 +0300
-Message-ID: <CAHb3i=tVphSZiPKohnVX3Q0AXD0LYQYStNjzXzrOKFPvKL3odg@mail.gmail.com>
-Subject: Re: [PATCH 2/2] i2c: npcm7xx: Annotate register field definitions
- with longer names
+Date: Tue, 11 Oct 2022 09:08:55 +0300
+Message-ID: <CAHb3i=tzG0myrwHVvHCDNVf=yf8Ze2FhhX=7zdrhcaZAzqx9QQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] i2c: npcm7xx: Group bank 0/1 registers together for readability
 To: =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
@@ -87,111 +86,83 @@ Thanks Jonathan!
 On Sat, Oct 8, 2022 at 3:59 PM Jonathan Neusch=C3=A4fer
 <j.neuschaefer@gmx.net> wrote:
 >
-> To make the code easier to understand, add longer names to the
-> definitions of register fields. These longer names are based on source
-> code published by DELL/AESS for WPCM450, but should apply just as well
-> to NPCM7xx and NPCM8xx.
+> The unlabelled registers NPCM_I2CCTL4 to NPCM_I2CSCLHT overlap with the
+> bank 1 registers below, and they are accessed after selecting bank 0, so
+> they clearly belong to bank 0.
+>
+> Move them together with the other bank 0 registers, and move the
+> unrelated definition of npcm_i2caddr down to keep the banked registers
+> in one piece.
 >
 > Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
 > ---
->  drivers/i2c/busses/i2c-npcm7xx.c | 56 ++++++++++++++++----------------
->  1 file changed, 28 insertions(+), 28 deletions(-)
+>  drivers/i2c/busses/i2c-npcm7xx.c | 31 +++++++++++++++----------------
+>  1 file changed, 15 insertions(+), 16 deletions(-)
 >
 > diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-np=
 cm7xx.c
-> index 9a7a2d0bf5765..bbc7359e67f74 100644
+> index 0c365b57d9572..9a7a2d0bf5765 100644
 > --- a/drivers/i2c/busses/i2c-npcm7xx.c
 > +++ b/drivers/i2c/busses/i2c-npcm7xx.c
-> @@ -146,50 +146,50 @@ static const int npcm_i2caddr[I2C_NUM_OWN_ADDR] =3D=
- {
+> @@ -106,7 +106,7 @@ enum i2c_addr {
+>  #define NPCM_I2CCST3                   0x19
+>  #define I2C_VER                                0x1F
+>
+> -/*BANK0 regs*/
+> +/* BANK 0 regs */
+>  #define NPCM_I2CADDR3                  0x10
+>  #define NPCM_I2CADDR7                  0x11
+>  #define NPCM_I2CADDR4                  0x12
+> @@ -115,6 +115,20 @@ enum i2c_addr {
+>  #define NPCM_I2CADDR9                  0x15
+>  #define NPCM_I2CADDR6                  0x16
+>  #define NPCM_I2CADDR10                 0x17
+> +#define NPCM_I2CCTL4                   0x1A
+> +#define NPCM_I2CCTL5                   0x1B
+> +#define NPCM_I2CSCLLT                  0x1C /* SCL Low Time */
+> +#define NPCM_I2CFIF_CTL                        0x1D /* FIFO Control */
+> +#define NPCM_I2CSCLHT                  0x1E /* SCL High Time */
+> +
+> +/* BANK 1 regs */
+> +#define NPCM_I2CFIF_CTS                        0x10 /* Both FIFOs Contro=
+l and Status */
+> +#define NPCM_I2CTXF_CTL                        0x12 /* Tx-FIFO Control *=
+/
+> +#define NPCM_I2CT_OUT                  0x14 /* Bus T.O. */
+> +#define NPCM_I2CPEC                    0x16 /* PEC Data */
+> +#define NPCM_I2CTXF_STS                        0x1A /* Tx-FIFO Status */
+> +#define NPCM_I2CRXF_STS                        0x1C /* Rx-FIFO Status */
+> +#define NPCM_I2CRXF_CTL                        0x1E /* Rx-FIFO Control *=
+/
+>
+>  #if IS_ENABLED(CONFIG_I2C_SLAVE)
+>  /*
+> @@ -131,21 +145,6 @@ static const int npcm_i2caddr[I2C_NUM_OWN_ADDR] =3D =
+{
+>  };
 >  #endif
 >
+> -#define NPCM_I2CCTL4                   0x1A
+> -#define NPCM_I2CCTL5                   0x1B
+> -#define NPCM_I2CSCLLT                  0x1C /* SCL Low Time */
+> -#define NPCM_I2CFIF_CTL                        0x1D /* FIFO Control */
+> -#define NPCM_I2CSCLHT                  0x1E /* SCL High Time */
+> -
+> -/* BANK 1 regs */
+> -#define NPCM_I2CFIF_CTS                        0x10 /* Both FIFOs Contro=
+l and Status */
+> -#define NPCM_I2CTXF_CTL                        0x12 /* Tx-FIFO Control *=
+/
+> -#define NPCM_I2CT_OUT                  0x14 /* Bus T.O. */
+> -#define NPCM_I2CPEC                    0x16 /* PEC Data */
+> -#define NPCM_I2CTXF_STS                        0x1A /* Tx-FIFO Status */
+> -#define NPCM_I2CRXF_STS                        0x1C /* Rx-FIFO Status */
+> -#define NPCM_I2CRXF_CTL                        0x1E /* Rx-FIFO Control *=
+/
+> -
 >  /* NPCM_I2CST reg fields */
-> -#define NPCM_I2CST_XMIT                        BIT(0)
-> -#define NPCM_I2CST_MASTER              BIT(1)
-> -#define NPCM_I2CST_NMATCH              BIT(2)
-> -#define NPCM_I2CST_STASTR              BIT(3)
-> -#define NPCM_I2CST_NEGACK              BIT(4)
-> -#define NPCM_I2CST_BER                 BIT(5)
-> -#define NPCM_I2CST_SDAST               BIT(6)
-> -#define NPCM_I2CST_SLVSTP              BIT(7)
-> +#define NPCM_I2CST_XMIT                        BIT(0)  /* Transmit mode =
-*/
-> +#define NPCM_I2CST_MASTER              BIT(1)  /* Master mode */
-> +#define NPCM_I2CST_NMATCH              BIT(2)  /* New match */
-> +#define NPCM_I2CST_STASTR              BIT(3)  /* Stall after start */
-> +#define NPCM_I2CST_NEGACK              BIT(4)  /* Negative ACK */
-> +#define NPCM_I2CST_BER                 BIT(5)  /* Bus error */
-> +#define NPCM_I2CST_SDAST               BIT(6)  /* SDA status */
-> +#define NPCM_I2CST_SLVSTP              BIT(7)  /* Slave stop */
->
->  /* NPCM_I2CCST reg fields */
-> -#define NPCM_I2CCST_BUSY               BIT(0)
-> -#define NPCM_I2CCST_BB                 BIT(1)
-> -#define NPCM_I2CCST_MATCH              BIT(2)
-> -#define NPCM_I2CCST_GCMATCH            BIT(3)
-> -#define NPCM_I2CCST_TSDA               BIT(4)
-> -#define NPCM_I2CCST_TGSCL              BIT(5)
-> -#define NPCM_I2CCST_MATCHAF            BIT(6)
-> -#define NPCM_I2CCST_ARPMATCH           BIT(7)
-> +#define NPCM_I2CCST_BUSY               BIT(0)  /* Busy */
-> +#define NPCM_I2CCST_BB                 BIT(1)  /* Bus busy */
-> +#define NPCM_I2CCST_MATCH              BIT(2)  /* Address match */
-> +#define NPCM_I2CCST_GCMATCH            BIT(3)  /* Global call match */
-> +#define NPCM_I2CCST_TSDA               BIT(4)  /* Test SDA line */
-> +#define NPCM_I2CCST_TGSCL              BIT(5)  /* Toggle SCL line */
-> +#define NPCM_I2CCST_MATCHAF            BIT(6)  /* Match address field */
-> +#define NPCM_I2CCST_ARPMATCH           BIT(7)  /* ARP address match */
->
->  /* NPCM_I2CCTL1 reg fields */
-> -#define NPCM_I2CCTL1_START             BIT(0)
-> -#define NPCM_I2CCTL1_STOP              BIT(1)
-> -#define NPCM_I2CCTL1_INTEN             BIT(2)
-> +#define NPCM_I2CCTL1_START             BIT(0)  /* Generate start conditi=
-on */
-> +#define NPCM_I2CCTL1_STOP              BIT(1)  /* Generate stop conditio=
-n */
-> +#define NPCM_I2CCTL1_INTEN             BIT(2)  /* Interrupt enable */
->  #define NPCM_I2CCTL1_EOBINTE           BIT(3)
->  #define NPCM_I2CCTL1_ACK               BIT(4)
-> -#define NPCM_I2CCTL1_GCMEN             BIT(5)
-> -#define NPCM_I2CCTL1_NMINTE            BIT(6)
-> -#define NPCM_I2CCTL1_STASTRE           BIT(7)
-> +#define NPCM_I2CCTL1_GCMEN             BIT(5)  /* Global call match enab=
-le */
-> +#define NPCM_I2CCTL1_NMINTE            BIT(6)  /* New match interrupt en=
-able */
-> +#define NPCM_I2CCTL1_STASTRE           BIT(7)  /* Stall after start enab=
-le */
->
->  /* RW1S fields (inside a RW reg): */
->  #define NPCM_I2CCTL1_RWS   \
->         (NPCM_I2CCTL1_START | NPCM_I2CCTL1_STOP | NPCM_I2CCTL1_ACK)
->
->  /* npcm_i2caddr reg fields */
-> -#define NPCM_I2CADDR_A                 GENMASK(6, 0)
-> -#define NPCM_I2CADDR_SAEN              BIT(7)
-> +#define NPCM_I2CADDR_A                 GENMASK(6, 0)   /* Address */
-> +#define NPCM_I2CADDR_SAEN              BIT(7)          /* Slave address =
-enable */
->
->  /* NPCM_I2CCTL2 reg fields */
-> -#define I2CCTL2_ENABLE                 BIT(0)
-> -#define I2CCTL2_SCLFRQ6_0              GENMASK(7, 1)
-> +#define I2CCTL2_ENABLE                 BIT(0)          /* Module enable =
-*/
-> +#define I2CCTL2_SCLFRQ6_0              GENMASK(7, 1)   /* Bits 0:6 of fr=
-equency divisor */
->
->  /* NPCM_I2CCTL3 reg fields */
-> -#define I2CCTL3_SCLFRQ8_7              GENMASK(1, 0)
-> -#define I2CCTL3_ARPMEN                 BIT(2)
-> +#define I2CCTL3_SCLFRQ8_7              GENMASK(1, 0)   /* Bits 7:8 of fr=
-equency divisor */
-> +#define I2CCTL3_ARPMEN                 BIT(2)  /* ARP match enable */
->  #define I2CCTL3_IDL_START              BIT(3)
->  #define I2CCTL3_400K_MODE              BIT(4)
->  #define I2CCTL3_BNK_SEL                        BIT(5)
+>  #define NPCM_I2CST_XMIT                        BIT(0)
+>  #define NPCM_I2CST_MASTER              BIT(1)
 > --
 > 2.35.1
 >
