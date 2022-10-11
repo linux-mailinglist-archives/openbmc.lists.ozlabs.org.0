@@ -2,60 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3A8C65FB0F1
-	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 13:07:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 456675FB036
+	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 12:11:10 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MmtKP6DHWz3c70
-	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 22:07:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Mms4X1CPDz3c4h
+	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 21:11:08 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=zohocorp.com header.i=pratik.a@zohocorp.com header.a=rsa-sha256 header.s=admin header.b=Qa+lZ+Dc;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=JVbFVUvx;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=zohocorp.com (client-ip=136.143.188.7; helo=sender4.zoho.com; envelope-from=pratik.a@zohocorp.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12d; helo=mail-lf1-x12d.google.com; envelope-from=fercerpav@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=zohocorp.com header.i=pratik.a@zohocorp.com header.a=rsa-sha256 header.s=admin header.b=Qa+lZ+Dc;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=JVbFVUvx;
 	dkim-atps=neutral
-X-Greylist: delayed 906 seconds by postgrey-1.36 at boromir; Tue, 11 Oct 2022 17:14:55 AEDT
-Received: from sender4.zoho.com (sender4-zc7.zoho.com [136.143.188.7])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mmlqz0pJ3z2xJN
-	for <openbmc@lists.ozlabs.org>; Tue, 11 Oct 2022 17:14:54 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1665467984; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=I2CxCcmNMtVh8J1houyvI6Uo7r1mqEB6Ju4ZvFzuijd2kPq+56WzKE20Opy9Kw+2DKV99opzi7Zr04c2L9vBqZfA4y+gnly0vX33EIc0LYrspC97PWb+9cYIcuBw1HSiv6HQF4xOiNUO2q5ceGsiwo94erlKgKx7qyOd2mQkG0g=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1665467984; h=Content-Type:Cc:Date:From:MIME-Version:Message-ID:Subject:To; 
-	bh=F/x84cJ/Kzycf4wH2rx/Lj3tUqN9gqSS4+7sr/3E0k4=; 
-	b=R5p7sqBBc4+sDGYd+u4psxLfjIy5EnOGqTtYL0HpzWKJDCFJB5mLhUgV7a4EWjuBecsOAP4zdTZbjoqjgLDlC0sK3pA4ZUYUWLXRa8UKxligNfweeBJVki5Fyn6n5Y0oX7VEErxsoU2n9XNp5bFQ0XSut1ESkWfRU6EuvHyQPho=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=zohocorp.com;
-	spf=pass  smtp.mailfrom=pratik.a@zohocorp.com;
-	dmarc=pass header.from=<pratik.a@zohocorp.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1665467984;
-	s=admin; d=zohocorp.com; i=pratik.a@zohocorp.com;
-	h=Date:Date:From:From:To:To:Cc:Cc:Message-Id:Message-Id:In-Reply-To:Subject:Subject:MIME-Version:Content-Type:Reply-To;
-	bh=F/x84cJ/Kzycf4wH2rx/Lj3tUqN9gqSS4+7sr/3E0k4=;
-	b=Qa+lZ+DcFmUJcmWIEkW+tWCVSTDORuCOF8osw8c0Z2P6oCBmcIXSzKeStbrF9Do9
-	dYDa2CA/Ef9/ZHolkro70r7TL9bs2LVUrhtB/7dsrbpXLcUud1p/vYof6VGKDB+UJhE
-	vXvoyZiqUFYPChcJgKHqkrqbsq938ioPaKImPoSA=
-Received: from mail.zoho.com by mx.zohomail.com
-	with SMTP id 1665467982552818.2338753830705; Mon, 10 Oct 2022 22:59:42 -0700 (PDT)
-Date: Tue, 11 Oct 2022 11:29:42 +0530
-From: Pratik Adle <pratik.a@zohocorp.com>
-To: "OpenBMCSupport" <OpenBMC.Support@intel.com>,
-	"openbmc" <openbmc@lists.ozlabs.org>
-Message-Id: <183c5a0a2bd.fc1aec47188934.9210721628492674063@zohocorp.com>
-In-Reply-To: 
-Subject: OpenBMC for Brighton City (Idaville platform)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mms3v2rzqz3bjd
+	for <openbmc@lists.ozlabs.org>; Tue, 11 Oct 2022 21:10:34 +1100 (AEDT)
+Received: by mail-lf1-x12d.google.com with SMTP id bu25so20377929lfb.3
+        for <openbmc@lists.ozlabs.org>; Tue, 11 Oct 2022 03:10:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=+RUBENAjQkfGkLEtSKfpJY1z2C5TtT9NMRbBfM1GXBE=;
+        b=JVbFVUvxH0HTdzOjxX+DwJTfyMA5MXLtGChlO7LOaPWD/FB6vKlHSCSc10FlH2J/j9
+         bHahX1Ofe7yikQ9o3znELiL8wc61cGQ9CGyEEJIHtA3B/HxFVmTKhfdVYCPU3EIjV6Pa
+         nqpL3BQwBpQS6HjenIXh6Pv19BckGhINh2nGTfGAHejPg0JUB+T02TKpylW0jiNVB07T
+         xLdZu9OGhwiq1/xd+e5koCq6OWAxFhC+CvcQVNgtKmUUe3zPsOPjE8Sb28f2QNmjcHVe
+         okaJj/zrc2Sk99CCexpQpnP5oY1WFtTaIcKcrl1qgg/HRq89c+hAdJn7oFnYJTZUg7sS
+         cgMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=+RUBENAjQkfGkLEtSKfpJY1z2C5TtT9NMRbBfM1GXBE=;
+        b=KL3YdUmO6rhZFjYw3IRXyONi+ej+XbZ886SQhPi5A1NscqmDDv8azqbvGGJglEQDgZ
+         b21sxHgo9c/niIQB7I7iJTrHCDckPciiiFFwKO0MXanABt8FLNjG8OlthoABwlrOH1xk
+         9u8gT5C1UsH92tKNrGST3Y+Ultl5YPs1TrUHIG7CpiDD4by7JJmk54lH6mQJR6jLM67y
+         kUztmF024PBWAat3VTjdIFVKELmA3Ls9wsefUMDECjTPs3N5I+4TgVZkz88Skij1mN8p
+         WHxNiftAesNdUDZJ4qAIudVTtZdy4z2/ALmdGPgiPyzIVhm61MOYe8cO+h59wReYw7xN
+         JMXg==
+X-Gm-Message-State: ACrzQf1JfRXk3Y/iaRg3g2mddfPlGo/835kGeOhm5RORy2jKByZqUPL/
+	mTTAKJ5oir7KUv5Sk+ATGnE=
+X-Google-Smtp-Source: AMsMyM7tHZoCOOV044Ori2MGgzx2IzDnrVlVzD5dtNkL8lx6YpywGPLFCbaAm5d1GQycgNW78lwWTg==
+X-Received: by 2002:a05:6512:3b2:b0:4a2:48c3:1f46 with SMTP id v18-20020a05651203b200b004a248c31f46mr8303006lfp.572.1665483029710;
+        Tue, 11 Oct 2022 03:10:29 -0700 (PDT)
+Received: from home.paul.comp (paulfertser.info. [2001:470:26:54b:226:9eff:fe70:80c2])
+        by smtp.gmail.com with ESMTPSA id g2-20020a2e3902000000b00261ccf566e3sm1986920lja.65.2022.10.11.03.10.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 11 Oct 2022 03:10:29 -0700 (PDT)
+Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
+	by home.paul.comp (8.15.2/8.15.2/Debian-22) with ESMTP id 29BAAPw3010708;
+	Tue, 11 Oct 2022 13:10:27 +0300
+Received: (from paul@localhost)
+	by home.paul.comp (8.15.2/8.15.2/Submit) id 29BAAPc7010707;
+	Tue, 11 Oct 2022 13:10:25 +0300
+Date: Tue, 11 Oct 2022 13:10:25 +0300
+From: Paul Fertser <fercerpav@gmail.com>
+To: Nikita Pavlov <icepbix@gmail.com>
+Subject: Re: how get smbios blob with intel-ipmi-oem
+Message-ID: <Y0VBEZnddPlHT3cW@home.paul.comp>
+References: <CAJewAaLk0Q9fnmT_s_8TdnDfcJMXbLcS4=OZoeT5+qatDnGFKQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_625618_628953123.1665467982525"
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
-X-Mailman-Approved-At: Tue, 11 Oct 2022 22:06:54 +1100
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJewAaLk0Q9fnmT_s_8TdnDfcJMXbLcS4=OZoeT5+qatDnGFKQ@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,37 +85,40 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Dilraj N <dilraj.n@zohocorp.com>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_625618_628953123.1665467982525
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
+Hi Nikita,
 
-Hi,
+On Tue, Oct 11, 2022 at 12:27:58PM +0300, Nikita Pavlov wrote:
+> Now I work with intel-ipmi-oem and want to get smbios blob. 
 
+If you're going to use MDRv1 protocol then I can share the experience.
 
+We use intel-ipmi-oem and it handles requests like 0x3e:0x20 (for
+region status) by calling methods of a D-Bus object, which you should
+also be able to query manually following
 
-We would like to build OpenBMC for Brighton City which is based 
-on ICX-D (Idaville platform).
+busctl introspect xyz.openbmc_project.Smbios.MDR_V1 /xyz/openbmc_project/Smbios/MDR_V1
 
+output.
 
+"xyz.openbmc_project.Smbios.MDR_V1" is handled by
+https://github.com/Intel-BMC/provingground/tree/master/services/smbios .
 
-In https://github.com/Intel-BMC/openbmc/, there is no specific meta layer for Idaville platform.
+Example of requesting status of the first region:
 
-So, can you help us to get started with OpenBMC for Brighton City?
+# ipmitool raw 0x3e 0x20 1
+ 11 01 01 02 00 00 80 cc 0a 91
 
+> I use intel-ipmi-oem lib and ipmi-whitelist.conf with phosphor-host-ipmid.
+> I test this by ipmitool like this ipmitool raw 0x30 0x1a and get:
 
+Why are you using 0x30 0x1a, it seems to be
+<Intel General Application>:<Get NIC Info> so completely unrelated?
 
-Regards,
-
-Pratik
-------=_Part_625618_628953123.1665467982525
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head><meta content="text/html;charset=UTF-8" http-equiv="Content-Type"></head><body ><div style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt;"><div>Hi,<br></div><div><br></div><div>We would like to build OpenBMC for Brighton City which is based 
-on ICX-D (Idaville platform).<br></div><div><br></div><div>In <a href="https://github.com/Intel-BMC/openbmc/" target="_blank">Intel-OpenBMC github</a>, there is no specific meta layer for Idaville platform.<br></div><div>So, can you help us to get started with OpenBMC for Brighton City?<br></div><div><br></div><div>Regards,<br></div><div>Pratik<br></div></div><br></body></html>
-------=_Part_625618_628953123.1665467982525--
-
+HTH
+-- 
+Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
+mailto:fercerpav@gmail.com
