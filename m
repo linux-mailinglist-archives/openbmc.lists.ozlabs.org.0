@@ -1,59 +1,59 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BCD895FB6D4
-	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 17:20:04 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A8FA5FB7A0
+	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 17:45:27 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Mmzwy46mdz3bsK
-	for <lists+openbmc@lfdr.de>; Wed, 12 Oct 2022 02:20:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Mn0VD69V2z3bhv
+	for <lists+openbmc@lfdr.de>; Wed, 12 Oct 2022 02:45:24 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=bAB8xt+R;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=CyWmZhh+;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=134.134.136.65; helo=mga03.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.55.52.120; helo=mga04.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=bAB8xt+R;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=CyWmZhh+;
 	dkim-atps=neutral
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MmzwF3Bjmz2xf7;
-	Wed, 12 Oct 2022 02:19:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mn0TX1lNGz2xJ8;
+	Wed, 12 Oct 2022 02:44:46 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1665501565; x=1697037565;
+  t=1665503088; x=1697039088;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=hq8H9GCveZZvFxxgF//YL8HEPEJFc1DXWo1WrcAUuRw=;
-  b=bAB8xt+RMT/qgTUVjhpRj8LCNm+L+umTr87Z25e5LcgsyCua9dKLds14
-   s7R/U8gJ1Tp4+cMmiO0NFzzqcnEquiiUMts69StpUHJ5IQB6ho1yjdA76
-   lJzsZlYEqCKYZJvigvYstVqw7dY9IgXZS7xIyIhMmpqrzREan6LG+eM64
-   AmFA7wswkn+zHQyHG2exhF2+ozpjPK6j6+MIuWD/00uJzIEOjLWu0ob3v
-   Jall32A0E7uS4Qq7LGPh+4IutX+fYOsrxa75iIoEPsrQFHuHu5nQ2Qoib
-   wArkZzNTjdo5Wj8LTNexL9I66KBAw6Gh0OOGJHekdKQIZVLKtaCUEO5ZF
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10497"; a="306155022"
+  bh=+ptjxKpKMe9ZpYpWkzy6xCUEZZDC37TWs3lCOeMWbyI=;
+  b=CyWmZhh+pfnGDk2xw3J4gTMyndONj4jdoNmNYgb3xVlm26cr25WSGFVx
+   63Cw1ELRcaTbDp4ik50IbvQX8MIlliygxrAWSYsOUY2Zju55BpFD76Ug4
+   5VSU7WROExLD7CO8WZ8vI/uuUOwFaajud1xHqLnNyXT1mWV4vwgde/XMW
+   gJAChklkNsY0HxjzA9xOixWm4OW98kcJWGwAehRqhQsF6WNCIkdvlTFwf
+   NgvrcCWqshMHje9KTCA7oNazHujMu5urEPREulUagcBg6nR+gGcLKZNds
+   Vs2nN+KE0GgOxXyL6yAAMu04w0V2mqvesItGXfX0VdA7n4MNW3MpqBHrS
+   g==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10497"; a="303277171"
 X-IronPort-AV: E=Sophos;i="5.95,176,1661842800"; 
-   d="scan'208";a="306155022"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Oct 2022 08:19:20 -0700
+   d="scan'208";a="303277171"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Oct 2022 08:44:41 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10497"; a="955372479"
+X-IronPort-AV: E=McAfee;i="6500,9779,10497"; a="715553658"
 X-IronPort-AV: E=Sophos;i="5.95,176,1661842800"; 
-   d="scan'208";a="955372479"
+   d="scan'208";a="715553658"
 Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmsmga005.fm.intel.com with ESMTP; 11 Oct 2022 08:19:15 -0700
+  by FMSMGA003.fm.intel.com with ESMTP; 11 Oct 2022 08:44:36 -0700
 Received: from andy by smile.fi.intel.com with local (Exim 4.96)
 	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1oiH2H-005NYA-25;
-	Tue, 11 Oct 2022 18:19:13 +0300
-Date: Tue, 11 Oct 2022 18:19:13 +0300
+	id 1oiHQo-005OPV-2A;
+	Tue, 11 Oct 2022 18:44:34 +0300
+Date: Tue, 11 Oct 2022 18:44:34 +0300
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Geert Uytterhoeven <geert@linux-m68k.org>
 Subject: Re: [PATCH v2 02/36] gpiolib: cdev: Add missed header(s)
-Message-ID: <Y0WJcXzkkK4oGbrR@smile.fi.intel.com>
+Message-ID: <Y0WPYuZ/9//jxwQ2@smile.fi.intel.com>
 References: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com>
  <20221010201453.77401-3-andriy.shevchenko@linux.intel.com>
  <Y0SyVwjDl7NGfTPn@sol>
@@ -62,10 +62,11 @@ References: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com>
  <Y0V57gI75ik4ki3A@sol>
  <Y0V9eJX7a0fe6EfX@smile.fi.intel.com>
  <CAMuHMdUhSKuJ3N5zf_+ad_dFu6kSmVTqRpgFUWtd54S9ryw=ew@mail.gmail.com>
+ <Y0WJcXzkkK4oGbrR@smile.fi.intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAMuHMdUhSKuJ3N5zf_+ad_dFu6kSmVTqRpgFUWtd54S9ryw=ew@mail.gmail.com>
+In-Reply-To: <Y0WJcXzkkK4oGbrR@smile.fi.intel.com>
 Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -82,61 +83,14 @@ Cc: Kent Gibson <warthog618@gmail.com>, linux-omap@vger.kernel.org, linux-stm32@
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Oct 11, 2022 at 04:39:46PM +0200, Geert Uytterhoeven wrote:
-> On Tue, Oct 11, 2022 at 4:31 PM Andy Shevchenko
-> <andriy.shevchenko@linux.intel.com> wrote:
-> > On Tue, Oct 11, 2022 at 10:13:02PM +0800, Kent Gibson wrote:
-> > > On Tue, Oct 11, 2022 at 04:48:17PM +0300, Andy Shevchenko wrote:
-> > > > On Tue, Oct 11, 2022 at 11:05:42AM +0300, Andy Shevchenko wrote:
-> > > > > On Tue, Oct 11, 2022 at 3:02 AM Kent Gibson <warthog618@gmail.com> wrote:
-> > > > > > On Mon, Oct 10, 2022 at 11:14:18PM +0300, Andy Shevchenko wrote:
+On Tue, Oct 11, 2022 at 06:19:13PM +0300, Andy Shevchenko wrote:
+> On Tue, Oct 11, 2022 at 04:39:46PM +0200, Geert Uytterhoeven wrote:
 
 ...
 
-> > > > > > > -#include <linux/gpio.h>
-> > > > > > >  #include <linux/gpio/driver.h>
-> > > > > > > +#include <linux/gpio.h>
-> > > > > > > +#include <linux/hte.h>
-> > > > > >
-> > > > > > Ok with the hte re-order.
-> > > > > >
-> > > > > > But moving the gpio subsystem header after the gpio/driver is not
-> > > > > > alphabetical ('.' precedes '/') and it read better and made more sense
-> > > > > > to me the way it was.
-> > > > >
-> > > > > I see, I guess this is vim sort vs shell sort. Strange, they should
-> > > > > follow the locale settings...
-> > > >
-> > > > I have checked, the shell and vim sort gave the same result as in this patch.
-> > > >
-> > >
-> > > The original order (sans hte.h) was done by VSCode Sort Lines Ascending,
-> > > and that still returns the same result.  That matches what I would
-> > > expect to see given the content of the text.
-> > >
-> > > And for me vim also gives the original order.
-> > >
-> > > Just to confirm - is '.' 0x2e and '/' 0x2f in your universe?
-> >
-> > $ LC_COLLATE=C sort test1.txt
-> > #include <linux/gpio.h>
-> > #include <linux/gpio/driver.h>
-> >
-> > $ LC_COLLATE= sort test1.txt
-> > #include <linux/gpio/driver.h>
-> > #include <linux/gpio.h>
-> >
-> > I guess this explains the difference. Currently I have en_US.UTF-8.
-> 
-> Throwing my can of paint into the mix...
-> 
-> I think it is more logical to first include the general <linux/gpio.h>,
-> followed by whatever <linux/gpio-foo.h> and <linux/gpio/bar.h>,
-> irrespective of (language-specific or phonebook) sort order.
-> 
-> Yeah, it sucks that this requires some manual work after running sort...
-
-It seems that kind of issue is in this patch only.
+After all this patch is not needed. However, during checking of the necessity
+of this patch I realized that seq_file is used in a few GPIO drivers without
+any actual users, so I will prepare clean up series for that as well.
 
 -- 
 With Best Regards,
