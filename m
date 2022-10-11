@@ -2,64 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2EA555FAA82
-	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 04:11:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0004F5FAB82
+	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 06:02:50 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MmfRZ0JNjz3bqw
-	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 13:11:54 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MmhvX6KTtz3bl0
+	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 15:02:48 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=LgM0Jr7I;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=ZZ13K51m;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::a2a; helo=mail-vk1-xa2a.google.com; envelope-from=sivaprasadsubramaniyam@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::730; helo=mail-qk1-x730.google.com; envelope-from=james.mihm@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=LgM0Jr7I;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=ZZ13K51m;
 	dkim-atps=neutral
-Received: from mail-vk1-xa2a.google.com (mail-vk1-xa2a.google.com [IPv6:2607:f8b0:4864:20::a2a])
+Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Ml9Pm6NQLz3bry
-	for <openbmc@lists.ozlabs.org>; Sun,  9 Oct 2022 03:20:10 +1100 (AEDT)
-Received: by mail-vk1-xa2a.google.com with SMTP id e5so3512821vkg.6
-        for <openbmc@lists.ozlabs.org>; Sat, 08 Oct 2022 09:20:10 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mmhtx2ttTz2xsD
+	for <openbmc@lists.ozlabs.org>; Tue, 11 Oct 2022 15:02:17 +1100 (AEDT)
+Received: by mail-qk1-x730.google.com with SMTP id m6so2723870qkm.4
+        for <openbmc@lists.ozlabs.org>; Mon, 10 Oct 2022 21:02:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=pOaKDEzkolnfW1iFoTFhg39KfgRv/xHfYlYUOxXTaoo=;
-        b=LgM0Jr7IPS/ZTmhsjTxA4tIw7mJw0NKmpuVBbn6D3yul3jBV42o1gqxMGqe9ngYewB
-         mOkVWUeZWzE0Gkol7Fzq2+ECbBOGYrCJxlfhyuZ+BCsUbXoxf1WYhWAs7bRaOHGMReKP
-         PruYstP/o4qto9kTFOZddN3hLVlnSTmsGg6Nt5TpjrrzUMORx7EhwdcdShyNwpd7vcX5
-         neSEClBroRoqKnr5fSOk/RoPa5+rKZ0mgnAfEGmxe5HFlI15wHWlSfocWhIMvQ8+HTFf
-         1YbWFHgCmmncEukuvJG3hf83kREZGs2Ib/iUoE0/2QuV3tym5JJao9lwovs4V4Z9qnW0
-         mRkQ==
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=8MOoJ/tC6nswN9FPhZaFRW4pvdLKEmpCYiS88Yn4SH4=;
+        b=ZZ13K51mCJoB/cMZrQKa3UPSJFTizxLQonTFAaN+sSkyWTHPR2vFgoVpGMEiC/vqAG
+         V9e1T0ld7AxBVY0XzOKIkw1Xcs05lacRp1F9OROYC96IffOTsuPJiYV0TWL/iPIJLCre
+         sSK4Uli5Djp7bWWgs/0Cthc3wvcOLgbS2lPIcWZzdVkFFoJxpj1Qk91/8IHVcca3YRNf
+         1VD4yCMG8LLBDJi9h/aw8JfXClOORm6l7uLx6ZWgSamj4yUFaQuMaf775wXN52LFgpso
+         iD8df1OAot9Ldan0QK5KTcj+t/JKcLsooz8JbRRqSwLdDvQCeRWAqiiyf5B1nIu32xKJ
+         ig3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pOaKDEzkolnfW1iFoTFhg39KfgRv/xHfYlYUOxXTaoo=;
-        b=UlP8HTyLirySapFK7lQeLIuzYcaxm1HeosCguqWvCF1Z3WNXYUaupDJjHpSYbeUW5t
-         IXVKHfj8wvaxs/vt1YMbPI8FANok5iAHLp89ZCkrI31VSxTsBD5cyFtNfbhDmCPPN1Xe
-         LG1iQrRvvPFOMaQ8w6xD8vOFvD1GaSlzZ2w+fZb5KwyUCCLQy/KSRZBrY2NP+fXEFbZ2
-         vKb+/AveHp1Sl2GBAHtj9wo3d5PlfjO3HbMarx49rNDBMbiOzdp7XJy0oL9+dWwwIros
-         TQV5JhKb04GlggK6Bh1HUTzHgD9fh81tVFIze1de+kIaAN8efBaJ9ErT16F7JDA1KUVT
-         CKDQ==
-X-Gm-Message-State: ACrzQf0wSxO4BQFxrVmipRdKE9ycl7NQyQ8zjNaPvkVy1dqFdSOUojao
-	2QRjAm6DEG6b9amnKCwcS/AGN2q9vp7xVrLB/fARosTt
-X-Google-Smtp-Source: AMsMyM4fRRWhQxfaDJOcvIq50QPu4AIUKDT2EKWBzNClJh4ZcaxtT8yTjKqoTZy7BKQzwUzWsSLBEMvv/M3JbDEVU2A=
-X-Received: by 2002:a1f:de86:0:b0:3ab:c79:e3af with SMTP id
- v128-20020a1fde86000000b003ab0c79e3afmr5631428vkg.9.1665246002869; Sat, 08
- Oct 2022 09:20:02 -0700 (PDT)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8MOoJ/tC6nswN9FPhZaFRW4pvdLKEmpCYiS88Yn4SH4=;
+        b=Wd6GJLqgHiCsULFLzlZH0WIe3fLzq+MYURDVwZ2cASjPna0ca9GMch8S6W1ij61eoI
+         as1Cm/KY3qqtDauXgZ6T1GSsXutAsJYw9vket40bzlgOcegihyadYd7rZkzEDVrxDRJv
+         ZmOSvHgA5jf2rfUv6owX+aNgmi2MlKDXTkHHPJ1awEFZIQO/sW8GQmhkPRTdmaSxj1wW
+         wE7oAHAk8G6R3c0HgZ7Sn6XQIq1g/sqtXRISJ6uZQX09fN1D7BeYPbHWnr+Yici7FLHI
+         2qacVC7QBmiDqQ9u/vjDbj9ARkhkQL2DOk5jfhHCewA8sm93rjRYCNSS/JxPVs8kpX2u
+         Tk1w==
+X-Gm-Message-State: ACrzQf3KEYWo6Pta9fMgBYhl310hGK3it8OsG9n3frR9HoXdnvBmB3oW
+	olISuPIhUhyTq6jNIYRJeSyA4yDPof1wnl2P5G8=
+X-Google-Smtp-Source: AMsMyM7HD/awQ3vhB1JukuviliaJ1o+gkcC789qVRqrfABqEXbDXMoOCCiQHRQJtVGHtTSNIr6AYq65z7wwqbm9+/Mo=
+X-Received: by 2002:a05:620a:2a09:b0:6ee:7d3e:687f with SMTP id
+ o9-20020a05620a2a0900b006ee7d3e687fmr593005qkp.572.1665460933626; Mon, 10 Oct
+ 2022 21:02:13 -0700 (PDT)
 MIME-Version: 1.0
-From: Sivaprasad Subramaniyam <sivaprasadsubramaniyam@gmail.com>
-Date: Sat, 8 Oct 2022 21:49:50 +0530
-Message-ID: <CAHYfTohqs1AzbmfqEjrA5qdm5OGnb0ny+55M_xdSxOE5Qcj43g@mail.gmail.com>
-Subject: Guidance to execute oem commands
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="00000000000076fa4205ea884c9c"
-X-Mailman-Approved-At: Tue, 11 Oct 2022 13:11:26 +1100
+References: <BM1PR01MB24678016E23DB9B97349C7A185209@BM1PR01MB2467.INDPRD01.PROD.OUTLOOK.COM>
+ <c259d074d0e5dae670bfe18155a23db600796afd.camel@codeconstruct.com.au>
+In-Reply-To: <c259d074d0e5dae670bfe18155a23db600796afd.camel@codeconstruct.com.au>
+From: James Mihm <james.mihm@gmail.com>
+Date: Mon, 10 Oct 2022 21:01:37 -0700
+Message-ID: <CADy_Pt3e=MfxBK72HkU0d8FCs_xdfFrH=2NVqMf1tntBr9CEHQ@mail.gmail.com>
+Subject: Re: Unable to connect to a BMC Serial Console
+To: Jeremy Kerr <jk@codeconstruct.com.au>
+Content-Type: multipart/alternative; boundary="000000000000560dba05eaba57fe"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,40 +74,170 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Shubhabrata Bose <shubhabrata.bose@tcs.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000076fa4205ea884c9c
+--000000000000560dba05eaba57fe
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi Sir,
-I am new to openbmc.
+Hi Shubh,
 
-I am trying to create separate .so file for oem commands.
+Is your goal to replace the Intel BMC firmware stack with an OpenBMC
+firmware image?
 
-I able to see .so file on /usr/lib/ipmi-provider also
+The Intel S2600GZ server (a.k.a., Grizzly Pass) is an older server with an
+Emulex Pilot 2
+BMC PSoC with a proprietary firmware stack. Furthermore, the Pilot series
+of BMC is not
+supported by OpenBMC. Whereas the S2600STP (a.k.a., Sawtooth Pass), that
+Jeremy has
+referenced, has the AST2500 BMC PSoC and is supported by OpenBMC.
 
-But try to test using ipmitool then throwing invalid cmd.
+To make things more challenging for hackers, Intel platforms don't have the
+BMC serial port
+normally accessible. Meaning that the hardware to connect to the BMC serial
+port isn't
+populated and logging into the BMC via the serial console is disabled.
 
-Can you guide me to resolve this issue?
-Let me know how ipmitool using phosphor-ipmi-host & intel-ipmi-oem?
+Regards, James.
 
-Thanks,
-Vss
+On Mon, Oct 10, 2022 at 6:16 PM Jeremy Kerr <jk@codeconstruct.com.au> wrote=
+:
 
---00000000000076fa4205ea884c9c
+> Hi Shubh,
+>
+> > TCS Confidential
+>
+> Really? :)
+>
+> > I am new to OpenBMC and I need some help about how to access the BMC
+> > console which I am not able to, after many tries.
+>
+> Just to confirm - you're referring to the console for the BMC system
+> itself, right? As distinct from the host serial.
+>
+> > Currently, I have connected my Host Server (i.e., Thinkstation P510 =E2=
+=80=93
+> > Intel X86-64 CPU installed with OS: Ubuntu 18.04)
+> > with Intel Server Board S2600GZ (OS :Ubuntu 14) which has a BMC chip
+> > using aUSB-TTL Serial console cable
+> > (=E2=80=9Cxcluma Usb To Ttl Serial Cable Debugger For Raspberry Pi Beag=
+lebone
+> > Cubietruck=E2=80=9D.)
+> > The minicom is not showing me any prompt & it=E2=80=99s paused; nothing=
+ is
+> > going ahead.
+>
+> A few things to check:
+>
+>  - Where have you attached to the TTL signals? Are you sure that's a
+>    BMC serial port?
+>  - What are you expecting to see there? The BMC might only be
+>    outputting console data during boot.
+>  - Are you using the correct baud rate? (since there should be
+>    activity on the TX line during boot, you can use this to find the
+>    TX line and set your baud rate)
+>
+> I'm not familiar with the S2600GZ, but I have done a bit of OpenBMC
+> development using a S2600STB platform, which may be similar. In that
+> case, slides 25 and 28 of this might help:
+>
+>
+> http://jk.ozlabs.org/docs/lca2021/lca2021%20-%20Server%20platforms%20-%20=
+Jeremy%20Kerr.pdf
+>
+> Otherwise, maybe Intel folks here can provide better connection details
+> for the GZ.
+>
+> Cheers,
+>
+>
+> Jeremy
+>
+>
+
+--000000000000560dba05eaba57fe
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"auto">Hi Sir,<div dir=3D"auto">I am new to openbmc.</div><div d=
-ir=3D"auto"><br></div><div dir=3D"auto">I am trying to create separate .so =
-file for oem commands.</div><div dir=3D"auto"><br></div><div dir=3D"auto">I=
- able to see .so file on /usr/lib/ipmi-provider also</div><div dir=3D"auto"=
-><br></div><div dir=3D"auto">But try to test using ipmitool then throwing i=
-nvalid cmd.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Can you guid=
-e me to resolve this issue?</div><div dir=3D"auto">Let me know how ipmitool=
- using phosphor-ipmi-host &amp; intel-ipmi-oem?</div><div dir=3D"auto"><br>=
-</div><div dir=3D"auto">Thanks,</div><div dir=3D"auto">Vss</div><div dir=3D=
-"auto"><br></div><div dir=3D"auto"><br></div></div>
+<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div di=
+r=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr">Hi Shubh,<br></div><div dir=3D"=
+ltr"><br></div><div>Is your goal to replace the Intel BMC firmware stack wi=
+th an OpenBMC firmware image?</div><div><br></div><div>The Intel S2600GZ se=
+rver (a.k.a., Grizzly Pass) is an older server with an Emulex Pilot 2</div>=
+<div>BMC PSoC with a proprietary firmware stack. Furthermore,=C2=A0the Pilo=
+t series of BMC is not</div><div>supported by OpenBMC. Whereas the S2600STP=
+ (a.k.a., Sawtooth Pass), that Jeremy has</div><div>referenced, has the AST=
+2500 BMC PSoC and is supported by OpenBMC.</div><div><br></div><div>To make=
+ things more challenging for=C2=A0hackers, Intel platforms don&#39;t have t=
+he BMC serial port</div><div>normally accessible. Meaning that the hardware=
+=C2=A0to connect to the BMC serial port isn&#39;t=C2=A0</div><div>populated=
+ and logging into the BMC via the serial console is disabled.</div><div><br=
+></div><div>Regards, James.<br></div></div></div></div></div></div></div><b=
+r><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, =
+Oct 10, 2022 at 6:16 PM Jeremy Kerr &lt;<a href=3D"mailto:jk@codeconstruct.=
+com.au">jk@codeconstruct.com.au</a>&gt; wrote:<br></div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">Hi Shubh,<br>
+<br>
+&gt; TCS Confidential<br>
+<br>
+Really? :)<br>
+<br>
+&gt; I am new to OpenBMC and I need some help about how to access the BMC<b=
+r>
+&gt; console which I am not able to, after many tries.<br>
+<br>
+Just to confirm - you&#39;re referring to the console for the BMC system<br=
+>
+itself, right? As distinct from the host serial.<br>
+<br>
+&gt; Currently, I have connected my Host Server (i.e., Thinkstation P510 =
+=E2=80=93<br>
+&gt; Intel X86-64 CPU installed with OS: Ubuntu 18.04)<br>
+&gt; with Intel Server Board S2600GZ (OS :Ubuntu 14) which has a BMC chip<b=
+r>
+&gt; using aUSB-TTL Serial console cable <br>
+&gt; (=E2=80=9Cxcluma Usb To Ttl Serial Cable Debugger For Raspberry Pi Bea=
+glebone<br>
+&gt; Cubietruck=E2=80=9D.)<br>
+&gt; The minicom is not showing me any prompt &amp; it=E2=80=99s paused; no=
+thing is<br>
+&gt; going ahead.<br>
+<br>
+A few things to check:<br>
+<br>
+=C2=A0- Where have you attached to the TTL signals? Are you sure that&#39;s=
+ a=C2=A0<br>
+=C2=A0 =C2=A0BMC serial port?<br>
+=C2=A0- What are you expecting to see there? The BMC might only be=C2=A0<br=
+>
+=C2=A0 =C2=A0outputting console data during boot.<br>
+=C2=A0- Are you using the correct baud rate? (since there should be=C2=A0<b=
+r>
+=C2=A0 =C2=A0activity=C2=A0on the TX line during boot, you can use this to =
+find the=C2=A0<br>
+=C2=A0 =C2=A0TX=C2=A0line and set your baud rate)<br>
+<br>
+I&#39;m not familiar with the S2600GZ, but I have done a bit of OpenBMC<br>
+development using a S2600STB platform, which may be similar. In that<br>
+case, slides 25 and 28 of this might help:<br>
+<br>
+<a href=3D"http://jk.ozlabs.org/docs/lca2021/lca2021%20-%20Server%20platfor=
+ms%20-%20Jeremy%20Kerr.pdf" rel=3D"noreferrer" target=3D"_blank">http://jk.=
+ozlabs.org/docs/lca2021/lca2021%20-%20Server%20platforms%20-%20Jeremy%20Ker=
+r.pdf</a><br>
+<br>
+Otherwise, maybe Intel folks here can provide better connection details<br>
+for the GZ.<br>
+<br>
+Cheers,<br>
+<br>
+<br>
+Jeremy<br>
+<br>
+</blockquote></div>
 
---00000000000076fa4205ea884c9c--
+--000000000000560dba05eaba57fe--
