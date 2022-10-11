@@ -2,67 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0004F5FAB82
-	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 06:02:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D92F35FAC37
+	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 08:09:27 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MmhvX6KTtz3bl0
-	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 15:02:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Mmljd5nLgz2xYy
+	for <lists+openbmc@lfdr.de>; Tue, 11 Oct 2022 17:09:25 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=ZZ13K51m;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=KwUpf67l;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::730; helo=mail-qk1-x730.google.com; envelope-from=james.mihm@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::535; helo=mail-ed1-x535.google.com; envelope-from=tali.perry1@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=ZZ13K51m;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=KwUpf67l;
 	dkim-atps=neutral
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
+Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mmhtx2ttTz2xsD
-	for <openbmc@lists.ozlabs.org>; Tue, 11 Oct 2022 15:02:17 +1100 (AEDT)
-Received: by mail-qk1-x730.google.com with SMTP id m6so2723870qkm.4
-        for <openbmc@lists.ozlabs.org>; Mon, 10 Oct 2022 21:02:17 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mmlj06LZvz2xWx
+	for <openbmc@lists.ozlabs.org>; Tue, 11 Oct 2022 17:08:50 +1100 (AEDT)
+Received: by mail-ed1-x535.google.com with SMTP id a13so18687911edj.0
+        for <openbmc@lists.ozlabs.org>; Mon, 10 Oct 2022 23:08:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=8MOoJ/tC6nswN9FPhZaFRW4pvdLKEmpCYiS88Yn4SH4=;
-        b=ZZ13K51mCJoB/cMZrQKa3UPSJFTizxLQonTFAaN+sSkyWTHPR2vFgoVpGMEiC/vqAG
-         V9e1T0ld7AxBVY0XzOKIkw1Xcs05lacRp1F9OROYC96IffOTsuPJiYV0TWL/iPIJLCre
-         sSK4Uli5Djp7bWWgs/0Cthc3wvcOLgbS2lPIcWZzdVkFFoJxpj1Qk91/8IHVcca3YRNf
-         1VD4yCMG8LLBDJi9h/aw8JfXClOORm6l7uLx6ZWgSamj4yUFaQuMaf775wXN52LFgpso
-         iD8df1OAot9Ldan0QK5KTcj+t/JKcLsooz8JbRRqSwLdDvQCeRWAqiiyf5B1nIu32xKJ
-         ig3g==
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rokH8SB+fCVwoXBK5lTt7JbvkpAPiYRJUy9ay8afCHU=;
+        b=KwUpf67ltK43D03SBE66eNPRpn7yhhdgS0Skz2Q8eUtoxcLKXkoUeqbIZVN+lWc1dj
+         JfPMLQaYl+haeC/kgnIsr8xBTvrPBWzFgG2x2QdjOw83/2mPI/BpupFV7sdAcUOs0yEz
+         nrB0C/ABWbjxYs6iUQNmX45REPjrqsKAuA03OSHNNDxfsWdM4nifhqZLngMmdV1GcI6E
+         m2Vr2n9W4l/ZoMZVHjZiYrYT5tSpGihFZsB+zzEb6IqxrRBAMLrB41wG243jrZjPHFud
+         ERWtI5dNzhjI/lGyTkjo2y5uREdGECrQpB6bIbA1QqEIg4axK2rBlPCLf/xIYU2eZqBy
+         2TqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8MOoJ/tC6nswN9FPhZaFRW4pvdLKEmpCYiS88Yn4SH4=;
-        b=Wd6GJLqgHiCsULFLzlZH0WIe3fLzq+MYURDVwZ2cASjPna0ca9GMch8S6W1ij61eoI
-         as1Cm/KY3qqtDauXgZ6T1GSsXutAsJYw9vket40bzlgOcegihyadYd7rZkzEDVrxDRJv
-         ZmOSvHgA5jf2rfUv6owX+aNgmi2MlKDXTkHHPJ1awEFZIQO/sW8GQmhkPRTdmaSxj1wW
-         wE7oAHAk8G6R3c0HgZ7Sn6XQIq1g/sqtXRISJ6uZQX09fN1D7BeYPbHWnr+Yici7FLHI
-         2qacVC7QBmiDqQ9u/vjDbj9ARkhkQL2DOk5jfhHCewA8sm93rjRYCNSS/JxPVs8kpX2u
-         Tk1w==
-X-Gm-Message-State: ACrzQf3KEYWo6Pta9fMgBYhl310hGK3it8OsG9n3frR9HoXdnvBmB3oW
-	olISuPIhUhyTq6jNIYRJeSyA4yDPof1wnl2P5G8=
-X-Google-Smtp-Source: AMsMyM7HD/awQ3vhB1JukuviliaJ1o+gkcC789qVRqrfABqEXbDXMoOCCiQHRQJtVGHtTSNIr6AYq65z7wwqbm9+/Mo=
-X-Received: by 2002:a05:620a:2a09:b0:6ee:7d3e:687f with SMTP id
- o9-20020a05620a2a0900b006ee7d3e687fmr593005qkp.572.1665460933626; Mon, 10 Oct
- 2022 21:02:13 -0700 (PDT)
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rokH8SB+fCVwoXBK5lTt7JbvkpAPiYRJUy9ay8afCHU=;
+        b=mz1v6FKh2x8EL9PlbB4csbmiVO5wMU+8u0m8jghDojndEv8fFnwzBs1viskEw622B2
+         T+ocRJazy3zTdhJA+Ev6r8SijK2U+BsCsXz6mvqo3NxQStv37KFxQepaUL9821eViM8X
+         IgrfwqG6DEigkeNotyTP3BFCffclaAMEvkwxRUcwJYUy72b77Rzt9ChnpOBiOXrlmr5O
+         b9ChmtY+vFpo+dOxN/VRIPjoDtvlium5j4vTWxs9Ohgu5ml87Po+dhQC2AWtRbuA6QbK
+         P5F6rDHs22jtKwIufiJXlVLbczbMyYyP6O4bTosrJFTIUniUByQn+Xa0q6vXTGGGV1f5
+         tWow==
+X-Gm-Message-State: ACrzQf1ldEha9OQapbgcQfyo2NT6uxEkPqBFBTlmUk05nZb7RHrkf4RW
+	UB9uj8jBY/ImwrI2CoaU2EdmZxCVmf2mvwF0wKw=
+X-Google-Smtp-Source: AMsMyM6HVsyRffxQA7dMiK2jhsqxPvCxPtElUDFPLF2FvR33Fk4NXJOV0Bsc6fwANmLFMObV0IEKU3AHsusQnwYwVKs=
+X-Received: by 2002:a05:6402:4411:b0:437:b723:72 with SMTP id
+ y17-20020a056402441100b00437b7230072mr21426449eda.38.1665468523541; Mon, 10
+ Oct 2022 23:08:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <BM1PR01MB24678016E23DB9B97349C7A185209@BM1PR01MB2467.INDPRD01.PROD.OUTLOOK.COM>
- <c259d074d0e5dae670bfe18155a23db600796afd.camel@codeconstruct.com.au>
-In-Reply-To: <c259d074d0e5dae670bfe18155a23db600796afd.camel@codeconstruct.com.au>
-From: James Mihm <james.mihm@gmail.com>
-Date: Mon, 10 Oct 2022 21:01:37 -0700
-Message-ID: <CADy_Pt3e=MfxBK72HkU0d8FCs_xdfFrH=2NVqMf1tntBr9CEHQ@mail.gmail.com>
-Subject: Re: Unable to connect to a BMC Serial Console
-To: Jeremy Kerr <jk@codeconstruct.com.au>
-Content-Type: multipart/alternative; boundary="000000000000560dba05eaba57fe"
+References: <20221008125924.1220203-1-j.neuschaefer@gmx.net> <20221008125924.1220203-2-j.neuschaefer@gmx.net>
+In-Reply-To: <20221008125924.1220203-2-j.neuschaefer@gmx.net>
+From: Tali Perry <tali.perry1@gmail.com>
+Date: Tue, 11 Oct 2022 09:08:32 +0300
+Message-ID: <CAHb3i=tVphSZiPKohnVX3Q0AXD0LYQYStNjzXzrOKFPvKL3odg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] i2c: npcm7xx: Annotate register field definitions
+ with longer names
+To: =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,170 +76,122 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Shubhabrata Bose <shubhabrata.bose@tcs.com>
+Cc: Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-i2c@vger.kernel.org, Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000560dba05eaba57fe
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Reviewed-by: Tali Perry <tali.perry1@gmail.com>
 
-Hi Shubh,
+Thanks Jonathan!
 
-Is your goal to replace the Intel BMC firmware stack with an OpenBMC
-firmware image?
-
-The Intel S2600GZ server (a.k.a., Grizzly Pass) is an older server with an
-Emulex Pilot 2
-BMC PSoC with a proprietary firmware stack. Furthermore, the Pilot series
-of BMC is not
-supported by OpenBMC. Whereas the S2600STP (a.k.a., Sawtooth Pass), that
-Jeremy has
-referenced, has the AST2500 BMC PSoC and is supported by OpenBMC.
-
-To make things more challenging for hackers, Intel platforms don't have the
-BMC serial port
-normally accessible. Meaning that the hardware to connect to the BMC serial
-port isn't
-populated and logging into the BMC via the serial console is disabled.
-
-Regards, James.
-
-On Mon, Oct 10, 2022 at 6:16 PM Jeremy Kerr <jk@codeconstruct.com.au> wrote=
-:
-
-> Hi Shubh,
+On Sat, Oct 8, 2022 at 3:59 PM Jonathan Neusch=C3=A4fer
+<j.neuschaefer@gmx.net> wrote:
 >
-> > TCS Confidential
+> To make the code easier to understand, add longer names to the
+> definitions of register fields. These longer names are based on source
+> code published by DELL/AESS for WPCM450, but should apply just as well
+> to NPCM7xx and NPCM8xx.
 >
-> Really? :)
+> Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+> ---
+>  drivers/i2c/busses/i2c-npcm7xx.c | 56 ++++++++++++++++----------------
+>  1 file changed, 28 insertions(+), 28 deletions(-)
 >
-> > I am new to OpenBMC and I need some help about how to access the BMC
-> > console which I am not able to, after many tries.
+> diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-np=
+cm7xx.c
+> index 9a7a2d0bf5765..bbc7359e67f74 100644
+> --- a/drivers/i2c/busses/i2c-npcm7xx.c
+> +++ b/drivers/i2c/busses/i2c-npcm7xx.c
+> @@ -146,50 +146,50 @@ static const int npcm_i2caddr[I2C_NUM_OWN_ADDR] =3D=
+ {
+>  #endif
 >
-> Just to confirm - you're referring to the console for the BMC system
-> itself, right? As distinct from the host serial.
+>  /* NPCM_I2CST reg fields */
+> -#define NPCM_I2CST_XMIT                        BIT(0)
+> -#define NPCM_I2CST_MASTER              BIT(1)
+> -#define NPCM_I2CST_NMATCH              BIT(2)
+> -#define NPCM_I2CST_STASTR              BIT(3)
+> -#define NPCM_I2CST_NEGACK              BIT(4)
+> -#define NPCM_I2CST_BER                 BIT(5)
+> -#define NPCM_I2CST_SDAST               BIT(6)
+> -#define NPCM_I2CST_SLVSTP              BIT(7)
+> +#define NPCM_I2CST_XMIT                        BIT(0)  /* Transmit mode =
+*/
+> +#define NPCM_I2CST_MASTER              BIT(1)  /* Master mode */
+> +#define NPCM_I2CST_NMATCH              BIT(2)  /* New match */
+> +#define NPCM_I2CST_STASTR              BIT(3)  /* Stall after start */
+> +#define NPCM_I2CST_NEGACK              BIT(4)  /* Negative ACK */
+> +#define NPCM_I2CST_BER                 BIT(5)  /* Bus error */
+> +#define NPCM_I2CST_SDAST               BIT(6)  /* SDA status */
+> +#define NPCM_I2CST_SLVSTP              BIT(7)  /* Slave stop */
 >
-> > Currently, I have connected my Host Server (i.e., Thinkstation P510 =E2=
-=80=93
-> > Intel X86-64 CPU installed with OS: Ubuntu 18.04)
-> > with Intel Server Board S2600GZ (OS :Ubuntu 14) which has a BMC chip
-> > using aUSB-TTL Serial console cable
-> > (=E2=80=9Cxcluma Usb To Ttl Serial Cable Debugger For Raspberry Pi Beag=
-lebone
-> > Cubietruck=E2=80=9D.)
-> > The minicom is not showing me any prompt & it=E2=80=99s paused; nothing=
- is
-> > going ahead.
+>  /* NPCM_I2CCST reg fields */
+> -#define NPCM_I2CCST_BUSY               BIT(0)
+> -#define NPCM_I2CCST_BB                 BIT(1)
+> -#define NPCM_I2CCST_MATCH              BIT(2)
+> -#define NPCM_I2CCST_GCMATCH            BIT(3)
+> -#define NPCM_I2CCST_TSDA               BIT(4)
+> -#define NPCM_I2CCST_TGSCL              BIT(5)
+> -#define NPCM_I2CCST_MATCHAF            BIT(6)
+> -#define NPCM_I2CCST_ARPMATCH           BIT(7)
+> +#define NPCM_I2CCST_BUSY               BIT(0)  /* Busy */
+> +#define NPCM_I2CCST_BB                 BIT(1)  /* Bus busy */
+> +#define NPCM_I2CCST_MATCH              BIT(2)  /* Address match */
+> +#define NPCM_I2CCST_GCMATCH            BIT(3)  /* Global call match */
+> +#define NPCM_I2CCST_TSDA               BIT(4)  /* Test SDA line */
+> +#define NPCM_I2CCST_TGSCL              BIT(5)  /* Toggle SCL line */
+> +#define NPCM_I2CCST_MATCHAF            BIT(6)  /* Match address field */
+> +#define NPCM_I2CCST_ARPMATCH           BIT(7)  /* ARP address match */
 >
-> A few things to check:
+>  /* NPCM_I2CCTL1 reg fields */
+> -#define NPCM_I2CCTL1_START             BIT(0)
+> -#define NPCM_I2CCTL1_STOP              BIT(1)
+> -#define NPCM_I2CCTL1_INTEN             BIT(2)
+> +#define NPCM_I2CCTL1_START             BIT(0)  /* Generate start conditi=
+on */
+> +#define NPCM_I2CCTL1_STOP              BIT(1)  /* Generate stop conditio=
+n */
+> +#define NPCM_I2CCTL1_INTEN             BIT(2)  /* Interrupt enable */
+>  #define NPCM_I2CCTL1_EOBINTE           BIT(3)
+>  #define NPCM_I2CCTL1_ACK               BIT(4)
+> -#define NPCM_I2CCTL1_GCMEN             BIT(5)
+> -#define NPCM_I2CCTL1_NMINTE            BIT(6)
+> -#define NPCM_I2CCTL1_STASTRE           BIT(7)
+> +#define NPCM_I2CCTL1_GCMEN             BIT(5)  /* Global call match enab=
+le */
+> +#define NPCM_I2CCTL1_NMINTE            BIT(6)  /* New match interrupt en=
+able */
+> +#define NPCM_I2CCTL1_STASTRE           BIT(7)  /* Stall after start enab=
+le */
 >
->  - Where have you attached to the TTL signals? Are you sure that's a
->    BMC serial port?
->  - What are you expecting to see there? The BMC might only be
->    outputting console data during boot.
->  - Are you using the correct baud rate? (since there should be
->    activity on the TX line during boot, you can use this to find the
->    TX line and set your baud rate)
+>  /* RW1S fields (inside a RW reg): */
+>  #define NPCM_I2CCTL1_RWS   \
+>         (NPCM_I2CCTL1_START | NPCM_I2CCTL1_STOP | NPCM_I2CCTL1_ACK)
 >
-> I'm not familiar with the S2600GZ, but I have done a bit of OpenBMC
-> development using a S2600STB platform, which may be similar. In that
-> case, slides 25 and 28 of this might help:
+>  /* npcm_i2caddr reg fields */
+> -#define NPCM_I2CADDR_A                 GENMASK(6, 0)
+> -#define NPCM_I2CADDR_SAEN              BIT(7)
+> +#define NPCM_I2CADDR_A                 GENMASK(6, 0)   /* Address */
+> +#define NPCM_I2CADDR_SAEN              BIT(7)          /* Slave address =
+enable */
 >
+>  /* NPCM_I2CCTL2 reg fields */
+> -#define I2CCTL2_ENABLE                 BIT(0)
+> -#define I2CCTL2_SCLFRQ6_0              GENMASK(7, 1)
+> +#define I2CCTL2_ENABLE                 BIT(0)          /* Module enable =
+*/
+> +#define I2CCTL2_SCLFRQ6_0              GENMASK(7, 1)   /* Bits 0:6 of fr=
+equency divisor */
 >
-> http://jk.ozlabs.org/docs/lca2021/lca2021%20-%20Server%20platforms%20-%20=
-Jeremy%20Kerr.pdf
+>  /* NPCM_I2CCTL3 reg fields */
+> -#define I2CCTL3_SCLFRQ8_7              GENMASK(1, 0)
+> -#define I2CCTL3_ARPMEN                 BIT(2)
+> +#define I2CCTL3_SCLFRQ8_7              GENMASK(1, 0)   /* Bits 7:8 of fr=
+equency divisor */
+> +#define I2CCTL3_ARPMEN                 BIT(2)  /* ARP match enable */
+>  #define I2CCTL3_IDL_START              BIT(3)
+>  #define I2CCTL3_400K_MODE              BIT(4)
+>  #define I2CCTL3_BNK_SEL                        BIT(5)
+> --
+> 2.35.1
 >
-> Otherwise, maybe Intel folks here can provide better connection details
-> for the GZ.
->
-> Cheers,
->
->
-> Jeremy
->
->
-
---000000000000560dba05eaba57fe
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr"><div di=
-r=3D"ltr"><div dir=3D"ltr"><div dir=3D"ltr">Hi Shubh,<br></div><div dir=3D"=
-ltr"><br></div><div>Is your goal to replace the Intel BMC firmware stack wi=
-th an OpenBMC firmware image?</div><div><br></div><div>The Intel S2600GZ se=
-rver (a.k.a., Grizzly Pass) is an older server with an Emulex Pilot 2</div>=
-<div>BMC PSoC with a proprietary firmware stack. Furthermore,=C2=A0the Pilo=
-t series of BMC is not</div><div>supported by OpenBMC. Whereas the S2600STP=
- (a.k.a., Sawtooth Pass), that Jeremy has</div><div>referenced, has the AST=
-2500 BMC PSoC and is supported by OpenBMC.</div><div><br></div><div>To make=
- things more challenging for=C2=A0hackers, Intel platforms don&#39;t have t=
-he BMC serial port</div><div>normally accessible. Meaning that the hardware=
-=C2=A0to connect to the BMC serial port isn&#39;t=C2=A0</div><div>populated=
- and logging into the BMC via the serial console is disabled.</div><div><br=
-></div><div>Regards, James.<br></div></div></div></div></div></div></div><b=
-r><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, =
-Oct 10, 2022 at 6:16 PM Jeremy Kerr &lt;<a href=3D"mailto:jk@codeconstruct.=
-com.au">jk@codeconstruct.com.au</a>&gt; wrote:<br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">Hi Shubh,<br>
-<br>
-&gt; TCS Confidential<br>
-<br>
-Really? :)<br>
-<br>
-&gt; I am new to OpenBMC and I need some help about how to access the BMC<b=
-r>
-&gt; console which I am not able to, after many tries.<br>
-<br>
-Just to confirm - you&#39;re referring to the console for the BMC system<br=
->
-itself, right? As distinct from the host serial.<br>
-<br>
-&gt; Currently, I have connected my Host Server (i.e., Thinkstation P510 =
-=E2=80=93<br>
-&gt; Intel X86-64 CPU installed with OS: Ubuntu 18.04)<br>
-&gt; with Intel Server Board S2600GZ (OS :Ubuntu 14) which has a BMC chip<b=
-r>
-&gt; using aUSB-TTL Serial console cable <br>
-&gt; (=E2=80=9Cxcluma Usb To Ttl Serial Cable Debugger For Raspberry Pi Bea=
-glebone<br>
-&gt; Cubietruck=E2=80=9D.)<br>
-&gt; The minicom is not showing me any prompt &amp; it=E2=80=99s paused; no=
-thing is<br>
-&gt; going ahead.<br>
-<br>
-A few things to check:<br>
-<br>
-=C2=A0- Where have you attached to the TTL signals? Are you sure that&#39;s=
- a=C2=A0<br>
-=C2=A0 =C2=A0BMC serial port?<br>
-=C2=A0- What are you expecting to see there? The BMC might only be=C2=A0<br=
->
-=C2=A0 =C2=A0outputting console data during boot.<br>
-=C2=A0- Are you using the correct baud rate? (since there should be=C2=A0<b=
-r>
-=C2=A0 =C2=A0activity=C2=A0on the TX line during boot, you can use this to =
-find the=C2=A0<br>
-=C2=A0 =C2=A0TX=C2=A0line and set your baud rate)<br>
-<br>
-I&#39;m not familiar with the S2600GZ, but I have done a bit of OpenBMC<br>
-development using a S2600STB platform, which may be similar. In that<br>
-case, slides 25 and 28 of this might help:<br>
-<br>
-<a href=3D"http://jk.ozlabs.org/docs/lca2021/lca2021%20-%20Server%20platfor=
-ms%20-%20Jeremy%20Kerr.pdf" rel=3D"noreferrer" target=3D"_blank">http://jk.=
-ozlabs.org/docs/lca2021/lca2021%20-%20Server%20platforms%20-%20Jeremy%20Ker=
-r.pdf</a><br>
-<br>
-Otherwise, maybe Intel folks here can provide better connection details<br>
-for the GZ.<br>
-<br>
-Cheers,<br>
-<br>
-<br>
-Jeremy<br>
-<br>
-</blockquote></div>
-
---000000000000560dba05eaba57fe--
