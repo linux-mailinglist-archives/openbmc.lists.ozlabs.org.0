@@ -2,66 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 88F9A5FC7EE
-	for <lists+openbmc@lfdr.de>; Wed, 12 Oct 2022 17:06:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CBE635FC9F6
+	for <lists+openbmc@lfdr.de>; Wed, 12 Oct 2022 19:35:59 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Mnbb22cHyz3bnY
-	for <lists+openbmc@lfdr.de>; Thu, 13 Oct 2022 02:06:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MnfvF3mdmz3c75
+	for <lists+openbmc@lfdr.de>; Thu, 13 Oct 2022 04:35:53 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=glBJX2jw;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=o5NCA1Y9;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::835; helo=mail-qt1-x835.google.com; envelope-from=edtanous@google.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=glBJX2jw;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=o5NCA1Y9;
 	dkim-atps=neutral
-Received: from mail-qt1-x835.google.com (mail-qt1-x835.google.com [IPv6:2607:f8b0:4864:20::835])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MnbZT36mJz3bjb
-	for <openbmc@lists.ozlabs.org>; Thu, 13 Oct 2022 02:06:08 +1100 (AEDT)
-Received: by mail-qt1-x835.google.com with SMTP id bb5so4988577qtb.11
-        for <openbmc@lists.ozlabs.org>; Wed, 12 Oct 2022 08:06:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=xftxVLRbwErBfZjIdLPPzQehqN4edV3u86VnvR+lJs0=;
-        b=glBJX2jwhLIjx7hQnfV5Z4XjGc/vIxt79FbbCcZgxkaK1/IBMCb6TyHB2wVaAUfaFi
-         739iJu0CG01P4fC+fiv+OMztAU/c31BheejIaw0jYALPEK9CAX++AHLIOr5NRK6iMGtM
-         Dw/gI/0+ZojFGjUuMlcsFOq38HFsfPE9/Lp82kaaqsYeQ5PDF5zGKJAp3ZXdZWr5WNLg
-         bMYqT/y7QZkPUeWRDjCVpflhfhLHx725gRE3eik358LM0PIUjfdhrhLvZvsOcVrYUukG
-         /XG1pik85+btK0/T8weC0A2gD/wyiKl1/mrKmH1NkzmOJ/ilQ20k7+ReFL9Ae8Do0M9w
-         LLjg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xftxVLRbwErBfZjIdLPPzQehqN4edV3u86VnvR+lJs0=;
-        b=Xe65v0hXkr0VyoE4qbBQExfmEvA5/chU1DaMRFy8ACBths4wqwTyuk6zqo5Ng3Vpqe
-         6iEUy/4duRXbiWwl4Zgygw1S4YVB53Oa2PLadhpVfUZllMYKoEXH33Iw6EXrUh0TKiu9
-         RdxnoqQF05h49ftMUWyH71Yt2Jt3TWfVtOGkUqN4HV61Qnfxg8vD7oRb+lheZincZP+z
-         qbHxzGOgDXkxzwRZq60L1aX2wLSRCE2TgSckCuFRlXO/NELdpmNp8hk9kaeHhf91adTl
-         MLcf1lJxPSHwRnvJwBsTAkbLgyDteKiDF6icl1nfW4BK1Mi6z6ZovRZQTENg2Cbt9jKE
-         OWhQ==
-X-Gm-Message-State: ACrzQf1K5U8usaIrG8PO6RbQExO/TyWXvzEUO/t+u861zvzpI/FFgKsD
-	ShZF1mxA0Awp2U2L4Lv8ZyQ5gASXxpG8FXiMfcGQlQ==
-X-Google-Smtp-Source: AMsMyM48RW17ELaY3C42+CkqwB/2e3LhaJub+QaTJnFJUkLD4bp+VQrtj7bIcITRHYbCECwX/etYT89PNuR5N/OnzFo=
-X-Received: by 2002:a05:622a:288:b0:35c:fe52:2e5 with SMTP id
- z8-20020a05622a028800b0035cfe5202e5mr23399639qtw.59.1665587164339; Wed, 12
- Oct 2022 08:06:04 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mnftc4VhZz3bjB
+	for <openbmc@lists.ozlabs.org>; Thu, 13 Oct 2022 04:35:19 +1100 (AEDT)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29CFcFcx023418
+	for <openbmc@lists.ozlabs.org>; Wed, 12 Oct 2022 17:35:16 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
+ subject : from : to : references : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=FqMgMFr6Hh9QuHAHDlWc1Nib7uLOEy1nLrmb6wmLf/4=;
+ b=o5NCA1Y9PvLCK7DlROxozUWQCOs52ZijSNx/YzoMObtmo//DLTtUM4UOXREVpghzEx1u
+ fE/FB2MANh6v91fsCpV+For0mY0TUxeCtUowpOMUOckvzquaKAZK7gYsENLzY+eki0bQ
+ RMMuTFnZLJTe80p1RYAvjq+8lgrnfAAq6YIW0ocohIgwL75WuJhhmDV0Xb54qbzPJ6T0
+ gVnPBqmyW50RvW5Dqa6Hp8VQd2aBFjdNYtmbGeeuXPgn84491e8W47O93t+D1PJp+o2y
+ yhq8Y36+dZaOjzUXGtTJaZVcvT/4HXm5O51zjTtG1orsjw8Es4562uBf7ao+xPbuJVKb vw== 
+Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com [169.55.91.170])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3k5xfmg3ky-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 12 Oct 2022 17:35:15 +0000
+Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
+	by ppma02wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 29CHLR4n027881
+	for <openbmc@lists.ozlabs.org>; Wed, 12 Oct 2022 17:35:14 GMT
+Received: from b03cxnp08026.gho.boulder.ibm.com (b03cxnp08026.gho.boulder.ibm.com [9.17.130.18])
+	by ppma02wdc.us.ibm.com with ESMTP id 3k30uaaqhf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 12 Oct 2022 17:35:14 +0000
+Received: from smtpav02.dal12v.mail.ibm.com ([9.208.128.128])
+	by b03cxnp08026.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 29CHZGk652756950
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+	for <openbmc@lists.ozlabs.org>; Wed, 12 Oct 2022 17:35:16 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 86D8D5805A
+	for <openbmc@lists.ozlabs.org>; Wed, 12 Oct 2022 17:35:13 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 4C90358051
+	for <openbmc@lists.ozlabs.org>; Wed, 12 Oct 2022 17:35:13 +0000 (GMT)
+Received: from [9.160.65.62] (unknown [9.160.65.62])
+	by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTPS
+	for <openbmc@lists.ozlabs.org>; Wed, 12 Oct 2022 17:35:13 +0000 (GMT)
+Message-ID: <0674aa19-5a96-5f3c-4861-ecc54ad030fc@linux.ibm.com>
+Date: Wed, 12 Oct 2022 12:35:12 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.3.2
+Subject: Re: Security Working Group meeting - Wednesday October 12 - results
+Content-Language: en-US
+From: Joseph Reynolds <jrey@linux.ibm.com>
+To: openbmc <openbmc@lists.ozlabs.org>
+References: <74f2b64b-9f53-d5a4-b616-510bd75664d5@linux.ibm.com>
+In-Reply-To: <74f2b64b-9f53-d5a4-b616-510bd75664d5@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: -4E_XuliOW1WfnmTvkfOrFSaMMNDcblR
+X-Proofpoint-ORIG-GUID: -4E_XuliOW1WfnmTvkfOrFSaMMNDcblR
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-References: <CANFuQ7BJBX2dZyrYAvxfuZ2sjnWLR-iAbu6_iCQHBFg7--0X-A@mail.gmail.com>
-In-Reply-To: <CANFuQ7BJBX2dZyrYAvxfuZ2sjnWLR-iAbu6_iCQHBFg7--0X-A@mail.gmail.com>
-From: Ed Tanous <edtanous@google.com>
-Date: Wed, 12 Oct 2022 08:05:53 -0700
-Message-ID: <CAH2-KxAZ1GrbBsUU_+OyWmroJEkwhBa5Ao_g5EtcUAsB75fxxA@mail.gmail.com>
-Subject: Re: Enhanced sensor monitor
-To: George Liu <liuxiwei1013@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-12_08,2022-10-12_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 clxscore=1015
+ impostorscore=0 adultscore=0 mlxlogscore=999 bulkscore=0 malwarescore=0
+ priorityscore=1501 suspectscore=0 spamscore=0 lowpriorityscore=0
+ phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2209130000 definitions=main-2210120112
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,77 +93,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Sep 27, 2022 at 2:44 AM George Liu <liuxiwei1013@gmail.com> wrote:
+On 10/12/22 9:15 AM, Joseph Reynolds wrote:
+> This is a reminder of the OpenBMC Security Working Group meeting 
+> scheduled for this Wednesday October 12 at 10:00am PDT.
 >
-> Hi, all:
->   I am working at Inspur and we're investigating a feature related to
-> sensor monitoring.
+> The meeting is on Discord voice.
 >
->   As far as I know, the OpenBMC community will only trigger LED alarms
-> when the parsing FRU/VPD fails or is not in place. The lack of the
-> function of triggering the corresponding Sensor fault light for the
-> fault status (Warning/Critical) of the sensors, including
-> threshold-type sensors and discrete-type sensors.
+> === MEETING ACCESS ON DISCORD VOICE  ===
+> First, join Discord via https://discord.gg/69Km47zH98 
+> <https://discord.gg/69Km47zH98> and confirm via email.
+> Then, to join: navigate Discord > OpenBMC > Voice channels >  Security 
+> ~ https://discord.com/channels/775381525260664832/1002376534377635860 
+> <https://discord.com/channels/775381525260664832/1002376534377635860>
 >
->   For threshold-type sensors, this function has been implemented in
-> the Intel warehouse [1], I think this should be a general function,
-> and even many companies have implemented it downstream, so can we push
-> this function upstream?
->   For discrete-type sensors, it is only implemented in the
-> sensor.yaml[2] of the phosphor-ipmi-hostd, and we found that the
-> present state is simply implemented. I think it is necessary for us to
-> improve the discrete function and support all types and offsets.
 >
->   In addition: For the SEL function, the phosphor-sel-logger has
-> implemented threshold-type sensor alarms and records SEL, and I hope
-> to also integrate discrete-type functions, and be able to get all
-> sensor information through `ipmitool sel elist`.
->
->   So we currently have an idea, we hope to create a
-> phosphor-sensor-monitor repository and implement the following
-> functions:
->   1. Provide a PDI interface (eg:
-> xyz.openbmc_project.Discrete.Sensor.Value) to record discrete states
+> We'll discuss the following items on the agenda 
+> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
+> and anything else that comes up:
 
-This interface is intentionally not present, as it removes most of the
-modeling required for exposing these types of presence, and states in
-other APIs, like Redfish, and would require agreement on naming
-conventions, which we've historically had issues with in the past.
+Meeting held 2022-10-12:
+Attendees: alda, cengel74, Dick Wilkins, dsp, galmasi, Joseph Reynolds, 
+Rob, russWilson, RuudHaring, skoteshwara, YutakaSugawara. 1 Ruud: 
+Working gerrit reviews for SELinux and for measured boot.
+Wanted: branch in public repo to show progress for measured boot.
+Can we start code before the design is approved?  Specifically, create a 
+public fork?
 
->   2. Provide a way to monitor threshold sensor status -> trigger LED
-> -> log SEL (the function of logging SEL has been implemented in
-> phosphor-sel-logger, I hope the two repositories can be merged in the
-> future)
+2 Joseph mentioned interest in some code reviews with security focus:
+https://gerrit.openbmc.org/c/openbmc/phosphor-certificate-manager/+/54947 
+<https://gerrit.openbmc.org/c/openbmc/phosphor-certificate-manager/+/54947>Allow 
+for expired certificate
+https://gerrit.openbmc.org/c/openbmc/webui-vue/+/56719 
+<https://gerrit.openbmc.org/c/openbmc/webui-vue/+/56719>Old password 
+input in change password screen
 
-Merging those two repositories, while possible, needs more discussion
-than is present here on how we would accomplish this, and what the
-advantages would be.
+3 New meeting time?
+Anyone can hold a security workgroup meeting.  It is fun and easy!  The 
+steps are:
 
->   3. Provide a way to monitor discrete sensor status
->       a. If it is the data on the Host side, trigger the PDI interface
-> through the ipmiStorageAddSEL method of phosphor-host-ipmid -> trigger
-> LED -> record SEL
+ 1. Set a meeting time.  Choose a date and time when others can meet.
+ 2. Publish (email) the meeting time and its agenda.
+ 3. Hold the meeting and keep notes about topics discussed.
+ 4. Publish (email) the notes.
 
-I'm assuming this would be implemented in OEM commands?
 
->       b. If it is the data on the BMC side (eg: PSU, OCC, etc.), it
-> should inherit this PDI interface in the respective daemon, and the
-> phosphor-sensor-monitor only needs to monitor the property value of
-> the PDI interface -> trigger LED -> record SEL
->   4. Flexible JSON configuration file, ideally, when adding or
-> deleting sensors, you do not need to change the code, just update the
-> JSON
+
+Joseph
+
 >
->   There may be many situations here that we have not considered.
-> Welcome to ask questions. If the current proposal is accepted, I will
-> push a design document, thanks!
+> Access, agenda and notes are in the wiki:
+> https://github.com/openbmc/openbmc/wiki/Security-working-group 
+> <https://github.com/openbmc/openbmc/wiki/Security-working-group>
 >
-> [1]: https://github.com/Intel-BMC/provingground/tree/master/callback-manager
-> [2]: https://github.com/openbmc/phosphor-host-ipmid/blob/master/scripts/sensor-example.yaml
->
-> BRs
-> George Liu
+> - Joseph
+
