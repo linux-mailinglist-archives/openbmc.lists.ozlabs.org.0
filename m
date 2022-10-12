@@ -1,67 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 823785FC681
-	for <lists+openbmc@lfdr.de>; Wed, 12 Oct 2022 15:30:56 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 08DDB5FC718
+	for <lists+openbmc@lfdr.de>; Wed, 12 Oct 2022 16:16:42 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MnYSZ2xt4z3c6N
-	for <lists+openbmc@lfdr.de>; Thu, 13 Oct 2022 00:30:54 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MnZTL4sRRz3bkR
+	for <lists+openbmc@lfdr.de>; Thu, 13 Oct 2022 01:16:38 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=fE1jC2hH;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ETX+OJJP;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.55.52.93; helo=mga11.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=fE1jC2hH;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ETX+OJJP;
 	dkim-atps=neutral
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MnYRr69Qjz2yR9;
-	Thu, 13 Oct 2022 00:30:15 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1665581417; x=1697117417;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=tV/ZvJGYw4mf000OleNKwCzv+JZQjAKj+4wcxHqkOco=;
-  b=fE1jC2hHij2QKrXFcOWcCbVa6YcNkTXIIYm30nyWXsltbt7zzY5J2zlW
-   pKCqBZSSZRb+jzrQfWvfJv9/eoGFr9Dml1N65KMNmMUChhpGGAVsnUhKG
-   Pf6OO/Xx6Fdzcr8wpie2yGSyHzvNtCsjZcqeWd/snAGEYV8iVdO70O8Wm
-   aFONE4tkMABXXm9kwRHqLnRV3OZ2QvD3T6xWe7RgXDWNkNxH1eI/vWVQN
-   bVz+fJQHQa+QPeuc/IiAKL+OGpZHVQse9SIaeCpTgRacs2LiKWdhV/rEZ
-   UPMRURUo4hZqjp4EQY11BkGGI0xbZpVSH2vhSinYipWZcTIPBJdVqLeg8
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10497"; a="302404005"
-X-IronPort-AV: E=Sophos;i="5.95,179,1661842800"; 
-   d="scan'208";a="302404005"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2022 06:30:13 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10497"; a="626766256"
-X-IronPort-AV: E=Sophos;i="5.95,179,1661842800"; 
-   d="scan'208";a="626766256"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orsmga002.jf.intel.com with ESMTP; 12 Oct 2022 06:30:07 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.96)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1oiboD-005qlS-1e;
-	Wed, 12 Oct 2022 16:30:05 +0300
-Date: Wed, 12 Oct 2022 16:30:05 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Kent Gibson <warthog618@gmail.com>
-Subject: Re: [PATCH v2 02/36] gpiolib: cdev: Add missed header(s)
-Message-ID: <Y0bBXSHyxpdTGxoU@smile.fi.intel.com>
-References: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com>
- <20221010201453.77401-3-andriy.shevchenko@linux.intel.com>
- <Y0SyVwjDl7NGfTPn@sol>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MnZSk1vXDz3bjh
+	for <openbmc@lists.ozlabs.org>; Thu, 13 Oct 2022 01:16:05 +1100 (AEDT)
+Received: from pps.filterd (m0098420.ppops.net [127.0.0.1])
+	by mx0b-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29CDdl0Z012165
+	for <openbmc@lists.ozlabs.org>; Wed, 12 Oct 2022 14:16:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date : to :
+ from : subject : content-type : content-transfer-encoding : mime-version;
+ s=pp1; bh=nylv2c4aWHUjzNntUnnrup7V9/d5W5N4CbUSvmkKWOI=;
+ b=ETX+OJJPgYltEaq9L+PFnWrJXNRFnBSNR2FvjuS76ZlKa2bmbftOcXja4Qq1oqZJvcqe
+ 8yL061KE0mpFF3m3aOp5dXbBoWR3+LkqHoKLYwgXsYJLxXRg+S1Vc4iNDs+hzTfR1QGt
+ cdZNDJCdh5p17VyG90ep0lod8xdGuOUH25rD6x4fbr+TVr46fDejWOx2IWHG8ha7zNwp
+ 7GDghtaKlMqbY7NRPNrlndUWwLU+960NVi0/qNUGgoIoz+5oNezlOyIL5NSak03RifYY
+ sTcCv+zqfEQjmtOk8r/4pT2wkMmq/798sCJNusMQfHAJYRXl+u7mikh5rsNSrJ49KjAF Dg== 
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com [169.63.214.131])
+	by mx0b-001b2d01.pphosted.com (PPS) with ESMTPS id 3k5w564ky7-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 12 Oct 2022 14:16:02 +0000
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+	by ppma01dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 29CE5j3h025834
+	for <openbmc@lists.ozlabs.org>; Wed, 12 Oct 2022 14:16:01 GMT
+Received: from b01cxnp22036.gho.pok.ibm.com (b01cxnp22036.gho.pok.ibm.com [9.57.198.26])
+	by ppma01dal.us.ibm.com with ESMTP id 3k30uar2y5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 12 Oct 2022 14:16:01 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com ([9.208.128.117])
+	by b01cxnp22036.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 29CEG0D521299780
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+	for <openbmc@lists.ozlabs.org>; Wed, 12 Oct 2022 14:16:01 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 430B558061
+	for <openbmc@lists.ozlabs.org>; Wed, 12 Oct 2022 14:16:00 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id EF5E458043
+	for <openbmc@lists.ozlabs.org>; Wed, 12 Oct 2022 14:15:59 +0000 (GMT)
+Received: from [9.160.65.62] (unknown [9.160.65.62])
+	by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTPS
+	for <openbmc@lists.ozlabs.org>; Wed, 12 Oct 2022 14:15:59 +0000 (GMT)
+Message-ID: <74f2b64b-9f53-d5a4-b616-510bd75664d5@linux.ibm.com>
+Date: Wed, 12 Oct 2022 09:15:58 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.3.2
+Content-Language: en-US
+To: openbmc <openbmc@lists.ozlabs.org>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Security Working Group meeting - Wednesday October 12
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: Z2whFasjqiSKEJBi6BsSWdAZ3A_DzO9_
+X-Proofpoint-GUID: Z2whFasjqiSKEJBi6BsSWdAZ3A_DzO9_
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y0SyVwjDl7NGfTPn@sol>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-10-12_06,2022-10-12_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0
+ priorityscore=1501 mlxscore=0 lowpriorityscore=0 malwarescore=0
+ clxscore=1015 bulkscore=0 suspectscore=0 phishscore=0 spamscore=0
+ impostorscore=0 mlxlogscore=811 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2209130000 definitions=main-2210120093
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,41 +90,32 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-renesas-soc@vger.kernel.org, alsa-devel@alsa-project.org, linux-samsung-soc@vger.kernel.org, linux-aspeed@lists.ozlabs.org, Geert Uytterhoeven <geert+renesas@glider.be>, patches@opensource.cirrus.com, Bartosz Golaszewski <brgl@bgdev.pl>, linux-actions@lists.infradead.org, linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, linux-gpio@vger.kernel.org, linux-mediatek@lists.infradead.org, linux-rpi-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org, linux-riscv@lists.infradead.org, linux-omap@vger.kernel.org, openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Oct 11, 2022 at 08:01:27AM +0800, Kent Gibson wrote:
-> On Mon, Oct 10, 2022 at 11:14:18PM +0300, Andy Shevchenko wrote:
+This is a reminder of the OpenBMC Security Working Group meeting 
+scheduled for this Wednesday October 12 at 10:00am PDT.
 
-...
+The meeting is on Discord voice.
 
-> > -#include <linux/gpio.h>
-> >  #include <linux/gpio/driver.h>
-> > +#include <linux/gpio.h>
-
-> But moving the gpio subsystem header after the gpio/driver is not
-> alphabetical ('.' precedes '/') and it read better and made more sense
-> to me the way it was.
-
-Okay, I will move it back.
-
-...
-
-> > +#include <linux/seq_file.h>
-> 
-> I wasn't aware that we use anything from seq_file.
-> What am I missing?
+=== MEETING ACCESS ON DISCORD VOICE  ===
+First, join Discord via https://discord.gg/69Km47zH98 
+<https://discord.gg/69Km47zH98> and confirm via email.
+Then, to join: navigate Discord > OpenBMC > Voice channels >  Security ~ 
+https://discord.com/channels/775381525260664832/1002376534377635860 
+<https://discord.com/channels/775381525260664832/1002376534377635860>
 
 
-Eventually I can answer to your question: the commit 0ae3109a8391
-("gpiolib: cdev: add fdinfo output for line request file descriptors")
-is what you are missing.
+We'll discuss the following items on the agenda 
+<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
+and anything else that comes up:
 
-That said, we need this patch.
-
--- 
-With Best Regards,
-Andy Shevchenko
+1.
 
 
+
+Access, agenda and notes are in the wiki:
+https://github.com/openbmc/openbmc/wiki/Security-working-group 
+<https://github.com/openbmc/openbmc/wiki/Security-working-group>
+
+- Joseph
