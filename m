@@ -1,34 +1,34 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 255B4600A40
-	for <lists+openbmc@lfdr.de>; Mon, 17 Oct 2022 11:17:37 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A6A9600A46
+	for <lists+openbmc@lfdr.de>; Mon, 17 Oct 2022 11:18:13 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MrWby72tCz3c75
-	for <lists+openbmc@lfdr.de>; Mon, 17 Oct 2022 20:17:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MrWcg3S19z3drn
+	for <lists+openbmc@lfdr.de>; Mon, 17 Oct 2022 20:18:11 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+Received: from gandalf.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MrWb02cpMz3c3Z;
-	Mon, 17 Oct 2022 20:16:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MrWb15rf7z3cBS;
+	Mon, 17 Oct 2022 20:16:45 +1100 (AEDT)
 Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
-	by gandalf.ozlabs.org (Postfix) with ESMTP id 4MrWZw6JtGz4xFy;
-	Mon, 17 Oct 2022 20:16:40 +1100 (AEDT)
+	by gandalf.ozlabs.org (Postfix) with ESMTP id 4MrWb13WWgz4xGm;
+	Mon, 17 Oct 2022 20:16:45 +1100 (AEDT)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by mail.ozlabs.org (Postfix) with ESMTPSA id 4MrWZr4gbFz4xG9;
-	Mon, 17 Oct 2022 20:16:36 +1100 (AEDT)
+	by mail.ozlabs.org (Postfix) with ESMTPSA id 4MrWZx343vz4wgv;
+	Mon, 17 Oct 2022 20:16:41 +1100 (AEDT)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
 To: linux-spi@vger.kernel.org
-Subject: [PATCH linux v2 1/3] spi: dt-bindings: aspeed: Add a ranges property
-Date: Mon, 17 Oct 2022 11:16:22 +0200
-Message-Id: <20221017091624.130227-2-clg@kaod.org>
+Subject: [PATCH linux v2 2/3] spi: aspeed: Handle custom decoding ranges
+Date: Mon, 17 Oct 2022 11:16:23 +0200
+Message-Id: <20221017091624.130227-3-clg@kaod.org>
 X-Mailer: git-send-email 2.37.3
 In-Reply-To: <20221017091624.130227-1-clg@kaod.org>
 References: <20221017091624.130227-1-clg@kaod.org>
@@ -50,42 +50,129 @@ Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, Andrew Jeffery <a
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-"ranges" predefines settings for the decoding ranges of each CS.
+The "ranges" property predefines settings for the decoding ranges of
+each CS. If found in the DT, the driver applies the settings at probe
+time. The default behavior is to set the decoding range of each CS
+using the flash device size when the spi slave is setup.
 
 Cc: Naresh Solanki <naresh.solanki@9elements.com>
 Cc: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
 Signed-off-by: Cédric Le Goater <clg@kaod.org>
 ---
- .../devicetree/bindings/spi/aspeed,ast2600-fmc.yaml      | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/spi/spi-aspeed-smc.c | 65 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 64 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/spi/aspeed,ast2600-fmc.yaml b/Documentation/devicetree/bindings/spi/aspeed,ast2600-fmc.yaml
-index fa8f4ac20985..a11cbc4c4c5c 100644
---- a/Documentation/devicetree/bindings/spi/aspeed,ast2600-fmc.yaml
-+++ b/Documentation/devicetree/bindings/spi/aspeed,ast2600-fmc.yaml
-@@ -38,6 +38,14 @@ properties:
-   interrupts:
-     maxItems: 1
+diff --git a/drivers/spi/spi-aspeed-smc.c b/drivers/spi/spi-aspeed-smc.c
+index b90571396a60..75e1d08bbd00 100644
+--- a/drivers/spi/spi-aspeed-smc.c
++++ b/drivers/spi/spi-aspeed-smc.c
+@@ -96,6 +96,7 @@ struct aspeed_spi {
+ 	u32			 ahb_base_phy;
+ 	u32			 ahb_window_size;
+ 	struct device		*dev;
++	bool                     fixed_windows;
  
-+  ranges:
-+    minItems: 1
-+    maxItems: 5
-+    description: |
-+      Defines the address mapping for child devices with four integer
-+      values for each chip-select line in use:
-+      <cs-number> 0 <physical address of mapping> <size>
+ 	struct clk		*clk;
+ 	u32			 clk_freq;
+@@ -382,6 +383,7 @@ static const char *aspeed_spi_get_name(struct spi_mem *mem)
+ 
+ struct aspeed_spi_window {
+ 	u32 cs;
++	u32 reg;
+ 	u32 offset;
+ 	u32 size;
+ };
+@@ -396,6 +398,7 @@ static void aspeed_spi_get_windows(struct aspeed_spi *aspi,
+ 	for (cs = 0; cs < aspi->data->max_cs; cs++) {
+ 		reg_val = readl(aspi->regs + CE0_SEGMENT_ADDR_REG + cs * 4);
+ 		windows[cs].cs = cs;
++		windows[cs].reg = reg_val;
+ 		windows[cs].size = data->segment_end(aspi, reg_val) -
+ 			data->segment_start(aspi, reg_val);
+ 		windows[cs].offset = data->segment_start(aspi, reg_val) - aspi->ahb_base_phy;
+@@ -572,7 +575,8 @@ static int aspeed_spi_dirmap_create(struct spi_mem_dirmap_desc *desc)
+ 	if (op->data.dir != SPI_MEM_DATA_IN)
+ 		return -EOPNOTSUPP;
+ 
+-	aspeed_spi_chip_adjust_window(chip, desc->info.offset, desc->info.length);
++	if (!aspi->fixed_windows)
++		aspeed_spi_chip_adjust_window(chip, desc->info.offset, desc->info.length);
+ 
+ 	if (desc->info.length > chip->ahb_window_size)
+ 		dev_warn(aspi->dev, "CE%d window (%dMB) too small for mapping",
+@@ -712,6 +716,61 @@ static void aspeed_spi_enable(struct aspeed_spi *aspi, bool enable)
+ 		aspeed_spi_chip_enable(aspi, cs, enable);
+ }
+ 
++static int aspeed_spi_chip_read_ranges(struct device_node *node, struct aspeed_spi *aspi)
++{
++	const char *range_prop = "ranges";
++	struct property *prop;
++	struct aspeed_spi_window ranges[ASPEED_SPI_MAX_NUM_CS];
++	int prop_size;
++	int count;
++	int ret;
++	int i;
 +
- required:
-   - compatible
-   - reg
-@@ -58,6 +66,7 @@ examples:
-         compatible = "aspeed,ast2600-fmc";
-         clocks = <&syscon ASPEED_CLK_AHB>;
-         interrupts = <GIC_SPI 39 IRQ_TYPE_LEVEL_HIGH>;
-+        ranges = <0 0 0x20000000 0x2000000>, <1 0 0x22000000 0x2000000>;
++	prop = of_find_property(node, range_prop, &prop_size);
++	if (!prop)
++		return 0;
++
++	count = prop_size / sizeof(*ranges);
++	if (count > aspi->data->max_cs) {
++		dev_err(aspi->dev, "invalid '%s' property %d\n", range_prop, count);
++		return -EINVAL;
++	}
++
++	if (count < aspi->data->max_cs)
++		dev_dbg(aspi->dev, "'%s' property does not cover all CE\n",
++			range_prop);
++
++	ret = of_property_read_u32_array(node, range_prop, (u32 *)ranges, count * 4);
++	if (ret)
++		return ret;
++
++	dev_info(aspi->dev, "Using preset decoding ranges\n");
++	for (i = 0; i < count; i++) {
++		struct aspeed_spi_window *win = &ranges[i];
++
++		if (win->cs > aspi->data->max_cs) {
++			dev_err(aspi->dev, "CE%d range is invalid", win->cs);
++			return -EINVAL;
++		}
++
++		/* Trim top bit of the address to keep offset */
++		win->offset &= aspi->ahb_window_size - 1;
++
++		/* Minimal check */
++		if (win->offset + win->size > aspi->ahb_window_size) {
++			dev_warn(aspi->dev, "CE%d range is too large", win->cs);
++				return -EINVAL;
++		}
++
++		ret = aspeed_spi_set_window(aspi, win);
++		if (ret)
++			return ret;
++	}
++
++	aspi->fixed_windows = true;
++	return 0;
++}
++
+ static int aspeed_spi_probe(struct platform_device *pdev)
+ {
+ 	struct device *dev = &pdev->dev;
+@@ -767,6 +826,10 @@ static int aspeed_spi_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
  
-         flash@0 {
-                 reg = < 0 >;
++	ret = aspeed_spi_chip_read_ranges(dev->of_node, aspi);
++	if (ret)
++		return ret;
++
+ 	/* IRQ is for DMA, which the driver doesn't support yet */
+ 
+ 	ctlr->mode_bits = SPI_RX_DUAL | SPI_TX_DUAL | data->mode_bits;
 -- 
 2.37.3
 
