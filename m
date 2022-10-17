@@ -1,68 +1,59 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 902F7600EFE
-	for <lists+openbmc@lfdr.de>; Mon, 17 Oct 2022 14:19:06 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43E146016A3
+	for <lists+openbmc@lfdr.de>; Mon, 17 Oct 2022 20:52:08 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MrbdN2kTsz3cds
-	for <lists+openbmc@lfdr.de>; Mon, 17 Oct 2022 23:19:04 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=MmUYf+hJ;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MrmLt1lYQz3cht
+	for <lists+openbmc@lfdr.de>; Tue, 18 Oct 2022 05:52:06 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.55.52.88; helo=mga01.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=MmUYf+hJ;
-	dkim-atps=neutral
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.160.45; helo=mail-oa1-f45.google.com; envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mrbcj0nVbz3c6D;
-	Mon, 17 Oct 2022 23:18:28 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1666009109; x=1697545109;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=RmYFEN28phqSp8mG6aCLWFWEADNDyPYb/TiMHr0QPNc=;
-  b=MmUYf+hJk9h3PVURw/QobnSQjibOC0oL5Tqo007jreRh8+mOpXuwD7jv
-   ow+MrMJrBDYanQt1JFYMg+sxnkPJbu6859RlZnbIHaZtv0mj3AelYxjQ+
-   QXskL/eE5RRkJMEdssJd3rqGaDKm+23XjBRNaqeUE3FPQEU1w/pcVV1O4
-   V6x/DJUZLvSaeU7ZG3/BaAT0m6ZL3FDYZaYXl129STQ8423r/yy0fPcf7
-   Hrx2QPgODG3cMXcsZWkEBHqrSNXTD1i18RKXl8VCpJzWMY6lxg+9tp4FF
-   /fggQEKIAxPiAp7JDgZa5kmbb234+0fqgYmgc65t7b4Sdl4c9Z4anli0P
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10502"; a="332320297"
-X-IronPort-AV: E=Sophos;i="5.95,191,1661842800"; 
-   d="scan'208";a="332320297"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Oct 2022 05:18:26 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10502"; a="623207818"
-X-IronPort-AV: E=Sophos;i="5.95,191,1661842800"; 
-   d="scan'208";a="623207818"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orsmga007.jf.intel.com with ESMTP; 17 Oct 2022 05:18:20 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.96)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1okP4U-008mkH-2E;
-	Mon, 17 Oct 2022 15:18:18 +0300
-Date: Mon, 17 Oct 2022 15:18:18 +0300
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Linus Walleij <linus.walleij@linaro.org>
-Subject: Re: [rft, PATCH v2 00/36] pinctrl: Clean up and add missed headers
-Message-ID: <Y01ICtqd8uy/4/Mb@smile.fi.intel.com>
-References: <20221010201453.77401-1-andriy.shevchenko@linux.intel.com>
- <CACRpkdZ1M3ckw+jFgvMqG4jvR-t_44GPoZ6ZDXszwZCJr-cDpg@mail.gmail.com>
- <Y00f5exY2fM6IwZ+@smile.fi.intel.com>
- <CACRpkdYmSOGtFz8W_RRkDqMXRRBOSB9jqSn65Sah90bf3Gm59g@mail.gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MrmLR0sKpz3bb2;
+	Tue, 18 Oct 2022 05:51:40 +1100 (AEDT)
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-132b8f6f1b2so14265056fac.11;
+        Mon, 17 Oct 2022 11:51:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GiJGN1wykXSQ00DVk7YPI2dlZqV1IWIoUviA+sQDHg0=;
+        b=nFE7vGVeqX5bc19hpSLF8O1RX1SRxKihMrjh6SQOCdaA0ty3FdulNqyD2ZEegcGAOZ
+         oxNKlcLYIpZWZwu1ua/mQeRk0tyM2jJ5LbBd2u3aXO37Cdgcll2leGy6f+oKn07A3JL4
+         kFrSQLuNMHjqfgO7VANsMZPJsU7dXN1pHeV8XjOcl+upzGyT73eQtQAqXZas+IyoEWBn
+         CyVDg1n6wz2ZX/PaMQhnYuaZktXYKnGz1/hmxRk8LOHO1bIg4JC0JAccgFwpwssy1n/i
+         Sxf2yW3BI7KfV1/Zloef/Div3dU5YaIblonKY70gYs6eED5W6JPVDAjk6ArEhCiL9qfF
+         Q/eA==
+X-Gm-Message-State: ACrzQf3OW4ZRlbOUt2AzjopmYSCUXLQ60I4vnkZ+IhVXqgNWZAvULZjW
+	wiucR4bYuNDVaRqPu44Znw==
+X-Google-Smtp-Source: AMsMyM6U30yroNpKFEKjCm7TCa6yB+1N8pcSiQ3DbD3vbcRuDFpLFvQGdmxPGsO1PpfLcrfrsqc6TQ==
+X-Received: by 2002:a05:6870:6488:b0:131:a45b:a8ca with SMTP id cz8-20020a056870648800b00131a45ba8camr6395086oab.260.1666032698384;
+        Mon, 17 Oct 2022 11:51:38 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id 52-20020a9d0bb7000000b006619f38a686sm5073054oth.56.2022.10.17.11.51.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 17 Oct 2022 11:51:37 -0700 (PDT)
+Received: (nullmailer pid 2273470 invoked by uid 1000);
+	Mon, 17 Oct 2022 18:51:38 -0000
+Date: Mon, 17 Oct 2022 13:51:38 -0500
+From: Rob Herring <robh@kernel.org>
+To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>
+Subject: Re: [PATCH linux v2 1/3] spi: dt-bindings: aspeed: Add a ranges
+ property
+Message-ID: <20221017185138.GA2264550-robh@kernel.org>
+References: <20221017091624.130227-1-clg@kaod.org>
+ <20221017091624.130227-2-clg@kaod.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <CACRpkdYmSOGtFz8W_RRkDqMXRRBOSB9jqSn65Sah90bf3Gm59g@mail.gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20221017091624.130227-2-clg@kaod.org>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,43 +65,57 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Kent Gibson <warthog618@gmail.com>, linux-omap@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, linux-aspeed@lists.ozlabs.org, patches@opensource.cirrus.com, Bartosz Golaszewski <brgl@bgdev.pl>, linux-actions@lists.infradead.org, linux-kernel@vger.kernel.org, linux-mips@vger.kernel.org, linux-renesas-soc@vger.kernel.org, linux-gpio@vger.kernel.org, linux-samsung-soc@vger.kernel.org, linux-mediatek@lists.infradead.org, linux-rpi-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org, linux-tegra@vger.kernel.org, linux-riscv@lists.infradead.org, alsa-devel@alsa-project.org, openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org
+Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org, Mark Brown <broonie@kernel.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Naresh Solanki <naresh.solanki@9elements.com>, Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Oct 17, 2022 at 11:58:03AM +0200, Linus Walleij wrote:
-> On Mon, Oct 17, 2022 at 11:27 AM Andy Shevchenko
-> <andriy.shevchenko@linux.intel.com> wrote:
-> > On Mon, Oct 17, 2022 at 11:02:09AM +0200, Linus Walleij wrote:
-> > > On Mon, Oct 10, 2022 at 10:15 PM Andy Shevchenko
-> > > <andriy.shevchenko@linux.intel.com> wrote:
-> > >
-> > > > Currently the header inclusion inside the pinctrl headers seems more arbitrary
-> > > > than logical. This series is basically out of two parts:
-> > > > - add missed headers to the pin control drivers / users
-> > > > - clean up the headers of pin control subsystem
-> > > >
-> > > > The idea is to have this series to be pulled after -rc1 by the GPIO and
-> > > > pin control subsystems, so all new drivers will utilize cleaned up headers
-> > > > of the pin control.
-> > >
-> > > Aha I see you want to send a pull request so I backed out the applied patches
-> > > from the series for now.
-> >
-> > Can I consider all that you answered to as Rb tag?
+On Mon, Oct 17, 2022 at 11:16:22AM +0200, Cédric Le Goater wrote:
+> "ranges" predefines settings for the decoding ranges of each CS.
+
+Please explain the problem, not what the change is.
+
+> Cc: Naresh Solanki <naresh.solanki@9elements.com>
+> Cc: Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>
+> Signed-off-by: Cédric Le Goater <clg@kaod.org>
+> ---
+>  .../devicetree/bindings/spi/aspeed,ast2600-fmc.yaml      | 9 +++++++++
+>  1 file changed, 9 insertions(+)
 > 
-> Acked-by: Linus Walleij <linus.walleij@linaro.org>
+> diff --git a/Documentation/devicetree/bindings/spi/aspeed,ast2600-fmc.yaml b/Documentation/devicetree/bindings/spi/aspeed,ast2600-fmc.yaml
+> index fa8f4ac20985..a11cbc4c4c5c 100644
+> --- a/Documentation/devicetree/bindings/spi/aspeed,ast2600-fmc.yaml
+> +++ b/Documentation/devicetree/bindings/spi/aspeed,ast2600-fmc.yaml
+> @@ -38,6 +38,14 @@ properties:
+>    interrupts:
+>      maxItems: 1
+>  
+> +  ranges:
+> +    minItems: 1
+> +    maxItems: 5
+> +    description: |
+> +      Defines the address mapping for child devices with four integer
+> +      values for each chip-select line in use:
+> +      <cs-number> 0 <physical address of mapping> <size>
+> +
+>  required:
+>    - compatible
+>    - reg
+> @@ -58,6 +66,7 @@ examples:
+>          compatible = "aspeed,ast2600-fmc";
+>          clocks = <&syscon ASPEED_CLK_AHB>;
+>          interrupts = <GIC_SPI 39 IRQ_TYPE_LEVEL_HIGH>;
+> +        ranges = <0 0 0x20000000 0x2000000>, <1 0 0x22000000 0x2000000>;
 
-Thank you!
+By having ranges here, 'reg' in child nodes become translatable 
+addresses. But they are not because they are SPI chip-selects. Only 
+memory mapped addresses should be translatable. 
 
-> I haven't reviewed in detail but I fully trust you to do the right thing
-> and fix any fallout so will happily pull this.
+Probably the ranges here should be in 'reg' of the controller.
 
-The plan is to push this to Linux Next for a couple of days and then I'll send
-PR to you and Bart.
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+>  
+>          flash@0 {
+>                  reg = < 0 >;
+> -- 
+> 2.37.3
+> 
+> 
