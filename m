@@ -1,61 +1,61 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B0B76038F6
-	for <lists+openbmc@lfdr.de>; Wed, 19 Oct 2022 06:53:52 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7D1F3603922
+	for <lists+openbmc@lfdr.de>; Wed, 19 Oct 2022 07:18:45 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Msdfj63GHz3bsK
-	for <lists+openbmc@lfdr.de>; Wed, 19 Oct 2022 15:53:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MsfCR2cb4z3c3W
+	for <lists+openbmc@lfdr.de>; Wed, 19 Oct 2022 16:18:43 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=GGBK4cIC;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=AdN7OPdj;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=ZDx2rCDP;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=r4fJi5bw;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25; helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=GGBK4cIC;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=AdN7OPdj;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=ZDx2rCDP;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=r4fJi5bw;
 	dkim-atps=neutral
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Msdf523TFz3bjH
-	for <openbmc@lists.ozlabs.org>; Wed, 19 Oct 2022 15:53:17 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MsfBt1c5Fz30NN
+	for <openbmc@lists.ozlabs.org>; Wed, 19 Oct 2022 16:18:14 +1100 (AEDT)
 Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 5E0815C0170;
-	Wed, 19 Oct 2022 00:53:15 -0400 (EDT)
+	by mailout.nyi.internal (Postfix) with ESMTP id 2A3A05C0088;
+	Wed, 19 Oct 2022 01:18:12 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Wed, 19 Oct 2022 00:53:15 -0400
+  by compute4.internal (MEProxy); Wed, 19 Oct 2022 01:18:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
 	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm3; t=1666155195; x=1666241595; bh=ogcM+uYIH4
-	/a0U9zHfabPBBAnWcgXPmEFG3OjiHvjzI=; b=GGBK4cICxU5oyCGxACkOY0fExH
-	3qwHPAOhVrCh7R6D3pR60adO4EE4XKUlvW1YMe4aEVBinJb039wvDCjU4xU3jWpJ
-	TYPvmN8qZDH29mabTDBjNRSjTv6Ki71iWr51BjXINM288rKu1GzXEb+iB5lGpvid
-	G6c8o6p/Dl4HiLdq/k21UYlIPZv2KKVo14p45y8ZgftAbLYIZJZ6BcsGJAMPf3Df
-	3N30TvDzSTT0f+UtfKBxtWA7LnswTWC0iJ49shJRhQXYZ0A2gP8mC6zaWgPQlJGI
-	444yUo+qbZTIwjo8NvqiBpAJ3dWh8miq3RhtO9hNEi6zz/ftuM+Jdn9Dcbpg==
+	:subject:to:to; s=fm3; t=1666156692; x=1666243092; bh=SSmpjScpNO
+	Hx7X6P39Z2mtcM/Yb9Bpp0E/Smcalc/Ms=; b=ZDx2rCDP8TBREfRk/7BWAnwcj/
+	JsqpdIxOoHQN/ODdKVhnQmKpqUqijTZyYLbanfg6CxLXT61rIttPAj8JwD/SZ9QZ
+	uhtU8iSFQ0KYO7HbX3yAoqDIfbxMLb1C2PlJE4PBC/sTnX88sHCzR3SYFH1EG3LI
+	yQYrsk/fW4s6DDhTbW8wq+DfBkMiWBVfB1DWyX/Lc9KTxNZDJqecent6ix5qt6nX
+	c5JM4gbc1Mwm9hTCUKNbHBPposqgadIEyd4z2YPhMF6A8mUFHvvmdXjEHRrIoQP+
+	IW+EdgWs/WrVsKLtLOWuBsPHmVPC6gRSDsyZU82Sz/tC29C5SKz1uinBUAGw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
 	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
 	:mime-version:references:reply-to:sender:subject:subject:to:to
 	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1666155195; x=1666241595; bh=ogcM+uYIH4/a0U9zHfabPBBAnWcg
-	XPmEFG3OjiHvjzI=; b=AdN7OPdjADhoqNi3u2ww5IaXNdPlQgSalBAL5V/xRBxO
-	IOzB2lqZo2B1nWSobFfuYjPRNAf8kygWco7Z5VNcdr9vaZHj2RY3SB5lz3UIkakN
-	ScDh5TvNz56em6FzDmPDLV6g+IRa8uI43uSAL+P/ar5IYA4x41vAIVauFoISEXLB
-	6Zt/Us82xJ1mRl+blHhlC/mM5OHDuW13evLDBBJRmV/TU/yHq4djzer9K8O6fK14
-	KhVFz2CXDVGNBIsEo+AmudLS6SkebbXGAX7UsXuUObyc+VkM8WK4EaNR59I5A1SO
-	CpngCHAQ8nkl7k+a1dOTFo7NVeKo3dJBlvoK0pwfvQ==
-X-ME-Sender: <xms:u4JPY96ryTseMdHc55ui9h4YGPS_rBDv2P6wdfqX6svdbz8mjy35tw>
-    <xme:u4JPY6695eGOGIwx7XDkvnNWze0Ytsv9RZ8Br3owe2nv2nNdO4BBETppUTCMpDA6d
-    CxNMQLXjz328Q7GIh0>
-X-ME-Received: <xmr:u4JPY0dvBE91cHdP_khMAl-teOsZdizINTkvL98ArhomCckQPFUF9CwvdBZ-X1OdIlxZC7-cZ-cwY_nBRTSKDPMBGOuT6_-t>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfeelfedgkeekucetufdoteggodetrfdotf
+	fm3; t=1666156692; x=1666243092; bh=SSmpjScpNOHx7X6P39Z2mtcM/Yb9
+	Bpp0E/Smcalc/Ms=; b=r4fJi5bwGDpxxQxZ+AS+V7V0lZoIVDDyq9ISlJcKAhTm
+	iKQR+wQLLh9m4Hm/M7JbVfOHz9CG88zBCmPCahET0zRoql6eQye+hxxDlGh4L6mb
+	R9OEJibQdvPWoRMEX6ClG17g1R1baPYdbjcvVCyeU7peX+NCEWTKZEyPkmGJ87yQ
+	etnYfzv5bxRhwFBTwtegk4Wh5WU65/7fPiuRwRwjEgR5kCDYlxV0c7luP2Da99jt
+	aUkPv9javikQ6S1AHwl5Ig8w0u1bcSntKnInyUm7Bx7GPL7DwFzzaP4+GspI2xaS
+	++c9ybjs7JI5L64V55DJ2b/Axh0MOO66hOJZVBZ4Ug==
+X-ME-Sender: <xms:k4hPY02XdySlO42kdvY_qpseIIOvwO_Lj1U-IvN9UjzYwR-p5a5O7g>
+    <xme:k4hPY_G1zIFHKxhjQyM0Xef487Y73W0aH2ID80wLCGDxY9qhIBn5iXI5em6r0jUPT
+    W3jcRgTEvhkWJnxz2Q>
+X-ME-Received: <xmr:k4hPY85VLN88kyWP3Db_zXaMVLpnhgv--aO0Py-a7UyDdEGK2ihxzWO5zJOo_qhwMNQ5UgS4Zop0XxTPnJojrFuT1FuWG-y4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfeelfedgleefucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfeehmdenucfjughrpeffhf
     fvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhitghkucghihhl
@@ -63,24 +63,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfeelfedgkeekucetufdoteggod
     hnpeehfeejheeftdejiedvfeekffehledukeduleelffekgfdtleduledvtdegtdehkeen
     ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrh
     hitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:u4JPY2KXNA0r9aOKL2hMYOA5J_etHLTHPEmgAlWsXx4ayPNiq-WG_w>
-    <xmx:u4JPYxJFAqYOpPCY8W1OiCDiTUKOZKsPM59FJeEUp4KQVxhl8VCwTw>
-    <xmx:u4JPY_wwhILhANk-PZ-p-id3D1tZRGft-u-cantUXXW4iU4MQlhl-A>
-    <xmx:u4JPYzyOP0fLtSdeD_5NpjL71bJr_4M75WBLPX9o7ojGktsF_4bgkA>
+X-ME-Proxy: <xmx:k4hPY90Iw93eMY8et2G-ngYO_VBe8WrRKY5lyWQWK4vIMB8MSqa2lg>
+    <xmx:k4hPY3EYAbTv9_Ajk7N8Aikf3Nji1fcIRq6XRwXYawHxxRsW9nTxjA>
+    <xmx:k4hPY2-Kf6fkBvOGWoRUCBeVU1_P78AHAzv8uFIJ4e_0SmnVxl3YSg>
+    <xmx:lIhPY6MeFc_6n5D1T9fDdXRlFjz3S3aedA5t1oG8hDcbiZgJSWXliQ>
 Feedback-ID: i68a1478a:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Oct 2022 00:53:14 -0400 (EDT)
-Date: Tue, 18 Oct 2022 23:53:13 -0500
+ 19 Oct 2022 01:18:11 -0400 (EDT)
+Date: Wed, 19 Oct 2022 00:18:10 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
 To: Lei Yu <yulei.sh@bytedance.com>
 Subject: Re: Blocking call in phosphor-networkd
-Message-ID: <Y0+CuVkotsGxecxW@heinlein.stwcx.org.github.beta.tailscale.net>
+Message-ID: <Y0+IkgQYAypeE5Zb@heinlein.stwcx.org.github.beta.tailscale.net>
 References: <CAGm54UF_XeQivcVozvjMjWbc4J68E+PJSbyVRFdScoyfKh9oEQ@mail.gmail.com>
+ <Y0+CuVkotsGxecxW@heinlein.stwcx.org.github.beta.tailscale.net>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="2Qhm1Lwlh+JwHilk"
+	protocol="application/pgp-signature"; boundary="6Esx3Lh+sHSwnGLf"
 Content-Disposition: inline
-In-Reply-To: <CAGm54UF_XeQivcVozvjMjWbc4J68E+PJSbyVRFdScoyfKh9oEQ@mail.gmail.com>
+In-Reply-To: <Y0+CuVkotsGxecxW@heinlein.stwcx.org.github.beta.tailscale.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -97,44 +98,53 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---2Qhm1Lwlh+JwHilk
+--6Esx3Lh+sHSwnGLf
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Oct 19, 2022 at 11:40:17AM +0800, Lei Yu wrote:
+On Tue, Oct 18, 2022 at 11:53:13PM -0500, Patrick Williams wrote:
+> On Wed, Oct 19, 2022 at 11:40:17AM +0800, Lei Yu wrote:
+>=20
+> > An alternative is to make async calls, but phosphor-networkd is
+> > written in "sync" way so it may require more effort to change it
+> > async.
+>=20
+> Does systemd-networkd emit any signals on this property?  Should we
+> match/cache the property instead of calling over to the other daemon?
 
-> An alternative is to make async calls, but phosphor-networkd is
-> written in "sync" way so it may require more effort to change it
-> async.
+It appears like it does.  I'd recommend this approach.
 
-Does systemd-networkd emit any signals on this property?  Should we
-match/cache the property instead of calling over to the other daemon?
-
-If it doesn't emit signals, can we modify systemd-networkd so that it
-does?
+```
+$ busctl introspect org.freedesktop.hostname1 /org/freedesktop/hostname1
+=2E..
+org.freedesktop.hostname1           interface -         -
+=2E..
+=2EHostname                           property  s         "heinlein"      e=
+mits-change <---
+```
 
 --=20
 Patrick Williams
 
---2Qhm1Lwlh+JwHilk
+--6Esx3Lh+sHSwnGLf
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmNPgrkACgkQqwNHzC0A
-wRmvMxAAjp8VEG9KeG3WkS9cOcmNG/sjakxuZTZg/GrPCeohGJpGk+dDxdiLTTR+
-qeGGz26IkC1Fi+XT0kH2AIq0/uol0aUf3Akzx3jF2IGfvdBhl0OGQ3NXhqXZjtwu
-HPfmSoGIZvw6J/ZbAYY15SXrxTcr80g0AOqnhJkJP3RcNOg6Y+czcJpB2ynCYW9g
-f03E5qpVZDjcnMSoltoKoF0G0164oYD8l3ciYkkZpS0IcEQfVQdpyahgeYBMBuUc
-0jWbL0eVIFrZEEh0BbzztFiM/j2Ky102QAVBahXtdxwg8S0mMPORtxK6mzzENUK+
-2p0Lrcoc6S+bL/TNu6XDCr3GR4q8N9iWUsiWqM40K7+nAvzMQkz5J6synqMQ/Unv
-S1SZ6348EiWu/Ss678vriTQJrAd8sQiccshy5LAhYETdTR9Nq/5okI9J4ThFuBRb
-oRns6X4OeFEN9Mr2MxQ8NWpMH5iG10C61gJ1BiKcM+9YSCM50O4WMzprk4pRvmL5
-OFozYbN3WQDsZG1oUA/xovE6HFmWn+Rj/s1IBxecOBlxdfFGtUTGtuYaZ/R+gtyh
-fehiNqzSZIPh93SB7o7T9JO5mQNv3lNmCx+a7WhjvxZYG3enqBe3xDtSBdV54mue
-hVHkmoC9tD6+woES1XmUjSr5Wwo+hrfts9ZjmoYYoZeb7h3DreY=
-=x7qL
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmNPiJAACgkQqwNHzC0A
+wRkqIA//RSYnnnvejwInm46aJ+4b9fJYgvpTVtJc4MDblQ4c53rye8PASGUeYLpn
+CqGhbbFcHbN17q6O5mkE62a2GsYwNeznWCQ5jOO+yUDfBJZBnwtstPxEKcWA/GHA
+C05yR/GXXLFuNO/nFPz+PYRH3ztcKXzwZXeIrtNqencHpRO12aZoiGHQb+KtiEQ6
+mTlexsPvrLMmuFYyTOahYH/DpDYz9noP7qiHqrQIGy17ZODyLzs6Cl6N4SsSXbW3
+YJ/3kQHIHwz4niFKGrg2F4VJ21VDGh4LnY4oAHqaxwM7nBQK2xspcyUs7af3zXjt
+Lvhjmh97MjH71fgMdDqEut/mARc1aolzjswbdla1ZSRE3cidU8fDXoCLmxWt35R/
+79lTLbp6IzpxASRijkG9NY9reTYAxhYDFB+OwpyQvzj5yp9qIFZQYjIKhRMezzoa
+IDUKMmfU+Q+Di3cb0ik0JWauqn7w5ZohwZL/VHG30UxAFKIrsQPY4LStl/FBotVl
+P95ojIxcceTBgxJiWtO9WY1q4MMhHaAaras4sAL9oD0zw0fqecdzBxcdM0Korkg3
+3/a1BzbeaNgHF9/XEmD3xVL/nPY8389tK4f/x+vX5YIw+h1Q5H2cKArXTAAeRyxK
+kxN4jLZhpNOs++gT71W8MZY8no42mEKNEFhn+TZjBdGdkEeFf1I=
+=qBl7
 -----END PGP SIGNATURE-----
 
---2Qhm1Lwlh+JwHilk--
+--6Esx3Lh+sHSwnGLf--
