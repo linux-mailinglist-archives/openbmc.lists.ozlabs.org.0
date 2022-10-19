@@ -1,89 +1,91 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E4C4660435F
-	for <lists+openbmc@lfdr.de>; Wed, 19 Oct 2022 13:35:56 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EAF97604990
+	for <lists+openbmc@lfdr.de>; Wed, 19 Oct 2022 16:43:46 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MspZf60ZDz3c3W
-	for <lists+openbmc@lfdr.de>; Wed, 19 Oct 2022 22:35:54 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MstlN0KDYz3c5q
+	for <lists+openbmc@lfdr.de>; Thu, 20 Oct 2022 01:43:44 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=PxGMW8w3;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=SCTAIhdT;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm1 header.b=ITDu+9ro;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=rdpan9zX;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.28; helo=out4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.29; helo=out5-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=PxGMW8w3;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=SCTAIhdT;
+	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm1 header.b=ITDu+9ro;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=rdpan9zX;
 	dkim-atps=neutral
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MspZ03NxZz3bjB
-	for <openbmc@lists.ozlabs.org>; Wed, 19 Oct 2022 22:35:19 +1100 (AEDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id 9EC7C5C017C;
-	Wed, 19 Oct 2022 07:35:15 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Wed, 19 Oct 2022 07:35:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm3; t=1666179315; x=1666265715; bh=IhOSBOnJMs
-	cF7iWrJESoolXZUSYVXRWheZ4lmGUa+zg=; b=PxGMW8w35F+cU/58NDwPz/41A+
-	AXZDlJTOfO76cuH4vc9uuLFWjGKGkhEKmC+EknZtlOD4Vpz13InkgLjFRNB2fAx/
-	ppikyJ9rWZ66oRRWe0Y7Hu2qY7aU2RFDk4EWjquKWwlF2JansQ7W9XC5MLHmJKE+
-	0UkArX64Ss3tAEDS5hIokKRJDFFoU6jh1jeUsKBKWkWftLceYic3dsPDMZGpvTuZ
-	/GM74eTMznENysLq8JWpe+UGjwXT3DE17Xa2ry6LRPWDN61Xthkgv/M6RfcxuZGo
-	GtgKjfVWxDcvN3CapZr+uP41bBi4PDCbcQ8XwnGR7WgAGGYijj4J8Ujn82Zg==
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mstkl2qySz2xGB
+	for <openbmc@lists.ozlabs.org>; Thu, 20 Oct 2022 01:43:10 +1100 (AEDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id C32455C00C5;
+	Wed, 19 Oct 2022 10:43:05 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute3.internal (MEProxy); Wed, 19 Oct 2022 10:43:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1666179315; x=1666265715; bh=IhOSBOnJMscF7iWrJESoolXZUSYV
-	XRWheZ4lmGUa+zg=; b=SCTAIhdTUmk2dErQwPF1Biz0VrVUADZZ3pJi1Ud18tlO
-	cDRup0vY9VrxeweQmb6AACjTXx0sZKOAXCNziOV3cPwnSpRTL7MDkW6UIB1Swt9e
-	HE7JeUQySCsSHnNyrbaS4EhkaOj0MLaWqLFpkwcJ7j1HpOXKZtx63sGnJp3nhi8f
-	QUTrztRgTC7z9JBMlYkr3mCh7dlmby6kpEC5s8E2Te0tcTV567+5ckCNwwyXgSto
-	jsWBgN/pETRUiIjbFF4KVKEGY+4B4hWovTiA/qIs6Dz1YjdFaTmYmfZKznf7oC7J
-	nt2VByJoAKq69k68mWjJ0jsydaek5ofGLAOIS04P6w==
-X-ME-Sender: <xms:8-BPY494OU8Xr79CQgQZ6XhUUcbP7NSX16VGHbUp_hQWlppJA7YYLw>
-    <xme:8-BPYwvrkssfpVl3skx4mMtsvnhJ4qgczECviXqP5qoxqzrp26pWn4-TgvleD4N53
-    Uq0qtvP8yxOl5fH9LY>
-X-ME-Received: <xmr:8-BPY-BNPtzA_ucZ5PKw7NjU5rRQqFAjz5G1hVdluE4sXn2pupS5Z-hFVo66ma5sE-EYueKOm1-s5kNezGlVhY_Oo1braWir>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfeelgedggedvucetufdoteggodetrfdotf
+	fuzziesquirrel.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm1; t=1666190585; x=1666276985; bh=xDI3tn5Bcq
+	5y35207gEYPeVuw2KD93Sqyi7q4Ot3ajk=; b=ITDu+9royA6Gha1NUZ978xgTKE
+	8CRhMhuBf+1+pRH2lqUuBTgvVruVVZVdEG+7AePB43MC4gkQkyoWRB6XmTVXg0eK
+	wTIGJruILh7MoAZTeSoQ+B6q6QPMlshlpLDE10V1uBuvpzhbDCZzsJYSKq+dOQBB
+	OKxcyGhUfCVUd1bdsodsmtXVgoCbFxForWu0REna3ULA5d0wyGZXBGyz1Bzu8TyA
+	9YwysLC+Zs7eKhmw9AMdUiIZm4PJ7nJxx/KcFm9g+lwZavzDLAgqA+O6VSwUzKGC
+	6UgIKUSSvpp9p4yE7poflZdgyCp5kgXJzTGak/P6wuP6VaqqnVjqBhCJFk2w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1666190585; x=
+	1666276985; bh=xDI3tn5Bcq5y35207gEYPeVuw2KD93Sqyi7q4Ot3ajk=; b=r
+	dpan9zXdHHuwQyYfOe/fRSyZjkkFfmHylRBMitlmXED/DruPUOVniki9479di/UW
+	/DUkldCZJ4G70zE7SpRDhql2XHwSNiCCwy1Q1g0kai7r1Bqi6dAjVDk/BXBOo6Nv
+	lob0kDOm4EFEtE9gghdtelN9b2/uR3vL0DMXlpGANjhyqhGu/FrIen6RVhmbmn2Z
+	mhH6E+ZAiSgtoGOSxykxNUbcohmVS00kvebaWE6zbRVeL8gOc/gi8p0pelr9R6rd
+	lmNtfzQK0JXloXyhAWCXqoexrKp0tw92RbcT0aOUizSNA6AaSi32O/oaz6rPwYt3
+	Fw9948IVuaMp2xyzwqOPg==
+X-ME-Sender: <xms:-QxQY2fWQBVxMIegjORqmNo65f6HCfWcc_dX83dSMUuROFGPMGhj4w>
+    <xme:-QxQYwPwJY7RSgfc9j6fcwYjUUgzEqB385xQ1fMOI7Av9l4JLgIrMDwqvqt3oRPh9
+    7spjnrklYCt58B0Wx8>
+X-ME-Received: <xmr:-QxQY3g77m9r8-hrk51NRSafJcccxotoxfhm3tHF4ZeOKW9-uscKJYRWcHoU1cgRZO5pUwC4_WDxqIpEHX8d>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfeelgedgjeelucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfeehmdenucfjughrpeffhf
-    fvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhitghkucghihhl
-    lhhirghmshcuoehprghtrhhitghksehsthiftgigrdighiiiqeenucggtffrrghtthgvrh
-    hnpefgvedvvdfgjeegffdvledvteehleektdfhheejleeitddvgeetleefudehudehfeen
-    ucffohhmrghinhepfhhrvggvuggvshhkthhophdrohhrghenucevlhhushhtvghrufhiii
-    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdig
-    hiii
-X-ME-Proxy: <xmx:8-BPY4fU4Q-hVZ9AOo-zvtUu4_Uvtv9CwYG3skZ2AYoLYzN6AWrtxw>
-    <xmx:8-BPY9OL0OL9RA9TX59kLHHDyPCaD7IZIc60an2vFsgIPsYjCXavRQ>
-    <xmx:8-BPYym31VFmjsDMs53Tn_rNSTYUG0Hrj-bbmdnJfQOI1CHfa0UbXw>
-    <xmx:8-BPY_VGE6CtKefWB-a0TNAEbCRyXkb9uRRkbDTadbWX08jkbKnWjQ>
-Feedback-ID: i68a1478a:Fastmail
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepkffuhffvveffjghftgfgfgggsehtqhertddtreejnecuhfhrohhmpeeurhgr
+    ugcuuehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtg
+    homheqnecuggftrfgrthhtvghrnhepgeetkedufeetjeehveefheektdeifedvhfeilefh
+    ieehvdehvddtudfguefgieetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepsghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtgho
+    mh
+X-ME-Proxy: <xmx:-QxQYz-OYNm8S9KcbEg0G6edlsG0-eUC_DsBI4xQNJpURmV6j792mw>
+    <xmx:-QxQYyvvQE5-VyVaAt5Y2VuUoLOIyv1m0BuDv9Q42xEyi7lTRpP8YQ>
+    <xmx:-QxQY6ETEe-qD_lBl3un2gCNtChPg6ATlcWk6EMsw4aHzSByuLuh5Q>
+    <xmx:-QxQY3WCPcmdZFGA_0U5cFvzWzpseZwqUDWaWAWDdfy-utPoQ4AcdQ>
+Feedback-ID: i02c9470a:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 19 Oct 2022 07:35:14 -0400 (EDT)
-Date: Wed, 19 Oct 2022 06:35:13 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Lei Yu <yulei.sh@bytedance.com>
-Subject: Re: Blocking call in phosphor-networkd
-Message-ID: <Y0/g8WAT3hItd3fk@heinlein.stwcx.org.github.beta.tailscale.net>
-References: <CAGm54UF_XeQivcVozvjMjWbc4J68E+PJSbyVRFdScoyfKh9oEQ@mail.gmail.com>
- <Y0+Cc2sp3mHZ0Z85@heinlein.stwcx.org.github.beta.tailscale.net>
- <CAGm54UFVdbM3cVRPk3qxeu0G-qp9n-ij5-JH8RFFBQ5oq2M7LQ@mail.gmail.com>
+ 19 Oct 2022 10:43:04 -0400 (EDT)
+Message-ID: <b96c24c0a1e5779c66a8882b6eec9883f9bd5e00.camel@fuzziesquirrel.com>
+Subject: Re: Adding support for custom SEL records
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Lei Yu <yulei.sh@bytedance.com>, Jason Bills <jason.m.bills@intel.com>
+Date: Wed, 19 Oct 2022 10:43:03 -0400
+In-Reply-To: <CAGm54UE55N3JW0CUYb9piRopBcz35+Q2H66row-fDBf1VEGo+w@mail.gmail.com>
+References: 	<CAGm54UFshn7RpFMhpoJrMVHh9ONibDQ0DKoUokaG0q7V4Qi5VQ@mail.gmail.com>
+	 <e91a28c961288e3ead27cff19dfc9f03907f4405.camel@fuzziesquirrel.com>
+	 <CAGm54UE55N3JW0CUYb9piRopBcz35+Q2H66row-fDBf1VEGo+w@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.44.4 
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="l+nut98CKlIk0473"
-Content-Disposition: inline
-In-Reply-To: <CAGm54UFVdbM3cVRPk3qxeu0G-qp9n-ij5-JH8RFFBQ5oq2M7LQ@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,98 +101,31 @@ Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Thanks for the reply Lei Yu.
 
---l+nut98CKlIk0473
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, Oct 19, 2022 at 03:09:47PM +0800, Lei Yu wrote:
-> On Wed, Oct 19, 2022 at 12:52 PM Patrick Williams <patrick@stwcx.xyz> wro=
-te:
-> > On Wed, Oct 19, 2022 at 11:40:17AM +0800, Lei Yu wrote:
-> >
-> > > How about changing the code to read the `/etc/hostname` file directly?
-> > > It is much faster than making DBus call to `systemd-hostnamed`.
-> >
-> > Absolutely not.
-> >
-> > The value of `/etc/hostname` is considered to be the "static hostname",
-> > which is configured by default in the 'base-files' package to be the
-> > value of ${MACHINE}:
-> >
-> > poky/meta/recipes-core/base-files/base-files_3.0.14.bb:hostname =3D "${=
-MACHINE}"
-> > poky/meta/recipes-core/base-files/base-files_3.0.14.bb:         echo ${=
-hostname} > ${D}${sysconfdir}/hostname
-> >
-> > The value from the dbus call is the "transient hostname" which is
-> > typically assigned by the DHCP server and is much much more likely to be
-> > something that resolves properly on your network.  Since all the
-> > machines of the same type will have the same static hostname (due to it
-> > being derived from MACHINE) you are almost certain that this name is
-> > useless for any purpose.
-> >
+On Wed, 2022-10-19 at 10:05 +0800, Lei Yu wrote:
 >=20
-> According to https://www.freedesktop.org/software/systemd/man/hostname.ht=
-ml:
->=20
-> ```
-> Otherwise, a transient hostname may be set during runtime, for example
-> based on information in a DHCP lease, see
-> systemd-hostnamed.service(8). Both NetworkManager and
-> systemd-networkd.service(8) allow this. Note that
-> systemd-hostnamed.service(8) gives higher priority to the static
-> hostname, so the transient hostname will only be used if the static
-> hostname is not configured.
-> ```
->=20
-> systemd-networkd will use the static hostname anyway even DHCP gives a
-> transient hostname.
-> So I do not think it makes any difference.
+> 2. The rsyslog way puts the SEL in a file and thus there are no DBus
+> objects, which makes it harder to work with other services.
 
-Agreed, this is all true.  I think this points to a bug in our hostname
-implementation within phosphor-networkd implementation.  We probably
-shouldn't make it worse though by using the `/etc/hostname` directly.
+Are there other services that work with IPMI sels?  I know there is a
+Redfish SEL log.  Anything else?
 
-What I mean by bug is to me the desired behavior would be as follows:
+> Indeed, but the rsyslog way is not really (and fully) upstream.
 
-   - Out of the box, openbmc should use the DHCP-assigned hostname to
-     set the transient hostname.
+I'm trying to determine which implementation is a better fit for me
+based on the technical merits of the solution, not based on what
+repositories the source code is in.  If that ends up being the rsyslog
+approach, I'd consider helping to move the code and make it fully
+upstream.
 
-   - If a user sets the Hostname, this should become the static hostname
-     and override any transient.
+In the hopes that it generates additional information about the
+motivations behind the differing implementations, allow me to ask a
+somewhat rhetorical question.  Jason, to avoid confusing OpenBMC users
+by having to select from two different SEL implementations with pros and
+cons of each that are not obvious, would you accept patches that remove
+the rsyslog based implementation from intel-ipmi-oem (provided the Intel
+metadata is also updated to use the alternative)?  If not, why not?
 
-   - If a user sets the Hostname to an empty string, the static hostname
-     should be cleared.
-
-What is happening today is:
-
-   - Out of the box, the hostname is set to MACHINE.
-
-   - DHCP-assigned hostnames are effectively ignored.
-
---=20
-Patrick Williams
-
---l+nut98CKlIk0473
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmNP4O8ACgkQqwNHzC0A
-wRnkkA/+KfLLqpZ027QnGmUmzkwOHxEuqI94s/GSR3WkJU810SuSiMBuSkKiBP+6
-fYVtr+nsUbY+dX0Q/BHr6RO/csSp/ZHlN4NoWk7UYb8TxS49bcLjO4NE4Gbm/lGT
-E0m+whXBkQDIaW1z9j3OHzZT9mqOctKOOofydLqsJSui41Vo0IuXPJB3D0+rpEBx
-39k6nnQ7NW3yI1a/C8LQEJnPl5N7XLrr5zcU1PUD0z3eeRQZLjyCYh97AQDzN+6L
-KZDjbXbPhvjMqDWT5PE3V16GEHZ2ReY31TSjzgE2ti5UCNKDPVwp0ik6/gBtIT2W
-Pq3JbM2iFnLlWfVl/K2VPSuuGiu2Crne8n0ZhU5Uf5QDyKNIq4XoCw9XNEq2FnGE
-v+hkl/lkNxtjTocRV0lqAGV2x8efurKsT8gXTA489+nH/lXX/VGl6DkPhJk4doIE
-nztiPLDSWYpBl8HY6wb35fog8wjQxVFkjPCDIVAI2LAippQ9DRpXvW6uEUyjLuHc
-8t3dk+FvwGtB3SwNn384yVbzBbdC9tfgjx8gk3oy8gpjtTPvqkG8bkQM2tmkSUJU
-GABsZ0cwBvyubL6NmV1snqDXTZKxg4x9zQz8LsQAMHdpfpwUVbkYm4QdqYO2wcjx
-wBPdfxJXj9lbHh2nFNeEuy8Wwhvl4Rb8CLcJMGpsG4ASpWbYFfI=
-=e6ea
------END PGP SIGNATURE-----
-
---l+nut98CKlIk0473--
+Thanks,
+brad
