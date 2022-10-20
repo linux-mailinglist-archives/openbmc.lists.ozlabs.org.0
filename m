@@ -1,48 +1,90 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F433605B94
-	for <lists+openbmc@lfdr.de>; Thu, 20 Oct 2022 11:56:14 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7E4EC606145
+	for <lists+openbmc@lfdr.de>; Thu, 20 Oct 2022 15:15:09 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MtNK775hrz3dsM
-	for <lists+openbmc@lfdr.de>; Thu, 20 Oct 2022 20:56:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MtSkg2D0kz3c7q
+	for <lists+openbmc@lfdr.de>; Fri, 21 Oct 2022 00:15:07 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=KgUr76UY;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Igss3TNz;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71; helo=twspam01.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com; receiver=<UNKNOWN>)
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com [211.20.114.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25; helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=KgUr76UY;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Igss3TNz;
+	dkim-atps=neutral
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MtNJj0K7lz3c46;
-	Thu, 20 Oct 2022 20:55:47 +1100 (AEDT)
-Received: from mail.aspeedtech.com ([192.168.0.24])
-	by twspam01.aspeedtech.com with ESMTP id 29K9W5Jd085421;
-	Thu, 20 Oct 2022 17:32:05 +0800 (GMT-8)
-	(envelope-from jammy_huang@aspeedtech.com)
-Received: from [192.168.2.115] (192.168.2.115) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 20 Oct
- 2022 17:54:32 +0800
-Message-ID: <a9dc473c-1556-bd3d-fc1f-5a7e54d21352@aspeedtech.com>
-Date: Thu, 20 Oct 2022 17:54:33 +0800
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MtSk042Jdz3bjL
+	for <openbmc@lists.ozlabs.org>; Fri, 21 Oct 2022 00:14:31 +1100 (AEDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 23C915C012A;
+	Thu, 20 Oct 2022 09:14:27 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Thu, 20 Oct 2022 09:14:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm3; t=1666271667; x=1666358067; bh=sNDBWHq7z+
+	YfFh3T2eDDQrmZDHIwBqC2yu9XR//kfVQ=; b=KgUr76UY9BZrc5ZYAswSRr8plm
+	52kfEXLha5zaOUfFsRbCXZNYab+fFRRDBE6dNBXJfwr6lZG0HV0A/6H1MAXNPHBj
+	rFeuMjG6YDSTnhLLCZiQr//snQh7jIBL+5fMOCFn+RW9tk6slxycWjXiGe+Cktjr
+	sa9qO9BKwVBTTuQXCLYG1wvgKP3r5VXRQe7SrGu6iiDFmA8rIFbr2YX/RJjXWnIe
+	+NR0md2VDMSklQhWZT9NMWgGF8FA6v8sUCrNi5Tb1iBtv9JJuxquqpGQIkX2PtBS
+	Q3+F2891Nc74EhW8yne+eZVwpxR+3GjdcSy2WMPGwuZM0+W7c275aOwYBDHg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1666271667; x=1666358067; bh=sNDBWHq7z+YfFh3T2eDDQrmZDHIw
+	BqC2yu9XR//kfVQ=; b=Igss3TNz3u8oxCp1LKzA4JVg1V/fDtvKui/xU0DhTRww
+	cPRYlO5HKsagcJRmb8h9tzPxQ3b+eMmqN3Q+xA6YgarcRNO+KSdAu0gPnmlIJnFl
+	0B9v28lycj895QhSxsNP95/H52MD5wqcaiZM/N95J+LFD73lsOvLJ3ZEewuw1/mO
+	uFzmzmkkahHuKdHA5Lf4ogj9V3HnNf33R9vloLNmXU+qnTkylZuMJmH4H0Asv/B2
+	9yEZUxnASl30aLazApC6Da7hkAbyMfNyXe4RDkTOMaQyChbW1XAmJWkPBOKHYweJ
+	P32ubNBRYa5RQSiGvYnzsptbv7+bQ42uUQ8RJ4Xs5Q==
+X-ME-Sender: <xms:sklRY5uv1o1Hnx7CobKsClSE1zAo90WFYCIjPRqNrR3mjSbI9fdFIg>
+    <xme:sklRYycjCNsuIhf4-rrwHb9Xwc1nsJt0oLZWHjxBcsn8qUzxycxMw4ZhwgAteWNH7
+    yaCzHiI0cQ4PXx4Bls>
+X-ME-Received: <xmr:sklRY8xZYMP1-yR9rxUcayVMM-tL8IGjlVeJu_mIgvwoPrcSEQmNjgRreM7W0RCGLbL6r9u1Yabw8jj7ZuJ-fQUhaVRXraAo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfeeliedgiedvucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    gfrhhlucfvnfffucdljedtmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredt
+    tddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
+    hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeehfeejheeftdejiedvfeekffeh
+    ledukeduleelffekgfdtleduledvtdegtdehkeenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:sklRYwPwprUxwgnve9BirhivYeg6w6XAzWD8ZZshdjP4UjeaMQKFzg>
+    <xmx:sklRY5-nvmw2O8xEDt1Bd-Jkskpdh6BCEZvRJ32itoS7tfOI38ZMZA>
+    <xmx:sklRYwXVQIH42hwzkXQHo-AP7vPfbxdm5l9QiQMzHduJ44bqUR5XsA>
+    <xmx:s0lRY7nYXMIIwnwZ66aPwnLWEtn7OxXrP76eaYS-vq6iQPmwDX5nrg>
+Feedback-ID: i68a1478a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 20 Oct 2022 09:14:26 -0400 (EDT)
+Date: Thu, 20 Oct 2022 08:14:25 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Deng Tyler <tyler.sabdon@gmail.com>
+Subject: Re: Are there plans to merge up to Honister 3.4.4?
+Message-ID: <Y1FJsc/N2c9YEuOO@heinlein.taila677.ts.net>
+References: <DM4PR84MB180655396433F817B6361197E5289@DM4PR84MB1806.NAMPRD84.PROD.OUTLOOK.COM>
+ <Y07jaeJ9/WjPUrEs@heinlein.stwcx.org.github.beta.tailscale.net>
+ <Y07lMANd/vVL9ph6@heinlein.stwcx.org.github.beta.tailscale.net>
+ <acf64248-8ba1-56fb-66a6-9c07d6d9112d@hpe.com>
+ <CAO9PYRKLNFg+0zQMGrbNcX3nQPGfPPrmUJ_hmW3N2kukPK9N4g@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.13.1
-Subject: Re: [PATCH v9 1/4] media: v4l: Add definition for the Aspeed JPEG
- format
-Content-Language: en-US
-To: Sakari Ailus <sakari.ailus@linux.intel.com>
-References: <20220921025112.13150-1-jammy_huang@aspeedtech.com>
- <20220921025112.13150-2-jammy_huang@aspeedtech.com>
- <Yy2tAlGXFJS+a2Lz@paasikivi.fi.intel.com>
-From: Jammy Huang <jammy_huang@aspeedtech.com>
-In-Reply-To: <Yy2tAlGXFJS+a2Lz@paasikivi.fi.intel.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [192.168.2.115]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 29K9W5Jd085421
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="1bwdDel059O7AFmc"
+Content-Disposition: inline
+In-Reply-To: <CAO9PYRKLNFg+0zQMGrbNcX3nQPGfPPrmUJ_hmW3N2kukPK9N4g@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,122 +96,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: ezequiel@vanguardiasur.com.ar, nicolas.dufresne@collabora.com, laurent.pinchart@ideasonboard.com, linux-aspeed@lists.ozlabs.org, andrew@aj.id.au, openbmc@lists.ozlabs.org, eajames@linux.ibm.com, linux-kernel@vger.kernel.org, stanimir.varbanov@linaro.org, joel@jms.id.au, ribalda@chromium.org, hverkuil-cisco@xs4all.nl, mchehab@kernel.org, linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org
+Cc: "Miller, Troy" <troy.miller@hpe.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Sakari,
 
-Thanks for your review.
+--1bwdDel059O7AFmc
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 2022/9/23 下午 08:56, Sakari Ailus wrote:
-> Hi Jammy,
->
-> Thanks for the update.
->
-> On Wed, Sep 21, 2022 at 10:51:09AM +0800, Jammy Huang wrote:
->> This introduces support for the Aspeed JPEG format, where the new frame
->> can refer to previous frame to reduce the amount of compressed data.
->> The concept is similar to I/P frame of video compression. It will
->> compare the new frame with previous one to decide which macroblock's
->> data is changed, and only the changed macroblocks will be compressed.
->>
->> This Aspeed JPEG format is used by the video engine on Aspeed platforms,
->> which is generally adapted for remote KVM.
->>
->> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
->> ---
->>   .../userspace-api/media/v4l/pixfmt-reserved.rst | 17 +++++++++++++++++
->>   drivers/media/v4l2-core/v4l2-ioctl.c            |  1 +
->>   include/uapi/linux/videodev2.h                  |  1 +
->>   3 files changed, 19 insertions(+)
->>
->> diff --git a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
->> index 0ff68cd8cf62..f62bc76d606f 100644
->> --- a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
->> +++ b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
->> @@ -258,6 +258,23 @@ please make a proposal on the linux-media mailing list.
->>           and it is used by various multimedia hardware blocks like GPU, display
->>           controllers, ISP and video accelerators.
->>           It contains four planes for progressive video.
->> +    * .. _V4L2-PIX-FMT-AJPG:
->> +
->> +      - ``V4L2_PIX_FMT_AJPG``
->> +      - 'AJPG'
->> +      - ASPEED JPEG format used by the aspeed-video driver on Aspeed platforms,
->> +        which is generally adapted for remote KVM.
->> +        On each frame compression, I will compare the new frame with previous
->> +        one to decide which macroblock's data is changed, and only the changed
->> +        macroblocks will be compressed.
->> +
->> +        The implementation is based on AST2600 A3 datasheet, revision 0.9, which
->> +        is not publicly available. Or you can reference Video stream data format
->> +        – ASPEED mode compression of SDK_User_Guide which available on
->> +        AspeedTech-BMC/openbmc/releases.
->> +
->> +        Decoder's implementation can be found here,
->> +        `https://github.com/AspeedTech-BMC/aspeed_codec/ <https://github.com/AspeedTech-BMC/aspeed_codec/>`__
-> This is better than the previous versions.
->
-> Can you still run
->
-> $ scripts/checkpatch.pl --strict --max-line-length=80
->
-> ?
-I will correct the length to meet the rule.
->
-> On the decoder --- which values is the user supposed to use for mode_420,
-> selector and advance_selector parameters? I think this needs to be
-> documented.
+On Thu, Oct 20, 2022 at 01:01:25PM +0800, Deng Tyler wrote:
+> Hi All:
+>     Do we have schedule to pull Landale 4.1 branch?
 
-I will update following information to aspeed_codec's github, and 
-provide recommended
+It appears that Landale is scheduled to be released on Oct 28th.
+Shortly after that happens, and the meta-layers we depend on similarly
+branch, we will also make a branch for the Landale stream.
 
-values.
+Right now 'master' is 'landale'.  Whatever is in 'master' at the time
+we do the branch and subtree-update is what will become our landale-based
+release.  That is to say you can start development and testing today
+even though it isn't named 'landale' yet.
 
-"The following parameters should be provided by the encoded stream to 
-let decoder
+--=20
+Patrick Williams
 
-know how to work, because Aspeed codec does not include the information 
-needed
+--1bwdDel059O7AFmc
+Content-Type: application/pgp-signature; name="signature.asc"
 
-for decoding in the header. Users can adjust the three parameters, 
-mode420, selector,
+-----BEGIN PGP SIGNATURE-----
 
-and advance_selector, to achieve the desired quality level while at the 
-same time
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmNRSa8ACgkQqwNHzC0A
+wRlByxAAmVh7m/teJcPqF2/5K+OaPZ8AT/reoLmmKvl7Tq4bf+YjueYY3uKvoj22
+1p8Oda3eC2aMbZtOECyzoQUHOHesummN/cmyQfrTyUn6InlCaZlYZxyznLMAFtl2
+Xb75Kfx+Yx2itqIWfS/OzYBQ85Ic+4JX6i19U778GuPMHfbKPg9GE08NH7S+jL9F
+WJKoC8M97rhlPbk8i7mTeKUVvoC7MYPTFPL5IvE7tg1+frzWOVs96a3rPfgXSUan
+u4SKt3diCttvV2T6/Si77vD9plCJKljSLGIn2tH9jNIZ4OxWKdvAV/xMgCMQNiRl
+MLHqC/wtcygD/XPl0hILq60+/XHIx6SqvKwnrhNA/I7O3hsjXK5s4H7lgwfyZMB7
+lNkCgEETwaW1Q4fHFOCuN3L7+rUzNBYa0EYxvRknBu6aCTZl476pllRVYW5Xvjpb
+fqOh2IvaBoZJJMQoQCZIhgejpDVNnbAzNWuX/9Gk6fWYSICDG0lzpiqA5U29U0Zh
+yGT1Ou6/oVTkHCv9zHAR47MH+ozjfwCY1kQgWgcHEe9sv7BzaY3cYB0oGo3g0Htq
+UZoeMAiATFNfh5I/6f0BN+cfxYRThyN0x9remy3a3HiVngq2W/Cpc99zbyr4KHZ6
+48hGbCFQIjl/50auQGzdyhJag2ODYu1twMsUod5qIJ1PsJCEkCQ=
+=CnAE
+-----END PGP SIGNATURE-----
 
-reduce the storage size."
-
->>   .. raw:: latex
->>   
->>       \normalsize
->> diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
->> index a1a1b51ac599..c72bc3410bee 100644
->> --- a/drivers/media/v4l2-core/v4l2-ioctl.c
->> +++ b/drivers/media/v4l2-core/v4l2-ioctl.c
->> @@ -1497,6 +1497,7 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *fmt)
->>   		case V4L2_PIX_FMT_MT21C:	descr = "Mediatek Compressed Format"; break;
->>   		case V4L2_PIX_FMT_QC08C:	descr = "QCOM Compressed 8-bit Format"; break;
->>   		case V4L2_PIX_FMT_QC10C:	descr = "QCOM Compressed 10-bit Format"; break;
->> +		case V4L2_PIX_FMT_AJPG:		descr = "Aspeed JPEG"; break;
->>   		default:
->>   			if (fmt->description[0])
->>   				return;
->> diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
->> index 86cae23cc446..870a7e5ef8ca 100644
->> --- a/include/uapi/linux/videodev2.h
->> +++ b/include/uapi/linux/videodev2.h
->> @@ -775,6 +775,7 @@ struct v4l2_pix_format {
->>   #define V4L2_PIX_FMT_HI240    v4l2_fourcc('H', 'I', '2', '4') /* BTTV 8-bit dithered RGB */
->>   #define V4L2_PIX_FMT_QC08C    v4l2_fourcc('Q', '0', '8', 'C') /* Qualcomm 8-bit compressed */
->>   #define V4L2_PIX_FMT_QC10C    v4l2_fourcc('Q', '1', '0', 'C') /* Qualcomm 10-bit compressed */
->> +#define V4L2_PIX_FMT_AJPG     v4l2_fourcc('A', 'J', 'P', 'G') /* Aspeed JPEG */
->>   
->>   /* 10bit raw packed, 32 bytes for every 25 pixels, last LSB 6 bits unused */
->>   #define V4L2_PIX_FMT_IPU3_SBGGR10	v4l2_fourcc('i', 'p', '3', 'b') /* IPU3 packed 10-bit BGGR bayer */
-
--- 
-Best Regards
-Jammy
-
+--1bwdDel059O7AFmc--
