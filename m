@@ -2,64 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E9CE06056A3
-	for <lists+openbmc@lfdr.de>; Thu, 20 Oct 2022 07:13:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 103CC605829
+	for <lists+openbmc@lfdr.de>; Thu, 20 Oct 2022 09:15:54 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MtG2L5f5Mz3c7V
-	for <lists+openbmc@lfdr.de>; Thu, 20 Oct 2022 16:12:58 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=a36MC+Ch;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MtJm76WsCz3dtX
+	for <lists+openbmc@lfdr.de>; Thu, 20 Oct 2022 18:15:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::435; helo=mail-wr1-x435.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=a36MC+Ch;
-	dkim-atps=neutral
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71; helo=twspam01.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com; receiver=<UNKNOWN>)
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com [211.20.114.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MtG1l3g99z2ygC
-	for <openbmc@lists.ozlabs.org>; Thu, 20 Oct 2022 16:12:25 +1100 (AEDT)
-Received: by mail-wr1-x435.google.com with SMTP id j7so32461295wrr.3
-        for <openbmc@lists.ozlabs.org>; Wed, 19 Oct 2022 22:12:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jms.id.au; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=gEyQ8wXCw3H9cHzW4gHEWztre5a5nR7SWXFOowWLhCc=;
-        b=a36MC+ChsETgIZyiJrEg2Orz14vpE+MYxFDswTDSGcdhqU8okP8bp5mwYG7LCXCERB
-         CUhh7Iqr5twEQsCPHFUVO+/XWz6Rc0GKLV/pV3DSmqZnKth6Y4fRycGf25GoarHLqtNL
-         rGZZ6e6V+Iwi8EuvqAAvbuK7P4CTQ0Bme1d+0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gEyQ8wXCw3H9cHzW4gHEWztre5a5nR7SWXFOowWLhCc=;
-        b=K2D1bv8TZdtgTPbDlGxmENTa45Ke4/e1kHcmRIzvOxbxvqFrBjTrRM99EzkofAuZQK
-         Z1jl+tJp5SECO7zoM4N4Y5xijbo9ULszVgVEqkkqfGnRpQJtrRFDGFlo5IVQdfm7BVRN
-         MPsYhhpRBx2ArdUWbKKCxIZ75lJ7X3OYxOZI//R7mAKAsxfRhy8EbYMEkG2eVSeI5LTi
-         Yl8XDjp8pPxaifX5ad6US14Ta05KZNDoRD9RKUUSVcL6wQ/AUDKPVtKeGAnPFv5YHKBL
-         NCGK4woJNTl+fWPDL8E+Gzu5pyw5rpghSJa5xWfGZjl3jrTaTuHKZhatL8IWzzfJFaNA
-         6F0g==
-X-Gm-Message-State: ACrzQf00GizjPmMXlPuXF3wQfkHFhg0OI/8iRsj1vt6SEuW2uzOi6Uml
-	VPNaLF7zbJfhtBltWS1mQSII8gtRBDxLdJJyGpIYDgfs
-X-Google-Smtp-Source: AMsMyM6x0u7/NaEXHQx5CAWqQE7g8MbCbqew6zsMa0z6odGnjd7ZBLIBrMVWEJ79aH27JnCAPhFzfpwXpNNrwKMvkAs=
-X-Received: by 2002:a5d:6d8a:0:b0:22f:1ade:de87 with SMTP id
- l10-20020a5d6d8a000000b0022f1adede87mr7024973wrs.3.1666242741138; Wed, 19 Oct
- 2022 22:12:21 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MtJll1Y7pz2xGJ;
+	Thu, 20 Oct 2022 18:15:27 +1100 (AEDT)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+	by twspam01.aspeedtech.com with ESMTP id 29K6p5ZF071387;
+	Thu, 20 Oct 2022 14:51:05 +0800 (GMT-8)
+	(envelope-from jammy_huang@aspeedtech.com)
+Received: from [192.168.2.115] (192.168.2.115) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 20 Oct
+ 2022 15:13:31 +0800
+Content-Type: multipart/alternative;
+	boundary="------------dq5xC4Ws5wwbKFxMgQzbqj02"
+Message-ID: <f91799bc-2b61-f3bd-93c8-43f99decdfa0@aspeedtech.com>
+Date: Thu, 20 Oct 2022 15:13:32 +0800
 MIME-Version: 1.0
-References: <20221019150714.606390-1-eajames@linux.ibm.com>
-In-Reply-To: <20221019150714.606390-1-eajames@linux.ibm.com>
-From: Joel Stanley <joel@jms.id.au>
-Date: Thu, 20 Oct 2022 05:12:09 +0000
-Message-ID: <CACPK8Xf2n7T+hrhzdpAf0iKpSt4mC3xifA8ryCnaFvEQWmpF0Q@mail.gmail.com>
-Subject: Re: [PATCH linux dev-6.0 0/3] watchdog: aspeed: Add pre-timeout
- interrupt support
-To: Eddie James <eajames@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.1
+Subject: Re: [PATCH v9 1/4] media: v4l: Add definition for the Aspeed JPEG
+ format
+Content-Language: en-US
+To: "eajames@linux.ibm.com" <eajames@linux.ibm.com>,
+        "mchehab@kernel.org"
+	<mchehab@kernel.org>,
+        "joel@jms.id.au" <joel@jms.id.au>,
+        "andrew@aj.id.au"
+	<andrew@aj.id.au>,
+        "linux-media@vger.kernel.org"
+	<linux-media@vger.kernel.org>,
+        "openbmc@lists.ozlabs.org"
+	<openbmc@lists.ozlabs.org>,
+        "linux-arm-kernel@lists.infradead.org"
+	<linux-arm-kernel@lists.infradead.org>,
+        "linux-aspeed@lists.ozlabs.org"
+	<linux-aspeed@lists.ozlabs.org>,
+        "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>,
+        "hverkuil-cisco@xs4all.nl"
+	<hverkuil-cisco@xs4all.nl>,
+        "ezequiel@vanguardiasur.com.ar"
+	<ezequiel@vanguardiasur.com.ar>,
+        "nicolas.dufresne@collabora.com"
+	<nicolas.dufresne@collabora.com>,
+        "stanimir.varbanov@linaro.org"
+	<stanimir.varbanov@linaro.org>,
+        "laurent.pinchart@ideasonboard.com"
+	<laurent.pinchart@ideasonboard.com>,
+        "sakari.ailus@linux.intel.com"
+	<sakari.ailus@linux.intel.com>,
+        "ribalda@chromium.org" <ribalda@chromium.org>
+References: <20220921025112.13150-1-jammy_huang@aspeedtech.com>
+ <20220921025112.13150-2-jammy_huang@aspeedtech.com>
+ <d34e9d22-231c-a843-ecc9-71480d68f918@aspeedtech.com>
+From: Jammy Huang <jammy_huang@aspeedtech.com>
+In-Reply-To: <d34e9d22-231c-a843-ecc9-71480d68f918@aspeedtech.com>
+X-Originating-IP: [192.168.2.115]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 29K6p5ZF071387
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,39 +82,280 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Eddie,
+--------------dq5xC4Ws5wwbKFxMgQzbqj02
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Wed, 19 Oct 2022 at 15:07, Eddie James <eajames@linux.ibm.com> wrote:
->
-> Enable the watchdog pre-timeout interrupt if enabled in the device tree,
-> and setup the relevant device trees.
+Hi Sakari,
 
-Have you put this on the upstream lists too? (I'd recommend sending
-out the wdt change and the device tree updates can go in once you've
-got the .c change merged).
+Thanks for your review.
 
-Cheers,
+On 2022/09/23 下午 12:56, Sakari Ailus wrote:
+> Hi Jammy,
+>
+> Thanks for the update.
+> On Wed, Sep 21, 2022 at 10:51:09AM +0800, Jammy Huang wrote:
+>> This introduces support for the Aspeed JPEG format, where the new frame
+>> can refer to previous frame to reduce the amount of compressed data.
+>> The concept is similar to I/P frame of video compression. It will
+>> compare the new frame with previous one to decide which macroblock's
+>> data is changed, and only the changed macroblocks will be compressed.
+>>
+>> This Aspeed JPEG format is used by the video engine on Aspeed platforms,
+>> which is generally adapted for remote KVM.
+>>
+>> Signed-off-by: Jammy Huang<jammy_huang@aspeedtech.com>
+>> ---
+>>   .../userspace-api/media/v4l/pixfmt-reserved.rst | 17 +++++++++++++++++
+>>   drivers/media/v4l2-core/v4l2-ioctl.c            |  1 +
+>>   include/uapi/linux/videodev2.h                  |  1 +
+>>   3 files changed, 19 insertions(+)
+>>
+>> diff --git a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
+>> index 0ff68cd8cf62..f62bc76d606f 100644
+>> --- a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
+>> +++ b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
+>> @@ -258,6 +258,23 @@ please make a proposal on the linux-media mailing list.
+>>           and it is used by various multimedia hardware blocks like GPU, display
+>>           controllers, ISP and video accelerators.
+>>           It contains four planes for progressive video.
+>> +    * .. _V4L2-PIX-FMT-AJPG:
+>> +
+>> +      - ``V4L2_PIX_FMT_AJPG``
+>> +      - 'AJPG'
+>> +      - ASPEED JPEG format used by the aspeed-video driver on Aspeed platforms,
+>> +        which is generally adapted for remote KVM.
+>> +        On each frame compression, I will compare the new frame with previous
+>> +        one to decide which macroblock's data is changed, and only the changed
+>> +        macroblocks will be compressed.
+>> +
+>> +        The implementation is based on AST2600 A3 datasheet, revision 0.9, which
+>> +        is not publicly available. Or you can reference Video stream data format
+>> +        – ASPEED mode compression of SDK_User_Guide which available on
+>> +        AspeedTech-BMC/openbmc/releases.
+>> +
+>> +        Decoder's implementation can be found here,
+>> +        `https://github.com/AspeedTech-BMC/aspeed_codec/  <https://github.com/AspeedTech-BMC/aspeed_codec/>`__
+>
+> This is better than the previous versions.
+>
+> Can you still run
+>
+> $ scripts/checkpatch.pl --strict --max-line-length=80
+>
+> ?
 
-Joel
+I will correct the length to meet the rule.
+
 
 >
-> Eddie James (3):
->   watchdog: aspeed: Add pre-timeout interrupt support
->   ARM: dts: aspeed: Setup watchdog pre-timeout interrupt
->   ARM: dts: aspeed: p10bmc: Set watchdog pre-timeout interrupt
+> On the decoder --- which values is the user supposed to use for mode_420,
+> selector and advance_selector parameters? I think this needs to be
+> documented.
+
+I will add following information to aspeed_codec's github, and provide 
+recommended
+
+values.
+
+"The following parameters should be provided by the encoded stream to 
+let decoder
+
+know how to work, because Aspeed codec does not include the information 
+needed
+
+for decoding in the header. Users can adjust the three parameters, 
+mode420, selector,
+
+and advance_selector, to achieve the desired quality level while at the 
+same time
+
+reduce the storage size."
+
+>>   .. raw:: latex
+>>   
+>>       \normalsize
+>> diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
+>> index a1a1b51ac599..c72bc3410bee 100644
+>> --- a/drivers/media/v4l2-core/v4l2-ioctl.c
+>> +++ b/drivers/media/v4l2-core/v4l2-ioctl.c
+>> @@ -1497,6 +1497,7 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *fmt)
+>>   		case V4L2_PIX_FMT_MT21C:	descr = "Mediatek Compressed Format"; break;
+>>   		case V4L2_PIX_FMT_QC08C:	descr = "QCOM Compressed 8-bit Format"; break;
+>>   		case V4L2_PIX_FMT_QC10C:	descr = "QCOM Compressed 10-bit Format"; break;
+>> +		case V4L2_PIX_FMT_AJPG:		descr = "Aspeed JPEG"; break;
+>>   		default:
+>>   			if (fmt->description[0])
+>>   				return;
+>> diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+>> index 86cae23cc446..870a7e5ef8ca 100644
+>> --- a/include/uapi/linux/videodev2.h
+>> +++ b/include/uapi/linux/videodev2.h
+>> @@ -775,6 +775,7 @@ struct v4l2_pix_format {
+>>   #define V4L2_PIX_FMT_HI240    v4l2_fourcc('H', 'I', '2', '4') /* BTTV 8-bit dithered RGB */
+>>   #define V4L2_PIX_FMT_QC08C    v4l2_fourcc('Q', '0', '8', 'C') /* Qualcomm 8-bit compressed */
+>>   #define V4L2_PIX_FMT_QC10C    v4l2_fourcc('Q', '1', '0', 'C') /* Qualcomm 10-bit compressed */
+>> +#define V4L2_PIX_FMT_AJPG     v4l2_fourcc('A', 'J', 'P', 'G') /* Aspeed JPEG */
+>>   
+>>   /* 10bit raw packed, 32 bytes for every 25 pixels, last LSB 6 bits unused */
+>>   #define V4L2_PIX_FMT_IPU3_SBGGR10	v4l2_fourcc('i', 'p', '3', 'b') /* IPU3 packed 10-bit BGGR bayer */
+> -- 
+> Kind regards,
 >
->  arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts |  1 +
->  arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts |  1 +
->  arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts |  1 +
->  arch/arm/boot/dts/aspeed-g5.dtsi             |  3 ++
->  arch/arm/boot/dts/aspeed-g6.dtsi             |  4 ++
->  drivers/watchdog/aspeed_wdt.c                | 54 +++++++++++++++++++-
->  6 files changed, 62 insertions(+), 2 deletions(-)
+> Sakari Ailus
 >
-> --
-> 2.31.1
->
+-- 
+Best Regards
+Jammy
+
+--------------dq5xC4Ws5wwbKFxMgQzbqj02
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>Hi Sakari,</p>
+    <p>Thanks for your review.<br>
+    </p>
+    <div class="moz-cite-prefix">On 2022/09/23 下午 12:56, Sakari Ailus
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:d34e9d22-231c-a843-ecc9-71480d68f918@aspeedtech.com">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+      <pre style="white-space: pre-wrap; color: rgb(0, 0, 0); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">Hi Jammy,
+
+Thanks for the update.</pre>
+      <div class="moz-cite-prefix">On Wed, Sep 21, 2022 at 10:51:09AM
+        +0800, Jammy Huang wrote:<br>
+      </div>
+      <blockquote type="cite"
+        cite="mid:20220921025112.13150-2-jammy_huang@aspeedtech.com">
+        <pre class="moz-quote-pre" wrap="">This introduces support for the Aspeed JPEG format, where the new frame
+can refer to previous frame to reduce the amount of compressed data.
+The concept is similar to I/P frame of video compression. It will
+compare the new frame with previous one to decide which macroblock's
+data is changed, and only the changed macroblocks will be compressed.
+
+This Aspeed JPEG format is used by the video engine on Aspeed platforms,
+which is generally adapted for remote KVM.
+
+Signed-off-by: Jammy Huang <a class="moz-txt-link-rfc2396E" href="mailto:jammy_huang@aspeedtech.com" moz-do-not-send="true">&lt;jammy_huang@aspeedtech.com&gt;</a>
+---
+ .../userspace-api/media/v4l/pixfmt-reserved.rst | 17 +++++++++++++++++
+ drivers/media/v4l2-core/v4l2-ioctl.c            |  1 +
+ include/uapi/linux/videodev2.h                  |  1 +
+ 3 files changed, 19 insertions(+)
+
+diff --git a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
+index 0ff68cd8cf62..f62bc76d606f 100644
+--- a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
++++ b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
+@@ -258,6 +258,23 @@ please make a proposal on the linux-media mailing list.
+         and it is used by various multimedia hardware blocks like GPU, display
+         controllers, ISP and video accelerators.
+         It contains four planes for progressive video.
++    * .. _V4L2-PIX-FMT-AJPG:
++
++      - ``V4L2_PIX_FMT_AJPG``
++      - 'AJPG'
++      - ASPEED JPEG format used by the aspeed-video driver on Aspeed platforms,
++        which is generally adapted for remote KVM.
++        On each frame compression, I will compare the new frame with previous
++        one to decide which macroblock's data is changed, and only the changed
++        macroblocks will be compressed.
++
++        The implementation is based on AST2600 A3 datasheet, revision 0.9, which
++        is not publicly available. Or you can reference Video stream data format
++        – ASPEED mode compression of SDK_User_Guide which available on
++        AspeedTech-BMC/openbmc/releases.
++
++        Decoder's implementation can be found here,
++        `<a class="moz-txt-link-freetext" href="https://github.com/AspeedTech-BMC/aspeed_codec/" moz-do-not-send="true">https://github.com/AspeedTech-BMC/aspeed_codec/</a> <a class="moz-txt-link-rfc2396E" href="https://github.com/AspeedTech-BMC/aspeed_codec/" moz-do-not-send="true">&lt;https://github.com/AspeedTech-BMC/aspeed_codec/&gt;</a>`__</pre>
+      </blockquote>
+      <br>
+      <pre style="white-space: pre-wrap; color: rgb(0, 0, 0); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">This is better than the previous versions.
+
+Can you still run
+
+$ scripts/checkpatch.pl --strict --max-line-length=80
+
+?</pre>
+    </blockquote>
+    <p>I will correct the length to meet the rule.</p>
+    <p><br>
+    </p>
+    <blockquote type="cite"
+      cite="mid:d34e9d22-231c-a843-ecc9-71480d68f918@aspeedtech.com">
+      <pre style="white-space: pre-wrap; color: rgb(0, 0, 0); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;">
+
+On the decoder --- which values is the user supposed to use for mode_420,
+selector and advance_selector parameters? I think this needs to be
+documented.</pre>
+    </blockquote>
+    <p>I will add following information to aspeed_codec's github, and
+      provide recommended</p>
+    <p>values.<br>
+    </p>
+    <p>"The following parameters should be provided by the encoded
+      stream to let decoder</p>
+    <p> know how to work, because Aspeed codec does not include the
+      information needed</p>
+    <p> for decoding in the header. Users can adjust the three
+      parameters, mode420, selector,</p>
+    <p> and advance_selector, to achieve the desired quality level while
+      at the same time</p>
+    <p>reduce the storage size."</p>
+    <blockquote type="cite"
+      cite="mid:d34e9d22-231c-a843-ecc9-71480d68f918@aspeedtech.com">
+      <blockquote type="cite"
+        cite="mid:20220921025112.13150-2-jammy_huang@aspeedtech.com">
+        <pre class="moz-quote-pre" wrap=""> .. raw:: latex
+ 
+     \normalsize
+diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
+index a1a1b51ac599..c72bc3410bee 100644
+--- a/drivers/media/v4l2-core/v4l2-ioctl.c
++++ b/drivers/media/v4l2-core/v4l2-ioctl.c
+@@ -1497,6 +1497,7 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *fmt)
+ 		case V4L2_PIX_FMT_MT21C:	descr = "Mediatek Compressed Format"; break;
+ 		case V4L2_PIX_FMT_QC08C:	descr = "QCOM Compressed 8-bit Format"; break;
+ 		case V4L2_PIX_FMT_QC10C:	descr = "QCOM Compressed 10-bit Format"; break;
++		case V4L2_PIX_FMT_AJPG:		descr = "Aspeed JPEG"; break;
+ 		default:
+ 			if (fmt-&gt;description[0])
+ 				return;
+diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+index 86cae23cc446..870a7e5ef8ca 100644
+--- a/include/uapi/linux/videodev2.h
++++ b/include/uapi/linux/videodev2.h
+@@ -775,6 +775,7 @@ struct v4l2_pix_format {
+ #define V4L2_PIX_FMT_HI240    v4l2_fourcc('H', 'I', '2', '4') /* BTTV 8-bit dithered RGB */
+ #define V4L2_PIX_FMT_QC08C    v4l2_fourcc('Q', '0', '8', 'C') /* Qualcomm 8-bit compressed */
+ #define V4L2_PIX_FMT_QC10C    v4l2_fourcc('Q', '1', '0', 'C') /* Qualcomm 10-bit compressed */
++#define V4L2_PIX_FMT_AJPG     v4l2_fourcc('A', 'J', 'P', 'G') /* Aspeed JPEG */
+ 
+ /* 10bit raw packed, 32 bytes for every 25 pixels, last LSB 6 bits unused */
+ #define V4L2_PIX_FMT_IPU3_SBGGR10	v4l2_fourcc('i', 'p', '3', 'b') /* IPU3 packed 10-bit BGGR bayer */
+</pre>
+      </blockquote>
+      <pre class="moz-signature" cols="72">-- 
+Kind regards,
+
+Sakari Ailus
+
+</pre>
+    </blockquote>
+    <pre class="moz-signature" cols="72">-- 
+Best Regards
+Jammy</pre>
+  </body>
+</html>
+
+--------------dq5xC4Ws5wwbKFxMgQzbqj02--
