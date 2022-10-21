@@ -1,83 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id BA305607A18
-	for <lists+openbmc@lfdr.de>; Fri, 21 Oct 2022 17:07:50 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E4C82607ACF
+	for <lists+openbmc@lfdr.de>; Fri, 21 Oct 2022 17:35:08 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Mv7BD4pL9z3dvv
-	for <lists+openbmc@lfdr.de>; Sat, 22 Oct 2022 02:07:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Mv7nk58JCz3dt1
+	for <lists+openbmc@lfdr.de>; Sat, 22 Oct 2022 02:35:06 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm1 header.b=gnpE0/0P;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=HLGvW2te;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=glKJRZP1;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.27; helo=out3-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::72c; helo=mail-qk1-x72c.google.com; envelope-from=wltu@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm1 header.b=gnpE0/0P;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=HLGvW2te;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=glKJRZP1;
 	dkim-atps=neutral
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+Received: from mail-qk1-x72c.google.com (mail-qk1-x72c.google.com [IPv6:2607:f8b0:4864:20::72c])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mv79Z4Mdhz2yfg
-	for <openbmc@lists.ozlabs.org>; Sat, 22 Oct 2022 02:07:13 +1100 (AEDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id AC3E45C0051;
-	Fri, 21 Oct 2022 11:07:09 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Fri, 21 Oct 2022 11:07:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	fuzziesquirrel.com; h=cc:content-type:date:date:from:from
-	:in-reply-to:message-id:mime-version:reply-to:sender:subject
-	:subject:to:to; s=fm1; t=1666364829; x=1666451229; bh=2W7qCJPrT8
-	maun/3hjeAHd5+ucL7B18r4hsxviRHObs=; b=gnpE0/0PR9q+qWKZ89gJRsgm7C
-	gHf3el4PBl4nLBQFI1lwV39r5e132vz9m65S68vHmilUarWTPg2PQBd6PBMD2cF4
-	KS7zD7POCncw/mSh9NmMojxF5RjNVm6Bb6QH8e60R3wwWVPGZOPN0icGzDaDeyYd
-	KnCcWtktryTIW5F7iKeoQKQirqLOg8PpaDYmHVmBNbfXJvXnUM88hkSjkDufUXwd
-	xgbpgTJW++5hTUXo6hU0BYVgE0K/SD+sC0pBmcCcUYhZANPbLV1LjFjlGL+3Bv5R
-	8CioI5985yXi86kpS4ohaVB+eFxNUtCSqKSeOyiWA6QnrNX6sdhlcEZRVLdw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:message-id:mime-version
-	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1666364829; x=
-	1666451229; bh=2W7qCJPrT8maun/3hjeAHd5+ucL7B18r4hsxviRHObs=; b=H
-	LGvW2teYcdj6MaeFOAnjbdt0ndnVGY1PTNLUOvz048MEWnFOTBUPIDR0pC8VOkES
-	a5MWonIiLUHqMOT5V64t24AsMaSTcykZdzFIxn+m5Js6moW0ZedHrFHiHTI7xuxj
-	J1I11l4miOlv2BYV6Osglxn34dN+wcxezayol2W3R1ZnmsVNwfFiT2LysCQ2LBrB
-	pNfeKdAW1ZwrXXSvnY1rurt1YCLnCOFQxs6td0Wwf/Z8LkB39i20Rq274OMQf5mE
-	AIUVk2RJ21QwHEdIp6uRNsq5nS1d/8/kFdMawWLRRnj0KK85LmA1HySNY2Sqsn7P
-	ZxkoLIgGgdkvX4yxqs9bg==
-X-ME-Sender: <xms:nLVSY-8IcxPbizRNtqD8P1C1vgw3l8pS552uRSJPRxgY595jPEe4Rg>
-    <xme:nLVSY-ujS2gOWJKWg9a1NxBL0SJeRUrXrTdGpe1GKOpDuQpD9M7PGgXY7FJ6R_Njt
-    h_eEkmZrCUq0pWkTLU>
-X-ME-Received: <xmr:nLVSY0BFfjsGSLduh7ros7y7-vpmtpraajtseBZYEQ3X0EQjFO24oRiE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfeelkedgkedvucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpeffhffvuffkgggtugesthdtredttd
-    dtvdenucfhrhhomhepuehrrgguuceuihhshhhophcuoegsrhgrughlvgihsgesfhhuiiii
-    ihgvshhquhhirhhrvghlrdgtohhmqeenucggtffrrghtthgvrhhnpedukedvuddvffevje
-    fhveejieehhfdvvdffgffglefgkefgjeetiedvhfevuedtvdenucffohhmrghinhepohhp
-    vghnsghmtgdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrdgtohhm
-X-ME-Proxy: <xmx:nLVSY2do3mJSlVIT_pf51t8Xpvt7Fzdcev1_9FOYQ7X3kkxMr9UtJQ>
-    <xmx:nLVSYzPCtrf2KCtVotKsRSiUSpRdA2b0OOdPNHsn1h9XQ1Cwt8lNuw>
-    <xmx:nLVSYwkeNS2875aq69JA7aGejXzka8jE5Vy85i-IRgqf_WZtO7S6Pg>
-    <xmx:nbVSY1XK1gIoK9qPeggGdGRN1AXKJr-pwSOGPMLyaqYSNpEdqE8lkw>
-Feedback-ID: i02c9470a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Oct 2022 11:07:08 -0400 (EDT)
-Date: Fri, 21 Oct 2022 11:07:06 -0400
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: wltu@google.com, openbmc@lists.ozlabs.org
-Subject: New mapper interface proposal
-Message-ID: <20221021150706.hkytptw3iwqbb4le@cheese>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mv7n75Drwz3c7L
+	for <openbmc@lists.ozlabs.org>; Sat, 22 Oct 2022 02:34:34 +1100 (AEDT)
+Received: by mail-qk1-x72c.google.com with SMTP id o22so2225188qkl.8
+        for <openbmc@lists.ozlabs.org>; Fri, 21 Oct 2022 08:34:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ESvH8Dh4eAjlT7zbpnLtsk3ZsvfeUS2gS+2WpzVopyQ=;
+        b=glKJRZP1R/cQXEmxAcbfTFsYZKFLhHreGeW9DufmvehNKDoKdUeRk+FucaXSIIbnL3
+         s+7lzv6mEH2oKi77PqU2mEND455rC4yrz6Hx7PH9B8KRLwNrdt43/mUzMuVSZH1b7edA
+         04BVcP5WqEC69wSuaIV+TmlKLHnqmXLXr0G7m3MSHV6rt+K+hsA8qWOiG4uDtlbSr9jS
+         Uu+uynvCzZOEXLdpd+KZWzJcYukJ2t8y0bkZhmTZzbilmTtyeRofdzEgfdvksMKakz/x
+         m52fACvDcQwxZlL0XUX9asBWLFs7PczSlPFSBUIchstDIT8ueVHP3IjRQl6mc7tCX7Fw
+         xk5A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ESvH8Dh4eAjlT7zbpnLtsk3ZsvfeUS2gS+2WpzVopyQ=;
+        b=38smk95tVR4HGn6M9qMffBlJwFN2Qu4OajZH/nCsdXQpmvUPKAvTcOjKtW3tlmXZyS
+         e5r4nOlP81fXufZDCs64KaYO6WNtMqAXe/r8L6kmiTgYQZHubL11B3gXHPbu2XRQMUSF
+         9yC/ZZFa8icEdsJkblAypx95D67Wtn07gOoE3T64hkcvGPxQsuS5SCOuLw5LcPy+Weze
+         3xdzZYK/gvqHsKt1ndk6N+VRpgH7t+8dC12v54cGgST1M1UxIhNE7YAghkKJTYqTe5qo
+         gOP2381LMnfTv2+e7kljju4AJLx1OmvvK3iaBrP6joF94/9pGCx6HoWhthvG+RrdjXto
+         JvaQ==
+X-Gm-Message-State: ACrzQf2Fo7PxZkp06nv7QR0Z/ghsxnua8o3OM92towZ6H4azxWWJ78Ek
+	ah4DQkmOnwhlhzvlvbToQxkDQGgaV5pALvBpAE73AuSACHI=
+X-Google-Smtp-Source: AMsMyM7lObDG8BLLMFfSy9+iE1CnRLV4uBKeeaFEP/ORA4bAPc9XdfJ5uVkasoANisv8IdiacmJWN4gEmIjfesvM6sQ=
+X-Received: by 2002:a05:620a:f04:b0:6cf:c030:a1c2 with SMTP id
+ v4-20020a05620a0f0400b006cfc030a1c2mr14295541qkl.312.1666366468990; Fri, 21
+ Oct 2022 08:34:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
+References: <20221021150706.hkytptw3iwqbb4le@cheese>
+In-Reply-To: <20221021150706.hkytptw3iwqbb4le@cheese>
+From: Willy Tu <wltu@google.com>
+Date: Fri, 21 Oct 2022 08:34:17 -0700
+Message-ID: <CAHwn2Xn9rJAtswZ1N7+SJsdNFTmL857OO3f6dnwRBjGqG4nGEA@mail.gmail.com>
+Subject: Re: New mapper interface proposal
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,15 +73,25 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi all
+Thanks for setting this up, Brad.
 
-There is a new mapper interface being proposed here: 
-https://gerrit.openbmc.org/c/openbmc/phosphor-dbus-interfaces/+/57821.  
-Given where the mapper sits in OpenBMC it seemed good to highlight this 
-addition.  Please have a look if you are able.  Thanks to Willy for the 
-patches.
+Hopefully the new change is somewhat useful for people's use cases.
 
--brad
+Best,
+Willy Tu
+
+On Fri, Oct 21, 2022 at 8:07 AM Brad Bishop <bradleyb@fuzziesquirrel.com> wrote:
+>
+> Hi all
+>
+> There is a new mapper interface being proposed here:
+> https://gerrit.openbmc.org/c/openbmc/phosphor-dbus-interfaces/+/57821.
+> Given where the mapper sits in OpenBMC it seemed good to highlight this
+> addition.  Please have a look if you are able.  Thanks to Willy for the
+> patches.
+>
+> -brad
