@@ -1,80 +1,80 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 766B7607F93
-	for <lists+openbmc@lfdr.de>; Fri, 21 Oct 2022 22:15:35 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 90484607FCE
+	for <lists+openbmc@lfdr.de>; Fri, 21 Oct 2022 22:35:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MvG1K2XNyz3dsv
-	for <lists+openbmc@lfdr.de>; Sat, 22 Oct 2022 07:15:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MvGS52qlLz3dsR
+	for <lists+openbmc@lfdr.de>; Sat, 22 Oct 2022 07:35:17 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=iW4dDUAK;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=lWsEUB+f;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=Whk9W0LJ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=FUrYkskd;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25; helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=iW4dDUAK;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=lWsEUB+f;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=Whk9W0LJ;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=FUrYkskd;
 	dkim-atps=neutral
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MvG0g5266z3bj0
-	for <openbmc@lists.ozlabs.org>; Sat, 22 Oct 2022 07:14:58 +1100 (AEDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id 2ADCF5C0156;
-	Fri, 21 Oct 2022 16:14:54 -0400 (EDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MvGRX0K4Sz3cfB
+	for <openbmc@lists.ozlabs.org>; Sat, 22 Oct 2022 07:34:47 +1100 (AEDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id F236E5C00B6;
+	Fri, 21 Oct 2022 16:34:45 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Fri, 21 Oct 2022 16:14:54 -0400
+  by compute2.internal (MEProxy); Fri, 21 Oct 2022 16:34:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
 	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm3; t=1666383294; x=1666469694; bh=N8/slTz0bQ
-	udjc6pyAf8P3k8zW7DRQZzoebKDjpBMIg=; b=iW4dDUAK2oUFtPRVddQJrqAtK6
-	WdFrsM0B+0jKGvrZfuhBXUKxELi4k+Rg8ONxG+2lbN4UYDsjWRGwOsZx6iDqpdHA
-	Ut1WguVsK6MRxh2tpea8dkUNG4bUqhF7mExxnQwgB304gF269IAIYem3GboU9nNT
-	YlKzjzV0v38BKPAi9hilFq0+zY+qvNIXlGLoMZsDWMkHYRRqNKjn3F4i1AuJSf1g
-	s3JN6Klwx6ej37mtnd2sdnODerwuN9+oIo32bgREtUIHBgyOTGG2VrKU5FXXWAaR
-	jiH53TsZEh0zwrTwE8evE9plMEOaMNj8qTqVgbG86IQD/wbvzEYJYz9DD1og==
+	:subject:to:to; s=fm3; t=1666384485; x=1666470885; bh=+W893TCHPR
+	A7Wa6YP8HJ2yHLmwgGUYb31TbBY7JmKMI=; b=Whk9W0LJCWZEN/nyEBvBOnStAX
+	Tgjgo833JRo9n6jfDs3LHM95Gd52BG2E/OrJbqPoVV3T96Pv49ymgF5pnxUxxVBO
+	QJgTHs/r4hdhZA+nlpFMF94lTcEiWv1PM2qnk7szMGHoyKKbZRYODCvjPneLbs+I
+	Gd9GXunUDYLpdptTXZEV7T29MJx2n2DgD6Towl1/JOxUYCOoOdIKxiweCyf+a2KN
+	LfG/3d5oRY/5TjsoslrdGgN3Jjc1QVVNQFQg8mHxSiBDP3Vr6ggiGdOBXK1/dGWH
+	BuBAMRxK2pAEmwgfg/p5jj5czGd28isx4mWfdC7dn4zBPOZ4mI2DYqnc3SoA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
 	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
 	:mime-version:references:reply-to:sender:subject:subject:to:to
 	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1666383294; x=1666469694; bh=N8/slTz0bQudjc6pyAf8P3k8zW7D
-	RQZzoebKDjpBMIg=; b=lWsEUB+fXC10nRQscgPeQpDbQRGf7Er3wcb09K+KrUH0
-	55Y69olxaUpXboT+6QqM527iuhV61TJRhnwrtK/jTaQRQJJr5gfd2xjCpF24/U8j
-	KIDUT6A8BVFoy9hNIDpaoW14exzU+HzR1BZm431x/Dc6fKGxM/0y/s0qeU4VNwc4
-	fwuVmGXilmmfKd8tyZ0/RCV7x0is+aJ7u1EQIoVnb1MLtQ4u4orcQRTfn4ua5gTk
-	8teletYSo5AcREueK5Av64D2jIz3wdcV2KScQHmicovY7xFCuxvm+P54tR1UTni3
-	d7IBZ1y+AvNtbT73ywncLTMxKwlzH2uh/ZZeDn1EZQ==
-X-ME-Sender: <xms:vf1SY2uftExCQpaIJAKdwPOOz4rRbyAqHQm8x8BWzH9Wdd6w9Gm_eA>
-    <xme:vf1SY7cevPi3aN7nzTx6yB2Mz5awNtNc--vjv_g1idf3SRk_aUVXAO3YZqJATwcoY
-    6-CgcW0gFjGTpaCxMs>
-X-ME-Received: <xmr:vf1SYxzWxeX0aTq168-xE65amnlpRqz7cgJxVXDyfkLyg2RFRRJIBWKUIdKGF_7qNYMap83AFE6HyHhLFbsQH3aao_UcJ9IL>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfeelkedgudeggecutefuodetggdotefrod
+	fm3; t=1666384485; x=1666470885; bh=+W893TCHPRA7Wa6YP8HJ2yHLmwgG
+	UYb31TbBY7JmKMI=; b=FUrYkskdkEIPfd0P8fuvzsve55Xxm+rYtHjjuuZB11gg
+	qv1cJ9Ofokg/MaWkDvPmfOUWnfc5AawM+oGh8neWmu6Zym3jf+x3Jc5pA1O2Yz/5
+	P4+H0EfG/82x8e5cm908wVX5aW1Wt2NrThQYWnp3i2yAU2W01bT1g4vfV7k5wTWk
+	JazoQHM0qxOKDfu0itxZcQHGyikD6v4wcvjcO3+FizcGuBmO5J4tSet+fJX7v3yR
+	Uwk9QMymomVMfE+YvE752fjFlJaNb0fEG4MvGy5GjXu9vidHfUiyQH2jCB1M/cpe
+	VLRd/Uk87K6Hr82caUpjTYKvaCBSsfDnKEoV8hBK8Q==
+X-ME-Sender: <xms:ZQJTYwlONHOb3B-yLzGMc0C_jxiqwWbwxjG3y_dIKki8IPSmBbviQA>
+    <xme:ZQJTY_1roxEsepbVtFvwQNy_YsjzmEp2zJv_BA6CNLKtul4FEh1HhSCWRM5Ps63RA
+    DUmYDKJZNw72fz2Z8Y>
+X-ME-Received: <xmr:ZQJTY-qgNkC2tmurD91RmiXfua5lwMpG2P2VilwT0wR-CGVm_vpVF2OV4DCxOzUSTZFJ-TRp4NatttTVT_Y50Gi3v4pS_Pwf>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrfeelkedgudegkecutefuodetggdotefrod
     ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
     necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enfghrlhcuvffnffculdefhedmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreer
+    enfghrlhcuvffnffculdejtddmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreer
     tddtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkh
     esshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepheefjeehfedtjeeivdefkeff
     heeludekudelleffkefgtdeludelvddtgedtheeknecuvehluhhsthgvrhfuihiivgeptd
     enucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:vf1SYxO-TII2uNhwotEG0Rh7Ehekrez1HxR6-kV-T3Nk9SexhsWrRg>
-    <xmx:vf1SY2_EOV0rz4nw-5OucffWaRKm5-M64QOr9q2QG_CxMxlPX2QfPQ>
-    <xmx:vf1SY5X5TnG52hZBazT84iD5xcp3uvABV2nVFrXH-VAAjQv5cWfDVA>
-    <xmx:vv1SY7Ea1fyWZ-mYoIjWxPQmw9xcgdKXbUtXES0k5NHwq0mjJX80Yw>
+X-ME-Proxy: <xmx:ZQJTY8krcPRhBvlBgBp7-X7AdzYXWZP4ivzNV4xAQFIbPX23ICpIjQ>
+    <xmx:ZQJTY-3-qMJRNIEZB3jzMoB-syCoq0wfBmFplWtuzWR5nRh-sk86Bg>
+    <xmx:ZQJTYzsVYMBEJ7bQ3jwOIixBQssD_WVEkJk3HovirmlsLKKV2e6pAg>
+    <xmx:ZQJTYz8xG_UN5UbO9YWhr3RPoU3eBF0akKrnNbX-vOSlC1iOJhN7aA>
 Feedback-ID: i68a1478a:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 21 Oct 2022 16:14:53 -0400 (EDT)
-Date: Fri, 21 Oct 2022 15:14:52 -0500
+ 21 Oct 2022 16:34:45 -0400 (EDT)
+Date: Fri, 21 Oct 2022 15:34:44 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
 To: "Bills, Jason M" <jason.m.bills@linux.intel.com>
 Subject: Re: Adding support for custom SEL records
-Message-ID: <Y1L9vCFMvm8alJMC@heinlein.stwcx.org.github.beta.tailscale.net>
+Message-ID: <Y1MCZNwdiZ9NC/tT@heinlein.stwcx.org.github.beta.tailscale.net>
 References: <CAGm54UFshn7RpFMhpoJrMVHh9ONibDQ0DKoUokaG0q7V4Qi5VQ@mail.gmail.com>
  <e91a28c961288e3ead27cff19dfc9f03907f4405.camel@fuzziesquirrel.com>
  <CAGm54UE55N3JW0CUYb9piRopBcz35+Q2H66row-fDBf1VEGo+w@mail.gmail.com>
@@ -82,7 +82,7 @@ References: <CAGm54UFshn7RpFMhpoJrMVHh9ONibDQ0DKoUokaG0q7V4Qi5VQ@mail.gmail.com>
  <5994636c-b32a-0b8a-5873-a73390318fe3@linux.intel.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="dLte16n6qN5uqrDV"
+	protocol="application/pgp-signature"; boundary="hCLymuZ8gfevIUmC"
 Content-Disposition: inline
 In-Reply-To: <5994636c-b32a-0b8a-5873-a73390318fe3@linux.intel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -101,126 +101,85 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---dLte16n6qN5uqrDV
+--hCLymuZ8gfevIUmC
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
 On Wed, Oct 19, 2022 at 09:50:47AM -0600, Bills, Jason M wrote:
 
-> Intel had a requirement to support storing at least 4000 log entries.=20
-> At the time, we were able to get about 400 entries on D-Bus before D-Bus=
+> I'd also be curious about the reverse question.  Is there any benefit to=
 =20
-> performance became unusable.
->=20
-> That was before dbus-broker, so it could perhaps be better today.
+> storing logs on D-Bus that makes it a better solution?
+=2E..
+> Is there a way we can now get together and define a new logging solution
+> that is fully upstream and avoids the drawbacks of both existing solution=
+s?
 
-I was surprised that there would be much performance impact to dbus as a
-whole because there should not be any impact to the bus because one
-process decided to host a bunch of objects.  I can understand _that_
-process becoming slower if there are algorithmic problems with it.
+First and foremost I'd like to see consistency come out of this.  If
+there is another proposal for how to do it that we can all consolidate
+on (and people are willing to put in effort to get there) then I'm
+on-board.  It seems to me like the lowest friction way to get there, with
+the best maintainability, is to use the phosphor-logging APIs even if we
+end up not putting them into d-bus entries.
 
-I did an experiment on an AST2600 system where I modified phosphor-logging
-to support 20k log entries and then created 10k of them.
+It happens that phosphor-logging stores the instances on d-bus, but the
+more important aspect to me is that we have a more consistent API for
+defining and creating errors and events.  The "rsyslog-way" is that you
+make very specific journal entries that the rsyslog magic knows about,
+but there are a few issues with it:
 
-```
-$ cat meta-facebook/recipes-phosphor/logging/phosphor-logging_%.bbappend
-FILESEXTRAPATHS:prepend :=3D "${THISDIR}/${PN}:"
+    1. We don't have any consistency in what, when, and how events are
+       logged.  We even have cases within the same repository (looking at
+       dbus-sensors) where some of the implementations make the magic
+       SEL records and others do not.  Additionally, they're not required
+       to be the same format.  Some maintainers have even outright
+       rejected patches with the "magic log statements".
 
-EXTRA_OEMESON +=3D "-Derror_cap=3D20000"
-```
+    2. There is no way to generate something like a Redfish message
+       registry for the events, because they're just arbitrary strings
+       that are sprinkled around.  It isn't even easy to programatically
+       search the code for them because there are 4 different approaches
+       to that: cout/cerr, direct journald, phosphor-logging "v1", and
+       phosphor-logging lg2.
 
-What I've found can be summarized as follows:
+    3. Any kind of automation around these is more at the whim of
+       whatever the developers / maintainers decide to change.  It is,
+       for example, really difficult for me to write data center tooling
+       that reacts to events like "we just lost pgood to the host"
+       because I have to read through the code to find the specific text
+       and hope it never changes.
 
-   - Overall there is no impact to the dbus by creating a large number
-     of log entries.  Interactions with other daemons happen just fine
-     with no performance impact.
-
-   - Creating 10k log entries does take a while.  Most of this time is
-     observed (via top) in jffs2 but there is also some peaky objmgr
-     activity.  There might be some improvements to be had there, but I
-     don't think anyone is intending to create 10k events in the span of
-     a minute.
-
-   - Dumping all the events from phosphor-logging is slow when there are
-     10k of them.  It took 8-11s.  I didn't have `strace` installed, but
-     it seemed like much of this was coming from `busctl` processing the
-     result and not from the bus transfer itself, but more investigation
-     would be required.
-
-   - Deleting all 10k of the events timed out at a dbus level, but still
-     succeeded.  Almost all of the time was spent in jffs2.
-
-I'm not suggesting there aren't optimizations we can do to
-phosphor-logging, but it doesn't seem like dbus itself is a direct
-concern.
-
-```
-    # busctl call xyz.openbmc_project.Logging \
-            /xyz/openbmc_project/logging \
-            xyz.openbmc_project.Collection.DeleteAll \
-            DeleteAll
-
-    # time busctl call xyz.openbmc_project.Logging \
-            /xyz/openbmc_project/logging \
-            org.freedesktop.DBus.ObjectManager \
-            GetManagedObjects > /dev/null
-
-    real    0m0.017s
-    user    0m0.015s
-    sys    0m0.001s
-
-    # time busctl tree xyz.openbmc_project.VirtualSensor > /dev/null
-
-    real    0m0.025s
-    user    0m0.019s
-    sys    0m0.001s   =20
-
-    ### Create 10000 log entries.
-    # for i in $(seq 0 10000) ; do busctl call \
-        xyz.openbmc_project.Logging /xyz/openbmc_project/logging \
-        xyz.openbmc_project.Logging.Create Create ssa{ss} \
-        "Hello.$i" \
-        "xyz.openbmc_project.Logging.Entry.Level.Warning" 0 ;
-      done
-
-    # time busctl call xyz.openbmc_project.Logging \
-            /xyz/openbmc_project/logging \
-            org.freedesktop.DBus.ObjectManager \
-            GetManagedObjects > /dev/null
-
-    real    0m11.722s
-    user    0m9.130s
-    sys    0m0.071s
-
-    # time busctl tree xyz.openbmc_project.VirtualSensor > /dev/null
-
-    real    0m0.024s
-    user    0m0.019s
-    sys    0m0.001s
-```
+Conversely, the phosphor-logging APIs leverage YAML-based error specifiers,
+which can be easily transposed into a Redfish message registry, and happen
+to also be the same structure we use for inter-process errors on d-bus call=
+s.
+While I have to review the implementations to make sure they're
+appropriately created, I have far less concern about them disappearing
+or changing once they are in place (and I can review the changes to the YAML
+specifiers to keep tabs on what changes their might be).
 
 --=20
 Patrick Williams
 
---dLte16n6qN5uqrDV
+--hCLymuZ8gfevIUmC
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmNS/bkACgkQqwNHzC0A
-wRmcPg/+JrMoWfsnDBIti4va99eAgQMe/VyCd1NKuWXq+M0gqzH8jwoz5OZoK64c
-Jh59DW9ZiL0LgLf7rmD10HtEIuocO5Ud9MiIKOVfu3Fgo7Nd5xjoKJQCXRbY6Mc4
-lFHq8fy2wfjDGUGuXjLUySRiEpJMSJqEfqSGwHkOgxcx00MaYFANB+yIeQsneDgy
-Mc/OKZPBaXMzErucnNngjOtiPZ1veUDntJ2kikWfFyForkIpPpPkZyJQD4/WJIYZ
-ZrtdvtHBZB7sFg8QTnqumKya0046+hZfr1WoBaWKwhlzZWKflN1w7a5Zy0m/HXp7
-gb7uHaT6lxatFoIMphrK8izRHtBTs77oTkU574gdOxZIZjhAQcww3NDKcZg9VT1/
-CVWuXzBrljy6jrANGz3TX/NWuW1D3yemyR8bBBGxkcAKIUSJpBDDTJuBQ1RxUNPO
-Oft6S9vtuebkkx3vKioSQjfM6TfAHcv0AT4ipa4ZW8I3k1SF8QTEzJUue+GVeGV0
-ZdjgskgTGTji6Qw1grx+NrS5LA0MUr/tfgpRU6PMmNcZeBiV0E8z4NSm3IIPXkF0
-1+myjKyJiLqU3VYGSY8lDMTMaqu13mXycbSnsVCyEIRxWMPyeRfeIYkdLMzqwfBe
-hAMQ1hF0l5GL0PulzVKK9sb37kLEwzhGKvuBjRwWqaAysnHjSHY=
-=ceMG
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmNTAmIACgkQqwNHzC0A
+wRnHFA/8CKLE+du8Tz9KPlBBTeyHZESlyCmG6d/iK8OX515aqzGMKfRZgtr9SAZf
+1CkXCHVr5wRRvRlKNX/k9UyDfYMGVp5PSTuvCdxDrNWQEF2qwPqsyEiCYDV/f1Ur
+YHjwr22KMsOmqLJ6BsDcE6Kn1EIrDy01L1F+jQWkVpUoRH59cvs0jEgjUhGodeeU
+rjtrhV6bJ7pHph8PfXVQwgXlTBwJVP2VaEpNDnr+uLWvPcIWLDkjZ09352NOHYWq
+P2lowzSk5dLn6u37kvlWpI3EYdOrOLQpLwkZHTLmR1jId6FZmLQ25xY9rurpyKbJ
+dwKbo65HB9qeO+gCG6h+42O3QfXk9SkJRkoDq58uVD2+5LgrUar1mdrA+IqTAfxR
+Gy82TZ3NS4ebwWAOsZuTeAiT3+vvVtJYB2P3frERQd7M/bLbyIlfwmipfhc0mNmZ
+i9n3b2DoDYgu5ujKKe8c7FXrPpPGdJHZM50pP3T9RBJhWrots2VuaTHh+me55fzF
+lvu2h9A+biNfSbT/3lEukylJ1cw1GOjnd5r/at0y89YcX0Bs3toPlEj8V0kwjJIc
+6x23OdSd9ZdKJqAndBREqiUcn3lpVH3hT+gls6rZIpSOnnoLMlF9K7rEUA/PaDl6
+vKob/Ac1OHqcfwFsZcJ0cwbDN0Ydtxa4Xf2f2QcCKffDB/GoKF8=
+=hsr3
 -----END PGP SIGNATURE-----
 
---dLte16n6qN5uqrDV--
+--hCLymuZ8gfevIUmC--
