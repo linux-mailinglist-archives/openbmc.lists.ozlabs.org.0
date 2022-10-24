@@ -2,91 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3389A60B96D
-	for <lists+openbmc@lfdr.de>; Mon, 24 Oct 2022 22:11:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id CE78E60B9BE
+	for <lists+openbmc@lfdr.de>; Mon, 24 Oct 2022 22:20:04 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Mx5nZ00cjz2xkx
-	for <lists+openbmc@lfdr.de>; Tue, 25 Oct 2022 07:11:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Mx5z64YGgz3bjP
+	for <lists+openbmc@lfdr.de>; Tue, 25 Oct 2022 07:20:02 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=IZwUX721;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=U4kuR+K+;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=CV1j0hql;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.20; helo=wout4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::435; helo=mail-wr1-x435.google.com; envelope-from=edtanous@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=IZwUX721;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=U4kuR+K+;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=CV1j0hql;
 	dkim-atps=neutral
-Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mx5mv05fHz2xGD
-	for <openbmc@lists.ozlabs.org>; Tue, 25 Oct 2022 07:11:09 +1100 (AEDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id D4E583200312;
-	Mon, 24 Oct 2022 16:11:04 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Mon, 24 Oct 2022 16:11:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm3; t=1666642264; x=1666728664; bh=B2tsF0A5ol
-	/pQeIPfyACEd+P6d4qWWsEaXPd+CpYcDQ=; b=IZwUX721Xd+CX1jHqKVHIXbwNd
-	/iQ+iZ45NGrWXDTdj6RdhxjuJK68b6w+Bvb3gDUkrvMKCSFxiv5vMcVkze5oAOxS
-	BU9aSNLlyvSjX56lZUY6D9XFeANXu3OP6aWjDIZWqIrHSvT9Ot1289n5Fhdc4Ncv
-	EAydFdKQfs2k4J/b2oOVd6ZXCykyDFJ1CxH32KaaQzCNUvbGGQXtSuhN5c4VT4W0
-	a5znYwf0euVfMLZLrHUZ8q53D205o8wZojKyCqEi7isCpghikjfWHqCwJLRffEsq
-	RAin6lKyhZC7Uwhgy1FipsuD6vx7EgWwkT1J159DFOHNyCNKKdutHqXHISYg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1666642264; x=1666728664; bh=B2tsF0A5ol/pQeIPfyACEd+P6d4q
-	WWsEaXPd+CpYcDQ=; b=U4kuR+K+/3pvTCF2n0Gb2CqGZY6VJ9Kp06MuF/9VhR8v
-	3UHWoj5waVj5oRzMQeFh99B/np0xhcMM2tJEX66dhGKoUOMPWxvx0+bFRll2Y0la
-	HbSAfs0JTWHE3QXXYz4LHDwASMj7Q/tBQC2h7k/WtS/1F0lcT6ZDGdRvA1XZEDwY
-	/5v1vvfOqo6N8w3B0JfCXuGBxal15pybkGezDM9yG2veT4s0N/QLjeoxUlBKIzDD
-	UQi/gfbnN5OrXuuts7IkuHq8oKwVdKLNusN5LcHBs8ZR4Lz9leze04asgIzYflMq
-	EhTWLiXA6b1XN1RGHXND4ee4VNN0qprrgxyqEWiHRA==
-X-ME-Sender: <xms:V_FWYyD5Tw55cnz14P-AsQ184CrJH4egICqqHeTmr-WfmwnYctNAZg>
-    <xme:V_FWY8juVaMNwUKhbRYmTmLqjLPxNbUySfdR8PcCZo7MXrDvSPJ13yx4OqKY_SwCf
-    3Lr_umNT_LMwpRkxqM>
-X-ME-Received: <xmr:V_FWY1mz3keXAviVgRNaaQ1bTvJZoj8apIIbjGzm_cYu_NjyVJuXkc022t06PXB_zhVuwUtJeNFLpfABTer5iUMbVg10OVhi>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvfedrgedtgedgudegudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enfghrlhcuvffnffculddvfedmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreer
-    tddtudenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkh
-    esshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepueehheefvdegffdvheegleel
-    tdeuleegfffgteetteffvdfftdetueetheekfffhnecuffhomhgrihhnpehgihhthhhusg
-    drtghomhdprghtohhsrdhnvghtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
-    pehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:V_FWYwy_43cEnuRrEirv8w2ybNtHKZTTXUhht6v7AM7nRSykh1Hn8Q>
-    <xmx:V_FWY3Tk8Gxw0uLpJHTTHVk4Sff0hIAhOYemVhFZ68eRAUCI2MR6lA>
-    <xmx:V_FWY7YZqIO0MhoOHe2_bqn3yyss5zGDDimEgwvhuCRB71EnyfZUHQ>
-    <xmx:WPFWY46CQ_BI9-3CHpxPZpw_vY8nK8XDQO_MQ6Cf8aYApFRnT60Xdw>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Oct 2022 16:11:03 -0400 (EDT)
-Date: Mon, 24 Oct 2022 15:11:01 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Francine Sauvage <francine.sauvage@atos.net>
-Subject: Re: compiler error : get_if<> with a variant enum ?
-Message-ID: <Y1bxVdFInc9G7gJ9@heinlein.taila677.ts.net>
-References: <PAXPR02MB768084801092880D4746547FE4299@PAXPR02MB7680.eurprd02.prod.outlook.com>
- <Y03nKztaGeEn1tZg@heinlein.stwcx.org.github.beta.tailscale.net>
- <PAXPR02MB7680EE5542E3508B583D4BDFE42A9@PAXPR02MB7680.eurprd02.prod.outlook.com>
- <PAXPR02MB7680E1F677D12D5656CA3F72E42A9@PAXPR02MB7680.eurprd02.prod.outlook.com>
- <Y1MDmAFeL1kg/5ip@heinlein.stwcx.org.github.beta.tailscale.net>
- <PAXPR02MB7680BF2C5955F6977D83B2D3E42E9@PAXPR02MB7680.eurprd02.prod.outlook.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mx5yY2K3mz2xJF
+	for <openbmc@lists.ozlabs.org>; Tue, 25 Oct 2022 07:19:32 +1100 (AEDT)
+Received: by mail-wr1-x435.google.com with SMTP id g12so5073421wrs.10
+        for <openbmc@lists.ozlabs.org>; Mon, 24 Oct 2022 13:19:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Z+jeo98ttc1QCF74lvsg705JB5Mfac4DV62AJfZ019M=;
+        b=CV1j0hqlvZeJ7Lxr3F+fvOY/ixuTafUxinad4l62/rLqM1hsb+zifXVUfnpPAfa3zo
+         dAt+ggyNXHQUt7EXVzm7r9nuXtLFF4Obvu1FqopcZKMMrwFa/oc2//jP/C1XDm/iJ0or
+         QApqGeM0Mc9+6qbjpIHptjIohCJccaRrhy4Z+xQkDFzxhCAjirdo9yuqrIPJWpw0FLVI
+         IK2+ylqQv8rYqvmgnvh7h1UgdKT0NqteNrGdanX0pSOd7batEq5KWdXYdzKqpFt8BAPa
+         FYiM9uHJqsSWB/d+cHYybcwTJkzk4vlVf7/1wA0TmZ+iE7IBXynTQlEMaIwGrh4bseM4
+         lKdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Z+jeo98ttc1QCF74lvsg705JB5Mfac4DV62AJfZ019M=;
+        b=YdLJ4l7jBgESQ6FhVd+zWZEWdyhfc+UNWo90sEUaj3pdnviL/EACn07Og87rXgvGbJ
+         50M7WBa92ZgwrSZEgCp69uW94kCZJHUPk5F/rTncia0iJ+EMHdBWFAqFV46/jZX9ZLxJ
+         +ysEOe4Oy2XG62UGwoUzxMFsh+OwiHo6SM/p4lZ9WHir4NOqO225G17e4hlA2cTduQG2
+         RHM/xc1e329C/fki2uF3BOVyc/ikjEoFlF7cASz9NuNj+aypsPcFizMe/rDWzGwl88nI
+         YcBnOA/u/S6jfNNpZhqxexe5eo1z2nZSDOhWY3/kvosLAIWD74OiiUW1UYQdXZFNfGac
+         r79Q==
+X-Gm-Message-State: ACrzQf2PVCvUy5I4qv5MQl8qF0Do2fn+E+g7dA8+e3zLI1MHMXRcRa7t
+	l/mOWn9KSOUi9VnhARSTmiPafstVp/reGAZlpJweWnDRvRYlQw==
+X-Google-Smtp-Source: AMsMyM6/zv9EYEfNUZekvWo2txBxwQ44oPcYd8xoTn29xMSvFPAfzdDqdd1fyEgjHtrxTJpI17JoFFsWbI9Z3YZu8C4=
+X-Received: by 2002:a05:6000:81d:b0:236:73ae:799e with SMTP id
+ bt29-20020a056000081d00b0023673ae799emr3737868wrb.559.1666642768293; Mon, 24
+ Oct 2022 13:19:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="WNTRapJsffz0YLoY"
-Content-Disposition: inline
-In-Reply-To: <PAXPR02MB7680BF2C5955F6977D83B2D3E42E9@PAXPR02MB7680.eurprd02.prod.outlook.com>
+References: <CAGm54UFshn7RpFMhpoJrMVHh9ONibDQ0DKoUokaG0q7V4Qi5VQ@mail.gmail.com>
+ <e91a28c961288e3ead27cff19dfc9f03907f4405.camel@fuzziesquirrel.com>
+ <CAGm54UE55N3JW0CUYb9piRopBcz35+Q2H66row-fDBf1VEGo+w@mail.gmail.com>
+ <b96c24c0a1e5779c66a8882b6eec9883f9bd5e00.camel@fuzziesquirrel.com>
+ <5994636c-b32a-0b8a-5873-a73390318fe3@linux.intel.com> <20221019171044.s4kfuqehuwwxpiit@cheese>
+ <6a0d18b1-cc43-41ad-9f9a-85c0a927e5b2@linux.intel.com> <CAH2-KxDoO4=141nhu2OV-FmyqCCst8_2TSmgvhJP4Ch14vas0A@mail.gmail.com>
+ <20221024190322.et5kn54vong3tn2v@cheese>
+In-Reply-To: <20221024190322.et5kn54vong3tn2v@cheese>
+From: Ed Tanous <edtanous@google.com>
+Date: Mon, 24 Oct 2022 13:19:15 -0700
+Message-ID: <CAH2-KxCAGR0LKE5iDecqe1hSf2zJ2xYhVbYS2hfedrpf9S70Ag@mail.gmail.com>
+Subject: Re: Adding support for custom SEL records
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,161 +79,111 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: "Bills, Jason M" <jason.m.bills@linux.intel.com>, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Mon, Oct 24, 2022 at 12:03 PM Brad Bishop
+<bradleyb@fuzziesquirrel.com> wrote:
+>
+> This is helpful, thanks Ed.
+>
+> On Mon, Oct 24, 2022 at 10:59:51AM -0700, Ed Tanous wrote:
+> >From what I recall, the requirements were:
+> >- Ability to store 4000 logs in a rotating buffer (original desire was
+> >10,000, but 4000 was picked as a middle-ground that could be
+> >implemented).
+>
+> A DBus object based implementation could meet this requirement, right?
+>
+> >- Ability to log 100+ entries per second, including when buffers get
+> >overwritten.
+>
+> I guess I would not be shocked if DBus objects + serialization might not
+> be able to sustain this rate of incoming logs.  Maybe it depends on the
+> filesystem or how the data is serialized in the filesystem.  The DBus
+> approach creates many files.  Obviously the syslog approach is only
+> using a couple of files.
+>
+> Do you think this kind of requirement is typical?  Quoting Patrick from
+> another thread here:
 
---WNTRapJsffz0YLoY
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+There are cases where every sensor will cross a threshold at the same
+moment (generally because a threshold was changed).  Is this a
+"typical" use case, probably not, but if it's trivial to DOS the BMC
+with events with a couple commands, it's not great.
 
-On Mon, Oct 24, 2022 at 04:31:03PM +0000, Francine Sauvage wrote:
-> Hi Patrick,
->=20
-> Thank you to help me !
->=20
-> I tried :
-> variant<MyEnum, std::string>=20
-> =3D> what():  xyz.openbmc_project.sdbusplus.Error.InvalidEnumString:
+>
+> >don't think anyone is intending to create 10k events in the span of
+> >a minute
 
-Can you confirm you are using the latest code?  This symptom sounds like
-something that was fixed over a year ago now:
+Intending to, no.  Created in an error case, or in the case of a
+failing piece of hardware, it can happen.
 
-https://github.com/openbmc/sdbusplus/commit/a22dbf40a115d5cd133e67500afa387=
-b317cac14
+>
+> 100/s is only 6k in a minute but that is getting pretty close...
+>
+> >- (abstract) Log storage should be aware of hardware limitations (SPI
+> >flash cell write endurance) and allow writing N logs per minute for
+> >the lifetime of the machine without hardware failure.  (I forget the
+> >value of N).
+>
+> Do you think the rsyslog implementation does better at this?  Why?
 
-We even have test cases that verify this exact scenario:
+@Jason?  I know there were a lot of worries about write expansion (N
+byte sel log turning into 100XN bytes of JSON) wearing out flash
+faster, and having some interactions with jffs2.
 
-https://github.com/openbmc/sdbusplus/blob/293c8a26901f39fa3c9a34be9b4ad530c=
-5592f90/test/server/message_variant.cpp
+>
+> >- "ipmitool sensor list" should return the results from a full sel log
+> >in less than 1 second (renegotiated from 200ms, the faster the
+> >better).
+>
+> Ok, again I would not be shocked if DBus objects weren't able to deliver
+> on this.
+>
+> >- The logging implementation should be able to support a well-formed,
+> >version controlled, Redfish MessageRegistry to the DMTF
+> >specifications.
+>
+> Do you think a DBus object based implementation could meet this
+> requirement?
 
->=20
-> " I think you could unpack a `variant<YourEnumType, std::string>` from th=
-e message (or dbus call result) and if it is your enumeration it'll be inte=
-rpreted as so but if not it will fall back to the string. "
-> I agree, theorically, but the "read" fails (even if callMethod is OK) :
-> -------------------------------------------------------------------------=
------------------------------------
-> using FlexDbusVariantType =3D std::variant<
->                 sdbusplus::xyz::openbmc_project::Inventory::Item::server:=
-:FlexibleModule::ModuleTypes,  <=3D=3D=3D=3D here is MyEnum
->                 std::vector<std::string>, std::vector<double>, std::strin=
-g,
->                 int64_t, uint64_t, double, int32_t, uint32_t, int16_t,
->                 uint16_t, uint8_t, bool
->                 >;                =20
+Today, as defined, without duplicating the logging strings, no, but
+DBus is just an IPC;  I'm fairly certain we could define a DBus based
+logging mechanism that met these requirements, but the key is that the
+Redfish instance (bmcweb in this case) needs a-priori knowledge of
+every possible log that the system can publish, and version them with
+DMTF-appropriate semver (existing messages changes rev the patch
+version, new messages revs the subminor version).  The existing
+rsyslog implementation places the log strings into bmcweb, so the only
+thing being transferred over the IPC is the MessageId and the
+specific-instance arguments, which in theory, increases the
+performance quite a bit, and avoids duplicating the strings in two
+places.
 
-What happens if you drop the ModuleTypes out of here?  Does it run
-successfully, but parse as a string?
+>
+> >- The logging implementation should be able to implement a
+> >well-formed, stable, and ACID compliant IPMI SEL command
+> >implementation.
+>
+> Do you think a DBus object based implementation could meet this
+> requirement?
 
-Is it possible you're missing some other type out of your variant list?
+Same answer, with today's code, no.  DBus is just an IPC, we could
+potentially define one.
 
-> using FlexDBusPropertiesMap =3D boost::container::flat_map<std::string, F=
-lexDbusVariantType>;
-> using FlexDBusInterfacesMap =3D  boost::container::flat_map<std::string, =
-FlexDBusPropertiesMap>;
-> using FlexManagedObjectType =3D std::vector<std::pair<sdbusplus::message:=
-:object_path, FlexDBusInterfacesMap>>;
-> .......................
->=20
->     std::cout << "Before calling callMethod" << std::endl;
->=20
->     auto respMsg =3D bull::dbus::utility::callMethod(
->         bus,=20
->         "xyz.openbmc_project.Inventory.Manager",=20
->         root_obj,=20
->         ORG_DBUS_OBJECT_MAN,
->         "GetManagedObjects");
->=20
->     std::cout << "After calling callMethod" << std::endl;
->=20
->     FlexManagedObjectType managed_objects;
->    =20
->     respMsg.read(managed_objects);  ,  <=3D=3D=3D=3D here it fails
->=20
->     std::cout << "After reading" << std::endl;
->=20
-> -------------------------------------------------------------------------=
-------------------------------------
->=20
-> If I don't declare MyEnum in the variant, I cannot use get_if<MyEnum>
-> If I declare MyEnum in the variant, I always get a runtime error
-> =3D> what():  xyz.openbmc_project.sdbusplus.Error.InvalidEnumString:
->=20
-> If I remove MyEnum from variant, it works, but I cannot compare strictly =
-the Enum, I need to convert.
-> get_if< MyEnum > is not possible if my Enum is not in the variant,
->=20
-> I will be pleased if you have any suggestion,
->=20
-> Kind Regards,
->=20
-> Francine SAUVAGE
-> Team Leader=A0- R&D, BDS
-> Atos France
-> Mobile: +33 6 21 43 11 21
-> R&D, BDS
-> Avenue Jean Jaur=E8s=A0- France
-> atos.net
-> =A0=A0=A0 =A0
-> TT: [Wednesday or Thurday(2nd week of month) ] - Friday]=20
-> OoO=A0: October 31
->=20
->=20
-> -----Message d'origine-----
-> De=A0: Patrick Williams <patrick@stwcx.xyz>=20
-> Envoy=E9=A0: vendredi 21 octobre 2022 22:40
-> =C0=A0: Francine Sauvage <francine.sauvage@atos.net>
-> Cc=A0: openbmc@lists.ozlabs.org
-> Objet=A0: Re: compiler error : get_if<> with a variant enum ?
->=20
-> On Thu, Oct 20, 2022 at 04:32:40PM +0000, Francine Sauvage wrote:
-> > But, I get a runtime error as all my objects are different:
-> >=20
-> > what():  xyz.openbmc_project.sdbusplus.Error.InvalidEnumString: An enum=
-eration mapping was attempted for which no valid enumeration value exists.
-> >=20
-> > Is there a way to add enum types to the variant of a ManagedObjects tha=
-t potentially are NOT in the object interfaces/Properties ?
-> >=20
-> > Or is there a way to filter the objects in ManagedObjects dbus calls ?
->=20
-> I'm sorry, I'm having trouble figuring out what you're trying to accompli=
-sh or where it is having trouble.
->=20
-> I think you could unpack a `variant<YourEnumType, std::string>` from the =
-message (or dbus call result) and if it is your enumeration it'll be interp=
-reted as so but if not it will fall back to the string.  You can even do `v=
-ariant<Enum1, Enum2, Enum3>` and it'll turn into the correct one.
->=20
-> The important thing is that you need to pass all possible types into the =
-variant when you attempt to unpack it.
->=20
-> Patrick Williams
+>
+> >
+> >I don't believe the current DBus implementation can meet the previous
+> >requirements,
+>
+> The motivation of my questions above is to understand which requirements
+> cannot be met by something based on DBus objects.
 
---=20
-Patrick Williams
+Cool.
 
---WNTRapJsffz0YLoY
-Content-Type: application/pgp-signature; name="signature.asc"
 
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmNW8VMACgkQqwNHzC0A
-wRkuYxAAih2dTMHMpyhdwTA62w6s2QlGJPyPjLGjiUIxYVfKfvIJa9Qq6j8FkmOf
-gvg0JUX3lEIEzHbOo83k57BAINEO+4ODRE4ifjB2eRBbTCUEJio6j0Pw3OGKFNHs
-ISaX8MYnIUQoYl5zC2kxmER8mGc9BKJSEjo6TcyHPdlUyroyJObcMsoCKJSzFiPP
-dc6l7IgU3/MMN7BBGPuTmY5mOZdis2SlDbYTuklh5YKehqdSmUQQtZq5qOktonb5
-JZpuceCNAhBL5gyOXLLT5HzA+lzLsjsWyiEXCvbgW4XsIro4lvh8kc02BRjyc/Fn
-I3lNbGE0lxNuHn/luGXp/ziAyJhkC743ghXfqcC9vCBp3euyKHQOcOATs+1Yrjns
-ZjEQ53+C+V7Hrpv2ZKr0vf73Tgppy08kmP+uPsg3SDdrmKYu/CokJ6IlZJHDiHqj
-+mW53snjJndRpzbCk1qFxY7SPFmKk++8BSARwi2mNj7aL3tJ9t6F+8Il2gUNYVob
-PCl7l96oMGXf6XxinVqwPvJc0H0Q3/A4qev74fj1T5IR7fsVJ6ig4Y83tsvQ7kEx
-7W/UFPcPK1BrjyWWE1BPvl4zX53AAcaSq/8HcgUzU5FD04ukMNK4mXaGkrSiYAry
-nYgK5ST1xaS0noObxGjkO84HK4duKuD+6MwOP5OkY8hwuVf76Wk=
-=JLDx
------END PGP SIGNATURE-----
-
---WNTRapJsffz0YLoY--
+>
+> Thanks,
+> brad
