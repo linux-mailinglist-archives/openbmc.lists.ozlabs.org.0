@@ -1,64 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7EC9160BDB7
-	for <lists+openbmc@lfdr.de>; Tue, 25 Oct 2022 00:45:28 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id B649760BE00
+	for <lists+openbmc@lfdr.de>; Tue, 25 Oct 2022 00:56:54 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Mx9Bp4R5Lz3bjL
-	for <lists+openbmc@lfdr.de>; Tue, 25 Oct 2022 09:45:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Mx9S448X5z3bYF
+	for <lists+openbmc@lfdr.de>; Tue, 25 Oct 2022 09:56:52 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Vnji15pD;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=WmlitFLx;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=134.134.136.20; helo=mga02.intel.com; envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=134.134.136.24; helo=mga09.intel.com; envelope-from=vernon.mauery@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Vnji15pD;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=WmlitFLx;
 	dkim-atps=neutral
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mx9BB1yCKz3045
-	for <openbmc@lists.ozlabs.org>; Tue, 25 Oct 2022 09:44:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mx9RR5rDFz2xGD
+	for <openbmc@lists.ozlabs.org>; Tue, 25 Oct 2022 09:56:19 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1666651490; x=1698187490;
+  t=1666652180; x=1698188180;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=IG1AWgT9gezUBN9/bKsQhTaoHNWshNU4WnW0NnXmn3A=;
-  b=Vnji15pDRNpKmiCjWkjw5Pku7rXF39ng/LpkR4kJmM68I3RO31MRI/Xj
-   SaV02T+14wqkTk49BQTUiWYG3PaAqmqj7Cu74RLiXLwY9WQ27Oq7w00eT
-   WBHmOEHg0eTe6BcRniRgAI7cWAflM8SCMHKzdSoN/0TbfVUAoZPehNs4A
-   eCYcUBKq0I2J/MmMnzwVlTDFNm+7lGlO3gYQn8SVr1iVq1puhP9KLggxJ
-   vzN9iupM4RctK+cgItJlHLB1KwO+SLcf+YflKGmsOf9iZ9J8Je/yi4iGr
-   MZEuH3SX55ExUOo4pyR6bnCz9tpACimhJ0CtG1+cm0XWsXsrnsJpM799I
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10510"; a="294939851"
+  bh=b7fe5qHbfGH13X/tOojG8Lb2JfHgPifoceUzgw9dJSQ=;
+  b=WmlitFLxD0yKVQbGJKQBiPh0KIu/cB99aq6EZoJglSpDtdPqP2jyIRxm
+   kH6dGoLBYz8tlrqxOOZ/P/4Qp0Np2YuFpykWeQuSt2FwIfABsKEz/LbmS
+   NV26FuDUbBBomzR06l9f4w6d64eCpLdDj+0avmSCTDM3xAlyRs1sJdaQZ
+   zq3NW0Wrz7nUUcT2zJBgSQPjYJre5n5sffiXrdUCmtqR+jJQoBLxQRIhU
+   uIPCSqr6sVxWslwia2Gje7PmpE5RMWIGvCZLxAGpxzuoOYVSKs2NNsKLW
+   DhOCk2iCetgsswHwcAUOSc8Qn8CA+X00mkS7Zc3CbjAohzgh+QvSeKQte
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10510"; a="308633088"
 X-IronPort-AV: E=Sophos;i="5.95,210,1661842800"; 
-   d="scan'208";a="294939851"
-Received: from orsmga008.jf.intel.com ([10.7.209.65])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Oct 2022 15:44:45 -0700
-X-IronPort-AV: E=McAfee;i="6500,9779,10510"; a="662589294"
+   d="scan'208";a="308633088"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Oct 2022 15:56:17 -0700
+X-IronPort-AV: E=McAfee;i="6500,9779,10510"; a="664704266"
 X-IronPort-AV: E=Sophos;i="5.95,210,1661842800"; 
-   d="scan'208";a="662589294"
+   d="scan'208";a="664704266"
 Received: from vmauery-desk.jf.intel.com (HELO mauery.jf.intel.com) ([10.243.48.71])
-  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Oct 2022 15:44:45 -0700
-Date: Mon, 24 Oct 2022 15:44:37 -0700
+  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Oct 2022 15:56:12 -0700
+Date: Mon, 24 Oct 2022 15:56:04 -0700
 From: Vernon Mauery <vernon.mauery@linux.intel.com>
-To: Patrick Williams <patrick@stwcx.xyz>
+To: Brad Bishop <bradleyb@fuzziesquirrel.com>
 Subject: Re: Adding support for custom SEL records
-Message-ID: <Y1cVVd2hTbsAxYlr@mauery.jf.intel.com>
+Message-ID: <Y1cYBPGouQ+X37k7@mauery.jf.intel.com>
 References: <CAGm54UFshn7RpFMhpoJrMVHh9ONibDQ0DKoUokaG0q7V4Qi5VQ@mail.gmail.com>
  <e91a28c961288e3ead27cff19dfc9f03907f4405.camel@fuzziesquirrel.com>
  <CAGm54UE55N3JW0CUYb9piRopBcz35+Q2H66row-fDBf1VEGo+w@mail.gmail.com>
  <b96c24c0a1e5779c66a8882b6eec9883f9bd5e00.camel@fuzziesquirrel.com>
  <5994636c-b32a-0b8a-5873-a73390318fe3@linux.intel.com>
- <Y1L9vCFMvm8alJMC@heinlein.stwcx.org.github.beta.tailscale.net>
+ <20221019171044.s4kfuqehuwwxpiit@cheese>
+ <6a0d18b1-cc43-41ad-9f9a-85c0a927e5b2@linux.intel.com>
+ <CAH2-KxDoO4=141nhu2OV-FmyqCCst8_2TSmgvhJP4Ch14vas0A@mail.gmail.com>
+ <20221024190322.et5kn54vong3tn2v@cheese>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <Y1L9vCFMvm8alJMC@heinlein.stwcx.org.github.beta.tailscale.net>
+In-Reply-To: <20221024190322.et5kn54vong3tn2v@cheese>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,76 +73,96 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "Bills, Jason M" <jason.m.bills@linux.intel.com>, openbmc@lists.ozlabs.org
+Cc: Ed Tanous <edtanous@google.com>, "Bills, Jason M" <jason.m.bills@linux.intel.com>, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 21-Oct-2022 03:14 PM, Patrick Williams wrote:
->On Wed, Oct 19, 2022 at 09:50:47AM -0600, Bills, Jason M wrote:
+On 24-Oct-2022 03:03 PM, Brad Bishop wrote:
+>This is helpful, thanks Ed.
 >
->> Intel had a requirement to support storing at least 4000 log entries.
->> At the time, we were able to get about 400 entries on D-Bus before D-Bus
->> performance became unusable.
+>On Mon, Oct 24, 2022 at 10:59:51AM -0700, Ed Tanous wrote:
+>>From what I recall, the requirements were:
+>>- Ability to store 4000 logs in a rotating buffer (original desire was
+>>10,000, but 4000 was picked as a middle-ground that could be
+>>implemented).
+>
+>A DBus object based implementation could meet this requirement, right?
+>
+>>- Ability to log 100+ entries per second, including when buffers get
+>>overwritten.
+>
+>I guess I would not be shocked if DBus objects + serialization might 
+>not be able to sustain this rate of incoming logs.  Maybe it depends 
+>on the filesystem or how the data is serialized in the filesystem.  
+>The DBus approach creates many files.  Obviously the syslog approach 
+>is only using a couple of files.
+>
+>Do you think this kind of requirement is typical?  Quoting Patrick 
+>from another thread here:
+>
+>>don't think anyone is intending to create 10k events in the span of
+>>a minute
+>
+>100/s is only 6k in a minute but that is getting pretty close...
+
+I think 100/s is a pretty high rate. Actually creating events at that 
+rate seems like a signal that the system is in a bit of distress. 
+Really, I think the gating factor is how fast they get processed at boot 
+time. If loading the events onto D-Bus as objects at boot time is the 
+same cost as creating them to start with, 100/s is insufficient for a 
+large number of log entries.
+
+>>- (abstract) Log storage should be aware of hardware limitations (SPI
+>>flash cell write endurance) and allow writing N logs per minute for
+>>the lifetime of the machine without hardware failure.  (I forget the
+>>value of N).
+>
+>Do you think the rsyslog implementation does better at this?  Why?
+
+One file with jffs2 uses fewer bytes than many files. When we were 
+trying to figure out how to do a file-based implementation to start 
+with, we tried individual files and found we ran out of space quickly 
+even though the total size of the files was not that great. We even 
+tried using empty files, encoding the data into the filenames themselves 
+in hopes to only use inodes but that seemed to suffer the same issue. A 
+single file that held all the entries was fast, small, and easy to 
+handle.
+
+>>- "ipmitool sensor list" should return the results from a full sel log
+>>in less than 1 second (renegotiated from 200ms, the faster the
+>>better).
+>
+>Ok, again I would not be shocked if DBus objects weren't able to 
+>deliver on this.
+
+I imagine dbus-broker could handle it, especially on a dual-core system. 
+I am not sure the systemd dbus daemon was able to handle it on the 
+ast2500.
+
+>>- The logging implementation should be able to support a well-formed,
+>>version controlled, Redfish MessageRegistry to the DMTF
+>>specifications.
+>
+>Do you think a DBus object based implementation could meet this 
+>requirement?
+>
+>>- The logging implementation should be able to implement a
+>>well-formed, stable, and ACID compliant IPMI SEL command
+>>implementation.
+>
+>Do you think a DBus object based implementation could meet this 
+>requirement?
+>
 >>
->> That was before dbus-broker, so it could perhaps be better today.
+>>I don't believe the current DBus implementation can meet the previous
+>>requirements,
 >
->I was surprised that there would be much performance impact to dbus as a
->whole because there should not be any impact to the bus because one
->process decided to host a bunch of objects.  I can understand _that_
->process becoming slower if there are algorithmic problems with it.
+>The motivation of my questions above is to understand which 
+>requirements cannot be met by something based on DBus objects.
 
-I suspect that it was a combination of the switch to dbus-broker in 
-addition to rewriting the mapper, which made the number of SEL entries 
-phosphor-logging is capable of handling go up from what it was before.
+I think it is possible to come up with a dbus interface that supports 
+the various requirements in this thread. I don't believe that the 
+current implementation is sufficient though.
 
->I did an experiment on an AST2600 system where I modified phosphor-logging
->to support 20k log entries and then created 10k of them.
->
->```
->$ cat meta-facebook/recipes-phosphor/logging/phosphor-logging_%.bbappend
->FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
->
->EXTRA_OEMESON += "-Derror_cap=20000"
->```
->
->What I've found can be summarized as follows:
->
->   - Overall there is no impact to the dbus by creating a large number
->     of log entries.  Interactions with other daemons happen just fine
->     with no performance impact.
-
-Right, I don't expect that once they are created that they would have a 
-meaningful impact other than maybe some sort of memory footprint, 
-though, that footprint is magnified from just phosphor-logging by the 
-mapper.
-
->   - Creating 10k log entries does take a while.  Most of this time is
->     observed (via top) in jffs2 but there is also some peaky objmgr
->     activity.  There might be some improvements to be had there, but I
->     don't think anyone is intending to create 10k events in the span of
->     a minute.
-
-This is really my biggest concern at this point. The OpenBMC is already 
-the slowest-to-boot BMC firmware that I have worked on in the past 10 
-years, and that is in the face of faster BMC processors and faster RAM. 
-Delay the 'fully booted' state of the BMC for this will cause validation 
-bugs because the BMC is changing behavior even though it should be at a 
-stable state.
-
->   - Dumping all the events from phosphor-logging is slow when there are
->     10k of them.  It took 8-11s.  I didn't have `strace` installed, but
->     it seemed like much of this was coming from `busctl` processing the
->     result and not from the bus transfer itself, but more investigation
->     would be required.
-
-I think more investigation needs to be done here. We should be limited 
-by the network, not by accessing the items.
-
->   - Deleting all 10k of the events timed out at a dbus level, but still
->     succeeded.  Almost all of the time was spent in jffs2.
-
-This would be a lot faster if all the items were in a single file, which 
-is a change that could be made independently of whether or not the 
-individual log entries are hosted as dbus objects.
 
 --Vernon
