@@ -1,75 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5547D60AD49
-	for <lists+openbmc@lfdr.de>; Mon, 24 Oct 2022 16:21:33 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 54E4560B4AE
+	for <lists+openbmc@lfdr.de>; Mon, 24 Oct 2022 20:00:49 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Mwy1R1dYvz3045
-	for <lists+openbmc@lfdr.de>; Tue, 25 Oct 2022 01:21:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Mx2tR1Jwcz3c1c
+	for <lists+openbmc@lfdr.de>; Tue, 25 Oct 2022 05:00:47 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=YUEP9XyI;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=NUgxU5R/;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72d; helo=mail-qk1-x72d.google.com; envelope-from=tcminyard@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::435; helo=mail-wr1-x435.google.com; envelope-from=edtanous@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=YUEP9XyI;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=NUgxU5R/;
 	dkim-atps=neutral
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mwy0q3CfZz2xKV
-	for <openbmc@lists.ozlabs.org>; Tue, 25 Oct 2022 01:20:57 +1100 (AEDT)
-Received: by mail-qk1-x72d.google.com with SMTP id f8so6142200qkg.3
-        for <openbmc@lists.ozlabs.org>; Mon, 24 Oct 2022 07:20:57 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Mx2sq2NVjz2xl2
+	for <openbmc@lists.ozlabs.org>; Tue, 25 Oct 2022 05:00:13 +1100 (AEDT)
+Received: by mail-wr1-x435.google.com with SMTP id o4so9198983wrq.6
+        for <openbmc@lists.ozlabs.org>; Mon, 24 Oct 2022 11:00:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:reply-to
-         :message-id:subject:cc:to:from:date:sender:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=snHhLpRnzMiuF/FkUzYYR4DW/a0NGNwApchz9Ej8VRU=;
-        b=YUEP9XyILJspEjolrjqp2Z9GjGMOMTrP45EmxEXsZljfkkiRMJwaEfnshgsJfs8X7M
-         KNgjsXqTJhQmhXRI0AaougoHAd1ZM5MiWxlHgU+f83ikUw0WIaE3xD0cU+/ICFuviutI
-         UJybqMEFZMf18o+q3wwUtI9WhD34rpMrCVBhcSmx57RZ817mZdAPNb+TaZE1IZTtVnfc
-         J13VQwN6Gk7ZemBPqfi8E/tAo+RfA+q8XHsf4hBGrvHN/lBiR+F+CGw1SWxmvIaiCsec
-         /9nmLcA7UkmseebRG5d3ZSiAUd+x0xYiFAU0DNreRXfO+w3UcrZtidnRR9zNPUXAXshz
-         KjyA==
+        d=google.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=tJrw0wYf0vaVqk7h8MZzxCYHW367GGDWMAEb8FFc7FM=;
+        b=NUgxU5R/AiJnw/tUkM40q3v4COsxltb143A0bNA0M3ImfQkY0bpoVjP5NjBXFBJiyB
+         UcYGi2J7sK99Ofk8uywOOGhrA+J5RnUit5D4d2GPNBAFVe3G7QXu4VmZauoBQ5XO5mE2
+         pVAQ4u2IDzaf9pTHZ0iHg3eXONsAz0l6PATegl2s5WLl12K6cEr6hRDQcn+O40PBKXPi
+         TgegRDqL5H9IVloz9LvUcTrDUIU0A/23AHBVthqy1cWLgS3IolG+UH3LLWqsexNsaDBl
+         I7c2pr3j8EMtDH0ycvJtLKv/G3L7WsUtA9TGleaBV1kdLyhY5aDZmeMHyApAwXWVMx2I
+         GS1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:reply-to
-         :message-id:subject:cc:to:from:date:sender:x-gm-message-state:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=snHhLpRnzMiuF/FkUzYYR4DW/a0NGNwApchz9Ej8VRU=;
-        b=tggLyS5RTEQ+tcwm/HHcTWXJpd6/02oGWLUczNMXZVbmnPguWEAwaGNNPzWlhFTXOe
-         Mj0ctJs0Ti1K66fB5ih6CeMyIeRgTpMiEBPY/hv14cwHhSFdWkRSuUJUUG/GJHC2CUkq
-         66OJvewQ7pM752mKvZFX12PJecd8wynn6LnYzbnhoxv+UT3sMztJEBcQDy2aH05xSx7K
-         9i2EFxw49K0ZFvTDTJ6Ijhzsa40lCgsIC2l3Lc4b4AUH7eArgDpkrclfPV/TdM3dHMS0
-         JHunbsOf5oABvN4KPtK4aFO7uitrrVKFLIToFvRYkzibuUS6qOhe8fFpQwPtGf6pGX+E
-         QTGw==
-X-Gm-Message-State: ACrzQf1cvGZABP8OWM39oAr3HOXlqQoZegZ0miDBPAoJtV0O28JjtHZs
-	wCeEKWl9gaRIT7Y6yFMfFA==
-X-Google-Smtp-Source: AMsMyM4x20N5g0CnTk189WOms1Rpbivdne8Eg7opnisvbRX7j+9LVguQi1ENkMDNfK6SBGQThtJoxA==
-X-Received: by 2002:a05:620a:12ac:b0:6ec:55bf:1d79 with SMTP id x12-20020a05620a12ac00b006ec55bf1d79mr22630933qki.598.1666621252246;
-        Mon, 24 Oct 2022 07:20:52 -0700 (PDT)
-Received: from serve.minyard.net ([47.184.185.126])
-        by smtp.gmail.com with ESMTPSA id k11-20020a05620a414b00b006ce9e880c6fsm4141qko.111.2022.10.24.07.20.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 24 Oct 2022 07:20:51 -0700 (PDT)
-Received: from minyard.net (unknown [IPv6:2001:470:b8f6:1b:8f12:af97:5f5:1273])
-	by serve.minyard.net (Postfix) with ESMTPSA id 9F91E180044;
-	Mon, 24 Oct 2022 14:20:49 +0000 (UTC)
-Date: Mon, 24 Oct 2022 09:20:48 -0500
-From: Corey Minyard <minyard@acm.org>
-To: Quan Nguyen <quan@os.amperecomputing.com>
-Subject: Re: [PATCH] ipmi: ssif_bmc: Use EPOLLIN instead of POLLIN
-Message-ID: <Y1afQOKvgUzOLPph@minyard.net>
-References: <20221024075956.3312552-1-quan@os.amperecomputing.com>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tJrw0wYf0vaVqk7h8MZzxCYHW367GGDWMAEb8FFc7FM=;
+        b=qVP/q4FYYEprkRkFIstlZCWm+9Z34GY73ShwbmXOV6lzddfmqQtqkVP21G1k+28W8l
+         cXSIuN9R4g9JCfoqyYfmjGvwbr0xTueMW6AyvAEzA04LqGkm0sZlYAv/HSH3SbVipOVr
+         TArHV2SxOp4blI+j4VkuJJ4mBTQO+O1qD4Jx1yfM5OPu+/bcrsJPhqb1ONY/kbyZIbjJ
+         oYAEH1ydjSiQNkyOdhe+CGkOuCOV8OEcrXz6Sd2rTrBpJrOeOdB49So9CsXa5p/s3k5u
+         YM8kieZtAM7HckjMbsD4UBmm/fffuBXQJBPg5wjnnRI7iNMZrcBbLOIuB01E44ydFe6o
+         qnLQ==
+X-Gm-Message-State: ACrzQf2ZjNod8HsW/XLu71LohPkyGKtTEVpvbmc70yQmWGmWCVZ90XCW
+	xhVZ7gW5V+Bo/N/hepfLhth2DSx1H3Yud/iBXJ+4U/X1LlzF/w==
+X-Google-Smtp-Source: AMsMyM4n2Gk6yYxFMHbBBAKJORYre/5SrgU3bXszflkqUxQNQv6rzz+g9hghZEdGFpguEvoSWpUwiF81sYlr5mmNsgU=
+X-Received: by 2002:a05:6000:81d:b0:236:73ae:799e with SMTP id
+ bt29-20020a056000081d00b0023673ae799emr3407921wrb.559.1666634404049; Mon, 24
+ Oct 2022 11:00:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221024075956.3312552-1-quan@os.amperecomputing.com>
+References: <CAGm54UFshn7RpFMhpoJrMVHh9ONibDQ0DKoUokaG0q7V4Qi5VQ@mail.gmail.com>
+ <e91a28c961288e3ead27cff19dfc9f03907f4405.camel@fuzziesquirrel.com>
+ <CAGm54UE55N3JW0CUYb9piRopBcz35+Q2H66row-fDBf1VEGo+w@mail.gmail.com>
+ <b96c24c0a1e5779c66a8882b6eec9883f9bd5e00.camel@fuzziesquirrel.com>
+ <5994636c-b32a-0b8a-5873-a73390318fe3@linux.intel.com> <20221019171044.s4kfuqehuwwxpiit@cheese>
+ <6a0d18b1-cc43-41ad-9f9a-85c0a927e5b2@linux.intel.com>
+In-Reply-To: <6a0d18b1-cc43-41ad-9f9a-85c0a927e5b2@linux.intel.com>
+From: Ed Tanous <edtanous@google.com>
+Date: Mon, 24 Oct 2022 10:59:51 -0700
+Message-ID: <CAH2-KxDoO4=141nhu2OV-FmyqCCst8_2TSmgvhJP4Ch14vas0A@mail.gmail.com>
+Subject: Re: Adding support for custom SEL records
+To: "Bills, Jason M" <jason.m.bills@linux.intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,44 +78,99 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: minyard@acm.org
-Cc: kernel test robot <lkp@intel.com>, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, thang@os.amperecomputing.com, linux-kernel@vger.kernel.org, Phong Vo <phong@os.amperecomputing.com>, Joel Stanley <joel@jms.id.au>, Open Source Submission <patches@amperecomputing.com>, openipmi-developer@lists.sourceforge.net
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Oct 24, 2022 at 02:59:56PM +0700, Quan Nguyen wrote:
-> This fixes the following sparse warning:
-> sparse warnings: (new ones prefixed by >>)
-> >> drivers/char/ipmi/ssif_bmc.c:254:22: sparse: sparse: invalid assignment: |=
-> >> drivers/char/ipmi/ssif_bmc.c:254:22: sparse:    left side has type restricted __poll_t
-> >> drivers/char/ipmi/ssif_bmc.c:254:22: sparse:    right side has type int
+On Wed, Oct 19, 2022 at 11:05 AM Bills, Jason M
+<jason.m.bills@linux.intel.com> wrote:
+>
+>
+>
+> On 10/19/2022 11:10 AM, Brad Bishop wrote:
+> > Thanks Jason
+> >
+> > On Wed, Oct 19, 2022 at 09:50:47AM -0600, Bills, Jason M wrote:
+> >
+> >> Intel had a requirement to support storing at least 4000 log entries.
+> >
+> > Ok.  So is it fair to assume anyone using the DBus backend does not have
+> > this requirement?
+>
+> That is my assumption, yes.
+> >
+> >> At the time, we were able to get about 400 entries on D-Bus before
+> >> D-Bus performance became unusable.
+> >
+> > To anyone using the DBus backend - have you observed similar performance
+> > issues?
+> >
+> > Jason is there a testcase or scenario I can execute to highlighht the
+> > issues you refer to concretely?  Maybe something like "create 4000 sels,
+> > run ipmitool and see how long it takes?"
+>
+> To clarify, my understanding is the D-Bus performance issues were not
+> isolated to just IPMI.  All of D-Bus for every BMC service was impacted.
+>
+> If I remember correctly, Ed Tanous is who did the initial evaluation, so
+> he may have more detail.  But I think it was similar to what you
+> suggest: Create 4000 logs on D-Bus and check the performance.  This
+> could be done with ipmitool.
 
-Thanks, you beat me to tracing this down.  It's in my for-next queue.
 
--corey
+From what I recall, the requirements were:
+- Ability to store 4000 logs in a rotating buffer (original desire was
+10,000, but 4000 was picked as a middle-ground that could be
+implemented).
+- Ability to log 100+ entries per second, including when buffers get
+overwritten.
+- (abstract) Log storage should be aware of hardware limitations (SPI
+flash cell write endurance) and allow writing N logs per minute for
+the lifetime of the machine without hardware failure.  (I forget the
+value of N).
+- "ipmitool sensor list" should return the results from a full sel log
+in less than 1 second (renegotiated from 200ms, the faster the
+better).
+- The logging implementation should be able to support a well-formed,
+version controlled, Redfish MessageRegistry to the DMTF
+specifications.
+- The logging implementation should be able to implement a
+well-formed, stable, and ACID compliant IPMI SEL command
+implementation.
 
-> 
-> Fixes: dd2bc5cc9e25 ("ipmi: ssif_bmc: Add SSIF BMC driver")
-> Reported-by: kernel test robot <lkp@intel.com>
-> Link: https://lore.kernel.org/all/202210181103.ontD9tRT-lkp@intel.com/
-> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
-> ---
->  drivers/char/ipmi/ssif_bmc.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/char/ipmi/ssif_bmc.c b/drivers/char/ipmi/ssif_bmc.c
-> index a7bb4b99000e..2d8069386398 100644
-> --- a/drivers/char/ipmi/ssif_bmc.c
-> +++ b/drivers/char/ipmi/ssif_bmc.c
-> @@ -251,7 +251,7 @@ static __poll_t ssif_bmc_poll(struct file *file, poll_table *wait)
->  	spin_lock_irq(&ssif_bmc->lock);
->  	/* The request is available, userspace application can get the request */
->  	if (ssif_bmc->request_available)
-> -		mask |= POLLIN;
-> +		mask |= EPOLLIN;
->  
->  	spin_unlock_irq(&ssif_bmc->lock);
->  
-> -- 
-> 2.35.1
-> 
+I don't believe the current DBus implementation can meet the previous
+requirements, but if it's capable of that these days, it would be
+excellent to consolidate.
+
+> >
+> >> I'd also be curious about the reverse question.  Is there any benefit
+> >> to storing logs on D-Bus that makes it a better solution?
+> >
+> > Yes, this is exactly the question I've been trying to ask.  The answer
+> > seems only to be that the code is in meta-intel/intel-ipmi-oem - but
+> > that is easily fixed by moving the code to
+> > meta-phosphor/phosphor-host-ipmid.
+> >
+> >> At the risk of complicating things more (https://xkcd.com/927/), D-Bus
+> >> was the primary solution when Intel joined.  We created the rsyslog
+> >> approach because of the limitation imposed by D-Bus.  But I know there
+> >> are still those who don't like the rsyslog approach.  Is there a way
+> >> we can now get together and define a new logging solution that is
+> >> fully upstream and avoids the drawbacks of both existing solutions?
+> >
+> > I hope so, because doing that would make things a lot easier for our
+> > users adopting OpenBMC.
+>
+> My main requirements are to store many logs (at least 4000 was the
+> original number, but I can try to get an updated number if needed) and
+> have them persist across BMC reboots.
+>
+> We currently accomplish this using rsyslog to extract logs from the
+> journal and store them in a persistent text file.
+>
+> How is best to approach starting a new design discussion?  Should we
+> continue discussing in this thread?  Start a design doc review?
+> Something else?
+> >
+> > Thanks,
+> > brad
