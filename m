@@ -1,22 +1,22 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 655B060C75A
-	for <lists+openbmc@lfdr.de>; Tue, 25 Oct 2022 11:05:25 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4179860C744
+	for <lists+openbmc@lfdr.de>; Tue, 25 Oct 2022 11:04:18 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MxQyC27YKz3cFZ
-	for <lists+openbmc@lfdr.de>; Tue, 25 Oct 2022 20:05:23 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MxQww0hHJz3bqw
+	for <lists+openbmc@lfdr.de>; Tue, 25 Oct 2022 20:04:16 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71; helo=twspam01.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com; receiver=<UNKNOWN>)
 Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com [211.20.114.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MxQw368dpz3brJ;
-	Tue, 25 Oct 2022 20:03:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MxQvr15c3z30F7;
+	Tue, 25 Oct 2022 20:03:19 +1100 (AEDT)
 Received: from mail.aspeedtech.com ([192.168.0.24])
-	by twspam01.aspeedtech.com with ESMTP id 29P8dHbu031240;
+	by twspam01.aspeedtech.com with ESMTP id 29P8dHbv031240;
 	Tue, 25 Oct 2022 16:39:17 +0800 (GMT-8)
 	(envelope-from jammy_huang@aspeedtech.com)
 Received: from JammyHuang-PC.aspeed.com (192.168.2.115) by TWMBX02.aspeed.com
@@ -32,9 +32,9 @@ To: <eajames@linux.ibm.com>, <mchehab@kernel.org>, <joel@jms.id.au>,
         <linux-media@vger.kernel.org>, <openbmc@lists.ozlabs.org>,
         <linux-arm-kernel@lists.infradead.org>,
         <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH v10 2/5] media: v4l2-ctrls: Reserve controls for ASPEED
-Date: Tue, 25 Oct 2022 17:02:00 +0800
-Message-ID: <20221025090203.5623-3-jammy_huang@aspeedtech.com>
+Subject: [PATCH v10 3/5] media: Documentation: aspeed-video: Add user documentation for the aspeed-video driver
+Date: Tue, 25 Oct 2022 17:02:01 +0800
+Message-ID: <20221025090203.5623-4-jammy_huang@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20221025090203.5623-1-jammy_huang@aspeedtech.com>
 References: <20221025090203.5623-1-jammy_huang@aspeedtech.com>
@@ -45,7 +45,7 @@ X-Originating-IP: [192.168.2.115]
 X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
  (192.168.0.24)
 X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 29P8dHbu031240
+X-MAIL: twspam01.aspeedtech.com 29P8dHbv031240
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,48 +60,97 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Reserve controls for ASPEED video family. Aspeed video engine contains a
-few features which improve video quality, reduce amount of compressed
-data, and etc. Hence, 16 controls are reserved for these aspeed
-proprietary features.
+Add user documentation for the aspeed-video driver.
 
 Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
 ---
 v10:
-  - no update
-v9:
-  - Rebase on new kernel
-v8:
-  - no update
-v7:
-  - no update
-v6:
-  - no update
-v5:
-  - no update
-v4:
   - new
 ---
- include/uapi/linux/v4l2-controls.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ .../media/drivers/aspeed-video.rst            | 61 +++++++++++++++++++
+ .../userspace-api/media/drivers/index.rst     |  1 +
+ 2 files changed, 62 insertions(+)
+ create mode 100644 Documentation/userspace-api/media/drivers/aspeed-video.rst
 
-diff --git a/include/uapi/linux/v4l2-controls.h b/include/uapi/linux/v4l2-controls.h
-index b5e7d082b8ad..60a6bed21c56 100644
---- a/include/uapi/linux/v4l2-controls.h
-+++ b/include/uapi/linux/v4l2-controls.h
-@@ -231,6 +231,12 @@ enum v4l2_colorfx {
-  */
- #define V4L2_CID_USER_DW100_BASE		(V4L2_CID_USER_BASE + 0x1190)
- 
-+/*
-+ * The base for Aspeed driver controls.
-+ * We reserve 16 controls for this driver.
-+ */
-+#define V4L2_CID_USER_ASPEED_BASE		(V4L2_CID_USER_BASE + 0x11A0)
+diff --git a/Documentation/userspace-api/media/drivers/aspeed-video.rst b/Documentation/userspace-api/media/drivers/aspeed-video.rst
+new file mode 100644
+index 000000000000..798a2588b175
+--- /dev/null
++++ b/Documentation/userspace-api/media/drivers/aspeed-video.rst
+@@ -0,0 +1,61 @@
++.. SPDX-License-Identifier: GPL-2.0
 +
- /* MPEG-class control IDs */
- /* The MPEG controls are applicable to all codec controls
-  * and the 'MPEG' part of the define is historical */
++.. include:: <isonum.txt>
++
++ASPEED video driver
++===================
++
++ASPEED Video Engine found on AST2400/2500/2600 SoC supports high performance
++video compressions with a wide range of video quality and compression ratio
++options. The adopted compressing algorithm is a modified JPEG algorithm.
++
++There are 2 types of compressions in this IP.
++
++* JPEG JFIF standard mode: for single frame and management compression
++* ASPEED proprietary mode: for multi-frame and differential compression.
++  Support 2-pass (high quality) video compression scheme (Patent pending by
++  ASPEED). Provide visually lossless video compression quality or to reduce
++  the network average loading under intranet KVM applications.
++
++More details on the ASPEED video hardware operations can be found in
++*chapter 6.2.16 KVM Video Driver* of SDK_User_Guide which available on
++AspeedTech-BMC/openbmc/releases.
++
++The ASPEED video driver implements the following driver-specific control:
++
++``V4L2_CID_ASPEED_HQ_MODE``
++-------------------------------
++    Enable/Disable ASPEED's High quality mode. This is a private control
++    that can be used to enable high quality for aspeed proprietary mode.
++
++.. flat-table::
++    :header-rows:  0
++    :stub-columns: 0
++    :widths:       1 4
++
++    * - ``(0)``
++      - ASPEED HQ mode is disabled.
++    * - ``(1)``
++      - ASPEED HQ mode is enabled.
++
++``V4L2_CID_ASPEED_HQ_JPEG_QUALITY``
++-------------------------------
++    Define the quality of ASPEED's High quality mode. This is a private control
++    that can be used to decide compression quality if High quality mode enabled
++    . Higher the value, better the quality and bigger the size.
++
++.. flat-table::
++    :header-rows:  0
++    :stub-columns: 0
++    :widths:       1 4
++
++    * - ``(1)``
++      - minimum
++    * - ``(12)``
++      - maximum
++    * - ``(1)``
++      - step
++    * - ``(1)``
++      - default
++
++**Copyright** |copy| 2022 ASPEED Technology Inc.
+diff --git a/Documentation/userspace-api/media/drivers/index.rst b/Documentation/userspace-api/media/drivers/index.rst
+index 32f82aed47d9..46a494e00b72 100644
+--- a/Documentation/userspace-api/media/drivers/index.rst
++++ b/Documentation/userspace-api/media/drivers/index.rst
+@@ -31,6 +31,7 @@ For more details see the file COPYING in the source distribution of Linux.
+ 	:maxdepth: 5
+ 	:numbered:
+ 
++	aspeed-video
+ 	ccs
+ 	cx2341x-uapi
+ 	dw100
 -- 
 2.25.1
 
