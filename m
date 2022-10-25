@@ -1,49 +1,49 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9F6CC60C23E
-	for <lists+openbmc@lfdr.de>; Tue, 25 Oct 2022 05:29:31 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 405D060C739
+	for <lists+openbmc@lfdr.de>; Tue, 25 Oct 2022 11:03:44 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MxHVd40nrz3bvs
-	for <lists+openbmc@lfdr.de>; Tue, 25 Oct 2022 14:29:29 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=hWOiabhv;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MxQwG0dDNz3cDv
+	for <lists+openbmc@lfdr.de>; Tue, 25 Oct 2022 20:03:42 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=hWOiabhv;
-	dkim-atps=neutral
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [71.19.156.171])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71; helo=twspam01.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com; receiver=<UNKNOWN>)
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com [211.20.114.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MxHV436F6z2xbK
-	for <openbmc@lists.ozlabs.org>; Tue, 25 Oct 2022 14:29:00 +1100 (AEDT)
-Received: from hatter.bewilderbeest.net (97-113-250-99.tukw.qwest.net [97.113.250.99])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: zev)
-	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 1D3D614F;
-	Mon, 24 Oct 2022 20:28:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
-	s=thorn; t=1666668536;
-	bh=Izj+g4YVRt+Rr4znHin5k2OzyE0uc6hgbjf/NdXpoDY=;
-	h=Date:From:To:Cc:Subject:From;
-	b=hWOiabhvoEbQ3wgWxVqKVfxdt0ZU3UVA/L7CabCzAEFv97WiWwp30Ebp9z3lyIJtw
-	 /Ra7mAHRiD09+rtusXft5QlG6zxfFELwsNb4wLacdlVin8qJfupIZXZRtQ852dpS7/
-	 8ElwLFgafTaw3abP0nRm7uVNaU0OgLLR5x9obsT0=
-Date: Mon, 24 Oct 2022 20:28:54 -0700
-From: Zev Weiss <zev@bewilderbeest.net>
-To: openbmc@lists.ozlabs.org, linux-aspeed@lists.ozlabs.org
-Subject: Log spam from aspeed-video driver
-Message-ID: <Y1dX9r9ybGjBrW0k@hatter.bewilderbeest.net>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MxQvr11tpz2xtt;
+	Tue, 25 Oct 2022 20:03:17 +1100 (AEDT)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+	by twspam01.aspeedtech.com with ESMTP id 29P8dHGZ031239;
+	Tue, 25 Oct 2022 16:39:17 +0800 (GMT-8)
+	(envelope-from jammy_huang@aspeedtech.com)
+Received: from JammyHuang-PC.aspeed.com (192.168.2.115) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Tue, 25 Oct
+ 2022 17:02:03 +0800
+From: Jammy Huang <jammy_huang@aspeedtech.com>
+To: <eajames@linux.ibm.com>, <mchehab@kernel.org>, <joel@jms.id.au>,
+        <andrew@aj.id.au>, <hverkuil-cisco@xs4all.nl>,
+        <laurent.pinchart@ideasonboard.com>, <xavier.roumegue@oss.nxp.com>,
+        <ezequiel@vanguardiasur.com.ar>, <stanimir.varbanov@linaro.org>,
+        <nicolas.dufresne@collabora.com>, <sakari.ailus@linux.intel.com>,
+        <ming.qian@nxp.com>, <andrzej.p@collabora.com>,
+        <linux-media@vger.kernel.org>, <openbmc@lists.ozlabs.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v10 0/5] add aspeed-jpeg support for aspeed-video
+Date: Tue, 25 Oct 2022 17:01:58 +0800
+Message-ID: <20221025090203.5623-1-jammy_huang@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [192.168.2.115]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 29P8dHGZ031239
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,44 +55,67 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, Jammy Huang <jammy_huang@aspeedtech.com>, Eddie James <eajames@linux.ibm.com>, Joel Stanley <joel@jms.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi all,
+The aim of this series is to add aspeed-jpeg support for aspeed-video
+driver. aspeed-jpeg is a per-frame differential jpeg format which only
+compress the parts which are different from the previous frame. In this
+way, it reduces both the amount of data to be transferred by network and
+those to be decoded on the client side.
 
-Since the recent update of the OpenBMC kernel to 6.0, I've been seeing a 
-lot of new log noise from aspeed-video driver when the host is powered 
-off after having been on:
+In the last, debugfs information is also updated per this change.
 
-     [  335.526279] aspeed-video 1e700000.video: Timed out; first mode detect
-     [  335.544172] aspeed-video 1e700000.video: No signal; don't start frame
-     [  337.165555] aspeed-video 1e700000.video: Timed out; first mode detect
-     [  337.186214] aspeed-video 1e700000.video: No signal; don't start frame
-     [  338.815501] aspeed-video 1e700000.video: Timed out; first mode detect
-     [  338.834008] aspeed-video 1e700000.video: No signal; don't start frame
+Changes in v10:
+ - Add document, aspeed-video.rst, for new V4L2 CID
+ - Fix warnings reported by kernel test robot
+ 
+Changes in v9:
+ - Rebase on new kernel
 
-It just emits that pair of messages continuously, about every 1.6 
-seconds.
+Changes in v8:
+ - Add information of decoder's implementation
+ 
+Changes in v7:
+ - Separate other patches alone from aspeed-jpeg series
+ - for Aspeed-jpeg, generate an I frame every 8 frames
+ - rename compression_mode as compression_scheme
+ - Add more reference for aspeed-jpeg
+ - Update debugfs message
 
-Looking through the commit history of the driver, it looks like that 
-stems from commit a3de90afe392 ("media: aspeed: use 
-v4l2_info/v4l2_warn/v4l2_dbg for log"), which converted a bunch of print 
-calls from dev_dbg() to various v4l2_*() calls.  Reverting to the old 
-5.15 kernel (which didn't include that change), I found by enabling the 
-dev_dbg() prints via sysfs (and cranking up the console loglevel) that 
-the conditions triggering those messages have been happening all along, 
-I just hadn't been seeing them because the debug prints were disabled by 
-default.
+Changes in v6:
+ - Update description for new format, aspeed-jpeg, in Documentation.
 
-I should note that aside from the dmesg spam I don't see any functional 
-problems with the driver; obmc-ikvm works as expected.
+Changes in v5:
+ - Use model data to tell different soc
 
-Was switching those dev_dbg() calls to v4l2_warn() instead of v4l2_dbg() 
-intentional?  Does this indicate some latent bug that should be fixed, 
-or should they just be converted to v4l2_dbg()?
+Changes in v4:
+ - Add definition for the Aspeed JPEG format
+ - Reserve controls for ASPEED
+ - Use s_fmt to update format rather than new control
+ - Update aspeed hq quality range, 1 ~ 12
 
 
-Thanks,
-Zev
+Jammy Huang (5):
+  media: v4l: Add definition for the Aspeed JPEG format
+  media: v4l2-ctrls: Reserve controls for ASPEED
+  media: Documentation: aspeed-video: Add user documentation for the
+    aspeed-video driver
+  media: aspeed: Support aspeed mode to reduce compressed data
+  media: aspeed: Extend debug message
+
+ .../media/drivers/aspeed-video.rst            |  61 ++++
+ .../userspace-api/media/drivers/index.rst     |   1 +
+ .../media/v4l/pixfmt-reserved.rst             |  17 +
+ drivers/media/platform/aspeed/aspeed-video.c  | 317 +++++++++++++++---
+ drivers/media/v4l2-core/v4l2-ioctl.c          |   1 +
+ include/uapi/linux/aspeed-video.h             |  14 +
+ include/uapi/linux/v4l2-controls.h            |   6 +
+ include/uapi/linux/videodev2.h                |   1 +
+ 8 files changed, 366 insertions(+), 52 deletions(-)
+ create mode 100644 Documentation/userspace-api/media/drivers/aspeed-video.rst
+ create mode 100644 include/uapi/linux/aspeed-video.h
+
+-- 
+2.25.1
 
