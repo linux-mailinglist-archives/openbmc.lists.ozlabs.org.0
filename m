@@ -1,136 +1,59 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE52E611293
-	for <lists+openbmc@lfdr.de>; Fri, 28 Oct 2022 15:24:52 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A39261112B
+	for <lists+openbmc@lfdr.de>; Fri, 28 Oct 2022 14:22:46 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MzNZB4klHz3cFQ
-	for <lists+openbmc@lfdr.de>; Sat, 29 Oct 2022 00:24:50 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MzMBX2Ddyz3cDP
+	for <lists+openbmc@lfdr.de>; Fri, 28 Oct 2022 23:22:44 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256 header.s=pps202002 header.b=Zud0YHTb;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=zohocorp.com header.i=nikhil.vu@zohocorp.com header.a=rsa-sha256 header.s=admin header.b=QjT4cp9B;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=equinix.com (client-ip=148.163.148.236; helo=mx0a-00268f01.pphosted.com; envelope-from=prvs=430077004c=zweiss@equinix.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=zohocorp.com (client-ip=136.143.188.7; helo=sender4-zc7.zoho.com; envelope-from=nikhil.vu@zohocorp.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256 header.s=pps202002 header.b=Zud0YHTb;
+	dkim=pass (1024-bit key; unprotected) header.d=zohocorp.com header.i=nikhil.vu@zohocorp.com header.a=rsa-sha256 header.s=admin header.b=QjT4cp9B;
 	dkim-atps=neutral
-X-Greylist: delayed 5794 seconds by postgrey-1.36 at boromir; Sat, 29 Oct 2022 00:24:17 AEDT
-Received: from mx0a-00268f01.pphosted.com (mx0a-00268f01.pphosted.com [148.163.148.236])
+Received: from sender4-zc7.zoho.com (sender4-zc7.zoho.com [136.143.188.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MzNYY42Ftz3cBv
-	for <openbmc@lists.ozlabs.org>; Sat, 29 Oct 2022 00:24:16 +1100 (AEDT)
-Received: from pps.filterd (m0165118.ppops.net [127.0.0.1])
-	by mx0a-00268f01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 29S4RkM7023084;
-	Fri, 28 Oct 2022 11:47:37 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=equinix.com; h=from : to : cc :
- subject : date : message-id : references : in-reply-to : content-type :
- content-id : content-transfer-encoding : mime-version; s=pps202002;
- bh=BS9aaSnYfiM1OnYF7WNxyaZHcAKwgDqieO939MSqUjE=;
- b=Zud0YHTbB5q17OcZUarB1LkeZ7sawyBPKbpo4gBckXAizk2ZtAL70ZmHG5vtawUT8DIv
- HAXodzmmVKt8J7o50kP2LL854aLkKZazGsTETo7Q4aQSyzGjXMqQQQSJEEuoyVZMDsUR
- PAJzBhN4Tfhfk/2kfjBFHcOH4bCZ5GvakzGI+WMp7KpOSlEc9V4IfL2fTScYV0jmIjpq
- fQM5zypXe/kb1FagvPijgnxnsuIZfF5vdEc7QlDxuZnjJaUEdQ6gnxS61EvhRZdOGoXR
- IcbZZRRd2gAV8jCtUveVpaH0cD4XpSIm/ENw4lTQ4aG6MjFRfAsTmSxgITS+LVa6nk2f tw== 
-Received: from nam12-bn8-obe.outbound.protection.outlook.com (mail-bn8nam12lp2173.outbound.protection.outlook.com [104.47.55.173])
-	by mx0a-00268f01.pphosted.com (PPS) with ESMTPS id 3kg82v91b6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 28 Oct 2022 11:47:37 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=nj2NE7QZYBp9AEylQ+JkWZxVMC1Wb/jGppD3gFFM8glUandPKzdw0C7gzWUcI+UjoiyGRD9tdXppDzt5pKVO/C77CFXt2Heds19QLScMAUW76PjCyln9DJVtNHaW6EacDg3afDwrnrz5D4X3cC081Vsaisg/tNIc20hUuAZEk1vIo4NGi4kSia+KtUzzHuxvFTbdtPJx6SVHY8YQG1hhqwwqEf2L7lZ5R5ii/P0lJwXEPZ3TcC3aZdXWR44yUjLevIwWqT5hpC1FpApnVhBpR97Gqk5WOusdzpXI+s8WqrOcBCclT5gY3W25CvtIPcsVaLU7wmGCH1TgODQ9PpUYlw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BS9aaSnYfiM1OnYF7WNxyaZHcAKwgDqieO939MSqUjE=;
- b=WYcY7H7Q9hJLl2CPKrpvwW9mMbDhWr8L1JkpCPwqFse7DhcSu/8WTlITvyLx+FEzapcG5ft4ugJ4kJhgVQ1C1iRQlMKv0fkYzA/G5c3J4yc2L1g6kEhZSJv13KFzeUeqyIcyJDF25hz8KVtc9Pj27V/mcFr8DdJ/DI+kOn0HO0njLAKsIy+4L4HdjWD2a+QnZMePG06nhuriQQvBUubgSdjDiEvELKtpv1tj0lAn3eVD4UVzaGoYYBUED4RNhIfN4lswujaWSW1XsnQApCGBwav8QEosG/cRZGE4Enz7tv0sim/3kQ3IRGtE6qvSIov7WD9HwBAwdE9Gvo/HjukX9A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=equinix.com; dmarc=pass action=none header.from=equinix.com;
- dkim=pass header.d=equinix.com; arc=none
-Received: from DM8PR04MB8007.namprd04.prod.outlook.com (2603:10b6:5:314::20)
- by BYAPR04MB5223.namprd04.prod.outlook.com (2603:10b6:a03:c5::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5723.26; Fri, 28 Oct
- 2022 11:47:33 +0000
-Received: from DM8PR04MB8007.namprd04.prod.outlook.com
- ([fe80::db6:5b31:1480:6e13]) by DM8PR04MB8007.namprd04.prod.outlook.com
- ([fe80::db6:5b31:1480:6e13%6]) with mapi id 15.20.5746.028; Fri, 28 Oct 2022
- 11:47:33 +0000
-From: Zev Weiss <zweiss@equinix.com>
-To: AKASH G J <akashgj91@gmail.com>
-Subject: Re: RISC-V Support in OpenBMC
-Thread-Topic: RISC-V Support in OpenBMC
-Thread-Index: AQHY6sMQtOmoM6qSqEywOzRzddlIrA==
-Date: Fri, 28 Oct 2022 11:47:32 +0000
-Message-ID: <20221028114732.GC18848@packtop>
-References:  <CAE33tLG4oOjTmNJ=a0jNEEdTj_501offkYUFcEVwk6rAnZYKSw@mail.gmail.com>
-In-Reply-To:  <CAE33tLG4oOjTmNJ=a0jNEEdTj_501offkYUFcEVwk6rAnZYKSw@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DM8PR04MB8007:EE_|BYAPR04MB5223:EE_
-x-ms-office365-filtering-correlation-id: b13a938b-2625-43b2-d62a-08dab8da3362
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:  2ibEReH2IKF2T/CPU8A9Qx1q46HX8T4MLnxj3hsQDFHLBR6AJFrxGCancfdsF6QEQAmudWEWj6eCnXGFEwXIT+WAo/IA5hWHGgjTHsPlRXKFjaUZTbewYloCghGpUodH+lTvmQPoxx95J4JngiVGPyX7w31NmbT/GVEGAhff0hKpI2J6ljO31IJf1HyaKYpAolDQdOQLz/gJgM8MC56uL+jj+OxAnquSBXrB9yTrx/QNZa8DoDfr3VH0WNw4swUOEJvs12kMrugAIGr9IIpI0EF+mxooLio3Na5waY1hk8qwoc/CfMt+ejXMPuUc6pt6wLaRpM1VVRdx1DCwiTqD4EiHLG/1QGiAKR5zG35AfhdMN/nbod+DeBNHLjzFypte5gLvyQNUzOjYr6SxtAOHw/9lKCwVA8XUYfDBJrGqOGYWfnt1xzxW5ixZ+s3gx/1huHWWfxgBYsIKom45C9gJDYjIze4qnlZVgcL18A3zgwoXKBpQ2FwBxci6YOvtYWSaPq16Nx9FQCk2FfHYpCPjoCt/fJxVUgxjYAeYMQElwrUkOKcy/2TiiZXz+d9cVwEwbCRSXDAQshqhJwzOz824314Valtvo4H07ejO7jT4vabFMG/AqN9uHyUBNJI+p8vwo2+UlZlR4p5ROP4B3vMBM13vX9P394sg+aLPvvpqFRZTFsibfUsXWviGLLgToufSNPKwha5XG+UgTCZU3woJZ/aW6DYFtInnk89Uv2fyHvcW44I8NLl/aDT5jP7sVXJB1H1HNx78gFYjk6hpRhYSOKy10cvtCZljU5TrCpVv8yw=
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM8PR04MB8007.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(7916004)(136003)(39860400002)(396003)(376002)(346002)(366004)(451199015)(66946007)(316002)(91956017)(8936002)(3480700007)(6916009)(6506007)(66446008)(64756008)(6512007)(38100700002)(38070700005)(66556008)(66476007)(8676002)(33716001)(86362001)(71200400001)(26005)(4326008)(83380400001)(33656002)(4744005)(76116006)(1076003)(186003)(9686003)(122000001)(478600001)(41300700001)(5660300002)(6486002)(2906002);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?DnrVq6o1jjuS2R4mi3n4Dnb1yxc91plM7w4yD5Okm+R3vrpw/8zP5zS5zKc1?=
- =?us-ascii?Q?smaJFRRp81+zNPfJEJhYVHug5eAbGuCpGaYoTNKiNRjfEo5gzoIEDdc32RuV?=
- =?us-ascii?Q?bU01kLWDkVVKoSmH5OlI1Ai/kPZQgg5yRSOg4Ug3YNpy25XCTKbItGbJlhQT?=
- =?us-ascii?Q?Q3FRXQhWBxuq3w4A0C7M6p0kAOBZUXVUJFFUBV+0TP4tzmM6yN83ZMLJqvoR?=
- =?us-ascii?Q?4d9I32iM8IJHxMkOiGANxMPuu7fYin1YLTduRu5sKZlCNp/wJx2QoU/nZhyP?=
- =?us-ascii?Q?aJceVCsB+7ACJsKwACABvLBkMEuECOgE9dmVjyvbA2FAj9ADX2eNtz8pF2EP?=
- =?us-ascii?Q?cg823ZcskkASgcuv1GOrmgPRyEjh7/7m4ubTEGk3Kyu1QUS2xJIDc7FkOqzp?=
- =?us-ascii?Q?YWU4mPIp4hf4GZgS75b1simhM5wrvc+nP/7SRp5Z/jhuycmf7f2IfebnSVCW?=
- =?us-ascii?Q?iYbc0S/daxMzUwJXUVNIk/uQcYw9N5a8qINGWX5neVRgqz1T/Jvi4/jfUQnV?=
- =?us-ascii?Q?NRDcClzBADeb2vyrjO7neP3uU1TrFatuNaGWuUyyZ496qNTGTFtJuOpYMnag?=
- =?us-ascii?Q?W6IKPpEWETZ+tEWSVj7gmYTOnM2akXNi1rx87kkc+6HpQNMD9inlBzqM6cH7?=
- =?us-ascii?Q?zVOWJxIT3Omp/gTvNAB4W2kx3Wf4Hi+ZgJQ5YUAGtUMucnaJydQH2XzbL1Cj?=
- =?us-ascii?Q?LswKOoZf0gqsTjPfUfMklsX1GjUvzuNgmPQf6V0Ay0irxudQZKD2Swpm3RLM?=
- =?us-ascii?Q?L3N2hW4QVHjUpXDo8bsntot/o+ARH7GB/U2UE84nYW42iVeBPR4x7xyuTrkM?=
- =?us-ascii?Q?y/0Kaphr1r13Q9UlfAN+k1LAXhdEBVbZnbjNEI5jQHvrbnkdr2YhGo7Rw7aQ?=
- =?us-ascii?Q?lzaOZjL75/NiVCRW8mDp15hV4bVr/yrpvNATnXV3tbaxjDx4Pwj/4+O5cezS?=
- =?us-ascii?Q?v8hJh+Iqw96uNy7mNcunZsnQRWZOq9B8QqeY68oqWFLZao1A6cabdLdrsA/z?=
- =?us-ascii?Q?rR2017rPhEVHZ4pBmKNx0WDfeiM049X7GmfBeKs3I6BQ7xLuT33ySkB/4fdu?=
- =?us-ascii?Q?dYyH1j/oRN+oZhZrNKyGzc34OzNg+ioSON7lRMXcudr0JBkONpdUQxMy1U+V?=
- =?us-ascii?Q?uy89KiE2CFC3qW3/kMly4roVUMYm0Gcr6a7m14qay9o+qnv2vwXFV2N/isj8?=
- =?us-ascii?Q?8OnN5r6jcbUQznyr3wfaB4Pz9hSp86w/zBMOW7rw3NqQ+0RS/tbLC041zY7V?=
- =?us-ascii?Q?vCMG7yUVYRrhFXD5ycXiovntmZzZ4OVLYjidef2CD/gQAUCOmgebbKaSQwUb?=
- =?us-ascii?Q?EdUGFc3VlkYE5X5+br8rVn3wMDUyaigydnP1ZoVHdAUGGHEGC1x2J4q1iK4a?=
- =?us-ascii?Q?V6r6dSNtQeO08UjUOt4H9D5w+CO+onB9oDJz8zBV44EaSwPhyHxCqyLwCpv/?=
- =?us-ascii?Q?U83dPko5hMZdUe/w/BfqO1Ln2I0ev9t1hVAt9z/sKDtiq7c9PWFG54c2FZMx?=
- =?us-ascii?Q?1P4y+z1viV8OvF5kwquPBGRZaDTmAyK7CdRUc6UlpAwlE4n3YPYwvWDeRSqv?=
- =?us-ascii?Q?sEbSNCfRgZsm659IO7zLLKiMI+vk2BLFfNIqidyv?=
-Content-Type: text/plain; charset="us-ascii"
-Content-ID: <64B075904C3CB547914D4EC2E2544F77@namprd04.prod.outlook.com>
-Content-Transfer-Encoding: quoted-printable
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MzM9v2hpqz3bcw
+	for <openbmc@lists.ozlabs.org>; Fri, 28 Oct 2022 23:22:10 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1666959726; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=mxXSOaqn63qBsT7b1j0ShiBkU2dp3sj6nVW6SPNGcD8tq9bJwhO8f/0icrhVSHsFINNnozEKA9POlW8YT2ULeuDCmc7EIdCz0UHRs+I6I25Vbgi+orH4PKO5MCeV8CcTtZ2sEz4+BTO61Hj5gYX2bXBPHgJ/MlAWGdGeQoRsDAk=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1666959726; h=Content-Type:Cc:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To; 
+	bh=5AlNqOGtr601sZ/X1xwF1HcvXxtVveASatR7b5RiDFU=; 
+	b=V0wYbt3sGWkQwKso8EwC2t7zFhrLGlfRz74a91fVwq3ZQAkTuCf4Zyi+2DkbIU3GxWovHNIv8Oy37h3vImCRZvuPIb2NDlFqODecwW/bxO5pLPoUGAvKY5KD8E/v7A7YY0sfhKIpnH+12NuQc5tMFRMuL4MfZfut6hZJRqfP/XE=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=zohocorp.com;
+	spf=pass  smtp.mailfrom=nikhil.vu@zohocorp.com;
+	dmarc=pass header.from=<nikhil.vu@zohocorp.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1666959726;
+	s=admin; d=zohocorp.com; i=nikhil.vu@zohocorp.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-Id:Message-Id:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Reply-To;
+	bh=5AlNqOGtr601sZ/X1xwF1HcvXxtVveASatR7b5RiDFU=;
+	b=QjT4cp9BbgXljF8bEj1bJE1eYfh8o0VikXpk/Aves7/5RKg/f+HrTIBcvXMIDgPh
+	YIdm2neV3dV7j4Hd0fdAdawcZZwlfLcgY1Jhmf5Aud8IS2BPRETeMn/lQnzsIXOfne/
+	xkLwTFU2Bg/PQVqaFx7YDFrPCcjD5XR6GLUa2x6o=
+Received: from mail.zoho.com by mx.zohomail.com
+	with SMTP id 1666959725520432.14120521465657; Fri, 28 Oct 2022 05:22:05 -0700 (PDT)
+Date: Fri, 28 Oct 2022 17:52:05 +0530
+From: Nikhil V <nikhil.vu@zohocorp.com>
+To: "patrick" <patrick@stwcx.xyz>
+Message-Id: <1841e8ad3c0.118df0b2e118974.5930685302191553052@zohocorp.com>
+In-Reply-To: <Y1vAVwy6lgej/WEC@heinlein.stwcx.org.github.beta.tailscale.net>
+References: <1841e00f475.fd648575116781.6157445050168975217@zohocorp.com> <Y1vAVwy6lgej/WEC@heinlein.stwcx.org.github.beta.tailscale.net>
+Subject: Re: openbmc booting from external QSPI NOR Flash
 MIME-Version: 1.0
-X-OriginatorOrg: equinix.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM8PR04MB8007.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b13a938b-2625-43b2-d62a-08dab8da3362
-X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Oct 2022 11:47:33.0450
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72adb271-2fc7-4afe-a5ee-9de6a59f6bfb
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: XODWRQh40hnp/lq7jnuSMpfNSJeHB8oOs9+v6GmPOwt8GVw4hKQkNrIIM3VNu29Oxxru6w9mPlP2EOugvGEe5A==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR04MB5223
-X-Proofpoint-GUID: UufIofrcOWwN9gGBvM9HWUzi0Oq5tHhs
-X-Proofpoint-ORIG-GUID: UufIofrcOWwN9gGBvM9HWUzi0Oq5tHhs
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-10-28_06,2022-10-27_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 impostorscore=0
- malwarescore=0 bulkscore=0 adultscore=0 suspectscore=0 clxscore=1011
- mlxlogscore=933 priorityscore=1501 lowpriorityscore=0 spamscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2210280072
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_393486_1705493352.1666959725505"
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -142,32 +65,121 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Oct 28, 2022 at 07:00:00AM PDT, AKASH G J wrote:
->Hi Team,
->
->Whether OpenBMC supports BMC controller with RISC-V architecture? If so,
->how we can generate BMC firmware image for the BMC controller with RISC-V
->architecture.
->
+------=_Part_393486_1705493352.1666959725505
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Currently I believe the only BMC SOCs supported in mainline OpenBMC are
-the Aspeed AST2x00, Nuvoton NPCM, and HP GXP chips, all of which are ARM
-based.
+Hi Patrick,
 
-A project with OpenBMC running on a PowerPC-based BMC was also announced
-recently (https://codeconstruct.com.au/docs/dcscm-openbmc/), though I
-don't think any of that work has made its way upstream so far.
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=20
 
-I don't know of any RISC-V based efforts though.
-
->Are there any BMC SoC available in market with RISC-V architecture?
->
-
-Not that I've heard of at this point.
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 " Most systems use a SPI-NOR, so this should not be difficult.  W=
+hat kind of trouble are you running into ? "
 
 
-Zev
+
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 As in beaglebone black it has onboard emmc. I donot want to use o=
+nboard flash or sdcard. I want that it should boot from external spi flash =
+(I have also set sysboot for same).
+
+
+
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 My openbmc image is in ".wic" format which i flashed into sdcard =
+through dd command. now i have connected external SPI NOR flash .
+
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=20
+
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 To program flash with openbmc image the programer has no option t=
+o flash with ".wic" format.
+
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=20
+
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0 Any other method or format of openbmc image available?
+
+
+
+
+
+Thanks & Regards,
+
+Nikhil Muley
+
+
+
+
+
+
+
+
+---- On Fri, 28 Oct 2022 17:13:19 +0530 Patrick Williams <patrick@stwcx.xyz=
+> wrote ---
+
+
+
+On Fri, Oct 28, 2022 at 03:21:29PM +0530, Nikhil V wrote:=20
+=20
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 I am unable to identify how cr=
+eate image for SPI Flash, or what are the steps to carried out to load imag=
+e in external qspi flash.=20
+=20
+Most systems use a SPI-NOR, so this should not be difficult.  What kind=20
+of trouble are you running into?=20
+=20
+--=20
+Patrick Williams
+------=_Part_393486_1705493352.1666959725505
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>=
+<meta content=3D"text/html;charset=3DUTF-8" http-equiv=3D"Content-Type"></h=
+ead><body ><div style=3D"font-family: Verdana, Arial, Helvetica, sans-serif=
+; font-size: 10pt;"><div>Hi Patrick,<br></div><div>&nbsp;&nbsp;&nbsp;&nbsp;=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br></div><div=
+>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp; " Most systems use a SPI-NOR, so this should not be difficult.  =
+What kind of trouble are you running into ? "<br></div><div><br></div><div>=
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp; As in beaglebone black it has onboard emmc. I donot want to use o=
+nboard flash or sdcard. I want that it should boot from external spi flash =
+(I have also set sysboot for same).<br></div><div><br></div><div>&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =
+My openbmc image is in ".wic" format which i flashed into sdcard through dd=
+ command. now i have connected external SPI NOR flash .<br></div><div>&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp; <br></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp; To program flash with openbmc image the progr=
+amer has no option to flash with ".wic" format.<br></div><div>&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p; <br></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nb=
+sp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Any other method or format of openbmc ima=
+ge available?<br></div><div id=3D"Zm-_Id_-Sgn" data-zbluepencil-ignore=3D"t=
+rue" data-sigid=3D"58018000000014003"><div><br></div><div><br></div><div>Th=
+anks &amp; Regards,<br></div><div>Nikhil Muley<br></div></div><div><br></di=
+v><div class=3D"zmail_extra_hr" style=3D"border-top: 1px solid rgb(204, 204=
+, 204); height: 0px; margin-top: 10px; margin-bottom: 10px; line-height: 0p=
+x;"><br></div><div class=3D"zmail_extra" data-zbluepencil-ignore=3D"true"><=
+div><br></div><div id=3D"Zm-_Id_-Sgn1">---- On Fri, 28 Oct 2022 17:13:19 +0=
+530 <b>Patrick Williams &lt;patrick@stwcx.xyz&gt;</b> wrote ---<br></div><d=
+iv><br></div><blockquote style=3D"margin: 0px;" id=3D"blockquote_zmail"><di=
+v>On Fri, Oct 28, 2022 at 03:21:29PM +0530, Nikhil V wrote: <br> <br>&gt; &=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I am unable to identify how creat=
+e image for SPI Flash, or what are the steps to carried out to load image i=
+n external qspi flash. <br> <br>Most systems use a SPI-NOR, so this should =
+not be difficult.  What kind <br>of trouble are you running into? <br> <br>=
+-- <br>Patrick Williams <br></div></blockquote></div><div><br></div></div><=
+br></body></html>
+------=_Part_393486_1705493352.1666959725505--
+
