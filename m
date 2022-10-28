@@ -2,63 +2,58 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 39061610D53
-	for <lists+openbmc@lfdr.de>; Fri, 28 Oct 2022 11:32:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9E56D610E16
+	for <lists+openbmc@lfdr.de>; Fri, 28 Oct 2022 12:07:16 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MzHQT0C6Yz3cFP
-	for <lists+openbmc@lfdr.de>; Fri, 28 Oct 2022 20:32:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MzJBB293bz3cFC
+	for <lists+openbmc@lfdr.de>; Fri, 28 Oct 2022 21:07:14 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=BqMNQqj1;
+	dkim=pass (1024-bit key; unprotected) header.d=zohocorp.com header.i=nikhil.vu@zohocorp.com header.a=rsa-sha256 header.s=admin header.b=DVEnt5h4;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::533; helo=mail-ed1-x533.google.com; envelope-from=akashgj91@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=zohocorp.com (client-ip=136.143.188.7; helo=sender4.zoho.com; envelope-from=nikhil.vu@zohocorp.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=BqMNQqj1;
+	dkim=pass (1024-bit key; unprotected) header.d=zohocorp.com header.i=nikhil.vu@zohocorp.com header.a=rsa-sha256 header.s=admin header.b=DVEnt5h4;
 	dkim-atps=neutral
-Received: from mail-ed1-x533.google.com (mail-ed1-x533.google.com [IPv6:2a00:1450:4864:20::533])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+X-Greylist: delayed 908 seconds by postgrey-1.36 at boromir; Fri, 28 Oct 2022 21:06:43 AEDT
+Received: from sender4.zoho.com (sender4-zc7.zoho.com [136.143.188.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MzHPr4Nv9z3bqt
-	for <openbmc@lists.ozlabs.org>; Fri, 28 Oct 2022 20:32:14 +1100 (AEDT)
-Received: by mail-ed1-x533.google.com with SMTP id r14so7034658edc.7
-        for <openbmc@lists.ozlabs.org>; Fri, 28 Oct 2022 02:32:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=Dh1xVgTPV5Au3arjZp3BvX8vrdegnZOK+9nKJ7EbDOs=;
-        b=BqMNQqj1ThMvr/7JgqjmKCiqGXwcRaEfZecjqODRDTJDOgjI8QQtIpcqsbuuTC/y4P
-         7CcY/2SbhSPQbA2CojBa9YeJdinQUz4cVsmO7jc4Y//QcsPmRuHuGtYuahmBAr4kfka2
-         T73UmNrZuHlc6r1v8UisiNFBt2e+fOxvfh9jY3kWpfiE/JZfNTfgos89tkiMSARqszuP
-         dkG10+21b6CPDaEL1UZwQ8AGh0pIsZSXbamiAQVgAWMpCYfAGvcRio7p8Gp8r3jP+EnE
-         CwpiHSupQXHFipRwDLnphflEsdGRGG/9klC9I6/f/ZdKXhm2ZubO2hiViydAmGOIhxAD
-         IXrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Dh1xVgTPV5Au3arjZp3BvX8vrdegnZOK+9nKJ7EbDOs=;
-        b=OzL7gjlXXyIPao8n5kZ5/BFfn+Bj8Rt3p6wd6SpXbmBHIgClY+TannYj6j13meF6uE
-         2b26YiyIp3SKeptPv9N3babzLnGQHtBEuFqjgnNkhf+FiR0kOBc1meCIXPWtGsHf30vf
-         P8GbLBuP+s3xrGGj8wVcPj93MqusTbYtpYDQRID/a3BlF1c2HufKBcl0ljHuUmZjulMr
-         0whuBMWLNj9TuOgjNTZCja+EqOJEaQrO/eU20iNHm3TTDCDPc5ep0vZx/d8q0Ml/nQhJ
-         jaSbUKFxYMF3RPT7qbKWjbPUTU8oo8rDqztMPdGEjwlkTBaS3PemYRba1gtwLxZIprtL
-         a91w==
-X-Gm-Message-State: ACrzQf2fM0ZUjpmyC1FP0XIYqZtZdFaB7BZhHK31NqnlQZtGSUPORHFQ
-	JiEmxuVw7ywwhaSU+5oqaGcSzJLulsDv7AL9F2/vdFG+Or0of1Rr
-X-Google-Smtp-Source: AMsMyM6wsmpdUzgOYGoNr5u0XbJL9PRajBw3GGxaiic/QgNob+6RtPtU35VfrglibNAxA8mP1gxOFo5M7JYPO8I/ikM=
-X-Received: by 2002:a05:6402:249f:b0:453:eb1b:1f8b with SMTP id
- q31-20020a056402249f00b00453eb1b1f8bmr48931481eda.235.1666949527126; Fri, 28
- Oct 2022 02:32:07 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MzJ9b4qZYz3bkZ
+	for <openbmc@lists.ozlabs.org>; Fri, 28 Oct 2022 21:06:43 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1666950691; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=CITmftn6JXAgzsW46igrzIgs2KuPxc0HQA8XrOoe0J2oaA7uddsI1nYtm6w3HE/m44doOhe/R6IG1fRDOHboXTtcO+RH881ZamExWqZqCuKBF6uLdcE8m8aiDb3k5KX9D5Kw9pFDgmLT2nG5s1cVz39QlrowyuZNffNfnynZ1uM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1666950691; h=Content-Type:Date:From:MIME-Version:Message-ID:Subject:To; 
+	bh=y3usDZowwZNBmEK1kpJn8jJ70tCCn5WcjGPTBC2A5qI=; 
+	b=gF+fARprolY0T2jm+ktSz00L9MeyXNFbwEiVxYjBlIffecU4FkAu1rhLqkn6AfB349iSOrLMgYzqrGo8TCTpNm8+TsGNKysva3gDl1FqxE2RCjdEy4Cp0Y84NQQ8trEHSziIAFCzQIp64fPnq56ulIa33bUO1pAjf2JLI2hkdDQ=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=zohocorp.com;
+	spf=pass  smtp.mailfrom=nikhil.vu@zohocorp.com;
+	dmarc=pass header.from=<nikhil.vu@zohocorp.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1666950691;
+	s=admin; d=zohocorp.com; i=nikhil.vu@zohocorp.com;
+	h=Date:Date:From:From:To:To:Message-Id:Message-Id:In-Reply-To:Subject:Subject:MIME-Version:Content-Type:Reply-To:Cc;
+	bh=y3usDZowwZNBmEK1kpJn8jJ70tCCn5WcjGPTBC2A5qI=;
+	b=DVEnt5h41LycDi05+6KAKX1ZyU3aKq0TpxU9sKzskOjcaLJkmstS53PDSBTAsYdp
+	dsVsAsv/Z5GTFR2LLLJqNvI7rYbScS9vYpLB8U0RCdizQ+/Dq0YW1caqRwFgzrnb7AQ
+	J3Jiyz/mKzK4HHeOc5A+HKfyiHzVdriSnQQBLmBA=
+Received: from mail.zoho.com by mx.zohomail.com
+	with SMTP id 1666950689922803.3063454078108; Fri, 28 Oct 2022 02:51:29 -0700 (PDT)
+Date: Fri, 28 Oct 2022 15:21:29 +0530
+From: Nikhil V <nikhil.vu@zohocorp.com>
+To: "openbmc" <openbmc@lists.ozlabs.org>
+Message-Id: <1841e00f475.fd648575116781.6157445050168975217@zohocorp.com>
+In-Reply-To: 
+Subject: openbmc booting from external QSPI NOR Flash
 MIME-Version: 1.0
-From: AKASH G J <akashgj91@gmail.com>
-Date: Fri, 28 Oct 2022 19:30:00 +0530
-Message-ID: <CAE33tLG4oOjTmNJ=a0jNEEdTj_501offkYUFcEVwk6rAnZYKSw@mail.gmail.com>
-Subject: RISC-V Support in OpenBMC
-To: openbmc@lists.ozlabs.org
-Content-Type: multipart/alternative; boundary="0000000000006c48df05ec14ee22"
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_385654_1947589373.1666950689909"
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,30 +68,34 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000006c48df05ec14ee22
+------=_Part_385654_1947589373.1666950689909
 Content-Type: text/plain; charset="UTF-8"
-
-Hi Team,
-
-Whether OpenBMC supports BMC controller with RISC-V architecture? If so,
-how we can generate BMC firmware image for the BMC controller with RISC-V
-architecture.
-
-Are there any BMC SoC available in market with RISC-V architecture?
-
-Thanks and Regards,
-
-Akash
-
---0000000000006c48df05ec14ee22
-Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hi Team,<div><br></div><div>Whether OpenBMC supports BMC c=
-ontroller with RISC-V architecture? If so, how we can generate BMC firmware=
- image for the=C2=A0BMC controller with RISC-V architecture.</div><div><br>=
-</div><div>Are there any BMC SoC available in market with RISC-V architectu=
-re?=C2=A0</div><div><br></div><div>Thanks and Regards,</div><div><br></div>=
-<div>Akash</div></div>
+Hi all,
 
---0000000000006c48df05ec14ee22--
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 I have successfully boot openbmc=
+ on beaglebone with Sd card. Now I want to boot openbmc from external QSPI =
+NOR Flash. I have also set the boot sequence to boot from external flash.
+
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 I am unable to identify how crea=
+te image for SPI Flash, or what are the steps to carried out to load image =
+in external qspi flash.
+
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Any pointer will be helpfu=
+l.
+
+
+
+
+
+Thanks & Regards,
+
+Nikhil Muley
+------=_Part_385654_1947589373.1666950689909
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head><meta content="text/html;charset=UTF-8" http-equiv="Content-Type"></head><body ><div style="font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt;"><div><br></div><div>Hi all,<br></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I have successfully boot openbmc on beaglebone with Sd card. Now I want to boot openbmc from external QSPI NOR Flash. I have also set the boot sequence to boot from external flash.<br></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; I am unable to identify how create image for SPI Flash, or what are the steps to carried out to load image in external qspi flash.<br></div><div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Any pointer will be helpful.<br></div><div><br></div><div><br></div><div>Thanks &amp; Regards,<br></div><div>Nikhil Muley<br></div></div><br></body></html>
+------=_Part_385654_1947589373.1666950689909--
+
