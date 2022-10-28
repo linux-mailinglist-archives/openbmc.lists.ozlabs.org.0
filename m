@@ -2,85 +2,85 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 778B6610FEE
-	for <lists+openbmc@lfdr.de>; Fri, 28 Oct 2022 13:42:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id BF296610FF2
+	for <lists+openbmc@lfdr.de>; Fri, 28 Oct 2022 13:43:53 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4MzLJd1khJz3cCZ
-	for <lists+openbmc@lfdr.de>; Fri, 28 Oct 2022 22:42:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4MzLKg3xzGz3cDv
+	for <lists+openbmc@lfdr.de>; Fri, 28 Oct 2022 22:43:51 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=OerYpw0H;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=pAZXfIpN;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=KcjpvhO/;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=hcQjC5H0;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.24; helo=wout1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=OerYpw0H;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=pAZXfIpN;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=KcjpvhO/;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=hcQjC5H0;
 	dkim-atps=neutral
 Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4MzLHx5WzCz3bcw
-	for <openbmc@lists.ozlabs.org>; Fri, 28 Oct 2022 22:42:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4MzLK65wF8z3cDv
+	for <openbmc@lists.ozlabs.org>; Fri, 28 Oct 2022 22:43:22 +1100 (AEDT)
 Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.west.internal (Postfix) with ESMTP id 20096320070D;
-	Fri, 28 Oct 2022 07:42:17 -0400 (EDT)
+	by mailout.west.internal (Postfix) with ESMTP id C7915320030E;
+	Fri, 28 Oct 2022 07:43:20 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Fri, 28 Oct 2022 07:42:17 -0400
+  by compute5.internal (MEProxy); Fri, 28 Oct 2022 07:43:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
 	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm3; t=1666957336; x=1667043736; bh=7cfw1M0wP4
-	KDxkPs3qzCpTnz1N4DYNWIiQETB0oJPXE=; b=OerYpw0H8i2nV09ouIssq0kErj
-	fVkCeWr0uXiUSvKQb6yzdM7UugSIVWWSyI0hQw+mPqXf/5hW8K92nkebNOGAHlH9
-	UdJvOF1FLiG2WmyZCd9K8sOIykEgSS0jwYipkMsiECgu/59t7MDLshK5tfOJ+iJB
-	XClFRNekKykc2pBQgT/n9yq8teeSmupqYK9iy8LAEmGQi+yqn1JnOgBTUt0SVKiF
-	g6f+ZoFeSpqBxj4ivhQFyxzXjhg67zsHMEX29DkhwzXsFLX7ydQJCfd4AyLF0qBl
-	xhaOIuvH0zEsMrGrDWKc7Zi3YnyNq0F8cTBIo3bVlcXK+I9D9USsRN6jQSyw==
+	:subject:to:to; s=fm3; t=1666957400; x=1667043800; bh=sBztaFADHI
+	+pHwIkbcUvtjQbPIYN57/6MDxJMp3xQx0=; b=KcjpvhO/DAWM5lTOkVMhW11a0c
+	aCTY3gjutkbcHv4aUUKShyFiOTS7T1jm39zQDbwdI/4a7P8VqhuPNqsmMBGqwbMg
+	weDIMpck54J9tGaEw/AlSIg7iTvxPkspO7WfYhqr1I7ma900dOskGzyvEVntXy5z
+	kiT8ZnOrgbHwwCFLkmVAlyTC+AAvgUHReDIfuBRKnDvoUgsRsix4eXeMM16TxNRG
+	UmC8KM91gw1FmLzae2awHxV77hvu524OQi2CfZP2X+UK8Aw/lnZ0+ZAo6+GFAdqk
+	WsYU6CoPa/PUEkJRbBPAIFHOeSlJr6183YC3YHW7n5u8SaY7iPdjYQbBFLXQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
 	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
 	:mime-version:references:reply-to:sender:subject:subject:to:to
 	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1666957336; x=1667043736; bh=7cfw1M0wP4KDxkPs3qzCpTnz1N4D
-	YNWIiQETB0oJPXE=; b=pAZXfIpNfW3qmWS3LuUYFXRdQdxm+xMAG9kfeD7NdTz0
-	YpjyBgBO0TsnJJza8NDtKS4wCQu9wMR9tlCWHYWOz0XTqrCBaz+BdkNBXPSiuWar
-	8d7Tl7+P6YRNo5LMRqfPomUcudE7YWr7G1LmNv8d6KgjIdg6aEJCgdeCZ1YcUFkc
-	YuteOeVu0wdztlGlrwc24lASNr7ddgGMbd8cd6Fw28a/mOHwuxjEG2TCkS5ALh9B
-	E1x/1pUzkaHIYpbjLPI7UmlPBSuvi5HrQExwH0zOIZqMuzp+SoDfAlvgJNkKV/IN
-	/19F/w2iQ7tD080bu8oQ0vev+BxEPKPvdvvEf2pE3g==
-X-ME-Sender: <xms:GMBbY35VRcVpPDJj1uB3Rts0d_cwx_4GaU3qEyrzaGxrw9wua8SLEw>
-    <xme:GMBbY862cqXHNWko0GbcwnSoTiYTKTaG0cBEvlcXa1r5Gt2DcOqUtTqWASPtFAtqh
-    38Hfs15WY8AYb-Iv4s>
-X-ME-Received: <xmr:GMBbY-dBXaOIMGIsYJblKjQ6JTR_pCr8VjiVOIm0hVNVHXUQsverkoLxcgSwKGrJs9pJ-NnQozlxaHzLRBcx48eUIalSykJ3ZNY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrtdeigdegudcutefuodetggdotefrodftvf
+	fm3; t=1666957400; x=1667043800; bh=sBztaFADHI+pHwIkbcUvtjQbPIYN
+	57/6MDxJMp3xQx0=; b=hcQjC5H040kKZW6aXVQgtV7zH0u9TpJTq/WFmqyQHg3G
+	N7Is5DwSPUSxcf1yQaOwTg6LBl05RtOyyjWtQGcA3XJcdsj8A85yzegnD9PHrc8W
+	igbo2XpadJ1Aw3aXREjJeNPLhWO2m64Dlco4MPIAbOGFA6tSL2wNNdsBrQ3aQTwS
+	gJ7P5aO1vlpmdmmRN+4TnWLcn8gvQqawVNUJQEB8Vnf/24EMZI2bY41LPhL1f6eI
+	gh7XvsJ6ePryu4Dz9xFRW7GoK6L1u7u4FDsiSRttTCjArhrdsT8nP1iMsrKg8Aqs
+	0xvGTnGd3oagtXWO7zJ8oyqK2Fkz3FN+ImDUaYnbqA==
+X-ME-Sender: <xms:WMBbY2kKR5E61Bpr1PwkU2uNtaIRod0s0oAANNjj7Qw8K2w9sWZpLQ>
+    <xme:WMBbY93gW51_5oWP1UopLaQUqVi5Fke_cJIykVgcOWkl38quo2UdUlv5SGLZ0DICz
+    4TeU63JEyKz_8u_NXU>
+X-ME-Received: <xmr:WMBbY0qkQXU2K63DNV2TV3bxJOEJyrpzsAngIsEs8nAZIs5D73L7J3tRdHazr4sWfQ5mtFIZwNBGC2nheF_QUGY01SvpN2N0Uyk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrtdeigdegvdcutefuodetggdotefrodftvf
     curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
-    hrlhcuvffnffculdefhedmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
-    htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepheefjeehfedtjeeivdefkeffheel
-    udekudelleffkefgtdeludelvddtgedtheeknecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:GMBbY4IFwq9szBi-OymTPSn0vcOUM74QhUb8QNY7C6I8PyQ3J6Y6YQ>
-    <xmx:GMBbY7LoqjI6HCVN8I5X7N8Vi-uWpErOOQaeQx9zluviWQG3r1I4hg>
-    <xmx:GMBbYxyc04CVXoCdorQ9m95A-CHnosTwGepAWd4n-BToPJhEUjpK2g>
-    <xmx:GMBbY9wUpCLmheUzCk7YmYcKx2nY4smpBs355gNteauIOLDPrphvKw>
+    uegrihhlohhuthemuceftddtnecufghrlhcuvffnffculdejtddmnecujfgurhepfffhvf
+    evuffkfhggtggujgesghdtreertddtudenucfhrhhomheprfgrthhrihgtkhcuhghilhhl
+    ihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnh
+    eptdejjefgudeghfetvddugffhjeefjeefhffffeefleegudevjeellefffedvffelnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrih
+    gtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:WMBbY6nbqMvRb0XOs7Ev9JByaOE5MG4PCk539aY3cLfeJWiU68hzAg>
+    <xmx:WMBbY00hT7YTqd6hrw0CJK7ST9y8uW2E0he74-m0UoFF4jDkr75dTQ>
+    <xmx:WMBbYxv4frE-GPqWY-OMmwXTwLONn4MrlcrEwszDoifRZzhUJbefGg>
+    <xmx:WMBbY59Af7_dpJqFFzblKlpQzPxih642Gn4-2bkhd6-ZCl4gBs2cgQ>
 Feedback-ID: i68a1478a:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 28 Oct 2022 07:42:16 -0400 (EDT)
-Date: Fri, 28 Oct 2022 06:42:14 -0500
+ 28 Oct 2022 07:43:19 -0400 (EDT)
+Date: Fri, 28 Oct 2022 06:43:19 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: AKASH G J <akashgj91@gmail.com>
-Subject: Re: RISC-V Support in OpenBMC
-Message-ID: <Y1vAFpmfGFC0mOtK@heinlein.stwcx.org.github.beta.tailscale.net>
-References: <CAE33tLG4oOjTmNJ=a0jNEEdTj_501offkYUFcEVwk6rAnZYKSw@mail.gmail.com>
+To: Nikhil V <nikhil.vu@zohocorp.com>
+Subject: Re: openbmc booting from external QSPI NOR Flash
+Message-ID: <Y1vAVwy6lgej/WEC@heinlein.stwcx.org.github.beta.tailscale.net>
+References: <1841e00f475.fd648575116781.6157445050168975217@zohocorp.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="Ns/OIOSanWVevms8"
+	protocol="application/pgp-signature"; boundary="ZGaujOGBj/fZ85j1"
 Content-Disposition: inline
-In-Reply-To: <CAE33tLG4oOjTmNJ=a0jNEEdTj_501offkYUFcEVwk6rAnZYKSw@mail.gmail.com>
+In-Reply-To: <1841e00f475.fd648575116781.6157445050168975217@zohocorp.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,49 +92,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---Ns/OIOSanWVevms8
-Content-Type: text/plain; charset=us-ascii
+--ZGaujOGBj/fZ85j1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Oct 28, 2022 at 07:30:00PM +0530, AKASH G J wrote:
-> Whether OpenBMC supports BMC controller with RISC-V architecture? If so,
-> how we can generate BMC firmware image for the BMC controller with RISC-V
-> architecture.
+On Fri, Oct 28, 2022 at 03:21:29PM +0530, Nikhil V wrote:
+=20
+> =A0=A0=A0=A0=A0=A0=A0 I am unable to identify how create image for SPI Fl=
+ash, or what are the steps to carried out to load image in external qspi fl=
+ash.
 
-There is nothing to preclude a RISC-V based BMC being contributed and
-running OpenBMC.  Yocto already supports RISC-V, so it should not be
-difficult other than getting kernel support for whichever SOC you end up
-with.
-
-I am not aware of any RISC-V BMC chips at this time.
+Most systems use a SPI-NOR, so this should not be difficult.  What kind
+of trouble are you running into?
 
 --=20
 Patrick Williams
 
---Ns/OIOSanWVevms8
+--ZGaujOGBj/fZ85j1
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmNbwBUACgkQqwNHzC0A
-wRnuxA/9GsnC5ThRpJGiQi9FmYIheAyNelHBwhnvDZhDdrnjZj+tJ2irHdRh9vXL
-1gpRBm7q/zUk06TphhMBaeeFP8XrVZK5oRyMXoOVUJTJ2Snq0VbRJv4UY1/lEqld
-Evv2/bl/fSdeYjPslyT1cT/DeDpEviVL01UpYhlGUKVQKBwPUu5NpnCvwrxKvfe8
-bl6ogvp0L5NGGMC0MVLF0V3/xABv2ZWpXfc9HMioW93rDxSW2BzMdbnq4eF0AxIZ
-iqRwOAGZIJr/YYUrByrAiH+ektaouISy5rWZbV4QXAAdyAz4R1aCAE8/jybZz0o+
-LnMNqUcw2fMgnL8l9Vnze3+YsudV6/by+OrFubynS68p/5SB9G2SHs1Uckmg/Oaw
-7o0iqMza+resydjD2a+B3X0P6q7PKuNleifFKVusCt+DihHvuujMHynqAczEeD5Q
-V96SKUyaHA4+gGfkepKOnSThHqzbJ+t6yXu4v1r8aZ7C335fZnx13UVdIy5cuPec
-l3kZR2/iFLWu4KkVToBEzG7acAbvATlJWQp4EMURHvE1qphhC28TzU3oZadVR9Ws
-aoebbgCAh8LLb+LDYH8aX8AiSMa0F1PKf6rKx4Ymm7ZGyeNLL7GQ6GUDM8Kw9eC4
-kHYaao3sl5gJEyhvv80R75ByC6vDjp8QtUq5ZpM6tYjjG3MfwLA=
-=Egwi
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmNbwFcACgkQqwNHzC0A
+wRmPNw//ZnoiJUYw/TZl+tf4X6jF1RIva68SLjT9s3hzxusTEf3LJwlubzMIbpAt
+dX/wFMyiUQ0LOKB4dXwn/yTpEJOdEGFd1notck+t1+54DxTucX1WV18bkPEG3/1U
+sRcy4PCA4SAUhZgOPuDtm44JkMHPc7SL2VMfXz8baDgVfCFMwBvfyxsZ+7d1ovQq
+j81kXMD+8TbRJHoAPZ/IHo8UMnu18rHbmHal7OWktTUbfS/sJmKg3aPJPBwI0Shn
+Bgpwotxg1naaN6i3AcjfLSJKAhBbVse3FMZWNvTfcvpm/BqFM9QnSwzIunhMBC4a
+EqNjekuaTdNtfOlKDf9iLvqXsZFN70b2E1x/KlhGIOISLjrP3sU2Z3B4f7rgMiP+
+9n2Dqib1eNQYKSrO0J73OoAKMCYUPeiRFeT4XxtFVDr6zCAFrrmF5aCd4J9tCG4M
+4kjJZJSNqR5EWVJ23kuLzwezKSUJU26zZayYDBLnPur1wgkp4zQ76W1EGIEQL46/
+lq9FUPLa3CK+68pGQVmKQ2F8thD9CuLaEISrPje4mfQUaDqYY7lHjzUIy9v+ETln
+Mkojx5GegRLjWRMdIhOEsGufkL3eLGwAMYxl6js/f+60DCxh3EC7eT0O0LETN45y
+GE5IBASQcJd280k4wWSCF4pRgdTmcUTVc9J7I2zUKQIdluUgHVc=
+=iaMZ
 -----END PGP SIGNATURE-----
 
---Ns/OIOSanWVevms8--
+--ZGaujOGBj/fZ85j1--
