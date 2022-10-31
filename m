@@ -1,90 +1,54 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 04B3E613B03
-	for <lists+openbmc@lfdr.de>; Mon, 31 Oct 2022 17:11:44 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8B824613D79
+	for <lists+openbmc@lfdr.de>; Mon, 31 Oct 2022 19:38:29 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4N1J7K5qGFz3c8V
-	for <lists+openbmc@lfdr.de>; Tue,  1 Nov 2022 03:11:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4N1MNg3C9zz3cK8
+	for <lists+openbmc@lfdr.de>; Tue,  1 Nov 2022 05:38:27 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm1 header.b=QAp8c9xx;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=N/kmd/C+;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=SkV5Wr/C;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=64.147.123.19; helo=wout3-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=broonie@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm1 header.b=QAp8c9xx;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=N/kmd/C+;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=SkV5Wr/C;
 	dkim-atps=neutral
-X-Greylist: delayed 411 seconds by postgrey-1.36 at boromir; Tue, 01 Nov 2022 03:11:07 AEDT
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4N1J6g5J0pz3c5D
-	for <openbmc@lists.ozlabs.org>; Tue,  1 Nov 2022 03:11:07 +1100 (AEDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.west.internal (Postfix) with ESMTP id C8A623200961;
-	Mon, 31 Oct 2022 12:04:12 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Mon, 31 Oct 2022 12:04:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	fuzziesquirrel.com; h=cc:content-transfer-encoding:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to;
-	 s=fm1; t=1667232252; x=1667318652; bh=gZSW7lQOg7Ihb+4VJ7uK8sTXw
-	dn5T4m3v8aG8q17DWI=; b=QAp8c9xxV7CSktwyu2oxQ/oWXnwVqH0zw3Qmfd3Ib
-	8P2Qt8FqhUO+0icVboI3Enik7yU8SIZpTZvTUE9fzQQlfWDRzVjSNekfaQ80596o
-	SaDK1U40rlHTlXgDU3yhsDWs8+nTWGzN+NomgcpFHmDWhxiDH7KYR3UWBpnDOoab
-	+f5vOIhc9qAMlSNhFiw7KorfOcMXZu068qPJwXwi/NsaDiSdWAbDbfuqYdxQYodl
-	9XlNMsSf+xVluL5eJ9rjzjrhjXO8AAdrB3hrw6ug79FxMg8c28x4tEGhJGFz8rUG
-	HJpb2wWMTJ3j8TIVEYRZoNYfV2sevfW5yPP3oSOe2KoGA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:date:feedback-id:feedback-id:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1667232252; x=1667318652; bh=g
-	ZSW7lQOg7Ihb+4VJ7uK8sTXwdn5T4m3v8aG8q17DWI=; b=N/kmd/C+yueVWvU/F
-	3dHgkM3MLVWY4qpmKMaXqgB3IfzOyHfzt8twCiHjrO4QEc/JHhCIc+O4WBawkX9z
-	cyBwX9DNS8AQ/MhdXBNseb3ObGBftGpMJWmwpGtg0G+k7ha+91X4cTF2c7EGpCbH
-	oUVAQ6x+nAhVD80eJsVZRQGVVJ7c1R+4qm6bJhouRNM9LZ8nwxbV7uMRJURfpYBZ
-	EgfwyeQOk6GJeQ4QL8cEDBt0rGBm3y0Z6rHOSCdWEwzT4UktK/cl7rxECkGpGR93
-	T/G5C8ysWSHyGihOj12VCcHMMlJtkcgCcgNrsJoL88Dt886pSs8sTFPox0NJ6Pm7
-	5jMkQ==
-X-ME-Sender: <xms:-_FfYwxAFKrpub6q5lWPWGOteS6wMl2XddgkvvnpBRtbhNkrVhSwWQ>
-    <xme:-_FfY0QpMFfK7T-bfN08W2qxS4Mlcpq9l6BtGyh3z24-Z_H_EDJXhtWLk7XQQQk5_
-    dZugk24W2ltk3J8s38>
-X-ME-Received: <xmr:-_FfYyUCpV5L17g_XcxbR7Ycs-hnsHhTLjS-MXaDIarPDZinoZ9op_mlUdue-om3SS7YFf3T2Uy2ozrHhV-a>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrudefgdekfecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefkuffhvfffjghftgfgfgggsehtqhertddtreejnecuhfhrohhmpeeurhgrugcu
-    uehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
-    eqnecuggftrfgrthhtvghrnhepfeehffekkeeggeevgfffhfekfeegveefvedugffhudek
-    veduuefhjeeklefhieefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepsghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
-X-ME-Proxy: <xmx:-_FfY-iTLuHOGxloR_JZBrbZw_LgLpMO4rMJsK1kuu-gI4_yTm4JZw>
-    <xmx:-_FfYyAu2381bd0tbaujPMIlr7RKtd2TyQceO5Y-P0PnUDiRyCeCww>
-    <xmx:-_FfY_L_KSKG1qTFVtWr3Wbxir7nviVCJYOTdrJxkzy_blLClP4zHg>
-    <xmx:_PFfYz40vYg6fC-CLzFEVzWYr85_ElafNtoGbUfnH0FKMcn1dFtEww>
-Feedback-ID: i02c9470a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 31 Oct 2022 12:04:11 -0400 (EDT)
-Message-ID: <98e64d12efcd50c8b122f2e4433d5fe1344d0451.camel@fuzziesquirrel.com>
-Subject: Re: Inspur's CCLA Schedule A update 2022-10-27
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: George Liu <liuxiwei1013@gmail.com>, OpenBMC Maillist
-	 <openbmc@lists.ozlabs.org>, banht@inspur.com
-Date: Mon, 31 Oct 2022 12:04:10 -0400
-In-Reply-To: <CANFuQ7CiAn5XrpXkxjqHOXoLmVMEGz4QHMHbkVuqU5+nwcin=w@mail.gmail.com>
-References: 	<CANFuQ7CiAn5XrpXkxjqHOXoLmVMEGz4QHMHbkVuqU5+nwcin=w@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4 
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4N1MN30hTFz3cG8
+	for <openbmc@lists.ozlabs.org>; Tue,  1 Nov 2022 05:37:55 +1100 (AEDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id A98876134E;
+	Mon, 31 Oct 2022 18:37:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC48FC433C1;
+	Mon, 31 Oct 2022 18:37:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1667241472;
+	bh=k6N38e70/PPX6NSRdBrUX8Bzwq8mIT6o35ZKD786iR0=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=SkV5Wr/CIw5qdIkzVXHHGMNDEYK6AF3A4+9G8FNv2BL0f6tvVUzS+Og4VRTVFTHG3
+	 4kLQ3LzO4QztxK1vubOEUvdcWI03YJKkBuh1EHqjgb7wxsSp7rijUY11KxIacjCuBD
+	 kks/8F8mEaD8dojMbJeBi58ORTJ7q6t+yO1CM8iLz7msr/wMPUb8WsXRiSda6NBoRt
+	 c6ftjDScW2mwuM/eO8iHhg6ysrzaSqwHDg5kpMuZdITN7lD67XmNQrOteuFJGIcHKL
+	 POSbFh2b0jvLhDyDsqjYCh8IX3vz2uB3Jbm76i4IBObBsGklnRFJ5F1rQ5lGjSQyIl
+	 HXhjDHrfZPctA==
+From: Mark Brown <broonie@kernel.org>
+To: Yang Yingliang <yangyingliang@huawei.com>, linux-spi@vger.kernel.org, openbmc@lists.ozlabs.org
+In-Reply-To: <20221029071529.3019626-1-yangyingliang@huawei.com>
+References: <20221029071529.3019626-1-yangyingliang@huawei.com>
+Subject: Re: [PATCH -next] spi: npcm-fiu: Use devm_platform_ioremap_resource_byname()
+Message-Id: <166724147061.755330.5013073524228405509.b4-ty@kernel.org>
+Date: Mon, 31 Oct 2022 18:37:50 +0000
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.10.0-dev-fc921
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,19 +60,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 2022-10-27 at 11:07 +0800, George Liu wrote:
-> Hey Brad:
-> =C2=A0 Attached is the updated Schedule A of CCLA from Inspur.
-> =C2=A0 Please help review.
+On Sat, 29 Oct 2022 15:15:29 +0800, Yang Yingliang wrote:
+> Use the devm_platform_ioremap_resource_byname() helper instead of
+> calling platform_get_resource_byname() and devm_ioremap_resource()
+> separately.
+> 
+> 
 
-Hi George
+Applied to
 
-Can you send a revised version with yourself listed as a CLA manager?=20
-Otherwise, please have one of the existing CLA managers send the
-Schedule A update.
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+
+Thanks!
+
+[1/1] spi: npcm-fiu: Use devm_platform_ioremap_resource_byname()
+      commit: 1793d36672eb8d86fb319cd28e056a154945506f
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
 
 Thanks,
-Brad
+Mark
