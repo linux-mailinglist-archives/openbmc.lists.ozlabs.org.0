@@ -1,90 +1,80 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A0A0361533B
-	for <lists+openbmc@lfdr.de>; Tue,  1 Nov 2022 21:26:24 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id CA01961544B
+	for <lists+openbmc@lfdr.de>; Tue,  1 Nov 2022 22:33:38 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4N21kk3qspz3cKb
-	for <lists+openbmc@lfdr.de>; Wed,  2 Nov 2022 07:26:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4N23DJ4SMCz3cJg
+	for <lists+openbmc@lfdr.de>; Wed,  2 Nov 2022 08:33:36 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm1 header.b=aCg/1wQy;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=B775qILK;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=a9BB3l0v;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=64.147.123.19; helo=wout3-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm1 header.b=aCg/1wQy;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=B775qILK;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=a9BB3l0v;
 	dkim-atps=neutral
-Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4N21k86fQ7z2yy7
-	for <openbmc@lists.ozlabs.org>; Wed,  2 Nov 2022 07:25:52 +1100 (AEDT)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.west.internal (Postfix) with ESMTP id 33345320095D
-	for <openbmc@lists.ozlabs.org>; Tue,  1 Nov 2022 16:25:49 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Tue, 01 Nov 2022 16:25:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	fuzziesquirrel.com; h=cc:cc:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:sender:subject:subject:to; s=fm1; t=1667334348; x=
-	1667420748; bh=gCrK0HpvxyI8fnyZvFMIPKftzG4zx7+s4VILqIvH374=; b=a
-	Cg/1wQyzbC9zn4CIBLpkNIywp+/9At3PcKK/MSK7NSLAreisXbvb8uHvb+aQ9Jx0
-	bBsNwjCPFsoktbH/kJ327/kVQY8yJl6Hb8BEmlSq1g/VJp/r956e0/3O8PiT6TPn
-	A35gFC41JDKNq92maeWDg3gHKCGotJagW3ouFSs1BI6Wze8Mid/We1dZZk508a6S
-	84WIUeP0aITak1CiQiWSID7JLF19N3X3OF+vj/OanfM8H9Rn0x0V/nBHJaJQSnUm
-	/68hPWB8LoGK+OFr1bJbfcNtxVlVnhZiKaJYBsqUErNYVkvP3HCK3RDDBxMnhfae
-	dP1qziOybJlofXh6K7zDw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1667334348; x=1667420748; bh=gCrK0HpvxyI8fnyZvFMIPKftzG4z
-	x7+s4VILqIvH374=; b=B775qILKtAaCu6j5G+BQrgEzimtL7Iq+pL5IWyo36yVe
-	bhn5cGmRvEInzbfYB8iY4jRlbXIb+6jDo6uSbyHqUy4p9xBExtPvo8omR5s9CBkU
-	RIpq7OB9pDX5QusDFZXgZ4L20Uapwov1YZ4ON2X5iOkQ4l8JF9F/KH1n2ks1+cgD
-	ZHXak+A1ezCWoFXn7KTSyh6zev5CKQwdp8IVupqzGPe74Kv+347ymYyH9dyNaVPb
-	hzih/x9SxDfDjMn9d4EhCFB2m94E58017zm4Ir9EkjPcqQJLvXtIZDtJM1edT9tA
-	4YMJQCvwW/XKwwZD3BVVGAqeRFzaKt5+dVchHRwLGA==
-X-ME-Sender: <xms:zIBhYxV5Mmu-SIoJN8t-brcG4CImt2Z--qGNADjX0RGFtdw9JLuZVA>
-    <xme:zIBhYxmImBoqKoL9ouS4W3vQCfaxie7wxrEooYItSDgrtDHpiae0dev2eqRW8oNxC
-    4D3lZkphOTh2hUGJoM>
-X-ME-Received: <xmr:zIBhY9bApHmQYzEQlRUJ_NzJ9OLFq8eJRQogIC3AUnCWdwuuQi6cbtwm>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrudehgddufeejucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenuchmihhsshhinhhgucfvqfcufhhivghlugculdeftd
-    dmnecujfgurhepfffhvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpeeurhgr
-    ugcuuehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtg
-    homheqnecuggftrfgrthhtvghrnhepjeegheelvdektdffjedvuddvgeelkeejhedvffel
-    teeiuefhudevvefflefgleevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepsghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtgho
-    mh
-X-ME-Proxy: <xmx:zIBhY0XLkW7Jgvh8AwbRnWA86LGcol45yDT98vM82TnlyeBWPUHtIA>
-    <xmx:zIBhY7lOk4ZwXnuagp0WRgJpld4Prr5Y1MBtOj43BsvFt71op9E3fA>
-    <xmx:zIBhYxdX5SbI0bJPBgEHFhoN_hhhuMw2pbU8-KK2G8dv7RxHb1Q2Qw>
-    <xmx:zIBhYxRFkszr98r8dBPqwaDD6lJkE3WSr3yqqYYMs_trYFXX4VDRjw>
-Feedback-ID: i02c9470a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <openbmc@lists.ozlabs.org>; Tue, 1 Nov 2022 16:25:48 -0400 (EDT)
-Date: Tue, 1 Nov 2022 16:25:46 -0400
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Cc: openbmc@lists.ozlabs.org
-Subject: Re: project wide changes to maintainer ACLs
-Message-ID: <20221101202546.j6lsqzrecrelucxz@cheese>
-References: <20221031230552.5ssc33v2xnghooqy@cheese>
- <Y2FrJf0aT92bxM6E@heinlein.taila677.ts.net>
- <20221101193927.gh4cq6qqy4qbqtwd@cheese>
- <Y2F8Hue7ngTNiDkY@heinlein.taila677.ts.net>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4N23Bv4DdRz3cNR
+	for <openbmc@lists.ozlabs.org>; Wed,  2 Nov 2022 08:32:23 +1100 (AEDT)
+Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
+	by mx0b-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2A1JiYlx021750;
+	Tue, 1 Nov 2022 21:32:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=1QKJ9XLOHfaQ92Ibo5rkHkB7d50FOWJISZIWDpDmG3Y=;
+ b=a9BB3l0vnZutbjXDnS5VTuPVjRdZNlYYE/tB0VAW67KN4QG1E8+H1xv7r5DedLDUyA5+
+ mohWpMgaTkrWxWRYMMghRdlTfDXQuiePjjqe1rf5ROpS8LKmrVv/EtiAlJdTxz2T9gEY
+ iNsY+TACAhf7YO8GhEweX8IXn1RiVTZNvso5Wf4PeCS2N1853hK1f6KY7E5qdzHI8VVo
+ Ti8zunY1PYFty0ngPFk8gZUdDn9JGDDL8tERIkbZLf2HHFn6MDSivqQAwJXsTwFN6nb4
+ gOhODzdhsPCm0QcxLBoQwDtk+xTsFdT6J5Yjn+w+qzeGA1Vc363xARiEk0IJ9MwrXZFo 8Q== 
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com [169.63.214.131])
+	by mx0b-001b2d01.pphosted.com (PPS) with ESMTPS id 3kjrugvvj2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 01 Nov 2022 21:32:17 +0000
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+	by ppma01dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 2A1LLb0w013580;
+	Tue, 1 Nov 2022 21:32:17 GMT
+Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com [9.57.198.23])
+	by ppma01dal.us.ibm.com with ESMTP id 3kgutam58k-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 01 Nov 2022 21:32:17 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com ([9.208.128.117])
+	by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 2A1LWFoS1245858
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 1 Nov 2022 21:32:15 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 26F1958063;
+	Tue,  1 Nov 2022 21:32:15 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 80E4E58065;
+	Tue,  1 Nov 2022 21:32:14 +0000 (GMT)
+Received: from slate16.aus.stglabs.ibm.com (unknown [9.160.92.229])
+	by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Tue,  1 Nov 2022 21:32:14 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-6.0] ARM: dts: aspeed: p10bmc: Add occ-hwmon nodes
+Date: Tue,  1 Nov 2022 16:32:12 -0500
+Message-Id: <20221101213212.643472-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <Y2F8Hue7ngTNiDkY@heinlein.taila677.ts.net>
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: zzv3AtBwDtoe3PA9Na-5qhluf_kutfZW
+X-Proofpoint-ORIG-GUID: zzv3AtBwDtoe3PA9Na-5qhluf_kutfZW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-01_10,2022-11-01_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0
+ priorityscore=1501 mlxscore=0 suspectscore=0 phishscore=0 impostorscore=0
+ lowpriorityscore=0 spamscore=0 adultscore=0 mlxlogscore=792 malwarescore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211010147
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,43 +86,200 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Eddie James <eajames@linux.ibm.com>, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Nov 01, 2022 at 03:05:50PM -0500, Patrick Williams wrote:
->On Tue, Nov 01, 2022 at 03:39:27PM -0400, Brad Bishop wrote:
->
->> If I ignore GitHub and Gerrit project owners for a minute, I think the
->> ideal setup would be that everyone can leave a +1.  In order for a
->> change to be approved, all OWNERS of files touched must give a +1.  We
->> completely do away with +2.  No special groups or per-project access
->> rules are required for this.
->
->I'm not sure.
->
->a. Generally we don't want to wait for all OWNERS to give feedback.
->
->b. We typically want every touched file to have an owner to have given
->   "thumbs up".  ie, there has been a coverage by at least one reviewer.
->
->Maybe by "all OWNERS of files touched must give a +1" you meant (b)?
+Add the occ-hwmon nodes in order to specify that the occ-hwmon driver
+should not poll the OCC during initialization.
 
-Yes I meant b.  Thanks for clarifying.
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+---
+ arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts | 10 +++++
+ arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 40 ++++++++++++++++++++
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts | 20 ++++++++++
+ 3 files changed, 70 insertions(+)
 
->I do see some value in differentiating between +1 and +2.  When I am a
->maintainer of a project, I'll sometimes review a commit and give it a +1
->in order to give indication that "this seems fine to me but I'd like to
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts
+index 6789c1ec286a..72b687f45ebf 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts
+@@ -334,6 +334,11 @@ sbefifo@2400 {
+ 
+ 			fsi_occ0: occ {
+ 				compatible = "ibm,p10-occ";
++
++				occ-hwmon {
++					compatible = "ibm,p10-occ-hwmon";
++					ibm,no-poll-on-init;
++				};
+ 			};
+ 		};
+ 
+@@ -478,6 +483,11 @@ sbefifo@2400 {
+ 
+ 			fsi_occ1: occ {
+ 				compatible = "ibm,p10-occ";
++
++				occ-hwmon {
++					compatible = "ibm,p10-occ-hwmon";
++					ibm,no-poll-on-init;
++				};
+ 			};
+ 		};
+ 
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
+index fcc890e3ad73..1448ea895be4 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
+@@ -2550,6 +2550,11 @@ sbefifo@2400 {
+ 
+ 			fsi_occ0: occ {
+ 				compatible = "ibm,p10-occ";
++
++				occ-hwmon {
++					compatible = "ibm,p10-occ-hwmon";
++					ibm,no-poll-on-init;
++				};
+ 			};
+ 		};
+ 
+@@ -2694,6 +2699,11 @@ sbefifo@2400 {
+ 
+ 			fsi_occ1: occ {
+ 				compatible = "ibm,p10-occ";
++
++				occ-hwmon {
++					compatible = "ibm,p10-occ-hwmon";
++					ibm,no-poll-on-init;
++				};
+ 			};
+ 		};
+ 
+@@ -2838,6 +2848,11 @@ sbefifo@2400 {
+ 
+ 			fsi_occ2: occ {
+ 				compatible = "ibm,p10-occ";
++
++				occ-hwmon {
++					compatible = "ibm,p10-occ-hwmon";
++					ibm,no-poll-on-init;
++				};
+ 			};
+ 		};
+ 
+@@ -2982,6 +2997,11 @@ sbefifo@2400 {
+ 
+ 			fsi_occ3: occ {
+ 				compatible = "ibm,p10-occ";
++
++				occ-hwmon {
++					compatible = "ibm,p10-occ-hwmon";
++					ibm,no-poll-on-init;
++				};
+ 			};
+ 		};
+ 
+@@ -3126,6 +3146,11 @@ sbefifo@2400 {
+ 
+ 			fsi_occ4: occ {
+ 				compatible = "ibm,p10-occ";
++
++				occ-hwmon {
++					compatible = "ibm,p10-occ-hwmon";
++					ibm,no-poll-on-init;
++				};
+ 			};
+ 		};
+ 
+@@ -3270,6 +3295,11 @@ sbefifo@2400 {
+ 
+ 			fsi_occ5: occ {
+ 				compatible = "ibm,p10-occ";
++
++				occ-hwmon {
++					compatible = "ibm,p10-occ-hwmon";
++					ibm,no-poll-on-init;
++				};
+ 			};
+ 		};
+ 
+@@ -3414,6 +3444,11 @@ sbefifo@2400 {
+ 
+ 			fsi_occ6: occ {
+ 				compatible = "ibm,p10-occ";
++
++				occ-hwmon {
++					compatible = "ibm,p10-occ-hwmon";
++					ibm,no-poll-on-init;
++				};
+ 			};
+ 		};
+ 
+@@ -3558,6 +3593,11 @@ sbefifo@2400 {
+ 
+ 			fsi_occ7: occ {
+ 				compatible = "ibm,p10-occ";
++
++				occ-hwmon {
++					compatible = "ibm,p10-occ-hwmon";
++					ibm,no-poll-on-init;
++				};
+ 			};
+ 		};
+ 
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+index 4879da4cdbd2..4edaa62e3afb 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+@@ -444,6 +444,11 @@ sbefifo@2400 {
+ 
+ 			fsi_occ0: occ {
+ 				compatible = "ibm,p10-occ";
++
++				occ-hwmon {
++					compatible = "ibm,p10-occ-hwmon";
++					ibm,no-poll-on-init;
++				};
+ 			};
+ 		};
+ 
+@@ -588,6 +593,11 @@ sbefifo@2400 {
+ 
+ 			fsi_occ1: occ {
+ 				compatible = "ibm,p10-occ";
++
++				occ-hwmon {
++					compatible = "ibm,p10-occ-hwmon";
++					ibm,no-poll-on-init;
++				};
+ 			};
+ 		};
+ 
+@@ -732,6 +742,11 @@ sbefifo@2400 {
+ 
+ 			fsi_occ2: occ {
+ 				compatible = "ibm,p10-occ";
++
++				occ-hwmon {
++					compatible = "ibm,p10-occ-hwmon";
++					ibm,no-poll-on-init;
++				};
+ 			};
+ 		};
+ 
+@@ -876,6 +891,11 @@ sbefifo@2400 {
+ 
+ 			fsi_occ3: occ {
+ 				compatible = "ibm,p10-occ";
++
++				occ-hwmon {
++					compatible = "ibm,p10-occ-hwmon";
++					ibm,no-poll-on-init;
++				};
+ 			};
+ 		};
+ 
+-- 
+2.31.1
 
-I'm fairly sure I recall seeing comments like: what does it mean when a 
-maintainer gives a +1 so I'd guess this is a source of confusion for 
-people.  Maybe you could copy/paste a canned response in this
-situation?
-
->see some more feedback on it".  Often I will suggest the people I'm
->looking to get deeper feedback from.  I have a Gerrit query that I check
->a few times a week ("status open label:Code-Review=+1,me") that I can
->use to check back if those deeper-reviewers never get to it so that the
->commit doesn't stall out.
-
-Ok.. well, yeah if you are using +1/+2 in automation/queries then yeah 
-my canned response idea doesn't hold up.
