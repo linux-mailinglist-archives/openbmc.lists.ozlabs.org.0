@@ -1,61 +1,58 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EE6C2616923
-	for <lists+openbmc@lfdr.de>; Wed,  2 Nov 2022 17:33:54 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 37EE861695C
+	for <lists+openbmc@lfdr.de>; Wed,  2 Nov 2022 17:41:24 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4N2XWy1ZWbz3cDp
-	for <lists+openbmc@lfdr.de>; Thu,  3 Nov 2022 03:33:50 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=gm1 header.b=k0kLx5rZ;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4N2Xhf0z4kz3cGk
+	for <lists+openbmc@lfdr.de>; Thu,  3 Nov 2022 03:41:22 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bootlin.com (client-ip=2001:4b98:dc4:8::240; helo=mslow1.mail.gandi.net; envelope-from=alexandre.belloni@bootlin.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=gm1 header.b=k0kLx5rZ;
-	dkim-atps=neutral
-X-Greylist: delayed 552 seconds by postgrey-1.36 at boromir; Thu, 03 Nov 2022 03:33:17 AEDT
-Received: from mslow1.mail.gandi.net (mslow1.mail.gandi.net [IPv6:2001:4b98:dc4:8::240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.160.44; helo=mail-oa1-f44.google.com; envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
+Received: from mail-oa1-f44.google.com (mail-oa1-f44.google.com [209.85.160.44])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4N2XWK3VsTz2xGq
-	for <openbmc@lists.ozlabs.org>; Thu,  3 Nov 2022 03:33:17 +1100 (AEDT)
-Received: from relay4-d.mail.gandi.net (unknown [217.70.183.196])
-	by mslow1.mail.gandi.net (Postfix) with ESMTP id E6752D1EE6
-	for <openbmc@lists.ozlabs.org>; Wed,  2 Nov 2022 16:24:06 +0000 (UTC)
-Received: (Authenticated sender: alexandre.belloni@bootlin.com)
-	by mail.gandi.net (Postfix) with ESMTPSA id 57719E0009;
-	Wed,  2 Nov 2022 16:23:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1667406224;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=12FZYtpp3TNBfA195rczrGKRPIW2epUEipXnIrnelNg=;
-	b=k0kLx5rZzd3GTdZryecEd73PZ/bILTPUMEl8xEwFd0WpmFcqOjUwA2sswbg1aIY/KK9Qpg
-	2p322+QVzXFJEuboQEaOq6l2p9RJ8XdkV7oAwGqGBIMHquph4Vsf90tgbaCc3Uu5H7u6IK
-	A+/mGevzXNiiruQDLSoAf2TaPwnV/otXnerrR2G80QPQhiWK7oCVHE9YjPqwO+Ot2/hDMK
-	Wx0iMS7291GTWK/PX0UhtCfTno/Wv63pVKPCMUQt5wESsZIxh4UR3queU0hqnr2bv7PWLC
-	vRzm2QP29so2u9YmkLXWqm7kFqXJciCFMD+3KZR3mZAWFoHAfJGL9UJXqW24lA==
-Date: Wed, 2 Nov 2022 17:23:41 +0100
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
-To: Tali Perry <tali.perry1@gmail.com>,
-	Avi Fishman <avifishman70@gmail.com>, Nancy Yuen <yuenn@google.com>,
-	Patrick Venture <venture@google.com>,
-	Alessandro Zummo <a.zummo@towertech.it>,
-	Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@pengutronix.de>,
-	Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH 0/9] rtc: Convert i2c drivers to .probe_new()
-Message-ID: <166740615895.299096.14166888636281572653.b4-ty@bootlin.com>
-References: <20221021130706.178687-1-u.kleine-koenig@pengutronix.de>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4N2XhF1Tjhz2xKV
+	for <openbmc@lists.ozlabs.org>; Thu,  3 Nov 2022 03:40:59 +1100 (AEDT)
+Received: by mail-oa1-f44.google.com with SMTP id 586e51a60fabf-13be3ef361dso20863736fac.12
+        for <openbmc@lists.ozlabs.org>; Wed, 02 Nov 2022 09:40:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=m+qIpBdMeiwMSdKxhevqq/k7KwaaJsQLzkW85JVdIao=;
+        b=MDxWx56yyPsYiUYoLjICkl7YnufLK/5IoN6tNEw5DXre59hF5PucEb6EdwF+3luw/t
+         A0Wgw6sU7GMfU3+M6Pm/tJJtKA774UMXqlgrMA6t+DyqDG0XpDUyCbw/8rOnC9IzQEfR
+         ejxgwaliRMYgnx1xeOfgTDGg9fuN6kJyQ+BknFn9k8A5nA3popRI6EXXd5iaLfQoaGby
+         OuBBZQ58CGn5b5vxVVA2y/POl5TYYPFdfoX2wPjZclcYvaOcHB1FcAZiXY29iJxADhEu
+         vJxN5KnFTcKDNc7paxCe2Nk9XPPoiXDLGHgNPssYrQODyZwBWtBEk5EcK0w8WnU4Vkjt
+         c9Fg==
+X-Gm-Message-State: ACrzQf3z8JjNdivxK3SoER1nI48C/nKJdWE81XbA7GX3d19mrtSirJXO
+	C6e+6F5vfxM1g9R3TkVnPg==
+X-Google-Smtp-Source: AMsMyM6f3lSc5rozDexOGm1YJwC+cz1fMbEXwplGHe3C/bKL7xZEBfeU6Fgy9bW+3b/j+e12LhudwQ==
+X-Received: by 2002:a05:6870:785:b0:131:e39c:9140 with SMTP id en5-20020a056870078500b00131e39c9140mr15365528oab.261.1667407256894;
+        Wed, 02 Nov 2022 09:40:56 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id i16-20020a056870a69000b0013b8b3710bfsm6213718oam.13.2022.11.02.09.40.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 02 Nov 2022 09:40:56 -0700 (PDT)
+Received: (nullmailer pid 4016578 invoked by uid 1000);
+	Wed, 02 Nov 2022 16:40:58 -0000
+Date: Wed, 2 Nov 2022 11:40:58 -0500
+From: Rob Herring <robh@kernel.org>
+To: Zev Weiss <zev@bewilderbeest.net>
+Subject: Re: [PATCH v2 2/3] dt-bindings: regulator: Add regulator-output
+ binding
+Message-ID: <166740725744.4016522.5256752936838143557.robh@kernel.org>
+References: <20221031233704.22575-1-zev@bewilderbeest.net>
+ <20221031233704.22575-3-zev@bewilderbeest.net>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221021130706.178687-1-u.kleine-koenig@pengutronix.de>
+In-Reply-To: <20221031233704.22575-3-zev@bewilderbeest.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,54 +64,24 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Wolfram Sang <wsa@kernel.org>, linux-rtc@vger.kernel.org, openbmc@lists.ozlabs.org, Benjamin Fair <benjaminfair@google.com>, kernel@pengutronix.de
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, Liam Girdwood <lgirdwood@gmail.com>, Rob Herring <robh+dt@kernel.org>, Naresh Solanki <naresh.solanki@9elements.com>, Laxman Dewangan <ldewangan@nvidia.com>, Mark Brown <broonie@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Patrick Rudolph <patrick.rudolph@9elements.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 21 Oct 2022 15:06:57 +0200, Uwe Kleine-König wrote:
-> See commit b8a1a4cd5a98 ("i2c: Provide a temporary .probe_new() call-back
-> type") for the rationale.
+
+On Mon, 31 Oct 2022 16:37:03 -0700, Zev Weiss wrote:
+> This describes a power output supplied by a regulator, such as a
+> power outlet on a power distribution unit (PDU).
 > 
-> Best regards
-> Uwe
+> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+> ---
 > 
-> Uwe Kleine-König (9):
->   rtc: abx80x: Convert to .probe_new()
->   rtc: ds1307: Convert to .probe_new()
->   rtc: isl1208: Convert to .probe_new()
->   rtc: m41t80: Convert to .probe_new()
->   rtc: nct3018y: Convert to .probe_new()
->   rtc: pcf2127: Convert to .probe_new()
->   rtc: rs5c372: Convert to .probe_new()
->   rtc: rv8803: Convert to .probe_new()
->   rtc: rx8025: Convert to .probe_new()
+> Changes since v1:
+>  - removed 'regulator-leave-on' property
 > 
-> [...]
+>  .../bindings/regulator/regulator-output.yaml  | 39 +++++++++++++++++++
+>  1 file changed, 39 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/regulator/regulator-output.yaml
+> 
 
-Applied, thanks!
-
-[1/9] rtc: abx80x: Convert to .probe_new()
-      commit: 4c112e62e093b216e10fbe568e51447b9e3fee34
-[3/9] rtc: isl1208: Convert to .probe_new()
-      commit: 44b8ae3ed23f0e2b5bc680c0a3f4be7c5597cb78
-[4/9] rtc: m41t80: Convert to .probe_new()
-      commit: 52b31f00779690274c2c54eb3cd939004ac077e4
-[5/9] rtc: nct3018y: Convert to .probe_new()
-      commit: a9e9636a71039f5aa270091209f0580c638e341f
-[6/9] rtc: pcf2127: Convert to .probe_new()
-      commit: e3be426bc755cb4946ee126ec23cd94cbe42251f
-[7/9] rtc: rs5c372: Convert to .probe_new()
-      commit: b08e47b0c8a83f4de9676122064bf57baa4ea1e8
-[8/9] rtc: rv8803: Convert to .probe_new()
-      commit: 1107e384f95eeeeda2ae98f0a162b4fb9f6015cd
-[9/9] rtc: rx8025: Convert to .probe_new()
-      commit: 789c2c83c89957e9c27e419801c2bab3bbf7a8b0
-
-Note that patch attestation reports bad signature on your patches.
-
-Best regards,
-
--- 
-Alexandre Belloni, co-owner and COO, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+Reviewed-by: Rob Herring <robh@kernel.org>
