@@ -2,48 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9178161A6AC
-	for <lists+openbmc@lfdr.de>; Sat,  5 Nov 2022 02:35:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A24B661A6A7
+	for <lists+openbmc@lfdr.de>; Sat,  5 Nov 2022 02:34:06 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4N40RV2qfyz3cLX
-	for <lists+openbmc@lfdr.de>; Sat,  5 Nov 2022 12:35:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4N40QN3c8Yz3cfF
+	for <lists+openbmc@lfdr.de>; Sat,  5 Nov 2022 12:34:04 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=Jk7aKEiT;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=CGBMyJP9;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=Jk7aKEiT;
+	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=CGBMyJP9;
 	dkim-atps=neutral
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [IPv6:2605:2700:0:5::4713:9cab])
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [71.19.156.171])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4N40Pp05HXz3bj1;
-	Sat,  5 Nov 2022 12:33:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4N40Pn04Tzz3bj1
+	for <openbmc@lists.ozlabs.org>; Sat,  5 Nov 2022 12:33:32 +1100 (AEDT)
 Received: from hatter.bewilderbeest.net (97-113-250-99.tukw.qwest.net [97.113.250.99])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: zev)
-	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 85675F1;
+	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id EBDE491A;
 	Fri,  4 Nov 2022 18:33:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
-	s=thorn; t=1667612008;
-	bh=0kVuSBCQW7dnCQkFGMlB2Vk2wcSiucoD2YkTfpm6/UE=;
-	h=From:To:Cc:Subject:Date:From;
-	b=Jk7aKEiTgjXw62nT31xtCXGFBdlrNRSFQ7kKgJfUIboZnpAnHCfBNkgFgeOLbU1YJ
-	 7LQX+XtTq5P87Zznn2sw33zKvSquli93DmVKKR/F4PzmTEgMhU5woq3o33lOluErzW
-	 0Vf781mWTnh83efDGWXvSyznyj8ipZtO7ReT5DyA=
+	s=thorn; t=1667612009;
+	bh=havEPQ5Zc7FUigJMnjIkknNS7EN8eM/Wdjj1wV/opao=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=CGBMyJP9v0UTGEWC6qTVqeU1LgFCjmouzNrHdBYlgpcVCkbKiPRdtTVQTVkbJHMy5
+	 kjOrik6cieDTnTheOMWYQ6tDDTnVDnZP2fXTUoQjmFAgn2ZY4RvTim1JaBNYwVKoj1
+	 XmS1QEOt2YpdzsFhD2AKg2p/QHpmgiuWO1MkCtrs=
 From: Zev Weiss <zev@bewilderbeest.net>
 To: linux-arm-kernel@lists.infradead.org,
 	linux-aspeed@lists.ozlabs.org,
 	soc@kernel.org
-Subject: [PATCH 0/2] ARM: dts: aspeed: Add Delta AHE-50DC BMC
-Date: Fri,  4 Nov 2022 18:33:19 -0700
-Message-Id: <20221105013321.2719-1-zev@bewilderbeest.net>
+Subject: [PATCH 1/2] dt-bindings: arm: aspeed: document Delta AHE-50DC BMC
+Date: Fri,  4 Nov 2022 18:33:20 -0700
+Message-Id: <20221105013321.2719-2-zev@bewilderbeest.net>
 X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221105013321.2719-1-zev@bewilderbeest.net>
+References: <20221105013321.2719-1-zev@bewilderbeest.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -61,26 +63,25 @@ Cc: devicetree@vger.kernel.org, Zev Weiss <zev@bewilderbeest.net>, Arnd Bergmann
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello,
+Document Delta AHE-50DC BMC board compatible.
 
-This series adds a device-tree for the BMCs of the Delta AHE-50DC
-Open19 power shelf.  The first patch adds a compat entry to the Aspeed
-bindings; the second adds the device-tree itself.
+Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+---
+ Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-
-Thanks,
-Zev
-
-Zev Weiss (2):
-  dt-bindings: arm: aspeed: document Delta AHE-50DC BMC
-  ARM: dts: aspeed: Add Delta AHE-50DC BMC
-
- .../bindings/arm/aspeed/aspeed.yaml           |    1 +
- arch/arm/boot/dts/Makefile                    |    1 +
- .../arm/boot/dts/aspeed-bmc-delta-ahe50dc.dts | 1094 +++++++++++++++++
- 3 files changed, 1096 insertions(+)
- create mode 100644 arch/arm/boot/dts/aspeed-bmc-delta-ahe50dc.dts
-
+diff --git a/Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml b/Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml
+index 217a1d674863..272626937ecd 100644
+--- a/Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml
++++ b/Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml
+@@ -17,6 +17,7 @@ properties:
+       - description: AST2400 based boards
+         items:
+           - enum:
++              - delta,ahe50dc-bmc
+               - facebook,galaxy100-bmc
+               - facebook,wedge100-bmc
+               - facebook,wedge40-bmc
 -- 
 2.38.1
 
