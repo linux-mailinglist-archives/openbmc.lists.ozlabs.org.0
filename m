@@ -1,72 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67B4261E2BB
-	for <lists+openbmc@lfdr.de>; Sun,  6 Nov 2022 15:50:44 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 62DB061E2C4
+	for <lists+openbmc@lfdr.de>; Sun,  6 Nov 2022 15:52:22 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4N4y361b7Jz3cMx
-	for <lists+openbmc@lfdr.de>; Mon,  7 Nov 2022 01:50:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4N4y502MNWz3cHh
+	for <lists+openbmc@lfdr.de>; Mon,  7 Nov 2022 01:52:20 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=Wm8Erbfm;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=MdkhUnBQ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.17.20; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.15.15; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=Wm8Erbfm;
+	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=MdkhUnBQ;
 	dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4N4y2R6Pn2z2xCd
-	for <openbmc@lists.ozlabs.org>; Mon,  7 Nov 2022 01:50:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4N4y4S0Swhz2xJ6
+	for <openbmc@lists.ozlabs.org>; Mon,  7 Nov 2022 01:51:51 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net; s=s31663417;
-	t=1667746186; bh=ECV+FbP67f13YOWH9y/B96gfaAMWtHMN4kiwg6xe/ew=;
+	t=1667746292; bh=EDw7/ApaRoHYrFz5JFfVxSbpvRHo10Rc+evSfgmLvrk=;
 	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Wm8ErbfmDYMYL47J70Vold6InuuMsMDRJlB3C376PAISlSpxry1odeOX5tKlrj7OG
-	 OFOmpADRZ9A8s7ItjUx0VBJYrQLXHJMQCAJ7v2Zc1CDeFI4+PHr3tqGJeejd387q1q
-	 NbCwn8e3x5LEoaj8LX86g1MhmRpqxPZ0X+AqP/sTygeEXtT0vRBwVBcrys0dEdD4XA
-	 65zG/sqagDSWAN8zS8Z1Et9CBAHHdgc9Qa34NrWYaZfKuuA+G7SI2Xu/9mgQK3wtV+
-	 TrPkGJnfzC3CFWXRR9Bk64qkR9Y0HMGwauL/3RNIGLpWNYBxnxsac2TuB9P+6WMugY
-	 /Ryi2pTPa6T5A==
+	b=MdkhUnBQDQaG7MrQw/QBa/+PdAyjUrTGB6RVIWH8I9wm6JYevgaxFNe4QjeWaHKkP
+	 RGmEGLlB+JI2us4eBl87Wtc3xqerLCvzIXV8zJ+28VapUl96ts5oNn2pL4C/vGPRBB
+	 4WYP3NJxpOIJgRos5YQlnPApIdC6xXr1+jrqe/GURG2kn1bV/htLs1B6oeWdW9VuFv
+	 OvSy3QMuaM6t8tUsdem+ASDJoVb3l914C+kbMDoKChE/0PZpvRof7rOsWzwbnQESeX
+	 8g6zIP0Hp1OpVDxgCa4bDeES3B22rGG+5asot335zXSU+K2bxGZ/NnPHB5f63qLqOh
+	 DVEcpFBBZpXAQ==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from probook ([87.78.44.193]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MQvD5-1ocWR32bFn-00O363; Sun, 06
- Nov 2022 15:49:46 +0100
-Date: Sun, 6 Nov 2022 15:49:43 +0100
+Received: from probook ([87.78.44.193]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1McpJg-1pQCjW07Yg-00ZztL; Sun, 06
+ Nov 2022 15:51:32 +0100
+Date: Sun, 6 Nov 2022 15:51:30 +0100
 From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 To: kernel test robot <lkp@intel.com>
-Subject: Re: [PATCH 8/8] spi: wpcm-fiu: Add direct map support
-Message-ID: <Y2fJhzeXQgG5DS1U@probook>
-References: <20221105185911.1547847-9-j.neuschaefer@gmx.net>
- <202211060513.HAfQX0DY-lkp@intel.com>
+Subject: Re: [PATCH 7/8] spi: wpcm-fiu: Add driver for Nuvoton WPCM450 Flash
+ Interface Unit (FIU)
+Message-ID: <Y2fJ8jyZDC12v8pQ@probook>
+References: <20221105185911.1547847-8-j.neuschaefer@gmx.net>
+ <202211060522.PA6tWBXx-lkp@intel.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="pjGtmQLcgVoAQZIl"
+	protocol="application/pgp-signature"; boundary="9VS3WmYdJL+KGKqF"
 Content-Disposition: inline
-In-Reply-To: <202211060513.HAfQX0DY-lkp@intel.com>
-X-Provags-ID: V03:K1:sJ2SqQ6RGeuHWMwFP7t5iXt67gyTZyOmJJqF6LgTdZCth2Pkfvp
- mO5tZHRmO3dVr6RNgK0TL0weozaLrCOk4TTP+5r3AcqUUNKyxvQhPyDvmLLOQf2NQ+7uNGV
- H40KE0ujNuJL6Kt646+lmbXu4h/p6HUdqD+Ig5/i6sjKvEpaUsklXoGEBLnzyTLfazIw3Yi
- wNOrIa36Rw1huGNQSwjtg==
+In-Reply-To: <202211060522.PA6tWBXx-lkp@intel.com>
+X-Provags-ID: V03:K1:oJ5ru1cyrw7RDcUHnSy09tCJMmYiyA/udXX7LddEiK7VDDR+rZZ
+ +GV9CD7tqRbbej7qEZ9PLqx+a8aNSxrrl9HDJdGWxHAHFzjlluEr1uPkBGpXmnGDSdJccRz
+ Ml5fWx2pc5PKhd/cGEKM8kf55FotaPq8iNFlkt/0SWQF+TN/7XcH9vGBRLbXtqjydw0JOH+
+ 7+8lopmfzUb1y8Anumhzg==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:WSxHhovQB+0=;pq1/NUCX5J84EDsRYejbVfZlgFf
- Vt9dBCEY6KELW0DhkrVBwh7UtAY1VQBY5SUbwpbzAVgax+jTcT+uRyBfbxp8a4rz6yd10ozw7
- zpZAnY6as+CBd8z38VteSc9C0LMjxYqyl2jXJSeM55S+rJdCzL0DzPajdc/Sde3yi0TqOtP/+
- hVoahS8WYzqkT7XqGXRT4ydjwXKMqHAle6HWQjgA6mzyc2fFTgCxobvWSciDit51Fn0ZNYeuf
- AfB7/SLBOX0dmNPGy2VHGsZfYPczjAY1di1ZI9gWvSf5hzTjr050OighHTR6D3S70xK3NtzLU
- wjkK2IXiyZW75kzpmytNUE06whU/dl/2vVXWvgUK7ycaHpL+M7lqnF8/SHZMXmM5A31JcVJj5
- QV4NstcxBs1yZ2+ztgQmrfMc/gf3zg66+TVwCpRjyZPPpgI84YtV+eCHnxcKfkm0AooKDCLvQ
- Ed5/R3lbDYBBXSqLqhlxwzlT2m9ujfC3pE93zwbRRkNa4rQJSgy4shu6+YLpDWYOSqbfrSXc5
- eYZ8AcKwLhTtaAd3J3GYYRuzgTtAuIVeKwX3MUJuSzF/n6PEPvVNxaAS3sx2327ZN4hR3erde
- hpONkpWsIhPfDr/mNBi8WoHBGk2F5TOCsxcYq4jihPz7iBkc5lSD1YuCOsLNWTKbt6rfiksUV
- QTISCgItLAySJpIQ9i8U3SnXNkji1w3TuCNYC3j77JrcE6WV4mwfSMHI27nDqVECySAFOKwej
- VvgPGVBSS9DgsHNvDM9aSwDrY1tmgv6Ev45GZ50j2sDiftdHxVKmi8uGSeh9Bf1ys+Ojbc9Vt
- QACe7AzyiIlQYckywrDGUDa+Zl7FCrWV19EmpH1uY9GL0Ya4s8d1p9sfePfENt2R5bklT8I3a
- nuZ+aVs+UHNDgsmImIab0/bvQr7BdkeeTSWnVrBl3nSCcCgvDUNwX5Ahjp5wB37nlMgIqfm/m
- beuTJg==
+UI-OutboundReport: notjunk:1;M01:P0:DXR6bHdGeK0=;tnNCRqf0Konp127/y0kqNWgv1+N
+ UnpAnfYAphWaHbTLTz01KKi2ydds6L6QP0fIYyxg90eq0AsZApvsniEXYRMUQ6CBdYznNnGdL
+ XcyID2poxX8vYn6YKboDCnagsk1GGks3DWCSjyZYNTnwnv/aCUnMvvnPnuseOoNIVyYxoPLLE
+ XqNmGAkWe6IuKdsKpxRJXd0530CNVSdyXOjXSHwiaJ4EmUfwZTiPx90KFTVL7aE5VTI9fKW91
+ DWoNhqh4TDmG31i/og9+EdQ1EHaz5TRs9CaYIWFnPmuffCpyPxwhal0NuOcb0idB7GBd1z+dl
+ wJCBK5varNJS+XXPEqDTWT77PPCgRwWApNyWa0aTPPbkQrgHC3Cxb/fvaWn8jIKLJ4XP41lNc
+ HBnskvTa3YHfkuFQoQMAn+fVlsDQIEMxqyGIIX4e14lV7V9aJ03BrjmzhrYXWNPaqccVyzhjU
+ Wctq8EbBvbJ8wycLMFKXra7x00Ly/LaaC9bRTrFZv+HXhBUOfSEBu+xzNUgl2nTvo5T/GQxQ6
+ Kbm34Xle3MUYkG4V+NX35ca+p2lDFeqr5+EmlzLN0w7uukeVOblCsCW73ufuwFVjMzrfky/fh
+ UPlGtM7au9AHR2rkU6mLYcOqxY8Y2iI47VngFBQheaAHTrWZe5QQE3/a6l/dp7IbhNd3ObmRz
+ RB4cJIfwcAycdsjpIlT4xHlEOKdTPwQmlvJUPENe6YgkevEUX1AEP/XJSIcrH9FWHquUn7SGF
+ bbUOJhBna93HVQe+1PzYpCJs87a9gexKucyvR8TzSE9SMiSCbtMcN+OMFGTkDKIW9SY5PXiWv
+ xSYw/CMq6K3031aUX9LDzahtBOyGTGf+vwTppnJmjjWyWzlCwCVMv5bSAtG1y4XQzmvqpfU4x
+ Qd44EHPUeJLDtVHC/C5Im+vly6n4R9MFtlDKxIZAYB6OxhLbnNev/nsVaqiBmQ/MF8hfJifnc
+ TLNnjg==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,37 +84,35 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---pjGtmQLcgVoAQZIl
+--9VS3WmYdJL+KGKqF
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-On Sun, Nov 06, 2022 at 05:35:24AM +0800, kernel test robot wrote:
-> >> drivers/spi/spi-wpcm-fiu.c:424:24: error: initialization of 'ssize_t (*)(struct spi_mem_dirmap_desc *, u64,  size_t,  void *)' {aka 'long int (*)(struct spi_mem_dirmap_desc *, long long unsigned int,  long unsigned int,  void *)'} from incompatible pointer type 'int (*)(struct spi_mem_dirmap_desc *, u64,  size_t,  void *)' {aka 'int (*)(struct spi_mem_dirmap_desc *, long long unsigned int,  long unsigned int,  void *)'} [-Werror=incompatible-pointer-types]
->      424 |         .dirmap_read = wpcm_fiu_direct_read,
->          |                        ^~~~~~~~~~~~~~~~~~~~
->    drivers/spi/spi-wpcm-fiu.c:424:24: note: (near initialization for 'wpcm_fiu_mem_ops.dirmap_read')
->    cc1: some warnings being treated as errors
+On Sun, Nov 06, 2022 at 05:35:26AM +0800, kernel test robot wrote:
+> >> drivers/spi/spi-wpcm-fiu.c:296:11: error: positional initialization of field in 'struct' declared with 'designated_init' attribute [-Werror=designated-init]
+>      296 |         { wpcm_fiu_normal_match, wpcm_fiu_normal_exec },
+>          |           ^~~~~~~~~~~~~~~~~~~~~
 
-Indeed. I'll fix it.
+Alright, this is not a bad idea, I'll change it.
 
---pjGtmQLcgVoAQZIl
+--9VS3WmYdJL+KGKqF
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmNnyYcACgkQCDBEmo7z
-X9v61w/+Io1ta7R0TS2m7Vkejmdcl6DZSvXI2z5VpV9J4y3LaDAzvKnb2FGVIcX3
-czQ76JDo26wMKTHFxb+PoV/BDss+5c9oPMHmb1AnGMDX/348gPnbDtrASxMnCWkr
-pkLpenYQG+EotLl0LRQH5HPCROwKx7sLqDdmcO55GyYLRVv8JIZ4zzdEangBHjph
-td4oRWimW/FD3ADtYMu4iGNJGVG4rwwpo6BGGUmJFYLv2OWauk65ByH0x1Iv42cm
-23JFPtu8IUctqI91HULI1sJGrHIzGMOX54iJmcRyNJc7U5w6YFaNRxDJ5HbToywe
-GOE3t53pw99xuNMC/VzMyUL4dCjqpoxT0GYQFxp4bIRgSKXGeNMG8QZGlZYKNAsH
-9m2QW6IwGaUWP8cCzeoaTxv1yOEYNsEO2KR6wQsLNl9Y/oNUfKxlArGvFjN0phx8
-SKIm91KyCU9UI/bcdHWYx05fIba/BgMIldPbwasp/2DKF4j7nCe5O89uB1Uh6OZy
-a3VXTcu+FKqQMk5iekUgEGAud6vgEkcfNfyGNxSQbt/LYXNKZXnimWQgaOp7mesR
-lm14A3Ic0cJX4GHmH12y8YZmGp31y4i+KVoqDrcFF9TPMtkTnKcSfe8vVewDFh3B
-4Jefen+bjYZpy02U92Z0h9kh8iqEkj+crx+wtHJKHIopJzV0gBk=
-=+33i
+iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmNnyfEACgkQCDBEmo7z
+X9vymg//W339DCLRB060/F+UAzAMGsYUWYjtFlIH2gAOSbNzKncYoBkyaM5vZWkm
+phYrLRCBOCMU1KRi80baQxKjrdRIa+jXGqFV7c9pw/YgrgiZ/Qhxbw87JO3FN/i1
+o176DXK+3TUMa6sJWM1cdTvIfZe3pgeB56948Zd3B8wCd+HaReC04kQ7qxupnzwd
+bMJeZwJYUVYWZlGdy2Mai59gWGihBviPr5fY1eBXzz8R32FcB+GswNW7xkKdn/W8
+JyMlTqEOnw8dJBkpmedWvRdXbN5uCmNnvSABIQvvbDuSFDenueZnGmKSbMNS9MoJ
+wkgaWIGz1Npy3DyXBbAKVGbyKaXbYnAkzWGYAEZRFPns/A+rqroxaRw2CnkNCAtm
+n8+cA1ZE3F5WAnhd6B1AL1m2Be8rghswOvIDNblCK72IM0D9XGgayw9IiwD8SKYV
+s2fL2LeJXfm1K9ukwJVm2GlmhUkrXb5VjBqSszghtcIIoljyQx96xuT+aCK6qsiT
+0gaEW+PCMoJ/RdtO4f61tcYU7+H2++MVn3oN5TU6zWIUFN62kJcm5Tj8rhON89LA
+mxZVawZe57wHlamFRByWW2qnGglcg0nMoRAIEV1HZaaQTBnLB+0EFsjdZjxJC9IP
+mH+iahGDdgXQrEajed/JswQKHyXieK0hVaoxHmhmeJysBckPv3c=
+=pOjm
 -----END PGP SIGNATURE-----
 
---pjGtmQLcgVoAQZIl--
+--9VS3WmYdJL+KGKqF--
