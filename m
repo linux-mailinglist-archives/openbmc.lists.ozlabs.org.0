@@ -2,75 +2,79 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3214461F2A5
-	for <lists+openbmc@lfdr.de>; Mon,  7 Nov 2022 13:12:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 70F3E61F7E2
+	for <lists+openbmc@lfdr.de>; Mon,  7 Nov 2022 16:42:04 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4N5VVd0j4Nz3cMs
-	for <lists+openbmc@lfdr.de>; Mon,  7 Nov 2022 23:12:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4N5b7t2hM7z3cLX
+	for <lists+openbmc@lfdr.de>; Tue,  8 Nov 2022 02:42:02 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=Z33AKJoE;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=FUsn/m+z;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.17.22; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=Z33AKJoE;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=FUsn/m+z;
 	dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4N5VTz4SsFz3bms
-	for <openbmc@lists.ozlabs.org>; Mon,  7 Nov 2022 23:12:22 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net; s=s31663417;
-	t=1667823128; bh=TthCH3MyFeU/53rL5fOF2FHb0MHylxKNaTSlZ2AoxCA=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-	b=Z33AKJoE+TjApwXXXAJcGicSIS3Ap3+hGcQ1cx6c05oLHC5/Sk927mE7S6vzBmiCY
-	 CTRIIRGeoSoUHfetu0bjdbV+VLU3AYxBrma53If3tqk1lBPYhLaIUypHu2luFK+GWZ
-	 GLIoqHFY/uom68aZHgYeIDs7l+ptFNeSsy+NxQzHOpAVqybJdEvFVqhhgCSrgGiTwP
-	 2GNssV2qyaDgOBw0WVyZQrGAcEyxEbroN02xDyjYQbBMauuRttCqIlksvQlB4s7Wjm
-	 CXdokptZalPCIUtwMqUt8KDxDcrVBpC+HxIO3R7OE5vIDTi87z6chwHjOkfe9g25FJ
-	 q4qz1gc9rjqzg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from probook ([95.223.44.31]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mel81-1pSRnZ1vdt-00ajmS; Mon, 07
- Nov 2022 13:12:08 +0100
-Date: Mon, 7 Nov 2022 13:12:08 +0100
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Subject: Re: [PATCH 3/8] dt-bindings: spi: Add Nuvoton WPCM450 Flash
- Interface Unit (FIU)
-Message-ID: <Y2j2GDKsvXwAdzg/@probook>
-References: <20221105185911.1547847-1-j.neuschaefer@gmx.net>
- <20221105185911.1547847-4-j.neuschaefer@gmx.net>
- <066919b1-c43d-f8ed-0191-cce8c575ee37@linaro.org>
- <Y2fIjSKAGleEtjHe@probook>
- <2400e167-073e-65fa-7fe6-b64a34bce256@linaro.org>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4N5b7F2Nqgz2yR9
+	for <openbmc@lists.ozlabs.org>; Tue,  8 Nov 2022 02:41:28 +1100 (AEDT)
+Received: from pps.filterd (m0098399.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.5/8.17.1.5) with ESMTP id 2A7EwgKi027533;
+	Mon, 7 Nov 2022 15:41:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=XdOf7TAGNV9srqmnnQaP22Zn71KDByTV27xRYmqzlGA=;
+ b=FUsn/m+zb33ERCJN5hEqjaNyeqF3QV70H7OOuXNsI85JYRGhUjsDrdPniFZY/QCkru50
+ 8QOWeVNGzUPdMZFJuN0j91bgI0PYgysFjF8AtBhj+pV7gqXB8d0PKWgRkViSfpcywUsG
+ VEBpGixA+H7QPRIuQMH2JELAvOGTnCRsS0eiJAj3hBIDPRbOlZmmJ4G0Eq3tVoJiZ1I5
+ BnIoxgJWW0eoRXhx4GjNRJPPgCcj31vS6fajHCaFGiJguI5R2A5EPoQE10xypDCFGKo7
+ Qc2SuCPiJfNklqTnfunMGvRQdxN8xqSjFwMTMOPC+MyVfklcIcKKz7E4uacDW0yLoimj WA== 
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com [169.62.189.11])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3kp8bf9dg3-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 07 Nov 2022 15:41:20 +0000
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+	by ppma03dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 2A7FMt58023947;
+	Mon, 7 Nov 2022 15:41:19 GMT
+Received: from b01cxnp22033.gho.pok.ibm.com (b01cxnp22033.gho.pok.ibm.com [9.57.198.23])
+	by ppma03dal.us.ibm.com with ESMTP id 3kngphvph8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Mon, 07 Nov 2022 15:41:19 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com ([9.208.128.112])
+	by b01cxnp22033.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 2A7FfIKs63963440
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Mon, 7 Nov 2022 15:41:18 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 220EE58058;
+	Mon,  7 Nov 2022 15:41:18 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 7761B5805A;
+	Mon,  7 Nov 2022 15:41:17 +0000 (GMT)
+Received: from slate16.aus.stglabs.ibm.com (unknown [9.65.228.202])
+	by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Mon,  7 Nov 2022 15:41:17 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-6.0] ARM: dts: aspeed: bonnell: Update incorrect eeprom address
+Date: Mon,  7 Nov 2022 09:41:14 -0600
+Message-Id: <20221107154114.13484-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="sBTt7LkDM7vI6FGs"
-Content-Disposition: inline
-In-Reply-To: <2400e167-073e-65fa-7fe6-b64a34bce256@linaro.org>
-X-Provags-ID: V03:K1:CsGqJgqR4n1lj798VMfbtLWI75P+FvbQ2ahoJ149atUQXYkWxQR
- A+UfigcIimbggR3yNWJeKwgQmf/dEBheHvGowYCRl6nlPWgplkuKBRMmJ4WePrVrc/qutMb
- Lg2DAcLqqVTraSFi/SSuWkfwZbE4G1XQhpySgkO76qjCp4VlvBd1mlreoxVBEtfXLBBGPf0
- 628UrCUYOYvaDhOjDV8UQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:wRs6Hd/unZ0=;EydYN8ey+yFLMSg/dNiej0V9srE
- KGKBb7MhjVqdRbiR75GhTayTFWzoTxoMNmm6z6dJeddfVuesQ5TaRsraIrZn/lNdtUerv47kO
- 3vT4gLZEFDJu7cpfiGXSlAGoWQhP4Fkl7z2hra1TYgFf5wpccd3gR+jLhRtVRGpRJt0xgyr9h
- Q//ngvTNbgXwQzESDaKeIQYzB9MWS1OSymAV+aA+YU+uxvJdhLd9IkDSdYwHZDKneMS0hmKWw
- i+nM6i/UX089oX3Ik9Ajmkd8iHVy5kL2VlEfK5ztGh+R6O3nsADy0ItLGQnjMCPXNBBtJP2Sm
- bnSOYGx7fvZApCyKwuEZ8Rko45M/saYGnPBFBxM6KDVzOSivpL6bQeXqBU7otv7IJQKocLoaZ
- QrTwcmvzZ223VenExdiKmdGQow2ZGLA8IYxbdaubukBLWkhYiya447qsAxi09LH3EH5is/LEx
- yGpxX7KifIGcnTxyO2tS7lfwKOgdIMKO8iw+TVph2BXv7LwygikyphNYAcuxuJfuHQHg3R4Xf
- RURkv2AEaZTY5BDqU8q/60JukDxbJPvI7vKMXlJehFvqsLzyNZO4YomVboLumUY3HPhrgSiQo
- q1xMN0CZj1Yr740sLdAoIPPXZ6Un0nF7dyz+Z8Qy4DKOUzqchkNdMzq2YM0c/sTu7GNLjBDM8
- 4+dWDq0ZTDNAvTF1qAgRJQCrUTdp9ceRX6+6tOalQchgdtVGfrHMDc4ibsIJdqdZEe94KMhPs
- xHbp14ovlvOPE8Cnr2TVs6UFsjT+fA+2eDfWWypSUy0PcLfk6uX6hrF06atgI4xoAhRC4tGW8
- T5UJr8A9bfuGAG2FsDhjvMHpeULUiBOJsmFP6AxPnGWBpn3w+KWzNMy2YMJlxGhb3TWJUlW9e
- KGnZ4ZW/R022o7IeEMb6h1WsdZYwluA7wnjepV9aqjSxfILJZt0hpcoejR8Lll/aq0w+cgEKx
- JyNyvw==
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 2_3WVLSptUbT1gs9Mtwk4eW6st4Cp049
+X-Proofpoint-ORIG-GUID: 2_3WVLSptUbT1gs9Mtwk4eW6st4Cp049
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-07_08,2022-11-07_02,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 suspectscore=0 adultscore=0 lowpriorityscore=0
+ mlxlogscore=780 bulkscore=0 spamscore=0 malwarescore=0 phishscore=0
+ mlxscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211070121
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,64 +86,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, Lee Jones <lee@kernel.org>, Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, linux-spi@vger.kernel.org, linux-gpio@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Mark Brown <broonie@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Linus Walleij <linus.walleij@linaro.org>
+Cc: Eddie James <eajames@linux.ibm.com>, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+The eeprom on bus 8 was at the wrong i2c address.
 
---sBTt7LkDM7vI6FGs
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+---
+ arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-On Mon, Nov 07, 2022 at 09:09:15AM +0100, Krzysztof Kozlowski wrote:
-> On 06/11/2022 15:45, Jonathan Neusch=C3=A4fer wrote:
-> > On Sun, Nov 06, 2022 at 10:38:45AM +0100, Krzysztof Kozlowski wrote:
-[...]
-> >> This is rather obvious, so what you should comment is WHY or WHEN seco=
-nd
-> >> resource can be omitted.
-> >=20
-> > Ok, I'll add more reasoning, which is basically: The "memory" mapping is
-> > only an optimization for faster access, knowledge of it is not necessary
-> > for full operation of the device.
-> >=20
-> >> Not every instance on the hardware has it?
-> >=20
-> > AFAIK every instance has it, and there's unlikely to be any variation on
-> > this fact anymore, because newer Nuvoton SoCs replaced the FIU with a
-> > redesigned and incompatible version.
-> >=20
-> > I admit that the value of making the "memory" mapping optional is rather
-> > theoretical, and I'm open to making this reg item mandatory to simplify
-> > the binding.
->=20
-> If every instance has it, then regardless whether it is actually used or
-> not, just require second address?
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts
+index 72b687f45ebf..e2a9a18bda57 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts
+@@ -683,9 +683,9 @@ tmp275@48 {
+ 		reg = <0x48>;
+ 	};
+ 
+-	eeprom@51 {
++	eeprom@50 {
+ 		compatible = "atmel,24c64";
+-		reg = <0x51>;
++		reg = <0x50>;
+ 	};
+ 
+ 	pca9551@60 {
+-- 
+2.31.1
 
-Alright, I'll do that.
-
-Thanks,
-Jonathan
-
---sBTt7LkDM7vI6FGs
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmNo9fYACgkQCDBEmo7z
-X9vrUg//Z2MgjUNH8jTRkS6zluTyC4TV47t+R9TD7rUExJ54x4AOrnXEcjVursL1
-ERyEDEOzRqDne+xXjv4d5UfGBK2bBfmd4+lZzyx0BfKa/QdN/LDVc+XQzCYC1CEA
-xWdH1Gy50GQhUUa3hB87zZ3diCH8/fhnwhT0DFshIuf1C6n/zwmPt2vVdam2wSzo
-Gck72bz1T4ZHHtoofDcv++FvDNw9gDiiX1Tu6DjBi2N4JUn08xuYm7tDE8EJaYhU
-4DLguem72fiZCQ1nJ3u5Y79k/7woIhmcRgYSW8Q0oVXB1wLltCYkwphuR3UEMMrZ
-db6K1P0JzFYDyOn140AsmOSrqN9NFQXAGf4FApuq5SqCIUuHoJwI6yPegaagnO2w
-Zz6gllxTwhZ2W7U+nxY1I3BGwcHT368D+VuXY6B91qT7MU0VzjaFHbIke3mlceuq
-34NaYgrJq4EZbAz3F3P54x9AIfp1z474EmavNF4/6cb5el3xDreexxmcPmUvd1ua
-fxmcBmZvc1vjFAUC7r9vKWUWkckcluJUTepmyoZp0O0RCn0c1xHMgzebGMh6dkLN
-4svAXrvnLQeLCSeVqDe808ZyqUjwNYRrzcK7ExZ4isQBUOHL3tzJ0s1jKBtu5kGK
-wVqovMtUD7l6/R6KxXbPjNdi6mJDGz4d9DGV17KlnO/h4kZudb0=
-=snOc
------END PGP SIGNATURE-----
-
---sBTt7LkDM7vI6FGs--
