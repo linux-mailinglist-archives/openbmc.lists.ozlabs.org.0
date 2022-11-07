@@ -2,51 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7CB4161EED7
-	for <lists+openbmc@lfdr.de>; Mon,  7 Nov 2022 10:25:15 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3214461F2A5
+	for <lists+openbmc@lfdr.de>; Mon,  7 Nov 2022 13:12:59 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4N5Qn24SD8z3cJn
-	for <lists+openbmc@lfdr.de>; Mon,  7 Nov 2022 20:25:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4N5VVd0j4Nz3cMs
+	for <lists+openbmc@lfdr.de>; Mon,  7 Nov 2022 23:12:57 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=inventron.com.tr header.i=@inventron.com.tr header.a=rsa-sha256 header.s=default header.b=sUdHFekR;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=Z33AKJoE;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=inventron.com.tr (client-ip=185.216.113.70; helo=ns1.ihsdnsx51.com; envelope-from=zehra.ozdemir@inventron.com.tr; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.17.22; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=inventron.com.tr header.i=@inventron.com.tr header.a=rsa-sha256 header.s=default header.b=sUdHFekR;
+	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=Z33AKJoE;
 	dkim-atps=neutral
-X-Greylist: delayed 398 seconds by postgrey-1.36 at boromir; Mon, 07 Nov 2022 20:24:38 AEDT
-Received: from ns1.ihsdnsx51.com (ns1.ihsdnsx51.com [185.216.113.70])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4N5QmQ6N64z30NN
-	for <openbmc@lists.ozlabs.org>; Mon,  7 Nov 2022 20:24:37 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=inventron.com.tr;
-	s=default; t=1667813074;
-	bh=0s806NWSGhw429nnCNKNGAV5UxO1BypQAKMAiYFtpo0=;
-	h=Received:Received:From:To:Subject;
-	b=sUdHFekRvMoM4DtdBK40KVwAaMQ0dXGR8cgJJr1cPURvEXdftx+A8gbIsDN9ZFUOk
-	 1PkK6mCTjWnk5Fb6rnTFWZTwZqXwheOeNVKNhZLerjqPRuEdLGhFuVB21R7gNC1+Ux
-	 z+VZkT4g9x4ZRmMm4rIPnk2r7Co+x+wVoORK3mCk=
-Received: (qmail 1528043 invoked from network); 7 Nov 2022 12:17:53 +0300
-Received: from 78.189.148.199.static.ttnet.com.tr (HELO INVLT5250ZO)
- (78.189.148.199)
-  by ns1.ihsdnsx51.com with ESMTPSA (DHE-RSA-AES256-GCM-SHA384 encrypted,
- authenticated); 7 Nov 2022 12:17:52 +0300
-From: <zehra.ozdemir@inventron.com.tr>
-To: <openbmc@lists.ozlabs.org>
-Subject: Phosphor State Manager Does Not Work as Expected
-Date: Mon, 7 Nov 2022 12:18:00 +0300
-Message-ID: <006e01d8f289$d5518340$7ff489c0$@inventron.com.tr>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4N5VTz4SsFz3bms
+	for <openbmc@lists.ozlabs.org>; Mon,  7 Nov 2022 23:12:22 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net; s=s31663417;
+	t=1667823128; bh=TthCH3MyFeU/53rL5fOF2FHb0MHylxKNaTSlZ2AoxCA=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Z33AKJoE+TjApwXXXAJcGicSIS3Ap3+hGcQ1cx6c05oLHC5/Sk927mE7S6vzBmiCY
+	 CTRIIRGeoSoUHfetu0bjdbV+VLU3AYxBrma53If3tqk1lBPYhLaIUypHu2luFK+GWZ
+	 GLIoqHFY/uom68aZHgYeIDs7l+ptFNeSsy+NxQzHOpAVqybJdEvFVqhhgCSrgGiTwP
+	 2GNssV2qyaDgOBw0WVyZQrGAcEyxEbroN02xDyjYQbBMauuRttCqIlksvQlB4s7Wjm
+	 CXdokptZalPCIUtwMqUt8KDxDcrVBpC+HxIO3R7OE5vIDTi87z6chwHjOkfe9g25FJ
+	 q4qz1gc9rjqzg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from probook ([95.223.44.31]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mel81-1pSRnZ1vdt-00ajmS; Mon, 07
+ Nov 2022 13:12:08 +0100
+Date: Mon, 7 Nov 2022 13:12:08 +0100
+From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 3/8] dt-bindings: spi: Add Nuvoton WPCM450 Flash
+ Interface Unit (FIU)
+Message-ID: <Y2j2GDKsvXwAdzg/@probook>
+References: <20221105185911.1547847-1-j.neuschaefer@gmx.net>
+ <20221105185911.1547847-4-j.neuschaefer@gmx.net>
+ <066919b1-c43d-f8ed-0191-cce8c575ee37@linaro.org>
+ <Y2fIjSKAGleEtjHe@probook>
+ <2400e167-073e-65fa-7fe6-b64a34bce256@linaro.org>
 MIME-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="----=_NextPart_000_006F_01D8F2A2.FA9FF3C0"
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AdjyfMtwVOh5780ZT32Hsjh4nMSnIA==
-Content-Language: en-us
-X-PPP-Message-ID: <166781267327.1528031.7504650190061730459@ns1.ihsdnsx51.com>
-X-PPP-Vhost: inventron.com.tr
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="sBTt7LkDM7vI6FGs"
+Content-Disposition: inline
+In-Reply-To: <2400e167-073e-65fa-7fe6-b64a34bce256@linaro.org>
+X-Provags-ID: V03:K1:CsGqJgqR4n1lj798VMfbtLWI75P+FvbQ2ahoJ149atUQXYkWxQR
+ A+UfigcIimbggR3yNWJeKwgQmf/dEBheHvGowYCRl6nlPWgplkuKBRMmJ4WePrVrc/qutMb
+ Lg2DAcLqqVTraSFi/SSuWkfwZbE4G1XQhpySgkO76qjCp4VlvBd1mlreoxVBEtfXLBBGPf0
+ 628UrCUYOYvaDhOjDV8UQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:wRs6Hd/unZ0=;EydYN8ey+yFLMSg/dNiej0V9srE
+ KGKBb7MhjVqdRbiR75GhTayTFWzoTxoMNmm6z6dJeddfVuesQ5TaRsraIrZn/lNdtUerv47kO
+ 3vT4gLZEFDJu7cpfiGXSlAGoWQhP4Fkl7z2hra1TYgFf5wpccd3gR+jLhRtVRGpRJt0xgyr9h
+ Q//ngvTNbgXwQzESDaKeIQYzB9MWS1OSymAV+aA+YU+uxvJdhLd9IkDSdYwHZDKneMS0hmKWw
+ i+nM6i/UX089oX3Ik9Ajmkd8iHVy5kL2VlEfK5ztGh+R6O3nsADy0ItLGQnjMCPXNBBtJP2Sm
+ bnSOYGx7fvZApCyKwuEZ8Rko45M/saYGnPBFBxM6KDVzOSivpL6bQeXqBU7otv7IJQKocLoaZ
+ QrTwcmvzZ223VenExdiKmdGQow2ZGLA8IYxbdaubukBLWkhYiya447qsAxi09LH3EH5is/LEx
+ yGpxX7KifIGcnTxyO2tS7lfwKOgdIMKO8iw+TVph2BXv7LwygikyphNYAcuxuJfuHQHg3R4Xf
+ RURkv2AEaZTY5BDqU8q/60JukDxbJPvI7vKMXlJehFvqsLzyNZO4YomVboLumUY3HPhrgSiQo
+ q1xMN0CZj1Yr740sLdAoIPPXZ6Un0nF7dyz+Z8Qy4DKOUzqchkNdMzq2YM0c/sTu7GNLjBDM8
+ 4+dWDq0ZTDNAvTF1qAgRJQCrUTdp9ceRX6+6tOalQchgdtVGfrHMDc4ibsIJdqdZEe94KMhPs
+ xHbp14ovlvOPE8Cnr2TVs6UFsjT+fA+2eDfWWypSUy0PcLfk6uX6hrF06atgI4xoAhRC4tGW8
+ T5UJr8A9bfuGAG2FsDhjvMHpeULUiBOJsmFP6AxPnGWBpn3w+KWzNMy2YMJlxGhb3TWJUlW9e
+ KGnZ4ZW/R022o7IeEMb6h1WsdZYwluA7wnjepV9aqjSxfILJZt0hpcoejR8Lll/aq0w+cgEKx
+ JyNyvw==
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,245 +82,64 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "'M. Erhan Yigitbasi'" <erhan.yigitbasi@inventron.com.tr>
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, Lee Jones <lee@kernel.org>, Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, linux-spi@vger.kernel.org, linux-gpio@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Mark Brown <broonie@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Linus Walleij <linus.walleij@linaro.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multipart message in MIME format.
 
-------=_NextPart_000_006F_01D8F2A2.FA9FF3C0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-
-Hello,
-
-We are trying to implement phosphor-state-manager to our projects to control
-the host. Logs are given down below when we trigger the immediate option
-from GUI: 
-
- 
-
-Nov 07 08:53:19 Aselsan-Server phosphor-chassis-state-manager[404]: Change
-to Chassis Requested Power State:
-xyz.openbmc_project.State.Chassis.Transition.Off
-Nov 07 08:53:20 Aselsan-Server systemctl[415]: Job for
-obmc-chassis-poweron@0.target canceled.
-Nov 07 08:53:20 Aselsan-Server systemd[1]: op-reset-chassis-on@0.service:
-Main process exited, code=exited, status=1/FAILURE
-Nov 07 08:53:20 Aselsan-Server systemd[1]: op-reset-chassis-on@0.service:
-Failed with result 'exit-code'.
-Nov 07 08:53:20 Aselsan-Server systemd[1]: Stopped Start chassis0 on after
-BMC reset.
-Nov 07 08:53:20 Aselsan-Server systemd[1]: Created slice Slice
-/system/obmc-led-group-stop.
-Nov 07 08:53:20 Aselsan-Server systemd[1]: Created slice Slice
-/system/op-power-stop.
-Nov 07 08:53:20 Aselsan-Server systemd[1]: Created slice Slice
-/system/op-powered-off.
-Nov 07 08:53:20 Aselsan-Server systemd[1]: Created slice Slice
-/system/op-wait-power-off.
-Nov 07 08:53:20 Aselsan-Server systemd[1]: Created slice Slice
-/system/phosphor-clear-one-time.
-Nov 07 08:53:20 Aselsan-Server systemd[1]: Created slice Slice
-/system/phosphor-reset-sensor-states.
-Nov 07 08:53:21 Aselsan-Server systemd[1]: Created slice Slice
-/system/phosphor-set-host-transition-to-off.
-Nov 07 08:53:21 Aselsan-Server systemd[1]: Stopped target Host0 running
-after reset.
-Nov 07 08:53:21 Aselsan-Server systemd[1]: Stopped target Power0 (On).
-Nov 07 08:53:21 Aselsan-Server systemd[1]: Stopped target Chassis0 power on
-after reset.
-Nov 07 08:53:21 Aselsan-Server systemd[1]: Stopped target Power0 On
-(Starting).
-Nov 07 08:53:21 Aselsan-Server systemd[1]: Stopped target Power0 On (Pre).
-Nov 07 08:53:21 Aselsan-Server systemd[1]: Stopped target Multi-User System.
-Nov 07 08:53:21 Aselsan-Server phosphor-bmc-state-manager[372]: BMC_READY
-Nov 07 08:53:21 Aselsan-Server phosphor-bmc-state-manager[372]: Setting the
-BMCState field to xyz.openbmc_project.State.BMC.BMCState.Ready
-Nov 07 08:53:21 Aselsan-Server systemd[1]: Stopped target Chassis0 (Reset
-Check).
-Nov 07 08:53:21 Aselsan-Server systemd[1]: Stopped target Host0 (Reset
-Check).
-Nov 07 08:53:21 Aselsan-Server systemd[1]: Starting Wait for
-/xyz/openbmc_project/control/host0/auto_reboot/one_time...
-Nov 07 08:53:21 Aselsan-Server systemd[1]: Reset host sensors was skipped
-because of a failed condition check
-(ConditionPathExists=!/run/openbmc/host@0-on).
-Nov 07 08:53:21 Aselsan-Server systemd[1]: Starting Set host state to
-transition to off...
-Nov 07 08:53:21 Aselsan-Server systemd[1]: Finished Wait for
-/xyz/openbmc_project/control/host0/auto_reboot/one_time.
-Nov 07 08:53:21 Aselsan-Server phosphor-host-state-manager[424]: Change to
-Host State: xyz.openbmc_project.State.Host.HostState.TransitioningToOff
-Nov 07 08:53:21 Aselsan-Server systemd[1]: Starting Reset one-time
-properties on chassis off...
-Nov 07 08:53:21 Aselsan-Server systemd[1]: Finished Set host state to
-transition to off.
-Nov 07 08:53:21 Aselsan-Server systemd[1]: Reached target Stop Host0 (Pre).
-Nov 07 08:53:21 Aselsan-Server systemd[1]: Reached target Host0 (Stopping).
-Nov 07 08:53:21 Aselsan-Server systemd[1]: Reached target Host0 (Stopped).
-Nov 07 08:53:22 Aselsan-Server systemd[1]: Reached target Power0 Off (Pre).
-Nov 07 08:53:22 Aselsan-Server systemd[1]: Started Stop Power0.
-Nov 07 08:53:22 Aselsan-Server systemd[1]: Starting Wait for Power0 to turn
-off...
-Nov 07 08:53:22 Aselsan-Server systemd[1]:
-phosphor-clear-one-time@0.service: Deactivated successfully.
-Nov 07 08:53:22 Aselsan-Server systemd[1]: Finished Reset one-time
-properties on chassis off. 
-
- 
-
- 
-
-After that, neither Chassis State nor Host State is off. The Chassis State
-is On and the Host State is TransitioningToOff. Could you please give us
-some information about what could have caused this condition?  
-
-
-------=_NextPart_000_006F_01D8F2A2.FA9FF3C0
-Content-Type: text/html;
-	charset="us-ascii"
+--sBTt7LkDM7vI6FGs
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
-xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
-xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
-xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta =
-http-equiv=3DContent-Type content=3D"text/html; =
-charset=3Dus-ascii"><meta name=3DGenerator content=3D"Microsoft Word 15 =
-(filtered medium)"><style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	margin-bottom:.0001pt;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-fareast-language:EN-US;}
-span.E-postaStili17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;
-	font-family:"Calibri",sans-serif;
-	mso-fareast-language:EN-US;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]--></head><body lang=3DTR =
-link=3D"#0563C1" vlink=3D"#954F72"><div class=3DWordSection1><p =
-class=3DMsoNormal>Hello,<o:p></o:p></p><p class=3DMsoNormal>We are =
-trying to implement phosphor-state-manager to our projects to control =
-the host. Logs are given down below when we trigger the immediate option =
-from GUI: <o:p></o:p></p><p class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
-class=3DMsoNormal><span =
-style=3D'font-size:11.5pt;font-family:"Arial",sans-serif;color:#1D1C1D;ba=
-ckground:white'>Nov 07 08:53:19 Aselsan-Server =
-phosphor-chassis-state-manager[404]: Change to Chassis Requested Power =
-State: xyz.openbmc_project.State.Chassis.Transition.Off</span><span =
-style=3D'font-size:11.5pt;font-family:"Arial",sans-serif;color:#1D1C1D'><=
-br><span style=3D'background:white'>Nov 07 08:53:20 Aselsan-Server =
-systemctl[415]: Job for obmc-chassis-poweron@0.target =
-canceled.</span><br><span style=3D'background:white'>Nov 07 08:53:20 =
-Aselsan-Server systemd[1]: op-reset-chassis-on@0.service: Main process =
-exited, code=3Dexited, status=3D1/FAILURE</span><br><span =
-style=3D'background:white'>Nov 07 08:53:20 Aselsan-Server systemd[1]: =
-op-reset-chassis-on@0.service: Failed with result =
-'exit-code'.</span><br><span style=3D'background:white'>Nov 07 08:53:20 =
-Aselsan-Server systemd[1]: Stopped Start chassis0 on after BMC =
-reset.</span><br><span style=3D'background:white'>Nov 07 08:53:20 =
-Aselsan-Server systemd[1]: Created slice Slice =
-/system/obmc-led-group-stop.</span><br><span =
-style=3D'background:white'>Nov 07 08:53:20 Aselsan-Server systemd[1]: =
-Created slice Slice /system/op-power-stop.</span><br><span =
-style=3D'background:white'>Nov 07 08:53:20 Aselsan-Server systemd[1]: =
-Created slice Slice /system/op-powered-off.</span><br><span =
-style=3D'background:white'>Nov 07 08:53:20 Aselsan-Server systemd[1]: =
-Created slice Slice /system/op-wait-power-off.</span><br><span =
-style=3D'background:white'>Nov 07 08:53:20 Aselsan-Server systemd[1]: =
-Created slice Slice /system/phosphor-clear-one-time.</span><br><span =
-style=3D'background:white'>Nov 07 08:53:20 Aselsan-Server systemd[1]: =
-Created slice Slice =
-/system/phosphor-reset-sensor-states.</span><br><span =
-style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server systemd[1]: =
-Created slice Slice =
-/system/phosphor-set-host-transition-to-off.</span><br><span =
-style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server systemd[1]: =
-Stopped target Host0 running after reset.</span><br><span =
-style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server systemd[1]: =
-Stopped target Power0 (On).</span><br><span =
-style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server systemd[1]: =
-Stopped target Chassis0 power on after reset.</span><br><span =
-style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server systemd[1]: =
-Stopped target Power0 On (Starting).</span><br><span =
-style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server systemd[1]: =
-Stopped target Power0 On (Pre).</span><br><span =
-style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server systemd[1]: =
-Stopped target Multi-User System.</span><br><span =
-style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server =
-phosphor-bmc-state-manager[372]: BMC_READY</span><br><span =
-style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server =
-phosphor-bmc-state-manager[372]: Setting the BMCState field to =
-xyz.openbmc_project.State.BMC.BMCState.Ready</span><br><span =
-style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server systemd[1]: =
-Stopped target Chassis0 (Reset Check).</span><br><span =
-style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server systemd[1]: =
-Stopped target Host0 (Reset Check).</span><br><span =
-style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server systemd[1]: =
-Starting Wait for =
-/xyz/openbmc_project/control/host0/auto_reboot/one_time...</span><br><spa=
-n style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server systemd[1]: =
-Reset host sensors was skipped because of a failed condition check =
-(ConditionPathExists=3D!/run/openbmc/host@0-on).</span><br><span =
-style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server systemd[1]: =
-Starting Set host state to transition to off...</span><br><span =
-style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server systemd[1]: =
-Finished Wait for =
-/xyz/openbmc_project/control/host0/auto_reboot/one_time.</span><br><span =
-style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server =
-phosphor-host-state-manager[424]: Change to Host State: =
-xyz.openbmc_project.State.Host.HostState.TransitioningToOff</span><br><sp=
-an style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server systemd[1]: =
-Starting Reset one-time properties on chassis off...</span><br><span =
-style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server systemd[1]: =
-Finished Set host state to transition to off.</span><br><span =
-style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server systemd[1]: =
-Reached target Stop Host0 (Pre).</span><br><span =
-style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server systemd[1]: =
-Reached target Host0 (Stopping).</span><br><span =
-style=3D'background:white'>Nov 07 08:53:21 Aselsan-Server systemd[1]: =
-Reached target Host0 (Stopped).</span><br><span =
-style=3D'background:white'>Nov 07 08:53:22 Aselsan-Server systemd[1]: =
-Reached target Power0 Off (Pre).</span><br><span =
-style=3D'background:white'>Nov 07 08:53:22 Aselsan-Server systemd[1]: =
-Started Stop Power0.</span><br><span style=3D'background:white'>Nov 07 =
-08:53:22 Aselsan-Server systemd[1]: Starting Wait for Power0 to turn =
-off...</span><br><span style=3D'background:white'>Nov 07 08:53:22 =
-Aselsan-Server systemd[1]: phosphor-clear-one-time@0.service: =
-Deactivated successfully.</span><br><span style=3D'background:white'>Nov =
-07 08:53:22 Aselsan-Server systemd[1]: Finished Reset one-time =
-properties on chassis off.</span></span> <o:p></o:p></p><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p><p =
-class=3DMsoNormal><o:p>&nbsp;</o:p></p><p class=3DMsoNormal>After that, =
-neither Chassis State nor Host State is off. The Chassis State is On and =
-the Host State is TransitioningToOff. Could you please give us some =
-information about what could have caused this condition? =
-&nbsp;<o:p></o:p></p></div></body></html>
-------=_NextPart_000_006F_01D8F2A2.FA9FF3C0--
+On Mon, Nov 07, 2022 at 09:09:15AM +0100, Krzysztof Kozlowski wrote:
+> On 06/11/2022 15:45, Jonathan Neusch=C3=A4fer wrote:
+> > On Sun, Nov 06, 2022 at 10:38:45AM +0100, Krzysztof Kozlowski wrote:
+[...]
+> >> This is rather obvious, so what you should comment is WHY or WHEN seco=
+nd
+> >> resource can be omitted.
+> >=20
+> > Ok, I'll add more reasoning, which is basically: The "memory" mapping is
+> > only an optimization for faster access, knowledge of it is not necessary
+> > for full operation of the device.
+> >=20
+> >> Not every instance on the hardware has it?
+> >=20
+> > AFAIK every instance has it, and there's unlikely to be any variation on
+> > this fact anymore, because newer Nuvoton SoCs replaced the FIU with a
+> > redesigned and incompatible version.
+> >=20
+> > I admit that the value of making the "memory" mapping optional is rather
+> > theoretical, and I'm open to making this reg item mandatory to simplify
+> > the binding.
+>=20
+> If every instance has it, then regardless whether it is actually used or
+> not, just require second address?
 
+Alright, I'll do that.
+
+Thanks,
+Jonathan
+
+--sBTt7LkDM7vI6FGs
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmNo9fYACgkQCDBEmo7z
+X9vrUg//Z2MgjUNH8jTRkS6zluTyC4TV47t+R9TD7rUExJ54x4AOrnXEcjVursL1
+ERyEDEOzRqDne+xXjv4d5UfGBK2bBfmd4+lZzyx0BfKa/QdN/LDVc+XQzCYC1CEA
+xWdH1Gy50GQhUUa3hB87zZ3diCH8/fhnwhT0DFshIuf1C6n/zwmPt2vVdam2wSzo
+Gck72bz1T4ZHHtoofDcv++FvDNw9gDiiX1Tu6DjBi2N4JUn08xuYm7tDE8EJaYhU
+4DLguem72fiZCQ1nJ3u5Y79k/7woIhmcRgYSW8Q0oVXB1wLltCYkwphuR3UEMMrZ
+db6K1P0JzFYDyOn140AsmOSrqN9NFQXAGf4FApuq5SqCIUuHoJwI6yPegaagnO2w
+Zz6gllxTwhZ2W7U+nxY1I3BGwcHT368D+VuXY6B91qT7MU0VzjaFHbIke3mlceuq
+34NaYgrJq4EZbAz3F3P54x9AIfp1z474EmavNF4/6cb5el3xDreexxmcPmUvd1ua
+fxmcBmZvc1vjFAUC7r9vKWUWkckcluJUTepmyoZp0O0RCn0c1xHMgzebGMh6dkLN
+4svAXrvnLQeLCSeVqDe808ZyqUjwNYRrzcK7ExZ4isQBUOHL3tzJ0s1jKBtu5kGK
+wVqovMtUD7l6/R6KxXbPjNdi6mJDGz4d9DGV17KlnO/h4kZudb0=
+=snOc
+-----END PGP SIGNATURE-----
+
+--sBTt7LkDM7vI6FGs--
