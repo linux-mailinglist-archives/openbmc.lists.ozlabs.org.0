@@ -1,56 +1,51 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44E306202D5
-	for <lists+openbmc@lfdr.de>; Mon,  7 Nov 2022 23:59:59 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D820620496
+	for <lists+openbmc@lfdr.de>; Tue,  8 Nov 2022 01:17:39 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4N5ms85klSz3bm9
-	for <lists+openbmc@lfdr.de>; Tue,  8 Nov 2022 09:59:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4N5pZn3Yddz2xmg
+	for <lists+openbmc@lfdr.de>; Tue,  8 Nov 2022 11:17:37 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=X3ce1B0+;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=HIioipVN;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.68.75; helo=ams.source.kernel.org; envelope-from=lee@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=X3ce1B0+;
+	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=HIioipVN;
 	dkim-atps=neutral
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [71.19.156.171])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4N5Qgm6fJCz307C
-	for <openbmc@lists.ozlabs.org>; Mon,  7 Nov 2022 20:20:36 +1100 (AEDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4N5pY00PZBz2xf6;
+	Tue,  8 Nov 2022 11:16:03 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (97-113-250-99.tukw.qwest.net [97.113.250.99])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by ams.source.kernel.org (Postfix) with ESMTPS id 046C7B80E94;
-	Mon,  7 Nov 2022 09:20:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AE90C433D6;
-	Mon,  7 Nov 2022 09:20:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1667812831;
-	bh=IohQRHyGWeft5/zFcaoSpTCgQ1fp32d/mBaMOehI0iQ=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=X3ce1B0+BJ5nN98fzPunOzYTXdhR+jiBqHcXII6WIR/xcqhD+X1MF8Kpsh9f8xuxF
-	 JRZc3DNGQY7stIqdNJqut73aXN/1vNFbS8LbdHyahl27S4CDHobC/r3YrMTQPd/0yr
-	 WnoV8NTlcnoY/lSpkBvhPwiHA3/vKBG47w1N6KVuVr6u1oZXXfRmJcyfTO7M6qTkuo
-	 Cf6OLCPqMuoCT/TZn/iT3N2+kxxodIkvBUo4XOvAeY9Q0pyT0C4rdQA0wb/AGqOxWV
-	 H7FrvsjHkYDBrXF74mbTIs40HiyREhCnq/WNgaiJ2Tb9nPw/MG/FWvgfU64Un4T6J+
-	 hKDfu+ukG64fA==
-Date: Mon, 7 Nov 2022 09:20:26 +0000
-From: Lee Jones <lee@kernel.org>
-To: Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>
-Subject: Re: [PATCH 4/8] dt-bindings: mfd: syscon: Add nuvoton,wpcm450-shm
-Message-ID: <Y2jN2s9hfVBNc6Y5@google.com>
-References: <20221105185911.1547847-1-j.neuschaefer@gmx.net>
- <20221105185911.1547847-5-j.neuschaefer@gmx.net>
+	(Authenticated sender: zev)
+	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 39228216;
+	Mon,  7 Nov 2022 16:16:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+	s=thorn; t=1667866560;
+	bh=VIkVQ5MTYduxA9TI2MvsFc6HLebHjxk8Luy5qKBI/ok=;
+	h=From:To:Cc:Subject:Date:From;
+	b=HIioipVNI5LZeGOhYsQxaD1DVC05XZ2NBPQpUo/BYR70nUO9y0A4gk9yKPSz5Dhoz
+	 mXCjsgZk07ildLOPSNOZ5bTxKau1Tv6i4Ir8Tc59b+UjTh6aBEl8fIBV3yhz+dQFIA
+	 g1fG/872VyNtaIrf4lfEnn23NBv+H1EYpHfCaekw=
+From: Zev Weiss <zev@bewilderbeest.net>
+To: linux-arm-kernel@lists.infradead.org,
+	linux-aspeed@lists.ozlabs.org,
+	soc@kernel.org
+Subject: [PATCH v2 0/2] ARM: dts: aspeed: Add Delta AHE-50DC BMC
+Date: Mon,  7 Nov 2022 16:15:49 -0800
+Message-Id: <20221108001551.18175-1-zev@bewilderbeest.net>
+X-Mailer: git-send-email 2.38.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20221105185911.1547847-5-j.neuschaefer@gmx.net>
-X-Mailman-Approved-At: Tue, 08 Nov 2022 09:59:28 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,23 +57,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Linus Walleij <linus.walleij@linaro.org>, linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org, linux-gpio@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Mark Brown <broonie@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, openbmc@lists.ozlabs.org
+Cc: devicetree@vger.kernel.org, Zev Weiss <zev@bewilderbeest.net>, Arnd Bergmann <arnd@arndb.de>, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Olof Johansson <olof@lixom.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sat, 05 Nov 2022, Jonathan Neuschäfer wrote:
+Hello,
 
-> The Shared Memory interface (SHM) is a piece of hardware in Nuvoton BMCs
-> that allows a host processor (connected via LPC) to access flash and RAM
-> that belong to the BMC. The SHM includes a register block accessible from
-> the BMC side.
-> 
-> Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
-> ---
->  Documentation/devicetree/bindings/mfd/syscon.yaml | 1 +
->  1 file changed, 1 insertion(+)
+This series adds a device-tree for the BMCs of the Delta AHE-50DC
+Open19 power shelf.  The first patch adds a compat entry to the Aspeed
+bindings; the second adds the device-tree itself.
 
-Applied, thanks.
+Changes since v1 [0]:
+ - rearranged patch 2 with macros to reduce boilerplate
+ - added ack from Krzysztof on patch 1
+
+Thanks,
+Zev
+
+[0] https://lore.kernel.org/lkml/20221105013321.2719-1-zev@bewilderbeest.net/T/
+
+Zev Weiss (2):
+  dt-bindings: arm: aspeed: document Delta AHE-50DC BMC
+  ARM: dts: aspeed: Add Delta AHE-50DC BMC
+
+ .../bindings/arm/aspeed/aspeed.yaml           |   1 +
+ arch/arm/boot/dts/Makefile                    |   1 +
+ .../arm/boot/dts/aspeed-bmc-delta-ahe50dc.dts | 418 ++++++++++++++++++
+ 3 files changed, 420 insertions(+)
+ create mode 100644 arch/arm/boot/dts/aspeed-bmc-delta-ahe50dc.dts
 
 -- 
-Lee Jones [李琼斯]
+2.38.1
+
