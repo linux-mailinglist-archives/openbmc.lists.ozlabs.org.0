@@ -2,57 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C0D6E621187
-	for <lists+openbmc@lfdr.de>; Tue,  8 Nov 2022 13:54:39 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D15336211AB
+	for <lists+openbmc@lfdr.de>; Tue,  8 Nov 2022 14:00:01 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4N67NF5B7dz3cfB
-	for <lists+openbmc@lfdr.de>; Tue,  8 Nov 2022 23:54:37 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4N67VN6XXSz3bVN
+	for <lists+openbmc@lfdr.de>; Tue,  8 Nov 2022 23:59:56 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=D0MB9l3S;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.160.48; helo=mail-oa1-f48.google.com; envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
-Received: from mail-oa1-f48.google.com (mail-oa1-f48.google.com [209.85.160.48])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::630; helo=mail-ej1-x630.google.com; envelope-from=linus.walleij@linaro.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=D0MB9l3S;
+	dkim-atps=neutral
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4N67Mt0cCQz2yHc
-	for <openbmc@lists.ozlabs.org>; Tue,  8 Nov 2022 23:54:17 +1100 (AEDT)
-Received: by mail-oa1-f48.google.com with SMTP id 586e51a60fabf-13bd19c3b68so16103845fac.7
-        for <openbmc@lists.ozlabs.org>; Tue, 08 Nov 2022 04:54:17 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4N67Tp3DMtz2yRS
+	for <openbmc@lists.ozlabs.org>; Tue,  8 Nov 2022 23:59:23 +1100 (AEDT)
+Received: by mail-ej1-x630.google.com with SMTP id m22so1153770eji.10
+        for <openbmc@lists.ozlabs.org>; Tue, 08 Nov 2022 04:59:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=xMYYNsg0Fd1lbIlymnFj9xbwbr0Q9XGXqF2lkb6r5vo=;
+        b=D0MB9l3SuLohSIy6XuTeWJN/UkCRPC4j9T5V2d4qNTDcoHVetCsF/ahRpMl6HP8cfs
+         neczcXs959bMdeWHVbsy4CijF3RYG7XlF0/dz4v2Z3G4gqplfVuCffm3LmzWEES13yLg
+         Sp/KEn2VS7yGrYdqtzzRm0CoKQsnY4tvbIlpDDgzDSvTlVdCxjAZZSPkrxid8XmcCNZP
+         TGXqsboBRvpw9flB3iG5JkY1uJXsblNWe70qFR0oBb/b+V4vzSCgxXwvVY4hFhPJcsju
+         PHo5MwbmloqxjAWIDDsJ7FDJJ+2qW5OhbgiffbByZwrBVMMOdblQGJJV6ibGCOf9UlLE
+         G9Sw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=DE+XyWQiVN5ob054jGunfYyC5EmPdaoUKQ02JS4SQzY=;
-        b=MBGEHhBG86ul79ct/jTRLor7oKS4lvJGGD1QVcTysEJxNPF0SDHNdoQg6+oVMnwg9E
-         /tCPwL1AEWogwGrX9iHJTf1+gxfB86G41e/mquu8ZRxxhyIcbhegmBXRXrlm6VrjRfhR
-         osPquSpMBP7Int2/wsXHzEqG5AJkTvC5lodCXshsTdq4l9HHTd3MtexXy+/srV68gSyw
-         ktd8YzLobaJp1kTywOb00Evhv0TnQxpNzNllSy3+KySC0OrHt2AlWN9I/aKxZpKy5Jg0
-         i77qmdxCeQ89pn9hZUNuqGLySNAPC+z2WZn5QjVIlM2pomBiiF6Hfe+ScpXsLtNPGss2
-         xAHg==
-X-Gm-Message-State: ACrzQf1E9iU6YsHzNzJF8ytkE8C98Xikx5wO51Uz4DRXg8jqddn6VIWz
-	+1gFJ+gwjwCou1I/cw+PaA==
-X-Google-Smtp-Source: AMsMyM7wgArqbuF5lY4XwPob9rxcmWPy8aaAYCeDk+Dhw5/7qAQJlOjnkzlSx1eXSdY3/4ET2jQfyQ==
-X-Received: by 2002:a05:6870:6086:b0:132:e9d6:ea36 with SMTP id t6-20020a056870608600b00132e9d6ea36mr44309846oae.116.1667912054075;
-        Tue, 08 Nov 2022 04:54:14 -0800 (PST)
-Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id m8-20020a4aab88000000b00480816a5b8csm3141349oon.18.2022.11.08.04.54.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 08 Nov 2022 04:54:13 -0800 (PST)
-Received: (nullmailer pid 3254925 invoked by uid 1000);
-	Tue, 08 Nov 2022 12:54:14 -0000
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xMYYNsg0Fd1lbIlymnFj9xbwbr0Q9XGXqF2lkb6r5vo=;
+        b=KVVEWZwlto+EDc3bJE9aqXdg4GPcfYVKGsjI04XnRShz9jFDo3u8S6lCw1tnKZhMd0
+         AB1hX5fGhXVADd/vFgUIhMP9thxZJGlzHhM8iNhEt31vURTMpEV2Pdqs4jT8UHUod70O
+         L0gdYn8dByl2tX9Tv2QUHEd5rDT+eTziF3CZlLEUc8tXHDknNf99uM4BMi219Jp/NVkN
+         X3haMIecE9b0hMYVuvTWIbjoTs5ypHP10PyOI/lyODkUgsTStFOEmTBo4l35hr1RNKzz
+         eSp3lsmrY1C6ccqLFfH9RBErQwsk4ecGwPvtyFcrugMoPlhASYbNJydoWUjXueVpp5Zf
+         foCg==
+X-Gm-Message-State: ANoB5pk8/AYlwi0HtfoqFVNoIs0y4nBjSsLIz7pBb2iwk3oUUQ/ycOGE
+	Lxi2npeJGUyJlE/YbHCy5Zjcrs+4eKwP2EryL27tng==
+X-Google-Smtp-Source: AA0mqf6ANmUnYiYdo2x4UFuu2t3zI2/P/e7ukIEC+BUNZec2Z8td6z1gbnX7j+6fQ7HJlb2YQ6VecwBo00lb4mFY7E8=
+X-Received: by 2002:a17:906:6acc:b0:7ae:658c:ee45 with SMTP id
+ q12-20020a1709066acc00b007ae658cee45mr11060672ejs.190.1667912359878; Tue, 08
+ Nov 2022 04:59:19 -0800 (PST)
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Jim Liu <jim.t90615@gmail.com>
+References: <20221108092840.14945-1-JJLIU0@nuvoton.com> <20221108092840.14945-4-JJLIU0@nuvoton.com>
 In-Reply-To: <20221108092840.14945-4-JJLIU0@nuvoton.com>
-References: <20221108092840.14945-1-JJLIU0@nuvoton.com>
- <20221108092840.14945-4-JJLIU0@nuvoton.com>
-Message-Id: <166791192799.3252677.10703620015363460099.robh@kernel.org>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Tue, 8 Nov 2022 13:59:08 +0100
+Message-ID: <CACRpkdYjVsHn1LuniEA2mB9Y5+hL3dP2kzVOLWYOcmAQk95sCw@mail.gmail.com>
 Subject: Re: [PATCH v2 3/3] dt-bindings: gpio: Add Nuvoton NPCM750 serial I/O
  expansion interface(SGPIO)
-Date: Tue, 08 Nov 2022 06:54:14 -0600
+To: Jim Liu <jim.t90615@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,51 +74,49 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, KWLIU@nuvoton.com, linus.walleij@linaro.org, JJLIU0@nuvoton.com, linux-kernel@vger.kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, brgl@bgdev.pl, openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org
+Cc: KWLIU@nuvoton.com, devicetree@vger.kernel.org, brgl@bgdev.pl, JJLIU0@nuvoton.com, linux-kernel@vger.kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Jim,
 
-On Tue, 08 Nov 2022 17:28:40 +0800, Jim Liu wrote:
+thanks for your patch!
+
+On Tue, Nov 8, 2022 at 10:29 AM Jim Liu <jim.t90615@gmail.com> wrote:
+>
 > NPCM750 include two SGPIO modules.
 > Each module supports up to 64 input and 64 output pins.
 > the output pin must be serial to parallel device(such as the hc595)
 > the input in must be parallel to serial device(such as the hc165)
-> 
+>
 > Signed-off-by: Jim Liu <JJLIU0@nuvoton.com>
 > ---
 > Changes for v2:
 >    - modify description
-> ---
->  .../bindings/gpio/nuvoton,sgpio.yaml          | 79 +++++++++++++++++++
->  1 file changed, 79 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/gpio/nuvoton,sgpio.yaml
-> 
+(...)
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+This:
 
-yamllint warnings/errors:
+> +  GPIO pins can be programmed to support the following options
+> +  - Support interrupt option for each input port and various interrupt
+> +    sensitivity option (level-high, level-low, edge-high, edge-low)
+> +  - Directly connected to APB bus and its shift clock is from APB bus clock
+> +    divided by a programmable value.
+> +  - nin_gpios is number of input GPIO lines
+> +  - nout_gpios is number of output GPIO lines
+> +  - ngpios is number of nin_gpios GPIO lines and nout_gpios GPIO lines.
 
-dtschema/dtc warnings/errors:
-Error: Documentation/devicetree/bindings/gpio/nuvoton,sgpio.example.dts:35.3-36.1 syntax error
-FATAL ERROR: Unable to parse input tree
-make[1]: *** [scripts/Makefile.lib:406: Documentation/devicetree/bindings/gpio/nuvoton,sgpio.example.dtb] Error 1
-make[1]: *** Waiting for unfinished jobs....
-make: *** [Makefile:1492: dt_binding_check] Error 2
+Why does input/output have to be configured uniquely/static per system?
 
-doc reference errors (make refcheckdocs):
+What is wrong with just using direction_input() and direction_output()
+at runtime like everybody else?
 
-See https://patchwork.ozlabs.org/patch/
+> +        nin_gpios = <64>;
+> +        nout_gpios = <64>;
 
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
+Especially since in the example you just set them all to be both input
+and output so they all depend on runtime direction configuration
+anyway.
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+Yours,
+Linus Walleij
