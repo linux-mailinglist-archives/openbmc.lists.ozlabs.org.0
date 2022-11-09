@@ -2,67 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 72880622695
-	for <lists+openbmc@lfdr.de>; Wed,  9 Nov 2022 10:15:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7841F62280C
+	for <lists+openbmc@lfdr.de>; Wed,  9 Nov 2022 11:09:00 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4N6fSt29jwz3cHl
-	for <lists+openbmc@lfdr.de>; Wed,  9 Nov 2022 20:15:26 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4N6gff249Dz3cB8
+	for <lists+openbmc@lfdr.de>; Wed,  9 Nov 2022 21:08:58 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=kbovMEF+;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=hv3S7WHU;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::635; helo=mail-ej1-x635.google.com; envelope-from=linus.walleij@linaro.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.15.15; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=kbovMEF+;
+	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=hv3S7WHU;
 	dkim-atps=neutral
-Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4N6fSG48mLz3bgC
-	for <openbmc@lists.ozlabs.org>; Wed,  9 Nov 2022 20:14:51 +1100 (AEDT)
-Received: by mail-ej1-x635.google.com with SMTP id ft34so8631344ejc.12
-        for <openbmc@lists.ozlabs.org>; Wed, 09 Nov 2022 01:14:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=BII9zpGzB69RugugB6yoflzCcqpd30y/N1Z9Get0kNc=;
-        b=kbovMEF+8HLQIt31/GrcUDBIGre3xrC8pBrRd5oe7sfJkpNpFdzAoEm+XSpeIPn1cM
-         1JdHOaKHVMwjdxmAMHZ8ifz82J5VAnAD+09wU3dIL4/I8o3AImDcRZw55jxwCvpBFlm5
-         Ns7TQ3Q6CC/l8R1UzGv31aRJ5KWYrvrqIsW5y/rQ2ZITwr7o0vqDCJ7YKaOk0FR1RaBh
-         uM0DG4ve29ACq9duIvMGpZlXDXZ+89wNzYdDqvTJSqoTFvLLliy9V6XwXdwYuHFgEIAO
-         boT+SnoFdEU6w4AvkXW/uDcdRpXM82h82QHBix/0qIM7xdI/mFpuG9YS8g7H03LKKw0z
-         RqbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BII9zpGzB69RugugB6yoflzCcqpd30y/N1Z9Get0kNc=;
-        b=hRDQ7P+ayB9gIWS6IOvROOCEDx1XGJN4gTitRGRcbtIkUPPdNnV+/nmOh7o/IKM0zo
-         yt35xROoyqb62Oq26OHWjyPXEBvdPrq6C7tzPhdgDWdyD6Visx4AJSSvN6I0yHsgO9S9
-         44DhOPnN6o3Hhz3tHI2OwOWX+0zMGMCxQStf27uvKNxOMYsZGygWvm1bqdOUIHb9Ic96
-         awiC3urHKjOQlVMdTK8G/36EvoS0p/wp5DGw3ax+1rGzDDRmSyFW6KF6gDAbT3Ul2SpV
-         mEQfli1AfvhtNxeog9B5pjxFICwsf6EugEUY3iADirbw82OJge9i4hlvGI2DECvL2kMD
-         ZoeA==
-X-Gm-Message-State: ACrzQf3ZeSx57fKrDsS31xNMqMmzDWYwySlB3avS7bBL8jsEUC0aPHFA
-	VGuUtcM76U0yZzBFe4sJHCnVzp1x/4AIyYW7dpuWGg==
-X-Google-Smtp-Source: AMsMyM5ksqUJ8SVIvXrtIwFN5i88+m+DzparWxKXy8NGnIIzbgssm45e6mhLSH/PRjclkP8xuAkTVBww6rMhLGIwxzg=
-X-Received: by 2002:a17:907:c1e:b0:7ae:31a0:571e with SMTP id
- ga30-20020a1709070c1e00b007ae31a0571emr24270592ejc.690.1667985287893; Wed, 09
- Nov 2022 01:14:47 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4N6gf13RHGz3cD2
+	for <openbmc@lists.ozlabs.org>; Wed,  9 Nov 2022 21:08:23 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net; s=s31663417;
+	t=1667988490; bh=kd8KI0VvTgYS616XjUKkZ7Ghx5h6RnT4rDbBnzCkVnk=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=hv3S7WHUR5IfwXEOq7pdqvjEH2A3PNbF9tOwgT7dBHgTscbhkZf4wjY7wVlswffGO
+	 F1izqEspC3ojgZIkERAK1FkK9XXXNx61lpXaK7tznsEzy29t6uC8CD/5CGvoKsUtWt
+	 4QvnYZ2OUY4D1Nj7akVe2HvNmM4Z4nMwq/CY9KJpj48mG1gTqA4gHK91W43TnUmaRm
+	 QJ6vezOl4LnqcQv/tUvYXjGlcKvcLXTRUy8haGDvY2Htu+uqw1S2PRGl1n8zCBWFnF
+	 e3m6YiuZnZi8DUe6Sj89t0Htm171AvscKAUVZfZrpSy2xTYEeQE+38PIN2h4GIc7BU
+	 6no8qE7AiwEAQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from probook ([95.223.44.31]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MS3mz-1oPB450iJX-00TQgw; Wed, 09
+ Nov 2022 11:08:10 +0100
+Date: Wed, 9 Nov 2022 11:08:09 +0100
+From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: Linus Walleij <linus.walleij@linaro.org>
+Subject: Re: [PATCH 0/8] Nuvoton WPCM450 FIU SPI flash controller
+Message-ID: <Y2t8CYaBfXB0RBkp@probook>
+References: <20221105185911.1547847-1-j.neuschaefer@gmx.net>
+ <CACRpkdaUv0=Q4X3VyN6hDZKTrchKpiA-H-aBSnj+8CWU6=TfXQ@mail.gmail.com>
 MIME-Version: 1.0
-References: <20221108092840.14945-1-JJLIU0@nuvoton.com> <20221108092840.14945-4-JJLIU0@nuvoton.com>
-In-Reply-To: <20221108092840.14945-4-JJLIU0@nuvoton.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Wed, 9 Nov 2022 10:14:36 +0100
-Message-ID: <CACRpkdb+Bkwa8yCKGtRcsJ6KnJh+RUuz_gOrQV63pcYQLaHCaw@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] dt-bindings: gpio: Add Nuvoton NPCM750 serial I/O
- expansion interface(SGPIO)
-To: Jim Liu <jim.t90615@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CACRpkdaUv0=Q4X3VyN6hDZKTrchKpiA-H-aBSnj+8CWU6=TfXQ@mail.gmail.com>
+X-Provags-ID: V03:K1:/uV95BZUCz/kdf3R+oZrIwHNFn3eUKIPK1T4QVkOSBcbBI0KsjV
+ pCReinysjykzMdIBCqbJvAO/UNY1Bb/vk85bxxC0FGsXb9i95XaLotvXEqswT3Bsl5IOOZ8
+ UDbWMTRUtH+dcZBlmLayitAIyaZsSyqe/QV6ZQJnUpmnPVHlES5X0ZdGLQvumgA4HMKPACR
+ o13WovKkBqBa0+8RPUC7g==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:+x4fTq1f/R0=;9QDlaw3XAmZieT+Qnphn3tjxCvx
+ Gbt1+QJfVDuWUr0NYRcIQIXYS9VkbQ2tqjuLqu7BiCZ1ksSOYoQrY+otHODD/gbUDusE8OgXj
+ 9UENzGSWuWwa7dT0nwJwsXYqS6bCDMwyO6iZQ7OSabDR7J6ALuSOEiIMnV1q2qmeiAgOXdqug
+ jiaNGyF4pf4UwPdzf4fHzlLsjXjd6Roh2a3Q/48dLcDBzsXRkJ3EFkzBOiEJeTm9ZH1stZnal
+ T81NgTbOmY0C+tZRtDyYS3ziyfkkCMms9Ql4BArIgPVUoBZsvg95MypLjv1RZpAn2fEr+ym0I
+ YD9plPQuHYhHKZ6L6cIZ3TUpcYnczXLB4eIINxnuNmcRbPtoO2RK2BPaKgnf6zgy1e7ZzZzaF
+ R3AnwnI/nlOzWFeLEQnyj2gpMfY5cpTA4U+LgI1SN951J6jUgfo9cBg8EB2RyeqWWY2jun5Bg
+ QTHiLEv1mHMHCayXkhOMGU9nUzuHJjKzgjWCsANKRzCCY4nWvsYWXoiXMUmsX2kK+ff55fLt9
+ t/JE98/H255T/e4q6E4SAOQMYDsF6cSbM0OPmrR8xoLrDWgSk2cYaB/zve4oiXxHgt9Aqqqfo
+ 2KCkEwtTakOSn4P9SwLLpzQBYJAKUMfmUAEoHQZcGSozn+W56QMdpWAanCvgaglh5xY05fumv
+ gHm15UbQKlUiVs8MAwPgnjymZJFhxZIUKo0zMYpy909WkwFFSZgnc5cZ23EQquiZdZZdW6QHq
+ dyFpihEQAKqFZlZVTGOZx32Ca05rAyj569nSY7XsGjhwtVr1YFIlvPbwK1f2VIeYWVbmKrQZE
+ +vCVYtGToAWTOyUgt4wNkCrBHTelGHdsxlNI7VcfkrwJQxGL92JSSvZmcBNiTczETPdmAVBHT
+ wQEQKI+gtTzb+kXuRJFPxMUYeZFB+qskkJau1H2MFF5fwhJSuuk6zbIhlxekG1E4Cph+gZaqP
+ 0mRT2pQ+C2yskoBXNoalSqx09ts=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,31 +78,26 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: KWLIU@nuvoton.com, devicetree@vger.kernel.org, brgl@bgdev.pl, JJLIU0@nuvoton.com, linux-kernel@vger.kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org
+Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, Lee Jones <lee@kernel.org>, Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, linux-spi@vger.kernel.org, linux-gpio@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Mark Brown <broonie@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Nov 8, 2022 at 10:29 AM Jim Liu <jim.t90615@gmail.com> wrote:
+On Wed, Nov 09, 2022 at 09:41:04AM +0100, Linus Walleij wrote:
+> On Sat, Nov 5, 2022 at 7:59 PM Jonathan Neusch=C3=A4fer
+> <j.neuschaefer@gmx.net> wrote:
+>
+> > Jonathan Neusch=C3=A4fer (8):
+> >   pinctrl: nuvoton: wpcm450: Refactor MFSEL setting code
+> >   pinctrl: nuvoton: wpcm450: Fix handling of inverted MFSEL bits
+>
+> I just applied these two patches to the pinctrl tree, it looks like they
+> can be applied independently of the others so I just did.
 
-> +  nin_gpios: true
-> +
-> +  nout_gpios: true
+Yes, that's the intention.
 
-My comment from v1 still holds.
-I'd say just drop these two, it's too much trying to protect
-the users from themselves.
+>
+> So no need to resend these or include me on subsequent patch
+> series.
 
-> +  bus-frequency: true
-
-Given that you have clocks already, what does this actually specify?
-Which bus? The one the GPIO is connected to? Why is it different
-from the frequency from the clocks? And what is it used for, why does
-it need to be specified? So many questions.
-
-A description is necessary.
-
-I guess the : true means it is picked up from the core schemas somehow
-but that doesn't make me smarter.
-
-Yours,
-Linus Walleij
+Thanks!
+Jonathan
