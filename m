@@ -2,44 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A7367623F2B
-	for <lists+openbmc@lfdr.de>; Thu, 10 Nov 2022 10:58:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5419F624C49
+	for <lists+openbmc@lfdr.de>; Thu, 10 Nov 2022 21:59:58 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4N7HMp4Nj6z3cj6
-	for <lists+openbmc@lfdr.de>; Thu, 10 Nov 2022 20:58:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4N7Z3J1pn1z3cH9
+	for <lists+openbmc@lfdr.de>; Fri, 11 Nov 2022 07:59:56 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=USATO2P5;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71; helo=twspam01.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com; receiver=<UNKNOWN>)
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com [211.20.114.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22f; helo=mail-oi1-x22f.google.com; envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=USATO2P5;
+	dkim-atps=neutral
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4N7HML71qZz2xb4;
-	Thu, 10 Nov 2022 20:57:48 +1100 (AEDT)
-Received: from mail.aspeedtech.com ([192.168.0.24])
-	by twspam01.aspeedtech.com with ESMTP id 2AA9WgmQ047730;
-	Thu, 10 Nov 2022 17:32:42 +0800 (GMT-8)
-	(envelope-from jammy_huang@aspeedtech.com)
-Received: from JammyHuang-PC.aspeed.com (192.168.2.115) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 10 Nov
- 2022 17:56:21 +0800
-From: Jammy Huang <jammy_huang@aspeedtech.com>
-To: <eajames@linux.ibm.com>, <mchehab@kernel.org>, <joel@jms.id.au>,
-        <andrew@aj.id.au>, <hverkuil-cisco@xs4all.nl>, <zev@bewilderbeest.net>,
-        <linux-media@vger.kernel.org>, <openbmc@lists.ozlabs.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH] media: aspeed: Use v4l2_dbg to replace v4l2_warn to avoid log spam
-Date: Thu, 10 Nov 2022 17:56:11 +0800
-Message-ID: <20221110095611.522-1-jammy_huang@aspeedtech.com>
-X-Mailer: git-send-email 2.25.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [192.168.2.115]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 2AA9WgmQ047730
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4N7Z2h19Sjz3cH9
+	for <openbmc@lists.ozlabs.org>; Fri, 11 Nov 2022 07:59:22 +1100 (AEDT)
+Received: by mail-oi1-x22f.google.com with SMTP id q186so3101159oia.9
+        for <openbmc@lists.ozlabs.org>; Thu, 10 Nov 2022 12:59:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=i8Lto0vgEGPzLq5ot3LFC/V5FjCWSnGWGWVArQyfLsU=;
+        b=USATO2P5v5EfdQnFs5ha5C8R9kLoA8Z8PzUHb6nBkdWOTcwQE6TYmQ0QfMPCbI7tX7
+         Gg+Xaz+Qq+oT5aYxbFV2xno8bV2Z5p+4ZFJu7yZze4qNR8082cugVIxO6MKygj+NhrbR
+         GPWdOcxz2c0Whk7KEgDJkygthmWl0I5OCd9VGpr/Wf+W3gTrwqevX5JxH0cagdru2cF3
+         X/lz5LSo/TUaLJi2bI/kz/bBP1z4Z8HIXQYckIzlc0feqWqH9Oj6XyPsKh6KB9eND7kW
+         dOPZY9EPFuZl1rZ+qJav1yyeYl2b8Cd3ZlDekZQqgpExc7aIB6nK7z5RTTuVAS5CARhh
+         VpGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=i8Lto0vgEGPzLq5ot3LFC/V5FjCWSnGWGWVArQyfLsU=;
+        b=CkYue8IFOWQeAVq2BfecWFYbu7+WEkHfM2JHpQqouCzQ34grPREzBcXzgUHjtX1fnL
+         YU6h+s7WqCwEMH+UqfY8HXvs1Ep2RaoF+EI/4P1N4bzdUO7qBZfI8UhzUTffjuOjwQA+
+         lpr8fvJKZF4pYvdovIt+ALxBwLpLot/N1wRneaLVO6iMaFAsLXdCVcE84lALP8TcGrrP
+         lLDO66f+dcKuGOE03VaL5I5xhYiTLMSsxru9e6s+udhh3JYlkFN7sP96VENuN19UzQ/l
+         LaGKtsxZNbB07Mq+75sjtUcwcBdvKqAF965yAB5/kut+3dEXK9GhriqfTqF/IpSfbTyT
+         eIDg==
+X-Gm-Message-State: ACrzQf0DSeE9OI2o2PLxVhNlHnmkY1Cm5jbl0fensxlEtTQ6TwIL5Hey
+	VVKmCopRjNWZzHVnc4uunvk9047H6CE=
+X-Google-Smtp-Source: AMsMyM6g4T6vCsjp/pCvYg6XgRB79XPfJpKaOixnoF5I+XlAMFw9dt0ayXx+IkzYATvrKQTkuw1ZGQ==
+X-Received: by 2002:a05:6808:152:b0:35a:3da7:e8ce with SMTP id h18-20020a056808015200b0035a3da7e8cemr1873274oie.190.1668113957451;
+        Thu, 10 Nov 2022 12:59:17 -0800 (PST)
+Received: from smtpclient.apple ([136.49.194.28])
+        by smtp.gmail.com with ESMTPSA id k4-20020a05680808c400b0035a534b9237sm192819oij.29.2022.11.10.12.59.17
+        for <openbmc@lists.ozlabs.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 10 Nov 2022 12:59:17 -0800 (PST)
+From: Andrew Geissler <geissonator@gmail.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: obmc-op-control-power_git.bb refactoring
+Message-Id: <73130EC5-5B2A-4E79-9AAD-88D26C61D71F@gmail.com>
+Date: Thu, 10 Nov 2022 14:59:16 -0600
+To: OpenBMC List <openbmc@lists.ozlabs.org>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,95 +80,77 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-If the host is powered off, there will be many warning log. To avoid the
-log spam in this condition, replace v4l2_warn with v4l2_dbg.
+Greetings,
 
-Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
----
- drivers/media/platform/aspeed/aspeed-video.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+Some recent phosphor-state-manager (PSM) feedback indicated quite a bit =
+of
+confusion with the services involved in powering on and off the chassis. =
+And
+I'll have to admit, after getting to explain it in discord, it is a bit
+confusing.
 
-diff --git a/drivers/media/platform/aspeed/aspeed-video.c b/drivers/media/platform/aspeed/aspeed-video.c
-index cf76aeee8cb6..662465d13a0e 100644
---- a/drivers/media/platform/aspeed/aspeed-video.c
-+++ b/drivers/media/platform/aspeed/aspeed-video.c
-@@ -586,13 +586,13 @@ static int aspeed_video_start_frame(struct aspeed_video *video)
- 	bool bcd_buf_need = (video->format != VIDEO_FMT_STANDARD);
- 
- 	if (video->v4l2_input_status) {
--		v4l2_warn(&video->v4l2_dev, "No signal; don't start frame\n");
-+		v4l2_dbg(1, debug, &video->v4l2_dev, "No signal; don't start frame\n");
- 		return 0;
- 	}
- 
- 	if (!(seq_ctrl & VE_SEQ_CTRL_COMP_BUSY) ||
- 	    !(seq_ctrl & VE_SEQ_CTRL_CAP_BUSY)) {
--		v4l2_warn(&video->v4l2_dev, "Engine busy; don't start frame\n");
-+		v4l2_dbg(1, debug, &video->v4l2_dev, "Engine busy; don't start frame\n");
- 		return -EBUSY;
- 	}
- 
-@@ -615,7 +615,7 @@ static int aspeed_video_start_frame(struct aspeed_video *video)
- 				       struct aspeed_video_buffer, link);
- 	if (!buf) {
- 		spin_unlock_irqrestore(&video->lock, flags);
--		v4l2_warn(&video->v4l2_dev, "No buffers; don't start frame\n");
-+		v4l2_dbg(1, debug, &video->v4l2_dev, "No buffers; don't start frame\n");
- 		return -EPROTO;
- 	}
- 
-@@ -796,7 +796,7 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
- 			if (video->format == VIDEO_FMT_STANDARD &&
- 			    list_is_last(&buf->link, &video->buffers)) {
- 				empty = false;
--				v4l2_warn(&video->v4l2_dev, "skip to keep last frame updated\n");
-+				v4l2_dbg(1, debug, &video->v4l2_dev, "skip to keep last frame updated\n");
- 			} else {
- 				buf->vb.vb2_buf.timestamp = ktime_get_ns();
- 				buf->vb.sequence = video->sequence++;
-@@ -1060,7 +1060,7 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
- 						      res_check(video),
- 						      MODE_DETECT_TIMEOUT);
- 		if (!rc) {
--			v4l2_warn(&video->v4l2_dev, "Timed out; first mode detect\n");
-+			v4l2_dbg(1, debug, &video->v4l2_dev, "Timed out; first mode detect\n");
- 			clear_bit(VIDEO_RES_DETECT, &video->flags);
- 			return;
- 		}
-@@ -1081,7 +1081,7 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
- 						      MODE_DETECT_TIMEOUT);
- 		clear_bit(VIDEO_RES_DETECT, &video->flags);
- 		if (!rc) {
--			v4l2_warn(&video->v4l2_dev, "Timed out; second mode detect\n");
-+			v4l2_dbg(1, debug, &video->v4l2_dev, "Timed out; second mode detect\n");
- 			return;
- 		}
- 
-@@ -1104,7 +1104,7 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
- 	} while (invalid_resolution && (tries++ < INVALID_RESOLUTION_RETRIES));
- 
- 	if (invalid_resolution) {
--		v4l2_warn(&video->v4l2_dev, "Invalid resolution detected\n");
-+		v4l2_dbg(1, debug, &video->v4l2_dev, "Invalid resolution detected\n");
- 		return;
- 	}
- 
-@@ -1856,7 +1856,7 @@ static void aspeed_video_stop_streaming(struct vb2_queue *q)
- 				!test_bit(VIDEO_FRAME_INPRG, &video->flags),
- 				STOP_TIMEOUT);
- 	if (!rc) {
--		v4l2_warn(&video->v4l2_dev, "Timed out when stopping streaming\n");
-+		v4l2_dbg(1, debug, &video->v4l2_dev, "Timed out when stopping streaming\n");
- 
- 		/*
- 		 * Need to force stop any DMA and try and get HW into a good
+The PSM repository defines the needed systemd targets for PSM to =
+function and
+the generic services that could be applicable to any system. System =
+specific
+services are hosted in machine-specific layers and loaded into the =
+appropriate
+systemd targets as needed.
 
-base-commit: aae703b02f92bde9264366c545e87cec451de471
-prerequisite-patch-id: bf47e8ab2998acfbc32be5a4b7b5ae8a3ae4218b
-prerequisite-patch-id: bf82715983e08f2e810ff1a82ce644f5f9006cd9
-prerequisite-patch-id: 28a2040ef0235e5765f05d2fc5529bce2a0f4c6f
-prerequisite-patch-id: 7e761c779730536db8baf50db5fc8caf058e95af
-prerequisite-patch-id: c48ea20973fa35938a7d33a0e20d2900df48755f
--- 
-2.25.1
+There are however a series of generic services for powering on/off the =
+chassis
+that are hosted outside[1] of PSM.
 
+What makes these services especially confusing is that they are under a =
+recipe
+indicating they are only for openpower machines (op) but in reality they =
+mostly
+just operate against a generic d-bus object, =
+/org/openbmc/control/power%i.
+
+There are two options for supporting /org/openbmc/control/power%i, =
+either
+utilizing the old skeleton repo[2] or the new phosphor-power =
+implementation.
+We definitely want to continue to push people away from our skeleton =
+repo (I'm
+pretty sure that this op-pwrctl part of skeleton is the last one being =
+used) but
+I'm not looking to tackle that here.
+
+What I would like to do is get the generic services that are not tied to =
+any
+specific chassis poweron implementation out of this[3] recipe and into =
+PSM. I'd
+also like to rename the service files and rename the recipe to remove =
+the
+"op" references.
+
+Here's what I'm thinking:
+
+Move these services to PSM and rename them as follows:
+- op-power-start@.service -> phosphor-power-start@.service
+- op-power-stop@.service -> phosphor-power-stop@.service
+- op-powered-off@.service -> phosphor-powered-off@.service
+- op-reset-chassis-on@.service -> phosphor-reset-chassis-on@.service
+
+Leave in current location but rename (these rely on code from the =
+skeleton repo):
+- op-wait-power-off@.service -> phosphor-wait-power-off@.service
+- op-wait-power-on@.service -> phosphor-wait-power-on@.service
+- obmc-op-control-power_git.bb -> phosphor-skeleton-control-power_git.bb
+
+I'd like the "skeleton" in the recipe name to hopefully keep people away =
+from it
+and remind ourselves to get rid of it at some point.
+
+Thoughts or comments?
+Andrew
+
+[1]: =
+https://github.com/openbmc/openbmc/tree/master/meta-phosphor/recipes-phosp=
+hor/chassis/obmc-op-control-power
+[2]: https://github.com/openbmc/skeleton/tree/master/op-pwrctl
+[3]: =
+https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-phosp=
+hor/chassis/obmc-op-control-power_git.bb=
