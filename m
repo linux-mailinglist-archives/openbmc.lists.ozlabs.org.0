@@ -1,63 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A39D6237CE
-	for <lists+openbmc@lfdr.de>; Thu, 10 Nov 2022 00:56:11 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 81BB262380A
+	for <lists+openbmc@lfdr.de>; Thu, 10 Nov 2022 01:14:13 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4N72146vvxz3cKr
-	for <lists+openbmc@lfdr.de>; Thu, 10 Nov 2022 10:56:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4N72Pv3FH7z3cHs
+	for <lists+openbmc@lfdr.de>; Thu, 10 Nov 2022 11:14:11 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Wd6ppp30;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=OhIxVFzO;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::331; helo=mail-wm1-x331.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::329; helo=mail-wm1-x329.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Wd6ppp30;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=OhIxVFzO;
 	dkim-atps=neutral
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4N720R5jD7z2yyZ;
-	Thu, 10 Nov 2022 10:55:35 +1100 (AEDT)
-Received: by mail-wm1-x331.google.com with SMTP id t1so151383wmi.4;
-        Wed, 09 Nov 2022 15:55:35 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4N72PJ5xRRz2yRS
+	for <openbmc@lists.ozlabs.org>; Thu, 10 Nov 2022 11:13:38 +1100 (AEDT)
+Received: by mail-wm1-x329.google.com with SMTP id c3-20020a1c3503000000b003bd21e3dd7aso2344380wma.1
+        for <openbmc@lists.ozlabs.org>; Wed, 09 Nov 2022 16:13:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=jms.id.au; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=j51pcpmAt7rygikiVDfge95qbdKBtRf/PjFzkYZrMnc=;
-        b=Wd6ppp30utQntCUqz+qW2cMWBmwMs+rr95pprrQ4BHDRQxjd30vD6E/xLK0J4s5ygs
-         XFdDT1RYyNMEv8ooKTwg21fWqx4yPRayjTX94hEsCfgP+jITqGcRlT5SkL5BNMlzhTL4
-         KN621bpyhvV2Z759F5e+QYGQ6fKGmRLziziwM=
+        bh=LQlpOcOiXl81/Ahx2mm4s89XDhcypuM8H0pgEvSLsww=;
+        b=OhIxVFzOVdFlVAxUjiWITaflbOUzZBeBCFzmZLiaVFcrAl8ad2QvVW8PY/ovUth0b9
+         pXwjnWlUhSP30lOWc/Yxi6AanJiEwgI3WqW+wTOKkerTl8blg/5mn0Grxkysdqzk06kv
+         rcRDbHY5YOeSH7gZpEvSbxOB3AmhYD0u/Q1JM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=j51pcpmAt7rygikiVDfge95qbdKBtRf/PjFzkYZrMnc=;
-        b=JHulyt/qZ+btr9jOiQyJbLoxTMgUN9Fl41F5KuJNldTcAYVjAkWgurp7NyLaZ1ltj2
-         yaSnwvYlGmcsQXC8N4fOKdzOqPNo5K4HiKMu9tfagtb9kaObMJM3kIP9caOia95Wy4yO
-         BTCWKANfeylpkMauGoeUNQ4kyXFEBlXl+514zoboEzc0hG4770dpaymsXY6k/kIXjIQT
-         5B9iEPY8dJK68bUA5ZYL+RXLD6r6Od0kdwbb0wApZ8/hCz75kr+uOEa7Rnq9d+zX4UpF
-         8fS9mdFb3mEbLFJYfUyzKqTCD8b5gmSmbRloQlJqXxWhgdmUD4g5n1Wfn4NPekwayFje
-         Q6SQ==
-X-Gm-Message-State: ACrzQf0zvj1eQvY7nabNloqBiWgyWLdNAEx3F+8mEd+2+VxNyWGN9xQx
-	3QT2lfKvtmZDXrhmnqIBP+1agq3pkSiwpOs8OZU=
-X-Google-Smtp-Source: AMsMyM633cR3aqFZIJs92t3FJDeCnj/48LR9q/mCiFCWUWAAUvWB71S7IrPEET1nrwzBbJA7zpjBPNFK4ve3y4WY6Cg=
-X-Received: by 2002:a05:600c:a46:b0:3b9:9b97:9304 with SMTP id
- c6-20020a05600c0a4600b003b99b979304mr41506443wmq.34.1668038131488; Wed, 09
- Nov 2022 15:55:31 -0800 (PST)
+        bh=LQlpOcOiXl81/Ahx2mm4s89XDhcypuM8H0pgEvSLsww=;
+        b=acAKfCGbE75mLsLTSUCcnNn5II3tjlxlZ47Um8iWMWdwP5wlfd5UfGwBo11ImUxP8Y
+         LvaAmkdhXHmnvCAs4AAtsePZzB756jOiS2jfwY0oHktPctk6IooXVmZ7BrB/pQs5bLVu
+         MT/GNS9juIPDCb0bi8EPjcAyCcZk0lDpXGYZ2JumjSTp0sL+tvJ2O+r4BZ94TqWrER1x
+         zlCe+DoHAzp6Yl+h0OIMrtx6vFXKDMaw0s7nxp3/OBKDb2pTZz1Rvlo+gCMMYN+BBYb5
+         I73S8QihAbt6LdVOMmN5dCB/TkNt/cv18SVHOap3TFwj09utnHQS6JuhOj74p5BeCwAB
+         eYug==
+X-Gm-Message-State: ACrzQf0JOeH+dRxheG1PkgEb+nVdIZxADcfwC0bfHftYMjqwxmAqm/yW
+	FMmxaaY1GeRp9tOAiqr0wxGqyH+eZYffpD5/Jh0=
+X-Google-Smtp-Source: AMsMyM6ZralU9souDC9JtnLIt2EwbirtzEfO0f/SdzIXpaf7G7fGeqcKFbfqOIdJVqqIYcDtxFK2g4ntenfJp7ILodQ=
+X-Received: by 2002:a05:600c:1d8f:b0:3cf:54f4:ef4 with SMTP id
+ p15-20020a05600c1d8f00b003cf54f40ef4mr48808133wms.190.1668039214549; Wed, 09
+ Nov 2022 16:13:34 -0800 (PST)
 MIME-Version: 1.0
-References: <20221108001551.18175-1-zev@bewilderbeest.net>
-In-Reply-To: <20221108001551.18175-1-zev@bewilderbeest.net>
+References: <20221026064021.16683-1-zev@bewilderbeest.net> <20221109114748.GE18848@packtop>
+In-Reply-To: <20221109114748.GE18848@packtop>
 From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 9 Nov 2022 23:55:19 +0000
-Message-ID: <CACPK8XeKA+rFwOGCZam2XZh9v8OndyZeE2sk4-3nb-rKdNeDBA@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] ARM: dts: aspeed: Add Delta AHE-50DC BMC
-To: Zev Weiss <zev@bewilderbeest.net>
+Date: Thu, 10 Nov 2022 00:13:22 +0000
+Message-ID: <CACPK8XdD_ZfN1xqR9P_J0-9VxHA_=Ma+rqDhNv33-L0CQT2fUw@mail.gmail.com>
+Subject: Re: [PATCH u-boot v2019.04-aspeed-openbmc] Revert "config/ast2500:
+ Enable RAM devices"
+To: Zev Weiss <zweiss@equinix.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -70,40 +71,46 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, Arnd Bergmann <arnd@arndb.de>, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, soc@kernel.org, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Olof Johansson <olof@lixom.net>, linux-arm-kernel@lists.infradead.org
+Cc: Ryan Chen <ryan_chen@aspeedtech.com>, Zev Weiss <zev@bewilderbeest.net>, Andrew Jeffery <andrew@aj.id.au>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Zhang Jian <zhangjian.3032@bytedance.com>, Dylan Hung <dylan_hung@aspeedtech.com>, Chia-Wei Wang <chiawei_wang@aspeedtech.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 8 Nov 2022 at 00:16, Zev Weiss <zev@bewilderbeest.net> wrote:
+On Wed, 9 Nov 2022 at 11:48, Zev Weiss <zweiss@equinix.com> wrote:
 >
-> Hello,
+> On Tue, Oct 25, 2022 at 11:40:21PM PDT, Zev Weiss wrote:
+> >This reverts commit ba91e9df1e16db0d209177148e864c65e58eb00f.
+> >
+> >CONFIG_RAM=y currently breaks DRAM initialization on ast2500; Aspeed
+> >recommends against using it [0].
+> >
+> >[0] https://lore.kernel.org/openbmc/HK0PR06MB2834AE1581020A5B7CE191839C5B9@HK0PR06MB2834.apcprd06.prod.outlook.com/
+> >
+> >Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+> >---
+> >
+> >Note that I'm not at all tied to this particular patch as the fix if
+> >the interested parties can agree on better course of action; I'm
+> >mostly just hoping to spur some further conversation given that
+> >currently a vanilla OpenBMC build bricks my ast2500 systems in a way
+> >that's not real easy to recover without a flash programmer.
+> >
 >
-> This series adds a device-tree for the BMCs of the Delta AHE-50DC
-> Open19 power shelf.  The first patch adds a compat entry to the Aspeed
-> bindings; the second adds the device-tree itself.
->
-> Changes since v1 [0]:
->  - rearranged patch 2 with macros to reduce boilerplate
->  - added ack from Krzysztof on patch 1
+> Ping...I'm hoping to get e3c246d4i migrated to u-boot-aspeed-sdk soon
+> (bearing in mind the end-of-year deadline suggested in Joel's email a
+> few months ago [0]), but with this issue outstanding doing so will make
+> any such systems self-bricking unless I hack around it with a bandaid
+> kconfig fragment in a bbappend, which doesn't seem like a great fix
+> since it's not really an e3c246d4i-specific problem.
 
-Looks good to me, I've put it in the aspeed tree for 6.2.
+I've merged this for now.
 
+We should consider removing the C DRAM training, or re-working it to
+match what the assembly does (IIRC it is different in structure
+compared to the assembly. I don't know why).
+
+>
 >
 > Thanks,
 > Zev
 >
-> [0] https://lore.kernel.org/lkml/20221105013321.2719-1-zev@bewilderbeest.net/T/
->
-> Zev Weiss (2):
->   dt-bindings: arm: aspeed: document Delta AHE-50DC BMC
->   ARM: dts: aspeed: Add Delta AHE-50DC BMC
->
->  .../bindings/arm/aspeed/aspeed.yaml           |   1 +
->  arch/arm/boot/dts/Makefile                    |   1 +
->  .../arm/boot/dts/aspeed-bmc-delta-ahe50dc.dts | 418 ++++++++++++++++++
->  3 files changed, 420 insertions(+)
->  create mode 100644 arch/arm/boot/dts/aspeed-bmc-delta-ahe50dc.dts
->
-> --
-> 2.38.1
->
+> [0] https://lore.kernel.org/openbmc/CACPK8Xe4ijKWnURT4T9em2pUqifNdkZUfg0dd5osATYnqqutSw@mail.gmail.com/
