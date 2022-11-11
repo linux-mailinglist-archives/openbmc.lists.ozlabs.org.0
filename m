@@ -2,86 +2,48 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B78E624E95
-	for <lists+openbmc@lfdr.de>; Fri, 11 Nov 2022 00:51:45 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 112EB625214
+	for <lists+openbmc@lfdr.de>; Fri, 11 Nov 2022 05:01:10 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4N7dsV6jBRz3cKq
-	for <lists+openbmc@lfdr.de>; Fri, 11 Nov 2022 10:51:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4N7lPH6mMzz3cKr
+	for <lists+openbmc@lfdr.de>; Fri, 11 Nov 2022 15:01:07 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=ewQjMx5y;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=Lm8NbliV;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=FsMeTvbC;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aj.id.au (client-ip=64.147.123.25; helo=wout2-smtp.messagingengine.com; envelope-from=andrew@aj.id.au; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm3 header.b=ewQjMx5y;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=Lm8NbliV;
+	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=FsMeTvbC;
 	dkim-atps=neutral
-X-Greylist: delayed 575 seconds by postgrey-1.36 at boromir; Fri, 11 Nov 2022 10:51:08 AEDT
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [IPv6:2605:2700:0:5::4713:9cab])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4N7drr0pFsz3c3W
-	for <openbmc@lists.ozlabs.org>; Fri, 11 Nov 2022 10:51:07 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.west.internal (Postfix) with ESMTP id B28C33200406;
-	Thu, 10 Nov 2022 18:41:25 -0500 (EST)
-Received: from imap50 ([10.202.2.100])
-  by compute3.internal (MEProxy); Thu, 10 Nov 2022 18:41:25 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
-	:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm3; t=1668123685; x=1668210085; bh=Jk7DTEmX7s
-	1t+MY4wTCO4N7WX2Xy6MHCBQ8VDodG2BY=; b=ewQjMx5yCHE+Cvb3I+qbQ6Smlb
-	16w9y6VfMZbfE7orEV6uloL9PLc8y+SHFJchiQyNbpMcWuqI+sMIs8QEM02cqNlD
-	ZppWpZOlJIBzx3jvBumpUpQqgjbTSgF0ekgm8uG+B3AQHQUDr20F/hHqFHiEcFSx
-	gcPGdZWxIODn/m8oVfvgrN1U+3ViWCTiSgj52bEseKUw+H6GdPJ51S5VISabTqD1
-	o2mNOLKU3KpS8YUdamult5MRTBM233h7PkDxpXfwewU0PbYXka4DIm7dVI+bFNuZ
-	5vRRgjqSlooHH5jy1J/iuL0krRPybKFFI8VH5DH9KmJ9zH0mSJRyFcfrPR5A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1668123685; x=1668210085; bh=Jk7DTEmX7s1t+MY4wTCO4N7WX2Xy
-	6MHCBQ8VDodG2BY=; b=Lm8NbliVApm0G7O7ci7o8v3Gfln5yGXvlKHixfHyPiwx
-	5ATwYKSPmuIiWtYDWjL63UyooAy9kHBQFA5KVxvbjGioukZVdwrBBeH4TZwpoUKX
-	kfoIBfK+t2KxJ4Su9UnhzVWXyFRyoHdc/EM3CYCTchxZcuP9o8iaRC8rmBUDZ1iB
-	wL/sUUPib9y9m75ZbhNh7+yRb25ABdjsTRx29HeqTTd8/tp2DqXg6yZxEY5H9xvk
-	HHUE3ZAHyFHuS8a0kd8a7TI0cgSfMw3sy7Scxlexg2e5be3IA4YgYt3TGVll4GgG
-	DFoD72ecWhdWTD7zx6xhfwFw62cpURbGSI4dIsHJqQ==
-X-ME-Sender: <xms:JIxtY0Qif4SWkNy2ISMlhfunnhqWvb41Te5HQV68ewkhNMo33JbGdQ>
-    <xme:JIxtYxzLkHkCI2v0SwXKo9L_Yx32Gu_l9AW3TEcI-TrbxWCGF_GIpdZZHz3GZqwqj
-    FI2APsfoQDILPuOUQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedrfeehgddugecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvufgtsehttdertderredtnecuhfhrohhmpedftehnughr
-    vgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtffrrg
-    htthgvrhhnpeehhfefkefgkeduveehffehieehudejfeejveejfedugfefuedtuedvhefh
-    veeuffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    grnhgurhgvfiesrghjrdhiugdrrghu
-X-ME-Proxy: <xmx:JYxtYx37UVbf2fhfKLhad8cdhoGbKtQdGiQX6QBC_sx9Jed19HjyvA>
-    <xmx:JYxtY4BlI1KFhZqZsASXgUtFtPyKxqgIlnOBP7frgOCSSTqx8DZJMQ>
-    <xmx:JYxtY9j7hpQYENhFQNSy6l3JGrssaF2bk1qUZVTYhzqg1hfIWs90HA>
-    <xmx:JYxtY3fFoMg6YspyjNr1s2qs8fL1gzolKs9Z6Yk712cYtGqeEpWE6w>
-Feedback-ID: idfb84289:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id D303E1700089; Thu, 10 Nov 2022 18:41:24 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-1115-g8b801eadce-fm-20221102.001-g8b801ead
-Mime-Version: 1.0
-Message-Id: <3d8ca8ab-56a3-4ad7-8b34-d97f50ae0d81@app.fastmail.com>
-In-Reply-To: <73130EC5-5B2A-4E79-9AAD-88D26C61D71F@gmail.com>
-References: <73130EC5-5B2A-4E79-9AAD-88D26C61D71F@gmail.com>
-Date: Fri, 11 Nov 2022 10:11:04 +1030
-From: "Andrew Jeffery" <andrew@aj.id.au>
-To: "Andrew Geissler" <geissonator@gmail.com>,
- "OpenBMC List" <openbmc@lists.ozlabs.org>
-Subject: Re: obmc-op-control-power_git.bb refactoring
-Content-Type: text/plain
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4N7lKg5wVjz3cC5
+	for <openbmc@lists.ozlabs.org>; Fri, 11 Nov 2022 14:57:59 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (97-113-250-99.tukw.qwest.net [97.113.250.99])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: zev)
+	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id BAC86216;
+	Thu, 10 Nov 2022 19:57:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+	s=thorn; t=1668139074;
+	bh=nB2BB1vZMl94/IR136wWGbb6FNzsmP2Ql8lon44MW1g=;
+	h=From:To:Cc:Subject:Date:From;
+	b=FsMeTvbCPffXoBTcYNlK/4pxrFMe+kuTJolO1ZhywpHGEK0qTe00vwI9HI7CAYAXR
+	 M4k5IP70zVY9EZqWOqYy3YScJCStRtppIh9PdYHsZxiGmWdZJCJ95MGHAkE5294ghX
+	 6gOQ5tmPKZPq5ftkL6SD7p07d3UxWn1tKs1eVw+I=
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Joel Stanley <joel@jms.id.au>
+Subject: [PATCH linux dev-6.0 0/7] Delta AHE-50DC OpenBMC kernel support
+Date: Thu, 10 Nov 2022 19:57:40 -0800
+Message-Id: <20221111035747.31663-1-zev@bewilderbeest.net>
+X-Mailer: git-send-email 2.38.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,21 +55,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org, Zev Weiss <zev@bewilderbeest.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 11 Nov 2022, at 07:29, Andrew Geissler wrote:
->
-> Here's what I'm thinking:
->
-> Move these services to PSM and rename them as follows:
-> - op-power-start@.service -> phosphor-power-start@.service
-> - op-power-stop@.service -> phosphor-power-stop@.service
+Hi Joel,
 
-This isn't terribly constructive but I feel like given s/op-/phosphor-/ 
-results in names like 'phosphor-power*' it's going to be confusing with 
-respect to the existing phosphor-power subproject.
+This series contains the patches necessary to provide support for the
+Delta AHE-50DC Open19 power shelf in the OpenBMC kernel.  Patch 1 is
+already in mainline and is included simply to avoid a small merge
+conflict; patches 2-4 are in Mark Brown's for-next regulator tree,
+patch 5 is a small bugfix that's already in mainline, and patches 6 &
+7 are now in your bmc.git repo's for-next tree.
 
-Not sure how to fix it though.
 
-Andrew
+Thanks,
+Zev
+
+Guenter Roeck (1):
+  Revert "hwmon: (pmbus) Add regulator supply into macro"
+
+Matti Vaittinen (1):
+  regulator: Add devm helpers for get and enable
+
+Zev Weiss (5):
+  regulator: devres: Add devm_regulator_bulk_get_exclusive()
+  regulator: Add regulator-output binding
+  regulator: userspace-consumer: Handle regulator-output DT nodes
+  dt-bindings: arm: aspeed: document Delta AHE-50DC BMC
+  ARM: dts: aspeed: Add Delta AHE-50DC BMC
+
+ .../bindings/arm/aspeed/aspeed.yaml           |   1 +
+ .../bindings/regulator/regulator-output.yaml  |  39 ++
+ arch/arm/boot/dts/Makefile                    |   1 +
+ .../arm/boot/dts/aspeed-bmc-delta-ahe50dc.dts | 418 ++++++++++++++++++
+ drivers/hwmon/pmbus/pmbus.h                   |   1 -
+ drivers/regulator/core.c                      |  42 +-
+ drivers/regulator/devres.c                    | 230 +++++++++-
+ drivers/regulator/internal.h                  |   2 +
+ drivers/regulator/userspace-consumer.c        |  60 ++-
+ include/linux/regulator/consumer.h            |  29 ++
+ include/linux/regulator/userspace-consumer.h  |   1 +
+ 11 files changed, 780 insertions(+), 44 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/regulator/regulator-output.yaml
+ create mode 100644 arch/arm/boot/dts/aspeed-bmc-delta-ahe50dc.dts
+
+-- 
+2.38.1
+
