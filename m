@@ -1,63 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 542C962533C
-	for <lists+openbmc@lfdr.de>; Fri, 11 Nov 2022 06:57:36 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 14EFB625D25
+	for <lists+openbmc@lfdr.de>; Fri, 11 Nov 2022 15:35:23 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4N7nzf19BNz3cMk
-	for <lists+openbmc@lfdr.de>; Fri, 11 Nov 2022 16:57:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4N81T46mv9z3fsF
+	for <lists+openbmc@lfdr.de>; Sat, 12 Nov 2022 01:35:20 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Kom70ZCA;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=PeZS2Cec;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::436; helo=mail-wr1-x436.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::630; helo=mail-ej1-x630.google.com; envelope-from=linus.walleij@linaro.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Kom70ZCA;
+	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=PeZS2Cec;
 	dkim-atps=neutral
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4N7nz30x67z3c6t
-	for <openbmc@lists.ozlabs.org>; Fri, 11 Nov 2022 16:57:00 +1100 (AEDT)
-Received: by mail-wr1-x436.google.com with SMTP id a14so5129955wru.5
-        for <openbmc@lists.ozlabs.org>; Thu, 10 Nov 2022 21:57:00 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4N817n0Kq7z3fXX
+	for <openbmc@lists.ozlabs.org>; Sat, 12 Nov 2022 01:20:19 +1100 (AEDT)
+Received: by mail-ej1-x630.google.com with SMTP id q9so13032511ejd.0
+        for <openbmc@lists.ozlabs.org>; Fri, 11 Nov 2022 06:20:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jms.id.au; s=google;
+        d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ioOrTK1jNUA4MKiJl/6d9zziB/7ZzevMu7lUj1Fo3js=;
-        b=Kom70ZCAy7S/PdotYJFR2v6tpVJT3FCxYSr39NQj0FHw7fG0VfvgbT/Au0XS4qDXA2
-         9lBC801zrYoBGKIxHNcDowXiQ5M8c5dh/3qgv3rvVyH3Qwps299XVtf7ZoRobgdVtS6L
-         TBTly9L4IxJ98QRUPGVzKgQ6J3fcNRoX3VOd0=
+        bh=8XnWoqHqROPGOcHnPLYRMUbIWz7bYGAQqwcf2qs2Ipc=;
+        b=PeZS2Cec6kqzUIH/C6si5K5+55feIDD54TJPB19WX4Zcoql/RyX4YgLOpYMHgn4XHh
+         9yRdI++voSchETEZQNwseFKrJo6xkO2WVjPYcY71RIeYBEL38KmwtXSPYUaF+aD7PfZ2
+         s70iFz5H6e+Rd60Nvywe33lLde8Vra+pmA7Va1+doOoTIjkR9sh5eywJ2JL+lJFMPDuM
+         zjXwP+wdJwrBp/qXzd6hXHMkW8yW8ZGdKRD7B2cmd4rYhtZMYnPQkq3Ywgg5tFhuQZd+
+         QCL9HXsVCJcDPrMW2dY3UJHGOylAgruM448ZhHeUV/hllLejfdj/bmM+Va1eTVtXV7ig
+         Jptg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=ioOrTK1jNUA4MKiJl/6d9zziB/7ZzevMu7lUj1Fo3js=;
-        b=v57DjCMy1Jc4gv1vevBuyI9YAdFxjLV8xKlTdOkbS7SzIkuDwNNAp8PwOQRCBOKOg4
-         uYJ/otYhyvgayxRWzbHCHAzj4URuOoyQL/30sn7Oy+E1r3pvxxreo5LwllfVJCR82Jik
-         ncxUCsNawllfHOJXZK39P98lifUCrwpNdXH3n7JFU47Iv42TAfLiglRrfuOuEEU+bPbM
-         Cu7uvH6QDEVIjiKZXfEMrQln9Dbc7Jr/Ce6FicFsfC+HDWf1AjcNM37Vr8pwOHQ99yru
-         gbYKIvGK+R8Cx9SFXMwJ8K34Gx4qURLfYNrA/p2wyDn3qKtWu6BPBpGw0L7VndQB+ZwU
-         blhA==
-X-Gm-Message-State: ANoB5pkj9s/0dY2o+/KcNKm+B7Uv5RjeQnDVbTNrqyHugAbh33NRgcin
-	41fjXU4eUHXMsk5WGETyLI8fp+Gb+NxsghdaqXnjrQMt
-X-Google-Smtp-Source: AA0mqf6qtMoZgbXL7bUzgtGh3OCC3N0PcINDyPHbIEbsvE92a3qUiScCH8vnvPoAot6dtOVdn9iEYcvJ3y+RcbKZg4s=
-X-Received: by 2002:a5d:58ee:0:b0:236:73ff:9cd0 with SMTP id
- f14-20020a5d58ee000000b0023673ff9cd0mr238414wrd.628.1668146209620; Thu, 10
- Nov 2022 21:56:49 -0800 (PST)
+        bh=8XnWoqHqROPGOcHnPLYRMUbIWz7bYGAQqwcf2qs2Ipc=;
+        b=pZ3IsWr1dCIdGjB3teysq6s3CfNJki1Fs55qaNCzVFGjFtUKn4BT99r6sxL9ZSdU+T
+         sz8K1EjKqn+qteYuCYPse5rWCjt6ros8MiXZghmHFRL+IUBt1g39jwaqEIncIG4nLw0C
+         FnQNEaLxV5GIQg+TGZWxqUH/OimCxF9cl7HjsAlqj22buFoVNhx/hc/Hko7XBMSThKFR
+         wEcx7nYyy7KSjDBNFULN5ws/PGNnzvz0OGd8Rx8B66kC1TiQw//CR03ZF0K6ffxKZSRk
+         GWQ1T7GM2c5aT59U2eEgvQRAMp4r39MGtLjQPVLcRFKuEqMcCJITstXQghjv3Av+dA7e
+         Lfzg==
+X-Gm-Message-State: ANoB5pmSlf81Ff7hM5LSIfFmhCeT0rtoTRAgoV95KJEZG99HHy1HQmjL
+	J+kSnpU5nme4CDY8lUgkmvDr3znKYDmwjkGpaN4X1Q==
+X-Google-Smtp-Source: AA0mqf4RBAVXKNecwLciDe0WJIDDV+587AIbknjYLqIA0UyJubGVzkQkzChS6pa5mn54/eWVP8ecSisCZ6otgHH5YbU=
+X-Received: by 2002:a17:906:b44:b0:7ad:b8c0:3057 with SMTP id
+ v4-20020a1709060b4400b007adb8c03057mr1992303ejg.440.1668176414026; Fri, 11
+ Nov 2022 06:20:14 -0800 (PST)
 MIME-Version: 1.0
-References: <20221111035747.31663-1-zev@bewilderbeest.net>
-In-Reply-To: <20221111035747.31663-1-zev@bewilderbeest.net>
-From: Joel Stanley <joel@jms.id.au>
-Date: Fri, 11 Nov 2022 05:56:37 +0000
-Message-ID: <CACPK8XfEcvMg1L3r7OnV9qZ93Lag5W_JCxngsPkfK8fXjPc5WA@mail.gmail.com>
-Subject: Re: [PATCH linux dev-6.0 0/7] Delta AHE-50DC OpenBMC kernel support
-To: Zev Weiss <zev@bewilderbeest.net>
+References: <20221108092840.14945-1-JJLIU0@nuvoton.com> <20221108092840.14945-4-JJLIU0@nuvoton.com>
+ <CACRpkdb+Bkwa8yCKGtRcsJ6KnJh+RUuz_gOrQV63pcYQLaHCaw@mail.gmail.com> <CAKUZ0+GCf_Zv=VhnY5Z=yYAfR1=_ha98BVVxRGVy8ui6so_Yrg@mail.gmail.com>
+In-Reply-To: <CAKUZ0+GCf_Zv=VhnY5Z=yYAfR1=_ha98BVVxRGVy8ui6so_Yrg@mail.gmail.com>
+From: Linus Walleij <linus.walleij@linaro.org>
+Date: Fri, 11 Nov 2022 15:20:02 +0100
+Message-ID: <CACRpkdYW0P8gqtGdiRX_frP32WF2W=NVg1JTu1fVMBXxEL0-WA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] dt-bindings: gpio: Add Nuvoton NPCM750 serial I/O
+ expansion interface(SGPIO)
+To: Jim Liu <jim.t90615@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -70,56 +75,34 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: KWLIU@nuvoton.com, devicetree@vger.kernel.org, brgl@bgdev.pl, JJLIU0@nuvoton.com, linux-kernel@vger.kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 11 Nov 2022 at 03:58, Zev Weiss <zev@bewilderbeest.net> wrote:
->
-> Hi Joel,
->
-> This series contains the patches necessary to provide support for the
-> Delta AHE-50DC Open19 power shelf in the OpenBMC kernel.  Patch 1 is
-> already in mainline and is included simply to avoid a small merge
-> conflict; patches 2-4 are in Mark Brown's for-next regulator tree,
-> patch 5 is a small bugfix that's already in mainline, and patches 6 &
-> 7 are now in your bmc.git repo's for-next tree.
+On Fri, Nov 11, 2022 at 10:30 AM Jim Liu <jim.t90615@gmail.com> wrote:
 
-Nice one. All merged into dev-6.0.
+> -D_out:
+> the output data is the serial data needed to connect to hc595 and the
+> data will output to hc595 parallel pins.
+> you can use dts nout_gpios to create the number of pins.
+>
+> -D_in
+> this pin need to connect to hc165 and get the serial data from hc165.
+> you can use dts nin_gpios to create the number of pins.
 
->
->
-> Thanks,
-> Zev
->
-> Guenter Roeck (1):
->   Revert "hwmon: (pmbus) Add regulator supply into macro"
->
-> Matti Vaittinen (1):
->   regulator: Add devm helpers for get and enable
->
-> Zev Weiss (5):
->   regulator: devres: Add devm_regulator_bulk_get_exclusive()
->   regulator: Add regulator-output binding
->   regulator: userspace-consumer: Handle regulator-output DT nodes
->   dt-bindings: arm: aspeed: document Delta AHE-50DC BMC
->   ARM: dts: aspeed: Add Delta AHE-50DC BMC
->
->  .../bindings/arm/aspeed/aspeed.yaml           |   1 +
->  .../bindings/regulator/regulator-output.yaml  |  39 ++
->  arch/arm/boot/dts/Makefile                    |   1 +
->  .../arm/boot/dts/aspeed-bmc-delta-ahe50dc.dts | 418 ++++++++++++++++++
->  drivers/hwmon/pmbus/pmbus.h                   |   1 -
->  drivers/regulator/core.c                      |  42 +-
->  drivers/regulator/devres.c                    | 230 +++++++++-
->  drivers/regulator/internal.h                  |   2 +
->  drivers/regulator/userspace-consumer.c        |  60 ++-
->  include/linux/regulator/consumer.h            |  29 ++
->  include/linux/regulator/userspace-consumer.h  |   1 +
->  11 files changed, 780 insertions(+), 44 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/regulator/regulator-output.yaml
->  create mode 100644 arch/arm/boot/dts/aspeed-bmc-delta-ahe50dc.dts
->
-> --
-> 2.38.1
->
+In the example it seems you enable d_out and d_in for *all* 64
+pins, correct? So they are all either input or output.
+
+That in effect turns them into GPIOs, so I don't see the problem
+with simply always doing this?
+
+Just that things are configurable doesn't mean we always need
+to provide means to configure them.
+
+If you have a use case where the user wants to control this, then
+that is another thing. Otherwise just make all pins input and output
+and wait for a usecase that needs more control, maybe it will
+never appear.
+
+Yours,
+Linus Walleij
