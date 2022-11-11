@@ -2,45 +2,45 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20C44625215
-	for <lists+openbmc@lfdr.de>; Fri, 11 Nov 2022 05:02:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 278476251FA
+	for <lists+openbmc@lfdr.de>; Fri, 11 Nov 2022 04:58:30 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4N7lQK6fvzz3cMb
-	for <lists+openbmc@lfdr.de>; Fri, 11 Nov 2022 15:02:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4N7lLC6t5Bz3dts
+	for <lists+openbmc@lfdr.de>; Fri, 11 Nov 2022 14:58:27 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=omKmN4ya;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=bC872HQm;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=omKmN4ya;
+	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=bC872HQm;
 	dkim-atps=neutral
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [IPv6:2605:2700:0:5::4713:9cab])
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [71.19.156.171])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4N7lKg5zwZz3cGH
-	for <openbmc@lists.ozlabs.org>; Fri, 11 Nov 2022 14:57:59 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4N7lKf6086z2xZ7
+	for <openbmc@lists.ozlabs.org>; Fri, 11 Nov 2022 14:57:58 +1100 (AEDT)
 Received: from hatter.bewilderbeest.net (97-113-250-99.tukw.qwest.net [97.113.250.99])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: zev)
-	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id E58E166A;
-	Thu, 10 Nov 2022 19:57:54 -0800 (PST)
+	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 27348B98;
+	Thu, 10 Nov 2022 19:57:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
 	s=thorn; t=1668139075;
-	bh=9XzyxCG+VrXJs0xHrgajhPg2J8eGKS09zggXsc8XXDk=;
+	bh=9+vZa7ARO6Ar2RQNcERy0+FKfVUJtEgmKe6Swwo8lsY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=omKmN4yamHbQEoIkC+ul5lqCUoA69l9H4BiFuXl2P7aAf4DzLEGNMxPS/B+JwlhCL
-	 /iayu/RVpUokimvpJ86qNmst5hNATiEux/YgtvXL2gmF3V0eWzvU/n2JGH0QLt+nCa
-	 IyrrNmRn6B9Qpo1i27PlTAgdbv0Qyh7HcIfZ6MuM=
+	b=bC872HQmmMsexyiU2F4WQHSxO1onVXOfOrpbQkCmxADT32GzcaKNvlrfxnQM25F/Z
+	 cQAZXlXSz4ekX4O3qBrtb1vYDAzuBB3FR4TlX1XWO6L83DT8BvfN4afTQj3/OpfuOV
+	 oYa+uvMrKVoDoQzt10LajE9H3GfTUyiUiSVK7YSE=
 From: Zev Weiss <zev@bewilderbeest.net>
 To: Joel Stanley <joel@jms.id.au>
-Subject: [PATCH linux dev-6.0 1/7] regulator: Add devm helpers for get and enable
-Date: Thu, 10 Nov 2022 19:57:41 -0800
-Message-Id: <20221111035747.31663-2-zev@bewilderbeest.net>
+Subject: [PATCH linux dev-6.0 2/7] regulator: devres: Add devm_regulator_bulk_get_exclusive()
+Date: Thu, 10 Nov 2022 19:57:42 -0800
+Message-Id: <20221111035747.31663-3-zev@bewilderbeest.net>
 X-Mailer: git-send-email 2.38.1
 In-Reply-To: <20221111035747.31663-1-zev@bewilderbeest.net>
 References: <20221111035747.31663-1-zev@bewilderbeest.net>
@@ -57,152 +57,146 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Mark Brown <broonie@kernel.org>, Matti Vaittinen <mazziesaccount@gmail.com>
+Cc: openbmc@lists.ozlabs.org, Mark Brown <broonie@kernel.org>, Zev Weiss <zev@bewilderbeest.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Matti Vaittinen <mazziesaccount@gmail.com>
+We had an exclusive variant of the devm_regulator_get() API, but no
+corresponding variant for the bulk API; let's add one now.  We add a
+generalized version of the existing regulator_bulk_get() function that
+additionally takes a get_type parameter and redefine
+regulator_bulk_get() in terms of it, then do similarly with
+devm_regulator_bulk_get(), and finally add the new
+devm_regulator_bulk_get_exclusive().
 
-A few regulator consumer drivers seem to be just getting a regulator,
-enabling it and registering a devm-action to disable the regulator at
-the driver detach and then forget about it.
-
-We can simplify this a bit by adding a devm-helper for this pattern.
-Add devm_regulator_get_enable() and devm_regulator_get_enable_optional()
-
-Signed-off-by: Matti Vaittinen <mazziesaccount@gmail.com>
-Link: https://lore.kernel.org/r/ed7b8841193bb9749d426f3cb3b199c9460794cd.1660292316.git.mazziesaccount@gmail.com
+Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+Link: https://lore.kernel.org/r/20221031233704.22575-2-zev@bewilderbeest.net
 Signed-off-by: Mark Brown <broonie@kernel.org>
-(cherry picked from commit da279e6965b3838e99e5c0ab8f76b87bf86b31a5)
 ---
- drivers/regulator/devres.c         | 164 +++++++++++++++++++++++++++++
- include/linux/regulator/consumer.h |  27 +++++
- 2 files changed, 191 insertions(+)
+ drivers/regulator/core.c           | 42 +++++++++++--------
+ drivers/regulator/devres.c         | 66 ++++++++++++++++++++++--------
+ drivers/regulator/internal.h       |  2 +
+ include/linux/regulator/consumer.h |  2 +
+ 4 files changed, 76 insertions(+), 36 deletions(-)
 
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index c3871565fd7d..778433b68600 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -4762,22 +4762,8 @@ static int _notifier_call_chain(struct regulator_dev *rdev,
+ 	return blocking_notifier_call_chain(&rdev->notifier, event, data);
+ }
+ 
+-/**
+- * regulator_bulk_get - get multiple regulator consumers
+- *
+- * @dev:           Device to supply
+- * @num_consumers: Number of consumers to register
+- * @consumers:     Configuration of consumers; clients are stored here.
+- *
+- * @return 0 on success, an errno on failure.
+- *
+- * This helper function allows drivers to get several regulator
+- * consumers in one operation.  If any of the regulators cannot be
+- * acquired then any regulators that were allocated will be freed
+- * before returning to the caller.
+- */
+-int regulator_bulk_get(struct device *dev, int num_consumers,
+-		       struct regulator_bulk_data *consumers)
++int _regulator_bulk_get(struct device *dev, int num_consumers,
++			struct regulator_bulk_data *consumers, enum regulator_get_type get_type)
+ {
+ 	int i;
+ 	int ret;
+@@ -4786,8 +4772,8 @@ int regulator_bulk_get(struct device *dev, int num_consumers,
+ 		consumers[i].consumer = NULL;
+ 
+ 	for (i = 0; i < num_consumers; i++) {
+-		consumers[i].consumer = regulator_get(dev,
+-						      consumers[i].supply);
++		consumers[i].consumer = _regulator_get(dev,
++						       consumers[i].supply, get_type);
+ 		if (IS_ERR(consumers[i].consumer)) {
+ 			ret = dev_err_probe(dev, PTR_ERR(consumers[i].consumer),
+ 					    "Failed to get supply '%s'",
+@@ -4814,6 +4800,26 @@ int regulator_bulk_get(struct device *dev, int num_consumers,
+ 
+ 	return ret;
+ }
++
++/**
++ * regulator_bulk_get - get multiple regulator consumers
++ *
++ * @dev:           Device to supply
++ * @num_consumers: Number of consumers to register
++ * @consumers:     Configuration of consumers; clients are stored here.
++ *
++ * @return 0 on success, an errno on failure.
++ *
++ * This helper function allows drivers to get several regulator
++ * consumers in one operation.  If any of the regulators cannot be
++ * acquired then any regulators that were allocated will be freed
++ * before returning to the caller.
++ */
++int regulator_bulk_get(struct device *dev, int num_consumers,
++		       struct regulator_bulk_data *consumers)
++{
++	return _regulator_bulk_get(dev, num_consumers, consumers, NORMAL_GET);
++}
+ EXPORT_SYMBOL_GPL(regulator_bulk_get);
+ 
+ static void regulator_bulk_enable_async(void *data, async_cookie_t cookie)
 diff --git a/drivers/regulator/devres.c b/drivers/regulator/devres.c
-index 32823a87fd40..3265e75e97ab 100644
+index 3265e75e97ab..fec0398d98b0 100644
 --- a/drivers/regulator/devres.c
 +++ b/drivers/regulator/devres.c
-@@ -70,6 +70,65 @@ struct regulator *devm_regulator_get_exclusive(struct device *dev,
+@@ -186,23 +186,9 @@ static void devm_regulator_bulk_release(struct device *dev, void *res)
+ 	regulator_bulk_free(devres->num_consumers, devres->consumers);
  }
- EXPORT_SYMBOL_GPL(devm_regulator_get_exclusive);
  
-+static void regulator_action_disable(void *d)
-+{
-+	struct regulator *r = (struct regulator *)d;
-+
-+	regulator_disable(r);
-+}
-+
-+static int _devm_regulator_get_enable(struct device *dev, const char *id,
-+				      int get_type)
-+{
-+	struct regulator *r;
-+	int ret;
-+
-+	r = _devm_regulator_get(dev, id, get_type);
-+	if (IS_ERR(r))
-+		return PTR_ERR(r);
-+
-+	ret = regulator_enable(r);
-+	if (!ret)
-+		ret = devm_add_action_or_reset(dev, &regulator_action_disable, r);
-+
-+	if (ret)
-+		devm_regulator_put(r);
-+
-+	return ret;
-+}
-+
-+/**
-+ * devm_regulator_get_enable_optional - Resource managed regulator get and enable
-+ * @dev: device to supply
-+ * @id:  supply name or regulator ID.
-+ *
-+ * Get and enable regulator for duration of the device life-time.
-+ * regulator_disable() and regulator_put() are automatically called on driver
-+ * detach. See regulator_get_optional() and regulator_enable() for more
-+ * information.
-+ */
-+int devm_regulator_get_enable_optional(struct device *dev, const char *id)
-+{
-+	return _devm_regulator_get_enable(dev, id, OPTIONAL_GET);
-+}
-+EXPORT_SYMBOL_GPL(devm_regulator_get_enable_optional);
-+
-+/**
-+ * devm_regulator_get_enable - Resource managed regulator get and enable
-+ * @dev: device to supply
-+ * @id:  supply name or regulator ID.
-+ *
-+ * Get and enable regulator for duration of the device life-time.
-+ * regulator_disable() and regulator_put() are automatically called on driver
-+ * detach. See regulator_get() and regulator_enable() for more
-+ * information.
-+ */
-+int devm_regulator_get_enable(struct device *dev, const char *id)
-+{
-+	return _devm_regulator_get_enable(dev, id, NORMAL_GET);
-+}
-+EXPORT_SYMBOL_GPL(devm_regulator_get_enable);
-+
- /**
-  * devm_regulator_get_optional - Resource managed regulator_get_optional()
-  * @dev: device to supply
-@@ -194,6 +253,111 @@ int devm_regulator_bulk_get_const(struct device *dev, int num_consumers,
+-/**
+- * devm_regulator_bulk_get - managed get multiple regulator consumers
+- *
+- * @dev:           device to supply
+- * @num_consumers: number of consumers to register
+- * @consumers:     configuration of consumers; clients are stored here.
+- *
+- * @return 0 on success, an errno on failure.
+- *
+- * This helper function allows drivers to get several regulator
+- * consumers in one operation with management, the regulators will
+- * automatically be freed when the device is unbound.  If any of the
+- * regulators cannot be acquired then any regulators that were
+- * allocated will be freed before returning to the caller.
+- */
+-int devm_regulator_bulk_get(struct device *dev, int num_consumers,
+-			    struct regulator_bulk_data *consumers)
++static int _devm_regulator_bulk_get(struct device *dev, int num_consumers,
++				    struct regulator_bulk_data *consumers,
++				    enum regulator_get_type get_type)
+ {
+ 	struct regulator_bulk_devres *devres;
+ 	int ret;
+@@ -212,7 +198,7 @@ int devm_regulator_bulk_get(struct device *dev, int num_consumers,
+ 	if (!devres)
+ 		return -ENOMEM;
+ 
+-	ret = regulator_bulk_get(dev, num_consumers, consumers);
++	ret = _regulator_bulk_get(dev, num_consumers, consumers, get_type);
+ 	if (!ret) {
+ 		devres->consumers = consumers;
+ 		devres->num_consumers = num_consumers;
+@@ -223,8 +209,52 @@ int devm_regulator_bulk_get(struct device *dev, int num_consumers,
+ 
+ 	return ret;
  }
- EXPORT_SYMBOL_GPL(devm_regulator_bulk_get_const);
- 
-+static int devm_regulator_bulk_match(struct device *dev, void *res,
-+				     void *data)
-+{
-+	struct regulator_bulk_devres *match = res;
-+	struct regulator_bulk_data *target = data;
-+
-+	/*
-+	 * We check the put uses same consumer list as the get did.
-+	 * We _could_ scan all entries in consumer array and check the
-+	 * regulators match but ATM I don't see the need. We can change this
-+	 * later if needed.
-+	 */
-+	return match->consumers == target;
-+}
 +
 +/**
-+ * devm_regulator_bulk_put - Resource managed regulator_bulk_put()
-+ * @consumers: consumers to free
-+ *
-+ * Deallocate regulators allocated with devm_regulator_bulk_get(). Normally
-+ * this function will not need to be called and the resource management
-+ * code will ensure that the resource is freed.
-+ */
-+void devm_regulator_bulk_put(struct regulator_bulk_data *consumers)
-+{
-+	int rc;
-+	struct regulator *regulator = consumers[0].consumer;
-+
-+	rc = devres_release(regulator->dev, devm_regulator_bulk_release,
-+			    devm_regulator_bulk_match, consumers);
-+	if (rc != 0)
-+		WARN_ON(rc);
-+}
-+EXPORT_SYMBOL_GPL(devm_regulator_bulk_put);
-+
-+static void devm_regulator_bulk_disable(void *res)
-+{
-+	struct regulator_bulk_devres *devres = res;
-+	int i;
-+
-+	for (i = 0; i < devres->num_consumers; i++)
-+		regulator_disable(devres->consumers[i].consumer);
-+}
-+
-+/**
-+ * devm_regulator_bulk_get_enable - managed get'n enable multiple regulators
++ * devm_regulator_bulk_get - managed get multiple regulator consumers
 + *
 + * @dev:           device to supply
 + * @num_consumers: number of consumers to register
-+ * @id:            list of supply names or regulator IDs
++ * @consumers:     configuration of consumers; clients are stored here.
 + *
 + * @return 0 on success, an errno on failure.
 + *
@@ -212,127 +206,63 @@ index 32823a87fd40..3265e75e97ab 100644
 + * regulators cannot be acquired then any regulators that were
 + * allocated will be freed before returning to the caller.
 + */
-+int devm_regulator_bulk_get_enable(struct device *dev, int num_consumers,
-+				   const char * const *id)
++int devm_regulator_bulk_get(struct device *dev, int num_consumers,
++			    struct regulator_bulk_data *consumers)
 +{
-+	struct regulator_bulk_devres *devres;
-+	struct regulator_bulk_data *consumers;
-+	int i, ret;
-+
-+	devres = devm_kmalloc(dev, sizeof(*devres), GFP_KERNEL);
-+	if (!devres)
-+		return -ENOMEM;
-+
-+	devres->consumers = devm_kcalloc(dev, num_consumers, sizeof(*consumers),
-+					 GFP_KERNEL);
-+	consumers = devres->consumers;
-+	if (!consumers)
-+		return -ENOMEM;
-+
-+	devres->num_consumers = num_consumers;
-+
-+	for (i = 0; i < num_consumers; i++)
-+		consumers[i].supply = id[i];
-+
-+	ret = devm_regulator_bulk_get(dev, num_consumers, consumers);
-+	if (ret)
-+		return ret;
-+
-+	for (i = 0; i < num_consumers; i++) {
-+		ret = regulator_enable(consumers[i].consumer);
-+		if (ret)
-+			goto unwind;
-+	}
-+
-+	ret = devm_add_action(dev, devm_regulator_bulk_disable, devres);
-+	if (!ret)
-+		return 0;
-+
-+unwind:
-+	while (--i >= 0)
-+		regulator_disable(consumers[i].consumer);
-+
-+	devm_regulator_bulk_put(consumers);
-+
-+	return ret;
++	return _devm_regulator_bulk_get(dev, num_consumers, consumers, NORMAL_GET);
 +}
-+EXPORT_SYMBOL_GPL(devm_regulator_bulk_get_enable);
+ EXPORT_SYMBOL_GPL(devm_regulator_bulk_get);
+ 
++/**
++ * devm_regulator_bulk_get_exclusive - managed exclusive get of multiple
++ * regulator consumers
++ *
++ * @dev:           device to supply
++ * @num_consumers: number of consumers to register
++ * @consumers:     configuration of consumers; clients are stored here.
++ *
++ * @return 0 on success, an errno on failure.
++ *
++ * This helper function allows drivers to exclusively get several
++ * regulator consumers in one operation with management, the regulators
++ * will automatically be freed when the device is unbound.  If any of
++ * the regulators cannot be acquired then any regulators that were
++ * allocated will be freed before returning to the caller.
++ */
++int devm_regulator_bulk_get_exclusive(struct device *dev, int num_consumers,
++				      struct regulator_bulk_data *consumers)
++{
++	return _devm_regulator_bulk_get(dev, num_consumers, consumers, EXCLUSIVE_GET);
++}
++EXPORT_SYMBOL_GPL(devm_regulator_bulk_get_exclusive);
 +
- static void devm_rdev_release(struct device *dev, void *res)
- {
- 	regulator_unregister(*(struct regulator_dev **)res);
+ /**
+  * devm_regulator_bulk_get_const - devm_regulator_bulk_get() w/ const data
+  *
+diff --git a/drivers/regulator/internal.h b/drivers/regulator/internal.h
+index 1e9c71642143..fb4433068d29 100644
+--- a/drivers/regulator/internal.h
++++ b/drivers/regulator/internal.h
+@@ -122,4 +122,6 @@ enum regulator_get_type {
+ 
+ struct regulator *_regulator_get(struct device *dev, const char *id,
+ 				 enum regulator_get_type get_type);
++int _regulator_bulk_get(struct device *dev, int num_consumers,
++			struct regulator_bulk_data *consumers, enum regulator_get_type get_type);
+ #endif
 diff --git a/include/linux/regulator/consumer.h b/include/linux/regulator/consumer.h
-index bc6cda706d1f..ee3b4a014611 100644
+index ee3b4a014611..628a52b8e63f 100644
 --- a/include/linux/regulator/consumer.h
 +++ b/include/linux/regulator/consumer.h
-@@ -207,6 +207,8 @@ struct regulator *__must_check regulator_get_optional(struct device *dev,
- 						      const char *id);
- struct regulator *__must_check devm_regulator_get_optional(struct device *dev,
- 							   const char *id);
-+int devm_regulator_get_enable(struct device *dev, const char *id);
-+int devm_regulator_get_enable_optional(struct device *dev, const char *id);
- void regulator_put(struct regulator *regulator);
- void devm_regulator_put(struct regulator *regulator);
- 
-@@ -244,12 +246,15 @@ int __must_check regulator_bulk_get(struct device *dev, int num_consumers,
- 				    struct regulator_bulk_data *consumers);
+@@ -247,6 +247,8 @@ int __must_check regulator_bulk_get(struct device *dev, int num_consumers,
  int __must_check devm_regulator_bulk_get(struct device *dev, int num_consumers,
  					 struct regulator_bulk_data *consumers);
-+void devm_regulator_bulk_put(struct regulator_bulk_data *consumers);
+ void devm_regulator_bulk_put(struct regulator_bulk_data *consumers);
++int __must_check devm_regulator_bulk_get_exclusive(struct device *dev, int num_consumers,
++						   struct regulator_bulk_data *consumers);
  int __must_check devm_regulator_bulk_get_const(
  	struct device *dev, int num_consumers,
  	const struct regulator_bulk_data *in_consumers,
- 	struct regulator_bulk_data **out_consumers);
- int __must_check regulator_bulk_enable(int num_consumers,
- 				       struct regulator_bulk_data *consumers);
-+int devm_regulator_bulk_get_enable(struct device *dev, int num_consumers,
-+				   const char * const *id);
- int regulator_bulk_disable(int num_consumers,
- 			   struct regulator_bulk_data *consumers);
- int regulator_bulk_force_disable(int num_consumers,
-@@ -354,6 +359,17 @@ devm_regulator_get_exclusive(struct device *dev, const char *id)
- 	return ERR_PTR(-ENODEV);
- }
- 
-+static inline int devm_regulator_get_enable(struct device *dev, const char *id)
-+{
-+	return -ENODEV;
-+}
-+
-+static inline int devm_regulator_get_enable_optional(struct device *dev,
-+						     const char *id)
-+{
-+	return -ENODEV;
-+}
-+
- static inline struct regulator *__must_check
- regulator_get_optional(struct device *dev, const char *id)
- {
-@@ -375,6 +391,10 @@ static inline void devm_regulator_put(struct regulator *regulator)
- {
- }
- 
-+static inline void devm_regulator_bulk_put(struct regulator_bulk_data *consumers)
-+{
-+}
-+
- static inline int regulator_register_supply_alias(struct device *dev,
- 						  const char *id,
- 						  struct device *alias_dev,
-@@ -465,6 +485,13 @@ static inline int regulator_bulk_enable(int num_consumers,
- 	return 0;
- }
- 
-+static inline int devm_regulator_bulk_get_enable(struct device *dev,
-+						 int num_consumers,
-+						 const char * const *id)
-+{
-+	return 0;
-+}
-+
- static inline int regulator_bulk_disable(int num_consumers,
- 					 struct regulator_bulk_data *consumers)
- {
 -- 
 2.38.1
 
