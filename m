@@ -2,57 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 66F1C62AF17
-	for <lists+openbmc@lfdr.de>; Wed, 16 Nov 2022 00:07:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E430762AF1B
+	for <lists+openbmc@lfdr.de>; Wed, 16 Nov 2022 00:07:45 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NBhdd2BRQz3cJM
-	for <lists+openbmc@lfdr.de>; Wed, 16 Nov 2022 10:07:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NBhfR5cPLz3brJ
+	for <lists+openbmc@lfdr.de>; Wed, 16 Nov 2022 10:07:43 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=hku9bPre;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=huaweicloud.com (client-ip=45.249.212.51; helo=dggsgout11.his.huawei.com; envelope-from=weiyongjun@huaweicloud.com; receiver=<UNKNOWN>)
-Received: from dggsgout11.his.huawei.com (unknown [45.249.212.51])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::82a; helo=mail-qt1-x82a.google.com; envelope-from=jim.t90615@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=hku9bPre;
+	dkim-atps=neutral
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NBL4Z68xxz3byZ
-	for <openbmc@lists.ozlabs.org>; Tue, 15 Nov 2022 20:10:35 +1100 (AEDT)
-Received: from mail02.huawei.com (unknown [172.30.67.169])
-	by dggsgout11.his.huawei.com (SkyGuard) with ESMTP id 4NBL4J6K7cz4f3v5f
-	for <openbmc@lists.ozlabs.org>; Tue, 15 Nov 2022 17:10:24 +0800 (CST)
-Received: from [10.174.178.165] (unknown [10.174.178.165])
-	by APP2 (Coremail) with SMTP id Syh0CgBnfrmCV3Nj+0M3Ag--.105S2;
-	Tue, 15 Nov 2022 17:10:28 +0800 (CST)
-Message-ID: <0ec81207-23e9-d5e4-27ae-63197c98c549@huaweicloud.com>
-Date: Tue, 15 Nov 2022 17:10:26 +0800
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NBLKd2QhQz3bjk
+	for <openbmc@lists.ozlabs.org>; Tue, 15 Nov 2022 20:21:55 +1100 (AEDT)
+Received: by mail-qt1-x82a.google.com with SMTP id c15so8354324qtw.8
+        for <openbmc@lists.ozlabs.org>; Tue, 15 Nov 2022 01:21:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=xXL/hOs12FtYk0AbtyBPhJfzSMYRFKjKvVy0h+Tw7Hc=;
+        b=hku9bPre7z/rmX8trtw0laMTMJsXJZzJ5kv0wzQ63Nu4YaiyH61mtYfscjoC8J7KsT
+         RmrxDzo1vKeAWi+c5jHBnUZkPtvtr8YuPQJxcXkquJOUb7vzMIsCaHjd3bC0Qcw+AgWA
+         /hh1NYhyxqPdo1Am+rkxQEZbuZQ/CbNHil9h457brT9+X2GSHeusMUTtdW59BFLzFpxP
+         5/Sl3x7YR+hWttbd1DI70S18O+s4rWkoOvopbocnJL/BtUdio9qY9eDVvd766lSWo376
+         nXCrTbiPBIOU82PyNw41a2/iwcao2dXQ9n4BYHTFC8hr7PFtNIJJlXG0WG5i3GVfjOh6
+         Ydgw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xXL/hOs12FtYk0AbtyBPhJfzSMYRFKjKvVy0h+Tw7Hc=;
+        b=6aoZFqN3JlQ3HjcsAuD/XVn4FJlS6d91bnWifOys1dP12mxN3PsIRpjhCTQBIwg5m4
+         dUGI5zZgm2a0p9tQg6o9d3eggUF/cFrikjkf29wVGlNhSq8/Zxv/XTaal+1MWY1ZdKFt
+         h5gfLwTlku5ZS3DNyrIn2aEeA54s1tR2w11k6nFcnX4xaLuXPGudbtdttrpSji5C0+dq
+         REu6mK7QAOqBXi4Uis2EEd0dfvv6AJMY3mHJDnyQJ0VwxfWocc3dapt4JN5flWfJcv3y
+         NOfluRPHpBRymkaaHt2+Pt3pZ/QjsPjBGCK+Dq/1bu2bW6aH5VlpCKfVHEKnUVJBUslQ
+         pX6Q==
+X-Gm-Message-State: ANoB5pl4AIXj+m8b5MNRg66wc6Iqw56FQoxYujq9vuP8Db0bycojjJMD
+	Xy7FWBq5eUX60pVxbkHPV7Pp1UczYkkgqQ+oX9w=
+X-Google-Smtp-Source: AA0mqf4YJ2cL4QTriG7mNPmQbW//LTaVCPgXBbNW8Dtht0N40RPHWO3lkf6xjgCAVTJycjjexUtxYPLi7cCVtzeyES0=
+X-Received: by 2002:ac8:1414:0:b0:3a5:3cb2:d849 with SMTP id
+ k20-20020ac81414000000b003a53cb2d849mr15998551qtj.504.1668504110388; Tue, 15
+ Nov 2022 01:21:50 -0800 (PST)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.1
-Subject: Re: [PATCH] irqchip/wpcm450: fix memory leak in ap_init_qci_info()
-To: =?UTF-8?Q?Jonathan_Neusch=c3=a4fer?= <j.neuschaefer@gmx.net>
-References: <20221114110854.554220-1-weiyongjun@huaweicloud.com>
- <Y3NPcfuS9M6BSoEW@probook>
-From: Wei Yongjun <weiyongjun@huaweicloud.com>
-In-Reply-To: <Y3NPcfuS9M6BSoEW@probook>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: Syh0CgBnfrmCV3Nj+0M3Ag--.105S2
-X-Coremail-Antispam: 1UD129KBjvdXoW7Gw4rtFWDZry5tr47WrW3Jrb_yoWkuwc_ur
-	4Uurn3ZF4vkF4rtay3uF45X390yF1vgrnaqF12yry5Zay0q393Grn7Zr93JF4IgF4xtrs7
-	Cr9avFy8A347GjkaLaAFLSUrUUUUUb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
-	9fnUUIcSsGvfJTRUUUb78YFVCjjxCrM7AC8VAFwI0_Jr0_Gr1l1xkIjI8I6I8E6xAIw20E
-	Y4v20xvaj40_Wr0E3s1l1IIY67AEw4v_Jr0_Jr4l8cAvFVAK0II2c7xJM28CjxkF64kEwV
-	A0rcxSw2x7M28EF7xvwVC0I7IYx2IY67AKxVW7JVWDJwA2z4x0Y4vE2Ix0cI8IcVCY1x02
-	67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I
-	0E14v26rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l5I8CrVACY4xI64kE6c02F40E
-	x7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AKxVWUJVW8JwAm72CE4IkC6x
-	0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzVAYIcxG8wCF04k20xvY0x0E
-	wIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E74
-	80Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIxkGc2Ij64vIr41lIxAIcVC0
-	I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04
-	k26cxKx2IYs7xG6rW3Jr0E3s1lIxAIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY
-	1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU1CPfJUUUUU==
-X-CM-SenderInfo: 5zhl50pqjm3046kxt4xhlfz01xgou0bp/
-X-CFilter-Loop: Reflected
+References: <20221108092840.14945-1-JJLIU0@nuvoton.com> <20221108092840.14945-4-JJLIU0@nuvoton.com>
+ <CACRpkdb+Bkwa8yCKGtRcsJ6KnJh+RUuz_gOrQV63pcYQLaHCaw@mail.gmail.com>
+ <CAKUZ0+GCf_Zv=VhnY5Z=yYAfR1=_ha98BVVxRGVy8ui6so_Yrg@mail.gmail.com>
+ <CACRpkdYW0P8gqtGdiRX_frP32WF2W=NVg1JTu1fVMBXxEL0-WA@mail.gmail.com>
+ <CAKUZ0+Hy5suFg9VZ8-+cH7kGc5KLqUnf9hjnT+iaw+a1HF8x0A@mail.gmail.com> <CACRpkdYbS_syVwgc=YndkV-DpEF0K8NpH6WzP=g0AFpN+OTN8A@mail.gmail.com>
+In-Reply-To: <CACRpkdYbS_syVwgc=YndkV-DpEF0K8NpH6WzP=g0AFpN+OTN8A@mail.gmail.com>
+From: Jim Liu <jim.t90615@gmail.com>
+Date: Tue, 15 Nov 2022 17:21:39 +0800
+Message-ID: <CAKUZ0+FD=x8s+vqUpYwsuRUw-yTHQjtTFzWDwW=d4k8X1x1LoQ@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] dt-bindings: gpio: Add Nuvoton NPCM750 serial I/O
+ expansion interface(SGPIO)
+To: Linus Walleij <linus.walleij@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 X-Mailman-Approved-At: Wed, 16 Nov 2022 10:06:44 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -65,56 +79,64 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Marc Zyngier <maz@kernel.org>, Thomas Gleixner <tglx@linutronix.de>, Wei Yongjun <weiyongjun1@huawei.com>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
+Cc: KWLIU@nuvoton.com, devicetree@vger.kernel.org, brgl@bgdev.pl, JJLIU0@nuvoton.com, linux-kernel@vger.kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Linus and Krzysztof
 
-On 2022/11/15 16:36, Jonathan Neuschäfer wrote:
-> Hi,
+Thanks for your understanding and your suggestion.
+I will follow your suggestion to modify the yaml file.
+-> nuvoton,input-ngpios = <...>
+-> nuvoton,output-ngpios = <...>
+
+And I don't think the node name needs to use gpio.
+because it's not a general gpio, so I reference aspeed dts and use sgpio.
+Could I use the sgpio node name or could you provide some suggestions?
+
+
+If you have any questions or are confused please let me know.
+Your comments are most welcome.
+
+Best regards,
+Jim
+On Mon, Nov 14, 2022 at 6:13 PM Linus Walleij <linus.walleij@linaro.org> wrote:
 >
-> the function name is wrong in the in the subject line. Other than that,
-> the patch looks good.
-
-
-Thanks, will fix in next version.
-
-
-Regards,
-
-Wei Yongjun
-
-
+> On Mon, Nov 14, 2022 at 9:38 AM Jim Liu <jim.t90615@gmail.com> wrote:
 >
-> Thanks,
-> Jonathan
+> > Our sgpio module has 64 pins output and 64 pins input.
+> > Soc have 8 reg to control 64 output pins
+> > and  8 reg to control 64 input pins.
+> > so the pin is only for gpi or gpo.
+> >
+> > The common property ngpio can be out or in.
+> > so i need to create d_out and d_in to control it.
+> > customers can set the number of output or input pins to use.
+> > the driver will open the ports to use.
+> > ex: if  i set d_out=9   and d_in=20
+> > driver will open two output ports and three input ports.
+> >
+> > Another method  is the driver default opens all ports , in this
+> > situation the driver doesn't need d_out and d_in.
 >
+> Finally I get it!
 >
-> On Mon, Nov 14, 2022 at 11:08:54AM +0000, Wei Yongjun wrote:
->> From: Wei Yongjun <weiyongjun1@huawei.com>
->>
->> If of_iomap() failed, 'aic' should be freed before return. Otherwise
->> there is a memory leak.
->>
->> Fixes: fead4dd49663 ("irqchip: Add driver for WPCM450 interrupt controller")
->> Signed-off-by: Wei Yongjun <weiyongjun1@huawei.com>
->> ---
->>  drivers/irqchip/irq-wpcm450-aic.c | 1 +
->>  1 file changed, 1 insertion(+)
->>
->> diff --git a/drivers/irqchip/irq-wpcm450-aic.c b/drivers/irqchip/irq-wpcm450-aic.c
->> index 0dcbeb1a05a1..91df62a64cd9 100644
->> --- a/drivers/irqchip/irq-wpcm450-aic.c
->> +++ b/drivers/irqchip/irq-wpcm450-aic.c
->> @@ -146,6 +146,7 @@ static int __init wpcm450_aic_of_init(struct device_node *node,
->>  	aic->regs = of_iomap(node, 0);
->>  	if (!aic->regs) {
->>  		pr_err("Failed to map WPCM450 AIC registers\n");
->> +		kfree(aic);
->>  		return -ENOMEM;
->>  	}
->>  
->> -- 
->> 2.34.1
->>
-
+> Some of the above should go into the binding document so that
+> others understand it too.
+>
+> Have you considered splitting this into 2 instances with 2 DT nodes:
+> one with up to 64 output-only pins and one with up to 64 input-only pins?
+> That means more nodes in the DT and more compatibles. If all
+> the registers are in the same place maybe this is not a good
+> idea.
+>
+> If you feel you need to keep the two properties, create something custom
+> for your hardware because this is not generally useful, e.g.
+>
+> nuvoton,input-ngpios = <...>
+> nuvoton,output-ngpios = <...>
+>
+> By this nomenclature it also becomes more evident what is going on.
+>
+> Yours,
+> Linus Walleij
