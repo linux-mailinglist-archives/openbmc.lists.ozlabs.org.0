@@ -1,80 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1AE8762C59C
-	for <lists+openbmc@lfdr.de>; Wed, 16 Nov 2022 17:58:00 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B083962C6E1
+	for <lists+openbmc@lfdr.de>; Wed, 16 Nov 2022 18:52:48 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NC8PK6Nq6z2xZV
-	for <lists+openbmc@lfdr.de>; Thu, 17 Nov 2022 03:57:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NC9cZ2lPgz3f6g
+	for <lists+openbmc@lfdr.de>; Thu, 17 Nov 2022 04:52:46 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qGOxSEXI;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=eMbTIVHb;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::436; helo=mail-wr1-x436.google.com; envelope-from=sharad.openbmc@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qGOxSEXI;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=eMbTIVHb;
 	dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NC8Nj3RgWz2xHK
-	for <openbmc@lists.ozlabs.org>; Thu, 17 Nov 2022 03:57:24 +1100 (AEDT)
-Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
-	by mx0b-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AGGg81T031561;
-	Wed, 16 Nov 2022 16:57:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : cc : subject
- : date : message-id : mime-version : content-transfer-encoding; s=pp1;
- bh=8Q9E6irN2B4WXYxW5wFJTk2a3PgqV6A327y3TstbExc=;
- b=qGOxSEXIzqVkhV6v1dYoW+oxh64pVZ7XVmUpmP89Eajxzxrj82pLfHH9ayYPvyZKTKZv
- nu705r5eDpFRcHxOKv5PnLeoAyaz8gmHGIgR6C7cltCIgge8xFVL0D3oRlJsXQ4dUFYb
- yO6Kt36xAd92YUSOz+roeBqO1IsaioCSyIhSqskyxq5qPcFMz48WGjRB6PzYAVD/lNf1
- 55GygORfE5czznvWQcaIdLdAtrpPpeyBtaNr0LEH58F1EgzY39OM8o4Wp7uTfU1fsNte
- uvLg1uhsytwFTflbJefqL/sYkBPRLIttHVtUjuSf2zsQV6uUSOFNBk2kdiLyjIrEhhYz +w== 
-Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com [169.47.144.26])
-	by mx0b-001b2d01.pphosted.com (PPS) with ESMTPS id 3kw3m50ay7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Nov 2022 16:57:19 +0000
-Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
-	by ppma04wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 2AGGofH4025874;
-	Wed, 16 Nov 2022 16:57:18 GMT
-Received: from b01cxnp23032.gho.pok.ibm.com (b01cxnp23032.gho.pok.ibm.com [9.57.198.27])
-	by ppma04wdc.us.ibm.com with ESMTP id 3kt349uqr6-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 16 Nov 2022 16:57:18 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com ([9.208.128.113])
-	by b01cxnp23032.gho.pok.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 2AGGvHi157409868
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 16 Nov 2022 16:57:17 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id CD57358059;
-	Wed, 16 Nov 2022 16:57:16 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 219535805B;
-	Wed, 16 Nov 2022 16:57:16 +0000 (GMT)
-Received: from slate16.aus.stglabs.ibm.com (unknown [9.160.114.76])
-	by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Wed, 16 Nov 2022 16:57:15 +0000 (GMT)
-From: Eddie James <eajames@linux.ibm.com>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-6.0] arm: dts: aspeed: ibm-power9-dual: Update OCC nodes
-Date: Wed, 16 Nov 2022 10:57:14 -0600
-Message-Id: <20221116165714.2349545-1-eajames@linux.ibm.com>
-X-Mailer: git-send-email 2.31.1
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NC9XV0rs6z3f8P
+	for <openbmc@lists.ozlabs.org>; Thu, 17 Nov 2022 04:49:13 +1100 (AEDT)
+Received: by mail-wr1-x436.google.com with SMTP id y16so31128167wrt.12
+        for <openbmc@lists.ozlabs.org>; Wed, 16 Nov 2022 09:49:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=tiOxRTEyjzuAOqjMhqDjIJC914MHGJvtLYIvRiZmF4A=;
+        b=eMbTIVHblqpTm+ZFEw2dSJg7jUZ4cCQmtRei0KxFHCzJPbQCr2dgAIp46mZD+NhcVG
+         f/b+td32RZZ3yPn+bYWxjX9gWYAdQjWJw+P+rvUIvkTVTIJXaAHjtXCswnbIrJ3DmrTn
+         azk9gz1t3uVIof0PvHwSh2jjEHopaS56O37eiYfyDC6KrOcpsjFeb+1AoVpsYOqaewpA
+         uYFmYnLFkPoTVgKMkQhMhn0yvN2g90CycfkNFQbXL67ZwJS14h+xHxgEcdiS0OF0RRrT
+         UyzTEPrIjjmoU5JKjHXUg5ugxGz0E6KZYlUZQQRXwM+YC2BzfB8unvtDA4XSu/vuJwM/
+         X2sQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=tiOxRTEyjzuAOqjMhqDjIJC914MHGJvtLYIvRiZmF4A=;
+        b=ilfrL21LWGmtfbKrm1LWLiNkUiJn+9ut5pjqqsFRJ092gTRZ9RKF9YaZosr66sHivO
+         dsPrz0g17NgVdfv+yiIwzMeApq85CdAXhV/IINIP97HMIiuT6rVusQmQ6MT17VAHhX6P
+         vrMtPVO2gLl/Lph64bWJH0XNp3/fpuirsNIaqrhkPgdM1Tw/bQxkmLZ1Or6YB+zHv9Yp
+         cFTPL1kLxMth8kbA+sf8zYqILm/axB3kaD7sTKm2ZCNVGMCDkYFaC/P8vE4vw9IRJhw3
+         YplCnyNk2dZKCsUsZJOUfVyu8DanA49TenT8AF+veBkHvL8b2nW5WB76Tclcw4dDHHRB
+         gNPA==
+X-Gm-Message-State: ANoB5pky0n7MrbHTE0JuqRKSUSi1REiUtk7xCzMDzP9W/Fydvs0JdFKn
+	FHmJTP7VGMFTM5d7pPFho2qBEL3sRuoASq3+4PWMTiylzXvRiw5c
+X-Google-Smtp-Source: AA0mqf64R6Nhb69FD5GpmK6UXL4iFRRs99wTmjDTp71fNIk6zHBz/Pirb872qTZn8Uy5rHJdZIkwnzbZq0xRL1H+47s=
+X-Received: by 2002:adf:f606:0:b0:236:8a0:2d76 with SMTP id
+ t6-20020adff606000000b0023608a02d76mr14303472wrp.28.1668620946045; Wed, 16
+ Nov 2022 09:49:06 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: j-62ySv8FXfj1lS4us9PyrqASwKkZDYD
-X-Proofpoint-ORIG-GUID: j-62ySv8FXfj1lS4us9PyrqASwKkZDYD
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-16_03,2022-11-16_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
- lowpriorityscore=0 mlxscore=0 priorityscore=1501 suspectscore=0
- mlxlogscore=999 phishscore=0 malwarescore=0 spamscore=0 adultscore=0
- bulkscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.12.0-2210170000 definitions=main-2211160115
+References: <CA+H48BRsTM4B_MHreMZG+_9abbjp5G2jcxmiMwqiPGrFytWWTg@mail.gmail.com>
+ <CAH2-KxABvChOBiOPqMZfjhCfByBJj0=h0PKZ6HcATZoEoYkUqQ@mail.gmail.com>
+In-Reply-To: <CAH2-KxABvChOBiOPqMZfjhCfByBJj0=h0PKZ6HcATZoEoYkUqQ@mail.gmail.com>
+From: sharad yadav <sharad.openbmc@gmail.com>
+Date: Wed, 16 Nov 2022 23:18:54 +0530
+Message-ID: <CA+H48BTnEp5w-LgnswBgtxxLMbkCyLPs7cL7bAOsic7Tuix=Sw@mail.gmail.com>
+Subject: Re: Performance: BMCWEB prioritizing URI response in multiple redfish
+ clients environment
+To: Ed Tanous <edtanous@google.com>
+Content-Type: multipart/alternative; boundary="000000000000c0fd1705ed9a1638"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,67 +75,180 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Eddie James <eajames@linux.ibm.com>, joel@jms.id.au
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Set the ibm,no-poll-on-init property for the OCCs.
+--000000000000c0fd1705ed9a1638
+Content-Type: text/plain; charset="UTF-8"
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
----
- arch/arm/boot/dts/ibm-power9-dual.dtsi | 23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+Thanks for your response. Responses inline.
 
-diff --git a/arch/arm/boot/dts/ibm-power9-dual.dtsi b/arch/arm/boot/dts/ibm-power9-dual.dtsi
-index a0fa65b44b0f..916041e6e00c 100644
---- a/arch/arm/boot/dts/ibm-power9-dual.dtsi
-+++ b/arch/arm/boot/dts/ibm-power9-dual.dtsi
-@@ -86,8 +86,13 @@ sbefifo@2400 {
- 			#address-cells = <1>;
- 			#size-cells = <0>;
- 
--			fsi_occ0: occ@1 {
-+			fsi_occ0: occ {
- 				compatible = "ibm,p9-occ";
-+
-+				occ-hwmon {
-+					compatible = "ibm,p9-occ-hwmon";
-+					ibm,no-poll-on-init;
-+				};
- 			};
- 		};
- 
-@@ -187,8 +192,13 @@ sbefifo@2400 {
- 			#address-cells = <1>;
- 			#size-cells = <0>;
- 
--			fsi_occ1: occ@2 {
-+			fsi_occ1: occ {
- 				compatible = "ibm,p9-occ";
-+
-+				occ-hwmon {
-+					compatible = "ibm,p9-occ-hwmon";
-+					ibm,no-poll-on-init;
-+				};
- 			};
- 		};
- 
-@@ -203,15 +213,6 @@ fsi_hub1: hub@3400 {
- 	};
- };
- 
--/* Legacy OCC numbering (to get rid of when userspace is fixed) */
--&fsi_occ0 {
--	reg = <1>;
--};
--
--&fsi_occ1 {
--	reg = <2>;
--};
--
- / {
- 	aliases {
- 		i2c100 = &cfam0_i2c0;
--- 
-2.31.1
+>  Can you elaborate on which URLs your clients are accessing?  Is this
+>  on an upstream SHA1 of bmcweb?  Do said clients implement HTTP
+>  keep-alive?  Keep-alive is important, because otherwise the bmc is
+>  negotiating TLS for every request, which can be quite slow, especially
+>  when done in parallel.
 
+We are at the latest bmcweb upstream code.
+We have 4 type of clients collecting set of URIs:
+All thermals: /redfish/v1/Chassis/<str>/Thermal/
+All other sensors: /redfish/v1/Chassis/<str>/Sensors/<str>/
+All inventory: /redfish/v1/Chassis/<str>/ and
+/redfish/v1/Systems/<str>/Processors/<str>/
+Log services: /redfish/v1/Systems/<str>/LogServices/EventLog/ and
+/redfish/v1/Systems/<str>/LogServices/EventLog/Entries/
+/redfish/v1/Systems/<str>/LogServices/EventLog/Entries/<str>/
+
+All clients implement keep-alive so clients avoid the TLS handshake penalty.
+
+>  I'm not sure how a priority system would work in this case.  Can you
+>  elaborate on your idea?  There is currently no queue outside of the
+>  TCP kernel, and async tasks in io_context.  Which queue were you
+>  planning on assigning priorities to?
+
+We want to prioritize our thermal sensor URI.
+Is there a way to prioritize HTTP requests over D-Bus response messages
+in bmcweb?
+
+Thanks,
+Sharad
+
+On Wed, 16 Nov 2022 at 21:59, Ed Tanous <edtanous@google.com> wrote:
+
+> On Wed, Nov 16, 2022 at 5:28 AM sharad yadav <sharad.openbmc@gmail.com>
+> wrote:
+> >
+> > Hi All,
+> >
+> > We are facing a delay(till 6seconds) in bmcweb URIs responses when there
+> are multiple clients(4 in our case) performing GET requests in parallel on
+> different URIs.
+>
+> Can you elaborate on which URLs your clients are accessing?  Is this
+> on an upstream SHA1 of bmcweb?  Do said clients implement HTTP
+> keep-alive?  Keep-alive is important, because otherwise the bmc is
+> negotiating TLS for every request, which can be quite slow, especially
+> when done in parallel.
+>
+> Can you put together an example script that reproduces the issue?
+>
+> > We have a very important telemetry URI, used for thermal monitoring. On
+> standalone, telemetry URI response is within 200ms.
+> > But with multiple clients, telemetry URI response reaches till 6seconds.
+> >
+> > Can we get help on how we can assign priority to our telemetry URI over
+> other URIs in bmcweb?
+>
+> I'm not sure how a priority system would work in this case.  Can you
+> elaborate on your idea?  There is currently no queue outside of the
+> TCP kernel, and async tasks in io_context.  Which queue were you
+> planning on assigning priorities to?
+>
+> >
+> > Thanks,
+> > Sharad
+> >
+> >
+> >
+> >
+> >
+> >
+>
+
+--000000000000c0fd1705ed9a1638
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div>Thanks for your response. Responses inline.</div><div=
+><br></div><font color=3D"#e06666">&gt;=C2=A0 Can you elaborate on which UR=
+Ls your clients are accessing?=C2=A0 Is this<br>&gt;=C2=A0 on an upstream S=
+HA1 of bmcweb?=C2=A0 Do said clients implement HTTP<br>&gt;=C2=A0 keep-aliv=
+e?=C2=A0 Keep-alive is important, because otherwise the bmc is<br>&gt;=C2=
+=A0 negotiating TLS for every request, which can be quite slow, especially<=
+br>&gt;=C2=A0 when done in parallel.</font><br><div><br></div><div>We are a=
+t the latest bmcweb upstream code.</div><div>We have 4 type of clients coll=
+ecting set of URIs:</div><div>All thermals:=C2=A0<span style=3D"color:rgb(1=
+0,48,105);font-family:ui-monospace,SFMono-Regular,&quot;SF Mono&quot;,Menlo=
+,Consolas,&quot;Liberation Mono&quot;,monospace;font-size:12px;white-space:=
+pre">/redfish/v1/Chassis/&lt;str&gt;/Thermal/</span></div><div>All other se=
+nsors:=C2=A0<span style=3D"color:rgb(10,48,105);font-family:ui-monospace,SF=
+Mono-Regular,&quot;SF Mono&quot;,Menlo,Consolas,&quot;Liberation Mono&quot;=
+,monospace;font-size:12px;white-space:pre">/redfish/v1/Chassis/&lt;str&gt;/=
+Sensors/&lt;str&gt;/</span><br></div><div>All inventory: /<span style=3D"co=
+lor:rgb(10,48,105);font-family:ui-monospace,SFMono-Regular,&quot;SF Mono&qu=
+ot;,Menlo,Consolas,&quot;Liberation Mono&quot;,monospace;font-size:12px;whi=
+te-space:pre">redfish/v1/Chassis/&lt;str&gt;/ and </span><span style=3D"col=
+or:rgb(10,48,105);font-family:ui-monospace,SFMono-Regular,&quot;SF Mono&quo=
+t;,Menlo,Consolas,&quot;Liberation Mono&quot;,monospace;font-size:12px;whit=
+e-space:pre">/redfish/v1/Systems/&lt;str&gt;/Processors/&lt;str&gt;/</span>=
+</div><div>Log services:=C2=A0<span style=3D"color:rgb(10,48,105);font-fami=
+ly:ui-monospace,SFMono-Regular,&quot;SF Mono&quot;,Menlo,Consolas,&quot;Lib=
+eration Mono&quot;,monospace;font-size:12px;white-space:pre">/redfish/v1/Sy=
+stems/&lt;str&gt;/LogServices/EventLog/ and </span><span style=3D"color:rgb=
+(10,48,105);font-family:ui-monospace,SFMono-Regular,&quot;SF Mono&quot;,Men=
+lo,Consolas,&quot;Liberation Mono&quot;,monospace;font-size:12px;white-spac=
+e:pre">/redfish/v1/Systems/&lt;str&gt;/LogServices/EventLog/Entries/</span>=
+</div><div><span style=3D"color:rgb(10,48,105);font-family:ui-monospace,SFM=
+ono-Regular,&quot;SF Mono&quot;,Menlo,Consolas,&quot;Liberation Mono&quot;,=
+monospace;font-size:12px;white-space:pre">/redfish/v1/Systems/&lt;str&gt;/L=
+ogServices/EventLog/Entries/&lt;str&gt;/</span></div><div><br></div><div>Al=
+l clients implement keep-alive so clients avoid the=C2=A0TLS handshake pena=
+lty.</div><div><br></div><div><font color=3D"#e06666">&gt;=C2=A0 I&#39;m no=
+t sure how a priority system would work in this case.=C2=A0 Can you<br>&gt;=
+=C2=A0 elaborate on your idea?=C2=A0 There is currently no queue outside of=
+ the<br>&gt;=C2=A0 TCP kernel, and async tasks in io_context.=C2=A0 Which q=
+ueue were you<br>&gt;=C2=A0 planning on assigning priorities to?</font><br>=
+</div><div><br></div><div>We want to prioritize our thermal sensor URI.</di=
+v><div>Is there a way to prioritize HTTP requests over D-Bus response messa=
+ges in=C2=A0bmcweb?</div><div><br></div><div>Thanks,</div><div>Sharad</div>=
+</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">=
+On Wed, 16 Nov 2022 at 21:59, Ed Tanous &lt;<a href=3D"mailto:edtanous@goog=
+le.com">edtanous@google.com</a>&gt; wrote:<br></div><blockquote class=3D"gm=
+ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
+204,204);padding-left:1ex">On Wed, Nov 16, 2022 at 5:28 AM sharad yadav &lt=
+;<a href=3D"mailto:sharad.openbmc@gmail.com" target=3D"_blank">sharad.openb=
+mc@gmail.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; Hi All,<br>
+&gt;<br>
+&gt; We are facing a delay(till 6seconds) in bmcweb URIs responses when the=
+re are multiple clients(4 in our case) performing GET requests in parallel =
+on different URIs.<br>
+<br>
+Can you elaborate on which URLs your clients are accessing?=C2=A0 Is this<b=
+r>
+on an upstream SHA1 of bmcweb?=C2=A0 Do said clients implement HTTP<br>
+keep-alive?=C2=A0 Keep-alive is important, because otherwise the bmc is<br>
+negotiating TLS for every request, which can be quite slow, especially<br>
+when done in parallel.<br>
+<br>
+Can you put together an example script that reproduces the issue?<br>
+<br>
+&gt; We have a very important telemetry URI, used for thermal monitoring. O=
+n standalone, telemetry URI response is within 200ms.<br>
+&gt; But with multiple clients, telemetry URI response reaches till 6second=
+s.<br>
+&gt;<br>
+&gt; Can we get help on how we can assign priority to our telemetry URI ove=
+r other URIs in bmcweb?<br>
+<br>
+I&#39;m not sure how a priority system would work in this case.=C2=A0 Can y=
+ou<br>
+elaborate on your idea?=C2=A0 There is currently no queue outside of the<br=
+>
+TCP kernel, and async tasks in io_context.=C2=A0 Which queue were you<br>
+planning on assigning priorities to?<br>
+<br>
+&gt;<br>
+&gt; Thanks,<br>
+&gt; Sharad<br>
+&gt;<br>
+&gt;<br>
+&gt;<br>
+&gt;<br>
+&gt;<br>
+&gt;<br>
+</blockquote></div>
+
+--000000000000c0fd1705ed9a1638--
