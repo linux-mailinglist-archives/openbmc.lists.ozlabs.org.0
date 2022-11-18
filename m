@@ -2,113 +2,84 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C15762EDED
-	for <lists+openbmc@lfdr.de>; Fri, 18 Nov 2022 07:52:48 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id BF7A66318B4
+	for <lists+openbmc@lfdr.de>; Mon, 21 Nov 2022 03:47:10 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ND6t62LXpz3chn
-	for <lists+openbmc@lfdr.de>; Fri, 18 Nov 2022 17:52:46 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NFsHJ4Z97z3cKv
+	for <lists+openbmc@lfdr.de>; Mon, 21 Nov 2022 13:47:08 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=blHYfQwr;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=N5YiIeLA;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:fe59::729; helo=nam12-dm6-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=jejb@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=blHYfQwr;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=N5YiIeLA;
 	dkim-atps=neutral
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on20729.outbound.protection.outlook.com [IPv6:2a01:111:f400:fe59::729])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ND6sN2GrCz3bky;
-	Fri, 18 Nov 2022 17:52:06 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=LRpKOCMu/mK3xnWcvRwUsTSYEXkQR1yD9H618t/aOYb6qJXp9DnmKzODThpyRjxEoqnQJCcvymnQLl6O3M0eBaGmv5IPmxMbySxX3AJaShunkC//0LWVAME7O6LKj5NcZ6zVKMLEoUZJBO5fPrTzzahrd6GbLJ0hPNPsCd+wiiKde4GmBesI7J8ie2ZGAnAl5CQpStxhHU4qsDxT9CE9XIk6Pi4ekRSJZ1ZKsNxwv233bo9RwdEVYGWXtvm2MRI37Vhvptnat0x1ST9ngIfP4kqEJ1b4nX+XR6BZSAyzXsuSFyabTqPGQJuIiERU95XTB3CK4kSi5XEhct15JLPVpw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+gxhRXZTUW4ifiiTQ8rRfRhkvi9nYqXJQpQlzx2ATNA=;
- b=P5qAN7uOq3MIkdfzsnZHRN2Nn1tzmKkJeT0m5CiO1Q1qRc2ibXZ8qjPeRCTaD56v/35XIIaHouU2H6eWCqvNx4Ffn86swPflNUDkYtRzEujRw3FRmZ9rHZbVgWP1YUz1aZRfbu3d8F8LAyrtdaYm6GqvGjAGABnMewuWn5068LZQAEJjvQqzBJFD03NFt/lcSv9doC9SZSf69/uVWiQHuHsgHKUKJyKGAN4rrbw93Bb165MMcruEgh4Sug7yJP6660RmO2yXTRpI3AZsmVYZrJDSZQ2lBw6zZKU74qcBYTBOzpAy1Rk8WFvxUVdKwL7dGj6+gDKr2j3CYRi1no0zIg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+gxhRXZTUW4ifiiTQ8rRfRhkvi9nYqXJQpQlzx2ATNA=;
- b=blHYfQwrabByk5sKTmtoSleSa4sZjm89oyaraByvUCXA2Xmh1ItXOnDl0q1aIngC53httqLkI7pK5XANWh8hSqPKDOXXwDC8GmFmDoB8EvK8J+MABh8C2rwuuGUpxu+7nmAX6a3OvN+lMT7GZpfdqVLbmLyazaci/tvliSk2rlc=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
-Received: from SN4PR01MB7455.prod.exchangelabs.com (2603:10b6:806:202::11) by
- DM6PR01MB5801.prod.exchangelabs.com (2603:10b6:5:200::30) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5813.16; Fri, 18 Nov 2022 06:51:45 +0000
-Received: from SN4PR01MB7455.prod.exchangelabs.com
- ([fe80::df7e:7f53:a83f:a86a]) by SN4PR01MB7455.prod.exchangelabs.com
- ([fe80::df7e:7f53:a83f:a86a%4]) with mapi id 15.20.5813.016; Fri, 18 Nov 2022
- 06:51:45 +0000
-From: Quan Nguyen <quan@os.amperecomputing.com>
-To: Rob Herring <robh+dt@kernel.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Joel Stanley <joel@jms.id.au>,
-	Andrew Jeffery <andrew@aj.id.au>
-Subject: [PATCH] ARM: dts: aspeed: mtjade: Add SMPro nodes
-Date: Fri, 18 Nov 2022 13:51:09 +0700
-Message-Id: <20221118065109.2339066-1-quan@os.amperecomputing.com>
-X-Mailer: git-send-email 2.35.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SGBP274CA0015.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b0::27)
- To SN4PR01MB7455.prod.exchangelabs.com (2603:10b6:806:202::11)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NDH2T53l7z3cH6
+	for <openbmc@lists.ozlabs.org>; Sat, 19 Nov 2022 00:00:33 +1100 (AEDT)
+Received: from pps.filterd (m0098404.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2AICegI2015784
+	for <openbmc@lists.ozlabs.org>; Fri, 18 Nov 2022 13:00:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
+ from : reply-to : to : cc : date : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=s73CZ8UoG3h8l9aRCf6Zb8BJ8Wul3mpHBgFYT+BMbBo=;
+ b=N5YiIeLAGCCkaQ5ESqUbvJvZREk/qLJN25eUqnsU9MiLic9GvHFvaT+PYqYXJQ+uE3Ew
+ y3/hdCB7Zw6VO2f3qg2sAXTVKZuPjwwAam2P2EfAn4kp84WUG+5w2rKaT6XtiPngRIyJ
+ c6ECKBMOxqxOZ+kJOfbU1TbtX1GEh+80KouQ53NN8Eeq7bwvw76VBywZBxn8/eCalBrG
+ ddEbB+ji53oQmtfMaTDqQWXoMfyjzoL8MxTypGM0Kgf5xntIcTM8FLHmYmA+s/gctc6s
+ F26ryoAZ+QxuLIy8PkreaNSntnQEbDLFX01z+RFlwrk0mS49DwI3ewodriz8gZN/FVdO 9A== 
+Received: from ppma04wdc.us.ibm.com (1a.90.2fa9.ip4.static.sl-reverse.com [169.47.144.26])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3kx9jjsm8n-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Fri, 18 Nov 2022 13:00:30 +0000
+Received: from pps.filterd (ppma04wdc.us.ibm.com [127.0.0.1])
+	by ppma04wdc.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 2AICooFM003592
+	for <openbmc@lists.ozlabs.org>; Fri, 18 Nov 2022 13:00:29 GMT
+Received: from b03cxnp08025.gho.boulder.ibm.com (b03cxnp08025.gho.boulder.ibm.com [9.17.130.17])
+	by ppma04wdc.us.ibm.com with ESMTP id 3kt34a7m0t-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Fri, 18 Nov 2022 13:00:28 +0000
+Received: from b03ledav004.gho.boulder.ibm.com (b03ledav004.gho.boulder.ibm.com [9.17.130.235])
+	by b03cxnp08025.gho.boulder.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 2AID0PDP49807634
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 18 Nov 2022 13:00:25 GMT
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 338267805E;
+	Fri, 18 Nov 2022 14:00:35 +0000 (GMT)
+Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 9F9F97805C;
+	Fri, 18 Nov 2022 14:00:34 +0000 (GMT)
+Received: from [IPv6:2601:5c4:4302:c21::a774] (unknown [9.211.83.197])
+	by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
+	Fri, 18 Nov 2022 14:00:34 +0000 (GMT)
+Message-ID: <ed082ceea79c3b3ce2d814195f1c90a79ae166b3.camel@linux.ibm.com>
+Subject: Re: Security Working Group meeting - Wednesday October 12
+From: James Bottomley <jejb@linux.ibm.com>
+To: jrey@linux.ibm.com
+Date: Fri, 18 Nov 2022 08:00:25 -0500
+In-Reply-To: <74f2b64b-9f53-d5a4-b616-510bd75664d5@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+User-Agent: Evolution 3.42.4 
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: A29J7sSM7uusVqbExgYmEkOgabrbb2-V
+X-Proofpoint-GUID: A29J7sSM7uusVqbExgYmEkOgabrbb2-V
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN4PR01MB7455:EE_|DM6PR01MB5801:EE_
-X-MS-Office365-Filtering-Correlation-Id: 807b2a9e-76f8-4652-e104-08dac9315aeb
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	X/AeZjrQ9e0NuSSydUZXoMf8QeznadP4emuo1QyXi/0u9P8zGo9YJgZ1WYDKEbeNjmnztSsVPbO5T9JvbW3hpajLhfkg6Xnu02HSMRon1ZcVLDNL46CeDoMid8Ng/OyQaMGL48Yo8B8WdioKR+wtF70/6e6uRvOIOi7na0JSG6ljQmpY9DuGMfpZvH25pmSb9E+AMVqwo/pFIalzK5DSS/puUcTrnOExDdGSs3iVsX2vAj4qb/KUhjHFZ5K7tH1cCz5YuefP7wt0Z1LO5ewJwrQx+lXvv+ZM+ko8Scy1FlDbiMolnu1VTDSns+wPmmrDHol692CYzPuW2VeEJurGbyRXpvbNBzpRpIIJjg9ih4oMBZV9vONzq3M//hNkBpZ/ze9ONH+qDn62DPGwjRbXvhwSrYlf0jW2mLP0JtEroUB6Lc3aOzNDZ/Agx4rL6cvXEJ62LOIEz2eijy3s8AvJUEiIPBz9lcWteCEFGWtkhVrECfu0xCydZchnIIGnId+7RprbJnNibku/3nNh+kRV6yGjBqQeAPPZpvlesoyIntfdZoCsz1DnEJTZhrf+vT4Fjwk2X8WgBonmOsyYKIMTzwLcOIHbWVNFDwfs/LuRv+3INi1oFey3B3CowlmLg3/7BiYltHlcuhuMtXBxmfNUdL4Kuvi15Yzi9vGspG2BJv619AqJEbyoilN6fyTg+LL9
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR01MB7455.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(136003)(366004)(396003)(376002)(39850400004)(346002)(451199015)(86362001)(6486002)(110136005)(6512007)(6666004)(6506007)(26005)(478600001)(52116002)(8936002)(66946007)(66476007)(41300700001)(66556008)(8676002)(5660300002)(316002)(107886003)(2906002)(54906003)(4744005)(4326008)(38350700002)(38100700002)(2616005)(1076003)(186003);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?us-ascii?Q?pnslQmetZtTMpGBWLolcBAEfLQB76a8XAaweYSFhnYCmkOIhga1Rzb7fO9Fg?=
- =?us-ascii?Q?uJBlDfyA6aaMnAsUXrB8B5s8SM/6McqIFycZv4+FaSQ+jFFHb2HUEDHUnY+s?=
- =?us-ascii?Q?42CMeSx7Eoj8XpjGUB4C1b5goS59b41EJHqDJ1dFHmgdctq4BxKOEiYe158Y?=
- =?us-ascii?Q?rPxOp44hCRSJimF3tIr0YyByJ/A9LM5kUG/COsbYhagqw+c3VH81TTuhbQQd?=
- =?us-ascii?Q?bp3VoAIl3ed3Dkpp/1Wtv0r0NkMPSxqbwciKDf0b85rujO2h4WCH+vEZZ52c?=
- =?us-ascii?Q?lJcwf2HPxjpPg9hOw+BrH+i2aLhMPOVd5UoSKItbJeRGTNI7AqNYd3nt28gG?=
- =?us-ascii?Q?CwMJoLnGCIq9VnEUUY759/IlXYVUsnOmPMnBLwrIAxWUpJ5pybTiMpXmIK5w?=
- =?us-ascii?Q?oDcgRjm23EF4TlPUhZGadWiGrSyEgHW4bwMkWe2rUV3IgRz+ziS83LLE85i7?=
- =?us-ascii?Q?JnZYEwUdZt6fgImiO0wva7tynkzqdqhxFTmlO0bCDT7RuvlBUfEIizyqil3n?=
- =?us-ascii?Q?M19i9nxG1C/dbsyuKRs1yf9FthYDx2/eovHkjma3dD1pyB7sTvhVaEGrOJpK?=
- =?us-ascii?Q?NCpNRd3VJwZfXmT0YJZ0Fj83I04WsGm2wmhxTc1qwgzSWLtI4Y8tPpuT3a+9?=
- =?us-ascii?Q?wzctEwg/1QNUS+IZndhrgdze2TDvAKNzZMfDmNABF/eSuGRmlhffsAzqS1oS?=
- =?us-ascii?Q?kOheGx0o9DZ4v7I2SUenLIFG2GzxQWgpnbMsOD48rWCjt3MPxHMze1EiGZid?=
- =?us-ascii?Q?aN+bcUc7E0u58BZN88qqrSDHQ4CdT8DQU2OmCmFsvfe//myRr0adZV4yS5vU?=
- =?us-ascii?Q?7clkMhNC8/sCwzao5KTqXhTvuMq16MTYrfxSO/YUf0kU/T5McTqCaVFVAmCZ?=
- =?us-ascii?Q?AFYMhsiB1cmTHMgRznLla3/4/u0BWBohI5ofghAOE5xLBd1kSzl0QW3Mvt+C?=
- =?us-ascii?Q?zuMOI2coQwxKi5gozyL6WIpS0okH9T5IMocEtjCD3+4ALk7okLWZVUYmCdgm?=
- =?us-ascii?Q?ZSfwU76IsHXPEdYMgqQheGKJ8ckbS3p284nmox9xeaoV6OhDZoZy37F/lm1G?=
- =?us-ascii?Q?/XdiIHKWDar2crs6T6tJm5vbLtQNI5aJSTXZ4TMA5qqz8QmkM3DbSrlzCWm3?=
- =?us-ascii?Q?7NTA1O4O0Aa/YMuaWuDzaN+zHUCCW8dKvDyGM29BG+5Or/v5wlVS+0w8lDwr?=
- =?us-ascii?Q?brIfhp5z04m3LLpRQ5eambadlQ1Pa/RLy9sFHaYyvmu4SfGWHZ4JkEULyVNS?=
- =?us-ascii?Q?+5lDX50AVRYKjdbmh3cTWMRHqIv0+VZrJmeEwUy3WE+lHGNn4SxTzsff+A7k?=
- =?us-ascii?Q?9FDO9pqQeph/RrUojc6gLH3ZyhKU7IA4hROInzngYA8m6Pz6OgORatijHDvY?=
- =?us-ascii?Q?nJ0hp/VxuiPkY9tSGacvuFTvmoVHPtYNb0kZwcQbYvI+agZpAzk2g7G45UEs?=
- =?us-ascii?Q?Jhar6dpXtmBfhEV5L7ZXtYsifYkfKnq/XIUtwEdDrd1vTlpVwYINoOZc38wE?=
- =?us-ascii?Q?FCOfVPbm5joGjESiRXbHlcyI2I5mhItaFutwxUC1Nhw03kpMF71ucHTxdQ16?=
- =?us-ascii?Q?xMfj9ujl1lcf1zAiQ7STC+T5leXCxPAu5AJEegnSUTmbsICGyT09xFzueKk1?=
- =?us-ascii?Q?7C/H9m8VQYR5Jle2QGH4Xnw=3D?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 807b2a9e-76f8-4652-e104-08dac9315aeb
-X-MS-Exchange-CrossTenant-AuthSource: SN4PR01MB7455.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Nov 2022 06:51:45.0004
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: EEEZ+x8iapOaPX768+wZPen0+zV4ArHb6Q00o16JI6pEeslbi3yY55AJKUJUkVcynwVS123CjDURK51trk9B1Nr+89ytuxmv0oTWyuqCGsw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR01MB5801
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-11-18_02,2022-11-18_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ priorityscore=1501 clxscore=1011 mlxlogscore=714 bulkscore=0
+ suspectscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0 impostorscore=0
+ adultscore=0 phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2211180075
+X-Mailman-Approved-At: Mon, 21 Nov 2022 13:46:40 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -120,36 +91,42 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Quan Nguyen <quan@os.amperecomputing.com>, Open Source Submission <patches@amperecomputing.com>, linux-arm-kernel@lists.infradead.org
+Reply-To: jejb@linux.ibm.com
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add SMPro nodes to Mt. Jade BMC.
+> === MEETING ACCESS ON DISCORD VOICE  ===
+> First, join Discord via https://discord.gg/69Km47zH98 
+> <https://discord.gg/69Km47zH98> and confirm via email.
+> Then, to join: navigate Discord > OpenBMC > Voice channels > 
+> Security ~ 
+> https://discord.com/channels/775381525260664832/1002376534377635860 
+> <https://discord.com/channels/775381525260664832/1002376534377635860>
 
-Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
----
- arch/arm/boot/dts/aspeed-bmc-ampere-mtjade.dts | 8 ++++++++
- 1 file changed, 8 insertions(+)
+I thought I should note here that I can't join this meeting because I
+can't get a discord account.  I'm not sure it's a huge loss because I'm
+only advising on the TPM pieces of the current IBM Research OpenBMC
+effort, but I mention it just in case this problem is excluding anyone
+else from the meetings and because it is a discriminatory decision of a
+proprietary platform which is impeding collaboration.
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ampere-mtjade.dts b/arch/arm/boot/dts/aspeed-bmc-ampere-mtjade.dts
-index 353359822d7b..0a51d2e32fab 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ampere-mtjade.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ampere-mtjade.dts
-@@ -354,6 +354,14 @@ &i2c1 {
- 
- &i2c2 {
- 	status = "okay";
-+	smpro@4f {
-+		compatible = "ampere,smpro";
-+		reg = <0x4f>;
-+	};
-+	smpro@4e {
-+		compatible = "ampere,smpro";
-+		reg = <0x4e>;
-+	};
- };
- 
- &i2c3 {
--- 
-2.35.1
+When I try to sign up for a discord account it insists on a phone
+number verification (OK, annoying, but lots of other proprietary silos
+do this as well, so not unusual).  My problem is it won't accept any of
+the phone numbers I possess because they're all VOIP ones (I switched
+to using VOIP for my phones [both mobile and land line] decades ago
+because I've got family in several countries around the world and have
+moved around as well so keeping all my numbers and in-country local
+ones for family was a trick only VOIP could do in the early days). 
+There appears to be no basis for discord's discrimination against VOIP
+other than the company running the silo also provides VOIP services and
+presumably doesn't like the competition.  Now I could go out and buy a
+non-VOIP SIM chip for my mobile just for this, but these are hoops I
+shouldn't have to be forced to jump through to participate in an open
+source project.
+
+Regards,
+
+James Bottomley
 
