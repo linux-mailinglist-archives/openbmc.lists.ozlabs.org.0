@@ -2,87 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6144E63327E
-	for <lists+openbmc@lfdr.de>; Tue, 22 Nov 2022 02:58:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 18383633248
+	for <lists+openbmc@lfdr.de>; Tue, 22 Nov 2022 02:41:38 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NGS8c201dz3cJq
-	for <lists+openbmc@lfdr.de>; Tue, 22 Nov 2022 12:58:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NGRnD020wz3cL7
+	for <lists+openbmc@lfdr.de>; Tue, 22 Nov 2022 12:41:36 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=RjCMysVY;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=EtFDMxmv;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=jejb@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::42e; helo=mail-wr1-x42e.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=RjCMysVY;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=EtFDMxmv;
 	dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NG9sJ69vmz3cBD
-	for <openbmc@lists.ozlabs.org>; Tue, 22 Nov 2022 02:14:12 +1100 (AEDT)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2ALFCuWR016065;
-	Mon, 21 Nov 2022 15:14:10 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : subject :
- from : reply-to : to : cc : date : in-reply-to : references : content-type
- : mime-version; s=pp1; bh=b6vHXgItSHN+Xu3NYcxbxGZpn2/cj9GWjba3cjOL0Qg=;
- b=RjCMysVYWcen0IFae6DlvklvzOSP7MzSaMqnFMjuPNGueuKb0Xx6C/JZl0QuFIXWrVkg
- 03OSc795Q3N3DRKwJsZO8RXYSNwwu5NyyoSG0EMlnGZmKz94NsusK4VdiJJ/sfbz9WFg
- FJdyD1kyRVUknF/t/lgxVOxXhYLcjR/BOqfRVoVTKGxqJZ3D7HSz4mE2wbENfQXJOH3O
- 1UlJ/i9VjtZ6ytrpbb2NhBXof43tJIdlvL8Ohk7A/DkHD72IcgoVCUiH39rsksMIVdeu
- TQGFZsrA0yDDMpwyHyVdb1L0PdBAmLb3NpifqB8qV69c1UVrKE/0nGyCPcDPGnLFfcfp pg== 
-Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com [169.63.214.131])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ky8xtcy9y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 21 Nov 2022 15:14:09 +0000
-Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
-	by ppma01dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 2ALF4tKi003308;
-	Mon, 21 Nov 2022 15:14:08 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([9.208.129.120])
-	by ppma01dal.us.ibm.com with ESMTP id 3kxps9sh9r-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Mon, 21 Nov 2022 15:14:08 +0000
-Received: from b03ledav004.gho.boulder.ibm.com ([9.17.130.235])
-	by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 2ALFE6Xb33554850
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Mon, 21 Nov 2022 15:14:06 GMT
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 98CEF7805E;
-	Mon, 21 Nov 2022 16:16:22 +0000 (GMT)
-Received: from b03ledav004.gho.boulder.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id F04C87805C;
-	Mon, 21 Nov 2022 16:16:21 +0000 (GMT)
-Received: from lingrow.int.hansenpartnership.com (unknown [9.163.75.249])
-	by b03ledav004.gho.boulder.ibm.com (Postfix) with ESMTP;
-	Mon, 21 Nov 2022 16:16:21 +0000 (GMT)
-Message-ID: <28bb9b375161541d22a627ea8de639521297bdd5.camel@linux.ibm.com>
-Subject: Re: Security Working Group meeting - Wednesday October 12
-From: James Bottomley <jejb@linux.ibm.com>
-To: Patrick Williams <patrick@stwcx.xyz>
-Date: Mon, 21 Nov 2022 10:14:02 -0500
-In-Reply-To: <Y3uSSqWTZRNrPEs5@heinlein.taila677.ts.net>
-References: <74f2b64b-9f53-d5a4-b616-510bd75664d5@linux.ibm.com>
-	 <ed082ceea79c3b3ce2d814195f1c90a79ae166b3.camel@linux.ibm.com>
-	 <Y3t60rxQ/ctsd184@heinlein.taila677.ts.net>
-	 <389cde168ce81c86dc256fe2a8ad87d64780cdd7.camel@linux.ibm.com>
-	 <Y3uSSqWTZRNrPEs5@heinlein.taila677.ts.net>
-Content-Type: multipart/signed; micalg="pgp-sha256";
-	protocol="application/pgp-signature"; boundary="=-D+Hy2WbHDY5r51DvJcqd"
-User-Agent: Evolution 3.42.4 
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NGRmb0JrMz2xl6
+	for <openbmc@lists.ozlabs.org>; Tue, 22 Nov 2022 12:41:02 +1100 (AEDT)
+Received: by mail-wr1-x42e.google.com with SMTP id cl5so22566846wrb.9
+        for <openbmc@lists.ozlabs.org>; Mon, 21 Nov 2022 17:41:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=jms.id.au; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=54RP2IWIIhy2xxrG6c6vLV9h3bx5Ywa0moelQvuO0uI=;
+        b=EtFDMxmvIub6AsvD5gUZq2j5iVqjX7b7XEX5dtvzYtqsqABsmsM4uIIZWxNPm9dISL
+         fK7m5cnFEK2m/3pm4yVvUsnyMgB7C0F+Z2yN7uo9lmxccGBUlVsGtqskMGcmA/RT2joC
+         obhoRSzaSLN2YtWMgaEq9BSTIcc3q02Wiv2Bk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=54RP2IWIIhy2xxrG6c6vLV9h3bx5Ywa0moelQvuO0uI=;
+        b=Ma4HonR7m6rJSxr9Aahk+CZ3EpLQIu8+/h8UDHfhz5DZ+yRo6LqiLee5+mEbBMiXLe
+         TrOmMvQMk9Kt2fWQDbtcvJ5kN7Ud/ox528bzKUY3UbrH9AIBTaT623/NTbZCpWnljs6W
+         wfet0l5G6KFYMXx3I+z2cPvIcvVQNBIXoNFurh4y9mJZIntReEv0lUlSeThHECNNPqtG
+         a9Q61ROqbN2D/nD8LnGVcWeQTEO20DjAHy+dmdneJLGCuUUL1CK/gUOxT/yrltQYU2XK
+         9856UfznvBtdwQYcg7e+65+m0K5HWU9eEcYT8r6BoHVh8ANc7k2sjkuz1l/XNYEPnNKv
+         keug==
+X-Gm-Message-State: ANoB5pkuBKbIpMBn2TSjKcQTBgnJOOR1GhfotNna19UsivlaCw+YG68l
+	76drAjAUEq9cWWm/RIQL3sW7RrIQUjorqCGQPlw=
+X-Google-Smtp-Source: AA0mqf4wL1IspdUOJeOJ/cWD2vinkqtYh79NadtQHo1Z0VjTDwiPzWDFg7XEJZqop4Z+XKeKlDDYRDYQS7jNsQKKF7w=
+X-Received: by 2002:a5d:6642:0:b0:236:6a28:eeda with SMTP id
+ f2-20020a5d6642000000b002366a28eedamr12437764wrw.315.1669081253980; Mon, 21
+ Nov 2022 17:40:53 -0800 (PST)
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: xv4tquV90VaG0M1jRt_SgGLPlltd2WL3
-X-Proofpoint-ORIG-GUID: xv4tquV90VaG0M1jRt_SgGLPlltd2WL3
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.895,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-11-21_13,2022-11-18_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 phishscore=0
- lowpriorityscore=0 malwarescore=0 spamscore=0 adultscore=0 impostorscore=0
- mlxlogscore=999 suspectscore=0 bulkscore=0 clxscore=1015
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2211210117
-X-Mailman-Approved-At: Tue, 22 Nov 2022 12:55:05 +1100
+References: <20221104161850.2889894-1-j.neuschaefer@gmx.net>
+In-Reply-To: <20221104161850.2889894-1-j.neuschaefer@gmx.net>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 22 Nov 2022 01:40:42 +0000
+Message-ID: <CACPK8XdXrAPMdnn0T6GQiYEK3R4MvwprOZu_Yvmv=WVOfivROg@mail.gmail.com>
+Subject: Re: [PATCH v5 0/6] Nuvoton WPCM450 clock and reset driver
+To: =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, 
+	Stephen Boyd <sboyd@kernel.org>, Arnd Bergmann <arnd@arndb.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,86 +73,113 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: jejb@linux.ibm.com
-Cc: openbmc@lists.ozlabs.org, jrey@linux.ibm.com
+Cc: devicetree@vger.kernel.org, linux-watchdog@vger.kernel.org, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org, Daniel Lezcano <daniel.lezcano@linaro.org>, Tomer Maimon <tmaimon77@gmail.com>, linux-kernel@vger.kernel.org, Tali Perry <tali.perry1@gmail.com>, Michael Turquette <mturquette@baylibre.com>, Rob Herring <robh+dt@kernel.org>, Thomas Gleixner <tglx@linutronix.de>, Philipp Zabel <p.zabel@pengutronix.de>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Wim Van Sebroeck <wim@linux-watchdog.org>, linux-clk@vger.kernel.org, Guenter Roeck <linux@roeck-us.net>, Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Fri, 4 Nov 2022 at 16:21, Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.ne=
+t> wrote:
+>
+> This series adds support for the clock and reset controller in the Nuvoto=
+n
+> WPCM450 SoC. This means that the clock rates for peripherals will be calc=
+ulated
+> automatically based on the clock tree as it was preconfigured by the boot=
+loader.
+> The 24 MHz dummy clock, that is currently in the devicetree, is no longer=
+ needed.
+> Somewhat unfortunately, this also means that there is a breaking change o=
+nce
+> the devicetree starts relying on the clock driver, but I find it acceptab=
+le in
+> this case, because WPCM450 is still at a somewhat early stage.
 
---=-D+Hy2WbHDY5r51DvJcqd
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Reviewed-by: Joel Stanley <joel@jms.id.au>
 
-On Mon, 2022-11-21 at 08:59 -0600, Patrick Williams wrote:
-> On Mon, Nov 21, 2022 at 09:31:31AM -0500, James Bottomley wrote:
-> > On Mon, 2022-11-21 at 07:19 -0600, Patrick Williams wrote:
-[...]
-> > > The only one that requires a verified phone number is "Highest".
-> > >=20
-> > > To test out what you are describing I did the following:
-> > >=20
-> > > =C2=A0=C2=A0 - Navigated to our invite link under Incognito (to avoid
-> > > Discord
-> > > =C2=A0=C2=A0=C2=A0=C2=A0 seeing my normal login):
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 https://discord.open=
-bmc.org=C2=A0(or)
-> > > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 https://discord.gg/6=
-9Km47zH98
-> > >=20
-> > > =C2=A0=C2=A0 - Clicked "Register".=C2=A0 Filled out "myemail+burner@g=
-mail.com",
-> > > a
-> > > =C2=A0=C2=A0=C2=A0=C2=A0 username, password, and an arbitrary date of=
- birth that is
-> > > more
-> > > =C2=A0=C2=A0=C2=A0=C2=A0 than 18 years old.
-> > >=20
-> > > =C2=A0=C2=A0 - Dealt with the captchas.
-> >=20
-> > Actually, no, this doesn't work either.=C2=A0 It brings me to the same
-> > account creation screen on discord.com and then demands phone
-> > number verification again.
->=20
-> > I've no idea why this doesn't work for me.=C2=A0 I suppose it could be
-> > source IP address (I am on comcast cable and discord.com seems to
-> > be IPv4 only).
->=20
-> I don't really have any other ideas either.=C2=A0 Maybe it doesn't like
-> the domain name you've used for the email address?
+>
+>
+> Upstreaming plan (although other suggestions are welcome):
+>
+> Once reviewed,
+>
+> - The ARM/dts changes should go through Joel Stanley's bmc tree
 
-I was using this one.  However, now it doesn't ask for email, it asks
-for user name which doesn't have an account
+I've picked up the standalone patch ("Add clock controller node").
 
-> =C2=A0 Did it give you a captcha?=C2=A0 I assume you're "passing" that.
+> - The clocksource/timer changes should probably go via Daniel Lezcano and=
+ TIP
+> - The clock controller bindings and driver should go through the clk tree
 
-Yes, the account verification screen is after the captcha.
+Stephen, do you plan on merging this driver for v6.2?
 
-> =C2=A0 I suspect there is something Discord is detecting in your account
-> signup that they are triggering a "higher probability of being spam"
-> setting, but I don't know what that would be.
-
-I tried using a socks proxy to the IBM network and that doesn't work
-either, so it's likely some browser or OS test (I tried with both
-chrome and firefox, with the same results, I've even tried a user agent
-switcher).
-
-Regards,
-
-James
+Alternatively, could we get an ack from you and merge this entire
+series through Arnd, where we have precedent for merging these initial
+support cross-tree patch sets?
 
 
---=-D+Hy2WbHDY5r51DvJcqd
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABMIAB0WIQTnYEDbdso9F2cI+arnQslM7pishQUCY3uVugAKCRDnQslM7pis
-hch/AP9WJJ9Dk0tddMe5wi6MPRa3Y5rsMn0altyQsDFYsfsVpgD9EsTNd7xFa395
-W3QCOSAem4gIUf+/8EXVBe87gTiP9Rk=
-=W3hg
------END PGP SIGNATURE-----
-
---=-D+Hy2WbHDY5r51DvJcqd--
-
+> - It probably makes sense to delay the final ARM/dts patch ("ARM: dts:
+>   wpcm450: Switch clocks to clock controller") until next cycle to make
+>   sure it is merged after the clock driver.
+>
+>
+> v5:
+> - Dropped patch 2 (watchdog: npcm: Enable clock if provided), which
+>   was since merged upstream
+> - Added patch 2 (clocksource: timer-npcm7xx: Enable timer 1 clock before =
+use) again,
+>   because I wasn't able to find it in linux-next
+> - Switched the driver to using struct clk_parent_data
+> - Rebased on 6.1-rc3
+>
+> v4:
+> - https://lore.kernel.org/lkml/20220610072141.347795-1-j.neuschaefer@gmx.=
+net/
+> - Leave WDT clock running during after restart handler
+> - Fix reset controller initialization
+> - Dropped patch 2/7 (clocksource: timer-npcm7xx: Enable timer 1 clock bef=
+ore use),
+>   as it was applied by Daniel Lezcano
+>
+> v3:
+> - https://lore.kernel.org/lkml/20220508194333.2170161-1-j.neuschaefer@gmx=
+.net/
+> - Changed "refclk" string to "ref"
+> - Fixed some dead code in the driver
+> - Added clk_prepare_enable call to the watchdog restart handler
+> - Added a few review tags
+>
+> v2:
+> - https://lore.kernel.org/lkml/20220429172030.398011-1-j.neuschaefer@gmx.=
+net/
+> - various small improvements
+>
+> v1:
+> - https://lore.kernel.org/lkml/20220422183012.444674-1-j.neuschaefer@gmx.=
+net/
+>
+> Jonathan Neusch=C3=A4fer (6):
+>   dt-bindings: timer: nuvoton,npcm7xx-timer: Allow specifying all clocks
+>   clocksource: timer-npcm7xx: Enable timer 1 clock before use
+>   dt-bindings: clock: Add Nuvoton WPCM450 clock/reset controller
+>   ARM: dts: wpcm450: Add clock controller node
+>   clk: wpcm450: Add Nuvoton WPCM450 clock/reset controller driver
+>   [NOT FOR MERGE] ARM: dts: wpcm450: Switch clocks to clock controller
+>
+>  .../bindings/clock/nuvoton,wpcm450-clk.yaml   |  66 +++
+>  .../bindings/timer/nuvoton,npcm7xx-timer.yaml |   8 +-
+>  arch/arm/boot/dts/nuvoton-wpcm450.dtsi        |  29 +-
+>  drivers/clk/Makefile                          |   1 +
+>  drivers/clk/clk-wpcm450.c                     | 375 ++++++++++++++++++
+>  drivers/clocksource/timer-npcm7xx.c           |  10 +
+>  drivers/reset/Kconfig                         |   2 +-
+>  .../dt-bindings/clock/nuvoton,wpcm450-clk.h   |  67 ++++
+>  8 files changed, 549 insertions(+), 9 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/clock/nuvoton,wpcm4=
+50-clk.yaml
+>  create mode 100644 drivers/clk/clk-wpcm450.c
+>  create mode 100644 include/dt-bindings/clock/nuvoton,wpcm450-clk.h
+>
+> --
+> 2.35.1
+>
