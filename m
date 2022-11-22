@@ -1,41 +1,41 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D48F63483E
-	for <lists+openbmc@lfdr.de>; Tue, 22 Nov 2022 21:34:39 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8C551634840
+	for <lists+openbmc@lfdr.de>; Tue, 22 Nov 2022 21:36:01 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NGwwR6LxGz3dv6
-	for <lists+openbmc@lfdr.de>; Wed, 23 Nov 2022 07:34:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NGwy72v12z3cNh
+	for <lists+openbmc@lfdr.de>; Wed, 23 Nov 2022 07:35:59 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized) smtp.mailfrom=nuvoton.com (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
 Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NGww4677rz3cLR
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NGww46SVqz3cLh
 	for <openbmc@lists.ozlabs.org>; Wed, 23 Nov 2022 07:34:11 +1100 (AEDT)
 Received: from NTILML01.nuvoton.com (ntil-fw [212.199.177.25])
-	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 2AMKY3B2009512
-	for <openbmc@lists.ozlabs.org>; Tue, 22 Nov 2022 22:34:03 +0200
-Received: from NTHCML01A.nuvoton.com (10.1.8.177) by NTILML01.nuvoton.com
- (10.190.1.46) with Microsoft SMTP Server (version=TLS1_2,
+	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 2AMKY4oS009515
+	for <openbmc@lists.ozlabs.org>; Tue, 22 Nov 2022 22:34:04 +0200
+Received: from NTHCCAS02.nuvoton.com (10.1.9.121) by NTILML01.nuvoton.com
+ (10.190.1.56) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Tue, 22 Nov
  2022 22:34:03 +0200
-Received: from NTHCCAS04.nuvoton.com (10.1.8.29) by NTHCML01A.nuvoton.com
- (10.1.8.177) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2176.2; Wed, 23 Nov
- 2022 04:34:00 +0800
-Received: from taln60.nuvoton.co.il (10.191.1.180) by NTHCCAS04.nuvoton.com
- (10.1.12.25) with Microsoft SMTP Server id 15.1.2176.2 via Frontend
- Transport; Wed, 23 Nov 2022 04:34:00 +0800
+Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTHCCAS02.nuvoton.com
+ (10.1.9.121) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.2; Wed, 23 Nov
+ 2022 04:34:01 +0800
+Received: from taln60.nuvoton.co.il (10.191.1.180) by NTHCCAS01.nuvoton.com
+ (10.1.12.25) with Microsoft SMTP Server id 15.1.2375.7 via Frontend
+ Transport; Wed, 23 Nov 2022 04:34:01 +0800
 Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
-	id 0336D63A1B; Tue, 22 Nov 2022 22:34:00 +0200 (IST)
+	id 8C05263A0A; Tue, 22 Nov 2022 22:34:00 +0200 (IST)
 From: Tomer Maimon <tmaimon77@gmail.com>
 To: <openbmc@lists.ozlabs.org>
-Subject: [PATCH linux dev-6.0 v1 1/2] dt-binding: soc: nuvoton: Add NPCM BPC LPC documentation
-Date: Tue, 22 Nov 2022 22:33:55 +0200
-Message-ID: <20221122203356.109117-2-tmaimon77@gmail.com>
+Subject: [PATCH linux dev-6.0 v1 2/2] soc: nuvoton: add NPCM LPC BPC driver
+Date: Tue, 22 Nov 2022 22:33:56 +0200
+Message-ID: <20221122203356.109117-3-tmaimon77@gmail.com>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20221122203356.109117-1-tmaimon77@gmail.com>
 References: <20221122203356.109117-1-tmaimon77@gmail.com>
@@ -58,136 +58,488 @@ Cc: Andrew Jeffery <andrew@aj.id.au>, Joel Stanley <joel@jms.id.au>, Tomer
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Added device tree binding documentation for Nuvoton BMC NPCM BIOS Post
-Code (BPC).
+Add Nuvoton BMC NPCM LPC BIOS post code (BPC) driver.
 
-The NPCM BPC monitoring two configurable I/O addresses written by the
-host on Low Pin Count (LPC) bus.
+The NPCM BPC monitoring two configurable I/O address written by the host
+on the Low Pin Count (LPC) bus.
 
 Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 ---
- .../bindings/soc/nuvoton/npcm-lpc-bpc.yaml    | 112 ++++++++++++++++++
- 1 file changed, 112 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/soc/nuvoton/npcm-lpc-bpc.yaml
+ drivers/soc/Kconfig                |   1 +
+ drivers/soc/Makefile               |   1 +
+ drivers/soc/nuvoton/Kconfig        |  24 ++
+ drivers/soc/nuvoton/Makefile       |   3 +
+ drivers/soc/nuvoton/npcm-lpc-bpc.c | 396 +++++++++++++++++++++++++++++
+ 5 files changed, 425 insertions(+)
+ create mode 100644 drivers/soc/nuvoton/Kconfig
+ create mode 100644 drivers/soc/nuvoton/Makefile
+ create mode 100644 drivers/soc/nuvoton/npcm-lpc-bpc.c
 
-diff --git a/Documentation/devicetree/bindings/soc/nuvoton/npcm-lpc-bpc.yaml b/Documentation/devicetree/bindings/soc/nuvoton/npcm-lpc-bpc.yaml
+diff --git a/drivers/soc/Kconfig b/drivers/soc/Kconfig
+index e461c071189b..f17764a7e588 100644
+--- a/drivers/soc/Kconfig
++++ b/drivers/soc/Kconfig
+@@ -15,6 +15,7 @@ source "drivers/soc/ixp4xx/Kconfig"
+ source "drivers/soc/litex/Kconfig"
+ source "drivers/soc/mediatek/Kconfig"
+ source "drivers/soc/microchip/Kconfig"
++source "drivers/soc/nuvoton/Kconfig"
+ source "drivers/soc/pxa/Kconfig"
+ source "drivers/soc/qcom/Kconfig"
+ source "drivers/soc/renesas/Kconfig"
+diff --git a/drivers/soc/Makefile b/drivers/soc/Makefile
+index 69ba6508cf2c..9f9250685485 100644
+--- a/drivers/soc/Makefile
++++ b/drivers/soc/Makefile
+@@ -20,6 +20,7 @@ obj-$(CONFIG_SOC_XWAY)		+= lantiq/
+ obj-$(CONFIG_LITEX_SOC_CONTROLLER) += litex/
+ obj-y				+= mediatek/
+ obj-y				+= microchip/
++obj-y				+= nuvoton/
+ obj-y				+= pxa/
+ obj-y				+= amlogic/
+ obj-y				+= qcom/
+diff --git a/drivers/soc/nuvoton/Kconfig b/drivers/soc/nuvoton/Kconfig
 new file mode 100644
-index 000000000000..2c8e66546891
+index 000000000000..9f92b8380f2a
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/soc/nuvoton/npcm-lpc-bpc.yaml
-@@ -0,0 +1,112 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/soc/nuvoton/npcm-lpc-bpc.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
++++ b/drivers/soc/nuvoton/Kconfig
+@@ -0,0 +1,24 @@
++# SPDX-License-Identifier: GPL-2.0-only
 +
-+title: Nuvoton Low Pin Count (LPC) Bus Controller
++if ARCH_NPCM || COMPILE_TEST
 +
-+maintainers:
-+  - Tomer Maimon <tmaimon77@gmail.com>
++menu "NUVOTON SoC drivers"
 +
-+description:
-+  The Low Pin Count (LPC) is a low bandwidth bus that is used to connect
-+  peripherals around the CPU and to replace the Industry Standard Architecture
-+  (ISA) bus.
++config NPCM_LPC_BPC
++	tristate "NPCM LPC BIOS Post Code support"
++	depends on (ARCH_NPCM || COMPILE_TEST)
++	help
++	  Provides a NPCM driver to control the LPC BIOS Post Code
++	  interface which allows the BMC to monitoring and save
++	  the data written by the host to an arbitrary LPC I/O port.
 +
-+  The Nuvoton NPCM LPC bus is a bridge of host CPU to a several of peripheral
-+  devices.
++config NPCM_PCI_MBOX
++	tristate "NPCM PCI Mailbox Controller"
++	depends on (ARCH_NPCM || COMPILE_TEST) && REGMAP && MFD_SYSCON
++	help
++	  Expose the NPCM BMC PCI MBOX registers found on Nuvoton SOCs
++	  to userspace.
 +
-+properties:
-+  compatible:
-+    items:
-+      - enum:
-+          - nuvoton,npcm750-lpc
-+          - nuvoton,npcm845-lpc
-+      - const: simple-mfd
-+      - const: syscon
++endmenu
 +
-+  reg:
-+    maxItems: 1
++endif
+diff --git a/drivers/soc/nuvoton/Makefile b/drivers/soc/nuvoton/Makefile
+new file mode 100644
+index 000000000000..b44b044ca335
+--- /dev/null
++++ b/drivers/soc/nuvoton/Makefile
+@@ -0,0 +1,3 @@
++# SPDX-License-Identifier: GPL-2.0-only
++obj-$(CONFIG_NPCM_LPC_BPC)		+= npcm-lpc-bpc.o
++obj-$(CONFIG_NPCM_PCI_MBOX)		+= npcm-pci-mbox.o
+diff --git a/drivers/soc/nuvoton/npcm-lpc-bpc.c b/drivers/soc/nuvoton/npcm-lpc-bpc.c
+new file mode 100644
+index 000000000000..42ac94f9ddf9
+--- /dev/null
++++ b/drivers/soc/nuvoton/npcm-lpc-bpc.c
+@@ -0,0 +1,396 @@
++// SPDX-License-Identifier: GPL-2.0
++// Copyright (c) 2020 Nuvoton Technology corporation.
 +
-+  "#address-cells":
-+    const: 1
++#include <linux/fs.h>
++#include <linux/bitops.h>
++#include <linux/interrupt.h>
++#include <linux/kfifo.h>
++#include <linux/mfd/syscon.h>
++#include <linux/module.h>
++#include <linux/of.h>
++#include <linux/platform_device.h>
++#include <linux/regmap.h>
++#include <linux/miscdevice.h>
++#include <linux/poll.h>
 +
-+  "#size-cells":
-+    const: 1
++#define DEVICE_NAME	"npcm-lpc-bpc"
 +
-+  ranges: true
++#define NUM_BPC_CHANNELS	2
++#define DW_PAD_SIZE		3
 +
-+patternProperties:
-+  "^lpc_bpc@[0-9a-f]+$":
-+    type: object
-+    additionalProperties: false
++/* BIOS POST Code FIFO Registers */
++#define NPCM_BPCFA2L_REG	0x2 //BIOS POST Code FIFO Address 2 LSB
++#define NPCM_BPCFA2M_REG	0x4 //BIOS POST Code FIFO Address 2 MSB
++#define NPCM_BPCFEN_REG		0x6 //BIOS POST Code FIFO Enable
++#define NPCM_BPCFSTAT_REG	0x8 //BIOS POST Code FIFO Status
++#define NPCM_BPCFDATA_REG	0xA //BIOS POST Code FIFO Data
++#define NPCM_BPCFMSTAT_REG	0xC //BIOS POST Code FIFO Miscellaneous Status
++#define NPCM_BPCFA1L_REG	0x10 //BIOS POST Code FIFO Address 1 LSB
++#define NPCM_BPCFA1M_REG	0x12 //BIOS POST Code FIFO Address 1 MSB
 +
-+    description:
-+      Nuvoton BMC NPCM BIOS Post Code (BPC) monitoring two configurable I/O
-+      addresses written by the host on the Low Pin Count (LPC) bus, the capure
-+      data stored in 128-word FIFO.
++/* BIOS regiser data */
++#define FIFO_IOADDR1_ENABLE	0x80
++#define FIFO_IOADDR2_ENABLE	0x40
 +
-+      NPCM BPC supports capture double words, when using capture
-+      double word only I/O address 1 is monitored.
++/* BPC interface package and structure definition */
++#define BPC_KFIFO_SIZE		0x400
 +
-+    properties:
-+      compatible:
-+        items:
-+          - enum:
-+              - nuvoton,npcm750-lpc-bpc
-+              - nuvoton,npcm845-lpc-bpc
++/* BPC regiser data */
++#define FIFO_DATA_VALID		0x80
++#define FIFO_OVERFLOW		0x20
++#define FIFO_READY_INT_ENABLE	0x8
++#define FIFO_DWCAPTURE		0x4
++#define FIFO_ADDR_DECODE	0x1
 +
-+      reg:
-+        maxItems: 1
++/* Host Reset */
++#define HOST_RESET_INT_ENABLE	0x10
++#define HOST_RESET_CHANGED	0x40
 +
-+      interrupts:
-+        maxItems: 1
++struct npcm_bpc_channel {
++	struct npcm_bpc	*data;
++	struct kfifo		fifo;
++	wait_queue_head_t	wq;
++	bool			host_reset;
++	struct miscdevice	miscdev;
++};
 +
-+      nuvoton,monitor-ports:
-+        $ref: /schemas/types.yaml#/definitions/uint32-array
-+        description: 
-+          Contain monitor I/O addresses, at least one monitor I/O address 
-+          required.
++struct npcm_bpc {
++	void __iomem		*base;
++	struct device		*dev;
++	int			irq;
++	bool			en_dwcap;
++	struct npcm_bpc_channel	ch[NUM_BPC_CHANNELS];
++};
 +
-+      nuvoton,bpc-en-dwcapture:
-+        description: If present, Enable capture double words support.
-+        type: boolean
++static struct npcm_bpc_channel *npcm_file_to_ch(struct file *file)
++{
++	return container_of(file->private_data, struct npcm_bpc_channel,
++			    miscdev);
++}
 +
-+    required:
-+      - compatible
-+      - reg
-+      - interrupts
-+      - nuvoton,monitor-ports
++static ssize_t npcm_bpc_read(struct file *file, char __user *buffer,
++			     size_t count, loff_t *ppos)
++{
++	struct npcm_bpc_channel *chan = npcm_file_to_ch(file);
++	struct npcm_bpc *lpc_bpc = chan->data;
++	unsigned int copied;
++	int cond_size = 1;
++	int ret = 0;
 +
-+required:
-+  - compatible
-+  - reg
-+  - "#address-cells"
-+  - "#size-cells"
-+  - ranges
++	if (lpc_bpc->en_dwcap)
++		cond_size = 3;
 +
-+additionalProperties:
-+  type: object
++	if (kfifo_len(&chan->fifo) < cond_size) {
++		if (file->f_flags & O_NONBLOCK)
++			return -EAGAIN;
 +
-+examples:
-+  - |
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
++		ret = wait_event_interruptible
++			(chan->wq, kfifo_len(&chan->fifo) > cond_size);
++		if (ret == -ERESTARTSYS)
++			return -EINTR;
++	}
 +
-+    lpc: lpc@f0007000 {
-+        compatible = "nuvoton,npcm750-lpc", "simple-mfd", "syscon";
-+        reg = <0xf0007000 0x1000>;
++	ret = kfifo_to_user(&chan->fifo, buffer, count, &copied);
 +
-+        #address-cells = <1>;
-+        #size-cells = <1>;
-+        ranges = <0x0 0xf0007000 0x1000>;
++	return ret ? ret : copied;
++}
 +
-+        lpc_snoop: lpc-snoop@40 {
-+            compatible = "nuvoton,npcm750-lpc-bpc";
-+            reg = <0x40 0x20>;
-+            interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
-+            nuvoton,monitor-ports = <0x80>;
-+        };
-+    };
-+...
++static __poll_t npcm_bpc_poll(struct file *file, struct poll_table_struct *pt)
++{
++	struct npcm_bpc_channel *chan = npcm_file_to_ch(file);
++	__poll_t mask = 0;
++
++	poll_wait(file, &chan->wq, pt);
++	if (!kfifo_is_empty(&chan->fifo))
++		mask |= POLLIN;
++
++	if (chan->host_reset) {
++		mask |= POLLHUP;
++		chan->host_reset = false;
++	}
++
++	return mask;
++}
++
++static const struct file_operations npcm_bpc_fops = {
++	.owner		= THIS_MODULE,
++	.read		= npcm_bpc_read,
++	.poll		= npcm_bpc_poll,
++	.llseek		= noop_llseek,
++};
++
++static irqreturn_t npcm_bpc_irq(int irq, void *arg)
++{
++	struct npcm_bpc *lpc_bpc = arg;
++	u8 fifo_st, host_st, data;
++	bool isr_flag = false;
++	u8 last_addr_bit = 0;
++	u8 padzero[3] = {0};
++	u8 addr_index = 0;
++
++	fifo_st = ioread8(lpc_bpc->base + NPCM_BPCFSTAT_REG);
++	while (FIFO_DATA_VALID & fifo_st) {
++		 /* If dwcapture enabled only channel 0 (FIFO 0) used */
++		if (!lpc_bpc->en_dwcap)
++			addr_index = fifo_st & FIFO_ADDR_DECODE;
++		else
++			last_addr_bit = fifo_st & FIFO_ADDR_DECODE;
++
++		/* Read data from FIFO to clear interrupt */
++		data = ioread8(lpc_bpc->base + NPCM_BPCFDATA_REG);
++		if (kfifo_is_full(&lpc_bpc->ch[addr_index].fifo))
++			kfifo_skip(&lpc_bpc->ch[addr_index].fifo);
++		kfifo_put(&lpc_bpc->ch[addr_index].fifo, data);
++		if (fifo_st & FIFO_OVERFLOW)
++			dev_warn(lpc_bpc->dev, "BIOS Post Codes FIFO Overflow\n");
++
++		fifo_st = ioread8(lpc_bpc->base + NPCM_BPCFSTAT_REG);
++		if (lpc_bpc->en_dwcap && last_addr_bit) {
++			if ((fifo_st & FIFO_ADDR_DECODE) ||
++			    ((FIFO_DATA_VALID & fifo_st) == 0)) {
++				while (kfifo_avail(&lpc_bpc->ch[addr_index].fifo) < DW_PAD_SIZE)
++					kfifo_skip(&lpc_bpc->ch[addr_index].fifo);
++				kfifo_in(&lpc_bpc->ch[addr_index].fifo,
++					 padzero, DW_PAD_SIZE);
++			}
++		}
++		isr_flag = true;
++	}
++
++	host_st = ioread8(lpc_bpc->base + NPCM_BPCFMSTAT_REG);
++	if (host_st & HOST_RESET_CHANGED) {
++		iowrite8(HOST_RESET_CHANGED,
++			 lpc_bpc->base + NPCM_BPCFMSTAT_REG);
++		lpc_bpc->ch[addr_index].host_reset = true;
++		isr_flag = true;
++	}
++
++	if (isr_flag) {
++		wake_up_interruptible(&lpc_bpc->ch[addr_index].wq);
++		return IRQ_HANDLED;
++	}
++
++	return IRQ_NONE;
++}
++
++static int npcm_bpc_config_irq(struct npcm_bpc *lpc_bpc,
++			       struct platform_device *pdev)
++{
++	struct device *dev = &pdev->dev;
++	int rc;
++
++	lpc_bpc->irq = platform_get_irq(pdev, 0);
++	if (lpc_bpc->irq < 0) {
++		dev_err(dev, "get IRQ failed\n");
++		return lpc_bpc->irq;
++	}
++
++	rc = devm_request_irq(dev, lpc_bpc->irq,
++			      npcm_bpc_irq, IRQF_SHARED,
++			      DEVICE_NAME, lpc_bpc);
++	if (rc < 0) {
++		dev_warn(dev, "Unable to request IRQ %d\n", lpc_bpc->irq);
++		return rc;
++	}
++
++	return 0;
++}
++
++static int npcm_enable_bpc(struct npcm_bpc *lpc_bpc, struct device *dev,
++			   int channel, u16 lpc_port)
++{
++	u8 addr_en, reg_en;
++	int err;
++
++	init_waitqueue_head(&lpc_bpc->ch[channel].wq);
++
++	err = kfifo_alloc(&lpc_bpc->ch[channel].fifo, BPC_KFIFO_SIZE,
++			  GFP_KERNEL);
++	if (err)
++		return err;
++
++	lpc_bpc->ch[channel].miscdev.minor = MISC_DYNAMIC_MINOR;
++	lpc_bpc->ch[channel].miscdev.name =
++		devm_kasprintf(dev, GFP_KERNEL, "%s%d", DEVICE_NAME, channel);
++	lpc_bpc->ch[channel].miscdev.fops = &npcm_bpc_fops;
++	lpc_bpc->ch[channel].miscdev.parent = dev;
++	err = misc_register(&lpc_bpc->ch[channel].miscdev);
++	if (err)
++		return err;
++
++	lpc_bpc->ch[channel].data = lpc_bpc;
++	lpc_bpc->ch[channel].host_reset = false;
++
++	/* Enable LPC snoop channel at requested port */
++	switch (channel) {
++	case 0:
++		addr_en = FIFO_IOADDR1_ENABLE;
++		iowrite8((u8)lpc_port & 0xFF,
++			 lpc_bpc->base + NPCM_BPCFA1L_REG);
++		iowrite8((u8)(lpc_port >> 8),
++			 lpc_bpc->base + NPCM_BPCFA1M_REG);
++		break;
++	case 1:
++		addr_en = FIFO_IOADDR2_ENABLE;
++		iowrite8((u8)lpc_port & 0xFF,
++			 lpc_bpc->base + NPCM_BPCFA2L_REG);
++		iowrite8((u8)(lpc_port >> 8),
++			 lpc_bpc->base + NPCM_BPCFA2M_REG);
++		break;
++	default:
++		return -EINVAL;
++	}
++
++	if (lpc_bpc->en_dwcap)
++		addr_en = FIFO_DWCAPTURE;
++
++	/*
++	 * Enable FIFO Ready Interrupt, FIFO Capture of I/O addr,
++	 * and Host Reset
++	 */
++	reg_en = ioread8(lpc_bpc->base + NPCM_BPCFEN_REG);
++	iowrite8(reg_en | addr_en | FIFO_READY_INT_ENABLE |
++		 HOST_RESET_INT_ENABLE, lpc_bpc->base + NPCM_BPCFEN_REG);
++
++	return 0;
++}
++
++static void npcm_disable_bpc(struct npcm_bpc *lpc_bpc, int channel)
++{
++	u8 reg_en;
++
++	switch (channel) {
++	case 0:
++		reg_en = ioread8(lpc_bpc->base + NPCM_BPCFEN_REG);
++		if (lpc_bpc->en_dwcap)
++			iowrite8(reg_en & ~FIFO_DWCAPTURE,
++				 lpc_bpc->base + NPCM_BPCFEN_REG);
++		else
++			iowrite8(reg_en & ~FIFO_IOADDR1_ENABLE,
++				 lpc_bpc->base + NPCM_BPCFEN_REG);
++		break;
++	case 1:
++		reg_en = ioread8(lpc_bpc->base + NPCM_BPCFEN_REG);
++		iowrite8(reg_en & ~FIFO_IOADDR2_ENABLE,
++			 lpc_bpc->base + NPCM_BPCFEN_REG);
++		break;
++	default:
++		return;
++	}
++
++	if (!(reg_en & (FIFO_IOADDR1_ENABLE | FIFO_IOADDR2_ENABLE)))
++		iowrite8(reg_en &
++			 ~(FIFO_READY_INT_ENABLE | HOST_RESET_INT_ENABLE),
++			 lpc_bpc->base + NPCM_BPCFEN_REG);
++
++	kfifo_free(&lpc_bpc->ch[channel].fifo);
++	misc_deregister(&lpc_bpc->ch[channel].miscdev);
++}
++
++static int npcm_bpc_probe(struct platform_device *pdev)
++{
++	struct npcm_bpc *lpc_bpc;
++	struct device_node *np;
++	struct device *dev;
++	u32 port;
++	int err;
++
++	dev = &pdev->dev;
++
++	lpc_bpc = devm_kzalloc(dev, sizeof(*lpc_bpc), GFP_KERNEL);
++	if (!lpc_bpc)
++		return -ENOMEM;
++
++	np = pdev->dev.parent->of_node;
++	if (!of_device_is_compatible(np, "nuvoton,npcm750-lpc") &&
++	    !of_device_is_compatible(np, "nuvoton,npcm845-lpc")) {
++		dev_err(dev, "unsupported LPC device binding\n");
++		return -ENODEV;
++	}
++
++	lpc_bpc->base = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(lpc_bpc->base))
++		return PTR_ERR(lpc_bpc->base);
++
++	dev_set_drvdata(&pdev->dev, lpc_bpc);
++
++	err = of_property_read_u32_index(dev->of_node, "nuvoton,monitor-ports",
++					 0, &port);
++	if (err) {
++		dev_err(dev, "no monitor ports configured\n");
++		return -ENODEV;
++	}
++
++	lpc_bpc->en_dwcap =
++		of_property_read_bool(dev->of_node, "nuvoton,bpc-en-dwcapture");
++
++	lpc_bpc->dev = dev;
++
++	err = npcm_bpc_config_irq(lpc_bpc, pdev);
++	if (err)
++		return err;
++
++	err = npcm_enable_bpc(lpc_bpc, dev, 0, port);
++	if (err) {
++		dev_err(dev, "Enable BIOS post code I/O port 0 failed\n");
++		return err;
++	}
++
++	/*
++	 * Configuration of second BPC channel port is optional
++	 * Double-Word Capture ignoring address 2
++	 */
++	if (!lpc_bpc->en_dwcap) {
++		if (of_property_read_u32_index(dev->of_node,
++					       "nuvoton,monitor-ports", 1,
++					       &port) == 0) {
++			err = npcm_enable_bpc(lpc_bpc, dev, 1, port);
++			if (err) {
++				dev_err(dev, "Enable BIOS post code I/O port 1 failed, disable I/O port 0\n");
++				npcm_disable_bpc(lpc_bpc, 0);
++				return err;
++			}
++		}
++	}
++
++	pr_info("NPCM BIOS Post Code probe\n");
++
++	return err;
++}
++
++static int npcm_bpc_remove(struct platform_device *pdev)
++{
++	struct npcm_bpc *lpc_bpc = dev_get_drvdata(&pdev->dev);
++	u8 reg_en;
++
++	reg_en = ioread8(lpc_bpc->base + NPCM_BPCFEN_REG);
++
++	if (reg_en & FIFO_IOADDR1_ENABLE)
++		npcm_disable_bpc(lpc_bpc, 0);
++	if (reg_en & FIFO_IOADDR2_ENABLE)
++		npcm_disable_bpc(lpc_bpc, 1);
++
++	return 0;
++}
++
++static const struct of_device_id npcm_bpc_match[] = {
++	{ .compatible = "nuvoton,npcm750-lpc-bpc" },
++	{ .compatible = "nuvoton,npcm845-lpc-bpc" },
++	{ },
++};
++
++static struct platform_driver npcm_bpc_driver = {
++	.driver = {
++		.name		= DEVICE_NAME,
++		.of_match_table = npcm_bpc_match,
++	},
++	.probe = npcm_bpc_probe,
++	.remove = npcm_bpc_remove,
++};
++
++module_platform_driver(npcm_bpc_driver);
++
++MODULE_DEVICE_TABLE(of, npcm_bpc_match);
++MODULE_LICENSE("GPL");
++MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
++MODULE_DESCRIPTION("NPCM LPC BIOS post code monitoring device driver");
 -- 
 2.33.0
 
