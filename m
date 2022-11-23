@@ -1,43 +1,96 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDEAF635214
-	for <lists+openbmc@lfdr.de>; Wed, 23 Nov 2022 09:17:47 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 840A9635AFD
+	for <lists+openbmc@lfdr.de>; Wed, 23 Nov 2022 12:06:41 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NHDWs6QD8z3chb
-	for <lists+openbmc@lfdr.de>; Wed, 23 Nov 2022 19:17:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NHJGl2N72z3cMx
+	for <lists+openbmc@lfdr.de>; Wed, 23 Nov 2022 22:06:39 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm3 header.b=XHerL+dM;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=DXuPSQyI;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx1.molgen.mpg.de; envelope-from=pmenzel@molgen.mpg.de; receiver=<UNKNOWN>)
-X-Greylist: delayed 519 seconds by postgrey-1.36 at boromir; Wed, 23 Nov 2022 19:17:20 AEDT
-Received: from mx1.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=arndb.de (client-ip=66.111.4.28; helo=out4-smtp.messagingengine.com; envelope-from=arnd@arndb.de; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm3 header.b=XHerL+dM;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=DXuPSQyI;
+	dkim-atps=neutral
+X-Greylist: delayed 455 seconds by postgrey-1.36 at boromir; Wed, 23 Nov 2022 22:05:59 AEDT
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NHDWN5vVgz3cJ7;
-	Wed, 23 Nov 2022 19:17:20 +1100 (AEDT)
-Received: from [192.168.0.2] (ip5f5aeb9c.dynamic.kabel-deutschland.de [95.90.235.156])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	(Authenticated sender: pmenzel)
-	by mx.molgen.mpg.de (Postfix) with ESMTPSA id B9EDE61EA1BD5;
-	Wed, 23 Nov 2022 09:08:30 +0100 (CET)
-Message-ID: <c8a4a3b6-6591-2710-433f-642277eeb8f3@molgen.mpg.de>
-Date: Wed, 23 Nov 2022 09:08:30 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: [PATCH] media: aspeed: Use v4l2_dbg to replace v4l2_warn to avoid
- log spam
-To: Jammy Huang <jammy_huang@aspeedtech.com>
-References: <20221110095611.522-1-jammy_huang@aspeedtech.com>
-Content-Language: en-US
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <20221110095611.522-1-jammy_huang@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NHJFz0J5Dz2xBF
+	for <openbmc@lists.ozlabs.org>; Wed, 23 Nov 2022 22:05:58 +1100 (AEDT)
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+	by mailout.nyi.internal (Postfix) with ESMTP id 404755C018B;
+	Wed, 23 Nov 2022 05:58:20 -0500 (EST)
+Received: from imap51 ([10.202.2.101])
+  by compute3.internal (MEProxy); Wed, 23 Nov 2022 05:58:20 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm3; t=1669201100; x=1669287500; bh=P/3gymjggx
+	G0AGo8CB4kiNTmYVS5hoUgWnwMUY5zy6A=; b=XHerL+dM+qFeU/J/gClsNwqKYP
+	+/f48/pxEFdBIrgqCgIQLzD9UFu9xP1tqyeSqfgwXjvIvRL8p3bCjb0bNiI9pfXR
+	DWGqecxjuUkjtwe6CpBmkVnaHwop6wzEjYcy0pl938upDFhP/AkM73XSEGC7A3+N
+	LcPLvZ9MFm+tPG3cRUTXK5slAxL/dBxMRCeSsA7s0qqzXQ/EEKvpMKUxH5+E7xvo
+	loR6KfoexCYcdlW9TyduWMYvnqWH/eobTeAxW4Vj6xt1EYhWenZqwLwHCkALwKE3
+	fdY1zhdIW83wFlwj7j/Gc1WNv63jnPWCYMnUZxsTCfC845UmY5WPFydbXPzQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1669201100; x=1669287500; bh=P/3gymjggxG0AGo8CB4kiNTmYVS5
+	hoUgWnwMUY5zy6A=; b=DXuPSQyIBea+ygxBIrS1CUZ8KzYgBSuCeg3zFSY1x7Wy
+	H35LLQSxcPV9GwtCUj4XHP0V8vIrTKuORP4QJP+vRXyA3S1sydeDaDSOxOt5/OnU
+	HewPpYDKJabWFRxYGXCrmlaQgR6klwWTX8IHHCGPDnHkViHAi8wTbxypX9y59l1V
+	0rxQCHvo0ZlnFmXuZgmGpxUVD8j3S8rDGBOqCkGvhrrw5XOy7lv82lQlzrkM0Aku
+	rWsh13yD1uLsqzYdVhjuCcTfNyf8pbNqQeR2Z+dciT+ZLmmVrg3RROoXYewu9hf7
+	Rq0ShKkYrXeYH+qTtfNv+BMTJoxU4CggQbRZuYv3bg==
+X-ME-Sender: <xms:y_x9Y2q-16jMcKDaMHfpFitDAPXbIXmVFOwsx9ZxWSTs7MsxbkcI-A>
+    <xme:y_x9Y0prnXaYP6gndujYUiB_tZI8ZEZs8UxJRl27wzVrJNI4tOxSD4305-gRr-HNx
+    7SQYlhiBmDu3HVDujI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedriedugddulecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdetrhhn
+    ugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtth
+    gvrhhnpeffheeugeetiefhgeethfejgfdtuefggeejleehjeeutefhfeeggefhkedtkeet
+    ffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrh
+    hnugesrghrnhgusgdruggv
+X-ME-Proxy: <xmx:y_x9Y7OCA_vrHQ-Vunm62PK5EGarJThVdKvx3qYwFvFoZEQ0cufGNQ>
+    <xmx:y_x9Y17k0gMJkZohfz_FAR1ZKZEHExBzEF7hOEjpfYX_EFbCvcvFjA>
+    <xmx:y_x9Y15042C56nmesMe3NyGdkvr8sJzz-UX_hMeVs-j-mHkZVyTEZw>
+    <xmx:zPx9Y5qMcGBjs0kHvf_zCQ_oUueT6B7zkZASXWcd43LgFoPl2Y8FhQ>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 2195EB60086; Wed, 23 Nov 2022 05:58:19 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.7.0-alpha0-1115-g8b801eadce-fm-20221102.001-g8b801ead
+Mime-Version: 1.0
+Message-Id: <577e273d-ff9b-4d8d-b797-d7275ab8374f@app.fastmail.com>
+In-Reply-To: <20221122201232.107065-3-tmaimon77@gmail.com>
+References: <20221122201232.107065-1-tmaimon77@gmail.com>
+ <20221122201232.107065-3-tmaimon77@gmail.com>
+Date: Wed, 23 Nov 2022 11:57:57 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "Tomer Maimon" <tmaimon77@gmail.com>, avifishman70@gmail.com,
+ tali.perry1@gmail.com, "Joel Stanley" <joel@jms.id.au>, venture@google.com,
+ yuenn@google.com, benjaminfair@google.com,
+ "Hitomi Hasegawa" <hasegawa-hitomi@fujitsu.com>,
+ "Hector Martin" <marcan@marcan.st>,
+ "Nicolas Ferre" <nicolas.ferre@microchip.com>,
+ "Conor.Dooley" <conor.dooley@microchip.com>,
+ =?UTF-8?Q?Heiko_St=C3=BCbner?= <heiko@sntech.de>,
+ "Sven Peter" <sven@svenpeter.dev>, "Brian Norris" <briannorris@chromium.org>,
+ "Rob Herring" <robh+dt@kernel.org>, krzysztof.kozlowski+dt@linaro.org
+Subject: Re: [PATCH v1 2/2] soc: nuvoton: add NPCM LPC BPC driver
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -49,113 +102,57 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, zev@bewilderbeest.net, andrew@aj.id.au, openbmc@lists.ozlabs.org, eajames@linux.ibm.com, linux-kernel@vger.kernel.org, joel@jms.id.au, hverkuil-cisco@xs4all.nl, mchehab@kernel.org, linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Dear Jammy,
-
-
-Am 10.11.22 um 10:56 schrieb Jammy Huang:
-> If the host is powered off, there will be many warning log. To avoid the
-
-…, many warnings are logged.
-
-Also, please paste one example message.
-
-Are the messages really just debug messages, or only in the one 
-condition? If the latter, another solution should be found, like 
-checking if the host is powered off, or rate limiting the message.
-
-> log spam in this condition, replace v4l2_warn with v4l2_dbg.
-
-Please add a reference, to Zev’s report on the mailing list.
-
-Link: …
-
-> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+On Tue, Nov 22, 2022, at 21:12, Tomer Maimon wrote:
+> Add Nuvoton BMC NPCM LPC BIOS post code (BPC) driver.
+>
+> The NPCM BPC monitoring two configurable I/O address written by the host
+> on the Low Pin Count (LPC) bus.
+>
+> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 > ---
->   drivers/media/platform/aspeed/aspeed-video.c | 16 ++++++++--------
->   1 file changed, 8 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/media/platform/aspeed/aspeed-video.c b/drivers/media/platform/aspeed/aspeed-video.c
-> index cf76aeee8cb6..662465d13a0e 100644
-> --- a/drivers/media/platform/aspeed/aspeed-video.c
-> +++ b/drivers/media/platform/aspeed/aspeed-video.c
-> @@ -586,13 +586,13 @@ static int aspeed_video_start_frame(struct aspeed_video *video)
->   	bool bcd_buf_need = (video->format != VIDEO_FMT_STANDARD);
->   
->   	if (video->v4l2_input_status) {
-> -		v4l2_warn(&video->v4l2_dev, "No signal; don't start frame\n");
-> +		v4l2_dbg(1, debug, &video->v4l2_dev, "No signal; don't start frame\n");
->   		return 0;
->   	}
->   
->   	if (!(seq_ctrl & VE_SEQ_CTRL_COMP_BUSY) ||
->   	    !(seq_ctrl & VE_SEQ_CTRL_CAP_BUSY)) {
-> -		v4l2_warn(&video->v4l2_dev, "Engine busy; don't start frame\n");
-> +		v4l2_dbg(1, debug, &video->v4l2_dev, "Engine busy; don't start frame\n");
->   		return -EBUSY;
->   	}
->   
-> @@ -615,7 +615,7 @@ static int aspeed_video_start_frame(struct aspeed_video *video)
->   				       struct aspeed_video_buffer, link);
->   	if (!buf) {
->   		spin_unlock_irqrestore(&video->lock, flags);
-> -		v4l2_warn(&video->v4l2_dev, "No buffers; don't start frame\n");
-> +		v4l2_dbg(1, debug, &video->v4l2_dev, "No buffers; don't start frame\n");
->   		return -EPROTO;
->   	}
->   
-> @@ -796,7 +796,7 @@ static irqreturn_t aspeed_video_irq(int irq, void *arg)
->   			if (video->format == VIDEO_FMT_STANDARD &&
->   			    list_is_last(&buf->link, &video->buffers)) {
->   				empty = false;
-> -				v4l2_warn(&video->v4l2_dev, "skip to keep last frame updated\n");
-> +				v4l2_dbg(1, debug, &video->v4l2_dev, "skip to keep last frame updated\n");
->   			} else {
->   				buf->vb.vb2_buf.timestamp = ktime_get_ns();
->   				buf->vb.sequence = video->sequence++;
-> @@ -1060,7 +1060,7 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
->   						      res_check(video),
->   						      MODE_DETECT_TIMEOUT);
->   		if (!rc) {
-> -			v4l2_warn(&video->v4l2_dev, "Timed out; first mode detect\n");
-> +			v4l2_dbg(1, debug, &video->v4l2_dev, "Timed out; first mode detect\n");
->   			clear_bit(VIDEO_RES_DETECT, &video->flags);
->   			return;
->   		}
-> @@ -1081,7 +1081,7 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
->   						      MODE_DETECT_TIMEOUT);
->   		clear_bit(VIDEO_RES_DETECT, &video->flags);
->   		if (!rc) {
-> -			v4l2_warn(&video->v4l2_dev, "Timed out; second mode detect\n");
-> +			v4l2_dbg(1, debug, &video->v4l2_dev, "Timed out; second mode detect\n");
->   			return;
->   		}
->   
-> @@ -1104,7 +1104,7 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
->   	} while (invalid_resolution && (tries++ < INVALID_RESOLUTION_RETRIES));
->   
->   	if (invalid_resolution) {
-> -		v4l2_warn(&video->v4l2_dev, "Invalid resolution detected\n");
-> +		v4l2_dbg(1, debug, &video->v4l2_dev, "Invalid resolution detected\n");
->   		return;
->   	}
->   
-> @@ -1856,7 +1856,7 @@ static void aspeed_video_stop_streaming(struct vb2_queue *q)
->   				!test_bit(VIDEO_FRAME_INPRG, &video->flags),
->   				STOP_TIMEOUT);
->   	if (!rc) {
-> -		v4l2_warn(&video->v4l2_dev, "Timed out when stopping streaming\n");
-> +		v4l2_dbg(1, debug, &video->v4l2_dev, "Timed out when stopping streaming\n");
->   
->   		/*
->   		 * Need to force stop any DMA and try and get HW into a good
-> 
-> base-commit: aae703b02f92bde9264366c545e87cec451de471
-> prerequisite-patch-id: bf47e8ab2998acfbc32be5a4b7b5ae8a3ae4218b
-> prerequisite-patch-id: bf82715983e08f2e810ff1a82ce644f5f9006cd9
-> prerequisite-patch-id: 28a2040ef0235e5765f05d2fc5529bce2a0f4c6f
-> prerequisite-patch-id: 7e761c779730536db8baf50db5fc8caf058e95af
-> prerequisite-patch-id: c48ea20973fa35938a7d33a0e20d2900df48755f
+>  drivers/soc/Kconfig                |   1 +
+>  drivers/soc/Makefile               |   1 +
+>  drivers/soc/nuvoton/Kconfig        |  24 ++
+>  drivers/soc/nuvoton/Makefile       |   3 +
+>  drivers/soc/nuvoton/npcm-lpc-bpc.c | 396 +++++++++++++++++++++++++++++
+
+In general, I try to keep drivers/soc/ for drivers that are
+used purely inside of the kernel and don't provide their
+own user space ABI, those should normally be part of
+some subsystem grouped by functionality.
+
+It appears that we have similar drivers for aspeed already,
+so there is some precedent, but I would still like to ask
+you and Joel to try to make sure the two are compatible,
+or ideally share the code for the user-facing part of the
+LPC driver.
+
+> +config NPCM_PCI_MBOX
+> +	tristate "NPCM PCI Mailbox Controller"
+> +	depends on (ARCH_NPCM || COMPILE_TEST) && REGMAP && MFD_SYSCON
+> +	help
+> +	  Expose the NPCM BMC PCI MBOX registers found on Nuvoton SOCs
+> +	  to userspace.
+
+This looks unrelated to the LPC driver, so this should
+probably be a separate patch. The same comment about user
+space presumably applies here, but I have not seen the driver.
+
+The implementation of npcm-lpc-bpc looks fine otherwise, I only
+noticed one minor detail that I would change:
+
+> +	np = pdev->dev.parent->of_node;
+> +	if (!of_device_is_compatible(np, "nuvoton,npcm750-lpc") &&
+> +	    !of_device_is_compatible(np, "nuvoton,npcm845-lpc")) {
+> +		dev_err(dev, "unsupported LPC device binding\n");
+> +		return -ENODEV;
+> +	}
+
+This check doesn't seem to make sense here, since those are
+the only two types you support.
+
+      Arnd
