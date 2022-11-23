@@ -1,96 +1,60 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 840A9635AFD
-	for <lists+openbmc@lfdr.de>; Wed, 23 Nov 2022 12:06:41 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 3419463652A
+	for <lists+openbmc@lfdr.de>; Wed, 23 Nov 2022 17:00:22 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NHJGl2N72z3cMx
-	for <lists+openbmc@lfdr.de>; Wed, 23 Nov 2022 22:06:39 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NHQnc0bZ6z3dvF
+	for <lists+openbmc@lfdr.de>; Thu, 24 Nov 2022 03:00:20 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm3 header.b=XHerL+dM;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=DXuPSQyI;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=OSZ2n10h;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=arndb.de (client-ip=66.111.4.28; helo=out4-smtp.messagingengine.com; envelope-from=arnd@arndb.de; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm3 header.b=XHerL+dM;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=DXuPSQyI;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=OSZ2n10h;
 	dkim-atps=neutral
-X-Greylist: delayed 455 seconds by postgrey-1.36 at boromir; Wed, 23 Nov 2022 22:05:59 AEDT
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NHJFz0J5Dz2xBF
-	for <openbmc@lists.ozlabs.org>; Wed, 23 Nov 2022 22:05:58 +1100 (AEDT)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 404755C018B;
-	Wed, 23 Nov 2022 05:58:20 -0500 (EST)
-Received: from imap51 ([10.202.2.101])
-  by compute3.internal (MEProxy); Wed, 23 Nov 2022 05:58:20 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm3; t=1669201100; x=1669287500; bh=P/3gymjggx
-	G0AGo8CB4kiNTmYVS5hoUgWnwMUY5zy6A=; b=XHerL+dM+qFeU/J/gClsNwqKYP
-	+/f48/pxEFdBIrgqCgIQLzD9UFu9xP1tqyeSqfgwXjvIvRL8p3bCjb0bNiI9pfXR
-	DWGqecxjuUkjtwe6CpBmkVnaHwop6wzEjYcy0pl938upDFhP/AkM73XSEGC7A3+N
-	LcPLvZ9MFm+tPG3cRUTXK5slAxL/dBxMRCeSsA7s0qqzXQ/EEKvpMKUxH5+E7xvo
-	loR6KfoexCYcdlW9TyduWMYvnqWH/eobTeAxW4Vj6xt1EYhWenZqwLwHCkALwKE3
-	fdY1zhdIW83wFlwj7j/Gc1WNv63jnPWCYMnUZxsTCfC845UmY5WPFydbXPzQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1669201100; x=1669287500; bh=P/3gymjggxG0AGo8CB4kiNTmYVS5
-	hoUgWnwMUY5zy6A=; b=DXuPSQyIBea+ygxBIrS1CUZ8KzYgBSuCeg3zFSY1x7Wy
-	H35LLQSxcPV9GwtCUj4XHP0V8vIrTKuORP4QJP+vRXyA3S1sydeDaDSOxOt5/OnU
-	HewPpYDKJabWFRxYGXCrmlaQgR6klwWTX8IHHCGPDnHkViHAi8wTbxypX9y59l1V
-	0rxQCHvo0ZlnFmXuZgmGpxUVD8j3S8rDGBOqCkGvhrrw5XOy7lv82lQlzrkM0Aku
-	rWsh13yD1uLsqzYdVhjuCcTfNyf8pbNqQeR2Z+dciT+ZLmmVrg3RROoXYewu9hf7
-	Rq0ShKkYrXeYH+qTtfNv+BMTJoxU4CggQbRZuYv3bg==
-X-ME-Sender: <xms:y_x9Y2q-16jMcKDaMHfpFitDAPXbIXmVFOwsx9ZxWSTs7MsxbkcI-A>
-    <xme:y_x9Y0prnXaYP6gndujYUiB_tZI8ZEZs8UxJRl27wzVrJNI4tOxSD4305-gRr-HNx
-    7SQYlhiBmDu3HVDujI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvgedriedugddulecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdetrhhn
-    ugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrghtth
-    gvrhhnpeffheeugeetiefhgeethfejgfdtuefggeejleehjeeutefhfeeggefhkedtkeet
-    ffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegrrh
-    hnugesrghrnhgusgdruggv
-X-ME-Proxy: <xmx:y_x9Y7OCA_vrHQ-Vunm62PK5EGarJThVdKvx3qYwFvFoZEQ0cufGNQ>
-    <xmx:y_x9Y17k0gMJkZohfz_FAR1ZKZEHExBzEF7hOEjpfYX_EFbCvcvFjA>
-    <xmx:y_x9Y15042C56nmesMe3NyGdkvr8sJzz-UX_hMeVs-j-mHkZVyTEZw>
-    <xmx:zPx9Y5qMcGBjs0kHvf_zCQ_oUueT6B7zkZASXWcd43LgFoPl2Y8FhQ>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 2195EB60086; Wed, 23 Nov 2022 05:58:19 -0500 (EST)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.7.0-alpha0-1115-g8b801eadce-fm-20221102.001-g8b801ead
-Mime-Version: 1.0
-Message-Id: <577e273d-ff9b-4d8d-b797-d7275ab8374f@app.fastmail.com>
-In-Reply-To: <20221122201232.107065-3-tmaimon77@gmail.com>
-References: <20221122201232.107065-1-tmaimon77@gmail.com>
- <20221122201232.107065-3-tmaimon77@gmail.com>
-Date: Wed, 23 Nov 2022 11:57:57 +0100
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Tomer Maimon" <tmaimon77@gmail.com>, avifishman70@gmail.com,
- tali.perry1@gmail.com, "Joel Stanley" <joel@jms.id.au>, venture@google.com,
- yuenn@google.com, benjaminfair@google.com,
- "Hitomi Hasegawa" <hasegawa-hitomi@fujitsu.com>,
- "Hector Martin" <marcan@marcan.st>,
- "Nicolas Ferre" <nicolas.ferre@microchip.com>,
- "Conor.Dooley" <conor.dooley@microchip.com>,
- =?UTF-8?Q?Heiko_St=C3=BCbner?= <heiko@sntech.de>,
- "Sven Peter" <sven@svenpeter.dev>, "Brian Norris" <briannorris@chromium.org>,
- "Rob Herring" <robh+dt@kernel.org>, krzysztof.kozlowski+dt@linaro.org
-Subject: Re: [PATCH v1 2/2] soc: nuvoton: add NPCM LPC BPC driver
-Content-Type: text/plain
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NHQn349fbz3045
+	for <openbmc@lists.ozlabs.org>; Thu, 24 Nov 2022 02:59:51 +1100 (AEDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id 7118861DD6;
+	Wed, 23 Nov 2022 15:59:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65271C43144;
+	Wed, 23 Nov 2022 15:59:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1669219187;
+	bh=NS11AyaOOzYSASBYlc4oJCK5uNhVXwOLd4pt39/P0oY=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=OSZ2n10hM0hKrs7saAE7lKyKvqaPuuWCmVvdvLWDgbVeRI4IlkEC1Nz5RxAbWnUrR
+	 ERHj1FNKpKY4E56WAxU8lOPQRg+RTjG4s2/53E/TejSFYKhIofzEPKxBree6tvNoBn
+	 OfaZjFr6nztFBkCdlwn9JaqZNUpxdQbcNG3+3P5AgCiTMo+W9+PXxllv+00Gw831Nn
+	 eYI3q+1AYyZNO6CKbSJ8kIf2/tiqaHs79kdbyOzy57uaFv7p/4msdFMK6Um+Qeb6Kc
+	 HLXKy0NPUUE7RDAvrd9/W1nPExKCzrpIqKafOrqnHIc0umhHY7Ryd9JoCoGrWsRJLM
+	 ODVHkRk97DMMg==
+Message-ID: <7561a0c3-c63b-a3f2-efeb-4bb0f4ad03e4@kernel.org>
+Date: Wed, 23 Nov 2022 16:59:42 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.5.0
+Subject: Re: [PATCH v7 3/7] dt-bindings: arm: nuvoton: Add bindings for NPCM
+ GFXI
+Content-Language: en-US
+To: Marvin Lin <milkfafa@gmail.com>, mchehab@kernel.org,
+ linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+ devicetree@vger.kernel.org
+References: <20221122085724.3245078-1-milkfafa@gmail.com>
+ <20221122085724.3245078-4-milkfafa@gmail.com>
+From: Krzysztof Kozlowski <krzk@kernel.org>
+In-Reply-To: <20221122085724.3245078-4-milkfafa@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,57 +66,64 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
+Cc: kwliu@nuvoton.com, tmaimon77@gmail.com, avifishman70@gmail.com, openbmc@lists.ozlabs.org, tali.perry1@gmail.com, kflin@nuvoton.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Nov 22, 2022, at 21:12, Tomer Maimon wrote:
-> Add Nuvoton BMC NPCM LPC BIOS post code (BPC) driver.
->
-> The NPCM BPC monitoring two configurable I/O address written by the host
-> on the Low Pin Count (LPC) bus.
->
-> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+On 22/11/2022 09:57, Marvin Lin wrote:
+> Add dt-bindings document for Graphics Core Information (GFXI) node. It
+> is used by NPCM video driver to retrieve Graphics core information.
+> 
+> Signed-off-by: Marvin Lin <milkfafa@gmail.com>
 > ---
->  drivers/soc/Kconfig                |   1 +
->  drivers/soc/Makefile               |   1 +
->  drivers/soc/nuvoton/Kconfig        |  24 ++
->  drivers/soc/nuvoton/Makefile       |   3 +
->  drivers/soc/nuvoton/npcm-lpc-bpc.c | 396 +++++++++++++++++++++++++++++
+>  .../bindings/arm/npcm/nuvoton,gfxi.yaml       | 41 +++++++++++++++++++
+>  1 file changed, 41 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/arm/npcm/nuvoton,gfxi.yaml
+> 
 
-In general, I try to keep drivers/soc/ for drivers that are
-used purely inside of the kernel and don't provide their
-own user space ABI, those should normally be part of
-some subsystem grouped by functionality.
+Please use scripts/get_maintainers.pl to get a list of necessary people
+and lists to CC.  It might happen, that command when run on an older
+kernel, gives you outdated entries.  Therefore please be sure you base
+your patches on recent Linux kernel.
 
-It appears that we have similar drivers for aspeed already,
-so there is some precedent, but I would still like to ask
-you and Joel to try to make sure the two are compatible,
-or ideally share the code for the user-facing part of the
-LPC driver.
+> diff --git a/Documentation/devicetree/bindings/arm/npcm/nuvoton,gfxi.yaml b/Documentation/devicetree/bindings/arm/npcm/nuvoton,gfxi.yaml
+> new file mode 100644
+> index 000000000000..5b785bda5739
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/arm/npcm/nuvoton,gfxi.yaml
+> @@ -0,0 +1,41 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/arm/npcm/nuvoton,gfxi.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Graphics Core Information block in Nuvoton SoCs
+> +
+> +maintainers:
+> +  - Joseph Liu <kwliu@nuvoton.com>
+> +  - Marvin Lin <kflin@nuvoton.com>
+> +
+> +description:
+> +  The Graphics Core Information (GFXI) are a block of registers in Nuvoton SoCs
+> +  that analyzes Graphics core behavior and provides inforomation in registers.
 
-> +config NPCM_PCI_MBOX
-> +	tristate "NPCM PCI Mailbox Controller"
-> +	depends on (ARCH_NPCM || COMPILE_TEST) && REGMAP && MFD_SYSCON
-> +	help
-> +	  Expose the NPCM BMC PCI MBOX registers found on Nuvoton SOCs
-> +	  to userspace.
+typo: information
 
-This looks unrelated to the LPC driver, so this should
-probably be a separate patch. The same comment about user
-space presumably applies here, but I have not seen the driver.
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - nuvoton,npcm750-gfxi
+> +          - nuvoton,npcm845-gfxi
+> +      - const: syscon
+> +      - const: simple-mfd
 
-The implementation of npcm-lpc-bpc looks fine otherwise, I only
-noticed one minor detail that I would change:
+That's not simple-mfd, you do not have any devices.
 
-> +	np = pdev->dev.parent->of_node;
-> +	if (!of_device_is_compatible(np, "nuvoton,npcm750-lpc") &&
-> +	    !of_device_is_compatible(np, "nuvoton,npcm845-lpc")) {
-> +		dev_err(dev, "unsupported LPC device binding\n");
-> +		return -ENODEV;
-> +	}
 
-This check doesn't seem to make sense here, since those are
-the only two types you support.
+Best regards,
+Krzysztof
 
-      Arnd
