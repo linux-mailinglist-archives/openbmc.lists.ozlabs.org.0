@@ -1,68 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 45BBB637D1E
-	for <lists+openbmc@lfdr.de>; Thu, 24 Nov 2022 16:39:43 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CC97637F77
+	for <lists+openbmc@lfdr.de>; Thu, 24 Nov 2022 20:14:56 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NJ2HK0QS5z3cct
-	for <lists+openbmc@lfdr.de>; Fri, 25 Nov 2022 02:39:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NJ73c2J9jz3dvG
+	for <lists+openbmc@lfdr.de>; Fri, 25 Nov 2022 06:14:52 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=pAd5o1mD;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=qRDGKxIB;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12a; helo=mail-lf1-x12a.google.com; envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.17.20; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=pAd5o1mD;
+	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=qRDGKxIB;
 	dkim-atps=neutral
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NJ2GS3RDsz3f2q
-	for <openbmc@lists.ozlabs.org>; Fri, 25 Nov 2022 02:38:55 +1100 (AEDT)
-Received: by mail-lf1-x12a.google.com with SMTP id s8so3047820lfc.8
-        for <openbmc@lists.ozlabs.org>; Thu, 24 Nov 2022 07:38:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=D+oPkZf+GhfgQrKgiZPW3MBbJ+ctJWRY4GDqWnQ3KJw=;
-        b=pAd5o1mDKoJlLHYuEBrsAdp97sFCOalRl7ZCuIjJ5TJeysxEpSt0XnQTZQNpAWfRxD
-         l+OwBw38RqoTdZqummg3ixL4VK2aGhoUF05LvfvJ6IH0w2vMk1mCMdBUKYq3JjVl5ZGX
-         63X/lcyXIwwW7NS+XsC37pKsONBwJsH7JqCJlxe5nE2OCh/Tu5gzxvFMxZ2M0RiPRZZ+
-         hxoXQEbOdd5FT/5+JZUX9qYhUS0n+1QLIyCo0vm0SCIyGwC2m0jb9PPuqSxybCJCL/8S
-         7Hk6RiLMSznbCDMmqjusKWoFoMQTzBiyp8YbkNpxd+b0Ql7etJWE3YTB+XiKf+Fx1xY7
-         G/Gw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=D+oPkZf+GhfgQrKgiZPW3MBbJ+ctJWRY4GDqWnQ3KJw=;
-        b=zQG1VOXfvuTBOjOL3LnRJzj8ALRaJBq9UKbh8ruuGUqmx10DuL/vmkIdfkm/gaa2aF
-         /8lyxpu5ikRLdIwQMDpSAOZzRwyOpKfULQNpaQtaf+1uJR3RlnnY31tbJ6jdd4yR2Y/M
-         gq7PhkI+FFFsnmTt5Dr92s4Fabpfup6EAKKFfbfnv6wV/bZedeSViO9Rau6QCtW+UckR
-         Ean9FRV6+JajEszYaszMcdl9qZ7BhuleaAP0ennVXFSGxabG7SO0vtlRKVtSVkpWt/zp
-         4q/Wz8mZg3NgfRFJzIFIbcWs6LS+vQvrIzSMYU3EtcPS432FwffVWCF4Mb08w3nqUkQ7
-         XaPQ==
-X-Gm-Message-State: ANoB5pnRhWaN9aQqzGIpk4Z196VQmLgQu72iMpW8bQlqNV0MJkZMbVTC
-	fq6bGnuqQ0PUOdiqlYyf1wPUNX33tLkBGiY2K9E=
-X-Google-Smtp-Source: AA0mqf6HsXQhF0DuR+7Wf3ySK3+lEUJMnOoMStylksqgUclTIEYHWGoDP2vvobF8sQuaz0QLvF326DqzQon/i2S9fnw=
-X-Received: by 2002:a05:6512:2116:b0:4b4:b904:a310 with SMTP id
- q22-20020a056512211600b004b4b904a310mr10492674lfr.576.1669304329613; Thu, 24
- Nov 2022 07:38:49 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NJ73064Gyz3cMs
+	for <openbmc@lists.ozlabs.org>; Fri, 25 Nov 2022 06:14:19 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net; s=s31663417;
+	t=1669317246; bh=NFWnNIWqkptw3ml6zf4DoZN14+tM1IwZ1YOxSQItJOg=;
+	h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+	b=qRDGKxIB3KUwiyL5cPwS3qckpNr+fdytN1/q52WReVT+FHiy8go0kdxmp+Pwezs1l
+	 oYVW2FTw62eb7Dr149j4l0e2ERhEgAHAcumG0ld1tUsd1wai9z0Fh28z+kaqb4cCbC
+	 kLiZFEzjwUbnyprILH0tRR1rmzr39WmmgSN29WHwJ57+c3TqmjcPZwuli/VMAfYRBC
+	 wmWuWpu63LDxrE/LOJO4OvhpnCdXWqRATbwys3sANIpMN9d4B/Z6OOyHEyNDzZmILa
+	 GgUnCBYsWaRfaU2+FfMGK+oQ4aAP1rncZvtaFiI2+zmIe1g+teLBJowzI8mjQkPb3s
+	 VJ2ifp8f8qEPg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from probook ([95.223.44.31]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1MXXyJ-1oPM5y40J5-00Z1jI; Thu, 24
+ Nov 2022 20:14:06 +0100
+From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: linux-spi@vger.kernel.org,
+	openbmc@lists.ozlabs.org
+Subject: [PATCH v2 0/3] Nuvoton WPCM450 FIU SPI flash controller
+Date: Thu, 24 Nov 2022 20:13:57 +0100
+Message-Id: <20221124191400.287918-1-j.neuschaefer@gmx.net>
+X-Mailer: git-send-email 2.35.1
 MIME-Version: 1.0
-References: <20221122201232.107065-1-tmaimon77@gmail.com> <20221122201232.107065-2-tmaimon77@gmail.com>
- <cedc0013-f0c0-3180-6995-477b77b919f8@linaro.org>
-In-Reply-To: <cedc0013-f0c0-3180-6995-477b77b919f8@linaro.org>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Thu, 24 Nov 2022 17:38:38 +0200
-Message-ID: <CAP6Zq1iGwqOVOnhmF0ijYw=KoTRJj5CUpFv6WDouZmjVxXhQ-g@mail.gmail.com>
-Subject: Re: [PATCH v1 1/2] dt-binding: soc: nuvoton: Add NPCM BPC LPC documentation
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:pxBod3xIczrwLY9TifnwC2+iMmnbFLXoB3ncLDjLkc76RRm7b5V
+ DQY3on6qpKyjtMl6Tl46ZNBFCBoIDNhbQi8ihsiK3KOpORQSJBzxsihmQ6043gmqrEboUtQ
+ nxt77CW/A/A+ZRr/GjXCJLoaQ6YTihgLcc2CJpzXzEIMSwOHN297UWQWfJM3SlC3N18mHA5
+ yUv+synyMgjdNL2EWsVUA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:6rq0NvK4hUg=;9vvRmFGmZv6gIbOpnueK+q+q0Jm
+ 6ERSxohsixgTlgNiU/Xndkj/jA7u8heRAVIOQfSGEIMlr5vG/dRHKCwuJEkWb00rPjRX/mwKB
+ YlOHMpNT8k9KY+RqOzEII/DX/VF1BHW7wWbhWlJyHBHKQU4Lc8zrFXqzw+ptd0nKrAiQe8Ec1
+ KkPLAJ5c+6plhUApX9WuJjQM1sBAxozt8Djaqjw0CBEAM6AZkGcyvlwpJdPRM70mcCtPxj+Pf
+ az2zR+r1R4QWrY7K8/Iht0TBCUYbSI1uCnY83qq/DbkAHnXcZMnOssnqPLbF87FCHyucZS4ec
+ vbfR89zxtCkG/JZjZd166UyU1bQt7WaX9jcdIkB2U0oD+LhaNEUwTbLmj3wBlWH22GWFGIHk1
+ wzTMihBdAPSkd1mAwOUAHFxSlAVdEIm6PnA8OMpsa7x2mXlUu8qG62GhLAhecnDYj1aykD+Bh
+ /UvYoEqX6y7uPKB3TyBEiA0rvE21UdsCypFPyRiul8jLSVlB0+gIcb787ls2ThwW6IGqkT+V8
+ jwp1QX9h8v40tgZN/MC7+Lp49nsLZjdYxn+K7X00kMzTw9+E8se0L3S6Jz1ern6wJgTGnSyzV
+ l7QX3GFQztupKGJ/s6Qa9LOCQrAPZ5vPxLuq5PRVXRcU4iOjYnM5625OfH5vniNartVgdzcIj
+ HD8jYmKNW6u9/nMozEdvGbR2+tTPBKI/r7ua3px8wvvSRCWqXa0wFlHjmyQ+izu84UDDKPj7b
+ +BmMdBOM8BpTuzQ95hlAh60cfMi2XYDnKbTl/QjTy9xizikIHMSHWfmRdLKb7GGbzwP9fbaYy
+ CjxPv/8GtaAK4WKJwtsztTcBXbqTbqK6yk0qRYtydOBLr5nvSeiiGBnfraNht+0XC0gDVZ23F
+ uWhoxO2ymApUbZcQkPsV11qo794JYcfi1o6MAC9yoJCWGQUizrQhzTi0dr2HC+JRMqh6iGe6y
+ viIb3qA3hUNcaUR3IIfb3W2sPcs=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,196 +76,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: hasegawa-hitomi@fujitsu.com, devicetree@vger.kernel.org, briannorris@chromium.org, benjaminfair@google.com, arnd@arndb.de, sven@svenpeter.dev, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, marcan@marcan.st, nicolas.ferre@microchip.com, tali.perry1@gmail.com, conor.dooley@microchip.com, robh+dt@kernel.org, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org, heiko@sntech.de
+Cc: devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Krzysztof,
+This patchset adds DT bindings and a driver for the Flash Interface Unit
+(FIU), the SPI flash controller in the Nuvoton WPCM450 BMC SoC. It
+supports four chip selects, and direct (memory-mapped) access to 16 MiB
+per chip. Larger flash chips can be accessed by software-defined SPI
+transfers.
 
-Thanks a lot for your comments.
+The existing NPCM7xx FIU driver is sufficitently incompatible with the
+WPCM450 FIU that I decided to write a new driver.
 
-On Wed, 23 Nov 2022 at 12:03, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 22/11/2022 21:12, Tomer Maimon wrote:
->
-> 1. Subject: drop second, redundant "documentation" (dt-bindings are
-> documentation).
-O.K.
->
-> 2. Use subject prefixes matching the subsystem (git log --oneline -- ...).
-this is what I did dt-binding: soc: nuvoton... do you mean dt-binding: nuvoton.
->
-> > Added device tree binding documentation for Nuvoton BMC NPCM BIOS Post
-> > Code (BPC).
-> >
-> > The NPCM BPC monitoring two configurable I/O addresses written by the
-> > host on Low Pin Count (LPC) bus.
-> >
-> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-> > ---
-> >  .../bindings/soc/nuvoton/npcm-lpc-bpc.yaml    | 112 ++++++++++++++++++
-> >  1 file changed, 112 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/soc/nuvoton/npcm-lpc-bpc.yaml
-> >
-> > diff --git a/Documentation/devicetree/bindings/soc/nuvoton/npcm-lpc-bpc.yaml b/Documentation/devicetree/bindings/soc/nuvoton/npcm-lpc-bpc.yaml
-> > new file mode 100644
-> > index 000000000000..2c8e66546891
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/soc/nuvoton/npcm-lpc-bpc.yaml
->
-> Filename should match compatibles, at least in the "vendor,device"
-> style, so for example: nuvoton,lpc.yaml
->
-> > @@ -0,0 +1,112 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/soc/nuvoton/npcm-lpc-bpc.yaml#
->
-> LPC is a generic bus, so this should not be in "soc" directory. Where?
-> Depends what is this... Generic bus bindings could be in "bus" directory
-> or dedicated "lpc", if we have more of these.
-The BPC can run also on the eSPI bus therefore I think it better to
-remove the LPC and describe only the BPC module it self.
->
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Nuvoton Low Pin Count (LPC) Bus Controller
-> > +
-> > +maintainers:
-> > +  - Tomer Maimon <tmaimon77@gmail.com>
-> > +
-> > +description:
-> > +  The Low Pin Count (LPC) is a low bandwidth bus that is used to connect
-> > +  peripherals around the CPU and to replace the Industry Standard Architecture
-> > +  (ISA) bus.
->
-> You need to decide whether you describe here bus, bus controller or
-> device on the bus.
->
-> > +
-> > +  The Nuvoton NPCM LPC bus is a bridge of host CPU to a several of peripheral
-> > +  devices.
->
-> LPC bus is a bridge? It's either incorrect or so generic that every bus
-> is a "bridge"?
->
-> > +
-> > +properties:
-> > +  compatible:
-> > +    items:
-> > +      - enum:
-> > +          - nuvoton,npcm750-lpc
-> > +          - nuvoton,npcm845-lpc
-> > +      - const: simple-mfd
-> > +      - const: syscon
-> > +
-> > +  reg:
-> > +    maxItems: 1
-> > +
-> > +  "#address-cells":
-> > +    const: 1
-> > +
-> > +  "#size-cells":
-> > +    const: 1
-> > +
-> > +  ranges: true
-> > +
-> > +patternProperties:
-> > +  "^lpc_bpc@[0-9a-f]+$":
->
-> No underscores in node names. Generic node names, so maybe "bpc"
->
-> This also does not match your example at all.
->
->
-> > +    type: object
-> > +    additionalProperties: false
-> > +
-> > +    description:
-> > +      Nuvoton BMC NPCM BIOS Post Code (BPC) monitoring two configurable I/O
-> > +      addresses written by the host on the Low Pin Count (LPC) bus, the capure
->
-> typo: capture
->
-> > +      data stored in 128-word FIFO.
-> > +
-> > +      NPCM BPC supports capture double words, when using capture
-> > +      double word only I/O address 1 is monitored.
->
-> This sentence is not grammatically correct. BPC supports capturing
-> double words when using double word capturing? Aren't these two sentences?
->
-> > +
-> > +    properties:
-> > +      compatible:
-> > +        items:
->
-> No items here.
->
-> > +          - enum:
-> > +              - nuvoton,npcm750-lpc-bpc
-> > +              - nuvoton,npcm845-lpc-bpc
-> > +
-> > +      reg:
-> > +        maxItems: 1
-> > +
-> > +      interrupts:
-> > +        maxItems: 1
-> > +
-> > +      nuvoton,monitor-ports:
-> > +        $ref: /schemas/types.yaml#/definitions/uint32-array
-> > +        description:
-> > +          Contain monitor I/O addresses, at least one monitor I/O address
->
-> Contains
->
-> But you need to explain what are these... I/O addresses on the bus?
->
-> > +          required.
-> > +
-> > +      nuvoton,bpc-en-dwcapture:
-> > +        description: If present, Enable capture double words support.
->
-> Is it the same as reg-io-width?
->
-> > +        type: boolean
-> > +
-> > +    required:
-> > +      - compatible
-> > +      - reg
-> > +      - interrupts
-> > +      - nuvoton,monitor-ports
-> > +
-> > +required:
-> > +  - compatible
-> > +  - reg
-> > +  - "#address-cells"
-> > +  - "#size-cells"
-> > +  - ranges
-> > +
-> > +additionalProperties:
-> > +  type: object
->
-> No, only bus schemas could have it. Here additionalProperties: false.
->
-> It seems there are already few LPC controllers and all are put in
-> different places:
-> Documentation/devicetree/bindings/mfd/aspeed-lpc.yaml
-> Documentation/devicetree/bindings/arm/hisilicon/low-pin-count.yaml
->
-> Maybe Rob why this was made not really as two bindings - for bus
-> controller and devices?
-As mention above, next patch I will describe only the BPC device.
->
-> Best regards,
-> Krzysztof
->
+Changelog for v2:
 
-In general, I waiting for Arnd approval for adding the NPCM BPC driver to SoC.
-After Arnd approval, I will send a new patch revision.
+- Dropped the patches which have been applied in the meantime, leaving
+  only three out of eight
+- Changed the binding to require both items in the reg property, because
+  there is no need to keep the second item optional, suggested by
+  Krzysztof Kozlowski
+- Various other cleanups suggested by Krzysztof Kozlowski and the kernel
+  test robot
 
-Best regards,
 
-Tomer
+Jonathan
+
+
+Jonathan Neusch=C3=A4fer (3):
+  dt-bindings: spi: Add Nuvoton WPCM450 Flash Interface Unit (FIU)
+  spi: wpcm-fiu: Add driver for Nuvoton WPCM450 Flash Interface Unit
+    (FIU)
+  spi: wpcm-fiu: Add direct map support
+
+ .../bindings/spi/nuvoton,wpcm450-fiu.yaml     |  66 +++
+ drivers/spi/Kconfig                           |  11 +
+ drivers/spi/Makefile                          |   1 +
+ drivers/spi/spi-wpcm-fiu.c                    | 508 ++++++++++++++++++
+ 4 files changed, 586 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/spi/nuvoton,wpcm450-=
+fiu.yaml
+ create mode 100644 drivers/spi/spi-wpcm-fiu.c
+
+=2D-
+2.35.1
+
