@@ -2,57 +2,46 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1E16E63834C
-	for <lists+openbmc@lfdr.de>; Fri, 25 Nov 2022 06:01:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9CD656382AD
+	for <lists+openbmc@lfdr.de>; Fri, 25 Nov 2022 04:25:18 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NJN4z4tPBz2yHc
-	for <lists+openbmc@lfdr.de>; Fri, 25 Nov 2022 16:01:55 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=free.fr header.i=@free.fr header.a=rsa-sha256 header.s=smtp-20201208 header.b=YWx0Y5rM;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NJKxS41NHz3dvX
+	for <lists+openbmc@lfdr.de>; Fri, 25 Nov 2022 14:25:16 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=free.fr (client-ip=212.27.42.1; helo=smtp1-g21.free.fr; envelope-from=daniel.lezcano@free.fr; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=free.fr header.i=@free.fr header.a=rsa-sha256 header.s=smtp-20201208 header.b=YWx0Y5rM;
-	dkim-atps=neutral
-Received: from smtp1-g21.free.fr (smtp1-g21.free.fr [212.27.42.1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71; helo=twspam01.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com; receiver=<UNKNOWN>)
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com [211.20.114.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NGcPr5Xd3z3bc5
-	for <openbmc@lists.ozlabs.org>; Tue, 22 Nov 2022 19:10:23 +1100 (AEDT)
-Received: from [192.168.10.46] (unknown [130.180.211.218])
-	(Authenticated sender: daniel.lezcano@free.fr)
-	by smtp1-g21.free.fr (Postfix) with ESMTPA id A0B24B0055A;
-	Tue, 22 Nov 2022 09:09:55 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1669104619;
-	bh=QqT0gBw0xLVZALCHaBpNFHcCmr+fibAnqkfvXhxig94=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=YWx0Y5rMecZm8dj2aaa9zKoRmXYW5RDTj3g3ZoslU9YoIxwdmfC5fpn3uPG9kMJd0
-	 mDCTXhUrqMfDCOKwrRh1D4dnnYENzRfbDZVY39jUVIUGGhPkphxJ2s5WfvP0PuY7x1
-	 lZc/rYX6wVO4lgWIZuuWcI/Rl3BUT+wRqqhFSEEjXHZNLYsv0+MXPIB4HONnnZm1z/
-	 DUpYtzOwj91El8w3ugBL/7+i/3VCa8PEQRrjQhjY9GJr69DDaSIjhqJ7BBx+Gdp3rp
-	 rM8Y8eXL1FgKO/4MSrdRa0Ps/X0QDB5esiDpeurpx66fWzo5hIXDoMnRq0YiZgqb6M
-	 jljMVQkHGOdpQ==
-Message-ID: <69a959d4-6058-de70-e1c7-15d81b33373c@free.fr>
-Date: Tue, 22 Nov 2022 09:09:55 +0100
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NJKx44g1Tz3brQ;
+	Fri, 25 Nov 2022 14:24:54 +1100 (AEDT)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+	by twspam01.aspeedtech.com with ESMTP id 2AP2xDVf033118;
+	Fri, 25 Nov 2022 10:59:13 +0800 (GMT-8)
+	(envelope-from jammy_huang@aspeedtech.com)
+Received: from [192.168.2.115] (192.168.2.115) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Fri, 25 Nov
+ 2022 11:23:42 +0800
+Message-ID: <80b80234-7dbb-4344-0328-15e83ef2357e@aspeedtech.com>
+Date: Fri, 25 Nov 2022 11:23:22 +0800
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
  Thunderbird/102.4.2
-Subject: Re: [PATCH v5 0/6] Nuvoton WPCM450 clock and reset driver
+Subject: Re: [PATCH] media: aspeed: Use v4l2_dbg to replace v4l2_warn to avoid
+ log spam
 Content-Language: en-US
-To: Joel Stanley <joel@jms.id.au>, =?UTF-8?Q?Jonathan_Neusch=c3=a4fer?=
- <j.neuschaefer@gmx.net>, Stephen Boyd <sboyd@kernel.org>,
- Arnd Bergmann <arnd@arndb.de>
-References: <20221104161850.2889894-1-j.neuschaefer@gmx.net>
- <CACPK8XdXrAPMdnn0T6GQiYEK3R4MvwprOZu_Yvmv=WVOfivROg@mail.gmail.com>
-From: Daniel Lezcano <daniel.lezcano@free.fr>
-In-Reply-To: <CACPK8XdXrAPMdnn0T6GQiYEK3R4MvwprOZu_Yvmv=WVOfivROg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Paul Menzel <pmenzel@molgen.mpg.de>
+References: <20221110095611.522-1-jammy_huang@aspeedtech.com>
+ <c8a4a3b6-6591-2710-433f-642277eeb8f3@molgen.mpg.de>
+From: Jammy Huang <jammy_huang@aspeedtech.com>
+In-Reply-To: <c8a4a3b6-6591-2710-433f-642277eeb8f3@molgen.mpg.de>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Fri, 25 Nov 2022 16:01:27 +1100
+X-Originating-IP: [192.168.2.115]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 2AP2xDVf033118
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,33 +53,149 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-watchdog@vger.kernel.org, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org, Tomer Maimon <tmaimon77@gmail.com>, linux-kernel@vger.kernel.org, Tali Perry <tali.perry1@gmail.com>, Michael Turquette <mturquette@baylibre.com>, Rob Herring <robh+dt@kernel.org>, Thomas Gleixner <tglx@linutronix.de>, Philipp Zabel <p.zabel@pengutronix.de>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Wim Van Sebroeck <wim@linux-watchdog.org>, linux-clk@vger.kernel.org, Guenter Roeck <linux@roeck-us.net>, Benjamin Fair <benjaminfair@google.com>
+Cc: linux-aspeed@lists.ozlabs.org, zev@bewilderbeest.net, andrew@aj.id.au, openbmc@lists.ozlabs.org, eajames@linux.ibm.com, linux-kernel@vger.kernel.org, joel@jms.id.au, hverkuil-cisco@xs4all.nl, mchehab@kernel.org, linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 22/11/2022 02:40, Joel Stanley wrote:
-> On Fri, 4 Nov 2022 at 16:21, Jonathan Neuschäfer <j.neuschaefer@gmx.net> wrote:
->>
->> This series adds support for the clock and reset controller in the Nuvoton
->> WPCM450 SoC. This means that the clock rates for peripherals will be calculated
->> automatically based on the clock tree as it was preconfigured by the bootloader.
->> The 24 MHz dummy clock, that is currently in the devicetree, is no longer needed.
->> Somewhat unfortunately, this also means that there is a breaking change once
->> the devicetree starts relying on the clock driver, but I find it acceptable in
->> this case, because WPCM450 is still at a somewhat early stage.
-> 
-> Reviewed-by: Joel Stanley <joel@jms.id.au>
-> 
->>
->>
->> Upstreaming plan (although other suggestions are welcome):
->>
->> Once reviewed,
->>
->> - The ARM/dts changes should go through Joel Stanley's bmc tree
-> 
-> I've picked up the standalone patch ("Add clock controller node").
-> 
->> - The clocksource/timer changes should probably go via Daniel Lezcano and TIP
+Hi Paul,
 
-I picked the timer change along with the binding
+On 2022/11/23 下午 04:08, Paul Menzel wrote:
+> Dear Jammy,
+>
+>
+> Am 10.11.22 um 10:56 schrieb Jammy Huang:
+>> If the host is powered off, there will be many warning log. To avoid the
+>
+> …, many warnings are logged.
+>
+> Also, please paste one example message.
+OK
+>
+> Are the messages really just debug messages, or only in the one 
+> condition? If the latter, another solution should be found, like 
+> checking if the host is powered off, or rate limiting the message.
+
+In my opinion, these logs are the former one.
+
+video: Timed out; first mode detect
+
+=> This would happen if timing detection failed.
+
+No signal; don't start frame
+
+=> This would happen when timing-detection is not finished with valid 
+resolution detected.
+
+>
+>> log spam in this condition, replace v4l2_warn with v4l2_dbg.
+>
+> Please add a reference, to Zev’s report on the mailing list.
+>
+> Link: …
+OK, thanks.
+>
+>> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+>> ---
+>>   drivers/media/platform/aspeed/aspeed-video.c | 16 ++++++++--------
+>>   1 file changed, 8 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/drivers/media/platform/aspeed/aspeed-video.c 
+>> b/drivers/media/platform/aspeed/aspeed-video.c
+>> index cf76aeee8cb6..662465d13a0e 100644
+>> --- a/drivers/media/platform/aspeed/aspeed-video.c
+>> +++ b/drivers/media/platform/aspeed/aspeed-video.c
+>> @@ -586,13 +586,13 @@ static int aspeed_video_start_frame(struct 
+>> aspeed_video *video)
+>>       bool bcd_buf_need = (video->format != VIDEO_FMT_STANDARD);
+>>         if (video->v4l2_input_status) {
+>> -        v4l2_warn(&video->v4l2_dev, "No signal; don't start frame\n");
+>> +        v4l2_dbg(1, debug, &video->v4l2_dev, "No signal; don't start 
+>> frame\n");
+>>           return 0;
+>>       }
+>>         if (!(seq_ctrl & VE_SEQ_CTRL_COMP_BUSY) ||
+>>           !(seq_ctrl & VE_SEQ_CTRL_CAP_BUSY)) {
+>> -        v4l2_warn(&video->v4l2_dev, "Engine busy; don't start 
+>> frame\n");
+>> +        v4l2_dbg(1, debug, &video->v4l2_dev, "Engine busy; don't 
+>> start frame\n");
+>>           return -EBUSY;
+>>       }
+>>   @@ -615,7 +615,7 @@ static int aspeed_video_start_frame(struct 
+>> aspeed_video *video)
+>>                          struct aspeed_video_buffer, link);
+>>       if (!buf) {
+>>           spin_unlock_irqrestore(&video->lock, flags);
+>> -        v4l2_warn(&video->v4l2_dev, "No buffers; don't start frame\n");
+>> +        v4l2_dbg(1, debug, &video->v4l2_dev, "No buffers; don't 
+>> start frame\n");
+>>           return -EPROTO;
+>>       }
+>>   @@ -796,7 +796,7 @@ static irqreturn_t aspeed_video_irq(int irq, 
+>> void *arg)
+>>               if (video->format == VIDEO_FMT_STANDARD &&
+>>                   list_is_last(&buf->link, &video->buffers)) {
+>>                   empty = false;
+>> -                v4l2_warn(&video->v4l2_dev, "skip to keep last frame 
+>> updated\n");
+>> +                v4l2_dbg(1, debug, &video->v4l2_dev, "skip to keep 
+>> last frame updated\n");
+>>               } else {
+>>                   buf->vb.vb2_buf.timestamp = ktime_get_ns();
+>>                   buf->vb.sequence = video->sequence++;
+>> @@ -1060,7 +1060,7 @@ static void aspeed_video_get_resolution(struct 
+>> aspeed_video *video)
+>>                                 res_check(video),
+>>                                 MODE_DETECT_TIMEOUT);
+>>           if (!rc) {
+>> -            v4l2_warn(&video->v4l2_dev, "Timed out; first mode 
+>> detect\n");
+>> +            v4l2_dbg(1, debug, &video->v4l2_dev, "Timed out; first 
+>> mode detect\n");
+>>               clear_bit(VIDEO_RES_DETECT, &video->flags);
+>>               return;
+>>           }
+>> @@ -1081,7 +1081,7 @@ static void aspeed_video_get_resolution(struct 
+>> aspeed_video *video)
+>>                                 MODE_DETECT_TIMEOUT);
+>>           clear_bit(VIDEO_RES_DETECT, &video->flags);
+>>           if (!rc) {
+>> -            v4l2_warn(&video->v4l2_dev, "Timed out; second mode 
+>> detect\n");
+>> +            v4l2_dbg(1, debug, &video->v4l2_dev, "Timed out; second 
+>> mode detect\n");
+>>               return;
+>>           }
+>>   @@ -1104,7 +1104,7 @@ static void 
+>> aspeed_video_get_resolution(struct aspeed_video *video)
+>>       } while (invalid_resolution && (tries++ < 
+>> INVALID_RESOLUTION_RETRIES));
+>>         if (invalid_resolution) {
+>> -        v4l2_warn(&video->v4l2_dev, "Invalid resolution detected\n");
+>> +        v4l2_dbg(1, debug, &video->v4l2_dev, "Invalid resolution 
+>> detected\n");
+>>           return;
+>>       }
+>>   @@ -1856,7 +1856,7 @@ static void 
+>> aspeed_video_stop_streaming(struct vb2_queue *q)
+>>                   !test_bit(VIDEO_FRAME_INPRG, &video->flags),
+>>                   STOP_TIMEOUT);
+>>       if (!rc) {
+>> -        v4l2_warn(&video->v4l2_dev, "Timed out when stopping 
+>> streaming\n");
+>> +        v4l2_dbg(1, debug, &video->v4l2_dev, "Timed out when 
+>> stopping streaming\n");
+>>             /*
+>>            * Need to force stop any DMA and try and get HW into a good
+>>
+>> base-commit: aae703b02f92bde9264366c545e87cec451de471
+>> prerequisite-patch-id: bf47e8ab2998acfbc32be5a4b7b5ae8a3ae4218b
+>> prerequisite-patch-id: bf82715983e08f2e810ff1a82ce644f5f9006cd9
+>> prerequisite-patch-id: 28a2040ef0235e5765f05d2fc5529bce2a0f4c6f
+>> prerequisite-patch-id: 7e761c779730536db8baf50db5fc8caf058e95af
+>> prerequisite-patch-id: c48ea20973fa35938a7d33a0e20d2900df48755f
+
+-- 
+Best Regards
+Jammy
+
