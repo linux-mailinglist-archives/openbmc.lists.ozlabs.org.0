@@ -2,57 +2,42 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E530263986E
-	for <lists+openbmc@lfdr.de>; Sat, 26 Nov 2022 23:25:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A34CE639F19
+	for <lists+openbmc@lfdr.de>; Mon, 28 Nov 2022 02:58:04 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NKRC867DJz3f24
-	for <lists+openbmc@lfdr.de>; Sun, 27 Nov 2022 09:25:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NL7sQ42D7z3cMb
+	for <lists+openbmc@lfdr.de>; Mon, 28 Nov 2022 12:58:02 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.166.44; helo=mail-io1-f44.google.com; envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
-Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=huawei.com (client-ip=45.249.212.255; helo=szxga08-in.huawei.com; envelope-from=zhengyongjun3@huawei.com; receiver=<UNKNOWN>)
+Received: from szxga08-in.huawei.com (szxga08-in.huawei.com [45.249.212.255])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NKRBp60gyz3bjd
-	for <openbmc@lists.ozlabs.org>; Sun, 27 Nov 2022 09:25:36 +1100 (AEDT)
-Received: by mail-io1-f44.google.com with SMTP id r81so5252385iod.2
-        for <openbmc@lists.ozlabs.org>; Sat, 26 Nov 2022 14:25:36 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=date:subject:message-id:references:in-reply-to:cc:to:from
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=ZlyB3iEQfZN2ouKWA070xdoCwtuTYqQ3/sG9m3p7/80=;
-        b=1eUpRb1LtfVavGeECIhptpUYjrInlHckPOpykORYpwktzBwV2QPLwenL2RI3HXoQyz
-         jyfm0DVfsx06JvmXbC8VsGKbiHy1cEOyJ+cHYLjmT/6ohQgNqOy5N+Rx51kkmgUEKOzA
-         CQC7tLvWyMqHDlxPc/iRPTja77ZMOSbBsjLonjI+by+q3VZVKnY6FgnS316gEQ9xZ5Bu
-         YMlbnLClcggsdkpYG3utRYtECrIcdEh6yqHl2om/inkZx+JvIBiAdbNJpJYMzrROlpcG
-         GI9A8O+hZjWX5kPsvtPjNDE54IFyukPWeS9qUrjZ4wePWbTzhfeMG3zeBNuUKChD356X
-         jQDQ==
-X-Gm-Message-State: ANoB5plVTEUHGly9pW5IIML+gvthrfB8xDhL0gknVfJPkUk/UbtugBra
-	sect7rkxrFdpSxrcFpyzTQ==
-X-Google-Smtp-Source: AA0mqf6yWHEStBRsGoTfckgJSkpmKT6XWvb9nkZy76Ew7cHLnrwvgiNck/FaNKmTl5/fQQkixWY/ew==
-X-Received: by 2002:a5d:8941:0:b0:6a1:2c0c:6084 with SMTP id b1-20020a5d8941000000b006a12c0c6084mr10279947iot.128.1669501533882;
-        Sat, 26 Nov 2022 14:25:33 -0800 (PST)
-Received: from robh_at_kernel.org ([64.188.179.252])
-        by smtp.gmail.com with ESMTPSA id z15-20020a05663822af00b00389d2ff28a5sm712108jas.47.2022.11.26.14.25.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 26 Nov 2022 14:25:33 -0800 (PST)
-Received: (nullmailer pid 35346 invoked by uid 1000);
-	Sat, 26 Nov 2022 22:25:36 -0000
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NJTyC6FRnz3c2j;
+	Fri, 25 Nov 2022 20:26:27 +1100 (AEDT)
+Received: from kwepemi500013.china.huawei.com (unknown [172.30.72.53])
+	by szxga08-in.huawei.com (SkyGuard) with ESMTP id 4NJTxQ1ltpz15Mv1;
+	Fri, 25 Nov 2022 17:25:46 +0800 (CST)
+Received: from huawei.com (10.175.112.208) by kwepemi500013.china.huawei.com
+ (7.221.188.120) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.31; Fri, 25 Nov
+ 2022 17:26:18 +0800
+From: Zheng Yongjun <zhengyongjun3@huawei.com>
+To: <eajames@linux.ibm.com>, <mchehab@kernel.org>,
+	<linux-media@vger.kernel.org>, <openbmc@lists.ozlabs.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-aspeed@lists.ozlabs.org>,
+	<linux-kernel@vger.kernel.org>
+Subject: [PATCH] media: aspeed: Fix return value check in aspeed_video_debugfs_create()
+Date: Fri, 25 Nov 2022 09:24:15 +0000
+Message-ID: <20221125092415.29635-1-zhengyongjun3@huawei.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-From: Rob Herring <robh@kernel.org>
-To: Jonathan =?utf-8?q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-In-Reply-To: <20221124191400.287918-2-j.neuschaefer@gmx.net>
-References: <20221124191400.287918-1-j.neuschaefer@gmx.net>
- <20221124191400.287918-2-j.neuschaefer@gmx.net>
-Message-Id: <166950112932.8087.6546134123286782729.robh@kernel.org>
-Subject: Re: [PATCH v2 1/3] dt-bindings: spi: Add Nuvoton WPCM450 Flash
- Interface Unit (FIU)
-Date: Sat, 26 Nov 2022 16:25:36 -0600
+Content-Type: text/plain
+X-Originating-IP: [10.175.112.208]
+X-ClientProxiedBy: dggems705-chm.china.huawei.com (10.3.19.182) To
+ kwepemi500013.china.huawei.com (7.221.188.120)
+X-CFilter-Loop: Reflected
+X-Mailman-Approved-At: Mon, 28 Nov 2022 12:57:47 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -64,60 +49,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Mark Brown <broonie@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
+Cc: andrew@aj.id.au, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+In case of error, the function debugfs_create_file() returns ERR_PTR()
+and never returns NULL. The NULL test in the return value check
+should be replaced with IS_ERR().
 
-On Thu, 24 Nov 2022 20:13:58 +0100, Jonathan Neuschäfer wrote:
-> The Flash Interface Unit (FIU) is the SPI flash controller in the
-> Nuvoton WPCM450 BMC SoC. It supports four chip selects, and direct
-> (memory-mapped) access to 16 MiB per chip. Larger flash chips can be
-> accessed by software-defined SPI transfers.
-> 
-> The FIU in newer NPCM7xx SoCs is not compatible with the WPCM450 FIU.
-> 
-> Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
-> ---
-> 
-> v2:
-> - A few cleanups suggested by Krzysztof Kozlowski
-> - Simplify binding by making second reg item mandatory
-> 
-> v1:
-> - https://lore.kernel.org/lkml/20221105185911.1547847-4-j.neuschaefer@gmx.net/
-> ---
->  .../bindings/spi/nuvoton,wpcm450-fiu.yaml     | 66 +++++++++++++++++++
->  1 file changed, 66 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/spi/nuvoton,wpcm450-fiu.yaml
-> 
+Fixes: 52fed10ad756 ("media: aspeed: add debugfs")
+Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
+---
+ drivers/media/platform/aspeed/aspeed-video.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+diff --git a/drivers/media/platform/aspeed/aspeed-video.c b/drivers/media/platform/aspeed/aspeed-video.c
+index 20f795ccc11b..c8fc2450e409 100644
+--- a/drivers/media/platform/aspeed/aspeed-video.c
++++ b/drivers/media/platform/aspeed/aspeed-video.c
+@@ -1780,10 +1780,12 @@ static int aspeed_video_debugfs_create(struct aspeed_video *video)
+ 	debugfs_entry = debugfs_create_file(DEVICE_NAME, 0444, NULL,
+ 					    video,
+ 					    &aspeed_video_debugfs_ops);
+-	if (!debugfs_entry)
++	if (IS_ERR(debugfs_entry)) {
+ 		aspeed_video_debugfs_remove(video);
++		return ERR_PTR(debugfs_entry);
++	}
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/spi/nuvoton,wpcm450-fiu.example.dts:18:18: fatal error: dt-bindings/clock/nuvoton,wpcm450-clk.h: No such file or directory
-   18 |         #include <dt-bindings/clock/nuvoton,wpcm450-clk.h>
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-compilation terminated.
-make[1]: *** [scripts/Makefile.lib:406: Documentation/devicetree/bindings/spi/nuvoton,wpcm450-fiu.example.dtb] Error 1
-make[1]: *** Waiting for unfinished jobs....
-make: *** [Makefile:1492: dt_binding_check] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20221124191400.287918-2-j.neuschaefer@gmx.net
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit after running the above command.
+-	return !debugfs_entry ? -EIO : 0;
++	return 0;
+ }
+ #else
+ static void aspeed_video_debugfs_remove(struct aspeed_video *video) { }
+--
+2.17.1
 
