@@ -2,49 +2,57 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A8514639781
-	for <lists+openbmc@lfdr.de>; Sat, 26 Nov 2022 19:05:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id E530263986E
+	for <lists+openbmc@lfdr.de>; Sat, 26 Nov 2022 23:25:58 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NKKQ63y3Yz3f2q
-	for <lists+openbmc@lfdr.de>; Sun, 27 Nov 2022 05:05:02 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256 header.s=20171124 header.b=RsUsqCrS;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NKRC867DJz3f24
+	for <lists+openbmc@lfdr.de>; Sun, 27 Nov 2022 09:25:56 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=lunn.ch (client-ip=156.67.10.101; helo=vps0.lunn.ch; envelope-from=andrew@lunn.ch; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256 header.s=20171124 header.b=RsUsqCrS;
-	dkim-atps=neutral
-X-Greylist: delayed 2318 seconds by postgrey-1.36 at boromir; Sun, 27 Nov 2022 05:04:26 AEDT
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.166.44; helo=mail-io1-f44.google.com; envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
+Received: from mail-io1-f44.google.com (mail-io1-f44.google.com [209.85.166.44])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NKKPQ2WzSz3c5D;
-	Sun, 27 Nov 2022 05:04:26 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=oc2TrEmr5KqotgSvg9398nOl+D8T+97lMY4B5EaEzvg=; b=RsUsqCrSLnBVxNF9DQ50ZHA+TD
-	uyJHRNxVAfcSDagZmeWTjuRD2W89a2yGOzAipRYzO8zJWN9QO1nr+6qik3SPp1ehavIBrd8WpTu5p
-	P2e4qwAHk/YWthWNz063iq0BfeC1Fwhz2o5G0iTLUXK+Ajq7/NR9Fdc6Jvtxsqwl8VsI=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1oyyvL-003WXJ-L6; Sat, 26 Nov 2022 18:25:07 +0100
-Date: Sat, 26 Nov 2022 18:25:07 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Zheng Yongjun <zhengyongjun3@huawei.com>
-Subject: Re: [PATCH v2] media: aspeed: Fix return value check in
- aspeed_video_debugfs_create()
-Message-ID: <Y4JL89BCcs1pjWZZ@lunn.ch>
-References: <20221126022813.57372-1-zhengyongjun3@huawei.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NKRBp60gyz3bjd
+	for <openbmc@lists.ozlabs.org>; Sun, 27 Nov 2022 09:25:36 +1100 (AEDT)
+Received: by mail-io1-f44.google.com with SMTP id r81so5252385iod.2
+        for <openbmc@lists.ozlabs.org>; Sat, 26 Nov 2022 14:25:36 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=date:subject:message-id:references:in-reply-to:cc:to:from
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ZlyB3iEQfZN2ouKWA070xdoCwtuTYqQ3/sG9m3p7/80=;
+        b=1eUpRb1LtfVavGeECIhptpUYjrInlHckPOpykORYpwktzBwV2QPLwenL2RI3HXoQyz
+         jyfm0DVfsx06JvmXbC8VsGKbiHy1cEOyJ+cHYLjmT/6ohQgNqOy5N+Rx51kkmgUEKOzA
+         CQC7tLvWyMqHDlxPc/iRPTja77ZMOSbBsjLonjI+by+q3VZVKnY6FgnS316gEQ9xZ5Bu
+         YMlbnLClcggsdkpYG3utRYtECrIcdEh6yqHl2om/inkZx+JvIBiAdbNJpJYMzrROlpcG
+         GI9A8O+hZjWX5kPsvtPjNDE54IFyukPWeS9qUrjZ4wePWbTzhfeMG3zeBNuUKChD356X
+         jQDQ==
+X-Gm-Message-State: ANoB5plVTEUHGly9pW5IIML+gvthrfB8xDhL0gknVfJPkUk/UbtugBra
+	sect7rkxrFdpSxrcFpyzTQ==
+X-Google-Smtp-Source: AA0mqf6yWHEStBRsGoTfckgJSkpmKT6XWvb9nkZy76Ew7cHLnrwvgiNck/FaNKmTl5/fQQkixWY/ew==
+X-Received: by 2002:a5d:8941:0:b0:6a1:2c0c:6084 with SMTP id b1-20020a5d8941000000b006a12c0c6084mr10279947iot.128.1669501533882;
+        Sat, 26 Nov 2022 14:25:33 -0800 (PST)
+Received: from robh_at_kernel.org ([64.188.179.252])
+        by smtp.gmail.com with ESMTPSA id z15-20020a05663822af00b00389d2ff28a5sm712108jas.47.2022.11.26.14.25.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 26 Nov 2022 14:25:33 -0800 (PST)
+Received: (nullmailer pid 35346 invoked by uid 1000);
+	Sat, 26 Nov 2022 22:25:36 -0000
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221126022813.57372-1-zhengyongjun3@huawei.com>
+From: Rob Herring <robh@kernel.org>
+To: Jonathan =?utf-8?q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+In-Reply-To: <20221124191400.287918-2-j.neuschaefer@gmx.net>
+References: <20221124191400.287918-1-j.neuschaefer@gmx.net>
+ <20221124191400.287918-2-j.neuschaefer@gmx.net>
+Message-Id: <166950112932.8087.6546134123286782729.robh@kernel.org>
+Subject: Re: [PATCH v2 1/3] dt-bindings: spi: Add Nuvoton WPCM450 Flash
+ Interface Unit (FIU)
+Date: Sat, 26 Nov 2022 16:25:36 -0600
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,22 +64,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, andrew@aj.id.au, openbmc@lists.ozlabs.org, eajames@linux.ibm.com, linux-kernel@vger.kernel.org, joel@jms.id.au, mchehab@kernel.org, linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-spi@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Mark Brown <broonie@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sat, Nov 26, 2022 at 02:28:13AM +0000, Zheng Yongjun wrote:
-> In case of error, the function debugfs_create_file() returns ERR_PTR()
-> and never returns NULL. The NULL test in the return value check
-> should be replaced with IS_ERR().
+
+On Thu, 24 Nov 2022 20:13:58 +0100, Jonathan Neuschäfer wrote:
+> The Flash Interface Unit (FIU) is the SPI flash controller in the
+> Nuvoton WPCM450 BMC SoC. It supports four chip selects, and direct
+> (memory-mapped) access to 16 MiB per chip. Larger flash chips can be
+> accessed by software-defined SPI transfers.
 > 
-> Fixes: 52fed10ad756 ("media: aspeed: add debugfs")
-> Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
+> The FIU in newer NPCM7xx SoCs is not compatible with the WPCM450 FIU.
+> 
+> Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+> ---
+> 
+> v2:
+> - A few cleanups suggested by Krzysztof Kozlowski
+> - Simplify binding by making second reg item mandatory
+> 
+> v1:
+> - https://lore.kernel.org/lkml/20221105185911.1547847-4-j.neuschaefer@gmx.net/
+> ---
+>  .../bindings/spi/nuvoton,wpcm450-fiu.yaml     | 66 +++++++++++++++++++
+>  1 file changed, 66 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/spi/nuvoton,wpcm450-fiu.yaml
+> 
 
-Please see:
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-https://patchwork.kernel.org/project/linux-wireless/patch/20200429101526.GA2094124@kroah.com/
+yamllint warnings/errors:
 
-and there are other examples. Just delete all the checks.
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/spi/nuvoton,wpcm450-fiu.example.dts:18:18: fatal error: dt-bindings/clock/nuvoton,wpcm450-clk.h: No such file or directory
+   18 |         #include <dt-bindings/clock/nuvoton,wpcm450-clk.h>
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[1]: *** [scripts/Makefile.lib:406: Documentation/devicetree/bindings/spi/nuvoton,wpcm450-fiu.example.dtb] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1492: dt_binding_check] Error 2
 
-	Andrew
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/project/devicetree-bindings/patch/20221124191400.287918-2-j.neuschaefer@gmx.net
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit after running the above command.
+
