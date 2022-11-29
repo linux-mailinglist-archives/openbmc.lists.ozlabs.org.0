@@ -1,72 +1,54 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D8A3263BDDF
-	for <lists+openbmc@lfdr.de>; Tue, 29 Nov 2022 11:24:18 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BCC2563C0AC
+	for <lists+openbmc@lfdr.de>; Tue, 29 Nov 2022 14:11:55 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NLz345PYmz3bSy
-	for <lists+openbmc@lfdr.de>; Tue, 29 Nov 2022 21:24:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NM2mT4Bq4z3bSq
+	for <lists+openbmc@lfdr.de>; Wed, 30 Nov 2022 00:11:53 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=DM9DMtIk;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=U3nXitFw;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.17.22; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.68.75; helo=ams.source.kernel.org; envelope-from=broonie@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=DM9DMtIk;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=U3nXitFw;
 	dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NLz1V0fqPz30RG
-	for <openbmc@lists.ozlabs.org>; Tue, 29 Nov 2022 21:22:53 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net; s=s31663417;
-	t=1669717359; bh=tCgpIcwmalgSx5qX5kzqlXYpLcTzbL9VQxyupLXaw8A=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=DM9DMtIkSyUhCSHewXFjGasoKBNheLeR3gikogX87cgw0WOXFLpUU3JFxrrit9n5u
-	 zrqmT4Hg/N5H/rwOcc045NWfjpgjx//7fsDTrbwC8qnus03qE1+1iuD9fyw93SBp6b
-	 9iR2DlUbDMyVoND6kAvolsCuLv9/M1W48VGRC+aN6LfK0v9u8QkXki1blEAK6m7cCv
-	 x/22XvWrMlLrDcfDRww0wA5eRB7TAkb1/v7PQyVyrYZYAZLP05ooE7z4P30jX6ZnwI
-	 NOcY7mzgYcaQYcwuhTWYP7jD1kHGuRLIZLHWqKShksg8Mf2nU6E2qOfrDDnQdgryr6
-	 v6PLroQVF4w1A==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from probook ([95.223.44.31]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1ML9uU-1pI2qD19k2-00IG2C; Tue, 29
- Nov 2022 11:22:39 +0100
-From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: linux-spi@vger.kernel.org,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH v2 2/2] spi: dt-bindings: nuvoton,wpcm450-fiu: Fix warning in example (missing reg property)
-Date: Tue, 29 Nov 2022 11:22:25 +0100
-Message-Id: <20221129102225.3598044-3-j.neuschaefer@gmx.net>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20221129102225.3598044-1-j.neuschaefer@gmx.net>
-References: <20221129102225.3598044-1-j.neuschaefer@gmx.net>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NM2lt1fwqz30QS
+	for <openbmc@lists.ozlabs.org>; Wed, 30 Nov 2022 00:11:22 +1100 (AEDT)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by ams.source.kernel.org (Postfix) with ESMTPS id D209EB810AD;
+	Tue, 29 Nov 2022 13:11:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24DC2C433D6;
+	Tue, 29 Nov 2022 13:11:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1669727476;
+	bh=euUraEArvrflZ4rzR7CLMRvUNt22h6qx6C0uHaCjtTk=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=U3nXitFwpJZ65eMbMUljAFH0laBRQQjmcvuUDHqgUoY8BmtpqT+7h+1S/koWBo4W4
+	 bpbcxoJ5lsFIcEcfGezQBn3llxqDUn1v0SEQqFxgiS2Mi9Dw2oh1744aXiikCxf4uS
+	 IEbMp8iDrQiJisFnR0o6QSVdBVDP2on307dc8MupM9sP/x231cMx3lnj40WK6ad1yb
+	 wsaw2VMqpvxAFS0bJAzlswP2SJ/WhokWEeFYBEw8tchID5cNpZJLcauxjU4CYQaL54
+	 TNwsBgssnngQ5CMJiUx8AhFS7h0jXkIfnyBOCl4kPAMQ/a2ePf9ak4XHYz4RmVKpNP
+	 9qZFwA3bdS7VA==
+From: Mark Brown <broonie@kernel.org>
+To: Jonathan Neuschäfer <j.neuschaefer@gmx.net>, linux-spi@vger.kernel.org
+In-Reply-To: <20221128214928.3531463-1-j.neuschaefer@gmx.net>
+References: <20221128214928.3531463-1-j.neuschaefer@gmx.net>
+Subject: Re: [PATCH 0/2] nuvoton,wpcm450-fiu binding example fixes
+Message-Id: <166972747487.90686.15799797932783778205.b4-ty@kernel.org>
+Date: Tue, 29 Nov 2022 13:11:14 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:37RMk8+HGcGRs4RthaIi7B02O6Es4HvsaRkekBdN3uGdbb9W+h6
- w/TxBKwJUAn/LIWYvS+ALmbCWH/uqNsUdER8fKxgK5kukwOO/IQRgChvKdKPVbxNLmthtxX
- FOUdvZJbpCE3E5Ax0xsTyYeqfAFkLy9bpHSzeMIGD/eFXPUAJjieo2KzwXMpDJl7JK9XTyJ
- a6MlPvtaZyJ5DcmQ2uBig==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:2kBgosZeI0g=;XxUd51KEo56pe33H/BWqf23JDVK
- t8LuwgMI6PcxP2WBKUKe3dhsR5/U9xLlgSuDRym3omKVXs4NElGix+3OgMzQ4nQHeC6/FvPTz
- PFBN3SWRRMF4bcHQqyUObvHB9l7KmivlphRgHoeTUJrWn6oAkK0srxToLNQJLaY85ZAVzv3k7
- DZwLp1JUQ7+1+DdScK0Df7Rhbuc49zSa+lcSAufouZ4gpVIPsCSF2PK4/LnHLD9WuaAZmod21
- HAD18Z8jbluOrds3n8OFeEYoWUFYO3J0SIUPgMbQanqS/11E4tf5H2xKtVrIXLzYnhxYk83vS
- PTHvAGxZ2/5hVAAHC19S/FvOGQ5krYuHTIGKgVSLY5FKkNFl9todDj4t8rSwTjuoiYjGS4b/J
- EAa431Ld3MtoWfMYHyNfisfFZdouDXq8ALl/0rzwjRX3SquEcbgxT/rEIgGHaKQCqexudRNIb
- aYDIFhnKiIsotgqncmKAmHFtJB/IMR56w06yeYrb3RBq0V2XczgtfEyJIA4b4zUQjpXQ8hTIE
- nK8pPhkr53PGg7rT+qtu3tryPF2VAvph5AKQmmgYPdtFBmpYH94EapyCi7d96RnYrWbJKz+SS
- SV1Eptuh8KbSHolJaKBF9wGXsQAeAQ68Qr33c0wqsMEQhaXlFuuClT2LZJej/HhAeM8Jn08l9
- JBrFQee7vyqsVjZcKlSjUNAfzhlnVX3zzPQsbB+c2cKCNbh994K6jFpg7MT1Yi0GUav+An3+S
- +B9LM2Mz+JsvoyjBqOSZGLe4Z2hbZHXAQZbGC3Qe30+ZkGPYgoqNrdgm7VdGIQtExSyi5o1/g
- JcxgM5kBNu0teaM5pkmmYho6O6vrIheMrS3gBGOJbKNZloVgauC0pRJEp31cXWbBOimf4zwLv
- qcfhH83spSbBISRGUoYoVLssMaBW/iTm/bFu3YKh540hbGMKu21UEKssu3C8WdmxJF/anXXgI
- ckY8yj4MITBBIwXr78LqgZNV2W0=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Mailer: b4 0.10.0-dev-fc921
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,38 +60,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, openbmc@lists.ozlabs.org, Conor Dooley <conor.dooley@microchip.com>, linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Rob Herring <robh+dt@kernel.org>, =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org, Conor Dooley <conor.dooley@microchip.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add missing "reg =3D <0>;" property to the flash@0 node in the example.
+On Mon, 28 Nov 2022 22:49:26 +0100, Jonathan Neuschäfer wrote:
+> My recently merged nuvoton,wpcm450-fiu DT binding caused some
+> dt_binding_check issues in linux-next. This series attempts to fix them
+> before the breakage spreads any further.
+> 
+> Thanks to Conor Dooley, who notified me.
+> 
+> Jonathan Neuschäfer (2):
+>   spi: dt-bindings: nuvoton,wpcm450-fiu: Fix error in example (bogus
+>     include)
+>   spi: dt-bindings: nuvoton,wpcm450-fiu: Fix warning in example (missing
+>     reg property)
+> 
+> [...]
 
-Fixes: dd71cd4dd6c9b ("spi: Add Nuvoton WPCM450 Flash Interface Unit (FIU)=
- bindings")
-Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-=2D--
+Applied to
 
-v2:
-- depersonalize commit message
-- Add Krzysztof's R-b
-=2D--
- Documentation/devicetree/bindings/spi/nuvoton,wpcm450-fiu.yaml | 1 +
- 1 file changed, 1 insertion(+)
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
-diff --git a/Documentation/devicetree/bindings/spi/nuvoton,wpcm450-fiu.yam=
-l b/Documentation/devicetree/bindings/spi/nuvoton,wpcm450-fiu.yaml
-index e4162845fcc1d..4e0d391e1d697 100644
-=2D-- a/Documentation/devicetree/bindings/spi/nuvoton,wpcm450-fiu.yaml
-+++ b/Documentation/devicetree/bindings/spi/nuvoton,wpcm450-fiu.yaml
-@@ -56,6 +56,7 @@ examples:
+Thanks!
 
-       flash@0 {
-         compatible =3D "jedec,spi-nor";
-+        reg =3D <0>;
-       };
-     };
+[1/2] spi: dt-bindings: nuvoton,wpcm450-fiu: Fix error in example (bogus include)
+      commit: 1e2872f5912fbc87a00d00d49af98e428f4ff8b7
+[2/2] spi: dt-bindings: nuvoton,wpcm450-fiu: Fix warning in example (missing reg property)
+      commit: c771b4eabd6a52afff0b6f01c361a9d04fa8cd9d
 
-=2D-
-2.35.1
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
 
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
