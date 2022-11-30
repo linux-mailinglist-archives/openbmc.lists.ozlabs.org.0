@@ -1,53 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id EF4C163D8ED
-	for <lists+openbmc@lfdr.de>; Wed, 30 Nov 2022 16:10:45 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 819CF63D9EA
+	for <lists+openbmc@lfdr.de>; Wed, 30 Nov 2022 16:51:16 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NMjM767fbz3bfj
-	for <lists+openbmc@lfdr.de>; Thu,  1 Dec 2022 02:10:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NMkFt2DXHz3bXQ
+	for <lists+openbmc@lfdr.de>; Thu,  1 Dec 2022 02:51:14 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=BWHb9s24;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized) smtp.mailfrom=nuvoton.com (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
-Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::732; helo=mail-qk1-x732.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=BWHb9s24;
+	dkim-atps=neutral
+Received: from mail-qk1-x732.google.com (mail-qk1-x732.google.com [IPv6:2607:f8b0:4864:20::732])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NMjKT5bZMz304s
-	for <openbmc@lists.ozlabs.org>; Thu,  1 Dec 2022 02:09:13 +1100 (AEDT)
-Received: from NTILML01.nuvoton.com (ntil-fw [212.199.177.25])
-	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 2AUF94q2020113
-	for <openbmc@lists.ozlabs.org>; Wed, 30 Nov 2022 17:09:04 +0200
-Received: from NTHCCAS02.nuvoton.com (10.1.9.121) by NTILML01.nuvoton.com
- (10.190.1.56) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Wed, 30 Nov
- 2022 17:09:03 +0200
-Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTHCCAS02.nuvoton.com
- (10.1.9.121) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.2; Wed, 30 Nov
- 2022 23:09:01 +0800
-Received: from taln60.nuvoton.co.il (10.191.1.180) by NTHCCAS01.nuvoton.com
- (10.1.12.25) with Microsoft SMTP Server id 15.1.2375.7 via Frontend
- Transport; Wed, 30 Nov 2022 23:09:01 +0800
-Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
-	id 6A69763A6B; Wed, 30 Nov 2022 17:09:00 +0200 (IST)
-From: Tomer Maimon <tmaimon77@gmail.com>
-To: <ulf.hansson@linaro.org>, <avifishman70@gmail.com>,
-        <tali.perry1@gmail.com>, <joel@jms.id.au>, <venture@google.com>,
-        <yuenn@google.com>, <benjaminfair@google.com>,
-        <adrian.hunter@intel.com>, <skhan@linuxfoundation.org>,
-        <davidgow@google.com>, <pbrobinson@gmail.com>, <gsomlo@gmail.com>,
-        <briannorris@chromium.org>, <arnd@arndb.de>, <krakoczy@antmicro.com>,
-        <andy.shevchenko@gmail.com>
-Subject: [PATCH v1 2/2] mmc: sdhci-npcm: Add NPCM SDHCI driver
-Date: Wed, 30 Nov 2022 17:08:57 +0200
-Message-ID: <20221130150857.67113-3-tmaimon77@gmail.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20221130150857.67113-1-tmaimon77@gmail.com>
-References: <20221130150857.67113-1-tmaimon77@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NMkFK2w3Kz3bTB
+	for <openbmc@lists.ozlabs.org>; Thu,  1 Dec 2022 02:50:44 +1100 (AEDT)
+Received: by mail-qk1-x732.google.com with SMTP id p18so12558486qkg.2
+        for <openbmc@lists.ozlabs.org>; Wed, 30 Nov 2022 07:50:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=82QCZk50OHhyMDgvhzbOVvcIx76jYb6gR6aOF5F4KSk=;
+        b=BWHb9s24KDdkAgujqN5R+CKe7Ztu9OKpL44TDgCg9B6FzSwsAFxaEJjPaoVuGJoqgP
+         4FAXXx0/etvMoP3Di1D9Nl1ZExrLiZIWpCmcclJ1ZLk2YU+Gd9XlqEHZ+/5h2967AkGc
+         H7h97MA3NEoxuvbb7RlNC9Tgu009b78+RNX6NxOwzQKFSTLJ5JHQnMRtTxkewTgoBss6
+         +bB2RyZK4dUUPefJlDy3SHxfXZZHEUNPxNyc66dvpA3Jr79VpMjJVcU8TJ7Z5sCMHrpG
+         2t1Yis/Cr+p+9nX+VMAft8PYJ0vYgGPkj1eDg1EuEnks53EoJ2QUSy+Z/TlqV2qZ6gfK
+         owdA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=82QCZk50OHhyMDgvhzbOVvcIx76jYb6gR6aOF5F4KSk=;
+        b=LTVf5rxK246Bw2h+AB9ErvotdABcE4EHfNn5FPaBn2jZh3a0sKAs5x1kBXa2zL3qYl
+         FhbVxxcqNBdlvq/qnYJGLzYkJI/YpNV1y9eLeR1/DrfUKKnbt3n1sKXRACoPRW37KXQz
+         DD+y1O/a7sK0eU2ty149OvFy2Rxx11YqY85reLH2GkfovrGAepKDITusDZXZQTCULelU
+         duAFoNo6KOniedGvWsvBAeDw/g0ZWJUJdykMMIVp3bIeERxt7iZjPgC9kjRQT4GRhxY5
+         HG4IpuIvYtuaT1Oz11T7/ge9sHq52rz3Aoh21+VIVCDGocuiY+8zB0bSr7IarLrIt1G3
+         QnCQ==
+X-Gm-Message-State: ANoB5pngj2mtF7djP1iNf4B57S0/lYTJJyxiE2sBsW7gGh7r8Pkw1R0l
+	wuO2XoYP8TlBZsC2dkTrR5fWa7jY3d+dTQUwHqc=
+X-Google-Smtp-Source: AA0mqf5kOZsnOEHPtDJ2/5QHse4qLyrS2H4vMNPxNFPJWJ4R6NiKajd7ShO0X6Lx+IavRjuWzZt1apcO/9r9gd7j/Wg=
+X-Received: by 2002:a37:b404:0:b0:6fa:4a82:1152 with SMTP id
+ d4-20020a37b404000000b006fa4a821152mr56822990qkf.504.1669823440294; Wed, 30
+ Nov 2022 07:50:40 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
+References: <20221130150857.67113-1-tmaimon77@gmail.com> <20221130150857.67113-3-tmaimon77@gmail.com>
+In-Reply-To: <20221130150857.67113-3-tmaimon77@gmail.com>
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Wed, 30 Nov 2022 17:50:04 +0200
+Message-ID: <CAHp75Vf-EKa9rdpmO54h0rgMcN4TLk8GcYfrjb-2Cy-GRVgEKA@mail.gmail.com>
+Subject: Re: [PATCH v1 2/2] mmc: sdhci-npcm: Add NPCM SDHCI driver
+To: Tomer Maimon <tmaimon77@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,138 +73,107 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>
+Cc: devicetree@vger.kernel.org, ulf.hansson@linaro.org, benjaminfair@google.com, arnd@arndb.de, krakoczy@antmicro.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, briannorris@chromium.org, linux-mmc@vger.kernel.org, adrian.hunter@intel.com, tali.perry1@gmail.com, gsomlo@gmail.com, joel@jms.id.au, davidgow@google.com, skhan@linuxfoundation.org, linux-kernel@vger.kernel.org, pbrobinson@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add Nuvoton NPCM BMC sdhci-pltfm controller driver.
+On Wed, Nov 30, 2022 at 5:09 PM Tomer Maimon <tmaimon77@gmail.com> wrote:
+>
+> Add Nuvoton NPCM BMC sdhci-pltfm controller driver.
 
-Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
----
- drivers/mmc/host/Kconfig      |  8 ++++
- drivers/mmc/host/Makefile     |  1 +
- drivers/mmc/host/sdhci-npcm.c | 81 +++++++++++++++++++++++++++++++++++
- 3 files changed, 90 insertions(+)
- create mode 100644 drivers/mmc/host/sdhci-npcm.c
+...
 
-diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
-index fb1062a6394c..4b2d9ce4308c 100644
---- a/drivers/mmc/host/Kconfig
-+++ b/drivers/mmc/host/Kconfig
-@@ -709,6 +709,14 @@ config MMC_TMIO
- 	  This provides support for the SD/MMC cell found in TC6393XB,
- 	  T7L66XB and also HTC ASIC3
- 
-+config MMC_SDHCI_NPCM
-+	tristate "Secure Digital Host Controller Interface support for NPCM"
-+	depends on ARCH_NPCM || COMPILE_TEST
-+	depends on MMC_SDHCI_PLTFM
-+	help
-+	  This provides support for the SD/eMMC controller found in
-+	  NPCM BMC family SoCs.
-+
- config MMC_SDHI
- 	tristate "Renesas SDHI SD/SDIO controller support"
- 	depends on SUPERH || ARCH_RENESAS || COMPILE_TEST
-diff --git a/drivers/mmc/host/Makefile b/drivers/mmc/host/Makefile
-index 4e4ceb32c4b4..801086613d7f 100644
---- a/drivers/mmc/host/Makefile
-+++ b/drivers/mmc/host/Makefile
-@@ -37,6 +37,7 @@ obj-$(CONFIG_MMC_SPI)		+= of_mmc_spi.o
- obj-$(CONFIG_MMC_S3C)   	+= s3cmci.o
- obj-$(CONFIG_MMC_SDRICOH_CS)	+= sdricoh_cs.o
- obj-$(CONFIG_MMC_TMIO)		+= tmio_mmc.o
-+obj-$(CONFIG_MMC_SDHCI_NPCM)	+= sdhci-npcm.o
- obj-$(CONFIG_MMC_TMIO_CORE)	+= tmio_mmc_core.o
- obj-$(CONFIG_MMC_SDHI)		+= renesas_sdhi_core.o
- obj-$(CONFIG_MMC_SDHI_SYS_DMAC)		+= renesas_sdhi_sys_dmac.o
-diff --git a/drivers/mmc/host/sdhci-npcm.c b/drivers/mmc/host/sdhci-npcm.c
-new file mode 100644
-index 000000000000..298c5f3e7c2b
---- /dev/null
-+++ b/drivers/mmc/host/sdhci-npcm.c
-@@ -0,0 +1,81 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+/*
-+ * NPCM SDHC MMC host controller driver.
-+ *
-+ */
-+
-+#include <linux/clk.h>
-+#include <linux/err.h>
-+#include <linux/io.h>
-+#include <linux/mmc/host.h>
-+#include <linux/mmc/mmc.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+
-+#include "sdhci-pltfm.h"
-+
-+static const struct sdhci_pltfm_data npcm_sdhci_pdata = {
-+	.quirks  = SDHCI_QUIRK_DELAY_AFTER_POWER,
-+	.quirks2 = SDHCI_QUIRK2_STOP_WITH_TC |
-+		   SDHCI_QUIRK2_NO_1_8_V,
-+};
-+
-+static int npcm_sdhci_probe(struct platform_device *pdev)
-+{
-+	struct sdhci_pltfm_host *pltfm_host;
-+	struct sdhci_host *host;
-+	u32 caps;
-+	int ret;
-+
-+	host = sdhci_pltfm_init(pdev, &npcm_sdhci_pdata, 0);
-+	if (IS_ERR(host))
-+		return PTR_ERR(host);
-+
-+	pltfm_host = sdhci_priv(host);
-+	pltfm_host->clk = devm_clk_get(&pdev->dev, NULL);
-+
-+	if (!IS_ERR(pltfm_host->clk))
-+		clk_prepare_enable(pltfm_host->clk);
-+
-+	caps = sdhci_readl(host, SDHCI_CAPABILITIES);
-+	if (caps & SDHCI_CAN_DO_8BIT)
-+		host->mmc->caps |= MMC_CAP_8_BIT_DATA;
-+
-+	ret = mmc_of_parse(host->mmc);
-+	if (ret)
-+		goto err_sdhci_add;
-+
-+	ret = sdhci_add_host(host);
-+	if (ret)
-+		goto err_sdhci_add;
-+
-+	return 0;
-+
-+err_sdhci_add:
-+	clk_disable_unprepare(pltfm_host->clk);
-+	sdhci_pltfm_free(pdev);
-+	return ret;
-+}
-+
-+static const struct of_device_id npcm_sdhci_of_match[] = {
-+	{ .compatible = "nuvoton,npcm750-sdhci" },
-+	{ .compatible = "nuvoton,npcm845-sdhci" },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, npcm_sdhci_of_match);
-+
-+static struct platform_driver npcm_sdhci_driver = {
-+	.driver = {
-+		.name	= "npcm-sdhci",
-+		.of_match_table = npcm_sdhci_of_match,
-+		.pm	= &sdhci_pltfm_pmops,
-+	},
-+	.probe		= npcm_sdhci_probe,
-+	.remove		= sdhci_pltfm_unregister,
-+};
-+
-+module_platform_driver(npcm_sdhci_driver);
-+
-+MODULE_DESCRIPTION("NPCM Secure Digital Host Controller Interface driver");
-+MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
-+MODULE_LICENSE("GPL v2");
+>  obj-$(CONFIG_MMC_S3C)          += s3cmci.o
+>  obj-$(CONFIG_MMC_SDRICOH_CS)   += sdricoh_cs.o
+>  obj-$(CONFIG_MMC_TMIO)         += tmio_mmc.o
+
+> +obj-$(CONFIG_MMC_SDHCI_NPCM)   += sdhci-npcm.o
+
+Keep it ordered by module name.
+
+>  obj-$(CONFIG_MMC_TMIO_CORE)    += tmio_mmc_core.o
+>  obj-$(CONFIG_MMC_SDHI)         += renesas_sdhi_core.o
+>  obj-$(CONFIG_MMC_SDHI_SYS_DMAC)                += renesas_sdhi_sys_dmac.o
+
+...
+
+> +/*
+> + * NPCM SDHC MMC host controller driver.
+> + *
+> + */
+
+Too many lines for seems to be oneliner comment.
+
+...
+
+> +#include <linux/of.h>
+
+I don't see how it's being used.
+But it seems the mod_devicetable.h is missing.
+
+...
+
+> +static const struct sdhci_pltfm_data npcm_sdhci_pdata = {
+> +       .quirks  = SDHCI_QUIRK_DELAY_AFTER_POWER,
+> +       .quirks2 = SDHCI_QUIRK2_STOP_WITH_TC |
+> +                  SDHCI_QUIRK2_NO_1_8_V,
+> +};
+
+Why? Can't you use the sdhci as a library?
+
+...
+
+> +static int npcm_sdhci_probe(struct platform_device *pdev)
+> +{
+> +       struct sdhci_pltfm_host *pltfm_host;
+> +       struct sdhci_host *host;
+> +       u32 caps;
+> +       int ret;
+> +
+> +       host = sdhci_pltfm_init(pdev, &npcm_sdhci_pdata, 0);
+> +       if (IS_ERR(host))
+> +               return PTR_ERR(host);
+> +
+> +       pltfm_host = sdhci_priv(host);
+
+> +       pltfm_host->clk = devm_clk_get(&pdev->dev, NULL);
+> +
+
+Blank line in a wrong position, should be before devm_clk_get().
+
+> +       if (!IS_ERR(pltfm_host->clk))
+> +               clk_prepare_enable(pltfm_host->clk);
+
+Why not use a specific helper that gets the clock enabled?
+
+> +       caps = sdhci_readl(host, SDHCI_CAPABILITIES);
+> +       if (caps & SDHCI_CAN_DO_8BIT)
+> +               host->mmc->caps |= MMC_CAP_8_BIT_DATA;
+> +
+> +       ret = mmc_of_parse(host->mmc);
+> +       if (ret)
+> +               goto err_sdhci_add;
+> +
+> +       ret = sdhci_add_host(host);
+> +       if (ret)
+> +               goto err_sdhci_add;
+> +
+> +       return 0;
+> +
+> +err_sdhci_add:
+> +       clk_disable_unprepare(pltfm_host->clk);
+> +       sdhci_pltfm_free(pdev);
+> +       return ret;
+> +}
+
+...
+
+> +
+
+Redundant blank line.
+
+> +module_platform_driver(npcm_sdhci_driver);
+
 -- 
-2.33.0
-
+With Best Regards,
+Andy Shevchenko
