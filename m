@@ -2,69 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D2D663D376
-	for <lists+openbmc@lfdr.de>; Wed, 30 Nov 2022 11:31:54 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0465563D8E5
+	for <lists+openbmc@lfdr.de>; Wed, 30 Nov 2022 16:10:15 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NMb9N3hjjz3bb6
-	for <lists+openbmc@lfdr.de>; Wed, 30 Nov 2022 21:31:52 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=FRon3T2g;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NMjLX6sLsz3bXG
+	for <lists+openbmc@lfdr.de>; Thu,  1 Dec 2022 02:10:12 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12a; helo=mail-lf1-x12a.google.com; envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=FRon3T2g;
-	dkim-atps=neutral
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized) smtp.mailfrom=nuvoton.com (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
+Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NMb8l6nCdz2y84
-	for <openbmc@lists.ozlabs.org>; Wed, 30 Nov 2022 21:31:18 +1100 (AEDT)
-Received: by mail-lf1-x12a.google.com with SMTP id be13so26256301lfb.4
-        for <openbmc@lists.ozlabs.org>; Wed, 30 Nov 2022 02:31:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=Fv3Wp1f+QTDnSN5uykjtcq/j71xlTKfFkgX9bxQuGXc=;
-        b=FRon3T2gVgOfoIGVXXk6Eres5nbKkb2IdBbrzgBFjsJNW4nD0SRIrwsjWFQ7AOX/sK
-         cI6IPeg8l2hzOuHsXUzbkYiq2Kbvqxt89KzzrpdE53ab9AlVxsL/eMmcJUjf7JrimUir
-         SSwWAdp/l7uVEqu0yDoKCgukZyx2SP/iJB/63Guv7Mt3f5W388hjRP9Ah1nzcYtQMPYm
-         uQjWn7+q5VTQ3NG6Tw6NjWsbmxnKiNkUZLOE4EDsS83gN+V4ussGRVzOxslhFOwNi7QW
-         Xad9318ZBrURj0IZews21eq/LDMAVJrT4uKSePY44qagIwXGbc8W+PZFJhSQXl4bnRG1
-         hi0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Fv3Wp1f+QTDnSN5uykjtcq/j71xlTKfFkgX9bxQuGXc=;
-        b=OJwecjl7bwH1BKtF+VfVq61lB2ddn6fvoycukx42dJ26zvEDwexXzurG0G+Q1eQT+D
-         g5R2yYJa6uDxbaUF3FO5so128PBEL4RvP/MfM9OjtAwzC+i2GLPfQVt5Khv4fDFyS2uw
-         /6ckZ1bJPL4g87PMbF3+3gU6qk2w4MKVZdhIgN3tzD7RTYudhMMABAAOWSs3eYIKG2Yz
-         ZBCxrcQd/aFaT2uP+moPpxwfuWmTDJrgX3B2QSYNFtPqD9ZJiAOhGB9C0KWy6FxQEqSl
-         9vy+80QbO8JJVOtKyzs5tRK4p0hUUaPle8ncbPtsfK1ihsJQZzgF0xlb8e68nNwmvLrd
-         J4Eg==
-X-Gm-Message-State: ANoB5pm4zDZQEva79i68YFWMFM9I62NO4iolaXDqGQQSOnbhTP6wHaH3
-	EFvzCzE2Du4qBcJbAi4UKM+bKlXgO7ptPlrmb+A=
-X-Google-Smtp-Source: AA0mqf6nHQyoRCEMLjI55WiSFRP0VDvbS2r/qwG4xRgS7G8nmlGVgO/ru9udgXyFtS/ASOMtB6DZl5ZOC8G5fnKjL20=
-X-Received: by 2002:a19:4352:0:b0:4b5:1334:a1f8 with SMTP id
- m18-20020a194352000000b004b51334a1f8mr4992189lfj.401.1669804273470; Wed, 30
- Nov 2022 02:31:13 -0800 (PST)
-MIME-Version: 1.0
-References: <20221122201232.107065-1-tmaimon77@gmail.com> <20221122201232.107065-2-tmaimon77@gmail.com>
- <cedc0013-f0c0-3180-6995-477b77b919f8@linaro.org> <CAP6Zq1iGwqOVOnhmF0ijYw=KoTRJj5CUpFv6WDouZmjVxXhQ-g@mail.gmail.com>
- <5c7a06bf-94e3-5c65-f202-105f74a41d29@linaro.org> <CAP6Zq1jdy-qDGFsk4sKcp3tx7d-nBMxOK72CRt3LLO8CrWJyKQ@mail.gmail.com>
- <7661de74-f68c-6617-6a4e-3b0eb76a2a2e@linaro.org>
-In-Reply-To: <7661de74-f68c-6617-6a4e-3b0eb76a2a2e@linaro.org>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NMjKT5VGVz2xJR
+	for <openbmc@lists.ozlabs.org>; Thu,  1 Dec 2022 02:09:13 +1100 (AEDT)
+Received: from NTILML01.nuvoton.com (ntil-fw [212.199.177.25])
+	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 2AUF92SM020107
+	for <openbmc@lists.ozlabs.org>; Wed, 30 Nov 2022 17:09:03 +0200
+Received: from NTHCCAS04.nuvoton.com (10.1.8.29) by NTILML01.nuvoton.com
+ (10.190.1.46) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2176.14; Wed, 30 Nov
+ 2022 17:09:02 +0200
+Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTHCCAS04.nuvoton.com
+ (10.1.8.29) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2176.2; Wed, 30
+ Nov 2022 23:09:00 +0800
+Received: from taln60.nuvoton.co.il (10.191.1.180) by NTHCCAS01.nuvoton.com
+ (10.1.12.25) with Microsoft SMTP Server id 15.1.2375.7 via Frontend
+ Transport; Wed, 30 Nov 2022 23:09:00 +0800
+Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
+	id 78B7E637C4; Wed, 30 Nov 2022 17:08:59 +0200 (IST)
 From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Wed, 30 Nov 2022 12:31:02 +0200
-Message-ID: <CAP6Zq1jQ7r4N5bc2yS0kuQrFqBvDD3mXxaASc=KkVt-fjBELuw@mail.gmail.com>
-Subject: Re: [PATCH v1 1/2] dt-binding: soc: nuvoton: Add NPCM BPC LPC documentation
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+To: <ulf.hansson@linaro.org>, <avifishman70@gmail.com>,
+        <tali.perry1@gmail.com>, <joel@jms.id.au>, <venture@google.com>,
+        <yuenn@google.com>, <benjaminfair@google.com>,
+        <adrian.hunter@intel.com>, <skhan@linuxfoundation.org>,
+        <davidgow@google.com>, <pbrobinson@gmail.com>, <gsomlo@gmail.com>,
+        <briannorris@chromium.org>, <arnd@arndb.de>, <krakoczy@antmicro.com>,
+        <andy.shevchenko@gmail.com>
+Subject: [PATCH v1 0/2] MMC: add NPCM SDHCI driver support
+Date: Wed, 30 Nov 2022 17:08:55 +0200
+Message-ID: <20221130150857.67113-1-tmaimon77@gmail.com>
+X-Mailer: git-send-email 2.33.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,62 +57,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: hasegawa-hitomi@fujitsu.com, devicetree@vger.kernel.org, briannorris@chromium.org, benjaminfair@google.com, arnd@arndb.de, sven@svenpeter.dev, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, marcan@marcan.st, nicolas.ferre@microchip.com, tali.perry1@gmail.com, conor.dooley@microchip.com, robh+dt@kernel.org, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org, heiko@sntech.de
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Thanks for your clarification
+This patch set adds SDHCI support for the Nuvoton NPCM Baseboard 
+Management Controller (BMC).
 
-On Wed, 30 Nov 2022 at 10:27, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 29/11/2022 17:44, Tomer Maimon wrote:
-> > hi Krzysztof,
-> >
-> > Thanks for your comments.
-> >
-> > On Thu, 24 Nov 2022 at 18:18, Krzysztof Kozlowski
-> > <krzysztof.kozlowski@linaro.org> wrote:
-> >>
-> >> On 24/11/2022 16:38, Tomer Maimon wrote:
-> >>> Hi Krzysztof,
-> >>>
-> >>> Thanks a lot for your comments.
-> >>>
-> >>> On Wed, 23 Nov 2022 at 12:03, Krzysztof Kozlowski
-> >>> <krzysztof.kozlowski@linaro.org> wrote:
-> >>>>
-> >>>> On 22/11/2022 21:12, Tomer Maimon wrote:
-> >>>>
-> >>>> 1. Subject: drop second, redundant "documentation" (dt-bindings are
-> >>>> documentation).
-> >>> O.K.
-> >>>>
-> >>>> 2. Use subject prefixes matching the subsystem (git log --oneline -- ...).
-> >>> this is what I did dt-binding: soc: nuvoton... do you mean dt-binding: nuvoton.
-> >>
-> >> You didn't run the command, did you?
-> > I did run this command "git log --oneline
-> > Documentation/devicetree/bindings/soc" and I got this log list
-> > e47206d71e67 dt-binding: soc: nuvoton: Add NPCM BPC LPC documentation
-> > 121494030c53 dt-bindings: soc: add i.MX93 mediamix blk ctrl
-> > 4fed4d20c59b dt-bindings: soc: add i.MX93 SRC
-> > c7ebd54158d3 dt-bindings: soc: imx: add i.MX8MP vpu blk ctrl
-> > 2345fc8dc2ec dt-bindings: soc: imx: add interconnect property for
-> > i.MX8MM vpu blk ctrl
-> > c1d9381ce430 dt-bindings: soc: imx: drop minItems for i.MX8MM vpu blk ctrl
-> > f3894f969cf5 dt-bindings: soc: mediatek: Add display mutex support for MT6795
-> > b2d7616e13c4 dt-bindings: soc: qcom: apr: add missing properties
-> > 301628d80501 ASoC: dt-bindings: qcom,q6adm: convert to dtschema
-> > 7b0ad4629d1f ASoC: dt-bindings: qcom,q6asm: convert to dtschema
-> > b2496de1dfdd dt-bindings: soc: qcom: apr: correct service children
-> >
-> > most of the subjects are similar to what I did, if it is not correct
-> > please let me know exactly what to write (beside the word
-> > documentation that I will remove)
->
-> None of them have "dt-binding", so fix that part.
->
-> Best regards,
-> Krzysztof
->
+The NPCM SDHCI driver tested on NPCM750 and NPCM845 EVB.
+
+Tomer Maimon (2):
+  dt-bindings: mmc: npcm,sdhci: Document NPCM SDHCI controller
+  mmc: sdhci-npcm: Add NPCM SDHCI driver
+
+ .../devicetree/bindings/mmc/npcm,sdhci.yaml   | 47 +++++++++++
+ drivers/mmc/host/Kconfig                      |  8 ++
+ drivers/mmc/host/Makefile                     |  1 +
+ drivers/mmc/host/sdhci-npcm.c                 | 81 +++++++++++++++++++
+ 4 files changed, 137 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/mmc/npcm,sdhci.yaml
+ create mode 100644 drivers/mmc/host/sdhci-npcm.c
+
+-- 
+2.33.0
+
