@@ -1,90 +1,58 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A1CEA63F94D
-	for <lists+openbmc@lfdr.de>; Thu,  1 Dec 2022 21:42:46 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id BA4FA63FC4C
+	for <lists+openbmc@lfdr.de>; Fri,  2 Dec 2022 00:50:19 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NNSgm46s0z3bb8
-	for <lists+openbmc@lfdr.de>; Fri,  2 Dec 2022 07:42:44 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ARzUoytv;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NNXr93KLMz3bYL
+	for <lists+openbmc@lfdr.de>; Fri,  2 Dec 2022 10:50:17 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ARzUoytv;
-	dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.167.179; helo=mail-oi1-f179.google.com; envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
+Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NNSg65dSwz3bX4
-	for <openbmc@lists.ozlabs.org>; Fri,  2 Dec 2022 07:42:09 +1100 (AEDT)
-Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B1K1cNV010524;
-	Thu, 1 Dec 2022 20:42:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- subject : to : cc : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=jZHw3UBhu6XTe4lhF/CevEfBC3ietWS2HvkrWIvLLKA=;
- b=ARzUoytvNuCU7shb3utrWNYRxOMsPXjbsyzH+RUlOjqZttoMFho/TLv1ovpP9heS+P06
- KH6J1dK83aNNG9OIe7N7gsBrlaIF/BWh48YcYZgfNjhbzTKdoZeXyCd+zGxiFXBg64P/
- Hcf+TTJxK24L54GVnPlhP0kj2zn+D56xdWwqG92wKtsmlrwmo6xxn0Jyth8Uwm1jnjLW
- 6N9BuRb2l66bbnZ5PxfS5PMdczRZudp2QB1yBGcGvzHPdktE7TMP7N6dl5736OILQ9cD
- NcDZx3V/wx1jofclXlrqFsxxi2fZrQOEeyEDDN8dCZDCo5VjOYnO0xryGtzXmSjFgQQR BQ== 
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com [169.62.189.11])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3m72xr10vt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 01 Dec 2022 20:42:04 +0000
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
-	by ppma03dal.us.ibm.com (8.16.1.2/8.16.1.2) with SMTP id 2B1KZuni019888;
-	Thu, 1 Dec 2022 20:42:04 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([9.208.129.118])
-	by ppma03dal.us.ibm.com with ESMTP id 3m3aea6fc5-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 01 Dec 2022 20:42:04 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com [10.241.53.103])
-	by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 2B1Kg2xF62062970
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 1 Dec 2022 20:42:02 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 4D0815805A;
-	Thu,  1 Dec 2022 20:42:02 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id A8A0458062;
-	Thu,  1 Dec 2022 20:42:01 +0000 (GMT)
-Received: from [9.160.91.87] (unknown [9.160.91.87])
-	by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS;
-	Thu,  1 Dec 2022 20:42:01 +0000 (GMT)
-Message-ID: <83f99d00-b72f-8136-2027-c248f2bc7d08@linux.ibm.com>
-Date: Thu, 1 Dec 2022 14:42:00 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.3.3
-Subject: Re: Potential high risk for readonly/operator users on BMC console
- access
-Content-Language: en-US
-To: Thang Nguyen OS <thang@amperemail.onmicrosoft.com>
-References: <496697FB-7A80-4F2B-BC4A-8955016082CD@amperemail.onmicrosoft.com>
- <0d89ea81-3f9a-3b59-6b82-5e503596e1a4@linux.ibm.com>
- <1AE3EBA0-0E46-47DE-BEF7-B7A0F4275D14@amperemail.onmicrosoft.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-In-Reply-To: <1AE3EBA0-0E46-47DE-BEF7-B7A0F4275D14@amperemail.onmicrosoft.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: TamHeXEX9U9lkocaHL2rIOfuUGlXyKYw
-X-Proofpoint-ORIG-GUID: TamHeXEX9U9lkocaHL2rIOfuUGlXyKYw
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NNXqr4YtFz3bSl
+	for <openbmc@lists.ozlabs.org>; Fri,  2 Dec 2022 10:49:58 +1100 (AEDT)
+Received: by mail-oi1-f179.google.com with SMTP id s141so3731063oie.10
+        for <openbmc@lists.ozlabs.org>; Thu, 01 Dec 2022 15:49:58 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=W+HjyG60puvlrURBNHopMfOrvdeMFci5vVt0oykR5tc=;
+        b=z9O2go3Kyz6Ke966LrsMJWR46qkKu327TYsEOF7/4ev8qpWPx0B0eihYl5BzpFcXL1
+         YEmoX98EptghEeRQeeqXYM3igZb8ynpWeeMp8EieLmAqrVPv+tJ9jQXzH39f0kBx1Stq
+         Qr5fCXKXdkIr0V+YN6b02yRNdGaO9VivvzWAZInpuCgnvp2KI4/E20tf8nooEVIwRswb
+         50PCsIq6F2cmW/jgV1WPNvPvSAznLzR7WFg850/Okg/PluEsTNKL9/wqjxpS8facN9nV
+         3gRgWrDDCiE317xgIjaPSwmPgmvnJ1Q1GhTtWt56fvM8Xp0JwiCKdSGNJdzXHdn3CbK/
+         YMWw==
+X-Gm-Message-State: ANoB5pkrEJ/muKWFN84EmsE0R51ab/jrWNEjAX7m93WSOhsUrrQbt3UY
+	EkNDNL8M8NUOupB/1NGQcg==
+X-Google-Smtp-Source: AA0mqf5bJr0Z/sHBoXak624BdBzYGGLAuHfYECUlI0mZIj1EYsWA3ZeDo7bemwuHtU+yAdY/jKae8A==
+X-Received: by 2002:aca:44c4:0:b0:35a:6147:c6a5 with SMTP id r187-20020aca44c4000000b0035a6147c6a5mr24461259oia.149.1669938595865;
+        Thu, 01 Dec 2022 15:49:55 -0800 (PST)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id g14-20020a544f8e000000b0035437f4deefsm2392807oiy.26.2022.12.01.15.49.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 01 Dec 2022 15:49:55 -0800 (PST)
+Received: (nullmailer pid 1708582 invoked by uid 1000);
+	Thu, 01 Dec 2022 23:49:54 -0000
+Date: Thu, 1 Dec 2022 17:49:54 -0600
+From: Rob Herring <robh@kernel.org>
+To: Tomer Maimon <tmaimon77@gmail.com>
+Subject: Re: [PATCH v1 1/2] dt-bindings: mmc: npcm,sdhci: Document NPCM SDHCI
+ controller
+Message-ID: <20221201234954.GA1704219-robh@kernel.org>
+References: <20221130150857.67113-1-tmaimon77@gmail.com>
+ <20221130150857.67113-2-tmaimon77@gmail.com>
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.219,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-01_14,2022-12-01_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- malwarescore=0 mlxscore=0 priorityscore=1501 bulkscore=0 spamscore=0
- adultscore=0 clxscore=1015 phishscore=0 suspectscore=0 impostorscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2212010158
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221130150857.67113-2-tmaimon77@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,82 +64,92 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Phong Vo <pvo@amperecomputing.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Phong Vo OS <phong@os.amperecomputing.com>, Nga Nguyen <nga.nguyen@amperecomputing.com>
+Cc: andy.shevchenko@gmail.com, ulf.hansson@linaro.org, linux-kernel@vger.kernel.org, benjaminfair@google.com, arnd@arndb.de, krakoczy@antmicro.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, briannorris@chromium.org, linux-mmc@vger.kernel.org, adrian.hunter@intel.com, tali.perry1@gmail.com, gsomlo@gmail.com, joel@jms.id.au, davidgow@google.com, skhan@linuxfoundation.org, devicetree@vger.kernel.org, pbrobinson@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 11/29/22 4:06 AM, Thang Nguyen OS wrote:
-> Thanks for your feedback.
->
->> On 29 Nov 2022, at 08:41, Joseph Reynolds <jrey@linux.ibm.com> wrote:
->>
->> [EXTERNAL EMAIL NOTICE: This email originated from an external sender. Please be mindful of safe email handling and proprietary information protection practices.]
->>
->>
->> On 11/21/22 4:17 AM, Thang Nguyen OS wrote:
->>> Hi,
->>> I would like to have your comments on below issue which we think it is high risk security issue which description below:
->>>
->>> Any user (read-only, operator, administrator), when created, has BMC console access/login by default. He can login to BMC via BMC console and do the following actions:
->>>   - Write to his /home/<user> folder to full. This will make the RootFS full and no more operation can be done, unless do A/C power and reflash the BMC from u-boot.
->>> - Write to /tmp folder to full which will make many application fail to work.
->>> It is good for administrator as he should have full privilege. However, for readonly/operator users, he should not have console access. No matter if he makes the BMC crashed by mistake or it is his intention, we should prevent his happens.
->>> It is known that many production systems do not support BMC console but still have some support and some companies allow remote access via KVM or console server. I think we should disable shell login for normal users (readonly and operator) by default.
->> Thanks for your report.  Here are my thoughts.
->>
->> You are describing resource exhaustion, sometimes denoted as one of:
->> - CWE-400: Uncontrolled Resource Consumption
->> - CWE-770: Allocation of Resources Without Limits or Throttling
->>
->> I agree this will lead to the failure of various BMC functions leading
->> to denial of service.
->>
->> There are two ways to access the BMC command shell:
->>
->> 1. Access to the BMC command shell via SSH port 22.  The default BMC
->> configuration only allows Administrator users to have access. [footnote 1]
-> No problem with SSH. Operator and read-only users can’t access BMC shell over SSH
->> 2. Access to the BMC command shell via the BMC's serial port.  The
->> typical BMC setup either does not have a console or specifies that
->> access to the BMC's physical console port should be protected.
->>
->> Please see some related build-time configuration options here:
->> https://github.com/openbmc/openbmc/wiki/Configuration-guide#bmc-console-shell-access
->>
->> Also, we can consider adding a check so that only admin users are
->> allowed to access to a BMC command shell via the BMC's serial console.
->> (And non-admin user will be logged off.)
-> Do you think we should disable console access by setting from phosphor-user-manager during user creation? The alternative command from BMC shell is usermode <user> -s /sbin/nologin
+On Wed, Nov 30, 2022 at 05:08:56PM +0200, Tomer Maimon wrote:
+> Add binding for Nuvoton NPCM SDHCI controller.
+> 
+> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> ---
+>  .../devicetree/bindings/mmc/npcm,sdhci.yaml   | 47 +++++++++++++++++++
+>  1 file changed, 47 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/mmc/npcm,sdhci.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/mmc/npcm,sdhci.yaml b/Documentation/devicetree/bindings/mmc/npcm,sdhci.yaml
+> new file mode 100644
+> index 000000000000..38409272807a
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/mmc/npcm,sdhci.yaml
+> @@ -0,0 +1,47 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/mmc/npcm,sdhci.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: NPCM SDHCI Controller
+> +
+> +maintainers:
+> +  - Tomer Maimon <tmaimon77@gmail.com>
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - nuvoton,npcm750-sdhci
+> +      - nuvoton,npcm845-sdhci
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +patternProperties:
+> +  "^sdhci@[0-9a-f]+$":
+> +    type: object
 
-I believe all non-admin users have their default shell set to 
-/bin/nologin per code in phosphor user manager:
-https://github.com/openbmc/phosphor-user-manager/blob/master/user_mgr.cpp
-Search for "nologin".
+sdhci is a child node of the nuvoton,npcm750-sdhci node?
 
-When reading this code, not only priv-admin users will have the "ssh" 
-group role per
-https://github.com/openbmc/docs/blob/master/architecture/user-management.md#supported-group-roles
+> +    $ref: mmc-controller.yaml
 
-Joseph
+I think you want:
 
+allOf:
+  - $ref: mmc-controller.yaml#
 
-> - Joseph
->
->
-> Footnote 1:
-> The effect of the following is to configure the dropbear SSH server so
-> only users who are in the priv-admin Linux group are allowed to connect
-> via SSH.
-> This config parameter:
-> https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-core/dropbear/dropbear/dropbear.default
-> Is configured into the image from here:
-> https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-core/dropbear/dropbear_%25.bbappend
-> and is used on the dropbear command line from here:
-> https://github.com/openbmc/openbmc/blob/master/poky/meta/recipes-core/dropbear/dropbear/dropbear%40.service
->
->
->
->
->>> Thanks,
->>> Thang Q. Nguyen -
+And then you will have some errors in the example to fix.
 
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - clocks
+> +
+> +unevaluatedProperties: false
+> +
+> +examples:
+> +  - |
+> +    sdhci0: sdhci@f0840000 {
+
+Drop unused labels.
+
+Node name should be 'mmc'
+
+> +      compatible = "nuvoton,npcm750-sdhci";
+
+Indent by 4 spaces.
+
+> +      reg = <0xf0840000 0x200>;
+> +      interrupts = <0 27 4>;
+> +      clocks = <&clk 4>;
+> +    };
+> -- 
+> 2.33.0
+> 
+> 
