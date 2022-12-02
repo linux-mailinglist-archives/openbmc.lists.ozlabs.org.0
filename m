@@ -2,63 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 511BD640886
-	for <lists+openbmc@lfdr.de>; Fri,  2 Dec 2022 15:33:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D25B9640D81
+	for <lists+openbmc@lfdr.de>; Fri,  2 Dec 2022 19:39:05 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NNwRn0qWtz3bfG
-	for <lists+openbmc@lfdr.de>; Sat,  3 Dec 2022 01:33:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NP1tb3s3mz3bfy
+	for <lists+openbmc@lfdr.de>; Sat,  3 Dec 2022 05:39:03 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=FeDHOOuO;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=iPHaTahL;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.55.52.120; helo=mga04.intel.com; envelope-from=sakari.ailus@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::134; helo=mail-lf1-x134.google.com; envelope-from=argataullina@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=FeDHOOuO;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=iPHaTahL;
 	dkim-atps=neutral
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NNwR63C6sz30Qv;
-	Sat,  3 Dec 2022 01:33:21 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1669991602; x=1701527602;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=n2a/CpHAAbyq8nKYEBLb4Z+TMWPhb76u70lEuNyc05Y=;
-  b=FeDHOOuOmn2pd/TzOCTedD5iu4Ie0d3jfqBd9lJSh67hPvuiydxJx0Zz
-   aZIoGMf8DRuDSvZEKgio9mHsv2le6lcpOOAT4dJhC+at8J7tszLHD46no
-   pQIs1pGWD85ccJ3HVSdq35AMAoUNvMr5OqnEACXmaXO8bWCc6LnbGEckm
-   +Opgu10TzOCpTI08Fbk3IzWJPBwufIGTTthHQitfBivDUvV2sIi5RYbrW
-   ZAXtsHYPshoHzw9uCfXSrnGZIBF7RIjuurejiPqarBluixZucRwxSP38v
-   GvX0K9x+e0WlUDtDvcks51UYCpkwRDPKMoJIXyV2FZLGLw7wrFY3pt66n
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10548"; a="314665460"
-X-IronPort-AV: E=Sophos;i="5.96,212,1665471600"; 
-   d="scan'208";a="314665460"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Dec 2022 06:33:19 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10548"; a="677614996"
-X-IronPort-AV: E=Sophos;i="5.96,212,1665471600"; 
-   d="scan'208";a="677614996"
-Received: from punajuuri.fi.intel.com (HELO paasikivi.fi.intel.com) ([10.237.72.43])
-  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 02 Dec 2022 06:33:14 -0800
-Received: from paasikivi.fi.intel.com (localhost [127.0.0.1])
-	by paasikivi.fi.intel.com (Postfix) with SMTP id F0A3220363;
-	Fri,  2 Dec 2022 16:24:28 +0200 (EET)
-Date: Fri, 2 Dec 2022 14:24:28 +0000
-From: Sakari Ailus <sakari.ailus@linux.intel.com>
-To: Jammy Huang <jammy_huang@aspeedtech.com>
-Subject: Re: [PATCH v11 3/5] media: Documentation: aspeed-video: Add user
- documentation for the aspeed-video driver
-Message-ID: <Y4oKnBDnvliD8cJb@paasikivi.fi.intel.com>
-References: <20221028023554.928-1-jammy_huang@aspeedtech.com>
- <20221028023554.928-4-jammy_huang@aspeedtech.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NP1sz2vx1z3bN8
+	for <openbmc@lists.ozlabs.org>; Sat,  3 Dec 2022 05:38:30 +1100 (AEDT)
+Received: by mail-lf1-x134.google.com with SMTP id g12so8692961lfh.3
+        for <openbmc@lists.ozlabs.org>; Fri, 02 Dec 2022 10:38:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=dXnzczsiq3bPLTUULrAlCyZ2hKJbFg+Nf3y1ogFbxK0=;
+        b=iPHaTahLfTepu2O3Ku9G92CGQ9yYa2NmNphmW0xrn8VKwYlf7aMfqnkqkYUdrWjLCv
+         2/mrdIHTHkzYXt+01EEY1b7mkv1QPS/cnaswq34BF5Vj35xRuFSYaZwip3iWQaTx2X/x
+         yv3HmVzlH6Radl+blwIGl0x/njPSqjCHTbMl+z1ExKceZDzlLT9CpcKzJvkxPv/YqejY
+         33zaiPzUq0uYXpE2/H4LLn5fYFWH9xSDqOGDvAR+VRLCWPXeMkml+MJTbsOUUAHAI22b
+         33BJqnZsZvbl68KDZP+jG3DgvUzmYl2m0fDNdFAN2P8N+uN3FT2mcDYL8NdpQ8I9kWyx
+         AWnQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dXnzczsiq3bPLTUULrAlCyZ2hKJbFg+Nf3y1ogFbxK0=;
+        b=lP/pZOzMtCjWyLa7bTZOJ3JFLzz2Frn3cSyWwrjaApDaaOTjXpZatFuxQgt+7l/IYP
+         VdPOHkA2eGbu4SwBQY5Y3zqir6VPYJ6UuQB7cRZl9LwTNH9UwLVrj7efTpK8gwu8itU9
+         bnGOOOwBkojDgJLZeMftY2G4iiNk5xl9Dtdgcsh/ndsoORCxusQiFOESlPG3xk8fnP/3
+         Czg2aufTRUoDBtNQzHr5kGCGYtpG3qimn5iH9jkFzMHMC98RL1nPFQwTjuP7OEgAF4qD
+         KKoXbj/lSuHLxInhr7FPim3AuapAqyeS/GcXis+II6+XZUWDEA9Hvu6MxPONCao9AT8n
+         f8Fg==
+X-Gm-Message-State: ANoB5pnD564AS7G/YvUBMmiSjPcUqon9sSQysuecllYfMRhkWO3ZUYnT
+	BuXtzdpOYXw1oWIXBs3Ujb0=
+X-Google-Smtp-Source: AA0mqf6Ol2gpwA3f4ZfxhNAsKftIdyY2/j/Rs8hEP29hw6l7yt2zNVu+A1XVuNDjYDjSUCqbX8chuQ==
+X-Received: by 2002:ac2:4c4a:0:b0:4aa:1e21:8f1f with SMTP id o10-20020ac24c4a000000b004aa1e218f1fmr18124919lfk.651.1670006303243;
+        Fri, 02 Dec 2022 10:38:23 -0800 (PST)
+Received: from [192.168.0.104] ([85.202.228.74])
+        by smtp.gmail.com with ESMTPSA id l12-20020a056512110c00b0047f7722b73csm1090527lfg.142.2022.12.02.10.38.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 Dec 2022 10:38:22 -0800 (PST)
+Message-ID: <2cf8fd4925cd441b1f131497450486d3ed113e27.camel@gmail.com>
+Subject: Re: [OpenBmc][JournalD] Persisting Journal Logs
+From: Alisa Gataullina <argataullina@gmail.com>
+To: Rohit Pai <ropai@nvidia.com>
+Date: Fri, 02 Dec 2022 21:38:22 +0300
+In-Reply-To: <LV2PR12MB6014244EC8301F492BB8BF84CD149@LV2PR12MB6014.namprd12.prod.outlook.com>
+References: 	<LV2PR12MB6014244EC8301F492BB8BF84CD149@LV2PR12MB6014.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.44.4-0ubuntu1 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20221028023554.928-4-jammy_huang@aspeedtech.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,115 +79,62 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-arm-kernel@lists.infradead.org, ezequiel@vanguardiasur.com.ar, nicolas.dufresne@collabora.com, linux-kernel@vger.kernel.org, linux-media@vger.kernel.org, linux-aspeed@lists.ozlabs.org, andrew@aj.id.au, andrzej.p@collabora.com, openbmc@lists.ozlabs.org, eajames@linux.ibm.com, xavier.roumegue@oss.nxp.com, stanimir.varbanov@linaro.org, joel@jms.id.au, hverkuil-cisco@xs4all.nl, mchehab@kernel.org, ming.qian@nxp.com, laurent.pinchart@ideasonboard.com
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Jammy,
+On Thu, 2022-12-01 at 14:04 +0000, Rohit Pai wrote:
+> I am running open bmc with Linux 5.15 and systemd 251 (251.2+).
+> I have configured persistent logging for journal.
+> /etc/systemd/journald.conf
+> [Journal]
+> Storage=3Dpersistent
+> =C2=A0
+> Created folder /var/log/journal. This is mounted on mtd flash
+> partition.
+> The rootfs has overlay with RO filesystem and RW filesystem coming
+> from mtd partition.
+> =C2=A0
+> ls -alt /var/log/journal/
+> drwxr-sr-x=C2=A0=C2=A0=C2=A0 2 root=C2=A0=C2=A0=C2=A0=C2=A0 systemd-=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 0 Jan=C2=A0 1 00:03
+> 2b4305f670484d1fa6b9c4deee336b91
+> =C2=A0
+> Jouranld creates a folder under /var/log/journal but I dont see
+> anything getting stored here ever.=C2=A0
+> I don't see journal being persistent across reboots.
+> Journal logs are kept only in /run/log/journal, and this is tmpfs in
+> the system and gets erased on each reboot.
+> I have tried=C2=A0journalctl --flush=C2=A0to see if anything gets pushed =
+to
+> inside /var/log/journal but nothing is stored apart from the folder
+> name.=C2=A0
+> journalctl --rotate=C2=A0also has no impact.
+> I seem to be doing everything as per the journalctl documentation but
+> still it=E2=80=99s not working.
+> =C2=A0
+> Anyone else has seen this issue, any help?
+> =C2=A0
+> Thanks=20
+> Rohit PAI=20
 
-On Fri, Oct 28, 2022 at 10:35:52AM +0800, Jammy Huang wrote:
-> Add user documentation for the aspeed-video driver.
-> 
-> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
-> ---
-> v11:
->   - update the way to change format
-> v10:
->   - new
-> ---
->  .../media/drivers/aspeed-video.rst            | 61 +++++++++++++++++++
->  .../userspace-api/media/drivers/index.rst     |  1 +
->  2 files changed, 66 insertions(+)
->  create mode 100644 Documentation/userspace-api/media/drivers/aspeed-video.rst
-> 
-> diff --git a/Documentation/userspace-api/media/drivers/aspeed-video.rst b/Documentation/userspace-api/media/drivers/aspeed-video.rst
-> new file mode 100644
-> index 000000000000..e5656a8d990e
-> --- /dev/null
-> +++ b/Documentation/userspace-api/media/drivers/aspeed-video.rst
-> @@ -0,0 +1,65 @@
-> +.. SPDX-License-Identifier: GPL-2.0
-> +
-> +.. include:: <isonum.txt>
-> +
-> +ASPEED video driver
-> +===================
-> +
-> +ASPEED Video Engine found on AST2400/2500/2600 SoC supports high performance
-> +video compressions with a wide range of video quality and compression ratio
-> +options. The adopted compressing algorithm is a modified JPEG algorithm.
-> +
-> +There are 2 types of compressions in this IP.
-> +
-> +* JPEG JFIF standard mode: for single frame and management compression
-> +* ASPEED proprietary mode: for multi-frame and differential compression.
-> +  Support 2-pass (high quality) video compression scheme (Patent pending by
-> +  ASPEED). Provide visually lossless video compression quality or to reduce
-> +  the network average loading under intranet KVM applications.
-> +
-> +VIDIOC_S_FMT can be used to choose which format you want. V4L2_PIX_FMT_JPEG
-> +stands for JPEG JFIF standard mode; V4L2_PIX_FMT_AJPG stands for ASPEED
-> +proprietary mode.
-> +
-> +More details on the ASPEED video hardware operations can be found in
-> +*chapter 6.2.16 KVM Video Driver* of SDK_User_Guide which available on
-> +AspeedTech-BMC/openbmc/releases.
+Hello
 
-Same comment on this, what does this refer to?
+To change journal log directory:
 
-> +
-> +The ASPEED video driver implements the following driver-specific control:
-> +
-> +``V4L2_CID_ASPEED_HQ_MODE``
-> +-------------------------------
-> +    Enable/Disable ASPEED's High quality mode. This is a private control
-> +    that can be used to enable high quality for aspeed proprietary mode.
-> +
-> +.. flat-table::
-> +    :header-rows:  0
-> +    :stub-columns: 0
-> +    :widths:       1 4
-> +
-> +    * - ``(0)``
-> +      - ASPEED HQ mode is disabled.
-> +    * - ``(1)``
-> +      - ASPEED HQ mode is enabled.
-> +
-> +``V4L2_CID_ASPEED_HQ_JPEG_QUALITY``
-> +-------------------------------
-> +    Define the quality of ASPEED's High quality mode. This is a private control
-> +    that can be used to decide compression quality if High quality mode enabled
-> +    . Higher the value, better the quality and bigger the size.
-> +
-> +.. flat-table::
-> +    :header-rows:  0
-> +    :stub-columns: 0
-> +    :widths:       1 4
-> +
-> +    * - ``(1)``
-> +      - minimum
-> +    * - ``(12)``
-> +      - maximum
-> +    * - ``(1)``
-> +      - step
-> +    * - ``(1)``
-> +      - default
-> +
-> +**Copyright** |copy| 2022 ASPEED Technology Inc.
-> diff --git a/Documentation/userspace-api/media/drivers/index.rst b/Documentation/userspace-api/media/drivers/index.rst
-> index 32f82aed47d9..46a494e00b72 100644
-> --- a/Documentation/userspace-api/media/drivers/index.rst
-> +++ b/Documentation/userspace-api/media/drivers/index.rst
-> @@ -31,6 +31,7 @@ For more details see the file COPYING in the source distribution of Linux.
->  	:maxdepth: 5
->  	:numbered:
->  
-> +	aspeed-video
->  	ccs
->  	cx2341x-uapi
->  	dw100
+systemd-tmpfiles --create --prefix /var/log/journal
+systemctl restart systemd-journald
 
--- 
-Kind regards,
+It needs to check journal log rotate settings. But this isn't
+recommended way for embedded system- too many rewriting cycles. The
+best way is to use remote syslog
 
-Sakari Ailus
+To mount /var/log on persistent storage with yocto you could add =20
+VOLATILE_LOG_DIR =3D "no"  into conf file of machine.
+After that all RedFsh, IPMI and all others logs defined with
+rsyslog.conf will be there on persistent storage. Also yocto created
+directory /var/log/journal but journal use default log path
+/run/log/journal. And you need to setup it.
+
+Best Regards,
+Alisa
