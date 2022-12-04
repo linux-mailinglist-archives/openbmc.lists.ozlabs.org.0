@@ -1,67 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 80685641B7D
-	for <lists+openbmc@lfdr.de>; Sun,  4 Dec 2022 09:19:22 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4077641C9C
+	for <lists+openbmc@lfdr.de>; Sun,  4 Dec 2022 12:22:08 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NQ02X2KSjz3bdl
-	for <lists+openbmc@lfdr.de>; Sun,  4 Dec 2022 19:19:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NQ45V3KbGz3bNy
+	for <lists+openbmc@lfdr.de>; Sun,  4 Dec 2022 22:22:06 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=Pn0MdT7j;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=bsm+SYLu;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bytedance.com (client-ip=2a00:1450:4864:20::32b; helo=mail-wm1-x32b.google.com; envelope-from=zhangjian.3032@bytedance.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::230; helo=mail-lj1-x230.google.com; envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=Pn0MdT7j;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=bsm+SYLu;
 	dkim-atps=neutral
-Received: from mail-wm1-x32b.google.com (mail-wm1-x32b.google.com [IPv6:2a00:1450:4864:20::32b])
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NQ01z1tZbz3bXR
-	for <openbmc@lists.ozlabs.org>; Sun,  4 Dec 2022 19:18:45 +1100 (AEDT)
-Received: by mail-wm1-x32b.google.com with SMTP id n9-20020a05600c3b8900b003d0944dba41so3025569wms.4
-        for <openbmc@lists.ozlabs.org>; Sun, 04 Dec 2022 00:18:44 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NQ44s3bb8z3bNn
+	for <openbmc@lists.ozlabs.org>; Sun,  4 Dec 2022 22:21:31 +1100 (AEDT)
+Received: by mail-lj1-x230.google.com with SMTP id z24so10447019ljn.4
+        for <openbmc@lists.ozlabs.org>; Sun, 04 Dec 2022 03:21:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance-com.20210112.gappssmtp.com; s=20210112;
+        d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=y8TCyPScLpghS6e2mx+sLfq31ciUW5bDY6CEPjz88mY=;
-        b=Pn0MdT7juBzqq3X5Hi+ioCzx3cHMY4Eb6UIzyYby6bb/e5ksSljVgNiH1UgDrQo7Ja
-         WNEnlWHKeqM8+1PnIanzZogBF236USdFuV8QhapM3fNFw6vRTR2BzhJ0wON6zINUlo3A
-         zy7OcrwZD58WajxqAicnGOQCjfKCAqRf+TVEoWfF950JYKe+yoXpWAD5AIuxQ9Rq2JnN
-         YMqmSuXpy/UUNjmALXk7YDTpgOFW6JrqE5N/UqxUryfN0ZKLcPC9Z6zvuH3uAKd/ZiiF
-         zP21atiUT3b8bAA0ic3Q3xStIATyBfvqd017MgEj7ji2yr3vfINaU1Zgallp3rITHY+T
-         K0bA==
+        bh=VzxN0a65z/xh5y8UY35P3CfCctAsgTN/CeWWUe2WBcw=;
+        b=bsm+SYLuNeRO6BAjvQlQ4TIaG6/6NdYqNvbB4RlSEyP0DFkYE2vlz8IlOuj+K/gvYW
+         8nG8WvZHhqw7z7ZotV5L/+dCsZs99lHTXgKo8kFCyK0zvFnt+ihW1AWCHtRYRXfPSjZM
+         s//Q+24IZCCfnrIfQei1k3zBSdKCUMgYMzoTpwYGx+YB2l+78dazsuZF7StEWi70mxFs
+         i8DAiUKjkU2qmgfZ5kMskeEiJPM11BGporGg0EhsDjSI7iKL7Pr87afP1n2kEhQIVVZY
+         VfDXstD+WIZ2umIqFYrml1u+Clb0dTwf1UaZql8EYZpPU6VUPOjmHLK2dIbYaug0tD5e
+         3VpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=y8TCyPScLpghS6e2mx+sLfq31ciUW5bDY6CEPjz88mY=;
-        b=xqYK9ij+TltX41avXxue6BFvaO/0ockVl0pFbqsnCKvOZuqKChA2Ft4CXcPHCuDZ6t
-         jrvieS0RVZpsM/61SGGs01XqDcXPAmIhW1zK5PJyOY3yWMWf+xZsaNuSXpyiCtDQnrqQ
-         izz5b9br9lRkFBfFI4BlqDQSrUDgk5d7l+GsoJ0by9qBVnM2x6cqVxL2I/q/Tv5AKjr8
-         PTh249E6GoyQNdSzE4aatUC606OkBX3HQfTeMALl+LYF98wmGTrxdMIyFzcobXUkLpJc
-         DxHglktCm2D8anPrU+NaVRLSHh5aIdx5ZmYpN5I6TNp15vxOZ6bmXp72oMgsg0F/UVwQ
-         xPEw==
-X-Gm-Message-State: ANoB5pkjty3lrImADN33b9o6/nWNdVA7brl6Uq05EgfYWPdU6tSHhR0J
-	19xpWoBHRZDutPXrZTiz5WPSlHd/3m21SYQBrL7lwwSE6U7s3HgJ
-X-Google-Smtp-Source: AA0mqf5icu7a0bwe0PH4mhgZikiQ6M5Segjx8J4gPyyBsciZvfT4KC0hiMHfsqaDK1zuEmbd1PJ/Kf7ybDrCrecevHA=
-X-Received: by 2002:a05:600c:1e12:b0:3cf:9ad3:a20e with SMTP id
- ay18-20020a05600c1e1200b003cf9ad3a20emr47012448wmb.151.1670141918605; Sun, 04
- Dec 2022 00:18:38 -0800 (PST)
+        bh=VzxN0a65z/xh5y8UY35P3CfCctAsgTN/CeWWUe2WBcw=;
+        b=EdkCM7PRU3ynzQ9rY4mq8nMdSXE5s0/HHD8UIeA40i37wTKXeST9J3lqr7c8jXiNuR
+         QSGLeB0tlNVDv5Sd1Qm9+7DC2jctilDkrc1pVmGwZLz7ZXBnnxHhHhTNFsVBsmls1gQN
+         ste/pHNQMSbfXU7Ejz6OXWDpMBPycm3cNG7mwyHGT5RLvTUozwQBqw2C8xc3VICwBHpI
+         PXuiYetgE3/UOsDOdQ/axdBeUaanRz9bS8lXJZEJDnE+mxuhHCsZK6W8e/18Gl3NICZZ
+         fVLef3V4uMbIkWZpw0mJXt+eO2iBv91VYkeJ3j38nTdiPgiLeQYyPzc9Z49NTqWrHa8f
+         j2+g==
+X-Gm-Message-State: ANoB5pltdiOw7WK6d9Xh0Mibiw+IJr9FW16kvN6P6rdcGjCVENNZEAP2
+	lwv8S/JlOTdZWnnVsO/w8xJmzEFVwPScp69KRlg=
+X-Google-Smtp-Source: AA0mqf6jF2SAt0IChwJcmP7BdZ2L/cinR4COc/NkJx0tLOuvLCXAKC31M+i+Q8bXLIABUTeys7fcBpVwhgKvfNAZw5w=
+X-Received: by 2002:a05:651c:b10:b0:26f:c081:9aee with SMTP id
+ b16-20020a05651c0b1000b0026fc0819aeemr18412001ljr.219.1670152885927; Sun, 04
+ Dec 2022 03:21:25 -0800 (PST)
 MIME-Version: 1.0
-References: <CACFAz8BpHQUROFcpG3+dG3XyUt0+8=zgcwkU4CTk3uuO0Z2c_w@mail.gmail.com>
- <44e8a1b5-22cc-1599-4f1e-5071e42fba8d@baywinds.org>
-In-Reply-To: <44e8a1b5-22cc-1599-4f1e-5071e42fba8d@baywinds.org>
-From: Zhang Jian <zhangjian.3032@bytedance.com>
-Date: Sun, 4 Dec 2022 16:18:27 +0800
-Message-ID: <CA+J-oUuZzkzuuwAJ_tfrcTk7dxvTj1Pr7QW+W-HJB1Ka+yuXTw@mail.gmail.com>
-Subject: Re: [Phishing Risk] [External] Re: Changing ethernet port speed
-To: Bruce Ferrell <bferrell@baywinds.org>
+References: <20221130150857.67113-1-tmaimon77@gmail.com> <20221130150857.67113-3-tmaimon77@gmail.com>
+ <0b5df859-a662-a677-aaa0-cbf68c029ab9@intel.com>
+In-Reply-To: <0b5df859-a662-a677-aaa0-cbf68c029ab9@intel.com>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Sun, 4 Dec 2022 13:21:14 +0200
+Message-ID: <CAP6Zq1iokM2chLjGiRmFxe3w2vUUKQ0acd6V9z=7AmDZMSViQw@mail.gmail.com>
+Subject: Re: [PATCH v1 2/2] mmc: sdhci-npcm: Add NPCM SDHCI driver
+To: Adrian Hunter <adrian.hunter@intel.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -74,59 +74,163 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: devicetree@vger.kernel.org, ulf.hansson@linaro.org, benjaminfair@google.com, arnd@arndb.de, krakoczy@antmicro.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, briannorris@chromium.org, linux-mmc@vger.kernel.org, andy.shevchenko@gmail.com, tali.perry1@gmail.com, gsomlo@gmail.com, joel@jms.id.au, davidgow@google.com, skhan@linuxfoundation.org, linux-kernel@vger.kernel.org, pbrobinson@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Bruce;
+Hi Adrian,
 
-Where are you want to set the duplex and speed?
+Thanks for your comments.
 
-For linux, I use ethtool. See:
-https://phoenixnap.com/kb/ethtool-command-change-speed-duplex-ethernet-card-linux
-For u-boot, I think you need use `mdio` to change the register of
-`phy`.(I'm not sure if any better way.).
+Your comments will be addressed next version.
 
-On Sun, Dec 4, 2022 at 3:10 PM Bruce Ferrell <bferrell@baywinds.org> wrote:
+On Thu, 1 Dec 2022 at 18:28, Adrian Hunter <adrian.hunter@intel.com> wrote:
+>
+> On 30/11/22 17:08, Tomer Maimon wrote:
+> > Add Nuvoton NPCM BMC sdhci-pltfm controller driver.
+> >
+> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> > ---
+> >  drivers/mmc/host/Kconfig      |  8 ++++
+> >  drivers/mmc/host/Makefile     |  1 +
+> >  drivers/mmc/host/sdhci-npcm.c | 81 +++++++++++++++++++++++++++++++++++
+> >  3 files changed, 90 insertions(+)
+> >  create mode 100644 drivers/mmc/host/sdhci-npcm.c
+> >
+> > diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
+> > index fb1062a6394c..4b2d9ce4308c 100644
+> > --- a/drivers/mmc/host/Kconfig
+> > +++ b/drivers/mmc/host/Kconfig
+> > @@ -709,6 +709,14 @@ config MMC_TMIO
+> >         This provides support for the SD/MMC cell found in TC6393XB,
+> >         T7L66XB and also HTC ASIC3
+> >
+> > +config MMC_SDHCI_NPCM
+> > +     tristate "Secure Digital Host Controller Interface support for NPCM"
+> > +     depends on ARCH_NPCM || COMPILE_TEST
+> > +     depends on MMC_SDHCI_PLTFM
+> > +     help
+> > +       This provides support for the SD/eMMC controller found in
+> > +       NPCM BMC family SoCs.
+> > +
+> >  config MMC_SDHI
+> >       tristate "Renesas SDHI SD/SDIO controller support"
+> >       depends on SUPERH || ARCH_RENESAS || COMPILE_TEST
+> > diff --git a/drivers/mmc/host/Makefile b/drivers/mmc/host/Makefile
+> > index 4e4ceb32c4b4..801086613d7f 100644
+> > --- a/drivers/mmc/host/Makefile
+> > +++ b/drivers/mmc/host/Makefile
+> > @@ -37,6 +37,7 @@ obj-$(CONFIG_MMC_SPI)               += of_mmc_spi.o
+> >  obj-$(CONFIG_MMC_S3C)        += s3cmci.o
+> >  obj-$(CONFIG_MMC_SDRICOH_CS) += sdricoh_cs.o
+> >  obj-$(CONFIG_MMC_TMIO)               += tmio_mmc.o
+> > +obj-$(CONFIG_MMC_SDHCI_NPCM) += sdhci-npcm.o
+> >  obj-$(CONFIG_MMC_TMIO_CORE)  += tmio_mmc_core.o
+> >  obj-$(CONFIG_MMC_SDHI)               += renesas_sdhi_core.o
+> >  obj-$(CONFIG_MMC_SDHI_SYS_DMAC)              += renesas_sdhi_sys_dmac.o
+> > diff --git a/drivers/mmc/host/sdhci-npcm.c b/drivers/mmc/host/sdhci-npcm.c
+> > new file mode 100644
+> > index 000000000000..298c5f3e7c2b
+> > --- /dev/null
+> > +++ b/drivers/mmc/host/sdhci-npcm.c
+> > @@ -0,0 +1,81 @@
+> > +// SPDX-License-Identifier: GPL-2.0+
+> > +/*
+> > + * NPCM SDHC MMC host controller driver.
+> > + *
+> > + */
+> > +
+> > +#include <linux/clk.h>
+> > +#include <linux/err.h>
+> > +#include <linux/io.h>
+> > +#include <linux/mmc/host.h>
+> > +#include <linux/mmc/mmc.h>
+> > +#include <linux/module.h>
+> > +#include <linux/of.h>
+> > +
+> > +#include "sdhci-pltfm.h"
+> > +
+> > +static const struct sdhci_pltfm_data npcm_sdhci_pdata = {
+> > +     .quirks  = SDHCI_QUIRK_DELAY_AFTER_POWER,
+> > +     .quirks2 = SDHCI_QUIRK2_STOP_WITH_TC |
+> > +                SDHCI_QUIRK2_NO_1_8_V,
+> > +};
+> > +
+> > +static int npcm_sdhci_probe(struct platform_device *pdev)
+> > +{
+> > +     struct sdhci_pltfm_host *pltfm_host;
+> > +     struct sdhci_host *host;
+> > +     u32 caps;
+> > +     int ret;
+> > +
+> > +     host = sdhci_pltfm_init(pdev, &npcm_sdhci_pdata, 0);
+> > +     if (IS_ERR(host))
+> > +             return PTR_ERR(host);
+> > +
+> > +     pltfm_host = sdhci_priv(host);
+> > +     pltfm_host->clk = devm_clk_get(&pdev->dev, NULL);
+>
+> For an optional clock, something like:
+>
+>         pltfm_host->clk = devm_clk_get_optional(&pdev->dev, NULL);
+>         if (IS_ERR(pltfm_host->clk))
+>                 return PTR_ERR(pltfm_host->clk);
+>
+> will handle -EPROBE_DEFER
+>
+> > +
+> > +     if (!IS_ERR(pltfm_host->clk))
+> > +             clk_prepare_enable(pltfm_host->clk);
+> > +
+> > +     caps = sdhci_readl(host, SDHCI_CAPABILITIES);
+> > +     if (caps & SDHCI_CAN_DO_8BIT)
+> > +             host->mmc->caps |= MMC_CAP_8_BIT_DATA;
+> > +
+> > +     ret = mmc_of_parse(host->mmc);
+> > +     if (ret)
+> > +             goto err_sdhci_add;
+> > +
+> > +     ret = sdhci_add_host(host);
+> > +     if (ret)
+> > +             goto err_sdhci_add;
+> > +
+> > +     return 0;
+> > +
+> > +err_sdhci_add:
+> > +     clk_disable_unprepare(pltfm_host->clk);
+> > +     sdhci_pltfm_free(pdev);
+> > +     return ret;
+> > +}
+> > +
+> > +static const struct of_device_id npcm_sdhci_of_match[] = {
+> > +     { .compatible = "nuvoton,npcm750-sdhci" },
+> > +     { .compatible = "nuvoton,npcm845-sdhci" },
+> > +     { }
+> > +};
+> > +MODULE_DEVICE_TABLE(of, npcm_sdhci_of_match);
+> > +
+> > +static struct platform_driver npcm_sdhci_driver = {
+> > +     .driver = {
+> > +             .name   = "npcm-sdhci",
+> > +             .of_match_table = npcm_sdhci_of_match,
+> > +             .pm     = &sdhci_pltfm_pmops,
+> > +     },
+> > +     .probe          = npcm_sdhci_probe,
+> > +     .remove         = sdhci_pltfm_unregister,
+> > +};
+> > +
+> > +module_platform_driver(npcm_sdhci_driver);
+> > +
+> > +MODULE_DESCRIPTION("NPCM Secure Digital Host Controller Interface driver");
+> > +MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
+> > +MODULE_LICENSE("GPL v2");
+>
+> WARNING: Prefer "GPL" over "GPL v2" - see commit bf7fbeeae6db ("module: Cure the MODULE_LICENSE "GPL" vs. "GPL v2" bogosity")
+> #133: FILE: drivers/mmc/host/sdhci-npcm.c:81:
+> +MODULE_LICENSE("GPL v2");
 >
 >
-> Normally, those parms should be modified with ipmitool
->
->
-> On 12/1/22 9:27 AM, Hamid Amirrad wrote:
->
-> Hi,
->
-> I am trying to change the Ethernet port speed from 10Mbps to 1Gbps, but I can't find a way to do that. Can you please point me in the right direction?
->
-> Thanks,
-> Hamid
->
->
-> ast# version
-> U-Boot 2016.07 (Jun 10 2020 - 10:12:49 +0000)
-> arm-openbmc-linux-gnueabi-gcc (GCC) 11.2.0
-> GNU ld (GNU Binutils) 2.37.20210721
->
-> ast# printenv
-> SN=8513060012
-> baudrate=115200
-> bootargs=console=ttyS4,115200n8 root=/dev/ram rw
-> bootcmd=bootm 20080000
-> bootdelay=2
-> ethact=FTGMAC100#0
-> ethaddr=00:02:C5:38:1D:DF
-> ethaddr1=00:02:C5:38:1D:E0
-> ipaddr=172.16.141.104
-> spi_dma=yes
-> stderr=serial
-> stdin=serial
-> stdout=serial
-> verify=yes
->
-> ast# ping 172.16.141.1
-> FTGMAC100#0: link up, 10Mbps half-duplex
-> Using FTGMAC100#0 device
->
-> ARP Retry count exceeded; starting again
-> ping failed; host 172.16.141.1 is not alive
+
+Best regards,
+
+Tomer
