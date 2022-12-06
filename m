@@ -2,91 +2,112 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 722DC6448D8
-	for <lists+openbmc@lfdr.de>; Tue,  6 Dec 2022 17:10:16 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A001644D10
+	for <lists+openbmc@lfdr.de>; Tue,  6 Dec 2022 21:09:27 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NRQP22XM7z3bZk
-	for <lists+openbmc@lfdr.de>; Wed,  7 Dec 2022 03:10:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NRWj12F4gz3bbF
+	for <lists+openbmc@lfdr.de>; Wed,  7 Dec 2022 07:09:25 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=h2akPIQ8;
+	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=L35LK6sI;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=nvidia.com (client-ip=2a01:111:f400:fe5a::631; helo=nam12-mw2-obe.outbound.protection.outlook.com; envelope-from=ropai@nvidia.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=h2akPIQ8;
+	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=L35LK6sI;
 	dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on20631.outbound.protection.outlook.com [IPv6:2a01:111:f400:fe5a::631])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NRQMZ3JGYz2xVr
-	for <openbmc@lists.ozlabs.org>; Wed,  7 Dec 2022 03:08:58 +1100 (AEDT)
-Received: from pps.filterd (m0127361.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B6G6BDk008020;
-	Tue, 6 Dec 2022 16:08:50 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- subject : to : cc : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=BKTeHdJWR6IeXTZpqlS8kek5A33xW7g5NtrLaVF86yg=;
- b=h2akPIQ8rzxmSjLR7Bf5h/b5T96c1RDrbWI8ICd6qZ5Z2sve0cg4yO7qUDhV8A7LZkZ/
- HzvwA8d8m+ww7SNo2LbHdeyd5u3oddtV4HgomCBBqqwFF97foIYTZZFeMn3aMCnsWNao
- VG11Ie7U2GovlktSqM5NtUnLpmYfpq7GzxtFzS+/cmgPvhWHr0dpGPRmk2/8jhf3XLel
- 9oTilQQ1aG8rKVZvh5BTyLMMDrm/Kh3UIonkhYO8tdriUiFtY3okVMA8+CrnUB5IwjQP
- SjyHgvBP4lM7gTz6bAR2/i1+M+jYDQ3TU/XK2GlCNHKOfJZ0KkesrVhdsv2aBM5tafXo PQ== 
-Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com [169.47.144.27])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3m9tqmnede-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 06 Dec 2022 16:08:49 +0000
-Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
-	by ppma05wdc.us.ibm.com (8.17.1.19/8.16.1.2) with ESMTP id 2B6G025x017666;
-	Tue, 6 Dec 2022 16:08:49 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([9.208.129.113])
-	by ppma05wdc.us.ibm.com (PPS) with ESMTPS id 3m9nygp7hn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 06 Dec 2022 16:08:49 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com [10.241.53.102])
-	by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 2B6G8lvB5636718
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 6 Dec 2022 16:08:48 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id CBB135806C;
-	Tue,  6 Dec 2022 16:08:47 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 36DC958056;
-	Tue,  6 Dec 2022 16:08:47 +0000 (GMT)
-Received: from [9.65.196.87] (unknown [9.65.196.87])
-	by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTPS;
-	Tue,  6 Dec 2022 16:08:47 +0000 (GMT)
-Message-ID: <b3a14275-1c66-4d54-5a91-4ddf73d16992@linux.ibm.com>
-Date: Tue, 6 Dec 2022 10:08:46 -0600
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.3.3
-Subject: Re: Potential high risk for readonly/operator users on BMC console
- access
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NRWhM511zz3bWv
+	for <openbmc@lists.ozlabs.org>; Wed,  7 Dec 2022 07:08:49 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=e5ySOLCitj2epP719NTfrn856krUWhpWJ3cAzvEKQX2G0Ng9mTfnoP0AeXRi+Slxb4dlrcsdGi6zJcqKIfNWUT+N4rB7cgSZXIq8QWgQa5GsLIvs62vVagQ9W/viI1TDnAF8FH9yxwScQ6bN1u3GHQfHhsDzd2dvXbnaxNxnQS9CEyvqezBtJATWzLXAcXIlK+WaqDuUqWVTkF8QkmCiczFxKBHQid4+jfOvhyHd44HrQza33NmAHaFAvm0VyN7JZpfeEONt02YwxYyxJUd9rE4yiaZ8Zt/zctCfVeW3L4Nz/8cqyQkD0pHj8aaiMZ1/RciqV09Uf2CxHGJ+p+4Lhw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=WNgKoAiLjOlGH8h0f9lD9iFv9zmelEAFSgifhS1EW6Q=;
+ b=a9seB5PJKMizCDIESPtvsmF03MH9gkSIpzM5Rtcu5AeeiAjYSQyRyhQAYVnFZY9B5J1Ie1XdP4ypyAp058/1OW5O7f9nUmVIw5cUtyQvgJ5QVjgBbz3aBAD9fvDSKwF6GfSHWk/lk77EaQJTcGKPYix2hY5LKro0K4QRY6O/jBVs36tlXGwoS76KC+4ZVrD991WHXQY5egjhX2UNbrfW1h3SgMBXjciCkIOS9wqLJvcmeSivhOaq6QxnN4VK8kalPJmIJtktkK9EutxvZNrUzG+jtXF+Me7YcTZzr841DZpgexYZq3Kq7Md+aEuSnQI5yyT/9gevyDF6QxLPhMl/6A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=WNgKoAiLjOlGH8h0f9lD9iFv9zmelEAFSgifhS1EW6Q=;
+ b=L35LK6sIdqcCWTbXFeB0VMlsGLYWyy+HywW3+cbHm/Trz/h7yoFvYJJwvTI03j+FP7MP7NJ/YJR+AkS10qSvdfbD1YDCUR00FWf0o6w03XHP8Cup5CsSA3g4H/heerg+pGDJyEgzDBXDbm+WM9IFjUulrlZhxo4WIHNLLvoyIbU2bmn8bxvQoc48SpHfnpv8Kg9Xsw67PWRgXY6FJKXUL5hSWmkP7A2Zq9L5TnwT6sfJsSfVaqUO1DgHTIT6EqwQuYFuqF4uVtgDajxWoXU8o4/N19tTsjD7zJw192IxxHce3h9QijV0OYFSGFn+T/9mDxHJ2t/TS3cL286iNQtJug==
+Received: from LV2PR12MB6014.namprd12.prod.outlook.com (2603:10b6:408:170::18)
+ by PH0PR12MB8152.namprd12.prod.outlook.com (2603:10b6:510:292::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5880.13; Tue, 6 Dec
+ 2022 20:08:26 +0000
+Received: from LV2PR12MB6014.namprd12.prod.outlook.com
+ ([fe80::3b0:528b:6b8e:7e02]) by LV2PR12MB6014.namprd12.prod.outlook.com
+ ([fe80::3b0:528b:6b8e:7e02%3]) with mapi id 15.20.5880.014; Tue, 6 Dec 2022
+ 20:08:26 +0000
+From: Rohit Pai <ropai@nvidia.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: [jffs2] handling flash corruption
+Thread-Topic: [jffs2] handling flash corruption
+Thread-Index: AdkJqILm4mUCK9dWS6uTwPMluau1bg==
+Date: Tue, 6 Dec 2022 20:08:26 +0000
+Message-ID:  <LV2PR12MB6014DB772E0529929A1C3091CD1B9@LV2PR12MB6014.namprd12.prod.outlook.com>
+Accept-Language: en-US
 Content-Language: en-US
-To: Thang Nguyen OS <thang@amperemail.onmicrosoft.com>
-References: <496697FB-7A80-4F2B-BC4A-8955016082CD@amperemail.onmicrosoft.com>
- <0d89ea81-3f9a-3b59-6b82-5e503596e1a4@linux.ibm.com>
- <1AE3EBA0-0E46-47DE-BEF7-B7A0F4275D14@amperemail.onmicrosoft.com>
- <83f99d00-b72f-8136-2027-c248f2bc7d08@linux.ibm.com>
- <45DFD31D-2961-47B1-BE2D-44ED61B43662@amperemail.onmicrosoft.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-In-Reply-To: <45DFD31D-2961-47B1-BE2D-44ED61B43662@amperemail.onmicrosoft.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: -eGBkeIm4_r6480KkcB-uci_Dha-x3MR
-X-Proofpoint-ORIG-GUID: -eGBkeIm4_r6480KkcB-uci_Dha-x3MR
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: LV2PR12MB6014:EE_|PH0PR12MB8152:EE_
+x-ms-office365-filtering-correlation-id: fd324c1b-3f86-46ca-2f4d-08dad7c5a29f
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:  5Cq3A2HBDqMfziwnlcfoh3YvYLgTG2D3OnIGcFTVt9bEC6ZatQm+owN1vmkI2BUMj8h+UKKmSVH1nklXfVk/tsG+VdAg9k6yfCSV0QlNj+hUsduPO5Bf47zxBBuHXfYsNqH2ExerzTQDxkRu1x10G6WeU3gP8jEQDXgP3R6COmaB9dq3rc0WJraD+KjFTL6d/+AgxCgBeSeD5PuedGH+SvCiGPbsINlJ8kewBx/utvV7lDwDHL7YTk71xxBpY9MU1CDcDKXG6fa0B5FprNUXw8JSjs6U79t8Pow7KCLZ6ux7TPgfaj/mpsNshJbZd2vCKG4nNJVZGDvFprmsDlS2ZShwAP280AGsSlsfVgeBLmu25vx1LjntwP/08pPVBhrXGS3ROG3NrDXvEsGIf16EvDKNlp8aHGYp0Pzj4zPZ/1XTtMAP5bEv8KQUoef2fzD6da1lMIiJp0QmqJO1sj9JEjFv9bCU7bnQGAp40uNu/6KQfbGfZGlK+F21d2V9lYvlcNDPw7bTnFBZePeGCASlFxI46nwFEKjsoTRlUjW8PssjHUl8DcH2OBn3bVT6BdQtSwYKji0fDNBJ1rq+LcEuS2LDiuSgw34ho21fqjGQoI5ao1tCc9Z/cb0KM2+30PZ6tdvK9wVjIsFNeriN4660AUktAcv3+cdxkvNioKVyLSlWQtRRARfNXwB1LaanthE/pqppuJ6YZDeZiBwP73XaJYe8oDpjyvgu7Qx2czl1l3WXfLLlWWJe6hnjw0vn6TsYPDWiiaHXFpF7TMFEZ/2zbEJxxsdWnV5HMoszmCD12i9PP+sOJsh+h+9GsTBk+HgmAN5jLw4Iiw0FfJX4G8CzxQ==
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB6014.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(346002)(136003)(366004)(396003)(376002)(39860400002)(451199015)(26005)(9686003)(6506007)(478600001)(316002)(166002)(6916009)(66556008)(66476007)(76116006)(71200400001)(66946007)(8676002)(66446008)(64756008)(7696005)(52536014)(5660300002)(8936002)(83380400001)(41300700001)(38070700005)(186003)(2906002)(122000001)(38100700002)(33656002)(55016003)(86362001);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?QT+/0RloEqxU/cf0y0DijAid1L2yR5hSSjChummiHgDCf8eqqP5RO1weM/iQ?=
+ =?us-ascii?Q?JHZIha/FXMNNmvWqTF9JdIj5n5jzecvX2O2ZDOFtrl6JnWIB9P/oE3IKeH4R?=
+ =?us-ascii?Q?nDK5dscm82gQ2o7mWX9zLnOd2JX0A4uAA2pAdyvfhaiRNJy78pJfy/mLsjZD?=
+ =?us-ascii?Q?4LL/rI85Vh0oJyPYfYX787arHapZUAWuR8Le9VOvMSEWkqxyxo+jmE0VK1rF?=
+ =?us-ascii?Q?T7FJlNrftFl7K1zSnBkbu618iwi5nW8hvnr7lw7i0cJkbtdybecWC0QiVWf3?=
+ =?us-ascii?Q?Vvyb0srAyftxB3yjR3iOJwmiitFsRn8Rl8vntWfhsV/XZ9HbA1Ej6CVZGlLh?=
+ =?us-ascii?Q?vvIxXbSFA93WjNif8HLQUKRNrOhrMXnldY9Nfw57s7JEKkIXXx6lXrKaqzaw?=
+ =?us-ascii?Q?zkEoDK2DMJgoxMA6qyjfDSF0NQDgFOLfvmOUcC8CMGgJajN5vE/fr3axg5x5?=
+ =?us-ascii?Q?t967hIlRJGmJ1gURqIHXN258reUZb9IIRDyDxoYs31qVJwOG6c4hrmXRhMs/?=
+ =?us-ascii?Q?JC/wrIcBK7sWOMKJyje07Emig3AYl9SnCvY3Vkzn1WSdVXNj1Mm/4XKwb/Uh?=
+ =?us-ascii?Q?XiwlciPNESN497wzQFfKYB4tTl1ohZLfIPNv+jiLC/FXJtSzSyyuztVirMjn?=
+ =?us-ascii?Q?19tcyIIXF4DH6NQ9pQl0sMLjVwLgaBcMrBW6aKlnZicLEFBwmax0apelEbS/?=
+ =?us-ascii?Q?tYc0pnoHTspVwhsprgoFJyED7oE8SA590EZSxbkDB9hrc9/lZ/+XRsWaOuXe?=
+ =?us-ascii?Q?g05vjc1IzFk1uEsI+whQhMCvGbcwrx459COG4Z1n8Z40hcV1/sLn3QYTCqNt?=
+ =?us-ascii?Q?3eJwigNWUkslswZ/zsafYvDhA1+YCX6f4eOJJxXUXs0cEQZiO1IYJBgJ5eNr?=
+ =?us-ascii?Q?GY/nJe4fQK3JbPGet3tOPgIhA2RPTI9r/IquZCx/C81ucm30M3Pn0u4uDrRS?=
+ =?us-ascii?Q?VehQKSdnNT2ECnRPdOMfobJSkrlun5kNqV4F/yOkcepgPOzxuZHnvciYhhx0?=
+ =?us-ascii?Q?XPOP5tPoww4MJ5atC2p6R0zxwym309/n4OsDeqLsUbtuwsHicFHJLXtWyjoe?=
+ =?us-ascii?Q?o2MmLf2qGkIB7z1Tinla023xBecuPE63re6xJHFxkD4qbOhJnR6+MTkExusg?=
+ =?us-ascii?Q?InbLVEMS4FRG3rWq6I+d4tAbo18blQRcDlfPMTKUpnZdVS4HfLOme5IGKhak?=
+ =?us-ascii?Q?mv8NOuGFMj0qO3kEAJmJx3cyvHUdYc3bgmb/fqJVlDyeZkc9m0LIfZUPqRG4?=
+ =?us-ascii?Q?f+vN2vZuzDfTwBMlMjHol2nDzOcCI6ONRbv03rwAuLfX95sJxNj5kRfg5848?=
+ =?us-ascii?Q?QhyGmN8YBKqB3TmhO2P/L8VpGQCGwMJqkioABTBZ21gflffJylEHkfCO8NdH?=
+ =?us-ascii?Q?tNjnk8Qon2ullfkEVQlkIr27vK/QZ+f5oY/R1iG+OvYCkCAiRBvlYSnCoFtc?=
+ =?us-ascii?Q?L7t2Eq5dhH/+xvFK2uQp8LguNCh0fHnMvQk3bWb2IZ/QLL4ca/sD2EahwYCo?=
+ =?us-ascii?Q?J3XIQQP0y4P94HfGfIoLA20tVKuDGruXILJJREPRI637hpT7bhh2R0mZwlQo?=
+ =?us-ascii?Q?vp131kGzoqs4nEAF9Ks=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_LV2PR12MB6014DB772E0529929A1C3091CD1B9LV2PR12MB6014namp_"
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
- definitions=2022-12-06_10,2022-12-06_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 mlxscore=0
- lowpriorityscore=0 clxscore=1015 priorityscore=1501 spamscore=0
- bulkscore=0 mlxlogscore=999 malwarescore=0 suspectscore=0 adultscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2210170000 definitions=main-2212060133
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB6014.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: fd324c1b-3f86-46ca-2f4d-08dad7c5a29f
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Dec 2022 20:08:26.2592
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: FUhgI4g2+8LrbBnLb+f9upSToF3WvpE02LnZZvKWoiaQNV6D2bR7e1RyP+vxQxDXKbIYlzNIAEW6qh7HPFbpeg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB8152
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,142 +119,351 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Phong Vo <pvo@amperecomputing.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Phong Vo OS <phong@os.amperecomputing.com>, Nga Nguyen <nga.nguyen@amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 12/5/22 2:55 AM, Thang Nguyen OS wrote:
-> On 2 Dec 2022, at 03: 42, Joseph Reynolds <jrey@ linux. ibm. com> 
-> wrote: [EXTERNAL EMAIL NOTICE: This email originated from an external 
-> sender. Please be mindful of safe email handling and proprietary 
-> information protection practices. ] On
-> ZjQcmQRYFpfptBannerStart
-> This Message Is From an External Sender
-> This message came from outside your organization.
-> ZjQcmQRYFpfptBannerEnd
->> On 2 Dec 2022, at 03:42, Joseph Reynolds <jrey@linux.ibm.com> wrote:
->>
->> [EXTERNAL EMAIL NOTICE: This email originated from an external 
->> sender. Please be mindful of safe email handling and proprietary 
->> information protection practices.]
->>
->>
->> On 11/29/22 4:06 AM, Thang Nguyen OS wrote:
->>> Thanks for your feedback.
->>>
->>>> On 29 Nov 2022, at 08:41, Joseph Reynolds <jrey@linux.ibm.com> wrote:
->>>>
->>>> [EXTERNAL EMAIL NOTICE: This email originated from an external 
->>>> sender. Please be mindful of safe email handling and proprietary 
->>>> information protection practices.]
->>>>
->>>>
->>>> On 11/21/22 4:17 AM, Thang Nguyen OS wrote:
->>>>> Hi,
->>>>> I would like to have your comments on below issue which we think 
->>>>> it is high risk security issue which description below:
->>>>>
->>>>> Any user (read-only, operator, administrator), when created, has 
->>>>> BMC console access/login by default. He can login to BMC via BMC 
->>>>> console and do the following actions:
->>>>>  - Write to his /home/<user> folder to full. This will make the 
->>>>> RootFS full and no more operation can be done, unless do A/C power 
->>>>> and reflash the BMC from u-boot.
->>>>> - Write to /tmp folder to full which will make many application 
->>>>> fail to work.
->>>>> It is good for administrator as he should have full privilege. 
->>>>> However, for readonly/operator users, he should not have console 
->>>>> access. No matter if he makes the BMC crashed by mistake or it is 
->>>>> his intention, we should prevent his happens.
->>>>> It is known that many production systems do not support BMC 
->>>>> console but still have some support and some companies allow 
->>>>> remote access via KVM or console server. I think we should disable 
->>>>> shell login for normal users (readonly and operator) by default.
->>>> Thanks for your report.  Here are my thoughts.
->>>>
->>>> You are describing resource exhaustion, sometimes denoted as one of:
->>>> - CWE-400: Uncontrolled Resource Consumption
->>>> - CWE-770: Allocation of Resources Without Limits or Throttling
->>>>
->>>> I agree this will lead to the failure of various BMC functions leading
->>>> to denial of service.
->>>>
->>>> There are two ways to access the BMC command shell:
->>>>
->>>> 1. Access to the BMC command shell via SSH port 22.  The default BMC
->>>> configuration only allows Administrator users to have access. 
->>>> [footnote 1]
->>> No problem with SSH. Operator and read-only users can’t access BMC 
->>> shell over SSH
->>>> 2. Access to the BMC command shell via the BMC's serial port.  The
->>>> typical BMC setup either does not have a console or specifies that
->>>> access to the BMC's physical console port should be protected.
->>>>
->>>> Please see some related build-time configuration options here:
->>>> https://github.com/openbmc/openbmc/wiki/Configuration-guide#bmc-console-shell-access
->>>>
->>>> Also, we can consider adding a check so that only admin users are
->>>> allowed to access to a BMC command shell via the BMC's serial console.
->>>> (And non-admin user will be logged off.)
->>> Do you think we should disable console access by setting from 
->>> phosphor-user-manager during user creation? The alternative command 
->>> from BMC shell is usermode <user> -s /sbin/nologin
->>
->> I believe all non-admin users have their default shell set to
->> /bin/nologin per code in phosphor user manager:
->> https://github.com/openbmc/phosphor-user-manager/blob/master/user_mgr.cpp
->> Search for "nologin”.
-> Unfortunately not. I tried to create new read-only users from WebUi 
-> using latest codes from github.com/openbmc/openbmc 
-> <http://github.com/openbmc/openbmc> but the users can still login to 
-> BMC console.
-> from 
-> https://github.com/openbmc/phosphor-user-manager/blob/7562658e1fce6e19b55063955a5803e19f8f10b6/user_mgr.cpp#L1354, 
-> it is based on sshRequested to set shell to /bin/sh or /sbin/nologin 
-> but I wonder how can we configure it.
+--_000_LV2PR12MB6014DB772E0529929A1C3091CD1B9LV2PR12MB6014namp_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Thang,
+Dear Team,
 
-I don't know the right way to configure this behavior.
+We have 256MB of spi nor flash on our platform.
+Its split into multiple partitions as mentioned in the table below.
 
-There is a stub section in an OpenBMC doc which introduces the BMC UART 
-serial interface we have been discussing, here:
-https://github.com/openbmc/docs/blob/master/architecture/interface-overview.md#bmc-serial
-and I would be happy to help with enhancements to describe user access.
+Block / size
+File system
+Usage
+/dev/mtdblcok5 (0.5MB)
+None
+Stores copy of uboot env
+/dev/mtdblcok6
+(16MB)
+Jffs2
+Read write file system
+This is overlayed with read-only file system from the image and mounter at =
+'/'
+/dev/mtdblock7
+(200MB)
+Jffs2
+Log partition
+Used for storing logs and bmc dumps
 
-IBM's public downstream fork has a custom configuration for SSH and BMC 
-console access which does something like you are asking about:
-https://github.com/ibm-openbmc/phosphor-user-manager/commit/16ec770914d2be3c407aced14fbca46ac9824f83
-I would be happy to change this implementation to a standard way.
+We are seeing flash corruption in few of our shipped products which undergo=
+ repeated power cycle test.
+The continuous power cycle test seems to somehow corrupt the data flash and=
+ on the next boot either we end up in kernel panic during init or there is =
+recovery tried by the file system which never seem to end successfully, and=
+ the application don't start well.
 
-Joseph
+When the flash is corrupt, we repeatedly see jffs2 errors as shown below.
 
->>
->> When reading this code, not only priv-admin users will have the "ssh"
->> group role per
->> https://github.com/openbmc/docs/blob/master/architecture/user-management.md#supported-group-roles
->>
->> Joseph
->>
->>
->>> - Joseph
->>>
->>>
->>> Footnote 1:
->>> The effect of the following is to configure the dropbear SSH server so
->>> only users who are in the priv-admin Linux group are allowed to connect
->>> via SSH.
->>> This config parameter:
->>> https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-core/dropbear/dropbear/dropbear.default
->>> Is configured into the image from here:
->>> https://github.com/openbmc/openbmc/blob/master/meta-phosphor/recipes-core/dropbear/dropbear_%25.bbappend
->>> and is used on the dropbear command line from here:
->>> https://github.com/openbmc/openbmc/blob/master/poky/meta/recipes-core/dropbear/dropbear/dropbear%40.service
->>>
->>>
->>>
->>>
->>>>> Thanks,
->>>>> Thang Q. Nguyen -
+[  279.805305] jffs2: jffs2_scan_eraseblock(): Magic bitmask 0x1985 not fou=
+nd at 0x06f90020: 0x8504 instead
+[  279.805319] jffs2: jffs2_scan_eraseblock(): Magic bitmask 0x1985 not fou=
+nd at 0x06f90024: 0x75a3 instead
+[  279.805327] jffs2: Further such events for this erase block will not be =
+printed
+[  279.817370] jffs2: jffs2_scan_eraseblock(): Magic bitmask 0x1985 not fou=
+nd at 0x06fa0000: 0x0b14 instead
+[ 279.848078] jffs2: jffs2_scan_eraseblock(): Magic bitmask 0x1985 not foun=
+d at 0x06fa0004: 0x1baa instead
+[  279.860240] jffs2: jffs2_scan_eraseblock(): Magic bitmask 0x1985 not fou=
+nd at 0x06fa0008: 0xb9c1 instead
+[  279.872368] jffs2: jffs2_scan_eraseblock(): Magic bitmask 0x1985 not fou=
+nd at 0x06fa000c: 0x4d18 instead
+
+These errors start to come when any file system related commands are execut=
+ed from the obmc-init.sh<https://github.com/openbmc/meta-phosphor/blob/mast=
+er/recipes-phosphor/initrdscripts/files/obmc-init.sh#L417> file.
+
+mount -t overlay -o lowerdir=3D$rodir,upperdir=3D$upper,workdir=3D$work cow=
+ /root
+
+So basically, it appears like jffs2 is trying to recover the file system bu=
+t because of the type of corruption it could not, and we are starting the o=
+verlay in a bad state which can subsequently trigger a kernel panic. The fl=
+ash corruption is mainly happening because of repeated power cycle test and=
+ some of the application (logging, debug collector, etc) trying to write so=
+mething into flash and causing a corruption. The reproduction seems to be v=
+ery difficult we saw one failure after 5K loops of test. We also tried to m=
+anually corrupt the flash by writing junk data to it, but it did not recrea=
+te the same issue.
+
+Has someone seen similar type of issue ?
+Do you any recommendations to solve issue ?
+Is there a way to recreate such corruption manually for testing purpose ?
+
+One solution we have in mind is to check the return status of all commands =
+in obmc-init script around rwfs and when these commands fail try to boot wi=
+th read-only file system.
+But we are not sure if it can work in all cases, if the commands work and s=
+till jffs2 causes kernel panic in the background sync then we will have the=
+ same problem.
+Any thoughts of how to detect the corrupted flash in obmc-init and avoid us=
+ing it ?
+
+I see some reference to fsck<https://github.com/openbmc/meta-phosphor/blob/=
+master/recipes-phosphor/initrdscripts/files/obmc-init.sh#L378>. This is not=
+ working in our platform because we don't have fsck.jffs2. It could be pack=
+aging issue which can be solved.
+Can we trust fsck to capture all possible flash corruption ? Could it be po=
+ssible that fsck does not detect anything but when jffs2 mounted then it ca=
+n start to fail ?
+
+Thanks
+Rohit PAI
+
+
+
+
+
+--_000_LV2PR12MB6014DB772E0529929A1C3091CD1B9LV2PR12MB6014namp_
+Content-Type: text/html; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
+osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
+//www.w3.org/TR/REC-html40">
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
 >
+<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
+<style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+@font-face
+	{font-family:"Abadi Extra Light";}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;}
+a:link, span.MsoHyperlink
+	{mso-style-priority:99;
+	color:#0563C1;
+	text-decoration:underline;}
+span.EmailStyle17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]-->
+</head>
+<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:=
+break-word">
+<div class=3D"WordSection1">
+<p class=3D"MsoNormal">Dear Team, <o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">We have 256MB of spi nor flash on our platform. <o:p=
+></o:p></p>
+<p class=3D"MsoNormal">Its split into multiple partitions as mentioned in t=
+he table below.
+<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<table class=3D"MsoTableGrid" border=3D"1" cellspacing=3D"0" cellpadding=3D=
+"0" style=3D"border-collapse:collapse;border:none">
+<tbody>
+<tr style=3D"height:20.65pt">
+<td width=3D"132" valign=3D"top" style=3D"width:98.7pt;border:solid windowt=
+ext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:20.65pt">
+<p class=3D"MsoNormal">Block / size<o:p></o:p></p>
+</td>
+<td width=3D"57" valign=3D"top" style=3D"width:42.4pt;border:solid windowte=
+xt 1.0pt;border-left:none;padding:0in 5.4pt 0in 5.4pt;height:20.65pt">
+<p class=3D"MsoNormal">File system<o:p></o:p></p>
+</td>
+<td width=3D"609" valign=3D"top" style=3D"width:457.1pt;border:solid window=
+text 1.0pt;border-left:none;padding:0in 5.4pt 0in 5.4pt;height:20.65pt">
+<p class=3D"MsoNormal">Usage <o:p></o:p></p>
+</td>
+</tr>
+<tr style=3D"height:14.35pt">
+<td width=3D"132" valign=3D"top" style=3D"width:98.7pt;border:solid windowt=
+ext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;height:14.35pt">
+<p class=3D"MsoNormal">/dev/mtdblcok5 (0.5MB)<o:p></o:p></p>
+</td>
+<td width=3D"57" valign=3D"top" style=3D"width:42.4pt;border-top:none;borde=
+r-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowt=
+ext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:14.35pt">
+<p class=3D"MsoNormal">None<o:p></o:p></p>
+</td>
+<td width=3D"609" valign=3D"top" style=3D"width:457.1pt;border-top:none;bor=
+der-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windo=
+wtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:14.35pt">
+<p class=3D"MsoNormal">Stores copy of uboot env<o:p></o:p></p>
+</td>
+</tr>
+<tr style=3D"height:23.2pt">
+<td width=3D"132" valign=3D"top" style=3D"width:98.7pt;border:solid windowt=
+ext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;height:23.2pt">
+<p class=3D"MsoNormal">/dev/mtdblcok6<o:p></o:p></p>
+<p class=3D"MsoNormal">(16MB)<o:p></o:p></p>
+</td>
+<td width=3D"57" valign=3D"top" style=3D"width:42.4pt;border-top:none;borde=
+r-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowt=
+ext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:23.2pt">
+<p class=3D"MsoNormal">Jffs2 <o:p></o:p></p>
+</td>
+<td width=3D"609" valign=3D"top" style=3D"width:457.1pt;border-top:none;bor=
+der-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windo=
+wtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:23.2pt">
+<p class=3D"MsoNormal">Read write file system <o:p></o:p></p>
+<p class=3D"MsoNormal">This is overlayed with read-only file system from th=
+e image and mounter at &#8216;/&#8217;<o:p></o:p></p>
+</td>
+</tr>
+<tr style=3D"height:23.2pt">
+<td width=3D"132" valign=3D"top" style=3D"width:98.7pt;border:solid windowt=
+ext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;height:23.2pt">
+<p class=3D"MsoNormal">/dev/mtdblock7<o:p></o:p></p>
+<p class=3D"MsoNormal">(200MB)<o:p></o:p></p>
+</td>
+<td width=3D"57" valign=3D"top" style=3D"width:42.4pt;border-top:none;borde=
+r-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowt=
+ext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:23.2pt">
+<p class=3D"MsoNormal">Jffs2<o:p></o:p></p>
+</td>
+<td width=3D"609" valign=3D"top" style=3D"width:457.1pt;border-top:none;bor=
+der-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windo=
+wtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:23.2pt">
+<p class=3D"MsoNormal">Log partition <o:p></o:p></p>
+<p class=3D"MsoNormal">Used for storing logs and bmc dumps <o:p></o:p></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">We are seeing flash corruption in few of our shipped=
+ products which undergo repeated power cycle test.
+<o:p></o:p></p>
+<p class=3D"MsoNormal">The continuous power cycle test seems to somehow cor=
+rupt the data flash and on the next boot either we end up in kernel panic d=
+uring init or there is recovery tried by the file system which never seem t=
+o end successfully, and the application
+ don&#8217;t start well. <o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">When the flash is corrupt, we repeatedly see jffs2 e=
+rrors as shown below.
+<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
+uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
+le-textfill-fill-alpha:100.0%">[ &nbsp;279.805305] jffs2: jffs2_scan_eraseb=
+lock(): Magic bitmask 0x1985 not found at 0x06f90020:
+ 0x8504 instead<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
+uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
+le-textfill-fill-alpha:100.0%">[ &nbsp;279.805319] jffs2: jffs2_scan_eraseb=
+lock(): Magic bitmask 0x1985 not found at 0x06f90024:
+ 0x75a3 instead<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
+uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
+le-textfill-fill-alpha:100.0%">[ &nbsp;279.805327] jffs2: Further such even=
+ts for this erase block will not be printed<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
+uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
+le-textfill-fill-alpha:100.0%">[ &nbsp;279.817370] jffs2: jffs2_scan_eraseb=
+lock(): Magic bitmask 0x1985 not found at 0x06fa0000:
+ 0x0b14 instead<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
+uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
+le-textfill-fill-alpha:100.0%">[ 279.848078] jffs2: jffs2_scan_eraseblock()=
+: Magic bitmask 0x1985 not found at 0x06fa0004:
+ 0x1baa instead<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
+uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
+le-textfill-fill-alpha:100.0%">[ &nbsp;279.860240] jffs2: jffs2_scan_eraseb=
+lock(): Magic bitmask 0x1985 not found at 0x06fa0008:
+ 0xb9c1 instead<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
+uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
+le-textfill-fill-alpha:100.0%">[ &nbsp;279.872368] jffs2: jffs2_scan_eraseb=
+lock(): Magic bitmask 0x1985 not found at 0x06fa000c:
+ 0x4d18 instead<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">These errors start to come when any file system rela=
+ted commands are executed from the
+<a href=3D"https://github.com/openbmc/meta-phosphor/blob/master/recipes-pho=
+sphor/initrdscripts/files/obmc-init.sh#L417">
+obmc-init.sh</a> file. <o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
+uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
+le-textfill-fill-alpha:100.0%">mount -t overlay -o lowerdir=3D$rodir,upperd=
+ir=3D$upper,workdir=3D$work cow /root<o:p></o:p></span></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">So basically, it appears like jffs2 is trying to rec=
+over the file system but because of the type of corruption it could not, an=
+d we are starting the overlay in a bad state which can subsequently trigger=
+ a kernel panic. The flash corruption
+ is mainly happening because of repeated power cycle test and some of the a=
+pplication (logging, debug collector, etc) trying to write something into f=
+lash and causing a corruption. The reproduction seems to be very difficult =
+we saw one failure after 5K loops
+ of test. We also tried to manually corrupt the flash by writing junk data =
+to it, but it did not recreate the same issue.
+<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Has someone seen similar type of issue ? <o:p></o:p>=
+</p>
+<p class=3D"MsoNormal">Do you any recommendations to solve issue ?<o:p></o:=
+p></p>
+<p class=3D"MsoNormal">Is there a way to recreate such corruption manually =
+for testing purpose ?
+<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">One solution we have in mind is to check the return =
+status of all commands in obmc-init script around rwfs and when these comma=
+nds fail try to boot with read-only file system.
+<o:p></o:p></p>
+<p class=3D"MsoNormal">But we are not sure if it can work in all cases, if =
+the commands work and still jffs2 causes kernel panic in the background syn=
+c then we will have the same problem.
+<o:p></o:p></p>
+<p class=3D"MsoNormal">Any thoughts of how to detect the corrupted flash in=
+ obmc-init and avoid using it ?
+<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">I see some reference to <a href=3D"https://github.co=
+m/openbmc/meta-phosphor/blob/master/recipes-phosphor/initrdscripts/files/ob=
+mc-init.sh#L378">
+fsck</a>. This is not working in our platform because we don&#8217;t have f=
+sck.jffs2. It could be packaging issue which can be solved.
+<o:p></o:p></p>
+<p class=3D"MsoNormal">Can we trust fsck to capture all possible flash corr=
+uption ? Could it be possible that fsck does not detect anything but when j=
+ffs2 mounted then it can start to fail ?<o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal">Thanks <o:p></o:p></p>
+<p class=3D"MsoNormal">Rohit PAI <o:p></o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
+uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
+le-textfill-fill-alpha:100.0%"><o:p>&nbsp;</o:p></span></p>
+<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
+uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
+le-textfill-fill-alpha:100.0%"><o:p>&nbsp;</o:p></span></p>
+</div>
+</body>
+</html>
 
+--_000_LV2PR12MB6014DB772E0529929A1C3091CD1B9LV2PR12MB6014namp_--
