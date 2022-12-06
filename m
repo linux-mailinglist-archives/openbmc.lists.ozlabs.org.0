@@ -2,112 +2,138 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6A001644D10
-	for <lists+openbmc@lfdr.de>; Tue,  6 Dec 2022 21:09:27 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 572E1644E10
+	for <lists+openbmc@lfdr.de>; Tue,  6 Dec 2022 22:40:29 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NRWj12F4gz3bbF
-	for <lists+openbmc@lfdr.de>; Wed,  7 Dec 2022 07:09:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NRYk31Yhxz3bXK
+	for <lists+openbmc@lfdr.de>; Wed,  7 Dec 2022 08:40:27 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=L35LK6sI;
+	dkim=pass (2048-bit key; unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256 header.s=pps202002 header.b=VNCe2eSe;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=nvidia.com (client-ip=2a01:111:f400:fe5a::631; helo=nam12-mw2-obe.outbound.protection.outlook.com; envelope-from=ropai@nvidia.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=equinix.com (client-ip=148.163.148.236; helo=mx0a-00268f01.pphosted.com; envelope-from=prvs=5339b91acc=zweiss@equinix.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=L35LK6sI;
+	dkim=pass (2048-bit key; unprotected) header.d=equinix.com header.i=@equinix.com header.a=rsa-sha256 header.s=pps202002 header.b=VNCe2eSe;
 	dkim-atps=neutral
-Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on20631.outbound.protection.outlook.com [IPv6:2a01:111:f400:fe5a::631])
+Received: from mx0a-00268f01.pphosted.com (mx0a-00268f01.pphosted.com [148.163.148.236])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NRWhM511zz3bWv
-	for <openbmc@lists.ozlabs.org>; Wed,  7 Dec 2022 07:08:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NRYjP1jkWz2yyZ
+	for <openbmc@lists.ozlabs.org>; Wed,  7 Dec 2022 08:39:51 +1100 (AEDT)
+Received: from pps.filterd (m0105196.ppops.net [127.0.0.1])
+	by mx0a-00268f01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B6LXvWB022910;
+	Tue, 6 Dec 2022 21:39:48 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=equinix.com; h=from : to : cc :
+ subject : date : message-id : references : in-reply-to : content-type :
+ content-id : content-transfer-encoding : mime-version; s=pps202002;
+ bh=LZ2mo8YHcDevb5yA2RUZaEUr2/KWf2M7Y/iTrJEHRNc=;
+ b=VNCe2eSenZQifulf9o/Kb0Cd+PgAAHK93gIL71O0/HTypzVI6tidFyNd8rJMai6ryhwO
+ 2bWK3bshuAQu4KdN7hDXuwgbm9STaV65q5M1dah/TZyundY+EkjDcbgePiYfvCUtpOTS
+ pomULpnlUtYHq1+L1GReLfqjpBdFn5srbwnmj+dYAQ7io3Dj2FaqOeITOZ8ka+/ln9+x
+ zC+ZM/k2neKrE1jv1yeSKJRJAf7aU8JIiqPUaNyyOO+FTPlxLt6oS7veAXzF0ewO/eA+
+ GpR72x/tFep1ORugZEI7jFzghe+Zo5R/l3L02Tg1LZbkTDUzEX4un2pev5Su9TRdiXf1 fw== 
+Received: from nam12-dm6-obe.outbound.protection.outlook.com (mail-dm6nam12lp2177.outbound.protection.outlook.com [104.47.59.177])
+	by mx0a-00268f01.pphosted.com (PPS) with ESMTPS id 3ma8jjs6db-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 06 Dec 2022 21:39:47 +0000
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=e5ySOLCitj2epP719NTfrn856krUWhpWJ3cAzvEKQX2G0Ng9mTfnoP0AeXRi+Slxb4dlrcsdGi6zJcqKIfNWUT+N4rB7cgSZXIq8QWgQa5GsLIvs62vVagQ9W/viI1TDnAF8FH9yxwScQ6bN1u3GHQfHhsDzd2dvXbnaxNxnQS9CEyvqezBtJATWzLXAcXIlK+WaqDuUqWVTkF8QkmCiczFxKBHQid4+jfOvhyHd44HrQza33NmAHaFAvm0VyN7JZpfeEONt02YwxYyxJUd9rE4yiaZ8Zt/zctCfVeW3L4Nz/8cqyQkD0pHj8aaiMZ1/RciqV09Uf2CxHGJ+p+4Lhw==
+ b=ATSO9YVUOhirqJ3ngSsSweFouSfQD6yHvzPIvGXMlEFieTw2dZrgBX3M9Qko80+H7S1N755cX8/h/a5YsemIDMF9ZC4zR+nPHkU2NfyQlrGLzDcXNSu/yvJNDS/6t6fLRClFORG7xnVec3VEIJq6ykEHvLjmoVeV6y4fRTOIU+jaEGda7jTPP1Rp6jM6jnJf4RoooT2oMZHxW9Pce4i6ZoUY2i/OYBPcRLxU+vkhJJR4Niq7TOXeraN9koECfBUmUu1FvGVnbtiBkwftd+7reruotxjcMn4PlP1gd9fOoHra0uxiiQwl4y42yBwUs+29AcOQt1zdSEoR2wmHhqKczQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=WNgKoAiLjOlGH8h0f9lD9iFv9zmelEAFSgifhS1EW6Q=;
- b=a9seB5PJKMizCDIESPtvsmF03MH9gkSIpzM5Rtcu5AeeiAjYSQyRyhQAYVnFZY9B5J1Ie1XdP4ypyAp058/1OW5O7f9nUmVIw5cUtyQvgJ5QVjgBbz3aBAD9fvDSKwF6GfSHWk/lk77EaQJTcGKPYix2hY5LKro0K4QRY6O/jBVs36tlXGwoS76KC+4ZVrD991WHXQY5egjhX2UNbrfW1h3SgMBXjciCkIOS9wqLJvcmeSivhOaq6QxnN4VK8kalPJmIJtktkK9EutxvZNrUzG+jtXF+Me7YcTZzr841DZpgexYZq3Kq7Md+aEuSnQI5yyT/9gevyDF6QxLPhMl/6A==
+ bh=LZ2mo8YHcDevb5yA2RUZaEUr2/KWf2M7Y/iTrJEHRNc=;
+ b=Y/6pJ+DZ2hTj7ODSV0euIxeVMyuf56wc5OHK4SoFEYFycgQxCjBjRf7MRT2DDhCi4qybPfOa5ODu37s8iKNyE02BktFas2WkxsluGWiugQYcStqiDtyNDKycVl8A1IrxzEPZ40ydIY7FodkkOocqOs1KWIpUvrDVo6+KhHtZspKCMrJjqkqHri5rkdwWVJ2JUVMdAoyryKfhVimB7kEPROWpQoL9pF0mxSuMs7G7OIFuEI4v3MNOQAhqeaqsW6IhAfVNGiRqrCI8fFwSFI9rYKzqVKxJa4kvo2uQ698EFKPbEi/er5G7tGmMKHS8xeDEaQ69Qq1Op32dS985a8AfDw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=WNgKoAiLjOlGH8h0f9lD9iFv9zmelEAFSgifhS1EW6Q=;
- b=L35LK6sIdqcCWTbXFeB0VMlsGLYWyy+HywW3+cbHm/Trz/h7yoFvYJJwvTI03j+FP7MP7NJ/YJR+AkS10qSvdfbD1YDCUR00FWf0o6w03XHP8Cup5CsSA3g4H/heerg+pGDJyEgzDBXDbm+WM9IFjUulrlZhxo4WIHNLLvoyIbU2bmn8bxvQoc48SpHfnpv8Kg9Xsw67PWRgXY6FJKXUL5hSWmkP7A2Zq9L5TnwT6sfJsSfVaqUO1DgHTIT6EqwQuYFuqF4uVtgDajxWoXU8o4/N19tTsjD7zJw192IxxHce3h9QijV0OYFSGFn+T/9mDxHJ2t/TS3cL286iNQtJug==
-Received: from LV2PR12MB6014.namprd12.prod.outlook.com (2603:10b6:408:170::18)
- by PH0PR12MB8152.namprd12.prod.outlook.com (2603:10b6:510:292::14) with
+ smtp.mailfrom=equinix.com; dmarc=pass action=none header.from=equinix.com;
+ dkim=pass header.d=equinix.com; arc=none
+Received: from DM8PR04MB8007.namprd04.prod.outlook.com (2603:10b6:5:314::20)
+ by BYAPR04MB6037.namprd04.prod.outlook.com (2603:10b6:a03:ef::31) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5880.13; Tue, 6 Dec
- 2022 20:08:26 +0000
-Received: from LV2PR12MB6014.namprd12.prod.outlook.com
- ([fe80::3b0:528b:6b8e:7e02]) by LV2PR12MB6014.namprd12.prod.outlook.com
- ([fe80::3b0:528b:6b8e:7e02%3]) with mapi id 15.20.5880.014; Tue, 6 Dec 2022
- 20:08:26 +0000
-From: Rohit Pai <ropai@nvidia.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: [jffs2] handling flash corruption
-Thread-Topic: [jffs2] handling flash corruption
-Thread-Index: AdkJqILm4mUCK9dWS6uTwPMluau1bg==
-Date: Tue, 6 Dec 2022 20:08:26 +0000
-Message-ID:  <LV2PR12MB6014DB772E0529929A1C3091CD1B9@LV2PR12MB6014.namprd12.prod.outlook.com>
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5880.14; Tue, 6 Dec
+ 2022 21:39:45 +0000
+Received: from DM8PR04MB8007.namprd04.prod.outlook.com
+ ([fe80::6c87:8da9:d12b:2c94]) by DM8PR04MB8007.namprd04.prod.outlook.com
+ ([fe80::6c87:8da9:d12b:2c94%7]) with mapi id 15.20.5880.013; Tue, 6 Dec 2022
+ 21:39:45 +0000
+From: Zev Weiss <zweiss@equinix.com>
+To: Hamid Amirrad <amirradh@gmail.com>
+Subject: Re: Changing ethernet port speed
+Thread-Topic: Changing ethernet port speed
+Thread-Index: AQHZCbtB+oCukyvZuUe+WU/GxdI1mw==
+Date: Tue, 6 Dec 2022 21:39:44 +0000
+Message-ID: <20221206213941.GH18848@packtop>
+References:  <CACFAz8BpHQUROFcpG3+dG3XyUt0+8=zgcwkU4CTk3uuO0Z2c_w@mail.gmail.com>
+ <20221204234449.GG18848@packtop>
+ <CACFAz8CO7sm6TXCct35kOH-mWZOAj=UHuRisgw3rSpawRxr9jQ@mail.gmail.com>
+In-Reply-To:  <CACFAz8CO7sm6TXCct35kOH-mWZOAj=UHuRisgw3rSpawRxr9jQ@mail.gmail.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: LV2PR12MB6014:EE_|PH0PR12MB8152:EE_
-x-ms-office365-filtering-correlation-id: fd324c1b-3f86-46ca-2f4d-08dad7c5a29f
+x-ms-traffictypediagnostic: DM8PR04MB8007:EE_|BYAPR04MB6037:EE_
+x-ms-office365-filtering-correlation-id: 9a11d0d8-9691-4ba5-4ed7-08dad7d26438
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:  5Cq3A2HBDqMfziwnlcfoh3YvYLgTG2D3OnIGcFTVt9bEC6ZatQm+owN1vmkI2BUMj8h+UKKmSVH1nklXfVk/tsG+VdAg9k6yfCSV0QlNj+hUsduPO5Bf47zxBBuHXfYsNqH2ExerzTQDxkRu1x10G6WeU3gP8jEQDXgP3R6COmaB9dq3rc0WJraD+KjFTL6d/+AgxCgBeSeD5PuedGH+SvCiGPbsINlJ8kewBx/utvV7lDwDHL7YTk71xxBpY9MU1CDcDKXG6fa0B5FprNUXw8JSjs6U79t8Pow7KCLZ6ux7TPgfaj/mpsNshJbZd2vCKG4nNJVZGDvFprmsDlS2ZShwAP280AGsSlsfVgeBLmu25vx1LjntwP/08pPVBhrXGS3ROG3NrDXvEsGIf16EvDKNlp8aHGYp0Pzj4zPZ/1XTtMAP5bEv8KQUoef2fzD6da1lMIiJp0QmqJO1sj9JEjFv9bCU7bnQGAp40uNu/6KQfbGfZGlK+F21d2V9lYvlcNDPw7bTnFBZePeGCASlFxI46nwFEKjsoTRlUjW8PssjHUl8DcH2OBn3bVT6BdQtSwYKji0fDNBJ1rq+LcEuS2LDiuSgw34ho21fqjGQoI5ao1tCc9Z/cb0KM2+30PZ6tdvK9wVjIsFNeriN4660AUktAcv3+cdxkvNioKVyLSlWQtRRARfNXwB1LaanthE/pqppuJ6YZDeZiBwP73XaJYe8oDpjyvgu7Qx2czl1l3WXfLLlWWJe6hnjw0vn6TsYPDWiiaHXFpF7TMFEZ/2zbEJxxsdWnV5HMoszmCD12i9PP+sOJsh+h+9GsTBk+HgmAN5jLw4Iiw0FfJX4G8CzxQ==
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB6014.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(346002)(136003)(366004)(396003)(376002)(39860400002)(451199015)(26005)(9686003)(6506007)(478600001)(316002)(166002)(6916009)(66556008)(66476007)(76116006)(71200400001)(66946007)(8676002)(66446008)(64756008)(7696005)(52536014)(5660300002)(8936002)(83380400001)(41300700001)(38070700005)(186003)(2906002)(122000001)(38100700002)(33656002)(55016003)(86362001);DIR:OUT;SFP:1101;
+x-microsoft-antispam-message-info:  Fwq6q70x5mzuZmkxqy3/LIupXVgBc+seT51+Zg7k3pP1bEUCD/nBIG1bbKHl5WgQ8w5m9fQCPDaQtXe4sUMNDyulWg72WWTNemBCcCsaFcDPfhwvzwDxpHneAMKmjizF5uJtqdS3OCl3gxdPkJ0s8nfAYH1jSZVH9w9JOvTytcJOAyEP+2F26oPy429wp27dWEWDndgFdCZfdLhjqi5Npy/rewoGKSFOBqd8ve1pw53z5xV08DuB9ZCdySrt0aDZFCHTftNwoBv6e0OxEl5Dj54d2c92nUeP+FdqjOX092Bh/JH2CfNgLqUd4xLphl5RNLVICf+ybiLthzF/uqss6jkROqTTx4fN05O86kXgQqNV3WrDVDniKVFSwh+8EfIwtCcCOjaUlL4hO8l6IJlo0SMAgcWVujWioqaEWKxaETWMgS3NGHrrGMyWS6DI3l78J3XVeE2ekAgEfwoXpymHX2TfSEJJISmxLN67yfY2eqOPHwJkAtz1hQVTj5dbnO6XJdkXh4iPB4QUID3Lz1AoNY6S/SQmL8KwxdGaPP69lz+Ed3uRo+PMVHsJ+tY+AyxmMdatYc0XJ1v3plHGaqXVsmunLJI53ETIW1KaNLn/s9Hmk2Bo1LZRWMCQMac9AONro8gcYO4B1OGai6TdsNMLQ94wCsPRLFx4dvztQtGMtz4INSMoz0y9FTR+E84497oXb0NbdzumLn5yBalIKrrL6hAIcuWsiqr6N/6K43UmzAQ=
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM8PR04MB8007.namprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(7916004)(39860400002)(136003)(346002)(396003)(366004)(376002)(451199015)(38070700005)(122000001)(38100700002)(966005)(478600001)(3480700007)(6486002)(71200400001)(2906002)(6506007)(33716001)(86362001)(83380400001)(5660300002)(186003)(9686003)(26005)(6916009)(6512007)(8936002)(41300700001)(8676002)(316002)(4326008)(64756008)(66446008)(66476007)(66556008)(1076003)(91956017)(76116006)(33656002)(66946007);DIR:OUT;SFP:1102;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?QT+/0RloEqxU/cf0y0DijAid1L2yR5hSSjChummiHgDCf8eqqP5RO1weM/iQ?=
- =?us-ascii?Q?JHZIha/FXMNNmvWqTF9JdIj5n5jzecvX2O2ZDOFtrl6JnWIB9P/oE3IKeH4R?=
- =?us-ascii?Q?nDK5dscm82gQ2o7mWX9zLnOd2JX0A4uAA2pAdyvfhaiRNJy78pJfy/mLsjZD?=
- =?us-ascii?Q?4LL/rI85Vh0oJyPYfYX787arHapZUAWuR8Le9VOvMSEWkqxyxo+jmE0VK1rF?=
- =?us-ascii?Q?T7FJlNrftFl7K1zSnBkbu618iwi5nW8hvnr7lw7i0cJkbtdybecWC0QiVWf3?=
- =?us-ascii?Q?Vvyb0srAyftxB3yjR3iOJwmiitFsRn8Rl8vntWfhsV/XZ9HbA1Ej6CVZGlLh?=
- =?us-ascii?Q?vvIxXbSFA93WjNif8HLQUKRNrOhrMXnldY9Nfw57s7JEKkIXXx6lXrKaqzaw?=
- =?us-ascii?Q?zkEoDK2DMJgoxMA6qyjfDSF0NQDgFOLfvmOUcC8CMGgJajN5vE/fr3axg5x5?=
- =?us-ascii?Q?t967hIlRJGmJ1gURqIHXN258reUZb9IIRDyDxoYs31qVJwOG6c4hrmXRhMs/?=
- =?us-ascii?Q?JC/wrIcBK7sWOMKJyje07Emig3AYl9SnCvY3Vkzn1WSdVXNj1Mm/4XKwb/Uh?=
- =?us-ascii?Q?XiwlciPNESN497wzQFfKYB4tTl1ohZLfIPNv+jiLC/FXJtSzSyyuztVirMjn?=
- =?us-ascii?Q?19tcyIIXF4DH6NQ9pQl0sMLjVwLgaBcMrBW6aKlnZicLEFBwmax0apelEbS/?=
- =?us-ascii?Q?tYc0pnoHTspVwhsprgoFJyED7oE8SA590EZSxbkDB9hrc9/lZ/+XRsWaOuXe?=
- =?us-ascii?Q?g05vjc1IzFk1uEsI+whQhMCvGbcwrx459COG4Z1n8Z40hcV1/sLn3QYTCqNt?=
- =?us-ascii?Q?3eJwigNWUkslswZ/zsafYvDhA1+YCX6f4eOJJxXUXs0cEQZiO1IYJBgJ5eNr?=
- =?us-ascii?Q?GY/nJe4fQK3JbPGet3tOPgIhA2RPTI9r/IquZCx/C81ucm30M3Pn0u4uDrRS?=
- =?us-ascii?Q?VehQKSdnNT2ECnRPdOMfobJSkrlun5kNqV4F/yOkcepgPOzxuZHnvciYhhx0?=
- =?us-ascii?Q?XPOP5tPoww4MJ5atC2p6R0zxwym309/n4OsDeqLsUbtuwsHicFHJLXtWyjoe?=
- =?us-ascii?Q?o2MmLf2qGkIB7z1Tinla023xBecuPE63re6xJHFxkD4qbOhJnR6+MTkExusg?=
- =?us-ascii?Q?InbLVEMS4FRG3rWq6I+d4tAbo18blQRcDlfPMTKUpnZdVS4HfLOme5IGKhak?=
- =?us-ascii?Q?mv8NOuGFMj0qO3kEAJmJx3cyvHUdYc3bgmb/fqJVlDyeZkc9m0LIfZUPqRG4?=
- =?us-ascii?Q?f+vN2vZuzDfTwBMlMjHol2nDzOcCI6ONRbv03rwAuLfX95sJxNj5kRfg5848?=
- =?us-ascii?Q?QhyGmN8YBKqB3TmhO2P/L8VpGQCGwMJqkioABTBZ21gflffJylEHkfCO8NdH?=
- =?us-ascii?Q?tNjnk8Qon2ullfkEVQlkIr27vK/QZ+f5oY/R1iG+OvYCkCAiRBvlYSnCoFtc?=
- =?us-ascii?Q?L7t2Eq5dhH/+xvFK2uQp8LguNCh0fHnMvQk3bWb2IZ/QLL4ca/sD2EahwYCo?=
- =?us-ascii?Q?J3XIQQP0y4P94HfGfIoLA20tVKuDGruXILJJREPRI637hpT7bhh2R0mZwlQo?=
- =?us-ascii?Q?vp131kGzoqs4nEAF9Ks=3D?=
-Content-Type: multipart/alternative;
-	boundary="_000_LV2PR12MB6014DB772E0529929A1C3091CD1B9LV2PR12MB6014namp_"
+x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?iwrVjXWtR9AGE4Y4WMFE/slytr2JP5Rm95x20wNSCbRVckNF7Vavn+xmjqvS?=
+ =?us-ascii?Q?n4Sf/yvZA9+GL6QYVLLhpG2ZNRfH+vRd+t92i2YPgqSjX+LLxdXBnQJDXjJo?=
+ =?us-ascii?Q?XKiGCRWjw6tS69phjxaCPrfdYPAZtZSvetAZvoh5+cVybC0ZSL8Z0DGSfvBV?=
+ =?us-ascii?Q?YMZ9PpBUxZPIT+wnXeKeGM2W+ubABtzIn4Bq/QhQr680SRaSsl2UlTnFannJ?=
+ =?us-ascii?Q?pzX7JML/Kx+O4VTOyBRbb/ZgXkcEs2nT6ak4+h7JRU0qde3y4sEeEUCwXx4u?=
+ =?us-ascii?Q?jkxig05BzkQRdduSB5bxlPcSiCALsLoEdGlW08cH2xdykm2x6N13HV4mb+/D?=
+ =?us-ascii?Q?PkllFTkSyBqmMLcqnlPmhV6maKC4MDW9SdYaNUliwjR7pBffzEzHHi2VBvsZ?=
+ =?us-ascii?Q?nl6/n1w/9UYuK3IYJ3MlMOxu/PpvtHiB8o0vEyNIjHbOXzmfPSCAwpotEKrj?=
+ =?us-ascii?Q?yZC/I48k30sFmFOr7nA539LahA3s/s4CSe9+sD/rzBn178VEmIBdEuQe89jo?=
+ =?us-ascii?Q?vvR0SATKJ3c4XWBI7qNi+cvVwov0vtoD/arXZjLg95yQ/h+Moh4WBc29fqDR?=
+ =?us-ascii?Q?oR/r5tKTkSnGE9baIsQy4zHtzdr7vvF33bw4FUZHSX57V8Pnm7sXajoVnFCT?=
+ =?us-ascii?Q?SqQR/vQf7GiO+VJj5yk0x3nnkTMRjq3I5rg4V/ElgNvM/Y8BajcYBOPXmkvm?=
+ =?us-ascii?Q?q82+zWsb6JFg0MyldACyRwe7KZZ7mV0Tl0OLW+Q3hm4yhpOQZJHN3JS3WXIO?=
+ =?us-ascii?Q?SxFAgy0ff1blus1Ts3HKI6Q0FbxIr0a4eqm5hf79pLq38vNC5YauPR7hEOml?=
+ =?us-ascii?Q?dsshEOGq4arOG/r35HvH2ju7dwKczS+MQ2dsuciEt23+ZqivpMLHFjbxbNNj?=
+ =?us-ascii?Q?BXlVZJg32FQCwJhFwlbyZ0uvpG53lzLweLXPJi8+kezmzq3sbKqWZk7dMhJP?=
+ =?us-ascii?Q?LOFkQKxr+POibTzpBTDaDQIC8KwEuvS8Nw5ZRwX3r9YQU34RFMLeAArqGdjR?=
+ =?us-ascii?Q?Ndga08Bn+1oU93x2wdMyQcvJO9uEh78rEw9EP5QIxgjb37lOZkdco1mnMxi5?=
+ =?us-ascii?Q?Y4qpLS7ePLluGkKXaR2kB8XVWzaa5/fwPgQJlrxcEvFLPQQwUPPaBSX8CF4u?=
+ =?us-ascii?Q?5LUjGQaGeNp7U+Rc1AUkjpoSDCw0NOyFRH73OvGVdWYzJE6cfAaYK4fFbEG8?=
+ =?us-ascii?Q?6ZTKb+bn9hlx0oj270FP0VEHQLTmRI2aqU3qIFrSIuhc01RHBRvwkelNff1s?=
+ =?us-ascii?Q?zT7ljKLpUrg5KLOp+LIxlADtZVy0RYEg9Gyw8eJTfNzJylOWPMmo3TP7zDQ3?=
+ =?us-ascii?Q?DYf6hbc8ZIomrZXpp2LohnI5KFe5Y5JPhQJuhQc/M5G3cxS9XV4Gpi7XeYZJ?=
+ =?us-ascii?Q?25a4y09U7M9Uokdnx7ZiFasqMcpnlQTuDGIxLte72WH0xmgDNU1TBTY/utK8?=
+ =?us-ascii?Q?RjZ+Jym7NMO2JF3wr3qYdIcIAtANizN13/NERHt5/Tz6WiCvl3lsHZXqOu7E?=
+ =?us-ascii?Q?fPcYL39pl7UYJA97nJXZTz2mHfUp126MK31GVIICZUvb8XV6QUWVbiiJ6uMd?=
+ =?us-ascii?Q?A50CdsZFTJ28Crtbj3i2TzOcI2T9JfLHDPfJYuza?=
+Content-Type: text/plain; charset="us-ascii"
+Content-ID: <E5ACE927FD94CF4E9AF4B41A93A99A4E@namprd04.prod.outlook.com>
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 	NpXXXimHkEKsQsURba2HdXb52Q0KlBmvnh+r7qCupau0mVLQg4eV8M6mG2KjV3bWUBuz24JYAagfONx8KNqnUq3010u2FZj3Vm6tjgZY+CUTy4Udb90EonbbXrkRYaQw/rw6RAtBn99wXK0A158V7Ea6mYGtOXrdusVNLEvbpa4yt4gPygd5BoFgtP7kwGte7KrVcp6Oy9zZ4IIKPTvMq96enAyinRQPZO7QoxTBkKc7ed0ryFahyJ6hcxAppZHIJq45EOWJDpaMJ8dXNkQ/aMmjFv2CwOiZsJhfSoAbeiOqKi5toXIY859+We80BFWvSG8vC40XTlgCnLE0qxghVNVXiuwXzVUmLwo6NNSmekPVDqV71ZbTlxkMX6sY4ntjwuzriQqQ9vSSPUQvnACC1X7i4UKsEkXFhi+BGKGOX9GvIT/POxwJusJ5pE/8FY+X8NB136JraoEBdinamidgVNrQmE9v5GnOe1pcwGE5FFqbGj8rV8S9IuYVYNv7G0j9t4EUiUSUT/10dmvnBrmraWov84pG7iv+OiO3D/t+Y9+whyk8bKX1/2DClM+kSYBftXnUUk711v9NVqymhA/ORp01h8XDshHG2jKvSULPor1IHBLoBRIFcP8BSi3QXdMpyi3S7EtYELrYFmmSIvOHIGOAgrJDPpT3Pp+0HkB2+j3U7JMwCQvdZ3I9V79mpncqLHXzob6rDuZ2up/IxoqAiIOTemItaOJww7GiuvOP1yi8e+dygdhRoGpV9o8OyAJB+yPjHdZzfHex4HJu8/n5B7mUi/TJhOsNz/a3fYbN9JRFiL19qyJQkDJ4Gt+qYJIT69xeV0jqX5t0r5spveG++F/HkjgeZZhc2BWbBT+9Vhg=
+X-OriginatorOrg: equinix.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB6014.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fd324c1b-3f86-46ca-2f4d-08dad7c5a29f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Dec 2022 20:08:26.2592
+X-MS-Exchange-CrossTenant-AuthSource: DM8PR04MB8007.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9a11d0d8-9691-4ba5-4ed7-08dad7d26438
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 Dec 2022 21:39:45.0549
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-id: 72adb271-2fc7-4afe-a5ee-9de6a59f6bfb
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: FUhgI4g2+8LrbBnLb+f9upSToF3WvpE02LnZZvKWoiaQNV6D2bR7e1RyP+vxQxDXKbIYlzNIAEW6qh7HPFbpeg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR12MB8152
+X-MS-Exchange-CrossTenant-userprincipalname: yL3cwx+pyhmWK1QksgLz4O33lu9gYYkMguA+25p/cqEwiY8o0y9GWRYsNnS/OTueLr+uVK82eMQnKC37a+Jv7g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR04MB6037
+X-Proofpoint-ORIG-GUID: OzQltiTeubQOFFTnVBqwq7r0TgYA6Y0u
+X-Proofpoint-GUID: OzQltiTeubQOFFTnVBqwq7r0TgYA6Y0u
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-06_12,2022-12-06_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 malwarescore=0
+ lowpriorityscore=0 bulkscore=0 suspectscore=0 mlxlogscore=937 phishscore=0
+ adultscore=0 mlxscore=0 impostorscore=0 priorityscore=1501 spamscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2210170000 definitions=main-2212060182
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -119,351 +145,64 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_LV2PR12MB6014DB772E0529929A1C3091CD1B9LV2PR12MB6014namp_
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-Dear Team,
-
-We have 256MB of spi nor flash on our platform.
-Its split into multiple partitions as mentioned in the table below.
-
-Block / size
-File system
-Usage
-/dev/mtdblcok5 (0.5MB)
-None
-Stores copy of uboot env
-/dev/mtdblcok6
-(16MB)
-Jffs2
-Read write file system
-This is overlayed with read-only file system from the image and mounter at =
-'/'
-/dev/mtdblock7
-(200MB)
-Jffs2
-Log partition
-Used for storing logs and bmc dumps
-
-We are seeing flash corruption in few of our shipped products which undergo=
- repeated power cycle test.
-The continuous power cycle test seems to somehow corrupt the data flash and=
- on the next boot either we end up in kernel panic during init or there is =
-recovery tried by the file system which never seem to end successfully, and=
- the application don't start well.
-
-When the flash is corrupt, we repeatedly see jffs2 errors as shown below.
-
-[  279.805305] jffs2: jffs2_scan_eraseblock(): Magic bitmask 0x1985 not fou=
-nd at 0x06f90020: 0x8504 instead
-[  279.805319] jffs2: jffs2_scan_eraseblock(): Magic bitmask 0x1985 not fou=
-nd at 0x06f90024: 0x75a3 instead
-[  279.805327] jffs2: Further such events for this erase block will not be =
-printed
-[  279.817370] jffs2: jffs2_scan_eraseblock(): Magic bitmask 0x1985 not fou=
-nd at 0x06fa0000: 0x0b14 instead
-[ 279.848078] jffs2: jffs2_scan_eraseblock(): Magic bitmask 0x1985 not foun=
-d at 0x06fa0004: 0x1baa instead
-[  279.860240] jffs2: jffs2_scan_eraseblock(): Magic bitmask 0x1985 not fou=
-nd at 0x06fa0008: 0xb9c1 instead
-[  279.872368] jffs2: jffs2_scan_eraseblock(): Magic bitmask 0x1985 not fou=
-nd at 0x06fa000c: 0x4d18 instead
-
-These errors start to come when any file system related commands are execut=
-ed from the obmc-init.sh<https://github.com/openbmc/meta-phosphor/blob/mast=
-er/recipes-phosphor/initrdscripts/files/obmc-init.sh#L417> file.
-
-mount -t overlay -o lowerdir=3D$rodir,upperdir=3D$upper,workdir=3D$work cow=
- /root
-
-So basically, it appears like jffs2 is trying to recover the file system bu=
-t because of the type of corruption it could not, and we are starting the o=
-verlay in a bad state which can subsequently trigger a kernel panic. The fl=
-ash corruption is mainly happening because of repeated power cycle test and=
- some of the application (logging, debug collector, etc) trying to write so=
-mething into flash and causing a corruption. The reproduction seems to be v=
-ery difficult we saw one failure after 5K loops of test. We also tried to m=
-anually corrupt the flash by writing junk data to it, but it did not recrea=
-te the same issue.
-
-Has someone seen similar type of issue ?
-Do you any recommendations to solve issue ?
-Is there a way to recreate such corruption manually for testing purpose ?
-
-One solution we have in mind is to check the return status of all commands =
-in obmc-init script around rwfs and when these commands fail try to boot wi=
-th read-only file system.
-But we are not sure if it can work in all cases, if the commands work and s=
-till jffs2 causes kernel panic in the background sync then we will have the=
- same problem.
-Any thoughts of how to detect the corrupted flash in obmc-init and avoid us=
-ing it ?
-
-I see some reference to fsck<https://github.com/openbmc/meta-phosphor/blob/=
-master/recipes-phosphor/initrdscripts/files/obmc-init.sh#L378>. This is not=
- working in our platform because we don't have fsck.jffs2. It could be pack=
-aging issue which can be solved.
-Can we trust fsck to capture all possible flash corruption ? Could it be po=
-ssible that fsck does not detect anything but when jffs2 mounted then it ca=
-n start to fail ?
-
-Thanks
-Rohit PAI
-
-
-
-
-
---_000_LV2PR12MB6014DB772E0529929A1C3091CD1B9LV2PR12MB6014namp_
-Content-Type: text/html; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
-
-<html xmlns:v=3D"urn:schemas-microsoft-com:vml" xmlns:o=3D"urn:schemas-micr=
-osoft-com:office:office" xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
-xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" xmlns=3D"http:=
-//www.w3.org/TR/REC-html40">
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
+On Tue, Dec 06, 2022 at 11:27:47AM PST, Hamid Amirrad wrote:
+>Hi,
 >
-<meta name=3D"Generator" content=3D"Microsoft Word 15 (filtered medium)">
-<style><!--
-/* Font Definitions */
-@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}
-@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}
-@font-face
-	{font-family:"Abadi Extra Light";}
-/* Style Definitions */
-p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;}
-a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:#0563C1;
-	text-decoration:underline;}
-span.EmailStyle17
-	{mso-style-type:personal-compose;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}
-.MsoChpDefault
-	{mso-style-type:export-only;}
-@page WordSection1
-	{size:8.5in 11.0in;
-	margin:1.0in 1.0in 1.0in 1.0in;}
-div.WordSection1
-	{page:WordSection1;}
---></style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext=3D"edit">
-<o:idmap v:ext=3D"edit" data=3D"1" />
-</o:shapelayout></xml><![endif]-->
-</head>
-<body lang=3D"EN-US" link=3D"#0563C1" vlink=3D"#954F72" style=3D"word-wrap:=
-break-word">
-<div class=3D"WordSection1">
-<p class=3D"MsoNormal">Dear Team, <o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">We have 256MB of spi nor flash on our platform. <o:p=
-></o:p></p>
-<p class=3D"MsoNormal">Its split into multiple partitions as mentioned in t=
-he table below.
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<table class=3D"MsoTableGrid" border=3D"1" cellspacing=3D"0" cellpadding=3D=
-"0" style=3D"border-collapse:collapse;border:none">
-<tbody>
-<tr style=3D"height:20.65pt">
-<td width=3D"132" valign=3D"top" style=3D"width:98.7pt;border:solid windowt=
-ext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:20.65pt">
-<p class=3D"MsoNormal">Block / size<o:p></o:p></p>
-</td>
-<td width=3D"57" valign=3D"top" style=3D"width:42.4pt;border:solid windowte=
-xt 1.0pt;border-left:none;padding:0in 5.4pt 0in 5.4pt;height:20.65pt">
-<p class=3D"MsoNormal">File system<o:p></o:p></p>
-</td>
-<td width=3D"609" valign=3D"top" style=3D"width:457.1pt;border:solid window=
-text 1.0pt;border-left:none;padding:0in 5.4pt 0in 5.4pt;height:20.65pt">
-<p class=3D"MsoNormal">Usage <o:p></o:p></p>
-</td>
-</tr>
-<tr style=3D"height:14.35pt">
-<td width=3D"132" valign=3D"top" style=3D"width:98.7pt;border:solid windowt=
-ext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;height:14.35pt">
-<p class=3D"MsoNormal">/dev/mtdblcok5 (0.5MB)<o:p></o:p></p>
-</td>
-<td width=3D"57" valign=3D"top" style=3D"width:42.4pt;border-top:none;borde=
-r-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowt=
-ext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:14.35pt">
-<p class=3D"MsoNormal">None<o:p></o:p></p>
-</td>
-<td width=3D"609" valign=3D"top" style=3D"width:457.1pt;border-top:none;bor=
-der-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windo=
-wtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:14.35pt">
-<p class=3D"MsoNormal">Stores copy of uboot env<o:p></o:p></p>
-</td>
-</tr>
-<tr style=3D"height:23.2pt">
-<td width=3D"132" valign=3D"top" style=3D"width:98.7pt;border:solid windowt=
-ext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;height:23.2pt">
-<p class=3D"MsoNormal">/dev/mtdblcok6<o:p></o:p></p>
-<p class=3D"MsoNormal">(16MB)<o:p></o:p></p>
-</td>
-<td width=3D"57" valign=3D"top" style=3D"width:42.4pt;border-top:none;borde=
-r-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowt=
-ext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:23.2pt">
-<p class=3D"MsoNormal">Jffs2 <o:p></o:p></p>
-</td>
-<td width=3D"609" valign=3D"top" style=3D"width:457.1pt;border-top:none;bor=
-der-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windo=
-wtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:23.2pt">
-<p class=3D"MsoNormal">Read write file system <o:p></o:p></p>
-<p class=3D"MsoNormal">This is overlayed with read-only file system from th=
-e image and mounter at &#8216;/&#8217;<o:p></o:p></p>
-</td>
-</tr>
-<tr style=3D"height:23.2pt">
-<td width=3D"132" valign=3D"top" style=3D"width:98.7pt;border:solid windowt=
-ext 1.0pt;border-top:none;padding:0in 5.4pt 0in 5.4pt;height:23.2pt">
-<p class=3D"MsoNormal">/dev/mtdblock7<o:p></o:p></p>
-<p class=3D"MsoNormal">(200MB)<o:p></o:p></p>
-</td>
-<td width=3D"57" valign=3D"top" style=3D"width:42.4pt;border-top:none;borde=
-r-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windowt=
-ext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:23.2pt">
-<p class=3D"MsoNormal">Jffs2<o:p></o:p></p>
-</td>
-<td width=3D"609" valign=3D"top" style=3D"width:457.1pt;border-top:none;bor=
-der-left:none;border-bottom:solid windowtext 1.0pt;border-right:solid windo=
-wtext 1.0pt;padding:0in 5.4pt 0in 5.4pt;height:23.2pt">
-<p class=3D"MsoNormal">Log partition <o:p></o:p></p>
-<p class=3D"MsoNormal">Used for storing logs and bmc dumps <o:p></o:p></p>
-</td>
-</tr>
-</tbody>
-</table>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">We are seeing flash corruption in few of our shipped=
- products which undergo repeated power cycle test.
-<o:p></o:p></p>
-<p class=3D"MsoNormal">The continuous power cycle test seems to somehow cor=
-rupt the data flash and on the next boot either we end up in kernel panic d=
-uring init or there is recovery tried by the file system which never seem t=
-o end successfully, and the application
- don&#8217;t start well. <o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">When the flash is corrupt, we repeatedly see jffs2 e=
-rrors as shown below.
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
-uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
-le-textfill-fill-alpha:100.0%">[ &nbsp;279.805305] jffs2: jffs2_scan_eraseb=
-lock(): Magic bitmask 0x1985 not found at 0x06f90020:
- 0x8504 instead<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
-uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
-le-textfill-fill-alpha:100.0%">[ &nbsp;279.805319] jffs2: jffs2_scan_eraseb=
-lock(): Magic bitmask 0x1985 not found at 0x06f90024:
- 0x75a3 instead<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
-uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
-le-textfill-fill-alpha:100.0%">[ &nbsp;279.805327] jffs2: Further such even=
-ts for this erase block will not be printed<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
-uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
-le-textfill-fill-alpha:100.0%">[ &nbsp;279.817370] jffs2: jffs2_scan_eraseb=
-lock(): Magic bitmask 0x1985 not found at 0x06fa0000:
- 0x0b14 instead<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
-uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
-le-textfill-fill-alpha:100.0%">[ 279.848078] jffs2: jffs2_scan_eraseblock()=
-: Magic bitmask 0x1985 not found at 0x06fa0004:
- 0x1baa instead<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
-uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
-le-textfill-fill-alpha:100.0%">[ &nbsp;279.860240] jffs2: jffs2_scan_eraseb=
-lock(): Magic bitmask 0x1985 not found at 0x06fa0008:
- 0xb9c1 instead<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
-uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
-le-textfill-fill-alpha:100.0%">[ &nbsp;279.872368] jffs2: jffs2_scan_eraseb=
-lock(): Magic bitmask 0x1985 not found at 0x06fa000c:
- 0x4d18 instead<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">These errors start to come when any file system rela=
-ted commands are executed from the
-<a href=3D"https://github.com/openbmc/meta-phosphor/blob/master/recipes-pho=
-sphor/initrdscripts/files/obmc-init.sh#L417">
-obmc-init.sh</a> file. <o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
-uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
-le-textfill-fill-alpha:100.0%">mount -t overlay -o lowerdir=3D$rodir,upperd=
-ir=3D$upper,workdir=3D$work cow /root<o:p></o:p></span></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">So basically, it appears like jffs2 is trying to rec=
-over the file system but because of the type of corruption it could not, an=
-d we are starting the overlay in a bad state which can subsequently trigger=
- a kernel panic. The flash corruption
- is mainly happening because of repeated power cycle test and some of the a=
-pplication (logging, debug collector, etc) trying to write something into f=
-lash and causing a corruption. The reproduction seems to be very difficult =
-we saw one failure after 5K loops
- of test. We also tried to manually corrupt the flash by writing junk data =
-to it, but it did not recreate the same issue.
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Has someone seen similar type of issue ? <o:p></o:p>=
-</p>
-<p class=3D"MsoNormal">Do you any recommendations to solve issue ?<o:p></o:=
-p></p>
-<p class=3D"MsoNormal">Is there a way to recreate such corruption manually =
-for testing purpose ?
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">One solution we have in mind is to check the return =
-status of all commands in obmc-init script around rwfs and when these comma=
-nds fail try to boot with read-only file system.
-<o:p></o:p></p>
-<p class=3D"MsoNormal">But we are not sure if it can work in all cases, if =
-the commands work and still jffs2 causes kernel panic in the background syn=
-c then we will have the same problem.
-<o:p></o:p></p>
-<p class=3D"MsoNormal">Any thoughts of how to detect the corrupted flash in=
- obmc-init and avoid using it ?
-<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">I see some reference to <a href=3D"https://github.co=
-m/openbmc/meta-phosphor/blob/master/recipes-phosphor/initrdscripts/files/ob=
-mc-init.sh#L378">
-fsck</a>. This is not working in our platform because we don&#8217;t have f=
-sck.jffs2. It could be packaging issue which can be solved.
-<o:p></o:p></p>
-<p class=3D"MsoNormal">Can we trust fsck to capture all possible flash corr=
-uption ? Could it be possible that fsck does not detect anything but when j=
-ffs2 mounted then it can start to fail ?<o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal">Thanks <o:p></o:p></p>
-<p class=3D"MsoNormal">Rohit PAI <o:p></o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><o:p>&nbsp;</o:p></p>
-<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
-uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
-le-textfill-fill-alpha:100.0%"><o:p>&nbsp;</o:p></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-family:&quot;Abadi Extra Light&q=
-uot;,sans-serif;color:#203864;mso-style-textfill-fill-color:#203864;mso-sty=
-le-textfill-fill-alpha:100.0%"><o:p>&nbsp;</o:p></span></p>
-</div>
-</body>
-</html>
+>I see that the u-boot has been recently upgraded to 2019.04.
+>I created the image as follows:
+>1. Checked out the code
+>2. . setup evb-ast2500
+>3. time bitbake obmc-phosphor-image
+>
+>Then I copied the created image (bmc-image)
+>from /trunk/build/evb-ast2500/tmp/deploy/images/evb-ast2500/obmc-phosphor-=
+image-evb-ast2500-20221122160306.static.mtd.all.tar
+>to my LC having BMC module. I used ./socflash.sh to upgrade the BMC image
+>to one just created. After upgrade is done, I still see the old u-boot
+>version (below). Is this something else I need to do for the u-boot to be
+>at revision 2019?
+>
+>ast# version
+>
+>U-Boot 2016.07 (Jun 10 2020 - 10:12:49 +0000)
+>arm-openbmc-linux-gnueabi-gcc (GCC) 11.2.0
+>GNU ld (GNU Binutils) 2.37.20210721
+>
+>I am using BMC simulator on another server and on that the u-boot revision
+>is fine (below). Not sure why u-boot is not at 2019 when I compile the cod=
+e
+>directly.
+>ast# version
+>U-Boot 2019.04 (Nov 10 2022 - 00:12:58 +0000)
+>
+>arm-openbmc-linux-gnueabi-gcc (GCC) 12.2.0
+>GNU ld (GNU Binutils) 2.39.0.20220819
+>
+>Any help would be greatly appreciated.
+>
+>Thanks,
+>Hamid
+>
 
---_000_LV2PR12MB6014DB772E0529929A1C3091CD1B9LV2PR12MB6014namp_--
+What OpenBMC commit are you building from?  It looks like evb-ast2500
+got updated to the newer u-boot branch in February:
+https://github.com/openbmc/openbmc/commit/7d75b9b68370374db00e9c99b5406ebb6=
+b18512f
+
+If the same image is showing the expected u-boot version in a simulator
+(qemu?), then it sounds like maybe your installation procedure isn't
+doing what you intended it to.  I don't know what the 'socflash.sh' you
+referred to above is; if you can boot into a reasonably healthy OpenBMC
+environment, I'd suggest using the normal firmware-update mechanism.  If
+the existing firmware is something else or isn't working enough to boot
+normally you might need to resort to a hardware flash programmer or
+something (or if you can get your u-boot networking working at all, even
+at a slow speed, you could TFTP in an OpenBMC kernel/initrd, boot into
+that, and use flashcp to write the full OpenBMC image).
+
+
+Zev
