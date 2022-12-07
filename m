@@ -2,72 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 398BC645ADF
-	for <lists+openbmc@lfdr.de>; Wed,  7 Dec 2022 14:26:42 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CE86C645B44
+	for <lists+openbmc@lfdr.de>; Wed,  7 Dec 2022 14:48:09 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NRyjr0BrXz3bgx
-	for <lists+openbmc@lfdr.de>; Thu,  8 Dec 2022 00:26:40 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NRzBb4Y56z3bfM
+	for <lists+openbmc@lfdr.de>; Thu,  8 Dec 2022 00:48:07 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=bIHdWFbw;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=B37MLY0f;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::730; helo=mail-qk1-x730.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=134.134.136.20; helo=mga02.intel.com; envelope-from=adrian.hunter@intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=bIHdWFbw;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=B37MLY0f;
 	dkim-atps=neutral
-Received: from mail-qk1-x730.google.com (mail-qk1-x730.google.com [IPv6:2607:f8b0:4864:20::730])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NRyjH1RZMz2xZp
-	for <openbmc@lists.ozlabs.org>; Thu,  8 Dec 2022 00:26:09 +1100 (AEDT)
-Received: by mail-qk1-x730.google.com with SMTP id k3so3542433qki.13
-        for <openbmc@lists.ozlabs.org>; Wed, 07 Dec 2022 05:26:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=gasjj2Warc1QIbknNKNkywz6J4OpsWmMf8ktNJGJzxM=;
-        b=bIHdWFbwnlgZ9X7ycTDJihFthCsDpZiozQ8aRPo5JuLh15PEb9zZRUQK8qp8nDk0Vz
-         JfuW+6fXd6v1zosJUbmBo1DSHPZzrgeQ4NH/RuGTFXM+l6tzYjFEJMqAyK/DnvtK+WRG
-         hYaFKDNCwaycPkz7L9zlXE/Dh2jw9yLebTR8VYUV0c2DQ5oY9Q/X4PuouvFypRwhA5Wx
-         USwVkgVJOjDKx/mSlCC/Kr/dZi+q8x8bV3j/UfJaDxQ/ivdISebJdeQQlFG1qs5GNxHU
-         M33kyTUKZI9LbjBWr9Icf107BKr2qSF8tmIgdHAQyMvy3YmTtB8gmVUXeCoUjH5wwazP
-         ivxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gasjj2Warc1QIbknNKNkywz6J4OpsWmMf8ktNJGJzxM=;
-        b=yBvnMFiD916YJfgS0Aa1jM/z31QpzJgMM2txTa62+TjPgZI6G8r7sixwRJy5qmENQZ
-         m+T7QGnEktkwcEuPUIIH2DpWdvcMwFnYje0jruBP0tm+fsdbvBmgl/habaA7z2UJxpd2
-         iYQYmpKkJ3RNr+PslJJH0Y6YbNcNoSjHLBFn3PgzRRnuXmxKfIycpu8fov5dQ44/vD0+
-         o5inx48H6grH+7c64be3jWvIpTsWGQUbCoZ8d5VxDI161pOPpjNW717HvJhFlFDJ2s3J
-         l3BIZeJUCq+wjWNv5ohblZW2MdpPOcf8ad/TFSiisxVCtnEN6KCoBDPKnAdMSYO81NMf
-         d/2w==
-X-Gm-Message-State: ANoB5pm0AdTPEPpBA4bQNbvg74IpiA2Yov6Aerm3jnCcU9kqTcEwt5ke
-	TQemi4cmiAcXHx/6zYHSyvEQ/sqxx/8efBfnlHQ=
-X-Google-Smtp-Source: AA0mqf5RnWnS+hISdVDsA/In+NITv+EGTmDYWDSf+CwqqDeU+RkT3eKO4lbUN9HJ6WbQczEee6OKmp48cqrdxu9QXDs=
-X-Received: by 2002:a05:620a:1aa3:b0:6fa:b56f:7ede with SMTP id
- bl35-20020a05620a1aa300b006fab56f7edemr80678604qkb.383.1670419563989; Wed, 07
- Dec 2022 05:26:03 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NRzB23kR9z2xHb
+	for <openbmc@lists.ozlabs.org>; Thu,  8 Dec 2022 00:47:32 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1670420858; x=1701956858;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=aHVcx5z4X6dmBc1V2l5HJGVIoO8fhDJR9OvEAm5YvL4=;
+  b=B37MLY0fzANZUuLdcshoOzsvZieetVR3qA5x4ePTxRzOB/8dqziWU/Zi
+   uhNzFw5jUOWUfdchDeWYtCTD23B/TXDOD8BOqHEgwDN1xvu4VFKk6bGQL
+   nYqOpuMNkES9F7s9Le0cTvR9TkdFBYuoxC/5bkIzC4Cs9gyVLx71/ODrU
+   aFJRnfHd7MKl+cAK1HNNKhKw2fuU8sRUe3r6rQcSRqe7RjrnMtey2cw32
+   txQyh6MvnscO9XmzOAxv31Td9tZyldWKbh2i33qKGTKm2LUSMoaTVtSH8
+   MIjqRkOFFgSR+LE7fHL2u+8zI1cVItxRooSSAKAJ4nZAQBLuxqZXcThCV
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10553"; a="304523668"
+X-IronPort-AV: E=Sophos;i="5.96,225,1665471600"; 
+   d="scan'208";a="304523668"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2022 05:47:20 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10553"; a="891805041"
+X-IronPort-AV: E=Sophos;i="5.96,225,1665471600"; 
+   d="scan'208";a="891805041"
+Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.252.38.130])
+  by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Dec 2022 05:47:15 -0800
+Message-ID: <137f93ed-4e3c-90b5-52fa-e3fc22a0ab6b@intel.com>
+Date: Wed, 7 Dec 2022 15:47:10 +0200
 MIME-Version: 1.0
-References: <20221205085351.27566-1-tmaimon77@gmail.com> <20221205085351.27566-3-tmaimon77@gmail.com>
- <CAHp75VeAzgCUiH5Z1pVJ-4X29aCK44q907DRQXX75zS4oEhHHg@mail.gmail.com>
- <CAP6Zq1gi7-pA9wdO3=V9Uf0+pKPTHwWw66MfbYmOwodoXeRDqA@mail.gmail.com>
- <CAHp75VctiJvvk-6AWfQSU9psHvPeKECaCWPuKL9YQ_-Vt3GBGA@mail.gmail.com>
- <c200557f-c30a-62f9-287a-af804e818cf1@intel.com> <CAHp75VczbNpHPi-TBe81Ad=P=eXJZpAmkj=m4-apGF1e0uh5kg@mail.gmail.com>
- <CAHp75VemBiGUTspEYDe3hwA9pEzjNMQGY6_kUoVMJyCuEWgChw@mail.gmail.com>
- <c4e2a00c-d09e-95e2-eaf2-1de6b820ac6e@intel.com> <CAP6Zq1h9XvH501e_nH9TkUCKPNOuH7dhOM8FrsUM=PYX4gt0qw@mail.gmail.com>
-In-Reply-To: <CAP6Zq1h9XvH501e_nH9TkUCKPNOuH7dhOM8FrsUM=PYX4gt0qw@mail.gmail.com>
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Wed, 7 Dec 2022 15:25:27 +0200
-Message-ID: <CAHp75Vd5DzkCW0Gpouv+0Or=Yhjp_KdFGP-jXkpHD=UZrG2ajA@mail.gmail.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Firefox/102.0 Thunderbird/102.5.1
 Subject: Re: [PATCH v2 2/2] mmc: sdhci-npcm: Add NPCM SDHCI driver
-To: Tomer Maimon <tmaimon77@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Language: en-US
+To: Tomer Maimon <tmaimon77@gmail.com>, ulf.hansson@linaro.org,
+ avifishman70@gmail.com, tali.perry1@gmail.com, joel@jms.id.au,
+ venture@google.com, yuenn@google.com, benjaminfair@google.com,
+ skhan@linuxfoundation.org, davidgow@google.com, pbrobinson@gmail.com,
+ gsomlo@gmail.com, briannorris@chromium.org, arnd@arndb.de,
+ krakoczy@antmicro.com, andy.shevchenko@gmail.com
+References: <20221205085351.27566-1-tmaimon77@gmail.com>
+ <20221205085351.27566-3-tmaimon77@gmail.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
+Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
+ Business Identity Code: 0357606 - 4, Domiciled in Helsinki
+In-Reply-To: <20221205085351.27566-3-tmaimon77@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,103 +76,143 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, ulf.hansson@linaro.org, benjaminfair@google.com, arnd@arndb.de, krakoczy@antmicro.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, briannorris@chromium.org, linux-mmc@vger.kernel.org, Adrian Hunter <adrian.hunter@intel.com>, tali.perry1@gmail.com, gsomlo@gmail.com, joel@jms.id.au, davidgow@google.com, skhan@linuxfoundation.org, linux-kernel@vger.kernel.org, pbrobinson@gmail.com
+Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Dec 7, 2022 at 3:01 PM Tomer Maimon <tmaimon77@gmail.com> wrote:
-> On Mon, 5 Dec 2022 at 16:33, Adrian Hunter <adrian.hunter@intel.com> wrote:
-> > On 5/12/22 16:17, Andy Shevchenko wrote:
-> > > On Mon, Dec 5, 2022 at 4:14 PM Andy Shevchenko
-> > > <andy.shevchenko@gmail.com> wrote:
-> > >> On Mon, Dec 5, 2022 at 3:41 PM Adrian Hunter <adrian.hunter@intel.com> wrote:
-> > >>> On 5/12/22 15:25, Andy Shevchenko wrote:
-> > >>>> On Mon, Dec 5, 2022 at 1:20 PM Tomer Maimon <tmaimon77@gmail.com> wrote:
+On 5/12/22 10:53, Tomer Maimon wrote:
+> Add Nuvoton NPCM BMC sdhci-pltfm controller driver.
+> 
+> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 
-...
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 
-> > >>>> devm_ is problematic in your case.
-> > >>>> TL;DR: you need to use clk_get_optional() and clk_put().
-> > >>>
-> > >>> devm_ calls exactly those, so what is the issue?
-> > >>
-> > >> The issue is the error path or removal stage where it may or may be
-> > >> not problematic. To be on the safe side, the best approach is to make
-> > >> sure that allocated resources are being deallocated in the reversed
-> > >> order. That said, the
-> > >>
-> > >> 1. call non-devm_func()
-> > >> 2. call devm_func()
-> > >>
-> > >> is wrong strictly speaking.
-> > >
-> > > To elaborate more, the
-> > >
-> > > 1. call all devm_func()
-> > > 2. call only non-devm_func()
-> > >
-> > > is the correct order.
-> >
-> > 1. WRT pltfm_host->clk, that is what is happening
-> > 2. WRT other resources that is simply not always possible because not every resource is wrapped by devm_
-> > e.g. mmc_alloc_host() / mmc_free_host()
-> I little confused about what to decide, should I use only
-> non-devm_func because mmc_alloc_host() / mmc_free_host() is not
-> warrped with devm_?
+> ---
+>  drivers/mmc/host/Kconfig      |  8 ++++
+>  drivers/mmc/host/Makefile     |  1 +
+>  drivers/mmc/host/sdhci-npcm.c | 84 +++++++++++++++++++++++++++++++++++
+>  3 files changed, 93 insertions(+)
+>  create mode 100644 drivers/mmc/host/sdhci-npcm.c
+> 
+> diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
+> index fb1062a6394c..82ab6fc25dca 100644
+> --- a/drivers/mmc/host/Kconfig
+> +++ b/drivers/mmc/host/Kconfig
+> @@ -415,6 +415,14 @@ config MMC_SDHCI_MILBEAUT
+>  
+>  	  If unsure, say N.
+>  
+> +config MMC_SDHCI_NPCM
+> +	tristate "Secure Digital Host Controller Interface support for NPCM"
+> +	depends on ARCH_NPCM || COMPILE_TEST
+> +	depends on MMC_SDHCI_PLTFM
+> +	help
+> +	  This provides support for the SD/eMMC controller found in
+> +	  NPCM BMC family SoCs.
+> +
+>  config MMC_SDHCI_IPROC
+>  	tristate "SDHCI support for the BCM2835 & iProc SD/MMC Controller"
+>  	depends on ARCH_BCM2835 || ARCH_BCM_IPROC || ARCH_BRCMSTB || COMPILE_TEST
+> diff --git a/drivers/mmc/host/Makefile b/drivers/mmc/host/Makefile
+> index 4e4ceb32c4b4..a101f87a5f19 100644
+> --- a/drivers/mmc/host/Makefile
+> +++ b/drivers/mmc/host/Makefile
+> @@ -97,6 +97,7 @@ obj-$(CONFIG_MMC_SDHCI_MICROCHIP_PIC32)	+= sdhci-pic32.o
+>  obj-$(CONFIG_MMC_SDHCI_BRCMSTB)		+= sdhci-brcmstb.o
+>  obj-$(CONFIG_MMC_SDHCI_OMAP)		+= sdhci-omap.o
+>  obj-$(CONFIG_MMC_SDHCI_SPRD)		+= sdhci-sprd.o
+> +obj-$(CONFIG_MMC_SDHCI_NPCM)		+= sdhci-npcm.o
+>  obj-$(CONFIG_MMC_CQHCI)			+= cqhci.o
+>  cqhci-y					+= cqhci-core.o
+>  cqhci-$(CONFIG_MMC_CRYPTO)		+= cqhci-crypto.o
+> diff --git a/drivers/mmc/host/sdhci-npcm.c b/drivers/mmc/host/sdhci-npcm.c
+> new file mode 100644
+> index 000000000000..beace15b6c00
+> --- /dev/null
+> +++ b/drivers/mmc/host/sdhci-npcm.c
+> @@ -0,0 +1,84 @@
+> +// SPDX-License-Identifier: GPL-2.0+
+> +/*
+> + * NPCM SDHC MMC host controller driver.
+> + *
+> + * Copyright (c) 2020 Nuvoton Technology corporation.
+> + */
+> +
+> +#include <linux/clk.h>
+> +#include <linux/err.h>
+> +#include <linux/io.h>
+> +#include <linux/mmc/host.h>
+> +#include <linux/mmc/mmc.h>
+> +#include <linux/module.h>
+> +
+> +#include "sdhci-pltfm.h"
+> +
+> +static const struct sdhci_pltfm_data npcm_sdhci_pdata = {
+> +	.quirks  = SDHCI_QUIRK_DELAY_AFTER_POWER,
+> +	.quirks2 = SDHCI_QUIRK2_STOP_WITH_TC |
+> +		   SDHCI_QUIRK2_NO_1_8_V,
+> +};
+> +
+> +static int npcm_sdhci_probe(struct platform_device *pdev)
+> +{
+> +	struct sdhci_pltfm_host *pltfm_host;
+> +	struct sdhci_host *host;
+> +	u32 caps;
+> +	int ret;
+> +
+> +	host = sdhci_pltfm_init(pdev, &npcm_sdhci_pdata, 0);
+> +	if (IS_ERR(host))
+> +		return PTR_ERR(host);
+> +
+> +	pltfm_host = sdhci_priv(host);
+> +
+> +	pltfm_host->clk = devm_clk_get_optional(&pdev->dev, NULL);
+> +	if (IS_ERR(pltfm_host->clk))
+> +		return PTR_ERR(pltfm_host->clk);
+> +
+> +	ret = clk_prepare_enable(pltfm_host->clk);
+> +	if (ret)
+> +		return ret;
+> +
+> +	caps = sdhci_readl(host, SDHCI_CAPABILITIES);
+> +	if (caps & SDHCI_CAN_DO_8BIT)
+> +		host->mmc->caps |= MMC_CAP_8_BIT_DATA;
+> +
+> +	ret = mmc_of_parse(host->mmc);
+> +	if (ret)
+> +		goto err_sdhci_add;
+> +
+> +	ret = sdhci_add_host(host);
+> +	if (ret)
+> +		goto err_sdhci_add;
+> +
+> +	return 0;
+> +
+> +err_sdhci_add:
+> +	clk_disable_unprepare(pltfm_host->clk);
+> +	sdhci_pltfm_free(pdev);
+> +	return ret;
+> +}
+> +
+> +static const struct of_device_id npcm_sdhci_of_match[] = {
+> +	{ .compatible = "nuvoton,npcm750-sdhci" },
+> +	{ .compatible = "nuvoton,npcm845-sdhci" },
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(of, npcm_sdhci_of_match);
+> +
+> +static struct platform_driver npcm_sdhci_driver = {
+> +	.driver = {
+> +		.name	= "npcm-sdhci",
+> +		.of_match_table = npcm_sdhci_of_match,
+> +		.pm	= &sdhci_pltfm_pmops,
+> +	},
+> +	.probe		= npcm_sdhci_probe,
+> +	.remove		= sdhci_pltfm_unregister,
+> +};
+> +module_platform_driver(npcm_sdhci_driver);
+> +
+> +MODULE_DESCRIPTION("NPCM Secure Digital Host Controller Interface driver");
+> +MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
+> +MODULE_LICENSE("GPL");
 
-It is up to you how to proceed. I pointed out the problem with your
-code which may or may not be fatal.
-
-If you want to solve it, there are several approaches:
-1) get rid of devm_ completely;
-2) properly shuffle the ordering in ->probe(), so all devm_ calls are
-followed by non-devm_;
-3) wrap non-devm_ cals to become managed (see
-devm_add_action_or_reset() approach);
-4) fix SDHCI / MMC layer by providing necessary devm_ calls and/or fix
-sdhci_pltfm_register() to handle the clock.
-
-Personally, the list order is from the least, what I prefer, to the
-most (i.o.w. I would like to see rather 4) than 1) to be implemented).
-
-> > > Hence in this case the driver can be worked around easily (by
-> > > shuffling the order in ->probe() to call devm_ first), but as I said
-> > > looking into implementation of the _unregister() I'm pretty sure that
-> > > clock management should be in sdhci-pltfm, rather than in all callers
-> > > who won't need the full customization.
-> > >
-> > > Hope this helps to understand my point.
-> > >
-> > >>>> Your ->remove() callback doesn't free resources in the reversed order
-> > >>>> which may or, by luck, may not be the case of all possible crashes,
-> > >>>> UAFs, races, etc during removal stage. All the same for error path in
-> > >>>> ->probe().
-> > >>
-> > >> I also pointed out above what would be the outcome of neglecting this rule.
-
-...
-
-> > >>>>>> Why can't you use sdhci_pltfm_register()?
-> > >>>>> two things are missing in sdhci_pltfm_register
-> > >>>>> 1. clock.
-> > >>>>
-> > >>>> Taking into account the implementation of the corresponding
-> > >>>> _unregister() I would add the clock handling to the _register() one.
-> > >>>> Perhaps via a new member of the platform data that supplies the name
-> > >>>> and index of the clock and hence all clk_get_optional() / clk_put will
-> > >>>> be moved there.
-> Do you mean to add it to sdhci_pltfm_register function? if yes I
-> believe it will take some time to modify sdhci_pltfm_register
-> I prefer not to use sdhci_pltfm_register.
-
-In the Linux kernel we are trying hard to avoid code duplication. Why
-do you need it to be open coded? (Yes, I heard you, but somebody
-should fix the issues with that funcion at some point, right?)
-
-> > >>>>> 2. Adding SDHCI_CAN_DO_8BIT capability according the eMMC capabilities.
-> > >>>>
-> > >>>> All the same, why can't platform data be utilised for this?
-
--- 
-With Best Regards,
-Andy Shevchenko
