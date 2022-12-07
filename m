@@ -1,69 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 239F164D708
-	for <lists+openbmc@lfdr.de>; Thu, 15 Dec 2022 08:12:08 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A925064D70A
+	for <lists+openbmc@lfdr.de>; Thu, 15 Dec 2022 08:13:02 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NXk1x6fWjz3bNw
-	for <lists+openbmc@lfdr.de>; Thu, 15 Dec 2022 18:12:05 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NXk30457Kz2yyZ
+	for <lists+openbmc@lfdr.de>; Thu, 15 Dec 2022 18:13:00 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=EjXIIr8Q;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Fkbez53J;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::22d; helo=mail-oi1-x22d.google.com; envelope-from=amirradh@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2001:4860:4864:20::2e; helo=mail-oa1-x2e.google.com; envelope-from=amirradh@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=EjXIIr8Q;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Fkbez53J;
 	dkim-atps=neutral
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+Received: from mail-oa1-x2e.google.com (mail-oa1-x2e.google.com [IPv6:2001:4860:4864:20::2e])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NS4f40nN6z3bZ8
-	for <openbmc@lists.ozlabs.org>; Thu,  8 Dec 2022 04:53:46 +1100 (AEDT)
-Received: by mail-oi1-x22d.google.com with SMTP id n205so21565664oib.1
-        for <openbmc@lists.ozlabs.org>; Wed, 07 Dec 2022 09:53:46 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NS7B0034Kz3bby
+	for <openbmc@lists.ozlabs.org>; Thu,  8 Dec 2022 06:48:05 +1100 (AEDT)
+Received: by mail-oa1-x2e.google.com with SMTP id 586e51a60fabf-12c8312131fso22590023fac.4
+        for <openbmc@lists.ozlabs.org>; Wed, 07 Dec 2022 11:48:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=C4w3+LQt4gQ4Ugi7Yz47cUlM1t0AaghCl9mVmCM8/fI=;
-        b=EjXIIr8QShRlVfYFc7fLBlvDDHVxXJtrkg9jPIxiLmBaNTxKw3H7sEvtL3sIvT3V+z
-         NUlEeGnzdods7MbnNaAoRrW/lP5YWgzrTIJlO5y5NUdLLPaKNnh67qxc35hM/3EOvmMx
-         MW9OlhWX35DfifOgWJAibtaP6B1xk9FLpD7SWxY8zvfXPhJ3vSRZAy/TENwVSrH9zzPY
-         GQ7YE1EMi250FsagvzvYogGHGbKc+s3dKp6abRYMLaB5LRZwmri5fMPnugaeFQXVd6Tw
-         2HUCYZDvPH8IyiSbMcMr+PAKy2TdFhQ3QSk69Fk13iL0zm9hvYDiCll/DTHZQizkPQBJ
-         FMcw==
+        bh=LiQuf/tGkMeSk6EdgYC07z9Tmp+oQ70PM3oB5NBV2uk=;
+        b=Fkbez53JOTciMyOm8TLbRYv4rUDVYkSRwkLjLvh9fT3tCAP2Gobr98ksJtflMKnDQy
+         bTaA3d/29Q4twImBVYmJdABCqWI6aYeECSxVxL5NeVwHgCUTI3KUvnY+71E9VPXAETFE
+         LAUjx8j+Tv0zlv/ehNGl8NiydYNHLxl/YO1ChNXkLivAIVIQGJ9psyvj1wV3R0OqRfD3
+         X2TotgI7SRE11GbL0OWBKENS8p9D39IJ+NnZgebtAawRKKjQRiLs4dFvgg9lqubbFFO4
+         T4W/V5xIc2xKUXDujGLHxoqD6kpmgvhwJZnBYCsFZ8mtCU4LwQkF//KPBMom7DS8sbrD
+         /DpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=C4w3+LQt4gQ4Ugi7Yz47cUlM1t0AaghCl9mVmCM8/fI=;
-        b=AIzZDMLekxosVP688YFDQ4X+NSWzCuB27xnJcPfM/eQtiaZNImsiCtRUcLezhYGGNY
-         PJzjnKdNYd5K62tuTG9I9QVMhkSz+dvzyy2z+zNkz4iUWqXYJLidq/Cye30UdH7pPGpY
-         T7Xtlhe5M4aUoiQkIQsUmB1PkbOeQDy7N0NFWXHREhgMhRuwRV89sqv9Tig3D62vSqhd
-         aPn7BIzWJ+aMAVgZL8uN/kDq0LNDmFNtT7PmusC5b82QmIzJd6bhhqPbtaFWxEG0SysX
-         y9jpojL8mvd8I5XSaBz+kk93aR1AGz3ysJ2TG2uZMkgOeg0TpRtzJqYcwJGDfeApsN3Z
-         wADQ==
-X-Gm-Message-State: ANoB5pl650tCvbNYBEz4vR2xEafaZyitDf5LzNLgqDA9JrcmTlAfq/cm
-	OX96qbsAoX32+DNEJ355KJHaZATpRF1G5/+vkXM=
-X-Google-Smtp-Source: AA0mqf41Zh2sQSzChARnX3ld9RHuX+dQ8nECubYLyQM5UnyUvpl91+hxU3yo0i8/44WknMloo0Qk5XovDwXOlJcO3xE=
-X-Received: by 2002:a05:6808:1495:b0:35b:e76a:c291 with SMTP id
- e21-20020a056808149500b0035be76ac291mr13186838oiw.260.1670435623120; Wed, 07
- Dec 2022 09:53:43 -0800 (PST)
+        bh=LiQuf/tGkMeSk6EdgYC07z9Tmp+oQ70PM3oB5NBV2uk=;
+        b=vTT6akCT/Oi7BE12C/xt9TiSwG5iV1vIiIXgRImRfA8uBf8aBMsALsG2AxaH2Vx5lv
+         DmdnG5q1RaOSeuYPC19cekCVcDFdwEGf3L+TBg2u8S83GlxuFYRWPG0unZ1Km+p9yOwo
+         Ql0pD0omSAtnKCtghil9iIxX6nNj5k1wDtku9afGweXgRFVNfAM8+l55uvZxS+ddbjAn
+         imUqKAGLly9LFSFx7k4OlD5GApMn7AaMf6gxJ9t/7098XL4yDIAI2CeAoqrMt6hg/dl2
+         G7FJGoq6chD+YtcWRtIykH8KVxz/VMvTzljwYj/PwQKKLHNsmJcnhqhyrDfudzC9Sfga
+         3CLw==
+X-Gm-Message-State: ANoB5pk1UrEYoniK1g5K5Ajz7UGIxKpuxxI/w/LkWPFjtBuL2fRtA8lZ
+	97iUWnaMeZUfaOQpppjoUMdCb46absfHRtH84bI=
+X-Google-Smtp-Source: AA0mqf7iz3ojy9NFzDpfqMkA/clmk28iLTwnnFWr5puA/1WWLMeiIG0iQa0HcV5n2NF1XhWd89zTGIr9aqeFRhwaQ8Y=
+X-Received: by 2002:a05:6870:bd49:b0:13b:8835:a774 with SMTP id
+ og9-20020a056870bd4900b0013b8835a774mr40341677oab.260.1670442479014; Wed, 07
+ Dec 2022 11:47:59 -0800 (PST)
 MIME-Version: 1.0
 References: <CACFAz8BpHQUROFcpG3+dG3XyUt0+8=zgcwkU4CTk3uuO0Z2c_w@mail.gmail.com>
  <20221204234449.GG18848@packtop> <CACFAz8CO7sm6TXCct35kOH-mWZOAj=UHuRisgw3rSpawRxr9jQ@mail.gmail.com>
- <20221206213941.GH18848@packtop>
-In-Reply-To: <20221206213941.GH18848@packtop>
+ <20221206213941.GH18848@packtop> <CACFAz8CXpJ-HR9RDB4DPCH5y-=kuRgwd3r_p7b7sA5CyQjty=A@mail.gmail.com>
+In-Reply-To: <CACFAz8CXpJ-HR9RDB4DPCH5y-=kuRgwd3r_p7b7sA5CyQjty=A@mail.gmail.com>
 From: Hamid Amirrad <amirradh@gmail.com>
-Date: Wed, 7 Dec 2022 12:53:30 -0500
-Message-ID: <CACFAz8CXpJ-HR9RDB4DPCH5y-=kuRgwd3r_p7b7sA5CyQjty=A@mail.gmail.com>
+Date: Wed, 7 Dec 2022 14:47:47 -0500
+Message-ID: <CACFAz8AspVJxBnp2k+aC=M3tANYp=QCUeEPZBmAQ7aC2YUb2Rg@mail.gmail.com>
 Subject: Re: Changing ethernet port speed
 To: Zev Weiss <zweiss@equinix.com>
-Content-Type: multipart/alternative; boundary="000000000000efb4f805ef4099f2"
+Content-Type: multipart/alternative; boundary="00000000000094566005ef423267"
 X-Mailman-Approved-At: Thu, 15 Dec 2022 18:08:48 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -80,133 +80,156 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000efb4f805ef4099f2
+--00000000000094566005ef423267
 Content-Type: text/plain; charset="UTF-8"
 
 Hi Zev,
 
-I am checking out the code from: https://github.com/openbmc/openbmc
-Revision I am building from is 15231.
+I might have installed it correctly this time (still have to confirm).
+However, I get the following, cant find any details about username
+password. where can I find it?
+evb-ast2500 login:
 
-sockflash.sh output is below for upgrading:
+Thanks,
+Hamid
 
-./socflash.sh image-bmc image-bmc
-ASPEED SOC Flash Utility v.1.22.08
-Warning:
-SoCflash utility is only for engineers to update the firmware in lab,
-it is not a commercialized software product,
-ASPEED has not done compatibility/reliability stress test for SoCflash.
-Please do not use this utility for any mass production purpose.
-Press y to continue if you are agree ....
-y
-Find ASPEED Device 1a03:2000 on 7:0.0
-MMIO Virtual Address: abb9000
-Relocate IO Base: b000
-Found ASPEED Device 1a03:2500 rev. 41
-Static Memory Controller Information:
-CS0 Flash Type is SPI
-CS1 Flash Type is SPI
-CS2 Flash Type is SPI
-CS3 Flash Type is NOR
-CS4 Flash Type is NOR
-Boot CS is 0
-Option Information:
-CS: 0
-Flash Type: SPI
-[Warning] Don't AC OFF or Reboot System During BMC Firmware Update!!
-Find Flash Chip #1: 64MB SPI Flash
-Backup Flash Chip O.K.
-Update Flash Chip #1 O.K.
-Update Flash Chip O.K.
+On Wed, Dec 7, 2022 at 12:53 PM Hamid Amirrad <amirradh@gmail.com> wrote:
 
-On Tue, Dec 6, 2022 at 4:39 PM Zev Weiss <zweiss@equinix.com> wrote:
+> Hi Zev,
+>
+> I am checking out the code from: https://github.com/openbmc/openbmc
+> Revision I am building from is 15231.
+>
+> sockflash.sh output is below for upgrading:
+>
+> ./socflash.sh image-bmc image-bmc
+> ASPEED SOC Flash Utility v.1.22.08
+> Warning:
+> SoCflash utility is only for engineers to update the firmware in lab,
+> it is not a commercialized software product,
+> ASPEED has not done compatibility/reliability stress test for SoCflash.
+> Please do not use this utility for any mass production purpose.
+> Press y to continue if you are agree ....
+> y
+> Find ASPEED Device 1a03:2000 on 7:0.0
+> MMIO Virtual Address: abb9000
+> Relocate IO Base: b000
+> Found ASPEED Device 1a03:2500 rev. 41
+> Static Memory Controller Information:
+> CS0 Flash Type is SPI
+> CS1 Flash Type is SPI
+> CS2 Flash Type is SPI
+> CS3 Flash Type is NOR
+> CS4 Flash Type is NOR
+> Boot CS is 0
+> Option Information:
+> CS: 0
+> Flash Type: SPI
+> [Warning] Don't AC OFF or Reboot System During BMC Firmware Update!!
+> Find Flash Chip #1: 64MB SPI Flash
+> Backup Flash Chip O.K.
+> Update Flash Chip #1 O.K.
+> Update Flash Chip O.K.
+>
+> On Tue, Dec 6, 2022 at 4:39 PM Zev Weiss <zweiss@equinix.com> wrote:
+>
+>> On Tue, Dec 06, 2022 at 11:27:47AM PST, Hamid Amirrad wrote:
+>> >Hi,
+>> >
+>> >I see that the u-boot has been recently upgraded to 2019.04.
+>> >I created the image as follows:
+>> >1. Checked out the code
+>> >2. . setup evb-ast2500
+>> >3. time bitbake obmc-phosphor-image
+>> >
+>> >Then I copied the created image (bmc-image)
+>> >from
+>> /trunk/build/evb-ast2500/tmp/deploy/images/evb-ast2500/obmc-phosphor-image-evb-ast2500-20221122160306.static.mtd.all.tar
+>> >to my LC having BMC module. I used ./socflash.sh to upgrade the BMC image
+>> >to one just created. After upgrade is done, I still see the old u-boot
+>> >version (below). Is this something else I need to do for the u-boot to be
+>> >at revision 2019?
+>> >
+>> >ast# version
+>> >
+>> >U-Boot 2016.07 (Jun 10 2020 - 10:12:49 +0000)
+>> >arm-openbmc-linux-gnueabi-gcc (GCC) 11.2.0
+>> >GNU ld (GNU Binutils) 2.37.20210721
+>> >
+>> >I am using BMC simulator on another server and on that the u-boot
+>> revision
+>> >is fine (below). Not sure why u-boot is not at 2019 when I compile the
+>> code
+>> >directly.
+>> >ast# version
+>> >U-Boot 2019.04 (Nov 10 2022 - 00:12:58 +0000)
+>> >
+>> >arm-openbmc-linux-gnueabi-gcc (GCC) 12.2.0
+>> >GNU ld (GNU Binutils) 2.39.0.20220819
+>> >
+>> >Any help would be greatly appreciated.
+>> >
+>> >Thanks,
+>> >Hamid
+>> >
+>>
+>> What OpenBMC commit are you building from?  It looks like evb-ast2500
+>> got updated to the newer u-boot branch in February:
+>>
+>> https://github.com/openbmc/openbmc/commit/7d75b9b68370374db00e9c99b5406ebb6b18512f
+>>
+>> If the same image is showing the expected u-boot version in a simulator
+>> (qemu?), then it sounds like maybe your installation procedure isn't
+>> doing what you intended it to.  I don't know what the 'socflash.sh' you
+>> referred to above is; if you can boot into a reasonably healthy OpenBMC
+>> environment, I'd suggest using the normal firmware-update mechanism.  If
+>> the existing firmware is something else or isn't working enough to boot
+>> normally you might need to resort to a hardware flash programmer or
+>> something (or if you can get your u-boot networking working at all, even
+>> at a slow speed, you could TFTP in an OpenBMC kernel/initrd, boot into
+>> that, and use flashcp to write the full OpenBMC image).
+>>
+>>
+>> Zev
+>>
+>
 
-> On Tue, Dec 06, 2022 at 11:27:47AM PST, Hamid Amirrad wrote:
-> >Hi,
-> >
-> >I see that the u-boot has been recently upgraded to 2019.04.
-> >I created the image as follows:
-> >1. Checked out the code
-> >2. . setup evb-ast2500
-> >3. time bitbake obmc-phosphor-image
-> >
-> >Then I copied the created image (bmc-image)
-> >from
-> /trunk/build/evb-ast2500/tmp/deploy/images/evb-ast2500/obmc-phosphor-image-evb-ast2500-20221122160306.static.mtd.all.tar
-> >to my LC having BMC module. I used ./socflash.sh to upgrade the BMC image
-> >to one just created. After upgrade is done, I still see the old u-boot
-> >version (below). Is this something else I need to do for the u-boot to be
-> >at revision 2019?
-> >
-> >ast# version
-> >
-> >U-Boot 2016.07 (Jun 10 2020 - 10:12:49 +0000)
-> >arm-openbmc-linux-gnueabi-gcc (GCC) 11.2.0
-> >GNU ld (GNU Binutils) 2.37.20210721
-> >
-> >I am using BMC simulator on another server and on that the u-boot revision
-> >is fine (below). Not sure why u-boot is not at 2019 when I compile the
-> code
-> >directly.
-> >ast# version
-> >U-Boot 2019.04 (Nov 10 2022 - 00:12:58 +0000)
-> >
-> >arm-openbmc-linux-gnueabi-gcc (GCC) 12.2.0
-> >GNU ld (GNU Binutils) 2.39.0.20220819
-> >
-> >Any help would be greatly appreciated.
-> >
-> >Thanks,
-> >Hamid
-> >
->
-> What OpenBMC commit are you building from?  It looks like evb-ast2500
-> got updated to the newer u-boot branch in February:
->
-> https://github.com/openbmc/openbmc/commit/7d75b9b68370374db00e9c99b5406ebb6b18512f
->
-> If the same image is showing the expected u-boot version in a simulator
-> (qemu?), then it sounds like maybe your installation procedure isn't
-> doing what you intended it to.  I don't know what the 'socflash.sh' you
-> referred to above is; if you can boot into a reasonably healthy OpenBMC
-> environment, I'd suggest using the normal firmware-update mechanism.  If
-> the existing firmware is something else or isn't working enough to boot
-> normally you might need to resort to a hardware flash programmer or
-> something (or if you can get your u-boot networking working at all, even
-> at a slow speed, you could TFTP in an OpenBMC kernel/initrd, boot into
-> that, and use flashcp to write the full OpenBMC image).
->
->
-> Zev
->
-
---000000000000efb4f805ef4099f2
+--00000000000094566005ef423267
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr">Hi Zev,<div><br></div><div>I am checking out the code from=
-:=C2=A0<a href=3D"https://github.com/openbmc/openbmc">https://github.com/op=
-enbmc/openbmc</a></div><div>Revision I am building=C2=A0from is=C2=A015231.=
-</div><div><br></div><div>sockflash.sh output is below for upgrading:</div>=
-<div><br></div><div>./socflash.sh image-bmc image-bmc<br>ASPEED SOC Flash U=
-tility v.1.22.08<br>Warning:<br>SoCflash utility is only for engineers to u=
-pdate the firmware in lab,<br>it is not a commercialized software product,<=
-br>ASPEED has not done compatibility/reliability stress test for SoCflash.<=
-br>Please do not use this utility for any mass production purpose.<br>Press=
- y to continue if you are agree ....<br>y<br>Find ASPEED Device 1a03:2000 o=
-n 7:0.0<br>MMIO Virtual Address: abb9000<br>Relocate IO Base: b000<br>Found=
- ASPEED Device 1a03:2500 rev. 41<br>Static Memory Controller Information:<b=
-r>CS0 Flash Type is SPI<br>CS1 Flash Type is SPI<br>CS2 Flash Type is SPI<b=
-r>CS3 Flash Type is NOR<br>CS4 Flash Type is NOR<br>Boot CS is 0<br>Option =
-Information:<br>CS: 0<br>Flash Type: SPI<br>[Warning] Don&#39;t AC OFF or R=
-eboot System During BMC Firmware Update!!<br>Find Flash Chip #1: 64MB SPI F=
-lash<br>Backup Flash Chip O.K.<br>Update Flash Chip #1 O.K.<br>Update Flash=
- Chip O.K.<br></div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" c=
-lass=3D"gmail_attr">On Tue, Dec 6, 2022 at 4:39 PM Zev Weiss &lt;<a href=3D=
-"mailto:zweiss@equinix.com">zweiss@equinix.com</a>&gt; wrote:<br></div><blo=
-ckquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left=
-:1px solid rgb(204,204,204);padding-left:1ex">On Tue, Dec 06, 2022 at 11:27=
-:47AM PST, Hamid Amirrad wrote:<br>
+<div dir=3D"ltr">Hi=C2=A0Zev,<div><br></div><div>I might have installed it =
+correctly this time (still have to confirm). However, I get the following, =
+cant find any details about username password. where can I find it?</div><d=
+iv>evb-ast2500 login:<br></div><div><br></div><div>Thanks,</div><div>Hamid<=
+/div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_a=
+ttr">On Wed, Dec 7, 2022 at 12:53 PM Hamid Amirrad &lt;<a href=3D"mailto:am=
+irradh@gmail.com">amirradh@gmail.com</a>&gt; wrote:<br></div><blockquote cl=
+ass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid=
+ rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">Hi Zev,<div><br></div>=
+<div>I am checking out the code from:=C2=A0<a href=3D"https://github.com/op=
+enbmc/openbmc" target=3D"_blank">https://github.com/openbmc/openbmc</a></di=
+v><div>Revision I am building=C2=A0from is=C2=A015231.</div><div><br></div>=
+<div>sockflash.sh output is below for upgrading:</div><div><br></div><div>.=
+/socflash.sh image-bmc image-bmc<br>ASPEED SOC Flash Utility v.1.22.08<br>W=
+arning:<br>SoCflash utility is only for engineers to update the firmware in=
+ lab,<br>it is not a commercialized software product,<br>ASPEED has not don=
+e compatibility/reliability stress test for SoCflash.<br>Please do not use =
+this utility for any mass production purpose.<br>Press y to continue if you=
+ are agree ....<br>y<br>Find ASPEED Device 1a03:2000 on 7:0.0<br>MMIO Virtu=
+al Address: abb9000<br>Relocate IO Base: b000<br>Found ASPEED Device 1a03:2=
+500 rev. 41<br>Static Memory Controller Information:<br>CS0 Flash Type is S=
+PI<br>CS1 Flash Type is SPI<br>CS2 Flash Type is SPI<br>CS3 Flash Type is N=
+OR<br>CS4 Flash Type is NOR<br>Boot CS is 0<br>Option Information:<br>CS: 0=
+<br>Flash Type: SPI<br>[Warning] Don&#39;t AC OFF or Reboot System During B=
+MC Firmware Update!!<br>Find Flash Chip #1: 64MB SPI Flash<br>Backup Flash =
+Chip O.K.<br>Update Flash Chip #1 O.K.<br>Update Flash Chip O.K.<br></div><=
+/div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">O=
+n Tue, Dec 6, 2022 at 4:39 PM Zev Weiss &lt;<a href=3D"mailto:zweiss@equini=
+x.com" target=3D"_blank">zweiss@equinix.com</a>&gt; wrote:<br></div><blockq=
+uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
+x solid rgb(204,204,204);padding-left:1ex">On Tue, Dec 06, 2022 at 11:27:47=
+AM PST, Hamid Amirrad wrote:<br>
 &gt;Hi,<br>
 &gt;<br>
 &gt;I see that the u-boot has been recently upgraded to 2019.04.<br>
@@ -275,5 +298,6 @@ that, and use flashcp to write the full OpenBMC image).<br>
 <br>
 Zev<br>
 </blockquote></div>
+</blockquote></div>
 
---000000000000efb4f805ef4099f2--
+--00000000000094566005ef423267--
