@@ -2,73 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05AEE645F40
-	for <lists+openbmc@lfdr.de>; Wed,  7 Dec 2022 17:49:59 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 110966462ED
+	for <lists+openbmc@lfdr.de>; Wed,  7 Dec 2022 22:05:20 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NS3DN5tgpz3bhZ
-	for <lists+openbmc@lfdr.de>; Thu,  8 Dec 2022 03:49:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NS8v16JMlz3bj0
+	for <lists+openbmc@lfdr.de>; Thu,  8 Dec 2022 08:05:17 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=SMK2V74s;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=bkJ2lXO0;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72b; helo=mail-qk1-x72b.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=SMK2V74s;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=bkJ2lXO0;
 	dkim-atps=neutral
-Received: from mail-qk1-x72b.google.com (mail-qk1-x72b.google.com [IPv6:2607:f8b0:4864:20::72b])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NS3Cm4RhKz3bXt
-	for <openbmc@lists.ozlabs.org>; Thu,  8 Dec 2022 03:49:22 +1100 (AEDT)
-Received: by mail-qk1-x72b.google.com with SMTP id j26so10399271qki.10
-        for <openbmc@lists.ozlabs.org>; Wed, 07 Dec 2022 08:49:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=y18DIpbfCukk25TWC8zheO2SUvaGDQaONDYCY89KTGU=;
-        b=SMK2V74sU8D3TcIrRaSUNwZYnaaTCeoM4k+ZcZTFw/ydUkhwZLbo1yEKDxUMIBS4gA
-         iwNJGXqzS6w1suvYGlU8ecRhl6NNxEKbu7JAvBOIviytxXOltcSBfBeWp+TnxyBxXr9j
-         aMWtjDuBUNQOGk7gO4jGnxDWTQ8/yXDvz53Y4z4R9i7/KWUTuiCGkDsrHLRa/o9SuTb7
-         KqorQSVIORS6lv2KWgYWjY+eZry7XlEBoWrdcJ1POsluOkv3Gc8qESPlNGyPzJ94Jsq1
-         5AvRk0IRxLOSHpjNN6gxt9LAglz7AWcGJObOYuX4CKqkCJ0dV+a7TLBA1pKfycAlJzKC
-         YqrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=y18DIpbfCukk25TWC8zheO2SUvaGDQaONDYCY89KTGU=;
-        b=EQmIZuRGHr5iKoDAQXNKd/gphdRCPazWZwd7zptjDsfteDRD8amcCeHHPKFSbUUR5V
-         ZXJOtIZH/dqOWacLNqDZ8HcvtIS2qav9retOEVBGrb44hgeUKin7gFnDsexZh557LA/V
-         drU0shk2U3R6XPNyaaz2Em5ca+baxQSMegHC631lJajzVk09LLhv209oHK2i66WWU78B
-         tWXH+ukjRy0lI1EU1Kmlgo0RQcLQrZHab0deALoj/iZGIijPY2RsOkltEdF0Sa2gvglR
-         Mpoa3DoUjko8X+1+RRsEWtKIs8Dh/B7ogcpSQrXZU8cu9WjFdSCNlc4bZ0g5rd2dYUG9
-         Nr3w==
-X-Gm-Message-State: ANoB5pkBNmCo5wU8YmNMpKMZV2fK6qEb5D3YOnS7JttZZfy6oFghKZff
-	/kwyd8Q9piOETaUPA126N/p+FwqPL1b8DW1lg3k=
-X-Google-Smtp-Source: AA0mqf6Z3cBlsiKEerUxS5aa9mOeKvWW6A2uIvZwb1fbjWfE4NyTIrR4VodmXjDwbwquQncYrV7lhOxx/sjwJ4ekXxA=
-X-Received: by 2002:a37:f504:0:b0:6cf:5fa1:15f8 with SMTP id
- l4-20020a37f504000000b006cf5fa115f8mr81140787qkk.748.1670431757330; Wed, 07
- Dec 2022 08:49:17 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NS8tP0jwJz2xG6
+	for <openbmc@lists.ozlabs.org>; Thu,  8 Dec 2022 08:04:44 +1100 (AEDT)
+Received: from pps.filterd (m0187473.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 2B7Kv4nH025915
+	for <openbmc@lists.ozlabs.org>; Wed, 7 Dec 2022 21:04:42 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
+ subject : from : to : references : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=riYdeTmI84pg6J0njIZgy/mtxiU3yvLmcjdkS3l5J7s=;
+ b=bkJ2lXO0BYx12X18RApvpZeq52eaKXwYW8Vox2V7DK+k5dnjipjsO5Wk66PPNrRdf35U
+ eAS1+SjJttoTfDISjgymjo0x5Y6GWaslYxDY545D1NHqU4zzzXFaHB3P2ErdGJAEiLdG
+ vZr0hiE7toFuSMB2tyE/zx3DH04Kkk2ng7CsCWRjUiXvECfydVebQkOwR8p8ZIg0qG4E
+ JrhJTKvYg79qiu3niAU+wtJewtUps2ThoOlW6M42Mwbg8F8VDY8T5EAr9LCodEI4L43i
+ 7WtjE6s3JPc4NRsAe4wzQIZB6lW5I0R44IfDLRbL6CXsnfs+ThgjW4NtXOpG3PNfN07O Tg== 
+Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com [169.55.91.170])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3mb2ag85u0-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 07 Dec 2022 21:04:41 +0000
+Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
+	by ppma02wdc.us.ibm.com (8.17.1.19/8.16.1.2) with ESMTP id 2B7Kcuwm019047
+	for <openbmc@lists.ozlabs.org>; Wed, 7 Dec 2022 21:04:40 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([9.208.130.102])
+	by ppma02wdc.us.ibm.com (PPS) with ESMTPS id 3m9nq8dy3a-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 07 Dec 2022 21:04:40 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com [10.241.53.104])
+	by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 2B7L4dGD66191642
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+	for <openbmc@lists.ozlabs.org>; Wed, 7 Dec 2022 21:04:39 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id A0ACB58056
+	for <openbmc@lists.ozlabs.org>; Wed,  7 Dec 2022 21:04:39 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 67D3258065
+	for <openbmc@lists.ozlabs.org>; Wed,  7 Dec 2022 21:04:39 +0000 (GMT)
+Received: from [9.65.196.87] (unknown [9.65.196.87])
+	by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTPS
+	for <openbmc@lists.ozlabs.org>; Wed,  7 Dec 2022 21:04:39 +0000 (GMT)
+Message-ID: <cbb94a8a-06c1-9a06-66c9-ecd68a305fff@linux.ibm.com>
+Date: Wed, 7 Dec 2022 15:04:38 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.3.3
+Subject: Re: Security Working Group meeting - Wednesday December 7 - results
+Content-Language: en-US
+From: Joseph Reynolds <jrey@linux.ibm.com>
+To: openbmc <openbmc@lists.ozlabs.org>
+References: <b3a548a8-fe43-ee21-a4f9-bf47cf18a163@linux.ibm.com>
+In-Reply-To: <b3a548a8-fe43-ee21-a4f9-bf47cf18a163@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: VdSMtHdAmYCoUo8vbdsKw9-sKEiPqh6x
+X-Proofpoint-ORIG-GUID: VdSMtHdAmYCoUo8vbdsKw9-sKEiPqh6x
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-References: <20221205085351.27566-1-tmaimon77@gmail.com> <20221205085351.27566-3-tmaimon77@gmail.com>
- <CAHp75VeAzgCUiH5Z1pVJ-4X29aCK44q907DRQXX75zS4oEhHHg@mail.gmail.com>
- <CAP6Zq1gi7-pA9wdO3=V9Uf0+pKPTHwWw66MfbYmOwodoXeRDqA@mail.gmail.com>
- <CAHp75VctiJvvk-6AWfQSU9psHvPeKECaCWPuKL9YQ_-Vt3GBGA@mail.gmail.com>
- <c200557f-c30a-62f9-287a-af804e818cf1@intel.com> <CAHp75VczbNpHPi-TBe81Ad=P=eXJZpAmkj=m4-apGF1e0uh5kg@mail.gmail.com>
- <CAHp75VemBiGUTspEYDe3hwA9pEzjNMQGY6_kUoVMJyCuEWgChw@mail.gmail.com>
- <c4e2a00c-d09e-95e2-eaf2-1de6b820ac6e@intel.com> <CAP6Zq1h9XvH501e_nH9TkUCKPNOuH7dhOM8FrsUM=PYX4gt0qw@mail.gmail.com>
- <CAHp75Vd5DzkCW0Gpouv+0Or=Yhjp_KdFGP-jXkpHD=UZrG2ajA@mail.gmail.com> <cae6475a-a1e9-ae57-6e64-59931f467050@intel.com>
-In-Reply-To: <cae6475a-a1e9-ae57-6e64-59931f467050@intel.com>
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Wed, 7 Dec 2022 18:48:41 +0200
-Message-ID: <CAHp75VfVRa5m3WeEvMvGCRK7YRBD5BCxOL2DHDzyuQ1cD4J9UA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] mmc: sdhci-npcm: Add NPCM SDHCI driver
-To: Adrian Hunter <adrian.hunter@intel.com>
-Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.205,Aquarius:18.0.923,Hydra:6.0.545,FMLib:17.11.122.1
+ definitions=2022-12-07_10,2022-12-07_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0
+ priorityscore=1501 malwarescore=0 adultscore=0 clxscore=1015
+ mlxlogscore=865 bulkscore=0 mlxscore=0 spamscore=0 suspectscore=0
+ lowpriorityscore=0 impostorscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2210170000 definitions=main-2212070177
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,110 +93,42 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, ulf.hansson@linaro.org, Tomer Maimon <tmaimon77@gmail.com>, arnd@arndb.de, krakoczy@antmicro.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, briannorris@chromium.org, linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, gsomlo@gmail.com, joel@jms.id.au, davidgow@google.com, skhan@linuxfoundation.org, pbrobinson@gmail.com, benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Dec 7, 2022 at 3:49 PM Adrian Hunter <adrian.hunter@intel.com> wrote:
-> On 7/12/22 15:25, Andy Shevchenko wrote:
-> > On Wed, Dec 7, 2022 at 3:01 PM Tomer Maimon <tmaimon77@gmail.com> wrote:
-> >> On Mon, 5 Dec 2022 at 16:33, Adrian Hunter <adrian.hunter@intel.com> wrote:
-> >>> On 5/12/22 16:17, Andy Shevchenko wrote:
-> >>>> On Mon, Dec 5, 2022 at 4:14 PM Andy Shevchenko
-> >>>> <andy.shevchenko@gmail.com> wrote:
-> >>>>> On Mon, Dec 5, 2022 at 3:41 PM Adrian Hunter <adrian.hunter@intel.com> wrote:
-> >>>>>> On 5/12/22 15:25, Andy Shevchenko wrote:
-> >>>>>>> On Mon, Dec 5, 2022 at 1:20 PM Tomer Maimon <tmaimon77@gmail.com> wrote:
-
-...
-
-> >>>>>>> devm_ is problematic in your case.
-> >>>>>>> TL;DR: you need to use clk_get_optional() and clk_put().
-> >>>>>>
-> >>>>>> devm_ calls exactly those, so what is the issue?
-> >>>>>
-> >>>>> The issue is the error path or removal stage where it may or may be
-> >>>>> not problematic. To be on the safe side, the best approach is to make
-> >>>>> sure that allocated resources are being deallocated in the reversed
-> >>>>> order. That said, the
-> >>>>>
-> >>>>> 1. call non-devm_func()
-> >>>>> 2. call devm_func()
-> >>>>>
-> >>>>> is wrong strictly speaking.
-> >>>>
-> >>>> To elaborate more, the
-> >>>>
-> >>>> 1. call all devm_func()
-> >>>> 2. call only non-devm_func()
-> >>>>
-> >>>> is the correct order.
-> >>>
-> >>> 1. WRT pltfm_host->clk, that is what is happening
-> >>> 2. WRT other resources that is simply not always possible because not every resource is wrapped by devm_
-> >>> e.g. mmc_alloc_host() / mmc_free_host()
-> >> I little confused about what to decide, should I use only
-> >> non-devm_func because mmc_alloc_host() / mmc_free_host() is not
-> >> warrped with devm_?
-> >
-> > It is up to you how to proceed. I pointed out the problem with your
-> > code which may or may not be fatal.
-> >
-> > If you want to solve it, there are several approaches:
-> > 1) get rid of devm_ completely;
-> > 2) properly shuffle the ordering in ->probe(), so all devm_ calls are
-> > followed by non-devm_;
-> > 3) wrap non-devm_ cals to become managed (see
-> > devm_add_action_or_reset() approach);
-> > 4) fix SDHCI / MMC layer by providing necessary devm_ calls and/or fix
-> > sdhci_pltfm_register() to handle the clock.
+On 12/6/22 8:28 PM, Joseph Reynolds wrote:
+> This is a reminder of the OpenBMC Security Working Group meeting 
+> scheduled for this Wednesday October 12 at 10:00am PDT.
 >
-> I can take care of sdhci_pltfm when I next have some time.
-> Otherwise it looks OK to me, so I am acking it.
+> The meeting is on Discord voice.
+>
+> === MEETING ACCESS ON DISCORD VOICE  ===
+> First, join Discord via https://discord.gg/69Km47zH98 
+> <https://discord.gg/69Km47zH98> and confirm via email.
+> Then, to join: navigate Discord > OpenBMC > Voice channels >  Security 
+> ~ https://discord.com/channels/775381525260664832/1002376534377635860 
+> <https://discord.com/channels/775381525260664832/1002376534377635860>
+>
+>
+> We'll discuss items on the agenda 
+> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
+> items proposed on the Discord OpenBMC #security channel, and anything 
+> else that comes up:
 
-Thank you!
+We has one topic, the security aspects of a BMC access vector which is 
+often overlooked
 
-> > Personally, the list order is from the least, what I prefer, to the
-> > most (i.o.w. I would like to see rather 4) than 1) to be implemented).
-> >
-> >>>> Hence in this case the driver can be worked around easily (by
-> >>>> shuffling the order in ->probe() to call devm_ first), but as I said
-> >>>> looking into implementation of the _unregister() I'm pretty sure that
-> >>>> clock management should be in sdhci-pltfm, rather than in all callers
-> >>>> who won't need the full customization.
-> >>>>
-> >>>> Hope this helps to understand my point.
-> >>>>
-> >>>>>>> Your ->remove() callback doesn't free resources in the reversed order
-> >>>>>>> which may or, by luck, may not be the case of all possible crashes,
-> >>>>>>> UAFs, races, etc during removal stage. All the same for error path in
-> >>>>>>> ->probe().
-> >>>>>
-> >>>>> I also pointed out above what would be the outcome of neglecting this rule.
+1.The BMC physical UART serial port provides access to uboot and then to 
+a Linux login process.
 
-...
 
-> >>>>>>>>> Why can't you use sdhci_pltfm_register()?
-> >>>>>>>> two things are missing in sdhci_pltfm_register
-> >>>>>>>> 1. clock.
-> >>>>>>>
-> >>>>>>> Taking into account the implementation of the corresponding
-> >>>>>>> _unregister() I would add the clock handling to the _register() one.
-> >>>>>>> Perhaps via a new member of the platform data that supplies the name
-> >>>>>>> and index of the clock and hence all clk_get_optional() / clk_put will
-> >>>>>>> be moved there.
-> >> Do you mean to add it to sdhci_pltfm_register function? if yes I
-> >> believe it will take some time to modify sdhci_pltfm_register
-> >> I prefer not to use sdhci_pltfm_register.
-> >
-> > In the Linux kernel we are trying hard to avoid code duplication. Why
-> > do you need it to be open coded? (Yes, I heard you, but somebody
-> > should fix the issues with that funcion at some point, right?)
-> >
-> >>>>>>>> 2. Adding SDHCI_CAN_DO_8BIT capability according the eMMC capabilities.
-> >>>>>>>
-> >>>>>>> All the same, why can't platform data be utilised for this?
+- Joseph
 
--- 
-With Best Regards,
-Andy Shevchenko
+>
+>
+> Access, agenda and notes are in the OpenBMC Security wiki:
+> https://github.com/openbmc/openbmc/wiki/Security-working-group 
+> <https://github.com/openbmc/openbmc/wiki/Security-working-group>
+>
+> - Joseph
+
