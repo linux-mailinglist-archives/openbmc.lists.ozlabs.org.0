@@ -2,113 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 797EF64697F
-	for <lists+openbmc@lfdr.de>; Thu,  8 Dec 2022 07:59:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 05DFE646A63
+	for <lists+openbmc@lfdr.de>; Thu,  8 Dec 2022 09:23:27 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NSQ4m2Nl0z3bZV
-	for <lists+openbmc@lfdr.de>; Thu,  8 Dec 2022 17:59:36 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NSRxS61Bbz3bh6
+	for <lists+openbmc@lfdr.de>; Thu,  8 Dec 2022 19:23:24 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=g+BIKH7T;
+	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=zIICd3HQ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:fe5b::71c; helo=nam12-bn8-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::1035; helo=mail-pj1-x1035.google.com; envelope-from=wangxiaohua.1217@bytedance.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=g+BIKH7T;
+	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=zIICd3HQ;
 	dkim-atps=neutral
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on2071c.outbound.protection.outlook.com [IPv6:2a01:111:f400:fe5b::71c])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NSQ3F6dGGz3bfs
-	for <openbmc@lists.ozlabs.org>; Thu,  8 Dec 2022 17:58:17 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=cGEv5Qpb6RcNpDbq0X4kEtTYtu5F5Vt3ELgmpdimrzrsv4/6wjLB/ENCjy7L5ihTcwPvmESvjg1neW8hF0GhTG+lVDCpp+8bmc0+QJrlVkyX5NDynmO/AZa5+wq+nGfgiEZzY8CiFNBE+TTtxp0CsuJ6EBKJ8DfWIvEyWMEhMLPQTRDnkCk4scgiAcazBnKkKYFVkyjhaTmZCUbcUj/4xx5p8nb6kOv7hGuzgOG+VAy9/d9wpGsTQQOA8PDZmu4gYvzk+7AzB0V1uGNlOUGu76bRSO62HGY9Qo2bmRS6JRCRbIxidFN2MszOCyGSA4rSkiTO9R5kNF+MdX3AOa0tcw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iAWNRSxNn/W+jDn6yeKjHzbFcK87/3thSknpteZwmoI=;
- b=IKiXnrlE2KWBdErUPlnOHQgVPUvm3c4j/JWCrhJt1qmtuV1t37CmpbkAP+xEzWh+w71wc4Hb9EwmWxJwhro7nVfiaer+lKJFvdu6tRHuUQ8f9AD/HBqUOW6j1bmwVi1GdCZ1QMShi22ow9lLvidvCAkjEemE+HVxdu6dUbGtDb6sESwlQsbrao8pkXtIa4RYFUW1XK/wlv4Nald37uOSKD3RBAdPJvFPFWJ7XRr9+rQP0eI188AuCoXLUFgtxUEBkbwiCGjxy+u0+uT0kcUg0BnthfeiZyB/Wvy7252ES0SHTxGdWhvMpQEHAee5djwV4jNSZwsk8zJcW/UpKAzoXg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NSRws25ngz30Qy
+	for <openbmc@lists.ozlabs.org>; Thu,  8 Dec 2022 19:22:51 +1100 (AEDT)
+Received: by mail-pj1-x1035.google.com with SMTP id w4-20020a17090ac98400b002186f5d7a4cso3934247pjt.0
+        for <openbmc@lists.ozlabs.org>; Thu, 08 Dec 2022 00:22:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iAWNRSxNn/W+jDn6yeKjHzbFcK87/3thSknpteZwmoI=;
- b=g+BIKH7T8F6yWZHdntIMNbtoHgiwkINRDmZxFoPznPwv44VTKfZwG1+Yoig7kZKT1i8XQx/4Ajis74Z4WvErN9N4xQXnboGhg17leuCmD1/LgADbyl5qk1gmyxX86ZLHj1VS4iejJjJxn/PCoH4Ez4r62SeUdoJbkTkSRBtNZlo=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
-Received: from SN4PR01MB7455.prod.exchangelabs.com (2603:10b6:806:202::11) by
- SA1PR01MB7358.prod.exchangelabs.com (2603:10b6:806:1f9::20) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.5880.10; Thu, 8 Dec 2022 06:57:59 +0000
-Received: from SN4PR01MB7455.prod.exchangelabs.com
- ([fe80::5bc2:68ec:263:8993]) by SN4PR01MB7455.prod.exchangelabs.com
- ([fe80::5bc2:68ec:263:8993%6]) with mapi id 15.20.5880.014; Thu, 8 Dec 2022
- 06:57:59 +0000
-From: Quan Nguyen <quan@os.amperecomputing.com>
-To: Joel Stanley <joel@jms.id.au>,
+        d=bytedance-com.20210112.gappssmtp.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=7u/E5qpdHwFQuHeaPU2cEPl1VrhfJjZCudUhgqf6PS4=;
+        b=zIICd3HQmh+fecmGSrbUQMD3zmtzx+bfsFr6o8meAHfbGoqA6dXKsdNQ2s5Sxtn3xS
+         xTYIxAFw/dmd14039xC1dFywEtxcf1sgW3WPXQ3mw7KCpROMWnIPhUz6XQPDgoBQCQaH
+         xUGOsubLCOJty5hwpmdjnOobW03CFChjaZOZc2B0fugRPQLO7AFuADqSgj92EPi77zka
+         tTfudr9abjUP7rcsZj7tmaiPlV5OipoEbngQQ4YerRvrC+OGJ63nRJU3aUjefLACWlX/
+         OCZsUfZmFL+iuVvnsFWEO6SVJw+3hO//VERjEr8SVVNbCILaZT+AOsMlAvKdQSJGGH2l
+         E/2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7u/E5qpdHwFQuHeaPU2cEPl1VrhfJjZCudUhgqf6PS4=;
+        b=GdsUecS+jKJ+U9XELkpB9vH5tR0WQf+A4i598t23cz4y9ybo/b7qE0AM97NoxbNkVM
+         NPSMxU27OMi9/BZJpzDgRqpYlKhWfVVmLcLcPHabeagU2R+bNJ8rDZpjUODeKqmC5f5O
+         zLtEKq4Y4LdYAWJYAPeEJb7KTvZoRrCYm372n2LV1HYSdZVDcIYJO3kmoA2+0WSRPQAD
+         5oBoUluhpTOvp8iuh3MVuFUE6ZHBP9ULxffeOb5syuBUFkr/TbU5qf2Mz1nGSw2zhW66
+         FdryOh14lPmkb5D5pPlPVNhmJcyTphtsVzLt5nYmkXRz06f5c6OSQt5Ss3Ec3AP/H0xE
+         VWWA==
+X-Gm-Message-State: ANoB5pmfso8ghnnkliymxlIYYH8Lou8x/RQhhVwwm/1L20jJkKmKUxfh
+	dY+V5Rp+0qqZcPnnUAsrUQBqVQ==
+X-Google-Smtp-Source: AA0mqf64b8xGKD4D1SAtTLAAbF3xdkkMRv6p7PsPsPC7K60mDS165m0Zj8QKel7QZDYCB5BAzIdL4A==
+X-Received: by 2002:a05:6a20:9f05:b0:a5:798c:f929 with SMTP id mk5-20020a056a209f0500b000a5798cf929mr2180406pzb.10.1670487763592;
+        Thu, 08 Dec 2022 00:22:43 -0800 (PST)
+Received: from localhost ([49.7.199.160])
+        by smtp.gmail.com with ESMTPSA id w63-20020a626242000000b005624e2e0508sm14749705pfb.207.2022.12.08.00.22.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 Dec 2022 00:22:43 -0800 (PST)
+From: Wang Xiaohua <wangxiaohua.1217@bytedance.com>
+To: linux-kernel@vger.kernel.org,
+	linux@roeck-us.net,
+	linux-hwmon@vger.kernel.org,
+	jdelvare@suse.com,
 	openbmc@lists.ozlabs.org,
-	Zev Weiss <zweiss@equinix.com>
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc v2] ARM: dts: aspeed: add Ampere's Mt. Mitchell BMC
-Date: Thu,  8 Dec 2022 13:57:38 +0700
-Message-Id: <20221208065738.814805-1-quan@os.amperecomputing.com>
-X-Mailer: git-send-email 2.35.1
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SG2PR06CA0226.apcprd06.prod.outlook.com
- (2603:1096:4:68::34) To SN4PR01MB7455.prod.exchangelabs.com
- (2603:10b6:806:202::11)
+	joel@jms.id.au
+Subject: [PATCH linux dev-6.0] pmbus: Add mp2971/mp2973 support in mp2975
+Date: Thu,  8 Dec 2022 16:22:39 +0800
+Message-Id: <20221208082239.1062679-1-wangxiaohua.1217@bytedance.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN4PR01MB7455:EE_|SA1PR01MB7358:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1990fdca-25d3-4b25-5a01-08dad8e98aa1
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	tX8nWA1CdnvR7J5GuB+OGJI2apim85Shd1p0/j/Ax2+EBmi62brakSuYJWcm70DnEhyvfLfllOtfjNrnmBuA2qb6XGQLR2xeEkDFahy8NqfCLEkrcoFnKYK8XCMAMe8bDcMZDM/AD7eY97mK60E4LBXTNiciXFf3uKqGrazyloaAPGDhyFxPPfjLvE3XovZLOwFgJH7aH8KMPsxmEMAcl9tk/ENSoIVrkHGjmxR+2P3GQRe8rAC53GmIupB9uVMMK1e4VpI6zCqCIkLc+SIO9sKLFnv0RXSWQtd2ICzfLRneMuyg669sWl5+9CDVIOqtPWRymj2ZGUzaJ7KMejp3rcILGixnLDy9tNqA2OH1cLVilzgIxhGQrw6grHyqg1BZAruoHZQuBLVwLE4WLY2zpLaxTfxvyp2kYHgh3u6yMrYwRgdWPDVpUgXDS8b9VYdnv7l66n/nbQurGXlC8w9uRuHVcMDYmSzkIktlf6LZCYD9zNwglQL1LOCGyMH1hqFNBcvNv4i/u3HEfgUBtZwspWNblmvTQ8bSLpOKRQ8dCHmQvOOTnbpS5eetzoP36St+JSqa81JRS8znXcgY2kvVnZs+cCx4sVuB+jdyW4YhCPUK9DdBgrUP8tjnJp7AZ6FgAw+G1PArkMI35T7+KIpyuIz1kVxtn0BXqf83XNlH93SW0qeMYBIR2p4fZrhw2QLh
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR01MB7455.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(39850400004)(396003)(136003)(346002)(366004)(376002)(451199015)(83380400001)(38350700002)(86362001)(4326008)(8936002)(5660300002)(2906002)(54906003)(8676002)(1076003)(186003)(52116002)(6512007)(6506007)(107886003)(6666004)(26005)(66946007)(2616005)(110136005)(66476007)(316002)(41300700001)(66556008)(6486002)(478600001)(38100700002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?us-ascii?Q?7YdrMcS6oLZudHnjzEf/tTpZXTrepJw/6RQLCTcISd49BsPEInBhiggfmkpx?=
- =?us-ascii?Q?/4mVdJuXS19h61hjgk0j/v8I8uu14aYkORkrd9hT6BzzWUbuaJtD7rac6DjQ?=
- =?us-ascii?Q?hUkVWRwFOKDs+VYLptHSWD6m3hKxWF+9bxUYOmoJzS3TwiB45o3C+dcIv4o+?=
- =?us-ascii?Q?IjASzYjOjObx/NK+7vKuY2OvU8aWjet1WlKGVZVVBvhJdFs4CR+JMvgux9/B?=
- =?us-ascii?Q?E2ZcaLGyqkPzuU8/cDJ6PPNX6M+RQ9BjJxXvPBPVNHmuMpKk+vOfbMQfmJzk?=
- =?us-ascii?Q?vOcLNoJZhufRQAFRRdWfK4ITiF6L6Kw/E8cf4/ANAMV7qYkyZY8eXS7pcpen?=
- =?us-ascii?Q?t8DiAMoU/ImNq3WxoRmXc63Tiay3QIZ8Kcm8iF1XuCmKAQH+j9s3WMqJ2AHk?=
- =?us-ascii?Q?tr/FTDlCWZz0/Nc7cn7dvp2cfTaFODrbE16kWcWumTst7OwWAFkB0tSs+cqk?=
- =?us-ascii?Q?tpkkomrOSWK9SejynpPOzdeSyISPJ2VGn3CNpvcapuMvEjLFQds9Ki4DMMcD?=
- =?us-ascii?Q?6nLSGfnJC/5OpjX+nklqOF07kBPN57QnSbK21X0n3Np+8KCGad+o7Zp7uQho?=
- =?us-ascii?Q?CDIgQUeU9+qJ+bXHCbb/wBwP4Rch1ixVTv0kQ+kZPNaYoWR0CspAySP5XmUh?=
- =?us-ascii?Q?M5ymer6Wew1aagrfVWIQEz4X5467yqyDvkLgtu82PxUAqJxG/zUE1eF3adM/?=
- =?us-ascii?Q?l1aAvLH4cHSp4OxQbWSgVzXLma6XMGEYL03a5SkYb3loNBhjmpodnW1FTbQE?=
- =?us-ascii?Q?qGr+/UFTjNN3+u7Clmi3tUWcQlWoekpf2PL3HpN6OnaDViM65CHXkAmsdqb9?=
- =?us-ascii?Q?SZGugCvySvcguZWvViYENgSk2Zw1JL3KGxVPIu0jeaGC8ReLRt8ujf9Ei+jJ?=
- =?us-ascii?Q?hpBZv+AtGxQXiAYj0So1buUQufH2j8p2F0fXo36TcAsQA88whnP0r1/ltTno?=
- =?us-ascii?Q?dV5JR+Ggwf/IqfE5nhDnYcPDY/YOoaOzdcVkyLZ5mkVYUdsqh6Ql/TGlE9E9?=
- =?us-ascii?Q?SEPENAGRS6Wh88CRCA+JnE5kTTfP3KPVxxw9zGC80fuFdW6R9G4QKL4VkKuk?=
- =?us-ascii?Q?0emdpxEp0x9mWc1fONGpNSgvS4HcZ5CQbh1KcmEYRs6wygHo2X7d6+2YiWoR?=
- =?us-ascii?Q?UlkzT++TtrPL2jD51haUyI+JKjjeFi4+2Ol8oHlyoWadwoTRN934tn6CbHl1?=
- =?us-ascii?Q?qXFKamsr0FiCV1SBcoEp+gLTdEtTcavO3Zknw/XHm0M1zAp1LP9lQDhF9bsR?=
- =?us-ascii?Q?2hCMnAJluVnkdnMaRb1yjCKDF34n96xk687OlGdDzJsguT4v3d8Ib9S0EVDK?=
- =?us-ascii?Q?JJqmvRuIqhNf36Wvi+yc3ZGg+lLMYQ6v6XJe+iaP/oFRc3sdJ3qtZaokvSoX?=
- =?us-ascii?Q?gHCYJkkJhvphB7Me6NleJGyfGB1SNzRGspbYEmMlxHI9nVNBk3h8iB5jO17a?=
- =?us-ascii?Q?Ei5P23VHbb2r8ZmvQTmtj5ab5jf8BHhxo+x1lzhYuuanmW9H8TjN6iWGMYBs?=
- =?us-ascii?Q?b0MQK8QTdMPaVjLd3JmHYEL1RVwZ9VY9peNyLpbKt6tjQcDH8frFE0QQCYC6?=
- =?us-ascii?Q?IsCyPOzz1gNg9vSx7tN5/Jw3gJVE269CGTl/h5OCXF12x1He9lNCwSpUMTXI?=
- =?us-ascii?Q?SgEq77w18AvUqsYLtetYeTc=3D?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1990fdca-25d3-4b25-5a01-08dad8e98aa1
-X-MS-Exchange-CrossTenant-AuthSource: SN4PR01MB7455.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Dec 2022 06:57:59.3030
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XC992BGzHeMLPVmf82My6/DucEalnfk9qpJO6g99ztzMR2kr25uR2Bj8wF5YZboSEM2bXh0ABt+1eaYVAvGNE/tgutb/Wj3gFLLY8L2uRl8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR01MB7358
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -120,156 +80,556 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Open Source Submission <patches@amperecomputing.com>, Thang Nguyen <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>, Quan Nguyen <quan@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add initial device tree for Aspeed AST2600-based Mt. Mitchell
-BMC found on AmpereOne's reference platform.
+Add mp2971/mp2973 support in mp2975
 
-Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
-Reviewed-by: Zev Weiss <zweiss@equinix.com>
----
-v2:
-- Fix tab issue                                        [Zev Weiss]
----
- arch/arm/dts/Makefile               |   1 +
- arch/arm/dts/ast2600-mtmitchell.dts | 114 ++++++++++++++++++++++++++++
- 2 files changed, 115 insertions(+)
- create mode 100644 arch/arm/dts/ast2600-mtmitchell.dts
+Tested with:
+My unit only include mp2971 and mp2973 devices
+MP2973:
+cat /sys/bus/i2c/devices/5-0076/hwmon/hwmon24/*label
+iin
+iout1
+iout2
+vin
+vout1
+vout2
+pin
+pout1
+pout2
+cat /sys/bus/i2c/devices/5-0076/hwmon/hwmon24/*input
+0
+82500
+14000
+12187
+1787
+1793
+0
+148000000
+25000000
+54000
+MP2971:
+cat /sys/bus/i2c/devices/5-0062/hwmon/hwmon20/*label
+iin
+iout1
+iout2
+vin
+vout1
+vout2
+pin
+pout1
+pout2
+cat /sys/bus/i2c/devices/5-0062/hwmon/hwmon20/*input
+18500
+22000
+500
+12187
+1025
+1800
+226000000
+22000000
+1000000
+55000
 
-diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
-index 6c34b83336..b6f9df21fc 100755
---- a/arch/arm/dts/Makefile
-+++ b/arch/arm/dts/Makefile
-@@ -687,6 +687,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	ast2600-dcscm.dtb \
- 	ast2600-fpga.dtb \
- 	ast2600-intel.dtb \
-+	ast2600-mtmitchell.dtb \
- 	ast2600-ncsi.dtb \
- 	ast2600-p10bmc.dtb \
- 	ast2600-pfr.dtb \
-diff --git a/arch/arm/dts/ast2600-mtmitchell.dts b/arch/arm/dts/ast2600-mtmitchell.dts
-new file mode 100644
-index 0000000000..ad95be43da
---- /dev/null
-+++ b/arch/arm/dts/ast2600-mtmitchell.dts
-@@ -0,0 +1,114 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+// Copyright (c) 2022, Ampere Computing LLC
+Signed-off-by: Wang Xiaohua <wangxiaohua.1217@bytedance.com>
+---
+ drivers/hwmon/pmbus/mp2975.c | 413 +++++++++++++++++++++++++++++++----
+ 1 file changed, 372 insertions(+), 41 deletions(-)
+
+diff --git a/drivers/hwmon/pmbus/mp2975.c b/drivers/hwmon/pmbus/mp2975.c
+index 51986adfbf47..972b5b02dfdd 100644
+--- a/drivers/hwmon/pmbus/mp2975.c
++++ b/drivers/hwmon/pmbus/mp2975.c
+@@ -52,10 +52,33 @@
+ #define MP2975_MAX_PHASE_RAIL2	4
+ #define MP2975_PAGE_NUM		2
+ 
++#define MP2971_RAIL2_FUNC                                                      \
++	(PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT | PMBUS_HAVE_IOUT |          \
++	 PMBUS_HAVE_STATUS_IOUT | PMBUS_HAVE_POUT)
 +
-+/dts-v1/;
-+
-+#include "ast2600-u-boot.dtsi"
-+
-+/ {
-+	model = "Ampere Mt.Mitchell BMC";
-+	compatible = "ampere,mtmitchell-bmc", "aspeed,ast2600";
-+
-+	memory {
-+		device_type = "memory";
-+		reg = <0x80000000 0x40000000>;
-+	};
-+
-+	chosen {
-+		stdout-path = &uart5;
-+	};
-+
-+	aliases {
-+		spi0 = &fmc;
-+		ethernet0 = &mac0;
-+	};
-+
-+	cpus {
-+		cpu@0 {
-+			clock-frequency = <800000000>;
-+		};
-+		cpu@1 {
-+			clock-frequency = <800000000>;
-+		};
-+	};
+ #define MP2975_RAIL2_FUNC	(PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT | \
+ 				 PMBUS_HAVE_IOUT | PMBUS_HAVE_STATUS_IOUT | \
+ 				 PMBUS_HAVE_POUT | PMBUS_PHASE_VIRTUAL)
+ 
++struct mp2971_device_info {
++	int max_phase_rail1;
++	int max_phase_rail2;
++	int imvp9_en_r1_mask;
++	int imvp9_en_r2_mask;
 +};
 +
-+&uart5 {
-+	u-boot,dm-pre-reloc;
-+	status = "okay";
++struct mp2971_data {
++	struct pmbus_driver_info info;
++	int vid_step[MP2975_PAGE_NUM];
++	int vout_format[MP2975_PAGE_NUM];
++	int vout_mode[MP2975_PAGE_NUM];
++	int vout_exponent[MP2975_PAGE_NUM];
++	int max_phase_rail1;
++	int max_phase_rail2;
++	int imvp9_en_r1_mask;
++	int imvp9_en_r2_mask;
 +};
 +
-+&sdrammc {
-+	clock-frequency = <400000000>;
+ struct mp2975_data {
+ 	struct pmbus_driver_info info;
+ 	int vout_scale;
+@@ -68,6 +91,9 @@ struct mp2975_data {
+ 	int curr_sense_gain[MP2975_PAGE_NUM];
+ };
+ 
++static const struct i2c_device_id mp2975_id[];
++
++#define to_mp2971_data(x) container_of(x, struct mp2971_data, info)
+ #define to_mp2975_data(x)  container_of(x, struct mp2975_data, info)
+ 
+ static int mp2975_read_byte_data(struct i2c_client *client, int page, int reg)
+@@ -95,6 +121,40 @@ mp2975_read_word_helper(struct i2c_client *client, int page, int phase, u8 reg,
+ 	return (ret > 0) ? ret & mask : ret;
+ }
+ 
++static int
++mp2971_linear2direct(struct mp2971_data *data, int page, int val)
++{
++	/* simple case */
++	if (val == 0)
++		return 0;
++
++	/* LINEAR16 does not support negative voltages */
++	if (val < 0)
++		return 0;
++
++	/*
++	 * For a static exponents, we don't have a choice
++	 * but to adjust the value to it.
++	 */
++
++	if (data->vout_exponent[page] < 0)
++		val <<= -data->vout_exponent[page];
++	else
++		val >>= data->vout_exponent[page];
++	return clamp_val(val, 0, 0xffff);
++}
++
++static int
++mp2971_vid2direct(struct mp2971_data *data, int page, int val)
++{
++	int vrf = data->info.vrm_version[page];
++
++	if (vrf == imvp9)
++		return (val + 29) * data->vid_step[page];
++
++	return (val + 49) * data->vid_step[page];
++}
++
+ static int
+ mp2975_vid2direct(int vrf, int val)
+ {
+@@ -214,6 +274,74 @@ mp2975_read_phases(struct i2c_client *client, struct mp2975_data *data,
+ 	return ret;
+ }
+ 
++static int
++mp2971_read_word_data(struct i2c_client *client, int page,
++				int phase, int reg)
++{
++	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
++	struct mp2971_data *data = to_mp2971_data(info);
++	int ret;
++
++	switch (reg) {
++	case PMBUS_OT_FAULT_LIMIT:
++	case PMBUS_VIN_OV_FAULT_LIMIT:
++	case PMBUS_VOUT_OV_FAULT_LIMIT:
++	case PMBUS_VOUT_UV_FAULT_LIMIT:
++	case PMBUS_READ_IOUT:
++		ret = mp2975_read_word_helper(client, page, phase,
++						 reg, GENMASK(15, 0));
++		break;
++	case PMBUS_READ_VOUT:
++		ret = mp2975_read_word_helper(client, page, phase, reg,
++					      GENMASK(11, 0));
++		if (ret < 0)
++			return ret;
++		/*
++		 * READ_VOUT can be provided in VID or direct format. The
++		 * format type is specified by bit 15 of the register
++		 * MP2971_MFR_DC_LOOP_CTRL. The driver enforces VOUT direct
++		 * format, since device allows to set the different formats for
++		 * the different rails and also all VOUT limits registers are
++		 * provided in a direct format. In case format is VID - convert
++		 * to direct.
++		 */
++		switch (data->vout_format[page]) {
++		case linear:
++			ret = mp2971_linear2direct(data, page, ret);
++			break;
++		case vid:
++			ret = mp2971_vid2direct(data, page, ret);
++			break;
++		case direct:
++			break;
++		default:
++			return -ENODATA;
++		}
++		break;
++	case PMBUS_UT_WARN_LIMIT:
++	case PMBUS_UT_FAULT_LIMIT:
++	case PMBUS_VIN_UV_WARN_LIMIT:
++	case PMBUS_VIN_UV_FAULT_LIMIT:
++	case PMBUS_VOUT_UV_WARN_LIMIT:
++	case PMBUS_VOUT_OV_WARN_LIMIT:
++	case PMBUS_VIN_OV_WARN_LIMIT:
++	case PMBUS_IIN_OC_FAULT_LIMIT:
++	case PMBUS_IOUT_OC_LV_FAULT_LIMIT:
++	case PMBUS_IIN_OC_WARN_LIMIT:
++	case PMBUS_IOUT_OC_WARN_LIMIT:
++	case PMBUS_IOUT_OC_FAULT_LIMIT:
++	case PMBUS_IOUT_UC_FAULT_LIMIT:
++	case PMBUS_POUT_OP_FAULT_LIMIT:
++	case PMBUS_POUT_OP_WARN_LIMIT:
++	case PMBUS_PIN_OP_WARN_LIMIT:
++		return -ENXIO;
++	default:
++		return -ENODATA;
++	}
++
++	return ret;
++}
++
+ static int mp2975_read_word_data(struct i2c_client *client, int page,
+ 				 int phase, int reg)
+ {
+@@ -365,6 +493,63 @@ mp2975_set_phase_rail2(struct pmbus_driver_info *info, int num_phases)
+ 		info->pfunc[MP2975_MAX_PHASE_RAIL1 - i] = PMBUS_HAVE_IOUT;
+ }
+ 
++static int mp2971_identify_multiphase(struct i2c_client *client,
++				      struct mp2971_data *data,
++				      struct pmbus_driver_info *info)
++{
++	int ret;
++
++	ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, 2);
++	if (ret < 0)
++		return ret;
++
++	/* Identify multiphase for rail 1 - could be from 1 to 12. */
++	ret = i2c_smbus_read_word_data(client, MP2975_MFR_VR_MULTI_CONFIG_R1);
++	if (ret <= 0)
++		return ret;
++
++	info->phases[0] = ret & GENMASK(3, 0);
++
++	/*
++	 * The device provides a total of 8 PWM pins, and can be configured
++	 * to different phase count applications for rail 1 and rail 2.
++	 * Rail 1 can be set to 8 phases, while rail 2 can only be set to 4
++	 * phases at most. When rail 1’s phase count is configured as 0, rail
++	 * 1 operates with 1-phase DCM. When rail 2 phase count is configured
++	 * as 0, rail 2 is disabled.
++	 */
++	if (info->phases[0] > data->max_phase_rail1)
++		return -EINVAL;
++
++	return 0;
++}
++
++static int
++mp2971_identify_vid(struct i2c_client *client, struct mp2971_data *data,
++			struct pmbus_driver_info *info, u32 reg, int page,
++			u32 imvp_bit, u32 vr_bit)
++{
++	int ret;
++
++	/* Identify VID mode and step selection. */
++	ret = i2c_smbus_read_word_data(client, reg);
++	if (ret < 0)
++		return ret;
++
++	if (ret & imvp_bit) {
++		info->vrm_version[page] = imvp9;
++		data->vid_step[page] = MP2975_PROT_DEV_OV_OFF;
++	} else if (ret & vr_bit) {
++		info->vrm_version[page] = vr12;
++		data->vid_step[page] = MP2975_PROT_DEV_OV_ON;
++	} else {
++		info->vrm_version[page] = vr13;
++		data->vid_step[page] = MP2975_PROT_DEV_OV_OFF;
++	}
++
++	return 0;
++}
++
+ static int
+ mp2975_identify_multiphase(struct i2c_client *client, struct mp2975_data *data,
+ 			   struct pmbus_driver_info *info)
+@@ -428,6 +613,68 @@ mp2975_identify_vid(struct i2c_client *client, struct mp2975_data *data,
+ 	return 0;
+ }
+ 
++static int
++mp2971_identify_rails_vid(struct i2c_client *client, struct mp2971_data *data,
++				     struct pmbus_driver_info *info)
++{
++	int ret;
++
++	ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, 2);
++	if (ret < 0)
++		return ret;
++
++	/* Identify VID mode for rail 1. */
++	ret = mp2971_identify_vid(client, data, info,
++				  MP2975_MFR_VR_MULTI_CONFIG_R1, 0,
++				  data->imvp9_en_r1_mask,
++				  MP2975_VID_STEP_SEL_R1);
++	if (ret < 0)
++		return ret;
++
++	/* Identify VID mode for rail 2, if connected. */
++	if (info->phases[1])
++		ret = mp2971_identify_vid(client, data, info,
++					  MP2975_MFR_VR_MULTI_CONFIG_R2, 1,
++					  data->imvp9_en_r2_mask,
++					  MP2975_VID_STEP_SEL_R2);
++	return ret;
++}
++
++static int mp2971_identify_vout_format(struct i2c_client *client,
++				       struct mp2971_data *data,
++				       struct pmbus_driver_info *info)
++{
++	int i, ret, vout_mode;
++
++	for (i = 0; i < info->pages; i++) {
++		ret = i2c_smbus_write_byte_data(client, PMBUS_PAGE, i);
++		if (ret < 0)
++			return ret;
++
++		ret = i2c_smbus_read_byte_data(client, PMBUS_VOUT_MODE);
++		if (ret < 0)
++			return ret;
++
++		vout_mode = ret;
++
++		switch (vout_mode >> 5) {
++		case 0:
++			data->vout_format[i] = linear;
++			data->vout_exponent[i] = ((s8)(vout_mode << 3)) >> 3;
++			break;
++		case 1:
++			data->vout_format[i] = vid;
++			break;
++		case 2:
++			data->vout_format[i] = direct;
++			break;
++		default:
++			return -ENODEV;
++		}
++	}
++	return 0;
++}
++
+ static int
+ mp2975_identify_rails_vid(struct i2c_client *client, struct mp2975_data *data,
+ 			  struct pmbus_driver_info *info)
+@@ -659,6 +906,24 @@ mp2975_vout_per_rail_config_get(struct i2c_client *client,
+ 	return 0;
+ }
+ 
++static struct pmbus_driver_info mp2971_info = {
++	.pages = 1,
++	.format[PSC_VOLTAGE_IN] = linear,
++	.format[PSC_VOLTAGE_OUT] = direct,
++	.format[PSC_TEMPERATURE] = linear,
++	.format[PSC_CURRENT_IN] = linear,
++	.format[PSC_CURRENT_OUT] = linear,
++	.format[PSC_POWER] = linear,
++	.m[PSC_VOLTAGE_OUT] = 1,
++	.R[PSC_VOLTAGE_OUT] = 3,
++	.func[0] = PMBUS_HAVE_VIN | PMBUS_HAVE_VOUT | PMBUS_HAVE_STATUS_VOUT |
++		   PMBUS_HAVE_IIN | PMBUS_HAVE_IOUT | PMBUS_HAVE_STATUS_IOUT |
++		   PMBUS_HAVE_TEMP | PMBUS_HAVE_STATUS_TEMP | PMBUS_HAVE_POUT |
++		   PMBUS_HAVE_PIN | PMBUS_HAVE_STATUS_INPUT,
++	.read_byte_data = mp2975_read_byte_data,
++	.read_word_data = mp2971_read_word_data,
 +};
 +
-+&wdt1 {
-+	status = "okay";
+ static struct pmbus_driver_info mp2975_info = {
+ 	.pages = 1,
+ 	.format[PSC_VOLTAGE_IN] = linear,
+@@ -683,63 +948,129 @@ static struct pmbus_driver_info mp2975_info = {
+ static int mp2975_probe(struct i2c_client *client)
+ {
+ 	struct pmbus_driver_info *info;
+-	struct mp2975_data *data;
+ 	int ret;
++	char *name;
++
++	name = (int)i2c_match_id(mp2975_id, client)->name;
++	if (name == NULL)
++		return 0;
++	if (!strcmp(name, "mp2971") || !strcmp(name, "mp2973")) {
++		struct mp2971_data *data;
++		struct mp2971_device_info *device_info;
++
++		data = devm_kzalloc(&client->dev, sizeof(struct mp2971_data),
++					GFP_KERNEL);
++		if (!data)
++			return -ENOMEM;
++
++		device_info =
++			(struct mp2971_device_info *)i2c_match_id(mp2975_id, client)
++				->driver_data;
++
++		memcpy(&data->info, &mp2971_info, sizeof(*info));
++		info = &data->info;
++
++		if (device_info) {
++			data->imvp9_en_r1_mask = device_info->imvp9_en_r1_mask;
++			data->imvp9_en_r2_mask = device_info->imvp9_en_r2_mask;
++			data->max_phase_rail1 = device_info->max_phase_rail1;
++			data->max_phase_rail2 = device_info->max_phase_rail2;
++		}
+ 
+-	data = devm_kzalloc(&client->dev, sizeof(struct mp2975_data),
+-			    GFP_KERNEL);
+-	if (!data)
+-		return -ENOMEM;
++		/* Identify multiphase configuration for rail 2. */
++		ret = mp2975_identify_multiphase_rail2(client);
++		if (ret < 0)
++			return ret;
+ 
+-	memcpy(&data->info, &mp2975_info, sizeof(*info));
+-	info = &data->info;
++		if (ret) {
++			/* Two rails are connected. */
++			data->info.pages = MP2975_PAGE_NUM;
++			data->info.phases[1] = ret;
++			data->info.func[1] = MP2971_RAIL2_FUNC;
++		}
+ 
+-	/* Identify multiphase configuration for rail 2. */
+-	ret = mp2975_identify_multiphase_rail2(client);
+-	if (ret < 0)
+-		return ret;
++		/* Identify multiphase configuration. */
++		ret = mp2971_identify_multiphase(client, data, info);
++		if (ret)
++			return ret;
+ 
+-	if (ret) {
+-		/* Two rails are connected. */
+-		data->info.pages = MP2975_PAGE_NUM;
+-		data->info.phases[1] = ret;
+-		data->info.func[1] = MP2975_RAIL2_FUNC;
+-	}
++		/* Identify VID setting per rail. */
++		ret = mp2971_identify_rails_vid(client, data, info);
++		if (ret < 0)
++			return ret;
+ 
+-	/* Identify multiphase configuration. */
+-	ret = mp2975_identify_multiphase(client, data, info);
+-	if (ret)
+-		return ret;
++		/* Identify vout format. */
++		ret = mp2971_identify_vout_format(client, data, info);
++		if (ret < 0)
++			return ret;
+ 
+-	/* Identify VID setting per rail. */
+-	ret = mp2975_identify_rails_vid(client, data, info);
+-	if (ret < 0)
+-		return ret;
++	} else {
++		struct mp2975_data *data;
+ 
+-	/* Obtain current sense gain of power stage. */
+-	ret = mp2975_current_sense_gain_get(client, data);
+-	if (ret)
+-		return ret;
++		data = devm_kzalloc(&client->dev, sizeof(struct mp2975_data),
++					GFP_KERNEL);
++		if (!data)
++			return -ENOMEM;
+ 
+-	/* Obtain voltage reference values. */
+-	ret = mp2975_vref_get(client, data, info);
+-	if (ret)
+-		return ret;
++		memcpy(&data->info, &mp2975_info, sizeof(*info));
++		info = &data->info;
+ 
+-	/* Obtain vout over-voltage scales. */
+-	ret = mp2975_vout_ov_scale_get(client, data, info);
+-	if (ret < 0)
+-		return ret;
++		/* Identify multiphase configuration for rail 2. */
++		ret = mp2975_identify_multiphase_rail2(client);
++		if (ret < 0)
++			return ret;
+ 
+-	/* Obtain offsets, maximum and format for vout. */
+-	ret = mp2975_vout_per_rail_config_get(client, data, info);
+-	if (ret)
+-		return ret;
++		if (ret) {
++			/* Two rails are connected. */
++			data->info.pages = MP2975_PAGE_NUM;
++			data->info.phases[1] = ret;
++			data->info.func[1] = MP2975_RAIL2_FUNC;
++		}
++
++		/* Identify multiphase configuration. */
++		ret = mp2975_identify_multiphase(client, data, info);
++		if (ret)
++			return ret;
++
++		/* Identify VID setting per rail. */
++		ret = mp2975_identify_rails_vid(client, data, info);
++		if (ret < 0)
++			return ret;
++
++		/* Obtain current sense gain of power stage. */
++		ret = mp2975_current_sense_gain_get(client, data);
++		if (ret)
++			return ret;
++
++		/* Obtain voltage reference values. */
++		ret = mp2975_vref_get(client, data, info);
++		if (ret)
++			return ret;
++
++		/* Obtain vout over-voltage scales. */
++		ret = mp2975_vout_ov_scale_get(client, data, info);
++		if (ret < 0)
++			return ret;
++
++		/* Obtain offsets, maximum and format for vout. */
++		ret = mp2975_vout_per_rail_config_get(client, data, info);
++		if (ret)
++			return ret;
++	}
+ 
+ 	return pmbus_do_probe(client, info);
+ }
+ 
++static const struct mp2971_device_info mp2971_device_info = {
++	.imvp9_en_r1_mask = BIT(14),
++	.imvp9_en_r2_mask = BIT(13),
++	.max_phase_rail1 = 8,
++	.max_phase_rail2 = 4,
 +};
 +
-+&wdt2 {
-+	status = "okay";
-+};
-+
-+&wdt3 {
-+	status = "okay";
-+};
-+
-+&mdio {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_mdio1_default &pinctrl_mdio2_default
-+		     &pinctrl_mdio3_default &pinctrl_mdio4_default>;
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	ethphy0: ethernet-phy@0 {
-+		reg = <0>;
-+	};
-+};
-+
-+&mac0 {
-+	status = "okay";
-+	phy-mode = "rgmii-rxid";
-+	phy-handle = <&ethphy0>;
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rgmii1_default>;
-+};
-+
-+&fmc {
-+	status = "okay";
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_fmcquad_default>;
-+
-+	flash@0 {
-+		compatible = "spi-flash", "sst,w25q256";
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <4>;
-+		spi-rx-bus-width = <4>;
-+	};
-+
-+	flash@1 {
-+		compatible = "spi-flash", "sst,w25q256";
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <4>;
-+		spi-rx-bus-width = <4>;
-+	};
-+};
-+
-+&scu {
-+	mac0-clk-delay = <0x10 0x0a
-+			  0x10 0x10
-+			  0x10 0x10>;
-+};
-+
-+&hace {
-+	u-boot,dm-pre-reloc;
-+	status = "okay";
-+};
-+
-+&acry {
-+	u-boot,dm-pre-reloc;
-+	status = "okay";
-+};
+ static const struct i2c_device_id mp2975_id[] = {
++	{"mp2971", (kernel_ulong_t)&mp2971_device_info },
++	{"mp2973", (kernel_ulong_t)&mp2971_device_info },
+ 	{"mp2975", 0},
+ 	{}
+ };
 -- 
-2.35.1
+2.25.1
 
