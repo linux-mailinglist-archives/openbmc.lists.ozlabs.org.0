@@ -2,59 +2,59 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95260646DA5
-	for <lists+openbmc@lfdr.de>; Thu,  8 Dec 2022 11:57:49 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C459A646FC6
+	for <lists+openbmc@lfdr.de>; Thu,  8 Dec 2022 13:33:10 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NSWMb3RQlz3bbX
-	for <lists+openbmc@lfdr.de>; Thu,  8 Dec 2022 21:57:47 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NSYTc56WBz3bjH
+	for <lists+openbmc@lfdr.de>; Thu,  8 Dec 2022 23:33:08 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=Qa23l/w0;
+	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=0wW5AAJQ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::52f; helo=mail-pg1-x52f.google.com; envelope-from=wangxiaohua.1217@bytedance.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::1032; helo=mail-pj1-x1032.google.com; envelope-from=wangxiaohua.1217@bytedance.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=Qa23l/w0;
+	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=0wW5AAJQ;
 	dkim-atps=neutral
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NSWM20nsJz2yQg
-	for <openbmc@lists.ozlabs.org>; Thu,  8 Dec 2022 21:57:16 +1100 (AEDT)
-Received: by mail-pg1-x52f.google.com with SMTP id 62so876479pgb.13
-        for <openbmc@lists.ozlabs.org>; Thu, 08 Dec 2022 02:57:16 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NSYSz5Mv3z30Qy
+	for <openbmc@lists.ozlabs.org>; Thu,  8 Dec 2022 23:32:33 +1100 (AEDT)
+Received: by mail-pj1-x1032.google.com with SMTP id js9so463002pjb.2
+        for <openbmc@lists.ozlabs.org>; Thu, 08 Dec 2022 04:32:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=bytedance-com.20210112.gappssmtp.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=p6Hy6inKJaWeXfEPAcwWc9YGEOkG6OFcL/TidBUWVYw=;
-        b=Qa23l/w0kOmruayCdapirmF1WzXk+IUl6eYbb6lgzuhAZ3dmENgulc+Co/h1uqb7H8
-         32wmfxzPEK8J0O5V28NuVUyEWlaOyvJFmE3Oyklkw6NSYIZPhBH/OPoCcy1XbPyACAFJ
-         OWz2rFaoPtJOeCFz4ZG5PnFdgmGFJDWJ+lacAynuiW7IaAHvBjw1lbPO+EKzPMbGHTAa
-         +but+j2+scUg9bHbG9CNYF1l6B1LgyYtcr8w87iFeyuenBveaTMm/XJdUGiI8sJ4Votc
-         mxI3z3BSoovKa0TOjLl4gcDATeq/P8b7u8jYASD8t8Pg2hteyQhpSEg8T4SfXQvGrIbO
-         +JcA==
+        bh=QdhMGRCgsT5zL0VWLqUUc9DokaewSCzXehxkiSYnwHM=;
+        b=0wW5AAJQM/g26FKvwHvtyxWgeVrWIA5VQxFw4G7GTY1sYVG/uabbrwncuM17EyXFbH
+         yzUdCiGloePaDjpDdvHGZnhX7KEnmQfiaU5giYeXIOf4w4o8u9FfB4k0QGa2EEA1Gi5f
+         kA31a2rvAVk9MpoMeBcRm+kNrkNTXNCOr2L9PdCzU5GoKuD9uCE2KDWE3+oGSd6wERjB
+         a2KKjmWvJz7JD7CV+Yy1mQiMxYw/UoVAEwao5SkhOoA4Gk1O7WFvxrGGzSQrPa5qDd+D
+         62VNYFXzkjl6nnVzcOZwAh7tlHyZFg3+TJ+x+F9MnKbQOrWec26N1eju65S0Ytf5SQGF
+         +slw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=p6Hy6inKJaWeXfEPAcwWc9YGEOkG6OFcL/TidBUWVYw=;
-        b=5LAYhG3dIKJx8C1bCKWwedP/qL1L7tBHVb+Tf9a/dXxEfwC6jyvR6vpEQyTA6iXtN8
-         9HDViMGta9Fmu5v3xJW75tZh/a6ldO/zO4Ik2aat+cEKgmA87aW9wneCCTsmMHsFXEiS
-         nokCQWtzy3/zwbFOi2zQbJpdb8zP/JD16f8D8zMqnyEXySEvvvF1vDh3yoRmppsNg1Gj
-         4DmWnW/MHdrBTMl1r9g+u6AnHMWdxdlFJMeBZSCWv27g1cAwjTlmrva9IVcKeAbJ0+LO
-         MXmG7zZGH42L6RlcZywjEbXowm2WlNGc5TU+VqBGrQrBveo/ov59ZhYeUxDRxGZYFoiT
-         W2FA==
-X-Gm-Message-State: ANoB5pkjo44G/mT4AyhJk9Vv0wpyrx6PjFZk50FjHupZntBaFnENAzVe
-	/YYLkB+aEFX99do7WnptvZeQsA==
-X-Google-Smtp-Source: AA0mqf4+gDti+xFAi1xfGDsEZPN+G/E4ZaRB7vavu8oRafy4oZdvKF9QvZdBVMEGLESVGHbH3pmKtg==
-X-Received: by 2002:a05:6a00:4188:b0:577:bd6c:5936 with SMTP id ca8-20020a056a00418800b00577bd6c5936mr791451pfb.16.1670497033809;
-        Thu, 08 Dec 2022 02:57:13 -0800 (PST)
-Received: from localhost ([49.7.199.230])
-        by smtp.gmail.com with ESMTPSA id h15-20020aa79f4f000000b005772d55df03sm5361326pfr.35.2022.12.08.02.57.13
+        bh=QdhMGRCgsT5zL0VWLqUUc9DokaewSCzXehxkiSYnwHM=;
+        b=QQTHmPGVl0MqP3Sq/tBGdOhwLuivTAHu7pRB4DKb7yrOOX6arClWekVPrds1EsuVb8
+         k4wY+rhKO1gyGDkpsI5cQQ8YmQIuGP+GD4KJKRwzW0fX5NE67zAMnR/JA1rTUTKZ19Sh
+         D0q0MBVd5QpMaFAUf6lE74AB1QIYkI9vg1Y7YRa86Z8rUJx4MSmvFDdhSm8krrPDFKap
+         p5L0kI0uZa54QMrRlgd11jliWkMdFN6UqkjQpw3uaUbbkHz/WA8ZgNQNxpNUDSZqvfB2
+         t7xMFHaQGTWUp0SC/meUTmmCU56+aaUCKh0MW0IxlsdG71/V1It6d3C8RxOIx8ZSWAd/
+         xedg==
+X-Gm-Message-State: ANoB5pnKlxIswnVFIfsYOe40xTBplDyg6HMa2+46EberBdqaTaH0DDSh
+	mbbmwfxKH4h3HyLInQrLPpsqQA==
+X-Google-Smtp-Source: AA0mqf5MrYIoPsMWamPbex0UQZz4H8mZOvxLO4CynGd3wwix6uIH7q5NyP7qFtvJez0zDyGAIaG1TQ==
+X-Received: by 2002:a05:6a20:be19:b0:a9:b8d8:8daa with SMTP id ge25-20020a056a20be1900b000a9b8d88daamr2326820pzb.44.1670502750202;
+        Thu, 08 Dec 2022 04:32:30 -0800 (PST)
+Received: from localhost ([49.7.199.140])
+        by smtp.gmail.com with ESMTPSA id 17-20020a170902c11100b0018962933a3esm16421522pli.181.2022.12.08.04.32.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 Dec 2022 02:57:13 -0800 (PST)
+        Thu, 08 Dec 2022 04:32:29 -0800 (PST)
 From: Wang Xiaohua <wangxiaohua.1217@bytedance.com>
 To: linux-kernel@vger.kernel.org,
 	linux@roeck-us.net,
@@ -62,9 +62,9 @@ To: linux-kernel@vger.kernel.org,
 	jdelvare@suse.com,
 	openbmc@lists.ozlabs.org,
 	joel@jms.id.au
-Subject: [PATCH linux dev-6.0] pmbus: Add mp2971/mp2973 support in mp2975
-Date: Thu,  8 Dec 2022 18:57:09 +0800
-Message-Id: <20221208105709.1266299-1-wangxiaohua.1217@bytedance.com>
+Subject: [PATCH linux dev-6.0 v2] pmbus: Add mp2971/mp2973 support in mp2975
+Date: Thu,  8 Dec 2022 20:32:25 +0800
+Message-Id: <20221208123225.2035045-1-wangxiaohua.1217@bytedance.com>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -133,6 +133,9 @@ cat /sys/bus/i2c/devices/5-0062/hwmon/hwmon20/*input
 55000
 
 Signed-off-by: Wang Xiaohua <wangxiaohua.1217@bytedance.com>
+
+v2:
+- Fix auto build test WARNING
 ---
  drivers/hwmon/pmbus/mp2975.c | 413 +++++++++++++++++++++++++++++++----
  1 file changed, 372 insertions(+), 41 deletions(-)
