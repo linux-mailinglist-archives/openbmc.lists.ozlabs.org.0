@@ -2,85 +2,39 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7931D64A8F4
-	for <lists+openbmc@lfdr.de>; Mon, 12 Dec 2022 21:58:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5554364B1A5
+	for <lists+openbmc@lfdr.de>; Tue, 13 Dec 2022 10:00:37 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NWDVM2xr0z3bh4
-	for <lists+openbmc@lfdr.de>; Tue, 13 Dec 2022 07:58:03 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=M1j4wFj7;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=d/7rn+Dq;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NWXX31ykFz3cBP
+	for <lists+openbmc@lfdr.de>; Tue, 13 Dec 2022 20:00:35 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.25; helo=wout2-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=M1j4wFj7;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=d/7rn+Dq;
-	dkim-atps=neutral
-Received: from wout2-smtp.messagingengine.com (wout2-smtp.messagingengine.com [64.147.123.25])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NWDTh2fntz3bWF
-	for <openbmc@lists.ozlabs.org>; Tue, 13 Dec 2022 07:57:27 +1100 (AEDT)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.west.internal (Postfix) with ESMTP id 62C5332008FD
-	for <openbmc@lists.ozlabs.org>; Mon, 12 Dec 2022 15:57:22 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Mon, 12 Dec 2022 15:57:22 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm2; t=1670878641; x=1670965041; bh=VGPhsPSPFe
-	p4hezdtvdx9Lw2XqgaB+7lYZZ/xMrp89A=; b=M1j4wFj7eFG6l2Klo2YEPuHS5b
-	eBL7kgbOqgAqNhYgly2RqZYflOW7ze8FjegmCIu/vf5UEtLxxPhzW4s93isfRW1U
-	/UQZJd+8LKXDBtSGCB3QiO4Hhsio+Hi+SZ/irWkiLF2w25tXqZ4BykE4kQYwjun5
-	Nugf8AfHpkzoHz2hnxvnb9at2JSF+9m6tP9N1FpMERw7RxL5/6ag7vWKG7lmV59x
-	/d1691AWHW1sFTmyVaO7PGGamAnXaMA1NJ0mxF22Ml38IsXB4aDgit/XNIfSqst0
-	JK7UvIEHNCpzz2knQ+jJ7vdAVOAooBImZbXaefFsAdtZoC+vUpjgAnGCdZqA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm2; t=1670878641; x=1670965041; bh=VGPhsPSPFep4hezdtvdx9Lw2Xqga
-	B+7lYZZ/xMrp89A=; b=d/7rn+Dq4IYJ2Bm6PIsJnVWi8yxwLChQ1rvfhoQhlVgZ
-	qqJI4nDzStwnd229OB/nnHR5bSYwCsSuRGYMCAc4bpDmGZUqsSLh2G3x63trco2A
-	Z3opKFS/PU9dEC3O3/WA02Qu0S+XKxdbJwg+R9VV6DqrPn4pfx4n/zcMDF/jUtoL
-	qrxRQyv6B92MEErsje0/q5p5RDG6av6jlOfAURmATDjI0boSTBps9zDODdPap9cY
-	sdNe8VMkbztF9T9cI11T7b44YyKMm8PfGjBDd9e7Wz7BALLeF2sdwJs1hjW2I+kf
-	qTxuaF/0vt6Acde3IHRPMToeGxHAq1dYhezXsSBZ2A==
-X-ME-Sender: <xms:sZWXY20KylkIJsdZoC5b2ndsJvnUCjKNF8KBaFPYpCLdgb1fKLvIPA>
-    <xme:sZWXY5F61irhpWoALLT0ppWe7QOXayuPo21BstNmDPM3tGXWum-gt_vsy4UwduUyE
-    BmUNHekHVe0S-nmbCo>
-X-ME-Received: <xmr:sZWXY-7NfKLSpqxlmmePlrC4CDVdpqlULWe_lvzIs7Ta1EgehBE-8xKyzhRBUguS5xUqqbTyOLb4EKJSAf3iExiY830U2VLblm4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdekgdduudelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
-    htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
-    geefgfdthefhkedtleffveekgfeuffehtdeinecuvehluhhsthgvrhfuihiivgeptdenuc
-    frrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:sZWXY33uctBm0Ez7_6CIRo_4FpkItxRTHcal_yfLpL2enXTHN4jDaw>
-    <xmx:sZWXY5Gds4BGFm5VN6z5mvueA5b6uhEaFOJkF74lS3PKeS6ah_YN2w>
-    <xmx:sZWXYw_5nKwLev5UHPLdr6ZKgqo3h5b-zHkp5-arz84EJKlslBiDdQ>
-    <xmx:sZWXY4wOf_EQkYfSyeJO9mJ8U8pLERWnhu2_A9_ewnZFTPHJGc0yNg>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <openbmc@lists.ozlabs.org>; Mon, 12 Dec 2022 15:57:21 -0500 (EST)
-Date: Mon, 12 Dec 2022 14:57:19 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: OpenBMC List <openbmc@lists.ozlabs.org>
-Subject: Re: Code Formatting and Linting
-Message-ID: <Y5eVrxhQmM+V81n+@heinlein.taila677.ts.net>
-References: <Y5EYMohfaXz8lA9t@heinlein.taila677.ts.net>
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=wanadoo.fr (client-ip=80.12.242.25; helo=smtp.smtpout.orange.fr; envelope-from=christophe.jaillet@wanadoo.fr; receiver=<UNKNOWN>)
+X-Greylist: delayed 5408 seconds by postgrey-1.36 at boromir; Tue, 13 Dec 2022 20:00:16 AEDT
+Received: from smtp.smtpout.orange.fr (smtp-25.smtpout.orange.fr [80.12.242.25])
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NWXWh4DT8z3bdl
+	for <openbmc@lists.ozlabs.org>; Tue, 13 Dec 2022 20:00:10 +1100 (AEDT)
+Received: from [192.168.1.18] ([86.243.100.34])
+	by smtp.orange.fr with ESMTPA
+	id 4zcOpfbp15FWA4zcOpIi5P; Tue, 13 Dec 2022 08:22:27 +0100
+X-ME-Helo: [192.168.1.18]
+X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
+X-ME-Date: Tue, 13 Dec 2022 08:22:27 +0100
+X-ME-IP: 86.243.100.34
+Message-ID: <720b814d-5102-04d3-4938-33a25e87a46d@wanadoo.fr>
+Date: Tue, 13 Dec 2022 08:22:24 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="oBwgebzLmeKjMV/k"
-Content-Disposition: inline
-In-Reply-To: <Y5EYMohfaXz8lA9t@heinlein.taila677.ts.net>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.2
+Subject: Re: [PATCH] USB: gadget: Add ID numbers to configfs-gadget driver
+ names
+Content-Language: fr
+To: Chanh Nguyen <chanh@os.amperecomputing.com>
+References: <20221213041203.21080-1-chanh@os.amperecomputing.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+In-Reply-To: <20221213041203.21080-1-chanh@os.amperecomputing.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,57 +46,136 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org, Dan Vacura <w36195@motorola.com>, Vijayavardhan Vennapusa <vvreddy@codeaurora.org>, Alan Stern <stern@rowland.harvard.edu>, Jakob Koschel <jakobkoschel@gmail.com>, Open Source Submission <patches@amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Le 13/12/2022 à 05:12, Chanh Nguyen a écrit :
+> It is unable to use configfs to attach more than one gadget. When
+> attaching the second gadget, it always fails and the kernel message
+> prints out:
+> 
+> Error: Driver 'configfs-gadget' is already registered, aborting...
+> UDC core: g1: driver registration failed: -16
+> 
+> This commit fixes the problem by a ".N" suffix added to each
+> configfs_gadget's driver name (where N is a unique ID number),
+> thus making the names distinct.
+> 
+> Fixes: fc274c1e9973 ("USB: gadget: Add a new bus for gadgets")
+> Signed-off-by: Chanh Nguyen <chanh-shex6MNQR2J/SfDzf78azzKzEDxYleXD@public.gmane.org>
+> ---
+>   drivers/usb/gadget/configfs.c | 42 +++++++++++++++++++++++++++++++++++
+>   1 file changed, 42 insertions(+)
+> 
+> diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
+> index 96121d1c8df4..d8c5156ad777 100644
+> --- a/drivers/usb/gadget/configfs.c
+> +++ b/drivers/usb/gadget/configfs.c
+> @@ -3,6 +3,7 @@
+>   #include <linux/module.h>
+>   #include <linux/slab.h>
+>   #include <linux/device.h>
+> +#include <linux/idr.h>
+>   #include <linux/kstrtox.h>
+>   #include <linux/nls.h>
+>   #include <linux/usb/composite.h>
+> @@ -11,6 +12,16 @@
+>   #include "u_f.h"
+>   #include "u_os_desc.h"
+>   
+> +static DEFINE_IDA(driver_id_numbers);
+> +
+> +/*
+> + * Driver name has the form of "configfs-gadget.%d", where %d
+> + * is id allocated by ida_alloc(). The max value returns by
+> + * ida_alloc() is INT_MAX, in 64-bit system, it is about nine
+> + * quintillion: 19 digits in decimal. Set the max length to 35.
+> + */
+> +#define DRIVER_NAME_LENGTH_MAX 35
 
---oBwgebzLmeKjMV/k
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Hi,
 
-On Wed, Dec 07, 2022 at 04:48:18PM -0600, Patrick Williams wrote:
+if paranoiac, the final \0 seems to be missing in the max length 
+computation, but see below.
 
-> After all the code in [3] is merged, we will have the following linters
-> enabled (opt-out unless specified):
->     - gitlint (commit message)
->     - codespell (commit message)
->     - beautysh (bash/sh/zsh)
->     - black (Python)
->     - clang-format (opt-in via .clang-format; C/C++)
->     - eslint (JSON)
->     - flake8 (Python)
->     - isort (Python)
->     - markdownlint (Markdown)
->     - prettier (JSON/Markdown/YAML)
->     - shellcheck (bash/sh)
+> +
+>   int check_user_usb_string(const char *name,
+>   		struct usb_gadget_strings *stringtab_dev)
+>   {
+> @@ -52,6 +63,9 @@ struct gadget_info {
+>   	char qw_sign[OS_STRING_QW_SIGN_LEN];
+>   	spinlock_t spinlock;
+>   	bool unbind;
+> +
+> +	/* Make driver names unique */
+> +	int driver_id_number;
+>   };
+>   
+>   static inline struct gadget_info *to_gadget_info(struct config_item *item)
+> @@ -1582,6 +1596,8 @@ static struct config_group *gadgets_make(
+>   		const char *name)
+>   {
+>   	struct gadget_info *gi;
+> +	char *driver_name;
+> +	int ret;
+>   
+>   	gi = kzalloc(sizeof(*gi), GFP_KERNEL);
+>   	if (!gi)
+> @@ -1623,6 +1639,21 @@ static struct config_group *gadgets_make(
+>   
+>   	gi->composite.gadget_driver = configfs_driver_template;
+>   
+> +	ret = ida_alloc(&driver_id_numbers, GFP_KERNEL);
+> +	if (ret < 0)
+> +		goto err;
+> +	gi->driver_id_number = ret;
+> +
+> +	driver_name = kmalloc(DRIVER_NAME_LENGTH_MAX, GFP_KERNEL);
+> +	if (!driver_name)
+> +		goto out_free_driver_id_number;
+> +
+> +	ret = scnprintf(driver_name, DRIVER_NAME_LENGTH_MAX,
+> +			"configfs-gadget.%d", gi->driver_id_number);
 
-Everything except for markdownlint is now enabled in CI.  I'm going to
-enable markdownlint in an always-passing mode shortly so that
-maintainers can start to get signal on the issues and then we'll see how
-soon we can enable that one as well.
 
---=20
-Patrick Williams
+using kasprintf() looks simpler here.
+No need to kmalloc()+scnprintf(), and no need for DRIVER_NAME_LENGTH_MAX.
 
---oBwgebzLmeKjMV/k
-Content-Type: application/pgp-signature; name="signature.asc"
+Just my 2c,
 
------BEGIN PGP SIGNATURE-----
+CJ
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmOXla0ACgkQqwNHzC0A
-wRkufQ//ccy9DVoGfBXoP0pTgcuIBiLJ8f1KzCZXp5U/8Zy21axigSJ2xgwA/vUY
-rO8vfCsePForzPrHbS812HpNkTnMQM8VfTW1zNXvTLH+0P5l87ofKMJ/fNdMPi/4
-BE5U2voAKSeRTLmECQleCxLsWsns4IIKrXopzUnGKhnt5mMQZ2mOEyLvRof7hZoH
-M/udnKcz0MsRXmlYpY1+MSa2V25YNQ2nM8+0D+j1nKXC7AB6lyqNjmsHasI0abz+
-gIPsBwL1B1KaKhyhy+lZjSQFqqVbNJ5Ql7f7ZFb9naz0yqKoLSU8V/kJNcYN6yCo
-GXOgBiQqnhv5DUL3p8lI4BDe/tyMoNPglIL4pLo2JlEbjHOFH+gor5E7I5+x0GmZ
-9iws9owohVTK7/9wSrioMPnu4FYKNF/b2aZVVig94JTmWzK4JI4QFrv+LbKOeQ0y
-DnUKP9DjSyybx7OZjdVYWtCpoZ2LjxZXheWpl1HuXLIIDHYi20F2pfbgGnx6bNh3
-GagsrUeomzpRPevmh7WrmyQxFp0XMO+EQNIcztZLIVT60e6pRBDjrpl4I2sRD+ax
-GRRI2UhiEhia4HcdG18CALblc4cbxEHrm2j3+3F2sDwFrKLFXEb87VAjlgk7tBFN
-T1SddXgPFdcEszi4ngOPQHJ4H7fmqzBga9oCKA2SprY+zxOWD/I=
-=beYR
------END PGP SIGNATURE-----
+> +	if (ret < 0)
+> +		goto out_free_driver_name;
+> +
+> +	gi->composite.gadget_driver.driver.name = driver_name;
+>   	gi->composite.gadget_driver.function = kstrdup(name, GFP_KERNEL);
+>   	gi->composite.name = gi->composite.gadget_driver.function;
+>   
+> @@ -1630,6 +1661,11 @@ static struct config_group *gadgets_make(
+>   		goto err;
+>   
+>   	return &gi->group;
+> +
+> +out_free_driver_name:
+> +	kfree(driver_name);
+> +out_free_driver_id_number:
+> +	ida_free(&driver_id_numbers, gi->driver_id_number);
+>   err:
+>   	kfree(gi);
+>   	return ERR_PTR(-ENOMEM);
+> @@ -1637,6 +1673,12 @@ static struct config_group *gadgets_make(
+>   
+>   static void gadgets_drop(struct config_group *group, struct config_item *item)
+>   {
+> +	struct gadget_info *gi = to_gadget_info(item);
+> +
+> +	mutex_lock(&gi->lock);
+> +	kfree(gi->composite.gadget_driver.driver.name);
+> +	ida_free(&driver_id_numbers, gi->driver_id_number);
+> +	mutex_unlock(&gi->lock);
+>   	config_item_put(item);
+>   }
+>   
 
---oBwgebzLmeKjMV/k--
