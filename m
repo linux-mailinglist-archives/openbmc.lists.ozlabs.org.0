@@ -1,70 +1,129 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 752CF653A0C
-	for <lists+openbmc@lfdr.de>; Thu, 22 Dec 2022 01:18:12 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72E36653A0D
+	for <lists+openbmc@lfdr.de>; Thu, 22 Dec 2022 01:19:07 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NcrW62ZhNz3bSp
-	for <lists+openbmc@lfdr.de>; Thu, 22 Dec 2022 11:18:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NcrX91vXxz3bdS
+	for <lists+openbmc@lfdr.de>; Thu, 22 Dec 2022 11:19:05 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=RWTymGrD;
+	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=LKc4PwUP;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::631; helo=mail-pl1-x631.google.com; envelope-from=potin.lai.pt@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=40.107.244.133; helo=nam12-mw2-obe.outbound.protection.outlook.com; envelope-from=chanh@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=RWTymGrD;
+	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=LKc4PwUP;
 	dkim-atps=neutral
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on2133.outbound.protection.outlook.com [40.107.244.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NYZQK45Xxz3bV1
-	for <openbmc@lists.ozlabs.org>; Sat, 17 Dec 2022 03:32:39 +1100 (AEDT)
-Received: by mail-pl1-x631.google.com with SMTP id 17so2888907pll.0
-        for <openbmc@lists.ozlabs.org>; Fri, 16 Dec 2022 08:32:39 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NbFrt1yqJz2yNX
+	for <openbmc@lists.ozlabs.org>; Mon, 19 Dec 2022 21:13:00 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=XYKSeC3Ut0RWfNwbYGN79BEzBrVxIip22gIVXt5XsB4NvEAE4XNlFa86hmvcf9eWtC6NdfYjhin6VrWNZrUo4YseiCD4DZbFUGsdPDijni6j7a5GZCjnUrEWem8rmSfQVTw1aBdgogkj5FBtRL9s1Op2sm05hPgTuFwxImqK+n/+l4DoTGJDqoh2HlLUmmVNeVwXJyX45kKSuEjP0MdcXb9EO7yyNbmFKm0/2tkdsJDCB4UHmv8fi2XEIH+oVHrXsH+voUkai+7NngGq9majdVe6b6KgMqkJar/T79odncR9oPcmuKpf1B8gx8Ugx9aRq4Bun2YD1ChPQjmySb8xfA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=JnFPScr185DF/VI3aXJvi8f/CFPKiAqYj5nh6ml3KVs=;
+ b=STgqMb/mInWVqxpqllI4gaHlPnaWXtBrL/fG+xSBMWzmyQb6217gOWj+zY3/P9tFc4SImcMTIpWwJ1dKz0sDh8SDvpbCfTTJziN3l3KGjqC98KH6pSmWkBMW6nOjPW8CF7Kl+DfFqI8EFr4VuA0IjIHEesjjrLLvMPdp6epBCJLIFvMMRED25E7VICMsg8EeeFQfzbqtxTRS6vcB/eFzwvFd7xAC8cA0nn5TInnIfqa519FhfITXF+V6K/k3tmF4yjOvPTO6oJ/z17mIVqLudFarV+LL+na8+HdaT0g5t1yLA4PhvifkIsR/JQgASkedKbrBzQ/A/Z3autGBOlOk1A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=amperemail.onmicrosoft.com; dkim=pass
+ header.d=amperemail.onmicrosoft.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=iV9BbS6RWMweT0W8zAGX7wYorG3gzy2S1hj4Ey8T+vs=;
-        b=RWTymGrD0XtL/BvNQgFPXX9yGledN5R+m+wWIMmYTAmphbm8f00xu4/3Ir9Zd7QLkm
-         8xyBcM1BtBUkfBSheklYIzbquIgkWU7kTIBPfi5yz4VKIeHgjKccho0X5H5M1g/0m0Bq
-         /0bbN+LxUk5DpaW2x3Cr0umxN/6UzWCE+VccYqe34GhLRTzKQ3UjZJ48QFj+aj1Luf91
-         I461rNN/E6s7u6t/BBdtbawfjN/CS3F8YrFRNmcmH7RUjYx/PBG4HQnfFBP1udXczzM8
-         e8rAvmnihJ3KdbvoJAFSapcOgFP4cwGKfAruXfHhCXHIiFI3sl7Q4BFBb6JHkmh9qxkQ
-         L9lQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=iV9BbS6RWMweT0W8zAGX7wYorG3gzy2S1hj4Ey8T+vs=;
-        b=OsSdAxlvLUbgnZwle4QGUoaKcjP35aT/6crLvG+SOSLY/co5U2yVO8+IO6SpwBACRM
-         xt57YjYu4dnN1E2TnW/AsNn7B8dbsIirlAmtYBw0V1BugJWu3V4lt5rp9AFrO09QDqAu
-         t1R+PrFEojWBB3nHv1mo1AxNxlEszPmH06X0IJaHNOr2tPJWBGTP6GzSO7VYjvsxrfrb
-         xVlOjqHxHJZH42ZafwWALgQDYsTC0Sj+rwLVUlF+eDjvn3CacXkgQZrmT3pii/Dpf91a
-         Pb3+OXbkFAuYexxcTV/ghUQZHSEpIm9Yic2wc2wHqNbv7TGB6bWa5MODVymaUb0zgtQw
-         aikA==
-X-Gm-Message-State: ANoB5pnlY7SzRtSNWRUvhymK0VIIO2/j5otwlRtFBM/LaxbsRwY6rvR2
-	HBadB701iGdxbhFO7bnBN5ZoiQaJJrI=
-X-Google-Smtp-Source: AA0mqf42vr4B+eUFLSzU1YN64iChUjGCuhNs7OeBnWMv0Zyxg5TVUo3LiHB5fkiQlPXpFE0fUAU+Xg==
-X-Received: by 2002:a05:6a20:28a0:b0:ad:58d4:2a7a with SMTP id q32-20020a056a2028a000b000ad58d42a7amr26401554pzf.22.1671208355079;
-        Fri, 16 Dec 2022 08:32:35 -0800 (PST)
-Received: from localhost.localdomain (1-34-79-176.hinet-ip.hinet.net. [1.34.79.176])
-        by smtp.gmail.com with ESMTPSA id g10-20020a63b14a000000b0046b2ebb0a52sm1673775pgp.17.2022.12.16.08.32.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Dec 2022 08:32:34 -0800 (PST)
-From: Potin Lai <potin.lai.pt@gmail.com>
-To: openbmc@lists.ozlabs.org,
-	Joel Stanley <joel@jms.id.au>
-Subject: [PATCH u-boot,v2019.04-aspeed-openbmc 1/1] ARM: Aspeed: add a config for FMC_WDT2 timer reload value
-Date: Sat, 17 Dec 2022 00:30:23 +0800
-Message-Id: <20221216163023.551569-1-potin.lai.pt@gmail.com>
-X-Mailer: git-send-email 2.31.1
+ d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=JnFPScr185DF/VI3aXJvi8f/CFPKiAqYj5nh6ml3KVs=;
+ b=LKc4PwUPjBnzVHguXDEks03pUiUWqEIpc78HjByxKHy9sli8FfsatjX3Sq6Eqj2bh6XSNAf0DAg5a6lukIyRdq99ZmltCsV44LBfMMup9N1ZH1LehMsZQBhNHoiLcm6XCfjdL/N/k7xSeDY2BmWh/v0O4l/4bne287ssU2yFetg=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amperemail.onmicrosoft.com;
+Received: from SN6PR01MB4973.prod.exchangelabs.com (2603:10b6:805:c4::13) by
+ BL0PR01MB4611.prod.exchangelabs.com (2603:10b6:208:75::17) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.5924.12; Mon, 19 Dec 2022 10:12:40 +0000
+Received: from SN6PR01MB4973.prod.exchangelabs.com
+ ([fe80::1e67:38ac:ed37:be1c]) by SN6PR01MB4973.prod.exchangelabs.com
+ ([fe80::1e67:38ac:ed37:be1c%3]) with mapi id 15.20.5924.016; Mon, 19 Dec 2022
+ 10:12:40 +0000
+Message-ID: <6fe62fbc-c666-8163-5cd2-6bac5447546f@amperemail.onmicrosoft.com>
+Date: Mon, 19 Dec 2022 17:12:29 +0700
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.5.1
+Subject: Re: [PATCH] USB: gadget: Add ID numbers to configfs-gadget driver
+ names
+Content-Language: en-US
+To: Alan Stern <stern@rowland.harvard.edu>
+References: <20221213041203.21080-1-chanh@os.amperecomputing.com>
+ <720b814d-5102-04d3-4938-33a25e87a46d@wanadoo.fr>
+ <6044a542-fbcd-0fe7-abd3-83f38b731ecc@amperemail.onmicrosoft.com>
+ <Y5nqtYa9yC8YY839@rowland.harvard.edu>
+From: Chanh Nguyen <chanh@amperemail.onmicrosoft.com>
+In-Reply-To: <Y5nqtYa9yC8YY839@rowland.harvard.edu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI2PR01CA0001.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:191::13) To SN6PR01MB4973.prod.exchangelabs.com
+ (2603:10b6:805:c4::13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN6PR01MB4973:EE_|BL0PR01MB4611:EE_
+X-MS-Office365-Filtering-Correlation-Id: f62dfa12-d0ae-42e4-45ca-08dae1a98f44
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 	3RM01Tcgb7Yk1pxCbVPvDH3d6h3V5eLnvetM4QGovd7H988sRwgCr0I2j6Uta2GETZyBtQMaFJWerhjpo/pLKITmxK1/I/rqQNGQRH738ilhzU96UCjgK2I/+qFCYBppVNyYkRCDB7j0rsf7ppFEcdjJfsD2ONgDk02IaWxWNeRh1dGJCc/8AHhUQrnj3Uwy2CJAauFIrOxnR7cUyjSie9/uyBiAAldaIcr/xRF+vOInAfD9HxtPVqzMeqsJT3c0inku1DoZQsaewLlg61cPjYwimDmKYa5Jf85aLzNovWzEC2qi9mejB097xVfusMeXqTPjvPz/6JnsR/lwgkhg0U8JUy/AE/L4seShciuYuu6eaawNDasG8DcLNsn7Cqj3rhzrvR1KXiVWN1Nfhhgx6HxmAA6Gn0Ac46roCYQKM31IBe2MdlSyq7ZtMU6xvDbkt8XVQ/10OlsPJOdh6kEaBGo2npbGdZuPjUdrzJ1TS822slKsHbsqZ1Fu4BPWhyK8mkhlDjyCEjDHOlbMaySle8Hs0FZa00OKSbMO7Yx/lazKfCSpbPfwYB2mHs2wYoSiQWS632WmohTf61cOfIys21Y/O7tDWKhqNaKABiT72RYDKWAtmKJmzwaPMIeWxHatvQSYpRMpfZGBlLYjB7zyazNVZKsnN6aBF6/sgkHd1fRb1xWXyiFQj8YCFj6Az8Z4
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN6PR01MB4973.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(376002)(39840400004)(366004)(136003)(396003)(346002)(451199015)(6486002)(6666004)(478600001)(6512007)(53546011)(26005)(6506007)(186003)(2616005)(54906003)(5660300002)(8936002)(7416002)(83380400001)(42882007)(6916009)(316002)(31686004)(38100700002)(2906002)(41300700001)(31696002)(83170400001)(8676002)(66556008)(66476007)(66946007)(4326008)(43740500002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?SmVOYWxWRDN0c1N4MVNXb20wc2ZTeXJMSEVmSDdqUUx2OHp2R3plZXM1MVRP?=
+ =?utf-8?B?MStJM0Z0MXFrZGp3RWswYmhNVU92ckNXbDBGc1lVd1ZhNnVqNzBzcDFTSnVl?=
+ =?utf-8?B?NUZ2ei9ESVVLT0FaZkE0Si85ZzdqSFYzNjc4b2JDbTdqVWRrU2JJeDY5bXdL?=
+ =?utf-8?B?Yk01SXpzakFKczIyYm1uZUVoMVY4dXhmVGFRN1ljUWtyK0htMjhBNFZPcWJa?=
+ =?utf-8?B?MWhpOEJGTnhsS29CUXgxMnNQcGZRdHo4cGlVQWtFcTFFZllOdlZ2NDhjNHdN?=
+ =?utf-8?B?cHpIQXdUbjcrYnZtdVJoRFdDY1Z1NFdCdnMxWGFzRTJrMTMzRU00bFZzRUZs?=
+ =?utf-8?B?bU9GbmIrYTlvTG1vV2dQWFlWdlJNaUlKUGpRRkxqVW9jOEpwVjJqc3hxQ3BP?=
+ =?utf-8?B?RGZNRjljUmpVdU1Cems1VkJUeVdIRTRYZ0o4MFM1RG1yQWxaSTdmRThUMzlC?=
+ =?utf-8?B?TUdqRUJINWtSS2d2MkwyQ1M0SklrR3cvdWI1QzljNHNCQUI5OExPU0lHRUor?=
+ =?utf-8?B?UzdKbHZsTnpIb0tHVE5mU09xSEJrelNHR1pPc0NOS1UwZUdQQkE3R0pwWitG?=
+ =?utf-8?B?NFZ4aUhUNXRlcTdvTFBMaW1POE0xalJoTGg1QUZlMHNkVG5tWVBnRW1yM0xQ?=
+ =?utf-8?B?QVVUb2RSdVpMYnJ5WXMyMFlFb0JwYU5neEdGOEoxVHQwSkw3VjdaN2prUk53?=
+ =?utf-8?B?Wm84bStWblRvKzYyRlN2QjE2aWtMTkUvVW5hUDV0eDJtZjJRUWRodytTR3VZ?=
+ =?utf-8?B?MTFNTmVGS1Y0Z2kzZnVyWGM3YTVUc3VzTWNLc054VWJhYzlxZEdVcDlraWFF?=
+ =?utf-8?B?OE5ENE10WTFkTjJPM21YK2Q0eG1TTzJiNm8relhaQ1FNMVdobEJGS3JjUGdq?=
+ =?utf-8?B?ZjY1TW5WR1czQlUrUmtrbkRCY1pGczdZVjNxS0lKcTRNTVljM0l1N1dzMnRQ?=
+ =?utf-8?B?MVZWanJRZVhxZkkxYXNCQ2V0MnAzQmN3VXRHQ0dUVE5KV1lwYjJWNzNhQ3dN?=
+ =?utf-8?B?NkJCMk83TkRTaktzUzhDbUJLWExxVVpYWWVtZ2tKbHJUdC93OVJ2QlVQWG1C?=
+ =?utf-8?B?bFNseTlUNnJmangxT3BJWXh2cVlMNytHYlhhUjhyWlVFYmt2bkpuMC9zNS9s?=
+ =?utf-8?B?VkVQYW1qbERZTm9lUXRvY0RkTHFxeFBXaExsT2Y5MmlSVXd6NW84Q2hmSUVn?=
+ =?utf-8?B?d3JiZ3RKN3JXdVNvRjNvRENiYld6b2FSZFVrYlp2VlhRTUlhL3dKazFEc2FR?=
+ =?utf-8?B?b1pnQ3ZVeUdoZmJEM2Yydml6U0VIaFJMeFQxOC9qeVBLd0tuYmh4b0h6QnBn?=
+ =?utf-8?B?VU9kK2tySXd5UTZ0MExNeEJXK2FKa0Zia3RjZTM5cTNVRnhFVzdPeUJFYjc5?=
+ =?utf-8?B?U2JLM25HRjgxWCs2WTJ6TWxESHBCSFhPUEtOZmc4bHV0cEs3YkVqT2VTL3dl?=
+ =?utf-8?B?MWsrTlhPYkl6YmxsQTVheE1ReUJJK3F4WFBSNzE2V2RmRjBSMUVGZDRzL3lZ?=
+ =?utf-8?B?bDdNSzJoNzhpcDhZY2xpWHpyRG1mREc2YndBaDRYcE9xdnBZUTZPOEJQanBK?=
+ =?utf-8?B?UEZTcTJhT1lYZW1VaXVWRWtCVjBHcERZaXJuVy9VbmxqOUxnNmVrckZTSlF1?=
+ =?utf-8?B?M2VUbzQrRkJxd09OZTF4YlpRVHN4RkF2YUJsbzEwT2gyU2NKZHVybnpkNUFU?=
+ =?utf-8?B?VCtWM20vVEI4ODczOFhDeDRHZlZCdjd6aEt0ZnBNd3UwMmg1bzRreWNqUVJX?=
+ =?utf-8?B?WjVBRmlDSXUvcDE2cUVYaUxsRXU3bUo1QkI5WTA1YkhCclZZbEl1b0wvZWNL?=
+ =?utf-8?B?YnphZjlJOHRncDdBdGhIMGlwVXo0SUVUUExoYzVpNTRESWZQNVFzRlZreFVB?=
+ =?utf-8?B?QTZ6MTErVkpLNzNoMDNDTU9BWUlWa05sUmVWTG9OUkFUWHRrODgxSXJBK2NG?=
+ =?utf-8?B?YnhaMHVyOG1NdWhZRkVHNWpFZitLYXZuZ09kaERBK0J1dmk0TjFnQmlsb0xn?=
+ =?utf-8?B?d1FhN2s5QXlJeUVsY3l3dCtGTkgvRW81cG01SDAwYy91QlVxZ0hSR2RINm56?=
+ =?utf-8?B?TnhyUXNIMWVkbUhzYjUxN2tMc3Y5ZmdZSUVDQWJLOHlIRUxuVzU5bVdydElr?=
+ =?utf-8?B?V0xWUEt3My81VUgxL0Rqa3AxR0JBM25nT2NpbDlsNnplajc4VmVQRHNFY0c2?=
+ =?utf-8?Q?l/FQ0UCECaLAAC0aO1wfHMA=3D?=
+X-OriginatorOrg: amperemail.onmicrosoft.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f62dfa12-d0ae-42e4-45ca-08dae1a98f44
+X-MS-Exchange-CrossTenant-AuthSource: SN6PR01MB4973.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Dec 2022 10:12:40.0841
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: bb1gL11sLpBqjzx8HPdWCPEXCbrXE04pHBmuZo8w+sA75/aZlFgjMBaHx0Ul5lGkjueFZFIOXzvJFQNEk9lhc7vF39uNZ29/+56O4lFNoPwjki1kB/Kbfwy2kR5XAm11
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL0PR01MB4611
 X-Mailman-Approved-At: Thu, 22 Dec 2022 11:16:45 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -77,85 +136,57 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Dan Zhang <zhdaniel@meta.com>, Potin Lai <potin.lai@quantatw.com>, Potin Lai <potin.lai.pt@gmail.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, linux-usb@vger.kernel.org, Frank Li <Frank.Li@nxp.com>, linux-kernel@vger.kernel.org, Dan Vacura <w36195@motorola.com>, Vijayavardhan Vennapusa <vvreddy@codeaurora.org>, Rondreis <linhaoguo86@gmail.com>, Christophe JAILLET <christophe.jaillet@wanadoo.fr>, Jakob Koschel <jakobkoschel@gmail.com>, Open Source Submission <patches@amperecomputing.com>, Chanh Nguyen <chanh@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add a config for FMC_WDT2 timer reload, and set timer reload value if
-FMC_WDT2 is enabled.
 
-Signed-off-by: Potin Lai <potin.lai.pt@gmail.com>
----
- arch/arm/include/asm/arch-aspeed/platform.h |  2 ++
- arch/arm/mach-aspeed/ast2600/Kconfig        | 10 ++++++++++
- arch/arm/mach-aspeed/ast2600/scu_info.c     | 13 +++++++++++++
- 3 files changed, 25 insertions(+)
 
-diff --git a/arch/arm/include/asm/arch-aspeed/platform.h b/arch/arm/include/asm/arch-aspeed/platform.h
-index ca270d4be1..4c2b0866fb 100644
---- a/arch/arm/include/asm/arch-aspeed/platform.h
-+++ b/arch/arm/include/asm/arch-aspeed/platform.h
-@@ -44,6 +44,8 @@
- #define ASPEED_FMC_CS0_BASE	0x20000000
- #elif defined(CONFIG_ASPEED_AST2600)
- #define ASPEED_FMC_WDT2		0x1e620064
-+#define ASPEED_FMC_WDT2_RELOAD	0x1e620068
-+#define ASPEED_FMC_WDT2_RESTART	0x1e62006C
- #define ASPEED_SPI1_BOOT_CTRL	0x1e630064
- #define ASPEED_MULTI_CTRL10	0x1e6e2438
- #define ASPEED_HW_STRAP1	0x1e6e2500
-diff --git a/arch/arm/mach-aspeed/ast2600/Kconfig b/arch/arm/mach-aspeed/ast2600/Kconfig
-index f5852afa77..4c141672a1 100644
---- a/arch/arm/mach-aspeed/ast2600/Kconfig
-+++ b/arch/arm/mach-aspeed/ast2600/Kconfig
-@@ -53,6 +53,16 @@ config TARGET_QUALCOMM_DC_SCM_V1
- 
- endchoice
- 
-+config ASPEED_FMC_WDT2_TIMER_RELOAD
-+	int "Aspeed FMC_WDT2 timer reload value"
-+	depends on ASPEED_AST2600
-+	range 0 8191
-+	default 0
-+	help
-+	  Aspeed FMC_WDT2 timer reload value, the time unit is 0.1 second.
-+	  if this value is 0, left original FMC_WDT2 timer reload register without
-+	  change (Default 22 seconds), if it is > 0 then set timer with the value.
-+
- source "board/aspeed/evb_ast2600/Kconfig"
- source "board/aspeed/fpga_ast2600/Kconfig"
- source "board/aspeed/slt_ast2600/Kconfig"
-diff --git a/arch/arm/mach-aspeed/ast2600/scu_info.c b/arch/arm/mach-aspeed/ast2600/scu_info.c
-index a2277eec58..c18bc3923a 100644
---- a/arch/arm/mach-aspeed/ast2600/scu_info.c
-+++ b/arch/arm/mach-aspeed/ast2600/scu_info.c
-@@ -30,6 +30,9 @@ static struct soc_id soc_map_table[] = {
- 	SOC_ID("AST2625-A3", 0x0503040305030403),
- };
- 
-+static u32 aspeed_fmc_wdt2_reload =
-+	CONFIG_ASPEED_FMC_WDT2_TIMER_RELOAD & 0x1FFF;
-+
- void aspeed_print_soc_id(void)
- {
- 	int i;
-@@ -302,6 +305,16 @@ void aspeed_print_2nd_wdt_mode(void)
- 
- 			printf("\n");
- 		}
-+
-+		if (aspeed_fmc_wdt2_reload &&
-+		    (readl(ASPEED_FMC_WDT2) & BIT(0))) {
-+			writel(aspeed_fmc_wdt2_reload, ASPEED_FMC_WDT2_RELOAD);
-+			writel(0x4755, ASPEED_FMC_WDT2_RESTART);
-+			printf("Set FMC_WDT2 timer reload value to 0x%04X\n",
-+			       aspeed_fmc_wdt2_reload);
-+		} else {
-+			printf("Keep FMC_WDT2 timer reload value as init\n");
-+		}
- 	}
- }
- 
--- 
-2.31.1
+On 14/12/2022 22:24, Alan Stern wrote:
+> [EXTERNAL EMAIL NOTICE: This email originated from an external sender. Please be mindful of safe email handling and proprietary information protection practices.]
+> 
+> 
+> On Wed, Dec 14, 2022 at 11:15:48AM +0700, Chanh Nguyen wrote:
+> 
+>> Thanks CJ for the review!
+>>
+>> I've made some changes as below (in gadgets_make() to remove unnecessary
+>> variables) and now trying to test it as much as possible. Will re-post it as
+>> v2 if looks good soon.
+>>
+>> static inline struct gadget_info *to_gadget_info(struct config_item *item)
+>> @@ -1623,13 +1629,25 @@ static struct config_group *gadgets_make(
+>>
+>>       gi->composite.gadget_driver = configfs_driver_template;
+>>
+>> +    gi->driver_id_number = ida_alloc(&driver_id_numbers, GFP_KERNEL);
+>> +    if (gi->driver_id_number < 0)
+>> +        goto err;
+>> +
+>> +    gi->composite.gadget_driver.driver.name =
+>> +                          kasprintf(GFP_KERNEL, "configfs-gadget.%d",
+>> +                                    gi->driver_id_number);
+>> +    if (!gi->composite.gadget_driver.driver.name)
+>> +        goto out_free_driver_id_number;
+>> +
+>>       gi->composite.gadget_driver.function = kstrdup(name, GFP_KERNEL);
+>>       gi->composite.name = gi->composite.gadget_driver.function;
+>>
+>>       if (!gi->composite.gadget_driver.function)
+>> -        goto err;
+>> +        goto out_free_driver_id_number;
+> 
+> This should goto out_free_driver_name.
+> 
 
+Thanks Alan! I'll update that.
+
+> 
+>>
+>>       return &gi->group;
+>> +
+>> +out_free_driver_id_number:
+>> +    ida_free(&driver_id_numbers, gi->driver_id_number);
+>>   err:
+>>       kfree(gi);
+>>       return ERR_PTR(-ENOMEM);
