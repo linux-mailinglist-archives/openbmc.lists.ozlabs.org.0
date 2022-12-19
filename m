@@ -2,71 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E21D650CEF
-	for <lists+openbmc@lfdr.de>; Mon, 19 Dec 2022 15:02:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9625D650D85
+	for <lists+openbmc@lfdr.de>; Mon, 19 Dec 2022 15:40:45 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NbLxS3YZKz3c8F
-	for <lists+openbmc@lfdr.de>; Tue, 20 Dec 2022 01:02:20 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NbMnl3rdJz3cGd
+	for <lists+openbmc@lfdr.de>; Tue, 20 Dec 2022 01:40:43 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=YWkqivfE;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=bSf+TPDe;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=vSYrMgEt;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.55.52.115; helo=mga14.intel.com; envelope-from=przemyslaw.hawrylewicz.czarnowski@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.29; helo=out5-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=YWkqivfE;
+	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=bSf+TPDe;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=vSYrMgEt;
 	dkim-atps=neutral
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NbLwq1bWvz3bPL
-	for <openbmc@lists.ozlabs.org>; Tue, 20 Dec 2022 01:01:45 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1671458507; x=1702994507;
-  h=message-id:date:mime-version:subject:to:references:from:
-   in-reply-to:content-transfer-encoding;
-  bh=VfowfKznjFy1wzPdvzuchsw636vZYZzQMDRqGbHohhg=;
-  b=YWkqivfEFkZKUEonZNClNjgA8gebLgW8d+IWG/a3Qn26cgHujXgQPYqp
-   cOyuI6/6hIW0k7dWdKD+P9iusM6aqSNIVjK9EaU5e8ez8k06EKitNIOic
-   lcvFO1ddfUvpiSVDII86/Cuw8OJDUpklS4u+0pnmyXwaf8CKiwhl653LJ
-   q1VDrDJLhhRGg2TYiAFG/aG2PbaqXGc4D+dGf7LNLWbRsKEimVn5+dxEn
-   UaZXa8YPiLtLJ4JZNUlBC131+0T4YRfHS69F+rWIsFDtO1XOBRpucX3LT
-   uhLrhfnnkUDITRca4XYcISQWGMVlM2dwr6BOsMIw/5YPxMIOUPRtcc76i
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10566"; a="319398135"
-X-IronPort-AV: E=Sophos;i="5.96,255,1665471600"; 
-   d="scan'208";a="319398135"
-Received: from fmsmga004.fm.intel.com ([10.253.24.48])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Dec 2022 06:01:36 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10566"; a="719116987"
-X-IronPort-AV: E=Sophos;i="5.96,255,1665471600"; 
-   d="scan'208";a="719116987"
-Received: from phawryle-mobl1.ger.corp.intel.com (HELO [172.28.38.34]) ([172.28.38.34])
-  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Dec 2022 06:01:36 -0800
-Message-ID: <8a15e91f-a8a1-0a70-1006-d07dafdd7b34@linux.intel.com>
-Date: Mon, 19 Dec 2022 15:01:25 +0100
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NbMn645vYz2xWg
+	for <openbmc@lists.ozlabs.org>; Tue, 20 Dec 2022 01:40:09 +1100 (AEDT)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id B14AA5C017E;
+	Mon, 19 Dec 2022 09:40:05 -0500 (EST)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Mon, 19 Dec 2022 09:40:05 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	fuzziesquirrel.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm3; t=1671460805; x=1671547205; bh=6IWwvH/APN
+	FJb73YiN1HFR4iojqX53oWrlC0YwHH798=; b=bSf+TPDefpJmBY49RwtrG7IaFz
+	9YQS6TD3P/c+ghDm3dDwvGOj0AV//e02kBz05/KqI18nuQxcQYAqpUoWIlBL1nRy
+	VBbwxABCUEM1eiykd0fMWBxvuJc4E8JXO+raIa2ISEGwIlmV1xLdhyVsd04ImK6V
+	/Win9SSFjNB14MsARulALMMbo0sEO/UFhBoGgPloNP7kNWGYy6uWZKBb/Nn1Kfe4
+	guXoBytGj4OUcl/fKyi0kPTYfcBH/1910YdDVpkX/O/+0Txiht/7d8V+32PV9JiR
+	NWwOq3Rz1K+Wde/ihhac6d570AeYYiQZjZlBFw/YzOFtLimVYxQcW01FvZWg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1671460805; x=
+	1671547205; bh=6IWwvH/APNFJb73YiN1HFR4iojqX53oWrlC0YwHH798=; b=v
+	SYrMgEt3TeOlqmBQS/5VHyRvbixb1nORa1Wjsvx1dM8efOFg/1pyRhIFEOiw6A6J
+	yjSM9QM6J7rlSjGhl2GjJoXlXtRcxk91pDzlPi9XJkJbGqMHGplS1vQITE+4MR4M
+	LeeJknT8O4cB1NPAeCovh7Y8SvuFnOPI8Ibm+WWSUTVOEm0z0va45VfRL/6EagH/
+	QfHWCrZWSWkQvy5X+8ZKQZESBbov7jOv2Wq2EO3TzJyObfgI+J1pvBGI2qTISng5
+	oKqoyLxeLsw3RSSrAbSB/uxXEx2MyY2xBCNKLH7895LTXqLFM4J0t5wD0eZ+ULyx
+	cdkC1J9Nhu20LDLi4E75A==
+X-ME-Sender: <xms:xXegYx183yHA58VOHzaDn_FHg4sZf8WovwLljxuGbPmEy0m89SpdMw>
+    <xme:xXegY4ECXA6WdGAEqSfE9WSfFp2DdLMhiEt3GXfqpJKWRlLbctR32iffBP3aT0_Bb
+    TacWeGBennd5ZKUK8A>
+X-ME-Received: <xmr:xXegYx5Pues_B4gjZCt2R9GDehOM8JIYhx0WPLOzEZtE-S7w1XAYxrfi_klfgYBwlCAItxxFGAEPZH9brMNo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrgeefgdegtdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpefkuffhvfevffgjfhgtgfgfggesthhqredttderjeenucfhrhhomhepuehrrggu
+    uceuihhshhhophcuoegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrdgtoh
+    hmqeenucggtffrrghtthgvrhhnpeegteekudefteejheevfeehkedtieefvdfhieelhfei
+    hedvhedvtddugfeugfeiteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrdgtohhm
+X-ME-Proxy: <xmx:xXegY-0PhxOKSQJtFtej1JwXidzr0lcF5KuzGs97QgWFAjrpQmDo1g>
+    <xmx:xXegY0F6kBlcGxX91827Xo-Y641xF5mWk4voZOwVFBtxlOEE96jxpg>
+    <xmx:xXegY_8PLUPESwG7A1HLrZjccqcfhf-vUoLsn-ehOJzvL7cKob8kfw>
+    <xmx:xXegY4DWQTx-2wAqMQXzzcall7cVHiXyzarcxiQrZCU2Jr4QGBvW3Q>
+Feedback-ID: i02c9470a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 19 Dec 2022 09:40:04 -0500 (EST)
+Message-ID: <2a197f638e9ef7372fc2cea686c0bec5b7f6f8d8.camel@fuzziesquirrel.com>
+Subject: Re: Ufispace OpenBMC CCLA Signed 20221206
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Jordan Chang <jordan.chang@ufispace.com>
+Date: Mon, 19 Dec 2022 09:40:04 -0500
+In-Reply-To: <CAJ3czeRU2-WAuv4UvL2_6ipiLdrmse8KN_t3cio7A6DZ2mDJ6A@mail.gmail.com>
+References: 	<CAJ3czeSoe8rDaXP59BY3MKdNwzZiEQsZxqmrvC8uvDKPL9dfpg@mail.gmail.com>
+	 <e6a0017bb89c7e77a32ff2666273f36bafa3319b.camel@fuzziesquirrel.com>
+	 <CAJ3czeRU2-WAuv4UvL2_6ipiLdrmse8KN_t3cio7A6DZ2mDJ6A@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.1 
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.5.0
-Subject: Re: Virtual Media repository request
-To: openbmc@lists.ozlabs.org
-References: <DM4PR11MB52476717C6A134B92BD62061B96E9@DM4PR11MB5247.namprd11.prod.outlook.com>
- <YbDjsxZYYtnNPsCK@heinlein>
- <475ba120-3734-8bf1-868f-83f48f10ccac@linux.intel.com>
- <YbdwYODNRJPuRady@heinlein>
- <5c98b6d46d71907242f1d868cc3d918db99cea53.camel@codeconstruct.com.au>
- <CACWQX819tsUA6t190mVp8LrrHbteiP4w-35MEH9LG9mWTvYgxw@mail.gmail.com>
- <d9ea11af-4b30-3424-5b1b-e0a51dde28f4@linux.intel.com>
- <8857fb3c25b2e3918dcda00f04710b3e9f84f1d9.camel@codeconstruct.com.au>
- <592e3b4d-2125-22b7-2413-0aa0857c9fe8@linux.intel.com>
- <4ab2d31e-4433-5987-c2ad-8f3d4ce50090@linux.intel.com>
-Content-Language: en-US
-From: "Czarnowski, Przemyslaw"
- <przemyslaw.hawrylewicz.czarnowski@linux.intel.com>
-In-Reply-To: <4ab2d31e-4433-5987-c2ad-8f3d4ce50090@linux.intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,39 +96,17 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Jay Lin <jay.tc.lin@ufispace.com>, manager@lfprojects.org, openbmc@lists.ozlabs.org, Eason Huang <eason.ys.huang@ufispace.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 23.12.2021 02:01, Czarnowski, Przemyslaw wrote:
-> On 20.12.2021 13:54, Czarnowski, Przemyslaw wrote:
->>
->> I plan to start pushing changes here this week.
->>
-> Replying to myself, but just pushed a series of first 4 patches to review.
-> 
-> It is just a skeleton (infrastructure to build main flows on) but wanted 
-> to get the first reviews for initial changes (transition from old 
-> content to the new one in particular).
-> 
+On Fri, 2022-12-09 at 11:09 +0800, Jordan Chang wrote:
+> Hi Brad,
+>=20
+> Thanks for your suggestion. I have edited the Schedule A section in
+> CCLA
+> document. Please help to review it. Thanks.
 
-I would like to rise the request for new service of Virtual Media 
-repository once again.
+Hi Jordan, CCLA accepted, thanks!
 
-Recently I've made an attempt to push VM service patches once again 
-after UT has been added. In the meantime, I've noticed that in order to 
-make a graceful transition between old and new solution the final switch 
-between the old and new code should be made at the moment when the last 
-patch is accepted.
-
-There are two main reason why I would like to recall the discussion.
-First is the voice of the maintainer of the old service. Second - 
-problems with linting and CI which wants to build and test both projects 
-simultaneously.
-
-Of course the decision does not belong to me. I just do not want mess 
-with current CI to support this transitional state.
-
--- 
-Best regards,
-Przemyslaw Czarnowski
-
+Brad
