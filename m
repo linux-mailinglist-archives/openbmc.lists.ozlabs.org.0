@@ -2,60 +2,39 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 089FB651F7D
-	for <lists+openbmc@lfdr.de>; Tue, 20 Dec 2022 12:12:18 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 021E86520FC
+	for <lists+openbmc@lfdr.de>; Tue, 20 Dec 2022 13:51:28 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Nbv6l5gcDz3c2d
-	for <lists+openbmc@lfdr.de>; Tue, 20 Dec 2022 22:12:15 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=mail header.b=k+K9r5+b;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NbxK968LVz3c7h
+	for <lists+openbmc@lfdr.de>; Tue, 20 Dec 2022 23:51:25 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=collabora.com (client-ip=2a00:1098:0:82:1000:25:2eeb:e5ab; helo=madras.collabora.co.uk; envelope-from=andrzej.p@collabora.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=mail header.b=k+K9r5+b;
-	dkim-atps=neutral
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx1.molgen.mpg.de; envelope-from=pmenzel@molgen.mpg.de; receiver=<UNKNOWN>)
+Received: from mx1.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Nbv683QRRz30Bp
-	for <openbmc@lists.ozlabs.org>; Tue, 20 Dec 2022 22:11:44 +1100 (AEDT)
-Received: from [192.168.15.130] (unknown [194.152.46.36])
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NbxJm5v86z2xHH
+	for <openbmc@lists.ozlabs.org>; Tue, 20 Dec 2022 23:51:01 +1100 (AEDT)
+Received: from [141.14.220.45] (g45.guest.molgen.mpg.de [141.14.220.45])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	(Authenticated sender: andrzej.p)
-	by madras.collabora.co.uk (Postfix) with ESMTPSA id 505E06602CA1;
-	Tue, 20 Dec 2022 11:11:31 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1671534692;
-	bh=QHMAUC+fvhHVVkpqVHzA/wa2L6JTA/KCqAx7KjaxPvw=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=k+K9r5+bPL4qe+X/EzD76sbMf/bplJEgIPfCL6f/A4SdRYp3s6IXy5klAJpr/z0BU
-	 denGdvufAXO2QpIGN4l37nhOTdDAezl1NB3pjLg/xqV3MYUDR0SBQoYDonXk36R/T8
-	 bdV5GI0LNA7SRRqQDDAQhN+Ld5i34eCbzN+Ct59M8dRHl5dDyxSYF4tWwGdPDp4NHB
-	 PXdfkGzuq84T4nGN6bcKYMWyPYXj4HYXave/pgWpJPQF4jxxxo6ddeGojjVaI6kdqI
-	 S9gEt0yiRRgZRuW75kwMBtIx6J2Pkau0Pet4GD4xD72wVjehppYo2x20I4xnJVbHcB
-	 8ORhJ2M999XKA==
-Message-ID: <078aa497-e441-ef3d-c206-de23ca2658c9@collabora.com>
-Date: Tue, 20 Dec 2022 12:11:28 +0100
+	(Authenticated sender: pmenzel)
+	by mx.molgen.mpg.de (Postfix) with ESMTPSA id 258E460027FC0;
+	Tue, 20 Dec 2022 13:50:56 +0100 (CET)
+Message-ID: <aa5aeebe-6a0e-9c55-dc4b-6f8f02308373@molgen.mpg.de>
+Date: Tue, 20 Dec 2022 13:50:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v9 7/7] media: nuvoton: Add driver for NPCM video capture
- and encode engine
+ Thunderbird/102.6.0
+Subject: Re: [PATCH v3 1/3] gpio: nuvoton: Add Nuvoton NPCM7xx sgpio driver
 Content-Language: en-US
-To: Marvin Lin <milkfafa@gmail.com>, mchehab@kernel.org,
- hverkuil-cisco@xs4all.nl, avifishman70@gmail.com, tmaimon77@gmail.com,
- tali.perry1@gmail.com, venture@google.com, yuenn@google.com,
- benjaminfair@google.com, robh+dt@kernel.org,
- krzysztof.kozlowski+dt@linaro.org
-References: <20221220094055.3011916-1-milkfafa@gmail.com>
- <20221220094055.3011916-8-milkfafa@gmail.com>
-From: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-In-Reply-To: <20221220094055.3011916-8-milkfafa@gmail.com>
+To: Jim Liu <jim.t90615@gmail.com>, Jim Liu <jjliu0@nuvoton.com>
+References: <20221220080139.1803-1-JJLIU0@nuvoton.com>
+ <20221220080139.1803-2-JJLIU0@nuvoton.com>
+From: Paul Menzel <pmenzel@molgen.mpg.de>
+In-Reply-To: <20221220080139.1803-2-JJLIU0@nuvoton.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -69,2271 +48,760 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: kwliu@nuvoton.com, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, kflin@nuvoton.com, linux-media@vger.kernel.org
+Cc: Joseph Liu <kwliu@nuvoton.com>, devicetree@vger.kernel.org, linus.walleij@linaro.org, linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, brgl@bgdev.pl
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Marvin,
+Dear Jim,
 
-Still something to look at...
 
-W dniu 20.12.2022 o 10:40, Marvin Lin pisze:
-> Add driver for Video Capture/Differentiation Engine (VCD) and Encoding
-> Compression Engine (ECE) present on Nuvoton NPCM SoCs. The VCD can
-> capture and differentiate video data from digital or analog sources,
-> then the ECE will compress the data into HEXTILE format. This driver
-> implements V4L2 interfaces and provides user controls to support KVM
-> feature, also tested with VNC Viewer and openbmc/obmc-ikvm.
-> 
-> Signed-off-by: Marvin Lin <milkfafa@gmail.com>
+Thank you for the patch.
+
+Am 20.12.22 um 09:01 schrieb Jim Liu:
+> Add Nuvoton BMC NPCM7xx sgpio driver support.
+
+Please mention the datasheet, and how this is tested.
+
+> Signed-off-by: Jim Liu <JJLIU0@nuvoton.com>
+
+The email address does not match the address the patch was sent from.
+
+ From the manual page git-send-email(1):
+
+>        --from=<address>
+>            Specify the sender of the emails. If not specified on the command
+>            line, the value of the sendemail.from configuration option is used.
+>            If neither the command-line option nor sendemail.from are set, then
+>            the user will be prompted for the value. The default for the prompt
+>            will be the value of GIT_AUTHOR_IDENT, or GIT_COMMITTER_IDENT if
+>            that is not set, as returned by "git var -l".
+
+(To avoid having to press the shift key, lowercase local part would be 
+nice: jjliu0@nuvoton.com. Depends on the server configuration though, if 
+it’s the same address.)
+
 > ---
->   MAINTAINERS                                 |   12 +
->   drivers/media/platform/Kconfig              |    1 +
->   drivers/media/platform/Makefile             |    1 +
->   drivers/media/platform/nuvoton/Kconfig      |   15 +
->   drivers/media/platform/nuvoton/Makefile     |    2 +
->   drivers/media/platform/nuvoton/npcm-regs.h  |  171 ++
->   drivers/media/platform/nuvoton/npcm-video.c | 1924 +++++++++++++++++++
->   7 files changed, 2126 insertions(+)
->   create mode 100644 drivers/media/platform/nuvoton/Kconfig
->   create mode 100644 drivers/media/platform/nuvoton/Makefile
->   create mode 100644 drivers/media/platform/nuvoton/npcm-regs.h
->   create mode 100644 drivers/media/platform/nuvoton/npcm-video.c
+> Changes for v3:
+>     - remove return in bank_reg function
+> Changes for v2:
+>     - add prefix
+>     - write the enum values in all capitals
+>     - remove _init in npcm_sgpio_probe
+> ---
+>   drivers/gpio/Kconfig           |   8 +
+>   drivers/gpio/Makefile          |   1 +
+>   drivers/gpio/gpio-npcm-sgpio.c | 639 +++++++++++++++++++++++++++++++++
+>   3 files changed, 648 insertions(+)
+>   create mode 100644 drivers/gpio/gpio-npcm-sgpio.c
 > 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 5a4526a171d6..d9f842ec141c 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2570,6 +2570,18 @@ F:	drivers/rtc/rtc-nct3018y.c
->   F:	include/dt-bindings/clock/nuvoton,npcm7xx-clock.h
->   F:	include/dt-bindings/clock/nuvoton,npcm845-clk.h
+> diff --git a/drivers/gpio/Kconfig b/drivers/gpio/Kconfig
+> index ec7cfd4f52b1..c23fff243461 100644
+> --- a/drivers/gpio/Kconfig
+> +++ b/drivers/gpio/Kconfig
+> @@ -470,6 +470,14 @@ config GPIO_MXS
+>   	select GPIO_GENERIC
+>   	select GENERIC_IRQ_CHIP
 >   
-> +ARM/NUVOTON NPCM VIDEO ENGINE DRIVER
-> +M:	Joseph Liu <kwliu@nuvoton.com>
-> +M:	Marvin Lin <kflin@nuvoton.com>
-> +L:	linux-media@vger.kernel.org
-> +L:	openbmc@lists.ozlabs.org (moderated for non-subscribers)
-> +S:	Maintained
-> +F:	Documentation/devicetree/bindings/media/nuvoton,npcm-ece.yaml
-> +F:	Documentation/devicetree/bindings/media/nuvoton,npcm-vcd.yaml
-> +F:	Documentation/userspace-api/media/drivers/npcm-video.rst
-> +F:	drivers/media/platform/nuvoton/
-> +F:	include/uapi/linux/npcm-video.h
-> +
->   ARM/NUVOTON WPCM450 ARCHITECTURE
->   M:	Jonathan Neuschäfer <j.neuschaefer@gmx.net>
->   L:	openbmc@lists.ozlabs.org (moderated for non-subscribers)
-> diff --git a/drivers/media/platform/Kconfig b/drivers/media/platform/Kconfig
-> index ee579916f874..91e54215de3a 100644
-> --- a/drivers/media/platform/Kconfig
-> +++ b/drivers/media/platform/Kconfig
-> @@ -73,6 +73,7 @@ source "drivers/media/platform/intel/Kconfig"
->   source "drivers/media/platform/marvell/Kconfig"
->   source "drivers/media/platform/mediatek/Kconfig"
->   source "drivers/media/platform/microchip/Kconfig"
-> +source "drivers/media/platform/nuvoton/Kconfig"
->   source "drivers/media/platform/nvidia/Kconfig"
->   source "drivers/media/platform/nxp/Kconfig"
->   source "drivers/media/platform/qcom/Kconfig"
-> diff --git a/drivers/media/platform/Makefile b/drivers/media/platform/Makefile
-> index 5453bb868e67..3296ec1ebe16 100644
-> --- a/drivers/media/platform/Makefile
-> +++ b/drivers/media/platform/Makefile
-> @@ -16,6 +16,7 @@ obj-y += intel/
->   obj-y += marvell/
->   obj-y += mediatek/
->   obj-y += microchip/
-> +obj-y += nuvoton/
->   obj-y += nvidia/
->   obj-y += nxp/
->   obj-y += qcom/
-> diff --git a/drivers/media/platform/nuvoton/Kconfig b/drivers/media/platform/nuvoton/Kconfig
-> new file mode 100644
-> index 000000000000..5047d1ba3de5
-> --- /dev/null
-> +++ b/drivers/media/platform/nuvoton/Kconfig
-> @@ -0,0 +1,15 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +
-> +comment "Nuvoton media platform drivers"
-> +
-> +config VIDEO_NPCM_VCD_ECE
-> +	tristate "Nuvoton NPCM Video Capture/Encode Engine driver"
-> +	depends on V4L_PLATFORM_DRIVERS
-> +	depends on VIDEO_DEV
-> +	select VIDEOBUF2_DMA_CONTIG
+> +config GPIO_NPCM_SGPIO
+> +	bool "Nuvoton SGPIO support"
+> +	depends on (ARCH_NPCM || COMPILE_TEST) && OF_GPIO
+> +	select GPIO_GENERIC
+> +	select GPIOLIB_IRQCHIP
 > +	help
-> +	  Support for the Video Capture/Differentiation Engine (VCD) and
-> +	  Encoding Compression Engine (ECE) present on Nuvoton NPCM SoCs.
-> +	  The VCD can capture and differentiate video data from digital or
-> +	  analog sources, then the ECE will compress the data into HEXTILE
-> +	  format.
-> diff --git a/drivers/media/platform/nuvoton/Makefile b/drivers/media/platform/nuvoton/Makefile
+> +	  Say Y here to support Nuvoton NPCM7XX/NPCM8XX SGPIO functionality.
+> +
+>   config GPIO_OCTEON
+>   	tristate "Cavium OCTEON GPIO"
+>   	depends on CAVIUM_OCTEON_SOC
+> diff --git a/drivers/gpio/Makefile b/drivers/gpio/Makefile
+> index 010587025fc8..106146f383f3 100644
+> --- a/drivers/gpio/Makefile
+> +++ b/drivers/gpio/Makefile
+> @@ -111,6 +111,7 @@ obj-$(CONFIG_GPIO_MT7621)		+= gpio-mt7621.o
+>   obj-$(CONFIG_GPIO_MVEBU)		+= gpio-mvebu.o
+>   obj-$(CONFIG_GPIO_MXC)			+= gpio-mxc.o
+>   obj-$(CONFIG_GPIO_MXS)			+= gpio-mxs.o
+> +obj-$(CONFIG_GPIO_NPCM_SGPIO)           += gpio-npcm-sgpio.o
+>   obj-$(CONFIG_GPIO_OCTEON)		+= gpio-octeon.o
+>   obj-$(CONFIG_GPIO_OMAP)			+= gpio-omap.o
+>   obj-$(CONFIG_GPIO_PALMAS)		+= gpio-palmas.o
+> diff --git a/drivers/gpio/gpio-npcm-sgpio.c b/drivers/gpio/gpio-npcm-sgpio.c
 > new file mode 100644
-> index 000000000000..74a4e3fc8555
+> index 000000000000..9c3896995f8f
 > --- /dev/null
-> +++ b/drivers/media/platform/nuvoton/Makefile
-> @@ -0,0 +1,2 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +obj-$(CONFIG_VIDEO_NPCM_VCD_ECE) += npcm-video.o
-> diff --git a/drivers/media/platform/nuvoton/npcm-regs.h b/drivers/media/platform/nuvoton/npcm-regs.h
-> new file mode 100644
-> index 000000000000..f528f5726307
-> --- /dev/null
-> +++ b/drivers/media/platform/nuvoton/npcm-regs.h
-> @@ -0,0 +1,171 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Register definition header for NPCM video driver
-> + *
-> + * Copyright (C) 2022 Nuvoton Technologies
-> + */
-> +
-> +#ifndef _NPCM_REGS_H
-> +#define _NPCM_REGS_H
-> +
-> +/* VCD Registers */
-> +#define VCD_DIFF_TBL			0x0000
-> +#define VCD_FBA_ADR			0x8000
-> +#define VCD_FBB_ADR			0x8004
-> +
-> +#define VCD_FB_LP			0x8008
-> +#define  VCD_FBA_LP			GENMASK(15, 0)
-> +#define  VCD_FBB_LP			GENMASK(31, 16)
-> +
-> +#define VCD_CAP_RES			0x800c
-> +#define  VCD_CAP_RES_VERT_RES		GENMASK(10, 0)
-> +#define  VCD_CAP_RES_HOR_RES		GENMASK(26, 16)
-> +
-> +#define VCD_MODE			0x8014
-> +#define  VCD_MODE_VCDE			BIT(0)
-> +#define  VCD_MODE_CM565			BIT(1)
-> +#define  VCD_MODE_IDBC			BIT(3)
-> +#define  VCD_MODE_COLOR_CNVRT		GENMASK(5, 4)
-> +#define   VCD_MODE_COLOR_CNVRT_NO_CNVRT	0
-> +#define   VCD_MODE_COLOR_CNVRT_RGB_222	1
-> +#define   VCD_MODE_COLOR_CNVRT_666_MODE	2
-> +#define   VCD_MODE_COLOR_CNVRT_RGB_888	3
-> +#define  VCD_MODE_KVM_BW_SET		BIT(16)
-> +
-> +#define VCD_CMD				0x8018
-> +#define  VCD_CMD_GO			BIT(0)
-> +#define  VCD_CMD_RST			BIT(1)
-> +#define  VCD_CMD_OPERATION		GENMASK(6, 4)
-> +#define   VCD_CMD_OPERATION_CAPTURE	0
-> +#define   VCD_CMD_OPERATION_COMPARE	2
-> +
-> +#define	VCD_STAT			0x801c
-> +#define	 VCD_STAT_DONE			BIT(0)
-> +#define	 VCD_STAT_IFOT			BIT(2)
-> +#define	 VCD_STAT_IFOR			BIT(3)
-> +#define	 VCD_STAT_BUSY			BIT(30)
-> +#define	VCD_STAT_CLEAR			0x3fff
-> +
-> +#define VCD_INTE			0x8020
-> +#define  VCD_INTE_DONE_IE		BIT(0)
-> +#define  VCD_INTE_IFOT_IE		BIT(2)
-> +#define  VCD_INTE_IFOR_IE		BIT(3)
-> +
-> +#define VCD_RCHG			0x8028
-> +#define VCD_RCHG_TIM_PRSCL		GENMASK(12, 9)
-> +
-> +#define VCD_FIFO			0x805c
-> +#define  VCD_FIFO_TH			0x100350ff
-> +
-> +#define VCD_MAX_SRC_BUFFER_SIZE		0x500000 /* 1920 x 1200 x 2 bpp */
-> +#define VCD_KVM_BW_PCLK			120000000UL
-> +#define VCD_BUSY_TIMEOUT_US		300000
-> +
-> +/* ECE Registers */
-> +#define ECE_DDA_CTRL			0x0000
-> +#define  ECE_DDA_CTRL_ECEEN		BIT(0)
-> +#define  ECE_DDA_CTRL_INTEN		BIT(8)
-> +
-> +#define ECE_DDA_STS			0x0004
-> +#define  ECE_DDA_STS_CDREADY		BIT(8)
-> +#define  ECE_DDA_STS_ACDRDY		BIT(10)
-> +
-> +#define ECE_FBR_BA			0x0008
-> +#define ECE_ED_BA			0x000c
-> +#define ECE_RECT_XY			0x0010
-> +
-> +#define ECE_RECT_DIMEN			0x0014
-> +#define  ECE_RECT_DIMEN_WR		GENMASK(10, 0)
-> +#define  ECE_RECT_DIMEN_WLTR		GENMASK(14, 11)
-> +#define  ECE_RECT_DIMEN_HR		GENMASK(26, 16)
-> +#define  ECE_RECT_DIMEN_HLTR		GENMASK(30, 27)
-> +
-> +#define ECE_RESOL			0x001c
-> +#define  ECE_RESOL_FB_LP_512		0
-> +#define  ECE_RESOL_FB_LP_1024		1
-> +#define  ECE_RESOL_FB_LP_2048		2
-> +#define  ECE_RESOL_FB_LP_2560		3
-> +#define  ECE_RESOL_FB_LP_4096		4
-> +
-> +#define ECE_HEX_CTRL			0x0040
-> +#define  ECE_HEX_CTRL_ENCDIS		BIT(0)
-> +#define  ECE_HEX_CTRL_ENC_GAP		GENMASK(12, 8)
-> +
-> +#define ECE_HEX_RECT_OFFSET		0x0048
-> +#define  ECE_HEX_RECT_OFFSET_MASK	GENMASK(22, 0)
-> +
-> +#define ECE_TILE_W			16
-> +#define ECE_TILE_H			16
-> +#define ECE_POLL_TIMEOUT_US		300000
-> +
-> +/* GCR Registers */
-> +#define INTCR				0x3c
-> +#define  INTCR_GFXIFDIS			GENMASK(9, 8)
-> +#define  INTCR_DEHS			BIT(27)
-> +
-> +#define INTCR2				0x60
-> +#define  INTCR2_GIRST2			BIT(2)
-> +#define  INTCR2_GIHCRST			BIT(5)
-> +#define  INTCR2_GIVCRST			BIT(6)
-> +
-> +#define INTCR3				0x9c
-> +#define  INTCR3_GMMAP			GENMASK(10, 8)
-> +#define   INTCR3_GMMAP_128MB		0
-> +#define   INTCR3_GMMAP_256MB		1
-> +#define   INTCR3_GMMAP_512MB		2
-> +#define   INTCR3_GMMAP_1GB		3
-> +#define   INTCR3_GMMAP_2GB		4
-> +
-> +#define INTCR4				0xc0
-> +#define  INTCR4_GMMAP			GENMASK(22, 16)
-> +#define  INTCR4_GMMAP_512MB		0x1f
-> +#define  INTCR4_GMMAP_512MB_ECC		0x1b
-> +#define  INTCR4_GMMAP_1GB		0x3f
-> +#define  INTCR4_GMMAP_1GB_ECC		0x37
-> +#define  INTCR4_GMMAP_2GB		0x7f
-> +#define  INTCR4_GMMAP_2GB_ECC		0x6f
-> +
-> +#define ADDR_GMMAP_128MB		0x07000000
-> +#define ADDR_GMMAP_256MB		0x0f000000
-> +#define ADDR_GMMAP_512MB		0x1f000000
-> +#define ADDR_GMMAP_512MB_ECC		0x1b000000
-> +#define ADDR_GMMAP_1GB			0x3f000000
-> +#define ADDR_GMMAP_1GB_ECC		0x37000000
-> +#define ADDR_GMMAP_2GB			0x7f000000
-> +#define ADDR_GMMAP_2GB_ECC		0x6f000000
-> +
-> +#define GMMAP_LENGTH			0xc00000 /* 4MB preserved, total 16MB */
-> +
-> +#define MFSEL1				0x0c
-> +#define  MFSEL1_DVH1SEL			BIT(27)
-> +
-> +/* GFXI Register */
-> +#define DISPST				0x00
-> +#define  DISPST_HSCROFF			BIT(1)
-> +#define  DISPST_MGAMODE			BIT(7)
-> +
-> +#define HVCNTL				0x10
-> +#define  HVCNTL_MASK			GENMASK(7, 0)
-> +
-> +#define HVCNTH				0x14
-> +#define  HVCNTH_MASK			GENMASK(2, 0)
-> +
-> +#define VVCNTL				0x20
-> +#define  VVCNTL_MASK			GENMASK(7, 0)
-> +
-> +#define VVCNTH				0x24
-> +#define  VVCNTH_MASK			GENMASK(2, 0)
-> +
-> +#define GPLLINDIV			0x40
-> +#define  GPLLINDIV_MASK			GENMASK(5, 0)
-> +#define  GPLLINDIV_GPLLFBDV8		BIT(7)
-> +
-> +#define GPLLFBDIV			0x44
-> +#define  GPLLFBDIV_MASK			GENMASK(7, 0)
-> +
-> +#define GPLLST				0x48
-> +#define  GPLLST_PLLOTDIV1		GENMASK(2, 0)
-> +#define  GPLLST_PLLOTDIV2		GENMASK(5, 3)
-> +#define  GPLLST_GPLLFBDV109		GENMASK(7, 6)
-> +
-> +#endif /* _NPCM_REGS_H */
-> diff --git a/drivers/media/platform/nuvoton/npcm-video.c b/drivers/media/platform/nuvoton/npcm-video.c
-> new file mode 100644
-> index 000000000000..951fdb4e37ca
-> --- /dev/null
-> +++ b/drivers/media/platform/nuvoton/npcm-video.c
-> @@ -0,0 +1,1924 @@
+> +++ b/drivers/gpio/gpio-npcm-sgpio.c
+> @@ -0,0 +1,639 @@
 > +// SPDX-License-Identifier: GPL-2.0
 > +/*
-> + * Driver for Video Capture/Differentiation Engine (VCD) and Encoding
-> + * Compression Engine (ECE) present on Nuvoton NPCM SoCs.
+> + * Nuvoton NPCM Serial GPIO Driver
 > + *
-> + * Copyright (C) 2022 Nuvoton Technologies
+> + * Copyright (C) 2021 Nuvoton Technologies
 > + */
 > +
-> +#include <linux/atomic.h>
 > +#include <linux/bitfield.h>
-> +#include <linux/bitmap.h>
 > +#include <linux/clk.h>
-> +#include <linux/delay.h>
-> +#include <linux/device.h>
-> +#include <linux/dma-mapping.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/jiffies.h>
-> +#include <linux/mfd/syscon.h>
+> +#include <linux/gpio/driver.h>
+> +#include <linux/hashtable.h>
+> +#include <linux/init.h>
+> +#include <linux/io.h>
+> +#include <linux/kernel.h>
 > +#include <linux/module.h>
-> +#include <linux/mutex.h>
-> +#include <linux/of.h>
-> +#include <linux/of_irq.h>
-> +#include <linux/of_platform.h>
-> +#include <linux/of_reserved_mem.h>
 > +#include <linux/platform_device.h>
-> +#include <linux/regmap.h>
-> +#include <linux/reset.h>
-> +#include <linux/sched.h>
 > +#include <linux/spinlock.h>
 > +#include <linux/string.h>
-> +#include <linux/v4l2-controls.h>
-> +#include <linux/videodev2.h>
-> +#include <linux/wait.h>
-> +#include <linux/workqueue.h>
-> +#include <media/v4l2-ctrls.h>
-> +#include <media/v4l2-dev.h>
-> +#include <media/v4l2-device.h>
-> +#include <media/v4l2-dv-timings.h>
-> +#include <media/v4l2-event.h>
-> +#include <media/v4l2-ioctl.h>
-> +#include <media/videobuf2-dma-contig.h>
-> +#include <uapi/linux/npcm-video.h>
-> +#include "npcm-regs.h"
 > +
-> +#define DEVICE_NAME			"npcm-video"
-> +#define MAX_FRAME_RATE			60
-> +#define MAX_WIDTH			1920
-> +#define MAX_HEIGHT			1200
-> +#define MIN_WIDTH			320
-> +#define MIN_HEIGHT			240
-> +#define MIN_LP				512
-> +#define MAX_LP				4096
-> +#define RECT_W				16
-> +#define RECT_H				16
-> +#define BITMAP_SIZE			32
+> +#define MAX_NR_HW_SGPIO			64
 > +
-> +struct npcm_video_addr {
-> +	size_t size;
-> +	dma_addr_t dma;
-> +	void *virt;
-> +};
+> +#define  NPCM_IOXCFG1				0x2A
+> +#define  NPCM_IOXCFG1_SFT_CLK		GENMASK(3, 0)
+> +#define  NPCM_IOXCFG1_SCLK_POL		BIT(4)
+> +#define  NPCM_IOXCFG1_LDSH_POL		BIT(5)
 > +
-> +struct npcm_video_buffer {
-> +	struct vb2_v4l2_buffer vb;
-> +	struct list_head link;
-> +};
+> +#define  NPCM_IOXCTS 0x28
+> +#define  NPCM_IOXCTS_IOXIF_EN BIT(7)
+> +#define  NPCM_IOXCTS_RD_MODE GENMASK(2, 1)
+> +#define  NPCM_IOXCTS_RD_MODE_PERIODIC BIT(2)
+> +#define  NPCM_IOXCTS_RD_MODE_CONTINUOUS GENMASK(2, 1)
 > +
-> +#define to_npcm_video_buffer(x) \
-> +	container_of((x), struct npcm_video_buffer, vb)
+> +#define  NPCM_IOXCFG2 0x2B
+> +#define  NPCM_IXOEVCFG_MASK 0x3
+> +#define  NPCM_IXOEVCFG_BOTH 0x3
+> +#define  NPCM_IXOEVCFG_FALLING 0x2
+> +#define  NPCM_IXOEVCFG_RISING 0x1
 > +
-> +enum {
-> +	VIDEO_STREAMING,
-> +	VIDEO_FRAME_INPRG,
-> +	VIDEO_STOPPED,
-> +};
-> +
-> +struct rect_list {
-> +	struct v4l2_clip clip;
-> +	struct list_head list;
-> +};
-> +
-> +struct rect_list_info {
-> +	struct rect_list *list;
-> +	struct rect_list *first;
-> +	struct list_head *head;
-> +	unsigned int index;
-> +	unsigned int tile_perline;
-> +	unsigned int tile_perrow;
-> +	unsigned int offset_perline;
-> +	unsigned int tile_size;
-> +	unsigned int tile_cnt;
-> +};
-> +
-> +struct npcm_ece {
-> +	struct regmap *regmap;
-> +	atomic_t clients;
-> +	struct reset_control *reset;
-> +};
-> +
-> +struct npcm_video {
-> +	struct regmap *gcr_regmap;
-> +	struct regmap *gfx_regmap;
-> +	struct regmap *vcd_regmap;
-> +
-> +	struct device *dev;
-> +	struct v4l2_ctrl_handler ctrl_handler;
-> +	struct v4l2_device v4l2_dev;
-> +	struct v4l2_pix_format pix_fmt;
-> +	struct v4l2_bt_timings active_timings;
-> +	struct v4l2_bt_timings detected_timings;
-> +	u32 v4l2_input_status;
-> +	struct vb2_queue queue;
-> +	struct video_device vdev;
-> +	struct mutex video_lock; /* v4l2 and videobuf2 lock */
-> +
-> +	struct list_head buffers;
-> +	spinlock_t lock; /* buffer list lock */
-> +	unsigned long flags;
-> +	unsigned int sequence;
-> +
-> +	size_t max_buffer_size;
-> +	struct npcm_video_addr src;
-> +	struct reset_control *reset;
-> +	struct npcm_ece ece;
-> +
-> +	unsigned int frame_rate;
-> +	unsigned int vb_index;
-> +	u32 bytesperline;
-> +	u8 bytesperpixel;
-> +	u32 rect_cnt;
-> +	u8 num_buffers;
-> +	struct list_head *list;
-> +	u32 *rect;
-> +	int ctrl_cmd;
-> +	int op_cmd;
-> +};
-> +
-> +#define to_npcm_video(x) container_of((x), struct npcm_video, v4l2_dev)
-> +
-> +static const struct v4l2_dv_timings_cap npcm_video_timings_cap = {
-> +	.type = V4L2_DV_BT_656_1120,
-> +	.bt = {
-> +		.min_width = MIN_WIDTH,
-> +		.max_width = MAX_WIDTH,
-> +		.min_height = MIN_HEIGHT,
-> +		.max_height = MAX_HEIGHT,
-> +		.min_pixelclock = 6574080, /* 640 x 480 x 24Hz */
-> +		.max_pixelclock = 138240000, /* 1920 x 1200 x 60Hz */
-> +		.standards = V4L2_DV_BT_STD_CEA861 | V4L2_DV_BT_STD_DMT |
-> +			     V4L2_DV_BT_STD_CVT | V4L2_DV_BT_STD_GTF,
-> +		.capabilities = V4L2_DV_BT_CAP_PROGRESSIVE |
-> +				V4L2_DV_BT_CAP_REDUCED_BLANKING |
-> +				V4L2_DV_BT_CAP_CUSTOM,
-> +	},
-> +};
-> +
-> +static DECLARE_BITMAP(bitmap, BITMAP_SIZE);
-> +
-> +static void npcm_video_ece_prepend_rect_header(u8 *addr, u16 x, u16 y, u16 w,
-> +					       u16 h)
-> +{
-> +	__be16 x_pos = cpu_to_be16(x);
-> +	__be16 y_pos = cpu_to_be16(y);
-> +	__be16 width = cpu_to_be16(w);
-> +	__be16 height = cpu_to_be16(h);
-> +	__be32 encoding = cpu_to_be32(5); /* Hextile encoding */
-> +
-> +	memcpy(addr, &x_pos, 2);
-> +	memcpy(addr + 2, &y_pos, 2);
-> +	memcpy(addr + 4, &width, 2);
-> +	memcpy(addr + 6, &height, 2);
-> +	memcpy(addr + 8, &encoding, 4);
-> +}
-> +
-> +static unsigned int npcm_video_ece_get_ed_size(struct npcm_video *video,
-> +					       u32 offset, u8 *addr)
-> +{
-> +	struct regmap *ece = video->ece.regmap;
-> +	u32 size, gap, val;
-> +	int ret;
-> +
-> +	ret = regmap_read_poll_timeout(ece, ECE_DDA_STS, val,
-> +				       (val & ECE_DDA_STS_CDREADY),
-> +				       0, ECE_POLL_TIMEOUT_US);
-> +
-> +	if (ret) {
-> +		dev_warn(video->dev, "Wait for ECE_DDA_STS_CDREADY timeout\n");
-> +		return 0;
-> +	}
-> +
-> +	size = readl(addr + offset);
-> +
-> +	regmap_read(ece, ECE_HEX_CTRL, &val);
-> +	gap = FIELD_GET(ECE_HEX_CTRL_ENC_GAP, val);
-> +
-> +	dev_dbg(video->dev, "offset = %u, ed_size = %u, gap = %u\n", offset,
-> +		size, gap);
-> +
-> +	return size + gap;
-> +}
-> +
-> +static void npcm_video_ece_enc_rect(struct npcm_video *video, u32 r_off_x,
-> +				    u32 r_off_y, u32 r_w, u32 r_h)
-> +{
-> +	struct regmap *ece = video->ece.regmap;
-> +	u32 rect_offset = (r_off_y * video->bytesperline) + (r_off_x * 2);
-> +	u32 temp;
-> +	u32 w_tile;
-> +	u32 h_tile;
-> +	u32 w_size = ECE_TILE_W;
-> +	u32 h_size = ECE_TILE_H;
-> +
-> +	regmap_update_bits(ece, ECE_DDA_CTRL, ECE_DDA_CTRL_ECEEN, 0);
-> +	regmap_update_bits(ece, ECE_DDA_CTRL, ECE_DDA_CTRL_ECEEN,
-> +			   ECE_DDA_CTRL_ECEEN);
-> +	regmap_write(ece, ECE_DDA_STS, ECE_DDA_STS_CDREADY |
-> +		     ECE_DDA_STS_ACDRDY);
-> +	regmap_write(ece, ECE_RECT_XY, rect_offset);
-> +
-> +	w_tile = r_w / ECE_TILE_W;
-> +	h_tile = r_h / ECE_TILE_H;
-> +
-> +	if (r_w % ECE_TILE_W) {
-> +		w_tile += 1;
-> +		w_size = r_w % ECE_TILE_W;
-> +	}
-> +
-> +	if (r_h % ECE_TILE_H || !h_tile) {
-> +		h_tile += 1;
-> +		h_size = r_h % ECE_TILE_H;
-> +	}
-> +
-> +	temp = FIELD_PREP(ECE_RECT_DIMEN_WLTR, w_size - 1) |
-> +	       FIELD_PREP(ECE_RECT_DIMEN_HLTR, h_size - 1) |
-> +	       FIELD_PREP(ECE_RECT_DIMEN_WR, w_tile - 1) |
-> +	       FIELD_PREP(ECE_RECT_DIMEN_HR, h_tile - 1);
-> +
-> +	regmap_write(ece, ECE_RECT_DIMEN, temp);
-> +}
-> +
-> +static u32 npcm_video_ece_read_rect_offset(struct npcm_video *video)
-> +{
-> +	struct regmap *ece = video->ece.regmap;
-> +	u32 offset;
-> +
-> +	regmap_read(ece, ECE_HEX_RECT_OFFSET, &offset);
-> +	return FIELD_GET(ECE_HEX_RECT_OFFSET_MASK, offset);
-> +}
+> +#define GPIO_BANK(x)    ((x) / 8)
+> +#define GPIO_BIT(x)     ((x) % 8)
 > +
 > +/*
-> + * Set the line pitch (in bytes) for the frame buffers.
-> + * Can be on of those values: 512, 1024, 2048, 2560 or 4096 bytes.
+> + * Slect the freqency of shift clock.
+
+Selectª.
+2.  frequency
+
+> + * The shift clock is a division of the APB clock.
 > + */
-> +static void npcm_video_ece_set_lp(struct npcm_video *video, u32 pitch)
-> +{
-> +	u32 lp;
-> +	struct regmap *ece = video->ece.regmap;
+> +struct npcm_clk_cfg {
+> +	const int *SFT_CLK;
+> +	const u8 *CLK_SEL;
+> +	const u8 cfg_opt;
+> +};
 > +
-> +	switch (pitch) {
-> +	case 512:
-> +		lp = ECE_RESOL_FB_LP_512;
-> +		break;
-> +	case 1024:
-> +		lp = ECE_RESOL_FB_LP_1024;
-> +		break;
-> +	case 2048:
-> +		lp = ECE_RESOL_FB_LP_2048;
-> +		break;
-> +	case 2560:
-> +		lp = ECE_RESOL_FB_LP_2560;
-> +		break;
-> +	case 4096:
-> +		lp = ECE_RESOL_FB_LP_4096;
-> +		break;
+> +struct npcm_sgpio {
+> +	struct gpio_chip chip;
+> +	struct clk *pclk;
+> +	struct irq_chip intc;
+> +	spinlock_t lock; /*protect event config*/
+> +	void __iomem *base;
+> +	int irq;
+> +	u8 nin_sgpio;
+> +	u8 nout_sgpio;
+> +	u8 in_port;
+> +	u8 out_port;
+> +	u8 int_type[MAX_NR_HW_SGPIO];
+> +};
+> +
+> +struct npcm_sgpio_bank {
+> +	u8 rdata_reg;
+> +	u8 wdata_reg;
+> +	u8 event_config;
+> +	u8 event_status;
+> +};
+> +
+> +enum npcm_sgpio_reg {
+> +	READ_DATA,
+> +	WRITE_DATA,
+> +	EVENT_CFG,
+> +	EVENT_STS,
+> +};
+> +
+> +static const struct npcm_sgpio_bank npcm_sgpio_banks[] = {
+> +	{
+> +		.wdata_reg = 0x00,
+> +		.rdata_reg = 0x08,
+> +		.event_config = 0x10,
+> +		.event_status = 0x20,
+> +	},
+> +	{
+> +		.wdata_reg = 0x01,
+> +		.rdata_reg = 0x09,
+> +		.event_config = 0x12,
+> +		.event_status = 0x21,
+> +	},
+> +	{
+> +		.wdata_reg = 0x02,
+> +		.rdata_reg = 0x0a,
+> +		.event_config = 0x14,
+> +		.event_status = 0x22,
+> +	},
+> +	{
+> +		.wdata_reg = 0x03,
+> +		.rdata_reg = 0x0b,
+> +		.event_config = 0x16,
+> +		.event_status = 0x23,
+> +	},
+> +	{
+> +		.wdata_reg = 0x04,
+> +		.rdata_reg = 0x0c,
+> +		.event_config = 0x18,
+> +		.event_status = 0x24,
+> +	},
+> +	{
+> +		.wdata_reg = 0x05,
+> +		.rdata_reg = 0x0d,
+> +		.event_config = 0x1a,
+> +		.event_status = 0x25,
+> +	},
+> +	{
+> +		.wdata_reg = 0x06,
+> +		.rdata_reg = 0x0e,
+> +		.event_config = 0x1c,
+> +		.event_status = 0x26,
+> +	},
+> +	{
+> +		.wdata_reg = 0x07,
+> +		.rdata_reg = 0x0f,
+> +		.event_config = 0x1e,
+> +		.event_status = 0x27,
+> +	},
+> +
+> +};
+> +
+> +static void __iomem *bank_reg(struct npcm_sgpio *gpio,
+> +			      const struct npcm_sgpio_bank *bank,
+> +				const enum npcm_sgpio_reg reg)
+> +{
+> +	switch (reg) {
+> +	case READ_DATA:
+> +		return gpio->base + bank->rdata_reg;
+> +	case WRITE_DATA:
+> +		return gpio->base + bank->wdata_reg;
+> +	case EVENT_CFG:
+> +		return gpio->base + bank->event_config;
+> +	case EVENT_STS:
+> +		return gpio->base + bank->event_status;
 > +	default:
-> +		return;
-> +	}
-> +
-> +	regmap_write(ece, ECE_RESOL, lp);
-> +}
-> +
-> +static void npcm_video_ece_set_fb_addr(struct npcm_video *video, u32 buffer)
-
-static inline void?
-
-> +{
-> +	struct regmap *ece = video->ece.regmap;
-> +
-> +	regmap_write(ece, ECE_FBR_BA, buffer);
-> +}
-> +
-> +static void npcm_video_ece_set_enc_dba(struct npcm_video *video, u32 addr)
-
-ditto
-
-> +{
-> +	struct regmap *ece = video->ece.regmap;
-> +
-> +	regmap_write(ece, ECE_ED_BA, addr);
-> +}
-> +
-> +static void npcm_video_ece_clear_rect_offset(struct npcm_video *video)
-
-ditto
-
-> +{
-> +	struct regmap *ece = video->ece.regmap;
-> +
-> +	regmap_write(ece, ECE_HEX_RECT_OFFSET, 0);
-> +}
-> +
-> +static void npcm_video_ece_ctrl_reset(struct npcm_video *video)
-> +{
-> +	struct regmap *ece = video->ece.regmap;
-> +
-> +	regmap_update_bits(ece, ECE_DDA_CTRL, ECE_DDA_CTRL_ECEEN, 0);
-> +	regmap_update_bits(ece, ECE_HEX_CTRL, ECE_HEX_CTRL_ENCDIS,
-> +			   ECE_HEX_CTRL_ENCDIS);
-> +	regmap_update_bits(ece, ECE_DDA_CTRL, ECE_DDA_CTRL_ECEEN,
-> +			   ECE_DDA_CTRL_ECEEN);
-> +	regmap_update_bits(ece, ECE_HEX_CTRL, ECE_HEX_CTRL_ENCDIS, 0);
-> +
-> +	npcm_video_ece_clear_rect_offset(video);
-> +}
-> +
-> +static void npcm_video_ece_ip_reset(struct npcm_video *video)
-> +{
-> +	/*
-> +	 * After resetting a module and clearing the reset bit, it should wait
-> +	 * at least 10 us before accessing the module.
-> +	 */
-> +	reset_control_assert(video->ece.reset);
-> +	usleep_range(10, 20);
-> +	reset_control_deassert(video->ece.reset);
-> +	usleep_range(10, 20);
-> +}
-> +
-> +static int npcm_video_ece_init(struct npcm_video *video)
-
-static inline int? But...
-
-> +{
-> +	npcm_video_ece_ip_reset(video);
-> +	npcm_video_ece_ctrl_reset(video);
-> +
-> +	return 0;
-
-...the return value is not inspected by the only caller anyway, so why not
-
-static inline void?
-
-> +}
-> +
-> +static int npcm_video_ece_stop(struct npcm_video *video)
-> +{
-> +	struct regmap *ece = video->ece.regmap;
-> +
-> +	regmap_update_bits(ece, ECE_DDA_CTRL, ECE_DDA_CTRL_ECEEN, 0);
-> +	regmap_update_bits(ece, ECE_DDA_CTRL, ECE_DDA_CTRL_INTEN, 0);
-> +	regmap_update_bits(ece, ECE_HEX_CTRL, ECE_HEX_CTRL_ENCDIS,
-> +			   ECE_HEX_CTRL_ENCDIS);
-> +	npcm_video_ece_clear_rect_offset(video);
-> +
-> +	return 0;
-
-Nobody inspects this return value. Either void, or check the return value
-at call site and handle a non-zero failure.
-
-> +}
-> +
-> +static bool npcm_video_alloc_buf(struct npcm_video *video,
-> +				 struct npcm_video_addr *addr, size_t size)
-> +{
-> +	if (size > VCD_MAX_SRC_BUFFER_SIZE)
-> +		size = VCD_MAX_SRC_BUFFER_SIZE;
-> +
-> +	addr->virt = dma_alloc_coherent(video->dev, size, &addr->dma,
-> +					GFP_KERNEL);
-> +
-> +	if (!addr->virt)
-> +		return false;
-> +
-> +	addr->size = size;
-> +	return true;
-> +}
-> +
-> +static void npcm_video_free_buf(struct npcm_video *video,
-> +				struct npcm_video_addr *addr)
-> +{
-> +	dma_free_coherent(video->dev, addr->size, addr->virt, addr->dma);
-> +	addr->size = 0;
-> +	addr->dma = 0ULL;
-> +	addr->virt = NULL;
-> +}
-> +
-> +static void npcm_video_free_diff_table(struct npcm_video *video)
-> +{
-> +	struct list_head *head, *pos, *nx;
-> +	struct rect_list *tmp;
-> +	unsigned int i;
-> +
-> +	for (i = 0; i < video->num_buffers; i++) {
-> +		head = &video->list[i];
-> +		list_for_each_safe(pos, nx, head) {
-> +			tmp = list_entry(pos, struct rect_list, list);
-> +			list_del(&tmp->list);
-> +			kfree(tmp);
-> +		}
+> +		/* acturally if code runs to here, it's an error case */
+> +		WARN(1, "NPCM SGPIO REG SET failed!!\n");
 > +	}
 > +}
 > +
-> +static int npcm_video_add_rect(struct npcm_video *video, unsigned int index,
-> +			       u32 x, u32 y, u32 w, u32 h)
+> +static const struct npcm_sgpio_bank *to_bank(unsigned int offset)
 > +{
-> +	struct list_head *head = &video->list[index];
-> +	struct rect_list *list = NULL;
-> +	struct v4l2_rect *r;
+> +	unsigned int bank = GPIO_BANK(offset);
 > +
-> +	list = kzalloc(sizeof(*list), GFP_KERNEL);
-> +	if (!list)
+> +	return &npcm_sgpio_banks[bank];
+> +}
+> +
+> +static void irqd_to_npcm_sgpio_data(struct irq_data *d,
+> +				    struct npcm_sgpio **gpio,
+> +				    const struct npcm_sgpio_bank **bank,
+> +				    u8 *bit, int *offset)
+> +{
+> +	struct npcm_sgpio *internal;
+> +
+> +	*offset = irqd_to_hwirq(d);
+> +	internal = irq_data_get_irq_chip_data(d);
+> +	WARN_ON(!internal);
+> +
+> +	*gpio = internal;
+> +	*offset -= internal->nout_sgpio;
+> +	*bank = to_bank(*offset);
+> +	*bit = GPIO_BIT(*offset);
+> +}
+> +
+> +static int npcm_sgpio_init_valid_mask(struct gpio_chip *gc,
+> +				      unsigned long *valid_mask, unsigned int ngpios)
+> +{
+> +	struct npcm_sgpio *gpio = gpiochip_get_data(gc);
+> +	u8 in_port, out_port, set_port;
+> +
+> +	in_port = gpio->nin_sgpio / 8;
+> +	if (gpio->nin_sgpio % 8 > 0)
+> +		in_port += 1;
+> +
+> +	out_port = gpio->nout_sgpio / 8;
+> +	if (gpio->nout_sgpio % 8 > 0)
+> +		out_port += 1;
+> +
+> +	gpio->in_port = in_port;
+> +	gpio->out_port = out_port;
+> +	set_port = ((out_port & 0xf) << 4) | (in_port & 0xf);
+> +	iowrite8(set_port, gpio->base + NPCM_IOXCFG2);
+> +
+> +	return 0;
+> +}
+> +
+> +static int npcm_sgpio_dir_in(struct gpio_chip *gc, unsigned int offset)
+> +{
+> +	struct npcm_sgpio *gpio = gpiochip_get_data(gc);
+> +
+> +	if (offset < gpio->nout_sgpio)
+> +		return -EINVAL;
+> +
+> +	return 0;
+
+If you like, you could write:
+
+     return offset < gpio->nout_sgpio ? -EINVAL : 0;
+
+> +}
+> +
+> +static int npcm_sgpio_dir_out(struct gpio_chip *gc, unsigned int offset, int val)
+> +{
+> +	struct npcm_sgpio *gpio = gpiochip_get_data(gc);
+> +
+> +	if (offset < gpio->nout_sgpio) {
+> +		gc->set(gc, offset, val);
 > +		return 0;
+> +	}
+> +	return -EINVAL;
+
+Above is a blank line before the `return` statement.
+
+> +}
 > +
-> +	r = &list->clip.c;
-> +	r->left = x;
-> +	r->top = y;
-> +	r->width = w;
-> +	r->height = h;
+> +static int npcm_sgpio_get_direction(struct gpio_chip *gc, unsigned int offset)
+> +{
+> +	struct npcm_sgpio *gpio = gpiochip_get_data(gc);
 > +
-> +	list_add_tail(&list->list, head);
+> +	if (offset < gpio->nout_sgpio)
+> +		return 0;
 > +	return 1;
 > +}
 > +
-> +static void npcm_video_merge_rect(struct npcm_video *video,
-> +				  struct rect_list_info *info)
+> +static void npcm_sgpio_set(struct gpio_chip *gc, unsigned int offset, int val)
 > +{
-> +	struct list_head *head = info->head;
-> +	struct rect_list *list = info->list;
-> +	struct rect_list *first = info->first;
-> +	struct v4l2_rect *r = &list->clip.c;
-> +	struct v4l2_rect *f = &first->clip.c;
+> +	struct npcm_sgpio *gpio = gpiochip_get_data(gc);
+> +	const struct  npcm_sgpio_bank *bank = to_bank(offset);
+> +	void __iomem *addr;
+> +	u8 reg = 0;
 > +
-> +	if (!first) {
-> +		first = list;
-> +		info->first = first;
-> +		list_add_tail(&list->list, head);
-> +		video->rect_cnt++;
+> +	addr = bank_reg(gpio, bank, WRITE_DATA);
+> +	reg = ioread8(addr);
+> +
+> +	if (val) {
+> +		reg |= (val << GPIO_BIT(offset));
+> +		iowrite8(reg, addr);
 > +	} else {
-> +		if ((r->left == (f->left + f->width)) && r->top == f->top) {
-> +			f->width += r->width;
-> +			kfree(list);
-> +		} else if ((r->top == (f->top + f->height)) &&
-> +			   (r->left == f->left)) {
-> +			f->height += r->height;
-> +			kfree(list);
-> +		} else if (((r->top > f->top) &&
-> +			   (r->top < (f->top + f->height))) &&
-> +			   ((r->left > f->left) &&
-> +			   (r->left < (f->left + f->width)))) {
-> +			kfree(list);
-> +		} else {
-> +			list_add_tail(&list->list, head);
-> +			video->rect_cnt++;
-> +			info->first = list;
-> +		}
+> +		reg &= ~(1 << GPIO_BIT(offset));
+> +		iowrite8(reg, addr);
 > +	}
 > +}
 > +
-> +static struct rect_list *npcm_video_new_rect(struct npcm_video *video,
-> +					     unsigned int offset,
-> +					     unsigned int index)
+> +static int npcm_sgpio_get(struct gpio_chip *gc, unsigned int offset)
 > +{
-> +	struct v4l2_bt_timings *act = &video->active_timings;
-> +	struct rect_list *list = NULL;
-> +	struct v4l2_rect *r;
+> +	struct npcm_sgpio *gpio = gpiochip_get_data(gc);
+> +	const struct  npcm_sgpio_bank *bank;
+> +	void __iomem *addr;
+> +	u8 dir, reg;
 > +
-> +	list = kzalloc(sizeof(*list), GFP_KERNEL);
-> +	if (!list)
-> +		return NULL;
-> +
-> +	r = &list->clip.c;
-> +
-> +	r->left = (offset << 4);
-> +	r->top = (index >> 2);
-> +	r->width = RECT_W;
-> +	r->height = RECT_H;
-> +	if ((r->left + RECT_W) > act->width)
-> +		r->width = act->width - r->left;
-> +	if ((r->top + RECT_H) > act->height)
-> +		r->height = act->height - r->top;
-> +
-> +	return list;
-> +}
-> +
-> +static int npcm_video_find_rect(struct npcm_video *video,
-> +				struct rect_list_info *info,
-> +				unsigned int offset)
-> +{
-> +	if (offset < info->tile_perline) {
-> +		info->list = npcm_video_new_rect(video, offset, info->index);
-> +		if (!info->list)
-> +			return -ENOMEM;
-> +
-> +		npcm_video_merge_rect(video, info);
-> +	}
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_build_table(struct npcm_video *video,
-> +				  struct rect_list_info *info)
-> +{
-> +	int ret;
-> +	unsigned int j, bit;
-> +	u32 value;
-> +	struct regmap *vcd = video->vcd_regmap;
-> +
-> +	for (j = 0; j < info->offset_perline; j += 4) {
-> +		regmap_read(vcd, VCD_DIFF_TBL + (j + info->index), &value);
-> +
-> +		bitmap_from_arr32(bitmap, &value, BITMAP_SIZE);
-> +
-> +		for_each_set_bit(bit, bitmap, BITMAP_SIZE) {
-> +			ret = npcm_video_find_rect(video, info, bit + (j << 3));
-> +			if (ret < 0)
-> +				return ret;
-> +		}
-> +	}
-> +	info->index += 64;
-> +	return info->tile_perline;
-> +}
-> +
-> +static int npcm_video_get_rect_list(struct npcm_video *video,
-> +				    unsigned int index)
-> +{
-> +	struct v4l2_bt_timings *act = &video->active_timings;
-> +	struct rect_list_info info;
-> +	int ret = 0;
-> +	unsigned int mod, tile_cnt = 0;
-> +
-> +	memset(&info, 0, sizeof(struct rect_list_info));
-> +	info.head = &video->list[index];
-> +
-> +	info.tile_perline = act->width >> 4;
-> +	mod = act->width % RECT_W;
-> +	if (mod != 0)
-> +		info.tile_perline += 1;
-> +
-> +	info.tile_perrow = act->height >> 4;
-> +	mod = act->height % RECT_H;
-> +	if (mod != 0)
-> +		info.tile_perrow += 1;
-> +
-> +	info.tile_size = info.tile_perrow * info.tile_perline;
-> +
-> +	info.offset_perline = info.tile_perline >> 5;
-> +	mod = info.tile_perline % 32;
-> +	if (mod != 0)
-> +		info.offset_perline += 1;
-> +
-> +	info.offset_perline *= 4;
-> +
-> +	do {
-> +		ret = npcm_video_build_table(video, &info);
-> +		if (ret < 0)
-> +			return ret;
-> +		tile_cnt += ret;
-> +	} while (tile_cnt < info.tile_size);
-> +
-> +	return ret;
-> +}
-> +
-> +static unsigned int npcm_video_get_rect_count(struct npcm_video *video)
-> +{
-> +	struct list_head *head, *pos, *nx;
-> +	struct rect_list *tmp;
-> +	unsigned int count;
+> +	dir = npcm_sgpio_get_direction(gc, offset);
 
-	unsigned int count = 0;
+Is the variable `dir` needed? If yes, please use `int` as that is the 
+type of the return value, and is more performant than fixed width type [1].
 
-otherwise if the below condition is not met, ...
-> +
-> +	if (video->list && video->rect) {
-> +		count = video->rect[video->vb_index];
-> +		head = &video->list[video->vb_index];
-> +
-> +		list_for_each_safe(pos, nx, head) {
-> +			tmp = list_entry(pos, struct rect_list, list);
-> +			list_del(&tmp->list);
-> +			kfree(tmp);
-> +		}
-
-why does a function whose name implies merely getting a number actually
-remove all elements from some list? count equals video->rect[video->vb_index];
-and everthing else looks like a(n indented?) side effect. This should be
-somehow commented in the code.
-
-> +	}
-> +
-> +	return count;
-
-... an undefined number is returned
-
-Which makes me wonder if the compiler is not warning about using a possibly
-uninitialized value.
-
-> +}
-> +
-> +static u8 npcm_video_is_mga(struct npcm_video *video)
-> +{
-> +	struct regmap *gfxi = video->gfx_regmap;
-> +	u32 dispst;
-> +
-> +	regmap_read(gfxi, DISPST, &dispst);
-> +	return ((dispst & DISPST_MGAMODE) == DISPST_MGAMODE);
-> +}
-> +
-> +static u32 npcm_video_hres(struct npcm_video *video)
-> +{
-> +	struct regmap *gfxi = video->gfx_regmap;
-> +	u32 hvcnth, hvcntl, apb_hor_res;
-> +
-> +	regmap_read(gfxi, HVCNTH, &hvcnth);
-> +	regmap_read(gfxi, HVCNTL, &hvcntl);
-> +	apb_hor_res = (((hvcnth & HVCNTH_MASK) << 8) +
-> +		       (hvcntl & HVCNTL_MASK) + 1);
-> +
-> +	return apb_hor_res;
-> +}
-> +
-> +static u32 npcm_video_vres(struct npcm_video *video)
-> +{
-> +	struct regmap *gfxi = video->gfx_regmap;
-> +	u32 vvcnth, vvcntl, apb_ver_res;
-> +
-> +	regmap_read(gfxi, VVCNTH, &vvcnth);
-> +	regmap_read(gfxi, VVCNTL, &vvcntl);
-> +
-> +	apb_ver_res = (((vvcnth & VVCNTH_MASK) << 8) + (vvcntl & VVCNTL_MASK));
-> +
-> +	return apb_ver_res;
-> +}
-> +
-> +static int npcm_video_capres(struct npcm_video *video, u32 hor_res,
-> +			     u32 vert_res)
-> +{
-> +	struct regmap *vcd = video->vcd_regmap;
-> +	u32 res, cap_res;
-> +
-> +	if (hor_res > MAX_WIDTH || vert_res > MAX_HEIGHT)
-> +		return -EINVAL;
-> +
-> +	res = FIELD_PREP(VCD_CAP_RES_VERT_RES, vert_res) |
-> +	      FIELD_PREP(VCD_CAP_RES_HOR_RES, hor_res);
-> +
-> +	regmap_write(vcd, VCD_CAP_RES, res);
-> +	regmap_read(vcd, VCD_CAP_RES, &cap_res);
-> +
-> +	if (cap_res != res)
-> +		return -EINVAL;
-> +
-> +	return 0;
-
-The return value is not handled by the caller
-
-> +}
-> +
-> +static void npcm_video_vcd_ip_reset(struct npcm_video *video)
-> +{
-> +	/*
-> +	 * After resetting a module and clearing the reset bit, it should wait
-> +	 * at least 10 us before accessing the module.
-> +	 */
-> +	reset_control_assert(video->reset);
-> +	usleep_range(10, 20);
-> +	reset_control_deassert(video->reset);
-> +	usleep_range(10, 20);
-> +}
-> +
-> +static void npcm_video_vcd_state_machine_reset(struct npcm_video *video)
-> +{
-> +	struct regmap *vcd = video->vcd_regmap;
-> +	u32 stat;
-> +	int ret;
-> +
-> +	regmap_update_bits(vcd, VCD_MODE, VCD_MODE_VCDE, 0);
-> +
-> +	regmap_update_bits(vcd, VCD_MODE, VCD_MODE_IDBC, 0);
-> +
-> +	regmap_update_bits(vcd, VCD_CMD, VCD_CMD_RST, VCD_CMD_RST);
-> +
-> +	ret = regmap_read_poll_timeout(vcd, VCD_STAT, stat,
-> +				       (stat & VCD_STAT_DONE), 0,
-> +				       ECE_POLL_TIMEOUT_US);
-> +
-> +	if (ret) {
-> +		dev_warn(video->dev, "Wait for VCD_STAT_DONE timeout\n");
-> +		return;
-> +	}
-> +
-> +	regmap_write(vcd, VCD_STAT, VCD_STAT_CLEAR);
-> +
-> +	regmap_update_bits(vcd, VCD_MODE, VCD_MODE_VCDE, VCD_MODE_VCDE);
-> +
-> +	regmap_update_bits(vcd, VCD_MODE, VCD_MODE_IDBC, VCD_MODE_IDBC);
-> +}
-> +
-> +static int npcm_video_gfx_reset(struct npcm_video *video)
-> +{
-> +	struct regmap *gcr = video->gcr_regmap;
-> +
-> +	regmap_update_bits(gcr, INTCR2, INTCR2_GIRST2, INTCR2_GIRST2);
-> +
-> +	npcm_video_vcd_state_machine_reset(video);
-> +
-> +	regmap_update_bits(gcr, INTCR2, INTCR2_GIRST2, 0);
-> +
-> +	return 0;
-
-Never inspected by callers
-
-> +}
-> +
-> +static void npcm_video_kvm_bw(struct npcm_video *video, u8 bandwidth)
-> +{
-> +	struct regmap *vcd = video->vcd_regmap;
-> +
-> +	if (!npcm_video_is_mga(video))
-> +		bandwidth = 1;
-> +
-> +	if (bandwidth)
-> +		regmap_update_bits(vcd, VCD_MODE, VCD_MODE_KVM_BW_SET,
-> +				   VCD_MODE_KVM_BW_SET);
-> +	else
-> +		regmap_update_bits(vcd, VCD_MODE, VCD_MODE_KVM_BW_SET, 0);
-> +}
-> +
-> +static u32 npcm_video_pclk(struct npcm_video *video)
-> +{
-> +	struct regmap *gfxi = video->gfx_regmap;
-> +	u32 tmp, pllfbdiv, pllinotdiv, gpllfbdiv;
-> +	u8 gpllfbdv109, gpllfbdv8, gpllindiv;
-> +	u8 gpllst_pllotdiv1, gpllst_pllotdiv2;
-> +
-> +	regmap_read(gfxi, GPLLST, &tmp);
-> +	gpllfbdv109 = FIELD_GET(GPLLST_GPLLFBDV109, tmp);
-> +	gpllst_pllotdiv1 = FIELD_GET(GPLLST_PLLOTDIV1, tmp);
-> +	gpllst_pllotdiv2 = FIELD_GET(GPLLST_PLLOTDIV2, tmp);
-> +
-> +	regmap_read(gfxi, GPLLINDIV, &tmp);
-> +	gpllfbdv8 = FIELD_GET(GPLLINDIV_GPLLFBDV8, tmp);
-> +	gpllindiv = FIELD_GET(GPLLINDIV_MASK, tmp);
-> +
-> +	regmap_read(gfxi, GPLLFBDIV, &tmp);
-> +	gpllfbdiv = FIELD_GET(GPLLFBDIV_MASK, tmp);
-> +
-> +	pllfbdiv = (512 * gpllfbdv109 + 256 * gpllfbdv8 + gpllfbdiv);
-> +	pllinotdiv = (gpllindiv * gpllst_pllotdiv1 * gpllst_pllotdiv2);
-> +	if (pllfbdiv == 0 || pllinotdiv == 0)
-> +		return 0;
-> +
-> +	return ((pllfbdiv * 25000) / pllinotdiv) * 1000;
-> +}
-> +
-> +static int npcm_video_get_bpp(struct npcm_video *video)
-> +{
-> +	struct regmap *vcd = video->vcd_regmap;
-> +	u32 mode, color_cnvr;
-> +
-> +	regmap_read(vcd, VCD_MODE, &mode);
-> +
-> +	color_cnvr = FIELD_GET(VCD_MODE_COLOR_CNVRT, mode);
-> +
-> +	switch (color_cnvr) {
-> +	case VCD_MODE_COLOR_CNVRT_NO_CNVRT:
-> +		return 2;
-> +	case VCD_MODE_COLOR_CNVRT_RGB_222:
-> +	case VCD_MODE_COLOR_CNVRT_666_MODE:
-> +		return 1;
-> +	case VCD_MODE_COLOR_CNVRT_RGB_888:
-> +		return 4;
-> +	}
-> +	return 0;
-> +}
-> +
-> +/*
-> + * Pitch must be a power of 2, >= linebytes,
-> + * at least 512, and no more than 4096.
-> + */
-> +static void npcm_video_set_linepitch(struct npcm_video *video, u32 linebytes)
-> +{
-> +	struct regmap *vcd = video->vcd_regmap;
-> +	u32 pitch = MIN_LP;
-> +
-> +	while ((pitch < linebytes) && (pitch < MAX_LP))
-> +		pitch *= 2;
-> +
-> +	regmap_write(vcd, VCD_FB_LP, FIELD_PREP(VCD_FBA_LP, pitch) |
-> +		     FIELD_PREP(VCD_FBB_LP, pitch));
-> +}
-> +
-> +static u32 npcm_video_get_linepitch(struct npcm_video *video)
-> +{
-> +	struct regmap *vcd = video->vcd_regmap;
-> +	u32 linepitch;
-> +
-> +	regmap_read(vcd, VCD_FB_LP, &linepitch);
-> +
-> +	return FIELD_GET(VCD_FBA_LP, linepitch);
-> +}
-> +
-> +static int npcm_video_command(struct npcm_video *video, u32 value)
-> +{
-> +	struct regmap *vcd = video->vcd_regmap;
-> +	u32 cmd;
-> +
-> +	regmap_write(vcd, VCD_STAT, VCD_STAT_CLEAR);
-> +
-> +	regmap_read(vcd, VCD_CMD, &cmd);
-> +	cmd |= FIELD_PREP(VCD_CMD_OPERATION, value);
-> +
-> +	regmap_write(vcd, VCD_CMD, cmd);
-> +	regmap_update_bits(vcd, VCD_CMD, VCD_CMD_GO, VCD_CMD_GO);
-> +	video->op_cmd = value;
-> +
-> +	return 0;
-
-Never inspected by caller
-
-> +}
-> +
-> +static int npcm_video_init_reg(struct npcm_video *video)
-> +{
-> +	struct regmap *gcr = video->gcr_regmap;
-> +	struct regmap *vcd = video->vcd_regmap;
-> +
-> +	/* Selects Data Enable */
-> +	regmap_update_bits(gcr, INTCR, INTCR_DEHS, 0);
-> +
-> +	/* Enable display of KVM GFX and access to memory */
-> +	regmap_update_bits(gcr, INTCR, INTCR_GFXIFDIS, 0);
-> +
-> +	/* Active Vertical/Horizontal Counters Reset */
-> +	regmap_update_bits(gcr, INTCR2, INTCR2_GIHCRST | INTCR2_GIVCRST,
-> +			   INTCR2_GIHCRST | INTCR2_GIVCRST);
-> +
-> +	/* Select KVM GFX input */
-> +	regmap_update_bits(gcr, MFSEL1, MFSEL1_DVH1SEL, 0);
-> +
-> +	/* Reset video modules */
-> +	npcm_video_vcd_ip_reset(video);
-> +	npcm_video_gfx_reset(video);
-> +
-> +	/* Set the FIFO thresholds */
-> +	regmap_write(vcd, VCD_FIFO, VCD_FIFO_TH);
-> +
-> +	/* Set video mode */
-> +	regmap_update_bits(vcd, VCD_MODE, 0xffffffff,
-> +			   VCD_MODE_VCDE | VCD_MODE_CM565 |
-> +			   VCD_MODE_IDBC | VCD_MODE_KVM_BW_SET);
-> +
-> +	regmap_write(vcd, VCD_RCHG, FIELD_PREP(VCD_RCHG_TIM_PRSCL, 0xf));
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_start_frame(struct npcm_video *video)
-> +{
-
-One of the callers ignores the return value, but not the other. Why?
-
-Regards,
-
-Andrzej
-
-> +	unsigned long flags;
-> +	struct npcm_video_buffer *buf;
-> +	struct regmap *vcd = video->vcd_regmap;
-> +	u32 val;
-> +	int ret;
-> +
-> +	if (video->v4l2_input_status) {
-> +		dev_dbg(video->dev, "No video signal; skip capture frame\n");
-> +		return 0;
-> +	}
-> +
-> +	ret = regmap_read_poll_timeout(vcd, VCD_STAT, val,
-> +				       !(val & VCD_STAT_BUSY), 1000,
-> +				       VCD_BUSY_TIMEOUT_US);
-> +
-> +	if (ret) {
-> +		dev_err(video->dev, "Wait for VCD_STAT_BUSY timeout\n");
-> +		return -EBUSY;
-> +	}
-> +
-> +	spin_lock_irqsave(&video->lock, flags);
-> +	buf = list_first_entry_or_null(&video->buffers,
-> +				       struct npcm_video_buffer, link);
-> +	if (!buf) {
-> +		spin_unlock_irqrestore(&video->lock, flags);
-> +		dev_dbg(video->dev, "No empty buffers; skip capture frame\n");
-> +		return 0;
-> +	}
-> +
-> +	set_bit(VIDEO_FRAME_INPRG, &video->flags);
-> +	spin_unlock_irqrestore(&video->lock, flags);
-> +
-> +	npcm_video_vcd_state_machine_reset(video);
-> +
-> +	regmap_update_bits(vcd, VCD_INTE, VCD_INTE_DONE_IE | VCD_INTE_IFOT_IE |
-> +			   VCD_INTE_IFOR_IE, VCD_INTE_DONE_IE |
-> +			   VCD_INTE_IFOT_IE | VCD_INTE_IFOR_IE);
-> +
-> +	npcm_video_command(video, video->ctrl_cmd);
-> +
-> +	return 0;
-> +}
-> +
-> +static void npcm_video_bufs_done(struct npcm_video *video,
-> +				 enum vb2_buffer_state state)
-> +{
-> +	unsigned long flags;
-> +	struct npcm_video_buffer *buf;
-> +
-> +	spin_lock_irqsave(&video->lock, flags);
-> +	list_for_each_entry(buf, &video->buffers, link)
-> +		vb2_buffer_done(&buf->vb.vb2_buf, state);
-> +	INIT_LIST_HEAD(&video->buffers);
-> +	spin_unlock_irqrestore(&video->lock, flags);
-> +}
-> +
-> +static void npcm_video_get_diff_rect(struct npcm_video *video,
-> +				     unsigned int index)
-> +{
-> +	u32 width = video->active_timings.width;
-> +	u32 height = video->active_timings.height;
-> +
-> +	if (video->op_cmd != VCD_CMD_OPERATION_CAPTURE) {
-> +		video->rect_cnt = 0;
-> +		npcm_video_get_rect_list(video, index);
-> +		video->rect[index] = video->rect_cnt;
+> +	if (dir == 0) {
+> +		bank = to_bank(offset);
+> +
+> +		addr = bank_reg(gpio, bank, WRITE_DATA);
+> +		reg = ioread8(addr);
+> +		reg = (reg >> GPIO_BIT(offset)) & 0x01;
 > +	} else {
-> +		video->rect[index] = npcm_video_add_rect(video, index, 0, 0,
-> +							 width, height);
+> +		offset -= gpio->nout_sgpio;
+> +		bank = to_bank(offset);
+> +
+> +		addr = bank_reg(gpio, bank, READ_DATA);
+> +		reg = ioread8(addr);
+> +		reg = (reg >> GPIO_BIT(offset)) & 0x01;
+> +	}
+> +
+> +	return reg;
+> +}
+> +
+> +static void npcm_sgpio_setup_enable(struct npcm_sgpio *gpio, bool enable)
+> +{
+> +	u8 reg = 0;
+> +
+> +	reg = ioread8(gpio->base + NPCM_IOXCTS);
+> +	reg = reg & ~NPCM_IOXCTS_RD_MODE;
+> +	reg = reg | NPCM_IOXCTS_RD_MODE_PERIODIC;
+> +
+> +	if (enable) {
+> +		reg |= NPCM_IOXCTS_IOXIF_EN;
+> +		iowrite8(reg, gpio->base + NPCM_IOXCTS);
+> +	} else {
+> +		reg &= ~NPCM_IOXCTS_IOXIF_EN;
+> +		iowrite8(reg, gpio->base + NPCM_IOXCTS);
 > +	}
 > +}
 > +
-> +static irqreturn_t npcm_video_irq(int irq, void *arg)
+> +static int npcm_sgpio_setup_clk(struct npcm_sgpio *gpio,
+> +				const struct npcm_clk_cfg *clk_cfg, u32 sgpio_freq)
 > +{
-> +	struct npcm_video *video = arg;
-> +	struct regmap *vcd = video->vcd_regmap;
-> +	struct npcm_video_buffer *buf;
-> +	struct rect_list *rect_list;
-> +	struct v4l2_rect *rect;
-> +	u32 status, ed_offset;
-> +	void *addr;
-> +	dma_addr_t vb_dma_addr;
-> +	unsigned int index, ed_size, total_size;
+> +	unsigned long apb_freq;
+> +	u32 sgpio_clk_div;
+> +	u8 tmp;
+> +	int i;
 > +
-> +	regmap_read(vcd, VCD_STAT, &status);
-> +	dev_dbg(video->dev, "VCD irq status 0x%x\n", status);
+> +	apb_freq = clk_get_rate(gpio->pclk);
+> +	sgpio_clk_div = (apb_freq / sgpio_freq);
+> +	if ((apb_freq % sgpio_freq) != 0)
+> +		sgpio_clk_div += 1;
 > +
-> +	regmap_write(vcd, VCD_INTE, 0);
-> +	regmap_write(vcd, VCD_STAT, VCD_STAT_CLEAR);
+> +	tmp = ioread8(gpio->base + NPCM_IOXCFG1) & ~NPCM_IOXCFG1_SFT_CLK;
 > +
-> +	if (test_bit(VIDEO_STOPPED, &video->flags) ||
-> +	    !test_bit(VIDEO_STREAMING, &video->flags)) {
-> +		clear_bit(VIDEO_FRAME_INPRG, &video->flags);
-> +		return IRQ_NONE;
-> +	}
-> +
-> +	if (status & VCD_STAT_DONE) {
-> +		spin_lock(&video->lock);
-> +		buf = list_first_entry_or_null(&video->buffers,
-> +					       struct npcm_video_buffer,
-> +					       link);
-> +
-> +		if (!buf) {
-> +			spin_unlock(&video->lock);
-> +			clear_bit(VIDEO_FRAME_INPRG, &video->flags);
-> +			return IRQ_NONE;
-> +		}
-> +
-> +		addr = vb2_plane_vaddr(&buf->vb.vb2_buf, 0);
-> +		vb_dma_addr = vb2_dma_contig_plane_dma_addr(&buf->vb.vb2_buf,
-> +							    0);
-> +		index = buf->vb.vb2_buf.index;
-> +
-> +		npcm_video_ece_ctrl_reset(video);
-> +		npcm_video_ece_clear_rect_offset(video);
-> +
-> +		npcm_video_ece_set_fb_addr(video, video->src.dma);
-> +
-> +		/* Set base address of encoded data to video buffer */
-> +		npcm_video_ece_set_enc_dba(video, vb_dma_addr);
-> +
-> +		npcm_video_ece_set_lp(video, video->bytesperline);
-> +		npcm_video_get_diff_rect(video, index);
-> +
-> +		total_size = 0;
-> +
-> +		list_for_each_entry(rect_list, &video->list[index], list) {
-> +			rect = &rect_list->clip.c;
-> +			ed_offset = npcm_video_ece_read_rect_offset(video);
-> +
-> +			npcm_video_ece_enc_rect(video, rect->left,
-> +						rect->top, rect->width,
-> +						rect->height);
-> +			ed_size = npcm_video_ece_get_ed_size(video,
-> +							     ed_offset,
-> +							     addr);
-> +
-> +			npcm_video_ece_prepend_rect_header(addr + ed_offset,
-> +							   rect->left,
-> +							   rect->top,
-> +							   rect->width,
-> +							   rect->height);
-> +
-> +			total_size += ed_size;
-> +		}
-> +
-> +		vb2_set_plane_payload(&buf->vb.vb2_buf, 0, total_size);
-> +		buf->vb.vb2_buf.timestamp = ktime_get_ns();
-> +		buf->vb.sequence = video->sequence++;
-> +		buf->vb.field = V4L2_FIELD_NONE;
-> +		vb2_buffer_done(&buf->vb.vb2_buf, VB2_BUF_STATE_DONE);
-> +		list_del(&buf->link);
-> +
-> +		spin_unlock(&video->lock);
-> +
-> +		clear_bit(VIDEO_FRAME_INPRG, &video->flags);
-> +	}
-> +
-> +	if (status & VCD_STAT_IFOR || status & VCD_STAT_IFOT) {
-> +		dev_warn(video->dev, "VCD FIFO overrun or over thresholds\n");
-> +		npcm_video_vcd_ip_reset(video);
-> +		npcm_video_gfx_reset(video);
-> +		npcm_video_start_frame(video);
-> +	}
-> +
-> +	return IRQ_HANDLED;
-> +}
-> +
-> +static void npcm_video_clear_gmmap(struct npcm_video *video)
-> +{
-> +	struct regmap *gcr = video->gcr_regmap;
-> +	u32 intcr, gmmap;
-> +	void __iomem *baseptr;
-> +
-> +	if (of_device_is_compatible(video->dev->of_node,
-> +				    "nuvoton,npcm750-vcd")) {
-> +		regmap_read(gcr, INTCR3, &intcr);
-> +		gmmap = FIELD_GET(INTCR3_GMMAP, intcr);
-> +
-> +		switch (gmmap) {
-> +		case INTCR3_GMMAP_128MB:
-> +			baseptr = ioremap_wc(ADDR_GMMAP_128MB, GMMAP_LENGTH);
-> +			break;
-> +		case INTCR3_GMMAP_256MB:
-> +			baseptr = ioremap_wc(ADDR_GMMAP_256MB, GMMAP_LENGTH);
-> +			break;
-> +		case INTCR3_GMMAP_512MB:
-> +			baseptr = ioremap_wc(ADDR_GMMAP_512MB, GMMAP_LENGTH);
-> +			break;
-> +		case INTCR3_GMMAP_1GB:
-> +			baseptr = ioremap_wc(ADDR_GMMAP_1GB, GMMAP_LENGTH);
-> +			break;
-> +		case INTCR3_GMMAP_2GB:
-> +			baseptr = ioremap_wc(ADDR_GMMAP_2GB, GMMAP_LENGTH);
-> +			break;
-> +		}
-> +	} else if (of_device_is_compatible(video->dev->of_node,
-> +					   "nuvoton,npcm845-vcd")) {
-> +		regmap_read(gcr, INTCR4, &intcr);
-> +		gmmap = FIELD_GET(INTCR4_GMMAP, intcr);
-> +
-> +		switch (gmmap) {
-> +		case INTCR4_GMMAP_512MB:
-> +			baseptr = ioremap_wc(ADDR_GMMAP_512MB, GMMAP_LENGTH);
-> +			break;
-> +		case INTCR4_GMMAP_512MB_ECC:
-> +			baseptr = ioremap_wc(ADDR_GMMAP_512MB_ECC,
-> +					     GMMAP_LENGTH);
-> +			break;
-> +		case INTCR4_GMMAP_1GB:
-> +			baseptr = ioremap_wc(ADDR_GMMAP_1GB, GMMAP_LENGTH);
-> +			break;
-> +		case INTCR4_GMMAP_1GB_ECC:
-> +			baseptr = ioremap_wc(ADDR_GMMAP_1GB_ECC, GMMAP_LENGTH);
-> +			break;
-> +		case INTCR4_GMMAP_2GB:
-> +			baseptr = ioremap_wc(ADDR_GMMAP_2GB, GMMAP_LENGTH);
-> +			break;
-> +		case INTCR4_GMMAP_2GB_ECC:
-> +			baseptr = ioremap_wc(ADDR_GMMAP_2GB_ECC, GMMAP_LENGTH);
-> +			break;
+> +	for (i = 0; i < clk_cfg->cfg_opt; i++) {
+> +		if (sgpio_clk_div >= clk_cfg->SFT_CLK[i]) {
+> +			iowrite8(clk_cfg->CLK_SEL[i] | tmp, gpio->base + NPCM_IOXCFG1);
+> +			return 0;
 > +		}
 > +	}
 > +
-> +	memset(baseptr, 0, GMMAP_LENGTH);
-> +	iounmap(baseptr);
+> +	return -EINVAL;
 > +}
 > +
-> +static void npcm_video_get_resolution(struct npcm_video *video)
+> +static void npcm_sgpio_irq_init_valid_mask(struct gpio_chip *gc,
+> +					   unsigned long *valid_mask, unsigned int ngpios)
 > +{
-> +	struct v4l2_bt_timings *act = &video->active_timings;
-> +	struct v4l2_bt_timings *det = &video->detected_timings;
-> +	struct regmap *gfxi;
-> +	u32 dispst;
+> +	struct npcm_sgpio *gpio = gpiochip_get_data(gc);
+> +	int n = gpio->nin_sgpio;
 > +
-> +	video->v4l2_input_status = 0;
-> +
-> +	det->width = npcm_video_hres(video);
-> +	det->height = npcm_video_vres(video);
-> +
-> +	if (act->width != det->width || act->height != det->height) {
-> +		dev_dbg(video->dev, "Resolution changed\n");
-> +
-> +		npcm_video_bufs_done(video, VB2_BUF_STATE_ERROR);
-> +
-> +		if (npcm_video_hres(video) > 0 && npcm_video_vres(video) > 0) {
-> +			gfxi = video->gfx_regmap;
-> +
-> +			if (test_bit(VIDEO_STREAMING, &video->flags)) {
-> +				/*
-> +				 * Wait for resolution is available,
-> +				 * and it is also captured by host.
-> +				 */
-> +				do {
-> +					mdelay(100);
-> +					regmap_read(gfxi, DISPST, &dispst);
-> +				} while (npcm_video_vres(video) < 100 ||
-> +					 npcm_video_pclk(video) == 0 ||
-> +					 (dispst & DISPST_HSCROFF));
-> +			}
-> +
-> +			det->width = npcm_video_hres(video);
-> +			det->height = npcm_video_vres(video);
-> +			det->pixelclock = npcm_video_pclk(video);
-> +		}
-> +	}
-> +
-> +	if (det->width == 0 || det->height == 0) {
-> +		det->width = MIN_WIDTH;
-> +		det->height = MIN_HEIGHT;
-> +		npcm_video_clear_gmmap(video);
-> +		video->v4l2_input_status = V4L2_IN_ST_NO_SIGNAL;
-> +	}
-> +
-> +	dev_dbg(video->dev, "Got resolution[%dx%d] -> [%dx%d], status %d\n",
-> +		act->width, act->height, det->width, det->height,
-> +		video->v4l2_input_status);
+> +	/* input GPIOs in the high range */
+> +	bitmap_set(valid_mask, gpio->nout_sgpio, n);
+> +	bitmap_clear(valid_mask, 0, gpio->nout_sgpio);
 > +}
 > +
-> +static void npcm_video_set_resolution(struct npcm_video *video)
+> +static void npcm_sgpio_irq_set_mask(struct irq_data *d, bool set)
 > +{
-> +	struct v4l2_bt_timings *act = &video->active_timings;
-> +	struct regmap *vcd = video->vcd_regmap;
-> +	u32 mode;
-> +
-> +	/* Set video frame physical address */
-> +	regmap_write(vcd, VCD_FBA_ADR, video->src.dma);
-> +	regmap_write(vcd, VCD_FBB_ADR, video->src.dma);
-> +
-> +	npcm_video_capres(video, act->width, act->height);
-> +
-> +	video->bytesperpixel = npcm_video_get_bpp(video);
-> +	npcm_video_set_linepitch(video, act->width * video->bytesperpixel);
-> +
-> +	video->bytesperline = npcm_video_get_linepitch(video);
-> +
-> +	npcm_video_kvm_bw(video, act->pixelclock > VCD_KVM_BW_PCLK);
-> +
-> +	npcm_video_gfx_reset(video);
-> +
-> +	regmap_read(vcd, VCD_MODE, &mode);
-> +
-> +	clear_bit(VIDEO_FRAME_INPRG, &video->flags);
-> +
-> +	dev_dbg(video->dev, "VCD mode = 0x%x, %s mode\n", mode,
-> +		npcm_video_is_mga(video) ? "Hi Res" : "VGA");
-> +
-> +	dev_dbg(video->dev,
-> +		"Digital mode: %d x %d x %d, pixelclock %lld, bytesperline %d\n",
-> +		act->width, act->height, video->bytesperpixel, act->pixelclock,
-> +		video->bytesperline);
-> +}
-> +
-> +static int npcm_video_start(struct npcm_video *video)
-> +{
-> +	int rc;
-> +
-> +	rc = npcm_video_init_reg(video);
-> +	if (rc)
-> +		return rc;
-> +
-> +	npcm_video_get_resolution(video);
-> +
-> +	video->active_timings = video->detected_timings;
-> +
-> +	video->max_buffer_size = VCD_MAX_SRC_BUFFER_SIZE;
-> +	if (!npcm_video_alloc_buf(video, &video->src, video->max_buffer_size))
-> +		return -ENOMEM;
-> +
-> +	npcm_video_set_resolution(video);
-> +
-> +	video->pix_fmt.width = video->active_timings.width;
-> +	video->pix_fmt.height = video->active_timings.height;
-> +	video->pix_fmt.sizeimage = video->max_buffer_size;
-> +	video->pix_fmt.bytesperline = video->bytesperline;
-> +
-> +	if (atomic_inc_return(&video->ece.clients) == 1) {
-> +		npcm_video_ece_init(video);
-> +		npcm_video_ece_set_fb_addr(video, video->src.dma);
-> +		npcm_video_ece_set_lp(video, video->bytesperline);
-> +
-> +		dev_dbg(video->dev, "ECE open: client %d\n",
-> +			atomic_read(&video->ece.clients));
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static void npcm_video_stop(struct npcm_video *video)
-> +{
+> +	const struct npcm_sgpio_bank *bank;
+> +	struct npcm_sgpio *gpio;
 > +	unsigned long flags;
-> +	struct regmap *vcd = video->vcd_regmap;
+> +	void __iomem *addr;
+> +	int offset;
+> +	u16 reg, type;
+> +	u8 bit;
 > +
-> +	spin_lock_irqsave(&video->lock, flags);
-> +	set_bit(VIDEO_STOPPED, &video->flags);
-> +	spin_unlock_irqrestore(&video->lock, flags);
+> +	irqd_to_npcm_sgpio_data(d, &gpio, &bank, &bit, &offset);
+> +	addr = bank_reg(gpio, bank, EVENT_CFG);
 > +
-> +	regmap_write(vcd, VCD_INTE, 0);
-> +	regmap_write(vcd, VCD_MODE, 0);
-> +	regmap_write(vcd, VCD_RCHG, 0);
-> +	regmap_write(vcd, VCD_STAT, VCD_STAT_CLEAR);
+> +	spin_lock_irqsave(&gpio->lock, flags);
 > +
-> +	if (video->src.size)
-> +		npcm_video_free_buf(video, &video->src);
+> +	npcm_sgpio_setup_enable(gpio, false);
 > +
-> +	if (video->list)
-> +		npcm_video_free_diff_table(video);
-> +
-> +	kfree(video->list);
-> +	video->list = NULL;
-> +
-> +	kfree(video->rect);
-> +	video->rect = NULL;
-> +
-> +	video->v4l2_input_status = V4L2_IN_ST_NO_SIGNAL;
-> +	video->flags = 0;
-> +	video->ctrl_cmd = VCD_CMD_OPERATION_CAPTURE;
-> +
-> +	if (atomic_dec_return(&video->ece.clients) == 0) {
-> +		npcm_video_ece_stop(video);
-> +		dev_dbg(video->dev, "ECE close: client %d\n",
-> +			atomic_read(&video->ece.clients));
-> +	}
-> +}
-> +
-> +static int npcm_video_querycap(struct file *file, void *fh,
-> +			       struct v4l2_capability *cap)
-> +{
-> +	strscpy(cap->driver, DEVICE_NAME, sizeof(cap->driver));
-> +	strscpy(cap->card, "NPCM Video Engine", sizeof(cap->card));
-> +	snprintf(cap->bus_info, sizeof(cap->bus_info), "platform:%s",
-> +		 DEVICE_NAME);
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_enum_format(struct file *file, void *fh,
-> +				  struct v4l2_fmtdesc *f)
-> +{
-> +	if (f->index)
-> +		return -EINVAL;
-> +
-> +	f->pixelformat = V4L2_PIX_FMT_HEXTILE;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_get_format(struct file *file, void *fh,
-> +				 struct v4l2_format *f)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +
-> +	f->fmt.pix = video->pix_fmt;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_enum_input(struct file *file, void *fh,
-> +				 struct v4l2_input *inp)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +
-> +	if (inp->index)
-> +		return -EINVAL;
-> +
-> +	strscpy(inp->name, "Host VGA capture", sizeof(inp->name));
-> +	inp->type = V4L2_INPUT_TYPE_CAMERA;
-> +	inp->capabilities = V4L2_IN_CAP_DV_TIMINGS;
-> +	inp->status = video->v4l2_input_status;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_get_input(struct file *file, void *fh, unsigned int *i)
-> +{
-> +	*i = 0;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_set_input(struct file *file, void *fh, unsigned int i)
-> +{
-> +	if (i)
-> +		return -EINVAL;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_get_parm(struct file *file, void *fh,
-> +			       struct v4l2_streamparm *a)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +
-> +	a->parm.capture.capability = V4L2_CAP_TIMEPERFRAME;
-> +	a->parm.capture.readbuffers = 3;
-> +	a->parm.capture.timeperframe.numerator = 1;
-> +	if (!video->frame_rate)
-> +		a->parm.capture.timeperframe.denominator = MAX_FRAME_RATE;
-> +	else
-> +		a->parm.capture.timeperframe.denominator = video->frame_rate;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_set_parm(struct file *file, void *fh,
-> +			       struct v4l2_streamparm *a)
-> +{
-> +	unsigned int frame_rate = 0;
-> +
-> +	a->parm.capture.capability = V4L2_CAP_TIMEPERFRAME;
-> +	a->parm.capture.readbuffers = 3;
-> +
-> +	if (a->parm.capture.timeperframe.numerator)
-> +		frame_rate = a->parm.capture.timeperframe.denominator /
-> +			     a->parm.capture.timeperframe.numerator;
-> +
-> +	if (!frame_rate || frame_rate > MAX_FRAME_RATE) {
-> +		frame_rate = 0;
-> +		a->parm.capture.timeperframe.denominator = MAX_FRAME_RATE;
-> +		a->parm.capture.timeperframe.numerator = 1;
+> +	reg = ioread16(addr);
+> +	if (set) {
+> +		reg &= ~(NPCM_IXOEVCFG_MASK << (bit * 2));
+> +	} else {
+> +		type = gpio->int_type[offset];
+> +		reg |= (type << (bit * 2));
 > +	}
 > +
-> +	return 0;
+> +	iowrite16(reg, addr);
+> +
+> +	npcm_sgpio_setup_enable(gpio, true);
+> +
+> +	addr = bank_reg(gpio, bank, EVENT_STS);
+> +	reg = ioread8(addr);
+> +	reg |= BIT(bit);
+> +	iowrite8(reg, addr);
+> +
+> +	spin_unlock_irqrestore(&gpio->lock, flags);
 > +}
 > +
-> +static int npcm_video_set_dv_timings(struct file *file, void *fh,
-> +				     struct v4l2_dv_timings *timings)
+> +static void npcm_sgpio_irq_ack(struct irq_data *d)
 > +{
-> +	struct npcm_video *video = video_drvdata(file);
+> +	const struct npcm_sgpio_bank *bank;
+> +	struct npcm_sgpio *gpio;
+> +	unsigned long flags;
+> +	void __iomem *status_addr;
+> +	int offset;
+> +	u8 bit;
 > +
-> +	if (timings->bt.width == video->active_timings.width &&
-> +	    timings->bt.height == video->active_timings.height)
-> +		return 0;
-> +
-> +	if (vb2_is_busy(&video->queue)) {
-> +		dev_err(video->dev, "%s device busy\n", __func__);
-> +		return -EBUSY;
-> +	}
-> +
-> +	video->active_timings = timings->bt;
-> +
-> +	npcm_video_set_resolution(video);
-> +
-> +	video->pix_fmt.width = timings->bt.width;
-> +	video->pix_fmt.height = timings->bt.height;
-> +	video->pix_fmt.sizeimage = video->max_buffer_size;
-> +	video->pix_fmt.bytesperline = video->bytesperline;
-> +
-> +	timings->type = V4L2_DV_BT_656_1120;
-> +
-> +	return 0;
+> +	irqd_to_npcm_sgpio_data(d, &gpio, &bank, &bit, &offset);
+> +	status_addr = bank_reg(gpio, bank, EVENT_STS);
+> +	spin_lock_irqsave(&gpio->lock, flags);
+> +	iowrite8(BIT(bit), status_addr);
+> +	spin_unlock_irqrestore(&gpio->lock, flags);
 > +}
 > +
-> +static int npcm_video_get_dv_timings(struct file *file, void *fh,
-> +				     struct v4l2_dv_timings *timings)
+> +static void npcm_sgpio_irq_mask(struct irq_data *d)
 > +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +
-> +	timings->type = V4L2_DV_BT_656_1120;
-> +	timings->bt = video->active_timings;
-> +
-> +	return 0;
+> +	npcm_sgpio_irq_set_mask(d, true);
 > +}
 > +
-> +static int npcm_video_query_dv_timings(struct file *file, void *fh,
-> +				       struct v4l2_dv_timings *timings)
+> +static void npcm_sgpio_irq_unmask(struct irq_data *d)
 > +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +
-> +	npcm_video_get_resolution(video);
-> +
-> +	timings->type = V4L2_DV_BT_656_1120;
-> +	timings->bt = video->detected_timings;
-> +
-> +	return video->v4l2_input_status ? -ENOLINK : 0;
+> +	npcm_sgpio_irq_set_mask(d, false);
 > +}
 > +
-> +static int npcm_video_enum_dv_timings(struct file *file, void *fh,
-> +				      struct v4l2_enum_dv_timings *timings)
+> +static int npcm_sgpio_set_type(struct irq_data *d, unsigned int type)
 > +{
-> +	return v4l2_enum_dv_timings_cap(timings, &npcm_video_timings_cap,
-> +					NULL, NULL);
-> +}
+> +	const struct npcm_sgpio_bank *bank;
+> +	irq_flow_handler_t handler;
+> +	struct npcm_sgpio *gpio;
+> +	unsigned long flags;
+> +	void __iomem *addr;
+> +	int offset;
+> +	u16 reg, val;
+> +	u8 bit;
 > +
-> +static int npcm_video_dv_timings_cap(struct file *file, void *fh,
-> +				     struct v4l2_dv_timings_cap *cap)
-> +{
-> +	*cap = npcm_video_timings_cap;
+> +	irqd_to_npcm_sgpio_data(d, &gpio, &bank, &bit, &offset);
 > +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_sub_event(struct v4l2_fh *fh,
-> +				const struct v4l2_event_subscription *sub)
-> +{
-> +	switch (sub->type) {
-> +	case V4L2_EVENT_SOURCE_CHANGE:
-> +		return v4l2_src_change_event_subscribe(fh, sub);
-> +	}
-> +
-> +	return v4l2_ctrl_subscribe_event(fh, sub);
-> +}
-> +
-> +static const struct v4l2_ioctl_ops npcm_video_ioctls = {
-> +	.vidioc_querycap = npcm_video_querycap,
-> +
-> +	.vidioc_enum_fmt_vid_cap = npcm_video_enum_format,
-> +	.vidioc_g_fmt_vid_cap = npcm_video_get_format,
-> +	.vidioc_s_fmt_vid_cap = npcm_video_get_format,
-> +	.vidioc_try_fmt_vid_cap = npcm_video_get_format,
-> +
-> +	.vidioc_reqbufs = vb2_ioctl_reqbufs,
-> +	.vidioc_querybuf = vb2_ioctl_querybuf,
-> +	.vidioc_qbuf = vb2_ioctl_qbuf,
-> +	.vidioc_expbuf = vb2_ioctl_expbuf,
-> +	.vidioc_dqbuf = vb2_ioctl_dqbuf,
-> +	.vidioc_create_bufs = vb2_ioctl_create_bufs,
-> +	.vidioc_prepare_buf = vb2_ioctl_prepare_buf,
-> +	.vidioc_streamon = vb2_ioctl_streamon,
-> +	.vidioc_streamoff = vb2_ioctl_streamoff,
-> +
-> +	.vidioc_enum_input = npcm_video_enum_input,
-> +	.vidioc_g_input = npcm_video_get_input,
-> +	.vidioc_s_input = npcm_video_set_input,
-> +
-> +	.vidioc_g_parm = npcm_video_get_parm,
-> +	.vidioc_s_parm = npcm_video_set_parm,
-> +
-> +	.vidioc_s_dv_timings = npcm_video_set_dv_timings,
-> +	.vidioc_g_dv_timings = npcm_video_get_dv_timings,
-> +	.vidioc_query_dv_timings = npcm_video_query_dv_timings,
-> +	.vidioc_enum_dv_timings = npcm_video_enum_dv_timings,
-> +	.vidioc_dv_timings_cap = npcm_video_dv_timings_cap,
-> +
-> +	.vidioc_subscribe_event = npcm_video_sub_event,
-> +	.vidioc_unsubscribe_event = v4l2_event_unsubscribe,
-> +};
-> +
-> +static int npcm_video_set_ctrl(struct v4l2_ctrl *ctrl)
-> +{
-> +	struct npcm_video *video = container_of(ctrl->handler,
-> +						struct npcm_video,
-> +						ctrl_handler);
-> +
-> +	switch (ctrl->id) {
-> +	case V4L2_CID_NPCM_CAPTURE_MODE:
-> +		if (ctrl->val == V4L2_NPCM_CAPTURE_MODE_COMPLETE)
-> +			video->ctrl_cmd = VCD_CMD_OPERATION_CAPTURE;
-> +		else if (ctrl->val == V4L2_NPCM_CAPTURE_MODE_DIFF)
-> +			video->ctrl_cmd = VCD_CMD_OPERATION_COMPARE;
+> +	switch (type & IRQ_TYPE_SENSE_MASK) {
+> +	case IRQ_TYPE_EDGE_BOTH:
+> +		val = NPCM_IXOEVCFG_BOTH;
+> +		handler = handle_edge_irq;
+> +		break;
+> +	case IRQ_TYPE_EDGE_RISING:
+> +		val = NPCM_IXOEVCFG_RISING;
+> +		handler = handle_edge_irq;
+> +		break;
+> +	case IRQ_TYPE_EDGE_FALLING:
+> +		val = NPCM_IXOEVCFG_FALLING;
+> +		handler = handle_edge_irq;
+> +		break;
+> +	case IRQ_TYPE_LEVEL_HIGH:
+> +		val = NPCM_IXOEVCFG_RISING;
+> +		handler = handle_level_irq;
+> +		break;
+> +	case IRQ_TYPE_LEVEL_LOW:
+> +		val = NPCM_IXOEVCFG_FALLING;
+> +		handler = handle_level_irq;
 > +		break;
 > +	default:
 > +		return -EINVAL;
 > +	}
 > +
+> +	gpio->int_type[offset] = val;
+> +
+> +	spin_lock_irqsave(&gpio->lock, flags);
+> +	npcm_sgpio_setup_enable(gpio, false);
+> +	addr = bank_reg(gpio, bank, EVENT_CFG);
+> +	reg = ioread16(addr);
+> +
+> +	reg |= (val << (bit * 2));
+> +
+> +	iowrite16(reg, addr);
+> +	npcm_sgpio_setup_enable(gpio, true);
+> +	spin_unlock_irqrestore(&gpio->lock, flags);
+> +
+> +	irq_set_handler_locked(d, handler);
+> +
 > +	return 0;
 > +}
 > +
-> +static int npcm_video_get_volatile_ctrl(struct v4l2_ctrl *ctrl)
+> +static void npcm_sgpio_irq_handler(struct irq_desc *desc)
 > +{
-> +	struct npcm_video *video = container_of(ctrl->handler,
-> +						struct npcm_video,
-> +						ctrl_handler);
+> +	struct gpio_chip *gc = irq_desc_get_handler_data(desc);
+> +	struct irq_chip *ic = irq_desc_get_chip(desc);
+> +	struct npcm_sgpio *gpio = gpiochip_get_data(gc);
+> +	unsigned int i, j, girq;
+> +	unsigned long reg;
 > +
-> +	switch (ctrl->id) {
-> +	case V4L2_CID_NPCM_RECT_COUNT:
-> +		ctrl->val = npcm_video_get_rect_count(video);
-> +		break;
-> +	default:
-> +		return -EINVAL;
+> +	chained_irq_enter(ic, desc);
+> +
+> +	for (i = 0; i < ARRAY_SIZE(npcm_sgpio_banks); i++) {
+> +		const struct npcm_sgpio_bank *bank = &npcm_sgpio_banks[i];
+> +
+> +		reg = ioread8(bank_reg(gpio, bank, EVENT_STS));
+> +		for_each_set_bit(j, &reg, 8) {
+> +			girq = irq_find_mapping(gc->irq.domain, i * 8 + gpio->nout_sgpio + j);
+> +			generic_handle_irq(girq);
+> +		}
 > +	}
 > +
-> +	return 0;
+> +	chained_irq_exit(ic, desc);
 > +}
 > +
-> +static const struct v4l2_ctrl_ops npcm_video_ctrl_ops = {
-> +	.s_ctrl = npcm_video_set_ctrl,
-> +	.g_volatile_ctrl = npcm_video_get_volatile_ctrl,
-> +};
-> +
-> +static const struct v4l2_ctrl_config npcm_ctrl_capture_mode = {
-> +	.ops = &npcm_video_ctrl_ops,
-> +	.id = V4L2_CID_NPCM_CAPTURE_MODE,
-> +	.name = "NPCM Video Capture Mode",
-> +	.type = V4L2_CTRL_TYPE_INTEGER,
-> +	.min = 0,
-> +	.max = V4L2_NPCM_CAPTURE_MODE_DIFF,
-> +	.step = 1,
-> +	.def = 0,
-> +};
-> +
-> +static const struct v4l2_ctrl_config npcm_ctrl_rect_count = {
-> +	.ops = &npcm_video_ctrl_ops,
-> +	.id = V4L2_CID_NPCM_RECT_COUNT,
-> +	.name = "NPCM Compressed Hextile Rectangle Count",
-> +	.type = V4L2_CTRL_TYPE_INTEGER,
-> +	.flags = V4L2_CTRL_FLAG_VOLATILE,
-> +	.min = 0,
-> +	.max = (MAX_WIDTH / RECT_W) * (MAX_HEIGHT / RECT_H),
-> +	.step = 1,
-> +	.def = 0,
-> +};
-> +
-> +static int npcm_video_open(struct file *file)
+> +static int npcm_sgpio_setup_irqs(struct npcm_sgpio *gpio,
+> +				 struct platform_device *pdev)
 > +{
-> +	int rc;
-> +	struct npcm_video *video = video_drvdata(file);
+> +	int rc, i;
+> +	struct gpio_irq_chip *irq;
 > +
-> +	mutex_lock(&video->video_lock);
-> +
-> +	rc = v4l2_fh_open(file);
-> +	if (rc) {
-> +		mutex_unlock(&video->video_lock);
+> +	rc = platform_get_irq(pdev, 0);
+> +	if (rc < 0)
 > +		return rc;
+> +
+> +	gpio->irq = rc;
+> +
+> +	npcm_sgpio_setup_enable(gpio, false);
+> +
+> +	/* Disable IRQ and clear Interrupt status registers for all SGPIO Pins. */
+> +	for (i = 0; i < ARRAY_SIZE(npcm_sgpio_banks); i++) {
+> +		const struct npcm_sgpio_bank *bank = &npcm_sgpio_banks[i];
+> +
+> +		iowrite16(0x0000, bank_reg(gpio, bank, EVENT_CFG));
+> +		iowrite8(0xff, bank_reg(gpio, bank, EVENT_STS));
 > +	}
 > +
-> +	if (v4l2_fh_is_singular_file(file))
-> +		npcm_video_start(video);
+> +	gpio->intc.name = dev_name(&pdev->dev);
+> +	gpio->intc.irq_ack = npcm_sgpio_irq_ack;
+> +	gpio->intc.irq_mask = npcm_sgpio_irq_mask;
+> +	gpio->intc.irq_unmask = npcm_sgpio_irq_unmask;
+> +	gpio->intc.irq_set_type = npcm_sgpio_set_type;
 > +
-> +	mutex_unlock(&video->video_lock);
+> +	irq = &gpio->chip.irq;
+> +	irq->chip = &gpio->intc;
+> +	irq->init_valid_mask = npcm_sgpio_irq_init_valid_mask;
+> +	irq->handler = handle_bad_irq;
+> +	irq->default_type = IRQ_TYPE_NONE;
+> +	irq->parent_handler = npcm_sgpio_irq_handler;
+> +	irq->parent_handler_data = gpio;
+> +	irq->parents = &gpio->irq;
+> +	irq->num_parents = 1;
 > +
 > +	return 0;
 > +}
 > +
-> +static int npcm_video_release(struct file *file)
-> +{
-> +	int rc;
-> +	struct npcm_video *video = video_drvdata(file);
-> +
-> +	mutex_lock(&video->video_lock);
-> +
-> +	if (v4l2_fh_is_singular_file(file))
-> +		npcm_video_stop(video);
-> +
-> +	rc = _vb2_fop_release(file, NULL);
-> +
-> +	mutex_unlock(&video->video_lock);
-> +
-> +	return rc;
-> +}
-> +
-> +static const struct v4l2_file_operations npcm_video_v4l2_fops = {
-> +	.owner = THIS_MODULE,
-> +	.read = vb2_fop_read,
-> +	.poll = vb2_fop_poll,
-> +	.unlocked_ioctl = video_ioctl2,
-> +	.mmap = vb2_fop_mmap,
-> +	.open = npcm_video_open,
-> +	.release = npcm_video_release,
+> +static const int npcm750_SFT_CLK[] = {
+> +		1024, 32, 8, 4, 3, 2,
 > +};
 > +
-> +static int npcm_video_queue_setup(struct vb2_queue *q,
-> +				  unsigned int *num_buffers,
-> +				  unsigned int *num_planes,
-> +				  unsigned int sizes[],
-> +				  struct device *alloc_devs[])
+> +static const u8 npcm750_CLK_SEL[] = {
+> +		0x00, 0x05, 0x07, 0x0C, 0x0D, 0x0E,
+> +};
+> +
+> +static const int npcm845_SFT_CLK[] = {
+> +		1024, 32, 16, 8, 4,
+> +};
+> +
+> +static const u8 npcm845_CLK_SEL[] = {
+> +		0x00, 0x05, 0x06, 0x07, 0x0C,
+> +};
+> +
+> +static const struct npcm_clk_cfg npcm750_sgpio_pdata = {
+> +	.SFT_CLK = npcm750_SFT_CLK,
+> +	.CLK_SEL = npcm750_CLK_SEL,
+> +	.cfg_opt = 6,
+> +};
+> +
+> +static const struct npcm_clk_cfg npcm845_sgpio_pdata = {
+
+You do not mention NPCM845 in the commit message.
+
+> +	.SFT_CLK = npcm845_SFT_CLK,
+> +	.CLK_SEL = npcm845_CLK_SEL,
+> +	.cfg_opt = 5,
+> +};
+> +
+> +static const struct of_device_id npcm_sgpio_of_table[] = {
+> +	{ .compatible = "nuvoton,npcm750-sgpio", .data = &npcm750_sgpio_pdata, },
+> +	{ .compatible = "nuvoton,npcm845-sgpio", .data = &npcm845_sgpio_pdata, },
+> +	{}
+> +};
+> +
+> +MODULE_DEVICE_TABLE(of, npcm_sgpio_of_table);
+> +
+> +static int npcm_sgpio_probe(struct platform_device *pdev)
 > +{
-> +	struct npcm_video *video = vb2_get_drv_priv(q);
-> +	unsigned int i;
+> +	struct npcm_sgpio *gpio;
+> +	const struct npcm_clk_cfg *clk_cfg;
+> +	int rc;
+> +	u32 nin_gpios, nout_gpios, sgpio_freq;
 > +
-> +	if (*num_planes) {
-> +		if (sizes[0] < video->max_buffer_size)
-> +			return -EINVAL;
-> +
-> +		return 0;
-> +	}
-> +
-> +	*num_planes = 1;
-> +	sizes[0] = video->max_buffer_size;
-> +
-> +	kfree(video->rect);
-> +	video->rect = NULL;
-> +
-> +	video->rect = kcalloc(*num_buffers, sizeof(*video->rect), GFP_KERNEL);
-> +	if (!video->rect)
+> +	gpio = devm_kzalloc(&pdev->dev, sizeof(*gpio), GFP_KERNEL);
+> +	if (!gpio)
 > +		return -ENOMEM;
 > +
-> +	if (video->list) {
-> +		npcm_video_free_diff_table(video);
-> +		kfree(video->list);
-> +		video->list = NULL;
-> +	}
+> +	gpio->base = devm_platform_ioremap_resource(pdev, 0);
+> +	if (IS_ERR(gpio->base))
+> +		return PTR_ERR(gpio->base);
 > +
-> +	video->list = kzalloc(sizeof(*video->list) * *num_buffers, GFP_KERNEL);
-> +	if (!video->list) {
-> +		kfree(video->rect);
-> +		return -ENOMEM;
-> +	}
-> +
-> +	for (i = 0; i < *num_buffers; i++)
-> +		INIT_LIST_HEAD(&video->list[i]);
-> +
-> +	video->num_buffers = *num_buffers;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_buf_prepare(struct vb2_buffer *vb)
-> +{
-> +	struct npcm_video *video = vb2_get_drv_priv(vb->vb2_queue);
-> +
-> +	if (vb2_plane_size(vb, 0) < video->max_buffer_size)
+> +	clk_cfg = device_get_match_data(&pdev->dev);
+> +	if (!clk_cfg)
 > +		return -EINVAL;
 > +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_start_streaming(struct vb2_queue *q, unsigned int count)
-> +{
-> +	int rc;
-> +	struct npcm_video *video = vb2_get_drv_priv(q);
-> +
-> +	video->sequence = 0;
-> +
-> +	rc = npcm_video_start_frame(video);
-> +	if (rc) {
-> +		npcm_video_bufs_done(video, VB2_BUF_STATE_QUEUED);
-> +		return rc;
-> +	}
-> +
-> +	set_bit(VIDEO_STREAMING, &video->flags);
-> +	return 0;
-> +}
-> +
-> +static void npcm_video_stop_streaming(struct vb2_queue *q)
-> +{
-> +	struct npcm_video *video = vb2_get_drv_priv(q);
-> +	struct regmap *vcd = video->vcd_regmap;
-> +
-> +	clear_bit(VIDEO_STREAMING, &video->flags);
-> +
-> +	regmap_write(vcd, VCD_INTE, 0);
-> +	regmap_write(vcd, VCD_STAT, VCD_STAT_CLEAR);
-> +	npcm_video_gfx_reset(video);
-> +
-> +	npcm_video_bufs_done(video, VB2_BUF_STATE_ERROR);
-> +
-> +	video->ctrl_cmd = VCD_CMD_OPERATION_CAPTURE;
-> +}
-> +
-> +static void npcm_video_buf_queue(struct vb2_buffer *vb)
-> +{
-> +	struct npcm_video *video = vb2_get_drv_priv(vb->vb2_queue);
-> +	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
-> +	struct npcm_video_buffer *nvb = to_npcm_video_buffer(vbuf);
-> +	unsigned long flags;
-> +
-> +	spin_lock_irqsave(&video->lock, flags);
-> +	list_add_tail(&nvb->link, &video->buffers);
-> +	spin_unlock_irqrestore(&video->lock, flags);
-> +}
-> +
-> +static void npcm_video_buf_finish(struct vb2_buffer *vb)
-> +{
-> +	struct npcm_video *video = vb2_get_drv_priv(vb->vb2_queue);
-> +	struct regmap *vcd = video->vcd_regmap;
-> +	u32 val;
-> +	int ret;
-> +
-> +	ret = regmap_read_poll_timeout(vcd, VCD_STAT, val,
-> +				       !(val & VCD_STAT_BUSY), 1000,
-> +				       VCD_BUSY_TIMEOUT_US);
-> +
-> +	if (ret) {
-> +		dev_warn(video->dev, "Wait for VCD_STAT_BUSY timeout\n");
-> +		return;
-> +	}
-> +
-> +	/* Capture next frame when a video buffer is dequeued */
-> +	npcm_video_start_frame(video);
-> +
-> +	video->vb_index = vb->index;
-> +}
-> +
-> +static const struct vb2_ops npcm_video_vb2_ops = {
-> +	.queue_setup = npcm_video_queue_setup,
-> +	.wait_prepare = vb2_ops_wait_prepare,
-> +	.wait_finish = vb2_ops_wait_finish,
-> +	.buf_prepare = npcm_video_buf_prepare,
-> +	.buf_finish = npcm_video_buf_finish,
-> +	.start_streaming = npcm_video_start_streaming,
-> +	.stop_streaming = npcm_video_stop_streaming,
-> +	.buf_queue =  npcm_video_buf_queue,
-> +};
-> +
-> +static int npcm_video_setup_video(struct npcm_video *video)
-> +{
-> +	struct v4l2_device *v4l2_dev = &video->v4l2_dev;
-> +	struct video_device *vdev = &video->vdev;
-> +	struct vb2_queue *vbq = &video->queue;
-> +	int rc;
-> +
-> +	video->pix_fmt.pixelformat = V4L2_PIX_FMT_HEXTILE;
-> +	video->pix_fmt.field = V4L2_FIELD_NONE;
-> +	video->pix_fmt.colorspace = V4L2_COLORSPACE_SRGB;
-> +	video->v4l2_input_status = V4L2_IN_ST_NO_SIGNAL;
-> +
-> +	rc = v4l2_device_register(video->dev, v4l2_dev);
-> +	if (rc) {
-> +		dev_err(video->dev, "Failed to register v4l2 device\n");
-> +		return rc;
-> +	}
-> +
-> +	v4l2_ctrl_handler_init(&video->ctrl_handler, 2);
-> +	v4l2_ctrl_new_custom(&video->ctrl_handler, &npcm_ctrl_capture_mode,
-> +			     NULL);
-> +	v4l2_ctrl_new_custom(&video->ctrl_handler, &npcm_ctrl_rect_count, NULL);
-> +
-> +	if (video->ctrl_handler.error) {
-> +		dev_err(video->dev, "Failed to init controls: %d\n",
-> +			video->ctrl_handler.error);
-> +
-> +		rc = video->ctrl_handler.error;
-> +		goto rel_ctrl_handler;
-> +	}
-> +
-> +	v4l2_dev->ctrl_handler = &video->ctrl_handler;
-> +
-> +	vbq->type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-> +	vbq->io_modes = VB2_MMAP | VB2_READ | VB2_DMABUF;
-> +	vbq->dev = v4l2_dev->dev;
-> +	vbq->lock = &video->video_lock;
-> +	vbq->ops = &npcm_video_vb2_ops;
-> +	vbq->mem_ops = &vb2_dma_contig_memops;
-> +	vbq->drv_priv = video;
-> +	vbq->buf_struct_size = sizeof(struct npcm_video_buffer);
-> +	vbq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_MONOTONIC;
-> +	vbq->min_buffers_needed = 3;
-> +
-> +	rc = vb2_queue_init(vbq);
-> +	if (rc) {
-> +		dev_err(video->dev, "Failed to init vb2 queue\n");
-> +		goto rel_ctrl_handler;
-> +	}
-> +
-> +	vdev->queue = vbq;
-> +	vdev->fops = &npcm_video_v4l2_fops;
-> +	vdev->device_caps = V4L2_CAP_VIDEO_CAPTURE | V4L2_CAP_READWRITE |
-> +			    V4L2_CAP_STREAMING;
-> +	vdev->v4l2_dev = v4l2_dev;
-> +	strscpy(vdev->name, DEVICE_NAME, sizeof(vdev->name));
-> +	vdev->vfl_type = VFL_TYPE_VIDEO;
-> +	vdev->vfl_dir = VFL_DIR_RX;
-> +	vdev->release = video_device_release_empty;
-> +	vdev->ioctl_ops = &npcm_video_ioctls;
-> +	vdev->lock = &video->video_lock;
-> +
-> +	video_set_drvdata(vdev, video);
-> +	rc = video_register_device(vdev, VFL_TYPE_VIDEO, 0);
-> +	if (rc) {
-> +		dev_err(video->dev, "Failed to register video device\n");
-> +		goto rel_vb_queue;
-> +	}
-> +
-> +	return 0;
-> +
-> +rel_vb_queue:
-> +	vb2_queue_release(vbq);
-> +rel_ctrl_handler:
-> +	v4l2_ctrl_handler_free(&video->ctrl_handler);
-> +	v4l2_device_unregister(v4l2_dev);
-> +
-> +	return rc;
-> +}
-> +
-> +static int npcm_video_init(struct npcm_video *video)
-> +{
-> +	int irq;
-> +	int rc;
-> +	struct device *dev = video->dev;
-> +
-> +	irq = irq_of_parse_and_map(dev->of_node, 0);
-> +	if (!irq) {
-> +		dev_err(dev, "Failed to find VCD IRQ\n");
-> +		return -ENODEV;
-> +	}
-> +
-> +	rc = devm_request_threaded_irq(dev, irq, NULL, npcm_video_irq,
-> +				       IRQF_ONESHOT, DEVICE_NAME, video);
+> +	rc = device_property_read_u32(&pdev->dev, "nin_gpios", &nin_gpios);
 > +	if (rc < 0) {
-> +		dev_err(dev, "Failed to request IRQ %d\n", irq);
-> +		return rc;
-> +	}
-> +
-> +	of_reserved_mem_device_init(dev);
-> +
-> +	rc = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
-> +	if (rc) {
-> +		dev_err(dev, "Failed to set DMA mask\n");
-> +		of_reserved_mem_device_release(dev);
-> +	}
-> +
-> +	return rc;
-> +}
-> +
-> +static const struct regmap_config npcm_video_regmap_cfg = {
-> +	.reg_bits	= 32,
-> +	.reg_stride	= 4,
-> +	.val_bits	= 32,
-> +	.max_register	= VCD_FIFO,
-> +};
-> +
-> +static const struct regmap_config npcm_video_ece_regmap_cfg = {
-> +	.reg_bits	= 32,
-> +	.reg_stride	= 4,
-> +	.val_bits	= 32,
-> +	.max_register	= ECE_HEX_RECT_OFFSET,
-> +};
-> +
-> +static int npcm_video_probe(struct platform_device *pdev)
-> +{
-> +	int rc;
-> +	void __iomem *regs;
-> +	struct npcm_video *video = kzalloc(sizeof(*video), GFP_KERNEL);
-> +	struct device_node *ece_node;
-> +	struct platform_device *ece_pdev;
-> +
-> +	if (!video)
-> +		return -ENOMEM;
-> +
-> +	video->frame_rate = MAX_FRAME_RATE;
-> +	video->dev = &pdev->dev;
-> +	spin_lock_init(&video->lock);
-> +	mutex_init(&video->video_lock);
-> +	INIT_LIST_HEAD(&video->buffers);
-> +
-> +	regs = devm_platform_ioremap_resource(pdev, 0);
-> +	if (IS_ERR(regs)) {
-> +		dev_err(&pdev->dev, "Failed to parse VCD reg in DTS\n");
-> +		return PTR_ERR(regs);
-> +	}
-> +
-> +	video->vcd_regmap = devm_regmap_init_mmio(&pdev->dev, regs,
-> +						  &npcm_video_regmap_cfg);
-> +	if (IS_ERR(video->vcd_regmap)) {
-> +		dev_err(&pdev->dev, "Failed to initialize VCD regmap\n");
-> +		return PTR_ERR(video->vcd_regmap);
-> +	}
-> +
-> +	ece_node = of_parse_phandle(video->dev->of_node, "nuvoton,ece", 0);
-> +	if (IS_ERR(ece_node)) {
-> +		dev_err(&pdev->dev, "Failed to get ECE phandle in DTS\n");
-> +		return PTR_ERR(ece_node);
-> +	}
-> +
-> +	ece_pdev = of_find_device_by_node(ece_node);
-> +	of_node_put(ece_node);
-> +	if (IS_ERR(ece_pdev)) {
-> +		dev_err(&pdev->dev, "Failed to find ECE device\n");
-> +		return PTR_ERR(ece_pdev);
-> +	}
-> +
-> +	regs = devm_platform_ioremap_resource(ece_pdev, 0);
-> +	if (IS_ERR(regs)) {
-> +		dev_err(&pdev->dev, "Failed to parse ECE reg in DTS\n");
-> +		return PTR_ERR(regs);
-> +	}
-> +
-> +	video->ece.regmap = devm_regmap_init_mmio(&pdev->dev, regs,
-> +						  &npcm_video_ece_regmap_cfg);
-> +	if (IS_ERR(video->ece.regmap)) {
-> +		dev_err(&pdev->dev, "Failed to initialize ECE regmap\n");
-> +		return PTR_ERR(video->ece.regmap);
-> +	}
-> +
-> +	video->reset = devm_reset_control_get(&pdev->dev, NULL);
-> +	if (IS_ERR(video->reset)) {
-> +		dev_err(&pdev->dev, "Failed to get VCD reset control in DTS\n");
-> +		return PTR_ERR(video->reset);
-> +	}
-> +
-> +	video->ece.reset = devm_reset_control_get(&ece_pdev->dev, NULL);
-> +	if (IS_ERR(video->ece.reset)) {
-> +		dev_err(&pdev->dev, "Failed to get ECE reset control in DTS\n");
-> +		return PTR_ERR(video->ece.reset);
-> +	}
-> +
-> +	video->gcr_regmap = syscon_regmap_lookup_by_phandle(pdev->dev.of_node,
-> +							    "nuvoton,sysgcr");
-> +	if (IS_ERR(video->gcr_regmap))
-> +		return PTR_ERR(video->gcr_regmap);
-> +
-> +	video->gfx_regmap = syscon_regmap_lookup_by_phandle(pdev->dev.of_node,
-> +							    "nuvoton,sysgfxi");
-> +	if (IS_ERR(video->gfx_regmap))
-> +		return PTR_ERR(video->gfx_regmap);
-> +
-> +	rc = npcm_video_init(video);
-> +	if (rc)
-> +		return rc;
-> +
-> +	rc = npcm_video_setup_video(video);
-> +	if (rc)
-> +		return rc;
-> +
-> +	dev_info(video->dev, "NPCM video driver probed\n");
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_remove(struct platform_device *pdev)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct v4l2_device *v4l2_dev = dev_get_drvdata(dev);
-> +	struct npcm_video *video = to_npcm_video(v4l2_dev);
-> +
-> +	video_unregister_device(&video->vdev);
-> +
-> +	vb2_queue_release(&video->queue);
-> +
-> +	v4l2_ctrl_handler_free(&video->ctrl_handler);
-> +
-> +	v4l2_device_unregister(v4l2_dev);
-> +
-> +	npcm_video_ece_stop(video);
-> +
-> +	of_reserved_mem_device_release(dev);
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct of_device_id npcm_video_match[] = {
-> +	{ .compatible = "nuvoton,npcm750-vcd" },
-> +	{ .compatible = "nuvoton,npcm845-vcd" },
-> +	{},
-> +};
-> +
-> +MODULE_DEVICE_TABLE(of, npcm_video_match);
-> +
-> +static struct platform_driver npcm_video_driver = {
-> +	.driver = {
-> +		.name = DEVICE_NAME,
-> +		.of_match_table = npcm_video_match,
-> +	},
-> +	.probe = npcm_video_probe,
-> +	.remove = npcm_video_remove,
-> +};
-> +
-> +module_platform_driver(npcm_video_driver);
-> +
-> +MODULE_AUTHOR("Joseph Liu<kwliu@nuvoton.com>");
-> +MODULE_AUTHOR("Marvin Lin<kflin@nuvoton.com>");
-> +MODULE_DESCRIPTION("Driver for Nuvoton NPCM Video Capture/Encode Engine");
-> +MODULE_LICENSE("GPL");
+> +		dev_err(&pdev->dev, "Could not read ngpios property\n");
 
+Mention nin_gpios?
+
+> +		return -EINVAL;
+> +	}
+> +	rc = device_property_read_u32(&pdev->dev, "nout_gpios", &nout_gpios);
+> +	if (rc < 0) {
+> +		dev_err(&pdev->dev, "Could not read ngpios property\n");
+> +		return -EINVAL;
+> +	}
+> +
+> +	gpio->nin_sgpio = nin_gpios;
+> +	gpio->nout_sgpio = nout_gpios;
+> +	if (gpio->nin_sgpio > MAX_NR_HW_SGPIO || gpio->nout_sgpio > MAX_NR_HW_SGPIO) {
+> +		dev_err(&pdev->dev, "Number of GPIOs exceeds the maximum of %d: input: %d output: %d\n",
+> +			MAX_NR_HW_SGPIO, nin_gpios, nout_gpios);
+> +		return -EINVAL;
+> +	}
+> +
+> +	rc = device_property_read_u32(&pdev->dev, "bus-frequency", &sgpio_freq);
+> +	if (rc < 0) {
+> +		dev_err(&pdev->dev, "Could not read bus-frequency property\n");
+> +		return -EINVAL;
+> +	}
+> +
+> +	gpio->pclk = devm_clk_get(&pdev->dev, NULL);
+> +	if (IS_ERR(gpio->pclk)) {
+> +		dev_err(&pdev->dev, "devm_clk_get failed\n");
+
+For a user, reading such an error message, I’d prefer a more elaborate 
+message, for example, what won’t work, and that the serial GPIO driver 
+initialization is aborted.
+
+> +		return PTR_ERR(gpio->pclk);
+> +	}
+> +
+> +	rc = npcm_sgpio_setup_clk(gpio, clk_cfg, sgpio_freq);
+> +	if (rc < 0) {
+> +		dev_err(&pdev->dev, "Failed to setup clock\n");
+> +		return -EINVAL;
+> +	}
+> +	spin_lock_init(&gpio->lock);
+> +	gpio->chip.parent = &pdev->dev;
+> +	gpio->chip.ngpio = gpio->nin_sgpio + gpio->nout_sgpio;
+> +	gpio->chip.init_valid_mask = npcm_sgpio_init_valid_mask;
+> +	gpio->chip.direction_input = npcm_sgpio_dir_in;
+> +	gpio->chip.direction_output = npcm_sgpio_dir_out;
+> +	gpio->chip.get_direction = npcm_sgpio_get_direction;
+> +	gpio->chip.request = NULL;
+> +	gpio->chip.free = NULL;
+> +	gpio->chip.get = npcm_sgpio_get;
+> +	gpio->chip.set = npcm_sgpio_set;
+> +	gpio->chip.set_config = NULL;
+> +	gpio->chip.label = dev_name(&pdev->dev);
+> +	gpio->chip.base = -1;
+> +
+> +	rc = npcm_sgpio_setup_irqs(gpio, pdev);
+> +	if (rc < 0)
+> +		return rc;
+> +
+> +	rc = devm_gpiochip_add_data(&pdev->dev, &gpio->chip, gpio);
+> +	if (rc < 0)
+> +		return rc;
+> +
+> +	npcm_sgpio_setup_enable(gpio, true);
+> +	return 0;
+> +}
+> +
+> +static struct platform_driver npcm_sgpio_driver = {
+> +	.driver = {
+> +		.name = KBUILD_MODNAME,
+> +		.of_match_table = npcm_sgpio_of_table,
+> +	},
+> +	.probe	= npcm_sgpio_probe,
+> +};
+> +
+> +module_platform_driver(npcm_sgpio_driver);
+> +
+> +MODULE_AUTHOR("Jim Liu <jjliu0@nuvoton.com>");
+> +MODULE_AUTHOR("Joseph Liu <kwliu@nuvoton.com>");
+> +MODULE_DESCRIPTION("Nuvoton NPCM Serial GPIO Driver");
+> +MODULE_LICENSE("GPL v2");
+
+
+Kind regards,
+
+Paul
+
+
+[1]: https://notabs.org/coding/smallIntsBigPenalty.htm
