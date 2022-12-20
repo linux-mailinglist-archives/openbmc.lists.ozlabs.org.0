@@ -1,62 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B748F651DD5
-	for <lists+openbmc@lfdr.de>; Tue, 20 Dec 2022 10:44:45 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E5E3651DDD
+	for <lists+openbmc@lfdr.de>; Tue, 20 Dec 2022 10:45:40 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Nbs9l3xlnz3fBm
-	for <lists+openbmc@lfdr.de>; Tue, 20 Dec 2022 20:44:43 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NbsBp0X4Cz3cg0
+	for <lists+openbmc@lfdr.de>; Tue, 20 Dec 2022 20:45:38 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=QlQ461LS;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=hJX97MJD;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::431; helo=mail-pf1-x431.google.com; envelope-from=milkfafa@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42d; helo=mail-pf1-x42d.google.com; envelope-from=milkfafa@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=QlQ461LS;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=hJX97MJD;
 	dkim-atps=neutral
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Nbs6L0fG0z3fDJ
-	for <openbmc@lists.ozlabs.org>; Tue, 20 Dec 2022 20:41:45 +1100 (AEDT)
-Received: by mail-pf1-x431.google.com with SMTP id c13so8126467pfp.5
-        for <openbmc@lists.ozlabs.org>; Tue, 20 Dec 2022 01:41:45 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Nbs6M67SDz3fDD
+	for <openbmc@lists.ozlabs.org>; Tue, 20 Dec 2022 20:41:47 +1100 (AEDT)
+Received: by mail-pf1-x42d.google.com with SMTP id w26so8123791pfj.6
+        for <openbmc@lists.ozlabs.org>; Tue, 20 Dec 2022 01:41:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=fuPzabFK+ItSAS4Njr3Xe+weyJyvM5VjKuGON2TO41E=;
-        b=QlQ461LSl6/nNSszRRAa8o2iBTd+KVoKQMlAbv1zirCUs18dDrBF0bVkg5GuGojPa8
-         Wl+lQl1FRWh4B5wZvC6lCySbxJvQHUz7c2ETo7IEKfMtd80ei7mboyB7iA9T2+gY1iAj
-         yA+/dqGMj0UaO0Tow+JjIqxULklWOc4fE7fWJOzdYkoKogOYBoH8Fxm3JeTgUzbgbaiP
-         FXYVPPEcwsIwYMyColcLOVjM2sHHNeTnTbiyv7fVkME2BOCbq26hK9L7G8uRbp5J0OJL
-         /Z6vdizVosObwxDnfkuCwxGJ8RsoiDzI3S1Q5CcqG8uha3ovmZC5UBmFG9atvdSYTjgr
-         IVkw==
+        bh=wEq1Xvo7TP+/RkzCozMEE+yHkXadjfTkZE3mVm9oT9I=;
+        b=hJX97MJDpk6dol+gxHK7BWJGD+1yFrwYTRqFYOU/2iF5lu+bLmR9h+spT9QDClr6z7
+         5KQXdJ2rOeDLsadWplAKgJgsRTuPsJ71q4xu3HxLhzmGkfo7WIf9h029B1lW5tz9pNXf
+         dgSdELhFF1wO2aO4CzbBMiZHuNbEizZPTyLHa829ybKZX/3IpjzwLwSv8qr5TMlFE4QR
+         0g/dbMIVLHIgJelqyk5aXve1HXgOVxxCDj22Io8qgEkpZPOLsDk8+N6h+6lqrRYepHvg
+         Gw6aZ2XJksxag1ar7zSvYpacCNiWIS0zQ+jIku/QUd5N6/PPrX/HJSutAe+Mbmdunrt6
+         pDyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=fuPzabFK+ItSAS4Njr3Xe+weyJyvM5VjKuGON2TO41E=;
-        b=ybWtao1+o/iE/Z89v48g0RikI8jWqpsiXnY235uaWAKMb+U1OnH6cq2GoUFFQ1hZiC
-         /Pb6oJKZhB5KN8rTPHT/lXB5w88Pi7OX41UT5JPHbcTLr+Jg8uaJIZ18r2ISuInFarXH
-         KdPkZLOXHwjvRM7xh7ew149c4I0LCoMdsrBFF8q4DSIlX6Yc9Q5ixxY3o3qoEYkWl/4s
-         gqqhQcjTG2MfHuzbDdI5dad+coFQExnM/9z/sEeWVKPqbMMfs85kvXyKz1M5viiaW8PS
-         s5OfWM2Chbx/u6/nBZHlf/R4o8Mc+1dTy1fOFiBQCnW7igfQz4VzeyIn/tFjbH94QfnU
-         vUTg==
-X-Gm-Message-State: ANoB5pmVR+6jKTVkt1p5rTEtMxK2iy3PflMEgbl8HNyLMI5Hyf0ziNLi
-	arn4mNWXAjGfrPpUW4bfWbnyHKDcW7qpOQ==
-X-Google-Smtp-Source: AA0mqf46h3a5VLwRn21N3VCnPWLOMpM4q9QAXLLV+3nNtDy7Mn4Rt9QT6rkkqHPVseUwWIHK0c97LQ==
-X-Received: by 2002:a05:6a00:791:b0:577:f836:6bcb with SMTP id g17-20020a056a00079100b00577f8366bcbmr46682140pfu.29.1671529302340;
-        Tue, 20 Dec 2022 01:41:42 -0800 (PST)
+        bh=wEq1Xvo7TP+/RkzCozMEE+yHkXadjfTkZE3mVm9oT9I=;
+        b=KpbTENeEPOziYxKV16C5V65vtjFnm0A6Gpwj6OoB3HMpobhnzE927uhf63PY+1JkDE
+         3GyKtmZBceVU2YXCtmTvhJbV60XuzpqdKxuFN6GdRndXgu7ljzTvdKZM3fHKUjkv3pSG
+         B3g6tSCyre46UdCxdzgm0XUhaCFlX2RC+qsqshBrJ3/kOo0wNfJZVe/H060gSIwp/WEK
+         BuurTn3gXyCvFq50qz3IwIySf6Y7O9lJjTvRSpgTmZ6inCiyjWikyl+l6LBDrRKFvW/N
+         Y9igK2mxW+H64UQQt0DS701OQDcz4DhJYwMRkCfjpFoGj9GcyjqgTM6EBaJSGl88hXtv
+         PDBA==
+X-Gm-Message-State: ANoB5pm0duYYplo6BzxgbBaVlCsDzCXRKl71ysXWZy5DRdlXk6NYlrwx
+	Yo/pJPMOrqSwPZ1wf5sy3As=
+X-Google-Smtp-Source: AA0mqf4nO88TS9Ril5ywXIoiLe4H5qgAjOx0d7y20leNoCHwVd7XR2mebTf3bAlKx7TrOVX4bYnHFg==
+X-Received: by 2002:a05:6a00:705:b0:566:900e:1023 with SMTP id 5-20020a056a00070500b00566900e1023mr42629863pfl.3.1671529305475;
+        Tue, 20 Dec 2022 01:41:45 -0800 (PST)
 Received: from hcdev-d520mt2.. (60-250-192-107.hinet-ip.hinet.net. [60.250.192.107])
-        by smtp.gmail.com with ESMTPSA id b17-20020a621b11000000b00576a89978e5sm8210230pfb.63.2022.12.20.01.41.39
+        by smtp.gmail.com with ESMTPSA id b17-20020a621b11000000b00576a89978e5sm8210230pfb.63.2022.12.20.01.41.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Dec 2022 01:41:42 -0800 (PST)
+        Tue, 20 Dec 2022 01:41:45 -0800 (PST)
 From: Marvin Lin <milkfafa@gmail.com>
 To: mchehab@kernel.org,
 	hverkuil-cisco@xs4all.nl,
@@ -69,9 +69,9 @@ To: mchehab@kernel.org,
 	robh+dt@kernel.org,
 	krzysztof.kozlowski+dt@linaro.org,
 	andrzej.p@collabora.com
-Subject: [PATCH v9 1/7] ARM: dts: nuvoton: Add node for NPCM VCD and ECE engine
-Date: Tue, 20 Dec 2022 17:40:49 +0800
-Message-Id: <20221220094055.3011916-2-milkfafa@gmail.com>
+Subject: [PATCH v9 2/7] media: dt-binding: nuvoton: Add NPCM VCD and ECE engine
+Date: Tue, 20 Dec 2022 17:40:50 +0800
+Message-Id: <20221220094055.3011916-3-milkfafa@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20221220094055.3011916-1-milkfafa@gmail.com>
 References: <20221220094055.3011916-1-milkfafa@gmail.com>
@@ -92,56 +92,144 @@ Cc: kwliu@nuvoton.com, Marvin Lin <milkfafa@gmail.com>, devicetree@vger.kernel.o
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add node for Video Capture/Differentiation Engine (VCD) and Encoding
-Compression Engine (ECE) present on Nuvoton NPCM SoCs. Tested with
-Nuvoton NPCM750 evaluation board.
+Add dt-binding document for Video Capture/Differentiation Engine (VCD)
+and Encoding Compression Engine (ECE) present on Nuvoton NPCM SoCs.
 
 Signed-off-by: Marvin Lin <milkfafa@gmail.com>
 ---
- arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi | 23 +++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ .../bindings/media/nuvoton,npcm-ece.yaml      | 43 +++++++++++
+ .../bindings/media/nuvoton,npcm-vcd.yaml      | 72 +++++++++++++++++++
+ 2 files changed, 115 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/media/nuvoton,npcm-ece.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/nuvoton,npcm-vcd.yaml
 
-diff --git a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
-index c7b5ef15b716..13a76689e14a 100644
---- a/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
-+++ b/arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi
-@@ -179,6 +179,24 @@ fiux: spi@fb001000 {
- 			status = "disabled";
- 		};
- 
-+		vcd: vcd@f0810000 {
-+			compatible = "nuvoton,npcm750-vcd";
-+			reg = <0xf0810000 0x10000>;
-+			interrupts = <GIC_SPI 22 IRQ_TYPE_LEVEL_HIGH>;
-+			resets = <&rstc NPCM7XX_RESET_IPSRST2 NPCM7XX_RESET_VCD>;
-+			nuvoton,sysgcr = <&gcr>;
-+			nuvoton,sysgfxi = <&gfxi>;
-+			nuvoton,ece = <&ece>;
-+			status = "disabled";
-+		};
+diff --git a/Documentation/devicetree/bindings/media/nuvoton,npcm-ece.yaml b/Documentation/devicetree/bindings/media/nuvoton,npcm-ece.yaml
+new file mode 100644
+index 000000000000..b47468e54504
+--- /dev/null
++++ b/Documentation/devicetree/bindings/media/nuvoton,npcm-ece.yaml
+@@ -0,0 +1,43 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/media/nuvoton,npcm-ece.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+		ece: video-codec@f0820000 {
-+			compatible = "nuvoton,npcm750-ece";
-+			reg = <0xf0820000 0x2000>;
-+			resets = <&rstc NPCM7XX_RESET_IPSRST2 NPCM7XX_RESET_ECE>;
-+			status = "disabled";
-+		};
++title: Nuvoton NPCM Encoding Compression Engine
 +
- 		apb {
- 			#address-cells = <1>;
- 			#size-cells = <1>;
-@@ -554,6 +572,11 @@ i2c15: i2c@8f000 {
- 				pinctrl-0 = <&smb15_pins>;
- 				status = "disabled";
- 			};
++maintainers:
++  - Joseph Liu <kwliu@nuvoton.com>
++  - Marvin Lin <kflin@nuvoton.com>
 +
-+			gfxi: gfxi@e000 {
-+				compatible = "nuvoton,npcm750-gfxi", "syscon";
-+				reg = <0xe000 0x100>;
-+			};
- 		};
- 	};
- 
++description: |
++  Video Encoding Compression Engine (ECE) present on Nuvoton NPCM SoCs.
++
++properties:
++  compatible:
++    enum:
++      - nuvoton,npcm750-ece
++      - nuvoton,npcm845-ece
++
++  reg:
++    maxItems: 1
++
++  resets:
++    maxItems: 1
++
++required:
++  - compatible
++  - reg
++  - resets
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/reset/nuvoton,npcm7xx-reset.h>
++
++    ece: video-codec@f0820000 {
++        compatible = "nuvoton,npcm750-ece";
++        reg = <0xf0820000 0x2000>;
++        resets = <&rstc NPCM7XX_RESET_IPSRST2 NPCM7XX_RESET_ECE>;
++    };
+diff --git a/Documentation/devicetree/bindings/media/nuvoton,npcm-vcd.yaml b/Documentation/devicetree/bindings/media/nuvoton,npcm-vcd.yaml
+new file mode 100644
+index 000000000000..c885f559d2e5
+--- /dev/null
++++ b/Documentation/devicetree/bindings/media/nuvoton,npcm-vcd.yaml
+@@ -0,0 +1,72 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/media/nuvoton,npcm-vcd.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Nuvoton NPCM Video Capture/Differentiation Engine
++
++maintainers:
++  - Joseph Liu <kwliu@nuvoton.com>
++  - Marvin Lin <kflin@nuvoton.com>
++
++description: |
++  Video Capture/Differentiation Engine (VCD) present on Nuvoton NPCM SoCs.
++
++properties:
++  compatible:
++    enum:
++      - nuvoton,npcm750-vcd
++      - nuvoton,npcm845-vcd
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  resets:
++    maxItems: 1
++
++  nuvoton,sysgcr:
++    $ref: /schemas/types.yaml#/definitions/phandle
++    description: phandle to access GCR (Global Control Register) registers.
++
++  nuvoton,sysgfxi:
++    $ref: /schemas/types.yaml#/definitions/phandle
++    description: phandle to access GFXI (Graphics Core Information) registers.
++
++  nuvoton,ece:
++    $ref: /schemas/types.yaml#/definitions/phandle
++    description: phandle to access ECE (Encoding Compression Engine) registers.
++
++  memory-region:
++    maxItems: 1
++    description:
++      CMA pool to use for buffers allocation instead of the default CMA pool.
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - resets
++  - nuvoton,sysgcr
++  - nuvoton,sysgfxi
++  - nuvoton,ece
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/interrupt-controller/arm-gic.h>
++    #include <dt-bindings/reset/nuvoton,npcm7xx-reset.h>
++
++    vcd: vcd@f0810000 {
++        compatible = "nuvoton,npcm750-vcd";
++        reg = <0xf0810000 0x10000>;
++        interrupts = <GIC_SPI 22 IRQ_TYPE_LEVEL_HIGH>;
++        resets = <&rstc NPCM7XX_RESET_IPSRST2 NPCM7XX_RESET_VCD>;
++        nuvoton,sysgcr = <&gcr>;
++        nuvoton,sysgfxi = <&gfxi>;
++        nuvoton,ece = <&ece>;
++    };
 -- 
 2.34.1
 
