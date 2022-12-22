@@ -2,123 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7E57765421C
-	for <lists+openbmc@lfdr.de>; Thu, 22 Dec 2022 14:47:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A2916654421
+	for <lists+openbmc@lfdr.de>; Thu, 22 Dec 2022 16:21:05 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NdBTK2BGwz3fHV
-	for <lists+openbmc@lfdr.de>; Fri, 23 Dec 2022 00:47:49 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NdDXv3MHCz3bgm
+	for <lists+openbmc@lfdr.de>; Fri, 23 Dec 2022 02:21:03 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=tandemg.com header.i=@tandemg.com header.a=rsa-sha256 header.s=selector1 header.b=AV3VrGMH;
+	dkim=pass (2048-bit key; unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=mail header.b=bYpPeK+e;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=tandemg.com (client-ip=40.107.8.74; helo=eur04-vi1-obe.outbound.protection.outlook.com; envelope-from=moria.zuberi@tandemg.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=collabora.com (client-ip=2a00:1098:0:82:1000:25:2eeb:e5ab; helo=madras.collabora.co.uk; envelope-from=andrzej.p@collabora.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=tandemg.com header.i=@tandemg.com header.a=rsa-sha256 header.s=selector1 header.b=AV3VrGMH;
+	dkim=pass (2048-bit key; unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=mail header.b=bYpPeK+e;
 	dkim-atps=neutral
-Received: from EUR04-VI1-obe.outbound.protection.outlook.com (mail-vi1eur04on2074.outbound.protection.outlook.com [40.107.8.74])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NdB9x0W7Jz3fK1
-	for <openbmc@lists.ozlabs.org>; Fri, 23 Dec 2022 00:34:27 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=ed/n6yhpVwggILj5xkTrT86m0FaAlOTDv6Wd+Znofn5P+agxC3mPbPiqiFCiJW/F97eAVtb8GoEfKnWp0vLM//uCQU21moazjeary4VB32d2zeFx18eyqd4K8SVbRu2WZZ2oVZDLUetqtULjtAtdoAa8hN3R39JxAYBDELyXUkDTfxcB2znZrTNVSyq8WblgLlU3pl4X8a1B6VtFo3nTIO3jlqfi3e/5q9wHE9LXqlau2Xjzyp3iTL0J3PmmnNHHhBtVykVPpzXA9vijQqGmYfhn5aCrUOTViM+xJm+KAFl5kBMCLdkjmp1rBd7TgHPwvvFCaXkefjEgH+XbeTPVMQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3KfuDan8B6nIb+3TZfnDkp1Aq9HUeLygNeZQTFdtNjM=;
- b=GuFMLfpQAG/w2070qoU4PgzIrf6uQcl3y3iytsbTMYRVJcOIJNdL224H2K31mW5d8BpLX1On4txMEJZ9BVHrjr4ogQ8Ysuh9lvJGPbElSJSb95m2Wwqr0YIXt3mO7ygMYQSI9Wy7ggAtwS8Mr6GuX497sIOj5io2yQ0+fgMS1x1C1a20y0jvd8E+Eqkt2f3Z/Pd0nIfxOYPROnDbzKmRzMAjMxYpxpCGXXDBYQ9HqFdZ4Q3Wg/7GRytW2Vmojr3VFPvYJLWEkzqWtXC/olOQ5jpqARIf+QZOQshH/UcC0UhfNpH6BSzejJZc549QuINkBThx73NaIn6Xq7oKEG6OmQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=tandemg.com; dmarc=pass action=none header.from=tandemg.com;
- dkim=pass header.d=tandemg.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=tandemg.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3KfuDan8B6nIb+3TZfnDkp1Aq9HUeLygNeZQTFdtNjM=;
- b=AV3VrGMHi1YmaH2pzxm6vDtEmz8beviOYVUM3GHAqBxbw+gu/sCoJpuiG1LVdTC6GiKN6fhJQaIAURpOrOI5MeUiPP7x7MjMemzo1UIZTjKw0IxpqXIgtcwqNLNp2a984Er77WyoZ8OPVbieiulXdOhA4DK70NUqeXntNr0a9cQQ9hPO3ZMfI5pz2CZZehx/0V0pVOUd66V0AbklW/q4u1JCAehhMlKaRiAcs34oy0Riu4dj64RH0yR+9af2OMZJzV6BrbrK3u1INlwilW04OnSsY0gGqnCS/Sc61yUTJNlsVJZ8pvNIIo+PrLPOjzNFs/ukB/HbVsBrcUzMPmN6Aw==
-Received: from AM6PR06MB5941.eurprd06.prod.outlook.com (2603:10a6:20b:99::17)
- by AS8PR06MB8329.eurprd06.prod.outlook.com (2603:10a6:20b:440::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5924.16; Thu, 22 Dec
- 2022 13:34:07 +0000
-Received: from AM6PR06MB5941.eurprd06.prod.outlook.com
- ([fe80::3f89:1d5:1dc4:792e]) by AM6PR06MB5941.eurprd06.prod.outlook.com
- ([fe80::3f89:1d5:1dc4:792e%7]) with mapi id 15.20.5924.016; Thu, 22 Dec 2022
- 13:34:07 +0000
-From: Moria Zuberi <moria.zuberi@tandemg.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Sending variant of type bool to phosphor-dbus-monitor
-Thread-Topic: Sending variant of type bool to phosphor-dbus-monitor
-Thread-Index: AdkWCVZ09e8hyO79S6yTexVBOmmSdw==
-Date: Thu, 22 Dec 2022 13:34:07 +0000
-Message-ID:  <AM6PR06MB5941E46DE7146B9C9331D07280E89@AM6PR06MB5941.eurprd06.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=tandemg.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AM6PR06MB5941:EE_|AS8PR06MB8329:EE_
-x-ms-office365-filtering-correlation-id: 98ad551a-1336-4e77-25fe-08dae4213357
-x-ms-exchange-atpmessageproperties: SA
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:  TzKKL8lDEbvs6+YAtIiLM7BeILThHmrbnHr96nYjsQLtWoaXLf9ZEN/UiDkru8bdEVKYUowl5szPwBpdKl5HqDehAT+epz78eJfl3HX7Z5/uI6/rr3KEogO+sHzTH1Yd9nUfoVVm3JxqkpU08iPpnQLHfjFtGwzEp24fL6nl2fYJGQsH4LSorAxpyX6NubAWmO3qJ2MArVojNSeBs1LVbm9hZhnCW+sSLwlJ/2ZDD30TfTXkRYAY0qfFqv4Xx+eorFu+O+F7DGToSJ68EGO8jgkNbTX4sfJtZfVgKHOaIs/4LEZIU7nJtrLSQdF/cWW4vfRLPO1ZX5Qj/jNxLFjCJJFlu/nzPRL3BmQ0rFAI3syf+AL1iR23BUH9py0zL30SO6sC+3nZ0OW2ZIZ2ww8fk7fhGH3hMoB6UJ1SzDL5oc8kFq6M01ViWZcrBKNwMrALhddvd3upjA60M8sU/MaT6xi5XLcPyvbOwEY2sfT9lidcBgX26o43RM82cmbldoVSp44f7+k12lehSISwxXVX4czQ1R/uDk1ZtVz71sJO4XQhzpRGdznsW9YUxg1BXDCD/osLmHGz9NAXtcvQSCBH6zjztLIFu/bxf8Qy5i/tCC9kDrr+0o53kT5dsZZ3vvEh30hVSGiAuSUZHGn/q0+cSpMlnWmLOvGsbhc5yPNXvaNSJmDoe8S/B5XwpLgojJ1S49roAFlbyBt7yqTeEFtCsw==
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM6PR06MB5941.eurprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(366004)(136003)(39840400004)(376002)(396003)(346002)(451199015)(38100700002)(122000001)(55016003)(33656002)(38070700005)(86362001)(6916009)(9686003)(478600001)(186003)(6506007)(7696005)(71200400001)(66556008)(5660300002)(8936002)(41300700001)(2906002)(44832011)(8676002)(52536014)(316002)(76116006)(66946007)(66446008)(66476007)(64756008);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?utf-8?B?RnRCTlNuWC9wMU00Q1hFUkdwNFVyN3h0N3ZXdUhjSmZtTHQ2eDlMS1FiRU9l?=
- =?utf-8?B?QTMweFFZeEZvVVhhekdBM3ZSZGMzdGZDdzZCUk5teXFSM0NpNUNHZExZc05O?=
- =?utf-8?B?K2U4Z1hqUk1sL20zakQxRzdWN01KNW04cEhueGFlUk5TeFduQVZaVThmTXZI?=
- =?utf-8?B?d1hDaUpzcFdpZUUwZFJJYzRabWZQMUJWTFFwY2FQZjBRdmlxMU1LeTlsVWh2?=
- =?utf-8?B?Qk1jVXlvNDJmS1JHdkZLV0pybXViZUxrRTJNOE1NN3dQQXpQRHo4aHVyZVZp?=
- =?utf-8?B?SzNEcXlSTzQ3cTYvcE9najQyMmYzK3pUbUk0Q0ZySU9wWFljRlVOTlhXTy9r?=
- =?utf-8?B?SEVpWTVsNkhwamFOTE9MS1VLVXJLSnltMExWY2k1aXZpOWNYNG9sZ2tLL3Uz?=
- =?utf-8?B?NVJZdXFRTnZ5Z2kwb0RxZjJnRnZIZVVUOXp1SmgwTkNxWVRHcnJ2T1pGYWZo?=
- =?utf-8?B?MTdZSHhrWU9td3EyOGhMOVZFa24zQXNyNTVuY3YvMEVYSEVJbTBoTUxKVU12?=
- =?utf-8?B?N0pUZk5ySGh0SW9HMjFoTjg0MTh0NDhiRk9VVzIweHFnZlhvd08rczVBdEVk?=
- =?utf-8?B?cjFRcHB3Qi9MQTRxYm9uYkNMSFNwakdzYXIvUk4yQ3pmbEs3UFo1QWVnQnNL?=
- =?utf-8?B?ZzVmTjczdVczdlZpUE9YNWVFU1N0OENtdFdPY0FieXFBbUtLblF3UC9IeHRC?=
- =?utf-8?B?dk00Rk9Idnl1R2VBMTNucHFxcGtPcHQ4TlNUY3FZRzNkci9CRC9CVHp5Q1Nv?=
- =?utf-8?B?SENFc2daK3dVcmx1cjNiNGdTTGUxak40cnN1YWxpZ0pMcGFSYVFUTmFrT1BF?=
- =?utf-8?B?Szl4TlZJd3ZOcVRSUDFybHpmSVE5OXJ1WHBhLzBoNUJmT1dyUERrNkRQczhY?=
- =?utf-8?B?bGVERU1taTF1bDJzUGNHZzBjOW5aMW1RdmJUZVV5S2VLOXZ6REZlaWxEakdH?=
- =?utf-8?B?RlBBYzhBeGVmdlVHK1BaeC93c0hwNkhCTUZWTDV2b2JqUTJEb2orQ2l3Qnl6?=
- =?utf-8?B?bHVwZmZNa3dlQXV1aCtNM295a1cyMEdnM0VBKzRub0tCcmFtZFRQOGhXK2Ru?=
- =?utf-8?B?ZGpkMFFBQU5kOC9iRVdLdE1CL241dTZHbTB2SWNGVEZJWjI2VDRJQVJLYjF6?=
- =?utf-8?B?Sk96WWwrUVlTWW0zUHpFUThaTlFxNFJaaDFGSzA0VlA3ZFRnVTkrMEc3YU5L?=
- =?utf-8?B?cXJYWi9nRDVTR1FNM05GRk9lTkZtbWdXTC9ONjBhMmRxbll1MUtucWJ6Q04v?=
- =?utf-8?B?UUJQTWJLejBWQ29qa3QxN3prWFlOZk5KY3VBb1JwczNsZnR2dGhaTmtzK1E4?=
- =?utf-8?B?MlV2RzJsaG56cUJ3VW1aUUpGNXU1aE9IQndTSXRCcytTeUhiZG93aDVmcU51?=
- =?utf-8?B?UDdPcmVsWW1oMmRNT0JuQ2RjTTdoZHZkVE1qUVB6bmZkR05OTkhLTklWL0lR?=
- =?utf-8?B?VHdodzBNeEdwMnRoNmJGY3RsemZRRHBaUDhRN0ZtbTMxY2syUnlROG52KytU?=
- =?utf-8?B?VXh3WHF6aWtjMlRVUlVoWVc0VWJIeUJXcUxtL3JLMWp3ZDM1MnVaSVkybytm?=
- =?utf-8?B?T0hVVExzRWZBRlhRQ2RWY013T0VmWllzMXRxRTAwVnJQbnBiaHM3b1pZMUsv?=
- =?utf-8?B?K3p1MjFmWVJZVXA4ZnBVYkdRNlhBVXpLUHhRalM5TnBzS2NxWFRNTllybFpX?=
- =?utf-8?B?SlRSMmdpeWtUWGpQTDV4MVMrQWxLSEpOTkVKeFNBd082NTlTTTBqQm5NcEd2?=
- =?utf-8?B?S3A4aDdSdjdPODNNdXB4Mnl5SlVpdSs5c091OFJTZ2dBS0lWMFp6TnNVaEhw?=
- =?utf-8?B?aVVCUlhKY0JLY29IbVdSNm1hMkZBMXBJVnA0Z0hwczBYMkQyOENKM1N2aDhN?=
- =?utf-8?B?ZzEwTWtkUTBCQVNSa1dtTkEzOXAvbVJmZGwvWWp0cTltU0JqUTlWUVQvMnJj?=
- =?utf-8?B?MFNOOGlRbi85cjRDZjhieXNTMlQ0RHNKZ1VDdzJGbE1Sbzg1aGtKbFJvS1kz?=
- =?utf-8?B?UndUL2dqTTdTZnBLT0hBVGVGVlBkNy9ZdDFVbjV4TFhkYWRXbGxKOTV3ajB0?=
- =?utf-8?B?SzRzMFA4ZDIxRmIwTDVpZUZsZ2NpY1VQMUQzZ09JTkpaLzVhQ0tIKzNlcDBH?=
- =?utf-8?B?VEozVWFrTk5rTlhtTmZ0UktZOVI5UFo4MTVSayt5c01jaHNCNzRwM29sL3Nn?=
- =?utf-8?Q?x/FpYMVkpxZb7XR8qjk0S/83L3rIAhds1xmIJ85Oe3Ft?=
-Content-Type: multipart/alternative;
-	boundary="_000_AM6PR06MB5941E46DE7146B9C9331D07280E89AM6PR06MB5941eurp_"
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NdDXF70qVz2xl6
+	for <openbmc@lists.ozlabs.org>; Fri, 23 Dec 2022 02:20:29 +1100 (AEDT)
+Received: from [192.168.0.192] (unknown [194.146.248.75])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: andrzej.p)
+	by madras.collabora.co.uk (Postfix) with ESMTPSA id E32616602CD4;
+	Thu, 22 Dec 2022 15:20:13 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1671722414;
+	bh=0WLku65f/V6ZFbTI8eRaD22um8ER97RajgZyN2ZWo+w=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=bYpPeK+exgNtp/fIMWWDdygR1jbWZ+llFWRNMB19amjByhA3Y8ydSKLTnwVbY+Uxw
+	 6xs7cztJbbVOOKen5ui4FK6AIeSR8Uu3M4XxwF4C/7NQeQix16PjOR9oBjg3BqbZw1
+	 X8k/wU71V0+IKxaJ/xfuQCC7GUfGIonMEVRQ9U+P+e7txp+x0CXyHevGptTF/OeQmG
+	 DbpHYERswk2kdGi38AR4rCczLFa0G+o7al15HOrJdw1QYD583Ey/W0uNv1psVW3gS+
+	 +9SsYbCZZH9DJkYTrDGHWa1qHe8ERf7WKdHkh3MshmGJPYsjqWtDq8fd11scLHOIpS
+	 17ZwZdeagFy5w==
+Message-ID: <f7067028-9662-7776-80a5-3bbe046c92e0@collabora.com>
+Date: Thu, 22 Dec 2022 16:20:11 +0100
 MIME-Version: 1.0
-X-OriginatorOrg: tandemg.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AM6PR06MB5941.eurprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 98ad551a-1336-4e77-25fe-08dae4213357
-X-MS-Exchange-CrossTenant-originalarrivaltime: 22 Dec 2022 13:34:07.2593
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: cd9e0716-88a7-42c4-a82b-7a64f204926d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: fQGtFr/+pRu2id0AP9Pn4FwWcDs7NSe7HjoN09FJXfODcpmwbl9ebgoCj/Vl+An2qVAf4g/p4hUf2hmSS/W2J2LaDag/EAH/a1I3qqolxfo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: AS8PR06MB8329
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH v2] USB: gadget: Add ID numbers to configfs-gadget driver
+ names
+To: Chanh Nguyen <chanh@os.amperecomputing.com>,
+ OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Frank Li
+ <frank.li@nxp.com>, Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+ Dan Vacura <w36195@motorola.com>, Jakob Koschel <jakobkoschel@gmail.com>,
+ Alan Stern <stern@rowland.harvard.edu>,
+ Vijayavardhan Vennapusa <vvreddy@codeaurora.org>,
+ Rondreis <linhaoguo86@gmail.com>, linux-usb@vger.kernel.org,
+ linux-kernel@vger.kernel.org,
+ Open Source Submission <patches@amperecomputing.com>
+References: <20221221091317.19380-1-chanh@os.amperecomputing.com>
+Content-Language: en-US
+From: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+In-Reply-To: <20221221091317.19380-1-chanh@os.amperecomputing.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -133,132 +76,130 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_AM6PR06MB5941E46DE7146B9C9331D07280E89AM6PR06MB5941eurp_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Hi,
 
-SGksDQoNCkkgYW0gdHJ5aW5nIHRvIGludm9rZSBhIERCdXMgbWV0aG9kIHRvIHR1cm4gb24gYW4g
-TEVEICphc3NlcnQgbGVkIGdyb3VwKSB2aWEgREJ1cyB3aXRoIHBob3NwaG9yLWRidXMtbW9uaXRv
-ci4NCg0KVGhlIG1ldGhvZOKAmXMgc2lnbmF0dXJlIGlzIChjYW4gYWxzbyBiZSBkb25lIHdpdGgg
-c2V0LXByb3BlcnR5LCBidXQgSSBkb27igJl0IHRoaW5rIHBob3NwaG9yLWRidXMtbW9uaXRvciBz
-dXBwb3J0cyB0aGlzIHR5cGUgb2YgY2FsbGJhY2spIDoNCmJ1c2N0bCBjYWxsIHh5ei5vcGVuYm1j
-X3Byb2plY3QuTEVELkdyb3VwTWFuYWdlciAveHl6L29wZW5ibWNfcHJvamVjdC9sZWQvZ3JvdXBz
-L2F0dGVudGlvbl9vbiBvcmcuZnJlZWRlc2t0b3AuREJ1cy5Qcm9wZXJ0aWVzIFNldCBzc3YgeHl6
-Lm9wZW5ibWNfcHJvamVjdC5MZWQuR3JvdXAgQXNzZXJ0ZWQgYiB0cnVlDQoNCkFuZCBpbiB0aGUg
-LnlhbWwgZmlsZSBJIHdyaXRlOg0KLSBuYW1lOiBhdHRlbiBsZWQgb24NCiAgZGVzY3JpcHRpb246
-ID4NCiAgICAnVHVybiBvbiBhdHRlbnRpb24gTEVELicNCiAgY2xhc3M6IGNhbGxiYWNrDQogIGNh
-bGxiYWNrOiBtZXRob2QNCiAgc2VydmljZTogeHl6Lm9wZW5ibWNfcHJvamVjdC5MRUQuR3JvdXBN
-YW5hZ2VyDQogIHBhdGg6IC94eXovb3BlbmJtY19wcm9qZWN0L2xlZC9ncm91cHMvYXR0ZW50aW9u
-X29uDQogIGludGVyZmFjZTogb3JnLmZyZWVkZXNrdG9wLkRCdXMuUHJvcGVydGllcw0KICBtZXRo
-b2Q6IFNldA0KICBhcmdzOg0KICAgIC0gdmFsdWU6IHh5ei5vcGVuYm1jX3Byb2plY3QuTGVkLkdy
-b3VwDQogICAgICB0eXBlOiBzdHJpbmcNCiAgICAtIHZhbHVlOiBBc3NlcnRlZA0KICAgICAgdHlw
-ZTogc3RyaW5nDQogICAgLSB2YWx1ZTogdHJ1ZQ0KICAgICAgdHlwZTogYm9vbGVhbg0KDQpCdXQg
-dGhlbiBJIGdldCBEQnVzIGVycm9yOg0KbWV0aG9kIGNhbGwgdGltZT0xNzIuMzU5MDQxIHNlbmRl
-cj06MS40OSAtPiBkZXN0aW5hdGlvbj14eXoub3BlbmJtY19wcm9qZWN0LkxFRC5Hcm91cE1hbmFn
-ZXIgc2VyaWFsPTExMiBwYXRoPS94eXovb3BlbmJtY19wcm9qZWN0L2xlZC9ncm91cHMvYXR0ZW50
-aW9uX29uOyBpbnRlcmZhY2U9b3JnLmZyZWVkZXNrdG9wLkRCdXMuUHJvcGVydGllczsgbWVtYmVy
-PVNldA0KICAgc3RyaW5nICJ4eXoub3BlbmJtY19wcm9qZWN0LkxlZC5Hcm91cCINCiAgIHN0cmlu
-ZyAiQXNzZXJ0ZWQiDQogICBib29sZWFuIHRydWUNCmVycm9yIHRpbWU9MTcyLjM1OTA5OCBzZW5k
-ZXI9OjEuNTUgLT4gZGVzdGluYXRpb249OjEuNDkgZXJyb3JfbmFtZT1vcmcuZnJlZWRlc2t0b3Au
-REJ1cy5FcnJvci5JbnZhbGlkU2lnbmF0dXJlIHJlcGx5X3NlcmlhbD0xMTINCiAgIHN0cmluZyAi
-SW5jb3JyZWN0IHNpZ25hdHVyZSB3aGVuIHNldHRpbmcgcHJvcGVydHkgJ0Fzc2VydGVkJywgZXhw
-ZWN0ZWQgJ3YnLCBnb3QgJ2InLiINCg0KSSBoYXZlIGFsc28gdHJpZWQgdG8gc2V0IOKAmHR5cGXi
-gJkgaW4gdGhlIC55YW1sIHRvIOKAnHZhcmlhbnTigJ0gYW5kIGFsc28g4oCcdmFyaWFudFtib29s
-ZWFuXeKAnSwgYnV0IHRoZXNlIGRpZCBub3QgY29tcGlsZS4NCg0KVGhhbmtzLA0KTW9yaWENCg0K
+W dniu 21.12.2022 o 10:13, Chanh Nguyen pisze:
+> It is unable to use configfs to attach more than one gadget. When
+> attaching the second gadget, it always fails and the kernel message
+> prints out:
+> 
+> Error: Driver 'configfs-gadget' is already registered, aborting...
+> UDC core: g1: driver registration failed: -16
+> 
 
---_000_AM6PR06MB5941E46DE7146B9C9331D07280E89AM6PR06MB5941eurp_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+I assume you are interested in a scenario where there is more than one
+UDC available which means you can have more than one active gadget?
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
-cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
-Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
-ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
-PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
-IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1m
-YWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAy
-IDQ7fQ0KLyogU3R5bGUgRGVmaW5pdGlvbnMgKi8NCnAuTXNvTm9ybWFsLCBsaS5Nc29Ob3JtYWws
-IGRpdi5Nc29Ob3JtYWwNCgl7bWFyZ2luOjBjbTsNCglmb250LXNpemU6MTEuMHB0Ow0KCWZvbnQt
-ZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmOw0KCW1zby1mYXJlYXN0LWxhbmd1YWdlOkVOLVVT
-O30NCnNwYW4uRW1haWxTdHlsZTE3DQoJe21zby1zdHlsZS10eXBlOnBlcnNvbmFsLWNvbXBvc2U7
-DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7DQoJY29sb3I6d2luZG93dGV4dDt9
-DQouTXNvQ2hwRGVmYXVsdA0KCXttc28tc3R5bGUtdHlwZTpleHBvcnQtb25seTsNCglmb250LWZh
-bWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjsNCgltc28tZmFyZWFzdC1sYW5ndWFnZTpFTi1VUzt9
-DQpAcGFnZSBXb3JkU2VjdGlvbjENCgl7c2l6ZTo2MTIuMHB0IDc5Mi4wcHQ7DQoJbWFyZ2luOjcy
-LjBwdCA3Mi4wcHQgNzIuMHB0IDcyLjBwdDt9DQpkaXYuV29yZFNlY3Rpb24xDQoJe3BhZ2U6V29y
-ZFNlY3Rpb24xO30NCi0tPjwvc3R5bGU+PCEtLVtpZiBndGUgbXNvIDldPjx4bWw+DQo8bzpzaGFw
-ZWRlZmF1bHRzIHY6ZXh0PSJlZGl0IiBzcGlkbWF4PSIxMDI2IiAvPg0KPC94bWw+PCFbZW5kaWZd
-LS0+PCEtLVtpZiBndGUgbXNvIDldPjx4bWw+DQo8bzpzaGFwZWxheW91dCB2OmV4dD0iZWRpdCI+
-DQo8bzppZG1hcCB2OmV4dD0iZWRpdCIgZGF0YT0iMSIgLz4NCjwvbzpzaGFwZWxheW91dD48L3ht
-bD48IVtlbmRpZl0tLT4NCjwvaGVhZD4NCjxib2R5IGxhbmc9ImVuLUlMIiBsaW5rPSIjMDU2M0Mx
-IiB2bGluaz0iIzk1NEY3MiIgc3R5bGU9IndvcmQtd3JhcDpicmVhay13b3JkIj4NCjxkaXYgY2xh
-c3M9IldvcmRTZWN0aW9uMSI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1V
-UyI+SGksPGJyPg0KPGJyPg0KSSBhbSB0cnlpbmcgdG8gaW52b2tlIGEgREJ1cyBtZXRob2QgdG8g
-dHVybiBvbiBhbiBMRUQgKmFzc2VydCBsZWQgZ3JvdXApIHZpYSBEQnVzIHdpdGggcGhvc3Bob3It
-ZGJ1cy1tb25pdG9yLjxicj4NCjxicj4NClRoZSBtZXRob2TigJlzIHNpZ25hdHVyZSBpcyAoY2Fu
-IGFsc28gYmUgZG9uZSB3aXRoIHNldC1wcm9wZXJ0eSwgYnV0IEkgZG9u4oCZdCB0aGluayBwaG9z
-cGhvci1kYnVzLW1vbml0b3Igc3VwcG9ydHMgdGhpcyB0eXBlIG9mIGNhbGxiYWNrKSA6PGJyPg0K
-YnVzY3RsIGNhbGwgeHl6Lm9wZW5ibWNfcHJvamVjdC5MRUQuR3JvdXBNYW5hZ2VyIC94eXovb3Bl
-bmJtY19wcm9qZWN0L2xlZC9ncm91cHMvYXR0ZW50aW9uX29uIG9yZy5mcmVlZGVza3RvcC5EQnVz
-LlByb3BlcnRpZXMgU2V0DQo8Yj5zc3Y8L2I+IHh5ei5vcGVuYm1jX3Byb2plY3QuTGVkLkdyb3Vw
-IEFzc2VydGVkIDxiPmIgdHJ1ZTxicj4NCjxicj4NCjwvYj5BbmQgaW4gdGhlIC55YW1sIGZpbGUg
-SSB3cml0ZTo8YnI+DQotIG5hbWU6IGF0dGVuIGxlZCBvbjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4N
-CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj4mbmJzcDsgZGVzY3JpcHRp
-b246ICZndDs8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3Bh
-biBsYW5nPSJFTi1VUyI+Jm5ic3A7Jm5ic3A7Jm5ic3A7ICdUdXJuIG9uIGF0dGVudGlvbiBMRUQu
-JzxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9
-IkVOLVVTIj4mbmJzcDsgY2xhc3M6IGNhbGxiYWNrPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAg
-Y2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPiZuYnNwOyBjYWxsYmFjazogbWV0
-aG9kPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFu
-Zz0iRU4tVVMiPiZuYnNwOyBzZXJ2aWNlOiB4eXoub3BlbmJtY19wcm9qZWN0LkxFRC5Hcm91cE1h
-bmFnZXI8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBs
-YW5nPSJFTi1VUyI+Jm5ic3A7IHBhdGg6IC94eXovb3BlbmJtY19wcm9qZWN0L2xlZC9ncm91cHMv
-YXR0ZW50aW9uX29uPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
-PHNwYW4gbGFuZz0iRU4tVVMiPiZuYnNwOyBpbnRlcmZhY2U6IG9yZy5mcmVlZGVza3RvcC5EQnVz
-LlByb3BlcnRpZXM8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48
-c3BhbiBsYW5nPSJFTi1VUyI+Jm5ic3A7IG1ldGhvZDogU2V0PG86cD48L286cD48L3NwYW4+PC9w
-Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPiZuYnNwOyBhcmdzOjxv
-OnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVO
-LVVTIj4mbmJzcDsmbmJzcDsmbmJzcDsgLSB2YWx1ZTogeHl6Lm9wZW5ibWNfcHJvamVjdC5MZWQu
-R3JvdXA8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBs
-YW5nPSJFTi1VUyI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IHR5cGU6IHN0cmluZzxv
-OnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVO
-LVVTIj4mbmJzcDsmbmJzcDsmbmJzcDsgLSB2YWx1ZTogQXNzZXJ0ZWQ8bzpwPjwvbzpwPjwvc3Bh
-bj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IHR5cGU6IHN0cmluZzxvOnA+PC9vOnA+PC9zcGFuPjwvcD4N
-CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj4mbmJzcDsmbmJzcDsmbmJz
-cDsgLSB2YWx1ZTogdHJ1ZTxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3Jt
-YWwiPjxiPjxzcGFuIGxhbmc9IkVOLVVTIj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsg
-dHlwZTogYm9vbGVhbjxvOnA+PC9vOnA+PC9zcGFuPjwvYj48L3A+DQo8cCBjbGFzcz0iTXNvTm9y
-bWFsIj48Yj48c3BhbiBsYW5nPSJFTi1VUyI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9iPjwv
-cD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj5CdXQgdGhlbiBJIGdl
-dCBEQnVzIGVycm9yOjxicj4NCm1ldGhvZCBjYWxsIHRpbWU9MTcyLjM1OTA0MSBzZW5kZXI9OjEu
-NDkgLSZndDsgZGVzdGluYXRpb249eHl6Lm9wZW5ibWNfcHJvamVjdC5MRUQuR3JvdXBNYW5hZ2Vy
-IHNlcmlhbD0xMTIgcGF0aD0veHl6L29wZW5ibWNfcHJvamVjdC9sZWQvZ3JvdXBzL2F0dGVudGlv
-bl9vbjsgaW50ZXJmYWNlPW9yZy5mcmVlZGVza3RvcC5EQnVzLlByb3BlcnRpZXM7IG1lbWJlcj1T
-ZXQ8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5n
-PSJFTi1VUyI+Jm5ic3A7Jm5ic3A7IHN0cmluZyAmcXVvdDt4eXoub3BlbmJtY19wcm9qZWN0Lkxl
-ZC5Hcm91cCZxdW90OzxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
-PjxzcGFuIGxhbmc9IkVOLVVTIj4mbmJzcDsmbmJzcDsgc3RyaW5nICZxdW90O0Fzc2VydGVkJnF1
-b3Q7PG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFu
-Zz0iRU4tVVMiPiZuYnNwOyZuYnNwOyBib29sZWFuIHRydWU8bzpwPjwvbzpwPjwvc3Bhbj48L3A+
-DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+ZXJyb3IgdGltZT0xNzIu
-MzU5MDk4IHNlbmRlcj06MS41NSAtJmd0OyBkZXN0aW5hdGlvbj06MS40OSBlcnJvcl9uYW1lPW9y
-Zy5mcmVlZGVza3RvcC5EQnVzLkVycm9yLkludmFsaWRTaWduYXR1cmUgcmVwbHlfc2VyaWFsPTEx
-MjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9
-IkVOLVVTIj4mbmJzcDsmbmJzcDsgc3RyaW5nICZxdW90O0luY29ycmVjdCBzaWduYXR1cmUgd2hl
-biBzZXR0aW5nIHByb3BlcnR5ICdBc3NlcnRlZCcsIGV4cGVjdGVkICd2JywgZ290ICdiJy4mcXVv
-dDs8YnI+DQo8YnI+DQpJIGhhdmUgYWxzbyB0cmllZCB0byBzZXQg4oCYdHlwZeKAmSBpbiB0aGUg
-LnlhbWwgdG8g4oCcdmFyaWFudOKAnSBhbmQgYWxzbyA8L3NwYW4+4oCcdmFyaWFudFtib29sZWFu
-XeKAnTxzcGFuIGxhbmc9IkVOLVVTIj4sIGJ1dCB0aGVzZSBkaWQgbm90IGNvbXBpbGUuPG86cD48
-L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMi
-PjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFu
-IGxhbmc9IkVOLVVTIj5UaGFua3MsPGJyPg0KTW9yaWE8L3NwYW4+PHNwYW4gbGFuZz0iRU4tVVMi
-PjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9
-IkVOLVVTIj48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjwvYm9keT4NCjwv
-aHRtbD4NCg==
+> This commit fixes the problem by a ".N" suffix added to each
+> configfs_gadget's driver name (where N is a unique ID number),
+> thus making the names distinct.
+> 
+> Fixes: fc274c1e9973 ("USB: gadget: Add a new bus for gadgets")
+> Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
+> 
+> ---
+> Changes in v2:
+>    - Replace scnprintf() by kasprintf() to simplify the code [CJ]
+>    - Move the clean up code from gadgets_drop() to
+>      gadget_info_attr_release()                        [Frank Li]
+>    - Correct the resource free up in gadges_make()   [Alan Stern]
+>    - Remove the unnecessary variable in gadgets_make()    [Chanh]
+>    - Fixes minor grammar issue in commit message          [Chanh]
+> ---
+>   drivers/usb/gadget/configfs.c | 25 ++++++++++++++++++++++++-
+>   1 file changed, 24 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
+> index 96121d1c8df4..7faf68bfa716 100644
+> --- a/drivers/usb/gadget/configfs.c
+> +++ b/drivers/usb/gadget/configfs.c
+> @@ -3,6 +3,7 @@
+>   #include <linux/module.h>
+>   #include <linux/slab.h>
+>   #include <linux/device.h>
+> +#include <linux/idr.h>
+>   #include <linux/kstrtox.h>
+>   #include <linux/nls.h>
+>   #include <linux/usb/composite.h>
+> @@ -11,6 +12,8 @@
+>   #include "u_f.h"
+>   #include "u_os_desc.h"
+>   
+> +static DEFINE_IDA(driver_id_numbers);
+> +
+>   int check_user_usb_string(const char *name,
+>   		struct usb_gadget_strings *stringtab_dev)
+>   {
+> @@ -52,6 +55,9 @@ struct gadget_info {
+>   	char qw_sign[OS_STRING_QW_SIGN_LEN];
+>   	spinlock_t spinlock;
+>   	bool unbind;
+> +
+> +	/* Make driver names unique */
+> +	int driver_id_number;
+>   };
+>   
+>   static inline struct gadget_info *to_gadget_info(struct config_item *item)
+> @@ -393,6 +399,8 @@ static void gadget_info_attr_release(struct config_item *item)
+>   	WARN_ON(!list_empty(&gi->string_list));
+>   	WARN_ON(!list_empty(&gi->available_func));
+>   	kfree(gi->composite.gadget_driver.function);
+> +	kfree(gi->composite.gadget_driver.driver.name);
+> +	ida_free(&driver_id_numbers, gi->driver_id_number);
+>   	kfree(gi);
+>   }
+>   
+> @@ -1623,13 +1631,28 @@ static struct config_group *gadgets_make(
+>   
+>   	gi->composite.gadget_driver = configfs_driver_template;
+>   
+> +	gi->driver_id_number = ida_alloc(&driver_id_numbers, GFP_KERNEL);
+> +	if (gi->driver_id_number < 0)
+> +		goto err;
+> +
+> +	gi->composite.gadget_driver.driver.name = kasprintf(GFP_KERNEL,
+> +							    "configfs-gadget.%d",
+> +							    gi->driver_id_number);
 
---_000_AM6PR06MB5941E46DE7146B9C9331D07280E89AM6PR06MB5941eurp_--
+I'm wondering if it maybe makes more sense to use the gadget name as a suffix
+instead?
+
+	gi->composite.gadget_driver.driver.name =
+		kasprintf(GFP_KERNEL, "configfs-gadget.%s" name);
+
+So that when you
+
+mkdir g1
+
+you will ultimately see /sys/bus/gadget/drivers/configfs-gadget.g1
+
+instead of /sys/bus/gadget/drivers/configfs-gadget.0
+
+Gadget names are guaranteed to be unique because they are created
+as sibling subdirectories in configfs. Your patch would then be greatly
+simplified (no need for ida).
+
+Regards,
+
+Andrzej
+
+> +	if (!gi->composite.gadget_driver.driver.name)
+> +		goto out_free_driver_id_number;
+> +
+>   	gi->composite.gadget_driver.function = kstrdup(name, GFP_KERNEL);
+>   	gi->composite.name = gi->composite.gadget_driver.function;
+>   
+>   	if (!gi->composite.gadget_driver.function)
+> -		goto err;
+> +		goto out_free_driver_name;
+>   
+>   	return &gi->group;
+> +
+> +out_free_driver_name:
+> +	kfree(gi->composite.gadget_driver.driver.name);
+> +out_free_driver_id_number:
+> +	ida_free(&driver_id_numbers, gi->driver_id_number);
+>   err:
+>   	kfree(gi);
+>   	return ERR_PTR(-ENOMEM);
+
