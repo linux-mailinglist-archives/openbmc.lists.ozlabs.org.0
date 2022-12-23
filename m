@@ -1,66 +1,80 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A2916654421
-	for <lists+openbmc@lfdr.de>; Thu, 22 Dec 2022 16:21:05 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 60A7D654BC0
+	for <lists+openbmc@lfdr.de>; Fri, 23 Dec 2022 04:30:11 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NdDXv3MHCz3bgm
-	for <lists+openbmc@lfdr.de>; Fri, 23 Dec 2022 02:21:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NdXk85PDFz3bXQ
+	for <lists+openbmc@lfdr.de>; Fri, 23 Dec 2022 14:30:08 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=mail header.b=bYpPeK+e;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=gvXwP+6g;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=collabora.com (client-ip=2a00:1098:0:82:1000:25:2eeb:e5ab; helo=madras.collabora.co.uk; envelope-from=andrzej.p@collabora.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::630; helo=mail-pl1-x630.google.com; envelope-from=milkfafa@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=collabora.com header.i=@collabora.com header.a=rsa-sha256 header.s=mail header.b=bYpPeK+e;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=gvXwP+6g;
 	dkim-atps=neutral
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e5ab])
+Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NdDXF70qVz2xl6
-	for <openbmc@lists.ozlabs.org>; Fri, 23 Dec 2022 02:20:29 +1100 (AEDT)
-Received: from [192.168.0.192] (unknown [194.146.248.75])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: andrzej.p)
-	by madras.collabora.co.uk (Postfix) with ESMTPSA id E32616602CD4;
-	Thu, 22 Dec 2022 15:20:13 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1671722414;
-	bh=0WLku65f/V6ZFbTI8eRaD22um8ER97RajgZyN2ZWo+w=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=bYpPeK+exgNtp/fIMWWDdygR1jbWZ+llFWRNMB19amjByhA3Y8ydSKLTnwVbY+Uxw
-	 6xs7cztJbbVOOKen5ui4FK6AIeSR8Uu3M4XxwF4C/7NQeQix16PjOR9oBjg3BqbZw1
-	 X8k/wU71V0+IKxaJ/xfuQCC7GUfGIonMEVRQ9U+P+e7txp+x0CXyHevGptTF/OeQmG
-	 DbpHYERswk2kdGi38AR4rCczLFa0G+o7al15HOrJdw1QYD583Ey/W0uNv1psVW3gS+
-	 +9SsYbCZZH9DJkYTrDGHWa1qHe8ERf7WKdHkh3MshmGJPYsjqWtDq8fd11scLHOIpS
-	 17ZwZdeagFy5w==
-Message-ID: <f7067028-9662-7776-80a5-3bbe046c92e0@collabora.com>
-Date: Thu, 22 Dec 2022 16:20:11 +0100
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NdXjX37mlz307C
+	for <openbmc@lists.ozlabs.org>; Fri, 23 Dec 2022 14:29:35 +1100 (AEDT)
+Received: by mail-pl1-x630.google.com with SMTP id d7so3804812pll.9
+        for <openbmc@lists.ozlabs.org>; Thu, 22 Dec 2022 19:29:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GeemHnrH9+ojMc2sxTxo6/NiqXsu00sy+aryfTNI9f8=;
+        b=gvXwP+6gXQ4kSrjuu3ifNh1lfmhon2wh7iF4gmUIHN1mcyOotJ0/oVdmTzsrFlJPg7
+         fawHXyM2SaEtSCNBwlvVjAWSfcTL79fsWeaEw4on7A2Wk7CSIUfj0nW8aYR2M3CiD9u2
+         Q6OjQynP8I0l/Q8jBgL86DgNI4lM0rXXrvYEB/508d2UY+nvy5gXP1wdOfnyOnKsbkgF
+         WMPDlj5Tt0f3CxXG+CZGIji91l5wv62i9WwZjirvToRFz2CLlvIcdd9vm5DzqAod5lDK
+         zwKJme4vssgIqfIfL78kPx3XwmVEx/lR1TLhocJFdnETNBVxj27YHZkhHtKy72QMVagz
+         wY5Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GeemHnrH9+ojMc2sxTxo6/NiqXsu00sy+aryfTNI9f8=;
+        b=Ssw3LPu1fDfA4UKWbzahKj4OFxXQRm/aEsiAltNmqAbCK7GW4IlYp8q/lyQcMw7NSd
+         fGeP5083HX0rSvCxdetf+XqZG+RgYx/A4pP4knw1MlDjwXl19nkk2VtW61UobxWvfcLQ
+         yXjwgLe2YcxNC1SuL+IVtg9Yh/k3aU80nTfpXdhG0hXHueArYYhIFxmgbZ+VYtNAumbl
+         F35uOPHaT+d5/dzmv731Kn9TUIHmOOBM2RhaoAOHc/LEACvAvHrQw3OFYzlN56mQDg1V
+         Lm3XFf5rY+WmABCNoVB+6SAxsGPrZpXGZAhFhhZSSlsxcWolKjrtwFRGuuwhpKvhgbKb
+         zFzw==
+X-Gm-Message-State: AFqh2kph9u9aL5nsNTjshDac3ErT2czYWJwNV+4fHDH3angYxNNQV7Rj
+	m/GDLkmeF+AyYLsLMWpQubY=
+X-Google-Smtp-Source: AMrXdXscb+BT37NezP69AEJ6tWXDRwhw/NiLRGTS4VzkaSaKfZDCkOEC4jnQ1FfAKPu1+jIhgxAPfA==
+X-Received: by 2002:a05:6a21:6d90:b0:b0:3318:ab59 with SMTP id wl16-20020a056a216d9000b000b03318ab59mr13387356pzb.14.1671766172324;
+        Thu, 22 Dec 2022 19:29:32 -0800 (PST)
+Received: from hcdev-d520mt2.. (60-250-192-107.hinet-ip.hinet.net. [60.250.192.107])
+        by smtp.gmail.com with ESMTPSA id w192-20020a6282c9000000b00575448ab0e9sm1376854pfd.123.2022.12.22.19.29.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Dec 2022 19:29:31 -0800 (PST)
+From: Marvin Lin <milkfafa@gmail.com>
+To: krzysztof.kozlowski@linaro.org,
+	robh+dt@kernel.org,
+	bp@alien8.de,
+	tony.luck@intel.com,
+	james.morse@arm.com,
+	mchehab@kernel.org,
+	rric@kernel.org,
+	benjaminfair@google.com,
+	yuenn@google.com,
+	venture@google.com,
+	avifishman70@gmail.com,
+	tmaimon77@gmail.com,
+	tali.perry1@gmail.com
+Subject: [PATCH v17 0/3] EDAC/nuvoton: Add NPCM memory controller driver
+Date: Fri, 23 Dec 2022 11:28:56 +0800
+Message-Id: <20221223032859.3055638-1-milkfafa@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH v2] USB: gadget: Add ID numbers to configfs-gadget driver
- names
-To: Chanh Nguyen <chanh@os.amperecomputing.com>,
- OpenBMC Maillist <openbmc@lists.ozlabs.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Frank Li
- <frank.li@nxp.com>, Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
- Dan Vacura <w36195@motorola.com>, Jakob Koschel <jakobkoschel@gmail.com>,
- Alan Stern <stern@rowland.harvard.edu>,
- Vijayavardhan Vennapusa <vvreddy@codeaurora.org>,
- Rondreis <linhaoguo86@gmail.com>, linux-usb@vger.kernel.org,
- linux-kernel@vger.kernel.org,
- Open Source Submission <patches@amperecomputing.com>
-References: <20221221091317.19380-1-chanh@os.amperecomputing.com>
-Content-Language: en-US
-From: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-In-Reply-To: <20221221091317.19380-1-chanh@os.amperecomputing.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -73,133 +87,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: KWLIU@nuvoton.com, YSCHU@nuvoton.com, Marvin Lin <milkfafa@gmail.com>, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, ctcchien@nuvoton.com, kflin@nuvoton.com, linux-edac@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi,
+This patch series add DTS node, dt-bindings document and driver for memory
+controller present on Nuvoton NPCM SoCs.
 
-W dniu 21.12.2022 o 10:13, Chanh Nguyen pisze:
-> It is unable to use configfs to attach more than one gadget. When
-> attaching the second gadget, it always fails and the kernel message
-> prints out:
-> 
-> Error: Driver 'configfs-gadget' is already registered, aborting...
-> UDC core: g1: driver registration failed: -16
-> 
+The memory controller supports single bit error correction and double bit
+error detection (in-line ECC in which a section 1/8th of the memory device
+used to store data is used for ECC storage).
 
-I assume you are interested in a scenario where there is more than one
-UDC available which means you can have more than one active gadget?
+Changes in v17:
+  - Correct subject prefixes of patch 1/3.
+  - Change dt-bindings document name to "nuvoton,npcm-memory-controller.yaml"
+    and refine the document format.
 
-> This commit fixes the problem by a ".N" suffix added to each
-> configfs_gadget's driver name (where N is a unique ID number),
-> thus making the names distinct.
-> 
-> Fixes: fc274c1e9973 ("USB: gadget: Add a new bus for gadgets")
-> Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
-> 
-> ---
-> Changes in v2:
->    - Replace scnprintf() by kasprintf() to simplify the code [CJ]
->    - Move the clean up code from gadgets_drop() to
->      gadget_info_attr_release()                        [Frank Li]
->    - Correct the resource free up in gadges_make()   [Alan Stern]
->    - Remove the unnecessary variable in gadgets_make()    [Chanh]
->    - Fixes minor grammar issue in commit message          [Chanh]
-> ---
->   drivers/usb/gadget/configfs.c | 25 ++++++++++++++++++++++++-
->   1 file changed, 24 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/usb/gadget/configfs.c b/drivers/usb/gadget/configfs.c
-> index 96121d1c8df4..7faf68bfa716 100644
-> --- a/drivers/usb/gadget/configfs.c
-> +++ b/drivers/usb/gadget/configfs.c
-> @@ -3,6 +3,7 @@
->   #include <linux/module.h>
->   #include <linux/slab.h>
->   #include <linux/device.h>
-> +#include <linux/idr.h>
->   #include <linux/kstrtox.h>
->   #include <linux/nls.h>
->   #include <linux/usb/composite.h>
-> @@ -11,6 +12,8 @@
->   #include "u_f.h"
->   #include "u_os_desc.h"
->   
-> +static DEFINE_IDA(driver_id_numbers);
-> +
->   int check_user_usb_string(const char *name,
->   		struct usb_gadget_strings *stringtab_dev)
->   {
-> @@ -52,6 +55,9 @@ struct gadget_info {
->   	char qw_sign[OS_STRING_QW_SIGN_LEN];
->   	spinlock_t spinlock;
->   	bool unbind;
-> +
-> +	/* Make driver names unique */
-> +	int driver_id_number;
->   };
->   
->   static inline struct gadget_info *to_gadget_info(struct config_item *item)
-> @@ -393,6 +399,8 @@ static void gadget_info_attr_release(struct config_item *item)
->   	WARN_ON(!list_empty(&gi->string_list));
->   	WARN_ON(!list_empty(&gi->available_func));
->   	kfree(gi->composite.gadget_driver.function);
-> +	kfree(gi->composite.gadget_driver.driver.name);
-> +	ida_free(&driver_id_numbers, gi->driver_id_number);
->   	kfree(gi);
->   }
->   
-> @@ -1623,13 +1631,28 @@ static struct config_group *gadgets_make(
->   
->   	gi->composite.gadget_driver = configfs_driver_template;
->   
-> +	gi->driver_id_number = ida_alloc(&driver_id_numbers, GFP_KERNEL);
-> +	if (gi->driver_id_number < 0)
-> +		goto err;
-> +
-> +	gi->composite.gadget_driver.driver.name = kasprintf(GFP_KERNEL,
-> +							    "configfs-gadget.%d",
-> +							    gi->driver_id_number);
+Changes in v16:
+  - Correct dt-bindings document path in MAINTAINERS.
+  - Fix wrong indentation in driver.
 
-I'm wondering if it maybe makes more sense to use the gadget name as a suffix
-instead?
+Changes in v15:
+  - Move dt-bindings document to memory-controllers directory and remove
+    superfluous string in content title.
 
-	gi->composite.gadget_driver.driver.name =
-		kasprintf(GFP_KERNEL, "configfs-gadget.%s" name);
+Changes in v14:
+  - Fix compile warnings.
 
-So that when you
+Changes in v13:
+  - Support error injection via debugfs.
+  - Fix coding style issues.
 
-mkdir g1
+Marvin Lin (3):
+  ARM: dts: nuvoton: Add node for NPCM memory controller
+  dt-bindings: edac: nuvoton: Add document for NPCM memory controller
+  EDAC/npcm: Add NPCM memory controller driver
 
-you will ultimately see /sys/bus/gadget/drivers/configfs-gadget.g1
+ .../nuvoton,npcm-memory-controller.yaml       |  50 ++
+ MAINTAINERS                                   |   8 +
+ arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi |   7 +
+ drivers/edac/Kconfig                          |  11 +
+ drivers/edac/Makefile                         |   1 +
+ drivers/edac/npcm_edac.c                      | 520 ++++++++++++++++++
+ 6 files changed, 597 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/memory-controllers/nuvoton,npcm-memory-controller.yaml
+ create mode 100644 drivers/edac/npcm_edac.c
 
-instead of /sys/bus/gadget/drivers/configfs-gadget.0
-
-Gadget names are guaranteed to be unique because they are created
-as sibling subdirectories in configfs. Your patch would then be greatly
-simplified (no need for ida).
-
-Regards,
-
-Andrzej
-
-> +	if (!gi->composite.gadget_driver.driver.name)
-> +		goto out_free_driver_id_number;
-> +
->   	gi->composite.gadget_driver.function = kstrdup(name, GFP_KERNEL);
->   	gi->composite.name = gi->composite.gadget_driver.function;
->   
->   	if (!gi->composite.gadget_driver.function)
-> -		goto err;
-> +		goto out_free_driver_name;
->   
->   	return &gi->group;
-> +
-> +out_free_driver_name:
-> +	kfree(gi->composite.gadget_driver.driver.name);
-> +out_free_driver_id_number:
-> +	ida_free(&driver_id_numbers, gi->driver_id_number);
->   err:
->   	kfree(gi);
->   	return ERR_PTR(-ENOMEM);
+-- 
+2.34.1
 
