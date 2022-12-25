@@ -2,51 +2,134 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2B9A36550C0
-	for <lists+openbmc@lfdr.de>; Fri, 23 Dec 2022 14:15:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C56A3655C3A
+	for <lists+openbmc@lfdr.de>; Sun, 25 Dec 2022 04:08:10 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Ndnjf5Y0Bz3bf6
-	for <lists+openbmc@lfdr.de>; Sat, 24 Dec 2022 00:15:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Nfm7r4Whyz3bjN
+	for <lists+openbmc@lfdr.de>; Sun, 25 Dec 2022 14:08:08 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=dkim header.b=L2d1lSQd;
+	dkim=pass (1024-bit key; unprotected) header.d=nxp.com header.i=@nxp.com header.a=rsa-sha256 header.s=selector2 header.b=nTL82isy;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=alien8.de (client-ip=5.9.137.197; helo=mail.skyhub.de; envelope-from=bp@alien8.de; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=nxp.com (client-ip=40.107.241.64; helo=eur02-vi1-obe.outbound.protection.outlook.com; envelope-from=frank.li@nxp.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=dkim header.b=L2d1lSQd;
+	dkim=pass (1024-bit key; unprotected) header.d=nxp.com header.i=@nxp.com header.a=rsa-sha256 header.s=selector2 header.b=nTL82isy;
 	dkim-atps=neutral
-X-Greylist: delayed 572 seconds by postgrey-1.36 at boromir; Sat, 24 Dec 2022 00:15:01 AEDT
-Received: from mail.skyhub.de (mail.skyhub.de [5.9.137.197])
+Received: from EUR02-VI1-obe.outbound.protection.outlook.com (mail-vi1eur02on2064.outbound.protection.outlook.com [40.107.241.64])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Ndnj12cW2z3bTc
-	for <openbmc@lists.ozlabs.org>; Sat, 24 Dec 2022 00:15:01 +1100 (AEDT)
-Received: from zn.tnic (p5de8e9fe.dip0.t-ipconnect.de [93.232.233.254])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 4C5BB1EC0716;
-	Fri, 23 Dec 2022 14:05:19 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1671800719;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-	bh=Ci2S/KkDjHi/arFt0HZu7tRxbP/f+F0KF5JX6cAx0c0=;
-	b=L2d1lSQdrZYqVjM+Jng06RLloh4Xb/MbJp/yQlrO84YBf7sHfvkTH+FgbmAhkIDNSRc0/A
-	xPxc3taIfS8+W/Y/IYhZJ8ANoDKrTiwKrIaeCF/5JzH3sVfvUWPcVZnv3iQPBLwuq1Z6Wx
-	jbzIEd7XIFmTENwD2L1GRHc8UXbuSRs=
-Date: Fri, 23 Dec 2022 14:05:12 +0100
-From: Borislav Petkov <bp@alien8.de>
-To: Marvin Lin <milkfafa@gmail.com>
-Subject: Re: [PATCH v17 3/3] EDAC/npcm: Add NPCM memory controller driver
-Message-ID: <Y6WniKjA6BHLknP6@zn.tnic>
-References: <20221223032859.3055638-1-milkfafa@gmail.com>
- <20221223032859.3055638-4-milkfafa@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Nfm7C4wJQz2y6F
+	for <openbmc@lists.ozlabs.org>; Sun, 25 Dec 2022 14:07:33 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=T43zYQoLzESZ7CYd5iMz0vBAWCGJUWYuInSdOOsxmCCms0D6Mjc/8Qmu7/ZjFkHcIDaPwKHaRUdsLYDHhUbpl2E01xvNUZp/sjqBttoo98JKxxiWdfcPTdsymmrPSes56yOnZKiLCaXXrSD3qw0T+hEdGe09WqSegVPAx3I77YFQlX+etZITATX/C+XCIvq+pEasI3sLQXSPiNZ5sSvzr6L4A2TLBxjdshlk1D97Zm7HAbzd53+sv6VqR8VMU5DFcmijXBD12REDpnsINJBzatjHw1bQ/aDhr3pfiWOrErBS4JnbAjv8anikd7jSUEEz6o/6z7fcLJ53ehuLgfzB6A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oWSixQwkG9Ol8egy7g25WR3s91TN2h7PXJ2kQetu+bI=;
+ b=M9LHqjX26f7Reoz228rt9Yv8tQ56kmQFDF1CXx0SS7cjudS8tm/WwAXBSW5YM4RXhSCpDe6ZYHrI71S/eXvEnyC7DX8PciFNLEtqRl/78LEVtrMUneznT3zPRyMyn2AU8FPQE4FN5yLiKP3+YLAVu3806lH+e98irkkzqfJwDm3ItB3GXE+kC1T1KP5BmKrfiBUaLmJsIN4V/wXPF98tTIeWWp3kzPaJJ8eu81yg9mexfF4NkaAhliOt/mtXXmUcPCIweU+EbQklm0Ukn5cktFH2mqIWXCbd1dqKPGbDTVInZuCzgZl5WhB6YVypCqBg8rFNDbvgRC8DmL11xuw8+Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nxp.com; dmarc=pass action=none header.from=nxp.com; dkim=pass
+ header.d=nxp.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nxp.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=oWSixQwkG9Ol8egy7g25WR3s91TN2h7PXJ2kQetu+bI=;
+ b=nTL82isyKH0KEmo/4ofZ7q31Cm5eUpJiD6B/uwEP0raEQO4r38bQvORqKBSer7EJKlxXmusnebR6yz5TqIg5Wt8e0qYUNVnIMpocpYc21Oz7rl50+xJtlfsO4gVKswHmi6oRdN9dUswsSDxHMIhdBV53uKGl2LWR8n/UkL2rOyw=
+Received: from HE1PR0401MB2331.eurprd04.prod.outlook.com (2603:10a6:3:24::22)
+ by DB9PR04MB8188.eurprd04.prod.outlook.com (2603:10a6:10:25e::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.5944.13; Sun, 25 Dec
+ 2022 03:07:13 +0000
+Received: from HE1PR0401MB2331.eurprd04.prod.outlook.com
+ ([fe80::ca48:3816:f0b6:3fcd]) by HE1PR0401MB2331.eurprd04.prod.outlook.com
+ ([fe80::ca48:3816:f0b6:3fcd%6]) with mapi id 15.20.5944.016; Sun, 25 Dec 2022
+ 03:07:13 +0000
+From: Frank Li <frank.li@nxp.com>
+To: Andrzej Pietrasiewicz <andrzej.p@collabora.com>, Chanh Nguyen
+	<chanh@os.amperecomputing.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Christophe JAILLET
+	<christophe.jaillet@wanadoo.fr>, Dan Vacura <w36195@motorola.com>, Jakob
+ Koschel <jakobkoschel@gmail.com>, Alan Stern <stern@rowland.harvard.edu>,
+	Vijayavardhan Vennapusa <vvreddy@codeaurora.org>, Rondreis
+	<linhaoguo86@gmail.com>, "linux-usb@vger.kernel.org"
+	<linux-usb@vger.kernel.org>, "linux-kernel@vger.kernel.org"
+	<linux-kernel@vger.kernel.org>, Open Source Submission
+	<patches@amperecomputing.com>
+Subject: RE: [EXT] Re: [PATCH v2] USB: gadget: Add ID numbers to
+ configfs-gadget driver names
+Thread-Topic: [EXT] Re: [PATCH v2] USB: gadget: Add ID numbers to
+ configfs-gadget driver names
+Thread-Index: AQHZFhjlqf1edg9mHkmn/Ogctu3iV65973mQ
+Date: Sun, 25 Dec 2022 03:07:12 +0000
+Message-ID:  <HE1PR0401MB2331C0314D27002E5F3FC17288EF9@HE1PR0401MB2331.eurprd04.prod.outlook.com>
+References: <20221221091317.19380-1-chanh@os.amperecomputing.com>
+ <f7067028-9662-7776-80a5-3bbe046c92e0@collabora.com>
+In-Reply-To: <f7067028-9662-7776-80a5-3bbe046c92e0@collabora.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nxp.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: HE1PR0401MB2331:EE_|DB9PR04MB8188:EE_
+x-ms-office365-filtering-correlation-id: 0f885017-5cd3-4362-f1cd-08dae6251ea6
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:  ua6ZkwYyrn6Y+tW4N8PXI9hwl85nsi/xzbxS9NFVE2sJqhl240M11IXQoOTkW6Q4sYZ4Pw0j71XZO6ZjOSVrci0yU6IG+fDpOLfgauBC3qOXiSaAqTcBo31lKecuky3SaSN6Apu0ByQ9wj00lXkYKEbQ6LlOqlpLl75z84A81kiA/XUPy/wTDyMWyqgROqNY2wvRp4K2JjFokuWDGKMHGduskLwO9ld2ice2dOJ54VN8hp0ikYqRe/hNX91RkxPoDv5USsEHIFJqMGIwDuYhrXRl2wHi7wHNFWDi26VqCm5pCleuSaB5WOmq+rlKGte7qV9wx9yVD5QwPT8Br3eIMsApzCQmqQijJFYgYhEqFuTg9WNqht6u30KIepuohff1J17Gh7ZG3R7jHXm+vhGEn20NFLwknkDusAbGaPfNEv+2WnGjaPd60G6WbGbdD6qQxhP6Bm66Fkuy+wtbEF+uS+NROmQE8U9oNsiHWXNKjQ2wbIfPuxQIA/BmoerjjVhkkHIvfyhIt7tG2z9MTljLrNYuoNkuTzfhria6EWm5fI+WtPXlqyzzWEPHAJL1lw7e64I/RHdFQz02bzGTbP96tQMO2TH00t3eSajjBgxj7JO9nmdlSIl55FiOHM7qcQ0GE9yZijsasz17SF3e1O82GnLJxlfbvjo6D1BNQejmW7SVqha/jBwsVfB2HNbBRY4dJeRnPv6du61qK1dcgS6uDw==
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:HE1PR0401MB2331.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230022)(4636009)(396003)(346002)(136003)(376002)(39860400002)(366004)(451199015)(33656002)(110136005)(44832011)(4744005)(41300700001)(52536014)(86362001)(8936002)(7416002)(76116006)(55016003)(66946007)(2906002)(66556008)(66476007)(64756008)(8676002)(316002)(5660300002)(66446008)(38070700005)(9686003)(26005)(186003)(38100700002)(122000001)(921005)(55236004)(6506007)(71200400001)(478600001)(7696005);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:  =?utf-8?B?dmpoeVNBTnFGS0pEekhUdDBvREdvcmxUR25FTzNnZTM0eDJNK01jd24xcXhm?=
+ =?utf-8?B?U2dHUUk4NkJCeWtqck5EckZDak1FUHFVRlB0Q2d4UnpDUExwRERZNlRBNTNZ?=
+ =?utf-8?B?TXZ2R0dIaG9jelg5RTN2U2g3RjBtSTFNa0s0UWYwMERKT2Q3Um1GUTNIUWtF?=
+ =?utf-8?B?OVZYeWtKbmQrZmtEeGN0RWJJbCtkSmxVUklOcy9EVmNDZlp4MEJVUmk3c1E4?=
+ =?utf-8?B?VU1pbGhYQlBuZEpOK2RNam4ralZuUncydW1IOGZDVGF6MHJVTGlHT292eXlo?=
+ =?utf-8?B?REtYMHRuZHo0RGY0RjBkNDdyeUZFVHh0RU0zbnpabEF2ZjFsRWl5RjRuN2lr?=
+ =?utf-8?B?UzQzQ3AxL0JsOVgwLytTU0lxMFBxV0lBKzNocTVqWEF3dE91RWlLeEVneUll?=
+ =?utf-8?B?MkZvOFo0LzVNc1RPMFBDOWRkaWMxS1hncWR2aXc3Z05pZ0lRU0UzV2JZYTU5?=
+ =?utf-8?B?MExXc2ZrOTNWQ3Q0aUNzY1g4OUc4VXNVUytnQ3NSZGVaNXhXVFhFR2w5ZUli?=
+ =?utf-8?B?c1NKeHpsTjNjRTZ6amdaa0RQeFN5YUN0REdpNlNpeDcwQUlKZllYekpSdTJN?=
+ =?utf-8?B?Qk9udDB2bmpDNTBmQlpRZUdQQUVIdVg5OExjM1B3L0dDOUU4SkFsNVA0Y29h?=
+ =?utf-8?B?bnBoa3BpRFRyOTdranBVeEZxaU51RTduNXVYcXh2eXdiU00vcWs5QkIwWkZw?=
+ =?utf-8?B?MUowT1c3ZnVyTVpsODBsZk93SmlzSTdPNXN3aTBLSC90a3FGQWViM3pYRHVD?=
+ =?utf-8?B?OWhnV2ZUaGVXVEZaTklZK0xOQ1dld05qYTVTOHg3VFZ2Q2M1V1NmNDk5QjVF?=
+ =?utf-8?B?Ym8raFhvWWszd0VMbzhobDNnOUlzdFB1a0U1MUZqbjBPcS9TZGRMMWhua3NL?=
+ =?utf-8?B?ek9uSWs2NWFpRTk4bnV2VDVQcFA0NG01cCt3RUE5dFpndnl1cGsrbUs3MVpr?=
+ =?utf-8?B?NlBYZHZZMGpmREtML01QcFYzQjdrYk5XckR1VGpsQlpJcnV6ZWt6OUpnOXB3?=
+ =?utf-8?B?anpHMFFzemhRcTJNRytocHhSYTRGclQ2UllSaTl6bVVCdlBQNk5iSFhzTk9q?=
+ =?utf-8?B?djlxMEFwUEhONXFJZyt6KzFBSXdQY3lvY2NGVUNJTncxWWNjSVZuWUdlYndU?=
+ =?utf-8?B?aWRRTCtpdk5uYWxqdmxQUXJMZEoxZnU0NGYyQ0o1NE5pQ2FGcFp4U1o1S0ZN?=
+ =?utf-8?B?K003QUdYNGZCUHdCaUNKcURwb1BYNGZwTWZseVM0RHhBZXI4WDEwb3N5WEh0?=
+ =?utf-8?B?cllES0xsSVRLOUdnR3dtejMvU2EwRTBxSlZrMTVLbmNhdmdXbDNOM2FnaHQ2?=
+ =?utf-8?B?Z24vdklXSGxOUXBlRlJVNWpTVVVLckVjc0Zqdk9JQlZpRU9YOVdZVXNlNUpB?=
+ =?utf-8?B?emZTZjJ6ekJQYjdqdHlaVHJuOGpueUJUSHpOekRjNm9hblBTUGVrd0ZxK3VB?=
+ =?utf-8?B?dW9SenBaN2RsTkZ6VzJqT0N1WEpRYXlTOHhrY2xVeGhUV2VDZDl5elltRWI4?=
+ =?utf-8?B?U1kzdTFoQ3VSVUFoaW1FczFlQjByYUZnUmF5bGdZWlgwenJYVkFGK3h4ZHM0?=
+ =?utf-8?B?RnNGMlpVMWxsaVhxRW5rbWpmQS9qcThuWVlBdFRmTlEwbzhhNVVBSFJzNkFM?=
+ =?utf-8?B?cGRQVG1Ia2pRSFlBQ2FYQXVvTnFoK3BMSWlmRUtZaXp3UlpQTDRtb3lENnNz?=
+ =?utf-8?B?SXJaYU5Zb0lZR2w5OUg1c1BUSmlYanVSdW5yK0FkbUE4cUNuek5NTFljYUdK?=
+ =?utf-8?B?N01jQjBIR1pGV0FDZVN4L1ZiUWs1OFJ1Vm9uWk9UdHJUUmFkL0ZEbUxLWE5x?=
+ =?utf-8?B?c05KMTE1TWlaLzMzZXUxOVVnSyt5UDArUDBvMjhUaWdPdlpMRHZXKzRETzN2?=
+ =?utf-8?B?alhTbDVGbkxFcmNDcVNFZHpsTm5EQTNZT0pTaFhQdjRQbS9KbFNWS3ZhRGd1?=
+ =?utf-8?B?eVZnS25lcndWbml3RFZhY0RVbjdGclM1RGhTQlN2N3RoRTY5cUlrTXE5LzJY?=
+ =?utf-8?B?WEN6cEhyMFpHd01GdU5sQlh3UTB6MCtndlRQMElKNDFFR0t4c3pVV3YrSFBO?=
+ =?utf-8?B?QyttTm9xN1VhcTV6cnE5bCtMMmF6L2UyaWNrem81YnRRdm5VZUpLOTg0U2ZM?=
+ =?utf-8?Q?fOCk=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20221223032859.3055638-4-milkfafa@gmail.com>
+X-OriginatorOrg: nxp.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: HE1PR0401MB2331.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0f885017-5cd3-4362-f1cd-08dae6251ea6
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 Dec 2022 03:07:12.8626
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 686ea1d3-bc2b-4c6f-a92c-d99c5c301635
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 0PFhYVRSxZrEn3X+lqIBAbArSKETlZz+lH62ascs4DdW4Exi3OlMwecSnr/BQPShjHVROeO4g68iVjUdeozVOA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB9PR04MB8188
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,402 +141,18 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, tony.luck@intel.com, rric@kernel.org, benjaminfair@google.com, linux-edac@vger.kernel.org, KWLIU@nuvoton.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, krzysztof.kozlowski@linaro.org, robh+dt@kernel.org, james.morse@arm.com, ctcchien@nuvoton.com, YSCHU@nuvoton.com, mchehab@kernel.org, kflin@nuvoton.com, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Dec 23, 2022 at 11:28:59AM +0800, Marvin Lin wrote:
-> +static void handle_ce(struct mem_ctl_info *mci)
-> +{
-> +	struct priv_data *priv = mci->pvt_info;
-> +	const struct npcm_platform_data *pdata = priv->pdata;
-> +	u64 addr = 0;
-> +	u64 data = 0;
-> +	u32 val_h = 0;
-> +	u32 val_l, id, synd;
-
-        u32 val_h = 0, val_l, id, synd;
-        u64 addr = 0, data = 0;
-
-Also, for all your functions:
-
-The EDAC tree preferred ordering of variable declarations at the
-beginning of a function is reverse fir tree order::
-
-	struct long_struct_name *descriptive_name;
-	unsigned long foo, bar;
-	unsigned int tmp;
-	int ret;
-
-The above is faster to parse than the reverse ordering::
-
-	int ret;
-	unsigned int tmp;
-	unsigned long foo, bar;
-	struct long_struct_name *descriptive_name;
-
-And even more so than random ordering::
-
-	unsigned long foo, bar;
-	int ret;
-	struct long_struct_name *descriptive_name;
-	unsigned int tmp;
-
-> +	regmap_read(npcm_regmap, pdata->ctl_ce_addr_l, &val_l);
-> +	if (pdata->chip == NPCM8XX_CHIP) {
-> +		regmap_read(npcm_regmap, pdata->ctl_ce_addr_h, &val_h);
-> +		val_h &= pdata->ce_addr_h_mask;
-> +	}
-> +	addr = ((addr | val_h) << 32) | val_l;
-> +
-> +	regmap_read(npcm_regmap, pdata->ctl_ce_data_l, &val_l);
-> +	if (pdata->chip == NPCM8XX_CHIP)
-> +		regmap_read(npcm_regmap, pdata->ctl_ce_data_h, &val_h);
-> +	data = ((data | val_h) << 32) | val_l;
-> +
-> +	regmap_read(npcm_regmap, pdata->ctl_source_id, &id);
-> +	id = (id & pdata->source_id_ce_mask) >> pdata->source_id_ce_shift;
-> +
-> +	regmap_read(npcm_regmap, pdata->ctl_ce_synd, &synd);
-> +	synd = (synd & pdata->ce_synd_mask) >> pdata->ce_synd_shift;
-> +
-> +	snprintf(priv->message, EDAC_MSG_SIZE,
-> +		 "addr = 0x%llx, data = 0x%llx, id = 0x%x", addr, data, id);
-> +
-> +	edac_mc_handle_error(HW_EVENT_ERR_CORRECTED, mci, 1, addr >> PAGE_SHIFT,
-> +			     addr & ~PAGE_MASK, synd, 0, 0, -1, priv->message,
-
-No need for that linebreak with the trailing piece.
-
-> +			     "");
-> +}
-> +
-> +static void handle_ue(struct mem_ctl_info *mci)
-> +{
-> +	struct priv_data *priv = mci->pvt_info;
-> +	const struct npcm_platform_data *pdata = priv->pdata;
-> +	u64 addr = 0;
-> +	u64 data = 0;
-> +	u32 val_h = 0;
-> +	u32 val_l, id, synd;
-
-As above.
-
-> +
-> +	regmap_read(npcm_regmap, pdata->ctl_ue_addr_l, &val_l);
-> +	if (pdata->chip == NPCM8XX_CHIP) {
-> +		regmap_read(npcm_regmap, pdata->ctl_ue_addr_h, &val_h);
-> +		val_h &= pdata->ue_addr_h_mask;
-> +	}
-> +	addr = ((addr | val_h) << 32) | val_l;
-> +
-> +	regmap_read(npcm_regmap, pdata->ctl_ue_data_l, &val_l);
-> +	if (pdata->chip == NPCM8XX_CHIP)
-> +		regmap_read(npcm_regmap, pdata->ctl_ue_data_h, &val_h);
-> +	data = ((data | val_h) << 32) | val_l;
-> +
-> +	regmap_read(npcm_regmap, pdata->ctl_source_id, &id);
-> +	id = (id & pdata->source_id_ue_mask) >> pdata->source_id_ue_shift;
-> +
-> +	regmap_read(npcm_regmap, pdata->ctl_ue_synd, &synd);
-> +	synd = (synd & pdata->ue_synd_mask) >> pdata->ue_synd_shift;
-> +
-> +	snprintf(priv->message, EDAC_MSG_SIZE,
-> +		 "addr = 0x%llx, data = 0x%llx, id = 0x%x", addr, data, id);
-> +
-> +	edac_mc_handle_error(HW_EVENT_ERR_UNCORRECTED, mci, 1,
-> +			     addr >> PAGE_SHIFT, addr & ~PAGE_MASK, synd, 0, 0,
-> +			     -1, priv->message, "");
-> +}
-> +
-> +static irqreturn_t edac_ecc_isr(int irq, void *dev_id)
-> +{
-> +	struct mem_ctl_info *mci = dev_id;
-> +	struct priv_data *priv = mci->pvt_info;
-> +	const struct npcm_platform_data *pdata = priv->pdata;
-> +	u32 status;
-> +
-> +	regmap_read(npcm_regmap, pdata->ctl_int_status, &status);
-> +	if (status & pdata->int_status_ce_mask) {
-> +		handle_ce(mci);
-> +
-> +		/* acknowledge the CE interrupt */
-> +		regmap_write(npcm_regmap, pdata->ctl_int_ack,
-> +			     pdata->int_ack_ce_mask);
-> +		return IRQ_HANDLED;
-> +	} else if (status & pdata->int_status_ue_mask) {
-> +		handle_ue(mci);
-> +
-> +		/* acknowledge the UE interrupt */
-> +		regmap_write(npcm_regmap, pdata->ctl_int_ack,
-> +			     pdata->int_ack_ue_mask);
-> +		return IRQ_HANDLED;
-> +	}
-
-	WARN_ON_ONCE(1);
-
-to catch weird cases.
-
-> +
-> +	return IRQ_NONE;
-> +}
-> +
-> +static ssize_t force_ecc_error(struct file *file, const char __user *data,
-> +			       size_t count, loff_t *ppos)
-> +{
-> +	struct device *dev = file->private_data;
-> +	struct mem_ctl_info *mci = to_mci(dev);
-> +	struct priv_data *priv = mci->pvt_info;
-> +	const struct npcm_platform_data *pdata = priv->pdata;
-> +	int ret;
-> +	u32 val, syndrome;
-> +
-> +	/*
-> +	 * error_type - 0: CE, 1: UE
-> +	 * location   - 0: data, 1: checkcode
-> +	 * bit        - 0 ~ 63 for data and 0 ~ 7 for checkcode
-> +	 */
-> +	edac_printk(KERN_INFO, EDAC_MOD_NAME,
-> +		    "force an ECC error, type = %d, location = %d, bit = %d\n",
-> +		    priv->error_type, priv->location, priv->bit);
-> +
-> +	/* ensure no pending writes */
-> +	ret = regmap_read_poll_timeout(npcm_regmap, pdata->ctl_controller_busy,
-> +				       val, !(val & pdata->controller_busy_mask),
-> +				       1000, 10000);
-> +	if (ret) {
-> +		edac_printk(KERN_INFO, EDAC_MOD_NAME,
-> +			    "wait pending writes timeout\n");
-> +		return count;
-> +	}
-> +
-> +	regmap_read(npcm_regmap, pdata->ctl_xor_check_bits, &val);
-> +	val &= ~pdata->xor_check_bits_mask;
-> +
-> +	/* write syndrome to XOR_CHECK_BITS */
-> +	if (priv->error_type == 0) {
-
-	if (priv->error_type == ERROR_TYPE_CORRECTABLE
-
-Use defines. Below too.
-
-> +		if (priv->location == 0 && priv->bit > 63) {
-
-
-> +			edac_printk(KERN_INFO, EDAC_MOD_NAME,
-> +				    "data bit should not exceed 63\n");
-
-				"data bit should not exceed 63 (%d)\n", priv->bit...)
-
-Below too.
-
-> +			return count;
-> +		}
-> +
-> +		if (priv->location == 1 && priv->bit > 7) {
-> +			edac_printk(KERN_INFO, EDAC_MOD_NAME,
-> +				    "checkcode bit should not exceed 7\n");
-> +			return count;
-> +		}
-> +
-> +		syndrome = priv->location ? 1 << priv->bit :
-> +			   data_synd[priv->bit];
-
-		syndrome = priv->location ? 1 << priv->bit
-					  : data_synd[priv->bit];
-
-
-> +		regmap_write(npcm_regmap, pdata->ctl_xor_check_bits,
-> +			     val | (syndrome << pdata->xor_check_bits_shift) |
-> +			     pdata->writeback_en_mask);
-> +	} else if (priv->error_type == 1) {
-> +		regmap_write(npcm_regmap, pdata->ctl_xor_check_bits,
-> +			     val | (UE_SYNDROME << pdata->xor_check_bits_shift));
-> +	}
-> +
-> +	/* force write check */
-> +	regmap_update_bits(npcm_regmap, pdata->ctl_xor_check_bits,
-> +			   pdata->fwc_mask, pdata->fwc_mask);
-> +
-> +	return count;
-> +}
-> +
-> +static const struct file_operations force_ecc_error_fops = {
-> +	.open = simple_open,
-> +	.write = force_ecc_error,
-> +	.llseek = generic_file_llseek,
-> +};
-> +
-
-I'd find it helpful if there were a short recipe in a comment here
-explaining how the injection should be done...
-
-> +static void setup_debugfs(struct mem_ctl_info *mci)
-> +{
-> +	struct priv_data *priv = mci->pvt_info;
-> +
-> +	priv->debugfs = edac_debugfs_create_dir(mci->mod_name);
-> +	if (!priv->debugfs)
-> +		return;
-> +
-> +	edac_debugfs_create_x8("error_type", 0644, priv->debugfs,
-> +			       &priv->error_type);
-> +	edac_debugfs_create_x8("location", 0644, priv->debugfs,
-> +			       &priv->location);
-> +	edac_debugfs_create_x8("bit", 0644, priv->debugfs, &priv->bit);
-> +	edac_debugfs_create_file("force_ecc_error", 0200, priv->debugfs,
-> +				 &mci->dev, &force_ecc_error_fops);
-> +}
-> +
-> +static int setup_irq(struct mem_ctl_info *mci, struct platform_device *pdev)
-> +{
-> +	struct priv_data *priv = mci->pvt_info;
-> +	const struct npcm_platform_data *pdata = priv->pdata;
-> +	int ret, irq;
-> +
-> +	irq = platform_get_irq(pdev, 0);
-> +	if (irq < 0) {
-> +		edac_printk(KERN_ERR, EDAC_MOD_NAME, "IRQ not defined in DTS\n");
-> +		return irq;
-> +	}
-> +
-> +	ret = devm_request_irq(&pdev->dev, irq, edac_ecc_isr, 0,
-> +			       dev_name(&pdev->dev), mci);
-> +	if (ret < 0) {
-> +		edac_printk(KERN_ERR, EDAC_MOD_NAME, "failed to request IRQ\n");
-> +		return ret;
-> +	}
-> +
-> +	/* enable the functional group of ECC and mask the others */
-> +	regmap_write(npcm_regmap, pdata->ctl_int_mask_master,
-> +		     pdata->int_mask_master_non_ecc_mask);
-> +
-> +	if (pdata->chip == NPCM8XX_CHIP)
-> +		regmap_write(npcm_regmap, pdata->ctl_int_mask_ecc,
-> +			     pdata->int_mask_ecc_non_event_mask);
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct regmap_config npcm_regmap_cfg = {
-> +	.reg_bits	= 32,
-> +	.reg_stride	= 4,
-> +	.val_bits	= 32,
-> +};
-> +
-> +static int edac_probe(struct platform_device *pdev)
-> +{
-> +	const struct npcm_platform_data *pdata;
-> +	struct device *dev = &pdev->dev;
-> +	struct edac_mc_layer layers[1];
-> +	struct mem_ctl_info *mci;
-> +	struct priv_data *priv;
-> +	void __iomem *reg;
-> +	int rc;
-> +	u32 val;
-> +
-> +	reg = devm_platform_ioremap_resource(pdev, 0);
-> +	if (IS_ERR(reg))
-> +		return PTR_ERR(reg);
-> +
-> +	npcm_regmap = devm_regmap_init_mmio(dev, reg, &npcm_regmap_cfg);
-> +	if (IS_ERR(npcm_regmap))
-> +		return PTR_ERR(npcm_regmap);
-> +
-> +	pdata = of_device_get_match_data(dev);
-> +	if (!pdata)
-> +		return -EINVAL;
-> +
-> +	/* bail out if ECC is not enabled */
-> +	regmap_read(npcm_regmap, pdata->ctl_ecc_en, &val);
-> +	if (!(val & pdata->ecc_en_mask)) {
-> +		edac_printk(KERN_ERR, EDAC_MOD_NAME, "ECC is not enabled\n");
-> +		return -EPERM;
-> +	}
-> +
-> +	edac_op_state = EDAC_OPSTATE_INT;
-> +
-> +	layers[0].type = EDAC_MC_LAYER_ALL_MEM;
-> +	layers[0].size = 1;
-> +
-> +	mci = edac_mc_alloc(0, ARRAY_SIZE(layers), layers,
-> +			    sizeof(struct priv_data));
-> +	if (!mci)
-> +		return -ENOMEM;
-> +
-> +	mci->pdev = &pdev->dev;
-> +	priv = mci->pvt_info;
-> +	priv->reg = reg;
-> +	priv->pdata = pdata;
-> +	platform_set_drvdata(pdev, mci);
-> +
-> +	mci->mtype_cap = MEM_FLAG_DDR4;
-> +	mci->edac_ctl_cap = EDAC_FLAG_SECDED;
-> +	mci->scrub_cap = SCRUB_FLAG_HW_SRC;
-> +	mci->scrub_mode = SCRUB_HW_SRC;
-> +	mci->edac_cap = EDAC_FLAG_SECDED;
-> +	mci->ctl_name = "npcm_ddr_controller";
-> +	mci->dev_name = dev_name(&pdev->dev);
-> +	mci->mod_name = EDAC_MOD_NAME;
-> +	mci->ctl_page_to_phys = NULL;
-> +
-> +	rc = setup_irq(mci, pdev);
-> +	if (rc)
-> +		goto free_edac_mc;
-> +
-> +	rc = edac_mc_add_mc(mci);
-> +	if (rc)
-> +		goto free_edac_mc;
-> +
-> +	if (IS_ENABLED(CONFIG_EDAC_DEBUG) && pdata->chip == NPCM8XX_CHIP)
-> +		setup_debugfs(mci);
-> +
-> +	return rc;
-> +
-> +free_edac_mc:
-> +	edac_mc_free(mci);
-> +	return rc;
-> +}
-> +
-> +static int edac_remove(struct platform_device *pdev)
-> +{
-> +	struct mem_ctl_info *mci = platform_get_drvdata(pdev);
-> +	struct priv_data *priv = mci->pvt_info;
-> +	const struct npcm_platform_data *pdata = priv->pdata;
-> +
-> +	regmap_write(npcm_regmap, pdata->ctl_int_mask_master,
-> +		     pdata->int_mask_master_global_mask);
-> +	regmap_update_bits(npcm_regmap, pdata->ctl_ecc_en, pdata->ecc_en_mask,
-> +			   0);
-
-You have a bunch of those things: the 80 cols rule is not a rigid and a
-static one - you should rather apply common sense. As in:
-
-Does it make sense to have this ugly linebreak with only the 0 argument there?
-
-	regmap_update_bits(npcm_regmap, pdata->ctl_ecc_en, pdata->ecc_en_mask,
-			   0);
-
-or should I simply let it stick out:
-
-	regmap_update_bits(npcm_regmap, pdata->ctl_ecc_en, pdata->ecc_en_mask, 0);
-
-and have much more readable code?
-
-Please apply common sense to all your linebreaks above.
-
-> +
-> +	edac_mc_del_mc(&pdev->dev);
-> +	edac_mc_free(mci);
-
-<--- What happens if someone tries to inject errors right at this
-moment, when you've freed the mci?
-
-Hint: you should destroy resources in the opposite order you've
-allocated them.
-
--- 
-Regards/Gruss,
-    Boris.
-
-https://people.kernel.org/tglx/notes-about-netiquette
+PiANCj4gSSdtIHdvbmRlcmluZyBpZiBpdCBtYXliZSBtYWtlcyBtb3JlIHNlbnNlIHRvIHVzZSB0
+aGUgZ2FkZ2V0IG5hbWUgYXMgYQ0KPiBzdWZmaXgNCj4gaW5zdGVhZD8NCj4gDQo+ICAgICAgICAg
+Z2ktPmNvbXBvc2l0ZS5nYWRnZXRfZHJpdmVyLmRyaXZlci5uYW1lID0NCj4gICAgICAgICAgICAg
+ICAgIGthc3ByaW50ZihHRlBfS0VSTkVMLCAiY29uZmlnZnMtZ2FkZ2V0LiVzIiBuYW1lKTsNCj4g
+DQo+IFNvIHRoYXQgd2hlbiB5b3UNCj4gDQo+IG1rZGlyIGcxDQo+IA0KPiB5b3Ugd2lsbCB1bHRp
+bWF0ZWx5IHNlZSAvc3lzL2J1cy9nYWRnZXQvZHJpdmVycy9jb25maWdmcy1nYWRnZXQuZzENCj4g
+DQo+IGluc3RlYWQgb2YgL3N5cy9idXMvZ2FkZ2V0L2RyaXZlcnMvY29uZmlnZnMtZ2FkZ2V0LjAN
+Cj4gDQo+IEdhZGdldCBuYW1lcyBhcmUgZ3VhcmFudGVlZCB0byBiZSB1bmlxdWUgYmVjYXVzZSB0
+aGV5IGFyZSBjcmVhdGVkDQo+IGFzIHNpYmxpbmcgc3ViZGlyZWN0b3JpZXMgaW4gY29uZmlnZnMu
+IFlvdXIgcGF0Y2ggd291bGQgdGhlbiBiZSBncmVhdGx5DQo+IHNpbXBsaWZpZWQgKG5vIG5lZWQg
+Zm9yIGlkYSkuDQoNCkkgdm90ZSB0aGlzIHdheXMuIA0KDQpCZXN0IHJlZ2FyZHMNCkZyYW5rIExp
+DQoNCj4gDQo+IFJlZ2FyZHMsDQo+IA0KPiBBbmRyemVqDQo+IA0KDQo=
