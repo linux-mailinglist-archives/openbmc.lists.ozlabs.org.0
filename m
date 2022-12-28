@@ -1,67 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 974BB65731C
-	for <lists+openbmc@lfdr.de>; Wed, 28 Dec 2022 07:21:39 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 91394657329
+	for <lists+openbmc@lfdr.de>; Wed, 28 Dec 2022 07:23:12 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NhhHj3C59z306l
-	for <lists+openbmc@lfdr.de>; Wed, 28 Dec 2022 17:21:37 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NhhKV3cffz3bqt
+	for <lists+openbmc@lfdr.de>; Wed, 28 Dec 2022 17:23:10 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=VKMH8CX6;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Fke8RKP2;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::634; helo=mail-pl1-x634.google.com; envelope-from=lesly895@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102c; helo=mail-pj1-x102c.google.com; envelope-from=lesly895@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=VKMH8CX6;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Fke8RKP2;
 	dkim-atps=neutral
-Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NhhH34XjYz304m
-	for <openbmc@lists.ozlabs.org>; Wed, 28 Dec 2022 17:21:02 +1100 (AEDT)
-Received: by mail-pl1-x634.google.com with SMTP id jn22so15179637plb.13
-        for <openbmc@lists.ozlabs.org>; Tue, 27 Dec 2022 22:21:02 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NhhJw5bWrz2xFx
+	for <openbmc@lists.ozlabs.org>; Wed, 28 Dec 2022 17:22:40 +1100 (AEDT)
+Received: by mail-pj1-x102c.google.com with SMTP id p4so15328901pjk.2
+        for <openbmc@lists.ozlabs.org>; Tue, 27 Dec 2022 22:22:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
         bh=fIi3nVBr5HhvV6liomqZDA7tgozsDbLWycpm0oi0WgQ=;
-        b=VKMH8CX6iDupXY+H+MuKnxn6zf5AnG7Bk5xP6NEs1lvgzc9LrjtXE0CKhhdRl80IEw
-         EwOWn55+mcvOzVHKdFAYcJbGk7Srm58H+WzX5Q9DmUnCKyl8xTRvHdoqx8ZcYOovj8iP
-         6oXduq9xrBcPOWEfpr3N0XtsxIRkZjZBCqRxmfGgcETpAj2SHQyIfbaw6bFxPoGGcDX8
-         UoT6/6HuWQOGlo1QM+aE3wg57xzmKI+ur8mRbg0eNfAgGSCiYrtsXXNm+9SYle2diGoR
-         MW1IRAS3y+c8/ddpIqnMZjWvs0wpNXnaZzwy17xzwKQ2b4j8NYKRQPYSSiGqSKlrRyPB
-         b/QA==
+        b=Fke8RKP2m8lr6UolwgPR+sSUBiHGHpS0R+io8pB5kVWsIDFtWHYY0KiitXZkt/Zf6v
+         oaayYdNmNHTqNbhNhQ+f0bUNaoeJiR5JXyVFcK17J4p45LrDpdviIJDKVC93WxzoDN/u
+         52IdC5rNFQvQCMBG0A845F253hFBLqTGEbZdYAx52sVV+LiTKBWTziMPdsQr4U6UbWuG
+         eGRXI5tnznz5MR+j3c/fyY0yXjyqS9ezhm4eHrYuglrrae/zCPf2Vi+4RhO9T2BU/MKf
+         CxQOsxXC7bOPp4c7HZOMER4bRg4iOBqdtk9+7dZSp+HR8MjmliHhI4tOQXdU7hjY1ObR
+         cwrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
         bh=fIi3nVBr5HhvV6liomqZDA7tgozsDbLWycpm0oi0WgQ=;
-        b=rwkipwdOYZcV9Mozo0U0WFQUjHNDe0WvQYf0l/KB3Lt5VyBplOURS7G1KoXG4DIV1+
-         +yfTRANS+kTSEM+oZJZ1DzTN2ZGt27S6A5IAsTuZVlnXfnRZ5dBKa8aVf8YoHWqIw03r
-         1o6qkZv70wHvTEjehcU0oCKLjkCWxjuub/3xmPqISpsobgUa79TB3hoYO8muBDe6ELG2
-         YFoT3md6uBaz7ySExCz8kWXGsV9yIntNSjbr0ZYDWRz22KsMExRczpthXcWYNj6bBQgl
-         pnibMPHcnphyURIfxeTKQ6sSoSBY7+/gES/Vb4y7BgjaBHOsRMez0MPkyOpaywq4KBLI
-         s2GQ==
-X-Gm-Message-State: AFqh2kpS0Soee6ykEce+bWCm4QSEbBYiE8iybvVumDORj1NnSXo/C7/M
-	Gl8vwVzjUqn+5D6ijYoXeJQfcQOKpTE=
-X-Google-Smtp-Source: AMrXdXuSos4Wu1VUvr73G2DGKjpwm3606VDmKYvc0fr7QK8ziMfImm524v/v5arLs9E7NRiSGejREg==
-X-Received: by 2002:a17:90a:4210:b0:219:49c6:538b with SMTP id o16-20020a17090a421000b0021949c6538bmr41251958pjg.33.1672208457651;
-        Tue, 27 Dec 2022 22:20:57 -0800 (PST)
+        b=hzWH6KfvrP2MPTAfcPLe2+QNFebccb6qy7PTGiELSnEjFuuh5PmFt0r+b+mNcApJ1Z
+         AvRqvfiOg4eAG/iFGMMkoGU2cEAe0YvKJzMfPKyXB/qrvmawyc8VDi5UaLmF3JQh763R
+         yNPSH9NnS5Y+j4nkH1qp1Xrl63xHtQ/kbLTZDcBsXj/cZgxxnjleBZVzE+kOGG38uiV2
+         2CVx0htLlCq+aEcmx6lWxCMV6IiSfL4uK43L/SfHWS/IWN8+pDjEYyQ7OIpmQiwWW5+Y
+         6pmG/0KOyb1iHCC0BPrxEhufWVM4UWaiLw+vAA38wnPOxoAbgw3dMCJnuJPirMBtCRYt
+         vV7w==
+X-Gm-Message-State: AFqh2kruql6+6SzoN26x3aZKVq2BSV+iFqM0L8zug3DTvUgw00FghyfL
+	MuKgVFaPzRaxHlo5MzfiE/MM9ELW2Dc=
+X-Google-Smtp-Source: AMrXdXs180XnHruHeN03fBMySjmAh4gj7zav54zf9j3RGhKRbOcg6qwD0ZdfoArJJnm2J5z5Bm3HWA==
+X-Received: by 2002:a05:6a21:3a45:b0:9d:efbe:e607 with SMTP id zu5-20020a056a213a4500b0009defbee607mr29276363pzb.35.1672208557218;
+        Tue, 27 Dec 2022 22:22:37 -0800 (PST)
 Received: from localhost.localdomain (61-220-204-242.hinet-ip.hinet.net. [61.220.204.242])
-        by smtp.gmail.com with ESMTPSA id m10-20020a17090a3f8a00b002195819d541sm11298438pjc.8.2022.12.27.22.20.56
+        by smtp.gmail.com with ESMTPSA id n7-20020a622707000000b00580c0219f16sm4844295pfn.169.2022.12.27.22.22.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Dec 2022 22:20:57 -0800 (PST)
+        Tue, 27 Dec 2022 22:22:36 -0800 (PST)
 From: Ryan Sie <lesly895@gmail.com>
 X-Google-Original-From: Ryan Sie <ryans@supermicro.com.tw>
 To: openbmc@lists.ozlabs.org
 Subject: [PATCH] Add Supermicro X13DEM BMC machine
-Date: Wed, 28 Dec 2022 14:20:07 +0800
-Message-Id: <20221228062007.1989410-1-ryans@supermicro.com.tw>
+Date: Wed, 28 Dec 2022 14:22:32 +0800
+Message-Id: <20221228062232.2003139-1-ryans@supermicro.com.tw>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
