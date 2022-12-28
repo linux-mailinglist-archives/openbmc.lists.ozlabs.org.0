@@ -1,66 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5CF4B6574D5
-	for <lists+openbmc@lfdr.de>; Wed, 28 Dec 2022 10:42:41 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E9166574FB
+	for <lists+openbmc@lfdr.de>; Wed, 28 Dec 2022 10:53:03 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Nhmlg1ws8z3c3N
-	for <lists+openbmc@lfdr.de>; Wed, 28 Dec 2022 20:42:39 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Nhmzd1Chyz3c66
+	for <lists+openbmc@lfdr.de>; Wed, 28 Dec 2022 20:53:01 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Rj3269mP;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=J6ajhNL7;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::a2f; helo=mail-vk1-xa2f.google.com; envelope-from=milkfafa@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::92b; helo=mail-ua1-x92b.google.com; envelope-from=milkfafa@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Rj3269mP;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=J6ajhNL7;
 	dkim-atps=neutral
-Received: from mail-vk1-xa2f.google.com (mail-vk1-xa2f.google.com [IPv6:2607:f8b0:4864:20::a2f])
+Received: from mail-ua1-x92b.google.com (mail-ua1-x92b.google.com [IPv6:2607:f8b0:4864:20::92b])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Nhml60T06z3bSl
-	for <openbmc@lists.ozlabs.org>; Wed, 28 Dec 2022 20:42:08 +1100 (AEDT)
-Received: by mail-vk1-xa2f.google.com with SMTP id z190so2986490vka.4
-        for <openbmc@lists.ozlabs.org>; Wed, 28 Dec 2022 01:42:07 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Nhmz34VJyz3bVs
+	for <openbmc@lists.ozlabs.org>; Wed, 28 Dec 2022 20:52:30 +1100 (AEDT)
+Received: by mail-ua1-x92b.google.com with SMTP id c26so3443641uak.5
+        for <openbmc@lists.ozlabs.org>; Wed, 28 Dec 2022 01:52:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=fwLk0wjxGIvhAq7dgs3jTc6JAPT5yAloCtLTEegt4xo=;
-        b=Rj3269mP+Zl4qhDW7MsDPLmDP6tF+49SIZwkN+VgicWg0Lh+MM6wfzfed8Yevd11Ca
-         IXyS/nw13+lolANzO+oXGSYaN0xQEv2Mx1ioSVy5ptMu1e1Pbc+2VAThBj0lsbhse7Su
-         fqfFjpkPCyS0FRZ3NorPCwDa1AVLENVVNGVkae8Dp32EJNnQKP5SZI+bVNX4IChMwlqX
-         AzDABDnLY7gtuzKSCBNcJkBFSiTVnq/Yz3F0XqyXhoKzHzcQ9uOLLJeMh6pfHw5Hlpp0
-         n2nSwjObsMi9NuCQDWCA/zsGxwsBswa1D2NdCFScnjJJurb3Si0pz9n+TNrrZFva3FoP
-         tJqg==
+        bh=ZMogUSlAiHPyH0AEAACLcteryhWYp3/F5J+NreDkLAU=;
+        b=J6ajhNL7VsYQBb8HGZQx9rMSfGcYfcXxo5nNMIEyP3mH1FDUA/Fgmdu3R2neFGYpJD
+         vLfWcEQD3TYRnUiVvXXD8DwcEsmt00sn6i48+NH3SgxzkMxq4iNUgzrJx5xTjzKCA+cI
+         50gbjORdkq0P133OGt8b63T95d0PEF0nUNZaaHc3SQ3FquykcEv2YMatJmn+9f4yAPRS
+         TOv+ubwGesuKZVPyWGdUpLL5o7kvncC8Q+u7HZomAs5GWnlikwGxpBDHsp2IRE7aa8qs
+         rcnA3kbNkCi5YcpzcOMGBjRj3WSPgW/1CXYVMwiPQrMwVcWj+cdR9SQnEH2ri3TWjP1P
+         6D3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=fwLk0wjxGIvhAq7dgs3jTc6JAPT5yAloCtLTEegt4xo=;
-        b=3MKEpDGJLeCQnTs5d6EbeCgeLytAs9OeH+W3bGqiVx9JYEiB929/iYoBhrb4Dx8Wkb
-         y4FvSpmNsHmI/UoUqo9cnbiAMt50mTgyxZaZQLAh9eCyhi08xY8CUcKoEiBMLCYOmtRf
-         12wshvtEi+iamRsJc0Xr7jKbO0qYd3wDZ3V6ay1KsFK7bW9gHMNiUVOAtzOusLJ5BhMg
-         dw987xpB0ZgD0hIJBatLYf7GYghJeztC6a8U0d3XQngtAfM1wel+np2Af3JywWaMMW7h
-         P3f/BdelM0osuysC1MESnNxYhg6cLlCzVreGTRQYTKMc2isfhhKrbmf1zW1CLehlVq/M
-         yjow==
-X-Gm-Message-State: AFqh2krvlEwRBee4PKPWGFg2aMr6bpWe3IZeIyoB1USh7LcsFfRHH4dy
-	l9swe97rUc5RPO5gett3u/44hWSJyJBijvAM8Ec=
-X-Google-Smtp-Source: AMrXdXuiO15bKKKO/sD+d/YsDkXXMmVgtIh2UUu6LekwHNnzWeW8s6XUBfaregIYgxtO4eVYcere42BjzWOrSO+I02A=
-X-Received: by 2002:ac5:c382:0:b0:3bd:e0b8:e350 with SMTP id
- s2-20020ac5c382000000b003bde0b8e350mr2671281vkk.25.1672220525745; Wed, 28 Dec
- 2022 01:42:05 -0800 (PST)
+        bh=ZMogUSlAiHPyH0AEAACLcteryhWYp3/F5J+NreDkLAU=;
+        b=pUfarNkeaTgn9XtLEuZVL85wCxxiG7/hdLQIWcYe/t44PV4wARszIyrCLd4PL2Yz6h
+         9SVBN9Q/t6oG1VIigwCv+9HyfqjiMOk7S+mSfQEXMrRF2gCnRkaAEPD82VEQaNNwvEuA
+         hSlK23mU23jpzSKhHdWc3C6qaALSudPJrowsZkHguJMRfpX30Mnj2D3/+5ld7WNUl0ka
+         a7Ti96XJG9Pjd2Pdd68uYPPuqjrGTb4DBABC0NLHX32BqAfLlbNqzkp/iQKnWG5u6WS5
+         hCwM8+1IepyZ02Q0zNXQq0hH7RD6YdNu2q+zD+MDRrKA9VHEOvzpWD26Rxqm2IrAVBXN
+         YxJg==
+X-Gm-Message-State: AFqh2kquI3UU7s1VYjn0BuEfW510kQUFzj295lxFfisCH05w1yEpPB4K
+	+7/WIFCi5XMDiTY3TMFZlwQ2r9RpGhWsNzhswks=
+X-Google-Smtp-Source: AMrXdXuw1nAiJmoWckgoP6fZNi9PwxDfSZLGl3H3I1DhOHYVkJ6HlpQtnKZbsmmHlkL76yYY8J6p6pGbeV5euq5ou1k=
+X-Received: by 2002:ab0:1e86:0:b0:42f:555b:e4e0 with SMTP id
+ o6-20020ab01e86000000b0042f555be4e0mr2176738uak.19.1672221147298; Wed, 28 Dec
+ 2022 01:52:27 -0800 (PST)
 MIME-Version: 1.0
-References: <20221227095123.2447948-1-milkfafa@gmail.com> <20221227095123.2447948-3-milkfafa@gmail.com>
- <0a3ece05-c94f-3d7e-2f90-b72b777617e5@linaro.org>
-In-Reply-To: <0a3ece05-c94f-3d7e-2f90-b72b777617e5@linaro.org>
+References: <20221227095123.2447948-1-milkfafa@gmail.com> <20221227095123.2447948-4-milkfafa@gmail.com>
+ <1cc66b84-fcf3-2801-57ad-94430fa38055@linaro.org>
+In-Reply-To: <1cc66b84-fcf3-2801-57ad-94430fa38055@linaro.org>
 From: Kun-Fa Lin <milkfafa@gmail.com>
-Date: Wed, 28 Dec 2022 17:41:54 +0800
-Message-ID: <CADnNmFp-RD6-6PUOJzF4GNW4zBoD+Zk6v0dGnmofLBxMWMEaow@mail.gmail.com>
-Subject: Re: [PATCH v10 2/7] media: dt-binding: nuvoton: Add NPCM VCD and ECE engine
+Date: Wed, 28 Dec 2022 17:52:16 +0800
+Message-ID: <CADnNmFqQWi4a2YeizmYZjtTXKiipGbZ-cgwqeaqn4dNOTDu9OA@mail.gmail.com>
+Subject: Re: [PATCH v10 3/7] dt-bindings: arm: nuvoton: Add bindings for NPCM GFXI
 To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -78,13 +78,14 @@ Cc: devicetree@vger.kernel.org, tmaimon77@gmail.com, kwliu@nuvoton.com, avifishm
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-> Subject - it is "dt-bindings", not "dt-bindings".
->
-> Use subject prefixes matching the subsystem (which you can get for
-> example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
-> your patch is touching).
+Hi Krzysztof,
 
-I'll correct it in the next patch. Thanks for the remind.
+Thanks for the remind.
+
+> The comment about subject from v8 applies here as well. Once you receive
+> a comment apply it everywhere, fix all the issues, not only one.
+
+I'll drop redundant "bindings for" in commit subject. Sorry for my negligence.
 
 Regards,
 Marvin
