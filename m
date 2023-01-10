@@ -1,54 +1,53 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37CFA664FD9
-	for <lists+openbmc@lfdr.de>; Wed, 11 Jan 2023 00:20:29 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 17839664FDC
+	for <lists+openbmc@lfdr.de>; Wed, 11 Jan 2023 00:21:32 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Ns6HH13z4z3fG6
-	for <lists+openbmc@lfdr.de>; Wed, 11 Jan 2023 10:20:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Ns6JT6hTZz3fDv
+	for <lists+openbmc@lfdr.de>; Wed, 11 Jan 2023 10:21:29 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.161.50; helo=mail-oo1-f50.google.com; envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
-Received: from mail-oo1-f50.google.com (mail-oo1-f50.google.com [209.85.161.50])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.210.44; helo=mail-ot1-f44.google.com; envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
+Received: from mail-ot1-f44.google.com (mail-ot1-f44.google.com [209.85.210.44])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Ns6DV19Wmz3c5D;
-	Wed, 11 Jan 2023 10:18:01 +1100 (AEDT)
-Received: by mail-oo1-f50.google.com with SMTP id y4-20020a4ab404000000b004f21c72be42so362402oon.8;
-        Tue, 10 Jan 2023 15:18:01 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Ns6DW6NCSz3c5D;
+	Wed, 11 Jan 2023 10:18:03 +1100 (AEDT)
+Received: by mail-ot1-f44.google.com with SMTP id k7-20020a056830168700b0067832816190so7911849otr.1;
+        Tue, 10 Jan 2023 15:18:03 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BkffzaMKgEkAFzow+1H0ViuhO0ELE5aDY2zTJCKAxL8=;
-        b=YplnferknMngq7s10z6z6iZvyGi4gqok9URfJwax3ZTsOzIseM/0pJdW6zB4Dco8El
-         /HNSklN4e1dWoOZxiHPghGCHpTDgyChQ2OWppjJ0FHk6sNcHSQjVXoj8PZqoVFJGf6Ye
-         eo2hTLfzZaKNN5RtK4YZomfwXVuQy7i1CZj9TZ3LtosHmi0QHr7MxLo0AvwoVZUFrgq9
-         BhLGAybpWYYblEJ3lpy9hZBcBC6cQ6np1MssekM1P/myEsjVcR94ol81b/WYo1nUkBr9
-         FIAa1dw8yEK3wpZSc6rEVvePmrPoeJwoewQYP74ajAdRVIBPVC831qXoQI0osCz6802h
-         +4Fg==
-X-Gm-Message-State: AFqh2kpIIgJm5fpxpHdfFbdAAdj704711FyJyi31vetVddlJtgC+yCZX
-	PjxoJuJoO8sTRG/W1rutqw==
-X-Google-Smtp-Source: AMrXdXsPUnlihCfZ58pdMoiErSCAf5PyyC5YskkNloNog96Pmb6ECnLgmGoZIrhTMwzUfjZO2S7H/A==
-X-Received: by 2002:a05:6820:387:b0:4f1:e2d8:47e4 with SMTP id r7-20020a056820038700b004f1e2d847e4mr75789ooj.9.1673392679634;
-        Tue, 10 Jan 2023 15:17:59 -0800 (PST)
+        bh=0PipTcdGJi3JzFB6MCvSNks1FIzBieh7o/0BWQgxG5o=;
+        b=jgrU6KRvSe9cm7fsaKzWmmd3vq+g/3h7d4Tqjs+SFFEb5i8IIoabl0iikNN5BO8Y1B
+         Los0OIOiWGwwlwnFAarP6t42IjclAwOCcCILaJEYDpijHS+5D1u86W6dpSoTE/5kGrKZ
+         +SG6/X+G+SK9liO31u78oQxIlo+qrVsz9cJ17N3kSC5Tge6G+Lr5quQKnNL09HnsSr3F
+         P8KCycnRBIl3FHH/VnrCNv95oixVaQZhqYQDbxXSLTCseOfTOiQQGE4t0oPmgIKEVtt1
+         gah6SkIxTyK/CnPvixwBCOS23YMgp88cyyMPKi2tfV2DihIYa8zU1OWXJYVAnb26aPZs
+         vH9w==
+X-Gm-Message-State: AFqh2kpJvsE+Gp1vaFZLZz7UyExKgcsAB1kBZyobE8OIK/yyRpJof8kW
+	8bn5ejteRT6vPDGFJAl7+g==
+X-Google-Smtp-Source: AMrXdXvTxhp8j2XHzYR8yhUyqDawXHa82JUo3VRja1xqQmky8ZknrJFW42XywhUnepnso8RXS9rv6A==
+X-Received: by 2002:a9d:480b:0:b0:670:9c6b:e684 with SMTP id c11-20020a9d480b000000b006709c6be684mr31539339otf.22.1673392681072;
+        Tue, 10 Jan 2023 15:18:01 -0800 (PST)
 Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id q6-20020a4a9606000000b004a388af96f9sm6330128ooi.4.2023.01.10.15.17.58
+        by smtp.gmail.com with ESMTPSA id 42-20020a9d012d000000b006619295af60sm2328250otu.70.2023.01.10.15.18.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Jan 2023 15:17:58 -0800 (PST)
-Received: (nullmailer pid 3145662 invoked by uid 1000);
+        Tue, 10 Jan 2023 15:18:00 -0800 (PST)
+Received: (nullmailer pid 3145664 invoked by uid 1000);
 	Tue, 10 Jan 2023 23:17:55 -0000
 From: Rob Herring <robh@kernel.org>
-Date: Tue, 10 Jan 2023 17:17:46 -0600
-Subject: [PATCH 3/4] dt-bindings: usb: Convert Marvell Orion EHCI to DT
- schema
+Date: Tue, 10 Jan 2023 17:17:47 -0600
+Subject: [PATCH 4/4] dt-bindings: usb: Convert Nuvoton EHCI to DT schema
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20230110-dt-usb-v1-3-8e366e326513@kernel.org>
+Message-Id: <20230110-dt-usb-v1-4-8e366e326513@kernel.org>
 References: <20230110-dt-usb-v1-0-8e366e326513@kernel.org>
 In-Reply-To: <20230110-dt-usb-v1-0-8e366e326513@kernel.org>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Michael Ellerman <mpe@ellerman.id.au>, Nicholas Piggin <npiggin@gmail.com>, Christophe Leroy <christophe.leroy@csgroup.eu>, Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>, Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>
@@ -68,56 +67,54 @@ Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-usb@vger.kernel.
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The Marvell Orion EHCI binding is just some compatible strings, so add it
-to the generic-ehci.yaml schema.
+The Nuvoton EHCI binding is just some compatible strings, so add it to the
+generic-ehci.yaml schema.
 
 Signed-off-by: Rob Herring <robh@kernel.org>
 ---
- .../devicetree/bindings/usb/ehci-orion.txt         | 22 ----------------------
- .../devicetree/bindings/usb/generic-ehci.yaml      |  2 ++
- 2 files changed, 2 insertions(+), 22 deletions(-)
+ .../devicetree/bindings/usb/generic-ehci.yaml        |  2 ++
+ .../devicetree/bindings/usb/npcm7xx-usb.txt          | 20 --------------------
+ 2 files changed, 2 insertions(+), 20 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/usb/ehci-orion.txt b/Documentation/devicetree/bindings/usb/ehci-orion.txt
-deleted file mode 100644
-index 2855bae79fda..000000000000
---- a/Documentation/devicetree/bindings/usb/ehci-orion.txt
-+++ /dev/null
-@@ -1,22 +0,0 @@
--* EHCI controller, Orion Marvell variants
--
--Required properties:
--- compatible: must be one of the following
--	"marvell,orion-ehci"
--	"marvell,armada-3700-ehci"
--- reg: physical base address of the controller and length of memory mapped
--  region.
--- interrupts: The EHCI interrupt
--
--Optional properties:
--- clocks: reference to the clock
--- phys: reference to the USB PHY
--- phy-names: name of the USB PHY, should be "usb"
--
--Example:
--
--	ehci@50000 {
--		compatible = "marvell,orion-ehci";
--		reg = <0x50000 0x1000>;
--		interrupts = <19>;
--	};
 diff --git a/Documentation/devicetree/bindings/usb/generic-ehci.yaml b/Documentation/devicetree/bindings/usb/generic-ehci.yaml
-index 994818cb6044..85e41609b09b 100644
+index 85e41609b09b..1687c7e9302b 100644
 --- a/Documentation/devicetree/bindings/usb/generic-ehci.yaml
 +++ b/Documentation/devicetree/bindings/usb/generic-ehci.yaml
-@@ -74,6 +74,8 @@ properties:
-           - const: usb-ehci
-       - enum:
+@@ -76,6 +76,8 @@ properties:
            - generic-ehci
-+          - marvell,armada-3700-ehci
-+          - marvell,orion-ehci
+           - marvell,armada-3700-ehci
+           - marvell,orion-ehci
++          - nuvoton,npcm750-ehci
++          - nuvoton,npcm845-ehci
            - usb-ehci
  
    reg:
+diff --git a/Documentation/devicetree/bindings/usb/npcm7xx-usb.txt b/Documentation/devicetree/bindings/usb/npcm7xx-usb.txt
+deleted file mode 100644
+index 352a0a1e2f76..000000000000
+--- a/Documentation/devicetree/bindings/usb/npcm7xx-usb.txt
++++ /dev/null
+@@ -1,20 +0,0 @@
+-Nuvoton NPCM7XX SoC USB controllers:
+------------------------------
+-
+-EHCI:
+------
+-
+-Required properties:
+-- compatible: should be one of
+-    "nuvoton,npcm750-ehci"
+-    "nuvoton,npcm845-ehci"
+-- interrupts: Should contain the EHCI interrupt
+-- reg:        Physical address and length of the register set for the device
+-
+-Example:
+-
+-	ehci1: usb@f0806000 {
+-		compatible = "nuvoton,npcm750-ehci";
+-		reg = <0xf0806000 0x1000>;
+-		interrupts = <0 61 4>;
+-	};
 
 -- 
 2.39.0
