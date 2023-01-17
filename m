@@ -2,67 +2,62 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EC2CA66E511
-	for <lists+openbmc@lfdr.de>; Tue, 17 Jan 2023 18:36:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A4F466E7B3
+	for <lists+openbmc@lfdr.de>; Tue, 17 Jan 2023 21:30:16 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NxGK65fFFz3cdS
-	for <lists+openbmc@lfdr.de>; Wed, 18 Jan 2023 04:36:26 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NxL9f23vgz3cdG
+	for <lists+openbmc@lfdr.de>; Wed, 18 Jan 2023 07:30:14 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=MyCE+2jZ;
+	dkim=permerror header.d=sandelman.ca header.i=@sandelman.ca header.a=rsa-sha1 header.s=mail header.b=LqokGJ0g;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22f; helo=mail-lj1-x22f.google.com; envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=sandelman.ca (client-ip=2607:f0b0:f:3:216:3eff:fe7c:d1f3; helo=tuna.sandelman.ca; envelope-from=mcr@sandelman.ca; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=MyCE+2jZ;
+	dkim=permerror header.d=sandelman.ca header.i=@sandelman.ca header.a=rsa-sha1 header.s=mail header.b=LqokGJ0g;
 	dkim-atps=neutral
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+X-Greylist: delayed 476 seconds by postgrey-1.36 at boromir; Wed, 18 Jan 2023 07:29:45 AEDT
+Received: from tuna.sandelman.ca (tuna.sandelman.ca [IPv6:2607:f0b0:f:3:216:3eff:fe7c:d1f3])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NxGJV1rTdz2x9L
-	for <openbmc@lists.ozlabs.org>; Wed, 18 Jan 2023 04:35:52 +1100 (AEDT)
-Received: by mail-lj1-x22f.google.com with SMTP id bn6so33892401ljb.13
-        for <openbmc@lists.ozlabs.org>; Tue, 17 Jan 2023 09:35:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=eqwxXzbfJuwcyGV/f2tlqmYfB0CiqMfLfLaQcdfnmUc=;
-        b=MyCE+2jZcl1rM9cMmvHpoG06LRLV/svFtYCoO7JmE82low/a5o3Cem3f5q1BtoQX8v
-         sFW+sal/QrDLsHz8gQ64WHxjZovKa7Y/mfCCSAp65ek67BRv+ygF8vlRveB89Uz0jfTk
-         LYTsDuhBYjsRPL1z3Pt4OfNEl3YtsdA2xBqLhb2bEVpoPtGLewff/XmAGKcFVI/tikRj
-         IsWx5dmwQ/f2mJqw2EeSOEfdaSq8IxD8b7h08djbGInpi6XK/7dbEorU9q6EBr/gopcT
-         UeTUv1QV3st+GxOzcbh3UIuwT9dn3nmnwwiQkntfEUCGw7TAVLidEsZFinZk7ivPGmgd
-         SIwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=eqwxXzbfJuwcyGV/f2tlqmYfB0CiqMfLfLaQcdfnmUc=;
-        b=7xTb472smSa/63JNg88yXVGAO8BKdYaipXbYM86RqpFXBlxjESpG/zLTAHcnZrhAji
-         huLM1SelYKXpBgash0m0uYPfh7jA5p5SvHfXZJNnpKeVEzTuOFFobsvCcmxSfLsLKytm
-         cbyNYRo1EW2/NR71kJbQv55bMh8h2X2grFV6sKgaE4K27WXKAPzEAQxbedIZk7V8Tr5I
-         DSe5auBtvMUPEYxN1lxDVnUxWz7FJBm1JJnc7rtGMMkiXVHrUM4/LT8VqEyJdk0MMt47
-         btBdEFih05CEUDjKEqPE3oHlvLGQAtii4442aS7h3BmZTaSlavNk3N/120wrDSYyXeXB
-         /E/A==
-X-Gm-Message-State: AFqh2kphHetS5hQU8eoYhfhMfxTeok6/j4Lvmixn/jAiyHymIrXM4UNY
-	Zz+KWXgHBcakiioqs4OOM4redjU/mcid7tWBBW8=
-X-Google-Smtp-Source: AMrXdXtTvhPNqCVQYqglQf+ISfVQE7hLx5JKwaKAIPT/rLf6I8GI1A9GLS3VUlQLvSF000OVBErwGm6Ra1X22JJ+XZU=
-X-Received: by 2002:a2e:9c83:0:b0:287:4e8e:2139 with SMTP id
- x3-20020a2e9c83000000b002874e8e2139mr427811lji.73.1673976944884; Tue, 17 Jan
- 2023 09:35:44 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NxL951rsyz3cg0
+	for <openbmc@lists.ozlabs.org>; Wed, 18 Jan 2023 07:29:44 +1100 (AEDT)
+Received: from localhost (localhost [127.0.0.1])
+	by tuna.sandelman.ca (Postfix) with ESMTP id CBF143899E;
+	Tue, 17 Jan 2023 15:50:47 -0500 (EST)
+Received: from tuna.sandelman.ca ([127.0.0.1])
+	by localhost (localhost [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 1CfRSs6KsBh7; Tue, 17 Jan 2023 15:50:47 -0500 (EST)
+Received: from sandelman.ca (unknown [IPv6:2607:f0b0:f:2:56b2:3ff:fe0b:d84])
+	by tuna.sandelman.ca (Postfix) with ESMTP id 3166B3899A;
+	Tue, 17 Jan 2023 15:50:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=sandelman.ca;
+	s=mail; t=1673988647;
+	bh=pUZ5T9TI5aCpwYbLupV7Z3pCgqToqpQsfVOV6GvmlOo=;
+	h=From:To:cc:Subject:In-Reply-To:References:Date:From;
+	b=LqokGJ0gl75aV91rDYdWoqBvl0QX+F8ZZKcUWnE+h19lM+po9XYMeFER7DiHdbhgH
+	 QYpNevaf4QIUzocG0pAepCUHWQUZHaxudoUSdhzeH71joiyvTK+rtWDRmpdK1l80kP
+	 cQhMJ1w948DIoh2Fcm4wiGjG0zoayj8d1TikfxFRVMv6UlTaMkVm6jw5PHYJzrIujh
+	 bXgmXIrdEw/tmeCrVk5jtgvtIp970iBWmllFGvXPc/StyCMmqxfQbd/waLorzPWxTE
+	 jpWI1cNheo0D5wRGF/4ejv3t/97QbbtKs8bHy3pA6EzY661SqjhyLGdr8k4Ic1yCkX
+	 rG7j4/wkhWbpg==
+Received: from localhost (localhost [IPv6:::1])
+	by sandelman.ca (Postfix) with ESMTP id E7A4749;
+	Tue, 17 Jan 2023 15:21:40 -0500 (EST)
+From: Michael Richardson <mcr@sandelman.ca>
+To: Lei Yu <yulei.sh@bytedance.com>
+Subject: Re: BMC image generation without private key
+In-Reply-To: <CAGm54UG=i8Ym-23N7R468xCsH3px5QAr52+zY+1MULBYVcf3Xg@mail.gmail.com>
+References: <CAGm54UG=i8Ym-23N7R468xCsH3px5QAr52+zY+1MULBYVcf3Xg@mail.gmail.com>
+X-Mailer: MH-E 8.6+git; nmh 1.7+dev; GNU Emacs 27.1
+X-Face: $\n1pF)h^`}$H>Hk{L"x@)JS7<%Az}5RyS@k9X%29-lHB$Ti.V>2bi.~ehC0;<'$9xN5Ub#
+ z!G,p`nR&p7Fz@^UXIn156S8.~^@MJ*mMsD7=QFeq%AL4m<nPbLgmtKK-5dC@#:k
 MIME-Version: 1.0
-References: <20221211204324.169991-1-tmaimon77@gmail.com> <20221211204324.169991-2-tmaimon77@gmail.com>
- <20221216184402.8A426C433D2@smtp.kernel.org>
-In-Reply-To: <20221216184402.8A426C433D2@smtp.kernel.org>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Tue, 17 Jan 2023 19:35:33 +0200
-Message-ID: <CAP6Zq1iPmy-fvqqAwBuoskR18v0dPVwYm0tEcE5h1g8fOiOQvg@mail.gmail.com>
-Subject: Re: [PATCH v14 1/1] clk: npcm8xx: add clock controller
-To: Stephen Boyd <sboyd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; boundary="=-=-=";
+	micalg=pgp-sha512; protocol="application/pgp-signature"
+Date: Tue, 17 Jan 2023 15:21:40 -0500
+Message-ID: <27195.1673986900@localhost>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,61 +69,71 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: benjaminfair@google.com, avifishman70@gmail.com, venture@google.com, mturquette@baylibre.com, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, joel@jms.id.au, openbmc@lists.ozlabs.org
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Stephen,
+--=-=-=
+Content-Type: text/plain
 
-Very sorry for the late reply.
 
-On Fri, 16 Dec 2022 at 20:44, Stephen Boyd <sboyd@kernel.org> wrote:
->
-> Quoting Tomer Maimon (2022-12-11 12:43:24)
-> > diff --git a/drivers/clk/clk-npcm8xx.c b/drivers/clk/clk-npcm8xx.c
-> > new file mode 100644
-> > index 000000000000..08ee7bea6f3a
-> > --- /dev/null
-> > +++ b/drivers/clk/clk-npcm8xx.c
-> > @@ -0,0 +1,650 @@
-> > +// SPDX-License-Identifier: GPL-2.0
-> > +/*
-> [...]
-> > +#define NPCM8XX_CLK_S_RCP        "rcp"
-> > +
-> > +static const u32 pll_mux_table[] = { 0, 1, 2, 3 };
-> > +static const struct clk_parent_data pll_mux_parents[] = {
-> > +       { .fw_name = NPCM8XX_CLK_S_PLL0, .name = NPCM8XX_CLK_S_PLL0 },
->
-> As this is a new driver either you should only have .fw_name here. The
-> .name field is a backup to migrate code over to a new binding. When
-> .fw_name is used there should be an associated DT binding update. I
-What do you mean by associated DT binding? does the.fw_name, for
-example, NPCM8XX_CLK_S_PLL0 need to represent in the device tree?
-> doubt the usage of .fw_name is correct though, because aren't these clks
-> internal to the controller? The .fw_name field is about describing does the
-yes the PLL clocks are internal.
-> parents that are an input to the clk controller node in DT (because the
-> controller is a consumer of these clks that are external to the device).
->
-> So can you use the .hw field for these internal clks? Check out
-> CLK_HW_INIT_HWS() macro and friends for a possible way to initialize
-> this.
-but still, I have used devm_clk_hw_register_mux_parent_data_table
-function to register the clock mux,
-should I use  devm_clk_hw_register_mux_parent_hws function instead?
-Does this modification need to be done in all the mux parent struct?
-could you point me to some example in the Linux kernel how do you
-think that I should represent the mux clock in the NPCM8XX clock
-driver?
->
-> > +       { .fw_name = NPCM8XX_CLK_S_PLL1, .name = NPCM8XX_CLK_S_PLL1 },
-> > +       { .fw_name = NPCM8XX_CLK_S_REFCLK, .name = NPCM8XX_CLK_S_REFCLK },
->
-> Maybe this is external? If so, it would be great to have this in the
-> binding as a `clocks` property.
-O.K.
+Lei Yu <yulei.sh@bytedance.com> wrote:
+    > For dev builds, it uses the insecure development key in the tree.
+    > For release builds, it requires the `SIGNING_KEY` env to point to a
+    > secure key to sign the image.
 
-Thanks,
+    > It is considered insecure because it requires the build server to
+    > access the private key.
 
-Tomer
+The build server requires authorization from the holder of the private key to
+create signatures.   One way is have direst access to the private key.
+I think that if the build server is so untrusted, then maybe there are other
+problems :-)
+
+I didn't find where SIGNING_KEY is used.
+I suspect that the signature is generated by an openssl command, and so
+actually it could be directed to an engine/HSM.
+
+BUT, in some cases the process is to build something as a devel-ish build,
+and then if QA approves, it is signed with the release key afterwards, and so
+your process would make sense.
+
+    > An alternative is proposed:
+    > * A new `SIGNING_PUBLIC_KEY` env is defined to point to a public key.
+    > * The above key is default to empty, and the behavior is the same as
+    > before, using the insecure development key to generate and sign the
+    > image.
+    > * With a valid `SIGNING_PUBLIC_KEY`:
+    > * The public key is installed into the BMC image.
+    > * The generated tarball is not signed, only containing the MANIFEST
+    > and the image.
+    > * A new `gen-bmc-tar` tool will be introduced to sign the above
+    > tarball, like `gen-bios-tar`.
+    > * If both `SIGNING_PUBLIC_KEY` and `SIGNING_KEY` is set, throw an error.
+
+There is a chain of custody concern between building tarbar and running gen-bmc-tar.
+So, I'd always sign with the development key, and I'd validate that signature
+and then replace it.
+
+    > With the above proposal, the build does not require the private key
+    > anymore and the user could install the public key during build, and
+    > sign the image separately.
+
+    > Comments are welcome.
+
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFFBAEBCgAvFiEEbsyLEzg/qUTA43uogItw+93Q3WUFAmPHA1QRHG1jckBzYW5k
+ZWxtYW4uY2EACgkQgItw+93Q3WUnxAgAwYKtAgcBl3Fp0Yfv8Veqe7NfVEzud4sU
+NqBTMhEabzbXi8TvRmxBOg8LzwUQ98lvybsHdKkZLuFfZE+I9LjBa8hvfBiUzCOj
+bUr6IYQLtrrtZfli8jUCL6TagXjm8hMohLwZOF6rv1ct0AKTV80mjvVsXvVrddlA
+CqGRBl6i7r0x4nAUisHb7bo2gOlpTYefM/W81tJQLdt597fPUoARgwGVwvJP/qa3
+4AjvMTguj3vppvbg7nhlcyxkMskdU3srvKXWx3U++VwaZv8awDRz5sfTFkKuR3iw
+VYdvUt1a7VxRSEMOnlrFYDuy5DLJLOJWCBpUoaPDPzTYz2G4ENaXsg==
+=RYy4
+-----END PGP SIGNATURE-----
+--=-=-=--
