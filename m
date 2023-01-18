@@ -1,63 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BF88F671242
-	for <lists+openbmc@lfdr.de>; Wed, 18 Jan 2023 04:56:27 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 63B2E671345
+	for <lists+openbmc@lfdr.de>; Wed, 18 Jan 2023 06:43:34 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4NxX4T4BlPz3c9R
-	for <lists+openbmc@lfdr.de>; Wed, 18 Jan 2023 14:56:25 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4NxZS202kvz3c8t
+	for <lists+openbmc@lfdr.de>; Wed, 18 Jan 2023 16:43:30 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=hf3jwcSM;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=uZ8qN7sj;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::634; helo=mail-ej1-x634.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::102d; helo=mail-pj1-x102d.google.com; envelope-from=wangxiaohua.1217@bytedance.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=hf3jwcSM;
+	dkim=pass (2048-bit key; unprotected) header.d=bytedance-com.20210112.gappssmtp.com header.i=@bytedance-com.20210112.gappssmtp.com header.a=rsa-sha256 header.s=20210112 header.b=uZ8qN7sj;
 	dkim-atps=neutral
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4NxX3v2RZsz3bbc
-	for <openbmc@lists.ozlabs.org>; Wed, 18 Jan 2023 14:55:53 +1100 (AEDT)
-Received: by mail-ej1-x634.google.com with SMTP id ud5so80250063ejc.4
-        for <openbmc@lists.ozlabs.org>; Tue, 17 Jan 2023 19:55:52 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4NxZRR2M9fz2xxn
+	for <openbmc@lists.ozlabs.org>; Wed, 18 Jan 2023 16:42:57 +1100 (AEDT)
+Received: by mail-pj1-x102d.google.com with SMTP id z1-20020a17090a66c100b00226f05b9595so1143567pjl.0
+        for <openbmc@lists.ozlabs.org>; Tue, 17 Jan 2023 21:42:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jms.id.au; s=google;
+        d=bytedance-com.20210112.gappssmtp.com; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=HcT5Z2kZpgpCs/H5CSpJUBKOlxzXUkwsQ72IKLNAM6A=;
-        b=hf3jwcSM3LErt5VoJyNZ76KtqHK0KCmJ/4wD6UGyTKAskIHSoCayvjIqXKFdK7Qwni
-         e2UwyP6TmHAM3aNlLBudDYPe5aTULyjuDG1Wn0wMV0irHHqAu+SSNd1e4fKE0pTrlZLn
-         64zhHySdv9XAhiBTQgoFL8h5IyS0kswCoOBLU=
+        bh=B0NQsbUzZHwj9TdEdJxAoLZF7IG828B+Vx2mBIfdrsI=;
+        b=uZ8qN7sjAkP96u910J7ICFh2dufjFu18YYpo8rdCDZmV1QSVVR5EiU0BqtMff70/G6
+         4e2GzzllpnzMTTHqoy4p14Ttva5FRHW97yjvCEdlnXPq+/j5YJ4aqJVWQipxmaE9Ri7K
+         PiHjQyAzMIu8Kr4M/E/pjvjGhl5X5ZxF6d12GgWtHiAUIAAw1nOWPwa9VpJTMsDgnmtN
+         wdg/3Ygrv+6lrXCC2hBVdjXhRwwmA6f3HGAEKeTQiKercgLFC9Bb+JgAqInj3dZ5m1cT
+         K4k69gJnGlzqrRQQuxQPyD3haXOZtJYY0oA/W1L2O4QF+U3TbMehB3g4Epdun+oYSAKr
+         fO4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=HcT5Z2kZpgpCs/H5CSpJUBKOlxzXUkwsQ72IKLNAM6A=;
-        b=hi4tkkVuVJikMg5xVtan03G0bjhUjXJMmi6opxdRNrgunHOY3WxNhJlGyf8sObc+pv
-         4jmNJAIrba1Rb4UWFT+KN7VbKLWE4ZeGq/GxLW5illAEhowULzcM5pvUPY4cttka4ahY
-         wk2Te0KnVb1HUzGzfcv6y43pCgzf3JNacfjfRK4QqC5XykgAeipw0+5C9UiZ7vBY/JUQ
-         hjbYFFocjIRu+m1Eed52F91iqyq7/nnAXQE2MiVr3ypubhnK8riw0FYcC8yy505vfNDg
-         VI4EKfVwmtcBlhXksSns7vVHR812wRFTIky0Kw5y9DXEPGC1yDjSjWiCMDa/nQ2LdDsW
-         qGAA==
-X-Gm-Message-State: AFqh2krJ5IKHv+RBa/DrGMeNihWAUbPtmluYJQL4pF0IzXVHclDy9jSX
-	uLxeM0IxtXPiSl3DggVzlQzezTWdDBGbljrZaP0=
-X-Google-Smtp-Source: AMrXdXt0hc10x0K73L0tm5fBfFF0XWK8jWggYbaXH1vOomxPm7E4QvIL+XpCg+PT91fmDey6NxJPSsQIXxL8ZRi+FHs=
-X-Received: by 2002:a17:906:ecb9:b0:86d:97d4:9fea with SMTP id
- qh25-20020a170906ecb900b0086d97d49feamr701815ejb.141.1674014149868; Tue, 17
- Jan 2023 19:55:49 -0800 (PST)
+        bh=B0NQsbUzZHwj9TdEdJxAoLZF7IG828B+Vx2mBIfdrsI=;
+        b=nQco8xL82rp1XC9SIvOkrUkRCRn8o4oBP8lbfQNxBCWJwXTGRdjTdaT4TzZlxlvsba
+         BK7Y9dw3Vw41o31FRKscNMz26ZPo5pRE+23MDbR8+L65EAHnTww9+PcxFhxVSCOpqtGu
+         qS8DCs9kbDI7ND9b1V0+21Gr80CqeE4PX3zPuqsA9hZ7EekOpYI1sKm+I6WWyeZ8nN6S
+         dM6D4XDUL33Ax3u8uDvQlX55FVQ3zzfMeGH2aQ8pGI4HfVK467mB9e8nIzZmAOqAebAV
+         nDW3VA8slUqH9V1l/kK/e94z2a8xLPCjHoq66St8D6i+Dh45JBmvpDtTXOGn+rPbbgCm
+         XFIw==
+X-Gm-Message-State: AFqh2koDOxJ98lzdOEs1dhJQRtkA55OwSB77+oTMqfTAkBsehwTwy11f
+	dcHsPoUc2nyBQehfkcGYEvejmSLtoOqfrU974riTXg==
+X-Google-Smtp-Source: AMrXdXsams3wHxQhETfG0ZnksdhNdPGE4tcNFElb0o1sePFlNiYz49JEbg5AW+EzGuoX9FtjxLsgKp01fl1D4P/jb3M=
+X-Received: by 2002:a17:90b:8d:b0:227:23c3:5db0 with SMTP id
+ bb13-20020a17090b008d00b0022723c35db0mr742198pjb.160.1674020573093; Tue, 17
+ Jan 2023 21:42:53 -0800 (PST)
 MIME-Version: 1.0
 References: <20221209024522.2102509-1-wangxiaohua.1217@bytedance.com> <c319b24e-a2bf-9516-5ae3-1b7da73862f7@roeck-us.net>
 In-Reply-To: <c319b24e-a2bf-9516-5ae3-1b7da73862f7@roeck-us.net>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 18 Jan 2023 03:55:37 +0000
-Message-ID: <CACPK8Xekz5LPqMH4_2cT2gg3NtoPt0rjM6ZY=8XccytMoaN=Bw@mail.gmail.com>
-Subject: Re: [PATCH linux dev-6.0 v3] pmbus: Add mp2971/mp2973 support in mp2975
+From: =?UTF-8?B?5pmT5Y2O546L?= <wangxiaohua.1217@bytedance.com>
+Date: Wed, 18 Jan 2023 13:42:40 +0800
+Message-ID: <CAEJrW_jPJTPd7Fx6_ATJsLED7SKibXaBPQJzhyyAM2+RRVUQAw@mail.gmail.com>
+Subject: Re: [External] Re: [PATCH linux dev-6.0 v3] pmbus: Add mp2971/mp2973
+ support in mp2975
 To: Guenter Roeck <linux@roeck-us.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
@@ -72,28 +76,14 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, Wang Xiaohua <wangxiaohua.1217@bytedance.com>, openbmc@lists.ozlabs.org, jdelvare@suse.com, linux-kernel@vger.kernel.org
+Cc: linux-hwmon@vger.kernel.org, openbmc@lists.ozlabs.org, jdelvare@suse.com, linux-kernel@vger.kernel.org, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello Xiaohua,
-
-
-On Sat, 10 Dec 2022 at 17:54, Guenter Roeck <linux@roeck-us.net> wrote:
+On Sun, Dec 11, 2022 at 1:54 AM Guenter Roeck <linux@roeck-us.net> wrote:
 >
 > On 12/8/22 18:45, Wang Xiaohua wrote:
 > > Add mp2971/mp2973 support in mp2975
-
-Guenter has some comments for you to address. Are you planning on
-working on this further?
-
-I would like to help you get support for this device in the tree, but
-it will require some more work.
-
-Cheers,
-
-Joel
-
 > >
 > > Tested with:
 > > My unit only include mp2971 and mp2973 devices
@@ -149,8 +139,9 @@ Joel
 > Either case, test results should be provided after "---" and not be part
 > of the commit description. Instead, the commit description should explain
 > what those chips actually are.
->
->
+
+Thanks for your comments.
+
 > > Signed-off-by: Wang Xiaohua <wangxiaohua.1217@bytedance.com>
 > >
 > > v2:
@@ -166,7 +157,9 @@ Joel
 >
 > Update to Documentation/hwmon/mp2975.rst and
 > Documentation/devicetree/bindings/trivial-devices.yaml required.
->
+
+Thanks. I will update the Documentation/hwmon/mp2975.rst.
+
 > However, there is a more severe problem: The changes are too complex
 > for me to review, and the chip datasheets are not published. I can not ev=
 aluate
@@ -177,6 +170,10 @@ aluate
 > Additional comments inline.
 >
 > Guenter
+
+Yes, the chip datasheets are still not published. I will try to use a
+less complex solution.
+
 >
 > > diff --git a/drivers/hwmon/pmbus/mp2975.c b/drivers/hwmon/pmbus/mp2975.=
 c
@@ -278,6 +275,10 @@ int page, int phase, u8 reg,
 > use different calculations with different results than those for
 > mp2975.
 >
+
+Thanks, I will define and implement it in mp2975_vid2direct() and add
+more comments in the code.
+
 > Example, for vrf =3D=3D imvp9, 10mV step size, and vid=3D=3D1:
 >
 > mp2971: (1 + 29) * 10 =3D 30 * 10 =3D 300
@@ -292,6 +293,9 @@ int page, int phase, u8 reg,
 > step size since IMVP9 explicitly specifies a step size of 10mV.
 > Also, the maximum voltage for IMVP9 is specified as 2.74V.
 >
+
+Yes, you are right, the step size is 10mV.
+
 > >   static int
 > >   mp2975_vid2direct(int vrf, int val)
 > >   {
@@ -378,6 +382,10 @@ onvert
 > Without datasheets I can not determine if this really makes sense
 > and/or is needed, or if a single function can be used for all chips.
 >
+
+Thanks for your suggestion, I will try to optimize the
+mp2975_vid2direct() function so it can be used for all chips.
+
 > >   static int mp2975_read_word_data(struct i2c_client *client, int page,
 > >                                int phase, int reg)
 > >   {
@@ -432,6 +440,9 @@ ured
 > Without datasheet, it is impossible to compare the chips to check if an
 > implementation with fewer / less extensive changes would be warranted.
 >
+
+Thanks for your comments. I will optimize the code.
+
 > > +
 > > +static int
 > > +mp2971_identify_vid(struct i2c_client *client, struct mp2971_data *dat=
@@ -752,3 +763,7 @@ o);
 > >       {}
 > >   };
 >
+
+BR,
+
+Xiaohua
