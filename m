@@ -2,70 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D176672E8E
-	for <lists+openbmc@lfdr.de>; Thu, 19 Jan 2023 03:00:03 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C91B8672E83
+	for <lists+openbmc@lfdr.de>; Thu, 19 Jan 2023 02:55:18 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Ny5Rj1nWcz3c6F
-	for <lists+openbmc@lfdr.de>; Thu, 19 Jan 2023 13:00:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Ny5LD5JQvz3fCb
+	for <lists+openbmc@lfdr.de>; Thu, 19 Jan 2023 12:55:16 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=HzF+mlaT;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=k0PPWVKh;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1032; helo=mail-pj1-x1032.google.com; envelope-from=potin.lai.pt@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62f; helo=mail-ej1-x62f.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=HzF+mlaT;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=k0PPWVKh;
 	dkim-atps=neutral
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Ny4Xf4SzWz2xbK
-	for <openbmc@lists.ozlabs.org>; Thu, 19 Jan 2023 12:19:14 +1100 (AEDT)
-Received: by mail-pj1-x1032.google.com with SMTP id dw9so842368pjb.5
-        for <openbmc@lists.ozlabs.org>; Wed, 18 Jan 2023 17:19:14 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Ny5KW6pwbz3bXQ;
+	Thu, 19 Jan 2023 12:54:37 +1100 (AEDT)
+Received: by mail-ej1-x62f.google.com with SMTP id kt14so1982382ejc.3;
+        Wed, 18 Jan 2023 17:54:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=utDmIRrPc8hFS/vmhm4HETIQODzF0nB4y0uHITxsM4w=;
-        b=HzF+mlaT/u/72Ild3byzLwjKSXIYnHG3gcZJDaMqXU6F5pXQs5tjM0mdafwRqbLT5j
-         FgQ+1uWinFFfy5MuJIIPCv9mpui3FmjHgUfuw1q2hk7HU9LizzIE0wAN8OvyvrF3SMPD
-         UFkeF9xc4q8NrYGhsDPSFVfz0XsCEEdVZvMoemkzSx8wyycUI+09ph3n6tg+yx0yLboN
-         r1bt+T6Xc2z94InjkvZcN5IuF2diLArN6LGTjWHppKrMSgE48Ak2+8gvMNX+sK1JlHIm
-         XhaW4F5umiYRPQOqmrhzrSvu5PBgV2R2h0qlfhQmu7vruTDjjqdAINrGUI8d7d/X5rdS
-         T9pw==
+        d=jms.id.au; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=e5LSz9bvo3BZ3yzR2LZdddWGu50g7D481ggXK11d8M0=;
+        b=k0PPWVKhCWmYp+/4o8oguC5R37MopUd//IyT1BMNYlmFuqOfC+PXEqR4ju6ET6EHPj
+         UMETuVxZJ7cjl47cvVjMIcJzgFi7PdATI6UypFahVC/NzuqT8pMg4hwu2Y+jNHdr51f7
+         rYTf0pCFhgx8Eids2p5agC7kJgzMXgEFPTZb8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=utDmIRrPc8hFS/vmhm4HETIQODzF0nB4y0uHITxsM4w=;
-        b=FL3FOWXNZ36YwR7y4sBoPxQUN59FyJ/1YHweQAxUnvArpq6ev3dhqFxABLamHeRdxx
-         xaQOhJBYxawX+B0jSz83jbipIKFPfwOq0nTxp6hPf7dt+EkRUSgc2pxIg8plCPiCA+dY
-         YKV9PMQeloN5bEWqA1/76bkYWDMZdMZYVAS6wHodeVshR3v+MjZUKhj1mFM296cBUdqj
-         aPjW4/QEwLDIbFX9ICXlL7sYQoLiC9nDCV0NOBOJ6/7tiJanxW4Tt7z5hdenSzOm975e
-         JiHdZw3M1iJ+P5sPlgw0euz3YzKLJjQyDQIXrUsdo/fDpLa8Su2EMr2jvU1rWS36rLBu
-         QykQ==
-X-Gm-Message-State: AFqh2krequLg9tchci5IjFNknmRNXx1NAJtAaZBkNGK3vv6ok0nku+rb
-	RpGO9YCydtPuvIxVRKXVxXUIB7viMTs=
-X-Google-Smtp-Source: AMrXdXvxe02QzFA4HzPiw+sCX6ICvqMEwbBe50WClBIwIr5RJPwKMDp2o1w/Yee8LaAOC8ENTkRvXA==
-X-Received: by 2002:a17:902:a5c6:b0:193:33d4:d509 with SMTP id t6-20020a170902a5c600b0019333d4d509mr31169989plq.30.1674091151496;
-        Wed, 18 Jan 2023 17:19:11 -0800 (PST)
-Received: from localhost.localdomain (1-34-79-176.hinet-ip.hinet.net. [1.34.79.176])
-        by smtp.gmail.com with ESMTPSA id a3-20020a170902900300b00189393ab02csm6270210plp.99.2023.01.18.17.19.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Jan 2023 17:19:10 -0800 (PST)
-From: Potin Lai <potin.lai.pt@gmail.com>
-To: Joel Stanley <joel@jms.id.au>,
-	openbmc@lists.ozlabs.org
-Subject: [RESEND PATCH u-boot,v2019.04-aspeed-openbmc 1/1] ARM: Aspeed: add a config for FMC_WDT2 timer reload value
-Date: Thu, 19 Jan 2023 09:16:58 +0800
-Message-Id: <20230119011658.457158-1-potin.lai.pt@gmail.com>
-X-Mailer: git-send-email 2.31.1
+        bh=e5LSz9bvo3BZ3yzR2LZdddWGu50g7D481ggXK11d8M0=;
+        b=j1d+SBDwAyl1iUw4EIQXq2eIqC3qmKTXgD7oD0LqSk990LVrlMydFH9YdVFZlcJ92d
+         uh145t4vcevfLXxbm0Uus3gN5/qVdNCrDORICBo5m5dDecrGN6cVgDKzHpunFKrGOrud
+         m8wlLYWEK2zW5EAzERuOcwEpKA+/D76d+WJ17lVnzTEdjGs7gou6NFUZFZeCJPB7ggcF
+         8sqRXc6gI4mVqa9cqbWxzlOSFcm5+IqQcDnY6s171xXbOxGV5jTOL6tG3XwZoom6Ck6d
+         nAWRAVSzNKAb7hRbsFQxl0qI2uT/c4/iQAzad1hGO2MG2TuU8Ew8+TKIe0vy79Rbg2dE
+         enWw==
+X-Gm-Message-State: AFqh2krZTBEOv64Yze52WAsA23OmsAQ/Vg6KECFJHGzg7pgNL1NynqZD
+	tvenSMRPrj4dTHopyqyrUIguBARL6mt3pi3MIPc=
+X-Google-Smtp-Source: AMrXdXu+ox64PdWPYUzYVyZ0V9eEMhNYJBdrtYqnVqBurU84ellrmAEXv1jl+qoNNn06JcsWkIRO245bljA8fWYGORE=
+X-Received: by 2002:a17:906:3b85:b0:7c1:4665:9684 with SMTP id
+ u5-20020a1709063b8500b007c146659684mr1204502ejf.23.1674093274564; Wed, 18 Jan
+ 2023 17:54:34 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Mailman-Approved-At: Thu, 19 Jan 2023 12:59:32 +1100
+References: <20220818101839.28860-1-billy_tsai@aspeedtech.com>
+ <CACRpkdYpp_1JJQmuX27pECxN0cjzciCuETLPTrSYKqpX0FPABQ@mail.gmail.com> <e501d2fb-aaa0-470d-a8d5-5f8e97898df7@beta.fastmail.com>
+In-Reply-To: <e501d2fb-aaa0-470d-a8d5-5f8e97898df7@beta.fastmail.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Thu, 19 Jan 2023 01:54:22 +0000
+Message-ID: <CACPK8XfQ=uarsOgJ7LaXqLyGG2vSF-47RkAEV=T2gruapx-yfg@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: aspeed: Force to disable the function's signal
+To: Andrew Jeffery <andrew@aj.id.au>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,86 +71,63 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Dan Zhang <dz4list@gmail.com>
+Cc: linux-aspeed@lists.ozlabs.org, Linus Walleij <linus.walleij@linaro.org>, linux-kernel@vger.kernel.org, Billy Tsai <billy_tsai@aspeedtech.com>, linux-gpio@vger.kernel.org, openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add a config for FMC_WDT2 timer reload, and set timer reload value if
-FMC_WDT2 is enabled.
+On Fri, 26 Aug 2022 at 22:48, Andrew Jeffery <andrew@aj.id.au> wrote:
+> On Sat, 27 Aug 2022, at 07:26, Linus Walleij wrote:
+> > On Thu, Aug 18, 2022 at 12:18 PM Billy Tsai <billy_tsai@aspeedtech.com> wrote:
+> >
+> >> When the driver want to disable the signal of the function, it doesn't
+> >> need to query the state of the mux function's signal on a pin. The
+> >> condition below will miss the disable of the signal:
 
-Signed-off-by: Potin Lai <potin.lai.pt@gmail.com>
-Reviewed-by: Patrick Williams <patrick@stwcx.xyz>
----
- arch/arm/include/asm/arch-aspeed/platform.h |  2 ++
- arch/arm/mach-aspeed/ast2600/Kconfig        | 10 ++++++++++
- arch/arm/mach-aspeed/ast2600/scu_info.c     | 13 +++++++++++++
- 3 files changed, 25 insertions(+)
+> > I can't see the verdict for this patch? Will there be a new
+> > version, or are we in the middle of a discussion?
+> > I'd really like Andrew's ACK on the result before merging.
+>
+> Apologies, it's been a bit of A Week :)
+>
+> Given the approach has been discussed with the IP designer and solves a bug I'm okay for it to be merged. If we run into issues it is easy enough to back it out.
 
-diff --git a/arch/arm/include/asm/arch-aspeed/platform.h b/arch/arm/include/asm/arch-aspeed/platform.h
-index ca270d4be1..4c2b0866fb 100644
---- a/arch/arm/include/asm/arch-aspeed/platform.h
-+++ b/arch/arm/include/asm/arch-aspeed/platform.h
-@@ -44,6 +44,8 @@
- #define ASPEED_FMC_CS0_BASE	0x20000000
- #elif defined(CONFIG_ASPEED_AST2600)
- #define ASPEED_FMC_WDT2		0x1e620064
-+#define ASPEED_FMC_WDT2_RELOAD	0x1e620068
-+#define ASPEED_FMC_WDT2_RESTART	0x1e62006C
- #define ASPEED_SPI1_BOOT_CTRL	0x1e630064
- #define ASPEED_MULTI_CTRL10	0x1e6e2438
- #define ASPEED_HW_STRAP1	0x1e6e2500
-diff --git a/arch/arm/mach-aspeed/ast2600/Kconfig b/arch/arm/mach-aspeed/ast2600/Kconfig
-index f5852afa77..4c141672a1 100644
---- a/arch/arm/mach-aspeed/ast2600/Kconfig
-+++ b/arch/arm/mach-aspeed/ast2600/Kconfig
-@@ -53,6 +53,16 @@ config TARGET_QUALCOMM_DC_SCM_V1
- 
- endchoice
- 
-+config ASPEED_FMC_WDT2_TIMER_RELOAD
-+	int "Aspeed FMC_WDT2 timer reload value"
-+	depends on ASPEED_AST2600
-+	range 0 8191
-+	default 0
-+	help
-+	  Aspeed FMC_WDT2 timer reload value, the time unit is 0.1 second.
-+	  if this value is 0, left original FMC_WDT2 timer reload register without
-+	  change (Default 22 seconds), if it is > 0 then set timer with the value.
-+
- source "board/aspeed/evb_ast2600/Kconfig"
- source "board/aspeed/fpga_ast2600/Kconfig"
- source "board/aspeed/slt_ast2600/Kconfig"
-diff --git a/arch/arm/mach-aspeed/ast2600/scu_info.c b/arch/arm/mach-aspeed/ast2600/scu_info.c
-index a2277eec58..c18bc3923a 100644
---- a/arch/arm/mach-aspeed/ast2600/scu_info.c
-+++ b/arch/arm/mach-aspeed/ast2600/scu_info.c
-@@ -30,6 +30,9 @@ static struct soc_id soc_map_table[] = {
- 	SOC_ID("AST2625-A3", 0x0503040305030403),
- };
- 
-+static u32 aspeed_fmc_wdt2_reload =
-+	CONFIG_ASPEED_FMC_WDT2_TIMER_RELOAD & 0x1FFF;
-+
- void aspeed_print_soc_id(void)
- {
- 	int i;
-@@ -302,6 +305,16 @@ void aspeed_print_2nd_wdt_mode(void)
- 
- 			printf("\n");
- 		}
-+
-+		if (aspeed_fmc_wdt2_reload &&
-+		    (readl(ASPEED_FMC_WDT2) & BIT(0))) {
-+			writel(aspeed_fmc_wdt2_reload, ASPEED_FMC_WDT2_RELOAD);
-+			writel(0x4755, ASPEED_FMC_WDT2_RESTART);
-+			printf("Set FMC_WDT2 timer reload value to 0x%04X\n",
-+			       aspeed_fmc_wdt2_reload);
-+		} else {
-+			printf("Keep FMC_WDT2 timer reload value as init\n");
-+		}
- 	}
- }
- 
--- 
-2.31.1
+As foreseen by Andrew, this caused a regression. On the Romulus
+machine the device tree contains a gpio hog for GPIO S7. With the
+patch applied:
 
+[    0.384796] aspeed-g5-pinctrl 1e6e2080.pinctrl: request pin 151
+(AA20) for 1e780000.gpio:943
+[    0.385009] Muxing pin 151 for GPIO
+[    0.385081] Disabling signal VPOB9 for VPO
+[    0.402291] aspeed-g5-pinctrl 1e6e2080.pinctrl: Failed to acquire
+regmap for IP block 1
+[    0.402521] aspeed-g5-pinctrl 1e6e2080.pinctrl: request() failed for pin 151
+
+The code path is aspeed-gpio -> pinmux-g5 -> regmap -> clk, and the
+of_clock code returns an error as it doesn't have a valid struct
+clk_hw pointer. The regmap call happens because pinmux wants to check
+the GFX node (IP block 1) to query bits there.
+
+For reference, reverting the patch gives us this trace:
+
+[    0.393160] Muxing pin 151 for GPIO
+[    0.393267] Disabling signal VPOB9 for VPO
+[    0.393383] Want SCU8C[0x00000080]=0x1, got 0x0 from 0x00000000
+[    0.393552] Disabling signal VPOB9 for VPOOFF1
+[    0.393681] Want SCU8C[0x00000080]=0x1, got 0x0 from 0x00000000
+[    0.393835] Disabling signal VPOB9 for VPOOFF2
+[    0.393965] Want SCU8C[0x00000080]=0x1, got 0x0 from 0x00000000
+[    0.394097] Enabling signal GPIOS7 for GPIOS7
+[    0.394217] Muxed pin 151 as GPIOS7
+[    0.394411] gpio-943 (seq_cont): hogged as output/low
+
+This can be reproduced in qemu without userspace:
+
+qemu-system-arm -M romulus-bmc -nographic -kernel arch/arm/boot/zImage
+-dtb arch/arm/boot/dts/aspeed-bmc-opp-romulus.dtb -no-reboot
+
+Billy, do you have any suggestions?
+
+Cheers,
+
+Joel
