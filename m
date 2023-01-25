@@ -1,83 +1,83 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2BF767B896
-	for <lists+openbmc@lfdr.de>; Wed, 25 Jan 2023 18:31:10 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6274B67B8A3
+	for <lists+openbmc@lfdr.de>; Wed, 25 Jan 2023 18:33:03 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4P29qJ4mNrz3cfl
-	for <lists+openbmc@lfdr.de>; Thu, 26 Jan 2023 04:31:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4P29sT1yDxz3cdl
+	for <lists+openbmc@lfdr.de>; Thu, 26 Jan 2023 04:33:01 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qfVIOLwF;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=m509XhZB;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qfVIOLwF;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=m509XhZB;
 	dkim-atps=neutral
 Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4P29pg5q5Vz3cYd
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4P29pg4jyGz3cLb
 	for <openbmc@lists.ozlabs.org>; Thu, 26 Jan 2023 04:30:35 +1100 (AEDT)
-Received: from pps.filterd (m0098409.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30PGbHMJ004263;
-	Wed, 25 Jan 2023 17:30:30 GMT
+Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 30PHNmuI006877;
+	Wed, 25 Jan 2023 17:30:31 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : cc : subject
- : date : message-id : in-reply-to : references : content-transfer-encoding
- : mime-version; s=pp1; bh=hX2R0RzdAn8abvVHDyRRckW+irvjuFWugGWBrOgSd+k=;
- b=qfVIOLwFHXmT7qym+sQ13oYts1zoNPBNYWwAqM1VIkd2QPbkRp6/3KKsOICF+9lkkGO2
- +GWa9vN/1zBjh1tjwFrb1tmnD6nnvcRQrcI5m3QYwLbrQH3NP3pTykshk1cyKXxFDMft
- jpuGICNgZS4owvvC/yYtAdwz4zOKHwWlnlzkw3QLc8gN62MHk2TToll7XMOskkq3ykLz
- fOEGDxHOlVSbqcOVvvmCtg29bVWdBd5zb7MA7d8HHovsJupsXBLO403kkWocfS8puCKX
- GCUxWP/J3DkW3e0fMRDZwF8S4foIl+aOf3U5gQxPkZAPY/hyvh68Ke6VtNoh3yEhhrV4 Vw== 
-Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com [169.55.85.253])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3nacg1udwc-1
+ : date : message-id : in-reply-to : references : mime-version :
+ content-transfer-encoding; s=pp1;
+ bh=7lT3N2sf3UZoWdQ0ls8Y9ntbLfBNArwL9jcxIQd99fw=;
+ b=m509XhZBkaBs4HNobCyO/ITODoZUx4gzbwJBzKTMgIS21SUZY3QSMcvKxqzFoOzsm9AR
+ lR9lAkinzNvCbuWBsDVrrlc5TsL197i/0/MAl9P9WZntytfjjcMD5d3hzeskdOoAcv40
+ cKkf4yETVicUCNDjSF+y+bwl0stkriw6D6JRLZ9pX8pH5CTDeS2WNgnjylAyMX/l2sdS
+ SZwwFuWqXONfzzoTlpNxypWHDyEB8IIoNp+HRdLFGsU++Xs/Tb1BEebqZoPWA6vslNyr
+ dUcJtc5Asz+RyJhzsB9Ts5JVa3zGBUohKHq+ZQz9WYwJDCequoan4a/ic9khWIAbTY8P aA== 
+Received: from ppma03wdc.us.ibm.com (ba.79.3fa9.ip4.static.sl-reverse.com [169.63.121.186])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3naaguw0qe-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Jan 2023 17:30:30 +0000
-Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
-	by ppma01wdc.us.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 30PGlo8E010809;
-	Wed, 25 Jan 2023 17:30:28 GMT
-Received: from smtprelay04.dal12v.mail.ibm.com ([9.208.130.102])
-	by ppma01wdc.us.ibm.com (PPS) with ESMTPS id 3n87p792w9-1
+	Wed, 25 Jan 2023 17:30:31 +0000
+Received: from pps.filterd (ppma03wdc.us.ibm.com [127.0.0.1])
+	by ppma03wdc.us.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 30PGUB7N006854;
+	Wed, 25 Jan 2023 17:30:29 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([9.208.130.101])
+	by ppma03wdc.us.ibm.com (PPS) with ESMTPS id 3n87p7h27r-1
 	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Wed, 25 Jan 2023 17:30:28 +0000
+	Wed, 25 Jan 2023 17:30:29 +0000
 Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com [10.39.53.230])
-	by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 30PHUROC6619732
+	by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 30PHUSfp5702372
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Wed, 25 Jan 2023 17:30:28 GMT
+	Wed, 25 Jan 2023 17:30:29 GMT
 Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id AA7DD5805C;
+	by IMSVA (Postfix) with ESMTP id 9866A58054;
+	Wed, 25 Jan 2023 17:30:28 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id EBA955805A;
 	Wed, 25 Jan 2023 17:30:27 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id F07565805D;
-	Wed, 25 Jan 2023 17:30:26 +0000 (GMT)
 Received: from slate16.aus.stglabs.ibm.com (unknown [9.77.150.21])
 	by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Wed, 25 Jan 2023 17:30:26 +0000 (GMT)
+	Wed, 25 Jan 2023 17:30:27 +0000 (GMT)
 From: Eddie James <eajames@linux.ibm.com>
 To: openbmc@lists.ozlabs.org
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc 1/4] tpm: Pull in upstream changes
-Date: Wed, 25 Jan 2023 11:30:22 -0600
-Message-Id: <20230125173025.3725606-2-eajames@linux.ibm.com>
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc 2/4] tpm: Support boot measurements
+Date: Wed, 25 Jan 2023 11:30:23 -0600
+Message-Id: <20230125173025.3725606-3-eajames@linux.ibm.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20230125173025.3725606-1-eajames@linux.ibm.com>
 References: <20230125173025.3725606-1-eajames@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: G-k8K1jn8E1IMfXhaCJJlooPG5NXXaKM
-X-Proofpoint-GUID: G-k8K1jn8E1IMfXhaCJJlooPG5NXXaKM
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: QdQpa39DZ9Dcr_lR5zDG87M2lAPuNc9J
+X-Proofpoint-GUID: QdQpa39DZ9Dcr_lR5zDG87M2lAPuNc9J
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.122.1
- definitions=2023-01-25_11,2023-01-25_01,2022-06-22_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 mlxlogscore=999
- lowpriorityscore=0 phishscore=0 adultscore=0 bulkscore=0 malwarescore=0
- clxscore=1015 impostorscore=0 spamscore=0 suspectscore=0
- priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2212070000 definitions=main-2301250152
+ definitions=2023-01-25_10,2023-01-25_01,2022-06-22_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ lowpriorityscore=0 spamscore=0 impostorscore=0 phishscore=0
+ priorityscore=1501 adultscore=0 bulkscore=0 mlxscore=0 malwarescore=0
+ mlxlogscore=999 suspectscore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2212070000 definitions=main-2301250147
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,519 +93,1125 @@ Cc: joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Get the TPM driver into the same state as upstream.
+Add TPM2 functions to support boot measurement. This includes
+starting up the TPM, initializing/appending the event log, and
+measuring the U-Boot version. Much of the code was used in the
+EFI subsystem, so remove it there and use the common functions.
 
 Signed-off-by: Eddie James <eajames@linux.ibm.com>
 ---
- cmd/tpm-v1.c         |  16 ++--
- cmd/tpm-v2.c         |  10 ++-
- include/tpm-common.h |   3 +
- include/tpm-v2.h     | 188 ++++++++++++++++++++++++++++++++++++++++++-
- lib/tpm-v2.c         |  39 +++++----
- 5 files changed, 231 insertions(+), 25 deletions(-)
+ include/tpm-v2.h | 254 +++++++++++++++
+ lib/tpm-v2.c     | 799 +++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 1053 insertions(+)
 
-diff --git a/cmd/tpm-v1.c b/cmd/tpm-v1.c
-index b75e0933a1..ebddb93bff 100644
---- a/cmd/tpm-v1.c
-+++ b/cmd/tpm-v1.c
-@@ -128,7 +128,8 @@ static int do_tpm_extend(cmd_tbl_t *cmdtp, int flag, int argc,
- 		return CMD_RET_FAILURE;
- 	}
- 
--	rc = tpm_extend(dev, index, in_digest, out_digest);
-+	rc = tpm_pcr_extend(dev, index, in_digest, sizeof(in_digest),
-+			    out_digest, "cmd");
- 	if (!rc) {
- 		puts("PCR value after execution of the command:\n");
- 		print_byte_string(out_digest, sizeof(out_digest));
-@@ -403,9 +404,9 @@ static int do_tpm_load_key_by_sha1(cmd_tbl_t *cmdtp, int flag, int argc, char *
- 	void *key;
- 	struct udevice *dev;
- 
--	rc = get_tpm(&dev);
--	if (rc)
--		return rc;
-+	err = get_tpm(&dev);
-+	if (err)
-+		return err;
- 
- 	if (argc < 5)
- 		return CMD_RET_USAGE;
-@@ -579,6 +580,7 @@ static int do_tpm_flush(cmd_tbl_t *cmdtp, int flag, int argc,
- static int do_tpm_list(cmd_tbl_t *cmdtp, int flag, int argc,
- 		       char * const argv[])
- {
-+	struct udevice *dev;
- 	int type = 0;
- 	u16 res_count;
- 	u8 buf[288];
-@@ -586,6 +588,10 @@ static int do_tpm_list(cmd_tbl_t *cmdtp, int flag, int argc,
- 	int err;
- 	uint i;
- 
-+	err = get_tpm(&dev);
-+	if (err)
-+		return err;
-+
- 	if (argc != 2)
- 		return CMD_RET_USAGE;
- 
-@@ -616,7 +622,7 @@ static int do_tpm_list(cmd_tbl_t *cmdtp, int flag, int argc,
- 	}
- 
- 	/* fetch list of already loaded resources in the TPM */
--	err = tpm_get_capability(TPM_CAP_HANDLE, type, buf,
-+	err = tpm_get_capability(dev, TPM_CAP_HANDLE, type, buf,
- 				 sizeof(buf));
- 	if (err) {
- 		printf("tpm_get_capability returned error %d.\n", err);
-diff --git a/cmd/tpm-v2.c b/cmd/tpm-v2.c
-index 459a955d29..65bab81405 100644
---- a/cmd/tpm-v2.c
-+++ b/cmd/tpm-v2.c
-@@ -115,7 +115,8 @@ static int do_tpm2_pcr_extend(cmd_tbl_t *cmdtp, int flag, int argc,
- 	if (index >= priv->pcr_count)
- 		return -EINVAL;
- 
--	rc = tpm2_pcr_extend(dev, index, digest);
-+	rc = tpm2_pcr_extend(dev, index, TPM2_ALG_SHA256, digest,
-+			     TPM2_DIGEST_LEN);
- 
- 	unmap_sysmem(digest);
- 
-@@ -149,7 +150,8 @@ static int do_tpm_pcr_read(cmd_tbl_t *cmdtp, int flag, int argc,
- 
- 	data = map_sysmem(simple_strtoul(argv[2], NULL, 0), 0);
- 
--	rc = tpm2_pcr_read(dev, index, priv->pcr_select_min, data, &updates);
-+	rc = tpm2_pcr_read(dev, index, priv->pcr_select_min, TPM2_ALG_SHA256,
-+			   data, TPM2_DIGEST_LEN, &updates);
- 	if (!rc) {
- 		printf("PCR #%u content (%u known updates):\n", index, updates);
- 		print_byte_string(data, TPM2_DIGEST_LEN);
-@@ -190,10 +192,10 @@ static int do_tpm_get_capability(cmd_tbl_t *cmdtp, int flag, int argc,
- 	for (i = 0; i < count; i++) {
- 		printf("Property 0x");
- 		for (j = 0; j < 4; j++)
--			printf("%02x", data[(i * 8) + j]);
-+			printf("%02x", data[(i * 8) + j + sizeof(u32)]);
- 		printf(": 0x");
- 		for (j = 4; j < 8; j++)
--			printf("%02x", data[(i * 8) + j]);
-+			printf("%02x", data[(i * 8) + j + sizeof(u32)]);
- 		printf("\n");
- 	}
- 
-diff --git a/include/tpm-common.h b/include/tpm-common.h
-index f9c2ca2053..702cd6e93b 100644
---- a/include/tpm-common.h
-+++ b/include/tpm-common.h
-@@ -293,4 +293,7 @@ static inline cmd_tbl_t *get_tpm2_commands(unsigned int *size)
-  */
- enum tpm_version tpm_get_version(struct udevice *dev);
- 
-+/* Iterate on all TPM devices */
-+#define for_each_tpm_device(dev) uclass_foreach_dev_probe(UCLASS_TPM, (dev))
-+
- #endif /* __TPM_COMMON_H */
 diff --git a/include/tpm-v2.h b/include/tpm-v2.h
-index b65f2ce55a..edebf9dc78 100644
+index edebf9dc78..8f42315209 100644
 --- a/include/tpm-v2.h
 +++ b/include/tpm-v2.h
-@@ -1,6 +1,13 @@
- /* SPDX-License-Identifier: GPL-2.0+ */
- /*
-+ * Defines APIs and structures that allow software to interact with a
-+ * TPM2 device
-+ *
-+ * Copyright (c) 2020 Linaro
-  * Copyright (c) 2018 Bootlin
-+ *
-+ * https://trustedcomputinggroup.org/resource/tss-overview-common-structures-specification/
-+ *
-  * Author: Miquel Raynal <miquel.raynal@bootlin.com>
-  */
+@@ -180,6 +180,50 @@ struct tcg_pcr_event2 {
+ 	u8 event[];
+ } __packed;
  
-@@ -9,8 +16,170 @@
- 
- #include <tpm-common.h>
- 
-+struct udevice;
-+
- #define TPM2_DIGEST_LEN		32
- 
-+#define TPM2_SHA1_DIGEST_SIZE 20
-+#define TPM2_SHA256_DIGEST_SIZE	32
-+#define TPM2_SHA384_DIGEST_SIZE	48
-+#define TPM2_SHA512_DIGEST_SIZE	64
-+#define TPM2_SM3_256_DIGEST_SIZE 32
-+
-+#define TPM2_MAX_PCRS 32
-+#define TPM2_PCR_SELECT_MAX ((TPM2_MAX_PCRS + 7) / 8)
-+#define TPM2_MAX_CAP_BUFFER 1024
-+#define TPM2_MAX_TPM_PROPERTIES ((TPM2_MAX_CAP_BUFFER - sizeof(u32) /* TPM2_CAP */ - \
-+				 sizeof(u32)) / sizeof(struct tpms_tagged_property))
-+
-+#define TPM2_HDR_LEN		10
-+
-+/*
-+ *  We deviate from this draft of the specification by increasing the value of
-+ *  TPM2_NUM_PCR_BANKS from 3 to 16 to ensure compatibility with TPM2
-+ *  implementations that have enabled a larger than typical number of PCR
-+ *  banks. This larger value for TPM2_NUM_PCR_BANKS is expected to be included
-+ *  in a future revision of the specification.
-+ */
-+#define TPM2_NUM_PCR_BANKS 16
-+
-+/* Definition of (UINT32) TPM2_CAP Constants */
-+#define TPM2_CAP_PCRS 0x00000005U
-+#define TPM2_CAP_TPM_PROPERTIES 0x00000006U
-+
-+/* Definition of (UINT32) TPM2_PT Constants */
-+#define TPM2_PT_GROUP			(u32)(0x00000100)
-+#define TPM2_PT_FIXED			(u32)(TPM2_PT_GROUP * 1)
-+#define TPM2_PT_MANUFACTURER		(u32)(TPM2_PT_FIXED + 5)
-+#define TPM2_PT_PCR_COUNT		(u32)(TPM2_PT_FIXED + 18)
-+#define TPM2_PT_MAX_COMMAND_SIZE	(u32)(TPM2_PT_FIXED + 30)
-+#define TPM2_PT_MAX_RESPONSE_SIZE	(u32)(TPM2_PT_FIXED + 31)
-+
-+/*
-+ * event types, cf.
-+ * "TCG Server Management Domain Firmware Profile Specification",
-+ * rev 1.00, 2020-05-01
-+ */
-+#define EV_POST_CODE			((u32)0x00000001)
-+#define EV_NO_ACTION			((u32)0x00000003)
-+#define EV_SEPARATOR			((u32)0x00000004)
-+#define EV_ACTION			((u32)0x00000005)
-+#define EV_TAG				((u32)0x00000006)
-+#define EV_S_CRTM_CONTENTS		((u32)0x00000007)
-+#define EV_S_CRTM_VERSION		((u32)0x00000008)
-+#define EV_CPU_MICROCODE		((u32)0x00000009)
-+#define EV_PLATFORM_CONFIG_FLAGS	((u32)0x0000000A)
-+#define EV_TABLE_OF_DEVICES		((u32)0x0000000B)
-+#define EV_COMPACT_HASH			((u32)0x0000000C)
-+
-+/* TPMS_TAGGED_PROPERTY Structure */
-+struct tpms_tagged_property {
-+	u32 property;
-+	u32 value;
-+} __packed;
-+
-+/* TPMS_PCR_SELECTION Structure */
-+struct tpms_pcr_selection {
-+	u16 hash;
-+	u8 size_of_select;
-+	u8 pcr_select[TPM2_PCR_SELECT_MAX];
-+} __packed;
-+
-+/* TPML_PCR_SELECTION Structure */
-+struct tpml_pcr_selection {
-+	u32 count;
-+	struct tpms_pcr_selection selection[TPM2_NUM_PCR_BANKS];
-+} __packed;
-+
-+/* TPML_TAGGED_TPM_PROPERTY Structure */
-+struct tpml_tagged_tpm_property {
-+	u32 count;
-+	struct tpms_tagged_property tpm_property[TPM2_MAX_TPM_PROPERTIES];
-+} __packed;
-+
-+/* TPMU_CAPABILITIES Union */
-+union tpmu_capabilities {
-+	/*
-+	 * Non exhaustive. Only added the structs needed for our
-+	 * current code
-+	 */
-+	struct tpml_pcr_selection assigned_pcr;
-+	struct tpml_tagged_tpm_property tpm_properties;
-+} __packed;
-+
-+/* TPMS_CAPABILITY_DATA Structure */
-+struct tpms_capability_data {
-+	u32 capability;
-+	union tpmu_capabilities data;
-+} __packed;
-+
 +/**
-+ * SHA1 Event Log Entry Format
++ *  struct TCG_EfiSpecIdEventAlgorithmSize - hashing algorithm information
 + *
-+ * @pcr_index:	PCRIndex event extended to
-+ * @event_type:	Type of event (see EFI specs)
-+ * @digest:	Value extended into PCR index
-+ * @event_size:	Size of event
-+ * @event:	Event data
++ *  @algorithm_id:	algorithm defined in enum tpm2_algorithms
++ *  @digest_size:	size of the algorithm
 + */
-+struct tcg_pcr_event {
-+	u32 pcr_index;
-+	u32 event_type;
-+	u8 digest[TPM2_SHA1_DIGEST_SIZE];
-+	u32 event_size;
-+	u8 event[];
++struct tcg_efi_spec_id_event_algorithm_size {
++	u16      algorithm_id;
++	u16      digest_size;
 +} __packed;
 +
-+/**
-+ * Definition of TPMU_HA Union
-+ */
-+union tpmu_ha {
-+	u8 sha1[TPM2_SHA1_DIGEST_SIZE];
-+	u8 sha256[TPM2_SHA256_DIGEST_SIZE];
-+	u8 sm3_256[TPM2_SM3_256_DIGEST_SIZE];
-+	u8 sha384[TPM2_SHA384_DIGEST_SIZE];
-+	u8 sha512[TPM2_SHA512_DIGEST_SIZE];
-+} __packed;
++#define TCG_EFI_SPEC_ID_EVENT_SIGNATURE_03 "Spec ID Event03"
++#define TCG_EFI_SPEC_ID_EVENT_SPEC_VERSION_MAJOR_TPM2 2
++#define TCG_EFI_SPEC_ID_EVENT_SPEC_VERSION_MINOR_TPM2 0
++#define TCG_EFI_SPEC_ID_EVENT_SPEC_VERSION_ERRATA_TPM2 2
 +
 +/**
-+ * Definition of TPMT_HA Structure
++ * struct TCG_EfiSpecIDEventStruct - content of the event log header
 + *
-+ * @hash_alg:	Hash algorithm defined in enum tpm2_algorithms
-+ * @digest:	Digest value for a given algorithm
++ * @signature:			signature, set to Spec ID Event03
++ * @platform_class:		class defined in TCG ACPI Specification
++ *				Client  Common Header.
++ * @spec_version_minor:		minor version
++ * @spec_version_major:		major version
++ * @spec_version_errata:	major version
++ * @uintn_size:			size of the efi_uintn_t fields used in various
++ *				data structures used in this specification.
++ *				0x01 indicates u32  and 0x02  indicates u64
++ * @number_of_algorithms:	hashing algorithms used in this event log
++ * @digest_sizes:		array of number_of_algorithms pairs
++ *				1st member defines the algorithm id
++ *				2nd member defines the algorithm size
 + */
-+struct tpmt_ha {
-+	u16 hash_alg;
-+	union tpmu_ha digest;
-+} __packed;
-+
-+/**
-+ * Definition of TPML_DIGEST_VALUES Structure
-+ *
-+ * @count:	Number of algorithms supported by hardware
-+ * @digests:	struct for algorithm id and hash value
-+ */
-+struct tpml_digest_values {
-+	u32 count;
-+	struct tpmt_ha digests[TPM2_NUM_PCR_BANKS];
-+} __packed;
-+
-+/**
-+ * Crypto Agile Log Entry Format
-+ *
-+ * @pcr_index:	PCRIndex event extended to
-+ * @event_type:	Type of event
-+ * @digests:	List of digests extended to PCR index
-+ * @event_size: Size of the event data
-+ * @event:	Event data
-+ */
-+struct tcg_pcr_event2 {
-+	u32 pcr_index;
-+	u32 event_type;
-+	struct tpml_digest_values digests;
-+	u32 event_size;
-+	u8 event[];
++struct tcg_efi_spec_id_event {
++	u8 signature[16];
++	u32 platform_class;
++	u8 spec_version_minor;
++	u8 spec_version_major;
++	u8 spec_errata;
++	u8 uintn_size;
++	u32 number_of_algorithms;
++	struct tcg_efi_spec_id_event_algorithm_size digest_sizes[];
 +} __packed;
 +
  /**
   * TPM2 Structure Tags for command/response buffers.
   *
-@@ -70,6 +239,7 @@ enum tpm2_handles {
-  * @TPM2_CC_DAM_RESET: TPM2_DictionaryAttackLockReset().
-  * @TPM2_CC_DAM_PARAMETERS: TPM2_DictionaryAttackParameters().
-  * @TPM2_CC_GET_CAPABILITY: TPM2_GetCapibility().
-+ * @TPM2_CC_GET_RANDOM: TPM2_GetRandom().
-  * @TPM2_CC_PCR_READ: TPM2_PCR_Read().
-  * @TPM2_CC_PCR_EXTEND: TPM2_PCR_Extend().
-  * @TPM2_CC_PCR_SETAUTHVAL: TPM2_PCR_SetAuthValue().
-@@ -77,14 +247,19 @@ enum tpm2_handles {
- enum tpm2_command_codes {
- 	TPM2_CC_STARTUP		= 0x0144,
- 	TPM2_CC_SELF_TEST	= 0x0143,
-+	TPM2_CC_HIER_CONTROL	= 0x0121,
- 	TPM2_CC_CLEAR		= 0x0126,
- 	TPM2_CC_CLEARCONTROL	= 0x0127,
- 	TPM2_CC_HIERCHANGEAUTH	= 0x0129,
-+	TPM2_CC_NV_DEFINE_SPACE	= 0x012a,
- 	TPM2_CC_PCR_SETAUTHPOL	= 0x012C,
-+	TPM2_CC_NV_WRITE	= 0x0137,
-+	TPM2_CC_NV_WRITELOCK	= 0x0138,
- 	TPM2_CC_DAM_RESET	= 0x0139,
- 	TPM2_CC_DAM_PARAMETERS	= 0x013A,
- 	TPM2_CC_NV_READ         = 0x014E,
- 	TPM2_CC_GET_CAPABILITY	= 0x017A,
-+	TPM2_CC_GET_RANDOM      = 0x017B,
- 	TPM2_CC_PCR_READ	= 0x017E,
- 	TPM2_CC_PCR_EXTEND	= 0x0182,
- 	TPM2_CC_PCR_SETAUTHVAL	= 0x0183,
-@@ -110,6 +285,7 @@ enum tpm2_return_codes {
- 	TPM2_RC_COMMAND_CODE	= TPM2_RC_VER1 + 0x0043,
- 	TPM2_RC_AUTHSIZE	= TPM2_RC_VER1 + 0x0044,
- 	TPM2_RC_AUTH_CONTEXT	= TPM2_RC_VER1 + 0x0045,
-+	TPM2_RC_NV_DEFINED	= TPM2_RC_VER1 + 0x004c,
- 	TPM2_RC_NEEDS_TEST	= TPM2_RC_VER1 + 0x0053,
- 	TPM2_RC_WARN		= 0x0900,
- 	TPM2_RC_TESTING		= TPM2_RC_WARN + 0x000A,
-@@ -121,11 +297,13 @@ enum tpm2_return_codes {
-  * TPM2 algorithms.
-  */
- enum tpm2_algorithms {
-+	TPM2_ALG_SHA1		= 0x04,
- 	TPM2_ALG_XOR		= 0x0A,
- 	TPM2_ALG_SHA256		= 0x0B,
- 	TPM2_ALG_SHA384		= 0x0C,
- 	TPM2_ALG_SHA512		= 0x0D,
- 	TPM2_ALG_NULL		= 0x10,
-+	TPM2_ALG_SM3_256	= 0x12,
+@@ -306,6 +350,26 @@ enum tpm2_algorithms {
+ 	TPM2_ALG_SM3_256	= 0x12,
  };
  
++extern const enum tpm2_algorithms tpm2_supported_algorithms[4];
++
++static inline u16 tpm2_algorithm_to_len(enum tpm2_algorithms a)
++{
++	switch (a) {
++	case TPM2_ALG_SHA1:
++		return TPM2_SHA1_DIGEST_SIZE;
++	case TPM2_ALG_SHA256:
++		return TPM2_SHA256_DIGEST_SIZE;
++	case TPM2_ALG_SHA384:
++		return TPM2_SHA384_DIGEST_SIZE;
++	case TPM2_ALG_SHA512:
++		return TPM2_SHA512_DIGEST_SIZE;
++	default:
++		return 0;
++	}
++}
++
++#define tpm2_algorithm_to_mask(a)	(1 << (a))
++
  /* NV index attributes */
-@@ -231,11 +409,14 @@ u32 tpm2_clear(struct udevice *dev, u32 handle, const char *pw,
-  *
-  * @dev		TPM device
-  * @index	Index of the PCR
-+ * @algorithm	Algorithm used, defined in 'enum tpm2_algorithms'
-  * @digest	Value representing the event to be recorded
-+ * @digest_len  len of the hash
-  *
-  * @return code of the operation
-  */
--u32 tpm2_pcr_extend(struct udevice *dev, u32 index, const uint8_t *digest);
-+u32 tpm2_pcr_extend(struct udevice *dev, u32 index, u32 algorithm,
-+		    const u8 *digest, u32 digest_len);
+ enum tpm_index_attrs {
+ 	TPMA_NV_PPWRITE		= 1UL << 0,
+@@ -371,6 +435,183 @@ enum {
+ 	TPM_MAX_BUF_SIZE	= 1260,
+ };
  
++/**
++ * struct tcg2_event_log - Container for managing the platform event log
++ *
++ * @log:		Address of the log
++ * @log_position:	Current entry position
++ * @log_size:		Log space available
++ * @found:		Boolean indicating if an existing log was discovered
++ */
++struct tcg2_event_log {
++	u8 *log;
++	u32 log_position;
++	u32 log_size;
++	bool found;
++};
++
++/**
++ * Create a list of digests of the supported PCR banks for a given input data
++ *
++ * @dev		TPM device
++ * @input	Data
++ * @length	Length of the data to calculate the digest
++ * @digest_list	List of digests to fill in
++ *
++ * Return: zero on success, negative errno otherwise
++ */
++int tcg2_create_digest(struct udevice *dev, const u8 *input, u32 length,
++		       struct tpml_digest_values *digest_list);
++
++/**
++ * Get the event size of the specified digests
++ *
++ * @digest_list	List of digests for the event
++ *
++ * Return: Size in bytes of the event
++ */
++u32 tcg2_event_get_size(struct tpml_digest_values *digest_list);
++
++/**
++ * tcg2_get_active_pcr_banks
++ *
++ * @dev			TPM device
++ * @active_pcr_banks	Bitmask of PCR algorithms supported
++ *
++ * Return: zero on success, negative errno otherwise
++ */
++int tcg2_get_active_pcr_banks(struct udevice *dev, u32 *active_pcr_banks);
++
++/**
++ * tcg2_log_append - Append an event to an event log
++ *
++ * @pcr_index	Index of the PCR
++ * @event_type	Type of event
++ * @digest_list List of digests to add
++ * @size	Size of event
++ * @event	Event data
++ * @log		Log buffer to append the event to
++ */
++void tcg2_log_append(u32 pcr_index, u32 event_type,
++		     struct tpml_digest_values *digest_list, u32 size,
++		     const u8 *event, u8 *log);
++
++/**
++ * Extend the PCR with specified digests
++ *
++ * @dev		TPM device
++ * @pcr_index	Index of the PCR
++ * @digest_list	List of digests to extend
++ *
++ * Return: zero on success, negative errno otherwise
++ */
++int tcg2_pcr_extend(struct udevice *dev, u32 pcr_index,
++		    struct tpml_digest_values *digest_list);
++
++/**
++ * Read the PCR into a list of digests
++ *
++* @dev		TPM device
++ * @pcr_index	Index of the PCR
++ * @digest_list	List of digests to extend
++ *
++ * Return: zero on success, negative errno otherwise
++ */
++int tcg2_pcr_read(struct udevice *dev, u32 pcr_index,
++		  struct tpml_digest_values *digest_list);
++
++/**
++ * Measure data into the TPM PCRs and the platform event log.
++ *
++ * @dev		TPM device
++ * @log		Platform event log
++ * @pcr_index	Index of the PCR
++ * @size	Size of the data
++ * @data	Pointer to the data
++ * @event_type	Event log type
++ * @event_size	Size of the event
++ * @event	Pointer to the event
++ *
++ * Return: zero on success, negative errno otherwise
++ */
++int tcg2_measure_data(struct udevice *dev, struct tcg2_event_log *elog,
++		      u32 pcr_index, u32 size, const u8 *data, u32 event_type,
++		      u32 event_size, const u8 *event);
++
++/**
++ * Measure an event into the platform event log.
++ *
++ * @dev		TPM device
++ * @log		Platform event log
++ * @pcr_index	Index of the PCR
++ * @event_type	Event log type
++ * @size	Size of the event
++ * @event	Pointer to the event
++ *
++ * Return: zero on success, negative errno otherwise
++ */
++int tcg2_measure_event(struct udevice *dev, struct tcg2_event_log *elog,
++		       u32 pcr_index, u32 event_type, u32 size,
++		       const u8 *event);
++
++/**
++ * Initialize the event log
++ *
++ * @dev		TPM device
++ * @elog	Platform event log
++ *
++ * Return: zero on success, negative errno otherwise
++ */
++int tcg2_init_log(struct udevice *dev, struct tcg2_event_log *elog);
++
++/**
++ * Begin measurements.
++ *
++ * @dev		TPM device
++ * @elog	Platform event log
++ *
++ * Return: zero on success, negative errno otherwise
++ */
++int tcg2_measurement_init(struct udevice **dev, struct tcg2_event_log *elog);
++
++/**
++ * Stop measurements and record separator events.
++ *
++ * @dev		TPM device
++ * @elog	Platform event log
++ * @error	Boolean to indicate whether an error ocurred or not
++ */
++void tcg2_measurement_term(struct udevice *dev, struct tcg2_event_log *elog,
++			   bool error);
++
++/**
++ * Get the platform event log address and size.
++ *
++ * @dev		TPM device
++ * @addr	Address of the log
++ * @size	Size of the log
++ *
++ * Return: zero on success, negative errno otherwise
++ */
++int tcg2_platform_get_log(struct udevice *dev, void **addr, u32 *size);
++
++/**
++ * Get the first TPM2 device found.
++ *
++ * @dev		TPM device
++ *
++ * Return: zero on success, negative errno otherwise
++ */
++int tcg2_platform_get_tpm2(struct udevice **dev);
++
++/**
++ * Platform-specific function for handling TPM startup errors
++ *
++ * @dev		TPM device
++ * @rc		The TPM response code
++ */
++void tcg2_platform_startup_error(struct udevice *dev, int rc);
++
  /**
-  * Issue a TPM2_PCR_Read command.
-@@ -243,13 +424,16 @@ u32 tpm2_pcr_extend(struct udevice *dev, u32 index, const uint8_t *digest);
-  * @dev		TPM device
-  * @idx		Index of the PCR
-  * @idx_min_sz	Minimum size in bytes of the pcrSelect array
-+ * @algorithm	Algorithm used, defined in 'enum tpm2_algorithms'
-  * @data	Output buffer for contents of the named PCR
-+ * @digest_len  len of the data
-  * @updates	Optional out parameter: number of updates for this PCR
+  * Issue a TPM2_Startup command.
   *
-  * @return code of the operation
-  */
- u32 tpm2_pcr_read(struct udevice *dev, u32 idx, unsigned int idx_min_sz,
--		  void *data, unsigned int *updates);
-+		  u16 algorithm, void *data, u32 digest_len,
-+		  unsigned int *updates);
+@@ -450,6 +691,19 @@ u32 tpm2_pcr_read(struct udevice *dev, u32 idx, unsigned int idx_min_sz,
+ u32 tpm2_get_capability(struct udevice *dev, u32 capability, u32 property,
+ 			void *buf, size_t prop_count);
  
++/**
++ * tpm2_get_pcr_info() - get the supported, active PCRs and number of banks
++ *
++ * @dev:		TPM device
++ * @supported_pcr:	bitmask with the algorithms supported
++ * @active_pcr:		bitmask with the active algorithms
++ * @pcr_banks:		number of PCR banks
++ *
++ * @return 0 on success, code of operation or negative errno on failure
++ */
++int tpm2_get_pcr_info(struct udevice *dev, u32 *supported_pcr, u32 *active_pcr,
++		      u32 *pcr_banks);
++
  /**
-  * Issue a TPM2_GetCapability command.  This implementation is limited
+  * Issue a TPM2_DictionaryAttackLockReset command.
+  *
 diff --git a/lib/tpm-v2.c b/lib/tpm-v2.c
-index f89592d6e2..7272170c78 100644
+index 7272170c78..222df8bfe4 100644
 --- a/lib/tpm-v2.c
 +++ b/lib/tpm-v2.c
-@@ -8,6 +8,7 @@
+@@ -6,11 +6,685 @@
+ 
+ #include <common.h>
  #include <dm.h>
++#include <dm/of_access.h>
  #include <tpm-common.h>
  #include <tpm-v2.h>
-+#include <linux/bitops.h>
++#include <u-boot/sha1.h>
++#include <u-boot/sha256.h>
++#include <u-boot/sha512.h>
++#include <version.h>
++#include <asm/io.h>
+ #include <linux/bitops.h>
++#include <linux/unaligned/be_byteshift.h>
++#include <linux/unaligned/generic.h>
++#include <linux/unaligned/le_byteshift.h>
++
  #include "tpm-utils.h"
  
++const enum tpm2_algorithms tpm2_supported_algorithms[4] = {
++	TPM2_ALG_SHA1,
++	TPM2_ALG_SHA256,
++	TPM2_ALG_SHA384,
++	TPM2_ALG_SHA512,
++};
++
++int tcg2_get_active_pcr_banks(struct udevice *dev, u32 *active_pcr_banks)
++{
++	u32 supported = 0;
++	u32 pcr_banks = 0;
++	u32 active = 0;
++	int rc;
++
++	rc = tpm2_get_pcr_info(dev, &supported, &active, &pcr_banks);
++	if (rc)
++		return rc;
++
++	*active_pcr_banks = active;
++
++	return 0;
++}
++
++u32 tcg2_event_get_size(struct tpml_digest_values *digest_list)
++{
++	u32 len;
++	size_t i;
++
++	len = offsetof(struct tcg_pcr_event2, digests);
++	len += offsetof(struct tpml_digest_values, digests);
++	for (i = 0; i < digest_list->count; ++i) {
++		u16 l = tpm2_algorithm_to_len(digest_list->digests[i].hash_alg);
++
++		if (!l)
++			continue;
++
++		len += l + offsetof(struct tpmt_ha, digest);
++	}
++	len += sizeof(u32);
++
++	return len;
++}
++
++int tcg2_create_digest(struct udevice *dev, const u8 *input, u32 length,
++		       struct tpml_digest_values *digest_list)
++{
++	u8 final[sizeof(union tpmu_ha)];
++	sha256_context ctx_256;
++	sha512_context ctx_512;
++	sha1_context ctx;
++	u32 active;
++	size_t i;
++	u32 len;
++	int rc;
++
++	rc = tcg2_get_active_pcr_banks(dev, &active);
++	if (rc)
++		return rc;
++
++	digest_list->count = 0;
++	for (i = 0; i < ARRAY_SIZE(tpm2_supported_algorithms); ++i) {
++		u32 mask =
++			tpm2_algorithm_to_mask(tpm2_supported_algorithms[i]);
++
++		if (!(active & mask))
++			continue;
++
++		switch (tpm2_supported_algorithms[i]) {
++		case TPM2_ALG_SHA1:
++			sha1_starts(&ctx);
++			sha1_update(&ctx, input, length);
++			sha1_finish(&ctx, final);
++			len = TPM2_SHA1_DIGEST_SIZE;
++			break;
++		case TPM2_ALG_SHA256:
++			sha256_starts(&ctx_256);
++			sha256_update(&ctx_256, input, length);
++			sha256_finish(&ctx_256, final);
++			len = TPM2_SHA256_DIGEST_SIZE;
++			break;
++		case TPM2_ALG_SHA384:
++			sha384_starts(&ctx_512);
++			sha384_update(&ctx_512, input, length);
++			sha384_finish(&ctx_512, final);
++			len = TPM2_SHA384_DIGEST_SIZE;
++			break;
++		case TPM2_ALG_SHA512:
++			sha512_starts(&ctx_512);
++			sha512_update(&ctx_512, input, length);
++			sha512_finish(&ctx_512, final);
++			len = TPM2_SHA512_DIGEST_SIZE;
++			break;
++		default:
++			printf("%s: unsupported algorithm %x\n", __func__,
++			       tpm2_supported_algorithms[i]);
++			continue;
++		}
++
++		digest_list->digests[digest_list->count].hash_alg =
++			tpm2_supported_algorithms[i];
++		memcpy(&digest_list->digests[digest_list->count].digest, final,
++		       len);
++		digest_list->count++;
++	}
++
++	return 0;
++}
++
++void tcg2_log_append(u32 pcr_index, u32 event_type,
++		     struct tpml_digest_values *digest_list, u32 size,
++		     const u8 *event, u8 *log)
++{
++	size_t len;
++	size_t pos;
++	u32 i;
++
++	pos = offsetof(struct tcg_pcr_event2, pcr_index);
++	put_unaligned_le32(pcr_index, log);
++	pos = offsetof(struct tcg_pcr_event2, event_type);
++	put_unaligned_le32(event_type, log + pos);
++	pos = offsetof(struct tcg_pcr_event2, digests) +
++		offsetof(struct tpml_digest_values, count);
++	put_unaligned_le32(digest_list->count, log + pos);
++
++	pos = offsetof(struct tcg_pcr_event2, digests) +
++		offsetof(struct tpml_digest_values, digests);
++	for (i = 0; i < digest_list->count; ++i) {
++		u16 hash_alg = digest_list->digests[i].hash_alg;
++
++		len = tpm2_algorithm_to_len(hash_alg);
++		if (!len)
++			continue;
++
++		pos += offsetof(struct tpmt_ha, hash_alg);
++		put_unaligned_le16(hash_alg, log + pos);
++		pos += offsetof(struct tpmt_ha, digest);
++		memcpy(log + pos, (u8 *)&digest_list->digests[i].digest, len);
++		pos += len;
++	}
++
++	put_unaligned_le32(size, log + pos);
++	pos += sizeof(u32);
++	memcpy(log + pos, event, size);
++}
++
++static int tcg2_log_append_check(struct tcg2_event_log *elog, u32 pcr_index,
++				 u32 event_type,
++				 struct tpml_digest_values *digest_list,
++				 u32 size, const u8 *event)
++{
++	u32 event_size;
++	u8 *log;
++
++	event_size = size + tcg2_event_get_size(digest_list);
++	if (elog->log_position + event_size > elog->log_size) {
++		printf("%s: log too large: %u + %u > %u\n", __func__,
++		       elog->log_position, event_size, elog->log_size);
++		return -ENOBUFS;
++	}
++
++	log = elog->log + elog->log_position;
++	elog->log_position += event_size;
++
++	tcg2_log_append(pcr_index, event_type, digest_list, size, event, log);
++
++	return 0;
++}
++
++static int tcg2_log_init(struct udevice *dev, struct tcg2_event_log *elog)
++{
++	struct tcg_efi_spec_id_event *ev;
++	struct tcg_pcr_event *log;
++	u32 event_size;
++	u32 count = 0;
++	u32 log_size;
++	u32 active;
++	u32 mask;
++	size_t i;
++	u16 len;
++	int rc;
++
++	rc = tcg2_get_active_pcr_banks(dev, &active);
++	if (rc)
++		return rc;
++
++	event_size = offsetof(struct tcg_efi_spec_id_event, digest_sizes);
++	for (i = 0; i < ARRAY_SIZE(tpm2_supported_algorithms); ++i) {
++		mask = tpm2_algorithm_to_mask(tpm2_supported_algorithms[i]);
++
++		if (!(active & mask))
++			continue;
++
++		switch (tpm2_supported_algorithms[i]) {
++		case TPM2_ALG_SHA1:
++		case TPM2_ALG_SHA256:
++		case TPM2_ALG_SHA384:
++		case TPM2_ALG_SHA512:
++			count++;
++			break;
++		default:
++			continue;
++		}
++	}
++
++	event_size += 1 +
++		(sizeof(struct tcg_efi_spec_id_event_algorithm_size) * count);
++	log_size = offsetof(struct tcg_pcr_event, event) + event_size;
++
++	if (log_size > elog->log_size) {
++		printf("%s: log too large: %u > %u\n", __func__, log_size,
++		       elog->log_size);
++		return -ENOBUFS;
++	}
++
++	log = (struct tcg_pcr_event *)elog->log;
++	put_unaligned_le32(0, &log->pcr_index);
++	put_unaligned_le32(EV_NO_ACTION, &log->event_type);
++	memset(&log->digest, 0, sizeof(log->digest));
++	put_unaligned_le32(event_size, &log->event_size);
++
++	ev = (struct tcg_efi_spec_id_event *)log->event;
++	strlcpy((char *)ev->signature, TCG_EFI_SPEC_ID_EVENT_SIGNATURE_03,
++		sizeof(ev->signature));
++	put_unaligned_le32(0, &ev->platform_class);
++	ev->spec_version_minor = TCG_EFI_SPEC_ID_EVENT_SPEC_VERSION_MINOR_TPM2;
++	ev->spec_version_major = TCG_EFI_SPEC_ID_EVENT_SPEC_VERSION_MAJOR_TPM2;
++	ev->spec_errata = TCG_EFI_SPEC_ID_EVENT_SPEC_VERSION_ERRATA_TPM2;
++	ev->uintn_size = sizeof(size_t) / sizeof(u32);
++	put_unaligned_le32(count, &ev->number_of_algorithms);
++
++	count = 0;
++	for (i = 0; i < ARRAY_SIZE(tpm2_supported_algorithms); ++i) {
++		mask = tpm2_algorithm_to_mask(tpm2_supported_algorithms[i]);
++
++		if (!(active & mask))
++			continue;
++
++		len = tpm2_algorithm_to_len(tpm2_supported_algorithms[i]);
++		if (!len)
++			continue;
++
++		put_unaligned_le16(tpm2_supported_algorithms[i],
++				   &ev->digest_sizes[count].algorithm_id);
++		put_unaligned_le16(len, &ev->digest_sizes[count].digest_size);
++		count++;
++	}
++
++	*((u8 *)ev + (event_size - 1)) = 0;
++	elog->log_position = log_size;
++
++	return 0;
++}
++
++static int tcg2_log_find_end(struct tcg2_event_log *elog, struct udevice *dev,
++			     struct tpml_digest_values *digest_list)
++{
++	const u32 offset = offsetof(struct tcg_pcr_event2, digests) +
++		offsetof(struct tpml_digest_values, digests);
++	u32 event_size;
++	u32 count;
++	u16 algo;
++	u32 pcr;
++	u32 pos;
++	u16 len;
++	u8 *log;
++	int rc;
++	u32 i;
++
++	while (elog->log_position + offset < elog->log_size) {
++		log = elog->log + elog->log_position;
++
++		pos = offsetof(struct tcg_pcr_event2, pcr_index);
++		pcr = get_unaligned_le32(log + pos);
++		pos = offsetof(struct tcg_pcr_event2, event_type);
++		if (!get_unaligned_le32(log + pos))
++			return 0;
++
++		pos = offsetof(struct tcg_pcr_event2, digests) +
++			offsetof(struct tpml_digest_values, count);
++		count = get_unaligned_le32(log + pos);
++		if (count > ARRAY_SIZE(tpm2_supported_algorithms) ||
++		    (digest_list->count && digest_list->count != count))
++			return 0;
++
++		pos = offsetof(struct tcg_pcr_event2, digests) +
++			offsetof(struct tpml_digest_values, digests);
++		for (i = 0; i < count; ++i) {
++			pos += offsetof(struct tpmt_ha, hash_alg);
++			if (elog->log_position + pos + sizeof(u16) >=
++			    elog->log_size)
++				return 0;
++
++			algo = get_unaligned_le16(log + pos);
++			pos += offsetof(struct tpmt_ha, digest);
++			switch (algo) {
++			case TPM2_ALG_SHA1:
++			case TPM2_ALG_SHA256:
++			case TPM2_ALG_SHA384:
++			case TPM2_ALG_SHA512:
++				len = tpm2_algorithm_to_len(algo);
++				break;
++			default:
++				return 0;
++			}
++
++			if (digest_list->count) {
++				if (algo != digest_list->digests[i].hash_alg ||
++				    elog->log_position + pos + len >=
++				    elog->log_size)
++					return 0;
++
++				memcpy(digest_list->digests[i].digest.sha512,
++					log + pos, len);
++			}
++
++			pos += len;
++		}
++
++		if (elog->log_position + pos + sizeof(u32) >= elog->log_size)
++			return 0;
++
++		event_size = get_unaligned_le32(log + pos);
++		pos += event_size + sizeof(u32);
++		if (elog->log_position + pos >= elog->log_size)
++			return 0;
++
++		if (digest_list->count) {
++			rc = tcg2_pcr_extend(dev, pcr, digest_list);
++			if (rc)
++				return rc;
++		}
++
++		elog->log_position += pos;
++	}
++
++	return 0;
++}
++
++static int tcg2_log_parse(struct udevice *dev, struct tcg2_event_log *elog)
++{
++	struct tpml_digest_values digest_list;
++	struct tcg_efi_spec_id_event *event;
++	struct tcg_pcr_event *log;
++	u32 calc_size;
++	u32 active;
++	u32 count;
++	u32 evsz;
++	u32 mask;
++	u16 algo;
++	u16 len;
++	int rc;
++	u32 i;
++	u16 j;
++
++	if (elog->log_size <= offsetof(struct tcg_pcr_event, event))
++		return 0;
++
++	log = (struct tcg_pcr_event *)elog->log;
++	if (get_unaligned_le32(&log->pcr_index) != 0 ||
++	    get_unaligned_le32(&log->event_type) != EV_NO_ACTION)
++		return 0;
++
++	for (i = 0; i < sizeof(log->digest); i++) {
++		if (log->digest[i])
++			return 0;
++	}
++
++	evsz = get_unaligned_le32(&log->event_size);
++	if (evsz < offsetof(struct tcg_efi_spec_id_event, digest_sizes) ||
++	    evsz + offsetof(struct tcg_pcr_event, event) > elog->log_size)
++		return 0;
++
++	event = (struct tcg_efi_spec_id_event *)log->event;
++	if (memcmp(event->signature, TCG_EFI_SPEC_ID_EVENT_SIGNATURE_03,
++		   sizeof(TCG_EFI_SPEC_ID_EVENT_SIGNATURE_03)))
++		return 0;
++
++	if (event->spec_version_minor != TCG_EFI_SPEC_ID_EVENT_SPEC_VERSION_MINOR_TPM2 ||
++	    event->spec_version_major != TCG_EFI_SPEC_ID_EVENT_SPEC_VERSION_MAJOR_TPM2)
++		return 0;
++
++	count = get_unaligned_le32(&event->number_of_algorithms);
++	if (count > ARRAY_SIZE(tpm2_supported_algorithms))
++		return 0;
++
++	calc_size = offsetof(struct tcg_efi_spec_id_event, digest_sizes) +
++		(sizeof(struct tcg_efi_spec_id_event_algorithm_size) * count) +
++		1;
++	if (evsz != calc_size)
++		return 0;
++
++	rc = tcg2_get_active_pcr_banks(dev, &active);
++	if (rc)
++		return rc;
++
++	digest_list.count = 0;
++
++	for (i = 0; i < count; ++i) {
++		algo = get_unaligned_le16(&event->digest_sizes[i].algorithm_id);
++		mask = tpm2_algorithm_to_mask(algo);
++
++		if (!(active & mask))
++			return 0;
++
++		switch (algo) {
++		case TPM2_ALG_SHA1:
++		case TPM2_ALG_SHA256:
++		case TPM2_ALG_SHA384:
++		case TPM2_ALG_SHA512:
++			len = get_unaligned_le16(&event->digest_sizes[i].digest_size);
++			if (tpm2_algorithm_to_len(algo) != len)
++				return 0;
++			digest_list.digests[digest_list.count++].hash_alg = algo;
++			break;
++		default:
++			return 0;
++		}
++	}
++
++	/* Read PCR0 to check if previous firmware extended the PCRs or not. */
++	rc = tcg2_pcr_read(dev, 0, &digest_list);
++	if (rc)
++		return rc;
++
++	for (i = 0; i < digest_list.count; ++i) {
++		len = tpm2_algorithm_to_len(digest_list.digests[i].hash_alg);
++		for (j = 0; j < len; ++j) {
++			if (digest_list.digests[i].digest.sha512[j])
++				break;
++		}
++
++		/* PCR is non-zero; it has been extended, so skip extending. */
++		if (j != len) {
++			digest_list.count = 0;
++			break;
++		}
++	}
++
++	elog->log_position = offsetof(struct tcg_pcr_event, event) + evsz;
++	rc = tcg2_log_find_end(elog, dev, &digest_list);
++	if (rc)
++		return rc;
++
++	elog->found = true;
++	return 0;
++}
++
++int tcg2_pcr_extend(struct udevice *dev, u32 pcr_index,
++		    struct tpml_digest_values *digest_list)
++{
++	u32 rc;
++	u32 i;
++
++	for (i = 0; i < digest_list->count; i++) {
++		u32 alg = digest_list->digests[i].hash_alg;
++
++		rc = tpm2_pcr_extend(dev, pcr_index, alg,
++				     (u8 *)&digest_list->digests[i].digest,
++				     tpm2_algorithm_to_len(alg));
++		if (rc) {
++			printf("%s: error pcr:%u alg:%08x\n", __func__,
++			       pcr_index, alg);
++			return rc;
++		}
++	}
++
++	return 0;
++}
++
++int tcg2_pcr_read(struct udevice *dev, u32 pcr_index,
++		  struct tpml_digest_values *digest_list)
++{
++	struct tpm_chip_priv *priv;
++	u32 rc;
++	u32 i;
++
++	priv = dev_get_uclass_priv(dev);
++	if (!priv)
++		return -ENODEV;
++
++	for (i = 0; i < digest_list->count; i++) {
++		u32 alg = digest_list->digests[i].hash_alg;
++		u8 *digest = (u8 *)&digest_list->digests[i].digest;
++
++		rc = tpm2_pcr_read(dev, pcr_index, priv->pcr_select_min, alg,
++				   digest, tpm2_algorithm_to_len(alg), NULL);
++		if (rc) {
++			printf("%s: error pcr:%u alg:%08x\n", __func__,
++			       pcr_index, alg);
++			return rc;
++		}
++	}
++
++	return 0;
++}
++
++int tcg2_measure_data(struct udevice *dev, struct tcg2_event_log *elog,
++		      u32 pcr_index, u32 size, const u8 *data, u32 event_type,
++		      u32 event_size, const u8 *event)
++{
++	struct tpml_digest_values digest_list;
++	int rc;
++
++	rc = tcg2_create_digest(dev, data, size, &digest_list);
++	if (rc)
++		return rc;
++
++	rc = tcg2_pcr_extend(dev, pcr_index, &digest_list);
++	if (rc)
++		return rc;
++
++	return tcg2_log_append_check(elog, pcr_index, event_type, &digest_list,
++				     event_size, event);
++}
++
++int tcg2_measure_event(struct udevice *dev, struct tcg2_event_log *elog,
++		       u32 pcr_index, u32 event_type, u32 size,
++		       const u8 *event)
++{
++	struct tpml_digest_values digest_list;
++	int rc;
++
++	rc = tcg2_create_digest(dev, event, size, &digest_list);
++	if (rc)
++		return rc;
++
++	rc = tcg2_pcr_extend(dev, pcr_index, &digest_list);
++	if (rc)
++		return rc;
++
++	return tcg2_log_append_check(elog, pcr_index, event_type, &digest_list,
++				     size, event);
++}
++
++int tcg2_init_log(struct udevice *dev, struct tcg2_event_log *elog)
++{
++	int rc;
++
++	rc = tcg2_platform_get_log(dev, (void **)&elog->log, &elog->log_size);
++	if (rc)
++		return rc;
++
++	elog->log_position = 0;
++	elog->found = false;
++	rc = tcg2_log_parse(dev, elog);
++	if (rc)
++		return rc;
++
++	if (!elog->found) {
++		rc = tcg2_log_init(dev, elog);
++		if (rc)
++			return rc;
++	}
++
++	return 0;
++}
++
++int tcg2_measurement_init(struct udevice **dev, struct tcg2_event_log *elog)
++{
++	int rc;
++
++	rc = tcg2_platform_get_tpm2(dev);
++	if (rc)
++		return rc;
++
++	rc = tpm_init(*dev);
++	if (rc)
++		return rc;
++
++	rc = tpm2_startup(*dev, TPM2_SU_CLEAR);
++	if (rc) {
++		tcg2_platform_startup_error(*dev, rc);
++		return rc;
++	}
++
++	rc = tpm2_self_test(*dev, TPMI_YES);
++	if (rc)
++		printf("%s: self test error, continuing.\n", __func__);
++
++	rc = tcg2_init_log(*dev, elog);
++	if (rc) {
++		tcg2_measurement_term(*dev, elog, true);
++		return rc;
++	}
++
++	rc = tcg2_measure_event(*dev, elog, 0, EV_S_CRTM_VERSION,
++				strlen(version_string) + 1,
++				(u8 *)version_string);
++	if (rc) {
++		tcg2_measurement_term(*dev, elog, true);
++		return rc;
++	}
++
++	return 0;
++}
++
++void tcg2_measurement_term(struct udevice *dev, struct tcg2_event_log *elog,
++			   bool error)
++{
++	u32 event = error ? 0x1 : 0xffffffff;
++	int i;
++
++	for (i = 0; i < 8; ++i)
++		tcg2_measure_event(dev, elog, i, EV_SEPARATOR, sizeof(event),
++				   (const u8 *)&event);
++
++	if (elog->log)
++		unmap_physmem(elog->log, MAP_NOCACHE);
++}
++
++__weak int tcg2_platform_get_log(struct udevice *dev, void **addr, u32 *size)
++{
++	const __be32 *addr_prop;
++	const __be32 *size_prop;
++	int asize;
++	int ssize;
++
++	*addr = NULL;
++	*size = 0;
++
++	addr_prop = dev_read_prop(dev, "linux,sml-base", &asize);
++	if (!addr_prop)
++		addr_prop = dev_read_prop(dev, "tpm_event_log_addr", &asize);
++	size_prop = dev_read_prop(dev, "linux,sml-size", &ssize);
++	if (!size_prop)
++		size_prop = dev_read_prop(dev, "tpm_event_log_size", &ssize);
++	if (addr_prop && size_prop) {
++		u64 a = of_read_number(addr_prop, asize / sizeof(__be32));
++		u64 s = of_read_number(size_prop, ssize / sizeof(__be32));
++
++		*addr = map_physmem(a, s, MAP_NOCACHE);
++		*size = (u32)s;
++	} else {
++		struct ofnode_phandle_args args;
++		phys_addr_t a;
++		phys_size_t s;
++
++		if (dev_read_phandle_with_args(dev, "memory-region", NULL, 0,
++					       0, &args))
++			return -ENODEV;
++
++		a = ofnode_get_addr_size(args.node, "reg", &s);
++		if (a == FDT_ADDR_T_NONE)
++			return -ENOMEM;
++
++		*addr = map_physmem(a, s, MAP_NOCACHE);
++		*size = (u32)s;
++	}
++
++	return 0;
++}
++
++__weak int tcg2_platform_get_tpm2(struct udevice **dev)
++{
++	for_each_tpm_device(*dev) {
++		if (tpm_get_version(*dev) == TPM_V2)
++			return 0;
++	}
++
++	return -ENODEV;
++}
++
++__weak void tcg2_platform_startup_error(struct udevice *dev, int rc) {}
++
  u32 tpm2_startup(struct udevice *dev, enum tpm2_startup_types mode)
-@@ -46,9 +47,11 @@ u32 tpm2_self_test(struct udevice *dev, enum tpm2_yes_no full_test)
- u32 tpm2_clear(struct udevice *dev, u32 handle, const char *pw,
- 	       const ssize_t pw_sz)
  {
-+	/* Length of the message header, up to start of password */
-+	uint offset = 27;
- 	u8 command_v2[COMMAND_BUFFER_SIZE] = {
- 		tpm_u16(TPM2_ST_SESSIONS),	/* TAG */
--		tpm_u32(27 + pw_sz),		/* Length */
-+		tpm_u32(offset + pw_sz),	/* Length */
- 		tpm_u32(TPM2_CC_CLEAR),		/* Command code */
- 
- 		/* HANDLE */
-@@ -63,7 +66,6 @@ u32 tpm2_clear(struct udevice *dev, u32 handle, const char *pw,
- 		tpm_u16(pw_sz),			/* Size of <hmac/password> */
- 		/* STRING(pw)			   <hmac/password> (if any) */
- 	};
--	unsigned int offset = 27;
- 	int ret;
- 
- 	/*
-@@ -79,11 +81,14 @@ u32 tpm2_clear(struct udevice *dev, u32 handle, const char *pw,
- 	return tpm_sendrecv_command(dev, command_v2, NULL, NULL);
- }
- 
--u32 tpm2_pcr_extend(struct udevice *dev, u32 index, const uint8_t *digest)
-+u32 tpm2_pcr_extend(struct udevice *dev, u32 index, u32 algorithm,
-+		    const u8 *digest, u32 digest_len)
- {
-+	/* Length of the message header, up to start of digest */
-+	uint offset = 33;
- 	u8 command_v2[COMMAND_BUFFER_SIZE] = {
- 		tpm_u16(TPM2_ST_SESSIONS),	/* TAG */
--		tpm_u32(33 + TPM2_DIGEST_LEN),	/* Length */
-+		tpm_u32(offset + digest_len),	/* Length */
- 		tpm_u32(TPM2_CC_PCR_EXTEND),	/* Command code */
- 
- 		/* HANDLE */
-@@ -97,20 +102,22 @@ u32 tpm2_pcr_extend(struct udevice *dev, u32 index, const uint8_t *digest)
- 		0,				/* Attributes: Cont/Excl/Rst */
- 		tpm_u16(0),			/* Size of <hmac/password> */
- 						/* <hmac/password> (if any) */
-+
-+		/* hashes */
- 		tpm_u32(1),			/* Count (number of hashes) */
--		tpm_u16(TPM2_ALG_SHA256),	/* Algorithm of the hash */
-+		tpm_u16(algorithm),	/* Algorithm of the hash */
- 		/* STRING(digest)		   Digest */
- 	};
--	unsigned int offset = 33;
- 	int ret;
- 
-+	if (!digest)
-+		return -EINVAL;
- 	/*
- 	 * Fill the command structure starting from the first buffer:
- 	 *     - the digest
- 	 */
- 	ret = pack_byte_string(command_v2, sizeof(command_v2), "s",
--			       offset, digest, TPM2_DIGEST_LEN);
--	offset += TPM2_DIGEST_LEN;
-+			       offset, digest, digest_len);
- 	if (ret)
- 		return TPM_LIB_ERROR;
- 
-@@ -118,7 +125,8 @@ u32 tpm2_pcr_extend(struct udevice *dev, u32 index, const uint8_t *digest)
- }
- 
- u32 tpm2_pcr_read(struct udevice *dev, u32 idx, unsigned int idx_min_sz,
--		  void *data, unsigned int *updates)
-+		  u16 algorithm, void *data, u32 digest_len,
-+		  unsigned int *updates)
- {
- 	u8 idx_array_sz = max(idx_min_sz, DIV_ROUND_UP(idx, 8));
- 	u8 command_v2[COMMAND_BUFFER_SIZE] = {
-@@ -128,7 +136,7 @@ u32 tpm2_pcr_read(struct udevice *dev, u32 idx, unsigned int idx_min_sz,
- 
- 		/* TPML_PCR_SELECTION */
- 		tpm_u32(1),			/* Number of selections */
--		tpm_u16(TPM2_ALG_SHA256),	/* Algorithm of the hash */
-+		tpm_u16(algorithm),		/* Algorithm of the hash */
- 		idx_array_sz,			/* Array size for selection */
- 		/* bitmap(idx)			   Selected PCR bitmap */
- 	};
-@@ -147,10 +155,13 @@ u32 tpm2_pcr_read(struct udevice *dev, u32 idx, unsigned int idx_min_sz,
- 	if (ret)
- 		return ret;
- 
-+	if (digest_len > response_len)
-+		return TPM_LIB_ERROR;
-+
- 	if (unpack_byte_string(response, response_len, "ds",
- 			       10, &counter,
--			       response_len - TPM2_DIGEST_LEN, data,
--			       TPM2_DIGEST_LEN))
-+			       response_len - digest_len, data,
-+			       digest_len))
- 		return TPM_LIB_ERROR;
- 
- 	if (updates)
-@@ -183,10 +194,10 @@ u32 tpm2_get_capability(struct udevice *dev, u32 capability, u32 property,
- 	/*
- 	 * In the response buffer, the properties are located after the:
- 	 * tag (u16), response size (u32), response code (u32),
--	 * YES/NO flag (u8), TPM_CAP (u32) and TPMU_CAPABILITIES (u32).
-+	 * YES/NO flag (u8), TPM_CAP (u32).
- 	 */
- 	properties_off = sizeof(u16) + sizeof(u32) + sizeof(u32) +
--			 sizeof(u8) + sizeof(u32) + sizeof(u32);
-+			 sizeof(u8) + sizeof(u32);
- 	memcpy(buf, &response[properties_off], response_len - properties_off);
- 
+ 	const u8 command_v2[12] = {
+@@ -203,6 +877,131 @@ u32 tpm2_get_capability(struct udevice *dev, u32 capability, u32 property,
  	return 0;
+ }
+ 
++static int tpm2_get_num_pcr(struct udevice *dev, u32 *num_pcr)
++{
++	u8 response[(sizeof(struct tpms_capability_data) -
++		offsetof(struct tpms_capability_data, data))];
++	u32 properties_offset =
++		offsetof(struct tpml_tagged_tpm_property, tpm_property) +
++		offsetof(struct tpms_tagged_property, value);
++	u32 ret;
++
++	memset(response, 0, sizeof(response));
++	ret = tpm2_get_capability(dev, TPM2_CAP_TPM_PROPERTIES,
++				  TPM2_PT_PCR_COUNT, response, 1);
++	if (ret)
++		return ret;
++
++	*num_pcr = get_unaligned_be32(response + properties_offset);
++	if (*num_pcr > TPM2_MAX_PCRS) {
++		printf("%s: too many pcrs: %u\n", __func__, *num_pcr);
++		return -E2BIG;
++	}
++
++	return 0;
++}
++
++static bool tpm2_is_active_pcr(struct tpms_pcr_selection *selection)
++{
++	int i;
++
++	/*
++	 * check the pcr_select. If at least one of the PCRs supports the
++	 * algorithm add it on the active ones
++	 */
++	for (i = 0; i < selection->size_of_select; i++) {
++		if (selection->pcr_select[i])
++			return true;
++	}
++
++	return false;
++}
++
++int tpm2_get_pcr_info(struct udevice *dev, u32 *supported_pcr, u32 *active_pcr,
++		      u32 *pcr_banks)
++{
++	u8 response[(sizeof(struct tpms_capability_data) -
++		offsetof(struct tpms_capability_data, data))];
++	struct tpml_pcr_selection pcrs;
++	u32 num_pcr;
++	size_t i;
++	u32 ret;
++
++	*supported_pcr = 0;
++	*active_pcr = 0;
++	*pcr_banks = 0;
++	memset(response, 0, sizeof(response));
++	ret = tpm2_get_capability(dev, TPM2_CAP_PCRS, 0, response, 1);
++	if (ret)
++		return ret;
++
++	pcrs.count = get_unaligned_be32(response);
++	/*
++	 * We only support 5 algorithms for now so check against that
++	 * instead of TPM2_NUM_PCR_BANKS
++	 */
++	if (pcrs.count > ARRAY_SIZE(tpm2_supported_algorithms) ||
++	    pcrs.count < 1) {
++		printf("%s: too many pcrs: %u\n", __func__, pcrs.count);
++		return -EMSGSIZE;
++	}
++
++	ret = tpm2_get_num_pcr(dev, &num_pcr);
++	if (ret)
++		return ret;
++
++	for (i = 0; i < pcrs.count; i++) {
++		/*
++		 * Definition of TPMS_PCR_SELECTION Structure
++		 * hash: u16
++		 * size_of_select: u8
++		 * pcr_select: u8 array
++		 *
++		 * The offsets depend on the number of the device PCRs
++		 * so we have to calculate them based on that
++		 */
++		u32 hash_offset = offsetof(struct tpml_pcr_selection, selection) +
++			i * offsetof(struct tpms_pcr_selection, pcr_select) +
++			i * ((num_pcr + 7) / 8);
++		u32 size_select_offset =
++			hash_offset + offsetof(struct tpms_pcr_selection,
++					       size_of_select);
++		u32 pcr_select_offset =
++			hash_offset + offsetof(struct tpms_pcr_selection,
++					       pcr_select);
++
++		pcrs.selection[i].hash =
++			get_unaligned_be16(response + hash_offset);
++		pcrs.selection[i].size_of_select =
++			__get_unaligned_be(response + size_select_offset);
++		if (pcrs.selection[i].size_of_select > TPM2_PCR_SELECT_MAX) {
++			printf("%s: pcrs selection too large: %u\n", __func__,
++			       pcrs.selection[i].size_of_select);
++			return -ENOBUFS;
++		}
++		/* copy the array of pcr_select */
++		memcpy(pcrs.selection[i].pcr_select, response + pcr_select_offset,
++		       pcrs.selection[i].size_of_select);
++	}
++
++	for (i = 0; i < pcrs.count; i++) {
++		u32 hash_mask = tpm2_algorithm_to_mask(pcrs.selection[i].hash);
++
++		if (hash_mask) {
++			*supported_pcr |= hash_mask;
++			if (tpm2_is_active_pcr(&pcrs.selection[i]))
++				*active_pcr |= hash_mask;
++		} else {
++			printf("%s: unknown algorithm %x\n", __func__,
++			       pcrs.selection[i].hash);
++		}
++	}
++
++	*pcr_banks = pcrs.count;
++
++	return 0;
++}
++
+ u32 tpm2_dam_reset(struct udevice *dev, const char *pw, const ssize_t pw_sz)
+ {
+ 	u8 command_v2[COMMAND_BUFFER_SIZE] = {
 -- 
 2.31.1
 
