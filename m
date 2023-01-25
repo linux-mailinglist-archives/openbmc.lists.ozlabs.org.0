@@ -1,62 +1,89 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id E1EC267A19C
-	for <lists+openbmc@lfdr.de>; Tue, 24 Jan 2023 19:44:19 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 30CA167B41E
+	for <lists+openbmc@lfdr.de>; Wed, 25 Jan 2023 15:20:16 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4P1bV959Dmz3cBm
-	for <lists+openbmc@lfdr.de>; Wed, 25 Jan 2023 05:44:17 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4P25b1422Rz3c6s
+	for <lists+openbmc@lfdr.de>; Thu, 26 Jan 2023 01:20:13 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=RuxlPFOP;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm1 header.b=jv6f3Tdc;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=BtMIXdyY;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.68.75; helo=ams.source.kernel.org; envelope-from=robh@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.25; helo=out1-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=RuxlPFOP;
+	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm1 header.b=jv6f3Tdc;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=BtMIXdyY;
 	dkim-atps=neutral
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4P1bSX5W2Rz3c61;
-	Wed, 25 Jan 2023 05:42:52 +1100 (AEDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by ams.source.kernel.org (Postfix) with ESMTPS id 0A162B81686;
-	Tue, 24 Jan 2023 18:42:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47F14C433A7;
-	Tue, 24 Jan 2023 18:42:47 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1674585767;
-	bh=DBSo7OynaPiD3LOZ5Et+hWfS1NPFDENYrFZZTqaJ4Zo=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=RuxlPFOPF6nG3xhTMWTioiwTQkM78eHKGibjNQ4Ld2qVM6eMg+Pqb+1pVDyLlEO88
-	 pCYdM+O5ReIsLpkyvLRIL8D6J8ybMRFahWkSUIYHGGmpS8jhZzaK8678isY2qke6J2
-	 Cc4WWweSKl5bPOqJYmyqqauDgUrccGrX1l18oSf5R4CHQZk/4niQE1RwVUAD8XWJaR
-	 TwCmM300aL9mG3rYbQBV7zQVXNTDypTmog+KVAjaRBT2nOh06Tg7xGq2KZH3P2MUdk
-	 IYGcne5XS33CH7MmDjhdgIB4U4YYi0kmVixCDf3HSDRQD921jyFvl2U+H5qXGNjAMO
-	 DsXd2ZRZKdUcA==
-Received: by mail-vs1-f50.google.com with SMTP id v127so17388983vsb.12;
-        Tue, 24 Jan 2023 10:42:47 -0800 (PST)
-X-Gm-Message-State: AFqh2kqOrXyfOJfddkEbyy9doG9troRk+e0Z+NJHWJlsyGXNu7Miwk2A
-	DcYGolAZidkKM9u57wb300K055iyxNMaIofm5g==
-X-Google-Smtp-Source: AMrXdXvM0olT9jSHiUMDJsNqRTneaeFB/92hij1cU2Y+/6V74N/GT/dxRky2xzkFIbykeif2r193/563hWiLeZlWlho=
-X-Received: by 2002:a05:6102:5490:b0:3b5:1fe4:f1c2 with SMTP id
- bk16-20020a056102549000b003b51fe4f1c2mr3941513vsb.0.1674585766048; Tue, 24
- Jan 2023 10:42:46 -0800 (PST)
-MIME-Version: 1.0
-References: <20230110-dt-usb-v3-0-5af0541fcf8c@kernel.org> <Y9ASq0VZ6G7Efe7s@kroah.com>
-In-Reply-To: <Y9ASq0VZ6G7Efe7s@kroah.com>
-From: Rob Herring <robh@kernel.org>
-Date: Tue, 24 Jan 2023 12:42:34 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqJJ8tFUCw-MbAsfJ7vKssRxu=p+3jG7dURmB77DOYoiSg@mail.gmail.com>
-Message-ID: <CAL_JsqJJ8tFUCw-MbAsfJ7vKssRxu=p+3jG7dURmB77DOYoiSg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/5] dt-bindings: usb: Convert some more simple
- OHCI/EHCI bindings
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4P25ZL2ffXz3bW2
+	for <openbmc@lists.ozlabs.org>; Thu, 26 Jan 2023 01:19:37 +1100 (AEDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id DC11A5C01E8;
+	Wed, 25 Jan 2023 09:19:29 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Wed, 25 Jan 2023 09:19:29 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	fuzziesquirrel.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm1; t=1674656369; x=1674742769; bh=aK9U8WTn97
+	NPebT51/cFuo3wwkACC0fVMEQTckx6J5U=; b=jv6f3TdcGCCKOTvBUoMPHcVATX
+	VCWzmgHjs2TF9GTjNDZZwj7/WUBiVnAdfNwdIsbBN1SODlWewJcQndj7pOsOgoms
+	cnd0S92aUpxr/U/eITxrJfS2gTAFRRpi1gsTHxnCiIbv2FAFT7hhy3p66ZWlJlU8
+	rxJWFK9EY+KnZdvVpeSEPKMOdrQ9StoFs5rHEwWvz4+dfMGBrIk/rO0dOhj430b2
+	3hQYtyTAq0mn5T471C6S4q3k0Tz26xIxmh5puujg++mEbU3NbCzCDolwFJokyKs0
+	pGHZE2ptyhidP1pP0eIzJJ2XSQIUEvyVGfE4OKfYnwoST+dyCoJ+f+Ged2HQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1674656369; x=
+	1674742769; bh=aK9U8WTn97NPebT51/cFuo3wwkACC0fVMEQTckx6J5U=; b=B
+	tMIXdyY9qLWYXlW9haoz3USyOO5FyVnPqPAn11XpsSQBwiatzevMepVzzzIhdC3h
+	DNWA+PeQzXKaPbYzseJP9IH7EDf5DC6EymEu/ryjQsFQblpOSZYPULLTthGaKrH5
+	kZRRATWDWTUYxmzIAcIhmQyc1EVqsiUhvONW2ZKNgGILOd0wjkQiZjeE/ahtptl9
+	C0ItTEBBSSte2todUwKicSUR8Dm26QuGXqOqDbZL4LOAJK9JZxQ1zqyjMZ7hQw7V
+	2dAH4YN+JY860A6zf5F8W6GZldkarumKXDHQw/kISB5osP1+0nAPNM4nb611rFj9
+	Hi54k3qtZYbykSwqRN97Q==
+X-ME-Sender: <xms:cDrRY5EOio3sBviGsdFjV1zvLrswnqCcQkr6E2MKogOENWR6TDjvrw>
+    <xme:cDrRY-WVgMB8Tj-Q9L8_eCinrq6GOsjcwIEyZcbAIr15tNjJdRplfOKQsBxdJ4A9n
+    HvRM30y9oL0qBPZ5qA>
+X-ME-Received: <xmr:cDrRY7Lo5zkrk2KEGAB768Ac04JHvwKGatcOHYdlg3fkRtGbZ7MHypY1cZcWIFAu05MIXlJHHDtDH27iuw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedruddvvddgieegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepkffuhffvveffjghftgfgfgggsehtqhertddtreejnecuhfhrohhmpeeurhgr
+    ugcuuehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtg
+    homheqnecuggftrfgrthhtvghrnhepgeetkedufeetjeehveefheektdeifedvhfeilefh
+    ieehvdehvddtudfguefgieetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepsghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtgho
+    mh
+X-ME-Proxy: <xmx:cDrRY_FrySdZuYCuVSXtcb_ouJpqukAD37VUiPaRJ4mwQ9AxlQlP9g>
+    <xmx:cDrRY_U_LaQw6eBD1EUvL5P5AH3KR_BLKoo2WtNdQDOqGQdJ_fyn6w>
+    <xmx:cDrRY6P1fHvyeKeHfu2rDbj1sRohsSSUVKTweSTIE0lp1MDspCIayA>
+    <xmx:cTrRY8h2wmqcnH0z8B7rr8j__KVPGTnPVeZ2sQ0tzskMVBNG2CqzPQ>
+Feedback-ID: i02c9470a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 25 Jan 2023 09:19:28 -0500 (EST)
+Message-ID: <95728b20d9dc6ba47b57f903b7be34b3d3610171.camel@fuzziesquirrel.com>
+Subject: Re: Alibaba's CCLA Schedule A update
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Heyi Guo <guoheyi@linux.alibaba.com>
+Date: Wed, 25 Jan 2023 09:19:27 -0500
+In-Reply-To: <34f330f0-7545-f596-7736-5e2d4bea385c@linux.alibaba.com>
+References: <34f330f0-7545-f596-7736-5e2d4bea385c@linux.alibaba.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.3 
+MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,30 +95,15 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-usb@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>, Michael Ellerman <mpe@ellerman.id.au>, openbmc@lists.ozlabs.org, Lee Jones <lee@kernel.org>, linux-kernel@vger.kernel.org, Christophe Leroy <christophe.leroy@csgroup.eu>, Tali Perry <tali.perry1@gmail.com>, Nicholas Piggin <npiggin@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Patrick Venture <venture@google.com>, linuxppc-dev@lists.ozlabs.org, Benjamin Fair <benjaminfair@google.com>
+Cc: openbmc <openbmc@lists.ozlabs.org>, wangkuiying.wky@alibaba-inc.com, zhibing.lzb@alibaba-inc.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Jan 24, 2023 at 11:17 AM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> On Mon, Jan 23, 2023 at 09:05:15PM -0600, Rob Herring wrote:
-> > The 'ohci-usb' compatible is another 'generic' compatible for OHCI, but
-> > isn't documented with a schema. Let's add it to generic-ohci.yaml
-> > schema. While looking at this, I found a few other USB host bindings
-> > which are simple enough to use the 'generic' schemas.
-> >
-> > Signed-off-by: Rob Herring <robh@kernel.org>
->
-> Am I supposed to take these in my USB tree?
+On Mon, 2023-01-23 at 11:41 +0800, Heyi Guo wrote:
+> Hi Brad,
+>=20
+> We'd like to add Kuiying Wang as CCLA manager
 
-Yes, please.
+CCLA accepted, thank you.
 
-> I'm still confused if you all want me to take these types of things or
-> not...
-
-Yes. I try to only pick up what has less responsive subsys
-maintainers, treewide (binding) cleanups, or otherwise falls thru the
-cracks.
-
-Rob
+-Brad
