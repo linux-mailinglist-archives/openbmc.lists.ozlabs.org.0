@@ -2,66 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 81B036877C8
-	for <lists+openbmc@lfdr.de>; Thu,  2 Feb 2023 09:47:35 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 753E26877F7
+	for <lists+openbmc@lfdr.de>; Thu,  2 Feb 2023 09:55:38 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4P6sqT2vTKz3f3f
-	for <lists+openbmc@lfdr.de>; Thu,  2 Feb 2023 19:47:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4P6t0m2z8Hz3f3f
+	for <lists+openbmc@lfdr.de>; Thu,  2 Feb 2023 19:55:36 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=FX0x0aUS;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=otRNP9Du;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1032; helo=mail-pj1-x1032.google.com; envelope-from=lesly895@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1029; helo=mail-pj1-x1029.google.com; envelope-from=lesly895@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=FX0x0aUS;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=otRNP9Du;
 	dkim-atps=neutral
-Received: from mail-pj1-x1032.google.com (mail-pj1-x1032.google.com [IPv6:2607:f8b0:4864:20::1032])
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4P6spq2RzZz3cDG
-	for <openbmc@lists.ozlabs.org>; Thu,  2 Feb 2023 19:46:57 +1100 (AEDT)
-Received: by mail-pj1-x1032.google.com with SMTP id o13so1268332pjg.2
-        for <openbmc@lists.ozlabs.org>; Thu, 02 Feb 2023 00:46:57 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4P6t0B02Sqz3cdZ
+	for <openbmc@lists.ozlabs.org>; Thu,  2 Feb 2023 19:55:05 +1100 (AEDT)
+Received: by mail-pj1-x1029.google.com with SMTP id o13so1285305pjg.2
+        for <openbmc@lists.ozlabs.org>; Thu, 02 Feb 2023 00:55:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=dP4ezt/1t6Z4xcIi0OZEKnCTdzSyeaij8GCaChsh5K8=;
-        b=FX0x0aUSdCby/66b2e9aUPPmAhKszSS8lW4O+wahbbIEIMLwxtBxJfWwu1n43rj7a2
-         xA/vSlHVXRg2CXOwRPtbw4i+aHemXK9J4nOKiEn9x/4Q0yotFlomgu6y8mzYcrbRDiUD
-         RSobHHdxtfEFq4wf7CZVuhyG6z9sdXoR8OzD2MWxxZjVyUFv6oUXVi5x+7xaP7PFdKgl
-         wcSaPb49fOiGhGABjbo91cE9uC7SXqod1Oa/eyz2ngQkxjogmUxCGEvltZpSwl9z5Rb+
-         Xnxd4125+IN+Ig4lLUeWEL0Y6yuMq+KPYwaLDJqUGrQpGOwxccZi1uMnaHPx+27xGiRM
-         18fQ==
+        bh=d+MdWcKt9zClXcvx61+Ta5iqkOnx5LPu8iXu+batmrA=;
+        b=otRNP9Duaub5XIuBorhimPyjkpSVpOj9Hg9qr3D3dVtImDIzAQUJNN2J8fwgcGCb+t
+         W1IpqxGZQQy1fJPuSqoc5/pO45ZV1tKs26pj4iH9irlak+fd4HLcVSFJo7n5RTbiEEOt
+         MvgXdKeYu975Up3VmQ77MfAyyHc/VrC7StjwaaKJO7Ip0rqSJsJpMxpElMvAhqXfptbB
+         EjhPc6uLiVKBDWX/IZXt0yhc4Ht/Uec8UdYa5G+NgvWt4Idc8cmFzawen2xjb6yQfaBm
+         GXAgHSb/wi1gjQDmcnecvjw1XY2eGfSLYVXibG/UW+t/Rk9VA0AOOsBOPKWMVb19W49P
+         SOWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:mime-version:message-id:date:subject:cc
          :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dP4ezt/1t6Z4xcIi0OZEKnCTdzSyeaij8GCaChsh5K8=;
-        b=pC9IUhutyMXmUZZ28CLg5Imqxl5F0KFCOV/2mETRZhvPfl8PiX5z+Xeel5Png5e05c
-         mtvj4kU44eRBMlWs8KLw2pNv8Gk42VM1SyBBl8iyLSj5HWRyr6sgxxtnsF3REzVuBJ+9
-         7BAJ3WOUKAw2DHxIQQ/E8ZuorB0tJwHPXnmIYmx+FVDkwhMGtLS8uKrimH5JMpmzEUEH
-         opbi7zD0QDlvMFnknIx/PjXbeIx/IV8uXBzpFwrlGSbgHv8XywlasDR7a0YMopo5b5yW
-         mPMe350Hr/fKjmoskH+caNRGJdZdOMKODgsRHCWVXpECzUuLU1hKF3tO2DyR5TC/Ryi/
-         Sw6A==
-X-Gm-Message-State: AO0yUKWT79LLIm/giHkkCGK29HzcKsTLZW/4+6pMjR+P7lFVo2CLX6Qw
-	pzFxJ4WHtoj7k1fu5uF/HiXjtTl8CgZn0w==
-X-Google-Smtp-Source: AK7set/JkxNBy+t+wEwfB4UWsHyAglWZ4Sb95yIeA3Z/EizBCYnVXcXH7p0+w9bDmqijQWxH4DlaQA==
-X-Received: by 2002:a17:902:db0c:b0:192:751c:6e8d with SMTP id m12-20020a170902db0c00b00192751c6e8dmr6022943plx.58.1675327614004;
-        Thu, 02 Feb 2023 00:46:54 -0800 (PST)
+        bh=d+MdWcKt9zClXcvx61+Ta5iqkOnx5LPu8iXu+batmrA=;
+        b=OHr7ZFMgvfC52Myk8n9aCIHfrqluP8/gar3/2siotTtWQPgMmKbTIIsXcbkxb254W+
+         9J9nVuES/EZ4bJw33i/FtaUUA9YBbuy5cYCDxrT/e+8ICKnrc6P2nV9L5bOh1YvngXRM
+         f/aS52+mFRD5dPNvn7g7rqi0p+3BnR+1CipX4Z/il/amZ/n1kPfkoyWT8I+ZMfTqFXpr
+         AI6+eLeMFxKTBiLhTdpSbnLwIyK/ubbnjyKqYCKPWdqPomIpWSl2li6E1CkkE73B/08i
+         zz7mQYcKrdV6+zJkfb4r8StZkdg/FlyeXs+Io7CvH/MOMFmKhjvll/IbMp4wV9TIeAbE
+         Qg/Q==
+X-Gm-Message-State: AO0yUKWRrQsle5Tp5UQKAWlvwHLFbPO+697fi+gk1DP+1IprNSUgrioM
+	27yJEQnPkmuZeYg6az7rBLLnlv55wtgxMw==
+X-Google-Smtp-Source: AK7set+C5IBKBJpL96ajmGfk4IlCBz3Om3hLfVqomrF+MmniPj6GVkGAZ0g/nNz3Q9j+T0zqI53sww==
+X-Received: by 2002:a17:90a:5d14:b0:22c:6238:ad0c with SMTP id s20-20020a17090a5d1400b0022c6238ad0cmr5881300pji.24.1675328102587;
+        Thu, 02 Feb 2023 00:55:02 -0800 (PST)
 Received: from localhost.localdomain (61-220-204-242.hinet-ip.hinet.net. [61.220.204.242])
-        by smtp.gmail.com with ESMTPSA id e8-20020a170902744800b00197d19bbadbsm5511403plt.57.2023.02.02.00.46.52
+        by smtp.gmail.com with ESMTPSA id e185-20020a6369c2000000b00499bc49fb9csm12066336pgc.41.2023.02.02.00.55.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Feb 2023 00:46:53 -0800 (PST)
+        Thu, 02 Feb 2023 00:55:02 -0800 (PST)
 From: lesly895@gmail.com
 X-Google-Original-From: ryans@supermicro.com.tw
 To: openbmc@lists.ozlabs.org
 Subject: [PATCH] ARM: dts: aspeed: Add Supermicro X13DEM (AST2600) BMC
-Date: Thu,  2 Feb 2023 16:46:48 +0800
-Message-Id: <20230202084648.6456-1-ryans@supermicro.com.tw>
+Date: Thu,  2 Feb 2023 16:54:58 +0800
+Message-Id: <20230202085458.6786-1-ryans@supermicro.com.tw>
 X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -88,8 +88,8 @@ X13DEM is Supermicro's next generation Hyper platform with an AST2600 BMC.
 Signed-off-by: Ryan Sie <ryans@supermicro.com.tw>
 ---
  arch/arm/boot/dts/Makefile                    |   1 +
- .../boot/dts/aspeed-bmc-supermicro-x13dem.dts | 399 ++++++++++++++++++
- 2 files changed, 400 insertions(+)
+ .../boot/dts/aspeed-bmc-supermicro-x13dem.dts | 398 ++++++++++++++++++
+ 2 files changed, 399 insertions(+)
  create mode 100664 arch/arm/boot/dts/aspeed-bmc-supermicro-x13dem.dts
 
 diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
@@ -106,10 +106,10 @@ index 2ee9c043218b..3b89006fa008 100644
  	aspeed-bmc-tyan-s8036.dtb \
 diff --git a/arch/arm/boot/dts/aspeed-bmc-supermicro-x13dem.dts b/arch/arm/boot/dts/aspeed-bmc-supermicro-x13dem.dts
 new file mode 100664
-index 000000000000..d574f70142fd
+index 000000000000..7c0771904544
 --- /dev/null
 +++ b/arch/arm/boot/dts/aspeed-bmc-supermicro-x13dem.dts
-@@ -0,0 +1,399 @@
+@@ -0,0 +1,398 @@
 +// SPDX-License-Identifier: GPL-2.0-or-later
 +// Copyright 2023 Supermicro Corp.
 +/dts-v1/;
@@ -177,7 +177,6 @@ index 000000000000..d574f70142fd
 +
 +&emmc_controller {
 +	status = "okay";
-+	timing-phase = <0x700FF>;
 +};
 +
 +&emmc {
