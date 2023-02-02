@@ -2,49 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8429B68734E
-	for <lists+openbmc@lfdr.de>; Thu,  2 Feb 2023 03:19:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 532B76873E3
+	for <lists+openbmc@lfdr.de>; Thu,  2 Feb 2023 04:35:52 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4P6jCM2ldxz3f2q
-	for <lists+openbmc@lfdr.de>; Thu,  2 Feb 2023 13:19:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4P6kvp0tWbz3cdx
+	for <lists+openbmc@lfdr.de>; Thu,  2 Feb 2023 14:35:50 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=YMJRrGKK;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=LQUc4BmX;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e2e; helo=mail-vs1-xe2e.google.com; envelope-from=milkfafa@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=YMJRrGKK;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=LQUc4BmX;
 	dkim-atps=neutral
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [71.19.156.171])
+Received: from mail-vs1-xe2e.google.com (mail-vs1-xe2e.google.com [IPv6:2607:f8b0:4864:20::e2e])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4P6jBm6cHgz3cFH
-	for <openbmc@lists.ozlabs.org>; Thu,  2 Feb 2023 13:18:40 +1100 (AEDT)
-Received: from hatter.bewilderbeest.net (97-113-250-99.tukw.qwest.net [97.113.250.99])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: zev)
-	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id C5E923FE;
-	Wed,  1 Feb 2023 18:18:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
-	s=thorn; t=1675304313;
-	bh=M/TiiamgoEuOPBv0/FYKxrV4c/yjfhQRaU4fbng+y9w=;
-	h=From:To:Cc:Subject:Date:From;
-	b=YMJRrGKKjc/poZmJMmfLqnQg1Pgp1/9mp6URbRZFO5iSMZlZyf5PFaSw1+FdV4k1e
-	 tY9+I0asH/MAcBbcPGx+LkQTD8yIX20MSAu+mSdVMzqFj9Ri+nrl3Mz+eZCf9h7s8D
-	 N/vLQApfx9yNOr08C9ABA4L8IA6zjGCP6HbNYkRc=
-From: Zev Weiss <zev@bewilderbeest.net>
-To: Iwona Winiarska <iwona.winiarska@intel.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH] hwmon: (peci/cputemp) Fix off-by-one in coretemp_label allocation
-Date: Wed,  1 Feb 2023 18:18:25 -0800
-Message-Id: <20230202021825.21486-1-zev@bewilderbeest.net>
-X-Mailer: git-send-email 2.39.1
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4P6kv92sxfz2yw6
+	for <openbmc@lists.ozlabs.org>; Thu,  2 Feb 2023 14:35:15 +1100 (AEDT)
+Received: by mail-vs1-xe2e.google.com with SMTP id i185so502608vsc.6
+        for <openbmc@lists.ozlabs.org>; Wed, 01 Feb 2023 19:35:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=QiX3UcRTZwH0PLnaIsBgvLzcPBnC8tyuWq+Tqoi57VM=;
+        b=LQUc4BmX3WhY4mCYLPKfRRvqUABK3NtdI6frXZWIw2784c3oIQ4Vos7Gfhs7jCn7FK
+         ynUp9byn/0vh/mgPEfgfa2s6HUwC/x8103svoUAmaCr6lqe6qs+ynwJfzZgpGprvNqEa
+         K/fIl+LWWDS910UYITK51n3aU2u9jfgox/mCClFrVHeiduGiwSkhWUMy+45sDj4wPY+l
+         b5/3gDmJDha/kuSwQr68eyFDIoKXruksNowHFRr20PCvEL9wSAvc4tYoIVNHX6fLRDvW
+         4xHfgSrKFDpE065ma9Lr8QwzS8MfsoWf64vPignS7vm5f1KXPQQY7q0Nd285c7QcfD65
+         5v/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QiX3UcRTZwH0PLnaIsBgvLzcPBnC8tyuWq+Tqoi57VM=;
+        b=Gx7bPevCFxNyYt14DmQ6xQdXvbou4jX11MfWTuruOLM0O2r5A5oeOtrFCUsQ1ZGxwL
+         9ial4mN53sjgpXHoxEb77DjtEMI8FNkYKS1Aoxn2o///ngYmJwrx0uowUHInDRf2pE2A
+         m7fSjkbc0igjRBWWm85N0r+0tT8o8Q7SCZSwKBPwS+XVcXaAHLoQKVeSXIFHe57goctX
+         wDJ535Hc+Jh1+SdDM141L6B8QBp9rPTLHaYDaMJEk63SddXm6cb8MxShjrV9Ch7vPYt6
+         13j4zoNPvrMY9zrKK4zY2HZZ5eAjxBcJztWXeP9OSTCc65zQ/jvax+p87h4a6vca9Wiv
+         vgcw==
+X-Gm-Message-State: AO0yUKUySXFB0azYhvMKnncSPUz0KDdw19kee6N4fpzxBne7hNtnoERx
+	8bVdxqib/EWrNHDAGuWeCSVLRr35vQGxQTjO/rc=
+X-Google-Smtp-Source: AK7set97jRS3svZhsG5T+qiZsHY/NEQaMcAWihNka2rtA4CCpDWrOkoxXYP4/3EZzRL1yy4Mm6pL6xwG6axK7PFRcMA=
+X-Received: by 2002:a05:6102:1276:b0:3ee:4ef8:45d3 with SMTP id
+ q22-20020a056102127600b003ee4ef845d3mr691400vsg.64.1675308911888; Wed, 01 Feb
+ 2023 19:35:11 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20221227095123.2447948-1-milkfafa@gmail.com> <20221227095123.2447948-8-milkfafa@gmail.com>
+ <b8f173c0-6d40-d6aa-543e-fa8b06557f4f@molgen.mpg.de> <CADnNmFr1naRfam=z0p-4hEugSDJy_HCK8XZyQJ0eFirnmwuH4A@mail.gmail.com>
+ <4d64e3f9-57a3-c6be-2709-36e9a1617bf9@molgen.mpg.de> <CADnNmFqFMBUj07oAZze3eeXAR0hbep4p9za=XNu5YrLVqUex=w@mail.gmail.com>
+In-Reply-To: <CADnNmFqFMBUj07oAZze3eeXAR0hbep4p9za=XNu5YrLVqUex=w@mail.gmail.com>
+From: Kun-Fa Lin <milkfafa@gmail.com>
+Date: Thu, 2 Feb 2023 11:35:00 +0800
+Message-ID: <CADnNmFqtUMnyCCnKfk3DUJ-VLgJdwC8X6fznVYCF6V5jeZ2bNw@mail.gmail.com>
+Subject: Re: [PATCH v10 7/7] media: nuvoton: Add driver for NPCM video capture
+ and encode engine
+To: Paul Menzel <pmenzel@molgen.mpg.de>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,34 +76,24 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, Jean Delvare <jdelvare@suse.com>, Zev Weiss <zev@bewilderbeest.net>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, openbmc@lists.ozlabs.org, Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>, linux-kernel@vger.kernel.org, stable@kernel.org
+Cc: kwliu@nuvoton.com, tmaimon77@gmail.com, devicetree@vger.kernel.org, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, andrzej.p@collabora.com, robh+dt@kernel.org, linux-media@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org, hverkuil-cisco@xs4all.nl, mchehab@kernel.org, kflin@nuvoton.com, benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The find_last_bit() call produces the index of the highest-numbered
-core in core_mask; because cores are numbered from zero, the number of
-elements we need to allocate is one more than that.
+Hi Paul,
 
-Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-Cc: stable@kernel.org # v5.18
-Fixes: bf3608f338e9 ("hwmon: peci: Add cputemp driver")
----
- drivers/hwmon/peci/cputemp.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> > >>> +MODULE_LICENSE("GPL");
+> > >>
+> > >> Not GPL v2?
 
-diff --git a/drivers/hwmon/peci/cputemp.c b/drivers/hwmon/peci/cputemp.c
-index ec9851daf2e8..f13cc4170f58 100644
---- a/drivers/hwmon/peci/cputemp.c
-+++ b/drivers/hwmon/peci/cputemp.c
-@@ -431,7 +431,7 @@ static int create_temp_label(struct peci_cputemp *priv)
- 	unsigned long core_max = find_last_bit(priv->core_mask, CORE_NUMS_MAX);
- 	int i;
- 
--	priv->coretemp_label = devm_kzalloc(priv->dev, core_max * sizeof(char *), GFP_KERNEL);
-+	priv->coretemp_label = devm_kzalloc(priv->dev, (core_max + 1) * sizeof(char *), GFP_KERNEL);
- 	if (!priv->coretemp_label)
- 		return -ENOMEM;
- 
--- 
-2.39.1.236.ga8a28b9eace8
+When using GPL v2, I got this warning from checkpatch.pl:
 
+WARNING: Prefer "GPL" over "GPL v2" - see commit bf7fbeeae6db
+("module: Cure the MODULE_LICENSE "GPL" vs. "GPL v2" bogosity")
+#2104: FILE: drivers/media/platform/nuvoton/npcm-video.c:1816:
++MODULE_LICENSE("GPL v2");
+
+It looks better to keep GPL, do you have any suggestions?
+
+Regards,
+Marvin
