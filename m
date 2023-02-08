@@ -2,66 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A9C8168D996
-	for <lists+openbmc@lfdr.de>; Tue,  7 Feb 2023 14:42:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 814BB68E59E
+	for <lists+openbmc@lfdr.de>; Wed,  8 Feb 2023 02:53:56 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PB47J49zzz3cNR
-	for <lists+openbmc@lfdr.de>; Wed,  8 Feb 2023 00:42:20 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PBNMQ2tYHz3bVJ
+	for <lists+openbmc@lfdr.de>; Wed,  8 Feb 2023 12:53:54 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=LwkDzri3;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=Z+o+KJ87;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::231; helo=mail-lj1-x231.google.com; envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::236; helo=mail-lj1-x236.google.com; envelope-from=jebr@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=LwkDzri3;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20210112 header.b=Z+o+KJ87;
 	dkim-atps=neutral
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PB46h5J84z30CT
-	for <openbmc@lists.ozlabs.org>; Wed,  8 Feb 2023 00:41:48 +1100 (AEDT)
-Received: by mail-lj1-x231.google.com with SMTP id h4so15605874lja.2
-        for <openbmc@lists.ozlabs.org>; Tue, 07 Feb 2023 05:41:48 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PBNLr16bYz2xl6
+	for <openbmc@lists.ozlabs.org>; Wed,  8 Feb 2023 12:53:23 +1100 (AEDT)
+Received: by mail-lj1-x236.google.com with SMTP id o5so17697598ljj.1
+        for <openbmc@lists.ozlabs.org>; Tue, 07 Feb 2023 17:53:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=c7+RWQXS2i6MLsgUfhI963MCZBFCpmZmLbiUeZ0o3TY=;
-        b=LwkDzri3JWQyEeaDwBs9FxVzDga/gfctGSAYRfrWD7a6UpDfky7XhCtUoYZ3/ROdza
-         3B3qniC9qxvs/ZtNZ4NLb4UEdfE7PgUktCfd1Ned7ZfPAWQ2kihJxR57iJN7c6xipgqk
-         BD+XMv7xZwbna+4Ekuh+Kc6sjB7sU0vgL7azKbKQ7aLdqnDYsEDaEwMAcvpZ1sR5+xMm
-         Y5TsXS73h9mLhYYMLhaxtNEzxDELc25mturS6jXRFA9mD9v6xwNruvfyvzr9qTo6L5eS
-         9EwVrQXqueuccMPmWVmX7hYJeZx8vNdY7B3ZFjMFS3JRodqHL3ejgxYF3cHIoYf0GDIE
-         eSQw==
+        d=google.com; s=20210112;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=mAkGP5/yRitrz50M8dWzW9h3ndAvG1UqqQ/otG6vpSo=;
+        b=Z+o+KJ87X/K8OsiAIXC7dRhPgru12hx2GJoE58/lsunbzwhuFLvU3e29tvm8izKMay
+         A1D3y5oLjVDHjkVTUib6hlBJ5iomM6a3eZ+uOl79fj3SNC6AXwQs5v3lS8enKyQM+gB1
+         hz9PPTqRIDY+FXapL16TP9cjt1ugsLig15Xew//OZxythbc5NgM0o+yCmxLQdxraOPoM
+         zsdBZ42cPBXRFxZ6j9tXsiYUnJzQ+sfB13uQ5RC1XS0NFoFs3f9bJyCvGh1C1fvKmh3D
+         z3195aIyoqvIv8GsDB6rdV2kkqlOwXe2LTNhSIZJVINqYiLL8YXokx+pQV304CwxUVZ9
+         LlXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=c7+RWQXS2i6MLsgUfhI963MCZBFCpmZmLbiUeZ0o3TY=;
-        b=tTNmixt2QTqrIIUH5NrxCwoEO8DtggjvpAHfvqosHA+NMitKLPfHgOeQw0maGbUwQk
-         c0EiliSRc6/uxlUO6f6ASOPGIUUV7vgG+oGmOac7SpUV19gUL/9f40X4tmMK6aCWIOns
-         EVST41zlblGwh4+MOtp+ZxRVX5tUvo60tJArLrdXj/JQTaptUyWkqoNRC1nHUdbTmuCi
-         QDKV30XzBD0hoYzn5NKGLjmQBDsTKvNPox6eZYJiO3MUn4t2wljpccv5L1HK0zWqqFlN
-         VJX+N2QvaSA7N/A2D9yGNQiciaeoJdjb9X5M1KPb3zFdI3p834LsS/LXdM/VRkubRCCs
-         MyZQ==
-X-Gm-Message-State: AO0yUKX2mUuy/ryZC8Cza7nszocWtukzmWFG7AFUC2nEniildGJg6c6v
-	fylg+JEgyHyhdYp33IC1YQiTsUXUVKRhyriT3rd7bpHaTZQ=
-X-Google-Smtp-Source: AK7set84jqqnRfOnJtFCSUspshzHrChfg2CtSoD52sjpEnbLT4gHM1as1pfg/d+dF6Kp7K2gONypgMahWyMFPmrj11k=
-X-Received: by 2002:a2e:2c08:0:b0:28b:642d:4401 with SMTP id
- s8-20020a2e2c08000000b0028b642d4401mr484107ljs.174.1675777303898; Tue, 07 Feb
- 2023 05:41:43 -0800 (PST)
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mAkGP5/yRitrz50M8dWzW9h3ndAvG1UqqQ/otG6vpSo=;
+        b=WfpH9MKjbbWarQGbMsdGnrUmjIKq3ZfmltjkNxtke3dkXCkMWCXxEKD/7/n20ktMUf
+         BSHanrHSlsBLlaVytvwkRqlHxTDz5Pc7X3z9+MJsubSpvp8+0mDWh59SAMfm1neqvvSt
+         gs2SAtOsnklxjFD/AbX6Dd7+xBBLRASQnfL8s0d5Skp17eRW4fpcyFnR8ZrXSkynGKvV
+         wzol5h3KPorK5lH1Q/dL8kfcoY6pSr/d68Ex4JFlj8fzwxOSHZKvNlEO/l2UsPSFnePA
+         cAyorAj57ebvyWbuLK0tXOFv/0fpnw7AauuVel/PTT3t8oVqTjy+nxSR3ELfz4Rx4T4x
+         JHNg==
+X-Gm-Message-State: AO0yUKWnXzAdMFKuVcQ0G+fv3z8jAT8XHKUwAZbRhh9qiwbvacik1Tjb
+	4srEydX522BIId+jjQj5SwJTrphEjGqy1JH9Jv8yyVXfNbcKqn5mr/g=
+X-Google-Smtp-Source: AK7set+cxk2CSBO7SdF6+f1z/qZiQ38iN6r9uAYRaF3eGdrUXR7gN7eaBs+pTMOIgc3jE2DlKegM3VT8JHvD2VFsjNw=
+X-Received: by 2002:a05:651c:171c:b0:290:6278:7806 with SMTP id
+ be28-20020a05651c171c00b0029062787806mr890318ljb.100.1675821195803; Tue, 07
+ Feb 2023 17:53:15 -0800 (PST)
 MIME-Version: 1.0
-References: <20221221175520.263549-1-tmaimon77@gmail.com>
-In-Reply-To: <20221221175520.263549-1-tmaimon77@gmail.com>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Tue, 7 Feb 2023 15:41:32 +0200
-Message-ID: <CAP6Zq1hCeWVgcG5_PJOMUzxYKZ9TCCA=MG5WZ31gwa3vEr5tnw@mail.gmail.com>
-Subject: Re: [PATCH linux dev-6.0 v1 0/2] MMC: add NPCM SDHCI driver support
-To: openbmc@lists.ozlabs.org
-Content-Type: text/plain; charset="UTF-8"
+From: John Broadbent <jebr@google.com>
+Date: Tue, 7 Feb 2023 17:53:03 -0800
+Message-ID: <CAPw1Ef9GhcYJXdBs6pGPi5rjxs0+HE2ROV6HT1SVMEmknvVH=A@mail.gmail.com>
+Subject: request for a repository
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="00000000000015d95805f42687ad"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,37 +70,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Joel Stanley <joel@jms.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Joel,
+--00000000000015d95805f42687ad
+Content-Type: text/plain; charset="UTF-8"
 
-Kind reminder regards NPCM eMMC driver.
+Hello,
 
-Thanks,
+We would like a new repository where we can share our upstream daemon that
+interfaces with our Root of Trust (rot). Ideally having a repository on
+openbmc would be a nice place to keep our source of truth for this daemon.
 
-Tomer
 
-On Wed, 21 Dec 2022 at 19:55, Tomer Maimon <tmaimon77@gmail.com> wrote:
->
-> This patch set adds SDHCI support for the Nuvoton NPCM Baseboard
-> Management Controller (BMC).
->
-> The NPCM SDHCI driver tested on NPCM750 and NPCM845 EVB.
->
-> Tomer Maimon (2):
->   dt-bindings: mmc: npcm,sdhci: Document NPCM SDHCI controller
->   mmc: sdhci-npcm: Add NPCM SDHCI driver
->
->  .../devicetree/bindings/mmc/npcm,sdhci.yaml   | 45 ++++++++++
->  drivers/mmc/host/Kconfig                      |  8 ++
->  drivers/mmc/host/Makefile                     |  1 +
->  drivers/mmc/host/sdhci-npcm.c                 | 84 +++++++++++++++++++
->  4 files changed, 138 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/mmc/npcm,sdhci.yaml
->  create mode 100644 drivers/mmc/host/sdhci-npcm.c
->
-> --
-> 2.33.0
->
+Thank you
+John Broadbent
+
+--00000000000015d95805f42687ad
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Hello,<div><br></div><div>We would like a new repository w=
+here we can share our upstream=C2=A0daemon that interfaces with our Root of=
+ Trust (rot). Ideally having a repository=C2=A0on openbmc would be a nice p=
+lace to keep our source of truth for this daemon.</div><div><br></div><div>=
+<br></div><div>Thank you</div><div>John Broadbent</div><div><br></div><div>=
+<br></div></div>
+
+--00000000000015d95805f42687ad--
