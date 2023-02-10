@@ -2,48 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DCF9B69192D
-	for <lists+openbmc@lfdr.de>; Fri, 10 Feb 2023 08:28:13 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 2F0B5691A30
+	for <lists+openbmc@lfdr.de>; Fri, 10 Feb 2023 09:43:35 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PClhC4cDFz3f4m
-	for <lists+openbmc@lfdr.de>; Fri, 10 Feb 2023 18:28:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PCnM8651bz3f3g
+	for <lists+openbmc@lfdr.de>; Fri, 10 Feb 2023 19:43:32 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=QDYxg/Q0;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71; helo=twspam01.aspeedtech.com; envelope-from=chiawei_wang@aspeedtech.com; receiver=<UNKNOWN>)
-Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com [211.20.114.71])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::433; helo=mail-pf1-x433.google.com; envelope-from=lesly895@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=QDYxg/Q0;
+	dkim-atps=neutral
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PClgm4rVdz3cNN;
-	Fri, 10 Feb 2023 18:27:48 +1100 (AEDT)
-Received: from mail.aspeedtech.com ([192.168.0.24])
-	by twspam01.aspeedtech.com with ESMTP id 31A7EWrr068845;
-	Fri, 10 Feb 2023 15:14:33 +0800 (GMT-8)
-	(envelope-from chiawei_wang@aspeedtech.com)
-Received: from Chiawei-PC03.aspeed.com (192.168.2.66) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Fri, 10 Feb
- 2023 15:26:48 +0800
-From: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
-To: <gregkh@linuxfoundation.org>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <joel@jms.id.au>,
-        <andrew@aj.id.au>, <jirislaby@kernel.org>,
-        <linux-serial@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
-        <openbmc@lists.ozlabs.org>
-Subject: [PATCH 4/4] ARM: dts: aspeed-g6: Add UDMA node
-Date: Fri, 10 Feb 2023 15:26:43 +0800
-Message-ID: <20230210072643.2772-5-chiawei_wang@aspeedtech.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PCnLX6MSnz3c7X
+	for <openbmc@lists.ozlabs.org>; Fri, 10 Feb 2023 19:42:58 +1100 (AEDT)
+Received: by mail-pf1-x433.google.com with SMTP id s20so3037257pfe.2
+        for <openbmc@lists.ozlabs.org>; Fri, 10 Feb 2023 00:42:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=FzUG7pn9uTm2Et2NuLX0QIcTXtgkaO6E6HsSAnvxDjY=;
+        b=QDYxg/Q0l1qGwONKJkDEgfytfTLyxtWZQxK6KQQ86ZmnHi2Lqatw4DrYE1LebSXB/E
+         j2RrodOtBjlZ2LXb2QE+N5K853qM4rUErNkLVY5n7eFBUHioKZ91PiB/5dZJSmTaDQka
+         Iqa4ZZr2QV5OYnK4B9Np0+nIungQABmnwFBNV3RFtGfu/nrsEciAkUdGUIzc+ondhXQs
+         3ECIV7husuYKSaEfDjuH7jxBK75FUFAml7iU0PeQsGqjjohJnpoKLf/w6XYhbWmTSL7G
+         wmMDCGbQgsgnrfXh0KzsP70dZ42u/yArWBnlmNLot5VtMJCPwq7Sf6zYpk8PbztGpJdf
+         h3+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FzUG7pn9uTm2Et2NuLX0QIcTXtgkaO6E6HsSAnvxDjY=;
+        b=o8+ROXXtrTxx9iCCSwH42pmBrr+lVX+KXt5ZhlTQEPwsx0O5x8YGkQtbVKDj074SDh
+         BfHfaGeRdASu7ipS72qQZw9Da4ibbER0pJ5KIFYZqNRyVEeMtzs1/gag2WwBxqpIFjK1
+         ejqHs/Qar4D1vLee9dzNgsKk30ZhwUmJ/FhvOJ5cFiE1RCyc9RJFcSfltLCEbWbfsmCw
+         z3GZMYR6GRAjf3SUngsYYLnt3wUelTiww2bDDkDkqnWOzuG4jofWjDP69cnxlUYfXxlt
+         eMwRdyQwcVRn6+2WJ4I7BGkhAS7oq/e74ekYijZVFUt7cBWotvDVJuWYnZuiEWzMfSUX
+         GWFg==
+X-Gm-Message-State: AO0yUKU4qSjK1ol7v/I6e7GcNluW4V7PClnvClB1b8pmXRI+iGURr3+Y
+	a4Kwl685g067paLg1oXHOmXg7OleRwQ=
+X-Google-Smtp-Source: AK7set8InxCxLmyl1g/loNdPzrvUqk8sbUGLER7NeEwK9POKaMAtWXErEtPVUD7ZakcCja7Eu76gLA==
+X-Received: by 2002:a62:1d44:0:b0:5a8:4c9d:6237 with SMTP id d65-20020a621d44000000b005a84c9d6237mr7129274pfd.21.1676018575346;
+        Fri, 10 Feb 2023 00:42:55 -0800 (PST)
+Received: from localhost.localdomain (61-220-204-242.hinet-ip.hinet.net. [61.220.204.242])
+        by smtp.gmail.com with ESMTPSA id y25-20020aa78559000000b0059275411af8sm2774047pfn.62.2023.02.10.00.42.53
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 10 Feb 2023 00:42:54 -0800 (PST)
+From: lesly895@gmail.com
+X-Google-Original-From: ryans@supermicro.com.tw
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH 2/2] [PATCH 2/2] ARM: dts: aspeed: remove redundant definition on Supermicro X13DEM
+Date: Fri, 10 Feb 2023 16:42:50 +0800
+Message-Id: <20230210084250.5081-1-ryans@supermicro.com.tw>
 X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230210072643.2772-1-chiawei_wang@aspeedtech.com>
-References: <20230210072643.2772-1-chiawei_wang@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [192.168.2.66]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
-X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 31A7EWrr068845
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,34 +76,93 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: andrew@aj.id.au, linux-arm-kernel@lists.infradead.org, Ryan Sie <ryans@supermicro.com.tw>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add the device tree node for UART DMA controller.
+From: Ryan Sie <ryans@supermicro.com.tw>
 
-Signed-off-by: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
+Signed-off-by: Ryan Sie <ryans@supermicro.com.tw>
 ---
- arch/arm/boot/dts/aspeed-g6.dtsi | 7 +++++++
- 1 file changed, 7 insertions(+)
+ .../boot/dts/aspeed-bmc-supermicro-x13dem.dts | 37 +------------------
+ 1 file changed, 1 insertion(+), 36 deletions(-)
 
-diff --git a/arch/arm/boot/dts/aspeed-g6.dtsi b/arch/arm/boot/dts/aspeed-g6.dtsi
-index cc2f8b785917..3f4e9da8f6c7 100644
---- a/arch/arm/boot/dts/aspeed-g6.dtsi
-+++ b/arch/arm/boot/dts/aspeed-g6.dtsi
-@@ -850,6 +850,13 @@ fsim1: fsi@1e79b100 {
- 				clocks = <&syscon ASPEED_CLK_GATE_FSICLK>;
- 				status = "disabled";
+diff --git a/arch/arm/boot/dts/aspeed-bmc-supermicro-x13dem.dts b/arch/arm/boot/dts/aspeed-bmc-supermicro-x13dem.dts
+index 7c0771904544..606c6dfcb282 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-supermicro-x13dem.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-supermicro-x13dem.dts
+@@ -31,14 +31,6 @@ video_engine_memory: video {
+ 			compatible = "shared-dma-pool";
+ 			reusable;
+ 		};
+-
+-		gfx_memory: framebuffer {
+-			size = <0x01000000>;
+-			alignment = <0x01000000>;
+-			compatible = "shared-dma-pool";
+-			reusable;
+-		};
+-
+ 	};
+ 
+ 	leds {
+@@ -118,7 +110,7 @@ partitions {
+ 			#size-cells = <1>;
+ 			all-bios@0 {
+ 				label = "all_part_bios";
+-				reg = <0x000000000 0x02000000>;
++				reg = <0x00000000 0x02000000>;
  			};
-+
-+			udma: uart-dma@1e79e000 {
-+				compatible = "aspeed,ast2600-udma";
-+				reg = <0x1e79e000 0x400>;
-+				interrupts = <GIC_SPI 56 IRQ_TYPE_LEVEL_HIGH>;
-+				status = "disabled";
-+			};
  		};
  	};
+@@ -300,15 +292,6 @@ &mac0 {
+ 	pinctrl-0 = <&pinctrl_rgmii1_default>;
  };
+ 
+-&mdio1 {
+-	status = "disabled";
+-
+-	ethphy1: ethernet-phy@0 {
+-		compatible = "ethernet-phy-ieee802.3-c22";
+-		reg = <0>;
+-	};
+-};
+-
+ &mac1 {
+ 	status = "disabled";
+ 	pinctrl-names = "default";
+@@ -317,15 +300,6 @@ &mac1 {
+ 	phy-handle = <&ethphy1>;
+ };
+ 
+-&mdio2 {
+-	status = "disabled";
+-
+-	ethphy2: ethernet-phy@0 {
+-		compatible = "ethernet-phy-ieee802.3-c22";
+-		reg = <0>;
+-	};
+-};
+-
+ &mac2 {
+ 	status = "okay";
+ 	pinctrl-names = "default";
+@@ -333,15 +307,6 @@ &mac2 {
+ 	use-ncsi;
+ };
+ 
+-&mdio3 {
+-	status = "disabled";
+-
+-	ethphy3: ethernet-phy@0 {
+-		compatible = "ethernet-phy-ieee802.3-c22";
+-		reg = <0>;
+-	};
+-};
+-
+ &mac3 {
+ 	status = "disabled";
+ 	pinctrl-names = "default";
 -- 
 2.25.1
 
