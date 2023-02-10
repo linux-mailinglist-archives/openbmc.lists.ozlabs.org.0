@@ -1,69 +1,61 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 71BD7691C1C
-	for <lists+openbmc@lfdr.de>; Fri, 10 Feb 2023 11:01:21 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EDA78691CC7
+	for <lists+openbmc@lfdr.de>; Fri, 10 Feb 2023 11:33:45 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PCq4v2P56z3f5k
-	for <lists+openbmc@lfdr.de>; Fri, 10 Feb 2023 21:01:19 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=iFfzWPjR;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PCqpH5wWDz3f4F
+	for <lists+openbmc@lfdr.de>; Fri, 10 Feb 2023 21:33:43 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=134.134.136.126; helo=mga18.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=iFfzWPjR;
-	dkim-atps=neutral
-Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.160.174; helo=mail-qt1-f174.google.com; envelope-from=geert.uytterhoeven@gmail.com; receiver=<UNKNOWN>)
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PCq4G6Fd5z3cdk;
-	Fri, 10 Feb 2023 21:00:40 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1676023247; x=1707559247;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=skyO+n4E72IHbnF1r9khsegze0IsfBWcm+0BlzjaYsw=;
-  b=iFfzWPjRVoWdCDM92z9p+cqoYRj4h5H7iXNTpCgBnyarAFdQIM3aFkPF
-   lddjXBMAlgePvH2SqTmMAFmhWnorGZXPjammNUmxjTBwvJoK6EpqGnKHZ
-   jqCqvS6nn6hzUvY5wnkU1Q1JeTQegILaJJGm3V6pavFrwLv1K/BjtRu1a
-   aCvP3bnSG3YS6TH9tKvYIRB92tWI9SDueuK5RWROxjdvIrSno0oW7JsYD
-   6CAzqiOS+B0szaXFgXYCF32/jxdcJ/HV7eCNHlPCU/OdxI4kjwZFRr/E0
-   iR74C0cscuNmtFgB6tzv31DW95GvPABe4aadx1PKrDlAjLksROHfFOh8L
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10616"; a="314028001"
-X-IronPort-AV: E=Sophos;i="5.97,286,1669104000"; 
-   d="scan'208";a="314028001"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 10 Feb 2023 02:00:36 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10616"; a="661355216"
-X-IronPort-AV: E=Sophos;i="5.97,286,1669104000"; 
-   d="scan'208";a="661355216"
-Received: from lkp-server01.sh.intel.com (HELO 4455601a8d94) ([10.239.97.150])
-  by orsmga007.jf.intel.com with ESMTP; 10 Feb 2023 02:00:32 -0800
-Received: from kbuild by 4455601a8d94 with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1pQQCm-0005jh-0Q;
-	Fri, 10 Feb 2023 10:00:32 +0000
-Date: Fri, 10 Feb 2023 18:00:31 +0800
-From: kernel test robot <lkp@intel.com>
-To: Chia-Wei Wang <chiawei_wang@aspeedtech.com>, gregkh@linuxfoundation.org,
-	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
-	joel@jms.id.au, andrew@aj.id.au, jirislaby@kernel.org,
-	linux-serial@vger.kernel.org, devicetree@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
-	linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org
-Subject: Re: [PATCH 2/4] soc: aspeed: Add UART DMA support
-Message-ID: <202302101749.ctd9pkv1-lkp@intel.com>
-References: <20230210072643.2772-3-chiawei_wang@aspeedtech.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PCqnt0bznz3bY1
+	for <openbmc@lists.ozlabs.org>; Fri, 10 Feb 2023 21:33:21 +1100 (AEDT)
+Received: by mail-qt1-f174.google.com with SMTP id h24so5164403qta.12
+        for <openbmc@lists.ozlabs.org>; Fri, 10 Feb 2023 02:33:21 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=fZS+c56KQpRDCKl5uf42ZhDkTWWR4DPlYQhT2r1VZ60=;
+        b=5uIFAxPfXNMMpat4wZlPDHkmq2DJzPRY2iTlopaKOx17Wo3kzEaJBu0+2Iv2kdvsm6
+         3hNvrhodbPvWJUYLzgbqDGR80UhcqPZ78JVbQEWBK7wKJpao8YTjMh6zf5n1mtfxB/E0
+         nbYsAU1Emo1JQkxXlHzShN/l/SU3b0A2Fj+JNtqtMarQ1NmLz/UhamnraKgb3mEvI5lL
+         oNQFZu8ikoTLRaLzRfpGSKRIdShTkDL1KmDWA6T9fLVyK/GdpI3Y05+FzVzHk5KywJB8
+         f+1+PpREMNv4KzHVaInsaSw6SMJ4YTbwaPzBHMRAxY0IDP47MibUERDhn4Jy7nz/W5c8
+         w+Vw==
+X-Gm-Message-State: AO0yUKUh8B4vJ0SFmp/5oKV7d3osBpuuuraKS3zwuLjmAFmc+caCBAn2
+	R3hY/RZ9JJ5R/v0ZaChDUfxfi+NzIzt5xGjr
+X-Google-Smtp-Source: AK7set/j/FFfU11kRvMIcyix88OYEzsmHi78MlrlTQa3c8sLjvLoCEWTkD6N8DS6Ni+lL3HbmtV8Ww==
+X-Received: by 2002:a05:622a:1a0c:b0:3b8:6d92:bf62 with SMTP id f12-20020a05622a1a0c00b003b86d92bf62mr24924513qtb.46.1676025197741;
+        Fri, 10 Feb 2023 02:33:17 -0800 (PST)
+Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com. [209.85.128.175])
+        by smtp.gmail.com with ESMTPSA id 69-20020a370a48000000b0071b158849e5sm3283803qkk.46.2023.02.10.02.33.17
+        for <openbmc@lists.ozlabs.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 10 Feb 2023 02:33:17 -0800 (PST)
+Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-52bf58b417fso61989187b3.6
+        for <openbmc@lists.ozlabs.org>; Fri, 10 Feb 2023 02:33:17 -0800 (PST)
+X-Received: by 2002:a0d:f444:0:b0:526:78ad:bb15 with SMTP id
+ d65-20020a0df444000000b0052678adbb15mr1562294ywf.47.1676024801737; Fri, 10
+ Feb 2023 02:26:41 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230210072643.2772-3-chiawei_wang@aspeedtech.com>
+References: <20221103213420.1395507-1-j.neuschaefer@gmx.net>
+In-Reply-To: <20221103213420.1395507-1-j.neuschaefer@gmx.net>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Fri, 10 Feb 2023 11:26:28 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdWo5vHCeE6BeSHrUy12uT7_wFhW-VbQmQ5u+4Q8c7-wYQ@mail.gmail.com>
+Message-ID: <CAMuHMdWo5vHCeE6BeSHrUy12uT7_wFhW-VbQmQ5u+4Q8c7-wYQ@mail.gmail.com>
+Subject: Re: [PATCH v6] soc: nuvoton: Add SoC info driver for WPCM450
+To: =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,131 +67,77 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: oe-kbuild-all@lists.linux.dev
+Cc: Hitomi Hasegawa <hasegawa-hitomi@fujitsu.com>, Paul Menzel <pmenzel@molgen.mpg.de>, Brian Norris <briannorris@chromium.org>, Tomer Maimon <tmaimon77@gmail.com>, Arnd Bergmann <arnd@arndb.de>, Sven Peter <sven@svenpeter.dev>, openbmc@lists.ozlabs.org, Hector Martin <marcan@marcan.st>, Nicolas Ferre <nicolas.ferre@microchip.com>, linux-kernel@vger.kernel.org, Conor Dooley <conor.dooley@microchip.com>, Joel Stanley <joel@jms.id.au>, Robert Jarzmik <robert.jarzmik@free.fr>, Linus Walleij <linus.walleij@linaro.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Chia-Wei,
+Hi Jonathan,
 
-Thank you for the patch! Perhaps something to improve:
+On Thu, Nov 3, 2022 at 10:37 PM Jonathan Neusch=C3=A4fer
+<j.neuschaefer@gmx.net> wrote:
+> Add a SoC information driver for Nuvoton WPCM450 SoCs. It provides
+> information such as the SoC revision.
+>
+> Usage example:
+>
+>   # grep . /sys/devices/soc0/*
+>   /sys/devices/soc0/family:Nuvoton NPCM
+>   /sys/devices/soc0/revision:A3
+>   /sys/devices/soc0/soc_id:WPCM450
+>
+> Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+> Reviewed-by: Joel Stanley <joel@jms.id.au>
+> Reviewed-by: Paul Menzel <pmenzel@molgen.mpg.de>
+> ---
+> v6:
+> - Select REGMAP
+> - Rearrange Kconfig structure a bit
 
-[auto build test WARNING on tty/tty-testing]
-[also build test WARNING on tty/tty-next tty/tty-linus robh/for-next driver-core/driver-core-testing driver-core/driver-core-next driver-core/driver-core-linus usb/usb-testing usb/usb-next usb/usb-linus linus/master v6.2-rc7 next-20230210]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Thanks for your patch!
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Chia-Wei-Wang/dt-bindings-aspeed-Add-UART-controller/20230210-152832
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/gregkh/tty.git tty-testing
-patch link:    https://lore.kernel.org/r/20230210072643.2772-3-chiawei_wang%40aspeedtech.com
-patch subject: [PATCH 2/4] soc: aspeed: Add UART DMA support
-config: sh-allmodconfig (https://download.01.org/0day-ci/archive/20230210/202302101749.ctd9pkv1-lkp@intel.com/config)
-compiler: sh4-linux-gcc (GCC) 12.1.0
-reproduce (this is a W=1 build):
-        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
-        chmod +x ~/bin/make.cross
-        # https://github.com/intel-lab-lkp/linux/commit/b1e3a89584657d9b0398f3f46b09dc4229835fa3
-        git remote add linux-review https://github.com/intel-lab-lkp/linux
-        git fetch --no-tags linux-review Chia-Wei-Wang/dt-bindings-aspeed-Add-UART-controller/20230210-152832
-        git checkout b1e3a89584657d9b0398f3f46b09dc4229835fa3
-        # save the config file
-        mkdir build_dir && cp config build_dir/.config
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=sh olddefconfig
-        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=sh SHELL=/bin/bash drivers/soc/aspeed/
+Unfortunately Joel seems to have sent v5 to Arnd instead of v6?
+https://lore.kernel.org/all/20230201051717.1005938-1-joel@jms.id.au
 
-If you fix the issue, kindly add following tag where applicable
-| Reported-by: kernel test robot <lkp@intel.com>
-| Link: https://lore.kernel.org/oe-kbuild-all/202302101749.ctd9pkv1-lkp@intel.com/
+Which is now commit 7dbb4a38bff34493 ("soc:
+nuvoton: Add SoC info driver for WPCM450") in soc/for-next...
 
-All warnings (new ones prefixed by >>):
+> --- /dev/null
+> +++ b/drivers/soc/nuvoton/Kconfig
+> @@ -0,0 +1,17 @@
+> +# SPDX-License-Identifier: GPL-2.0
+> +menu "Nuvoton SoC drivers"
+> +       depends on ARCH_NPCM || COMPILE_TEST
 
-   drivers/soc/aspeed/aspeed-udma.c: In function 'aspeed_udma_request_chan':
->> drivers/soc/aspeed/aspeed-udma.c:194:13: warning: variable 'retval' set but not used [-Wunused-but-set-variable]
-     194 |         int retval = 0;
-         |             ^~~~~~
+... and lacks the above dependency, hence appearing on my radar.
 
+> +
+> +config WPCM450_SOC
+> +       tristate "Nuvoton WPCM450 SoC driver"
+> +       default y if ARCH_WPCM450
+> +       select SOC_BUS
+> +       select REGMAP
+> +       help
+> +         Say Y here to compile the SoC information driver for Nuvoton
+> +         WPCM450 SoCs.
+> +
+> +         This driver provides information such as the SoC model and
+> +         revision.
+> +
+> +endmenu
 
-vim +/retval +194 drivers/soc/aspeed/aspeed-udma.c
+Do you plan to send a follow-up patch?
+Thanks!
 
-   189	
-   190	static int aspeed_udma_request_chan(u32 ch_no, dma_addr_t addr,
-   191			struct circ_buf *rb, u32 rb_sz,
-   192			aspeed_udma_cb_t cb, void *id, bool dis_tmout, bool is_tx)
-   193	{
- > 194		int retval = 0;
-   195		int rbsz_code;
-   196	
-   197		u32 reg;
-   198		unsigned long flags;
-   199		struct aspeed_udma_chan *ch;
-   200	
-   201		if (ch_no > UDMA_MAX_CHANNEL) {
-   202			retval = -EINVAL;
-   203			goto out;
-   204		}
-   205	
-   206		if (IS_ERR_OR_NULL(rb) || IS_ERR_OR_NULL(rb->buf)) {
-   207			retval = -EINVAL;
-   208			goto out;
-   209		}
-   210	
-   211		rbsz_code = aspeed_udma_get_bufsz_code(rb_sz);
-   212		if (rbsz_code < 0) {
-   213			retval = -EINVAL;
-   214			goto out;
-   215		}
-   216	
-   217		spin_lock_irqsave(&udma->lock, flags);
-   218	
-   219		if (is_tx) {
-   220			reg = readl(udma->regs + UDMA_TX_DMA_INT_EN);
-   221			if (reg & (0x1 << ch_no)) {
-   222				retval = -EBUSY;
-   223				goto unlock_n_out;
-   224			}
-   225	
-   226			reg |= (0x1 << ch_no);
-   227			writel(reg, udma->regs + UDMA_TX_DMA_INT_EN);
-   228	
-   229			reg = readl(udma->regs + UDMA_CHX_TX_CTRL(ch_no));
-   230			reg |= (dis_tmout) ? UDMA_TX_CTRL_TMOUT_DISABLE : 0;
-   231			reg |= (rbsz_code << UDMA_TX_CTRL_BUFSZ_SHIFT) & UDMA_TX_CTRL_BUFSZ_MASK;
-   232			writel(reg, udma->regs + UDMA_CHX_TX_CTRL(ch_no));
-   233	
-   234			writel(addr, udma->regs + UDMA_CHX_TX_BUF_BASE(ch_no));
-   235		} else {
-   236			reg = readl(udma->regs + UDMA_RX_DMA_INT_EN);
-   237			if (reg & (0x1 << ch_no)) {
-   238				retval = -EBUSY;
-   239				goto unlock_n_out;
-   240			}
-   241	
-   242			reg |= (0x1 << ch_no);
-   243			writel(reg, udma->regs + UDMA_RX_DMA_INT_EN);
-   244	
-   245			reg = readl(udma->regs + UDMA_CHX_RX_CTRL(ch_no));
-   246			reg |= (dis_tmout) ? UDMA_RX_CTRL_TMOUT_DISABLE : 0;
-   247			reg |= (rbsz_code << UDMA_RX_CTRL_BUFSZ_SHIFT) & UDMA_RX_CTRL_BUFSZ_MASK;
-   248			writel(reg, udma->regs + UDMA_CHX_RX_CTRL(ch_no));
-   249	
-   250			writel(addr, udma->regs + UDMA_CHX_RX_BUF_BASE(ch_no));
-   251		}
-   252	
-   253		ch = (is_tx) ? &udma->tx_chs[ch_no] : &udma->rx_chs[ch_no];
-   254		ch->rb = rb;
-   255		ch->rb_sz = rb_sz;
-   256		ch->cb = cb;
-   257		ch->cb_arg = id;
-   258		ch->dma_addr = addr;
-   259		ch->dis_tmout = dis_tmout;
-   260	
-   261	unlock_n_out:
-   262		spin_unlock_irqrestore(&udma->lock, flags);
-   263	out:
-   264		return 0;
-   265	}
-   266	
+Gr{oetje,eeting}s,
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests
+                        Geert
+
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
+
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
