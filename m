@@ -2,42 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 83B1C691D1F
-	for <lists+openbmc@lfdr.de>; Fri, 10 Feb 2023 11:46:17 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9758E692362
+	for <lists+openbmc@lfdr.de>; Fri, 10 Feb 2023 17:34:36 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PCr4l2k5Sz3f5s
-	for <lists+openbmc@lfdr.de>; Fri, 10 Feb 2023 21:46:15 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PCzpd1xVKz3f53
+	for <lists+openbmc@lfdr.de>; Sat, 11 Feb 2023 03:34:33 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (1024-bit key; unprotected) header.d=inventron.com.tr header.i=@inventron.com.tr header.a=rsa-sha256 header.s=default header.b=YjL4NqSI;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=molgen.mpg.de (client-ip=141.14.17.11; helo=mx3.molgen.mpg.de; envelope-from=pmenzel@molgen.mpg.de; receiver=<UNKNOWN>)
-X-Greylist: delayed 617 seconds by postgrey-1.36 at boromir; Fri, 10 Feb 2023 21:45:52 AEDT
-Received: from mx3.molgen.mpg.de (mx3.molgen.mpg.de [141.14.17.11])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=inventron.com.tr (client-ip=185.216.113.70; helo=ns1.ihsdnsx51.com; envelope-from=zehra.ozdemir@inventron.com.tr; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (1024-bit key; unprotected) header.d=inventron.com.tr header.i=@inventron.com.tr header.a=rsa-sha256 header.s=default header.b=YjL4NqSI;
+	dkim-atps=neutral
+Received: from ns1.ihsdnsx51.com (ns1.ihsdnsx51.com [185.216.113.70])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PCr4J1vf5z30QS;
-	Fri, 10 Feb 2023 21:45:51 +1100 (AEDT)
-Received: from [141.14.13.65] (g320.RadioFreeInternet.molgen.mpg.de [141.14.13.65])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: pmenzel)
-	by mx.molgen.mpg.de (Postfix) with ESMTPSA id 0701361CC40F9;
-	Fri, 10 Feb 2023 11:35:30 +0100 (CET)
-Message-ID: <34e3729f-9266-3606-9f11-33222f50e753@molgen.mpg.de>
-Date: Fri, 10 Feb 2023 11:35:29 +0100
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PCznz2kbtz30CT
+	for <openbmc@lists.ozlabs.org>; Sat, 11 Feb 2023 03:33:56 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=inventron.com.tr;
+	s=default; t=1676046831;
+	bh=Wq33WiXzjndXdq51WDBwm/A/e1a3Pna5HWXs6ILAdJo=;
+	h=Received:Received:From:To:Subject;
+	b=YjL4NqSIS5qeVIpemoHgTBs7obGRWZ0aE9Ds0zLhjI/gGn5svTvAPcYAgkLa98smH
+	 9Lc+ZjDeTKwdH3bLWLpGXDd/seikabQpaK6gyL2e4LhlxjwkI+qljId9B2BIpQYJTr
+	 CDL1ccYtUQDW435u/a6lIE5atD/r+ojr/jDuoTYY=
+Received: (qmail 2821266 invoked from network); 10 Feb 2023 19:33:51 +0300
+Received: from 78.189.148.199.static.ttnet.com.tr (HELO INVLT5250ZO)
+ (78.189.148.199)
+  by ns1.ihsdnsx51.com with ESMTPSA (DHE-RSA-AES256-GCM-SHA384 encrypted,
+ authenticated); 10 Feb 2023 19:33:50 +0300
+From: <zehra.ozdemir@inventron.com.tr>
+To: <openbmc@lists.ozlabs.org>
+Subject: PSU Sensors Association with Entity Manager
+Date: Fri, 10 Feb 2023 19:33:52 +0300
+Message-ID: <000001d93d6d$7618b2c0$624a1840$@inventron.com.tr>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH 3/4] serial: 8250: Add Aspeed UART driver
-To: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
-References: <20230210072643.2772-1-chiawei_wang@aspeedtech.com>
- <20230210072643.2772-4-chiawei_wang@aspeedtech.com>
-Content-Language: en-US
-From: Paul Menzel <pmenzel@molgen.mpg.de>
-In-Reply-To: <20230210072643.2772-4-chiawei_wang@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_000_0001_01D93D86.9B6834B0"
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: Adk9ZSkyL+xBCufORFmtSRuCN80U+Q==
+Content-Language: en-us
+X-PPP-Message-ID:  <167604683133.2821260.10653277331904788743@ns1.ihsdnsx51.com>
+X-PPP-Vhost: inventron.com.tr
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -49,596 +57,448 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-serial@vger.kernel.org, linux-aspeed@lists.ozlabs.org, andrew@aj.id.au, gregkh@linuxfoundation.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, robh+dt@kernel.org, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, jirislaby@kernel.org, linux-arm-kernel@lists.infradead.org
+Cc: "'M. Erhan Yigitbasi'" <erhan.yigitbasi@inventron.com.tr>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Dear Chia-Wei,
+This is a multipart message in MIME format.
+
+------=_NextPart_000_0001_01D93D86.9B6834B0
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+
+Hello,
+
+We are trying to implement psu sensors with entity-manager by defining
+chassis and power supply in separate json configuration file according to
+entity-manager's sample configurations.  PSU sensors are not displayed under
+/xyz/openbmc_project/inventory/system/board/{chassisID}/all_sensors but
+under
+/xyz/openbmc_project/inventory/system/powersupply/{powersupplyID}/all_sensor
+s. And they are not shown in the Web UI. Here is the powersupply.json
+configuration we used:
+
+{
+
+    "Exposes": [
+
+        {
+
+            "Address": "0x58",
+
+            "Bus": "3",
+
+            "Labels": [
+
+                "iin",
+
+                "iout1",
+
+                "iout2",
+
+                "fan1",
+
+                "vin",
+
+                "vout1",
+
+                "vout2",
+
+                "pin",
+
+                "pout1",
+
+                "pout2",
+
+                "temp1"
+
+            ],
+
+            "Name": "Some_PSU",
+
+            "PollRate": 5.0,
+
+            "Type": "pmbus"
+
+        }
+
+    ],
+
+    "Name": "Some Power Supply Name",
+
+    "Probe": "TRUE",
+
+    "Type": "PowerSupply",
+
+    "xyz.openbmc_project.Inventory.Decorator.Asset": {
+
+        "Manufacturer": "SomeManufacturer",
+
+        "Model": "SomeModel",
+
+        "PartNumber": "SomePart",
+
+        "SerialNumber": "SomeSerial"
+
+    }
+
+}
+
+We examined the Inventory and LEDs page from bmcweb logs and we saw that
+sensorAssocPath does not include our psu sensors in the
+getInventoryItemAssociation() method in sensors.hpp. sensorAssocPath filled
+from sensorNames vector and this vector comes from
+/xyz/openbmc_project/inventory/system/board/{chassisID}/all_sensors as much
+as we understand. So our question is how to show psu sensors in the WebUI
+and what can possibly be wrong with our configuration. Do we certainly need
+to list psu sensors under
+/xyz/openbmc_project/inventory/system/board/{chassisID}/all_sensors? Also
+what needs to be done to show the manufacturer and model information of
+Power Supply in UI too?
 
 
-Thank you for your patch.
+------=_NextPart_000_0001_01D93D86.9B6834B0
+Content-Type: text/html;
+	charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Am 10.02.23 um 08:26 schrieb Chia-Wei Wang:
-> Add the driver for Aspeed UART/VUART devices, which are 16550A
-> compatible. It is an wrapper to cover the generic 16550A operation
+<html xmlns:v=3D"urn:schemas-microsoft-com:vml" =
+xmlns:o=3D"urn:schemas-microsoft-com:office:office" =
+xmlns:w=3D"urn:schemas-microsoft-com:office:word" =
+xmlns:m=3D"http://schemas.microsoft.com/office/2004/12/omml" =
+xmlns=3D"http://www.w3.org/TR/REC-html40"><head><meta =
+http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Dus-ascii"><meta name=3DGenerator content=3D"Microsoft Word 15 =
+(filtered medium)"><style><!--
+/* Font Definitions */
+@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}
+@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}
+/* Style Definitions */
+p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	margin-bottom:.0001pt;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:EN-US;}
+span.E-postaStili17
+	{mso-style-type:personal-compose;
+	font-family:"Calibri",sans-serif;
+	color:windowtext;}
+.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;
+	mso-fareast-language:EN-US;}
+@page WordSection1
+	{size:8.5in 11.0in;
+	margin:1.0in 1.0in 1.0in 1.0in;}
+div.WordSection1
+	{page:WordSection1;}
+--></style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext=3D"edit" spidmax=3D"1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext=3D"edit">
+<o:idmap v:ext=3D"edit" data=3D"1" />
+</o:shapelayout></xml><![endif]--></head><body lang=3DTR =
+link=3D"#0563C1" vlink=3D"#954F72"><div class=3DWordSection1><p =
+class=3DMsoNormal>Hello,<o:p></o:p></p><p class=3DMsoNormal>We are =
+trying to implement psu sensors with entity-manager by defining chassis =
+and power supply in separate json configuration file according to =
+entity-manager&#8217;s sample configurations. &nbsp;PSU sensors are not =
+displayed under =
+/xyz/openbmc_project/inventory/system/board/{chassisID}/all_sensors but =
+under =
+/xyz/openbmc_project/inventory/system/powersupply/{powersupplyID}/all_sen=
+sors. And they are not shown in the Web UI. Here is the powersupply.json =
+configuration we used:<o:p></o:p></p><p class=3DMsoNormal =
+style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>{<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp; =
+</span><span style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;Exposes&quot;</span><sp=
+an style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>: [<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; {<o:p></o:p></span></p><p class=3DMsoNormal =
+style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;Address&quot;</span><sp=
+an style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>: </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#0451A5;mso-fareast-language:TR'>&quot;0x58&quot;</span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;Bus&quot;</span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>: </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#0451A5;mso-fareast-language:TR'>&quot;3&quot;</span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;Labels&quot;</span><spa=
+n style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>: [<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;iin&quot;</span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;iout1&quot;</span><span=
+ style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;iout2&quot;</span><span=
+ style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;fan1&quot;</span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;vin&quot;</span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;vout1&quot;</span><span=
+ style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;vout2&quot;</span><span=
+ style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;pin&quot;</span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;pout1&quot;</span><span=
+ style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;pout2&quot;</span><span=
+ style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;temp1&quot;</span><span=
+ style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ],<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;Name&quot;</span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>: </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#0451A5;mso-fareast-language:TR'>&quot;Some_PSU&quot;</span><s=
+pan style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;PollRate&quot;</span><s=
+pan style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>: </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#6554C0;mso-fareast-language:TR'>5.0</span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;Type&quot;</span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>: </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#0451A5;mso-fareast-language:TR'>&quot;pmbus&quot;</span><span=
+ style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; }<o:p></o:p></span></p><p class=3DMsoNormal =
+style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp; =
+],<o:p></o:p></span></p><p class=3DMsoNormal =
+style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp; =
+&nbsp;</span><span style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;Name&quot;</span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>: </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#0451A5;mso-fareast-language:TR'>&quot;Some Power Supply =
+Name&quot;</span><span style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp; =
+</span><span style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;Probe&quot;</span><span=
+ style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>: </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#0451A5;mso-fareast-language:TR'>&quot;TRUE&quot;</span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp; =
+</span><span style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;Type&quot;</span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>: </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#0451A5;mso-fareast-language:TR'>&quot;PowerSupply&quot;</span=
+><span style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp; =
+</span><span style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;xyz.openbmc_project.Inv=
+entory.Decorator.Asset&quot;</span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>: {<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; </span><span style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;Manufacturer&quot;</spa=
+n><span style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>: </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#0451A5;mso-fareast-language:TR'>&quot;SomeManufacturer&quot;<=
+/span><span style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; </span><span style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;Model&quot;</span><span=
+ style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>: </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#0451A5;mso-fareast-language:TR'>&quot;SomeModel&quot;</span><=
+span style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; </span><span style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;PartNumber&quot;</span>=
+<span style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>: </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#0451A5;mso-fareast-language:TR'>&quot;SomePart&quot;</span><s=
+pan style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>,<o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp; </span><span style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#A31515;mso-fareast-language:TR'>&quot;SerialNumber&quot;</spa=
+n><span style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>: </span><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:#0451A5;mso-fareast-language:TR'>&quot;SomeSerial&quot;</span>=
+<span style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'><o:p></o:p></span></p><p =
+class=3DMsoNormal style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>&nbsp;&nbsp;&nbsp; =
+}<o:p></o:p></span></p><p class=3DMsoNormal =
+style=3D'line-height:13.5pt;background:#FFFFFE'><span =
+style=3D'font-size:10.0pt;font-family:"Courier =
+New";color:black;mso-fareast-language:TR'>}<o:p></o:p></span></p><p =
+class=3DMsoNormal>We examined the Inventory and LEDs page from bmcweb =
+logs and we saw that sensorAssocPath does not include our psu sensors in =
+the getInventoryItemAssociation() method in sensors.hpp. sensorAssocPath =
+filled from sensorNames vector and this vector comes from =
+/xyz/openbmc_project/inventory/system/board/{chassisID}/all_sensors as =
+much as we understand. So our question is how to show psu sensors in the =
+WebUI and what can possibly be wrong with our configuration. Do we =
+certainly need to list psu sensors under =
+/xyz/openbmc_project/inventory/system/board/{chassisID}/all_sensors? =
+Also what needs to be done to show the manufacturer and model =
+information of Power Supply in UI too?<o:p></o:p></p></div></body></html>
+------=_NextPart_000_0001_01D93D86.9B6834B0--
 
-a wrapper
-
-> while exetending DMA feature for the devices.
-
-extending
-
-Is this for all ASPEED devices or only current ones?
-
-How did you test this? What is the maximum transfer speed?
-
-There are other serial drivers also supporting DMA, and those seem to 
-use DMAengine?
-
-     $ git grep dmaengine drivers/tty/serial/8250/
-
-> Signed-off-by: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
-> ---
->   drivers/tty/serial/8250/8250_aspeed.c | 502 ++++++++++++++++++++++++++
->   drivers/tty/serial/8250/Kconfig       |   8 +
->   drivers/tty/serial/8250/Makefile      |   1 +
->   3 files changed, 511 insertions(+)
->   create mode 100644 drivers/tty/serial/8250/8250_aspeed.c
-> 
-> diff --git a/drivers/tty/serial/8250/8250_aspeed.c b/drivers/tty/serial/8250/8250_aspeed.c
-> new file mode 100644
-> index 000000000000..2eaa59ee6d27
-> --- /dev/null
-> +++ b/drivers/tty/serial/8250/8250_aspeed.c
-> @@ -0,0 +1,502 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Copyright (C) ASPEED Technology Inc.
-> + */
-> +#include <linux/device.h>
-> +#include <linux/io.h>
-> +#include <linux/module.h>
-> +#include <linux/serial_8250.h>
-> +#include <linux/serial_reg.h>
-> +#include <linux/of.h>
-> +#include <linux/of_irq.h>
-> +#include <linux/of_platform.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/clk.h>
-> +#include <linux/reset.h>
-> +#include <linux/dma-mapping.h>
-> +#include <linux/circ_buf.h>
-> +#include <linux/tty_flip.h>
-> +#include <linux/pm_runtime.h>
-> +#include <linux/soc/aspeed/aspeed-udma.h>
-> +
-> +#include "8250.h"
-> +
-> +#define DEVICE_NAME "aspeed-uart"
-> +
-> +/* offsets for the aspeed virtual uart registers */
-> +#define VUART_GCRA	0x20
-> +#define   VUART_GCRA_VUART_EN			BIT(0)
-> +#define   VUART_GCRA_SIRQ_POLARITY		BIT(1)
-> +#define   VUART_GCRA_DISABLE_HOST_TX_DISCARD	BIT(5)
-> +#define VUART_GCRB	0x24
-> +#define   VUART_GCRB_HOST_SIRQ_MASK		GENMASK(7, 4)
-> +#define   VUART_GCRB_HOST_SIRQ_SHIFT		4
-> +#define VUART_ADDRL	0x28
-> +#define VUART_ADDRH	0x2c
-> +
-> +#define DMA_TX_BUFSZ	PAGE_SIZE
-> +#define DMA_RX_BUFSZ	(64 * 1024)
-
-Maybe add the unit to the macro name?
-
-> +
-> +struct uart_ops ast8250_pops;
-> +
-> +struct ast8250_vuart {
-> +	u32 port;
-
-Does it need to be a fixed length type, or can you use `unsigned int`? [1]
-
-[1]: https://notabs.org/coding/smallIntsBigPenalty.htm
-
-> +	u32 sirq;
-> +	u32 sirq_pol;
-> +};
-> +
-> +struct ast8250_udma {
-> +	u32 ch;
-> +
-> +	u32 tx_rbsz;
-> +	u32 rx_rbsz;
-> +
-> +	dma_addr_t tx_addr;
-> +	dma_addr_t rx_addr;
-> +
-> +	struct circ_buf *tx_rb;
-> +	struct circ_buf *rx_rb;
-> +
-> +	bool tx_tmout_dis;
-
-I’d write `disabled`.
-
-> +	bool rx_tmout_dis;
-> +};
-> +
-> +struct ast8250_data {
-> +	int line;
-> +
-> +	u8 __iomem *regs;
-> +
-> +	bool is_vuart;
-> +	bool use_dma;
-> +
-> +	struct reset_control *rst;
-> +	struct clk *clk;
-> +
-> +	struct ast8250_vuart vuart;
-> +	struct ast8250_udma dma;
-> +};
-> +
-> +static void ast8250_dma_tx_complete(int tx_rb_rptr, void *id)
-> +{
-> +	u32 count;
-> +	unsigned long flags;
-> +	struct uart_port *port = (struct uart_port *)id;
-> +	struct ast8250_data *data = port->private_data;
-> +
-> +	spin_lock_irqsave(&port->lock, flags);
-> +
-> +	count = CIRC_CNT(tx_rb_rptr, port->state->xmit.tail, data->dma.tx_rbsz);
-> +	port->state->xmit.tail = tx_rb_rptr;
-> +	port->icount.tx += count;
-> +
-> +	if (uart_circ_chars_pending(&port->state->xmit) < WAKEUP_CHARS)
-> +		uart_write_wakeup(port);
-> +
-> +	spin_unlock_irqrestore(&port->lock, flags);
-> +}
-> +
-> +static void ast8250_dma_rx_complete(int rx_rb_wptr, void *id)
-> +{
-> +	unsigned long flags;
-> +	struct uart_port *up = (struct uart_port *)id;
-> +	struct tty_port *tp = &up->state->port;
-> +	struct ast8250_data *data = up->private_data;
-> +	struct ast8250_udma *dma = &data->dma;
-> +	struct circ_buf *rx_rb = dma->rx_rb;
-> +	u32 rx_rbsz = dma->rx_rbsz;
-> +	u32 count = 0;
-> +
-> +	spin_lock_irqsave(&up->lock, flags);
-> +
-> +	rx_rb->head = rx_rb_wptr;
-> +
-> +	dma_sync_single_for_cpu(up->dev,
-> +			dma->rx_addr, dma->rx_rbsz, DMA_FROM_DEVICE);
-> +
-> +	while (CIRC_CNT(rx_rb->head, rx_rb->tail, rx_rbsz)) {
-> +		count = CIRC_CNT_TO_END(rx_rb->head, rx_rb->tail, rx_rbsz);
-> +
-> +		tty_insert_flip_string(tp, rx_rb->buf + rx_rb->tail, count);
-> +
-> +		rx_rb->tail += count;
-> +		rx_rb->tail %= rx_rbsz;
-> +
-> +		up->icount.rx += count;
-> +	}
-> +
-> +	if (count) {
-> +		aspeed_udma_set_rx_rptr(data->dma.ch, rx_rb->tail);
-> +		tty_flip_buffer_push(tp);
-> +	}
-> +
-> +	spin_unlock_irqrestore(&up->lock, flags);
-> +}
-> +
-> +static void ast8250_dma_start_tx(struct uart_port *port)
-> +{
-> +	struct ast8250_data *data = port->private_data;
-> +	struct ast8250_udma *dma = &data->dma;
-> +	struct circ_buf *tx_rb = dma->tx_rb;
-> +
-> +	dma_sync_single_for_device(port->dev,
-> +			dma->tx_addr, dma->tx_rbsz, DMA_TO_DEVICE);
-> +
-> +	aspeed_udma_set_tx_wptr(dma->ch, tx_rb->head);
-> +}
-> +
-> +static void ast8250_dma_pops_hook(struct uart_port *port)
-> +{
-> +	static int first = 1;
-> +
-> +	if (first) {
-> +		ast8250_pops = *port->ops;
-> +		ast8250_pops.start_tx = ast8250_dma_start_tx;
-> +	}
-> +
-> +	first = 0;
-> +	port->ops = &ast8250_pops;
-> +}
-> +
-> +static void ast8250_vuart_init(struct ast8250_data *data)
-> +{
-> +	u8 reg;
-> +	struct ast8250_vuart *vuart = &data->vuart;
-> +
-> +	/* IO port address */
-> +	writeb((u8)(vuart->port >> 0), data->regs + VUART_ADDRL);
-> +	writeb((u8)(vuart->port >> 8), data->regs + VUART_ADDRH);
-> +
-> +	/* SIRQ number */
-> +	reg = readb(data->regs + VUART_GCRB);
-> +	reg &= ~VUART_GCRB_HOST_SIRQ_MASK;
-> +	reg |= ((vuart->sirq << VUART_GCRB_HOST_SIRQ_SHIFT) & VUART_GCRB_HOST_SIRQ_MASK);
-> +	writeb(reg, data->regs + VUART_GCRB);
-> +
-> +	/* SIRQ polarity */
-> +	reg = readb(data->regs + VUART_GCRA);
-> +	if (vuart->sirq_pol)
-> +		reg |= VUART_GCRA_SIRQ_POLARITY;
-> +	else
-> +		reg &= ~VUART_GCRA_SIRQ_POLARITY;
-> +	writeb(reg, data->regs + VUART_GCRA);
-> +}
-> +
-> +static void ast8250_vuart_set_host_tx_discard(struct ast8250_data *data, bool discard)
-> +{
-> +	u8 reg;
-> +
-> +	reg = readb(data->regs + VUART_GCRA);
-> +	if (discard)
-> +		reg &= ~VUART_GCRA_DISABLE_HOST_TX_DISCARD;
-> +	else
-> +		reg |= VUART_GCRA_DISABLE_HOST_TX_DISCARD;
-> +	writeb(reg, data->regs + VUART_GCRA);
-> +}
-> +
-> +static void ast8250_vuart_set_enable(struct ast8250_data *data, bool enable)
-> +{
-> +	u8 reg;
-> +
-> +	reg = readb(data->regs + VUART_GCRA);
-> +	if (enable)
-> +		reg |= VUART_GCRA_VUART_EN;
-> +	else
-> +		reg &= ~VUART_GCRA_VUART_EN;
-> +	writeb(reg, data->regs + VUART_GCRA);
-> +}
-> +
-> +static int ast8250_handle_irq(struct uart_port *port)
-> +{
-> +	u32 iir = port->serial_in(port, UART_IIR);
-> +
-> +	return serial8250_handle_irq(port, iir);
-> +}
-> +
-> +static int ast8250_startup(struct uart_port *port)
-> +{
-> +	int rc = 0;
-> +	struct ast8250_data *data = port->private_data;
-> +	struct ast8250_udma *dma;
-> +
-> +	if (data->is_vuart)
-> +		ast8250_vuart_set_host_tx_discard(data, false);
-> +
-> +	if (data->use_dma) {
-> +		dma = &data->dma;
-> +
-> +		dma->tx_rbsz = DMA_TX_BUFSZ;
-> +		dma->rx_rbsz = DMA_RX_BUFSZ;
-> +
-> +		/*
-> +		 * We take the xmit buffer passed from upper layers as
-> +		 * the DMA TX buffer and allocate a new buffer for the
-> +		 * RX use.
-> +		 *
-> +		 * To keep the TX/RX operation consistency, we use the
-> +		 * streaming DMA interface instead of the coherent one
-> +		 */
-> +		dma->tx_rb = &port->state->xmit;
-> +		dma->rx_rb->buf = kzalloc(data->dma.rx_rbsz, GFP_KERNEL);
-> +		if (IS_ERR_OR_NULL(dma->rx_rb->buf)) {
-> +			dev_err(port->dev, "failed to allcoate RX DMA buffer\n");
-> +			rc = -ENOMEM;
-> +			goto out;
-> +		}
-> +
-> +		dma->tx_addr = dma_map_single(port->dev, dma->tx_rb->buf,
-> +				dma->tx_rbsz, DMA_TO_DEVICE);
-> +		if (dma_mapping_error(port->dev, dma->tx_addr)) {
-> +			dev_err(port->dev, "failed to map streaming TX DMA region\n");
-> +			rc = -ENOMEM;
-> +			goto free_dma_n_out;
-> +		}
-> +
-> +		dma->rx_addr = dma_map_single(port->dev, dma->rx_rb->buf,
-> +				dma->rx_rbsz, DMA_FROM_DEVICE);
-> +		if (dma_mapping_error(port->dev, dma->rx_addr)) {
-> +			dev_err(port->dev, "failed to map streaming RX DMA region\n");
-> +			rc = -ENOMEM;
-> +			goto free_dma_n_out;
-> +		}
-> +
-> +		rc = aspeed_udma_request_tx_chan(dma->ch, dma->tx_addr, dma->tx_rb,
-> +						 dma->tx_rbsz, ast8250_dma_tx_complete,
-> +						 port, dma->tx_tmout_dis);
-> +		if (rc) {
-> +			dev_err(port->dev, "failed to request DMA TX channel\n");
-> +			goto free_dma_n_out;
-> +		}
-> +
-> +		rc = aspeed_udma_request_rx_chan(dma->ch, dma->rx_addr, dma->rx_rb,
-> +						 dma->rx_rbsz, ast8250_dma_rx_complete,
-> +						 port, dma->rx_tmout_dis);
-> +		if (rc) {
-> +			dev_err(port->dev, "failed to request DMA RX channel\n");
-> +			goto free_dma_n_out;
-> +		}
-> +
-> +		ast8250_dma_pops_hook(port);
-> +
-> +		aspeed_udma_tx_chan_ctrl(dma->ch, ASPEED_UDMA_OP_ENABLE);
-> +		aspeed_udma_rx_chan_ctrl(dma->ch, ASPEED_UDMA_OP_ENABLE);
-> +	}
-> +
-> +	memset(&port->icount, 0, sizeof(port->icount));
-> +	return serial8250_do_startup(port);
-> +
-> +free_dma_n_out:
-> +	kfree(dma->rx_rb->buf);
-> +out:
-> +	return rc;
-> +}
-> +
-> +static void ast8250_shutdown(struct uart_port *port)
-> +{
-> +	int rc;
-> +	struct ast8250_data *data = port->private_data;
-> +	struct ast8250_udma *dma;
-> +
-> +	if (data->use_dma) {
-> +		dma = &data->dma;
-> +
-> +		aspeed_udma_tx_chan_ctrl(dma->ch, ASPEED_UDMA_OP_RESET);
-> +		aspeed_udma_rx_chan_ctrl(dma->ch, ASPEED_UDMA_OP_RESET);
-> +
-> +		aspeed_udma_tx_chan_ctrl(dma->ch, ASPEED_UDMA_OP_DISABLE);
-> +		aspeed_udma_rx_chan_ctrl(dma->ch, ASPEED_UDMA_OP_DISABLE);
-> +
-> +		rc = aspeed_udma_free_tx_chan(dma->ch);
-> +		if (rc)
-> +			dev_err(port->dev, "failed to free DMA TX channel, rc=%d\n", rc);
-> +
-> +		rc = aspeed_udma_free_rx_chan(dma->ch);
-> +		if (rc)
-> +			dev_err(port->dev, "failed to free DMA TX channel, rc=%d\n", rc);
-> +
-> +		dma_unmap_single(port->dev, dma->tx_addr,
-> +				dma->tx_rbsz, DMA_TO_DEVICE);
-> +		dma_unmap_single(port->dev, dma->rx_addr,
-> +				dma->rx_rbsz, DMA_FROM_DEVICE);
-> +
-> +		kfree(dma->rx_rb->buf);
-> +	}
-> +
-> +	if (data->is_vuart)
-> +		ast8250_vuart_set_host_tx_discard(data, true);
-> +
-> +	serial8250_do_shutdown(port);
-> +}
-> +
-> +static int __maybe_unused ast8250_suspend(struct device *dev)
-> +{
-> +	struct ast8250_data *data = dev_get_drvdata(dev);
-> +
-> +	serial8250_suspend_port(data->line);
-> +
-> +	return 0;
-> +}
-> +
-> +static int __maybe_unused ast8250_resume(struct device *dev)
-> +{
-> +	struct ast8250_data *data = dev_get_drvdata(dev);
-> +
-> +	serial8250_resume_port(data->line);
-> +
-> +	return 0;
-> +}
-> +
-> +static int ast8250_probe(struct platform_device *pdev)
-> +{
-> +	int rc;
-> +	struct uart_8250_port uart = {};
-> +	struct uart_port *port = &uart.port;
-> +	struct device *dev = &pdev->dev;
-> +	struct ast8250_data *data;
-> +
-> +	struct resource *res;
-> +	u32 irq;
-> +
-> +	data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
-> +	if (data == NULL)
-> +		return -ENOMEM;
-> +
-> +	data->dma.rx_rb = devm_kzalloc(dev, sizeof(data->dma.rx_rb), GFP_KERNEL);
-> +	if (data->dma.rx_rb == NULL)
-> +		return -ENOMEM;
-> +
-> +	irq = platform_get_irq(pdev, 0);
-> +	if (irq < 0)
-> +		return irq;
-> +
-> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> +	if (res == NULL) {
-> +		dev_err(dev, "failed to get register base\n");
-> +		return -ENODEV;
-> +	}
-> +
-> +	data->regs = devm_ioremap(dev, res->start, resource_size(res));
-> +	if (IS_ERR(data->regs)) {
-> +		dev_err(dev, "failed to map registers\n");
-> +		return PTR_ERR(data->regs);
-> +	}
-> +
-> +	data->clk = devm_clk_get(dev, NULL);
-> +	if (IS_ERR(data->clk)) {
-> +		dev_err(dev, "failed to get clocks\n");
-> +		return -ENODEV;
-> +	}
-> +
-> +	rc = clk_prepare_enable(data->clk);
-> +	if (rc) {
-> +		dev_err(dev, "failed to enable clock\n");
-> +		return rc;
-> +	}
-> +
-> +	data->rst = devm_reset_control_get_optional_exclusive(dev, NULL);
-> +	if (!IS_ERR(data->rst))
-> +		reset_control_deassert(data->rst);
-> +
-> +	data->is_vuart = of_property_read_bool(dev->of_node, "virtual");
-> +	if (data->is_vuart) {
-> +		rc = of_property_read_u32(dev->of_node, "port", &data->vuart.port);
-> +		if (rc) {
-> +			dev_err(dev, "failed to get VUART port address\n");
-> +			return -ENODEV;
-> +		}
-> +
-> +		rc = of_property_read_u32(dev->of_node, "sirq", &data->vuart.sirq);
-> +		if (rc) {
-> +			dev_err(dev, "failed to get VUART SIRQ number\n");
-> +			return -ENODEV;
-> +		}
-> +
-> +		rc = of_property_read_u32(dev->of_node, "sirq-polarity", &data->vuart.sirq_pol);
-> +		if (rc) {
-> +			dev_err(dev, "failed to get VUART SIRQ polarity\n");
-> +			return -ENODEV;
-> +		}
-> +
-> +		ast8250_vuart_init(data);
-> +		ast8250_vuart_set_host_tx_discard(data, true);
-> +		ast8250_vuart_set_enable(data, true);
-> +	}
-> +
-> +	data->use_dma = of_property_read_bool(dev->of_node, "dma-mode");
-> +	if (data->use_dma) {
-> +		rc = of_property_read_u32(dev->of_node, "dma-channel", &data->dma.ch);
-> +		if (rc) {
-> +			dev_err(dev, "failed to get DMA channel\n");
-> +			return -ENODEV;
-> +		}
-> +
-> +		data->dma.tx_tmout_dis = of_property_read_bool(dev->of_node,
-> +							       "dma-tx-timeout-disable");
-> +		data->dma.rx_tmout_dis = of_property_read_bool(dev->of_node,
-> +							       "dma-rx-timeout-disable");
-> +	}
-> +
-> +	spin_lock_init(&port->lock);
-> +	port->dev = dev;
-> +	port->type = PORT_16550A;
-> +	port->irq = irq;
-> +	port->line = of_alias_get_id(dev->of_node, "serial");
-> +	port->handle_irq = ast8250_handle_irq;
-> +	port->mapbase = res->start;
-> +	port->mapsize = resource_size(res);
-> +	port->membase = data->regs;
-> +	port->uartclk = clk_get_rate(data->clk);
-> +	port->regshift = 2;
-> +	port->iotype = UPIO_MEM32;
-> +	port->flags = UPF_FIXED_TYPE | UPF_FIXED_PORT | UPF_SHARE_IRQ;
-> +	port->startup = ast8250_startup;
-> +	port->shutdown = ast8250_shutdown;
-> +	port->private_data = data;
-> +	uart.bugs |= UART_BUG_TXRACE;
-> +
-> +	data->line = serial8250_register_8250_port(&uart);
-> +	if (data->line < 0) {
-> +		dev_err(dev, "failed to register 8250 port\n");
-> +		return data->line;
-> +	}
-> +
-> +	pm_runtime_set_active(&pdev->dev);
-> +	pm_runtime_enable(&pdev->dev);
-> +
-> +	platform_set_drvdata(pdev, data);
-> +	return 0;
-> +}
-> +
-> +static int ast8250_remove(struct platform_device *pdev)
-> +{
-> +	struct ast8250_data *data = platform_get_drvdata(pdev);
-> +
-> +	if (data->is_vuart)
-> +		ast8250_vuart_set_enable(data, false);
-> +
-> +	serial8250_unregister_port(data->line);
-> +	return 0;
-> +}
-> +
-> +static const struct dev_pm_ops ast8250_pm_ops = {
-> +	SET_SYSTEM_SLEEP_PM_OPS(ast8250_suspend, ast8250_resume)
-> +};
-> +
-> +static const struct of_device_id ast8250_of_match[] = {
-> +	{ .compatible = "aspeed,ast2600-uart" },
-> +};
-> +
-> +static struct platform_driver ast8250_platform_driver = {
-> +	.driver = {
-> +		.name = DEVICE_NAME,
-> +		.pm = &ast8250_pm_ops,
-> +		.of_match_table = ast8250_of_match,
-> +	},
-> +	.probe = ast8250_probe,
-> +	.remove = ast8250_remove,
-> +};
-> +
-> +module_platform_driver(ast8250_platform_driver);
-> +
-> +MODULE_AUTHOR("Chia-Wei Wang <chiawei_wang@aspeedtech.com>");
-> +MODULE_LICENSE("GPL");
-
-Should it be GPL v2?
-
-> +MODULE_DESCRIPTION("Aspeed UART Driver");
-> diff --git a/drivers/tty/serial/8250/Kconfig b/drivers/tty/serial/8250/Kconfig
-> index b0f62345bc84..d8ecc261d8c4 100644
-> --- a/drivers/tty/serial/8250/Kconfig
-> +++ b/drivers/tty/serial/8250/Kconfig
-> @@ -538,6 +538,14 @@ config SERIAL_8250_BCM7271
->   	  including DMA support and high accuracy BAUD rates, say
->   	  Y to this option. If unsure, say N.
->   
-> +config SERIAL_8250_ASPEED
-> +	tristate "Aspeed serial port support"
-> +	depends on SERIAL_8250 && ARCH_ASPEED
-> +	help
-> +	  If you have a system using an Aspeed AST26xx SoCs and wish to
-> +	  make use of its UARTs and VUARTs, which are 16550A compatible
-> +	  and include DMA support, say Y to this option. If unsure, say N.
-> +
->   config SERIAL_OF_PLATFORM
->   	tristate "Devicetree based probing for 8250 ports"
->   	depends on SERIAL_8250 && OF
-> diff --git a/drivers/tty/serial/8250/Makefile b/drivers/tty/serial/8250/Makefile
-> index 1615bfdde2a0..7f05b7ed422b 100644
-> --- a/drivers/tty/serial/8250/Makefile
-> +++ b/drivers/tty/serial/8250/Makefile
-> @@ -42,6 +42,7 @@ obj-$(CONFIG_SERIAL_8250_PERICOM)	+= 8250_pericom.o
->   obj-$(CONFIG_SERIAL_8250_PXA)		+= 8250_pxa.o
->   obj-$(CONFIG_SERIAL_8250_TEGRA)		+= 8250_tegra.o
->   obj-$(CONFIG_SERIAL_8250_BCM7271)	+= 8250_bcm7271.o
-> +obj-$(CONFIG_SERIAL_8250_ASPEED)	+= 8250_aspeed.o
->   obj-$(CONFIG_SERIAL_OF_PLATFORM)	+= 8250_of.o
->   
->   CFLAGS_8250_ingenic.o += -I$(srctree)/scripts/dtc/libfdt
-
-Kind regards,
-
-Paul
