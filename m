@@ -1,69 +1,127 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1FB9B693A51
-	for <lists+openbmc@lfdr.de>; Sun, 12 Feb 2023 22:53:54 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FC58693BD8
+	for <lists+openbmc@lfdr.de>; Mon, 13 Feb 2023 02:46:20 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PFLp80LBsz3bf6
-	for <lists+openbmc@lfdr.de>; Mon, 13 Feb 2023 08:53:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PFRyK6V2Dz3c5D
+	for <lists+openbmc@lfdr.de>; Mon, 13 Feb 2023 12:46:17 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=FjHfJmu9;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=VdAkvuHG;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.17.20; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f400:feab::731; helo=apc01-sg2-obe.outbound.protection.outlook.com; envelope-from=chiawei_wang@aspeedtech.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=FjHfJmu9;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=VdAkvuHG;
 	dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sgaapc01on20731.outbound.protection.outlook.com [IPv6:2a01:111:f400:feab::731])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PFLnW31fdz3bbS
-	for <openbmc@lists.ozlabs.org>; Mon, 13 Feb 2023 08:53:17 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net; s=s31663417;
-	t=1676238768; bh=KhlXxGweVh+Ir5PG88PTEmiZLUcrwXaCiezH0mbqr0U=;
-	h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
-	b=FjHfJmu9HRghHNWByh31Rn7pdpolVWQKRyjNfKuZK0FzuM2QVj4z1FUcvPyrbdOCv
-	 ijTJx2cHJbBbYxedycnGYMstpQgQ3vuvwe7bFQGwPhdRRnZalRsK0GZAjqdm3z1usW
-	 xzlmEUPf0A/Ga5MzrX8xEe0+pfpY4tGU4N2q7vG1aoJMHAZthtdjShqNoV9NUGZNtt
-	 l9d2WgunVdWxIJm5n4UXhh9Nm6kU0bZpKVQ68VsC5R75tPq8JtwAXJx7LZQWoVpipm
-	 P+bh5s+8HOBv+RkKfUc5O3zS8MPdPsCapBlIPjgLZKu7tHR8VGLvf2r1OjMLVLH08T
-	 80KqZFyIimwpQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from probook ([95.223.44.193]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MiJVG-1oyI7V3Qog-00fWHx; Sun, 12
- Feb 2023 22:52:47 +0100
-From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH v2] soc: nuvoton: Fix Kconfig
-Date: Sun, 12 Feb 2023 22:52:31 +0100
-Message-Id: <20230212215234.2608565-1-j.neuschaefer@gmx.net>
-X-Mailer: git-send-email 2.39.1
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PFRxV6cX7z3bg5;
+	Mon, 13 Feb 2023 12:45:32 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=B2sz2nMxMaMWysBj4fBxeFhUvPV5tFIiJPT+1h2Z83hVR+HWfxH3wARJoLty1PtPG4Kse/jB5IVrTjvRSnXg3jI4jBIKcgHMyL72z6S3ryTvyCt6Uv3u31BTP2Wf9FMhHEiOF2bsv1rmrVy0mN8KdSwDcaFOtoVhffyizqzvdGUsrBvSIljL48vupNvUTL0wGCvRL7PuRTbOBa/ixZe4rp1typqQax2qAHNvYK7OfOQlNDsFxwafjoydZYqGDKbdMflw91bhOTdUiVS4Bv56LEMFykXFKmLw4GXqm6RKRVAKkNmF9hRAFIIdvj2fE1t5glQl5iyzs7vBxAWu1vrxYg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=DaeYP8KParJdlf1dBMQnib32qQAf89vsuzEhz/eQ3E4=;
+ b=Gp+7dP40xl3eCvYfVYDSU60aufPm+TAVppz/50XuOPGVmWi7FGUWzbnma8vmbqkT0iBazA5IqaOu52a/83SCdsyXUp60Fp8XzwISxKJLKzyRhYJlNgcRPWz3lFTIR2Cwj+PESn7IEu2mdfjEZXStNMlCBGEIHq+jLXzNwDeFk1zSAELYvjLG45kLHqYbgZ7gcFPFNtV1h96XBi6B1t9TrQuVESG+k/mEpu4SZ/SvR2iHxZrPeAURs9KpDGogJwzxFv4cIVxQdCshz3dDsiXG6/Kfu8qH+LsD6NLpq5ymON5QRUTCkwJcRYdcKsWYDTXaO4Bd4XN3OFi87k8hmoaBGw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=DaeYP8KParJdlf1dBMQnib32qQAf89vsuzEhz/eQ3E4=;
+ b=VdAkvuHGb6eFtjTsdBOa/CdLkL0YfiylLp5g0XKmNH7HTzhbQsixYbmw/23ijaMlhk3xcJZ9sDVmkmaU7a3uGBuDWEF8Te9FlwQcOLydhNUU5n6I01Oupc9MShU3gysgxxrR6Ipjapte5g7UeI0EWMaTH6WKbgL3LLehAsowG1vxMsbtJbi6q0okn1Kb0sbCltJh8o6JcdgsBmY5gATpibgrMxdEFaEB6sRbHi/yVHxznu1wR1J7f9uz7Vc2ATleOU3ZvDHA/EzHAkC8I7R1iMvhXTvg1ftPzO54vQLHcbIIkkUpGLnJguLkcB6yOprVdBhmmdIqhTpwkgfMSjhsvg==
+Received: from KL1PR0601MB3781.apcprd06.prod.outlook.com
+ (2603:1096:820:11::14) by TYZPR06MB6141.apcprd06.prod.outlook.com
+ (2603:1096:400:343::11) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6111.9; Mon, 13 Feb
+ 2023 01:45:06 +0000
+Received: from KL1PR0601MB3781.apcprd06.prod.outlook.com
+ ([fe80::2cd0:fdbf:62e0:8eaa]) by KL1PR0601MB3781.apcprd06.prod.outlook.com
+ ([fe80::2cd0:fdbf:62e0:8eaa%4]) with mapi id 15.20.6111.010; Mon, 13 Feb 2023
+ 01:45:06 +0000
+From: ChiaWei Wang <chiawei_wang@aspeedtech.com>
+To: =?utf-8?B?SWxwbyBKw6RydmluZW4=?= <ilpo.jarvinen@linux.intel.com>
+Subject: RE: [PATCH 3/4] serial: 8250: Add Aspeed UART driver
+Thread-Topic: [PATCH 3/4] serial: 8250: Add Aspeed UART driver
+Thread-Index: AQHZPSGHc2FuUfvkK0yq1ehxne+sqq7IM3KAgAPqpgA=
+Date: Mon, 13 Feb 2023 01:45:05 +0000
+Message-ID:  <KL1PR0601MB378160E42842A0A55947BF7191DD9@KL1PR0601MB3781.apcprd06.prod.outlook.com>
+References: <20230210072643.2772-1-chiawei_wang@aspeedtech.com>
+ <20230210072643.2772-4-chiawei_wang@aspeedtech.com>
+ <2d389fc9-0d5-42a1-b6d7-695c70dcf0fe@linux.intel.com>
+In-Reply-To: <2d389fc9-0d5-42a1-b6d7-695c70dcf0fe@linux.intel.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: KL1PR0601MB3781:EE_|TYZPR06MB6141:EE_
+x-ms-office365-filtering-correlation-id: 387de25e-406f-45c8-aab5-08db0d63eeaf
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:  x/GrUbWf3guZgs1jmHd8lqsSlUaaYjf8vfgAaINbVgRM7WwUalsJsdAa754MXvE+e45pYdx2hi+A7Xk1HbG3Z0KAW+A+XT2p/OFO6nIoBn7xUbUfzwmVgnDeugmv0u30Nzdqg9tn5AULoyYZCUcGg/EwLoZQAvNTl1zs5J6+O14NuMEj7UkXYnl+PNo6a9YX3QAD/OX/ohnO+l3dtvz7CBYcYOk4nWxhK9HV4MiQaa8Lq02iAX8r7Op4C0HawABrysWJrYjlTUUYDkbZ9gXoEaH/JSXnAVcOiecjFrZ16M4LV9J9Hn5JdE3PONy64QptbQ+ZtbLl+QCgIM3o7FIMcFHbzYLFGt7uC9tEN9q2YuGXu3etULQKCz5FU6IzCoRm/0Qdhg4Zr6EEwnZqWYwYsoHjdYm4ox9zBP/vzjaNYnYc1VfVG2dekOb/8l2Ls0ttfgaUzpgHagqLiTBLS8FS4ZbqZoMRWiEwoK1Vims4i9nqOQjwC8coSVV/M2wAbZVQqnHhQQRb5npzaxfZXIHd9AWZbTWE2j6JHSKXIm2pI/j54opnJA8n6dCajnrvlGUy3+Im8NJu961GXAhfi4NorOmLM5xXS2pUmMjuaP9dj4YmvbR/qFdcwBjlrYC6hJvNHcGPvBd2PllDjXxc1vHP/HOMoteEyKTkUj3Lv/cV+3ppfsRssBbhQlm3Fj33r1QUP9IqMI66Q6WEYxu9GHwvWw==
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:KL1PR0601MB3781.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(366004)(376002)(136003)(346002)(396003)(39830400003)(451199018)(71200400001)(7696005)(186003)(26005)(54906003)(6506007)(9686003)(478600001)(8936002)(41300700001)(52536014)(2906002)(7416002)(5660300002)(316002)(8676002)(76116006)(66556008)(66476007)(38100700002)(64756008)(66946007)(4326008)(66446008)(122000001)(55016003)(86362001)(38070700005)(33656002)(6916009)(66574015);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:  =?utf-8?B?OWZNWkVYbW9CdkU1YWhmaXBkUFVHZnRPcksrc3ZGVXpGRENEZkplU3JaUTBQ?=
+ =?utf-8?B?SHdaTXR2Q01waWVVZVNuQlUvR0VwUHpWQVVmRUh1dUxwQUpuUGVPa2Y5S1BI?=
+ =?utf-8?B?QVErV2VsUmFmZVV3MjY0TVVqTG5idWFmK1BuS00yZ0hNODJEUys0UjNQWHky?=
+ =?utf-8?B?VjVEWFB5aE1qcEQyQXhpVytKem5HSnRsd3RsNGhYeFhkUmduTFZ2WVYwd2dZ?=
+ =?utf-8?B?NExrNjErN3I1VEJPQjJtVWlqenZ3dkphVnNuSTNkSlhVUERPT3ZCanRyempC?=
+ =?utf-8?B?UVIzanl2VzQ2aGg3d01rZVVLVkZMY1ZPdFlBMytER29tRGtJWUZMS2VpeVh4?=
+ =?utf-8?B?NElwSTdULzhWeG9oWVZXTjl0ZkRzbDBxWlVjTlZwQU5RUEt1elZwTUJ5YkpF?=
+ =?utf-8?B?N3MxWXN3Wno0c0FBcks0N3dMcCtWSDRvNUpSeExEVEFnM1V0SUlHZ1JJL1dY?=
+ =?utf-8?B?a1l2aHNXUUZlOHQ2RTBqa3AvcStrOHFZMWN1bE1EbDJaUFZsUGM3WHZEam90?=
+ =?utf-8?B?dVI2N0x2dWNLbjBxTTlXcWtRY2szMm1UUHZUY2J4TGtGZEpTU0MwQWd4Rkk2?=
+ =?utf-8?B?eFJYL0tyNmI1UnZiaHUzUlNtSjg1emV3eDR6NHUzdEtUWUlvcmhyVEhVdERH?=
+ =?utf-8?B?cUo1a3d3RVVaZHdnRzkvMzRxRDlJNjhlOTZmNUc4b0E2ZUZYVyszSnlMZXlp?=
+ =?utf-8?B?c21wRXBnZ0ovRnFpUWF5TW1vM2pYcDB2ZjB2Qk1JRFgvV3VLYnZxdjhMWFp4?=
+ =?utf-8?B?Q3l1WEUrL01Fd2RSRm83OVJoVS8xQ244b3hidUtlaU9WYnN0aUM0aHIxNGY4?=
+ =?utf-8?B?WEsxeU1rRVJwTWp0enZtRGV6NXZwZjRlS20vZHZOTVdDdk05cVlVd3BXeEJW?=
+ =?utf-8?B?WXhPanUvRDZxZ0VHdk9Bc1pQZUl6ZW4rbHVTK3BOdGRLMVoyWUpzVG1QdkpI?=
+ =?utf-8?B?TGtsdGoxK3hpbXJEcWp2bWhVSHJNNDlsdy81MUxhTEFEZmJhY0VZK0JudHph?=
+ =?utf-8?B?Y3FDTGhWWDlNTjJna0tVTFR5VjhiYWhyMUgxYmtMV0ZIOHgyQzBaWDI3TTFh?=
+ =?utf-8?B?S1Z0bVBWRFJjQndKQ0ZpcDJZWVVZNHFvWVRIOU53U0Y3dkNWU1hxZHhVWmFM?=
+ =?utf-8?B?WmRlUithcXZDQVRUNStURzZ5ckxYYktaalRhYTlVWGNvdzNZMkNNS2ZlWEdM?=
+ =?utf-8?B?RGh1Q0cwb3lzdjZqdmVPSnBBSkV3UUVZaDQvaS9sWTY3TG5MamNmZUMzbXkv?=
+ =?utf-8?B?RWVsaXNpM3RqTjJIRE9rOXc0ajhZc0J4WUEyS2tYWTY4NHZMeHFOU1h1L3ZP?=
+ =?utf-8?B?VlRqcTZaZFk4K21xVGlHWjQrdm9IZEVCNUh6aHJqcFBhM09hRWVDUUJkZjdu?=
+ =?utf-8?B?T1JRMi9MK3lMMENmVlQreXNtQVdOakloYUdqcEl6QUIxRXNNS296cWtKYzkw?=
+ =?utf-8?B?TXdYL0tmOUxYWC9PTXRPZGpjSEhabDNoQzM5dTYwWWJINEprT2xKMnBKNTlB?=
+ =?utf-8?B?Ym9QcTRRV3p5S241cTZLLzNoQklGVTBzd0I0dS9pM0hxQmZrejBDWFJMOEYy?=
+ =?utf-8?B?dWw4NmxGbE5EdDNSajh5UWhSb2xPdmVZOTJQWE5VeFJjd3lUcTVnSEFQT0FN?=
+ =?utf-8?B?NzZYd2x1UEM0NGozTGhHTk9nSjZtRGVLYm5xWjRHajh4cmdUV1ZSQkMvVWEw?=
+ =?utf-8?B?NndINUJJcHhSS0xERGdNeEUrd041MHdkTW9Pd0NwSDNXS3czZGF4b2dHampE?=
+ =?utf-8?B?UzJNempEMnJvWjhXdkZWVGlROWY4RFJCczlaQzJXMjdCMmRHd2xFUGxuQWxP?=
+ =?utf-8?B?aFZvakREZEE2aktSdmdrRWQ4ODhBNnJpOUFTU3hYcWl5WFhodzQzK21wWWJ6?=
+ =?utf-8?B?RS9QSTZCR2wreEhiVzlQSHBSSVZiekFGUW8wL2xtb3ZvcTFhWTkrR0ZRZlYz?=
+ =?utf-8?B?TkZRaVNEeVdkc0YvL1hEaFhDd3RJUXErdlFjcHVNU2EvWUVlc3E4ZDN6QTkw?=
+ =?utf-8?B?bEFkOUxpdkNKUWo2NU85MnVNajlQbVpzbXZwMm1EbVdaN3ZmMHA4YVltS1ZV?=
+ =?utf-8?B?TDF2NDN3aGZSYjA3QWxJb0F3NHlKbzRrNGpBSkRXaGF1UXNsL0Vock5RK20x?=
+ =?utf-8?B?eDIwR0xXWWwzK0JoakE1RFVHWEtyVE9waDNSY0RUOFRlSm5XRTZuckJPbWJl?=
+ =?utf-8?B?ZFE9PQ==?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:e4yzc1meWECvQDbL1MGCjl5SLxQELkgTkQl50KXSTujchjAMPGE
- K1/3TWYIEA3V4Gt3xrdLB1LMTbeiGlVWvimEeOWRQBztopsq3P57N93DHnnRRNPDECQhvWd
- dOAIIWZSp22EBRavrovtdDuq2GrA6fTlUUIzE83I+qkFZCbfNKVhqqBf4JD8PuV453sTuDe
- OKVrz2tTCTkt4Gb2jOaOQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:tzuN0GfOMi0=;GHXMDF8kjktfW+NYRAfeP2e+aMT
- fKcgjj/hr3ATI5rQwt0zzh9eW5ffuaV6LzgJOXyrr+U783H7W9gjt0CyVHhV/NOjYJrauSQuV
- zFh+3JgQ+i7s7ZY8Smvs5THXQRt6btkolTRz9orkEnscwmcFaDtwZxp1e5IY2xhl96gzBcYuX
- /KGeOjXOWeQ9U4BBnJaTPIJsn3JA2k/zUi0f68VQiGHv27qecXjAXCeEPQQ0EjN43Yj0TTtHk
- t8F8rwuXV7CQHzZGp3q6G7eM76f9QQ35SLC3187Tu31mME+/3v8OD2tVS+MW+Idseb2ZPOCJz
- AY0uz3DYAHvauuk8JrzTXyQKFwgYGPt4ipCqTaTh44CJ7Fjhj8eN23hwNpN5R2eYCU/R6SvaH
- dzXNJZUGcMkxXw+/wPAaM36g/bruNhkAM4JoQi/pEpJ89OXv16niahC87iKFrFPWZL+rsr08y
- jbrEZhg58gAktW9HQloZq/qyQEZkRFKnyNpaLiunuEcbNg8s55X2TBt5J+dAC76uJ3T5+VqXV
- xIlSnFkkVe9mw5LsxPTuaBvzbHQr9bsUagiYsH9gE4J2BxhuXJUAMAvrEKcY9hM+b4DM1JkL3
- kEhvTq3WIrOZcHfPkWm+KZp109ZkM5dndmIS4Uz6iOX7s5VsxkzSHwggnAQuRMShaEJDedoNY
- W9MS92f1Lwv0/gtGDo5gxaNfz1EDGQSjStXMYWI8dF6H5HUUA2dLlY6X1FCPRkZfkCiMtZcmH
- vTp6SVABiovUDaQMHfUNpMOcOuoj5sNdIVlmWHL0iTX4lRHWpZQvSMfdSkL5zO8yVxJ4dJ3Sg
- aTQynOm9+UHD5NCHrIDnATljFtHmwGJQc6hF370Rjc4tZfLRO1QhiCrYP6ErdWxsYbr4xGEGT
- TavntpTT5DsdBRBZcOBYSgs6UThRLCTBn7p8Bu5jY/H8jGr91jbiuqaC9DAAYLF0OOSDdbxgk
- Pypjtnn3C8K4nULlFmmu2cMEEi0=
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: KL1PR0601MB3781.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 387de25e-406f-45c8-aab5-08db0d63eeaf
+X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Feb 2023 01:45:05.9845
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: jrbd0tkDgE/pa+3bUPcSYqczoyTCJcMHaB2LB/2wLHr+TQBCLMXpOLN3ufmr5oXiPCSFovpEJk4ePTkQ8aTEVYUrDuGulRc1JYx3LVekuTs=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB6141
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,59 +133,36 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Paul Menzel <pmenzel@molgen.mpg.de>, Arnd Bergmann <arnd@arndb.de>, linux-kernel@vger.kernel.org, =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, Geert Uytterhoeven <geert@linux-m68k.org>, Joel Stanley <joel@jms.id.au>
+Cc: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, linux-serial <linux-serial@vger.kernel.org>, "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, "andrew@aj.id.au" <andrew@aj.id.au>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, LKML <linux-kernel@vger.kernel.org>, "robh+dt@kernel.org" <robh+dt@kernel.org>, "joel@jms.id.au" <joel@jms.id.au>, "krzysztof.kozlowski+dt@linaro.org" <krzysztof.kozlowski+dt@linaro.org>, Jiri Slaby <jirislaby@kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Unfortunately, version 5 of the Nuvoton WPCM450 SoC driver was applied
-to bmc.git, which misses a few fixes that were in version 6.
-
-This patch adds the missing fixes:
-
- - Add a menu "Nuvoton SoC drivers" to make it easier to add other
-   Nuvoton SoC drivers later on and to prevent asking about the Nuvoton
-   WPCM450 SoC driver when configuring a kernel without support for
-   Nuvoton SoCs.
- - Select CONFIG_REGMAP from CONFIG_WPCM450_SOC, because the driver
-   relies on regmap to work.
-
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Link: https://lore.kernel.org/lkml/CAMuHMdWo5vHCeE6BeSHrUy12uT7_wFhW-VbQmQ=
-5u+4Q8c7-wYQ@mail.gmail.com/
-Fixes: 77b8c67b5637 ("soc: nuvoton: Add SoC info driver for WPCM450")
-Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-=2D--
-
-v2:
-- Commit message improvements, as suggested by Geert Uytterhoeven.
-- Add Link after Reviewed-by, as checkpatch.pl now suggests
-=2D--
- drivers/soc/nuvoton/Kconfig | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/soc/nuvoton/Kconfig b/drivers/soc/nuvoton/Kconfig
-index df46182088ec2..2167d3d739d84 100644
-=2D-- a/drivers/soc/nuvoton/Kconfig
-+++ b/drivers/soc/nuvoton/Kconfig
-@@ -1,11 +1,17 @@
- # SPDX-License-Identifier: GPL-2.0
--menuconfig WPCM450_SOC
-+menu "Nuvoton SoC drivers"
-+	depends on ARCH_NPCM || COMPILE_TEST
-+
-+config WPCM450_SOC
- 	tristate "Nuvoton WPCM450 SoC driver"
- 	default y if ARCH_WPCM450
- 	select SOC_BUS
-+	select REGMAP
- 	help
- 	  Say Y here to compile the SoC information driver for Nuvoton
- 	  WPCM450 SoCs.
-
- 	  This driver provides information such as the SoC model and
- 	  revision.
-+
-+endmenu
-=2D-
-2.39.1
-
+PiBGcm9tOiBJbHBvIErDpHJ2aW5lbiA8aWxwby5qYXJ2aW5lbkBsaW51eC5pbnRlbC5jb20+DQo+
+IFNlbnQ6IEZyaWRheSwgRmVicnVhcnkgMTAsIDIwMjMgOTo1MiBQTQ0KPiANCj4gT24gRnJpLCAx
+MCBGZWIgMjAyMywgQ2hpYS1XZWkgV2FuZyB3cm90ZToNCj4gDQo+ID4gQWRkIHRoZSBkcml2ZXIg
+Zm9yIEFzcGVlZCBVQVJUL1ZVQVJUIGRldmljZXMsIHdoaWNoIGFyZSAxNjU1MEENCj4gPiBjb21w
+YXRpYmxlLiBJdCBpcyBhbiB3cmFwcGVyIHRvIGNvdmVyIHRoZSBnZW5lcmljIDE2NTUwQSBvcGVy
+YXRpb24NCj4gPiB3aGlsZSBleGV0ZW5kaW5nIERNQSBmZWF0dXJlIGZvciB0aGUgZGV2aWNlcy4N
+Cj4gPg0KPiA+IFNpZ25lZC1vZmYtYnk6IENoaWEtV2VpIFdhbmcgPGNoaWF3ZWlfd2FuZ0Bhc3Bl
+ZWR0ZWNoLmNvbT4NCj4gPiAtLS0NCj4gPiAgZHJpdmVycy90dHkvc2VyaWFsLzgyNTAvODI1MF9h
+c3BlZWQuYyB8IDUwMg0KPiArKysrKysrKysrKysrKysrKysrKysrKysrKw0KPiA+ICBkcml2ZXJz
+L3R0eS9zZXJpYWwvODI1MC9LY29uZmlnICAgICAgIHwgICA4ICsNCj4gPiAgZHJpdmVycy90dHkv
+c2VyaWFsLzgyNTAvTWFrZWZpbGUgICAgICB8ICAgMSArDQo+IA0KPiBIaSwNCj4gDQo+IEJlZm9y
+ZSBJIGxvb2sgYW55IGZ1cnRoZXIgaW50byB0aGlzLCBjb3VsZCB5b3UgcGxlYXNlIGV4cGxhaW4g
+d2h5IHRoaXMgaXMgbWFkZSB0bw0KPiBiZSBlbnRpcmVseSBzZXBhcmF0ZSBmcm9tIHdoYXQgd2Ug
+aGF2ZSBpbg0KPiAgIGRyaXZlcnMvdHR5L3NlcmlhbC84MjUwLzgyNTBfYXNwZWVkX3Z1YXJ0LmMN
+Cj4gPw0KPiANCj4gSSBxdWlja2x5IHdlbnQgdGhyb3VnaCBzb21lIGZ1bmN0aW9ucyBhbmQgdGhl
+eSd2ZSBzaWduaWZpY2FudCBwYXJ0cyBpbiBjb21tb24NCj4gd2l0aCBubyB2YXJpYXRpb25zIGF0
+IGFsbCBpbiBtYW55IGZ1bmN0aW9ucyBhbmQgeW91J3JlIGRlZmluZXMgYXJlIDE6MSB0b28NCj4g
+KGV4Y2VwdCBmb3IgdGhlIERNQSBidWYgc2l6ZXMpLiBJdCB3b3VsZCBzZWVtIG11Y2ggYmV0dGVy
+IHRvIGFkZCB0aGUgbWlzc2luZw0KPiBmdW5jdGlvbmFsaXR5IGludG8gODI1MF9hc3BlZWRfdnVh
+cnQuYyByYXRoZXIgdGhhbiBjcmVhdGluZyBzb21ldGhpbmcgZnJvbQ0KPiBzY3JhdGNoIHdpdGgg
+bGFyZ2Ugb3ZlcmxhcCB3aXRoIGV4aXN0aW5nIGNvZGUuDQo+IA0KPiBJZiB5b3UgaW50ZW5kIHRv
+IGtlZXAgaXQgYXMgYSBzZXBhcmF0ZSBvbmUsIHlvdSBzaG91bGQgaGF2ZSBhIHJhdGhlciBnb29k
+DQo+IGp1c3RpZmljYXRpb24gZm9yIGl0Lg0KDQpZZXMsIHRoZSBtYWluIGRpZmZlcmVuY2UgaXMg
+dGhlIFVBUlQgRE1BIHN1cHBvcnQuDQpIb3dldmVyLCBkdWUgdG8gdGhlIFVETUEgZGVzaWduIGlz
+IG5vdCBxdWl0ZSBmaXQgdG8gdGhlIERNQUVuZ2luZSwgdGhlIGltcGxlbWVudGF0aW9uIGlzIGtp
+bmQgb2YgaGFja2luZy4NCldlIHRob3VnaHQgbGVhdmluZyB0aGUgb3JpZ2luYWwgVlVBUlQgZHJp
+dmVyIHVuaW1wYWN0ZWQgd291bGQgYmUgYmV0dGVyLg0KVGhlIFVETUEgY292ZXJzIGJvdGggVUFS
+VCBhbmQgVlVBUlQgRE1BIHN1cHBvcnQsIGFuZCBzbyBkbyB0aGUgbmV3IDgyNTBfYXNwZWVkLmMu
+DQoNClJlZ2FyZHMsDQpDaGlhd2VpDQo=
