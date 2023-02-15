@@ -1,44 +1,84 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14AC3697EC9
-	for <lists+openbmc@lfdr.de>; Wed, 15 Feb 2023 15:53:25 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 71FE969843F
+	for <lists+openbmc@lfdr.de>; Wed, 15 Feb 2023 20:16:14 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PH1KZ6YLRz3ccw
-	for <lists+openbmc@lfdr.de>; Thu, 16 Feb 2023 01:53:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PH78r2Sbkz3cfX
+	for <lists+openbmc@lfdr.de>; Thu, 16 Feb 2023 06:16:12 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=lyWyMmnw;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=leemhuis.info (client-ip=80.237.130.52; helo=wp530.webpack.hosteurope.de; envelope-from=regressions@leemhuis.info; receiver=<UNKNOWN>)
-Received: from wp530.webpack.hosteurope.de (wp530.webpack.hosteurope.de [80.237.130.52])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=lyWyMmnw;
+	dkim-atps=neutral
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PH1K412zjz3cNg;
-	Thu, 16 Feb 2023 01:52:54 +1100 (AEDT)
-Received: from [2a02:8108:8980:2478:8cde:aa2c:f324:937e]; authenticated
-	by wp530.webpack.hosteurope.de running ExIM with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
-	id 1pSJ9L-00082i-9y; Wed, 15 Feb 2023 15:52:47 +0100
-Message-ID: <05f6936f-f8e0-d0e5-7f8f-d0278dc03753@leemhuis.info>
-Date: Wed, 15 Feb 2023 15:52:46 +0100
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PH78C1BVHz3083
+	for <openbmc@lists.ozlabs.org>; Thu, 16 Feb 2023 06:15:38 +1100 (AEDT)
+Received: from pps.filterd (m0098417.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31FJDcfg017817
+	for <openbmc@lists.ozlabs.org>; Wed, 15 Feb 2023 19:15:35 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date : to :
+ from : subject : content-type : content-transfer-encoding : mime-version;
+ s=pp1; bh=YqbzQOeTEdp4IK2aFYnnM0vIwG+cMZ/LMDOWwjprv44=;
+ b=lyWyMmnw//eXAxanUGDBvPcxLnfLfp14xeWJmJ1KRRRsHeWSEO+tXJjlwF+63F23Wg67
+ 9JrLj+upL+NGUkAwLE72UHWyd++qzjDCyEvtDDQSu2J2SKEplW40pJJJlRSzRrLdPnd2
+ k2LLNfqILBOLxfIh/kevOFwKjqnngQk8C8CtfeJKBzCbnbE0+M4IRRZYUXTlXUDReVIn
+ UcvvrIcY8RRzJwiIhMHy9pqJBygq3/oD7XmBB+i1I+SHQa6uenkLdd9D/7OPeGIQawr3
+ Id34ZjUSW4Zc04R9bmv6FHbXPERzJ4wcnZtLenGx0F+wkAKJuf336AJ9J0dnkv+8vOT1 PA== 
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com [169.62.189.11])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3ns4gv26p8-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 15 Feb 2023 19:15:34 +0000
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+	by ppma03dal.us.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 31FIiFG6007056
+	for <openbmc@lists.ozlabs.org>; Wed, 15 Feb 2023 19:15:34 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([9.208.130.97])
+	by ppma03dal.us.ibm.com (PPS) with ESMTPS id 3np2n7caxx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 15 Feb 2023 19:15:34 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com [10.241.53.103])
+	by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 31FJFXia31719734
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+	for <openbmc@lists.ozlabs.org>; Wed, 15 Feb 2023 19:15:33 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 354555805E
+	for <openbmc@lists.ozlabs.org>; Wed, 15 Feb 2023 19:15:33 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id ED33158056
+	for <openbmc@lists.ozlabs.org>; Wed, 15 Feb 2023 19:15:32 +0000 (GMT)
+Received: from [9.160.121.126] (unknown [9.160.121.126])
+	by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTPS
+	for <openbmc@lists.ozlabs.org>; Wed, 15 Feb 2023 19:15:32 +0000 (GMT)
+Message-ID: <15bc9481-bec7-af3f-56d9-9748433bb1bd@linux.ibm.com>
+Date: Wed, 15 Feb 2023 13:15:31 -0600
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.4.2
+Content-Language: en-US
+To: openbmc <openbmc@lists.ozlabs.org>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Security Working Group meeting - Wednesday Feb 15 - results
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: aC3jCAVgfCHZEQHLExuE5sPgV9kh8qKn
+X-Proofpoint-ORIG-GUID: aC3jCAVgfCHZEQHLExuE5sPgV9kh8qKn
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH] pinctrl: aspeed: Force to disable the function's signal
-Content-Language: en-US, de-DE
-From: "Linux regression tracking #update (Thorsten Leemhuis)"
- <regressions@leemhuis.info>
-To: Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>
-References: <20220818101839.28860-1-billy_tsai@aspeedtech.com>
- <CACRpkdYpp_1JJQmuX27pECxN0cjzciCuETLPTrSYKqpX0FPABQ@mail.gmail.com>
- <e501d2fb-aaa0-470d-a8d5-5f8e97898df7@beta.fastmail.com>
- <CACPK8XfQ=uarsOgJ7LaXqLyGG2vSF-47RkAEV=T2gruapx-yfg@mail.gmail.com>
- <3af98200-7240-9e93-bd6a-d0e2f71ab1c4@leemhuis.info>
-In-Reply-To: <3af98200-7240-9e93-bd6a-d0e2f71ab1c4@leemhuis.info>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-bounce-key: webpack.hosteurope.de;regressions@leemhuis.info;1676472776;d1d0c111;
-X-HE-SMSGID: 1pSJ9L-00082i-9y
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-15_10,2023-02-15_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ impostorscore=0 clxscore=1011 mlxscore=0 phishscore=0 adultscore=0
+ mlxlogscore=920 spamscore=0 malwarescore=0 suspectscore=0 bulkscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302150165
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -50,51 +90,89 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Reply-To: Linux regressions mailing list <regressions@lists.linux.dev>
-Cc: Linux kernel regressions list <regressions@lists.linux.dev>, linux-aspeed@lists.ozlabs.org, Linus Walleij <linus.walleij@linaro.org>, linux-kernel@vger.kernel.org, Billy Tsai <billy_tsai@aspeedtech.com>, linux-gpio@vger.kernel.org, openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-[TLDR: This mail in primarily relevant for Linux regression tracking. A
-change or fix related to the regression discussed in this thread was
-posted or applied, but it did not use a Link: tag to point to the
-report, as Linus and the documentation call for. Things happen, no
-worries -- but now the regression tracking bot needs to be told manually
-about the fix. See link in footer if these mails annoy you.]
+An OpenBMC Security Working Group meeting was held on Wednesday Feb 15 
+at 10:00am PDT.
+A reminder was not sent.
 
-On 21.01.23 13:32, Linux kernel regression tracking (#adding) wrote:
-> On 19.01.23 02:54, Joel Stanley wrote:
->> On Fri, 26 Aug 2022 at 22:48, Andrew Jeffery <andrew@aj.id.au> wrote:
->>> On Sat, 27 Aug 2022, at 07:26, Linus Walleij wrote:
->>>> On Thu, Aug 18, 2022 at 12:18 PM Billy Tsai <billy_tsai@aspeedtech.com> wrote:
->>>>
->>>>> When the driver want to disable the signal of the function, it doesn't
->>>>> need to query the state of the mux function's signal on a pin. The
->>>>> condition below will miss the disable of the signal:
->>
->>>> I can't see the verdict for this patch? Will there be a new
->>>> version, or are we in the middle of a discussion?
->>>> I'd really like Andrew's ACK on the result before merging.
->>>
->>> Apologies, it's been a bit of A Week :)
->>>
->>> Given the approach has been discussed with the IP designer and solves a bug I'm okay for it to be merged. If we run into issues it is easy enough to back it out.
->>
->> As foreseen by Andrew, this caused a regression. On the Romulus
->> machine the device tree contains a gpio hog for GPIO S7. With the
->> patch applied:
-> 
-> #regzbot ^introduced cf517fef601b
-> #regzbot title pinctrl: aspeed-g5-pinctrl 1e6e2080.pinctrl: Failed to
-> acquire regmap for IP block 1
-> #regzbot ignore-activity
+MEETING ACCESS ON DISCORD VOICE
+First, join Discord via https://discord.gg/69Km47zH98 
+<https://discord.gg/69Km47zH98> and confirm via email.
+Then, to join: navigate Discord > OpenBMC > Voice channels >  Security ~ 
+https://discord.com/channels/775381525260664832/1002376534377635860 
+<https://discord.com/channels/775381525260664832/1002376534377635860>
 
-#regzbot fix: 606d4ef4922662
+Access and notes about the Security Working Group are in the OpenBMC 
+Security wiki:
+https://github.com/openbmc/openbmc/wiki/Security-working-group 
+<https://github.com/openbmc/openbmc/wiki/Security-working-group>
 
-Ciao, Thorsten (wearing his 'the Linux kernel's regression tracker' hat)
---
-Everything you wanna know about Linux kernel regression tracking:
-https://linux-regtracking.leemhuis.info/about/#tldr
-That page also explains what to do if mails like this annoy you.
+The meeting agenda and minutes are in 
+<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
+items proposed on the Discord OpenBMC #security channel, and anything 
+else that comes up:
 
-#regzbot ignore-activity
+Attended: ddaniil, Dick Wilkins, RuudHaring, skhoteswara, cacih, Daniil 
+Engranov, James Mihm, Joseph Reynolds
+
+
+TOPICS:
+
+1 What security guidelines do we have?
+
+DISCUSSION:
+
+For BMC firmware builders, installers, and BMC admins, see
+
+https://github.com/openbmc/openbmc/wiki/Configuration-guide 
+<https://github.com/openbmc/openbmc/wiki/Configuration-guide>
+
+Interest in adding topics for: Build > bmc secure boot and for 
+attestation.  ← Please edit these into the wiki, referencing project 
+docs as needed.
+
+
+We should have a threat model so the above-mentioned people know which 
+security features to enable or configure.
+
+Consensus was to create a new wiki: Threat Model Topics
+
+Purpose: Collect existing thoughts about threats.  Note this will not be 
+complete, and does not follow any specific threat modeling process.
+
+Use cases for this threat model?  (1) Inform developers on needed 
+security features, (2) guidance for integrators, installers, and admins 
+(per the Configuration Guide), and (3) for security audits.
+
+
+
+2 James mentioned work toward having the OpenBMC community project 
+provide information needed for downstream users to certify their 
+solution to the FIPS 140-2 (not yet -3) spec.  To be clear, such users 
+must necessarily refer back to their decision to use the OpenBMC 
+community project, so this material should be in the OpenBMC community 
+scope.
+
+DISCUSSION:
+
+We discussed an example of a FIPS 140 topic: an entropy collector needed 
+to create cryptographically secure random numbers needed to create 
+secure TLS connections.  Specifically, AST2600 entropy generator 
+https://csrc.nist.gov/projects/cryptographic-algorithm-validation-program/details?product=13789 
+<https://csrc.nist.gov/projects/cryptographic-algorithm-validation-program/details?product=13789>, 
+versus entropy collector - 
+https://atsec-information-security.blogspot.com/2019/10/stephan-mueller-publishes-sp800-90b.html 
+<https://atsec-information-security.blogspot.com/2019/10/stephan-mueller-publishes-sp800-90b.html>
+
+
+The consensus was to produce this as a new openbmc/security/docs 
+document which would list each of the FIPS requirements and give info 
+for each.  For example, how openbmc satisfies that requirement.  Let’s 
+create a gerrit review (marked WIP) for this.
+
+
+
+
+- Joseph
