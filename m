@@ -1,55 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DCDF569945C
-	for <lists+openbmc@lfdr.de>; Thu, 16 Feb 2023 13:30:50 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC44B69954D
+	for <lists+openbmc@lfdr.de>; Thu, 16 Feb 2023 14:13:25 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PHZ6c5003z3cf8
-	for <lists+openbmc@lfdr.de>; Thu, 16 Feb 2023 23:30:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PHb3l652fz3cfX
+	for <lists+openbmc@lfdr.de>; Fri, 17 Feb 2023 00:13:23 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ri3L3bzL;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=N5Nm+7Xi;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linuxfoundation.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=gregkh@linuxfoundation.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::144; helo=mail-lf1-x144.google.com; envelope-from=liuxiwei1013@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=ri3L3bzL;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=N5Nm+7Xi;
 	dkim-atps=neutral
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-x144.google.com (mail-lf1-x144.google.com [IPv6:2a00:1450:4864:20::144])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PHZ601YGpz3cLX
-	for <openbmc@lists.ozlabs.org>; Thu, 16 Feb 2023 23:30:15 +1100 (AEDT)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id 5352A61FA8;
-	Thu, 16 Feb 2023 12:30:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A1CCC433EF;
-	Thu, 16 Feb 2023 12:30:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676550611;
-	bh=/fQFLHBFP8/wIGlgaiTPaimScL2/GER3IjakdtyFA20=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ri3L3bzLfZwmgkk4fKnfjjjJQ53xsiL5XN588kYH70ssaAXLuyo2I6xEjr/OsMXWm
-	 cXLEZ+HTDHhPB8UGOo9n+YJRNyP2XZqXbM1auMOnjTNyXorQrIcIdtA/l1UPPzOim1
-	 iQGkzguS8Zd/11sDrRSVjeMvNffeBKuPrnFjF/p4=
-Date: Thu, 16 Feb 2023 13:30:09 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Quan Nguyen <quan@os.amperecomputing.com>
-Subject: Re: [PATCH 2/2] misc: smpro-errmon: Add dimm training failure
- syndrome
-Message-ID: <Y+4h0V+LtaX8745A@kroah.com>
-References: <20230214064509.3622044-1-quan@os.amperecomputing.com>
- <20230214064509.3622044-3-quan@os.amperecomputing.com>
- <866fe1b3-8044-6581-9711-452550f91198@molgen.mpg.de>
- <98b2a8d6-c5bf-a782-7fc1-8874f94edc25@os.amperecomputing.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PHb391z2Vz3bgx
+	for <openbmc@lists.ozlabs.org>; Fri, 17 Feb 2023 00:12:51 +1100 (AEDT)
+Received: by mail-lf1-x144.google.com with SMTP id bp15so2654100lfb.13
+        for <openbmc@lists.ozlabs.org>; Thu, 16 Feb 2023 05:12:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lQqxDtlbj8ZsQltKE34W/iy942f9WvS2sQHB5LE3m6U=;
+        b=N5Nm+7XiHUof6fqoF9R+cvRP0tmGFlF0/D7AQ/w1GFXzAJYbS9R5+iVoBt99Lz/1Dx
+         Cwp6OfCErz324uaHqLZbPxEfRGVB+oE4YJ7rb//TAbyx44BEaOEUjCH7XoToC/kWurn7
+         QXEbYYbpe48HPLLj8z6h0q5WS4HYhZLkB+CbRsZ7TixYUrbYZcLy5Q6VwFCGlg00fsIn
+         Xh8DpsLrR1YGzpYlCmKT5wKV1yuWuza6Q0Qx5tm9vz7JDVe43FaJGFfEoqgURb7umi/7
+         ARoZ7UBSZPVZ2NQrccXA0P6c5swLjuwpv3C2zX+Fd1V9auRzVd3fFGLFekqc3qhThzk2
+         tB3Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lQqxDtlbj8ZsQltKE34W/iy942f9WvS2sQHB5LE3m6U=;
+        b=PgI6aBx0mVVGmFK7HqY/KYNQpCDRis4KLAgBlGTjycvOMUQXICSQ8VrEi3S4inlCVY
+         01D2DZDOQvwwSlC6xwtS+KIUQdsnYr73ChFwwmtARO5m4ko8mAvx8J1xBFnyTBbmcIcg
+         Nyi1N8G1TbU9FoFqmJIHBdt2dgT7ZNN2o2PIk4j153XfT8AnTlnxe1qgFkwPD/rIEpWd
+         mNSQsZi07O7fOldCk2/OcHBA5oUa5kwFJH9djHMOK2jxp2OYxQHRxsBKca43zGUt0jlv
+         6uU4GIBPudxaULME4qOmjoPtkb03hQcCg+KkqKYG71FfbDZuAgY3MXQj0+bd+/illZ9o
+         O/Cw==
+X-Gm-Message-State: AO0yUKVEInQD/DCnADk0Q6EOvrvPOVD1PN6v+ztDo1cxQ2LOM+LI8Cxm
+	qYLTXCRr/JR/y3d9Od2L/bH65sDf69ov4PmTdkc=
+X-Google-Smtp-Source: AK7set8Kc6Q2ElSc9f3umOy7zkwAtyYAnojRetyQ1+i483nYUUcDwL665+iCMFKaT4fsfsGAcB6y3VIxbrj52PbizZk=
+X-Received: by 2002:ac2:4949:0:b0:4d5:ca32:6ae5 with SMTP id
+ o9-20020ac24949000000b004d5ca326ae5mr1634935lfi.5.1676553166702; Thu, 16 Feb
+ 2023 05:12:46 -0800 (PST)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <98b2a8d6-c5bf-a782-7fc1-8874f94edc25@os.amperecomputing.com>
+References: <000001d93d6d$7618b2c0$624a1840$@inventron.com.tr> <0ef2b569-caae-a5bb-853a-d5135fd00ceb@intel.com>
+In-Reply-To: <0ef2b569-caae-a5bb-853a-d5135fd00ceb@intel.com>
+From: George Liu <liuxiwei1013@gmail.com>
+Date: Thu, 16 Feb 2023 21:12:35 +0800
+Message-ID: <CANFuQ7B92O8gf+iCfuPGw66PAnhC_r2UX_a+pWbnYwiCgsH2vg@mail.gmail.com>
+Subject: Re: PSU Sensors Association with Entity Manager
+To: Johnathan Mantey <johnathanx.mantey@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -61,65 +75,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Paul Menzel <pmenzel@molgen.mpg.de>, Arnd Bergmann <arnd@arndb.de>, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, Thang Nguyen <thang@os.amperecomputing.com>, linux-kernel@vger.kernel.org, Phong Vo <phong@os.amperecomputing.com>, Joel Stanley <joel@jms.id.au>, Open Source Submission <patches@amperecomputing.com>
+Cc: zehra.ozdemir@inventron.com.tr, openbmc@lists.ozlabs.org, "M. Erhan Yigitbasi" <erhan.yigitbasi@inventron.com.tr>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, Feb 16, 2023 at 10:22:14AM +0700, Quan Nguyen wrote:
-> 
-> 
-> On 15/02/2023 14:33, Paul Menzel wrote:
-> > Dear Quan,
-> > 
-> > 
-> > Thank you for your patch.
-> > 
-> 
-> Thanks Paul for the review.
-> 
-> > Am 14.02.23 um 07:45 schrieb Quan Nguyen:
-> > > Adds event_dimm[0-15]_syndrome sysfs to report the failure syndrome
-> > > to BMC when DIMM training failed.
-> > 
-> > Where you able to verify that it works? Out of curiosity, how?
-> > 
-> 
-> Yes, we verified it by injecting DIMM errors and confirm that errors was
-> reported correctly via sysfs.
-> For about how to do error injection, we may  need to refer to section 3.2
-> Memory Error Group in Altra Family RAS Error Injection User Manual. It is
-> shared in our Ampere Customer Connect [1]. The latest version is
-> v1.00_20220329.
-> 
-> [1] https://connect.amperecomputing.com
-> 
-> > > Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
-> > > ---
-> > >   .../sysfs-bus-platform-devices-ampere-smpro   | 10 +++
-> > >   drivers/misc/smpro-errmon.c                   | 77 +++++++++++++++++++
-> > >   2 files changed, 87 insertions(+)
-> > > 
-> > > diff --git
-> > > a/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
-> > > b/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
-> > > index d4e3f308c451..c35f1d45e656 100644
-> > > --- a/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
-> > > +++ b/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
-> > > @@ -265,6 +265,16 @@ Description:
-> > >           For more details, see section `5.7 GPI Status Registers
-> > > and 5.9 Memory Error Register Definitions,
-> > >           Altra Family Soc BMC Interface Specification`.
-> > > +What:
-> > > /sys/bus/platform/devices/smpro-errmon.*/event_dimm[0-15]_syndrome
-> > > +KernelVersion:    6.1
-> > 
-> > Should it be 6.2, as it probably won’t make it into 6.1?
-> > 
-> 
-> Thanks for the catch. Will fix in next version.
+On Sat, Feb 11, 2023 at 12:55 AM Johnathan Mantey
+<johnathanx.mantey@intel.com> wrote:
+>
+>
+> On 2/10/23 08:33, zehra.ozdemir@inventron.com.tr wrote:
+>
+> Hello,
+>
+> We are trying to implement psu sensors with entity-manager by defining ch=
+assis and power supply in separate json configuration file according to ent=
+ity-manager=E2=80=99s sample configurations.  PSU sensors are not displayed=
+ under /xyz/openbmc_project/inventory/system/board/{chassisID}/all_sensors =
+but under /xyz/openbmc_project/inventory/system/powersupply/{powersupplyID}=
+/all_sensors. And they are not shown in the Web UI. Here is the powersupply=
+.json configuration we used:
+>
+> <snip>
+>
+> There have been changes in the Redfish schema, which is still in transiti=
+on in bmcweb.
+>
+> There are meson flags that allow you to choose between the two:
+> EXTRA_OEMESON +=3D " -Dredfish-new-powersubsystem-thermalsubsystem=3Denab=
+led"
+> EXTRA_OEMESON +=3D " -Dredfish-allow-deprecated-power-thermal=3Ddisabled"
+>
+> The "new" model, implementing the PowerSubsystem schema, is incomplete. T=
+here is a group of commits as part of the 'redfish-power-supply' topic:
+> https://gerrit.openbmc.org/q/topic:redfish-power-supply
+> The commits are not merged, excepting one.
 
-Should be 6.3, it's missed the 6.2 merge window cycle, sorry.
+I will resolve these conflicts soon and re-push again.
 
-thanks,
-
-greg k-h
+>
+> I'm sure other openbmc members may also have additional input.
+>
+> --
+> Johnathan Mantey
+> Senior Software Engineer
+> azad technology partners
+> Contributing to Technology Innovation since 1992
+> Phone: (503) 712-6764
+> Email: johnathanx.mantey@intel.com
+>
