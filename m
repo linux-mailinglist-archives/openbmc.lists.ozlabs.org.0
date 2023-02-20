@@ -2,113 +2,47 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6AB0E69C4CB
-	for <lists+openbmc@lfdr.de>; Mon, 20 Feb 2023 05:40:06 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id CD40869C55A
+	for <lists+openbmc@lfdr.de>; Mon, 20 Feb 2023 07:24:26 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PKqTc2Cmpz3bXQ
-	for <lists+openbmc@lfdr.de>; Mon, 20 Feb 2023 15:40:04 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=outlook.com header.i=@outlook.com header.a=rsa-sha256 header.s=selector1 header.b=OSgn1s1U;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PKsp05SGgz3cDp
+	for <lists+openbmc@lfdr.de>; Mon, 20 Feb 2023 17:24:24 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=outlook.com (client-ip=2a01:111:f403:7011::816; helo=ind01-bmx-obe.outbound.protection.outlook.com; envelope-from=saini.ranbirs@outlook.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=outlook.com header.i=@outlook.com header.a=rsa-sha256 header.s=selector1 header.b=OSgn1s1U;
-	dkim-atps=neutral
-Received: from IND01-BMX-obe.outbound.protection.outlook.com (mail-bmxind01olkn20816.outbound.protection.outlook.com [IPv6:2a01:111:f403:7011::816])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71; helo=twspam01.aspeedtech.com; envelope-from=ryan_chen@aspeedtech.com; receiver=<UNKNOWN>)
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com [211.20.114.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PKqSy2SjZz3bVD
-	for <openbmc@lists.ozlabs.org>; Mon, 20 Feb 2023 15:39:28 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=EzR1yZaSTLpQzQgSonXB0S+z28vh8NkT64kX6NLLbU68UNX8TKNPZhwlGGAlvRfpIHuGN4ACmK02Q6hOFHgUSe4c7qKOYXRvFiYWZ6Khj4S9COpIriKkeKL8G1ImB1SeRDCn1ePLRDU9gATjmagxPE2LT8IAAJrNEmKesj+79dUd7jMHUZaz+V2nNIDxYPw2vNwVeVkc4unrtsfBZiV+uk9OHu8iJIL77vWjADl9gyz4QvRvpzFmFio0eCmAx67C8GVC8482z7VXmWP/hgy5yWqeGCGut7sa0DGUg+RAaXVUU8ohvUXYy9zsUdfZ64lFENN9RZ1lUXDBQCAxfBwqYQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jozA3sKqNc4D07Kv4fG8dfD53jRq/aYUEpYuY7qHGzk=;
- b=flhgz3FxvBPCTuEG4ripmPD7E34cXkB1SicjtvbqsTLYeVSgxxSMDHHdCgsfagWwvtD6qHuRSso7iJ+F+3WEVuZQUMRkiGFEjWW43kHfHAl2eCAwTT+yd4RGPVfiar5RMCiw6u2fB9QrGvF3UXp2o+nCq9Xr0Pvd5vNCSQhBTmuoS3GPtpNDuKPbZgr+jLRyNhf45cBncrOdytC7lY0GXyHkMs1y6oXPu2euCNhDm3qG2LY0mA1t1rcNXfxYQj2PjYfHzXqiWgx9lvIE3wflvyCIaUNKHH+pah6mNQsjvjF968yWKvXgDC5J/f7w1gbw2TuB30KeSKTMDzlPjs836w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jozA3sKqNc4D07Kv4fG8dfD53jRq/aYUEpYuY7qHGzk=;
- b=OSgn1s1UjUMj7Tg5/EcU1G2m9xw1xWi5SBMIh4SRa7pk+iLmIdmgnGm26Kv9E4vP4QntSWvD3X+mF692nLoZFsxUF23ptMHJ1kshwq7v4P+E+th13Uwsm9KUKu2y04Szga1tAD9jGatUC1n4SWx0zv7FPeOoLYdSdZwyBKwzqVAripv+x0L1lvG2YhVLV6pq0efISs+5w7XQ7BJQ6OV4g5Wkjuzc8oVZflWubE980hs7aspoAMClbagcQaPd51QI6exSJbdGutFp9fbmu7Y9L9gl+SYO9pxjHQ8pECMFys44mTsAfCMWBqU2XcKDNWsfsawyfD3RHEGxHRa+C6BW6A==
-Received: from MA0PR01MB6812.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:5e::10)
- by MAZPR01MB7991.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:a2::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6134.16; Mon, 20 Feb
- 2023 04:39:08 +0000
-Received: from MA0PR01MB6812.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::f21:dad5:f9ab:818f]) by MA0PR01MB6812.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::f21:dad5:f9ab:818f%5]) with mapi id 15.20.6134.014; Mon, 20 Feb 2023
- 04:39:08 +0000
-From: Ranbir Singh <saini.ranbirs@outlook.com>
-To: Zev Weiss <zweiss@equinix.com>
-Subject: Re: What are the login details for AST2600-EVB core-image-minimal ?
-Thread-Topic: What are the login details for AST2600-EVB core-image-minimal ?
-Thread-Index: AQHZQfj2d8EWFfzVRkmP4AHk1M16lq7TkVuAgAOw0sA=
-Date: Mon, 20 Feb 2023 04:39:08 +0000
-Message-ID:  <MA0PR01MB681255641A185BBC94B2607FF9A49@MA0PR01MB6812.INDPRD01.PROD.OUTLOOK.COM>
-References:  <MA0PR01MB6812A470837194C53182B5ACF9A09@MA0PR01MB6812.INDPRD01.PROD.OUTLOOK.COM>
- <20230217200141.GW18848@packtop>
-In-Reply-To: <20230217200141.GW18848@packtop>
-Accept-Language: en-GB, en-US
-Content-Language: en-GB
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-x-tmn: [Qec1ohy/ODB/3pt2vVZYxE7/6J3FqeOU]
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: MA0PR01MB6812:EE_|MAZPR01MB7991:EE_
-x-ms-office365-filtering-correlation-id: 86f7ba4e-eba6-4102-cc63-08db12fc6780
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:  CVH5sXWWBG9MAbZeeQnFNbIZueVJHKx+Ps8ha450M2PasQ21P/dey2xNfehDz3fyXb+1tc1KZTO+/MppTXy5DDCfxYoyyFPXjRljzPHEU0LCRV1dmM7M9nM01p/td+vngLGlSlICiNdDVLt+a3uHkfyuF0meAejSHyTfxJw9fTaMv9ej1ajVixD17x22kpOwyXkrljfAwIh/OTg660yP3NUzxa2kEs5cAxrA3eSpNDlmWoqMzLSjxRIuw8DsrLUyzKwRAfkv5V14h8lpxu+aZEkx80EZ3MkQnX8+37cKWXL+UfHl6A6gsGq3jnefdKHOTIxhyvmfjPgYj6F8SgF54KIA+TWzgHfd6EMGjsc7YfMYxcK5sejyWLMcgPLVZ5MS77vxgkiSFkvJho5ClJlUrJZ1cWISHziYGZe0qwHprWuC+E5yexOoBO4czBGDfA9wBQODnmBkHsgj+YQRhdb7aq5QIM6AaErxEWRM3YOK9YXgKbTZcIhnxEKl0EpArV6cofICWusR16QDIbSJrfGF91rwiCwqDgvTZPM3XD8o3Dq0JvE5Co0H4A9WYDVyTsqoIbinhn0PdfhGPwgRVok4YEgEyBuE69TXMK0ETHSw6sKAD3ylZgVc8sNJcVmK60yxjo1Ygp68lIgR4V4jNHFYJezrBKuTbNKUxziv++QSZ90=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?utf-8?B?ZktRSnZ4NzY1ekN5bGE3YmZYMWJXM1VqcVRTN2RhU2dVVWhJNXFkM21VUVBR?=
- =?utf-8?B?QVRNL01CRWxYaVExYlpBWnhCeWxqYjdvMm5jRUQ5N0dTZ1J0M042MTZzbFJF?=
- =?utf-8?B?dHhPVTQ3bEU1N3pHU3ZSb0s4SXlsRHpUZ1Mrdk1nQlNNSkJQcXB4bXg3VHdz?=
- =?utf-8?B?R3pRSDZjRSt1R2FqaEpXU3BOc3RPWVJVR3U1cFhSZktzcEcwa1dsQnM4OWtH?=
- =?utf-8?B?ZGhIM2dhNVZlUkhIOVBQYytlME9lVHdxV0FydGdUUXR4bmFqSkQ0MnI3bmhi?=
- =?utf-8?B?QUNqTnVvYys3aGtHZXZ0bEpYYXo5NHUyWEp1Mm9SdEtxWldwQ3hZbG8rTkl0?=
- =?utf-8?B?ajhsQVA1MCtVNHpaaThnVWh0UFJ0aW9ST01hR3RXY04rTlg0QlMrYmxtcnNs?=
- =?utf-8?B?Z0hUZldQb3NmNVk0aWIyUlJJaDF0L3lKUWFXai9ST0pmOFQyNVg0bUplc1BJ?=
- =?utf-8?B?aWJ1Z3hhYlJBVldrdGtSbUpTelhLeWFQaVlPdVhQSXE1bzQ4OXVnYk9NYlhj?=
- =?utf-8?B?elhKaFg1RnM1Rkx5T3BJUXBvZFhnRkFNVEhKU0k2YlVidGxJK2NhcUVSWkxJ?=
- =?utf-8?B?WVY0MXdUUW93NjJzRVgxNzUwOFJtY3RBT05kbjFaSWttTmRvTXA4bWdtT092?=
- =?utf-8?B?WDUzVlpLNEJqSEFzbWhNTHJxNGRhaDVyUW9ZY2dmR0p1UFIwb25BR0gvay9C?=
- =?utf-8?B?UEtjdStvMWY4ZWJuSzJ4b1pnYXBuKy9aOFJpbUtaQk9hZE43OFNHYWpla3Zs?=
- =?utf-8?B?LzF5eEZ2NzM1b2dKNit1Rk41RytqVWpaSDRzS2l0Z3BLaC8yQjdIcnZiS0dn?=
- =?utf-8?B?ZEhrSDF1aVV2MVBLY3dDWU1Qc1dvb21Qc3dmc0Y4WUtzUGs4TGVNK1kwd05k?=
- =?utf-8?B?VDAwd0N4cUpZTjZLdlJmeEs1cytIY2NCdUN3Z0dCUTFSV28zeWNYVUVSL0tE?=
- =?utf-8?B?V3lMcFg1MklCUGFUdzBtNmxuSkU2eHNMdzk0Slo3MVpEU010ZVZhZ2tvVWdM?=
- =?utf-8?B?QkxSOW8vVHJSWDhYd3l1MWQvMHlWMit1L0lZQWZRSERRS3I2N3lJT1lCODkr?=
- =?utf-8?B?L3lBbUZRV3RCM3FEVmdyTmdycFZQSFo1dy9oVjlaQktPU3EwQ3h2SnlZUFM2?=
- =?utf-8?B?ODVmcDVRWWtEbUorVlEwd0g4RG5Oc3BmNkFjSVM4UytzMlVTczl5WDRDcVhr?=
- =?utf-8?B?dndla1FOQnFZNXZJQTFqb2FSMzY0YjRUaCt0ODZqS3ZhMDdzcVBhSUQvbU5k?=
- =?utf-8?B?b0VuSWFZa1BoTVVNRFdtQjd3YlJjVlRZUVZ4TjdSK0RmbkprdWJKZk15RSs3?=
- =?utf-8?B?ZElsVkxoSEIxem9nZmgyaHN0VEt4Nzc0dERZb09TNE5wdkdnTmExQXlobk9X?=
- =?utf-8?B?eFFybkQvY20xN2NYbDFxNXNBZUdsV0tQcnBpZjA5WnhDazgxWDJIeU15NVZL?=
- =?utf-8?B?WUhUMnp1WlVZQ21nT3U3M3p0d1RZZU11cTF4UXZXZm9MMDBXWlNqMU9QdGVU?=
- =?utf-8?B?cXdDUTZLcGpwZzNHUDdEWmtpQmlvd2RjbEk4V1Q3akx4VXdLaDh4MEpQVjJM?=
- =?utf-8?B?cDNZWnBXeGl1cEZBOG9iTnJtaVBQTk9TWTM2bUlZRDNONGMzTVUxSmt2aStZ?=
- =?utf-8?B?dDFoRm5XNWtBZjZ3eXYwSlJBUEV1ZWZkQjBaUXh2TWczaFFSbEx5U2hLTGFJ?=
- =?utf-8?B?UE92THlCUlpyMkJjRzhqQy9kaW1YVCtpTDA4WENVL3VxMlgvamFYMEpRPT0=?=
-Content-Type: multipart/alternative;
-	boundary="_000_MA0PR01MB681255641A185BBC94B2607FF9A49MA0PR01MB6812INDP_"
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PKsmw2H4tz3bnP;
+	Mon, 20 Feb 2023 17:23:27 +1100 (AEDT)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+	by twspam01.aspeedtech.com with ESMTP id 31K64vFx022736;
+	Mon, 20 Feb 2023 14:04:57 +0800 (GMT-8)
+	(envelope-from ryan_chen@aspeedtech.com)
+Received: from aspeedtech.com (192.168.10.13) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Mon, 20 Feb
+ 2023 14:17:51 +0800
+From: Ryan Chen <ryan_chen@aspeedtech.com>
+To: Ryan Chen <ryan_chen@aspeedtech.com>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+        Joel Stanley
+	<joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+        Philipp Zabel
+	<p.zabel@pengutronix.de>, <openbmc@lists.ozlabs.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>
+Subject: [PATCH v5 0/2] Add ASPEED AST2600 I2Cv2 controller driver
+Date: Mon, 20 Feb 2023 14:17:43 +0800
+Message-ID: <20230220061745.1973981-1-ryan_chen@aspeedtech.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MA0PR01MB6812.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 86f7ba4e-eba6-4102-cc63-08db12fc6780
-X-MS-Exchange-CrossTenant-originalarrivaltime: 20 Feb 2023 04:39:08.0297
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MAZPR01MB7991
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [192.168.10.13]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 31K64vFx022736
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -120,155 +54,120 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_MA0PR01MB681255641A185BBC94B2607FF9A49MA0PR01MB6812INDP_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+This series add AST2600 i2cv2 new register set driver. The i2cv2 new
+register set have new clock divider option for more flexiable generation.
+And also have separate i2c master and slave register set for control.
 
-WWVzLCBJIHRyaWVkIGNvcmUtaW1hZ2UtbWluaW1hbCBhcyBwcm9iYWJseSBmb3Igc29tZSBzeXN0
-ZW0gcmVzb3VyY2VzIHJlYXNvbnMgb24gbXkgbGFwdG9wLCB0aGUgdXN1YWwgYnVpbGQgdGFyZ2V0
-ICJvYm1jLXBob3NwaG9yLWltYWdlIiB3YXMgZ2V0dGluZyBhYm9ydGVkIGR1cmluZyBidWlsZC4N
-Cg0KTm93LCBvbiBzb21lIHNlcnZlciwgdGhlIHRhcmdldCAib2JtYy1waG9zcGhvci1pbWFnZSIg
-YnVpbHQgc3VjY2Vzc2Z1bGx5IChhdCBIRUFEIGNvbW1pdCA2ZjAzZGQ4M2QzMjQzMTJmNjkxMzM4
-YjIyMDA4ZjdmYjY5YTgyZjMyKSBhbmQgSSBhbSBhYmxlIHRvIGxvZ2luIHVzaW5nIHJvb3QvMHBl
-bkJtYy4NCg0KSG93ZXZlciwgYWZ0ZXIgbG9naW4gSSBhbSBnZXR0aW5nIHRoaXMgLQ0KDQpyb290
-QGV2Yi1hc3QyNjAwOn4jIG9ibWN1dGlsIHN0YXRlDQpDdXJyZW50Qk1DU3RhdGUgICAgIDogeHl6
-Lm9wZW5ibWNfcHJvamVjdC5TdGF0ZS5CTUMuQk1DU3RhdGUuTm90UmVhZHkNCkN1cnJlbnRQb3dl
-clN0YXRlICAgOiB4eXoub3BlbmJtY19wcm9qZWN0LlN0YXRlLkNoYXNzaXMuUG93ZXJTdGF0ZS5P
-ZmYNCkN1cnJlbnRIb3N0U3RhdGUgICAgOiB4eXoub3BlbmJtY19wcm9qZWN0LlN0YXRlLkhvc3Qu
-SG9zdFN0YXRlLk9mZg0KQm9vdFByb2dyZXNzICAgICAgICA6IHh5ei5vcGVuYm1jX3Byb2plY3Qu
-U3RhdGUuQm9vdC5Qcm9ncmVzcy5Qcm9ncmVzc1N0YWdlcy5VbnNwZWNpZmllZA0KT3BlcmF0aW5n
-U3lzdGVtU3RhdGU6IHh5ei5vcGVuYm1jX3Byb2plY3QuU3RhdGUuT3BlcmF0aW5nU3lzdGVtLlN0
-YXR1cy5PU1N0YXR1cy5JbmFjdGl2ZQ0Kcm9vdEBldmItYXN0MjYwMDp+Iw0KDQpJcyB0aGlzIG5v
-cm1hbCBmb3IgZXZiLWFzdDI2MDAgPw0KDQpfX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-Xw0KRnJvbTogWmV2IFdlaXNzIDx6d2Vpc3NAZXF1aW5peC5jb20+DQpTZW50OiAxOCBGZWJydWFy
-eSAyMDIzIDAxOjMxDQpUbzogUmFuYmlyIFNpbmdoIDxzYWluaS5yYW5iaXJzQG91dGxvb2suY29t
-Pg0KQ2M6IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZyA8b3BlbmJtY0BsaXN0cy5vemxhYnMub3Jn
-Pg0KU3ViamVjdDogUmU6IFdoYXQgYXJlIHRoZSBsb2dpbiBkZXRhaWxzIGZvciBBU1QyNjAwLUVW
-QiBjb3JlLWltYWdlLW1pbmltYWwgPw0KDQpPbiBGcmksIEZlYiAxNywgMjAyMyBhdCAwMzo0OToz
-NkFNIFBTVCwgUmFuYmlyIFNpbmdoIHdyb3RlOg0KPlN0ZXBzIGZvbGxvd2VkDQo+PT09PT09PT09
-PT0NCj4NCj4gIDEuICAuIHNldHVwIGV2Yi1hc3QyNjAwDQo+ICAyLiAgYml0YmFrZSBjb3JlLWlt
-YWdlLW1pbmltYWwNCg0KSXMgdGhlcmUgYSBwYXJ0aWN1bGFyIHJlYXNvbiB5b3Ugd2VudCBmb3Ig
-Y29yZS1pbWFnZS1taW5pbWFsIGhlcmU/ICBUaGUNCnVzdWFsIE9wZW5CTUMgYnVpbGQgdGFyZ2V0
-IGlzIG9ibWMtcGhvc3Bob3ItaW1hZ2U7IEkgc3VzcGVjdCBzd2l0Y2hpbmcNCnRvIHRoYXQgd2ls
-bCBzb2x2ZSB5b3VyIHByb2JsZW0uDQoNCj4gIDMuICBxZW11LXN5c3RlbS1hcm0gLW0gNTEyIC1N
-IGFzdDI2MDAtZXZiIC1ub2dyYXBoaWMgICAgIC1kcml2ZSBmaWxlPXRtcC9kZXBsb3kvaW1hZ2Vz
-L2V2Yi1hc3QyNjAwL2NvcmUtaW1hZ2UtbWluaW1hbC1ldmItYXN0MjYwMC5zdGF0aWMubXRkLGZv
-cm1hdD1yYXcsaWY9bXRkICAgICAtbmV0IG5pYyAgICAgLW5ldCB1c2VyLGhvc3Rmd2Q9OjEyNy4w
-LjAuMToyMjIyLToyMixob3N0ZndkPToxMjcuMC4wLjE6MjQ0My06NDQzLGhvc3Rmd2Q9dWRwOjEy
-Ny4wLjAuMToyNjIzLTo2MjMsaG9zdG5hbWU9cWVtDQo+DQo+VGhlIGltYWdlIGJvb3RzIHVwLCBi
-dXQgZGVmYXVsdCBsb2dpbiByb290LzBwZW5CbWMgZG9lc24ndCB3b3JrIC4uLg0KPg0KPltjaWQ6
-Njk4OTNlZTgtMDhmMi00NzAyLTljMGItMjQxZWJhYzI1ZWVhXQ0KPg0KPlR5cG8gaGFzIGJlZW4g
-Y2hlY2tlZCBtdWx0aXBsZSB0aW1lcyDwn5mCDQoNCg==
+The legacy register layout is mix master/slave register control together.
+The following is add more detail description about new register layout.
+And new feature set add for register.
 
---_000_MA0PR01MB681255641A185BBC94B2607FF9A49MA0PR01MB6812INDP_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+-Add new clock divider option for more flexible and accurate clock
+rate generation
+-Add tCKHighMin timing to guarantee SCL high pulse width.
+-Add support dual pool buffer mode, split 32 bytes pool buffer of
+each device into 2 x 16 bytes for Tx and Rx individually.
+-Increase DMA buffer size to 4096 bytes and support byte alignment.
+-Re-define the base address of BUS1 ~ BUS16 and Pool buffer.
+-Re-define registers for separating master and slave mode control.
+-Support 4 individual DMA buffers for master Tx and Rx, slave Tx and Rx.
 
-PGh0bWw+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIgY29udGVudD0i
-dGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxzdHlsZSB0eXBlPSJ0ZXh0L2NzcyIgc3R5bGU9
-ImRpc3BsYXk6bm9uZTsiPiBQIHttYXJnaW4tdG9wOjA7bWFyZ2luLWJvdHRvbTowO30gPC9zdHls
-ZT4NCjwvaGVhZD4NCjxib2R5IGRpcj0ibHRyIj4NCjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OiBD
-YWxpYnJpLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7IGZvbnQtc2l6ZTogMTJwdDsgY29sb3I6IHJn
-YigwLCAwLCAwKTsgYmFja2dyb3VuZC1jb2xvcjogcmdiKDI1NSwgMjU1LCAyNTUpOyIgY2xhc3M9
-ImVsZW1lbnRUb1Byb29mIj4NClllcywgSSB0cmllZCBjb3JlLWltYWdlLW1pbmltYWwgYXMgcHJv
-YmFibHkgZm9yIHNvbWUgc3lzdGVtIHJlc291cmNlcyByZWFzb25zIG9uIG15IGxhcHRvcCwgdGhl
-IHVzdWFsIGJ1aWxkIHRhcmdldCAmcXVvdDtvYm1jLXBob3NwaG9yLWltYWdlJnF1b3Q7IHdhcyBn
-ZXR0aW5nIGFib3J0ZWQgZHVyaW5nIGJ1aWxkLjwvZGl2Pg0KPGRpdiBzdHlsZT0iZm9udC1mYW1p
-bHk6IENhbGlicmksIEhlbHZldGljYSwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB0OyBjb2xv
-cjogcmdiKDAsIDAsIDApOyBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjU1LCAyNTUsIDI1NSk7IiBj
-bGFzcz0iZWxlbWVudFRvUHJvb2YiPg0KPGJyPg0KPC9kaXY+DQo8ZGl2IHN0eWxlPSJmb250LWZh
-bWlseTogQ2FsaWJyaSwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDEycHQ7IGNv
-bG9yOiByZ2IoMCwgMCwgMCk7IGJhY2tncm91bmQtY29sb3I6IHJnYigyNTUsIDI1NSwgMjU1KTsi
-IGNsYXNzPSJlbGVtZW50VG9Qcm9vZiI+DQpOb3csIG9uIHNvbWUgc2VydmVyLCB0aGUmbmJzcDs8
-c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1jb2xvcjpyZ2IoMjU1LCAyNTUsIDI1NSk7ZGlzcGxheTpp
-bmxpbmUgIWltcG9ydGFudCIgY2xhc3M9IkNvbnRlbnRQYXN0ZWQxIj50YXJnZXQmbmJzcDs8L3Nw
-YW4+PHNwYW4gc3R5bGU9ImJhY2tncm91bmQtY29sb3I6cmdiKDI1NSwgMjU1LCAyNTUpO2Rpc3Bs
-YXk6aW5saW5lICFpbXBvcnRhbnQiIGNsYXNzPSJDb250ZW50UGFzdGVkMCI+JnF1b3Q7b2JtYy1w
-aG9zcGhvci1pbWFnZSZxdW90OzxzcGFuIGNsYXNzPSJDb250ZW50UGFzdGVkMCBDb250ZW50UGFz
-dGVkMiI+Jm5ic3A7YnVpbHQNCiBzdWNjZXNzZnVsbHkgKGF0IEhFQUQgY29tbWl0Jm5ic3A7NmYw
-M2RkODNkMzI0MzEyZjY5MTMzOGIyMjAwOGY3ZmI2OWE4MmYzMikgYW5kIEkgYW0gYWJsZSB0byBs
-b2dpbiB1c2luZyByb290LzBwZW5CbWMuPC9zcGFuPjwvc3Bhbj48L2Rpdj4NCjxkaXYgc3R5bGU9
-ImZvbnQtZmFtaWx5OiBDYWxpYnJpLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7IGZvbnQtc2l6ZTog
-MTJwdDsgY29sb3I6IHJnYigwLCAwLCAwKTsgYmFja2dyb3VuZC1jb2xvcjogcmdiKDI1NSwgMjU1
-LCAyNTUpOyIgY2xhc3M9ImVsZW1lbnRUb1Byb29mIj4NCjxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5k
-LWNvbG9yOnJnYigyNTUsIDI1NSwgMjU1KTtkaXNwbGF5OmlubGluZSAhaW1wb3J0YW50IiBjbGFz
-cz0iQ29udGVudFBhc3RlZDAiPjxzcGFuIGNsYXNzPSJDb250ZW50UGFzdGVkMCBDb250ZW50UGFz
-dGVkMiI+PGJyPg0KPC9zcGFuPjwvc3Bhbj48L2Rpdj4NCjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5
-OiBDYWxpYnJpLCBIZWx2ZXRpY2EsIHNhbnMtc2VyaWY7IGZvbnQtc2l6ZTogMTJwdDsgY29sb3I6
-IHJnYigwLCAwLCAwKTsgYmFja2dyb3VuZC1jb2xvcjogcmdiKDI1NSwgMjU1LCAyNTUpOyIgY2xh
-c3M9ImVsZW1lbnRUb1Byb29mIj4NCjxzcGFuIHN0eWxlPSJiYWNrZ3JvdW5kLWNvbG9yOnJnYigy
-NTUsIDI1NSwgMjU1KTtkaXNwbGF5OmlubGluZSAhaW1wb3J0YW50IiBjbGFzcz0iQ29udGVudFBh
-c3RlZDAiPjxzcGFuIGNsYXNzPSJDb250ZW50UGFzdGVkMCBDb250ZW50UGFzdGVkMiI+SG93ZXZl
-ciwgYWZ0ZXIgbG9naW4gSSBhbSBnZXR0aW5nIHRoaXMgLTwvc3Bhbj48L3NwYW4+PC9kaXY+DQo8
-ZGl2IHN0eWxlPSJmb250LWZhbWlseTogQ2FsaWJyaSwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBm
-b250LXNpemU6IDEycHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7IGJhY2tncm91bmQtY29sb3I6IHJn
-YigyNTUsIDI1NSwgMjU1KTsiIGNsYXNzPSJlbGVtZW50VG9Qcm9vZiI+DQo8c3BhbiBzdHlsZT0i
-YmFja2dyb3VuZC1jb2xvcjpyZ2IoMjU1LCAyNTUsIDI1NSk7ZGlzcGxheTppbmxpbmUgIWltcG9y
-dGFudCIgY2xhc3M9IkNvbnRlbnRQYXN0ZWQwIj48c3BhbiBjbGFzcz0iQ29udGVudFBhc3RlZDAg
-Q29udGVudFBhc3RlZDIiPjxicj4NCjwvc3Bhbj48L3NwYW4+PC9kaXY+DQo8ZGl2IHN0eWxlPSJm
-b250LWZhbWlseTogQ2FsaWJyaSwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDEy
-cHQ7IGNvbG9yOiByZ2IoMCwgMCwgMCk7IGJhY2tncm91bmQtY29sb3I6IHJnYigyNTUsIDI1NSwg
-MjU1KTsiIGNsYXNzPSJlbGVtZW50VG9Qcm9vZiI+DQo8c3BhbiBzdHlsZT0iYmFja2dyb3VuZC1j
-b2xvcjpyZ2IoMjU1LCAyNTUsIDI1NSk7ZGlzcGxheTppbmxpbmUgIWltcG9ydGFudCIgY2xhc3M9
-IkNvbnRlbnRQYXN0ZWQwIj48c3BhbiBjbGFzcz0iQ29udGVudFBhc3RlZDAgQ29udGVudFBhc3Rl
-ZDIgQ29udGVudFBhc3RlZDMiPnJvb3RAZXZiLWFzdDI2MDA6fiMgb2JtY3V0aWwgc3RhdGUNCjxk
-aXYgY2xhc3M9IkNvbnRlbnRQYXN0ZWQzIj5DdXJyZW50Qk1DU3RhdGUgJm5ic3A7ICZuYnNwOyA6
-IHh5ei5vcGVuYm1jX3Byb2plY3QuU3RhdGUuQk1DLkJNQ1N0YXRlLjxzcGFuIHN0eWxlPSJiYWNr
-Z3JvdW5kLWNvbG9yOiByZ2IoMjU1LCAyNTUsIDApOyI+Tm90UmVhZHk8L3NwYW4+PC9kaXY+DQo8
-ZGl2IGNsYXNzPSJDb250ZW50UGFzdGVkMyI+Q3VycmVudFBvd2VyU3RhdGUgJm5ic3A7IDogeHl6
-Lm9wZW5ibWNfcHJvamVjdC5TdGF0ZS5DaGFzc2lzLlBvd2VyU3RhdGUuT2ZmPC9kaXY+DQo8ZGl2
-IGNsYXNzPSJDb250ZW50UGFzdGVkMyI+Q3VycmVudEhvc3RTdGF0ZSAmbmJzcDsgJm5ic3A7OiB4
-eXoub3BlbmJtY19wcm9qZWN0LlN0YXRlLkhvc3QuSG9zdFN0YXRlLk9mZjwvZGl2Pg0KPGRpdiBj
-bGFzcz0iQ29udGVudFBhc3RlZDMiPkJvb3RQcm9ncmVzcyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAm
-bmJzcDs6IHh5ei5vcGVuYm1jX3Byb2plY3QuU3RhdGUuQm9vdC5Qcm9ncmVzcy5Qcm9ncmVzc1N0
-YWdlcy5VbnNwZWNpZmllZDwvZGl2Pg0KPGRpdiBjbGFzcz0iQ29udGVudFBhc3RlZDMiPk9wZXJh
-dGluZ1N5c3RlbVN0YXRlOiB4eXoub3BlbmJtY19wcm9qZWN0LlN0YXRlLk9wZXJhdGluZ1N5c3Rl
-bS5TdGF0dXMuT1NTdGF0dXMuSW5hY3RpdmU8L2Rpdj4NCnJvb3RAZXZiLWFzdDI2MDA6fiM8YnI+
-DQo8L3NwYW4+PC9zcGFuPjwvZGl2Pg0KPGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6IENhbGlicmks
-IEhlbHZldGljYSwgc2Fucy1zZXJpZjsgZm9udC1zaXplOiAxMnB0OyBjb2xvcjogcmdiKDAsIDAs
-IDApOyBiYWNrZ3JvdW5kLWNvbG9yOiByZ2IoMjU1LCAyNTUsIDI1NSk7IiBjbGFzcz0iZWxlbWVu
-dFRvUHJvb2YiPg0KPGJyPg0KPC9kaXY+DQo8ZGl2IHN0eWxlPSJmb250LWZhbWlseTogQ2FsaWJy
-aSwgSGVsdmV0aWNhLCBzYW5zLXNlcmlmOyBmb250LXNpemU6IDEycHQ7IGNvbG9yOiByZ2IoMCwg
-MCwgMCk7IGJhY2tncm91bmQtY29sb3I6IHJnYigyNTUsIDI1NSwgMjU1KTsiIGNsYXNzPSJlbGVt
-ZW50VG9Qcm9vZiI+DQpJcyB0aGlzIG5vcm1hbCBmb3ImbmJzcDs8c3BhbiBzdHlsZT0iYmFja2dy
-b3VuZC1jb2xvcjpyZ2IoMjU1LCAyNTUsIDI1NSk7ZGlzcGxheTppbmxpbmUgIWltcG9ydGFudCIg
-Y2xhc3M9IkNvbnRlbnRQYXN0ZWQ0Ij5ldmItYXN0MjYwMCA/PC9zcGFuPjwvZGl2Pg0KPGRpdiBp
-ZD0iYXBwZW5kb25zZW5kIj48L2Rpdj4NCjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OkNhbGlicmks
-SGVsdmV0aWNhLHNhbnMtc2VyaWY7IGZvbnQtc2l6ZToxMnB0OyBjb2xvcjpyZ2IoMCwwLDApIj4N
-Cjxicj4NCjwvZGl2Pg0KPGhyIHRhYmluZGV4PSItMSIgc3R5bGU9ImRpc3BsYXk6aW5saW5lLWJs
-b2NrOyB3aWR0aDo5OCUiPg0KPGRpdiBpZD0iZGl2UnBseUZ3ZE1zZyIgZGlyPSJsdHIiPjxmb250
-IGZhY2U9IkNhbGlicmksIHNhbnMtc2VyaWYiIGNvbG9yPSIjMDAwMDAwIiBzdHlsZT0iZm9udC1z
-aXplOiAxMXB0OyBjb2xvcjogcmdiKDAsIDAsIDApOyIgY2xhc3M9ImVsZW1lbnRUb1Byb29mIj48
-Yj5Gcm9tOjwvYj4gWmV2IFdlaXNzICZsdDt6d2Vpc3NAZXF1aW5peC5jb20mZ3Q7PGJyPg0KPGI+
-U2VudDo8L2I+IDE4IEZlYnJ1YXJ5IDIwMjMgMDE6MzE8YnI+DQo8Yj5Ubzo8L2I+IFJhbmJpciBT
-aW5naCAmbHQ7c2FpbmkucmFuYmlyc0BvdXRsb29rLmNvbSZndDs8YnI+DQo8Yj5DYzo8L2I+IG9w
-ZW5ibWNAbGlzdHMub3psYWJzLm9yZyAmbHQ7b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnJmd0Ozxi
-cj4NCjxiPlN1YmplY3Q6PC9iPiBSZTogV2hhdCBhcmUgdGhlIGxvZ2luIGRldGFpbHMgZm9yIEFT
-VDI2MDAtRVZCIGNvcmUtaW1hZ2UtbWluaW1hbCA/PC9mb250Pg0KPGRpdj4mbmJzcDs8L2Rpdj4N
-CjwvZGl2Pg0KPGRpdiBjbGFzcz0iQm9keUZyYWdtZW50Ij48Zm9udCBzaXplPSIyIj48c3BhbiBz
-dHlsZT0iZm9udC1zaXplOjExcHQiPg0KPGRpdiBjbGFzcz0iUGxhaW5UZXh0Ij5PbiBGcmksIEZl
-YiAxNywgMjAyMyBhdCAwMzo0OTozNkFNIFBTVCwgUmFuYmlyIFNpbmdoIHdyb3RlOjxicj4NCiZn
-dDtTdGVwcyBmb2xsb3dlZDxicj4NCiZndDs9PT09PT09PT09PTxicj4NCiZndDs8YnI+DQomZ3Q7
-Jm5ic3A7IDEuJm5ic3A7IC4gc2V0dXAgZXZiLWFzdDI2MDA8YnI+DQomZ3Q7Jm5ic3A7IDIuJm5i
-c3A7IGJpdGJha2UgY29yZS1pbWFnZS1taW5pbWFsPGJyPg0KPGJyPg0KSXMgdGhlcmUgYSBwYXJ0
-aWN1bGFyIHJlYXNvbiB5b3Ugd2VudCBmb3IgY29yZS1pbWFnZS1taW5pbWFsIGhlcmU/Jm5ic3A7
-IFRoZTxicj4NCnVzdWFsIE9wZW5CTUMgYnVpbGQgdGFyZ2V0IGlzIG9ibWMtcGhvc3Bob3ItaW1h
-Z2U7IEkgc3VzcGVjdCBzd2l0Y2hpbmc8YnI+DQp0byB0aGF0IHdpbGwgc29sdmUgeW91ciBwcm9i
-bGVtLjxicj4NCjxicj4NCiZndDsmbmJzcDsgMy4mbmJzcDsgcWVtdS1zeXN0ZW0tYXJtIC1tIDUx
-MiAtTSBhc3QyNjAwLWV2YiAtbm9ncmFwaGljJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IC1kcml2
-ZSBmaWxlPXRtcC9kZXBsb3kvaW1hZ2VzL2V2Yi1hc3QyNjAwL2NvcmUtaW1hZ2UtbWluaW1hbC1l
-dmItYXN0MjYwMC5zdGF0aWMubXRkLGZvcm1hdD1yYXcsaWY9bXRkJm5ic3A7Jm5ic3A7Jm5ic3A7
-Jm5ic3A7IC1uZXQgbmljJm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IC1uZXQgdXNlcixob3N0Zndk
-PToxMjcuMC4wLjE6MjIyMi06MjIsaG9zdGZ3ZD06MTI3LjAuMC4xOjI0NDMtOjQ0Myxob3N0Zndk
-PXVkcDoxMjcuMC4wLjE6MjYyMy06NjIzLGhvc3RuYW1lPXFlbTxicj4NCiZndDs8YnI+DQomZ3Q7
-VGhlIGltYWdlIGJvb3RzIHVwLCBidXQgZGVmYXVsdCBsb2dpbiByb290LzBwZW5CbWMgZG9lc24n
-dCB3b3JrIC4uLjxicj4NCiZndDs8YnI+DQomZ3Q7W2NpZDo2OTg5M2VlOC0wOGYyLTQ3MDItOWMw
-Yi0yNDFlYmFjMjVlZWFdPGJyPg0KJmd0Ozxicj4NCiZndDtUeXBvIGhhcyBiZWVuIGNoZWNrZWQg
-bXVsdGlwbGUgdGltZXMg8J+Zgjxicj4NCjxicj4NCjwvZGl2Pg0KPC9zcGFuPjwvZm9udD48L2Rp
-dj4NCjwvYm9keT4NCjwvaHRtbD4NCg==
+And following is new register set for package transfer sequence.
+-New Master operation mode:
+ S -> Aw -> P
+ S -> Aw -> TxD -> P
+ S -> Ar -> RxD -> P
+ S -> Aw -> RxD -> Sr -> Ar -> TxD -> P
+-Bus SDA lock auto-release capability for new master DMA command mode.
+-Bus auto timeout for new master/slave DMA mode.
 
---_000_MA0PR01MB681255641A185BBC94B2607FF9A49MA0PR01MB6812INDP_--
+The following is two versus register layout.
+Old:
+{I2CD00}: Function Control Register     
+{I2CD04}: Clock and AC Timing Control Register
+{I2CD08}: Clock and AC Timing Control Register
+{I2CD0C}: Interrupt Control Register
+{I2CD10}: Interrupt Status Register 
+{I2CD14}: Command/Status Register   
+{I2CD18}: Slave Device Address Register
+{I2CD1C}: Pool Buffer Control Register
+{I2CD20}: Transmit/Receive Byte Buffer Register
+{I2CD24}: DMA Mode Buffer Address Register
+{I2CD28}: DMA Transfer Length Register
+{I2CD2C}: Original DMA Mode Buffer Address Setting
+{I2CD30}: Original DMA Transfer Length Setting and Final Status
+
+New Register mode
+{I2CC00}: Master/Slave Function Control Register
+{I2CC04}: Master/Slave Clock and AC Timing Control Register
+{I2CC08}: Master/Slave Transmit/Receive Byte Buffer Register
+{I2CC0C}: Master/Slave Pool Buffer Control Register
+{I2CM10}: Master Interrupt Control Register
+{I2CM14}: Master Interrupt Status Register  
+{I2CM18}: Master Command/Status Register
+{I2CM1C}: Master DMA Buffer Length Register
+{I2CS20}: Slave~ Interrupt Control Register
+{I2CS24}: Slave~ Interrupt Status Register
+{I2CS28}: Slave~ Command/Status Register
+{I2CS2C}: Slave~ DMA Buffer Length Register
+{I2CM30}: Master DMA Mode Tx Buffer Base Address
+{I2CM34}: Master DMA Mode Rx Buffer Base Address
+{I2CS38}: Slave~ DMA Mode Tx Buffer Base Address
+{I2CS3C}: Slave~ DMA Mode Rx Buffer Base Address
+{I2CS40}: Slave Device Address Register
+{I2CM48}: Master DMA Length Status Register
+{I2CS4C}: Slave  DMA Length Status Register
+{I2CC50}: Current DMA Operating Address Status
+{I2CC54}: Current DMA Operating Length  Status
+
+v5:
+-remove ast2600-i2c-global.yaml, i2c-ast2600-global.c.
+-i2c-ast2600.c
+ -remove legacy clock divide, all go for new clock divide.
+ -remove duplicated read isr.
+ -remove no used driver match
+ -fix probe return for each labels return.
+ -global use mfd driver, driver use phandle to regmap read/write.
+-rename aspeed,i2c-ast2600.yaml to aspeed,i2cv2.yaml
+-remove bus-frequency.
+-add required aspeed,gr
+-add timeout, byte-mode, buff-mode properites.
+
+v4:
+-fix i2c-ast2600.c driver buffer mode use single buffer conflit in
+ master slave mode both enable.
+-fix kmemleak issue when use dma mode.
+-fix typo aspeed,i2c-ast2600.yaml compatible is "aspeed,ast2600-i2c"
+-fix typo aspeed,i2c-ast2600.ymal to aspeed,i2c-ast2600.yaml
+
+v3:
+-fix i2c global clock divide default value.
+-remove i2c slave no used dev_dbg info.
+
+v2:
+-add i2c global ymal file commit.
+-rename file name from new to ast2600.
+ aspeed-i2c-new-global.c -> i2c-ast2600-global.c
+ aspeed-i2c-new-global.h -> i2c-ast2600-global.h
+ i2c-new-aspeed.c -> i2c-ast2600.c
+-rename all driver function name to ast2600.
+
+Ryan Chen (2):
+  dt-bindings: i2c: Add support for ASPEED i2Cv2
+  i2c: aspeed: support ast2600 i2cv2 new register mode driver
+
+ .../devicetree/bindings/i2c/aspeed,i2cv2.yaml |   83 +
+ MAINTAINERS                                   |    9 +
+ drivers/i2c/busses/Kconfig                    |   11 +
+ drivers/i2c/busses/Makefile                   |    1 +
+ drivers/i2c/busses/i2c-ast2600.c              | 1703 +++++++++++++++++
+ 5 files changed, 1807 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/i2c/aspeed,i2cv2.yaml
+ create mode 100644 drivers/i2c/busses/i2c-ast2600.c
+
+-- 
+2.34.1
+
