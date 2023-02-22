@@ -2,62 +2,79 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F149B69EC5C
-	for <lists+openbmc@lfdr.de>; Wed, 22 Feb 2023 02:30:58 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 677AC69EC91
+	for <lists+openbmc@lfdr.de>; Wed, 22 Feb 2023 02:51:44 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PLzBS55QQz3bgn
-	for <lists+openbmc@lfdr.de>; Wed, 22 Feb 2023 12:30:56 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PLzfQ0k36z3c6V
+	for <lists+openbmc@lfdr.de>; Wed, 22 Feb 2023 12:51:42 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=LaMXyIwe;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=PNr4lhi3;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=jk@codeconstruct.com.au; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=LaMXyIwe;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=PNr4lhi3;
 	dkim-atps=neutral
-Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PLz9m3qXYz3bfK;
-	Wed, 22 Feb 2023 12:30:20 +1100 (AEDT)
-Received: from pecola.lan (unknown [159.196.93.152])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 56D4620037;
-	Wed, 22 Feb 2023 09:30:15 +0800 (AWST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1677029417;
-	bh=dKZoLqo3DWoAawVA6U++xyewr4VS6v9UTkeXqOdFT80=;
-	h=Subject:From:To:Date:In-Reply-To:References;
-	b=LaMXyIwenqXd2NJpLNx0MJWu44XaaWS+XoUVQz1QhWfj6xROwysPYi4xLGrQNIf/8
-	 3vMdoH/XGf9BY2b37v5F1QSMq0cOaM/bRejMzgxCBWb+EpSqp3qrsUAIBSoOz2ekzq
-	 afvd5hPg4g2SVmF5w8+dnhmkD1NRVTkFb8LARY9UlHW/Bld2O+r5NReLqZ3jcQyKV6
-	 HvUuqLCN+/WPxMcvoEsirCy6QG5UmLNor+K4ZgH0IpmSaJTWCl+6aqq8qpL7mnlgXK
-	 vW7ZmjerwzWwIFBVlswQLy7YN6BqYtRYWa/FXjmk15FM/qCRtgbwGHVEx++XRWMHyZ
-	 hweZA1/lDrgsQ==
-Message-ID: <d5d0bbdbfdce06a6e2ad34f2fa8f27d4eaf36207.camel@codeconstruct.com.au>
-Subject: Re: [PATCH v5 1/2] dt-bindings: i2c: Add support for ASPEED i2Cv2
-From: Jeremy Kerr <jk@codeconstruct.com.au>
-To: Ryan Chen <ryan_chen@aspeedtech.com>, Rob Herring <robh+dt@kernel.org>, 
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Joel Stanley
- <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,  Philipp Zabel
- <p.zabel@pengutronix.de>, "openbmc@lists.ozlabs.org"
- <openbmc@lists.ozlabs.org>,  "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>, "linux-aspeed@lists.ozlabs.org"
- <linux-aspeed@lists.ozlabs.org>, "linux-kernel@vger.kernel.org"
- <linux-kernel@vger.kernel.org>
-Date: Wed, 22 Feb 2023 09:30:14 +0800
-In-Reply-To: <TYZPR06MB527469EBE6A18B897D2C1F6CF2A59@TYZPR06MB5274.apcprd06.prod.outlook.com>
-References: <20230220061745.1973981-1-ryan_chen@aspeedtech.com>
-	 <20230220061745.1973981-2-ryan_chen@aspeedtech.com>
-	 <2141e513acc750bf26775f5b435f4dccd41244aa.camel@codeconstruct.com.au>
-	 <TYZPR06MB5274714E58C319B4FE3B6E1BF2A49@TYZPR06MB5274.apcprd06.prod.outlook.com>
-	 <dfc2c2c442af55f64e147c920585cb7e6a74939f.camel@codeconstruct.com.au>
-	 <TYZPR06MB527469EBE6A18B897D2C1F6CF2A59@TYZPR06MB5274.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.3-1 
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PLzdm4Yygz3bgn
+	for <openbmc@lists.ozlabs.org>; Wed, 22 Feb 2023 12:51:08 +1100 (AEDT)
+Received: from pps.filterd (m0098419.ppops.net [127.0.0.1])
+	by mx0b-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 31M1hWQx024002;
+	Wed, 22 Feb 2023 01:51:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=gZSfsSLm9fl2niQ83oDpnR7UKEdloo7CNWenZCynQZE=;
+ b=PNr4lhi3zZNVzocD2EriBkriKFZtErvM+Pd0yOlLpXI0TfePGdKz0R2rVAKvtMjFNYD5
+ Quawm5egtjA6x1TrexZSx5MJkl64BqD6v9X4JBoFpLMr+Z/Qkd/hPyZhh/p3/jdw1kI3
+ N+wSPQdbMSYTJeyB3sZquYQ2jaifrs+nJ1U5wPtDe9sze5eqJL4zpldURwCDsLgIcJ3u
+ lfXaT+l2VMMkjzbqN2oyaMozrbixFUQv7PbKSsd1jBEegiU0PvLvshafDtq5B7eOFmuR
+ xHNpwkSssMx4MnXJmTFONgOFckuY8W9pxUoQ7UZl3yHlVPp4gqUrlXlf9UD729b89PnV dg== 
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com [169.63.214.131])
+	by mx0b-001b2d01.pphosted.com (PPS) with ESMTPS id 3nw9mu03nf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 Feb 2023 01:51:01 +0000
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+	by ppma01dal.us.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 31M0j01m011420;
+	Wed, 22 Feb 2023 01:51:00 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([9.208.130.99])
+	by ppma01dal.us.ibm.com (PPS) with ESMTPS id 3ntpa7k595-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 22 Feb 2023 01:51:00 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com [10.241.53.102])
+	by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 31M1owtN39059870
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 22 Feb 2023 01:50:58 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id AC6BC5803F;
+	Wed, 22 Feb 2023 01:50:58 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 2CF505805A;
+	Wed, 22 Feb 2023 01:50:58 +0000 (GMT)
+Received: from slate16.aus.stglabs.ibm.com (unknown [9.160.165.73])
+	by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Wed, 22 Feb 2023 01:50:58 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH dev-6.1] ARM: dts: aspeed: everest: Add reserved memory for TPM event log
+Date: Tue, 21 Feb 2023 19:50:56 -0600
+Message-Id: <20230222015056.3903734-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: lUFFYB6MeNwWiHzIi4OMdFoL2Qc8NOSX
+X-Proofpoint-ORIG-GUID: lUFFYB6MeNwWiHzIi4OMdFoL2Qc8NOSX
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.930,Hydra:6.0.562,FMLib:17.11.170.22
+ definitions=2023-02-21_14,2023-02-20_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 priorityscore=1501
+ phishscore=0 mlxscore=0 bulkscore=0 mlxlogscore=849 lowpriorityscore=0
+ clxscore=1011 adultscore=0 impostorscore=0 spamscore=0 malwarescore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2302220008
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,35 +86,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Eddie James <eajames@linux.ibm.com>, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Ryan,
+Trusted boot support requires the platform event log passed up
+from the bootloader. In U-Boot, this can now be accomplished with
+a reserved memory region, so add a region for this purpose to the
+Everest BMC devicetree.
 
-> > On the other hand, if it's just because of OS behaviour, then this
-> > doesn't belong
-> > in the DT.
-> >=20
-> > Maybe to help us understand: why would you ever *not* want DMA
-> > mode?
-> > Isn't that always preferable?
-> In AST SOC i2c design is 16 i2c bus share one dma engine.=20
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+---
+ arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Does this mean that only one i2c controller in the system can be
-configured to use DMA? Or is it able to be shared between multiple
-controllers?
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
+index 1448ea895be4..95d1ab6811ff 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
+@@ -162,6 +162,11 @@ reserved-memory {
+ 		#size-cells = <1>;
+ 		ranges;
+ 
++		event_log: tcg_event_log@b3d00000 {
++			no-map;
++			reg = <0xb3d00000 0x100000>;
++		};
++
+ 		ramoops@b3e00000 {
+ 			compatible = "ramoops";
+ 			reg = <0xb3e00000 0x200000>; /* 16 * (4 * 0x8000) */
+@@ -1887,6 +1892,7 @@ &i2c12 {
+ 	tpm@2e {
+ 		compatible = "nuvoton,npct75x", "tcg,tpm-tis-i2c";
+ 		reg = <0x2e>;
++		memory-region = <&event_log>;
+ 	};
+ };
+ 
+-- 
+2.31.1
 
-> It can be switch setting by dts setting. Otherwise driver by default
-> probe is DMA mode.
-
-You've explained what the modes do, and how they're switched, and what
-the default is. However this doesn't explain *why* someone would want
-to choose a particular mode when creating a controller node.
-
-Still with the question above: assuming there are no restrictions on
-DMA usage, why wouldn't a driver implementation just enable it always?
-
-Cheers,
-
-
-Jeremy
