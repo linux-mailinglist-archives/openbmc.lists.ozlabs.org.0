@@ -2,58 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A94F169EB8A
-	for <lists+openbmc@lfdr.de>; Wed, 22 Feb 2023 00:56:38 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 97B7E69EC3F
+	for <lists+openbmc@lfdr.de>; Wed, 22 Feb 2023 02:15:19 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PLx5c3dz6z3c3G
-	for <lists+openbmc@lfdr.de>; Wed, 22 Feb 2023 10:56:36 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PLyrP1xYwz303P
+	for <lists+openbmc@lfdr.de>; Wed, 22 Feb 2023 12:15:17 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=f3pL3kMx;
+	dkim=pass (1024-bit key; unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=ksjWfUD7;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.microsoft.com (client-ip=13.77.154.182; helo=linux.microsoft.com; envelope-from=dphadke@linux.microsoft.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=f3pL3kMx;
+	dkim=pass (1024-bit key; unprotected) header.d=linux.microsoft.com header.i=@linux.microsoft.com header.a=rsa-sha256 header.s=default header.b=ksjWfUD7;
 	dkim-atps=neutral
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [71.19.156.171])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PLx4y1GWXz302m
-	for <openbmc@lists.ozlabs.org>; Wed, 22 Feb 2023 10:56:02 +1100 (AEDT)
-Received: from hatter.bewilderbeest.net (174-21-161-58.tukw.qwest.net [174.21.161.58])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: zev)
-	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 6C05D218;
-	Tue, 21 Feb 2023 15:55:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
-	s=thorn; t=1677023754;
-	bh=iA3eX2JkRVDTDT2ipfUWkJ/tJSppV02IAvBLp2GA4Hg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=f3pL3kMxXRGS57bZs0bi0UxSMPqY+xoPYpikTIMQlrYctXjww6hQElNCOgEK0bF6S
-	 SounwmLUpKvotErTul86fAPHZqShXvwM9BjhW9fOHqNC5RSu28AqZbheEXGdJLZs+r
-	 39pQznJtrbKklL7b4bMAxcHax66ee+zPW10CsRSM=
-Date: Tue, 21 Feb 2023 15:55:53 -0800
-From: Zev Weiss <zev@bewilderbeest.net>
-To: "Winiarska, Iwona" <iwona.winiarska@intel.com>
-Subject: Re: [RFC PATCH] hwmon: (peci/cputemp) Number cores as seen by host
- system
-Message-ID: <Y/VaCRIuwD0Ihp5Z@hatter.bewilderbeest.net>
-References: <20230209011632.32668-1-zev@bewilderbeest.net>
- <20230209175001.GA667937@roeck-us.net>
- <Y+WMcCukyTvPcN2F@hatter.bewilderbeest.net>
- <97485a97-08c4-917b-1b8d-8102a8575a58@roeck-us.net>
- <Y+WieWyU+055eEom@hatter.bewilderbeest.net>
- <20230210184511.GA3670524@roeck-us.net>
- <2e6e07e5decb9c9f2eef6a49f9e11ba23a15a180.camel@intel.com>
+Received: from linux.microsoft.com (linux.microsoft.com [13.77.154.182])
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PLyqj2LfGz300C;
+	Wed, 22 Feb 2023 12:14:41 +1100 (AEDT)
+Received: from [192.168.87.25] (unknown [50.35.78.176])
+	by linux.microsoft.com (Postfix) with ESMTPSA id 33E7320B9C3D;
+	Tue, 21 Feb 2023 17:14:07 -0800 (PST)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 33E7320B9C3D
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+	s=default; t=1677028447;
+	bh=YTkfcoTrsyGUhPbAsJNW1hFtxJhcxATFUQJzQJ+E840=;
+	h=Date:Subject:To:References:From:In-Reply-To:From;
+	b=ksjWfUD7hL4lluKkN4pyotZAcfERPzfs3CXBvbcHi0Lo+wPjs33I5/pVstNjH2kls
+	 q0vfgIXT9nM0kXJiEpsfRXOeOPz9TtJ1UY3OuEK7kN2aV/k9BZrA2waNzRTCKhOztW
+	 1fe+pTK6b/qVT5wvs7gFyCbTFooPdzbctJdO2q/g=
+Message-ID: <d0f8d17a-bdcb-7554-b96c-99226d013fe6@linux.microsoft.com>
+Date: Tue, 21 Feb 2023 17:14:07 -0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH v5 1/2] dt-bindings: i2c: Add support for ASPEED i2Cv2
+Content-Language: en-US
+To: Ryan Chen <ryan_chen@aspeedtech.com>,
+ Jeremy Kerr <jk@codeconstruct.com.au>, Rob Herring <robh+dt@kernel.org>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Joel Stanley <joel@jms.id.au>, Andrew Jeffery <andrew@aj.id.au>,
+ Philipp Zabel <p.zabel@pengutronix.de>,
+ "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+ "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>,
+ "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+References: <20230220061745.1973981-1-ryan_chen@aspeedtech.com>
+ <20230220061745.1973981-2-ryan_chen@aspeedtech.com>
+ <2141e513acc750bf26775f5b435f4dccd41244aa.camel@codeconstruct.com.au>
+ <TYZPR06MB5274714E58C319B4FE3B6E1BF2A49@TYZPR06MB5274.apcprd06.prod.outlook.com>
+ <dfc2c2c442af55f64e147c920585cb7e6a74939f.camel@codeconstruct.com.au>
+ <TYZPR06MB527469EBE6A18B897D2C1F6CF2A59@TYZPR06MB5274.apcprd06.prod.outlook.com>
+From: Dhananjay Phadke <dphadke@linux.microsoft.com>
+In-Reply-To: <TYZPR06MB527469EBE6A18B897D2C1F6CF2A59@TYZPR06MB5274.apcprd06.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <2e6e07e5decb9c9f2eef6a49f9e11ba23a15a180.camel@intel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -65,147 +68,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>, "jae.hyun.yoo@linux.intel.com" <jae.hyun.yoo@linux.intel.com>, "jdelvare@suse.com" <jdelvare@suse.com>, "andrew@aj.id.au" <andrew@aj.id.au>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "pierre-louis.bossart@linux.intel.com" <pierre-louis.bossart@linux.intel.com>, "joel@jms.id.au" <joel@jms.id.au>, "linux@roeck-us.net" <linux@roeck-us.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sat, Feb 18, 2023 at 01:20:14PM PST, Winiarska, Iwona wrote:
->On Fri, 2023-02-10 at 10:45 -0800, Guenter Roeck wrote:
->> On Thu, Feb 09, 2023 at 05:48:41PM -0800, Zev Weiss wrote:
->> > On Thu, Feb 09, 2023 at 04:26:47PM PST, Guenter Roeck wrote:
->> > > On 2/9/23 16:14, Zev Weiss wrote:
->> > > > On Thu, Feb 09, 2023 at 09:50:01AM PST, Guenter Roeck wrote:
->> > > > > On Wed, Feb 08, 2023 at 05:16:32PM -0800, Zev Weiss wrote:
->> > > > > > While porting OpenBMC to a new platform with a Xeon Gold 6314U CPU
->> > > > > > (Ice Lake, 32 cores), I discovered that the core numbering used by
->> > > > > > the
->> > > > > > PECI interface appears to correspond to the cores that are present
->> > > > > > in
->> > > > > > the physical silicon, rather than those that are actually enabled
->> > > > > > and
->> > > > > > usable by the host OS (i.e. it includes cores that the chip was
->> > > > > > manufactured with but later had fused off).
->> > > > > >
->> > > > > > Thus far the cputemp driver has transparently exposed that numbering
->> > > > > > to userspace in its 'tempX_label' sysfs files, making the core
->> > > > > > numbers
->> > > > > > it reported not align with the core numbering used by the host
->> > > > > > system,
->> > > > > > which seems like an unfortunate source of confusion.
->> > > > > >
->> > > > > > We can instead use a separate counter to label the cores in a
->> > > > > > contiguous fashion (0 through numcores-1) so that the core numbering
->> > > > > > reported by the PECI cputemp driver matches the numbering seen by
->> > > > > > the
->> > > > > > host.
->> > > > > >
->> > > > >
->> > > > > I don't really have an opinion if this change is desirable or not.
->> > > > > I suspect one could argue either way. I'l definitely want to see
->> > > > > feedback from others. Any comments or thoughts, anyone ?
->> > > > >
->> > > >
->> > > > Agreed, I'd definitely like to get some input from Intel folks on this.
->> > > >
->> > > > Though since I realize my initial email didn't quite explain this
->> > > > explicitly, I should probably clarify with an example how weird the
->> > > > numbering can get with the existing code -- on the 32-core CPU I'm
->> > > > working with at the moment, the tempX_label files produce the following
->> > > > core numbers:
->> > > >
->> > > >     Core 0
->> > > >     Core 1
->> > > >     Core 2
->> > > >     Core 3
->> > > >     Core 4
->> > > >     Core 5
->> > > >     Core 6
->> > > >     Core 7
->> > > >     Core 8
->> > > >     Core 9
->> > > >     Core 11
->> > > >     Core 12
->> > > >     Core 13
->> > > >     Core 14
->> > > >     Core 15
->> > > >     Core 18
->> > > >     Core 20
->> > > >     Core 22
->> > > >     Core 23
->> > > >     Core 24
->> > > >     Core 26
->> > > >     Core 27
->> > > >     Core 28
->> > > >     Core 29
->> > > >     Core 30
->> > > >     Core 31
->> > > >     Core 33
->> > > >     Core 34
->> > > >     Core 35
->> > > >     Core 36
->> > > >     Core 38
->> > > >     Core 39
->> > > >
->> > > > i.e. it's not just a different permutation of the expected core numbers,
->> > > > we end up with gaps (e.g. the nonexistence of core 10), and core numbers
->> > > > well in excess of the number of cores the processor really "has" (e.g.
->> > > > number 39) -- all of which seems like a rather confusing thing to see in
->> > > > your BMC's sensor readings.
->> > > >
->> > >
->> > > Sure, but what do you see with /proc/cpuinfo and with coretemp
->> > > on the host ? It might be even more confusing if the core numbers
->> > > reported by the peci driver don't match the core numbers provided
->> > > by other tools.
->> > >
->> >
->> > The host sees them numbered as the usual 0-31 you'd generally expect, and
->> > assigned to those cores in the same increasing order -- hence the patch
->> > bringing the two into alignment with each other.  Currently only cores 0
->> > through 9 match up between the two, and the rest are off by somewhere
->> > between one and eight.
->> >
+On 2/20/2023 7:32 PM, Ryan Chen wrote:
+>>>>> +Â  timeout:
+>>>>> +Â Â Â  type: boolean
+>>>>> +Â Â Â  description: Enable i2c bus timeout for master/slave (35ms)
+>>>>> +
+>>>>> +Â  byte-mode:
+>>>>> +Â Â Â  type: boolean
+>>>>> +Â Â Â  description: Force i2c driver use byte mode transmit
+>>>>> +
+>>>>> +Â  buff-mode:
+>>>>> +Â Â Â  type: boolean
+>>>>> +Â Â Â  description: Force i2c driver use buffer mode transmit
+>>>>
+>>>> These three aren't really a property of the hardware, more of the
+>>>> intended driver configuration. Do they really belong in the DT?
+>>>>
+>>> Sorry, I am confused.
+>>> This is hardware controller mode setting for each i2c transfer.
+>>> So I add it in property for change different i2c transfer mode.
+>>> Is my mis-understand the property setting?
 >>
->> Hmm, interesting. It is not sequential on my large system (Intel(R) Xeon(R)
->> Gold 6154). I also know for sure that core IDs on Intel server CPUs are
->> typically not sequential. The processor number is sequential, but the core
->> ID isn't. On my system, the output from the "sensors" command (that is,
->> from the coretemp driver) matches the non-sequential core IDs from
->> /proc/cpuinfo, which is exactly how I would expect it to be.
+>> It depends what this is configuration is for.
 >>
->> Guenter
->
->On Linux, from host side, core ID is obtained from EDX of CPUID(EAX=0xb).
->Unfortunately, the value exposed to the host (and whether it's in sequential or
->non-sequential form) can vary from platform to platform (which BTW is why on
->Linux, core ID shouldn't really be used for any logic related to task placement
->- topology info should be used instead).
->From BMC perspective - we'll always get the non-sequential form.
->
->If we just apply the patch proposed by Zev, we'll end up being consistent on one
->set of platforms and inconsistent on other set of platforms.
->If we want to make things consistent, we need a different approach - either by
->obtaining additional information over PECI or by limiting the scope of the
->proposed change to specific platforms.
->
->Thanks
->-Iwona
->
+>> Would you set the transfer mode based on the design of the board? Is there
+>> something about the physical i2c bus wiring (or some other hardware design
+>> choice) that would mean you use one setting over another?
+>>
+> No, it not depend on board design. It is only for register control for controller transfer behave.
+> The controller support 3 different trigger mode for transfer.
+> Byte mode: it means step by step to issue transfer.
+> Example i2c read, each step will issue interrupt then driver need trigger for next step.
+> Sr (start read) | D | D | D | P
+> Buffer mode: it means, the data can prepare into buffer register, then Trigger transfer. So Sr D D D P, only have only 1 interrupt handling.
+> The DMA mode most like with buffer mode, The differ is data prepare in DRAM, than trigger transfer.
+> 
+> 
 
-Okay, I was sort of afraid of something like that.
+Unless these settings like xfer mode are per i2c bus, it could be just a
+module parameter? Not sure anything other than default mode would be
+used if DMA mode works for all master/slave transactions.
 
-Does PECI provide the necessary information to reliably map its 
-(physical silicon I presume) core numbers to the logical numbers seen by 
-the host OS?  The PECI specs I have don't seem to mention anything along 
-those lines as far as I can see, though perhaps there are newer or more 
-detailed ones I don't have access to.
+Regards,
+Dhananjay
 
-If not, how difficult would it be to classify known CPU models by 
-distinct core-numbering schemes to handle it "manually" in the driver?  
-If the necessary information is available I could try to develop a patch 
-for it.
-
-
-Thanks,
-Zev
 
