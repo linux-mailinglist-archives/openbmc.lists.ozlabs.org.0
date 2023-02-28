@@ -1,33 +1,33 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id DC9C36A5594
-	for <lists+openbmc@lfdr.de>; Tue, 28 Feb 2023 10:23:25 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72A356A56C0
+	for <lists+openbmc@lfdr.de>; Tue, 28 Feb 2023 11:29:46 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PQsNq5RCTz3cBF
-	for <lists+openbmc@lfdr.de>; Tue, 28 Feb 2023 20:23:23 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PQtsN1bZJz3c9Q
+	for <lists+openbmc@lfdr.de>; Tue, 28 Feb 2023 21:29:44 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=J1ko6Yhx;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=HhuYpTK1;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7eae::700; helo=nam11-bn8-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7eab::714; helo=nam11-co1-obe.outbound.protection.outlook.com; envelope-from=chanh@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=J1ko6Yhx;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=HhuYpTK1;
 	dkim-atps=neutral
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on20700.outbound.protection.outlook.com [IPv6:2a01:111:f400:7eae::700])
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on20714.outbound.protection.outlook.com [IPv6:2a01:111:f400:7eab::714])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PQsL13Phfz3bM7
-	for <openbmc@lists.ozlabs.org>; Tue, 28 Feb 2023 20:20:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PQtrf1cP8z3bTS;
+	Tue, 28 Feb 2023 21:29:04 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=JsHiM6BPzPkfZw7BZU8g+b7tt7QWjchwzeilWV/1l/zH3mRlGRT/LGb/NlaX3LkU1W0PKu4wesvfIZEzTFxZwJLs7Tt6HMH16gUeQ/Co8VI2FaWBGNy8wCJ/VaS1411XQyHMjIc6DjBHcZnMyOqmGGpRUEECMYbKT0q9FVdEflPKHRKKZX9OMXSV6JGahNqzDlckXXhKTp6EXpgi2SCr+MRoilRDDvHxh2kPeiDAaRXrSnT95SlZq8fmW4Yp6rNBodtJmBsAYG7quBwDJ3mvsx0LGePn6MTWXad5R2RSiPgRoj/OzgvfJ3mTPxYylcRiaCsnFn/taJljcXroq3UGaw==
+ b=jKNZFeXHXf+lVbXNzx78auIeLU74ruPeeJDMvy5pkNyXJolatCCnFbv6S535RfoHl3E8Xn9CP+fPiMDyVismykNnfKKwwNTfS+KwoSECSz1gGqh3La8vZkFYr8l5mkKHQGCRV6mZv08J4/CksAjxrA8GfedKo9GW4DjyZoFMhQnNcZa8j/ao15QC8GGMx8zAzHEgHj10rLtnkFsun85+QhJuQetaXxMRKdnY31W0jIvaxBEIPvmIQTVAdbonF1fX8HDU+y5EcN+4YZE3l+tJIQlBLJ1ivyEm+jNT+7cNTbKvpsleZi57jKaG9JBmplxLdZ1z3BTrplVtbz45KEnK8Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=HV3raVgT963lo0Qx8AhRmxaH03ccLTVpGLKw8OsSZFQ=;
- b=oWJIBvMK61qBxSqknHi254/zclcTtI0gZhAmrEzn+RJ4S9T2ptpwx/eRSGiExUK+gzyJxogg2sLQBSTRAsnaMzBtCDX5aiwv+3zJynI7EW3Zy5+CTbQX3LNgRNQefiNU8m7UAgWtAYfKYsy/I+B83e6SYhhb2bimIgo/kQL2IdL2hm57YndFtf2HnV82vQZqk0uqDRwDFhmjjHkobaa+9UjHdnNHcfjDZbQyqxXMpFDh2Ze8+4inupjIwnapCaAt9TariuBH45NMRLLVVKuKUePaVFPR6L72LbOnneTdheQR3ul/s0BUBbiosmePL68+/smvVyMFtEA4WGU9f9/8xQ==
+ bh=rtU5KrXMAak+luSoccNhFtyihRo4Ke/yaUKzymOrtb8=;
+ b=XuzpX9pezWgrjSt6gnJ0bTZ2w6W1/BPxu3A3oY1HHdWBVHrW+t5dwSCMgcLEMaZ33mAA5YjI8CX/Nx7kGrNwNYkjVXsrewLSQjW13U1PaT4SxRFeCGWngRvGSNPdPdbGzjk9beCFjaVIk1MEEOPqZS1O/2x74JDdWAX3HhBoVLeSn9lJy3r4Sv6f0Tf4Coc3fSU1wIXpLPOzoz5jShpXvbebm3ToY30SQw/BotZBppTWfx1lg4dZDtfBz4z+roWF7dcvoJqo4mzNhAtk1cYrSOgDUlm7RPZdyhaEXr1DUsUYGlJVUSx58+b1eIe4d8yZ1fsk3WCb5UG66j/JlnFkAg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
  header.from=os.amperecomputing.com; dkim=pass
@@ -35,87 +35,85 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=os.amperecomputing.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=HV3raVgT963lo0Qx8AhRmxaH03ccLTVpGLKw8OsSZFQ=;
- b=J1ko6YhxDSEk6i9aKVDRnObNnV6o9ufsBfCwouJ83/Ie7oYMLT41/rdxhv3FtzJBc8JQ8jwpCgqma7yF1+Vx57CzR071gkj7gUtewbe1FmOXHlsYY/kdU63g4h+C6ea5Al2EcnXm6L0PFzqUdLMPkQaaGHRQbX49m/WYg0sv1lE=
+ bh=rtU5KrXMAak+luSoccNhFtyihRo4Ke/yaUKzymOrtb8=;
+ b=HhuYpTK1DVxC62r6mvnG0Q0yDWkzmIuZYytXQm9dJhrwJujdLViwOZT5UjCmJfahYXy6E9wTn4oSqS4DoadcdcU49cq/QTV9d+EOl9c6sCRZ7wHGVYoezTKiVpK5RkICyot9bIejrNxnKL0VcTn9brMpkRulgT/DxK7JO3Yha4Q=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
-Received: from SN4PR01MB7455.prod.exchangelabs.com (2603:10b6:806:202::11) by
- MN0PR01MB7780.prod.exchangelabs.com (2603:10b6:208:37f::21) with Microsoft
+Received: from SN6PR01MB4973.prod.exchangelabs.com (2603:10b6:805:c4::13) by
+ SA1PR01MB6703.prod.exchangelabs.com (2603:10b6:806:1a6::13) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6134.30; Tue, 28 Feb 2023 09:20:38 +0000
-Received: from SN4PR01MB7455.prod.exchangelabs.com
- ([fe80::ff57:42f9:7d6d:de10]) by SN4PR01MB7455.prod.exchangelabs.com
- ([fe80::ff57:42f9:7d6d:de10%3]) with mapi id 15.20.6134.028; Tue, 28 Feb 2023
- 09:20:38 +0000
-From: Quan Nguyen <quan@os.amperecomputing.com>
-To: Quan Nguyen <quan@os.amperecomputing.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
+ 15.20.6134.30; Tue, 28 Feb 2023 10:28:43 +0000
+Received: from SN6PR01MB4973.prod.exchangelabs.com
+ ([fe80::a807:4f38:56ee:b079]) by SN6PR01MB4973.prod.exchangelabs.com
+ ([fe80::a807:4f38:56ee:b079%6]) with mapi id 15.20.6134.025; Tue, 28 Feb 2023
+ 10:28:43 +0000
+From: Chanh Nguyen <chanh@os.amperecomputing.com>
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+	Rob Herring <robh+dt@kernel.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
 	Joel Stanley <joel@jms.id.au>,
 	Andrew Jeffery <andrew@aj.id.au>,
-	linux-kernel@vger.kernel.org,
-	openbmc@lists.ozlabs.org,
-	Open Source Submission <patches@amperecomputing.com>
-Subject: [PATCH v2 2/2] misc: smpro-errmon: Add dimm training failure syndrome
-Date: Tue, 28 Feb 2023 16:20:10 +0700
-Message-Id: <20230228092010.1863419-3-quan@os.amperecomputing.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20230228092010.1863419-1-quan@os.amperecomputing.com>
-References: <20230228092010.1863419-1-quan@os.amperecomputing.com>
-Content-Transfer-Encoding: 8bit
+	devicetree@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org,
+	linux-aspeed@lists.ozlabs.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v2] ARM: dts: aspeed: mtmitchell: Enable NCSI
+Date: Tue, 28 Feb 2023 17:28:20 +0700
+Message-Id: <20230228102820.18477-1-chanh@os.amperecomputing.com>
+X-Mailer: git-send-email 2.17.1
 Content-Type: text/plain
-X-ClientProxiedBy: SGXP274CA0021.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b8::33)
- To SN4PR01MB7455.prod.exchangelabs.com (2603:10b6:806:202::11)
+X-ClientProxiedBy: SI2PR02CA0037.apcprd02.prod.outlook.com
+ (2603:1096:4:196::8) To SN6PR01MB4973.prod.exchangelabs.com
+ (2603:10b6:805:c4::13)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN4PR01MB7455:EE_|MN0PR01MB7780:EE_
-X-MS-Office365-Filtering-Correlation-Id: fd5f7b3b-316d-4fe3-0989-08db196d0dfb
+X-MS-TrafficTypeDiagnostic: SN6PR01MB4973:EE_|SA1PR01MB6703:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8be8fdfb-7961-4263-79d3-08db1976913e
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	nQf0d3T0LrgmFbxsJ1ck0ivHXC5LILDLDhUZWJsEDa+WyMWKJc+o4rhdUm9qtTiDm1ktS+uAeYSGZG2OYm5MjX2yeeknAEGXpxqppktb7O6hLoQ2ufN60ycNFCM1DTVWLsB454RsJB8Ni9enQSFjGHDX8tC7zVPhfbBBUOAUWE30bMB9/C6e9fa/jPmQqdNdZNClbdX5ftlYlig8Z6mrtmj7UikIT4bAMK1L8DtHhLL625/fuuOZq0NoNTaBT1uRzMvkOsuPb/MQRuQPQvoXg8FV5KVYYwrbwoEeaBSLm6Gu9cz1lhkSem0C4bq74Z73y/3BCdOQ0cHQ0hVfSdAdFFz8jnlZ7W8+XSoYq3hWWB4EezArYW2S6EKfrMnXfoqhMCiVitUhsu5g32+9/cCWyYrQKESwMyNpM4f331etLR158WsgrXP5H78kZs7u2pdQQ8wBVmkpDUF0agq+VHr34Z9MUc87l5FqkyFnhtwa/bfUY/BA+VTknUO/cEJ+MeNyIK72H6jM0cV/ztnPURpVR/frQ6qWP7RFSazZ8PeETtcJTGzwMkluSaoPuonzZNU3RpN7N2njkfzmEwHM77cplKU4kCcfR5vCFGUmRnLG61s6QAjZCuUD7/u/OAp0dg6ElrhF5wqf8SwO8x7Pc3kNh2LM88dX9LSB2kAmXAbjjwC9o/BCAgV/CN8M3wxLSY3S
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR01MB7455.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(366004)(39850400004)(396003)(376002)(346002)(136003)(451199018)(86362001)(8676002)(66556008)(4326008)(66946007)(8936002)(41300700001)(5660300002)(66476007)(2906002)(38100700002)(38350700002)(6486002)(316002)(478600001)(52116002)(107886003)(6666004)(110136005)(54906003)(1076003)(6506007)(2616005)(186003)(6512007)(83380400001)(26005);DIR:OUT;SFP:1102;
+X-Microsoft-Antispam-Message-Info: 	h7xM1aBDdz1hNugzGGdQ6DzivkDgmHdHHf1UfHzWKe7T/RHDyXMutr2sW3qE62njvhnLa1j6Sf9/GEx6pK6vBwbTPyZ8og8atrwHx8AHXEl3ZmisQGrS4DObUn0AcpnmmWmIrrVkXrH82y7ooJC1w6tcCG2Xr8SNo8PdYRr1Q8AA6dDzFtB4Likg1TfpPrEL+xIHi1af4oygEyFQvQ72F6+w9bW1cfsE+ZS2u7yFLBOgOBSRLkg3DCm/rXMzQ2bHB18HTfMJWwSFdDV9aGeU8HhoRdnS4eqOr2v49nMTS1G++bPQdOryrudVn0gKpdjZknPbLgMWrXy6yuIovjyjQ+alMaoHRPhyYUuiN5RgdVhWNzB9FXUVg1iW6RXrVUNceiLjuntoY4zG+G8JL6QqwI4x0vvIIfgw0SWnMAtx8SVhQeXSwhJDgWr0Dc+Lwq3GMXsiWdtxz3QekbS4pGWDkbfQxy8UQxmXOBoBV5vhL5XX6J82KLtI8/hrZy0OGVJTd1zQk6ZDsgZYGgwY0YoCtqi6oNNILR4EEgVspOVkWtUPixN8JlskO879PGAHA+AQqSHDwO0JwEuMQNu8ewHElpr7EI7VFfpiIML0jkp3eqbx8pGjoxOF0jfY2SIUruevt+cvm96O9dhFrtmK2nzop4nVDwYLasjwoXBJqgWt6imWVR/6rNp7SQFiWqdElRgrwYOoo6fBihT1cT6EK83iQ+Ij99Lyv24nsBsQygfJYa4=
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN6PR01MB4973.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(136003)(39850400004)(376002)(366004)(346002)(396003)(451199018)(6486002)(83380400001)(6506007)(1076003)(107886003)(6512007)(26005)(2616005)(41300700001)(6666004)(186003)(52116002)(66946007)(86362001)(2906002)(4326008)(66556008)(8676002)(66476007)(8936002)(5660300002)(38350700002)(38100700002)(478600001)(316002)(110136005)(449214003);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?us-ascii?Q?f/1CKzMNCai8SF7Lhuz7LNDbNdWKXgdvVQhjFWjeVUPnO8uRGa16w/JJYlth?=
- =?us-ascii?Q?NZM1DvGMl0vjiXiw+PP4JMso11BH8I0bG/+2qF22ue9q5F3ZEM+cQjp0q0gq?=
- =?us-ascii?Q?3kD8oOpWo2Gq2A52cXtNdX6N9YZhbbGacbhi6c0/ditGuu1UndxcbpC1kM+J?=
- =?us-ascii?Q?a9ZmHwMN+H5esB78aO4EV+/gwOq0x8WDUclGHJ/JQr5Rt22A1KpW/wcoBUkr?=
- =?us-ascii?Q?vEBDtEXpt1ljOtlBI3jvAGcLT5gyYZcPnBjZpTjIEG5j7uIUo8NFLORLz7xc?=
- =?us-ascii?Q?fb/+zWi5S9DJUYdQsvsSvf0f/3zVhRff3Q9olairPyi8iHajucTHPjOa64Bl?=
- =?us-ascii?Q?shlr0YPwSH+fHYsXMkC4jcs61SDCsoWGp7evEOPgJLs10z68ypCgJhceOFr3?=
- =?us-ascii?Q?7nnO2/yEzwp1oRfhdmfXgoAPsD0LwegD2HPBUE7m7h1InC7z1FMrY3k4YrsV?=
- =?us-ascii?Q?5ZzZsYQN1M2R3wrbHGIYhxm9NB0WNW1UrBvUBYraNZ8iej2MSq16mLotqkEo?=
- =?us-ascii?Q?/P9P7ZiNQxAfGCVrUQmFYO0HRPGFolmY9FQrqV4Ke1F4M2vblpZgYUqSJg1p?=
- =?us-ascii?Q?m23cR1XE33v203emTwVoBrWaWWRMj1X6sioREjP42os3WwnrFC0VBLOLa8Dd?=
- =?us-ascii?Q?HO6chYt58g2u7HU0vdvjO1lsyzPERpqudLWcmjGrv/uA99wyJWwMFYYUiI5K?=
- =?us-ascii?Q?My2HYjnKCaif0fzn8vG0u6CiHxf2pe9If0FNrlpBrfHupQh4pefNTGVqM7Qx?=
- =?us-ascii?Q?GDd073vNjx9xEYD5yXHeypoZXyBR4ozXe0wN8e+ApuXrONRdXU2z3vcuAfFd?=
- =?us-ascii?Q?V0farP09ySA8NLjkeVIW74r2hk+on4YXebHxBZPSGJysi89XiXQfL+TOLflo?=
- =?us-ascii?Q?NrwDTRe/AkYv63Dc6ctptsDocM8/YpcwRSN7VzH1LFk7qSaddERD+0m7A/aA?=
- =?us-ascii?Q?NuxEg0iM52Mx3UPoGe47c9ofO163uJk/nr7k3yJ4acomH5OBI+YviA4UdLEf?=
- =?us-ascii?Q?DAl0PrlKHJD7tuJ49fu9/7f+WfbcU2EIaMw8w/3n0Ve7VO58wqwL69Ru0/N9?=
- =?us-ascii?Q?DzUxd+BjsG3dW5fEmavwg5saoNw/8Fdr8wt1MO4LN3V0BBntd7jCPIWaYqoU?=
- =?us-ascii?Q?MAlWh8DsomFqdTXKwsetlLFC3muj1lWXBY4bxK0zcWTb7NJA1dkB3nZaVMzJ?=
- =?us-ascii?Q?YCrm8OCtyQFCCB78tM487gL/rss0gLwpCtb3Rr0RyPFw5mOT9PwyePY+RsBm?=
- =?us-ascii?Q?6rim/54yPrULyiAefBIiAkjKUuInwd2c0K/JF6Vev1twtNwt6xgjFfr9IjhG?=
- =?us-ascii?Q?onNlYuIPf2YGq8d/XKY3FADsCGIcDK8Jk5rOcL9BukHFpre5xxah3v1Wci8v?=
- =?us-ascii?Q?cR2QI3Bm0imeYuJY0hxHylp9esvx4ho3usyetdbfAR2guSVKMip0xaMcQsmm?=
- =?us-ascii?Q?08bPD9j9I0ME7FNPnlvumrFEUjTK0vUwzwKWZYIiXx+jg3cEjGAYRGyuysLF?=
- =?us-ascii?Q?YmPPOVzkVy2DU963TsQzO90+ng3VNZrFMnom2DH+kk74Tr4UwUzOdUQTvZRQ?=
- =?us-ascii?Q?gLlV05+fnh5pNg45VarMOz6x4UPC/TA9TAx7LJzgtBT4CIyyjzsOXLQCLjvZ?=
- =?us-ascii?Q?kQKPclaFqOgKFw8nlGBzSj8=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?us-ascii?Q?Qanpld+8sPZENtfjR0v+3ds6OEfSrrlluLsD2kbeSfsOuiIZs2k2baY8iA2N?=
+ =?us-ascii?Q?Ys8DHcaI8DnOl6x9Eqea/XznvsAHKbsfOBA635+x7peuBIcwGLAFYedD1zmw?=
+ =?us-ascii?Q?BIipWB1cSkahdcI9IAHrk1OMLItWNX3fqb7TVm79zOehW7uUAHS8B56Gapek?=
+ =?us-ascii?Q?4kHbVXEf0SVNan5IjcbbwbS6vug3jP/V8rFkJWQ0XxnfjUptODrTTiSkSWLs?=
+ =?us-ascii?Q?CWBFHHjFcB7/F34E8Hwjfb2hShvF49a4SNB7vPem+BWRFJn/9fQzM5Z38/G/?=
+ =?us-ascii?Q?2xL+gmAZJJ1Ek3G0Vr4QaCpJzShF6wDUoC3dngSoTkTb1XbgoiJ+pH52jI5w?=
+ =?us-ascii?Q?kTFXXcS6qpEFK7YKM2UGIueVNHlTBLAkMttzc1rtKVuuadU7V2ZL/Yicz+cP?=
+ =?us-ascii?Q?4swYN2ZnAuB4N41O1/yCOOoMgYADfr16TsJU+Qe2iOUzd5e+vMIxXJoQQXTv?=
+ =?us-ascii?Q?KZCbRm5VFDfdCFGKhxM6DVexj3gZMjSVeAmEHQbVef9WR67V1nzIh2i+Xf91?=
+ =?us-ascii?Q?nHyVCLLJXgWyUFHRC2v+PPxeBTsnqJG85xycxri9btH0SOZS4u+fE/aCitm7?=
+ =?us-ascii?Q?Sab5o3kPeaU3hlJng8PaBOXkL+5Cu04RF7+hCm2wORx3DyDuDopO6RxdrGcm?=
+ =?us-ascii?Q?uz5YP1jrh/6D1hNW1HwAIiu9tO1yhkOGr/Z7cWzF5SGfpP5hyXckBnxFmcbp?=
+ =?us-ascii?Q?vHFht9qndfzCvR40jv/erltlYMlWSTFzAi1VW7JCsvdH1mQ05ngW/D45mfI+?=
+ =?us-ascii?Q?9hgeZW0uTxphjRkn7CVO1Tk2wlK1bc14HsUcOUMvzkB8u+otfI4gAlRH5eln?=
+ =?us-ascii?Q?G8PWv0ERCVm+W4DrMcShzmKqVmla6M6MsqmL//JSp4Oy+yv6bKaRN4+CsZWK?=
+ =?us-ascii?Q?jEEuChNeBbJaWI3+A8V9u/wWSZ8qTW3wnSTn0K3NzxVibZ1vts0JVn/zTTjj?=
+ =?us-ascii?Q?xTQX6vLUgIhO09TBo8waPhdsTZZjwnnE8Oy2JS85gEnXq/KNp0HmKnb32IpM?=
+ =?us-ascii?Q?ISZka3177F6l3TOdxQKQWXi+9NU/IIT4/iQL9nzb490qho+b2gLf7onT1s+z?=
+ =?us-ascii?Q?sGvlN8viLrEhVIrNIUO1sIjOP6Cc4alYiKvpzJZE9LS/A4yzSrNHiMgZ437z?=
+ =?us-ascii?Q?dCF+0UaM0EE1ia1dcNWaRRrdKdIN+zco1W8WDRDadNSOmQ1VSNyPYKnAGb+p?=
+ =?us-ascii?Q?4loAuA4pN/0uOg6lrWUt95tvBtv3k6HrfcOMOLeE8+6uX366vNJebeg/O2LJ?=
+ =?us-ascii?Q?xpToZpv0foEwEUWn0/8rPJVmlYSh9IuJjN+CCiwvR/NKu1FmowHRf+3gh+8B?=
+ =?us-ascii?Q?7jmR7qNHcVPV94b1mKkNqa8eTkKOOBuVy0kVLzsooHt7k6c2J+c2X/SpEw05?=
+ =?us-ascii?Q?cF0h4cffcFcc73koDhm3WigQ0nEj7kf1w2rXJtGd5sFl7pkCc2HigRvW0E8/?=
+ =?us-ascii?Q?uAswXlbJuX2xIwguc6kHN2vtULqOxmyFCEQg6cjo+d0Qd7y8wnErS0elxH8z?=
+ =?us-ascii?Q?QQaiue5r8lST+Te6lMMG65v3J5vD4svxj2iro2dl+DxAZD7kXWfc1nKCrW6h?=
+ =?us-ascii?Q?sHFHdS4xbpPFjjwNf4NPVeCdVxZTaohXsqet+dhSEcNV6iLPQC5xqks1K3Q1?=
+ =?us-ascii?Q?w6WeIiReT/e4AfKDed3If1k=3D?=
 X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fd5f7b3b-316d-4fe3-0989-08db196d0dfb
-X-MS-Exchange-CrossTenant-AuthSource: SN4PR01MB7455.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8be8fdfb-7961-4263-79d3-08db1976913e
+X-MS-Exchange-CrossTenant-AuthSource: SN6PR01MB4973.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Feb 2023 09:20:38.3980
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Feb 2023 10:28:43.8089
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: QD1Sb56xnuBVKhhvyqMA8F1ySdInS5khIjFne4m92pEuvNyouhi9ZEMgz8Q79oLiKBlEp+SeKFdtTjdxnA0/CnlQqglcc4GaDNuMGR6zcQE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR01MB7780
+X-MS-Exchange-CrossTenant-UserPrincipalName: zKvFNl7Gdnd1m5S02Rqx9IRgT52VTYJqMRVgbqzCl7GTJ6+FsA7xdRVOEHyYfNgOm7poCcl2Wk99zBzQ5jO9ATmvVMywUFELkDzaA9+d5aaPTh9lD3DvylXB1sZ5wMZl
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR01MB6703
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -127,147 +125,94 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Thang Nguyen <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>
+Cc: Chanh Nguyen <chanh@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Adds event_dimm[0-15]_syndrome sysfs to report the failure syndrome
-to BMC when DIMM training failed.
+Support the mac3 (RGMII4) as an NC-SI stack instead of an MDIO PHY.
 
-Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
----
-v2:
-  + Change "to initialized" to "to initialize"            [Paul]
-  + Corrected kernel version to 6.3                  [Greg,Paul]
-  + Corrected variables type to 'unsigned int"            [Paul]
----
- .../sysfs-bus-platform-devices-ampere-smpro   | 10 +++
- drivers/misc/smpro-errmon.c                   | 77 +++++++++++++++++++
- 2 files changed, 87 insertions(+)
+The OCP slot #0 and OCP slot #1 use a common the BMC_NCSI signal,
+so we use only one of them at the same time. The OCP slot #0 will
+be enabled by PCA9539's setting by default.
 
-diff --git a/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro b/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
-index 5a8d1af49a2b..44101d3fed22 100644
---- a/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
-+++ b/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
-@@ -265,6 +265,16 @@ Description:
- 		For more details, see section `5.7 GPI Status Registers and 5.9 Memory Error Register Definitions,
- 		Altra Family Soc BMC Interface Specification`.
- 
-+What:		/sys/bus/platform/devices/smpro-errmon.*/event_dimm[0-15]_syndrome
-+KernelVersion:	6.3
-+Contact:	Quan Nguyen <quan@os.amperecomputing.com>
-+Description:
-+		(RO) The sysfs returns the 2-byte DIMM failure syndrome data for slot
-+		0-15 if it failed to initialize.
-+
-+		For more details, see section `5.11 Boot Stage Register Definitions,
-+		Altra Family Soc BMC Interface Specification`.
-+
- What:		/sys/bus/platform/devices/smpro-misc.*/boot_progress
- KernelVersion:	6.1
- Contact:	Quan Nguyen <quan@os.amperecomputing.com>
-diff --git a/drivers/misc/smpro-errmon.c b/drivers/misc/smpro-errmon.c
-index 1635e881aefb..a1f0b2c77fac 100644
---- a/drivers/misc/smpro-errmon.c
-+++ b/drivers/misc/smpro-errmon.c
-@@ -47,6 +47,12 @@
- #define WARN_PMPRO_INFO_LO	0xAC
- #define WARN_PMPRO_INFO_HI	0xAD
- 
-+/* Boot Stage Register */
-+#define BOOTSTAGE		0xB0
-+#define DIMM_SYNDROME_SEL	0xB4
-+#define DIMM_SYNDROME_ERR	0xB5
-+#define DIMM_SYNDROME_STAGE	4
-+
- /* PCIE Error Registers */
- #define PCIE_CE_ERR_CNT		0xC0
- #define PCIE_CE_ERR_LEN		0xC1
-@@ -468,6 +474,61 @@ EVENT_RO(vrd_hot, VRD_HOT_EVENT);
- EVENT_RO(dimm_hot, DIMM_HOT_EVENT);
- EVENT_RO(dimm_2x_refresh, DIMM_2X_REFRESH_EVENT);
- 
-+static ssize_t smpro_dimm_syndrome_read(struct device *dev, struct device_attribute *da,
-+					char *buf, unsigned int slot)
-+{
-+	struct smpro_errmon *errmon = dev_get_drvdata(dev);
-+	unsigned int data;
-+	int ret;
-+
-+	ret = regmap_read(errmon->regmap, BOOTSTAGE, &data);
-+	if (ret)
-+		return ret;
-+
-+	/* check for valid stage */
-+	data = (data >> 8) & 0xff;
-+	if (data != DIMM_SYNDROME_STAGE)
-+		return ret;
-+
-+	/* Write the slot ID to retrieve Error Syndrome */
-+	ret = regmap_write(errmon->regmap, DIMM_SYNDROME_SEL, slot);
-+	if (ret)
-+		return ret;
-+
-+	/* Read the Syndrome error */
-+	ret = regmap_read(errmon->regmap, DIMM_SYNDROME_ERR, &data);
-+	if (ret || !data)
-+		return ret;
-+
-+	return sysfs_emit(buf, "%04x\n", data);
-+}
-+
-+#define EVENT_DIMM_SYNDROME(_slot) \
-+	static ssize_t event_dimm##_slot##_syndrome_show(struct device *dev,          \
-+							 struct device_attribute *da, \
-+							 char *buf)                   \
-+	{                                                                             \
-+		return smpro_dimm_syndrome_read(dev, da, buf, _slot);                 \
-+	}                                                                             \
-+	static DEVICE_ATTR_RO(event_dimm##_slot##_syndrome)
-+
-+EVENT_DIMM_SYNDROME(0);
-+EVENT_DIMM_SYNDROME(1);
-+EVENT_DIMM_SYNDROME(2);
-+EVENT_DIMM_SYNDROME(3);
-+EVENT_DIMM_SYNDROME(4);
-+EVENT_DIMM_SYNDROME(5);
-+EVENT_DIMM_SYNDROME(6);
-+EVENT_DIMM_SYNDROME(7);
-+EVENT_DIMM_SYNDROME(8);
-+EVENT_DIMM_SYNDROME(9);
-+EVENT_DIMM_SYNDROME(10);
-+EVENT_DIMM_SYNDROME(11);
-+EVENT_DIMM_SYNDROME(12);
-+EVENT_DIMM_SYNDROME(13);
-+EVENT_DIMM_SYNDROME(14);
-+EVENT_DIMM_SYNDROME(15);
-+
- static struct attribute *smpro_errmon_attrs[] = {
- 	&dev_attr_overflow_core_ce.attr,
- 	&dev_attr_overflow_core_ue.attr,
-@@ -493,6 +554,22 @@ static struct attribute *smpro_errmon_attrs[] = {
- 	&dev_attr_event_vrd_hot.attr,
- 	&dev_attr_event_dimm_hot.attr,
- 	&dev_attr_event_dimm_2x_refresh.attr,
-+	&dev_attr_event_dimm0_syndrome.attr,
-+	&dev_attr_event_dimm1_syndrome.attr,
-+	&dev_attr_event_dimm2_syndrome.attr,
-+	&dev_attr_event_dimm3_syndrome.attr,
-+	&dev_attr_event_dimm4_syndrome.attr,
-+	&dev_attr_event_dimm5_syndrome.attr,
-+	&dev_attr_event_dimm6_syndrome.attr,
-+	&dev_attr_event_dimm7_syndrome.attr,
-+	&dev_attr_event_dimm8_syndrome.attr,
-+	&dev_attr_event_dimm9_syndrome.attr,
-+	&dev_attr_event_dimm10_syndrome.attr,
-+	&dev_attr_event_dimm11_syndrome.attr,
-+	&dev_attr_event_dimm12_syndrome.attr,
-+	&dev_attr_event_dimm13_syndrome.attr,
-+	&dev_attr_event_dimm14_syndrome.attr,
-+	&dev_attr_event_dimm15_syndrome.attr,
- 	NULL
+Also, enable the OCP Auxiliary Power during booting.
+
+Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
+---
+Changes in v2:
+   - Change PCA9539APW node name.                     [Krzysztof]
+---
+ .../boot/dts/aspeed-bmc-ampere-mtmitchell.dts | 37 ++++++++++++++++++-
+ 1 file changed, 36 insertions(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ampere-mtmitchell.dts b/arch/arm/boot/dts/aspeed-bmc-ampere-mtmitchell.dts
+index 4b91600eaf62..1e0e88465254 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ampere-mtmitchell.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ampere-mtmitchell.dts
+@@ -251,6 +251,14 @@
+ 	pinctrl-0 = <&pinctrl_rgmii1_default>;
  };
  
++&mac3 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rmii4_default>;
++	clock-names = "MACCLK", "RCLK";
++	use-ncsi;
++};
++
+ &fmc {
+ 	status = "okay";
+ 	flash@0 {
+@@ -439,6 +447,26 @@
+ 	status = "okay";
+ };
+ 
++&i2c8 {
++	status = "okay";
++
++	gpio@77 {
++		compatible = "nxp,pca9539";
++		reg = <0x77>;
++		gpio-controller;
++		#address-cells = <1>;
++		#size-cells = <0>;
++		#gpio-cells = <2>;
++
++		bmc-ocp0-en-hog {
++			gpio-hog;
++			gpios = <7 GPIO_ACTIVE_LOW>;
++			output-high;
++			line-name = "bmc-ocp0-en-n";
++		};
++	};
++};
++
+ &i2c9 {
+ 	status = "okay";
+ };
+@@ -530,13 +558,20 @@
+ 	/*V0-V7*/	"s0-hightemp-n","s0-fault-alert","s0-sys-auth-failure-n",
+ 			"host0-reboot-ack-n","host0-ready","host0-shd-req-n",
+ 			"host0-shd-ack-n","s0-overtemp-n",
+-	/*W0-W7*/	"ocp-aux-pwren","ocp-main-pwren","ocp-pgood","",
++	/*W0-W7*/	"","ocp-main-pwren","ocp-pgood","",
+ 			"bmc-ok","bmc-ready","spi0-program-sel","spi0-backup-sel",
+ 	/*X0-X7*/	"i2c-backup-sel","s1-fault-alert","s1-fw-boot-ok",
+ 			"s1-hightemp-n","s0-spi-auth-fail-n","s1-sys-auth-failure-n",
+ 			"s1-overtemp-n","s1-spi-auth-fail-n",
+ 	/*Y0-Y7*/	"","","","","","","","host0-special-boot",
+ 	/*Z0-Z7*/	"reset-button","ps0-pgood","ps1-pgood","","","","","";
++
++	ocp-aux-pwren-hog {
++		gpio-hog;
++		gpios = <ASPEED_GPIO(W, 0) GPIO_ACTIVE_HIGH>;
++		output-high;
++		line-name = "ocp-aux-pwren";
++	};
+ };
+ 
+ &gpio1 {
 -- 
-2.35.1
+2.17.1
 
