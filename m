@@ -2,70 +2,118 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2A6086A4635
-	for <lists+openbmc@lfdr.de>; Mon, 27 Feb 2023 16:40:09 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C1466A557E
+	for <lists+openbmc@lfdr.de>; Tue, 28 Feb 2023 10:21:30 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PQPnz0fsdz3bfp
-	for <lists+openbmc@lfdr.de>; Tue, 28 Feb 2023 02:40:07 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PQsLb6cLbz3cFT
+	for <lists+openbmc@lfdr.de>; Tue, 28 Feb 2023 20:21:27 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=f/jHkhW8;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=bEjHY9jt;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2001:4860:4864:20::30; helo=mail-oa1-x30.google.com; envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7eae::700; helo=nam11-bn8-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=f/jHkhW8;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=bEjHY9jt;
 	dkim-atps=neutral
-Received: from mail-oa1-x30.google.com (mail-oa1-x30.google.com [IPv6:2001:4860:4864:20::30])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on20700.outbound.protection.outlook.com [IPv6:2a01:111:f400:7eae::700])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PQPnK0dLLz307T
-	for <openbmc@lists.ozlabs.org>; Tue, 28 Feb 2023 02:39:31 +1100 (AEDT)
-Received: by mail-oa1-x30.google.com with SMTP id 586e51a60fabf-172afa7bee2so7778234fac.6
-        for <openbmc@lists.ozlabs.org>; Mon, 27 Feb 2023 07:39:30 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PQsKz4Jm8z3bM7
+	for <openbmc@lists.ozlabs.org>; Tue, 28 Feb 2023 20:20:54 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=MtvpOsXmjYoUNwSd+CHAzGEQ4ASd17bvR96bxVcQVYnRmA6ED9Ce1FZxoCIlBMclems+fVfepfvqgOwbIjLEsF7lxFpx7LpNcfAWKAiclifKK4ulSGzcqLojMoiUwThgFzK/A6PANS3+l54R1phKnf3l8cFMXxUib/5IYX/JT+LsMwfJMiNooXWZrwAcVcuHJMUOgzV5o1nho96YrzBmz4RrU6uvP9a9GP5Rso4wnbCbaRzGxlwjDMHMdvITdD+KglDlYYZE0nGLjEata2m4DPWSyfSvL046UuVaR8FOS53MxkbHFHnyEu0B5fRnyym3MXIg+Kw/ibBL754IrnxBRQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lIHvRndMn/09M4y/asnJoV/+PLLpWsf+3HKr/bJuLI0=;
+ b=kmFQiz3/7g1LaGdzH1/B6TKZ9NLJvxOPILsSUC9oFDVGTdVxVqnUn+e7ExuNmvEyJqoGd6YSHVy/sCLyIgDwrgp72bAl0Mg6UcVbyIxbGeWYSzrwVtCo6Xzhf28VUL/9bV9l09G+HUJ5RmhqnjvedR6wwGub6/z4Guti5mpPluLs0cugooSKtkTtVnBBw+sh9fPwB5B5nfEucAr6IRM1WWRG9CE0LC3LWDoSlzKuSVWmVPHFz9A1VL6Tp1ltP45vm5bXQ7UlC96wWDUWjh0RwSQfJ8PucIlCh6A7gXAF/O5GxyyOtJKxDcY+/IJfflocPvqj5+i12IEbKA08VkCb9g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=EWrtMU3m9sbEwfTA6Oyqzjs4HdBbM2rJmOb6/zNiS90=;
-        b=f/jHkhW85uQKpGRjkBlN/n6qV2rJWFWlQrFmh6tX2jpLS3WWzS5tt4Xxj0RxQv924g
-         gKc1godkpDf0egybWDyFhqN4am65yX7O0BoggDDQDH9LgCHDuVw9y2Tznls0iQ4YrcQ6
-         GgzMHKiQTtRzSpft7YxJgS0h2s991x3F2efJREk6NGZE+ymnSy9JjHz5L/+5YJeIhYlh
-         HneU8SjRIDIi7CQm4YzCZHxVXb6YSamvVjbuLzLp6bQIZqOrO1+PTw3+/dEWZ9XDz27v
-         329dwO3Uulwe8OuC0ad/ce0OlT7RWqee3V+DLn7fxdASFdbb0riHMuXjeg5kUIm5LSdt
-         NQEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EWrtMU3m9sbEwfTA6Oyqzjs4HdBbM2rJmOb6/zNiS90=;
-        b=eb+Ic/ugSZxljbrpl05JjtA+rOWLm3LToJqafzJzQwuPQe3YGJ6YO51fDbiDDiHEeM
-         V1wl+NPJFhCPBelQa9YGiqdCPgyxyeduRla/21YvH3Czlfasdoa1DJTYQ8Wa9yYg36lT
-         UaH4GnGBxqsOgqI3Ps6jwdkspik2/nl2AAJxzu2mwQx6gU8+ARrZCXU833uEyeKXyh4e
-         zIi5UggzQVgQGUFbeW8XzTrKXeuAdDVNsDopFtBIj6HzLbBpKsk3L7YXgwHA7xnHF6Ji
-         3UHUdZMGGHR9NHWtAJFUjrqQavYWg/b3s1iAoN2x8wtdt7ON+wYE0GUp9SKHpM4JebFu
-         5utA==
-X-Gm-Message-State: AO0yUKUzMGN+cc9AYcNo5PQnW4F19Rqr9G8uLHAvr/WbMJYJ5rPa8C9U
-	OUQjAK2fWmXsAvDzqFDYA0GBKr3Y9xU=
-X-Google-Smtp-Source: AK7set9vGnH/5I8xXUYa1GVNHP09UHD9fiZpjOFWSnVSQb0y+Mk6R+aSFBOwcIszTjdPAnaSYlTkhw==
-X-Received: by 2002:a05:6870:b150:b0:16e:8b9f:93e1 with SMTP id a16-20020a056870b15000b0016e8b9f93e1mr21382436oal.5.1677512364207;
-        Mon, 27 Feb 2023 07:39:24 -0800 (PST)
-Received: from smtpclient.apple ([129.41.86.0])
-        by smtp.gmail.com with ESMTPSA id g21-20020a056830309500b0068bc48c61a5sm2707566ots.19.2023.02.27.07.39.23
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Mon, 27 Feb 2023 07:39:23 -0800 (PST)
-From: Andrew Geissler <geissonator@gmail.com>
-Message-Id: <A24C6F76-0303-4942-8F77-6D33A641B4F1@gmail.com>
-Content-Type: multipart/alternative;
-	boundary="Apple-Mail=_551F3FC9-4936-4880-88D0-9DD3FD044EF0"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.1\))
-Subject: Re: Regarding Code Coverage metrics for OpenBMC firmware
-Date: Mon, 27 Feb 2023 09:39:22 -0600
-In-Reply-To: <CAGugOWv-Fqbgb5HyujtfahXH8hLbhdsi9u2AtVahNL3jN=Gzhw@mail.gmail.com>
-To: Satish Yaduvanshi <satishroyal4u@gmail.com>
-References: <CAGugOWv-Fqbgb5HyujtfahXH8hLbhdsi9u2AtVahNL3jN=Gzhw@mail.gmail.com>
-X-Mailer: Apple Mail (2.3696.120.41.1.1)
+ d=os.amperecomputing.com; s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lIHvRndMn/09M4y/asnJoV/+PLLpWsf+3HKr/bJuLI0=;
+ b=bEjHY9jt2YCbN3NMa+LDV6eBSOPrypkrGBTiy+9CUAvDHUkes7wsUq8oueLEEWesV9BTVelzuIqXn6WFcWTmJ0/tkgchQRrDlgM9WqD5j4+UyWCsbbEadk89s56PEaMJkU7ovcrnrL2u18+uePboaaOor/4s+mzKhq6CQG8JTwE=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
+Received: from SN4PR01MB7455.prod.exchangelabs.com (2603:10b6:806:202::11) by
+ MN0PR01MB7780.prod.exchangelabs.com (2603:10b6:208:37f::21) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6134.30; Tue, 28 Feb 2023 09:20:30 +0000
+Received: from SN4PR01MB7455.prod.exchangelabs.com
+ ([fe80::ff57:42f9:7d6d:de10]) by SN4PR01MB7455.prod.exchangelabs.com
+ ([fe80::ff57:42f9:7d6d:de10%3]) with mapi id 15.20.6134.028; Tue, 28 Feb 2023
+ 09:20:30 +0000
+From: Quan Nguyen <quan@os.amperecomputing.com>
+To: Quan Nguyen <quan@os.amperecomputing.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Joel Stanley <joel@jms.id.au>,
+	Andrew Jeffery <andrew@aj.id.au>,
+	linux-kernel@vger.kernel.org,
+	openbmc@lists.ozlabs.org,
+	Open Source Submission <patches@amperecomputing.com>
+Subject: [PATCH v2 0/2] Add DIMM 2x refresh event and failure syndrome
+Date: Tue, 28 Feb 2023 16:20:08 +0700
+Message-Id: <20230228092010.1863419-1-quan@os.amperecomputing.com>
+X-Mailer: git-send-email 2.35.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: SGXP274CA0021.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b8::33)
+ To SN4PR01MB7455.prod.exchangelabs.com (2603:10b6:806:202::11)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN4PR01MB7455:EE_|MN0PR01MB7780:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0d8b8c0b-0960-4997-571b-08db196d0968
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 	Gbjh5YZXe2G8Q1D4Ph7cLtqrMoSvuElOczLXXK8bqr0e5eiv10P+b0idvdnoriseTp3irK1TZ9DrBfo/xFbFe1u+WnoSoiuRM1iGX04VHvl8V8JW5+6R+wZ6EHgl8uDm+JR0zmfI/C7LHDdkZzK6MZVxFD90VoU7SvPchFunK/LRFsx49tpXz3X8BuEq1ieM+oQBfHZto7fg4IoC+0ddZSqrErGApwKhi+elD9oBerVHxpI8rkK5rmZ9wXxuTD3CDynH6xdC7uEh0x0IOwYymi4l8Hi6PBOuJJU5GkYC+RphHQfXIL07iBMHNrBzhxIfug5WwGe+uXtpsv2cBnswYKwAtNyHXUUbSRjGcn6VDr1pVGg3k/cbP+1PJVpzNKDkReMFwNuk12Bcgq/pW1sLjCjBcsHmJlujCm7v2mo2aSoGfFONAXl0npOBYrSksHA30GLTCE3qCNiJrtI80O2efoYexaKhmhunyL8UBoURc2sCrJUaN/D+A/bb2HWqm8cdanE34IFm38bYwRlLe2fRbOkuBLdfqDc4ybK8zGvOkHzLgKlKMLD/hkKTKMR5skeUPtEG5gijQd3SUZkPRsOHBOd+gfp2Yx3uT4S2uXnoXpgQL0vVF47Rj6ph23olX+GMyCbPMxIVMdVdlFt9Z8H+D+UDoelYStjh8F3+axQgsXYfc3MR1SYC2ivPwN7UXseF
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR01MB7455.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(366004)(39850400004)(396003)(376002)(346002)(136003)(451199018)(86362001)(8676002)(66556008)(4326008)(66946007)(8936002)(41300700001)(5660300002)(66476007)(4744005)(2906002)(38100700002)(38350700002)(966005)(6486002)(316002)(478600001)(52116002)(107886003)(6666004)(110136005)(54906003)(1076003)(6506007)(2616005)(186003)(6512007)(83380400001)(26005);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?us-ascii?Q?0pPIDILb3gg8n2CnI+ODCNPDVyzUOIy/slGClcYe9q1ehnpL7tc7UZi8IcLA?=
+ =?us-ascii?Q?/tEvLKiA6KuG+M/HI+l+oywchwI/0iBJM8BREGmm5WUZBOXGyKmK3H5rWcQP?=
+ =?us-ascii?Q?7wIjG3SXtY2cspflYWxZCeh3COGEZv+gx+eoyR/bYeTQBymAdPoJfnCm6g+h?=
+ =?us-ascii?Q?pJk+AIh+p0zWbcb8jGw7UHkxADy20jVSFvCR+k3/8g8gaHyFLgotr6eD5r6B?=
+ =?us-ascii?Q?rnifDgkLyMoFLevr/+q9S8gKYP7ldpx2ZdsnZCNFQKS8DeyJMpiN5lGLbZLs?=
+ =?us-ascii?Q?hoj5PSNIeU0e7lU+OFRrVZ/lJBljiWuZeQc5rnkpsmrRt8YnGcUxZrS+1WyL?=
+ =?us-ascii?Q?5tvNnWQcvV1PoONrqqSxPNTBr18NJORnTWrgB3tHP2YhipdxEsYMot41UxFE?=
+ =?us-ascii?Q?4SUeHMlKDs0FayCt2J2OuRLY/xx8yi07rllx0emg0OeVAG7oaHP2djVSTWzK?=
+ =?us-ascii?Q?IuS1E0k9ceHAip5BEcxoSy8CW8bN6RD2zI9284zAwKISl9SV0+F+PR20Mf6c?=
+ =?us-ascii?Q?pewjxh4Pv6Fl4IPJrmDkpP1bRDZ/s2RrJdezaN7XeSq69pvf4ZR6Kw9wAfYu?=
+ =?us-ascii?Q?kBGbrGpI4h2A+59oRTQjV09Hd0oobKwoGVyWaPF4B1Z1hriSVMOQvzcPwHOR?=
+ =?us-ascii?Q?Spsh/F810q/zKJC2alQdyjnPUnzToDTFG0JmZCgL8BWv1QPlUGHuCkzY3pHD?=
+ =?us-ascii?Q?uxfnez28SFi3EcuOqL/MBlpxJC+WbyRckgcG4/CwnEf/AK/+ImmhFuY1W4tS?=
+ =?us-ascii?Q?rTvvDW70qzAcbvu5QTLOGFTShk4P6Tw4A4YSLq2fEoq9gojm3WZ1InjAQfkm?=
+ =?us-ascii?Q?L9py1sZE7FPVSDcE+2/swYMx3fGtrl1eB+By5JGr5dUj6FtSQgPAjhqfGGjE?=
+ =?us-ascii?Q?cbRtB6102oqnXwdKl9lflYJjd7zPphNK4xTNH2zBoZOvFkDoXvrQYe2f+yyU?=
+ =?us-ascii?Q?38Jd27vsRkCA1bIfjmhKfkzr4brcOi+SoissIRXPsbRa3tmbhe522IbLnq0C?=
+ =?us-ascii?Q?bkk1iMO7bQkOe4kYX/DGrLdQeHvoWv/+LAS7oy2B4yhJzuv0uEaUFPOB3EDn?=
+ =?us-ascii?Q?xjfxjriHNjCYNO3yhoDfSzYrGTLnWISXLDCwuWTY1y8tH6QsbQUhRlJOFxoJ?=
+ =?us-ascii?Q?f1oGw9I5rn49Xb9iDrFgHA9JmVVk+aEu5sZlN1MeedruMzme8PwJpEWGjVai?=
+ =?us-ascii?Q?qC9qMKlHvTNpMk6CAz+M08M1eSBfKHEqzmRRYGt6DzX+3QHLZx2HftEZg8/Z?=
+ =?us-ascii?Q?H7VxczSbGlefrRNnld3LwR8ApSII2u8pnBCncsXO6i/0Dmf/okjkMOVye7WL?=
+ =?us-ascii?Q?cT37Tvw60ZYkyKUFdpGNPKdeMejKXCb0DF/mTyTuaC6U4AB0NA5kvwpAHgyK?=
+ =?us-ascii?Q?n868I7wQjyWjkSTywEDjhf5+guA9jUTdrt2WToQVx5d5Qr33jmFtl3qSrQmk?=
+ =?us-ascii?Q?s+V0KsPjsQqzY/lSxOgWwPYp7weeQWPY/ff3NFjOvuSGJPvBH2T24tn7IJtf?=
+ =?us-ascii?Q?U6J0hGVr89q7n6Vrpfsw/IxdS7JHJ2L8qE39tPYvyjUNnjQAwvsNp9lNQPJi?=
+ =?us-ascii?Q?wAytRG59+F6YzJKk16ecBygphrU3Wtb/bU31OC8HZflXK/8lxQ2OIlUsvP1V?=
+ =?us-ascii?Q?7aji6F1WkMC+fkNiACnbaZQ=3D?=
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0d8b8c0b-0960-4997-571b-08db196d0968
+X-MS-Exchange-CrossTenant-AuthSource: SN4PR01MB7455.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Feb 2023 09:20:30.7862
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: d7anci2Dyvc3o9G9FC27xxJNGU4SXVv3b+1rYjPhPiuCEW4oYfJTT/SMWIhbFllM/O4ZIyHIUFEX7uZuXBSHD6MCSsWDpMUiAr3acs+d+Kw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR01MB7780
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,95 +125,30 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
+Cc: Thang Nguyen <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Adds event_dimm_2x_refresh sysfs to report doubling of DIMM refresh
+rate on high temperature condition and event_dimm[0-15]_syndrome sysfs
+to report the DDR failure syndrome to BMC when DIMM training failed.
 
---Apple-Mail=_551F3FC9-4936-4880-88D0-9DD3FD044EF0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+Discussion for v1:
+https://lore.kernel.org/lkml/20230214064509.3622044-1-quan@os.amperecomputing.com/T/
 
+v2:
+  + Change "to initialized" to "to initialize"            [Paul]
+  + Corrected kernel version to 6.3                  [Greg,Paul]
+  + Corrected variables type to 'unsigned int"            [Paul]
 
+Quan Nguyen (2):
+  misc: smpro-errmon: Add DIMM 2x Refresh rate event
+  misc: smpro-errmon: Add dimm training failure syndrome
 
-> On Feb 26, 2023, at 9:31 AM, Satish Yaduvanshi =
-<satishroyal4u@gmail.com> wrote:
->=20
->=20
-> Hi All ,
->=20
-> Could any one of you help  on how to capture the code coverage metrics =
-for  openbmc firmware. Is there any documentation/procedure on it?
+ .../sysfs-bus-platform-devices-ampere-smpro   | 19 ++++-
+ drivers/misc/smpro-errmon.c                   | 82 +++++++++++++++++++
+ 2 files changed, 98 insertions(+), 3 deletions(-)
 
-There is periodic jenkins job that runs and captures all of the coverage =
-we currently have. The latest info can be found out at:
+-- 
+2.35.1
 
-  =
-https://jenkins.openbmc.org/job/latest-unit-test-coverage/lastSuccessfulBu=
-ild/artifact/openbmc-build-scripts/scripts/unit-test-meta-data/
-
-You have to dig for the data though in each repo, for example:
-
-  =
-https://jenkins.openbmc.org/job/latest-unit-test-coverage/lastSuccessfulBu=
-ild/artifact/openbmc-build-scripts/scripts/unit-test-meta-data/phosphor-st=
-ate-manager/build/meson-logs/coveragereport/index.html
-
-This data is captured as a part of the standard CI unit test script.
-
->=20
-> Thanks,
-> Satish Kumar Gampa
->=20
-
-
---Apple-Mail=_551F3FC9-4936-4880-88D0-9DD3FD044EF0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=us-ascii
-
-<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
-charset=3Dus-ascii"></head><body style=3D"word-wrap: break-word; =
--webkit-nbsp-mode: space; line-break: after-white-space;" class=3D""><br =
-class=3D""><div><br class=3D""><blockquote type=3D"cite" class=3D""><div =
-class=3D"">On Feb 26, 2023, at 9:31 AM, Satish Yaduvanshi &lt;<a =
-href=3D"mailto:satishroyal4u@gmail.com" =
-class=3D"">satishroyal4u@gmail.com</a>&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div class=3D""><div dir=3D"ltr" =
-class=3D""><br clear=3D"all" class=3D""><div class=3D"">Hi All =
-,</div><div class=3D""><br class=3D""></div><div class=3D"">Could any =
-one of you help&nbsp; on how to capture the code coverage metrics =
-for&nbsp; openbmc firmware. Is there any documentation/procedure on =
-it?</div></div></div></blockquote><div><br class=3D""></div><div>There =
-is periodic jenkins job that runs and captures all of the coverage we =
-currently have. The latest info can be found out at:</div><div><br =
-class=3D""></div><div>&nbsp; <a =
-href=3D"https://jenkins.openbmc.org/job/latest-unit-test-coverage/lastSucc=
-essfulBuild/artifact/openbmc-build-scripts/scripts/unit-test-meta-data/" =
-class=3D"">https://jenkins.openbmc.org/job/latest-unit-test-coverage/lastS=
-uccessfulBuild/artifact/openbmc-build-scripts/scripts/unit-test-meta-data/=
-</a></div><div><br class=3D""></div><div>You have to dig for the data =
-though in each repo, for example:</div><div><br =
-class=3D""></div><div>&nbsp;&nbsp;<a =
-href=3D"https://jenkins.openbmc.org/job/latest-unit-test-coverage/lastSucc=
-essfulBuild/artifact/openbmc-build-scripts/scripts/unit-test-meta-data/pho=
-sphor-state-manager/build/meson-logs/coveragereport/index.html" =
-class=3D"">https://jenkins.openbmc.org/job/latest-unit-test-coverage/lastS=
-uccessfulBuild/artifact/openbmc-build-scripts/scripts/unit-test-meta-data/=
-phosphor-state-manager/build/meson-logs/coveragereport/index.html</a></div=
-><div><br class=3D""></div><div>This data is captured as a part of the =
-standard CI unit test script.</div><br class=3D""><blockquote =
-type=3D"cite" class=3D""><div class=3D""><div dir=3D"ltr" class=3D""><div =
-class=3D""><br class=3D""></div><div class=3D"">Thanks,</div><div =
-class=3D"">Satish Kumar Gampa</div><div dir=3D"ltr" =
-data-smartmail=3D"gmail_signature" class=3D""><div dir=3D"ltr" =
-class=3D""><div class=3D""><div dir=3D"ltr" class=3D""><div =
-class=3D""><div dir=3D"ltr" class=3D""><div dir=3D"ltr" class=3D""><div =
-dir=3D"ltr" class=3D""><div dir=3D"ltr" class=3D""><div class=3D""><font =
-face=3D"arial black, sans-serif" class=3D""><br =
-class=3D""></font></div></div></div></div></div></div></div></div></div></=
-div></div>
-</div></blockquote></div><br class=3D""></body></html>=
-
---Apple-Mail=_551F3FC9-4936-4880-88D0-9DD3FD044EF0--
