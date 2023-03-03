@@ -2,56 +2,65 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CEB036AA3F2
-	for <lists+openbmc@lfdr.de>; Fri,  3 Mar 2023 23:10:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B9C716AA5A5
+	for <lists+openbmc@lfdr.de>; Sat,  4 Mar 2023 00:31:31 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PT2Gc5RDMz3f3c
-	for <lists+openbmc@lfdr.de>; Sat,  4 Mar 2023 09:10:32 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PT4414SJrz3ccs
+	for <lists+openbmc@lfdr.de>; Sat,  4 Mar 2023 10:31:29 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Qesop7JB;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kaod.org (client-ip=178.32.125.2; helo=smtpout1.mo529.mail-out.ovh.net; envelope-from=clg@kaod.org; receiver=<UNKNOWN>)
-Received: from smtpout1.mo529.mail-out.ovh.net (smtpout1.mo529.mail-out.ovh.net [178.32.125.2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.55.52.93; helo=mga11.intel.com; envelope-from=lkp@intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Qesop7JB;
+	dkim-atps=neutral
+Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PT2GC1Vgpz3cJv
-	for <openbmc@lists.ozlabs.org>; Sat,  4 Mar 2023 09:10:08 +1100 (AEDT)
-Received: from mxplan5.mail.ovh.net (unknown [10.109.138.188])
-	by mo529.mail-out.ovh.net (Postfix) with ESMTPS id E32522147F;
-	Fri,  3 Mar 2023 21:52:42 +0000 (UTC)
-Received: from kaod.org (37.59.142.95) by DAG4EX2.mxp5.local (172.16.2.32)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.21; Fri, 3 Mar
- 2023 22:52:41 +0100
-Authentication-Results: garm.ovh; auth=pass (GARM-95G001d732c472-8cab-4b6b-bb7d-bfc5848c7217,
-                    D247C90D5DACFD620130D6A3F59DE8A1FE9C6D23) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 86.250.25.177
-Message-ID: <6a1826c6-3951-03eb-d38c-56e7517c3c6e@kaod.org>
-Date: Fri, 3 Mar 2023 22:52:41 +0100
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PT43G0KWkz3cJv
+	for <openbmc@lists.ozlabs.org>; Sat,  4 Mar 2023 10:30:45 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1677886250; x=1709422250;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=MsnQ6U1QZT1glkU3UUvrlM2HfAZTPpjEe/eFE0RMVB4=;
+  b=Qesop7JBxHUV6AWLhSALwRkPGAqAA2Lhk/vAG5UIVvsdOrNsjjMoG6oD
+   202q4fZ8d7JcWn/KRmWEWAgjBdKE6vTVgoyjcMkvFD6IV/UOYhPQooPDW
+   VD2tWkPPlzt7YYvzmEOYhCBg5Smn5dK1UIEYN57oI2jEA9T9ZFS/9r+uU
+   ZBF2WMKH2r7dQhbKbfQAtMOIQK8j7bkaJnrf/f0ZR8Hql38+1i1oVe5Rh
+   oLrXdzz6loZEBgdt4MfozC7bzz6Ge0hgiRnZd7S7aO+fYaK+GWcPeLt1F
+   wm7i80//un4MEcm1bOH4bDwfd2dsTFgNkkSTWp2jxZDs7bnhoysyvdMuw
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="332663671"
+X-IronPort-AV: E=Sophos;i="5.98,232,1673942400"; 
+   d="scan'208";a="332663671"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Mar 2023 15:30:34 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10638"; a="799381485"
+X-IronPort-AV: E=Sophos;i="5.98,232,1673942400"; 
+   d="scan'208";a="799381485"
+Received: from lkp-server01.sh.intel.com (HELO 776573491cc5) ([10.239.97.150])
+  by orsmga004.jf.intel.com with ESMTP; 03 Mar 2023 15:30:28 -0800
+Received: from kbuild by 776573491cc5 with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1pYEr6-0001iy-0d;
+	Fri, 03 Mar 2023 23:30:28 +0000
+Date: Sat, 4 Mar 2023 07:30:01 +0800
+From: kernel test robot <lkp@intel.com>
+To: David Wang <tomato1220@gmail.com>, arnd@arndb.de, olof@lixom.net,
+	soc@kernel.org, robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org
+Subject: Re: [PATCH 2/7] ARM: dts: nuvoton: Add Quanta GSZ BMC Device Tree
+Message-ID: <202303040612.codF6aYF-lkp@intel.com>
+References: <20230303063435.803097-2-davidwang@quantatw.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 03/87] spi: aspeed-smc: Convert to platform remove
- callback returning void
-Content-Language: en-US
-To: =?UTF-8?Q?Uwe_Kleine-K=c3=b6nig?= <u.kleine-koenig@pengutronix.de>,
-	Chin-Ting Kuo <chin-ting_kuo@aspeedtech.com>, Mark Brown
-	<broonie@kernel.org>, Joel Stanley <joel@jms.id.au>
-References: <20230303172041.2103336-1-u.kleine-koenig@pengutronix.de>
- <20230303172041.2103336-4-u.kleine-koenig@pengutronix.de>
-From: =?UTF-8?Q?C=c3=a9dric_Le_Goater?= <clg@kaod.org>
-In-Reply-To: <20230303172041.2103336-4-u.kleine-koenig@pengutronix.de>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [37.59.142.95]
-X-ClientProxiedBy: DAG5EX1.mxp5.local (172.16.2.41) To DAG4EX2.mxp5.local
- (172.16.2.32)
-X-Ovh-Tracer-GUID: 827e19ec-485e-4362-bb35-131486e0838d
-X-Ovh-Tracer-Id: 7794042108611103666
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvhedrudelledgudegkecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfqggfjpdevjffgvefmvefgnecuuegrihhlohhuthemucehtddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefkffggfgfuvfevfhfhjggtgfhisehtkeertddtfeejnecuhfhrohhmpeevrogurhhitgcunfgvucfiohgrthgvrhcuoegtlhhgsehkrghougdrohhrgheqnecuggftrfgrthhtvghrnhepffdufeeliedujeeffffhjeffiefghffhhfdvkeeijeehledvueffhfejtdehgeegnecukfhppeduvdejrddtrddtrddupdefjedrheelrddugedvrdelheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpeduvdejrddtrddtrddupdhmrghilhhfrhhomhepoegtlhhgsehkrghougdrohhrgheqpdhnsggprhgtphhtthhopedupdhrtghpthhtohepuhdrkhhlvghinhgvqdhkohgvnhhighesphgvnhhguhhtrhhonhhigidruggvpdgthhhinhdqthhinhhgpghkuhhosegrshhpvggvughtvggthhdrtghomhdpsghrohhonhhivgeskhgvrhhnvghlrdhorhhgpdhjohgvlhesjhhmshdrihgurdgruhdprghnughrvgifsegrjhdrihgurdgruhdplhhinhhugidqrghsphgvvggusehlihhsthhsrdhoiihlrggsshdrohhrghdpohhpvghnsghmtgeslhhishhtshdrohiilhgrsghsrdhorhhgpdhlihhnuhigqdhsphhisehvghgvrhdrkh
- gvrhhnvghlrdhorhhgpdhlihhnuhigqdgrrhhmqdhkvghrnhgvlheslhhishhtshdrihhnfhhrrgguvggrugdrohhrghdpkhgvrhhnvghlsehpvghnghhuthhrohhnihigrdguvgdpoffvtefjohhsthepmhhohedvledpmhhouggvpehsmhhtphhouhht
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230303063435.803097-2-davidwang@quantatw.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,60 +72,60 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, linux-spi@vger.kernel.org, kernel@pengutronix.de, linux-arm-kernel@lists.infradead.org
+Cc: devicetree@vger.kernel.org, David Wang <davidwang@quantatw.com>, fran.hsu@quantatw.com, tmaimon77@gmail.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, oe-kbuild-all@lists.linux.dev, linux-arm-kernel@lists.infradead.org, benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 3/3/23 18:19, Uwe Kleine-König wrote:
-> The .remove() callback for a platform driver returns an int which makes
-> many driver authors wrongly assume it's possible to do error handling by
-> returning an error code. However the value returned is (mostly) ignored
-> and this typically results in resource leaks. To improve here there is a
-> quest to make the remove callback return void. In the first step of this
-> quest all drivers are converted to .remove_new() which already returns
-> void.
-> 
-> Trivially convert this driver from always returning zero in the remove
-> callback to the void returning variant.
-> 
-> Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Hi David,
 
-Acked-by: Cédric Le Goater <clg@kaod.org>
+Thank you for the patch! Yet something to improve:
 
-Thanks,
+[auto build test ERROR on robh/for-next]
+[also build test ERROR on soc/for-next arm/for-next arm/fixes arm64/for-next/core clk/clk-next kvmarm/next rockchip/for-next shawnguo/for-next xilinx-xlnx/master linus/master v6.2 next-20230303]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-C.
+url:    https://github.com/intel-lab-lkp/linux/commits/David-Wang/ARM-dts-nuvoton-Add-Quanta-GSZ-BMC-Device-Tree/20230303-143845
+base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
+patch link:    https://lore.kernel.org/r/20230303063435.803097-2-davidwang%40quantatw.com
+patch subject: [PATCH 2/7] ARM: dts: nuvoton: Add Quanta GSZ BMC Device Tree
+config: arm-randconfig-r046-20230302 (https://download.01.org/0day-ci/archive/20230304/202303040612.codF6aYF-lkp@intel.com/config)
+compiler: arm-linux-gnueabi-gcc (GCC) 12.1.0
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # https://github.com/intel-lab-lkp/linux/commit/582e8c7ca5de26f639e46b839d9b4c6cbf7e43cf
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review David-Wang/ARM-dts-nuvoton-Add-Quanta-GSZ-BMC-Device-Tree/20230303-143845
+        git checkout 582e8c7ca5de26f639e46b839d9b4c6cbf7e43cf
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-12.1.0 make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash
 
-> ---
->   drivers/spi/spi-aspeed-smc.c | 5 ++---
->   1 file changed, 2 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/spi/spi-aspeed-smc.c b/drivers/spi/spi-aspeed-smc.c
-> index 873ff2cf72c9..3f2548860317 100644
-> --- a/drivers/spi/spi-aspeed-smc.c
-> +++ b/drivers/spi/spi-aspeed-smc.c
-> @@ -787,13 +787,12 @@ static int aspeed_spi_probe(struct platform_device *pdev)
->   	return ret;
->   }
->   
-> -static int aspeed_spi_remove(struct platform_device *pdev)
-> +static void aspeed_spi_remove(struct platform_device *pdev)
->   {
->   	struct aspeed_spi *aspi = platform_get_drvdata(pdev);
->   
->   	aspeed_spi_enable(aspi, false);
->   	clk_disable_unprepare(aspi->clk);
-> -	return 0;
->   }
->   
->   /*
-> @@ -1201,7 +1200,7 @@ MODULE_DEVICE_TABLE(of, aspeed_spi_matches);
->   
->   static struct platform_driver aspeed_spi_driver = {
->   	.probe			= aspeed_spi_probe,
-> -	.remove			= aspeed_spi_remove,
-> +	.remove_new		= aspeed_spi_remove,
->   	.driver	= {
->   		.name		= DEVICE_NAME,
->   		.of_match_table = aspeed_spi_matches,
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
+| Link: https://lore.kernel.org/oe-kbuild-all/202303040612.codF6aYF-lkp@intel.com/
 
+All errors (new ones prefixed by >>):
+
+>> Error: arch/arm/boot/dts/nuvoton-npcm730-gsz.dts:223.1-6 Label or path emc0 not found
+>> Error: arch/arm/boot/dts/nuvoton-npcm730-gsz.dts:231.1-4 Label or path mc not found
+>> Error: arch/arm/boot/dts/nuvoton-npcm730-gsz.dts:239.1-7 Label or path ohci1 not found
+>> Error: arch/arm/boot/dts/nuvoton-npcm730-gsz.dts:243.1-5 Label or path aes not found
+>> Error: arch/arm/boot/dts/nuvoton-npcm730-gsz.dts:247.1-5 Label or path sha not found
+>> Error: arch/arm/boot/dts/nuvoton-npcm730-gsz.dts:251.1-6 Label or path udc5 not found
+>> Error: arch/arm/boot/dts/nuvoton-npcm730-gsz.dts:255.1-6 Label or path udc6 not found
+>> Error: arch/arm/boot/dts/nuvoton-npcm730-gsz.dts:259.1-6 Label or path udc7 not found
+>> Error: arch/arm/boot/dts/nuvoton-npcm730-gsz.dts:263.1-6 Label or path udc8 not found
+>> Error: arch/arm/boot/dts/nuvoton-npcm730-gsz.dts:267.1-9 Label or path pcimbox not found
+>> Error: arch/arm/boot/dts/nuvoton-npcm730-gsz.dts:271.1-8 Label or path sdhci0 not found
+>> Error: arch/arm/boot/dts/nuvoton-npcm730-gsz.dts:366.1-5 Label or path otp not found
+>> Error: arch/arm/boot/dts/nuvoton-npcm730-gsz.dts:384.1-10 Label or path lpc_host not found
+>> Error: arch/arm/boot/dts/nuvoton-npcm730-gsz.dts:1506.1-7 Label or path peci0 not found
+   FATAL ERROR: Syntax error parsing input tree
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
