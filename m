@@ -1,64 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 420816A8F29
-	for <lists+openbmc@lfdr.de>; Fri,  3 Mar 2023 03:26:37 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9FF136A8F23
+	for <lists+openbmc@lfdr.de>; Fri,  3 Mar 2023 03:24:08 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PSX0V4M6Dz3cMK
-	for <lists+openbmc@lfdr.de>; Fri,  3 Mar 2023 13:26:34 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PSWxf3CwZz3cNX
+	for <lists+openbmc@lfdr.de>; Fri,  3 Mar 2023 13:24:06 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm2 header.b=lGhRdofL;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=jZOrXZob;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm2 header.b=N/Z9S/5M;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=ejo7X0yX;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.26; helo=out2-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm2 header.b=lGhRdofL;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=jZOrXZob;
+	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm2 header.b=N/Z9S/5M;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=ejo7X0yX;
 	dkim-atps=neutral
+X-Greylist: delayed 320 seconds by postgrey-1.36 at boromir; Fri, 03 Mar 2023 13:23:29 AEDT
 Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PSWzt0Ffyz3cBq
-	for <openbmc@lists.ozlabs.org>; Fri,  3 Mar 2023 13:26:02 +1100 (AEDT)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.nyi.internal (Postfix) with ESMTP id 9FDC95C00BB;
-	Thu,  2 Mar 2023 21:18:03 -0500 (EST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PSWwx69Fhz30hh
+	for <openbmc@lists.ozlabs.org>; Fri,  3 Mar 2023 13:23:29 +1100 (AEDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id EA5185C0143;
+	Thu,  2 Mar 2023 21:23:27 -0500 (EST)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute1.internal (MEProxy); Thu, 02 Mar 2023 21:18:03 -0500
+  by compute5.internal (MEProxy); Thu, 02 Mar 2023 21:23:27 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	fuzziesquirrel.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm2; t=1677809883; x=1677896283; bh=YU
-	PSNRDb+ylBPSuHV1Aerxf48n/N02bSiMDuAyHZifE=; b=lGhRdofLGU3PPCbmxr
-	tbSxKgHdmUAb8iQ4BuunxK/w2vAnDnbCbVEu6Wc3xeOjZg7ZZSWI7ViGI77i+PGq
-	vPbDzvS0+pORN3eeyoFVkgBVz9dlDQUT7arqB+IyonJ9cZRnV4O+H+gV/DCrqb0g
-	eoWyz1ac1RMDW1fNbqLg8GxuSfFPUEAHFAxwtjTBRzKBQibs1TC7voIJIlzra4eY
-	8XJXoS5yeZaLjan2iSvyDCnB+h70GS6U7r0+Xs55+pLucaXN1qvOkwjhRi4gKpnv
-	CH0JChK4XWWnUaDyaAKpiN9Z4svw3ZSVr1sa+HneVi5eUbKyP7A3nLNBfmDCnf5x
-	B0AA==
+	:subject:subject:to:to; s=fm2; t=1677810207; x=1677896607; bh=LU
+	hdyRXXPmIxczgzVvNPzDvK9UoeqNx7DcS6WwKQiJk=; b=N/Z9S/5MCRRCAD1bu7
+	eLwfV2vxSX2ZE4gNbOc9kaMaEMUGljk9ri5QtQD81WihKWJd06JUubftjGWfrJYA
+	X/MYxeQNkWt5tlb39ra+130D/0LymrCc99pZapF9DOwqtlVl92PaIKj8waAsNa4j
+	oplCti6PwQr5I8aTfhIhEEuvmIbGhLPdSmWlaxk+nIbgC0+vET+4OOizyjBpTEDH
+	vhjc4aDb6TuLrWCG5N8euLYg5rh3rJcIxBpswaIqBqRqqUY3KZLXotPhCYTVQrlE
+	zHwcXC6r9ovGoipzMFFbq1v4irxUKAZcGl6P6jhhnnisMZCB5qr4UQ3iZrlbRX9/
+	Pq4Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
 	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1677809883; x=1677896283; bh=YUPSNRDb+ylBPSuHV1Aerxf48n/N02bSiMD
-	uAyHZifE=; b=jZOrXZobFoTFuM9dy0/fpaZVuepCk3vamr12shUl2w2tUGgJ7VL
-	5a4GfvxtSHfDeL6u03P33ftn0XckjYXwOgZIS7hAMJwYsdS7ZySVvIrCCu7gLJLW
-	gJdJvoYJ6aNcn154Ifra9CJeZVcc1r8CwdI2FPl+TPTSRMDZ5d484h5veEWZUjw6
-	Iv0uTqdll9UILPDE5C/GByouKrZdFMrv1iKV/j9vdAf4acDYvHKaU6LQgeqA4gwm
-	y+fhFwbf+e3uwh7IBHZj+BMxb8SwG9AJ2OvvmAUITo9zyZzzyRPov22oWW4NrMok
-	E+SraUNAV9SF1J58wNr1O/q4UlKsvX2oLWw==
-X-ME-Sender: <xms:21gBZLieOGcHvsdoQ1Jt35ZrB5hODAUrO5a0lTEUPenKxgWzgcEK8A>
-    <xme:21gBZIAAS_tR5tTHsu3-cfxJ6uz0N9oqKQFPhskiJYfZHWdHRZmQSsa0_Zra1mekG
-    4-rHfhREGL5rBkvwbw>
-X-ME-Received: <xmr:21gBZLGOws72v1Egw-WsD0urbzrF0GzEKv2sS1pzngqaTyzOCV08elDUhTGF5z83bitQdQUu737ggOOfJ31iOz-rzGcGUdqIbvJsto8rnWY0lMqogvs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudelkedggeegucetufdoteggodetrfdotf
+	1677810207; x=1677896607; bh=LUhdyRXXPmIxczgzVvNPzDvK9UoeqNx7DcS
+	6WwKQiJk=; b=ejo7X0yXH4Wfbco6xX0IF+RsI4FGrrqebY0nBZiOdIXj/gxs/gK
+	dWR4hSjH8wUSyGoz3fsCPGvA7fovpqGeJ8CDn8E8eboYQwZ9nacbp9kghYOU9zHO
+	eLNjttrH6Vg7p0j7hd/IhreYvFoB7b2UwaypWRiYyJVIQT4f5TUWt+icK/iGQ9t7
+	teSTWv1EZoq6YJtXt563S/cN+j0RJ/CrOTPcEqYmZ6t3nEnWLo8OXMFbIKJlvKCw
+	d96VEmhOMoWio3TqhgiifYvaD5aXy7c0Ow59mlLgl7+zL3ikMiA9Gb1rwKsGH/ak
+	m0f10rxcXMnDil/jBEBxJ/H1SqeopdteGZQ==
+X-ME-Sender: <xms:H1oBZFRvkRVr1mXkxaAp3G0CC-uuYR81JxXgGlqhpOz7DXm_uWojHQ>
+    <xme:H1oBZOz6V5o6R5RczrczP0HwxAKGwrsHeNCFUWnuExfvgej-wgxRST-J8IXghZzfb
+    dE7oB3yrvSIi54wqqg>
+X-ME-Received: <xmr:H1oBZK021rMwxAfOI7Y_azUpXn9zoHfm17HpjBNF4GOuSVG6J_1WgVsKnIklgrZGcW6hfMw1W7VKYJHV7V746KrcrIRpN8m-0N6BVI21RAzatGJcPZc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudelkedggeehucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepkffuhffvveffjghftgfgfgggsehtqhertddtreejnecuhfhrohhmpeeurhgr
@@ -67,21 +68,22 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudelkedggeegucetufdoteggod
     ieehvdehvddtudfguefgieetnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
     hmrghilhhfrhhomhepsghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtgho
     mh
-X-ME-Proxy: <xmx:21gBZIQzGSN13JgCjXae7Inp5ZTP1LEkV2xHpJk2XwGl-BvPLN_E0w>
-    <xmx:21gBZIxL98cp2hdrbPkIEdH641jaIHQKxZZtDoj8yCfmjxg-22yhWQ>
-    <xmx:21gBZO6OIeBoG0RFAs8iSK_JvymHqfkZWeBOLYbQIy9nqoFWy7s5CQ>
-    <xmx:21gBZFqrqbZ35sJnOu5ubnUCqlU3cpWyrX6qvIhcIa4kv7GCKtXwVA>
+X-ME-Proxy: <xmx:H1oBZNAhtLmogZ7NaRZGU7Lq0JDb3L4izy8s2wjzohQXvrhDJJ-4tg>
+    <xmx:H1oBZOgJF7CRVTbweOVGYBTDuUn40GJQsKRmODU-gB9q8jiCOH0Wkg>
+    <xmx:H1oBZBpEfH-UFDR5W8v-_ftJ1UrzXpAYZ-UyguE4XxL1uqynrfxuKw>
+    <xmx:H1oBZCaXn__2CyDQxhLpJtcLisrPNGqDYh9gsqYkxk5rQxKnWD2jsQ>
 Feedback-ID: i02c9470a:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 2 Mar 2023 21:18:02 -0500 (EST)
-Message-ID: <98d5bca2443cfda96791d1640d9817cd44f37c89.camel@fuzziesquirrel.com>
+ 2 Mar 2023 21:23:27 -0500 (EST)
+Message-ID: <3ebbfacc2f0d7119025402fa6b18dfd6b3bb0276.camel@fuzziesquirrel.com>
 Subject: Re: Equinix CCLA Schedule A update
 From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: Zev Weiss <zweiss@equinix.com>, "openbmc@lists.ozlabs.org"
-	 <openbmc@lists.ozlabs.org>
-Date: Thu, 02 Mar 2023 21:18:01 -0500
-In-Reply-To: <20230302223441.GY18848@packtop>
+To: Zev Weiss <zweiss@equinix.com>
+Date: Thu, 02 Mar 2023 21:23:26 -0500
+In-Reply-To: <20230303022200.GZ18848@packtop>
 References: <20230302223441.GY18848@packtop>
+	 <98d5bca2443cfda96791d1640d9817cd44f37c89.camel@fuzziesquirrel.com>
+	 <20230303022200.GZ18848@packtop>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.46.4 
@@ -97,15 +99,15 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Olivier Faurax <Olivier.Faurax@eu.equinix.com>
+Cc: Olivier Faurax <Olivier.Faurax@eu.equinix.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 2023-03-02 at 22:35 +0000, Zev Weiss wrote:
-> Hi Brad,
+On Fri, 2023-03-03 at 02:22 +0000, Zev Weiss wrote:
 >=20
-> An updated CCLA Schedule A for Equinix is attached.
+> Oh, you're right -- I attached the wrong file by mistake.=C2=A0 The
+> actually-updated one is attached now.
 
-Hi Zev.  I couldn't find anything different from the previous one?
+Accepted, thanks!
 
 -brad
