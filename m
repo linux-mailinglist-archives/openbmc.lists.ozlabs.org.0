@@ -1,33 +1,33 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0C3386B38E0
-	for <lists+openbmc@lfdr.de>; Fri, 10 Mar 2023 09:37:00 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 000466B38E6
+	for <lists+openbmc@lfdr.de>; Fri, 10 Mar 2023 09:37:56 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PXztd61cYz3ccw
-	for <lists+openbmc@lfdr.de>; Fri, 10 Mar 2023 19:36:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PXzvk6Fcjz3cjK
+	for <lists+openbmc@lfdr.de>; Fri, 10 Mar 2023 19:37:54 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=H+Wyhxfv;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=c9UzbKyC;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7e8a::705; helo=nam10-bn7-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=H+Wyhxfv;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=c9UzbKyC;
 	dkim-atps=neutral
 Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on20705.outbound.protection.outlook.com [IPv6:2a01:111:f400:7e8a::705])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PXzrx5Jszz3cBF
-	for <openbmc@lists.ozlabs.org>; Fri, 10 Mar 2023 19:35:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PXzry1vz6z3cBF
+	for <openbmc@lists.ozlabs.org>; Fri, 10 Mar 2023 19:35:30 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=Pg/9mmMMd73/u92uTkD5PQ8/JKaNLHguugGYB2RWvgpVr7zhCHWdFXFDYpuiP5fvoWdXHUwAwVaUCsbJ7M8sfrsy3Oec7+B6M0R1Ce16N5X9vSHhu1viq1oWuM/nuTvOXw2phBWiPoQaYCFKgMYm7w5Y93xu+4KKv4IspG95xi6W84xjglYWtzJCymmtoR8RvUrzquAbBXazHXdZaKsG/WQ0UMAB0AyDLedck5FpkDqyyfxeU1K3+Gnx/apgcYbYYE+lh1U8XCCvgrbgv8fYozSWCWBQ3tf8qKOKLSMPltlFEt73IAwNmI0F1zTaJ8YnNT/fWSXg5k2OsKOBzdpeZg==
+ b=MV1oK24DJS5tvu5037G3fMR61LQmUf1rHTIeMh8eQ5bQJFZms/+kgrwSDzDk1SGHQTdVRGsfrGq8Ay9GrfXgL98oc+WbROyXojTJwfddnxc98+noJFe1xEs/VX452xvaTUFKpgGeDUlbz++pWhhiX9x0Yytfq7r5wSPWWzKuLV1EeqZIuguBYaEVa9VPfj1OZ0ClcEKwGf9ZLYeuK0a6IFyTG6bXGTJmaE3PDn060BK4OSdd4Ja94zCua5T72Cm6a9AqM26zMFQGEojcuOQ+06PxPQylQstgDS+sIt7B2YlExErRyoQWj7nhE1lH+16wF9aE62cbONeBvNvzrBqW+w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=FnhBdbDz3cV2lUW7lqPi1e6JU52JQC6kMKIpCJIbwPY=;
- b=dR2k4zyqMVuaTO0AdfbSPay0TzQW3gFq9MMBSoLyy1TTEvd6Put3maQhLLWtMjvwb4yok82nOluh7zF7vUJRMsiAcBgImj/uYqEh56PLe8TDEGHkUMNEGEx+CszkcizCh64RhTjTa/LbRDzRQSJ2RJYwUPQdEy2Js8TX95B/aw7VraUPCjcllzIELijIFOJB001gt64KLf1QiJjHy/kTXxQSleF5hLPCueLkV90omJG48lXyjyf7UhZjb8GjdtgXzYAmFYXNQxRyNDLuNOqNtoHoCecHJP3KD8QHEoT6M0VU+edP18fa+3nwnDCmkjChp8voDhs7ySWrFEumXnqh4Q==
+ bh=xRLPb2sXuW8r6ok6n6zo2W5AWbDjwMi+cmJb4GcOE5A=;
+ b=hPUZb7E8Mdm/Hkg84Xc63m8Po4MOyI4E/EPkTtPuG9zsx85G5ZefTklFN1JAJtnhPqxRodHY9q/IXCduELHIrRpoVzdGh8CbsJPbusoY5yeNd/Az1tAMaWe6HTeelTCZWn+wNIffHnvsRECZp+SloODhDWtoN7ZYlyIpauMUIZMKoJLAEq1vmZrabgRwJfOBGyKyMmGxtcu3Uh++OR1S7QQNp951Nf5ZCvcH3pKKwNPCXhCKpqIMO5VVn7lEtW+c5X6+mkg24oGxQ6BCbGqwkZ6w1ClA+waqWvq3bagq2Dfkdzbv76yoTT6bW4eoQhexrNDU7MOIqUNYb8oDMJ1rUg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
  header.from=os.amperecomputing.com; dkim=pass
@@ -35,18 +35,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=os.amperecomputing.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=FnhBdbDz3cV2lUW7lqPi1e6JU52JQC6kMKIpCJIbwPY=;
- b=H+WyhxfvZ30ue4+GdshL6C5QWoGnLlrrKeqi7LmBmtzIkH0nXp9GM0r9kibSrHyMdi5yTDMs6z9sghPmwJSycoKUQSKALbNU4SrJKUntJovYqpuigFyB15mWiRJQLI4vabGMBn3atRMvpTL8BSEW6K6aeumhUl/3RSStwhIAwHk=
+ bh=xRLPb2sXuW8r6ok6n6zo2W5AWbDjwMi+cmJb4GcOE5A=;
+ b=c9UzbKyCVJI2TmCQrjPI5SSoJLyVrne3YfefAe26LOf2E9DuiaFIcOZiixlwKnSYUah4PRzld46ugBR6wY3bcjsLwiO+YHkV19s+/tC/f7HofF+13CBRYRcehiTnOlHmhKCjRxYS5+Ojsz5ZeguFPOmvVllfT32S7QgSK75JIZI=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
 Received: from SN4PR01MB7455.prod.exchangelabs.com (2603:10b6:806:202::11) by
  MN2PR01MB5917.prod.exchangelabs.com (2603:10b6:208:194::18) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6178.19; Fri, 10 Mar 2023 08:35:06 +0000
+ 15.20.6178.19; Fri, 10 Mar 2023 08:35:10 +0000
 Received: from SN4PR01MB7455.prod.exchangelabs.com
  ([fe80::ff57:42f9:7d6d:de10]) by SN4PR01MB7455.prod.exchangelabs.com
  ([fe80::ff57:42f9:7d6d:de10%3]) with mapi id 15.20.6134.028; Fri, 10 Mar 2023
- 08:35:06 +0000
+ 08:35:10 +0000
 From: Quan Nguyen <quan@os.amperecomputing.com>
 To: Quan Nguyen <quan@os.amperecomputing.com>,
 	Arnd Bergmann <arnd@arndb.de>,
@@ -57,9 +57,9 @@ To: Quan Nguyen <quan@os.amperecomputing.com>,
 	linux-kernel@vger.kernel.org,
 	openbmc@lists.ozlabs.org,
 	Open Source Submission <patches@amperecomputing.com>
-Subject: [PATCH v3 1/2] misc: smpro-errmon: Add DIMM 2x Refresh rate event
-Date: Fri, 10 Mar 2023 15:34:15 +0700
-Message-Id: <20230310083416.3670980-2-quan@os.amperecomputing.com>
+Subject: [PATCH v3 2/2] misc: smpro-errmon: Add dimm training failure syndrome
+Date: Fri, 10 Mar 2023 15:34:16 +0700
+Message-Id: <20230310083416.3670980-3-quan@os.amperecomputing.com>
 X-Mailer: git-send-email 2.35.1
 In-Reply-To: <20230310083416.3670980-1-quan@os.amperecomputing.com>
 References: <20230310083416.3670980-1-quan@os.amperecomputing.com>
@@ -71,51 +71,51 @@ X-ClientProxiedBy: SI1PR02CA0055.apcprd02.prod.outlook.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SN4PR01MB7455:EE_|MN2PR01MB5917:EE_
-X-MS-Office365-Filtering-Correlation-Id: effe5eb7-26f1-49c5-eb8f-08db214259e7
+X-MS-Office365-Filtering-Correlation-Id: f81f4239-0e26-4656-0889-08db21425c30
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	kB9NUc1KGNlvVdYmvVj9iIcxk0vv5KGKrxVULCuR+oKHOck4DC8kKv9JQysEKRAN2jGFUJy/4Ow6CJpmFrKM0vdTfJhcDGe0ZoAA50EdYOD1/sLuIcwqfv99m0Ylo3ytjDYLwA/1/JMta6ZJo9QqETZfuxWTuwVmZf4USaq6DVR1gukjtG5/pg4Ql4wxHhx2SYIyHvw8RsmERax/gAIE0nBRt+ndm4VXPXm5EIZWe+T82MipTSe4M8CIytDRgiEZAYvcgn/A6mnUCmNgJH04eTAqn6iSU7HsdE5Zc4MbpDB8KDuYOUrilAUFKbEdIcYWIL737kb3ZSHSDlqAwO0Nf2QzjwGP3BAIDNWVPYGdwRWWYuh4p3x84WsSryEZeE19U/2JDpgYWOq2hazLNqWaUvP0YH1YfeGoW8YNkt7Am6FbZmMbQXB6NMuI9FLB6k29bHObUDkQYbTBdgjl2hO+eBUj2Gz4uFlwnhg5tPYcNykRCYHPjvBkXml/xD+NhvNzZhbWiPlZCPglunT737ZEthe9ivByMx6EsbVXJu+xVWd+WvVEGVDAAXq9C3hX7RJtAD9ZTDjacQlKLBeMiXu9QYJDTWaJveMMBC7j7WBqnsxhKDzlmAfklg6D7eBW3oeeTisaOYc2/uuR2zcdnhtdkyRX3CtU2F3ae+ivxHtKfRALT6fMQwpZe9PvoAHp0fTMBG9S3d2Pyrd/Q0TUuMUHKw==
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR01MB7455.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(376002)(346002)(136003)(366004)(396003)(39850400004)(451199018)(54906003)(110136005)(6506007)(38350700002)(38100700002)(86362001)(1076003)(2616005)(6512007)(26005)(107886003)(83380400001)(6666004)(186003)(316002)(52116002)(5660300002)(478600001)(6486002)(41300700001)(66556008)(8936002)(2906002)(4326008)(8676002)(66946007)(66476007);DIR:OUT;SFP:1102;
+X-Microsoft-Antispam-Message-Info: 	NYCgdyxhHdTGlUf2UOVt+pURizeqb/mpOnlzJk+SRYX2/aB3y8Ys+TGx55hWH2rziDBBwFM51MWIo83BJN+EaEksHAW9tA2U2p0nmwiiUAueZ/dyau/ACK1yyIuvzrCJVLRpjOEHq3Frd8YcRJ3syUCM+hmMdGIc4k7ymAzjm2qn+M5cYzYH51zc9zGjD+k/Jcs3i4Dk1Acxry1xHenPI1+0lBOIJNQzV8sdGOTMVffYIHojgiR4eI/Zl1ZHVwIzx+Gox2QTKLJBwhuuxS4xAO5o/fgvrtz/M7N+5SWn+VOT7bmVOYZ5v5BPHGU8tnY8yAuofwe3JIPd2nZVLJOzG0oSD9scDhYD/as8LTj5I1vhIDakmK0TxP8PDLAXcErgsr2QjG/1R29+o8FNfajq8HH+QiuyZB04dznyVuc7WcedC2sNNDkgSBomjyt7EzkWAT4VqCjQceo606v+qfdRE3fWRax6BUO3zIcojrO2xzMCbaq4JynFgsC4QDw+vxpx+Ehun/fhy4FCofKv1bq+scBPyp11yrX9NgbH26x6ycK2JTS7MvMMq83pMbc15IJopOlUE0BMv6KCS3HKXgFSaj/8zXevFU5HnPkJkq/MzP36st671rYP4idi+w0WDyBB1U6vLg/2BMpFfmSWfMT4UKa/wIWxrtknyaiFSQrquiOJdxCanD1bykmjOmoulGD5
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR01MB7455.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(376002)(346002)(136003)(366004)(396003)(39850400004)(451199018)(54906003)(110136005)(6506007)(38350700002)(38100700002)(86362001)(1076003)(2616005)(6512007)(26005)(107886003)(83380400001)(186003)(316002)(52116002)(5660300002)(478600001)(6486002)(41300700001)(66556008)(8936002)(2906002)(4326008)(8676002)(66946007)(66476007);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?us-ascii?Q?3qiuL/NZVeATkP3owOJwLHUfgSlCjh+YKTilJxM/V33i4E51pTR5TvrtnoYj?=
- =?us-ascii?Q?g3PO+Ux3ynvX3w5OPge3s61mbKcuUFE+JBuMiq5UwlKo+cqUL2hLNr5FqCks?=
- =?us-ascii?Q?tkOVouHuHkb6tCZILrXVIdDFMYGaUnM1EptSwwhbl7X83Ewh0SJACqFkBbxv?=
- =?us-ascii?Q?ifRZbD36mw2482ppIpC5TiqWGObMgl7vT7DRP3AUsj6IEzStGQb80Tr+yULL?=
- =?us-ascii?Q?iyxS1Tlg4WZr8t6D9RPI2u9o+uUpgelaijvAD+UyT5i4nZhGjXBQt82LnBPq?=
- =?us-ascii?Q?YqDitkgz+mqTRoYoF9e1qD9CF0mZJUmevq2HXpY54J3UomEtO1LUOqj8uTXY?=
- =?us-ascii?Q?fI8YCbSckR9mAhGdaOJ9Fei5WfOWE/erL0KYHcoy+E62Jo2g+i83NkfTrtMG?=
- =?us-ascii?Q?KzYYcA9iWf0DMvVU/3TS5C3x+GcxBcPdc90T1StltUQiiy3wnmaFmo6PNfdH?=
- =?us-ascii?Q?yWd5Tu2oQUtGs9JVXfOYiYcqdK4SF02/Ddsp11qV+fF6leGU1LYM5UnPz5l2?=
- =?us-ascii?Q?wiC1GKdskYiVIKW1Jvu95NrM/5AcMQ3lEmtp2Sxqu8NrnwPPz7AuybcHhUB7?=
- =?us-ascii?Q?eUfzgdNIehg53Qm+mRhp4uUUlhp7YGVKnDKkzVszS2mfm/tn9JLzpADWuqgG?=
- =?us-ascii?Q?wVr2ZN549CfSxdJVG6MkFR/fihe/dig5E00n0IVxjFO1uWsu5aC7K3KVDyMz?=
- =?us-ascii?Q?2g8pghYSf1Zq3KE7AyKJMQ7xSgFmRoyPgYrAqmrSui3y0H9u9P+Em5m23Vru?=
- =?us-ascii?Q?nIGda7HhvmflVygivTaZRsR1pszaJ/oDn7QkMqTYHwHUwTpL23sLWcVI+fPz?=
- =?us-ascii?Q?xKDcRsNY283uwyPsv2AsP9Qqr+hxVK6UbKP4CWwks2S6atTLrH15DIfPtmcn?=
- =?us-ascii?Q?EQodKxUh3ZofagXm3PPVZNfTzVtH+fhzc0vN7fmPRqXYtMb+l3r9Qe65EIs0?=
- =?us-ascii?Q?euKEo6YZ1U9N5oo8fRty2BuHZT2d8zAkkGcBC/epKi6naD0VzswuwyAI02nf?=
- =?us-ascii?Q?IuRW6HAvzwXu9IR/4bfjr4wdv7bwudfjT5t49rvTnRZOU8fhB7qJusFs7Koz?=
- =?us-ascii?Q?NZxQnuHawmg/FzU3kc3kLgfkWpm49gd24I8MtTzAM6wxvqmTJ8edPL79JGnV?=
- =?us-ascii?Q?OyA0pqNK+aNqe0fQSIaYplWqxG3BBM/FS5WXikx8+9Yzk7nwB+kBcbcmuzWK?=
- =?us-ascii?Q?rT1BvW3M8ZFp6UZxJ3lz3jo5uG4n41kTNZzfqntmEIHuYNbYE0Abuagueb7x?=
- =?us-ascii?Q?6L3KA53RCZW5u2oO1MasYl87LuxOjepJ1ZoaVjyW1+eL9A1XvV9EkFdxQWT2?=
- =?us-ascii?Q?+KBGk5Nx1KSaF9sYagyumDz7OJa7989AuSFVXHqDE9f4WvN53fN6r7zwZKRj?=
- =?us-ascii?Q?p9GqRfbT+v2IR6mIK8605aENJFm5vcFmfuj1GllFBZPSQZ3MRc2btUDvWCUv?=
- =?us-ascii?Q?IgP0p2knMoZFmw5v7uUCbsxBySu6jeKB7ejscZJ2aFVCUWJB/kl+Tzd0qr4y?=
- =?us-ascii?Q?6Tf2N33gn/AsdSS/NpY8+b5vFTqlH/mRlcnnsDxGqi6SXUVSQrEJ1B9ormju?=
- =?us-ascii?Q?lIcKQw/+gzmDtuqsk8BCwjAx/JjtJjHXaH/bgP60em667qcYkSKGCZ4rk94P?=
- =?us-ascii?Q?PgC/MKB+Bvoz7VkoF4gJ8C8=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?us-ascii?Q?urNAX2V17Ot4Q95mHLstr18p0zPP301GZ+U36aY2yuO5NomC6rqq/go37tEb?=
+ =?us-ascii?Q?bM2Kg3/WBLNSSEXt0x+Wj/YzjTycl6jffUGFmhMeSmVTSlIPqpjDXL2MimTu?=
+ =?us-ascii?Q?Qu7y5IPVEKL8fIUEWb7s/jXDAssxUXqP6PXArsq6bhCDoCRJD20XvHRvHt5T?=
+ =?us-ascii?Q?WNvXqYILpkRPjwP+A5Nw1RrvlqFkB0Am1nT9TfS4MVgpTLrkaF7hsy/fbypv?=
+ =?us-ascii?Q?HFjCOlvNeEo8YZ/hTCfnKaIgo5LM9jJ6TyxeeFe3gEbgQGgqrGTw8bLF38Tm?=
+ =?us-ascii?Q?/JsZzQbfCSsZuwrRNvP/vtZWEMcz7vlJ8k6KZoGymXcS5nqBxUkiQqLXEKy8?=
+ =?us-ascii?Q?pkfRJ07C7ElVYlI1VHJldv1sdcld8S6PTEGH+dFXPmJY0keXE/NUN0MuShPU?=
+ =?us-ascii?Q?XOTlyD5htBlv1ET+Aj7Z1oAKUlnryj0U2EXY1z8i1B07J/2e3t/Jnfg9+G3n?=
+ =?us-ascii?Q?TUobkf1bYC8/UoOVQwFUKuQo7sqhDKQYC1v0wnzBvr6XDVQLiedwtseVmtjd?=
+ =?us-ascii?Q?EkqvjR24qU4FMz9iWLsgz9H1U5vv6ifXO6gQrE0kHqY8CV+xIqhPDZ13qOlR?=
+ =?us-ascii?Q?iVT3DBPpkI6qg6HONRMtrykHlDnjWsH2hAbhVKkyKBnVG4eQo1Me2UPD6Kds?=
+ =?us-ascii?Q?RPlpmsOcNDgcEUbzjTskO7Hi8VOyVs4+gwOM3h5ZeTgI7sOgeOP+B6rOXrG1?=
+ =?us-ascii?Q?MbH7pKKAUcnWt2lLaaBew8i5WRRF7rGwlUaJpmkk2H6SCjBKabp0fEqdvaSK?=
+ =?us-ascii?Q?xZSJWW3/Cj3D5dhcag8jXQ9G1u63LFxfrifSiGzDj1UU9oQwdYMzl+lTPnnI?=
+ =?us-ascii?Q?mKyDXSolqJMr5xAWCGOyjlFFYpS9QpP7eWKN8kik7qKM21CTjjJ7nWHPx4x/?=
+ =?us-ascii?Q?yR2O/STuD5wvI0r11XMFl0Szt88AzqzDOUMZ3X8eYOaQeQT2alvJck2qGv74?=
+ =?us-ascii?Q?5BgJOQuKjGUWAs4vOLSVVjZM5Ctl/pIGd51FwMPhC0+tWUIITsIFf4w1tj8R?=
+ =?us-ascii?Q?yosnW5Nd/QkTCETWf5IQ5ZxRZVe/4O2Xz2hs+7ZWMW5J/X9SUt8qLGJgkoAK?=
+ =?us-ascii?Q?tz4dGKpIs3eQO6Kg6LgpYfTihoLjRurbO7AxoFAiR7EPEofJBh47SQ6knJzw?=
+ =?us-ascii?Q?oBBfqQr22fVMFY/6FW2CdMnjpRwLPvgI8qV1tvxqOd8QclVm+MwGvHdjePk8?=
+ =?us-ascii?Q?jUpw6d0Yw8InAFQkkASpYpCScMEZN0Hvq0vNfC0ViBASk7LU3yhMcjblpBOk?=
+ =?us-ascii?Q?3Gpp0pNplc8gqDxUPba4Z19pbpVppdntcnVHUHWKtS5qMTUmJuhxMR2rpnJ9?=
+ =?us-ascii?Q?KohRhAHB/yz1OHSRROIxG8ggQjw+AO85ve6F278xxZne48JSqvy1CboU21Yd?=
+ =?us-ascii?Q?nyfBuFupFXpD8CjGt+mAPgXmV2zIg3G4p36dgtCeUVD6efL88vwFIS7DQXX5?=
+ =?us-ascii?Q?bAZgyH+XU0RR0gPKb7FcUvUso37ZF1Y/O+5G9Ny9owZIxWLMeNjODWygdqsV?=
+ =?us-ascii?Q?Ez7FF4B+n9niDOnQEz3nN060xFGto3wQZtRszIxf43p3f5zLl9nvdm3fkmT4?=
+ =?us-ascii?Q?BfMN9lIKE+MNlI2uCh4fOhW2gQ6UK+vfnlXRiXDEzQf07R50t3XuV8mjJJEa?=
+ =?us-ascii?Q?MZj7SW4lpL4oO+RASN0Zs80=3D?=
 X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: effe5eb7-26f1-49c5-eb8f-08db214259e7
+X-MS-Exchange-CrossTenant-Network-Message-Id: f81f4239-0e26-4656-0889-08db21425c30
 X-MS-Exchange-CrossTenant-AuthSource: SN4PR01MB7455.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Mar 2023 08:35:06.5798
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Mar 2023 08:35:10.3454
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: QakyP60e/OVJVFBszOqYUiA7t45waouTUCU+npUewCuGOLi4JTI8U6N89KzFB4o7uPzmLpQpBBeIyNhqzCu1detTMp29meCd++Df7Ukh65g=
+X-MS-Exchange-CrossTenant-UserPrincipalName: TsllEoQPGzCUsi/XQaNJWN/FpO8Tn42J8ZY2EYh0gHg9nBSShAkl6WWNZhZhSwUipMzhvj1sN6NTTP26eT4oOxyT8nznFUNM6Q9gSvRQjqk=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR01MB5917
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -132,9 +132,8 @@ Cc: Thang Nguyen <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomput
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-In high temperature condition, JEDEC spec requires memory controller to
-double the refresh rate. This commit adds event_dimm_2x_refresh sysfs
-to report that events for all memory channels.
+Adds event_dimm[0-15]_syndrome sysfs to report the failure syndrome
+to BMC when DIMM training failed.
 
 Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
 ---
@@ -142,81 +141,134 @@ v3:
   + Corrected kernel version to 6.4                       [Greg]
 
 v2:
+  + Change "to initialized" to "to initialize"            [Paul]
   + Corrected kernel version to 6.3                  [Greg,Paul]
+  + Corrected variables type to 'unsigned int"            [Paul]
 ---
- .../ABI/testing/sysfs-bus-platform-devices-ampere-smpro  | 9 ++++++---
- drivers/misc/smpro-errmon.c                              | 5 +++++
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ .../sysfs-bus-platform-devices-ampere-smpro   | 10 +++
+ drivers/misc/smpro-errmon.c                   | 77 +++++++++++++++++++
+ 2 files changed, 87 insertions(+)
 
 diff --git a/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro b/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
-index ca93c215ef99..14b58c893df5 100644
+index 14b58c893df5..fead760dcf77 100644
 --- a/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
 +++ b/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
-@@ -234,8 +234,8 @@ Description:
- 		For details, see section `5.10 RAS Internal Error Register Definitions,
+@@ -265,6 +265,16 @@ Description:
+ 		For more details, see section `5.7 GPI Status Registers and 5.9 Memory Error Register Definitions,
  		Altra Family Soc BMC Interface Specification`.
  
--What:		/sys/bus/platform/devices/smpro-errmon.*/event_[vrd_warn_fault|vrd_hot|dimm_hot]
--KernelVersion:	6.1
-+What:		/sys/bus/platform/devices/smpro-errmon.*/event_[vrd_warn_fault|vrd_hot|dimm_hot|dimm_2x_refresh]
-+KernelVersion:	6.1 (event_[vrd_warn_fault|vrd_hot|dimm_hot]), 6.4 (event_dimm_2x_refresh)
- Contact:	Quan Nguyen <quan@os.amperecomputing.com>
- Description:
- 		(RO) Contains the detail information in case of VRD/DIMM warning/hot events
-@@ -258,8 +258,11 @@ Description:
- 		+---------------+---------------------------------------------------------------+---------------------+
- 		| DIMM HOT      | /sys/bus/platform/devices/smpro-errmon.*/event_dimm_hot       | DIMM Hot            |
- 		+---------------+---------------------------------------------------------------+---------------------+
-+		| DIMM 2X       | /sys/bus/platform/devices/smpro-errmon.*/event_dimm_2x_refresh| DIMM 2x refresh rate|
-+		| REFRESH RATE  |                                                               | event in high temp  |
-+		+---------------+---------------------------------------------------------------+---------------------+
- 
--		For more details, see section `5.7 GPI Status Registers,
-+		For more details, see section `5.7 GPI Status Registers and 5.9 Memory Error Register Definitions,
- 		Altra Family Soc BMC Interface Specification`.
- 
++What:		/sys/bus/platform/devices/smpro-errmon.*/event_dimm[0-15]_syndrome
++KernelVersion:	6.4
++Contact:	Quan Nguyen <quan@os.amperecomputing.com>
++Description:
++		(RO) The sysfs returns the 2-byte DIMM failure syndrome data for slot
++		0-15 if it failed to initialize.
++
++		For more details, see section `5.11 Boot Stage Register Definitions,
++		Altra Family Soc BMC Interface Specification`.
++
  What:		/sys/bus/platform/devices/smpro-misc.*/boot_progress
+ KernelVersion:	6.1
+ Contact:	Quan Nguyen <quan@os.amperecomputing.com>
 diff --git a/drivers/misc/smpro-errmon.c b/drivers/misc/smpro-errmon.c
-index d1431d419aa4..1635e881aefb 100644
+index 1635e881aefb..a1f0b2c77fac 100644
 --- a/drivers/misc/smpro-errmon.c
 +++ b/drivers/misc/smpro-errmon.c
-@@ -67,6 +67,7 @@
- #define VRD_WARN_FAULT_EVENT_DATA	0x78
- #define VRD_HOT_EVENT_DATA		0x79
- #define DIMM_HOT_EVENT_DATA		0x7A
-+#define DIMM_2X_REFRESH_EVENT_DATA	0x96
+@@ -47,6 +47,12 @@
+ #define WARN_PMPRO_INFO_LO	0xAC
+ #define WARN_PMPRO_INFO_HI	0xAD
  
- #define MAX_READ_BLOCK_LENGTH	48
- 
-@@ -190,6 +191,7 @@ enum EVENT_TYPES {
- 	VRD_WARN_FAULT_EVENT,
- 	VRD_HOT_EVENT,
- 	DIMM_HOT_EVENT,
-+	DIMM_2X_REFRESH_EVENT,
- 	NUM_EVENTS_TYPE,
- };
- 
-@@ -198,6 +200,7 @@ static u8 smpro_event_table[NUM_EVENTS_TYPE] = {
- 	VRD_WARN_FAULT_EVENT_DATA,
- 	VRD_HOT_EVENT_DATA,
- 	DIMM_HOT_EVENT_DATA,
-+	DIMM_2X_REFRESH_EVENT_DATA,
- };
- 
- static ssize_t smpro_event_data_read(struct device *dev,
-@@ -463,6 +466,7 @@ static DEVICE_ATTR_RO(warn_pmpro);
- EVENT_RO(vrd_warn_fault, VRD_WARN_FAULT_EVENT);
- EVENT_RO(vrd_hot, VRD_HOT_EVENT);
++/* Boot Stage Register */
++#define BOOTSTAGE		0xB0
++#define DIMM_SYNDROME_SEL	0xB4
++#define DIMM_SYNDROME_ERR	0xB5
++#define DIMM_SYNDROME_STAGE	4
++
+ /* PCIE Error Registers */
+ #define PCIE_CE_ERR_CNT		0xC0
+ #define PCIE_CE_ERR_LEN		0xC1
+@@ -468,6 +474,61 @@ EVENT_RO(vrd_hot, VRD_HOT_EVENT);
  EVENT_RO(dimm_hot, DIMM_HOT_EVENT);
-+EVENT_RO(dimm_2x_refresh, DIMM_2X_REFRESH_EVENT);
+ EVENT_RO(dimm_2x_refresh, DIMM_2X_REFRESH_EVENT);
  
++static ssize_t smpro_dimm_syndrome_read(struct device *dev, struct device_attribute *da,
++					char *buf, unsigned int slot)
++{
++	struct smpro_errmon *errmon = dev_get_drvdata(dev);
++	unsigned int data;
++	int ret;
++
++	ret = regmap_read(errmon->regmap, BOOTSTAGE, &data);
++	if (ret)
++		return ret;
++
++	/* check for valid stage */
++	data = (data >> 8) & 0xff;
++	if (data != DIMM_SYNDROME_STAGE)
++		return ret;
++
++	/* Write the slot ID to retrieve Error Syndrome */
++	ret = regmap_write(errmon->regmap, DIMM_SYNDROME_SEL, slot);
++	if (ret)
++		return ret;
++
++	/* Read the Syndrome error */
++	ret = regmap_read(errmon->regmap, DIMM_SYNDROME_ERR, &data);
++	if (ret || !data)
++		return ret;
++
++	return sysfs_emit(buf, "%04x\n", data);
++}
++
++#define EVENT_DIMM_SYNDROME(_slot) \
++	static ssize_t event_dimm##_slot##_syndrome_show(struct device *dev,          \
++							 struct device_attribute *da, \
++							 char *buf)                   \
++	{                                                                             \
++		return smpro_dimm_syndrome_read(dev, da, buf, _slot);                 \
++	}                                                                             \
++	static DEVICE_ATTR_RO(event_dimm##_slot##_syndrome)
++
++EVENT_DIMM_SYNDROME(0);
++EVENT_DIMM_SYNDROME(1);
++EVENT_DIMM_SYNDROME(2);
++EVENT_DIMM_SYNDROME(3);
++EVENT_DIMM_SYNDROME(4);
++EVENT_DIMM_SYNDROME(5);
++EVENT_DIMM_SYNDROME(6);
++EVENT_DIMM_SYNDROME(7);
++EVENT_DIMM_SYNDROME(8);
++EVENT_DIMM_SYNDROME(9);
++EVENT_DIMM_SYNDROME(10);
++EVENT_DIMM_SYNDROME(11);
++EVENT_DIMM_SYNDROME(12);
++EVENT_DIMM_SYNDROME(13);
++EVENT_DIMM_SYNDROME(14);
++EVENT_DIMM_SYNDROME(15);
++
  static struct attribute *smpro_errmon_attrs[] = {
  	&dev_attr_overflow_core_ce.attr,
-@@ -488,6 +492,7 @@ static struct attribute *smpro_errmon_attrs[] = {
- 	&dev_attr_event_vrd_warn_fault.attr,
+ 	&dev_attr_overflow_core_ue.attr,
+@@ -493,6 +554,22 @@ static struct attribute *smpro_errmon_attrs[] = {
  	&dev_attr_event_vrd_hot.attr,
  	&dev_attr_event_dimm_hot.attr,
-+	&dev_attr_event_dimm_2x_refresh.attr,
+ 	&dev_attr_event_dimm_2x_refresh.attr,
++	&dev_attr_event_dimm0_syndrome.attr,
++	&dev_attr_event_dimm1_syndrome.attr,
++	&dev_attr_event_dimm2_syndrome.attr,
++	&dev_attr_event_dimm3_syndrome.attr,
++	&dev_attr_event_dimm4_syndrome.attr,
++	&dev_attr_event_dimm5_syndrome.attr,
++	&dev_attr_event_dimm6_syndrome.attr,
++	&dev_attr_event_dimm7_syndrome.attr,
++	&dev_attr_event_dimm8_syndrome.attr,
++	&dev_attr_event_dimm9_syndrome.attr,
++	&dev_attr_event_dimm10_syndrome.attr,
++	&dev_attr_event_dimm11_syndrome.attr,
++	&dev_attr_event_dimm12_syndrome.attr,
++	&dev_attr_event_dimm13_syndrome.attr,
++	&dev_attr_event_dimm14_syndrome.attr,
++	&dev_attr_event_dimm15_syndrome.attr,
  	NULL
  };
  
