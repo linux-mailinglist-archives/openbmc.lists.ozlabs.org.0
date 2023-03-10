@@ -1,122 +1,80 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 000466B38E6
-	for <lists+openbmc@lfdr.de>; Fri, 10 Mar 2023 09:37:56 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 65F886B5492
+	for <lists+openbmc@lfdr.de>; Fri, 10 Mar 2023 23:38:15 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PXzvk6Fcjz3cjK
-	for <lists+openbmc@lfdr.de>; Fri, 10 Mar 2023 19:37:54 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PYLYK1TtZz3chy
+	for <lists+openbmc@lfdr.de>; Sat, 11 Mar 2023 09:38:13 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=c9UzbKyC;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=TbXg65gP;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7e8a::705; helo=nam10-bn7-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=c9UzbKyC;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=TbXg65gP;
 	dkim-atps=neutral
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on20705.outbound.protection.outlook.com [IPv6:2a01:111:f400:7e8a::705])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PXzry1vz6z3cBF
-	for <openbmc@lists.ozlabs.org>; Fri, 10 Mar 2023 19:35:30 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=MV1oK24DJS5tvu5037G3fMR61LQmUf1rHTIeMh8eQ5bQJFZms/+kgrwSDzDk1SGHQTdVRGsfrGq8Ay9GrfXgL98oc+WbROyXojTJwfddnxc98+noJFe1xEs/VX452xvaTUFKpgGeDUlbz++pWhhiX9x0Yytfq7r5wSPWWzKuLV1EeqZIuguBYaEVa9VPfj1OZ0ClcEKwGf9ZLYeuK0a6IFyTG6bXGTJmaE3PDn060BK4OSdd4Ja94zCua5T72Cm6a9AqM26zMFQGEojcuOQ+06PxPQylQstgDS+sIt7B2YlExErRyoQWj7nhE1lH+16wF9aE62cbONeBvNvzrBqW+w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=xRLPb2sXuW8r6ok6n6zo2W5AWbDjwMi+cmJb4GcOE5A=;
- b=hPUZb7E8Mdm/Hkg84Xc63m8Po4MOyI4E/EPkTtPuG9zsx85G5ZefTklFN1JAJtnhPqxRodHY9q/IXCduELHIrRpoVzdGh8CbsJPbusoY5yeNd/Az1tAMaWe6HTeelTCZWn+wNIffHnvsRECZp+SloODhDWtoN7ZYlyIpauMUIZMKoJLAEq1vmZrabgRwJfOBGyKyMmGxtcu3Uh++OR1S7QQNp951Nf5ZCvcH3pKKwNPCXhCKpqIMO5VVn7lEtW+c5X6+mkg24oGxQ6BCbGqwkZ6w1ClA+waqWvq3bagq2Dfkdzbv76yoTT6bW4eoQhexrNDU7MOIqUNYb8oDMJ1rUg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=xRLPb2sXuW8r6ok6n6zo2W5AWbDjwMi+cmJb4GcOE5A=;
- b=c9UzbKyCVJI2TmCQrjPI5SSoJLyVrne3YfefAe26LOf2E9DuiaFIcOZiixlwKnSYUah4PRzld46ugBR6wY3bcjsLwiO+YHkV19s+/tC/f7HofF+13CBRYRcehiTnOlHmhKCjRxYS5+Ojsz5ZeguFPOmvVllfT32S7QgSK75JIZI=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
-Received: from SN4PR01MB7455.prod.exchangelabs.com (2603:10b6:806:202::11) by
- MN2PR01MB5917.prod.exchangelabs.com (2603:10b6:208:194::18) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6178.19; Fri, 10 Mar 2023 08:35:10 +0000
-Received: from SN4PR01MB7455.prod.exchangelabs.com
- ([fe80::ff57:42f9:7d6d:de10]) by SN4PR01MB7455.prod.exchangelabs.com
- ([fe80::ff57:42f9:7d6d:de10%3]) with mapi id 15.20.6134.028; Fri, 10 Mar 2023
- 08:35:10 +0000
-From: Quan Nguyen <quan@os.amperecomputing.com>
-To: Quan Nguyen <quan@os.amperecomputing.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Joel Stanley <joel@jms.id.au>,
-	Andrew Jeffery <andrew@aj.id.au>,
-	linux-kernel@vger.kernel.org,
-	openbmc@lists.ozlabs.org,
-	Open Source Submission <patches@amperecomputing.com>
-Subject: [PATCH v3 2/2] misc: smpro-errmon: Add dimm training failure syndrome
-Date: Fri, 10 Mar 2023 15:34:16 +0700
-Message-Id: <20230310083416.3670980-3-quan@os.amperecomputing.com>
-X-Mailer: git-send-email 2.35.1
-In-Reply-To: <20230310083416.3670980-1-quan@os.amperecomputing.com>
-References: <20230310083416.3670980-1-quan@os.amperecomputing.com>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: SI1PR02CA0055.apcprd02.prod.outlook.com
- (2603:1096:4:1f5::16) To SN4PR01MB7455.prod.exchangelabs.com
- (2603:10b6:806:202::11)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PYLXj0hq5z2xBV
+	for <openbmc@lists.ozlabs.org>; Sat, 11 Mar 2023 09:37:40 +1100 (AEDT)
+Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32ALVHhk013474;
+	Fri, 10 Mar 2023 22:37:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=XXba/TXqg2cqpZs526UwOU7BGB1O4lAr1sTa/4w7umE=;
+ b=TbXg65gP1lrOcwZRUz0mU2cN8vCIwG3nG0DGExD/iApclqnSufLYLGYCgG7zth9C1qoJ
+ bPK18V95hVx/htvAYTHbmB/8To6wHheV9ylbcBxVyC6nv8BmdtPikkFApBKXhlaw5Aqa
+ hgPIkJY+X+pQQEKPHZpgi4TZxM71yGVIgmcRFqREdOMuBvl8GCYS6RIuUZ0S8faj9xuZ
+ 8hstRDjORE0EockR/CsyyU9yTqvnrkN21ZeQUqRkDc7vNuj0EZ2F04cybNtbiLsabZkX
+ gArL41j4RtCwUIxZ/U8fp/aCzmg5hrMN/rY+jM1tErCZuC5cI1sI8ClWVWUsoLtYidXy Gg== 
+Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com [169.62.189.11])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3p8chkh9vg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 10 Mar 2023 22:37:33 +0000
+Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
+	by ppma03dal.us.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 32AKnAkJ023603;
+	Fri, 10 Mar 2023 22:37:33 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([9.208.130.98])
+	by ppma03dal.us.ibm.com (PPS) with ESMTPS id 3p6fnwwpjd-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 10 Mar 2023 22:37:32 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com [10.241.53.102])
+	by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 32AMbVSF60883260
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 10 Mar 2023 22:37:31 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 946B558061;
+	Fri, 10 Mar 2023 22:37:31 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id E3D165805A;
+	Fri, 10 Mar 2023 22:37:30 +0000 (GMT)
+Received: from slate16.aus.stglabs.ibm.com (unknown [9.65.208.45])
+	by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Fri, 10 Mar 2023 22:37:30 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-6.1] ARM: dts: aspeed: p10bmc: Reorganize FSI tree and add I2C responders
+Date: Fri, 10 Mar 2023 16:37:30 -0600
+Message-Id: <20230310223730.2356763-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN4PR01MB7455:EE_|MN2PR01MB5917:EE_
-X-MS-Office365-Filtering-Correlation-Id: f81f4239-0e26-4656-0889-08db21425c30
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	NYCgdyxhHdTGlUf2UOVt+pURizeqb/mpOnlzJk+SRYX2/aB3y8Ys+TGx55hWH2rziDBBwFM51MWIo83BJN+EaEksHAW9tA2U2p0nmwiiUAueZ/dyau/ACK1yyIuvzrCJVLRpjOEHq3Frd8YcRJ3syUCM+hmMdGIc4k7ymAzjm2qn+M5cYzYH51zc9zGjD+k/Jcs3i4Dk1Acxry1xHenPI1+0lBOIJNQzV8sdGOTMVffYIHojgiR4eI/Zl1ZHVwIzx+Gox2QTKLJBwhuuxS4xAO5o/fgvrtz/M7N+5SWn+VOT7bmVOYZ5v5BPHGU8tnY8yAuofwe3JIPd2nZVLJOzG0oSD9scDhYD/as8LTj5I1vhIDakmK0TxP8PDLAXcErgsr2QjG/1R29+o8FNfajq8HH+QiuyZB04dznyVuc7WcedC2sNNDkgSBomjyt7EzkWAT4VqCjQceo606v+qfdRE3fWRax6BUO3zIcojrO2xzMCbaq4JynFgsC4QDw+vxpx+Ehun/fhy4FCofKv1bq+scBPyp11yrX9NgbH26x6ycK2JTS7MvMMq83pMbc15IJopOlUE0BMv6KCS3HKXgFSaj/8zXevFU5HnPkJkq/MzP36st671rYP4idi+w0WDyBB1U6vLg/2BMpFfmSWfMT4UKa/wIWxrtknyaiFSQrquiOJdxCanD1bykmjOmoulGD5
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR01MB7455.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(376002)(346002)(136003)(366004)(396003)(39850400004)(451199018)(54906003)(110136005)(6506007)(38350700002)(38100700002)(86362001)(1076003)(2616005)(6512007)(26005)(107886003)(83380400001)(186003)(316002)(52116002)(5660300002)(478600001)(6486002)(41300700001)(66556008)(8936002)(2906002)(4326008)(8676002)(66946007)(66476007);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?us-ascii?Q?urNAX2V17Ot4Q95mHLstr18p0zPP301GZ+U36aY2yuO5NomC6rqq/go37tEb?=
- =?us-ascii?Q?bM2Kg3/WBLNSSEXt0x+Wj/YzjTycl6jffUGFmhMeSmVTSlIPqpjDXL2MimTu?=
- =?us-ascii?Q?Qu7y5IPVEKL8fIUEWb7s/jXDAssxUXqP6PXArsq6bhCDoCRJD20XvHRvHt5T?=
- =?us-ascii?Q?WNvXqYILpkRPjwP+A5Nw1RrvlqFkB0Am1nT9TfS4MVgpTLrkaF7hsy/fbypv?=
- =?us-ascii?Q?HFjCOlvNeEo8YZ/hTCfnKaIgo5LM9jJ6TyxeeFe3gEbgQGgqrGTw8bLF38Tm?=
- =?us-ascii?Q?/JsZzQbfCSsZuwrRNvP/vtZWEMcz7vlJ8k6KZoGymXcS5nqBxUkiQqLXEKy8?=
- =?us-ascii?Q?pkfRJ07C7ElVYlI1VHJldv1sdcld8S6PTEGH+dFXPmJY0keXE/NUN0MuShPU?=
- =?us-ascii?Q?XOTlyD5htBlv1ET+Aj7Z1oAKUlnryj0U2EXY1z8i1B07J/2e3t/Jnfg9+G3n?=
- =?us-ascii?Q?TUobkf1bYC8/UoOVQwFUKuQo7sqhDKQYC1v0wnzBvr6XDVQLiedwtseVmtjd?=
- =?us-ascii?Q?EkqvjR24qU4FMz9iWLsgz9H1U5vv6ifXO6gQrE0kHqY8CV+xIqhPDZ13qOlR?=
- =?us-ascii?Q?iVT3DBPpkI6qg6HONRMtrykHlDnjWsH2hAbhVKkyKBnVG4eQo1Me2UPD6Kds?=
- =?us-ascii?Q?RPlpmsOcNDgcEUbzjTskO7Hi8VOyVs4+gwOM3h5ZeTgI7sOgeOP+B6rOXrG1?=
- =?us-ascii?Q?MbH7pKKAUcnWt2lLaaBew8i5WRRF7rGwlUaJpmkk2H6SCjBKabp0fEqdvaSK?=
- =?us-ascii?Q?xZSJWW3/Cj3D5dhcag8jXQ9G1u63LFxfrifSiGzDj1UU9oQwdYMzl+lTPnnI?=
- =?us-ascii?Q?mKyDXSolqJMr5xAWCGOyjlFFYpS9QpP7eWKN8kik7qKM21CTjjJ7nWHPx4x/?=
- =?us-ascii?Q?yR2O/STuD5wvI0r11XMFl0Szt88AzqzDOUMZ3X8eYOaQeQT2alvJck2qGv74?=
- =?us-ascii?Q?5BgJOQuKjGUWAs4vOLSVVjZM5Ctl/pIGd51FwMPhC0+tWUIITsIFf4w1tj8R?=
- =?us-ascii?Q?yosnW5Nd/QkTCETWf5IQ5ZxRZVe/4O2Xz2hs+7ZWMW5J/X9SUt8qLGJgkoAK?=
- =?us-ascii?Q?tz4dGKpIs3eQO6Kg6LgpYfTihoLjRurbO7AxoFAiR7EPEofJBh47SQ6knJzw?=
- =?us-ascii?Q?oBBfqQr22fVMFY/6FW2CdMnjpRwLPvgI8qV1tvxqOd8QclVm+MwGvHdjePk8?=
- =?us-ascii?Q?jUpw6d0Yw8InAFQkkASpYpCScMEZN0Hvq0vNfC0ViBASk7LU3yhMcjblpBOk?=
- =?us-ascii?Q?3Gpp0pNplc8gqDxUPba4Z19pbpVppdntcnVHUHWKtS5qMTUmJuhxMR2rpnJ9?=
- =?us-ascii?Q?KohRhAHB/yz1OHSRROIxG8ggQjw+AO85ve6F278xxZne48JSqvy1CboU21Yd?=
- =?us-ascii?Q?nyfBuFupFXpD8CjGt+mAPgXmV2zIg3G4p36dgtCeUVD6efL88vwFIS7DQXX5?=
- =?us-ascii?Q?bAZgyH+XU0RR0gPKb7FcUvUso37ZF1Y/O+5G9Ny9owZIxWLMeNjODWygdqsV?=
- =?us-ascii?Q?Ez7FF4B+n9niDOnQEz3nN060xFGto3wQZtRszIxf43p3f5zLl9nvdm3fkmT4?=
- =?us-ascii?Q?BfMN9lIKE+MNlI2uCh4fOhW2gQ6UK+vfnlXRiXDEzQf07R50t3XuV8mjJJEa?=
- =?us-ascii?Q?MZj7SW4lpL4oO+RASN0Zs80=3D?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f81f4239-0e26-4656-0889-08db21425c30
-X-MS-Exchange-CrossTenant-AuthSource: SN4PR01MB7455.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Mar 2023 08:35:10.3454
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TsllEoQPGzCUsi/XQaNJWN/FpO8Tn42J8ZY2EYh0gHg9nBSShAkl6WWNZhZhSwUipMzhvj1sN6NTTP26eT4oOxyT8nznFUNM6Q9gSvRQjqk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR01MB5917
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: EXW_dSwGsrrl0F4hRemd7MqiewiytNec
+X-Proofpoint-GUID: EXW_dSwGsrrl0F4hRemd7MqiewiytNec
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-10_10,2023-03-10_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxlogscore=999
+ lowpriorityscore=0 bulkscore=0 mlxscore=0 malwarescore=0 impostorscore=0
+ spamscore=0 phishscore=0 clxscore=1015 adultscore=0 suspectscore=0
+ priorityscore=1501 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303100179
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -128,150 +86,4792 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Thang Nguyen <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>
+Cc: joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Adds event_dimm[0-15]_syndrome sysfs to report the failure syndrome
-to BMC when DIMM training failed.
+Since three systems have at least some of the FSI tree in common,
+reorganize the FSI tree into include files. In addition, add the I2C
+responders and associated engines.
 
-Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
 ---
-v3:
-  + Corrected kernel version to 6.4                       [Greg]
+ arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts |  336 +---
+ arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 1683 ++++++++++--------
+ arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts |  678 +------
+ arch/arm/boot/dts/ibm-power10-dual.dtsi      |  830 +++++++++
+ arch/arm/boot/dts/ibm-power10-quad.dtsi      |  825 +++++++++
+ 5 files changed, 2647 insertions(+), 1705 deletions(-)
+ create mode 100644 arch/arm/boot/dts/ibm-power10-dual.dtsi
+ create mode 100644 arch/arm/boot/dts/ibm-power10-quad.dtsi
 
-v2:
-  + Change "to initialized" to "to initialize"            [Paul]
-  + Corrected kernel version to 6.3                  [Greg,Paul]
-  + Corrected variables type to 'unsigned int"            [Paul]
----
- .../sysfs-bus-platform-devices-ampere-smpro   | 10 +++
- drivers/misc/smpro-errmon.c                   | 77 +++++++++++++++++++
- 2 files changed, 87 insertions(+)
-
-diff --git a/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro b/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
-index 14b58c893df5..fead760dcf77 100644
---- a/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
-+++ b/Documentation/ABI/testing/sysfs-bus-platform-devices-ampere-smpro
-@@ -265,6 +265,16 @@ Description:
- 		For more details, see section `5.7 GPI Status Registers and 5.9 Memory Error Register Definitions,
- 		Altra Family Soc BMC Interface Specification`.
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts
+index 79516dc21c01..2f75677ea8f3 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts
+@@ -12,38 +12,11 @@ / {
+ 	compatible = "ibm,bonnell-bmc", "aspeed,ast2600";
  
-+What:		/sys/bus/platform/devices/smpro-errmon.*/event_dimm[0-15]_syndrome
-+KernelVersion:	6.4
-+Contact:	Quan Nguyen <quan@os.amperecomputing.com>
-+Description:
-+		(RO) The sysfs returns the 2-byte DIMM failure syndrome data for slot
-+		0-15 if it failed to initialize.
-+
-+		For more details, see section `5.11 Boot Stage Register Definitions,
-+		Altra Family Soc BMC Interface Specification`.
-+
- What:		/sys/bus/platform/devices/smpro-misc.*/boot_progress
- KernelVersion:	6.1
- Contact:	Quan Nguyen <quan@os.amperecomputing.com>
-diff --git a/drivers/misc/smpro-errmon.c b/drivers/misc/smpro-errmon.c
-index 1635e881aefb..a1f0b2c77fac 100644
---- a/drivers/misc/smpro-errmon.c
-+++ b/drivers/misc/smpro-errmon.c
-@@ -47,6 +47,12 @@
- #define WARN_PMPRO_INFO_LO	0xAC
- #define WARN_PMPRO_INFO_HI	0xAD
+ 	aliases {
+-		i2c100 = &cfam0_i2c0;
+-		i2c101 = &cfam0_i2c1;
+-		i2c110 = &cfam0_i2c10;
+-		i2c111 = &cfam0_i2c11;
+-		i2c112 = &cfam0_i2c12;
+-		i2c113 = &cfam0_i2c13;
+-		i2c114 = &cfam0_i2c14;
+-		i2c115 = &cfam0_i2c15;
+-		i2c202 = &cfam1_i2c2;
+-		i2c203 = &cfam1_i2c3;
+-		i2c210 = &cfam1_i2c10;
+-		i2c211 = &cfam1_i2c11;
+-		i2c214 = &cfam1_i2c14;
+-		i2c215 = &cfam1_i2c15;
+-		i2c216 = &cfam1_i2c16;
+-		i2c217 = &cfam1_i2c17;
+-
+ 		serial4 = &uart5;
+ 		i2c16 = &i2c11mux0chn0;
+ 		i2c17 = &i2c11mux0chn1;
+ 		i2c18 = &i2c11mux0chn2;
+ 		i2c19 = &i2c11mux0chn3;
+-
+-		spi10 = &cfam0_spi0;
+-		spi11 = &cfam0_spi1;
+-		spi12 = &cfam0_spi2;
+-		spi13 = &cfam0_spi3;
+-		spi20 = &cfam1_spi0;
+-		spi21 = &cfam1_spi1;
+-		spi22 = &cfam1_spi2;
+-		spi23 = &cfam1_spi3;
+-
+ 	};
  
-+/* Boot Stage Register */
-+#define BOOTSTAGE		0xB0
-+#define DIMM_SYNDROME_SEL	0xB4
-+#define DIMM_SYNDROME_ERR	0xB5
-+#define DIMM_SYNDROME_STAGE	4
-+
- /* PCIE Error Registers */
- #define PCIE_CE_ERR_CNT		0xC0
- #define PCIE_CE_ERR_LEN		0xC1
-@@ -468,6 +474,61 @@ EVENT_RO(vrd_hot, VRD_HOT_EVENT);
- EVENT_RO(dimm_hot, DIMM_HOT_EVENT);
- EVENT_RO(dimm_2x_refresh, DIMM_2X_REFRESH_EVENT);
- 
-+static ssize_t smpro_dimm_syndrome_read(struct device *dev, struct device_attribute *da,
-+					char *buf, unsigned int slot)
-+{
-+	struct smpro_errmon *errmon = dev_get_drvdata(dev);
-+	unsigned int data;
-+	int ret;
-+
-+	ret = regmap_read(errmon->regmap, BOOTSTAGE, &data);
-+	if (ret)
-+		return ret;
-+
-+	/* check for valid stage */
-+	data = (data >> 8) & 0xff;
-+	if (data != DIMM_SYNDROME_STAGE)
-+		return ret;
-+
-+	/* Write the slot ID to retrieve Error Syndrome */
-+	ret = regmap_write(errmon->regmap, DIMM_SYNDROME_SEL, slot);
-+	if (ret)
-+		return ret;
-+
-+	/* Read the Syndrome error */
-+	ret = regmap_read(errmon->regmap, DIMM_SYNDROME_ERR, &data);
-+	if (ret || !data)
-+		return ret;
-+
-+	return sysfs_emit(buf, "%04x\n", data);
-+}
-+
-+#define EVENT_DIMM_SYNDROME(_slot) \
-+	static ssize_t event_dimm##_slot##_syndrome_show(struct device *dev,          \
-+							 struct device_attribute *da, \
-+							 char *buf)                   \
-+	{                                                                             \
-+		return smpro_dimm_syndrome_read(dev, da, buf, _slot);                 \
-+	}                                                                             \
-+	static DEVICE_ATTR_RO(event_dimm##_slot##_syndrome)
-+
-+EVENT_DIMM_SYNDROME(0);
-+EVENT_DIMM_SYNDROME(1);
-+EVENT_DIMM_SYNDROME(2);
-+EVENT_DIMM_SYNDROME(3);
-+EVENT_DIMM_SYNDROME(4);
-+EVENT_DIMM_SYNDROME(5);
-+EVENT_DIMM_SYNDROME(6);
-+EVENT_DIMM_SYNDROME(7);
-+EVENT_DIMM_SYNDROME(8);
-+EVENT_DIMM_SYNDROME(9);
-+EVENT_DIMM_SYNDROME(10);
-+EVENT_DIMM_SYNDROME(11);
-+EVENT_DIMM_SYNDROME(12);
-+EVENT_DIMM_SYNDROME(13);
-+EVENT_DIMM_SYNDROME(14);
-+EVENT_DIMM_SYNDROME(15);
-+
- static struct attribute *smpro_errmon_attrs[] = {
- 	&dev_attr_overflow_core_ce.attr,
- 	&dev_attr_overflow_core_ue.attr,
-@@ -493,6 +554,22 @@ static struct attribute *smpro_errmon_attrs[] = {
- 	&dev_attr_event_vrd_hot.attr,
- 	&dev_attr_event_dimm_hot.attr,
- 	&dev_attr_event_dimm_2x_refresh.attr,
-+	&dev_attr_event_dimm0_syndrome.attr,
-+	&dev_attr_event_dimm1_syndrome.attr,
-+	&dev_attr_event_dimm2_syndrome.attr,
-+	&dev_attr_event_dimm3_syndrome.attr,
-+	&dev_attr_event_dimm4_syndrome.attr,
-+	&dev_attr_event_dimm5_syndrome.attr,
-+	&dev_attr_event_dimm6_syndrome.attr,
-+	&dev_attr_event_dimm7_syndrome.attr,
-+	&dev_attr_event_dimm8_syndrome.attr,
-+	&dev_attr_event_dimm9_syndrome.attr,
-+	&dev_attr_event_dimm10_syndrome.attr,
-+	&dev_attr_event_dimm11_syndrome.attr,
-+	&dev_attr_event_dimm12_syndrome.attr,
-+	&dev_attr_event_dimm13_syndrome.attr,
-+	&dev_attr_event_dimm14_syndrome.attr,
-+	&dev_attr_event_dimm15_syndrome.attr,
- 	NULL
+ 	chosen {
+@@ -197,313 +170,6 @@ &emmc {
+ 	clk-phase-mmc-hs200 = <180>, <180>;
  };
  
+-&fsim0 {
+-	status = "okay";
+-
+-	#address-cells = <2>;
+-	#size-cells = <0>;
+-
+-	cfam-reset-gpios = <&gpio0 ASPEED_GPIO(Q, 0) GPIO_ACTIVE_HIGH>;
+-
+-	cfam@0,0 {
+-		reg = <0 0>;
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		chip-id = <0>;
+-
+-		scom@1000 {
+-			compatible = "ibm,fsi2pib";
+-			reg = <0x1000 0x400>;
+-		};
+-
+-		i2c@1800 {
+-			compatible = "ibm,fsi-i2c-master";
+-			reg = <0x1800 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			cfam0_i2c0: i2c-bus@0 {
+-				reg = <0>;	/* OMI01 */
+-			};
+-
+-			cfam0_i2c1: i2c-bus@1 {
+-				reg = <1>;	/* OMI23 */
+-			};
+-
+-			cfam0_i2c10: i2c-bus@a {
+-				reg = <10>;	/* OP3A */
+-			};
+-
+-			cfam0_i2c11: i2c-bus@b {
+-				reg = <11>;	/* OP3B */
+-			};
+-
+-			cfam0_i2c12: i2c-bus@c {
+-				reg = <12>;	/* OP4A */
+-			};
+-
+-			cfam0_i2c13: i2c-bus@d {
+-				reg = <13>;	/* OP4B */
+-			};
+-
+-			cfam0_i2c14: i2c-bus@e {
+-				reg = <14>;	/* OP5A */
+-			};
+-
+-			cfam0_i2c15: i2c-bus@f {
+-				reg = <15>;	/* OP5B */
+-			};
+-		};
+-
+-		fsi2spi@1c00 {
+-			compatible = "ibm,fsi2spi";
+-			reg = <0x1c00 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			cfam0_spi0: spi@0 {
+-				reg = <0x0>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-
+-			cfam0_spi1: spi@20 {
+-				reg = <0x20>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-
+-			cfam0_spi2: spi@40 {
+-				reg = <0x40>;
+-				compatible = "ibm,fsi2spi-restricted";
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-
+-			cfam0_spi3: spi@60 {
+-				reg = <0x60>;
+-				compatible = "ibm,fsi2spi-restricted";
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-		};
+-
+-		sbefifo@2400 {
+-			compatible = "ibm,p9-sbefifo";
+-			reg = <0x2400 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			fsi_occ0: occ {
+-				compatible = "ibm,p10-occ";
+-
+-				occ-hwmon {
+-					compatible = "ibm,p10-occ-hwmon";
+-					ibm,no-poll-on-init;
+-				};
+-			};
+-		};
+-
+-		fsi_hub0: hub@3400 {
+-			compatible = "fsi-master-hub";
+-			reg = <0x3400 0x400>;
+-			#address-cells = <2>;
+-			#size-cells = <0>;
+-		};
+-	};
+-};
+-
+-&fsi_hub0 {
+-	cfam@1,0 {
+-		reg = <1 0>;
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		chip-id = <1>;
+-
+-		scom@1000 {
+-			compatible = "ibm,fsi2pib";
+-			reg = <0x1000 0x400>;
+-		};
+-
+-		i2c@1800 {
+-			compatible = "ibm,fsi-i2c-master";
+-			reg = <0x1800 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			cfam1_i2c2: i2c-bus@2 {
+-				reg = <2>;	/* OMI45 */
+-			};
+-
+-			cfam1_i2c3: i2c-bus@3 {
+-				reg = <3>;	/* OMI67 */
+-			};
+-
+-			cfam1_i2c10: i2c-bus@a {
+-				reg = <10>;	/* OP3A */
+-			};
+-
+-			cfam1_i2c11: i2c-bus@b {
+-				reg = <11>;	/* OP3B */
+-			};
+-
+-			cfam1_i2c14: i2c-bus@e {
+-				reg = <14>;	/* OP5A */
+-			};
+-
+-			cfam1_i2c15: i2c-bus@f {
+-				reg = <15>;	/* OP5B */
+-			};
+-
+-			cfam1_i2c16: i2c-bus@10 {
+-				reg = <16>;	/* OP6A */
+-			};
+-
+-			cfam1_i2c17: i2c-bus@11 {
+-				reg = <17>;	/* OP6B */
+-			};
+-		};
+-
+-		fsi2spi@1c00 {
+-			compatible = "ibm,fsi2spi";
+-			reg = <0x1c00 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			cfam1_spi0: spi@0 {
+-				reg = <0x0>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-
+-			cfam1_spi1: spi@20 {
+-				reg = <0x20>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-
+-			cfam1_spi2: spi@40 {
+-				reg = <0x40>;
+-				compatible = "ibm,fsi2spi-restricted";
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-
+-			cfam1_spi3: spi@60 {
+-				reg = <0x60>;
+-				compatible = "ibm,fsi2spi-restricted";
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-		};
+-
+-		sbefifo@2400 {
+-			compatible = "ibm,p9-sbefifo";
+-			reg = <0x2400 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			fsi_occ1: occ {
+-				compatible = "ibm,p10-occ";
+-
+-				occ-hwmon {
+-					compatible = "ibm,p10-occ-hwmon";
+-					ibm,no-poll-on-init;
+-				};
+-			};
+-		};
+-
+-		fsi_hub1: hub@3400 {
+-			compatible = "fsi-master-hub";
+-			reg = <0x3400 0x400>;
+-			#address-cells = <2>;
+-			#size-cells = <0>;
+-
+-			no-scan-on-init;
+-		};
+-	};
+-};
+-
+ &ibt {
+ 	status = "okay";
+ };
+@@ -913,3 +579,5 @@ &kcs3 {
+ 	aspeed,lpc-io-reg = <0xca2>;
+ 	aspeed,lpc-interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
+ };
++
++#include "ibm-power10-dual.dtsi"
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
+index c6f8f20914d1..bbf17be7fd8b 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts
+@@ -12,38 +12,6 @@ / {
+ 	compatible = "ibm,everest-bmc", "aspeed,ast2600";
+ 
+ 	aliases {
+-		i2c100 = &cfam0_i2c0;
+-		i2c101 = &cfam0_i2c1;
+-		i2c110 = &cfam0_i2c10;
+-		i2c111 = &cfam0_i2c11;
+-		i2c112 = &cfam0_i2c12;
+-		i2c113 = &cfam0_i2c13;
+-		i2c114 = &cfam0_i2c14;
+-		i2c115 = &cfam0_i2c15;
+-		i2c202 = &cfam1_i2c2;
+-		i2c203 = &cfam1_i2c3;
+-		i2c210 = &cfam1_i2c10;
+-		i2c211 = &cfam1_i2c11;
+-		i2c214 = &cfam1_i2c14;
+-		i2c215 = &cfam1_i2c15;
+-		i2c216 = &cfam1_i2c16;
+-		i2c217 = &cfam1_i2c17;
+-		i2c300 = &cfam2_i2c0;
+-		i2c301 = &cfam2_i2c1;
+-		i2c310 = &cfam2_i2c10;
+-		i2c311 = &cfam2_i2c11;
+-		i2c312 = &cfam2_i2c12;
+-		i2c313 = &cfam2_i2c13;
+-		i2c314 = &cfam2_i2c14;
+-		i2c315 = &cfam2_i2c15;
+-		i2c402 = &cfam3_i2c2;
+-		i2c403 = &cfam3_i2c3;
+-		i2c410 = &cfam3_i2c10;
+-		i2c411 = &cfam3_i2c11;
+-		i2c414 = &cfam3_i2c14;
+-		i2c415 = &cfam3_i2c15;
+-		i2c416 = &cfam3_i2c16;
+-		i2c417 = &cfam3_i2c17;
+ 		i2c500 = &cfam4_i2c0;
+ 		i2c501 = &cfam4_i2c1;
+ 		i2c510 = &cfam4_i2c10;
+@@ -113,22 +81,72 @@ aliases {
+ 
+ 		serial4 = &uart5;
+ 
+-		spi10 = &cfam0_spi0;
+-		spi11 = &cfam0_spi1;
+-		spi12 = &cfam0_spi2;
+-		spi13 = &cfam0_spi3;
+-		spi20 = &cfam1_spi0;
+-		spi21 = &cfam1_spi1;
+-		spi22 = &cfam1_spi2;
+-		spi23 = &cfam1_spi3;
+-		spi30 = &cfam2_spi0;
+-		spi31 = &cfam2_spi1;
+-		spi32 = &cfam2_spi2;
+-		spi33 = &cfam2_spi3;
+-		spi40 = &cfam3_spi0;
+-		spi41 = &cfam3_spi1;
+-		spi42 = &cfam3_spi2;
+-		spi43 = &cfam3_spi3;
++		sbefifo500 = &sbefifo500;
++		sbefifo501 = &sbefifo501;
++		sbefifo510 = &sbefifo510;
++		sbefifo511 = &sbefifo511;
++		sbefifo512 = &sbefifo512;
++		sbefifo513 = &sbefifo513;
++		sbefifo514 = &sbefifo514;
++		sbefifo515 = &sbefifo515;
++		sbefifo602 = &sbefifo602;
++		sbefifo603 = &sbefifo603;
++		sbefifo610 = &sbefifo610;
++		sbefifo611 = &sbefifo611;
++		sbefifo614 = &sbefifo614;
++		sbefifo615 = &sbefifo615;
++		sbefifo616 = &sbefifo616;
++		sbefifo617 = &sbefifo617;
++		sbefifo700 = &sbefifo700;
++		sbefifo701 = &sbefifo701;
++		sbefifo710 = &sbefifo710;
++		sbefifo711 = &sbefifo711;
++		sbefifo712 = &sbefifo712;
++		sbefifo713 = &sbefifo713;
++		sbefifo714 = &sbefifo714;
++		sbefifo715 = &sbefifo715;
++		sbefifo802 = &sbefifo802;
++		sbefifo803 = &sbefifo803;
++		sbefifo810 = &sbefifo810;
++		sbefifo811 = &sbefifo811;
++		sbefifo814 = &sbefifo814;
++		sbefifo815 = &sbefifo815;
++		sbefifo816 = &sbefifo816;
++		sbefifo817 = &sbefifo817;
++
++		scom500 = &scom500;
++		scom501 = &scom501;
++		scom510 = &scom510;
++		scom511 = &scom511;
++		scom512 = &scom512;
++		scom513 = &scom513;
++		scom514 = &scom514;
++		scom515 = &scom515;
++		scom602 = &scom602;
++		scom603 = &scom603;
++		scom610 = &scom610;
++		scom611 = &scom611;
++		scom614 = &scom614;
++		scom615 = &scom615;
++		scom616 = &scom616;
++		scom617 = &scom617;
++		scom700 = &scom700;
++		scom701 = &scom701;
++		scom710 = &scom710;
++		scom711 = &scom711;
++		scom712 = &scom712;
++		scom713 = &scom713;
++		scom714 = &scom714;
++		scom715 = &scom715;
++		scom802 = &scom802;
++		scom803 = &scom803;
++		scom810 = &scom810;
++		scom811 = &scom811;
++		scom814 = &scom814;
++		scom815 = &scom815;
++		scom816 = &scom816;
++		scom817 = &scom817;
++
+ 		spi50 = &cfam4_spi0;
+ 		spi51 = &cfam4_spi1;
+ 		spi52 = &cfam4_spi2;
+@@ -2413,172 +2431,85 @@ &emmc {
+ 	clk-phase-mmc-hs200 = <210>, <228>;
+ };
+ 
+-&fsim0 {
++&ibt {
+ 	status = "okay";
++};
+ 
+-	#address-cells = <2>;
+-	#size-cells = <0>;
+-
+-	/*
+-	 * CFAM Reset is supposed to be active low but pass1 hardware is wired
+-	 * active high.
+-	 */
+-	cfam-reset-gpios = <&gpio0 ASPEED_GPIO(Q, 0) GPIO_ACTIVE_HIGH>;
+-
+-	cfam@0,0 {	/* DCM0_C0 */
+-		reg = <0 0>;
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		chip-id = <0>;
+-
+-		scom@1000 {
+-			compatible = "ibm,fsi2pib";
+-			reg = <0x1000 0x400>;
+-		};
+-
+-		i2c@1800 {
+-			compatible = "ibm,fsi-i2c-master";
+-			reg = <0x1800 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			cfam0_i2c0: i2c-bus@0 {
+-				reg = <0>;	/* OMI01 */
+-			};
+-
+-			cfam0_i2c1: i2c-bus@1 {
+-				reg = <1>;	/* OMI23 */
+-			};
+-
+-			cfam0_i2c10: i2c-bus@a {
+-				reg = <10>;	/* OP3A */
+-			};
+-
+-			cfam0_i2c11: i2c-bus@b {
+-				reg = <11>;	/* OP3B */
+-			};
+-
+-			cfam0_i2c12: i2c-bus@c {
+-				reg = <12>;	/* OP4A */
+-			};
+-
+-			cfam0_i2c13: i2c-bus@d {
+-				reg = <13>;	/* OP4B */
+-			};
+-
+-			cfam0_i2c14: i2c-bus@e {
+-				reg = <14>;	/* OP5A */
+-			};
+-
+-			cfam0_i2c15: i2c-bus@f {
+-				reg = <15>;	/* OP5B */
+-			};
+-		};
+-
+-		fsi2spi@1c00 {
+-			compatible = "ibm,fsi2spi";
+-			reg = <0x1c00 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			cfam0_spi0: spi@0 {
+-				reg = <0x0>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-
+-			cfam0_spi1: spi@20 {
+-				reg = <0x20>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
++&uart2 {
++	status = "okay";
++};
+ 
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
++&vuart1 {
++	status = "okay";
++};
+ 
+-			cfam0_spi2: spi@40 {
+-				reg = <0x40>;
+-				compatible = "ibm,fsi2spi-restricted";
+-				#address-cells = <1>;
+-				#size-cells = <0>;
++&vuart2 {
++	status = "okay";
++};
+ 
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
++&lpc_ctrl {
++	status = "okay";
++	memory-region = <&flash_memory>;
++};
+ 
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
++&mac2 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rmii3_default>;
++	clocks = <&syscon ASPEED_CLK_GATE_MAC3CLK>,
++		 <&syscon ASPEED_CLK_MAC3RCLK>;
++	clock-names = "MACCLK", "RCLK";
++	use-ncsi;
++};
+ 
+-			cfam0_spi3: spi@60 {
+-				reg = <0x60>;
+-				compatible = "ibm,fsi2spi-restricted";
+-				#address-cells = <1>;
+-				#size-cells = <0>;
++&mac3 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rmii4_default>;
++	clocks = <&syscon ASPEED_CLK_GATE_MAC4CLK>,
++		 <&syscon ASPEED_CLK_MAC4RCLK>;
++	clock-names = "MACCLK", "RCLK";
++	use-ncsi;
++};
+ 
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
++&wdt1 {
++	aspeed,reset-type = "none";
++	aspeed,external-signal;
++	aspeed,ext-push-pull;
++	aspeed,ext-active-high;
+ 
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-		};
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_wdtrst1_default>;
++};
+ 
+-		sbefifo@2400 {
+-			compatible = "ibm,p9-sbefifo";
+-			reg = <0x2400 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
++&wdt2 {
++	status = "okay";
++};
+ 
+-			fsi_occ0: occ {
+-				compatible = "ibm,p10-occ";
++&xdma {
++	status = "okay";
++	memory-region = <&vga_memory>;
++};
+ 
+-				occ-hwmon {
+-					compatible = "ibm,p10-occ-hwmon";
+-					ibm,no-poll-on-init;
+-				};
+-			};
+-		};
++&kcs2 {
++	status = "okay";
++	aspeed,lpc-io-reg = <0xca8 0xcac>;
++};
+ 
+-		fsi_hub0: hub@3400 {
+-			compatible = "fsi-master-hub";
+-			reg = <0x3400 0x400>;
+-			#address-cells = <2>;
+-			#size-cells = <0>;
+-		};
+-	};
++&kcs3 {
++	status = "okay";
++	aspeed,lpc-io-reg = <0xca2>;
++	aspeed,lpc-interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
+ };
+ 
++#include "ibm-power10-quad.dtsi"
++
+ &fsi_hub0 {
+-	cfam@1,0 { /* DCM0_C1 */
+-		reg = <1 0>;
++	cfam@4,0 { /* DCM2_C0 */
++		reg = <4 0>;
+ 		#address-cells = <1>;
+ 		#size-cells = <1>;
+-		chip-id = <1>;
++		chip-id = <4>;
+ 
+ 		scom@1000 {
+ 			compatible = "ibm,fsi2pib";
+@@ -2591,185 +2522,260 @@ i2c@1800 {
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+ 
+-			cfam1_i2c2: i2c-bus@2 {
+-				reg = <2>;	/* OMI45 */
+-			};
++			cfam4_i2c0: i2c-bus@0 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <0>;	/* OM01 */
+ 
+-			cfam1_i2c3: i2c-bus@3 {
+-				reg = <3>;	/* OMI67 */
+-			};
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
+ 
+-			cfam1_i2c10: i2c-bus@a {
+-				reg = <10>;	/* OP3A */
+-			};
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
+ 
+-			cfam1_i2c11: i2c-bus@b {
+-				reg = <11>;	/* OP3B */
+-			};
++						scom500: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
+ 
+-			cfam1_i2c14: i2c-bus@e {
+-				reg = <14>;	/* OP5A */
++						sbefifo500: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 
+-			cfam1_i2c15: i2c-bus@f {
+-				reg = <15>;	/* OP5B */
+-			};
++			cfam4_i2c1: i2c-bus@1 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <1>;	/* OM23 */
+ 
+-			cfam1_i2c16: i2c-bus@10 {
+-				reg = <16>;	/* OP6A */
+-			};
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
+ 
+-			cfam1_i2c17: i2c-bus@11 {
+-				reg = <17>;	/* OP6B */
+-			};
+-		};
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
+ 
+-		fsi2spi@1c00 {
+-			compatible = "ibm,fsi2spi";
+-			reg = <0x1c00 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
++						scom501: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
+ 
+-			cfam1_spi0: spi@0 {
+-				reg = <0x0>;
++						sbefifo501: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam4_i2c10: i2c-bus@a {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
++				reg = <10>;	/* OP3A */
+ 
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
+ 
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom510: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo510: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
+ 				};
+ 			};
+ 
+-			cfam1_spi1: spi@20 {
+-				reg = <0x20>;
++			cfam4_i2c11: i2c-bus@b {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
++				reg = <11>;	/* OP3B */
+ 
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
+ 
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom511: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo511: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
+ 				};
+ 			};
+ 
+-			cfam1_spi2: spi@40 {
+-				reg = <0x40>;
+-				compatible = "ibm,fsi2spi-restricted";
++			cfam4_i2c12: i2c-bus@c {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
++				reg = <12>;	/* OP4A */
+ 
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
+ 
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom512: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo512: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
+ 				};
+ 			};
+ 
+-			cfam1_spi3: spi@60 {
+-				reg = <0x60>;
+-				compatible = "ibm,fsi2spi-restricted";
++			cfam4_i2c13: i2c-bus@d {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
++				reg = <13>;	/* OP4B */
+ 
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
+ 
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-		};
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
+ 
+-		sbefifo@2400 {
+-			compatible = "ibm,p9-sbefifo";
+-			reg = <0x2400 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
++						scom513: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
+ 
+-			fsi_occ1: occ {
+-				compatible = "ibm,p10-occ";
+-
+-				occ-hwmon {
+-					compatible = "ibm,p10-occ-hwmon";
+-					ibm,no-poll-on-init;
++						sbefifo513: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
+ 				};
+ 			};
+-		};
+ 
+-		fsi_hub1: hub@3400 {
+-			compatible = "fsi-master-hub";
+-			reg = <0x3400 0x400>;
+-			#address-cells = <2>;
+-			#size-cells = <0>;
+-
+-			no-scan-on-init;
+-		};
+-	};
+-
+-	cfam@2,0 { /* DCM1_C0 */
+-		reg = <2 0>;
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		chip-id = <2>;
+-
+-		scom@1000 {
+-			compatible = "ibm,fsi2pib";
+-			reg = <0x1000 0x400>;
+-		};
++			cfam4_i2c14: i2c-bus@e {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <14>;	/* OP5A */
+ 
+-		i2c@1800 {
+-			compatible = "ibm,fsi-i2c-master";
+-			reg = <0x1800 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
+ 
+-			cfam2_i2c0: i2c-bus@0 {
+-				reg = <0>;	/* OM01 */
+-			};
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
+ 
+-			cfam2_i2c1: i2c-bus@1 {
+-				reg = <1>;	/* OM23 */
+-			};
++						scom514: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
+ 
+-			cfam2_i2c10: i2c-bus@a {
+-				reg = <10>;	/* OP3A */
++						sbefifo514: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 
+-			cfam2_i2c11: i2c-bus@b {
+-				reg = <11>;	/* OP3B */
+-			};
++			cfam4_i2c15: i2c-bus@f {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <15>;	/* OP5B */
+ 
+-			cfam2_i2c12: i2c-bus@c {
+-				reg = <12>;	/* OP4A */
+-			};
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
+ 
+-			cfam2_i2c13: i2c-bus@d {
+-				reg = <13>;	/* OP4B */
+-			};
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
+ 
+-			cfam2_i2c14: i2c-bus@e {
+-				reg = <14>;	/* OP5A */
+-			};
++						scom515: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
+ 
+-			cfam2_i2c15: i2c-bus@f {
+-				reg = <15>;	/* OP5B */
++						sbefifo515: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 		};
+ 
+@@ -2779,7 +2785,7 @@ fsi2spi@1c00 {
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+ 
+-			cfam2_spi0: spi@0 {
++			cfam4_spi0: spi@0 {
+ 				reg = <0x0>;
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+@@ -2795,7 +2801,7 @@ eeprom@0 {
+ 				};
+ 			};
+ 
+-			cfam2_spi1: spi@20 {
++			cfam4_spi1: spi@20 {
+ 				reg = <0x20>;
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+@@ -2811,9 +2817,9 @@ eeprom@0 {
+ 				};
+ 			};
+ 
+-			cfam2_spi2: spi@40 {
++			cfam4_spi2: spi@40 {
+ 				reg = <0x40>;
+-				compatible = "ibm,fsi2spi-restricted";
++				compatible =  "ibm,fsi2spi";
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 
+@@ -2828,9 +2834,9 @@ eeprom@0 {
+ 				};
+ 			};
+ 
+-			cfam2_spi3: spi@60 {
++			cfam4_spi3: spi@60 {
+ 				reg = <0x60>;
+-				compatible = "ibm,fsi2spi-restricted";
++				compatible =  "ibm,fsi2spi";
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 
+@@ -2852,7 +2858,7 @@ sbefifo@2400 {
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+ 
+-			fsi_occ2: occ {
++			fsi_occ4: occ {
+ 				compatible = "ibm,p10-occ";
+ 
+ 				occ-hwmon {
+@@ -2862,7 +2868,7 @@ occ-hwmon {
+ 			};
+ 		};
+ 
+-		fsi_hub2: hub@3400 {
++		fsi_hub4: hub@3400 {
+ 			compatible = "fsi-master-hub";
+ 			reg = <0x3400 0x400>;
+ 			#address-cells = <2>;
+@@ -2872,11 +2878,11 @@ fsi_hub2: hub@3400 {
+ 		};
+ 	};
+ 
+-	cfam@3,0 { /* DCM1_C1 */
+-		reg = <3 0>;
++	cfam@5,0 { /* DCM2_C1 */
++		reg = <5 0>;
+ 		#address-cells = <1>;
+ 		#size-cells = <1>;
+-		chip-id = <3>;
++		chip-id = <5>;
+ 
+ 		scom@1000 {
+ 			compatible = "ibm,fsi2pib";
+@@ -2889,334 +2895,260 @@ i2c@1800 {
+ 			#address-cells = <1>;
+ 			#size-cells = <0>;
+ 
+-			cfam3_i2c2: i2c-bus@2 {
++			cfam5_i2c2: i2c-bus@2 {
++				#address-cells = <1>;
++				#size-cells = <0>;
+ 				reg = <2>;	/* OM45 */
+-			};
+-
+-			cfam3_i2c3: i2c-bus@3 {
+-				reg = <3>;	/* OM67 */
+-			};
+-
+-			cfam3_i2c10: i2c-bus@a {
+-				reg = <10>;	/* OP3A */
+-			};
+-
+-			cfam3_i2c11: i2c-bus@b {
+-				reg = <11>;	/* OP3B */
+-			};
+-
+-			cfam3_i2c14: i2c-bus@e {
+-				reg = <14>;	/* OP5A */
+-			};
+-
+-			cfam3_i2c15: i2c-bus@f {
+-				reg = <15>;	/* OP5B */
+-			};
+-
+-			cfam3_i2c16: i2c-bus@10 {
+-				reg = <16>;	/* OP6A */
+-			};
+ 
+-			cfam3_i2c17: i2c-bus@11 {
+-				reg = <17>;	/* OP6B */
+-			};
+-		};
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
+ 
+-		fsi2spi@1c00 {
+-			compatible = "ibm,fsi2spi";
+-			reg = <0x1c00 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
+ 
+-			cfam3_spi0: spi@0 {
+-				reg = <0x0>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
++						scom602: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
+ 
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
++						sbefifo602: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
+ 				};
+ 			};
+ 
+-			cfam3_spi1: spi@20 {
+-				reg = <0x20>;
++			cfam5_i2c3: i2c-bus@3 {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
++				reg = <3>;	/* OM67 */
+ 
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
+ 
+-			cfam3_spi2: spi@40 {
+-				reg = <0x40>;
+-				compatible = "ibm,fsi2spi-restricted";
+-				#address-cells = <1>;
+-				#size-cells = <0>;
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
+ 
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
++						scom603: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
+ 
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
++						sbefifo603: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
+ 				};
+ 			};
+ 
+-			cfam3_spi3: spi@60 {
+-				reg = <0x60>;
+-				compatible = "ibm,fsi2spi-restricted";
++			cfam5_i2c10: i2c-bus@a {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
++				reg = <10>;	/* OP3A */
+ 
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-		};
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
+ 
+-		sbefifo@2400 {
+-			compatible = "ibm,p9-sbefifo";
+-			reg = <0x2400 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
+ 
+-			fsi_occ3: occ {
+-				compatible = "ibm,p10-occ";
++						scom610: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
+ 
+-				occ-hwmon {
+-					compatible = "ibm,p10-occ-hwmon";
+-					ibm,no-poll-on-init;
++						sbefifo610: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
+ 				};
+ 			};
+-		};
+-
+-		fsi_hub3: hub@3400 {
+-			compatible = "fsi-master-hub";
+-			reg = <0x3400 0x400>;
+-			#address-cells = <2>;
+-			#size-cells = <0>;
+-
+-			no-scan-on-init;
+-		};
+-	};
+-
+-	cfam@4,0 { /* DCM2_C0 */
+-		reg = <4 0>;
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		chip-id = <4>;
+-
+-		scom@1000 {
+-			compatible = "ibm,fsi2pib";
+-			reg = <0x1000 0x400>;
+-		};
+-
+-		i2c@1800 {
+-			compatible = "ibm,fsi-i2c-master";
+-			reg = <0x1800 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			cfam4_i2c0: i2c-bus@0 {
+-				reg = <0>;	/* OM01 */
+-			};
+-
+-			cfam4_i2c1: i2c-bus@1 {
+-				reg = <1>;	/* OM23 */
+-			};
+ 
+-			cfam4_i2c10: i2c-bus@a {
+-				reg = <10>;	/* OP3A */
+-			};
+-
+-			cfam4_i2c11: i2c-bus@b {
++			cfam5_i2c11: i2c-bus@b {
++				#address-cells = <1>;
++				#size-cells = <0>;
+ 				reg = <11>;	/* OP3B */
+-			};
+ 
+-			cfam4_i2c12: i2c-bus@c {
+-				reg = <12>;	/* OP4A */
+-			};
+-
+-			cfam4_i2c13: i2c-bus@d {
+-				reg = <13>;	/* OP4B */
+-			};
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
+ 
+-			cfam4_i2c14: i2c-bus@e {
+-				reg = <14>;	/* OP5A */
+-			};
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
+ 
+-			cfam4_i2c15: i2c-bus@f {
+-				reg = <15>;	/* OP5B */
+-			};
+-		};
++						scom611: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
+ 
+-		fsi2spi@1c00 {
+-			compatible = "ibm,fsi2spi";
+-			reg = <0x1c00 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			cfam4_spi0: spi@0 {
+-				reg = <0x0>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
++						sbefifo611: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
+ 				};
+ 			};
+ 
+-			cfam4_spi1: spi@20 {
+-				reg = <0x20>;
++			cfam5_i2c14: i2c-bus@e {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
++				reg = <14>;	/* OP5A */
+ 
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
+ 
+-			cfam4_spi2: spi@40 {
+-				reg = <0x40>;
+-				compatible = "ibm,fsi2spi-restricted";
+-				#address-cells = <1>;
+-				#size-cells = <0>;
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
+ 
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
++						scom614: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
+ 
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
++						sbefifo614: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
+ 				};
+ 			};
+ 
+-			cfam4_spi3: spi@60 {
+-				reg = <0x60>;
+-				compatible = "ibm,fsi2spi-restricted";
++			cfam5_i2c15: i2c-bus@f {
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
++				reg = <15>;	/* OP5B */
+ 
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-		};
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
+ 
+-		sbefifo@2400 {
+-			compatible = "ibm,p9-sbefifo";
+-			reg = <0x2400 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
+ 
+-			fsi_occ4: occ {
+-				compatible = "ibm,p10-occ";
++						scom615: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
+ 
+-				occ-hwmon {
+-					compatible = "ibm,p10-occ-hwmon";
+-					ibm,no-poll-on-init;
++						sbefifo615: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
+ 				};
+ 			};
+-		};
+-
+-		fsi_hub4: hub@3400 {
+-			compatible = "fsi-master-hub";
+-			reg = <0x3400 0x400>;
+-			#address-cells = <2>;
+-			#size-cells = <0>;
+ 
+-			no-scan-on-init;
+-		};
+-	};
++			cfam5_i2c16: i2c-bus@10 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <16>;	/* OP6A */
+ 
+-	cfam@5,0 { /* DCM2_C1 */
+-		reg = <5 0>;
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		chip-id = <5>;
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
+ 
+-		scom@1000 {
+-			compatible = "ibm,fsi2pib";
+-			reg = <0x1000 0x400>;
+-		};
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
+ 
+-		i2c@1800 {
+-			compatible = "ibm,fsi-i2c-master";
+-			reg = <0x1800 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
++						scom616: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
+ 
+-			cfam5_i2c2: i2c-bus@2 {
+-				reg = <2>;	/* OM45 */
+-			};
+-
+-			cfam5_i2c3: i2c-bus@3 {
+-				reg = <3>;	/* OM67 */
+-			};
+-
+-			cfam5_i2c10: i2c-bus@a {
+-				reg = <10>;	/* OP3A */
++						sbefifo616: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 
+-			cfam5_i2c11: i2c-bus@b {
+-				reg = <11>;	/* OP3B */
+-			};
++			cfam5_i2c17: i2c-bus@11 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <17>;	/* OP6B */
+ 
+-			cfam5_i2c14: i2c-bus@e {
+-				reg = <14>;	/* OP5A */
+-			};
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
+ 
+-			cfam5_i2c15: i2c-bus@f {
+-				reg = <15>;	/* OP5B */
+-			};
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
+ 
+-			cfam5_i2c16: i2c-bus@10 {
+-				reg = <16>;	/* OP6A */
+-			};
++						scom617: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
+ 
+-			cfam5_i2c17: i2c-bus@11 {
+-				reg = <17>;	/* OP6B */
++						sbefifo617: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 		};
+ 
+@@ -3260,7 +3192,7 @@ eeprom@0 {
+ 
+ 			cfam5_spi2: spi@40 {
+ 				reg = <0x40>;
+-				compatible = "ibm,fsi2spi-restricted";
++				compatible =  "ibm,fsi2spi";
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 
+@@ -3277,7 +3209,7 @@ eeprom@0 {
+ 
+ 			cfam5_spi3: spi@60 {
+ 				reg = <0x60>;
+-				compatible = "ibm,fsi2spi-restricted";
++				compatible =  "ibm,fsi2spi";
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 
+@@ -3337,35 +3269,259 @@ i2c@1800 {
+ 			#size-cells = <0>;
+ 
+ 			cfam6_i2c0: i2c-bus@0 {
++				#address-cells = <1>;
++				#size-cells = <0>;
+ 				reg = <0>;	/* OM01 */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom700: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo700: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 
+ 			cfam6_i2c1: i2c-bus@1 {
++				#address-cells = <1>;
++				#size-cells = <0>;
+ 				reg = <1>;	/* OM23 */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom701: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo701: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 
+ 			cfam6_i2c10: i2c-bus@a {
++				#address-cells = <1>;
++				#size-cells = <0>;
+ 				reg = <10>;	/* OP3A */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom710: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo710: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 
+ 			cfam6_i2c11: i2c-bus@b {
++				#address-cells = <1>;
++				#size-cells = <0>;
+ 				reg = <11>;	/* OP3B */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom711: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo711: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 
+ 			cfam6_i2c12: i2c-bus@c {
++				#address-cells = <1>;
++				#size-cells = <0>;
+ 				reg = <12>;	/* OP4A */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom712: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo712: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 
+ 			cfam6_i2c13: i2c-bus@d {
++				#address-cells = <1>;
++				#size-cells = <0>;
+ 				reg = <13>;	/* OP4B */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom713: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo713: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 
+ 			cfam6_i2c14: i2c-bus@e {
++				#address-cells = <1>;
++				#size-cells = <0>;
+ 				reg = <14>;	/* OP5A */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom714: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo714: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 
+ 			cfam6_i2c15: i2c-bus@f {
++				#address-cells = <1>;
++				#size-cells = <0>;
+ 				reg = <15>;	/* OP5B */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom715: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo715: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 		};
+ 
+@@ -3409,7 +3565,7 @@ eeprom@0 {
+ 
+ 			cfam6_spi2: spi@40 {
+ 				reg = <0x40>;
+-				compatible = "ibm,fsi2spi-restricted";
++				compatible =  "ibm,fsi2spi";
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 
+@@ -3426,7 +3582,7 @@ eeprom@0 {
+ 
+ 			cfam6_spi3: spi@60 {
+ 				reg = <0x60>;
+-				compatible = "ibm,fsi2spi-restricted";
++				compatible =  "ibm,fsi2spi";
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 
+@@ -3486,35 +3642,259 @@ i2c@1800 {
+ 			#size-cells = <0>;
+ 
+ 			cfam7_i2c2: i2c-bus@2 {
++				#address-cells = <1>;
++				#size-cells = <0>;
+ 				reg = <2>;	/* OM45 */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom802: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo802: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 
+ 			cfam7_i2c3: i2c-bus@3 {
++				#address-cells = <1>;
++				#size-cells = <0>;
+ 				reg = <3>;	/* OM67 */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom803: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo803: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 
+ 			cfam7_i2c10: i2c-bus@a {
++				#address-cells = <1>;
++				#size-cells = <0>;
+ 				reg = <10>;	/* OP3A */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom810: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo810: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 
+ 			cfam7_i2c11: i2c-bus@b {
++				#address-cells = <1>;
++				#size-cells = <0>;
+ 				reg = <11>;	/* OP3B */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom811: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo811: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 
+ 			cfam7_i2c14: i2c-bus@e {
++				#address-cells = <1>;
++				#size-cells = <0>;
+ 				reg = <14>;	/* OP5A */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom814: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo814: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 
+ 			cfam7_i2c15: i2c-bus@f {
++				#address-cells = <1>;
++				#size-cells = <0>;
+ 				reg = <15>;	/* OP5B */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom815: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo815: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 
+ 			cfam7_i2c16: i2c-bus@10 {
++				#address-cells = <1>;
++				#size-cells = <0>;
+ 				reg = <16>;	/* OP6A */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom816: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo816: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 
+ 			cfam7_i2c17: i2c-bus@11 {
++				#address-cells = <1>;
++				#size-cells = <0>;
+ 				reg = <17>;	/* OP6B */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom817: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo817: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
+ 			};
+ 		};
+ 
+@@ -3558,7 +3938,7 @@ eeprom@0 {
+ 
+ 			cfam7_spi2: spi@40 {
+ 				reg = <0x40>;
+-				compatible = "ibm,fsi2spi-restricted";
++				compatible =  "ibm,fsi2spi";
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 
+@@ -3575,7 +3955,7 @@ eeprom@0 {
+ 
+ 			cfam7_spi3: spi@60 {
+ 				reg = <0x60>;
+-				compatible = "ibm,fsi2spi-restricted";
++				compatible =  "ibm,fsi2spi";
+ 				#address-cells = <1>;
+ 				#size-cells = <0>;
+ 
+@@ -3619,22 +3999,6 @@ fsi_hub7: hub@3400 {
+ };
+ 
+ /* Legacy OCC numbering (to get rid of when userspace is fixed) */
+-&fsi_occ0 {
+-	reg = <1>;
+-};
+-
+-&fsi_occ1 {
+-	reg = <2>;
+-};
+-
+-&fsi_occ2 {
+-	reg = <3>;
+-};
+-
+-&fsi_occ3 {
+-	reg = <4>;
+-};
+-
+ &fsi_occ4 {
+ 	reg = <5>;
+ };
+@@ -3650,74 +4014,3 @@ &fsi_occ6 {
+ &fsi_occ7 {
+ 	reg = <8>;
+ };
+-
+-&ibt {
+-	status = "okay";
+-};
+-
+-&uart2 {
+-	status = "okay";
+-};
+-
+-&vuart1 {
+-	status = "okay";
+-};
+-
+-&vuart2 {
+-	status = "okay";
+-};
+-
+-&lpc_ctrl {
+-	status = "okay";
+-	memory-region = <&flash_memory>;
+-};
+-
+-&mac2 {
+-	status = "okay";
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_rmii3_default>;
+-	clocks = <&syscon ASPEED_CLK_GATE_MAC3CLK>,
+-		 <&syscon ASPEED_CLK_MAC3RCLK>;
+-	clock-names = "MACCLK", "RCLK";
+-	use-ncsi;
+-};
+-
+-&mac3 {
+-	status = "okay";
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_rmii4_default>;
+-	clocks = <&syscon ASPEED_CLK_GATE_MAC4CLK>,
+-		 <&syscon ASPEED_CLK_MAC4RCLK>;
+-	clock-names = "MACCLK", "RCLK";
+-	use-ncsi;
+-};
+-
+-&wdt1 {
+-	aspeed,reset-type = "none";
+-	aspeed,external-signal;
+-	aspeed,ext-push-pull;
+-	aspeed,ext-active-high;
+-
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&pinctrl_wdtrst1_default>;
+-};
+-
+-&wdt2 {
+-	status = "okay";
+-};
+-
+-&xdma {
+-	status = "okay";
+-	memory-region = <&vga_memory>;
+-};
+-
+-&kcs2 {
+-	status = "okay";
+-	aspeed,lpc-io-reg = <0xca8 0xcac>;
+-};
+-
+-&kcs3 {
+-	status = "okay";
+-	aspeed,lpc-io-reg = <0xca2>;
+-	aspeed,lpc-interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
+-};
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+index 7162e65b8115..8bd86390e14b 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts
+@@ -12,39 +12,6 @@ / {
+ 	compatible = "ibm,rainier-bmc", "aspeed,ast2600";
+ 
+ 	aliases {
+-		i2c100 = &cfam0_i2c0;
+-		i2c101 = &cfam0_i2c1;
+-		i2c110 = &cfam0_i2c10;
+-		i2c111 = &cfam0_i2c11;
+-		i2c112 = &cfam0_i2c12;
+-		i2c113 = &cfam0_i2c13;
+-		i2c114 = &cfam0_i2c14;
+-		i2c115 = &cfam0_i2c15;
+-		i2c202 = &cfam1_i2c2;
+-		i2c203 = &cfam1_i2c3;
+-		i2c210 = &cfam1_i2c10;
+-		i2c211 = &cfam1_i2c11;
+-		i2c214 = &cfam1_i2c14;
+-		i2c215 = &cfam1_i2c15;
+-		i2c216 = &cfam1_i2c16;
+-		i2c217 = &cfam1_i2c17;
+-		i2c300 = &cfam2_i2c0;
+-		i2c301 = &cfam2_i2c1;
+-		i2c310 = &cfam2_i2c10;
+-		i2c311 = &cfam2_i2c11;
+-		i2c312 = &cfam2_i2c12;
+-		i2c313 = &cfam2_i2c13;
+-		i2c314 = &cfam2_i2c14;
+-		i2c315 = &cfam2_i2c15;
+-		i2c402 = &cfam3_i2c2;
+-		i2c403 = &cfam3_i2c3;
+-		i2c410 = &cfam3_i2c10;
+-		i2c411 = &cfam3_i2c11;
+-		i2c414 = &cfam3_i2c14;
+-		i2c415 = &cfam3_i2c15;
+-		i2c416 = &cfam3_i2c16;
+-		i2c417 = &cfam3_i2c17;
+-
+ 		serial4 = &uart5;
+ 		i2c16 = &i2c2mux0;
+ 		i2c17 = &i2c2mux1;
+@@ -61,23 +28,6 @@ aliases {
+ 		i2c28 = &i2c6mux0chn3;
+ 		i2c29 = &i2c11mux0chn0;
+ 		i2c30 = &i2c11mux0chn1;
+-
+-		spi10 = &cfam0_spi0;
+-		spi11 = &cfam0_spi1;
+-		spi12 = &cfam0_spi2;
+-		spi13 = &cfam0_spi3;
+-		spi20 = &cfam1_spi0;
+-		spi21 = &cfam1_spi1;
+-		spi22 = &cfam1_spi2;
+-		spi23 = &cfam1_spi3;
+-		spi30 = &cfam2_spi0;
+-		spi31 = &cfam2_spi1;
+-		spi32 = &cfam2_spi2;
+-		spi33 = &cfam2_spi3;
+-		spi40 = &cfam3_spi0;
+-		spi41 = &cfam3_spi1;
+-		spi42 = &cfam3_spi2;
+-		spi43 = &cfam3_spi3;
+ 	};
+ 
+ 	chosen {
+@@ -301,632 +251,6 @@ &emmc {
+ 	clk-phase-mmc-hs200 = <180>, <180>;
+ };
+ 
+-&fsim0 {
+-	status = "okay";
+-
+-	#address-cells = <2>;
+-	#size-cells = <0>;
+-
+-	/*
+-	 * CFAM Reset is supposed to be active low but pass1 hardware is wired
+-	 * active high.
+-	 */
+-	cfam-reset-gpios = <&gpio0 ASPEED_GPIO(Q, 0) GPIO_ACTIVE_HIGH>;
+-
+-	cfam@0,0 {
+-		reg = <0 0>;
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		chip-id = <0>;
+-
+-		scom@1000 {
+-			compatible = "ibm,fsi2pib";
+-			reg = <0x1000 0x400>;
+-		};
+-
+-		i2c@1800 {
+-			compatible = "ibm,fsi-i2c-master";
+-			reg = <0x1800 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			cfam0_i2c0: i2c-bus@0 {
+-				reg = <0>;	/* OMI01 */
+-			};
+-
+-			cfam0_i2c1: i2c-bus@1 {
+-				reg = <1>;	/* OMI23 */
+-			};
+-
+-			cfam0_i2c10: i2c-bus@a {
+-				reg = <10>;	/* OP3A */
+-			};
+-
+-			cfam0_i2c11: i2c-bus@b {
+-				reg = <11>;	/* OP3B */
+-			};
+-
+-			cfam0_i2c12: i2c-bus@c {
+-				reg = <12>;	/* OP4A */
+-			};
+-
+-			cfam0_i2c13: i2c-bus@d {
+-				reg = <13>;	/* OP4B */
+-			};
+-
+-			cfam0_i2c14: i2c-bus@e {
+-				reg = <14>;	/* OP5A */
+-			};
+-
+-			cfam0_i2c15: i2c-bus@f {
+-				reg = <15>;	/* OP5B */
+-			};
+-		};
+-
+-		fsi2spi@1c00 {
+-			compatible = "ibm,fsi2spi";
+-			reg = <0x1c00 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			cfam0_spi0: spi@0 {
+-				reg = <0x0>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-
+-			cfam0_spi1: spi@20 {
+-				reg = <0x20>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-
+-			cfam0_spi2: spi@40 {
+-				reg = <0x40>;
+-				compatible = "ibm,fsi2spi-restricted";
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-
+-			cfam0_spi3: spi@60 {
+-				reg = <0x60>;
+-				compatible = "ibm,fsi2spi-restricted";
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-                };
+-
+-		sbefifo@2400 {
+-			compatible = "ibm,p9-sbefifo";
+-			reg = <0x2400 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			fsi_occ0: occ {
+-				compatible = "ibm,p10-occ";
+-
+-				occ-hwmon {
+-					compatible = "ibm,p10-occ-hwmon";
+-					ibm,no-poll-on-init;
+-				};
+-			};
+-		};
+-
+-		fsi_hub0: hub@3400 {
+-			compatible = "fsi-master-hub";
+-			reg = <0x3400 0x400>;
+-			#address-cells = <2>;
+-			#size-cells = <0>;
+-		};
+-	};
+-};
+-
+-&fsi_hub0 {
+-	cfam@1,0 {
+-		reg = <1 0>;
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		chip-id = <1>;
+-
+-		scom@1000 {
+-			compatible = "ibm,fsi2pib";
+-			reg = <0x1000 0x400>;
+-		};
+-
+-		i2c@1800 {
+-			compatible = "ibm,fsi-i2c-master";
+-			reg = <0x1800 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			cfam1_i2c2: i2c-bus@2 {
+-				reg = <2>;	/* OMI45 */
+-			};
+-
+-			cfam1_i2c3: i2c-bus@3 {
+-				reg = <3>;	/* OMI67 */
+-			};
+-
+-			cfam1_i2c10: i2c-bus@a {
+-				reg = <10>;	/* OP3A */
+-			};
+-
+-			cfam1_i2c11: i2c-bus@b {
+-				reg = <11>;	/* OP3B */
+-			};
+-
+-			cfam1_i2c14: i2c-bus@e {
+-				reg = <14>;	/* OP5A */
+-			};
+-
+-			cfam1_i2c15: i2c-bus@f {
+-				reg = <15>;	/* OP5B */
+-			};
+-
+-			cfam1_i2c16: i2c-bus@10 {
+-				reg = <16>;	/* OP6A */
+-			};
+-
+-			cfam1_i2c17: i2c-bus@11 {
+-				reg = <17>;	/* OP6B */
+-			};
+-		};
+-
+-		fsi2spi@1c00 {
+-			compatible = "ibm,fsi2spi";
+-			reg = <0x1c00 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			cfam1_spi0: spi@0 {
+-				reg = <0x0>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-
+-			cfam1_spi1: spi@20 {
+-				reg = <0x20>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-
+-			cfam1_spi2: spi@40 {
+-				reg = <0x40>;
+-				compatible = "ibm,fsi2spi-restricted";
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-
+-			cfam1_spi3: spi@60 {
+-				reg = <0x60>;
+-				compatible = "ibm,fsi2spi-restricted";
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-                };
+-
+-		sbefifo@2400 {
+-			compatible = "ibm,p9-sbefifo";
+-			reg = <0x2400 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			fsi_occ1: occ {
+-				compatible = "ibm,p10-occ";
+-
+-				occ-hwmon {
+-					compatible = "ibm,p10-occ-hwmon";
+-					ibm,no-poll-on-init;
+-				};
+-			};
+-		};
+-
+-		fsi_hub1: hub@3400 {
+-			compatible = "fsi-master-hub";
+-			reg = <0x3400 0x400>;
+-			#address-cells = <2>;
+-			#size-cells = <0>;
+-
+-			no-scan-on-init;
+-		};
+-	};
+-
+-	cfam@2,0 {
+-		reg = <2 0>;
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		chip-id = <2>;
+-
+-		scom@1000 {
+-			compatible = "ibm,fsi2pib";
+-			reg = <0x1000 0x400>;
+-		};
+-
+-		i2c@1800 {
+-			compatible = "ibm,fsi-i2c-master";
+-			reg = <0x1800 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			cfam2_i2c0: i2c-bus@0 {
+-				reg = <0>;	/* OM01 */
+-			};
+-
+-			cfam2_i2c1: i2c-bus@1 {
+-				reg = <1>;	/* OM23 */
+-			};
+-
+-			cfam2_i2c10: i2c-bus@a {
+-				reg = <10>;	/* OP3A */
+-			};
+-
+-			cfam2_i2c11: i2c-bus@b {
+-				reg = <11>;	/* OP3B */
+-			};
+-
+-			cfam2_i2c12: i2c-bus@c {
+-				reg = <12>;	/* OP4A */
+-			};
+-
+-			cfam2_i2c13: i2c-bus@d {
+-				reg = <13>;	/* OP4B */
+-			};
+-
+-			cfam2_i2c14: i2c-bus@e {
+-				reg = <14>;	/* OP5A */
+-			};
+-
+-			cfam2_i2c15: i2c-bus@f {
+-				reg = <15>;	/* OP5B */
+-			};
+-		};
+-
+-		fsi2spi@1c00 {
+-			compatible = "ibm,fsi2spi";
+-			reg = <0x1c00 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			cfam2_spi0: spi@0 {
+-				reg = <0x0>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-
+-			cfam2_spi1: spi@20 {
+-				reg = <0x20>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-
+-			cfam2_spi2: spi@40 {
+-				reg = <0x40>;
+-				compatible = "ibm,fsi2spi-restricted";
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-
+-			cfam2_spi3: spi@60 {
+-				reg = <0x60>;
+-				compatible = "ibm,fsi2spi-restricted";
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-		};
+-
+-		sbefifo@2400 {
+-			compatible = "ibm,p9-sbefifo";
+-			reg = <0x2400 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			fsi_occ2: occ {
+-				compatible = "ibm,p10-occ";
+-
+-				occ-hwmon {
+-					compatible = "ibm,p10-occ-hwmon";
+-					ibm,no-poll-on-init;
+-				};
+-			};
+-		};
+-
+-		fsi_hub2: hub@3400 {
+-			compatible = "fsi-master-hub";
+-			reg = <0x3400 0x400>;
+-			#address-cells = <2>;
+-			#size-cells = <0>;
+-
+-			no-scan-on-init;
+-		};
+-	};
+-
+-	cfam@3,0 {
+-		reg = <3 0>;
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		chip-id = <3>;
+-
+-		scom@1000 {
+-			compatible = "ibm,fsi2pib";
+-			reg = <0x1000 0x400>;
+-		};
+-
+-		i2c@1800 {
+-			compatible = "ibm,fsi-i2c-master";
+-			reg = <0x1800 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			cfam3_i2c2: i2c-bus@2 {
+-				reg = <2>;	/* OM45 */
+-			};
+-
+-			cfam3_i2c3: i2c-bus@3 {
+-				reg = <3>;	/* OM67 */
+-			};
+-
+-			cfam3_i2c10: i2c-bus@a {
+-				reg = <10>;	/* OP3A */
+-			};
+-
+-			cfam3_i2c11: i2c-bus@b {
+-				reg = <11>;	/* OP3B */
+-			};
+-
+-			cfam3_i2c14: i2c-bus@e {
+-				reg = <14>;	/* OP5A */
+-			};
+-
+-			cfam3_i2c15: i2c-bus@f {
+-				reg = <15>;	/* OP5B */
+-			};
+-
+-			cfam3_i2c16: i2c-bus@10 {
+-				reg = <16>;	/* OP6A */
+-			};
+-
+-			cfam3_i2c17: i2c-bus@11 {
+-				reg = <17>;	/* OP6B */
+-			};
+-		};
+-
+-		fsi2spi@1c00 {
+-			compatible = "ibm,fsi2spi";
+-			reg = <0x1c00 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			cfam3_spi0: spi@0 {
+-				reg = <0x0>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-
+-			cfam3_spi1: spi@20 {
+-				reg = <0x20>;
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-
+-			cfam3_spi2: spi@40 {
+-				reg = <0x40>;
+-				compatible = "ibm,fsi2spi-restricted";
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-
+-			cfam3_spi3: spi@60 {
+-				reg = <0x60>;
+-				compatible = "ibm,fsi2spi-restricted";
+-				#address-cells = <1>;
+-				#size-cells = <0>;
+-
+-				eeprom@0 {
+-					at25,byte-len = <0x80000>;
+-					at25,addr-mode = <4>;
+-					at25,page-size = <256>;
+-
+-					compatible = "atmel,at25";
+-					reg = <0>;
+-					spi-max-frequency = <1000000>;
+-				};
+-			};
+-		};
+-
+-		sbefifo@2400 {
+-			compatible = "ibm,p9-sbefifo";
+-			reg = <0x2400 0x400>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-
+-			fsi_occ3: occ {
+-				compatible = "ibm,p10-occ";
+-
+-				occ-hwmon {
+-					compatible = "ibm,p10-occ-hwmon";
+-					ibm,no-poll-on-init;
+-				};
+-			};
+-		};
+-
+-		fsi_hub3: hub@3400 {
+-			compatible = "fsi-master-hub";
+-			reg = <0x3400 0x400>;
+-			#address-cells = <2>;
+-			#size-cells = <0>;
+-
+-			no-scan-on-init;
+-		};
+-	};
+-};
+-
+-/* Legacy OCC numbering (to get rid of when userspace is fixed) */
+-&fsi_occ0 {
+-	reg = <1>;
+-};
+-
+-&fsi_occ1 {
+-	reg = <2>;
+-};
+-
+-&fsi_occ2 {
+-	reg = <3>;
+-};
+-
+-&fsi_occ3 {
+-	reg = <4>;
+-};
+-
+ &ibt {
+ 	status = "okay";
+ };
+@@ -2418,3 +1742,5 @@ &kcs3 {
+ 	aspeed,lpc-io-reg = <0xca2>;
+ 	aspeed,lpc-interrupts = <11 IRQ_TYPE_LEVEL_LOW>;
+ };
++
++#include "ibm-power10-quad.dtsi"
+diff --git a/arch/arm/boot/dts/ibm-power10-dual.dtsi b/arch/arm/boot/dts/ibm-power10-dual.dtsi
+new file mode 100644
+index 000000000000..2930dd23d400
+--- /dev/null
++++ b/arch/arm/boot/dts/ibm-power10-dual.dtsi
+@@ -0,0 +1,830 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++// Copyright 2023 IBM Corp.
++
++&fsim0 {
++	status = "okay";
++
++	#address-cells = <2>;
++	#size-cells = <0>;
++
++	cfam-reset-gpios = <&gpio0 ASPEED_GPIO(Q, 0) GPIO_ACTIVE_HIGH>;
++
++	cfam@0,0 {
++		reg = <0 0>;
++		#address-cells = <1>;
++		#size-cells = <1>;
++		chip-id = <0>;
++
++		scom@1000 {
++			compatible = "ibm,fsi2pib";
++			reg = <0x1000 0x400>;
++		};
++
++		i2c@1800 {
++			compatible = "ibm,fsi-i2c-master";
++			reg = <0x1800 0x400>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			cfam0_i2c0: i2c-bus@0 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <0>;	/* OMI01 */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom100: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo100: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam0_i2c1: i2c-bus@1 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <1>;	/* OMI23 */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom101: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo101: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam0_i2c10: i2c-bus@a {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <10>;	/* OP3A */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom110: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo110: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam0_i2c11: i2c-bus@b {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <11>;	/* OP3B */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom111: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo111: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam0_i2c12: i2c-bus@c {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <12>;	/* OP4A */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom112: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo112: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam0_i2c13: i2c-bus@d {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <13>;	/* OP4B */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom113: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo113: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam0_i2c14: i2c-bus@e {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <14>;	/* OP5A */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom114: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo114: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam0_i2c15: i2c-bus@f {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <15>;	/* OP5B */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom115: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo115: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++		};
++
++		fsi2spi@1c00 {
++			compatible = "ibm,fsi2spi";
++			reg = <0x1c00 0x400>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			cfam0_spi0: spi@0 {
++				reg = <0x0>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				eeprom@0 {
++					at25,byte-len = <0x80000>;
++					at25,addr-mode = <4>;
++					at25,page-size = <256>;
++
++					compatible = "atmel,at25";
++					reg = <0>;
++					spi-max-frequency = <1000000>;
++				};
++			};
++
++			cfam0_spi1: spi@20 {
++				reg = <0x20>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				eeprom@0 {
++					at25,byte-len = <0x80000>;
++					at25,addr-mode = <4>;
++					at25,page-size = <256>;
++
++					compatible = "atmel,at25";
++					reg = <0>;
++					spi-max-frequency = <1000000>;
++				};
++			};
++
++			cfam0_spi2: spi@40 {
++				reg = <0x40>;
++				compatible =  "ibm,fsi2spi";
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				eeprom@0 {
++					at25,byte-len = <0x80000>;
++					at25,addr-mode = <4>;
++					at25,page-size = <256>;
++
++					compatible = "atmel,at25";
++					reg = <0>;
++					spi-max-frequency = <1000000>;
++				};
++			};
++
++			cfam0_spi3: spi@60 {
++				reg = <0x60>;
++				compatible =  "ibm,fsi2spi";
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				eeprom@0 {
++					at25,byte-len = <0x80000>;
++					at25,addr-mode = <4>;
++					at25,page-size = <256>;
++
++					compatible = "atmel,at25";
++					reg = <0>;
++					spi-max-frequency = <1000000>;
++				};
++			};
++		};
++
++		sbefifo@2400 {
++			compatible = "ibm,p9-sbefifo";
++			reg = <0x2400 0x400>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			fsi_occ0: occ {
++				compatible = "ibm,p10-occ";
++
++				occ-hwmon {
++					compatible = "ibm,p10-occ-hwmon";
++					ibm,no-poll-on-init;
++				};
++			};
++		};
++
++		fsi_hub0: hub@3400 {
++			compatible = "fsi-master-hub";
++			reg = <0x3400 0x400>;
++			#address-cells = <2>;
++			#size-cells = <0>;
++		};
++	};
++};
++
++&fsi_hub0 {
++	cfam@1,0 {
++		reg = <1 0>;
++		#address-cells = <1>;
++		#size-cells = <1>;
++		chip-id = <1>;
++
++		scom@1000 {
++			compatible = "ibm,fsi2pib";
++			reg = <0x1000 0x400>;
++		};
++
++		i2c@1800 {
++			compatible = "ibm,fsi-i2c-master";
++			reg = <0x1800 0x400>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			cfam1_i2c2: i2c-bus@2 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <2>;	/* OMI45 */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom202: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo202: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam1_i2c3: i2c-bus@3 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <3>;	/* OMI67 */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom203: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo203: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam1_i2c10: i2c-bus@a {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <10>;	/* OP3A */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom210: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo210: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam1_i2c11: i2c-bus@b {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <11>;	/* OP3B */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom211: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo211: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam1_i2c14: i2c-bus@e {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <14>;	/* OP5A */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom214: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo214: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam1_i2c15: i2c-bus@f {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <15>;	/* OP5B */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom215: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo215: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam1_i2c16: i2c-bus@10 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <16>;	/* OP6A */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom216: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo216: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam1_i2c17: i2c-bus@11 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <17>;	/* OP6B */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom217: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo217: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++		};
++
++		fsi2spi@1c00 {
++			compatible = "ibm,fsi2spi";
++			reg = <0x1c00 0x400>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			cfam1_spi0: spi@0 {
++				reg = <0x0>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				eeprom@0 {
++					at25,byte-len = <0x80000>;
++					at25,addr-mode = <4>;
++					at25,page-size = <256>;
++
++					compatible = "atmel,at25";
++					reg = <0>;
++					spi-max-frequency = <1000000>;
++				};
++			};
++
++			cfam1_spi1: spi@20 {
++				reg = <0x20>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				eeprom@0 {
++					at25,byte-len = <0x80000>;
++					at25,addr-mode = <4>;
++					at25,page-size = <256>;
++
++					compatible = "atmel,at25";
++					reg = <0>;
++					spi-max-frequency = <1000000>;
++				};
++			};
++
++			cfam1_spi2: spi@40 {
++				reg = <0x40>;
++				compatible =  "ibm,fsi2spi";
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				eeprom@0 {
++					at25,byte-len = <0x80000>;
++					at25,addr-mode = <4>;
++					at25,page-size = <256>;
++
++					compatible = "atmel,at25";
++					reg = <0>;
++					spi-max-frequency = <1000000>;
++				};
++			};
++
++			cfam1_spi3: spi@60 {
++				reg = <0x60>;
++				compatible =  "ibm,fsi2spi";
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				eeprom@0 {
++					at25,byte-len = <0x80000>;
++					at25,addr-mode = <4>;
++					at25,page-size = <256>;
++
++					compatible = "atmel,at25";
++					reg = <0>;
++					spi-max-frequency = <1000000>;
++				};
++			};
++		};
++
++		sbefifo@2400 {
++			compatible = "ibm,p9-sbefifo";
++			reg = <0x2400 0x400>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			fsi_occ1: occ {
++				compatible = "ibm,p10-occ";
++
++				occ-hwmon {
++					compatible = "ibm,p10-occ-hwmon";
++					ibm,no-poll-on-init;
++				};
++			};
++		};
++
++		fsi_hub1: hub@3400 {
++			compatible = "fsi-master-hub";
++			reg = <0x3400 0x400>;
++			#address-cells = <2>;
++			#size-cells = <0>;
++
++			no-scan-on-init;
++		};
++	};
++};
++
++/* Legacy OCC numbering (to get rid of when userspace is fixed) */
++&fsi_occ0 {
++	reg = <1>;
++};
++
++&fsi_occ1 {
++	reg = <2>;
++};
++
++/ {
++	aliases {
++		i2c100 = &cfam0_i2c0;
++		i2c101 = &cfam0_i2c1;
++		i2c110 = &cfam0_i2c10;
++		i2c111 = &cfam0_i2c11;
++		i2c112 = &cfam0_i2c12;
++		i2c113 = &cfam0_i2c13;
++		i2c114 = &cfam0_i2c14;
++		i2c115 = &cfam0_i2c15;
++		i2c202 = &cfam1_i2c2;
++		i2c203 = &cfam1_i2c3;
++		i2c210 = &cfam1_i2c10;
++		i2c211 = &cfam1_i2c11;
++		i2c214 = &cfam1_i2c14;
++		i2c215 = &cfam1_i2c15;
++		i2c216 = &cfam1_i2c16;
++		i2c217 = &cfam1_i2c17;
++
++		sbefifo100 = &sbefifo100;
++		sbefifo101 = &sbefifo101;
++		sbefifo110 = &sbefifo110;
++		sbefifo111 = &sbefifo111;
++		sbefifo112 = &sbefifo112;
++		sbefifo113 = &sbefifo113;
++		sbefifo114 = &sbefifo114;
++		sbefifo115 = &sbefifo115;
++		sbefifo202 = &sbefifo202;
++		sbefifo203 = &sbefifo203;
++		sbefifo210 = &sbefifo210;
++		sbefifo211 = &sbefifo211;
++		sbefifo214 = &sbefifo214;
++		sbefifo215 = &sbefifo215;
++		sbefifo216 = &sbefifo216;
++		sbefifo217 = &sbefifo217;
++
++		scom100 = &scom100;
++		scom101 = &scom101;
++		scom110 = &scom110;
++		scom111 = &scom111;
++		scom112 = &scom112;
++		scom113 = &scom113;
++		scom114 = &scom114;
++		scom115 = &scom115;
++		scom202 = &scom202;
++		scom203 = &scom203;
++		scom210 = &scom210;
++		scom211 = &scom211;
++		scom214 = &scom214;
++		scom215 = &scom215;
++		scom216 = &scom216;
++		scom217 = &scom217;
++
++		spi10 = &cfam0_spi0;
++		spi11 = &cfam0_spi1;
++		spi12 = &cfam0_spi2;
++		spi13 = &cfam0_spi3;
++		spi20 = &cfam1_spi0;
++		spi21 = &cfam1_spi1;
++		spi22 = &cfam1_spi2;
++		spi23 = &cfam1_spi3;
++	};
++};
+diff --git a/arch/arm/boot/dts/ibm-power10-quad.dtsi b/arch/arm/boot/dts/ibm-power10-quad.dtsi
+new file mode 100644
+index 000000000000..08e1c5659088
+--- /dev/null
++++ b/arch/arm/boot/dts/ibm-power10-quad.dtsi
+@@ -0,0 +1,825 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++// Copyright 2023 IBM Corp.
++
++#include "ibm-power10-dual.dtsi"
++
++&fsi_hub0 {
++	cfam@2,0 {
++		reg = <2 0>;
++		#address-cells = <1>;
++		#size-cells = <1>;
++		chip-id = <2>;
++
++		scom@1000 {
++			compatible = "ibm,fsi2pib";
++			reg = <0x1000 0x400>;
++		};
++
++		i2c@1800 {
++			compatible = "ibm,fsi-i2c-master";
++			reg = <0x1800 0x400>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			cfam2_i2c0: i2c-bus@0 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <0>;	/* OM01 */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom300: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo300: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam2_i2c1: i2c-bus@1 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <1>;	/* OM23 */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom301: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo301: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam2_i2c10: i2c-bus@a {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <10>;	/* OP3A */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom310: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo310: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam2_i2c11: i2c-bus@b {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <11>;	/* OP3B */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom311: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo311: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam2_i2c12: i2c-bus@c {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <12>;	/* OP4A */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom312: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo312: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam2_i2c13: i2c-bus@d {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <13>;	/* OP4B */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom313: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo313: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam2_i2c14: i2c-bus@e {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <14>;	/* OP5A */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom314: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo314: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam2_i2c15: i2c-bus@f {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <15>;	/* OP5B */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom315: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo315: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++		};
++
++		fsi2spi@1c00 {
++			compatible = "ibm,fsi2spi";
++			reg = <0x1c00 0x400>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			cfam2_spi0: spi@0 {
++				reg = <0x0>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				eeprom@0 {
++					at25,byte-len = <0x80000>;
++					at25,addr-mode = <4>;
++					at25,page-size = <256>;
++
++					compatible = "atmel,at25";
++					reg = <0>;
++					spi-max-frequency = <1000000>;
++				};
++			};
++
++			cfam2_spi1: spi@20 {
++				reg = <0x20>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				eeprom@0 {
++					at25,byte-len = <0x80000>;
++					at25,addr-mode = <4>;
++					at25,page-size = <256>;
++
++					compatible = "atmel,at25";
++					reg = <0>;
++					spi-max-frequency = <1000000>;
++				};
++			};
++
++			cfam2_spi2: spi@40 {
++				reg = <0x40>;
++				compatible =  "ibm,fsi2spi";
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				eeprom@0 {
++					at25,byte-len = <0x80000>;
++					at25,addr-mode = <4>;
++					at25,page-size = <256>;
++
++					compatible = "atmel,at25";
++					reg = <0>;
++					spi-max-frequency = <1000000>;
++				};
++			};
++
++			cfam2_spi3: spi@60 {
++				reg = <0x60>;
++				compatible =  "ibm,fsi2spi";
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				eeprom@0 {
++					at25,byte-len = <0x80000>;
++					at25,addr-mode = <4>;
++					at25,page-size = <256>;
++
++					compatible = "atmel,at25";
++					reg = <0>;
++					spi-max-frequency = <1000000>;
++				};
++			};
++		};
++
++		sbefifo@2400 {
++			compatible = "ibm,p9-sbefifo";
++			reg = <0x2400 0x400>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			fsi_occ2: occ {
++				compatible = "ibm,p10-occ";
++
++				occ-hwmon {
++					compatible = "ibm,p10-occ-hwmon";
++					ibm,no-poll-on-init;
++				};
++			};
++		};
++
++		fsi_hub2: hub@3400 {
++			compatible = "fsi-master-hub";
++			reg = <0x3400 0x400>;
++			#address-cells = <2>;
++			#size-cells = <0>;
++
++			no-scan-on-init;
++		};
++	};
++
++	cfam@3,0 {
++		reg = <3 0>;
++		#address-cells = <1>;
++		#size-cells = <1>;
++		chip-id = <3>;
++
++		scom@1000 {
++			compatible = "ibm,fsi2pib";
++			reg = <0x1000 0x400>;
++		};
++
++		i2c@1800 {
++			compatible = "ibm,fsi-i2c-master";
++			reg = <0x1800 0x400>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			cfam3_i2c2: i2c-bus@2 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <2>;	/* OM45 */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom402: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo402: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam3_i2c3: i2c-bus@3 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <3>;	/* OM67 */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom403: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo403: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam3_i2c10: i2c-bus@a {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <10>;	/* OP3A */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom410: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo410: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam3_i2c11: i2c-bus@b {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <11>;	/* OP3B */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom411: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo411: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam3_i2c14: i2c-bus@e {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <14>;	/* OP5A */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom414: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo414: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam3_i2c15: i2c-bus@f {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <15>;	/* OP5B */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom415: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo415: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam3_i2c16: i2c-bus@10 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <16>;	/* OP6A */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom416: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo416: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++
++			cfam3_i2c17: i2c-bus@11 {
++				#address-cells = <1>;
++				#size-cells = <0>;
++				reg = <17>;	/* OP6B */
++
++				i2cr@20 {
++					compatible = "ibm,i2cr-fsi-master";
++					reg = <0x20>;
++					#address-cells = <2>;
++					#size-cells = <0>;
++
++					cfam@0,0 {
++						reg = <0 0>;
++						#address-cells = <1>;
++						#size-cells = <1>;
++						chip-id = <0>;
++
++						scom417: scom@1000 {
++							compatible = "ibm,i2cr-scom";
++							reg = <0x1000 0x400>;
++						};
++
++						sbefifo417: sbefifo@2400 {
++							compatible = "ibm,p9-sbefifo";
++							reg = <0x2400 0x400>;
++							#address-cells = <1>;
++							#size-cells = <0>;
++						};
++					};
++				};
++			};
++		};
++
++		fsi2spi@1c00 {
++			compatible = "ibm,fsi2spi";
++			reg = <0x1c00 0x400>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			cfam3_spi0: spi@0 {
++				reg = <0x0>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				eeprom@0 {
++					at25,byte-len = <0x80000>;
++					at25,addr-mode = <4>;
++					at25,page-size = <256>;
++
++					compatible = "atmel,at25";
++					reg = <0>;
++					spi-max-frequency = <1000000>;
++				};
++			};
++
++			cfam3_spi1: spi@20 {
++				reg = <0x20>;
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				eeprom@0 {
++					at25,byte-len = <0x80000>;
++					at25,addr-mode = <4>;
++					at25,page-size = <256>;
++
++					compatible = "atmel,at25";
++					reg = <0>;
++					spi-max-frequency = <1000000>;
++				};
++			};
++
++			cfam3_spi2: spi@40 {
++				reg = <0x40>;
++				compatible =  "ibm,fsi2spi";
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				eeprom@0 {
++					at25,byte-len = <0x80000>;
++					at25,addr-mode = <4>;
++					at25,page-size = <256>;
++
++					compatible = "atmel,at25";
++					reg = <0>;
++					spi-max-frequency = <1000000>;
++				};
++			};
++
++			cfam3_spi3: spi@60 {
++				reg = <0x60>;
++				compatible =  "ibm,fsi2spi";
++				#address-cells = <1>;
++				#size-cells = <0>;
++
++				eeprom@0 {
++					at25,byte-len = <0x80000>;
++					at25,addr-mode = <4>;
++					at25,page-size = <256>;
++
++					compatible = "atmel,at25";
++					reg = <0>;
++					spi-max-frequency = <1000000>;
++				};
++			};
++		};
++
++		sbefifo@2400 {
++			compatible = "ibm,p9-sbefifo";
++			reg = <0x2400 0x400>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			fsi_occ3: occ {
++				compatible = "ibm,p10-occ";
++
++				occ-hwmon {
++					compatible = "ibm,p10-occ-hwmon";
++					ibm,no-poll-on-init;
++				};
++			};
++		};
++
++		fsi_hub3: hub@3400 {
++			compatible = "fsi-master-hub";
++			reg = <0x3400 0x400>;
++			#address-cells = <2>;
++			#size-cells = <0>;
++
++			no-scan-on-init;
++		};
++	};
++};
++
++/* Legacy OCC numbering (to get rid of when userspace is fixed) */
++&fsi_occ2 {
++	reg = <3>;
++};
++
++&fsi_occ3 {
++	reg = <4>;
++};
++
++/ {
++	aliases {
++		i2c300 = &cfam2_i2c0;
++		i2c301 = &cfam2_i2c1;
++		i2c310 = &cfam2_i2c10;
++		i2c311 = &cfam2_i2c11;
++		i2c312 = &cfam2_i2c12;
++		i2c313 = &cfam2_i2c13;
++		i2c314 = &cfam2_i2c14;
++		i2c315 = &cfam2_i2c15;
++		i2c402 = &cfam3_i2c2;
++		i2c403 = &cfam3_i2c3;
++		i2c410 = &cfam3_i2c10;
++		i2c411 = &cfam3_i2c11;
++		i2c414 = &cfam3_i2c14;
++		i2c415 = &cfam3_i2c15;
++		i2c416 = &cfam3_i2c16;
++		i2c417 = &cfam3_i2c17;
++
++		sbefifo300 = &sbefifo300;
++		sbefifo301 = &sbefifo301;
++		sbefifo310 = &sbefifo310;
++		sbefifo311 = &sbefifo311;
++		sbefifo312 = &sbefifo312;
++		sbefifo313 = &sbefifo313;
++		sbefifo314 = &sbefifo314;
++		sbefifo315 = &sbefifo315;
++		sbefifo402 = &sbefifo402;
++		sbefifo403 = &sbefifo403;
++		sbefifo410 = &sbefifo410;
++		sbefifo411 = &sbefifo411;
++		sbefifo414 = &sbefifo414;
++		sbefifo415 = &sbefifo415;
++		sbefifo416 = &sbefifo416;
++		sbefifo417 = &sbefifo417;
++
++		scom300 = &scom300;
++		scom301 = &scom301;
++		scom310 = &scom310;
++		scom311 = &scom311;
++		scom312 = &scom312;
++		scom313 = &scom313;
++		scom314 = &scom314;
++		scom315 = &scom315;
++		scom402 = &scom402;
++		scom403 = &scom403;
++		scom410 = &scom410;
++		scom411 = &scom411;
++		scom414 = &scom414;
++		scom415 = &scom415;
++		scom416 = &scom416;
++		scom417 = &scom417;
++
++		spi30 = &cfam2_spi0;
++		spi31 = &cfam2_spi1;
++		spi32 = &cfam2_spi2;
++		spi33 = &cfam2_spi3;
++		spi40 = &cfam3_spi0;
++		spi41 = &cfam3_spi1;
++		spi42 = &cfam3_spi2;
++		spi43 = &cfam3_spi3;
++	};
++};
 -- 
-2.35.1
+2.31.1
 
