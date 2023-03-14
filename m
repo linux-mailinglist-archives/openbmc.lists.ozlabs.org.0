@@ -1,72 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 733756B8C15
-	for <lists+openbmc@lfdr.de>; Tue, 14 Mar 2023 08:37:59 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 037786B8E94
+	for <lists+openbmc@lfdr.de>; Tue, 14 Mar 2023 10:24:45 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PbQNj27w3z3cLh
-	for <lists+openbmc@lfdr.de>; Tue, 14 Mar 2023 18:37:57 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PbSlt6G79z3cfj
+	for <lists+openbmc@lfdr.de>; Tue, 14 Mar 2023 20:24:42 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bytedance.com header.i=@bytedance.com header.a=rsa-sha256 header.s=google header.b=U7pR+CnG;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=gDFXjIII;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bytedance.com (client-ip=2a00:1450:4864:20::336; helo=mail-wm1-x336.google.com; envelope-from=zhangjian.3032@bytedance.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62d; helo=mail-pl1-x62d.google.com; envelope-from=jim.t90615@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bytedance.com header.i=@bytedance.com header.a=rsa-sha256 header.s=google header.b=U7pR+CnG;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=gDFXjIII;
 	dkim-atps=neutral
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PbQN66MvPz3bgW
-	for <openbmc@lists.ozlabs.org>; Tue, 14 Mar 2023 18:37:24 +1100 (AEDT)
-Received: by mail-wm1-x336.google.com with SMTP id j19-20020a05600c191300b003eb3e1eb0caso12447296wmq.1
-        for <openbmc@lists.ozlabs.org>; Tue, 14 Mar 2023 00:37:24 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PbSkq0XFMz3cJv
+	for <openbmc@lists.ozlabs.org>; Tue, 14 Mar 2023 20:23:45 +1100 (AEDT)
+Received: by mail-pl1-x62d.google.com with SMTP id p20so15867169plw.13
+        for <openbmc@lists.ozlabs.org>; Tue, 14 Mar 2023 02:23:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1678779440;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20210112; t=1678785821;
+        h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=j6S15GBcZYo+MiJUP7mKDjF/hafRP0A6CZsjyyX+0B4=;
-        b=U7pR+CnGDfW4Qi1zQ0BzXZMSRsUHRb+rD0oT/AVoMPCM8BBCGByl93F0Uxg52Sp5r4
-         V394BH8SZ3w6FOOQgnmctLg/+ivGpN/mvGpX97bbTaN6YzOKwroVagqW7/ilu6GX9AGM
-         n00d1sfqm8GtEOfm6qKf6TJ6oXhk75ZU+xhT6+ggXUMWLzyrrDKTgYs1pxacj8zvaakN
-         skNX/DGPL/7t4xEbMk33txChMCjmHylZ76T4jZ3W4RBl7hkV+GIGnoHqZd1M/LgwWsri
-         pCagbvwTUAD4+20Z0Ful8eZTYpOfoRoVUKYfR61xG4TCaTFfL7hXK+R7kTlYF+ryNnJc
-         ZHcA==
+        bh=WkRcazuJb7v9nTIQ0dhQR/wIjE8fenM+pHebExHfSRc=;
+        b=gDFXjIIIBxk2rJLz6BEGVWRZGsY0bEHGcvQtoBp9I0YSbhTwhuzE4loJTzLmLMA1d3
+         YzwiWWsJw7t2R3r39B/Ny0SwHfhP5vywYBCfuyZZDHV56KddrQlh90Y7Z1MOyjDV/XSK
+         W3rdzBR/KrF8lRu5DQmtd01Dn//M3xIDf/iFMDGVnVE7tYC3NzMxJQcklE52wFB4OR88
+         yNd9dMyngc5sQeMhK655/nTL50O9fQwqFfMFGvkFeyzJvIGo6ufBLe0k1qfmKHo4c5ig
+         Bg4BFzP2oZV5dRc0OJVrVmCxgWV0slzuU8YEusvOqHxN5DmW3FldGQxrB2cvfrBbt6/d
+         i7BA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678779440;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1678785821;
+        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=j6S15GBcZYo+MiJUP7mKDjF/hafRP0A6CZsjyyX+0B4=;
-        b=JIizsH+fpFlYiHOQX5Qu0NCp/qonihv2AlRffi3Z0H5KuahMmP+C84cHqCr7xjfRCJ
-         Nw7AwSPMNNGr952dusFvWnvewV6cGMbpt6omL0x+8eU9BtrkohlhkKN+X+326sYJjpHy
-         kLUZS587SZdjKbqxmXVgLLhOxIL74JtZBJ7jvM/otshLiVxsApRuxdf9ji2cqNvZ44zg
-         5GqB2mpKb3wBCJEO9+PnMsF2l99tDzFhqxHstsfJh3Sexsmxiur/6rEQx6nvUbaVfKal
-         efUUu0Y25tmCMHw4/qV5m0nAmStru9jqEL0B3wvnA8roG+YhSGk01BRIhFOvn9y4GX/Y
-         vIGw==
-X-Gm-Message-State: AO0yUKXnJPx4w5v9j9CTzq4uVjyeQKymFjTDlMcQet4Nld57UasGMrgX
-	InVdg0LtJmUfQERbLgKuCGlpY74dZ7cHJK5FAqLsC++wN+RqBW6ISIU=
-X-Google-Smtp-Source: AK7set9ANkxyAAASo8zQXjGqQ8Q1ZMS0eoB/H6azs3GDjrajfDoZHQEKcaIbSOsUq/8YJDTPCjc7WLoGhyYJdlX4LCI=
-X-Received: by 2002:a05:600c:a39a:b0:3e1:eddc:e3ae with SMTP id
- hn26-20020a05600ca39a00b003e1eddce3aemr3958217wmb.0.1678779440513; Tue, 14
- Mar 2023 00:37:20 -0700 (PDT)
-MIME-Version: 1.0
-References: <CAB7+d-nOMCGdD7upJviTVrWuZ=mW0gyV9G0E4wke8rQstg2zzw@mail.gmail.com>
- <CA+J-oUsaF8rNYYff9QZj8C0iZgHf8+YE=LfPuQ74ndx+XrwAnA@mail.gmail.com>
- <MA0PR01MB6812D93048C946BE907B7DA4F9BE9@MA0PR01MB6812.INDPRD01.PROD.OUTLOOK.COM>
- <CA+J-oUvicuX0sqo0xGkMft3m+KsMbdVivK88r2DeQQunWMK6-Q@mail.gmail.com> <MA0PR01MB68129D4BD8846606B2427036F9BE9@MA0PR01MB6812.INDPRD01.PROD.OUTLOOK.COM>
-In-Reply-To: <MA0PR01MB68129D4BD8846606B2427036F9BE9@MA0PR01MB6812.INDPRD01.PROD.OUTLOOK.COM>
-From: Zhang Jian <zhangjian.3032@bytedance.com>
-Date: Tue, 14 Mar 2023 15:37:09 +0800
-Message-ID: <CA+J-oUtZSnCwFGEvkp5sNcTsuej7hH1GaqJ9B7XY=r2Btoc0RA@mail.gmail.com>
-Subject: Re: [External] Running evb-ast2600 image using qemu
-To: Ranbir Singh <saini.ranbirs@outlook.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        bh=WkRcazuJb7v9nTIQ0dhQR/wIjE8fenM+pHebExHfSRc=;
+        b=eybTHXDvxFsNJ22Jq9h5HYapjrHU5gaSIY1IVxqcqhq0Ji4mA8bDOuyiOBTlObWz1d
+         C37EBwSC5979TAuxXtRDeoEIiPiWl3LcjLIx8zVzR4Eam/C9UjVAj/ZskpU6zMl55WKL
+         8QfafPF/FhUsma+J3jVPXPNho6rkDLY6mRFO8f8tUtA14dx1tNGas5/Vxwa354ZzlDiT
+         /mBkW61P2a2Gip2rsY5BcTOyQz6eJPVi4kFVUXPvXDx922sqrDMPl7ScONl2S1TbhafU
+         M41OvL95xtC7ontdtIQ/oCbDab6+Lp+Du8kc/faRR5JxrkYX6O88y25EbWAESxBZ/Vbf
+         llHw==
+X-Gm-Message-State: AO0yUKWL/dvMHC4aYkxCuq9R6ib9uG9GUw/N8wT2af18pWdg2VdVQKud
+	e12rm2oxq2P6bfKKIzwaxQA=
+X-Google-Smtp-Source: AK7set9CmVYYHzcHXn+3N7OGiHWr47DueIgz3FHgT31XfMbtEpFH52tbv+yXIF0e5GGnYiFDYxPy6A==
+X-Received: by 2002:a05:6a20:8e0a:b0:c7:6a98:5bd8 with SMTP id y10-20020a056a208e0a00b000c76a985bd8mr23210905pzj.0.1678785820982;
+        Tue, 14 Mar 2023 02:23:40 -0700 (PDT)
+Received: from localhost.localdomain ([1.200.129.193])
+        by smtp.gmail.com with ESMTPSA id f21-20020aa782d5000000b00592626fe48csm1120898pfn.122.2023.03.14.02.23.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Mar 2023 02:23:40 -0700 (PDT)
+From: Jim Liu <jim.t90615@gmail.com>
+To: JJLIU0@nuvoton.com,
+	KWLIU@nuvoton.com,
+	linus.walleij@linaro.org,
+	brgl@bgdev.pl,
+	jim.t90615@gmail.com,
+	robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org
+Subject: [PATCH v5 0/3]Add Nuvoton NPCM SGPIO feature
+Date: Tue, 14 Mar 2023 17:23:08 +0800
+Message-Id: <20230314092311.8924-1-jim.t90615@gmail.com>
+X-Mailer: git-send-email 2.17.1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,81 +78,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: David Bashaw <theactualdbashaw@gmail.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: linux-gpio@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Mar 14, 2023 at 2:04=E2=80=AFPM Ranbir Singh <saini.ranbirs@outlook=
-.com> wrote:
->
-> Jian - Using the same command as you mentioned, and after machine has boo=
-ted and logged in
->
->
->
->
-> Also, noted that CurrentBMCState continue to come as NotReady even after =
-5 min of bootup completed. Is this normal ?
-I think this is not normal,  the state of  `CurrentBMCState`  is
-checking the multi-user state( state is active?),
-```
- systemctl | grep -i multi
-  multi-user.target
-                                    loaded active     active
-Multi-User System
-```
-you could use `systemctl | grep -i activating`(I'm not sure to use
-activating) to check what service blocked this.
+This SGPIO controller is for NUVOTON NPCM7xx and NPCM8xx SoC.
+Nuvoton NPCM SGPIO module is combine serial to parallel IC (HC595)
+and parallel to serial IC (HC165), and use APB3 clock to control it.
+This interface has 4 pins  (D_out , D_in, S_CLK, LDSH).
+NPCM7xx/NPCM8xx have two sgpio module each module can support up
+to 64 output pins,and up to 64 input pin, the pin is only for gpi or gpo.
+GPIO pins have sequential, First half is gpo and second half is gpi.
 
->
-> Best Regards,
-> Ranbir Singh
->
-> ________________________________
-> From: Zhang Jian <zhangjian.3032@bytedance.com>
-> Sent: 14 March 2023 11:05
-> To: Ranbir Singh <saini.ranbirs@outlook.com>
-> Cc: David Bashaw <theactualdbashaw@gmail.com>; openbmc@lists.ozlabs.org <=
-openbmc@lists.ozlabs.org>
-> Subject: Re: [External] Running evb-ast2600 image using qemu
->
-> On Tue, Mar 14, 2023 at 1:28=E2=80=AFPM Ranbir Singh <saini.ranbirs@outlo=
-ok.com> wrote:
-> >
-> > Is there anyway to login using the Web UI also when running image on qe=
-mu ?
-> of cause, the command line forwarded the port localhost 1443 to bmc
-> 443, you just need access https://127.0.0.1:1443 in your browser
-> > ________________________________
-> > From: openbmc <openbmc-bounces+saini.ranbirs=3Doutlook.com@lists.ozlabs=
-.org> on behalf of Jian Zhang <zhangjian.3032@bytedance.com>
-> > Sent: 14 March 2023 09:02
-> > To: David Bashaw <theactualdbashaw@gmail.com>
-> > Cc: openbmc@lists.ozlabs.org <openbmc@lists.ozlabs.org>
-> > Subject: Re: [External] Running evb-ast2600 image using qemu
-> >
-> > The command that I used.
-> > ```
-> > qemu-system-arm -M ast2600-evb  -nographic -drive file=3Dimage-bmc,form=
-at=3Draw,if=3Dmtd -net nic,model=3Dftgmac100,netdev=3Dnetdev1 -netdev user,=
-id=3Dnetdev1,hostfwd=3D:127.0.0.1:3222-:22,hostfwd=3D:127.0.0.1:1443-:443,h=
-ostfwd=3Dudp::1623-:623
-> > ```
-> > For your reference.
-> >
-> > Jian
-> > From: "David Bashaw"<theactualdbashaw@gmail.com>
-> > Date: Tue, Mar 14, 2023, 07:52
-> > Subject: [External] Running evb-ast2600 image using qemu
-> > To: <openbmc@lists.ozlabs.org>
-> > I'm new to openbmc but have read lots fo docs.
-> > I want to try running an evb-ast2600 image using qemu.
-> > I ran the following steps:
-> > .setup evb-ast2600
-> > bitbake obmc-phosphor-image
-> >
-> > The build completes fine.
-> > I installed qemu-system-arm also.
-> >
-> > What command line should I use to invoke qemu?
-> >
+
+Jim Liu (3):
+  gpio: nuvoton: Add Nuvoton NPCM sgpio driver
+  arm: dts: nuvoton: npcm: Add sgpio feature
+  dt-bindings: gpio: add NPCM sgpio driver bindings
+
+ .../bindings/gpio/nuvoton,sgpio.yaml          |  87 +++
+ arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi |  30 +
+ drivers/gpio/Kconfig                          |   8 +
+ drivers/gpio/Makefile                         |   1 +
+ drivers/gpio/gpio-npcm-sgpio.c                | 648 ++++++++++++++++++
+ 5 files changed, 774 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/gpio/nuvoton,sgpio.yaml
+ create mode 100644 drivers/gpio/gpio-npcm-sgpio.c
+
+-- 
+2.17.1
+
