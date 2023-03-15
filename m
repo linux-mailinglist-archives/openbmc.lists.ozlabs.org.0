@@ -2,65 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2DF4A6BAD97
-	for <lists+openbmc@lfdr.de>; Wed, 15 Mar 2023 11:24:50 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D05AC6BBF09
+	for <lists+openbmc@lfdr.de>; Wed, 15 Mar 2023 22:28:02 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Pc62m0RGvz3cf1
-	for <lists+openbmc@lfdr.de>; Wed, 15 Mar 2023 21:24:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PcNm05Q9Dz3chJ
+	for <lists+openbmc@lfdr.de>; Thu, 16 Mar 2023 08:28:00 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=eBZ+3hWK;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=lJB7eOXJ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=NJBIopE+;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=134.134.136.65; helo=mga03.intel.com; envelope-from=adrian.hunter@intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.29; helo=out5-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=eBZ+3hWK;
+	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=lJB7eOXJ;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=NJBIopE+;
 	dkim-atps=neutral
-Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Pc6206x8kz3bW0;
-	Wed, 15 Mar 2023 21:24:07 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1678875849; x=1710411849;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=xYkvbs2h0q7JWA1b+nO3YwUaWDYJLNgu/dGPXzcBNk8=;
-  b=eBZ+3hWKcklIAmRfqOWaS9ewKeG8A2C2zkhMeRBdA3V1VtMsab8siahQ
-   LyQFESMNlXnClX/jRGkl4BCw2b9reIOvXaby6qC2ZBVfwTy9QSHTnZ52u
-   fOjWxDjQNoJd26k1k2vJr+SO+eNtwxKOAO43q8WfGW1+uQOGXCbxfX2rN
-   MOyTEzXKyolggrt6Df4TlkBiaa1j/PiViCxo0HBy24AQ0hiDQ3lzDTLdd
-   guShksJa6RSaYamT6BUtAmCZBql//bs03L/1vsRZ90GdDgHMg+ukMrciQ
-   MOCky2EdyKz3Q6FIJlThyUg8+flyfParFY/MzCnNlmptLaTYjzQSorA8L
-   A==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10649"; a="340029680"
-X-IronPort-AV: E=Sophos;i="5.98,262,1673942400"; 
-   d="scan'208";a="340029680"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Mar 2023 03:23:53 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10649"; a="925293739"
-X-IronPort-AV: E=Sophos;i="5.98,262,1673942400"; 
-   d="scan'208";a="925293739"
-Received: from ahunter6-mobl1.ger.corp.intel.com (HELO [10.0.2.15]) ([10.251.220.200])
-  by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Mar 2023 03:23:50 -0700
-Message-ID: <08ce7ccc-5590-1adb-bba9-71e6051e7058@intel.com>
-Date: Wed, 15 Mar 2023 12:23:45 +0200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PcNlJ3JKhz3bh8
+	for <openbmc@lists.ozlabs.org>; Thu, 16 Mar 2023 08:27:22 +1100 (AEDT)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id DBC615C0082;
+	Wed, 15 Mar 2023 17:27:18 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Wed, 15 Mar 2023 17:27:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	fuzziesquirrel.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm3; t=1678915638; x=1679002038; bh=w8ZyvjVaYP
+	o2dqsTIiI5GfFhpirzf/fSnGPHCsS4c9o=; b=lJB7eOXJwwKULXttu1kliU7LV0
+	FIHnYoh2Yu56Rlj8Zm3FEYaAjaDxkvVpdGvbw2ixI2Cd9dd/La/CuJBrv5dp/bEc
+	cZKn3nFmvvryYPAMUQWIUPvF1KbvYH3TKAGdKmqAcYOAX3G2VzNfonQDlFmtwtU0
+	+qxL2ZxqkpPw2BEU9+woOmCdKzbz/wirs2d+3KKb+61gxZm3pj1yeTuRETJRyNvI
+	GP0TWye4n/ViF31WdHMegauyKF9mephswtEjY4XlM8govbNbIu5zSB6Jr5sQ09Hf
+	EDM3hPDtkcC/nZuVfcivcRjhNxglBHGkHD99JJav5hWYmDgESTde0Lcm5Vdg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:sender:subject:subject:to:to:x-me-proxy:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1678915638; x=
+	1679002038; bh=w8ZyvjVaYPo2dqsTIiI5GfFhpirzf/fSnGPHCsS4c9o=; b=N
+	JBIopE+FGxS0t23IaKZmyOU0wIbM/6/FV7V4lLAg26ANivOs7SsDimQgJHD5tE5d
+	SuNo2yHoFE1KC+hwkrrGiaqj/1KGwpgSAuJOjyFLMkAgCC8sEyWNxfgl7u9dQy8c
+	EXp2I/pY1kjIyLoScLaTMlJrjmYAF/0FcKhdiOXBlha9GNrsMG4JEVt9hWV8ig7F
+	172JhobOcTLLDU+0bJQHlvqTwyyAlbNhY1LyRTeTQVhSKoGp+ZJfCwfGDxYS1p1x
+	ow67oNX401M0kJCRI4tvo3oFbzpt6rPu6oL0YGgzWEs4M4gtJdQjha6Wlk88HbSg
+	NpML/oiv9J/2RTHfx3Kqw==
+X-ME-Sender: <xms:NjgSZK4LPVr7odMIzg6lQVISCbdJRtL8LV64Y3HjtKvr02zk6-SdYQ>
+    <xme:NjgSZD5p2jTB008DAAyVDtaa-r-1OjXNQTVEBX1VpLUuYQowoNtykYB3Teb3yshnI
+    gtFPHaAX0vYHvPKhkc>
+X-ME-Received: <xmr:NjgSZJfbFHzkSvcynRy2y93Cn8zRHTdMB1IMMMrXkR4L-d0dYco_0gDpLr1jef8ZbYF85OCOOnu2KjrncxhJLYxJJWGSM1hlS80UxlMlRxpVr_2wrBs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvddvkedgudeglecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefkuffhvfffjghftgfgfgggsehtqhertddtreejnecuhfhrohhmpeeurhgr
+    ugcuuehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtg
+    homheqnecuggftrfgrthhtvghrnhepfeehffekkeeggeevgfffhfekfeegveefvedugffh
+    udekveduuefhjeeklefhieefnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepsghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtgho
+    mh
+X-ME-Proxy: <xmx:NjgSZHKVQjhR7WpqffEFEB7aQ6YFZzFhZr4sezQVA0XluGklngSwuQ>
+    <xmx:NjgSZOLR-aMd66qpL9B2KVidKbOR8JJakRACvKYU0enazwRZp1wl_Q>
+    <xmx:NjgSZIwFLj0ZyuWjoCo65Cqk7iDZYbeFZBDG_cWMQuxFXy5cjndtAw>
+    <xmx:NjgSZIw0M6GHgQtgYqoYygTV7yYnEoKIE59UEuXuF3KJ39rNHp1Ltg>
+Feedback-ID: i02c9470a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 15 Mar 2023 17:27:18 -0400 (EDT)
+Message-ID: <ea34b23bffc6b1120da50d2a0a62360380610766.camel@fuzziesquirrel.com>
+Subject: Re: Insyde's CCLA Schdule A update 20230314
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Andy Wang <andy.wang@insyde.com>, "openbmc@lists.ozlabs.org"
+	 <openbmc@lists.ozlabs.org>
+Date: Wed, 15 Mar 2023 17:27:16 -0400
+In-Reply-To: <PSBPR02MB4437DA6A0A2691B7F8D9D1709ABE9@PSBPR02MB4437.apcprd02.prod.outlook.com>
+References: 	<PSBPR02MB4437DA6A0A2691B7F8D9D1709ABE9@PSBPR02MB4437.apcprd02.prod.outlook.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4 
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Firefox/102.0 Thunderbird/102.9.0
-Subject: Re: [PATCH -next] mmc: sdhci-of-aspeed: Use
- devm_platform_get_and_ioremap_resource()
-Content-Language: en-US
-To: Yang Li <yang.lee@linux.alibaba.com>, ulf.hansson@linaro.org
-References: <20230315055023.61779-1-yang.lee@linux.alibaba.com>
-From: Adrian Hunter <adrian.hunter@intel.com>
-Organization: Intel Finland Oy, Registered Address: PL 281, 00181 Helsinki,
- Business Identity Code: 0357606 - 4, Domiciled in Helsinki
-In-Reply-To: <20230315055023.61779-1-yang.lee@linux.alibaba.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -72,37 +96,21 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: oel@jms.id.au, linux-aspeed@lists.ozlabs.org, andrew@aj.id.au, openbmc@lists.ozlabs.org, linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 15/03/23 07:50, Yang Li wrote:
-> According to commit 890cc39a8799 ("drivers: provide
-> devm_platform_get_and_ioremap_resource()"), convert
-> platform_get_resource(), devm_ioremap_resource() to a single
-> call to devm_platform_get_and_ioremap_resource(), as this is exactly
-> what this function does.
-> 
-> Signed-off-by: Yang Li <yang.lee@linux.alibaba.com>
+On Tue, 2023-03-14 at 02:54 +0000, Andy Wang wrote:
+> Hi,=20
+> =C2=A0
+> Attached is the updated Schedule A of CCLA from Insyde.
+> =C2=A0
+> Please help review. Thanks in advance
 
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Hi Andy
 
-> ---
->  drivers/mmc/host/sdhci-of-aspeed.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-of-aspeed.c
-> index ba6677bf7372..25b4073f698b 100644
-> --- a/drivers/mmc/host/sdhci-of-aspeed.c
-> +++ b/drivers/mmc/host/sdhci-of-aspeed.c
-> @@ -547,8 +547,7 @@ static int aspeed_sdc_probe(struct platform_device *pdev)
->  		return ret;
->  	}
->  
-> -	sdc->res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> -	sdc->regs = devm_ioremap_resource(&pdev->dev, sdc->res);
-> +	sdc->regs = devm_platform_get_and_ioremap_resource(pdev, 0, &sdc->res);
->  	if (IS_ERR(sdc->regs)) {
->  		ret = PTR_ERR(sdc->regs);
->  		goto err_clk;
+You aren't designated as a CLA Manager for Insyde.  Please have a CLA
+Manager (Chris Liao) send the update.
 
+Thanks!
+
+Brad
