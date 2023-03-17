@@ -1,80 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 635F66BEA6D
-	for <lists+openbmc@lfdr.de>; Fri, 17 Mar 2023 14:47:29 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5CD9B6BEAE3
+	for <lists+openbmc@lfdr.de>; Fri, 17 Mar 2023 15:17:15 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PdQRg1F1Xz3cjN
-	for <lists+openbmc@lfdr.de>; Sat, 18 Mar 2023 00:47:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PdR61230zz3f3w
+	for <lists+openbmc@lfdr.de>; Sat, 18 Mar 2023 01:17:13 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=fjoKN/x0;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=WNJy2ZnB;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::134; helo=mail-il1-x134.google.com; envelope-from=groeck7@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=fjoKN/x0;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=WNJy2ZnB;
 	dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PdQR116mGz2yWN;
-	Sat, 18 Mar 2023 00:46:52 +1100 (AEDT)
-Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
-	by mx0b-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32HDBJUc002313;
-	Fri, 17 Mar 2023 13:46:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : cc : subject
- : date : message-id : mime-version : content-transfer-encoding; s=pp1;
- bh=PlqlzntpHLPj36p2Jm0RQSOWvLZkc6dnkzTHliS6Kio=;
- b=fjoKN/x0cFtimfoiwdi67tbUygQLc0G6XAO5KD/898VGLzTQCHAz/nXv8JqtlmO8qO/G
- tGF+aQvXZzSUP/ElP252+P3zvXnKk5cYKQH2kFhbENdrIX0gIKAYFGWd2hnaFTsQ3Q4V
- tSez2x+BmbXV2lzPgHKZvfSveckQSwPccPat9tp6ccgX3rrv6abFWTQYQvHMHU+d7cJG
- GFS4AKSLmsUDeaInuVP1m3bb0BIKg1nGDE5T3Wjkukw6PnWEqXNLNOeEBDA2XZBvrsJ2
- BRGS/XOKO4msIWR6pc+IULKLclGWrOzJ5pGivuaPD4KOdCVPGZNoxSXzfItjhObuxZ8W dg== 
-Received: from ppma03dal.us.ibm.com (b.bd.3ea9.ip4.static.sl-reverse.com [169.62.189.11])
-	by mx0b-001b2d01.pphosted.com (PPS) with ESMTPS id 3pcpq9cq3y-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Mar 2023 13:46:44 +0000
-Received: from pps.filterd (ppma03dal.us.ibm.com [127.0.0.1])
-	by ppma03dal.us.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 32HCoaGl026757;
-	Fri, 17 Mar 2023 13:46:43 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([9.208.130.101])
-	by ppma03dal.us.ibm.com (PPS) with ESMTPS id 3pbsa02w40-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 17 Mar 2023 13:46:43 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com [10.39.53.233])
-	by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 32HDkgQ038339032
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 17 Mar 2023 13:46:42 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 509655803F;
-	Fri, 17 Mar 2023 13:46:42 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 47BAE58066;
-	Fri, 17 Mar 2023 13:46:41 +0000 (GMT)
-Received: from slate16.aus.stglabs.ibm.com (unknown [9.160.25.240])
-	by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Fri, 17 Mar 2023 13:46:41 +0000 (GMT)
-From: Eddie James <eajames@linux.ibm.com>
-To: linux-fsi@lists.ozlabs.org
-Subject: [PATCH] fsi: sbefifo: Add configurable in-command timeout
-Date: Fri, 17 Mar 2023 08:46:38 -0500
-Message-Id: <20230317134638.3128232-1-eajames@linux.ibm.com>
-X-Mailer: git-send-email 2.31.1
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PdR5N3VzPz3cd2
+	for <openbmc@lists.ozlabs.org>; Sat, 18 Mar 2023 01:16:39 +1100 (AEDT)
+Received: by mail-il1-x134.google.com with SMTP id a13so2805350ilr.9
+        for <openbmc@lists.ozlabs.org>; Fri, 17 Mar 2023 07:16:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679062596;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7ckr4N9Sg6yKbc6efTCWtcAHsD7HxkVk0i05mjYu31s=;
+        b=WNJy2ZnBkM8Tkwd+KJi7m787VnBx0swkocx+gbV662DuU/V4GLdrU9OZnb8ykE9cia
+         P6oSqNRA7TabRBdENL0v0ncOdiUwVj9nL2v/paZBi227Z1J8qmzcmqfGSeUzSRwnU+5b
+         XNchW5m717XFXc/SzHNiWbfjC00B1BpdZ4N4CODgvMjLbCYzcxCbBhRfW4xbj+5Bmcf1
+         Ugv3LC8U//tpgnxEMRM0RoGCpQ4sEb2gsLcqLroCL8r1C5SOAY+pdjcxeyQn8Gc4kjkT
+         hSEGYJxWlqYJu+F7VSZ7BIFpic0+1HDJKTkf3xBF7aw3iZRE9Abfuh8sb8IxB6vrdw9b
+         sOYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679062596;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7ckr4N9Sg6yKbc6efTCWtcAHsD7HxkVk0i05mjYu31s=;
+        b=Nz3/K9qb9v2+5rN04qcSTt9erKSi+blAG1GD8lBBua0zraW7+uCfTsisPMbyqixYO+
+         yTy6jJf/ZJQ09s7pf834G/9hgLHcsjDh8Q1Eurbjra4wxGdYkneWfXB+JHXYRnMq2uqr
+         Og5wj2V2atxqct9n9PGvRI7ubx8BX40S6II/akzqZhcvMOX+NRZ3GtEiMzSl3knMP1uN
+         +aV8HbJmg4JUZd6W/BsqhwI40bBqPLKbb7GCDkZ2NcOPAeKDcYVP6gQ/AXcPW9ikjzCl
+         +lYcFS33j/HdoAjPFpOEBeR2jbGv6zYUXi5OvLf8N6PJIIREMUeq2mnXIboBEJfkY6yc
+         VkhQ==
+X-Gm-Message-State: AO0yUKUCxTbXqhJyw//whP0QQ16ilDfjFVOdeubHASYGcoFLDBensMD0
+	FIFzH6VcFEV6+3wLLIep8zQ=
+X-Google-Smtp-Source: AK7set9SLmJwK/CZFRPZV2uNhmXoOUlXDKKRGv8Vge8H2EEO6FUoFm4c2gVXXbQYUQGPsz8OALi7UA==
+X-Received: by 2002:a92:6a0c:0:b0:317:9c8b:c0a7 with SMTP id f12-20020a926a0c000000b003179c8bc0a7mr9056018ilc.11.1679062596257;
+        Fri, 17 Mar 2023 07:16:36 -0700 (PDT)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id s29-20020a02b15d000000b004061ba59f18sm706712jah.120.2023.03.17.07.16.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Mar 2023 07:16:35 -0700 (PDT)
+Date: Fri, 17 Mar 2023 07:16:33 -0700
+From: Guenter Roeck <linux@roeck-us.net>
+To: Tomer Maimon <tmaimon77@gmail.com>
+Subject: Re: [PATCH v2 2/2] mmc: sdhci-npcm: Add NPCM SDHCI driver
+Message-ID: <f28c7c34-077c-4c7e-afd8-c4180718d403@roeck-us.net>
+References: <20221205085351.27566-1-tmaimon77@gmail.com>
+ <20221205085351.27566-3-tmaimon77@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: w8Dqacc40-QrNOl2G9XG8wHKDOieIolH
-X-Proofpoint-GUID: w8Dqacc40-QrNOl2G9XG8wHKDOieIolH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-03-17_08,2023-03-16_02,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 bulkscore=0
- suspectscore=0 clxscore=1011 priorityscore=1501 adultscore=0 phishscore=0
- spamscore=0 lowpriorityscore=0 mlxscore=0 mlxlogscore=999 malwarescore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2303150002
- definitions=main-2303170092
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20221205085351.27566-3-tmaimon77@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,139 +79,163 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Eddie James <eajames@linux.ibm.com>, joel@jms.id.au, linux-kernel@vger.kernel.org
+Cc: andy.shevchenko@gmail.com, ulf.hansson@linaro.org, linux-kernel@vger.kernel.org, benjaminfair@google.com, arnd@arndb.de, krakoczy@antmicro.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, briannorris@chromium.org, linux-mmc@vger.kernel.org, adrian.hunter@intel.com, tali.perry1@gmail.com, gsomlo@gmail.com, joel@jms.id.au, davidgow@google.com, skhan@linuxfoundation.org, devicetree@vger.kernel.org, pbrobinson@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-A new use case for the SBEFIFO requires a long in-command timeout
-as the SBE processes each part of the command before clearing the
-upstream FIFO for the next part of the command. Add ioctl support
-to configure this timeout in a similar way to the existing read
-timeout.
+On Mon, Dec 05, 2022 at 10:53:51AM +0200, Tomer Maimon wrote:
+> Add Nuvoton NPCM BMC sdhci-pltfm controller driver.
+> 
+> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
----
- drivers/fsi/fsi-sbefifo.c | 33 ++++++++++++++++++++++++++++++++-
- include/uapi/linux/fsi.h  | 10 ++++++++++
- 2 files changed, 42 insertions(+), 1 deletion(-)
+I still don't see this driver in the upstream kernel, or in linux-next.
 
-diff --git a/drivers/fsi/fsi-sbefifo.c b/drivers/fsi/fsi-sbefifo.c
-index 9912b7a6a4b9..223486b3cfcb 100644
---- a/drivers/fsi/fsi-sbefifo.c
-+++ b/drivers/fsi/fsi-sbefifo.c
-@@ -127,6 +127,7 @@ struct sbefifo {
- 	bool			dead;
- 	bool			async_ffdc;
- 	bool			timed_out;
-+	u32			timeout_in_cmd_ms;
- 	u32			timeout_start_rsp_ms;
- };
- 
-@@ -136,6 +137,7 @@ struct sbefifo_user {
- 	void			*cmd_page;
- 	void			*pending_cmd;
- 	size_t			pending_len;
-+	u32			cmd_timeout_ms;
- 	u32			read_timeout_ms;
- };
- 
-@@ -508,7 +510,7 @@ static int sbefifo_send_command(struct sbefifo *sbefifo,
- 		rc = sbefifo_wait(sbefifo, true, &status, timeout);
- 		if (rc < 0)
- 			return rc;
--		timeout = msecs_to_jiffies(SBEFIFO_TIMEOUT_IN_CMD);
-+		timeout = msecs_to_jiffies(sbefifo->timeout_in_cmd_ms);
- 
- 		vacant = sbefifo_vacant(status);
- 		len = chunk = min(vacant, remaining);
-@@ -802,6 +804,7 @@ static int sbefifo_user_open(struct inode *inode, struct file *file)
- 		return -ENOMEM;
- 	}
- 	mutex_init(&user->file_lock);
-+	user->cmd_timeout_ms = SBEFIFO_TIMEOUT_IN_CMD;
- 	user->read_timeout_ms = SBEFIFO_TIMEOUT_START_RSP;
- 
- 	return 0;
-@@ -845,9 +848,11 @@ static ssize_t sbefifo_user_read(struct file *file, char __user *buf,
- 	rc = mutex_lock_interruptible(&sbefifo->lock);
- 	if (rc)
- 		goto bail;
-+	sbefifo->timeout_in_cmd_ms = user->cmd_timeout_ms;
- 	sbefifo->timeout_start_rsp_ms = user->read_timeout_ms;
- 	rc = __sbefifo_submit(sbefifo, user->pending_cmd, cmd_len, &resp_iter);
- 	sbefifo->timeout_start_rsp_ms = SBEFIFO_TIMEOUT_START_RSP;
-+	sbefifo->timeout_in_cmd_ms = SBEFIFO_TIMEOUT_IN_CMD;
- 	mutex_unlock(&sbefifo->lock);
- 	if (rc < 0)
- 		goto bail;
-@@ -937,6 +942,28 @@ static int sbefifo_user_release(struct inode *inode, struct file *file)
- 	return 0;
- }
- 
-+static int sbefifo_cmd_timeout(struct sbefifo_user *user, void __user *argp)
-+{
-+	struct device *dev = &user->sbefifo->dev;
-+	u32 timeout;
-+
-+	if (get_user(timeout, (__u32 __user *)argp))
-+		return -EFAULT;
-+
-+	if (timeout == 0) {
-+		user->cmd_timeout_ms = SBEFIFO_TIMEOUT_IN_CMD;
-+		dev_dbg(dev, "Command timeout reset to %u\n", user->cmd_timeout_ms);
-+		return 0;
-+	}
-+
-+	if (timeout > 120)
-+		return -EINVAL;
-+
-+	user->cmd_timeout_ms = timeout * 1000; /* user timeout is in sec */
-+	dev_dbg(dev, "Command timeout set to %u\n", user->cmd_timeout_ms);
-+	return 0;
-+}
-+
- static int sbefifo_read_timeout(struct sbefifo_user *user, void __user *argp)
- {
- 	struct device *dev = &user->sbefifo->dev;
-@@ -971,6 +998,9 @@ static long sbefifo_user_ioctl(struct file *file, unsigned int cmd, unsigned lon
- 
- 	mutex_lock(&user->file_lock);
- 	switch (cmd) {
-+	case FSI_SBEFIFO_CMD_TIMEOUT_SECONDS:
-+		rc = sbefifo_cmd_timeout(user, (void __user *)arg);
-+		break;
- 	case FSI_SBEFIFO_READ_TIMEOUT_SECONDS:
- 		rc = sbefifo_read_timeout(user, (void __user *)arg);
- 		break;
-@@ -1025,6 +1055,7 @@ static int sbefifo_probe(struct device *dev)
- 	sbefifo->fsi_dev = fsi_dev;
- 	dev_set_drvdata(dev, sbefifo);
- 	mutex_init(&sbefifo->lock);
-+	sbefifo->timeout_in_cmd_ms = SBEFIFO_TIMEOUT_IN_CMD;
- 	sbefifo->timeout_start_rsp_ms = SBEFIFO_TIMEOUT_START_RSP;
- 
- 	/*
-diff --git a/include/uapi/linux/fsi.h b/include/uapi/linux/fsi.h
-index b2f1977378c7..a2e730fc6309 100644
---- a/include/uapi/linux/fsi.h
-+++ b/include/uapi/linux/fsi.h
-@@ -59,6 +59,16 @@ struct scom_access {
-  * /dev/sbefifo* ioctl interface
-  */
- 
-+/**
-+ * FSI_SBEFIFO_CMD_TIMEOUT sets the timeout for writing data to the SBEFIFO.
-+ *
-+ * The command timeout is specified in seconds.  The minimum value of command
-+ * timeout is 1 seconds (default) and the maximum value of command timeout is
-+ * 120 seconds.  A command timeout of 0 will reset the value to the default of
-+ * 1 seconds.
-+ */
-+#define FSI_SBEFIFO_CMD_TIMEOUT_SECONDS		_IOW('s', 0x01, __u32)
-+
- /**
-  * FSI_SBEFIFO_READ_TIMEOUT sets the read timeout for response from SBE.
-  *
--- 
-2.31.1
+Couple of comments:
 
+- devm ordering does not really matter here. The devm resource
+  is the clock, it does not depend on local data, and it will be
+  released last, so that is ok.
+- sdhci_pltfm_unregister() calls clk_disable_unprepare(),
+  so there is no enabled clock floating around on driver removal.
+  Unfortunately, that also means that the more convenient
+  devm_clk_get_optional_enabled() can not be used.
+
+Real problem inline below.
+
+Guenter
+
+> ---
+>  drivers/mmc/host/Kconfig      |  8 ++++
+>  drivers/mmc/host/Makefile     |  1 +
+>  drivers/mmc/host/sdhci-npcm.c | 84 +++++++++++++++++++++++++++++++++++
+>  3 files changed, 93 insertions(+)
+>  create mode 100644 drivers/mmc/host/sdhci-npcm.c
+> 
+> diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
+> index fb1062a6394c..82ab6fc25dca 100644
+> --- a/drivers/mmc/host/Kconfig
+> +++ b/drivers/mmc/host/Kconfig
+> @@ -415,6 +415,14 @@ config MMC_SDHCI_MILBEAUT
+>  
+>  	  If unsure, say N.
+>  
+> +config MMC_SDHCI_NPCM
+> +	tristate "Secure Digital Host Controller Interface support for NPCM"
+> +	depends on ARCH_NPCM || COMPILE_TEST
+> +	depends on MMC_SDHCI_PLTFM
+> +	help
+> +	  This provides support for the SD/eMMC controller found in
+> +	  NPCM BMC family SoCs.
+> +
+>  config MMC_SDHCI_IPROC
+>  	tristate "SDHCI support for the BCM2835 & iProc SD/MMC Controller"
+>  	depends on ARCH_BCM2835 || ARCH_BCM_IPROC || ARCH_BRCMSTB || COMPILE_TEST
+> diff --git a/drivers/mmc/host/Makefile b/drivers/mmc/host/Makefile
+> index 4e4ceb32c4b4..a101f87a5f19 100644
+> --- a/drivers/mmc/host/Makefile
+> +++ b/drivers/mmc/host/Makefile
+> @@ -97,6 +97,7 @@ obj-$(CONFIG_MMC_SDHCI_MICROCHIP_PIC32)	+= sdhci-pic32.o
+>  obj-$(CONFIG_MMC_SDHCI_BRCMSTB)		+= sdhci-brcmstb.o
+>  obj-$(CONFIG_MMC_SDHCI_OMAP)		+= sdhci-omap.o
+>  obj-$(CONFIG_MMC_SDHCI_SPRD)		+= sdhci-sprd.o
+> +obj-$(CONFIG_MMC_SDHCI_NPCM)		+= sdhci-npcm.o
+>  obj-$(CONFIG_MMC_CQHCI)			+= cqhci.o
+>  cqhci-y					+= cqhci-core.o
+>  cqhci-$(CONFIG_MMC_CRYPTO)		+= cqhci-crypto.o
+> diff --git a/drivers/mmc/host/sdhci-npcm.c b/drivers/mmc/host/sdhci-npcm.c
+> new file mode 100644
+> index 000000000000..beace15b6c00
+> --- /dev/null
+> +++ b/drivers/mmc/host/sdhci-npcm.c
+> @@ -0,0 +1,84 @@
+> +// SPDX-License-Identifier: GPL-2.0+
+> +/*
+> + * NPCM SDHC MMC host controller driver.
+> + *
+> + * Copyright (c) 2020 Nuvoton Technology corporation.
+> + */
+> +
+> +#include <linux/clk.h>
+> +#include <linux/err.h>
+> +#include <linux/io.h>
+> +#include <linux/mmc/host.h>
+> +#include <linux/mmc/mmc.h>
+> +#include <linux/module.h>
+> +
+> +#include "sdhci-pltfm.h"
+> +
+> +static const struct sdhci_pltfm_data npcm_sdhci_pdata = {
+> +	.quirks  = SDHCI_QUIRK_DELAY_AFTER_POWER,
+> +	.quirks2 = SDHCI_QUIRK2_STOP_WITH_TC |
+> +		   SDHCI_QUIRK2_NO_1_8_V,
+> +};
+> +
+> +static int npcm_sdhci_probe(struct platform_device *pdev)
+> +{
+> +	struct sdhci_pltfm_host *pltfm_host;
+> +	struct sdhci_host *host;
+> +	u32 caps;
+> +	int ret;
+> +
+> +	host = sdhci_pltfm_init(pdev, &npcm_sdhci_pdata, 0);
+> +	if (IS_ERR(host))
+> +		return PTR_ERR(host);
+> +
+> +	pltfm_host = sdhci_priv(host);
+> +
+> +	pltfm_host->clk = devm_clk_get_optional(&pdev->dev, NULL);
+> +	if (IS_ERR(pltfm_host->clk))
+> +		return PTR_ERR(pltfm_host->clk);
+> +
+> +	ret = clk_prepare_enable(pltfm_host->clk);
+> +	if (ret)
+> +		return ret;
+> +
+
+The two functions above should not return but goto the call
+to sdhci_pltfm_free() to avoid a memory leak on error.
+
+> +	caps = sdhci_readl(host, SDHCI_CAPABILITIES);
+> +	if (caps & SDHCI_CAN_DO_8BIT)
+> +		host->mmc->caps |= MMC_CAP_8_BIT_DATA;
+> +
+> +	ret = mmc_of_parse(host->mmc);
+> +	if (ret)
+> +		goto err_sdhci_add;
+> +
+> +	ret = sdhci_add_host(host);
+> +	if (ret)
+> +		goto err_sdhci_add;
+> +
+> +	return 0;
+> +
+> +err_sdhci_add:
+> +	clk_disable_unprepare(pltfm_host->clk);
+> +	sdhci_pltfm_free(pdev);
+> +	return ret;
+> +}
+> +
+> +static const struct of_device_id npcm_sdhci_of_match[] = {
+> +	{ .compatible = "nuvoton,npcm750-sdhci" },
+> +	{ .compatible = "nuvoton,npcm845-sdhci" },
+> +	{ }
+> +};
+> +MODULE_DEVICE_TABLE(of, npcm_sdhci_of_match);
+> +
+> +static struct platform_driver npcm_sdhci_driver = {
+> +	.driver = {
+> +		.name	= "npcm-sdhci",
+> +		.of_match_table = npcm_sdhci_of_match,
+> +		.pm	= &sdhci_pltfm_pmops,
+> +	},
+> +	.probe		= npcm_sdhci_probe,
+> +	.remove		= sdhci_pltfm_unregister,
+> +};
+> +module_platform_driver(npcm_sdhci_driver);
+> +
+> +MODULE_DESCRIPTION("NPCM Secure Digital Host Controller Interface driver");
+> +MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
+> +MODULE_LICENSE("GPL");
+> -- 
+> 2.33.0
+> 
