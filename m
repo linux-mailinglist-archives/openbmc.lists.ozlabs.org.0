@@ -1,54 +1,119 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 381C56BF683
-	for <lists+openbmc@lfdr.de>; Sat, 18 Mar 2023 00:37:01 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id E7A216BFF04
+	for <lists+openbmc@lfdr.de>; Sun, 19 Mar 2023 03:06:54 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PdgWv1MSrz3f68
-	for <lists+openbmc@lfdr.de>; Sat, 18 Mar 2023 10:36:59 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PfLpN5GZMz3cd6
+	for <lists+openbmc@lfdr.de>; Sun, 19 Mar 2023 13:06:52 +1100 (AEDT)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=nOXjJYsd;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.166.181; helo=mail-il1-f181.google.com; envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
-Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f400:feae::712; helo=apc01-psa-obe.outbound.protection.outlook.com; envelope-from=ryan_chen@aspeedtech.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=nOXjJYsd;
+	dkim-atps=neutral
+Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01on20712.outbound.protection.outlook.com [IPv6:2a01:111:f400:feae::712])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PdgWY3S8Pz3cdj
-	for <openbmc@lists.ozlabs.org>; Sat, 18 Mar 2023 10:36:41 +1100 (AEDT)
-Received: by mail-il1-f181.google.com with SMTP id bp11so3566783ilb.3
-        for <openbmc@lists.ozlabs.org>; Fri, 17 Mar 2023 16:36:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679096199;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+iGoAOKSmHCVth67NMGeLxQ5fWD4kKekoVqDyGCZvnM=;
-        b=N7AkZb2vUbAMmRUH/pN+EI8mFBHkBkS4b6Dsvwek54ct+Dn9/QSEWKnSIvmnusMf4a
-         mwqlqpc3kRDteoj9CdJqW+lEOl1sufmbYqDBRRZ+xvj/vM3vYOX0km9nwRcN4NIdElya
-         V5FTaPM0VsXaxNFgwHEl43HvYB/3OcRX1xTTAzR6c6wVE2W2apmFaONnKET0n+HuIaOo
-         U8jEocCeQMToZHKnzH8A33AOEVwoXDE1kpzlJzJPWCHwnYjfBIYRsJn/ZsgBwrtpTHxi
-         VPhJVYVphEqR1chkPO1uAOBvTiPO9ePKf2NAX4b0b9PKMFwK/vLpoertBcx+kJCRpnMr
-         Q4Sw==
-X-Gm-Message-State: AO0yUKWn4ZjTsaqHJUpoVdq/vcqs2BlarkdUpvucZ3jU89rqJiBgrZQb
-	lrdYvN3ooJ+LLLqpdgemdw==
-X-Google-Smtp-Source: AK7set+JoUicm/oF7GJeMM55kcKyXre09MpcMZog4f8IHA1Wk0/B7NJvctRD3Mrq1AyTv2BcnI1yqg==
-X-Received: by 2002:a92:c14b:0:b0:319:e144:80dd with SMTP id b11-20020a92c14b000000b00319e14480ddmr215094ilh.27.1679096198674;
-        Fri, 17 Mar 2023 16:36:38 -0700 (PDT)
-Received: from robh_at_kernel.org ([64.188.179.249])
-        by smtp.gmail.com with ESMTPSA id c11-20020a023f4b000000b003c449a192cdsm1070848jaf.73.2023.03.17.16.36.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Mar 2023 16:36:38 -0700 (PDT)
-Received: (nullmailer pid 3968777 invoked by uid 1000);
-	Fri, 17 Mar 2023 23:36:35 -0000
-From: Rob Herring <robh@kernel.org>
-To: Alessandro Zummo <a.zummo@towertech.it>, Alexandre Belloni <alexandre.belloni@bootlin.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>, Samuel Holland <samuel@sholland.org>, Nicolas Ferre <nicolas.ferre@microchip.com>, Claudiu Beznea <claudiu.beznea@microchip.com>, Florian Fainelli <f.fainelli@gmail.com>, Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Hans Ulli Kroll <ulli.kroll@googlemail.com>, Linus Walleij <linus.walleij@linaro.org>, Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>, Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>
-Subject: [PATCH] dt-bindings: rtc: Drop unneeded quotes
-Date: Fri, 17 Mar 2023 18:36:33 -0500
-Message-Id: <20230317233634.3968656-1-robh@kernel.org>
-X-Mailer: git-send-email 2.39.2
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PfLnb4gFKz2xVr;
+	Sun, 19 Mar 2023 13:06:10 +1100 (AEDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=AKJMRy1LvZT48yj7aPh3tEYEMUPOJFbKUL1UouLhaGCZPsugLMF88TL6LJGDtbEKyiUBQunZ9uY61C5QsrKQom1q52gy9vdxHzAynonAzoHK48DJHnpl6d9cBP6pFv+WoaWMFw+r4g8up2daUsvqerYkhJB+eYjzbuYwQUgXvBV5msKFaUvJkroy3wh0x1eGm//mLEZe2HXJ6zDMWb0UHDfzgJefAH5201quTu5r4ckwbN16dllhBShZcEuf65AW2Cn3s4/uYxirYcbmizgHL0oZVpOCP/Fcdre/bA0RDSApa9ZqlwdBZGzar9WroZPNm2RUHKAU/FYhPskX3U8ghg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PgeYUi5G7qA7xn5pUDagPqaBoyBKxVV4cjhAZE4pJJo=;
+ b=MQVX2RSrAsd/x8KSayLpUe4yRb7ymPuinhq1m+a1UtmsI3utgb0uNzOUVFRI69xeh8WaWoW5CqezbxatlmGUCMawqOvAfdRU8atmPQOjgQQT75218iR3LUwWITFBMSLcveGE13ion8lS0DkRmBL36+EwU1LMeaJwFQUAs+UeTRqbD75ZMhUJXBLssVEWAEjwUASLgYRAapfQPquup82saU/BJVjGVkgsyGUxxhBpYHS9g9wMbnV0EKdXawrStrc32Xo/Y9HMye5OM4ArvsOsVNi+vqWO+D5Wo8iinGn6SVM/wFvMkzVsbEPyaqPUcdwAs5rxx4PTZQWWoKmwmX407Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PgeYUi5G7qA7xn5pUDagPqaBoyBKxVV4cjhAZE4pJJo=;
+ b=nOXjJYsdtLEo7a9xrfRslrXraxj7MD9aHNlL3TNtV5/dnxmglR2P7Of8xqqtjVdXHaoCmkArSancIHaXE5Y/I/YhhqNcP8GVGW9xkWZoni12CRsyFjF9SaUs+J5L09D7NXu3Tq9xxVQEk0TWdq3XIcfqWlAf3JPdUBG4RLKVR/6eBoK6CfMcfr/KahC1MK9Jm2chNqi1M7AJQV+/B44DRGrRARRkkdTCum6jNH4zzRFR1pXactQn8/jdJC/FWfojH10cD8DBR772J+r8gj5lzXg/B/rrKQWdlH7YkHB/SGkHp5jPnnlHMph9Odml74g5iBqyrgqAseW0wCTE3qRrcw==
+Received: from SEZPR06MB5269.apcprd06.prod.outlook.com (2603:1096:101:78::6)
+ by PSAPR06MB3880.apcprd06.prod.outlook.com (2603:1096:301:3c::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.37; Sun, 19 Mar
+ 2023 02:05:47 +0000
+Received: from SEZPR06MB5269.apcprd06.prod.outlook.com
+ ([fe80::daf6:5ebb:a93f:1869]) by SEZPR06MB5269.apcprd06.prod.outlook.com
+ ([fe80::daf6:5ebb:a93f:1869%9]) with mapi id 15.20.6178.037; Sun, 19 Mar 2023
+ 02:05:47 +0000
+From: Ryan Chen <ryan_chen@aspeedtech.com>
+To: Andi Shyti <andi.shyti@kernel.org>
+Subject: RE: [PATCH v6 1/2] dt-bindings: i2c: aspeed: support for
+ AST2600-i2cv2
+Thread-Topic: [PATCH v6 1/2] dt-bindings: i2c: aspeed: support for
+ AST2600-i2cv2
+Thread-Index: AQHZSZBNCqcj9BIMLU6U/5WV2MINja8AX5gAgAEbpFA=
+Date: Sun, 19 Mar 2023 02:05:46 +0000
+Message-ID:  <SEZPR06MB5269DB6BE01C48BBFA17876DF2839@SEZPR06MB5269.apcprd06.prod.outlook.com>
+References: <20230226031321.3126756-1-ryan_chen@aspeedtech.com>
+ <20230226031321.3126756-2-ryan_chen@aspeedtech.com>
+ <20230318090936.qvqozqfskpe5lja7@intel.intel>
+In-Reply-To: <20230318090936.qvqozqfskpe5lja7@intel.intel>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SEZPR06MB5269:EE_|PSAPR06MB3880:EE_
+x-ms-office365-filtering-correlation-id: b0fc9060-6cf0-4710-bf4e-08db281e745c
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:  kLPzArKaEjZSDotKtUNqY6IRyUvjKkjyW+vwWxbXkiL8pmsw7hb+KWhWHmF5xT5P1nFt4+vu4oJZ6YXwe3Q20r8XwIC5ZX5xDHP1hOLZHhodL4ayVNrRr+kbtF0kgHa0lRk7UVEmTtdEf4Tp4VeNqjaZpr2pADOBUupatPetZFXbT7UtUWKi84jHxCl0AWVmJvlg89wEiuJ7rbx+qfUrCnU0Z3rGnuLwM0L0MRirBl/2jmYdOaDGXeHt1ROGHx9Ao0xcTbSpi6lcRPy/BjzAIpIiRc/QJC02GkRA+XZl1OLi3qKBwePSOx+bUW5KLvE8ux1gIo602kqfTGx2ZpgaovOustWHGLESaDNNqr5MjZaOy2cBbvgAo9hKUuGT2YdW0t2i5d1GAhrvNmGn4RBPkUOQMA1+QhjdejlcyTafSmwVghGsfOkf68RGCoHSB1I57tyNNcAcZ+olXoKoXh/Sb6DJ5j5goQE6VYbvEv/LQQN5n+2OkJfLVIMQ71CSt7gmiLkP5Ug0A+hNqaaPHcL2wgzMlTXLrDbLhp1adVIE6dFfSrmrgUCWEnufNEQDQ8l6XZdByQtspXXqixMi0MalEtn1k8BIJfeEMAL34MGUJmqjJjFsqgM21ORZoi8FzKmqnWP0kHOFOKR14aSLIUdosGcdG7vlwwf3qF75N4+a9rSgQleoXdYM382rV3qU98kNuHmty1b/7PHWsALSEtuRdw==
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEZPR06MB5269.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(39830400003)(396003)(366004)(376002)(136003)(346002)(451199018)(83380400001)(38100700002)(86362001)(38070700005)(55016003)(122000001)(6916009)(4326008)(41300700001)(8676002)(64756008)(66446008)(66476007)(66556008)(66946007)(76116006)(52536014)(2906002)(8936002)(7416002)(5660300002)(33656002)(26005)(186003)(9686003)(53546011)(6506007)(316002)(478600001)(54906003)(71200400001)(7696005);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?pPZqomkhpgB9brMyNS4TkOp/R+Z0SQTPVrUlnHXIFvXvxzj3zuRV2Q7URwwT?=
+ =?us-ascii?Q?pAj5JqlQfIBkUZrZx+kPylWGFT0mgWp3FzWgP1/Wtf5VCxwBlxlznBEuV+tW?=
+ =?us-ascii?Q?yQBFK+fYFkWd8fnLEmxgV4AZw+cX94Sgw8i0uZ3WHAAm0s1QfWdJMc9RwR67?=
+ =?us-ascii?Q?lLD/xAt9xrrfRD9usN4zWcC6ECEkKaMQah/wQDlHInBjxU3ZEMbTSFo3Bwq9?=
+ =?us-ascii?Q?ezmDldmlqVcodQVXq8nr37wFfOR2a8vtCcviyqu09aiesgaE36nnes2dut7p?=
+ =?us-ascii?Q?QkaJoqFA/pZN0o9Rr5DJz47PMY++T2IJP45BfPmUe+SGYxAYWdH5UIN5GrcJ?=
+ =?us-ascii?Q?7QNH7pJ7vbqjldLzuhOA+2G2gELO6RVZ1bQaNPQe4whfTcmTq0tgks6ZYVps?=
+ =?us-ascii?Q?oRu3/fvFMIQggy3YkOMOoDbp2g9bBKmN7NH8HpxXUNL3oQ+Ub9JcokhSyGcW?=
+ =?us-ascii?Q?xicI8kYoCw64SfLXZZKdDDO9TkvIZhXDmC0VFypJfwNElt534NE9iUwvfZot?=
+ =?us-ascii?Q?DepVE5LdL0MCnaSoFw/H8ZdMwQZ95Y57mYBXzB8E/CjW34WFt+QKQZqyvCW9?=
+ =?us-ascii?Q?AwZ8cZX3MI8QlpDsebqqUZ30hMNRoHz0RVXo1ZhtpIVv2nqAPxxGKByNQKVx?=
+ =?us-ascii?Q?Zjs9U3yr21qCgYXe4N1Pu5OA8zXAATruTt/NV5mLDho6SgA3AfAK67YEmxQi?=
+ =?us-ascii?Q?ejum5l7/e3uIngEL6h4aA6SqVzcjU4EUNaaznDlxZXOCNP9ttCuKKJBElIsL?=
+ =?us-ascii?Q?H/xV50Zmd8vTt/6cJuuMNAaucXZnH5uMp69s46S1/3+s+B8Ezgtme7bOrOCB?=
+ =?us-ascii?Q?PoZ2zmgXKo6NGTwhGEDH1c6mm9b8p7McIS/shRmw/ySn1sFcCKLK1BJq158Y?=
+ =?us-ascii?Q?sRv0UOZmA5dYuly2rFoI8WncioBUZwfmMK0XuNh1fnBDalSJXkdIDDMHyj7J?=
+ =?us-ascii?Q?Kmq5X0/VqpK8wrK/SsRtVpNfM7BhU7FxbqJbFidiMh67ByhXHH2diC1kw5gx?=
+ =?us-ascii?Q?U1h1YOMlHXgrT3Dd/aoDVg5vNwp4av94XKA1w9FdoPmW6/IL+4XSxlkEKhaS?=
+ =?us-ascii?Q?5f+UJhrfR+yUQG247+fFqiRWc8WCYxiSwbHCn9nomkGW0cL1iTRUryRZ1Sib?=
+ =?us-ascii?Q?Q7KPw/iuwph0yTdBcK45hi263VBDRXBzKq/WMCPt6sTIjbIOYBSepddJtVfG?=
+ =?us-ascii?Q?DU0/EULdiA8Ri9J4bTs5fkWN2+0eFDo8i2PSSt5xFaIEQDzCP7GOG71Z0HZL?=
+ =?us-ascii?Q?x7VPAibyvYn3XEhdTxdXy0+zanmuNG5zahlpzUDBv/bT5FWBxcnOapmfeQdX?=
+ =?us-ascii?Q?fxskDDpbD9m1hDgTx0rQWwaKouG/0jPKMm90dgWDeflJ6hWG980c7rGtmrJc?=
+ =?us-ascii?Q?LcfclJSAoWdNzKx8zjMXPF6Csywi281o+wVn43Fdz4pOcCqYE6+4p+72MONv?=
+ =?us-ascii?Q?J/dg269XLxX+70+lJF0AU8Zat77fcRNdpEv70ypNYYie/13No13go9UoXDxl?=
+ =?us-ascii?Q?/LgM7YnBolrPb7k8ZnTO8wQSk8u4K+yXHinRUntySH8aC0A6UVS/4XPnDCd8?=
+ =?us-ascii?Q?gb1UHMlUTc4mAxHen9XEjfBptIxuxz7E7L8MMXy8?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB5269.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b0fc9060-6cf0-4710-bf4e-08db281e745c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Mar 2023 02:05:46.9266
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: VAqrP2bi1f0b8sAYEJ2btSjFjPCRHISkWcaFXbRlIisfSW18jdEYbNcnT7fxiXvzL37r32drISBZnD5ryjNxJrOZ5SZLtq+YX+LGpzoKqys=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PSAPR06MB3880
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,245 +125,57 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-rtc@vger.kernel.org, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev, linux-arm-kernel@lists.infradead.org
+Cc: "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, Philipp Zabel <p.zabel@pengutronix.de>, "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, Andrew Jeffery <andrew@aj.id.au>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, Brendan Higgins <brendan.higgins@linux.dev>, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Cleanup bindings dropping unneeded quotes. Once all these are fixed,
-checking for this can be enabled in yamllint.
+Hello,
 
-Signed-off-by: Rob Herring <robh@kernel.org>
----
- .../devicetree/bindings/rtc/allwinner,sun4i-a10-rtc.yaml      | 2 +-
- .../devicetree/bindings/rtc/allwinner,sun6i-a31-rtc.yaml      | 2 +-
- .../devicetree/bindings/rtc/atmel,at91rm9200-rtc.yaml         | 2 +-
- .../devicetree/bindings/rtc/atmel,at91sam9260-rtt.yaml        | 2 +-
- .../devicetree/bindings/rtc/brcm,brcmstb-waketimer.yaml       | 2 +-
- Documentation/devicetree/bindings/rtc/faraday,ftrtc010.yaml   | 4 ++--
- .../devicetree/bindings/rtc/microcrystal,rv3032.yaml          | 2 +-
- Documentation/devicetree/bindings/rtc/mstar,msc313-rtc.yaml   | 2 +-
- Documentation/devicetree/bindings/rtc/nuvoton,nct3018y.yaml   | 2 +-
- Documentation/devicetree/bindings/rtc/nxp,pcf2127.yaml        | 2 +-
- Documentation/devicetree/bindings/rtc/rtc-mxc.yaml            | 2 +-
- Documentation/devicetree/bindings/rtc/rtc-mxc_v2.yaml         | 2 +-
- Documentation/devicetree/bindings/rtc/sa1100-rtc.yaml         | 4 ++--
- Documentation/devicetree/bindings/rtc/st,stm32-rtc.yaml       | 2 +-
- Documentation/devicetree/bindings/rtc/ti,k3-rtc.yaml          | 2 +-
- Documentation/devicetree/bindings/rtc/trivial-rtc.yaml        | 2 +-
- 16 files changed, 18 insertions(+), 18 deletions(-)
+> -----Original Message-----
+> From: Andi Shyti <andi.shyti@kernel.org>
+> Sent: Saturday, March 18, 2023 5:10 PM
+> To: Ryan Chen <ryan_chen@aspeedtech.com>
+> Cc: Andrew Jeffery <andrew@aj.id.au>; Brendan Higgins
+> <brendan.higgins@linux.dev>; Benjamin Herrenschmidt
+> <benh@kernel.crashing.org>; Joel Stanley <joel@jms.id.au>; Rob Herring
+> <robh+dt@kernel.org>; Krzysztof Kozlowski
+> <krzysztof.kozlowski+dt@linaro.org>; Philipp Zabel
+> <p.zabel@pengutronix.de>; linux-i2c@vger.kernel.org;
+> openbmc@lists.ozlabs.org; devicetree@vger.kernel.org;
+> linux-arm-kernel@lists.infradead.org; linux-aspeed@lists.ozlabs.org;
+> linux-kernel@vger.kernel.org
+> Subject: Re: [PATCH v6 1/2] dt-bindings: i2c: aspeed: support for
+> AST2600-i2cv2
+>=20
+> Hi Ryan,
+>=20
+> On Sun, Feb 26, 2023 at 11:13:20AM +0800, Ryan Chen wrote:
+> > Add ast2600-i2cv2 compatible and aspeed,global-regs, aspeed,timeout
+> > aspeed,xfer-mode description for ast2600-i2cv2.
+> >
+> > Signed-off-by: Ryan Chen <ryan_chen@aspeedtech.com>
+> > ---
+> >  .../devicetree/bindings/i2c/aspeed,i2c.yaml   | 44
+> +++++++++++++++++++
+> >  1 file changed, 44 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
+> > b/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
+> > index f597f73ccd87..75de3ce41cf5 100644
+> > --- a/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
+> > +++ b/Documentation/devicetree/bindings/i2c/aspeed,i2c.yaml
+> > @@ -49,6 +49,25 @@ properties:
+> >      description:
+> >        states that there is another master active on this bus
+> >
+> > +  aspeed,timeout:
+> > +    type: boolean
+> > +    description: I2C bus timeout enable for master/slave mode
+>=20
+> Finally you can proceed with this. Please remove "aspeed,timeout"
+> and use "i2c-scl-has-clk-low-timeout" instead.
 
-diff --git a/Documentation/devicetree/bindings/rtc/allwinner,sun4i-a10-rtc.yaml b/Documentation/devicetree/bindings/rtc/allwinner,sun4i-a10-rtc.yaml
-index dede49431733..054e1e397fc8 100644
---- a/Documentation/devicetree/bindings/rtc/allwinner,sun4i-a10-rtc.yaml
-+++ b/Documentation/devicetree/bindings/rtc/allwinner,sun4i-a10-rtc.yaml
-@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: Allwinner A10 RTC
- 
- allOf:
--  - $ref: "rtc.yaml#"
-+  - $ref: rtc.yaml#
- 
- maintainers:
-   - Chen-Yu Tsai <wens@csie.org>
-diff --git a/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-rtc.yaml b/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-rtc.yaml
-index 04947e166cef..4531eec568a6 100644
---- a/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-rtc.yaml
-+++ b/Documentation/devicetree/bindings/rtc/allwinner,sun6i-a31-rtc.yaml
-@@ -61,7 +61,7 @@ properties:
-         - the Internal Oscillator, at index 2.
- 
- allOf:
--  - $ref: "rtc.yaml#"
-+  - $ref: rtc.yaml#
-   - if:
-       properties:
-         compatible:
-diff --git a/Documentation/devicetree/bindings/rtc/atmel,at91rm9200-rtc.yaml b/Documentation/devicetree/bindings/rtc/atmel,at91rm9200-rtc.yaml
-index 0e5f0fcc26b0..4d2bef15fb7a 100644
---- a/Documentation/devicetree/bindings/rtc/atmel,at91rm9200-rtc.yaml
-+++ b/Documentation/devicetree/bindings/rtc/atmel,at91rm9200-rtc.yaml
-@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: Atmel AT91 RTC
- 
- allOf:
--  - $ref: "rtc.yaml#"
-+  - $ref: rtc.yaml#
- 
- maintainers:
-   - Alexandre Belloni <alexandre.belloni@bootlin.com>
-diff --git a/Documentation/devicetree/bindings/rtc/atmel,at91sam9260-rtt.yaml b/Documentation/devicetree/bindings/rtc/atmel,at91sam9260-rtt.yaml
-index b5cd20e89daf..b80b85c394ac 100644
---- a/Documentation/devicetree/bindings/rtc/atmel,at91sam9260-rtt.yaml
-+++ b/Documentation/devicetree/bindings/rtc/atmel,at91sam9260-rtt.yaml
-@@ -8,7 +8,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: Atmel AT91 RTT
- 
- allOf:
--  - $ref: "rtc.yaml#"
-+  - $ref: rtc.yaml#
- 
- maintainers:
-   - Alexandre Belloni <alexandre.belloni@bootlin.com>
-diff --git a/Documentation/devicetree/bindings/rtc/brcm,brcmstb-waketimer.yaml b/Documentation/devicetree/bindings/rtc/brcm,brcmstb-waketimer.yaml
-index c6c57636c729..c5e5c5aec74e 100644
---- a/Documentation/devicetree/bindings/rtc/brcm,brcmstb-waketimer.yaml
-+++ b/Documentation/devicetree/bindings/rtc/brcm,brcmstb-waketimer.yaml
-@@ -15,7 +15,7 @@ description:
-   optionally generate RTC alarm interrupts.
- 
- allOf:
--  - $ref: "rtc.yaml#"
-+  - $ref: rtc.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/rtc/faraday,ftrtc010.yaml b/Documentation/devicetree/bindings/rtc/faraday,ftrtc010.yaml
-index 056d42daae06..b1c1a0e21318 100644
---- a/Documentation/devicetree/bindings/rtc/faraday,ftrtc010.yaml
-+++ b/Documentation/devicetree/bindings/rtc/faraday,ftrtc010.yaml
-@@ -38,8 +38,8 @@ properties:
- 
-   clock-names:
-     items:
--      - const: "PCLK"
--      - const: "EXTCLK"
-+      - const: PCLK
-+      - const: EXTCLK
- 
- required:
-   - compatible
-diff --git a/Documentation/devicetree/bindings/rtc/microcrystal,rv3032.yaml b/Documentation/devicetree/bindings/rtc/microcrystal,rv3032.yaml
-index dd6eebf06ea6..27a9de10f0af 100644
---- a/Documentation/devicetree/bindings/rtc/microcrystal,rv3032.yaml
-+++ b/Documentation/devicetree/bindings/rtc/microcrystal,rv3032.yaml
-@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: Microchip RV-3032 RTC
- 
- allOf:
--  - $ref: "rtc.yaml#"
-+  - $ref: rtc.yaml#
- 
- maintainers:
-   - Alexandre Belloni <alexandre.belloni@bootlin.com>
-diff --git a/Documentation/devicetree/bindings/rtc/mstar,msc313-rtc.yaml b/Documentation/devicetree/bindings/rtc/mstar,msc313-rtc.yaml
-index 585c185d1eb3..af4a31cd0954 100644
---- a/Documentation/devicetree/bindings/rtc/mstar,msc313-rtc.yaml
-+++ b/Documentation/devicetree/bindings/rtc/mstar,msc313-rtc.yaml
-@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: Mstar MSC313e RTC
- 
- allOf:
--  - $ref: "rtc.yaml#"
-+  - $ref: rtc.yaml#
- 
- maintainers:
-   - Daniel Palmer <daniel@0x0f.com>
-diff --git a/Documentation/devicetree/bindings/rtc/nuvoton,nct3018y.yaml b/Documentation/devicetree/bindings/rtc/nuvoton,nct3018y.yaml
-index 7a1857f5caa8..4f9b5604acd9 100644
---- a/Documentation/devicetree/bindings/rtc/nuvoton,nct3018y.yaml
-+++ b/Documentation/devicetree/bindings/rtc/nuvoton,nct3018y.yaml
-@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: NUVOTON NCT3018Y Real Time Clock
- 
- allOf:
--  - $ref: "rtc.yaml#"
-+  - $ref: rtc.yaml#
- 
- maintainers:
-   - Medad CChien <ctcchien@nuvoton.com>
-diff --git a/Documentation/devicetree/bindings/rtc/nxp,pcf2127.yaml b/Documentation/devicetree/bindings/rtc/nxp,pcf2127.yaml
-index a1148eb22c24..bcb230027622 100644
---- a/Documentation/devicetree/bindings/rtc/nxp,pcf2127.yaml
-+++ b/Documentation/devicetree/bindings/rtc/nxp,pcf2127.yaml
-@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: NXP PCF2127 Real Time Clock
- 
- allOf:
--  - $ref: "rtc.yaml#"
-+  - $ref: rtc.yaml#
- 
- maintainers:
-   - Alexandre Belloni <alexandre.belloni@bootlin.com>
-diff --git a/Documentation/devicetree/bindings/rtc/rtc-mxc.yaml b/Documentation/devicetree/bindings/rtc/rtc-mxc.yaml
-index 4f263fa6fd0d..a14b52178c4b 100644
---- a/Documentation/devicetree/bindings/rtc/rtc-mxc.yaml
-+++ b/Documentation/devicetree/bindings/rtc/rtc-mxc.yaml
-@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: Real Time Clock of the i.MX SoCs
- 
- allOf:
--  - $ref: "rtc.yaml#"
-+  - $ref: rtc.yaml#
- 
- maintainers:
-   - Philippe Reynes <tremyfr@gmail.com>
-diff --git a/Documentation/devicetree/bindings/rtc/rtc-mxc_v2.yaml b/Documentation/devicetree/bindings/rtc/rtc-mxc_v2.yaml
-index 2d1a30663d72..e50131c26dc6 100644
---- a/Documentation/devicetree/bindings/rtc/rtc-mxc_v2.yaml
-+++ b/Documentation/devicetree/bindings/rtc/rtc-mxc_v2.yaml
-@@ -7,7 +7,7 @@ $schema: http://devicetree.org/meta-schemas/core.yaml#
- title: i.MX53 Secure Real Time Clock (SRTC)
- 
- allOf:
--  - $ref: "rtc.yaml#"
-+  - $ref: rtc.yaml#
- 
- maintainers:
-   - Patrick Bruenn <p.bruenn@beckhoff.com>
-diff --git a/Documentation/devicetree/bindings/rtc/sa1100-rtc.yaml b/Documentation/devicetree/bindings/rtc/sa1100-rtc.yaml
-index b04b87ef6f33..a16c355dcd11 100644
---- a/Documentation/devicetree/bindings/rtc/sa1100-rtc.yaml
-+++ b/Documentation/devicetree/bindings/rtc/sa1100-rtc.yaml
-@@ -34,8 +34,8 @@ properties:
- 
-   interrupt-names:
-     items:
--      - const: 'rtc 1Hz'
--      - const: 'rtc alarm'
-+      - const: rtc 1Hz
-+      - const: rtc alarm
- 
- required:
-   - compatible
-diff --git a/Documentation/devicetree/bindings/rtc/st,stm32-rtc.yaml b/Documentation/devicetree/bindings/rtc/st,stm32-rtc.yaml
-index 9e66ed33cda4..4703083d1f11 100644
---- a/Documentation/devicetree/bindings/rtc/st,stm32-rtc.yaml
-+++ b/Documentation/devicetree/bindings/rtc/st,stm32-rtc.yaml
-@@ -32,7 +32,7 @@ properties:
-     maxItems: 1
- 
-   st,syscfg:
--    $ref: "/schemas/types.yaml#/definitions/phandle-array"
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-     items:
-       minItems: 3
-       maxItems: 3
-diff --git a/Documentation/devicetree/bindings/rtc/ti,k3-rtc.yaml b/Documentation/devicetree/bindings/rtc/ti,k3-rtc.yaml
-index d995ef04a6eb..df5b4f77f6fb 100644
---- a/Documentation/devicetree/bindings/rtc/ti,k3-rtc.yaml
-+++ b/Documentation/devicetree/bindings/rtc/ti,k3-rtc.yaml
-@@ -13,7 +13,7 @@ description: |
-   This RTC appears in the AM62x family of SoCs.
- 
- allOf:
--  - $ref: "rtc.yaml#"
-+  - $ref: rtc.yaml#
- 
- properties:
-   compatible:
-diff --git a/Documentation/devicetree/bindings/rtc/trivial-rtc.yaml b/Documentation/devicetree/bindings/rtc/trivial-rtc.yaml
-index eb75861c28c3..a3603e638c37 100644
---- a/Documentation/devicetree/bindings/rtc/trivial-rtc.yaml
-+++ b/Documentation/devicetree/bindings/rtc/trivial-rtc.yaml
-@@ -15,7 +15,7 @@ description: |
-   possibly an interrupt line.
- 
- allOf:
--  - $ref: "rtc.yaml#"
-+  - $ref: rtc.yaml#
- 
- properties:
-   compatible:
--- 
-2.39.2
+Thanks a lot, I will start progress this.=20
 
+Best Regards
+Ryan
