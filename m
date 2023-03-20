@@ -2,89 +2,90 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 086BA6C1F10
-	for <lists+openbmc@lfdr.de>; Mon, 20 Mar 2023 19:08:25 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C5646C21D7
+	for <lists+openbmc@lfdr.de>; Mon, 20 Mar 2023 20:46:06 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PgN5L5zhjz2xG9
-	for <lists+openbmc@lfdr.de>; Tue, 21 Mar 2023 05:08:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PgQG35xLbz3cMh
+	for <lists+openbmc@lfdr.de>; Tue, 21 Mar 2023 06:46:03 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=LpTTMMaM;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=uDHVQrSM;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=JisP7dIu;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::831; helo=mail-qt1-x831.google.com; envelope-from=f.fainelli@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.28; helo=out4-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=LpTTMMaM;
+	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=uDHVQrSM;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=JisP7dIu;
 	dkim-atps=neutral
-Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PgN4k2l5Hz3cCy
-	for <openbmc@lists.ozlabs.org>; Tue, 21 Mar 2023 05:07:48 +1100 (AEDT)
-Received: by mail-qt1-x831.google.com with SMTP id r5so14159946qtp.4
-        for <openbmc@lists.ozlabs.org>; Mon, 20 Mar 2023 11:07:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679335664;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=L3ZgQ6hbDwLFA0+/6XyOTTwas24M548/DGldx8bD/B4=;
-        b=LpTTMMaMAGr1wg0gxQpPPQJcst7GYq7vYAPtjRVIP8cmaf+ovoh4ciEsHhfsjI72S3
-         LNmMof4lp289jUlBGm0qH75LQ0CEWWtVzCRDcHNa1zAYsdAXZmdAnNtD4MLAi+g54KPj
-         4H227WE8o8Kf40sjsZo96JnijcrGtUCo6gOS5QHwi1TfT2ZtLLmtiFq3AQd4IpH/iGc/
-         XRmMRfibPzro/QdkcU+II9zbngeGi2EO0U2WjN2eA/BXgZBHd0ODyvvxwIfX1g2OpXjH
-         8qDJcZy+sq6X/Oa5xQqs6yjdd2aYZHxya+sjOqGm/5hthoBF+rPcqikSfMc0B9dW26dC
-         xVSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679335664;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=L3ZgQ6hbDwLFA0+/6XyOTTwas24M548/DGldx8bD/B4=;
-        b=jajcmPNKHSMGNaYaIt6VIGPl7tdnYHIbCAnZOtOLRVruwPRK4VY0sn25aO3ixBNqhq
-         k5cT4EGGvGqlS+EC/b79Ra+rBAr2oeQuTD8SV8H2NlvDXgcGqtfvvtltQCPj9jP1yLPg
-         KApu2MhZGIYwCUKDIrBNZUSDShlXYKFPssL3NZnFIH7YsS+46vHaFFe/c7JJY4yjIyRy
-         hqyKjvMOdGLKNlUERnsMlUkWph+heX/PXqTPaiBT05vLeJiiEeFmEZrvpW4e1z4/Hruq
-         ErnE7vgAdPWlSeO4duuREHZZTTRpaiNcL1yl6j6kphx0kOmrFujRObGvJum6mhiC9uMv
-         LI9Q==
-X-Gm-Message-State: AO0yUKVtebX2MOwuQocqb06TUZoPxZ9ZTggTJRXhE2V/uvNyhTT0sZfc
-	5CchhnQaGVrfNw5qJZVw70s=
-X-Google-Smtp-Source: AK7set8AD38+i11dYanB4qCBbmNUzfei9aCNLyXLYPG8CRg4osCls4SV6Aq39hM7qRY/j3bqRVDkuA==
-X-Received: by 2002:a05:622a:180e:b0:3bf:bb1f:3c2b with SMTP id t14-20020a05622a180e00b003bfbb1f3c2bmr198499qtc.6.1679335664447;
-        Mon, 20 Mar 2023 11:07:44 -0700 (PDT)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id n3-20020a37bd03000000b007456b2759efsm7789701qkf.28.2023.03.20.11.07.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 20 Mar 2023 11:07:43 -0700 (PDT)
-Message-ID: <b7057b51-540f-54a5-aba2-8f44da832289@gmail.com>
-Date: Mon, 20 Mar 2023 11:07:30 -0700
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PgQFM3TrZz3cKj
+	for <openbmc@lists.ozlabs.org>; Tue, 21 Mar 2023 06:45:26 +1100 (AEDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 238665C0148;
+	Mon, 20 Mar 2023 15:45:22 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Mon, 20 Mar 2023 15:45:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	fuzziesquirrel.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm3; t=1679341522; x=1679427922; bh=gK
+	sOCY7m1/0HsEIdHaZm7PHEpNYnPC85sBAQOxXtSz0=; b=uDHVQrSMebpEsZyLed
+	KtfdXewETnIhdNxxU5GxOIX46r42GoMA3HiYD0InOYMOkf458UTA6zDPbAlHTK05
+	KYJJ/swHn0jn+ObVHW5z0ZfMTLHSvHHgfnsce7RovfMzw/ylvrMZCAl0mGzkSvlw
+	q1xU405kamITDFypvyfgAYC0unrjWrRqkINnva2mNKGc2nx0JYQlsEW1hWdE/f1j
+	yfOwV0phWJIkk539aUDahWDW9UA7qt4B31P1j/Jm4FAuFLPiZe+p2ORNiD5hSYUL
+	1qiOFHftrdqfASIDutG4seE9dv9cnQ7AJtHF9pdn1W9s87boVJ4pydge63bVC+GY
+	9bRA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1679341522; x=1679427922; bh=gKsOCY7m1/0HsEIdHaZm7PHEpNYnPC85sBA
+	QOxXtSz0=; b=JisP7dIuawtiz//YP8lNJL1qIWE88MS6wCi/fqV9uul7bnmzWwg
+	nfwUYyJryqSZ5zNodqArV7fE1mB4Oe3GSZUOXHn6CMANL2HQCoP7YP4vqA0BMneO
+	DvY+9WeLisP1R4hL36tncntEW13pmMcm7wvlIzpn1DitHOvQPsAdxL4yqFhVWaw1
+	ZAzGPGXH0hUxf4Jq8eSWM17iSW+vvTsUHEcUGM4gNQn+iF0XWJBiylbjIMlWYTsS
+	Pdgfq0DBLb84DiNNpA6Tlwe2aokTU9PA/2H0wgWGThf57CO484Ix4bD/H5R1zjzY
+	IphjVfOi3hzdT6We5IW8R8aMdFTDU7cGbuw==
+X-ME-Sender: <xms:0bcYZM1kAALWmbsR_g13yOQyFtu3GwP-seblA2tht6jKCivSiAs2UA>
+    <xme:0bcYZHE1rS8FMnKLJXkLqH8aYrcHjMNC078ArFY_HGog5Y3v6RvAJTfyRfhRIzg9N
+    2T0333MogHvp80G6c0>
+X-ME-Received: <xmr:0bcYZE6fTyQ7IIlmUoE6UFBV03AloHYy6mdO4-U3dLdJQgV8QASuQIE-l73HPAl8ASguipiI5eL-xIjJEG-8kDvS0_7-p_2IFpmx7fzz6NbS6aCJA5Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdefkedguddvjecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefkuffhvfevffgjfhgtgfgfggesthhqredttderjeenucfhrhhomhepuehr
+    rgguuceuihhshhhophcuoegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeegteekudefteejheevfeehkedtieefvdfhieel
+    hfeihedvhedvtddugfeugfeiteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrdgt
+    ohhm
+X-ME-Proxy: <xmx:0bcYZF1U0sOYaCTX2WHZNXyxez6igrcoYU_AiYyzo6lLaplJlEWR0w>
+    <xmx:0bcYZPE9WQAHAgsmvk-5KPh0gWdRV4mXevYlKhtb3wIVJjctqyb25w>
+    <xmx:0bcYZO-BuOzoQBZzaiNrF7_3uMU6jRQrsGrJqvRnNJfmhYvEfmyidQ>
+    <xmx:0rcYZCMYyMIi6rXyU8EUoZZ54i8lxu6xCAqFTb05RFRvco8SPeGyFw>
+Feedback-ID: i02c9470a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 20 Mar 2023 15:45:21 -0400 (EDT)
+Message-ID: <f93b92cdf5eb0066d3f1e48fa4d88539c29e5977.camel@fuzziesquirrel.com>
+Subject: Re: Quanta's CCLA Schedule A update 2023-03-20
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Litzung Chen =?UTF-8?Q?=28=E9=99=B3=E5=88=A9=E7=90=AE=29?=
+	 <Litzung.Chen@quantatw.com>
+Date: Mon, 20 Mar 2023 15:45:20 -0400
+In-Reply-To: <TY2PR04MB3952B507D338A69F62D05C16F1809@TY2PR04MB3952.apcprd04.prod.outlook.com>
+References: 	<TY2PR04MB3952B507D338A69F62D05C16F1809@TY2PR04MB3952.apcprd04.prod.outlook.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4 
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH] dt-bindings: rtc: Drop unneeded quotes
-Content-Language: en-US
-To: Rob Herring <robh@kernel.org>, Alessandro Zummo <a.zummo@towertech.it>,
- Alexandre Belloni <alexandre.belloni@bootlin.com>,
- Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
- Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
- Samuel Holland <samuel@sholland.org>,
- Nicolas Ferre <nicolas.ferre@microchip.com>,
- Claudiu Beznea <claudiu.beznea@microchip.com>,
- Broadcom internal kernel review list
- <bcm-kernel-feedback-list@broadcom.com>,
- Hans Ulli Kroll <ulli.kroll@googlemail.com>,
- Linus Walleij <linus.walleij@linaro.org>,
- Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>,
- Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>,
- Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>,
- Maxime Coquelin <mcoquelin.stm32@gmail.com>,
- Alexandre Torgue <alexandre.torgue@foss.st.com>
-References: <20230317233634.3968656-1-robh@kernel.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230317233634.3968656-1-robh@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,24 +97,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-rtc@vger.kernel.org, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev, linux-arm-kernel@lists.infradead.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 3/17/23 16:36, Rob Herring wrote:
-> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
-> checking for this can be enabled in yamllint.
-> 
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
->   .../devicetree/bindings/rtc/allwinner,sun4i-a10-rtc.yaml      | 2 +-
->   .../devicetree/bindings/rtc/allwinner,sun6i-a31-rtc.yaml      | 2 +-
->   .../devicetree/bindings/rtc/atmel,at91rm9200-rtc.yaml         | 2 +-
->   .../devicetree/bindings/rtc/atmel,at91sam9260-rtt.yaml        | 2 +-
->   .../devicetree/bindings/rtc/brcm,brcmstb-waketimer.yaml       | 2 +-
+On Mon, 2023-03-20 at 07:19 +0000, Litzung Chen (=E9=99=B3=E5=88=A9=E7=90=
+=AE) wrote:
+> Hi Brad,
+> =C2=A0
+> Attached is the updated Schedule A of CCLA from Quanta, please help
+> review.
 
-Acked-by: Florian Fainelli <f.fainelli@gmail.com> 
-#brcm,brcmstb-waketimer.yaml
--- 
-Florian
+Hi Litzung
 
+You are not listed as a CLA Manager on the most recent Schedule A we
+have on file.  For both mine and Quantas protection, I can only accept
+Schedule A updates from CLA Managers.  Can you please have one of the
+existing CLA managers send the update?  If you would like to make
+Schedule A updates after that, have them add "CLA Manager" next to your
+name.
+
+> And I wold like to upload the CCLA file to Quanta google driver
+> folder.
+> =C2=A0
+> Could you also help me to apply permission?
+
+I would love to help you with this once you have been added to Schedule
+A with "CLA Manager" next to your name.  This update needs to be sent by
+an existing CLA Manager.
+
+Apologies, I realize this is a hassle - but again this is for both mine
+and Quanta's protection.
+
+Thanks,
+Brad
