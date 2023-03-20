@@ -1,23 +1,23 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 73E076C0BD9
-	for <lists+openbmc@lfdr.de>; Mon, 20 Mar 2023 09:13:14 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 33EEA6C0BED
+	for <lists+openbmc@lfdr.de>; Mon, 20 Mar 2023 09:13:49 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Pg6tc2sQCz3cHs
-	for <lists+openbmc@lfdr.de>; Mon, 20 Mar 2023 19:13:12 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Pg6vH0PJfz3cKj
+	for <lists+openbmc@lfdr.de>; Mon, 20 Mar 2023 19:13:47 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71; helo=twspam01.aspeedtech.com; envelope-from=chiawei_wang@aspeedtech.com; receiver=<UNKNOWN>)
 Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com [211.20.114.71])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Pg6t90Rjwz3blY;
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Pg6t90VJtz3c8T;
 	Mon, 20 Mar 2023 19:12:47 +1100 (AEDT)
 Received: from mail.aspeedtech.com ([192.168.0.24])
-	by twspam01.aspeedtech.com with ESMTP id 32K7v5EP088826;
-	Mon, 20 Mar 2023 15:57:05 +0800 (GMT-8)
+	by twspam01.aspeedtech.com with ESMTP id 32K7v6Wo088827;
+	Mon, 20 Mar 2023 15:57:06 +0800 (GMT-8)
 	(envelope-from chiawei_wang@aspeedtech.com)
 Received: from Chiawei-PC03.aspeed.com (192.168.2.66) by TWMBX02.aspeed.com
  (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Mon, 20 Mar
@@ -32,10 +32,12 @@ To: <vkoul@kernel.org>, <robh+dt@kernel.org>,
         <linux-arm-kernel@lists.infradead.org>,
         <linux-aspeed@lists.ozlabs.org>, <linux-kernel@vger.kernel.org>,
         <linux-serial@vger.kernel.org>, <openbmc@lists.ozlabs.org>
-Subject: [PATCH v3 0/5] arm: aspeed: Add UART DMA support
-Date: Mon, 20 Mar 2023 16:11:28 +0800
-Message-ID: <20230320081133.23655-1-chiawei_wang@aspeedtech.com>
+Subject: [PATCH v3 1/5] dt-bindings: serial: 8250: Add aspeed,ast2600-uart
+Date: Mon, 20 Mar 2023 16:11:29 +0800
+Message-ID: <20230320081133.23655-2-chiawei_wang@aspeedtech.com>
 X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20230320081133.23655-1-chiawei_wang@aspeedtech.com>
+References: <20230320081133.23655-1-chiawei_wang@aspeedtech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -43,7 +45,7 @@ X-Originating-IP: [192.168.2.66]
 X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
  (192.168.0.24)
 X-DNSRBL: 
-X-MAIL: twspam01.aspeedtech.com 32K7v5EP088826
+X-MAIL: twspam01.aspeedtech.com 32K7v6Wo088827
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,46 +57,31 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Rob Herring <robh@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This patch serias adds the 8250 driver with DMA support for AST26xx UART devices
+Add a compatible string for the NS16550A-compatible UARTs
+of Aspeed AST2600 SoCs.
 
-v3 change:
- - add error check against dma_to_phys
- - revise UDMA binding
- - remove UDMA binding header
- - remove redundant header inclusions of UDMA driver
- - fix incorrect UDMA channel number (14->28)
- - place UDMA kconfig in alphabetical order
- - collect Acked-by tags
+Signed-off-by: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
+Acked-by: Rob Herring <robh@kernel.org>
+---
+ Documentation/devicetree/bindings/serial/8250.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-v2 change:
- - re-write UDMA driver based on the DMAEngine framework
- - re-write 8250_aspeed driver with DMA support based on the 8250_dma implementation
- - remove virtual UART part as there is already a 8250_aspeed_vuart driver
-
-Chia-Wei Wang (5):
-  dt-bindings: serial: 8250: Add aspeed,ast2600-uart
-  dt-bindings: dmaengine: Add AST2600 UDMA bindings
-  dmaengine: aspeed: Add AST2600 UART DMA driver
-  serial: 8250: Add AST2600 UART driver
-  ARM: dts: aspeed-g6: Add UDMA node
-
- .../bindings/dma/aspeed,ast2600-udma.yaml     |  56 ++
- .../devicetree/bindings/serial/8250.yaml      |   1 +
- arch/arm/boot/dts/aspeed-g6.dtsi              |   9 +
- drivers/dma/Kconfig                           |   9 +
- drivers/dma/Makefile                          |   1 +
- drivers/dma/ast2600-udma.c                    | 534 ++++++++++++++++++
- drivers/tty/serial/8250/8250_aspeed.c         | 224 ++++++++
- drivers/tty/serial/8250/Kconfig               |   8 +
- drivers/tty/serial/8250/Makefile              |   1 +
- 9 files changed, 843 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/dma/aspeed,ast2600-udma.yaml
- create mode 100644 drivers/dma/ast2600-udma.c
- create mode 100644 drivers/tty/serial/8250/8250_aspeed.c
-
+diff --git a/Documentation/devicetree/bindings/serial/8250.yaml b/Documentation/devicetree/bindings/serial/8250.yaml
+index 692aa05500fd..cc6842371d38 100644
+--- a/Documentation/devicetree/bindings/serial/8250.yaml
++++ b/Documentation/devicetree/bindings/serial/8250.yaml
+@@ -59,6 +59,7 @@ properties:
+       - const: ns16850
+       - const: aspeed,ast2400-vuart
+       - const: aspeed,ast2500-vuart
++      - const: aspeed,ast2600-uart
+       - const: intel,xscale-uart
+       - const: mrvl,pxa-uart
+       - const: nuvoton,wpcm450-uart
 -- 
 2.25.1
 
