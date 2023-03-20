@@ -1,67 +1,90 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8138F6C123F
-	for <lists+openbmc@lfdr.de>; Mon, 20 Mar 2023 13:47:48 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 086BA6C1F10
+	for <lists+openbmc@lfdr.de>; Mon, 20 Mar 2023 19:08:25 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PgDzQ2yXKz3cGk
-	for <lists+openbmc@lfdr.de>; Mon, 20 Mar 2023 23:47:46 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PgN5L5zhjz2xG9
+	for <lists+openbmc@lfdr.de>; Tue, 21 Mar 2023 05:08:22 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kp+y3A1L;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=LpTTMMaM;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.55.52.151; helo=mga17.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::831; helo=mail-qt1-x831.google.com; envelope-from=f.fainelli@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kp+y3A1L;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=LpTTMMaM;
 	dkim-atps=neutral
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PgDyg0fDxz3c6m;
-	Mon, 20 Mar 2023 23:47:05 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1679316427; x=1710852427;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=BS/iDj084XvVXlM/TI4ORDgBbDzLSZq0yXe7n1ACXBA=;
-  b=kp+y3A1Lgytkqvanyi+4EdZJLq/esAhQUDgEVtMncR59DPmFxZjzM5w8
-   LrMg7jBiEEa+qQTlCMJDA6H4kmDFZN/mmhKOKLxigs5FE1HguavmeyJIF
-   rxVFNVaeIPG4nly2jvAUgZImIzO+UIm3x7eA1TBeQ1waMUP9//5eF5rBl
-   tvAIaFsTJoAOsKESWKGrsxpslHvmunXcOEp9J097QT9ohJoKxipE3uYqW
-   T2mI9QFBEhtIegO0womTJJJHKGo5B2pz3etAluJS3iZqIGtRTRaYN0COT
-   vsL77hYM3zvkHkWlyt4n0h0UUwUHif7nvxcnEshqL2Q+nt7bKB1hDnwfA
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10654"; a="319050914"
-X-IronPort-AV: E=Sophos;i="5.98,274,1673942400"; 
-   d="scan'208";a="319050914"
-Received: from fmsmga008.fm.intel.com ([10.253.24.58])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 Mar 2023 05:46:57 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10654"; a="745361757"
-X-IronPort-AV: E=Sophos;i="5.98,274,1673942400"; 
-   d="scan'208";a="745361757"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by fmsmga008.fm.intel.com with ESMTP; 20 Mar 2023 05:46:51 -0700
-Received: from andy by smile.fi.intel.com with local (Exim 4.96)
-	(envelope-from <andriy.shevchenko@linux.intel.com>)
-	id 1peEuW-006GkN-0C;
-	Mon, 20 Mar 2023 14:46:48 +0200
-Date: Mon, 20 Mar 2023 14:46:47 +0200
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: Paul Fertser <fercerpav@gmail.com>
-Subject: Re: [PATCH v8 10/13] hwmon: peci: Add cputemp driver
-Message-ID: <ZBhVt74i1DSoa+bE@smile.fi.intel.com>
-References: <20220208153639.255278-1-iwona.winiarska@intel.com>
- <20220208153639.255278-11-iwona.winiarska@intel.com>
- <ZBhHS7v+98NK56is@home.paul.comp>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PgN4k2l5Hz3cCy
+	for <openbmc@lists.ozlabs.org>; Tue, 21 Mar 2023 05:07:48 +1100 (AEDT)
+Received: by mail-qt1-x831.google.com with SMTP id r5so14159946qtp.4
+        for <openbmc@lists.ozlabs.org>; Mon, 20 Mar 2023 11:07:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679335664;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=L3ZgQ6hbDwLFA0+/6XyOTTwas24M548/DGldx8bD/B4=;
+        b=LpTTMMaMAGr1wg0gxQpPPQJcst7GYq7vYAPtjRVIP8cmaf+ovoh4ciEsHhfsjI72S3
+         LNmMof4lp289jUlBGm0qH75LQ0CEWWtVzCRDcHNa1zAYsdAXZmdAnNtD4MLAi+g54KPj
+         4H227WE8o8Kf40sjsZo96JnijcrGtUCo6gOS5QHwi1TfT2ZtLLmtiFq3AQd4IpH/iGc/
+         XRmMRfibPzro/QdkcU+II9zbngeGi2EO0U2WjN2eA/BXgZBHd0ODyvvxwIfX1g2OpXjH
+         8qDJcZy+sq6X/Oa5xQqs6yjdd2aYZHxya+sjOqGm/5hthoBF+rPcqikSfMc0B9dW26dC
+         xVSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679335664;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=L3ZgQ6hbDwLFA0+/6XyOTTwas24M548/DGldx8bD/B4=;
+        b=jajcmPNKHSMGNaYaIt6VIGPl7tdnYHIbCAnZOtOLRVruwPRK4VY0sn25aO3ixBNqhq
+         k5cT4EGGvGqlS+EC/b79Ra+rBAr2oeQuTD8SV8H2NlvDXgcGqtfvvtltQCPj9jP1yLPg
+         KApu2MhZGIYwCUKDIrBNZUSDShlXYKFPssL3NZnFIH7YsS+46vHaFFe/c7JJY4yjIyRy
+         hqyKjvMOdGLKNlUERnsMlUkWph+heX/PXqTPaiBT05vLeJiiEeFmEZrvpW4e1z4/Hruq
+         ErnE7vgAdPWlSeO4duuREHZZTTRpaiNcL1yl6j6kphx0kOmrFujRObGvJum6mhiC9uMv
+         LI9Q==
+X-Gm-Message-State: AO0yUKVtebX2MOwuQocqb06TUZoPxZ9ZTggTJRXhE2V/uvNyhTT0sZfc
+	5CchhnQaGVrfNw5qJZVw70s=
+X-Google-Smtp-Source: AK7set8AD38+i11dYanB4qCBbmNUzfei9aCNLyXLYPG8CRg4osCls4SV6Aq39hM7qRY/j3bqRVDkuA==
+X-Received: by 2002:a05:622a:180e:b0:3bf:bb1f:3c2b with SMTP id t14-20020a05622a180e00b003bfbb1f3c2bmr198499qtc.6.1679335664447;
+        Mon, 20 Mar 2023 11:07:44 -0700 (PDT)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id n3-20020a37bd03000000b007456b2759efsm7789701qkf.28.2023.03.20.11.07.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 20 Mar 2023 11:07:43 -0700 (PDT)
+Message-ID: <b7057b51-540f-54a5-aba2-8f44da832289@gmail.com>
+Date: Mon, 20 Mar 2023 11:07:30 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ZBhHS7v+98NK56is@home.paul.comp>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH] dt-bindings: rtc: Drop unneeded quotes
+Content-Language: en-US
+To: Rob Herring <robh@kernel.org>, Alessandro Zummo <a.zummo@towertech.it>,
+ Alexandre Belloni <alexandre.belloni@bootlin.com>,
+ Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+ Chen-Yu Tsai <wens@csie.org>, Jernej Skrabec <jernej.skrabec@gmail.com>,
+ Samuel Holland <samuel@sholland.org>,
+ Nicolas Ferre <nicolas.ferre@microchip.com>,
+ Claudiu Beznea <claudiu.beznea@microchip.com>,
+ Broadcom internal kernel review list
+ <bcm-kernel-feedback-list@broadcom.com>,
+ Hans Ulli Kroll <ulli.kroll@googlemail.com>,
+ Linus Walleij <linus.walleij@linaro.org>,
+ Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>,
+ Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>,
+ Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>,
+ Maxime Coquelin <mcoquelin.stm32@gmail.com>,
+ Alexandre Torgue <alexandre.torgue@foss.st.com>
+References: <20230317233634.3968656-1-robh@kernel.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230317233634.3968656-1-robh@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,64 +96,24 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Randy Dunlap <rdunlap@infradead.org>, linux-aspeed@lists.ozlabs.org, linux-doc@vger.kernel.org, Dave Hansen <dave.hansen@intel.com>, Zev Weiss <zweiss@equinix.com>, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, Jonathan Corbet <corbet@lwn.net>, openbmc@lists.ozlabs.org, Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>, Guenter Roeck <linux@roeck-us.net>, devicetree@vger.kernel.org, Jean Delvare <jdelvare@suse.com>, Arnd Bergmann <arnd@arndb.de>, Billy Tsai <billy_tsai@aspeedtech.com>, Rob Herring <robh+dt@kernel.org>, Borislav Petkov <bp@alien8.de>, Dan Williams <dan.j.williams@intel.com>, linux-arm-kernel@lists.infradead.org, linux-hwmon@vger.kernel.org, Tony Luck <tony.luck@intel.com>, Andrew Jeffery <andrew@aj.id.au>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Iwona Winiarska <iwona.winiarska@intel.com>, linux-kernel@vger.kernel.org, Olof Johansson <olof@lixom.net>
+Cc: linux-rtc@vger.kernel.org, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Mar 20, 2023 at 02:45:15PM +0300, Paul Fertser wrote:
-> Hello,
+On 3/17/23 16:36, Rob Herring wrote:
+> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
+> checking for this can be enabled in yamllint.
 > 
-> We are seeing wrong DTS temperatures on at least "Intel(R) Xeon(R)
-> Bronze 3204 CPU @ 1.90GHz" and most probably other Skylake Xeon CPUs
-> are also affected, see inline.
+> Signed-off-by: Rob Herring <robh@kernel.org>
+> ---
+>   .../devicetree/bindings/rtc/allwinner,sun4i-a10-rtc.yaml      | 2 +-
+>   .../devicetree/bindings/rtc/allwinner,sun6i-a31-rtc.yaml      | 2 +-
+>   .../devicetree/bindings/rtc/atmel,at91rm9200-rtc.yaml         | 2 +-
+>   .../devicetree/bindings/rtc/atmel,at91sam9260-rtt.yaml        | 2 +-
+>   .../devicetree/bindings/rtc/brcm,brcmstb-waketimer.yaml       | 2 +-
 
-Thanks for the report! I guess we need a fix for this indeed.
-
-> On Tue, Feb 08, 2022 at 04:36:36PM +0100, Iwona Winiarska wrote:
-> > Add peci-cputemp driver for Digital Thermal Sensor (DTS) thermal
-> > readings of the processor package and processor cores that are
-> > accessible via the PECI interface.
-> ...
-> > +static const struct cpu_info cpu_hsx = {
-> > +	.reg		= &resolved_cores_reg_hsx,
-> > +	.min_peci_revision = 0x33,
-> > +	.thermal_margin_to_millidegree = &dts_eight_dot_eight_to_millidegree,
-> > +};
-> > +
-> > +static const struct cpu_info cpu_icx = {
-> > +	.reg		= &resolved_cores_reg_icx,
-> > +	.min_peci_revision = 0x40,
-> > +	.thermal_margin_to_millidegree = &dts_ten_dot_six_to_millidegree,
-> > +};
-> ...
-> > +	{
-> > +		.name = "peci_cpu.cputemp.skx",
-> > +		.driver_data = (kernel_ulong_t)&cpu_hsx,
-> > +	},
-> 
-> With this configuration we get this data:
-> 
-> /sys/bus/peci/devices/0-30/peci_cpu.cputemp.skx.48/hwmon/hwmon15# grep . temp[123]_{label,input}
-> temp1_label:Die
-> temp2_label:DTS
-> temp3_label:Tcontrol
-> temp1_input:30938
-> temp2_input:67735
-> temp3_input:80000
-> 
-> On the host system "sensors" report
-> 
-> Package id 0:  +31.C (high = +80.C, crit = +90.C)
-> 
-> So I conclude Die temperature as retrieved over PECI is correct while
-> DTS is mis-calculated. The old downstream code in OpenBMC was using
-> ten_dot_six_to_millidegree() function for conversion, and that was
-> providing expected results. And indeed if we reverse the calculation
-> here we get 80000 - ((80000-67735) * 256 / 64) = 30940 which matches
-> expectations.
-
+Acked-by: Florian Fainelli <f.fainelli@gmail.com> 
+#brcm,brcmstb-waketimer.yaml
 -- 
-With Best Regards,
-Andy Shevchenko
-
+Florian
 
