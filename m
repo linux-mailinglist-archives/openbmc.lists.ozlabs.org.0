@@ -1,124 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 79E5D6C3523
-	for <lists+openbmc@lfdr.de>; Tue, 21 Mar 2023 16:08:48 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D2FF56C36E9
+	for <lists+openbmc@lfdr.de>; Tue, 21 Mar 2023 17:27:19 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Pgw3f2fBRz3cfh
-	for <lists+openbmc@lfdr.de>; Wed, 22 Mar 2023 02:08:46 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PgxpF4kSDz3chs
+	for <lists+openbmc@lfdr.de>; Wed, 22 Mar 2023 03:27:17 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=vDh0+OlL;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=P/dWgqKh;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=amd.com (client-ip=2a01:111:f400:7e89::60d; helo=nam10-mw2-obe.outbound.protection.outlook.com; envelope-from=supreeth.venkatesh@amd.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::82a; helo=mail-qt1-x82a.google.com; envelope-from=dhruvaraj@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=amd.com header.i=@amd.com header.a=rsa-sha256 header.s=selector1 header.b=vDh0+OlL;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=P/dWgqKh;
 	dkim-atps=neutral
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2060d.outbound.protection.outlook.com [IPv6:2a01:111:f400:7e89::60d])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-x82a.google.com (mail-qt1-x82a.google.com [IPv6:2607:f8b0:4864:20::82a])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Pgw305j25z3cGk
-	for <openbmc@lists.ozlabs.org>; Wed, 22 Mar 2023 02:08:09 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=DviQWsOeGy8FbiV8L504MuwhKhFMjTAe+U/G0wdXzac2RxFdOSedmEgPDotDa4HD65RxrW4mJ5azZopiURfMVvFo3qYfyOQbjZtEBsz8GulTzZg8PS38s/haqeKhjxhPbLzqpg+N7DUN+YT+llxYcnbZ0vosaox0DVbPSXI8OF46neib2IQ/J+P88Oob29Liq6IfZnqoPm5OxyZb4oHhauze4sddxydy2soRC9fr8k0VyZgdOKcYRBoRrE3exfU0d65acv6s9KJXIRxD2f81esKYeeErOd+aoI6M300a31BUP8S9SdK953biKlPRBJ5sc1BOlHAcjaB615n8c5t5dQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gMKrzOWAzntJQ5AMyYs+Ujct0/M0EvFmb8sqiNFuA2E=;
- b=KIZPRhb7h/ucocjvwtFabGXYiVRMWd6Up7h/BAlKiwd/DvMGeBrrCPp09nSbL7KanL7ZkwbsEyBpe3F47jo/ZgrBZFYVMGHLKyt8luJ1zbsDmXRaRWToKUCquYwte0K56SBhM+Ve+ACw348U5teZ21BPCDEcvQiOGvDrWKpfqX0DX3fecIdhnB9yjjM4BMUaVhZXubYooPtQPmM1Z6nEgkGif6n0UN4rhC8Z4JiB7S/70gAxVo6xnFpRjFqQMnhtP7GcstfIABfId1zAb6A3yYwUSm50OsZtyK98k4BIyf/Fx69+3a3bPBG4GV7tt3dckBI6/H+MOHCkXoLQqmCbhA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gMKrzOWAzntJQ5AMyYs+Ujct0/M0EvFmb8sqiNFuA2E=;
- b=vDh0+OlL9g+Kj+Wg5smGW3ZBiUjhkvT1/05tB66jCceyxyIRsgIImrsoBOXiRR8oC7/VCKfIW7Gd3AsKgGep0hoQVJ2SOUr+N7BYAWroos5zJheTI31TpbW0Y8Hs7PeQJdelmJyWUASFeH9jm4/XZJvpbdi1LABV+F48K6sumaA=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from SN6PR12MB4752.namprd12.prod.outlook.com (2603:10b6:805:e9::10)
- by CYYPR12MB8962.namprd12.prod.outlook.com (2603:10b6:930:c4::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6178.37; Tue, 21 Mar
- 2023 15:07:46 +0000
-Received: from SN6PR12MB4752.namprd12.prod.outlook.com
- ([fe80::8465:3c53:e5fd:9028]) by SN6PR12MB4752.namprd12.prod.outlook.com
- ([fe80::8465:3c53:e5fd:9028%4]) with mapi id 15.20.6178.037; Tue, 21 Mar 2023
- 15:07:46 +0000
-Message-ID: <255d7c9a-ce17-bbe1-7312-990d0221cf36@amd.com>
-Date: Tue, 21 Mar 2023 10:07:43 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.0
-Subject: Re: [RFC] BMC RAS Feature
-To: Patrick Williams <patrick@stwcx.xyz>
-References: <07621845-19a4-0568-be0e-f556ba40b813@amd.com>
- <ZBmJpxTnEVVpfsz2@heinlein.taila677.ts.net>
-Content-Language: en-US
-From: Supreeth Venkatesh <supreeth.venkatesh@amd.com>
-In-Reply-To: <ZBmJpxTnEVVpfsz2@heinlein.taila677.ts.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: BL1PR13CA0352.namprd13.prod.outlook.com
- (2603:10b6:208:2c6::27) To SN6PR12MB4752.namprd12.prod.outlook.com
- (2603:10b6:805:e9::10)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Pgxnf6drDz30Kr
+	for <openbmc@lists.ozlabs.org>; Wed, 22 Mar 2023 03:26:46 +1100 (AEDT)
+Received: by mail-qt1-x82a.google.com with SMTP id hf2so14379829qtb.3
+        for <openbmc@lists.ozlabs.org>; Tue, 21 Mar 2023 09:26:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1679416002;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=N8RD46XtZCulfQqh0hRJXIgq9/Aoiju+h9YRnOvgnRE=;
+        b=P/dWgqKhvVWSEWu4wBA/UTG9lImwsbWeYiRKv0oOxcDUE0nXXM/dOmEOt2kODf6zNh
+         /bQ6n3/PWGqB/D00El6L7bW8eZ62cQRd3Fz9lqCZEkpKxKgLPib+BRcaFWH+8xaf9w66
+         CiI81xu41swJVqflq4feg0hyA4Lcip9eePtSDoKO3Swwt18yPH/WpiYbwHSJiw3u9C5F
+         uxAx47h20fxEGEV4EQRKElLXfWjjvwVYcprrXpuhLcxF03YidYOId0Je9rcBjl5qq8Ac
+         UunYVwXE/VeADq7Di6I7Te1ebnu4oeXobpU1wy5dzYOK+f9xxSnfRmSIIyHkaO4Q47r9
+         NemQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679416002;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=N8RD46XtZCulfQqh0hRJXIgq9/Aoiju+h9YRnOvgnRE=;
+        b=uqqQTnJQqUcIi8uZVPZoQy8nYdumwQLPOCkyHKyyAElsor1wsdBTKdLrnuE0EVw57W
+         sJwL0tQe7VIzlWfaDwq3SZGTJ9Du/PzsWm9KB03DJ07fuq9Nx27jJy16bnIDqBa40djM
+         ZlKaJXIRIlf3OprwxhmSNkr9MBGnUsrWwqxdgTM4fDedCfdh9LLMshK38ZV3hZFYZRjD
+         eZuGWE8Vay2HziQDpzdR9p3AFym1RbI3SaN4lBPnznkNuKXR+uSja0ANHQcZGzRyIUA8
+         XnsiT/geLasuXkLZfSJc3Ge3ogiSCixS0f4QTEnw9H0s+cRDYJyJbOQU1IdWsuIo/CYo
+         1PRw==
+X-Gm-Message-State: AO0yUKUGLnEytbnZj0TU0z56Cv/t3HhwNCj5teoniMbFgoab0xkBdhPf
+	Dxc/07NHJD0zoWhdV1lNQVbqJjlkNv0eb967oY8=
+X-Google-Smtp-Source: AK7set8JMJjBFv3ftP9V4mHLX5vjG1IcuJfMHpM3o9EjI1Bafj0l7cyvyq3e6VCz47Fx3XNK2HdfV4SlJNgGVYeTo4w=
+X-Received: by 2002:a05:622a:18aa:b0:3db:a6c5:cdc6 with SMTP id
+ v42-20020a05622a18aa00b003dba6c5cdc6mr184276qtc.10.1679416002376; Tue, 21 Mar
+ 2023 09:26:42 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN6PR12MB4752:EE_|CYYPR12MB8962:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4ada3eea-4802-4637-8130-08db2a1e0771
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	K+qtlQgxiXCA0tRwZWDOAyd5F6XE/587BZCpbQsXS7UUjNeqdc/6UlfF3WWP/s2bNrnHhp3+8XZNwikWOexpbKST+55dANNHaTbu7R6HElU2IlMgHqMEgtTGm0sCJVQca3xaAK7bVHgE0do1ivc//9h5p1rNlHR08GwqbsC9vivzzQiRDmT5BV693im8f9AYIqkb6T41JndeGg+X62eiIb3h7WdH5ZAm2sbCnJxv+Aqp7qJWM1acA79pZm/MroRJREW8Omak4aDOrmuUD5zAE9LV2VN5KR5WTgh6vGXD6V5c7trzRTDc06Q7H69Qxb5Dpjixrz2TQvAuCO5U2OfhB/e9xh4fbX/3/Fk93VfL2xxNWjc1RhmfOKJHLvXYAndWohxOjppa90nhx9Rco3g9jecTgBlIRw9u8zsCW9cgUF1EezDe+IF0cgWfEdewEoTWyFLxA/SJto3MYd9o2Kge53vVUWSe4T+iI6SmnfAJb/lPrOxNzgCIQ13QcB0ZFDr76RCzFCeqhA2WS1dMj9xej3S7C7nvn4+V3CGuIuCYZRY2KBQkjwnr7pB8ShrW6gHV2oHuMe+WNaLvENn13CBl8FfrvkheuJnfoQpmXg1nbdzbMP0t6KtM/c02ABtDDKU34amlMJ5lC9XViG9pcd5YGP5b7ulQBkbyNfCcMOCbwIelH5EbPE0clzcSirO9pMFv+RsuBaMp2nT+ts//kKK9kZt8Wn7+3XIe8bmmEpI7GtU=
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN6PR12MB4752.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(366004)(396003)(136003)(346002)(376002)(39860400002)(451199018)(31686004)(2906002)(38100700002)(478600001)(26005)(2616005)(316002)(53546011)(186003)(86362001)(31696002)(36756003)(19627235002)(6666004)(41300700001)(6486002)(66556008)(6916009)(5660300002)(66946007)(4326008)(8676002)(66476007)(6512007)(6506007)(8936002)(44832011)(43740500002)(45980500001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?M2daMTMxMTV0dU5HZG9wTnVkOWNCTWdMWkljL2NkSUxWVytERjhFQVBNUGc4?=
- =?utf-8?B?Z1g5Skd4VUZpUlNpV0Vzd2RNYjhveUVNelVmaWhaQW50ZEc5QWMxTGo4aExa?=
- =?utf-8?B?eGhqZ1ZKS0RMTDBLb3NMbGNaTlZuWUpYMGlPRmlldU1HZ1BTMXAvZ3c3TEx5?=
- =?utf-8?B?UUw2SU9semlMTG5xVit2aTQ1QjVpdjN1VXpMTmNMUWhEZnYwUndKYS9yUVU2?=
- =?utf-8?B?SWE2cTZlWFUyS1BzYUxqRUlVaTc5UkdaTUlwekxGZjVhQ1VUV2ZsQ3dRclJo?=
- =?utf-8?B?RmdaVDRTQ0xGbTBpaTlJMm1IdzBlZG9tcyt3T0NGVjdFYXlseGZGam9ZVnJ6?=
- =?utf-8?B?dUdQZkQxWVlDS1kyejY4VXVwVGVpMHJXbU0rdmZCV3YxNTlZeU12a01WRnRu?=
- =?utf-8?B?ZmRLdGdwaVNmTnhSYnhvRjlrWitRcTRkTlpMSVBRRlhXRG1ibEFDTUhEVGRi?=
- =?utf-8?B?dGVobnJBUWpmVlliYVMyeFN5M2VzUis5ekJRNE1vUnBuM2FqYkdpN2lVZ1g0?=
- =?utf-8?B?QkxyMGMvR1V2Z2V4a0pzVzR6a01qQlV0MndKUVl1SU1tT09QVHpKREhhdm8v?=
- =?utf-8?B?N3R2REdHUEZhSkhJTVE0ZnRucFk0L2pOY0l6U3djczRvY2ZjdTE4cUs2aEts?=
- =?utf-8?B?cmdzNU4wRGY2OHJKRmVET2VrVFhWbEpUVnZrRFBWYnpRUmdEeXFjUFlzNThX?=
- =?utf-8?B?eTBpLzZWaXFQbjFVcXY3OWd5dmlEZWpRS2k3T3pvaFpJVjB0Nmxydi92OXRC?=
- =?utf-8?B?QVZBQmpqbDl6Zit3b3owd2pLK3pORGt3dFphVjJTNmUxaTJDTHR0ZjU2ZkZs?=
- =?utf-8?B?ZjNuRDU4SXphcTRxaFJlYjFXVlluN2tqaTBkalFRTXV5aE1qYmJ5QlRHd2s1?=
- =?utf-8?B?cit4TnBvUVVkSmVvUVRLcEorZTdlS3B3bE1VRUFGWmFtM1FQcFJRcks0MWV1?=
- =?utf-8?B?bVdRYXkyN0FjU0ZtdStuaUVNQmx1WWgzS1ViSDlGTStURmx5bzRCQ0M4dVdX?=
- =?utf-8?B?dGdNWjRaLzk5ajBOcUw1THhPcHFaZzhIZnQ3U0g5elpqbzhIS2RMZTArbTNF?=
- =?utf-8?B?UkZDUUUvUysycFQ2bjFpeERRODNvQWZDeVNWMTMwOWRGYmgzYnozNnJTaWhX?=
- =?utf-8?B?S0VzekxpM0FXeTFReVJPRWtHZkpkQ1JXUnpya2RZZ0hnb1YxWmgzTkFKQVN3?=
- =?utf-8?B?NjVTU3pZRGc2dmpXbWJBdmR2TkFtdHBUN2lwcjV2ZUlyWm9CYlllVjNwZVNU?=
- =?utf-8?B?MlFuUGFySU9qWFN4UTViaVU5OHI1K2xjU0w2Uit4Um9UcDlHUlZsSEtONCtr?=
- =?utf-8?B?NzkxNlEvdWFINDYrUjFlTkg4djNyNzFJSlpNb21tM2ZMVXo1N08velpIM3J0?=
- =?utf-8?B?dDdZT0d4aDBYOFpUcnM4QkJVNTdWQTlpVWl1Z21mY3NrMzhHdnR2NGhOK2xG?=
- =?utf-8?B?d0ZKQUk2bVU2QnpFZ0swWlZycXNGeG5iS3R2ZjA2ZU1HMlpLN1Y1Z0gzcEpH?=
- =?utf-8?B?TDdadkJlR1k5UENlNGQwRzVFNW95TFVWTk1YaU0xcWZNeDc0VXNiazlvZG1k?=
- =?utf-8?B?dkxDYjE4NVBIZXJIaTQxcnVuSmJ4bXc1OHFidG9uYVVJRXhCK1paSEhqeUZU?=
- =?utf-8?B?M3FFd0hrZW9TOXlSK1RocWRQay9hdFdLd1VybUhxQmthK29OVjZTYVZtR0Fm?=
- =?utf-8?B?dk1QZVllRnpmYlFSeGhha3huZ2hrNVNKTkVYTDBNYlN5TkJZY2xnSnpFMHh4?=
- =?utf-8?B?MWlvNnQ5cXVVaDZiT0x6WllnNmhUL3FTSldKS2Jkb2NySHNORUdiQ21EdEE0?=
- =?utf-8?B?THY2U0dtd2J3bHpsVG5VbUdWTmNPZ2NZcnNZZWsrYkptUW1rMkk4V2FNa3gv?=
- =?utf-8?B?bEEreGdPUW9LbE9mTW1BTUtaaExCQTcweXozaVgvdFFBUVNpVVRWcGplQlM0?=
- =?utf-8?B?cmN3NytqV3pKdGxTd2VwbDJBMUd6Sk9RN2UyQXdvVDlBeW1wREY5empzWEhT?=
- =?utf-8?B?Q01XSVlXZnJXTHhKUEtQYzdQWE9wTzF6MXdHSWp0ZlJiaVBUY2t6bFhJN2lt?=
- =?utf-8?B?OGkzSENqM05yQk13OWk2QU9EU1BYYTFqZ2dsdWgvaytZejJNWk5nVDhlOWJk?=
- =?utf-8?Q?YPYVkWRh2bjMK9MjAsd3JaD1G?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4ada3eea-4802-4637-8130-08db2a1e0771
-X-MS-Exchange-CrossTenant-AuthSource: SN6PR12MB4752.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 Mar 2023 15:07:46.6884
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: vgBKQFkveqaVfUdn92fuZNIIoJallELbCvVjzSfvpINKb8B385/XvZX4NFrHY68DIA0BJ902B/OxQPWq5TjyvA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR12MB8962
+References: <07621845-19a4-0568-be0e-f556ba40b813@amd.com> <ZBmJpxTnEVVpfsz2@heinlein.taila677.ts.net>
+ <255d7c9a-ce17-bbe1-7312-990d0221cf36@amd.com>
+In-Reply-To: <255d7c9a-ce17-bbe1-7312-990d0221cf36@amd.com>
+From: dhruvaraj S <dhruvaraj@gmail.com>
+Date: Tue, 21 Mar 2023 21:56:30 +0530
+Message-ID: <CAK7WosjjdVwNqSwkY2mxYhgAeKdwigtyLryTfJ9r6ShjfbRuCA@mail.gmail.com>
+Subject: Re: [RFC] BMC RAS Feature
+To: Supreeth Venkatesh <supreeth.venkatesh@amd.com>
+Content-Type: multipart/alternative; boundary="0000000000004076e205f76b82c8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -130,95 +74,301 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, bradleyb@fuzziesquirrel.com, Abinaya.Dhandapani@amd.com, Michael Shen <gpgpgp@google.com>, ed@tanous.net
+Cc: Michael Shen <gpgpgp@google.com>, openbmc@lists.ozlabs.org, ed@tanous.net, bradleyb@fuzziesquirrel.com, Abinaya.Dhandapani@amd.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+--0000000000004076e205f76b82c8
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 3/21/23 05:40, Patrick Williams wrote:
-> On Tue, Mar 21, 2023 at 12:14:45AM -0500, Supreeth Venkatesh wrote:
+On Tue, 21 Mar 2023 at 20:38, Supreeth Venkatesh <supreeth.venkatesh@amd.co=
+m>
+wrote:
+
 >
->> #### Alternatives Considered
->>
->> In-band mechanisms using System Management Mode (SMM) exists.
->>
->> However, out of band method to gather RAS data is processor specific.
->>
-> How does this compare with existing implementations in
-> phosphor-debug-collector.
-Thanks for your feedback. See below.
-> I believe there was some attempt to extend
-> P-D-C previously to handle Intel's crashdump behavior.
-Intel's crashdump interface uses com.intel.crashdump.
-We have implemented com.amd.crashdump based on that reference. However, 
-can this be made generic?
-
-PoC below:
-
-busctl tree com.amd.crashdump
-
-└─/com
-   └─/com/amd
-     └─/com/amd/crashdump
-       ├─/com/amd/crashdump/0
-       ├─/com/amd/crashdump/1
-       ├─/com/amd/crashdump/2
-       ├─/com/amd/crashdump/3
-       ├─/com/amd/crashdump/4
-       ├─/com/amd/crashdump/5
-       ├─/com/amd/crashdump/6
-       ├─/com/amd/crashdump/7
-       ├─/com/amd/crashdump/8
-       └─/com/amd/crashdump/9
-
-> The repository
-> currently handles IBM's processors, I think, or maybe that is covered by
-> openpower-debug-collector.
+> On 3/21/23 05:40, Patrick Williams wrote:
+> > On Tue, Mar 21, 2023 at 12:14:45AM -0500, Supreeth Venkatesh wrote:
+> >
+> >> #### Alternatives Considered
+> >>
+> >> In-band mechanisms using System Management Mode (SMM) exists.
+> >>
+> >> However, out of band method to gather RAS data is processor specific.
+> >>
+> > How does this compare with existing implementations in
+> > phosphor-debug-collector.
+> Thanks for your feedback. See below.
+> > I believe there was some attempt to extend
+> > P-D-C previously to handle Intel's crashdump behavior.
+> Intel's crashdump interface uses com.intel.crashdump.
+> We have implemented com.amd.crashdump based on that reference. However,
+> can this be made generic?
 >
-> In any case, I think you should look at the existing D-Bus interfaces
-> (and associated Redfish implementation) of these repositories and
-> determine if you can use those approaches (or document why now).
-I could not find an existing D-Bus interface for RAS in 
-xyz/openbmc_project/.
-It would be helpful if you could point me to it.
-There are references to com.intel.crashdump in bmcweb code, but the 
-interface itself does not exist in yaml/com/intel/
-we can add com.amd.crashdump as a start or even come up with a new 
-generic Dbus interface.
-As far as Redfish implementation is concerned, we are following the 
-specification.
-redfish/v1/Systems/system/LogServices/Crashdump schema is being used.
-
-{
-
-"@odata.id": "/redfish/v1/Systems/system/LogServices/Crashdump/Entries",
-"@odata.type": "#LogEntryCollection.LogEntryCollection",
-"Description": "Collection of Crashdump Entries",
-"Members":
-  [
-{"@odata.id": "/redfish/v1/Systems/system/LogServices/Crashdump/Entries/0",
-"@odata.type": "#LogEntry.v1_7_0.LogEntry",
-"AdditionalDataURI": 
-"/redfish/v1/Systems/system/LogServices/Crashdump/Entries/0/ras-error0.cper",
-"Created": "1970-1-1T0:4:12Z",
-"DiagnosticDataType": "OEM",
-"EntryType": "Oem",
-"Id": "0",
-"Name": "CPU Crashdump",
-"OEMDiagnosticDataType": "APMLCrashdump"
-},
-{"@odata.id": "/redfish/v1/Systems/system/LogServices/Crashdump/Entries/1",
-"@odata.type": "#LogEntry.v1_7_0.LogEntry",
-"AdditionalDataURI": 
-"/redfish/v1/Systems/system/LogServices/Crashdump/Entries/1/ras-error1.cper",
-"Created": "1970-1-1T0:4:12Z",
-"DiagnosticDataType": "OEM",
-"EntryType": "Oem",
-"Id": "1",
-"Name": "CPU Crashdump",
-"OEMDiagnosticDataType": "APMLCrashdump"
-},
-],
-"Members@odata.count": 2,
-"Name": "Open BMC Crashdump Entries"}
+> PoC below:
 >
+> busctl tree com.amd.crashdump
+>
+> =E2=94=94=E2=94=80/com
+>    =E2=94=94=E2=94=80/com/amd
+>      =E2=94=94=E2=94=80/com/amd/crashdump
+>        =E2=94=9C=E2=94=80/com/amd/crashdump/0
+>        =E2=94=9C=E2=94=80/com/amd/crashdump/1
+>        =E2=94=9C=E2=94=80/com/amd/crashdump/2
+>        =E2=94=9C=E2=94=80/com/amd/crashdump/3
+>        =E2=94=9C=E2=94=80/com/amd/crashdump/4
+>        =E2=94=9C=E2=94=80/com/amd/crashdump/5
+>        =E2=94=9C=E2=94=80/com/amd/crashdump/6
+>        =E2=94=9C=E2=94=80/com/amd/crashdump/7
+>        =E2=94=9C=E2=94=80/com/amd/crashdump/8
+>        =E2=94=94=E2=94=80/com/amd/crashdump/9
+>
+> > The repository
+> > currently handles IBM's processors, I think, or maybe that is covered b=
+y
+> > openpower-debug-collector.
+> >
+> > In any case, I think you should look at the existing D-Bus interfaces
+> > (and associated Redfish implementation) of these repositories and
+> > determine if you can use those approaches (or document why now).
+> I could not find an existing D-Bus interface for RAS in
+> xyz/openbmc_project/.
+> It would be helpful if you could point me to it.
+>
+
+There is an interface for the dumps generated from the host, which can be
+used for these kinds of dumps
+https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/op=
+enbmc_project/Dump/Entry/System.interface.yaml
+
+The fault log also provides similar dumps
+https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/op=
+enbmc_project/Dump/Entry/FaultLog.interface.yaml
+
+
+The tree for the dump manager looks like this
+`-/xyz
+  `-/xyz/openbmc_project
+    `-/xyz/openbmc_project/dump
+      |-/xyz/openbmc_project/dump/bmc
+      | `-/xyz/openbmc_project/dump/bmc/entry
+      |   |-/xyz/openbmc_project/dump/bmc/entry/1
+      |   |-/xyz/openbmc_project/dump/bmc/entry/2
+      |   |-/xyz/openbmc_project/dump/bmc/entry/3
+      |   `-/xyz/openbmc_project/dump/bmc/entry/4
+      |-/xyz/openbmc_project/dump/faultlog
+      |-/xyz/openbmc_project/dump/hardware
+      |-/xyz/openbmc_project/dump/hostboot
+      |-/xyz/openbmc_project/dump/internal
+      | `-/xyz/openbmc_project/dump/internal/manager
+      |-/xyz/openbmc_project/dump/resource
+      |-/xyz/openbmc_project/dump/sbe
+      `-/xyz/openbmc_project/dump/system
+
+There are references to com.intel.crashdump in bmcweb code, but the
+> interface itself does not exist in yaml/com/intel/
+> we can add com.amd.crashdump as a start or even come up with a new
+> generic Dbus interface.
+> As far as Redfish implementation is concerned, we are following the
+> specification.
+> redfish/v1/Systems/system/LogServices/Crashdump schema is being used.
+>
+> {
+>
+> "@odata.id": "/redfish/v1/Systems/system/LogServices/Crashdump/Entries",
+> "@odata.type": "#LogEntryCollection.LogEntryCollection",
+> "Description": "Collection of Crashdump Entries",
+> "Members":
+>   [
+> {"@odata.id":
+> "/redfish/v1/Systems/system/LogServices/Crashdump/Entries/0",
+> "@odata.type": "#LogEntry.v1_7_0.LogEntry",
+> "AdditionalDataURI":
+>
+> "/redfish/v1/Systems/system/LogServices/Crashdump/Entries/0/ras-error0.cp=
+er",
+> "Created": "1970-1-1T0:4:12Z",
+> "DiagnosticDataType": "OEM",
+> "EntryType": "Oem",
+> "Id": "0",
+> "Name": "CPU Crashdump",
+> "OEMDiagnosticDataType": "APMLCrashdump"
+> },
+> {"@odata.id":
+> "/redfish/v1/Systems/system/LogServices/Crashdump/Entries/1",
+> "@odata.type": "#LogEntry.v1_7_0.LogEntry",
+> "AdditionalDataURI":
+>
+> "/redfish/v1/Systems/system/LogServices/Crashdump/Entries/1/ras-error1.cp=
+er",
+> "Created": "1970-1-1T0:4:12Z",
+> "DiagnosticDataType": "OEM",
+> "EntryType": "Oem",
+> "Id": "1",
+> "Name": "CPU Crashdump",
+> "OEMDiagnosticDataType": "APMLCrashdump"
+> },
+> ],
+> "Members@odata.count": 2,
+> "Name": "Open BMC Crashdump Entries"}
+> >
+>
+
+
+--=20
+--------------
+Dhruvaraj S
+
+--0000000000004076e205f76b82c8
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote">=
+<div dir=3D"ltr" class=3D"gmail_attr">On Tue, 21 Mar 2023 at 20:38, Supreet=
+h Venkatesh &lt;<a href=3D"mailto:supreeth.venkatesh@amd.com">supreeth.venk=
+atesh@amd.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" sty=
+le=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddi=
+ng-left:1ex"><br>
+On 3/21/23 05:40, Patrick Williams wrote:<br>
+&gt; On Tue, Mar 21, 2023 at 12:14:45AM -0500, Supreeth Venkatesh wrote:<br=
+>
+&gt;<br>
+&gt;&gt; #### Alternatives Considered<br>
+&gt;&gt;<br>
+&gt;&gt; In-band mechanisms using System Management Mode (SMM) exists.<br>
+&gt;&gt;<br>
+&gt;&gt; However, out of band method to gather RAS data is processor specif=
+ic.<br>
+&gt;&gt;<br>
+&gt; How does this compare with existing implementations in<br>
+&gt; phosphor-debug-collector.<br>
+Thanks for your feedback. See below.<br>
+&gt; I believe there was some attempt to extend<br>
+&gt; P-D-C previously to handle Intel&#39;s crashdump behavior.<br>
+Intel&#39;s crashdump interface uses com.intel.crashdump.<br>
+We have implemented com.amd.crashdump based on that reference. However, <br=
+>
+can this be made generic?<br>
+<br>
+PoC below:<br>
+<br>
+busctl tree com.amd.crashdump<br>
+<br>
+=E2=94=94=E2=94=80/com<br>
+=C2=A0=C2=A0 =E2=94=94=E2=94=80/com/amd<br>
+=C2=A0=C2=A0=C2=A0=C2=A0 =E2=94=94=E2=94=80/com/amd/crashdump<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =E2=94=9C=E2=94=80/com/amd/crashdump/0=
+<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =E2=94=9C=E2=94=80/com/amd/crashdump/1=
+<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =E2=94=9C=E2=94=80/com/amd/crashdump/2=
+<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =E2=94=9C=E2=94=80/com/amd/crashdump/3=
+<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =E2=94=9C=E2=94=80/com/amd/crashdump/4=
+<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =E2=94=9C=E2=94=80/com/amd/crashdump/5=
+<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =E2=94=9C=E2=94=80/com/amd/crashdump/6=
+<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =E2=94=9C=E2=94=80/com/amd/crashdump/7=
+<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =E2=94=9C=E2=94=80/com/amd/crashdump/8=
+<br>
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =E2=94=94=E2=94=80/com/amd/crashdump/9=
+<br>
+<br>
+&gt; The repository<br>
+&gt; currently handles IBM&#39;s processors, I think, or maybe that is cove=
+red by<br>
+&gt; openpower-debug-collector.<br>
+&gt;<br>
+&gt; In any case, I think you should look at the existing D-Bus interfaces<=
+br>
+&gt; (and associated Redfish implementation) of these repositories and<br>
+&gt; determine if you can use those approaches (or document why now).<br>
+I could not find an existing D-Bus interface for RAS in <br>
+xyz/openbmc_project/.<br>
+It would be helpful if you could point me to it.<br></blockquote><div><br><=
+/div><div>There is an interface for the dumps generated from the host, whic=
+h can be used for these kinds of dumps</div><div><a href=3D"https://github.=
+com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/openbmc_project/D=
+ump/Entry/System.interface.yaml">https://github.com/openbmc/phosphor-dbus-i=
+nterfaces/blob/master/yaml/xyz/openbmc_project/Dump/Entry/System.interface.=
+yaml</a><br></div><div><br></div><div>The fault log also provides similar d=
+umps</div><div><a href=3D"https://github.com/openbmc/phosphor-dbus-interfac=
+es/blob/master/yaml/xyz/openbmc_project/Dump/Entry/FaultLog.interface.yaml"=
+>https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/o=
+penbmc_project/Dump/Entry/FaultLog.interface.yaml</a><br></div><div><br></d=
+iv><div><br></div><div>The tree for the dump manager looks like this</div>`=
+-/xyz<br>=C2=A0 `-/xyz/openbmc_project<br>=C2=A0 =C2=A0 `-/xyz/openbmc_proj=
+ect/dump<br>=C2=A0 =C2=A0 =C2=A0 |-/xyz/openbmc_project/dump/bmc<br>=C2=A0 =
+=C2=A0 =C2=A0 | `-/xyz/openbmc_project/dump/bmc/entry<br>=C2=A0 =C2=A0 =C2=
+=A0 | =C2=A0 |-/xyz/openbmc_project/dump/bmc/entry/1<br>=C2=A0 =C2=A0 =C2=
+=A0 | =C2=A0 |-/xyz/openbmc_project/dump/bmc/entry/2<br>=C2=A0 =C2=A0 =C2=
+=A0 | =C2=A0 |-/xyz/openbmc_project/dump/bmc/entry/3<br>=C2=A0 =C2=A0 =C2=
+=A0 | =C2=A0 `-/xyz/openbmc_project/dump/bmc/entry/4<br>=C2=A0 =C2=A0 =C2=
+=A0 |-/xyz/openbmc_project/dump/faultlog<br>=C2=A0 =C2=A0 =C2=A0 |-/xyz/ope=
+nbmc_project/dump/hardware<br>=C2=A0 =C2=A0 =C2=A0 |-/xyz/openbmc_project/d=
+ump/hostboot<br>=C2=A0 =C2=A0 =C2=A0 |-/xyz/openbmc_project/dump/internal<b=
+r>=C2=A0 =C2=A0 =C2=A0 | `-/xyz/openbmc_project/dump/internal/manager<br>=
+=C2=A0 =C2=A0 =C2=A0 |-/xyz/openbmc_project/dump/resource<br>=C2=A0 =C2=A0 =
+=C2=A0 |-/xyz/openbmc_project/dump/sbe<br><div>=C2=A0 =C2=A0 =C2=A0 `-/xyz/=
+openbmc_project/dump/system=C2=A0</div><div><br></div><blockquote class=3D"=
+gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
+4,204,204);padding-left:1ex">
+There are references to com.intel.crashdump in bmcweb code, but the <br>
+interface itself does not exist in yaml/com/intel/<br>
+we can add com.amd.crashdump as a start or even come up with a new <br>
+generic Dbus interface.<br>
+As far as Redfish implementation is concerned, we are following the <br>
+specification.<br>
+redfish/v1/Systems/system/LogServices/Crashdump schema is being used.<br>
+<br>
+{<br>
+<br>
+&quot;@<a href=3D"http://odata.id" rel=3D"noreferrer" target=3D"_blank">oda=
+ta.id</a>&quot;: &quot;/redfish/v1/Systems/system/LogServices/Crashdump/Ent=
+ries&quot;,<br>
+&quot;@odata.type&quot;: &quot;#LogEntryCollection.LogEntryCollection&quot;=
+,<br>
+&quot;Description&quot;: &quot;Collection of Crashdump Entries&quot;,<br>
+&quot;Members&quot;:<br>
+=C2=A0=C2=A0[<br>
+{&quot;@<a href=3D"http://odata.id" rel=3D"noreferrer" target=3D"_blank">od=
+ata.id</a>&quot;: &quot;/redfish/v1/Systems/system/LogServices/Crashdump/En=
+tries/0&quot;,<br>
+&quot;@odata.type&quot;: &quot;#LogEntry.v1_7_0.LogEntry&quot;,<br>
+&quot;AdditionalDataURI&quot;: <br>
+&quot;/redfish/v1/Systems/system/LogServices/Crashdump/Entries/0/ras-error0=
+.cper&quot;,<br>
+&quot;Created&quot;: &quot;1970-1-1T0:4:12Z&quot;,<br>
+&quot;DiagnosticDataType&quot;: &quot;OEM&quot;,<br>
+&quot;EntryType&quot;: &quot;Oem&quot;,<br>
+&quot;Id&quot;: &quot;0&quot;,<br>
+&quot;Name&quot;: &quot;CPU Crashdump&quot;,<br>
+&quot;OEMDiagnosticDataType&quot;: &quot;APMLCrashdump&quot;<br>
+},<br>
+{&quot;@<a href=3D"http://odata.id" rel=3D"noreferrer" target=3D"_blank">od=
+ata.id</a>&quot;: &quot;/redfish/v1/Systems/system/LogServices/Crashdump/En=
+tries/1&quot;,<br>
+&quot;@odata.type&quot;: &quot;#LogEntry.v1_7_0.LogEntry&quot;,<br>
+&quot;AdditionalDataURI&quot;: <br>
+&quot;/redfish/v1/Systems/system/LogServices/Crashdump/Entries/1/ras-error1=
+.cper&quot;,<br>
+&quot;Created&quot;: &quot;1970-1-1T0:4:12Z&quot;,<br>
+&quot;DiagnosticDataType&quot;: &quot;OEM&quot;,<br>
+&quot;EntryType&quot;: &quot;Oem&quot;,<br>
+&quot;Id&quot;: &quot;1&quot;,<br>
+&quot;Name&quot;: &quot;CPU Crashdump&quot;,<br>
+&quot;OEMDiagnosticDataType&quot;: &quot;APMLCrashdump&quot;<br>
+},<br>
+],<br>
+&quot;Members@odata.count&quot;: 2,<br>
+&quot;Name&quot;: &quot;Open BMC Crashdump Entries&quot;}<br>
+&gt;<br>
+</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
+gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">--=
+------------<br>Dhruvaraj S</div></div>
+
+--0000000000004076e205f76b82c8--
