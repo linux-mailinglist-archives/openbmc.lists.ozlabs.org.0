@@ -2,71 +2,56 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14A016C3B02
-	for <lists+openbmc@lfdr.de>; Tue, 21 Mar 2023 20:51:51 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 188A56C3CC2
+	for <lists+openbmc@lfdr.de>; Tue, 21 Mar 2023 22:33:12 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Ph2LD2RW7z3cMh
-	for <lists+openbmc@lfdr.de>; Wed, 22 Mar 2023 06:51:48 +1100 (AEDT)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=gm1 header.b=Gqqu81Vc;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Ph4b96gFBz3chw
+	for <lists+openbmc@lfdr.de>; Wed, 22 Mar 2023 08:33:09 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bootlin.com (client-ip=2001:4b98:dc4:8::240; helo=mslow1.mail.gandi.net; envelope-from=alexandre.belloni@bootlin.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=gm1 header.b=Gqqu81Vc;
-	dkim-atps=neutral
-X-Greylist: delayed 700 seconds by postgrey-1.36 at boromir; Wed, 22 Mar 2023 06:51:16 AEDT
-Received: from mslow1.mail.gandi.net (mslow1.mail.gandi.net [IPv6:2001:4b98:dc4:8::240])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.160.52; helo=mail-oa1-f52.google.com; envelope-from=robherring2@gmail.com; receiver=<UNKNOWN>)
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Ph2Kc524yz3bfk
-	for <openbmc@lists.ozlabs.org>; Wed, 22 Mar 2023 06:51:16 +1100 (AEDT)
-Received: from relay7-d.mail.gandi.net (unknown [217.70.183.200])
-	by mslow1.mail.gandi.net (Postfix) with ESMTP id 9663CC9713
-	for <openbmc@lists.ozlabs.org>; Tue, 21 Mar 2023 19:39:37 +0000 (UTC)
-Received: (Authenticated sender: alexandre.belloni@bootlin.com)
-	by mail.gandi.net (Postfix) with ESMTPSA id 600B420002;
-	Tue, 21 Mar 2023 19:39:16 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1679427559;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=yBHkU6tb5xg5smOIlShgBtygMh+FM3sL86bax3a5bDo=;
-	b=Gqqu81VcF0q1VsN48gRKkyeZZ3R6+UANTWm2J0WaavxgBCkF8PFF1FerT5b2POxH1Hq7s9
-	1Qv0wA5bBLGiB1yBLatCXEeo/olRqMhkC5dE4arA3WU73R7BIuzPPg4vfFc1u/sVLYaKUn
-	m2OghwcQmLKpja/d6gy4765C02hTkInW1+wBxz83j1dyTKQe4ZMhwBitXC40IKLdqmfHTU
-	BAMM0YHBvatH/VDQ67MXVxu7s73gDTtd4aJxEGXc5aVBqOchr9VzbdyawWSJcaBYaQZlD0
-	VbHpWvQhmbAASjUzsLZ8sIYPYNcy9pB0mKubjbE0R6u2nurh6F5U/M0+ADg2EA==
-Date: Tue, 21 Mar 2023 20:39:15 +0100
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
-To: Alessandro Zummo <a.zummo@towertech.it>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	Chen-Yu Tsai <wens@csie.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Nicolas Ferre <nicolas.ferre@microchip.com>,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>,
-	Hans Ulli Kroll <ulli.kroll@googlemail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Avi Fishman <avifishman70@gmail.com>,
-	Tomer Maimon <tmaimon77@gmail.com>,
-	Tali Perry <tali.perry1@gmail.com>,
-	Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>,
-	Benjamin Fair <benjaminfair@google.com>,
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
-	Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH] dt-bindings: rtc: Drop unneeded quotes
-Message-ID: <167942752119.675121.3470511868063129229.b4-ty@bootlin.com>
-References: <20230317233634.3968656-1-robh@kernel.org>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Ph4Zk097Cz2yNm;
+	Wed, 22 Mar 2023 08:32:44 +1100 (AEDT)
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-177ca271cb8so17654900fac.2;
+        Tue, 21 Mar 2023 14:32:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1679434361;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=a/SrNI7Im7OQzPMwgFxuqdWvT+8hAcxHPUJhevfOoDk=;
+        b=w6DpIuSAjWZzEqmi1Nmnow0kLnRcOqJcP7uxzouNXrBxP84GaFBFRunvypyg5sHE80
+         k8WpidjXdgLTm3hI8bG80yYaE1bdgb7nFmn6Y3IsOLQDdlIhVa/KPnUYE532Xz2FGa9i
+         XcGWyci3phTFOWq99vnTV94DjKZ0H49Tq7FCUZb2D9oCQnwgNEPZ9oyXePeTnjzBeNfP
+         H4EgA4yXoMvhn3M6CYVo1q0scTBTRvamjCPFPc5SxS73u2G2QBvTFwXCsSyopfhraaxJ
+         v1uP3Fe9Sg5Yx1ziLqq99S2lJ0iD2PB50aE6SdLh+m/3kdTCYJiOjrKssRNgKKsM13nI
+         Z2Hw==
+X-Gm-Message-State: AO0yUKXP8yYVTnjoyehxR/L3OZbCjoYkcyM0jyYmCNa0zRIgbpqJV1Bf
+	QRpa2oDsB0FFt7yyBcrzJw==
+X-Google-Smtp-Source: AK7set+sV/jKtfFsliyuVdroKJyTtvegHA63GNPGyroahiRTLam+vd+reVQMt4XQK0cSjZ/4FRQ6ow==
+X-Received: by 2002:a05:6870:8888:b0:172:4748:32d9 with SMTP id m8-20020a056870888800b00172474832d9mr300895oam.3.1679434361552;
+        Tue, 21 Mar 2023 14:32:41 -0700 (PDT)
+Received: from robh_at_kernel.org (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id tk6-20020a05687189c600b0017703cd8ff6sm4604096oab.7.2023.03.21.14.32.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Mar 2023 14:32:41 -0700 (PDT)
+Received: (nullmailer pid 1648942 invoked by uid 1000);
+	Tue, 21 Mar 2023 21:32:40 -0000
+Date: Tue, 21 Mar 2023 16:32:40 -0500
+From: Rob Herring <robh@kernel.org>
+To: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
+Subject: Re: [PATCH v3 2/5] dt-bindings: dmaengine: Add AST2600 UDMA bindings
+Message-ID: <167943435989.1648881.16454367602496486662.robh@kernel.org>
+References: <20230320081133.23655-1-chiawei_wang@aspeedtech.com>
+ <20230320081133.23655-3-chiawei_wang@aspeedtech.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230317233634.3968656-1-robh@kernel.org>
+In-Reply-To: <20230320081133.23655-3-chiawei_wang@aspeedtech.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,25 +63,20 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-rtc@vger.kernel.org, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, linux-sunxi@lists.linux.dev, linux-arm-kernel@lists.infradead.org
+Cc: pmenzel@molgen.mpg.de, hdanton@sina.com, krzysztof.kozlowski+dt@linaro.org, linux-aspeed@lists.ozlabs.org, devicetree@vger.kernel.org, andrew@aj.id.au, gregkh@linuxfoundation.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, vkoul@kernel.org, robh+dt@kernel.org, joel@jms.id.au, linux-serial@vger.kernel.org, dmaengine@vger.kernel.org, ilpo.jarvinen@linux.intel.com, jirislaby@kernel.org, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
-On Fri, 17 Mar 2023 18:36:33 -0500, Rob Herring wrote:
-> Cleanup bindings dropping unneeded quotes. Once all these are fixed,
-> checking for this can be enabled in yamllint.
+On Mon, 20 Mar 2023 16:11:30 +0800, Chia-Wei Wang wrote:
+> Add the dmaengine bindings for the UART DMA engine of Aspeed AST2600 SoC.
 > 
+> Signed-off-by: Chia-Wei Wang <chiawei_wang@aspeedtech.com>
+> ---
+>  .../bindings/dma/aspeed,ast2600-udma.yaml     | 56 +++++++++++++++++++
+>  1 file changed, 56 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/dma/aspeed,ast2600-udma.yaml
 > 
 
-Applied, thanks!
+Reviewed-by: Rob Herring <robh@kernel.org>
 
-[1/1] dt-bindings: rtc: Drop unneeded quotes
-      commit: ab0fccc373d505c9a09bf459557768ab3177e0d2
-
-Best regards,
-
--- 
-Alexandre Belloni, co-owner and COO, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
