@@ -1,75 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D28EC6C345E
-	for <lists+openbmc@lfdr.de>; Tue, 21 Mar 2023 15:36:13 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED95B6C348E
+	for <lists+openbmc@lfdr.de>; Tue, 21 Mar 2023 15:43:03 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PgvL35PYwz3ch6
-	for <lists+openbmc@lfdr.de>; Wed, 22 Mar 2023 01:36:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PgvTx4q1jz3ccg
+	for <lists+openbmc@lfdr.de>; Wed, 22 Mar 2023 01:43:01 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=YmaItWKw;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=P14fjCC8;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d2a; helo=mail-io1-xd2a.google.com; envelope-from=groeck7@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d30; helo=mail-io1-xd30.google.com; envelope-from=groeck7@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=YmaItWKw;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=P14fjCC8;
 	dkim-atps=neutral
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+Received: from mail-io1-xd30.google.com (mail-io1-xd30.google.com [IPv6:2607:f8b0:4864:20::d30])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PgvKS0Zl2z2xjw
-	for <openbmc@lists.ozlabs.org>; Wed, 22 Mar 2023 01:35:39 +1100 (AEDT)
-Received: by mail-io1-xd2a.google.com with SMTP id p17so5254305ioj.10
-        for <openbmc@lists.ozlabs.org>; Tue, 21 Mar 2023 07:35:39 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PgvTN4Xqbz3cD2
+	for <openbmc@lists.ozlabs.org>; Wed, 22 Mar 2023 01:42:30 +1100 (AEDT)
+Received: by mail-io1-xd30.google.com with SMTP id y85so981286iof.13
+        for <openbmc@lists.ozlabs.org>; Tue, 21 Mar 2023 07:42:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1679409335;
+        d=gmail.com; s=20210112; t=1679409746;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=NLIEUjpPIkk5ZzeFs91fzheQ2P/C6YZLsjoyxu0zBSY=;
-        b=YmaItWKwyThfHmmzmWbFEwaB6lWSDyG9F3mZkDIntHl7tNMjJp5VZQLtBR11IIoi8U
-         3U/Nl2zoVHdXFK9Me1m4Co/z/LBl8yzcGVdbZ9ZIQw4LQVDnVVTc7vVJlkqUkcUouXMw
-         Vy8uednSlQJjcLxBhylmkzq+jEiyvY57lOz0mqK7O3jwzJTInmLFaMhnzC/AgaQfiX9R
-         RvXDM/PsFZ+KrVqmjpZggst5V6OzRyRfYr+D0mZXIxy6Y3aJRFzSuFNPWxANq1359InO
-         TeB7PkaKFBknkgFtvJoN4RLTqlcwPu1TqgW+CWQ9S+exXicIwPSBkcFEO2iT5m7ggwnF
-         K85Q==
+        bh=/mPHZAJ/4f0K+ZrgW1eaRgvJAnV5woW5J9CiZAelkEY=;
+        b=P14fjCC8K0ZFXG1N71qzuKysqhqk2D1T4ohhzGYNupPn5JlcVbouPXVpZVHGW9LmoK
+         QY51Dyk7sDTbnnULZT4+m4OeZJkjVHy4nBpZb0sESfSNN+s77TP2bJrfM6011w+7KHzh
+         EJBBWpIm6iMx5LsBMRhVxh33ermcGREAJuLTxPm4aOxxXzAABqJFOD0A518OXgaGZdpG
+         +3DCBtb7CCWvH2gkamobNaYXqJzm+8S1Grm4PyxjUyZApyAd0IqxJ8rIZbFERkpOWwnY
+         9IRk25V2+uyhB3AFmObiZcKF5ozcuXJnbFsyBbQMvP2laBeaq4UC0mT8DXXV0h3WlyG0
+         pbLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679409335;
+        d=1e100.net; s=20210112; t=1679409746;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=NLIEUjpPIkk5ZzeFs91fzheQ2P/C6YZLsjoyxu0zBSY=;
-        b=B+IB+oRgqhrxqZJ8sahEnOBLyUaMZIT+1SFYl5JZgYunz2Fc1J6JEEG9Zp2HEKrBH6
-         wJUv64UvYjUzyYegcpE867YP4EiuKraCi88nKL3WR5cPAvE9O32/3+bj5EZz8xar4ydr
-         VHCtu3ZCoW+1ALakEVZVVx4tslReHwCO8fCWz8I0rZCAUzvHxAtbNaVKPT+qjDYz4/Yp
-         wJ2EhcaJoOj9CqpNTVsXV3hysMqMhfWfH3cjQIHWpoV+08/NqESNDCcIHbj9es2FAe4L
-         Vnjg3H9dbUK5oswqKiH+Ez71/OdUhddp6NrIB1i3bOKlyCah8IOIiUeuVxwq6Hdr6gR2
-         P/fg==
-X-Gm-Message-State: AO0yUKX6byGrlB2rsdJ+71B/EjeOVwqalMiRRY+J+sTpLK0CSzifNa2Q
-	qGfEiO6rZXBJ1SfKEDzizmA=
-X-Google-Smtp-Source: AK7set80j+wwwROdSByOE4y0Ml39evb+VWSLcs/srYh+mgkN0R2RD0cTX9+qLbvZ7EwqN3uGWL9t4A==
-X-Received: by 2002:a5e:8e09:0:b0:758:6d1e:2978 with SMTP id a9-20020a5e8e09000000b007586d1e2978mr841923ion.10.1679409335658;
-        Tue, 21 Mar 2023 07:35:35 -0700 (PDT)
+        bh=/mPHZAJ/4f0K+ZrgW1eaRgvJAnV5woW5J9CiZAelkEY=;
+        b=ZW/93YlzH2kR2K/ZLNLp/XPGkKCqOo0Afj8ZbSrEERzIIA0aCon3lCJ0T3FIGr41kJ
+         rwC13FDwPNdLdjJQhc7FKeOoWzYK2gGy39WZUeLTWYheYRq/j59L2Y1ZOuBL+Jdga40Y
+         JPjpNlyACWWhUg2Pzn+uuc6bGNNhvsETM5klhd+TY875DLbDVZHT/bP1AuVV4d3zIHGj
+         Cm0/7R862WQmnJFaxz/wGOjKJvqE4E85+D2cqiYunvX4Qhf1XsNMjt/gTDJ/LeIk3o3E
+         U8hOmogXg7bRy0n3ALJw+tTpk/vmlRtgzBUJ2QuV8HU2ryJvpIR3MAAXwPNJb4lda/xv
+         P3Ew==
+X-Gm-Message-State: AO0yUKXODxP7dCvFwY+O+H4ASi3OP+tUNb5Xs5IJ0P9roxmj6EZJ9PWW
+	Hhw6sqzdYPla6jmtbcN1FjY=
+X-Google-Smtp-Source: AK7set8NNKp5yKnKnglKuRwfSaTDCAz9jQ2kweLIW2szz/T8DYHrBJehsD3eLsAHBfa+gLUD5CqpWQ==
+X-Received: by 2002:a5d:8550:0:b0:74c:da4b:c4e4 with SMTP id b16-20020a5d8550000000b0074cda4bc4e4mr1807054ios.3.1679409746016;
+        Tue, 21 Mar 2023 07:42:26 -0700 (PDT)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id g8-20020a6b7608000000b0074c7db1470dsm3604347iom.20.2023.03.21.07.35.34
+        by smtp.gmail.com with ESMTPSA id p15-20020a056638216f00b00403089c2a1dsm4246541jak.108.2023.03.21.07.42.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Mar 2023 07:35:35 -0700 (PDT)
-Date: Tue, 21 Mar 2023 07:35:34 -0700
+        Tue, 21 Mar 2023 07:42:25 -0700 (PDT)
+Date: Tue, 21 Mar 2023 07:42:24 -0700
 From: Guenter Roeck <linux@roeck-us.net>
-To: "andriy.shevchenko@linux.intel.com" <andriy.shevchenko@linux.intel.com>
+To: Iwona Winiarska <iwona.winiarska@intel.com>
 Subject: Re: [PATCH] hwmon: (peci/cputemp) Fix miscalculated DTS for SKX
-Message-ID: <b23c180b-667e-4689-a7da-2f8b8902c8cc@roeck-us.net>
+Message-ID: <d30ea7f5-7b47-474f-8208-a87d0b2e1394@roeck-us.net>
 References: <20230321090410.866766-1-iwona.winiarska@intel.com>
- <f2fe16cf-3838-df89-958f-c39d1bae81a1@molgen.mpg.de>
- <df6ab72faf9f1484f7f850ad7386f76b60e5bf02.camel@intel.com>
- <ZBmsXYV6jkLiFmJz@smile.fi.intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZBmsXYV6jkLiFmJz@smile.fi.intel.com>
+In-Reply-To: <20230321090410.866766-1-iwona.winiarska@intel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -81,32 +78,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "linux-hwmon@vger.kernel.org" <linux-hwmon@vger.kernel.org>, "pmenzel@molgen.mpg.de" <pmenzel@molgen.mpg.de>, "jdelvare@suse.com" <jdelvare@suse.com>, "Winiarska, Iwona" <iwona.winiarska@intel.com>, "fercerpav@gmail.com" <fercerpav@gmail.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Cc: linux-hwmon@vger.kernel.org, Jean Delvare <jdelvare@suse.com>, Paul Fertser <fercerpav@gmail.com>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Mar 21, 2023 at 03:08:45PM +0200, andriy.shevchenko@linux.intel.com wrote:
-> On Tue, Mar 21, 2023 at 10:29:22AM +0000, Winiarska, Iwona wrote:
-> > On Tue, 2023-03-21 at 10:41 +0100, Paul Menzel wrote:
-> > > Am 21.03.23 um 10:04 schrieb Iwona Winiarska:
+On Tue, Mar 21, 2023 at 10:04:10AM +0100, Iwona Winiarska wrote:
+> For Skylake, DTS temperature of the CPU is reported in S10.6 format
+> instead of S8.8.
 > 
-> ...
-> 
-> > > This is not aligned. Why not only use one space before the equal sign?
-> > 
-> > Yeah - same alignment problem is present in cpu_hsx and cpu_icx though, so I
-> > just followed along for skx to not stand out visually.
-> > So while I agree that alignment is broken here, I think it might be better to
-> > separate out the potential cleanup from the fix.
-> 
-> I agree with Iwona. If community wants a cleanup, it can be created in
-> a separate patch. For the fixes it's better to reduce the unrelated churn.
-> 
+> Reported-by: Paul Fertser <fercerpav@gmail.com>
+> Link: https://lore.kernel.org/lkml/ZBhHS7v+98NK56is@home.paul.comp/
+> Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
 
-I don't want a cleanup. The original author chose the alignment,
-I accepted it because I give submitters some slack when it comes to
-formatting as long as checkpatch doesn't complain, and I do not want
-to get into lets-change-alignment wars.
+Applied.
 
 Thanks,
 Guenter
+
+> ---
+>  drivers/hwmon/peci/cputemp.c | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/hwmon/peci/cputemp.c b/drivers/hwmon/peci/cputemp.c
+> index 30850a479f61..87d56f0fc888 100644
+> --- a/drivers/hwmon/peci/cputemp.c
+> +++ b/drivers/hwmon/peci/cputemp.c
+> @@ -537,6 +537,12 @@ static const struct cpu_info cpu_hsx = {
+>  	.thermal_margin_to_millidegree = &dts_eight_dot_eight_to_millidegree,
+>  };
+>  
+> +static const struct cpu_info cpu_skx = {
+> +	.reg		= &resolved_cores_reg_hsx,
+> +	.min_peci_revision = 0x33,
+> +	.thermal_margin_to_millidegree = &dts_ten_dot_six_to_millidegree,
+> +};
+> +
+>  static const struct cpu_info cpu_icx = {
+>  	.reg		= &resolved_cores_reg_icx,
+>  	.min_peci_revision = 0x40,
+> @@ -558,7 +564,7 @@ static const struct auxiliary_device_id peci_cputemp_ids[] = {
+>  	},
+>  	{
+>  		.name = "peci_cpu.cputemp.skx",
+> -		.driver_data = (kernel_ulong_t)&cpu_hsx,
+> +		.driver_data = (kernel_ulong_t)&cpu_skx,
+>  	},
+>  	{
+>  		.name = "peci_cpu.cputemp.icx",
