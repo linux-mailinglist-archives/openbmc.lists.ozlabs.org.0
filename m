@@ -2,67 +2,96 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 423756C6814
-	for <lists+openbmc@lfdr.de>; Thu, 23 Mar 2023 13:21:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0C3B16C876E
+	for <lists+openbmc@lfdr.de>; Fri, 24 Mar 2023 22:25:03 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Pj4FK0SS9z3f3x
-	for <lists+openbmc@lfdr.de>; Thu, 23 Mar 2023 23:21:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PjwGM69w9z3fS3
+	for <lists+openbmc@lfdr.de>; Sat, 25 Mar 2023 08:24:59 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=mD4LZLSV;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=e/F69InY;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=BOjl8uYF;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::1130; helo=mail-yw1-x1130.google.com; envelope-from=ulf.hansson@linaro.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.26; helo=out2-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=mD4LZLSV;
+	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=e/F69InY;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=BOjl8uYF;
 	dkim-atps=neutral
-Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
+Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Pj4Dj6nBVz3cdL
-	for <openbmc@lists.ozlabs.org>; Thu, 23 Mar 2023 23:20:37 +1100 (AEDT)
-Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-5445009c26bso391418047b3.8
-        for <openbmc@lists.ozlabs.org>; Thu, 23 Mar 2023 05:20:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1679574033;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=dsiewv1O2k8V1HgYXshp7MCoXkAGG/2ljcLy5V0fCAY=;
-        b=mD4LZLSVxLGUwCVQRPyUG/E+HpMJnL0y2QOvXPP7296TXuYBgqjoZFwnQxvfwLeBCt
-         nipNWIH5s9pTqZSUc2HrXRr+5vgSriF5mP8Pgjyz7Z9AnPsTQx0t5HrW5GcmlVUk0nxu
-         UPsLyOw5yk2zI1vJKb7KZ27uR7303Zd2XCF31W5zt7XpQE0R4vcMCVf6dGgSsplSOyxO
-         uzPO0CWwqZ+2+o89pRajm3cJ+i348IPgSezo9uHcJaPw4o8n22tcqOk7g+pbWPIxqPOn
-         WSgL7zwTIh8MS77uAU2BSh6YAH80f4aFhD6shByuuW0AVqE++cGc6qvwxhDl/OO/Ixoy
-         v6RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1679574033;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=dsiewv1O2k8V1HgYXshp7MCoXkAGG/2ljcLy5V0fCAY=;
-        b=1aoIIEwVCOCzwIeZ4lS0d5KNAN9BMp7kFeMAO4EhzQjbCSEwE5V0IT/iV6bvJK3i7F
-         y+nCTFwwht3IjK9cduwlG2R7Zcv11edGYpVqMx1LEKti5sjb5n3eJTu+FecTT1uyonqJ
-         QaBOIyeqk6UMaekzokY8N2pn95Cdn3jhsMD7ARR2I1OcUIpdrPJxhSc5TiDsZoXLHHkM
-         /+xkUNgoGpfYP7YGF7mC//wKxRQIBOIw8PI2hRIxQLemRjWhEoL9iZxr0RL+dgWuKqQq
-         LXGgEnCFVdVdZPInn8M4VIPdGtXtDRz6LdxCMaoCkOSEGo/h7B18YWK5cOagpxKmHvoh
-         sT7A==
-X-Gm-Message-State: AAQBX9ff8IK7ohRUYnNnV6cvwxn2EAOj8QQ5SW/ReJiff6t0S31xHOn9
-	2Pw9ZUrSskA7BNxDQuNBCq7dP0r3NOSC0EEpMT7E+g==
-X-Google-Smtp-Source: AKy350a9PgdqZyyRieSlRzFLQRJHBuDE7c080j8qkbym2YY5zeGq+1tmxcWFgg7px0mx8p5mR45XOCSaDat0z6T/8Ms=
-X-Received: by 2002:a81:b345:0:b0:53c:6fda:835f with SMTP id
- r66-20020a81b345000000b0053c6fda835fmr1699102ywh.0.1679574033577; Thu, 23 Mar
- 2023 05:20:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <20221205085351.27566-1-tmaimon77@gmail.com> <20221205085351.27566-3-tmaimon77@gmail.com>
- <f28c7c34-077c-4c7e-afd8-c4180718d403@roeck-us.net>
-In-Reply-To: <f28c7c34-077c-4c7e-afd8-c4180718d403@roeck-us.net>
-From: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Thu, 23 Mar 2023 13:19:57 +0100
-Message-ID: <CAPDyKFo0d9Vz_8p_SEVznT2hzBZqnZsUnrp4T3mtRSnZZBEfFA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] mmc: sdhci-npcm: Add NPCM SDHCI driver
-To: Tomer Maimon <tmaimon77@gmail.com>, Guenter Roeck <linux@roeck-us.net>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PjwFg5dSyz3cLx
+	for <openbmc@lists.ozlabs.org>; Sat, 25 Mar 2023 08:24:22 +1100 (AEDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.nyi.internal (Postfix) with ESMTP id 39AA85C00B4;
+	Fri, 24 Mar 2023 17:24:17 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Fri, 24 Mar 2023 17:24:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	fuzziesquirrel.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm3; t=1679693057; x=1679779457; bh=1P
+	6UJDorTtqYx2WtHaKmWSkmBbIUCfcHAVpYRPEi7LE=; b=e/F69InYGnY2XIDtJz
+	nkfZlkSWZJ7/P4d+aqvAZ1cQTiKhddtfOz/BQXhPUDX7RC/7HSkWWqwv6qpTDLaP
+	hZbCkWmCn5IogJA2W1G8MnnnC6oUUz7moWFt+zHMwxZm9LPVGZNw3ELrTMafpnyC
+	ir45wc9FBFA+tH9VcxGpPhsKrLKwsq7h83/p8RdaR4ejVWeifJ4WEgCmsqxYaYB1
+	7UeFwaJPeTHnuDBiaiT+oYD4el1Kr09640SGmDyX0leUazYZ/OHje8WAiBnlRJ/D
+	HJihdc+G2u3ps2AY11vwiixeA+SXu14RFrtyLHMwwc3+w9oWSt4cPJdJGeGQIwEh
+	xMOw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1679693057; x=1679779457; bh=1P6UJDorTtqYx2WtHaKmWSkmBbIUCfcHAVp
+	YRPEi7LE=; b=BOjl8uYFQASzvurh1otwlA6ZotTgVuxUyebonPR8Bk5lIUpDNCa
+	+oo+CBVNKzpIDDcbp6HU7wrs2orHIBLwtN1cr+cnbLCS9uQhZR32FPIRpA/5aCau
+	gVE3bW4mPj/s/Tg/yM8IXVbD1LBRSpiX0d+MJIs/hmx9L+nCDBDo37V1hJPEDjJS
+	/gMFBUawzyPcLEN0x/HTTW6Kg7I5pkN/GTkCOQlUcvEVb3EYz+GBtElPv6o62Km7
+	69fNbEyWH+eb0RNTtrr7ZVisndXkZ9wVk32wj3XOtuFbT570rAqm1+3r3Z/GZfO0
+	nQQFwMzfpuxS8I0XaGV3xgkXkYeg5cA+2yg==
+X-ME-Sender: <xms:ABUeZFvdg7RXNzEaPM8689GtN9uZwFbpnCbRbdiPCn_DKFB6UETWiA>
+    <xme:ABUeZOcd35bmHq5KdxEMEbPhMhgw9JzS1qreWn_9pruSLIwYVPTpRE-ImqmSbQv8n
+    aSgg9fvGtsMIiEMYyk>
+X-ME-Received: <xmr:ABUeZIydMYwj_iC8ZyxhpRJH-rRwuMolg9FeyayYSM6K2NpZtE-wZjgB9sMkd5snFgY80rSYkevKpqJy>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrvdegiedgudehtdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefkuffhvfevffgjfhgtgfgfggesthhqredttderjeenucfhrhhomhepuehr
+    rgguuceuihhshhhophcuoegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrd
+    gtohhmqeenucggtffrrghtthgvrhhnpeegteekudefteejheevfeehkedtieefvdfhieel
+    hfeihedvhedvtddugfeugfeiteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrdgt
+    ohhm
+X-ME-Proxy: <xmx:ABUeZMNIny5qf7kkkdJzNYwWL06Hl9ZzqGaUyZevQeN-Ym_aUj8ACw>
+    <xmx:ABUeZF_xOF-Wr4fIGPNSusG_79In9qprlsroUZFe07fKDgujiPLk-w>
+    <xmx:ABUeZMW7lBqViSp7bZD6RcRs01S-h1et82-RElJtSZUXjP_tTXpjxg>
+    <xmx:ARUeZBZXIxTfglIdF0i0oyKhVxqnfTGl2LIWf27AWD3et9DYjhwHDA>
+Feedback-ID: i02c9470a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 24 Mar 2023 17:24:16 -0400 (EDT)
+Message-ID: <68f767784c3b39d3935ace6d7e6db708c58d216b.camel@fuzziesquirrel.com>
+Subject: Re: =?UTF-8?Q?=E5=9B=9E=E8=A6=86=3A?= [External]  Re: Quanta's CCLA
+ Schedule A update 2023-03-20Wayland.Lee@quantatw.com
+ <Wayland.Lee@quantatw.com>
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Richard Tung =?UTF-8?Q?=28=E8=91=A3=E5=BD=A5=E5=B1=8F=29?=
+	 <Richard.Tung@quantatw.com>, Litzung Chen
+	=?UTF-8?Q?=28=E9=99=B3=E5=88=A9=E7=90=AE=29?=
+	 <Litzung.Chen@quantatw.com>
+Date: Fri, 24 Mar 2023 17:24:15 -0400
+In-Reply-To: <TY0PR04MB635735F6211AD9C0D8748A0EE9869@TY0PR04MB6357.apcprd04.prod.outlook.com>
+References: 	<TY2PR04MB3952B507D338A69F62D05C16F1809@TY2PR04MB3952.apcprd04.prod.outlook.com>
+	 <f93b92cdf5eb0066d3f1e48fa4d88539c29e5977.camel@fuzziesquirrel.com>
+	 <TY0PR04MB635735F6211AD9C0D8748A0EE9869@TY0PR04MB6357.apcprd04.prod.outlook.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4 
+MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,176 +103,17 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: andy.shevchenko@gmail.com, linux-kernel@vger.kernel.org, benjaminfair@google.com, arnd@arndb.de, krakoczy@antmicro.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, briannorris@chromium.org, linux-mmc@vger.kernel.org, adrian.hunter@intel.com, tali.perry1@gmail.com, gsomlo@gmail.com, joel@jms.id.au, davidgow@google.com, skhan@linuxfoundation.org, devicetree@vger.kernel.org, pbrobinson@gmail.com
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Phyllis Lu =?UTF-8?Q?=28=E9=99=B8=E6=80=A1=E8=90=B1=29?= <Phyllis.Lu@quantatw.com>, Steven Liou =?UTF-8?Q?=28=E5=8A=89=E8=A8=98=E6=BC=A2=29?= <Steven.Liou@quantatw.com>, Wayland Lee =?UTF-8?Q?=28=E6=9D=8E=E5=AE=B6=E7=91=8B=29?= <Wayland.Lee@quantatw.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, 17 Mar 2023 at 15:16, Guenter Roeck <linux@roeck-us.net> wrote:
->
-> On Mon, Dec 05, 2022 at 10:53:51AM +0200, Tomer Maimon wrote:
-> > Add Nuvoton NPCM BMC sdhci-pltfm controller driver.
-> >
-> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
->
-> I still don't see this driver in the upstream kernel, or in linux-next.
+On Wed, 2023-03-22 at 09:17 +0000, Richard Tung (=E8=91=A3=E5=BD=A5=E5=B1=
+=8F) wrote:
+> Hi Brad,
+> I would like to update Quanta's CCLA, see attached file.
 
-Tomer, Guenter,
+Hi Richard, Schedule A updated and approved, thanks. =C2=A0I will be able t=
+o
+take future updates from Litzung now - thanks for your time on this.
 
-Looks like I may have missed picking it up, probably because I thought
-the review was still ongoing.
-
-Please re-submit and include the reviewed-by tags, etc.
-
-Kind regards
-Uffe
-
->
-> Couple of comments:
->
-> - devm ordering does not really matter here. The devm resource
->   is the clock, it does not depend on local data, and it will be
->   released last, so that is ok.
-> - sdhci_pltfm_unregister() calls clk_disable_unprepare(),
->   so there is no enabled clock floating around on driver removal.
->   Unfortunately, that also means that the more convenient
->   devm_clk_get_optional_enabled() can not be used.
->
-> Real problem inline below.
->
-> Guenter
->
-> > ---
-> >  drivers/mmc/host/Kconfig      |  8 ++++
-> >  drivers/mmc/host/Makefile     |  1 +
-> >  drivers/mmc/host/sdhci-npcm.c | 84 +++++++++++++++++++++++++++++++++++
-> >  3 files changed, 93 insertions(+)
-> >  create mode 100644 drivers/mmc/host/sdhci-npcm.c
-> >
-> > diff --git a/drivers/mmc/host/Kconfig b/drivers/mmc/host/Kconfig
-> > index fb1062a6394c..82ab6fc25dca 100644
-> > --- a/drivers/mmc/host/Kconfig
-> > +++ b/drivers/mmc/host/Kconfig
-> > @@ -415,6 +415,14 @@ config MMC_SDHCI_MILBEAUT
-> >
-> >         If unsure, say N.
-> >
-> > +config MMC_SDHCI_NPCM
-> > +     tristate "Secure Digital Host Controller Interface support for NPCM"
-> > +     depends on ARCH_NPCM || COMPILE_TEST
-> > +     depends on MMC_SDHCI_PLTFM
-> > +     help
-> > +       This provides support for the SD/eMMC controller found in
-> > +       NPCM BMC family SoCs.
-> > +
-> >  config MMC_SDHCI_IPROC
-> >       tristate "SDHCI support for the BCM2835 & iProc SD/MMC Controller"
-> >       depends on ARCH_BCM2835 || ARCH_BCM_IPROC || ARCH_BRCMSTB || COMPILE_TEST
-> > diff --git a/drivers/mmc/host/Makefile b/drivers/mmc/host/Makefile
-> > index 4e4ceb32c4b4..a101f87a5f19 100644
-> > --- a/drivers/mmc/host/Makefile
-> > +++ b/drivers/mmc/host/Makefile
-> > @@ -97,6 +97,7 @@ obj-$(CONFIG_MMC_SDHCI_MICROCHIP_PIC32)     += sdhci-pic32.o
-> >  obj-$(CONFIG_MMC_SDHCI_BRCMSTB)              += sdhci-brcmstb.o
-> >  obj-$(CONFIG_MMC_SDHCI_OMAP)         += sdhci-omap.o
-> >  obj-$(CONFIG_MMC_SDHCI_SPRD)         += sdhci-sprd.o
-> > +obj-$(CONFIG_MMC_SDHCI_NPCM)         += sdhci-npcm.o
-> >  obj-$(CONFIG_MMC_CQHCI)                      += cqhci.o
-> >  cqhci-y                                      += cqhci-core.o
-> >  cqhci-$(CONFIG_MMC_CRYPTO)           += cqhci-crypto.o
-> > diff --git a/drivers/mmc/host/sdhci-npcm.c b/drivers/mmc/host/sdhci-npcm.c
-> > new file mode 100644
-> > index 000000000000..beace15b6c00
-> > --- /dev/null
-> > +++ b/drivers/mmc/host/sdhci-npcm.c
-> > @@ -0,0 +1,84 @@
-> > +// SPDX-License-Identifier: GPL-2.0+
-> > +/*
-> > + * NPCM SDHC MMC host controller driver.
-> > + *
-> > + * Copyright (c) 2020 Nuvoton Technology corporation.
-> > + */
-> > +
-> > +#include <linux/clk.h>
-> > +#include <linux/err.h>
-> > +#include <linux/io.h>
-> > +#include <linux/mmc/host.h>
-> > +#include <linux/mmc/mmc.h>
-> > +#include <linux/module.h>
-> > +
-> > +#include "sdhci-pltfm.h"
-> > +
-> > +static const struct sdhci_pltfm_data npcm_sdhci_pdata = {
-> > +     .quirks  = SDHCI_QUIRK_DELAY_AFTER_POWER,
-> > +     .quirks2 = SDHCI_QUIRK2_STOP_WITH_TC |
-> > +                SDHCI_QUIRK2_NO_1_8_V,
-> > +};
-> > +
-> > +static int npcm_sdhci_probe(struct platform_device *pdev)
-> > +{
-> > +     struct sdhci_pltfm_host *pltfm_host;
-> > +     struct sdhci_host *host;
-> > +     u32 caps;
-> > +     int ret;
-> > +
-> > +     host = sdhci_pltfm_init(pdev, &npcm_sdhci_pdata, 0);
-> > +     if (IS_ERR(host))
-> > +             return PTR_ERR(host);
-> > +
-> > +     pltfm_host = sdhci_priv(host);
-> > +
-> > +     pltfm_host->clk = devm_clk_get_optional(&pdev->dev, NULL);
-> > +     if (IS_ERR(pltfm_host->clk))
-> > +             return PTR_ERR(pltfm_host->clk);
-> > +
-> > +     ret = clk_prepare_enable(pltfm_host->clk);
-> > +     if (ret)
-> > +             return ret;
-> > +
->
-> The two functions above should not return but goto the call
-> to sdhci_pltfm_free() to avoid a memory leak on error.
->
-> > +     caps = sdhci_readl(host, SDHCI_CAPABILITIES);
-> > +     if (caps & SDHCI_CAN_DO_8BIT)
-> > +             host->mmc->caps |= MMC_CAP_8_BIT_DATA;
-> > +
-> > +     ret = mmc_of_parse(host->mmc);
-> > +     if (ret)
-> > +             goto err_sdhci_add;
-> > +
-> > +     ret = sdhci_add_host(host);
-> > +     if (ret)
-> > +             goto err_sdhci_add;
-> > +
-> > +     return 0;
-> > +
-> > +err_sdhci_add:
-> > +     clk_disable_unprepare(pltfm_host->clk);
-> > +     sdhci_pltfm_free(pdev);
-> > +     return ret;
-> > +}
-> > +
-> > +static const struct of_device_id npcm_sdhci_of_match[] = {
-> > +     { .compatible = "nuvoton,npcm750-sdhci" },
-> > +     { .compatible = "nuvoton,npcm845-sdhci" },
-> > +     { }
-> > +};
-> > +MODULE_DEVICE_TABLE(of, npcm_sdhci_of_match);
-> > +
-> > +static struct platform_driver npcm_sdhci_driver = {
-> > +     .driver = {
-> > +             .name   = "npcm-sdhci",
-> > +             .of_match_table = npcm_sdhci_of_match,
-> > +             .pm     = &sdhci_pltfm_pmops,
-> > +     },
-> > +     .probe          = npcm_sdhci_probe,
-> > +     .remove         = sdhci_pltfm_unregister,
-> > +};
-> > +module_platform_driver(npcm_sdhci_driver);
-> > +
-> > +MODULE_DESCRIPTION("NPCM Secure Digital Host Controller Interface driver");
-> > +MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
-> > +MODULE_LICENSE("GPL");
-> > --
-> > 2.33.0
-> >
+-brad
