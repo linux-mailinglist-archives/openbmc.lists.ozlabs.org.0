@@ -1,68 +1,79 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C3DD6CD8B4
-	for <lists+openbmc@lfdr.de>; Wed, 29 Mar 2023 13:46:05 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D9C56CDB46
+	for <lists+openbmc@lfdr.de>; Wed, 29 Mar 2023 15:56:31 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PmlB33GJMz3f5W
-	for <lists+openbmc@lfdr.de>; Wed, 29 Mar 2023 22:46:03 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Pmp4Y2z2Jz3f5m
+	for <lists+openbmc@lfdr.de>; Thu, 30 Mar 2023 00:56:29 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=IHwXdetf;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Mg5DvpPy;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::42f; helo=mail-wr1-x42f.google.com; envelope-from=satishroyal4u@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22a; helo=mail-lj1-x22a.google.com; envelope-from=fercerpav@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=IHwXdetf;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Mg5DvpPy;
 	dkim-atps=neutral
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Pml9T02THz3c9H
-	for <openbmc@lists.ozlabs.org>; Wed, 29 Mar 2023 22:45:32 +1100 (AEDT)
-Received: by mail-wr1-x42f.google.com with SMTP id h17so15325910wrt.8
-        for <openbmc@lists.ozlabs.org>; Wed, 29 Mar 2023 04:45:32 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Pmp3z1yN2z3c73
+	for <openbmc@lists.ozlabs.org>; Thu, 30 Mar 2023 00:55:58 +1100 (AEDT)
+Received: by mail-lj1-x22a.google.com with SMTP id a21so9036906ljq.10
+        for <openbmc@lists.ozlabs.org>; Wed, 29 Mar 2023 06:55:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680090327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=NQLmytFVskrVAW2W0v01uI1zl+of4k+L3nGXnHzphMY=;
-        b=IHwXdetfCMklr7Z8rvh8aUAyjc8eQowmd6D2fQnj4Kmfj1On1DQA+FCAw6+Wx3MMVe
-         vhnRSjaVoM5nh/tdSm4y1egVqkGEAUCx7lA12pG+ahjDO2YBsLCmCAq1rkhgMwCJ7wYq
-         rgZMGKmuT8G1iRKda9RfeIlPkTdOJoQt/5/GnnYEFP4zwnjK/7DQDkCeibyDq0qkSdl8
-         KfYmos2P9WSfAbuKXkIzh8avM/5XOBl7LCNbSRNby4nWbb+1kxfMTuPBNhxb+Zusi7TO
-         btkjyUqLrH5wIdaO137fTzSFrfjpm+PNao7DnMh372hD6a/4P5ATCAJtB35f0HP/KU2q
-         zuDw==
+        d=gmail.com; s=20210112; t=1680098152;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=pGxPvzTZh1LKWA92DnIchZUbEWFajh9Ix2oktjT7o9s=;
+        b=Mg5DvpPyXIbWa9IJ7hyj63iCa0kJfswn1z66/722Lpa5CPRZQ1nc7LbcFWX7UmxVVY
+         TV/RrEsXtXJoWx1UOtiocPqH9rd3uano1QTbPf6x2jUBso+MYU1KHwhBMmmXf/q54lBW
+         O/P5+L2YD2Xsj4LRHi0uH3KwpCouxGvvOGrdGV/RxkwDJJt5oxew4oFhq5TMKUUEMkhC
+         ypn6VrqTbxnz/LsBpJzjMySH/7yDTz73+iB8kMXNZ/xQiwrau62jl9a86i95CEf8swMX
+         CvmZoQBHI3m2mBuAaqFu7QK3s/LO/6NnlKvG6Cnip83dnJV1sv8ji/E9hhXyuMBP1RKG
+         UbgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680090327;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=NQLmytFVskrVAW2W0v01uI1zl+of4k+L3nGXnHzphMY=;
-        b=IKYIsr5SzAU22dE0DEnzxkE0X1tVph2MYUQyZRLAAOknBu0yCHXgNv97lcx5++4lhd
-         yFAaaZQ7sA3FbmMPPTxR4PnOTBg7k/y75/kf0mkwFv8lHEyKktvsJ4GCAaXLaVq432Ql
-         zhe5I4lC1RL50052inuBuqedoEfLAwj4LnDqlrPLv0NAYhmrIc1HtQtshV56NZwWKS6Z
-         Teiy9vmVkzjMQhf5ICD+XA3tK8SvoOcnkpf01+PbN7+rdfnjUQDicT2S4X2d6FCECmeR
-         E+hMVGftaLF5KhvPAYkYVEYSLV15yPJocLA22nW3YEnsl6stLaq+mU/GT+zC5GQwgI/Q
-         4Akw==
-X-Gm-Message-State: AAQBX9cUa5En4myNZcQzdfSxCck2RT86Opo/1WQZ0CYjLVPiYZvmJAUm
-	h/BmAU5UF8sVIUmLrmldRgOGmOcP16Lk8doYRX8=
-X-Google-Smtp-Source: AKy350YZO0siEqzhoKvyoXitbTsBur+iy66ZNiPX4mX4n1Vntj8fLZG+H3f7O2NmwUIZkXInR0MYKEHFuW9UvCIRdi8=
-X-Received: by 2002:a5d:4a52:0:b0:2e1:1569:6e07 with SMTP id
- v18-20020a5d4a52000000b002e115696e07mr2028006wrs.9.1680090326780; Wed, 29 Mar
- 2023 04:45:26 -0700 (PDT)
+        d=1e100.net; s=20210112; t=1680098152;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=pGxPvzTZh1LKWA92DnIchZUbEWFajh9Ix2oktjT7o9s=;
+        b=YOyT4iGwaontSSMPjTZAFfRQMF5SKbdcDztzVyEKZSK1RFqDYLCR+yi/lNHn+fGjg7
+         hzPVb1e+/sJqTJq5jr2RkGUW0pZe8Fy9rCwJbApyfancPuExVFpt4hIjoNx3vEDQxUvQ
+         RdU/LjXykWit04eBendaVGIVuaP8vGn0UJm1d1zFvFXdwdyrd2AGw/hREytuCLr3Ys6t
+         choCfEdzIBOupC2H2knJv2TOUyF4EGNFGy37H1nuBuTbNJKZ54ArTJVfF22DaWHzvIPb
+         zRe1BmlzGSeJaOxqZcHiHlnRY7ZNK6hSrzHNJfJdH9kPREonka+LrOmUK1pCdgpebw7d
+         qb1w==
+X-Gm-Message-State: AAQBX9fi6ykY+VHdlfmlUq4R/FBESYV94vOPJMv/ZUSeuLyzSGjCvywp
+	VXqW5yAvzuwFmlssywn0mYo=
+X-Google-Smtp-Source: AKy350aWo9LYGS3Lg0JvTfxDt4Nikq5J6mixNP/fXrvlk4kerbB+gfZ9HsEEjnOy8au2GChfsHe9fg==
+X-Received: by 2002:a2e:9589:0:b0:298:a7bd:5c56 with SMTP id w9-20020a2e9589000000b00298a7bd5c56mr5864639ljh.53.1680098152343;
+        Wed, 29 Mar 2023 06:55:52 -0700 (PDT)
+Received: from home.paul.comp (paulfertser.info. [2001:470:26:54b:226:9eff:fe70:80c2])
+        by smtp.gmail.com with ESMTPSA id c2-20020a2e9d82000000b002a6007383a0sm739986ljj.135.2023.03.29.06.55.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Mar 2023 06:55:52 -0700 (PDT)
+Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
+	by home.paul.comp (8.15.2/8.15.2/Debian-22) with ESMTP id 32TDtki5027543;
+	Wed, 29 Mar 2023 16:55:47 +0300
+Received: (from paul@localhost)
+	by home.paul.comp (8.15.2/8.15.2/Submit) id 32TDtkPM027542;
+	Wed, 29 Mar 2023 16:55:46 +0300
+Date: Wed, 29 Mar 2023 16:55:45 +0300
+From: Paul Fertser <fercerpav@gmail.com>
+To: "Winiarska, Iwona" <iwona.winiarska@intel.com>
+Subject: Re: Plans regarding PECI sensors and PCIe inventory with upstream
+ Linux
+Message-ID: <ZCRDYVwnGekY8e7z@home.paul.comp>
+References: <ZBr/QC4P32yoZyzs@home.paul.comp>
+ <31613359fc3690a04a62da282c3e2fd494fd1f30.camel@intel.com>
 MIME-Version: 1.0
-References: <CAGugOWsUK=2gE6iBiumKukO87b_cgAm2eT+Y=su1PPWow1-S8Q@mail.gmail.com>
- <20230328224413.GB18848@packtop>
-In-Reply-To: <20230328224413.GB18848@packtop>
-From: Satish Yaduvanshi <satishroyal4u@gmail.com>
-Date: Wed, 29 Mar 2023 17:15:16 +0530
-Message-ID: <CAGugOWvofh+f15KuMCkC97V-9Hn4QxuVTgw5aXkTM3bVNaeEDg@mail.gmail.com>
-Subject: Re: Containerization Enablement in OpenBMC firmware
-To: Zev Weiss <zweiss@equinix.com>
-Content-Type: multipart/alternative; boundary="0000000000001e50ba05f808836c"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <31613359fc3690a04a62da282c3e2fd494fd1f30.camel@intel.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,78 +85,56 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Weiss, Zev" <zweiss@equinix.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000001e50ba05f808836c
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hello Iwona,
 
-Embedding a container in  OpenBMC may bring  many advantages such as
-portability, modularity, security and considerably speed up the application
-development time.
+On Fri, Mar 24, 2023 at 09:38:04PM +0000, Winiarska, Iwona wrote:
+> On Wed, 2023-03-22 at 16:14 +0300, Paul Fertser wrote:
+> > Recently OpenBMC switched to newer Linux version which got upstream
+> > support for the PECI bus, with CPU and DIMM modules temperature
+> > sensors reported via it. I assume this is essential for all
+> > Intel-based server motherboards as monitoring CPU temperature and
+> > spinning fans accordingly is one of the core BMC functionalities.
+> 
+> Yes, it's currently not compatible with upstream PECI.
+> 
+> In January there was a thread related to dbus-sensors present and future:
+> https://lore.kernel.org/openbmc/Y79U52toP0+Y4edh@hatter.bewilderbeest.net/
+> where Zev mentioned that he started to work on dbus-sensors replacement, which
+> does support (among other things) upstream PECI:
+> 
+> https://github.com/zevweiss/omnisensor/blob/master/src/peci.rs
 
-On Wed, Mar 29, 2023 at 4:14=E2=80=AFAM Zev Weiss <zweiss@equinix.com> wrot=
-e:
+It's a rather cool project, but I do not see it having become part of
+OpenBMC mainstream just yet. Probably not many have tried even just
+testing it, as I only see commits from Zev himself. I hope this will
+change in the future.
 
-> On Tue, Mar 28, 2023 at 09:43:20AM PDT, Satish Yaduvanshi wrote:
-> >Hi,
-> >
-> >I would like to know is there any future plans to containerize the  apps
-> >and services of OpenBMC firmware
-> >
-> >Thanks,
-> >Satish Kumar
->
-> I'm not aware of any efforts in that direction, no.  Is there a
-> particular benefit that would be achieved by doing so?
->
->
-> Zev
->
+For now I figured a simple change seems to be enough to allow
+IntelCPUSensor from dbus-sensors to continue working on current
+OpenBMC:
 
+https://gerrit.openbmc.org/c/openbmc/dbus-sensors/+/62025
 
---=20
+> Regarding peci-pcie, the plan would be to, instead of using pecidev, implement a
+> PECI driver on the kernel side, which exposes the necessary information over
+> sysfs (abstracting away the PECI commands used internally) and use that in peci-
+> pcie.
 
-Satish  Kumar G
+When I was asking about plans I meant something with specific dates,
+not just the general outline :) You can see as it currently stands
+OpenBMC upstream lost the very essential feature (fan control
+depending on CPU temperature) for most (all?) Intel-based servers, so
+I'm surprised there's no particular migration path ready in
+advance.
 
---0000000000001e50ba05f808836c
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+That said, thank you for the upstreaming work, I see it was attempted
+before for years and you're the one who finally managed to do the
+right (from Linux maintainers PoV) thing. Congratulations!
 
-<div dir=3D"ltr"><span style=3D"color:rgb(44,45,49);font-family:Georgia,Tim=
-es,&quot;Times New Roman&quot;,serif;font-size:17.6px">Embedding a containe=
-r in=C2=A0 OpenBMC may bring=C2=A0 many advantages such as portability, mod=
-ularity, security and considerably speed up the application development tim=
-e.</span><br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D=
-"gmail_attr">On Wed, Mar 29, 2023 at 4:14=E2=80=AFAM Zev Weiss &lt;<a href=
-=3D"mailto:zweiss@equinix.com">zweiss@equinix.com</a>&gt; wrote:<br></div><=
-blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
-eft:1px solid rgb(204,204,204);padding-left:1ex">On Tue, Mar 28, 2023 at 09=
-:43:20AM PDT, Satish Yaduvanshi wrote:<br>
-&gt;Hi,<br>
-&gt;<br>
-&gt;I would like to know is there any future plans to containerize the=C2=
-=A0 apps<br>
-&gt;and services of OpenBMC firmware<br>
-&gt;<br>
-&gt;Thanks,<br>
-&gt;Satish Kumar<br>
-<br>
-I&#39;m not aware of any efforts in that direction, no.=C2=A0 Is there a<br=
->
-particular benefit that would be achieved by doing so?<br>
-<br>
-<br>
-Zev<br>
-</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
-gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
-iv dir=3D"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr"><div dir=3D"ltr"=
-><div dir=3D"ltr"><div dir=3D"ltr"><div><br></div><div><span style=3D"font-=
-family:&quot;arial black&quot;,sans-serif;font-size:12.8px">Satish =C2=A0Ku=
-mar G</span><br></div><div><font face=3D"arial black, sans-serif"><br></fon=
-t></div><div><font face=3D"arial black, sans-serif"><br></font></div></div>=
-</div></div></div></div></div></div></div></div>
-
---0000000000001e50ba05f808836c--
+-- 
+Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
+mailto:fercerpav@gmail.com
