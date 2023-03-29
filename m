@@ -2,78 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D9C56CDB46
-	for <lists+openbmc@lfdr.de>; Wed, 29 Mar 2023 15:56:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 08ECB6CF509
+	for <lists+openbmc@lfdr.de>; Wed, 29 Mar 2023 23:10:02 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Pmp4Y2z2Jz3f5m
-	for <lists+openbmc@lfdr.de>; Thu, 30 Mar 2023 00:56:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Pmzhl6Jvsz3fCp
+	for <lists+openbmc@lfdr.de>; Thu, 30 Mar 2023 08:09:59 +1100 (AEDT)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Mg5DvpPy;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=sKk0Mw+z;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22a; helo=mail-lj1-x22a.google.com; envelope-from=fercerpav@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=Mg5DvpPy;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=sKk0Mw+z;
 	dkim-atps=neutral
-Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Pmp3z1yN2z3c73
-	for <openbmc@lists.ozlabs.org>; Thu, 30 Mar 2023 00:55:58 +1100 (AEDT)
-Received: by mail-lj1-x22a.google.com with SMTP id a21so9036906ljq.10
-        for <openbmc@lists.ozlabs.org>; Wed, 29 Mar 2023 06:55:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680098152;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=pGxPvzTZh1LKWA92DnIchZUbEWFajh9Ix2oktjT7o9s=;
-        b=Mg5DvpPyXIbWa9IJ7hyj63iCa0kJfswn1z66/722Lpa5CPRZQ1nc7LbcFWX7UmxVVY
-         TV/RrEsXtXJoWx1UOtiocPqH9rd3uano1QTbPf6x2jUBso+MYU1KHwhBMmmXf/q54lBW
-         O/P5+L2YD2Xsj4LRHi0uH3KwpCouxGvvOGrdGV/RxkwDJJt5oxew4oFhq5TMKUUEMkhC
-         ypn6VrqTbxnz/LsBpJzjMySH/7yDTz73+iB8kMXNZ/xQiwrau62jl9a86i95CEf8swMX
-         CvmZoQBHI3m2mBuAaqFu7QK3s/LO/6NnlKvG6Cnip83dnJV1sv8ji/E9hhXyuMBP1RKG
-         UbgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680098152;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pGxPvzTZh1LKWA92DnIchZUbEWFajh9Ix2oktjT7o9s=;
-        b=YOyT4iGwaontSSMPjTZAFfRQMF5SKbdcDztzVyEKZSK1RFqDYLCR+yi/lNHn+fGjg7
-         hzPVb1e+/sJqTJq5jr2RkGUW0pZe8Fy9rCwJbApyfancPuExVFpt4hIjoNx3vEDQxUvQ
-         RdU/LjXykWit04eBendaVGIVuaP8vGn0UJm1d1zFvFXdwdyrd2AGw/hREytuCLr3Ys6t
-         choCfEdzIBOupC2H2knJv2TOUyF4EGNFGy37H1nuBuTbNJKZ54ArTJVfF22DaWHzvIPb
-         zRe1BmlzGSeJaOxqZcHiHlnRY7ZNK6hSrzHNJfJdH9kPREonka+LrOmUK1pCdgpebw7d
-         qb1w==
-X-Gm-Message-State: AAQBX9fi6ykY+VHdlfmlUq4R/FBESYV94vOPJMv/ZUSeuLyzSGjCvywp
-	VXqW5yAvzuwFmlssywn0mYo=
-X-Google-Smtp-Source: AKy350aWo9LYGS3Lg0JvTfxDt4Nikq5J6mixNP/fXrvlk4kerbB+gfZ9HsEEjnOy8au2GChfsHe9fg==
-X-Received: by 2002:a2e:9589:0:b0:298:a7bd:5c56 with SMTP id w9-20020a2e9589000000b00298a7bd5c56mr5864639ljh.53.1680098152343;
-        Wed, 29 Mar 2023 06:55:52 -0700 (PDT)
-Received: from home.paul.comp (paulfertser.info. [2001:470:26:54b:226:9eff:fe70:80c2])
-        by smtp.gmail.com with ESMTPSA id c2-20020a2e9d82000000b002a6007383a0sm739986ljj.135.2023.03.29.06.55.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Mar 2023 06:55:52 -0700 (PDT)
-Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
-	by home.paul.comp (8.15.2/8.15.2/Debian-22) with ESMTP id 32TDtki5027543;
-	Wed, 29 Mar 2023 16:55:47 +0300
-Received: (from paul@localhost)
-	by home.paul.comp (8.15.2/8.15.2/Submit) id 32TDtkPM027542;
-	Wed, 29 Mar 2023 16:55:46 +0300
-Date: Wed, 29 Mar 2023 16:55:45 +0300
-From: Paul Fertser <fercerpav@gmail.com>
-To: "Winiarska, Iwona" <iwona.winiarska@intel.com>
-Subject: Re: Plans regarding PECI sensors and PCIe inventory with upstream
- Linux
-Message-ID: <ZCRDYVwnGekY8e7z@home.paul.comp>
-References: <ZBr/QC4P32yoZyzs@home.paul.comp>
- <31613359fc3690a04a62da282c3e2fd494fd1f30.camel@intel.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Pmzh83dzCz3cBX
+	for <openbmc@lists.ozlabs.org>; Thu, 30 Mar 2023 08:09:27 +1100 (AEDT)
+Received: from pps.filterd (m0098396.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32TIRvvx001633
+	for <openbmc@lists.ozlabs.org>; Wed, 29 Mar 2023 21:09:25 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date : to :
+ from : subject : content-type : content-transfer-encoding : mime-version;
+ s=pp1; bh=PQa5St8wr6JyIQCia0uNZLd+kQLPMd6S4mBdjUIR/eg=;
+ b=sKk0Mw+z+7bbA0aKeY01hPFinpSrYu6NvS+kJT7zqh/YQX63F1Rzc6cZrS7+abc9uJdx
+ 49/GWCd6c05i1uERxAbKalLDlNhic/C7ZTutoO0D4ZA2ZUDgKJ+virdReZX8dHEOQNgm
+ 3Co8Z9uX6jAD3L0ThVHiHurnb+dBT6TFsjUlzC/ifMVIB0rJ/NZ0jetKPht838kCRdel
+ DyARhjUS7Kvgh68Kc4BX0vwnI3eyuCzm0mBMLqhoQhuRypzhRBjQ5+fXjDgSXgG5X6Mj
+ tnrLmfvTiioUUIinQ3+BPIXZx5Ux9y9uwDX94w0f9SI7cK7nWA3ZysXSgZWEE8csAG5F mA== 
+Received: from ppma01dal.us.ibm.com (83.d6.3fa9.ip4.static.sl-reverse.com [169.63.214.131])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3pmpr3b7fp-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 29 Mar 2023 21:09:24 +0000
+Received: from pps.filterd (ppma01dal.us.ibm.com [127.0.0.1])
+	by ppma01dal.us.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 32TJ33qP029362
+	for <openbmc@lists.ozlabs.org>; Wed, 29 Mar 2023 21:09:23 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([9.208.129.118])
+	by ppma01dal.us.ibm.com (PPS) with ESMTPS id 3phrk7xge5-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Wed, 29 Mar 2023 21:09:23 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com [10.241.53.105])
+	by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 32TL9MR310879602
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+	for <openbmc@lists.ozlabs.org>; Wed, 29 Mar 2023 21:09:22 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 2A6EB58059
+	for <openbmc@lists.ozlabs.org>; Wed, 29 Mar 2023 21:09:22 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C42955805F
+	for <openbmc@lists.ozlabs.org>; Wed, 29 Mar 2023 21:09:21 +0000 (GMT)
+Received: from [9.160.174.160] (unknown [9.160.174.160])
+	by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTPS
+	for <openbmc@lists.ozlabs.org>; Wed, 29 Mar 2023 21:09:21 +0000 (GMT)
+Message-ID: <d317e01c-fd41-e7aa-2a79-89166300001f@linux.ibm.com>
+Date: Wed, 29 Mar 2023 16:09:20 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Content-Language: en-US
+To: openbmc <openbmc@lists.ozlabs.org>
+From: Joseph Reynolds <jrey@linux.ibm.com>
+Subject: Security Working Group meeting - Wednesday March 29 - results
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: rS8BGTD4s1M88Q6tQWOeso2DaYJyjYYr
+X-Proofpoint-ORIG-GUID: rS8BGTD4s1M88Q6tQWOeso2DaYJyjYYr
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <31613359fc3690a04a62da282c3e2fd494fd1f30.camel@intel.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-29_14,2023-03-28_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015
+ priorityscore=1501 spamscore=0 malwarescore=0 bulkscore=0 suspectscore=0
+ phishscore=0 adultscore=0 mlxlogscore=808 impostorscore=0 mlxscore=0
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303290160
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,56 +90,191 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Weiss, Zev" <zweiss@equinix.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hello Iwona,
+An OpenBMC Security Working Group meeting was held on Wednesday March 29 
+at 10:00am PDT.
 
-On Fri, Mar 24, 2023 at 09:38:04PM +0000, Winiarska, Iwona wrote:
-> On Wed, 2023-03-22 at 16:14 +0300, Paul Fertser wrote:
-> > Recently OpenBMC switched to newer Linux version which got upstream
-> > support for the PECI bus, with CPU and DIMM modules temperature
-> > sensors reported via it. I assume this is essential for all
-> > Intel-based server motherboards as monitoring CPU temperature and
-> > spinning fans accordingly is one of the core BMC functionalities.
-> 
-> Yes, it's currently not compatible with upstream PECI.
-> 
-> In January there was a thread related to dbus-sensors present and future:
-> https://lore.kernel.org/openbmc/Y79U52toP0+Y4edh@hatter.bewilderbeest.net/
-> where Zev mentioned that he started to work on dbus-sensors replacement, which
-> does support (among other things) upstream PECI:
-> 
-> https://github.com/zevweiss/omnisensor/blob/master/src/peci.rs
+MEETING ACCESS ON DISCORD VOICE
+First, join Discord via https://discord.gg/69Km47zH98 
+<https://discord.gg/69Km47zH98> and confirm via email.
+Then, to join: navigate Discord > OpenBMC > Voice channels >  Security ~ 
+https://discord.com/channels/775381525260664832/1002376534377635860 
+<https://discord.com/channels/775381525260664832/1002376534377635860>
 
-It's a rather cool project, but I do not see it having become part of
-OpenBMC mainstream just yet. Probably not many have tried even just
-testing it, as I only see commits from Zev himself. I hope this will
-change in the future.
+Access and notes about the Security Working Group are in the OpenBMC 
+Security wiki:
+https://github.com/openbmc/openbmc/wiki/Security-working-group 
+<https://github.com/openbmc/openbmc/wiki/Security-working-group>
 
-For now I figured a simple change seems to be enough to allow
-IntelCPUSensor from dbus-sensors to continue working on current
-OpenBMC:
+The meeting agenda and minutes are in 
+<https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
+items proposed on the Discord OpenBMC #security channel, and anything 
+else that comes up:
 
-https://gerrit.openbmc.org/c/openbmc/dbus-sensors/+/62025
+Attended: Joseph Reynolds, dsp (Dhananjay), Daniil Engeranov, jejb, cacih
 
-> Regarding peci-pcie, the plan would be to, instead of using pecidev, implement a
-> PECI driver on the kernel side, which exposes the necessary information over
-> sysfs (abstracting away the PECI commands used internally) and use that in peci-
-> pcie.
+TOPICS:
 
-When I was asking about plans I meant something with specific dates,
-not just the general outline :) You can see as it currently stands
-OpenBMC upstream lost the very essential feature (fan control
-depending on CPU temperature) for most (all?) Intel-based servers, so
-I'm surprised there's no particular migration path ready in
-advance.
+1 Joseph: Is there a common use case to get “service” access to the 
+BMC?  A “service user” means a person authorized by the system 
+manufacturer or OEM who is trusted to access BMC internals as needed to 
+diagnose or fix problems on the BMC; they are allowed to use interfaces 
+which are not accessible to BMC admin user, for example REST APIs only 
+allowed to “service” users, or to get root user access to the BMC 
+command shell.
 
-That said, thank you for the upstreaming work, I see it was attempted
-before for years and you're the one who finally managed to do the
-right (from Linux maintainers PoV) thing. Congratulations!
 
--- 
-Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
-mailto:fercerpav@gmail.com
+For context, assume the BMC admin user does not have access to the BMC 
+command shell and can only access the BMC’s REST APIs and similar 
+external interfaces; that is, the BMC admin has no access to BMC 
+internals.  Also, assume the BMC admin has access to the BMC’s 
+management network, and can share that access with a service user.
+
+
+DISCUSSION (joseph and dsp):
+
+Joseph discussed IBM’s custom Access Control File (ACF) solution, and 
+Dhananjay discussed Microsoft's Secure Unlock.
+
+
+IBM ACF: Joseph reviewed the steps for an IBM service agent to get 
+service access to a customer BMC.  The steps are:
+
+ 1.
+
+    The customer calls for service and gives the system serial number to
+    the service rep.
+
+ 2.
+
+    The service rep uses their access (access to the private key, which
+    is stored behind their organization’s firewall) to create a token
+    (an ACF file).  This ACF file contains a request to access to BMC,
+    identifies a date range, and identifies the system serial number. 
+    It is digitally signed by a private key held by the service
+    organization, and the BMC can validate the signature via a public
+    key which is built into the BMC firmware.
+
+ 3.
+
+    The service rep gives the ACF file to the customer/admin.  (The ACF
+    file has no secrets other than the secure hash of the service
+    account’s password.)
+
+ 4.
+
+    The BMC admin uploads the ACF to the BMC.  Doing so enables the
+    service user password access.
+
+ 5.
+
+    The service user can now login to the BMC, using the password stored
+    in the ACF.
+
+ 6.
+
+    If desired, the admin or service agent can delete the ACF, or allow
+    it to expire.
+
+WIP Design: https://gerrit.openbmc.org/c/openbmc/docs/+/45201 
+<https://gerrit.openbmc.org/c/openbmc/docs/+/45201>  .  The 
+implementation is in IBM’s public downstream (github.com/ibm-openbmc) 
+version of bmcweb and phosphor-certificate-manager.
+
+Note: the ACF is ASN.1-encoded (binary file) but is not an x.509 
+certificate.
+
+
+Microsoft Secure Unlock: Dhananjay reviewed Secure Unlock.  The 
+approximate steps are:
+
+ 1.
+
+    Retrieve info from BMC’s RoT.
+
+ 2.
+
+    This info goes to the service organization (behind the firewall),
+    which uses it to create a token needed to access the BMC.
+
+ 3.
+
+    This access token is uploaded to BMC.
+
+Touchpoint: a use case for this token is to disable secure boot
+
+
+The common use case?
+
+There is a common use case for REST APIs to:
+
+  *
+
+    Initiate a request for service access to the BMC.
+
+  *
+
+    Upload a service access token to the BMC.
+
+With additional APIs desired for inspecting and deleting the access token.
+
+[Although not discussed, I presume at most 1 access token at a time is 
+allowed.]
+
+
+A common use case:
+
+In addition to the use case to get BMC root access…
+
+Recover admin account access.  Customers regularly call for service 
+because they lost access to their admin account.  Recovery means, for 
+example: recreate the admin account or set it to a usable state, and set 
+its password to a known value, reset its password lockout, etc.
+
+It is desired to be able to create an access token which performs only 
+this admin account recovery, and does not grant general access to BMC 
+internals.
+
+
+There are at least 2 shared use cases for the access token.  That is, 
+the access token can be create for one of these purposes:
+
+ 1.
+
+    Enable service user login.
+
+ 2.
+
+    Recover access to the BMC’s admin account.
+
+There are multiple other purposes; one mentioned is to disable secure boot.
+
+In other words, the token encodes a specific action, such as listed above.
+
+Each manufacturer would have a different set of purposes for the tokens, 
+and we do not image these would be shared.
+
+
+Anti-replay protection for these access tokens is assumed.  For example, 
+an access token used to get access to a BMC command shell could not be 
+used twice: the second attempt to upload it should result in permission 
+denied with reason: anti-replay protection.  (In this example, login 
+access is allowed multiple times until the ACF expires or is deleted.)
+
+
+TODO for Joseph: We decided to start a design for this. Daniil asked: 
+Create a new bitbake image feature to optionally build in the “service 
+access” APIs.  When present a system integrator would have to hook up an 
+appropriate implementation ~ 
+https://github.com/openbmc/openbmc/wiki/Configuration-guide 
+<https://github.com/openbmc/openbmc/wiki/Configuration-guide>.
+
+When the service access APIs are built into the image, should there be 
+an API to disable it?
+
+
+
+
+- Joseph
