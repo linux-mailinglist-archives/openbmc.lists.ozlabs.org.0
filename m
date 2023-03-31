@@ -2,67 +2,143 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id ECDD06D278C
-	for <lists+openbmc@lfdr.de>; Fri, 31 Mar 2023 20:08:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 923126D55B6
+	for <lists+openbmc@lfdr.de>; Tue,  4 Apr 2023 03:07:33 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Pp7Yy6Lrfz3fTb
-	for <lists+openbmc@lfdr.de>; Sat,  1 Apr 2023 05:08:06 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Pr8kV71Xzz3cK8
+	for <lists+openbmc@lfdr.de>; Tue,  4 Apr 2023 11:07:30 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=UBIDq+EW;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=bwCGgaFn;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22d; helo=mail-lj1-x22d.google.com; envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=us.ibm.com (client-ip=148.163.158.5; helo=mx0a-001b2d01.pphosted.com; envelope-from=lakshmiy@us.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=UBIDq+EW;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=bwCGgaFn;
 	dkim-atps=neutral
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mx0a-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Pp7YN5tXlz3fQp
-	for <openbmc@lists.ozlabs.org>; Sat,  1 Apr 2023 05:07:35 +1100 (AEDT)
-Received: by mail-lj1-x22d.google.com with SMTP id bx10so5616653ljb.8
-        for <openbmc@lists.ozlabs.org>; Fri, 31 Mar 2023 11:07:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1680286051;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=8ii8LD6WV3C4Mz3PNT9z7qUlfncWckLBytbPn5yKSnc=;
-        b=UBIDq+EWVVrV/nFkG74e6Ck3KsIBeFYPLC7Xt2wx83p6yLICE4/wZmSiWaTvztxI8v
-         CV1Dv9YQFFyKTlwnfasNaspTw7NfJz+SBro6PXjhY3wx9ZM3A1AsbK4FqwAFir9NMjc8
-         9UXZNt3ipnWeBi5Dui/8fZS8cHHLaZ+P50TBFZK528A9gZd16gpis7aplDKLJx7+shDJ
-         wtXqoL2A0L8n13TIlX9QA/p4RLyy3eRi+73eoRJkv8TW9sLF9cOGV/szXVXj/gU6Heu8
-         BwMPQA4OPbakFlcV9Om+ysvLY/l3ncY3AgavC7TjuIlYApks3KdnfFkSQmvi2dqpjk1+
-         Wnrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1680286051;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8ii8LD6WV3C4Mz3PNT9z7qUlfncWckLBytbPn5yKSnc=;
-        b=G6D2XUyCChY+6B4xtezc8a/9vovyqqgwTLpTUj/p5bPr5MT0n9TtxF2Y1wO9CQYFEx
-         2yJxfEV9aoQO/WDhgNNZR8MA7LOfGPbvmrWvNXJcdwnL9ez4ePiKswrhsgP4b54aqll3
-         MjcmwR0qiyT2+NnfoyQGZlsbxSfBTbqtOSo73zsY2GdrOobb6fUyxfzG4MEjLTf9yXx2
-         2d6ja4Z1nk9qgsKLpCU9ONlWq5p+VczRjLNzvQSNwsRfs+RqhNUWo/I/jbWo+DltOS6G
-         ze4bxYvUf4V16QD4VTB9KFixulZjIMXvBG9SXUSyp0GjxkaOAoz8uQPD+tZdpXZ5FN6p
-         XqFw==
-X-Gm-Message-State: AAQBX9f2q/7ukYeyacpNHUTUrCkm+VYQqphTUaulu1RqNEi4WMh8E0b/
-	7b9tq7+9Gq0Bxg8RuidKH0485muPJjOrbVIjT/c=
-X-Google-Smtp-Source: AKy350aJZ07tOb0BEmK67XU1aSTjWS5ZWGMRUNpAkCOO67wCOY4oPZGH0a+FVKSihdSNPSHW7CcfwJie1AFAbCCto40=
-X-Received: by 2002:a05:651c:108:b0:29a:9053:ed24 with SMTP id
- a8-20020a05651c010800b0029a9053ed24mr8730992ljb.6.1680286050817; Fri, 31 Mar
- 2023 11:07:30 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PpBJP324wz3fQW
+	for <openbmc@lists.ozlabs.org>; Sat,  1 Apr 2023 07:11:32 +1100 (AEDT)
+Received: from pps.filterd (m0098416.ppops.net [127.0.0.1])
+	by mx0b-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 32VK9eVX012225
+	for <openbmc@lists.ozlabs.org>; Fri, 31 Mar 2023 20:11:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : subject :
+ date : message-id : content-type : content-id : content-transfer-encoding
+ : mime-version; s=pp1; bh=OWn4UJwtepiQq90Hq3IbkSKm3Nf213lzqRZhdgZhzgQ=;
+ b=bwCGgaFnOWSdVTUwOb6FO+jcV20zbliwE/8EzPYJ5FgfIr6iBNAipArOIZpY8Heiiasc
+ 0V8GktjIGynZap7afLCMnH7SrfiBgOn23GCRRriwKgJKF85TFstV4HEIRzSK7vnTuth0
+ Z7/aUGEMtvOqCtDS3NVYePrePNpz80MTnP7k8tWV00kkdQ33oWkuk12JssTbmDIAhrmM
+ OROB5eJYRtgSFTNYreXhlNhmRyb2DtWGPWVXWRUNQcbhD3Qi9/obgs2/bvQnEc+lK00U
+ gCDRxUa9iMbNjqbs5jCiVw8q7seGbU4I6YHu/dbkqRpcj0DgQGIrn89blb0QusDouNIO Tg== 
+Received: from nam02-sn1-obe.outbound.protection.outlook.com (mail-sn1nam02lp2046.outbound.protection.outlook.com [104.47.57.46])
+	by mx0b-001b2d01.pphosted.com (PPS) with ESMTPS id 3pnu3pbjpr-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <openbmc@lists.ozlabs.org>; Fri, 31 Mar 2023 20:11:28 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=aeB5V3L/DCHT7cwCEJM1HwB8zGGlifaxdGJvRgb/jxTstiOp8breKqMpCtmu0Fpj1axLqFqI9d5MpRp3YqU3P1yLSWpR+ATdTV9PGv8hVLzQYbkM0QMtwWxgTmibclAwD3re7JwmC2jQ2DqOHV6cU3NIKhJis2K2TRWmeiZzz0jq/zdPCMTyin0QLzfhZoD/CPkzg4BMxFziwUpBTxo6CFL20V3Feq4UMFKEHf2fXikTen1FuBjeUqHa0VZ6xCvJ9RfrJVs0b4wMPQcC0uUIrJs/ykZlc1RFbFM0JuW8Wn45qDME0CU7bF3nuvm8Yu0K2N7gTlpyBpsumAMPySgYLg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=OWn4UJwtepiQq90Hq3IbkSKm3Nf213lzqRZhdgZhzgQ=;
+ b=GbTAQckiLuyCXIhUNIsKSBMADZ2LCn55eGwL/jvmvd7w/p1CvQ++pBRan3xfx7CjvjqeHG9aB7FlVlT/co6HQPKSxg61PhDHa3biQqPtzIbA9XJ5c4nGu4B70CKz/GRGdAp3H22nDzth4Sulazpbgq0yBzfN6jZyj310X6M8jBFTBE8Vkt5pxgNvE585b+DrdJkUavZnn9r+P5fELwmt/gkgMG0h8NHGEURFlK6bxYe+bI0hii7kGMakrgWEjgEfK5AZZf9nlPRBri5fEzPljgPklXYTN87W1wqf4/4j/urwD1a9MRg31T+u9jWmf4wKMhV2HB7nM0u4h3hJ2ue4jw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=us.ibm.com; dmarc=pass action=none header.from=us.ibm.com;
+ dkim=pass header.d=us.ibm.com; arc=none
+Received: from MW3PR15MB3898.namprd15.prod.outlook.com (2603:10b6:303:43::24)
+ by SA0PR15MB4000.namprd15.prod.outlook.com (2603:10b6:806:8b::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6254.22; Fri, 31 Mar
+ 2023 20:11:26 +0000
+Received: from MW3PR15MB3898.namprd15.prod.outlook.com
+ ([fe80::e734:439b:b3e:c4f3]) by MW3PR15MB3898.namprd15.prod.outlook.com
+ ([fe80::e734:439b:b3e:c4f3%6]) with mapi id 15.20.6254.024; Fri, 31 Mar 2023
+ 20:11:26 +0000
+From: Lakshmi Yadlapati <lakshmiy@us.ibm.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Moving to correct PCIe Device Interface
+Thread-Topic: Moving to correct PCIe Device Interface
+Thread-Index: AQHZZAz4wsf/Z8qFtEGkS1yPFSdGJQ==
+Date: Fri, 31 Mar 2023 20:11:26 +0000
+Message-ID: <9FE52383-B329-4100-906B-86F794EEF3C0@us.ibm.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: MW3PR15MB3898:EE_|SA0PR15MB4000:EE_
+x-ms-office365-filtering-correlation-id: 77f15550-33cb-4145-c1f6-08db32241b7c
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:  wav/AVxNbC9Hzl4qMVNHVKcMencBt97+FjUsnM78on9t7lrHmvoRQW3q6Fi8b3AZogR2aX749iXutVJIEnZxm9DrlczluQ1h+3S72YykKwGkkqUH7PGkAcQMbbVjqO+POpHK3TsYLOLtM206tvwfOkBzNHsbSwh5zB7o7YAljW2jnPx282n7d+qNT4sYFseXSIhabpQSlwZVmmk9xNgRQA6oGNCwEDhg6JttyFb7P3zPAOAa+rB7uK5wX1V1S1QvzwqhBp3A080yWfiLu2ITzVIN47ZrQUO5dUaIlYgwX1v13esSYKG9XM6js9jyOJKE6MwnjFZkrmyW3aVetQGssiQ4Gu88Qt9n1zNOe01UqfDHLbD3TdHPlQx7mU5C9vJgcHacMHgQWrCIlC8zI/rTzktm2/4R14p6skXbkBYEplyl4dkZrinoOVAdUb+L2JQFo051plIgey0CFdiV/1+sCpLnmm5tyw5SOhv8/WFWj9RH+w/e1scVc7oD2B6C2KVgHSUmyL/im6WZCFGwOepGF5MoDC/905iE/Pl+0bMbwCUcx+omvdMRTHIQ9wrY7+98qKjlZ8UJwQIzjtFlrbVR69hCi0zE7IXoICZ/Tw6YGtEEuE4PxeaRas+J4hUgrhIJlZ/boif/dsyuyTVDBbsX+KYxrMMNDfoI7dW2hGx3V9wbCrbHMO0TBEiYg1XQeerU
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW3PR15MB3898.namprd15.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(366004)(396003)(136003)(346002)(376002)(39860400002)(451199021)(6916009)(41300700001)(66556008)(558084003)(66446008)(64756008)(66946007)(66476007)(8676002)(76116006)(91956017)(2906002)(86362001)(38070700005)(122000001)(33656002)(2616005)(38100700002)(8936002)(5660300002)(6506007)(6512007)(71200400001)(966005)(6486002)(186003)(478600001)(316002)(45980500001);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:  =?utf-8?B?bmE2azZFZi9kZEJjUm9qU294dmEvY1oxb3Jqd0ZTWmJnZTNoeTZHWm9xL3dS?=
+ =?utf-8?B?OXVRRG5McjFjbkFEWm5PUjVIWWR2ZGNnbU5xdnNNNjlURGovd3BseVpKNzAy?=
+ =?utf-8?B?ZlJQbUlLb1pwcnFKYi9iSVQ3MVlkRVZHSUw0LzB6OC9vRU45K0pqWTNpUmZ2?=
+ =?utf-8?B?UGU4VUd6d1ZZL09oQ0hsM0M1ZDdaYjJINEt2b3JYOExQdmVuanp1YndmTk9y?=
+ =?utf-8?B?blU4NmQyam5iTmNJc0ErRXNkTkp1bjlTQUVuTmMzNXIxa0dXRmVOWWljbUU2?=
+ =?utf-8?B?d2lQT3p3aW9qV1VGMFRmMDYraXNtNDhrazl5Nkl1RkloL1UxcndKWVd0NC82?=
+ =?utf-8?B?OWhxcWhVTnVPSDBqVkRDUlBQOEQ4ek9Jc2l5cUVETWY0eEltcjZGR1ZUbVNi?=
+ =?utf-8?B?V2E2aS9UTTlJYU8rYjJIWU55Wnd2RFdFUzZUQy9nUlhKL3dlaExTZ09YaExE?=
+ =?utf-8?B?aWZyc0RqQkVkWGlaRCtRcmVheEQyYzlpbFFwSldIbHpqL2VlRGRQQzNlazU5?=
+ =?utf-8?B?dkpTcDZsWXB3SUpUWGYyNmIrRmVIQ0ZlQUdZQTl0V1RqWElUUDhzRCsrVGx0?=
+ =?utf-8?B?UEZHa255YmFneGtMdUJEVHVXNnkyRFQrSTE0ZFBOWHptVE16amFWWndya1RH?=
+ =?utf-8?B?dHVES2pGWnBPcm5VTitjVndlcmM3NUJYS1dyNnVQQzVzWXZTZTRCZFdYVTB1?=
+ =?utf-8?B?VWpTL1dydTF4QjFyU2wyRk9MK242U2NFZHViMEZsbVVUdEtCOGc5d09rOFpr?=
+ =?utf-8?B?TGhZRWZBVFhudmYwWWxGYjNuOEppcW5pV0lQbXA3WXVsR1VTd0tJOHltdzkv?=
+ =?utf-8?B?S2JqaGlxRFhWbElCUENydzMxTFZUOVlmajFVcE96c2hwYjdjRHFKVzc1U0Qz?=
+ =?utf-8?B?a24vdFNOUnl0eDcwcTNwVzZMUk92N2ttcVZURDFoSUlmMWdvamxVZkZJN2ZR?=
+ =?utf-8?B?SC81Y3ZkSnY0bWh2VmFIOFZXK2Vldkt3cG9hK0xpNlJWUjhKWUNkUUUvVGFw?=
+ =?utf-8?B?b1NqRU8yOTF1ZjZQTitTL2dJY3hxSUU5QjZ3WldjZWRGdWFUMW4zbmNhdHRO?=
+ =?utf-8?B?S0cvcDd4U09tUHBzd2hDeUpsZDRuUFIxYjBDTWhERkJqTUZYS2IyZ2dBRWJp?=
+ =?utf-8?B?UHNMaDkvR2t2MWlhNGNnR3JZNGFIRmNnMkdvanpQV1htcE45cEpMSkZmM2g2?=
+ =?utf-8?B?M2E5TkIzaVV6ZG1tM1JiVXB0dFRhVStKRU8wbWNjenU3bXVCZjVhbVJIRnov?=
+ =?utf-8?B?SFVMc0t4eXJSRlNBRVZaUjRYbDVwQlB3NmJyYzFEd2VzV21QZ0l2ZUxrWnFm?=
+ =?utf-8?B?dzJqS2loODRRRXFyTlIyamRud2sxbjZRcW1xYTk1QWNYc1hrRmtxa1d1cWZS?=
+ =?utf-8?B?TStDZzczQSsxNXIxRWxseG5VYVpFd2JkY3FFRy9TMTVrV1dzL0JzVW1WOTZZ?=
+ =?utf-8?B?UDNPdlRiZ3VWNmlWZ3dLWGxjRlhBLzBoVWlPcGcvWlRyYUYyTGp2OEJRSi9q?=
+ =?utf-8?B?RHBwamtPSVAzczFIaXNjWmJBdlpXdDIwUkdJYmRHRmpJbU5QOFpCd2h5bFZZ?=
+ =?utf-8?B?QlpEYlh0UDJKZlFYMzhGczd4NlR6TDQ0dTBkVDl1RUo5RjhDMVc0RWRDL3Ri?=
+ =?utf-8?B?cXU2TDdWLzUwZUJoVEdCelRpMWxjdElNaXJ6Uzk1NCtBS2dvWjhQSXVoWk1v?=
+ =?utf-8?B?RlM4MFFTT2g0MHhITDVhT2FtU1JZSXllblNZakNjaTk5Njd1NVhEZGtRSE8z?=
+ =?utf-8?B?MUFLVGVGSlBJeWJqaWZFUHdnL1RSeGhzWWp6c29HSnZVTkJaMlptR3d4a2FJ?=
+ =?utf-8?B?VzRBMjczWUttM1JyaFNOQVMzYkVzanQxL2VVWUw0VEx2dEhPalN5cENvZVdk?=
+ =?utf-8?B?T2ZqaE54L3ZGbURxeGJFT3I2V2VsbFRoRUxEUGdheWxBR0tmeFlUR3dLdzZC?=
+ =?utf-8?B?bEFsaVdvd1UxWi9nSklrTTVYY1J5b0VBV1kzVzNkZkNzOFBlRG5aNzR4N0Fw?=
+ =?utf-8?B?NnhCQnZNQzJkaWg0d2M3WGJoR2JSbHRiQ3RZdHFldGVYSGEyOGgzWFpzQkxY?=
+ =?utf-8?B?VVZtWGtvenA0dGNIRm5PRGZQYXRWYVZ5S083OGsvQWtZMnYvSzZwdFVmWkt1?=
+ =?utf-8?B?L2NaVCszL24xSW0rMzhhRThOeWppejlpdFA3Zjc4cHVwNWF1VU0wUzBxSGVI?=
+ =?utf-8?Q?dA1Wg5ORgY20PQ9mrIO6VHQB3BYvJO2fbMNpZZc00d2D?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <A0E0D78B0B060B45BB974092B945BC40@namprd15.prod.outlook.com>
+X-OriginatorOrg: us.ibm.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: MW3PR15MB3898.namprd15.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 77f15550-33cb-4145-c1f6-08db32241b7c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Mar 2023 20:11:26.4107
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: fcf67057-50c9-4ad4-98f3-ffca64add9e9
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ftiXKzRu53SK+y96ZJCl0h/g38pc00WM597IuGNXtHA12mC6k3YIL3vTpAZWQfddCvxQToN28HhmPfjeOgS1+A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA0PR15MB4000
+X-Proofpoint-ORIG-GUID: T7-BmhO0PCDzU8LPMMhMtWBeXJ9srxP4
+X-Proofpoint-GUID: T7-BmhO0PCDzU8LPMMhMtWBeXJ9srxP4
+Content-Transfer-Encoding: base64
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-References: <20230309194402.119562-1-tmaimon77@gmail.com> <20230309194402.119562-2-tmaimon77@gmail.com>
- <495fcc93ab28ff8949569ededee954c1.sboyd@kernel.org>
-In-Reply-To: <495fcc93ab28ff8949569ededee954c1.sboyd@kernel.org>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Fri, 31 Mar 2023 21:07:19 +0300
-Message-ID: <CAP6Zq1hOHJWQSmGoVDz5bSjwdhNyQmaZVOEE8_dX6S4HCFQ2Jg@mail.gmail.com>
-Subject: Re: [PATCH v15 1/1] clk: npcm8xx: add clock controller
-To: Stephen Boyd <sboyd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-31_07,2023-03-31_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 mlxscore=0 spamscore=0
+ lowpriorityscore=0 malwarescore=0 priorityscore=1501 mlxlogscore=429
+ impostorscore=0 phishscore=0 suspectscore=0 clxscore=1011 adultscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2303310161
+X-Mailman-Approved-At: Tue, 04 Apr 2023 11:07:03 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,232 +150,11 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: benjaminfair@google.com, avifishman70@gmail.com, venture@google.com, mturquette@baylibre.com, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, joel@jms.id.au, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-HI Stephen,
-
-Thanks for your comments
-
-On Mon, 20 Mar 2023 at 21:50, Stephen Boyd <sboyd@kernel.org> wrote:
->
-> Quoting Tomer Maimon (2023-03-09 11:44:02)
-> > diff --git a/drivers/clk/clk-npcm8xx.c b/drivers/clk/clk-npcm8xx.c
-> > new file mode 100644
-> > index 000000000000..67058f121251
-> > --- /dev/null
-> > +++ b/drivers/clk/clk-npcm8xx.c
-> > @@ -0,0 +1,561 @@
-> [...]
-> > +
-> > +struct npcm8xx_pll_data {
-> > +       const char *name;
-> > +       struct clk_parent_data parent;
-> > +       unsigned int reg;
-> > +       unsigned long flags;
-> > +};
-> > +
-> > +struct npcm8xx_clk_div_data {
-> > +       u32 reg;
-> > +       u8 shift;
-> > +       u8 width;
-> > +       const char *name;
-> > +       const struct clk_parent_data parent_data;
-> > +       u8 clk_divider_flags;
-> > +       unsigned long flags;
-> > +       int onecell_idx;
-> > +};
-> > +
-> > +struct npcm8xx_clk_mux_data {
-> > +       u8 shift;
-> > +       u32 mask;
-> > +       const u32 *table;
-> > +       const char *name;
-> > +       const struct clk_parent_data *parent_data;
-> > +       u8 num_parents;
-> > +       unsigned long flags;
-> > +};
-> > +
-> [...]
-> > +
-> > +static struct npcm8xx_pll_data npcm8xx_pll_clks[] = {
->
-> Can this be const?
-Will add
->
-> > +       { NPCM8XX_CLK_S_PLL0, { .name = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCON0, 0 },
-> > +       { NPCM8XX_CLK_S_PLL1, { .name = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCON1, 0 },
-> > +       { NPCM8XX_CLK_S_PLL2, { .name = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCON2, 0 },
-> > +       { NPCM8XX_CLK_S_PLL_GFX, { .name = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCONG, 0 },
-> > +};
-> > +
-> > +static const u32 cpuck_mux_table[] = { 0, 1, 2, 7 };
-> > +static const struct clk_parent_data cpuck_mux_parents[] = {
-> > +       { .fw_name = NPCM8XX_CLK_S_PLL0, .name = NPCM8XX_CLK_S_PLL0 },
->
-> You should only have .fw_name or .index when introducing new drivers.
-> The .name field is for existing drivers that want to migrate to
-> clk_parent_data.
-I thought using .name was done when the clock defines in the DT, like
-the ref clock.
-If the other clocks are not defined both .fw_name and .name the clocks
-are not registered properly.
->
-> > +       { .fw_name = NPCM8XX_CLK_S_PLL1, .name = NPCM8XX_CLK_S_PLL1 },
-> > +       { .name = NPCM8XX_CLK_S_REFCLK },
->
-> Note, this line says to use '.index = 0', and .name will be ignored.
-> Maybe just use the index for everything? That makes it simpler and
-> potentially faster because we don't have to do string comparisons
-> anywhere.
-Should the clk_parent_data mux use only .index? if yes how should the
-clock tree have a connection between the parent's clock and the mux
-for example:
-for example, how should the driver connect between
-NPCM8XX_CLK_S_PLL1_DIV2 and the index number in the clk_parent_data?
->
-> > +       { .fw_name = NPCM8XX_CLK_S_PLL2, .name = NPCM8XX_CLK_S_PLL2 }
-> > +};
-> > +
-> > +static const u32 pixcksel_mux_table[] = { 0, 2 };
-> > +static const struct clk_parent_data pixcksel_mux_parents[] = {
-> > +       { .fw_name = NPCM8XX_CLK_S_PLL_GFX, .name = NPCM8XX_CLK_S_PLL_GFX },
-> > +       { .name = NPCM8XX_CLK_S_REFCLK }
-> > +};
-> > +
-> [...]
-> > +
-> > +static unsigned long npcm8xx_clk_pll_recalc_rate(struct clk_hw *hw,
-> > +                                                unsigned long parent_rate)
-> > +{
-> > +       struct npcm8xx_clk_pll *pll = to_npcm8xx_clk_pll(hw);
-> > +       unsigned long fbdv, indv, otdv1, otdv2;
-> > +       unsigned int val;
-> > +       u64 ret;
-> > +
-> > +       if (parent_rate == 0) {
-> > +               pr_debug("%s: parent rate is zero\n", __func__);
-> > +               return 0;
-> > +       }
-> > +
-> > +       val = readl_relaxed(pll->pllcon + pll->reg);
->
-> Is pll->reg ever set?
-Will remove.
->
-> > +
-> > +       indv = FIELD_GET(PLLCON_INDV, val);
-> > +       fbdv = FIELD_GET(PLLCON_FBDV, val);
-> > +       otdv1 = FIELD_GET(PLLCON_OTDV1, val);
-> > +       otdv2 = FIELD_GET(PLLCON_OTDV2, val);
-> > +
-> > +       ret = (u64)parent_rate * fbdv;
-> > +       do_div(ret, indv * otdv1 * otdv2);
-> > +
-> > +       return ret;
-> > +}
-> > +
-> > +static const struct clk_ops npcm8xx_clk_pll_ops = {
-> > +       .recalc_rate = npcm8xx_clk_pll_recalc_rate,
-> > +};
-> > +
-> > +static struct clk_hw *
-> > +npcm8xx_clk_register_pll(struct device *dev, void __iomem *pllcon,
-> > +                        const char *name, const struct clk_parent_data *parent,
-> > +                        unsigned long flags)
-> > +{
-> > +       struct npcm8xx_clk_pll *pll;
-> > +       struct clk_init_data init = {};
-> > +       int ret;
-> > +
-> > +       pll = kzalloc(sizeof(*pll), GFP_KERNEL);
-> > +       if (!pll)
-> > +               return ERR_PTR(-ENOMEM);
-> > +
-> > +       init.name = name;
-> > +       init.ops = &npcm8xx_clk_pll_ops;
-> > +       init.parent_data = parent;
-> > +       init.num_parents = 1;
-> > +       init.flags = flags;
-> > +
-> > +       pll->pllcon = pllcon;
-> > +       pll->hw.init = &init;
-> > +
-> > +       ret = devm_clk_hw_register(dev, &pll->hw);
-> > +       if (ret) {
-> > +               kfree(pll);
-> > +               return ERR_PTR(ret);
-> > +       }
-> > +
-> > +       return &pll->hw;
-> > +}
-> > +
-> > +static DEFINE_SPINLOCK(npcm8xx_clk_lock);
-> > +
-> > +static int npcm8xx_clk_probe(struct platform_device *pdev)
-> > +{
-> > +       struct clk_hw_onecell_data *npcm8xx_clk_data;
-> > +       struct device *dev = &pdev->dev;
-> > +       void __iomem *clk_base;
-> > +       struct resource *res;
-> > +       struct clk_hw *hw;
-> > +       unsigned int i;
-> > +       int err;
-> > +
-> > +       npcm8xx_clk_data = devm_kzalloc(dev, struct_size(npcm8xx_clk_data, hws,
-> > +                                                        NPCM8XX_NUM_CLOCKS),
-> > +                                       GFP_KERNEL);
-> > +       if (!npcm8xx_clk_data)
-> > +               return -ENOMEM;
-> > +
-> > +       res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> > +       clk_base = devm_ioremap(dev, res->start, resource_size(res));
->
-> Can you use devm_platform_ioremap_resource() instead?
-We should use devm_ioremap since the clock register is used for the
-reset driver as well.
->
-> > +       if (!clk_base) {
->
-> Then this is checked for error pointer.
->
-> > +               dev_err(&pdev->dev, "Failed to remap I/O memory\n");
->
-> And no error message.
->
-> > +               return -ENOMEM;
-> > +       }
-> > +
-> > +       npcm8xx_clk_data->num = NPCM8XX_NUM_CLOCKS;
-> > +
-> [....]
-> > +       if (IS_ERR(hw)) {
-> > +               dev_err(dev, "npcm8xx_clk: Can't register axi div2\n");
-> > +               return PTR_ERR(hw);
-> > +       }
-> > +       npcm8xx_clk_data->hws[NPCM8XX_CLK_AXI] = hw;
-> > +
-> > +       hw = devm_clk_hw_register_fixed_factor(dev, NPCM8XX_CLK_S_ATB,
-> > +                                              NPCM8XX_CLK_S_AXI, 0, 1, 2);
-> > +       if (IS_ERR(hw)) {
-> > +               dev_err(dev, "npcm8xx_clk: Can't register atb div2\n");
-> > +               return PTR_ERR(hw);
-> > +       }
-> > +       npcm8xx_clk_data->hws[NPCM8XX_CLK_ATB] = hw;
-> > +
-> > +       /* Register clock dividers specified in npcm8xx_divs */
-> > +       for (i = 0; i < ARRAY_SIZE(npcm8xx_divs); i++) {
-> > +               const struct npcm8xx_clk_div_data *div_data = &npcm8xx_divs[i];
-> > +
-> > +               hw = clk_hw_register_divider_parent_data(dev, div_data->name,
->
-> Do we have a devm_ variant of this function? If not, can you add it?
-I will try to do it.
->
-> > +                                                        &div_data->parent_data,
-> > +                                                        div_data->flags,
-
-Thanks,
-
-Tomer
+Q29tbWl0czoNCg0KaHR0cHM6Ly9nZXJyaXQub3BlbmJtYy5vcmcvYy9vcGVuYm1jL2JtY3dlYi8r
+LzYyMDY0DQpodHRwczovL2dlcnJpdC5vcGVuYm1jLm9yZy9jL29wZW5ibWMvcGVjaS1wY2llLysv
+NjIxMDANCg0KYXJlIG1vdmluZyB0byB0aGUgY29ycmVjdCBQQ0llRGV2aWNlIGludGVyZmFjZS4g
+QW55IGZvcmtzIG9yIGRvd25zdHJlYW0gY29kZSB3aWxsIGFsc28gaGF2ZSB0byBiZSBtb3ZlZC4N
+Cg0KVGhhbmtzLA0KTGFrc2htaSBZYWRsYXBhdGkNCg0K
