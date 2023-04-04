@@ -2,59 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 880946D5E19
-	for <lists+openbmc@lfdr.de>; Tue,  4 Apr 2023 12:52:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 7A6CB6D653C
+	for <lists+openbmc@lfdr.de>; Tue,  4 Apr 2023 16:25:38 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PrPjt3C39z3ch5
-	for <lists+openbmc@lfdr.de>; Tue,  4 Apr 2023 20:52:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PrVRN2ZFbz3cRW
+	for <lists+openbmc@lfdr.de>; Wed,  5 Apr 2023 00:25:36 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=HgFk8cmc;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=U5R6tLp/;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.55.52.115; helo=mga14.intel.com; envelope-from=arun.p.m@linux.intel.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::42e; helo=mail-wr1-x42e.google.com; envelope-from=satishroyal4u@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=HgFk8cmc;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=U5R6tLp/;
 	dkim-atps=neutral
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PrPjJ0zTVz3bfk
-	for <openbmc@lists.ozlabs.org>; Tue,  4 Apr 2023 20:52:18 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1680605540; x=1712141540;
-  h=message-id:date:mime-version:from:subject:to;
-  bh=Nayf4c/PXQ6U4HIkA1GifdZEuEdq2lUW4Q7Coisji18=;
-  b=HgFk8cmcWS34AmheMYhEvIzVKB+Z1Syu/XqZTg861rq4VmAHfMj3q27G
-   oU9KT3OMZCDkInbDF4LLk3xbF6VvFSbfrJm4Dwb9rW2wuJq7QuOq26RxV
-   gDQKh7O5YszFo2f3Hy5rzbrMxFpNX8J+8UCKaqf25inFs2Q7ZGhAfAnmU
-   VFwmwfb1IQonu/1vqlnQO1Y85OAWqC1sYSzK0ESff5X1sQjxFiO2/ghdr
-   jpFldAf6CBZ8LuG+h+YeQFuEY/xp7ELqSxz7R/tLFBPluNszX4XyMkkwl
-   qa3a535/91rqQW+sZfNycOOLiDA6AwvQitHpFhBnmsJsFFgEtsPW5+j4E
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10669"; a="342173270"
-X-IronPort-AV: E=Sophos;i="5.98,317,1673942400"; 
-   d="scan'208,217";a="342173270"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Apr 2023 03:52:14 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10669"; a="932419302"
-X-IronPort-AV: E=Sophos;i="5.98,317,1673942400"; 
-   d="scan'208,217";a="932419302"
-Received: from apm-mobl2.gar.corp.intel.com (HELO [10.213.96.53]) ([10.213.96.53])
-  by fmsmga006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Apr 2023 03:52:14 -0700
-Content-Type: multipart/alternative;
- boundary="------------vEnRehTCbAvKrsRVW2qa88dN"
-Message-ID: <02dddf9c-d74d-14b1-48dd-331522e28fe1@linux.intel.com>
-Date: Tue, 4 Apr 2023 16:22:11 +0530
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PrVQr5L77z2ynD
+	for <openbmc@lists.ozlabs.org>; Wed,  5 Apr 2023 00:25:07 +1000 (AEST)
+Received: by mail-wr1-x42e.google.com with SMTP id i9so33033346wrp.3
+        for <openbmc@lists.ozlabs.org>; Tue, 04 Apr 2023 07:25:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1680618303;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=57D2wawgDyMKdkgtE5Gz0zTv+tEffUawlS7gjXTcmhQ=;
+        b=U5R6tLp/FNKjxs80dp2qeeFIwETg4dnHdzIKLYdX6UBTyeq+pTu+WxiTSaXWM9g8Bj
+         Q2kIlSc5CfBBYWsuiPj2kxEorIINxw15HYuv7sEdQ9iYWNL2uN2Lt2P7zd3QHpFuMWps
+         az8A6517nP6ifuccW0u52LrDqM12pcbU4cy2HTZKyICuntb+fTjriS/HW84/zxpn3R5y
+         3bv/Y2+hOl53veuLYt+sb1FNk9j/+00kaOqfng4sc230L3B8Nymlo1DT7Oy0pIB6Tnf8
+         9usu8USu8Ne3O15JPkeGNFpRqyozrNfd/F3g2k+kY3hMafOan+dqXW6U+J2k3ZcSniJj
+         7ZkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112; t=1680618303;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=57D2wawgDyMKdkgtE5Gz0zTv+tEffUawlS7gjXTcmhQ=;
+        b=tU7lM/CDFzQecLGU3j2vJlv/LW/bjAy5M4jxgNe+O8zjQDHuB5VLyJ9fQq+1muLBuV
+         KSGKLYtzzfVNOu/NJ+u3iUDBLBUze1k/yvHYFFrxDqNFWXO7UjFPvcdKa4m19r1jQR6X
+         ZQmp2k0d3Lomjg4IkuhVDCBkj4ZWkjblU6U/Bu+skIGtNEQNXeIV2AzFSdgSxMwsNjob
+         FJo+PPHKoBiU4MtYqYwdaVO00QAjosAjt1+jBQEgHEgY+m5woG9vzgzn11cuQqYCXjEM
+         P6GqGZh+JhiPGG+vhmtRXSbMenIU7BcODP57ULeAvPIjdBPBhR5k54Ex1aExqxMuf5Hn
+         A1iQ==
+X-Gm-Message-State: AAQBX9fisSyg1j/mtauJGpMzQ7biLkvPuOJ9cZQVnykX9tuHOCY96k7s
+	g4x9vVkBOJ3OtL9omshhYP0kKxI1/d5MpS7kmcQRDkW9RmQ=
+X-Google-Smtp-Source: AKy350aknZrNGyAApvDTtqOwte2PcZkibY+RmkYSklcEd462kPP46Oww4oD714ix1bGkhdsCkHUoSdKcYwKVkk1lhhg=
+X-Received: by 2002:a5d:4603:0:b0:2e4:c9ac:c49e with SMTP id
+ t3-20020a5d4603000000b002e4c9acc49emr541284wrq.9.1680618302541; Tue, 04 Apr
+ 2023 07:25:02 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.9.1
-Content-Language: en-US
-From: "arun.p.m" <arun.p.m@linux.intel.com>
-Subject: Cancelling recurring bi-weekly OpenBMC PMCI WG meetings
-To: openbmc@lists.ozlabs.org
+References: <CAGugOWsUK=2gE6iBiumKukO87b_cgAm2eT+Y=su1PPWow1-S8Q@mail.gmail.com>
+ <20230328224413.GB18848@packtop> <CAGugOWvofh+f15KuMCkC97V-9Hn4QxuVTgw5aXkTM3bVNaeEDg@mail.gmail.com>
+ <CAGugOWv=XF9UHLcgcr-W5_3DE5+w3EaP4i0eHe-nbSFVgJqsHg@mail.gmail.com> <ZCq82_K1gRdlM7Tg@heinlein.vulture-banana.ts.net>
+In-Reply-To: <ZCq82_K1gRdlM7Tg@heinlein.vulture-banana.ts.net>
+From: Satish Yaduvanshi <satishroyal4u@gmail.com>
+Date: Tue, 4 Apr 2023 19:54:51 +0530
+Message-ID: <CAGugOWtUdXVUN3p1oGSe=DS_g04YfxUoe98vfxOL6xYxM9=pjw@mail.gmail.com>
+Subject: Re: Containerization Enablement in OpenBMC firmware
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: multipart/alternative; boundary="000000000000ed131005f8837024"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,52 +75,69 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Zev Weiss <zweiss@equinix.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------vEnRehTCbAvKrsRVW2qa88dN
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+--000000000000ed131005f8837024
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Have gone through some documentation over  internet. Firmware can be
+containerized to get the more benefits.  so is there any plans to
+containerize the OpenBMC firmware?
 
-We had very less topics and reduced attendance in last couple of OpenBMC 
-PMCI WG meetings. Also, the feedback suggests text-based communication 
-is inclusive and more effective to work asynchronously.
+On Mon, Apr 3, 2023 at 5:17=E2=80=AFPM Patrick Williams <patrick@stwcx.xyz>=
+ wrote:
 
-Thus cancelling the *recurring *bi-weekly OpenBMC PMCI WG meetings. 
-Going forward meetings will be scheduled on need basis. For more details 
-please refer - https://github.com/openbmc/openbmc/wiki/OpenBMC-PMCI-WG
+> On Fri, Mar 31, 2023 at 10:55:47PM +0530, Satish Yaduvanshi wrote:
+> > For containerizing firmware, I do believe architecture matters. could
+> > anyone of you  explain the OpenBMC firmware architecture briefly
+>
+> Have you read through any of the design information in the docs
+> repository or watched any of the background videos on the YouTube
+> channel?  Was there any specific questions you had?
+>
+> --
+> Patrick Williams
+>
 
-Thanks,
 
-Arun
+--=20
 
---------------vEnRehTCbAvKrsRVW2qa88dN
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Satish  Kumar G
 
-<html>
-  <head>
+--000000000000ed131005f8837024
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>Hi,</p>
-    <p>We had very less topics and reduced attendance in last couple of
-      OpenBMC PMCI WG meetings. Also, the feedback suggests text-based
-      communication is inclusive and more effective to work
-      asynchronously.</p>
-    <p>Thus cancelling the <b>recurring </b>bi-weekly OpenBMC PMCI WG
-      meetings. Going forward meetings will be scheduled on need basis.
-      For more details please refer - <a moz-do-not-send="true"
-        href="https://github.com/openbmc/openbmc/wiki/OpenBMC-PMCI-WG"
-        class="moz-txt-link-freetext">https://github.com/openbmc/openbmc/wiki/OpenBMC-PMCI-WG</a></p>
-    <p>Thanks,</p>
-    <p>Arun<br>
-    </p>
-  </body>
-</html>
+<div dir=3D"ltr">Have gone through some documentation over=C2=A0 internet. =
+Firmware can be containerized to get the more benefits.=C2=A0 so is there a=
+ny plans to containerize the OpenBMC firmware?</div><br><div class=3D"gmail=
+_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Apr 3, 2023 at 5:17=
+=E2=80=AFPM Patrick Williams &lt;<a href=3D"mailto:patrick@stwcx.xyz">patri=
+ck@stwcx.xyz</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
+g-left:1ex">On Fri, Mar 31, 2023 at 10:55:47PM +0530, Satish Yaduvanshi wro=
+te:<br>
+&gt; For containerizing firmware, I do believe architecture matters. could<=
+br>
+&gt; anyone of you=C2=A0 explain the OpenBMC firmware architecture briefly<=
+br>
+<br>
+Have you read through any of the design information in the docs<br>
+repository or watched any of the background videos on the YouTube<br>
+channel?=C2=A0 Was there any specific questions you had?<br>
+<br>
+-- <br>
+Patrick Williams<br>
+</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
+gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature"><d=
+iv dir=3D"ltr"><div><div dir=3D"ltr"><div><div dir=3D"ltr"><div dir=3D"ltr"=
+><div dir=3D"ltr"><div dir=3D"ltr"><div><br></div><div><span style=3D"font-=
+family:&quot;arial black&quot;,sans-serif;font-size:12.8px">Satish =C2=A0Ku=
+mar G</span><br></div><div><font face=3D"arial black, sans-serif"><br></fon=
+t></div><div><font face=3D"arial black, sans-serif"><br></font></div></div>=
+</div></div></div></div></div></div></div></div>
 
---------------vEnRehTCbAvKrsRVW2qa88dN--
+--000000000000ed131005f8837024--
