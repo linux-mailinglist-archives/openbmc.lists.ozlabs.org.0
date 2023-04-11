@@ -1,67 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3AD256DD10B
-	for <lists+openbmc@lfdr.de>; Tue, 11 Apr 2023 06:40:00 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6DD4F6DD121
+	for <lists+openbmc@lfdr.de>; Tue, 11 Apr 2023 06:50:20 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PwY6Q0vJtz3cMH
-	for <lists+openbmc@lfdr.de>; Tue, 11 Apr 2023 14:39:58 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PwYLL1Wq2z3cV7
+	for <lists+openbmc@lfdr.de>; Tue, 11 Apr 2023 14:50:18 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=gGu1uhuk;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=YRYg9BcI;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::630; helo=mail-ej1-x630.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::629; helo=mail-pl1-x629.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=gGu1uhuk;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=YRYg9BcI;
 	dkim-atps=neutral
-Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PwY5t3W5Gz2yPD
-	for <openbmc@lists.ozlabs.org>; Tue, 11 Apr 2023 14:39:29 +1000 (AEST)
-Received: by mail-ej1-x630.google.com with SMTP id dm2so17293343ejc.8
-        for <openbmc@lists.ozlabs.org>; Mon, 10 Apr 2023 21:39:29 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PwYKn3nKTz3bqw
+	for <openbmc@lists.ozlabs.org>; Tue, 11 Apr 2023 14:49:48 +1000 (AEST)
+Received: by mail-pl1-x629.google.com with SMTP id m18so6659174plx.5
+        for <openbmc@lists.ozlabs.org>; Mon, 10 Apr 2023 21:49:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jms.id.au; s=google; t=1681187964;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ynv+c1uDD/dX+srL/F3UqJNCXqr4FtkcsXibUM8a7+c=;
-        b=gGu1uhukSdvnPnjP4NKlE3X5QbjJWCw0jrPvlmtf7QzCmDkCtmyE0cb5Cs0YFvM5tQ
-         yeef7RciYCPGXkaV4XWopHqBNJmj10CemeEDZX01uXunlmBkNHPKTizmUGclE7mYXMxZ
-         Oi6AWLvBYtQEN+Q+ShP5fyHf0um62DIXdCg2E=
+        d=gmail.com; s=20210112; t=1681188584;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=7cj4odQiw8kfqMVaUgp9nC5vUCvSbD7Emp6IMmdcZaI=;
+        b=YRYg9BcIktmREfbtfhlRFpQMRkRjXBW4vwipuhPiVujNVjoipNdpJutM3W2JIY+C2o
+         8C0LKS2H/eqrprvFU55NoexDPjAlUWcp6fc3EHMxTuRFM6xPanis+axg0GPIcm0hyTJu
+         3q3vROFNWcOSl2oGcUDJ39T+7RPZcVYsp8E/lX0z+p9IHW2/x0hMgzpmHNycNuXir5qB
+         xw7ilDXJbrQuhgZgMK7VDU4hfrIUAz1FI6A5yjMlvaZCYyeSz2VqbPy+3XrQ4vksDoT8
+         IbzzvonRMoje0RGn0ka1Vkml8qHdwBW0Dbh84YeCZ+Ppkeh6Xw6t8JUjayTXyF9dTOkk
+         NT/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681187964;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ynv+c1uDD/dX+srL/F3UqJNCXqr4FtkcsXibUM8a7+c=;
-        b=ad2khh1oD8zo+VcP5qf9K380sUAn6DN71deqAPe1UN483p/WHe8jcXCF52xBUHwZM3
-         PW7ppT3YvCeop2B4ByUMuIvd27zxGdOjDuLMgjn87/XQAsi6kdZuLPaNwesPSzZCzcZG
-         NDR07rch/cFYwC/8qGOU1asmnoCbX4zM6XRCo6cX4IlN9QuhyMkm4TuZyq368/nDwM6E
-         MSG4klL2Qghmg1QnaLONJm5mv9fYhJry8dHe3GhOvs0HMD5BXcgfC4FKky7CZBHv1w55
-         KQ0Ij2q4NuxDdzmEjIJaoYSzPW3dGX3QxEsKvOlx7FkADOZHFlRqVMVccuQR38DIhWid
-         460w==
-X-Gm-Message-State: AAQBX9eHfnAbU/yPCVQqBtD5ICryiqbxDs56fO9bZifgZSC4T/O4bBnY
-	w+FYirTkle8oJJPTakh8E7obhfFL85XQVyRRwSPykiTQH3I=
-X-Google-Smtp-Source: AKy350YKaTdOb9BU2KBe8kG3Lc572OimqTI6dIPeT2az0swlFfVrQBEY89l8jJsGglyLCTTGaSTUNO5vlj8jeNsT8ds=
-X-Received: by 2002:a17:907:970c:b0:8f5:2e0e:6def with SMTP id
- jg12-20020a170907970c00b008f52e0e6defmr5470748ejc.0.1681187964146; Mon, 10
- Apr 2023 21:39:24 -0700 (PDT)
-MIME-Version: 1.0
-References: <191F3605-11DF-4870-AB07-B4A31169B3D2@hpe.com> <CACPK8Xd2kGxq1sb7DKZ0qXoinYygk6WvPTVqy84kgznGrBPdOA@mail.gmail.com>
- <4044DFC4-7175-4E59-9A99-2EE355FF415D@hpe.com>
-In-Reply-To: <4044DFC4-7175-4E59-9A99-2EE355FF415D@hpe.com>
+        d=1e100.net; s=20210112; t=1681188584;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:to
+         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=7cj4odQiw8kfqMVaUgp9nC5vUCvSbD7Emp6IMmdcZaI=;
+        b=yOGExXRr1TqWqfA5wX5e0TpkOUe2BCmQAnBUySNh3QmhPWLs/YczH0jsiLnIIT3+an
+         BMNIFr7uszBvUiei7aLPZJ4jgKGG46wNG1/9fZlw3BoA3S1QHPuJZOlKvJZJ+IzJt8G6
+         eBzJtc53gV4VrrOI+8J69U+OttDHz2GDy6CYBEpNCHPr6dcmKATzs/pkNpiPk9S5rqi2
+         /981NPTE68RhHT8ih/sRxm/HBO1UUTni0RW3b0I5ZUxzImhPS2OW0P1cvC34jZSbFbrL
+         lsSFgmTr2aqRW6sZYsvd5ZFOZMkWXlkGoX8Xl6LW/YZFCJbowUbzXLkJ+mDLHZ5l1Cy7
+         SK1w==
+X-Gm-Message-State: AAQBX9eEhfPLmKqpbq9KXlxM1aHGsd31wlyM0Cuwq231rnRqupVKY3PK
+	Z1SKN0QbyfQhxdArV67hhPtfDK1+uv8=
+X-Google-Smtp-Source: AKy350YGpUNDJwRCzTSO9XBEfslbwdXqMt3mrX35V+73t2on4uan2za5sg8YsELS1ftk/kh5xn9IDQ==
+X-Received: by 2002:a05:6a20:49b0:b0:d8:bd6d:e122 with SMTP id fs48-20020a056a2049b000b000d8bd6de122mr1523508pzb.29.1681188584389;
+        Mon, 10 Apr 2023 21:49:44 -0700 (PDT)
+Received: from localhost.localdomain ([45.124.203.18])
+        by smtp.gmail.com with ESMTPSA id s21-20020aa78295000000b0062dc14ee2a7sm8663607pfm.211.2023.04.10.21.49.42
+        for <openbmc@lists.ozlabs.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 10 Apr 2023 21:49:43 -0700 (PDT)
 From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 11 Apr 2023 04:39:12 +0000
-Message-ID: <CACPK8Xdvcs2LTSdqWcEW-Ppp8NEf=xBkgAw8ytF8Vm=AAVENUA@mail.gmail.com>
-Subject: Re: GXP support into OpenBMC kernel
-To: "Verdun, Jean-Marie" <verdun@hpe.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-6.1 0/2] ARM: config: Add OpenBMC ARMv6/7 defconfig
+Date: Tue, 11 Apr 2023 14:19:32 +0930
+Message-Id: <20230411044935.22608-1-joel@jms.id.au>
+X-Mailer: git-send-email 2.39.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,47 +76,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Hawkins, Nick" <nick.hawkins@hpe.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 5 Apr 2023 at 23:40, Verdun, Jean-Marie <verdun@hpe.com> wrote:
->
-> Hi Joel,
->
-> Thanks for your answer. Here is the process that I propose, let me know i=
-f that doesn't match your expectation.
->
-> - We keep upstreaming into 6.2x and we will warn you about need to backpo=
-rt (I hope it will be easy but I think it will be the case)
+When testing the kernel, we have a in-tree defconfig that has an
+approximation of all the options enabled in the openbmc yocto tree.
 
-You can't upstream to 6.2, that is already released. Did you mean
-mainline? That would be 6.4, although realistically if you don't have
-patches merged yet then you're targeting 6.5.
+This was fine when the focus of development was ASPEED, but with HPE's
+GXP platform getting good upstream support it would simplify testing to
+have a unified config. Nuvoton is lagging somewhat but we can improve
+build testing by adding npcm7xx/poleg coverage too.
 
-> - In parallel, we start enabling some of our gen11 machines into openbmc =
-repo and point to standard openbmc kernel. We have decided to have a fine g=
-rain process to upstream and do it one step at a time. That might look like=
- a little bit overkill, but I think that will be efficient.
+This is a OpenBMC downstream only arrangement for now.
 
-Yes, that's a good plan.
+Joel Stanley (2):
+  ARM: config: Add openbmc defconfig
+  ARM: config: openbmc: Add HPE GPX and Nuvoton 7xx
 
-I've picked all of the GXP patches from mainline that were merged
-after 6.1 that I could find. Take a look here, if it looks okay I'll
-merge them into the openbmc tree:
+ arch/arm/configs/openbmc_defconfig | 329 +++++++++++++++++++++++++++++
+ 1 file changed, 329 insertions(+)
+ create mode 100644 arch/arm/configs/openbmc_defconfig
 
- https://github.com/shenki/linux/commits/dev-6.1
+-- 
+2.39.2
 
-> - When we identify potential bottleneck, we discuss through the mailing l=
-ist about them, and get your feedbacks on how to process.
->
-> We would like to apply the same approach with u-boot, if that is ok for y=
-ou
-
-u-boot is a bit harder. I would prefer not to apply them to the 4 year
-old aspeed tree, as that is already too old. Instead we could start a
-new branch based on the most recent release.
-
-Cheers,
-
-Joel
