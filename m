@@ -2,69 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id BAFFD6DD103
-	for <lists+openbmc@lfdr.de>; Tue, 11 Apr 2023 06:36:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3AD256DD10B
+	for <lists+openbmc@lfdr.de>; Tue, 11 Apr 2023 06:40:00 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PwY2x4kHyz3cT4
-	for <lists+openbmc@lfdr.de>; Tue, 11 Apr 2023 14:36:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4PwY6Q0vJtz3cMH
+	for <lists+openbmc@lfdr.de>; Tue, 11 Apr 2023 14:39:58 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=XTFGEbEA;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=gGu1uhuk;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::102b; helo=mail-pj1-x102b.google.com; envelope-from=timlee660101@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::630; helo=mail-ej1-x630.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20210112 header.b=XTFGEbEA;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=gGu1uhuk;
 	dkim-atps=neutral
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PwV8R4nlbz3c83
-	for <openbmc@lists.ozlabs.org>; Tue, 11 Apr 2023 12:26:31 +1000 (AEST)
-Received: by mail-pj1-x102b.google.com with SMTP id d22-20020a17090a111600b0023d1b009f52so9434602pja.2
-        for <openbmc@lists.ozlabs.org>; Mon, 10 Apr 2023 19:26:31 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4PwY5t3W5Gz2yPD
+	for <openbmc@lists.ozlabs.org>; Tue, 11 Apr 2023 14:39:29 +1000 (AEST)
+Received: by mail-ej1-x630.google.com with SMTP id dm2so17293343ejc.8
+        for <openbmc@lists.ozlabs.org>; Mon, 10 Apr 2023 21:39:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1681179988;
-        h=message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=OOrwJ8ghRFISBlNXfV14EO4Es76TzFfzoWxrMgEV19Q=;
-        b=XTFGEbEAgE+7btTEk5hkOFQLxp1n7sWb5WAeWP2fGJZZ4wQIaSwCH094P8jp/mXr76
-         WNjDk5FKW9Bz6Aqsl8nY8HtCzWOqTEuFAXCUi8xBTQKoWrhVu8pv+6jd/SP5Gm9PS5V6
-         VdasMG2Y1YTitM8V4M9kklPLQG/DX7nomTJUFz3pbu+xyeHkXJQ7kAgFzrLyJ9NNqPxy
-         Rc0tPoT8F1soTfAN7vvWL7bu5DiZ5e+N0LkgFLPuXatqpDgtwqNMJG8RK4Dl0lVqUBm0
-         BiRFhjmBVnsNWoyhSoP4yrEbkQsqksliY30o2nQtgC5L5vn5I9HF0WacSClOh6U622cR
-         5OOg==
+        d=jms.id.au; s=google; t=1681187964;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Ynv+c1uDD/dX+srL/F3UqJNCXqr4FtkcsXibUM8a7+c=;
+        b=gGu1uhukSdvnPnjP4NKlE3X5QbjJWCw0jrPvlmtf7QzCmDkCtmyE0cb5Cs0YFvM5tQ
+         yeef7RciYCPGXkaV4XWopHqBNJmj10CemeEDZX01uXunlmBkNHPKTizmUGclE7mYXMxZ
+         Oi6AWLvBYtQEN+Q+ShP5fyHf0um62DIXdCg2E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1681179988;
-        h=message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20210112; t=1681187964;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=OOrwJ8ghRFISBlNXfV14EO4Es76TzFfzoWxrMgEV19Q=;
-        b=kFvpnJrDGjGuPifiFDBoSIi5RBKqiWCYYQ3xosVcGRKuw5Cejh3n1ajMMlem9GJaG1
-         /agpL1RpOkFZP1ls1rPE9hUYqvz9DtJ9EhYBQ7HA+WYIrdLUh1SqkN44FjiaR4WeOUiF
-         My1VF0Ito2x9eWCGZrJUDFLfLsLo7h+SrWjXy0CZIDFjR+Ky37XlGBp34L21AeBND3Ju
-         0T/+91w+6uSkpjt4ymtXruggPcqg9P1xGhvKu7T6aUuVRHVq90X+idwMSYzf5xCXKCPT
-         O1KNgoaxoH60FBoKc4NREe6pYLHC6c5GUwTQPzt0nRr1KS8hjL5VsiQW/SzjBtuTRLLM
-         yFpA==
-X-Gm-Message-State: AAQBX9d1LY61IGVfQ+tD8SfvrVvMMJj8f3bMfX+7XDX4Mc2EOsdd9RdL
-	JZzg8TpJXkedN8+iOO9sBKG3sA0XgRZCYw==
-X-Google-Smtp-Source: AKy350bHdWswkXHIt4p154ZhsyuYYVzn9J0013fxQlkWaSDv/OioR12yFJAa7VfGssFeL3TF5kWOHQ==
-X-Received: by 2002:a17:90b:4a86:b0:23f:b35a:534e with SMTP id lp6-20020a17090b4a8600b0023fb35a534emr16834065pjb.29.1681179988351;
-        Mon, 10 Apr 2023 19:26:28 -0700 (PDT)
-Received: from localhost.localdomain (60-250-192-107.hinet-ip.hinet.net. [60.250.192.107])
-        by smtp.gmail.com with ESMTPSA id t23-20020a17090ad15700b0023acdac248dsm8134384pjw.15.2023.04.10.19.26.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 10 Apr 2023 19:26:27 -0700 (PDT)
-From: Tim Lee <timlee660101@gmail.com>
-To: timlee660101@gmail.com,
-	chli30@nuvoton.com,
-	openbmc@lists.ozlabs.org,
-	joel@jms.id.au
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc] tools: env: use /run to store lockfile
-Date: Tue, 11 Apr 2023 10:26:14 +0800
-Message-Id: <20230411022614.23046-1-timlee660101@gmail.com>
-X-Mailer: git-send-email 2.17.1
-X-Mailman-Approved-At: Tue, 11 Apr 2023 14:34:44 +1000
+        bh=Ynv+c1uDD/dX+srL/F3UqJNCXqr4FtkcsXibUM8a7+c=;
+        b=ad2khh1oD8zo+VcP5qf9K380sUAn6DN71deqAPe1UN483p/WHe8jcXCF52xBUHwZM3
+         PW7ppT3YvCeop2B4ByUMuIvd27zxGdOjDuLMgjn87/XQAsi6kdZuLPaNwesPSzZCzcZG
+         NDR07rch/cFYwC/8qGOU1asmnoCbX4zM6XRCo6cX4IlN9QuhyMkm4TuZyq368/nDwM6E
+         MSG4klL2Qghmg1QnaLONJm5mv9fYhJry8dHe3GhOvs0HMD5BXcgfC4FKky7CZBHv1w55
+         KQ0Ij2q4NuxDdzmEjIJaoYSzPW3dGX3QxEsKvOlx7FkADOZHFlRqVMVccuQR38DIhWid
+         460w==
+X-Gm-Message-State: AAQBX9eHfnAbU/yPCVQqBtD5ICryiqbxDs56fO9bZifgZSC4T/O4bBnY
+	w+FYirTkle8oJJPTakh8E7obhfFL85XQVyRRwSPykiTQH3I=
+X-Google-Smtp-Source: AKy350YKaTdOb9BU2KBe8kG3Lc572OimqTI6dIPeT2az0swlFfVrQBEY89l8jJsGglyLCTTGaSTUNO5vlj8jeNsT8ds=
+X-Received: by 2002:a17:907:970c:b0:8f5:2e0e:6def with SMTP id
+ jg12-20020a170907970c00b008f52e0e6defmr5470748ejc.0.1681187964146; Mon, 10
+ Apr 2023 21:39:24 -0700 (PDT)
+MIME-Version: 1.0
+References: <191F3605-11DF-4870-AB07-B4A31169B3D2@hpe.com> <CACPK8Xd2kGxq1sb7DKZ0qXoinYygk6WvPTVqy84kgznGrBPdOA@mail.gmail.com>
+ <4044DFC4-7175-4E59-9A99-2EE355FF415D@hpe.com>
+In-Reply-To: <4044DFC4-7175-4E59-9A99-2EE355FF415D@hpe.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Tue, 11 Apr 2023 04:39:12 +0000
+Message-ID: <CACPK8Xdvcs2LTSdqWcEW-Ppp8NEf=xBkgAw8ytF8Vm=AAVENUA@mail.gmail.com>
+Subject: Re: GXP support into OpenBMC kernel
+To: "Verdun, Jean-Marie" <verdun@hpe.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,63 +73,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "Hawkins, Nick" <nick.hawkins@hpe.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-According this issue ppp-project/ppp#339.
-Eventually, the dt-utils changed lock directory to fix missing /var/lock
-directory error then make dt-utils can run normally.
+On Wed, 5 Apr 2023 at 23:40, Verdun, Jean-Marie <verdun@hpe.com> wrote:
+>
+> Hi Joel,
+>
+> Thanks for your answer. Here is the process that I propose, let me know i=
+f that doesn't match your expectation.
+>
+> - We keep upstreaming into 6.2x and we will warn you about need to backpo=
+rt (I hope it will be easy but I think it will be the case)
 
-We also have a similar issue with these two utilities fw_printenv and
-fw_setenv will failed when the directory /var/lock is non-existent.
+You can't upstream to 6.2, that is already released. Did you mean
+mainline? That would be 6.4, although realistically if you don't have
+patches merged yet then you're targeting 6.5.
 
-We have a custom linux distribution built with yocto (OpenBMC) that
-use systemd and it deprecated the /var/lock directory.
-More discussion in systemd/systemd#15668.
+> - In parallel, we start enabling some of our gen11 machines into openbmc =
+repo and point to standard openbmc kernel. We have decided to have a fine g=
+rain process to upstream and do it one step at a time. That might look like=
+ a little bit overkill, but I think that will be efficient.
 
-Thus, we sync with community's solution for uboot/tools/env utilities:
-The current location /var/lock is considered legacy (at least by systemd).
-Just use /run to store the lockfile and append the usual .lock suffix.
+Yes, that's a good plan.
 
-Tested:
-Verified /run/lock is now present and fw_printenv can work in OpenBMC.
+I've picked all of the GXP patches from mainline that were merged
+after 6.1 that I could find. Take a look here, if it looks okay I'll
+merge them into the openbmc tree:
 
-Signed-off-by: Tim Lee <timlee660101@gmail.com>
----
- tools/env/fw_env_main.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ https://github.com/shenki/linux/commits/dev-6.1
 
-diff --git a/tools/env/fw_env_main.c b/tools/env/fw_env_main.c
-index 26ba6624cd..4c84b13cfc 100644
---- a/tools/env/fw_env_main.c
-+++ b/tools/env/fw_env_main.c
-@@ -72,7 +72,7 @@ void usage_printenv(void)
- 		" -c, --config         configuration file, default:" CONFIG_FILE "\n"
- #endif
- 		" -n, --noheader       do not repeat variable name in output\n"
--		" -l, --lock           lock node, default:/var/lock\n"
-+		" -l, --lock           lock node, default:/run\n"
- 		"\n");
- }
- 
-@@ -87,7 +87,7 @@ void usage_env_set(void)
- #ifdef CONFIG_FILE
- 		" -c, --config         configuration file, default:" CONFIG_FILE "\n"
- #endif
--		" -l, --lock           lock node, default:/var/lock\n"
-+		" -l, --lock           lock node, default:/run\n"
- 		" -s, --script         batch mode to minimize writes\n"
- 		"\n"
- 		"Examples:\n"
-@@ -205,7 +205,7 @@ int parse_setenv_args(int argc, char *argv[])
- 
- int main(int argc, char *argv[])
- {
--	char *lockname = "/var/lock/" CMD_PRINTENV ".lock";
-+	char *lockname = "/run/" CMD_PRINTENV ".lock";
- 	int lockfd = -1;
- 	int retval = EXIT_SUCCESS;
- 	char *_cmdname;
--- 
-2.17.1
+> - When we identify potential bottleneck, we discuss through the mailing l=
+ist about them, and get your feedbacks on how to process.
+>
+> We would like to apply the same approach with u-boot, if that is ok for y=
+ou
 
+u-boot is a bit harder. I would prefer not to apply them to the 4 year
+old aspeed tree, as that is already too old. Instead we could start a
+new branch based on the most recent release.
+
+Cheers,
+
+Joel
