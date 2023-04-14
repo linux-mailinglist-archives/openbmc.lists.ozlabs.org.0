@@ -2,75 +2,51 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CF3586E1F0C
-	for <lists+openbmc@lfdr.de>; Fri, 14 Apr 2023 11:10:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5B0E36E27D5
+	for <lists+openbmc@lfdr.de>; Fri, 14 Apr 2023 18:00:01 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4PyVyk1nyHz3fB4
-	for <lists+openbmc@lfdr.de>; Fri, 14 Apr 2023 19:10:06 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Pyh3g1t0Hz3fWV
+	for <lists+openbmc@lfdr.de>; Sat, 15 Apr 2023 01:59:59 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=pfnBK13x;
+	dkim=pass (1024-bit key; unprotected) header.d=inventron.com.tr header.i=@inventron.com.tr header.a=rsa-sha256 header.s=default header.b=rnTVa1jB;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::b36; helo=mail-yb1-xb36.google.com; envelope-from=linus.walleij@linaro.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=inventron.com.tr (client-ip=185.216.113.71; helo=ns1.ihsdnsx51.com; envelope-from=tunc.doygun@inventron.com.tr; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=pfnBK13x;
+	dkim=pass (1024-bit key; unprotected) header.d=inventron.com.tr header.i=@inventron.com.tr header.a=rsa-sha256 header.s=default header.b=rnTVa1jB;
 	dkim-atps=neutral
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+X-Greylist: delayed 397 seconds by postgrey-1.36 at boromir; Sat, 15 Apr 2023 01:59:24 AEST
+Received: from ns1.ihsdnsx51.com (ns1.ihsdnsx51.com [185.216.113.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4PyVyB1Wxfz3cFt
-	for <openbmc@lists.ozlabs.org>; Fri, 14 Apr 2023 19:09:35 +1000 (AEST)
-Received: by mail-yb1-xb36.google.com with SMTP id y16so3048123ybb.2
-        for <openbmc@lists.ozlabs.org>; Fri, 14 Apr 2023 02:09:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1681463364; x=1684055364;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=F81GLoXLZtL8vSYDorqAiL9CnEzuuMOCcLiXsP3TrCA=;
-        b=pfnBK13xoj6MOIemvnh+e0VZmwkcUJ+TfhPfedGgirQgO5YLUTQmosJzSNe/gHWo/1
-         ubKpJ+UjeNxA0eSLk5uTboLOoZ9CVbVps5jQPOuhddVcfEKIRj36V9F6j/Uvfkh+TPpH
-         TbQifVNV4ANZnCz2cCmhsbu7MeK1YAI1WPcIgpMyBNuUbh+3rF6x2e5kF/6sSyEanncz
-         84fruTtD5nT1/ka61tFRLkbHsJzoaWR7jznJ/7MVP0nShZDKy6/Vq8Fpf9Vled7Z2UhU
-         anNFj2syL0/CaF4FpMeFmRw6ZmyAYU8Rq1jnzZZISGDvS81vlH7jZVdZy3oZB7lF9Jbn
-         xrsQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681463364; x=1684055364;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=F81GLoXLZtL8vSYDorqAiL9CnEzuuMOCcLiXsP3TrCA=;
-        b=P2WL18zSCgtj0HHBfc6dWqEL20Z2R9fUXssofWs1p6YdYII+UU98rtqb+mK0zoKBxy
-         utvbSnjSvG/+gGO1I9atxQCGSJmQAAjT7TOIuOx3ZVmKEdxRsrFwXhmAC4no4m5yDZ+v
-         1wNciUBvdeu9XBXEEomvjW7Q+VBLTtNm6owK0pqyqpr3nG4K4r7tRXjYg3XLHHvha8xe
-         Yax0pfjrQNi+T8K1BS79VFLTqVQvh8NVyhN0xEOvjvNXYbBdHzPU8T6qn1rAlxqAyr8H
-         gdjtpwTg0qoEnmKxAUFN+giqcyybJ8MtOIXDRIU80vaUYmzPzNKo0jP76I/I3VcnnQdr
-         iMDw==
-X-Gm-Message-State: AAQBX9eVkeF4kwBdYA5+cib2GMFm1jNrdT6tCGtbi84gQbdwACp9QSNi
-	vVEgMQN3wUnpgJh9ACqAKOOsMjoSqDAHipCSnxwIbg==
-X-Google-Smtp-Source: AKy350bIQo/9mA1ytvcDNUEaapfEg+kfYekEH3BIQxSuBh0eEJRichKnj01FOdNlxlgxYYScjklm2+r1l0zhYAyvmps=
-X-Received: by 2002:a25:d40a:0:b0:b8f:32c4:5cc4 with SMTP id
- m10-20020a25d40a000000b00b8f32c45cc4mr3383651ybf.4.1681463364094; Fri, 14 Apr
- 2023 02:09:24 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Pyh302MGjz3fT6
+	for <openbmc@lists.ozlabs.org>; Sat, 15 Apr 2023 01:59:23 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=inventron.com.tr;
+	s=default; t=1681487960;
+	bh=/ZFnaQ6JCTMZCo/AlRJ2lUClChV5TSic3uuyohpyl+s=;
+	h=Received:Received:To:From:Subject;
+	b=rnTVa1jBVq/NhO833Ng3MDFeZQiXDAf40/etOx4aTCkvFQgsXNK8nTRBDbrATAmqT
+	 ioD2uUwKJcsolsaXBJUzKjvXNmbcAQE48tKuc1+88VBIwjZe8yPuEBWCEtfNfv2/qE
+	 NmXC7kyoaUjXUn9wPSOupzRulg1L0l5kZhI/QjDI=
+Received: (qmail 710761 invoked from network); 14 Apr 2023 18:52:39 +0300
+Received: from 78.189.148.199.static.ttnet.com.tr (HELO ?192.168.1.37?)
+ (78.189.148.199)
+  by ns1.ihsdnsx51.com with ESMTPSA (AES128-GCM-SHA256 encrypted,
+ authenticated); 14 Apr 2023 18:52:38 +0300
+Content-Type: multipart/alternative;
+ boundary="------------ZeV42FIYBhLKM0LjCHNhXZig"
+Message-ID: <cc8b520e-b0b1-66df-d5c4-84931f4a1f8c@inventron.com.tr>
+Date: Fri, 14 Apr 2023 18:52:38 +0300
 MIME-Version: 1.0
-References: <20230403-immutable-irqchips-v1-0-503788a7f6e6@linaro.org>
-In-Reply-To: <20230403-immutable-irqchips-v1-0-503788a7f6e6@linaro.org>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Fri, 14 Apr 2023 11:09:12 +0200
-Message-ID: <CACRpkda8Lp2j_-RWfDb2AppRvkSQ0fdyS56RXS9_OsmeEXqxKg@mail.gmail.com>
-Subject: Re: [PATCH 0/9] Convert low hanging pinctrl irqchips to be immutable
-To: Ray Jui <rjui@broadcom.com>, Scott Branden <sbranden@broadcom.com>, 
-	Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, Andrew Lunn <andrew@lunn.ch>, 
-	Gregory Clement <gregory.clement@bootlin.com>, 
-	Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>, Avi Fishman <avifishman70@gmail.com>, 
-	Tomer Maimon <tmaimon77@gmail.com>, Tali Perry <tali.perry1@gmail.com>, 
-	Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>, 
-	Benjamin Fair <benjaminfair@google.com>, Patrice Chotard <patrice.chotard@foss.st.com>, 
-	Maxime Coquelin <mcoquelin.stm32@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+To: openbmc@lists.ozlabs.org
+Content-Language: en-US
+From: Tunc Doygun <tunc.doygun@inventron.com.tr>
+Subject: smbios-mdrv1
+X-PPP-Message-ID: <168148755901.710750.3449336563857137946@ns1.ihsdnsx51.com>
+X-PPP-Vhost: inventron.com.tr
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,31 +58,110 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Marc Zyngier <maz@kernel.org>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Apr 4, 2023 at 11:43=E2=80=AFAM Linus Walleij <linus.walleij@linaro=
-.org> wrote:
+This is a multi-part message in MIME format.
+--------------ZeV42FIYBhLKM0LjCHNhXZig
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-> This repeats the two-fold exercise in the GPIO subsystem
-> by doing the same for pin control: let's switch over all
-> easily identifiable irqchips to be immutable.
->
-> Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-> ---
-> Linus Walleij (9):
->       pinctrl: iproc: Convert to immutable irq_chip
->       pinctrl: nsp: Convert to immutable irq_chip
->       pinctrl: armada-37xx: Convert to immutable irq_chip
->       pinctrl: npcm7xx: Convert to immutable irq_chip
->       pinctrl: equilibrium: Convert to immutable irq_chip
->       pinctrl: mcp23s08: Convert to immutable irq_chip
->       pinctrl: st: Convert to immutable irq_chip
->       pinctrl: stmfx: Convert to immutable irq_chip
->       pinctrl: sx150x: Convert to immutable irq_chip
+Hi,
 
-No reaction to these patches, so I just merged them.
+We are trying to communicate BMC with bios that supports smbios-mdrv1. 
+We have built the mdrv1 code in Intel's 
+https://github.com/Intel-BMC/provingground/tree/master/services/smbios 
+repo in yocto.We included intel-ipmi-oem project into image. We enabled 
+kcs3 0xCA2 in dts. But we could not communicate. Is there anything else 
+we should do?
 
-Yours,
-Linus Walleij
+intel-ipmi-oem logs:
+
+Apr 14 15:33:50 ipmid[383]: Registering OEM commands
+Apr 14 15:33:51 ipmid[383]: BIOSConfig module initialization
+Apr 14 15:33:51 ipmid[383]: Registering MultiNode commands
+Apr 14 15:33:52 ipmid[383]: Registering Chassis commands
+Apr 14 15:33:52 ipmid[383]: Loading whitelist filter
+Apr 14 15:33:57 ipmid[383]: Unable to find SMM Channel Info
+Apr 14 15:33:57  ipmid[383]: Could not initialize provisioning mode, 
+defaulting to restricted
+Apr 14 15:33:58  ipmid[383]: Error in OperatingSystemState Get
+Apr 14 15:33:58  ipmid[383]: No Object has implemented the interface
+Apr 14 15:33:58  ipmid[383]: The operation failed internally.
+Apr 14 15:33:58  ipmid[383]: Could not initialize CoreBiosDone, 
+coreBIOSDone asserted as default
+Apr 14 15:33:58  ipmid[383]: New interface mapping
+Apr 14 15:33:58  ipmid[383]: Set restrictedMode = false
+Apr 14 15:33:58  ipmid[383]: New interface mapping
+
+ipmid logs:
+
+Apr 14 15:48:21  ipmid[382]: Legacy Handler failed to catch exception
+Apr 14 15:48:23  ipmid[382]: Get Sol Config - Invalid channel in request
+Apr 14 15:48:24  ipmid[382]: Get Sol Config - Invalid channel in request
+Apr 14 15:48:25  ipmid[382]: Get Sol Config - Invalid channel in request
+Apr 14 15:48:26  ipmid[382]: Get Sol Config - Invalid channel in request
+
+--------------ZeV42FIYBhLKM0LjCHNhXZig
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<html>
+  <head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p>Hi,</p>
+    <p><span class="HwtZe" lang="en"><span class="jCAhz ChMk0b"><span
+            class="ryNqvb">We are trying to communicate BMC with bios
+            that supports smbios-mdrv1. We have built the mdrv1 code in
+            Intel's
+            <a class="moz-txt-link-freetext" href="https://github.com/Intel-BMC/provingground/tree/master/services/smbios">https://github.com/Intel-BMC/provingground/tree/master/services/smbios</a>
+            repo in yocto.</span></span><span class="jCAhz ChMk0b"><span
+            class="ryNqvb">We included intel-ipmi-oem project into
+            image. We enabled kcs3 0xCA2 in dts. But we could not
+            communicate. Is there anything else we should do?</span></span></span></p>
+    <p><span class="HwtZe" lang="en"><span class="jCAhz ChMk0b"><span
+            class="ryNqvb">intel-ipmi-oem logs:</span></span></span></p>
+    <p><span class="HwtZe" lang="en"><span class="jCAhz ChMk0b"><span
+            class="ryNqvb">Apr 14 15:33:50 ipmid[383]: Registering OEM
+            commands<br>
+            Apr 14 15:33:51 ipmid[383]: BIOSConfig module initialization<br>
+            Apr 14 15:33:51 ipmid[383]: Registering MultiNode commands<br>
+            Apr 14 15:33:52 ipmid[383]: Registering Chassis commands<br>
+            Apr 14 15:33:52 ipmid[383]: Loading whitelist filter<br>
+            Apr 14 15:33:57 ipmid[383]: Unable to find SMM Channel Info<br>
+            Apr 14 15:33:57  ipmid[383]: Could not initialize
+            provisioning mode, defaulting to restricted<br>
+            Apr 14 15:33:58  ipmid[383]: Error in OperatingSystemState
+            Get<br>
+            Apr 14 15:33:58  ipmid[383]: No Object has implemented the
+            interface<br>
+            Apr 14 15:33:58  ipmid[383]: The operation failed
+            internally.<br>
+            Apr 14 15:33:58  ipmid[383]: Could not initialize
+            CoreBiosDone, coreBIOSDone asserted as default<br>
+            Apr 14 15:33:58  ipmid[383]: New interface mapping<br>
+            Apr 14 15:33:58  ipmid[383]: Set restrictedMode = false<br>
+            Apr 14 15:33:58  ipmid[383]: New interface mapping<br>
+          </span></span></span></p>
+    <p><span class="HwtZe" lang="en"><span class="jCAhz ChMk0b"><span
+            class="ryNqvb">ipmid logs:</span></span></span></p>
+    <p><span class="HwtZe" lang="en"><span class="jCAhz ChMk0b"><span
+            class="ryNqvb">Apr 14 15:48:21  ipmid[382]: Legacy Handler
+            failed to catch exception<br>
+            Apr 14 15:48:23  ipmid[382]: Get Sol Config - Invalid
+            channel in request<br>
+            Apr 14 15:48:24  ipmid[382]: Get Sol Config - Invalid
+            channel in request<br>
+            Apr 14 15:48:25  ipmid[382]: Get Sol Config - Invalid
+            channel in request<br>
+            Apr 14 15:48:26  ipmid[382]: Get Sol Config - Invalid
+            channel in request<br>
+            <br>
+          </span></span></span></p>
+  </body>
+</html>
+
+--------------ZeV42FIYBhLKM0LjCHNhXZig--
