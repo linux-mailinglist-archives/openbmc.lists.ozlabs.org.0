@@ -2,57 +2,57 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 900D66E40CE
-	for <lists+openbmc@lfdr.de>; Mon, 17 Apr 2023 09:26:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 13B6A6E40D3
+	for <lists+openbmc@lfdr.de>; Mon, 17 Apr 2023 09:27:03 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Q0JWp37L9z3cfj
-	for <lists+openbmc@lfdr.de>; Mon, 17 Apr 2023 17:26:30 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Q0JXN6dwcz3cjM
+	for <lists+openbmc@lfdr.de>; Mon, 17 Apr 2023 17:27:00 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.219.176; helo=mail-yb1-f176.google.com; envelope-from=geert.uytterhoeven@gmail.com; receiver=<UNKNOWN>)
-Received: from mail-yb1-f176.google.com (mail-yb1-f176.google.com [209.85.219.176])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.219.178; helo=mail-yb1-f178.google.com; envelope-from=geert.uytterhoeven@gmail.com; receiver=<UNKNOWN>)
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q0JWR4sXDz2yJT
-	for <openbmc@lists.ozlabs.org>; Mon, 17 Apr 2023 17:26:10 +1000 (AEST)
-Received: by mail-yb1-f176.google.com with SMTP id 3so1372042ybc.9
-        for <openbmc@lists.ozlabs.org>; Mon, 17 Apr 2023 00:26:10 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q0JX3631zz3cfJ
+	for <openbmc@lists.ozlabs.org>; Mon, 17 Apr 2023 17:26:43 +1000 (AEST)
+Received: by mail-yb1-f178.google.com with SMTP id j15so3684354ybl.10
+        for <openbmc@lists.ozlabs.org>; Mon, 17 Apr 2023 00:26:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1681716368; x=1684308368;
+        d=1e100.net; s=20221208; t=1681716401; x=1684308401;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=9lk2TzBxvy3H2YxFAlaJgwEBlJno+8HhyM3z0zVaEQA=;
-        b=DwzDCl1/KtLna0iFRCj1GtHA8Vibqo9J8oTx1qVWg5gpTMf180bVYFW6qN0NGiIjjC
-         QdSmWJFWCm9iYsFlwv3jfaY69x5fr3mVafqIlJ6LSOqoFGr7Ej75IsZDuGhzAmXF1VkY
-         NcqokMMvpscCoK0P2y6xBhXaql3U0LB5gFLTPwbpRSpZxad20JAwjCMtAUTrz+S7Pj5q
-         W2MxKv/wwW1PA0PF8GLaAMADnYDJrmEfZ4hDdq+Tv3CqnKUlzp7O/nH/tekpo/3HdmkI
-         r3m2eNEsLAlKWoBwMw2xU7cw+TUXfYYuhlnkCj57c3QECfDTbogDf10h8iENHGYSMlkx
-         h7Hg==
-X-Gm-Message-State: AAQBX9eBSP5NAfBxMf7QoSwtNSqiOIiFLwCpJ2UTshYy/3koEoswjOjZ
-	bTIIG3vJYOfLGwnNmBse02BcC0SvysfTTw==
-X-Google-Smtp-Source: AKy350YTBbZcZoeEuYDyZH1nn+Ul/UDzpzwPai6OLlJt6VoTw8WMnT4Ub7HksH9ka2275TXuJWH2RQ==
-X-Received: by 2002:a05:6902:1545:b0:b92:5744:7cdf with SMTP id r5-20020a056902154500b00b9257447cdfmr2586759ybu.60.1681716367654;
-        Mon, 17 Apr 2023 00:26:07 -0700 (PDT)
-Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com. [209.85.219.169])
-        by smtp.gmail.com with ESMTPSA id eo9-20020a05690c2c0900b0054fa9e39be0sm1397472ywb.56.2023.04.17.00.26.06
+        bh=UnHCIIu6B3qiVRFBtGIosQ/MV7BEV+uDGlhW9VKcxis=;
+        b=MdvNDJflSrXG2DZ4J7m1oZUh2DBnAWdt858frvycKUOLR1bvrM66dUgaArg5240y3b
+         w1NBQg5wPTg1VY7+CpXRZuW5dECEoWG/eRU4gz3gMtFiyM/n1J5JkoJ3QF5SmqpoTc17
+         E0zVZNzDSBEgRLFtwMkueKFRM0Sf04E267NBCszJDTEGUjGPx61/4PnvQxtrR0QpYooA
+         fjVg/hW7R4UzlfDXh7o07U9h9kTdjsjdOVZw0V0HR7i3uNta6um6Amj7kmN85oDPH7lh
+         boe5o/h+ru4404uy0GhBpj7grddL1nN9m/XyQDsKrze4hMRTl7+Zg5bytdaIW8oeIOIa
+         CYIQ==
+X-Gm-Message-State: AAQBX9ddfc/2HHunSSI8+kaMdQUdTrOIdnmteCDZlhyGC7Ji0rNNN1RO
+	Itk/mswx+kIymU/MHgcJFEX19VRe4nY0ow==
+X-Google-Smtp-Source: AKy350ZmdLj6L7wGmP+4d7NaEh2i16MRQPg8/yppHQKKHbeaIZeVw4FQFLgdKT4nM8o23tUN8focqg==
+X-Received: by 2002:a25:1542:0:b0:b92:4ad0:fb1c with SMTP id 63-20020a251542000000b00b924ad0fb1cmr2325179ybv.65.1681716401098;
+        Mon, 17 Apr 2023 00:26:41 -0700 (PDT)
+Received: from mail-yb1-f171.google.com (mail-yb1-f171.google.com. [209.85.219.171])
+        by smtp.gmail.com with ESMTPSA id df5-20020a05690c0f8500b0054f9a3b60a1sm2186755ywb.33.2023.04.17.00.26.40
         for <openbmc@lists.ozlabs.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 17 Apr 2023 00:26:06 -0700 (PDT)
-Received: by mail-yb1-f169.google.com with SMTP id j15so3683149ybl.10
-        for <openbmc@lists.ozlabs.org>; Mon, 17 Apr 2023 00:26:06 -0700 (PDT)
-X-Received: by 2002:a25:d8d7:0:b0:b92:2c78:1481 with SMTP id
- p206-20020a25d8d7000000b00b922c781481mr4579095ybg.12.1681716366734; Mon, 17
- Apr 2023 00:26:06 -0700 (PDT)
+        Mon, 17 Apr 2023 00:26:40 -0700 (PDT)
+Received: by mail-yb1-f171.google.com with SMTP id u13so24891454ybu.5
+        for <openbmc@lists.ozlabs.org>; Mon, 17 Apr 2023 00:26:40 -0700 (PDT)
+X-Received: by 2002:a25:d707:0:b0:b8f:578c:4e3a with SMTP id
+ o7-20020a25d707000000b00b8f578c4e3amr6749432ybg.12.1681716399950; Mon, 17 Apr
+ 2023 00:26:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230412183834.3769519-1-j.neuschaefer@gmx.net>
-In-Reply-To: <20230412183834.3769519-1-j.neuschaefer@gmx.net>
+References: <20230412183834.3769519-1-j.neuschaefer@gmx.net> <20230412183834.3769519-2-j.neuschaefer@gmx.net>
+In-Reply-To: <20230412183834.3769519-2-j.neuschaefer@gmx.net>
 From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Mon, 17 Apr 2023 09:25:55 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdVdJooFiLfttxeRVZO_0doWiurwg3ZkxEbyO7D8eaDeKw@mail.gmail.com>
-Message-ID: <CAMuHMdVdJooFiLfttxeRVZO_0doWiurwg3ZkxEbyO7D8eaDeKw@mail.gmail.com>
-Subject: Re: [PATCH v3 1/2] soc: nuvoton: Add a menu for Nuvoton SoC drivers
+Date: Mon, 17 Apr 2023 09:26:28 +0200
+X-Gmail-Original-Message-ID: <CAMuHMdVUC9n8vQYq+5tXX1jVPSnhyKoMAcB0dd6GFMXA=Apobw@mail.gmail.com>
+Message-ID: <CAMuHMdVUC9n8vQYq+5tXX1jVPSnhyKoMAcB0dd6GFMXA=Apobw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] soc: nuvoton: Add "select REGMAP" to WPCM450 SoC driver
 To: =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
@@ -73,9 +73,8 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On Wed, Apr 12, 2023 at 8:38=E2=80=AFPM Jonathan Neusch=C3=A4fer
 <j.neuschaefer@gmx.net> wrote:
-> Add a menu "Nuvoton SoC drivers" to make it easier to add other Nuvoton
-> SoC drivers later on and to prevent asking about the Nuvoton WPCM450 SoC
-> driver when configuring a kernel without support for Nuvoton SoCs.
+> Select CONFIG_REGMAP from CONFIG_WPCM450_SOC, because the driver relies
+> on regmap to work.
 >
 > Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
 > Link: https://lore.kernel.org/lkml/CAMuHMdWo5vHCeE6BeSHrUy12uT7_wFhW-VbQm=
