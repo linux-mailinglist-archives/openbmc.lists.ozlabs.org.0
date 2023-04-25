@@ -2,70 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3DDEE6EE3E0
-	for <lists+openbmc@lfdr.de>; Tue, 25 Apr 2023 16:27:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F05576EE51D
+	for <lists+openbmc@lfdr.de>; Tue, 25 Apr 2023 17:58:47 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Q5PTv39msz3chj
-	for <lists+openbmc@lfdr.de>; Wed, 26 Apr 2023 00:27:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Q5RW6390Gz3f4t
+	for <lists+openbmc@lfdr.de>; Wed, 26 Apr 2023 01:58:42 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=erUmTkQL;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EgTh2lVl;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::436; helo=mail-pf1-x436.google.com; envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=robh+dt@kernel.org; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=erUmTkQL;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EgTh2lVl;
 	dkim-atps=neutral
-Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q5PTJ3x58z3cK6
-	for <openbmc@lists.ozlabs.org>; Wed, 26 Apr 2023 00:26:59 +1000 (AEST)
-Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-63b4dfead1bso4875750b3a.3
-        for <openbmc@lists.ozlabs.org>; Tue, 25 Apr 2023 07:26:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1682432816; x=1685024816;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=xIrH9084V4lRRI1LBhSxY0IjqfIzWuH7XMc7nqCHfhk=;
-        b=erUmTkQLfAPydHA9OAxgePSaA7Syy7SWx/ybpalyRnfU4l4cftI6jqjsqYUakhWDFT
-         SuSqIc7uNKc+QzRcVZSfTgq4CFwFdOe4gSDxRJthIDoTHQFRglJj7mMxFfkUkWQSa8gz
-         LNRB58wJLtxWEZ6ne1D1/VLKK4E9z05dXWiuTBPsUydyVQxwXQmsE0NjGvuQ4NWoDa+Q
-         fq9yct9apuxJ30O1ZJvzd4mpn7oLaUPNGsEMjdyCw/GeZV1sv0Gt9jhofSBMkkRMLKBe
-         j8XN9EyKvC3rUz5jO6zlk1e2TZC52UJvPPyjgqnpErZymQ50ZwGU49qslcQQ7KLv6CpW
-         IO/A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682432816; x=1685024816;
-        h=to:date:message-id:subject:mime-version:content-transfer-encoding
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xIrH9084V4lRRI1LBhSxY0IjqfIzWuH7XMc7nqCHfhk=;
-        b=WUD5pjZE19Oyg9KFCZmHGdoncALyRgy/4tb3e9PP2YY07DLble448yg47oyzRHTHIE
-         3jpXav7gva8BS+BbyKS6O6kBiwrYF6yk9dmQqnikZC8F5gS3Y3lJtkRb9fH4hsoQ4Sz8
-         nEzRdl+grgPKp1MvhzcaZtlisrT/n3xbYDWzyM0tRm3OrVFfCl3Hw+GVi6XdkXkr7S4K
-         2lQiOknZeNb+2Z/b1cUz8tzKrfjkOAneOAdHl7W1Y6QbXHhOxdrh8aDgLEiwkeNOzpS3
-         hrS39bJWET4GKLlrV3/RuIMzfkeDwoifLg4TDiSVax6oQrx6tbZX6t30HC+nWabyw2um
-         bX1A==
-X-Gm-Message-State: AAQBX9cah4Tc6tfWSHtIsrYtB7SncFc23xUYroEb6DkQSyXR7v74/R2f
-	uySMUoDNqrVbvBGSnjeLNNFN0FiB4vM=
-X-Google-Smtp-Source: AKy350Z56T0vJIAIthepiBZqtzNnZCksWaFw2B7LrYbEReke7D7dM0c3DADwOvTVYoUu/y9erYMf/w==
-X-Received: by 2002:a05:6a00:1a15:b0:63a:d2e4:cc35 with SMTP id g21-20020a056a001a1500b0063ad2e4cc35mr22982477pfv.31.1682432816341;
-        Tue, 25 Apr 2023 07:26:56 -0700 (PDT)
-Received: from smtpclient.apple (184-167-248-253.res.spectrum.com. [184.167.248.253])
-        by smtp.gmail.com with ESMTPSA id g1-20020a056a00078100b0062ddcad2cc5sm9352202pfu.30.2023.04.25.07.26.55
-        for <openbmc@lists.ozlabs.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 25 Apr 2023 07:26:56 -0700 (PDT)
-From: Andrew Geissler <geissonator@gmail.com>
-Content-Type: text/plain;
-	charset=us-ascii
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q5RVZ1rkPz30QQ;
+	Wed, 26 Apr 2023 01:58:14 +1000 (AEST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id 33B3D62890;
+	Tue, 25 Apr 2023 15:58:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24FA0C433A7;
+	Tue, 25 Apr 2023 15:58:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1682438290;
+	bh=itrfj1uL7ULKhIO/qSGGwopdMhHtcuGv7fowY1MDPYk=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=EgTh2lVlpMtQ5px5R+jV+EfXPM/vMd0vZZcesoDR/dZgys7DryqsRrWS2pdpS9uas
+	 OYd9yTEmElOVrIZbn0OqVscAcdbafdiKbG9xGY95F+dXOVKPpAW5UFqkaPFQaikMgo
+	 aWZCYgp15j+P/IiGD62g++flweL1qEmmRIyA46J9ZxdgcgQr67x7Q3TlACfNIAqEWA
+	 ybnHZqICC3N6Bh2h/8vZ/QwOp/oM5lTZZiMl9J1LI5jXGxCqVcLQ5wSHavpOM+9lzJ
+	 GcWe9oPB1zz3J6OXPcR6ftsIf9jN3vnmyzPm8qTrcAX6jvM8Z/Yhdc9tzdb3LHV6hX
+	 cc5h5IH4H4Nww==
+Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-b9582901279so8834664276.2;
+        Tue, 25 Apr 2023 08:58:10 -0700 (PDT)
+X-Gm-Message-State: AAQBX9cdYVp+IG4aDAm1RTlu+NXYKp5sTi4S3gpBHGYNcGDofOuFCJ1d
+	+SaQfGILyQw8E+f1/K5VYxNkl5H0PTCi4C2WBA==
+X-Google-Smtp-Source: AKy350bpts/PPga3+dzd9vak+rbAaLdXpa4DHHS4UXvr1kLSlKfqR897O6l7AESMOVdvAuhJNuLkwu1gSc/085IiOR0=
+X-Received: by 2002:a25:b097:0:b0:b97:f46:a2b8 with SMTP id
+ f23-20020a25b097000000b00b970f46a2b8mr12284894ybj.17.1682438288965; Tue, 25
+ Apr 2023 08:58:08 -0700 (PDT)
+MIME-Version: 1.0
+References: <20220328000915.15041-1-ansuelsmth@gmail.com> <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
+ <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain> <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
+ <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
+In-Reply-To: <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
+From: Rob Herring <robh+dt@kernel.org>
+Date: Tue, 25 Apr 2023 10:57:57 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
+Message-ID: <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
+Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
+To: Geert Uytterhoeven <geert@linux-m68k.org>, Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.3\))
-Subject: etcd in openbmc
-Message-Id: <CD1A5B69-FE10-4122-8D85-DDD501B46CDF@gmail.com>
-Date: Tue, 25 Apr 2023 08:26:54 -0600
-To: OpenBMC List <openbmc@lists.ozlabs.org>
-X-Mailer: Apple Mail (2.3696.120.41.1.3)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,43 +70,61 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-aspeed@lists.ozlabs.org, linux-realtek-soc@lists.infradead.org, linux-arm-kernel@axis.com, linux-stm32@st-md-mailman.stormreply.com, chrome-platform@lists.linux.dev, linux-samsung-soc@vger.kernel.org, openbmc@lists.ozlabs.org, Krzysztof Kozlowski <krzk@kernel.org>, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-actions@lists.infradead.org, linux-unisoc@lists.infradead.org, linux-mediatek@lists.infradead.org, linux-rpi-kernel@lists.infradead.org, linux-tegra@vger.kernel.org, linux-amlogic@lists.infradead.org, linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, Ansuel Smith <ansuelsmth@gmail.com>, linux-renesas-soc@vger.kernel.org, kernel@dh-electronics.com, Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-oxnas@groups.io
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Greetings,
+On Tue, Apr 25, 2023 at 2:28=E2=80=AFAM Geert Uytterhoeven <geert@linux-m68=
+k.org> wrote:
+>
+> Hi Rob,
+>
+> On Tue, Apr 25, 2023 at 12:16=E2=80=AFAM Rob Herring <robh+dt@kernel.org>=
+ wrote:
+> > I have a script[1] that does the conversion written the last time this
+> > came up. Just have to agree on directory names. I think the easiest
+> > would be for Arnd/Olof to run it at the end of a merge window before
+> > rc1.
+>
+> "emev2" and "sh7" are missing for renesas.
 
-We've started to prototype the use of etcd[1] as a mechanism to support =
-a
-system where multiple BMC's will be a part of a single composed system. =
-etcd
-is a strongly consistent, distributed key-value store that provides a =
-reliable
-way to store data that needs to be accessed by a distributed system or =
-cluster
-of machines. The initial use case is to ensure phosphor-settingsd and
-bios-settings-mgr values are consistent across all BMC's in the composed =
-system.
-With a bit of hand waving, the idea is that we have a compile option =
-within
-these repos to build in an etcd plugin that will utilize the =
-etcd-cpp-apiv3[2]=20
-(c++ wrapper library around etcd) to read/write their values into etcd =
-when
-enabled.
+No doubt it's been bitrotting (or I may have missed some).
 
-Our primary use case here is that our BIOS/Host firmware can come down =
-to any
-BMC to read/write BIOS values and the OpenBMC firmware guarantees the =
-data is
-consistent across all BMC's. Also, we ensure all BMC's within the =
-composed
-system are utilizing the same phosphor-settings values.
+> Does your script also cater for .dts files not matching any pattern,
+> but including a .dtsi file that does match a pattern?
 
-Jayanth and I have started the process of getting the etcd recipes into
-meta-openembedded and have some initial WIP patches up at
-https://gerrit.openbmc.org/c/openbmc/openbmc/+/62509
+I assume I built everything after moving, but maybe not...
 
-Thoughts/Comments appreciated.
+That's all just "details". First, we need agreement on a) moving
+things to subdirs and b) doing it 1-by-1 or all at once. So far we've
+been stuck on a) for being 'too much churn'.
 
-[1]: https://etcd.io/
-[2]: https://github.com/etcd-cpp-apiv3/etcd-cpp-apiv3=
+One nice thing with subdirs is 'make CHECK_DTBS=3Dy
+arch/arm/boot/dts/foo/' can build everything for a platform family
+without having to mess with the kconfig. Maybe most folks don't care,
+but I do. My CI job running schema checks looks like this to deal with
+grouping the arm dts files (this list is probably out of date too, but
+less so):
+
+        if [ "$ARCH" =3D "arm" ]; then
+            VENDOR_LIST=3D"alphascale alpine artpec aspeed axm bcm cx9
+(ecx|highbank) \
+              efm ep7 imx1 imx23 imx28 imx27 imx5 imx6 imx7 ls vf qcom \
+              (am3|am4|am5|dra|keystone|omap|compulab|logicpd|elpida|motoro=
+la-cpcap|da|dm)
+\
+              nspire armada dove kirkwood orion mvebu mmp2 berlin pxa
+(arm-|integ|mps|ve) \
+              (at91|sama|usb_|tny_|mpa1600|animeo_ip|aks-cdu|ethernut5|evk-=
+pro3|pm9g45|ge86)
+\
+              exynos s3c s5p gemini (hisi|hi3|hip) mt meson moxa nuvo
+lpc owl ox8 \
+              (r7|r8|r9|emev2|sh73a|gr-|iwg) (rk|rv11) socfpga stm
+(sti|st-pin) ste \
+              spear (sun|axp) tegra uniph (vt8500|wm8) xen zynq"
+        else
+            VENDOR_LIST=3D$(ls arch/$ARCH/boot/dts/ | xargs)
+        fi
+
+Rob
