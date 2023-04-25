@@ -2,86 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F4BC6EE217
-	for <lists+openbmc@lfdr.de>; Tue, 25 Apr 2023 14:45:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3DDEE6EE3E0
+	for <lists+openbmc@lfdr.de>; Tue, 25 Apr 2023 16:27:34 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Q5MDf0Bd3z3cd6
-	for <lists+openbmc@lfdr.de>; Tue, 25 Apr 2023 22:45:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Q5PTv39msz3chj
+	for <lists+openbmc@lfdr.de>; Wed, 26 Apr 2023 00:27:31 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=en8cmqwn;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ZsC5CGFe;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=erUmTkQL;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.29; helo=out5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::436; helo=mail-pf1-x436.google.com; envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=en8cmqwn;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ZsC5CGFe;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=erUmTkQL;
 	dkim-atps=neutral
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q5MD52rRkz2xKS
-	for <openbmc@lists.ozlabs.org>; Tue, 25 Apr 2023 22:45:25 +1000 (AEST)
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-	by mailout.nyi.internal (Postfix) with ESMTP id 6F8965C0198;
-	Tue, 25 Apr 2023 08:45:23 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute4.internal (MEProxy); Tue, 25 Apr 2023 08:45:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1682426723; x=1682513123; bh=9i
-	lD7rtXS/Z3T8ECZjx/vthNJE6BarC3gPm4khDo3Ms=; b=en8cmqwnVkjzWHhHLp
-	wY64oQC57QBFKkvm0p66/aK6ntNr588975PETfnwxW2gsdvAMzENev4gkwrR5hqJ
-	xDa//7ltgQRcXkmLeREiMUdnVxs+v4HMzkz0SvgUO8t7Bl54et5qbxVX3s+9eWn7
-	iprGKxuWCtEC2+zz8wZ1/WP8jKWmj6Ik4S39fsR7OBlzreVczHXpG7/B1IYYNcRk
-	2/xrgdKv2G458YTQ5ypOMQi5bEh98O0yzieqNOFkjqISML2g2wg33ssh+hp2wJCg
-	SEJ3N2+3dUND0G0+Wgkq6itIZFjxdRyUPkp2w3tOe233GWdr6IkKNSXklMnF7PbY
-	1fUQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1682426723; x=1682513123; bh=9ilD7rtXS/Z3T
-	8ECZjx/vthNJE6BarC3gPm4khDo3Ms=; b=ZsC5CGFesCtyxyF+rovkG2G0HdvKY
-	4oTRAXS76Rnvp4OQY3p9WrbpN2wbTaovs8zNhysh6vY1yJ/x1WseC5h48vbfQGkO
-	GBJCjVB9FsLgqx9OlMNlb8UK0pmMMuIy+3VfKGTkKPs9g/M86YqAjNSev0ggkYR3
-	q1fUcdzT8yJVyiA557fcxaVWxgqV3vePuxeSrKkviyjIYqORrOW/VBkyb9FGXRo5
-	GACfLDfGK+stEQQdkHO/LvaPeM1f5NUDTncPiC8Z/lpbLNS7q6UUJ9Kh8YhbO6CG
-	KaSznYDS9AbZlAFPEavjNAXI1p714JH4Z80Pg6OJTbCIH5AxPpMh7yWYw==
-X-ME-Sender: <xms:Y8tHZAYNQPC5alcfU3QxdJl1yO2QxQFFWZIGOoPIwUGlnLp6z3cwDQ>
-    <xme:Y8tHZLYLd1RjUNdCuZxa4dxSDVnqmhPWClFM_fSUZIbpAnKqvPBKl2r9Msietefpb
-    6-wm8ezUKlJrNpuaaU>
-X-ME-Received: <xmr:Y8tHZK_YXYJ5hFjYxMInm7sx1-n0utnhT2l4Pa4PYncea3OAdbhIxIESwtN4sZUKH5biJjNxTUl0vN8rONwScdxuJQW4hcxCcLQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeduvddgheeiucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredt
-    tddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
-    hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeehfeejheeftdejiedvfeekffeh
-    ledukeduleelffekgfdtleduledvtdegtdehkeenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:Y8tHZKro2Zpwj28lxK_TkdYvMCcnZ3VzO4DRc5IQzlcIYfp39_t2jg>
-    <xmx:Y8tHZLqQzNpJdv_Kbl1xfedFrzN-EIA1N6OwB4fyTUSkNETkfPZUmQ>
-    <xmx:Y8tHZIRXfysLe0qYxSfVqj-0BhXcbcfwbOuPXzPVQ7a9Atppsa40Fw>
-    <xmx:Y8tHZKS8RULRz7GBAczpONwbW1MzWUl08hnU2oi8tT5ftXISG_3woA>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Apr 2023 08:45:22 -0400 (EDT)
-Date: Tue, 25 Apr 2023 07:45:22 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Francine Sauvage <francine.sauvage@atos.net>
-Subject: Re: return error on property changes
-Message-ID: <ZEfLYnpMUO_owCVx@heinlein.vulture-banana.ts.net>
-References: <PAXPR02MB7680989DB7CF5B5C47627599E4669@PAXPR02MB7680.eurprd02.prod.outlook.com>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="uHo0oRsPhLoTTUry"
-Content-Disposition: inline
-In-Reply-To: <PAXPR02MB7680989DB7CF5B5C47627599E4669@PAXPR02MB7680.eurprd02.prod.outlook.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q5PTJ3x58z3cK6
+	for <openbmc@lists.ozlabs.org>; Wed, 26 Apr 2023 00:26:59 +1000 (AEST)
+Received: by mail-pf1-x436.google.com with SMTP id d2e1a72fcca58-63b4dfead1bso4875750b3a.3
+        for <openbmc@lists.ozlabs.org>; Tue, 25 Apr 2023 07:26:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1682432816; x=1685024816;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xIrH9084V4lRRI1LBhSxY0IjqfIzWuH7XMc7nqCHfhk=;
+        b=erUmTkQLfAPydHA9OAxgePSaA7Syy7SWx/ybpalyRnfU4l4cftI6jqjsqYUakhWDFT
+         SuSqIc7uNKc+QzRcVZSfTgq4CFwFdOe4gSDxRJthIDoTHQFRglJj7mMxFfkUkWQSa8gz
+         LNRB58wJLtxWEZ6ne1D1/VLKK4E9z05dXWiuTBPsUydyVQxwXQmsE0NjGvuQ4NWoDa+Q
+         fq9yct9apuxJ30O1ZJvzd4mpn7oLaUPNGsEMjdyCw/GeZV1sv0Gt9jhofSBMkkRMLKBe
+         j8XN9EyKvC3rUz5jO6zlk1e2TZC52UJvPPyjgqnpErZymQ50ZwGU49qslcQQ7KLv6CpW
+         IO/A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682432816; x=1685024816;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xIrH9084V4lRRI1LBhSxY0IjqfIzWuH7XMc7nqCHfhk=;
+        b=WUD5pjZE19Oyg9KFCZmHGdoncALyRgy/4tb3e9PP2YY07DLble448yg47oyzRHTHIE
+         3jpXav7gva8BS+BbyKS6O6kBiwrYF6yk9dmQqnikZC8F5gS3Y3lJtkRb9fH4hsoQ4Sz8
+         nEzRdl+grgPKp1MvhzcaZtlisrT/n3xbYDWzyM0tRm3OrVFfCl3Hw+GVi6XdkXkr7S4K
+         2lQiOknZeNb+2Z/b1cUz8tzKrfjkOAneOAdHl7W1Y6QbXHhOxdrh8aDgLEiwkeNOzpS3
+         hrS39bJWET4GKLlrV3/RuIMzfkeDwoifLg4TDiSVax6oQrx6tbZX6t30HC+nWabyw2um
+         bX1A==
+X-Gm-Message-State: AAQBX9cah4Tc6tfWSHtIsrYtB7SncFc23xUYroEb6DkQSyXR7v74/R2f
+	uySMUoDNqrVbvBGSnjeLNNFN0FiB4vM=
+X-Google-Smtp-Source: AKy350Z56T0vJIAIthepiBZqtzNnZCksWaFw2B7LrYbEReke7D7dM0c3DADwOvTVYoUu/y9erYMf/w==
+X-Received: by 2002:a05:6a00:1a15:b0:63a:d2e4:cc35 with SMTP id g21-20020a056a001a1500b0063ad2e4cc35mr22982477pfv.31.1682432816341;
+        Tue, 25 Apr 2023 07:26:56 -0700 (PDT)
+Received: from smtpclient.apple (184-167-248-253.res.spectrum.com. [184.167.248.253])
+        by smtp.gmail.com with ESMTPSA id g1-20020a056a00078100b0062ddcad2cc5sm9352202pfu.30.2023.04.25.07.26.55
+        for <openbmc@lists.ozlabs.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 25 Apr 2023 07:26:56 -0700 (PDT)
+From: Andrew Geissler <geissonator@gmail.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.3\))
+Subject: etcd in openbmc
+Message-Id: <CD1A5B69-FE10-4122-8D85-DDD501B46CDF@gmail.com>
+Date: Tue, 25 Apr 2023 08:26:54 -0600
+To: OpenBMC List <openbmc@lists.ozlabs.org>
+X-Mailer: Apple Mail (2.3696.120.41.1.3)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,68 +77,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Greetings,
 
---uHo0oRsPhLoTTUry
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+We've started to prototype the use of etcd[1] as a mechanism to support =
+a
+system where multiple BMC's will be a part of a single composed system. =
+etcd
+is a strongly consistent, distributed key-value store that provides a =
+reliable
+way to store data that needs to be accessed by a distributed system or =
+cluster
+of machines. The initial use case is to ensure phosphor-settingsd and
+bios-settings-mgr values are consistent across all BMC's in the composed =
+system.
+With a bit of hand waving, the idea is that we have a compile option =
+within
+these repos to build in an etcd plugin that will utilize the =
+etcd-cpp-apiv3[2]=20
+(c++ wrapper library around etcd) to read/write their values into etcd =
+when
+enabled.
 
-On Sun, Apr 23, 2023 at 08:29:03AM +0000, Francine Sauvage wrote:
-> Hi,
-> I cannot implement the following use case:
->=20
-> From bmcweb code, I set RequestedPowerTransition.
-> From requestedPowerTransition (phosphor-state-manager) code , I have a ba=
-d condition and I reject the transition.
->=20
-> =3D=3D> How can I throw something (error code, exception ?) back to bmcwe=
-b in order to know what happened exactly ?
->=20
-> I was not able to add a "exceptions:" part in yaml around a property to c=
-reate and throw a specific exception while getting / setting a property, li=
-ke I did with methods.
->=20
-> I need to declare (and return) an exception while a property is changing,=
- especially when the transition is not accepted.
->=20
-> I have an old version of openbmc, it may be solved in the new version, bu=
-t please tell me how to help me eventually patching the needed parts,
->=20
+Our primary use case here is that our BIOS/Host firmware can come down =
+to any
+BMC to read/write BIOS values and the OpenBMC firmware guarantees the =
+data is
+consistent across all BMC's. Also, we ensure all BMC's within the =
+composed
+system are utilizing the same phosphor-settings values.
 
-I think you used the wrong YAML keyword.
+Jayanth and I have started the process of getting the etcd recipes into
+meta-openembedded and have some initial WIP patches up at
+https://gerrit.openbmc.org/c/openbmc/openbmc/+/62509
 
-```
-$ git grep "exceptions:" | wc -l      =20
-0
-$ git grep "errors:" | wc -l      =20
-161
-```
+Thoughts/Comments appreciated.
 
---=20
-Patrick Williams
-
---uHo0oRsPhLoTTUry
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmRHy2IACgkQqwNHzC0A
-wRkrcA/9G9XOTzvKOn6p8IlRgtwmwZGbHEf6ZFeKCOlgej9V59zG9NhZMiUG9dSh
-ZqSPrZFh8bKs4LEWRugNfC5lOzcdP+iVliGR2wkssxb1oVQfcoxPs0/yH7QcUkhC
-ymjRtuM0cFBv7MnqG84Rn3Vf2DdQ3TwlODOBoI1UA+2u5ZxB6FzvELfrjCVGdMqt
-YQbbn4Sg+plFaR0gPVxkarqL3LHo/rYQBcyBDHuRhRFPRHkalQ8hethvFqMiMkN+
-YicfrqkA8ShrNRQcAGIVzzvlrl96Xr6lZWXnhnhtriKaUHHZNkm8hnFw8MxF6VXf
-dTbf6aYdz5d2NBb1gsed/vHRSFioZajJpyxSiJ9sPwbgubu0DF/KC9JqibEl4K6v
-ySMiFpaBTs/5XAkvCYOJ+mwA/ITE7Bk7j+CBXHuK3GHMIP8qrbaZc/3r1cLBFkqT
-mSnzXm/u7QXwR2v7jE5QvrRoF5ay/Tvmglodc7byLJ09qtWIQukXPNoFKpDs4TRQ
-D62UAaE0gYt95KJntNCyZyA3kRO5C3PTF9Ivh0PSgrux+ivE9cmiG0Et30WQE/O0
-lJ69S0hOrxY8lXZ0hvUfVkuTQcPm3O5qlHZTph+0bNTHAhlA/0oGt+yLrsWgmItz
-xSSZwxSJTyCs1K2Q8gPsSABEWeU24Vt5qtiiDNVbX1ZbEiPxR4Y=
-=eJ3d
------END PGP SIGNATURE-----
-
---uHo0oRsPhLoTTUry--
+[1]: https://etcd.io/
+[2]: https://github.com/etcd-cpp-apiv3/etcd-cpp-apiv3=
