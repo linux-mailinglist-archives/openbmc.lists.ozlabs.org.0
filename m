@@ -1,33 +1,33 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id BD3146EDC03
-	for <lists+openbmc@lfdr.de>; Tue, 25 Apr 2023 09:00:29 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 375206EDC05
+	for <lists+openbmc@lfdr.de>; Tue, 25 Apr 2023 09:01:22 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Q5CZ344vqz3cK6
-	for <lists+openbmc@lfdr.de>; Tue, 25 Apr 2023 17:00:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Q5Cb412q7z3bh3
+	for <lists+openbmc@lfdr.de>; Tue, 25 Apr 2023 17:01:20 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=WMtkWWXY;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=S9JB08nQ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:fe5b::726; helo=nam12-bn8-obe.outbound.protection.outlook.com; envelope-from=chanh@os.amperecomputing.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7eb2::72f; helo=nam02-bn1-obe.outbound.protection.outlook.com; envelope-from=chanh@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=WMtkWWXY;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=S9JB08nQ;
 	dkim-atps=neutral
-Received: from NAM12-BN8-obe.outbound.protection.outlook.com (mail-bn8nam12on20726.outbound.protection.outlook.com [IPv6:2a01:111:f400:fe5b::726])
+Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam02on2072f.outbound.protection.outlook.com [IPv6:2a01:111:f400:7eb2::72f])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q5CWW3Vqtz2xbC;
-	Tue, 25 Apr 2023 16:58:15 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q5CWy5vrHz3cd6;
+	Tue, 25 Apr 2023 16:58:38 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=AFXeVE0fqh7P2Dr4GEMVw/ezJ75Rr47Cwa6NS32Z/qwkQQfJOh1zl29hne9aMTEsXFnp6/+K+UaH4jF0J02UfNmUDdbHDUsyjswrK6O+lS/FesBwFRbGc0G7F7Wk/T/72rQcLNySGYXKXqvPTsK+Hv98snNmrZcnR11/tyXlJFNOPdwQdoPk9zpWFH7GZEc4oG6txc9a9tOWXEb/6sXE3DzHW8RkFOkEsrQjLZG/EATrjE3rMRc/eBWpTTUxWpayTYw7cevcxiGyMLckL1lanXrM1Rq+kmtMcEWIlrh+70xSKTBPxQ8cQJS6g2VoUMQKr22I5SpCRE4SbHDhaJITRA==
+ b=cRSbrfw6/7RRmj0iQZ9XcLDzslilP9Y/LSjluV+VZXXX5expmO4/8oXCQUkpU8YagBgkdBjKQce+RyrAclFlNJxLWW9EKYcEETIHD9bJC6B3hWEkRu20/kWFS2BAfKc/2TnYSFxOlHbEd41kC6B8JrOpbM5UpwLl38/ZWYyocI/beCyKrjDFcoycJSDcD1YwC5WwX63z3s0ZX0VzIlPTBJOpCSvUqyRYLQp3lOq7PTnz18qSRA9gcvFfocR9TQhFwrTZBK/YfIdrawZ/6hPnNVgEKoBpF/LhlRdvFFvSFRBTXb5wgoYuFvSIZ5sRmkxPmW4rLGNkjZ33VI8w77Dbjg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rg+cMoirJ2FrVqpGHaVNOdkm/zS+vXiFXl3xcs9AUMc=;
- b=LDpY0h0ygzA00JLJFcGj686BXkMkMu90qS4I5ayO3ZiRFeRPy1nXI9t0twKiu93FwTn7mYL4lzA68YlbvbMUL9xB2xe2WkRpYzOwN7GVNAgt5uotBI/0bFAW19sTnP/gtatJiCHMckr5Pv1QAr5fu4NgMe9slbHd2AVUpanwWeDHNDkr+gZc1KLq2mrYKS/xnOoKryx6kMKO0waljRhAbF+G7Vd5oXtcsYGKSisoXX2hkZYSOLZbYuxJH3E0JtA49N1pRF9OzUNwS1cnQP5iUygez1VdJOELGSckl124wh40k27p0bObypzKmZXOYnOJVB0r3Bda+QbaNIKpI3LjrQ==
+ bh=BsgOiHHpxY+wnoEyDLlsEeEqiFxUKcTKV9FoEc/l4Cg=;
+ b=V64IJ9iAx0wsvh8k0fRzj27DOZDn8XvyCY6NjDgbBZ7UHYDR7/V2gE5Oo2pyzM4OoyoXNL905xUTz5i0WiVEX/sfyWRCs1V8oNfQzopc/Oumme4nAse/7D34/93vVM/5g44aQT3hdWJa0J3IckmmoapVwbCRvC8C9vULVuAuPGOB1ZM5WmjzbQ1tmYG59eG/OZWvNPyJ9PIMloFcKZHkm89zFwpfc1ZH4MUUH02K9AJXRGWmT9N2y1S2QOVcsZ5RSqRnUPxGBXPmZKLBcLAV+y2ColmNZboH+7iTMpCr3KYjigYefRz4zxLzyfWhaMivVqHYa2Fogxh/Zz98d0dxTg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
  header.from=os.amperecomputing.com; dkim=pass
@@ -35,18 +35,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=os.amperecomputing.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rg+cMoirJ2FrVqpGHaVNOdkm/zS+vXiFXl3xcs9AUMc=;
- b=WMtkWWXYO/SNAlweBTtVcvZHo+IOC9XWQv3592ICOOJx+SJ6x5OcxYHypOCHPEaFf4M9FhVSTy29eayDW0iFOGB0t7hFjXgSNd1mtRhXpQ6QHodzdysUIQPXRPn15LEDP8r2fIVGzfQAoCXzTflGdrX6wgDG0IxUX5TeYZUV9JU=
+ bh=BsgOiHHpxY+wnoEyDLlsEeEqiFxUKcTKV9FoEc/l4Cg=;
+ b=S9JB08nQcuEwdSRZAMC+h9KukVBVAIM1OEl+B+cqDSvQiyQZ4Qt6Rgb9djB9e40ijEUyVstH9ADw9r+gR1Aonrut5Qu0JEDRqo5IKW/nNEk+bq9JKDhdTTpJVB0EkJCUQrtPQd5IduvX1HZs3+aQvVeb9MfroO62L5ET5pOiiIk=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
 Received: from BYAPR01MB4966.prod.exchangelabs.com (2603:10b6:a03:7e::28) by
  PH0PR01MB6504.prod.exchangelabs.com (2603:10b6:510:b::14) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6340.19; Tue, 25 Apr 2023 06:58:12 +0000
+ 15.20.6340.19; Tue, 25 Apr 2023 06:58:20 +0000
 Received: from BYAPR01MB4966.prod.exchangelabs.com
  ([fe80::46c3:3b44:d2f8:4c3]) by BYAPR01MB4966.prod.exchangelabs.com
  ([fe80::46c3:3b44:d2f8:4c3%4]) with mapi id 15.20.6340.019; Tue, 25 Apr 2023
- 06:58:12 +0000
+ 06:58:20 +0000
 From: Chanh Nguyen <chanh@os.amperecomputing.com>
 To: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
 	Rob Herring <robh+dt@kernel.org>,
@@ -57,9 +57,9 @@ To: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
 	linux-arm-kernel@lists.infradead.org,
 	linux-aspeed@lists.ozlabs.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 2/4] ARM: dts: aspeed: mtmitchell: Add I2C Fan
-Date: Tue, 25 Apr 2023 13:57:13 +0700
-Message-Id: <20230425065715.21871-3-chanh@os.amperecomputing.com>
+Subject: [PATCH 3/4] ARM: dts: aspeed: mtmitchell: Update ADC sensors for Mt.Mitchell DVT systems
+Date: Tue, 25 Apr 2023 13:57:14 +0700
+Message-Id: <20230425065715.21871-4-chanh@os.amperecomputing.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20230425065715.21871-1-chanh@os.amperecomputing.com>
 References: <20230425065715.21871-1-chanh@os.amperecomputing.com>
@@ -70,51 +70,51 @@ X-ClientProxiedBy: SG2PR02CA0051.apcprd02.prod.outlook.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: BYAPR01MB4966:EE_|PH0PR01MB6504:EE_
-X-MS-Office365-Filtering-Correlation-Id: 57ef7d1b-cdf7-45aa-c6d4-08db455a6f86
+X-MS-Office365-Filtering-Correlation-Id: 71389a6c-9b86-48b0-556f-08db455a73fa
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	MFUnOfrwP+ZxdqXfZdnuG8wmnGkYv6A4d4gFIC9M4IVH/L+K3Mql0msGjv9Inv1nJi6MDRrHMjy16Bgk2r1zFO68rLIrhmUGTTpTX1yycqENuWHherHERUgSH4EASgrDeKeTKx04efCQNQJw6xalSahjjh+Vu4OkZ8Uedkrd4P4i+/kFePAqOt71Yzdrzn6NXpb8Zsb9GD7L1r7dvjr+sKiChfPqZRvh8nucW79+yyTh/7ujRQ/0Dq5AGS3NAn4vrJKYWmO1i4/s30u1qSrqqWkosmhHvokpzKmCav/70f/K7djUv9rK7y2nfuPpBXRGyi35j53JlS50+mgm5cZnuKc+f+2JpWG7v8P6cvtvHjKwRzzaefyQFPlVGsOzD+Uo3K9kGoJWUrwV/zvYz2qVymmNrl9X/k5lTne0jnLaaeCKHM3+qzhyemBuZRzBhaCgPqX/+cOCeXIT7mQLzLhW8zsBVNtdw1VaDR9sepfMflG9fjg8th/+hLoQ4h3frc7Obg5eJfNA5ojTVXTibO3Y3naNw3sZRe3sb+NjEFpvNl4PeZg6WA2bgC3LrXLppE6Pfnz1QKaaO/J1pNM24M6hl3a2j8wG63kCv/CAW/Y8wpfb1dZIUJV47qqO9fs8JeW9
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR01MB4966.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(366004)(396003)(346002)(39850400004)(376002)(136003)(451199021)(107886003)(6506007)(1076003)(26005)(6512007)(2616005)(186003)(38350700002)(38100700002)(66946007)(478600001)(86362001)(66556008)(66476007)(8676002)(8936002)(110136005)(5660300002)(52116002)(6486002)(41300700001)(2906002)(4744005)(4326008)(316002);DIR:OUT;SFP:1102;
+X-Microsoft-Antispam-Message-Info: 	IY/blidp4dHgGVRHuXR31zK0h3btv6JguWs9Wm1rSauaC02MKZdNqthG/qXX/BBIFPHQVAFrcvkJ7qk2fL/CExHZ5seX1CkBwTDgpx+oVhynA60IcyfW08fCaue+dzu5PdIF7lIDdRN3xNpgL5fc0J6SAyjUjBA0gvKTau7GoUtetU4UAwDWvgfumZUR+OlyrS30KyFP/Rxv1Bsp1nGELU1CtpKjDvNmiHI4dSCueguM3RnmNKQYMHVGO3Fv1WwCAHVx6zoYFnMOA4IjEUslHVf4eiYkCGUBZz2f/CDZFTeKPBgotwpnUF4mb2cU7nWnCH2KXBY3QPKlPVf/6qf5CVj1BOL2MC1L7moVM3mdLoDlFOLRd7XvS+yEgLwFsCsUnPSfv/5CglxlB67igPjSEx50de6pkCN/UHqCBbdaFoMzZBx6yGVxgU5pl9jJdW/AC4nGW9P89hQ2ECCIzS19Ofj7rppYxzfW3aXfuM3UrZKDVhn+zT/XRqgqoEaWS2GrmhbjJ0XPfKq1NorWKZrPnSXr1FhVdjKJNCXyMNeUo9VyUlZhrtmTfJOF0C7KZcIduNvlSH6+czP07dE4D/gJ9W5FQoqXmutcbiyJBGuSPoO5VaS7lKop2IhS118Y47lrk9CfzvlFmPV+vCCF4S6a/gPFD7p1CszQbTId+AwVCxY=
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR01MB4966.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(366004)(396003)(346002)(39850400004)(376002)(136003)(451199021)(107886003)(6506007)(1076003)(26005)(6512007)(2616005)(83380400001)(186003)(38350700002)(38100700002)(66946007)(478600001)(86362001)(66556008)(66476007)(8676002)(8936002)(110136005)(5660300002)(52116002)(6486002)(41300700001)(2906002)(4326008)(6666004)(316002)(414714003)(473944003);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?us-ascii?Q?DlUK6GN+sFpbmIhBR4vS6n4MCAYAk2gP8sx07yk2LcYy6+1lKDZApybFnUv2?=
- =?us-ascii?Q?7VXrc4ILgZ63xc93sClRvxLEyRxwxMAf9AFDwrXy798GHtK/PdMNBBnoaIg+?=
- =?us-ascii?Q?a3pSrs/E7WfjFb27NtdtGaktZlJOMkuZz4m9QKf/PUva6Ii2uRRsTLJLaD6o?=
- =?us-ascii?Q?u5GkIHMOqqLwWnpIe6iYjP3FLxgXzPJoY5pJQv1L94ARmarpujGNaJk7HhLb?=
- =?us-ascii?Q?XTOQcFO3odhJ2o352x9W+LdYqJESl0n08/ceisFej3QTpnuVjrKZnJOWBKip?=
- =?us-ascii?Q?HLYYrnb3SR9peJh1SgFPEfYdkvTZXTapzfepbBi4gbXJxvbP6EyEd1tia8U6?=
- =?us-ascii?Q?vltlEChzSdOtSdR2wFafWh6d0wNE1kXb7N1fUfxjYtb+zsZuM/iB3SprD7z+?=
- =?us-ascii?Q?v3FAccRv7HSr++IJJPuMcmGAUPNXV/x6Oi0Uc1PuA0VNEko8U1EcYCzfZGVp?=
- =?us-ascii?Q?Twg1bf9EoZJqA6boPLrCjZr6eGXW6UVRTn8Ay/hoCMXwl5/zFXJKpaBv0nGy?=
- =?us-ascii?Q?n11XP/EVZODVfYDM1BKfTuH/Sxw36a2bM++4dmFLcqFtP/7QnIZR7SGeBkw8?=
- =?us-ascii?Q?ADU+e4mbJ8/J6XzLE935ldFHvKudFCDB1hCPj578Kg90nUdQgQuD/XSvgwN9?=
- =?us-ascii?Q?NGsQz0KnbVLTaI2TwUMK645aQ9rB5RVlG9qKeoNCnROWrmRWThy9mnximnyN?=
- =?us-ascii?Q?vRyYMClPq6d8A0y6wneicizCh7dRmieYunJbqAVqHymklVw/6gU8mnnaMME8?=
- =?us-ascii?Q?1Ecqz9x80wUoKNwG8eM7ElgpICQNjByp3IvgE/y31/i/SSu+z7ZSDQK6V6iv?=
- =?us-ascii?Q?CVHgBzskPR/QYXBnLQCr0GNvXpfrnoxcRVbHQ/lRReAf4t8HyJUYzoaUY3NK?=
- =?us-ascii?Q?xZbY7aDUWMb2+I8VQKUc1tUXZpEaTT6UEykhN9wjykAZVBZ+kH5CSSqCwOt/?=
- =?us-ascii?Q?+uLu2SDlyKjUKJt7v5GLVMtqfZDgLT89cjWvj7haRvr3CIILuz9wt7PiMR5y?=
- =?us-ascii?Q?TUWDaFf/SNxYnVoix7ALl75ir0sSzFUf31gk5kYSlbLx5E1YmpH9NVuOuB5v?=
- =?us-ascii?Q?kY/BnxhyOel3nYSvAuRN5VjEkmeOYehYYBcBbvcFuFsfzRDbDMfjdVn16l5v?=
- =?us-ascii?Q?OnY8FTlDqHp1skpII93PyL4hguSFsBN+Zbrfr5JGwI6EIP2coPQVc4ro2wwT?=
- =?us-ascii?Q?3d/DZ4w1yWUElbeil3RZ7Xt8F9JuTplYsrHU2he9PBNv03yX2rZWntpaAATm?=
- =?us-ascii?Q?r8bJvRLvkIf4JEpBprVhBHDEl98lFt68fkEm65WY2NluEeGKyHFi3MZvycN+?=
- =?us-ascii?Q?B48GjarSw5ZOJVz4C0c4BdraIpwcsgvYPLm3YyQeHG4D+IuqckNLLVVaPy7I?=
- =?us-ascii?Q?MV7EaCTLyd6tdArmxYbGJYNSQS/pRwySjLzq2515O6UABU/WozKfJ/ZmGAyn?=
- =?us-ascii?Q?sSizNi/1iU33aZ/NgL7BlbRZtxjuUSCw9AKt2fZmC2iBKnOETHh8902NtJxL?=
- =?us-ascii?Q?TxgxjsHa//ppWZV03Ko/EpF9kCi2OPWzt8/FEOsc7sXMPWrrY6n36Iclnou6?=
- =?us-ascii?Q?HYNIUQaqczq6+WOT4sOPaW/7yX5RvoFNvu2NAyp6IMHd19Xrun2nlgrwqs1n?=
- =?us-ascii?Q?1xHU8yDgUFMtDlZIW7DaMp8=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?us-ascii?Q?9lVV2IM0xIXJgWE8ZkwMaHPajx+Pkj+c1dPWO/kvm/oN55OhpqebLuuwcvsn?=
+ =?us-ascii?Q?P0nzkAYnGzGovMt4Bq2EnFQu6ZYgnvZDpwD+CEXI6AjSQlMCfEdJVRWtHncs?=
+ =?us-ascii?Q?cLncYnFG0I+dV1ycFlvR40MX9a0ZO5oS8VYvzKIAEoqJIHdLyY+UUQ9fLDr/?=
+ =?us-ascii?Q?VhgNg7j4U1yEHKTXK4CWFft04keAM0VZJNcacPKEykubNhhdxr2/hYPFQz9+?=
+ =?us-ascii?Q?agptnpuXPyBSbvDaCzbNXNRZ6/hU00VjW5/X1bvNdNFhc9xbfvHcfuT6oE2e?=
+ =?us-ascii?Q?vJ5IGtCI7cQ5Pd3m+9u/XsDTDJetFCA9WZ9hhYFHbtAbts34P5Vk4BgUf4+5?=
+ =?us-ascii?Q?dSBLQ3i54cS5aB9NPA+Tai6uKlfgGhNW0yZ+T9cu6enXIVX7K/1HUpf+NDwB?=
+ =?us-ascii?Q?Ca8XKyIjhTlFEDRFiP8yBk0K8c9BC73+QO7BBLZ9I8v6URjfQIZab+w3O+Up?=
+ =?us-ascii?Q?uBRAzR7YuBjiC3nc/yYMip1FakZ7nzHeCdOUaz96056Uv/hCVBZ+xpcA0HgQ?=
+ =?us-ascii?Q?sxpGQStSVSVtNlzCG7F6gpzEbZ7oILNHEXWjRViIHqRRgascZXdJtx90aB7u?=
+ =?us-ascii?Q?xm1muSugLBMifF3cmTdzfib+Z9roa0RdD6LepP1bPkjY6V3XV3vspismPXYZ?=
+ =?us-ascii?Q?BsTjf14FMl5MfS+g7y+Th18nNqPL6WfUJE9aYRU0pIzkX+jg2TXo0pz/+EAK?=
+ =?us-ascii?Q?E9FupA+A6lfVG+GrV5LgHT/nAjafiawLdu3px0/3FbSH/N3diFcNeUFUilU+?=
+ =?us-ascii?Q?dugyajhdt4dHCvcBnLa6+p3A39TRxUYv43ixVwluJln/VbNG3/p+7CB0GQRW?=
+ =?us-ascii?Q?ud3lYkcic/krBi6yJBXkMEFHnjfJVZaDX3fG4bj7ktKqwWcPYt56p1bseoZ/?=
+ =?us-ascii?Q?3IuWxKfMH1/Ve37srXOfimb9F/kAos+ZM+gJNh1CrIzhSyjgUdDf5hD7qJud?=
+ =?us-ascii?Q?rpG/aJ9Mb6p3PIN2VC0dV5T6w5c0pvDrDhWfAO78KLVLQiQUiPFopMyjvuLw?=
+ =?us-ascii?Q?Mp0PcXs9smH0gy/lfsGeGQjGBK7FpjWTIBJSyavOgu2oYP/tkmz8YWahJjCZ?=
+ =?us-ascii?Q?F/86NIlGl8dNdY+7Czj6bS1I33GtvNVdWa2YJni7/IO/Rull6+gg0Rx8ubuo?=
+ =?us-ascii?Q?L3Pdz/+keIEYhfPrkbE2xiJ7mCrCxnWZie7YOvNolEoKdLymJqje9G4byOkP?=
+ =?us-ascii?Q?BwiNiJue0hb9qVsYf5KmNiibR1AC/N3TUBoKNLT8WsNqfz8hzNX6oaG03lxR?=
+ =?us-ascii?Q?x37a8koE3gY46+DxONhSRqqdchqYjPXkU7oKBQaKiC8F/sutfBP16ccfFY8p?=
+ =?us-ascii?Q?V/TzZD5Pf+ZIoZuPtu7kXrvX5fkCM02VN8o+mbnoJxeYmdxGY12ilmu+2EVY?=
+ =?us-ascii?Q?E9HY2UgVI6Yc1k5mnfW42ydciT8TUBQPwzxFW05aIQhV9CnUQmHiA/XA//jV?=
+ =?us-ascii?Q?Ddrn+axT8AhES3jjri7YGob97WDRa6r4O3XLyY1HZMH0CWRyrNm607l7DWMg?=
+ =?us-ascii?Q?OeVpOBBBC8s5a2hJGEWcYumO/2TOHzNtxRP1GuLoW3/w9QzgFhcVBtcKPJMS?=
+ =?us-ascii?Q?9U43r5fxlzxQf+2EtrI82cwsyQ1uPNmJs3xQuKjsS6jMpLqwgi9m/6mEpKGC?=
+ =?us-ascii?Q?2TGuywvXxBXQt28WdpDsdBQ=3D?=
 X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 57ef7d1b-cdf7-45aa-c6d4-08db455a6f86
+X-MS-Exchange-CrossTenant-Network-Message-Id: 71389a6c-9b86-48b0-556f-08db455a73fa
 X-MS-Exchange-CrossTenant-AuthSource: BYAPR01MB4966.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Apr 2023 06:58:12.6992
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Apr 2023 06:58:20.0007
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: +5f9z9hWhPNzCY1F9dXHzw8eSTz6gGcW5eKlJbFoEHbK5he2QiSt9PyFMWVwVN+GxCJ6YccXDGWLUF1hork/4b+MKxa9GKfytB/PaY2bDOyqKWdr+yzYRaTd9ifPyH7E
+X-MS-Exchange-CrossTenant-UserPrincipalName: LUFupQPoaRRFKQOy/B7swy9DvnNEHPDHF97/mb/CTH56fOZPE0FfnYvOvBcMOyzFhtDhq0ccKfyF3vtBxyKrTbKXWguaX+oGcdnYZoIKi9ybTGOWRo289N8pRXRBPGJC
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR01MB6504
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -131,37 +131,267 @@ Cc: Chanh Nguyen <chanh@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add the MAX31790 node as a Fan I2C controller. It controls the
-TACH and PWM for Fan Mt.Mitchell system.
+Change to use I2C ADC controller (ltc2497) for Mt.Mitchell DVT and
+later hardware.
 
 Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
 ---
- arch/arm/boot/dts/aspeed-bmc-ampere-mtmitchell.dts | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+ .../boot/dts/aspeed-bmc-ampere-mtmitchell.dts | 107 +++++++++++-------
+ 1 file changed, 66 insertions(+), 41 deletions(-)
 
 diff --git a/arch/arm/boot/dts/aspeed-bmc-ampere-mtmitchell.dts b/arch/arm/boot/dts/aspeed-bmc-ampere-mtmitchell.dts
-index e79f56208b89..6455cf80da0e 100644
+index 6455cf80da0e..0b5ea8620063 100644
 --- a/arch/arm/boot/dts/aspeed-bmc-ampere-mtmitchell.dts
 +++ b/arch/arm/boot/dts/aspeed-bmc-ampere-mtmitchell.dts
-@@ -477,6 +477,18 @@
- 			line-name = "bmc-ocp0-en-n";
- 		};
+@@ -65,174 +65,192 @@
+ 
+ 	adc0mux: adc0mux {
+ 		compatible = "io-channel-mux";
+-		io-channels = <&adc0 0>;
++		io-channels = <&adc_i2c_0 0>;
+ 		#io-channel-cells = <1>;
+ 		io-channel-names = "parent";
+ 		mux-controls = <&gpioI5mux>;
++		settle-time-us = <10000>;
+ 		channels = "s0", "s1";
  	};
-+
-+	max31790@20 {
-+		compatible = "maxim,max31790";
-+		reg = <0x20>;
-+		pwm-to-tach = <0 0 0 0 1 1>;
-+	};
-+
-+	max31790@2f {
-+		compatible = "maxim,max31790";
-+		reg = <0x2f>;
-+		pwm-to-tach = <0 0 0 0 1 1>;
-+	};
+ 
+ 	adc1mux: adc1mux {
+ 		compatible = "io-channel-mux";
+-		io-channels = <&adc0 1>;
++		io-channels = <&adc_i2c_0 1>;
+ 		#io-channel-cells = <1>;
+ 		io-channel-names = "parent";
+ 		mux-controls = <&gpioI5mux>;
++		settle-time-us = <10000>;
+ 		channels = "s0", "s1";
+ 	};
+ 
+ 	adc2mux: adc2mux {
+ 		compatible = "io-channel-mux";
+-		io-channels = <&adc0 2>;
++		io-channels = <&adc_i2c_0 2>;
+ 		#io-channel-cells = <1>;
+ 		io-channel-names = "parent";
+ 		mux-controls = <&gpioI5mux>;
++		settle-time-us = <10000>;
+ 		channels = "s0", "s1";
+ 	};
+ 
+ 	adc3mux: adc3mux {
+ 		compatible = "io-channel-mux";
+-		io-channels = <&adc0 3>;
++		io-channels = <&adc_i2c_0 3>;
+ 		#io-channel-cells = <1>;
+ 		io-channel-names = "parent";
+ 		mux-controls = <&gpioI5mux>;
++		settle-time-us = <10000>;
+ 		channels = "s0", "s1";
+ 	};
+ 
+ 	adc4mux: adc4mux {
+ 		compatible = "io-channel-mux";
+-		io-channels = <&adc0 4>;
++		io-channels = <&adc_i2c_0 4>;
+ 		#io-channel-cells = <1>;
+ 		io-channel-names = "parent";
+ 		mux-controls = <&gpioI5mux>;
++		settle-time-us = <10000>;
+ 		channels = "s0", "s1";
+ 	};
+ 
+ 	adc5mux: adc5mux {
+ 		compatible = "io-channel-mux";
+-		io-channels = <&adc0 5>;
++		io-channels = <&adc_i2c_0 5>;
+ 		#io-channel-cells = <1>;
+ 		io-channel-names = "parent";
+ 		mux-controls = <&gpioI5mux>;
++		settle-time-us = <10000>;
+ 		channels = "s0", "s1";
+ 	};
+ 
+ 	adc6mux: adc6mux {
+ 		compatible = "io-channel-mux";
+-		io-channels = <&adc0 6>;
++		io-channels = <&adc_i2c_0 6>;
+ 		#io-channel-cells = <1>;
+ 		io-channel-names = "parent";
+ 		mux-controls = <&gpioI5mux>;
++		settle-time-us = <10000>;
+ 		channels = "s0", "s1";
+ 	};
+ 
+ 	adc7mux: adc7mux {
+ 		compatible = "io-channel-mux";
+-		io-channels = <&adc0 7>;
++		io-channels = <&adc_i2c_0 7>;
+ 		#io-channel-cells = <1>;
+ 		io-channel-names = "parent";
+ 		mux-controls = <&gpioI5mux>;
++		settle-time-us = <10000>;
+ 		channels = "s0", "s1";
+ 	};
+ 
+ 	adc8mux: adc8mux {
+ 		compatible = "io-channel-mux";
+-		io-channels = <&adc1 0>;
++		io-channels = <&adc_i2c_0 8>;
+ 		#io-channel-cells = <1>;
+ 		io-channel-names = "parent";
+ 		mux-controls = <&gpioI5mux>;
++		settle-time-us = <10000>;
+ 		channels = "s0", "s1";
+ 	};
+ 
+ 	adc9mux: adc9mux {
+ 		compatible = "io-channel-mux";
+-		io-channels = <&adc1 1>;
++		io-channels = <&adc_i2c_0 9>;
+ 		#io-channel-cells = <1>;
+ 		io-channel-names = "parent";
+ 		mux-controls = <&gpioI5mux>;
++		settle-time-us = <10000>;
+ 		channels = "s0", "s1";
+ 	};
+ 
+ 	adc10mux: adc10mux {
+ 		compatible = "io-channel-mux";
+-		io-channels = <&adc1 2>;
++		io-channels = <&adc_i2c_0 10>;
+ 		#io-channel-cells = <1>;
+ 		io-channel-names = "parent";
+ 		mux-controls = <&gpioI5mux>;
++		settle-time-us = <10000>;
+ 		channels = "s0", "s1";
+ 	};
+ 
+ 	adc11mux: adc11mux {
+ 		compatible = "io-channel-mux";
+-		io-channels = <&adc1 3>;
++		io-channels = <&adc_i2c_0 11>;
+ 		#io-channel-cells = <1>;
+ 		io-channel-names = "parent";
+ 		mux-controls = <&gpioI5mux>;
++		settle-time-us = <10000>;
+ 		channels = "s0", "s1";
+ 	};
+ 
+ 	adc12mux: adc12mux {
+ 		compatible = "io-channel-mux";
+-		io-channels = <&adc1 4>;
++		io-channels = <&adc_i2c_0 12>;
+ 		#io-channel-cells = <1>;
+ 		io-channel-names = "parent";
+ 		mux-controls = <&gpioI5mux>;
++		settle-time-us = <10000>;
+ 		channels = "s0", "s1";
+ 	};
+ 
+ 	adc13mux: adc13mux {
+ 		compatible = "io-channel-mux";
+-		io-channels = <&adc1 5>;
++		io-channels = <&adc_i2c_0 13>;
+ 		#io-channel-cells = <1>;
+ 		io-channel-names = "parent";
+ 		mux-controls = <&gpioI5mux>;
++		settle-time-us = <10000>;
+ 		channels = "s0", "s1";
+ 	};
+ 
+ 	adc14mux: adc14mux {
+ 		compatible = "io-channel-mux";
+-		io-channels = <&adc1 6>;
++		io-channels = <&adc_i2c_0 14>;
+ 		#io-channel-cells = <1>;
+ 		io-channel-names = "parent";
+ 		mux-controls = <&gpioI5mux>;
++		settle-time-us = <10000>;
+ 		channels = "s0", "s1";
+ 	};
+ 
+ 	adc15mux: adc15mux {
+ 		compatible = "io-channel-mux";
+-		io-channels = <&adc1 7>;
++		io-channels = <&adc_i2c_0 15>;
+ 		#io-channel-cells = <1>;
+ 		io-channel-names = "parent";
+ 		mux-controls = <&gpioI5mux>;
++		settle-time-us = <10000>;
+ 		channels = "s0", "s1";
+ 	};
+ 
+ 	iio-hwmon {
+ 		compatible = "iio-hwmon";
+-		io-channels = <&adc0mux 0>, <&adc0mux 1>,
+-			<&adc1mux 0>, <&adc1mux 1>,
+-			<&adc2mux 0>, <&adc2mux 1>,
+-			<&adc3mux 0>, <&adc3mux 1>,
+-			<&adc4mux 0>, <&adc4mux 1>,
+-			<&adc5mux 0>, <&adc5mux 1>,
+-			<&adc6mux 0>, <&adc6mux 1>,
+-			<&adc7mux 0>, <&adc7mux 1>,
+-			<&adc8mux 0>, <&adc8mux 1>,
+-			<&adc9mux 0>, <&adc9mux 1>,
+-			<&adc10mux 0>, <&adc10mux 1>,
+-			<&adc11mux 0>, <&adc11mux 1>,
+-			<&adc12mux 0>, <&adc12mux 1>,
+-			<&adc13mux 0>, <&adc13mux 1>,
+-			<&adc14mux 0>, <&adc14mux 1>,
+-			<&adc15mux 0>, <&adc15mux 1>,
+-			<&adc_i2c 0>, <&adc_i2c 1>,
+-			<&adc_i2c 2>, <&adc_i2c 3>,
+-			<&adc_i2c 4>, <&adc_i2c 5>,
+-			<&adc_i2c 6>, <&adc_i2c 7>,
+-			<&adc_i2c 8>, <&adc_i2c 9>,
+-			<&adc_i2c 10>, <&adc_i2c 11>,
+-			<&adc_i2c 12>, <&adc_i2c 13>,
+-			<&adc_i2c 14>, <&adc_i2c 15>;
++		io-channels =	<&adc0mux 0>, <&adc0mux 1>,
++				<&adc1mux 0>, <&adc1mux 1>,
++				<&adc2mux 0>, <&adc2mux 1>,
++				<&adc3mux 0>, <&adc3mux 1>,
++				<&adc4mux 0>, <&adc4mux 1>,
++				<&adc5mux 0>, <&adc5mux 1>,
++				<&adc6mux 0>, <&adc6mux 1>,
++				<&adc7mux 0>, <&adc7mux 1>,
++				<&adc8mux 0>, <&adc8mux 1>,
++				<&adc9mux 0>, <&adc9mux 1>,
++				<&adc10mux 0>, <&adc10mux 1>,
++				<&adc11mux 0>, <&adc11mux 1>,
++				<&adc12mux 0>, <&adc12mux 1>,
++				<&adc13mux 0>, <&adc13mux 1>,
++				<&adc14mux 0>, <&adc14mux 1>,
++				<&adc15mux 0>, <&adc15mux 1>,
++				<&adc_i2c_1 0>, <&adc_i2c_1 1>,
++				<&adc_i2c_1 2>, <&adc_i2c_1 3>,
++				<&adc_i2c_1 4>, <&adc_i2c_1 5>,
++				<&adc_i2c_1 6>, <&adc_i2c_1 7>,
++				<&adc_i2c_1 8>, <&adc_i2c_1 9>,
++				<&adc_i2c_1 10>, <&adc_i2c_1 11>,
++				<&adc_i2c_1 12>, <&adc_i2c_1 13>,
++				<&adc_i2c_1 14>, <&adc_i2c_1 15>,
++				<&adc0 0>, <&adc0 1>,
++				<&adc0 2>;
+ 	};
  };
  
- &i2c9 {
+@@ -353,7 +371,14 @@
+ &i2c4 {
+ 	status = "okay";
+ 
+-	adc_i2c: adc@16 {
++	adc_i2c_0: adc@14 {
++		compatible = "lltc,ltc2497";
++		reg = <0x14>;
++		vref-supply = <&voltage_mon_reg>;
++		#io-channel-cells = <1>;
++	 };
++
++	adc_i2c_1: adc@16 {
+ 		compatible = "lltc,ltc2497";
+ 		reg = <0x16>;
+ 		vref-supply = <&voltage_mon_reg>;
 -- 
 2.17.1
 
