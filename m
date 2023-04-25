@@ -2,61 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id F05576EE51D
-	for <lists+openbmc@lfdr.de>; Tue, 25 Apr 2023 17:58:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 440186EE66F
+	for <lists+openbmc@lfdr.de>; Tue, 25 Apr 2023 19:15:50 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Q5RW6390Gz3f4t
-	for <lists+openbmc@lfdr.de>; Wed, 26 Apr 2023 01:58:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Q5TD41Q6kz3cBq
+	for <lists+openbmc@lfdr.de>; Wed, 26 Apr 2023 03:15:48 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EgTh2lVl;
+	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20221208.gappssmtp.com header.i=@tanous-net.20221208.gappssmtp.com header.a=rsa-sha256 header.s=20221208 header.b=cq69Jvqj;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=robh+dt@kernel.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=tanous.net (client-ip=2a00:1450:4864:20::42c; helo=mail-wr1-x42c.google.com; envelope-from=ed@tanous.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EgTh2lVl;
+	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20221208.gappssmtp.com header.i=@tanous-net.20221208.gappssmtp.com header.a=rsa-sha256 header.s=20221208 header.b=cq69Jvqj;
 	dkim-atps=neutral
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q5RVZ1rkPz30QQ;
-	Wed, 26 Apr 2023 01:58:14 +1000 (AEST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id 33B3D62890;
-	Tue, 25 Apr 2023 15:58:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24FA0C433A7;
-	Tue, 25 Apr 2023 15:58:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1682438290;
-	bh=itrfj1uL7ULKhIO/qSGGwopdMhHtcuGv7fowY1MDPYk=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=EgTh2lVlpMtQ5px5R+jV+EfXPM/vMd0vZZcesoDR/dZgys7DryqsRrWS2pdpS9uas
-	 OYd9yTEmElOVrIZbn0OqVscAcdbafdiKbG9xGY95F+dXOVKPpAW5UFqkaPFQaikMgo
-	 aWZCYgp15j+P/IiGD62g++flweL1qEmmRIyA46J9ZxdgcgQr67x7Q3TlACfNIAqEWA
-	 ybnHZqICC3N6Bh2h/8vZ/QwOp/oM5lTZZiMl9J1LI5jXGxCqVcLQ5wSHavpOM+9lzJ
-	 GcWe9oPB1zz3J6OXPcR6ftsIf9jN3vnmyzPm8qTrcAX6jvM8Z/Yhdc9tzdb3LHV6hX
-	 cc5h5IH4H4Nww==
-Received: by mail-yb1-f176.google.com with SMTP id 3f1490d57ef6-b9582901279so8834664276.2;
-        Tue, 25 Apr 2023 08:58:10 -0700 (PDT)
-X-Gm-Message-State: AAQBX9cdYVp+IG4aDAm1RTlu+NXYKp5sTi4S3gpBHGYNcGDofOuFCJ1d
-	+SaQfGILyQw8E+f1/K5VYxNkl5H0PTCi4C2WBA==
-X-Google-Smtp-Source: AKy350bpts/PPga3+dzd9vak+rbAaLdXpa4DHHS4UXvr1kLSlKfqR897O6l7AESMOVdvAuhJNuLkwu1gSc/085IiOR0=
-X-Received: by 2002:a25:b097:0:b0:b97:f46:a2b8 with SMTP id
- f23-20020a25b097000000b00b970f46a2b8mr12284894ybj.17.1682438288965; Tue, 25
- Apr 2023 08:58:08 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q5TCR2PZ3z3bh3
+	for <openbmc@lists.ozlabs.org>; Wed, 26 Apr 2023 03:15:13 +1000 (AEST)
+Received: by mail-wr1-x42c.google.com with SMTP id ffacd0b85a97d-2f40b891420so5826608f8f.0
+        for <openbmc@lists.ozlabs.org>; Tue, 25 Apr 2023 10:15:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tanous-net.20221208.gappssmtp.com; s=20221208; t=1682442904; x=1685034904;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dW7KDplV0rV2nkNW6W/PZY61yU1PcHbPiec7RYche0o=;
+        b=cq69Jvqj/W9Ji3wpf5AEVnaN6iOnqx96LSTzz704uYlDEupNnJTe/rrUWP13wSlk5A
+         IWlPFq8V/iFEjkNetpfwX80itlAUGz11BaS1VakQzivEV+m3BWXIr5N8Yst8fUa0RHiU
+         9GCUh4dSL9zgJMdu6VsJ3SjleNXrd2/Vr0nkbTURrF2nxbeubIqd++rguYz4Nxnu0kLV
+         hfzTCskWuYNu+Ke7DjpD4AxDL1l9wqjLZ6D4YEYvGjTtKjftlNsY6bJWHmdwbSOJcvnQ
+         CR9fXr67kBbTmafNkJVfgdeEDaWYM3UPtvErX2Cyinfzy2LnUo2O46uV/cog46Sb+kTg
+         Rt3A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1682442904; x=1685034904;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=dW7KDplV0rV2nkNW6W/PZY61yU1PcHbPiec7RYche0o=;
+        b=iyYOvPY062G/nTGR35fjdvsxX80YF8+bkTpmI1mQsmf4A89Zh6r6dvwbuv05OL+cHS
+         /qZ1UBZ81d7JfbYV1IZOQpH2kK6p3b2sCcOb14wVYbNzhFq9stRC7PHvHHIR7f7Efogd
+         vOhEYFA5xwx0uzYCdlWSc67qtVrGergVrl9iqjSlLvwHtplRq9cDnePAXVMDp6ospVd3
+         3zKbySLUBN65zo1qKfnreIX3sUeEv/DKcSWgW+kR37vr0Fa3Za6zeUvYpXcl3C4cM5i0
+         gNmg6Mbm5p1B64yvP+cq8JHGa121T3Tl7tjsxWdC89VUTRBZe8Tx6F3DZPqFpRHnFmHR
+         6RBA==
+X-Gm-Message-State: AAQBX9e1UmHZL7pLzEb154n2cO/IGci8ST2kNJhi2vJxpw43Qh/bPdJ4
+	ad+X2Mg9ehJAsZKJIzDUE5RqCYqLJ1nRByOLE+k60w==
+X-Google-Smtp-Source: AKy350ZKWqfZR3twqyyidbQ0FUGPWyoMX6vd836t10TXBcabEXy3MqioE1evIiYcXF6o52yAj8F2Ona7We4uyE50Z2c=
+X-Received: by 2002:adf:f710:0:b0:2dc:cb11:bed3 with SMTP id
+ r16-20020adff710000000b002dccb11bed3mr11982843wrp.68.1682442903801; Tue, 25
+ Apr 2023 10:15:03 -0700 (PDT)
 MIME-Version: 1.0
-References: <20220328000915.15041-1-ansuelsmth@gmail.com> <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
- <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain> <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
- <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
-In-Reply-To: <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
-From: Rob Herring <robh+dt@kernel.org>
-Date: Tue, 25 Apr 2023 10:57:57 -0500
-X-Gmail-Original-Message-ID: <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
-Message-ID: <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
-To: Geert Uytterhoeven <geert@linux-m68k.org>, Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>
+References: <CY5PR12MB6083E003B72438968F80D7D0CC609@CY5PR12MB6083.namprd12.prod.outlook.com>
+In-Reply-To: <CY5PR12MB6083E003B72438968F80D7D0CC609@CY5PR12MB6083.namprd12.prod.outlook.com>
+From: Ed Tanous <ed@tanous.net>
+Date: Tue, 25 Apr 2023 10:14:50 -0700
+Message-ID: <CACWQX80NqAe0QXzx73TtsravWS2uabDdaYw2xwOBfKS90Gw6ag@mail.gmail.com>
+Subject: Re: $expand on sensors slower than individual gets
+To: Aishwary Joshi <aishwaryj@nvidia.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -70,61 +75,106 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, linux-realtek-soc@lists.infradead.org, linux-arm-kernel@axis.com, linux-stm32@st-md-mailman.stormreply.com, chrome-platform@lists.linux.dev, linux-samsung-soc@vger.kernel.org, openbmc@lists.ozlabs.org, Krzysztof Kozlowski <krzk@kernel.org>, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-actions@lists.infradead.org, linux-unisoc@lists.infradead.org, linux-mediatek@lists.infradead.org, linux-rpi-kernel@lists.infradead.org, linux-tegra@vger.kernel.org, linux-amlogic@lists.infradead.org, linux-omap@vger.kernel.org, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, Ansuel Smith <ansuelsmth@gmail.com>, linux-renesas-soc@vger.kernel.org, kernel@dh-electronics.com, Krzysztof Kozlowski <krzk+dt@kernel.org>, linux-oxnas@groups.io
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Apr 25, 2023 at 2:28=E2=80=AFAM Geert Uytterhoeven <geert@linux-m68=
-k.org> wrote:
+On Fri, Apr 21, 2023 at 2:23=E2=80=AFAM Aishwary Joshi <aishwaryj@nvidia.co=
+m> wrote:
 >
-> Hi Rob,
+> Hi All,
 >
-> On Tue, Apr 25, 2023 at 12:16=E2=80=AFAM Rob Herring <robh+dt@kernel.org>=
- wrote:
-> > I have a script[1] that does the conversion written the last time this
-> > came up. Just have to agree on directory names. I think the easiest
-> > would be for Arnd/Olof to run it at the end of a merge window before
-> > rc1.
 >
-> "emev2" and "sh7" are missing for renesas.
+>
+> We would like to get feedback on following performance issue that we have=
+ observed with $expand on /redfish/v1/Chassis/<ChassisId>/Sensors URI compa=
+red to using GET on individual Sensor URI (/redfish/v1/Chassis/<ChassisId>/=
+Sensors/<SensorName>) on some Chassis
+>
+>
+>
+> Little bit background about the system:
+>
+> 1. No of Sensors present on the Chassis_X(where we see performance drop w=
+ith $expand) : 7 sensors
+>
+> 2. No of Sensors present on the Chassis_Y(where we DONOT see the performa=
+nce drop $expand): 31 sensors
+>
+> 3. We have a common service that host 24 Chassis (including Chassis_X, Ch=
+assis_Y)
+>
+> 4. Total No of Sensors supported by service that host 24 Chassis instance=
+s: 102
+>
+> 5. Time it took with $expand on Chassis_X sensors: 0.48secs('/redfish/v1/=
+Chassis/Chassis_X/Sensors?$expand=3D*($levels=3D1)')
+>
+> 6. Total time taken by querying 7 sensors(present on Chassis_X) URI: 0.6s=
+ecs
+>
+> 6. Time it took with $expand on Chassis_Y sensors: 0.48secs('/redfish/v1/=
+Chassis/Chassis_X/Sensors?$expand=3D*($levels=3D1)')
+>
+> 7. Total time taken by querying 31 sensors(present on Chassis_y) URI: 0.9=
+1secs
+>
+>
+>
+> We see advantage of using $expand on Chassis_Y but not on Chassis_X.
+>
+> And Based on our analysis on $expand, looks like performance of $expand o=
+n sensors is tied to the number of sensors hosted by backend service and no=
+t by the number of sensors present on a Chassis. This is because of "GetMan=
+agedObjects" call done on the backend service which returns 102 sensors in =
+our case irrespective of the number of sensors present on the requested cha=
+ssis.
+>
+> Code Ref: https://github.com/openbmc/bmcweb/blob/master/redfish-core/lib/=
+sensors.hpp#L2471
+>
+>
+>
+> Because of this issue problem, we are noticing significant perf drop when=
+ using $expand
+>
+> 8. Total time to query individual Sensors URI(101) : 3.08secs
+>
+> 9. Total time to query sensors with $expand(24 URIs) : 12secs
 
-No doubt it's been bitrotting (or I may have missed some).
+Could you please try to bisect this down to the commit that caused the
+regression?  928fefb9a542b816d7c0418077def2b3874d1b0f might be of
+note, because I think that's the one that did the GetManagedObjects?
 
-> Does your script also cater for .dts files not matching any pattern,
-> but including a .dtsi file that does match a pattern?
+>
+>
+>
+>
+>
+>
+>
+> We would like to know
+>
+> 1. Is this the correct current behaviour with bmcweb.
 
-I assume I built everything after moving, but maybe not...
+Obviously anything that provides worse performance is not ideal, and
+should be looked into, but in terms of correctness, it sounds like
+it's giving the correct responses in both cases, so it sounds like
+it's not a bug, but a performance regression.
 
-That's all just "details". First, we need agreement on a) moving
-things to subdirs and b) doing it 1-by-1 or all at once. So far we've
-been stuck on a) for being 'too much churn'.
+>
+> 2. if community is also experiencing similar performance drop with case m=
+entioned above and what has been done to resolve it ?
+>
+> Also like to know if any recent $expand enhancement done in the sensor ar=
+ea which might help with performance issue, please do let me know.
 
-One nice thing with subdirs is 'make CHECK_DTBS=3Dy
-arch/arm/boot/dts/foo/' can build everything for a platform family
-without having to mess with the kconfig. Maybe most folks don't care,
-but I do. My CI job running schema checks looks like this to deal with
-grouping the arm dts files (this list is probably out of date too, but
-less so):
+see the SHA1 above.
 
-        if [ "$ARCH" =3D "arm" ]; then
-            VENDOR_LIST=3D"alphascale alpine artpec aspeed axm bcm cx9
-(ecx|highbank) \
-              efm ep7 imx1 imx23 imx28 imx27 imx5 imx6 imx7 ls vf qcom \
-              (am3|am4|am5|dra|keystone|omap|compulab|logicpd|elpida|motoro=
-la-cpcap|da|dm)
-\
-              nspire armada dove kirkwood orion mvebu mmp2 berlin pxa
-(arm-|integ|mps|ve) \
-              (at91|sama|usb_|tny_|mpa1600|animeo_ip|aks-cdu|ethernut5|evk-=
-pro3|pm9g45|ge86)
-\
-              exynos s3c s5p gemini (hisi|hi3|hip) mt meson moxa nuvo
-lpc owl ox8 \
-              (r7|r8|r9|emev2|sh73a|gr-|iwg) (rk|rv11) socfpga stm
-(sti|st-pin) ste \
-              spear (sun|axp) tegra uniph (vt8500|wm8) xen zynq"
-        else
-            VENDOR_LIST=3D$(ls arch/$ARCH/boot/dts/ | xargs)
-        fi
 
-Rob
+My suspicion is that we either need to:
+1. Roll back the efficient expand patches until they don't cause a
+performance regression.
+2. Determine the crossover of how many sensors for which
+GetManagedObjects is faster than GetAll, and have bmcweb pick between
+the two paths dependent on how many sensors are there.
