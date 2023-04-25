@@ -2,32 +2,32 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 375206EDC05
-	for <lists+openbmc@lfdr.de>; Tue, 25 Apr 2023 09:01:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FAE06EDC08
+	for <lists+openbmc@lfdr.de>; Tue, 25 Apr 2023 09:02:13 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Q5Cb412q7z3bh3
-	for <lists+openbmc@lfdr.de>; Tue, 25 Apr 2023 17:01:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Q5Cc324K0z3f6R
+	for <lists+openbmc@lfdr.de>; Tue, 25 Apr 2023 17:02:11 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=S9JB08nQ;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=j1n61RUF;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7eb2::72f; helo=nam02-bn1-obe.outbound.protection.outlook.com; envelope-from=chanh@os.amperecomputing.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=S9JB08nQ;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=j1n61RUF;
 	dkim-atps=neutral
 Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam02on2072f.outbound.protection.outlook.com [IPv6:2a01:111:f400:7eb2::72f])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q5CWy5vrHz3cd6;
-	Tue, 25 Apr 2023 16:58:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q5CWz46Fxz3cdj;
+	Tue, 25 Apr 2023 16:58:39 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=cRSbrfw6/7RRmj0iQZ9XcLDzslilP9Y/LSjluV+VZXXX5expmO4/8oXCQUkpU8YagBgkdBjKQce+RyrAclFlNJxLWW9EKYcEETIHD9bJC6B3hWEkRu20/kWFS2BAfKc/2TnYSFxOlHbEd41kC6B8JrOpbM5UpwLl38/ZWYyocI/beCyKrjDFcoycJSDcD1YwC5WwX63z3s0ZX0VzIlPTBJOpCSvUqyRYLQp3lOq7PTnz18qSRA9gcvFfocR9TQhFwrTZBK/YfIdrawZ/6hPnNVgEKoBpF/LhlRdvFFvSFRBTXb5wgoYuFvSIZ5sRmkxPmW4rLGNkjZ33VI8w77Dbjg==
+ b=n2pzIfBZQgCM8hDlCqtPKJUyq18RzQjO+1a4iNkq3Vd9UvXh3kTIFWNh0tmQy05ybM+ckHhytyR4+am/ifI0FeQrSGCE0TllPLLXkJA3hY97o0XHS7AqUbVrONxpQJ+xrKdCR/Bnin9YIfNR5R7G1lG+LRFWnniypM6vxPdJ4WcRfw3g+7n6hKgAJeSfUweaCPfqlO8LHupMV3ge4rSQn/8gWfJzqntI9BkGjqAXHtSlFZ5VWmYbi8/A5pAwcL7dLein694OCfIUKFtk7p+qxd/ZyNpDQ0AyRZQeTbq6BRBllEEFhSi0Rq44YHXf7Xo0pCrPqIwEQZtpbks+Up9uSQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BsgOiHHpxY+wnoEyDLlsEeEqiFxUKcTKV9FoEc/l4Cg=;
- b=V64IJ9iAx0wsvh8k0fRzj27DOZDn8XvyCY6NjDgbBZ7UHYDR7/V2gE5Oo2pyzM4OoyoXNL905xUTz5i0WiVEX/sfyWRCs1V8oNfQzopc/Oumme4nAse/7D34/93vVM/5g44aQT3hdWJa0J3IckmmoapVwbCRvC8C9vULVuAuPGOB1ZM5WmjzbQ1tmYG59eG/OZWvNPyJ9PIMloFcKZHkm89zFwpfc1ZH4MUUH02K9AJXRGWmT9N2y1S2QOVcsZ5RSqRnUPxGBXPmZKLBcLAV+y2ColmNZboH+7iTMpCr3KYjigYefRz4zxLzyfWhaMivVqHYa2Fogxh/Zz98d0dxTg==
+ bh=BrErqXJC53VxM2wB/OXNQ/V63QIPSlJVlK1UaYSJrmQ=;
+ b=KGvN5QjhWIh6C/vWvLWQm0qrBqdM5VhKWF98ssxkH3b2ms6UAtGbgA9IksUna6Jlq6thF4f4ed2mDu6dnFrYaGbjagE8r7n3es+USTynFzfCZcdRZ77kE5QosBZI85ejig1dOA2DbNAZzxWzocomUphPlXie2sf0UPB1KDV4RQ/y6/ZXWalBM8TuF2xmXyldBY2iDLMXDwaX2Bv8KBQrTqpwcaAKLcvy3ZWeHGmty11nfXn0oDeAURgBIFKV2YFmrjxLTAbV1eJqQvi1b/zgA/c2ctEkokb2pVgV0LdT0Zw08p51IKQuxe5m1bPVppja6ZlOiRzu54hRpkb35vPphA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
  header.from=os.amperecomputing.com; dkim=pass
@@ -35,18 +35,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=os.amperecomputing.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BsgOiHHpxY+wnoEyDLlsEeEqiFxUKcTKV9FoEc/l4Cg=;
- b=S9JB08nQcuEwdSRZAMC+h9KukVBVAIM1OEl+B+cqDSvQiyQZ4Qt6Rgb9djB9e40ijEUyVstH9ADw9r+gR1Aonrut5Qu0JEDRqo5IKW/nNEk+bq9JKDhdTTpJVB0EkJCUQrtPQd5IduvX1HZs3+aQvVeb9MfroO62L5ET5pOiiIk=
+ bh=BrErqXJC53VxM2wB/OXNQ/V63QIPSlJVlK1UaYSJrmQ=;
+ b=j1n61RUF3cJ6ecrjD1P4JyRH/Adua5yDftsTcwyFXqKdjn3w6TwGX7bvJZkNWU+7mubw2lSklthNecClHkfLRdsJ+qtdAqTtvhK9ONo1E+CxknvyD9xh2rC6C8zacGPo1kjyjXK6Amn6cTsAghv3LmWtYx/8lcljrBtUY+CwZAA=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
 Received: from BYAPR01MB4966.prod.exchangelabs.com (2603:10b6:a03:7e::28) by
  PH0PR01MB6504.prod.exchangelabs.com (2603:10b6:510:b::14) with Microsoft SMTP
  Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6340.19; Tue, 25 Apr 2023 06:58:20 +0000
+ 15.20.6340.19; Tue, 25 Apr 2023 06:58:24 +0000
 Received: from BYAPR01MB4966.prod.exchangelabs.com
  ([fe80::46c3:3b44:d2f8:4c3]) by BYAPR01MB4966.prod.exchangelabs.com
  ([fe80::46c3:3b44:d2f8:4c3%4]) with mapi id 15.20.6340.019; Tue, 25 Apr 2023
- 06:58:20 +0000
+ 06:58:24 +0000
 From: Chanh Nguyen <chanh@os.amperecomputing.com>
 To: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
 	Rob Herring <robh+dt@kernel.org>,
@@ -57,9 +57,9 @@ To: OpenBMC Maillist <openbmc@lists.ozlabs.org>,
 	linux-arm-kernel@lists.infradead.org,
 	linux-aspeed@lists.ozlabs.org,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 3/4] ARM: dts: aspeed: mtmitchell: Update ADC sensors for Mt.Mitchell DVT systems
-Date: Tue, 25 Apr 2023 13:57:14 +0700
-Message-Id: <20230425065715.21871-4-chanh@os.amperecomputing.com>
+Subject: [PATCH 4/4] ARM: dts: aspeed: mtmitchell: Add MCTP
+Date: Tue, 25 Apr 2023 13:57:15 +0700
+Message-Id: <20230425065715.21871-5-chanh@os.amperecomputing.com>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20230425065715.21871-1-chanh@os.amperecomputing.com>
 References: <20230425065715.21871-1-chanh@os.amperecomputing.com>
@@ -70,51 +70,51 @@ X-ClientProxiedBy: SG2PR02CA0051.apcprd02.prod.outlook.com
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: BYAPR01MB4966:EE_|PH0PR01MB6504:EE_
-X-MS-Office365-Filtering-Correlation-Id: 71389a6c-9b86-48b0-556f-08db455a73fa
+X-MS-Office365-Filtering-Correlation-Id: 30bba879-403e-43d9-897c-08db455a76c5
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	IY/blidp4dHgGVRHuXR31zK0h3btv6JguWs9Wm1rSauaC02MKZdNqthG/qXX/BBIFPHQVAFrcvkJ7qk2fL/CExHZ5seX1CkBwTDgpx+oVhynA60IcyfW08fCaue+dzu5PdIF7lIDdRN3xNpgL5fc0J6SAyjUjBA0gvKTau7GoUtetU4UAwDWvgfumZUR+OlyrS30KyFP/Rxv1Bsp1nGELU1CtpKjDvNmiHI4dSCueguM3RnmNKQYMHVGO3Fv1WwCAHVx6zoYFnMOA4IjEUslHVf4eiYkCGUBZz2f/CDZFTeKPBgotwpnUF4mb2cU7nWnCH2KXBY3QPKlPVf/6qf5CVj1BOL2MC1L7moVM3mdLoDlFOLRd7XvS+yEgLwFsCsUnPSfv/5CglxlB67igPjSEx50de6pkCN/UHqCBbdaFoMzZBx6yGVxgU5pl9jJdW/AC4nGW9P89hQ2ECCIzS19Ofj7rppYxzfW3aXfuM3UrZKDVhn+zT/XRqgqoEaWS2GrmhbjJ0XPfKq1NorWKZrPnSXr1FhVdjKJNCXyMNeUo9VyUlZhrtmTfJOF0C7KZcIduNvlSH6+czP07dE4D/gJ9W5FQoqXmutcbiyJBGuSPoO5VaS7lKop2IhS118Y47lrk9CfzvlFmPV+vCCF4S6a/gPFD7p1CszQbTId+AwVCxY=
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR01MB4966.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(366004)(396003)(346002)(39850400004)(376002)(136003)(451199021)(107886003)(6506007)(1076003)(26005)(6512007)(2616005)(83380400001)(186003)(38350700002)(38100700002)(66946007)(478600001)(86362001)(66556008)(66476007)(8676002)(8936002)(110136005)(5660300002)(52116002)(6486002)(41300700001)(2906002)(4326008)(6666004)(316002)(414714003)(473944003);DIR:OUT;SFP:1102;
+X-Microsoft-Antispam-Message-Info: 	weDf+Qln3h2ISa/Mgs8IQVTeru+ZdJpJ2+wUolOTCCeIH8sSDibVCeDHPVLWLgsWzBY5sBN2lk7+81CIEhvW6F+/IhhrqjmXgkANgrlx0zmA7e33d1VGI6L1HYZ1NhlmjJdPJlZ+h1KfN5cdfyOcmcOxHPUfSMQg3qoRfa2sJMFErYTyaqDjEpeqyAVXoDpyV5EfUKqaGuCMYA73BvuH8IxoIhZSgSh1bJmqJGQnRZU6LfxUG9Mz8C/2+JhaMZBZmT2/LcAq01vH8OGegDYjNIoD/LS8ytklK2l2eKkYoDsojHG2oosCWZ5uQWiRLgh7SleBz+j1K9viURuiDNEvsKVgx0lxO48GIeO0MTNYRF3PSLK1KV9os8XMoHQTjQZToS8rZUuC+gaq5mKdhes8Tj5Z8wtWy5+NvdtVbrjBbCP4ZKJhEDw/f0vFZsvz913vsP1NRDsWU4fk+Xeou6TqpZnGV10xRBxg2U0WE1lkItmx620cYDw9wkMyup9PUIO+Wlr8IbtgtWE2bV+6iJnksCg8JibJ1d5kRnqSol9ZOANkcEzoYYHVxiJxxNow4ZTTGHDVz2Y3j7QTPLwA9Hc6S3KlhOVg071s5tU1/+udBeRkO/su9j8EDSDxC3395hJt
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR01MB4966.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(366004)(396003)(346002)(39850400004)(376002)(136003)(451199021)(107886003)(6506007)(1076003)(26005)(6512007)(2616005)(186003)(38350700002)(38100700002)(66946007)(478600001)(86362001)(66556008)(66476007)(8676002)(8936002)(110136005)(5660300002)(52116002)(6486002)(41300700001)(2906002)(4744005)(4326008)(6666004)(316002);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?us-ascii?Q?9lVV2IM0xIXJgWE8ZkwMaHPajx+Pkj+c1dPWO/kvm/oN55OhpqebLuuwcvsn?=
- =?us-ascii?Q?P0nzkAYnGzGovMt4Bq2EnFQu6ZYgnvZDpwD+CEXI6AjSQlMCfEdJVRWtHncs?=
- =?us-ascii?Q?cLncYnFG0I+dV1ycFlvR40MX9a0ZO5oS8VYvzKIAEoqJIHdLyY+UUQ9fLDr/?=
- =?us-ascii?Q?VhgNg7j4U1yEHKTXK4CWFft04keAM0VZJNcacPKEykubNhhdxr2/hYPFQz9+?=
- =?us-ascii?Q?agptnpuXPyBSbvDaCzbNXNRZ6/hU00VjW5/X1bvNdNFhc9xbfvHcfuT6oE2e?=
- =?us-ascii?Q?vJ5IGtCI7cQ5Pd3m+9u/XsDTDJetFCA9WZ9hhYFHbtAbts34P5Vk4BgUf4+5?=
- =?us-ascii?Q?dSBLQ3i54cS5aB9NPA+Tai6uKlfgGhNW0yZ+T9cu6enXIVX7K/1HUpf+NDwB?=
- =?us-ascii?Q?Ca8XKyIjhTlFEDRFiP8yBk0K8c9BC73+QO7BBLZ9I8v6URjfQIZab+w3O+Up?=
- =?us-ascii?Q?uBRAzR7YuBjiC3nc/yYMip1FakZ7nzHeCdOUaz96056Uv/hCVBZ+xpcA0HgQ?=
- =?us-ascii?Q?sxpGQStSVSVtNlzCG7F6gpzEbZ7oILNHEXWjRViIHqRRgascZXdJtx90aB7u?=
- =?us-ascii?Q?xm1muSugLBMifF3cmTdzfib+Z9roa0RdD6LepP1bPkjY6V3XV3vspismPXYZ?=
- =?us-ascii?Q?BsTjf14FMl5MfS+g7y+Th18nNqPL6WfUJE9aYRU0pIzkX+jg2TXo0pz/+EAK?=
- =?us-ascii?Q?E9FupA+A6lfVG+GrV5LgHT/nAjafiawLdu3px0/3FbSH/N3diFcNeUFUilU+?=
- =?us-ascii?Q?dugyajhdt4dHCvcBnLa6+p3A39TRxUYv43ixVwluJln/VbNG3/p+7CB0GQRW?=
- =?us-ascii?Q?ud3lYkcic/krBi6yJBXkMEFHnjfJVZaDX3fG4bj7ktKqwWcPYt56p1bseoZ/?=
- =?us-ascii?Q?3IuWxKfMH1/Ve37srXOfimb9F/kAos+ZM+gJNh1CrIzhSyjgUdDf5hD7qJud?=
- =?us-ascii?Q?rpG/aJ9Mb6p3PIN2VC0dV5T6w5c0pvDrDhWfAO78KLVLQiQUiPFopMyjvuLw?=
- =?us-ascii?Q?Mp0PcXs9smH0gy/lfsGeGQjGBK7FpjWTIBJSyavOgu2oYP/tkmz8YWahJjCZ?=
- =?us-ascii?Q?F/86NIlGl8dNdY+7Czj6bS1I33GtvNVdWa2YJni7/IO/Rull6+gg0Rx8ubuo?=
- =?us-ascii?Q?L3Pdz/+keIEYhfPrkbE2xiJ7mCrCxnWZie7YOvNolEoKdLymJqje9G4byOkP?=
- =?us-ascii?Q?BwiNiJue0hb9qVsYf5KmNiibR1AC/N3TUBoKNLT8WsNqfz8hzNX6oaG03lxR?=
- =?us-ascii?Q?x37a8koE3gY46+DxONhSRqqdchqYjPXkU7oKBQaKiC8F/sutfBP16ccfFY8p?=
- =?us-ascii?Q?V/TzZD5Pf+ZIoZuPtu7kXrvX5fkCM02VN8o+mbnoJxeYmdxGY12ilmu+2EVY?=
- =?us-ascii?Q?E9HY2UgVI6Yc1k5mnfW42ydciT8TUBQPwzxFW05aIQhV9CnUQmHiA/XA//jV?=
- =?us-ascii?Q?Ddrn+axT8AhES3jjri7YGob97WDRa6r4O3XLyY1HZMH0CWRyrNm607l7DWMg?=
- =?us-ascii?Q?OeVpOBBBC8s5a2hJGEWcYumO/2TOHzNtxRP1GuLoW3/w9QzgFhcVBtcKPJMS?=
- =?us-ascii?Q?9U43r5fxlzxQf+2EtrI82cwsyQ1uPNmJs3xQuKjsS6jMpLqwgi9m/6mEpKGC?=
- =?us-ascii?Q?2TGuywvXxBXQt28WdpDsdBQ=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?us-ascii?Q?yWsTi82feKNNXNI2DJkbuS49cBtIARX7I3yxgKPFd+t4St26Jog7CoEylAix?=
+ =?us-ascii?Q?NrDX+1rKX9LfqgnKyDd79ImoxgCdem8iHPK/fEUx+sYeAh9cElB5nrFbWIim?=
+ =?us-ascii?Q?T2yjwN9qwFXFD0auJFnGfkG5QLsE/gAbOBQ8PVWw3mBNSdatofKHBvhFbcSz?=
+ =?us-ascii?Q?i86iqcS5dNRNN8kHbVdHZkrdYX4amCT0PiBXfo315z6EMD8EXZNvW08uQnUc?=
+ =?us-ascii?Q?SODqTlM1v3cMhiP1CfQNIvzGbH3SiVo8idhksrHBLz9EIklwtZbEp17rghlA?=
+ =?us-ascii?Q?eOFjJdX2TwdFVBxAAY5j4zEW70L8NZyVnKjSpVg86CAfq5o11NnVu8Zka4GX?=
+ =?us-ascii?Q?oGzwcR/QdHHbClrmCeTZRjM2b0T9pnK00Pk5w7uLP6+RpTWWc0mRPkVfDyiy?=
+ =?us-ascii?Q?ZtiWuE3QmaYfFnHlk0i63TSdCwQe9fPqPw+cPmJot1g5A72C62FVqRAyhvLQ?=
+ =?us-ascii?Q?XnMidu3oCGCKjIg1rCksrlCd5VKbDrYj+xi0RgAYcdTwpJ5/eoHj7L5ejc68?=
+ =?us-ascii?Q?gB2nn14wDzbVp2kSMR2Wr5/nxwsvJ+Ekl77/d3bzZjzwwzQT6Lk7JEBxUz83?=
+ =?us-ascii?Q?4PhQFZQCxilb2On7YAXEZPfNbkH5txZ2MEYMF4T7C0foRCaIIEZy9ypSg41u?=
+ =?us-ascii?Q?uSoHlcYyWiRgOTOlNfSI2pVNJ/miyNyVAg2uYrvleyH9vfn1rbYj66+AJR3z?=
+ =?us-ascii?Q?zjAic9qKx3mNozwFNITvgO4c3NoJIrDhIpq48Acjn9nSoGJxzVtU34WWgCFF?=
+ =?us-ascii?Q?pCths9ZUsciJ3/omJsIlK96BBMGsXOU8S8MRDq4d8hU3RVKLhsMl5ljPZybk?=
+ =?us-ascii?Q?mU3q3oGoa/2al/rrikYKGPoMwU4C/bvf1xSFL/uMiK7diMD6INBIxzezFy7I?=
+ =?us-ascii?Q?+/G5+Xs0aNpJGTCgr5I/+SiKGwfCFNSY2awDHNBXieCW91G2rLvZ8x3yLz1h?=
+ =?us-ascii?Q?iUuLbkS8KqCoHjLAvIaJXfEvs2oO/cXzwBLqUjCA6Rve47Ol6lCAmPfElPHj?=
+ =?us-ascii?Q?rm+Tz9CDEUDKlVR9Irlfm6oyiULtS5FkcM9LoOwRD3xB8E+7R5G6aqTg2VeI?=
+ =?us-ascii?Q?i/A1Vb+Uii77KZ44b33myWRFVX6ctckYTr9MB94scSR2wWuskvbWqFsGIlhf?=
+ =?us-ascii?Q?FRaUfP+2tNin/pK0tK5nNyfQNl7mUeVyFnDuOnZVMdkJh5ZUcXEFY/cEJPaM?=
+ =?us-ascii?Q?nNnqFwDFOg5P25/y6/QFpmT2Vf/z5veExi0v0v0qBIH/c2hx1fkoUCsNxssP?=
+ =?us-ascii?Q?A/YyVeVDjQTu2HRRtxyUGx+KcAwMetuZRr9CbjqRhMBNXLM5PZikscqa1027?=
+ =?us-ascii?Q?uALUoTGnfrdtEB57NQpUN4JpHeIQA/vemZxJMzwEolZnIo75mV1u1msKCuLy?=
+ =?us-ascii?Q?4Hei/H5OZQ3nt0ZB0JzubV483elhT1QVe7vsSSOuhir/hOgJCyxjJpio2hMZ?=
+ =?us-ascii?Q?0fDKnFNIZc3VH4b9pfYyD9OzuaHqymZUDwsMwXpKMWog2Jnu0W6r4QmcMoxh?=
+ =?us-ascii?Q?0pu81yP3COzWQGeyQx642jQmcvEYBiJVElFMHaEOEWRxKi5+jWI9OFV4KZZM?=
+ =?us-ascii?Q?X5Y+kT9xP1J6KmoArziVLv6b9L6GEt9tL+p2ZHAVSd7lnXQTUOxW201igjig?=
+ =?us-ascii?Q?h3yeUKJlC7KV7FVuozFryf8=3D?=
 X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 71389a6c-9b86-48b0-556f-08db455a73fa
+X-MS-Exchange-CrossTenant-Network-Message-Id: 30bba879-403e-43d9-897c-08db455a76c5
 X-MS-Exchange-CrossTenant-AuthSource: BYAPR01MB4966.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Apr 2023 06:58:20.0007
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Apr 2023 06:58:24.8583
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: LUFupQPoaRRFKQOy/B7swy9DvnNEHPDHF97/mb/CTH56fOZPE0FfnYvOvBcMOyzFhtDhq0ccKfyF3vtBxyKrTbKXWguaX+oGcdnYZoIKi9ybTGOWRo289N8pRXRBPGJC
+X-MS-Exchange-CrossTenant-UserPrincipalName: jZJj5hf+uYrgVCoa2kHXcZuZpom0h/fVXzvuRsuRuvppo0W11SRu1pIZlmeFZFrQsYb7ZsSXG7OD6T0g4AXyPMLAkE2wyq3MjTNTnqCNaO+jL+xvxR25ZRNPBfR7zO3u
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR01MB6504
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -131,267 +131,31 @@ Cc: Chanh Nguyen <chanh@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Change to use I2C ADC controller (ltc2497) for Mt.Mitchell DVT and
-later hardware.
+Enable MCTP driver on I2C3 bus for MCTP transaction
 
 Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
 ---
- .../boot/dts/aspeed-bmc-ampere-mtmitchell.dts | 107 +++++++++++-------
- 1 file changed, 66 insertions(+), 41 deletions(-)
+ arch/arm/boot/dts/aspeed-bmc-ampere-mtmitchell.dts | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/arch/arm/boot/dts/aspeed-bmc-ampere-mtmitchell.dts b/arch/arm/boot/dts/aspeed-bmc-ampere-mtmitchell.dts
-index 6455cf80da0e..0b5ea8620063 100644
+index 0b5ea8620063..33e06eafed31 100644
 --- a/arch/arm/boot/dts/aspeed-bmc-ampere-mtmitchell.dts
 +++ b/arch/arm/boot/dts/aspeed-bmc-ampere-mtmitchell.dts
-@@ -65,174 +65,192 @@
+@@ -366,6 +366,13 @@
  
- 	adc0mux: adc0mux {
- 		compatible = "io-channel-mux";
--		io-channels = <&adc0 0>;
-+		io-channels = <&adc_i2c_0 0>;
- 		#io-channel-cells = <1>;
- 		io-channel-names = "parent";
- 		mux-controls = <&gpioI5mux>;
-+		settle-time-us = <10000>;
- 		channels = "s0", "s1";
- 	};
- 
- 	adc1mux: adc1mux {
- 		compatible = "io-channel-mux";
--		io-channels = <&adc0 1>;
-+		io-channels = <&adc_i2c_0 1>;
- 		#io-channel-cells = <1>;
- 		io-channel-names = "parent";
- 		mux-controls = <&gpioI5mux>;
-+		settle-time-us = <10000>;
- 		channels = "s0", "s1";
- 	};
- 
- 	adc2mux: adc2mux {
- 		compatible = "io-channel-mux";
--		io-channels = <&adc0 2>;
-+		io-channels = <&adc_i2c_0 2>;
- 		#io-channel-cells = <1>;
- 		io-channel-names = "parent";
- 		mux-controls = <&gpioI5mux>;
-+		settle-time-us = <10000>;
- 		channels = "s0", "s1";
- 	};
- 
- 	adc3mux: adc3mux {
- 		compatible = "io-channel-mux";
--		io-channels = <&adc0 3>;
-+		io-channels = <&adc_i2c_0 3>;
- 		#io-channel-cells = <1>;
- 		io-channel-names = "parent";
- 		mux-controls = <&gpioI5mux>;
-+		settle-time-us = <10000>;
- 		channels = "s0", "s1";
- 	};
- 
- 	adc4mux: adc4mux {
- 		compatible = "io-channel-mux";
--		io-channels = <&adc0 4>;
-+		io-channels = <&adc_i2c_0 4>;
- 		#io-channel-cells = <1>;
- 		io-channel-names = "parent";
- 		mux-controls = <&gpioI5mux>;
-+		settle-time-us = <10000>;
- 		channels = "s0", "s1";
- 	};
- 
- 	adc5mux: adc5mux {
- 		compatible = "io-channel-mux";
--		io-channels = <&adc0 5>;
-+		io-channels = <&adc_i2c_0 5>;
- 		#io-channel-cells = <1>;
- 		io-channel-names = "parent";
- 		mux-controls = <&gpioI5mux>;
-+		settle-time-us = <10000>;
- 		channels = "s0", "s1";
- 	};
- 
- 	adc6mux: adc6mux {
- 		compatible = "io-channel-mux";
--		io-channels = <&adc0 6>;
-+		io-channels = <&adc_i2c_0 6>;
- 		#io-channel-cells = <1>;
- 		io-channel-names = "parent";
- 		mux-controls = <&gpioI5mux>;
-+		settle-time-us = <10000>;
- 		channels = "s0", "s1";
- 	};
- 
- 	adc7mux: adc7mux {
- 		compatible = "io-channel-mux";
--		io-channels = <&adc0 7>;
-+		io-channels = <&adc_i2c_0 7>;
- 		#io-channel-cells = <1>;
- 		io-channel-names = "parent";
- 		mux-controls = <&gpioI5mux>;
-+		settle-time-us = <10000>;
- 		channels = "s0", "s1";
- 	};
- 
- 	adc8mux: adc8mux {
- 		compatible = "io-channel-mux";
--		io-channels = <&adc1 0>;
-+		io-channels = <&adc_i2c_0 8>;
- 		#io-channel-cells = <1>;
- 		io-channel-names = "parent";
- 		mux-controls = <&gpioI5mux>;
-+		settle-time-us = <10000>;
- 		channels = "s0", "s1";
- 	};
- 
- 	adc9mux: adc9mux {
- 		compatible = "io-channel-mux";
--		io-channels = <&adc1 1>;
-+		io-channels = <&adc_i2c_0 9>;
- 		#io-channel-cells = <1>;
- 		io-channel-names = "parent";
- 		mux-controls = <&gpioI5mux>;
-+		settle-time-us = <10000>;
- 		channels = "s0", "s1";
- 	};
- 
- 	adc10mux: adc10mux {
- 		compatible = "io-channel-mux";
--		io-channels = <&adc1 2>;
-+		io-channels = <&adc_i2c_0 10>;
- 		#io-channel-cells = <1>;
- 		io-channel-names = "parent";
- 		mux-controls = <&gpioI5mux>;
-+		settle-time-us = <10000>;
- 		channels = "s0", "s1";
- 	};
- 
- 	adc11mux: adc11mux {
- 		compatible = "io-channel-mux";
--		io-channels = <&adc1 3>;
-+		io-channels = <&adc_i2c_0 11>;
- 		#io-channel-cells = <1>;
- 		io-channel-names = "parent";
- 		mux-controls = <&gpioI5mux>;
-+		settle-time-us = <10000>;
- 		channels = "s0", "s1";
- 	};
- 
- 	adc12mux: adc12mux {
- 		compatible = "io-channel-mux";
--		io-channels = <&adc1 4>;
-+		io-channels = <&adc_i2c_0 12>;
- 		#io-channel-cells = <1>;
- 		io-channel-names = "parent";
- 		mux-controls = <&gpioI5mux>;
-+		settle-time-us = <10000>;
- 		channels = "s0", "s1";
- 	};
- 
- 	adc13mux: adc13mux {
- 		compatible = "io-channel-mux";
--		io-channels = <&adc1 5>;
-+		io-channels = <&adc_i2c_0 13>;
- 		#io-channel-cells = <1>;
- 		io-channel-names = "parent";
- 		mux-controls = <&gpioI5mux>;
-+		settle-time-us = <10000>;
- 		channels = "s0", "s1";
- 	};
- 
- 	adc14mux: adc14mux {
- 		compatible = "io-channel-mux";
--		io-channels = <&adc1 6>;
-+		io-channels = <&adc_i2c_0 14>;
- 		#io-channel-cells = <1>;
- 		io-channel-names = "parent";
- 		mux-controls = <&gpioI5mux>;
-+		settle-time-us = <10000>;
- 		channels = "s0", "s1";
- 	};
- 
- 	adc15mux: adc15mux {
- 		compatible = "io-channel-mux";
--		io-channels = <&adc1 7>;
-+		io-channels = <&adc_i2c_0 15>;
- 		#io-channel-cells = <1>;
- 		io-channel-names = "parent";
- 		mux-controls = <&gpioI5mux>;
-+		settle-time-us = <10000>;
- 		channels = "s0", "s1";
- 	};
- 
- 	iio-hwmon {
- 		compatible = "iio-hwmon";
--		io-channels = <&adc0mux 0>, <&adc0mux 1>,
--			<&adc1mux 0>, <&adc1mux 1>,
--			<&adc2mux 0>, <&adc2mux 1>,
--			<&adc3mux 0>, <&adc3mux 1>,
--			<&adc4mux 0>, <&adc4mux 1>,
--			<&adc5mux 0>, <&adc5mux 1>,
--			<&adc6mux 0>, <&adc6mux 1>,
--			<&adc7mux 0>, <&adc7mux 1>,
--			<&adc8mux 0>, <&adc8mux 1>,
--			<&adc9mux 0>, <&adc9mux 1>,
--			<&adc10mux 0>, <&adc10mux 1>,
--			<&adc11mux 0>, <&adc11mux 1>,
--			<&adc12mux 0>, <&adc12mux 1>,
--			<&adc13mux 0>, <&adc13mux 1>,
--			<&adc14mux 0>, <&adc14mux 1>,
--			<&adc15mux 0>, <&adc15mux 1>,
--			<&adc_i2c 0>, <&adc_i2c 1>,
--			<&adc_i2c 2>, <&adc_i2c 3>,
--			<&adc_i2c 4>, <&adc_i2c 5>,
--			<&adc_i2c 6>, <&adc_i2c 7>,
--			<&adc_i2c 8>, <&adc_i2c 9>,
--			<&adc_i2c 10>, <&adc_i2c 11>,
--			<&adc_i2c 12>, <&adc_i2c 13>,
--			<&adc_i2c 14>, <&adc_i2c 15>;
-+		io-channels =	<&adc0mux 0>, <&adc0mux 1>,
-+				<&adc1mux 0>, <&adc1mux 1>,
-+				<&adc2mux 0>, <&adc2mux 1>,
-+				<&adc3mux 0>, <&adc3mux 1>,
-+				<&adc4mux 0>, <&adc4mux 1>,
-+				<&adc5mux 0>, <&adc5mux 1>,
-+				<&adc6mux 0>, <&adc6mux 1>,
-+				<&adc7mux 0>, <&adc7mux 1>,
-+				<&adc8mux 0>, <&adc8mux 1>,
-+				<&adc9mux 0>, <&adc9mux 1>,
-+				<&adc10mux 0>, <&adc10mux 1>,
-+				<&adc11mux 0>, <&adc11mux 1>,
-+				<&adc12mux 0>, <&adc12mux 1>,
-+				<&adc13mux 0>, <&adc13mux 1>,
-+				<&adc14mux 0>, <&adc14mux 1>,
-+				<&adc15mux 0>, <&adc15mux 1>,
-+				<&adc_i2c_1 0>, <&adc_i2c_1 1>,
-+				<&adc_i2c_1 2>, <&adc_i2c_1 3>,
-+				<&adc_i2c_1 4>, <&adc_i2c_1 5>,
-+				<&adc_i2c_1 6>, <&adc_i2c_1 7>,
-+				<&adc_i2c_1 8>, <&adc_i2c_1 9>,
-+				<&adc_i2c_1 10>, <&adc_i2c_1 11>,
-+				<&adc_i2c_1 12>, <&adc_i2c_1 13>,
-+				<&adc_i2c_1 14>, <&adc_i2c_1 15>,
-+				<&adc0 0>, <&adc0 1>,
-+				<&adc0 2>;
- 	};
+ &i2c3 {
+ 	status = "okay";
++	bus-frequency = <1000000>;
++	multi-master;
++	mctp-controller;
++	mctp@10 {
++		compatible = "mctp-i2c-controller";
++		reg = <0x10>;
++	};
  };
  
-@@ -353,7 +371,14 @@
  &i2c4 {
- 	status = "okay";
- 
--	adc_i2c: adc@16 {
-+	adc_i2c_0: adc@14 {
-+		compatible = "lltc,ltc2497";
-+		reg = <0x14>;
-+		vref-supply = <&voltage_mon_reg>;
-+		#io-channel-cells = <1>;
-+	 };
-+
-+	adc_i2c_1: adc@16 {
- 		compatible = "lltc,ltc2497";
- 		reg = <0x16>;
- 		vref-supply = <&voltage_mon_reg>;
 -- 
 2.17.1
 
