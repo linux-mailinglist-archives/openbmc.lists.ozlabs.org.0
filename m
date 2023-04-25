@@ -1,95 +1,87 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 181EB6EE213
-	for <lists+openbmc@lfdr.de>; Tue, 25 Apr 2023 14:44:53 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F4BC6EE217
+	for <lists+openbmc@lfdr.de>; Tue, 25 Apr 2023 14:45:56 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Q5MCQ6PYrz3cfB
-	for <lists+openbmc@lfdr.de>; Tue, 25 Apr 2023 22:44:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Q5MDf0Bd3z3cd6
+	for <lists+openbmc@lfdr.de>; Tue, 25 Apr 2023 22:45:54 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=TreMTERY;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=kaIdAfNg;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=en8cmqwn;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ZsC5CGFe;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.29; helo=out5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=TreMTERY;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=kaIdAfNg;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=en8cmqwn;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=ZsC5CGFe;
 	dkim-atps=neutral
 Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q5MBm5KFKz2ylk
-	for <openbmc@lists.ozlabs.org>; Tue, 25 Apr 2023 22:44:14 +1000 (AEST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id 528D75C01A3;
-	Tue, 25 Apr 2023 08:44:11 -0400 (EDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q5MD52rRkz2xKS
+	for <openbmc@lists.ozlabs.org>; Tue, 25 Apr 2023 22:45:25 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id 6F8965C0198;
+	Tue, 25 Apr 2023 08:45:23 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Tue, 25 Apr 2023 08:44:11 -0400
+  by compute4.internal (MEProxy); Tue, 25 Apr 2023 08:45:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1682426651; x=1682513051; bh=rW
-	l2oyL70NeJSeDWdvpEB+ZG1StPbZA2O+tz+i1qtW0=; b=TreMTERYwooPVr/E+t
-	48Odss7jhcm/qMIYGRJ0XCSuZkvHogJOhV++yQQkmh1jCt4M/ASpM7Mk+IqK9182
-	LV0uHW1x149mLNI+76+lyIEJvyzFBQMPK6wxhQNsXIrqVqs2vb//Nfor9mKrqD0u
-	uj3Nk2ip9fP2cSVQt+rM+URF4MQSHw386P6KGzUJyjgiT7sMmpRLuyJyQDlVGEZr
-	LziDxoBFUe3xPoBDHqjM27M63hwAsGMt62yWFElqXGQux/CgxLx96bc+bTc1VYKU
-	QkM/24bV31DAfrrP/1kIuubXPeLU5GQfY3bYB+G7CTEFBlcQnLD8BMYoWAFe9A+S
-	/BEA==
+	:subject:subject:to:to; s=fm3; t=1682426723; x=1682513123; bh=9i
+	lD7rtXS/Z3T8ECZjx/vthNJE6BarC3gPm4khDo3Ms=; b=en8cmqwnVkjzWHhHLp
+	wY64oQC57QBFKkvm0p66/aK6ntNr588975PETfnwxW2gsdvAMzENev4gkwrR5hqJ
+	xDa//7ltgQRcXkmLeREiMUdnVxs+v4HMzkz0SvgUO8t7Bl54et5qbxVX3s+9eWn7
+	iprGKxuWCtEC2+zz8wZ1/WP8jKWmj6Ik4S39fsR7OBlzreVczHXpG7/B1IYYNcRk
+	2/xrgdKv2G458YTQ5ypOMQi5bEh98O0yzieqNOFkjqISML2g2wg33ssh+hp2wJCg
+	SEJ3N2+3dUND0G0+Wgkq6itIZFjxdRyUPkp2w3tOe233GWdr6IkKNSXklMnF7PbY
+	1fUQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1682426651; x=1682513051; bh=rWl2oyL70NeJS
-	eDWdvpEB+ZG1StPbZA2O+tz+i1qtW0=; b=kaIdAfNgqOZbYHd5dlZRCZNbINIUh
-	yp1HkeL6Er5WKFaQMVMT4uVWC7F+9hnzfPKloJPdRvavsxQjMTelggUf1NVFOKht
-	jJ1/tL+MkF6tasZkoEWlOaHgpiJPjQFW7SB22cNwT2Uoi9C4Ja8BUANKWohcINQq
-	2yC5qKBaI9u5R8PfPZIfNmH9ExPTffTMNBAxHIxYgby1ZRszoX/qFohD15Lb53HJ
-	sdaPyeKeT/KI39/4f2nWnL8uwpd6nuVLT55n71wZLgAOJujKvG8HW30SwfPIg3zv
-	SdA4HuOYQoo7FUcQ6v3z/wCM6nfoBDfKtnLTxcS4G9oyECJ6LqFG/f//A==
-X-ME-Sender: <xms:GstHZN1q61kkWfTm967WtDkVksrqAVKnnmpRtPYHP7Z2vL9glTiyIw>
-    <xme:GstHZEEq8TyouYqomsDz1haP2fIxF2H3HWwSlb4rfPTpiGESSlY7hv6NthX5b1fOb
-    bzWbuqHkYYAkZQT6bM>
-X-ME-Received: <xmr:GstHZN678eerNdIQQlZLgOWlRvlu88OCiHujCGqitTXDQ22jMZw6mrypcwaJoY44fBAtyXAMo2ZP0tXkMsaaYEtCE6bpG665z-8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeduvddgheehucetufdoteggodetrfdotf
+	:x-sasl-enc; s=fm3; t=1682426723; x=1682513123; bh=9ilD7rtXS/Z3T
+	8ECZjx/vthNJE6BarC3gPm4khDo3Ms=; b=ZsC5CGFesCtyxyF+rovkG2G0HdvKY
+	4oTRAXS76Rnvp4OQY3p9WrbpN2wbTaovs8zNhysh6vY1yJ/x1WseC5h48vbfQGkO
+	GBJCjVB9FsLgqx9OlMNlb8UK0pmMMuIy+3VfKGTkKPs9g/M86YqAjNSev0ggkYR3
+	q1fUcdzT8yJVyiA557fcxaVWxgqV3vePuxeSrKkviyjIYqORrOW/VBkyb9FGXRo5
+	GACfLDfGK+stEQQdkHO/LvaPeM1f5NUDTncPiC8Z/lpbLNS7q6UUJ9Kh8YhbO6CG
+	KaSznYDS9AbZlAFPEavjNAXI1p714JH4Z80Pg6OJTbCIH5AxPpMh7yWYw==
+X-ME-Sender: <xms:Y8tHZAYNQPC5alcfU3QxdJl1yO2QxQFFWZIGOoPIwUGlnLp6z3cwDQ>
+    <xme:Y8tHZLYLd1RjUNdCuZxa4dxSDVnqmhPWClFM_fSUZIbpAnKqvPBKl2r9Msietefpb
+    6-wm8ezUKlJrNpuaaU>
+X-ME-Received: <xmr:Y8tHZK_YXYJ5hFjYxMInm7sx1-n0utnhT2l4Pa4PYncea3OAdbhIxIESwtN4sZUKH5biJjNxTUl0vN8rONwScdxuJQW4hcxCcLQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeduvddgheeiucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredt
-    tdejnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
-    hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeetteeigfefgeetffdtteeuledt
-    udevgeelgeekvdekgedukedufefhhfettddutdenucevlhhushhtvghrufhiiigvpedtne
+    tddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
+    hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeehfeejheeftdejiedvfeekffeh
+    ledukeduleelffekgfdtleduledvtdegtdehkeenucevlhhushhtvghrufhiiigvpedtne
     curfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:GstHZK3dQeqUEodx452bKsFrF9qpiX2GxKqi0-W28TGV4tqgXpxMXw>
-    <xmx:GstHZAGV9Ij5ioOOGJNr2BGFh6fsCYBsj1_k_90Rg3yn4m_lTJUknA>
-    <xmx:GstHZL_z1MmwgDDg0fU-VZ4bHoMQvHrm5V-e4N93nRphM6mrHirh6g>
-    <xmx:G8tHZMjEe07zqFOrBnIkNEPemrbbf6d4pFdOVWi40psCZP4TRsbefQ>
+X-ME-Proxy: <xmx:Y8tHZKro2Zpwj28lxK_TkdYvMCcnZ3VzO4DRc5IQzlcIYfp39_t2jg>
+    <xmx:Y8tHZLqQzNpJdv_Kbl1xfedFrzN-EIA1N6OwB4fyTUSkNETkfPZUmQ>
+    <xmx:Y8tHZIRXfysLe0qYxSfVqj-0BhXcbcfwbOuPXzPVQ7a9Atppsa40Fw>
+    <xmx:Y8tHZKS8RULRz7GBAczpONwbW1MzWUl08hnU2oi8tT5ftXISG_3woA>
 Feedback-ID: i68a1478a:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 25 Apr 2023 08:44:10 -0400 (EDT)
-Date: Tue, 25 Apr 2023 07:44:08 -0500
+ 25 Apr 2023 08:45:22 -0400 (EDT)
+Date: Tue, 25 Apr 2023 07:45:22 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: Sandeep Kumar <sandeep.pkumar@tcs.com>
-Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on Qemu
-Message-ID: <ZEfLGN2-vVIwILuK@heinlein.vulture-banana.ts.net>
-References: <MA1PR01MB412922EF629403C84674A6AD87909@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
- <8e23c99e-0e62-3866-ce61-c75a14453a37@kaod.org>
- <MA1PR01MB4129EB6FA57EA28AA9002E9C879B9@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
- <2231ac88-3005-0fb4-6aad-e7652ffd3467@kaod.org>
- <MA1PR01MB41297891E40E6E5652661662879D9@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
- <9c136acf-ea18-130b-41bb-5001b01ee8cf@kaod.org>
- <MA1PR01MB4129E3F1719B297B56DC148A87629@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
- <MA1PR01MB41294AC02644C3CB98E6F84187639@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
- <MA1PR01MB41299E9B9A723B06576C522787649@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
+To: Francine Sauvage <francine.sauvage@atos.net>
+Subject: Re: return error on property changes
+Message-ID: <ZEfLYnpMUO_owCVx@heinlein.vulture-banana.ts.net>
+References: <PAXPR02MB7680989DB7CF5B5C47627599E4669@PAXPR02MB7680.eurprd02.prod.outlook.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="+8NN2AFZkiHUNPR5"
+	protocol="application/pgp-signature"; boundary="uHo0oRsPhLoTTUry"
 Content-Disposition: inline
-In-Reply-To: <MA1PR01MB41299E9B9A723B06576C522787649@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
+In-Reply-To: <PAXPR02MB7680989DB7CF5B5C47627599E4669@PAXPR02MB7680.eurprd02.prod.outlook.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,60 +93,68 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ninad Palsule <ninad@linux.ibm.com>, Andrew Jeffery <andrew@aj.id.au>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Joel Stanley <jms@jms.id.au>, =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@kaod.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---+8NN2AFZkiHUNPR5
-Content-Type: text/plain; charset=utf-8
+--uHo0oRsPhLoTTUry
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Apr 25, 2023 at 03:40:52AM +0000, Sandeep Kumar wrote:
+On Sun, Apr 23, 2023 at 08:29:03AM +0000, Francine Sauvage wrote:
+> Hi,
+> I cannot implement the following use case:
 >=20
-> Would appreciate any help on my earlier query(i.e., generating obmc-phosp=
-hor-image.rootfs.wic.qcow2 image).
-> How to build this image =3D>  obmc-phosphor-image.rootfs.wic.qcow2 ? In o=
-penBmc build directory we don=E2=80=99t get this image built.
+> From bmcweb code, I set RequestedPowerTransition.
+> From requestedPowerTransition (phosphor-state-manager) code , I have a ba=
+d condition and I reject the transition.
 >=20
-> Also, remaining image formats used while running on qemu are available in=
- the build directory. i.e fitImage-linux.bin, aspeed-bmc-ibm-rainier.dtb an=
-d obmc-phosphor-initramfs.rootfs.cpio.xz .
+> =3D=3D> How can I throw something (error code, exception ?) back to bmcwe=
+b in order to know what happened exactly ?
 >=20
-> Please advise if we have to build openbmc stack in a different way than t=
-he standard procedure. We follow the below steps for build,
-> 1. . setup Romulus
-> 2. bitbake obmc-phosphor-image
+> I was not able to add a "exceptions:" part in yaml around a property to c=
+reate and throw a specific exception while getting / setting a property, li=
+ke I did with methods.
+>=20
+> I need to declare (and return) an exception while a property is changing,=
+ especially when the transition is not accepted.
+>=20
+> I have an old version of openbmc, it may be solved in the new version, bu=
+t please tell me how to help me eventually patching the needed parts,
+>=20
 
-I don't understand what you're building and why you're looking for a WIC
-image.  You said you were building Romulus, which doesn't use WIC, but
-then you referenced a Rainier DTB.
+I think you used the wrong YAML keyword.
 
-WIC is used for eMMC devices.  MTD is used for SPI-NOR devices.  Romulus
-is a SPI-NOR machine.
+```
+$ git grep "exceptions:" | wc -l      =20
+0
+$ git grep "errors:" | wc -l      =20
+161
+```
 
 --=20
 Patrick Williams
 
---+8NN2AFZkiHUNPR5
+--uHo0oRsPhLoTTUry
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmRHyxcACgkQqwNHzC0A
-wRk7TRAAiJ/v9NRn8HLYEu6VmX/sVFA5yi8G9vmIEyy9V2Ang8zfsKsJXkNXqMYw
-2dtBMDA0b65SPpnFKIa9sZH7bOYGYnDRMgPSovJW0bYkMM7K3I30xiCdotHXQB6v
-lepF/zD+7yqUrCSjkMVVbzWw22uQrX1b8Y3qTZsFUe9B+Hr/S7odNjW6/mA7K1HU
-Wsb+wcZq1m+g1K7jiEZ4WwyPxfYiqUqitRORfiDIHsGMibgarCGl3aDkYloYteHT
-8F7bTNFb75eavaX1b1FkPiaMwCdD+2EqV4bqzaT/0AXTn0wJe/GNNXXBGuSdVOef
-tYR847Y8RACFuqrwZnxXP3qtxUF9JY90XTnmzZG9FTkF0AjPv4h8/rg15XU+pHAB
-konpGv0aDhWMPP97FF5qkpRSAyJqjUTCXe/5dKUN3gV0iSRollQV9ijhyFD7UM4k
-o5eKatXRBrgIqo2+YQbOoMwcCkaPUO5eLpezcQdTLYgdeAWfU2BQtsCVMDwSRp+l
-ZEBx0q79vDa2g/3kzKBrWHla5Vjqrfu7FAvq5dTj6ztxqpiarK9gNjFreR5rzJUE
-H1Hj45YizW84R16hcEq94fFk3BYW5JitG8NLMLrZowjVwc1IDKidmaKUooUgec2P
-S/3IZeXQhso462n/gq92NLhviWctSTdBuIr2Ne2T3uWrqp4wC1g=
-=CQ/Y
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmRHy2IACgkQqwNHzC0A
+wRkrcA/9G9XOTzvKOn6p8IlRgtwmwZGbHEf6ZFeKCOlgej9V59zG9NhZMiUG9dSh
+ZqSPrZFh8bKs4LEWRugNfC5lOzcdP+iVliGR2wkssxb1oVQfcoxPs0/yH7QcUkhC
+ymjRtuM0cFBv7MnqG84Rn3Vf2DdQ3TwlODOBoI1UA+2u5ZxB6FzvELfrjCVGdMqt
+YQbbn4Sg+plFaR0gPVxkarqL3LHo/rYQBcyBDHuRhRFPRHkalQ8hethvFqMiMkN+
+YicfrqkA8ShrNRQcAGIVzzvlrl96Xr6lZWXnhnhtriKaUHHZNkm8hnFw8MxF6VXf
+dTbf6aYdz5d2NBb1gsed/vHRSFioZajJpyxSiJ9sPwbgubu0DF/KC9JqibEl4K6v
+ySMiFpaBTs/5XAkvCYOJ+mwA/ITE7Bk7j+CBXHuK3GHMIP8qrbaZc/3r1cLBFkqT
+mSnzXm/u7QXwR2v7jE5QvrRoF5ay/Tvmglodc7byLJ09qtWIQukXPNoFKpDs4TRQ
+D62UAaE0gYt95KJntNCyZyA3kRO5C3PTF9Ivh0PSgrux+ivE9cmiG0Et30WQE/O0
+lJ69S0hOrxY8lXZ0hvUfVkuTQcPm3O5qlHZTph+0bNTHAhlA/0oGt+yLrsWgmItz
+xSSZwxSJTyCs1K2Q8gPsSABEWeU24Vt5qtiiDNVbX1ZbEiPxR4Y=
+=eJ3d
 -----END PGP SIGNATURE-----
 
---+8NN2AFZkiHUNPR5--
+--uHo0oRsPhLoTTUry--
