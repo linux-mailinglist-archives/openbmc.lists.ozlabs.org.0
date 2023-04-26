@@ -2,66 +2,113 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6E4FC6EEC38
-	for <lists+openbmc@lfdr.de>; Wed, 26 Apr 2023 04:04:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0B1D06EEC6B
+	for <lists+openbmc@lfdr.de>; Wed, 26 Apr 2023 04:35:05 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Q5hy91p3tz3cLr
-	for <lists+openbmc@lfdr.de>; Wed, 26 Apr 2023 12:04:33 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Q5jdL64nRz3cd2
+	for <lists+openbmc@lfdr.de>; Wed, 26 Apr 2023 12:35:02 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=mMcFRri2;
+	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=NwudVLt3;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::629; helo=mail-ej1-x629.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=amperemail.onmicrosoft.com (client-ip=2a01:111:f400:fe5a::714; helo=nam12-mw2-obe.outbound.protection.outlook.com; envelope-from=hieuh@amperemail.onmicrosoft.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=mMcFRri2;
+	dkim=fail reason="key not found in DNS" header.d=amperemail.onmicrosoft.com header.i=@amperemail.onmicrosoft.com header.a=rsa-sha256 header.s=selector1-amperemail-onmicrosoft-com header.b=NwudVLt3;
 	dkim-atps=neutral
-Received: from mail-ej1-x629.google.com (mail-ej1-x629.google.com [IPv6:2a00:1450:4864:20::629])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (mail-mw2nam12on20714.outbound.protection.outlook.com [IPv6:2a01:111:f400:fe5a::714])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q5hxZ4tRpz2yWN
-	for <openbmc@lists.ozlabs.org>; Wed, 26 Apr 2023 12:04:02 +1000 (AEST)
-Received: by mail-ej1-x629.google.com with SMTP id a640c23a62f3a-94f7a7a3351so1229756366b.2
-        for <openbmc@lists.ozlabs.org>; Tue, 25 Apr 2023 19:04:02 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q5jcn0FZzz30QD
+	for <openbmc@lists.ozlabs.org>; Wed, 26 Apr 2023 12:34:31 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=HJEjIpAyPS5lRHSloK+Cgj1KWYmJ090zCOn7Q612QNXgfMowzl+moDEtmRe8PWlXgtHteU0Y2awzgBXHoeH/pngA8ByGOOHi6RY6icUztYUsg64LpKUZ6oCr/SUw55vcx+iVkITK8NyYTe0m8bQDnFMROfU6bf40EiJRO3fvpmVo1kH1RmDtzzez1Iqs91msXrauyz35/L8txbqDkMVZ0ZECl7UNJRjHPDhxHCc6MWuNJEwkmBjeC2vN2l5aFSRsaDwTJR8RcKVbndi9ZWpkyAO2FgLluEcixvv0ptSUCyTTWRu83ZVuDKX9sxYCetAlhMUCxJrqm1t38gJvdasXnA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=lrqXeIevLkQbpKVvqmAjVOkZ5ihc+/eM2yH44z/y+hQ=;
+ b=a0WFrXxCZsoERpW55MnNQPqx/fmGYh/a4sCEnSLK/7UBoCioFNhJN/G5nEvYQ7HeBHO/MP6v7QRvGlO/0ax1RKSvGdgo1NpRYMA/qzCRaGY1sJnim19EmWIM07fMUfo9Q8zk3482ZONST/aZE5BgOVYugWEsQKOU/VTqvBxnch/n4E69klttLyTWtLE3e4fygkCWVF+GwFnSV0bmtrPGtMkbxWl7mM7AOG3RPMSh6qushoUEErmbewRiCb6i7Y8ceexmgUS5dfkiodrl0FHrXHDESiYcEJQDWyBVY6lpzwxP1q5J58LwG40hgMdKjZDnJaaYsCrfd9oiQYH+BgateA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amperemail.onmicrosoft.com; dmarc=pass action=none
+ header.from=amperemail.onmicrosoft.com; dkim=pass
+ header.d=amperemail.onmicrosoft.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jms.id.au; s=google; t=1682474636; x=1685066636;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pxSWBEYZlNZW+jua4S5nwDI2g/pXBGbnN7kJRXndEJM=;
-        b=mMcFRri2XhK92cm9ONSfhIHOskPYOezAiz7KtBazwVydRV9bNBdWJSqnlmu4EIwBGe
-         qoJ/3tP4lDpACNbh9x56XZmqQuVYQWiHaeJ+f4JvNR8crq03nfPz1bEpAg9NF0CBq+3Q
-         33RVC1aXLn8BAki29ZWTBnRRHkdGOYmJjbY4Q=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1682474636; x=1685066636;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pxSWBEYZlNZW+jua4S5nwDI2g/pXBGbnN7kJRXndEJM=;
-        b=TXNE+T+qXv2zhjagK/gbzEZMZ10BXZUbXPYf587xRRChB3kr1TR0IgFCwO0Aj8yCgj
-         66dizJgAmk5ZuK+90N7QT0D1h0cThR03IzqAD0KIr715VSHyhpEKR3a0wuqO3iPYM64X
-         DgisHsjurwMuyBhYZNHJ/SmxSUctED2E239/T0mMpMxF1h6Vh4XjR+aomXU3RBeZjAGs
-         iacd32fsFFzP60XH74KApOcAjvwqHq6o0a6Cs+mqquVNZ969KVeQEUr0v7TcE6i1Q6Uj
-         J1/uQNqmH+8f6B0Q7C8AFwVikj4NGOZ6ba1J++Z0FqqjW+F3wEa8UmvFwMov0n4wNhYl
-         Bclg==
-X-Gm-Message-State: AAQBX9fFd/NCr606QBbqVlL0CQriBRMzdJTrUsPz2T4Bdp/24V4es0v4
-	fWJVt4N87InwyAW2Mgfds0RKqg91fLVzwUMGZDY=
-X-Google-Smtp-Source: AKy350ZOI+ko0D9fPxZonz73kkuyXFvzUA/i4XqsHbYulra6AKuPTqmpZO0S8kB/PASzaQE0536n8GGZHpEWRLDt594=
-X-Received: by 2002:a17:907:7208:b0:930:b130:b7b with SMTP id
- dr8-20020a170907720800b00930b1300b7bmr15637808ejc.6.1682474635512; Tue, 25
- Apr 2023 19:03:55 -0700 (PDT)
+ d=amperemail.onmicrosoft.com; s=selector1-amperemail-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=lrqXeIevLkQbpKVvqmAjVOkZ5ihc+/eM2yH44z/y+hQ=;
+ b=NwudVLt3ZsTwfc+jLh3BFdUZi4LUZyYliY7fXy59DxX29cCVyh3viGD7SNw/7Eg5+WEJPmzsRmHDry62MPkjL1ag0Ni8H/qw2WakQefgeOlhiHPChQyWAkzsa2p1N1md1s8lKszGO1x2Nv6FZzJAbJEtc0+f9OYYvc6AJaI0ULA=
+Received: from DM4PR01MB7836.prod.exchangelabs.com (2603:10b6:8:6c::9) by
+ SN6PR01MB4543.prod.exchangelabs.com (2603:10b6:805:eb::28) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6340.19; Wed, 26 Apr 2023 02:34:10 +0000
+Received: from DM4PR01MB7836.prod.exchangelabs.com
+ ([fe80::a0a5:8f58:e78b:8997]) by DM4PR01MB7836.prod.exchangelabs.com
+ ([fe80::a0a5:8f58:e78b:8997%4]) with mapi id 15.20.6340.019; Wed, 26 Apr 2023
+ 02:34:09 +0000
+From: Hieu Huynh OS <hieuh@amperemail.onmicrosoft.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Restrict account only works on a dedicated network interface
+Thread-Topic: Restrict account only works on a dedicated network interface
+Thread-Index: AQHZd+eU1vfR/xmiv0+uiNIovUvj2A==
+Date: Wed, 26 Apr 2023 02:34:09 +0000
+Message-ID: <DC643F45-5229-46F8-8233-E4116ECF4E2A@amperemail.onmicrosoft.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amperemail.onmicrosoft.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DM4PR01MB7836:EE_|SN6PR01MB4543:EE_
+x-ms-office365-filtering-correlation-id: c8f02177-265e-49c8-d560-08db45feb6da
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:  Xaj8Xw5kkddr9uds8HwveOeUxWeDexh0vDKXiDxzVJM3aArN1O7X38qhg2Y0t24kQfNZqIV4bcnLqjywFjuxfq7eseV9kSeWcosgJ7Zr95MQP4t4Ghm7MUD6NKF3qV/Y64k0MxGr6f4Avbszek9nzdqLj3ashohRf5qpHl/NnflMnD9a6UK86tR6c7jECxlnlUNPSxwjbJieXchzS8aLackcBRAbX11Dfz9fb8iWXrrdf6juoqAoz7RKeeB+mDn4q4cBGN+L3TFSx3AXm4dcedYpqumBjZPjSR9R+BkHFLThIZCtET9K44REjbbDqefVr5Rxsnfh0XNS38nHp4s8h5IcO9WcTsVVy+NSBAoBAFZT+i53unApAjyJVlL0QW9dJ1pj5dOkuYEiLaxl89P9pfA1ZRTYxqkUhBEIQbI/pyQcE2ws7yqfdTczi7VTcTFe59y5hBvgY8svHJBg8Gloct+nCyYJ2Gkj0UOZ9Sn4MzCkxud7SmOuXush0B9UEm2qKDnV+4x9s9XRnxcmcg6VYdVlTLeGhs6eqCTWSTSMPnRAvU4qHpRkezWjsuao70CGzhaG4RUYvDsO2DRDQwslvcpdhArVVwZiTsyAMlOlp0X1rbZRz8j/8iBg6Vb9Nf5s
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR01MB7836.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(136003)(39850400004)(346002)(376002)(396003)(366004)(451199021)(38070700005)(478600001)(91956017)(4326008)(66476007)(316002)(76116006)(64756008)(66446008)(66946007)(122000001)(6916009)(66556008)(41300700001)(2906002)(8936002)(8676002)(15650500001)(5660300002)(38100700002)(2616005)(6512007)(26005)(55236004)(6506007)(86362001)(186003)(33656002)(558084003)(107886003)(83380400001)(71200400001)(6486002);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?9DFRv97YJjoiEkuJEiiVqpbZAwi6lFA/CsmxO81XpflRa0v0Rn7mLL1HJ0SF?=
+ =?us-ascii?Q?BaFlz10Sur3CxJMsDSm0MAoZm8EGS/01PJqRkiqMij1XIh8CaR/jeFLUP6+Z?=
+ =?us-ascii?Q?3UXY6F8c8MwPhBvOt0NXplKrUypxStQhnhfGnXuV8LigeL5NNpXFy8HhBCQC?=
+ =?us-ascii?Q?O+SwAdZ4/IaokmKvIe7xaKCjtkuWUxeJ+C/U3yguY93C0wAp48CLcO1u3BUD?=
+ =?us-ascii?Q?4UtYavywOYMWrplPn8MrUkGafJKd2YUNQe/7PvX8GG4USSxAUAY62u2n9P3K?=
+ =?us-ascii?Q?Wbo0rJM/NFKf3y0kZOSEnXPpLj2gZWdH+r/OxIJb5h7joAnUR+VtAwFM5qjq?=
+ =?us-ascii?Q?9rQUzrXGtP3btexN/8wTVs1ZDYHtbO/DFkkZVbwM3w9csH4YZaNK5Zf0wlfv?=
+ =?us-ascii?Q?TNlZ19S7oDTThjjuGb7kpYNcNz8n1zvSYI65TTgIWglW3awo4gEJEG5Yk5L5?=
+ =?us-ascii?Q?PJ7+8Sl671gytgbfG4Nb0lhCJQ0T0O2zEsok+O2mlyCIKP6AGQKRy6xlhU/e?=
+ =?us-ascii?Q?1Kvq/2AmHYD9ReIkr9Sw9bI3Kl5jbJFUteFLfOpF3bGjXeIjbovNkqWLkw+H?=
+ =?us-ascii?Q?qrLwgUaxf9tJuozaOho7fgfWUzsT2iipyp1KaVCSqeCTEc3ZbdFmUb1DP1EY?=
+ =?us-ascii?Q?MnP3CPZybKxp57M889YCsObT9T+CfOVKuLYoJz8lTw44UKUYUpRjlFEkxcNP?=
+ =?us-ascii?Q?zKc3X8mTSUfJiOzGDB78YzMrsL4xxvEtItmYQk2Y0aqPGHPSUV8vrPQSm9kp?=
+ =?us-ascii?Q?DTAp9bP0aXfahUw96+EpZuo6bKNlVVYm+0E2sgH5I33KoqXi3poRbnQ/BuL9?=
+ =?us-ascii?Q?BLOtmwQIWJc7TEOSZduoF1cuNhUhOnRkjigUGbY7xTIbxfQgwQsbs+Wis5U2?=
+ =?us-ascii?Q?pfMiJDLuD/pRSb646ex+Zc5T239gVgtu0i+BELZF6+hiS3qMHxeoPgSnBuID?=
+ =?us-ascii?Q?bjfAkQ+ParPNUc0OdBRg5VP1TKQHp/KQCHSUWAMpM7fFVmMPcH7Jbow54zxw?=
+ =?us-ascii?Q?zNOe48LiJoe2F1nKuJe3IvVxih2f0L4ZmmTLv43LsF6J+qekWX3zWMtgHWqH?=
+ =?us-ascii?Q?BSTXXZ6FOOQ818Up7UuofyG1d4dFotbfcinkkspM9jxqMgMJkRZp41MXFBPr?=
+ =?us-ascii?Q?NzdP6ZFtDYJmcQLxZShZcF1JRUWx2kP9G3EkRWxMU0ej3dKKBL/LfTx2LjXZ?=
+ =?us-ascii?Q?+s1qLl7MknSZuNjGm2UO2TZNe6cmbY9k8vGgLmUu7SBjFWayk6iRlZbxgjba?=
+ =?us-ascii?Q?rYZ+q0h+evonbognXWZIaXL4XewdcIP30ooR3ZXSNQrX5XviEvdkmDOmS8Q+?=
+ =?us-ascii?Q?06iZ5S7SSx0aEuQRG8KN+LUEfyzH0veCGCOsKFiOYv6PYuTrsUN8vGmcxFyj?=
+ =?us-ascii?Q?W3NYyodSNK6/xngEEM/5fSwGoulXOHnpgybhBDgteixrIvlSYXV3Btxo5jRM?=
+ =?us-ascii?Q?aOGPMzCHqxl+HeORab5h1i6pJ3VnpPiZ91kj/tVd+lkGH4oGkk1S0Fnf1vcO?=
+ =?us-ascii?Q?CZbZVK1cfBSDFo3m9S/9FcZCBVLOXx6vSrJ93fPItuaJcdWbcxeckyj2V2mX?=
+ =?us-ascii?Q?UWVS0lLgyJkZUq9yMReF8E869/XPg+wKoDvpEwUqQ5deDHlGTSaX/5bBNF3I?=
+ =?us-ascii?Q?ZKlqD+8nUT1X16rJgyKHmFc=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_DC643F45522946F88233E4116ECF4E2Aamperemailonmicrosoftco_"
 MIME-Version: 1.0
-References: <20230422220240.322572-1-j.neuschaefer@gmx.net> <20230422220240.322572-3-j.neuschaefer@gmx.net>
-In-Reply-To: <20230422220240.322572-3-j.neuschaefer@gmx.net>
-From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 26 Apr 2023 02:03:44 +0000
-Message-ID: <CACPK8Xd7ebqq0m+xLOxsOXuxqRw31BXUBjhwuSpMJaH27NQZ6Q@mail.gmail.com>
-Subject: Re: [PATCH v7 2/2] clk: wpcm450: Add Nuvoton WPCM450 clock/reset
- controller driver
-To: =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-OriginatorOrg: amperemail.onmicrosoft.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM4PR01MB7836.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c8f02177-265e-49c8-d560-08db45feb6da
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 Apr 2023 02:34:09.4358
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: mDkCes5H2k8cXDGsZCtpjMz5R2G5z1nElh+yVu9Yg+muqAK1Jwgjng7ZJ2pDdLZ7RX4j0whCmTirEK+9VNsKpdnmTKe9fFIFWY5t6Qd5yHFO+nZ1xgwQ3/3L4xA5oMFz
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN6PR01MB4543
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,515 +120,61 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Thomas Gleixner <tglx@linutronix.de>, linux-watchdog@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>, Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org, Daniel Lezcano <daniel.lezcano@linaro.org>, Tomer Maimon <tmaimon77@gmail.com>, linux-kernel@vger.kernel.org, Tali Perry <tali.perry1@gmail.com>, Michael Turquette <mturquette@baylibre.com>, Rob Herring <robh+dt@kernel.org>, Christophe JAILLET <christophe.jaillet@wanadoo.fr>, Guenter Roeck <linux@roeck-us.net>, Philipp Zabel <p.zabel@pengutronix.de>, Krzysztof Kozlowski <krzk+dt@kernel.org>, Wim Van Sebroeck <wim@linux-watchdog.org>, linux-clk@vger.kernel.org, Avi Fishman <avifishman70@gmail.com>, Benjamin Fair <benjaminfair@google.com>
+Cc: Thang Nguyen OS <thang@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Sat, 22 Apr 2023 at 22:05, Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.n=
-et> wrote:
->
-> This driver implements the following features w.r.t. the clock and reset
-> controller in the WPCM450 SoC:
->
-> - It calculates the rates for all clocks managed by the clock controller
-> - It leaves the clock tree mostly unchanged, except that it enables/
->   disables clock gates based on usage.
-> - It exposes the reset lines managed by the controller using the
->   Generic Reset Controller subsystem
->
-> NOTE: If the driver and the corresponding devicetree node are present,
->       the driver will disable "unused" clocks. This is problem until
->       the clock relations are properly declared in the devicetree (in a
->       later patch). Until then, the clk_ignore_unused kernel parameter
->       can be used as a workaround.
->
-> Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+--_000_DC643F45522946F88233E4116ECF4E2Aamperemailonmicrosoftco_
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Joel Stanley <joel@jms.id.au>
+Hi,
 
-> ---
+How to restrict 1 account only works on 1 dedicated network interface? I in=
+tended to create an account that only works with Redfish in-band.
+
+Thanks!
+
+---
+Best Regards,
+Hieu Huynh
+
+
+
+
+--_000_DC643F45522946F88233E4116ECF4E2Aamperemailonmicrosoftco_
+Content-Type: text/html; charset="us-ascii"
+Content-ID: <CA1EBF7A046BAA408B9968045001D5DF@prod.exchangelabs.com>
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Dus-ascii"=
 >
-> v7:
-> - Simplify error handling by not deallocating resources
+</head>
+<body style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; line-br=
+eak: after-white-space;">
+<div>Hi,</div>
+<div><br>
+</div>
+<div>How to restrict 1 account only works on 1 dedicated network interface?=
+ I intended to create an account that only works with Redfish in-band.</div=
 >
-> v6:
-> - Enable RESET_SIMPLE based on ARCH_WPCM450, not ARCH_NPCM, as suggested =
-by Tomer Maimon
->
-> v5:
-> - https://lore.kernel.org/lkml/20221104161850.2889894-6-j.neuschaefer@gmx=
-.net/
-> - Switch to using clk_parent_data
->
-> v4:
-> - https://lore.kernel.org/lkml/20220610072141.347795-6-j.neuschaefer@gmx.=
-net/
-> - Fix reset controller initialization
->
-> v3:
-> - https://lore.kernel.org/lkml/20220508194333.2170161-7-j.neuschaefer@gmx=
-.net/
-> - Change reference clock name from "refclk" to "ref"
-> - Remove unused variable in return path of wpcm450_clk_register_pll
-> - Remove unused divisor tables
->
-> v2:
-> - https://lore.kernel.org/lkml/20220429172030.398011-7-j.neuschaefer@gmx.=
-net/
-> - no changes
-> ---
->  drivers/clk/Makefile      |   1 +
->  drivers/clk/clk-wpcm450.c | 374 ++++++++++++++++++++++++++++++++++++++
->  drivers/reset/Kconfig     |   2 +-
->  3 files changed, 376 insertions(+), 1 deletion(-)
->  create mode 100644 drivers/clk/clk-wpcm450.c
->
-> diff --git a/drivers/clk/Makefile b/drivers/clk/Makefile
-> index e3ca0d058a256..b58352d4d615d 100644
-> --- a/drivers/clk/Makefile
-> +++ b/drivers/clk/Makefile
-> @@ -75,6 +75,7 @@ obj-$(CONFIG_COMMON_CLK_RS9_PCIE)     +=3D clk-renesas-=
-pcie.o
->  obj-$(CONFIG_COMMON_CLK_VC5)           +=3D clk-versaclock5.o
->  obj-$(CONFIG_COMMON_CLK_VC7)           +=3D clk-versaclock7.o
->  obj-$(CONFIG_COMMON_CLK_WM831X)                +=3D clk-wm831x.o
-> +obj-$(CONFIG_ARCH_WPCM450)             +=3D clk-wpcm450.o
->  obj-$(CONFIG_COMMON_CLK_XGENE)         +=3D clk-xgene.o
->
->  # please keep this section sorted lexicographically by directory path na=
-me
-> diff --git a/drivers/clk/clk-wpcm450.c b/drivers/clk/clk-wpcm450.c
-> new file mode 100644
-> index 0000000000000..6f6d8a1ea3484
-> --- /dev/null
-> +++ b/drivers/clk/clk-wpcm450.c
-> @@ -0,0 +1,374 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-> + * Nuvoton WPCM450 clock and reset controller driver.
-> + *
-> + * Copyright (C) 2022 Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-> + */
-> +
-> +#define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
-> +
-> +#include <linux/bitfield.h>
-> +#include <linux/clk-provider.h>
-> +#include <linux/io.h>
-> +#include <linux/kernel.h>
-> +#include <linux/module.h>
-> +#include <linux/of.h>
-> +#include <linux/of_address.h>
-> +#include <linux/reset-controller.h>
-> +#include <linux/reset/reset-simple.h>
-> +#include <linux/slab.h>
-> +
-> +#include <dt-bindings/clock/nuvoton,wpcm450-clk.h>
-> +
-> +struct wpcm450_clk_pll {
-> +       struct clk_hw hw;
-> +       void __iomem *pllcon;
-> +       u8 flags;
-> +};
-> +
-> +#define to_wpcm450_clk_pll(_hw) container_of(_hw, struct wpcm450_clk_pll=
-, hw)
-> +
-> +#define PLLCON_FBDV    GENMASK(24, 16)
-> +#define PLLCON_PRST    BIT(13)
-> +#define PLLCON_PWDEN   BIT(12)
-> +#define PLLCON_OTDV    GENMASK(10, 8)
-> +#define PLLCON_INDV    GENMASK(5, 0)
-> +
-> +static unsigned long wpcm450_clk_pll_recalc_rate(struct clk_hw *hw,
-> +                                                unsigned long parent_rat=
-e)
-> +{
-> +       struct wpcm450_clk_pll *pll =3D to_wpcm450_clk_pll(hw);
-> +       unsigned long fbdv, indv, otdv;
-> +       u64 rate;
-> +       u32 pllcon;
-> +
-> +       if (parent_rate =3D=3D 0) {
-> +               pr_err("%s: parent rate is zero", __func__);
-> +               return 0;
-> +       }
-> +
-> +       pllcon =3D readl_relaxed(pll->pllcon);
-> +
-> +       indv =3D FIELD_GET(PLLCON_INDV, pllcon) + 1;
-> +       fbdv =3D FIELD_GET(PLLCON_FBDV, pllcon) + 1;
-> +       otdv =3D FIELD_GET(PLLCON_OTDV, pllcon) + 1;
-> +
-> +       rate =3D (u64)parent_rate * fbdv;
-> +       do_div(rate, indv * otdv);
-> +
-> +       return rate;
-> +}
-> +
-> +static int wpcm450_clk_pll_is_enabled(struct clk_hw *hw)
-> +{
-> +       struct wpcm450_clk_pll *pll =3D to_wpcm450_clk_pll(hw);
-> +       u32 pllcon;
-> +
-> +       pllcon =3D readl_relaxed(pll->pllcon);
-> +
-> +       return !(pllcon & PLLCON_PRST);
-> +}
-> +
-> +static void wpcm450_clk_pll_disable(struct clk_hw *hw)
-> +{
-> +       struct wpcm450_clk_pll *pll =3D to_wpcm450_clk_pll(hw);
-> +       u32 pllcon;
-> +
-> +       pllcon =3D readl_relaxed(pll->pllcon);
-> +       pllcon |=3D PLLCON_PRST | PLLCON_PWDEN;
-> +       writel(pllcon, pll->pllcon);
-> +}
-> +
-> +static const struct clk_ops wpcm450_clk_pll_ops =3D {
-> +       .recalc_rate =3D wpcm450_clk_pll_recalc_rate,
-> +       .is_enabled =3D wpcm450_clk_pll_is_enabled,
-> +       .disable =3D wpcm450_clk_pll_disable
-> +};
-> +
-> +static struct clk_hw *
-> +wpcm450_clk_register_pll(void __iomem *pllcon, const char *name,
-> +                        const struct clk_parent_data *parent, unsigned l=
-ong flags)
-> +{
-> +       struct wpcm450_clk_pll *pll;
-> +       struct clk_init_data init =3D {};
-> +       int ret;
-> +
-> +       pll =3D kzalloc(sizeof(*pll), GFP_KERNEL);
-> +       if (!pll)
-> +               return ERR_PTR(-ENOMEM);
-> +
-> +       init.name =3D name;
-> +       init.ops =3D &wpcm450_clk_pll_ops;
-> +       init.parent_data =3D parent;
-> +       init.num_parents =3D 1;
-> +       init.flags =3D flags;
-> +
-> +       pll->pllcon =3D pllcon;
-> +       pll->hw.init =3D &init;
-> +
-> +       ret =3D clk_hw_register(NULL, &pll->hw);
-> +       if (ret) {
-> +               kfree(pll);
-> +               return ERR_PTR(ret);
-> +       }
-> +
-> +       return &pll->hw;
-> +}
-> +
-> +#define REG_CLKEN      0x00
-> +#define REG_CLKSEL     0x04
-> +#define REG_CLKDIV     0x08
-> +#define REG_PLLCON0    0x0c
-> +#define REG_PLLCON1    0x10
-> +#define REG_PMCON      0x14
-> +#define REG_IRQWAKECON 0x18
-> +#define REG_IRQWAKEFLAG        0x1c
-> +#define REG_IPSRST     0x20
-> +
-> +struct wpcm450_pll_data {
-> +       const char *name;
-> +       struct clk_parent_data parent;
-> +       unsigned int reg;
-> +       unsigned long flags;
-> +};
-> +
-> +static const struct wpcm450_pll_data pll_data[] =3D {
-> +       { "pll0", { .name =3D "ref" }, REG_PLLCON0, 0 },
-> +       { "pll1", { .name =3D "ref" }, REG_PLLCON1, 0 },
-> +};
-> +
-> +struct wpcm450_clksel_data {
-> +       const char *name;
-> +       const struct clk_parent_data *parents;
-> +       unsigned int num_parents;
-> +       const u32 *table;
-> +       int shift;
-> +       int width;
-> +       int index;
-> +       unsigned long flags;
-> +};
-> +
-> +static const u32 parent_table[] =3D { 0, 1, 2 };
-> +
-> +static const struct clk_parent_data default_parents[] =3D {
-> +       { .name =3D "pll0" },
-> +       { .name =3D "pll1" },
-> +       { .name =3D "ref" },
-> +};
-> +
-> +static const struct clk_parent_data huart_parents[] =3D {
-> +       { .name =3D "ref" },
-> +       { .name =3D "refdiv2" },
-> +};
-> +
-> +static const struct wpcm450_clksel_data clksel_data[] =3D {
-> +       { "cpusel", default_parents, ARRAY_SIZE(default_parents),
-> +               parent_table, 0, 2, -1, CLK_IS_CRITICAL },
-> +       { "clkout", default_parents, ARRAY_SIZE(default_parents),
-> +               parent_table, 2, 2, -1, 0 },
-> +       { "usbphy", default_parents, ARRAY_SIZE(default_parents),
-> +               parent_table, 6, 2, -1, 0 },
-> +       { "uartsel", default_parents, ARRAY_SIZE(default_parents),
-> +               parent_table, 8, 2, WPCM450_CLK_USBPHY, 0 },
-> +       { "huartsel", huart_parents, ARRAY_SIZE(huart_parents),
-> +               parent_table, 10, 1, -1, 0 },
-> +};
-> +
-> +static const struct clk_div_table div_fixed2[] =3D {
-> +       { .val =3D 0, .div =3D 2 },
-> +       { }
-> +};
-> +
-> +struct wpcm450_clkdiv_data {
-> +       const char *name;
-> +       struct clk_parent_data parent;
-> +       int div_flags;
-> +       const struct clk_div_table *table;
-> +       int shift;
-> +       int width;
-> +       unsigned long flags;
-> +};
-> +
-> +static struct wpcm450_clkdiv_data clkdiv_data_early[] =3D {
-> +       { "refdiv2", { .name =3D "ref" }, 0, div_fixed2, 0, 0 },
-> +};
-> +
-> +static const struct wpcm450_clkdiv_data clkdiv_data[] =3D {
-> +       { "cpu", { .name =3D "cpusel" }, 0, div_fixed2, 0, 0, CLK_IS_CRIT=
-ICAL },
-> +       { "adcdiv", { .name =3D "ref" }, CLK_DIVIDER_POWER_OF_TWO, NULL, =
-28, 2, 0 },
-> +       { "apb", { .name =3D "ahb" }, CLK_DIVIDER_POWER_OF_TWO, NULL, 26,=
- 2, 0 },
-> +       { "ahb", { .name =3D "cpu" }, CLK_DIVIDER_POWER_OF_TWO, NULL, 24,=
- 2, 0 },
-> +       { "uart", { .name =3D "uartsel" }, 0, NULL, 16, 4, 0 },
-> +       { "ahb3", { .name =3D "ahb" }, CLK_DIVIDER_POWER_OF_TWO, NULL, 8,=
- 2, 0 },
-> +};
-> +
-> +struct wpcm450_clken_data {
-> +       const char *name;
-> +       struct clk_parent_data parent;
-> +       int bitnum;
-> +       unsigned long flags;
-> +};
-> +
-> +static const struct wpcm450_clken_data clken_data[] =3D {
-> +       { "fiu", { .name =3D "ahb3" }, WPCM450_CLK_FIU, 0 },
-> +       { "xbus", { .name =3D "ahb3" }, WPCM450_CLK_XBUS, 0 },
-> +       { "kcs", { .name =3D "apb" }, WPCM450_CLK_KCS, 0 },
-> +       { "shm", { .name =3D "ahb3" }, WPCM450_CLK_SHM, 0 },
-> +       { "usb1", { .name =3D "ahb" }, WPCM450_CLK_USB1, 0 },
-> +       { "emc0", { .name =3D "ahb" }, WPCM450_CLK_EMC0, 0 },
-> +       { "emc1", { .name =3D "ahb" }, WPCM450_CLK_EMC1, 0 },
-> +       { "usb0", { .name =3D "ahb" }, WPCM450_CLK_USB0, 0 },
-> +       { "peci", { .name =3D "apb" }, WPCM450_CLK_PECI, 0 },
-> +       { "aes", { .name =3D "apb" }, WPCM450_CLK_AES, 0 },
-> +       { "uart0", { .name =3D "uart" }, WPCM450_CLK_UART0, 0 },
-> +       { "uart1", { .name =3D "uart" }, WPCM450_CLK_UART1, 0 },
-> +       { "smb2", { .name =3D "apb" }, WPCM450_CLK_SMB2, 0 },
-> +       { "smb3", { .name =3D "apb" }, WPCM450_CLK_SMB3, 0 },
-> +       { "smb4", { .name =3D "apb" }, WPCM450_CLK_SMB4, 0 },
-> +       { "smb5", { .name =3D "apb" }, WPCM450_CLK_SMB5, 0 },
-> +       { "huart", { .name =3D "huartsel" }, WPCM450_CLK_HUART, 0 },
-> +       { "pwm", { .name =3D "apb" }, WPCM450_CLK_PWM, 0 },
-> +       { "timer0", { .name =3D "refdiv2" }, WPCM450_CLK_TIMER0, 0 },
-> +       { "timer1", { .name =3D "refdiv2" }, WPCM450_CLK_TIMER1, 0 },
-> +       { "timer2", { .name =3D "refdiv2" }, WPCM450_CLK_TIMER2, 0 },
-> +       { "timer3", { .name =3D "refdiv2" }, WPCM450_CLK_TIMER3, 0 },
-> +       { "timer4", { .name =3D "refdiv2" }, WPCM450_CLK_TIMER4, 0 },
-> +       { "mft0", { .name =3D "apb" }, WPCM450_CLK_MFT0, 0 },
-> +       { "mft1", { .name =3D "apb" }, WPCM450_CLK_MFT1, 0 },
-> +       { "wdt", { .name =3D "refdiv2" }, WPCM450_CLK_WDT, 0 },
-> +       { "adc", { .name =3D "adcdiv" }, WPCM450_CLK_ADC, 0 },
-> +       { "sdio", { .name =3D "ahb" }, WPCM450_CLK_SDIO, 0 },
-> +       { "sspi", { .name =3D "apb" }, WPCM450_CLK_SSPI, 0 },
-> +       { "smb0", { .name =3D "apb" }, WPCM450_CLK_SMB0, 0 },
-> +       { "smb1", { .name =3D "apb" }, WPCM450_CLK_SMB1, 0 },
-> +};
-> +
-> +static DEFINE_SPINLOCK(wpcm450_clk_lock);
-> +
-> +/*
-> + * NOTE: Error handling is very rudimentary here. If the clock driver in=
-itial-
-> + * ization fails, the system is probably in bigger trouble than what is =
-caused
-> + * by a few leaked resources.
-> + */
-> +
-> +static void __init wpcm450_clk_init(struct device_node *clk_np)
-> +{
-> +       struct clk_hw_onecell_data *clk_data;
-> +       static struct clk_hw **hws;
-> +       static struct clk_hw *hw;
-> +       void __iomem *clk_base;
-> +       int i, ret;
-> +       struct reset_simple_data *reset;
-> +
-> +       clk_base =3D of_iomap(clk_np, 0);
-> +       if (!clk_base) {
-> +               pr_err("%pOFP: failed to map registers\n", clk_np);
-> +               of_node_put(clk_np);
-> +               return;
-> +       }
-> +       of_node_put(clk_np);
-> +
-> +       clk_data =3D kzalloc(struct_size(clk_data, hws, WPCM450_NUM_CLKS)=
-, GFP_KERNEL);
-> +       if (!clk_data)
-> +               return;
-> +
-> +       clk_data->num =3D WPCM450_NUM_CLKS;
-> +       hws =3D clk_data->hws;
-> +
-> +       for (i =3D 0; i < WPCM450_NUM_CLKS; i++)
-> +               hws[i] =3D ERR_PTR(-ENOENT);
-> +
-> +       // PLLs
-> +       for (i =3D 0; i < ARRAY_SIZE(pll_data); i++) {
-> +               const struct wpcm450_pll_data *data =3D &pll_data[i];
-> +
-> +               hw =3D wpcm450_clk_register_pll(clk_base + data->reg, dat=
-a->name,
-> +                                             &data->parent, data->flags)=
-;
-> +               if (IS_ERR(hw)) {
-> +                       pr_info("Failed to register PLL: %pe", hw);
-> +                       return;
-> +               }
-> +       }
-> +
-> +       // Early divisors (REF/2)
-> +       for (i =3D 0; i < ARRAY_SIZE(clkdiv_data_early); i++) {
-> +               const struct wpcm450_clkdiv_data *data =3D &clkdiv_data_e=
-arly[i];
-> +
-> +               hw =3D clk_hw_register_divider_table_parent_data(NULL, da=
-ta->name, &data->parent,
-> +                                                              data->flag=
-s, clk_base + REG_CLKDIV,
-> +                                                              data->shif=
-t, data->width,
-> +                                                              data->div_=
-flags, data->table,
-> +                                                              &wpcm450_c=
-lk_lock);
-> +               if (IS_ERR(hw)) {
-> +                       pr_err("Failed to register div table: %pe\n", hw)=
-;
-> +                       return;
-> +               }
-> +       }
-> +
-> +       // Selects/muxes
-> +       for (i =3D 0; i < ARRAY_SIZE(clksel_data); i++) {
-> +               const struct wpcm450_clksel_data *data =3D &clksel_data[i=
-];
-> +
-> +               hw =3D clk_hw_register_mux_parent_data(NULL, data->name, =
-data->parents,
-> +                                                    data->num_parents, d=
-ata->flags,
-> +                                                    clk_base + REG_CLKSE=
-L, data->shift,
-> +                                                    data->width, 0,
-> +                                                    &wpcm450_clk_lock);
-> +               if (IS_ERR(hw)) {
-> +                       pr_err("Failed to register mux: %pe\n", hw);
-> +                       return;
-> +               }
-> +               if (data->index >=3D 0)
-> +                       clk_data->hws[data->index] =3D hw;
-> +       }
-> +
-> +       // Divisors
-> +       for (i =3D 0; i < ARRAY_SIZE(clkdiv_data); i++) {
-> +               const struct wpcm450_clkdiv_data *data =3D &clkdiv_data[i=
-];
-> +
-> +               hw =3D clk_hw_register_divider_table_parent_data(NULL, da=
-ta->name, &data->parent,
-> +                                                              data->flag=
-s, clk_base + REG_CLKDIV,
-> +                                                              data->shif=
-t, data->width,
-> +                                                              data->div_=
-flags, data->table,
-> +                                                              &wpcm450_c=
-lk_lock);
-> +               if (IS_ERR(hw)) {
-> +                       pr_err("Failed to register divider: %pe\n", hw);
-> +                       return;
-> +               }
-> +       }
-> +
-> +       // Enables/gates
-> +       for (i =3D 0; i < ARRAY_SIZE(clken_data); i++) {
-> +               const struct wpcm450_clken_data *data =3D &clken_data[i];
-> +
-> +               hw =3D clk_hw_register_gate_parent_data(NULL, data->name,=
- &data->parent, data->flags,
-> +                                                     clk_base + REG_CLKE=
-N, data->bitnum,
-> +                                                     data->flags, &wpcm4=
-50_clk_lock);
-> +               if (IS_ERR(hw)) {
-> +                       pr_err("Failed to register gate: %pe\n", hw);
-> +                       return;
-> +               }
-> +               clk_data->hws[data->bitnum] =3D hw;
-> +       }
-> +
-> +       ret =3D of_clk_add_hw_provider(clk_np, of_clk_hw_onecell_get, clk=
-_data);
-> +       if (ret)
-> +               pr_err("Failed to add DT provider: %d\n", ret);
-> +
-> +       // Reset controller
-> +       reset =3D kzalloc(sizeof(*reset), GFP_KERNEL);
-> +       if (!reset)
-> +               return;
-> +       reset->rcdev.owner =3D THIS_MODULE;
-> +       reset->rcdev.nr_resets =3D WPCM450_NUM_RESETS;
-> +       reset->rcdev.ops =3D &reset_simple_ops;
-> +       reset->rcdev.of_node =3D clk_np;
-> +       reset->membase =3D clk_base + REG_IPSRST;
-> +       ret =3D reset_controller_register(&reset->rcdev);
-> +       if (ret)
-> +               pr_err("Failed to register reset controller: %d\n", ret);
-> +
-> +       of_node_put(clk_np);
-> +}
-> +
-> +CLK_OF_DECLARE(wpcm450_clk_init, "nuvoton,wpcm450-clk", wpcm450_clk_init=
-);
-> diff --git a/drivers/reset/Kconfig b/drivers/reset/Kconfig
-> index 2a52c990d4fec..16e111d213560 100644
-> --- a/drivers/reset/Kconfig
-> +++ b/drivers/reset/Kconfig
-> @@ -208,7 +208,7 @@ config RESET_SCMI
->
->  config RESET_SIMPLE
->         bool "Simple Reset Controller Driver" if COMPILE_TEST || EXPERT
-> -       default ARCH_ASPEED || ARCH_BCMBCA || ARCH_BITMAIN || ARCH_REALTE=
-K || ARCH_STM32 || (ARCH_INTEL_SOCFPGA && ARM64) || ARCH_SUNXI || ARC
-> +       default ARCH_ASPEED || ARCH_BCMBCA || ARCH_BITMAIN || ARCH_REALTE=
-K || ARCH_STM32 || (ARCH_INTEL_SOCFPGA && ARM64) || ARCH_SUNXI || ARC || AR=
-CH_WPCM450
->         depends on HAS_IOMEM
->         help
->           This enables a simple reset controller driver for reset lines t=
-hat
-> --
-> 2.39.2
->
+<div><br>
+</div>
+<div>Thanks!</div>
+<div><br>
+</div>
+<div>
+<div>---</div>
+<div>Best Regards,</div>
+<div>Hieu Huynh</div>
+<div><br>
+</div>
+<br class=3D"Apple-interchange-newline">
+</div>
+<br>
+</body>
+</html>
+
+--_000_DC643F45522946F88233E4116ECF4E2Aamperemailonmicrosoftco_--
