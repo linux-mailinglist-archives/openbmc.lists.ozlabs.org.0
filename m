@@ -1,70 +1,65 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 09C826F1EA5
-	for <lists+openbmc@lfdr.de>; Fri, 28 Apr 2023 21:15:46 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 544D26F2796
+	for <lists+openbmc@lfdr.de>; Sun, 30 Apr 2023 06:19:18 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Q7Ml363mWz3f5N
-	for <lists+openbmc@lfdr.de>; Sat, 29 Apr 2023 05:15:43 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=g8Rj+06F;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Q8Cld5xzfz3cL0
+	for <lists+openbmc@lfdr.de>; Sun, 30 Apr 2023 14:19:09 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.17.21; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=g8Rj+06F;
-	dkim-atps=neutral
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.71; helo=twspam01.aspeedtech.com; envelope-from=ryan_chen@aspeedtech.com; receiver=<UNKNOWN>)
+Received: from twspam01.aspeedtech.com (twspam01.aspeedtech.com [211.20.114.71])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q7MkV75LCz3brK
-	for <openbmc@lists.ozlabs.org>; Sat, 29 Apr 2023 05:15:13 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net; s=s31663417;
-	t=1682709309; i=j.neuschaefer@gmx.net;
-	bh=OIUIhU/6PWDogQO/lmzOqywaW9TBLhjV4hyEduc671g=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject;
-	b=g8Rj+06Fzsk+0BdszfBBVPG+nDIQ5FTAjy8r/+IF+mWE2ZprDTMNCkjnRWpOw3gNv
-	 aMxNLtbOdKPotd4pUMLpUM6MpxmiNtYjrxFWMd2t3I7nF06QwmonqRVYCu1kiCO3Jr
-	 jwX2OjQRRhpGEORW8puWEsCek26rQjhzDtU7zyZiiXnXe27sKzpcM95ruwb3xtSZ3f
-	 jGoHdAxmvP6jtwrYRnYCLlmsQwpVYj3oY8hhjwnz/Vcw8Byi9rjIzRzlGjxZXVeIW3
-	 Mh3tJNBUJS6R93sJVlUtYO2ImeCXq+ZF9YUG60kyiKPA2v/qoLrwJL+vkYvLwzXC4K
-	 lGLCl77wMqpbQ==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from probook ([87.78.41.149]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1N4QsY-1qIZFT3IZy-011VAF; Fri, 28
- Apr 2023 21:15:09 +0200
-Date: Fri, 28 Apr 2023 21:15:08 +0200
-From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: openbmc@lists.ozlabs.org, Avi Fishman <avifishman70@gmail.com>
-Subject: Upstreaming Nuvoton EMC (100 Mbit Ethernet MAC Controller) support
-Message-ID: <ZEwbPFW5p6jB0kLR@probook>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q8ClC4MqXz30Mn;
+	Sun, 30 Apr 2023 14:18:45 +1000 (AEST)
+Received: from mail.aspeedtech.com ([192.168.0.24])
+	by twspam01.aspeedtech.com with ESMTP id 33U40HT4060619;
+	Sun, 30 Apr 2023 12:00:17 +0800 (GMT-8)
+	(envelope-from ryan_chen@aspeedtech.com)
+Received: from aspeedtech.com (192.168.10.13) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Sun, 30 Apr
+ 2023 12:17:15 +0800
+From: Ryan Chen <ryan_chen@aspeedtech.com>
+To: <jk@codeconstruct.com.au>, Brendan Higgins <brendan.higgins@linux.dev>,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Joel Stanley
+	<joel@jms.id.au>, Rob Herring <robh+dt@kernel.org>,
+        Krzysztof Kozlowski
+	<krzysztof.kozlowski+dt@linaro.org>,
+        Andrew Jeffery <andrew@aj.id.au>,
+        Philipp Zabel <p.zabel@pengutronix.de>, Wolfram Sang <wsa@kernel.org>,
+        "Andy
+ Shevchenko" <andriy.shevchenko@linux.intel.com>,
+        <linux-i2c@vger.kernel.org>, Florian Fainelli <f.fainelli@gmail.com>,
+        Jean Delvare <jdelvare@suse.de>,
+        William Zhang <william.zhang@broadcom.com>,
+        Tyrone Ting <kfting@nuvoton.com>,
+        Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>,
+        Ryan Chen
+	<ryan_chen@aspeedtech.com>,
+        Conor Dooley <conor.dooley@microchip.com>,
+        "Phil
+ Edworthy" <phil.edworthy@renesas.com>,
+        <openbmc@lists.ozlabs.org>, <devicetree@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-aspeed@lists.ozlabs.org>, <=linux-kernel@vger.kernel.org>,
+        Andi Shyti
+	<andi.shyti@kernel.org>
+Subject: [PATCH v11 0/2] Add ASPEED AST2600 I2Cv2 controller driver
+Date: Sun, 30 Apr 2023 12:17:10 +0800
+Message-ID: <20230430041712.3247998-1-ryan_chen@aspeedtech.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="KCaJrWtlOFCFs1Oi"
-Content-Disposition: inline
-X-Provags-ID: V03:K1:ttOsNeBbzFq+MeMP1kegUIZc1rpPyS9ec03eqVcAD3ejw4J/oiI
- yz+FdvacoVdraxU/5dCEgOwvTJYi+vrN+BXzetiiQRNThLBE6bxpq4OcvosSkYrIfptO/pt
- CLh2lwIN0xzHvXnvDZoCZA83Av0exxoSlhejJGPaWThhOabKKnr8Uu3izwYgnVFVsx/DqVC
- XlCTOw9Hmn9eQku0l5D2w==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:uvyANSMm2M8=;1QyN2DkNVMrvHhsPOQ5gn9ru+QF
- /XR6ej5oInLycrrOhqVcg72BUyzBJBAlVVmC7v1uSDNzset7aABXGNjjoB6CcVCJE68BKfo93
- n/3Zl2tqk+IT9RWjn/TyGJhwTsVYR2R0n3IsfBj+62hktDjzz8/dMSyA+AewskhmRMONbYqzK
- QlsIo4fYrcIYfWyqXATk40E5cApQS1FdzRzUi4xUdX0/HmXBh3FIIbGm4mJ9tGC91xZTPbsMH
- hfSXeh/fE7FgETMPMR+tgLVDxHtOUJo44fYcv1ZQOL7Rnj7tCcJjfO+SRCOtIyQrs++trvSJF
- wGCkO/N+NiHreZKu3pe8SpvHtAe59VaR/Pg37cBDnjvm9bqQHfF9pRHYpd0Iatvii4rf0MvY/
- 6ie1GYxgcKY8Tng0amt7a2QfTKrjd1yIPTl0Nb0efbnu/U6WjLTlAVi+JQu7fc9LJ2+5p1UGs
- ozhqvNuzueVezmoWiBUAd7NeiROY/bDtReA0tuLh8JcjTlTJqg/4vi36A6e/BKkmD7LykgM8Z
- e9bRBBg0LMqylOiBUR+v9Cf3GOLdu3E4nHmHpMa60DQybKNHhD24bfJfm3MLKz0Nju3A6HXHB
- BVTYD1mxTnfZbfx2I+v3dOMgIDT25wHGy/Ah/uLg/XcKAsruj5CtWuq7Rgh9ounhSJhdNHbYs
- MQ1BgGIpbKliwS7w/Evns6ef24LOcFsvQFXdxnLZjxrGoJhXtGLLIkv8fIHxxANg01dS/pgc7
- BUPatQwNeiG20NkdrsUd8LyyJOHoYmnnPaylU2qwQTRPPOruPSrRQcjEo+cgxS0wp+hi2+fq8
- PZn1+yChRlzesZ5O/ztWuA57TwR8zsTkNQTuDrex7mNwhhEOcmmmVTw+Crxm41arsMkIg4JUz
- Ledkz4vP0uzkDKmuGPXgYp5seE7Lkz8s+yBHf9hpjadmaHE3mPPL7PUaillxuK94nZ6YFQxPc
- 2gcXCw+QaNIUpwKJOLIdzsbbP3U=
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [192.168.10.13]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
+X-DNSRBL: 
+X-MAIL: twspam01.aspeedtech.com 33U40HT4060619
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,58 +71,206 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This series add AST2600 i2cv2 new register set driver. The i2cv2 driver
+is new register set that have new clock divider option for more
+flexiable generation. And also have separate i2c master and slave register
+set for control.
 
---KCaJrWtlOFCFs1Oi
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+The legacy register layout is mix master/slave register control together.
+The following is add more detail description about new register layout.
+And new feature set add for register.
 
-Hello Avi and others,
+-Add new clock divider option for more flexible and accurate clock rate
+generation -Add tCKHighMin timing to guarantee SCL high pulse width.
+-Add support dual pool buffer mode, split 32 bytes pool buffer of each
+device into 2 x 16 bytes for Tx and Rx individually.
+-Increase DMA buffer size to 4096 bytes and support byte alignment.
+-Re-define the base address of BUS1 ~ BUS16 and Pool buffer.
+-Re-define registers for separating master and slave mode control.
+-Support 4 individual DMA buffers for master Tx and Rx, slave Tx and Rx.
 
-in my ongoing project to support the Nuvoton WPCM450 BMC in mainline
-Linux, I have reached the point where the next useful step would be
-Ethernet support. The WPCM450 contains a Nuvoton EMC, which is also used
-in some older Winbond SoCs, and newer Nuvoton NPCM7xx BMCs.
+And following is new register set for package transfer sequence.
+-New Master operation mode:
+ S -> Aw -> P
+ S -> Aw -> TxD -> P
+ S -> Ar -> RxD -> P
+ S -> Aw -> RxD -> Sr -> Ar -> TxD -> P
+-Bus SDA lock auto-release capability for new master DMA command mode.
+-Bus auto timeout for new master/slave DMA mode.
 
-In my downstream branch I have a EMC driver based on the W90P910
-Ethernet driver that was part of mainline Linux in the past but has
-since been removed. My version of the driver is heavily refactored,
-though.
+The following is two versus register layout.
+Old:
+{I2CD00}: Function Control Register     
+{I2CD04}: Clock and AC Timing Control Register
+{I2CD08}: Clock and AC Timing Control Register
+{I2CD0C}: Interrupt Control Register
+{I2CD10}: Interrupt Status Register 
+{I2CD14}: Command/Status Register   
+{I2CD18}: Slave Device Address Register
+{I2CD1C}: Pool Buffer Control Register
+{I2CD20}: Transmit/Receive Byte Buffer Register
+{I2CD24}: DMA Mode Buffer Address Register
+{I2CD28}: DMA Transfer Length Register
+{I2CD2C}: Original DMA Mode Buffer Address Setting
+{I2CD30}: Original DMA Transfer Length Setting and Final Status
 
-Nuvoton's downstream repository[1] also contains a EMC driver, albeit a
-different one.
+New Register mode
+{I2CC00}: Master/Slave Function Control Register
+{I2CC04}: Master/Slave Clock and AC Timing Control Register
+{I2CC08}: Master/Slave Transmit/Receive Byte Buffer Register
+{I2CC0C}: Master/Slave Pool Buffer Control Register
+{I2CM10}: Master Interrupt Control Register
+{I2CM14}: Master Interrupt Status Register
+{I2CM18}: Master Command/Status Register
+{I2CM1C}: Master DMA Buffer Length Register
+{I2CS20}: Slave~ Interrupt Control Register
+{I2CS24}: Slave~ Interrupt Status Register
+{I2CS28}: Slave~ Command/Status Register
+{I2CS2C}: Slave~ DMA Buffer Length Register
+{I2CM30}: Master DMA Mode Tx Buffer Base Address
+{I2CM34}: Master DMA Mode Rx Buffer Base Address
+{I2CS38}: Slave~ DMA Mode Tx Buffer Base Address
+{I2CS3C}: Slave~ DMA Mode Rx Buffer Base Address
+{I2CS40}: Slave Device Address Register
+{I2CM48}: Master DMA Length Status Register
+{I2CS4C}: Slave  DMA Length Status Register
+{I2CC50}: Current DMA Operating Address Status
+{I2CC54}: Current DMA Operating Length  Status
 
-Is the Nuvoton BMC team interested in upstreaming EMC support at the
-moment?
+aspeed,global-regs:
+This global register is needed, global register is setting for
+new clock divide control, and new register set control.
 
+ASPEED SOC chip is server product, i2c bus may have fingerprint
+connect to another board. And also support hotplug.
+The following is board-specific design example.
+Board A                                         Board B
+-------------------------                       ------------------------
+|i2c bus#1(master/slave)  <===fingerprint ===> i2c bus#x (master/slave)|
+|i2c bus#2(master)-> tmp i2c device |          |                       |
+|i2c bus#3(master)-> adc i2c device |          |                       |
+-------------------------                       ------------------------
 
-Best regards,
-Jonathan
+i2c-scl-clk-low-timeout-us:
+For example I2C controller as slave mode, and suddenly disconnected.
+Slave state machine will keep waiting for master clock in for rx/tx
+transmit. So it need timeout setting to enable timeout unlock controller
+state. And in another side. In Master side also need avoid suddenly
+slave miss(un-plug), Master will timeout and release the SDA/SCL.
 
+aspeed,enable-dma:
+For example The bus#1 have trunk data needed for transfer,
+it can enable bus dma mode transfer, it can reduce cpu utilized.
+Others bus bus#2/3 use defautl buffer mode.
 
-[1]: https://github.com/Nuvoton-Israel/linux
+v11:
+-aspeed,i2c.yaml
+ -no change, the same with v10.
+-i2c-ast2600.c
+ -modify alert_enable from int -> boolean.
+ -modify dbg string recovery -> recover.
+ -remove no need to init 0.
+ -remove new line after break.
+ -remove unneeded empty line.
+ -modify dma_alloc_coherent to dmam_alloc_coherent
+ -modify probe nomem return dev_err_probe
+ -modify i2c_add_adapter to devm_i2c_adapter
+ -modify checkpatch: Alignment should match open parenthesis
+ -modify checkpatch: braces {} should be used on all arms of this statement
+ -modify checkpatch: Unbalanced braces around else statement
 
---KCaJrWtlOFCFs1Oi
-Content-Type: application/pgp-signature; name="signature.asc"
+v10:
+-aspeed,i2c.yaml
+ -move unevaluatedProperties after allOf.
+ -remove extra one blank line.
+-i2c-ast2600.c
+ -no change, the same with v8.
 
------BEGIN PGP SIGNATURE-----
+v9:
+-aspeed,i2c.yaml
+ -backoff to v7.
+  -no fix typo in maintainer's name and email. this would be another patch.
+  -no remove address-cells, size-cells, this would be another patch.
+ -use aspeed,enable-dma property instead of aspeed,xfer-mode selection.
+ -fix allOf and else false properties for aspeed,ast2600-i2cv2.
+-i2c-ast2600.c
+ -no change, the same with v8
 
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmRMGxsACgkQCDBEmo7z
-X9u08RAAyGjo5vNwzJCJCz3WNF3fmJYVY59g7MiM1pbnnMReym3hB3+4VvXqhJab
-2Z0UaAg7og5xSWCLVUrDYP9AAQSTYTzJ1BT/Ni6WR8L+D0tBnRmYZBMW0bB5BSne
-qEbFFsRvpMG2UZbVPzWaL+iDiM8bwGIegfejO9rn8g1K0l0BIBulYXiwGuXcgGwd
-h6alcKh6GNxBWy7z0nrOsl/gbpbeB6d1AoTMwX/Q91rQu0rug63/aUn/q+9gFeDE
-5Itza1eSYIJVPeh2guLd4kcQbNfSAH/oECxbygskJaMT+RVHda/6EmHAQgskyfvI
-zWJ9HwTEbfrJfJCl4UJk2FZjz7BeIajiNYtTujcEk6mpycygw0RFfyAejX6sKL7k
-Dn1wVUHxjj5jEvEOrFrHyQQxn385a4511c28yyWafvilAi3e0WkE1iCDpxfHhS6u
-OaZSKrabDmkinnp++A4KfE5ecrB0AAodndKRpMqaCHeYbaEpSEijr8zOOd5SdobW
-vJqsCJ1duJPtgR49JW3bqf+lDv2aLrecCiGJDeLItvjBycfQU2ThWfJUA+xNXoql
-GIQrBkeiESRCgqU2RMCMkbVkxYbFsVinG6JpZNiCCmaXV9HQe2u9j3bKXesGotXw
-EtG+enuW6abXVXiUovs1ffQySHc2CPmqo0st431jpafvdzHschs=
-=aAJp
------END PGP SIGNATURE-----
+v8:
+-aspeed,i2c.yaml
+ -modify commit message.
+  -Fix typo in maintainer's name and email.
+ -remove address-cells, size-cells.
+-i2c-ast2600.c
+ -move "i2c timeout counter" comment description before property_read.
+ -remove redundant code "return ret" in probe end.
 
---KCaJrWtlOFCFs1Oi--
+v7:
+-aspeed,i2c.yaml
+ -Update ASPEED I2C maintainers email.
+ -use aspeed,enable-dma property instead of aspeed,xfer-mode selection.
+ -fix allOf and else false properties for aspeed,ast2600-i2cv2.
+-i2c-ast2600.c
+ -remove aspeed,xfer-mode instead of aspeed,enable-dma mode. buffer mode
+is default.
+ -remove aspeed,timeout instead of i2c-scl-clk-low-timeout-us for
+timeout setting.
+
+v6:
+-remove aspeed,i2cv2.yaml, merge to aspeed,i2c.yaml -add support for
+ i2cv2 properites.
+-i2c-ast2600.c
+ -fix ast2600_i2c_remove ordering.
+ -remove ast2600_i2c_probe goto labels, and add dev_err_probe -remove
+  redundant deb_dbg debug message.
+ -rename gr_regmap -> global_regs
+
+v5:
+-remove ast2600-i2c-global.yaml, i2c-ast2600-global.c.
+-i2c-ast2600.c
+ -remove legacy clock divide, all go for new clock divide.
+ -remove duplicated read isr.
+ -remove no used driver match
+ -fix probe return for each labels return.
+ -global use mfd driver, driver use phandle to regmap read/write.
+-rename aspeed,i2c-ast2600.yaml to aspeed,i2cv2.yaml -remove bus-frequency.
+-add required aspeed,gr
+-add timeout, byte-mode, buff-mode properites.
+
+v4:
+-fix i2c-ast2600.c driver buffer mode use single buffer conflit in
+ master slave mode both enable.
+-fix kmemleak issue when use dma mode.
+-fix typo aspeed,i2c-ast2600.yaml compatible is "aspeed,ast2600-i2c"
+-fix typo aspeed,i2c-ast2600.ymal to aspeed,i2c-ast2600.yaml
+
+v3:
+-fix i2c global clock divide default value.
+-remove i2c slave no used dev_dbg info.
+
+v2:
+-add i2c global ymal file commit.
+-rename file name from new to ast2600.
+ aspeed-i2c-new-global.c -> i2c-ast2600-global.c
+ aspeed-i2c-new-global.h -> i2c-ast2600-global.h
+ i2c-new-aspeed.c -> i2c-ast2600.c
+-rename all driver function name to ast2600.
+
+Ryan Chen (2):
+  dt-bindings: i2c: aspeed: support for AST2600-i2cv2
+  i2c: aspeed: support ast2600 i2c new register mode driver
+
+ .../devicetree/bindings/i2c/aspeed,i2c.yaml   |   51 +-
+ MAINTAINERS                                   |    9 +
+ drivers/i2c/busses/Kconfig                    |   11 +
+ drivers/i2c/busses/Makefile                   |    1 +
+ drivers/i2c/busses/i2c-ast2600.c              | 1596 +++++++++++++++++
+ 5 files changed, 1665 insertions(+), 3 deletions(-)
+ create mode 100644 drivers/i2c/busses/i2c-ast2600.c
+
+-- 
+2.34.1
+
