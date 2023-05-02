@@ -2,95 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1514A6F3F0F
-	for <lists+openbmc@lfdr.de>; Tue,  2 May 2023 10:21:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 271616F3F86
+	for <lists+openbmc@lfdr.de>; Tue,  2 May 2023 10:46:20 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Q9Y2V6Mclz3cLF
-	for <lists+openbmc@lfdr.de>; Tue,  2 May 2023 18:21:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Q9YZx6pN3z3c34
+	for <lists+openbmc@lfdr.de>; Tue,  2 May 2023 18:46:17 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm2 header.b=G/ReWH/C;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Y/xWbzku;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=Z9H3Qcm1;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=arndb.de (client-ip=66.111.4.224; helo=new2-smtp.messagingengine.com; envelope-from=arnd@arndb.de; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::52a; helo=mail-pg1-x52a.google.com; envelope-from=milkfafa@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm2 header.b=G/ReWH/C;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=Y/xWbzku;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=Z9H3Qcm1;
 	dkim-atps=neutral
-X-Greylist: delayed 325 seconds by postgrey-1.36 at boromir; Tue, 02 May 2023 18:20:57 AEST
-Received: from new2-smtp.messagingengine.com (new2-smtp.messagingengine.com [66.111.4.224])
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q9Y1j400Bz3bmH;
-	Tue,  2 May 2023 18:20:57 +1000 (AEST)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailnew.nyi.internal (Postfix) with ESMTP id 0A58D5803C3;
-	Tue,  2 May 2023 04:15:27 -0400 (EDT)
-Received: from imap51 ([10.202.2.101])
-  by compute6.internal (MEProxy); Tue, 02 May 2023 04:15:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm2; t=
-	1683015327; x=1683022527; bh=ghjR7QqLTKl0Wa6Qp/pmJnR12EKA7bqxYQW
-	ouqZ3mAY=; b=G/ReWH/CR4stPP8pBvKE2oH2tiIxeT1Y9djsugPvcan1vwLCNKB
-	+CmHc2S3racpCMakxZ1qQRdhDmpzbTSxPsJLCIAsBgFwKTe+QJwmoUIe5cxfT6Wy
-	tgZI7GBK40sokCJo7woyfvbYgCDiIcu9MJqEUid0mCHXVNlzPDjNZzJJBtLrLhF9
-	X/mbJHalC7bJ1Xs6/CKvhniyT1ORP+ioH4B0Q9MMwa1hEm8wfe270mide7U5ucC4
-	jYc1KiyRZtz0ezseY2LvXW4OKb5R6V9gMew5kODf8MnejtSKgLd/xIANaAqpsh7o
-	O3SUD5day0+7MZzwDONO0PUZT+hvXwYxYyA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1683015327; x=1683022527; bh=ghjR7QqLTKl0Wa6Qp/pmJnR12EKA7bqxYQW
-	ouqZ3mAY=; b=Y/xWbzku7vrNHNzte8uy72nMxc+pbAIi4IeA/XfvwUvtiZV9Est
-	bPyNKEthPJpnwnx5/Y68ss9jDEmHmeNI9uaomvywj4LEhNdN2/6OUB0Ap6qjjHvb
-	OQIPRGrLOJBmcaLg/XgkHAzTOPE5Xwu/E3de9zryJ4QMstqpCG+bbbWHvXXdfXgL
-	L+W8t5CYwFrU7f8XrnzjjIYPTrCSQ2/hUzXAWg8+DhkBUcIkmt6eVQO+8Sms9yZ1
-	Z+nDtml+a4kCprv84LWaOxgu+YrgM2G6hBbX6r3CD52Qvxv2Jvyac8zhWROAt9xl
-	Ftb8duEVIIhaiX5H6fsUSxaLGjuOvtdmUyw==
-X-ME-Sender: <xms:nsZQZGG99LYs7t6dhgAngkbsv9osgUeFMS5nCv0_eqkMW790xp5pVg>
-    <xme:nsZQZHXku8NWvKl4XxdR48yR-0RVaLsU5fwZmJq18kazWD7vv8gAEIoPKVDAKkTuy
-    5prPVni2U8mfnd5sN8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfedviecutefuodetggdotefrodftvfcurf
-    hrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecuuegr
-    ihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjug
-    hrpefofgggkfgjfhffhffvvefutgfgsehtqhertderreejnecuhfhrohhmpedftehrnhgu
-    uceuvghrghhmrghnnhdfuceorghrnhgusegrrhhnuggsrdguvgeqnecuggftrfgrthhtvg
-    hrnhepgeefjeehvdelvdffieejieejiedvvdfhleeivdelveehjeelteegudektdfgjeev
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheprghrnh
-    gusegrrhhnuggsrdguvg
-X-ME-Proxy: <xmx:nsZQZAK8fS_X5YYcPQ8tmCY5TK5FJ7gjlJsS0RCSCVoEK-Zwdrq3Yw>
-    <xmx:nsZQZAFFLoJhNSVEvLGVyQfmt0zeZphfcdHG8-tw9pYY47GFwhKrNA>
-    <xmx:nsZQZMUL4rbP96pvZI76ZCUHun2qRq8vNtMGMdc-nT5M5xb0isYJ2g>
-    <xmx:n8ZQZPq1o7msWppgt2EUHhnFGcmwGcb09Ud671-g5_97NEtVzT49Eg>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id 1C690B60086; Tue,  2 May 2023 04:15:26 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-374-g72c94f7a42-fm-20230417.001-g72c94f7a
-Mime-Version: 1.0
-Message-Id: <720a2829-b6b5-411c-ac69-9a53e881f48d@app.fastmail.com>
-In-Reply-To:  <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
-References: <20220328000915.15041-1-ansuelsmth@gmail.com>
- <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
- <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain>
- <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
- <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
- <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
-Date: Tue, 02 May 2023 10:15:03 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Rob Herring" <robh+dt@kernel.org>,
- "Geert Uytterhoeven" <geert@linux-m68k.org>,
- "Olof Johansson" <olof@lixom.net>
-Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
-Content-Type: text/plain;charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q9YYQ583tz3bpW
+	for <openbmc@lists.ozlabs.org>; Tue,  2 May 2023 18:44:56 +1000 (AEST)
+Received: by mail-pg1-x52a.google.com with SMTP id 41be03b00d2f7-51b4ef5378bso3012852a12.1
+        for <openbmc@lists.ozlabs.org>; Tue, 02 May 2023 01:44:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683017088; x=1685609088;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=GeQ3YlDylA+SoWbDxm8aDmx/3NOWKe3tMJJA9yBoh7k=;
+        b=Z9H3Qcm1sOfVsUJ811IFgTkujKN/+n7Hthp+VKkZhJ458UuMk+IK1ygwnt6el+VDZi
+         ZeYPz2fYl1lEaCJ/SO6qct+aj0rPnrW4sjLJAES2uwP6NzNYTC8qfS1/kHvGD6cK0t86
+         IFicMkUXrC+pURw1vLc4lnEhWw9FJX7zQn23txsX+TlNdVU8W3DlJNCFjRTTChqJfiE6
+         t/6Lly8N3eR5DLNLtUmLk7lqxSkb19FhMkbqHLcATl48uJgLwFPNUIQFVA2iyNo6ZVUY
+         3nAj3HE2bVVW31GeFoiYJtjeXEM7WzCccRPx6GxYSF1yv35P26xowL/uMhNy1ipOFRws
+         UuNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683017088; x=1685609088;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=GeQ3YlDylA+SoWbDxm8aDmx/3NOWKe3tMJJA9yBoh7k=;
+        b=UborldqTC8ni7R44JEexETGRogaLTgms4O91qRGdsHcoDex4Uy2fZtBlFRuifUl5Zj
+         LJosGmnk+c85ig3ZoLrvM73c1d2eFgU0UmzPpq/ibtuw84OgKncnfBPz1jxYWag/Tkdy
+         +nMphz1KONf36ucoubxq2n09IFKFXVPolOq8Tsdj1YDxX0c8rddJ2zw46nJOSN/F/+h3
+         7deVQev55ZaG9yE3t2xLC7ubb5BoypHQ18NnoLsvWl3awdx1M8+i5mK5ptC2dPwJu/tT
+         GfZ6M4S628A0LufTHXjc6nYxktxpUX8N+OtOUSZNkTf0KVm3dCS2mgnqG31pbR4YZqqS
+         SqmQ==
+X-Gm-Message-State: AC+VfDziBzX8AfhOOPGf/gCxeeaHtk/Q6jWZ5YjUlCXlCRewpueadYcT
+	QnjLICOs/6qkFXeGh1XUYrY=
+X-Google-Smtp-Source: ACHHUZ5nu5cx8HImYBYhZJ7/FKDDXNGXg6NIXGlltQL24/2vP4MW8okl+Tqh80wDmI7wO5hoeTfb6g==
+X-Received: by 2002:a17:90b:1d01:b0:247:4f32:d108 with SMTP id on1-20020a17090b1d0100b002474f32d108mr17638457pjb.13.1683017088126;
+        Tue, 02 May 2023 01:44:48 -0700 (PDT)
+Received: from hcdev-d520mt2.. (60-250-192-107.hinet-ip.hinet.net. [60.250.192.107])
+        by smtp.gmail.com with ESMTPSA id v10-20020a17090a520a00b0023fcece8067sm7059039pjh.2.2023.05.02.01.44.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 02 May 2023 01:44:47 -0700 (PDT)
+From: Marvin Lin <milkfafa@gmail.com>
+To: mchehab@kernel.org,
+	hverkuil-cisco@xs4all.nl,
+	avifishman70@gmail.com,
+	tmaimon77@gmail.com,
+	tali.perry1@gmail.com,
+	venture@google.com,
+	yuenn@google.com,
+	benjaminfair@google.com,
+	robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	andrzej.p@collabora.com
+Subject: [PATCH v12 0/7] Support Nuvoton NPCM Video Capture/Encode Engine
+Date: Tue,  2 May 2023 16:44:23 +0800
+Message-Id: <20230502084430.234182-1-milkfafa@gmail.com>
+X-Mailer: git-send-email 2.34.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,33 +85,210 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, linux-realtek-soc@lists.infradead.org, linux-arm-kernel@axis.com, linux-stm32@st-md-mailman.stormreply.com, chrome-platform@lists.linux.dev, linux-samsung-soc@vger.kernel.org, openbmc@lists.ozlabs.org, Krzysztof Kozlowski <krzk@kernel.org>, linux-rockchip@lists.infradead.org, linux-sunxi@lists.linux.dev, devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-actions@lists.infradead.org, linux-unisoc@lists.infradead.org, linux-mediatek@lists.infradead.org, linux-rpi-kernel@lists.infradead.org, linux-tegra@vger.kernel.org, linux-amlogic@lists.infradead.org, Linux-OMAP <linux-omap@vger.kernel.org>, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, Christian Marangi <ansuelsmth@gmail.com>, Linux-Renesas <linux-renesas-soc@vger.kernel.org>, kernel@dh-electronics.com, Krzysztof Kozlowski <krzk+dt@kernel.org>, "linux-oxnas@groups.io" <linux-oxnas@groups.io>
+Cc: kwliu@nuvoton.com, Marvin Lin <milkfafa@gmail.com>, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, kflin@nuvoton.com, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Apr 25, 2023, at 17:57, Rob Herring wrote:
-> On Tue, Apr 25, 2023 at 2:28=E2=80=AFAM Geert Uytterhoeven <geert@linu=
-x-m68k.org> wrote:
->
->> Does your script also cater for .dts files not matching any pattern,
->> but including a .dtsi file that does match a pattern?
->
-> I assume I built everything after moving, but maybe not...
->
-> That's all just "details". First, we need agreement on a) moving
-> things to subdirs and b) doing it 1-by-1 or all at once. So far we've
-> been stuck on a) for being 'too much churn'.
+This patch series add DTS node, dt-bindings document and drivers for Video
+Capture/Differentiation Engine (VCD) and Encoding Compression Engine (ECE)
+present on Nuvoton NPCM SoCs.
 
-Sorry for missing most of the discussion last week. The script sounds
-fine to me, the only reason I didn't want to do this in the past is that
-we had the plan to move platforms out of the kernel tree to an external
-repository and I wanted to do this platform at a time and also only move
-each one once. I don't think that is going to happen anytime soon now,
-so let's just do your script.
+As described in the datasheet NPCM750D_DS_Rev_1.0, the VCD can capture a
+frame from digital video input and compare two frames in memory, and then
+the ECE can compress the frame data into HEXTITLE format which is defined
+in Remote Framebuffer Protocol (RFC 6143, chapter 7.7.4. Hextile Encoding).
 
-Can you send me the script and/or a pull request of the resulting
-tree based on my soc/dt branch? Everything is merged upstream,
-and I think git-merge would handle the remaining merges with any
-other changes in mainline.
+The output of v4l2-compliance:
+v4l2-compliance 1.23.0-4965, 64 bits, 64-bit time_t
+v4l2-compliance SHA: d0964d133053 2022-11-06 14:46:45
 
-        Arnd
+Compliance test for npcm-video device /dev/video0:
+
+Driver Info:
+        Driver name      : npcm-video
+        Card type        : NPCM Video Engine
+        Bus info         : platform:npcm-video
+        Driver version   : 5.15.50
+        Capabilities     : 0x84200001
+                Video Capture
+                Streaming
+                Extended Pix Format
+                Device Capabilities
+        Device Caps      : 0x04200001
+                Video Capture
+                Streaming
+                Extended Pix Format
+
+Required ioctls:
+        test VIDIOC_QUERYCAP: OK
+        test invalid ioctls: OK
+
+Allow for multiple opens:
+        test second /dev/video0 open: OK
+        test VIDIOC_QUERYCAP: OK
+        test VIDIOC_G/S_PRIORITY: OK
+        test for unlimited opens: OK
+
+Debug ioctls:
+        test VIDIOC_DBG_G/S_REGISTER: OK (Not Supported)
+        test VIDIOC_LOG_STATUS: OK (Not Supported)
+
+Input ioctls:
+        test VIDIOC_G/S_TUNER/ENUM_FREQ_BANDS: OK (Not Supported)
+        test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+        test VIDIOC_S_HW_FREQ_SEEK: OK (Not Supported)
+        test VIDIOC_ENUMAUDIO: OK (Not Supported)
+        test VIDIOC_G/S/ENUMINPUT: OK
+        test VIDIOC_G/S_AUDIO: OK (Not Supported)
+        Inputs: 1 Audio Inputs: 0 Tuners: 0
+
+Output ioctls:
+        test VIDIOC_G/S_MODULATOR: OK (Not Supported)
+        test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+        test VIDIOC_ENUMAUDOUT: OK (Not Supported)
+        test VIDIOC_G/S/ENUMOUTPUT: OK (Not Supported)
+        test VIDIOC_G/S_AUDOUT: OK (Not Supported)
+        Outputs: 0 Audio Outputs: 0 Modulators: 0
+
+Input/Output configuration ioctls:
+        test VIDIOC_ENUM/G/S/QUERY_STD: OK (Not Supported)
+        test VIDIOC_ENUM/G/S/QUERY_DV_TIMINGS: OK
+        test VIDIOC_DV_TIMINGS_CAP: OK
+        test VIDIOC_G/S_EDID: OK (Not Supported)
+
+Control ioctls (Input 0):
+        test VIDIOC_QUERY_EXT_CTRL/QUERYMENU: OK
+        test VIDIOC_QUERYCTRL: OK
+        test VIDIOC_G/S_CTRL: OK
+        test VIDIOC_G/S/TRY_EXT_CTRLS: OK
+                warn: v4l2-test-controls.cpp(1070): V4L2_CID_DV_RX_POWER_PRESENT not found for input 0
+        test VIDIOC_(UN)SUBSCRIBE_EVENT/DQEVENT: OK
+        test VIDIOC_G/S_JPEGCOMP: OK (Not Supported)
+        Standard Controls: 1 Private Controls: 2
+
+Format ioctls (Input 0):
+        test VIDIOC_ENUM_FMT/FRAMESIZES/FRAMEINTERVALS: OK
+        test VIDIOC_G/S_PARM: OK (Not Supported)
+        test VIDIOC_G_FBUF: OK (Not Supported)
+        test VIDIOC_G_FMT: OK
+        test VIDIOC_TRY_FMT: OK
+        test VIDIOC_S_FMT: OK
+        test VIDIOC_G_SLICED_VBI_CAP: OK (Not Supported)
+        test Cropping: OK (Not Supported)
+        test Composing: OK (Not Supported)
+        test Scaling: OK (Not Supported)
+
+Codec ioctls (Input 0):
+        test VIDIOC_(TRY_)ENCODER_CMD: OK (Not Supported)
+        test VIDIOC_G_ENC_INDEX: OK (Not Supported)
+        test VIDIOC_(TRY_)DECODER_CMD: OK (Not Supported)
+
+Buffer ioctls (Input 0):
+        test VIDIOC_REQBUFS/CREATE_BUFS/QUERYBUF: OK
+        test VIDIOC_EXPBUF: OK
+        test Requests: OK (Not Supported)
+
+Total for npcm-video device /dev/video0: 45, Succeeded: 45, Failed: 0, Warnings: 1
+
+Changes in v12:
+  - Modify the flow for detecting resolution change and raise
+    V4L2_EVENT_SOURCE_CHANGE event.
+  - Add V4L2_PIX_FMT_RGB565 format support.
+
+Changes in v11:
+  - Replace "u8/u16/u32" with "unsigned int" for generic local variables.
+  - Correct subsystem prefixes, drop redundant words in commit subject, and
+    add more information in commit message.
+
+Changes in v10:
+  - drivers/media/platform/nuvoton/npcm-video.c
+    * Let short functions to be inline function.
+    * Correct return type of some functions, and properly handle return
+      value by callers.
+    * Correct the timing of removing rect_list and the flow of FIFO overrun
+      case in irq.
+    * Adjust line breaks, indentations, and style of variable declarations.
+
+Changes in v9:
+  - Change ECE node name to "video-codec".
+  - Drop redundant "bindings for" in commit subject of patch 2/7.
+  - Refine the format of VCD/ECE dt-binding document.
+
+Changes in v8:
+  - Let VCD/ECE to be 2 separate nodes and update dt-binding documents.
+  - Move register definitions out to a local header file.
+  - Driver refinements (add error handling for memory allocation, remove
+    unnecessary condition check and introduce "goto"s to handle similar
+    error recovery paths).
+  - Correct properties and typo in GFXI dt-binding document.
+
+Changes in v7:
+  - Add uapi documents for driver-specific controls.
+  - Implement driver-specific controls for switching capture mode and
+    getting the count of compressed HEXTILE rectangles.
+  - Drop unnecessary "enum_framesizes" and "enum_frameintervals" functions.
+  - Include the output of v4l2-compliance in cover letter.
+
+Changes in v6:
+  - Support NPCM845 and add compatible "nuvoton,npcm845-video".
+  - Correct pixel format to V4L2_PIX_FMT_HEXTILE which is newly added in
+    this patch series.
+
+Changes in v5:
+  - Simplify function prefix "nuvoton_" to "npcm_".
+  - Increase VCD_BUSY_TIMEOUT_US and ECE_POLL_TIMEOUT_US to 300ms to
+    prevent polling timeout when ECC is enabled or system is busy.
+
+Changes in v4:
+  - Fix compile warning reported by kernel test robot.
+
+Changes in v3:
+  - Add video driver entry in MAINTAINERS.
+  - Change config name to CONFIG_VIDEO_NPCM_VCD_ECE.
+  - Reduce the waiting time after resetting the VCD/ECE module.
+  - Correct data types of some variables.
+
+Changes in v2:
+  - Add Hextile document and locate with vendor formats.
+
+Marvin Lin (7):
+  ARM: dts: nuvoton: Add node for NPCM VCD and ECE engine
+  media: dt-bindings: nuvoton: Add NPCM VCD and ECE engine
+  dt-bindings: arm: nuvoton: Add NPCM GFXI
+  media: v4l: Add HEXTILE compressed format
+  media: v4l2-ctrls: Add user control base for Nuvoton NPCM controls
+  media: uapi: Add controls for NPCM video driver
+  media: nuvoton: Add driver for NPCM video capture and encode engine
+
+ .../bindings/arm/npcm/nuvoton,gfxi.yaml       |   39 +
+ .../bindings/media/nuvoton,npcm-ece.yaml      |   43 +
+ .../bindings/media/nuvoton,npcm-vcd.yaml      |   72 +
+ .../userspace-api/media/drivers/index.rst     |    1 +
+ .../media/drivers/npcm-video.rst              |   67 +
+ .../media/v4l/pixfmt-reserved.rst             |    7 +
+ MAINTAINERS                                   |   12 +
+ arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi |   23 +
+ drivers/media/platform/Kconfig                |    1 +
+ drivers/media/platform/Makefile               |    1 +
+ drivers/media/platform/nuvoton/Kconfig        |   15 +
+ drivers/media/platform/nuvoton/Makefile       |    2 +
+ drivers/media/platform/nuvoton/npcm-regs.h    |  183 ++
+ drivers/media/platform/nuvoton/npcm-video.c   | 1898 +++++++++++++++++
+ drivers/media/v4l2-core/v4l2-ioctl.c          |    1 +
+ include/uapi/linux/npcm-video.h               |   41 +
+ include/uapi/linux/v4l2-controls.h            |    6 +
+ include/uapi/linux/videodev2.h                |    1 +
+ 18 files changed, 2413 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/arm/npcm/nuvoton,gfxi.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/nuvoton,npcm-ece.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/nuvoton,npcm-vcd.yaml
+ create mode 100644 Documentation/userspace-api/media/drivers/npcm-video.rst
+ create mode 100644 drivers/media/platform/nuvoton/Kconfig
+ create mode 100644 drivers/media/platform/nuvoton/Makefile
+ create mode 100644 drivers/media/platform/nuvoton/npcm-regs.h
+ create mode 100644 drivers/media/platform/nuvoton/npcm-video.c
+ create mode 100644 include/uapi/linux/npcm-video.h
+
+-- 
+2.34.1
+
