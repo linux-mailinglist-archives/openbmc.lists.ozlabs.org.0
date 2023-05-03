@@ -2,93 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 742CF6F56D4
-	for <lists+openbmc@lfdr.de>; Wed,  3 May 2023 13:03:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4CAA66F581A
+	for <lists+openbmc@lfdr.de>; Wed,  3 May 2023 14:46:48 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QBDZP2SLgz3cf0
-	for <lists+openbmc@lfdr.de>; Wed,  3 May 2023 21:03:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QBGsy1VMqz3cdQ
+	for <lists+openbmc@lfdr.de>; Wed,  3 May 2023 22:46:46 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm3 header.b=WBctjyvS;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=AH+K36za;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=Q20Ib5SC;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=arndb.de (client-ip=64.147.123.27; helo=wnew2-smtp.messagingengine.com; envelope-from=arnd@arndb.de; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1030; helo=mail-pj1-x1030.google.com; envelope-from=avifishman70@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=arndb.de header.i=@arndb.de header.a=rsa-sha256 header.s=fm3 header.b=WBctjyvS;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=AH+K36za;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=Q20Ib5SC;
 	dkim-atps=neutral
-Received: from wnew2-smtp.messagingengine.com (wnew2-smtp.messagingengine.com [64.147.123.27])
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QBDYm2KYbz3bgr;
-	Wed,  3 May 2023 21:02:36 +1000 (AEST)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailnew.west.internal (Postfix) with ESMTP id 6C7392B0671E;
-	Wed,  3 May 2023 07:02:32 -0400 (EDT)
-Received: from imap51 ([10.202.2.101])
-  by compute6.internal (MEProxy); Wed, 03 May 2023 07:02:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm3; t=
-	1683111752; x=1683118952; bh=MMamfdw2Idw7oZk+/E3mvL+dBo0TUHD8cWv
-	2z+u/0pc=; b=WBctjyvS2xYVsNx/PXLCezyBfk6d0fNGJLAbjyR93iv+JntYfRw
-	1FknZqmA6tsFPUoOxwPIzC92Rp5Y6yMCdnzeprisuAEmk/2FwjwhujnyjmXpkimB
-	SppIL5oaBfr59F6AzPecb7p3PngCPKwbucj2v1SwZaiAn0b8V6yRvxWIATOoB1yT
-	kTJFFdKrKoLxDca9M6vO2wD00yP0v9E+Y6cH9ws5eKi/SUd2UHkyPleSrFe3oyLX
-	8GenDC9VkDzpl0DM3D3MJqCCidmbvb4oXCVvEsbwuVU7zsrm1wOjex4kRkPwyRT1
-	Y3o5kMbVVaclWgwF5PhZKyT7r7Y+YHslZ1Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1683111752; x=1683118952; bh=MMamfdw2Idw7oZk+/E3mvL+dBo0TUHD8cWv
-	2z+u/0pc=; b=AH+K36zaN4zYugn+q+n765d7RqYhBnYAkyeBKpd/jUwnO4cc17N
-	sOtk4fgnjqgBRejjoUPfmgWTaKFP4N6l86PC9yWkTl7qSHDYKt8zUNrMJm7hgsac
-	MAKOY5kQ55a0V+cd6KgpG+xKpJy4SWbnKyPbmZiW4Z0r+3tL/pAww5DKoBXtHvDI
-	i273D40wtniWtgLX4sC5ApVUdClgCvIzPssLKxyAw/v9JuPv2gH8vOUO3lADSDBb
-	NaXuK10560hVSSAb2s815TRFlAaY6HIsVEB4nLwDJq5pD3D+mqkoaNJij4p9s68c
-	FZWuHfNk6rEKY5SsKc3Dqj2x0oLyHX/paVw==
-X-ME-Sender: <xms:Rj9SZKlTTnbDiHX55Z0zVK4RRHqTtD34Ic0kr9gu8LXRZUd5vW1sNQ>
-    <xme:Rj9SZB2RRbTSlfnvoyCiq-CjuDURcGdNgs5GoDJl4qCHFJ5-ZHoIvp9bWKCYjpXN-
-    ODT0WgrXyw40LeC0sc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfedvkedgfeegucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepofgfggfkjghffffhvfevufgtgfesthhqredtreerjeenucfhrhhomhepfdet
-    rhhnugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrg
-    htthgvrhhnpeegfeejhedvledvffeijeeijeeivddvhfeliedvleevheejleetgedukedt
-    gfejveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    grrhhnugesrghrnhgusgdruggv
-X-ME-Proxy: <xmx:Rj9SZIovGybcnhaYiLbWAMPNr2wtxMzL-NEtbKfgejz2jVx79Q3BOw>
-    <xmx:Rj9SZOmlZGrdb2-rGVi2XdPxahue8H13hkdPES4NDGwCeY-jXgd-ew>
-    <xmx:Rj9SZI2--fY13skOLwZ1x9wt_VRgsao0yXJv8XyToKLEhPijWfOSBw>
-    <xmx:SD9SZMJstDJSwk6E9VhGeSPmli8W6KuMDF8H4lCfg1AWmdfP8FfC5WnUfw0>
-Feedback-ID: i56a14606:Fastmail
-Received: by mailuser.nyi.internal (Postfix, from userid 501)
-	id B77FBB6008D; Wed,  3 May 2023 07:02:30 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
-User-Agent: Cyrus-JMAP/3.9.0-alpha0-386-g2404815117-fm-20230425.001-g24048151
-Mime-Version: 1.0
-Message-Id: <99b49e6b-e963-415a-a2c9-72505087833c@app.fastmail.com>
-In-Reply-To:  <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
-References: <20220328000915.15041-1-ansuelsmth@gmail.com>
- <85eb14ec-f465-7447-ad77-a3dabc666f47@kernel.org>
- <YkKRYnN84D9VZhGj@Ansuel-xps.localdomain>
- <CAL_Jsq+RQQ-ADMxLPUFwk6S6kGmb6oNDy4k52fnU0EtbUvqmSA@mail.gmail.com>
- <CAMuHMdWNTE48MFy6fqxAsfMWz9b6E7dVNXtXtESP95sxk2PGwA@mail.gmail.com>
- <CAL_JsqJthKTm8bhRF2B=ae1tvtPeYYXx_Tm76qQtSwLtH5C6VA@mail.gmail.com>
- <720a2829-b6b5-411c-ac69-9a53e881f48d@app.fastmail.com>
- <CAL_JsqKCtmkwzKa01gyG65fH8ye6R3KhR41PJbJhOJ4X9j=znA@mail.gmail.com>
-Date: Wed, 03 May 2023 13:02:10 +0200
-From: "Arnd Bergmann" <arnd@arndb.de>
-To: "Rob Herring" <robh+dt@kernel.org>
-Subject: Re: [RFC PATCH 0/1] Categorize ARM dts directory
-Content-Type: text/plain;charset=utf-8
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QBGsM1knVz3c7Q
+	for <openbmc@lists.ozlabs.org>; Wed,  3 May 2023 22:46:13 +1000 (AEST)
+Received: by mail-pj1-x1030.google.com with SMTP id 98e67ed59e1d1-24deb9c5ffcso2824580a91.1
+        for <openbmc@lists.ozlabs.org>; Wed, 03 May 2023 05:46:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683117970; x=1685709970;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nKcaR2Y71+BtcLhFEMIecVXlw8v4MnMkXKlw5yUDa7w=;
+        b=Q20Ib5SCi/mOl7nJ4DS3hOypeOFH6yLJfWH+GMCn22d9D78iUEFgWqHS1EltgKh1jc
+         SlvP94ZPds+ZNIj54i+AQUgGaWyhw+OGT8IPz9IqSGm2ZrH1/yTh061wItUXLKGQFI4l
+         z6749hHZvIkZLUBIH+jkDGNmzdvv7eehE36LYkhA7WEpEP2Hp1vX5/sMtznb5KrWA5lF
+         D0boAjkNR4ZF6vxeIsEJb0wGdF9QMlq9JhqlKtQeTF7WSe9CUlCp1ZuF9CBTctf8DjSu
+         0vw0wlnkJRqyY04jM8Yb1Kl4sbEugxVBFdM7lhxz1iXhHUGsRxa4wPiZD9hou//bCsZp
+         PdDA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683117970; x=1685709970;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nKcaR2Y71+BtcLhFEMIecVXlw8v4MnMkXKlw5yUDa7w=;
+        b=dIK2xnoQRx2wWQFeDBP9RCQhRLoS19DcIEkRsLPzB05cDXNnKBWLeHtchwVSFVa/ZL
+         6fbVUu1Rsue4g0b2yyjwU0+nXNzX1dB6KTAE/KChBLRT0GAqbe5T650HfqetCJ9ukbgA
+         /An5MopBx8am+Gdc39afu/qYHiYHHQbFukY2kyDr+KGUBVJS/LegLlxPcJEATYLjrgIO
+         kT1NkD4sd4rWVbVeDv/p5jtTBDWcpQrFfJvZD59LK3UTI0401REsmy/XvMv6fcIZ+vx4
+         nv9vJsT5GlO+kiOe9Rbuk/dKL0EN2+34eDx5lZXgWmj6afxuC0HRS7KNawFDopjAYnjk
+         qGzg==
+X-Gm-Message-State: AC+VfDzW7+2Upq02lt2T78WQdokpt7mlTLPqtK1dHuEWz1ROlUUmO8z8
+	Uxp9JVK3/2WD5E7sypKcVe5yO/d11+0gO+VB1g==
+X-Google-Smtp-Source: ACHHUZ5nhf4lF3uq/4n15BVT+42cY4KAqH7L29R9qy4h36JsiFb1uqtPjzLO52x+qngqc/wt+tisZOg9lmF1kPRQFx4=
+X-Received: by 2002:a17:90a:5511:b0:24e:165d:8f65 with SMTP id
+ b17-20020a17090a551100b0024e165d8f65mr7526116pji.5.1683117970103; Wed, 03 May
+ 2023 05:46:10 -0700 (PDT)
+MIME-Version: 1.0
+References: <ZEwbPFW5p6jB0kLR@probook> <CACPK8XcONxSRa=5vq3uDxiAQww6ULVJr+OkQp3Q72MDLSJrBnQ@mail.gmail.com>
+In-Reply-To: <CACPK8XcONxSRa=5vq3uDxiAQww6ULVJr+OkQp3Q72MDLSJrBnQ@mail.gmail.com>
+From: Avi Fishman <avifishman70@gmail.com>
+Date: Wed, 3 May 2023 15:45:59 +0300
+Message-ID: <CAKKbWA6=Em3Pih83qX2v0YfPZr823Cj9UvmaRoxbEKQmPqumQw@mail.gmail.com>
+Subject: Re: Upstreaming Nuvoton EMC (100 Mbit Ethernet MAC Controller) support
+To: Joel Stanley <joel@jms.id.au>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -101,96 +75,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, linux-realtek-soc@lists.infradead.org, linux-arm-kernel@axis.com, linux-stm32@st-md-mailman.stormreply.com, chrome-platform@lists.linux.dev, linux-samsung-soc@vger.kernel.org, openbmc@lists.ozlabs.org, Krzysztof Kozlowski <krzk@kernel.org>, linux-rockchip@lists.infradead.org, Geert Uytterhoeven <geert@linux-m68k.org>, linux-sunxi@lists.linux.dev, devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-actions@lists.infradead.org, linux-unisoc@lists.infradead.org, linux-mediatek@lists.infradead.org, linux-rpi-kernel@lists.infradead.org, linux-tegra@vger.kernel.org, linux-amlogic@lists.infradead.org, Linux-OMAP <linux-omap@vger.kernel.org>, linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org, Christian Marangi <ansuelsmth@gmail.com>, Linux-Renesas <linux-renesas-soc@vger.kernel.org>, kernel@dh-electronics.com, Olof Johansson <olof@lixom.net>, Krzysztof Kozlowski <krzk+dt@kernel.org>, "linux-oxnas@groups.io" <linux-oxnas@groups.
- io>
+Cc: openbmc@lists.ozlabs.org, =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, May 2, 2023, at 21:40, Rob Herring wrote:
-> On Tue, May 2, 2023 at 3:15=E2=80=AFAM Arnd Bergmann <arnd@arndb.de> w=
-rote:
+Hi Jonathan,
 
-> vendor_map =3D {
->     'alphascale' : 'alphascale',
->     'alpine' : 'alpine',
+Indeed this will be great.
+Note that the code has some workarounds in its implementation.
+See updated version at:
+https://github.com/Nuvoton-Israel/linux/tree/NPCM-5.15-OpenBMC/drivers/net/=
+ethernet/nuvoton
+also, long time ago I started the progress of upstreaming and stopped, see:
+https://www.mail-archive.com/linux-kernel@vger.kernel.org/msg2067239.html
 
-I would make this one 'amazon' if we go with current manufacturers.
+Thanks,
+Avi
 
->     'nspire' : 'nspire',
+On Tue, May 2, 2023 at 9:44=E2=80=AFAM Joel Stanley <joel@jms.id.au> wrote:
+>
+> On Fri, 28 Apr 2023 at 19:15, Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx=
+.net> wrote:
+> >
+> > Hello Avi and others,
+> >
+> > in my ongoing project to support the Nuvoton WPCM450 BMC in mainline
+> > Linux, I have reached the point where the next useful step would be
+> > Ethernet support. The WPCM450 contains a Nuvoton EMC, which is also use=
+d
+> > in some older Winbond SoCs, and newer Nuvoton NPCM7xx BMCs.
+>
+> That would be a great contribution.
+>
+> I have a npcm750 eval board that I can test it on, please cc me when
+> you post the patches.
+>
+> Cheers,
+>
+> Joel
 
-nspire is the name of the end-user product, so that doesn't quite
-fit. The SoC was apparently an LSI logic Zevio, which is now owned
-by Broadcom.
 
->     'mvebu' : 'marvell',
->     'mmp' : 'marvell',
->     'berlin' : 'berlin',
 
-While berlin is related to pxa/mmp, this one is now owned
-by Synaptics, and the 64-bit versions are already in the
-synaptics subdir, so I'd go with teh same here.
-
->     'openbmc' : 'aspeed',
->     'en7' : 'airoha',
-
-airoha is a separate company now, but the hardware is still
-shared with mediatek, so we could consider lumping it into
-that subdir, but a separate one may be better long-term.
-
->     'gemini' : 'gemini',
-
-This one is also a product name, not a company. Apparently,
-gemini was originally made by Storm Semiconductor, and then
-by Cortina, which was subsequently acquired by Inphi, and that ended
-up in Marvell after the product was already discontinued.
-
-Out of the four, I'd probably go with 'cortina' as the
-directory name.
-
->     'meson' : 'meson',
-
--> amlogic
-
->     'moxa' : 'moxa',
->     'mstar' : 'mstar',
-
--> sigmastar
-
->     'nuvo' : 'nuvoton',
->     'lpc' : 'lpc',
-
--> nxp
-
->     'lan96' : 'microchip',
->     'owl' : 'actions',
->     'ox8' : 'oxsemi',
->     'rda' : 'rda',
-
--> unisoc
-
->     'rtd' : 'realtek',
->     'r7' : 'renesas',
->     'r8' : 'renesas',
->     'r9' : 'renesas',
->     'emev2' : 'renesas',
->     'sh73a' : 'renesas',
->     'gr-' : 'renesas',
->     'iwg' : 'renesas',
->     'rk' : 'rockchip',
->     'rv11' : 'rockchip',
->     'rockchip' : 'rockchip',
->     'socfpga' : 'socfpga',
-
--> intel
-
->     'stm' : 'stm32',
->     'sti' : 'sti',
->     'st-pin' : 'sti',
->     'ste' : 'st-ericsson',
->     'spear' : 'spear',
-
-I would put all five of these into 'st'. The ux500 was developed
-in st-ericsson, but last sold by st, and the other ones are all
-original st products.
-
-      Arnd
+--
+Regards,
+Avi
