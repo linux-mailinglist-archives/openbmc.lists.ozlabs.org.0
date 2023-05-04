@@ -1,64 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 14CA76F75C9
-	for <lists+openbmc@lfdr.de>; Thu,  4 May 2023 22:01:47 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4CEA06F771B
+	for <lists+openbmc@lfdr.de>; Thu,  4 May 2023 22:35:06 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QC4TN6dDFz3bh9
-	for <lists+openbmc@lfdr.de>; Fri,  5 May 2023 06:01:44 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QC5Cr1XxFz3cTk
+	for <lists+openbmc@lfdr.de>; Fri,  5 May 2023 06:35:04 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20221208 header.b=rIyOre2a;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=eLJgfPOL;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2607:f8b0:4864:20::829; helo=mail-qt1-x829.google.com; envelope-from=osk@google.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::432; helo=mail-pf1-x432.google.com; envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20221208 header.b=rIyOre2a;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=eLJgfPOL;
 	dkim-atps=neutral
-Received: from mail-qt1-x829.google.com (mail-qt1-x829.google.com [IPv6:2607:f8b0:4864:20::829])
+Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QC4Sk6dHqz30QQ
-	for <openbmc@lists.ozlabs.org>; Fri,  5 May 2023 06:01:09 +1000 (AEST)
-Received: by mail-qt1-x829.google.com with SMTP id d75a77b69052e-3ef34c49cb9so844481cf.1
-        for <openbmc@lists.ozlabs.org>; Thu, 04 May 2023 13:01:09 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QC5CH3R2bz3c8F
+	for <openbmc@lists.ozlabs.org>; Fri,  5 May 2023 06:34:33 +1000 (AEST)
+Received: by mail-pf1-x432.google.com with SMTP id d2e1a72fcca58-64115eef620so15210390b3a.1
+        for <openbmc@lists.ozlabs.org>; Thu, 04 May 2023 13:34:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1683230464; x=1685822464;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=uCaixQBHhl42Fb2rT0LM7bjhFV8gsQbj7xUsmGduqkY=;
-        b=rIyOre2ax99xX09VfH58wNXswq14ULbonCBQyPWb/HPprvdchKSRYYJh9VHEJy65Gr
-         HGkp7+SNCYpx+ThGKhWThFEMOa4DHN/iqMhCGusF8HoVmgnx40ZaCCZ2Ja9hBci/H75L
-         twlQBoWKc0Ov9L8/cxHojk5M2XS/kC4VmWk3tN6QG5HupOC6mh/timxEMNrd7FnogrVV
-         5yD0e8nRvKzm/RZ+b8oWi8NTFmVfm92o08ezgkQXp9KkyK2zXGRW/EHGR2O17QtxHTtc
-         tcehibIxdLKygeQunzDr73algO2QRYO0pkb8TTTBNyD/UUrZaAd32KN0/6tsuy3urQuV
-         V5BA==
+        d=gmail.com; s=20221208; t=1683232470; x=1685824470;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ORASDzOJC6cyTDjqC23hsIvpM2ufMHL8cJncTFsbBvs=;
+        b=eLJgfPOLDPOles2VYZGZBAIod5bKj+dkzznltWKulKFGw7ixEq0EDIYXPqGub6lr2G
+         auAhF3+m2/UjVXpVmannQhOwJ/iY3CeJTlU3wjoW7DrXgxzcgpnyYd9vnktv5Tpl4o73
+         HT70JU1/INF/bMv+VkPZQOCFOmUOVxRHE0tKdSW9yxeLryJRkXpdAaAwGJHRkqg9PBWz
+         v4Yiy2m8pe6QGF6VaHCXRD+8XvmJ0XgzYoj4TAyLVYGXvmEsLBY+3t6r0aeaBmVzPXSr
+         2vILji+QL3+94Y+l31z07FQcGTuQfXMHn+fOb05mX5ND41dalUbd1z6B17x2yt11rqyi
+         UOKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683230464; x=1685822464;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=uCaixQBHhl42Fb2rT0LM7bjhFV8gsQbj7xUsmGduqkY=;
-        b=JB1nz1pc9qYQN2CV8DL2x8afEQnUkukwxf+xuQKIdHjuRA904Afezw2eO4jhQzg4Mm
-         U7lXEUSkWnrNToRjfbrTpGSr2VzrcYZcTkVlwJxjKZ5tq36/MCoCnTcOgwvsPAEkADDY
-         X8jJTb+yrnrfsPFu19kZl0uhPkkPMYOzdX/g9yz2oQizHa6/7rgu5Mh+q5MTEQD7EidX
-         FvCyhPtK4/QcwQxFlbv2gvLpGs1lrIOi6EVS3qD8puw2vfb3mblF8tQT1Glh7rXHObyC
-         3eQ0meS9/HqLoz/tWOEhFvU5TGdfn6CWs/KDVhSb/40DEq9r4/KA61BdjWA0CyWIsxbz
-         qEQg==
-X-Gm-Message-State: AC+VfDybPyJQyPW5NQC0Z1myS6IHzGpBxNX4cM4BLRuIwbFBOXqwp1vX
-	HMpgoHOEcjVS4YS8sHSelB/T7Kl0+vzOTt3rmAgcvw==
-X-Google-Smtp-Source: ACHHUZ5nC1q5XSjEb3TkBEa4jKDRjBm17lNyqp3zeXRbJGs5ejHNpZsBKG8m/+bW99xHbKYBojdwgg7J8ey+qxnMSrM=
-X-Received: by 2002:a05:622a:112:b0:3e6:81be:93b3 with SMTP id
- u18-20020a05622a011200b003e681be93b3mr79372qtw.5.1683230464409; Thu, 04 May
- 2023 13:01:04 -0700 (PDT)
-MIME-Version: 1.0
-From: Oskar Senft <osk@google.com>
-Date: Thu, 4 May 2023 16:00:47 -0400
-Message-ID: <CABoTLcQNTwxi5nVRG8yRoDrrtV-pO-WA1ubtFVmnLnebPLucmg@mail.gmail.com>
-Subject: entity-manager: SBTSI and hwmontempsensor
-To: zev@bewilderbeest.net
-Content-Type: multipart/alternative; boundary="000000000000e8745f05fae3a1fe"
+        d=1e100.net; s=20221208; t=1683232470; x=1685824470;
+        h=to:date:message-id:subject:mime-version:content-transfer-encoding
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ORASDzOJC6cyTDjqC23hsIvpM2ufMHL8cJncTFsbBvs=;
+        b=Cg4mdv7QRvJ3htDZX5C3uO7xmyUvdpU1l29srd8FXrWuwe7hWaIW4EnLIEnAK1BUQF
+         NM0KtF3j60N7fZ+oU+JGTKfUyIpG3LBfXLRYAYx6eWJr73//pdcjBi5X8zf4q+ifB3BR
+         Gic+4BoUh/ha0x9Hmozw+6lmSypSlvVyldzu7T86xDGt38qgq7pkFo5XjimFj+XaRdXZ
+         JJBAgJNDkTtuQmBkz5bLFa+mhNfZI786X2UwLTrjzuiWEfgchR+Lq4oK20G6tIXFrdku
+         gAD63dUf9uRjmV3XCJyjH0XRfm6Ts3/XoOWAsol+XFJBilapKJYjobQpCHk+o0yJMRB2
+         3fAw==
+X-Gm-Message-State: AC+VfDzd8yQJvqkJioKpWMNhiMG1aiYbynhIMRBakNYYGWgCaDX+sg52
+	XB8AuYXJ3VjnVZ7v1bZiEdZTdbjwaJo=
+X-Google-Smtp-Source: ACHHUZ5I3EqK1hNzKC7AuybD3Hi2dLS3vQvGszMQ4pxbllDiHc4lA2BR2n7uw+7WAh4xdcWs7IIlyQ==
+X-Received: by 2002:a17:902:ce88:b0:1ac:373a:7323 with SMTP id f8-20020a170902ce8800b001ac373a7323mr1958940plg.16.1683232469791;
+        Thu, 04 May 2023 13:34:29 -0700 (PDT)
+Received: from smtpclient.apple (184-167-248-253.res.spectrum.com. [184.167.248.253])
+        by smtp.gmail.com with ESMTPSA id t4-20020a170902b20400b001a96496f250sm20198607plr.34.2023.05.04.13.34.29
+        for <openbmc@lists.ozlabs.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 04 May 2023 13:34:29 -0700 (PDT)
+From: Andrew Geissler <geissonator@gmail.com>
+Content-Type: text/plain;
+	charset=us-ascii
+Content-Transfer-Encoding: quoted-printable
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.3\))
+Subject: phosphor-state-manager: creating a log for chassis power on 
+Message-Id: <34C873D0-3C90-4ECC-9622-31479967B830@gmail.com>
+Date: Thu, 4 May 2023 14:34:28 -0600
+To: OpenBMC List <openbmc@lists.ozlabs.org>
+X-Mailer: Apple Mail (2.3696.120.41.1.3)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,44 +77,30 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ali El-Haj-Mahmoud <aaelhaj@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---000000000000e8745f05fae3a1fe
-Content-Type: text/plain; charset="UTF-8"
+Recently I added some code[1] to PSM to create an informational log =
+whenever the
+chassis power transitions from off to on. My thinking was this was a =
+fairly
+specific use case for only certain people so the intention was to just =
+optionally bring
+this new feature in via a bbappend[2].
 
-Hi Zev
+In the review, Patrick noted that he'd seen a similar requirement =
+elsewhere and
+votes that we just make it the default in PSM to install this new =
+service.
 
-In
-https://github.com/openbmc/entity-manager/commit/e22143df37faa0b0f5e2918d2f505b9f64e74b0f
-you "removed devices now managed by hwmontempsensor".
+If anyone has an opinion on this, please weigh in via the gerrit[2] =
+review or here
+via email.
 
-I'm trying to figure out how to add SBTSI support for the TYAN S8036 board
-(AMD Milan). Do I just add the device to the DTS and then reference it in
-EntityManager board configuration via its bus and address?
+Thanks,
+Andrew
 
-Is there still a way to dynamically get Entity Manager (or now
-dbus-sensors) to bind the driver or does it HAVE to happen in the DTS now?
-
-Thanks!
-
-Oskar.
-
---000000000000e8745f05fae3a1fe
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi Zev</div><div><br></div><div>In <a href=3D"https:/=
-/github.com/openbmc/entity-manager/commit/e22143df37faa0b0f5e2918d2f505b9f6=
-4e74b0f">https://github.com/openbmc/entity-manager/commit/e22143df37faa0b0f=
-5e2918d2f505b9f64e74b0f</a> you &quot;removed devices now managed by hwmont=
-empsensor&quot;.</div><div><br></div><div>I&#39;m trying to figure out how =
-to add SBTSI=C2=A0support for the TYAN S8036 board (AMD Milan). Do I just a=
-dd the device to the DTS and then reference it in EntityManager board confi=
-guration via its bus and address?</div><div><br></div><div>Is there still a=
- way to dynamically get Entity Manager (or now dbus-sensors) to bind the dr=
-iver or does it HAVE to happen in the DTS now?</div><div><br></div><div>Tha=
-nks!</div><div><br></div><div>Oskar.</div></div>
-
---000000000000e8745f05fae3a1fe--
+[1]: =
+https://github.com/openbmc/phosphor-state-manager/commit/afe12d69a0c8182e7=
+b587d81531e0a9e376f5ce7
+[2]: https://gerrit.openbmc.org/c/openbmc/openbmc/+/63078=
