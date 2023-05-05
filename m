@@ -1,79 +1,102 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B2DC6F7FCF
-	for <lists+openbmc@lfdr.de>; Fri,  5 May 2023 11:23:52 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6259F6F83F6
+	for <lists+openbmc@lfdr.de>; Fri,  5 May 2023 15:27:10 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QCQGs4bhzz3f5Y
-	for <lists+openbmc@lfdr.de>; Fri,  5 May 2023 19:23:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QCWgc0XWdz3fFY
+	for <lists+openbmc@lfdr.de>; Fri,  5 May 2023 23:27:08 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=DJNs626M;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=BU0Kl8zU;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::130; helo=mail-lf1-x130.google.com; envelope-from=fercerpav@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=stefanb@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=DJNs626M;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=BU0Kl8zU;
 	dkim-atps=neutral
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QCQGG2FBmz3c6H
-	for <openbmc@lists.ozlabs.org>; Fri,  5 May 2023 19:23:16 +1000 (AEST)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f11d267d8bso1695069e87.2
-        for <openbmc@lists.ozlabs.org>; Fri, 05 May 2023 02:23:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683278591; x=1685870591;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Xj6Drd5f9NmzWvlwa3+eK6FOmSCUs4hpc3k8RTI/WaM=;
-        b=DJNs626Mwrn4KF3VVroaW3NzzPd2+YgUzFdgtjCJ/mtpshEgs3qaFL1jMrBKC1bDyu
-         ReLCBArdsNwyo6rNBZR9/4nDXhDNsO4D4A7WvxYhcMELc9/o1HW/OkVTxsVliYoSIHkR
-         YIN4e/DawJPWdY6jg7h/i6qbByf8NevgfagmsbuxrJMKptnYDZsgnZN7jHhw4FnDnBg3
-         X5ulnctz78ssbxlVNEaygulCMMfWGvmmoZjYo/+KHE0lS3+hYI34YcOHLg6dmx9or3aR
-         rzevJfL5PhO7WGnkja4Yonpof7Xb/xRkHnhX8TlO92CjitMA9UWKfFShFHZBxTB07HFY
-         N6iw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683278591; x=1685870591;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Xj6Drd5f9NmzWvlwa3+eK6FOmSCUs4hpc3k8RTI/WaM=;
-        b=b9TAha+tbuFuhTRCFG/ikWxbyBO+yZNmPx0frwI/8K216s7euXLRO+fFHpbuJUqcow
-         zuJJgwLDYEs3KyBQ+XvvUssmEfkX/W7wu0+raOzb5tWbtP6ua41i2Krfvwhgz6Rz6MTD
-         xuptowOQ1hIrPMju2iCwSaA3fDBF4mmZ8BUQkn2lq5ZhHKXzC4AD5et76VgmHaIJlW51
-         Is2G3Yvfh9aK/d856ixmpazNIU9VHPRcVt6UVRKuLsfqf0anFNKEwiN8A3ImCtSybPMK
-         T3Qps+ksJ0QUFUqHVFINAYRjrl7pa7uvtESVXC/oh58ecvXJwxvAwMdDxP2pgr/AU/PJ
-         uXaw==
-X-Gm-Message-State: AC+VfDz7GOPukxFzqvG29zVLOHTZ0k8egqovGk6b1Tjn37jE8sDh4HAx
-	Ou6/mrGMoetqOAW6lfwvG88=
-X-Google-Smtp-Source: ACHHUZ7jKnh1oNSHdK6ANg5ioeiAeLcNO4syPzOvB5jL65nk0/fZsJ3f88l/gnkevGcTLytX8IyzIw==
-X-Received: by 2002:a19:a415:0:b0:4f1:4644:499a with SMTP id q21-20020a19a415000000b004f14644499amr265120lfc.61.1683278590824;
-        Fri, 05 May 2023 02:23:10 -0700 (PDT)
-Received: from home.paul.comp (paulfertser.info. [2001:470:26:54b:226:9eff:fe70:80c2])
-        by smtp.gmail.com with ESMTPSA id z10-20020ac2418a000000b004dc4c5149dasm212148lfh.301.2023.05.05.02.23.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 05 May 2023 02:23:10 -0700 (PDT)
-Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
-	by home.paul.comp (8.15.2/8.15.2/Debian-22) with ESMTP id 3459N7iF022283;
-	Fri, 5 May 2023 12:23:08 +0300
-Received: (from paul@localhost)
-	by home.paul.comp (8.15.2/8.15.2/Submit) id 3459N6xq022282;
-	Fri, 5 May 2023 12:23:06 +0300
-Date: Fri, 5 May 2023 12:23:06 +0300
-From: Paul Fertser <fercerpav@gmail.com>
-To: Zev Weiss <zev@bewilderbeest.net>
-Subject: Hot-plugging non-sensor devices on non-PnP buses (was: Re:
- entity-manager: SBTSI and hwmontempsensor)
-Message-ID: <ZFTK+ij4jMAqtQWw@home.paul.comp>
-References: <CABoTLcQNTwxi5nVRG8yRoDrrtV-pO-WA1ubtFVmnLnebPLucmg@mail.gmail.com>
- <9b2c7872-fbe3-4691-b5c1-bf69290b4186@hatter.bewilderbeest.net>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QCWg4235Xz3c71
+	for <openbmc@lists.ozlabs.org>; Fri,  5 May 2023 23:26:39 +1000 (AEST)
+Received: from pps.filterd (m0353726.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 345D8Q9q016119;
+	Fri, 5 May 2023 13:26:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
+ subject : to : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=ldsDVAhflj6ROxeBA7uPp+DslW7+xsigz9UidDuKpV4=;
+ b=BU0Kl8zUPKb2xCfRCts0+ALfKQ5Md+OJVJPfYP63dJnMpz8qGUgEcccmLLD7OvOC+fvu
+ 4nP0s5RdnVmWkiTwBdkAlRtxptG4aibc4qncCGrbF+bTNb8xOm9eTeQdAOd97WJUlKLs
+ 9/6nreZqHXUJ6g7nbZYun3ySBEm6NYc/GglcagTx1MKROsX0bmIQemtvdamOFcOn2KZe
+ A1FEmUU/t32v3ruRJsp+es3xQVKWgvU09aT7Owy9wZHK/TpAt8dMAcFQd0WbRt1klqTA
+ QcCGgW1TYfp5Afgs7xhOi991hM7aimioliYZlwP6XZSE+L/OvdICT1wUAWQyAKbSeimN Sg== 
+Received: from ppma05wdc.us.ibm.com (1b.90.2fa9.ip4.static.sl-reverse.com [169.47.144.27])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qd0hdck09-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 05 May 2023 13:26:26 +0000
+Received: from pps.filterd (ppma05wdc.us.ibm.com [127.0.0.1])
+	by ppma05wdc.us.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 345Cm5IN002049;
+	Fri, 5 May 2023 13:26:24 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([9.208.130.99])
+	by ppma05wdc.us.ibm.com (PPS) with ESMTPS id 3q8tv86udg-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 05 May 2023 13:26:24 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com [10.39.53.233])
+	by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 345DQNY238338936
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 5 May 2023 13:26:23 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 7CC1558060;
+	Fri,  5 May 2023 13:26:23 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id BED5158054;
+	Fri,  5 May 2023 13:26:22 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+	by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Fri,  5 May 2023 13:26:22 +0000 (GMT)
+Message-ID: <7fbe2c10-aa83-2640-0de0-b07ca0e5a13d@linux.ibm.com>
+Date: Fri, 5 May 2023 09:26:22 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on Qemu
+Content-Language: en-US
+To: Sandeep Kumar <sandeep.pkumar@tcs.com>,
+        =?UTF-8?Q?C=c3=a9dric_Le_Goater?=
+ <clg@kaod.org>,
+        "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+        Ninad Palsule <ninad@linux.ibm.com>, Joel Stanley <jms@jms.id.au>,
+        Andrew Jeffery <andrew@aj.id.au>
+References: <MA1PR01MB412922EF629403C84674A6AD87909@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
+ <8e23c99e-0e62-3866-ce61-c75a14453a37@kaod.org>
+ <MA1PR01MB4129EB6FA57EA28AA9002E9C879B9@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
+ <2231ac88-3005-0fb4-6aad-e7652ffd3467@kaod.org>
+ <MA1PR01MB41297891E40E6E5652661662879D9@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
+ <9c136acf-ea18-130b-41bb-5001b01ee8cf@kaod.org>
+ <MA1PR01MB4129E3F1719B297B56DC148A87629@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
+ <MA1PR01MB41294AC02644C3CB98E6F84187639@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
+ <MA1PR01MB4129B241046BEB173A6CFA66876D9@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
+ <8abb1400-f7c4-f04a-8352-6c2583e23f0b@linux.ibm.com>
+ <MA1PR01MB4129EE9FDCFF415DF8580CB987729@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <MA1PR01MB4129EE9FDCFF415DF8580CB987729@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 70QQOUMRtxqZfxLnX24llUFGcWKfTiVa
+X-Proofpoint-ORIG-GUID: 70QQOUMRtxqZfxLnX24llUFGcWKfTiVa
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9b2c7872-fbe3-4691-b5c1-bf69290b4186@hatter.bewilderbeest.net>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-05_20,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 phishscore=0
+ adultscore=0 lowpriorityscore=0 priorityscore=1501 bulkscore=0
+ mlxlogscore=999 spamscore=0 malwarescore=0 mlxscore=0 suspectscore=0
+ clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2305050109
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,57 +108,183 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ali El-Haj-Mahmoud <aaelhaj@google.com>, Oskar Senft <osk@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Zev,
 
-I do not mean to hi-jack the topic as the issue I have a question about
-is closely related, please see inline.
 
-On Thu, May 04, 2023 at 02:10:15PM -0700, Zev Weiss wrote:
-> It shouldn't be in your DTS, because then it'd be statically defined and
-> hwmontempsensor wouldn't be able to remove it when the host is powered off
-> (which I assume you'd want).
+On 5/5/23 01:40, Sandeep Kumar wrote:
+>   TCS Confidential
 > 
-> In terms of userspace/kernel separation, it's overall pretty similar to how
-> it had been previously, just with the management of device lifetimes
-> (instantiation & removal) moved to hwmontempsensor instead of
-> entity-manager.
+> Hi Stefan,
+> 
+> Stefan: Is the kernel configured in the same way? Are you using the same kernel version?
+> Ans:
+>          I am using the Kernel version coming with the latest openBMC without any changes.
+>          Kernel version used : Linux evb-ast2600 6.1.15-580639a #1 SMP Thu Apr 6 00:55:09 UTC 2023 armv71 GNU/Linux
+> 
+> Stefan:  What is the output of this?  find /sys/class/tpm | grep pcr
+> Ams:     find: /sys/class/tpm: No such file or directory.
+> 
+> Could you please point to the right version of kernel which has all these changes ?
 
-I see similar mechanism is also implemented in omnisensor, so this can
-be an option (probably preferred since it's a much cleaner code) too.
+I am not aware of changes in the Linux kernel for TPM I2C and why it would not work in this kernel version.
 
-But what if the device in consideration isn't a sensor at all? We're
-trying to use PCA9551 which is a LED driver controllable over
-I2C. Since it's meant to show statuses of the host storage devices
-it's powered only when the host is powered. The kernel driver
-leds-pca955x handles it nicely but the probe() needs to be run with
-the device powered.
+Does this show any files?
 
-I initially thought entity-manager should be the right place in the
-architecture to handle cases like this, but now that you say OpenBMC
-is moving towards implementing dynamic driver assigning functionality
-in the sensors daemons instead I wonder what the solution for the
-non-sensor devices should be (as duplicating the relevant code in
-phosphor-led-manager seems to be obviously wrong). I can also imagine
-e.g. SPI devices needing similar treatment, so it's neither sensors
-nor I2C specific in the big picture.
+find /sys | grep pcr
 
-What further complicates situation with leds-pca955x specifically is
-that it /needs/ DT or platform data to work, and that makes it try
-binding automatically on startup, and probe() fails while the host
-system is off, and "new_device" sysfs node can't be used to retry (as
-the device is already defined), so either the driver needs to be
-modular and reloaded with essentially rmmod/insmod sequence or the
-userspace can use sysfs "bind" node to call probe() again (this is
-also problematic with entity-manager as $Address template argument
-isn't suitable for a string like 5-0019, where 19 is in hex).
+Do /dev/tpm0 and /dev/tpmrm0 appear after the echo ? What does dmesg show related to tpm (dmesg | grep -i tpm)?
 
-I would be happy to hear your and the other OpenBMC community member's
-thoughts on this matter.
+    Stefan
 
--- 
-Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
-mailto:fercerpav@gmail.com
+
+> 
+> 
+> Thanks,
+> Sandeep.
+> 
+> -----Original Message-----
+> From: Stefan Berger <stefanb@linux.ibm.com>
+> Sent: Thursday, May 4, 2023 7:30 PM
+> To: Sandeep Kumar <sandeep.pkumar@tcs.com>; Cédric Le Goater <clg@kaod.org>; openbmc@lists.ozlabs.org; Ninad Palsule <ninad@linux.ibm.com>; Joel Stanley <jms@jms.id.au>; Andrew Jeffery <andrew@aj.id.au>
+> Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on Qemu
+> 
+> "External email. Open with Caution"
+> 
+> 
+> On 5/4/23 05:12, Sandeep Kumar wrote:
+>> TCS Confidential Hi C, I was able to build and run the image(for
+>> evb-ast2600) with swtpm. Few issues observed, If I run with the flash. 
+>> img provided in your github link(https: //github. 
+>> com/legoater/qemu-aspeed-boot/tree/master/images) everything ZjQcmQRYFpfptBannerStart This Message Is From an External Sender This message came from outside your organization.
+>> ZjQcmQRYFpfptBannerEnd
+>> TCS Confidential
+>>
+>> Hi C,
+>> I was able to build and run the image(for evb-ast2600) with swtpm. Few
+>> issues observed,
+>>
+>>   1. If I run with the flash.img provided in your github link(_https://github.com/legoater/qemu-aspeed-boot/tree/master/images_ <https://github.com/legoater/qemu-aspeed-boot/tree/master/images>) everything works as expected, i.e I get the below output.
+>>
+>> *# echo tpm_tis_i2c 0x2e > /sys/bus/i2c/devices/i2c-12/new_device*
+>> *[  182.735902] tpm_tis_i2c 12-002e: 2.0 TPM (device-id 0x1, rev-id
+>> 1)* *[  182.773885] i2c i2c-12: new_device: Instantiated device
+>> tpm_tis_i2c at 0x2e*
+>> *#*
+>> *#*
+>> *# cat /sys/class/tpm/tpm0/pcr-sha256/0*
+>> *B804724EA13F52A9072BA87FE8FDCC497DFC9DF9AA15B9088694639C431688E0*
+>> *#*
+>> *#*
+>>
+>>   2. If I run it with the locally built image, I get this error,
+> 
+> Is the kernel configured in the same way? Are you using the same kernel version?
+>>
+>> *root@evb-ast2600:~# echo tpm_tis_i2c 0x2e >
+>> /sys/bus/i2c/devices/i2c-12/new_device*
+>> *[  174.063597] i2c i2c-12: new_device: Instantiated device
+>> tpm_tis_i2c at 0x2e*
+> 
+> What is the output of this?
+> 
+> find /sys/class/tpm | grep pcr
+> 
+>     Stefan
+> 
+>> *root@evb-ast2600:~# cat /sys/class/tpm/tpm0/pcr-sha256/0*
+>> *cat: can't open '/sys/class/tpm/tpm0/pcr-sha256/0': No such file or
+>> directory*
+>> *root@evb-ast2600:~#*
+>> *root@evb-ast2600:~#*
+>> Please do let me know about what has been done to write the values
+>> into “*/sys/class/tpm/tpm0/pcr-sha256/0**” . * Thanks, Sandeep.
+>> _____________________________________________
+>> *From:* Sandeep Kumar
+>> *Sent:* Thursday, April 20, 2023 5:45 PM
+>> *To:* Cédric Le Goater <clg@kaod.org>; openbmc@lists.ozlabs.org; Ninad
+>> Palsule <ninad@linux.ibm.com>; Joel Stanley <jms@jms.id.au>; Andrew
+>> Jeffery <andrew@aj.id.au>
+>> *Subject:* RE: Integrating swtpm(as a software TPM) with OpenBMC on
+>> Qemu Hi C, How to build this image =>
+>> *obmc-phosphor-image.rootfs.wic.qcow2* ? In openBmc build directory we don’t get this image built.
+>> Also, remaining image formats used while running on qemu are available in the build directory. i.e fitImage-linux.bin, aspeed-bmc-ibm-rainier.dtb and obmc-phosphor-initramfs.rootfs.cpio.xz .
+>> Please advise if we have to build openbmc stack in a different way
+>> than the standard procedure. We follow the below steps for build, 1. .
+>> setup Romulus 2. bitbake obmc-phosphor-image Thanks, Sandeep.
+>> -----Original Message-----
+>> From: Sandeep Kumar
+>> Sent: Wednesday, April 19, 2023 3:00 PM
+>> To: Cédric Le Goater <_clg@kaod.org_ <mailto:clg@kaod.org>>;
+>> _openbmc@lists.ozlabs.org_ <mailto:openbmc@lists.ozlabs.org>; Ninad
+>> Palsule <_ninad@linux.ibm.com_ <mailto:ninad@linux.ibm.com>>; Joel
+>> Stanley <_jms@jms.id.au_ <mailto:jms@jms.id.au>>; Andrew Jeffery
+>> <_andrew@aj.id.au_ <mailto:andrew@aj.id.au>>
+>> Subject: RE: Integrating swtpm(as a software TPM) with OpenBMC on Qemu
+>> Hi C, Got it working. Looks like slirp is no longer supported on
+>> ubnutu 18.04. have upgraded to a newer version  and is working now.
+>> Thanks,
+>> Sandeep.
+>> -----Original Message-----
+>> From: Cédric Le Goater <clg@kaod.org <mailto:clg@kaod.org>>
+>> Sent: Wednesday, April 19, 2023 2:26 PM
+>> To: Sandeep Kumar <sandeep.pkumar@tcs.com
+>> <mailto:sandeep.pkumar@tcs.com>>; openbmc@lists.ozlabs.org
+>> <mailto:openbmc@lists.ozlabs.org>; Ninad Palsule <ninad@linux.ibm.com
+>> <mailto:ninad@linux.ibm.com>>; Joel Stanley <jms@jms.id.au
+>> <mailto:jms@jms.id.au>>; Andrew Jeffery <andrew@aj.id.au
+>> <mailto:andrew@aj.id.au>>
+>> Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on Qemu
+>> "External email. Open with Caution"
+>> Hello Sandeep
+>> On 4/18/23 09:45, Sandeep Kumar wrote:
+>>> TCS Confidential
+>>>
+>>> Hi C,
+>>> Built the qemu from your branch. Few issues, *$ ./qemu-system-arm -m
+>>> 256 -M romulus-bmc -nographic -drive
+>>> file=./obmc-phosphor-image-romulus.static.mtd,format=raw,if=mtd -net
+>>> nic -net
+>>> user,hostfwd=:127.0.0.1:2222-:22,hostfwd=:127.0.0.1:4443-:443,hostfwd
+>>> =
+>>> tcp:127.0.0.1:8880-:80,hostfwd=tcp:127.0.0.1:2200-:2200,hostfwd=udp:1
+>>> 2
+>>> 7.0.0.1:6623-:623,hostfwd=udp:127.0.0.1:6664-:664,hostname=qemu*
+>>> *qemu-system-arm: -net
+>>> user,hostfwd=:127.0.0.1:2222-:22,hostfwd=:127.0.0.1:4443-:443,hostfwd
+>>> =
+>>> tcp:127.0.0.1:8880-:80,hostfwd=tcp:127.0.0.1:2200-:2200,hostfwd=udp:1
+>>> 2
+>>> 7.0.0.1:6623-:623,hostfwd=udp:127.0.0.1:6664-:664,hostname=qemu:
+>>> network backend 'user' is not compiled into this binary* I didn’t
+>>> enable the slirp package I guess. So enabled it while running
+>>> configure, *$ ../configure --enable-slirp*
+>>> *........*
+>>> *Run-time dependency slirp found: NO (tried pkgconfig)*
+>>> *../meson.build:681:2: ERROR: Dependency "slirp" not found, tried
+>>> pkgconfig* *A full log can be found at
+>>> /home/tcs/work/sandeep/measured_boot/ibm_qemu/qemu/build/meson-logs/m
+>>> e
+>>> son-log.txt*
+>>> *NOTICE: You are using Python 3.6 which is EOL. Starting with
+>>> v0.62.0, Meson will require Python 3.7 or newer*
+>>> *ERROR: meson setup failed*
+>>> I have already installed slirp locally, but still getting the above error.
+>> Did you install the libslirp-dev or libslirp-devel package ?
+>> C.
+>>
+>> TCS Confidential
+>>
+>> =====-----=====-----=====
+>> Notice: The information contained in this e-mail message and/or
+>> attachments to it may contain confidential or privileged information.
+>> If you are not the intended recipient, any dissemination, use, review,
+>> distribution, printing or copying of the information contained in this
+>> e-mail message and/or attachments to it are strictly prohibited. If
+>> you have received this communication in error, please notify us by
+>> reply e-mail or telephone and immediately and permanently delete the
+>> message and any attachments. Thank you
+>>
+> 
+>   TCS Confidential
