@@ -2,119 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3FDB56F87BF
-	for <lists+openbmc@lfdr.de>; Fri,  5 May 2023 19:37:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E252A6F8A4F
+	for <lists+openbmc@lfdr.de>; Fri,  5 May 2023 22:44:08 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QCdDt75Nnz3f7T
-	for <lists+openbmc@lfdr.de>; Sat,  6 May 2023 03:37:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QCjMp5V9Wz3fHv
+	for <lists+openbmc@lfdr.de>; Sat,  6 May 2023 06:44:06 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=tcs.com header.i=@tcs.com header.a=rsa-sha256 header.s=default2048 header.b=HYBTTm7g;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=AbGrZaeD;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=tcs.com (client-ip=219.64.33.120; helo=inmumg03.tcs.com; envelope-from=prvs=4820960be=sandeep.pkumar@tcs.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=stefanb@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=tcs.com header.i=@tcs.com header.a=rsa-sha256 header.s=default2048 header.b=HYBTTm7g;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=AbGrZaeD;
 	dkim-atps=neutral
-Received: from inmumg03.tcs.com (unknown [219.64.33.120])
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QCdDD4CBkz3chj
-	for <openbmc@lists.ozlabs.org>; Sat,  6 May 2023 03:37:11 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=tcs.com; i=@tcs.com; q=dns/txt; s=default2048;
-  t=1683308236; x=1714844236;
-  h=from:to:subject:date:message-id:references:in-reply-to:
-   content-transfer-encoding:mime-version;
-  bh=nZcapoaj8VpZHolqc4Ejymy5sSSbTATSxwBfo8TelHc=;
-  b=HYBTTm7gmk9xNyC04kQ4+GDN08Om8M5r7tfHRo7xHoe8rpZk5kJGQEQc
-   IHZXVXTIYsWKWSSncWr/QOMCIiw0jCifaUg2xsqqheGoxxhW87S03eX6m
-   5L1Kf+k0M1D1wWHL8VCs3hfCKM/oMcgxQPf4neMkQeVYlToeBL63+1AC+
-   6lGWX5UKOeLFpp7mldAElzDYCqTGvXyIYhXfXWNQTyuIELte5IYaP/KjS
-   3BCqLKdks1PoLldCG4q1oDFwA5zQwlWlbdhzFq05lLk2VHkat08gqGZGP
-   RALH8aPpmpM0nVeOX2UzoMicrAGNlatJu7Hew7+033R36nlzlhyOvUDBF
-   Q==;
-X-IPAS-Result: =?us-ascii?q?A2AtAADpPVVk/2AKEaxaHAEBAQEBAQcBARIBAQQEAQFAC?=
- =?us-ascii?q?YEyBwEBCwGCLXMCgVoxhCCIHYkYA51eFIFdDQ8BAQEBAQEBAQEHAQEuCwsEA?=
- =?us-ascii?q?QGCEoJ0AhY0BQmEbiY0CQ4BAgQBAQEBAwIDAQEBAQEBAwEBBgEBAQEBAQYEA?=
- =?us-ascii?q?YEchS85DQgBDhCCECkBgyMBAQEBAwEiEVEEAgEIDQQEAQEBAgIjAwICAiYKF?=
- =?us-ascii?q?AEICAIEARIIgneCXBOsMAEBAXiBMoEBghQEnUaBZ4EULQGHUnxkg1oXgzZ7g?=
- =?us-ascii?q?k8mb0OCaD6BU4EPAoEiCQESARIRFRWDLzmCLgSCGAGKIow4gTB0gSeBLoEEA?=
- =?us-ascii?q?gkCEUMogRAIaYF0QAINZAsLbYFAXUSBbAQCEUIMFVoCcxMIFAETAwcHAgGBG?=
- =?us-ascii?q?hA6BwRACwIbDAcJHyQ3A0QdQAMLGyY0PTUGDh8FBEAtgVkEL0KBEwZKmDWBa?=
- =?us-ascii?q?AiBShsTAQckBR0uCCsOBwMTHTcBEC8GLwOSFxSDa45mnmUHhAGBWoobjRZyg?=
- =?us-ascii?q?y+DeheDfUyBCYsTmGOYACCKcIJGlQ+FGgIEAgQFAg4IgWOBJXAzGiODNwlJj?=
- =?us-ascii?q?lQWg1CPPAE8dT0CBwEKAQEDCYhuglcBAQ?=
-IronPort-PHdr: A9a23:f1QIqBXQGTgkjrziar38aL+GeMbV8KzEUzF92vMcY1JmTK2v8tzYM
- VDF4r011RmVB9idsKkewLOP6OjJYi8p39WoiDg6aptCVhsI2409vjcLJ4q7M3D9N+PgdCcgH
- c5PBxdP9nC/NlVJSo6lPwWB6nK94iQPFRrhKAF7Ovr6GpLIj8Swyuu+54Dfbx9HiTajYb5+N
- hu7oAvPusUZnIduN6g8wQbVr3VVfOhb2WxnKVWPkhjm+8y+5oRj8yNeu/Ig885PT6D3dLkmQ
- LJbETorLXk76NXkuhffQwSP4GAcUngNnRpTHwfF9hD6UYzvvSb8q+FwxTOVPczyTbAzRDSi8
- 6JmQwLmhSsbKzI09nzch9duh6xHvh2uux1/w5bVYI6LMvp+Yrjdds4eSWZYQ8pdSzBNDoa6Y
- oASDeQOIPxYopH9qVUQsBW+GQeiCuDhyjBKmnD40qI13v89EQ7dwAAsA84CvGjWodjzKawcU
- fq1zK7NzTjbcv1ZwzH955XWfR8/ufGHQLd+cdfUyUY1DQPOk1KdqZf/MDOTy+sCrXaU7/J6W
- eK3iG4ntgRxrSK1xso3lonGmpkVxkrY+iV+xYY4PNu1Q1N0btC4CpVfrT2aN5doTcM4RWFlo
- Do3xqMGtJC7fyUHzJoqywPcZvCafYWF4A7uWPqRLzpmmX5pZL2yiwis/EW9yeDxUtW43llKo
- ydFk9TBqm4A2wDV58OaSfV95l+s1SuN2gzN8O1IPEI5mbDGJ5I92LI9kpsevVzdEiL3hEn7g
- qqbelg49uWs6unqZ6/pqoOBO4Jxlw3yLqEjl8m9DOk+LwMARXKU+f6m273m5UD5RbJKgeAon
- aTBq5DaINgbpra+Aw9IzoYv8xa/ACmi0NQfhXQKMlxLdQyZgYbnPV/AOvf2A+mjjlmjiDtrx
- vbGMaP9ApjVM3TOkqntcaxg50Ne0gY/0MxT64hQB7wAOP7zX1X+tN3cDh83KQy0xOPnBc1m1
- owEX2KAH7GWP73KsVOS/uIvIPSMZIoPtzbnMPUl++LhjWQjlVABeqmp2IMbaHajEft+OUWWf
- WLsgssdEWcNpgczQ/TmiEeeXj5Le3ayQ6U86ykhB4KgEIjDXJ6igbKa0SihHJ1afGFGBU2WH
- XjyaoWIQ+0MZz6KIs99jjwEUqCsS40k1RG1rwL6yb9nLvHO9i0ZqJ3vzsJ65/DLmREo6TN0F
- 9id032KT2xsgmwIQzA20bt8oUNnzVeMzLJ0g/tCFdxc//9JSBs1NYbAz+xmDND/QgXBfs+XR
- 1agWdqmBC0+Q8k1w98PeEZ9B86iggrE3yurB78ajaeEBIcu/qLbxXjxKJU193GT77UsgVAgC
- uFCL2KrnOYr7BTeCYfPmW2dlqC3ZeId1iuL/2CGmy7Gl8BUSg97GYHIFV8Yb1fbt5yt7UfNZ
- 7ynDrhhNRFOn4rKYKxSZ9vjiF5uQPb4JM+YZHC1km2rQxGSyfnEOI3ydmMX2S71DEkfjxtV+
- mSCPAIlQCC7rDSaRBpvE1vjK3vl9fJjrH7zGkk1yQiGR0lg0aelvB8fgLqXTPZFmvomvyol4
- w5oFVC50sOeX9iFvCJjeb4aYN976UoRkSrwsQBnM4PoDa1siFMEYkwjtkXizRhoIoxC18km6
- no3mllcM6WdhWhIcT+V0Ii4GaDSI3O6qAumbaLb10mYyNWL/64VwOgzsBPouwT/RRlqyGluz
- 9QAiyjU3Z7NFgdHFMupCi7fvzB2pLDfNy864Y6clXhhKrK9vTKK3dU1TPAkxRCtc5Y6UuuEG
- Qb+HtdcC52oL+onyFSsZwgPaeZV8qN8Nsi6dvyAjaisOusonD+vgWldpo5n1UfZ6yFnDOXP2
- sVt/g==
-IronPort-Data: A9a23:eH6nn6wB1MfXiG0djGh6t+dwxyrEfRIJ4+MujC+fZmUNrF6WrkVVz
- 2VJC22GO/3cYWene48ibYzl8xkC7J7dm4I2HFFl/3pgEyMU+JvJCY/HfkmhMnqedpKbEk5u5
- sxENInLJ8xkZ3KN/R3F3poNDZVfOQNkYpKmVYYo7wgoHVcMpB8J0E4lw6hj6mJRqYDR7zml4
- LsemOWCfg70s9JIGjhMsfnb9Usy5K6aVA4w5zTSW9ga5DcyqFFIVPrzFYnpR5cvatQ88kaSH
- o4v/Znhlo/r105F5uCNzt4XRnY3rov6ZmBivJb0t5+K2XCurgRqukoy2WF1hU1/011llPgpo
- DlBWADZpQoBZsXxdOohvxZwPA9uB4Bd3oD8e3GjndOx4Evcd3e0zKA7ZK02FdVwFudfKk1ly
- dA8EBUxR0zra+Ceme3hDLAzwJ17api1VG8ckigIITXxFv8gTZ3OW+PS5sJd1S0YmstVW/3ZY
- qL1bBI+N0qZM0wXZg9/5JQWzM3vqGPTVwdkqUuU/YwY7lLIwwdz3+24WDbSUpnQLSlPpW6Ro
- G7c8nvRCxNcNdDZwCft2nCpncfNmDi9WY5UHaDQ3vVuj3WQz2sfThoMWjOTpuG0jES7UPpbK
- lcI4Wwpv6w7/lftScPyNyBUu1bd4URaAoUWSrV8uV/lJrfo3jt1z1MsFlZpAOHKfudrLdD2/
- jdlR+/UOAE=
-IronPort-HdrOrdr: A9a23:oCDeUqMF5gHutMBcTsejsMiBIKoaSvp037BL7TESdfU7SKClfq
- yV88jztiWE6wr5OktApTnoAsDpKhmwyXcc2/h1AV7IZmnbUQWTQr1K3M/P/gSlNgvb3s57kY
- 9dTok7NfvTIX8St7ef3DWF
-X-Talos-CUID: 9a23:mTqatmyhI3Po5FI5w4uhBgU7NNAfX2b780yKKlOUFkRGTqeRRQefrfY=
-X-Talos-MUID: 9a23:gcMJ3whPlKtwApKttCP6sMMpZO0vzb6CLHoxkIwH4++rOBZrNDyfg2Hi
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-AV: E=Sophos;i="5.99,252,1677522600"; 
-   d="scan'208";a="936189040"
-X-DISCLAIMER: FALSE
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=UBEf94GCV2pq5owA7TSuVe+fRt5fPh4CtNxtrLBdKUhmAfABLgGqF1ehNV3EiTImm/AdWi9W0fV/+YlBIOsrhKLJp/Ck3kypIU1Apfik5cy4So1JbPICI80fGswhM0cxc6btGX0ZKNyBlRu/rFkDWztXUf57CuSy3bZJ1urd5MZiaUKZS7EP6NwFqb0eeLq/narmJs4pahaGrwJEz4MiFTs9lzSspVHkiYgV4ILlEY8DrG4AQuuM2uqm/x42J1ttdmj7FjSIfVS7hvItoetFhcJWDs6xPMx7FVRyR9rK9BL0+Jw41iqdZh5dN5n4p17gaL6Inkhmw1xz3kBYBkrPgQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=nZcapoaj8VpZHolqc4Ejymy5sSSbTATSxwBfo8TelHc=;
- b=BFIDPDr9ILxZaNCm9wq0yudLJzWnpKUc8D/oWXJKUczQl8bGTJF7b40J9UJjsMr3/xYXXnd7lLwkzycQp1NEwRu3AsyeoROpVV5PkQgeSm/rN8gHzopfnleD/nRi11O2M+L9LKl78CbuNkbOdGRisHWEvcu6mRf7ezVFbGKlQ0Yj67arRodTYPnyB5gAlUjUk5xLBC2fqf2YOK8QvSL9AN61E5oTVRo8TsHSkDzBVsyX6+r724jXiIAcolAxSEe+teGA242fSYWUsFD47IqOWKHPYLRHoUOFxIy15PhhsLC9LdAQL4sDqgRj0r2j+guHXbHh/Gwve0NpYjaY6TIceg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=tcs.com; dmarc=pass action=none header.from=tcs.com; dkim=pass
- header.d=tcs.com; arc=none
-From: Sandeep Kumar <sandeep.pkumar@tcs.com>
-To: Stefan Berger <stefanb@linux.ibm.com>,
-	=?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@kaod.org>,
-	"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Ninad Palsule
-	<ninad@linux.ibm.com>, Joel Stanley <jms@jms.id.au>, Andrew Jeffery
-	<andrew@aj.id.au>
-Subject: RE: Integrating swtpm(as a software TPM) with OpenBMC on Qemu
-Thread-Topic: Integrating swtpm(as a software TPM) with OpenBMC on Qemu
-Thread-Index: AdlnvJ+n/GpqnOWCTXuloOzDKwOlRwACYiMAAU26xTAAFQ2ZAAEd3S7QADT/RYAAAPBKYAA3+8WQArnSE3AACj0agAAglpiwABCLCAAAAzSuoAACjtUAAALsTwA=
-Date: Fri, 5 May 2023 17:36:52 +0000
-Message-ID: <MA1PR01MB41293CA1F337F47DDA58035D87729@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QCjMB0plcz3cMj
+	for <openbmc@lists.ozlabs.org>; Sat,  6 May 2023 06:43:33 +1000 (AEST)
+Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 345Kbn0D020192;
+	Fri, 5 May 2023 20:43:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
+ subject : to : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=unpJo7TA4gx0mGzATpj4umjONciZ1XYSEobjo/h69GM=;
+ b=AbGrZaeDqgeZn2NVy29NxG6/IcStZtIU0Z00wJ+h/Jpv8EFABI99zJO/MCNOvkPNpwJs
+ VX8YrNMKwaos0u2ECeuJdnnRkd9iVhdKqYfPJjZL8Clk6bC4WgcmHQB7mlAxlcdh49ZU
+ ODScaRucD3Zq7WufQUHycGXYQbWPVbVWA83p+6Dkx3DD4f73KLHQ9RXDYHwhO0/pfSRa
+ 1+4cjQm/wyt2P2jq6utFtDYXUO1sNPaAD+9ZF/QYsyDmd8auw/yEsQaDBMNygCpyH9q3
+ wBhpgyfxiapFigSmGFk7nQWVuKy6uOLkyKJ4XcTsIDPltE/w30N/jlHl3TZOPSievAW6 CA== 
+Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com [169.55.91.170])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qd78vu052-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 05 May 2023 20:43:22 +0000
+Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
+	by ppma02wdc.us.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 345H8PVw002605;
+	Fri, 5 May 2023 20:38:20 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([9.208.130.100])
+	by ppma02wdc.us.ibm.com (PPS) with ESMTPS id 3q8tv8rga2-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 05 May 2023 20:38:20 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com [10.39.53.228])
+	by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 345KcJv656951158
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 5 May 2023 20:38:20 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 8803158077;
+	Fri,  5 May 2023 20:38:19 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id B145758071;
+	Fri,  5 May 2023 20:38:18 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+	by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Fri,  5 May 2023 20:38:18 +0000 (GMT)
+Message-ID: <71e0634f-e5b6-d804-7b55-7ae674f34342@linux.ibm.com>
+Date: Fri, 5 May 2023 16:38:18 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on Qemu
+Content-Language: en-US
+To: Sandeep Kumar <sandeep.pkumar@tcs.com>,
+        =?UTF-8?Q?C=c3=a9dric_Le_Goater?=
+ <clg@kaod.org>,
+        "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
+        Ninad Palsule <ninad@linux.ibm.com>, Joel Stanley <jms@jms.id.au>,
+        Andrew Jeffery <andrew@aj.id.au>
 References: <MA1PR01MB412922EF629403C84674A6AD87909@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
- <8e23c99e-0e62-3866-ce61-c75a14453a37@kaod.org>
  <MA1PR01MB4129EB6FA57EA28AA9002E9C879B9@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
  <2231ac88-3005-0fb4-6aad-e7652ffd3467@kaod.org>
  <MA1PR01MB41297891E40E6E5652661662879D9@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
@@ -127,95 +82,24 @@ References: <MA1PR01MB412922EF629403C84674A6AD87909@MA1PR01MB4129.INDPRD01.PROD.
  <7fbe2c10-aa83-2640-0de0-b07ca0e5a13d@linux.ibm.com>
  <MA1PR01MB412975D2976523FD64289DB487729@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
  <b35b62e6-2195-627f-6939-381f40abdd43@linux.ibm.com>
-In-Reply-To: <b35b62e6-2195-627f-6939-381f40abdd43@linux.ibm.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: MSIP_Label_1aabfc0d-38d5-4801-9e82-1226fde31efa_ActionId=3dab299d-996f-4ded-9565-37ee7dcfb822;MSIP_Label_1aabfc0d-38d5-4801-9e82-1226fde31efa_ContentBits=0;MSIP_Label_1aabfc0d-38d5-4801-9e82-1226fde31efa_Enabled=true;MSIP_Label_1aabfc0d-38d5-4801-9e82-1226fde31efa_Method=Standard;MSIP_Label_1aabfc0d-38d5-4801-9e82-1226fde31efa_Name=IRM_test_300622002_ul;MSIP_Label_1aabfc0d-38d5-4801-9e82-1226fde31efa_SetDate=2023-05-05T17:35:05Z;MSIP_Label_1aabfc0d-38d5-4801-9e82-1226fde31efa_SiteId=404b1967-6507-45ab-8a6d-7374a3f478be;
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=tcs.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: MA1PR01MB4129:EE_|MAZPR01MB5526:EE_
-x-ms-office365-filtering-correlation-id: 2cd669a4-e27b-437e-2e59-08db4d8f501e
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 1sx0lMDNU46NGP6uXDJHc4sEI+3Rax60sFvVo96XYrqxeJKweStRp4rUGZV1Aiq2A7tintgQzDhMkZ3nJZ+ikmb8l8YGF4Xf8Za/LbDY6b7KNB2OvLxT/XbNdvqOzRIpu1MWS8qnDB9tOWqgqCQpMmIxTBIFCbjvoU8+Mp49QaH0yBIAeM/drcUtV5lFN341sDIuGlv7T1RGJIDoJ/YobDhKRLYV3HRG+01niSxl5uRDvCuWF/mqJnUodJukucOhpGZSCVPBuddupb6ik8yAlMeF0e0FsQA95+aGgGlkjvnlqvDt1JkfBMHISDvDcYat6UCsw4zdQwtTwS9lSOjCSe1XmFSLqVFJbsF+fsy0nykfzCKKU0SEqwdWN/Sc+EzIGkJLGqb0J5rdbYm2hVOVmiZa6zaktpOKTSpK2M07ZcY1LjO0yaeH/r340PjT8GGSDYK2IIyzdqkNjseIJCe9gRLYfNjJuL2cToHOVzTvOGdCQyBSMuJAIrzpIhXfyjO40EENhPb64EUh5xeQv1QA/CtnLJnKX28UByO9gyvojGwmRoAm7LmW37HxD1klQBpSvd7hOcXIy7csLfNs/QxDsyYd1d4kNEfo+o92Okd/VYkmW3uoIDp74WxdLGj3uhlrSdO5dDofeqGCOqknPHJgTg==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(346002)(39860400002)(396003)(366004)(136003)(376002)(451199021)(83380400001)(186003)(2906002)(30864003)(66574015)(38100700002)(86362001)(33656002)(38070700005)(82960400001)(122000001)(55016003)(8936002)(8676002)(5660300002)(52536014)(64756008)(66446008)(66946007)(76116006)(41300700001)(71200400001)(66556008)(66476007)(7696005)(316002)(478600001)(53546011)(26005)(6506007)(9686003)(110136005);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?UlJSU2R6Uk5rMHpJTFhSSG1vZXlOc2lnYkdEZEZielJleUhQdk40MWIrVHFl?=
- =?utf-8?B?Y09zNEpJOHFoYVlmajJzdFA0cjhYclM2c2p1alJSTFN4bVJ0Q2E0Q3lBOWU4?=
- =?utf-8?B?NWtTQWh5SDVKOTI5MEZuVTIxYXp3ZTlNZ2xWZEpuVlYzV0laaFlkc0xVUTBV?=
- =?utf-8?B?WDFSOWpJeURzNTljVHp4MXhWcHRhZTJ3UXFVWCswaEFGdEtRNlhJUHRBY1o1?=
- =?utf-8?B?eUdkLzNiU1ZaTlgzazREVzhJRGVQa1BEYTBDd3NyWjRnS3JSQ1o5UnFvMjJQ?=
- =?utf-8?B?Q0dQdzAyM3hCZ2NESTVLQ1daVUt4TUg4SzJCU3FzS3dMeWpUSURyODR0NG43?=
- =?utf-8?B?WmtNT0t5OC9pTXA4L2hJNXdUekZXN0xhZnFoV1dFc0RuL3VOcnpMMTBtSzBo?=
- =?utf-8?B?UCs2UVRUN1EvRHNMK3RMeTBYRlp3RVROeEp4STFPeVhmMkFpVE1PaDg1NTR4?=
- =?utf-8?B?WFMvRWlnUXl2QmJxbkM5b3JtWEZzdSt2d1I1MFY5blFMUjVraXVWL1laYSt2?=
- =?utf-8?B?UzM0cG9CejNzTnhwY3lnZjFyWjJuYkJOWXVmc1hDRWNUbGlRYU91SnNNR2dw?=
- =?utf-8?B?Qi96RmRRSDVvRWc5ZmsrSWdzU2kvMXpjQzNoZFk3ZHp6Q1I2RmhHVks0RTNW?=
- =?utf-8?B?T2wrK0hDYVhya1IvcTNXcVJpQjZtMURNMTNKUzUzMVBKMmpBYjF0RnZUK0RL?=
- =?utf-8?B?NyttNUM5YW1tL2lvZitJL3R6RlVvNWFXU3NRSlJQMVlXdTYxenRzaTFTOWxC?=
- =?utf-8?B?YWFwc25QUW9COS8wZ0IzNUJVU1NEWlA0cVZZRVM0dU5NSkhTQUlhS3Jjclhs?=
- =?utf-8?B?cDFrWnY3TzdPcXNYN0M1NjBzMlpkVi9FTjZXcDdmU1cwZzhGY21aMGVGMHJW?=
- =?utf-8?B?ZEJXMnlsWDY0b0xrMTNVQkt4ejJya3VzNGVlZFJ1cFdiRG1WM2orcmpQSERJ?=
- =?utf-8?B?NEVUK2U2dlhXVnRKbDcxQ3lxOHd5Z2pjam8xUm53TU1PaEdOWkhIM01RWHMz?=
- =?utf-8?B?MDJyZkQxRGt6eEJqZnJSMzJtS0MvYWw3bmE0cjNHb0FLa1RCa0RTNiswUFd3?=
- =?utf-8?B?MEtEVGo1eGcrRmJjeDhRZkllcXo2QWE5bEFsL0srcms0cTl3ZTZLbmFWSlIr?=
- =?utf-8?B?dnhQa0JPb0hBZVl2aldzYW9LMlJMdXdENVRQVmdSZUc2M0VsMGV4bTE1VUs2?=
- =?utf-8?B?eWQ3YVVDbThOUmJkTjQyVE5vMzVkSXdlenB5aHdMY3JuZnlId285ZGphT0Uz?=
- =?utf-8?B?dmZjZXJRVWUyUEhJaG9hOUVmYnh2eThveURNL0VvYUw2bE4vTUVuV0lqaHdJ?=
- =?utf-8?B?MGlUSTRWWWJ6RTV2UzFRL2VDQjMvVlVwOG1kdC9LVm4rcDlDdXNoNVA2T0p6?=
- =?utf-8?B?elV0SFVSSVpobnpYVWo2ck5pbVoyWVJHei91RTBjTTJUWmdyN0NVOEE5T00x?=
- =?utf-8?B?T2lCYzJxc1VuTHcxa3dKeDNEODhjNUt0Q2xTVUlRS0p2THdMVVFJc0o1OTRR?=
- =?utf-8?B?UmMrUHZ6dXhZRHdvemtRdW5FLzYrdU56L3hJaGYwTW04ZURuWEkxQVhJVGM5?=
- =?utf-8?B?cUUxWXN6MHF6YkZ6a3ladzNYNDFvMkttSkJNR2F6SjB4YzdrRzVGc2NqTjF1?=
- =?utf-8?B?QmMrcTVsbHpGaVBEWmtRbjdxZzRFYWYwcUFScXhNSUxEYTltU2ltRCtYejNj?=
- =?utf-8?B?SG5VaXNjVW11Z21IdzFJcjZCV1U5VloxKzdDTVFOZnNrMkZ2ZGNLTm1WcEQy?=
- =?utf-8?B?YXFBcSs3RVFmcE5TTUNlRUlqMWZFTisxNGRTbmJRZVpLaWtpK0l1UkFSRWZZ?=
- =?utf-8?B?UmVScEN0d2FmbmE5SkhUaXQ1QXNuMXRHc1NYdWZBcjAvTkpZVlFkRitoT1pV?=
- =?utf-8?B?WHcrMzBtNit1NUg4MG9VZEttWVdYQVBHTXdTU3ZPdXRuWHJwQzdRRkdzQmRa?=
- =?utf-8?B?alk3ekNXYWgzOS9KMzkwL3I1aTVFY21HWXd2NVlDbVZVMktBak9YTk9vSUhC?=
- =?utf-8?B?WkxDazNkS0FWenB1UGo3YldUR0RSaUUrMkR5aFlUczYxenJaSWp2dUM3VEV5?=
- =?utf-8?B?WXUvZFFpSlMwMXdUY3JYeC9ZVk1lUG5hTVpMWVZtd0Z2NHgzakFBdXdteEcv?=
- =?utf-8?Q?6w5Q=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ <MA1PR01MB41293CA1F337F47DDA58035D87729@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <MA1PR01MB41293CA1F337F47DDA58035D87729@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: q_m2waDEcEFE-vVyTmRnjJ3FYrNuZrRq
+X-Proofpoint-ORIG-GUID: q_m2waDEcEFE-vVyTmRnjJ3FYrNuZrRq
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: dYWw6cbJuA5NVVgvag9tnJ9BjrSSwjRjUFAgx1wj3tQ9cisEsHKo26qHyPm1Wiulx4pElAb0LBfs4+vwTIkyFcZdRpw323x4bj5gn1umidftYR+TV2kW20bOKrKX8H6QVllz3ttvoOKoMVXEcTJyYKTeBF5xRpc1pGcge/+dUZ6pfVsN6WKXV6CGF7TExnx25ke8H8hTHjZaxDYKmzOrPE/Cab6yYvJXUDaBJVNxAu0o8HxDPZeKSuQLjBXvNMhMQLU4/N1UQboT9Uhva44XaeR5GESIPbrdLFBPv3TWQkZNuBgs9yqqmu49/m6rDFoYP7m0q2oGy+prv2wArdxj68NV6ipsdNaEGSWY8Gy2dBU4ceuhOtA1plH/Pni3UEGEifyjmZel++/29LAIkmEZpBiS5v4MMmDV6lj0G1mfazMVndt62TWreBHv+nGcdbHLkqW50PmNCWLZGvM2rqg5wghErf98D6FpT/IrEeSXBM6WSGJbCw79f4jj3uUuaKbiLJ6TNaY+V1GU6j88h76xQx0Y6ygLkLwKdcEdASZPYJUt3LEh/GddeDxJSgj9uNp/XZtI/7DNtoocW6Z51deD7TpNN3R0bsgcKLKCruTQKhSngXJlVINjAWfavpKqK0e/KBN1qi5VuXATPsNf7U0DxU3r5MZu3Is4V9loURMU8OWbweOwuepVTJXzIP93uM1TDdAkcI0CIRpBusixnptc1++LIw9Ln1LvCRLB2P2+S1vYO2M+oSomZGZyuVrGfywQuDorznUaJ1n3MggA2Ax1LiFqJEwJ5empvb8SQjuKViWyBp6TqVcz8IMb/+YBg/ssAgk4397da4bI+ksl/WEYanHq5KJoaeJ03Ok0FFgPAqmcoODDNxLmCXx2bngrgSWR
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2cd669a4-e27b-437e-2e59-08db4d8f501e
-X-MS-Exchange-CrossTenant-originalarrivaltime: 05 May 2023 17:36:52.2670
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 404b1967-6507-45ab-8a6d-7374a3f478be
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: AdAJCWTvQpCMootkeiWGhI+MIMh6tgso0My4uMoPetQ0A1tfK9fb0+QexKJqqQtk
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MAZPR01MB5526
-X-TM-AS-Product-Ver: SMEX-14.0.0.3092-9.0.1002-27608.000
-X-TM-AS-Result: No-10--46.269200-8.000000
-X-TMASE-MatchedRID: 7u3eoxEoplCyQbgMbzsHcF68POeSPvko/sUSFaCjTLw3l2plwgrtWCD1
-	HdXyqDnEaVY0IA0nVbZjOO533RcWD96rPPq1PqrN1jTI2Usp8OOJJ72DuZB0nMh3X6cIqUh+Lra
-	GNlLRahg1CAfqNRQ7gzcFFy6KMNzvO25WCVRZfO8IXkQOByz0hlhRyidsElYkZWGgJ7zmFAeeYK
-	9cdC4kXNWvRsOl9XyI2y+G3DWf9IBdOowMVtgKruns7YW5fJLVnmYvjdGoUIyu+ZyFqtd5FcNB4
-	YZX+3pbbuUFf/ftHin7EWW9myF/Vl0XqM0YkzRVYr3mRifQt8qRsyIQ4jFl6zFcf92WG8u/855M
-	88ee2L8k6Fh0z7oJ+LXxWxXqWALgcNll7ufqpwKHjikUS3GyEhmCYUYerLHrv8jdqvFOu+LaOm0
-	pddvEPbLeEGy47Zyb1rH4Rg0AOT28UYKHDdYW3yp2scJP0UwarmLeMrcoM6i3dp6DuD+6wAzvg1
-	/q1MH2dQH+7D0uVvH9vU1lxb1okw8DZfNNydHnNazZgZY9vGtswYo64ufkVaVjgXyvS9c/t0rZO
-	tjKogjoKEr2irJf5GrWlzkloRRi25OAogjz0t2nbZwEx097TRMxKDqgAFSz70GLyvzOg0x1qGHE
-	RnMSPTCsAme4bhohekMCFQtUEemOjJJt8830B10ieHN50/kHw9xweTwQKgVhv+ctX+VuT0Yx760
-	ONDcWQKr4HagX24vwyai0vjsnxmPKQgbIX4yu/MHOvrIHjr7E4i/j+gqDIJbRfsVvs4VIfWQ10s
-	xxRTdJEs8dhPbC03DXOJL5XyQrWAV+lodQzC6PaFHMfVTC4NIFVVzYGjNKWQy9YC5qGvy2s0ar5
-	ZAS9Hzw+XD1ifTXbdTuPa9VRGvEQdG7H66TyKsQd9qPXhnJ/4rWvpj9UcgD/dHyT/Xh7Q==
-X-TM-AS-User-Approved-Sender: No
-X-TM-AS-User-Blocked-Sender: No
-X-TMASE-Result: 10--46.269200-8.000000
-X-TMASE-Version: SMEX-14.0.0.3092-9.0.1002-27608.000
-X-TM-SNTS-SMTP: C22C31125E29E0B9A5C9350463A484ABE328FCC9D68420243ED28F09FAF049142000:8
-X-OriginatorOrg: TCS.COM
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-05-05_27,2023-05-05_01,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ bulkscore=0 phishscore=0 malwarescore=0 suspectscore=0 adultscore=0
+ mlxscore=0 impostorscore=0 priorityscore=1501 clxscore=1015 spamscore=0
+ mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2303200000 definitions=main-2305050167
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -230,288 +114,583 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-IFRDUyBDb25maWRlbnRpYWwNCg0KSGkgU3RlZmFuLA0KDQpJIGhhdmUgdGhlc2Ugb3B0aW9ucyBz
-ZXQgaW4gL2hvbWUvdGNzL3dvcmsvc2FuL29wZW5ibWMvb3BlbmJtY19hcHJpbC9vcGVuYm1jL21l
-dGEtYXNwZWVkL3JlY2lwZXMta2VybmVsL2xpbnV4L2xpbnV4LWFzcGVlZC90cG0vdHBtMi5jZmcN
-Cg0KQ09ORklHX0hXX1JBTkRPTT15DQpDT05GSUdfSFdfUkFORE9NX1RQTT15DQpDT05GSUdfVENH
-X1RQTT15DQpDT05GSUdfVENHX1RJU19DT1JFPXkNCkNPTkZJR19UQ0dfVElTPXkNCkNPTkZJR19U
-Q0dfVElTX1NQST15DQpDT05GSUdfVENHX1RJU19JMkM9eQ0KQ09ORklHX1NFQ1VSSVRZRlM9eQ0K
-DQphbmQgaW4gL2hvbWUvdGNzL3dvcmsvc2FuL29wZW5ibWMvb3BlbmJtY19hcHJpbC9vcGVuYm1j
-L21ldGEtYXNwZWVkL3JlY2lwZXMta2VybmVsL2xpbnV4L2xpbnV4LWFzcGVlZC5pbmMgSSBoYXZl
-IHRoZXNlLA0KDQpTUkNfVVJJICs9ICIgXA0KICAgICAgICAgICAgIGZpbGU6Ly9kZWZjb25maWcg
-XA0KICAgICAgICAgICAgIGZpbGU6Ly9yc2Ffb2VtX2ZpdGltYWdlX2tleS5rZXk7c2hhMjU2c3Vt
-PWVlYjRmZjJlYmJmYmQ5N2I2MjU0ZmU2ZGJhZWVhNDEwNjdlNTRjNjUxNzZjMjMzZWM3YjJhYjJk
-ZWNmMWRkY2QgXA0KICAgICAgICAgICAgIGZpbGU6Ly9yc2Ffb2VtX2ZpdGltYWdlX2tleS5jcnQ7
-c2hhMjU2c3VtPTQ1ZjVhNTU0OTdjY2U4MDQwOTk5YmY5ZjMyMTRkNDcxYWM3YjgzYWI3YWNlZjQx
-YzQ0MjVhMzQ2NjJlODM3MmUgXA0KICAgICAgICAgICAgICR7QGJiLnV0aWxzLmNvbnRhaW5zKCdN
-QUNISU5FX0ZFQVRVUkVTJywgJ3RwbTInLCAnZmlsZTovL3RwbS90cG0yLnNjYyBmaWxlOi8vdHBt
-L3RwbTIuY2ZnJywgJycsIGQpfSBcDQogICAgICAgICAgICAgJHtAYmIudXRpbHMuY29udGFpbnNf
-YW55KCdESVNUUk9fRkVBVFVSRVMnLCBcDQogICAgICAgICAgICAgICAgJ29ibWMtc3RhdGljLW5v
-cm9vdGZzIG9ibWMtdWJpLWZzJywgXA0KICAgICAgICAgICAgICAgICdmaWxlOi8vdWJpL3ViaS5z
-Y2MgZmlsZTovL3ViaS91YmkuY2ZnJywgJycsIGQpfSBcDQogICAgICAgICAgICINCg0KQW55dGhp
-bmcgZWxzZSBuZWVkcyB0byBiZSBkb25lIHRvIGVuYWJsZSBUUE0gPw0KDQpUaGFua3MsDQpTYW5k
-ZWVwLg0KDQotLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbTogU3RlZmFuIEJlcmdlciA8
-c3RlZmFuYkBsaW51eC5pYm0uY29tPg0KU2VudDogRnJpZGF5LCBNYXkgNSwgMjAyMyA5OjQxIFBN
-DQpUbzogU2FuZGVlcCBLdW1hciA8c2FuZGVlcC5wa3VtYXJAdGNzLmNvbT47IEPDqWRyaWMgTGUg
-R29hdGVyIDxjbGdAa2FvZC5vcmc+OyBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmc7IE5pbmFkIFBh
-bHN1bGUgPG5pbmFkQGxpbnV4LmlibS5jb20+OyBKb2VsIFN0YW5sZXkgPGptc0BqbXMuaWQuYXU+
-OyBBbmRyZXcgSmVmZmVyeSA8YW5kcmV3QGFqLmlkLmF1Pg0KU3ViamVjdDogUmU6IEludGVncmF0
-aW5nIHN3dHBtKGFzIGEgc29mdHdhcmUgVFBNKSB3aXRoIE9wZW5CTUMgb24gUWVtdQ0KDQoiRXh0
-ZXJuYWwgZW1haWwuIE9wZW4gd2l0aCBDYXV0aW9uIg0KDQpJIGVuYWJsZSB0aGUgZm9sbG93aW5n
-IGtlcm5lbCBidWlsZCBvcHRpb25zIGZvciBPcGVuQk1DIExpbnV4IGtlcm5lbDoNCg0KQ09ORklH
-X1RDR19UUE09eQ0KQ09ORklHX1RDR19USVNfQ09SRT15DQpDT05GSUdfVENHX1RJUz15DQpDT05G
-SUdfVENHX1RJU19JMkM9eQ0KDQpXaXRoIHN3dHBtIHJ1bm5pbmcgaW4gYW5vdGhlciB0ZXJtaW5h
-bDoNCg0Kd2hpbGUgOjsgZG8gc3d0cG0gc29ja2V0IC0tdHBtc3RhdGUgZGlyPS90bXAvbXl0cG0x
-ICAgICAtLWN0cmwgdHlwZT11bml4aW8scGF0aD0vdG1wL215dHBtMS9zd3RwbS1zb2NrICAgICAt
-LXRwbTIgICAgIC0tbG9nIGxldmVsPTIwOyBkb25lDQoNCkkgc3RhcnQgcWVtdSBidWlsdCBmcm9t
-IHFlbXUgZ2l0IG1hc3RlciBicmFuY2ggdGlwOg0KDQovdG1wL3FlbXUtc3lzdGVtLWFybSAtbWFj
-aGluZSBhc3QyNjAwLWV2YiAtbm9ncmFwaGljIC1uby1yZWJvb3QgLW5ldCBuaWMgLW5ldCB1c2Vy
-LGhvc3Rmd2Q9OjEyNy4wLjAuMTo1NzIyLToyMixob3N0ZndkPToxMjcuMC4wLjE6NTc0My06NDQz
-LGhvc3Rmd2Q9dWRwOjEyNy4wLjAuMTo1NzIzLTo2MjMgLWRyaXZlIGZpbGU9Li90bXAvZGVwbG95
-L2ltYWdlcy9ldmItYXN0MjYwMC9vYm1jLXBob3NwaG9yLWltYWdlLWV2Yi1hc3QyNjAwLnN0YXRp
-Yy5tdGQsZm9ybWF0PXJhdyxpZj1tdGQgICAgIC1jaGFyZGV2IHNvY2tldCxpZD1jaHJ0cG0scGF0
-aD0vdG1wL215dHBtMS9zd3RwbS1zb2NrICAgICAtdHBtZGV2IGVtdWxhdG9yLGlkPXRwbTAsY2hh
-cmRldj1jaHJ0cG0gICAgIC1kZXZpY2UgdHBtLXRpcy1pMmMsdHBtZGV2PXRwbTAsYnVzPWFzcGVl
-ZC5pMmMuYnVzLjEyLGFkZHJlc3M9MHgyZQ0KDQpyb290QGV2Yi1hc3QyNjAwOn4jIGVjaG8gdHBt
-X3Rpc19pMmMgMHgyZSA+IC9zeXMvYnVzL2kyYy9kZXZpY2VzL2kyYy0xMi9uZXdfZGV2aWNlDQpb
-ICAgNjMuNzcxMjAwXSB0cG1fdGlzX2kyYyAxMi0wMDJlOiAyLjAgVFBNIChkZXZpY2UtaWQgMHgx
-LCByZXYtaWQgMSkNClsgICA2My43ODM5MjddIHRwbSB0cG0wOiBBIFRQTSBlcnJvciAoMjU2KSBv
-Y2N1cnJlZCBhdHRlbXB0aW5nIHRoZSBzZWxmIHRlc3QNClsgICA2My43ODQyNTZdIHRwbSB0cG0w
-OiBzdGFydGluZyB1cCB0aGUgVFBNIG1hbnVhbGx5DQpbICAgNjMuODUxNDc0XSBpMmMgaTJjLTEy
-OiBuZXdfZGV2aWNlOiBJbnN0YW50aWF0ZWQgZGV2aWNlIHRwbV90aXNfaTJjIGF0IDB4MmUNCg0K
-cm9vdEBldmItYXN0MjYwMDp+IyB1bmFtZSAtYQ0KTGludXggZXZiLWFzdDI2MDAgNi4xLjE1LTU4
-MDYzOWEtZGlydHktYzU2YmZiNy0wMDEyMy1nYzU2YmZiNzBlYmZhICMxIFNNUCBUaHUgQXByICA2
-IDAwOjU1OjA5IFVUQyAyMDIzIGFybXY3bCBHTlUvTGludXgNCg0Kcm9vdEBldmItYXN0MjYwMDp+
-IyBncmVwIHRwbV90aXNfaTJjIC9wcm9jL2thbGxzeW1zIDgwNTYzMThjIHQgdHBtX3Rpc19pMmNf
-cmVtb3ZlDQo4MDU2MzFiMCB0IHRwbV90aXNfaTJjX3JldHJ5X3RyYW5zZmVyX3VudGlsX2Fjaw0K
-ODA1NjMyM2MgdCB0cG1fdGlzX2kyY193cml0ZV9ieXRlcw0KODA1NjMzMzQgdCB0cG1fdGlzX2ky
-Y192ZXJpZnlfY3JjDQo4MDU2MzNlMCB0IHRwbV90aXNfaTJjX3JlYWRfYnl0ZXMNCjgwNTYzNjA0
-IHQgdHBtX3Rpc19pMmNfcHJvYmUNCjgwZDIzOTY0IHQgdHBtX3Rpc19pMmNfZHJpdmVyX2luaXQN
-Cg0Kcm9vdEBldmItYXN0MjYwMDp+IyBmaW5kIC9zeXMvY2xhc3MvdHBtDQovc3lzL2NsYXNzL3Rw
-bQ0KL3N5cy9jbGFzcy90cG0vdHBtMA0KDQpyb290QGV2Yi1hc3QyNjAwOn4jIGxzIC1sIC9kZXYv
-dHBtKg0KY3J3LS0tLS0tLSAgICAxIHJvb3QgICAgIHJvb3QgICAgICAgMTAsIDIyNCBNYXkgIDUg
-MTY6MDMgL2Rldi90cG0wDQpjcnctLS0tLS0tICAgIDEgcm9vdCAgICAgcm9vdCAgICAgIDI1Miwg
-NjU1MzYgTWF5ICA1IDE2OjAzIC9kZXYvdHBtcm0wDQoNCnJvb3RAZXZiLWFzdDI2MDA6fiMgZmlu
-ZCAvc3lzLyB8IGdyZXAgcGNyDQovc3lzL2RldmljZXMvcGxhdGZvcm0vYWhiL2FoYjphcGIvYWhi
-OmFwYjpidXNAMWU3OGEwMDAvMWU3OGE2ODAuaTJjLWJ1cy9pMmMtMTIvMTItMDAyZS90cG0vdHBt
-MC9wY3Itc2hhMQ0KL3N5cy9kZXZpY2VzL3BsYXRmb3JtL2FoYi9haGI6YXBiL2FoYjphcGI6YnVz
-QDFlNzhhMDAwLzFlNzhhNjgwLmkyYy1idXMvaTJjLTEyLzEyLTAwMmUvdHBtL3RwbTAvcGNyLXNo
-YTEvMTcNClsuLi4gbG90cyBtb3JlIGVudHJpZXMgYWxzbyBmb3Igc2hhMjU2LCBzaGEzODQsIGFu
-ZCBzaGE1MTIgXQ0KDQoNCg0KDQpJdCBzZWVtcyB0byB3b3JrIGFzIGV4cGVjdGVkDQoNCk9uIDUv
-NS8yMyAxMTowOCwgU2FuZGVlcCBLdW1hciB3cm90ZToNCj4gVENTIENvbmZpZGVudGlhbCBIaSBT
-dGVmYW4sIFBsZWFzZSBmaW5kIGJlbG93IG15IGFuc3dlcnMgaW5saW5lLg0KPiBUaGFua3MsIFNh
-bmRlZXAuIC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tIEZyb206IFN0ZWZhbiBCZXJnZXINCj4g
-PHN0ZWZhbmJA4oCKbGludXgu4oCKaWJtLuKAimNvbT4gU2VudDogRnJpZGF5LCBNYXkgNSwgMjAy
-MyA2OuKAijU2IFBNIFRvOg0KPiBTYW5kZWVwIEt1bWFyIDxzYW5kZWVwLuKAinBrdW1hckDigIp0
-Y3Mu4oCKY29tPjsgWmpRY21RUllGcGZwdEJhbm5lclN0YXJ0IFRoaXMgTWVzc2FnZSBJcyBGcm9t
-IGFuIEV4dGVybmFsIFNlbmRlciBUaGlzIG1lc3NhZ2UgY2FtZSBmcm9tIG91dHNpZGUgeW91ciBv
-cmdhbml6YXRpb24uDQo+IFpqUWNtUVJZRnBmcHRCYW5uZXJFbmQNCj4NCj4gVENTIENvbmZpZGVu
-dGlhbA0KPg0KPg0KPiBIaSBTdGVmYW4sDQo+DQo+IFBsZWFzZSBmaW5kIGJlbG93IG15IGFuc3dl
-cnMgaW5saW5lLg0KPg0KPiBUaGFua3MsDQo+DQo+IFNhbmRlZXAuDQo+DQo+IC0tLS0tT3JpZ2lu
-YWwgTWVzc2FnZS0tLS0tDQo+IEZyb206IFN0ZWZhbiBCZXJnZXIgPHN0ZWZhbmJAbGludXguaWJt
-LmNvbT4NCj4gU2VudDogRnJpZGF5LCBNYXkgNSwgMjAyMyA2OjU2IFBNDQo+IFRvOiBTYW5kZWVw
-IEt1bWFyIDxzYW5kZWVwLnBrdW1hckB0Y3MuY29tPjsgQ8OpZHJpYyBMZSBHb2F0ZXINCj4gPGNs
-Z0BrYW9kLm9yZz47IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZzsgTmluYWQgUGFsc3VsZQ0KPiA8
-bmluYWRAbGludXguaWJtLmNvbT47IEpvZWwgU3RhbmxleSA8am1zQGptcy5pZC5hdT47IEFuZHJl
-dyBKZWZmZXJ5DQo+IDxhbmRyZXdAYWouaWQuYXU+DQo+IFN1YmplY3Q6IFJlOiBJbnRlZ3JhdGlu
-ZyBzd3RwbShhcyBhIHNvZnR3YXJlIFRQTSkgd2l0aCBPcGVuQk1DIG9uIFFlbXUNCj4NCj4gIkV4
-dGVybmFsIGVtYWlsLiBPcGVuIHdpdGggQ2F1dGlvbiINCj4NCj4gT24gNS81LzIzIDAxOjQwLCBT
-YW5kZWVwIEt1bWFyIHdyb3RlOg0KPg0KPiAgPiAgIFRDUyBDb25maWRlbnRpYWwNCj4NCj4gID4N
-Cj4NCj4gID4gSGkgU3RlZmFuLA0KPg0KPiAgPg0KPg0KPiAgPiBTdGVmYW46IElzIHRoZSBrZXJu
-ZWwgY29uZmlndXJlZCBpbiB0aGUgc2FtZSB3YXk/IEFyZSB5b3UgdXNpbmcgdGhlIHNhbWUga2Vy
-bmVsIHZlcnNpb24/DQo+DQo+ICA+IEFuczoNCj4NCj4gID4gICAgICAgICAgSSBhbSB1c2luZyB0
-aGUgS2VybmVsIHZlcnNpb24gY29taW5nIHdpdGggdGhlIGxhdGVzdCBvcGVuQk1DIHdpdGhvdXQg
-YW55IGNoYW5nZXMuDQo+DQo+ICA+ICAgICAgICAgIEtlcm5lbCB2ZXJzaW9uIHVzZWQgOiBMaW51
-eCBldmItYXN0MjYwMCA2LjEuMTUtNTgwNjM5YSAjMQ0KPiBTTVANCj4NCj4gID4gVGh1IEFwciA2
-IDAwOjU1OjA5IFVUQyAyMDIzIGFybXY3MSBHTlUvTGludXgNCj4NCj4gID4NCj4NCj4gID4gU3Rl
-ZmFuOiAgV2hhdCBpcyB0aGUgb3V0cHV0IG9mIHRoaXM/ICBmaW5kIC9zeXMvY2xhc3MvdHBtIHwg
-Z3JlcA0KPiBwY3INCj4NCj4gID4gQW1zOiAgICAgZmluZDogL3N5cy9jbGFzcy90cG06IE5vIHN1
-Y2ggZmlsZSBvciBkaXJlY3RvcnkuDQo+DQo+ICA+DQo+DQo+ICA+IENvdWxkIHlvdSBwbGVhc2Ug
-cG9pbnQgdG8gdGhlIHJpZ2h0IHZlcnNpb24gb2Yga2VybmVsIHdoaWNoIGhhcyBhbGwgdGhlc2Ug
-Y2hhbmdlcyA/DQo+DQo+IEkgYW0gbm90IGF3YXJlIG9mIGNoYW5nZXMgaW4gdGhlIExpbnV4IGtl
-cm5lbCBmb3IgVFBNIEkyQyBhbmQgd2h5IGl0IHdvdWxkIG5vdCB3b3JrIGluIHRoaXMga2VybmVs
-IHZlcnNpb24uDQo+DQo+IERvZXMgdGhpcyBzaG93IGFueSBmaWxlcz8NCj4NCj4gZmluZCAvc3lz
-IHwgZ3JlcCBwY3INCj4NCj4gKlNhbmRlZXA6IEl0IGRvZXNuJ3Qgc2hvdyBhbnkgZmlsZXMuICoN
-Cj4NCj4gKnJvb3RAZXZiLWFzdDI2MDA6fiMgZWNobyB0cG1fdGlzX2kyYyAweDJlID4NCj4gL3N5
-cy9idXMvaTJjL2RldmljZXMvaTJjLTEyL25ld19kZXZpY2UqDQo+DQo+ICpbICAyNzMuMjczMDg5
-XSBpMmMgaTJjLTEyOiBuZXdfZGV2aWNlOiBJbnN0YW50aWF0ZWQgZGV2aWNlDQo+IHRwbV90aXNf
-aTJjIGF0IDB4MmUqDQo+DQo+ICpyb290QGV2Yi1hc3QyNjAwOn4jKg0KPg0KPiAqcm9vdEBldmIt
-YXN0MjYwMDp+IyBmaW5kIC9zeXMgfCBncmVwIHBjcioNCj4NCj4gKnJvb3RAZXZiLWFzdDI2MDA6
-fiMqDQo+DQo+IERvIC9kZXYvdHBtMCBhbmQgL2Rldi90cG1ybTAgYXBwZWFyIGFmdGVyIHRoZSBl
-Y2hvID8gV2hhdCBkb2VzIGRtZXNnIHNob3cgcmVsYXRlZCB0byB0cG0gKGRtZXNnIHwgZ3JlcCAt
-aSB0cG0pPw0KPg0KPiAqU2FuZGVlcDogIEkgZG9u4oCZdCBzZWUgL2Rldi90cG0wIGFuZCAvZGV2
-L3RwbXJtMCBhZnRlciB0aGUgZWNoby4NCj4gT3V0cHV0IGFzIGJlbG93LCAqDQo+DQo+ICoqDQo+
-DQo+ICpyb290QGV2Yi1hc3QyNjAwOn4jIGVjaG8gdHBtX3Rpc19pMmMgMHgyZSA+DQo+IC9zeXMv
-YnVzL2kyYy9kZXZpY2VzL2kyYy0xMi9uZXdfZGV2aWNlKg0KPg0KPiAqWyAgMjczLjI3MzA4OV0g
-aTJjIGkyYy0xMjogbmV3X2RldmljZTogSW5zdGFudGlhdGVkIGRldmljZQ0KPiB0cG1fdGlzX2ky
-YyBhdCAweDJlKg0KPg0KPiAqcm9vdEBldmItYXN0MjYwMDp+IyoNCj4NCj4gKnJvb3RAZXZiLWFz
-dDI2MDA6fiMgZmluZCAvc3lzIHwgZ3JlcCBwY3IqDQo+DQo+ICpyb290QGV2Yi1hc3QyNjAwOn4j
-Kg0KPg0KPiAqcm9vdEBldmItYXN0MjYwMDp+IyBscyAvZGV2L3RwbSoqDQo+DQo+ICpsczogL2Rl
-di90cG0qOiBObyBzdWNoIGZpbGUgb3IgZGlyZWN0b3J5Kg0KPg0KPiAqcm9vdEBldmItYXN0MjYw
-MDp+IyBkbWVzZyB8IGdyZXAgLWkgdHBtKg0KPg0KPiAqWyAgICA2LjI5MDg5OF0gc3lzdGVtZFsx
-XTogc3lzdGVtZCAyNTMuMV4gcnVubmluZyBpbiBzeXN0ZW0gbW9kZQ0KPiAoK1BBTSAtQVVESVQg
-LVNFTElOVVggLUFQUEFSTU9SIC1JTUEgLVNNQUNLICtTRUNDT01QIC1HQ1JZUFQgLUdOVVRMUw0K
-PiAtT1BFTlNTTCAtQUNMICtCTEtJRCAtQ1VSTCAtRUxGVVRJTFMgLUZJRE8yIC1JRE4yIC1JRE4g
-LUlQVEMgLUtNT0QNCj4gLUxJQkNSWVBUU0VUVVAgK0xJQkZESVNLIC1QQ1JFMiAtUFdRVUFMSVRZ
-IC1QMTFLSVQgLVFSRU5DT0RFIC1UUE0yDQo+IC1CWklQMiAtTFo0IC1YWiAtWkxJQiArWlNURCAt
-QlBGX0ZSQU1FV09SSyAtWEtCQ09NTU9OIC1VVE1QIC1TWVNWSU5JVA0KPiBkZWZhdWx0LWhpZXJh
-cmNoeT11bmlmaWVkKSoNCj4NCj4gKlsgIDI3My4yNzMwODldIGkyYyBpMmMtMTI6IG5ld19kZXZp
-Y2U6IEluc3RhbnRpYXRlZCBkZXZpY2UNCj4gdHBtX3Rpc19pMmMgYXQgMHgyZSoNCj4NCj4gKnJv
-b3RAZXZiLWFzdDI2MDA6fiMqDQo+DQo+ICAgICAgU3RlZmFuDQo+DQo+ICA+DQo+DQo+ICA+DQo+
-DQo+ICA+IFRoYW5rcywNCj4NCj4gID4gU2FuZGVlcC4NCj4NCj4gID4NCj4NCj4gID4gLS0tLS1P
-cmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4NCj4gID4gRnJvbTogU3RlZmFuIEJlcmdlciA8c3RlZmFu
-YkBsaW51eC5pYm0uY29tDQo+IDxtYWlsdG86c3RlZmFuYkBsaW51eC5pYm0uY29tPj4NCj4NCj4g
-ID4gU2VudDogVGh1cnNkYXksIE1heSA0LCAyMDIzIDc6MzAgUE0NCj4NCj4gID4gVG86IFNhbmRl
-ZXAgS3VtYXIgPHNhbmRlZXAucGt1bWFyQHRjcy5jb20NCj4gPG1haWx0bzpzYW5kZWVwLnBrdW1h
-ckB0Y3MuY29tPj47IEPDqWRyaWMgTGUgR29hdGVyDQo+DQo+ICA+IDxjbGdAa2FvZC5vcmcgPG1h
-aWx0bzpjbGdAa2FvZC5vcmc+Pjsgb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnDQo+IDxtYWlsdG86
-b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPjsgTmluYWQgUGFsc3VsZQ0KPg0KPiAgPiA8bmluYWRA
-bGludXguaWJtLmNvbSA8bWFpbHRvOm5pbmFkQGxpbnV4LmlibS5jb20+PjsgSm9lbCBTdGFubGV5
-DQo+IDxqbXNAam1zLmlkLmF1IDxtYWlsdG86am1zQGptcy5pZC5hdT4+OyBBbmRyZXcgSmVmZmVy
-eQ0KPg0KPiAgPiA8YW5kcmV3QGFqLmlkLmF1IDxtYWlsdG86YW5kcmV3QGFqLmlkLmF1Pj4NCj4N
-Cj4gID4gU3ViamVjdDogUmU6IEludGVncmF0aW5nIHN3dHBtKGFzIGEgc29mdHdhcmUgVFBNKSB3
-aXRoIE9wZW5CTUMgb24NCj4gUWVtdQ0KPg0KPiAgPg0KPg0KPiAgPiAiRXh0ZXJuYWwgZW1haWwu
-IE9wZW4gd2l0aCBDYXV0aW9uIg0KPg0KPiAgPg0KPg0KPiAgPg0KPg0KPiAgPiBPbiA1LzQvMjMg
-MDU6MTIsIFNhbmRlZXAgS3VtYXIgd3JvdGU6DQo+DQo+ICA+PiBUQ1MgQ29uZmlkZW50aWFsIEhp
-IEMsIEkgd2FzIGFibGUgdG8gYnVpbGQgYW5kIHJ1biB0aGUgaW1hZ2UoZm9yDQo+DQo+ICA+PiBl
-dmItYXN0MjYwMCkgd2l0aCBzd3RwbS4gRmV3IGlzc3VlcyBvYnNlcnZlZCwgSWYgSSBydW4gd2l0
-aCB0aGUNCj4NCj4gID4+IGZsYXNoLiBpbWcgcHJvdmlkZWQgaW4geW91ciBnaXRodWIgbGluayho
-dHRwczrigIovL2dpdGh1Yi4NCj4NCj4gID4+IGNvbS9sZWdvYXRlci9xZW11LWFzcGVlZC1ib290
-L3RyZWUvbWFzdGVyL2ltYWdlcykgZXZlcnl0aGluZyBaalFjbVFSWUZwZnB0QmFubmVyU3RhcnQg
-VGhpcyBNZXNzYWdlIElzIEZyb20gYW4gRXh0ZXJuYWwgU2VuZGVyIFRoaXMgbWVzc2FnZSBjYW1l
-IGZyb20gb3V0c2lkZSB5b3VyIG9yZ2FuaXphdGlvbi4NCj4NCj4gID4+IFpqUWNtUVJZRnBmcHRC
-YW5uZXJFbmQNCj4NCj4gID4+IFRDUyBDb25maWRlbnRpYWwNCj4NCj4gID4+DQo+DQo+ICA+PiBI
-aSBDLA0KPg0KPiAgPj4gSSB3YXMgYWJsZSB0byBidWlsZCBhbmQgcnVuIHRoZSBpbWFnZShmb3Ig
-ZXZiLWFzdDI2MDApIHdpdGggc3d0cG0uDQo+DQo+ICA+PiBGZXcgaXNzdWVzIG9ic2VydmVkLA0K
-Pg0KPiAgPj4NCj4NCj4gID4+ICAgMS4gSWYgSSBydW4gd2l0aCB0aGUgZmxhc2guaW1nIHByb3Zp
-ZGVkIGluIHlvdXIgZ2l0aHViIGxpbmsoX2h0dHBzOi8vZ2l0aHViLmNvbS9sZWdvYXRlci9xZW11
-LWFzcGVlZC1ib290L3RyZWUvbWFzdGVyL2ltYWdlc18gPGh0dHBzOi8vZ2l0aHViLmNvbS9sZWdv
-YXRlci9xZW11LWFzcGVlZC1ib290L3RyZWUvbWFzdGVyL2ltYWdlcyA8aHR0cHM6Ly9naXRodWIu
-Y29tL2xlZ29hdGVyL3FlbXUtYXNwZWVkLWJvb3QvdHJlZS9tYXN0ZXIvaW1hZ2VzPj4pIGV2ZXJ5
-dGhpbmcgd29ya3MgYXMgZXhwZWN0ZWQsIGkuZSBJIGdldCB0aGUgYmVsb3cgb3V0cHV0Lg0KPg0K
-PiAgPj4NCj4NCj4gID4+ICojIGVjaG8gdHBtX3Rpc19pMmMgMHgyZSA+IC9zeXMvYnVzL2kyYy9k
-ZXZpY2VzL2kyYy0xMi9uZXdfZGV2aWNlKg0KPg0KPiAgPj4gKlsgIDE4Mi43MzU5MDJdIHRwbV90
-aXNfaTJjIDEyLTAwMmU6IDIuMCBUUE0gKGRldmljZS1pZCAweDEsDQo+IHJldi1pZA0KPg0KPiAg
-Pj4gMSkqICpbICAxODIuNzczODg1XSBpMmMgaTJjLTEyOiBuZXdfZGV2aWNlOiBJbnN0YW50aWF0
-ZWQgZGV2aWNlDQo+DQo+ICA+PiB0cG1fdGlzX2kyYyBhdCAweDJlKg0KPg0KPiAgPj4gKiMqDQo+
-DQo+ICA+PiAqIyoNCj4NCj4gID4+ICojIGNhdCAvc3lzL2NsYXNzL3RwbS90cG0wL3Bjci1zaGEy
-NTYvMCoNCj4NCj4gID4+ICpCODA0NzI0RUExM0Y1MkE5MDcyQkE4N0ZFOEZEQ0M0OTdERkM5REY5
-QUExNUI5MDg4Njk0NjM5QzQzMTY4OEUwKg0KPg0KPiAgPj4gKiMqDQo+DQo+ICA+PiAqIyoNCj4N
-Cj4gID4+DQo+DQo+ICA+PiAgIDIuIElmIEkgcnVuIGl0IHdpdGggdGhlIGxvY2FsbHkgYnVpbHQg
-aW1hZ2UsIEkgZ2V0IHRoaXMgZXJyb3IsDQo+DQo+ICA+DQo+DQo+ICA+IElzIHRoZSBrZXJuZWwg
-Y29uZmlndXJlZCBpbiB0aGUgc2FtZSB3YXk/IEFyZSB5b3UgdXNpbmcgdGhlIHNhbWUga2VybmVs
-IHZlcnNpb24/DQo+DQo+ICA+Pg0KPg0KPiAgPj4gKnJvb3RAZXZiLWFzdDI2MDA6fiMgZWNobyB0
-cG1fdGlzX2kyYyAweDJlID4NCj4NCj4gID4+IC9zeXMvYnVzL2kyYy9kZXZpY2VzL2kyYy0xMi9u
-ZXdfZGV2aWNlKg0KPg0KPiAgPj4gKlsgIDE3NC4wNjM1OTddIGkyYyBpMmMtMTI6IG5ld19kZXZp
-Y2U6IEluc3RhbnRpYXRlZCBkZXZpY2UNCj4NCj4gID4+IHRwbV90aXNfaTJjIGF0IDB4MmUqDQo+
-DQo+ICA+DQo+DQo+ICA+IFdoYXQgaXMgdGhlIG91dHB1dCBvZiB0aGlzPw0KPg0KPiAgPg0KPg0K
-PiAgPiBmaW5kIC9zeXMvY2xhc3MvdHBtIHwgZ3JlcCBwY3INCj4NCj4gID4NCj4NCj4gID4gICAg
-IFN0ZWZhbg0KPg0KPiAgPg0KPg0KPiAgPj4gKnJvb3RAZXZiLWFzdDI2MDA6fiMgY2F0IC9zeXMv
-Y2xhc3MvdHBtL3RwbTAvcGNyLXNoYTI1Ni8wKg0KPg0KPiAgPj4gKmNhdDogY2FuJ3Qgb3BlbiAn
-L3N5cy9jbGFzcy90cG0vdHBtMC9wY3Itc2hhMjU2LzAnOiBObyBzdWNoIGZpbGUNCj4gb3INCj4N
-Cj4gID4+IGRpcmVjdG9yeSoNCj4NCj4gID4+ICpyb290QGV2Yi1hc3QyNjAwOn4jKg0KPg0KPiAg
-Pj4gKnJvb3RAZXZiLWFzdDI2MDA6fiMqDQo+DQo+ICA+PiBQbGVhc2UgZG8gbGV0IG1lIGtub3cg
-YWJvdXQgd2hhdCBoYXMgYmVlbiBkb25lIHRvIHdyaXRlIHRoZSB2YWx1ZXMNCj4NCj4gID4+IGlu
-dG8g4oCcKi9zeXMvY2xhc3MvdHBtL3RwbTAvcGNyLXNoYTI1Ni8wKirigJ0gLiAqIFRoYW5rcywg
-U2FuZGVlcC4NCj4NCj4gID4+IF9fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X19fX19fXw0KPg0KPiAgPj4gKkZyb206KiBTYW5kZWVwIEt1bWFyDQo+DQo+ICA+PiAqU2VudDoq
-IFRodXJzZGF5LCBBcHJpbCAyMCwgMjAyMyA1OjQ1IFBNDQo+DQo+ICA+PiAqVG86KiBDw6lkcmlj
-IExlIEdvYXRlciA8Y2xnQGthb2Qub3JnIDxtYWlsdG86Y2xnQGthb2Qub3JnPj47DQo+IG9wZW5i
-bWNAbGlzdHMub3psYWJzLm9yZyA8bWFpbHRvOm9wZW5ibWNAbGlzdHMub3psYWJzLm9yZz47DQo+
-DQo+ICA+PiBOaW5hZCBQYWxzdWxlIDxuaW5hZEBsaW51eC5pYm0uY29tIDxtYWlsdG86bmluYWRA
-bGludXguaWJtLmNvbT4+Ow0KPiBKb2VsIFN0YW5sZXkgPGptc0BqbXMuaWQuYXUgPG1haWx0bzpq
-bXNAam1zLmlkLmF1Pj47DQo+DQo+ICA+PiBBbmRyZXcgSmVmZmVyeSA8YW5kcmV3QGFqLmlkLmF1
-IDxtYWlsdG86YW5kcmV3QGFqLmlkLmF1Pj4NCj4NCj4gID4+ICpTdWJqZWN0OiogUkU6IEludGVn
-cmF0aW5nIHN3dHBtKGFzIGEgc29mdHdhcmUgVFBNKSB3aXRoIE9wZW5CTUMNCj4gb24NCj4NCj4g
-ID4+IFFlbXUgSGkgQywgSG93IHRvIGJ1aWxkIHRoaXMgaW1hZ2UgPT4NCj4NCj4gID4+ICpvYm1j
-LXBob3NwaG9yLWltYWdlLnJvb3Rmcy53aWMucWNvdzIqID8gSW4gb3BlbkJtYyBidWlsZCBkaXJl
-Y3Rvcnkgd2UgZG9u4oCZdCBnZXQgdGhpcyBpbWFnZSBidWlsdC4NCj4NCj4gID4+IEFsc28sIHJl
-bWFpbmluZyBpbWFnZSBmb3JtYXRzIHVzZWQgd2hpbGUgcnVubmluZyBvbiBxZW11IGFyZSBhdmFp
-bGFibGUgaW4gdGhlIGJ1aWxkIGRpcmVjdG9yeS4gaS5lIGZpdEltYWdlLWxpbnV4LmJpbiwgYXNw
-ZWVkLWJtYy1pYm0tcmFpbmllci5kdGIgYW5kIG9ibWMtcGhvc3Bob3ItaW5pdHJhbWZzLnJvb3Rm
-cy5jcGlvLnh6IC4NCj4NCj4gID4+IFBsZWFzZSBhZHZpc2UgaWYgd2UgaGF2ZSB0byBidWlsZCBv
-cGVuYm1jIHN0YWNrIGluIGEgZGlmZmVyZW50IHdheQ0KPg0KPiAgPj4gdGhhbiB0aGUgc3RhbmRh
-cmQgcHJvY2VkdXJlLiBXZSBmb2xsb3cgdGhlIGJlbG93IHN0ZXBzIGZvciBidWlsZCwgMS4gLg0K
-Pg0KPiAgPj4gc2V0dXAgUm9tdWx1cyAyLiBiaXRiYWtlIG9ibWMtcGhvc3Bob3ItaW1hZ2UgVGhh
-bmtzLCBTYW5kZWVwLg0KPg0KPiAgPj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4NCj4g
-ID4+IEZyb206IFNhbmRlZXAgS3VtYXINCj4NCj4gID4+IFNlbnQ6IFdlZG5lc2RheSwgQXByaWwg
-MTksIDIwMjMgMzowMCBQTQ0KPg0KPiAgPj4gVG86IEPDqWRyaWMgTGUgR29hdGVyIDxfY2xnQGth
-b2Qub3JnXyA8bWFpbHRvOmNsZ0BrYW9kLm9yZw0KPiA8bWFpbHRvOl9jbGdAa2FvZC5vcmdfJTIw
-JTNjbWFpbHRvOmNsZ0BrYW9kLm9yZz4+PjsNCj4NCj4gID4+IF9vcGVuYm1jQGxpc3RzLm96bGFi
-cy5vcmdfIDxtYWlsdG86X29wZW5ibWNAbGlzdHMub3psYWJzLm9yZ18+DQo+IDxtYWlsdG86b3Bl
-bmJtY0BsaXN0cy5vemxhYnMub3JnIDxtYWlsdG86b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPj47
-DQo+IE5pbmFkDQo+DQo+ICA+PiBQYWxzdWxlIDxfbmluYWRAbGludXguaWJtLmNvbV8gPG1haWx0
-bzpuaW5hZEBsaW51eC5pYm0uY29tDQo+IDxtYWlsdG86X25pbmFkQGxpbnV4LmlibS5jb21fJTIw
-JTNjbWFpbHRvOm5pbmFkQGxpbnV4LmlibS5jb20+Pj47IEpvZWwNCj4NCj4gID4+IFN0YW5sZXkg
-PF9qbXNAam1zLmlkLmF1XyA8bWFpbHRvOmptc0BqbXMuaWQuYXUNCj4gPG1haWx0bzpfam1zQGpt
-cy5pZC5hdV8lMjAlM2NtYWlsdG86am1zQGptcy5pZC5hdT4+PjsgQW5kcmV3IEplZmZlcnkNCj4N
-Cj4gID4+IDxfYW5kcmV3QGFqLmlkLmF1XyA8bWFpbHRvOmFuZHJld0Bhai5pZC5hdQ0KPiA8bWFp
-bHRvOl9hbmRyZXdAYWouaWQuYXVfJTIwJTNjbWFpbHRvOmFuZHJld0Bhai5pZC5hdT4+Pg0KPg0K
-PiAgPj4gU3ViamVjdDogUkU6IEludGVncmF0aW5nIHN3dHBtKGFzIGEgc29mdHdhcmUgVFBNKSB3
-aXRoIE9wZW5CTUMgb24NCj4NCj4gID4+IFFlbXUgSGkgQywgR290IGl0IHdvcmtpbmcuIExvb2tz
-IGxpa2Ugc2xpcnAgaXMgbm8gbG9uZ2VyIHN1cHBvcnRlZA0KPiBvbg0KPg0KPiAgPj4gdWJudXR1
-IDE4LjA0LiBoYXZlIHVwZ3JhZGVkIHRvIGEgbmV3ZXIgdmVyc2lvbiAgYW5kIGlzIHdvcmtpbmcg
-bm93Lg0KPg0KPiAgPj4gVGhhbmtzLA0KPg0KPiAgPj4gU2FuZGVlcC4NCj4NCj4gID4+IC0tLS0t
-T3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+DQo+ICA+PiBGcm9tOiBDw6lkcmljIExlIEdvYXRlciA8
-Y2xnQGthb2Qub3JnIDxtYWlsdG86Y2xnQGthb2Qub3JnDQo+IDxtYWlsdG86Y2xnQGthb2Qub3Jn
-JTIwJTNjbWFpbHRvOmNsZ0BrYW9kLm9yZz4+Pg0KPg0KPiAgPj4gU2VudDogV2VkbmVzZGF5LCBB
-cHJpbCAxOSwgMjAyMyAyOjI2IFBNDQo+DQo+ICA+PiBUbzogU2FuZGVlcCBLdW1hciA8c2FuZGVl
-cC5wa3VtYXJAdGNzLmNvbQ0KPg0KPiAgPj4gPG1haWx0bzpzYW5kZWVwLnBrdW1hckB0Y3MuY29t
-IDxtYWlsdG86c2FuZGVlcC5wa3VtYXJAdGNzLmNvbT4+PjsNCj4gb3BlbmJtY0BsaXN0cy5vemxh
-YnMub3JnIDxtYWlsdG86b3BlbmJtY0BsaXN0cy5vemxhYnMub3JnPg0KPg0KPiAgPj4gPG1haWx0
-bzpvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcNCj4gPG1haWx0bzpvcGVuYm1jQGxpc3RzLm96bGFi
-cy5vcmc+PjsgTmluYWQgUGFsc3VsZSA8bmluYWRAbGludXguaWJtLmNvbQ0KPg0KPiAgPj4gPG1h
-aWx0bzpuaW5hZEBsaW51eC5pYm0uY29tIDxtYWlsdG86bmluYWRAbGludXguaWJtLmNvbT4+Pjsg
-Sm9lbA0KPiBTdGFubGV5IDxqbXNAam1zLmlkLmF1DQo+DQo+ICA+PiA8bWFpbHRvOmptc0BqbXMu
-aWQuYXUgPG1haWx0bzpqbXNAam1zLmlkLmF1Pj4+OyBBbmRyZXcgSmVmZmVyeQ0KPiA8YW5kcmV3
-QGFqLmlkLmF1DQo+DQo+ICA+PiA8bWFpbHRvOmFuZHJld0Bhai5pZC5hdSA8bWFpbHRvOmFuZHJl
-d0Bhai5pZC5hdT4+Pg0KPg0KPiAgPj4gU3ViamVjdDogUmU6IEludGVncmF0aW5nIHN3dHBtKGFz
-IGEgc29mdHdhcmUgVFBNKSB3aXRoIE9wZW5CTUMgb24NCj4NCj4gID4+IFFlbXUgIkV4dGVybmFs
-IGVtYWlsLiBPcGVuIHdpdGggQ2F1dGlvbiINCj4NCj4gID4+IEhlbGxvIFNhbmRlZXANCj4NCj4g
-ID4+IE9uIDQvMTgvMjMgMDk6NDUsIFNhbmRlZXAgS3VtYXIgd3JvdGU6DQo+DQo+ICA+Pj4gVENT
-IENvbmZpZGVudGlhbA0KPg0KPiAgPj4+DQo+DQo+ICA+Pj4gSGkgQywNCj4NCj4gID4+PiBCdWls
-dCB0aGUgcWVtdSBmcm9tIHlvdXIgYnJhbmNoLiBGZXcgaXNzdWVzLCAqJCAuL3FlbXUtc3lzdGVt
-LWFybQ0KPiAtbQ0KPg0KPiAgPj4+IDI1NiAtTSByb211bHVzLWJtYyAtbm9ncmFwaGljIC1kcml2
-ZQ0KPg0KPiAgPj4+IGZpbGU9Li9vYm1jLXBob3NwaG9yLWltYWdlLXJvbXVsdXMuc3RhdGljLm10
-ZCxmb3JtYXQ9cmF3LGlmPW10ZA0KPiAtbmV0DQo+DQo+ICA+Pj4gbmljIC1uZXQNCj4NCj4gID4+
-Pg0KPiB1c2VyLGhvc3Rmd2Q9OjEyNy4wLjAuMToyMjIyLToyMixob3N0ZndkPToxMjcuMC4wLjE6
-NDQ0My06NDQzLGhvc3Rmdw0KPg0KPiAgPj4+IGQNCj4NCj4gID4+PiA9DQo+DQo+ICA+Pj4gdGNw
-OjEyNy4wLjAuMTo4ODgwLTo4MCxob3N0ZndkPXRjcDoxMjcuMC4wLjE6MjIwMC06MjIwMCxob3N0
-ZndkPXVkcDoNCj4NCj4gID4+PiAxDQo+DQo+ICA+Pj4gMg0KPg0KPiAgPj4+IDcuMC4wLjE6NjYy
-My06NjIzLGhvc3Rmd2Q9dWRwOjEyNy4wLjAuMTo2NjY0LTo2NjQsaG9zdG5hbWU9cWVtdSoNCj4N
-Cj4gID4+PiAqcWVtdS1zeXN0ZW0tYXJtOiAtbmV0DQo+DQo+ICA+Pj4NCj4gdXNlcixob3N0Zndk
-PToxMjcuMC4wLjE6MjIyMi06MjIsaG9zdGZ3ZD06MTI3LjAuMC4xOjQ0NDMtOjQ0Myxob3N0ZncN
-Cj4NCj4gID4+PiBkDQo+DQo+ICA+Pj4gPQ0KPg0KPiAgPj4+IHRjcDoxMjcuMC4wLjE6ODg4MC06
-ODAsaG9zdGZ3ZD10Y3A6MTI3LjAuMC4xOjIyMDAtOjIyMDAsaG9zdGZ3ZD11ZHA6DQo+DQo+ICA+
-Pj4gMQ0KPg0KPiAgPj4+IDINCj4NCj4gID4+PiA3LjAuMC4xOjY2MjMtOjYyMyxob3N0ZndkPXVk
-cDoxMjcuMC4wLjE6NjY2NC06NjY0LGhvc3RuYW1lPXFlbXU6DQo+DQo+ICA+Pj4gbmV0d29yayBi
-YWNrZW5kICd1c2VyJyBpcyBub3QgY29tcGlsZWQgaW50byB0aGlzIGJpbmFyeSogSSBkaWRu4oCZ
-dA0KPg0KPiAgPj4+IGVuYWJsZSB0aGUgc2xpcnAgcGFja2FnZSBJIGd1ZXNzLiBTbyBlbmFibGVk
-IGl0IHdoaWxlIHJ1bm5pbmcNCj4NCj4gID4+PiBjb25maWd1cmUsICokIC4uL2NvbmZpZ3VyZSAt
-LWVuYWJsZS1zbGlycCoNCj4NCj4gID4+PiAqLi4uLi4uLi4qDQo+DQo+ICA+Pj4gKlJ1bi10aW1l
-IGRlcGVuZGVuY3kgc2xpcnAgZm91bmQ6IE5PICh0cmllZCBwa2djb25maWcpKg0KPg0KPiAgPj4+
-ICouLi9tZXNvbi5idWlsZDo2ODE6MjogRVJST1I6IERlcGVuZGVuY3kgInNsaXJwIiBub3QgZm91
-bmQsIHRyaWVkDQo+DQo+ICA+Pj4gcGtnY29uZmlnKiAqQSBmdWxsIGxvZyBjYW4gYmUgZm91bmQg
-YXQNCj4NCj4gID4+Pg0KPiAvaG9tZS90Y3Mvd29yay9zYW5kZWVwL21lYXN1cmVkX2Jvb3QvaWJt
-X3FlbXUvcWVtdS9idWlsZC9tZXNvbi1sb2dzLw0KPg0KPiAgPj4+IG0NCj4NCj4gID4+PiBlDQo+
-DQo+ICA+Pj4gc29uLWxvZy50eHQqDQo+DQo+ICA+Pj4gKk5PVElDRTogWW91IGFyZSB1c2luZyBQ
-eXRob24gMy42IHdoaWNoIGlzIEVPTC4gU3RhcnRpbmcgd2l0aA0KPg0KPiAgPj4+IHYwLjYyLjAs
-IE1lc29uIHdpbGwgcmVxdWlyZSBQeXRob24gMy43IG9yIG5ld2VyKg0KPg0KPiAgPj4+ICpFUlJP
-UjogbWVzb24gc2V0dXAgZmFpbGVkKg0KPg0KPiAgPj4+IEkgaGF2ZSBhbHJlYWR5IGluc3RhbGxl
-ZCBzbGlycCBsb2NhbGx5LCBidXQgc3RpbGwgZ2V0dGluZyB0aGUgYWJvdmUgZXJyb3IuDQo+DQo+
-ICA+PiBEaWQgeW91IGluc3RhbGwgdGhlIGxpYnNsaXJwLWRldiBvciBsaWJzbGlycC1kZXZlbCBw
-YWNrYWdlID8NCj4NCj4gID4+IEMuDQo+DQo+ICA+Pg0KPg0KPiAgPj4gVENTIENvbmZpZGVudGlh
-bA0KPg0KPiAgPj4NCj4NCj4gID4+ID09PT09LS0tLS09PT09PS0tLS0tPT09PT0NCj4NCj4gID4+
-IE5vdGljZTogVGhlIGluZm9ybWF0aW9uIGNvbnRhaW5lZCBpbiB0aGlzIGUtbWFpbCBtZXNzYWdl
-IGFuZC9vcg0KPg0KPiAgPj4gYXR0YWNobWVudHMgdG8gaXQgbWF5IGNvbnRhaW4gY29uZmlkZW50
-aWFsIG9yIHByaXZpbGVnZWQgaW5mb3JtYXRpb24uDQo+DQo+ICA+PiBJZiB5b3UgYXJlIG5vdCB0
-aGUgaW50ZW5kZWQgcmVjaXBpZW50LCBhbnkgZGlzc2VtaW5hdGlvbiwgdXNlLA0KPg0KPiAgPj4g
-cmV2aWV3LCBkaXN0cmlidXRpb24sIHByaW50aW5nIG9yIGNvcHlpbmcgb2YgdGhlIGluZm9ybWF0
-aW9uDQo+DQo+ICA+PiBjb250YWluZWQgaW4gdGhpcyBlLW1haWwgbWVzc2FnZSBhbmQvb3IgYXR0
-YWNobWVudHMgdG8gaXQgYXJlDQo+DQo+ICA+PiBzdHJpY3RseSBwcm9oaWJpdGVkLiBJZiB5b3Ug
-aGF2ZSByZWNlaXZlZCB0aGlzIGNvbW11bmljYXRpb24gaW4NCj4NCj4gID4+IGVycm9yLCBwbGVh
-c2Ugbm90aWZ5IHVzIGJ5IHJlcGx5IGUtbWFpbCBvciB0ZWxlcGhvbmUgYW5kDQo+IGltbWVkaWF0
-ZWx5DQo+DQo+ICA+PiBhbmQgcGVybWFuZW50bHkgZGVsZXRlIHRoZSBtZXNzYWdlIGFuZCBhbnkg
-YXR0YWNobWVudHMuIFRoYW5rIHlvdQ0KPg0KPiAgPj4NCj4NCj4gID4NCj4NCj4gID4gICBUQ1Mg
-Q29uZmlkZW50aWFsDQo+DQo+DQo+IFRDUyBDb25maWRlbnRpYWwNCj4NCg0KIFRDUyBDb25maWRl
-bnRpYWwNCg==
+
+
+On 5/5/23 13:36, Sandeep Kumar wrote:
+>   TCS Confidential
+> 
+> Hi Stefan,
+> 
+> I have these options set in /home/tcs/work/san/openbmc/openbmc_april/openbmc/meta-aspeed/recipes-kernel/linux/linux-aspeed/tpm/tpm2.cfg
+> 
+> CONFIG_HW_RANDOM=y
+> CONFIG_HW_RANDOM_TPM=y
+> CONFIG_TCG_TPM=y
+> CONFIG_TCG_TIS_CORE=y
+> CONFIG_TCG_TIS=y
+> CONFIG_TCG_TIS_SPI=y
+> CONFIG_TCG_TIS_I2C=y
+> CONFIG_SECURITYFS=y
+
+
+I added 'MACHINE_FEATURES:append = " tpm2"' and this works for me.
+
+As long as these symbols are built into the kernel it should work:
+
+> root@evb-ast2600:~# grep tpm_tis_i2c /proc/kallsyms
+> 8056318c t tpm_tis_i2c_remove
+> 805631b0 t tpm_tis_i2c_retry_transfer_until_ack
+> 8056323c t tpm_tis_i2c_write_bytes
+> 80563334 t tpm_tis_i2c_verify_crc
+> 805633e0 t tpm_tis_i2c_read_bytes
+> 80563604 t tpm_tis_i2c_probe
+> 80d23964 t tpm_tis_i2c_driver_init
+
+> 
+> and in /home/tcs/work/san/openbmc/openbmc_april/openbmc/meta-aspeed/recipes-kernel/linux/linux-aspeed.inc I have these,
+> 
+> SRC_URI += " \
+>               file://defconfig \
+>               file://rsa_oem_fitimage_key.key;sha256sum=eeb4ff2ebbfbd97b6254fe6dbaeea41067e54c65176c233ec7b2ab2decf1ddcd \
+>               file://rsa_oem_fitimage_key.crt;sha256sum=45f5a55497cce8040999bf9f3214d471ac7b83ab7acef41c4425a34662e8372e \
+>               ${@bb.utils.contains('MACHINE_FEATURES', 'tpm2', 'file://tpm/tpm2.scc file://tpm/tpm2.cfg', '', d)} \
+>               ${@bb.utils.contains_any('DISTRO_FEATURES', \
+>                  'obmc-static-norootfs obmc-ubi-fs', \
+>                  'file://ubi/ubi.scc file://ubi/ubi.cfg', '', d)} \
+>             "
+> 
+> Anything else needs to be done to enable TPM ?
+
+Apart from having to use the latest QEMU with the TPM TIS I2C support (from git repo) I don't know of anything else.
+
+    Stefan
+
+> 
+> Thanks,
+> Sandeep.
+> 
+> -----Original Message-----
+> From: Stefan Berger <stefanb@linux.ibm.com>
+> Sent: Friday, May 5, 2023 9:41 PM
+> To: Sandeep Kumar <sandeep.pkumar@tcs.com>; Cédric Le Goater <clg@kaod.org>; openbmc@lists.ozlabs.org; Ninad Palsule <ninad@linux.ibm.com>; Joel Stanley <jms@jms.id.au>; Andrew Jeffery <andrew@aj.id.au>
+> Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on Qemu
+> 
+> "External email. Open with Caution"
+> 
+> I enable the following kernel build options for OpenBMC Linux kernel:
+> 
+> CONFIG_TCG_TPM=y
+> CONFIG_TCG_TIS_CORE=y
+> CONFIG_TCG_TIS=y
+> CONFIG_TCG_TIS_I2C=y
+> 
+> With swtpm running in another terminal:
+> 
+> while :; do swtpm socket --tpmstate dir=/tmp/mytpm1     --ctrl type=unixio,path=/tmp/mytpm1/swtpm-sock     --tpm2     --log level=20; done
+> 
+> I start qemu built from qemu git master branch tip:
+> 
+> /tmp/qemu-system-arm -machine ast2600-evb -nographic -no-reboot -net nic -net user,hostfwd=:127.0.0.1:5722-:22,hostfwd=:127.0.0.1:5743-:443,hostfwd=udp:127.0.0.1:5723-:623 -drive file=./tmp/deploy/images/evb-ast2600/obmc-phosphor-image-evb-ast2600.static.mtd,format=raw,if=mtd     -chardev socket,id=chrtpm,path=/tmp/mytpm1/swtpm-sock     -tpmdev emulator,id=tpm0,chardev=chrtpm     -device tpm-tis-i2c,tpmdev=tpm0,bus=aspeed.i2c.bus.12,address=0x2e
+> 
+> root@evb-ast2600:~# echo tpm_tis_i2c 0x2e > /sys/bus/i2c/devices/i2c-12/new_device
+> [   63.771200] tpm_tis_i2c 12-002e: 2.0 TPM (device-id 0x1, rev-id 1)
+> [   63.783927] tpm tpm0: A TPM error (256) occurred attempting the self test
+> [   63.784256] tpm tpm0: starting up the TPM manually
+> [   63.851474] i2c i2c-12: new_device: Instantiated device tpm_tis_i2c at 0x2e
+> 
+> root@evb-ast2600:~# uname -a
+> Linux evb-ast2600 6.1.15-580639a-dirty-c56bfb7-00123-gc56bfb70ebfa #1 SMP Thu Apr  6 00:55:09 UTC 2023 armv7l GNU/Linux
+> 
+> root@evb-ast2600:~# grep tpm_tis_i2c /proc/kallsyms> 8056318c t tpm_tis_i2c_remove
+> 805631b0 t tpm_tis_i2c_retry_transfer_until_ack
+> 8056323c t tpm_tis_i2c_write_bytes
+> 80563334 t tpm_tis_i2c_verify_crc
+> 805633e0 t tpm_tis_i2c_read_bytes
+> 80563604 t tpm_tis_i2c_probe
+> 80d23964 t tpm_tis_i2c_driver_init
+> 
+> root@evb-ast2600:~# find /sys/class/tpm
+> /sys/class/tpm
+> /sys/class/tpm/tpm0
+> 
+> root@evb-ast2600:~# ls -l /dev/tpm*
+> crw-------    1 root     root       10, 224 May  5 16:03 /dev/tpm0
+> crw-------    1 root     root      252, 65536 May  5 16:03 /dev/tpmrm0
+> 
+> root@evb-ast2600:~# find /sys/ | grep pcr
+> /sys/devices/platform/ahb/ahb:apb/ahb:apb:bus@1e78a000/1e78a680.i2c-bus/i2c-12/12-002e/tpm/tpm0/pcr-sha1
+> /sys/devices/platform/ahb/ahb:apb/ahb:apb:bus@1e78a000/1e78a680.i2c-bus/i2c-12/12-002e/tpm/tpm0/pcr-sha1/17
+> [... lots more entries also for sha256, sha384, and sha512 ]
+> 
+> 
+> 
+> 
+> It seems to work as expected
+> 
+> On 5/5/23 11:08, Sandeep Kumar wrote:
+>> TCS Confidential Hi Stefan, Please find below my answers inline.
+>> Thanks, Sandeep. -----Original Message----- From: Stefan Berger
+>> <stefanb@ linux. ibm. com> Sent: Friday, May 5, 2023 6: 56 PM To:
+>> Sandeep Kumar <sandeep. pkumar@ tcs. com>; ZjQcmQRYFpfptBannerStart This Message Is From an External Sender This message came from outside your organization.
+>> ZjQcmQRYFpfptBannerEnd
+>>
+>> TCS Confidential
+>>
+>>
+>> Hi Stefan,
+>>
+>> Please find below my answers inline.
+>>
+>> Thanks,
+>>
+>> Sandeep.
+>>
+>> -----Original Message-----
+>> From: Stefan Berger <stefanb@linux.ibm.com>
+>> Sent: Friday, May 5, 2023 6:56 PM
+>> To: Sandeep Kumar <sandeep.pkumar@tcs.com>; Cédric Le Goater
+>> <clg@kaod.org>; openbmc@lists.ozlabs.org; Ninad Palsule
+>> <ninad@linux.ibm.com>; Joel Stanley <jms@jms.id.au>; Andrew Jeffery
+>> <andrew@aj.id.au>
+>> Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on Qemu
+>>
+>> "External email. Open with Caution"
+>>
+>> On 5/5/23 01:40, Sandeep Kumar wrote:
+>>
+>>   >   TCS Confidential
+>>
+>>   >
+>>
+>>   > Hi Stefan,
+>>
+>>   >
+>>
+>>   > Stefan: Is the kernel configured in the same way? Are you using the same kernel version?
+>>
+>>   > Ans:
+>>
+>>   >          I am using the Kernel version coming with the latest openBMC without any changes.
+>>
+>>   >          Kernel version used : Linux evb-ast2600 6.1.15-580639a #1
+>> SMP
+>>
+>>   > Thu Apr 6 00:55:09 UTC 2023 armv71 GNU/Linux
+>>
+>>   >
+>>
+>>   > Stefan:  What is the output of this?  find /sys/class/tpm | grep
+>> pcr
+>>
+>>   > Ams:     find: /sys/class/tpm: No such file or directory.
+>>
+>>   >
+>>
+>>   > Could you please point to the right version of kernel which has all these changes ?
+>>
+>> I am not aware of changes in the Linux kernel for TPM I2C and why it would not work in this kernel version.
+>>
+>> Does this show any files?
+>>
+>> find /sys | grep pcr
+>>
+>> *Sandeep: It doesn't show any files. *
+>>
+>> *root@evb-ast2600:~# echo tpm_tis_i2c 0x2e >
+>> /sys/bus/i2c/devices/i2c-12/new_device*
+>>
+>> *[  273.273089] i2c i2c-12: new_device: Instantiated device
+>> tpm_tis_i2c at 0x2e*
+>>
+>> *root@evb-ast2600:~#*
+>>
+>> *root@evb-ast2600:~# find /sys | grep pcr*
+>>
+>> *root@evb-ast2600:~#*
+>>
+>> Do /dev/tpm0 and /dev/tpmrm0 appear after the echo ? What does dmesg show related to tpm (dmesg | grep -i tpm)?
+>>
+>> *Sandeep:  I don’t see /dev/tpm0 and /dev/tpmrm0 after the echo.
+>> Output as below, *
+>>
+>> **
+>>
+>> *root@evb-ast2600:~# echo tpm_tis_i2c 0x2e >
+>> /sys/bus/i2c/devices/i2c-12/new_device*
+>>
+>> *[  273.273089] i2c i2c-12: new_device: Instantiated device
+>> tpm_tis_i2c at 0x2e*
+>>
+>> *root@evb-ast2600:~#*
+>>
+>> *root@evb-ast2600:~# find /sys | grep pcr*
+>>
+>> *root@evb-ast2600:~#*
+>>
+>> *root@evb-ast2600:~# ls /dev/tpm**
+>>
+>> *ls: /dev/tpm*: No such file or directory*
+>>
+>> *root@evb-ast2600:~# dmesg | grep -i tpm*
+>>
+>> *[    6.290898] systemd[1]: systemd 253.1^ running in system mode
+>> (+PAM -AUDIT -SELINUX -APPARMOR -IMA -SMACK +SECCOMP -GCRYPT -GNUTLS
+>> -OPENSSL -ACL +BLKID -CURL -ELFUTILS -FIDO2 -IDN2 -IDN -IPTC -KMOD
+>> -LIBCRYPTSETUP +LIBFDISK -PCRE2 -PWQUALITY -P11KIT -QRENCODE -TPM2
+>> -BZIP2 -LZ4 -XZ -ZLIB +ZSTD -BPF_FRAMEWORK -XKBCOMMON -UTMP -SYSVINIT
+>> default-hierarchy=unified)*
+>>
+>> *[  273.273089] i2c i2c-12: new_device: Instantiated device
+>> tpm_tis_i2c at 0x2e*
+>>
+>> *root@evb-ast2600:~#*
+>>
+>>       Stefan
+>>
+>>   >
+>>
+>>   >
+>>
+>>   > Thanks,
+>>
+>>   > Sandeep.
+>>
+>>   >
+>>
+>>   > -----Original Message-----
+>>
+>>   > From: Stefan Berger <stefanb@linux.ibm.com
+>> <mailto:stefanb@linux.ibm.com>>
+>>
+>>   > Sent: Thursday, May 4, 2023 7:30 PM
+>>
+>>   > To: Sandeep Kumar <sandeep.pkumar@tcs.com
+>> <mailto:sandeep.pkumar@tcs.com>>; Cédric Le Goater
+>>
+>>   > <clg@kaod.org <mailto:clg@kaod.org>>; openbmc@lists.ozlabs.org
+>> <mailto:openbmc@lists.ozlabs.org>; Ninad Palsule
+>>
+>>   > <ninad@linux.ibm.com <mailto:ninad@linux.ibm.com>>; Joel Stanley
+>> <jms@jms.id.au <mailto:jms@jms.id.au>>; Andrew Jeffery
+>>
+>>   > <andrew@aj.id.au <mailto:andrew@aj.id.au>>
+>>
+>>   > Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on
+>> Qemu
+>>
+>>   >
+>>
+>>   > "External email. Open with Caution"
+>>
+>>   >
+>>
+>>   >
+>>
+>>   > On 5/4/23 05:12, Sandeep Kumar wrote:
+>>
+>>   >> TCS Confidential Hi C, I was able to build and run the image(for
+>>
+>>   >> evb-ast2600) with swtpm. Few issues observed, If I run with the
+>>
+>>   >> flash. img provided in your github link(https: //github.
+>>
+>>   >> com/legoater/qemu-aspeed-boot/tree/master/images) everything ZjQcmQRYFpfptBannerStart This Message Is From an External Sender This message came from outside your organization.
+>>
+>>   >> ZjQcmQRYFpfptBannerEnd
+>>
+>>   >> TCS Confidential
+>>
+>>   >>
+>>
+>>   >> Hi C,
+>>
+>>   >> I was able to build and run the image(for evb-ast2600) with swtpm.
+>>
+>>   >> Few issues observed,
+>>
+>>   >>
+>>
+>>   >>   1. If I run with the flash.img provided in your github link(_https://github.com/legoater/qemu-aspeed-boot/tree/master/images_ <https://github.com/legoater/qemu-aspeed-boot/tree/master/images <https://github.com/legoater/qemu-aspeed-boot/tree/master/images>>) everything works as expected, i.e I get the below output.
+>>
+>>   >>
+>>
+>>   >> *# echo tpm_tis_i2c 0x2e > /sys/bus/i2c/devices/i2c-12/new_device*
+>>
+>>   >> *[  182.735902] tpm_tis_i2c 12-002e: 2.0 TPM (device-id 0x1,
+>> rev-id
+>>
+>>   >> 1)* *[  182.773885] i2c i2c-12: new_device: Instantiated device
+>>
+>>   >> tpm_tis_i2c at 0x2e*
+>>
+>>   >> *#*
+>>
+>>   >> *#*
+>>
+>>   >> *# cat /sys/class/tpm/tpm0/pcr-sha256/0*
+>>
+>>   >> *B804724EA13F52A9072BA87FE8FDCC497DFC9DF9AA15B9088694639C431688E0*
+>>
+>>   >> *#*
+>>
+>>   >> *#*
+>>
+>>   >>
+>>
+>>   >>   2. If I run it with the locally built image, I get this error,
+>>
+>>   >
+>>
+>>   > Is the kernel configured in the same way? Are you using the same kernel version?
+>>
+>>   >>
+>>
+>>   >> *root@evb-ast2600:~# echo tpm_tis_i2c 0x2e >
+>>
+>>   >> /sys/bus/i2c/devices/i2c-12/new_device*
+>>
+>>   >> *[  174.063597] i2c i2c-12: new_device: Instantiated device
+>>
+>>   >> tpm_tis_i2c at 0x2e*
+>>
+>>   >
+>>
+>>   > What is the output of this?
+>>
+>>   >
+>>
+>>   > find /sys/class/tpm | grep pcr
+>>
+>>   >
+>>
+>>   >     Stefan
+>>
+>>   >
+>>
+>>   >> *root@evb-ast2600:~# cat /sys/class/tpm/tpm0/pcr-sha256/0*
+>>
+>>   >> *cat: can't open '/sys/class/tpm/tpm0/pcr-sha256/0': No such file
+>> or
+>>
+>>   >> directory*
+>>
+>>   >> *root@evb-ast2600:~#*
+>>
+>>   >> *root@evb-ast2600:~#*
+>>
+>>   >> Please do let me know about what has been done to write the values
+>>
+>>   >> into “*/sys/class/tpm/tpm0/pcr-sha256/0**” . * Thanks, Sandeep.
+>>
+>>   >> _____________________________________________
+>>
+>>   >> *From:* Sandeep Kumar
+>>
+>>   >> *Sent:* Thursday, April 20, 2023 5:45 PM
+>>
+>>   >> *To:* Cédric Le Goater <clg@kaod.org <mailto:clg@kaod.org>>;
+>> openbmc@lists.ozlabs.org <mailto:openbmc@lists.ozlabs.org>;
+>>
+>>   >> Ninad Palsule <ninad@linux.ibm.com <mailto:ninad@linux.ibm.com>>;
+>> Joel Stanley <jms@jms.id.au <mailto:jms@jms.id.au>>;
+>>
+>>   >> Andrew Jeffery <andrew@aj.id.au <mailto:andrew@aj.id.au>>
+>>
+>>   >> *Subject:* RE: Integrating swtpm(as a software TPM) with OpenBMC
+>> on
+>>
+>>   >> Qemu Hi C, How to build this image =>
+>>
+>>   >> *obmc-phosphor-image.rootfs.wic.qcow2* ? In openBmc build directory we don’t get this image built.
+>>
+>>   >> Also, remaining image formats used while running on qemu are available in the build directory. i.e fitImage-linux.bin, aspeed-bmc-ibm-rainier.dtb and obmc-phosphor-initramfs.rootfs.cpio.xz .
+>>
+>>   >> Please advise if we have to build openbmc stack in a different way
+>>
+>>   >> than the standard procedure. We follow the below steps for build, 1. .
+>>
+>>   >> setup Romulus 2. bitbake obmc-phosphor-image Thanks, Sandeep.
+>>
+>>   >> -----Original Message-----
+>>
+>>   >> From: Sandeep Kumar
+>>
+>>   >> Sent: Wednesday, April 19, 2023 3:00 PM
+>>
+>>   >> To: Cédric Le Goater <_clg@kaod.org_ <mailto:clg@kaod.org
+>> <mailto:_clg@kaod.org_%20%3cmailto:clg@kaod.org>>>;
+>>
+>>   >> _openbmc@lists.ozlabs.org_ <mailto:_openbmc@lists.ozlabs.org_>
+>> <mailto:openbmc@lists.ozlabs.org <mailto:openbmc@lists.ozlabs.org>>;
+>> Ninad
+>>
+>>   >> Palsule <_ninad@linux.ibm.com_ <mailto:ninad@linux.ibm.com
+>> <mailto:_ninad@linux.ibm.com_%20%3cmailto:ninad@linux.ibm.com>>>; Joel
+>>
+>>   >> Stanley <_jms@jms.id.au_ <mailto:jms@jms.id.au
+>> <mailto:_jms@jms.id.au_%20%3cmailto:jms@jms.id.au>>>; Andrew Jeffery
+>>
+>>   >> <_andrew@aj.id.au_ <mailto:andrew@aj.id.au
+>> <mailto:_andrew@aj.id.au_%20%3cmailto:andrew@aj.id.au>>>
+>>
+>>   >> Subject: RE: Integrating swtpm(as a software TPM) with OpenBMC on
+>>
+>>   >> Qemu Hi C, Got it working. Looks like slirp is no longer supported
+>> on
+>>
+>>   >> ubnutu 18.04. have upgraded to a newer version  and is working now.
+>>
+>>   >> Thanks,
+>>
+>>   >> Sandeep.
+>>
+>>   >> -----Original Message-----
+>>
+>>   >> From: Cédric Le Goater <clg@kaod.org <mailto:clg@kaod.org
+>> <mailto:clg@kaod.org%20%3cmailto:clg@kaod.org>>>
+>>
+>>   >> Sent: Wednesday, April 19, 2023 2:26 PM
+>>
+>>   >> To: Sandeep Kumar <sandeep.pkumar@tcs.com
+>>
+>>   >> <mailto:sandeep.pkumar@tcs.com <mailto:sandeep.pkumar@tcs.com>>>;
+>> openbmc@lists.ozlabs.org <mailto:openbmc@lists.ozlabs.org>
+>>
+>>   >> <mailto:openbmc@lists.ozlabs.org
+>> <mailto:openbmc@lists.ozlabs.org>>; Ninad Palsule <ninad@linux.ibm.com
+>>
+>>   >> <mailto:ninad@linux.ibm.com <mailto:ninad@linux.ibm.com>>>; Joel
+>> Stanley <jms@jms.id.au
+>>
+>>   >> <mailto:jms@jms.id.au <mailto:jms@jms.id.au>>>; Andrew Jeffery
+>> <andrew@aj.id.au
+>>
+>>   >> <mailto:andrew@aj.id.au <mailto:andrew@aj.id.au>>>
+>>
+>>   >> Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on
+>>
+>>   >> Qemu "External email. Open with Caution"
+>>
+>>   >> Hello Sandeep
+>>
+>>   >> On 4/18/23 09:45, Sandeep Kumar wrote:
+>>
+>>   >>> TCS Confidential
+>>
+>>   >>>
+>>
+>>   >>> Hi C,
+>>
+>>   >>> Built the qemu from your branch. Few issues, *$ ./qemu-system-arm
+>> -m
+>>
+>>   >>> 256 -M romulus-bmc -nographic -drive
+>>
+>>   >>> file=./obmc-phosphor-image-romulus.static.mtd,format=raw,if=mtd
+>> -net
+>>
+>>   >>> nic -net
+>>
+>>   >>>
+>> user,hostfwd=:127.0.0.1:2222-:22,hostfwd=:127.0.0.1:4443-:443,hostfw
+>>
+>>   >>> d
+>>
+>>   >>> =
+>>
+>>   >>> tcp:127.0.0.1:8880-:80,hostfwd=tcp:127.0.0.1:2200-:2200,hostfwd=udp:
+>>
+>>   >>> 1
+>>
+>>   >>> 2
+>>
+>>   >>> 7.0.0.1:6623-:623,hostfwd=udp:127.0.0.1:6664-:664,hostname=qemu*
+>>
+>>   >>> *qemu-system-arm: -net
+>>
+>>   >>>
+>> user,hostfwd=:127.0.0.1:2222-:22,hostfwd=:127.0.0.1:4443-:443,hostfw
+>>
+>>   >>> d
+>>
+>>   >>> =
+>>
+>>   >>> tcp:127.0.0.1:8880-:80,hostfwd=tcp:127.0.0.1:2200-:2200,hostfwd=udp:
+>>
+>>   >>> 1
+>>
+>>   >>> 2
+>>
+>>   >>> 7.0.0.1:6623-:623,hostfwd=udp:127.0.0.1:6664-:664,hostname=qemu:
+>>
+>>   >>> network backend 'user' is not compiled into this binary* I didn’t
+>>
+>>   >>> enable the slirp package I guess. So enabled it while running
+>>
+>>   >>> configure, *$ ../configure --enable-slirp*
+>>
+>>   >>> *........*
+>>
+>>   >>> *Run-time dependency slirp found: NO (tried pkgconfig)*
+>>
+>>   >>> *../meson.build:681:2: ERROR: Dependency "slirp" not found, tried
+>>
+>>   >>> pkgconfig* *A full log can be found at
+>>
+>>   >>>
+>> /home/tcs/work/sandeep/measured_boot/ibm_qemu/qemu/build/meson-logs/
+>>
+>>   >>> m
+>>
+>>   >>> e
+>>
+>>   >>> son-log.txt*
+>>
+>>   >>> *NOTICE: You are using Python 3.6 which is EOL. Starting with
+>>
+>>   >>> v0.62.0, Meson will require Python 3.7 or newer*
+>>
+>>   >>> *ERROR: meson setup failed*
+>>
+>>   >>> I have already installed slirp locally, but still getting the above error.
+>>
+>>   >> Did you install the libslirp-dev or libslirp-devel package ?
+>>
+>>   >> C.
+>>
+>>   >>
+>>
+>>   >> TCS Confidential
+>>
+>>   >>
+>>
+>>   >> =====-----=====-----=====
+>>
+>>   >> Notice: The information contained in this e-mail message and/or
+>>
+>>   >> attachments to it may contain confidential or privileged information.
+>>
+>>   >> If you are not the intended recipient, any dissemination, use,
+>>
+>>   >> review, distribution, printing or copying of the information
+>>
+>>   >> contained in this e-mail message and/or attachments to it are
+>>
+>>   >> strictly prohibited. If you have received this communication in
+>>
+>>   >> error, please notify us by reply e-mail or telephone and
+>> immediately
+>>
+>>   >> and permanently delete the message and any attachments. Thank you
+>>
+>>   >>
+>>
+>>   >
+>>
+>>   >   TCS Confidential
+>>
+>>
+>> TCS Confidential
+>>
+> 
+>   TCS Confidential
