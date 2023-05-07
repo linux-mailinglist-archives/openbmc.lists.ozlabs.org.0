@@ -1,159 +1,119 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 930F56F959A
-	for <lists+openbmc@lfdr.de>; Sun,  7 May 2023 02:35:32 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05CC26F9694
+	for <lists+openbmc@lfdr.de>; Sun,  7 May 2023 04:22:13 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QDQSL2ykhz3bpn
-	for <lists+openbmc@lfdr.de>; Sun,  7 May 2023 10:35:30 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QDSqP4SGfz3cdB
+	for <lists+openbmc@lfdr.de>; Sun,  7 May 2023 12:22:09 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=hpe.com header.i=@hpe.com header.a=rsa-sha256 header.s=pps0720 header.b=ahZJkD5g;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=mWt7eBIS;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=hpe.com (client-ip=148.163.143.35; helo=mx0b-002e3701.pphosted.com; envelope-from=verdun@hpe.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f403:704b::71e; helo=apc01-tyz-obe.outbound.protection.outlook.com; envelope-from=ryan_chen@aspeedtech.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=hpe.com header.i=@hpe.com header.a=rsa-sha256 header.s=pps0720 header.b=ahZJkD5g;
+	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector1 header.b=mWt7eBIS;
 	dkim-atps=neutral
-Received: from mx0b-002e3701.pphosted.com (mx0b-002e3701.pphosted.com [148.163.143.35])
+Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01on2071e.outbound.protection.outlook.com [IPv6:2a01:111:f403:704b::71e])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Q9gY33PZYz3brK
-	for <openbmc@lists.ozlabs.org>; Tue,  2 May 2023 23:15:00 +1000 (AEST)
-Received: from pps.filterd (m0150245.ppops.net [127.0.0.1])
-	by mx0b-002e3701.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34289ZxS006907
-	for <openbmc@lists.ozlabs.org>; Tue, 2 May 2023 13:14:56 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hpe.com; h=from : to : subject :
- date : message-id : content-type : mime-version; s=pps0720;
- bh=0W9bvMRufvxdf2Bi2d/ilJh1K+V2/h31Oefy2t4JUik=;
- b=ahZJkD5gyi9pkDOF+jvtNL/NL3pa6tG6JUOAwfPNlfFzMYzqp/FPggLNBjV0d0MPSLIY
- Dsi5Eoyll1qAlKVTVeb3Q5pPvUILFNiXO+NTZQb8q2ysodP6YsqkSACr40j/QaR7r0r4
- lSQDCOAhqLD5JdoJVqoq919W/UtCN/9iNsG5Wy4amVwaUWwG9ROCmyWqByVSuBql1M9S
- gUQ2KkVhFwnFivjMcRjLXGIyPKQaDaKBHH9msmQOJdpCj8l9YnRu0Dc/fC0iaJiBAYlr
- bC5usV9ZXls7KY3wmCRcLgC6ZcJ5GsgtxR119QBJFKbUqtM3IJTlGk3Twa6gLYqv4aHq eg== 
-Received: from p1lg14880.it.hpe.com (p1lg14880.it.hpe.com [16.230.97.201])
-	by mx0b-002e3701.pphosted.com (PPS) with ESMTPS id 3qaxrxj9rq-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Tue, 02 May 2023 13:14:56 +0000
-Received: from p1wg14923.americas.hpqcorp.net (unknown [10.119.18.111])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by p1lg14880.it.hpe.com (Postfix) with ESMTPS id 70F0780020A
-	for <openbmc@lists.ozlabs.org>; Tue,  2 May 2023 13:14:54 +0000 (UTC)
-Received: from p1wg14926.americas.hpqcorp.net (10.119.18.115) by
- p1wg14923.americas.hpqcorp.net (10.119.18.111) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Tue, 2 May 2023 01:14:38 -1200
-Received: from p1wg14920.americas.hpqcorp.net (16.230.19.123) by
- p1wg14926.americas.hpqcorp.net (10.119.18.115) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.42
- via Frontend Transport; Tue, 2 May 2023 01:14:38 -1200
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (192.58.206.38)
- by edge.it.hpe.com (16.230.19.123) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.986.42; Tue, 2 May 2023 01:14:38 -1200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QDSpm2jdvz3bpn;
+	Sun,  7 May 2023 12:21:32 +1000 (AEST)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=NCDM24RAY/+E5SYRfHp+VGA+ZJQ1iTgK0yWpGtWUDMfEvhWPKzQZnVm+8dfnkariK3VVBC9mVek3uKZFmbPyNUoHyXEIvAyyz3hD6tHRhVwqSnKOwAWMaG3wllbYmRUCrMb6OTB6DPd6ohn8v+Zo9rnXsxy8S4Ahm4dnMzr8l5uEz3pIitUGtGUAjNnfPkT26ZtQFM6NpnGK4Cd+FGbLd8YsWwaKxqVcLHr09/pb3fezBOM12EHh1kaxafLWiabsIIPoZuZlNe7pNYe5COsl9/NSq7CfCaL48F4/sqDCD9Ojd/xYD/uAbXOB9RrCltTHGsK3mAl9Ebl8psZ3NF4CwQ==
+ b=PLKOgnkMHzX0R8o2SU5eutGthSmNnMXElEbF9LqWvKrOC7/L6EWEIL40o0iOPhXNyk9nJYMZOCfgHvhLs/Ad5vzxqhNbbKN+tHn+mTqCdFtQf9yPp7Pw8xW7Ua74x9rUWBg9MtIZ6HnScntGwaONiXfvE+Aj3qxM20wFo7xK0QfjE4KAZmMGft7qes3sPEFTq7fGVtHYA9MCb7G3mxUZhibfK4SDCvJVEQHEv6O7ZwVJVTDfI47L5hwA1GMELEGoqV9Zrv0WVb27PdSebG9CtSA900q8Y4J/e5rUDij9fXLm+iHAVvOohdJofCkC6LWU58q4H4y1S1gHO0F5Bgj53Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=0W9bvMRufvxdf2Bi2d/ilJh1K+V2/h31Oefy2t4JUik=;
- b=Sv4gjLRcTQ424cQC6bnZjnOdH4vARWtShm1KHcc/WH0Pjxkg9eYJcBvt8zVlq+vhK2bLvK4vE8iOL06/ZZYIhdgpqmavUR3j2C5YNz+OnIieov0TTM+lx+MEV0pTv8St0pDDX+J9PijwnHH4AihhrBbb+OnQW3mb5FVBZ7ckfy+7pJd5mKYhGb/NImgmrsua3v8g58ApisbgI/fPlAZe+kAkbUUf7p5B2jNTLuru0K2MO8KTAP2t+3vzeJhX16iytuJCG4sxFulTcTtJIb6Viod926/OW+rOFQjb4btYhY3vcb5qCSNte45cU7gk8jHeGbD1NxNa0nFI0kA40KxZJQ==
+ bh=6upfybPELbzHVKfDxljbgRD0nNEHohSZSsTjDaAKivw=;
+ b=e6OHMAivmf+oCf80QT/tZ+6CA20zLnt+wqn7cX0C5ZSo+TLhyA3IhGuzpgbeWIAjlDhiHFPH+EKtapXwnmxWlD15Al5YqgL7HV8XNFNTdorlv0hfD0873ehaZjQcO/v9vuMiDltT01V9r2L9XHCt7vJ0P/JI078arbAyKobhKJiJcK5ToIQJXXN0FmlKqLdw/UDx2OmHcHeTtuiINXMo256bGbTYuLgHLVD2WNDEepY1eAzsju7WHfOi40IpxSfbAt4zIFr3BM7SjC8WkXoz+9Gxz31z6VIXc0S2ctWRzIbptjcRSHrB6vYb7ql6o1sNEWyNKlJ52RaGE0UIcxO7xg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=hpe.com; dmarc=pass action=none header.from=hpe.com; dkim=pass
- header.d=hpe.com; arc=none
-Received: from DM4PR84MB1976.NAMPRD84.PROD.OUTLOOK.COM (2603:10b6:8:4f::17) by
- MW5PR84MB1817.NAMPRD84.PROD.OUTLOOK.COM (2603:10b6:303:1c3::7) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6363.20; Tue, 2 May 2023 13:14:36 +0000
-Received: from DM4PR84MB1976.NAMPRD84.PROD.OUTLOOK.COM
- ([fe80::11d:9b53:5229:eb4e]) by DM4PR84MB1976.NAMPRD84.PROD.OUTLOOK.COM
- ([fe80::11d:9b53:5229:eb4e%6]) with mapi id 15.20.6340.031; Tue, 2 May 2023
- 13:14:36 +0000
-From: "Verdun, Jean-Marie" <verdun@hpe.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Subject: Meetup in the bay : Save the date June 13th
-Thread-Topic: Meetup in the bay : Save the date June 13th
-Thread-Index: AQHZfPgLAZ9WvIM81kqix+teFXTBHg==
-Date: Tue, 2 May 2023 13:14:36 +0000
-Message-ID: <F27617ED-03D8-4B2E-B4B3-228AA055BF29@hpe.com>
-Accept-Language: en-US
-Content-Language: en-US
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=6upfybPELbzHVKfDxljbgRD0nNEHohSZSsTjDaAKivw=;
+ b=mWt7eBISDnLiJ72sifttXiuRUTyeMNDKvJrX/5VgyOZyxkxi9HBRLWv9wai1uznxrOJ8yayXaTahnbcK6AGRfdJIa/Ta4cuOfyYnVQ6Wkq4QCZA/AnBtZAI7H20TVmUdE1o1Liz/r8Q9pWDSJy/GAac6rJNe2XBEsrQXTnKOFHoZOGlyQQwYz1JNBZHLGWhNvibMZwFeGtGF+qRJx4c+vQB8/pUqrOvIuILISVxIEpfv+2n4G8URZEYMuFSRuHXvZWZ2kLAk/z3FbeYAZNIrINkcmae/jawroa29DnjJssPlaEFgSuq9DpDB/gSe0iAKoeRHWZA/97WrrGJFIzCPPg==
+Received: from SEZPR06MB5269.apcprd06.prod.outlook.com (2603:1096:101:78::6)
+ by SEYPR06MB5015.apcprd06.prod.outlook.com (2603:1096:101:50::8) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6363.29; Sun, 7 May
+ 2023 02:21:11 +0000
+Received: from SEZPR06MB5269.apcprd06.prod.outlook.com
+ ([fe80::76d6:4828:7e80:2965]) by SEZPR06MB5269.apcprd06.prod.outlook.com
+ ([fe80::76d6:4828:7e80:2965%7]) with mapi id 15.20.6363.029; Sun, 7 May 2023
+ 02:21:10 +0000
+From: Ryan Chen <ryan_chen@aspeedtech.com>
+To: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Subject: RE: [PATCH v11 2/2] i2c: aspeed: support ast2600 i2c new register
+ mode driver
+Thread-Topic: [PATCH v11 2/2] i2c: aspeed: support ast2600 i2c new register
+ mode driver
+Thread-Index: AQHZexqquS1FAKmTS0msEvFixuRDUa9HdBoAgAJWy8A=
+Date: Sun, 7 May 2023 02:21:10 +0000
+Message-ID:  <SEZPR06MB526906C3DAFFE0A8FA924AA7F2709@SEZPR06MB5269.apcprd06.prod.outlook.com>
+References: <20230430041712.3247998-1-ryan_chen@aspeedtech.com>
+ <20230430041712.3247998-3-ryan_chen@aspeedtech.com>
+ <ZFFzRL/+73Ftix4Q@smile.fi.intel.com>
+In-Reply-To: <ZFFzRL/+73Ftix4Q@smile.fi.intel.com>
+Accept-Language: zh-TW, en-US
+Content-Language: zh-TW
 X-MS-Has-Attach: 
 X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DM4PR84MB1976:EE_|MW5PR84MB1817:EE_
-x-ms-office365-filtering-correlation-id: adfde87e-731a-46b4-e60a-08db4b0f2d90
+x-ms-traffictypediagnostic: SEZPR06MB5269:EE_|SEYPR06MB5015:EE_
+x-ms-office365-filtering-correlation-id: b2d608a5-f32c-4f06-20d3-08db4ea1b8e8
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: usEt0QUVhI3gsiMa3OCpQVXgdYKUm3w1w4YTOk8o6zmGofV3b3Kn+urNMeJCR2WzH/vKD+8LSdgm5HGUxinQEwuIFbNCZX87+PeD30Xl5gduw+UOqbCKNnLnXPMAss6D5kgUAzOgpbwMQQpqz2SK66460V/5BE+8e1oVqA5Udb8Pir0SRJWQVV0m7eRDx+8YYjGXYaI3dusF1MGo/pp3dvLZqr9H9z/cDDPp+65w9J26AuaI852lCjWFXNru5hoLBIMDgGGMN2+kPc22IuTjG1ruFhaQrOrhOcVizKFqM32hmwKdFTpuFUiiuvTlkJfbCX3nvR1t1cJfAUitGn87qhK8zFBLyUobmHZbqD8GXl6ujDefa9nG5vrErOOVqJWUIGz7UGT4e4hrPzavjBRG9c28ubsBQ3Qk/O8aUfxKl7Q+LasaarpqPqCzihbo4sAQEUETHGZMwOdAlcJa/IZBfsMDMlMKZSi18JTqmQkOG1Wp6IoveM1riQDPtp7NTgPoVevL38BwTfPEuQf9nW3kXpJtc8aA3rX8UcGbHrC6cYMm8b38a+oqj/EvSjVaq16+INeC9znU/ag6t2b8Fk5EvsoX3CdXbm7ZyLnC0+6wMLKOLqfmWBIhCQLKZPgkiqmMKoOp/czI6iUOPpa9YFgT7g==
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM4PR84MB1976.NAMPRD84.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230028)(366004)(39860400002)(346002)(396003)(376002)(136003)(451199021)(5660300002)(86362001)(2616005)(83380400001)(186003)(6506007)(6512007)(82960400001)(166002)(26005)(122000001)(38100700002)(38070700005)(8676002)(8936002)(9326002)(478600001)(33656002)(966005)(6486002)(71200400001)(316002)(36756003)(41300700001)(6916009)(64756008)(66476007)(66556008)(66946007)(66446008)(76116006)(2906002)(4744005)(45980500001);DIR:OUT;SFP:1102;
+x-microsoft-antispam-message-info:  TOvynNvd96ppo93orBpG/Zx9RrhKQEtt0NHIaH8JJZ6xk1Eq85ans/tLTxWKULSR05svMo4qUNt3WpZXfce5HMjG9nOJxQrxZnAXFV+tVTbCTz0LHuDZdNiDjPQ1PuciNWHO0iHPSasY6ZPwhQiS4rgMzRfS+xZqw2JUZaWNhO+dGf1P81MlbZRW97qZfpYFu8esITjbMr98JQZNHsjpZ/tYhymLScTZpuMTrDcsibLe49ZTIn9aSuY8ZPEoWqOgIUvp09qyXEpf8V24qxrh0D+VkPoYBUymcv7LgkqO8p/leRx6d1hHa15OAqvNlbqhCsh2WLza/pqiGZmogPod/DQZPlAJGodwvKrzM43hruxOKH9ya6ZU++7w+Ru83f4cA71tiCho6YP84VQOp7RgvlUz50NuVZmnIwidaCkWCH1uL3/gNVdASA038QicoQCYahyKMNJscCmw3UoLNefRQV/ASBCA2ZQGv2hviW5JM7UFiDzAA+o5cc5FR+FmNT71OWmhK6xZ1ZF9VakTqMox1QqWlRzqgjyc73tXTBUUKdN2blLC+oqkMG+ZQ31p0M3slFjnt9UqeSWUoVhdL6+YAB3tChNx2eNnJA3WpQbxBUQ=
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEZPR06MB5269.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(396003)(136003)(346002)(376002)(39830400003)(366004)(451199021)(41300700001)(2906002)(30864003)(54906003)(83380400001)(478600001)(122000001)(186003)(6506007)(26005)(33656002)(9686003)(316002)(86362001)(8936002)(8676002)(52536014)(7416002)(5660300002)(4326008)(38100700002)(71200400001)(55016003)(966005)(38070700005)(6916009)(7696005)(76116006)(66476007)(66556008)(66446008)(64756008)(66946007);DIR:OUT;SFP:1102;
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?SnQ4Y0VSRFNaZTBqU2tZQXpla3NhVG1VekR6NUNKWmNDSXg5ZXNONUhSUHNK?=
- =?utf-8?B?MWpneHVGOGpEckpJcWNOOHRabnNoQm5ycGxEZGN5dm5oemlYZHBVbHA4ZlJL?=
- =?utf-8?B?aWpQME9hZk9EMzBqSm1FeHAyU1I4U0llK1dTZ3lla00xaUNyLzhRU0MzNGh1?=
- =?utf-8?B?SWlVdXZpbWVraXlqNUpSWmVPZnFRZ0tHOHh5UnlRaXBsK2V3UnpWb3VSbC9j?=
- =?utf-8?B?WC84L21ZYWNCL1BvK01wRzZaWlc3YWRlWlhLRDZyeFl1Y3ZpNTRvMG9MdFds?=
- =?utf-8?B?L1RwYlh3c3g5TnpyRUhFL3RQRnp5bG1TbTRPUk16Vy9xSjhmWVcyMGIydVc0?=
- =?utf-8?B?ZW1kYlRzNGJKUDU3WHJ1WEp2eld0ckNZVzFaenNmK08xYUswVW1ldU5IdkxB?=
- =?utf-8?B?aCtDZ2o1b2xBcmU2L1BMOXRZQnBkd3RSQmJiSHEyL0lORU1aM3YrRTlmNlBO?=
- =?utf-8?B?RWRucU9RWXZiQVFpVlVRTkFHL3BDWVFVUUgzcGQ2S2RHaFlKRkxPZWxHdklY?=
- =?utf-8?B?c0pKTERKbEZrWFBKZG83QUZXaGRkOVlvRXBPejZHTmVWWDhGQXZRQVRzS3Ix?=
- =?utf-8?B?Lzgzem5MWWVocXE2SFVDbWE4eXl0VG1KeW03eTBhSERBUDFvZE9CRkJTamps?=
- =?utf-8?B?OWpORFM5eEJoRmh0bGgwWVd1azFFZzkvaEMrdWY2VDhlTEZoTTZ4MzU5ekVR?=
- =?utf-8?B?S3J3UE1UTlVXdVBVU0RudU9VVWN2YWxsSUhHQi9pWUNFcjlPSEF2ZytINjE5?=
- =?utf-8?B?cTR5TnFCWEM1Y3p4MHJIL0lqMGlGMFRLOFVBTS94NXFEaWFYbXpIZHRvZXFt?=
- =?utf-8?B?S09CeHVKZXNmMFhXL3daQ0hKU2lNZlE0WFhFQnl6YS85NW10ZmthMlhrUkls?=
- =?utf-8?B?SFhHeGZnZDBlRVNRTmlRMFdDcDVZalNrc2M3V3hmT2NVVndsY0NpdzJYNTY3?=
- =?utf-8?B?U3g0eEZ2TGY5QjVvUGU0clBOaGQyN1lBQzgyYjRmZXVUWEhtMDM3STkzYVpu?=
- =?utf-8?B?b2V6d0EvbFJxSUlUQUFxREpBYVg2L2hTbjVDQ2FESmRma2dzdFA3R0ZiTnBu?=
- =?utf-8?B?K3RSenpFcENKcTJXZ2VIbzhWNXY2OTlNRUY2ZTkxN3dXRGJUeGUrWjNYZzVj?=
- =?utf-8?B?ZE12UzZYblZrMStaR24rbnJUTk0rQWtYakN6N0tPUWRNNitEWS9GVS8xUXRq?=
- =?utf-8?B?dm5sWHpaYm16RjU5dnF2cWRqOUtyckFpU0hlb25yOGMvU1o5R0dHUitLWUEy?=
- =?utf-8?B?MmFRcm15TUNXWmZKYXEveDFDRmt4UHd5WGE3dFQvSHZudnpuc1JTSHkwRUpE?=
- =?utf-8?B?Mzc3WDkvZjdKbk5EdFQzOW5jOUFqYlM1SnlPNExVVHR0S21ka3laU3JSUklz?=
- =?utf-8?B?ZEk5ZDluaEloelRWSnY4bWxKdVIvT2hxVmJZT0xVTE9YQUZWUkdWTWZsblpT?=
- =?utf-8?B?MW9uWDc2eFlSUy9YaHhGbE0zcmdjb1FJRk83bllrVnRUOFIwUWdEb2FsVS94?=
- =?utf-8?B?SjBGRXNvNnFOeDVUUzdEeWtmd2I5ZTRMWXRQbXUrMktJQ3lXZ1FldEtWaTZJ?=
- =?utf-8?B?SUpwWkRjVkRSVE1aeXNBYU1TSUVSMk9XVXBQUXRVMFd6YkdOSHpGN2ZXUk1Y?=
- =?utf-8?B?eUVRd0ZadmxLSkhvRU9NTzJjd0dZazBzVnpVWTIrWCtSdjBvTDQ5TEdvc3BI?=
- =?utf-8?B?TEpNSTJ6Y2N2VUZRV1RySG1RRnFjY3NKNVBtRTJ0cVgrVDlKUURXbS96RnU2?=
- =?utf-8?B?ajV4YzRYVUNKUnBMMTBKY095Ti80ZXNtNkQzK0xJSXVLUXNOQ2ZOa09RREF1?=
- =?utf-8?B?b2tOcDhiMVgxZ2l6ejk4c1YveXI3N3RseEJFT0dKdWFOcWdpR29BYTRxdXkz?=
- =?utf-8?B?K1RZVWY5Ri9Cbnd3ZjM3L2wvL2s5RUVmbFF0Y3lsOUlxSXFMTWhlaDY2OEhK?=
- =?utf-8?B?ZWZKelE3N3NEOURHR0pvMWNqKzZpbGdiRUxFYVFlMjVYQ3NCM1FJcERCenRk?=
- =?utf-8?B?cVlDbmhpcW4vVFNxNDJCRHBNeEFBTWJmai9LQk9TT1hYVTEvL2hFMGx2d0t6?=
- =?utf-8?B?cGNkNlpDMTVEZlZZTmtVT3RJQ0ZRZkV2RmFrYjZPNkRFMStSSDRDNWEwQ1BC?=
- =?utf-8?Q?PfUIJ7RQet/hIHXqkDbu0YdRp?=
-Content-Type: multipart/alternative;
-	boundary="_000_F27617ED03D84B2EB4B3228AA055BF29hpecom_"
+x-ms-exchange-antispam-messagedata-0:  =?us-ascii?Q?wz+7ml4/ToA3x7GWojGLEvYzXl76UZNcjw/6J6ypf7ooQPXaveNGsNkDJlib?=
+ =?us-ascii?Q?E7+ff6KjE80eoqSG1s73MjPxxDYIVztUylCmvpjOzzkexQSV2mjchoqrsX8w?=
+ =?us-ascii?Q?sP+TJpycvPSPKg2jGtryItze/jWeNDs0CuaPW7GyP5MJgQbUXO5HrcjHgZp/?=
+ =?us-ascii?Q?RcqfmB+FhWAQ7dtaD2lKqFd6yCfUQnC9XI2RzVvmsAwwbjEp/WHtwRAftd3g?=
+ =?us-ascii?Q?ftlIjoCoH0DYPT9GfP1JJwj6irzqbrgLYoNP+TmpAqDIvwmkKk7zJUcNSRkK?=
+ =?us-ascii?Q?2LuLgTbX73M964sf76H+R1pc9BCeokVU44Z3NNfmNpwjt31iKbnZtCnc0gkw?=
+ =?us-ascii?Q?ML/4FWbKOsRCtE1x8y0phpTSqCHj1VQbjFZ+ws2+D9F6HQ8m3Fa89XicZgUj?=
+ =?us-ascii?Q?OtAvOL3aNfEF6TlDOxwD71B24Rx+wDkDwq5i4LVDZNEcYPacFkZkWGx/WgON?=
+ =?us-ascii?Q?1ZrBL5o/KWe6VPf2ZRSCdceVKfKpJ5TjSngOv3r6OJKXg3LeTwK+CIUFx9Nn?=
+ =?us-ascii?Q?awz/D6dwIT/EVCCIBlT4JOPkgCZgBU5aZdrXoU2RdF6KJk6pvyKltFGPtOWh?=
+ =?us-ascii?Q?yRLqQY0iQN8sD0AwvI7kfxjOvxYmEaxJ1O+ghM9DiFw5n0/93AWrES1aLXgx?=
+ =?us-ascii?Q?md4iXSRxBgs0eZXERsZdos1xQ5XnhIpXDZ6wvvhna92c+ClYffKH/2HoWZjy?=
+ =?us-ascii?Q?sOCBFVlpUGdh6NBnc8PsRl78HMxq4Xk1VanM2ZBfWhBXQZg0vRuYAw4NBifX?=
+ =?us-ascii?Q?h2yGeKA3OkuRToNJlPnpQpAHB3s7XdPE/Zw369tSzM4iyKBI+qZNTuqe+H26?=
+ =?us-ascii?Q?jTtDLiqfb+8owf3sfIGrchaRVgDIJ/QTrqAKj2JIBJZxTzgDvahkspXSb8/L?=
+ =?us-ascii?Q?f5XDKz5n+OaD1zezqHS7r93lP4oZuBStUW4vH/+9D+JVaeIh9AhqcPx9C9W/?=
+ =?us-ascii?Q?ANdZOTigU8D+F8Y9WA2UiJFp9KizOgkGdEoHhEHuvgQd29sDxXlFaDzootF2?=
+ =?us-ascii?Q?IAkkQFIgdgn+clAlcQPtLyxOXuExwyYEaXXGHe2bIDckq5wi6aufhq9+ZxA+?=
+ =?us-ascii?Q?LS3z0M2GlOq+cZvERkukOvXvWvOWcFaL8J2Ax2diTvbWVSVhYd2HobAHe3+Z?=
+ =?us-ascii?Q?o5RxRD8EewPDs5tgy7twEVk5RsseCRbp0uwIBl8vkcWpLSpnMTuDqHIMrdcp?=
+ =?us-ascii?Q?e4QHN/kYVWl4PZZakT3h6PoBuhJHkwLbLsO39Y7PdRX86A5EkSpCFV1nxurl?=
+ =?us-ascii?Q?YoyG+I3PCmMi/+sen2J6uLV+PyjM8DzrbULlCNw/s3+wX36D+DlTO/R0qZED?=
+ =?us-ascii?Q?bpFTpUOFy4TodyZkBsDW2irGkshJ0sFu7zCG35GAzW2lMJBfaxw6DW9SrPf7?=
+ =?us-ascii?Q?bJ0U8y4/4opDIvW+DUpLTcVfgxdYTgy4OBSS0U72IX2SkJQCNchwHArXF+Lh?=
+ =?us-ascii?Q?X2opByLiFebNNxjRRodXOSpvu8DU8siKWpxX/4NeNQuJsJEhTahG989HTogL?=
+ =?us-ascii?Q?7Eh9PUPYX6gqzloDx7CXxa+SyvHGwdq+TtJ2Jq2sApYXu7RrmMCQL/SC2BTM?=
+ =?us-ascii?Q?in3Ih93oSVrhTvWO+mlo0UCheTj3WNm6rtGxNPLE?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: aspeedtech.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR84MB1976.NAMPRD84.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: adfde87e-731a-46b4-e60a-08db4b0f2d90
-X-MS-Exchange-CrossTenant-originalarrivaltime: 02 May 2023 13:14:36.3553
+X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB5269.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b2d608a5-f32c-4f06-20d3-08db4ea1b8e8
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 May 2023 02:21:10.1608
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 105b2061-b669-4b31-92ac-24d304d195dc
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: p6D35O3Cc5DjbD0WTqYpoqEIZn0e6R4BLsBpCj08ETbTFDI77BLfgnzn0Syb3PfO
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW5PR84MB1817
-X-OriginatorOrg: hpe.com
-X-Proofpoint-ORIG-GUID: zvKJXd9V9DjSKpM4cgNQ4H4llxJfsYkg
-X-Proofpoint-GUID: zvKJXd9V9DjSKpM4cgNQ4H4llxJfsYkg
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
-MIME-Version: 1.0
-X-HPE-SCL: -1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-02_08,2023-04-27_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- phishscore=0 priorityscore=1501 impostorscore=0 mlxscore=0 suspectscore=0
- mlxlogscore=999 malwarescore=0 spamscore=0 adultscore=0 clxscore=1011
- bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2303200000 definitions=main-2305020112
-X-Mailman-Approved-At: Sun, 07 May 2023 10:35:01 +1000
+X-MS-Exchange-CrossTenant-userprincipalname: kawdubgZlqE580GLXJhCf8MZdfb20Gkqadfj6BiqZ6GuPnsyCoZJJcl0xw7SqbWiyPhDRWHS8WZlmeWoTTQRDNKaJuIOhFlDoUz2eZqT0RM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEYPR06MB5015
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -165,145 +125,468 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, Brendan Higgins <brendan.higgins@linux.dev>, Conor Dooley <conor.dooley@microchip.com>, "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, "jk@codeconstruct.com.au" <jk@codeconstruct.com.au>, Jean Delvare <jdelvare@suse.de>, Andi Shyti <andi.shyti@kernel.org>, Phil Edworthy <phil.edworthy@renesas.com>, Florian Fainelli <f.fainelli@gmail.com>, "=linux-kernel@vger.kernel.org" <=linux-kernel@vger.kernel.org>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Joel Stanley <joel@jms.id.au>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, William Zhang <william.zhang@broadcom.com>, Rob Herring <robh+dt@kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>, Andrew Jeffery <andrew@aj.id.au>, Wolfram Sang <wsa@kernel.org>, Tyrone Ting <kfting@nuvoton.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_F27617ED03D84B2EB4B3228AA055BF29hpecom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Hello Andy,
+>=20
+> On Sun, Apr 30, 2023 at 12:17:12PM +0800, Ryan Chen wrote:
+> > Add i2c new register mode driver to support AST2600 i2c new register
+> > mode. AST2600 i2c controller have legacy and new register mode. The
+> > new register mode have global register support 4 base clock for scl
+> > clock selection, and new clock divider mode. The i2c new register mode
+> > have separate register set to control i2c master and slave.
+>=20
+> ...
+>=20
+> > +#include <linux/clk.h>
+> > +#include <linux/err.h>
+> > +#include <linux/i2c.h>
+> > +#include <linux/io.h>
+> > +#include <linux/slab.h>
+> > +#include <linux/delay.h>
+> > +#include <linux/reset.h>
+> > +#include <linux/module.h>
+> > +#include <linux/interrupt.h>
+> > +#include <linux/completion.h>
+> > +#include <linux/of.h>
+> > +#include <linux/of_irq.h>
+> > +#include <linux/mfd/syscon.h>
+> > +#include <linux/regmap.h>
+> > +#include <linux/of_device.h>
+> > +#include <linux/dma-mapping.h>
+> > +#include <linux/i2c-smbus.h>
+>=20
+> Ordered?
+Update by alphabetical order
 
-SGksDQoNCkkgaGF2ZSBwb3N0ZWQgeWVzdGVyZGF5IG9uIGRpc2NvcmQgdGhlIGFubm91bmNlbWVu
-dCBvZiBhbiB1cGNvbWluZyBtZWV0dXAgb24gSnVuZSAxM3RoIHdoaWNoIHdpbGwgYmUgaG9zdGVk
-IGF0IEhQRSBjYW1wdXMgaW4gU2FuIEpvc2UuIGh0dHBzOi8vd3d3LmV2ZW50YnJpdGUuY29tL2Uv
-b3BlbmJtYy1iYXktYXJlYS1tZWV0dXAtdGlja2V0cy02Mjg2MjU5MjYwNjcNCg0KVGhhdCBtZWV0
-dXAgaXMgb3BlbiB0byBhbnlib2R5LCBvbmx5IHJlZ2lzdHJhdGlvbiBpcyByZXF1aXJlZCB0byBr
-ZWVwIHRoZSByb29tIGNhcGFjaXR5IHVuZGVyIGNvbnRyb2wuIFdlIHdpbGwgYmUgZXhwbG9yaW5n
-IGhvdyBPcGVuQk1DIHdvcmtzIG9uIEhQRSBQcm9MaWFudCBtYWNoaW5lcywgYW5kIGRpZyBpbnRv
-IHRoZSB0ZWNobmljYWwgYXNwZWN0IG9mIGl0IGluY2x1ZGluZw0KDQogICogICBSb20gY2hhbm5l
-bCBjb21tdW5pY2F0aW9uDQogICogICBSb20gY29uZmlndXJhdGlvbg0KICAqICAgR1hQIEFzaWMg
-YXJjaGl0ZWN0dXJlIGFuZCB3aGVyZSBkbyB3ZSBzdGFuZCByZWdhcmRpbmcgc2VjdXJpdHkgYW5k
-IGxpbnV4IGRyaXZlcnMNCiAgKiAgIFNwZWNpZmljcyBuZWVkZWQgZm9yIHRoZSBQcm9MaWFudCBm
-YW1pbHkNCg0KSSBhbSBvcGVuIHRvIG90aGVyIHRvcGljcyBmcm9tIG90aGVyIGhhcmR3YXJlIHZl
-bmRvcnMsIG9yIGNvbW11bml0eSBtZW1iZXJzLiBQbGVhc2UgcGluZyBtZSBpZiB5b3Ugd2FudCBy
-dW4gYSBxdWljayB0YWxrIGR1cmluZyB0aGF0IG1lZXR1cC4gT3VyIGNvbW11bml0eSBjYW7igJl0
-IGV4aXN0IHdpdGhvdXQgeW91Lg0KDQpIb3BlIHRvIHNlZSB5b3UgaW4gdGhlIGJheSAhDQoNCklm
-IHlvdSBhcmUgaW4gRXVyb3BlLCBkbyBub3Qgd29ycnkgdG9vIG11Y2ggd2Ugd2lsbCBzZXR1cCBh
-bm90aGVyIG1lZXR1cCBzb21ld2hlcmUgaW4gU2VwdGVtYmVyLg0KDQp2ZWptYXJpZQ0K
+#include <linux/clk.h>
+#include <linux/completion.h>
+#include <linux/delay.h>
+#include <linux/dma-mapping.h>
+#include <linux/err.h>
+#include <linux/i2c.h>
+#include <linux/i2c-smbus.h>
+#include <linux/interrupt.h>
+#include <linux/io.h>
+#include <linux/mfd/syscon.h>
+#include <linux/module.h>
+#include <linux/of.h>
+#include <linux/of_device.h>
+#include <linux/of_irq.h>
+#include <linux/regmap.h>
+#include <linux/reset.h>
+#include <linux/slab.h>
+> ...
+>=20
+> > +#define AST2600_GLOBAL_INIT				\
+> > +			(AST2600_I2CG_CTRL_NEW_REG |	\
+> > +			AST2600_I2CG_CTRL_NEW_CLK_DIV)
+>=20
+> Make just a one TAB and put the last two lines on the single one.
 
---_000_F27617ED03D84B2EB4B3228AA055BF29hpecom_
-Content-Type: text/html; charset="utf-8"
-Content-ID: <1850343D1791484D990605E1203B6DD4@NAMPRD84.PROD.OUTLOOK.COM>
-Content-Transfer-Encoding: base64
+Update by following.=20
 
-PGh0bWwgeG1sbnM6bz0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6b2ZmaWNlIiB4
-bWxuczp3PSJ1cm46c2NoZW1hcy1taWNyb3NvZnQtY29tOm9mZmljZTp3b3JkIiB4bWxuczptPSJo
-dHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL29mZmljZS8yMDA0LzEyL29tbWwiIHhtbG5zPSJo
-dHRwOi8vd3d3LnczLm9yZy9UUi9SRUMtaHRtbDQwIj4NCjxoZWFkPg0KPG1ldGEgaHR0cC1lcXVp
-dj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPg0KPG1l
-dGEgbmFtZT0iR2VuZXJhdG9yIiBjb250ZW50PSJNaWNyb3NvZnQgV29yZCAxNSAoZmlsdGVyZWQg
-bWVkaXVtKSI+DQo8c3R5bGU+PCEtLQ0KLyogRm9udCBEZWZpbml0aW9ucyAqLw0KQGZvbnQtZmFj
-ZQ0KCXtmb250LWZhbWlseTpXaW5nZGluZ3M7DQoJcGFub3NlLTE6NSAwIDAgMCAwIDAgMCAwIDAg
-MDt9DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OiJDYW1icmlhIE1hdGgiOw0KCXBhbm9zZS0x
-OjIgNCA1IDMgNSA0IDYgMyAyIDQ7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpDYWxpYnJp
-Ow0KCXBhbm9zZS0xOjIgMTUgNSAyIDIgMiA0IDMgMiA0O30NCi8qIFN0eWxlIERlZmluaXRpb25z
-ICovDQpwLk1zb05vcm1hbCwgbGkuTXNvTm9ybWFsLCBkaXYuTXNvTm9ybWFsDQoJe21hcmdpbjow
-aW47DQoJZm9udC1zaXplOjEyLjBwdDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJp
-ZjsNCgltc28tbGlnYXR1cmVzOnN0YW5kYXJkY29udGV4dHVhbDt9DQphOmxpbmssIHNwYW4uTXNv
-SHlwZXJsaW5rDQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgljb2xvcjojMDU2M0MxOw0KCXRl
-eHQtZGVjb3JhdGlvbjp1bmRlcmxpbmU7fQ0KcC5Nc29MaXN0UGFyYWdyYXBoLCBsaS5Nc29MaXN0
-UGFyYWdyYXBoLCBkaXYuTXNvTGlzdFBhcmFncmFwaA0KCXttc28tc3R5bGUtcHJpb3JpdHk6MzQ7
-DQoJbWFyZ2luLXRvcDowaW47DQoJbWFyZ2luLXJpZ2h0OjBpbjsNCgltYXJnaW4tYm90dG9tOjBp
-bjsNCgltYXJnaW4tbGVmdDouNWluOw0KCWZvbnQtc2l6ZToxMi4wcHQ7DQoJZm9udC1mYW1pbHk6
-IkNhbGlicmkiLHNhbnMtc2VyaWY7DQoJbXNvLWxpZ2F0dXJlczpzdGFuZGFyZGNvbnRleHR1YWw7
-fQ0Kc3Bhbi5FbWFpbFN0eWxlMTcNCgl7bXNvLXN0eWxlLXR5cGU6cGVyc29uYWwtY29tcG9zZTsN
-Cglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjsNCgljb2xvcjp3aW5kb3d0ZXh0O30N
-Ci5Nc29DaHBEZWZhdWx0DQoJe21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5Ow0KCWZvbnQtc2l6
-ZToxMi4wcHQ7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7fQ0KQHBhZ2UgV29y
-ZFNlY3Rpb24xDQoJe3NpemU6OC41aW4gMTEuMGluOw0KCW1hcmdpbjoxLjBpbiAxLjBpbiAxLjBp
-biAxLjBpbjt9DQpkaXYuV29yZFNlY3Rpb24xDQoJe3BhZ2U6V29yZFNlY3Rpb24xO30NCi8qIExp
-c3QgRGVmaW5pdGlvbnMgKi8NCkBsaXN0IGwwDQoJe21zby1saXN0LWlkOjEyMDI3OTA2MzY7DQoJ
-bXNvLWxpc3QtdHlwZTpoeWJyaWQ7DQoJbXNvLWxpc3QtdGVtcGxhdGUtaWRzOi0xNDk5ODUzNzM0
-IC0xNzg4MTg1MTAwIDY3Njk4NjkxIDY3Njk4NjkzIDY3Njk4Njg5IDY3Njk4NjkxIDY3Njk4Njkz
-IDY3Njk4Njg5IDY3Njk4NjkxIDY3Njk4NjkzO30NCkBsaXN0IGwwOmxldmVsMQ0KCXttc28tbGV2
-ZWwtc3RhcnQtYXQ6MDsNCgltc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDpidWxsZXQ7DQoJbXNvLWxl
-dmVsLXRleHQ6LTsNCgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVy
-LXBvc2l0aW9uOmxlZnQ7DQoJdGV4dC1pbmRlbnQ6LS4yNWluOw0KCWZvbnQtZmFtaWx5OiJDYWxp
-YnJpIixzYW5zLXNlcmlmOw0KCW1zby1mYXJlYXN0LWZvbnQtZmFtaWx5OkNhbGlicmk7fQ0KQGxp
-c3QgbDA6bGV2ZWwyDQoJe21zby1sZXZlbC1udW1iZXItZm9ybWF0OmJ1bGxldDsNCgltc28tbGV2
-ZWwtdGV4dDpvOw0KCW1zby1sZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXIt
-cG9zaXRpb246bGVmdDsNCgl0ZXh0LWluZGVudDotLjI1aW47DQoJZm9udC1mYW1pbHk6IkNvdXJp
-ZXIgTmV3Ijt9DQpAbGlzdCBsMDpsZXZlbDMNCgl7bXNvLWxldmVsLW51bWJlci1mb3JtYXQ6YnVs
-bGV0Ow0KCW1zby1sZXZlbC10ZXh0Ou+CpzsNCgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCglt
-c28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJdGV4dC1pbmRlbnQ6LS4yNWluOw0KCWZv
-bnQtZmFtaWx5OldpbmdkaW5nczt9DQpAbGlzdCBsMDpsZXZlbDQNCgl7bXNvLWxldmVsLW51bWJl
-ci1mb3JtYXQ6YnVsbGV0Ow0KCW1zby1sZXZlbC10ZXh0Ou+CtzsNCgltc28tbGV2ZWwtdGFiLXN0
-b3A6bm9uZTsNCgltc28tbGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJdGV4dC1pbmRlbnQ6
-LS4yNWluOw0KCWZvbnQtZmFtaWx5OlN5bWJvbDt9DQpAbGlzdCBsMDpsZXZlbDUNCgl7bXNvLWxl
-dmVsLW51bWJlci1mb3JtYXQ6YnVsbGV0Ow0KCW1zby1sZXZlbC10ZXh0Om87DQoJbXNvLWxldmVs
-LXRhYi1zdG9wOm5vbmU7DQoJbXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjpsZWZ0Ow0KCXRleHQt
-aW5kZW50Oi0uMjVpbjsNCglmb250LWZhbWlseToiQ291cmllciBOZXciO30NCkBsaXN0IGwwOmxl
-dmVsNg0KCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDpidWxsZXQ7DQoJbXNvLWxldmVsLXRleHQ6
-74KnOw0KCW1zby1sZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1udW1iZXItcG9zaXRp
-b246bGVmdDsNCgl0ZXh0LWluZGVudDotLjI1aW47DQoJZm9udC1mYW1pbHk6V2luZ2RpbmdzO30N
-CkBsaXN0IGwwOmxldmVsNw0KCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDpidWxsZXQ7DQoJbXNv
-LWxldmVsLXRleHQ674K3Ow0KCW1zby1sZXZlbC10YWItc3RvcDpub25lOw0KCW1zby1sZXZlbC1u
-dW1iZXItcG9zaXRpb246bGVmdDsNCgl0ZXh0LWluZGVudDotLjI1aW47DQoJZm9udC1mYW1pbHk6
-U3ltYm9sO30NCkBsaXN0IGwwOmxldmVsOA0KCXttc28tbGV2ZWwtbnVtYmVyLWZvcm1hdDpidWxs
-ZXQ7DQoJbXNvLWxldmVsLXRleHQ6bzsNCgltc28tbGV2ZWwtdGFiLXN0b3A6bm9uZTsNCgltc28t
-bGV2ZWwtbnVtYmVyLXBvc2l0aW9uOmxlZnQ7DQoJdGV4dC1pbmRlbnQ6LS4yNWluOw0KCWZvbnQt
-ZmFtaWx5OiJDb3VyaWVyIE5ldyI7fQ0KQGxpc3QgbDA6bGV2ZWw5DQoJe21zby1sZXZlbC1udW1i
-ZXItZm9ybWF0OmJ1bGxldDsNCgltc28tbGV2ZWwtdGV4dDrvgqc7DQoJbXNvLWxldmVsLXRhYi1z
-dG9wOm5vbmU7DQoJbXNvLWxldmVsLW51bWJlci1wb3NpdGlvbjpsZWZ0Ow0KCXRleHQtaW5kZW50
-Oi0uMjVpbjsNCglmb250LWZhbWlseTpXaW5nZGluZ3M7fQ0Kb2wNCgl7bWFyZ2luLWJvdHRvbTow
-aW47fQ0KdWwNCgl7bWFyZ2luLWJvdHRvbTowaW47fQ0KLS0+PC9zdHlsZT4NCjwvaGVhZD4NCjxi
-b2R5IGxhbmc9IkVOLVVTIiBsaW5rPSIjMDU2M0MxIiB2bGluaz0iIzk1NEY3MiIgc3R5bGU9Indv
-cmQtd3JhcDpicmVhay13b3JkIj4NCjxkaXYgY2xhc3M9IldvcmRTZWN0aW9uMSI+DQo8cCBjbGFz
-cz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+SGksPG86cD48L286
-cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6
-ZToxMS4wcHQiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3Jt
-YWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij5JIGhhdmUgcG9zdGVkIHllc3RlcmRh
-eSBvbiBkaXNjb3JkIHRoZSBhbm5vdW5jZW1lbnQgb2YgYW4gdXBjb21pbmcgbWVldHVwIG9uIEp1
-bmUgMTM8c3VwPnRoPC9zdXA+IHdoaWNoIHdpbGwgYmUgaG9zdGVkIGF0IEhQRSBjYW1wdXMgaW4g
-U2FuIEpvc2UuDQo8YSBocmVmPSJodHRwczovL3d3dy5ldmVudGJyaXRlLmNvbS9lL29wZW5ibWMt
-YmF5LWFyZWEtbWVldHVwLXRpY2tldHMtNjI4NjI1OTI2MDY3Ij4NCmh0dHBzOi8vd3d3LmV2ZW50
-YnJpdGUuY29tL2Uvb3BlbmJtYy1iYXktYXJlYS1tZWV0dXAtdGlja2V0cy02Mjg2MjU5MjYwNjc8
-L2E+PG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5
-bGU9ImZvbnQtc2l6ZToxMS4wcHQiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNs
-YXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij5UaGF0IG1lZXR1
-cCBpcyBvcGVuIHRvIGFueWJvZHksIG9ubHkgcmVnaXN0cmF0aW9uIGlzIHJlcXVpcmVkIHRvIGtl
-ZXAgdGhlIHJvb20gY2FwYWNpdHkgdW5kZXIgY29udHJvbC4gV2Ugd2lsbCBiZSBleHBsb3Jpbmcg
-aG93IE9wZW5CTUMgd29ya3Mgb24gSFBFIFByb0xpYW50IG1hY2hpbmVzLCBhbmQgZGlnIGludG8g
-dGhlIHRlY2huaWNhbCBhc3BlY3Qgb2YNCiBpdCBpbmNsdWRpbmc8bzpwPjwvbzpwPjwvc3Bhbj48
-L3A+DQo8dWwgc3R5bGU9Im1hcmdpbi10b3A6MGluIiB0eXBlPSJkaXNjIj4NCjxsaSBjbGFzcz0i
-TXNvTGlzdFBhcmFncmFwaCIgc3R5bGU9Im1hcmdpbi1sZWZ0OjBpbjttc28tbGlzdDpsMCBsZXZl
-bDEgbGZvMSI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPlJvbSBjaGFubmVsIGNvbW11
-bmljYXRpb248bzpwPjwvbzpwPjwvc3Bhbj48L2xpPjxsaSBjbGFzcz0iTXNvTGlzdFBhcmFncmFw
-aCIgc3R5bGU9Im1hcmdpbi1sZWZ0OjBpbjttc28tbGlzdDpsMCBsZXZlbDEgbGZvMSI+PHNwYW4g
-c3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPlJvbSBjb25maWd1cmF0aW9uPG86cD48L286cD48L3Nw
-YW4+PC9saT48bGkgY2xhc3M9Ik1zb0xpc3RQYXJhZ3JhcGgiIHN0eWxlPSJtYXJnaW4tbGVmdDow
-aW47bXNvLWxpc3Q6bDAgbGV2ZWwxIGxmbzEiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0
-Ij5HWFAgQXNpYyBhcmNoaXRlY3R1cmUgYW5kIHdoZXJlIGRvIHdlIHN0YW5kIHJlZ2FyZGluZyBz
-ZWN1cml0eSBhbmQgbGludXggZHJpdmVyczxvOnA+PC9vOnA+PC9zcGFuPjwvbGk+PGxpIGNsYXNz
-PSJNc29MaXN0UGFyYWdyYXBoIiBzdHlsZT0ibWFyZ2luLWxlZnQ6MGluO21zby1saXN0OmwwIGxl
-dmVsMSBsZm8xIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+U3BlY2lmaWNzIG5lZWRl
-ZCBmb3IgdGhlIFByb0xpYW50IGZhbWlseTxvOnA+PC9vOnA+PC9zcGFuPjwvbGk+PC91bD4NCjxw
-IGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij48bzpwPiZu
-YnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0i
-Zm9udC1zaXplOjExLjBwdCI+SSBhbSBvcGVuIHRvIG90aGVyIHRvcGljcyBmcm9tIG90aGVyIGhh
-cmR3YXJlIHZlbmRvcnMsIG9yIGNvbW11bml0eSBtZW1iZXJzLiBQbGVhc2UgcGluZyBtZSBpZiB5
-b3Ugd2FudCBydW4gYSBxdWljayB0YWxrIGR1cmluZyB0aGF0IG1lZXR1cC4gT3VyIGNvbW11bml0
-eSBjYW7igJl0IGV4aXN0IHdpdGhvdXQgeW91LjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNs
-YXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0Ij48bzpwPiZuYnNw
-OzwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9u
-dC1zaXplOjExLjBwdCI+SG9wZSB0byBzZWUgeW91IGluIHRoZSBiYXkgISA8bzpwPg0KPC9vOnA+
-PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6
-MTEuMHB0Ij48bzpwPiZuYnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
-Ij48c3BhbiBzdHlsZT0iZm9udC1zaXplOjExLjBwdCI+SWYgeW91IGFyZSBpbiBFdXJvcGUsIGRv
-IG5vdCB3b3JyeSB0b28gbXVjaCB3ZSB3aWxsIHNldHVwIGFub3RoZXIgbWVldHVwIHNvbWV3aGVy
-ZSBpbiBTZXB0ZW1iZXIuPG86cD48L286cD48L3NwYW4+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1h
-bCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMS4wcHQiPjxvOnA+Jm5ic3A7PC9vOnA+PC9zcGFu
-PjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTEuMHB0
-Ij52ZWptYXJpZSA8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8L2Rpdj4NCjwvYm9keT4NCjwvaHRt
-bD4NCg==
+#define AST2600_GLOBAL_INIT		\
+	(AST2600_I2CG_CTRL_NEW_REG |	\
+	 AST2600_I2CG_CTRL_NEW_CLK_DIV)
+> ...
+>=20
+> > +#define I2CCG_DIV_CTRL 0xC6411208
+>=20
+> Is it decimal? Is it combination of bitfields? Can you add a comment what=
+ is
+> this magic?
+>=20
+This have been comment in previous line. I will move above of this magic co=
+de.
+/*
+ * APB clk : 100Mhz
+ * div	: scl		: baseclk [APB/((div/2) + 1)] : tBuf [1/bclk * 16]
+ * I2CG10[31:24] base clk4 for i2c auto recovery timeout counter (0xC6)
+ * I2CG10[23:16] base clk3 for Standard-mode (100Khz) min tBuf 4.7us
+ * 0x3c : 100.8Khz	: 3.225Mhz					  : 4.96us
+ * 0x3d : 99.2Khz	: 3.174Mhz					  : 5.04us
+ * 0x3e : 97.65Khz	: 3.125Mhz					  : 5.12us
+ * 0x40 : 97.75Khz	: 3.03Mhz					  : 5.28us
+ * 0x41 : 99.5Khz	: 2.98Mhz					  : 5.36us (default)
+ * I2CG10[15:8] base clk2 for Fast-mode (400Khz) min tBuf 1.3us
+ * 0x12 : 400Khz	: 10Mhz						  : 1.6us
+ * I2CG10[7:0] base clk1 for Fast-mode Plus (1Mhz) min tBuf 0.5us
+ * 0x08 : 1Mhz		: 20Mhz						  : 0.8us
+ */
+> ...
+>=20
+> > +struct ast2600_i2c_timing_table {
+> > +	u32 divisor;
+> > +	u32 timing;
+> > +};
+>=20
+> Is it even used?
+>=20
+Will remove.=20
+> ...
+>=20
+> > +enum xfer_mode {
+> > +	BYTE_MODE =3D 0,
+>=20
+> Why explicit assignment?
 
---_000_F27617ED03D84B2EB4B3228AA055BF29hpecom_--
+Will remove.
+>=20
+> > +	BUFF_MODE,
+> > +	DMA_MODE,
+> > +};
+>=20
+> ...
+>=20
+> > +	base_clk1 =3D (i2c_bus->apb_clk * 10) / ((((clk_div_reg & 0xff) + 2) =
+* 10) /
+> 2);
+> > +	base_clk2 =3D (i2c_bus->apb_clk * 10) /
+> > +			(((((clk_div_reg >> 8) & 0xff) + 2) * 10) / 2);
+> > +	base_clk3 =3D (i2c_bus->apb_clk * 10) /
+> > +			(((((clk_div_reg >> 16) & 0xff) + 2) * 10) / 2);
+> > +	base_clk4 =3D (i2c_bus->apb_clk * 10) /
+> > +			(((((clk_div_reg >> 24) & 0xff) + 2) * 10) / 2);
+>=20
+> The same equation is used per each byte of clk_div_reg? Can it be rewritt=
+en to
+> avoid this and using loop, so you will have an array of base_clk to be fi=
+lled?
+>=20
+> Don't forget to use GENMASK().
+>=20
+Will update for loop.
+	for (i =3D 0; i < AST2600_NUM_CLK_DIV_BYTES; i++) {
+		u32 byte_val =3D (clk_div_reg >> (i * 8)) & GENMASK(7, 0);
+		base_clk[i] =3D (i2c_bus->apb_clk * 10) / ((byte_val + 2) * 5);
+	}
+> ...
+>=20
+> > +	if ((i2c_bus->apb_clk / i2c_bus->bus_frequency) <=3D 32) {
+> > +		baseclk_idx =3D 0;
+> > +		divisor =3D DIV_ROUND_UP(i2c_bus->apb_clk,
+> i2c_bus->bus_frequency);
+> > +	} else if ((base_clk1 / i2c_bus->bus_frequency) <=3D 32) {
+> > +		baseclk_idx =3D 1;
+> > +		divisor =3D DIV_ROUND_UP(base_clk1, i2c_bus->bus_frequency);
+> > +	} else if ((base_clk2 / i2c_bus->bus_frequency) <=3D 32) {
+> > +		baseclk_idx =3D 2;
+> > +		divisor =3D DIV_ROUND_UP(base_clk2, i2c_bus->bus_frequency);
+> > +	} else if ((base_clk3 / i2c_bus->bus_frequency) <=3D 32) {
+> > +		baseclk_idx =3D 3;
+> > +		divisor =3D DIV_ROUND_UP(base_clk3, i2c_bus->bus_frequency);
+>=20
+> Will be optimized with above suggestion, I believe.
+
+Will up with previous
+>=20
+> > +	} else {
+> > +		baseclk_idx =3D 4;
+> > +		divisor =3D DIV_ROUND_UP(base_clk4, i2c_bus->bus_frequency);
+> > +		inc =3D 0;
+> > +		while ((divisor + inc) > 32) {
+> > +			inc |=3D divisor & 0x1;
+> > +			divisor >>=3D 1;
+> > +			baseclk_idx++;
+> > +		}
+> > +		divisor +=3D inc;
+>=20
+> I think the above loop can be rewritten to have better representation.
+>=20
+Will up with previous
+
+> > +	}
+>=20
+> ...
+>=20
+> > +	baseclk_idx &=3D 0xf;
+>=20
+> GENMASK()?
+>=20
+Will update=20
+> ...
+>=20
+> > +	scl_low =3D ((divisor * 9) / 16) - 1;
+> > +	scl_low =3D min_t(u32, scl_low, 0xf);
+>=20
+> This can be done in one line. Also, why not 15?
+>=20
+> ...
+>=20
+> > +	scl_high =3D (divisor - scl_low - 2) & 0xf;
+>=20
+> GENMASK()?
+Will update
+
+>=20
+> ...
+>=20
+> > +	data =3D ((scl_high - 1) << 20) | (scl_high << 16) | (scl_low << 12) =
+|
+> > +(baseclk_idx);
+>=20
+> Too many parentheses.
+Update to=20
+data =3D ((scl_high - 1) << 20) | (scl_high << 16) | (scl_low << 12) | base=
+clk_idx;
+
+>=20
+> ...
+>=20
+> > +	/* due to master slave is common buffer, so need force the master sto=
+p
+> not issue */
+> > +	if (readl(i2c_bus->reg_base + AST2600_I2CM_CMD_STS) & 0xffff) {
+>=20
+> GENMASK() ?
+>=20
+> > +		writel(0, i2c_bus->reg_base + AST2600_I2CM_CMD_STS);
+> > +		i2c_bus->cmd_err =3D -EBUSY;
+> > +		writel(0, i2c_bus->reg_base + AST2600_I2CC_BUFF_CTRL);
+> > +		complete(&i2c_bus->cmd_complete);
+> > +	}
+>=20
+> ...
+>=20
+> > +	/* send start */
+> > +	dev_dbg(i2c_bus->dev, "[%d] %sing %d byte%s %s 0x%02x\n",
+> > +		i2c_bus->msgs_index, msg->flags & I2C_M_RD ? "read" : "write",
+>=20
+> str_read_write() ?
+Sorry do you mean there have a function call str_read_write?
+Can you point me where it is for refer?
+>=20
+> > +		msg->len, msg->len > 1 ? "s" : "",
+> > +		msg->flags & I2C_M_RD ? "from" : "to", msg->addr);
+>=20
+> ...
+>=20
+> > +				for (i =3D 0; i < xfer_len; i++) {
+> > +					wbuf[i % 4] =3D msg->buf[i];
+> > +					if (i % 4 =3D=3D 3)
+> > +						writel(*(u32 *)wbuf, i2c_bus->buf_base + i - 3);
+>=20
+> Err.. There can be alignment issues.
+
+Will update
+>=20
+> > +				}
+> > +				if (--i % 4 !=3D 3)
+> > +					writel(*(u32 *)wbuf, i2c_bus->buf_base + i - (i % 4));
+>=20
+> The above code is ugly. Can you think about it and write in a better way?
+Sorry, that is because the register only support for 4 byte align write.
+That the reason I need put for byte write to 4 byte align write.
+>=20
+> ...
+>=20
+> > +				for (i =3D 0; i < xfer_len; i++) {
+> > +					wbuf[i % 4] =3D msg->buf[i2c_bus->master_xfer_cnt + i];
+> > +					if (i % 4 =3D=3D 3)
+> > +						writel(*(u32 *)wbuf, i2c_bus->buf_base + i - 3);
+> > +				}
+> > +				if (--i % 4 !=3D 3)
+> > +					writel(*(u32 *)wbuf, i2c_bus->buf_base + i - (i % 4));
+>=20
+> Ditto.
+Will update
+
+>=20
+> ...
+>=20
+> Do you have similar code pieces? Why not doing it in a separate function =
+with
+> parameters?
+>=20
+I will think it to be MICRO function call.
+> ...
+>=20
+> > +	return ast2600_i2c_master_irq(i2c_bus) ? IRQ_HANDLED : IRQ_NONE;
+>=20
+> IRQ_RETVAL() ?
+Sorry, most return is handled or not handled.
+Do you mean replace it just " return IRQ_RETVAL(ret);"
+
+>=20
+> ...
+>=20
+> > +	writel(0xfffffff, i2c_bus->reg_base + AST2600_I2CM_ISR);
+>=20
+> GENMASK()
+>=20
+Will Update
+> ...
+>=20
+> > +	writel(0xfffffff, i2c_bus->reg_base + AST2600_I2CS_ISR);
+>=20
+> Ditto.
+Will Update
+>=20
+> > +	if (i2c_bus->mode =3D=3D BYTE_MODE) {
+> > +		writel(0xffff, i2c_bus->reg_base + AST2600_I2CS_IER);
+>=20
+> Ditto.
+Will Update
+>=20
+> > +	} else {
+> > +		/* Set interrupt generation of I2C slave controller */
+> > +		writel(AST2600_I2CS_PKT_DONE, i2c_bus->reg_base +
+> AST2600_I2CS_IER);
+> > +	}
+>=20
+> ...
+>=20
+> > +	WARN_ON(!i2c_bus->slave);
+>=20
+> Why?
+It can be removed.=20
+>=20
+> ...
+>=20
+> > +static const struct of_device_id ast2600_i2c_bus_of_table[] =3D {
+> > +	{
+> > +		.compatible =3D "aspeed,ast2600-i2cv2",
+> > +	},
+> > +	{}
+> > +};
+>=20
+> > +
+>=20
+> Redundant blank line.
+Will removed.
+>=20
+> > +MODULE_DEVICE_TABLE(of, ast2600_i2c_bus_of_table);
+>=20
+> ...
+>=20
+> > +	i2c_bus =3D devm_kzalloc(dev, sizeof(*i2c_bus), GFP_KERNEL);
+> > +	if (!i2c_bus)
+> > +		return dev_err_probe(dev, -ENOMEM, "no memory allocated\n");
+>=20
+> No. We do not print error message for ENOMEM.
+> You homework to find why.
+>=20
+Got it, will update.
+
+> ...
+>=20
+> > +	if (of_property_read_bool(pdev->dev.of_node, "aspeed,enable-dma"))
+>=20
+> device_property_read_bool() ?
+>=20
+> > +		i2c_bus->mode =3D DMA_MODE;
+>=20
+> ...
+>=20
+> > +	if (i2c_bus->mode =3D=3D BUFF_MODE) {
+> > +		res =3D platform_get_resource(pdev, IORESOURCE_MEM, 1);
+> > +		if (res && resource_size(res) >=3D 2) {
+> > +			i2c_bus->buf_base =3D devm_ioremap_resource(dev, res);
+> > +
+> > +			if (!IS_ERR_OR_NULL(i2c_bus->buf_base))
+> > +				i2c_bus->buf_size =3D resource_size(res) / 2;
+> > +		} else {
+> > +			i2c_bus->mode =3D BYTE_MODE;
+> > +		}
+> > +	}
+>=20
+> Can be done without additional checks and with a simple call to
+> devm_platform_ioremap_resource(). No?
+>=20
+Sorry, I can't catch your point, can you guide me more about it?
+> ...
+>=20
+> > +	/* i2c timeout counter: use base clk4 1Mhz,
+> > +	 * per unit: 1/(1000/4096) =3D 4096us
+> > +	 */
+>=20
+> Wrong multi-line style of the comment.
+>=20
+Will update to
+/*
+ * i2c timeout counter: use base clk4 1Mhz,
+ * per unit: 1/(1000/4096) =3D 4096us
+ */
+> ...
+>=20
+> > +	ret =3D of_property_read_u32(dev->of_node,
+> > +				   "i2c-scl-clk-low-timeout-us",
+> > +				   &i2c_bus->timeout);
+> > +	if (!ret)
+> > +		i2c_bus->timeout /=3D 4096;
+>=20
+> What is this and why I2C core timings (standard) can't be utilized here?
+It is scl clk timout setting. That have been discuss with following.
+https://lore.kernel.org/lkml/20230314221614.24205-1-andi.shyti@kernel.org/T=
+/
+
+>=20
+> ...
+>=20
+> > +	ret =3D of_property_read_u32(dev->of_node, "clock-frequency",
+> &i2c_bus->bus_frequency);
+> > +	if (ret < 0) {
+> > +		dev_warn(dev, "Could not read clock-frequency property\n");
+> > +		i2c_bus->bus_frequency =3D 100000;
+> > +	}
+>=20
+> There are macro for standard speeds. Moreover, there is a function to par=
+se
+> properties, no need to open code.
+>=20
+Will update
+ret =3D of_property_read_u32(dev->of_node, "clock-frequency", &bus_freq);
+if (ret < 0) {
+    dev_warn(dev, "Could not read clock-frequency property\n");
+    i2c_bus->bus_frequency =3D I2C_SPEED_STANDARD;
+} else {
+    i2c_bus->bus_frequency =3D bus_freq;
+}
+> ...
+>=20
+> > +	i2c_bus->adap.dev.of_node =3D dev->of_node;
+>=20
+> device_set_node()
+>=20
+> ...
+>=20
+> > +	if (of_property_read_bool(dev->of_node, "smbus-alert")) {
+>=20
+> Doesn't core have already support for this?
+Will remove it.=20
+>=20
+> > +		i2c_bus->alert_enable =3D true;
+> > +		i2c_bus->ara =3D i2c_new_smbus_alert_device(&i2c_bus->adap,
+> &i2c_bus->alert_data);
+> > +		if (!i2c_bus->ara)
+> > +			dev_warn(dev, "Failed to register ARA client\n");
+> > +
+> > +		writel(AST2600_I2CM_PKT_DONE | AST2600_I2CM_BUS_RECOVER |
+> AST2600_I2CM_SMBUS_ALT,
+> > +		       i2c_bus->reg_base + AST2600_I2CM_IER);
+> > +	} else {
+> > +		i2c_bus->alert_enable =3D false;
+> > +		/* Set interrupt generation of I2C master controller */
+> > +		writel(AST2600_I2CM_PKT_DONE | AST2600_I2CM_BUS_RECOVER,
+> > +		       i2c_bus->reg_base + AST2600_I2CM_IER);
+> > +	}
+>=20
+> ...
+>=20
+> > +	dev_info(dev, "%s [%d]: adapter [%d khz] mode [%d]\n",
+> > +		 dev->of_node->name, i2c_bus->adap.nr, i2c_bus->bus_frequency /
+> 1000,
+> > +		 i2c_bus->mode);
+>=20
+> Useless noise.
+>=20
+Will remove it.
+
+Thanks your review.
+
+Best Regards,
+Ryan Chen.
