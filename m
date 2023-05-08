@@ -1,90 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1229C6F9B8E
-	for <lists+openbmc@lfdr.de>; Sun,  7 May 2023 22:38:46 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C27C56FB03D
+	for <lists+openbmc@lfdr.de>; Mon,  8 May 2023 14:38:51 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QDx8g6tjTz3c9V
-	for <lists+openbmc@lfdr.de>; Mon,  8 May 2023 06:38:43 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QFLST3dJCz3cdt
+	for <lists+openbmc@lfdr.de>; Mon,  8 May 2023 22:38:49 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=WDzYdeAe;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=crgRPowG;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Dc6j0gNJ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.29; helo=out5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.55.52.88; helo=mga01.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=WDzYdeAe;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=crgRPowG;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Dc6j0gNJ;
 	dkim-atps=neutral
-Received: from out5-smtp.messagingengine.com (out5-smtp.messagingengine.com [66.111.4.29])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QDx811TfSz3bl6
-	for <openbmc@lists.ozlabs.org>; Mon,  8 May 2023 06:38:07 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 950B75C00D4;
-	Sun,  7 May 2023 16:38:01 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Sun, 07 May 2023 16:38:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1683491881; x=1683578281; bh=CQ
-	YKLT07AGgXU6SvA/SM4EXoxFEmF+PPG53P53uRteg=; b=WDzYdeAevB+HKZNB/R
-	v8+4GlhtLl3o2vCthM/f8WVSc7H17CXGdizavFG/sPzKm5cjJJ2SHDTseQgG8+tX
-	woQZOC97ksarqMquhApZ+t7AeYqhIy4vIFtMN203OMVzLf4eYfZsQ/KxNA/fotMn
-	O53X0MIPBcKAktoVtiTT4l/nwgYHXKNn1ZDaTSm1XdmY7ExLZ6c/WTwX4WRp34nA
-	MHhLdMXIbFXB+GBWTknzZMqwgeUgaG+pDGXH0wOd6I9nIi+yauOhQvGG8Wjed76J
-	icWCAjW/0k1WlTaNYmD2lD4pBaFsoAQUDI/nklMi7MM+n+FBbBsqW1t3pxS97eYQ
-	Kt7g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1683491881; x=1683578281; bh=CQYKLT07AGgXU
-	6SvA/SM4EXoxFEmF+PPG53P53uRteg=; b=crgRPowGRtzJv4aoGQZek6q/Ge6Ot
-	9dg9yjT+QSGdxy1T238riPQpT18tH0knuQn+TcX5PChRtXm5GzjVwASIx0NdvGLJ
-	tZlk8mRFSCf8oGKweU8eR/K1pQtP58jYX4NX6flsQb48e07PMiAK7F9IAGGkQWii
-	1tcaIe0pJcfC5mE8n1dD4vnETX3Ri8fGpS8/YY3XK6YBp5rm6IiDE1KwtWcryo3y
-	vBiQ8kMFbtyBJGsMEDAsQqJ4gKhnG2qLoSQLAULmfXu5NWa7o6gbMy8cMz1StaEM
-	a/VPzGSh2NOQn82f/xCxZcYqXjgxA8vegLZ80rqw1IfFnN8yOMTF457GA==
-X-ME-Sender: <xms:KAxYZN2HerIR54S7jMY1N-xqyEKpRPN7faXHFHLzYa7kNO--hORMyQ>
-    <xme:KAxYZEGD7kEbzQ6i6OG2GVf4ZiEhrjQXafaQCQQx1cWWJwFDtO6FtacK4i7oPRUdb
-    QTAZFD7gIQVddyvdDE>
-X-ME-Received: <xmr:KAxYZN6gxrHkk302npy_bgjUYK1DuS_PzHlsnicjBG7k3f5KRXSirzDbWcsQGkR2K8w_06qZRzIf700Iz7-7l-dbKXpdbBxupIE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeefiedgudehudcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enfghrlhcuvffnffculddvfedmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreer
-    tddtjeenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkh
-    esshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepvddtjeeuffefteduteejteet
-    tdehheffveehgffgueetgefftdetffejfeelheeunecuffhomhgrihhnpehgihhthhhusg
-    drtghomhdptghpphdqshhthihlvgdqrghnugdqtghonhhvvghnthhiohhnshdrmhgunecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrih
-    gtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:KAxYZK1epTtQ3Hw2lraJ5P6SZbGRo-9sl6HrtAmc7DCGcAO9HobWHQ>
-    <xmx:KAxYZAGCOILhqYgaSg6gnrNQxeCc2dxCqn7lpdIRiJMWbMkVroITLw>
-    <xmx:KAxYZL_crm6K0IYponIX276-fiSfhxd-hosP8FU4xzEH_ftiEB95qQ>
-    <xmx:KQxYZLO755KPK0v791K0PvmC7pC8ZIPOMWMpjeiZt3vXELKKT6ixMA>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 7 May 2023 16:38:00 -0400 (EDT)
-Date: Sun, 7 May 2023 15:37:59 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: Lei Yu <yulei.sh@bytedance.com>
-Subject: Re: sdbusplus updates (client-bindings and namespace)
-Message-ID: <ZFgMJz51IVKzo5IJ@heinlein.vulture-banana.ts.net>
-References: <ZFLepbxKKXVGAwRB@heinlein.vulture-banana.ts.net>
- <CAGm54UF=8EWwzC0ZONoYFjHV2RagGyNocX3Ob-ftaYACpG9n9Q@mail.gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QFLRs3X0Rz3cBK;
+	Mon,  8 May 2023 22:38:15 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1683549497; x=1715085497;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=TGcBs2WMT86YIl2FW8BGGb2rDomhZlvsCn9sqxbnMAI=;
+  b=Dc6j0gNJTIwYhvCh3Sd5IMUk4HqvY8FE6ZWpCnHQayfDiE5Sd0ZfCitH
+   OOk5Vt6mlvKsjhb3wOe1Ptxv4YNENmmj/fvXycTdWvky6VhqK3kYhOXX1
+   Gx/n6JgAqea+yY4shDxbSRmCQ8kfUDwjGfm1++9J5EEc08JV+r08WL5/s
+   rRvzIYqvlM3yaJjgJm+zuThunfZJKL+Il0FopFP1rc3uF/aREicj4ziWn
+   +qNbVRU7HkbbTD5/0Zt0G5eEaUkNjEdYCKBOca0s5NjPLhoTlx0TbBodj
+   3OJFJrjTmfqQ0ecnzmBHFZkkN/NuExyC98suylRC2jictvxQMrBMJr9de
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10703"; a="377724350"
+X-IronPort-AV: E=Sophos;i="5.99,259,1677571200"; 
+   d="scan'208";a="377724350"
+Received: from orsmga004.jf.intel.com ([10.7.209.38])
+  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 May 2023 05:38:09 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10703"; a="822653340"
+X-IronPort-AV: E=Sophos;i="5.99,259,1677571200"; 
+   d="scan'208";a="822653340"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by orsmga004.jf.intel.com with ESMTP; 08 May 2023 05:38:04 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.96)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1pw07t-00ArL0-0V;
+	Mon, 08 May 2023 15:38:01 +0300
+Date: Mon, 8 May 2023 15:38:00 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Ryan Chen <ryan_chen@aspeedtech.com>
+Subject: Re: [PATCH v11 2/2] i2c: aspeed: support ast2600 i2c new register
+ mode driver
+Message-ID: <ZFjtKNtR3zveNIvY@smile.fi.intel.com>
+References: <20230430041712.3247998-1-ryan_chen@aspeedtech.com>
+ <20230430041712.3247998-3-ryan_chen@aspeedtech.com>
+ <ZFFzRL/+73Ftix4Q@smile.fi.intel.com>
+ <SEZPR06MB526906C3DAFFE0A8FA924AA7F2709@SEZPR06MB5269.apcprd06.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="jYKUGEtse7lTBzXP"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAGm54UF=8EWwzC0ZONoYFjHV2RagGyNocX3Ob-ftaYACpG9n9Q@mail.gmail.com>
+In-Reply-To: <SEZPR06MB526906C3DAFFE0A8FA924AA7F2709@SEZPR06MB5269.apcprd06.prod.outlook.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,87 +75,125 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC List <openbmc@lists.ozlabs.org>
+Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, Brendan Higgins <brendan.higgins@linux.dev>, Conor Dooley <conor.dooley@microchip.com>, "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, "jk@codeconstruct.com.au" <jk@codeconstruct.com.au>, Jean Delvare <jdelvare@suse.de>, Andi Shyti <andi.shyti@kernel.org>, Phil Edworthy <phil.edworthy@renesas.com>, Florian Fainelli <f.fainelli@gmail.com>, "=linux-kernel@vger.kernel.org" <=linux-kernel@vger.kernel.org>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Joel Stanley <joel@jms.id.au>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, William Zhang <william.zhang@broadcom.com>, Rob Herring <robh+dt@kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>, Andrew Jeffery <andrew@aj.id.au>, Wolfram Sang <wsa@kernel.org>, Tyrone Ting <kfting@nuvoton.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Sun, May 07, 2023 at 02:21:10AM +0000, Ryan Chen wrote:
+> > On Sun, Apr 30, 2023 at 12:17:12PM +0800, Ryan Chen wrote:
 
---jYKUGEtse7lTBzXP
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+...
 
-On Fri, May 05, 2023 at 05:09:53PM +0800, Lei Yu wrote:
-> On Thu, May 4, 2023 at 6:23=E2=80=AFAM Patrick Williams <patrick@stwcx.xy=
-z> wrote:
+> > > +#define AST2600_GLOBAL_INIT				\
+> > > +			(AST2600_I2CG_CTRL_NEW_REG |	\
+> > > +			AST2600_I2CG_CTRL_NEW_CLK_DIV)
+> > 
+> > Make just a one TAB and put the last two lines on the single one.
+> 
+> Update by following. 
+> 
+> #define AST2600_GLOBAL_INIT		\
+> 	(AST2600_I2CG_CTRL_NEW_REG |	\
+> 	 AST2600_I2CG_CTRL_NEW_CLK_DIV)
 
-> >     Interface: xyz.openbmc_project.Object.Enable
-> >     Old Class: sdbusplus::xyz::openbmc_project::Object::server::Enable
-> >     New Class: sdbusplus::server::xyz::openbmc_project::object::Enable
-> >     Client Class: sdbusplus::client::xyz::openbmc_project::object::Enab=
-le
->=20
-> The previous class was using `Object` but now with the new namespace
-> it becomes `object`, is it intended about the upper-case `O` becoming
-> the lower-case `o`?
-> If yes, why the `Enable` still kept the upper-case `E`?
-> Do we have a rule that all the strings other than the last part should
-> be lower-case?
+As I mentioned the last two can occupy a single line.
 
-Yes, this was intentional.
+...
 
-The older namespace code did not apply an explicit style to the
-namespace or server but just used the portions of the interface name.
-We happen to name interfaces in UpperCamelCase.  With the `server` near
-the end, there was no name-identifier collision between:
+> > > +	/* send start */
+> > > +	dev_dbg(i2c_bus->dev, "[%d] %sing %d byte%s %s 0x%02x\n",
+> > > +		i2c_bus->msgs_index, msg->flags & I2C_M_RD ? "read" : "write",
+> > 
+> > str_read_write() ?
+> Sorry do you mean there have a function call str_read_write?
+> Can you point me where it is for refer?
 
-    * ...Foo -> ...::server::Foo
-    * ...Foo.Create -> ...::Foo::server::Create
+string_helpers.h.
 
-By putting the `server` near the beginning you end up with:
+> > > +		msg->len, msg->len > 1 ? "s" : "",
+> > > +		msg->flags & I2C_M_RD ? "from" : "to", msg->addr);
 
-    * ...Foo -> server::...::Foo
-    * ...Foo.Create -> server::...::Foo::Create
+...
 
-This causes a collision because `server::...::Foo` is both a namespace
-and a classname.
+> > > +				if (--i % 4 != 3)
+> > > +					writel(*(u32 *)wbuf, i2c_bus->buf_base + i - (i % 4));
+> > 
+> > The above code is ugly. Can you think about it and write in a better way?
+> Sorry, that is because the register only support for 4 byte align write.
+> That the reason I need put for byte write to 4 byte align write.
 
-The project C++ style guide states[1]:
+Yes, that's fine. The problem is in _how_ the driver does it. We have a lot of
+helpers in the kernel to access unaligned data.
 
-    * Structs, classes, enums, and typed template parameters should all be =
-in
-      UpperCamelCase.
-    * Namespaces should be lower_snake_case.
+...
 
-In order to satisfy both the namespace/classname collision problem when
-dealing with nested interface names and to closer align with the C++
-style guide we have documented, I explicitly use the lower_snake_case
-on the namespace portions and UpperCameCase on the classname portion.
+> > > +	return ast2600_i2c_master_irq(i2c_bus) ? IRQ_HANDLED : IRQ_NONE;
+> > 
+> > IRQ_RETVAL() ?
+> Sorry, most return is handled or not handled.
+> Do you mean replace it just " return IRQ_RETVAL(ret);"
 
-[1]: https://github.com/openbmc/docs/blob/master/cpp-style-and-conventions.=
-md
+Have you had a chance to look in the implementation of IRQ_RETVAL() ?
+I believe if you do, you will find the answer to your question.
 
---=20
-Patrick Williams
+...
 
---jYKUGEtse7lTBzXP
-Content-Type: application/pgp-signature; name="signature.asc"
+> > > +	if (i2c_bus->mode == BUFF_MODE) {
+> > > +		res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
+> > > +		if (res && resource_size(res) >= 2) {
+> > > +			i2c_bus->buf_base = devm_ioremap_resource(dev, res);
+> > > +
+> > > +			if (!IS_ERR_OR_NULL(i2c_bus->buf_base))
+> > > +				i2c_bus->buf_size = resource_size(res) / 2;
+> > > +		} else {
+> > > +			i2c_bus->mode = BYTE_MODE;
+> > > +		}
+> > > +	}
+> > 
+> > Can be done without additional checks and with a simple call to
+> > devm_platform_ioremap_resource(). No?
+> > 
+> Sorry, I can't catch your point, can you guide me more about it?
 
------BEGIN PGP SIGNATURE-----
+	if (BUFF_MODE) {
+		void __iomem buf_base;
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmRYDCUACgkQqwNHzC0A
-wRmr5w/+MlNgx5zOk3LaGstdikrMymAQMIsWr4KBUcbM7mypteukXaN1L27NzHwq
-SKVDPGiZBFeSVfZXKvlED5mfWLi2AlJ6pDurrBJZZvDiWas8RNK6QoSbD8kFJpCk
-eoGHAcz71kmbJZrpnV42ummQXo2qZHvmE+I667jxqPA05BUhzDVzvf+b7hELEM6D
-Ay6oTMJ2W+3GmviH9zd+VtWGvHY+f9Bz5QJgsukNXAzHRt9z3ROpAPje65AfaPQj
-Vp9iqPJKFAC6Xj7mIXzIMMcO5X42RjHc4MXtSSsVFt8Rya5VIMLZARPTRy4Ljng8
-KA9cuhKE+sAkTRDKMvmOGQZN21gCJ4L1rvCmmO2YYi17zygF7rHCeoCrBjAep55z
-tNAl2/OZJTrox/E6+d8SlAxkT25DmfEx+sg0QeQeFBcEIWRouVKewIPPkJN6Wfh8
-o0cZbPt1JpCBFWqqYaXFWpoz8hgj7m9X5voaDtyiRYnGmgUj9d0pRCHataLD18iU
-FStm12JHix9wM9KhwykFV66WHyQ838AVpo17dcMpQOgev4QcZdEk0DAPVn4xMTG9
-l3Ib8XMJOm/EomRzvjeRkPz0cF9hnsXJCUhjx0DKzbXKLcLrj2NUpdiiZ4iTZyCs
-1Zy8xFKIYvD+ghnzNSWxDkkGpiQSnd3cvzhaaHGN/tyyBuh6jcM=
-=Tykw
------END PGP SIGNATURE-----
+		buf_base = devm_platform_ioremap_and_get_resource(pdev, 1, &res);
+		if (IS_ERR(buf_base))
+			mode = BYTE_MODE;
+		else {
+			->buf_base = buf_base;
+			->buf_size = ...
+		}
+	}
 
---jYKUGEtse7lTBzXP--
+...
+
+> > > +	ret = of_property_read_u32(dev->of_node, "clock-frequency",
+> > &i2c_bus->bus_frequency);
+> > > +	if (ret < 0) {
+> > > +		dev_warn(dev, "Could not read clock-frequency property\n");
+> > > +		i2c_bus->bus_frequency = 100000;
+> > > +	}
+> > 
+> > There are macro for standard speeds. Moreover, there is a function to parse
+> > properties, no need to open code.
+> > 
+> Will update
+> ret = of_property_read_u32(dev->of_node, "clock-frequency", &bus_freq);
+> if (ret < 0) {
+>     dev_warn(dev, "Could not read clock-frequency property\n");
+>     i2c_bus->bus_frequency = I2C_SPEED_STANDARD;
+> } else {
+>     i2c_bus->bus_frequency = bus_freq;
+> }
+
+No, just use the I2C core API to fill this property in the specific i2c_timings
+structure.
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
