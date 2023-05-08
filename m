@@ -1,51 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D98516FB8F8
-	for <lists+openbmc@lfdr.de>; Mon,  8 May 2023 22:54:47 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56AB86FB886
+	for <lists+openbmc@lfdr.de>; Mon,  8 May 2023 22:52:37 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QFYSj48NHz3fPG
-	for <lists+openbmc@lfdr.de>; Tue,  9 May 2023 06:54:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QFYQC2RNgz3cdV
+	for <lists+openbmc@lfdr.de>; Tue,  9 May 2023 06:52:35 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20221208 header.b=4vdSUm/3;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=pengutronix.de (client-ip=2001:67c:670:201:290:27ff:fe1d:cc33; helo=metis.ext.pengutronix.de; envelope-from=ukl@pengutronix.de; receiver=<UNKNOWN>)
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::336; helo=mail-wm1-x336.google.com; envelope-from=edtanous@google.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20221208 header.b=4vdSUm/3;
+	dkim-atps=neutral
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QFYRK02Cmz3cBL
-	for <openbmc@lists.ozlabs.org>; Tue,  9 May 2023 06:53:32 +1000 (AEST)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1pw7r9-000308-NO; Mon, 08 May 2023 22:53:15 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1pw7r4-0024pC-EM; Mon, 08 May 2023 22:53:10 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1pw7r3-002YUu-K0; Mon, 08 May 2023 22:53:09 +0200
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Brendan Higgins <brendan.higgins@linux.dev>,
-	Wolfram Sang <wsa@kernel.org>
-Subject: [PATCH 03/89] i2c: aspeed: Convert to platform remove callback returning void
-Date: Mon,  8 May 2023 22:51:40 +0200
-Message-Id: <20230508205306.1474415-4-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230508205306.1474415-1-u.kleine-koenig@pengutronix.de>
-References: <20230508205306.1474415-1-u.kleine-koenig@pengutronix.de>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QFYPZ5BdRz3cBL
+	for <openbmc@lists.ozlabs.org>; Tue,  9 May 2023 06:52:01 +1000 (AEST)
+Received: by mail-wm1-x336.google.com with SMTP id 5b1f17b1804b1-3f19ab994ccso50654145e9.2
+        for <openbmc@lists.ozlabs.org>; Mon, 08 May 2023 13:52:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1683579115; x=1686171115;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ndVML2MU8/kZOtSTOEF30XRigfst+FRBwJk660ciKeA=;
+        b=4vdSUm/3kstN4PFonywHn9QlbfV6NrQNMHuFl7OcLVOw1iR5mAoOR5orRJePfk3Qmv
+         2ywKLjDMfJugollsl+HKAVOQeGSNvtr8EHJFBCgDh+grpBFTaN81yTRLuAwcLh0oI6ZN
+         3UC4aaVxj5KoLwzc4v0vYif5oW9D55zdxW6v7C5G9tT4dKfDRxZj8heXYLXc9JgSTrMt
+         l5FcMMC6nh/WumJcr/eJNAoSDL4xsm6N8SoTyrq0ZmHKmBw4yCNF3+0zsYo5lY9SknY4
+         pwggw/OvxzWerTrGb9JJ6pUqVpbxhyGIwCgxRnJgYUgUHcQUw8rknLXT99GlR+ifYPhk
+         zXtA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683579115; x=1686171115;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ndVML2MU8/kZOtSTOEF30XRigfst+FRBwJk660ciKeA=;
+        b=Ydv3/z91SEM0VOKTxC2IN4WYUqLIkoyFUQbKXGeNFbbyAA1PaKEXQRY2T8+FsZptWf
+         80I/KtNmxiput/7DqSGOkpybY5E8omSiKNrJ+inGSxmJB4mcD6vMFU1iGk/yQD1dKeA5
+         MCjdXVLVPfQ+AKWnklbZsile/a8+rW4m1AtWg/2arOR0aiw+6waIjiCqPDKwUMHC8539
+         IOdl1Bt+hk/+vN9ygayILG7VCFIuv8vADL5OeZe3j0nvXQVdC2WMJ3Uvux1L4aNdlpki
+         iwiixjPJoyxTFekRfn60fR1Y0Ryw/J9YmHz3abr8bMfGIA9G7pKk6dBPgGCXFV7Qxy6f
+         tOMA==
+X-Gm-Message-State: AC+VfDz2m/MPfp0Q52E4g4VMVIU0tHbPP2iCqcZGDJvFGF0Qv1vUK7N4
+	LmlxfG4HZZG9zq2kx7qM3bXCmUgCrsKoWG2XsfrfQA==
+X-Google-Smtp-Source: ACHHUZ4NrK6sINxuSLvuQmibV6bAfiCsLNcgBtxHeMcveVA/3v0mYwk1S/dydAI3e+OiL+CH1d9/lRZrnMkpY8AQ0oU=
+X-Received: by 2002:a05:6000:54d:b0:306:34ae:6a16 with SMTP id
+ b13-20020a056000054d00b0030634ae6a16mr7850587wrf.35.1683579115382; Mon, 08
+ May 2023 13:51:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1714; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=9zNsI5stUnuhq0FHylihgdIHvTwSQVOvrt5eEDRxnsI=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBkWWBDUvMtm/WjKIGQSlttusSEAyRutYR/7+6F6 jlZk3FRObOJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZFlgQwAKCRCPgPtYfRL+ ToVqB/wIJjh1M34I9n3/oezujnyyemKFn4RZb2KZy4OIRwmftRZXK2Yhjpb9OaZ/k5qxecJvB8f r2D73urArwe+CdbB1S3SbNbXloErOdQjJrMlLhCE6rPrM1hE+XCN2lB1eBVu23W1f7hHBC+a8hB ZXZmtCHGCCyvuXHkSjELSgac9dpcyQZxoTCbS/ZHdr7ZFkpoqJwbnkrrRyAszA/WUsnQEr1WfVg CpBfiY/7PI+vebi6Bzi8Jkesww4ufpQDkTcTK45uEDgTr5epLjf2lwb6J0Z25jCZ6ZWgRaekqf+ BS1Q0Xc+M037lingsnv6BfzDV43v+5axIqlRsF3gnasQGQLj
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: openbmc@lists.ozlabs.org
+References: <LV2PR12MB60140D575EA40854D74472F4CD719@LV2PR12MB6014.namprd12.prod.outlook.com>
+In-Reply-To: <LV2PR12MB60140D575EA40854D74472F4CD719@LV2PR12MB6014.namprd12.prod.outlook.com>
+From: Ed Tanous <edtanous@google.com>
+Date: Mon, 8 May 2023 13:51:43 -0700
+Message-ID: <CAH2-KxAVgJUC89mdLO4RnrQgAV-rVROrUHSDz=j-SzyVhTMKFA@mail.gmail.com>
+Subject: Re: IPMI Sensor Name limitation of 16 bytes
+To: Rohit Pai <ropai@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,54 +75,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, Joel Stanley <joel@jms.id.au>, kernel@pengutronix.de, linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is (mostly) ignored
-and this typically results in resource leaks. To improve here there is a
-quest to make the remove callback return void. In the first step of this
-quest all drivers are converted to .remove_new() which already returns
-void.
+On Mon, May 8, 2023 at 10:52=E2=80=AFAM Rohit Pai <ropai@nvidia.com> wrote:
+>
+> Would like to receive feedback about this solution and any alternative th=
+at may exist to solve this problem. Any pointers on existing patch also wou=
+ld be helpful.
+>
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+Overall, I'm in support of this feature, and I think it would give us
+a lot more flexibility in Redfish in the future.  It's one of the
+design points that I really wasn't happy with in the original sensor
+subsystem.
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/i2c/busses/i2c-aspeed.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+While I think most would directly take this feature, one thing to keep
+in mind is that there were organizations that had the requirement to
+be able to map IPMI names to Redfish names using a reasonable
+algorithm.  Having this supported would break that requirement, but I
+think that's something that an individual machine can figure out by
+coming up with names less than 16 characters for platforms that have
+this requirement.
 
-diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
-index d3c99c5b3247..2e5acfeb76c8 100644
---- a/drivers/i2c/busses/i2c-aspeed.c
-+++ b/drivers/i2c/busses/i2c-aspeed.c
-@@ -1061,7 +1061,7 @@ static int aspeed_i2c_probe_bus(struct platform_device *pdev)
- 	return 0;
- }
- 
--static int aspeed_i2c_remove_bus(struct platform_device *pdev)
-+static void aspeed_i2c_remove_bus(struct platform_device *pdev)
- {
- 	struct aspeed_i2c_bus *bus = platform_get_drvdata(pdev);
- 	unsigned long flags;
-@@ -1077,13 +1077,11 @@ static int aspeed_i2c_remove_bus(struct platform_device *pdev)
- 	reset_control_assert(bus->rst);
- 
- 	i2c_del_adapter(&bus->adap);
--
--	return 0;
- }
- 
- static struct platform_driver aspeed_i2c_bus_driver = {
- 	.probe		= aspeed_i2c_probe_bus,
--	.remove		= aspeed_i2c_remove_bus,
-+	.remove_new	= aspeed_i2c_remove_bus,
- 	.driver		= {
- 		.name		= "aspeed-i2c-bus",
- 		.of_match_table	= aspeed_i2c_bus_of_table,
--- 
-2.39.2
+One thing I would also very much caution against is reducing the
+performance of SDR listing any more than it already is.  It's current
+performance is at basically the bare minimum of where it should be, so
+if making this change requires any additional dbus calls, that's going
+to cause some problems.
 
+
+One thing I had advocated for in the past is simply doing algorithmic
+string reduction until it fits, using the most common transforms.
+
+Power -> Pwr
+Temperature -> Temp
+Power Supply -> PSU
+
+These are algorithms that humans already do today manually to get to
+the 16 char length, so in theory you could do this transform without
+any changes needed to the actual platform configs, and if someone
+wanted to reverse the algorithm later and come up with the Redfish
+string, they could.  Something you could consider, but there might be
+simpler ideas that meet your goals.
