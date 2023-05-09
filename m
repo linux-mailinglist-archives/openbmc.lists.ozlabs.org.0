@@ -2,80 +2,55 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 62E076FC097
-	for <lists+openbmc@lfdr.de>; Tue,  9 May 2023 09:41:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BE656FC405
+	for <lists+openbmc@lfdr.de>; Tue,  9 May 2023 12:35:49 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QFqpb3jrJz3fL1
-	for <lists+openbmc@lfdr.de>; Tue,  9 May 2023 17:41:11 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QFvgz5f93z3fMb
+	for <lists+openbmc@lfdr.de>; Tue,  9 May 2023 20:35:43 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=AOVelzry;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=iRKzOqXa;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12c; helo=mail-lf1-x12c.google.com; envelope-from=fercerpav@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=AOVelzry;
+	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=iRKzOqXa;
 	dkim-atps=neutral
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [71.19.156.171])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QFqp00Cb8z308w
-	for <openbmc@lists.ozlabs.org>; Tue,  9 May 2023 17:40:37 +1000 (AEST)
-Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-4efe8991b8aso6380145e87.0
-        for <openbmc@lists.ozlabs.org>; Tue, 09 May 2023 00:40:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683618033; x=1686210033;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=/SFKnkSSzQ7GA0ciWdxbbJI317Jrgf5OShes/VJ+zzM=;
-        b=AOVelzrykZguaHtfZwCCL8Y6DiAD+myiK2I20z0+EC6hH4AMdvL4G14GJ20WWErgCD
-         ZtavjZk2c4mP1y4NmEU8LLdAAhmvyCHCvXYPxytKrmu4v8e3EhxONV712y4gOmuNcJx/
-         BAjdesm3vPNehYv7eleoZVLBOqLl3WDaKbhx3CyMvklPS5NgGmWjTlB25f5OLod9q/43
-         VCZqzyx6L6hn6VcfACeQhUj4ohDS4LY8ZRHRz6DnN89LftU3+kyPaDiaqGai7syx2hhr
-         M59ECnJJiYF+hMHZiYaxHVueXr5on4+U3HTYxh7bTWfu+RLrzMjbIUij+GEYTAvxgSzo
-         hgsw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683618033; x=1686210033;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/SFKnkSSzQ7GA0ciWdxbbJI317Jrgf5OShes/VJ+zzM=;
-        b=K1w75xah4XEHkaY5rPbJY5Iq7OlhVxvFqUSv504Y6A7f6o1JT9JxinmO9XdS7qSx/K
-         NaJe+hgo99sOkpRoMGCnxZxbUinMkJLYqT4jk0p1JPBMnIIpv94+Fb4Jt2j1TIKqaUGF
-         nGyNBFeakob9HbN0ynO+k2fQmaxBUeKp1xfi+2HJ8K6cj7iQzTKUHwG5+396pvJQFwFr
-         qExaYZhw2GHVGhCzGqDcO9pqsMILSZnmj07vN1lZCCNlzXwie1IrZfwq/P3WHmqvpIAT
-         lGx09oojmRK9wczrH+ihCeEWCxD+DgRob3TES64yj01Si2y+UynxC5k/+nN9Mb2plrLG
-         UBhQ==
-X-Gm-Message-State: AC+VfDzbjPfjt3efDtSGaIflvD1N/LmwvyP+qD467XEJB+t5JZy5cgsG
-	9wwf6dr3z0u1tl5L5UCJ+dA=
-X-Google-Smtp-Source: ACHHUZ6gWB/CF7onx3Y65JGZhuDAtayKaoudv6M1aHE2M40Hw0P4mEyXyFi9+TlKyWGWoTUWhMLdDw==
-X-Received: by 2002:a2e:800e:0:b0:2ac:7e97:6cca with SMTP id j14-20020a2e800e000000b002ac7e976ccamr560441ljg.29.1683618032786;
-        Tue, 09 May 2023 00:40:32 -0700 (PDT)
-Received: from home.paul.comp (paulfertser.info. [2001:470:26:54b:226:9eff:fe70:80c2])
-        by smtp.gmail.com with ESMTPSA id t21-20020a2e9c55000000b002ad5f774579sm1162844ljj.96.2023.05.09.00.40.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 May 2023 00:40:32 -0700 (PDT)
-Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
-	by home.paul.comp (8.15.2/8.15.2/Debian-22) with ESMTP id 3497eSBF030938;
-	Tue, 9 May 2023 10:40:29 +0300
-Received: (from paul@localhost)
-	by home.paul.comp (8.15.2/8.15.2/Submit) id 3497eRII030937;
-	Tue, 9 May 2023 10:40:27 +0300
-Date: Tue, 9 May 2023 10:40:26 +0300
-From: Paul Fertser <fercerpav@gmail.com>
-To: Zev Weiss <zev@bewilderbeest.net>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QFvgN635Rz3f51
+	for <openbmc@lists.ozlabs.org>; Tue,  9 May 2023 20:35:12 +1000 (AEST)
+Received: from hatter.bewilderbeest.net (174-21-172-149.tukw.qwest.net [174.21.172.149])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: zev)
+	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 7CEE3CCC;
+	Tue,  9 May 2023 03:35:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+	s=thorn; t=1683628510;
+	bh=7iMGV4tLm3HmazMtfLfAQna6/xbZ5/qvUaB4DKROWT0=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=iRKzOqXaerQKZjz67y4Oq+40ixhZGeUommSM5ce8qB4d7YStqUTmtaGsFGjCB+OUi
+	 Wpx7AZ+6KZPL9T4sMksYPsj25V3KLApW3DP4vEAl+xylo3cKp1vmEjHXeypXshoOXW
+	 fmOUEzGsIos4jVB59uxjBafUu/CCnk7CxWZdVJAE=
+Date: Tue, 9 May 2023 03:35:09 -0700
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Paul Fertser <fercerpav@gmail.com>
 Subject: Re: Hot-plugging non-sensor devices on non-PnP buses (was: Re:
  entity-manager: SBTSI and hwmontempsensor)
-Message-ID: <ZFn46vES/XAKOtuF@home.paul.comp>
+Message-ID: <93fcd898-7eef-4855-b93d-cd34bf7dd758@hatter.bewilderbeest.net>
 References: <CABoTLcQNTwxi5nVRG8yRoDrrtV-pO-WA1ubtFVmnLnebPLucmg@mail.gmail.com>
  <9b2c7872-fbe3-4691-b5c1-bf69290b4186@hatter.bewilderbeest.net>
  <ZFTK+ij4jMAqtQWw@home.paul.comp>
  <17542652-2f18-4bd0-9432-f81ebc4c5f42@hatter.bewilderbeest.net>
+ <ZFn46vES/XAKOtuF@home.paul.comp>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <17542652-2f18-4bd0-9432-f81ebc4c5f42@hatter.bewilderbeest.net>
+In-Reply-To: <ZFn46vES/XAKOtuF@home.paul.comp>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -91,43 +66,76 @@ Cc: Ed Tanous <edtanous@google.com>, Andrew Jeffery <andrew@aj.id.au>, OpenBMC M
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Zev,
+On Tue, May 09, 2023 at 12:40:26AM PDT, Paul Fertser wrote:
+>Hi Zev,
+>
+>Thank you for answering. A quick additional point inline.
+>
+>On Mon, May 08, 2023 at 03:46:13PM -0700, Zev Weiss wrote:
+>> On Fri, May 05, 2023 at 02:23:06AM PDT, Paul Fertser wrote:
+>> > What further complicates situation with leds-pca955x specifically is
+>> > that it /needs/ DT or platform data to work, and that makes it try
+>> > binding automatically on startup, and probe() fails while the host
+>> > system is off, and "new_device" sysfs node can't be used to retry (as
+>> > the device is already defined), so either the driver needs to be
+>> > modular and reloaded with essentially rmmod/insmod sequence or the
+>> > userspace can use sysfs "bind" node to call probe() again (this is
+>> > also problematic with entity-manager as $Address template argument
+>> > isn't suitable for a string like 5-0019, where 19 is in hex).
+>> >
+>>
+>> This seems like the trickier part to me.  AFAIK the kernel as it stands
+>> doesn't really offer any way of specifying any of the additional parameters
+>> that DT properties and such can provide when dynamically instantiating
+>> devices, so if you need any non-default configuration your only option is a
+>> statically-defined device (via a DT node), and if that's not an option
+>> because you need dynamic instantiation then you're kind of out of luck
+>> unfortunately.
+>
+>Dynamic instantiation is still possible either by having the
+>corresponding kernel driver modular 
 
-Thank you for answering. A quick additional point inline.
+True to an extent, though it's rather more of a blunt instrument, since 
+it's a per-driver operation instead of per-device (it's a different 
+operation that happens to trigger the desired behavior as a side-effect, 
+I'd say).
 
-On Mon, May 08, 2023 at 03:46:13PM -0700, Zev Weiss wrote:
-> On Fri, May 05, 2023 at 02:23:06AM PDT, Paul Fertser wrote:
-> > What further complicates situation with leds-pca955x specifically is
-> > that it /needs/ DT or platform data to work, and that makes it try
-> > binding automatically on startup, and probe() fails while the host
-> > system is off, and "new_device" sysfs node can't be used to retry (as
-> > the device is already defined), so either the driver needs to be
-> > modular and reloaded with essentially rmmod/insmod sequence or the
-> > userspace can use sysfs "bind" node to call probe() again (this is
-> > also problematic with entity-manager as $Address template argument
-> > isn't suitable for a string like 5-0019, where 19 is in hex).
-> > 
-> 
-> This seems like the trickier part to me.  AFAIK the kernel as it stands
-> doesn't really offer any way of specifying any of the additional parameters
-> that DT properties and such can provide when dynamically instantiating
-> devices, so if you need any non-default configuration your only option is a
-> statically-defined device (via a DT node), and if that's not an option
-> because you need dynamic instantiation then you're kind of out of luck
-> unfortunately.
+>or by using "bind" and "unbind"
+>sysfs nodes.
 
-Dynamic instantiation is still possible either by having the
-corresponding kernel driver modular or by using "bind" and "unbind"
-sysfs nodes. In this specific case we tested having the driver
-built-in, it tries binding on BMC startup, fails if the host is off,
-then at any point of time one can do "echo 5-0019 >
-/sys/bus/i2c/drivers/leds-pca955x/bind" and it'll re-try binding, and
-that works if the host is on at the moment. And of course it can be
-"unbind" later if needed. This could even almost work with current
-entity-manager code if it was listening for host power state events,
-if it wasn't skipping the devices that it already tried exporting, and
-if it had something like $HexAddress for the template arguments.
+Ah right, I'd forgotten about that one -- I actually sent some patches 
+upstream to try to make that mode work a little more gracefully a while 
+back (adding a way of preventing automatic driver-bind on boot so it 
+would only be done when explicitly requested), but never arrived at 
+anything that all the relevant maintainers approved of.
 
--- 
-Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
-mailto:fercerpav@gmail.com
+Also (this is arguably somewhat pedantic, but for the kinds of things we 
+might end up dealing with perhaps relevant): while it is at least 
+operating at the same per-device granularity, bind/unbind is still 
+semantically a distinct operation from true dynamic instantiation 
+though.  For a bind operation you need an extant device to attach a 
+driver to, whereas the i2c new_device operation actually creates a new 
+thing that wasn't previously there.  There are many cases where 
+bind/unbind might be sufficient, but in other scenarios it might not be.
+
+>In this specific case we tested having the driver
+>built-in, it tries binding on BMC startup, fails if the host is off,
+>then at any point of time one can do "echo 5-0019 >
+>/sys/bus/i2c/drivers/leds-pca955x/bind" and it'll re-try binding, and
+>that works if the host is on at the moment. And of course it can be
+>"unbind" later if needed. This could even almost work with current
+>entity-manager code if it was listening for host power state events,
+>if it wasn't skipping the devices that it already tried exporting, and
+>if it had something like $HexAddress for the template arguments.
+>
+
+Perhaps that's something worth experimenting with and posting E-M 
+patches for?  Though the "bouncing off the guardrails" aspect (the 
+futile bind attempt on boot) is a bit unfortunate of course...and it 
+might need some additional consideration of what happens if the host 
+_does_ happen to be powered on when the BMC boots (and the boot-time 
+bind succeeds instead of failing).
+
+
+Zev
+
