@@ -1,64 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 964456FBECF
-	for <lists+openbmc@lfdr.de>; Tue,  9 May 2023 07:43:56 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 960BC6FBF45
+	for <lists+openbmc@lfdr.de>; Tue,  9 May 2023 08:33:47 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QFnCG2ssKz3fKF
-	for <lists+openbmc@lfdr.de>; Tue,  9 May 2023 15:43:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QFpJk0Gvxz3fJq
+	for <lists+openbmc@lfdr.de>; Tue,  9 May 2023 16:33:42 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Gz15a+us;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=QsLNZPOd;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::535; helo=mail-ed1-x535.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::634; helo=mail-ej1-x634.google.com; envelope-from=tali.perry1@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Gz15a+us;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=QsLNZPOd;
 	dkim-atps=neutral
-Received: from mail-ed1-x535.google.com (mail-ed1-x535.google.com [IPv6:2a00:1450:4864:20::535])
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QFnBg6Xtvz3blV
-	for <openbmc@lists.ozlabs.org>; Tue,  9 May 2023 15:43:21 +1000 (AEST)
-Received: by mail-ed1-x535.google.com with SMTP id 4fb4d7f45d1cf-50bc4ba28cbso9880921a12.0
-        for <openbmc@lists.ozlabs.org>; Mon, 08 May 2023 22:43:21 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QFpJ70QrRz3cBF
+	for <openbmc@lists.ozlabs.org>; Tue,  9 May 2023 16:33:10 +1000 (AEST)
+Received: by mail-ej1-x634.google.com with SMTP id a640c23a62f3a-9659c5b14d8so879284366b.3
+        for <openbmc@lists.ozlabs.org>; Mon, 08 May 2023 23:33:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jms.id.au; s=google; t=1683610996; x=1686202996;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ejZaRz7nLcEBFVDwDsxUFGZkwts3LqyOQvk9j0Y1b+Y=;
-        b=Gz15a+us+tTxdEl0TdOXO9lVEo93iu+JwSR0kvA/W6/aPIDfoFCDQ2qoItz/aGPFNk
-         EWUTElpblDDuSiOIVB26Y3B7Huib7J7R7iFB0Lb8VDThWnkzGeGB6L3oBtIl+IH41QUX
-         LY1q9BiVnwCxE6AYEWU5KUee1n3Sx90vDHhrg=
+        d=gmail.com; s=20221208; t=1683613986; x=1686205986;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=C0qAJplq+FoI0Zp4URt/LobsN3wJwY/Cob7hjfKkbcY=;
+        b=QsLNZPOdfTVI15CvYKz6nU5Jx4eYvQygux3+q8UGBogt5ad0FnvVMGb2wzLGF2FtFm
+         o27GjsKehAG3gFdyd3oyjHfWPjoUdAopfyE+pifQawsgvbNgaACLebI2URtUWlFJkeLn
+         +7vvti8C9anhzhk/2D2sffl2cOAmY2bEua/TMXjqLAR2PSNzgEJcg8qd9FcdD6Z58mIv
+         xdDhM0mDv5W8lyg2z1eOdHu/JNcqP7Mr8+uGn0XRyY72p3Pn9Og+Hd8hzJaAQEyCQpK9
+         0sKWIAxG2Jk0zPkyeuqbqGSWspGpKbclj2rwJLvyuzG5eDpopeKGDolbz/eTAYv/tnn2
+         CBFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683610996; x=1686202996;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ejZaRz7nLcEBFVDwDsxUFGZkwts3LqyOQvk9j0Y1b+Y=;
-        b=dws2F1PewXVywF7IV1/A63WUBgpA5kCxJ5GkWbvkxeXJyLRyZ9+f9VfUIirrTLtB42
-         +VZm6pNEjNUMMqLq4VrQSck4cdAjPCdGgyINEuyUge1LR8QfSIpXsju9DGkJzz55G9l/
-         3Dzo93YMAOyFLHVlNYUR4mE50uR8o5rUf/T3euALT48rY1VYkIQaTWdEJWZ14HYYehTJ
-         3UXntJuyn8k/RQ2Jj9s5P19xYKPXJxGqxFtpliEWGtqiARfU+cuqmwJroqXzeubrhrzp
-         whjm7LKsntJXjUzZ97pyKpSOP3w1MtGaDYXWNuHXyO9/BKjkSQljtzuebfxq+KkXuoxk
-         f2aQ==
-X-Gm-Message-State: AC+VfDzDWGoVkG6j0IW1LYl5tXloU/5/kEHHs4p2C7Pt76bGhuHxlFc9
-	nMleKYm2saWWzEE9XYAVYD71KaLvc2DxlxXvQmjeYV7w+KM=
-X-Google-Smtp-Source: ACHHUZ7ZMSWCto9rSNhqxlDbN5D5EH6bt/PBWUbdgxDd1PPRRCnx9ZVMti/d/YNePJtUABRh6oZyXU8go3cehVsK/Ic=
-X-Received: by 2002:a17:907:6e10:b0:968:1e8:a754 with SMTP id
- sd16-20020a1709076e1000b0096801e8a754mr4040726ejc.72.1683610995854; Mon, 08
- May 2023 22:43:15 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1683613986; x=1686205986;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=C0qAJplq+FoI0Zp4URt/LobsN3wJwY/Cob7hjfKkbcY=;
+        b=XyO/eu1TVs/R6p59//nw6NUr/SCfhXRGAuapwAoYxyHqNKBtavoSHnUaeG7aPuDtyK
+         BhHBzb9WWNTm6PI+vDej1MgEusyZaxvCU1gxeFsYrj4nrQUyn6g42pJRzPa47rLKUQgO
+         AWmNqnqI23FdJSAKMYEsECPe/rfH4XPcVVpxPkm+XRLV9elzQgwrYuQrsyf/Z3li/nu0
+         cQUBEUt10xEMgY9qJEWTSEnKWyM1GxINTpzMcffecStmRkOWVTGSmzzCo0cPkMw1r7g+
+         Ah2iQt4dweXCmcwMHKBXRfmrC49Q8PWHB98vylKxx7Nmf3EHsAmjEE62TCIs+ZcrKVJ8
+         k9Cg==
+X-Gm-Message-State: AC+VfDws4UBWwcImJ7ApjQjnGnvZa8i9ESp3AiyWVgR/2Q1D5gt/+BRZ
+	3wG7C/g0lCldfF9yq8IX2y+DoNwMoPCuRZuKU6369KdQojo=
+X-Google-Smtp-Source: ACHHUZ40Pk/rGGD9Hs1bhsarUFa7aMrDojR7Hhcs9DWiGrJtcqFql8RALK7W2RsmZ6yAnhMOr+wsHb8JIqMeE1socOo=
+X-Received: by 2002:a17:907:16a3:b0:967:92c6:1ec1 with SMTP id
+ hc35-20020a17090716a300b0096792c61ec1mr4562870ejc.55.1683613985926; Mon, 08
+ May 2023 23:33:05 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230509001102.5886-1-ryans@supermicro.com.tw>
-In-Reply-To: <20230509001102.5886-1-ryans@supermicro.com.tw>
-From: Joel Stanley <joel@jms.id.au>
-Date: Tue, 9 May 2023 05:43:02 +0000
-Message-ID: <CACPK8XcNmfte8+tNxpi_Jr4YvnUHSLPe3PgBEvTYtF7Loqp5Dg@mail.gmail.com>
-Subject: Re: [PATCH] ARM: dts: aspeed: Add Supermicro X13dem system BMC devicetree
-To: lesly895@gmail.com
+References: <20230508205306.1474415-1-u.kleine-koenig@pengutronix.de> <20230508205306.1474415-46-u.kleine-koenig@pengutronix.de>
+In-Reply-To: <20230508205306.1474415-46-u.kleine-koenig@pengutronix.de>
+From: Tali Perry <tali.perry1@gmail.com>
+Date: Tue, 9 May 2023 09:32:54 +0300
+Message-ID: <CAHb3i=sP7GgEfc4yKe6E=9HCh=F-D6sKOvM1T22xN_0fyagiKQ@mail.gmail.com>
+Subject: Re: [PATCH 45/89] i2c: npcm7xx: Convert to platform remove callback
+ returning void
+To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,334 +76,67 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: andrew@aj.id.au, Ryan Sie <ryans@supermicro.com.tw>, openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org
+Cc: Benjamin Fair <benjaminfair@google.com>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org, Wolfram Sang <wsa@kernel.org>, linux-i2c@vger.kernel.org, kernel@pengutronix.de, Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 9 May 2023 at 00:11, <lesly895@gmail.com> wrote:
->
-> From: Ryan Sie <ryans@supermicro.com.tw>
->
-> Add a devicetree for the new X13dem system.
+Thanks!
 
-That is obvious. Some more details about the system would help for review.
+Reviewed-by: Tali Perry <tali.perry@nuvoton.com>
 
+
+On Mon, May 8, 2023 at 11:53=E2=80=AFPM Uwe Kleine-K=C3=B6nig
+<u.kleine-koenig@pengutronix.de> wrote:
 >
-> Signed-off-by: Ryan Sie <ryans@supermicro.com.tw>
+> The .remove() callback for a platform driver returns an int which makes
+> many driver authors wrongly assume it's possible to do error handling by
+> returning an error code. However the value returned is (mostly) ignored
+> and this typically results in resource leaks. To improve here there is a
+> quest to make the remove callback return void. In the first step of this
+> quest all drivers are converted to .remove_new() which already returns
+> void.
+>
+> Trivially convert this driver from always returning zero in the remove
+> callback to the void returning variant.
+>
+> Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
 > ---
->  .../boot/dts/aspeed-bmc-supermicro-x13dem.dts | 283 ++++++++++++++++++
->  1 file changed, 283 insertions(+)
->  create mode 100644 arch/arm/boot/dts/aspeed-bmc-supermicro-x13dem.dts
+>  drivers/i2c/busses/i2c-npcm7xx.c | 5 ++---
+>  1 file changed, 2 insertions(+), 3 deletions(-)
 >
-> diff --git a/arch/arm/boot/dts/aspeed-bmc-supermicro-x13dem.dts b/arch/arm/boot/dts/aspeed-bmc-supermicro-x13dem.dts
-> new file mode 100644
-> index 000000000000..b5aac905e7ea
-> --- /dev/null
-> +++ b/arch/arm/boot/dts/aspeed-bmc-supermicro-x13dem.dts
-> @@ -0,0 +1,283 @@
-> +// SPDX-License-Identifier: GPL-2.0-or-later
-> +// Copyright 2023 Supermicro Corp.
-> +/dts-v1/;
-> +
-> +#include "aspeed-g6.dtsi"
-> +#include <dt-bindings/gpio/aspeed-gpio.h>
-> +#include <dt-bindings/i2c/i2c.h>
-> +
-> +/ {
-> +       model = "X13dem";
-
-Convetion is to name the machine the model + BMC, so this would be "X13DEM BMC".
-
-> +       compatible = "aspeed,ast2600";
-
-Needs a compatible for the machine.
-
-> +
-> +       aliases {
-> +               mmc0 = &emmc;
-> +       };
-> +
-> +       chosen {
-> +               stdout-path = &uart5;
-> +               bootargs = "console=ttyS4,115200n8 earlycon";
-> +       };
-> +
-> +       memory@80000000 {
-> +               device_type = "memory";
-> +               reg = <0x80000000 0x40000000>;
-> +       };
-> +
-> +       reserved-memory {
-> +               #address-cells = <1>;
-> +               #size-cells = <1>;
-> +               ranges;
-> +
-> +               /* LPC FW cycle bridge region requires natural alignment */
-> +               flash_memory: region@b4000000 {
-> +                       no-map;
-> +                       reg = <0xb4000000 0x04000000>; /* 64M */
-
-Are you sure you need this?
-
-> +               };
-> +
-> +               /* VGA region is dictated by hardware strapping */
-> +               vga_memory: region@bf000000 {
-> +                       no-map;
-> +                       compatible = "shared-dma-pool";
-> +                       reg = <0xbf000000 0x01000000>;  /* 16M */
-
-Are you sure you need this?
-
-> +               };
-> +       };
-> +
-> +       leds {
-> +           compatible = "gpio-leds";
-> +           powerfail {
-> +                   gpios = <&gpio0 ASPEED_GPIO(G, 5) GPIO_ACTIVE_LOW>;
-> +           };
-> +       };
-> +
-> +       iio-hwmon {
-> +               compatible = "iio-hwmon";
-> +               io-channels = <&adc0 0>, <&adc0 1>, <&adc0 2>, <&adc0 3>,
-> +                       <&adc0 4>, <&adc0 5>, <&adc0 6>, <&adc0 7>,
-> +                       <&adc1 0>, <&adc1 1>, <&adc1 2>, <&adc1 3>,
-> +                       <&adc1 4>, <&adc1 5>, <&adc1 6>, <&adc1 7>;
-> +       };
-> +};
-> +
-> +&adc0 {
-> +       status = "okay";
-> +       aspeed,int-vref-microvolt = <2500000>;
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_adc0_default &pinctrl_adc1_default
-> +               &pinctrl_adc2_default &pinctrl_adc3_default
-> +               &pinctrl_adc4_default &pinctrl_adc5_default
-> +               &pinctrl_adc6_default &pinctrl_adc7_default>;
-> +};
-> +
-> +&adc1 {
-> +       status = "okay";
-> +       aspeed,int-vref-microvolt = <2500000>;
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_adc8_default &pinctrl_adc9_default
-> +               &pinctrl_adc10_default &pinctrl_adc11_default
-> +               &pinctrl_adc12_default &pinctrl_adc13_default
-> +               &pinctrl_adc14_default &pinctrl_adc15_default>;
-> +};
-> +
-> +&emmc_controller {
-> +       status = "okay";
-> +};
-> +
-> +&pinctrl_emmc_default {
-> +       bias-disable;
-> +};
-> +
-> +&emmc {
-> +       status = "okay";
-> +       clk-phase-mmc-hs200 = <180>, <180>;
-> +};
-> +
-> +&spi1 {
-> +       status = "okay";
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_spi1_default>;
-> +
-> +       flash@0 {
-> +               status = "okay";
-> +               m25p,fast-read;
-> +               label = "spi1:0";
-> +               spi-max-frequency = <25000000>;
-> +       };
-> +};
-> +
-> +&gpio0 {
-> +       status = "okay";
-> +       gpio-line-names =
-
-Consult this document for common names:
-
- https://github.com/openbmc/docs/blob/master/designs/device-tree-gpio-naming.md
-
-> +       /*A0-A7*/       "","","","","","","","",
-> +       /*B0-B7*/       "","","","","","","jpfr2","jpfr3",
-> +       /*C0-C7*/       "","","","","","","","",
-> +       /*D0-D7*/       "","","","","","","","",
-> +       /*E0-E7*/       "","","","","","","","",
-> +       /*F0-F7*/       "","","","","","","","",
-> +       /*G0-G7*/       "","","","","","pwrfail-led","","",
-> +       /*H0-H7*/       "smc-n","nmi-n","pwrbtn-n","rst-n","","","phy1-rst","",
-> +       /*I0-I7*/       "","","","","","","","",
-> +       /*J0-J7*/       "","","","","","","","",
-> +       /*K0-K7*/       "","","","","","","","",
-> +       /*L0-L7*/       "","","","","","","","",
-> +       /*M0-M7*/       "","","","","","","","",
-> +       /*N0-N7*/       "","","","","","","","",
-> +       /*O0-O7*/       "","","","","","","","speaker-bmc",
-> +       /*P0-P7*/       "cpld-int","","","","","","","bmc-hbled-n",
-> +       /*Q0-Q7*/       "","","","","","","","",
-> +       /*R0-R7*/       "","","","","pwr-ctrl-4","","","",
-> +       /*S0-S7*/       "","","wake-n","","pwrok-in","pcie-rst-in","","uid-sw-in",
-> +       /*T0-T7*/       "","","","","","","","",
-> +       /*U0-U7*/       "","","","","","","","",
-> +       /*V0-V7*/       "","","","","","","","",
-> +       /*W0-W7*/       "","","","","","","","",
-> +       /*X0-X7*/       "","bios-cmp-in","smci-pch-out","","","","nmi-in","bmc-ready",
-> +       /*Y0-Y7*/       "","bmc-hb-led","bmc-cpld-mux-sel","emmc-rst","","","sci-bmc-out","",
-> +       /*Z0-Z7*/       "bmc-prg-n","pwer-ctrl-1","pwrbtn-in","","","","","";
-> +};
-> +
-> +&gpio1 {
-> +       status = "disabled";
-> +};
-> +
-> +&sgpiom0 {
-> +       status = "disabled";
-
-If you're disabling it you can remove the names below.
-
-> +       gpio-line-names =
-> +       /* SGPIO output lines */
-> +       /*OA0-OA7*/     "","","","","","","","",
-> +       /*OB0-OB7*/     "","","","","","","","",
-> +       /*OC0-OC7*/     "","","","","","","","",
-> +       /*OD0-OD7*/     "","","","","","","","",
-> +       /*OE0-OE7*/     "","","","","","","","",
-> +       /*OF0-OF7*/     "","","","","","","","",
-> +       /*OG0-OG7*/     "","","","","","","","",
-> +       /*OH0-OH7*/     "","","","","","","","",
-> +       /*OI0-OI7*/     "","","","","","","","",
-> +       /*OJ0-OJ7*/     "","","","","","","","",
-> +       /*DUMMY*/       "","","","","","","","",
-> +       /*DUMMY*/       "","","","","","","","",
-> +
-> +       /* SGPIO input lines */
-> +       /*IA0-IA7*/     "","","","","","","","",
-> +       /*IB0-IB7*/     "","","","","","","","",
-> +       /*IC0-IC7*/     "","","","","","","","",
-> +       /*ID0-ID7*/     "","","","","","","","",
-> +       /*IE0-IE7*/     "","","","","","","","",
-> +       /*IF0-IF7*/     "","","","","","","","",
-> +       /*IG0-IG7*/     "","","","","","","","",
-> +       /*IH0-IH7*/     "","","","","","","","",
-> +       /*II0-II7*/     "","","","","","","","",
-> +       /*IJ0-IJ7*/     "","","","","","","","";
-> +};
-> +
-> +&kcs3 {
-> +       aspeed,lpc-io-reg = <0xca2>;
-> +       status = "okay";
-> +};
-> +
-> +&kcs4 {
-> +       aspeed,lpc-io-reg = <0xca4>;
-> +       status = "okay";
-> +};
-> +
-> +&uart1 {
-> +       status = "okay";
-> +};
-> +
-> +&uart2 {
-> +       status = "okay";
-> +};
-> +
-> +&uart3 {
-> +       status = "okay";
-> +};
-> +
-> +&uart4 {
-> +       status = "okay";
-> +};
-> +
-> +&uart_routing {
-> +       status = "okay";
-> +};
-> +
-> +&mdio0 {
-> +       status = "okay";
-> +
-> +       ethphy0: ethernet-phy@0 {
-> +               compatible = "ethernet-phy-ieee802.3-c22";
-> +               reg = <0>;
-> +       };
-> +};
-> +
-> +&mac0 {
-> +       status = "okay";
-> +
-> +       phy-mode = "rgmii";
-> +       phy-handle = <&ethphy0>;
-> +
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_rgmii1_default>;
-> +};
-> +
-> +&mac2 {
-> +       status = "okay";
-> +       pinctrl-names = "default";
-> +       pinctrl-0 = <&pinctrl_rmii3_default>;
-> +       clocks = <&syscon ASPEED_CLK_GATE_MAC3CLK>,
-> +                       <&syscon ASPEED_CLK_MAC3RCLK>;
-> +       clock-names = "MACCLK", "RCLK";
-> +       use-ncsi;
-> +};
-> +
-> +&i2c0 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c1 {
-> +       status = "disabled";
-> +};
-> +
-> +&i2c2 {
-> +       multi-master;
-> +       status = "okay";
-> +};
-> +
-> +&i2c3 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c4 {
-> +       status = "okay";
-> +       bus-frequency = <400000>;
-> +};
-> +
-> +&i2c5 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c6 {
-> +       status = "okay";
-> +};
-> +
-> +&i2c7 {
-> +       status = "okay";
-> +};
-> +
-> +&lpc_ctrl {
-> +       status = "okay";
-> +       memory-region = <&flash_memory>;
-> +};
-> +
-> +&xdma {
-> +       status = "okay";
-> +       memory-region = <&vga_memory>;
-> +};
-> +
-> +&vhub {
-> +       status = "okay";
-> +};
-> +
-> +&rtc {
-> +       status = "okay";
-> +};
-> +
+> diff --git a/drivers/i2c/busses/i2c-npcm7xx.c b/drivers/i2c/busses/i2c-np=
+cm7xx.c
+> index 38d5864d0cb5..53b65ffb6a64 100644
+> --- a/drivers/i2c/busses/i2c-npcm7xx.c
+> +++ b/drivers/i2c/busses/i2c-npcm7xx.c
+> @@ -2361,7 +2361,7 @@ static int npcm_i2c_probe_bus(struct platform_devic=
+e *pdev)
+>         return 0;
+>  }
+>
+> -static int npcm_i2c_remove_bus(struct platform_device *pdev)
+> +static void npcm_i2c_remove_bus(struct platform_device *pdev)
+>  {
+>         unsigned long lock_flags;
+>         struct npcm_i2c *bus =3D platform_get_drvdata(pdev);
+> @@ -2371,7 +2371,6 @@ static int npcm_i2c_remove_bus(struct platform_devi=
+ce *pdev)
+>         npcm_i2c_disable(bus);
+>         spin_unlock_irqrestore(&bus->lock, lock_flags);
+>         i2c_del_adapter(&bus->adap);
+> -       return 0;
+>  }
+>
+>  static const struct of_device_id npcm_i2c_bus_of_table[] =3D {
+> @@ -2383,7 +2382,7 @@ MODULE_DEVICE_TABLE(of, npcm_i2c_bus_of_table);
+>
+>  static struct platform_driver npcm_i2c_bus_driver =3D {
+>         .probe =3D npcm_i2c_probe_bus,
+> -       .remove =3D npcm_i2c_remove_bus,
+> +       .remove_new =3D npcm_i2c_remove_bus,
+>         .driver =3D {
+>                 .name =3D "nuvoton-i2c",
+>                 .of_match_table =3D npcm_i2c_bus_of_table,
 > --
-> 2.34.1
+> 2.39.2
 >
