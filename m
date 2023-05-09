@@ -1,60 +1,60 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id F2D317043D5
-	for <lists+openbmc@lfdr.de>; Tue, 16 May 2023 05:07:08 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BD017043D6
+	for <lists+openbmc@lfdr.de>; Tue, 16 May 2023 05:08:01 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QL1P65pkQz3fHF
-	for <lists+openbmc@lfdr.de>; Tue, 16 May 2023 13:07:06 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QL1Q70mgLz3f4v
+	for <lists+openbmc@lfdr.de>; Tue, 16 May 2023 13:07:59 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=GsClSg+9;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=Sam+crre;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::134; helo=mail-lf1-x134.google.com; envelope-from=fr0st61te@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::136; helo=mail-lf1-x136.google.com; envelope-from=fr0st61te@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=GsClSg+9;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=Sam+crre;
 	dkim-atps=neutral
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QFx0r6H35z3c8f
-	for <openbmc@lists.ozlabs.org>; Tue,  9 May 2023 21:35:24 +1000 (AEST)
-Received: by mail-lf1-x134.google.com with SMTP id 2adb3069b0e04-4f13a72ff53so6375233e87.0
-        for <openbmc@lists.ozlabs.org>; Tue, 09 May 2023 04:35:24 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QFx0s1wrPz3c8f
+	for <openbmc@lists.ozlabs.org>; Tue,  9 May 2023 21:35:25 +1000 (AEST)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-4f11d267d8bso6433477e87.2
+        for <openbmc@lists.ozlabs.org>; Tue, 09 May 2023 04:35:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683632121; x=1686224121;
+        d=gmail.com; s=20221208; t=1683632122; x=1686224122;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=8zWM9Ku4QEF1MXGuje7rt5LFZjeiu0mnfAywbxjklTg=;
-        b=GsClSg+96jqtWjYLPTKM5pAJI4Eo2Ah8uaXlBAjQknewgiD5RpDgLbDOeUHrrdfrQj
-         WuJ0Y6pxTynTReP5smOZrhhjFAN7AVjy0gOR/IKJNhvNZClw6ASSuIfokJ9+WvofxOfM
-         9aiSdbQK+suvq1C0Pe2xoy/YOi1G5c2WKReuwgQnwIZzkeM7IQe3cyRksKtFDaOGZUtP
-         8DIdgFxhvFepNFy7jRPo+Ql7m1jw76sq13DjFpna9nCCeyHhYRiio1PUxHCQV5R1mK0y
-         BKnop1iVJlY7vVgXY4M91QeAEczd+kz22dym4iKCDv7/g5OAC4QJ0cZ1hyOiQUyv/PPn
-         emdw==
+        bh=+QQeh9YjZzNjrXQibFSAmN6bJH27K6sErXcLxHfNpn8=;
+        b=Sam+crretoYBxWHA4qS3k5/sYy/9YNnNDeOcT/ax6idvKykJaCktFYNZ0iU6e8debI
+         B8DvJGdp1lL3Q7x5zbpU5gXoSw53k9Ch9CLd1ox4Z0XpstyGRuMY0jd47E1L/eoeTtLi
+         hyCkyvBViRBW90AOQReNZeqrscn3rogJXPMFlMm3HeRi7zJGYsvW5u0Dw7CtEC/mJGve
+         RS0Mg6lh3GQw0reca5/4SrH/9HdIWYtkje+PabbVny0Z158fzPPjMkcwOHo3XQEG2cVA
+         SjPjIPX5M11qNKaKPNIeqAQOvqo0H0DPctFCbD2iK5JPG0LYGFH5dl9SQTIcaJra+uYW
+         qqSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683632121; x=1686224121;
+        d=1e100.net; s=20221208; t=1683632122; x=1686224122;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=8zWM9Ku4QEF1MXGuje7rt5LFZjeiu0mnfAywbxjklTg=;
-        b=Ss3TPQNaAuP+Ti7rrdkolx8QM1B8FWML7kJyBtC2UF2qkZX7LuhUCKUy8tbvl2kRkS
-         EE5L2DvkPG7uEWMnSwMJcE5dPp/iECcLmp4IVKRzfdoQEUKW7FbAMJCe0KRXsnFymhMR
-         CWn2CQCzBhL2noy1q1kwEiUhzzmBZVbC39kkObLmR+tPQFxPNQbR1JmjFgN2hSt51iDS
-         y7ndHauGS6FaGbRIJp0eeQYrzlwa2lfr8xM+/lDsjkbYuWMty7dZUjhY0IkaANyx/O+1
-         j7CYuBczpCZVJHDlqw0dFI03/wolyBxjQflVF31n3UVC0Js6ikIPuQI6A1sVWlS7pCA0
-         TSKA==
-X-Gm-Message-State: AC+VfDw+Bv64yD14oxqJ6ENUmnnlXIetZbMOK3J8uLp6HlT0b+M0vkKm
-	NVboj2bfKT1PdZHwXBlj1UM=
-X-Google-Smtp-Source: ACHHUZ4rSmlvz0jORkDZiqRrHk7JyLuRrDC5VraFbgQQXsHmS+H1SxrFJ8w8Mx2ICmrN1/BOlrRVRQ==
-X-Received: by 2002:ac2:46f8:0:b0:4ef:fe49:e14f with SMTP id q24-20020ac246f8000000b004effe49e14fmr647454lfo.20.1683632121311;
-        Tue, 09 May 2023 04:35:21 -0700 (PDT)
+        bh=+QQeh9YjZzNjrXQibFSAmN6bJH27K6sErXcLxHfNpn8=;
+        b=lBdOfZCKLDwxpOHpDtcQUdUPhorw9Dw/yz6ntuHVcpy3C5N/K0giOT6+5dWmYZNfPq
+         0qyseYbHtyfojhI/Bba9B9X71CPg7gVBisRmW8TyS19j5FVayTbiZEXV7v+UCjq2gsKc
+         gyIb4rABA1vSin5J9n6nSEGb4PaMEo5eh9LeUUnLNaOEXd6RC1u5JVZUUbzkEnIvSNtt
+         iYvhlJV7riLJqYenFD58kgzewAMcV1lBeXBDuyBfkHhBpzDSEN1nuFQgIZU+vUMyApUZ
+         5HI+Ysz/McKHQxKKV+NFhc86GYK9Y3gqJtivg+i3f/B7myiAdQgzvLuctxI9EeXgT8j1
+         ehqQ==
+X-Gm-Message-State: AC+VfDwTS7z08J0fvt8blvedP5OAXGc+fQ8bcIha+Oot/RLtkTip+sRa
+	CT6siFGmCqjieFcOp+U4iCE=
+X-Google-Smtp-Source: ACHHUZ53BaQ3IWMDiSD/9ydEo3S9fenNHEm7zgrZw941KuYic4L3B4+t1YiwvBZYRXPaOZh79K0r7Q==
+X-Received: by 2002:ac2:5623:0:b0:4eb:30f9:eed7 with SMTP id b3-20020ac25623000000b004eb30f9eed7mr824674lff.22.1683632122133;
+        Tue, 09 May 2023 04:35:22 -0700 (PDT)
 Received: from localhost.localdomain (93-80-66-133.broadband.corbina.ru. [93.80.66.133])
-        by smtp.googlemail.com with ESMTPSA id k16-20020ac24570000000b004f25ccac240sm108940lfm.74.2023.05.09.04.35.20
+        by smtp.googlemail.com with ESMTPSA id k16-20020ac24570000000b004f25ccac240sm108940lfm.74.2023.05.09.04.35.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 09 May 2023 04:35:21 -0700 (PDT)
 From: Ivan Mikhaylov <fr0st61te@gmail.com>
@@ -65,9 +65,9 @@ To: Samuel Mendoza-Jonas <sam@mendozajonas.com>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Rob Herring <robh+dt@kernel.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>
-Subject: [PATCH v2 4/5] net/ncsi: add shift MAC address property
-Date: Tue,  9 May 2023 14:35:03 +0000
-Message-Id: <20230509143504.30382-5-fr0st61te@gmail.com>
+Subject: [PATCH v2 5/5] dt-bindings: net: ftgmac100: convert to yaml version from txt
+Date: Tue,  9 May 2023 14:35:04 +0000
+Message-Id: <20230509143504.30382-6-fr0st61te@gmail.com>
 X-Mailer: git-send-email 2.40.1
 In-Reply-To: <20230509143504.30382-1-fr0st61te@gmail.com>
 References: <20230509143504.30382-1-fr0st61te@gmail.com>
@@ -89,59 +89,128 @@ Cc: netdev@vger.kernel.org, openbmc@lists.ozlabs.org, Ivan Mikhaylov <fr0st61te@
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add the shift MAC address property for GMA command which provides which
-shift should be used but keep old one values for backward compatability.
-
 Signed-off-by: Ivan Mikhaylov <fr0st61te@gmail.com>
 ---
- net/ncsi/ncsi-rsp.c | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ .../bindings/net/faraday,ftgmac100.yaml       | 110 ++++++++++++++++++
+ 1 file changed, 110 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/net/faraday,ftgmac100.yaml
 
-diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
-index 069c2659074b..1f108db34d85 100644
---- a/net/ncsi/ncsi-rsp.c
-+++ b/net/ncsi/ncsi-rsp.c
-@@ -9,6 +9,8 @@
- #include <linux/netdevice.h>
- #include <linux/etherdevice.h>
- #include <linux/skbuff.h>
-+#include <linux/platform_device.h>
-+#include <linux/of.h>
- 
- #include <net/ncsi.h>
- #include <net/net_namespace.h>
-@@ -616,9 +618,12 @@ static int ncsi_rsp_handler_oem_gma(struct ncsi_request *nr, int mfr_id)
- {
- 	struct ncsi_dev_priv *ndp = nr->ndp;
- 	struct net_device *ndev = ndp->ndev.dev;
-+	struct platform_device *pdev;
- 	struct ncsi_rsp_oem_pkt *rsp;
- 	struct sockaddr saddr;
- 	u32 mac_addr_off = 0;
-+	s32 shift_mac_addr = 0;
-+	u64 mac_addr;
- 	int ret = 0;
- 
- 	/* Get the response header */
-@@ -635,7 +640,17 @@ static int ncsi_rsp_handler_oem_gma(struct ncsi_request *nr, int mfr_id)
- 
- 	memcpy(saddr.sa_data, &rsp->data[mac_addr_off], ETH_ALEN);
- 	if (mfr_id == NCSI_OEM_MFR_BCM_ID || mfr_id == NCSI_OEM_MFR_INTEL_ID)
--		eth_addr_inc((u8 *)saddr.sa_data);
-+		shift_mac_addr = 1;
+diff --git a/Documentation/devicetree/bindings/net/faraday,ftgmac100.yaml b/Documentation/devicetree/bindings/net/faraday,ftgmac100.yaml
+new file mode 100644
+index 000000000000..98cd142f74bb
+--- /dev/null
++++ b/Documentation/devicetree/bindings/net/faraday,ftgmac100.yaml
+@@ -0,0 +1,110 @@
++# SPDX-License-Identifier: GPL-2.0
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/net/faraday,ftgmac100.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
-+	pdev = to_platform_device(ndev->dev.parent);
-+	if (pdev)
-+		of_property_read_s32(pdev->dev.of_node,
-+				     "mac-address-increment", &shift_mac_addr);
++title: Faraday Technology FTGMAC100 gigabit ethernet controller
 +
-+	/* Increase mac address by shift value for BMC's address */
-+	mac_addr = ether_addr_to_u64((u8 *)saddr.sa_data);
-+	mac_addr += shift_mac_addr;
-+	u64_to_ether_addr(mac_addr, (u8 *)saddr.sa_data);
- 	if (!is_valid_ether_addr((const u8 *)saddr.sa_data))
- 		return -ENXIO;
- 
++allOf:
++  - $ref: "ethernet-controller.yaml#"
++
++maintainers:
++  - Po-Yu Chuang <ratbert@faraday-tech.com>
++
++properties:
++  compatible:
++    oneOf:
++      - const: faraday,ftgmac100
++      - items:
++          - enum:
++              - aspeed,ast2400-mac
++              - aspeed,ast2500-mac
++              - aspeed,ast2600-mac
++          - const: faraday,ftgmac100
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  clocks:
++    description: |
++      In accordance with the generic clock bindings. Must describe the MAC
++      IP clock, and optionally an RMII RCLK gate for the AST2500/AST2600. The
++      required MAC clock must be the first cell.
++    minItems: 1
++    maxItems: 2
++
++  clock-names:
++    items:
++      - enum:
++          - MACCLK
++          - RCLK
++
++  phy-mode:
++    enum:
++      - rgmii
++      - rmii
++
++  phy-handle: true
++
++  use-ncsi:
++    description: |
++      Use the NC-SI stack instead of an MDIO PHY. Currently assumes
++      rmii (100bT) but kept as a separate property in case NC-SI grows support
++      for a gigabit link.
++    type: boolean
++
++  no-hw-checksum:
++    description: |
++      Used to disable HW checksum support. Here for backward
++      compatibility as the driver now should have correct defaults based on
++      the SoC.
++    type: boolean
++
++  mac-address-increment:
++    description: |
++      Increment the MAC address taken by GMA command via  NC-SI. Specifies
++      a signed number to be added to the host MAC address as obtained by
++      the OEM GMA command. If not specified, 1 is used by default for
++      Broadcom and Intel network cards, 0 otherwise.
++
++  mdio:
++    $ref: /schemas/net/mdio.yaml#
++
++required:
++  - compatible
++  - reg
++  - interrupts
++
++unevaluatedProperties: false
++
++examples:
++  - |
++    mac0: ethernet@1e660000 {
++        compatible = "aspeed,ast2500-mac", "faraday,ftgmac100";
++        reg = <0x1e660000 0x180>;
++        interrupts = <2>;
++        use-ncsi;
++    };
++
++    mac1: ethernet@1e680000 {
++        compatible = "aspeed,ast2500-mac", "faraday,ftgmac100";
++        reg = <0x1e680000 0x180>;
++        interrupts = <2>;
++
++        phy-handle = <&phy>;
++        phy-mode = "rgmii";
++
++        mdio {
++            #address-cells = <1>;
++            #size-cells = <0>;
++
++            phy: ethernet-phy@1 {
++                compatible = "ethernet-phy-ieee802.3-c22";
++                reg = <1>;
++            };
++        };
++    };
 -- 
 2.40.1
 
