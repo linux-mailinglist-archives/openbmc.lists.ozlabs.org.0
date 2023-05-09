@@ -1,104 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 38A646FCB54
-	for <lists+openbmc@lfdr.de>; Tue,  9 May 2023 18:31:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 588A06FCEFA
+	for <lists+openbmc@lfdr.de>; Tue,  9 May 2023 22:01:14 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QG3Zj35Dvz2xG9
-	for <lists+openbmc@lfdr.de>; Wed, 10 May 2023 02:31:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QG8DS0RkSz3fNd
+	for <lists+openbmc@lfdr.de>; Wed, 10 May 2023 06:01:12 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=mmZrEcO9;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=ZfyHXJNf;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=stefanb@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b36; helo=mail-yb1-xb36.google.com; envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=mmZrEcO9;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=ZfyHXJNf;
 	dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QG3Z62v9Qz3fLK
-	for <openbmc@lists.ozlabs.org>; Wed, 10 May 2023 02:31:09 +1000 (AEST)
-Received: from pps.filterd (m0353723.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 349GKWUX031030;
-	Tue, 9 May 2023 16:30:59 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- subject : to : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=798W5t3js6IUJVwK5rkW/LpRP0zZE1jjZs/yrMfiQ3Y=;
- b=mmZrEcO9MheuaG8JkGs6nKljVtFsX23P5lucf+EI0RI/S/nEeNogwKxurRL4ns1e3St2
- Gq6JVLmh1bddshJz6L9aF9pG75aG1Na6ye8fHsGllVRrhiTcDEtX7NECr09PvUQo71Ra
- /Z4Rxo8FjFcjP5npN2zChbwxlEqsfgMadaftjMgenTikm/ghmgN3laPcCQzXOHi7KzVp
- 2EqU80E4P8i1dx+SKfllmwKcTVWahvrzm5poO47vsSch2FASq1UPuVa0uQkAem84q0wx
- e4gw/5hDe9zYWRJxq/rOjxvFhiYE8BKq2uuVh1Az7zkD7XrWd/hfjPNmvVoafsATiYtc aw== 
-Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com [169.55.85.253])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qfs6e1d08-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 09 May 2023 16:30:59 +0000
-Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
-	by ppma01wdc.us.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 349D8BrD014991;
-	Tue, 9 May 2023 16:30:58 GMT
-Received: from smtprelay03.wdc07v.mail.ibm.com ([9.208.129.113])
-	by ppma01wdc.us.ibm.com (PPS) with ESMTPS id 3qf7ptmbqr-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 09 May 2023 16:30:58 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com [10.241.53.103])
-	by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 349GUv2v4326094
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 9 May 2023 16:30:57 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id E46475805E;
-	Tue,  9 May 2023 16:30:56 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 6B49E58056;
-	Tue,  9 May 2023 16:30:56 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
-	by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Tue,  9 May 2023 16:30:56 +0000 (GMT)
-Message-ID: <7481d113-65f9-fc86-1908-29d8234ad980@linux.ibm.com>
-Date: Tue, 9 May 2023 12:30:56 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on Qemu
-Content-Language: en-US
-To: Sandeep Kumar <sandeep.pkumar@tcs.com>,
-        =?UTF-8?Q?C=c3=a9dric_Le_Goater?=
- <clg@kaod.org>,
-        "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
-        Ninad Palsule <ninad@linux.ibm.com>, Joel Stanley <jms@jms.id.au>,
-        Andrew Jeffery <andrew@aj.id.au>
-References: <MA1PR01MB412922EF629403C84674A6AD87909@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
- <9c136acf-ea18-130b-41bb-5001b01ee8cf@kaod.org>
- <MA1PR01MB4129E3F1719B297B56DC148A87629@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
- <MA1PR01MB41294AC02644C3CB98E6F84187639@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
- <MA1PR01MB4129B241046BEB173A6CFA66876D9@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
- <8abb1400-f7c4-f04a-8352-6c2583e23f0b@linux.ibm.com>
- <MA1PR01MB4129EE9FDCFF415DF8580CB987729@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
- <7fbe2c10-aa83-2640-0de0-b07ca0e5a13d@linux.ibm.com>
- <MA1PR01MB412975D2976523FD64289DB487729@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
- <b35b62e6-2195-627f-6939-381f40abdd43@linux.ibm.com>
- <MA1PR01MB41293CA1F337F47DDA58035D87729@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
- <71e0634f-e5b6-d804-7b55-7ae674f34342@linux.ibm.com>
- <MA1PR01MB41297364D34EE0949966C5BD87769@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <MA1PR01MB41297364D34EE0949966C5BD87769@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: 506fWIGrsRE8xChGM_ZZ-lmhy5x_RJU4
-X-Proofpoint-GUID: 506fWIGrsRE8xChGM_ZZ-lmhy5x_RJU4
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
-MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
- definitions=2023-05-09_09,2023-05-05_01,2023-02-09_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 spamscore=0
- mlxscore=0 bulkscore=0 mlxlogscore=999 malwarescore=0 clxscore=1015
- impostorscore=0 priorityscore=1501 suspectscore=0 adultscore=0
- lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305090132
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QG8Cs3rygz3fLr
+	for <openbmc@lists.ozlabs.org>; Wed, 10 May 2023 06:00:40 +1000 (AEST)
+Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-b9e2b65d006so9548781276.3
+        for <openbmc@lists.ozlabs.org>; Tue, 09 May 2023 13:00:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683662435; x=1686254435;
+        h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=PXhrc7Hv9ntIG7Yk9Ab1X0BW6MrFByRJBbL87EvTWwc=;
+        b=ZfyHXJNfV7Z1+UDM1C2Bs9w8WWY3HsT/yJK+ovG6fyQ1mpXZ7yFrq0UqVw58QSspmy
+         c+xx9NQK900B9y7AR2ai2kMJtPk2i+CaSIFfTEH9DU00+JACYPXY+4zJFL3Jc+xUeCYm
+         yxlr46V6hDVNvi8WW4A8yaSSNkXqpHluM+ZQbLSmB9fJ+cInvmRVujFuGBgM4Bqahvh3
+         yTRHAPa4Kn7MmmOqqRf2QFni0N0YhmDL5L6RFGl0fzuHqml6BBuekY5lETd0QEKNMsN7
+         CoC2QBOt4jriLrDtN/HBEYNlEbqkByrmoJAftSlNxRicdTLJiFxoQwRB+UlW+dZl+nIl
+         FBPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683662435; x=1686254435;
+        h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PXhrc7Hv9ntIG7Yk9Ab1X0BW6MrFByRJBbL87EvTWwc=;
+        b=QMjt4Nl2tTbgcALmoeJBFleVJVFZ4Hvb6TMUW8dXoG6dyZDPUTN2ifj48OQSrATn7x
+         zUvMX+1K/wPFG2Fn+/i+GwQgagM0/m7Hw6WBXz1mpfW8AQPjlWptI9rlz0lUaI60hpae
+         VIYyA7xR6DyoUcBWADcdcY6wZLPWHUSpk+ZIu1af8xJ2Mo8keeC7OUVzldGXu7o3AgdS
+         AksFNDlqQ63cjD1xUE9OMHUlpQazFZ6307IQgMLVT0JZF3+A1mQUNEoEOqzDd119XlsV
+         PzrGOdMFeJX4Hp2Bzo2vLphBal6iuvgsqzuajwqGcE351gvtkvPRm0uUqZ3IKsJp8Rc0
+         YzPQ==
+X-Gm-Message-State: AC+VfDzAWEPdkI0SSznRhZ+7o80T9ltIYCB90oiSIFV3OCJypJHGML+Q
+	pgVmeiNKe7Pp4puswbhhTyTDgff0Kv4/eg==
+X-Google-Smtp-Source: ACHHUZ6a4eYv8svKd4OnF9SibnRPhDdR0rPjWfw0fE16sTVdwL/aFZZ2M7xlM/sTgSyTz2vwbPp2iA==
+X-Received: by 2002:a25:21d6:0:b0:ba1:67e4:e62b with SMTP id h205-20020a2521d6000000b00ba167e4e62bmr14033490ybh.13.1683662435316;
+        Tue, 09 May 2023 13:00:35 -0700 (PDT)
+Received: from smtpclient.apple ([67.220.1.27])
+        by smtp.gmail.com with ESMTPSA id m124-20020a255882000000b00b8f46d74e5dsm3210172ybb.37.2023.05.09.13.00.34
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 09 May 2023 13:00:35 -0700 (PDT)
+From: Andrew Geissler <geissonator@gmail.com>
+Message-Id: <48E1A495-C402-4FF5-BEE7-CB883B076D10@gmail.com>
+Content-Type: multipart/alternative;
+	boundary="Apple-Mail=_145D31AA-6C35-460F-A40A-272C15796F39"
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.3\))
+Subject: Re: Preventing a system power on before BMC Ready
+Date: Tue, 9 May 2023 15:00:33 -0500
+In-Reply-To: <CACWQX81Tg+22k=bwniGG4Brvj5uENM_ZXOg5B=9fOCKMfKKyLw@mail.gmail.com>
+To: Ed Tanous <ed@tanous.net>,
+ Michael Richardson <mcr@sandelman.ca>
+References: <0992ABFC-7CD8-4E4E-8731-167E59C8A9F7@gmail.com>
+ <CACWQX81Tg+22k=bwniGG4Brvj5uENM_ZXOg5B=9fOCKMfKKyLw@mail.gmail.com>
+X-Mailer: Apple Mail (2.3696.120.41.1.3)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -110,653 +79,188 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: OpenBMC List <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
+--Apple-Mail=_145D31AA-6C35-460F-A40A-272C15796F39
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain;
+	charset=utf-8
 
-On 5/9/23 08:06, Sandeep Kumar wrote:
->   TCS Confidential
-> 
-> Hi Stefan,
-> 
-> Thanks for the help.
-> 
-> 'MACHINE_FEATURES:append = " tpm2" => this worked for me as well.  Could you please also point to the API's which can be used for communicating with swtpm? Any sample code which can be used for reading and writing data to and from the block device ?
 
-TPM 2 has character devices /dev/tpm0 and /dev/tpmrm0 that can for example be used with either one of the tss2 stacks:
 
-meta-security/meta-tpm/recipes-tpm2/ibmtpm2tss
-meta-security/meta-tpm/recipes-tpm2/ibmtpm2tss/ibmtpm2tss
-meta-security/meta-tpm/recipes-tpm2/ibmtpm2tss/ibmtpm2tss/0001-utils-12-Makefile.am-expand-wildcards-in-prereqs.patch
-meta-security/meta-tpm/recipes-tpm2/ibmtpm2tss/ibmtpm2tss_1661.bb
-meta-security/meta-tpm/recipes-tpm2/tpm2-tss-engine
-meta-security/meta-tpm/recipes-tpm2/tpm2-tss-engine/tpm2-tss-engine_1.1.0.bb
-meta-security/meta-tpm/recipes-tpm2/tpm2-tss
-meta-security/meta-tpm/recipes-tpm2/tpm2-tss/tpm2-tss
-meta-security/meta-tpm/recipes-tpm2/tpm2-tss/tpm2-tss/fixup_hosttools.patch
-meta-security/meta-tpm/recipes-tpm2/tpm2-tss/tpm2-tss_4.0.1.bb
+> On May 2, 2023, at 7:48 PM, Ed Tanous <ed@tanous.net> wrote:
+>=20
+>=20
+>=20
+> On Tue, May 2, 2023 at 1:49=E2=80=AFPM Andrew Geissler =
+<geissonator@gmail.com <mailto:geissonator@gmail.com>> wrote:
+> >
+> > That got us brainstorming about some possible solutions:
+> > - Write some code in bmcweb to send a =E2=80=9Cbmc state change =
+event=E2=80=9D anytime bmcweb
+> >   comes up to ensure listening clients know =E2=80=9Csomething=E2=80=9D=
+ has happened
+> > - Add an optional compile option to bmcweb (or =
+PSM/x86-power-control) to require
+> >   BMC Ready before issuing chassis or system POST requests (return =
+error if not
+> >   at Ready)
+>=20
+> PSM or x86-power-control mods would be my preference.  bmcweb should =
+not be in charge of business logic.  If the system shouldn't allow power =
+on while the bmc is in ready state, then the daemons that handle power =
+on need to have that as a constraint, otherwise you'd have the same =
+problem if a user tried from IPMI.
 
-Intel: https://github.com/tpm2-software/tpm2-tss#overview
-IBM: https://github.com/kgoldman/ibmtss
+Thanks for the responses guys. I=E2=80=99m going to go down the path of =
+an optional config
+option to PSM that will require BMC Ready for chassis or host =
+operations. It will
+return a well defined d-bus error that bmcweb can look at and return an =
+error
+to the redfish client indicating the operation is not possible (and when =
+they should retry).
 
-    Stefan
+Long term, we=E2=80=99d really like to see the power on/off operations =
+return a redfish
+task so clients could track the power operation vs. the required polling =
+and/or boot
+event notifications by them now. That timeline for us is out there a bit =
+though.
 
-> 
-> Thanks,
-> Sandeep.
-> 
-> -----Original Message-----
-> From: Stefan Berger <stefanb@linux.ibm.com>
-> Sent: Saturday, May 6, 2023 2:08 AM
-> To: Sandeep Kumar <sandeep.pkumar@tcs.com>; Cédric Le Goater <clg@kaod.org>; openbmc@lists.ozlabs.org; Ninad Palsule <ninad@linux.ibm.com>; Joel Stanley <jms@jms.id.au>; Andrew Jeffery <andrew@aj.id.au>
-> Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on Qemu
-> 
-> "External email. Open with Caution"
-> 
-> 
-> On 5/5/23 13:36, Sandeep Kumar wrote:
->>    TCS Confidential
->>
->> Hi Stefan,
->>
->> I have these options set in
->> /home/tcs/work/san/openbmc/openbmc_april/openbmc/meta-aspeed/recipes-k
->> ernel/linux/linux-aspeed/tpm/tpm2.cfg
->>
->> CONFIG_HW_RANDOM=y
->> CONFIG_HW_RANDOM_TPM=y
->> CONFIG_TCG_TPM=y
->> CONFIG_TCG_TIS_CORE=y
->> CONFIG_TCG_TIS=y
->> CONFIG_TCG_TIS_SPI=y
->> CONFIG_TCG_TIS_I2C=y
->> CONFIG_SECURITYFS=y
-> 
-> 
-> I added 'MACHINE_FEATURES:append = " tpm2"' and this works for me.
-> 
-> As long as these symbols are built into the kernel it should work:
-> 
->> root@evb-ast2600:~# grep tpm_tis_i2c /proc/kallsyms 8056318c t
->> tpm_tis_i2c_remove
->> 805631b0 t tpm_tis_i2c_retry_transfer_until_ack
->> 8056323c t tpm_tis_i2c_write_bytes
->> 80563334 t tpm_tis_i2c_verify_crc
->> 805633e0 t tpm_tis_i2c_read_bytes
->> 80563604 t tpm_tis_i2c_probe
->> 80d23964 t tpm_tis_i2c_driver_init
-> 
->>
->> and in
->> /home/tcs/work/san/openbmc/openbmc_april/openbmc/meta-aspeed/recipes-k
->> ernel/linux/linux-aspeed.inc I have these,
->>
->> SRC_URI += " \
->>                file://defconfig \
->>                file://rsa_oem_fitimage_key.key;sha256sum=eeb4ff2ebbfbd97b6254fe6dbaeea41067e54c65176c233ec7b2ab2decf1ddcd \
->>                file://rsa_oem_fitimage_key.crt;sha256sum=45f5a55497cce8040999bf9f3214d471ac7b83ab7acef41c4425a34662e8372e \
->>                ${@bb.utils.contains('MACHINE_FEATURES', 'tpm2', 'file://tpm/tpm2.scc file://tpm/tpm2.cfg', '', d)} \
->>                ${@bb.utils.contains_any('DISTRO_FEATURES', \
->>                   'obmc-static-norootfs obmc-ubi-fs', \
->>                   'file://ubi/ubi.scc file://ubi/ubi.cfg', '', d)} \
->>              "
->>
->> Anything else needs to be done to enable TPM ?
-> 
-> Apart from having to use the latest QEMU with the TPM TIS I2C support (from git repo) I don't know of anything else.
-> 
->      Stefan
-> 
->>
->> Thanks,
->> Sandeep.
->>
->> -----Original Message-----
->> From: Stefan Berger <stefanb@linux.ibm.com>
->> Sent: Friday, May 5, 2023 9:41 PM
->> To: Sandeep Kumar <sandeep.pkumar@tcs.com>; Cédric Le Goater
->> <clg@kaod.org>; openbmc@lists.ozlabs.org; Ninad Palsule
->> <ninad@linux.ibm.com>; Joel Stanley <jms@jms.id.au>; Andrew Jeffery
->> <andrew@aj.id.au>
->> Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on Qemu
->>
->> "External email. Open with Caution"
->>
->> I enable the following kernel build options for OpenBMC Linux kernel:
->>
->> CONFIG_TCG_TPM=y
->> CONFIG_TCG_TIS_CORE=y
->> CONFIG_TCG_TIS=y
->> CONFIG_TCG_TIS_I2C=y
->>
->> With swtpm running in another terminal:
->>
->> while :; do swtpm socket --tpmstate dir=/tmp/mytpm1     --ctrl type=unixio,path=/tmp/mytpm1/swtpm-sock     --tpm2     --log level=20; done
->>
->> I start qemu built from qemu git master branch tip:
->>
->> /tmp/qemu-system-arm -machine ast2600-evb -nographic -no-reboot -net nic -net user,hostfwd=:127.0.0.1:5722-:22,hostfwd=:127.0.0.1:5743-:443,hostfwd=udp:127.0.0.1:5723-:623 -drive file=./tmp/deploy/images/evb-ast2600/obmc-phosphor-image-evb-ast2600.static.mtd,format=raw,if=mtd     -chardev socket,id=chrtpm,path=/tmp/mytpm1/swtpm-sock     -tpmdev emulator,id=tpm0,chardev=chrtpm     -device tpm-tis-i2c,tpmdev=tpm0,bus=aspeed.i2c.bus.12,address=0x2e
->>
->> root@evb-ast2600:~# echo tpm_tis_i2c 0x2e > /sys/bus/i2c/devices/i2c-12/new_device
->> [   63.771200] tpm_tis_i2c 12-002e: 2.0 TPM (device-id 0x1, rev-id 1)
->> [   63.783927] tpm tpm0: A TPM error (256) occurred attempting the self test
->> [   63.784256] tpm tpm0: starting up the TPM manually
->> [   63.851474] i2c i2c-12: new_device: Instantiated device tpm_tis_i2c at 0x2e
->>
->> root@evb-ast2600:~# uname -a
->> Linux evb-ast2600 6.1.15-580639a-dirty-c56bfb7-00123-gc56bfb70ebfa #1
->> SMP Thu Apr  6 00:55:09 UTC 2023 armv7l GNU/Linux
->>
->> root@evb-ast2600:~# grep tpm_tis_i2c /proc/kallsyms> 8056318c t
->> tpm_tis_i2c_remove
->> 805631b0 t tpm_tis_i2c_retry_transfer_until_ack
->> 8056323c t tpm_tis_i2c_write_bytes
->> 80563334 t tpm_tis_i2c_verify_crc
->> 805633e0 t tpm_tis_i2c_read_bytes
->> 80563604 t tpm_tis_i2c_probe
->> 80d23964 t tpm_tis_i2c_driver_init
->>
->> root@evb-ast2600:~# find /sys/class/tpm /sys/class/tpm
->> /sys/class/tpm/tpm0
->>
->> root@evb-ast2600:~# ls -l /dev/tpm*
->> crw-------    1 root     root       10, 224 May  5 16:03 /dev/tpm0
->> crw-------    1 root     root      252, 65536 May  5 16:03 /dev/tpmrm0
->>
->> root@evb-ast2600:~# find /sys/ | grep pcr
->> /sys/devices/platform/ahb/ahb:apb/ahb:apb:bus@1e78a000/1e78a680.i2c-bu
->> s/i2c-12/12-002e/tpm/tpm0/pcr-sha1
->> /sys/devices/platform/ahb/ahb:apb/ahb:apb:bus@1e78a000/1e78a680.i2c-bu
->> s/i2c-12/12-002e/tpm/tpm0/pcr-sha1/17
->> [... lots more entries also for sha256, sha384, and sha512 ]
->>
->>
->>
->>
->> It seems to work as expected
->>
->> On 5/5/23 11:08, Sandeep Kumar wrote:
->>> TCS Confidential Hi Stefan, Please find below my answers inline.
->>> Thanks, Sandeep. -----Original Message----- From: Stefan Berger
->>> <stefanb@ linux. ibm. com> Sent: Friday, May 5, 2023 6: 56 PM To:
->>> Sandeep Kumar <sandeep. pkumar@ tcs. com>; ZjQcmQRYFpfptBannerStart This Message Is From an External Sender This message came from outside your organization.
->>> ZjQcmQRYFpfptBannerEnd
->>>
->>> TCS Confidential
->>>
->>>
->>> Hi Stefan,
->>>
->>> Please find below my answers inline.
->>>
->>> Thanks,
->>>
->>> Sandeep.
->>>
->>> -----Original Message-----
->>> From: Stefan Berger <stefanb@linux.ibm.com>
->>> Sent: Friday, May 5, 2023 6:56 PM
->>> To: Sandeep Kumar <sandeep.pkumar@tcs.com>; Cédric Le Goater
->>> <clg@kaod.org>; openbmc@lists.ozlabs.org; Ninad Palsule
->>> <ninad@linux.ibm.com>; Joel Stanley <jms@jms.id.au>; Andrew Jeffery
->>> <andrew@aj.id.au>
->>> Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on
->>> Qemu
->>>
->>> "External email. Open with Caution"
->>>
->>> On 5/5/23 01:40, Sandeep Kumar wrote:
->>>
->>>    >   TCS Confidential
->>>
->>>    >
->>>
->>>    > Hi Stefan,
->>>
->>>    >
->>>
->>>    > Stefan: Is the kernel configured in the same way? Are you using the same kernel version?
->>>
->>>    > Ans:
->>>
->>>    >          I am using the Kernel version coming with the latest openBMC without any changes.
->>>
->>>    >          Kernel version used : Linux evb-ast2600 6.1.15-580639a #1
->>> SMP
->>>
->>>    > Thu Apr 6 00:55:09 UTC 2023 armv71 GNU/Linux
->>>
->>>    >
->>>
->>>    > Stefan:  What is the output of this?  find /sys/class/tpm | grep
->>> pcr
->>>
->>>    > Ams:     find: /sys/class/tpm: No such file or directory.
->>>
->>>    >
->>>
->>>    > Could you please point to the right version of kernel which has all these changes ?
->>>
->>> I am not aware of changes in the Linux kernel for TPM I2C and why it would not work in this kernel version.
->>>
->>> Does this show any files?
->>>
->>> find /sys | grep pcr
->>>
->>> *Sandeep: It doesn't show any files. *
->>>
->>> *root@evb-ast2600:~# echo tpm_tis_i2c 0x2e >
->>> /sys/bus/i2c/devices/i2c-12/new_device*
->>>
->>> *[  273.273089] i2c i2c-12: new_device: Instantiated device
->>> tpm_tis_i2c at 0x2e*
->>>
->>> *root@evb-ast2600:~#*
->>>
->>> *root@evb-ast2600:~# find /sys | grep pcr*
->>>
->>> *root@evb-ast2600:~#*
->>>
->>> Do /dev/tpm0 and /dev/tpmrm0 appear after the echo ? What does dmesg show related to tpm (dmesg | grep -i tpm)?
->>>
->>> *Sandeep:  I don’t see /dev/tpm0 and /dev/tpmrm0 after the echo.
->>> Output as below, *
->>>
->>> **
->>>
->>> *root@evb-ast2600:~# echo tpm_tis_i2c 0x2e >
->>> /sys/bus/i2c/devices/i2c-12/new_device*
->>>
->>> *[  273.273089] i2c i2c-12: new_device: Instantiated device
->>> tpm_tis_i2c at 0x2e*
->>>
->>> *root@evb-ast2600:~#*
->>>
->>> *root@evb-ast2600:~# find /sys | grep pcr*
->>>
->>> *root@evb-ast2600:~#*
->>>
->>> *root@evb-ast2600:~# ls /dev/tpm**
->>>
->>> *ls: /dev/tpm*: No such file or directory*
->>>
->>> *root@evb-ast2600:~# dmesg | grep -i tpm*
->>>
->>> *[    6.290898] systemd[1]: systemd 253.1^ running in system mode
->>> (+PAM -AUDIT -SELINUX -APPARMOR -IMA -SMACK +SECCOMP -GCRYPT -GNUTLS
->>> -OPENSSL -ACL +BLKID -CURL -ELFUTILS -FIDO2 -IDN2 -IDN -IPTC -KMOD
->>> -LIBCRYPTSETUP +LIBFDISK -PCRE2 -PWQUALITY -P11KIT -QRENCODE -TPM2
->>> -BZIP2 -LZ4 -XZ -ZLIB +ZSTD -BPF_FRAMEWORK -XKBCOMMON -UTMP -SYSVINIT
->>> default-hierarchy=unified)*
->>>
->>> *[  273.273089] i2c i2c-12: new_device: Instantiated device
->>> tpm_tis_i2c at 0x2e*
->>>
->>> *root@evb-ast2600:~#*
->>>
->>>        Stefan
->>>
->>>    >
->>>
->>>    >
->>>
->>>    > Thanks,
->>>
->>>    > Sandeep.
->>>
->>>    >
->>>
->>>    > -----Original Message-----
->>>
->>>    > From: Stefan Berger <stefanb@linux.ibm.com
->>> <mailto:stefanb@linux.ibm.com>>
->>>
->>>    > Sent: Thursday, May 4, 2023 7:30 PM
->>>
->>>    > To: Sandeep Kumar <sandeep.pkumar@tcs.com
->>> <mailto:sandeep.pkumar@tcs.com>>; Cédric Le Goater
->>>
->>>    > <clg@kaod.org <mailto:clg@kaod.org>>; openbmc@lists.ozlabs.org
->>> <mailto:openbmc@lists.ozlabs.org>; Ninad Palsule
->>>
->>>    > <ninad@linux.ibm.com <mailto:ninad@linux.ibm.com>>; Joel Stanley
->>> <jms@jms.id.au <mailto:jms@jms.id.au>>; Andrew Jeffery
->>>
->>>    > <andrew@aj.id.au <mailto:andrew@aj.id.au>>
->>>
->>>    > Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on
->>> Qemu
->>>
->>>    >
->>>
->>>    > "External email. Open with Caution"
->>>
->>>    >
->>>
->>>    >
->>>
->>>    > On 5/4/23 05:12, Sandeep Kumar wrote:
->>>
->>>    >> TCS Confidential Hi C, I was able to build and run the image(for
->>>
->>>    >> evb-ast2600) with swtpm. Few issues observed, If I run with the
->>>
->>>    >> flash. img provided in your github link(https: //github.
->>>
->>>    >> com/legoater/qemu-aspeed-boot/tree/master/images) everything ZjQcmQRYFpfptBannerStart This Message Is From an External Sender This message came from outside your organization.
->>>
->>>    >> ZjQcmQRYFpfptBannerEnd
->>>
->>>    >> TCS Confidential
->>>
->>>    >>
->>>
->>>    >> Hi C,
->>>
->>>    >> I was able to build and run the image(for evb-ast2600) with swtpm.
->>>
->>>    >> Few issues observed,
->>>
->>>    >>
->>>
->>>    >>   1. If I run with the flash.img provided in your github link(_https://github.com/legoater/qemu-aspeed-boot/tree/master/images_ <https://github.com/legoater/qemu-aspeed-boot/tree/master/images <https://github.com/legoater/qemu-aspeed-boot/tree/master/images>>) everything works as expected, i.e I get the below output.
->>>
->>>    >>
->>>
->>>    >> *# echo tpm_tis_i2c 0x2e >
->>> /sys/bus/i2c/devices/i2c-12/new_device*
->>>
->>>    >> *[  182.735902] tpm_tis_i2c 12-002e: 2.0 TPM (device-id 0x1,
->>> rev-id
->>>
->>>    >> 1)* *[  182.773885] i2c i2c-12: new_device: Instantiated device
->>>
->>>    >> tpm_tis_i2c at 0x2e*
->>>
->>>    >> *#*
->>>
->>>    >> *#*
->>>
->>>    >> *# cat /sys/class/tpm/tpm0/pcr-sha256/0*
->>>
->>>    >>
->>> *B804724EA13F52A9072BA87FE8FDCC497DFC9DF9AA15B9088694639C431688E0*
->>>
->>>    >> *#*
->>>
->>>    >> *#*
->>>
->>>    >>
->>>
->>>    >>   2. If I run it with the locally built image, I get this error,
->>>
->>>    >
->>>
->>>    > Is the kernel configured in the same way? Are you using the same kernel version?
->>>
->>>    >>
->>>
->>>    >> *root@evb-ast2600:~# echo tpm_tis_i2c 0x2e >
->>>
->>>    >> /sys/bus/i2c/devices/i2c-12/new_device*
->>>
->>>    >> *[  174.063597] i2c i2c-12: new_device: Instantiated device
->>>
->>>    >> tpm_tis_i2c at 0x2e*
->>>
->>>    >
->>>
->>>    > What is the output of this?
->>>
->>>    >
->>>
->>>    > find /sys/class/tpm | grep pcr
->>>
->>>    >
->>>
->>>    >     Stefan
->>>
->>>    >
->>>
->>>    >> *root@evb-ast2600:~# cat /sys/class/tpm/tpm0/pcr-sha256/0*
->>>
->>>    >> *cat: can't open '/sys/class/tpm/tpm0/pcr-sha256/0': No such
->>> file or
->>>
->>>    >> directory*
->>>
->>>    >> *root@evb-ast2600:~#*
->>>
->>>    >> *root@evb-ast2600:~#*
->>>
->>>    >> Please do let me know about what has been done to write the
->>> values
->>>
->>>    >> into “*/sys/class/tpm/tpm0/pcr-sha256/0**” . * Thanks, Sandeep.
->>>
->>>    >> _____________________________________________
->>>
->>>    >> *From:* Sandeep Kumar
->>>
->>>    >> *Sent:* Thursday, April 20, 2023 5:45 PM
->>>
->>>    >> *To:* Cédric Le Goater <clg@kaod.org <mailto:clg@kaod.org>>;
->>> openbmc@lists.ozlabs.org <mailto:openbmc@lists.ozlabs.org>;
->>>
->>>    >> Ninad Palsule <ninad@linux.ibm.com
->>> <mailto:ninad@linux.ibm.com>>; Joel Stanley <jms@jms.id.au
->>> <mailto:jms@jms.id.au>>;
->>>
->>>    >> Andrew Jeffery <andrew@aj.id.au <mailto:andrew@aj.id.au>>
->>>
->>>    >> *Subject:* RE: Integrating swtpm(as a software TPM) with OpenBMC
->>> on
->>>
->>>    >> Qemu Hi C, How to build this image =>
->>>
->>>    >> *obmc-phosphor-image.rootfs.wic.qcow2* ? In openBmc build directory we don’t get this image built.
->>>
->>>    >> Also, remaining image formats used while running on qemu are available in the build directory. i.e fitImage-linux.bin, aspeed-bmc-ibm-rainier.dtb and obmc-phosphor-initramfs.rootfs.cpio.xz .
->>>
->>>    >> Please advise if we have to build openbmc stack in a different
->>> way
->>>
->>>    >> than the standard procedure. We follow the below steps for build, 1. .
->>>
->>>    >> setup Romulus 2. bitbake obmc-phosphor-image Thanks, Sandeep.
->>>
->>>    >> -----Original Message-----
->>>
->>>    >> From: Sandeep Kumar
->>>
->>>    >> Sent: Wednesday, April 19, 2023 3:00 PM
->>>
->>>    >> To: Cédric Le Goater <_clg@kaod.org_ <mailto:clg@kaod.org
->>> <mailto:_clg@kaod.org_%20%3cmailto:clg@kaod.org>>>;
->>>
->>>    >> _openbmc@lists.ozlabs.org_ <mailto:_openbmc@lists.ozlabs.org_>
->>> <mailto:openbmc@lists.ozlabs.org <mailto:openbmc@lists.ozlabs.org>>;
->>> Ninad
->>>
->>>    >> Palsule <_ninad@linux.ibm.com_ <mailto:ninad@linux.ibm.com
->>> <mailto:_ninad@linux.ibm.com_%20%3cmailto:ninad@linux.ibm.com>>>;
->>> Joel
->>>
->>>    >> Stanley <_jms@jms.id.au_ <mailto:jms@jms.id.au
->>> <mailto:_jms@jms.id.au_%20%3cmailto:jms@jms.id.au>>>; Andrew Jeffery
->>>
->>>    >> <_andrew@aj.id.au_ <mailto:andrew@aj.id.au
->>> <mailto:_andrew@aj.id.au_%20%3cmailto:andrew@aj.id.au>>>
->>>
->>>    >> Subject: RE: Integrating swtpm(as a software TPM) with OpenBMC
->>> on
->>>
->>>    >> Qemu Hi C, Got it working. Looks like slirp is no longer
->>> supported on
->>>
->>>    >> ubnutu 18.04. have upgraded to a newer version  and is working now.
->>>
->>>    >> Thanks,
->>>
->>>    >> Sandeep.
->>>
->>>    >> -----Original Message-----
->>>
->>>    >> From: Cédric Le Goater <clg@kaod.org <mailto:clg@kaod.org
->>> <mailto:clg@kaod.org%20%3cmailto:clg@kaod.org>>>
->>>
->>>    >> Sent: Wednesday, April 19, 2023 2:26 PM
->>>
->>>    >> To: Sandeep Kumar <sandeep.pkumar@tcs.com
->>>
->>>    >> <mailto:sandeep.pkumar@tcs.com
->>> <mailto:sandeep.pkumar@tcs.com>>>;
->>> openbmc@lists.ozlabs.org <mailto:openbmc@lists.ozlabs.org>
->>>
->>>    >> <mailto:openbmc@lists.ozlabs.org
->>> <mailto:openbmc@lists.ozlabs.org>>; Ninad Palsule
->>> <ninad@linux.ibm.com
->>>
->>>    >> <mailto:ninad@linux.ibm.com <mailto:ninad@linux.ibm.com>>>; Joel
->>> Stanley <jms@jms.id.au
->>>
->>>    >> <mailto:jms@jms.id.au <mailto:jms@jms.id.au>>>; Andrew Jeffery
->>> <andrew@aj.id.au
->>>
->>>    >> <mailto:andrew@aj.id.au <mailto:andrew@aj.id.au>>>
->>>
->>>    >> Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC
->>> on
->>>
->>>    >> Qemu "External email. Open with Caution"
->>>
->>>    >> Hello Sandeep
->>>
->>>    >> On 4/18/23 09:45, Sandeep Kumar wrote:
->>>
->>>    >>> TCS Confidential
->>>
->>>    >>>
->>>
->>>    >>> Hi C,
->>>
->>>    >>> Built the qemu from your branch. Few issues, *$
->>> ./qemu-system-arm -m
->>>
->>>    >>> 256 -M romulus-bmc -nographic -drive
->>>
->>>    >>> file=./obmc-phosphor-image-romulus.static.mtd,format=raw,if=mtd
->>> -net
->>>
->>>    >>> nic -net
->>>
->>>    >>>
->>> user,hostfwd=:127.0.0.1:2222-:22,hostfwd=:127.0.0.1:4443-:443,hostfw
->>>
->>>    >>> d
->>>
->>>    >>> =
->>>
->>>    >>> tcp:127.0.0.1:8880-:80,hostfwd=tcp:127.0.0.1:2200-:2200,hostfwd=udp:
->>>
->>>    >>> 1
->>>
->>>    >>> 2
->>>
->>>    >>>
->>> 7.0.0.1:6623-:623,hostfwd=udp:127.0.0.1:6664-:664,hostname=qemu*
->>>
->>>    >>> *qemu-system-arm: -net
->>>
->>>    >>>
->>> user,hostfwd=:127.0.0.1:2222-:22,hostfwd=:127.0.0.1:4443-:443,hostfw
->>>
->>>    >>> d
->>>
->>>    >>> =
->>>
->>>    >>> tcp:127.0.0.1:8880-:80,hostfwd=tcp:127.0.0.1:2200-:2200,hostfwd=udp:
->>>
->>>    >>> 1
->>>
->>>    >>> 2
->>>
->>>    >>> 7.0.0.1:6623-:623,hostfwd=udp:127.0.0.1:6664-:664,hostname=qemu:
->>>
->>>    >>> network backend 'user' is not compiled into this binary* I
->>> didn’t
->>>
->>>    >>> enable the slirp package I guess. So enabled it while running
->>>
->>>    >>> configure, *$ ../configure --enable-slirp*
->>>
->>>    >>> *........*
->>>
->>>    >>> *Run-time dependency slirp found: NO (tried pkgconfig)*
->>>
->>>    >>> *../meson.build:681:2: ERROR: Dependency "slirp" not found,
->>> tried
->>>
->>>    >>> pkgconfig* *A full log can be found at
->>>
->>>    >>>
->>> /home/tcs/work/sandeep/measured_boot/ibm_qemu/qemu/build/meson-logs/
->>>
->>>    >>> m
->>>
->>>    >>> e
->>>
->>>    >>> son-log.txt*
->>>
->>>    >>> *NOTICE: You are using Python 3.6 which is EOL. Starting with
->>>
->>>    >>> v0.62.0, Meson will require Python 3.7 or newer*
->>>
->>>    >>> *ERROR: meson setup failed*
->>>
->>>    >>> I have already installed slirp locally, but still getting the above error.
->>>
->>>    >> Did you install the libslirp-dev or libslirp-devel package ?
->>>
->>>    >> C.
->>>
->>>    >>
->>>
->>>    >> TCS Confidential
->>>
->>>    >>
->>>
->>>    >> =====-----=====-----=====
->>>
->>>    >> Notice: The information contained in this e-mail message and/or
->>>
->>>    >> attachments to it may contain confidential or privileged information.
->>>
->>>    >> If you are not the intended recipient, any dissemination, use,
->>>
->>>    >> review, distribution, printing or copying of the information
->>>
->>>    >> contained in this e-mail message and/or attachments to it are
->>>
->>>    >> strictly prohibited. If you have received this communication in
->>>
->>>    >> error, please notify us by reply e-mail or telephone and
->>> immediately
->>>
->>>    >> and permanently delete the message and any attachments. Thank
->>> you
->>>
->>>    >>
->>>
->>>    >
->>>
->>>    >   TCS Confidential
->>>
->>>
->>> TCS Confidential
->>>
->>
->>    TCS Confidential
-> 
->   TCS Confidential
+> > - Queue up the power on request and execute it once we reach BMC =
+Ready (not sure
+> >   what type of response that would be to Redfish clients or what =
+error path
+> >   looks like if we never reach Ready?)
+>=20
+> Redfish has async tasks for this exact use case, and we already have =
+code to do them.  Alternatively you could just return an error that the =
+operation is not possible, along with a retry-after header instructing =
+the user when to retry their request.  We do this in the few update apis =
+already.
+
+Yep, I like the alternative here medium term.
+
+>=20
+> > - Find a way in the client to better detect an unexpected bmc reboot =
+(heartbeat
+> >   of some sort)
+> > - Push bmcweb further in the startup to BMC Ready, ensuring clients =
+can't talk
+> >   to the BMC until it's near Ready state
+>=20
+> For your use case, if this is possible, that=E2=80=99s probably =
+easiest and most client friendly, so long as you can handle the case =
+where the bmc never hits =E2=80=9Cready=E2=80=9D
+
+Possible, but our redfish client does potentially manage a lot of =
+systems, so anything that
+increases repeated traffic is frowned upon. And since this seems like =
+something that could
+affect any Redfish client with similar event driven requirements, it =
+seems best to ensure
+the openbmc back end provides an adequate error in this situation.
+
+>=20
+> >
+> > Thoughts?
+> > Andrew
+> --=20
+> -Ed
+
+
+--Apple-Mail=_145D31AA-6C35-460F-A40A-272C15796F39
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/html;
+	charset=utf-8
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
+charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
+-webkit-nbsp-mode: space; line-break: after-white-space;" class=3D""><br =
+class=3D""><div><br class=3D""><blockquote type=3D"cite" class=3D""><div =
+class=3D"">On May 2, 2023, at 7:48 PM, Ed Tanous &lt;<a =
+href=3D"mailto:ed@tanous.net" class=3D"">ed@tanous.net</a>&gt; =
+wrote:</div><br class=3D"Apple-interchange-newline"><div class=3D""><div =
+class=3D""><br class=3D"">
+<br class=3D"">
+On Tue, May 2, 2023 at 1:49=E2=80=AFPM Andrew Geissler &lt;<a =
+href=3D"mailto:geissonator@gmail.com" target=3D"_blank" =
+class=3D"">geissonator@gmail.com</a>&gt; wrote:<br class=3D"">
+&gt;<br class=3D"">
+&gt; That got us brainstorming about some possible solutions:<br =
+class=3D"">
+&gt; - Write some code in bmcweb to send a =E2=80=9Cbmc state change =
+event=E2=80=9D anytime bmcweb<br class=3D"">
+&gt;&nbsp; &nbsp;comes up to ensure listening clients know =
+=E2=80=9Csomething=E2=80=9D has happened<br class=3D"">
+&gt; - Add an optional compile option to bmcweb (or =
+PSM/x86-power-control) to require<br class=3D"">
+&gt;&nbsp; &nbsp;BMC Ready before issuing chassis or system POST =
+requests (return error if not<br class=3D"">
+&gt;&nbsp; &nbsp;at Ready)<br class=3D"">
+<br class=3D""></div><div class=3D"">
+PSM or x86-power-control mods would be my preference.&nbsp; bmcweb =
+should not be in charge of business logic.&nbsp; If the system shouldn't =
+allow power on while the bmc is in ready state, then the daemons that =
+handle power on need to have that as a constraint, otherwise you'd have =
+the same problem if a user tried from =
+IPMI.</div></div></blockquote><div><br class=3D""></div><div>Thanks for =
+the responses guys. I=E2=80=99m going to go down the path of an optional =
+config</div><div>option to PSM that will require BMC Ready for chassis =
+or host operations. It will</div><div>return a well defined d-bus error =
+that bmcweb can look at and return an error</div><div>to the redfish =
+client indicating the operation is not possible (and when they should =
+retry).</div><div><br class=3D""></div><div>Long term, we=E2=80=99d =
+really like to see the power on/off operations return a =
+redfish</div><div>task so clients could track the power operation vs. =
+the required polling and/or boot</div><div>event notifications by them =
+now. That timeline for us is out there a bit though.</div><br =
+class=3D""><blockquote type=3D"cite" class=3D""><div class=3D""><div =
+class=3D"">
+&gt; - Queue up the power on request and execute it once we reach BMC =
+Ready (not sure<br class=3D"">
+&gt;&nbsp; &nbsp;what type of response that would be to Redfish clients =
+or what error path<br class=3D"">
+&gt;&nbsp; &nbsp;looks like if we never reach Ready?)</div><div =
+dir=3D"auto" class=3D""><br class=3D""></div><div dir=3D"auto" =
+class=3D"">Redfish has async tasks for this exact use case, and we =
+already have code to do them.&nbsp; Alternatively you could just return =
+an error that the operation is not possible, along with a retry-after =
+header instructing the user when to retry their request.&nbsp; We do =
+this in the few update apis already.</div></div></blockquote><div><br =
+class=3D""></div><div>Yep, I like the alternative here medium =
+term.</div><br class=3D""><blockquote type=3D"cite" class=3D""><div =
+class=3D""><div dir=3D"auto" class=3D""><br class=3D"">
+&gt; - Find a way in the client to better detect an unexpected bmc =
+reboot (heartbeat<br class=3D"">
+&gt;&nbsp; &nbsp;of some sort)<br class=3D"">
+&gt; - Push bmcweb further in the startup to BMC Ready, ensuring clients =
+can't talk<br class=3D"">
+&gt;&nbsp; &nbsp;to the BMC until it's near Ready state</div><div =
+dir=3D"auto" class=3D""><br class=3D""></div><div dir=3D"auto" =
+class=3D"">For your use case, if this is possible, that=E2=80=99s =
+probably easiest and most client friendly, so long as you can handle the =
+case where the bmc never hits =
+=E2=80=9Cready=E2=80=9D</div></div></blockquote><div><br =
+class=3D""></div><div>Possible, but our redfish client does potentially =
+manage a lot of systems, so anything that</div><div>increases repeated =
+traffic is frowned upon. And since this seems like something that =
+could</div><div>affect any Redfish client with similar event driven =
+requirements, it seems best to ensure</div><div>the openbmc back end =
+provides an adequate error in this situation.</div><br =
+class=3D""><blockquote type=3D"cite" class=3D""><div class=3D""><div =
+dir=3D"auto" class=3D""><br class=3D"">
+&gt;<br class=3D"">
+&gt; Thoughts?<br class=3D"">
+&gt; Andrew<br class=3D"">
+</div><span class=3D"gmail_signature_prefix">-- </span><br class=3D""><div=
+ dir=3D"ltr" class=3D"gmail_signature" =
+data-smartmail=3D"gmail_signature"><div dir=3D"ltr" =
+class=3D"">-Ed</div></div>
+</div></blockquote></div><br class=3D""></body></html>=
+
+--Apple-Mail=_145D31AA-6C35-460F-A40A-272C15796F39--
