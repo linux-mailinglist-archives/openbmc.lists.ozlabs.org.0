@@ -2,72 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 588A06FCEFA
-	for <lists+openbmc@lfdr.de>; Tue,  9 May 2023 22:01:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B7C296FD9CB
+	for <lists+openbmc@lfdr.de>; Wed, 10 May 2023 10:43:51 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QG8DS0RkSz3fNd
-	for <lists+openbmc@lfdr.de>; Wed, 10 May 2023 06:01:12 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QGT8P400qz3fNT
+	for <lists+openbmc@lfdr.de>; Wed, 10 May 2023 18:43:49 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=ZfyHXJNf;
+	dkim=pass (2048-bit key; unprotected) header.d=yahoo.com header.i=@yahoo.com header.a=rsa-sha256 header.s=s2048 header.b=OIesuZAg;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b36; helo=mail-yb1-xb36.google.com; envelope-from=geissonator@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=yahoo.com (client-ip=74.6.130.40; helo=sonic308-1.consmr.mail.bf2.yahoo.com; envelope-from=erhan14@yahoo.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=ZfyHXJNf;
+	dkim=pass (2048-bit key; unprotected) header.d=yahoo.com header.i=@yahoo.com header.a=rsa-sha256 header.s=s2048 header.b=OIesuZAg;
 	dkim-atps=neutral
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+Received: from sonic308-1.consmr.mail.bf2.yahoo.com (sonic308-1.consmr.mail.bf2.yahoo.com [74.6.130.40])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QG8Cs3rygz3fLr
-	for <openbmc@lists.ozlabs.org>; Wed, 10 May 2023 06:00:40 +1000 (AEST)
-Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-b9e2b65d006so9548781276.3
-        for <openbmc@lists.ozlabs.org>; Tue, 09 May 2023 13:00:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683662435; x=1686254435;
-        h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=PXhrc7Hv9ntIG7Yk9Ab1X0BW6MrFByRJBbL87EvTWwc=;
-        b=ZfyHXJNfV7Z1+UDM1C2Bs9w8WWY3HsT/yJK+ovG6fyQ1mpXZ7yFrq0UqVw58QSspmy
-         c+xx9NQK900B9y7AR2ai2kMJtPk2i+CaSIFfTEH9DU00+JACYPXY+4zJFL3Jc+xUeCYm
-         yxlr46V6hDVNvi8WW4A8yaSSNkXqpHluM+ZQbLSmB9fJ+cInvmRVujFuGBgM4Bqahvh3
-         yTRHAPa4Kn7MmmOqqRf2QFni0N0YhmDL5L6RFGl0fzuHqml6BBuekY5lETd0QEKNMsN7
-         CoC2QBOt4jriLrDtN/HBEYNlEbqkByrmoJAftSlNxRicdTLJiFxoQwRB+UlW+dZl+nIl
-         FBPg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683662435; x=1686254435;
-        h=references:to:cc:in-reply-to:date:subject:mime-version:message-id
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=PXhrc7Hv9ntIG7Yk9Ab1X0BW6MrFByRJBbL87EvTWwc=;
-        b=QMjt4Nl2tTbgcALmoeJBFleVJVFZ4Hvb6TMUW8dXoG6dyZDPUTN2ifj48OQSrATn7x
-         zUvMX+1K/wPFG2Fn+/i+GwQgagM0/m7Hw6WBXz1mpfW8AQPjlWptI9rlz0lUaI60hpae
-         VIYyA7xR6DyoUcBWADcdcY6wZLPWHUSpk+ZIu1af8xJ2Mo8keeC7OUVzldGXu7o3AgdS
-         AksFNDlqQ63cjD1xUE9OMHUlpQazFZ6307IQgMLVT0JZF3+A1mQUNEoEOqzDd119XlsV
-         PzrGOdMFeJX4Hp2Bzo2vLphBal6iuvgsqzuajwqGcE351gvtkvPRm0uUqZ3IKsJp8Rc0
-         YzPQ==
-X-Gm-Message-State: AC+VfDzAWEPdkI0SSznRhZ+7o80T9ltIYCB90oiSIFV3OCJypJHGML+Q
-	pgVmeiNKe7Pp4puswbhhTyTDgff0Kv4/eg==
-X-Google-Smtp-Source: ACHHUZ6a4eYv8svKd4OnF9SibnRPhDdR0rPjWfw0fE16sTVdwL/aFZZ2M7xlM/sTgSyTz2vwbPp2iA==
-X-Received: by 2002:a25:21d6:0:b0:ba1:67e4:e62b with SMTP id h205-20020a2521d6000000b00ba167e4e62bmr14033490ybh.13.1683662435316;
-        Tue, 09 May 2023 13:00:35 -0700 (PDT)
-Received: from smtpclient.apple ([67.220.1.27])
-        by smtp.gmail.com with ESMTPSA id m124-20020a255882000000b00b8f46d74e5dsm3210172ybb.37.2023.05.09.13.00.34
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 09 May 2023 13:00:35 -0700 (PDT)
-From: Andrew Geissler <geissonator@gmail.com>
-Message-Id: <48E1A495-C402-4FF5-BEE7-CB883B076D10@gmail.com>
-Content-Type: multipart/alternative;
-	boundary="Apple-Mail=_145D31AA-6C35-460F-A40A-272C15796F39"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.3\))
-Subject: Re: Preventing a system power on before BMC Ready
-Date: Tue, 9 May 2023 15:00:33 -0500
-In-Reply-To: <CACWQX81Tg+22k=bwniGG4Brvj5uENM_ZXOg5B=9fOCKMfKKyLw@mail.gmail.com>
-To: Ed Tanous <ed@tanous.net>,
- Michael Richardson <mcr@sandelman.ca>
-References: <0992ABFC-7CD8-4E4E-8731-167E59C8A9F7@gmail.com>
- <CACWQX81Tg+22k=bwniGG4Brvj5uENM_ZXOg5B=9fOCKMfKKyLw@mail.gmail.com>
-X-Mailer: Apple Mail (2.3696.120.41.1.3)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QGT7n6m5Wz3cjD
+	for <openbmc@lists.ozlabs.org>; Wed, 10 May 2023 18:43:16 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1683708191; bh=NQUNVEFem4DqDCfOZaC9GNsD5OZShlCJK0tRRTAm0ko=; h=Date:From:To:Subject:References:From:Subject:Reply-To; b=OIesuZAgdtTueJZg0/WX7w7cBdje603Nmo3kBukxesh2XKfEZP2XkZnICYHCCnQ4seAj+yCQEG8eG+RHpy+eY3PxT9NqKRbIq4ag+rrxTH+XBczdKarT7rDLFWKU41m0cro56HAvg22JwPofZaj/7bTSlWUZhLgjaf4MZOz4/RfYgAIMRyhqPmHjmsqpxeX+YXtk4NDcSs2lxIZrbbFJcvVSeu4pRTmf5CncAI0hL8HUecq6l9toQwEPRyGDCJodPJTxZYeRsXbWaq3Ze+Kdo0Uwb3i9FkcAoXrLPkhEXkxn4WX1bwivaa6EiGxBMIpMe0zxTNPe51uzuI0eWxAiag==
+X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1683708191; bh=6rtvbXHfcoKyHp9J2iwyQAUKmwxbxvsRdhv8dPDMmwJ=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=UGkJR7/AoScNVekb7wW+kWZaIF5mZPPnFUkZg48dKYuAQBdq8jltcG1y7mgVnWTgABdO5JwMO3qdAc1pMoF1TgzNCdCkIs0mcmbf6Hgu7bpWPdgX1PD9ie0BPUwUpJSLxUPRliPC1mLQhCc7zyAywIrcUVWDc5/TmgwPyW1PQyRIlRnSFMvTL4tw5yYr8+PufVXxNM/xkPdeaZIIDlX/s9mdEu1OCCH483SnVWCcYF5U1lW4+KygxQs3UCIU55i9K6CnRceVPzjZ7ymxkSDgJv7SDIc2kF93g79oMkz0Na9SUv+dgxtJg/SRiCa8tRw5fVc5W2DmTpFG9Y67kc2Bdw==
+X-YMail-OSG: 8.GzF00VM1kdsAp1PH8dboJu7ngtKYuMjEjdn6U5vNNc2I0cH0bZy1.PT8_0gpR
+ W4aVQKLAJwXK3YSFiQiiXFjLykHtHNli0aaZJul.EdayxlVP9iiBlbHPtrMbneByJVTBMsais.TT
+ zACSKbB9Y8bAjGS.FWUY65cxFJsR3frCpxDQs_4zOfJaW_LqNgWEhPKfpugoLGAIYmUr5qwmv0RE
+ 22BWfCeP0uM_IN4J7RgXuiSoxPIyRsm59hxzq.y376mUHgx3BNuDna7G_9Rxn6AD3oc6jcfuJ5Tj
+ R9IiU3wRCmLXEax9B2P8oj7UnRTjTTRZkMK3pPZMdgbd6ZlPvQkhZZs9NIqW1C288RW0AD2ERUxp
+ vuJI1ylrm83bTvSu5LHV0aQLMZETwzX1l4_qgQt_sbvTXZSy7UpclxhjNb_43CSIJ6iwASB6D04X
+ genZmSod4.wJYtRXy8H15xahENyErPu19Ex0zU7ptG06aAxljKGEcw_QOQiKHAfhQSU.pdulKNxK
+ efZBD7UdegiOLOTH9i3zqOYlU5efrpK9a7T89OqJ_DRgCrsUTKOh1V3G4Dc07yIuXWQXwPoqncyr
+ MIvS69.zYYQ2skBanwp3Gsm.sZsAQXe0kkFJO01jS9_VkqmagWmn0.jqN0Tbn4RIYeydS6kei7_J
+ .mtDsJjlfKcGBPBZCkMxzoUupzN3DsFk3RQXptk6AVTI1JG7TOr_.OmGBjrOmnnx7IXdKH_bfgfZ
+ 6GSg_SKy3MF.dvs8QNABDhnUEgDi8TstgcFIOBymHHBgzu3hWww8_W0kKc6SDW.YFEyaCdmVGs82
+ oSTMAjzVW5nByXYuiOiZVmu9zNLxtPKHfi0hPMn6PK9H3IuCZ6C93g_qH8j4d880mxe8cMR8e_Yu
+ xq900JRVqNCz8a8rJCXape8ZlGdHtUIeuTon4uxR0HiyS8ELAVl2X2F_6jE8UJQL0VA0mxxKWbvO
+ nK.geajrIZVsKnk5oEAI1gLqsta9yKCBq1S2OT7SWy50L4B_UFMeFKim1dfmLTHItzGScKQel9PJ
+ qSAWsdmLn.VRfV1MWmdU9ErCRrpb.S3FngJh7HAV68IsVzNjzXGLQMiUiOYmDSTdkFOQOawmSw_Q
+ 14uLsi7Vr5hTvRWGWeTR.rNQox.OKqjoxU.EMrVhYiqvuBl8boKwx4HVEv1daGIfHFEik_y0pllX
+ BiEyV.dJ85CBHv0r.KrBRqxqbu1NvauvwU8IJulLbeGPrf1nYpEJTOYj0.RrFgJjtMxWUtshZEHR
+ XCGrx1fx4wgQ5Zs_Niz5eMN.WvVjHxczVz4KW4HfLjBWyoscWeS3x8ta_trhwflfxhla7RQ2Yale
+ gExKIDev15Hya2XF2HXwq9Vsi4EF.iIZNkdi9J9eiclFWsrMOnlWAGoIYq8GxjyjuRAY6U3cOHRM
+ O8SSyTa._yjEEiKlJl66Zaw15IaIrqK3nfMLm1ntkCTtVpRMDgNSjfX9lYkFkILE6QvqJg6PZsIU
+ jVJwc8x.KOEutXhpjYLMk0NDW0DTaWGhnWL.im8koIivwsM50FcfAf3tQbHdPffPco00uRfECV.f
+ VS2pNNxqHufcFKzCJ5M205aofnMiJqOhQPA6gIMN893bvjRfctYdC2Lvv5yUFkbLgTcmkwHlM5r5
+ 5dakKbHt17kPPw78QUVjuEXqOD9ZJ0s4YLUxoGNU2gtaX7Y94eo6NWhei.9MNVDpK0mEq1Z1TX3Q
+ b1Bsge99o7q0thNHW0rSUf9Ho9g7ma15mhlT4IOVp7z9JqOtjtfyh4Tef8uWUXL1xwERiOZ44cno
+ WRUkzSux8HRbPCtkH96vrgAKydRV8o2J0.GeNJdkKwoaU.zu23QHNP2N5X3kIMMY20DAGrk05sg9
+ O7xYBKddFSoostdkMdbsq4uGlZtwyoyDXGG7cCckdpsL.UkCh0g4WFDxFhx7z0wCV3UmGtum_ItF
+ Vehq64Sy2bLmWgCOcN9RGvSfIcKdPuiXOPKuVzl1WutlHg93jDpdPIUoLlY5UDOb23H0hTOHlCTV
+ lSqRXhvTyGFvggP.rJjqiv5o3CYpfaoEtEUnkrdswL7dytEBt7O6TdBRzQQtLBb7c3z8DZN7EEN0
+ YzoRaamEu_CTHw6IJ7FQYwkDPJUP6PSSqnMJ_rx0w9jb7OyugtvMmBT4r.TpxLCGL0jSA6qcbqJT
+ 9H.o.aiaUjNubNDCBonMTeOw4NnbFX7DUhYAtldYuD9I0Ilq9LOeo
+X-Sonic-MF: <erhan14@yahoo.com>
+X-Sonic-ID: de159bce-9537-4a20-8be8-b4f92a69a579
+Received: from sonic.gate.mail.ne1.yahoo.com by sonic308.consmr.mail.bf2.yahoo.com with HTTP; Wed, 10 May 2023 08:43:11 +0000
+Date: Wed, 10 May 2023 08:43:08 +0000 (UTC)
+From: "Erhan Y." <erhan14@yahoo.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Message-ID: <334816234.178220.1683708188909@mail.yahoo.com>
+Subject: Intel RSD FW Extension IPMI Commands
+MIME-Version: 1.0
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_178219_1192170057.1683708188908"
+References: <334816234.178220.1683708188909.ref@mail.yahoo.com>
+X-Mailer: WebService/1.1.21471 YMailNorrin
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,188 +78,38 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC List <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
---Apple-Mail=_145D31AA-6C35-460F-A40A-272C15796F39
+------=_Part_178219_1192170057.1683708188908
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=utf-8
 
+Hi,Is there any implementation of Intel RSD FW extension IPMI commands in e=
+ither intel-ipmi-oem or ipmid itself?Our BIOS is sending group extension (0=
+x2C) network function code by defining body id as (0x04: Intel RSD) for MDR=
+ commands.We want to get SMBIOS data from this BIOS.I suppose we have to im=
+plement the commands defined in this document :=C2=A0https://www.intel.com/=
+content/dam/www/public/us/en/documents/guides/firmware-extension-spec-v2-3.=
+pdfThanks
 
-
-> On May 2, 2023, at 7:48 PM, Ed Tanous <ed@tanous.net> wrote:
->=20
->=20
->=20
-> On Tue, May 2, 2023 at 1:49=E2=80=AFPM Andrew Geissler =
-<geissonator@gmail.com <mailto:geissonator@gmail.com>> wrote:
-> >
-> > That got us brainstorming about some possible solutions:
-> > - Write some code in bmcweb to send a =E2=80=9Cbmc state change =
-event=E2=80=9D anytime bmcweb
-> >   comes up to ensure listening clients know =E2=80=9Csomething=E2=80=9D=
- has happened
-> > - Add an optional compile option to bmcweb (or =
-PSM/x86-power-control) to require
-> >   BMC Ready before issuing chassis or system POST requests (return =
-error if not
-> >   at Ready)
->=20
-> PSM or x86-power-control mods would be my preference.  bmcweb should =
-not be in charge of business logic.  If the system shouldn't allow power =
-on while the bmc is in ready state, then the daemons that handle power =
-on need to have that as a constraint, otherwise you'd have the same =
-problem if a user tried from IPMI.
-
-Thanks for the responses guys. I=E2=80=99m going to go down the path of =
-an optional config
-option to PSM that will require BMC Ready for chassis or host =
-operations. It will
-return a well defined d-bus error that bmcweb can look at and return an =
-error
-to the redfish client indicating the operation is not possible (and when =
-they should retry).
-
-Long term, we=E2=80=99d really like to see the power on/off operations =
-return a redfish
-task so clients could track the power operation vs. the required polling =
-and/or boot
-event notifications by them now. That timeline for us is out there a bit =
-though.
-
-> > - Queue up the power on request and execute it once we reach BMC =
-Ready (not sure
-> >   what type of response that would be to Redfish clients or what =
-error path
-> >   looks like if we never reach Ready?)
->=20
-> Redfish has async tasks for this exact use case, and we already have =
-code to do them.  Alternatively you could just return an error that the =
-operation is not possible, along with a retry-after header instructing =
-the user when to retry their request.  We do this in the few update apis =
-already.
-
-Yep, I like the alternative here medium term.
-
->=20
-> > - Find a way in the client to better detect an unexpected bmc reboot =
-(heartbeat
-> >   of some sort)
-> > - Push bmcweb further in the startup to BMC Ready, ensuring clients =
-can't talk
-> >   to the BMC until it's near Ready state
->=20
-> For your use case, if this is possible, that=E2=80=99s probably =
-easiest and most client friendly, so long as you can handle the case =
-where the bmc never hits =E2=80=9Cready=E2=80=9D
-
-Possible, but our redfish client does potentially manage a lot of =
-systems, so anything that
-increases repeated traffic is frowned upon. And since this seems like =
-something that could
-affect any Redfish client with similar event driven requirements, it =
-seems best to ensure
-the openbmc back end provides an adequate error in this situation.
-
->=20
-> >
-> > Thoughts?
-> > Andrew
-> --=20
-> -Ed
-
-
---Apple-Mail=_145D31AA-6C35-460F-A40A-272C15796F39
+------=_Part_178219_1192170057.1683708188908
+Content-Type: text/html; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=utf-8
 
-<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; =
-charset=3Dutf-8"></head><body style=3D"word-wrap: break-word; =
--webkit-nbsp-mode: space; line-break: after-white-space;" class=3D""><br =
-class=3D""><div><br class=3D""><blockquote type=3D"cite" class=3D""><div =
-class=3D"">On May 2, 2023, at 7:48 PM, Ed Tanous &lt;<a =
-href=3D"mailto:ed@tanous.net" class=3D"">ed@tanous.net</a>&gt; =
-wrote:</div><br class=3D"Apple-interchange-newline"><div class=3D""><div =
-class=3D""><br class=3D"">
-<br class=3D"">
-On Tue, May 2, 2023 at 1:49=E2=80=AFPM Andrew Geissler &lt;<a =
-href=3D"mailto:geissonator@gmail.com" target=3D"_blank" =
-class=3D"">geissonator@gmail.com</a>&gt; wrote:<br class=3D"">
-&gt;<br class=3D"">
-&gt; That got us brainstorming about some possible solutions:<br =
-class=3D"">
-&gt; - Write some code in bmcweb to send a =E2=80=9Cbmc state change =
-event=E2=80=9D anytime bmcweb<br class=3D"">
-&gt;&nbsp; &nbsp;comes up to ensure listening clients know =
-=E2=80=9Csomething=E2=80=9D has happened<br class=3D"">
-&gt; - Add an optional compile option to bmcweb (or =
-PSM/x86-power-control) to require<br class=3D"">
-&gt;&nbsp; &nbsp;BMC Ready before issuing chassis or system POST =
-requests (return error if not<br class=3D"">
-&gt;&nbsp; &nbsp;at Ready)<br class=3D"">
-<br class=3D""></div><div class=3D"">
-PSM or x86-power-control mods would be my preference.&nbsp; bmcweb =
-should not be in charge of business logic.&nbsp; If the system shouldn't =
-allow power on while the bmc is in ready state, then the daemons that =
-handle power on need to have that as a constraint, otherwise you'd have =
-the same problem if a user tried from =
-IPMI.</div></div></blockquote><div><br class=3D""></div><div>Thanks for =
-the responses guys. I=E2=80=99m going to go down the path of an optional =
-config</div><div>option to PSM that will require BMC Ready for chassis =
-or host operations. It will</div><div>return a well defined d-bus error =
-that bmcweb can look at and return an error</div><div>to the redfish =
-client indicating the operation is not possible (and when they should =
-retry).</div><div><br class=3D""></div><div>Long term, we=E2=80=99d =
-really like to see the power on/off operations return a =
-redfish</div><div>task so clients could track the power operation vs. =
-the required polling and/or boot</div><div>event notifications by them =
-now. That timeline for us is out there a bit though.</div><br =
-class=3D""><blockquote type=3D"cite" class=3D""><div class=3D""><div =
-class=3D"">
-&gt; - Queue up the power on request and execute it once we reach BMC =
-Ready (not sure<br class=3D"">
-&gt;&nbsp; &nbsp;what type of response that would be to Redfish clients =
-or what error path<br class=3D"">
-&gt;&nbsp; &nbsp;looks like if we never reach Ready?)</div><div =
-dir=3D"auto" class=3D""><br class=3D""></div><div dir=3D"auto" =
-class=3D"">Redfish has async tasks for this exact use case, and we =
-already have code to do them.&nbsp; Alternatively you could just return =
-an error that the operation is not possible, along with a retry-after =
-header instructing the user when to retry their request.&nbsp; We do =
-this in the few update apis already.</div></div></blockquote><div><br =
-class=3D""></div><div>Yep, I like the alternative here medium =
-term.</div><br class=3D""><blockquote type=3D"cite" class=3D""><div =
-class=3D""><div dir=3D"auto" class=3D""><br class=3D"">
-&gt; - Find a way in the client to better detect an unexpected bmc =
-reboot (heartbeat<br class=3D"">
-&gt;&nbsp; &nbsp;of some sort)<br class=3D"">
-&gt; - Push bmcweb further in the startup to BMC Ready, ensuring clients =
-can't talk<br class=3D"">
-&gt;&nbsp; &nbsp;to the BMC until it's near Ready state</div><div =
-dir=3D"auto" class=3D""><br class=3D""></div><div dir=3D"auto" =
-class=3D"">For your use case, if this is possible, that=E2=80=99s =
-probably easiest and most client friendly, so long as you can handle the =
-case where the bmc never hits =
-=E2=80=9Cready=E2=80=9D</div></div></blockquote><div><br =
-class=3D""></div><div>Possible, but our redfish client does potentially =
-manage a lot of systems, so anything that</div><div>increases repeated =
-traffic is frowned upon. And since this seems like something that =
-could</div><div>affect any Redfish client with similar event driven =
-requirements, it seems best to ensure</div><div>the openbmc back end =
-provides an adequate error in this situation.</div><br =
-class=3D""><blockquote type=3D"cite" class=3D""><div class=3D""><div =
-dir=3D"auto" class=3D""><br class=3D"">
-&gt;<br class=3D"">
-&gt; Thoughts?<br class=3D"">
-&gt; Andrew<br class=3D"">
-</div><span class=3D"gmail_signature_prefix">-- </span><br class=3D""><div=
- dir=3D"ltr" class=3D"gmail_signature" =
-data-smartmail=3D"gmail_signature"><div dir=3D"ltr" =
-class=3D"">-Ed</div></div>
-</div></blockquote></div><br class=3D""></body></html>=
-
---Apple-Mail=_145D31AA-6C35-460F-A40A-272C15796F39--
+<html><head></head><body><div class=3D"yahoo-style-wrap" style=3D"font-fami=
+ly:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:16px;"><div dir=
+=3D"ltr" data-setdir=3D"false">Hi,</div><div dir=3D"ltr" data-setdir=3D"fal=
+se">Is there any implementation of Intel RSD FW extension IPMI commands in =
+either intel-ipmi-oem or ipmid itself?</div><div dir=3D"ltr" data-setdir=3D=
+"false">Our BIOS is sending group extension (0x2C) network function code by=
+ defining body id as (0x04: Intel RSD) for MDR commands.</div><div dir=3D"l=
+tr" data-setdir=3D"false">We want to get SMBIOS data from this BIOS.</div><=
+div dir=3D"ltr" data-setdir=3D"false">I suppose we have to implement the co=
+mmands defined in this document :&nbsp;<a href=3D"https://www.intel.com/con=
+tent/dam/www/public/us/en/documents/guides/firmware-extension-spec-v2-3.pdf=
+" rel=3D"nofollow" target=3D"_blank">https://www.intel.com/content/dam/www/=
+public/us/en/documents/guides/firmware-extension-spec-v2-3.pdf</a></div><di=
+v dir=3D"ltr" data-setdir=3D"false">Thanks</div><div dir=3D"ltr" data-setdi=
+r=3D"false"><br></div></div></body></html>
+------=_Part_178219_1192170057.1683708188908--
