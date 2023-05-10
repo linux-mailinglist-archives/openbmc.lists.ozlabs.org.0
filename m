@@ -2,71 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B7C296FD9CB
-	for <lists+openbmc@lfdr.de>; Wed, 10 May 2023 10:43:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 420776FDC13
+	for <lists+openbmc@lfdr.de>; Wed, 10 May 2023 12:59:42 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QGT8P400qz3fNT
-	for <lists+openbmc@lfdr.de>; Wed, 10 May 2023 18:43:49 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QGX963phcz3fMg
+	for <lists+openbmc@lfdr.de>; Wed, 10 May 2023 20:59:38 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=yahoo.com header.i=@yahoo.com header.a=rsa-sha256 header.s=s2048 header.b=OIesuZAg;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=ocBRnivt;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=yahoo.com (client-ip=74.6.130.40; helo=sonic308-1.consmr.mail.bf2.yahoo.com; envelope-from=erhan14@yahoo.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::631; helo=mail-pl1-x631.google.com; envelope-from=lesly895@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=yahoo.com header.i=@yahoo.com header.a=rsa-sha256 header.s=s2048 header.b=OIesuZAg;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=ocBRnivt;
 	dkim-atps=neutral
-Received: from sonic308-1.consmr.mail.bf2.yahoo.com (sonic308-1.consmr.mail.bf2.yahoo.com [74.6.130.40])
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QGT7n6m5Wz3cjD
-	for <openbmc@lists.ozlabs.org>; Wed, 10 May 2023 18:43:16 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1683708191; bh=NQUNVEFem4DqDCfOZaC9GNsD5OZShlCJK0tRRTAm0ko=; h=Date:From:To:Subject:References:From:Subject:Reply-To; b=OIesuZAgdtTueJZg0/WX7w7cBdje603Nmo3kBukxesh2XKfEZP2XkZnICYHCCnQ4seAj+yCQEG8eG+RHpy+eY3PxT9NqKRbIq4ag+rrxTH+XBczdKarT7rDLFWKU41m0cro56HAvg22JwPofZaj/7bTSlWUZhLgjaf4MZOz4/RfYgAIMRyhqPmHjmsqpxeX+YXtk4NDcSs2lxIZrbbFJcvVSeu4pRTmf5CncAI0hL8HUecq6l9toQwEPRyGDCJodPJTxZYeRsXbWaq3Ze+Kdo0Uwb3i9FkcAoXrLPkhEXkxn4WX1bwivaa6EiGxBMIpMe0zxTNPe51uzuI0eWxAiag==
-X-SONIC-DKIM-SIGN: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s2048; t=1683708191; bh=6rtvbXHfcoKyHp9J2iwyQAUKmwxbxvsRdhv8dPDMmwJ=; h=X-Sonic-MF:Date:From:To:Subject:From:Subject; b=UGkJR7/AoScNVekb7wW+kWZaIF5mZPPnFUkZg48dKYuAQBdq8jltcG1y7mgVnWTgABdO5JwMO3qdAc1pMoF1TgzNCdCkIs0mcmbf6Hgu7bpWPdgX1PD9ie0BPUwUpJSLxUPRliPC1mLQhCc7zyAywIrcUVWDc5/TmgwPyW1PQyRIlRnSFMvTL4tw5yYr8+PufVXxNM/xkPdeaZIIDlX/s9mdEu1OCCH483SnVWCcYF5U1lW4+KygxQs3UCIU55i9K6CnRceVPzjZ7ymxkSDgJv7SDIc2kF93g79oMkz0Na9SUv+dgxtJg/SRiCa8tRw5fVc5W2DmTpFG9Y67kc2Bdw==
-X-YMail-OSG: 8.GzF00VM1kdsAp1PH8dboJu7ngtKYuMjEjdn6U5vNNc2I0cH0bZy1.PT8_0gpR
- W4aVQKLAJwXK3YSFiQiiXFjLykHtHNli0aaZJul.EdayxlVP9iiBlbHPtrMbneByJVTBMsais.TT
- zACSKbB9Y8bAjGS.FWUY65cxFJsR3frCpxDQs_4zOfJaW_LqNgWEhPKfpugoLGAIYmUr5qwmv0RE
- 22BWfCeP0uM_IN4J7RgXuiSoxPIyRsm59hxzq.y376mUHgx3BNuDna7G_9Rxn6AD3oc6jcfuJ5Tj
- R9IiU3wRCmLXEax9B2P8oj7UnRTjTTRZkMK3pPZMdgbd6ZlPvQkhZZs9NIqW1C288RW0AD2ERUxp
- vuJI1ylrm83bTvSu5LHV0aQLMZETwzX1l4_qgQt_sbvTXZSy7UpclxhjNb_43CSIJ6iwASB6D04X
- genZmSod4.wJYtRXy8H15xahENyErPu19Ex0zU7ptG06aAxljKGEcw_QOQiKHAfhQSU.pdulKNxK
- efZBD7UdegiOLOTH9i3zqOYlU5efrpK9a7T89OqJ_DRgCrsUTKOh1V3G4Dc07yIuXWQXwPoqncyr
- MIvS69.zYYQ2skBanwp3Gsm.sZsAQXe0kkFJO01jS9_VkqmagWmn0.jqN0Tbn4RIYeydS6kei7_J
- .mtDsJjlfKcGBPBZCkMxzoUupzN3DsFk3RQXptk6AVTI1JG7TOr_.OmGBjrOmnnx7IXdKH_bfgfZ
- 6GSg_SKy3MF.dvs8QNABDhnUEgDi8TstgcFIOBymHHBgzu3hWww8_W0kKc6SDW.YFEyaCdmVGs82
- oSTMAjzVW5nByXYuiOiZVmu9zNLxtPKHfi0hPMn6PK9H3IuCZ6C93g_qH8j4d880mxe8cMR8e_Yu
- xq900JRVqNCz8a8rJCXape8ZlGdHtUIeuTon4uxR0HiyS8ELAVl2X2F_6jE8UJQL0VA0mxxKWbvO
- nK.geajrIZVsKnk5oEAI1gLqsta9yKCBq1S2OT7SWy50L4B_UFMeFKim1dfmLTHItzGScKQel9PJ
- qSAWsdmLn.VRfV1MWmdU9ErCRrpb.S3FngJh7HAV68IsVzNjzXGLQMiUiOYmDSTdkFOQOawmSw_Q
- 14uLsi7Vr5hTvRWGWeTR.rNQox.OKqjoxU.EMrVhYiqvuBl8boKwx4HVEv1daGIfHFEik_y0pllX
- BiEyV.dJ85CBHv0r.KrBRqxqbu1NvauvwU8IJulLbeGPrf1nYpEJTOYj0.RrFgJjtMxWUtshZEHR
- XCGrx1fx4wgQ5Zs_Niz5eMN.WvVjHxczVz4KW4HfLjBWyoscWeS3x8ta_trhwflfxhla7RQ2Yale
- gExKIDev15Hya2XF2HXwq9Vsi4EF.iIZNkdi9J9eiclFWsrMOnlWAGoIYq8GxjyjuRAY6U3cOHRM
- O8SSyTa._yjEEiKlJl66Zaw15IaIrqK3nfMLm1ntkCTtVpRMDgNSjfX9lYkFkILE6QvqJg6PZsIU
- jVJwc8x.KOEutXhpjYLMk0NDW0DTaWGhnWL.im8koIivwsM50FcfAf3tQbHdPffPco00uRfECV.f
- VS2pNNxqHufcFKzCJ5M205aofnMiJqOhQPA6gIMN893bvjRfctYdC2Lvv5yUFkbLgTcmkwHlM5r5
- 5dakKbHt17kPPw78QUVjuEXqOD9ZJ0s4YLUxoGNU2gtaX7Y94eo6NWhei.9MNVDpK0mEq1Z1TX3Q
- b1Bsge99o7q0thNHW0rSUf9Ho9g7ma15mhlT4IOVp7z9JqOtjtfyh4Tef8uWUXL1xwERiOZ44cno
- WRUkzSux8HRbPCtkH96vrgAKydRV8o2J0.GeNJdkKwoaU.zu23QHNP2N5X3kIMMY20DAGrk05sg9
- O7xYBKddFSoostdkMdbsq4uGlZtwyoyDXGG7cCckdpsL.UkCh0g4WFDxFhx7z0wCV3UmGtum_ItF
- Vehq64Sy2bLmWgCOcN9RGvSfIcKdPuiXOPKuVzl1WutlHg93jDpdPIUoLlY5UDOb23H0hTOHlCTV
- lSqRXhvTyGFvggP.rJjqiv5o3CYpfaoEtEUnkrdswL7dytEBt7O6TdBRzQQtLBb7c3z8DZN7EEN0
- YzoRaamEu_CTHw6IJ7FQYwkDPJUP6PSSqnMJ_rx0w9jb7OyugtvMmBT4r.TpxLCGL0jSA6qcbqJT
- 9H.o.aiaUjNubNDCBonMTeOw4NnbFX7DUhYAtldYuD9I0Ilq9LOeo
-X-Sonic-MF: <erhan14@yahoo.com>
-X-Sonic-ID: de159bce-9537-4a20-8be8-b4f92a69a579
-Received: from sonic.gate.mail.ne1.yahoo.com by sonic308.consmr.mail.bf2.yahoo.com with HTTP; Wed, 10 May 2023 08:43:11 +0000
-Date: Wed, 10 May 2023 08:43:08 +0000 (UTC)
-From: "Erhan Y." <erhan14@yahoo.com>
-To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-Message-ID: <334816234.178220.1683708188909@mail.yahoo.com>
-Subject: Intel RSD FW Extension IPMI Commands
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QGX8V0JN4z3fCY
+	for <openbmc@lists.ozlabs.org>; Wed, 10 May 2023 20:59:05 +1000 (AEST)
+Received: by mail-pl1-x631.google.com with SMTP id d9443c01a7336-1ab1b79d3a7so48767875ad.3
+        for <openbmc@lists.ozlabs.org>; Wed, 10 May 2023 03:59:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683716342; x=1686308342;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=+jZSIW19PlvqSImz31K5RhoxRj11VW/ea77nyalEajU=;
+        b=ocBRnivtjqfJrmWZ/PKJgTFnfEN7ma2lKdXau9/OrDzhUjL77O4WDpsWNTXz5/vr+M
+         KexL9bjXvPQ3GCo9ePLPg0jy2jKMu6p1YHy+TCT1nDOQ19ERztn7AP9NzICQpXX4aGLJ
+         L+RD6+omi+qDILJwty9lExweMirQjO6SxMskVQKOXg6SnjLMzp6v7Q+G5y6rbmBdCflo
+         lDxF0E3A6f2yWZmzRj2La+24+VrIhkihn43N4w9H6ZHYi0GssMpyKhWiQLxdTPFmhrkd
+         HYsmjMAWVErvlNCmYePxK/I5Ze9iJmw4nc5I1okqDzCfjvW+vqn7bznS0FmyiyrjfLJW
+         G8yQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683716342; x=1686308342;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+jZSIW19PlvqSImz31K5RhoxRj11VW/ea77nyalEajU=;
+        b=Zt+g/f6BNiVSsQFd/Qj9QG/b9zd4k3aBbcur6PuOSWUJrldDdaLdR4HVjue57FTAUQ
+         m8G06dcaVo0KkLlQe69wHXu+xjF+2VK9b6K9SSUvbKFOAGDMfZMr+vUVeX80JUWuhYEl
+         e0IYId8h1N4TMfvsATHEuBlHbSmfSklyhhxHfbnZuyBwjajEsQO+emiswgqMXoGfzyM0
+         mRq/KBUVwyc2OggiRETKrJox4rkQYF9ji+lFdz3tbNw4ihHgHRtZ2zYC+SwaVb4vXfjJ
+         V1J5zKRZAWQ5wGn7ilgbNM5sLwGEdemGhIgFHR0/BEi/y8+T1qZrzIHz3s/BBiFWQbaD
+         Zhiw==
+X-Gm-Message-State: AC+VfDwp0zJGIeeOSLiCYUqc67ONNJSCJySskbPoxzHlOj7PBrcXMSkL
+	ifxf5YIzemtNo+nbQDhzdpRcIRNn5ecUIA==
+X-Google-Smtp-Source: ACHHUZ6TpXU15JvewezEQ5pYRQYqRFBJLlJgx0c1plkvwMxu2Lvje6TksDYPrM9eSdWY+hWukfgcyA==
+X-Received: by 2002:a17:902:b213:b0:1ab:13c7:8992 with SMTP id t19-20020a170902b21300b001ab13c78992mr15747869plr.39.1683716341755;
+        Wed, 10 May 2023 03:59:01 -0700 (PDT)
+Received: from openbmc-server.. (61-220-204-242.hinet-ip.hinet.net. [61.220.204.242])
+        by smtp.gmail.com with ESMTPSA id w3-20020a170902e88300b001aaffe15f39sm3484204plg.30.2023.05.10.03.59.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 10 May 2023 03:59:01 -0700 (PDT)
+From: lesly895@gmail.com
+X-Google-Original-From: ryans@supermicro.com.tw
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH v2] ARM: dts: aspeed: Add Supermicro X13dem system BMC devicetree
+Date: Wed, 10 May 2023 10:58:56 +0000
+Message-Id: <20230510105856.2066494-1-ryans@supermicro.com.tw>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_178219_1192170057.1683708188908"
-References: <334816234.178220.1683708188909.ref@mail.yahoo.com>
-X-Mailer: WebService/1.1.21471 YMailNorrin
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,38 +76,322 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: andrew@aj.id.au, linux-arm-kernel@lists.infradead.org, Ryan Sie <ryans@supermicro.com.tw>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_178219_1192170057.1683708188908
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+From: Ryan Sie <ryans@supermicro.com.tw>
 
-Hi,Is there any implementation of Intel RSD FW extension IPMI commands in e=
-ither intel-ipmi-oem or ipmid itself?Our BIOS is sending group extension (0=
-x2C) network function code by defining body id as (0x04: Intel RSD) for MDR=
- commands.We want to get SMBIOS data from this BIOS.I suppose we have to im=
-plement the commands defined in this document :=C2=A0https://www.intel.com/=
-content/dam/www/public/us/en/documents/guides/firmware-extension-spec-v2-3.=
-pdfThanks
+Add a devicetree for the new X13dem system.
 
-------=_Part_178219_1192170057.1683708188908
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Ryan Sie <ryans@supermicro.com.tw>
+---
+ .../bindings/arm/aspeed/aspeed.yaml           |   1 +
+ arch/arm/boot/dts/Makefile                    |   1 +
+ .../boot/dts/aspeed-bmc-supermicro-x13dem.dts | 270 ++++++++++++++++++
+ 3 files changed, 272 insertions(+)
+ create mode 100644 arch/arm/boot/dts/aspeed-bmc-supermicro-x13dem.dts
 
-<html><head></head><body><div class=3D"yahoo-style-wrap" style=3D"font-fami=
-ly:Helvetica Neue, Helvetica, Arial, sans-serif;font-size:16px;"><div dir=
-=3D"ltr" data-setdir=3D"false">Hi,</div><div dir=3D"ltr" data-setdir=3D"fal=
-se">Is there any implementation of Intel RSD FW extension IPMI commands in =
-either intel-ipmi-oem or ipmid itself?</div><div dir=3D"ltr" data-setdir=3D=
-"false">Our BIOS is sending group extension (0x2C) network function code by=
- defining body id as (0x04: Intel RSD) for MDR commands.</div><div dir=3D"l=
-tr" data-setdir=3D"false">We want to get SMBIOS data from this BIOS.</div><=
-div dir=3D"ltr" data-setdir=3D"false">I suppose we have to implement the co=
-mmands defined in this document :&nbsp;<a href=3D"https://www.intel.com/con=
-tent/dam/www/public/us/en/documents/guides/firmware-extension-spec-v2-3.pdf=
-" rel=3D"nofollow" target=3D"_blank">https://www.intel.com/content/dam/www/=
-public/us/en/documents/guides/firmware-extension-spec-v2-3.pdf</a></div><di=
-v dir=3D"ltr" data-setdir=3D"false">Thanks</div><div dir=3D"ltr" data-setdi=
-r=3D"false"><br></div></div></body></html>
-------=_Part_178219_1192170057.1683708188908--
+diff --git a/Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml b/Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml
+index 1b585e554791..0dda2565983e 100644
+--- a/Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml
++++ b/Documentation/devicetree/bindings/arm/aspeed/aspeed.yaml
+@@ -86,6 +86,7 @@ properties:
+               - jabil,rbp-bmc
+               - nuvia,dc-scm-bmc
+               - quanta,s6q-bmc
++              - supermicro,x13dem-bmc
+           - const: aspeed,ast2600
+ 
+ additionalProperties: true
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index eb681903d50b..0197ac26a3ae 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -1629,6 +1629,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
+ 	aspeed-bmc-quanta-q71l.dtb \
+ 	aspeed-bmc-quanta-s6q.dtb \
+ 	aspeed-bmc-supermicro-x11spi.dtb \
++	aspeed-bmc-supermicro-x13dem.dtb \
+ 	aspeed-bmc-inventec-transformers.dtb \
+ 	aspeed-bmc-tyan-s7106.dtb \
+ 	aspeed-bmc-tyan-s8036.dtb \
+diff --git a/arch/arm/boot/dts/aspeed-bmc-supermicro-x13dem.dts b/arch/arm/boot/dts/aspeed-bmc-supermicro-x13dem.dts
+new file mode 100644
+index 000000000000..0adb564e99e6
+--- /dev/null
++++ b/arch/arm/boot/dts/aspeed-bmc-supermicro-x13dem.dts
+@@ -0,0 +1,270 @@
++// SPDX-License-Identifier: GPL-2.0-or-later
++// Copyright 2023 Supermicro Corp.
++/dts-v1/;
++
++#include "aspeed-g6.dtsi"
++#include <dt-bindings/gpio/aspeed-gpio.h>
++#include <dt-bindings/i2c/i2c.h>
++
++/ {
++	model = "Supermicro X13DEM BMC";
++	compatible = "supermicro,x13dem-bmc", "aspeed,ast2600";
++
++	aliases {
++		mmc0 = &emmc;
++	};
++
++	chosen {
++		stdout-path = &uart5;
++	};
++
++	memory@80000000 {
++		device_type = "memory";
++		reg = <0x80000000 0x80000000>;
++	};
++
++	reserved-memory {
++		#address-cells = <1>;
++		#size-cells = <1>;
++		ranges;
++
++		video_engine_memory: video {
++			size = <0x04000000>;
++			alignment = <0x01000000>;
++			compatible = "shared-dma-pool";
++			reusable;
++		};
++
++		gfx_memory: framebuffer {
++			size = <0x01000000>;
++			alignment = <0x01000000>;
++			compatible = "shared-dma-pool";
++			reusable;
++		};
++	};
++
++	leds {
++	    compatible = "gpio-leds";
++	    led-power {
++		    gpios = <&gpio0 ASPEED_GPIO(G, 5) GPIO_ACTIVE_LOW>;
++	    };
++	};
++
++	iio-hwmon {
++		compatible = "iio-hwmon";
++		io-channels = <&adc0 0>, <&adc0 1>, <&adc0 2>, <&adc0 3>,
++			<&adc0 4>, <&adc0 5>, <&adc0 6>, <&adc0 7>,
++			<&adc1 0>, <&adc1 1>, <&adc1 2>, <&adc1 3>,
++			<&adc1 4>, <&adc1 5>, <&adc1 6>, <&adc1 7>;
++	};
++};
++
++&adc0 {
++	status = "okay";
++	aspeed,int-vref-microvolt = <2500000>;
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_adc0_default &pinctrl_adc1_default
++		&pinctrl_adc2_default &pinctrl_adc3_default
++		&pinctrl_adc4_default &pinctrl_adc5_default
++		&pinctrl_adc6_default &pinctrl_adc7_default>;
++};
++
++&adc1 {
++	status = "okay";
++	aspeed,int-vref-microvolt = <2500000>;
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_adc8_default &pinctrl_adc9_default
++		&pinctrl_adc10_default &pinctrl_adc11_default
++		&pinctrl_adc12_default &pinctrl_adc13_default
++		&pinctrl_adc14_default &pinctrl_adc15_default>;
++};
++
++&emmc_controller {
++	status = "okay";
++};
++
++&emmc {
++	status = "okay";
++	max-frequency = <100000000>;
++	clk-phase-mmc-hs200 = <9>, <225>;
++};
++
++&spi1 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_spi1_default>;
++
++	flash@0 {
++		status = "okay";
++		m25p,fast-read;
++		label = "spi1:0";
++		spi-max-frequency = <25000000>;
++	};
++};
++
++&gpio0 {
++	status = "okay";
++	gpio-line-names =
++	/*A0-A7*/	"","","","","","","","",
++	/*B0-B7*/	"","","","","","","","",
++	/*C0-C7*/	"","","","","","","","",
++	/*D0-D7*/	"","","","","","","","",
++	/*E0-E7*/	"","","","","","","","",
++	/*F0-F7*/	"","","","","","","","",
++	/*G0-G7*/	"","","","","","led-power","","",
++	/*H0*/		"smi-control",
++	/*H1*/		"nmi-control",
++	/*H2*/		"power-chassis-control",
++	/*H3*/		"reset-control",
++	/*H4*/		"",
++	/*H5*/		"",
++	/*H6*/		"reset-phy",
++	/*H7*/		"",
++	/*I0-I7*/	"","","","","","","","",
++	/*J0-J7*/	"","","","","","","","",
++	/*K0-K7*/	"","","","","","","","",
++	/*L0-L7*/	"","","","","","","","",
++	/*M0-M7*/	"","","","","","","","",
++	/*N0-N7*/	"","","","","","","","",
++	/*O0-O7*/	"","","","","","","","",
++	/*P0-P7*/	"","","","","","","","led-heartbeat",
++	/*Q0-Q7*/	"","","","","","","","",
++	/*R0-R7*/	"","","","","","","","",
++	/*S0-S3*/	"","","","",
++	/*S4*/		"power-chassis-good",
++	/*S5*/		"reset-button",
++	/*S6*/		"",
++	/*S7*/		"id-button",
++	/*T0-T7*/	"","","","","","","","",
++	/*U0-U7*/	"","","","","","","","",
++	/*V0-V7*/	"","","","","","","","",
++	/*W0-W7*/	"","","","","","","","",
++	/*X0*/		"",
++	/*X1*/		"post-complete",
++	/*X2*/		"smi-button",
++	/*X3-X5*/	"","","",
++	/*X6*/		"nmi-button",
++	/*X7*/		"bmc-ready",
++	/*Y0*/		"",
++	/*Y1*/		"led-heartbeat2",
++	/*Y2*/		"",
++	/*Y3*/		"reset-emmc",
++	/*Y4-Y7*/	"","","","",
++	/*Z0*/		"BMC_PROG_N",
++	/*Z1*/		"BMC_PWRFAN_FAIL_N",
++	/*Z2*/		"power-button",
++	/*Z3-Z7*/	"","","","","";
++};
++
++&kcs3 {
++	aspeed,lpc-io-reg = <0xca2>;
++	status = "okay";
++};
++
++&kcs4 {
++	aspeed,lpc-io-reg = <0xca4>;
++	status = "okay";
++};
++
++&uart1 {
++	status = "okay";
++};
++
++&uart2 {
++	status = "okay";
++};
++
++&uart3 {
++	status = "okay";
++};
++
++&uart4 {
++	status = "okay";
++};
++
++&uart_routing {
++	status = "okay";
++};
++
++&mdio0 {
++	status = "okay";
++
++	ethphy0: ethernet-phy@0 {
++		compatible = "ethernet-phy-ieee802.3-c22";
++		reg = <0>;
++	};
++};
++
++&mac0 {
++	status = "okay";
++
++	phy-mode = "rgmii";
++	phy-handle = <&ethphy0>;
++
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rgmii1_default>;
++};
++
++&mac2 {
++	status = "okay";
++	pinctrl-names = "default";
++	pinctrl-0 = <&pinctrl_rmii3_default>;
++	clocks = <&syscon ASPEED_CLK_GATE_MAC3CLK>,
++			<&syscon ASPEED_CLK_MAC3RCLK>;
++	clock-names = "MACCLK", "RCLK";
++	use-ncsi;
++};
++
++&i2c0 {
++	status = "okay";
++};
++
++&i2c1 {
++	status = "disabled";
++};
++
++&i2c2 {
++	multi-master;
++	status = "okay";
++};
++
++&i2c3 {
++	status = "okay";
++};
++
++&i2c4 {
++	status = "okay";
++	bus-frequency = <400000>;
++};
++
++&i2c5 {
++	status = "okay";
++};
++
++&i2c6 {
++	status = "okay";
++};
++
++&i2c7 {
++	status = "okay";
++};
++
++&vhub {
++	status = "okay";
++	pinctrl-names = "default";
++};
++
++&rtc {
++	status = "okay";
++};
++
++&video {
++	status = "okay";
++	memory-region = <&video_engine_memory>;
++};
++
++&gfx {
++	status = "okay";
++	memory-region = <&gfx_memory>;
++};
++
+-- 
+2.34.1
+
