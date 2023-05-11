@@ -2,64 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EC296FE524
-	for <lists+openbmc@lfdr.de>; Wed, 10 May 2023 22:32:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1A1246FE608
+	for <lists+openbmc@lfdr.de>; Wed, 10 May 2023 23:16:12 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QGmsk0d3gz3cjC
-	for <lists+openbmc@lfdr.de>; Thu, 11 May 2023 06:32:10 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QGnrT6VZsz3f6r
+	for <lists+openbmc@lfdr.de>; Thu, 11 May 2023 07:16:09 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=aZFBw60I;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=kxU9hqWi;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12b; helo=mail-lf1-x12b.google.com; envelope-from=fr0st61te@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::130; helo=mail-lf1-x130.google.com; envelope-from=fr0st61te@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=aZFBw60I;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=kxU9hqWi;
 	dkim-atps=neutral
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QGms45mPWz3bln
-	for <openbmc@lists.ozlabs.org>; Thu, 11 May 2023 06:31:34 +1000 (AEST)
-Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4efe9a98736so8733974e87.1
-        for <openbmc@lists.ozlabs.org>; Wed, 10 May 2023 13:31:34 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QGnqw3ZRdz3cKv
+	for <openbmc@lists.ozlabs.org>; Thu, 11 May 2023 07:15:38 +1000 (AEST)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-4f00c33c3d6so8777464e87.2
+        for <openbmc@lists.ozlabs.org>; Wed, 10 May 2023 14:15:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1683750690; x=1686342690;
+        d=gmail.com; s=20221208; t=1683753327; x=1686345327;
         h=mime-version:user-agent:content-transfer-encoding:references
          :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=6cJ31Dz8u9AcUhlObGAjcSV4Wb31sZ6inct5YiBtNcQ=;
-        b=aZFBw60Icmyf5PAu9Im1gIlr5mMXj6CB5LIt+sR2kvyrsWAWQOJbRwA1fEoaEiI6Wy
-         XpCFTp4dIP+LixD5Kp+DOOibcLhU0IJ6KT1BXKpDB+3heCfeSA769iQ2l7uK0ftwl/WA
-         rbhq6l8mWxnrm7q0VMr2KEbtVuueCDnMZKJ0o6vMfjhtjKF40JndQtip3Ut0vUa+Vy9D
-         QDdNbD8Os/PIv8zKLbJk2qWuQ7oN7bPp1ReTjHpiDoJci4LHKQ+amTR8PYUqPCVN68Rj
-         AonF7JvTzsxDJ8z1LqHC7+kI34+zZmL2S23ah7bqfYtOV8nRO9eJvx5ARCdhy8OXHkt3
-         4siw==
+        bh=d/rus91C04tG29B/ScEf5OKsFh39zkI9m79US8PQUjY=;
+        b=kxU9hqWiGsb6rsgN4sv51cSToVaLDE6+6IgBcxEr62a3B/BMVcBuiVluCaqLMEHwlG
+         BFAM6qG3wuW1WyQ9uhU3Tdd53L3Ny1BPh1yKrKNzyzy8RxWQ22VZ7PSM6LoWJpm1AZzc
+         Gyz+SUfMIhvpvLa+0Uh8jC7FufEwGCFBTw5gycr4IMXnHXhUd4AIUgQ+RoJMT/FlP5IT
+         WoWNoGlUwUETI35+lXLleEM5h+cVoS8tBcsRlEokqWNGiZm6/sGhBDotop8q6jf708MS
+         CiRGnJhbBvnwsfTVHmoW7ZS2yKNMc04seGozJqJkCFhSx3CWaeYjags32ka57rBHgUWV
+         R85w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1683750690; x=1686342690;
+        d=1e100.net; s=20221208; t=1683753327; x=1686345327;
         h=mime-version:user-agent:content-transfer-encoding:references
          :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=6cJ31Dz8u9AcUhlObGAjcSV4Wb31sZ6inct5YiBtNcQ=;
-        b=NF9O3sW8ue88MDIiom0m5L80FnUmYl3VOQQ8IqfQ1oK9EXhNrtjKNs8eSCFLxviKtw
-         8GloEUjF7q6yfe/70zIbJY/i7TVU+zy3g1bIRwy9LFesJWKyC/Axdcld+0Z6J1cLQeUP
-         u04M0kV1T9k8x7QNo0nwD8W8Mm7TowkGRms8vs8vgZZ95ZE+aTJIGcva9gjvF5xkZvpI
-         ErGSZAHTThj3epegeZ0cQwNOBhBtYxWQgMF9PKHWlHc8bll4ofGLTfOQ1xForsWZ7pPP
-         1QvRaigD3Fbpeb/QxuT/uuo1v4x3L0gmcSMEDlLgUVA6yqzj7g28jTHOOpxVOV+nz9kT
-         yDqA==
-X-Gm-Message-State: AC+VfDyXu5nWfvvOSu9sTeLwzeEBdbN/I8HJLSqkq1FGeazLfqOY2AFr
-	SJslbBIX/EyJQFY1ucNGdcA=
-X-Google-Smtp-Source: ACHHUZ7BN0N/SM/uFgH1sFjlZDggAPwPRCR6aCGoJbsQ+Vg+fZHaeI92gRzcJPAw8LF0lgrHUuZraA==
-X-Received: by 2002:ac2:488c:0:b0:4f1:4086:9384 with SMTP id x12-20020ac2488c000000b004f140869384mr1966232lfc.61.1683750690155;
-        Wed, 10 May 2023 13:31:30 -0700 (PDT)
+        bh=d/rus91C04tG29B/ScEf5OKsFh39zkI9m79US8PQUjY=;
+        b=KAvTS+dUWig+AtVhWsCAeHYEL9iso7mh3o2hZhB/07Z5d7oqIjmgjarN+Ab8aRtEV+
+         NWmWUAS9OQNpBQ3OazYiZtM3xrKf8HJcIKQUAE2TKeFMr9nq19tjevIA5NbL7PkbqPtz
+         KLft88kBTQs8s5JXFwgGQm5hYF4tkvYYmn9OMtm9GWuQp++4GORw2goDVgLbTMkrCrd/
+         qqdIXkdgcP3rpwSLorCcKSMRLMUevvXhxkKXQfgyk9epxduubwgCW4aXIl4rVNBBbuPt
+         xlN9UMDSXY+0B5KboJ/o9BaNjshhVy0Aicwnx+sWQK0ZeO1evhQ1Mtz/dDrFgyMCmkLL
+         nsGw==
+X-Gm-Message-State: AC+VfDyHvhwmPoBiOPtHmLcpGifXJOTskMKGN23XmhOHvc2Bve3j0gyJ
+	/eoVukyK9KFmwZ5/51a9EBc=
+X-Google-Smtp-Source: ACHHUZ7mTLdh7Av90znwfta5PHJDraIwi2lq/a1/0UxCzBCWfwDKpJ8dEBq126g+Wle4n2oXjPdsAg==
+X-Received: by 2002:ac2:5d67:0:b0:4ef:ed49:fcc2 with SMTP id h7-20020ac25d67000000b004efed49fcc2mr1937613lft.26.1683753327073;
+        Wed, 10 May 2023 14:15:27 -0700 (PDT)
 Received: from [100.119.7.139] (95-31-186-150.broadband.corbina.ru. [95.31.186.150])
-        by smtp.gmail.com with ESMTPSA id s11-20020a19ad4b000000b004f00d7fcf0fsm849476lfd.26.2023.05.10.13.31.28
+        by smtp.gmail.com with ESMTPSA id k12-20020a2ea28c000000b002ab4c9c1514sm2167665lja.41.2023.05.10.14.15.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 10 May 2023 13:31:29 -0700 (PDT)
-Message-ID: <fc3dae42f2dfdf046664d964bae560ff6bb32f69.camel@gmail.com>
-Subject: Re: [PATCH v2 3/5] dt-bindings: net: add mac-address-increment
- option
+        Wed, 10 May 2023 14:15:26 -0700 (PDT)
+Message-ID: <c16f87f8182bdb0a0fe89014e56a32758248baeb.camel@gmail.com>
+Subject: Re: [PATCH v2 5/5] dt-bindings: net: ftgmac100: convert to yaml
+ version from txt
 From: Ivan Mikhaylov <fr0st61te@gmail.com>
 To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Samuel
  Mendoza-Jonas <sam@mendozajonas.com>, "David S . Miller"
@@ -67,11 +67,11 @@ To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Samuel
  <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring
  <robh+dt@kernel.org>, Krzysztof Kozlowski
  <krzysztof.kozlowski+dt@linaro.org>
-Date: Wed, 10 May 2023 23:31:26 +0000
-In-Reply-To: <6b5be71e-141e-c02a-8cba-a528264b26c2@linaro.org>
+Date: Thu, 11 May 2023 00:15:24 +0000
+In-Reply-To: <ec0a3553-2c11-301e-d838-f0bc70353b17@linaro.org>
 References: <20230509143504.30382-1-fr0st61te@gmail.com>
-	 <20230509143504.30382-4-fr0st61te@gmail.com>
-	 <6b5be71e-141e-c02a-8cba-a528264b26c2@linaro.org>
+	 <20230509143504.30382-6-fr0st61te@gmail.com>
+	 <ec0a3553-2c11-301e-d838-f0bc70353b17@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 User-Agent: Evolution 3.48.1 
@@ -87,103 +87,136 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Paul Fertser <fercerpav@gmail.com>, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Cc: netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 2023-05-10 at 16:48 +0200, Krzysztof Kozlowski wrote:
+On Wed, 2023-05-10 at 16:50 +0200, Krzysztof Kozlowski wrote:
 > On 09/05/2023 16:35, Ivan Mikhaylov wrote:
-> > Add the mac-address-increment option for specify MAC address taken
-> > by
-> > any other sources.
-> >=20
-> > Signed-off-by: Paul Fertser <fercerpav@gmail.com>
 > > Signed-off-by: Ivan Mikhaylov <fr0st61te@gmail.com>
+>=20
+> Need some commit msg.
+>=20
+>=20
 > > ---
-> > =C2=A0.../devicetree/bindings/net/ethernet-controller.yaml=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 | 8
-> > ++++++++
-> > =C2=A01 file changed, 8 insertions(+)
+> > =C2=A0.../bindings/net/faraday,ftgmac100.yaml=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0 | 110
+> > ++++++++++++++++++
+>=20
+> Missing actual conversion (removal).
+>=20
+> > =C2=A01 file changed, 110 insertions(+)
+> > =C2=A0create mode 100644
+> > Documentation/devicetree/bindings/net/faraday,ftgmac100.yaml
 > >=20
-> > diff --git a/Documentation/devicetree/bindings/net/ethernet-
-> > controller.yaml b/Documentation/devicetree/bindings/net/ethernet-
-> > controller.yaml
-> > index 00be387984ac..6900098c5105 100644
-> > --- a/Documentation/devicetree/bindings/net/ethernet-
-> > controller.yaml
-> > +++ b/Documentation/devicetree/bindings/net/ethernet-
-> > controller.yaml
-> > @@ -34,6 +34,14 @@ properties:
-> > =C2=A0=C2=A0=C2=A0=C2=A0 minItems: 6
-> > =C2=A0=C2=A0=C2=A0=C2=A0 maxItems: 6
-> > =C2=A0
-> > +=C2=A0 mac-address-increment:
-> > +=C2=A0=C2=A0=C2=A0 $ref: /schemas/types.yaml#/definitions/int32
-> > +=C2=A0=C2=A0=C2=A0 description:
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Specifies the MAC address increment to =
-be added to the MAC
-> > address.
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Should be used in cases when there is a=
- need to use MAC
-> > address
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 different from one obtained by any othe=
-r level, like u-boot
-> > or the
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 NC-SI stack.
+> > diff --git
+> > a/Documentation/devicetree/bindings/net/faraday,ftgmac100.yaml
+> > b/Documentation/devicetree/bindings/net/faraday,ftgmac100.yaml
+> > new file mode 100644
+> > index 000000000000..98cd142f74bb
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/net/faraday,ftgmac100.yaml
+> > @@ -0,0 +1,110 @@
+> > +# SPDX-License-Identifier: GPL-2.0
 >=20
-> We don't store MAC addresses in DT, but provide simple placeholder
-> for
-> firmware or bootloader. Why shall we store static "increment" part of
-> MAC address? Can't the firmware give you proper MAC address?
+> Dual-license, unless you copied some chunks of old binding... but was
+> there old binding?
+
+Krzysztof, I copied a lot from old one ftgmac100.txt.
+
 >=20
-> Best regards,
-> Krzysztof
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/net/faraday,ftgmac100.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Faraday Technology FTGMAC100 gigabit ethernet controller
+> > +
+> > +allOf:
+> > +=C2=A0 - $ref: "ethernet-controller.yaml#"
+>=20
+> Drop quotes.
+>=20
+>=20
+> > +
+> > +maintainers:
+> > +=C2=A0 - Po-Yu Chuang <ratbert@faraday-tech.com>
+> > +
+> > +properties:
+> > +=C2=A0 compatible:
+> > +=C2=A0=C2=A0=C2=A0 oneOf:
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: faraday,ftgmac100
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - items:
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - enum:
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 - aspeed,ast2400-mac
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 - aspeed,ast2500-mac
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 - aspeed,ast2600-mac
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - const: farada=
+y,ftgmac100
+> > +
+> > +=C2=A0 reg:
+> > +=C2=A0=C2=A0=C2=A0 maxItems: 1
+> > +
+> > +=C2=A0 interrupts:
+> > +=C2=A0=C2=A0=C2=A0 maxItems: 1
+> > +
+> > +=C2=A0 clocks:
+> > +=C2=A0=C2=A0=C2=A0 description: |
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 In accordance with the generic clock bi=
+ndings.
+>=20
+> Drop this part. Obvious.
+>=20
+> > =C2=A0Must describe the MAC
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 IP clock, and optionally an RMII RCLK g=
+ate for the
+> > AST2500/AST2600. The
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 required MAC clock must be the first ce=
+ll.
+>=20
+> The cells depend on clock provider. Do you mean something else?
+
+It's exactly from ftgmac100.txt, this section without any changes, I
+didn't add anything new in the sentence.
+
+>=20
+> > +=C2=A0=C2=A0=C2=A0 minItems: 1
+> > +=C2=A0=C2=A0=C2=A0 maxItems: 2
+> > +
+> > +=C2=A0 clock-names:
+> > +=C2=A0=C2=A0=C2=A0 items:
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - enum:
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - MACCLK
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - RCLK
+>=20
+> This does not allow two clocks... List all the items and add
+> minItems: 1.
+>=20
+>=20
+> > +
+> > +=C2=A0 phy-mode:
+> > +=C2=A0=C2=A0=C2=A0 enum:
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - rgmii
+> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 - rmii
+> > +
+> > +=C2=A0 phy-handle: true
+> > +
+> > +=C2=A0 use-ncsi:
+> > +=C2=A0=C2=A0=C2=A0 description: |
+>=20
+> Do not need '|' unless you need to preserve formatting.
+>=20
+> I will stop review, because it depends whether this is true
+> conversion
+> or new binding.
 >=20
 
-Krzysztof, maybe that's a point to make commit message with better
-explanation from my side. At current time there is at least two cases
-where I see it's possible to be used:
-
-1. NC-SI
-2. embedded
-
-At NC-SI level there is Get Mac Address command which provides to BMC
-mac address from the host which is same as host mac address, it happens
-at runtime and overrides old one.
-
-Also, this part was also to be discussed 2 years ago in this thread:
-https://lore.kernel.org/all/OF8E108F72.39D22E89-ON00258765.001E46EB-0025876=
-5.00251157@ibm.com/
-
-Where Milton provided this information:
-
-DTMF spec DSP0222 NC-SI (network controller sideband interface)
-is a method to provide a BMC (Baseboard management controller) shared
-access to an external ethernet port for comunication to the management
-network in the outside world.  The protocol describes ethernet packets=20
-that control selective bridging implemented in a host network
-controller
-to share its phy.  Various NIC OEMs have added a query to find out the=20
-address the host is using, and some vendors have added code to query
-host
-nic and set the BMC mac to a fixed offset (current hard coded +1 from
-the host value).  If this is compiled in the kernel, the NIC OEM is=20
-recognised and the BMC doesn't miss the NIC response the address is set
-once each time the NCSI stack reinitializes.  This mechanism overrides
-any mac-address or local-mac-address or other assignment.
-
-DSP0222
-https://www.dmtf.org/documents/pmci/network-controller-sideband-interface-n=
-c-si-specification-110
-
-
-In embedded case, sometimes you have different multiple ethernet
-interfaces which using one mac address which increments or decrements
-for particular interface, just for better explanation, there is patch
-with explanation which providing them such way of work:
-https://github.com/openwrt/openwrt/blob/master/target/linux/generic/pending=
--5.15/682-of_net-add-mac-address-increment-support.patch
-
-In their rep a lot of dts using such option.
+I've tried to convert it from ftgmac100.txt, everything is same in it
+except mac-address-increment option with explanation for which purpose
+it there, need I divide conversion from that option or is it fine in
+one?
 
 Thanks.
