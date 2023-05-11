@@ -1,50 +1,51 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 281AB6FECD2
-	for <lists+openbmc@lfdr.de>; Thu, 11 May 2023 09:30:45 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9BC076FECCA
+	for <lists+openbmc@lfdr.de>; Thu, 11 May 2023 09:29:52 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QH3TZ6wcwz3fM3
-	for <lists+openbmc@lfdr.de>; Thu, 11 May 2023 17:30:42 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QH3SZ3kBSz3fM8
+	for <lists+openbmc@lfdr.de>; Thu, 11 May 2023 17:29:50 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=Nm40waXQ;
+	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=Yj6Zwf5B;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=163.com (client-ip=220.181.12.197; helo=m12.mail.163.com; envelope-from=maxiaoyu_jn@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=163.com (client-ip=220.181.12.216; helo=m12.mail.163.com; envelope-from=maxiaoyu_jn@163.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=Nm40waXQ;
+	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=Yj6Zwf5B;
 	dkim-atps=neutral
-Received: from m12.mail.163.com (m12.mail.163.com [220.181.12.197])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QH3Rw061vz3f5K
-	for <openbmc@lists.ozlabs.org>; Thu, 11 May 2023 17:29:13 +1000 (AEST)
+X-Greylist: delayed 916 seconds by postgrey-1.36 at boromir; Thu, 11 May 2023 17:29:15 AEST
+Received: from m12.mail.163.com (m12.mail.163.com [220.181.12.216])
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QH3Rw04Krz3cdk
+	for <openbmc@lists.ozlabs.org>; Thu, 11 May 2023 17:29:14 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=fd2Qs
-	ib8nbWpHJgEIvbTYd7jZB85zti28xLcIaTZ02s=; b=Nm40waXQE8CiNPXkRwz/7
-	bIADBx7RRAiFdqD6poZhvauGdjomHqFOj0rSFMegFM6/5tje0KpKstIbOdIWYTu9
-	O3QdoPYGwubEHkjiitrjuZc2bPmhiHJRMyNqOp1GXPeRVgh87BClU05xHlHm0zVT
-	CDku3tXaLOjaqpdiq6sp4w=
+	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=CA0W+
+	2ql/iwC68LczJHhS9sXwdEc1KcFQJ6AX5cu15c=; b=Yj6Zwf5BIwXerRLFaa1me
+	0LoSM9v3GMQ3HJ1fCdUNgyN7ZbN1YtL1xb+SANLqfg6DUsU5LJgokOAJ6aTqJMPd
+	zEFkMbDoxHhHIILO+3ByzwYn1YFtsVxOhD9d6Yv1wgTS5xE/N85StpxY6tNO8sza
+	FCrrmKcB30jvbmwdvtNT4A=
 Received: from localhost.localdomain (unknown [117.136.93.156])
-	by zwqz-smtp-mta-g0-0 (Coremail) with SMTP id _____wAXbyOVlVxkXzQ+Bg--.49879S2;
-	Thu, 11 May 2023 15:13:27 +0800 (CST)
+	by zwqz-smtp-mta-g4-2 (Coremail) with SMTP id _____wAHHa03mVxkazpNBg--.32806S2;
+	Thu, 11 May 2023 15:28:58 +0800 (CST)
 From: maxiaoyu_jn@163.com
 To: joel@jms.id.au,
 	andrew@aj.id.au,
 	openbmc@lists.ozlabs.org
-Subject: [PATCH v2 1/1] [PATCH v2,1/1]ARM: dts: aspeed: Add Inspur NF5280M7 BMC machine
-Date: Thu, 11 May 2023 15:13:09 +0800
-Message-Id: <20230511071309.3854-1-maxiaoyu_jn@163.com>
+Subject: [PATCH v2 1/1]ARM: dts: aspeed: Add Inspur NF5280M7 BMC machine
+Date: Thu, 11 May 2023 15:28:44 +0800
+Message-Id: <20230511072844.5289-1-maxiaoyu_jn@163.com>
 X-Mailer: git-send-email 2.40.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wAXbyOVlVxkXzQ+Bg--.49879S2
-X-Coremail-Antispam: 1Uf129KBjvAXoWfJr4rGw1xJr17Gr13Cry7GFg_yoW8JFWrXo
+X-CM-TRANSID: _____wAHHa03mVxkazpNBg--.32806S2
+X-Coremail-Antispam: 1Uf129KBjvAXoWfJr4rGw1xJr17Gr13Cry7GFg_yoW8Jw18uo
 	ZFyFnY9ry5WFy8Wa97Zry3Kw17Ar1kKr1fGw4Ut3W3AryrZrsxtF95Ga15uFyjy34rtryq
-	y34IkFWUt348tr4kn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73VFW2AGmfu7bjvjm3
-	AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjxUwSoXDUUUU
+	y34IkFWUt348tr4kn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7v73VFW2AGmfu7bjvjm3
+	AaLaJ3UbIYCTnIWIevJa73UjIFyTuYvjxUs0tCUUUUU
 X-Originating-IP: [117.136.93.156]
-X-CM-SenderInfo: 5pd0xtpr1xsyrq6rljoofrz/1tbiGhlsg1aEFMs55AAAs8
+X-CM-SenderInfo: 5pd0xtpr1xsyrq6rljoofrz/1tbiXQVsg1WBpikLiwABst
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -68,6 +69,13 @@ development.
 
 Signed-off-by: Xiaoyu Ma <maxiaoyu@inspur.com>
 ---
+changelog:
+v2:
+ -Add ADC pimux and remove the pca9555 child nodes
+
+v1:
+ -Add Inspur NF5280M7 BMC machine 
+
  arch/arm/boot/dts/Makefile                    |   1 +
  .../boot/dts/aspeed-bmc-inspur-nf5280m7.dts   | 669 ++++++++++++++++++
  2 files changed, 670 insertions(+)
