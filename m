@@ -2,89 +2,82 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 76ACE6FFF29
-	for <lists+openbmc@lfdr.de>; Fri, 12 May 2023 05:03:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 06526700281
+	for <lists+openbmc@lfdr.de>; Fri, 12 May 2023 10:29:19 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QHYVK2jsxz3fP8
-	for <lists+openbmc@lfdr.de>; Fri, 12 May 2023 13:03:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QHhkh2zt7z3fWn
+	for <lists+openbmc@lfdr.de>; Fri, 12 May 2023 18:29:16 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=aQPEFrUq;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=TcVMwMSf;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=EFXVT/a3;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25; helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::233; helo=mail-lj1-x233.google.com; envelope-from=fr0st61te@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=aQPEFrUq;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=TcVMwMSf;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=EFXVT/a3;
 	dkim-atps=neutral
-Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QHYTg4M76z3cGk
-	for <openbmc@lists.ozlabs.org>; Fri, 12 May 2023 13:02:30 +1000 (AEST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id CE9EF5C11CE
-	for <openbmc@lists.ozlabs.org>; Thu, 11 May 2023 23:02:24 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Thu, 11 May 2023 23:02:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1683860544; x=1683946944; bh=BZ
-	uXY3hCBi0ppPq14PPZq9Zzhb1uXluKpYJD8D6GRWA=; b=aQPEFrUq8xtDFaZQiC
-	MSzjNXC3a3vPp87GcS0OeIrfUJARHz+vBAcbRQhDUQhlRkpmcEkgdzW8FPUQTYHF
-	tWdJqyiDc0ULabBQeALVHDnSIRc4QZfsHyccP+RPXnBgLsYHM6NgoiZqY2JdZg+U
-	xHKR5/8hW72sI2tNxLttMIr6BTsQbNwKimI0zwKJLJ9eXKd6gIKSACUKGEzCMM9u
-	Y2WKkW34XOCZLJyW3mAZt9m5F1fGP+TI/5D/R7ecdJwZuYiHdChJjzKGsDgf7KMo
-	+fUhjM3+jRph8TgFvqI2poQbezC8E17F6UnP09o4SLVQEpA76Pn7CSpCrpkEC1Dt
-	T8cg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm3; t=1683860544; x=1683946944; bh=BZuXY3hCBi0pp
-	Pq14PPZq9Zzhb1uXluKpYJD8D6GRWA=; b=TcVMwMSfLLWy+N146tkQcPIBVJt+e
-	besTyDo+H8kyYSeCzhUTc7+r/YiCao9sv6JpgSEmK//7WT0hFGqIB2EUVKHj/ewW
-	ehe0+8uAI69WxEOMEvg8+jj7cowOPOZdaD9GnYNeNG5AZtEUN+1S/XPg0jSQOQ9R
-	/PmbXjvV5+5v5PKOpthPAARkR64CorAbvDso+ecR4XFSA1ZIPkWeFW2XqLjkPUBL
-	t0zUmupp15Ar1d6N2rL0eaXHC8TkcBD5k1ELuiSIw/FFDXIo8UjQwcMyxFithBDS
-	hfJjkfwM58t+3vnfdXNLXMvocYGC14+bm678uqN1rtMj3lKgBPV9FXm4A==
-X-ME-Sender: <xms:QKxdZAl78OvzbDbQO4wUhxqOLWMlhEy2VkORRykmr0SPOoWZsk13iw>
-    <xme:QKxdZP2UMAaQlruZj9TL39LggY68Uyu9CAFpPTVWAy-FbIX0I8E85sHtNAypiv4fk
-    o51l5zsHUOGJzg97cM>
-X-ME-Received: <xmr:QKxdZOoVJ_9emk3EUAemxKaD41sonown5lsz2YAWNZFy0y7M1YuPQwZ2eRN_E9m0YCJFKXTZ356HBnaWg-xZGSbHICJQDS9IAL4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrfeegledgieefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    gfrhhlucfvnfffucdludejmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
-    htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhephffguddtfeevteeiueelfedufeet
-    udettdekgfetfeetgffhtdevvedufeegleetnecuffhomhgrihhnpehgihhthhhusgdrtg
-    homhdpohhpvghnsghmtgdrohhrghdpvdehgedtthgrnhhouhhsrdhnvghtnecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhessh
-    htfigtgidrgiihii
-X-ME-Proxy: <xmx:QKxdZMn87yXc0gTFVxdOhGVXNMK1tj6Axp4dqoFa9A4QyLf2bsC6YA>
-    <xmx:QKxdZO372lds2n3fok_M9MwPRRcWsCIHsd_pbSSR_CYcwK6h6ObC0g>
-    <xmx:QKxdZDvO9mv06dyQY5n1UiAXENtY9FUk5fV7CeXTaFeSFWnqygSOBw>
-    <xmx:QKxdZHiKIRQcVL09bVpIOhlUstrAku_U1R2k8xzZ3D_6d9bHMiBOeg>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <openbmc@lists.ozlabs.org>; Thu, 11 May 2023 23:02:24 -0400 (EDT)
-Date: Thu, 11 May 2023 22:02:22 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: OpenBMC List <openbmc@lists.ozlabs.org>
-Subject: Re: clang-16 rollout
-Message-ID: <ZF2sPuvx6O2hQF7i@heinlein.vulture-banana.ts.net>
-References: <ZFuSH0kBl3uOp2wg@heinlein.vulture-banana.ts.net>
- <ZFxixiiHQrRY_5jf@heinlein.vulture-banana.ts.net>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QHhk73k9Kz3bfw
+	for <openbmc@lists.ozlabs.org>; Fri, 12 May 2023 18:28:45 +1000 (AEST)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2ad819ab8a9so72980631fa.0
+        for <openbmc@lists.ozlabs.org>; Fri, 12 May 2023 01:28:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1683880119; x=1686472119;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=h0STyvDKOt/jPA6CkWmo5ah+D/XtsYoBFrU3Alj5ZsU=;
+        b=EFXVT/a30g4w+NUlOkvBYSmMYZuq+2UkSXSY7L5VI9FXK9h6p9sebFV1ZG1n9iAdRo
+         TE2TV5vJYHPQv601eshefRx655Pm8ALANm+hIPOzlm/A4ndvayojYfATi8NRrY2f+FSH
+         GqoGt18ApNwKW/Wf7YMBhyBFe5+Fe1mIFLoD3TyqDJPdRPjcuF5YAbpvI/sXWv1iEYjI
+         tZdfRX7ArJcMrNr3rqZ3OFOlaB8HvZqJEa4Sw53nwwSTBiVQIe43Bh1SIp2IMzaZBHQO
+         LeoJ/qvyOspp90dSrlC67d5gCtDbvEFFwR8TfNVNaGDb39JV5w5Jj48XPk1XEnlBmiX8
+         YQ7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1683880119; x=1686472119;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=h0STyvDKOt/jPA6CkWmo5ah+D/XtsYoBFrU3Alj5ZsU=;
+        b=SP1ensVwBy8PzF1OGdRnn1Ey8fJ6RG8fpgBR27VZHV9F2D3naGQdwEB4Sli9wB7h+b
+         WDxVvioXXq6fvvBGjN3R4cm2LGfXBoTOYPnGTgsuFWiOL6uP3S3Q+3snnwYgppdXCZWX
+         SPAq4fW61b/0Ff7bkqPKas85YMuafbernGsu6USnzoIzEvx8jBcC+0T+MxmYhjOlOnud
+         KvdzDMU2MfSNwBUUPyIm8evmHDLLgQjZLzmIIG3YP1pg8QjyJ/+v7WRuxDTxikSycAAB
+         PJ0YqAP2I66EiEV3/iMFmON3Wtu1AvVamhEQrIcrJ/8w0p4NPiMovyRcNDwIIye54Lxo
+         aVIQ==
+X-Gm-Message-State: AC+VfDzrKUHtXrwDWbqtsXvJ88ZVMvSR+O9MwRPD4qW6KPddAq/uYzzM
+	kyL6CQXdgMghkMZCTT5LndI=
+X-Google-Smtp-Source: ACHHUZ6vsL+DKF6BXISXrfmfcFw38us7u5JV3h9YJmohdhzUI31GzrrgI9YuuOkIONqSb4FxiCgvFw==
+X-Received: by 2002:a2e:9942:0:b0:2ad:8f4a:4ed5 with SMTP id r2-20020a2e9942000000b002ad8f4a4ed5mr3646719ljj.37.1683880119229;
+        Fri, 12 May 2023 01:28:39 -0700 (PDT)
+Received: from [100.119.7.139] (95-31-186-77.broadband.corbina.ru. [95.31.186.77])
+        by smtp.gmail.com with ESMTPSA id y23-20020a05651c021700b002a8b9570403sm2720044ljn.31.2023.05.12.01.28.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 12 May 2023 01:28:38 -0700 (PDT)
+Message-ID: <be85bef7e144ebe08f422bf53bb81b59a130cb29.camel@gmail.com>
+Subject: Re: [PATCH v2 3/5] dt-bindings: net: add mac-address-increment
+ option
+From: Ivan Mikhaylov <fr0st61te@gmail.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Samuel
+ Mendoza-Jonas <sam@mendozajonas.com>, "David S . Miller"
+ <davem@davemloft.net>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski
+ <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Rob Herring
+ <robh+dt@kernel.org>, Krzysztof Kozlowski
+ <krzysztof.kozlowski+dt@linaro.org>
+Date: Fri, 12 May 2023 11:28:37 +0000
+In-Reply-To: <8de01e81-43dc-71af-f56f-4fba957b0b0b@linaro.org>
+References: <20230509143504.30382-1-fr0st61te@gmail.com>
+	 <20230509143504.30382-4-fr0st61te@gmail.com>
+	 <6b5be71e-141e-c02a-8cba-a528264b26c2@linaro.org>
+	 <fc3dae42f2dfdf046664d964bae560ff6bb32f69.camel@gmail.com>
+	 <8de01e81-43dc-71af-f56f-4fba957b0b0b@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.48.1 
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="2seYTYT5a2zLPtF2"
-Content-Disposition: inline
-In-Reply-To: <ZFxixiiHQrRY_5jf@heinlein.vulture-banana.ts.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -96,68 +89,140 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Paul Fertser <fercerpav@gmail.com>, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
---2seYTYT5a2zLPtF2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Wed, May 10, 2023 at 10:36:38PM -0500, Patrick Williams wrote:
-
-> There are a few pervasive issues related to clang-tidy-16 that we are
-> still investigating.  The most common one, which affects many
-> repositories  is an issue in Boost that looks something like this (but not
-> always io_uring):
+On Fri, 2023-05-12 at 08:22 +0200, Krzysztof Kozlowski wrote:
+> On 11/05/2023 01:31, Ivan Mikhaylov wrote:
+> > On Wed, 2023-05-10 at 16:48 +0200, Krzysztof Kozlowski wrote:
+> > > On 09/05/2023 16:35, Ivan Mikhaylov wrote:
+> > > > Add the mac-address-increment option for specify MAC address
+> > > > taken
+> > > > by
+> > > > any other sources.
+> > > >=20
+> > > > Signed-off-by: Paul Fertser <fercerpav@gmail.com>
+> > > > Signed-off-by: Ivan Mikhaylov <fr0st61te@gmail.com>
+> > > > ---
+> > > > =C2=A0.../devicetree/bindings/net/ethernet-controller.yaml=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0 | 8
+> > > > ++++++++
+> > > > =C2=A01 file changed, 8 insertions(+)
+> > > >=20
+> > > > diff --git a/Documentation/devicetree/bindings/net/ethernet-
+> > > > controller.yaml
+> > > > b/Documentation/devicetree/bindings/net/ethernet-
+> > > > controller.yaml
+> > > > index 00be387984ac..6900098c5105 100644
+> > > > --- a/Documentation/devicetree/bindings/net/ethernet-
+> > > > controller.yaml
+> > > > +++ b/Documentation/devicetree/bindings/net/ethernet-
+> > > > controller.yaml
+> > > > @@ -34,6 +34,14 @@ properties:
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0 minItems: 6
+> > > > =C2=A0=C2=A0=C2=A0=C2=A0 maxItems: 6
+> > > > =C2=A0
+> > > > +=C2=A0 mac-address-increment:
+> > > > +=C2=A0=C2=A0=C2=A0 $ref: /schemas/types.yaml#/definitions/int32
+> > > > +=C2=A0=C2=A0=C2=A0 description:
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Specifies the MAC address increment=
+ to be added to the
+> > > > MAC
+> > > > address.
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 Should be used in cases when there =
+is a need to use MAC
+> > > > address
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 different from one obtained by any =
+other level, like u-
+> > > > boot
+> > > > or the
+> > > > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 NC-SI stack.
+> > >=20
+> > > We don't store MAC addresses in DT, but provide simple
+> > > placeholder
+> > > for
+> > > firmware or bootloader. Why shall we store static "increment"
+> > > part of
+> > > MAC address? Can't the firmware give you proper MAC address?
+> > >=20
+> > > Best regards,
+> > > Krzysztof
+> > >=20
+> >=20
+> > Krzysztof, maybe that's a point to make commit message with better
+> > explanation from my side. At current time there is at least two
+> > cases
+> > where I see it's possible to be used:
+> >=20
+> > 1. NC-SI
+> > 2. embedded
+> >=20
+> > At NC-SI level there is Get Mac Address command which provides to
+> > BMC
+> > mac address from the host which is same as host mac address, it
+> > happens
+> > at runtime and overrides old one.
+> >=20
+> > Also, this part was also to be discussed 2 years ago in this
+> > thread:
+> > https://lore.kernel.org/all/OF8E108F72.39D22E89-ON00258765.001E46EB-002=
+58765.00251157@ibm.com/
 >=20
-> ```
-> /usr/local/include/boost/asio/detail/impl/io_uring_descriptor_service.ipp=
-:109:3: error: Called C++ object pointer is null [clang-analyzer-core.CallA=
-ndMessage,-warnings-as-errors]
-> ```
+> Which was not sent to Rob though...
+>=20
+>=20
+> >=20
+> > Where Milton provided this information:
+> >=20
+> > DTMF spec DSP0222 NC-SI (network controller sideband interface)
+> > is a method to provide a BMC (Baseboard management controller)
+> > shared
+> > access to an external ethernet port for comunication to the
+> > management
+> > network in the outside world.=C2=A0 The protocol describes ethernet
+> > packets=20
+> > that control selective bridging implemented in a host network
+> > controller
+> > to share its phy.=C2=A0 Various NIC OEMs have added a query to find out
+> > the=20
+> > address the host is using, and some vendors have added code to
+> > query
+> > host
+> > nic and set the BMC mac to a fixed offset (current hard coded +1
+> > from
+> > the host value).=C2=A0 If this is compiled in the kernel, the NIC OEM i=
+s
+> > recognised and the BMC doesn't miss the NIC response the address is
+> > set
+> > once each time the NCSI stack reinitializes.=C2=A0 This mechanism
+> > overrides
+> > any mac-address or local-mac-address or other assignment.
+> >=20
+> > DSP0222
+> > https://www.dmtf.org/documents/pmci/network-controller-sideband-interfa=
+ce-nc-si-specification-110
+> >=20
+> >=20
+> > In embedded case, sometimes you have different multiple ethernet
+> > interfaces which using one mac address which increments or
+> > decrements
+> > for particular interface, just for better explanation, there is
+> > patch
+> > with explanation which providing them such way of work:
+> > https://github.com/openwrt/openwrt/blob/master/target/linux/generic/pen=
+ding-5.15/682-of_net-add-mac-address-increment-support.patch
+> >=20
+> > In their rep a lot of dts using such option.
+>=20
+> None of these explain why this is property of the hardware. I
+> understand
+> that this is something you want Linux to do, but DT is not for that
+> purpose. Do not encode system policies into DT and what above commit
+> says is a policy.
+>=20
 
-All known issues except for bmcweb should be resolved now.  We ended up
-working around the above error with a change in sdbusplus[1].
+Krzysztof, okay then to which DT subsystem it should belong? To
+ftgmac100 after conversion?
 
-> The bmcweb repository has a big set of clang-tidy issues and I've been
-> working on fixing some of them [1].
-
-I have the majority of the bmcweb-specific clang-tidy issues resolved
-now[2], including one we had to patch boost in CI[3,4], but there are
-still a few more minor fixes to be made.=20
-
-[1]: https://github.com/openbmc/sdbusplus/commit/fdfd3af1e7f7a8e4d0caee3edf=
-aa12cd53cd0d17
-[2]: https://gerrit.openbmc.org/q/status:open+project:openbmc/bmcweb+after:=
-2023-05-10+(author:patrick%2540stwcx.xyz+OR+author:ed%2540tanous.net)
-[3]: https://github.com/openbmc/openbmc-build-scripts/commit/876ea1efac0970=
-372f956971540fcbb9e3b06634
-[4]: https://github.com/williamspatrick/beast/commit/98f8b1fbd059a35754c2c7=
-b2841769cf8d021272
-
---=20
-Patrick Williams
-
---2seYTYT5a2zLPtF2
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmRdrDwACgkQqwNHzC0A
-wRkjkhAAngscCyOr4yoL1TJFLdWwceL8UxwCOOnRX5k92KcfIhBAaI0Xw362JMsc
-RCcd75H2cp9doH6d0qhwgsV/Fi/H8zd1s3BeBSBfs6wLA6GH6w1nAlwSu8NrIplv
-sQo9MUSAdrP0DuGKj1Yf2Lya2KQgdJu+YgMb2zyr/TJVogUAo+O1nPwENYngwG96
-bywnvb8fHCmoj45XGjkeMsHBxOQF7HD2zkdoK5F/uU+Yv+KVUgSZ6HEW9uUdbaAt
-hkbee2npWdJyT1H3yc5YY6pRsMFfqboohOGn/ZPVWXhQgSklOhgD2wxdSUkQWJ1v
-3yG6aufN4yOmCRc5rXJS5R7yp+BKcAnwOCWB5pmgxY9Mxyb9agBO8NAmYevAP407
-i5423d+UZRH2S99NdP1tbctys5I4mpSTaVD/3dAP0Oy+nhXZ4crfi9C+RIFc24Lc
-pUcH/8ckHnbcHH1u5nvKVS4YfIxXcg/5M3jzo5VVv8a+GdfMWMCnSkuS5eaVgQx0
-kmmfbqNGtGoRH0sU0dyDwMg+jNN+h3NP989uRXcb1Hytt0D/GBlq8qlZeagGjJVh
-zmzef8uk+qsLs9yEmj/0RJ2mSC0MDllriC03ueMYyNTygaOXvlrhYNg2EkQE7wt2
-sfTtxyzL9sh+wugexzt1RvSD4s3sSErf6J9XHL0DyMchK74CA30=
-=xvYW
------END PGP SIGNATURE-----
-
---2seYTYT5a2zLPtF2--
+Thanks.
