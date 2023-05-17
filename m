@@ -1,69 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 75E9270687F
-	for <lists+openbmc@lfdr.de>; Wed, 17 May 2023 14:44:43 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A4E0F706E85
+	for <lists+openbmc@lfdr.de>; Wed, 17 May 2023 18:48:36 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QLt951tPzz3cT4
-	for <lists+openbmc@lfdr.de>; Wed, 17 May 2023 22:44:41 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QLzZV4HMzz3f8Z
+	for <lists+openbmc@lfdr.de>; Thu, 18 May 2023 02:48:34 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=FMlLS0aE;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=akgw0EDn;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::b29; helo=mail-yb1-xb29.google.com; envelope-from=linus.walleij@linaro.org; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.55.52.115; helo=mga14.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=FMlLS0aE;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=akgw0EDn;
 	dkim-atps=neutral
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QLt8T4xfQz3cCy
-	for <openbmc@lists.ozlabs.org>; Wed, 17 May 2023 22:44:09 +1000 (AEST)
-Received: by mail-yb1-xb29.google.com with SMTP id 3f1490d57ef6-ba82d82bd39so923577276.2
-        for <openbmc@lists.ozlabs.org>; Wed, 17 May 2023 05:44:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1684327446; x=1686919446;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gNevE736BEsxBU0FmwLJIhGqBiG7yoAC/t6/uUIBMdY=;
-        b=FMlLS0aECYmfOvG19PTRQ4JzQVOPvgp3keEl4q4lBIcarONNex1FSS2aSSOrdLjxfE
-         OYiPfSd3p8dfD1QItx7D8wl2cvYk/x1+YjFMYiLcupDwHagK7bMFjrihVjrw89h1isK/
-         BL8m4dOesp9dOvFJIsPhRXwRJJZw0WXMjrRaZLCGs1aGyZghu3sRXCSFqAbHEbi4bEe9
-         sb34beQApq2PcsJ82bacmFQQUt6j72BaQNjANrnbsGmWxQJeZKXoqvssjMl8KTkBxSm2
-         hNmUL8hfNmz56/sTiGz6zGIXfLgQdcu9zLtf9Q3wfq58AlUNYHc4mTp5/+V36z6r3Z0n
-         03CQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1684327446; x=1686919446;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=gNevE736BEsxBU0FmwLJIhGqBiG7yoAC/t6/uUIBMdY=;
-        b=WC3qHAXPyriH/8XwsRYBLky2dz3+oKM/uHG8u6cOSNz2qT12CacGEYb0UXGnf1x217
-         50x+ugfOxym/g6pjXhMexsAZtnbNVg1Xe5G3z7eOFZ8FPg7vVGm2OIglvm8i6Lj87SFy
-         XaE5Tp0KqUiIAVfrEKQGB7GvUTIrRyU/frhBoE4Aw9+yJBDo4ZJYaH7lCMjMT+QBIfnV
-         OMjBmCZ7Ohr+umcIkuocGw6OOkibIYvq5XIsCWZmgs9Gu36KC2xNHYLY6bPL8Q/6ROId
-         dDdwL2q5B9RzDoUP1By20FBzmxBPymCAAf15C1ft4VvUfpy/u8Q50MGNl0yjAZMS6Rlm
-         w4uw==
-X-Gm-Message-State: AC+VfDyMUkOO/6gmN0+ppZON2IsPbhxLRGuvkjpySxJ7ZOksgjYODeSR
-	eTyjK1I+zUZN0vs8iwMmFpqIKwZx+MS6Z4TAvWCo6A==
-X-Google-Smtp-Source: ACHHUZ4prpZ1ZwoDxxoHkrbtIQ9L4j9bzrbZd//ns/O1W/Gj5TZTAbzyimVq3qT7URmcD+Feztnv9pZGkl2jlaxwl+I=
-X-Received: by 2002:a25:1504:0:b0:ba7:382f:6380 with SMTP id
- 4-20020a251504000000b00ba7382f6380mr12543280ybv.24.1684327445737; Wed, 17 May
- 2023 05:44:05 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1684220962.git.mazziesaccount@gmail.com>
-In-Reply-To: <cover.1684220962.git.mazziesaccount@gmail.com>
-From: Linus Walleij <linus.walleij@linaro.org>
-Date: Wed, 17 May 2023 14:43:54 +0200
-Message-ID: <CACRpkdYPZWNTOW6c0q1+q64JRvxUXswQqm6j5N5KaAWO=sSUaQ@mail.gmail.com>
-Subject: Re: [PATCH v4 0/7] fix fwnode_irq_get[_byname()] returnvalue
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QLzYr6L1Sz3c9K
+	for <openbmc@lists.ozlabs.org>; Thu, 18 May 2023 02:47:59 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1684342081; x=1715878081;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=3aGbiMN0V+5yc6Amt+Y7GgCQxqWtHVXzMieUoBpl1Y0=;
+  b=akgw0EDnkysbTbMr6w1/0Ouy+2xXLengqevbrO45RfhgumRfmw1Zv9tE
+   pB4k80WxM3XZhDo70y1RRaqfkv/CwvWL/PUXoYxIGHIFpaJ7K1yYvTXIy
+   C05KifyReiBj19tIgFd25aOcN9NzZjggUyr2RkBhpTEJX6CH8niSyFpdA
+   i2KXl896UagS/GBf2N5TwNDSzP4jhc380my+EWlEHuJ8gWes0NwlyCahD
+   hSlalxk0NTB/Wj25wpleV5EjhZqJ5/xOhqjuWbRJKWoQE4Q7Tlp3AUNsn
+   5H6m4Gj0eTGKp1Vw1R1C1v0A0MGWtYXNmPmFqLKGmyR8TbrrYZyyLVkmI
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10713"; a="351834334"
+X-IronPort-AV: E=Sophos;i="5.99,282,1677571200"; 
+   d="scan'208";a="351834334"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 May 2023 09:47:55 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10713"; a="948338934"
+X-IronPort-AV: E=Sophos;i="5.99,282,1677571200"; 
+   d="scan'208";a="948338934"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by fmsmga006.fm.intel.com with ESMTP; 17 May 2023 09:47:38 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.96)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1pzKJL-0008UB-36;
+	Wed, 17 May 2023 19:47:35 +0300
+Date: Wed, 17 May 2023 19:47:35 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Matti Vaittinen <mazziesaccount@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH v4 2/7] iio: mb1232: relax return value check for IRQ get
+Message-ID: <ZGUFJ5LRCzW2V0a1@smile.fi.intel.com>
+References: <cover.1684220962.git.mazziesaccount@gmail.com>
+ <429804dac3b1ea55dd233d1e2fdf94240e2f2b93.1684220962.git.mazziesaccount@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <429804dac3b1ea55dd233d1e2fdf94240e2f2b93.1684220962.git.mazziesaccount@gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,24 +72,36 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>, "Rafael J. Wysocki" <rafael@kernel.org>, linux-iio@vger.kernel.org, Andy Shevchenko <andriy.shevchenko@linux.intel.com>, linux-mips@vger.kernel.org, Paul Cercueil <paul@crapouillou.net>, Eric Dumazet <edumazet@google.com>, Daniel Scally <djrscally@gmail.com>, Lars-Peter Clausen <lars@metafoo.de>, openbmc@lists.ozlabs.org, Russell King <linux@armlinux.org.uk>, linux-acpi@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Michael Hennerich <Michael.Hennerich@analog.com>, =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, linux-gpio@vger.kernel.org, Andreas Klinger <ak@it-klinger.de>, Marcin Wojtas <mw@semihalf.com>, Akhil R <akhilrajeev@nvidia.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>, linux-kernel@vger.kernel.org, Wolfram Sang <wsa@kernel.org>, Sakari Ailus <sakari.ailus@linux.intel.com>, netdev@vger.kernel.org, "David S. M
- iller" <davem@davemloft.net>, Jonathan Cameron <jic23@kernel.org>
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>, "Rafael J. Wysocki" <rafael@kernel.org>, linux-iio@vger.kernel.org, Linus Walleij <linus.walleij@linaro.org>, linux-mips@vger.kernel.org, Paul Cercueil <paul@crapouillou.net>, Eric Dumazet <edumazet@google.com>, Wolfram Sang <wsa@kernel.org>, Lars-Peter Clausen <lars@metafoo.de>, openbmc@lists.ozlabs.org, Russell King <linux@armlinux.org.uk>, linux-acpi@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Michael Hennerich <Michael.Hennerich@analog.com>, Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>, linux-gpio@vger.kernel.org, Andreas Klinger <ak@it-klinger.de>, Marcin Wojtas <mw@semihalf.com>, Akhil R <akhilrajeev@nvidia.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Matti Vaittinen <matti.vaittinen@fi.rohmeurope.com>, linux-kernel@vger.kernel.org, Daniel Scally <djrscally@gmail.com>, Sakari Ailus <sakari.ailus@linux.intel.com>, netdev@vger.kernel.org, "David S. Miller" <d
+ avem@davemloft.net>, Jonathan Cameron <jic23@kernel.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, May 16, 2023 at 9:12=E2=80=AFAM Matti Vaittinen
-<mazziesaccount@gmail.com> wrote:
+On Tue, May 16, 2023 at 10:12:41AM +0300, Matti Vaittinen wrote:
+> fwnode_irq_get() was changed to not return 0 anymore.
+> 
+> Drop check for return value 0.
 
-> The fwnode_irq_get() and the fwnode_irq_get_byname() may have returned
-> zero if mapping the IRQ fails. This contradicts the
-> fwnode_irq_get_byname() documentation. Furthermore, returning zero or
-> errno on error is unepected and can easily lead to problems
-> like:
+...
 
-Also, zero is not really a valid IRQ, it means NO_IRQ:
-https://lwn.net/Articles/470820/
+> -	if (data->irqnr <= 0) {
+> +	if (data->irqnr < 0) {
+>  		/* usage of interrupt is optional */
+>  		data->irqnr = -1;
+>  	} else {
 
-I'll apply the pinctrl patches.
 
-Yours,
-Linus Walleij
+After this change I'm not sure we need this branch at all, I mean that -errn is
+equal to -1 in the code (but needs to be checked for silly checks like == -1).
+
+Hence
+
+Entire excerpt can be replaced with
+
+	if (data->irqnr > 0) {
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
