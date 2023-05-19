@@ -1,49 +1,49 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id D0541709292
-	for <lists+openbmc@lfdr.de>; Fri, 19 May 2023 11:05:16 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EB76B7093E7
+	for <lists+openbmc@lfdr.de>; Fri, 19 May 2023 11:44:07 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QN1By4s0Fz3fFF
-	for <lists+openbmc@lfdr.de>; Fri, 19 May 2023 19:05:14 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QN23n5hSjz3fBg
+	for <lists+openbmc@lfdr.de>; Fri, 19 May 2023 19:44:05 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=n8yCzF1C;
+	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=gUVLhPIx;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=163.com (client-ip=220.181.12.215; helo=m12.mail.163.com; envelope-from=lintao1890@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=163.com (client-ip=220.181.12.214; helo=m12.mail.163.com; envelope-from=lintao1890@163.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=n8yCzF1C;
+	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=gUVLhPIx;
 	dkim-atps=neutral
-Received: from m12.mail.163.com (m12.mail.163.com [220.181.12.215])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QN1BH6zp4z3cBP
-	for <openbmc@lists.ozlabs.org>; Fri, 19 May 2023 19:04:36 +1000 (AEST)
+Received: from m12.mail.163.com (m12.mail.163.com [220.181.12.214])
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QN23F5Rh7z3cBP
+	for <openbmc@lists.ozlabs.org>; Fri, 19 May 2023 19:43:35 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=lDHj6
-	jooUTuRRCBu1swOGWzKT84zRF8oclVd0hfu43g=; b=n8yCzF1C6HB0TVRBg2Ah9
-	+ek3Sm3bFqNyGErP5qDrNs2AlHUTfhJ3lQb6Y9DFQHt4PjpwbHow9rKb3w+JN1lZ
-	qbSCWwmzhlzPTBhgvljMkxFNYJnWm56lu6iTtPYASEPdt68A9o/+l/ar64F3WZ2W
-	ryY2xAmgWfiKlOjr7dNUng=
+	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=fs/2t
+	u6NTVPwPiUvEgCNe6B+mo/5QdtOr0JpFb7+Vm4=; b=gUVLhPIxR26Olnf83Ko6I
+	NNT+ubUnZIUb2KT4OMFF+nqwqgns1pkcOl3YaPhGdHJ+mBbLNsAtbUZYj1uz/oBQ
+	WE2N/FCVWRccTKV5yW6o4su4Yem8DdHsJFm7bSzFQ3gro5exQqcYYicjo9V1eO+Y
+	sVkYRbbH5q/QONHMXUIxyA=
 Received: from localhost (unknown [60.208.111.205])
-	by zwqz-smtp-mta-g3-2 (Coremail) with SMTP id _____wDnlRGPO2dkmWFDAA--.25346S2;
-	Fri, 19 May 2023 17:04:16 +0800 (CST)
+	by zwqz-smtp-mta-g2-0 (Coremail) with SMTP id _____wBHpSK0RGdk4dNEAA--.25358S2;
+	Fri, 19 May 2023 17:43:16 +0800 (CST)
 From: lintao1890@163.com
 To: openbmc@lists.ozlabs.org,
 	joel@jms.id.au
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc v3] board: ast2600: Add Inspur SCM V1 board
-Date: Fri, 19 May 2023 17:04:15 +0800
-Message-Id: <20230519090415.840567-1-lintao1890@163.com>
+Subject: [PATCH u-boot v2019.04-aspeed-openbmc v4] board: ast2600: Add Inspur SCM V1 board
+Date: Fri, 19 May 2023 17:43:16 +0800
+Message-Id: <20230519094316.845479-1-lintao1890@163.com>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wDnlRGPO2dkmWFDAA--.25346S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW3JFyfJw1UAF1fGr4kAr13Jwb_yoWxAF4Upa
-	n3ZF4rKF4fXa1rKas8Ary0gFy3Gan5CrZakw47W345JFWfu3s0vrW8Kr97Arn8Xr4DGw4r
-	KF1rGr9FgF1ktw7anT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07j9o7tUUUUU=
+X-CM-TRANSID: _____wBHpSK0RGdk4dNEAA--.25358S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW3JFyfJw1UAF1fGr4kAr13Jwb_yoWxAFWfpa
+	n3ZF4rKF4fXa1rK3s8Ary0gFy3Gan5CrZakw17W345JFWfu3s0vrW8Kr97ArnxXr4DGw4r
+	KFyrGr9FgF1ktw7anT9S1TB71UUUUj7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jvSoJUUUUU=
 X-Originating-IP: [60.208.111.205]
-X-CM-SenderInfo: xolq3tjrrymii6rwjhhfrp/1tbiQw10llc7edOs8QAAs3
+X-CM-SenderInfo: xolq3tjrrymii6rwjhhfrp/xtbCfAx0lmDcJzJPMwABsG
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,6 +71,9 @@ V1 -> V2:
 ---
 V2 -> V3:
     - use gpio subsystem
+---
+V3 -> V4:
+    - fix style problems
 ---
  arch/arm/dts/Makefile                    |   3 +-
  arch/arm/dts/ast2600-inspur-nf5280m7.dts | 190 +++++++++++++++++++++++
@@ -347,7 +350,7 @@ index 0000000000..8af8692f3c
 +obj-y += inspur.o
 diff --git a/board/aspeed/ast2600_inspur/inspur.c b/board/aspeed/ast2600_inspur/inspur.c
 new file mode 100644
-index 0000000000..ef6aeaa46c
+index 0000000000..75edcd9a91
 --- /dev/null
 +++ b/board/aspeed/ast2600_inspur/inspur.c
 @@ -0,0 +1,18 @@
@@ -365,7 +368,7 @@ index 0000000000..ef6aeaa46c
 +{
 +	/* GPIOB[2] output low*/
 +	gpio_request(ASPEED_GPIO(B, 2), "");
-+	gpio_direction_output(ASPEED_GPIO(B, 2) , GPIO_ACTIVE_LOW);
++	gpio_direction_output(ASPEED_GPIO(B, 2), GPIO_ACTIVE_LOW);
 +
 +	return 0;
 +}
