@@ -1,49 +1,49 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB76B7093E7
-	for <lists+openbmc@lfdr.de>; Fri, 19 May 2023 11:44:07 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 42FD670AE8A
+	for <lists+openbmc@lfdr.de>; Sun, 21 May 2023 17:25:53 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QN23n5hSjz3fBg
-	for <lists+openbmc@lfdr.de>; Fri, 19 May 2023 19:44:05 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=gUVLhPIx;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QPPYC1Q2yz3cXf
+	for <lists+openbmc@lfdr.de>; Mon, 22 May 2023 01:25:51 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=163.com (client-ip=220.181.12.214; helo=m12.mail.163.com; envelope-from=lintao1890@163.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=gUVLhPIx;
-	dkim-atps=neutral
-Received: from m12.mail.163.com (m12.mail.163.com [220.181.12.214])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QN23F5Rh7z3cBP
-	for <openbmc@lists.ozlabs.org>; Fri, 19 May 2023 19:43:35 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=fs/2t
-	u6NTVPwPiUvEgCNe6B+mo/5QdtOr0JpFb7+Vm4=; b=gUVLhPIxR26Olnf83Ko6I
-	NNT+ubUnZIUb2KT4OMFF+nqwqgns1pkcOl3YaPhGdHJ+mBbLNsAtbUZYj1uz/oBQ
-	WE2N/FCVWRccTKV5yW6o4su4Yem8DdHsJFm7bSzFQ3gro5exQqcYYicjo9V1eO+Y
-	sVkYRbbH5q/QONHMXUIxyA=
-Received: from localhost (unknown [60.208.111.205])
-	by zwqz-smtp-mta-g2-0 (Coremail) with SMTP id _____wBHpSK0RGdk4dNEAA--.25358S2;
-	Fri, 19 May 2023 17:43:16 +0800 (CST)
-From: lintao1890@163.com
-To: openbmc@lists.ozlabs.org,
-	joel@jms.id.au
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc v4] board: ast2600: Add Inspur SCM V1 board
-Date: Fri, 19 May 2023 17:43:16 +0800
-Message-Id: <20230519094316.845479-1-lintao1890@163.com>
-X-Mailer: git-send-email 2.34.1
+Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized) smtp.mailfrom=nuvoton.com (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tomer.maimon@nuvoton.com; receiver=<UNKNOWN>)
+X-Greylist: delayed 3189 seconds by postgrey-1.36 at boromir; Mon, 22 May 2023 01:25:31 AEST
+Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QPPXq2L9hz3bd5
+	for <openbmc@lists.ozlabs.org>; Mon, 22 May 2023 01:25:29 +1000 (AEST)
+Received: from NTILML01.nuvoton.com (212.199.177.18.static.012.net.il [212.199.177.18])
+	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 34LEW7N1029460
+	for <openbmc@lists.ozlabs.org>; Sun, 21 May 2023 17:32:08 +0300
+Received: from NTHCML01B.nuvoton.com (10.1.8.178) by NTILML01.nuvoton.com
+ (10.190.1.46) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Sun, 21 May
+ 2023 17:32:07 +0300
+Received: from NTHCCAS04.nuvoton.com (10.1.8.29) by NTHCML01B.nuvoton.com
+ (10.1.8.178) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2176.2; Sun, 21 May
+ 2023 22:32:05 +0800
+Received: from taln60.nuvoton.co.il (10.191.1.180) by NTHCCAS04.nuvoton.com
+ (10.1.8.29) with Microsoft SMTP Server id 15.1.2176.2 via Frontend Transport;
+ Sun, 21 May 2023 22:32:04 +0800
+Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
+	id 199DA62E6B; Sun, 21 May 2023 17:32:04 +0300 (IDT)
+From: Tomer Maimon <tmaimon77@gmail.com>
+To: <mturquette@baylibre.com>, <sboyd@kernel.org>, <avifishman70@gmail.com>,
+        <tali.perry1@gmail.com>, <joel@jms.id.au>, <venture@google.com>,
+        <yuenn@google.com>, <benjaminfair@google.com>
+Subject: [PATCH v16 0/1] Introduce Nuvoton Arbel NPCM8XX BMC SoC
+Date: Sun, 21 May 2023 17:32:01 +0300
+Message-ID: <20230521143202.155399-1-tmaimon77@gmail.com>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wBHpSK0RGdk4dNEAA--.25358S2
-X-Coremail-Antispam: 1Uf129KBjvJXoW3JFyfJw1UAF1fGr4kAr13Jwb_yoWxAFWfpa
-	n3ZF4rKF4fXa1rK3s8Ary0gFy3Gan5CrZakw17W345JFWfu3s0vrW8Kr97ArnxXr4DGw4r
-	KFyrGr9FgF1ktw7anT9S1TB71UUUUj7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jvSoJUUUUU=
-X-Originating-IP: [60.208.111.205]
-X-CM-SenderInfo: xolq3tjrrymii6rwjhhfrp/xtbCfAx0lmDcJzJPMwABsG
+Content-Type: text/plain
+X-NotSetDelaration: True
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,323 +55,154 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: LinTao <lintao.lc@inspur.com>
+Cc: openbmc@lists.ozlabs.org, Tomer Maimon <tmaimon77@gmail.com>, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: LinTao <lintao.lc@inspur.com>
+This patchset adds clock support for the Nuvoton 
+Arbel NPCM8XX Board Management controller (BMC) SoC family.
 
-AST2600-INSPUR is an Inspur SCM V1 board which is
-equipped with AST2600
+This patchset cover letter is based from the initial support for NPCM8xx BMC to
+keep tracking the version history.
 
-Signed-off-by: LinTao <lintao.lc@inspur.com>
----
-V1 -> V2:
-    - add a missing '\'
----
-V2 -> V3:
-    - use gpio subsystem
----
-V3 -> V4:
-    - fix style problems
----
- arch/arm/dts/Makefile                    |   3 +-
- arch/arm/dts/ast2600-inspur-nf5280m7.dts | 190 +++++++++++++++++++++++
- arch/arm/mach-aspeed/ast2600/Kconfig     |   8 +
- board/aspeed/ast2600_inspur/Kconfig      |  13 ++
- board/aspeed/ast2600_inspur/Makefile     |   1 +
- board/aspeed/ast2600_inspur/inspur.c     |  18 +++
- 6 files changed, 232 insertions(+), 1 deletion(-)
- create mode 100644 arch/arm/dts/ast2600-inspur-nf5280m7.dts
- create mode 100644 board/aspeed/ast2600_inspur/Kconfig
- create mode 100644 board/aspeed/ast2600_inspur/Makefile
- create mode 100644 board/aspeed/ast2600_inspur/inspur.c
+all the other initial support patches had been applied to Linux kernel 6.0.
 
-diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
-index 6c34b83336..f62c16b4f1 100755
---- a/arch/arm/dts/Makefile
-+++ b/arch/arm/dts/Makefile
-@@ -695,7 +695,8 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	ast2600-slt.dtb \
- 	ast2600-tacoma.dtb \
- 	ast2600-intel.dtb \
--	ast2600-tacoma.dtb
-+	ast2600-tacoma.dtb \
-+	ast2600-inspur-nf5280m7.dtb
- 
- dtb-$(CONFIG_ARCH_STI) += stih410-b2260.dtb
- 
-diff --git a/arch/arm/dts/ast2600-inspur-nf5280m7.dts b/arch/arm/dts/ast2600-inspur-nf5280m7.dts
-new file mode 100644
-index 0000000000..8210797868
---- /dev/null
-+++ b/arch/arm/dts/ast2600-inspur-nf5280m7.dts
-@@ -0,0 +1,190 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+// Copyright 2023 Inspur Corp.
-+/dts-v1/;
-+
-+#include "ast2600-u-boot.dtsi"
-+
-+/ {
-+	model = "Inspur SCM V1";
-+	compatible = "inspur,nf5280m7-bmc", "aspeed,ast2600";
-+
-+	memory {
-+		device_type = "memory";
-+		reg = <0x80000000 0x40000000>;
-+	};
-+
-+	chosen {
-+		stdout-path = &uart5;
-+	};
-+
-+	aliases {
-+		mmc0 = &emmc_slot0;
-+		mmc1 = &sdhci_slot0;
-+		mmc2 = &sdhci_slot1;
-+		spi0 = &fmc;
-+		spi1 = &spi1;
-+		spi2 = &spi2;
-+		ethernet1 = &mac1;
-+	};
-+
-+	cpus {
-+		cpu@0 {
-+			clock-frequency = <1200000000>;
-+		};
-+		cpu@1 {
-+			clock-frequency = <1200000000>;
-+		};
-+	};
-+};
-+
-+&gpio0 {
-+	status = "okay";
-+};
-+
-+&uart1 {
-+	status = "okay";
-+};
-+
-+&uart2 {
-+	status = "okay";
-+};
-+
-+&uart5 {
-+	u-boot,dm-pre-reloc;
-+	status = "okay";
-+};
-+
-+&sdrammc {
-+	clock-frequency = <400000000>;
-+};
-+
-+&mdio {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_mdio2_default>;
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	ethphy0: ethernet-phy@0 {
-+		reg = <0>;
-+	};
-+
-+	ethphy1: ethernet-phy@1 {
-+		reg = <0>;
-+	};
-+
-+	ethphy2: ethernet-phy@2 {
-+		reg = <0>;
-+	};
-+
-+	ethphy3: ethernet-phy@3 {
-+		reg = <0>;
-+	};
-+};
-+
-+&mac1 {
-+	status = "okay";
-+	phy-mode = "rgmii";
-+	phy-handle = <&ethphy1>;
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rgmii2_default>;
-+};
-+
-+&fmc {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_fmcquad_default>;
-+	flash@0 {
-+		status = "okay";
-+		spi-max-frequency = <40000000>;
-+		spi-tx-bus-width = <4>;
-+		spi-rx-bus-width = <4>;
-+	};
-+	flash@1 {
-+		status = "okay";
-+		spi-max-frequency = <40000000>;
-+		spi-tx-bus-width = <4>;
-+		spi-rx-bus-width = <4>;
-+	};
-+};
-+
-+&i2c1 {
-+	status = "okay";
-+	multi-master;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_i2c2_default>;
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+	multi-master;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_i2c5_default>;
-+};
-+
-+&i2c5 {
-+	status = "okay";
-+	multi-master;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_i2c6_default>;
-+};
-+
-+&i2c6 {
-+	status = "okay";
-+	multi-master;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_i2c7_default>;
-+};
-+
-+&i2c7 {
-+	status = "okay";
-+	multi-master;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_i2c8_default>;
-+};
-+
-+&i2c8 {
-+	status = "okay";
-+	multi-master;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_i2c9_default>;
-+};
-+
-+&i2c9 {
-+	status = "okay";
-+	multi-master;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_i2c10_default>;
-+};
-+
-+&i2c12 {
-+	status = "okay";
-+	multi-master;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_i2c13_default>;
-+};
-+
-+&i2c13 {
-+	status = "okay";
-+	multi-master;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_i2c14_default>;
-+};
-+
-+&hace {
-+	u-boot,dm-pre-reloc;
-+	status = "okay";
-+};
-+
-+&acry {
-+	u-boot,dm-pre-reloc;
-+	status = "disabled";
-+};
-diff --git a/arch/arm/mach-aspeed/ast2600/Kconfig b/arch/arm/mach-aspeed/ast2600/Kconfig
-index f5852afa77..db177399b9 100644
---- a/arch/arm/mach-aspeed/ast2600/Kconfig
-+++ b/arch/arm/mach-aspeed/ast2600/Kconfig
-@@ -51,6 +51,13 @@ config TARGET_QUALCOMM_DC_SCM_V1
- 	  QUALCOMM-DC-SCM-V1 is a Qualcomm DC-SCM V1 board which is
- 	  equipped with AST2600.
- 
-+config TARGET_AST2600_INSPUR
-+	bool "AST2600-INSPUR"
-+	depends on ASPEED_AST2600
-+	help
-+	  AST2600-INSPUR is an Inspur SCM V1 board which is
-+	  equipped with AST2600.
-+
- endchoice
- 
- source "board/aspeed/evb_ast2600/Kconfig"
-@@ -59,5 +66,6 @@ source "board/aspeed/slt_ast2600/Kconfig"
- source "board/aspeed/ast2600_ibm/Kconfig"
- source "board/aspeed/ast2600_intel/Kconfig"
- source "board/qualcomm/dc-scm-v1/Kconfig"
-+source "board/aspeed/ast2600_inspur/Kconfig"
- 
- endif
-diff --git a/board/aspeed/ast2600_inspur/Kconfig b/board/aspeed/ast2600_inspur/Kconfig
-new file mode 100644
-index 0000000000..ef11a01bcc
---- /dev/null
-+++ b/board/aspeed/ast2600_inspur/Kconfig
-@@ -0,0 +1,13 @@
-+if TARGET_AST2600_INSPUR
-+
-+config SYS_BOARD
-+	default "ast2600_inspur"
-+
-+config SYS_VENDOR
-+	default "aspeed"
-+
-+config SYS_CONFIG_NAME
-+	string "board configuration name"
-+	default "ast2600_inspur"
-+
-+endif
-diff --git a/board/aspeed/ast2600_inspur/Makefile b/board/aspeed/ast2600_inspur/Makefile
-new file mode 100644
-index 0000000000..8af8692f3c
---- /dev/null
-+++ b/board/aspeed/ast2600_inspur/Makefile
-@@ -0,0 +1 @@
-+obj-y += inspur.o
-diff --git a/board/aspeed/ast2600_inspur/inspur.c b/board/aspeed/ast2600_inspur/inspur.c
-new file mode 100644
-index 0000000000..75edcd9a91
---- /dev/null
-+++ b/board/aspeed/ast2600_inspur/inspur.c
-@@ -0,0 +1,18 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+/*
-+ * Copyright 2023 Inspur Corp.
-+ */
-+
-+#include <common.h>
-+#include <asm/io.h>
-+#include <asm/gpio.h>
-+#include <dt-bindings/gpio/aspeed-gpio.h>
-+
-+int board_late_init(void)
-+{
-+	/* GPIOB[2] output low*/
-+	gpio_request(ASPEED_GPIO(B, 2), "");
-+	gpio_direction_output(ASPEED_GPIO(B, 2), GPIO_ACTIVE_LOW);
-+
-+	return 0;
-+}
+This patchset was tested on the Arbel NPCM8XX evaluation board.
+
+Addressed comments from:
+
+ - Stephen Boyd: https://www.spinics.net/lists/kernel/msg4729384.html
+
+Changes since version 15:
+ - NPCM8XX clock driver
+	- Remove unused regs parameter from npcm8xx_pll_data structure.
+	- Using index and clk_hw parameters to set the clock parent in the clock structures.
+
+Changes since version 14:
+ - NPCM8XX clock driver
+	- Remove unnecessary register definitions.
+	- Remove the internal reference clock, instead use the external DT reference clock.
+	- rearrange the driver.
+	- using .names parameter in DT to define clock (refclk).
+
+Changes since version 13:
+ - NPCM8XX clock driver
+	- Remove unnecessary definitions and add module.h define
+	- Use in clk_parent_data struct.fw_name and .name.
+	- Add module_exit function.
+	- Add const to divider clock names.
+	- Add MODULE_DESCRIPTION and MODULE_LICENSE
+
+Changes since version 12:
+ - NPCM8XX clock driver
+	- Use clk_parent_data in mux and div clock structure.
+	- Add const to mux tables.
+	- Using devm_clk_hw_register_fixed_rate function.
+	- use only .name clk_parent_data instead .name and .fw_name.
+	- Modify mask values in mux clocks. 
+
+Changes since version 11:
+ - NPCM8XX clock driver
+	- Modify Kconfig help.
+	- Modify loop variable to unsigned int.
+
+Changes since version 11:
+ - NPCM8XX clock driver
+	- Modify Kconfig help.
+	- Modify loop variable to unsigned int.
+
+Changes since version 10:
+ - NPCM8XX clock driver
+	- Fix const warning.
+
+Changes since version 9:
+ - NPCM8XX clock driver
+	- Move configuration place.
+	- Using clk_parent_data instead of parent_name
+	- using devm_ioremap instead of ioremap. deeply sorry, I know we had
+	 a long discussion on what should the driver use, from other examples 
+	 (also in other clock drivers) I see the combination of 
+	 platform_get_resource and devm_ioremap are commonly used and it answer
+	 the reset and clock needs.
+
+Changes since version 8:
+ - NPCM8XX clock driver
+	- Move configuration place.
+	- Add space before and aftre '{' '}'.
+	- Handle devm_of_clk_add_hw_provider function error.
+
+Changes since version 7:
+ - NPCM8XX clock driver
+	- The clock and reset registers using the same memory region, 
+	  due to it the clock driver should claim the ioremap directly 
+	  without checking the memory region.
+
+Changes since version 6:
+ - NPCM reset driver
+	- Modify warning message.
+ - dt-bindings: serial: 8250: Add npcm845 compatible string patch accepted, due
+   to it the patch removed from the patchset.
+
+Changes since version 5:
+ - NPCM8XX clock driver
+	- Remove refclk if devm_of_clk_add_hw_provider function failed.
+ - NPCM8XX clock source driver
+	- Remove NPCM8XX TIMER_OF_DECLARE support, using the same as NPCM7XX.
+
+Changes since version 4:
+ - NPCM8XX clock driver
+	- Use the same quote in the dt-binding file.
+
+Changes since version 3:
+ - NPCM8XX clock driver
+	- Rename NPCM8xx clock dt-binding header file.
+	- Remove unused structures.
+	- Improve Handling the clocks registration.
+ - NPCM reset driver
+	- Add ref phandle to dt-binding.
+
+Changes since version 2:
+ - Remove NPCM8xx WDT compatible patch.
+ - Remove NPCM8xx UART compatible patch.
+ - NPCM8XX clock driver
+	- Add debug new line.
+	- Add 25M fixed rate clock.
+	- Remove unused clocks and clock name from dt-binding.
+ - NPCM reset driver
+	- Revert to npcm7xx dt-binding.
+	- Skip dt binding quotes.
+	- Adding DTS backward compatibility.
+	- Remove NPCM8xx binding include file.
+	- Warp commit message.
+- NPCM8XX device tree:
+	- Remove unused clock nodes (used in the clock driver)
+	- Modify gcr and rst node names.
+
+Changes since version 1:
+ - NPCM8XX clock driver
+	- Modify dt-binding.
+	- Remove unsed definition and include.
+	- Include alphabetically.
+	- Use clock devm.
+ - NPCM reset driver
+	- Modify dt-binding.
+	- Modify syscon name.
+	- Add syscon support to NPCM7XX dts reset node.
+	- use data structure.
+ - NPCM8XX device tree:
+	- Modify evb compatible name.
+	- Add NPCM7xx compatible.
+	- Remove disable nodes from the EVB DTS.
+
+Tomer Maimon (1):
+  clk: npcm8xx: add clock controller
+
+ drivers/clk/Kconfig       |   8 +
+ drivers/clk/Makefile      |   1 +
+ drivers/clk/clk-npcm8xx.c | 566 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 575 insertions(+)
+ create mode 100644 drivers/clk/clk-npcm8xx.c
+
 -- 
-2.34.1
+2.33.0
 
