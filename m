@@ -1,127 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 96930712936
-	for <lists+openbmc@lfdr.de>; Fri, 26 May 2023 17:17:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id D867A712AA2
+	for <lists+openbmc@lfdr.de>; Fri, 26 May 2023 18:30:09 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QST6x3dhGz3fGf
-	for <lists+openbmc@lfdr.de>; Sat, 27 May 2023 01:17:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QSVl35CMhz3fCF
+	for <lists+openbmc@lfdr.de>; Sat, 27 May 2023 02:30:07 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=Vgoa22bQ;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20221208 header.b=lY4KaeFS;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=nvidia.com (client-ip=2a01:111:f400:7e8c::60f; helo=nam04-mw2-obe.outbound.protection.outlook.com; envelope-from=ropai@nvidia.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::333; helo=mail-wm1-x333.google.com; envelope-from=edtanous@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=Vgoa22bQ;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20221208 header.b=lY4KaeFS;
 	dkim-atps=neutral
-Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam04on2060f.outbound.protection.outlook.com [IPv6:2a01:111:f400:7e8c::60f])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QST6M6TwLz2xkm
-	for <openbmc@lists.ozlabs.org>; Sat, 27 May 2023 01:16:40 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=IIxt+DzXMCVX+pK6Yykzlx9EA4CXVFlqjp9K4pBFW92oJt9nTim2w2KJY64ApY0fsCN3rfbNoY0amLccwNA+tABDJLC87vJTwpVTeSv0d0ThCszXT55QgSL/PgH8s/RSBdK4hKF7mHbmjXr5ffMgHiDb2x/Em4O/+/5ZtBU7TWwd19z2Oo8fQMz0AImLYtM066l1fxCvmdPAfC89icfTRA7QbdEer6aKrFvbzZubLEgZ+9bow3u7NNB73OS1oYxMc+kLHRHd80wjnvWK0OyMgIAypChCc2sPd8QMinHxHy4gZcI2RV6aD/x1DvTB2nuwITJUfQ34FzWuyzAdkTK2ew==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GDNY74YeD4TzNh4Xithtogb0F/NTHA6duAbiIXdnBtw=;
- b=E21RbhPTSIf1rZXZhGp1YTHVGpFemQSyqE4FFzBm7l4Dgg9AHmSTJv9E2WN2a0Vk4tzw9iGeVJXNSLenWax///C61ESG1FR5QJzY1sNW8JGZ7Xv+gEAs4RJQlUr/naPHtZOiT+pUpbaDai6EbxuXoQScLQ5OWjiIQ3A3946KObPKN4fEiQeIVQgA70D7pljTY/rxSMMwU67aF1DCJnFt4raFFNQTd2uIEuzRjv2h7tEcEK2yGVshUEEhjfrbdxbj8g12T/ow4u2g9jUf9BakTOo1IGlaargT+VO8keZtUrQKRgPV45xGyFpFU8Gr21owgfL9/q64PYMNZHtf8lY+Zg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GDNY74YeD4TzNh4Xithtogb0F/NTHA6duAbiIXdnBtw=;
- b=Vgoa22bQmRTf1Py0Ot1XOzZRqR41haI34kXJNEgXiyrAOvQxXlyD9p8zVTF57o+O+EwP3cLWku83ebikeuxu/x9xEf/htkViOn26Sar35leGGytGuVvqjKoqaVcElrXNhcRGE6ErZzzZAYOxT2goHfsOsZYIDwg5sAlQ6n9o091j8+OhuikG7VW+2D5aSXGCfka5IlCc6GUFzsWTi9iIDP9IDQzrADF9L0jj455LRWwwmWvwp1VUfSjbBGZ1fABrmUMSPPOX8uZHgwcyFDwdfV96OGmWh0V1RXq7JoJPNT1TyEU8my9JulDVNEjfTns4+KlCY8qrlxjPXbDuPbpmRg==
-Received: from LV2PR12MB6014.namprd12.prod.outlook.com (2603:10b6:408:170::18)
- by CH2PR12MB4069.namprd12.prod.outlook.com (2603:10b6:610:ac::18) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6433.18; Fri, 26 May
- 2023 15:16:18 +0000
-Received: from LV2PR12MB6014.namprd12.prod.outlook.com
- ([fe80::507:bce:e64c:f3fe]) by LV2PR12MB6014.namprd12.prod.outlook.com
- ([fe80::507:bce:e64c:f3fe%7]) with mapi id 15.20.6433.018; Fri, 26 May 2023
- 15:16:18 +0000
-From: Rohit Pai <ropai@nvidia.com>
-To: Ed Tanous <edtanous@google.com>
-Subject: RE: Prioritizing URIs with tight performance requirement in openBmc
- with bmcweb
-Thread-Topic: Prioritizing URIs with tight performance requirement in openBmc
- with bmcweb
-Thread-Index: AdmOIj9HMMHUr5E5SWm5E5BqGmJtZAAOkWAAAF37VNA=
-Date: Fri, 26 May 2023 15:16:18 +0000
-Message-ID:  <LV2PR12MB6014D3A0F42E3124DA926C3FCD479@LV2PR12MB6014.namprd12.prod.outlook.com>
-References:  <LV2PR12MB601419E4F59555BBCB4EE70FCD419@LV2PR12MB6014.namprd12.prod.outlook.com>
- <CAH2-KxAdhmj98prJ2QCuN4p1ZxRZs3ZFdchxdZ-_A9c-ACpMOQ@mail.gmail.com>
-In-Reply-To:  <CAH2-KxAdhmj98prJ2QCuN4p1ZxRZs3ZFdchxdZ-_A9c-ACpMOQ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: LV2PR12MB6014:EE_|CH2PR12MB4069:EE_
-x-ms-office365-filtering-correlation-id: 422c35ab-d567-42f0-e883-08db5dfc2798
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:  MKphl6k18QDYijLp8i+GA7aTjWLPXLRdmHqA5/uztFrKAjVyrgSspfnOi88S2Hz3AVc/dWvOJps7or9vski+OgwMNCa7Y41d5gZkXnQ17abQT/Wj3XY/ybnqqvSJ5YGhH78aXbxct7X+fSfMw21pvtzlU7gJNTqg2wX3PkDc+uoQKbJA5vGRvC4wBPEaAw3Tuk+GZx6MEE0AXQb2IjjejsDTnEl77SAd9qAc7oMS/tv1Cub/iLk7EYRKY8OU5s6/DDWkEA8k7bKsrHmfLiWTNvo50o3PSWa0qA+NRPnMvigWTvekwRpWxIbABPy5B12hjqY36js7F55ibQ/cKJ5rG4lg1ZHep5kVsG0t/OY25lzN6Bp8tvY2MkmGbyyzdTrKfqp5y0RgaYX/K+26I8nUaakAOFffVcc8UBZEtEFU70IABiUQwbXTCFHef/Mjz1wF3KbKORz+0O1u+15/7/MjGNDFgB7IJwwXe+muRH7Up6TXyYPQbUA7WXVvoJipj0NzjT4KwVDD46jxMl4XSbk9kCktQlj9BLXoLxXPFdW5RjlEdruF/Me/1hdGs7PbpfqFCCwb/8nFi1Ff255LlIVR7bd6jTZ6jaMRUgDW6RcGQJQbXJlwwntS+vZMB9lPJPbk
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB6014.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(376002)(39860400002)(366004)(136003)(346002)(396003)(451199021)(122000001)(316002)(71200400001)(52536014)(26005)(53546011)(9686003)(76116006)(6506007)(66476007)(66446008)(64756008)(66946007)(66556008)(6916009)(4326008)(38100700002)(5660300002)(55016003)(33656002)(41300700001)(7696005)(8676002)(8936002)(83380400001)(86362001)(478600001)(186003)(30864003)(2906002)(38070700005);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?utf-8?B?WE9Na3RYUmZXMmxuaXFXZ2VPSGFldmJJTmhnZ2VpcFIrcm95L2tRTFNQcUt6?=
- =?utf-8?B?Z1NTM1RDcEo4TXpTS3RxejZxYzZtUWRETDQvbFd2YzM5SUJETzBUQ0xQSHEx?=
- =?utf-8?B?S2VGZURBOVowaHExU056dFJGTDNpNTkxb3oyK1dsV2JjWExHa21Damh1blF6?=
- =?utf-8?B?QzBsUEVQbStXbW05NFFHQ2ovVVplSUh3QVpzcEZrMVVQZUp5S2dDRU9pLy9q?=
- =?utf-8?B?RzY0cVNXV3hSN1FlbTA1dU9VUzFnUkdMMG1TVnVSd2E0WHBZempLSHRZVW9l?=
- =?utf-8?B?SXBPVGxtWE1sOWVhTGVtdzBlT3l1dGJ2ckgxK1BXbTVzNksza3J6VVN3M0ds?=
- =?utf-8?B?L1dFZXhaZGZ5UXRER0JHaDVIMitYR0xQMmNOV2I5NHc4WU9aQW1oOE1YdU9i?=
- =?utf-8?B?bllSNnJ3Z3FORjFORC9qVWZoUURZSVM1bkR1UHozWWR4MWI0RXJsVnpVWjRR?=
- =?utf-8?B?K3BMRWIzRXZzR2g3OXBFUldxUGpGczVIQ0tmUXZ6QlRDaDZHZEw3ais5aXBF?=
- =?utf-8?B?WE9KbDFQM2dueXlKT2NTdThKOWVISVJ1MEs4NXR5OGxEM04rMlpocVdWOTFH?=
- =?utf-8?B?Y2IwRi9SdGhRYXpIVkMzUlhpMXIrUzlhSFZ3SUVxU2ZwMG5ROFFGMTc2Nzlx?=
- =?utf-8?B?Tmd0V3BGNVdybmw2QnR5RDFRSGxFTWdldU5pUU1JSDVLb244UURmekdIUmEv?=
- =?utf-8?B?U2JNQ05ib1doZmNuQ1UvaGpMZTJIdHVMakRjVTl3WjBCYmt2d3JIRTFTMkJo?=
- =?utf-8?B?TW1OQ0VPeCtpcWtrbGowU0NNMTNsbjRQY01FYWszdjZHQlNmMjBYbHpuMkVY?=
- =?utf-8?B?aTN5amNIT0wycnphS2RsWkZqcXpmUC9EL0J5OWxTamtzbzlsaUNDTkVVQ0NK?=
- =?utf-8?B?YjU4MEdvVEx6b0V5M0VtUzFYSzRJaHp2bDZ6WVZSUmpNOUxJeXBYZEsvWFlY?=
- =?utf-8?B?TFU3SVViZ2ZBRWtIY0MxTW4rUUFBUU1Oc0s1QXB1VUlncGlmRWFOa0pKdHdM?=
- =?utf-8?B?VWg4ME5PUFBob0YzTzJUU1J3Qm5MSDI5VzBOMmZqc1RYUjRmTGdsaHVQNVVp?=
- =?utf-8?B?NnZiUm1vWlJRc1VydTc4bm5FQUcxTW1MTDZoQWdhQm5DWUJxYzVwVzNZMjNt?=
- =?utf-8?B?KzN3MUQ3VS9oQ2ZON3FDTHVsaTQrM2QwS0dZNDVIU3dhNDZWWTg2aXpacTB2?=
- =?utf-8?B?emNGRnNJWXZNNEJ2QktIOFR1K0F4VEVXTFRQTjkyRENoYmorVGdYT05RbDFN?=
- =?utf-8?B?eXZWSXhEeE14aVhpTnM4TFB1QzB6YnZ3TnhRRHM0UURXSnFDSjgxMmk0Q3Z5?=
- =?utf-8?B?M3BYSzBGU3RjUm1KYjdCWTZwcVI2WGtLT0wzOSsxS29qMWordlJ4RjZpVEhq?=
- =?utf-8?B?cGdGZ1hHNk8xbzIyZjV4aStTV0p5T3Z6dTJLN200YzhxM0MwUXNIQ2hpNXBn?=
- =?utf-8?B?K1VrRk5IQkNXbDRheUVnSDBFdVhmRjhjd0ZRS05wc0Z2WnY2bDhjU1VNM2dh?=
- =?utf-8?B?MUhYMXo5K1g4YWFyWHlJTmpVWGVvZ2xkQk0xb0hLR1JMUVZGWFpsYklsaW1U?=
- =?utf-8?B?NDU4WmE0dEplcUpXSzcyYUs5bGJGWVFBemJ6ZnpLejN2YnFQNDZUSlZiLzhX?=
- =?utf-8?B?VDlLeHdYcEp1cDE3VEVscS9LM2crZjZjS2ZONnJVc2hINGdLU0FsVGZHeFY2?=
- =?utf-8?B?NlFzTzBxb2pTY052dEFhNFhoQ2RjWGtTU3V3THlsZW5aMGE1MkpvTGFvaDRH?=
- =?utf-8?B?MjU3c25tbE9rRkZmQlpnVTBDOWczRnFydWs1OC9uKzFuUDBYNldnSlJuWlk0?=
- =?utf-8?B?cEZIRXVxTUN5TDdBWlNVMUUwL3lzNzJRdDlBd0VPSmdZQ2d0Z2FPcmsxd1c3?=
- =?utf-8?B?UFRMaVV6Z3hPUTdCeFQ0elF4NERYSTNjdGtKNkk5eVJsZnY0UWxRNFNLSTVm?=
- =?utf-8?B?QlhDV2JoNjQ5ODJ4N05zVFZ3dTF0NmJIOHBzeTBIRVhOS1k4TTExUXhqbTRX?=
- =?utf-8?B?VEFqaDBzTFptaHJCYm85MnVxZmlhR3cxaHlJMXh2VXNhOXBmY0ZGQTM5QWtt?=
- =?utf-8?B?UTJTNGwxSGljMWdxREJNOEVPVmJnekc5Ym53cXBSS3pyck9OZy8rOVY2Lzgz?=
- =?utf-8?Q?p0bQ=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QSVkS72Dhz3c71
+	for <openbmc@lists.ozlabs.org>; Sat, 27 May 2023 02:29:35 +1000 (AEST)
+Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f6d7abe9a4so7116345e9.2
+        for <openbmc@lists.ozlabs.org>; Fri, 26 May 2023 09:29:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20221208; t=1685118569; x=1687710569;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nYcIfqXmE8C9HjYRYT6MZAFCSSUw6bA9T/ueWR3M4u0=;
+        b=lY4KaeFSskzM9j7/tuEBUKFJM0/nV20K3KyyqgGkl+TgHHsQAls6eXNOooUMWsGQ/o
+         JGifGnCQS2xJ56CN36JiJM0Yln3O++0ILFKiZl8JGhWjV2pLSWAE6tMgEqXtGFwzffPf
+         38ot09Mygu2iMpbgmi5TpofB9q2H6F2ZYlrmirIIsaqYb42aC3BrNUJk3nuayAgUPFdQ
+         ofrTXOHcDAuB0xbExwY4WrE2XFFK/g8cK9P0NuQlEplgVKESAX4KDVc9MmPJpKLKBLMF
+         9bRci9EdFx8U8QKrwrf7izWRaBhlh9T2okYECFR9lueQAavIBhsQqHZjgBZHzaraGbcA
+         1Gmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685118569; x=1687710569;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nYcIfqXmE8C9HjYRYT6MZAFCSSUw6bA9T/ueWR3M4u0=;
+        b=jBaDWmDoJtgq11LLRW62U1lbEGhFLeryAmsJjbUu9F1IRlb4dRDs68GEUfJ7JyaRsf
+         NNxsi/g1KV6bbOFFdeBKlTnQRNqQ53jaLT5t8A+130se+CuBRwYHm5O+kQbHH5YAH4aH
+         1v5XD4y9XYwBrES6KNbXUg1LV3Hqkz+gkY31TZcCI7ZiJqAx0mjtDcLcZdlV3/NVd0ng
+         5G9DxGVz61cemZr/fmN3a4N3qpNpKyN8CIM3aNp59kClC9/lAoKgNgrLM45deaGlNvnP
+         G6nsV+NQS9bswFd+ax0w0jSscSkiSWIMZYpj6u26EDUt5J4wIMZOXV0RcbodGdwNHyBu
+         qkdQ==
+X-Gm-Message-State: AC+VfDwJACIhP7CWzdkwt9ZncwOG3VPVKgcuYsD+fge+JdnlSMr7dq+p
+	ITVL7x02fij72TBTr0jPvye+0YS2E77QyQ3U/xIv1tTX9BocSmIkw+CEz9yL
+X-Google-Smtp-Source: ACHHUZ7ZYLdXlyRYcLdP/fi06ragZI9cyKA63fZaTVJjC0nV5T8mXp+IhSzCzu9ystakOKngOqC0WnVa4Hwuqz2M+gU=
+X-Received: by 2002:adf:e4cf:0:b0:306:475d:92ff with SMTP id
+ v15-20020adfe4cf000000b00306475d92ffmr1475570wrm.3.1685118569033; Fri, 26 May
+ 2023 09:29:29 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB6014.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 422c35ab-d567-42f0-e883-08db5dfc2798
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 May 2023 15:16:18.0469
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: KcJGo4JTB5GywL0FY29yVi+UAtbrnw2O7Grfqj99pGhFbn/aByhXtXF+uHdDf4lzPRDOBk6Esck2iSWD1ynCRA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4069
+References: <LV2PR12MB601419E4F59555BBCB4EE70FCD419@LV2PR12MB6014.namprd12.prod.outlook.com>
+ <CAH2-KxAdhmj98prJ2QCuN4p1ZxRZs3ZFdchxdZ-_A9c-ACpMOQ@mail.gmail.com> <LV2PR12MB6014D3A0F42E3124DA926C3FCD479@LV2PR12MB6014.namprd12.prod.outlook.com>
+In-Reply-To: <LV2PR12MB6014D3A0F42E3124DA926C3FCD479@LV2PR12MB6014.namprd12.prod.outlook.com>
+From: Ed Tanous <edtanous@google.com>
+Date: Fri, 26 May 2023 09:29:17 -0700
+Message-ID: <CAH2-KxAfBX38cAKNcA37_yLbT3VY4GcG4ip=-6huueXyj82jsg@mail.gmail.com>
+Subject: Re: Prioritizing URIs with tight performance requirement in openBmc
+ with bmcweb
+To: Rohit Pai <ropai@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -137,217 +81,365 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGVsbG8gRWQsIA0KDQpUaGFua3MgZm9yIHlvdXIgcmVzcG9uc2UgYW5kIGZlZWRiYWNrLiBQbGVh
-c2UgZmluZCBteSBhbnN3ZXJzIHRvIHlvdXIgcXVlc3Rpb25zIGJlbG93LiANCg0KPiA+IFdoYXQg
-b3RoZXIgY29uc3RyYWludHMgYXJlIGhlcmU/ICBXZSdyZSB0YWxraW5nIGFib3V0IGEgVENQIHBy
-b3RvY29sLCBydW5uaW5nIG9uIGEgbmV0d29yaywgb24gYSBtdWx0aS1wcm9jZXNzIENQVS4gIEFy
-ZSB0aGVzZSBoYXJkIHJlYWx0aW1lIHJlcXVpcmVtZW50cz8gIEl0J3MgdW5saWtlbHkgeW91J3Jl
-IGdvaW5nIHRvIGdldCBoYXJkIHJlYWx0aW1lIGd1YXJhbnRlZXMgZnJvbSBSZWRmaXNoLg0KTm8g
-dGhlc2UgYXJlIG5vdCBoYXJkIHJlYWwgdGltZSByZXF1aXJlbWVudHMuIFRoZSBsYXRlbmN5IGNh
-biBnbyBtb3JlIHRoYXQgNTAwbXMgaW4gc29tZSBpbnN0YW5jZXMsIGJ1dCB3ZSB3YW50IHRvIHRh
-cmdldCB0aGUgb3V0bGllcnMgKHNhbXBsZXMgd2hpY2ggdGFrZSBtb3JlIHRoYW4gNTAwbXMgb2Yg
-VEFUKSB0byBiZSBsZXNzIHRoYW4gb25lIHBlcmNlbnQgb2YgdGhlIHRvdGFsIHNhbXBsZXMuIA0K
-V2UgYWxzbyB3YW50IHRvIGxpbWl0IHRoZSBtYXggbGF0ZW5jeSBvZiB0aGUgcG93ZXIsIHRoZXJt
-YWwgbWV0cmljIFVSSSB1bmRlciAxcy4gVGhlIGZhYnJpYyBibWMgcGVyaW9kaWNhbGx5IHBvbGxz
-IHRoaXMgVVJJcyBmcm9tIG91ciBwbGF0Zm9ybSBhbmQgaW1wbGVtZW50cyB0aGUgUElEIGxvb3Ag
-Y29udHJvbCBiYXNlZCBvbiB0aGUgcmVzcG9uc2Ugb2YgdGhpcyBVUkkgc28gaXRzIGNyaXRpY2Fs
-IGZvciB1cyB0byBsaW1pdCB0aGUgbWF4IGxhdGVuY3kgb2YgdGhpcyBVUkkuIA0KDQo+PiAgICAg
-ICAgIEEgICAgICAgICAgICBCICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQyAgICAg
-ICAgICAgICBEDQo+PiBUQ1DilIDilrpUTFPilIDilIDilrpIVFRQIENvbm5lY3Rpb27ilIDilrpE
-QnVz4pSA4pa6RGFlbW9uDQo+PiBXaGljaCBsb2NhdGlvbiBhcmUgeW91IHNlZWluZyBxdWV1aW5n
-IHByb2JsZW1zPyAgDQpUaGUgdGltZSBzcGVudCBpbiByb3V0ZSBoYW5kbGVyIGFmdGVyIGdldHRp
-bmcgdGhlIHJlc3BvbnNlIGZyb20gdGhlIGJhY2tlbmQgZGFlbW9uIGlzIGFmZmVjdGluZyB0aGUg
-bmV4dCBVUkkgd2hpY2ggaXMgd2FpdGluZyBpbiB0aGUgcXVldWUuIA0KRnJvbSBvdXIgdGVzdHMg
-d2Ugc2VlIHRoYXQgdGhlIGJhY2tlbmQgZGFlbW9uIHJlc3BvbmRzIG9uIGFuIGF2ZXJhZ2Ugd2l0
-aGluIDIwMG1zLiBTaW5jZSB0aGlzIGlzIGFzeW5jIHRoaXMgaGFzIG5vIGltcGFjdC4gDQpUaGUg
-cmVzcG9uc2UgcmVjZWl2ZWQgZnJvbSB0aGUgZGJ1cyBiYWNrZW5kIGhhcyBhcm91bmQgMjUwMCBw
-cm9wZXJ0aWVzIHRvIHByb2Nlc3MuIFByb2Nlc3Npbmcgb2YgdGhpcyBpbiB0aGUgcm91dGUgaGFu
-ZGxlciBhbmQgcHJlcGFyaW5nIHRoZSByZXNwb25zZSBpdCdzIHRha2luZyBhdmcgdGltZSBvZiAy
-MDBtcyAobWF4IHRpbWUgb2YgNDAwIG1zIGFuZCBzZXZlcmFsIGluc3RhbmNlcyBnb2luZyBjbG9z
-ZSB0byAzMDBtcykuIFRoZSBBdmcgQ1BVIGNvbnN1bXB0aW9uIGR1cmluZyB0aGUgdGVzdCBpcyA1
-MCUgYW5kIGF2ZyBibWN3ZWIgY29uc3VtcHRpb24gaXMgYmV0d2VlbiAxMiB0byAxNSUuIA0KDQog
-DQo+PiBXaGF0IGlzIHRoZSBiYWxscGFyayBmb3IgaG93IGJpZyAiaHVnZSBhbW91bnQiIG9mIGRh
-dGEgd291bGQgYmU/ICBXaGF0IHByb2Nlc3NpbmcgaXMgYmVpbmcgZG9uZT8gICANClRoZSBKU09O
-IGluIHRoZSBIVFRQIHJlc3BvbnNlIGlzIGFyb3VuZCA0MDBLQi4gDQpUaGUgcm91dGUgaGFuZGxl
-ciBsb2dpYyBtYWtlcyB0aGUgR2V0TWFuYWdlZE9iamVjdHMgY2FsbCB0byB0aGUgYmFja2VuZCBz
-ZXJ2aWNlIGFuZCBwcm9jZXNzZXMgdGhlIHJlc3BvbnNlIHdoaWNoIGhhcyBhcm91bmQgMjUwMCBw
-cm9wZXJ0aWVzIHRvIGxvb3AgdGhyb3VnaC4gDQpUaGVyZSBpcyBubyBzcGVjaWZpYyBidXNpbmVz
-cyBsb2dpYyBoZXJlIHdoaWNoIGlzIHRpbWUgY29uc3VtaW5nIGJ1dCBpdCdzIHRoZSBudW1iZXIg
-b2YgcHJvcGVydGllcyB3aGljaCBzZWVtIHRvIGhhdmUgc2lnbmlmaWNhbnQgaW1wYWN0LiANCg0K
-Pj4gT25lIHRoaW5nIEkndmUgY29uc2lkZXJlZCBiZWZvcmUgaXMgc3dpdGNoaW5nIGJtY3dlYiBv
-dmVyIHRvIGJvb3N0Ojpqc29uLCB3aGljaCBjYW4gZG8gaW5jcmVtZW50YWwgY2h1bmtlZCBwYXJz
-aW5nLCB1bmxpa2UgbmxvaG1hbm4sIHdoaWNoIHdvdWxkIGxldCB1cyB1bmJsb2NrIHRoZSBmbG93
-cyBhcyBlYWNoIHByb2Nlc3NlcyB0aGUgZGF0YS4NCkRvIHlvdSBoYXZlIGFueSBwb2ludGVycyBm
-b3IgdGhpcyA/IHdoZXJlIGV4YWN0bHkgd2Ugd291bGQgYmUgdW5ibG9ja2luZyB0aGUgZmxvdyBp
-biByb3V0ZSBoYW5kbGVyIGFmdGVyIHByb2Nlc3NpbmcgY2h1bmsgb2YgcHJvcGVydGllcyBmcm9t
-IHRoZSBiYWNrZW5kIE9SIHNvbWV3aGVyZSBlbHNlPyANCg0KPj4gQ2FuIHlvdSBzaGFyZSB5b3Vy
-IHRlc3Q/ICBJcyB5b3VyIHRlc3QgdXNpbmcgbXVsdGlwbGUgY29ubmVjdGlvbnMgdG8gZW5zdXJl
-IHRoYXQgdGhlIHRoZXJtYWwgbWV0cmljIGlzIGJlaW5nIHB1bGxlZCBmcm9tIGEgZGlmZmVyZW50
-IGNvbm5lY3Rpb24gdGhhbiB0aGUgYWdncmVnYXRpb24gVVJJPw0KSW4gdGhlIHRlc3Qgd2UgaGF2
-ZSB0d28gY2xpZW50cyBjb25uZWN0ZWQgdG8gb3VyIHBsYXRmb3JtLiANCk9uZSBjbGllbnQgZG9l
-cyBwb3dlciwgdGhlcm1hbCBtZXRyaWMgVVJJIHBvbGxpbmcgZm9yIGV2ZXJ5IDUwMG1zLiBXZSBo
-YXZlIHNpbmdsZSBhZ2dyZWdhdGUgVVJJIGZvciB0aGlzIHdoaWNoIGNvbWJpbmUgYWxsIHBvd2Vy
-LCB0aGVybWFsIHNlbnNvcnMuIFdlIGhhdmUgY2xvc2UgdG8gMTAwIHNlbnNvcnMuIFRoaXMgaXMg
-dGhlIFVSSSB3aGVyZSB3ZSBoYXZlIHN0cmljdCBwZXJmb3JtYW5jZSByZXF1aXJlbWVudC4gDQpP
-dGhlciBjbGllbnQgcGVyaW9kaWNhbGx5IHBvbGxzIHN0YXRzIGFuZCBjb3VudGVycyBhZ2dyZWdh
-dGUgVVJJIGZvciBldmVyeSA1IHNlY29uZHMuIFRoaXMgaXMgdGhlIFVSSSB3aGljaCBoYXMgYXJv
-dW5kIDQwMEtCIG9mIEpTT04gcmVzcG9uc2UgYW5kIGhhcyAyNTAwIGRidXMgcHJvcGVydGllcyB0
-byBwcm9jZXNzLiBXZSBhcmUgbm90IHZlcnkgcGFydGljdWxhciBhYm91dCB0aGUgbGF0ZW5jeSBv
-ZiB0aGUNCnN0YXRzIGFuZCBjb3VudGVycyBVUkkuIEluIHRoZSB0ZXN0IHJlc3VsdCB3ZSBzZWUg
-dGhhdCBwb3dlciwgdGhlcm1hbCBtZXRyaWMgVVJJIGhhcyBtYXggbGF0ZW5jeSB0aW1lIG9mIDEu
-MiBzZWNvbmRzIChtaW4gaXMgMm1zIGFuZCBhdmcgaXMgOW1zKSBhbmQgYXJvdW5kIDMuNSUgb3V0
-bGllcnMgKHNhbXBsZXMgdG9vayBtb3JlIHRoYW4gNTAwbXMpLiBXZSBjYW4gc2VlIHRoYXQgd2hl
-bmV2ZXIgYm1jd2ViIGNvZGUgaXMgYnVzeSBwcmVwYXJpbmcgdGhlIHJlc3BvbnNlIGZvciB0aGUg
-c3RhdHMgYW5kIGNvdW50ZXIgVVJJIGFuZCB0aGVyZSBpcyByZXF1ZXN0IGZvciB0aGVybWFsIG1l
-dHJpYyBVUkkgdGhlbiBsYXRlbmN5IG9mIHRoZSB0aGVybWFsIG1ldHJpYyBVUklzIGlzIGFmZmVj
-dGVkLiANCklmIHdlIGxpbWl0IHRoZSBudW1iZXIgb2YgcHJvcGVydGllcyBpbiB0aGUgc3RhdHMg
-YW5kIGNvdW50ZXJzIFVSSSwgdGhlbiB3ZSBjYW4gbWVldCB0aGUgcmVxdWlyZW1lbnQsIGJ1dCB3
-ZSBuZWVkIHRvIGNyZWF0ZSBsb3Qgb2YgYWdncmVnYXRlIFVSSXMuIEl0IHdvdWxkIG5vdCBiZSBj
-b252ZW5pZW50IGZvciB0aGUgY3VzdG9tZXJzIHRvIHVzZSBtYW55IGFnZ3JlZ2F0ZSBVUklzIGFu
-ZCB0aGVuIGNvbWJpbmUgdGhlIHJlc3BvbnNlLiAgSXMgdGhlcmUgd2F5IHRvIHByb2Nlc3MgY2h1
-bmsgb2YgcHJvcGVydGllcyBpbiB0aGUgcm91dGUgaGFuZGxlciBhbmQgdm9sdW50YXJpbHkgcmVs
-ZWFzZSB0aGUgY29udGV4dCBmb3IgYm1jd2ViIHRvIHByb2Nlc3MgdGhlIG5leHQgVVJJcyBpbiB0
-aGUgcXVldWUgPyBhbnkgb3RoZXIgdHJpY2sgd2hpY2ggY2FuIHdvcmsgaGVyZSA/IA0KDQoNCj4g
-SGVyZSB0aGUgaWRlYSBpcyB0byBkZXZlbG9wIGEgbmV3IGFwcGxpY2F0aW9uIHNlcnZlciB0byBz
-ZXJ2ZSB0aGUgVVJJcyB3aGljaCBoYXZlIHN0cm9uZyBsYXRlbmN5IHJlcXVpcmVtZW50cyBhbmQg
-cm91dGUgdGhlIHJlc3Qgb2YgdGhlIFVSSXMgdG8gYm1jd2ViLg0KPj4gVGhpcyBpcyB0aGUgcGFy
-dCBJIGRvbid0IHVuZGVyc3RhbmQ7ICBJZiB0aGUgZm9yd2FyZGluZyBjYWxscyBpbiB0aGlzIG5l
-dyBzZXJ2ZXIgYXJlIGJsb2NraW5nIHRvIGJtY3dlYiwgd2hhdCdzIHRoZSBwb2ludCBvZiBhZGRp
-bmcgaXQ/DQpUaGUgYmFja2VuZCBmb3IgdGhlIHRoZXJtYWwgbWV0cmljcyBhbmQgc3RhdHMvY291
-bnRlcnMgbWV0cmljcyBpcyBkaWZmZXJlbnQgc28gd2Ugd291bGQgbm90IGJlIGJsb2NrZWQgb24g
-dGhlIHNhbWUgc2VydmljZS4gDQpXaXRoIGEgcmV2ZXJzZSBwcm94eSBvdXIgaWRlYSBpcyB0byBm
-b3J3YXJkIHRoZXJtYWwgbWV0cmljcyB0byBhbm90aGVyIGJhY2tlbmQgYXBwbGljYXRpb24gc2Vy
-dmVyIChuZXcgYm1jd2ViIHNlcnZlciBvciBhIHNpbWlsYXIgbGlnaHR3ZWlnaHQgc2VydmVyIGlu
-c3RhbmNlKSBhbmQgYWxsIG90aGVyIFVSSXMgdG8gdGhlIGV4aXN0aW5nIGJtY3dlYi4gDQoNCkkg
-d2lsbCBzaGFyZSBhbnkgZnVydGhlciByZXN1bHRzIGZyb20gb3VyIGludGVybmFsIHRlc3RzIGFz
-IHdlIHRyeW91dCBkaWZmZXJlbnQgdGhpbmdzLiANCg0KVGhhbmtzIA0KUm9oaXQgUEFJIA0KDQoN
-Ci0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBFZCBUYW5vdXMgPGVkdGFub3VzQGdv
-b2dsZS5jb20+IA0KU2VudDogV2VkbmVzZGF5LCBNYXkgMjQsIDIwMjMgOTo1NyBQTQ0KVG86IFJv
-aGl0IFBhaSA8cm9wYWlAbnZpZGlhLmNvbT4NCkNjOiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcN
-ClN1YmplY3Q6IFJlOiBQcmlvcml0aXppbmcgVVJJcyB3aXRoIHRpZ2h0IHBlcmZvcm1hbmNlIHJl
-cXVpcmVtZW50IGluIG9wZW5CbWMgd2l0aCBibWN3ZWINCg0KRXh0ZXJuYWwgZW1haWw6IFVzZSBj
-YXV0aW9uIG9wZW5pbmcgbGlua3Mgb3IgYXR0YWNobWVudHMNCg0KDQpPbiBXZWQsIE1heSAyNCwg
-MjAyMyBhdCAyOjM24oCvQU0gUm9oaXQgUGFpIDxyb3BhaUBudmlkaWEuY29tPiB3cm90ZToNCj4N
-Cj4gSGVsbG8gQWxsLA0KPg0KPg0KPg0KPiBXZSBoYXZlIGEgcmVxdWlyZW1lbnQgaW4gb3VyIHBs
-YXRmb3JtIHRvIHNlcnZlIGEgZmV3IHNwZWNpZmljIFVSSSB3aXRoIGEgdGlnaHQgcGVyZm9ybWFu
-Y2UgcmVxdWlyZW1lbnQgb24gdGhlIHR1cm5hcm91bmQgdGltZSAobGF0ZW5jeSkuDQo+DQo+IE9u
-ZSBzdWNoIGV4YW1wbGUgaXMgdGhlIHRlbGVtZXRyeSBzZW5zb3IgbWV0cmljIFVSSSB3aGljaCBo
-YXMgcG93ZXIsIHRoZXJtYWwgZGF0YSBjYW4gaGF2ZSBhIG1heCB0dXJuYXJvdW5kIHRpbWUgb2Yg
-NTAwbXMuDQoNCldoYXQgb3RoZXIgY29uc3RyYWludHMgYXJlIGhlcmU/ICBXZSdyZSB0YWxraW5n
-IGFib3V0IGEgVENQIHByb3RvY29sLCBydW5uaW5nIG9uIGEgbmV0d29yaywgb24gYSBtdWx0aS1w
-cm9jZXNzIENQVS4gIEFyZSB0aGVzZSBoYXJkIHJlYWx0aW1lIHJlcXVpcmVtZW50cz8gIEl0J3Mg
-dW5saWtlbHkgeW91J3JlIGdvaW5nIHRvIGdldCBoYXJkIHJlYWx0aW1lIGd1YXJhbnRlZXMgZnJv
-bSBSZWRmaXNoLg0KDQo+DQo+DQo+DQo+IFRoZSBjdXJyZW50IGJtY3dlYiBkZXNpZ24gdXNlcyBv
-bmx5IGEgc2luZ2xlIHRocmVhZCB0byBzZXJ2ZSBhbGwgVVJJIHJlcXVlc3RzL3Jlc3BvbnNlcy4N
-Cj4NCj4gSWYgYm1jd2ViIGlzIHByb2Nlc3NpbmcgYSBodWdlIGFtb3VudCBvZiBkYXRhICh3aGlj
-aCBpcyBjb21tb24gZm9yIGFnZ3JlZ2F0aW9uIFVSSXMpIHRoZW4gb3RoZXIgcmVxdWVzdHMgd291
-bGQgZ2V0IGJsb2NrZWQgYW5kIHRoZWlyIGxhdGVuY3kgdGltZSB3b3VsZCBnZXQgaW1wYWN0ZWQu
-DQoNClRoZSBibWN3ZWIgcXVldWluZyBmbG93IGxvb2tzIHNvbWV0aGluZyBsaWtlOg0KDQogICAg
-ICAgIEEgICAgICAgICAgICBCICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQyAgICAg
-ICAgICAgICBEDQpUQ1DilIDilrpUTFPilIDilIDilrpIVFRQIENvbm5lY3Rpb27ilIDilrpEQnVz
-4pSA4pa6RGFlbW9uDQoNCldoaWNoIGxvY2F0aW9uIGFyZSB5b3Ugc2VlaW5nIHF1ZXVpbmcgcHJv
-YmxlbXM/ICBLZWVwIGluIG1pbmQsIEhUVFANCjEuMSBjYW4gb25seSBwcm9jZXNzIGEgc2luZ2xl
-IHJlcXVlc3QvcmVzcG9uc2UgYXQgYSB0aW1lIHBlciBjb25uZWN0aW9uLCBzbyBpZiB5b3VyIHN5
-c3RlbSBpcyB0cnlpbmcgdG8gcHJvY2VzcyB0aGluZ3MgZnJvbSBhIHNpbmdsZSBjb25uZWN0aW9u
-IGF0IEEsIHlvdSdyZSByaWdodCwgbG9uZyByZXF1ZXN0cyB3aWxsIGJsb2NrIHNob3J0IG9uZXMu
-DQoNCj4NCj4gSGVyZSBJIGFtIHJlZmVycmluZyB0byB0aGUgdGltZSBibWN3ZWIgdGFrZXMgdG8g
-cHJlcGFyZSB0aGUgSlNPTiByZXNwb25zZSBhZnRlciBpdCBoYXMgZ290IHRoZSBkYXRhIGZyb20g
-dGhlIGJhY2tlbmQgc2VydmljZS4NCg0KV2hhdCBpcyB0aGUgYmFsbHBhcmsgZm9yIGhvdyBiaWcg
-Imh1Z2UgYW1vdW50IiBvZiBkYXRhIHdvdWxkIGJlPyAgV2hhdA0KcHJvY2Vzc2luZyBpcyBhY3R1
-YWxseSBiZWluZyBkb25lPyAgIFRoaXMgd291bGQgYmUgdGhlIGZpcnN0IHRpbWUgdGhhdA0KanNv
-biBwYXJzaW5nIGl0c2VsZiBoYXMgYWN0dWFsbHkgc2hvd24gdXAgb24gYSBwZXJmb3JtYW5jZSBw
-cm9maWxlLCBidXQgd2l0aCBleHBhbmQgKyBhZ2dyZWdhdGlvbiwgeW91J3JlIHJpZ2h0LCB0aGVy
-ZSdzIHBvdGVudGlhbCBmb3IgdGhhdC4NCg0KT25lIHRoaW5nIEkndmUgY29uc2lkZXJlZCBiZWZv
-cmUgaXMgc3dpdGNoaW5nIGJtY3dlYiBvdmVyIHRvIGJvb3N0Ojpqc29uLCB3aGljaCBjYW4gZG8g
-aW5jcmVtZW50YWwgY2h1bmtlZCBwYXJzaW5nLCB1bmxpa2UgbmxvaG1hbm4sIHdoaWNoIHdvdWxk
-IGxldCB1cyB1bmJsb2NrIHRoZSBmbG93cyBhcyBlYWNoIHByb2Nlc3NlcyB0aGUgZGF0YS4NCg0K
-Pg0KPiBJbiBvdXIgcGxhdGZvcm0sIHdlIHNlZSB0aGF0IHBvd2VyIHRoZXJtYWwgbWV0cmljIFVS
-SSBjYW4gdGFrZSBtb3JlIHRoYW4gNTAwbXMgd2hlbiBpdOKAmXMgcmVxdWVzdGVkIGluIHBhcmFs
-bGVsIHRvIG90aGVyIGFnZ3JlZ2F0aW9uIFVSSSB3aGljaCBoYXZlIGh1Z2UgcmVzcG9uc2UgZGF0
-YS4NCg0KQ2FuIHlvdSBzaGFyZSB5b3VyIHRlc3Q/ICBJcyB5b3VyIHRlc3QgdXNpbmcgbXVsdGlw
-bGUgY29ubmVjdGlvbnMgdG8gZW5zdXJlIHRoYXQgdGhlIHRoZXJtYWwgbWV0cmljIGlzIGJlaW5n
-IHB1bGxlZCBmcm9tIGEgZGlmZmVyZW50IGNvbm5lY3Rpb24gdGhhbiB0aGUgYWdncmVnYXRpb24g
-VVJJPw0KDQo+DQo+DQo+DQo+IFRvIHNvbHZlIHRoaXMgcHJvYmxlbSwgd2UgdGhvdWdodCBvZiBh
-IGNvdXBsZSBvZiBzb2x1dGlvbnMuDQo+DQo+DQo+DQo+IFRvIGludHJvZHVjZSBtdWx0aS10aHJl
-YWRpbmcgc3VwcG9ydCBpbiBibWN3ZWIuDQoNClN1cmUsIEkgaGF2ZSBubyBwcm9ibGVtIHdpdGgg
-YWRkaW5nIHRocmVhZHMsIGFuZCBpdCByZWFsbHkgd291bGRuJ3QgYmUgdG91Z2ggdG8gYWNjb21w
-bGlzaCBhcyBhIHRlc3Q6DQoxLiBMaW5rIHB0aHJlYWRzIGluIG1lc29uLiAgTWFrZSB0aGlzIGEg
-bWVzb24gb3B0aW9uIHNvIHBsYXRmb3JtcyB0aGF0IGRvbid0IG5lZWQgbXVsdGlwbGUgdGhyZWFk
-cyBjYW4gb3B0IG91dCBvZiBpdC4NCjIuIGdvIHRvIGVhY2ggYXN5bmNfcmVhZCBhbmQgYXN5bmNf
-d3JpdGUgY2FsbCwgYW5kIGVuc3VyZSB0aGF0IHRoZXkgYXJlIHVzaW5nIGEgc3RyYW5kICh0byBr
-ZWVwIHByb2Nlc3Npbmcgb24gdGhlIHNhbWUgdGhyZWFkIGZvciBhbnkgb25lIGNhbGwpLg0KMy4g
-TG9jYXRlIGFsbCBvZiB0aGUgZ2xvYmFsIGFuZCBjcm9zcyBjb25uZWN0aW9uIGRhdGEgc3RydWN0
-dXJlcywgYW5kIGFkZCBhIG11dGV4IHRvIGVhY2ggb2YgdGhlbS4gIE9uZSBvZiB0aGUgZ2xvYmFs
-IGRhdGEgc3RydWN0dXJlcyBpcyB0aGUgRGJ1cyBjb25uZWN0aW9uIGl0c2VsZiwgc28gaWYgeW91
-ciBwZXJmb3JtYW5jZSBwcm9ibGVtIGV4aXN0cyBvbiBDIG9yIEQgYWJvdmUsIGl0IHdpbGwgbGlr
-ZWx5IHN0aWxsIGV4aXN0IHdpdGggbXVsdGlwbGUgdGhyZWFkcy4NCjQuIFVwZGF0ZSBzZGJ1c3Bs
-dXMgYXNpbyBjb25uZWN0aW9uIHRvIHN1cHBvcnQgc3RyYW5kcywgZW5zdXJpbmcgdGhhdCB0aGUg
-Y2FsbGJhY2tzIGhhcHBlbiBvbiB0aGUgc2FtZSB0aHJlYWQgdGhleSdyZSByZXF1ZXN0ZWQuDQpB
-bHRlcm5hdGl2ZWx5LCBqdXN0IHNldCB1cCBhIGRidXMgY29ubmVjdGlvbiBwZXIgdGhyZWFkLg0K
-NS4gVGVzdCBoZWF2aWx5IHRvIG1ha2Ugc3VyZSB3ZSBkb24ndCBoYXZlIHRocmVhZGluZyBhY2Nl
-c3MgcHJvYmxlbXMgb3IgbWlzc2luZyBtdXRleGVzLg0KNi4gVXBkYXRlIHRoZSBERVZFTE9QSU5H
-Lm1kIGRvYyB0byBhY2NvdW50IGZvciBtdWx0aXBsZSB0aHJlYWRzIGluIHRoZSB3YXkgd2UgcmV2
-aWV3IGNvZGUuIChyZWVudHJhbmN5LCBldGMpLiAgTW9zdCBvZiB0aGUgZXhpc3RpbmcgY29kZSBz
-aG91bGQgYmUgcmVlbnRyYW50LCBidXQgaXQncyB3b3J0aCBsb29raW5nLg0KVGhlcmUncyBsaWtl
-bHkgYSBmZXcgb3RoZXIgbWlub3IgdGhpbmdzIHRoYXQgd291bGQgbmVlZCBmaXhlZCwgYnV0IHRo
-ZSBhYm92ZSBpcyB0aGUgZ2VuZXJhbCBnaXN0Lg0KDQo+DQo+IERvZXMgYW55b25lIGhhdmUgYW55
-IGV4cGVyaWVuY2UvZmVlZGJhY2sgb24gbWFraW5nIHRoaXMgd29yaz8NCj4NCj4gSXMgdGhlcmUg
-YW55IHN0cm9uZyByZWFzb24gbm90IHRvIGhhdmUgbXVsdGktdGhyZWFkaW5nIHN1cHBvcnQgaW4g
-Ym1jd2ViIG90aGVyIHRoYW4gZ2VuZXJhbCBndWlkZWxpbmVzIHRvIGF2b2lkIHRocmVhZHM/DQoN
-Ckl0IGluY3JlYXNlcyB0aGUgYmluYXJ5IHNpemUgYmV5b25kIHdoYXQgY2FuIGZpdCBvbiBhIGxv
-dCBvZiBCTUNzIChhYm91dCAxMC0yMCUpIFRoaXMgaXMgZmluZSBzbyBsb25nIGFzIHlvdSBrZWVw
-IGl0IGFzIGEgY29tcGlsZSBvcHRpb24gc28gcGVvcGxlIGNhbiBvcHQgaW50byB0aHJlYWRpbmcg
-c3VwcG9ydC4gIEhpc3RvcmljYWxseSwgdGVhY2hpbmcgYW5kIHJldmlld2luZyBtdWx0aS10aHJl
-YWRlZCBjb2RlIGhhcyBiZWVuIGFuIG9yZGVyIG9mIG1hZ25pdHVkZSBtb3JlIGRpZmZpY3VsdCB0
-aGFuIHNpbmdsZSB0aHJlYWRlZCBjb2RlLCBzbyBrZWVwaW5nIHRoZSBzaW5nbGUgdGhyZWFkIHNp
-Z25pZmljYW50bHkgaW1wcm92ZXMgdGhlIHJldmlldyBwcm9jZXNzLCBzbyBwbGVhc2UgcGxhbiBv
-biBoYXZpbmcgZm9sa3MgcHJlcGFyZWQgdG8gcmV2aWV3IGNvZGUgZm9yIG11bHRpLXRocmVhZGVk
-IGNvcnJlY3RuZXNzLg0KDQo+DQo+DQo+DQo+IFRvIHVzZSBhIHJldmVyc2UgcHJveHkgbGlrZSBu
-Z2lueCBhcyB0aGUgZnJvbnQgZW5kIHRvIHJlZGlyZWN0IGEgZmV3IFVSSXMgdG8gYSBuZXcgYXBw
-bGljYXRpb24gc2VydmVyLg0KDQpQbGVhc2UgdGFrZSBhIGxvb2sgYXQgdGhlIE9wZW5CTUMgdHJl
-ZSBhcm91bmQgMjAxOC0yMDE5LiAgVGhlcmUgd2VyZSBzZXZlcmFsIHBsYXRmb3JtcyB0aGF0IGZv
-cm1lcmx5IHVzZWQgbmdpbnggYXMgdGhlIGZyb250IGVuZCB0byBibWN3ZWIsIGFuZCBoYXZlIHNp
-bmNlIGRyb3BwZWQgaXQuICBUaGVyZSB3YXMgYWxzbyBhIGRpc2N1c3Npb24gb24gZGlzY29yZCBy
-ZWNlbnRseSB5b3UgbWlnaHQgbG9vayBhdC4gIEknbSBub3QgcmVhbGx5IHN1cmUgaG93IG5naW54
-IHdvdWxkIHNvbHZlIHlvdXIgcHJvYmxlbSB0aG91Z2guICBUaGUgYm1jd2ViIHJlYWN0b3IgZGVz
-aWduIGxvb2tzIHNpbWlsYXIgdG8gbmdpbnggKHdlIHVzZSBhc2lvLCB0aGV5IHVzZSBsaWJ1dikg
-YWxyZWFkeSwgc28gaXQncyBub3QgY2xlYXIgdG8gbWUgd2hhdCB5b3Ugd291bGQgZ2FpbiBoZXJl
-LCB1bmxlc3MgeW91IHdlcmUgcnVubmluZyBtdWx0aXBsZSBwcm9jZXNzZXMgb2YgYm1jd2ViPyAg
-S2VlcCBpbiBtaW5kLCB0aGVyZSdkIG5lZWQgdG8gYmUgc29tZSBzb3J0IG9mIHNoYXJlZCBzdGF0
-ZSBpbiB0aGF0IGNhc2UsIHNvIHlvdSBoYXZlIHRvIGRvICMzIGluIHRoZSBhYm92ZSBhbnl3YXku
-DQoNCj4NCj4gSGVyZSB0aGUgaWRlYSBpcyB0byBkZXZlbG9wIGEgbmV3IGFwcGxpY2F0aW9uIHNl
-cnZlciB0byBzZXJ2ZSB0aGUgVVJJcyB3aGljaCBoYXZlIHN0cm9uZyBsYXRlbmN5IHJlcXVpcmVt
-ZW50cyBhbmQgcm91dGUgdGhlIHJlc3Qgb2YgdGhlIFVSSXMgdG8gYm1jd2ViLg0KDQpUaGlzIGlz
-IHRoZSBwYXJ0IEkgZG9uJ3QgdW5kZXJzdGFuZDsgIElmIHRoZSBmb3J3YXJkaW5nIGNhbGxzIGlu
-IHRoaXMgbmV3IHNlcnZlciBhcmUgYmxvY2tpbmcgdG8gYm1jd2ViLCB3aGF0J3MgdGhlIHBvaW50
-IG9mIGFkZGluZyBpdD8NCkZlZWwgZnJlZSB0byBqdXN0IHNob3cgdGhlIGNvZGUgb2YgdGhpcyB3
-b3JraW5nIGFzIHdlbGwuDQoNCj4NCj4gICAgICAgIEhhcyBhbnlvbmUgZXhwZXJpZW5jZWQgYW55
-IGxpbWl0YXRpb25zIHdpdGggbmdpbnggb24gb3BlbkJtYyBwbGF0Zm9ybXMgKHcuci50IHBlcmZv
-cm1hbmNlLCBtZW1vcnkgZm9vdHByaW50LCBldGMpPw0KPg0KPiAgICAgICAgV2UgYWxzbyBoYXZl
-IHRoZSByZXF1aXJlbWVudCB0byBzdXBwb3J0IFNTRSwgSXMgdGhlcmUgYW55IGtub3duIGxpbWl0
-YXRpb24gdG8gbWFrZSBzdWNoIGEgZmVhdHVyZSB3b3JrIHdpdGggbmdpbng/DQoNCkl0IGNhbiBi
-ZSBtYWRlIHRvIHdvcmsuICBBdXRoWCB0ZW5kcyB0byBiZSB0aGUgaGFyZGVyIHBhcnQsIGFzIGlt
-cGxlbWVudGluZyBDU1JGIGZvciBTU0Ugb3Igd2Vic29ja2V0cyBpcyBhIGh1Z2UgcGFpbi4NCg0K
-Pg0KPg0KPg0KPg0KPg0KPiBBbnkgb3RoZXIgc3VnZ2VzdGlvbiBvciBzb2x1dGlvbiB0byB0aGUg
-cHJvYmxlbSB3ZSBhcmUgc29sdmluZyB0byBtZWV0IG91ciBwZXJmb3JtYW5jZSByZXF1aXJlbWVu
-dCB3aXRoIGJtY3dlYj8NCg0KMS4gQXVkaXQgeW91ciBjb2RlIGZvciBhbnkgYmxvY2tpbmcgY2Fs
-bHMuICBJZiB5b3UgaGF2ZSBhbnksIHB1dCB0aGVtIGludG8gYSBsb29wLCBwcm9jZXNzIFggYnl0
-ZXMgYXQgYSB0aW1lLCB3aGlsZSBjYWxsaW5nIGJvb3N0Ojphc2lvOjpkaXNwYXRjaCBpbiBiZXR3
-ZWVuLCB0byBub3Qgc3RhcnZlIHRoZSBvdGhlciB0YXNrcy4NCjIuIE1vdmUgdGhlIGJtY3dlYiBj
-b3JlIHRvIGEganNvbiBsaWJyYXJ5IHRoYXQgY2FuIGRvIGluY3JlbWVudGFsIHNlcmlhbGl6YXRp
-b24vZGVzZXJpYWxpemF0aW9uLiAgYm9vc3Q6Ompzb24gd291bGQgYmUgbXkgZmlyc3QgY2hvaWNl
-Lg0KMy4gSSBoYXZlIHBhdGNoZXMgdG8gdHVybiBvbiB1cmluZywgd2hpY2ggbGV0cyB1cyB1c2Ug
-Ym9vc3Q6OmFzaW86OnJhbmRvbV9hY2Nlc3NfZmlsZSB0byBmaXggIzEgZm9yIGJsb2NraW5nIGZp
-bGVzeXN0ZW0gY2FsbHMuDQo0LiBTZXQgcmVhc29uYWJsZSBsaW1pdHMgb24gdGhlIG1heCBhZ2dy
-ZWdhdGlvbiBzaXplIHRoYXQgaXMgYWxsb3dlZCBhdCBhIHN5c3RlbSBsZXZlbC4gIFRoZXJlIHdl
-cmUgc29tZSBwcm9wb3NhbHMgb24gZ2Vycml0Lg0KDQoNCkkgd291bGQgYmUgd29ycmllZCBhYm91
-dCBzZXBhcmF0aW5nIGNvZGUgaW50byB0d28gY2xhc3NlcyAoaGlnaCBwcmlvcml0eS9sb3cgcHJp
-b3JpdHkpIGJlY2F1c2UgZXZlcnlvbmUncyBvcGluaW9ucyB3aWxsIGRpZmZlciBhYm91dCB3aGF0
-IHNob3VsZCBiZSAiaGlnaCIgcHJpb3JpdHksIGFuZCB3aGF0IHNob3VsZCBiZSAibG93IiBwcmlv
-cml0eS4gIElmIHRoYXQgaXNuJ3QgY29uZmlndXJhYmxlIGVhc2lseSwgSSB3b3JyeSB0aGF0IHdl
-J3JlIGdvaW5nIHRvIGhhdmUgcHJvYmxlbXMgYWdyZWVpbmcgb24gcHJpb3JpdHksIGFuZCBJIGRv
-bid0IHdhbnQgdG8gYmUgaW4gYSBzaXR1YXRpb24gd2hlcmUgZXZlcnkgZGV2ZWxvcGVyIGlzIGhh
-dmluZyB0byBtYWtlIHByaW9yaXR5IGNhbGxzIGZvciBldmVyeSBzeXN0ZW0gY2xhc3MuICBJJ20g
-b3BlbiB0byB0aGUgcG9zc2liaWxpdHkgaGVyZSwgYnV0IHdlIG5lZWQgdG8gbWFrZSBzdXJlIGl0
-IGtlZXBzIGNvZGUgbW92aW5nLg0KDQo+DQo+DQo+DQo+DQo+DQo+IFRoYW5rcw0KPg0KPiBSb2hp
-dCBQQUkNCj4NCj4NCg==
+On Fri, May 26, 2023 at 8:16=E2=80=AFAM Rohit Pai <ropai@nvidia.com> wrote:
+>
+> Hello Ed,
+>
+> Thanks for your response and feedback. Please find my answers to your que=
+stions below.
+
+One additional test, can you enable handler tracking and provide the result=
+?
+https://www.boost.org/doc/libs/1_82_0/doc/html/boost_asio/overview/core/han=
+dler_tracking.html
+
+That will give a better idea of what specific callback is stalling,
+and for how long.
+One thing I've considered is just putting a hard cap of, say, 100ms on
+the individual handlers, where if any handler takes longer than that,
+print to the console.  That would allow us to much more easily find
+the flows that are taking too long in practice.  I would expect most
+individual context handlers to complete in < 10 ms, unless they're
+processing too much data.
+
+>
+> > > What other constraints are here?  We're talking about a TCP protocol,=
+ running on a network, on a multi-process CPU.  Are these hard realtime req=
+uirements?  It's unlikely you're going to get hard realtime guarantees from=
+ Redfish.
+> No these are not hard real time requirements. The latency can go more tha=
+t 500ms in some instances, but we want to target the outliers (samples whic=
+h take more than 500ms of TAT) to be less than one percent of the total sam=
+ples.
+> We also want to limit the max latency of the power, thermal metric URI un=
+der 1s. The fabric bmc periodically polls this URIs from our platform and i=
+mplements the PID loop control based on the response of this URI so its cri=
+tical for us to limit the max latency of this URI.
+>
+> >>         A            B                                 C             D
+> >> TCP=E2=94=80=E2=96=BATLS=E2=94=80=E2=94=80=E2=96=BAHTTP Connection=E2=
+=94=80=E2=96=BADBus=E2=94=80=E2=96=BADaemon
+> >> Which location are you seeing queuing problems?
+> The time spent in route handler after getting the response from the backe=
+nd daemon is affecting the next URI which is waiting in the queue.
+
+To make sure we're clear, the route handler is the part JUST calling
+DBus and turning it into json objects.  The json object serialization
+happens outside the router call, so it isn't taking significant time
+in your tests?
+
+> From our tests we see that the backend daemon responds on an average with=
+in 200ms. Since this is async this has no impact.
+> The response received from the dbus backend has around 2500 properties to=
+ process. Processing of this in the route handler and preparing the respons=
+e it's taking avg time of 200ms (max time of 400 ms and several instances g=
+oing close to 300ms). The Avg CPU consumption during the test is 50% and av=
+g bmcweb consumption is between 12 to 15%.
+
+This is not so bad;  I'm assuming you're not running encryption?
+
+>
+>
+> >> What is the ballpark for how big "huge amount" of data would be?  What=
+ processing is being done?
+> The JSON in the HTTP response is around 400KB.
+
+First of all, let's do the easy things to reduce the size.  Start by
+making the json not pretty print (change the nlohmann::json::dump()
+call in http_connection.hpp to do that), or switch your clients to use
+CBOR encoding, which was added a few months ago, to reduce the payload
+size being sent on the wire.
+
+> The route handler logic makes the GetManagedObjects call to the backend s=
+ervice and processes the response which has around 2500 properties to loop =
+through.
+
+Can you please change this to Properties GetAll and see if that
+improves your consistency?  We never really intended messages to get
+THAT big, so the fact that you're seeing some blocking isn't that
+surprising.  Also keep in mind, the data structures we use for the
+GetManagedObjects call haven't really been optimized, and create a
+bunch of intermediates.  If you profile this, you could likely get the
+DBus message -> nlohmann json processing time down by an order of
+magnitude.
+
+> There is no specific business logic here which is time consuming but it's=
+ the number of properties which seem to have significant impact.
+>
+> >> One thing I've considered before is switching bmcweb over to boost::js=
+on, which can do incremental chunked parsing, unlike nlohmann, which would =
+let us unblock the flows as each processes the data.
+> Do you have any pointers for this ? where exactly we would be unblocking =
+the flow in route handler after processing chunk of properties from the bac=
+kend OR somewhere else?
+
+boost/json is in the package and has better documentation than I have.
+In terms of unblocking, we could actually write out values
+incrementally as the dbus responses are returned, so we reduce the
+memory required, and in theory reduce the amount of time we block on
+any one handler.  Even if we didn't do that fully, we could, say,
+process 4kB worth of data, then return control to the io_context
+through boost::asio::dispatch so that other traffic could be
+processed.
+
+>
+> >> Can you share your test?  Is your test using multiple connections to e=
+nsure that the thermal metric is being pulled from a different connection t=
+han the aggregation URI?
+> In the test we have two clients connected to our platform.
+> One client does power, thermal metric URI polling for every 500ms. We hav=
+e single aggregate URI for this which combine all power, thermal sensors. W=
+e have close to 100 sensors. This is the URI where we have strict performan=
+ce requirement.
+> Other client periodically polls stats and counters aggregate URI for ever=
+y 5 seconds. This is the URI which has around 400KB of JSON response and ha=
+s 2500 dbus properties to process. We are not very particular about the lat=
+ency of the
+> stats and counters URI. In the test result we see that power, thermal met=
+ric URI has max latency time of 1.2 seconds (min is 2ms and avg is 9ms) and=
+ around 3.5% outliers (samples took more than 500ms). We can see that whene=
+ver bmcweb code is busy preparing the response for the stats and counter UR=
+I and there is request for thermal metric URI then latency of the thermal m=
+etric URIs is affected.
+> If we limit the number of properties in the stats and counters URI, then =
+we can meet the requirement, but we need to create lot of aggregate URIs. I=
+t would not be convenient for the customers to use many aggregate URIs and =
+then combine the response.  Is there way to process chunk of properties in =
+the route handler and voluntarily release the context for bmcweb to process=
+ the next URIs in the queue ? any other trick which can work here ?
+
+Can you share your test code?  Which URIs are you hitting that are
+calling GetManagedObjects?
+
+FWIW, as an overall theme, I do wonder if the speed gained by going to
+GetManagedObjects is worth it in the long run.  It seems to
+significantly effect stability, because even objects added that the
+route doesn't care about have to be processed, and as systems are
+getting larger, the GetManagedObjects responses are getting larger,
+for no change that the user sees.  Said another way, we're throwing
+away significantly more data.
+
+>
+>
+> > Here the idea is to develop a new application server to serve the URIs =
+which have strong latency requirements and route the rest of the URIs to bm=
+cweb.
+> >> This is the part I don't understand;  If the forwarding calls in this =
+new server are blocking to bmcweb, what's the point of adding it?
+> The backend for the thermal metrics and stats/counters metrics is differe=
+nt so we would not be blocked on the same service.
+
+I find it unlikely that we'll be able to all agree on what is "high"
+priority (some people see any http call is low priority), so unless
+this was easily configurable what the priority is for a given route,
+I'm not sure this kind of architecture would work.  My preference
+would be to:
+1. Optimize the callbacks that are taking too much time, and make them
+call boost::asio::dispatch during long loops.
+2. Use threads to ensure there's more resources available that don't
+block (this only works up to N connections, whatever N is for thread
+count).
+
+
+Thanks for the discussion;  Let me know what you find.
+
+
+> With a reverse proxy our idea is to forward thermal metrics to another ba=
+ckend application server (new bmcweb server or a similar lightweight server=
+ instance) and all other URIs to the existing bmcweb.
+>
+> I will share any further results from our internal tests as we tryout dif=
+ferent things.
+>
+> Thanks
+> Rohit PAI
+>
+>
+> -----Original Message-----
+> From: Ed Tanous <edtanous@google.com>
+> Sent: Wednesday, May 24, 2023 9:57 PM
+> To: Rohit Pai <ropai@nvidia.com>
+> Cc: openbmc@lists.ozlabs.org
+> Subject: Re: Prioritizing URIs with tight performance requirement in open=
+Bmc with bmcweb
+>
+> External email: Use caution opening links or attachments
+>
+>
+> On Wed, May 24, 2023 at 2:36=E2=80=AFAM Rohit Pai <ropai@nvidia.com> wrot=
+e:
+> >
+> > Hello All,
+> >
+> >
+> >
+> > We have a requirement in our platform to serve a few specific URI with =
+a tight performance requirement on the turnaround time (latency).
+> >
+> > One such example is the telemetry sensor metric URI which has power, th=
+ermal data can have a max turnaround time of 500ms.
+>
+> What other constraints are here?  We're talking about a TCP protocol, run=
+ning on a network, on a multi-process CPU.  Are these hard realtime require=
+ments?  It's unlikely you're going to get hard realtime guarantees from Red=
+fish.
+>
+> >
+> >
+> >
+> > The current bmcweb design uses only a single thread to serve all URI re=
+quests/responses.
+> >
+> > If bmcweb is processing a huge amount of data (which is common for aggr=
+egation URIs) then other requests would get blocked and their latency time =
+would get impacted.
+>
+> The bmcweb queuing flow looks something like:
+>
+>         A            B                                 C             D
+> TCP=E2=94=80=E2=96=BATLS=E2=94=80=E2=94=80=E2=96=BAHTTP Connection=E2=94=
+=80=E2=96=BADBus=E2=94=80=E2=96=BADaemon
+>
+> Which location are you seeing queuing problems?  Keep in mind, HTTP
+> 1.1 can only process a single request/response at a time per connection, =
+so if your system is trying to process things from a single connection at A=
+, you're right, long requests will block short ones.
+>
+> >
+> > Here I am referring to the time bmcweb takes to prepare the JSON respon=
+se after it has got the data from the backend service.
+>
+> What is the ballpark for how big "huge amount" of data would be?  What
+> processing is actually being done?   This would be the first time that
+> json parsing itself has actually shown up on a performance profile, but w=
+ith expand + aggregation, you're right, there's potential for that.
+>
+> One thing I've considered before is switching bmcweb over to boost::json,=
+ which can do incremental chunked parsing, unlike nlohmann, which would let=
+ us unblock the flows as each processes the data.
+>
+> >
+> > In our platform, we see that power thermal metric URI can take more tha=
+n 500ms when it=E2=80=99s requested in parallel to other aggregation URI wh=
+ich have huge response data.
+>
+> Can you share your test?  Is your test using multiple connections to ensu=
+re that the thermal metric is being pulled from a different connection than=
+ the aggregation URI?
+>
+> >
+> >
+> >
+> > To solve this problem, we thought of a couple of solutions.
+> >
+> >
+> >
+> > To introduce multi-threading support in bmcweb.
+>
+> Sure, I have no problem with adding threads, and it really wouldn't be to=
+ugh to accomplish as a test:
+> 1. Link pthreads in meson.  Make this a meson option so platforms that do=
+n't need multiple threads can opt out of it.
+> 2. go to each async_read and async_write call, and ensure that they are u=
+sing a strand (to keep processing on the same thread for any one call).
+> 3. Locate all of the global and cross connection data structures, and add=
+ a mutex to each of them.  One of the global data structures is the Dbus co=
+nnection itself, so if your performance problem exists on C or D above, it =
+will likely still exist with multiple threads.
+> 4. Update sdbusplus asio connection to support strands, ensuring that the=
+ callbacks happen on the same thread they're requested.
+> Alternatively, just set up a dbus connection per thread.
+> 5. Test heavily to make sure we don't have threading access problems or m=
+issing mutexes.
+> 6. Update the DEVELOPING.md doc to account for multiple threads in the wa=
+y we review code. (reentrancy, etc).  Most of the existing code should be r=
+eentrant, but it's worth looking.
+> There's likely a few other minor things that would need fixed, but the ab=
+ove is the general gist.
+>
+> >
+> > Does anyone have any experience/feedback on making this work?
+> >
+> > Is there any strong reason not to have multi-threading support in bmcwe=
+b other than general guidelines to avoid threads?
+>
+> It increases the binary size beyond what can fit on a lot of BMCs (about =
+10-20%) This is fine so long as you keep it as a compile option so people c=
+an opt into threading support.  Historically, teaching and reviewing multi-=
+threaded code has been an order of magnitude more difficult than single thr=
+eaded code, so keeping the single thread significantly improves the review =
+process, so please plan on having folks prepared to review code for multi-t=
+hreaded correctness.
+>
+> >
+> >
+> >
+> > To use a reverse proxy like nginx as the front end to redirect a few UR=
+Is to a new application server.
+>
+> Please take a look at the OpenBMC tree around 2018-2019.  There were seve=
+ral platforms that formerly used nginx as the front end to bmcweb, and have=
+ since dropped it.  There was also a discussion on discord recently you mig=
+ht look at.  I'm not really sure how nginx would solve your problem though.=
+  The bmcweb reactor design looks similar to nginx (we use asio, they use l=
+ibuv) already, so it's not clear to me what you would gain here, unless you=
+ were running multiple processes of bmcweb?  Keep in mind, there'd need to =
+be some sort of shared state in that case, so you have to do #3 in the abov=
+e anyway.
+>
+> >
+> > Here the idea is to develop a new application server to serve the URIs =
+which have strong latency requirements and route the rest of the URIs to bm=
+cweb.
+>
+> This is the part I don't understand;  If the forwarding calls in this new=
+ server are blocking to bmcweb, what's the point of adding it?
+> Feel free to just show the code of this working as well.
+>
+> >
+> >        Has anyone experienced any limitations with nginx on openBmc pla=
+tforms (w.r.t performance, memory footprint, etc)?
+> >
+> >        We also have the requirement to support SSE, Is there any known =
+limitation to make such a feature work with nginx?
+>
+> It can be made to work.  AuthX tends to be the harder part, as implementi=
+ng CSRF for SSE or websockets is a huge pain.
+>
+> >
+> >
+> >
+> >
+> >
+> > Any other suggestion or solution to the problem we are solving to meet =
+our performance requirement with bmcweb?
+>
+> 1. Audit your code for any blocking calls.  If you have any, put them int=
+o a loop, process X bytes at a time, while calling boost::asio::dispatch in=
+ between, to not starve the other tasks.
+> 2. Move the bmcweb core to a json library that can do incremental seriali=
+zation/deserialization.  boost::json would be my first choice.
+> 3. I have patches to turn on uring, which lets us use boost::asio::random=
+_access_file to fix #1 for blocking filesystem calls.
+> 4. Set reasonable limits on the max aggregation size that is allowed at a=
+ system level.  There were some proposals on gerrit.
+>
+>
+> I would be worried about separating code into two classes (high priority/=
+low priority) because everyone's opinions will differ about what should be =
+"high" priority, and what should be "low" priority.  If that isn't configur=
+able easily, I worry that we're going to have problems agreeing on priority=
+, and I don't want to be in a situation where every developer is having to =
+make priority calls for every system class.  I'm open to the possibility he=
+re, but we need to make sure it keeps code moving.
+>
+> >
+> >
+> >
+> >
+> >
+> > Thanks
+> >
+> > Rohit PAI
+> >
+> >
