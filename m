@@ -2,70 +2,104 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D867A712AA2
-	for <lists+openbmc@lfdr.de>; Fri, 26 May 2023 18:30:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D6BD7158D6
+	for <lists+openbmc@lfdr.de>; Tue, 30 May 2023 10:41:02 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QSVl35CMhz3fCF
-	for <lists+openbmc@lfdr.de>; Sat, 27 May 2023 02:30:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QVm7v51DYz3f64
+	for <lists+openbmc@lfdr.de>; Tue, 30 May 2023 18:40:59 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20221208 header.b=lY4KaeFS;
+	dkim=pass (2048-bit key; unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256 header.s=selector1 header.b=dYdv7Jz1;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::333; helo=mail-wm1-x333.google.com; envelope-from=edtanous@google.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=hotmail.com (client-ip=2a01:111:f400:7e89::816; helo=nam10-mw2-obe.outbound.protection.outlook.com; envelope-from=h-a-m-i-d@hotmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20221208 header.b=lY4KaeFS;
+	dkim=pass (2048-bit key; unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256 header.s=selector1 header.b=dYdv7Jz1;
 	dkim-atps=neutral
-Received: from mail-wm1-x333.google.com (mail-wm1-x333.google.com [IPv6:2a00:1450:4864:20::333])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10olkn20816.outbound.protection.outlook.com [IPv6:2a01:111:f400:7e89::816])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QSVkS72Dhz3c71
-	for <openbmc@lists.ozlabs.org>; Sat, 27 May 2023 02:29:35 +1000 (AEST)
-Received: by mail-wm1-x333.google.com with SMTP id 5b1f17b1804b1-3f6d7abe9a4so7116345e9.2
-        for <openbmc@lists.ozlabs.org>; Fri, 26 May 2023 09:29:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1685118569; x=1687710569;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nYcIfqXmE8C9HjYRYT6MZAFCSSUw6bA9T/ueWR3M4u0=;
-        b=lY4KaeFSskzM9j7/tuEBUKFJM0/nV20K3KyyqgGkl+TgHHsQAls6eXNOooUMWsGQ/o
-         JGifGnCQS2xJ56CN36JiJM0Yln3O++0ILFKiZl8JGhWjV2pLSWAE6tMgEqXtGFwzffPf
-         38ot09Mygu2iMpbgmi5TpofB9q2H6F2ZYlrmirIIsaqYb42aC3BrNUJk3nuayAgUPFdQ
-         ofrTXOHcDAuB0xbExwY4WrE2XFFK/g8cK9P0NuQlEplgVKESAX4KDVc9MmPJpKLKBLMF
-         9bRci9EdFx8U8QKrwrf7izWRaBhlh9T2okYECFR9lueQAavIBhsQqHZjgBZHzaraGbcA
-         1Gmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685118569; x=1687710569;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nYcIfqXmE8C9HjYRYT6MZAFCSSUw6bA9T/ueWR3M4u0=;
-        b=jBaDWmDoJtgq11LLRW62U1lbEGhFLeryAmsJjbUu9F1IRlb4dRDs68GEUfJ7JyaRsf
-         NNxsi/g1KV6bbOFFdeBKlTnQRNqQ53jaLT5t8A+130se+CuBRwYHm5O+kQbHH5YAH4aH
-         1v5XD4y9XYwBrES6KNbXUg1LV3Hqkz+gkY31TZcCI7ZiJqAx0mjtDcLcZdlV3/NVd0ng
-         5G9DxGVz61cemZr/fmN3a4N3qpNpKyN8CIM3aNp59kClC9/lAoKgNgrLM45deaGlNvnP
-         G6nsV+NQS9bswFd+ax0w0jSscSkiSWIMZYpj6u26EDUt5J4wIMZOXV0RcbodGdwNHyBu
-         qkdQ==
-X-Gm-Message-State: AC+VfDwJACIhP7CWzdkwt9ZncwOG3VPVKgcuYsD+fge+JdnlSMr7dq+p
-	ITVL7x02fij72TBTr0jPvye+0YS2E77QyQ3U/xIv1tTX9BocSmIkw+CEz9yL
-X-Google-Smtp-Source: ACHHUZ7ZYLdXlyRYcLdP/fi06ragZI9cyKA63fZaTVJjC0nV5T8mXp+IhSzCzu9ystakOKngOqC0WnVa4Hwuqz2M+gU=
-X-Received: by 2002:adf:e4cf:0:b0:306:475d:92ff with SMTP id
- v15-20020adfe4cf000000b00306475d92ffmr1475570wrm.3.1685118569033; Fri, 26 May
- 2023 09:29:29 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QSWtC6ZRTz3f8b
+	for <openbmc@lists.ozlabs.org>; Sat, 27 May 2023 03:21:22 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=nkhH+BEkqgHvN1xNijgIqwOy5tMeu0znhJFfwiWtp/Do2tok1b/89dlfiMOn0S018KeT7/0clvfS/D2FjlabFhrO4dXX++Geny3tJnFtUp+xdOXZDCDXhLt8nO/eTJcBs3PskvHSrEvxaiTg3smuu3OHLPZWNv77FZWTZeG8+bW7G4kWD6bkaw9KuUbD//bRvQTzJ/3ItOE0wEOzan+IDhdfYsQMA7SjojjnBln7Fvo9MrpzofFrrZifMJhPW5wQWzBliS0In3iqeklbXEHC9qVpGSOEYTHKFRjmeVsQE+da2tt+G7Y8FqjMjB+rV23pLGVU3l5f0oS420Kn26rdLQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Ck62Z6DUTU2Wc0gNfBn4JZC9Vh7dc3vXEK/TfjoedYY=;
+ b=N1RIzHA6BQOrkqyweRscF1GL3FlTi2WmgZXZ/P50dcNHE5khmQB+eCY0jV38QiKVanZShOvz6lM7QjVvi2LidKJA3IanFqLUrjJ3H29UBWZOrmIdciqIrQg6winJ/wlZ6rH9Kh+CEqcCVYb7unAt9baRXqvFNGkL9t5ZJkU93hDMD843d2tn2pa15v571FcXBRKs1oJu4wWXJtOl04FPzK/JK6l9ENEh+AOq+tvEmDLhX0F6SYHzhjta4+5muhHMoYsaeCUWa4hU/vvJwjkSVhwmxQbCYVV3oUHlHm7nTk5EjKl7BAePlogZ2ACZ33aa1y1dx8g/rR4q1wOdo9hG/g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Ck62Z6DUTU2Wc0gNfBn4JZC9Vh7dc3vXEK/TfjoedYY=;
+ b=dYdv7Jz1clHJ6YH8hlGtC5Ev3b/yuTjFd948naYzOKBb0EUi9MnJsY4fRzwrDR4YbN7WbfCKGVh4FRyoinMfAculcy8uYk+VhtEoISzAv1M3P2sJ5SqgR2fSyBj+fQJmaWc7tu0L8xsUGf8FW/30nITj+3J5g10uU08IZ7aikFPB4d3FrX7YUTeujhrD62eDIlZNAVALnhyDKixvlyLKeUv1z3xroPbS1ggcY5eAjP128qwu+yqondrUVlAIDKPIXGOm1Q1skUIRbr5CQaDpbY4rBmHFx+c/K2hoVGhFDmBPx2Wtv1OmX9YT29HBrLi7vgeUfcVMVvAZ+5vwNJphZg==
+Received: from SA3PR15MB5728.namprd15.prod.outlook.com (2603:10b6:806:319::9)
+ by PH8PR15MB6134.namprd15.prod.outlook.com (2603:10b6:510:239::15) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6433.17; Fri, 26 May
+ 2023 17:21:01 +0000
+Received: from SA3PR15MB5728.namprd15.prod.outlook.com
+ ([fe80::f814:5736:5421:420f]) by SA3PR15MB5728.namprd15.prod.outlook.com
+ ([fe80::f814:5736:5421:420f%7]) with mapi id 15.20.6433.018; Fri, 26 May 2023
+ 17:21:01 +0000
+From: hamid amirrad <h-a-m-i-d@hotmail.com>
+To: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Subject: Disabling https
+Thread-Topic: Disabling https
+Thread-Index: AQHZj/X3S969GmrzpUWW5zf3Nw6cbQ==
+Date: Fri, 26 May 2023 17:21:01 +0000
+Message-ID:  <SA3PR15MB5728B4C071EDCE147FC860B1A6479@SA3PR15MB5728.namprd15.prod.outlook.com>
+Accept-Language: en-CA, en-US
+Content-Language: en-CA
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-tmn: [/wlSdXzvJsv78/xRfw1q0oj75UgxrBR/EjiTaqBVf0hDYZgiW6rTwnTLa6IOnstw]
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA3PR15MB5728:EE_|PH8PR15MB6134:EE_
+x-ms-office365-filtering-correlation-id: a4bc025e-7d05-4e3c-0078-08db5e0d941a
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:  O5aGnm6lHDULBFpYS/ZXXIdPzshGJ9uN8ZbjhT9HbxQ7SESt1dSG9j5SL+t6sdR3kUAhG2bHP7bGAlg/MCP5KKTot5gwyIaPtEbUD9EnUwYBvDdXbSvA/ZToZGwfvV68I9EH5MrdebvwxhUyjss3xhynyG5np4dEjQyZmhlsR5Q0UmKazcdvuwbZUaWmdzPNzbh7dQ5zyIgPuHwCymg/IrNqY8SXNvmiSNFg6P5TRHHOkpoEUNT8Y/YoOYmKpKYExvlZxs5ZxWRCQvxY5uLT2M9rgfrIoytlTWExCSg/psypziGkeSsagTkC2jS+Ai4PXI39f6TnRGBseIxsBlAViia+X2SZdyBPt0eHFWgAhrTZw1Uc6ySWnXYJ6Pz/2K/sxoOyo0bro7HqXBZIX9WaKnedyY7sZNKjVogCrKH7SkLF8TJw/QPrkxAUZTwKP3FTG0jLYHg1zqivJHT0v9//qpbjE1CBENnl2Ix1+SScr59wnXfMOwhm/tS7vFFyJrSoeArik1Q/ZmGWzPJrDhn6xImOzbLm1bCYohsWPMiz5MXxoo/T4fCWQ7qJEvEu24hBFD+4hA0XBA5Tn1C/5SFAH9C+bIoRwp3xecBCv9VCxDc=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:  =?iso-8859-1?Q?yaGcyJkyD00KrfHt1Eqxo4f8f4q4zXpo6gRdR2kO3+29Qe+AzxYqgVAJMb?=
+ =?iso-8859-1?Q?lhfLG+DGgxEgpxS0kJ3umlo6AdBzSDNybOOrQUEudgaBrvpQTrcNcjssoX?=
+ =?iso-8859-1?Q?jkRvk7YonP5Al0asCKevhiNwo9AZA+m6q02ejiEpXSiaRA6Rr5GmX51uUT?=
+ =?iso-8859-1?Q?H/cvvbvfzSyk0UCYSDQUecEPetHuEbs0fno79/EmSrlsWGuKzaUtcd65bL?=
+ =?iso-8859-1?Q?ST1P6P6Hhi1KcqBGztdyzfbL7N9SRl9jRPuecUqxEnDKwEdaO5LGtlGqD6?=
+ =?iso-8859-1?Q?iWj7gZD01IaY/hUQf6eX4K2JHH1uNiDTSwvxJ0zCHq28c7fDqWm79tEYrT?=
+ =?iso-8859-1?Q?DRco1Mg+Col4Fe8B9pxsJKddDqliU/puSXVxifVfa9XfhPpIYnlEgC8sIY?=
+ =?iso-8859-1?Q?IctZXYynfW95Yh7YoXGRktHlaAV8TDgysgF+3SyhWEWYjNEGQ/NX76F5ja?=
+ =?iso-8859-1?Q?/Wgi5ZFfhET/B/0j76xUh2T31vi8Yhaf4/cPlfrR5oxlvclNUzSjc+aa4X?=
+ =?iso-8859-1?Q?oaJzSc0OsT7dffmTi5JQPENQdLpfdw+bTuO+UM6MgOJaYjuHcn6UKsEZrL?=
+ =?iso-8859-1?Q?q9iEee1N2Fi2JI5M6F5HvQM4OR6zCzv5VI9ULMREbHuDrblMvcPBsXYcAV?=
+ =?iso-8859-1?Q?xkLqAtK3UAlJIrCzPbvug7Vse5bk377ujZnrfCWxqoLS/KJT0vV1znMPaQ?=
+ =?iso-8859-1?Q?7jRh0kpdAP5/8K/64LQJYnG4GzICprgp5kzTNpsPjzMVvs1Aq7xr4NcYzd?=
+ =?iso-8859-1?Q?F9Pta9Z75pvYYUkAIVFlXB80XanP2rX1NgBdBRIojnmbdVM66hCXw2raMW?=
+ =?iso-8859-1?Q?D8R7pb7i/7duOtQtG432ZDqAwAoiLWwUuq3tJeV8QxKXeVbr3dtO55tx96?=
+ =?iso-8859-1?Q?N6GvyRygLzoMRfqm4bIU4yT/Ckg40HW8vK/1cbczs0/a+exF25FiM9E0zh?=
+ =?iso-8859-1?Q?u7aV7b1oF7YJagzZvwNobXRwBmnW3CjT/EOG9buRszn9PaqkKZ/kzGlr2A?=
+ =?iso-8859-1?Q?eOUXm4fOSROepuNPz0vJtq8cbRr62eWg3crmxqv/STLXQsqa28BcZ49nlJ?=
+ =?iso-8859-1?Q?Ef2GSvvsGG/FRKg26l+uh9PC/0AEtYGoE75jO5njrmVanUW0OvE5HJP0oQ?=
+ =?iso-8859-1?Q?hD8lB/eb++bWkY6pt9qgNh0sWomDH39mIAi9aYYD6yTaOizLWtooboPza+?=
+ =?iso-8859-1?Q?IxVPhk991rilDkLWSbXWAeaQWQInXo6DTRSQnVR+r4WdrAaYuiEZ7c/a8X?=
+ =?iso-8859-1?Q?vpUQ2jWgUHzHeXQ6OeuVC06XvObD2iFy2ncM87T2U3FUefr04sn9M/wxEv?=
+ =?iso-8859-1?Q?kOS/KqmCXLNzznHIt8ODL2Qf5Q=3D=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_SA3PR15MB5728B4C071EDCE147FC860B1A6479SA3PR15MB5728namp_"
 MIME-Version: 1.0
-References: <LV2PR12MB601419E4F59555BBCB4EE70FCD419@LV2PR12MB6014.namprd12.prod.outlook.com>
- <CAH2-KxAdhmj98prJ2QCuN4p1ZxRZs3ZFdchxdZ-_A9c-ACpMOQ@mail.gmail.com> <LV2PR12MB6014D3A0F42E3124DA926C3FCD479@LV2PR12MB6014.namprd12.prod.outlook.com>
-In-Reply-To: <LV2PR12MB6014D3A0F42E3124DA926C3FCD479@LV2PR12MB6014.namprd12.prod.outlook.com>
-From: Ed Tanous <edtanous@google.com>
-Date: Fri, 26 May 2023 09:29:17 -0700
-Message-ID: <CAH2-KxAfBX38cAKNcA37_yLbT3VY4GcG4ip=-6huueXyj82jsg@mail.gmail.com>
-Subject: Re: Prioritizing URIs with tight performance requirement in openBmc
- with bmcweb
-To: Rohit Pai <ropai@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-4722e.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SA3PR15MB5728.namprd15.prod.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: a4bc025e-7d05-4e3c-0078-08db5e0d941a
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 May 2023 17:21:01.5212
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR15MB6134
+X-Mailman-Approved-At: Tue, 30 May 2023 18:40:31 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,369 +111,73 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, May 26, 2023 at 8:16=E2=80=AFAM Rohit Pai <ropai@nvidia.com> wrote:
->
-> Hello Ed,
->
-> Thanks for your response and feedback. Please find my answers to your que=
-stions below.
+--_000_SA3PR15MB5728B4C071EDCE147FC860B1A6479SA3PR15MB5728namp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-One additional test, can you enable handler tracking and provide the result=
-?
-https://www.boost.org/doc/libs/1_82_0/doc/html/boost_asio/overview/core/han=
-dler_tracking.html
+Hi,
 
-That will give a better idea of what specific callback is stalling,
-and for how long.
-One thing I've considered is just putting a hard cap of, say, 100ms on
-the individual handlers, where if any handler takes longer than that,
-print to the console.  That would allow us to much more easily find
-the flows that are taking too long in practice.  I would expect most
-individual context handlers to complete in < 10 ms, unless they're
-processing too much data.
+I have built an openbmc image for ast2500 module but i am really having a h=
+ard time accessing it via REST or web. Both of them fail with ssl certifica=
+te even when I try to import the server.pem from the BMC module into my bro=
+wser or use --insecure for my curl.
 
->
-> > > What other constraints are here?  We're talking about a TCP protocol,=
- running on a network, on a multi-process CPU.  Are these hard realtime req=
-uirements?  It's unlikely you're going to get hard realtime guarantees from=
- Redfish.
-> No these are not hard real time requirements. The latency can go more tha=
-t 500ms in some instances, but we want to target the outliers (samples whic=
-h take more than 500ms of TAT) to be less than one percent of the total sam=
-ples.
-> We also want to limit the max latency of the power, thermal metric URI un=
-der 1s. The fabric bmc periodically polls this URIs from our platform and i=
-mplements the PID loop control based on the response of this URI so its cri=
-tical for us to limit the max latency of this URI.
->
-> >>         A            B                                 C             D
-> >> TCP=E2=94=80=E2=96=BATLS=E2=94=80=E2=94=80=E2=96=BAHTTP Connection=E2=
-=94=80=E2=96=BADBus=E2=94=80=E2=96=BADaemon
-> >> Which location are you seeing queuing problems?
-> The time spent in route handler after getting the response from the backe=
-nd daemon is affecting the next URI which is waiting in the queue.
+Can you guys guide me on how to disable the https so i can just access my m=
+odule via REST and web?
 
-To make sure we're clear, the route handler is the part JUST calling
-DBus and turning it into json objects.  The json object serialization
-happens outside the router call, so it isn't taking significant time
-in your tests?
-
-> From our tests we see that the backend daemon responds on an average with=
-in 200ms. Since this is async this has no impact.
-> The response received from the dbus backend has around 2500 properties to=
- process. Processing of this in the route handler and preparing the respons=
-e it's taking avg time of 200ms (max time of 400 ms and several instances g=
-oing close to 300ms). The Avg CPU consumption during the test is 50% and av=
-g bmcweb consumption is between 12 to 15%.
-
-This is not so bad;  I'm assuming you're not running encryption?
-
->
->
-> >> What is the ballpark for how big "huge amount" of data would be?  What=
- processing is being done?
-> The JSON in the HTTP response is around 400KB.
-
-First of all, let's do the easy things to reduce the size.  Start by
-making the json not pretty print (change the nlohmann::json::dump()
-call in http_connection.hpp to do that), or switch your clients to use
-CBOR encoding, which was added a few months ago, to reduce the payload
-size being sent on the wire.
-
-> The route handler logic makes the GetManagedObjects call to the backend s=
-ervice and processes the response which has around 2500 properties to loop =
-through.
-
-Can you please change this to Properties GetAll and see if that
-improves your consistency?  We never really intended messages to get
-THAT big, so the fact that you're seeing some blocking isn't that
-surprising.  Also keep in mind, the data structures we use for the
-GetManagedObjects call haven't really been optimized, and create a
-bunch of intermediates.  If you profile this, you could likely get the
-DBus message -> nlohmann json processing time down by an order of
-magnitude.
-
-> There is no specific business logic here which is time consuming but it's=
- the number of properties which seem to have significant impact.
->
-> >> One thing I've considered before is switching bmcweb over to boost::js=
-on, which can do incremental chunked parsing, unlike nlohmann, which would =
-let us unblock the flows as each processes the data.
-> Do you have any pointers for this ? where exactly we would be unblocking =
-the flow in route handler after processing chunk of properties from the bac=
-kend OR somewhere else?
-
-boost/json is in the package and has better documentation than I have.
-In terms of unblocking, we could actually write out values
-incrementally as the dbus responses are returned, so we reduce the
-memory required, and in theory reduce the amount of time we block on
-any one handler.  Even if we didn't do that fully, we could, say,
-process 4kB worth of data, then return control to the io_context
-through boost::asio::dispatch so that other traffic could be
-processed.
-
->
-> >> Can you share your test?  Is your test using multiple connections to e=
-nsure that the thermal metric is being pulled from a different connection t=
-han the aggregation URI?
-> In the test we have two clients connected to our platform.
-> One client does power, thermal metric URI polling for every 500ms. We hav=
-e single aggregate URI for this which combine all power, thermal sensors. W=
-e have close to 100 sensors. This is the URI where we have strict performan=
-ce requirement.
-> Other client periodically polls stats and counters aggregate URI for ever=
-y 5 seconds. This is the URI which has around 400KB of JSON response and ha=
-s 2500 dbus properties to process. We are not very particular about the lat=
-ency of the
-> stats and counters URI. In the test result we see that power, thermal met=
-ric URI has max latency time of 1.2 seconds (min is 2ms and avg is 9ms) and=
- around 3.5% outliers (samples took more than 500ms). We can see that whene=
-ver bmcweb code is busy preparing the response for the stats and counter UR=
-I and there is request for thermal metric URI then latency of the thermal m=
-etric URIs is affected.
-> If we limit the number of properties in the stats and counters URI, then =
-we can meet the requirement, but we need to create lot of aggregate URIs. I=
-t would not be convenient for the customers to use many aggregate URIs and =
-then combine the response.  Is there way to process chunk of properties in =
-the route handler and voluntarily release the context for bmcweb to process=
- the next URIs in the queue ? any other trick which can work here ?
-
-Can you share your test code?  Which URIs are you hitting that are
-calling GetManagedObjects?
-
-FWIW, as an overall theme, I do wonder if the speed gained by going to
-GetManagedObjects is worth it in the long run.  It seems to
-significantly effect stability, because even objects added that the
-route doesn't care about have to be processed, and as systems are
-getting larger, the GetManagedObjects responses are getting larger,
-for no change that the user sees.  Said another way, we're throwing
-away significantly more data.
-
->
->
-> > Here the idea is to develop a new application server to serve the URIs =
-which have strong latency requirements and route the rest of the URIs to bm=
-cweb.
-> >> This is the part I don't understand;  If the forwarding calls in this =
-new server are blocking to bmcweb, what's the point of adding it?
-> The backend for the thermal metrics and stats/counters metrics is differe=
-nt so we would not be blocked on the same service.
-
-I find it unlikely that we'll be able to all agree on what is "high"
-priority (some people see any http call is low priority), so unless
-this was easily configurable what the priority is for a given route,
-I'm not sure this kind of architecture would work.  My preference
-would be to:
-1. Optimize the callbacks that are taking too much time, and make them
-call boost::asio::dispatch during long loops.
-2. Use threads to ensure there's more resources available that don't
-block (this only works up to N connections, whatever N is for thread
-count).
+Thanks,
 
 
-Thanks for the discussion;  Let me know what you find.
+Sent from Outlook<http://aka.ms/weboutlook>
 
+--_000_SA3PR15MB5728B4C071EDCE147FC860B1A6479SA3PR15MB5728namp_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-> With a reverse proxy our idea is to forward thermal metrics to another ba=
-ckend application server (new bmcweb server or a similar lightweight server=
- instance) and all other URIs to the existing bmcweb.
->
-> I will share any further results from our internal tests as we tryout dif=
-ferent things.
->
-> Thanks
-> Rohit PAI
->
->
-> -----Original Message-----
-> From: Ed Tanous <edtanous@google.com>
-> Sent: Wednesday, May 24, 2023 9:57 PM
-> To: Rohit Pai <ropai@nvidia.com>
-> Cc: openbmc@lists.ozlabs.org
-> Subject: Re: Prioritizing URIs with tight performance requirement in open=
-Bmc with bmcweb
->
-> External email: Use caution opening links or attachments
->
->
-> On Wed, May 24, 2023 at 2:36=E2=80=AFAM Rohit Pai <ropai@nvidia.com> wrot=
-e:
-> >
-> > Hello All,
-> >
-> >
-> >
-> > We have a requirement in our platform to serve a few specific URI with =
-a tight performance requirement on the turnaround time (latency).
-> >
-> > One such example is the telemetry sensor metric URI which has power, th=
-ermal data can have a max turnaround time of 500ms.
->
-> What other constraints are here?  We're talking about a TCP protocol, run=
-ning on a network, on a multi-process CPU.  Are these hard realtime require=
-ments?  It's unlikely you're going to get hard realtime guarantees from Red=
-fish.
->
-> >
-> >
-> >
-> > The current bmcweb design uses only a single thread to serve all URI re=
-quests/responses.
-> >
-> > If bmcweb is processing a huge amount of data (which is common for aggr=
-egation URIs) then other requests would get blocked and their latency time =
-would get impacted.
->
-> The bmcweb queuing flow looks something like:
->
->         A            B                                 C             D
-> TCP=E2=94=80=E2=96=BATLS=E2=94=80=E2=94=80=E2=96=BAHTTP Connection=E2=94=
-=80=E2=96=BADBus=E2=94=80=E2=96=BADaemon
->
-> Which location are you seeing queuing problems?  Keep in mind, HTTP
-> 1.1 can only process a single request/response at a time per connection, =
-so if your system is trying to process things from a single connection at A=
-, you're right, long requests will block short ones.
->
-> >
-> > Here I am referring to the time bmcweb takes to prepare the JSON respon=
-se after it has got the data from the backend service.
->
-> What is the ballpark for how big "huge amount" of data would be?  What
-> processing is actually being done?   This would be the first time that
-> json parsing itself has actually shown up on a performance profile, but w=
-ith expand + aggregation, you're right, there's potential for that.
->
-> One thing I've considered before is switching bmcweb over to boost::json,=
- which can do incremental chunked parsing, unlike nlohmann, which would let=
- us unblock the flows as each processes the data.
->
-> >
-> > In our platform, we see that power thermal metric URI can take more tha=
-n 500ms when it=E2=80=99s requested in parallel to other aggregation URI wh=
-ich have huge response data.
->
-> Can you share your test?  Is your test using multiple connections to ensu=
-re that the thermal metric is being pulled from a different connection than=
- the aggregation URI?
->
-> >
-> >
-> >
-> > To solve this problem, we thought of a couple of solutions.
-> >
-> >
-> >
-> > To introduce multi-threading support in bmcweb.
->
-> Sure, I have no problem with adding threads, and it really wouldn't be to=
-ugh to accomplish as a test:
-> 1. Link pthreads in meson.  Make this a meson option so platforms that do=
-n't need multiple threads can opt out of it.
-> 2. go to each async_read and async_write call, and ensure that they are u=
-sing a strand (to keep processing on the same thread for any one call).
-> 3. Locate all of the global and cross connection data structures, and add=
- a mutex to each of them.  One of the global data structures is the Dbus co=
-nnection itself, so if your performance problem exists on C or D above, it =
-will likely still exist with multiple threads.
-> 4. Update sdbusplus asio connection to support strands, ensuring that the=
- callbacks happen on the same thread they're requested.
-> Alternatively, just set up a dbus connection per thread.
-> 5. Test heavily to make sure we don't have threading access problems or m=
-issing mutexes.
-> 6. Update the DEVELOPING.md doc to account for multiple threads in the wa=
-y we review code. (reentrancy, etc).  Most of the existing code should be r=
-eentrant, but it's worth looking.
-> There's likely a few other minor things that would need fixed, but the ab=
-ove is the general gist.
->
-> >
-> > Does anyone have any experience/feedback on making this work?
-> >
-> > Is there any strong reason not to have multi-threading support in bmcwe=
-b other than general guidelines to avoid threads?
->
-> It increases the binary size beyond what can fit on a lot of BMCs (about =
-10-20%) This is fine so long as you keep it as a compile option so people c=
-an opt into threading support.  Historically, teaching and reviewing multi-=
-threaded code has been an order of magnitude more difficult than single thr=
-eaded code, so keeping the single thread significantly improves the review =
-process, so please plan on having folks prepared to review code for multi-t=
-hreaded correctness.
->
-> >
-> >
-> >
-> > To use a reverse proxy like nginx as the front end to redirect a few UR=
-Is to a new application server.
->
-> Please take a look at the OpenBMC tree around 2018-2019.  There were seve=
-ral platforms that formerly used nginx as the front end to bmcweb, and have=
- since dropped it.  There was also a discussion on discord recently you mig=
-ht look at.  I'm not really sure how nginx would solve your problem though.=
-  The bmcweb reactor design looks similar to nginx (we use asio, they use l=
-ibuv) already, so it's not clear to me what you would gain here, unless you=
- were running multiple processes of bmcweb?  Keep in mind, there'd need to =
-be some sort of shared state in that case, so you have to do #3 in the abov=
-e anyway.
->
-> >
-> > Here the idea is to develop a new application server to serve the URIs =
-which have strong latency requirements and route the rest of the URIs to bm=
-cweb.
->
-> This is the part I don't understand;  If the forwarding calls in this new=
- server are blocking to bmcweb, what's the point of adding it?
-> Feel free to just show the code of this working as well.
->
-> >
-> >        Has anyone experienced any limitations with nginx on openBmc pla=
-tforms (w.r.t performance, memory footprint, etc)?
-> >
-> >        We also have the requirement to support SSE, Is there any known =
-limitation to make such a feature work with nginx?
->
-> It can be made to work.  AuthX tends to be the harder part, as implementi=
-ng CSRF for SSE or websockets is a huge pain.
->
-> >
-> >
-> >
-> >
-> >
-> > Any other suggestion or solution to the problem we are solving to meet =
-our performance requirement with bmcweb?
->
-> 1. Audit your code for any blocking calls.  If you have any, put them int=
-o a loop, process X bytes at a time, while calling boost::asio::dispatch in=
- between, to not starve the other tasks.
-> 2. Move the bmcweb core to a json library that can do incremental seriali=
-zation/deserialization.  boost::json would be my first choice.
-> 3. I have patches to turn on uring, which lets us use boost::asio::random=
-_access_file to fix #1 for blocking filesystem calls.
-> 4. Set reasonable limits on the max aggregation size that is allowed at a=
- system level.  There were some proposals on gerrit.
->
->
-> I would be worried about separating code into two classes (high priority/=
-low priority) because everyone's opinions will differ about what should be =
-"high" priority, and what should be "low" priority.  If that isn't configur=
-able easily, I worry that we're going to have problems agreeing on priority=
-, and I don't want to be in a situation where every developer is having to =
-make priority calls for every system class.  I'm open to the possibility he=
-re, but we need to make sure it keeps code moving.
->
-> >
-> >
-> >
-> >
-> >
-> > Thanks
-> >
-> > Rohit PAI
-> >
-> >
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+</head>
+<body>
+<div style=3D"font-family: inherit; font-size: inherit; color: inherit; bac=
+kground-color: transparent;">
+Hi,</div>
+<div style=3D"font-family: inherit; font-size: inherit; color: inherit; bac=
+kground-color: transparent;">
+<br>
+</div>
+<div style=3D"font-family: inherit; font-size: inherit; color: inherit; bac=
+kground-color: transparent;">
+I have built an openbmc image for ast2500 module but i am really having a h=
+ard time accessing it via REST or web. Both of them fail with ssl certifica=
+te even when I try to import the server.pem from the BMC module into my bro=
+wser or use --insecure for my curl.</div>
+<div style=3D"font-family: inherit; font-size: inherit; color: inherit; bac=
+kground-color: transparent;">
+<br>
+</div>
+<div style=3D"font-family: inherit; font-size: inherit; color: inherit; bac=
+kground-color: transparent;">
+Can you guys guide me on how to disable the https so i can just access my m=
+odule via REST and web?</div>
+<div style=3D"font-family: inherit; font-size: inherit; color: inherit; bac=
+kground-color: transparent;">
+<br>
+</div>
+<div style=3D"font-family: inherit; font-size: inherit; color: inherit; bac=
+kground-color: transparent;">
+Thanks,</div>
+<div><br>
+</div>
+<div>
+<p>Sent from <a href=3D"http://aka.ms/weboutlook">Outlook</a><br>
+</p>
+</div>
+</body>
+</html>
+
+--_000_SA3PR15MB5728B4C071EDCE147FC860B1A6479SA3PR15MB5728namp_--
