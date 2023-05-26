@@ -2,104 +2,126 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0B4F6710C5F
-	for <lists+openbmc@lfdr.de>; Thu, 25 May 2023 14:50:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 96930712936
+	for <lists+openbmc@lfdr.de>; Fri, 26 May 2023 17:17:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QRnvT4k9fz3f97
-	for <lists+openbmc@lfdr.de>; Thu, 25 May 2023 22:49:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QST6x3dhGz3fGf
+	for <lists+openbmc@lfdr.de>; Sat, 27 May 2023 01:17:13 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ne59JkGL;
+	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=Vgoa22bQ;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=stefanb@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=nvidia.com (client-ip=2a01:111:f400:7e8c::60f; helo=nam04-mw2-obe.outbound.protection.outlook.com; envelope-from=ropai@nvidia.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ne59JkGL;
+	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=Vgoa22bQ;
 	dkim-atps=neutral
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam04on2060f.outbound.protection.outlook.com [IPv6:2a01:111:f400:7e8c::60f])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QRntt4Zh3z3cdB
-	for <openbmc@lists.ozlabs.org>; Thu, 25 May 2023 22:49:26 +1000 (AEST)
-Received: from pps.filterd (m0353728.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34PCMSDi031063;
-	Thu, 25 May 2023 12:49:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- subject : to : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=n4sOcDHI7WnYirQAXrJdyb0Zb+rjiC3MljhvvCgfasM=;
- b=ne59JkGLNLi22TLis4uf6ogXyt4UUVPqNlQKnoUDz3IfzzZlTYabZarTNuBablo7m/1q
- XPak0Ui6/ZXknFoVgtRqVPINDckm/+GlIFl+2nYMLW/aYH0o6y7dm6K04M3a8NIv567m
- sBIW1WtbyYIpAmBTXdFIABAxKSWWFVusP7Y5bhyInqDy3KF7nF8HV19awSLYNuantvi0
- 0CbBsOyZq2EahqNebumNx9m3iKMQ8EEd/Sg5Nj8utOW3bDGFn3lTAOBG99MhrOB2yv2n
- 9VTE6XhsrAoI1FrGfTm4XbdxXXhR/JCs3QuvIx05/CUmD+mGFaV64YB5+WpgQlcyLSIK fg== 
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com [169.62.189.10])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qt7b29fq7-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 May 2023 12:49:11 +0000
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
-	by ppma02dal.us.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 34PCFhVR031428;
-	Thu, 25 May 2023 12:49:10 GMT
-Received: from smtprelay01.wdc07v.mail.ibm.com ([9.208.129.119])
-	by ppma02dal.us.ibm.com (PPS) with ESMTPS id 3qppdq1cw1-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 25 May 2023 12:49:10 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com [10.241.53.100])
-	by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 34PCn9fM32506410
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 25 May 2023 12:49:09 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 0934758062;
-	Thu, 25 May 2023 12:49:09 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 770B258057;
-	Thu, 25 May 2023 12:49:08 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
-	by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Thu, 25 May 2023 12:49:08 +0000 (GMT)
-Message-ID: <fdfbd0c5-87b0-a19a-802a-031c3a5f5043@linux.ibm.com>
-Date: Thu, 25 May 2023 08:49:08 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on Qemu
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QST6M6TwLz2xkm
+	for <openbmc@lists.ozlabs.org>; Sat, 27 May 2023 01:16:40 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=IIxt+DzXMCVX+pK6Yykzlx9EA4CXVFlqjp9K4pBFW92oJt9nTim2w2KJY64ApY0fsCN3rfbNoY0amLccwNA+tABDJLC87vJTwpVTeSv0d0ThCszXT55QgSL/PgH8s/RSBdK4hKF7mHbmjXr5ffMgHiDb2x/Em4O/+/5ZtBU7TWwd19z2Oo8fQMz0AImLYtM066l1fxCvmdPAfC89icfTRA7QbdEer6aKrFvbzZubLEgZ+9bow3u7NNB73OS1oYxMc+kLHRHd80wjnvWK0OyMgIAypChCc2sPd8QMinHxHy4gZcI2RV6aD/x1DvTB2nuwITJUfQ34FzWuyzAdkTK2ew==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=GDNY74YeD4TzNh4Xithtogb0F/NTHA6duAbiIXdnBtw=;
+ b=E21RbhPTSIf1rZXZhGp1YTHVGpFemQSyqE4FFzBm7l4Dgg9AHmSTJv9E2WN2a0Vk4tzw9iGeVJXNSLenWax///C61ESG1FR5QJzY1sNW8JGZ7Xv+gEAs4RJQlUr/naPHtZOiT+pUpbaDai6EbxuXoQScLQ5OWjiIQ3A3946KObPKN4fEiQeIVQgA70D7pljTY/rxSMMwU67aF1DCJnFt4raFFNQTd2uIEuzRjv2h7tEcEK2yGVshUEEhjfrbdxbj8g12T/ow4u2g9jUf9BakTOo1IGlaargT+VO8keZtUrQKRgPV45xGyFpFU8Gr21owgfL9/q64PYMNZHtf8lY+Zg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=GDNY74YeD4TzNh4Xithtogb0F/NTHA6duAbiIXdnBtw=;
+ b=Vgoa22bQmRTf1Py0Ot1XOzZRqR41haI34kXJNEgXiyrAOvQxXlyD9p8zVTF57o+O+EwP3cLWku83ebikeuxu/x9xEf/htkViOn26Sar35leGGytGuVvqjKoqaVcElrXNhcRGE6ErZzzZAYOxT2goHfsOsZYIDwg5sAlQ6n9o091j8+OhuikG7VW+2D5aSXGCfka5IlCc6GUFzsWTi9iIDP9IDQzrADF9L0jj455LRWwwmWvwp1VUfSjbBGZ1fABrmUMSPPOX8uZHgwcyFDwdfV96OGmWh0V1RXq7JoJPNT1TyEU8my9JulDVNEjfTns4+KlCY8qrlxjPXbDuPbpmRg==
+Received: from LV2PR12MB6014.namprd12.prod.outlook.com (2603:10b6:408:170::18)
+ by CH2PR12MB4069.namprd12.prod.outlook.com (2603:10b6:610:ac::18) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6433.18; Fri, 26 May
+ 2023 15:16:18 +0000
+Received: from LV2PR12MB6014.namprd12.prod.outlook.com
+ ([fe80::507:bce:e64c:f3fe]) by LV2PR12MB6014.namprd12.prod.outlook.com
+ ([fe80::507:bce:e64c:f3fe%7]) with mapi id 15.20.6433.018; Fri, 26 May 2023
+ 15:16:18 +0000
+From: Rohit Pai <ropai@nvidia.com>
+To: Ed Tanous <edtanous@google.com>
+Subject: RE: Prioritizing URIs with tight performance requirement in openBmc
+ with bmcweb
+Thread-Topic: Prioritizing URIs with tight performance requirement in openBmc
+ with bmcweb
+Thread-Index: AdmOIj9HMMHUr5E5SWm5E5BqGmJtZAAOkWAAAF37VNA=
+Date: Fri, 26 May 2023 15:16:18 +0000
+Message-ID:  <LV2PR12MB6014D3A0F42E3124DA926C3FCD479@LV2PR12MB6014.namprd12.prod.outlook.com>
+References:  <LV2PR12MB601419E4F59555BBCB4EE70FCD419@LV2PR12MB6014.namprd12.prod.outlook.com>
+ <CAH2-KxAdhmj98prJ2QCuN4p1ZxRZs3ZFdchxdZ-_A9c-ACpMOQ@mail.gmail.com>
+In-Reply-To:  <CAH2-KxAdhmj98prJ2QCuN4p1ZxRZs3ZFdchxdZ-_A9c-ACpMOQ@mail.gmail.com>
+Accept-Language: en-US
 Content-Language: en-US
-To: Sandeep Kumar <sandeep.pkumar@tcs.com>,
-        =?UTF-8?Q?C=c3=a9dric_Le_Goater?=
- <clg@kaod.org>,
-        "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
-        Ninad Palsule <ninad@linux.ibm.com>, Joel Stanley <jms@jms.id.au>,
-        Andrew Jeffery <andrew@aj.id.au>
-References: <MA1PR01MB412922EF629403C84674A6AD87909@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
- <MA1PR01MB4129EE9FDCFF415DF8580CB987729@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
- <7fbe2c10-aa83-2640-0de0-b07ca0e5a13d@linux.ibm.com>
- <MA1PR01MB412975D2976523FD64289DB487729@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
- <b35b62e6-2195-627f-6939-381f40abdd43@linux.ibm.com>
- <MA1PR01MB41293CA1F337F47DDA58035D87729@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
- <71e0634f-e5b6-d804-7b55-7ae674f34342@linux.ibm.com>
- <MA1PR01MB41297364D34EE0949966C5BD87769@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
- <7481d113-65f9-fc86-1908-29d8234ad980@linux.ibm.com>
- <PN2PR01MB41385D9BE33B729837BD39C2877E9@PN2PR01MB4138.INDPRD01.PROD.OUTLOOK.COM>
- <58361ee6-99a7-e19c-704d-e4fbb0e422d0@linux.ibm.com>
- <MA1PR01MB412970377A2533F1BEA11BA987409@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
- <9ef4994c-6665-d7a2-f79c-f1360d3873e5@linux.ibm.com>
- <MA1PR01MB412906869D16199F845C80A987469@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <MA1PR01MB412906869D16199F845C80A987469@MA1PR01MB4129.INDPRD01.PROD.OUTLOOK.COM>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: NNuXKIYN_mwDYYQT0ze9JT_w92Hkzfo0
-X-Proofpoint-GUID: NNuXKIYN_mwDYYQT0ze9JT_w92Hkzfo0
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: LV2PR12MB6014:EE_|CH2PR12MB4069:EE_
+x-ms-office365-filtering-correlation-id: 422c35ab-d567-42f0-e883-08db5dfc2798
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:  MKphl6k18QDYijLp8i+GA7aTjWLPXLRdmHqA5/uztFrKAjVyrgSspfnOi88S2Hz3AVc/dWvOJps7or9vski+OgwMNCa7Y41d5gZkXnQ17abQT/Wj3XY/ybnqqvSJ5YGhH78aXbxct7X+fSfMw21pvtzlU7gJNTqg2wX3PkDc+uoQKbJA5vGRvC4wBPEaAw3Tuk+GZx6MEE0AXQb2IjjejsDTnEl77SAd9qAc7oMS/tv1Cub/iLk7EYRKY8OU5s6/DDWkEA8k7bKsrHmfLiWTNvo50o3PSWa0qA+NRPnMvigWTvekwRpWxIbABPy5B12hjqY36js7F55ibQ/cKJ5rG4lg1ZHep5kVsG0t/OY25lzN6Bp8tvY2MkmGbyyzdTrKfqp5y0RgaYX/K+26I8nUaakAOFffVcc8UBZEtEFU70IABiUQwbXTCFHef/Mjz1wF3KbKORz+0O1u+15/7/MjGNDFgB7IJwwXe+muRH7Up6TXyYPQbUA7WXVvoJipj0NzjT4KwVDD46jxMl4XSbk9kCktQlj9BLXoLxXPFdW5RjlEdruF/Me/1hdGs7PbpfqFCCwb/8nFi1Ff255LlIVR7bd6jTZ6jaMRUgDW6RcGQJQbXJlwwntS+vZMB9lPJPbk
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB6014.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(376002)(39860400002)(366004)(136003)(346002)(396003)(451199021)(122000001)(316002)(71200400001)(52536014)(26005)(53546011)(9686003)(76116006)(6506007)(66476007)(66446008)(64756008)(66946007)(66556008)(6916009)(4326008)(38100700002)(5660300002)(55016003)(33656002)(41300700001)(7696005)(8676002)(8936002)(83380400001)(86362001)(478600001)(186003)(30864003)(2906002)(38070700005);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:  =?utf-8?B?WE9Na3RYUmZXMmxuaXFXZ2VPSGFldmJJTmhnZ2VpcFIrcm95L2tRTFNQcUt6?=
+ =?utf-8?B?Z1NTM1RDcEo4TXpTS3RxejZxYzZtUWRETDQvbFd2YzM5SUJETzBUQ0xQSHEx?=
+ =?utf-8?B?S2VGZURBOVowaHExU056dFJGTDNpNTkxb3oyK1dsV2JjWExHa21Damh1blF6?=
+ =?utf-8?B?QzBsUEVQbStXbW05NFFHQ2ovVVplSUh3QVpzcEZrMVVQZUp5S2dDRU9pLy9q?=
+ =?utf-8?B?RzY0cVNXV3hSN1FlbTA1dU9VUzFnUkdMMG1TVnVSd2E0WHBZempLSHRZVW9l?=
+ =?utf-8?B?SXBPVGxtWE1sOWVhTGVtdzBlT3l1dGJ2ckgxK1BXbTVzNksza3J6VVN3M0ds?=
+ =?utf-8?B?L1dFZXhaZGZ5UXRER0JHaDVIMitYR0xQMmNOV2I5NHc4WU9aQW1oOE1YdU9i?=
+ =?utf-8?B?bllSNnJ3Z3FORjFORC9qVWZoUURZSVM1bkR1UHozWWR4MWI0RXJsVnpVWjRR?=
+ =?utf-8?B?K3BMRWIzRXZzR2g3OXBFUldxUGpGczVIQ0tmUXZ6QlRDaDZHZEw3ais5aXBF?=
+ =?utf-8?B?WE9KbDFQM2dueXlKT2NTdThKOWVISVJ1MEs4NXR5OGxEM04rMlpocVdWOTFH?=
+ =?utf-8?B?Y2IwRi9SdGhRYXpIVkMzUlhpMXIrUzlhSFZ3SUVxU2ZwMG5ROFFGMTc2Nzlx?=
+ =?utf-8?B?Tmd0V3BGNVdybmw2QnR5RDFRSGxFTWdldU5pUU1JSDVLb244UURmekdIUmEv?=
+ =?utf-8?B?U2JNQ05ib1doZmNuQ1UvaGpMZTJIdHVMakRjVTl3WjBCYmt2d3JIRTFTMkJo?=
+ =?utf-8?B?TW1OQ0VPeCtpcWtrbGowU0NNMTNsbjRQY01FYWszdjZHQlNmMjBYbHpuMkVY?=
+ =?utf-8?B?aTN5amNIT0wycnphS2RsWkZqcXpmUC9EL0J5OWxTamtzbzlsaUNDTkVVQ0NK?=
+ =?utf-8?B?YjU4MEdvVEx6b0V5M0VtUzFYSzRJaHp2bDZ6WVZSUmpNOUxJeXBYZEsvWFlY?=
+ =?utf-8?B?TFU3SVViZ2ZBRWtIY0MxTW4rUUFBUU1Oc0s1QXB1VUlncGlmRWFOa0pKdHdM?=
+ =?utf-8?B?VWg4ME5PUFBob0YzTzJUU1J3Qm5MSDI5VzBOMmZqc1RYUjRmTGdsaHVQNVVp?=
+ =?utf-8?B?NnZiUm1vWlJRc1VydTc4bm5FQUcxTW1MTDZoQWdhQm5DWUJxYzVwVzNZMjNt?=
+ =?utf-8?B?KzN3MUQ3VS9oQ2ZON3FDTHVsaTQrM2QwS0dZNDVIU3dhNDZWWTg2aXpacTB2?=
+ =?utf-8?B?emNGRnNJWXZNNEJ2QktIOFR1K0F4VEVXTFRQTjkyRENoYmorVGdYT05RbDFN?=
+ =?utf-8?B?eXZWSXhEeE14aVhpTnM4TFB1QzB6YnZ3TnhRRHM0UURXSnFDSjgxMmk0Q3Z5?=
+ =?utf-8?B?M3BYSzBGU3RjUm1KYjdCWTZwcVI2WGtLT0wzOSsxS29qMWordlJ4RjZpVEhq?=
+ =?utf-8?B?cGdGZ1hHNk8xbzIyZjV4aStTV0p5T3Z6dTJLN200YzhxM0MwUXNIQ2hpNXBn?=
+ =?utf-8?B?K1VrRk5IQkNXbDRheUVnSDBFdVhmRjhjd0ZRS05wc0Z2WnY2bDhjU1VNM2dh?=
+ =?utf-8?B?MUhYMXo5K1g4YWFyWHlJTmpVWGVvZ2xkQk0xb0hLR1JMUVZGWFpsYklsaW1U?=
+ =?utf-8?B?NDU4WmE0dEplcUpXSzcyYUs5bGJGWVFBemJ6ZnpLejN2YnFQNDZUSlZiLzhX?=
+ =?utf-8?B?VDlLeHdYcEp1cDE3VEVscS9LM2crZjZjS2ZONnJVc2hINGdLU0FsVGZHeFY2?=
+ =?utf-8?B?NlFzTzBxb2pTY052dEFhNFhoQ2RjWGtTU3V3THlsZW5aMGE1MkpvTGFvaDRH?=
+ =?utf-8?B?MjU3c25tbE9rRkZmQlpnVTBDOWczRnFydWs1OC9uKzFuUDBYNldnSlJuWlk0?=
+ =?utf-8?B?cEZIRXVxTUN5TDdBWlNVMUUwL3lzNzJRdDlBd0VPSmdZQ2d0Z2FPcmsxd1c3?=
+ =?utf-8?B?UFRMaVV6Z3hPUTdCeFQ0elF4NERYSTNjdGtKNkk5eVJsZnY0UWxRNFNLSTVm?=
+ =?utf-8?B?QlhDV2JoNjQ5ODJ4N05zVFZ3dTF0NmJIOHBzeTBIRVhOS1k4TTExUXhqbTRX?=
+ =?utf-8?B?VEFqaDBzTFptaHJCYm85MnVxZmlhR3cxaHlJMXh2VXNhOXBmY0ZGQTM5QWtt?=
+ =?utf-8?B?UTJTNGwxSGljMWdxREJNOEVPVmJnekc5Ym53cXBSS3pyck9OZy8rOVY2Lzgz?=
+ =?utf-8?Q?p0bQ=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-25_06,2023-05-25_02,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 malwarescore=0
- suspectscore=0 priorityscore=1501 adultscore=0 mlxscore=0 bulkscore=0
- lowpriorityscore=0 phishscore=0 impostorscore=0 spamscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305250103
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB6014.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 422c35ab-d567-42f0-e883-08db5dfc2798
+X-MS-Exchange-CrossTenant-originalarrivaltime: 26 May 2023 15:16:18.0469
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: KcJGo4JTB5GywL0FY29yVi+UAtbrnw2O7Grfqj99pGhFbn/aByhXtXF+uHdDf4lzPRDOBk6Esck2iSWD1ynCRA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH2PR12MB4069
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -111,1766 +133,221 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-
-On 5/25/23 05:49, Sandeep Kumar wrote:
->   TCS Confidential
-> 
-> Hi Stefan,
-> 
-> Which OS are you building this ? I am building it on ubuntu 20.04. Also, I am building it for evb-ast2600 and I don’t see TPM enabled in the configs/evb-ast2600_defconfig  file.
-
-$ cat /etc/lsb-release
-DISTRIB_ID=Ubuntu
-DISTRIB_RELEASE=22.04
-DISTRIB_CODENAME=jammy
-DISTRIB_DESCRIPTION="Ubuntu 22.04.1 LTS"
-
-$ . setup evb-ast2600
-Machine evb-ast2600 found in meta-evb/meta-evb-aspeed/meta-evb-ast2600
-Common targets are:
-
-      obmc-phosphor-image: Includes OpenBMC Phosphor userspace and Web UI
-
-      core-image-minimal: A small image just capable of allowing a device to boot
-
-      core-image-full-cmdline: A small image with more Linux functionality
-                               installed, including a ssh server.
-
-Note that the core targets will not set the default phosphor password.
-
-
-    Stefan
-
-
-
-> 
-> Thanks,
-> Sandeep.
-> 
-> -----Original Message-----
-> From: Stefan Berger <stefanb@linux.ibm.com>
-> Sent: Tuesday, May 23, 2023 8:06 PM
-> To: Sandeep Kumar <sandeep.pkumar@tcs.com>; Cédric Le Goater <clg@kaod.org>; openbmc@lists.ozlabs.org; Ninad Palsule <ninad@linux.ibm.com>; Joel Stanley <jms@jms.id.au>; Andrew Jeffery <andrew@aj.id.au>
-> Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on Qemu
-> 
-> "External email. Open with Caution"
-> 
-> 
-> 
-> On 5/23/23 01:59, Sandeep Kumar wrote:
-> 
->>
->> TCS Confidential
-> 
-> What is TCS Confidential ?
-> 
->>
->>
->> Hi Stefan,
->>
->> Thanks for the information. I am trying to make use of the commands by using tpm_init() inside image-fit.c file. It compiles but gives an undefined reference error as below.
->>
-> 
-> When I am running the OpenBMC image that I build with `bitbake obmc-phosphor-image` I already have uboot with TPM 2 support built-in. I am not sure how you are getting this error.
-> 
->       Stefan
-> 
->>     gcc
->> -isystem/home/tcs/work/san/openbmc/openbmc_april/openbmc/build/evb-ast
->> 2600/tmp/work/evb_ast2600-openbmc-linux-gnueabi/u-boot-aspeed-sdk/1_v2
->> 019.04+gitAUTOINC+fd915728e1-r0/recipe-sysroot-native/usr/include -O2
->> -pipe
->> -L/home/tcs/work/san/openbmc/openbmc_april/openbmc/build/evb-ast2600/t
->> mp/work/evb_ast2600-openbmc-linux-gnueabi/u-boot-aspeed-sdk/1_v2019.04
->> +gitAUTOINC+fd915728e1-r0/recipe-sysroot-native/usr/lib
->> -L/home/tcs/work/san/openbmc/openbmc_april/openbmc/build/evb-ast2600/t
->> mp/work/evb_ast2600-openbmc-linux-gnueabi/u-boot-aspeed-sdk/1_v2019.04
->> +gitAUTOINC+fd915728e1-r0/recipe-sysroot-native/lib
->> -Wl,--enable-new-dtags
->> -Wl,-rpath-link,/home/tcs/work/san/openbmc/openbmc_april/openbmc/build
->> /evb-ast2600/tmp/work/evb_ast2600-openbmc-linux-gnueabi/u-boot-aspeed-
->> sdk/1_v2019.04+gitAUTOINC+fd915728e1-r0/recipe-sysroot-native/usr/lib
->>
->> -Wl,-rpath-link,/home/tcs/work/san/openbmc/openbmc_april/openbmc/build
->> /evb-ast2600/tmp/work/evb_ast2600-openbmc-linux-gnueabi/u-boot-aspeed-
->> sdk/1_v2019.04+gitAUTOINC+fd915728e1-r0/recipe-sysroot-native/lib
->> -Wl,-rpath,/home/tcs/work/san/openbmc/openbmc_april/openbmc/build/evb-
->> ast2600/tmp/work/evb_ast2600-openbmc-linux-gnueabi/u-boot-aspeed-sdk/1
->> _v2019.04+gitAUTOINC+fd915728e1-r0/recipe-sysroot-native/usr/lib
->> -Wl,-rpath,/home/tcs/work/san/openbmc/openbmc_april/openbmc/build/evb-
->> ast2600/tmp/work/evb_ast2600-openbmc-linux-gnueabi/u-boot-aspeed-sdk/1
->> _v2019.04+gitAUTOINC+fd915728e1-r0/recipe-sysroot-native/lib
->> -Wl,-O1  -o tools/fit_check_sign tools/aisimage.o tools/atmelimage.o
->> tools/common/image-sig.o tools/common/bootm.o tools/lib/crc32.o
->> tools/default_image.o tools/lib/fdtdec_common.o tools/lib/fdtdec.o
->> tools/fit_common.o tools/fit_image.o tools/common/image-fit.o
->> tools/image-host.o tools/common/image.o tools/imagetool.o
->> tools/imximage.o tools/imx8image.o tools/imx8mimage.o tools/kwbimage.o
->> tools/lib/md5.o tools/lpc32xximage.o tools/mxsimage.o
->> tools/omapimage.o tools/os_support.o tools/pblimage.o
->> tools/pbl_crc32.o tools/vybridimage.o tools/stm32image.o
->> tools/lib/rc4.o tools/rkcommon.o tools/rkimage.o tools/rksd.o
->> tools/rkspi.o tools/socfpgaimage.o tools/lib/crc16.o tools/lib/sha1.o
->> tools/lib/sha256.o tools/lib/sha512.o tools/common/hash.o
->> tools/ublimage.o tools/zynqimage.o tools/zynqmpimage.o
->> tools/zynqmpbif.o tools/libfdt/fdt.o tools/libfdt/fdt_wip.o
->> tools/libfdt/fdt_sw.o tools/libfdt/fdt_rw.o
->> tools/libfdt/fdt_strerror.o tools/libfdt/fdt_empty_tree.o
->> tools/libfdt/fdt_addresses.o tools/libfdt/fdt_overlay.o
->> tools/lib/libfdt/fdt_ro.o tools/lib/libfdt/fdt_region.o
->> tools/gpimage.o tools/gpimage-common.o tools/mtk_image.o
->> tools/lib/rsa/rsa-sign.o tools/lib/rsa/rsa-verify.o
->> tools/lib/rsa/rsa-checksum.o tools/lib/rsa/rsa-mod-exp.o
->> tools/fit_check_sign.o  -lssl -lcrypto
->>
->> /home/tcs/work/san/openbmc/openbmc_april/openbmc/build/evb-ast2600/tmp/hosttools/ld: tools/common/image-fit.o: in function `boot_get_setup_fit':
->>
->> image-fit.c:(.text+0x27e1): undefined reference to `get_tpm'
->>
->> /home/tcs/work/san/openbmc/openbmc_april/openbmc/build/evb-ast2600/tmp/hosttools/ld: image-fit.c:(.text+0x280e): undefined reference to `tpm_init'
->>
->> collect2: error: ld returned 1 exit status
->>
->> make[2]: *** [scripts/Makefile.host:106: tools/dumpimage] Error 1
->>
->> Although the tpm_init() is present in tpm-common.c  and image-fit.c is present in the same module as well. But still I get the above error. I have tried including the DEPENDS on libtpm in the u-boot recipe but nothing seems to work. Any specific library/specific location to be included for TPM support?
->>
->> -----Original Message-----
->> From: Stefan Berger <stefanb@linux.ibm.com>
->> Sent: Thursday, May 18, 2023 5:10 PM
->> To: Sandeep Kumar <sandeep.pkumar@tcs.com>; Cédric Le Goater
->> <clg@kaod.org>; openbmc@lists.ozlabs.org; Ninad Palsule
->> <ninad@linux.ibm.com>; Joel Stanley <jms@jms.id.au>; Andrew Jeffery
->> <andrew@aj.id.au>
->> Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on Qemu
->>
->> "External email. Open with Caution"
->>
->> On 5/17/23 13:13, Sandeep Kumar wrote:
->>
->>   >   TCS Confidential
->>
->>   >
->>
->>   > Hi Stefan,
->>
->>   >
->>
->>   > Thanks for providing the information. I am able to make use of it. But is it possible to make use of this stack at the bootloader(inside u-boot) level ?
->>
->>   >
->>
->> There are quite a few commands in u-boot:
->>
->> ast# tpm2
->>
->> tpm2 - Issue a TPMv2.x command
->>
->> Usage:
->>
->> tpm2 <command> [<arguments>]
->>
->> device [num device]
->>
->>        Show all devices or set the specified device info
->>
->>        Show information about the TPM.
->>
->> state
->>
->>        Show internal state from the TPM (if available) init
->>
->>        Initialize the software stack. Always the first command to issue.
->>
->> startup <mode>
->>
->>        Issue a TPM2_Startup command.
->>
->>        <mode> is one of:
->>
->>            * TPM2_SU_CLEAR (reset state)
->>
->>            * TPM2_SU_STATE (preserved state) self_test <type>
->>
->>        Test the TPM capabilities.
->>
->>        <type> is one of:
->>
->>            * full (perform all tests)
->>
->>            * continue (only check untested tests) clear <hierarchy>
->>
->>        Issue a TPM2_Clear command.
->>
->>        <hierarchy> is one of:
->>
->>            * TPM2_RH_LOCKOUT
->>
->>            * TPM2_RH_PLATFORM
->>
->> pcr_extend <pcr> <digest_addr>
->>
->>        Extend PCR #<pcr> with digest at <digest_addr>.
->>
->>        <pcr>: index of the PCR
->>
->>        <digest_addr>: address of a 32-byte SHA256 digest pcr_read <pcr>
->> <digest_addr>
->>
->>        Read PCR #<pcr> to memory address <digest_addr>.
->>
->>       <pcr>: index of the PCR
->>
->>        <digest_addr>: address to store the a 32-byte SHA256 digest
->> get_capability <capability> <property> <addr> <count>
->>
->>        Read and display <count> entries indexed by <capability>/<property>.
->>
->>        Values are 4 bytes long and are written at <addr>.
->>
->>        <capability>: capability
->>
->>        <property>: property
->>
->>        <addr>: address to store <count> entries of 4 bytes
->>
->>        <count>: number of entries to retrieve dam_reset [<password>]
->>
->>        If the TPM is not in a LOCKOUT state, reset the internal error counter.
->>
->>        <password>: optional password
->>
->> dam_parameters <max_tries> <recovery_time> <lockout_recovery>
->> [<password>]
->>
->>        If the TPM is not in a LOCKOUT state, set the DAM parameters
->>
->>        <maxTries>: maximum number of failures before lockout,
->>
->>                    0 means always locking
->>
->>        <recoveryTime>: time before decrement of the error counter,
->>
->>                        0 means no lockout
->>
->>        <lockoutRecovery>: time of a lockout (before the next try),
->>
->>                           0 means a reboot is needed
->>
->>        <password>: optional password of the LOCKOUT hierarchy
->> change_auth <hierarchy> <new_pw> [<old_pw>]
->>
->>        <hierarchy>: the hierarchy
->>
->>        <new_pw>: new password for <hierarchy>
->>
->>        <old_pw>: optional previous password of <hierarchy>
->> pcr_setauthpolicy|pcr_setauthvalue <pcr> <key> [<password>]
->>
->>        Change the <key> to access PCR #<pcr>.
->>
->>        hierarchy and may be empty.
->>
->>        /!\WARNING: untested function, use at your own risks !
->>
->>        <pcr>: index of the PCR
->>
->>        <key>: secret to protect the access of PCR #<pcr>
->>
->>        <password>: optional password of the PLATFORM hierarchy
->>
->> Regards,
->>
->>       Stefan
->>
->>   > Thanks,
->>
->>   > Sandeep.
->>
->>   >
->>
->>   > -----Original Message-----
->>
->>   > From: Stefan Berger <stefanb@linux.ibm.com
->> <mailto:stefanb@linux.ibm.com>>
->>
->>   > Sent: Tuesday, May 9, 2023 10:01 PM
->>
->>   > To: Sandeep Kumar <sandeep.pkumar@tcs.com
->> <mailto:sandeep.pkumar@tcs.com>>; Cédric Le Goater
->>
->>   > <clg@kaod.org <mailto:clg@kaod.org>>; openbmc@lists.ozlabs.org
->> <mailto:openbmc@lists.ozlabs.org>; Ninad Palsule
->>
->>   > <ninad@linux.ibm.com <mailto:ninad@linux.ibm.com>>; Joel Stanley
->> <jms@jms.id.au <mailto:jms@jms.id.au>>; Andrew Jeffery
->>
->>   > <andrew@aj.id.au <mailto:andrew@aj.id.au>>
->>
->>   > Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on
->> Qemu
->>
->>   >
->>
->>   > "External email. Open with Caution"
->>
->>   >
->>
->>   >
->>
->>   > On 5/9/23 08:06, Sandeep Kumar wrote:
->>
->>   >>    TCS Confidential
->>
->>   >>
->>
->>   >> Hi Stefan,
->>
->>   >>
->>
->>   >> Thanks for the help.
->>
->>   >>
->>
->>   >> 'MACHINE_FEATURES:append = " tpm2" => this worked for me as well.  Could you please also point to the API's which can be used for communicating with swtpm? Any sample code which can be used for reading and writing data to and from the block device ?
->>
->>   >
->>
->>   > TPM 2 has character devices /dev/tpm0 and /dev/tpmrm0 that can for example be used with either one of the tss2 stacks:
->>
->>   >
->>
->>   > meta-security/meta-tpm/recipes-tpm2/ibmtpm2tss
->>
->>   > meta-security/meta-tpm/recipes-tpm2/ibmtpm2tss/ibmtpm2tss
->>
->>   >
->> meta-security/meta-tpm/recipes-tpm2/ibmtpm2tss/ibmtpm2tss/0001-utils-1
->>
->>   > 2-Makefile.am-expand-wildcards-in-prereqs.patch
->>
->>   > meta-security/meta-tpm/recipes-tpm2/ibmtpm2tss/ibmtpm2tss_1661.bb
->>
->>   > meta-security/meta-tpm/recipes-tpm2/tpm2-tss-engine
->>
->>   > meta-security/meta-tpm/recipes-tpm2/tpm2-tss-engine/tpm2-tss-engine_1.
->>
->>   > 1.0.bb meta-security/meta-tpm/recipes-tpm2/tpm2-tss
->>
->>   > meta-security/meta-tpm/recipes-tpm2/tpm2-tss/tpm2-tss
->>
->>   > meta-security/meta-tpm/recipes-tpm2/tpm2-tss/tpm2-tss/fixup_hosttools.
->>
->>   > patch
->> meta-security/meta-tpm/recipes-tpm2/tpm2-tss/tpm2-tss_4.0.1.bb
->>
->>   >
->>
->>   > Intel: https://github.com/tpm2-software/tpm2-tss#overview
->> <https://github.com/tpm2-software/tpm2-tss#overview>
->>
->>   > IBM: https://github.com/kgoldman/ibmtss
->> <https://github.com/kgoldman/ibmtss>
->>
->>   >
->>
->>   >      Stefan
->>
->>   >
->>
->>   >>
->>
->>   >> Thanks,
->>
->>   >> Sandeep.
->>
->>   >>
->>
->>   >> -----Original Message-----
->>
->>   >> From: Stefan Berger <stefanb@linux.ibm.com
->> <mailto:stefanb@linux.ibm.com>>
->>
->>   >> Sent: Saturday, May 6, 2023 2:08 AM
->>
->>   >> To: Sandeep Kumar <sandeep.pkumar@tcs.com
->> <mailto:sandeep.pkumar@tcs.com>>; Cédric Le Goater
->>
->>   >> <clg@kaod.org <mailto:clg@kaod.org>>; openbmc@lists.ozlabs.org
->> <mailto:openbmc@lists.ozlabs.org>; Ninad Palsule
->>
->>   >> <ninad@linux.ibm.com <mailto:ninad@linux.ibm.com>>; Joel Stanley
->> <jms@jms.id.au <mailto:jms@jms.id.au>>; Andrew Jeffery
->>
->>   >> <andrew@aj.id.au <mailto:andrew@aj.id.au>>
->>
->>   >> Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on
->>
->>   >> Qemu
->>
->>   >>
->>
->>   >> "External email. Open with Caution"
->>
->>   >>
->>
->>   >>
->>
->>   >> On 5/5/23 13:36, Sandeep Kumar wrote:
->>
->>   >>>     TCS Confidential
->>
->>   >>>
->>
->>   >>> Hi Stefan,
->>
->>   >>>
->>
->>   >>> I have these options set in
->>
->>   >>>
->> /home/tcs/work/san/openbmc/openbmc_april/openbmc/meta-aspeed/recipes
->>
->>   >>> - k ernel/linux/linux-aspeed/tpm/tpm2.cfg
->>
->>   >>>
->>
->>   >>> CONFIG_HW_RANDOM=y
->>
->>   >>> CONFIG_HW_RANDOM_TPM=y
->>
->>   >>> CONFIG_TCG_TPM=y
->>
->>   >>> CONFIG_TCG_TIS_CORE=y
->>
->>   >>> CONFIG_TCG_TIS=y
->>
->>   >>> CONFIG_TCG_TIS_SPI=y
->>
->>   >>> CONFIG_TCG_TIS_I2C=y
->>
->>   >>> CONFIG_SECURITYFS=y
->>
->>   >>
->>
->>   >>
->>
->>   >> I added 'MACHINE_FEATURES:append = " tpm2"' and this works for me.
->>
->>   >>
->>
->>   >> As long as these symbols are built into the kernel it should work:
->>
->>   >>
->>
->>   >>> root@evb-ast2600:~# grep tpm_tis_i2c /proc/kallsyms 8056318c t
->>
->>   >>> tpm_tis_i2c_remove
->>
->>   >>> 805631b0 t tpm_tis_i2c_retry_transfer_until_ack
->>
->>   >>> 8056323c t tpm_tis_i2c_write_bytes
->>
->>   >>> 80563334 t tpm_tis_i2c_verify_crc
->>
->>   >>> 805633e0 t tpm_tis_i2c_read_bytes
->>
->>   >>> 80563604 t tpm_tis_i2c_probe
->>
->>   >>> 80d23964 t tpm_tis_i2c_driver_init
->>
->>   >>
->>
->>   >>>
->>
->>   >>> and in
->>
->>   >>>
->> /home/tcs/work/san/openbmc/openbmc_april/openbmc/meta-aspeed/recipes
->>
->>   >>> - k ernel/linux/linux-aspeed.inc I have these,
->>
->>   >>>
->>
->>   >>> SRC_URI += " \
->>
->>   >>> file://defconfig <file://defconfig> \
->>
->>   >>>
->> file://rsa_oem_fitimage_key.key;sha256sum=eeb4ff2ebbfbd97b6254fe6dbaee
->> a41067e54c65176c233ec7b2ab2decf1ddcd
->> <file://rsa_oem_fitimage_key.key;sha256sum=eeb4ff2ebbfbd97b6254fe6dbae
->> ea41067e54c65176c233ec7b2ab2decf1ddcd> \
->>
->>   >>>
->> file://rsa_oem_fitimage_key.crt;sha256sum=45f5a55497cce8040999bf9f3214
->> d471ac7b83ab7acef41c4425a34662e8372e
->> <file://rsa_oem_fitimage_key.crt;sha256sum=45f5a55497cce8040999bf9f321
->> 4d471ac7b83ab7acef41c4425a34662e8372e> \
->>
->>   >>> ${@bb.utils.contains('MACHINE_FEATURES
->> <mailto:$%7b@bb.utils.contains('MACHINE_FEATURES>', 'tpm2',
->> 'file://tpm/tpm2.scc file://tpm/tpm2.cfg <file://tpm/tpm2.cfg>', '',
->> d)} \
->>
->>   >>> ${@bb.utils.contains_any('DISTRO_FEATURES
->> <mailto:$%7b@bb.utils.contains_any('DISTRO_FEATURES>', \
->>
->>   >>>                    'obmc-static-norootfs obmc-ubi-fs', \
->>
->>   >>>                    'file://ubi/ubi.scc file://ubi/ubi.cfg
->> <file://ubi/ubi.cfg>', '', d)} \
->>
->>   >>>               "
->>
->>   >>>
->>
->>   >>> Anything else needs to be done to enable TPM ?
->>
->>   >>
->>
->>   >> Apart from having to use the latest QEMU with the TPM TIS I2C support (from git repo) I don't know of anything else.
->>
->>   >>
->>
->>   >>       Stefan
->>
->>   >>
->>
->>   >>>
->>
->>   >>> Thanks,
->>
->>   >>> Sandeep.
->>
->>   >>>
->>
->>   >>> -----Original Message-----
->>
->>   >>> From: Stefan Berger <stefanb@linux.ibm.com
->> <mailto:stefanb@linux.ibm.com>>
->>
->>   >>> Sent: Friday, May 5, 2023 9:41 PM
->>
->>   >>> To: Sandeep Kumar <sandeep.pkumar@tcs.com
->> <mailto:sandeep.pkumar@tcs.com>>; Cédric Le Goater
->>
->>   >>> <clg@kaod.org <mailto:clg@kaod.org>>; openbmc@lists.ozlabs.org
->> <mailto:openbmc@lists.ozlabs.org>; Ninad Palsule
->>
->>   >>> <ninad@linux.ibm.com <mailto:ninad@linux.ibm.com>>; Joel Stanley
->> <jms@jms.id.au <mailto:jms@jms.id.au>>; Andrew Jeffery
->>
->>   >>> <andrew@aj.id.au <mailto:andrew@aj.id.au>>
->>
->>   >>> Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC on
->>
->>   >>> Qemu
->>
->>   >>>
->>
->>   >>> "External email. Open with Caution"
->>
->>   >>>
->>
->>   >>> I enable the following kernel build options for OpenBMC Linux kernel:
->>
->>   >>>
->>
->>   >>> CONFIG_TCG_TPM=y
->>
->>   >>> CONFIG_TCG_TIS_CORE=y
->>
->>   >>> CONFIG_TCG_TIS=y
->>
->>   >>> CONFIG_TCG_TIS_I2C=y
->>
->>   >>>
->>
->>   >>> With swtpm running in another terminal:
->>
->>   >>>
->>
->>   >>> while :; do swtpm socket --tpmstate dir=/tmp/mytpm1     --ctrl
->> type=unixio,path=/tmp/mytpm1/swtpm-sock     --tpm2     --log level=20;
->> done
->>
->>   >>>
->>
->>   >>> I start qemu built from qemu git master branch tip:
->>
->>   >>>
->>
->>   >>> /tmp/qemu-system-arm -machine ast2600-evb -nographic -no-reboot
->> -net nic -net
->> user,hostfwd=:127.0.0.1:5722-:22,hostfwd=:127.0.0.1:5743-:443,hostfwd=
->> udp:127.0.0.1:5723-:623 -drive
->> file=./tmp/deploy/images/evb-ast2600/obmc-phosphor-image-evb-ast2600.s
->> tatic.mtd,format=raw,if=mtd -chardev
->> socket,id=chrtpm,path=/tmp/mytpm1/swtpm-sock     -tpmdev
->> emulator,id=tpm0,chardev=chrtpm     -device
->> tpm-tis-i2c,tpmdev=tpm0,bus=aspeed.i2c.bus.12,address=0x2e
->>
->>   >>>
->>
->>   >>> root@evb-ast2600:~# echo tpm_tis_i2c 0x2e >
->> /sys/bus/i2c/devices/i2c-12/new_device
->>
->>   >>> [   63.771200] tpm_tis_i2c 12-002e: 2.0 TPM (device-id 0x1,
->> rev-id 1)
->>
->>   >>> [   63.783927] tpm tpm0: A TPM error (256) occurred attempting
->> the self test
->>
->>   >>> [   63.784256] tpm tpm0: starting up the TPM manually
->>
->>   >>> [   63.851474] i2c i2c-12: new_device: Instantiated device
->> tpm_tis_i2c at 0x2e
->>
->>   >>>
->>
->>   >>> root@evb-ast2600:~# uname -a
->>
->>   >>> Linux evb-ast2600
->> 6.1.15-580639a-dirty-c56bfb7-00123-gc56bfb70ebfa
->>
->>   >>> #1 SMP Thu Apr  6 00:55:09 UTC 2023 armv7l GNU/Linux
->>
->>   >>>
->>
->>   >>> root@evb-ast2600:~# grep tpm_tis_i2c /proc/kallsyms> 8056318c t
->>
->>   >>> tpm_tis_i2c_remove
->>
->>   >>> 805631b0 t tpm_tis_i2c_retry_transfer_until_ack
->>
->>   >>> 8056323c t tpm_tis_i2c_write_bytes
->>
->>   >>> 80563334 t tpm_tis_i2c_verify_crc
->>
->>   >>> 805633e0 t tpm_tis_i2c_read_bytes
->>
->>   >>> 80563604 t tpm_tis_i2c_probe
->>
->>   >>> 80d23964 t tpm_tis_i2c_driver_init
->>
->>   >>>
->>
->>   >>> root@evb-ast2600:~# find /sys/class/tpm /sys/class/tpm
->>
->>   >>> /sys/class/tpm/tpm0
->>
->>   >>>
->>
->>   >>> root@evb-ast2600:~# ls -l /dev/tpm*
->>
->>   >>> crw-------    1 root     root       10, 224 May  5 16:03
->> /dev/tpm0
->>
->>   >>> crw-------    1 root     root      252, 65536 May  5 16:03
->> /dev/tpmrm0
->>
->>   >>>
->>
->>   >>> root@evb-ast2600:~# find /sys/ | grep pcr
->>
->>   >>>
->> /sys/devices/platform/ahb/ahb:apb/ahb:apb:bus@1e78a000/1e78a680.i2c-
->>
->>   >>> b
->>
->>   >>> u
->>
->>   >>> s/i2c-12/12-002e/tpm/tpm0/pcr-sha1
->>
->>   >>>
->> /sys/devices/platform/ahb/ahb:apb/ahb:apb:bus@1e78a000/1e78a680.i2c-
->>
->>   >>> b
->>
->>   >>> u
->>
->>   >>> s/i2c-12/12-002e/tpm/tpm0/pcr-sha1/17
->>
->>   >>> [... lots more entries also for sha256, sha384, and sha512 ]
->>
->>   >>>
->>
->>   >>>
->>
->>   >>>
->>
->>   >>>
->>
->>   >>> It seems to work as expected
->>
->>   >>>
->>
->>   >>> On 5/5/23 11:08, Sandeep Kumar wrote:
->>
->>   >>>> TCS Confidential Hi Stefan, Please find below my answers inline.
->>
->>   >>>> Thanks, Sandeep. -----Original Message----- From: Stefan Berger
->>
->>   >>>> <stefanb@ linux. ibm. com> Sent: Friday, May 5, 2023 6: 56 PM To:
->>
->>   >>>> Sandeep Kumar <sandeep. pkumar@ tcs. com>; ZjQcmQRYFpfptBannerStart This Message Is From an External Sender This message came from outside your organization.
->>
->>   >>>> ZjQcmQRYFpfptBannerEnd
->>
->>   >>>>
->>
->>   >>>> TCS Confidential
->>
->>   >>>>
->>
->>   >>>>
->>
->>   >>>> Hi Stefan,
->>
->>   >>>>
->>
->>   >>>> Please find below my answers inline.
->>
->>   >>>>
->>
->>   >>>> Thanks,
->>
->>   >>>>
->>
->>   >>>> Sandeep.
->>
->>   >>>>
->>
->>   >>>> -----Original Message-----
->>
->>   >>>> From: Stefan Berger <stefanb@linux.ibm.com
->> <mailto:stefanb@linux.ibm.com>>
->>
->>   >>>> Sent: Friday, May 5, 2023 6:56 PM
->>
->>   >>>> To: Sandeep Kumar <sandeep.pkumar@tcs.com
->> <mailto:sandeep.pkumar@tcs.com>>; Cédric Le Goater
->>
->>   >>>> <clg@kaod.org <mailto:clg@kaod.org>>; openbmc@lists.ozlabs.org
->> <mailto:openbmc@lists.ozlabs.org>; Ninad Palsule
->>
->>   >>>> <ninad@linux.ibm.com <mailto:ninad@linux.ibm.com>>; Joel Stanley
->> <jms@jms.id.au <mailto:jms@jms.id.au>>; Andrew Jeffery
->>
->>   >>>> <andrew@aj.id.au <mailto:andrew@aj.id.au>>
->>
->>   >>>> Subject: Re: Integrating swtpm(as a software TPM) with OpenBMC
->> on
->>
->>   >>>> Qemu
->>
->>   >>>>
->>
->>   >>>> "External email. Open with Caution"
->>
->>   >>>>
->>
->>   >>>> On 5/5/23 01:40, Sandeep Kumar wrote:
->>
->>   >>>>
->>
->>   >>>>     >   TCS Confidential
->>
->>   >>>>
->>
->>   >>>>     >
->>
->>   >>>>
->>
->>   >>>>     > Hi Stefan,
->>
->>   >>>>
->>
->>   >>>>     >
->>
->>   >>>>
->>
->>   >>>>     > Stefan: Is the kernel configured in the same way? Are you using the same kernel version?
->>
->>   >>>>
->>
->>   >>>>     > Ans:
->>
->>   >>>>
->>
->>   >>>>     >          I am using the Kernel version coming with the latest openBMC without any changes.
->>
->>   >>>>
->>
->>   >>>>     >          Kernel version used : Linux evb-ast2600
->> 6.1.15-580639a #1
->>
->>   >>>> SMP
->>
->>   >>>>
->>
->>   >>>>     > Thu Apr 6 00:55:09 UTC 2023 armv71 GNU/Linux
->>
->>   >>>>
->>
->>   >>>>     >
->>
->>   >>>>
->>
->>   >>>>     > Stefan:  What is the output of this?  find /sys/class/tpm
->> |
->>
->>   >>>> grep pcr
->>
->>   >>>>
->>
->>   >>>>     > Ams:     find: /sys/class/tpm: No such file or directory.
->>
->>   >>>>
->>
->>   >>>>     >
->>
->>   >>>>
->>
->>   >>>>     > Could you please point to the right version of kernel which has all these changes ?
->>
->>   >>>>
->>
->>   >>>> I am not aware of changes in the Linux kernel for TPM I2C and why it would not work in this kernel version.
->>
->>   >>>>
->>
->>   >>>> Does this show any files?
->>
->>   >>>>
->>
->>   >>>> find /sys | grep pcr
->>
->>   >>>>
->>
->>   >>>> *Sandeep: It doesn't show any files. *
->>
->>   >>>>
->>
->>   >>>> *root@evb-ast2600:~# echo tpm_tis_i2c 0x2e >
->>
->>   >>>> /sys/bus/i2c/devices/i2c-12/new_device*
->>
->>   >>>>
->>
->>   >>>> *[  273.273089] i2c i2c-12: new_device: Instantiated device
->>
->>   >>>> tpm_tis_i2c at 0x2e*
->>
->>   >>>>
->>
->>   >>>> *root@evb-ast2600:~#*
->>
->>   >>>>
->>
->>   >>>> *root@evb-ast2600:~# find /sys | grep pcr*
->>
->>   >>>>
->>
->>   >>>> *root@evb-ast2600:~#*
->>
->>   >>>>
->>
->>   >>>> Do /dev/tpm0 and /dev/tpmrm0 appear after the echo ? What does dmesg show related to tpm (dmesg | grep -i tpm)?
->>
->>   >>>>
->>
->>   >>>> *Sandeep:  I don’t see /dev/tpm0 and /dev/tpmrm0 after the echo.
->>
->>   >>>> Output as below, *
->>
->>   >>>>
->>
->>   >>>> **
->>
->>   >>>>
->>
->>   >>>> *root@evb-ast2600:~# echo tpm_tis_i2c 0x2e >
->>
->>   >>>> /sys/bus/i2c/devices/i2c-12/new_device*
->>
->>   >>>>
->>
->>   >>>> *[  273.273089] i2c i2c-12: new_device: Instantiated device
->>
->>   >>>> tpm_tis_i2c at 0x2e*
->>
->>   >>>>
->>
->>   >>>> *root@evb-ast2600:~#*
->>
->>   >>>>
->>
->>   >>>> *root@evb-ast2600:~# find /sys | grep pcr*
->>
->>   >>>>
->>
->>   >>>> *root@evb-ast2600:~#*
->>
->>   >>>>
->>
->>   >>>> *root@evb-ast2600:~# ls /dev/tpm**
->>
->>   >>>>
->>
->>   >>>> *ls: /dev/tpm*: No such file or directory*
->>
->>   >>>>
->>
->>   >>>> *root@evb-ast2600:~# dmesg | grep -i tpm*
->>
->>   >>>>
->>
->>   >>>> *[    6.290898] systemd[1]: systemd 253.1^ running in system
->> mode
->>
->>   >>>> (+PAM -AUDIT -SELINUX -APPARMOR -IMA -SMACK +SECCOMP -GCRYPT
->>
->>   >>>> -GNUTLS -OPENSSL -ACL +BLKID -CURL -ELFUTILS -FIDO2 -IDN2 -IDN
->>
->>   >>>> -IPTC -KMOD -LIBCRYPTSETUP +LIBFDISK -PCRE2 -PWQUALITY -P11KIT
->>
->>   >>>> -QRENCODE -TPM2
->>
->>   >>>> -BZIP2 -LZ4 -XZ -ZLIB +ZSTD -BPF_FRAMEWORK -XKBCOMMON -UTMP
->>
->>   >>>> -SYSVINIT
->>
->>   >>>> default-hierarchy=unified)*
->>
->>   >>>>
->>
->>   >>>> *[  273.273089] i2c i2c-12: new_device: Instantiated device
->>
->>   >>>> tpm_tis_i2c at 0x2e*
->>
->>   >>>>
->>
->>   >>>> *root@evb-ast2600:~#*
->>
->>   >>>>
->>
->>   >>>>         Stefan
->>
->>   >>>>
->>
->>   >>>>     >
->>
->>   >>>>
->>
->>   >>>>     >
->>
->>   >>>>
->>
->>   >>>>     > Thanks,
->>
->>   >>>>
->>
->>   >>>>     > Sandeep.
->>
->>   >>>>
->>
->>   >>>>     >
->>
->>   >>>>
->>
->>   >>>>     > -----Original Message-----
->>
->>   >>>>
->>
->>   >>>>     > From: Stefan Berger <stefanb@linux.ibm.com
->>
->>   >>>> <mailto:stefanb@linux.ibm.com <mailto:stefanb@linux.ibm.com>>>
->>
->>   >>>>
->>
->>   >>>>     > Sent: Thursday, May 4, 2023 7:30 PM
->>
->>   >>>>
->>
->>   >>>>     > To: Sandeep Kumar <sandeep.pkumar@tcs.com
->>
->>   >>>> <mailto:sandeep.pkumar@tcs.com
->> <mailto:sandeep.pkumar@tcs.com>>>; Cédric Le Goater
->>
->>   >>>>
->>
->>   >>>>     > <clg@kaod.org <mailto:clg@kaod.org
->> <mailto:clg@kaod.org%20%3cmailto:clg@kaod.org>>>;
->>
->>   >>>> openbmc@lists.ozlabs.org <mailto:openbmc@lists.ozlabs.org>
->> <mailto:openbmc@lists.ozlabs.org <mailto:openbmc@lists.ozlabs.org>>;
->> Ninad
->>
->>   >>>> Palsule
->>
->>   >>>>
->>
->>   >>>>     > <ninad@linux.ibm.com <mailto:ninad@linux.ibm.com
->> <mailto:ninad@linux.ibm.com%20%3cmailto:ninad@linux.ibm.com>>>; Joel
->>
->>   >>>> Stanley <jms@jms.id.au <mailto:jms@jms.id.au
->> <mailto:jms@jms.id.au%20%3cmailto:jms@jms.id.au>>>; Andrew Jeffery
->>
->>   >>>>
->>
->>   >>>>     > <andrew@aj.id.au <mailto:andrew@aj.id.au
->> <mailto:andrew@aj.id.au%20%3cmailto:andrew@aj.id.au>>>
->>
->>   >>>>
->>
->>   >>>>     > Subject: Re: Integrating swtpm(as a software TPM) with
->>
->>   >>>> OpenBMC on Qemu
->>
->>   >>>>
->>
->>   >>>>     >
->>
->>   >>>>
->>
->>   >>>>     > "External email. Open with Caution"
->>
->>   >>>>
->>
->>   >>>>     >
->>
->>   >>>>
->>
->>   >>>>     >
->>
->>   >>>>
->>
->>   >>>>     > On 5/4/23 05:12, Sandeep Kumar wrote:
->>
->>   >>>>
->>
->>   >>>>     >> TCS Confidential Hi C, I was able to build and run the
->>
->>   >>>> image(for
->>
->>   >>>>
->>
->>   >>>>     >> evb-ast2600) with swtpm. Few issues observed, If I run
->> with
->>
->>   >>>> the
->>
->>   >>>>
->>
->>   >>>>     >> flash. img provided in your github link(https: //github.
->>
->>   >>>>
->>
->>   >>>>     >> com/legoater/qemu-aspeed-boot/tree/master/images) everything ZjQcmQRYFpfptBannerStart This Message Is From an External Sender This message came from outside your organization.
->>
->>   >>>>
->>
->>   >>>>     >> ZjQcmQRYFpfptBannerEnd
->>
->>   >>>>
->>
->>   >>>>     >> TCS Confidential
->>
->>   >>>>
->>
->>   >>>>     >>
->>
->>   >>>>
->>
->>   >>>>     >> Hi C,
->>
->>   >>>>
->>
->>   >>>>     >> I was able to build and run the image(for evb-ast2600) with swtpm.
->>
->>   >>>>
->>
->>   >>>>     >> Few issues observed,
->>
->>   >>>>
->>
->>   >>>>     >>
->>
->>   >>>>
->>
->>   >>>>     >>   1. If I run with the flash.img provided in your github link(_https://github.com/legoater/qemu-aspeed-boot/tree/master/images_ <https://github.com/legoater/qemu-aspeed-boot/tree/master/images <https://github.com/legoater/qemu-aspeed-boot/tree/master/images <https://github.com/legoater/qemu-aspeed-boot/tree/master/images%20%3chttps:/github.com/legoater/qemu-aspeed-boot/tree/master/images>>>) everything works as expected, i.e I get the below output.
->>
->>   >>>>
->>
->>   >>>>     >>
->>
->>   >>>>
->>
->>   >>>>     >> *# echo tpm_tis_i2c 0x2e >
->>
->>   >>>> /sys/bus/i2c/devices/i2c-12/new_device*
->>
->>   >>>>
->>
->>   >>>>     >> *[  182.735902] tpm_tis_i2c 12-002e: 2.0 TPM (device-id
->> 0x1,
->>
->>   >>>> rev-id
->>
->>   >>>>
->>
->>   >>>>     >> 1)* *[  182.773885] i2c i2c-12: new_device: Instantiated
->>
->>   >>>> device
->>
->>   >>>>
->>
->>   >>>>     >> tpm_tis_i2c at 0x2e*
->>
->>   >>>>
->>
->>   >>>>     >> *#*
->>
->>   >>>>
->>
->>   >>>>     >> *#*
->>
->>   >>>>
->>
->>   >>>>     >> *# cat /sys/class/tpm/tpm0/pcr-sha256/0*
->>
->>   >>>>
->>
->>   >>>>     >>
->>
->>   >>>>
->> *B804724EA13F52A9072BA87FE8FDCC497DFC9DF9AA15B9088694639C431688E0*
->>
->>   >>>>
->>
->>   >>>>     >> *#*
->>
->>   >>>>
->>
->>   >>>>     >> *#*
->>
->>   >>>>
->>
->>   >>>>     >>
->>
->>   >>>>
->>
->>   >>>>     >>   2. If I run it with the locally built image, I get this
->> error,
->>
->>   >>>>
->>
->>   >>>>     >
->>
->>   >>>>
->>
->>   >>>>     > Is the kernel configured in the same way? Are you using the same kernel version?
->>
->>   >>>>
->>
->>   >>>>     >>
->>
->>   >>>>
->>
->>   >>>>     >> *root@evb-ast2600:~# echo tpm_tis_i2c 0x2e >
->>
->>   >>>>
->>
->>   >>>>     >> /sys/bus/i2c/devices/i2c-12/new_device*
->>
->>   >>>>
->>
->>   >>>>     >> *[  174.063597] i2c i2c-12: new_device: Instantiated
->> device
->>
->>   >>>>
->>
->>   >>>>     >> tpm_tis_i2c at 0x2e*
->>
->>   >>>>
->>
->>   >>>>     >
->>
->>   >>>>
->>
->>   >>>>     > What is the output of this?
->>
->>   >>>>
->>
->>   >>>>     >
->>
->>   >>>>
->>
->>   >>>>     > find /sys/class/tpm | grep pcr
->>
->>   >>>>
->>
->>   >>>>     >
->>
->>   >>>>
->>
->>   >>>>     >     Stefan
->>
->>   >>>>
->>
->>   >>>>     >
->>
->>   >>>>
->>
->>   >>>>     >> *root@evb-ast2600:~# cat
->> /sys/class/tpm/tpm0/pcr-sha256/0*
->>
->>   >>>>
->>
->>   >>>>     >> *cat: can't open '/sys/class/tpm/tpm0/pcr-sha256/0': No
->> such
->>
->>   >>>> file or
->>
->>   >>>>
->>
->>   >>>>     >> directory*
->>
->>   >>>>
->>
->>   >>>>     >> *root@evb-ast2600:~#*
->>
->>   >>>>
->>
->>   >>>>     >> *root@evb-ast2600:~#*
->>
->>   >>>>
->>
->>   >>>>     >> Please do let me know about what has been done to write
->> the
->>
->>   >>>> values
->>
->>   >>>>
->>
->>   >>>>     >> into “*/sys/class/tpm/tpm0/pcr-sha256/0**” . * Thanks, Sandeep.
->>
->>   >>>>
->>
->>   >>>>     >> _____________________________________________
->>
->>   >>>>
->>
->>   >>>>     >> *From:* Sandeep Kumar
->>
->>   >>>>
->>
->>   >>>>     >> *Sent:* Thursday, April 20, 2023 5:45 PM
->>
->>   >>>>
->>
->>   >>>>     >> *To:* Cédric Le Goater <clg@kaod.org <mailto:clg@kaod.org
->> <mailto:clg@kaod.org%20%3cmailto:clg@kaod.org>>>;
->>
->>   >>>> openbmc@lists.ozlabs.org <mailto:openbmc@lists.ozlabs.org>
->> <mailto:openbmc@lists.ozlabs.org <mailto:openbmc@lists.ozlabs.org>>;
->>
->>   >>>>
->>
->>   >>>>     >> Ninad Palsule <ninad@linux.ibm.com
->>
->>   >>>> <mailto:ninad@linux.ibm.com <mailto:ninad@linux.ibm.com>>>; Joel
->> Stanley <jms@jms.id.au
->>
->>   >>>> <mailto:jms@jms.id.au <mailto:jms@jms.id.au>>>;
->>
->>   >>>>
->>
->>   >>>>     >> Andrew Jeffery <andrew@aj.id.au <mailto:andrew@aj.id.au
->> <mailto:andrew@aj.id.au%20%3cmailto:andrew@aj.id.au>>>
->>
->>   >>>>
->>
->>   >>>>     >> *Subject:* RE: Integrating swtpm(as a software TPM) with
->>
->>   >>>> OpenBMC on
->>
->>   >>>>
->>
->>   >>>>     >> Qemu Hi C, How to build this image =>
->>
->>   >>>>
->>
->>   >>>>     >> *obmc-phosphor-image.rootfs.wic.qcow2* ? In openBmc build directory we don��t get this image built.
->>
->>   >>>>
->>
->>   >>>>     >> Also, remaining image formats used while running on qemu are available in the build directory. i.e fitImage-linux.bin, aspeed-bmc-ibm-rainier.dtb and obmc-phosphor-initramfs.rootfs.cpio.xz .
->>
->>   >>>>
->>
->>   >>>>     >> Please advise if we have to build openbmc stack in a
->>
->>   >>>> different way
->>
->>   >>>>
->>
->>   >>>>     >> than the standard procedure. We follow the below steps for build, 1. .
->>
->>   >>>>
->>
->>   >>>>     >> setup Romulus 2. bitbake obmc-phosphor-image Thanks, Sandeep.
->>
->>   >>>>
->>
->>   >>>>     >> -----Original Message-----
->>
->>   >>>>
->>
->>   >>>>     >> From: Sandeep Kumar
->>
->>   >>>>
->>
->>   >>>>     >> Sent: Wednesday, April 19, 2023 3:00 PM
->>
->>   >>>>
->>
->>   >>>>     >> To: Cédric Le Goater <_clg@kaod.org_ <mailto:clg@kaod.org
->>
->>   >>>> <mailto:_clg@kaod.org_%20%3cmailto:clg@kaod.org
->> <mailto:_clg@kaod.org_%20%3cmailto:clg@kaod.org>>>>;
->>
->>   >>>>
->>
->>   >>>>     >> _openbmc@lists.ozlabs.org_
->> <mailto:_openbmc@lists.ozlabs.org_>
->>
->>   >>>> <mailto:_openbmc@lists.ozlabs.org_
->> <mailto:_openbmc@lists.ozlabs.org_>>
->>
->>   >>>> <mailto:openbmc@lists.ozlabs.org
->>
->>   >>>> <mailto:openbmc@lists.ozlabs.org
->> <mailto:openbmc@lists.ozlabs.org>>>;
->>
->>   >>>> Ninad
->>
->>   >>>>
->>
->>   >>>>     >> Palsule <_ninad@linux.ibm.com_
->> <mailto:ninad@linux.ibm.com
->>
->>   >>>> <mailto:_ninad@linux.ibm.com_%20%3cmailto:ninad@linux.ibm.com
->> <mailto:_ninad@linux.ibm.com_%20%3cmailto:ninad@linux.ibm.com>>>>;
->>
->>   >>>> Joel
->>
->>   >>>>
->>
->>   >>>>     >> Stanley <_jms@jms.id.au_ <mailto:jms@jms.id.au
->>
->>   >>>> <mailto:_jms@jms.id.au_%20%3cmailto:jms@jms.id.au
->> <mailto:_jms@jms.id.au_%20%3cmailto:jms@jms.id.au>>>>; Andrew
->>
->>   >>>> Jeffery
->>
->>   >>>>
->>
->>   >>>>     >> <_andrew@aj.id.au_ <mailto:andrew@aj.id.au
->>
->>   >>>> <mailto:_andrew@aj.id.au_%20%3cmailto:andrew@aj.id.au
->> <mailto:_andrew@aj.id.au_%20%3cmailto:andrew@aj.id.au>>>>
->>
->>   >>>>
->>
->>   >>>>     >> Subject: RE: Integrating swtpm(as a software TPM) with
->>
->>   >>>> OpenBMC on
->>
->>   >>>>
->>
->>   >>>>     >> Qemu Hi C, Got it working. Looks like slirp is no longer
->>
->>   >>>> supported on
->>
->>   >>>>
->>
->>   >>>>     >> ubnutu 18.04. have upgraded to a newer version  and is working now.
->>
->>   >>>>
->>
->>   >>>>     >> Thanks,
->>
->>   >>>>
->>
->>   >>>>     >> Sandeep.
->>
->>   >>>>
->>
->>   >>>>     >> -----Original Message-----
->>
->>   >>>>
->>
->>   >>>>     >> From: Cédric Le Goater <clg@kaod.org <mailto:clg@kaod.org
->>
->>   >>>> <mailto:clg@kaod.org%20%3cmailto:clg@kaod.org
->> <mailto:clg@kaod.org%20%3cmailto:clg@kaod.org>>>>
->>
->>   >>>>
->>
->>   >>>>     >> Sent: Wednesday, April 19, 2023 2:26 PM
->>
->>   >>>>
->>
->>   >>>>     >> To: Sandeep Kumar <sandeep.pkumar@tcs.com
->>
->>   >>>>
->>
->>   >>>>     >> <mailto:sandeep.pkumar@tcs.com
->>
->>   >>>> <mailto:sandeep.pkumar@tcs.com
->> <mailto:sandeep.pkumar@tcs.com>>>>;
->>
->>   >>>> openbmc@lists.ozlabs.org <mailto:openbmc@lists.ozlabs.org>
->> <mailto:openbmc@lists.ozlabs.org <mailto:openbmc@lists.ozlabs.org>>
->>
->>   >>>>
->>
->>   >>>>     >> <mailto:openbmc@lists.ozlabs.org
->>
->>   >>>> <mailto:openbmc@lists.ozlabs.org
->> <mailto:openbmc@lists.ozlabs.org>>>; Ninad Palsule
->>
->>   >>>> <ninad@linux.ibm.com
->>
->>   >>>>
->>
->>   >>>>     >> <mailto:ninad@linux.ibm.com <mailto:ninad@linux.ibm.com
->> <mailto:ninad@linux.ibm.com%20%3cmailto:ninad@linux.ibm.com>>>>;
->>
->>   >>>> Joel Stanley <jms@jms.id.au
->>
->>   >>>>
->>
->>   >>>>     >> <mailto:jms@jms.id.au <mailto:jms@jms.id.au
->> <mailto:jms@jms.id.au%20%3cmailto:jms@jms.id.au>>>>; Andrew
->>
->>   >>>> Jeffery <andrew@aj.id.au
->>
->>   >>>>
->>
->>   >>>>     >> <mailto:andrew@aj.id.au <mailto:andrew@aj.id.au
->> <mailto:andrew@aj.id.au%20%3cmailto:andrew@aj.id.au>>>>
->>
->>   >>>>
->>
->>   >>>>     >> Subject: Re: Integrating swtpm(as a software TPM) with
->>
->>   >>>> OpenBMC on
->>
->>   >>>>
->>
->>   >>>>     >> Qemu "External email. Open with Caution"
->>
->>   >>>>
->>
->>   >>>>     >> Hello Sandeep
->>
->>   >>>>
->>
->>   >>>>     >> On 4/18/23 09:45, Sandeep Kumar wrote:
->>
->>   >>>>
->>
->>   >>>>     >>> TCS Confidential
->>
->>   >>>>
->>
->>   >>>>     >>>
->>
->>   >>>>
->>
->>   >>>>     >>> Hi C,
->>
->>   >>>>
->>
->>   >>>>     >>> Built the qemu from your branch. Few issues, *$
->>
->>   >>>> ./qemu-system-arm -m
->>
->>   >>>>
->>
->>   >>>>     >>> 256 -M romulus-bmc -nographic -drive
->>
->>   >>>>
->>
->>   >>>>     >>>
->>
->>   >>>> file=./obmc-phosphor-image-romulus.static.mtd,format=raw,if=mtd
->>
->>   >>>> -net
->>
->>   >>>>
->>
->>   >>>>     >>> nic -net
->>
->>   >>>>
->>
->>   >>>>     >>>
->>
->>   >>>>
->> user,hostfwd=:127.0.0.1:2222-:22,hostfwd=:127.0.0.1:4443-:443,hostf
->>
->>   >>>> w
->>
->>   >>>>
->>
->>   >>>>     >>> d
->>
->>   >>>>
->>
->>   >>>>     >>> =
->>
->>   >>>>
->>
->>   >>>>     >>> tcp:127.0.0.1:8880-:80,hostfwd=tcp:127.0.0.1:2200-:2200,hostfwd=udp:
->>
->>   >>>>
->>
->>   >>>>     >>> 1
->>
->>   >>>>
->>
->>   >>>>     >>> 2
->>
->>   >>>>
->>
->>   >>>>     >>>
->>
->>   >>>> 7.0.0.1:6623-:623,hostfwd=udp:127.0.0.1:6664-:664,hostname=qemu*
->>
->>   >>>>
->>
->>   >>>>     >>> *qemu-system-arm: -net
->>
->>   >>>>
->>
->>   >>>>     >>>
->>
->>   >>>>
->> user,hostfwd=:127.0.0.1:2222-:22,hostfwd=:127.0.0.1:4443-:443,hostf
->>
->>   >>>> w
->>
->>   >>>>
->>
->>   >>>>     >>> d
->>
->>   >>>>
->>
->>   >>>>     >>> =
->>
->>   >>>>
->>
->>   >>>>     >>> tcp:127.0.0.1:8880-:80,hostfwd=tcp:127.0.0.1:2200-:2200,hostfwd=udp:
->>
->>   >>>>
->>
->>   >>>>     >>> 1
->>
->>   >>>>
->>
->>   >>>>     >>> 2
->>
->>   >>>>
->>
->>   >>>>     >>> 7.0.0.1:6623-:623,hostfwd=udp:127.0.0.1:6664-:664,hostname=qemu:
->>
->>   >>>>
->>
->>   >>>>     >>> network backend 'user' is not compiled into this binary*
->> I
->>
->>   >>>> didn’t
->>
->>   >>>>
->>
->>   >>>>     >>> enable the slirp package I guess. So enabled it while
->>
->>   >>>> running
->>
->>   >>>>
->>
->>   >>>>     >>> configure, *$ ../configure --enable-slirp*
->>
->>   >>>>
->>
->>   >>>>     >>> *........*
->>
->>   >>>>
->>
->>   >>>>     >>> *Run-time dependency slirp found: NO (tried pkgconfig)*
->>
->>   >>>>
->>
->>   >>>>     >>> *../meson.build:681:2: ERROR: Dependency "slirp" not
->> found,
->>
->>   >>>> tried
->>
->>   >>>>
->>
->>   >>>>     >>> pkgconfig* *A full log can be found at
->>
->>   >>>>
->>
->>   >>>>     >>>
->>
->>   >>>>
->> /home/tcs/work/sandeep/measured_boot/ibm_qemu/qemu/build/meson-logs
->>
->>   >>>> /
->>
->>   >>>>
->>
->>   >>>>     >>> m
->>
->>   >>>>
->>
->>   >>>>     >>> e
->>
->>   >>>>
->>
->>   >>>>     >>> son-log.txt*
->>
->>   >>>>
->>
->>   >>>>     >>> *NOTICE: You are using Python 3.6 which is EOL. Starting
->>
->>   >>>> with
->>
->>   >>>>
->>
->>   >>>>     >>> v0.62.0, Meson will require Python 3.7 or newer*
->>
->>   >>>>
->>
->>   >>>>     >>> *ERROR: meson setup failed*
->>
->>   >>>>
->>
->>   >>>>     >>> I have already installed slirp locally, but still getting the above error.
->>
->>   >>>>
->>
->>   >>>>     >> Did you install the libslirp-dev or libslirp-devel package ?
->>
->>   >>>>
->>
->>   >>>>     >> C.
->>
->>   >>>>
->>
->>   >>>>     >>
->>
->>   >>>>
->>
->>   >>>>     >> TCS Confidential
->>
->>   >>>>
->>
->>   >>>>     >>
->>
->>   >>>>
->>
->>   >>>>     >> =====-----=====-----=====
->>
->>   >>>>
->>
->>   >>>>     >> Notice: The information contained in this e-mail message
->>
->>   >>>> and/or
->>
->>   >>>>
->>
->>   >>>>     >> attachments to it may contain confidential or privileged information.
->>
->>   >>>>
->>
->>   >>>>     >> If you are not the intended recipient, any dissemination,
->>
->>   >>>> use,
->>
->>   >>>>
->>
->>   >>>>     >> review, distribution, printing or copying of the
->> information
->>
->>   >>>>
->>
->>   >>>>     >> contained in this e-mail message and/or attachments to it
->>
->>   >>>> are
->>
->>   >>>>
->>
->>   >>>>     >> strictly prohibited. If you have received this
->> communication
->>
->>   >>>> in
->>
->>   >>>>
->>
->>   >>>>     >> error, please notify us by reply e-mail or telephone and
->>
->>   >>>> immediately
->>
->>   >>>>
->>
->>   >>>>     >> and permanently delete the message and any attachments.
->>
->>   >>>> Thank you
->>
->>   >>>>
->>
->>   >>>>     >>
->>
->>   >>>>
->>
->>   >>>>     >
->>
->>   >>>>
->>
->>   >>>>     >   TCS Confidential
->>
->>   >>>>
->>
->>   >>>>
->>
->>   >>>> TCS Confidential
->>
->>   >>>>
->>
->>   >>>
->>
->>   >>>     TCS Confidential
->>
->>   >>
->>
->>   >>    TCS Confidential
->>
->>   >
->>
->>   >   TCS Confidential
->>
->>
->> TCS Confidential
->>
-> 
->   TCS Confidential
+SGVsbG8gRWQsIA0KDQpUaGFua3MgZm9yIHlvdXIgcmVzcG9uc2UgYW5kIGZlZWRiYWNrLiBQbGVh
+c2UgZmluZCBteSBhbnN3ZXJzIHRvIHlvdXIgcXVlc3Rpb25zIGJlbG93LiANCg0KPiA+IFdoYXQg
+b3RoZXIgY29uc3RyYWludHMgYXJlIGhlcmU/ICBXZSdyZSB0YWxraW5nIGFib3V0IGEgVENQIHBy
+b3RvY29sLCBydW5uaW5nIG9uIGEgbmV0d29yaywgb24gYSBtdWx0aS1wcm9jZXNzIENQVS4gIEFy
+ZSB0aGVzZSBoYXJkIHJlYWx0aW1lIHJlcXVpcmVtZW50cz8gIEl0J3MgdW5saWtlbHkgeW91J3Jl
+IGdvaW5nIHRvIGdldCBoYXJkIHJlYWx0aW1lIGd1YXJhbnRlZXMgZnJvbSBSZWRmaXNoLg0KTm8g
+dGhlc2UgYXJlIG5vdCBoYXJkIHJlYWwgdGltZSByZXF1aXJlbWVudHMuIFRoZSBsYXRlbmN5IGNh
+biBnbyBtb3JlIHRoYXQgNTAwbXMgaW4gc29tZSBpbnN0YW5jZXMsIGJ1dCB3ZSB3YW50IHRvIHRh
+cmdldCB0aGUgb3V0bGllcnMgKHNhbXBsZXMgd2hpY2ggdGFrZSBtb3JlIHRoYW4gNTAwbXMgb2Yg
+VEFUKSB0byBiZSBsZXNzIHRoYW4gb25lIHBlcmNlbnQgb2YgdGhlIHRvdGFsIHNhbXBsZXMuIA0K
+V2UgYWxzbyB3YW50IHRvIGxpbWl0IHRoZSBtYXggbGF0ZW5jeSBvZiB0aGUgcG93ZXIsIHRoZXJt
+YWwgbWV0cmljIFVSSSB1bmRlciAxcy4gVGhlIGZhYnJpYyBibWMgcGVyaW9kaWNhbGx5IHBvbGxz
+IHRoaXMgVVJJcyBmcm9tIG91ciBwbGF0Zm9ybSBhbmQgaW1wbGVtZW50cyB0aGUgUElEIGxvb3Ag
+Y29udHJvbCBiYXNlZCBvbiB0aGUgcmVzcG9uc2Ugb2YgdGhpcyBVUkkgc28gaXRzIGNyaXRpY2Fs
+IGZvciB1cyB0byBsaW1pdCB0aGUgbWF4IGxhdGVuY3kgb2YgdGhpcyBVUkkuIA0KDQo+PiAgICAg
+ICAgIEEgICAgICAgICAgICBCICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQyAgICAg
+ICAgICAgICBEDQo+PiBUQ1DilIDilrpUTFPilIDilIDilrpIVFRQIENvbm5lY3Rpb27ilIDilrpE
+QnVz4pSA4pa6RGFlbW9uDQo+PiBXaGljaCBsb2NhdGlvbiBhcmUgeW91IHNlZWluZyBxdWV1aW5n
+IHByb2JsZW1zPyAgDQpUaGUgdGltZSBzcGVudCBpbiByb3V0ZSBoYW5kbGVyIGFmdGVyIGdldHRp
+bmcgdGhlIHJlc3BvbnNlIGZyb20gdGhlIGJhY2tlbmQgZGFlbW9uIGlzIGFmZmVjdGluZyB0aGUg
+bmV4dCBVUkkgd2hpY2ggaXMgd2FpdGluZyBpbiB0aGUgcXVldWUuIA0KRnJvbSBvdXIgdGVzdHMg
+d2Ugc2VlIHRoYXQgdGhlIGJhY2tlbmQgZGFlbW9uIHJlc3BvbmRzIG9uIGFuIGF2ZXJhZ2Ugd2l0
+aGluIDIwMG1zLiBTaW5jZSB0aGlzIGlzIGFzeW5jIHRoaXMgaGFzIG5vIGltcGFjdC4gDQpUaGUg
+cmVzcG9uc2UgcmVjZWl2ZWQgZnJvbSB0aGUgZGJ1cyBiYWNrZW5kIGhhcyBhcm91bmQgMjUwMCBw
+cm9wZXJ0aWVzIHRvIHByb2Nlc3MuIFByb2Nlc3Npbmcgb2YgdGhpcyBpbiB0aGUgcm91dGUgaGFu
+ZGxlciBhbmQgcHJlcGFyaW5nIHRoZSByZXNwb25zZSBpdCdzIHRha2luZyBhdmcgdGltZSBvZiAy
+MDBtcyAobWF4IHRpbWUgb2YgNDAwIG1zIGFuZCBzZXZlcmFsIGluc3RhbmNlcyBnb2luZyBjbG9z
+ZSB0byAzMDBtcykuIFRoZSBBdmcgQ1BVIGNvbnN1bXB0aW9uIGR1cmluZyB0aGUgdGVzdCBpcyA1
+MCUgYW5kIGF2ZyBibWN3ZWIgY29uc3VtcHRpb24gaXMgYmV0d2VlbiAxMiB0byAxNSUuIA0KDQog
+DQo+PiBXaGF0IGlzIHRoZSBiYWxscGFyayBmb3IgaG93IGJpZyAiaHVnZSBhbW91bnQiIG9mIGRh
+dGEgd291bGQgYmU/ICBXaGF0IHByb2Nlc3NpbmcgaXMgYmVpbmcgZG9uZT8gICANClRoZSBKU09O
+IGluIHRoZSBIVFRQIHJlc3BvbnNlIGlzIGFyb3VuZCA0MDBLQi4gDQpUaGUgcm91dGUgaGFuZGxl
+ciBsb2dpYyBtYWtlcyB0aGUgR2V0TWFuYWdlZE9iamVjdHMgY2FsbCB0byB0aGUgYmFja2VuZCBz
+ZXJ2aWNlIGFuZCBwcm9jZXNzZXMgdGhlIHJlc3BvbnNlIHdoaWNoIGhhcyBhcm91bmQgMjUwMCBw
+cm9wZXJ0aWVzIHRvIGxvb3AgdGhyb3VnaC4gDQpUaGVyZSBpcyBubyBzcGVjaWZpYyBidXNpbmVz
+cyBsb2dpYyBoZXJlIHdoaWNoIGlzIHRpbWUgY29uc3VtaW5nIGJ1dCBpdCdzIHRoZSBudW1iZXIg
+b2YgcHJvcGVydGllcyB3aGljaCBzZWVtIHRvIGhhdmUgc2lnbmlmaWNhbnQgaW1wYWN0LiANCg0K
+Pj4gT25lIHRoaW5nIEkndmUgY29uc2lkZXJlZCBiZWZvcmUgaXMgc3dpdGNoaW5nIGJtY3dlYiBv
+dmVyIHRvIGJvb3N0Ojpqc29uLCB3aGljaCBjYW4gZG8gaW5jcmVtZW50YWwgY2h1bmtlZCBwYXJz
+aW5nLCB1bmxpa2UgbmxvaG1hbm4sIHdoaWNoIHdvdWxkIGxldCB1cyB1bmJsb2NrIHRoZSBmbG93
+cyBhcyBlYWNoIHByb2Nlc3NlcyB0aGUgZGF0YS4NCkRvIHlvdSBoYXZlIGFueSBwb2ludGVycyBm
+b3IgdGhpcyA/IHdoZXJlIGV4YWN0bHkgd2Ugd291bGQgYmUgdW5ibG9ja2luZyB0aGUgZmxvdyBp
+biByb3V0ZSBoYW5kbGVyIGFmdGVyIHByb2Nlc3NpbmcgY2h1bmsgb2YgcHJvcGVydGllcyBmcm9t
+IHRoZSBiYWNrZW5kIE9SIHNvbWV3aGVyZSBlbHNlPyANCg0KPj4gQ2FuIHlvdSBzaGFyZSB5b3Vy
+IHRlc3Q/ICBJcyB5b3VyIHRlc3QgdXNpbmcgbXVsdGlwbGUgY29ubmVjdGlvbnMgdG8gZW5zdXJl
+IHRoYXQgdGhlIHRoZXJtYWwgbWV0cmljIGlzIGJlaW5nIHB1bGxlZCBmcm9tIGEgZGlmZmVyZW50
+IGNvbm5lY3Rpb24gdGhhbiB0aGUgYWdncmVnYXRpb24gVVJJPw0KSW4gdGhlIHRlc3Qgd2UgaGF2
+ZSB0d28gY2xpZW50cyBjb25uZWN0ZWQgdG8gb3VyIHBsYXRmb3JtLiANCk9uZSBjbGllbnQgZG9l
+cyBwb3dlciwgdGhlcm1hbCBtZXRyaWMgVVJJIHBvbGxpbmcgZm9yIGV2ZXJ5IDUwMG1zLiBXZSBo
+YXZlIHNpbmdsZSBhZ2dyZWdhdGUgVVJJIGZvciB0aGlzIHdoaWNoIGNvbWJpbmUgYWxsIHBvd2Vy
+LCB0aGVybWFsIHNlbnNvcnMuIFdlIGhhdmUgY2xvc2UgdG8gMTAwIHNlbnNvcnMuIFRoaXMgaXMg
+dGhlIFVSSSB3aGVyZSB3ZSBoYXZlIHN0cmljdCBwZXJmb3JtYW5jZSByZXF1aXJlbWVudC4gDQpP
+dGhlciBjbGllbnQgcGVyaW9kaWNhbGx5IHBvbGxzIHN0YXRzIGFuZCBjb3VudGVycyBhZ2dyZWdh
+dGUgVVJJIGZvciBldmVyeSA1IHNlY29uZHMuIFRoaXMgaXMgdGhlIFVSSSB3aGljaCBoYXMgYXJv
+dW5kIDQwMEtCIG9mIEpTT04gcmVzcG9uc2UgYW5kIGhhcyAyNTAwIGRidXMgcHJvcGVydGllcyB0
+byBwcm9jZXNzLiBXZSBhcmUgbm90IHZlcnkgcGFydGljdWxhciBhYm91dCB0aGUgbGF0ZW5jeSBv
+ZiB0aGUNCnN0YXRzIGFuZCBjb3VudGVycyBVUkkuIEluIHRoZSB0ZXN0IHJlc3VsdCB3ZSBzZWUg
+dGhhdCBwb3dlciwgdGhlcm1hbCBtZXRyaWMgVVJJIGhhcyBtYXggbGF0ZW5jeSB0aW1lIG9mIDEu
+MiBzZWNvbmRzIChtaW4gaXMgMm1zIGFuZCBhdmcgaXMgOW1zKSBhbmQgYXJvdW5kIDMuNSUgb3V0
+bGllcnMgKHNhbXBsZXMgdG9vayBtb3JlIHRoYW4gNTAwbXMpLiBXZSBjYW4gc2VlIHRoYXQgd2hl
+bmV2ZXIgYm1jd2ViIGNvZGUgaXMgYnVzeSBwcmVwYXJpbmcgdGhlIHJlc3BvbnNlIGZvciB0aGUg
+c3RhdHMgYW5kIGNvdW50ZXIgVVJJIGFuZCB0aGVyZSBpcyByZXF1ZXN0IGZvciB0aGVybWFsIG1l
+dHJpYyBVUkkgdGhlbiBsYXRlbmN5IG9mIHRoZSB0aGVybWFsIG1ldHJpYyBVUklzIGlzIGFmZmVj
+dGVkLiANCklmIHdlIGxpbWl0IHRoZSBudW1iZXIgb2YgcHJvcGVydGllcyBpbiB0aGUgc3RhdHMg
+YW5kIGNvdW50ZXJzIFVSSSwgdGhlbiB3ZSBjYW4gbWVldCB0aGUgcmVxdWlyZW1lbnQsIGJ1dCB3
+ZSBuZWVkIHRvIGNyZWF0ZSBsb3Qgb2YgYWdncmVnYXRlIFVSSXMuIEl0IHdvdWxkIG5vdCBiZSBj
+b252ZW5pZW50IGZvciB0aGUgY3VzdG9tZXJzIHRvIHVzZSBtYW55IGFnZ3JlZ2F0ZSBVUklzIGFu
+ZCB0aGVuIGNvbWJpbmUgdGhlIHJlc3BvbnNlLiAgSXMgdGhlcmUgd2F5IHRvIHByb2Nlc3MgY2h1
+bmsgb2YgcHJvcGVydGllcyBpbiB0aGUgcm91dGUgaGFuZGxlciBhbmQgdm9sdW50YXJpbHkgcmVs
+ZWFzZSB0aGUgY29udGV4dCBmb3IgYm1jd2ViIHRvIHByb2Nlc3MgdGhlIG5leHQgVVJJcyBpbiB0
+aGUgcXVldWUgPyBhbnkgb3RoZXIgdHJpY2sgd2hpY2ggY2FuIHdvcmsgaGVyZSA/IA0KDQoNCj4g
+SGVyZSB0aGUgaWRlYSBpcyB0byBkZXZlbG9wIGEgbmV3IGFwcGxpY2F0aW9uIHNlcnZlciB0byBz
+ZXJ2ZSB0aGUgVVJJcyB3aGljaCBoYXZlIHN0cm9uZyBsYXRlbmN5IHJlcXVpcmVtZW50cyBhbmQg
+cm91dGUgdGhlIHJlc3Qgb2YgdGhlIFVSSXMgdG8gYm1jd2ViLg0KPj4gVGhpcyBpcyB0aGUgcGFy
+dCBJIGRvbid0IHVuZGVyc3RhbmQ7ICBJZiB0aGUgZm9yd2FyZGluZyBjYWxscyBpbiB0aGlzIG5l
+dyBzZXJ2ZXIgYXJlIGJsb2NraW5nIHRvIGJtY3dlYiwgd2hhdCdzIHRoZSBwb2ludCBvZiBhZGRp
+bmcgaXQ/DQpUaGUgYmFja2VuZCBmb3IgdGhlIHRoZXJtYWwgbWV0cmljcyBhbmQgc3RhdHMvY291
+bnRlcnMgbWV0cmljcyBpcyBkaWZmZXJlbnQgc28gd2Ugd291bGQgbm90IGJlIGJsb2NrZWQgb24g
+dGhlIHNhbWUgc2VydmljZS4gDQpXaXRoIGEgcmV2ZXJzZSBwcm94eSBvdXIgaWRlYSBpcyB0byBm
+b3J3YXJkIHRoZXJtYWwgbWV0cmljcyB0byBhbm90aGVyIGJhY2tlbmQgYXBwbGljYXRpb24gc2Vy
+dmVyIChuZXcgYm1jd2ViIHNlcnZlciBvciBhIHNpbWlsYXIgbGlnaHR3ZWlnaHQgc2VydmVyIGlu
+c3RhbmNlKSBhbmQgYWxsIG90aGVyIFVSSXMgdG8gdGhlIGV4aXN0aW5nIGJtY3dlYi4gDQoNCkkg
+d2lsbCBzaGFyZSBhbnkgZnVydGhlciByZXN1bHRzIGZyb20gb3VyIGludGVybmFsIHRlc3RzIGFz
+IHdlIHRyeW91dCBkaWZmZXJlbnQgdGhpbmdzLiANCg0KVGhhbmtzIA0KUm9oaXQgUEFJIA0KDQoN
+Ci0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQpGcm9tOiBFZCBUYW5vdXMgPGVkdGFub3VzQGdv
+b2dsZS5jb20+IA0KU2VudDogV2VkbmVzZGF5LCBNYXkgMjQsIDIwMjMgOTo1NyBQTQ0KVG86IFJv
+aGl0IFBhaSA8cm9wYWlAbnZpZGlhLmNvbT4NCkNjOiBvcGVuYm1jQGxpc3RzLm96bGFicy5vcmcN
+ClN1YmplY3Q6IFJlOiBQcmlvcml0aXppbmcgVVJJcyB3aXRoIHRpZ2h0IHBlcmZvcm1hbmNlIHJl
+cXVpcmVtZW50IGluIG9wZW5CbWMgd2l0aCBibWN3ZWINCg0KRXh0ZXJuYWwgZW1haWw6IFVzZSBj
+YXV0aW9uIG9wZW5pbmcgbGlua3Mgb3IgYXR0YWNobWVudHMNCg0KDQpPbiBXZWQsIE1heSAyNCwg
+MjAyMyBhdCAyOjM24oCvQU0gUm9oaXQgUGFpIDxyb3BhaUBudmlkaWEuY29tPiB3cm90ZToNCj4N
+Cj4gSGVsbG8gQWxsLA0KPg0KPg0KPg0KPiBXZSBoYXZlIGEgcmVxdWlyZW1lbnQgaW4gb3VyIHBs
+YXRmb3JtIHRvIHNlcnZlIGEgZmV3IHNwZWNpZmljIFVSSSB3aXRoIGEgdGlnaHQgcGVyZm9ybWFu
+Y2UgcmVxdWlyZW1lbnQgb24gdGhlIHR1cm5hcm91bmQgdGltZSAobGF0ZW5jeSkuDQo+DQo+IE9u
+ZSBzdWNoIGV4YW1wbGUgaXMgdGhlIHRlbGVtZXRyeSBzZW5zb3IgbWV0cmljIFVSSSB3aGljaCBo
+YXMgcG93ZXIsIHRoZXJtYWwgZGF0YSBjYW4gaGF2ZSBhIG1heCB0dXJuYXJvdW5kIHRpbWUgb2Yg
+NTAwbXMuDQoNCldoYXQgb3RoZXIgY29uc3RyYWludHMgYXJlIGhlcmU/ICBXZSdyZSB0YWxraW5n
+IGFib3V0IGEgVENQIHByb3RvY29sLCBydW5uaW5nIG9uIGEgbmV0d29yaywgb24gYSBtdWx0aS1w
+cm9jZXNzIENQVS4gIEFyZSB0aGVzZSBoYXJkIHJlYWx0aW1lIHJlcXVpcmVtZW50cz8gIEl0J3Mg
+dW5saWtlbHkgeW91J3JlIGdvaW5nIHRvIGdldCBoYXJkIHJlYWx0aW1lIGd1YXJhbnRlZXMgZnJv
+bSBSZWRmaXNoLg0KDQo+DQo+DQo+DQo+IFRoZSBjdXJyZW50IGJtY3dlYiBkZXNpZ24gdXNlcyBv
+bmx5IGEgc2luZ2xlIHRocmVhZCB0byBzZXJ2ZSBhbGwgVVJJIHJlcXVlc3RzL3Jlc3BvbnNlcy4N
+Cj4NCj4gSWYgYm1jd2ViIGlzIHByb2Nlc3NpbmcgYSBodWdlIGFtb3VudCBvZiBkYXRhICh3aGlj
+aCBpcyBjb21tb24gZm9yIGFnZ3JlZ2F0aW9uIFVSSXMpIHRoZW4gb3RoZXIgcmVxdWVzdHMgd291
+bGQgZ2V0IGJsb2NrZWQgYW5kIHRoZWlyIGxhdGVuY3kgdGltZSB3b3VsZCBnZXQgaW1wYWN0ZWQu
+DQoNClRoZSBibWN3ZWIgcXVldWluZyBmbG93IGxvb2tzIHNvbWV0aGluZyBsaWtlOg0KDQogICAg
+ICAgIEEgICAgICAgICAgICBCICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgQyAgICAg
+ICAgICAgICBEDQpUQ1DilIDilrpUTFPilIDilIDilrpIVFRQIENvbm5lY3Rpb27ilIDilrpEQnVz
+4pSA4pa6RGFlbW9uDQoNCldoaWNoIGxvY2F0aW9uIGFyZSB5b3Ugc2VlaW5nIHF1ZXVpbmcgcHJv
+YmxlbXM/ICBLZWVwIGluIG1pbmQsIEhUVFANCjEuMSBjYW4gb25seSBwcm9jZXNzIGEgc2luZ2xl
+IHJlcXVlc3QvcmVzcG9uc2UgYXQgYSB0aW1lIHBlciBjb25uZWN0aW9uLCBzbyBpZiB5b3VyIHN5
+c3RlbSBpcyB0cnlpbmcgdG8gcHJvY2VzcyB0aGluZ3MgZnJvbSBhIHNpbmdsZSBjb25uZWN0aW9u
+IGF0IEEsIHlvdSdyZSByaWdodCwgbG9uZyByZXF1ZXN0cyB3aWxsIGJsb2NrIHNob3J0IG9uZXMu
+DQoNCj4NCj4gSGVyZSBJIGFtIHJlZmVycmluZyB0byB0aGUgdGltZSBibWN3ZWIgdGFrZXMgdG8g
+cHJlcGFyZSB0aGUgSlNPTiByZXNwb25zZSBhZnRlciBpdCBoYXMgZ290IHRoZSBkYXRhIGZyb20g
+dGhlIGJhY2tlbmQgc2VydmljZS4NCg0KV2hhdCBpcyB0aGUgYmFsbHBhcmsgZm9yIGhvdyBiaWcg
+Imh1Z2UgYW1vdW50IiBvZiBkYXRhIHdvdWxkIGJlPyAgV2hhdA0KcHJvY2Vzc2luZyBpcyBhY3R1
+YWxseSBiZWluZyBkb25lPyAgIFRoaXMgd291bGQgYmUgdGhlIGZpcnN0IHRpbWUgdGhhdA0KanNv
+biBwYXJzaW5nIGl0c2VsZiBoYXMgYWN0dWFsbHkgc2hvd24gdXAgb24gYSBwZXJmb3JtYW5jZSBw
+cm9maWxlLCBidXQgd2l0aCBleHBhbmQgKyBhZ2dyZWdhdGlvbiwgeW91J3JlIHJpZ2h0LCB0aGVy
+ZSdzIHBvdGVudGlhbCBmb3IgdGhhdC4NCg0KT25lIHRoaW5nIEkndmUgY29uc2lkZXJlZCBiZWZv
+cmUgaXMgc3dpdGNoaW5nIGJtY3dlYiBvdmVyIHRvIGJvb3N0Ojpqc29uLCB3aGljaCBjYW4gZG8g
+aW5jcmVtZW50YWwgY2h1bmtlZCBwYXJzaW5nLCB1bmxpa2UgbmxvaG1hbm4sIHdoaWNoIHdvdWxk
+IGxldCB1cyB1bmJsb2NrIHRoZSBmbG93cyBhcyBlYWNoIHByb2Nlc3NlcyB0aGUgZGF0YS4NCg0K
+Pg0KPiBJbiBvdXIgcGxhdGZvcm0sIHdlIHNlZSB0aGF0IHBvd2VyIHRoZXJtYWwgbWV0cmljIFVS
+SSBjYW4gdGFrZSBtb3JlIHRoYW4gNTAwbXMgd2hlbiBpdOKAmXMgcmVxdWVzdGVkIGluIHBhcmFs
+bGVsIHRvIG90aGVyIGFnZ3JlZ2F0aW9uIFVSSSB3aGljaCBoYXZlIGh1Z2UgcmVzcG9uc2UgZGF0
+YS4NCg0KQ2FuIHlvdSBzaGFyZSB5b3VyIHRlc3Q/ICBJcyB5b3VyIHRlc3QgdXNpbmcgbXVsdGlw
+bGUgY29ubmVjdGlvbnMgdG8gZW5zdXJlIHRoYXQgdGhlIHRoZXJtYWwgbWV0cmljIGlzIGJlaW5n
+IHB1bGxlZCBmcm9tIGEgZGlmZmVyZW50IGNvbm5lY3Rpb24gdGhhbiB0aGUgYWdncmVnYXRpb24g
+VVJJPw0KDQo+DQo+DQo+DQo+IFRvIHNvbHZlIHRoaXMgcHJvYmxlbSwgd2UgdGhvdWdodCBvZiBh
+IGNvdXBsZSBvZiBzb2x1dGlvbnMuDQo+DQo+DQo+DQo+IFRvIGludHJvZHVjZSBtdWx0aS10aHJl
+YWRpbmcgc3VwcG9ydCBpbiBibWN3ZWIuDQoNClN1cmUsIEkgaGF2ZSBubyBwcm9ibGVtIHdpdGgg
+YWRkaW5nIHRocmVhZHMsIGFuZCBpdCByZWFsbHkgd291bGRuJ3QgYmUgdG91Z2ggdG8gYWNjb21w
+bGlzaCBhcyBhIHRlc3Q6DQoxLiBMaW5rIHB0aHJlYWRzIGluIG1lc29uLiAgTWFrZSB0aGlzIGEg
+bWVzb24gb3B0aW9uIHNvIHBsYXRmb3JtcyB0aGF0IGRvbid0IG5lZWQgbXVsdGlwbGUgdGhyZWFk
+cyBjYW4gb3B0IG91dCBvZiBpdC4NCjIuIGdvIHRvIGVhY2ggYXN5bmNfcmVhZCBhbmQgYXN5bmNf
+d3JpdGUgY2FsbCwgYW5kIGVuc3VyZSB0aGF0IHRoZXkgYXJlIHVzaW5nIGEgc3RyYW5kICh0byBr
+ZWVwIHByb2Nlc3Npbmcgb24gdGhlIHNhbWUgdGhyZWFkIGZvciBhbnkgb25lIGNhbGwpLg0KMy4g
+TG9jYXRlIGFsbCBvZiB0aGUgZ2xvYmFsIGFuZCBjcm9zcyBjb25uZWN0aW9uIGRhdGEgc3RydWN0
+dXJlcywgYW5kIGFkZCBhIG11dGV4IHRvIGVhY2ggb2YgdGhlbS4gIE9uZSBvZiB0aGUgZ2xvYmFs
+IGRhdGEgc3RydWN0dXJlcyBpcyB0aGUgRGJ1cyBjb25uZWN0aW9uIGl0c2VsZiwgc28gaWYgeW91
+ciBwZXJmb3JtYW5jZSBwcm9ibGVtIGV4aXN0cyBvbiBDIG9yIEQgYWJvdmUsIGl0IHdpbGwgbGlr
+ZWx5IHN0aWxsIGV4aXN0IHdpdGggbXVsdGlwbGUgdGhyZWFkcy4NCjQuIFVwZGF0ZSBzZGJ1c3Bs
+dXMgYXNpbyBjb25uZWN0aW9uIHRvIHN1cHBvcnQgc3RyYW5kcywgZW5zdXJpbmcgdGhhdCB0aGUg
+Y2FsbGJhY2tzIGhhcHBlbiBvbiB0aGUgc2FtZSB0aHJlYWQgdGhleSdyZSByZXF1ZXN0ZWQuDQpB
+bHRlcm5hdGl2ZWx5LCBqdXN0IHNldCB1cCBhIGRidXMgY29ubmVjdGlvbiBwZXIgdGhyZWFkLg0K
+NS4gVGVzdCBoZWF2aWx5IHRvIG1ha2Ugc3VyZSB3ZSBkb24ndCBoYXZlIHRocmVhZGluZyBhY2Nl
+c3MgcHJvYmxlbXMgb3IgbWlzc2luZyBtdXRleGVzLg0KNi4gVXBkYXRlIHRoZSBERVZFTE9QSU5H
+Lm1kIGRvYyB0byBhY2NvdW50IGZvciBtdWx0aXBsZSB0aHJlYWRzIGluIHRoZSB3YXkgd2UgcmV2
+aWV3IGNvZGUuIChyZWVudHJhbmN5LCBldGMpLiAgTW9zdCBvZiB0aGUgZXhpc3RpbmcgY29kZSBz
+aG91bGQgYmUgcmVlbnRyYW50LCBidXQgaXQncyB3b3J0aCBsb29raW5nLg0KVGhlcmUncyBsaWtl
+bHkgYSBmZXcgb3RoZXIgbWlub3IgdGhpbmdzIHRoYXQgd291bGQgbmVlZCBmaXhlZCwgYnV0IHRo
+ZSBhYm92ZSBpcyB0aGUgZ2VuZXJhbCBnaXN0Lg0KDQo+DQo+IERvZXMgYW55b25lIGhhdmUgYW55
+IGV4cGVyaWVuY2UvZmVlZGJhY2sgb24gbWFraW5nIHRoaXMgd29yaz8NCj4NCj4gSXMgdGhlcmUg
+YW55IHN0cm9uZyByZWFzb24gbm90IHRvIGhhdmUgbXVsdGktdGhyZWFkaW5nIHN1cHBvcnQgaW4g
+Ym1jd2ViIG90aGVyIHRoYW4gZ2VuZXJhbCBndWlkZWxpbmVzIHRvIGF2b2lkIHRocmVhZHM/DQoN
+Ckl0IGluY3JlYXNlcyB0aGUgYmluYXJ5IHNpemUgYmV5b25kIHdoYXQgY2FuIGZpdCBvbiBhIGxv
+dCBvZiBCTUNzIChhYm91dCAxMC0yMCUpIFRoaXMgaXMgZmluZSBzbyBsb25nIGFzIHlvdSBrZWVw
+IGl0IGFzIGEgY29tcGlsZSBvcHRpb24gc28gcGVvcGxlIGNhbiBvcHQgaW50byB0aHJlYWRpbmcg
+c3VwcG9ydC4gIEhpc3RvcmljYWxseSwgdGVhY2hpbmcgYW5kIHJldmlld2luZyBtdWx0aS10aHJl
+YWRlZCBjb2RlIGhhcyBiZWVuIGFuIG9yZGVyIG9mIG1hZ25pdHVkZSBtb3JlIGRpZmZpY3VsdCB0
+aGFuIHNpbmdsZSB0aHJlYWRlZCBjb2RlLCBzbyBrZWVwaW5nIHRoZSBzaW5nbGUgdGhyZWFkIHNp
+Z25pZmljYW50bHkgaW1wcm92ZXMgdGhlIHJldmlldyBwcm9jZXNzLCBzbyBwbGVhc2UgcGxhbiBv
+biBoYXZpbmcgZm9sa3MgcHJlcGFyZWQgdG8gcmV2aWV3IGNvZGUgZm9yIG11bHRpLXRocmVhZGVk
+IGNvcnJlY3RuZXNzLg0KDQo+DQo+DQo+DQo+IFRvIHVzZSBhIHJldmVyc2UgcHJveHkgbGlrZSBu
+Z2lueCBhcyB0aGUgZnJvbnQgZW5kIHRvIHJlZGlyZWN0IGEgZmV3IFVSSXMgdG8gYSBuZXcgYXBw
+bGljYXRpb24gc2VydmVyLg0KDQpQbGVhc2UgdGFrZSBhIGxvb2sgYXQgdGhlIE9wZW5CTUMgdHJl
+ZSBhcm91bmQgMjAxOC0yMDE5LiAgVGhlcmUgd2VyZSBzZXZlcmFsIHBsYXRmb3JtcyB0aGF0IGZv
+cm1lcmx5IHVzZWQgbmdpbnggYXMgdGhlIGZyb250IGVuZCB0byBibWN3ZWIsIGFuZCBoYXZlIHNp
+bmNlIGRyb3BwZWQgaXQuICBUaGVyZSB3YXMgYWxzbyBhIGRpc2N1c3Npb24gb24gZGlzY29yZCBy
+ZWNlbnRseSB5b3UgbWlnaHQgbG9vayBhdC4gIEknbSBub3QgcmVhbGx5IHN1cmUgaG93IG5naW54
+IHdvdWxkIHNvbHZlIHlvdXIgcHJvYmxlbSB0aG91Z2guICBUaGUgYm1jd2ViIHJlYWN0b3IgZGVz
+aWduIGxvb2tzIHNpbWlsYXIgdG8gbmdpbnggKHdlIHVzZSBhc2lvLCB0aGV5IHVzZSBsaWJ1dikg
+YWxyZWFkeSwgc28gaXQncyBub3QgY2xlYXIgdG8gbWUgd2hhdCB5b3Ugd291bGQgZ2FpbiBoZXJl
+LCB1bmxlc3MgeW91IHdlcmUgcnVubmluZyBtdWx0aXBsZSBwcm9jZXNzZXMgb2YgYm1jd2ViPyAg
+S2VlcCBpbiBtaW5kLCB0aGVyZSdkIG5lZWQgdG8gYmUgc29tZSBzb3J0IG9mIHNoYXJlZCBzdGF0
+ZSBpbiB0aGF0IGNhc2UsIHNvIHlvdSBoYXZlIHRvIGRvICMzIGluIHRoZSBhYm92ZSBhbnl3YXku
+DQoNCj4NCj4gSGVyZSB0aGUgaWRlYSBpcyB0byBkZXZlbG9wIGEgbmV3IGFwcGxpY2F0aW9uIHNl
+cnZlciB0byBzZXJ2ZSB0aGUgVVJJcyB3aGljaCBoYXZlIHN0cm9uZyBsYXRlbmN5IHJlcXVpcmVt
+ZW50cyBhbmQgcm91dGUgdGhlIHJlc3Qgb2YgdGhlIFVSSXMgdG8gYm1jd2ViLg0KDQpUaGlzIGlz
+IHRoZSBwYXJ0IEkgZG9uJ3QgdW5kZXJzdGFuZDsgIElmIHRoZSBmb3J3YXJkaW5nIGNhbGxzIGlu
+IHRoaXMgbmV3IHNlcnZlciBhcmUgYmxvY2tpbmcgdG8gYm1jd2ViLCB3aGF0J3MgdGhlIHBvaW50
+IG9mIGFkZGluZyBpdD8NCkZlZWwgZnJlZSB0byBqdXN0IHNob3cgdGhlIGNvZGUgb2YgdGhpcyB3
+b3JraW5nIGFzIHdlbGwuDQoNCj4NCj4gICAgICAgIEhhcyBhbnlvbmUgZXhwZXJpZW5jZWQgYW55
+IGxpbWl0YXRpb25zIHdpdGggbmdpbnggb24gb3BlbkJtYyBwbGF0Zm9ybXMgKHcuci50IHBlcmZv
+cm1hbmNlLCBtZW1vcnkgZm9vdHByaW50LCBldGMpPw0KPg0KPiAgICAgICAgV2UgYWxzbyBoYXZl
+IHRoZSByZXF1aXJlbWVudCB0byBzdXBwb3J0IFNTRSwgSXMgdGhlcmUgYW55IGtub3duIGxpbWl0
+YXRpb24gdG8gbWFrZSBzdWNoIGEgZmVhdHVyZSB3b3JrIHdpdGggbmdpbng/DQoNCkl0IGNhbiBi
+ZSBtYWRlIHRvIHdvcmsuICBBdXRoWCB0ZW5kcyB0byBiZSB0aGUgaGFyZGVyIHBhcnQsIGFzIGlt
+cGxlbWVudGluZyBDU1JGIGZvciBTU0Ugb3Igd2Vic29ja2V0cyBpcyBhIGh1Z2UgcGFpbi4NCg0K
+Pg0KPg0KPg0KPg0KPg0KPiBBbnkgb3RoZXIgc3VnZ2VzdGlvbiBvciBzb2x1dGlvbiB0byB0aGUg
+cHJvYmxlbSB3ZSBhcmUgc29sdmluZyB0byBtZWV0IG91ciBwZXJmb3JtYW5jZSByZXF1aXJlbWVu
+dCB3aXRoIGJtY3dlYj8NCg0KMS4gQXVkaXQgeW91ciBjb2RlIGZvciBhbnkgYmxvY2tpbmcgY2Fs
+bHMuICBJZiB5b3UgaGF2ZSBhbnksIHB1dCB0aGVtIGludG8gYSBsb29wLCBwcm9jZXNzIFggYnl0
+ZXMgYXQgYSB0aW1lLCB3aGlsZSBjYWxsaW5nIGJvb3N0Ojphc2lvOjpkaXNwYXRjaCBpbiBiZXR3
+ZWVuLCB0byBub3Qgc3RhcnZlIHRoZSBvdGhlciB0YXNrcy4NCjIuIE1vdmUgdGhlIGJtY3dlYiBj
+b3JlIHRvIGEganNvbiBsaWJyYXJ5IHRoYXQgY2FuIGRvIGluY3JlbWVudGFsIHNlcmlhbGl6YXRp
+b24vZGVzZXJpYWxpemF0aW9uLiAgYm9vc3Q6Ompzb24gd291bGQgYmUgbXkgZmlyc3QgY2hvaWNl
+Lg0KMy4gSSBoYXZlIHBhdGNoZXMgdG8gdHVybiBvbiB1cmluZywgd2hpY2ggbGV0cyB1cyB1c2Ug
+Ym9vc3Q6OmFzaW86OnJhbmRvbV9hY2Nlc3NfZmlsZSB0byBmaXggIzEgZm9yIGJsb2NraW5nIGZp
+bGVzeXN0ZW0gY2FsbHMuDQo0LiBTZXQgcmVhc29uYWJsZSBsaW1pdHMgb24gdGhlIG1heCBhZ2dy
+ZWdhdGlvbiBzaXplIHRoYXQgaXMgYWxsb3dlZCBhdCBhIHN5c3RlbSBsZXZlbC4gIFRoZXJlIHdl
+cmUgc29tZSBwcm9wb3NhbHMgb24gZ2Vycml0Lg0KDQoNCkkgd291bGQgYmUgd29ycmllZCBhYm91
+dCBzZXBhcmF0aW5nIGNvZGUgaW50byB0d28gY2xhc3NlcyAoaGlnaCBwcmlvcml0eS9sb3cgcHJp
+b3JpdHkpIGJlY2F1c2UgZXZlcnlvbmUncyBvcGluaW9ucyB3aWxsIGRpZmZlciBhYm91dCB3aGF0
+IHNob3VsZCBiZSAiaGlnaCIgcHJpb3JpdHksIGFuZCB3aGF0IHNob3VsZCBiZSAibG93IiBwcmlv
+cml0eS4gIElmIHRoYXQgaXNuJ3QgY29uZmlndXJhYmxlIGVhc2lseSwgSSB3b3JyeSB0aGF0IHdl
+J3JlIGdvaW5nIHRvIGhhdmUgcHJvYmxlbXMgYWdyZWVpbmcgb24gcHJpb3JpdHksIGFuZCBJIGRv
+bid0IHdhbnQgdG8gYmUgaW4gYSBzaXR1YXRpb24gd2hlcmUgZXZlcnkgZGV2ZWxvcGVyIGlzIGhh
+dmluZyB0byBtYWtlIHByaW9yaXR5IGNhbGxzIGZvciBldmVyeSBzeXN0ZW0gY2xhc3MuICBJJ20g
+b3BlbiB0byB0aGUgcG9zc2liaWxpdHkgaGVyZSwgYnV0IHdlIG5lZWQgdG8gbWFrZSBzdXJlIGl0
+IGtlZXBzIGNvZGUgbW92aW5nLg0KDQo+DQo+DQo+DQo+DQo+DQo+IFRoYW5rcw0KPg0KPiBSb2hp
+dCBQQUkNCj4NCj4NCg==
