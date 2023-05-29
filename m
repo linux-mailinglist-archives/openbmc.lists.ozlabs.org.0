@@ -1,71 +1,86 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9ACBB714D75
-	for <lists+openbmc@lfdr.de>; Mon, 29 May 2023 17:53:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F01C7150CF
+	for <lists+openbmc@lfdr.de>; Mon, 29 May 2023 23:00:34 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QVKnD3Njjz3fCb
-	for <lists+openbmc@lfdr.de>; Tue, 30 May 2023 01:53:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QVSbf6RKGz3f7D
+	for <lists+openbmc@lfdr.de>; Tue, 30 May 2023 07:00:30 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=Mjj5Ugct;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=VOW2vY32;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::236; helo=mail-lj1-x236.google.com; envelope-from=tmaimon77@gmail.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12b; helo=mail-lf1-x12b.google.com; envelope-from=fercerpav@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=Mjj5Ugct;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=VOW2vY32;
 	dkim-atps=neutral
-Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QVKmh2g6fz2xH6
-	for <openbmc@lists.ozlabs.org>; Tue, 30 May 2023 01:52:51 +1000 (AEST)
-Received: by mail-lj1-x236.google.com with SMTP id 38308e7fff4ca-2af2696fd1cso35740041fa.2
-        for <openbmc@lists.ozlabs.org>; Mon, 29 May 2023 08:52:51 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QVSb16myCz3cNN
+	for <openbmc@lists.ozlabs.org>; Tue, 30 May 2023 06:59:57 +1000 (AEST)
+Received: by mail-lf1-x12b.google.com with SMTP id 2adb3069b0e04-4f4f757d575so2432697e87.0
+        for <openbmc@lists.ozlabs.org>; Mon, 29 May 2023 13:59:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1685375564; x=1687967564;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dGEKNlVjba3Uxjbme8b9RXxIe58f3YvDlezq/+8zxTI=;
-        b=Mjj5UgctfezMCHltzHW+A8T5x5/3dFb2dzNasfCyGbtOikmZvng/0XBFxq+uXYE/FY
-         t6l3BHE+27xIy++ICtp63addI+J79hwzn9bwR19674sk57FXhmiKyPx6OWLuTTOaij4Z
-         X5lumtOqj/JWTUjEujNKKgVE4eoiLWeJiafazpmY/LiF/Vxcelg6tRJZOhcpOptzwS2s
-         KizfpfxMqxskhm2Q8DevdKApUT0fMSws9sWE162eWkKflZT0XPRKSMtAC8F6NU2Pxioy
-         tPhZJEVXYtGGE+qRPRtJ2he+drqgMzbohVXSCnJD3svkS9XPXb+E95Hi1t4Ch6W2g4D8
-         aFog==
+        d=gmail.com; s=20221208; t=1685393994; x=1687985994;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=muVhT1+GO4gC9zLL5tbx3GAF0hy1z8ZsUMfe1NrlHoE=;
+        b=VOW2vY32yN4iDG2a70OWI7XGg+K37P2ltLyg+H9RPE5J2BJcFf+kVPllbQ25uhsuI2
+         fCQhyx7foXShno15V4AaW+V6aU6yJunaxCgyrVqXoCqHjAQvDLmG6Q9clx5bdHZKzBj0
+         +aI0A1u5NvWf2IHkK+DP/wdNIwlyG7u7cI0nn+4k7dccr4s/g1zgNe6rJo+jKdS42kOY
+         6u9kBBQLpOVpjAEKTHjnZhD0mQ6wsDhULe4PtzDa+Ki9olu+foQ+xBYndtdEN19qfLmx
+         hzmA57oUsjAoFbm0QrwOw9/dLTwpjHeOCzSSCqsdbuf55BezbvXkrmNxFv5Rx9K2KRkk
+         8bVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1685375564; x=1687967564;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dGEKNlVjba3Uxjbme8b9RXxIe58f3YvDlezq/+8zxTI=;
-        b=J9mrYG0YTBfEbXbJxd7IUDAYHwTedZwCzrqHAt8+i9i2HnjBy9LA9pBssvB756kpTN
-         qUy5PmZGqkVqcvxpIS+QU15YviHv15hSwSbmOKuR1fSBRYTZdpBmoX0lm2GVWun3mpLP
-         IB+m/32zyfjKBC8DjJBWA9MKRuHNs1yDreYz2gC/hkLqs/bB9TUXKARKVMC4iqjjEVu4
-         YnJ5riBncfhJJ8RrB82ZO3qbPuuPzojJy6AEUtQSY6pmhL2WuoaaEoyBy2gtkwPTe0mQ
-         hRUEHeMK3oCFG4jsqU4wHs7cgjtYXpyktJWZUTfqFAyrGhpmUwEV56F81wSLoddcf6WE
-         jPJg==
-X-Gm-Message-State: AC+VfDwd35WUJ0xaesYFzwVmGNJ34uWZJ/cZvN6QbSVZ+zVBDK7SK7TV
-	4xtgHsc6avkEyvVK7iZOzzQCZQx9GvzmQn5RyIs=
-X-Google-Smtp-Source: ACHHUZ44ENjVnVGMqNdRd/W6tQ7x2nto8cf2mXLOOpYHKQnav8XqY4+w3zejqGP55+7gAu7B5aymdVDL1+GPnAzA5tI=
-X-Received: by 2002:a2e:84c1:0:b0:2a7:748c:1eef with SMTP id
- q1-20020a2e84c1000000b002a7748c1eefmr4039767ljh.38.1685375563857; Mon, 29 May
- 2023 08:52:43 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1685393994; x=1687985994;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=muVhT1+GO4gC9zLL5tbx3GAF0hy1z8ZsUMfe1NrlHoE=;
+        b=KrA60DGVXnbbpoeBf+6/0JlccOXzmaNaeXCnM/7r97L/dPw0GtlLHexy6gaXwOfwpU
+         imxk93d9pcaDwaXi7UnRewMwDqaho9qMHO/wCRjrOLYYw0FTKNbeVxtCa4W+GGB9NeYW
+         y4AUoeF6F8FmJpkmPeNi2kvoZaIGFvuP7UCgxtFLt5ZbivchJsn6kXAS4IdT6UZd3LlR
+         hPGDgz31nA7MB+g1inzwXsiBw5QpTvkdJy9yYdmMmjOBcQTnA3BkmiNRWrn4Gm0tmMiS
+         jXvBBeX7zSOJJc3kcOPdXB1gtXdeE1KmyH+5nAykVnOtNyIdgte2TIH+xnYywLSyr/CD
+         cdAA==
+X-Gm-Message-State: AC+VfDwoPK9RiGySSGShsc6LrdyFlBMUdrP6Xo0lnjM9SscqBtuLrOS4
+	WOJIrsbowiGTe8ZqQLBVKGA=
+X-Google-Smtp-Source: ACHHUZ54FS3+uUFt4OYzMp7Z3BXugUjfLX2QWU5yKwQPe3QNbSapaaGTh/IPu6IvY8bPyz4pQ/8KVQ==
+X-Received: by 2002:ac2:4464:0:b0:4eb:3cac:23b9 with SMTP id y4-20020ac24464000000b004eb3cac23b9mr76329lfl.9.1685393993425;
+        Mon, 29 May 2023 13:59:53 -0700 (PDT)
+Received: from home.paul.comp (paulfertser.info. [2001:470:26:54b:226:9eff:fe70:80c2])
+        by smtp.gmail.com with ESMTPSA id f24-20020ac251b8000000b004f252a753e1sm114533lfk.22.2023.05.29.13.59.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 29 May 2023 13:59:53 -0700 (PDT)
+Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
+	by home.paul.comp (8.15.2/8.15.2/Debian-22) with ESMTP id 34TKxm5b018866;
+	Mon, 29 May 2023 23:59:49 +0300
+Received: (from paul@localhost)
+	by home.paul.comp (8.15.2/8.15.2/Submit) id 34TKxlTT018865;
+	Mon, 29 May 2023 23:59:47 +0300
+Date: Mon, 29 May 2023 23:59:46 +0300
+From: Paul Fertser <fercerpav@gmail.com>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH v2 3/5] dt-bindings: net: add mac-address-increment option
+Message-ID: <ZHUSQkXwruFQbvSC@home.paul.comp>
+References: <20230509143504.30382-4-fr0st61te@gmail.com>
+ <6b5be71e-141e-c02a-8cba-a528264b26c2@linaro.org>
+ <fc3dae42f2dfdf046664d964bae560ff6bb32f69.camel@gmail.com>
+ <8de01e81-43dc-71af-f56f-4fba957b0b0b@linaro.org>
+ <be85bef7e144ebe08f422bf53bb81b59a130cb29.camel@gmail.com>
+ <5b826dc7-2d02-d4ed-3b6a-63737abe732b@linaro.org>
+ <e6247cb39cc16a9328d9432e0595745b67c0aed5.camel@gmail.com>
+ <38ae4ceb-da21-d73e-9625-1918b4ab4e16@linaro.org>
+ <5d7421b6a419a9645f97e6240b1dfbf47ffcab4e.camel@gmail.com>
+ <408ee74c-e6ed-d654-af04-58bd7d1e087b@linaro.org>
 MIME-Version: 1.0
-References: <20230521143202.155399-1-tmaimon77@gmail.com> <20230521143202.155399-2-tmaimon77@gmail.com>
- <0e72c35f-5d9d-45a7-5f85-3971b8029106@wanadoo.fr> <CAP6Zq1jOSKpzFvto1LMs=JftLK0fxrrg+73Sh34GunuLfcAfEA@mail.gmail.com>
- <fa7a8bc4-d1a1-3b1a-8b9e-618681d281dd@wanadoo.fr>
-In-Reply-To: <fa7a8bc4-d1a1-3b1a-8b9e-618681d281dd@wanadoo.fr>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Mon, 29 May 2023 18:52:32 +0300
-Message-ID: <CAP6Zq1gb8zJc=2QwNbes-AXP25thKsEVJ11pQfX24eWN62zDMQ@mail.gmail.com>
-Subject: Re: [PATCH v16 1/1] clk: npcm8xx: add clock controller
-To: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <408ee74c-e6ed-d654-af04-58bd7d1e087b@linaro.org>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,56 +92,90 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: benjaminfair@google.com, sboyd@kernel.org, venture@google.com, mturquette@baylibre.com, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, avifishman70@gmail.com, joel@jms.id.au, openbmc@lists.ozlabs.org
+Cc: devicetree@vger.kernel.org, Samuel Mendoza-Jonas <sam@mendozajonas.com>, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Ivan Mikhaylov <fr0st61te@gmail.com>, Eric Dumazet <edumazet@google.com>, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, "David S . Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 22 May 2023 at 20:36, Christophe JAILLET
-<christophe.jaillet@wanadoo.fr> wrote:
->
-> Le 22/05/2023 =C3=A0 14:56, Tomer Maimon a =C3=A9crit :
-> > Hi Christophe,
-> >
-> > Thanks for your comments
-> >
->
-> [...]
->
-> >>> +static struct clk_hw *
-> >>> +npcm8xx_clk_register_pll(struct device *dev, void __iomem *pllcon,
-> >>> +                      const char *name, const struct clk_parent_data=
- *parent,
-> >>> +                      unsigned long flags)
-> >>> +{
-> >>> +     struct npcm8xx_clk_pll *pll;
-> >>> +     struct clk_init_data init =3D {};
-> >>> +     int ret;
-> >>> +
-> >>> +     pll =3D kzalloc(sizeof(*pll), GFP_KERNEL);
-> >>
-> >> Everything looks devm_()'ed in this driver, except this kzalloc.
-> >> Except the one below, there is no kfree to free this memory, and no
-> >> .remove() function.
-> > Also  clk_hw_register_divider_parent_data doesn't use devm_
-> > about free the pll, we use it, return at the end of the function.
-> > about adding remove, we had a dissection about it in V4, since the
-> > clock is a service driver it shouldn't be removed.
-> > https://patchwork.kernel.org/project/linux-watchdog/patch/2022062113142=
-4.162355-7-tmaimon77@gmail.com/
->
-> LoL.
-> At least, I'm consistent :).
->
-> Just to make it clear, what I mean about kfree() is not to add one here,
-> but either:
->     - to use devm_kzalloc() here, to avoid a leak, should loading the
-> driver fails      OR
->     - have some kfree() where needed (at least in the error handling
-> path of the probe, if the remove function makes no point)
-O.K. Thanks for your clarification.
->
-> CJ
+Hello Krzysztof,
 
-Best regards,
+Let me try to clarify a bit on the particular usecase and answer your
+questions.
 
-Tomer
+Let's consider a server motherboard manufactured and sold by a single
+company. This motherboard includes I210 (Ethernet Controlleer) chip
+along with the other necessary parts right there, soldered to the PCB,
+non-replaceable. This I210 is connected to the host CPU with a PCIe
+lane and acts as a regular network adapter. In addition to that this
+chip is connected using NC-SI (management channel) to the BMC SoC
+(also permanently soldered to the board).
+
+There is a separate EEPROM connected directly to I210 which hosts its
+firmware and many operational parameters, including the MAC
+address. This EEPROM is not anyhow accessible by the BMC (the host can
+read/write it using special protocol over PCIe). Intel expects the
+board manufacturer to embed a MAC address from the manufacturer's
+range in the EEPROM configuration. But in many cases it's desirable to
+use a separate MAC address for the BMC (then I210 acts as if it has an
+integrated switch), so the board manufacturer can, by its internal
+policy, allocate two consecutive MAC addresses to each motherboard.
+
+The only way BMC can learn the MAC address used by I210 is by a
+special vendor-specific NC-SI command, and it can provide just a
+single address, the one used by the host. NC-SI is using Ethernet
+frames with a special type, so to execute this command the network
+driver needs to be (at least partially) functional. I do not really
+imagine nvmem getting support to read it this way.
+
+On Wed, May 17, 2023 at 09:26:35PM +0200, Krzysztof Kozlowski wrote:
+> I would like to remind this question.
+> "why different boards with same device should have different offset/value?"
+
+In the usecase we're aiming for the DT is describing a specific board
+from manufacturer that guarantees the offset to be correct, as none of
+the parts are replaceable and the MAC address is flashed into the
+I210 EEPROM during manufacturing.
+
+> Let me extend this question with one more:
+> "Why for all your boards of one type, so using the same DTS, would you
+> use one value of incrementing MAC address?"
+
+Here we assume that for all the boards supported by a particular DT
+the board manufacturer guarantees the MAC address offset by internal
+production policy, by allocating the addresses from the manufacturer's
+pool.
+
+> But you hard-code the number, just in BMC DTS. How does it differ from
+> BMC hard-coding it differently?
+> 
+> You encode policy - or software decisions - into Devicetree.
+
+But MAC address of an Ethernet equipment is an inherent part of the
+hardware. It's just that we can't store it in an nvmem-addressable
+cell in this case, unfortunately.
+
+> Why devices with same board cannot use different values? One board "1"
+> and second "2" for MAC increments? I am sure that one customer could
+> have it different.
+
+You assume that the customers might be allocating their own MAC
+addresses for the network interface of a motherboard, that might be
+true if the customer gets such a board from an ODM. But such a
+customer not willing to follow the MAC address offsets policy is not
+much different from a customer who e.g. modifies flash partitions or
+storage format making the nvmem references invalid, and so requiring a
+separate DT.
+
+> If you want to convince us, please illustrate it in a real world
+> upstreamed DTS (or explain why it cannot). Otherwise I don't see
+> justification as it is not a hardware property.
+
+Can you please tell how you would imagine a responsible vendor tackle
+the usecase I outlined? Guess it's not by a startup script that would
+be getting a MAC address from an interface, applying the offset, and
+then change it on the same interface?
+
+Thank you for the review and discussion.
+
+-- 
+Be free, use free (http://www.gnu.org/philosophy/free-sw.html) software!
+mailto:fercerpav@gmail.com
