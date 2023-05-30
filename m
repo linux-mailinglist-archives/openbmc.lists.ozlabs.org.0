@@ -1,49 +1,94 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CADD5715A02
-	for <lists+openbmc@lfdr.de>; Tue, 30 May 2023 11:25:41 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4260E71639A
+	for <lists+openbmc@lfdr.de>; Tue, 30 May 2023 16:19:00 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QVn7R0T8Kz3f6b
-	for <lists+openbmc@lfdr.de>; Tue, 30 May 2023 19:25:39 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QVvds6GkFz3f6j
+	for <lists+openbmc@lfdr.de>; Wed, 31 May 2023 00:18:57 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=Hs+fUuyV;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=aKd99wQh;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=163.com (client-ip=220.181.12.215; helo=m12.mail.163.com; envelope-from=lintao1890@163.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=163.com header.i=@163.com header.a=rsa-sha256 header.s=s110527 header.b=Hs+fUuyV;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=aKd99wQh;
 	dkim-atps=neutral
-Received: from m12.mail.163.com (m12.mail.163.com [220.181.12.215])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QVn6p6lSHz3bhC
-	for <openbmc@lists.ozlabs.org>; Tue, 30 May 2023 19:25:03 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
-	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=Hv3Dj
-	4XyAZOE//sd0oL3DF4/boGWivslEaIaNCc+X3M=; b=Hs+fUuyVf5Q8AhTxU+2fT
-	eCd4Y8/iF3QgJVPI++pqStiAatokSMEZrItcXdqlV64kA0pTRE96xKFsXDUV88J1
-	MA5yIjsrBHvbuA/8io86Jy695zBfb5SzcsdZpGuQU+UJqo8NDobV3ysmSkNp0UQ+
-	pRV5uHgi+5gTXVvDvBpMeI=
-Received: from localhost (unknown [60.208.111.205])
-	by zwqz-smtp-mta-g2-3 (Coremail) with SMTP id _____wD3pWrcwHVkey0BBA--.52630S2;
-	Tue, 30 May 2023 17:24:44 +0800 (CST)
-From: lintao1890@163.com
-To: openbmc@lists.ozlabs.org,
-	joel@jms.id.au
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc v7] board: ast2600: Add Inspur SCM V1 board
-Date: Tue, 30 May 2023 17:24:44 +0800
-Message-Id: <20230530092444.817807-1-lintao1890@163.com>
-X-Mailer: git-send-email 2.34.1
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QVvdC3RnXz3bkD;
+	Wed, 31 May 2023 00:18:23 +1000 (AEST)
+Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34UDeSY5011649;
+	Tue, 30 May 2023 14:18:09 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
+ mime-version : subject : to : cc : references : from : in-reply-to :
+ content-type : content-transfer-encoding; s=pp1;
+ bh=X+BCio2225xDSjN0IY0e48DYq1CNHg9Y4ZY/uoMoLrk=;
+ b=aKd99wQhOv/FUspt8ryXzv/Dr9otr42CVjiZ/puiMy5IZU97ub1xXsg7V8NlUcEDXnfw
+ fYNsD8wZ98z0S3p9sZmzFtOjI52XNTWVtXLfdKSDBsfc1vIKWolwE5NVNu5gPjT0WETU
+ Y4J7yvbHKrtrNHEVbtCdUaXS762TMMzemZfbMzrymmhawBb2YbD9x9x5rEmVBtalW5ZE
+ noFAJGeSc+hOSLM9basje8LFDPdwv5KML80piKC+RpyXBWgDfNpCrBN2DFafmc5l5vvx
+ 18+vIDHD2J0/pVZ0nAouTFHMpMqUclbAmf81j3IrG4He3LcfFHAlYKxZQlHwVuc7uZsC MQ== 
+Received: from pps.reinject (localhost [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qwj0e9hew-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 30 May 2023 14:18:09 +0000
+Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
+	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 34UDeVEX011730;
+	Tue, 30 May 2023 14:18:08 GMT
+Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com [169.55.85.253])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qwj0e9heh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 30 May 2023 14:18:08 +0000
+Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
+	by ppma01wdc.us.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 34UDPFoI009520;
+	Tue, 30 May 2023 14:18:08 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([9.208.130.101])
+	by ppma01wdc.us.ibm.com (PPS) with ESMTPS id 3qu9g5q6cx-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 30 May 2023 14:18:08 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com [10.241.53.100])
+	by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 34UEI6pd5178044
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Tue, 30 May 2023 14:18:06 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 79DDC58058;
+	Tue, 30 May 2023 14:18:06 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 491DF58057;
+	Tue, 30 May 2023 14:18:06 +0000 (GMT)
+Received: from [9.61.0.144] (unknown [9.61.0.144])
+	by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Tue, 30 May 2023 14:18:06 +0000 (GMT)
+Message-ID: <e123f9a1-e316-a80d-1431-1d3528c25ba5@linux.ibm.com>
+Date: Tue, 30 May 2023 09:18:06 -0500
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: _____wD3pWrcwHVkey0BBA--.52630S2
-X-Coremail-Antispam: 1Uf129KBjvJXoWxZF1DKFyrCryrtFW8CrW8Crg_yoW5try7pa
-	n7ZFWrGFZYqF4xG3W5Ary8KF1rJw1kZFZ3Krn7AFy8GF4ruF90q348KryxArnrJryUGw4r
-	tFn7WryvqFs8t3DanT9S1TB71UUUUUUqnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
-	9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07j6UDJUUUUU=
-X-Originating-IP: [60.208.111.205]
-X-CM-SenderInfo: xolq3tjrrymii6rwjhhfrp/1tbiMgB-llWB37-LywAAsv
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: [PATCH] aspeed-video.c: Fix error checking for debugfs_create_dir
+To: Osama Muhammad <osmtendev@gmail.com>, mchehab@kernel.org, joel@jms.id.au,
+        andrew@aj.id.au
+References: <20230524171137.22128-1-osmtendev@gmail.com>
+Content-Language: en-US
+From: Eddie James <eajames@linux.ibm.com>
+In-Reply-To: <20230524171137.22128-1-osmtendev@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: DSF5jfKcmHE-ax3BFAKGbt1dgredKQN2
+X-Proofpoint-ORIG-GUID: tMGJsXcu9DFzvcK79DzGAD4azZowQp1G
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
+ definitions=2023-05-30_10,2023-05-30_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
+ impostorscore=0 bulkscore=0 priorityscore=1501 phishscore=0 spamscore=0
+ adultscore=0 clxscore=1011 mlxlogscore=999 malwarescore=0 suspectscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2304280000 definitions=main-2305300114
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -55,220 +100,38 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Lin Tao <lintao.lc@inspur.com>
+Cc: openbmc@lists.ozlabs.org, linux-aspeed@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Lin Tao <lintao.lc@inspur.com>
 
-AST2600-INSPUR is an Inspur SCM V1 board which is equipped with AST2600
+On 5/24/23 12:11, Osama Muhammad wrote:
+> This patch fixes the error checking in aspeed-video.c in
+> debugfs_create_dir. The correct way to check if an error occurred
+> is using 'IS_ERR' inline function.
 
-Signed-off-by: Lin Tao <lintao.lc@inspur.com>
----
-V1 -> V2:
-    - add a missing '\'
----
-V2 -> V3:
-    - use gpio subsystem
----
-V3 -> V4:
-    - fix style problems
----
-V4 -> V5:
-    - turn on SCM LED1
----
-V5 -> V6:
-    - delete unnecessary code
----
-V6 -> V7:
-    - submit device tree only
----
- arch/arm/dts/Makefile                    |   1 +
- arch/arm/dts/ast2600-inspur-nf5280m7.dts | 163 +++++++++++++++++++++++
- 2 files changed, 164 insertions(+)
- create mode 100644 arch/arm/dts/ast2600-inspur-nf5280m7.dts
 
-diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
-index 6c34b83336..9d21e58ca5 100755
---- a/arch/arm/dts/Makefile
-+++ b/arch/arm/dts/Makefile
-@@ -687,6 +687,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	ast2600-dcscm.dtb \
- 	ast2600-fpga.dtb \
- 	ast2600-intel.dtb \
-+	ast2600-inspur-nf5280m7.dtb \
- 	ast2600-ncsi.dtb \
- 	ast2600-p10bmc.dtb \
- 	ast2600-pfr.dtb \
-diff --git a/arch/arm/dts/ast2600-inspur-nf5280m7.dts b/arch/arm/dts/ast2600-inspur-nf5280m7.dts
-new file mode 100644
-index 0000000000..3c9200c525
---- /dev/null
-+++ b/arch/arm/dts/ast2600-inspur-nf5280m7.dts
-@@ -0,0 +1,163 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+// Copyright 2023 Inspur Corp.
-+/dts-v1/;
-+
-+#include "ast2600-u-boot.dtsi"
-+
-+/ {
-+	model = "Inspur SCM V1";
-+	compatible = "inspur,nf5280m7-bmc", "aspeed,ast2600";
-+
-+	memory {
-+		device_type = "memory";
-+		reg = <0x80000000 0x40000000>;
-+	};
-+
-+	chosen {
-+		stdout-path = &uart5;
-+	};
-+
-+	aliases {
-+		mmc0 = &emmc_slot0;
-+		mmc1 = &sdhci_slot0;
-+		mmc2 = &sdhci_slot1;
-+		spi0 = &fmc;
-+		spi1 = &spi1;
-+		spi2 = &spi2;
-+		ethernet1 = &mac1;
-+	};
-+
-+	cpus {
-+		cpu@0 {
-+			clock-frequency = <1200000000>;
-+		};
-+		cpu@1 {
-+			clock-frequency = <1200000000>;
-+		};
-+	};
-+};
-+
-+&gpio0 {
-+	status = "okay";
-+};
-+
-+&uart1 {
-+	status = "okay";
-+};
-+
-+&uart2 {
-+	status = "okay";
-+};
-+
-+&uart5 {
-+	u-boot,dm-pre-reloc;
-+	status = "okay";
-+};
-+
-+&sdrammc {
-+	clock-frequency = <400000000>;
-+};
-+
-+&mdio {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_mdio2_default>;
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+	ethphy0: ethernet-phy@0 {
-+		reg = <0>;
-+	};
-+
-+	ethphy1: ethernet-phy@1 {
-+		reg = <0>;
-+	};
-+
-+	ethphy2: ethernet-phy@2 {
-+		reg = <0>;
-+	};
-+
-+	ethphy3: ethernet-phy@3 {
-+		reg = <0>;
-+	};
-+};
-+
-+&mac1 {
-+	status = "okay";
-+	phy-mode = "rgmii";
-+	phy-handle = <&ethphy1>;
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rgmii2_default>;
-+};
-+
-+&fmc {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_fmcquad_default>;
-+	flash@0 {
-+		status = "okay";
-+		spi-max-frequency = <40000000>;
-+		spi-tx-bus-width = <4>;
-+		spi-rx-bus-width = <4>;
-+	};
-+	flash@1 {
-+		status = "okay";
-+		spi-max-frequency = <40000000>;
-+		spi-tx-bus-width = <4>;
-+		spi-rx-bus-width = <4>;
-+	};
-+};
-+
-+&i2c1 {
-+	status = "okay";
-+	multi-master;
-+};
-+
-+&i2c4 {
-+	status = "okay";
-+	multi-master;
-+};
-+
-+&i2c5 {
-+	status = "okay";
-+	multi-master;
-+};
-+
-+&i2c6 {
-+	status = "okay";
-+	multi-master;
-+};
-+
-+&i2c7 {
-+	status = "okay";
-+	multi-master;
-+};
-+
-+&i2c8 {
-+	status = "okay";
-+	multi-master;
-+};
-+
-+&i2c9 {
-+	status = "okay";
-+	multi-master;
-+};
-+
-+&i2c12 {
-+	status = "okay";
-+	multi-master;
-+};
-+
-+&i2c13 {
-+	status = "okay";
-+	multi-master;
-+};
-+
-+&hace {
-+	u-boot,dm-pre-reloc;
-+	status = "okay";
-+};
-+
-+&acry {
-+	u-boot,dm-pre-reloc;
-+	status = "disabled";
-+};
--- 
-2.34.1
+Thanks.
 
+Reviewed-by: Eddie James <eajames@linux.ibm.com>
+
+
+>
+> Signed-off-by: Osama Muhammad <osmtendev@gmail.com>
+> ---
+>   drivers/media/platform/aspeed/aspeed-video.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/drivers/media/platform/aspeed/aspeed-video.c b/drivers/media/platform/aspeed/aspeed-video.c
+> index 374eb7781936..97847f44964a 100644
+> --- a/drivers/media/platform/aspeed/aspeed-video.c
+> +++ b/drivers/media/platform/aspeed/aspeed-video.c
+> @@ -1976,7 +1976,7 @@ static int aspeed_video_debugfs_create(struct aspeed_video *video)
+>   	debugfs_entry = debugfs_create_file(DEVICE_NAME, 0444, NULL,
+>   					    video,
+>   					    &aspeed_video_debugfs_fops);
+> -	if (!debugfs_entry)
+> +	if (IS_ERR(debugfs_entry))
+>   		aspeed_video_debugfs_remove(video);
+>   
+>   	return !debugfs_entry ? -EIO : 0;
