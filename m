@@ -2,93 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4260E71639A
-	for <lists+openbmc@lfdr.de>; Tue, 30 May 2023 16:19:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 708FF717391
+	for <lists+openbmc@lfdr.de>; Wed, 31 May 2023 04:12:46 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QVvds6GkFz3f6j
-	for <lists+openbmc@lfdr.de>; Wed, 31 May 2023 00:18:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QWCTR6yGkz3cKj
+	for <lists+openbmc@lfdr.de>; Wed, 31 May 2023 12:12:43 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=aKd99wQh;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=UksYza6w;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::52f; helo=mail-ed1-x52f.google.com; envelope-from=joel.stan@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=aKd99wQh;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=UksYza6w;
 	dkim-atps=neutral
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QVvdC3RnXz3bkD;
-	Wed, 31 May 2023 00:18:23 +1000 (AEST)
-Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 34UDeSY5011649;
-	Tue, 30 May 2023 14:18:09 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- mime-version : subject : to : cc : references : from : in-reply-to :
- content-type : content-transfer-encoding; s=pp1;
- bh=X+BCio2225xDSjN0IY0e48DYq1CNHg9Y4ZY/uoMoLrk=;
- b=aKd99wQhOv/FUspt8ryXzv/Dr9otr42CVjiZ/puiMy5IZU97ub1xXsg7V8NlUcEDXnfw
- fYNsD8wZ98z0S3p9sZmzFtOjI52XNTWVtXLfdKSDBsfc1vIKWolwE5NVNu5gPjT0WETU
- Y4J7yvbHKrtrNHEVbtCdUaXS762TMMzemZfbMzrymmhawBb2YbD9x9x5rEmVBtalW5ZE
- noFAJGeSc+hOSLM9basje8LFDPdwv5KML80piKC+RpyXBWgDfNpCrBN2DFafmc5l5vvx
- 18+vIDHD2J0/pVZ0nAouTFHMpMqUclbAmf81j3IrG4He3LcfFHAlYKxZQlHwVuc7uZsC MQ== 
-Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qwj0e9hew-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 May 2023 14:18:09 +0000
-Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 34UDeVEX011730;
-	Tue, 30 May 2023 14:18:08 GMT
-Received: from ppma01wdc.us.ibm.com (fd.55.37a9.ip4.static.sl-reverse.com [169.55.85.253])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3qwj0e9heh-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 May 2023 14:18:08 +0000
-Received: from pps.filterd (ppma01wdc.us.ibm.com [127.0.0.1])
-	by ppma01wdc.us.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 34UDPFoI009520;
-	Tue, 30 May 2023 14:18:08 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([9.208.130.101])
-	by ppma01wdc.us.ibm.com (PPS) with ESMTPS id 3qu9g5q6cx-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Tue, 30 May 2023 14:18:08 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com [10.241.53.100])
-	by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 34UEI6pd5178044
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Tue, 30 May 2023 14:18:06 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 79DDC58058;
-	Tue, 30 May 2023 14:18:06 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 491DF58057;
-	Tue, 30 May 2023 14:18:06 +0000 (GMT)
-Received: from [9.61.0.144] (unknown [9.61.0.144])
-	by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Tue, 30 May 2023 14:18:06 +0000 (GMT)
-Message-ID: <e123f9a1-e316-a80d-1431-1d3528c25ba5@linux.ibm.com>
-Date: Tue, 30 May 2023 09:18:06 -0500
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QWCSs6NJHz3c34;
+	Wed, 31 May 2023 12:12:13 +1000 (AEST)
+Received: by mail-ed1-x52f.google.com with SMTP id 4fb4d7f45d1cf-51475e981f0so8637999a12.1;
+        Tue, 30 May 2023 19:12:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=jms.id.au; s=google; t=1685499129; x=1688091129;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Ucx4kwK8ujRzNJbb04V3YLVl0GtgGlj1PvcZVvmj1Eg=;
+        b=UksYza6wNv++MXgkLV6TDe5P04amEFt0Y/STxFL5ddTVUpx9Oof8N9nejDVj0LJBaZ
+         Qp9nHyCFEoOR2KT7C59Zo4iAZgnllES/CX4UtbLXNF/cafT7E7uaRCE5ICzrl5osOrzh
+         MS2F0URjTIywWbkLqEpmPRsMFkH/rpfcRCPP0=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685499129; x=1688091129;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Ucx4kwK8ujRzNJbb04V3YLVl0GtgGlj1PvcZVvmj1Eg=;
+        b=gxr8RSgCSJdWZ1p2I1fEftxbIfUFLJa8K8YKclQEAgyAgYPdb7F3EQ1w9KZEfGD9IZ
+         0jwo09CZCLLeQ21kYwDbGbouPCqiQnqQ2doc39fDyQxbuy3HaeUswsf+e7qG349c47Mj
+         KOEliz32blWjVWdjmhl+luzANQTcV+A9tEvXcbb88C/cGu6eE9OVHyaJ8X84NxA/rS5Z
+         FurnUYDHowh+7NEm/iJbP0BgUK5Fiv/6bIRiG0dfWvs5WSWN8PJOqLdck+e32ZBbwT3b
+         LhVmnA9OoHiauRMBkY2pPg4PtZIucwDDlaVZ4IrVZ4Lh4bYLyCJtL7dkGK+Skg8Yakzs
+         Og/w==
+X-Gm-Message-State: AC+VfDxy1VvTQuh+B69i/oUYiiye2V5RL49wCFhbjQG06gY4t+YgR3aj
+	fIVd/X4CkQkjFOpfaoRkcJceeTNQ4SYRPBKeZxW56JRr
+X-Google-Smtp-Source: ACHHUZ5oxahDY3MaQoUQVhM7Tbdz41DGYhxrKbPGA+375sD6ptx3fcUhjX/tVD5i8ak/I8xYWweHuxNKoat820sgwb0=
+X-Received: by 2002:a17:907:70e:b0:94f:5847:8ac with SMTP id
+ xb14-20020a170907070e00b0094f584708acmr4252784ejb.51.1685499128511; Tue, 30
+ May 2023 19:12:08 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.10.0
-Subject: Re: [PATCH] aspeed-video.c: Fix error checking for debugfs_create_dir
-To: Osama Muhammad <osmtendev@gmail.com>, mchehab@kernel.org, joel@jms.id.au,
-        andrew@aj.id.au
-References: <20230524171137.22128-1-osmtendev@gmail.com>
-Content-Language: en-US
-From: Eddie James <eajames@linux.ibm.com>
-In-Reply-To: <20230524171137.22128-1-osmtendev@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: DSF5jfKcmHE-ax3BFAKGbt1dgredKQN2
-X-Proofpoint-ORIG-GUID: tMGJsXcu9DFzvcK79DzGAD4azZowQp1G
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.573,FMLib:17.11.176.26
- definitions=2023-05-30_10,2023-05-30_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 lowpriorityscore=0
- impostorscore=0 bulkscore=0 priorityscore=1501 phishscore=0 spamscore=0
- adultscore=0 clxscore=1011 mlxlogscore=999 malwarescore=0 suspectscore=0
- mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2304280000 definitions=main-2305300114
+References: <20230317134638.3128232-1-eajames@linux.ibm.com>
+In-Reply-To: <20230317134638.3128232-1-eajames@linux.ibm.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 31 May 2023 02:11:56 +0000
+Message-ID: <CACPK8XeSemvhR2_mn_Qb2Xtt2K5=UqEufnKd1HnQxO2MfWXHSg@mail.gmail.com>
+Subject: Re: [PATCH] fsi: sbefifo: Add configurable in-command timeout
+To: Eddie James <eajames@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -100,38 +70,152 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, linux-aspeed@lists.ozlabs.org
+Cc: openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-fsi@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-
-On 5/24/23 12:11, Osama Muhammad wrote:
-> This patch fixes the error checking in aspeed-video.c in
-> debugfs_create_dir. The correct way to check if an error occurred
-> is using 'IS_ERR' inline function.
-
-
-Thanks.
-
-Reviewed-by: Eddie James <eajames@linux.ibm.com>
-
-
+On Fri, 17 Mar 2023 at 13:46, Eddie James <eajames@linux.ibm.com> wrote:
 >
-> Signed-off-by: Osama Muhammad <osmtendev@gmail.com>
+> A new use case for the SBEFIFO requires a long in-command timeout
+> as the SBE processes each part of the command before clearing the
+> upstream FIFO for the next part of the command. Add ioctl support
+> to configure this timeout in a similar way to the existing read
+> timeout.
+>
+> Signed-off-by: Eddie James <eajames@linux.ibm.com>
+
+I've got one minor suggestion below that I'll make when applying.
+
+Reviewed-by: Joel Stanley <joel@jms.id.au>
+
 > ---
->   drivers/media/platform/aspeed/aspeed-video.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>  drivers/fsi/fsi-sbefifo.c | 33 ++++++++++++++++++++++++++++++++-
+>  include/uapi/linux/fsi.h  | 10 ++++++++++
+>  2 files changed, 42 insertions(+), 1 deletion(-)
 >
-> diff --git a/drivers/media/platform/aspeed/aspeed-video.c b/drivers/media/platform/aspeed/aspeed-video.c
-> index 374eb7781936..97847f44964a 100644
-> --- a/drivers/media/platform/aspeed/aspeed-video.c
-> +++ b/drivers/media/platform/aspeed/aspeed-video.c
-> @@ -1976,7 +1976,7 @@ static int aspeed_video_debugfs_create(struct aspeed_video *video)
->   	debugfs_entry = debugfs_create_file(DEVICE_NAME, 0444, NULL,
->   					    video,
->   					    &aspeed_video_debugfs_fops);
-> -	if (!debugfs_entry)
-> +	if (IS_ERR(debugfs_entry))
->   		aspeed_video_debugfs_remove(video);
->   
->   	return !debugfs_entry ? -EIO : 0;
+> diff --git a/drivers/fsi/fsi-sbefifo.c b/drivers/fsi/fsi-sbefifo.c
+> index 9912b7a6a4b9..223486b3cfcb 100644
+> --- a/drivers/fsi/fsi-sbefifo.c
+> +++ b/drivers/fsi/fsi-sbefifo.c
+> @@ -127,6 +127,7 @@ struct sbefifo {
+>         bool                    dead;
+>         bool                    async_ffdc;
+>         bool                    timed_out;
+> +       u32                     timeout_in_cmd_ms;
+>         u32                     timeout_start_rsp_ms;
+>  };
+>
+> @@ -136,6 +137,7 @@ struct sbefifo_user {
+>         void                    *cmd_page;
+>         void                    *pending_cmd;
+>         size_t                  pending_len;
+> +       u32                     cmd_timeout_ms;
+>         u32                     read_timeout_ms;
+>  };
+>
+> @@ -508,7 +510,7 @@ static int sbefifo_send_command(struct sbefifo *sbefifo,
+>                 rc = sbefifo_wait(sbefifo, true, &status, timeout);
+>                 if (rc < 0)
+>                         return rc;
+> -               timeout = msecs_to_jiffies(SBEFIFO_TIMEOUT_IN_CMD);
+> +               timeout = msecs_to_jiffies(sbefifo->timeout_in_cmd_ms);
+>
+>                 vacant = sbefifo_vacant(status);
+>                 len = chunk = min(vacant, remaining);
+> @@ -802,6 +804,7 @@ static int sbefifo_user_open(struct inode *inode, struct file *file)
+>                 return -ENOMEM;
+>         }
+>         mutex_init(&user->file_lock);
+> +       user->cmd_timeout_ms = SBEFIFO_TIMEOUT_IN_CMD;
+>         user->read_timeout_ms = SBEFIFO_TIMEOUT_START_RSP;
+>
+>         return 0;
+> @@ -845,9 +848,11 @@ static ssize_t sbefifo_user_read(struct file *file, char __user *buf,
+>         rc = mutex_lock_interruptible(&sbefifo->lock);
+>         if (rc)
+>                 goto bail;
+> +       sbefifo->timeout_in_cmd_ms = user->cmd_timeout_ms;
+>         sbefifo->timeout_start_rsp_ms = user->read_timeout_ms;
+>         rc = __sbefifo_submit(sbefifo, user->pending_cmd, cmd_len, &resp_iter);
+>         sbefifo->timeout_start_rsp_ms = SBEFIFO_TIMEOUT_START_RSP;
+> +       sbefifo->timeout_in_cmd_ms = SBEFIFO_TIMEOUT_IN_CMD;
+>         mutex_unlock(&sbefifo->lock);
+>         if (rc < 0)
+>                 goto bail;
+> @@ -937,6 +942,28 @@ static int sbefifo_user_release(struct inode *inode, struct file *file)
+>         return 0;
+>  }
+>
+> +static int sbefifo_cmd_timeout(struct sbefifo_user *user, void __user *argp)
+> +{
+> +       struct device *dev = &user->sbefifo->dev;
+> +       u32 timeout;
+> +
+> +       if (get_user(timeout, (__u32 __user *)argp))
+> +               return -EFAULT;
+> +
+> +       if (timeout == 0) {
+> +               user->cmd_timeout_ms = SBEFIFO_TIMEOUT_IN_CMD;
+> +               dev_dbg(dev, "Command timeout reset to %u\n", user->cmd_timeout_ms);
+
+%u ms ? Or divide it by 1000 to print it in seconds?
+
+> +               return 0;
+> +       }
+> +
+> +       if (timeout > 120)
+> +               return -EINVAL;
+> +
+> +       user->cmd_timeout_ms = timeout * 1000; /* user timeout is in sec */
+> +       dev_dbg(dev, "Command timeout set to %u\n", user->cmd_timeout_ms);
+
+Same here.
+
+> +       return 0;
+> +}
+> +
+>  static int sbefifo_read_timeout(struct sbefifo_user *user, void __user *argp)
+>  {
+>         struct device *dev = &user->sbefifo->dev;
+> @@ -971,6 +998,9 @@ static long sbefifo_user_ioctl(struct file *file, unsigned int cmd, unsigned lon
+>
+>         mutex_lock(&user->file_lock);
+>         switch (cmd) {
+> +       case FSI_SBEFIFO_CMD_TIMEOUT_SECONDS:
+> +               rc = sbefifo_cmd_timeout(user, (void __user *)arg);
+> +               break;
+>         case FSI_SBEFIFO_READ_TIMEOUT_SECONDS:
+>                 rc = sbefifo_read_timeout(user, (void __user *)arg);
+>                 break;
+> @@ -1025,6 +1055,7 @@ static int sbefifo_probe(struct device *dev)
+>         sbefifo->fsi_dev = fsi_dev;
+>         dev_set_drvdata(dev, sbefifo);
+>         mutex_init(&sbefifo->lock);
+> +       sbefifo->timeout_in_cmd_ms = SBEFIFO_TIMEOUT_IN_CMD;
+>         sbefifo->timeout_start_rsp_ms = SBEFIFO_TIMEOUT_START_RSP;
+>
+>         /*
+> diff --git a/include/uapi/linux/fsi.h b/include/uapi/linux/fsi.h
+> index b2f1977378c7..a2e730fc6309 100644
+> --- a/include/uapi/linux/fsi.h
+> +++ b/include/uapi/linux/fsi.h
+> @@ -59,6 +59,16 @@ struct scom_access {
+>   * /dev/sbefifo* ioctl interface
+>   */
+>
+> +/**
+> + * FSI_SBEFIFO_CMD_TIMEOUT sets the timeout for writing data to the SBEFIFO.
+> + *
+> + * The command timeout is specified in seconds.  The minimum value of command
+> + * timeout is 1 seconds (default) and the maximum value of command timeout is
+> + * 120 seconds.  A command timeout of 0 will reset the value to the default of
+> + * 1 seconds.
+> + */
+> +#define FSI_SBEFIFO_CMD_TIMEOUT_SECONDS                _IOW('s', 0x01, __u32)
+> +
+>  /**
+>   * FSI_SBEFIFO_READ_TIMEOUT sets the read timeout for response from SBE.
+>   *
+> --
+> 2.31.1
+>
