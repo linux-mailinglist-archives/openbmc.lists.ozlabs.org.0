@@ -2,128 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 994FF720ED0
-	for <lists+openbmc@lfdr.de>; Sat,  3 Jun 2023 10:50:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 954277228A6
+	for <lists+openbmc@lfdr.de>; Mon,  5 Jun 2023 16:19:54 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QYD8W0VB8z3dsl
-	for <lists+openbmc@lfdr.de>; Sat,  3 Jun 2023 18:50:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QZbN81vbsz3f0f
+	for <lists+openbmc@lfdr.de>; Tue,  6 Jun 2023 00:19:52 +1000 (AEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=QZkufqeW;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=r7GGsIF2;
 	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=nvidia.com (client-ip=2a01:111:f400:7eb2::610; helo=nam02-bn1-obe.outbound.protection.outlook.com; envelope-from=ropai@nvidia.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1036; helo=mail-pj1-x1036.google.com; envelope-from=raviteja28031990@gmail.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=QZkufqeW;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=r7GGsIF2;
 	dkim-atps=neutral
-Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam02on20610.outbound.protection.outlook.com [IPv6:2a01:111:f400:7eb2::610])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QYD7v75J4z3cLx
-	for <openbmc@lists.ozlabs.org>; Sat,  3 Jun 2023 18:49:28 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=fXaY5gXAoEAryKVIU1W45bTZU1Ep6x9ETjixFGKpW7wzq0Qv+KyNUKsqthLHASozS+CHrX469EY9J1XbI2/wzPpQTkIeND/jvqetmm4yXT4acR8AYAWd/DsOLgNfyioKCi0cbhMvgWDoheHOVmSzOcxIXiw0EOQvvHeH8LN2NPBIbW3HK1Iw39M86D1/pR8l2rdJK+94jmvlfRWYqMlo+V8rk8BMFi8cHkVsH54mfgS6zKeQl8zGf8ysQBAdbgAtPBGBdlurhTsoHWyApWkWbIKsBxLkX0ur16B307HxjBjWYB4dCZN9g5WiroNahLpCVZxbEcFt4LEuD1BqLp408g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dLxkAD2znUwWz3FWQRMuybHySH10GdD+VOpQl6gvgwg=;
- b=WB4ShDr4HhOwyYtwwo0oheslS8+mEYFo9VuDz/fEDMUM/mwUGDMIShPzEakgNXxXbb5V21NKSGrNYvBsUYUOLwWiOPp/qdeixu7pgNuQVD/w82iiSX2WoiVJBU3yb2jPn/9iV4807hy83ToKczqdGfYf50TGG/qBPHiS57CwUHrmEhcnZv69cSTiWI/nTOtEe5e3S7pUir3oo2w7QMLM6OoF9Xf0GCgpgPzS/0EQkiybwzFxjx6zWcA7KFKNHIbi4L7eudEQNoXOOH0mzrF4JM3H7Vy/BtSdOfIovQ3kG1jJKvI9cNG7DSUjqFMwSb46YEyDTrDenFSNfXiJ652PrQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=dLxkAD2znUwWz3FWQRMuybHySH10GdD+VOpQl6gvgwg=;
- b=QZkufqeWZTiOUPltOD8OahltJkTocK9onpQwx+OIGg1GYtp0T2Le2VcwyNUhnJ6rWr4q9jV3aqPZcTUrNnW6EpFE4htH5uAqtPDzauWJ/3MCQo8GHt67CN7qsS9Vv0uceVI/ytbcvymHejl3LVup4L1k9rP4PeqnaX/P3tjmijSX5zZ92GJGL+QaClqqh25FKPh/ZYD3ZXFq2LnuRX15LUTlFJGguudx46h8pWoJDD7vxq9S+k/azZX1/07XZTgWxrhVVu7w+PVfyNGZ/CU3vzMm2UdaJ0bHuMNQ2Nn9MUTi+vMF246+lEG5CPRO904AOmlJSFAZCc4w2PV040lWeg==
-Received: from LV2PR12MB6014.namprd12.prod.outlook.com (2603:10b6:408:170::18)
- by SN7PR12MB7835.namprd12.prod.outlook.com (2603:10b6:806:328::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6433.24; Sat, 3 Jun
- 2023 08:49:05 +0000
-Received: from LV2PR12MB6014.namprd12.prod.outlook.com
- ([fe80::507:bce:e64c:f3fe]) by LV2PR12MB6014.namprd12.prod.outlook.com
- ([fe80::507:bce:e64c:f3fe%7]) with mapi id 15.20.6455.027; Sat, 3 Jun 2023
- 08:49:05 +0000
-From: Rohit Pai <ropai@nvidia.com>
-To: Ed Tanous <edtanous@google.com>
-Subject: RE: Prioritizing URIs with tight performance requirement in openBmc
- with bmcweb
-Thread-Topic: Prioritizing URIs with tight performance requirement in openBmc
- with bmcweb
-Thread-Index: AdmOIj9HMMHUr5E5SWm5E5BqGmJtZAAOkWAAAAMhPIABk6P0AABNnoyQ
-Date: Sat, 3 Jun 2023 08:49:04 +0000
-Message-ID:  <LV2PR12MB60143B8210EC0B427F219528CD4FA@LV2PR12MB6014.namprd12.prod.outlook.com>
-References:  <LV2PR12MB601419E4F59555BBCB4EE70FCD419@LV2PR12MB6014.namprd12.prod.outlook.com>
- <CAH2-KxAdhmj98prJ2QCuN4p1ZxRZs3ZFdchxdZ-_A9c-ACpMOQ@mail.gmail.com>
- <CAH2-KxDfqpMLpeFkKn8BHkL2e7nwVBR+o3ziDBvw3KJd6fHwsg@mail.gmail.com>
- <CAH2-KxAEay+E=D9scS=2pHb7tOw0Vz5_ZoH_5=Q5o6sJdGE1Jg@mail.gmail.com>
-In-Reply-To:  <CAH2-KxAEay+E=D9scS=2pHb7tOw0Vz5_ZoH_5=Q5o6sJdGE1Jg@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: LV2PR12MB6014:EE_|SN7PR12MB7835:EE_
-x-ms-office365-filtering-correlation-id: 3ad7e484-956a-4866-9dff-08db640f62e7
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:  mWDe52rigE0AUIgbsO1hDChZvBbKITV7VDHpA2gtrlg8T8MuvV7/qtlDbImH8mIp8nW27QuQB3oXlpRzJoiVEgYy1H5QByZ2hmAf+DKU1ApU6Zo6KvOXDDLs0YAaQjuIZU3FAeRQ+OBghiwn769/xJXrW9rDBt+VJfnEYXz415deW2n0MJi6bMJSolrIw5Om+OelC4Sr8c3EIlmn3ILZ8eV+8lbntjNaD+iRW+nABbwiBlVYlBvMd1oMRyJujK8bTaNi1Cvt8sooGWuwvuIyKAoxxrce5zo2u/AhlZyYytYQZrxervBxawD5tLUG7tIbjRADlkhvZL5LQ1qaaONSkuf+Q/Z2JJEiWDj9z+P/Tzk7CgdiPD1+SsOcJOdtKX+CaJIUMD9QZzcKLLUlcw8Z3tgXa7Wl0TQrGz4MiqH/RQKV/hjsyoD7XcBfR2jblVm24yS/l7EdpdHGAtAOMeQ5O3dKE9uM7+hSCEdnB8507Z2YPzGISgdkj8cbtsO5TZxgr9dRtVE2+W4KkAXd0Oj1N2wpKM4+JQPsyx28b37NUfDsptGAn5fDFO7+pGUrvZsexwF5xTZP9wbNU+ZeTSrgglBuq1mW9/UHWSlS5l229eHEXWFN5tD4Oto+jC4Q+3U5t4lVSMRTTPmnoz2FvXWu1CpkQEvXdTbQT8FqvXR512M=
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB6014.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(39860400002)(346002)(396003)(366004)(376002)(136003)(451199021)(8676002)(33656002)(55016003)(83380400001)(41300700001)(9686003)(122000001)(4326008)(38070700005)(316002)(38100700002)(52536014)(7696005)(86362001)(6506007)(66476007)(66446008)(66946007)(66556008)(71200400001)(64756008)(6916009)(76116006)(2906002)(478600001)(5660300002)(966005)(8936002)(53546011)(26005)(186003);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?utf-8?B?T0ViNkFaT29Wb1d0WFIyb0dvNzRXVlgvVXo2aVF5VEdnQXBkVFJOUmt6RGZV?=
- =?utf-8?B?Z3kyNklFajI4QmEyeHhlN1FyczFJSGVPM2xxRnlmWDQ1ZklkMi9CNHJWTHJy?=
- =?utf-8?B?NkVFTjlSaVFLNUloSnFXeEFwNE5LNnRDcnlDMWQ5dU9Zci9aTTd5RXM5YlpL?=
- =?utf-8?B?clFYb1M0VHJRc1E4QUx0dWplbGV4Mm9LRDJUSzdmRFgyR1N5WWE0bExOM1Zj?=
- =?utf-8?B?cUgwclA3b2N3dy8zVkp6eGQ3Y25XSUh2NlZScmZEYlA4SXpxVmFmSnh2OHBV?=
- =?utf-8?B?ZmxDdzBmVUliQ1BjK25BUTgrNlFJV3lmWTZBemxBS3libHl6OEYrZnRjK0ZY?=
- =?utf-8?B?cEtKaVFvREdneTZJdGtKSVBlK01rcmRnMEc4L1pWYkc1enBBZHpla3RmTGk0?=
- =?utf-8?B?V3lwRjk0OG5FQnVOendaNzVBMjlRbUFKZ0JSQ001NlJicU40NVFJUTh1dlNt?=
- =?utf-8?B?YVV6NkxSRTF1YmVOV2d4aWxyZVRsYytvZktuN2VvR2hvdS9kN2g0Q3R2eHBT?=
- =?utf-8?B?a0ZEdWxGcitrQnJScHVMZlY4MjB1YndCNTYvT1U3TThpWXFudTNMdUEybHhl?=
- =?utf-8?B?V2hCNWNXNjNiRkpYL3JnNHZkbGVyYmFIZ2Y5OGZhOFZaNEcwRURwSWJsblZH?=
- =?utf-8?B?YUV1MHVKZUEzbyttUERmNkY3SkNsWmhVMjAvU1NwaVQ0VmxKTlFQVC9JYnM3?=
- =?utf-8?B?Ri9yanNzR3FQQTB1ZzlJdTRkaFNPK09wdmlKOEhlOVdrYW1DWHEzaENlVU1H?=
- =?utf-8?B?LzRORHpMNHAxVHpMNmdSUmpIZ0wvV1cyd0txSElMU2E3TDZBRE5oMGd2NDV4?=
- =?utf-8?B?cDF2NUFCUEJqbVplRUdzb0FmbWl4Mis0UEFSek54OGJiM2xTclhqVTRoUEs3?=
- =?utf-8?B?akpQTkdNeGc2SDNLU05GR1JtZlluYUgrQ2d3WkduMVZ6OEQ0d2gvbzBDZTh6?=
- =?utf-8?B?L2VIM05tdDNLdFBNRXR4ZE5xZXd2aHhiNmMrbDFVckRCZDlEZXFVdFd6dVJZ?=
- =?utf-8?B?TnhocGJsMHVRQkp0aEdBVmk1ODE2ZVVLd1lhOXVRbzJBMkZVVWlsQXQ2V2JJ?=
- =?utf-8?B?TDBIUG9Ob3VOVnRYSWxBditJdDFkSGZPcXdGUk9QaGpFaEJteGJwMmNua2Rl?=
- =?utf-8?B?d2ZXc0NtUGdrMlIzYXBianlENEN6YUpWc2VMbmRXcExNZEdMdnFGa1BwWkhv?=
- =?utf-8?B?bEliZk9uTCtxRmZ2dUNlUmZzV21MZXdjaENhRG5EMTJUcHY5K3BITS95a1R5?=
- =?utf-8?B?bXVvUUpOWThoSmwzVkxRRzFhNThLc1RMUnU5dGRsMkFNQk9lMnhod0JJQndI?=
- =?utf-8?B?Zk9tL3dURDJPWHl2TlJIN0pNQ2RYRkZ6VmIvYmYvUnJwQXZSNlBPUzlhdjJB?=
- =?utf-8?B?UzN6NDN0cW5Ya1A5a2k4c0U5dEtqSmhyMzlQcjNXcDd0Mnh5ZmhYcFFFVExE?=
- =?utf-8?B?V2NSb3djdytocG5SMk5qUGxXdGpST3M0ZzB2UE9TdFpjR1M3bXpmSnorZ3Bw?=
- =?utf-8?B?U0FYTFNNWWFWNDFjZWJLTzZOSlN0SWZETHlDeERrTHVqQk90UEdYUWRab3V6?=
- =?utf-8?B?VTJ2bEpQWmdzdFljemdvK2lXNGpnU2Y2a2V0eWdzVXNpRitwN0VOU0psaWlu?=
- =?utf-8?B?YjgwUVZYanNOcGlucTdPVjE1bk5kT3JUQTh1VVdHQ3I5bWlUL1VDSGVjU3B1?=
- =?utf-8?B?blpjcWZYd1hEYUM0RzVqanh1cDNzVmpUaTl1WXhzZGd3UklIeHN3U2RIa3FB?=
- =?utf-8?B?YkpHTllsYVhWbTFqTDB5VFVramVXcGlqbUFRTWpyVGt5cjlOZ2NveFlSYWZO?=
- =?utf-8?B?ckZHdkVWNUo2ZjBxdGN1RlBTSGgvcmNCK3pkdzV1NmxRK2JSRDlkVUZ0WjhK?=
- =?utf-8?B?aFE4aFlBTEZLNHI3bHVkMnJ3eWhnYmxDWlRlbG9BMWJQUE1YMGg1SWxqUlNz?=
- =?utf-8?B?UWZGQzU2WVo2eEFpRDZLTzJmK3QxU3Q2TFl4V2dTVjFWRGZ2d29GMi8zZ2ZH?=
- =?utf-8?B?UDgvR2FFU09DY1prMUw0L2RPTXhtdGJpVW1HQmlrTTNHZlZ0TjlKNDJSSWlz?=
- =?utf-8?B?TGczTlJyVEpxUEh4dTZRaitPamJ6TWIxQXBRdXNRV2dBTXZYd1M4SE85MlR5?=
- =?utf-8?Q?u18A=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QZbMb4hZWz3bVP
+	for <openbmc@lists.ozlabs.org>; Tue,  6 Jun 2023 00:19:22 +1000 (AEST)
+Received: by mail-pj1-x1036.google.com with SMTP id 98e67ed59e1d1-2568caabfbfso2268461a91.3
+        for <openbmc@lists.ozlabs.org>; Mon, 05 Jun 2023 07:19:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1685974758; x=1688566758;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XnCRgNkLuql85huv25ujYTUl5tjTlulPXvbaxBfwBUs=;
+        b=r7GGsIF2BsquRUWBi8Anv1IYdpMO/2JMyMrSOJJ43DpVwUOyGpoWaSKZuKUFUgCXvt
+         vw63P2u9trdf5sfiK14uV9hpDrTUoYSwUjMv6CCgrixg6/uxZ68fja6wdXd0MFB7O3ad
+         K/EEZgBsm1jvfI9iKYPYFsxh7CSQyxA9+L3jhRtdFLWraiQHMZap23z6BmJvwor92q+B
+         396Df/kj1mwv8P2EGCvuC7IEBdnfzg9+8MfetRYIOcqowJEz7s0x1eYsPsL5TDDjQPVJ
+         IMQRh+zLdKc/03PP3o9jHnMCovB/bQ/T7MuStQAUf7cucTslCsr8R82N/clRAuJuphw2
+         JBUw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1685974758; x=1688566758;
+        h=to:subject:message-id:date:from:in-reply-to:references:mime-version
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XnCRgNkLuql85huv25ujYTUl5tjTlulPXvbaxBfwBUs=;
+        b=D1VwWm7VqDFhPFSAbDHsDWj++gJp42z5wjYYk4Q9zUNl6piAxYZb6Oz5dUfZjOUk+l
+         t2Zsp4xd1DXIMrBAxxyIlJg3kgN5llCor9w21wL5gcCiSPrbX/XPa/y0ERV690TWRHcj
+         6/AN1XNRHpP+sDfHxLamVLiz4CqnUuvQlBZsZTxheCtjwp2NomDZwG6je7pcL54nJUbP
+         xGsCjqTnEDpU3KGNvuRV1jJZ5wATjU4UYuCe+zPfjrSwwwPm6rpNhRSRi+zxSAwr83ye
+         ObsZ67o8301/vBRVL/VhJQwKziWP2exXIriLGYJ8lwgrlvRZMlTUh/mZJMdvGmahqQaj
+         qUxQ==
+X-Gm-Message-State: AC+VfDyolvzxWckRqvSv2SLJgRHc0BAHvIbRNPQY+E8Vuru9E5ZCwCuZ
+	IDk+lCwhiec6dcOZs0i1jjZWIr6lKmtZC78bsUI/1qzIR4I=
+X-Google-Smtp-Source: ACHHUZ6Z0BSuRBAi/ycjUwh20L+jQ+5DrKgd2kkPW3+ad89k52BCiAJNwbuBeuvIFFpEd3gKysUc5UcvOZ00DzElklc=
+X-Received: by 2002:a17:90a:420a:b0:259:b73:f508 with SMTP id
+ o10-20020a17090a420a00b002590b73f508mr2905645pjg.1.1685974758366; Mon, 05 Jun
+ 2023 07:19:18 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB6014.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3ad7e484-956a-4866-9dff-08db640f62e7
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jun 2023 08:49:04.9307
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: xEYtMLyCAg6E7MU/YN+sklAgLmNAHEctBx2NZrwi5mk9DJCYnQm03dy5uG9NRXvcR3ZzoCkAlVshrMye+Wsf1Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7835
+References: <CAM4DKZkkKx_MPVv_R7WqOhnKA+hRYWU4GK=DqbqqSVj_CtMtMg@mail.gmail.com>
+ <2d93fd2f-bde5-22f2-373a-63398963e94f@linux.intel.com> <CAM4DKZkvHE6AOgpaO2bCKgK9CgN_YZM9UpEDpzD3-+DSXf4EXQ@mail.gmail.com>
+ <7230376b-c7f4-b931-faff-27a4da1b38a9@gmail.com>
+In-Reply-To: <7230376b-c7f4-b931-faff-27a4da1b38a9@gmail.com>
+From: raviteja bailapudi <raviteja28031990@gmail.com>
+Date: Mon, 5 Jun 2023 19:49:06 +0530
+Message-ID: <CAM4DKZ=-pHzz-OuOyszYmrHMWog5uNpB-S4mQtQaVrY2iJ5=BQ@mail.gmail.com>
+Subject: Re: OpenBMC Network Route Management: Metric and Static Route config support
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Content-Type: multipart/alternative; boundary="00000000000092a56205fd629681"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -135,69 +74,601 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGVsbG8gRWQsIA0KDQpXZSBoYXZlIGJlZW4gYW5hbHl6aW5nIHRpbWUgc3BlbnQgaW4gcm91dGUg
-aGFuZGxlciBjb2RlIHRvIGdldCBzb21lIHRpbWUgbWVhc3VyZW1lbnRzIHdpdGggZGlmZmVyZW50
-IGFwcHJvYWNoZXMuIA0KQXQgbGVhc3Qgd2Uga25vdyBmcm9tIG91ciB0ZXN0cyB0aGF0IG1ham9y
-aXR5IG9mIHRoZSB0aW1lIGlzIHNwZW50IGluIHJvdXRlIGhhbmRsZXJzIGFuZCBub3QgaW4gSlNP
-TiBzZXJpYWxpemF0aW9uIHdoaWNoIGhhcHBlbnMgb3V0c2lkZS4gDQoNClRvIHJlY2FwIG91ciB0
-ZXN0LCB3ZSBoYXZlIHR3byBodHRwIGNsaWVudHMgZG9pbmcgdGhlcm1hbCBtZXRyaWMgYW5kIHN0
-YXRzL2NvdW50ZXJzIG1ldHJpYyBVUkkgcG9sbGluZyBzaW11bHRhbmVvdXNseSBmcm9tIHRoZSBC
-TUMuIA0KVGhlcm1hbCBtZXRyaWMgVVJJIGhhcyBhcm91bmQgMTAwIHNlbnNvcnMgYW5kIGhhcyB0
-aWdodCBsYXRlbmN5IHBlcmYgcmVxdWlyZW1lbnQgb2YgNTAwbXMuIA0KU3RhdHMvY291bnRlciBt
-ZXRyaWMgVVJJIGhhcyBhcm91bmQgMjUwMCBwcm9wZXJ0aWVzIHRvIGZldGNoIGZyb20gdGhlIGJh
-Y2tlbmQgd2hpY2ggdXNlcyB0aGUgR2V0TWFuYWdlZE9iamVjdHMgQVBJLiANClRpbWUgYW5hbHlz
-aXMgd2FzIGRvbmUgb24gdGhlIGxhdGVuY3kgbWVhc3VyZW1lbnQgb2Ygc3RhdHMvY291bnRlciBV
-UkkgYXMgdGhpcyBpbXBhY3RzIHRoZSBsYXRlbmN5IG9mIHRoZXJtYWwgbWV0cmljIFVSSSB3aXRo
-IHRoZSBjdXJyZW50IGJtY3dlYiBzaW5nbGUgdGhyZWFkZWQgbmF0dXJlLiANCg0KTWV0aG9kIDEg
-LSBPYmplY3QgTWFuZ2VyIGNhbGwgdG8gdGhlIGJhY2tlbmQgc2VydmljZSwgYm1jd2ViIGhhbmRs
-ZXIgY29kZSBwcm9jZXNzZXMgdGhlIHJlc3BvbnNlIGFuZCBwcmVwYXJlcyB0aGUgcmVxdWlyZWQg
-SlNPTiBvYmplY3RzLiANCmEuIEJhY2tlbmQgZGJ1cyBjYWxsIHR1cm5hcm91bmQgdGltZSAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAtIDU4NCBtcyANCmIuIExv
-Z2ljIGluIGJtY3dlYiByb3V0ZSBoYW5kbGVyIGNvZGUgdG8gcHJlcGFyZSByZXNwb25zZSAgICAg
-IC0gMzY1IG1zIA0KYy4gVG90YWwgVVJJIGxhdGVuY3kgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLSAx
-MDE5IG1zDQoNCk1ldGhvZCAyIC0gQmFja2VuZCBwb3B1bGF0ZXMgYWxsIHRoZSBuZWVkZWQgcHJv
-cGVydGllcyBpbiBhIHNpbmdsZSBhZ2dyZWdhdGUgcHJvcGVydHkuIA0KYS4gQmFja2VuZCBkYnVz
-IGNhbGwgdHVybmFyb3VuZCB0aW1lICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgIC0gMTYxIG1zIA0KYi4gTG9naWMgaW4gYm1jd2ViIHJvdXRlIGhhbmRsZXIgY29k
-ZSB0byBwcmVwYXJlIHJlc3BvbnNlICAgICAgLSA3MSAgIG1zIA0KYy4gVG90YWwgVVJJIGxhdGVu
-Y3kgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgLSAyOTEgbXMNCg0KTWV0aG9kIDMgLSBCbWN3ZWIgcmVh
-ZHMgYWxsIHRoZSBwcm9wZXJ0aWVzIGZyb20gYSBmaWxlIGZkLiBIZXJlIGdvYWwgaXMgdG8gZWxp
-bWluYXRlIGxhdGVuY3kgYW5kIGxvYWQgY29taW5nIGJ5IHVzaW5nIGRidXMgYXMgYW4gSVBDIGZv
-ciBsYXJnZSBwYXlsb2Fkcy4gDQphLiBmZCByZWFkIGNhbGwgaW4gYm1jd2ViICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-LSA2NCBtcyANCmIuIEpTT04gb2JqZWN0aW9uIHBvcHVsYXRpb24gZnJvbSB0aGUgcmVhZCBmaWxl
-IGNvbnRlbnRzICAgICAgICAgICAgIC0gOTYgbXMgDQpjLiBUb3RhbCBVUkkgbGF0ZW5jeSAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgLSAyNTQgbXMgDQpUaGUgZmlsZSBjb250ZW50cyB3ZXJlIGluIEpT
-T04gZm9ybWF0LiBJZiB3ZSBjYW4gcmVwbGFjZSB0aGlzIHdpdGggZWZmaWNpZW50IGRhdGEgc3Ry
-dWN0dXJlIHdoaWNoIGNhbiBiZSB1c2VkIHdpdGggZmQgcGFzc2luZywgdGhlbiBJIHRoaW5rIHdl
-IGNhbiBmdXJ0aGVyIG9wdGltaXplIHBvaW50IGIuIA0KT3B0aW1pemF0aW9uIGFyb3VuZCBDUFUg
-Ym91bmQgbG9naWMgaW4gaGFuZGxlciBjb2RlIHdvdWxkIGNlcnRhaW5seSBoZWxwIHRoZSBsYXRl
-bmN5IG9mIHRoZSBvdGhlciByZXF1ZXN0cyBwZW5kaW5nIGluIHRoZSBxdWV1ZS4gDQoNCkkgd2ls
-bCB0cnkgdGhlIG11bHRpLXRocmVhZGVkIHNvbHV0aW9uIHB1dCBieSB5b3UgaW4gdGhlIGNvbWlu
-ZyBkYXlzIGFuZCBzaGFyZSB0aGUgcmVzdWx0cy4gDQoNClRoYW5rcyANClJvaGl0IFBBSSANCg0K
-DQotLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KRnJvbTogRWQgVGFub3VzIDxlZHRhbm91c0Bn
-b29nbGUuY29tPiANClNlbnQ6IEZyaWRheSwgSnVuZSAyLCAyMDIzIDEyOjA0IEFNDQpUbzogUm9o
-aXQgUGFpIDxyb3BhaUBudmlkaWEuY29tPg0KQ2M6IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZw0K
-U3ViamVjdDogUmU6IFByaW9yaXRpemluZyBVUklzIHdpdGggdGlnaHQgcGVyZm9ybWFuY2UgcmVx
-dWlyZW1lbnQgaW4gb3BlbkJtYyB3aXRoIGJtY3dlYg0KDQpFeHRlcm5hbCBlbWFpbDogVXNlIGNh
-dXRpb24gb3BlbmluZyBsaW5rcyBvciBhdHRhY2htZW50cw0KDQoNCk9uIFdlZCwgTWF5IDI0LCAy
-MDIzIGF0IDEwOjU24oCvQU0gRWQgVGFub3VzIDxlZHRhbm91c0Bnb29nbGUuY29tPiB3cm90ZToN
-Cj4NCj4gT24gV2VkLCBNYXkgMjQsIDIwMjMgYXQgOToyNuKAr0FNIEVkIFRhbm91cyA8ZWR0YW5v
-dXNAZ29vZ2xlLmNvbT4gd3JvdGU6DQo+ID4NCj4gPiBUaGVyZSdzIGxpa2VseSBhIGZldyBvdGhl
-ciBtaW5vciB0aGluZ3MgdGhhdCB3b3VsZCBuZWVkIGZpeGVkLCBidXQgDQo+ID4gdGhlIGFib3Zl
-IGlzIHRoZSBnZW5lcmFsIGdpc3QuDQo+DQo+IEkgc3BlbnQgYW4gaG91ciBvciBzbyBhbmQgcHV0
-IHRvZ2V0aGVyIGEgc2ltcGxlIFBPQyBvZiBtdWx0aXRocmVhZGluZyANCj4gYm1jd2ViLiAgSXQn
-cyBub3QgdGhyZWFkc2FmZSBmb3IgYWxsIHRoZSBnbG9iYWwgc3RydWN0dXJlcyAoYWx0aG91Z2gg
-SSANCj4gZGlkIG9uZSBhcyBhbiBleGFtcGxlKSwgYW5kIGhhcyBhIGxvdCBvZiBzYWZldHkgaXNz
-dWVzIHdlJ2xsIG5lZWQgdG8gDQo+IHdvcmsgdGhyb3VnaCwgYnV0IHdpbGwgZ2l2ZSB1cyBhIGhp
-bnQgYWJvdXQgd2hldGhlciBtdWx0aS10aHJlYWRpbmcgDQo+IGJtY3dlYiB3aWxsIHNvbHZlIHlv
-dXIgcGVyZm9ybWFuY2UgcHJvYmxlbToNCj4gaHR0cHM6Ly9nZXJyaXQub3BlbmJtYy5vcmcvYy9v
-cGVuYm1jL2JtY3dlYi8rLzYzNzEwDQo+DQo+IFBUQUwNCg0KUm9oaXQsIFdlcmUgeW91IGFibGUg
-dG8gdHJ5IHRoaXM/DQo=
+--00000000000092a56205fd629681
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi All
+
+
+Gentle reminder for the feedback on Static route feature
+
+
+I have pushed a DMTF proposal and DMTF PR for adding static route
+configuration to EthernetInterface schema.
+
+Here is DMTF redfish PR to enable redfish static route configuration
+https://github.com/DMTF/Redfish/pull/5464
+
+
+This PR adds IPv4StaticRoutes resource under EthernetInterface schema which
+allows clients to configure multiple static routes per interface.
+
+Example:
+
+"IPv4StaticRoutes": [
+
+     {
+
+            "NextHopAddress": "192.168.1.1",
+
+            "DestinationAddress": "192.168.1.2",
+
+            "SubnetMask": "255.255.255.255"
+
+     },
+
+     {
+
+            "NextHopAddress": "192.168.2.1",
+
+            "DestinationAddress": "192.1.2.0",
+
+            "SubnetMask": "255.255.255.0"
+
+     }]
+
+
+This PR was reviewed and discussed in the DMTF meeting recently and one of
+the suggestion from DMTF members were to check for community interest in
+having this use case.
+
+
+Would like to hear community views in allowing the user to add a static
+route.
+
+
+Thanks,
+
+Raviteja
+
+On Tue, Jul 26, 2022 at 2:55=E2=80=AFPM Sunitha Harish <sunithaharish04@gma=
+il.com>
+wrote:
+
+>
+> On 23-06-2022 15:57, raviteja bailapudi wrote:
+>
+> Hi, Jiaqing
+>
+> We have noticed an issue while using Static IPv4 addresses on both eth0
+> and eth1.
+> We have configured a static private IP with the matching subnet of Laptop
+> Connected on eth0 and  configured a static public IP on eth1.
+> Both routes have got the metric value 0. eth0 route is the first entry of
+> the routing table which was being used for routing.
+>
+>
+> Ping to eth1 IP <9.x.x.84> does not work and that Eth0 private IP pings
+> from the laptop connected.
+>
+> * IP  Config:*
+>
+>
+> 2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast qlen
+> 1000
+>
+>     link/ether 08:94:ef:82:4c:76 brd ff:ff:ff:ff:ff:ff
+>
+>     inet 169.254.7.123/16 brd 169.254.255.255 scope link eth0
+>
+>        valid_lft forever preferred_lft forever
+>
+>     inet 10.x.x.100/24 brd 10.6.6.255 scope global eth0.          =E2=80=
+=94>
+> Private IP (Connected to laptop)
+>
+>        valid_lft forever preferred_lft forever
+>
+>     inet6 fe80::a94:efff:fe82:4c76/64 scope link
+>
+>        valid_lft forever preferred_lft forever
+>
+> 3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast qlen
+> 1000
+>
+>     link/ether 08:94:ef:82:4c:77 brd ff:ff:ff:ff:ff:ff
+>
+>     inet 9.x.x.84/24 brd 9.x.x.255 scope global eth1.               =E2=
+=80=94>
+> Public IP
+>
+>        valid_lft forever preferred_lft forever
+>
+>     inet6 fe80::a94:efff:fe82:4c77/64 scope link
+>
+>        valid_lft forever preferred_lft forever
+>
+>
+>
+> * Routing table:*
+>
+> Kernel IP routing table
+>
+> Destination     Gateway         Genmask         Flags   MSS   Window  irt=
+t
+> Iface
+>
+> 0.0.0.0                10.x.x.1             0.0.0.0           UG         =
+0
+>       0           0   eth0
+>
+> 0.0.0.0                 9.x.x.1              0.0.0.0           UG        =
+0
+>       0           0   eth1  <<=3D=3D=3D=3D not pingable.
+>
+> 9.x.x.0                 0.0.0.0         255.255.255.0   U          0
+>   0           0   eth1
+>
+> 10.x.x.0               0.0.0.0         255.255.255.0   U          0
+>   0          0   eth0
+>
+> 169.254.0.0        0.0.0.0         255.255.0.0        U          0
+>   0          0   eth0
+>
+>
+>
+> But with DHCP enabled on eth1, dhcp subnet with metric value 1024 was
+> always at the bottom and was reachable
+> as DHCP routes  get priority over static routes.
+>
+>
+> Its good if Redfish has a way to set the metric value as an optional
+> parameter while user PATCHes the Static IP address. This can be used by
+> phosphor-networkd to set the route priority on that interface while addin=
+g
+> route for this IP.
+>
+>
+> Regards,
+>
+> Raviteja
+>
+> On Thu, Jun 23, 2022 at 12:34 PM Jiaqing Zhao <
+> jiaqing.zhao@linux.intel.com> wrote:
+>
+>> Hi, Raviteja
+>>
+>> Can you help explain the routing issue you met?
+>>
+>> I've also met a metric-related issue. When there are 2 interfaces, one
+>> use DHCP,
+>> the other use Static, systemd-networkd sets the metric 1024 on the
+>> DHCP-assigned
+>> default routev (metric for static default gateway is 0), which causing
+>> peers
+>> only reachable via the DHCP-assigned default route cannot be accessed.
+>>
+>> And in current OpenBMC implementation, I think we should allow setting
+>> null to
+>> Gateway of IPv4StaticAddress to not set default route on that interface.
+>>
+>> Thanks,
+>> Jiaqing
+>>
+>> On 2022-06-22 18:50, raviteja bailapudi wrote:
+>> > Hi Team
+>> >
+>> > We have hit network routing issues while using Static IPv4 addresses o=
+n
+>> > both eth0 and eth1,  as both default gateways at the interfaces were o=
+f
+>> the
+>> > same metric value. To solve this problem we are planning to provide an
+>> > interface for admins to set the metric value for the gateway while
+>> setting
+>> > up the Static IPv4 network on BMC.
+>> >
+>> >
+>> > To enable users to connect from outside-subnet clients, we also need t=
+o
+>> > support static routes on BMC.
+>> >
+>> >
+>> > I have started a thread in redfish forum as well
+>> >
+>> >
+>> https://redfishforum.com/thread/683/network-routing-table-management-sup=
+port
+>> >
+>> >
+>> > Please share your views on the same.
+>> >
+>> >
+>> >
+>> > Regards,
+>> >
+>> > Raviteja
+>> >
+>>
+>
+
+--00000000000092a56205fd629681
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><p style=3D"margin:0px;font-stretch:normal;font-size:13px;=
+line-height:normal;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:=
+none;font-kerning:auto;font-variant-alternates:normal;font-variant-ligature=
+s:normal;font-variant-numeric:normal;font-variant-east-asian:normal;font-fe=
+ature-settings:normal">Hi All</p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal;min-height:15px"><br></p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal">Gentle reminder for the feedback on Static route feature<span class=
+=3D"gmail-Apple-converted-space">=C2=A0</span></p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal;min-height:15px"><br></p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal">I have pushed a DMTF proposal and DMTF PR for adding static route con=
+figuration to EthernetInterface schema.</p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal">Here is DMTF redfish PR to enable redfish static route configuration =
+<a href=3D"https://github.com/DMTF/Redfish/pull/5464"><span style=3D"color:=
+rgb(220,161,13)">https://github.com/DMTF/Redfish/pull/5464</span></a></p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal;min-height:15px"><br></p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal">This PR adds IPv4StaticRoutes resource under EthernetInterface schema=
+ which allows clients to configure multiple static routes per interface.</p=
+>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal">Example:</p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal">&quot;IPv4StaticRoutes&quot;: [</p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal"><span class=3D"gmail-Apple-converted-space">=C2=A0 =C2=A0 =C2=A0</spa=
+n>{</p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal"><span class=3D"gmail-Apple-converted-space">=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 </span>&quot;NextHopAddress&quot;: &quot;192.168.1.1&quot=
+;,</p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal"><span class=3D"gmail-Apple-converted-space">=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 </span>&quot;DestinationAddress&quot;: &quot;192.168.1.2&=
+quot;,</p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal"><span class=3D"gmail-Apple-converted-space">=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 </span>&quot;SubnetMask&quot;: &quot;255.255.255.255&quot=
+;</p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal"><span class=3D"gmail-Apple-converted-space">=C2=A0=C2=A0 =C2=A0 </spa=
+n>},</p><p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-heig=
+ht:normal;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font=
+-kerning:auto;font-variant-alternates:normal;font-variant-ligatures:normal;=
+font-variant-numeric:normal;font-variant-east-asian:normal;font-feature-set=
+tings:normal">=C2=A0 =C2=A0 =C2=A0{</p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal"><span class=3D"gmail-Apple-converted-space">=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 </span>&quot;NextHopAddress&quot;: &quot;192.168.2.1&quot=
+;,</p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal"><span class=3D"gmail-Apple-converted-space">=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 </span>&quot;DestinationAddress&quot;: &quot;192.1.2.0&qu=
+ot;,</p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal"><span class=3D"gmail-Apple-converted-space">=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 </span>&quot;SubnetMask&quot;: &quot;255.255.255.0&quot;<=
+/p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal"><span class=3D"gmail-Apple-converted-space">=C2=A0=C2=A0 =C2=A0 </spa=
+n>}]</p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal;min-height:15px"><br></p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal">This PR was reviewed and discussed in the DMTF meeting recently and o=
+ne of the suggestion from DMTF members were to check for community interest=
+ in having this use case.</p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal;min-height:15px"><br></p>
+<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
+l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
+:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
+iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
+rmal">Would like to hear community views in allowing the user to add a stat=
+ic route.</p><p style=3D"margin:0px;font-stretch:normal;font-size:13px;line=
+-height:normal;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none=
+;font-kerning:auto;font-variant-alternates:normal;font-variant-ligatures:no=
+rmal;font-variant-numeric:normal;font-variant-east-asian:normal;font-featur=
+e-settings:normal"><br></p><p style=3D"margin:0px;font-stretch:normal;font-=
+size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;;font-si=
+ze-adjust:none;font-kerning:auto;font-variant-alternates:normal;font-varian=
+t-ligatures:normal;font-variant-numeric:normal;font-variant-east-asian:norm=
+al;font-feature-settings:normal">Thanks,</p><p style=3D"margin:0px;font-str=
+etch:normal;font-size:13px;line-height:normal;font-family:&quot;Helvetica N=
+eue&quot;;font-size-adjust:none;font-kerning:auto;font-variant-alternates:n=
+ormal;font-variant-ligatures:normal;font-variant-numeric:normal;font-varian=
+t-east-asian:normal;font-feature-settings:normal">Raviteja=C2=A0</p></div><=
+br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Tue,=
+ Jul 26, 2022 at 2:55=E2=80=AFPM Sunitha Harish &lt;<a href=3D"mailto:sunit=
+haharish04@gmail.com">sunithaharish04@gmail.com</a>&gt; wrote:<br></div><bl=
+ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
+t-width:1px;border-left-style:solid;border-left-color:rgb(204,204,204);padd=
+ing-left:1ex">
+ =20
+   =20
+ =20
+  <div>
+    <p><br>
+    </p>
+    <div>On 23-06-2022 15:57, raviteja bailapudi
+      wrote:<br>
+    </div>
+    <blockquote type=3D"cite">
+     =20
+      <div dir=3D"ltr">Hi, Jiaqing
+        <div><br>
+        </div>
+        <div>
+          <p>We have noticed an issue while using Static IPv4
+            addresses on both eth0 and eth1.<br>
+            We have configured a static private IP with the matching
+            subnet of Laptop Connected on eth0 and<span>=C2=A0 </span>confi=
+gured a
+            static public IP on eth1.<br>
+            Both routes=C2=A0have got=C2=A0the metric value 0. eth0 route i=
+s the
+            first entry of the routing table which was being used for
+            routing.<br>
+          </p>
+          <p><br>
+          </p>
+          <p>Ping to eth1 IP &lt;9.x.x.84&gt; does not work
+            and that Eth0 private IP pings from the laptop connected.<br>
+            <br>
+            <b>
+              IP<span>=C2=A0 </span>Config:</b><br>
+          </p>
+          <p><br>
+          </p>
+          <p>2: eth0: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt;
+            mtu 1500 qdisc pfifo_fast qlen 1000</p>
+          <p><span>=C2=A0 =C2=A0 </span>link/ether
+            08:94:ef:82:4c:76 brd ff:ff:ff:ff:ff:ff</p>
+          <p><span>=C2=A0 =C2=A0 </span>inet
+            <a href=3D"http://169.254.7.123/16" target=3D"_blank">169.254.7=
+.123/16</a>
+            brd 169.254.255.255 scope link eth0</p>
+          <p><span>=C2=A0=C2=A0 =C2=A0 =C2=A0
+            </span>valid_lft forever preferred_lft forever</p>
+          <p><span>=C2=A0 =C2=A0 </span>inet
+            10.x.x.100/24 brd 10.6.6.255 scope global eth0.<span>=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 </span>=E2=80=94&gt;
+            Private IP (Connected to laptop)</p>
+          <p><span>=C2=A0=C2=A0 =C2=A0 =C2=A0
+            </span>valid_lft forever preferred_lft forever</p>
+          <p><span>=C2=A0 =C2=A0 </span>inet6
+            fe80::a94:efff:fe82:4c76/64 scope link</p>
+          <p><span>=C2=A0=C2=A0 =C2=A0 =C2=A0
+            </span>valid_lft forever preferred_lft forever</p>
+          <p>3: eth1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt;
+            mtu 1500 qdisc pfifo_fast qlen 1000</p>
+          <p><span>=C2=A0 =C2=A0 </span>link/ether
+            08:94:ef:82:4c:77 brd ff:ff:ff:ff:ff:ff</p>
+          <p><span>=C2=A0 =C2=A0 </span>inet
+            9.x.x.84/24 brd 9.x.x.255 scope global eth1. <span>=C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 </span>=E2=80=94&gt;
+            Public IP<span>=C2=A0</span></p>
+          <p><span>=C2=A0=C2=A0 =C2=A0 =C2=A0
+            </span>valid_lft forever preferred_lft forever</p>
+          <p><span>=C2=A0 =C2=A0 </span>inet6
+            fe80::a94:efff:fe82:4c77/64 scope link</p>
+          <p><span>=C2=A0=C2=A0 =C2=A0 =C2=A0
+            </span>valid_lft forever preferred_lft forever</p>
+          <p><br>
+            <br>
+            <b>
+              Routing table:</b><br>
+            <br>
+            Kernel IP routing table</p>
+          <p>Destination <span>=C2=A0 =C2=A0 </span>Gateway <span>=C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 </span>Genmask
+            <span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 </span>Flags
+            <span>=C2=A0 </span>MSS <span>=C2=A0 </span>Window<span>=C2=A0 =
+</span>irtt<span>=C2=A0 </span>Iface</p>
+          <p>0.0.0.0<span>=C2=A0
+              =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 </span>10.x.=
+x.1 <span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 </span>0.0.0.0
+            <span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 </span>UG
+            <span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 </span>0
+            <span>=C2=A0 =C2=A0 =C2=A0 </span>0 <span>=C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 </span>0 <span>=C2=A0 </span>eth0</p>
+          <p>0.0.0.0 <span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 </span>9.x.x.1<span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 </span>0.0.0.0
+            <span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 </span>UG<span>=C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 </span>0<span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 </span>0 <sp=
+an>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 </span>0 <span>=C2=A0 </span>eth1<spa=
+n>=C2=A0 </span>&lt;&lt;=3D=3D=3D=3D
+            not pingable.<span>=C2=A0</span></p>
+          <p>9.x.x.0 <span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 </span>0.0.0.0
+            <span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 </span>255.255.255.0
+            <span>=C2=A0 </span>U<span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <=
+/span>0<span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 </span>0 <span>=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 </span>0 <span>=C2=A0 </span>eth1</p>
+          <p>10.x.x.0 <span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 </span>0.0.0.0
+            <span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 </span>255.255.255.0
+            <span>=C2=A0 </span>U<span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <=
+/span>0 <span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 </span>0<span>=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 </span>0 <span>=C2=A0 </span>eth0</p>
+          <p>169.254.0.0<span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 </span>0.0.0.0
+            <span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 </span>255.255.0.0<span>=C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 </span>U<span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 <=
+/span>0 <span>=C2=A0 =C2=A0 =C2=A0 =C2=A0 </span>0<span>=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 </span>0 <span>=C2=A0 </span>eth0</p>
+          <p><br>
+            <br>
+            But with DHCP enabled on eth1, dhcp subnet with metric value
+            1024 was always at the bottom and was reachable<br>
+            as DHCP routes<span>=C2=A0 </span>get
+            priority over static routes.=C2=A0</p>
+          <p><br>
+          </p>
+        </div>
+      </div>
+    </blockquote>
+    <p>Its good if Redfish has a way to set the metric value as an
+      optional parameter while user PATCHes the Static IP address. This
+      can be used by phosphor-networkd to set the route priority on that
+      interface while adding route for this IP.<br>
+    </p>
+    <blockquote type=3D"cite">
+      <div dir=3D"ltr">
+        <div>
+          <p><br>
+          </p>
+          <p>Regards,</p>
+          <p>Raviteja</p>
+        </div>
+      </div>
+      <br>
+      <div class=3D"gmail_quote">
+        <div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jun 23, 2022 at 12:34
+          PM Jiaqing Zhao &lt;<a href=3D"mailto:jiaqing.zhao@linux.intel.co=
+m" target=3D"_blank">jiaqing.zhao@linux.intel.com</a>&gt;
+          wrote:<br>
+        </div>
+        <blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex=
+;border-left-width:1px;border-left-style:solid;border-left-color:rgb(204,20=
+4,204);padding-left:1ex">Hi,
+          Raviteja<br>
+          <br>
+          Can you help explain the routing issue you met?<br>
+          <br>
+          I&#39;ve also met a metric-related issue. When there are 2
+          interfaces, one use DHCP,<br>
+          the other use Static, systemd-networkd sets the metric 1024 on
+          the DHCP-assigned<br>
+          default routev (metric for static default gateway is 0), which
+          causing peers<br>
+          only reachable via the DHCP-assigned default route cannot be
+          accessed.<br>
+          <br>
+          And in current OpenBMC implementation, I think we should allow
+          setting null to<br>
+          Gateway of IPv4StaticAddress to not set default route on that
+          interface.<br>
+          <br>
+          Thanks,<br>
+          Jiaqing<br>
+          <br>
+          On 2022-06-22 18:50, raviteja bailapudi wrote:<br>
+          &gt; Hi Team<br>
+          &gt; <br>
+          &gt; We have hit network routing issues while using Static
+          IPv4 addresses on<br>
+          &gt; both eth0 and eth1,=C2=A0 as both default gateways at the
+          interfaces were of the<br>
+          &gt; same metric value. To solve this problem we are planning
+          to provide an<br>
+          &gt; interface for admins to set the metric value for the
+          gateway while setting<br>
+          &gt; up the Static IPv4 network on BMC.<br>
+          &gt; <br>
+          &gt; <br>
+          &gt; To enable users to connect from outside-subnet clients,
+          we also need to<br>
+          &gt; support static routes on BMC.<br>
+          &gt; <br>
+          &gt; <br>
+          &gt; I have started a thread in redfish forum as well<br>
+          &gt; <br>
+          &gt; <a href=3D"https://redfishforum.com/thread/683/network-routi=
+ng-table-management-support" rel=3D"noreferrer" target=3D"_blank">https://r=
+edfishforum.com/thread/683/network-routing-table-management-support</a><br>
+          &gt; <br>
+          &gt; <br>
+          &gt; Please share your views on the same.<br>
+          &gt; <br>
+          &gt; <br>
+          &gt; <br>
+          &gt; Regards,<br>
+          &gt; <br>
+          &gt; Raviteja<br>
+          &gt; <br>
+        </blockquote>
+      </div>
+    </blockquote>
+  </div>
+
+</blockquote></div>
+
+--00000000000092a56205fd629681--
