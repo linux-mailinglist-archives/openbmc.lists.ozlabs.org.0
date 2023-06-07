@@ -2,76 +2,34 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 837B57263FD
-	for <lists+openbmc@lfdr.de>; Wed,  7 Jun 2023 17:18:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 42F137267DF
+	for <lists+openbmc@lfdr.de>; Wed,  7 Jun 2023 19:59:04 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QbrZs1y7Gz3dwL
-	for <lists+openbmc@lfdr.de>; Thu,  8 Jun 2023 01:18:29 +1000 (AEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=KrwvjCyi;
-	dkim-atps=neutral
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Qbw860wGFz3dxQ
+	for <lists+openbmc@lfdr.de>; Thu,  8 Jun 2023 03:59:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::230; helo=mail-lj1-x230.google.com; envelope-from=fr0st61te@gmail.com; receiver=<UNKNOWN>)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=KrwvjCyi;
-	dkim-atps=neutral
-Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+Authentication-Results: lists.ozlabs.org; spf=softfail (domain owner discourages use of this host) smtp.mailfrom=gmail.com (client-ip=62.142.5.84; helo=fgw23-7.mail.saunalahti.fi; envelope-from=andy.shevchenko@gmail.com; receiver=<UNKNOWN>)
+Received: from fgw23-7.mail.saunalahti.fi (fgw23-7.mail.saunalahti.fi [62.142.5.84])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QbrZG04tyz3dsC
-	for <openbmc@lists.ozlabs.org>; Thu,  8 Jun 2023 01:17:56 +1000 (AEST)
-Received: by mail-lj1-x230.google.com with SMTP id 38308e7fff4ca-2b1fe3a1a73so10759861fa.1
-        for <openbmc@lists.ozlabs.org>; Wed, 07 Jun 2023 08:17:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686151073; x=1688743073;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=J8z7m82/KC/ogG5KfzFtCE/IZsx2I1+lo+fvkMs3lVI=;
-        b=KrwvjCyiuKy8NElczUTdWM72YCTiuNzc2TfkZIhtCx9OpD58l6lBL7PfxF0+3gUyn5
-         EAimbPNqcKNRR9Ap/k9H1sPF3+vdNwcdaySGuch3nwmMkAXBhMy7JbQGIsL7+1jEQQDf
-         wB/w286Yp0Am7V40DuFH1QFFRE2/B7CxS/2DQtKZLil7CKWULxUZNAxtVRRav5UNZgVs
-         OlQ49nCEou+8ftugLgkCdfm09Pmg6J5bgYMJaprDysYEFhcD5sc7ToZjY1VO0u5FbKTh
-         uE1q/yQZr86BRZuKLrSemZJ6dmv6zTnjQhymVYHWp+q3gsx1qZH38TWicV2pn277yYRT
-         Jawg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686151073; x=1688743073;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=J8z7m82/KC/ogG5KfzFtCE/IZsx2I1+lo+fvkMs3lVI=;
-        b=KvNNCH209x0BlgA20917Oz1nXRjY4K6AN1YHEXeYd1vLT0Vz7q7+/v/EvN1/I8qelt
-         KJg5ipB6QC0XnMFiKv/q/URt6jY3vbNsc3oOPPpgIFEBWBlFg2WZGq2I7nrcSu+hkn92
-         h5LoC+nLrXqgU9FBMsFrLqZYr5Ot0rs/b24ifEVIlle65wNThS4Z82IOxhiSpLGEg4AP
-         GzQ97zeWZmr03WxIqVRmDq7S9OZNCFgnoDpWT9AUmqwUIXTt9PwknjcsEh5G9YwMZ1aS
-         Y5ehsyKzH40Z9C1CcP0RK9Ona28ivILsXqwIIVyJVqAGnFT8ExjNPDnbT2V0FVp6bbc1
-         WnYA==
-X-Gm-Message-State: AC+VfDyxMRtI3br7a3GwSSzxzbZfu5KdMzQbgLWO++5SNQjyEpn8yPML
-	hb4SqzxuZ68W2D1KwSmfjZU=
-X-Google-Smtp-Source: ACHHUZ6QGxxYUzCRHlhXMM8I3iHl94QfBfhqNXsd+jEeJhRo7X1ZrG+LPXO6l6uY8qCfI8JWJpPyAg==
-X-Received: by 2002:a2e:9c55:0:b0:2ac:78d5:fd60 with SMTP id t21-20020a2e9c55000000b002ac78d5fd60mr2388472ljj.9.1686151072769;
-        Wed, 07 Jun 2023 08:17:52 -0700 (PDT)
-Received: from localhost.localdomain (95-31-191-227.broadband.corbina.ru. [95.31.191.227])
-        by smtp.googlemail.com with ESMTPSA id v5-20020a2e87c5000000b002ad9a1bfa8esm2302014ljj.1.2023.06.07.08.17.52
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 Jun 2023 08:17:52 -0700 (PDT)
-From: Ivan Mikhaylov <fr0st61te@gmail.com>
-To: Samuel Mendoza-Jonas <sam@mendozajonas.com>,
-	"David S . Miller" <davem@davemloft.net>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Vijay Khemka <vijaykhemka@fb.com>
-Subject: [PATCH v3 2/2] net/ncsi: change from ndo_set_mac_address to dev_set_mac_address
-Date: Wed,  7 Jun 2023 18:17:42 +0300
-Message-Id: <20230607151742.6699-3-fr0st61te@gmail.com>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230607151742.6699-1-fr0st61te@gmail.com>
-References: <20230607151742.6699-1-fr0st61te@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Qbw7m3YGHz3dsR
+	for <openbmc@lists.ozlabs.org>; Thu,  8 Jun 2023 03:58:42 +1000 (AEST)
+Received: from localhost (88-113-24-87.elisa-laajakaista.fi [88.113.24.87])
+	by fgw23.mail.saunalahti.fi (Halon) with ESMTP
+	id c846300f-055c-11ee-b972-005056bdfda7;
+	Wed, 07 Jun 2023 20:57:35 +0300 (EEST)
+From: andy.shevchenko@gmail.com
+Date: Wed, 7 Jun 2023 20:57:34 +0300
+To: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Subject: Re: [PATCH] pinctrl: npcm7xx: Add missing check for ioremap
+Message-ID: <ZIDFDgcM07aPlzoB@surfacebook>
+References: <20230607095829.1345-1-jiasheng@iscas.ac.cn>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230607095829.1345-1-jiasheng@iscas.ac.cn>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,50 +41,39 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Paul Fertser <fercerpav@gmail.com>, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org, Ivan Mikhaylov <fr0st61te@gmail.com>
+Cc: benjaminfair@google.com, linux-gpio@vger.kernel.org, avifishman70@gmail.com, venture@google.com, linus.walleij@linaro.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, openbmc@lists.ozlabs.org, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Change ndo_set_mac_address to dev_set_mac_address because
-dev_set_mac_address provides a way to notify network layer about MAC
-change. In other case, services may not aware about MAC change and keep
-using old one which set from network adapter driver.
+Wed, Jun 07, 2023 at 05:58:29PM +0800, Jiasheng Jiang kirjoitti:
+> Add check for ioremap() and return the error if it fails in order to
+> guarantee the success of ioremap().
 
-As example, DHCP client from systemd do not update MAC address without
-notification from net subsystem which leads to the problem with acquiring
-the right address from DHCP server.
+This one is correct, otherwise the GPIO is not functional at all.
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
 
-Fixes: cb10c7c0dfd9e ("net/ncsi: Add NCSI Broadcom OEM command")
-Cc: stable@vger.kernel.org # v6.0+ 2f38e84 net/ncsi: make one oem_gma function for all mfr id
-Signed-off-by: Paul Fertser <fercerpav@gmail.com>
-Signed-off-by: Ivan Mikhaylov <fr0st61te@gmail.com>
----
- net/ncsi/ncsi-rsp.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+> Fixes: 3b588e43ee5c ("pinctrl: nuvoton: add NPCM7xx pinctrl and GPIO driver")
+> Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+> ---
+>  drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
+> index 21e61c2a3798..843ffcd96877 100644
+> --- a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
+> +++ b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
+> @@ -1884,6 +1884,8 @@ static int npcm7xx_gpio_of(struct npcm7xx_pinctrl *pctrl)
+>  		}
+>  
+>  		pctrl->gpio_bank[id].base = ioremap(res.start, resource_size(&res));
+> +		if (!pctrl->gpio_bank[id].base)
+> +			return -EINVAL;
+>  
+>  		ret = bgpio_init(&pctrl->gpio_bank[id].gc, dev, 4,
+>  				 pctrl->gpio_bank[id].base + NPCM7XX_GP_N_DIN,
 
-diff --git a/net/ncsi/ncsi-rsp.c b/net/ncsi/ncsi-rsp.c
-index 91c42253a711..069c2659074b 100644
---- a/net/ncsi/ncsi-rsp.c
-+++ b/net/ncsi/ncsi-rsp.c
-@@ -616,7 +616,6 @@ static int ncsi_rsp_handler_oem_gma(struct ncsi_request *nr, int mfr_id)
- {
- 	struct ncsi_dev_priv *ndp = nr->ndp;
- 	struct net_device *ndev = ndp->ndev.dev;
--	const struct net_device_ops *ops = ndev->netdev_ops;
- 	struct ncsi_rsp_oem_pkt *rsp;
- 	struct sockaddr saddr;
- 	u32 mac_addr_off = 0;
-@@ -643,7 +642,9 @@ static int ncsi_rsp_handler_oem_gma(struct ncsi_request *nr, int mfr_id)
- 	/* Set the flag for GMA command which should only be called once */
- 	ndp->gma_flag = 1;
- 
--	ret = ops->ndo_set_mac_address(ndev, &saddr);
-+	rtnl_lock();
-+	ret = dev_set_mac_address(ndev, &saddr, NULL);
-+	rtnl_unlock();
- 	if (ret < 0)
- 		netdev_warn(ndev, "NCSI: 'Writing mac address to device failed\n");
- 
 -- 
-2.40.1
+With Best Regards,
+Andy Shevchenko
+
 
