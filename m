@@ -2,116 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B84D72D85D
-	for <lists+openbmc@lfdr.de>; Tue, 13 Jun 2023 06:20:41 +0200 (CEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=corigine.onmicrosoft.com header.i=@corigine.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-corigine-onmicrosoft-com header.b=Baa2nn8I;
-	dkim-atps=neutral
+	by mail.lfdr.de (Postfix) with ESMTPS id 2B00472862D
+	for <lists+openbmc@lfdr.de>; Thu,  8 Jun 2023 19:19:41 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QgFj26Yy2z30Q4
-	for <lists+openbmc@lfdr.de>; Tue, 13 Jun 2023 14:20:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QcWDB4sWMz3f05
+	for <lists+openbmc@lfdr.de>; Fri,  9 Jun 2023 03:19:38 +1000 (AEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20221208 header.b=utY4p+tr;
+	dkim-atps=neutral
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=corigine.com (client-ip=2a01:111:f400:fe59::716; helo=nam12-dm6-obe.outbound.protection.outlook.com; envelope-from=simon.horman@corigine.com; receiver=<UNKNOWN>)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::435; helo=mail-wr1-x435.google.com; envelope-from=edtanous@google.com; receiver=<UNKNOWN>)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=corigine.onmicrosoft.com header.i=@corigine.onmicrosoft.com header.a=rsa-sha256 header.s=selector2-corigine-onmicrosoft-com header.b=Baa2nn8I;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20221208 header.b=utY4p+tr;
 	dkim-atps=neutral
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on20716.outbound.protection.outlook.com [IPv6:2a01:111:f400:fe59::716])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QcLZJ3k49z3dwG
-	for <openbmc@lists.ozlabs.org>; Thu,  8 Jun 2023 20:49:42 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BDi3+bQiXUqsY9qADoug3+hxCD0apGXO0nqz2t5Gt4uLIcoW/c3GiIuV8Skrn/fNYL+6rwNAPBfQlcjqPKBD+XWL8xtOfBAqzRVrLQlTXf3uQsFEq9tDeUFMPPIo0XCwF5ZmI6dY0LbhZrw78jSQ29eEZOU2j36n5zcbqWOwUl38uOeoTjXax5ghf8hopKK6e7aamy2o0w42kE9YODhmwZJhclvQDu44ljRoviTv07qFkQBxMmX/GSISzLvLwJNdmA4V87OZ1St1sf+2OVM/ZDtZi5q1P3OhFyg+jxktlyinvSmrSI83Infs9J7CD4nodGDVznL2+P2V2tFskBM/Rg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Q+cR2mIDvwag+qeQZBuJbI4wmjM3ho6/mkFxr6MDEDU=;
- b=Nci6Gqj4cNFCge4hDINyCMtJCjwKLLSJFVyTh007+tpSLaSjZVxkr7XzKI9ojNkfUaIdnk2zmJJSWXpAv+NJ7bgKD0fE475LxTwDKejBZLdK7/svXdaCo4+xH8DNUa+Rnz2GEvqIEnXHwiCYoqb5F2U0+j0yGntABTGk/b5LnSqGhrq4+YNGyd7mRkbtIPzT2UoyxfKPG/SOvFE5qTthQ5EqOVPERRJG42zEpaA4/5plV1mE6sgymmVeBN/+xqUklSQgcUHVC7vzf4llXJdiKDt0uCpjnlKHHnpid8dDrA3Y4S8RMyMErpeHN0g+oWNRCN6Sl0ZrFM6t4HXc1Hk4hA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=corigine.com; dmarc=pass action=none header.from=corigine.com;
- dkim=pass header.d=corigine.com; arc=none
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QcWCd5Ycbz3dxY
+	for <openbmc@lists.ozlabs.org>; Fri,  9 Jun 2023 03:19:08 +1000 (AEST)
+Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-30aeee7c8a0so697300f8f.1
+        for <openbmc@lists.ozlabs.org>; Thu, 08 Jun 2023 10:19:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=corigine.onmicrosoft.com; s=selector2-corigine-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Q+cR2mIDvwag+qeQZBuJbI4wmjM3ho6/mkFxr6MDEDU=;
- b=Baa2nn8IAwm9zgINzssT2fJ8yLwKdCnk/QEVRbrwgCxZrqhNqM7V5OKjEXi3lChB6r6gl9QIOMLVUE+E3rXddzUCm6MIS5zl3k48BEZ248QEM2B1I940S4gmoFw5Sha2c1xdK0P3AyO2iTHFUEjrHxhS5HBYN0DCWymuM0vFqUA=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=corigine.com;
-Received: from PH0PR13MB4842.namprd13.prod.outlook.com (2603:10b6:510:78::6)
- by BY3PR13MB5044.namprd13.prod.outlook.com (2603:10b6:a03:362::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6455.33; Thu, 8 Jun
- 2023 10:49:21 +0000
-Received: from PH0PR13MB4842.namprd13.prod.outlook.com
- ([fe80::eb8f:e482:76e0:fe6e]) by PH0PR13MB4842.namprd13.prod.outlook.com
- ([fe80::eb8f:e482:76e0:fe6e%4]) with mapi id 15.20.6455.030; Thu, 8 Jun 2023
- 10:49:21 +0000
-Date: Thu, 8 Jun 2023 12:49:13 +0200
-From: Simon Horman <simon.horman@corigine.com>
-To: Ivan Mikhaylov <fr0st61te@gmail.com>
-Subject: Re: [PATCH v3 2/2] net/ncsi: change from ndo_set_mac_address to
- dev_set_mac_address
-Message-ID: <ZIGyKQV2yHTa+cI4@corigine.com>
-References: <20230607151742.6699-1-fr0st61te@gmail.com>
- <20230607151742.6699-3-fr0st61te@gmail.com>
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230607151742.6699-3-fr0st61te@gmail.com>
-X-ClientProxiedBy: AM0PR04CA0062.eurprd04.prod.outlook.com
- (2603:10a6:208:1::39) To PH0PR13MB4842.namprd13.prod.outlook.com
- (2603:10b6:510:78::6)
+        d=google.com; s=20221208; t=1686244743; x=1688836743;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HNugzUbnUGaAkHnSwJAqXfMvdhYeJGsuEVtvafCaCiA=;
+        b=utY4p+trqb6KpI9b3CT3nres/41QhVdXEf0ny8J9nh8q55jXPVxqHGlIl6ifN9Imus
+         038ytfCghtTLOlwtb3YDTY+1dhOjRZWXmoktNUKsSxfSdd6BecYy4DI4Mqc5EH5ANBym
+         iej+dLBVUj9n7Nh74tRuNAfWlkdL8gzFcZCBAPhGNvWrtRTvk8kWgisc+1n4vc2F2T6h
+         ycNPaGeW7utLOv7oTKXJ1WPqulEuNcjra5wHAwzuxpYpJ3PmfFtxc0gF5vDpMumJMMnj
+         2LBLodDBDPUPR/yx3yoqVBYHICBV9PwBtzz6ezWfAHichPxYcISvYqs09FzcVzqgY04n
+         NuHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1686244743; x=1688836743;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HNugzUbnUGaAkHnSwJAqXfMvdhYeJGsuEVtvafCaCiA=;
+        b=PuCxWOi9dtdMVUq+8jToeiVbgIGMJYMqVl2kNo36Tq4kMgpOjqiV6Is4DaegsUP7h+
+         IJUYt1O0sjnHq5WIpNcUAU6pRcDAzUBRZfg/7OnFYALpjdm+9+V1HwtWn2BmdkJvcmwt
+         /l2OFK8NX2llKz0r0w2CtP8DUH2ZjzjGqMDQCRqx3nzeoj0lMZftq/qid5J7WD6kfrWr
+         H7RGGYmt3a9xLLyR0BHJrb0SV6ZWJKNgwRzg3m7q31MdE/pCsnErjhStyMhZM9Jfcqlb
+         JKTm1HTSKFk+dOwJmBptNr+kt/q/AadQpaVeg3lniESj/KrL8I4Tr3ZyPBtG5Zl+BlAm
+         z+Ow==
+X-Gm-Message-State: AC+VfDz/6+gl8x3Z8IHcwj6NV4kZ00+kVMUpvD8qH1e4HLslFWaRWZxk
+	7FfOmIOqMaAsuK5jAsvYUrIlyPk34Gea3SnE7uAuYQ==
+X-Google-Smtp-Source: ACHHUZ5bia6cDQWQvW9mwOwgpUN3+binvkgIRnd56huPu2IV5KfoxKuIlulM4yTTLag2Ino/onkDWXt3ofiGJgv+1k0=
+X-Received: by 2002:a5d:45c2:0:b0:30a:e5a6:1840 with SMTP id
+ b2-20020a5d45c2000000b0030ae5a61840mr2164643wrs.17.1686244743076; Thu, 08 Jun
+ 2023 10:19:03 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR13MB4842:EE_|BY3PR13MB5044:EE_
-X-MS-Office365-Filtering-Correlation-Id: 79de3500-5785-4ad2-eee5-08db680e03fd
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	sInn21JMfzGTwvqbx/7Qx+ammILNeJNIz2BARYjDr1WAbXUpJv3/7QWvnKvbmKa/Ft6lr0MTuK2wKAJq0q8YuwJhFYuKCuzsy47hq+uOFtKQDJZtJPmzFOAWAR4OjZJImqij/lTDMXpoLu3s1YJXsBETMGEQ0mQFRrvLgDYfHDKrigC1J6+CoEa1qWpfE08g5Q8NMvZ0pTby4UJ5N3YRSGKC3ufR9WBin4lY+x7nRtINpzp8f7JUaRqpvoP8h0t5zy/YqRAZNEyGNDOUR8X9G3MYFW8eBDOloNAFlsBJrWJqbosbx3iNJbTOKMercZnqnau8uKREl+xAEZEiPu5LE2vRRm4X+yBz/wyrIzTJCyNR0hjgVXaaxjvRN7N9cJGQP8idIEmimzgEQ6PJBPRJDiuyFN5WeTC7OWR4o8NAqaCu90XZ+9+1NOc0A7ivbWzxk/z3tZIoJjWYe6UIhYVMqdCBi+tlZcgkQ3E0u9hFIwlyUeEGNUGUJUeFBNng3RTQ/FCX5kHFz+HvVS70dMpVbNYjXMK4gV0wS2q91q9dOCRpNeRpYMH2inTyIHmFoW/vT+ti7p1ENlDz2zqG+NdapOn0O0uKnry6GJrm1pYbdsc=
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR13MB4842.namprd13.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(136003)(366004)(376002)(39840400004)(346002)(396003)(451199021)(86362001)(4744005)(2906002)(36756003)(44832011)(7416002)(6666004)(6486002)(83380400001)(186003)(6506007)(6512007)(478600001)(54906003)(6916009)(66556008)(66476007)(316002)(66946007)(8676002)(8936002)(4326008)(38100700002)(2616005)(41300700001)(5660300002)(67856001);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?us-ascii?Q?ptQqlahjc7Qj6HwDkA4mqSdAJJ0D46627c+TQycmPqbD4IXe/E/DFCZg/zL5?=
- =?us-ascii?Q?6qFNZZYtIpc9hKm6Ul5PkEHTeROdsNP6YHgrGcOKxlSnqVGmNaL2A4qBeN1K?=
- =?us-ascii?Q?YIpvTvyijQTaumRVsW/OAnF3qQE5yFQj+uGB5PnXAIrrT3OrZZZpNR8E/b4n?=
- =?us-ascii?Q?Vskn/n2JaVcGBvXKJclN6hnnRkCwDplLEHNqXvFXtSqSETRDbCGIykKFB7tr?=
- =?us-ascii?Q?kxeEDPWg2SIhs9QzBda7GG9C4PRrFVcYU8oeTIRo8Z6ICpa/LXMj96fxHWNm?=
- =?us-ascii?Q?9Qde0IvOOMbolZRUqGBs1vR3xdpaa6zIKx8RtJ3skAbie3ABEPch0g7bItKJ?=
- =?us-ascii?Q?7Z3CgDkrQeg5pe84aVzCSrfGwrvVuE6P4cWms7eFrQ016y06UdR7CW/WTNiN?=
- =?us-ascii?Q?twmLi39NdkSf9yq9jB4srT5dHWgbZgUktrjZzYSPqCdZ+kvEQoaTcLG6dIhN?=
- =?us-ascii?Q?0Rl2L89xZvTGWjV4SrzRBjcs0c7+KvswJpPigKQqaKBAmZYGI7xBEIkdNY6g?=
- =?us-ascii?Q?7dDMzAf2pLR3oWHDmBmehvz4f0I6YnhhG2VFhIZ1X9Gq4rY2CtqVD1gG3LRf?=
- =?us-ascii?Q?T/5gxh98rSvD5g872fescu2izKNKLgTkDriwlqk7KzfjgIj9FQY5RgI+A6Ax?=
- =?us-ascii?Q?pjhpWflUjGyuTjvNIBj7zekk4zPabHXFwmqpPGuMfvrYl+Xpvji7LZT57Y6I?=
- =?us-ascii?Q?ey5ZtUKXB+JBlEqGRhyS8n9Hj7WVags5//RSsD/E9v9WNTP0fVOl7Ab2uo7L?=
- =?us-ascii?Q?k3QJCpzvApD6NJONjWBsSPcrpQAd1lbLsit0VT7BwI4qOoFoLPBGaenq/9/i?=
- =?us-ascii?Q?dBxRD4HKymOJDf1cRLQcfuUM0rYKmVwMQ2Kd1wCjJxcmiiti9qtCyct0LB9P?=
- =?us-ascii?Q?fb22mrow+eS/FjPUPFId2F6EqnNoBbTP8dMVYjYgmsoTW+mZt2qXtJ2vLB6I?=
- =?us-ascii?Q?UF5+qg7NeXdVmImoYWRRaI/6YINWK43Do9V+YU4k78jFkoo/PDhZZHR9xmCi?=
- =?us-ascii?Q?0sh989k2bXq+JXE62qUfX+sbs2rVZeB1S+r0w8e3GURKUYGNJJUBPVmR12H0?=
- =?us-ascii?Q?AxmU1tbs0lscRTYIWGsHbV1AYNQ4cWT4kPCZVAoAzyDNNbhVVoGpv7l4N6HE?=
- =?us-ascii?Q?Hfxn2L6Jpb1L/RZ2KdbvnRzhYmfg7fuCWEh9ygwbxolkpcoYGU4X21M52zu3?=
- =?us-ascii?Q?6+cVcBL29OgYLfC3lGs0B37Jli7ujvPxR5qfOwcPmHmIvPUDiaafixmbWIZs?=
- =?us-ascii?Q?9VpESwpvrii45a2d5GAJ7xapNXVsKXIDHwi03rt6/H1He3HSxfhL18ocfpW9?=
- =?us-ascii?Q?1dq72lf9nwqIgYeEpg7C+r+viMuhXGBcQ92DcBbjpMvHXBBzRh+0QbTqln4Y?=
- =?us-ascii?Q?EqxsgxQe8Rja/iitQb/w2PT8isqnSgJw2Ikcu7AQ+ON8fcmYfTUfVppuyCyk?=
- =?us-ascii?Q?T9yd6FMnx1IvFO21ugcPYX+8uG440EHTAz3vxLGgBSJCz4TChrC9WhCUpEJT?=
- =?us-ascii?Q?uXxUSaVh97NpYU2gME8SSqlUMY3E2YGECyDN1w6zmrdatYqXyhRBg7RI4hSp?=
- =?us-ascii?Q?mFUYRcK/2jCHML4opegkJMBbI6m89YuL8trVKI73aJgIELlxq/XEAtA4zH6C?=
- =?us-ascii?Q?xD+Iz/1igHclZ4xFhvi/7XuHJs2FlfntmbrV+SIuLKnM3CGSP0XvhEO/R43u?=
- =?us-ascii?Q?azNsPg=3D=3D?=
-X-OriginatorOrg: corigine.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 79de3500-5785-4ad2-eee5-08db680e03fd
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR13MB4842.namprd13.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Jun 2023 10:49:21.1251
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: fe128f2c-073b-4c20-818e-7246a585940c
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: qjof1PCD6X55MvolL2gvjxHxCs3BG3yq86ZImSrybrvn0j6ilT9BaF06xboTRrzsjAi0iCCSW5gtlX8OBqbvncH5rTcrVtYzen68bkJNO+Y=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BY3PR13MB5044
-X-Mailman-Approved-At: Tue, 13 Jun 2023 14:20:08 +1000
+References: <LV2PR12MB601419E4F59555BBCB4EE70FCD419@LV2PR12MB6014.namprd12.prod.outlook.com>
+ <CAH2-KxAdhmj98prJ2QCuN4p1ZxRZs3ZFdchxdZ-_A9c-ACpMOQ@mail.gmail.com>
+ <CAH2-KxDfqpMLpeFkKn8BHkL2e7nwVBR+o3ziDBvw3KJd6fHwsg@mail.gmail.com>
+ <CAH2-KxAEay+E=D9scS=2pHb7tOw0Vz5_ZoH_5=Q5o6sJdGE1Jg@mail.gmail.com> <LV2PR12MB60143B8210EC0B427F219528CD4FA@LV2PR12MB6014.namprd12.prod.outlook.com>
+In-Reply-To: <LV2PR12MB60143B8210EC0B427F219528CD4FA@LV2PR12MB6014.namprd12.prod.outlook.com>
+From: Ed Tanous <edtanous@google.com>
+Date: Thu, 8 Jun 2023 10:18:51 -0700
+Message-ID: <CAH2-KxA9zOYZH8wyCkktyREPB-HCwtz8yX5ZHexFDBaN6FpZXQ@mail.gmail.com>
+Subject: Re: Prioritizing URIs with tight performance requirement in openBmc
+ with bmcweb
+To: Rohit Pai <ropai@nvidia.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -123,24 +79,111 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Samuel Mendoza-Jonas <sam@mendozajonas.com>, Paul Fertser <fercerpav@gmail.com>, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, stable@vger.kernel.org, Vijay Khemka <vijaykhemka@fb.com>, Eric Dumazet <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, "David S . Miller" <davem@davemloft.net>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Jun 07, 2023 at 06:17:42PM +0300, Ivan Mikhaylov wrote:
-> Change ndo_set_mac_address to dev_set_mac_address because
-> dev_set_mac_address provides a way to notify network layer about MAC
-> change. In other case, services may not aware about MAC change and keep
-> using old one which set from network adapter driver.
-> 
-> As example, DHCP client from systemd do not update MAC address without
-> notification from net subsystem which leads to the problem with acquiring
-> the right address from DHCP server.
-> 
-> Fixes: cb10c7c0dfd9e ("net/ncsi: Add NCSI Broadcom OEM command")
-> Cc: stable@vger.kernel.org # v6.0+ 2f38e84 net/ncsi: make one oem_gma function for all mfr id
-> Signed-off-by: Paul Fertser <fercerpav@gmail.com>
-> Signed-off-by: Ivan Mikhaylov <fr0st61te@gmail.com>
+On Sat, Jun 3, 2023 at 1:49=E2=80=AFAM Rohit Pai <ropai@nvidia.com> wrote:
+>
+> Hello Ed,
 
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
+The below is all really great data
 
+>
+> Thermal metric URI has around 100 sensors and has tight latency perf requ=
+irement of 500ms.
+> Stats/counter metric URI has around 2500 properties to fetch from the bac=
+kend which uses the GetManagedObjects API.
+> Time analysis was done on the latency measurement of stats/counter URI as=
+ this impacts the latency of thermal metric URI with the current bmcweb sin=
+gle threaded nature.
+
+What two queries are you testing with?
+
+>
+>
+>
+> Method 1 - Object Manger call to the backend service, bmcweb handler code=
+ processes the response and prepares the required JSON objects.
+> a. Backend dbus call turnaround time                                     =
+         - 584 ms
+
+This is quite high.  Have you looked at reducing this?  This would
+imply that you're doing blocking calls in your backend daemon.
+
+> b. Logic in bmcweb route handler code to prepare response      - 365 ms
+
+This could almost certainly be reduced with some targeted things.  You
+didn't answer me on whether you're using TLS in this example, so I'm
+going to assume you're not from your numbers.  I would've expected
+crypto to be a significant part of your profile.
+
+> c. Total URI latency                                                     =
+                          - 1019 ms
+
+a + b !=3D c.  Is the rest the time spent writing to the socket?  What
+is the extra time?
+
+>
+> Method 2 - Backend populates all the needed properties in a single aggreg=
+ate property.
+> a. Backend dbus call turnaround time                                     =
+         - 161 ms
+
+This is still higher than I would like to see, but in the realm of
+what I would expect.
+
+> b. Logic in bmcweb route handler code to prepare response      - 71   ms
+
+I would've expected to see this in single digit ms for a single
+property.  Can you profile here and see what's taking so long?
+
+> c. Total URI latency                                                     =
+                          - 291 ms
+>
+> Method 3 - Bmcweb reads all the properties from a file fd. Here goal is t=
+o eliminate latency and load coming by using dbus as an IPC for large paylo=
+ads.
+> a. fd read call in bmcweb                                                =
+                     - 64 ms
+
+This is roughly equivalent to the dbus call, so if we figure out where
+the bottleneck is in method 1B from the above, we could probably get
+this comperable.
+
+> b. JSON objection population from the read file contents             - 96=
+ ms
+
+This seems really high.
+
+> c. Total URI latency                                                     =
+                           - 254 ms
+> The file contents were in JSON format. If we can replace this with effici=
+ent data structure which can be used with fd passing, then I think we can f=
+urther optimize point b.
+
+In Method 3 you've essentially invented a new internal OpenBMC API.  I
+would love to foster discussions of how to handle that, but we need to
+treat it holistically in the system, and understand how:
+1. The schemas will be managed
+2. Concurrency will be managed
+3. Blocking will be managed (presumably you did a blocking filesystem
+read to get the data)
+
+I'm happy to have those discussions, and the data you have above is
+interesting, but any sort of change would require much larger project
+buy-in.
+
+> Optimization around CPU bound logic in handler code would certainly help =
+the latency of the other requests pending in the queue.
+
+Is it CPU bound or Memory bandwidth bound?  Most of the time I've seen
+the latter.  How did you collect the measurements on cpu versus IO
+versus memory bound?
+
+>
+> I will try the multi-threaded solution put by you in the coming days and =
+share the results.
+>
+
+Sounds good.  Thanks for the input.
