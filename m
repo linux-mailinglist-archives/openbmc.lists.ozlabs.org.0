@@ -2,97 +2,83 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 47B5A72C39F
-	for <lists+openbmc@lfdr.de>; Mon, 12 Jun 2023 14:02:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 07C8D72C48C
+	for <lists+openbmc@lfdr.de>; Mon, 12 Jun 2023 14:40:31 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=dkim header.b=IeBV6G30;
-	dkim=fail reason="signature verification failed" (4096-bit key; unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=alien8 header.b=dowkXs+B;
-	dkim=fail reason="signature verification failed" (4096-bit key) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=alien8 header.b=AwvwLYEX;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=dkim header.b=jbXLavAN;
+	dkim=fail reason="signature verification failed" (4096-bit key; unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=alien8 header.b=A9Zg4yb1;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Qfr000Kh2z30Nx
-	for <lists+openbmc@lfdr.de>; Mon, 12 Jun 2023 22:02:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QfrrD5Fcbz30G5
+	for <lists+openbmc@lfdr.de>; Mon, 12 Jun 2023 22:40:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=dkim header.b=IeBV6G30;
-	dkim=pass (4096-bit key; unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=alien8 header.b=dowkXs+B;
-	dkim=pass (4096-bit key) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=alien8 header.b=AwvwLYEX;
+	dkim=pass (1024-bit key; unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=dkim header.b=jbXLavAN;
+	dkim=pass (4096-bit key; unprotected) header.d=alien8.de header.i=@alien8.de header.a=rsa-sha256 header.s=alien8 header.b=A9Zg4yb1;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=alien8.de (client-ip=2a01:4f8:190:11c2::b:1457; helo=mail.skyhub.de; envelope-from=bp@alien8.de; receiver=lists.ozlabs.org)
 Received: from mail.skyhub.de (mail.skyhub.de [IPv6:2a01:4f8:190:11c2::b:1457])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QfqzM12qSz2xdq
-	for <openbmc@lists.ozlabs.org>; Mon, 12 Jun 2023 22:01:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Qfrqd2jfkz304g
+	for <openbmc@lists.ozlabs.org>; Mon, 12 Jun 2023 22:39:57 +1000 (AEST)
 Received: from mail.alien8.de (mail.alien8.de [IPv6:2a01:4f9:3051:3f93::2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id E05711EC0398;
-	Mon, 12 Jun 2023 14:01:31 +0200 (CEST)
+	by mail.skyhub.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 09D151EC0398;
+	Mon, 12 Jun 2023 14:39:54 +0200 (CEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=dkim;
-	t=1686571291;
+	t=1686573594;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:in-reply-to:in-reply-to:  references:references;
-	bh=aCD0rhhYxmitMKHhWCG0kd5hHn491gY3FyRL/Ejl4QU=;
-	b=IeBV6G30DY01vSH2jKXlHAUV8ULyYztISDDfO+WnZ/Ife/P+Wm1aZ+Fa2X7eq/SWZZCGvs
-	X/NtQN1owm9vW9nd9I4jynTAUPnCL07c0VamaU1vdliE84hTtv6uPwI6a5bkVUK8m4ofkd
-	RnPW2KeWM3YhsnxSiPFBJbDBhS/cDvI=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1686571291; bh=aCD0rhhYxmitMKHhWCG0kd5hHn491gY3FyRL/Ejl4QU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=dowkXs+B87WSwIt+wt4kae8OPbwGHpysMIdlUgxYi6mpcCYXfHY7bcTpHcEyx6BE4
-	 QuNGx+gtMOW38joxrpG6nIfHUyrGcw1qdw8SnLK4RT3I36fpmYgNIrCBOr2hAsMwbs
-	 NIlp5Scate82a4kBAH17xJZ5vbQ2frJU1PTL7/4bL1XNn8utkIdCclaNtWweRIwyuB
-	 PlLzyy0jE8Ak/LPXFI3/ef4sBV6bAosUkheJ8Ks9+CQEubyD4Jjl87mKqQLo4PM7Xi
-	 bT3ybyQnZYf0ImQAI80vgjNrQmahDSDo//UwiZ3MqeCFhSl9lSnE16FzIdJElbQjbq
-	 q5WG5Nigmj4CR07YvTghFIp3b67HZa5t1KfzuToX1LWLlY3vjSOdB857vHnn8OmDtv
-	 qZIS/ORJbmaBLIJfGSlNULog4sqHQvzBZIWnTX6PK8IlhQneDUcRr3x7bOv2XARTWp
-	 gNdVio981/xZODDLtHPxSBy0yau/o5WuHogrddu3cmAEZuFUUPNFhMA/WIF/ql0KO2
-	 Y9CWWOqKO0W7I/ltMkWv3cSkRpEucQ805KIlav4/XzcgDB7cdbVgzC9heMNL/WA6ik
-	 w6FU7RWuZCS/GvX3w9OhPDgdPSdporzM5bXdnwlTWIvmucwFNry+CBcfhxW/zv7pTN
-	 yeEQP7TqNCBcKPVa3aOXAnSk=
-X-Virus-Scanned: Debian amavisd-new at mail.maysoba.com
-Authentication-Results: mail.maysoba.com (amavisd-new);
-	dkim=pass (4096-bit key) header.d=alien8.de
+	bh=OtR4NuAqh+pHPTCUSpv56F9hvDIrIt4bvebQxXNCupE=;
+	b=jbXLavANDNUPKIW0uadvj4TxpIgfAKekRwfaVh727yyB/VsGQRDU8up79cts1NDS3icvCJ
+	zM4iUSKDiFW+npXhrB7/EmkRv3m7VGNnTYMJ5RcsNAotwnBRkVb4j7LriJD/m1vvH9meSN
+	VGr+z3pzKMKnZJQ4DQ5K0f3YsXWdWac=
+X-Virus-Scanned: Debian amavisd-new at mail.alien8.de
+Authentication-Results: mail.alien8.de (amavisd-new); dkim=pass (4096-bit key)
+	header.d=alien8.de
 Received: from mail.alien8.de ([127.0.0.1])
-	by localhost (mail.maysoba.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id dflzjxyCl_ZZ; Mon, 12 Jun 2023 12:01:29 +0000 (UTC)
+	by localhost (mail.alien8.de [127.0.0.1]) (amavisd-new, port 10026)
+	with SMTP id LM8F35X4M-PE; Mon, 12 Jun 2023 12:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alien8.de; s=alien8;
-	t=1686571289; bh=aCD0rhhYxmitMKHhWCG0kd5hHn491gY3FyRL/Ejl4QU=;
+	t=1686573591; bh=OtR4NuAqh+pHPTCUSpv56F9hvDIrIt4bvebQxXNCupE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=AwvwLYEXlqknXMl8J6hgmWUHplUdHj5dna8ng/ccDjbTWTh4rcFZ/996X4BCd4hez
-	 vCl73VpkA+2IpBYWqpgJFMHaxzW1Aswuqw0dbsdsmr8Ol97TD9AMR+rpc+b938jKwh
-	 Gdyj50s/qz1TkeNq69n6SuuZF8EGB3D6wiqyZ/S06cocX474NZoLX3F9qXeqPNOxlP
-	 bvNqsFOEfcwrHmxwo4euEyi+t6uzJeagYcDwvhrp5IGQaxzjPojuCSjGZger4ghzAG
-	 gjKeJs41PmIg5Ptu8A7i5WSQa8dheS77pjxRP/3vY8q8i06SQrEN92DveX+6JbXMlB
-	 MLreY8TDAictVGIUVsKnkPrPqsecGXIPkrEm1i1iYHYhoy1cqAcWXyfY/VYXgQvoub
-	 HJ0LFjZ5X9m6RB7pLfFFqX/TG26tMcjrQ/XyGArXjTF8ybO3BoEkUpww8PH+Ch5ja5
-	 HJbxB6y5cdIwC8bGrgBYwNTKuZpPK+gZslYxPGxIqwDkZt03lS/0XkXrdTyceqW2LA
-	 jqqJQdN4VTiv/MzFDfYvbzlYbrqMBHz5GkF/96vr8Gr/EWRaE8iIbYgYHpuK1GsflQ
-	 HUt5qRD5kHyShyr2/yfr2MF2xzs36LFzvwBBIJ0FXPPYkZoY+FMrK/5qUZ34pgKcLW
-	 CQkng9EhhBvSFXsccz9rIlzQ=
-Received: from zn.tnic (p200300eA971dC5f0329C23fffEa6a903.dip0.t-ipconnect.de [IPv6:2003:ea:971d:c5f0:329c:23ff:fea6:a903])
+	b=A9Zg4yb1aBDEj55k7A9V6N0+HBFCyzB6VYpMtHTfhHk8yYQB7EzlO6VaIzApZ967A
+	 x4P0Cn+Q0KJo+L/VMuT99YiZFpGcs0IthGftjWwioKqWgH/IX5cJf06bME1p7pTCZb
+	 /20VvUGcXv6bAcJWk9MobiUF0kt+FJL/50IsFrtU7rpRRkQw4C50hGyb6mfRMIxcpd
+	 22s0XnK4WneEdTxUyRBwh42iG1Q8IqTEZ+sMG98fVFyxt1ag87eqPLISmiH7dCEcwZ
+	 Kn9kyIfSjlBkfm1HdJKujp1ZbRarrdTvNjetu4trW1Z6pJO7ov1IJvkWOiJaI841hL
+	 YFCpFOo/wXWSGKjnsNzyMMM7yMe3dtHFJlfpOOoWIbPY0T5qjsRxJc7Ccl9YETZ/sC
+	 U56nwzcBl10K06igNUwOduYW/TUsBKqR3Wbr2Yj2skwQMzd08h3tTGmCdDWKNd/sTK
+	 VJ1IUcaM56gIvGuCdZAwgEFWCbBA4IV7iLRS+BV7bncYzXg+kLWValltRHrFcnWotR
+	 oh1Lr1wTeQCe1Eha3GtVKMGDDUjAK3EztnbWn0aBLR939H4S3zwy3DqB5wlP0TZFWV
+	 mCHbCoJWaxAaj0YMz9kixkqEgADWQogN9wVW4EDXwFkbQmRdR0gFEmXQ81S6ivTq4T
+	 2Ph9D+D7LL+JTCAntFnBePGQ=
+Received: from zn.tnic (p200300ea971dc5F0329C23FfFEa6a903.dip0.t-ipconnect.de [IPv6:2003:ea:971d:c5f0:329c:23ff:fea6:a903])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (P-256) server-signature ECDSA (P-256) server-digest SHA256)
 	(No client certificate requested)
-	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 1495C40E00EA;
-	Mon, 12 Jun 2023 12:01:08 +0000 (UTC)
-Date: Mon, 12 Jun 2023 14:01:07 +0200
+	by mail.alien8.de (SuperMail on ZX Spectrum 128k) with ESMTPSA id 6743940E01F7;
+	Mon, 12 Jun 2023 12:39:30 +0000 (UTC)
+Date: Mon, 12 Jun 2023 14:39:25 +0200
 From: Borislav Petkov <bp@alien8.de>
 To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Subject: Re: [PATCH v18 1/3] ARM: dts: nuvoton: Add node for NPCM memory
  controller
-Message-ID: <20230612120107.GFZIcJA3zktkiyTS2+@fat_crate.local>
+Message-ID: <20230612123925.GGZIcR/dUrcu03z6V+@fat_crate.local>
 References: <20230111093245.318745-1-milkfafa@gmail.com>
  <20230111093245.318745-2-milkfafa@gmail.com>
  <20230612110401.GPZIb7oZPdsPGFzSDc@fat_crate.local>
  <38c30778-9526-cba6-4ddb-00bcefeb5647@linaro.org>
+ <20230612120107.GFZIcJA3zktkiyTS2+@fat_crate.local>
+ <99795947-0584-df42-a28a-aa89d7e21c7e@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <38c30778-9526-cba6-4ddb-00bcefeb5647@linaro.org>
+In-Reply-To: <99795947-0584-df42-a28a-aa89d7e21c7e@linaro.org>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,16 +94,10 @@ Cc: devicetree@vger.kernel.org, tony.luck@intel.com, rric@kernel.org, benjaminfa
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Jun 12, 2023 at 01:22:09PM +0200, Krzysztof Kozlowski wrote:
-> It is preferred this goes via Nuvoton ARM SoC tree. I don't understand
-> why this is first in the series - it's clearly wrong.
+On Mon, Jun 12, 2023 at 02:09:33PM +0200, Krzysztof Kozlowski wrote:
+> Please route the DTS (1/3) via Nuvoton SoC tree.
 
-Don't ask me...
-
-So the EDAC driver itself is self-contained so I can review it and you
-can pick it up with the rest, if it looks ok.
-
-That ok?
+Don't all three need to go together?
 
 -- 
 Regards/Gruss,
