@@ -2,69 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B21AA72D829
-	for <lists+openbmc@lfdr.de>; Tue, 13 Jun 2023 05:37:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 12F4072DE5C
+	for <lists+openbmc@lfdr.de>; Tue, 13 Jun 2023 11:56:23 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=Ak216gkr;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=EFOAAGfy;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QgDl640mwz30PS
-	for <lists+openbmc@lfdr.de>; Tue, 13 Jun 2023 13:37:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QgP8K62Krz30MN
+	for <lists+openbmc@lfdr.de>; Tue, 13 Jun 2023 19:56:17 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=Ak216gkr;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=EFOAAGfy;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::234; helo=mail-oi1-x234.google.com; envelope-from=raviteja28031990@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::932; helo=mail-ua1-x932.google.com; envelope-from=milkfafa@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ua1-x932.google.com (mail-ua1-x932.google.com [IPv6:2607:f8b0:4864:20::932])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QgDkW36Xyz307y
-	for <openbmc@lists.ozlabs.org>; Tue, 13 Jun 2023 13:36:49 +1000 (AEST)
-Received: by mail-oi1-x234.google.com with SMTP id 5614622812f47-392116ae103so2982674b6e.0
-        for <openbmc@lists.ozlabs.org>; Mon, 12 Jun 2023 20:36:49 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QgP7j1J1hz2y1d
+	for <openbmc@lists.ozlabs.org>; Tue, 13 Jun 2023 19:55:44 +1000 (AEST)
+Received: by mail-ua1-x932.google.com with SMTP id a1e0cc1a2514c-78cee27c08aso327426241.2
+        for <openbmc@lists.ozlabs.org>; Tue, 13 Jun 2023 02:55:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686627406; x=1689219406;
+        d=gmail.com; s=20221208; t=1686650139; x=1689242139;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=E7v74uXYNBWouY+uFNi8ap0Mm0dM4OjKKOaR/CW0R6E=;
-        b=Ak216gkr0Z81piYMT4bGQPLYFCWsbOWp5l+U+P/0kC9lBs8K0Y95KhGWVEDQ+VAx4W
-         c5nMRWzVH1t2mT4cM+StmyMtqLaey3oaGsQ4MMW7w6ktN4J/kK65wKS4qTwmHlm456u1
-         qrm9XLXjC9eR0ZgVeStrRuyzS6G3gpBjq/Cz8fUUSmlQffwfqG3fuqvwI/16gNffvJyH
-         8trWVw+ZD8koSAIAX+kO8lnx3waPaOmiP/IdPVfk9j+87Orhu8V42Mu3DfM/ZQ4SpZ72
-         l8Sr+eYKfNsyI0tICW7KqVFzeFN4WKVI1XJnKcsrtjbaksyxkY6wa+C/ub+Zu3QKoPij
-         VXSA==
+        bh=fwWyCUDuegx+tvkvTGStT67ElUFA4N+9n715czI5oMM=;
+        b=EFOAAGfykMNiEdEIHAfYE+irtvjkVom+OCnYLYU3kU0Rke9e1gCAxYxpvkxgFfDTLq
+         /IGjpl7MZuDj83JotVbsEk/YqixsvEiYQi9bAp5n+JdxO9Gan3tNXKEjF8mziH+PnJOn
+         BmpvoPMpX+6oz9ORNEtky4ww3U8A5SZcXqmNrrEhtttLMzWwv0QhxCEZ7OgZ+ev2oBvi
+         kOCmX5nZHqiY1dNRMiAX0ahKpTUrN9Mw65Wz8vfmCnilGw1vLLBSlw8MUU4u2JlMWwAP
+         sivKbPprB2Nuk9rdmuuNeg6dQhUREKl2Kq59cBj7z1/ZpHtczZGoI8qP4L72MB6/b7wd
+         z8XA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686627406; x=1689219406;
+        d=1e100.net; s=20221208; t=1686650139; x=1689242139;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=E7v74uXYNBWouY+uFNi8ap0Mm0dM4OjKKOaR/CW0R6E=;
-        b=A5pg00hJI+CF4AwbFY/p+4kVR60D21z736litJ2PKuVWrbttu/jrSypdszG2rYtpGo
-         SsRkyp30tt5VTAShOQafwqpToItB8HjpmQrMVjND18u/f45b/3m8nOXU6T60auOlQ/ZE
-         HKNj/qrsNP+ByiGVXdmENPqc+4m4r3kqLWT4g6OOG3ktLNB8bIV3QJKDRQAoePHHTaxo
-         lEuUbZZIpZlDyU9X6pf0arWGUv92zeQw7PgW8UaZBB7g1+tfofV2CCK0fa5DS2ZDerSq
-         AA4oZly0o3g2rFRHDROqWX5LSuBD88i62qdDn/v6lAXXyhR1cE75ZN4/fdJWpI/MDSDz
-         BiwA==
-X-Gm-Message-State: AC+VfDxrzUGvxvCW60QDdaCLml+C3KNRNjXfZAq96u3Q2gmBnl9ki+3I
-	ryAiURy43BtsYNBpf8Z0ugkvkVlm+sk7RN6fgdI=
-X-Google-Smtp-Source: ACHHUZ7KfaIS0Wh9YfRkgLBi3zs61fuDEiC8BA6t54CW3iFU4x5lfOHSLwQCNu8Nw7lCKxhhbJ2Oi30d2f6muyOTa4w=
-X-Received: by 2002:a05:6808:1926:b0:39a:9cef:9dd3 with SMTP id
- bf38-20020a056808192600b0039a9cef9dd3mr7749493oib.27.1686627406101; Mon, 12
- Jun 2023 20:36:46 -0700 (PDT)
+        bh=fwWyCUDuegx+tvkvTGStT67ElUFA4N+9n715czI5oMM=;
+        b=hLezoUspWlkyroza4y8DnU0g9Qc7X6UYAJejintjj7HMm69uhVB1HKzn0zqw6K5q37
+         yLbRkfKx00p10/MZPBggbJ9Aa+mFUpf1I53TH8KPf5PE63PsLXsvSmhtTYzYthkPrkMi
+         5tgXS5iTq6zbeFxEw7JmCuYygIHNKSbI1VrqpFXX6Jsk1WaGMnsp2LVIEOpb/lX7pPXV
+         GcMeG8uz+xIlsuxGjAkqZFZRQLy/qdNj2+wn8/mvPK3lfPmu5oyg31a6i+rLFp+V+SSY
+         ERf46QD53OytPzBgXD/aau+Tfov/5V6u9yGdkrSrpGTUxTOqE/tqrTjfLjIa6KnsZGyf
+         IMlA==
+X-Gm-Message-State: AC+VfDz8QF+wHnT9/SrLFRKp/cEv1UViyxqdJnN7gKYIEu124sAxRz42
+	BFIKayFJjn0Ls4jgf8NU2xWWdOvAN/tXyTE26To=
+X-Google-Smtp-Source: ACHHUZ7e9IsqIAz0PgLSkxZe5wg7yRy8uMMFUo1OILtylLbe/RXl7LMH2ceasVjVOwYCrnYhfuIfG6I7+3mrqQZSYJg=
+X-Received: by 2002:a67:b904:0:b0:43b:3978:2434 with SMTP id
+ q4-20020a67b904000000b0043b39782434mr4872625vsn.22.1686650138870; Tue, 13 Jun
+ 2023 02:55:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <CAM4DKZkkKx_MPVv_R7WqOhnKA+hRYWU4GK=DqbqqSVj_CtMtMg@mail.gmail.com>
- <2d93fd2f-bde5-22f2-373a-63398963e94f@linux.intel.com> <CAM4DKZkvHE6AOgpaO2bCKgK9CgN_YZM9UpEDpzD3-+DSXf4EXQ@mail.gmail.com>
- <7230376b-c7f4-b931-faff-27a4da1b38a9@gmail.com> <CAM4DKZ=-pHzz-OuOyszYmrHMWog5uNpB-S4mQtQaVrY2iJ5=BQ@mail.gmail.com>
- <ZIEpSaXg4IkZ7MZk@heinlein.vulture-banana.ts.net> <5b277b0b61ab54060749975ec12aa2422d4427cb.camel@gmail.com>
-In-Reply-To: <5b277b0b61ab54060749975ec12aa2422d4427cb.camel@gmail.com>
-From: raviteja bailapudi <raviteja28031990@gmail.com>
-Date: Tue, 13 Jun 2023 09:06:34 +0530
-Message-ID: <CAM4DKZ=ZhaNVZhs9cbY4G_MUVo-5Usr1FjMWjMLvEWxhCVNivw@mail.gmail.com>
-Subject: Re: OpenBMC Network Route Management: Metric and Static Route config support
-To: Ivan Mikhaylov <fr0st61te@gmail.com>
-Content-Type: multipart/alternative; boundary="00000000000068c1f005fdfa8b37"
+References: <20230111093245.318745-1-milkfafa@gmail.com> <20230111093245.318745-2-milkfafa@gmail.com>
+ <20230612110401.GPZIb7oZPdsPGFzSDc@fat_crate.local> <38c30778-9526-cba6-4ddb-00bcefeb5647@linaro.org>
+ <20230612120107.GFZIcJA3zktkiyTS2+@fat_crate.local> <99795947-0584-df42-a28a-aa89d7e21c7e@linaro.org>
+ <20230612123925.GGZIcR/dUrcu03z6V+@fat_crate.local> <e0171cb6-54e7-41bd-4b08-fa667fe58ff4@linaro.org>
+ <20230612131649.GHZIcawTKBMIQpFD6I@fat_crate.local>
+In-Reply-To: <20230612131649.GHZIcawTKBMIQpFD6I@fat_crate.local>
+From: Kun-Fa Lin <milkfafa@gmail.com>
+Date: Tue, 13 Jun 2023 17:55:27 +0800
+Message-ID: <CADnNmFqhNKoV5EfaiMSo9yz-hTaTm+0pGUJyFNH_V8pNVEU36w@mail.gmail.com>
+Subject: Re: [PATCH v18 1/3] ARM: dts: nuvoton: Add node for NPCM memory controller
+To: Borislav Petkov <bp@alien8.de>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,132 +77,15 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: devicetree <devicetree@vger.kernel.org>, tony.luck@intel.com, rric@kernel.org, Benjamin Fair <benjaminfair@google.com>, linux-edac <linux-edac@vger.kernel.org>, CS20 KWLiu <KWLIU@nuvoton.com>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Tali Perry <tali.perry1@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Rob Herring <robh+dt@kernel.org>, James Morse <james.morse@arm.com>, ctcchien@nuvoton.com, YSCHU@nuvoton.com, Mauro Carvalho Chehab <mchehab@kernel.org>, Marvin Lin <kflin@nuvoton.com>, Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000068c1f005fdfa8b37
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> Marvin,
+> Please route the DTS (1/3) via Nuvoton SoC tree.
 
-Hi Patrick/Ivan
+OK, will route the DTS via Nuvoton SoC tree.
+Thanks, Krzysztof!
 
-
-Yes the DMFT PR is private and is intended only for DMTF members.
-
-I have captured DMTF mockup schema in the above mail as an example.
-
-Intent of this mail is to get feedback and use-cases of static route
-feature on BMC.
-
-
-would like to hear community interest on allowing static
-route configuration by user explicitly.
-
-On Fri, Jun 9, 2023 at 12:07=E2=80=AFPM Ivan Mikhaylov <fr0st61te@gmail.com=
-> wrote:
-
-> On Wed, 2023-06-07 at 20:05 -0500, Patrick Williams wrote:
-> > On Mon, Jun 05, 2023 at 07:49:06PM +0530, raviteja bailapudi wrote:
-> >
-> > > Gentle reminder for the feedback on Static route feature
-> > >
-> > > Here is DMTF redfish PR to enable redfish static route
-> > > configuration
-> > > https://github.com/DMTF/Redfish/pull/5464
-> >
-> > How are we suppose to review a private PR?
-> >
->
-> I'd glad to look at this PR too, at least there is multiple proposals
-> in gerrit about that theme:
->
-> https://gerrit.openbmc.org/c/openbmc/phosphor-networkd/+/63619
-> https://gerrit.openbmc.org/c/openbmc/bmcweb/+/61641
-> https://gerrit.openbmc.org/c/openbmc/phosphor-dbus-interfaces/+/60448
->
-> Is it possible to put it in redfish forum/mail list/gerrit?
->
-> Thanks.
->
-
---00000000000068c1f005fdfa8b37
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><p style=3D"margin:0px;font-stretch:normal;font-size:13px;=
-line-height:normal;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:=
-none;font-kerning:auto;font-variant-alternates:normal;font-variant-ligature=
-s:normal;font-variant-numeric:normal;font-variant-east-asian:normal;font-fe=
-ature-settings:normal">Hi Patrick/Ivan</p>
-<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
-l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
-:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
-iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
-rmal;min-height:15px"><br></p>
-<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
-l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
-:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
-iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
-rmal">Yes the DMFT PR is private and is intended only for DMTF members.</p>
-<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
-l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
-:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
-iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
-rmal">I have captured DMTF mockup schema in the above mail as an example.</=
-p>
-<p style=3D"margin:0px;font-stretch:normal;font-size:13px;line-height:norma=
-l;font-family:&quot;Helvetica Neue&quot;;font-size-adjust:none;font-kerning=
-:auto;font-variant-alternates:normal;font-variant-ligatures:normal;font-var=
-iant-numeric:normal;font-variant-east-asian:normal;font-feature-settings:no=
-rmal">Intent of this mail is to get feedback and use-cases of static route =
-feature on BMC.</p><p style=3D"margin:0px;font-stretch:normal;font-size:13p=
-x;line-height:normal;font-family:&quot;Helvetica Neue&quot;;font-size-adjus=
-t:none;font-kerning:auto;font-variant-alternates:normal;font-variant-ligatu=
-res:normal;font-variant-numeric:normal;font-variant-east-asian:normal;font-=
-feature-settings:normal"><br></p><p style=3D"margin:0px;font-stretch:normal=
-;font-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;;f=
-ont-size-adjust:none;font-kerning:auto;font-variant-alternates:normal;font-=
-variant-ligatures:normal;font-variant-numeric:normal;font-variant-east-asia=
-n:normal;font-feature-settings:normal">would like to hear community interes=
-t on allowing static route=C2=A0configuration by user explicitly.</p></div>=
-<br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Fri=
-, Jun 9, 2023 at 12:07=E2=80=AFPM Ivan Mikhaylov &lt;<a href=3D"mailto:fr0s=
-t61te@gmail.com" target=3D"_blank">fr0st61te@gmail.com</a>&gt; wrote:<br></=
-div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bor=
-der-left-width:1px;border-left-style:solid;border-left-color:rgb(204,204,20=
-4);padding-left:1ex">On Wed, 2023-06-07 at 20:05 -0500, Patrick Williams wr=
-ote:<br>
-&gt; On Mon, Jun 05, 2023 at 07:49:06PM +0530, raviteja bailapudi wrote:<br=
->
-&gt; <br>
-&gt; &gt; Gentle reminder for the feedback on Static route feature<br>
-&gt; &gt; <br>
-&gt; &gt; Here is DMTF redfish PR to enable redfish static route<br>
-&gt; &gt; configuration<br>
-&gt; &gt; <a href=3D"https://github.com/DMTF/Redfish/pull/5464" rel=3D"nore=
-ferrer" target=3D"_blank">https://github.com/DMTF/Redfish/pull/5464</a><br>
-&gt; <br>
-&gt; How are we suppose to review a private PR?<br>
-&gt; <br>
-<br>
-I&#39;d glad to look at this PR too, at least there is multiple proposals<b=
-r>
-in gerrit about that theme:<br>
-<br>
-<a href=3D"https://gerrit.openbmc.org/c/openbmc/phosphor-networkd/+/63619" =
-rel=3D"noreferrer" target=3D"_blank">https://gerrit.openbmc.org/c/openbmc/p=
-hosphor-networkd/+/63619</a><br>
-<a href=3D"https://gerrit.openbmc.org/c/openbmc/bmcweb/+/61641" rel=3D"nore=
-ferrer" target=3D"_blank">https://gerrit.openbmc.org/c/openbmc/bmcweb/+/616=
-41</a><br>
-<a href=3D"https://gerrit.openbmc.org/c/openbmc/phosphor-dbus-interfaces/+/=
-60448" rel=3D"noreferrer" target=3D"_blank">https://gerrit.openbmc.org/c/op=
-enbmc/phosphor-dbus-interfaces/+/60448</a><br>
-<br>
-Is it possible to put it in redfish forum/mail list/gerrit?<br>
-<br>
-Thanks.<br>
-</blockquote></div>
-
---00000000000068c1f005fdfa8b37--
+> Patches 2 and 3 queued for 6.5.
+Thanks, Boris!
