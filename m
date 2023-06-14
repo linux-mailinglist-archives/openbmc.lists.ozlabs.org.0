@@ -2,66 +2,48 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 13A0272F314
-	for <lists+openbmc@lfdr.de>; Wed, 14 Jun 2023 05:27:38 +0200 (CEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b=uJG8njXB;
-	dkim-atps=neutral
+	by mail.lfdr.de (Postfix) with ESMTPS id 62C3572FFF7
+	for <lists+openbmc@lfdr.de>; Wed, 14 Jun 2023 15:25:52 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QgrTM6s35z30PM
-	for <lists+openbmc@lfdr.de>; Wed, 14 Jun 2023 13:27:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Qh5lf2K3pz30fx
+	for <lists+openbmc@lfdr.de>; Wed, 14 Jun 2023 23:25:50 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b=uJG8njXB;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=qq.com (client-ip=203.205.221.173; helo=out203-205-221-173.mail.qq.com; envelope-from=992492046@qq.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 853 seconds by postgrey-1.37 at boromir; Wed, 14 Jun 2023 13:27:01 AEST
-Received: from out203-205-221-173.mail.qq.com (out203-205-221-173.mail.qq.com [203.205.221.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized) smtp.mailfrom=nuvoton.com (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tomer.maimon@nuvoton.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 918 seconds by postgrey-1.37 at boromir; Wed, 14 Jun 2023 23:25:30 AEST
+Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QgrSj6TsMz2xwc
-	for <openbmc@lists.ozlabs.org>; Wed, 14 Jun 2023 13:26:59 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
-	t=1686713215; bh=lL+ulDIcz4STKpB/t/QCwdDZnmjKo4p7KG1a3AzCeM4=;
-	h=From:To:Subject:Date;
-	b=uJG8njXBw5M1d/B8lKwu2XR6rumnFzErdOcYa7FQCmGYaVJAkKjjY0I4SgYeCpVyO
-	 Pvb77/WWpnb/JlmGN8GEHCoO/9M6SQ7NMKvk9MhhuOPfn2Xs1Fy3ZdiEkC+XiF1rok
-	 urWinQ4cIVaJGg2kNLjsycDPdwrSFU/eBaIfKe+Q=
-X-QQ-FEAT: oHWrrGTW1dBM1wq2dbSTgn8AaBOV+Hnu
-X-QQ-SSF: 00000000000000F0000000000000
-X-QQ-XMAILREADINFO: OWGjEroX2VOy/dXPOYIzQK4=
-X-QQ-XMAILINFO: M97kRfYivzNAzJ/2lDr8hT4qNUG98gvQleUPAYsVF5/vWrTpe/CxAQ/N6f8imG
-	 v06ZJGoe4nwZiuFzIUV/8vyMKVKKwrvrv9et09ROatsLOWqPqPeJgIjvV2UT8aD8zaguY+lfxRu/S
-	 iaDGh2Cx24lFLwd6mYjXipxiAgDYyE588N4335cxo1PKMVtUXC9qQeVjFRi5hVmv1C4ZGIr3BkU7Y
-	 scoqAhni2WXnWo/tkPepnV8OYDkgeLz3fbe03gJ2ruNkCrpm4NeGln0VWdzC6i1WXaUEq6rL/HU/q
-	 NEwoCzGiQLBX6cyOkAoQRM7WVyFqHTcY78Pbgcc4IV5meCvI4TWjLL0mv7DX2wCyBEgyFh4izeTU7
-	 BXo9J//a4VRLQojt6sQ1/EHsvuEhVlzynaTSYUD5iHBMxVpk7Q7leodbm89cNvvlVDkQZ7NkmYisK
-	 FeXgsXME70r0Nv72mAxnlkliHe5oQYqpsB0DhdpqZwGJWjtyyZRewGOud1anTUrOjnrJVnKiVwmEp
-	 8CuKLRM6jCY/bQjsIPTNodjVLFvOmeYAbrrafEjUUxQKXU+LpPZ5yqYWIZSKHotk7mTICC96CX98b
-	 MWsofTzFKJSxwoifYNSnVLtARQEzlLfRcS/1zFIRwhKeVvPKOIlFc2TwsucWLTNI9jsZ5qKxURuP0
-	 7kymUPKIO3ZC6IWC3sTXAk/bsbnTOGop34EgrHJMfvcbrwVnpWW5HODApLHnp0d0cj4xi12/jAFLO
-	 rYReyYKw1T/Nb1lm7BDdN1wGdmJQjFLp1XxKuUW5jYFckgK2cq7YszCUD2b8WX2PFu0v9i5WT2Z2m
-	 Be9yGXw1MQ1sSCh2oregyHYt7JmOKoguUZ9bsSxLKQtg/IDmJ0t+PBpVYK4VtEzBjwTbBlenpgPgA
-	 SqafU8HU8G/taKFEZa8Vj5ZFXUOMVyXbXj/iK06tu0NPtl+Uip7pUY5XU0ueLeM
-X-HAS-ATTACH: no
-X-QQ-BUSINESS-ORIGIN: 2
-X-Originating-IP: 218.76.101.94
-X-QQ-STYLE: 
-X-QQ-mid: webmail631t1686712292t5405807
-From: "=?gb18030?B?ucy8/rb+sr/T97DY7L8=?=" <992492046@qq.com>
-To: "=?gb18030?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>
-Subject: How can I short time of compiling bmcweb for develop and debug?
-Mime-Version: 1.0
-Content-Type: multipart/alternative;
-	boundary="----=_NextPart_64892FE4_0F320E10_1FB2B0D3"
-Content-Transfer-Encoding: 8Bit
-Date: Wed, 14 Jun 2023 11:11:32 +0800
-X-Priority: 3
-Message-ID: <tencent_F28333DC12EF23784BA9F47E1E894F293C0A@qq.com>
-X-QQ-MIME: TCMime 1.0 by Tencent
-X-Mailer: QQMail 2.x
-X-QQ-Mailer: QQMail 2.x
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Qh5lG1b1Yz2xwD
+	for <openbmc@lists.ozlabs.org>; Wed, 14 Jun 2023 23:25:28 +1000 (AEST)
+Received: from NTILML01.nuvoton.com (212.199.177.18.static.012.net.il [212.199.177.18])
+	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 35ED9wVG032261
+	for <openbmc@lists.ozlabs.org>; Wed, 14 Jun 2023 16:09:58 +0300
+Received: from NTHCCAS02.nuvoton.com (10.1.9.121) by NTILML01.nuvoton.com
+ (10.190.1.46) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Wed, 14 Jun
+ 2023 16:09:57 +0300
+Received: from NTHCCAS04.nuvoton.com (10.1.8.29) by NTHCCAS02.nuvoton.com
+ (10.1.9.121) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2176.2; Wed, 14 Jun
+ 2023 21:09:55 +0800
+Received: from taln60.nuvoton.co.il (10.191.1.180) by NTHCCAS04.nuvoton.com
+ (10.1.8.29) with Microsoft SMTP Server id 15.1.2176.2 via Frontend Transport;
+ Wed, 14 Jun 2023 21:09:55 +0800
+Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
+	id CD36D637C4; Wed, 14 Jun 2023 16:09:54 +0300 (IDT)
+From: Tomer Maimon <tmaimon77@gmail.com>
+To: <mturquette@baylibre.com>, <sboyd@kernel.org>, <avifishman70@gmail.com>,
+        <tali.perry1@gmail.com>, <joel@jms.id.au>, <venture@google.com>,
+        <yuenn@google.com>, <benjaminfair@google.com>
+Subject: [PATCH v16 0/1] Introduce Nuvoton Arbel NPCM8XX BMC SoC
+Date: Wed, 14 Jun 2023 16:09:49 +0300
+Message-ID: <20230614130952.253349-1-tmaimon77@gmail.com>
+X-Mailer: git-send-email 2.33.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-NotSetDelaration: True
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,59 +55,154 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org, Tomer Maimon <tmaimon77@gmail.com>, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
+This patchset adds clock support for the Nuvoton 
+Arbel NPCM8XX Board Management controller (BMC) SoC family.
 
-------=_NextPart_64892FE4_0F320E10_1FB2B0D3
-Content-Type: text/plain;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
+This patchset cover letter is based from the initial support for NPCM8xx BMC to
+keep tracking the version history.
 
-RWFjaCB0aW1lIHRoYXQgSSBjb2RlIGFueSBsaW5lIGluIGJtY3dlYiBzdWNoIGFzICdwcmlu
-dGYoJ2hlbGxvIGJtYycpICcgc3RpbGwgbmVlZCB0byB0YWtlIHRvbyBtdWNoIHRpbWUoJmd0
-OzVtaW4pIHRvIGNvbXBpbGUgcHJvamVjdC5BcyBhIGRldmVsb3BlciwgSXQgaXMgaGFyZCB0
-byBzdGFuZCBmb3IgdGhpcyBpc3N1ZS5JIGNvbXBpbGVkIHRoZSBibWN3ZWIgYnkgY29tbWFu
-ZCAnYml0YmFrZSBibWN3ZWInLldpdGhvdXQgb3BlbmJtYyBzdHJ1Y3R1cmUgY29tcGlsZSBp
-bmRlcGVuZHRlbnRseSBpbiBteSBQQyBpcyBhbHNvIGNvc3QgbXVjaCB0aW1lLg0KSG93IGRv
-IHlvdSBjb25xdWVyIHRoaXMgcHJvYmxlbSBpbiBkZXZlbG9wIHN0YWdlP1RoYW5rcyE=
+all the other initial support patches had been applied to Linux kernel 6.0.
 
-------=_NextPart_64892FE4_0F320E10_1FB2B0D3
-Content-Type: text/html;
-	charset="gb18030"
-Content-Transfer-Encoding: base64
+This patchset was tested on the Arbel NPCM8XX evaluation board.
 
-PG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNo
-YXJzZXQ9R0IxODAzMCI+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoMzEsIDM1LCA0MCk7IGZv
-bnQtZmFtaWx5OiAtYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90O1Nl
-Z29lIFVJJnF1b3Q7LCAmcXVvdDtOb3RvIFNhbnMmcXVvdDssIEhlbHZldGljYSwgQXJpYWws
-IHNhbnMtc2VyaWYsICZxdW90O0FwcGxlIENvbG9yIEVtb2ppJnF1b3Q7LCAmcXVvdDtTZWdv
-ZSBVSSBFbW9qaSZxdW90OzsiPkVhY2ggdGltZSB0aGF0IEkgY29kZSBhbnkgbGluZSBpbiBi
-bWN3ZWIgc3VjaCBhcyAncHJpbnRmKCdoZWxsbyBibWMnKSAnIHN0aWxsIG5lZWQgdG8gdGFr
-ZSB0b28gbXVjaCB0aW1lKCZndDs1bWluKSB0byBjb21waWxlIHByb2plY3QuQXMgYSBkZXZl
-bG9wZXIsIEl0IGlzIGhhcmQgdG8gc3RhbmQgZm9yIHRoaXMgaXNzdWUuPC9zcGFuPjxkaXY+
-PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoMzEsIDM1LCA0MCk7IGZvbnQtZmFtaWx5OiAtYXBw
-bGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90O1NlZ29lIFVJJnF1b3Q7LCAm
-cXVvdDtOb3RvIFNhbnMmcXVvdDssIEhlbHZldGljYSwgQXJpYWwsIHNhbnMtc2VyaWYsICZx
-dW90O0FwcGxlIENvbG9yIEVtb2ppJnF1b3Q7LCAmcXVvdDtTZWdvZSBVSSBFbW9qaSZxdW90
-OzsiPkkgY29tcGlsZWQgdGhlIGJtY3dlYiBieSBjb21tYW5kICdiaXRiYWtlIGJtY3dlYicu
-V2l0aG91dCBvcGVuYm1jIHN0cnVjdHVyZSBjb21waWxlIGluZGVwZW5kdGVudGx5IGluIG15
-IFBDIGlzIGFsc28gY29zdCBtdWNoIHRpbWUuPC9zcGFuPjxiciBzdHlsZT0iYm94LXNpemlu
-ZzogYm9yZGVyLWJveDsgY29sb3I6IHJnYigzMSwgMzUsIDQwKTsgZm9udC1mYW1pbHk6IC1h
-cHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDss
-ICZxdW90O05vdG8gU2FucyZxdW90OywgSGVsdmV0aWNhLCBBcmlhbCwgc2Fucy1zZXJpZiwg
-JnF1b3Q7QXBwbGUgQ29sb3IgRW1vamkmcXVvdDssICZxdW90O1NlZ29lIFVJIEVtb2ppJnF1
-b3Q7OyI+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoMzEsIDM1LCA0MCk7IGZvbnQtZmFtaWx5
-OiAtYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90O1NlZ29lIFVJJnF1
-b3Q7LCAmcXVvdDtOb3RvIFNhbnMmcXVvdDssIEhlbHZldGljYSwgQXJpYWwsIHNhbnMtc2Vy
-aWYsICZxdW90O0FwcGxlIENvbG9yIEVtb2ppJnF1b3Q7LCAmcXVvdDtTZWdvZSBVSSBFbW9q
-aSZxdW90OzsiPkhvdyBkbyB5b3UgY29ucXVlciB0aGlzIHByb2JsZW0gaW4gZGV2ZWxvcCBz
-dGFnZT9UaGFua3MhPC9zcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjogcmdiKDMxLCAzNSwgNDAp
-OyBmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVv
-dDtTZWdvZSBVSSZxdW90OywgJnF1b3Q7Tm90byBTYW5zJnF1b3Q7LCBIZWx2ZXRpY2EsIEFy
-aWFsLCBzYW5zLXNlcmlmLCAmcXVvdDtBcHBsZSBDb2xvciBFbW9qaSZxdW90OywgJnF1b3Q7
-U2Vnb2UgVUkgRW1vamkmcXVvdDs7Ij48L3NwYW4+PC9kaXY+
+Addressed comments from:
 
-------=_NextPart_64892FE4_0F320E10_1FB2B0D3--
+ - Stephen Boyd: https://www.spinics.net/lists/kernel/msg4729384.html
+
+Changes since version 15:
+ - NPCM8XX clock driver
+	- Remove unused regs parameter from npcm8xx_pll_data structure.
+	- Using index and clk_hw parameters to set the clock parent in the clock structures.
+
+Changes since version 14:
+ - NPCM8XX clock driver
+	- Remove unnecessary register definitions.
+	- Remove the internal reference clock, instead use the external DT reference clock.
+	- rearrange the driver.
+	- using .names parameter in DT to define clock (refclk).
+
+Changes since version 13:
+ - NPCM8XX clock driver
+	- Remove unnecessary definitions and add module.h define
+	- Use in clk_parent_data struct.fw_name and .name.
+	- Add module_exit function.
+	- Add const to divider clock names.
+	- Add MODULE_DESCRIPTION and MODULE_LICENSE
+
+Changes since version 12:
+ - NPCM8XX clock driver
+	- Use clk_parent_data in mux and div clock structure.
+	- Add const to mux tables.
+	- Using devm_clk_hw_register_fixed_rate function.
+	- use only .name clk_parent_data instead .name and .fw_name.
+	- Modify mask values in mux clocks. 
+
+Changes since version 11:
+ - NPCM8XX clock driver
+	- Modify Kconfig help.
+	- Modify loop variable to unsigned int.
+
+Changes since version 11:
+ - NPCM8XX clock driver
+	- Modify Kconfig help.
+	- Modify loop variable to unsigned int.
+
+Changes since version 10:
+ - NPCM8XX clock driver
+	- Fix const warning.
+
+Changes since version 9:
+ - NPCM8XX clock driver
+	- Move configuration place.
+	- Using clk_parent_data instead of parent_name
+	- using devm_ioremap instead of ioremap. deeply sorry, I know we had
+	 a long discussion on what should the driver use, from other examples 
+	 (also in other clock drivers) I see the combination of 
+	 platform_get_resource and devm_ioremap are commonly used and it answer
+	 the reset and clock needs.
+
+Changes since version 8:
+ - NPCM8XX clock driver
+	- Move configuration place.
+	- Add space before and aftre '{' '}'.
+	- Handle devm_of_clk_add_hw_provider function error.
+
+Changes since version 7:
+ - NPCM8XX clock driver
+	- The clock and reset registers using the same memory region, 
+	  due to it the clock driver should claim the ioremap directly 
+	  without checking the memory region.
+
+Changes since version 6:
+ - NPCM reset driver
+	- Modify warning message.
+ - dt-bindings: serial: 8250: Add npcm845 compatible string patch accepted, due
+   to it the patch removed from the patchset.
+
+Changes since version 5:
+ - NPCM8XX clock driver
+	- Remove refclk if devm_of_clk_add_hw_provider function failed.
+ - NPCM8XX clock source driver
+	- Remove NPCM8XX TIMER_OF_DECLARE support, using the same as NPCM7XX.
+
+Changes since version 4:
+ - NPCM8XX clock driver
+	- Use the same quote in the dt-binding file.
+
+Changes since version 3:
+ - NPCM8XX clock driver
+	- Rename NPCM8xx clock dt-binding header file.
+	- Remove unused structures.
+	- Improve Handling the clocks registration.
+ - NPCM reset driver
+	- Add ref phandle to dt-binding.
+
+Changes since version 2:
+ - Remove NPCM8xx WDT compatible patch.
+ - Remove NPCM8xx UART compatible patch.
+ - NPCM8XX clock driver
+	- Add debug new line.
+	- Add 25M fixed rate clock.
+	- Remove unused clocks and clock name from dt-binding.
+ - NPCM reset driver
+	- Revert to npcm7xx dt-binding.
+	- Skip dt binding quotes.
+	- Adding DTS backward compatibility.
+	- Remove NPCM8xx binding include file.
+	- Warp commit message.
+- NPCM8XX device tree:
+	- Remove unused clock nodes (used in the clock driver)
+	- Modify gcr and rst node names.
+
+Changes since version 1:
+ - NPCM8XX clock driver
+	- Modify dt-binding.
+	- Remove unsed definition and include.
+	- Include alphabetically.
+	- Use clock devm.
+ - NPCM reset driver
+	- Modify dt-binding.
+	- Modify syscon name.
+	- Add syscon support to NPCM7XX dts reset node.
+	- use data structure.
+ - NPCM8XX device tree:
+	- Modify evb compatible name.
+	- Add NPCM7xx compatible.
+	- Remove disable nodes from the EVB DTS.
+
+Tomer Maimon (1):
+  clk: npcm8xx: add clock controller
+
+ drivers/clk/Kconfig       |   8 +
+ drivers/clk/Makefile      |   1 +
+ drivers/clk/clk-npcm8xx.c | 566 ++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 575 insertions(+)
+ create mode 100644 drivers/clk/clk-npcm8xx.c
+
+-- 
+2.33.0
 
