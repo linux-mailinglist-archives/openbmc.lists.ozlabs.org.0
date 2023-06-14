@@ -1,71 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 12F4072DE5C
-	for <lists+openbmc@lfdr.de>; Tue, 13 Jun 2023 11:56:23 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 13A0272F314
+	for <lists+openbmc@lfdr.de>; Wed, 14 Jun 2023 05:27:38 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=EFOAAGfy;
+	dkim=pass (1024-bit key; unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b=uJG8njXB;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QgP8K62Krz30MN
-	for <lists+openbmc@lfdr.de>; Tue, 13 Jun 2023 19:56:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QgrTM6s35z30PM
+	for <lists+openbmc@lfdr.de>; Wed, 14 Jun 2023 13:27:35 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=EFOAAGfy;
+	dkim=pass (1024-bit key; unprotected) header.d=qq.com header.i=@qq.com header.a=rsa-sha256 header.s=s201512 header.b=uJG8njXB;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::932; helo=mail-ua1-x932.google.com; envelope-from=milkfafa@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-ua1-x932.google.com (mail-ua1-x932.google.com [IPv6:2607:f8b0:4864:20::932])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=qq.com (client-ip=203.205.221.173; helo=out203-205-221-173.mail.qq.com; envelope-from=992492046@qq.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 853 seconds by postgrey-1.37 at boromir; Wed, 14 Jun 2023 13:27:01 AEST
+Received: from out203-205-221-173.mail.qq.com (out203-205-221-173.mail.qq.com [203.205.221.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QgP7j1J1hz2y1d
-	for <openbmc@lists.ozlabs.org>; Tue, 13 Jun 2023 19:55:44 +1000 (AEST)
-Received: by mail-ua1-x932.google.com with SMTP id a1e0cc1a2514c-78cee27c08aso327426241.2
-        for <openbmc@lists.ozlabs.org>; Tue, 13 Jun 2023 02:55:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686650139; x=1689242139;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=fwWyCUDuegx+tvkvTGStT67ElUFA4N+9n715czI5oMM=;
-        b=EFOAAGfykMNiEdEIHAfYE+irtvjkVom+OCnYLYU3kU0Rke9e1gCAxYxpvkxgFfDTLq
-         /IGjpl7MZuDj83JotVbsEk/YqixsvEiYQi9bAp5n+JdxO9Gan3tNXKEjF8mziH+PnJOn
-         BmpvoPMpX+6oz9ORNEtky4ww3U8A5SZcXqmNrrEhtttLMzWwv0QhxCEZ7OgZ+ev2oBvi
-         kOCmX5nZHqiY1dNRMiAX0ahKpTUrN9Mw65Wz8vfmCnilGw1vLLBSlw8MUU4u2JlMWwAP
-         sivKbPprB2Nuk9rdmuuNeg6dQhUREKl2Kq59cBj7z1/ZpHtczZGoI8qP4L72MB6/b7wd
-         z8XA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686650139; x=1689242139;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=fwWyCUDuegx+tvkvTGStT67ElUFA4N+9n715czI5oMM=;
-        b=hLezoUspWlkyroza4y8DnU0g9Qc7X6UYAJejintjj7HMm69uhVB1HKzn0zqw6K5q37
-         yLbRkfKx00p10/MZPBggbJ9Aa+mFUpf1I53TH8KPf5PE63PsLXsvSmhtTYzYthkPrkMi
-         5tgXS5iTq6zbeFxEw7JmCuYygIHNKSbI1VrqpFXX6Jsk1WaGMnsp2LVIEOpb/lX7pPXV
-         GcMeG8uz+xIlsuxGjAkqZFZRQLy/qdNj2+wn8/mvPK3lfPmu5oyg31a6i+rLFp+V+SSY
-         ERf46QD53OytPzBgXD/aau+Tfov/5V6u9yGdkrSrpGTUxTOqE/tqrTjfLjIa6KnsZGyf
-         IMlA==
-X-Gm-Message-State: AC+VfDz8QF+wHnT9/SrLFRKp/cEv1UViyxqdJnN7gKYIEu124sAxRz42
-	BFIKayFJjn0Ls4jgf8NU2xWWdOvAN/tXyTE26To=
-X-Google-Smtp-Source: ACHHUZ7e9IsqIAz0PgLSkxZe5wg7yRy8uMMFUo1OILtylLbe/RXl7LMH2ceasVjVOwYCrnYhfuIfG6I7+3mrqQZSYJg=
-X-Received: by 2002:a67:b904:0:b0:43b:3978:2434 with SMTP id
- q4-20020a67b904000000b0043b39782434mr4872625vsn.22.1686650138870; Tue, 13 Jun
- 2023 02:55:38 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230111093245.318745-1-milkfafa@gmail.com> <20230111093245.318745-2-milkfafa@gmail.com>
- <20230612110401.GPZIb7oZPdsPGFzSDc@fat_crate.local> <38c30778-9526-cba6-4ddb-00bcefeb5647@linaro.org>
- <20230612120107.GFZIcJA3zktkiyTS2+@fat_crate.local> <99795947-0584-df42-a28a-aa89d7e21c7e@linaro.org>
- <20230612123925.GGZIcR/dUrcu03z6V+@fat_crate.local> <e0171cb6-54e7-41bd-4b08-fa667fe58ff4@linaro.org>
- <20230612131649.GHZIcawTKBMIQpFD6I@fat_crate.local>
-In-Reply-To: <20230612131649.GHZIcawTKBMIQpFD6I@fat_crate.local>
-From: Kun-Fa Lin <milkfafa@gmail.com>
-Date: Tue, 13 Jun 2023 17:55:27 +0800
-Message-ID: <CADnNmFqhNKoV5EfaiMSo9yz-hTaTm+0pGUJyFNH_V8pNVEU36w@mail.gmail.com>
-Subject: Re: [PATCH v18 1/3] ARM: dts: nuvoton: Add node for NPCM memory controller
-To: Borislav Petkov <bp@alien8.de>
-Content-Type: text/plain; charset="UTF-8"
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QgrSj6TsMz2xwc
+	for <openbmc@lists.ozlabs.org>; Wed, 14 Jun 2023 13:26:59 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+	t=1686713215; bh=lL+ulDIcz4STKpB/t/QCwdDZnmjKo4p7KG1a3AzCeM4=;
+	h=From:To:Subject:Date;
+	b=uJG8njXBw5M1d/B8lKwu2XR6rumnFzErdOcYa7FQCmGYaVJAkKjjY0I4SgYeCpVyO
+	 Pvb77/WWpnb/JlmGN8GEHCoO/9M6SQ7NMKvk9MhhuOPfn2Xs1Fy3ZdiEkC+XiF1rok
+	 urWinQ4cIVaJGg2kNLjsycDPdwrSFU/eBaIfKe+Q=
+X-QQ-FEAT: oHWrrGTW1dBM1wq2dbSTgn8AaBOV+Hnu
+X-QQ-SSF: 00000000000000F0000000000000
+X-QQ-XMAILREADINFO: OWGjEroX2VOy/dXPOYIzQK4=
+X-QQ-XMAILINFO: M97kRfYivzNAzJ/2lDr8hT4qNUG98gvQleUPAYsVF5/vWrTpe/CxAQ/N6f8imG
+	 v06ZJGoe4nwZiuFzIUV/8vyMKVKKwrvrv9et09ROatsLOWqPqPeJgIjvV2UT8aD8zaguY+lfxRu/S
+	 iaDGh2Cx24lFLwd6mYjXipxiAgDYyE588N4335cxo1PKMVtUXC9qQeVjFRi5hVmv1C4ZGIr3BkU7Y
+	 scoqAhni2WXnWo/tkPepnV8OYDkgeLz3fbe03gJ2ruNkCrpm4NeGln0VWdzC6i1WXaUEq6rL/HU/q
+	 NEwoCzGiQLBX6cyOkAoQRM7WVyFqHTcY78Pbgcc4IV5meCvI4TWjLL0mv7DX2wCyBEgyFh4izeTU7
+	 BXo9J//a4VRLQojt6sQ1/EHsvuEhVlzynaTSYUD5iHBMxVpk7Q7leodbm89cNvvlVDkQZ7NkmYisK
+	 FeXgsXME70r0Nv72mAxnlkliHe5oQYqpsB0DhdpqZwGJWjtyyZRewGOud1anTUrOjnrJVnKiVwmEp
+	 8CuKLRM6jCY/bQjsIPTNodjVLFvOmeYAbrrafEjUUxQKXU+LpPZ5yqYWIZSKHotk7mTICC96CX98b
+	 MWsofTzFKJSxwoifYNSnVLtARQEzlLfRcS/1zFIRwhKeVvPKOIlFc2TwsucWLTNI9jsZ5qKxURuP0
+	 7kymUPKIO3ZC6IWC3sTXAk/bsbnTOGop34EgrHJMfvcbrwVnpWW5HODApLHnp0d0cj4xi12/jAFLO
+	 rYReyYKw1T/Nb1lm7BDdN1wGdmJQjFLp1XxKuUW5jYFckgK2cq7YszCUD2b8WX2PFu0v9i5WT2Z2m
+	 Be9yGXw1MQ1sSCh2oregyHYt7JmOKoguUZ9bsSxLKQtg/IDmJ0t+PBpVYK4VtEzBjwTbBlenpgPgA
+	 SqafU8HU8G/taKFEZa8Vj5ZFXUOMVyXbXj/iK06tu0NPtl+Uip7pUY5XU0ueLeM
+X-HAS-ATTACH: no
+X-QQ-BUSINESS-ORIGIN: 2
+X-Originating-IP: 218.76.101.94
+X-QQ-STYLE: 
+X-QQ-mid: webmail631t1686712292t5405807
+From: "=?gb18030?B?ucy8/rb+sr/T97DY7L8=?=" <992492046@qq.com>
+To: "=?gb18030?B?b3BlbmJtYw==?=" <openbmc@lists.ozlabs.org>
+Subject: How can I short time of compiling bmcweb for develop and debug?
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_64892FE4_0F320E10_1FB2B0D3"
+Content-Transfer-Encoding: 8Bit
+Date: Wed, 14 Jun 2023 11:11:32 +0800
+X-Priority: 3
+Message-ID: <tencent_F28333DC12EF23784BA9F47E1E894F293C0A@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,15 +73,59 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree <devicetree@vger.kernel.org>, tony.luck@intel.com, rric@kernel.org, Benjamin Fair <benjaminfair@google.com>, linux-edac <linux-edac@vger.kernel.org>, CS20 KWLiu <KWLIU@nuvoton.com>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, Tali Perry <tali.perry1@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Rob Herring <robh+dt@kernel.org>, James Morse <james.morse@arm.com>, ctcchien@nuvoton.com, YSCHU@nuvoton.com, Mauro Carvalho Chehab <mchehab@kernel.org>, Marvin Lin <kflin@nuvoton.com>, Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-> Marvin,
-> Please route the DTS (1/3) via Nuvoton SoC tree.
+This is a multi-part message in MIME format.
 
-OK, will route the DTS via Nuvoton SoC tree.
-Thanks, Krzysztof!
+------=_NextPart_64892FE4_0F320E10_1FB2B0D3
+Content-Type: text/plain;
+	charset="gb18030"
+Content-Transfer-Encoding: base64
 
-> Patches 2 and 3 queued for 6.5.
-Thanks, Boris!
+RWFjaCB0aW1lIHRoYXQgSSBjb2RlIGFueSBsaW5lIGluIGJtY3dlYiBzdWNoIGFzICdwcmlu
+dGYoJ2hlbGxvIGJtYycpICcgc3RpbGwgbmVlZCB0byB0YWtlIHRvbyBtdWNoIHRpbWUoJmd0
+OzVtaW4pIHRvIGNvbXBpbGUgcHJvamVjdC5BcyBhIGRldmVsb3BlciwgSXQgaXMgaGFyZCB0
+byBzdGFuZCBmb3IgdGhpcyBpc3N1ZS5JIGNvbXBpbGVkIHRoZSBibWN3ZWIgYnkgY29tbWFu
+ZCAnYml0YmFrZSBibWN3ZWInLldpdGhvdXQgb3BlbmJtYyBzdHJ1Y3R1cmUgY29tcGlsZSBp
+bmRlcGVuZHRlbnRseSBpbiBteSBQQyBpcyBhbHNvIGNvc3QgbXVjaCB0aW1lLg0KSG93IGRv
+IHlvdSBjb25xdWVyIHRoaXMgcHJvYmxlbSBpbiBkZXZlbG9wIHN0YWdlP1RoYW5rcyE=
+
+------=_NextPart_64892FE4_0F320E10_1FB2B0D3
+Content-Type: text/html;
+	charset="gb18030"
+Content-Transfer-Encoding: base64
+
+PG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250ZW50PSJ0ZXh0L2h0bWw7IGNo
+YXJzZXQ9R0IxODAzMCI+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoMzEsIDM1LCA0MCk7IGZv
+bnQtZmFtaWx5OiAtYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90O1Nl
+Z29lIFVJJnF1b3Q7LCAmcXVvdDtOb3RvIFNhbnMmcXVvdDssIEhlbHZldGljYSwgQXJpYWws
+IHNhbnMtc2VyaWYsICZxdW90O0FwcGxlIENvbG9yIEVtb2ppJnF1b3Q7LCAmcXVvdDtTZWdv
+ZSBVSSBFbW9qaSZxdW90OzsiPkVhY2ggdGltZSB0aGF0IEkgY29kZSBhbnkgbGluZSBpbiBi
+bWN3ZWIgc3VjaCBhcyAncHJpbnRmKCdoZWxsbyBibWMnKSAnIHN0aWxsIG5lZWQgdG8gdGFr
+ZSB0b28gbXVjaCB0aW1lKCZndDs1bWluKSB0byBjb21waWxlIHByb2plY3QuQXMgYSBkZXZl
+bG9wZXIsIEl0IGlzIGhhcmQgdG8gc3RhbmQgZm9yIHRoaXMgaXNzdWUuPC9zcGFuPjxkaXY+
+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoMzEsIDM1LCA0MCk7IGZvbnQtZmFtaWx5OiAtYXBw
+bGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90O1NlZ29lIFVJJnF1b3Q7LCAm
+cXVvdDtOb3RvIFNhbnMmcXVvdDssIEhlbHZldGljYSwgQXJpYWwsIHNhbnMtc2VyaWYsICZx
+dW90O0FwcGxlIENvbG9yIEVtb2ppJnF1b3Q7LCAmcXVvdDtTZWdvZSBVSSBFbW9qaSZxdW90
+OzsiPkkgY29tcGlsZWQgdGhlIGJtY3dlYiBieSBjb21tYW5kICdiaXRiYWtlIGJtY3dlYicu
+V2l0aG91dCBvcGVuYm1jIHN0cnVjdHVyZSBjb21waWxlIGluZGVwZW5kdGVudGx5IGluIG15
+IFBDIGlzIGFsc28gY29zdCBtdWNoIHRpbWUuPC9zcGFuPjxiciBzdHlsZT0iYm94LXNpemlu
+ZzogYm9yZGVyLWJveDsgY29sb3I6IHJnYigzMSwgMzUsIDQwKTsgZm9udC1mYW1pbHk6IC1h
+cHBsZS1zeXN0ZW0sIEJsaW5rTWFjU3lzdGVtRm9udCwgJnF1b3Q7U2Vnb2UgVUkmcXVvdDss
+ICZxdW90O05vdG8gU2FucyZxdW90OywgSGVsdmV0aWNhLCBBcmlhbCwgc2Fucy1zZXJpZiwg
+JnF1b3Q7QXBwbGUgQ29sb3IgRW1vamkmcXVvdDssICZxdW90O1NlZ29lIFVJIEVtb2ppJnF1
+b3Q7OyI+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoMzEsIDM1LCA0MCk7IGZvbnQtZmFtaWx5
+OiAtYXBwbGUtc3lzdGVtLCBCbGlua01hY1N5c3RlbUZvbnQsICZxdW90O1NlZ29lIFVJJnF1
+b3Q7LCAmcXVvdDtOb3RvIFNhbnMmcXVvdDssIEhlbHZldGljYSwgQXJpYWwsIHNhbnMtc2Vy
+aWYsICZxdW90O0FwcGxlIENvbG9yIEVtb2ppJnF1b3Q7LCAmcXVvdDtTZWdvZSBVSSBFbW9q
+aSZxdW90OzsiPkhvdyBkbyB5b3UgY29ucXVlciB0aGlzIHByb2JsZW0gaW4gZGV2ZWxvcCBz
+dGFnZT9UaGFua3MhPC9zcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjogcmdiKDMxLCAzNSwgNDAp
+OyBmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwgQmxpbmtNYWNTeXN0ZW1Gb250LCAmcXVv
+dDtTZWdvZSBVSSZxdW90OywgJnF1b3Q7Tm90byBTYW5zJnF1b3Q7LCBIZWx2ZXRpY2EsIEFy
+aWFsLCBzYW5zLXNlcmlmLCAmcXVvdDtBcHBsZSBDb2xvciBFbW9qaSZxdW90OywgJnF1b3Q7
+U2Vnb2UgVUkgRW1vamkmcXVvdDs7Ij48L3NwYW4+PC9kaXY+
+
+------=_NextPart_64892FE4_0F320E10_1FB2B0D3--
+
