@@ -2,75 +2,79 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 68D6D7331DE
-	for <lists+openbmc@lfdr.de>; Fri, 16 Jun 2023 15:09:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8D30673338F
+	for <lists+openbmc@lfdr.de>; Fri, 16 Jun 2023 16:26:58 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=OW4BKbmd;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ZuwCFX7m;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QjKHh1X7vz3bmp
-	for <lists+openbmc@lfdr.de>; Fri, 16 Jun 2023 23:09:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QjM1D2fBPz3bnL
+	for <lists+openbmc@lfdr.de>; Sat, 17 Jun 2023 00:26:56 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=OW4BKbmd;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ZuwCFX7m;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::735; helo=mail-qk1-x735.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=lists.ozlabs.org)
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QjKH43ZKyz3bd6
-	for <openbmc@lists.ozlabs.org>; Fri, 16 Jun 2023 23:08:47 +1000 (AEST)
-Received: by mail-qk1-x735.google.com with SMTP id af79cd13be357-762389a65a3so30516085a.1
-        for <openbmc@lists.ozlabs.org>; Fri, 16 Jun 2023 06:08:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1686920924; x=1689512924;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qc6UYV9dRIwD5kVAzyGoig9jeBOmyHtyGkovM+RWMnI=;
-        b=OW4BKbmdbFyNHiiJN74kYB/q0gGec56Lg+5yFa3ihGO3aAGE53HVvflD1Ivr9FhYLb
-         utjLdcBhCkC2GKfT4x1VopSa9Izs53T8iE0No+i9YZk/uOTGaGmoBRebU/HumM51rS8/
-         gnDXvKFsjWnLUVs0pT6J2/juubQ4AAhz+BptfKN7NcJpQZGw4EXpOU1OloocVAOkA+Ie
-         oZXYvxCqVQ2Vd05DdQZsh1if+bmk98mH445kwMdarnWkOD5FMsHQ8O35xGgYmrPYzU4c
-         tpYrcPaoaTNKFusq8Ll3qPV5u3B0VZCQQhNrOhN9+wm3rhxdv9PZAfRPME3xM27jL7kJ
-         PtrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1686920924; x=1689512924;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=qc6UYV9dRIwD5kVAzyGoig9jeBOmyHtyGkovM+RWMnI=;
-        b=iKa+bW15qkm4YlzxnsjkAa+z8RJCMgZbLCQnD5gJw0/WtH+Gkt+3UDl/zQOD7ouE74
-         CUu3PbJm2toTdRQjN1U81ZFWwgTsyusCOd+/LAazKhXFflQkWaPL4pJetPfZuIgBxTnR
-         qpfovUDb9Eoy196B3FdlMW/MSK+GQwLqL92su9rscXefP03Nov9jrUdWcD/aGoM3RahN
-         lirBCCv1tKdC6GMWsyMAFaH0b/4Q34BJ4pAS70ln3bQKJh8wbAqlr4GhbzrCF0gksk5b
-         WystAcL5G6VVdJ9bqV3ftHW0k8yjbqb7NGH5hMwy3xyBx/a7QxnjyhxcgMRW1w4bpicI
-         hRiQ==
-X-Gm-Message-State: AC+VfDxwSzE5PNAIL9CN+lBWm9qMv0ysZNTIZZ/2NCK7Cw7u7OOMHrXs
-	L8aSPUfdu+TJ4vfoQ+WgcJI=
-X-Google-Smtp-Source: ACHHUZ66KYv0nf5JJZbO3KPW+o9EUKiaYmu7zRuY8n3mytX2nV5QlQz6hdEvYRXd9MPHbGh1IjsSRA==
-X-Received: by 2002:a05:620a:4d94:b0:762:5a6:82aa with SMTP id uw20-20020a05620a4d9400b0076205a682aamr1679897qkn.35.1686920923536;
-        Fri, 16 Jun 2023 06:08:43 -0700 (PDT)
-Received: from smtpclient.apple (pool-98-113-238-12.nycmny.fios.verizon.net. [98.113.238.12])
-        by smtp.gmail.com with ESMTPSA id p12-20020a05620a132c00b0075edaba7369sm6488577qkj.81.2023.06.16.06.08.43
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 16 Jun 2023 06:08:43 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.3\))
-Subject: Re: phosphor-bmc-state-manager: error while loading shared libraries:
- libfmt.so.9: cannot open shared object file: No such file or directory
-From: Andrew Geissler <geissonator@gmail.com>
-In-Reply-To: <871db367053a4dc0aed3adab0a4a44cb@tcs.com>
-Date: Fri, 16 Jun 2023 09:08:42 -0400
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <153CBB6A-FC50-4AAB-AE18-36524A8DF2F1@gmail.com>
-References: <035800fa6a6748478d434ed0a38e6a83@tcs.com>
- <871db367053a4dc0aed3adab0a4a44cb@tcs.com>
-To: Shruti Janardhan <shruti.janardhan@tcs.com>
-X-Mailer: Apple Mail (2.3696.120.41.1.3)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QjM0c1nS5z2ygG
+	for <openbmc@lists.ozlabs.org>; Sat, 17 Jun 2023 00:26:23 +1000 (AEST)
+Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35GEHlJU018583;
+	Fri, 16 Jun 2023 14:26:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=2yXstbu3hmJ5fx+JjdPnanCxaPV6yp0lEpOJxJHm4fI=;
+ b=ZuwCFX7m42SIUdETXIURMfbuXDXt+h5bS5/q3lT8L3m9toQpKHAOj+ODCMj2AoKB+WHe
+ znOhtaAUE7GwaqnAnQ1POoGEjayzaHbaxst70lFwrKYATs/yZ5B5IEwAVBilnzWAn/cl
+ uK8rt7QLbc1f/eS2WfXCvR8cGTNM31xuQUcGO6q5n/gPIcBarWB0wKhAGttXB5jf3qTy
+ pDYarRc0dmEk1/rig4j02qYMM8FaXM3QfWgcbToUfoutFOfUltKDLUBN+dKjT66cg7za
+ BeSdOaMHs6Vy4xTNIe65yXrOjueaZ4xs3YWr5MNh1oZ8eoWLDXXbPgypwFyfpcdxBMMm cQ== 
+Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com [169.62.189.10])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3r8sc8g6bj-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 Jun 2023 14:26:17 +0000
+Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
+	by ppma02dal.us.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 35GCPksI027186;
+	Fri, 16 Jun 2023 14:26:16 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([9.208.129.114])
+	by ppma02dal.us.ibm.com (PPS) with ESMTPS id 3r4gt6j0kn-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 16 Jun 2023 14:26:16 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com [10.241.53.100])
+	by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 35GEQEY631588890
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 16 Jun 2023 14:26:14 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id F2FA558065;
+	Fri, 16 Jun 2023 14:26:13 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C7A1C58063;
+	Fri, 16 Jun 2023 14:26:13 +0000 (GMT)
+Received: from slate16.aus.stglabs.ibm.com (unknown [9.61.27.6])
+	by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+	Fri, 16 Jun 2023 14:26:13 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-6.1] ARM: dts: aspeed: bonnell: Add reserved memory for TPM event log
+Date: Fri, 16 Jun 2023 09:26:10 -0500
+Message-Id: <20230616142610.356623-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.39.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: RIg49AO9-LAD4AEJ_dsegqLDRWvdhkmA
+X-Proofpoint-ORIG-GUID: RIg49AO9-LAD4AEJ_dsegqLDRWvdhkmA
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-06-16_09,2023-06-16_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
+ impostorscore=0 suspectscore=0 priorityscore=1501 phishscore=0
+ lowpriorityscore=0 adultscore=0 mlxlogscore=894 spamscore=0 bulkscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2305260000 definitions=main-2306160127
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,85 +86,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Sushma Patil <sushma.patil2@tcs.com>
+Cc: Eddie James <eajames@linux.ibm.com>, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Trusted boot support requires the platform event log passed up
+from the bootloader. In U-Boot, this can now be accomplished with
+a reserved memory region, so add a region for this purpose to the
+Bonnell BMC devicetree.
 
+Signed-off-by: Eddie James <eajames@linux.ibm.com>
+---
+ arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-> On Jun 16, 2023, at 5:04 AM, Shruti Janardhan =
-<shruti.janardhan@tcs.com> wrote:
->=20
-> Hi everyone,
->=20
-> The issue is resolved now.
->=20
->=20
-> By checking the commit ID of the phosphor state manager recipe and =
-OpenBmc, we realized we were using mismatched versions of commit IDs. So =
-after fixing that, the program ran successfully.
->=20
-
-Thanks for sending a follow up on your solution Shruti. Mismatched =
-SDK/Code has been a common issue and is why I=E2=80=99m working on =
-moving the developer intro series over to just using devtool up at =
-https://gerrit.openbmc.org/c/openbmc/docs/+/64233.
-
->=20
-> Thanks and regards,
->=20
-> Shruti Janardhan
->=20
->=20
-> ________________________________
-> From: openbmc =
-<openbmc-bounces+shruti.janardhan=3Dtcs.com@lists.ozlabs.org> on behalf =
-of Shruti Janardhan
-> Sent: Friday, June 9, 2023 5:14 PM
-> To: openbmc@lists.ozlabs.org
-> Cc: Sushma Patil
-> Subject: phosphor-bmc-state-manager: error while loading shared =
-libraries: libfmt.so.9: cannot open shared object file: No such file or =
-directory
->=20
->=20
-> Hi everyone,
->=20
-> While trying to run "hello world" in SDK by following the steps =
-mentioned in the Openbmc Github page, we are getting the error: =
-"phosphor-bmc-state-manager: error while loading shared libraries: =
-libfmt.so.9: cannot open shared object file: No such file or directory".
->=20
->=20
-> These are some of the steps taken by us to resolve it:
->=20
->  *   Tried installing the packages =
-libfmt-dev,libfmt-doc,libfmt-ocaml.libmft-ocaml-dev.
->  *   Using another pre-existing Qemu arm and image.
->  *   Installed and Re-built Qemu and SDK again in a new directory.
->=20
-> Despite trying all these steps, the error persists and we aren't sure =
-whether the issue is with the Qemu or SDK. Could you please help us to =
-resolve this problem.
->=20
-> Thanks and regards,
-> Shruti Janardhan
->=20
->=20
->=20
-> =3D=3D=3D=3D=3D-----=3D=3D=3D=3D=3D-----=3D=3D=3D=3D=3D
-> Notice: The information contained in this e-mail
-> message and/or attachments to it may contain=20
-> confidential or privileged information. If you are=20
-> not the intended recipient, any dissemination, use,=20
-> review, distribution, printing or copying of the=20
-> information contained in this e-mail message=20
-> and/or attachments to it are strictly prohibited. If=20
-> you have received this communication in error,=20
-> please notify us by reply e-mail or telephone and=20
-> immediately and permanently delete the message=20
-> and any attachments. Thank you
->=20
->=20
-> <winmail.dat>
+diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts
+index 79516dc21c01..c65688aed661 100644
+--- a/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts
++++ b/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts
+@@ -61,6 +61,11 @@ reserved-memory {
+ 		#size-cells = <1>;
+ 		ranges;
+ 
++		event_log: tcg_event_log@b3d00000 {
++			no-map;
++			reg = <0xb3d00000 0x100000>;
++		};
++
+ 		ramoops@b3e00000 {
+ 			compatible = "ramoops";
+ 			reg = <0xb3e00000 0x200000>; /* 16 * (4 * 0x8000) */
+@@ -788,8 +793,9 @@ &i2c12 {
+ 	status = "okay";
+ 
+ 	tpm@2e {
+-		compatible = "nuvoton,npct75x";
++		compatible = "nuvoton,npct75x", "tcg,tpm-tis-i2c";
+ 		reg = <0x2e>;
++		memory-region = <&event_log>;
+ 	};
+ 
+ 	eeprom@50 {
+-- 
+2.39.3
 
