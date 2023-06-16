@@ -2,79 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8D30673338F
-	for <lists+openbmc@lfdr.de>; Fri, 16 Jun 2023 16:26:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 89FE77333C4
+	for <lists+openbmc@lfdr.de>; Fri, 16 Jun 2023 16:38:28 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ZuwCFX7m;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=YBabPw+q;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QjM1D2fBPz3bnL
-	for <lists+openbmc@lfdr.de>; Sat, 17 Jun 2023 00:26:56 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QjMGV2Twtz3bpp
+	for <lists+openbmc@lfdr.de>; Sat, 17 Jun 2023 00:38:26 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=ZuwCFX7m;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=YBabPw+q;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=lists.ozlabs.org)
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=134.134.136.126; helo=mga18.intel.com; envelope-from=suryakanth.sekar@linux.intel.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 64 seconds by postgrey-1.37 at boromir; Sat, 17 Jun 2023 00:37:52 AEST
+Received: from mga18.intel.com (mga18.intel.com [134.134.136.126])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QjM0c1nS5z2ygG
-	for <openbmc@lists.ozlabs.org>; Sat, 17 Jun 2023 00:26:23 +1000 (AEST)
-Received: from pps.filterd (m0353727.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 35GEHlJU018583;
-	Fri, 16 Jun 2023 14:26:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : cc : subject
- : date : message-id : mime-version : content-transfer-encoding; s=pp1;
- bh=2yXstbu3hmJ5fx+JjdPnanCxaPV6yp0lEpOJxJHm4fI=;
- b=ZuwCFX7m42SIUdETXIURMfbuXDXt+h5bS5/q3lT8L3m9toQpKHAOj+ODCMj2AoKB+WHe
- znOhtaAUE7GwaqnAnQ1POoGEjayzaHbaxst70lFwrKYATs/yZ5B5IEwAVBilnzWAn/cl
- uK8rt7QLbc1f/eS2WfXCvR8cGTNM31xuQUcGO6q5n/gPIcBarWB0wKhAGttXB5jf3qTy
- pDYarRc0dmEk1/rig4j02qYMM8FaXM3QfWgcbToUfoutFOfUltKDLUBN+dKjT66cg7za
- BeSdOaMHs6Vy4xTNIe65yXrOjueaZ4xs3YWr5MNh1oZ8eoWLDXXbPgypwFyfpcdxBMMm cQ== 
-Received: from ppma02dal.us.ibm.com (a.bd.3ea9.ip4.static.sl-reverse.com [169.62.189.10])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3r8sc8g6bj-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Jun 2023 14:26:17 +0000
-Received: from pps.filterd (ppma02dal.us.ibm.com [127.0.0.1])
-	by ppma02dal.us.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 35GCPksI027186;
-	Fri, 16 Jun 2023 14:26:16 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([9.208.129.114])
-	by ppma02dal.us.ibm.com (PPS) with ESMTPS id 3r4gt6j0kn-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 16 Jun 2023 14:26:16 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com [10.241.53.100])
-	by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 35GEQEY631588890
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 16 Jun 2023 14:26:14 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id F2FA558065;
-	Fri, 16 Jun 2023 14:26:13 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C7A1C58063;
-	Fri, 16 Jun 2023 14:26:13 +0000 (GMT)
-Received: from slate16.aus.stglabs.ibm.com (unknown [9.61.27.6])
-	by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
-	Fri, 16 Jun 2023 14:26:13 +0000 (GMT)
-From: Eddie James <eajames@linux.ibm.com>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-6.1] ARM: dts: aspeed: bonnell: Add reserved memory for TPM event log
-Date: Fri, 16 Jun 2023 09:26:10 -0500
-Message-Id: <20230616142610.356623-1-eajames@linux.ibm.com>
-X-Mailer: git-send-email 2.39.3
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QjMFr6l7vz300v
+	for <openbmc@lists.ozlabs.org>; Sat, 17 Jun 2023 00:37:52 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1686926273; x=1718462273;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=2g5h4s+Qiv7zx88ebOogNhJX6DpfdBQ6cyX6W5t7Vcs=;
+  b=YBabPw+qO6X0zMi/NR1VarG2ic6rTiZGom+CaN4vXW2gJaLBMeH54TXT
+   7XS8MKpFCdHEY+FS3izGaS84TYyp9CKm+sa4bE/VwNt6A/b0p6Ji4tlpn
+   ltxLRbRrZ+CabhsN13W362n9yvk2C86JvC3QXcz5mLfFeYwNsQGM1XtTW
+   xsNGNaH5NHY86zefx2N3fzw8Zk3Il5UTOtrphD03Gkp7VviRylFqX1BiG
+   6mc7PguNnZuCfu+8Vdsy6+JbqIzjUsQjCRhaeWk1Rnoa285sk+g4/IGk2
+   JyFS046/iqY6TdlxCNTJ2HosSmGZzST3tqUDFgi/oxuOsE7lW5cJ9i6Pb
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10742"; a="343964673"
+X-IronPort-AV: E=Sophos;i="6.00,247,1681196400"; 
+   d="scan'208";a="343964673"
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Jun 2023 07:36:44 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10742"; a="712895780"
+X-IronPort-AV: E=Sophos;i="6.00,247,1681196400"; 
+   d="scan'208";a="712895780"
+Received: from linux.intel.com ([10.54.29.200])
+  by orsmga002.jf.intel.com with ESMTP; 16 Jun 2023 07:36:44 -0700
+Received: from [10.215.122.98] (ssekar-MOBL.gar.corp.intel.com [10.215.122.98])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	(No client certificate requested)
+	by linux.intel.com (Postfix) with ESMTPS id 11995580D61;
+	Fri, 16 Jun 2023 07:36:41 -0700 (PDT)
+Message-ID: <fdbd70b3-e85a-5756-b12f-9a291fe7767b@linux.intel.com>
+Date: Fri, 16 Jun 2023 20:06:38 +0530
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: RIg49AO9-LAD4AEJ_dsegqLDRWvdhkmA
-X-Proofpoint-ORIG-GUID: RIg49AO9-LAD4AEJ_dsegqLDRWvdhkmA
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-06-16_09,2023-06-16_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 clxscore=1015 mlxscore=0
- impostorscore=0 suspectscore=0 priorityscore=1501 phishscore=0
- lowpriorityscore=0 adultscore=0 mlxlogscore=894 spamscore=0 bulkscore=0
- malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2306160127
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.10.0
+Subject: Re: openbmc/bios-settings-mgr: Notification of unresponsiveness
+To: Andrew Jeffery <andrew@aj.id.au>, wangkuiying.wky@alibaba-inc.com,
+ openbmc@lists.ozlabs.org
+References: <f21a5062-b462-4597-8770-4869b0071ba2@app.fastmail.com>
+Content-Language: en-US
+From: "Sekar, Suryakanth" <suryakanth.sekar@linux.intel.com>
+In-Reply-To: <f21a5062-b462-4597-8770-4869b0071ba2@app.fastmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,47 +76,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Eddie James <eajames@linux.ibm.com>, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Trusted boot support requires the platform event log passed up
-from the bootloader. In U-Boot, this can now be accomplished with
-a reserved memory region, so add a region for this purpose to the
-Bonnell BMC devicetree.
+Hi Andrew,
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
----
- arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+I didn't see any open code review waiting for review and merge. 
+Everything is taken care.
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts b/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts
-index 79516dc21c01..c65688aed661 100644
---- a/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts
-@@ -61,6 +61,11 @@ reserved-memory {
- 		#size-cells = <1>;
- 		ranges;
- 
-+		event_log: tcg_event_log@b3d00000 {
-+			no-map;
-+			reg = <0xb3d00000 0x100000>;
-+		};
-+
- 		ramoops@b3e00000 {
- 			compatible = "ramoops";
- 			reg = <0xb3e00000 0x200000>; /* 16 * (4 * 0x8000) */
-@@ -788,8 +793,9 @@ &i2c12 {
- 	status = "okay";
- 
- 	tpm@2e {
--		compatible = "nuvoton,npct75x";
-+		compatible = "nuvoton,npct75x", "tcg,tpm-tis-i2c";
- 		reg = <0x2e>;
-+		memory-region = <&event_log>;
- 	};
- 
- 	eeprom@50 {
--- 
-2.39.3
+Thanks
 
+Suryakanth.S
+
+On 6/16/2023 10:26 AM, Andrew Jeffery wrote:
+> Hello Kuiying and Suryakanth,
+>
+> A complaint has been raised to the Technical Oversight Forum that one or more patches to openbmc/bios-settings-mgr have not been responded to in a reasonable timeframe.
+>
+> This is the first notice of a complaint of unresponsiveness.
+>
+> The project has recently defined some constraints on timeliness for reviews. This helps to set expectations for both contributors and maintainers. Maintainers are expected to find time to provide feedback on patches inside one month of them being pushed to Gerrit. Upon complaint, missing this deadline forms one count of unresponsiveness. If a subproject's maintainers receive three notices of unresponsiveness within a 12 month period then the Technical Oversight Forum will seek to introduce new maintainers to the subproject.
+>
+> Further details and considerations of this policy can be found at the following location:
+>
+> https://github.com/openbmc/docs/blob/master/process/subproject-maintainership.md
+>
+> The complaint regarding openbmc/bios-settings-mgr can be found below:
+>
+> https://github.com/openbmc/technical-oversight-forum/issues/27#issuecomment-1589985292
+>
+> The specific patches identified by the complaint are:
+>
+> 1. 63276: clang-format: copy latest and re-format
+>     https://gerrit.openbmc.org/c/openbmc/bios-settings-mgr/+/63276
+>
+> If you are unable to continue with your maintenance role for openbmc/bios-settings-mgr then please work with the community identify others who are capable and willing. Please consider the expectations set out in the community membership documentation as part of this effort:
+>
+> https://github.com/openbmc/docs/blob/master/community-membership.md
+>
+> On behalf of the Technical Oversight Forum,
+>
+> Andrew
