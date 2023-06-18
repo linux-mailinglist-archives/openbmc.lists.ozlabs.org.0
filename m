@@ -1,64 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 37247734540
-	for <lists+openbmc@lfdr.de>; Sun, 18 Jun 2023 09:54:29 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5AC757345C7
+	for <lists+openbmc@lfdr.de>; Sun, 18 Jun 2023 12:11:05 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=D6mLCtdg;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=nDX7yVuW;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QkQCR0rrQz30Qg
-	for <lists+openbmc@lfdr.de>; Sun, 18 Jun 2023 17:54:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QkTF31DQMz3bTW
+	for <lists+openbmc@lfdr.de>; Sun, 18 Jun 2023 20:11:03 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=D6mLCtdg;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=nDX7yVuW;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::235; helo=mail-lj1-x235.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QkQBn72H0z2xFk
-	for <openbmc@lists.ozlabs.org>; Sun, 18 Jun 2023 17:53:53 +1000 (AEST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
-	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id 216CA60B51;
-	Sun, 18 Jun 2023 07:53:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38C6C433C8;
-	Sun, 18 Jun 2023 07:53:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1687074830;
-	bh=i/GwCqNS4xHdNmyl3PuFSJYZpQ/bp/fCK4rTaAbcm5o=;
-	h=Date:Subject:To:References:From:In-Reply-To:From;
-	b=D6mLCtdgi79ZzJMNBCFsAKJGVdOwn8bcGoRZwy23XlBuWUrXZCnGbweQQSazNzyX9
-	 riUs0KE5RW7JmWwT463Wi5HG2isigNpcUlkjtL1p8jbNU/dxCxpf/EfVQ3Bk5JBH7r
-	 9uIjOLvRdbB6+Uw38lak74bUPoCb62Tp9KPrT3iY5E0Ip5V6vnQ/zi52rdRDqvZt0b
-	 n9MeN4L5nSO4wAynoDftpb+S4FdrUzX3Wn0JxfQxn7SJLJH824RptrNn0uF1dNC8AC
-	 BHuyFHZo6nQpT3D1eYts0wsrW7RtokcKQyexUSypaqi/nHMAlNXrGOku16NrcN5kF6
-	 xpQdts2MbBz2Q==
-Message-ID: <be07d762-ca58-4620-1a88-81d1362ae0c4@kernel.org>
-Date: Sun, 18 Jun 2023 09:53:44 +0200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QkTDN6Srpz3025
+	for <openbmc@lists.ozlabs.org>; Sun, 18 Jun 2023 20:10:26 +1000 (AEST)
+Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b466073e19so15135771fa.1
+        for <openbmc@lists.ozlabs.org>; Sun, 18 Jun 2023 03:10:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1687083021; x=1689675021;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=+QzP8d8NJeIsG+jeIA47bTuJMthoGf5/u6Pa47cKpHc=;
+        b=nDX7yVuWZaw3FYSuqFv8BLNXfX9LF02zBfMPthJojKBhQsn//5k5Z6ammhBsd7ClE2
+         PsEPO1vHyMsbavpKW0VHN+16jIWpRHf9rbHtuNkHNjDyFkudLsITCmjoSOoY/kiFCEjC
+         DS9RM7oRjRtB58VtO109dTaYcQboeCxWzUGEPDwp14arsBBpGmKxpiTcyP1W1cyR33pH
+         /5ZymNSxF096UMNriTmFLmZr3VE26/K3/QUSIds0ErIYcy/aJWG8PRReO+Y8+yIJ46iZ
+         5ycRbtJbMcIBmGqdO0YPmfSYrEENrOU05PpgKP64hgLxzUoGbiH/ujHfdmI+Q42gy9fQ
+         S6ag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1687083021; x=1689675021;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=+QzP8d8NJeIsG+jeIA47bTuJMthoGf5/u6Pa47cKpHc=;
+        b=e3G6vrb9bfL/lHoltG47GW04Uz/7lSxndh8i++KOSnKu29x//6tC5m/vxErAuASr5u
+         0AnL5utJ9JV9W44ZyveZcVbBLuou/HSerMYpBFeYO/E+7tjnG6A6cgvx38w0FbzXM8Fv
+         zTV4+ndWUbrIwA7EKci8rFBWnsDHACnWp/P2Uf1UtbFkcQ12g+xM2ksbjAbNMzhRiJGj
+         XK8OXom4kQ1TKMQRRfvsIb3V8gC1RYpX2rzbst4ZqZUkrRC+PkJ0rKpBHDzYlz9lRoZU
+         /JoyLmzEfMe73mC7Q9LTJWayXVKcS/y3h2m2i3oWNuRmXwzpHivdCQ2NZiXZAqe0FsrC
+         IpSg==
+X-Gm-Message-State: AC+VfDyxYDSyAMJM85VhWRJBYds8+HH49Ka2Ta3ZgjwoZrlbFJSLFmk5
+	Ad0VXvifBqBrs2y82Vpy+YqA3OkHDWbGqydqcr4=
+X-Google-Smtp-Source: ACHHUZ7s3ft/YYFH64F+Nq72ZuH4q9KSab94WY/oX20U9TxpoL52JGsySmYRA7KtMLefZS8rOqzeF7Y4SZvvBe7xQyE=
+X-Received: by 2002:a2e:9846:0:b0:2b4:737c:e316 with SMTP id
+ e6-20020a2e9846000000b002b4737ce316mr599751ljj.14.1687083020932; Sun, 18 Jun
+ 2023 03:10:20 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [RFT PATCH 1/4] dt-bindings: Add bindings for peci-npcm
-To: "Winiarska, Iwona" <iwona.winiarska@intel.com>,
- "tmaimon77@gmail.com" <tmaimon77@gmail.com>,
- "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
- "warp5tw@gmail.com" <warp5tw@gmail.com>
 References: <20230616193450.413366-1-iwona.winiarska@intel.com>
- <20230616193450.413366-2-iwona.winiarska@intel.com>
- <2cf63766-dc02-0940-9d28-4c6f9a6b5661@kernel.org>
- <6db5ac93a4308640cf55b837727d437bce7a2430.camel@intel.com>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzk@kernel.org>
-In-Reply-To: <6db5ac93a4308640cf55b837727d437bce7a2430.camel@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230616193450.413366-1-iwona.winiarska@intel.com>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Sun, 18 Jun 2023 13:10:09 +0300
+Message-ID: <CAP6Zq1jK5y+UYDGgGmh+039pjF_mdyfy5p9m2UUsrGBNTn0v8Q@mail.gmail.com>
+Subject: Re: [RFT PATCH 0/4] Add support for PECI Nuvoton
+To: Iwona Winiarska <iwona.winiarska@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,52 +73,56 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org, kfting <warp5tw@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 17/06/2023 23:21, Winiarska, Iwona wrote:
-> On Sat, 2023-06-17 at 09:48 +0200, Krzysztof Kozlowski wrote:
->> On 16/06/2023 21:34, Iwona Winiarska wrote:
->>> From: Tomer Maimon <tmaimon77@gmail.com>
->>>
->>> Add device tree bindings for the peci-npcm controller driver.
->>>
->>> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
->>> Signed-off-by: kfting <warp5tw@gmail.com>
->>> Co-developed-by: Iwona Winiarska <iwona.winiarska@intel.com>
->>> Signed-off-by: Iwona Winiarska <iwona.winiarska@intel.com>
->>
->> Please use scripts/get_maintainers.pl to get a list of necessary people
->> and lists to CC.  It might happen, that command when run on an older
->> kernel, gives you outdated entries.  Therefore please be sure you base
->> your patches on recent Linux kernel.
->>
->> You missed at least DT list (maybe more), so this won't be tested by our
->> tools. Performing review on untested code might be a waste of time, thus
->> I will skip this patch entirely till you follow the process allowing the
->> patch to be tested.
-> 
-> That was the idea behind marking it as "RFT", adding a note that "I wasn't able
-> to test it on a real hardware so I would like to ask for help to test it on
-> Nuvoton systems." 
+Hi Iwona,
 
-Which does not explain sending patch incorrect patch or patch which
-automation cannot test.
+Thanks a lot for upstream Nuvoton PECI driver.
 
-
-> in the cover letter, and sending it exclusively to OpenBMC
-> mailinglist - to avoid wasting time on review before someone has a chance to run
-> it on Nuvoton hardware.
-
-
-Usually such patches after receiving tested tags are immediately
-applied, so in that case your patch would be applied without review and
-our automation testing.
-
-Anyway, fine, to be clear it cannot be applied:
-
-NAK, patch is not correct
+We will test the driver in a day or two and let you know.
 
 Best regards,
-Krzysztof
 
+Tomer
+
+On Fri, 16 Jun 2023 at 22:35, Iwona Winiarska <iwona.winiarska@intel.com> wrote:
+>
+> Hi!
+>
+> This series is based on patches that were sent by Tomer Maimon from
+> Nuvoton [1].
+> Similar to Aspeed driver, I removed vendor-specific properties that
+> were not used (as in, default values were used in all of the available
+> DTS files). If there is a use-case for such properties, they can be
+> added in a separate series.
+> I wasn't able to test it on a real hardware so I would like to ask for
+> help to test it on Nuvoton systems.
+>
+> Thanks
+> -Iwona
+>
+> [1] https://lore.kernel.org/openbmc/CAP6Zq1jnbQ8k9VEyf9WgVq5DRrEzf5V6kaYP30S7g9BV9jKtaQ@mail.gmail.com/
+>
+> Iwona Winiarska (2):
+>   ARM: dts: nuvoton: Add PECI controller node
+>   arm64: dts: nuvoton: Add PECI controller node
+>
+> Tomer Maimon (2):
+>   dt-bindings: Add bindings for peci-npcm
+>   peci: Add peci-npcm controller driver
+>
+>  .../devicetree/bindings/peci/peci-npcm.yaml   |  56 ++++
+>  arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi |   9 +
+>  .../dts/nuvoton/nuvoton-common-npcm8xx.dtsi   |   9 +
+>  drivers/peci/controller/Kconfig               |  16 +
+>  drivers/peci/controller/Makefile              |   1 +
+>  drivers/peci/controller/peci-npcm.c           | 298 ++++++++++++++++++
+>  6 files changed, 389 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/peci/peci-npcm.yaml
+>  create mode 100644 drivers/peci/controller/peci-npcm.c
+>
+> --
+> 2.40.1
+>
