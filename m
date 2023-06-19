@@ -2,66 +2,89 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5AC757345C7
-	for <lists+openbmc@lfdr.de>; Sun, 18 Jun 2023 12:11:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3328373580D
+	for <lists+openbmc@lfdr.de>; Mon, 19 Jun 2023 15:09:43 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=nDX7yVuW;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm1 header.b=hwxjjW1f;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=CDhB1FJA;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QkTF31DQMz3bTW
-	for <lists+openbmc@lfdr.de>; Sun, 18 Jun 2023 20:11:03 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Ql98X6m2kz30dw
+	for <lists+openbmc@lfdr.de>; Mon, 19 Jun 2023 23:09:32 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=nDX7yVuW;
+	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm1 header.b=hwxjjW1f;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=CDhB1FJA;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::235; helo=mail-lj1-x235.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aj.id.au (client-ip=64.147.123.20; helo=wout4-smtp.messagingengine.com; envelope-from=andrew@aj.id.au; receiver=lists.ozlabs.org)
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QkTDN6Srpz3025
-	for <openbmc@lists.ozlabs.org>; Sun, 18 Jun 2023 20:10:26 +1000 (AEST)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2b466073e19so15135771fa.1
-        for <openbmc@lists.ozlabs.org>; Sun, 18 Jun 2023 03:10:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1687083021; x=1689675021;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=+QzP8d8NJeIsG+jeIA47bTuJMthoGf5/u6Pa47cKpHc=;
-        b=nDX7yVuWZaw3FYSuqFv8BLNXfX9LF02zBfMPthJojKBhQsn//5k5Z6ammhBsd7ClE2
-         PsEPO1vHyMsbavpKW0VHN+16jIWpRHf9rbHtuNkHNjDyFkudLsITCmjoSOoY/kiFCEjC
-         DS9RM7oRjRtB58VtO109dTaYcQboeCxWzUGEPDwp14arsBBpGmKxpiTcyP1W1cyR33pH
-         /5ZymNSxF096UMNriTmFLmZr3VE26/K3/QUSIds0ErIYcy/aJWG8PRReO+Y8+yIJ46iZ
-         5ycRbtJbMcIBmGqdO0YPmfSYrEENrOU05PpgKP64hgLxzUoGbiH/ujHfdmI+Q42gy9fQ
-         S6ag==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687083021; x=1689675021;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+QzP8d8NJeIsG+jeIA47bTuJMthoGf5/u6Pa47cKpHc=;
-        b=e3G6vrb9bfL/lHoltG47GW04Uz/7lSxndh8i++KOSnKu29x//6tC5m/vxErAuASr5u
-         0AnL5utJ9JV9W44ZyveZcVbBLuou/HSerMYpBFeYO/E+7tjnG6A6cgvx38w0FbzXM8Fv
-         zTV4+ndWUbrIwA7EKci8rFBWnsDHACnWp/P2Uf1UtbFkcQ12g+xM2ksbjAbNMzhRiJGj
-         XK8OXom4kQ1TKMQRRfvsIb3V8gC1RYpX2rzbst4ZqZUkrRC+PkJ0rKpBHDzYlz9lRoZU
-         /JoyLmzEfMe73mC7Q9LTJWayXVKcS/y3h2m2i3oWNuRmXwzpHivdCQ2NZiXZAqe0FsrC
-         IpSg==
-X-Gm-Message-State: AC+VfDyxYDSyAMJM85VhWRJBYds8+HH49Ka2Ta3ZgjwoZrlbFJSLFmk5
-	Ad0VXvifBqBrs2y82Vpy+YqA3OkHDWbGqydqcr4=
-X-Google-Smtp-Source: ACHHUZ7s3ft/YYFH64F+Nq72ZuH4q9KSab94WY/oX20U9TxpoL52JGsySmYRA7KtMLefZS8rOqzeF7Y4SZvvBe7xQyE=
-X-Received: by 2002:a2e:9846:0:b0:2b4:737c:e316 with SMTP id
- e6-20020a2e9846000000b002b4737ce316mr599751ljj.14.1687083020932; Sun, 18 Jun
- 2023 03:10:20 -0700 (PDT)
-MIME-Version: 1.0
-References: <20230616193450.413366-1-iwona.winiarska@intel.com>
-In-Reply-To: <20230616193450.413366-1-iwona.winiarska@intel.com>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Sun, 18 Jun 2023 13:10:09 +0300
-Message-ID: <CAP6Zq1jK5y+UYDGgGmh+039pjF_mdyfy5p9m2UUsrGBNTn0v8Q@mail.gmail.com>
-Subject: Re: [RFT PATCH 0/4] Add support for PECI Nuvoton
-To: Iwona Winiarska <iwona.winiarska@intel.com>
-Content-Type: text/plain; charset="UTF-8"
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Ql97r1YnPz304l
+	for <openbmc@lists.ozlabs.org>; Mon, 19 Jun 2023 23:08:55 +1000 (AEST)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.west.internal (Postfix) with ESMTP id 59063320095B;
+	Mon, 19 Jun 2023 09:08:50 -0400 (EDT)
+Received: from imap50 ([10.202.2.100])
+  by compute6.internal (MEProxy); Mon, 19 Jun 2023 09:08:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm1; t=1687180129; x=1687266529; bh=JK
+	YAL/Zrmo/17R1QgLoR1t8DL6oMFtqmdDwkknkmEJY=; b=hwxjjW1flojF5ETQ0C
+	37drr5CtpUdVkh54IpInn054Wtq1vWlbaTJqpC3+MEXzxyfMDtmlzXMl1an1mgRJ
+	JLWFaBMEgKPimtSHxWPzjkamIH0k3Scs7Rp+JQscNdsSfq/AxCE1fFZ+g3qDrrks
+	//EuEawwlSuG9u2OsIOVms8401obrQFb0Fq+oV3e/tp33uO1FzuIM0qrH2PaEuAb
+	NCBSEW3e8+TCALkb7GLNYlAqz0C/5BihlfNbeNjJHxv91a07Vuh8kgh7mCv8UC62
+	7b9vD7OyaNvVmysWZPJA3rJSAVNxhMZsnupJhTaZekn8G/eRUcwYzqafu5WzH+/V
+	ovGA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm2; t=1687180129; x=1687266529; bh=JKYAL/Zrmo/17
+	R1QgLoR1t8DL6oMFtqmdDwkknkmEJY=; b=CDhB1FJAwdl3UmfE06eoT95JMJSzy
+	6/ZsyE3xZ74zkmFguZm3GlvmUwLgFIVV2i3A1rJiv/ROvw90ZHJ1RaZEadj1HvMh
+	FpjGDxZ62SONeuM0UHqCVksjpCiyJyLPLHTxWl09lWTHYbipriWfC08xd5KiCq3g
+	7iwzFEuL1uk5GsZ/DKxKpXnqV7zZpF579Y8lfaEtmoACG5JFQynl4LKZTeAVG7by
+	QtnTrsySgRRXJhSeAT33oc0ZDPjWvHiGJ1sd++jmYdxuIhNYWTGFSKnnaGO89ED8
+	Wn/JW7Pa0LLParnwhhosOr22rBm6QT0GEEm4nLzGMzaaoQkMYXRjb4jew==
+X-ME-Sender: <xms:YFOQZIwsufvbrhWeTRXElTVvuLoH-5BAFYVV1qwzE1vFT7tMuCVrxg>
+    <xme:YFOQZMTb40yfpXSQ60jokQNuKrpnzat3NYkAfbG6cqOORVp0O4rfSgYSqhqs5H9Be
+    5wPWVRgPlXCgzYQFQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrgeefvddgheelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehn
+    ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtf
+    frrghtthgvrhhnpeevtdejgeejieffgeekgfdugeelkeevkeegkeejjefgleejkedvjeff
+    ueevteffgfenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhsuhgsphhrohhjvggtth
+    dqmhgrihhnthgrihhnvghrshhhihhprdhmugdpohhpvghnsghmtgdrohhrghdptghomhhm
+    uhhnihhthidqmhgvmhgsvghrshhhihhprdhmugenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpegrnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:YFOQZKUCh_wFXTfuwmiZstI7v2YRYCToQE3NCBOEO1aC6FA_2QCZ2A>
+    <xmx:YFOQZGjK25xo2DqNRxEPlX1Bly147UocJ6gt-0F21oPAl_Gy-hrbzA>
+    <xmx:YFOQZKBikkUTAWh4Jv-a7yvitxSDFyhYn-prkvRTr2LMG1e1mzXtxg>
+    <xmx:YVOQZL66aq_lXqijBuvnzXndeze7m6-eTiKS1uqEjA1hwV3AR9WLfA>
+Feedback-ID: idfb84289:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 78A291700090; Mon, 19 Jun 2023 09:08:48 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-496-g8c46984af0-fm-20230615.001-g8c46984a
+Mime-Version: 1.0
+Message-Id: <e998fac9-25c2-4b20-96c0-9968ad10c4f5@app.fastmail.com>
+In-Reply-To: <fdbd70b3-e85a-5756-b12f-9a291fe7767b@linux.intel.com>
+References: <f21a5062-b462-4597-8770-4869b0071ba2@app.fastmail.com>
+ <fdbd70b3-e85a-5756-b12f-9a291fe7767b@linux.intel.com>
+Date: Mon, 19 Jun 2023 22:38:05 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Suryakanth Sekar" <suryakanth.sekar@linux.intel.com>,
+ wangkuiying.wky@alibaba-inc.com, openbmc@lists.ozlabs.org
+Subject: Re: openbmc/bios-settings-mgr: Notification of unresponsiveness
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,56 +96,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, kfting <warp5tw@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Iwona,
+Hi Suryakanth,
 
-Thanks a lot for upstream Nuvoton PECI driver.
-
-We will test the driver in a day or two and let you know.
-
-Best regards,
-
-Tomer
-
-On Fri, 16 Jun 2023 at 22:35, Iwona Winiarska <iwona.winiarska@intel.com> wrote:
+On Sat, 17 Jun 2023, at 00:06, Sekar, Suryakanth wrote:
+> Hi Andrew,
 >
-> Hi!
->
-> This series is based on patches that were sent by Tomer Maimon from
-> Nuvoton [1].
-> Similar to Aspeed driver, I removed vendor-specific properties that
-> were not used (as in, default values were used in all of the available
-> DTS files). If there is a use-case for such properties, they can be
-> added in a separate series.
-> I wasn't able to test it on a real hardware so I would like to ask for
-> help to test it on Nuvoton systems.
+> I didn't see any open code review waiting for review and merge. 
+> Everything is taken care.
+
+Yes, thanks. If you look at the history of the patch I linked in the original email, you'll find that Kuiying merged the change approximately 4.5 hours after I sent the notice.
+
+Andrew
+
 >
 > Thanks
-> -Iwona
 >
-> [1] https://lore.kernel.org/openbmc/CAP6Zq1jnbQ8k9VEyf9WgVq5DRrEzf5V6kaYP30S7g9BV9jKtaQ@mail.gmail.com/
+> Suryakanth.S
 >
-> Iwona Winiarska (2):
->   ARM: dts: nuvoton: Add PECI controller node
->   arm64: dts: nuvoton: Add PECI controller node
->
-> Tomer Maimon (2):
->   dt-bindings: Add bindings for peci-npcm
->   peci: Add peci-npcm controller driver
->
->  .../devicetree/bindings/peci/peci-npcm.yaml   |  56 ++++
->  arch/arm/boot/dts/nuvoton-common-npcm7xx.dtsi |   9 +
->  .../dts/nuvoton/nuvoton-common-npcm8xx.dtsi   |   9 +
->  drivers/peci/controller/Kconfig               |  16 +
->  drivers/peci/controller/Makefile              |   1 +
->  drivers/peci/controller/peci-npcm.c           | 298 ++++++++++++++++++
->  6 files changed, 389 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/peci/peci-npcm.yaml
->  create mode 100644 drivers/peci/controller/peci-npcm.c
->
-> --
-> 2.40.1
->
+> On 6/16/2023 10:26 AM, Andrew Jeffery wrote:
+>> Hello Kuiying and Suryakanth,
+>>
+>> A complaint has been raised to the Technical Oversight Forum that one or more patches to openbmc/bios-settings-mgr have not been responded to in a reasonable timeframe.
+>>
+>> This is the first notice of a complaint of unresponsiveness.
+>>
+>> The project has recently defined some constraints on timeliness for reviews. This helps to set expectations for both contributors and maintainers. Maintainers are expected to find time to provide feedback on patches inside one month of them being pushed to Gerrit. Upon complaint, missing this deadline forms one count of unresponsiveness. If a subproject's maintainers receive three notices of unresponsiveness within a 12 month period then the Technical Oversight Forum will seek to introduce new maintainers to the subproject.
+>>
+>> Further details and considerations of this policy can be found at the following location:
+>>
+>> https://github.com/openbmc/docs/blob/master/process/subproject-maintainership.md
+>>
+>> The complaint regarding openbmc/bios-settings-mgr can be found below:
+>>
+>> https://github.com/openbmc/technical-oversight-forum/issues/27#issuecomment-1589985292
+>>
+>> The specific patches identified by the complaint are:
+>>
+>> 1. 63276: clang-format: copy latest and re-format
+>>     https://gerrit.openbmc.org/c/openbmc/bios-settings-mgr/+/63276
+>>
+>> If you are unable to continue with your maintenance role for openbmc/bios-settings-mgr then please work with the community identify others who are capable and willing. Please consider the expectations set out in the community membership documentation as part of this effort:
+>>
+>> https://github.com/openbmc/docs/blob/master/community-membership.md
+>>
+>> On behalf of the Technical Oversight Forum,
+>>
+>> Andrew
