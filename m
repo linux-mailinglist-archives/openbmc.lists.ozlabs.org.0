@@ -1,68 +1,131 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4232F7394CE
-	for <lists+openbmc@lfdr.de>; Thu, 22 Jun 2023 03:43:15 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 72C8973B6FF
+	for <lists+openbmc@lfdr.de>; Fri, 23 Jun 2023 14:20:48 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20221208 header.b=QpG7lSV2;
+	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=lZUWmj0t;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QmjnF1Crfz30Kf
-	for <lists+openbmc@lfdr.de>; Thu, 22 Jun 2023 11:43:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QnbtQ2VZmz3bn0
+	for <lists+openbmc@lfdr.de>; Fri, 23 Jun 2023 22:20:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20221208 header.b=QpG7lSV2;
+	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=lZUWmj0t;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::32a; helo=mail-wm1-x32a.google.com; envelope-from=wak@google.com; receiver=lists.ozlabs.org)
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=nvidia.com (client-ip=2a01:111:f400:7e8c::612; helo=nam04-mw2-obe.outbound.protection.outlook.com; envelope-from=ropai@nvidia.com; receiver=lists.ozlabs.org)
+Received: from NAM04-MW2-obe.outbound.protection.outlook.com (mail-mw2nam04on20612.outbound.protection.outlook.com [IPv6:2a01:111:f400:7e8c::612])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Qmjmg4144z2xLS
-	for <openbmc@lists.ozlabs.org>; Thu, 22 Jun 2023 11:42:42 +1000 (AEST)
-Received: by mail-wm1-x32a.google.com with SMTP id 5b1f17b1804b1-3f9c0abc876so11763915e9.3
-        for <openbmc@lists.ozlabs.org>; Wed, 21 Jun 2023 18:42:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1687398154; x=1689990154;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=A9kSwiWn86NSb+0SmUzJtRDNDguzCriGWAYRsMYVNpw=;
-        b=QpG7lSV2k7JRvx+8NvvWvUaBrrQKuupHaYxdbI3zjV8kI6YlbB3VW25xmNbF6i7MJZ
-         J1fRNbaT6tT405l+/Ms1t+12p+8fSnkkNOiTyw/PGGJpkFdNodi+aauh0s/tpKIrQoIo
-         e6hHp4qbPtvx6rfN0rtlpFqTny+XxRdzgD0IyjRc31EMoEv/8biar0TmaqA3AO1uJWQu
-         PKKDTXnGUOMZtcVLeJ6f8xdKM9kXqapT4fhgkkgD5jCz7movVfKF7JlRhlYRtkCPawRE
-         sPu2AprZSphEJYMGk6useqmDAWf134iBoKzh8GGe+ucH7N66H3WYo8TboXXO34Lxtmwl
-         jiKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1687398154; x=1689990154;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=A9kSwiWn86NSb+0SmUzJtRDNDguzCriGWAYRsMYVNpw=;
-        b=ZmGMzRoJjvNBYaZOnYifCj7OreKPN732M16S3LLjlwYd0w0+iZR3GR/pqaic/0pByj
-         jM7ZWz2362DfOTAOSrVb/24KrpII4uLQNrBm7vYtRMJnEGP6AWykUbMUzt0hRj6j/aum
-         NoNdEzz4AXuS1XQQx4r3RIIkrx/KPH7cyCUaWCjZxuxaO4AoxDn/lCpCSDA8i/uL2tRR
-         U0bgEaAclafTVo6oOj5pXSbrihRIaXesdiYt3GSPFnYfl3/Lfp0nHONbbthfuJDzD5Ba
-         TgshF60U0nrxh64GpIS1HSlGB8hG6oOG4PwYl4LhJbkR+Ag9D26x7WXv/PbZqd8WkDO0
-         RKLw==
-X-Gm-Message-State: AC+VfDxOFHHCb8lavjKaV1sXPPdRHXVeOL+1GgBZfyNlMlh6gDh7P7V0
-	PhBoGs3/o3ui3/yOXv8JXgLbDLn2EZTdOCmw5lCE0w==
-X-Google-Smtp-Source: ACHHUZ4rskudSuUYPmoDaF2avAlHgfmNfAmMeNjaz3V4WBcWKmMrvnt4vkVgsYkN67n7Mt/T2wqJiiUJLRA0M0E21Us=
-X-Received: by 2002:a1c:7404:0:b0:3f9:e78d:8dcf with SMTP id
- p4-20020a1c7404000000b003f9e78d8dcfmr907458wmc.28.1687398154534; Wed, 21 Jun
- 2023 18:42:34 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Qnbsm2K8hz3bXM
+	for <openbmc@lists.ozlabs.org>; Fri, 23 Jun 2023 22:20:09 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=W/+Yhydl0fb1soOg4rNiwZS4RLEOcUs2HXs9pUCkM0DH6q9+spcQhe+Q4WIyGqW2pEaSfqX4fw4JsAYNC2sGhTsZUgbAYHBYv/71ZpwjoXasQwKQ89WP+nC2nLxvpzgDZ4wd47gxUGLz3llEUPtXtPmB9+emgvuKEKxxbcBbSnUxo35Br9rd8eDLoI1JOPviWEvin1J4YPvCJuDXcXkaTFLGT/3IW6a/ohCTqOk7N8axRTSvBamBL44RhbYM7Uf/cu5lf2G8hCiXJQmwbr8Rf2wSZiy350G/GnZ/uDugfNbN26Q56jG90Q/6uO/rcel82GpftupGbk4pGfddumirfA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=7gtB2Nh/bxrwu2ht89VrSMq/6GPlulu5uOPhE5JQOUk=;
+ b=GD/4uJfN0RZHNWAyzUoPlTqTi4D9D+y5MxAKFV1zZRxmBi4TXOWCOhHakaVD1g6Mz1TODmP1MMNooMrFmQ21K3iQOlSh0bS2S5494MNneVzjvaMkTX/aPUkcqy0McnH8IusVwmWXJo8tw71O2UHfLW59k3U1bGzIp9QJaPDWVSdAMtE4F7sUF9aEdQqrr8qjsU+xvG2wzJr/zyRYI/vR8yXZHcdpvDcrb1/GuenGC1V7G3P1vw81NzWHZ06wttHQesSQXJGLQZi4r5ow7/hgLqEQsG4evnW8vCge12gH/bYwEfp0wgWpBOQU2lMYm1OrF4McSxg6AdFKqkhppvhUYA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=7gtB2Nh/bxrwu2ht89VrSMq/6GPlulu5uOPhE5JQOUk=;
+ b=lZUWmj0t+6xaIuiDf2QfOa3X22VI1TO8qkiPrE/trVghu1t32FPqSwKkAUnzbBqk98AQx+bcHd2G6pWI+mN+M6FbyuuHUQkpkDWbwCEXG/m0kOa1ABAqCdNxarEG1W+e8se3doZvdqj4f2C2JwJ4vWxezQ7sfSpAhx69kZrHX48UL0eT4EpDvZCqGcxJsxGqv1NF+cF7E9EurxrVBbQ2oMiicy8k4Y86eiEQdWioEJHiGOc0sGfbrCkTpxmPyNTkr+FFBoFoANl+nSuX4y1hlmXvOEhkGkstq5hY4YKTaBYx9AGjWTqCfrBQ/yHuLzIsSKQb6wCfSOpMIKimDMGYDA==
+Received: from LV2PR12MB6014.namprd12.prod.outlook.com (2603:10b6:408:170::18)
+ by DM3PR12MB9286.namprd12.prod.outlook.com (2603:10b6:8:1ae::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6521.24; Fri, 23 Jun
+ 2023 12:19:47 +0000
+Received: from LV2PR12MB6014.namprd12.prod.outlook.com
+ ([fe80::507:bce:e64c:f3fe]) by LV2PR12MB6014.namprd12.prod.outlook.com
+ ([fe80::507:bce:e64c:f3fe%4]) with mapi id 15.20.6521.024; Fri, 23 Jun 2023
+ 12:19:47 +0000
+From: Rohit Pai <ropai@nvidia.com>
+To: 'Ed Tanous' <edtanous@google.com>
+Subject: RE: Prioritizing URIs with tight performance requirement in openBmc
+ with bmcweb
+Thread-Topic: Prioritizing URIs with tight performance requirement in openBmc
+ with bmcweb
+Thread-Index:  AdmOIj9HMMHUr5E5SWm5E5BqGmJtZAAOkWAAAAMhPIABk6P0AABNnoyQAQ/N34AC4Uj9AA==
+Date: Fri, 23 Jun 2023 12:19:46 +0000
+Message-ID:  <LV2PR12MB601433A82743D4E82BF14077CD23A@LV2PR12MB6014.namprd12.prod.outlook.com>
+References:  <LV2PR12MB601419E4F59555BBCB4EE70FCD419@LV2PR12MB6014.namprd12.prod.outlook.com>
+ <CAH2-KxAdhmj98prJ2QCuN4p1ZxRZs3ZFdchxdZ-_A9c-ACpMOQ@mail.gmail.com>
+ <CAH2-KxDfqpMLpeFkKn8BHkL2e7nwVBR+o3ziDBvw3KJd6fHwsg@mail.gmail.com>
+ <CAH2-KxAEay+E=D9scS=2pHb7tOw0Vz5_ZoH_5=Q5o6sJdGE1Jg@mail.gmail.com>
+ <LV2PR12MB60143B8210EC0B427F219528CD4FA@LV2PR12MB6014.namprd12.prod.outlook.com>
+ <CAH2-KxA9zOYZH8wyCkktyREPB-HCwtz8yX5ZHexFDBaN6FpZXQ@mail.gmail.com>
+In-Reply-To:  <CAH2-KxA9zOYZH8wyCkktyREPB-HCwtz8yX5ZHexFDBaN6FpZXQ@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: LV2PR12MB6014:EE_|DM3PR12MB9286:EE_
+x-ms-office365-filtering-correlation-id: d5417075-12da-48fb-4808-08db73e42264
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:  Mvw67dDt4PJaa3dx9JwkbVJEWvBffD2szWPXBV4RDzObFIE6mTsDSvUFYuZkkGQiUc/0U+2nWVQJDzBgz1XMr/zE6dtwcwzd5Bu78xA3Hn8RFUZIRxmIj8cWP2hJncETlzwfIZ8WUB6vgXHq+ZWBwePiqM/zWas5tf+jYXwkim0f71mXYz/HXV5b8TopkRaimLBlrnNkSoUX9ba+Giz+ftjVw9yZgCrejsSK8lMNx6ihVK8taI6uFqpYFJtR9bUrPfHcqFPUc0z+nm+DR5rcXXFiOkjIS+y7Uw9kEBYuufAinbzDLPjQ/igtV+Al/C53wtO5AkOvFCE5SeAQlH63SeXw5BC1rJbi4OgqTbDVHXVyNekGZUJGE78XCyVXXioLYSynAlbV7IEpJ5nTt6OWy6yP8h6K6qnoXRwQcuG+RnmtOlS5jJanh1uxhxSgBVnAA5YN9qlJSS9sj0fAS4DnUnbypEehb7gJqUQ1fUW8uzQ+aTWDpPgAjbgD/8iAveA4oNAk2ipukFaZcrkTNmL4spOIEUVX22R1uF31qPoOmb+b6WHEfBx1ytWX6upEr35YQjcTniMP7rSFvWzJUX7NcH8hG1CLc1gPxrvFnQEQo9uL+I1OH7O7O6ol4kFRaVAY
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB6014.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(396003)(376002)(136003)(346002)(39860400002)(366004)(451199021)(478600001)(71200400001)(7696005)(4326008)(76116006)(9686003)(26005)(6506007)(53546011)(186003)(966005)(2906002)(66946007)(66446008)(8676002)(52536014)(64756008)(6916009)(8936002)(316002)(5660300002)(66476007)(66556008)(41300700001)(122000001)(38100700002)(38070700005)(33656002)(83380400001)(86362001)(55016003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:  =?utf-8?B?eGNkZllCVlhzUjFRaHZqTVhxaTZINjc3Tm41cm5JYlJNbTdBck1rbE8wWVJj?=
+ =?utf-8?B?Z3FweFBIclkwTTBxaXIwK0s3UXJtZk9vVkdzc09vQmFHcjRWZENiNjhYbzdJ?=
+ =?utf-8?B?YUUxNHMzVzE1OFRTdkdxQVBKejh0dVFlRmxQR3c5akFyR2tSRllSSFFMcDN2?=
+ =?utf-8?B?RXY1d2Fyb3lOVXVxQktOMlgvc0p2OFREWGZ3b211WlQrdWZ3ajltRTFOc21t?=
+ =?utf-8?B?bEZYVm5wdGQxSXpZaEMwUllJRE1KNnhwNEZTaHFnbGZWV3RNcGE1dm1WM09Z?=
+ =?utf-8?B?U09SbUtYRjhSemxRTE9icCs1UUdMSCtNUHljWnZDa2dqdDJhOUpaZGdsTEMx?=
+ =?utf-8?B?OC92THp4NTlEZlNrMEcrMU50WkhOTU1tK3FFNXVGZkdjdzVsdExDQWVBeXVN?=
+ =?utf-8?B?TFFOV0Z6S1ZSTnd0N2libU0rMTJGSkJoZDd5RENzOVN2VTFuYjRnaG1kalBa?=
+ =?utf-8?B?RWJ4VTRBZjRna2dkZ3Q4aWJuQ3NETUUzQnZNai8xTGtOUXk0NVByc3FJcDdp?=
+ =?utf-8?B?ZHVFUzgxK0t1QWRoR0lxdVA0K0VTeERHUFZXV2V6NGlGalRxRFBGVW0wWmVG?=
+ =?utf-8?B?a2VQTDMxalk1Y1ozZlNnQWQrQTRvblpOQWU5akk0Y3hPbzV1dlZWTjdQZFBH?=
+ =?utf-8?B?MVk0R0pZODJmaUcwamxQS0x1QUdtRGNkcU1ncWk2Zi9YdEZtUEdFeVJWWHZl?=
+ =?utf-8?B?eE16bDFvRnNVdG9ZNWNEdnNjVndDK0F4U0dNU3IzeXVVUGllS2tITnJhNXpu?=
+ =?utf-8?B?bFA2T1JTRFdteUZPamdPN1lpOER5dnVvN0xhamhhTXo4WW10YmNGZ0tlMHoz?=
+ =?utf-8?B?OGZxckRSdUU5TkJwZU9yN0d4L3k3azBMNm5sdy8vQ2JvbVJ1Q2I0N0pUQldV?=
+ =?utf-8?B?aHpHOUFSakRUQTg0bGlXSHl2SzVZZk5IVTVZbktHWUtPSHFlOWJCaE8xQm1D?=
+ =?utf-8?B?SVp2WlJwZTVqcmd0UE14M1FDenFudlFiWU5ycHlmRThJdnpMNXFWS2ViamtM?=
+ =?utf-8?B?eUhNdVZTNHBpV1pxbXMwbXlwRmRjOTRzZWQrYlpGaDAvRE9TbmJXQkdXdCtq?=
+ =?utf-8?B?SEF5S2orREs5UURJd2VOZ0hRSUQ2RkRMSFBud1U3Q3RRZkwwZVRqUjNjK1lU?=
+ =?utf-8?B?Wm5KaHh0R0xhM0tQZnJOdWRjY3dKc1RTOWh6ODNrbGEwbjllcFFuVEJSRzdi?=
+ =?utf-8?B?YzBLVDR2VHpGUkRnZDhNOE9DdytVbHk0Wm5RZXRENlZtRjdpV21pZTlFblVV?=
+ =?utf-8?B?bW5mSStHMVVEMnNSQ0xEL3ZJbHY1WC9EK3liZTZuY2hLcEVtdytwZ2d1QmVs?=
+ =?utf-8?B?QjlPcnB0UnFCc3NERW5YOXVlMGVaV09IUkd4LzJqS0hMcmZOQUw3NU5FL2dh?=
+ =?utf-8?B?Mlh2eUJGdGtIU0gzRHRqKzdsaFVEa25rSElXdDQrb2syejVQeWpZdG0vdTll?=
+ =?utf-8?B?T0xpWkNpL055SnBtSjVaWFpJWXVDNWtZY1NoVTBkZGFQanRGMXR1NWRMbmdu?=
+ =?utf-8?B?b3F0S1lLNmFweFpUTlZ1ME5yVklGNTI1bUFpYlV1cGk2SnNEUEI5ZThkcEpz?=
+ =?utf-8?B?QXJJLzJjbjhCVjFKYTlpK1FCTmhaK1lqajl5dXM5SGlUQjFEMGpTekg1czJh?=
+ =?utf-8?B?UzE1b3h5cUZQSVI1elJRZzZKeGY3RDh1NGprWDNwUkdzL0pKMUkxODYwMU5V?=
+ =?utf-8?B?S1YvZ3NZQW5FdXdqbjJWT3lqdGNvSFJKQTFaVzdsTEhsWmRrVXkydW5zTmxQ?=
+ =?utf-8?B?bjdmMDdVbW8vK21ZTU9NV3o5T3QzUGlGdGZmdWlVS0docnEyL0U2RG5UczlG?=
+ =?utf-8?B?SmJuVDl4ZVhaOXNiVENUZWtSYS96VUR3NDc1ZnNGRWw4dzRtYmFtTm5FbnUy?=
+ =?utf-8?B?UDZGKzNBdVROSExWMlYvSHR0ZGUrajhSLzlLR0ZjaTJwWGxiTFFHV3VKSVFt?=
+ =?utf-8?B?MTF2ZjQrOU1nd1RIRUlnekFCdXJ1V2FWWjFnUk1RWE1peGtTUUJKZUxsMXBn?=
+ =?utf-8?B?dHpxbm55R3VlejVWZ1FoRlhkUGtCYS9UYzZRdTMyVk1UNGJRbEp3TXF1aVJR?=
+ =?utf-8?B?eG8xdmd3bXJPYUlIWUxDdUxSbzB1SlRKaFR6SHZaNytuV0VYYS9JVDdGamFk?=
+ =?utf-8?Q?YF+o=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-References: <DS7PR10MB486175B1DBCE7437A2F8E980A55CA@DS7PR10MB4861.namprd10.prod.outlook.com>
- <CAMhqiMqGwvNFP7knyTQz7bLk1jHffhkqCb74oy7cZswQQz57wg@mail.gmail.com> <DS7PR10MB4861A9A481E8CF2955356128A55DA@DS7PR10MB4861.namprd10.prod.outlook.com>
-In-Reply-To: <DS7PR10MB4861A9A481E8CF2955356128A55DA@DS7PR10MB4861.namprd10.prod.outlook.com>
-From: William Kennington <wak@google.com>
-Date: Wed, 21 Jun 2023 18:42:23 -0700
-Message-ID: <CAPnigKnOE5hQqi4+5xyxhaqMaBbhHHw=J=oz+0RSW6XUOL2QAA@mail.gmail.com>
-Subject: Re: [EXTERNAL] Re: The design of multiple VLAN at OpenBMC
-To: =?UTF-8?B?S2VubnkgV3UgKOWQs+W7uuWvrCk=?= <KennyWu@ami.com>
-Content-Type: multipart/alternative; boundary="00000000000099348005feadffcd"
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB6014.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d5417075-12da-48fb-4808-08db73e42264
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Jun 2023 12:19:46.9247
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: sz+ZxNhBKKiMeozkWM5lmEQyNPrFNN2QzkdoXQXLC96ZVafa8+7Q/2PWKHz9tTXaylg68Bvs8eM1VPsImsCaYA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PR12MB9286
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,206 +137,148 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ratan Gupta <ratankgupta31@gmail.com>, Pravinash Jeyapaul <pravinashj@ami.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---00000000000099348005feadffcd
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-Multiple VLANs should just work for an arbitrary number of VLANs from
-phosphor-networkd. The only issue would be protocols like IPMI that do not
-generalize the protocol to support more than 1 VLAN. I can't comment on how
-redfish models multiple interfaces / VLANs.
-
-On Wed, Jun 21, 2023 at 6:40=E2=80=AFPM Kenny Wu (=E5=90=B3=E5=BB=BA=E5=AF=
-=AC) <KennyWu@ami.com> wrote:
-
-> Hi @Ratan Gupta,
->
-> Thanks you reply. It is helpful to us.
->
-> But I want clear more detail about the number of VLAN. Due RD may need
-> provide expect result to QA. RD can limit the number of VLAN by their own
-> design ?
-> And from your comment, a single VLAN is enough to using at general
-> environment.
->
-> Thanks,
-> KennyWu.
->
-> -----Original Message-----
-> From: Ratan Gupta <ratankgupta31@gmail.com>
-> Sent: Tuesday, June 20, 2023 2:11 PM
-> To: Kenny Wu (=E5=90=B3=E5=BB=BA=E5=AF=AC) <KennyWu@ami.com>
-> Cc: openbmc@lists.ozlabs.org; Pravinash Jeyapaul <pravinashj@ami.com>
-> Subject: [EXTERNAL] Re: The design of multiple VLAN at OpenBMC
->
->
-> **CAUTION: The e-mail below is from an external source. Please exercise
-> caution before opening attachments, clicking links, or following guidance=
-.**
->
-> Hi Kenny,
->
-> You can have multiple VLAN on the same interface, I don't see we have a
-> restriction on the number of VLANs.
-> It is up to the system admin, How many VLANs do they need? In a typical
-> scenario, it should not be more than a single VLAN.
->
-> Thanks,
-> Ratan
->
-> On Tue, Jun 20, 2023 at 9:39=E2=80=AFAM Kenny Wu (=E5=90=B3=E5=BB=BA=E5=
-=AF=AC) <KennyWu@ami.com> wrote:
-> >
-> > Hi ,
-> >
-> >
-> >
-> > We are develop OpenBMC and meet some design question need to consult. I
-> will be appreciate your responses.
-> >
-> >
-> >
-> > The VLAN behavior at OpenBMC. It support multiple VLAN. Is there are an=
-y
-> restricted maximum number at each service IPMI/WEB/Redfish. Or it is
-> decided by developer?
-> >
-> >
-> >
-> > As I know IPMI is only service one interface, VLAN or non-VLAN. Once
-> user enabled VLAN, the IPMI daemon will respond both ?
-> >
-> >
-> >
-> > Thanks,
-> > KennyWu
-> >
-> >
-> >
-> > -The information contained in this message may be confidential and
-> proprietary to American Megatrends (AMI). This communication is intended =
-to
-> be read only by the individual or entity to whom it is addressed or by
-> their designee. If the reader of this message is not the intended
-> recipient, you are on notice that any distribution of this message, in an=
-y
-> form, is strictly prohibited. Please promptly notify the sender by reply
-> e-mail or by telephone at 770-246-8600 <(770)%20246-8600>, and then
-> delete or destroy all copies of the transmission.
-> -The information contained in this message may be confidential and
-> proprietary to American Megatrends (AMI). This communication is intended =
-to
-> be read only by the individual or entity to whom it is addressed or by
-> their designee. If the reader of this message is not the intended
-> recipient, you are on notice that any distribution of this message, in an=
-y
-> form, is strictly prohibited. Please promptly notify the sender by reply
-> e-mail or by telephone at 770-246-8600 <(770)%20246-8600>, and then
-> delete or destroy all copies of the transmission.
->
-
---00000000000099348005feadffcd
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Multiple=C2=A0VLANs should just work for an arbitrary numb=
-er of VLANs from phosphor-networkd. The only issue would be protocols like =
-IPMI that do not generalize the protocol to support more than 1 VLAN. I can=
-&#39;t comment on how redfish models multiple interfaces / VLANs.</div><br>=
-<div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Ju=
-n 21, 2023 at 6:40=E2=80=AFPM Kenny Wu (=E5=90=B3=E5=BB=BA=E5=AF=AC) &lt;<a=
- href=3D"mailto:KennyWu@ami.com">KennyWu@ami.com</a>&gt; wrote:<br></div><b=
-lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">Hi @Ratan Gupta,<br>
-<br>
-Thanks you reply. It is helpful to us.<br>
-<br>
-But I want clear more detail about the number of VLAN. Due RD may need prov=
-ide expect result to QA. RD can limit the number of VLAN by their own desig=
-n ?<br>
-And from your comment, a single VLAN is enough to using at general environm=
-ent.<br>
-<br>
-Thanks,<br>
-KennyWu.<br>
-<br>
------Original Message-----<br>
-From: Ratan Gupta &lt;<a href=3D"mailto:ratankgupta31@gmail.com" target=3D"=
-_blank">ratankgupta31@gmail.com</a>&gt;<br>
-Sent: Tuesday, June 20, 2023 2:11 PM<br>
-To: Kenny Wu (=E5=90=B3=E5=BB=BA=E5=AF=AC) &lt;<a href=3D"mailto:KennyWu@am=
-i.com" target=3D"_blank">KennyWu@ami.com</a>&gt;<br>
-Cc: <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">openbmc@l=
-ists.ozlabs.org</a>; Pravinash Jeyapaul &lt;<a href=3D"mailto:pravinashj@am=
-i.com" target=3D"_blank">pravinashj@ami.com</a>&gt;<br>
-Subject: [EXTERNAL] Re: The design of multiple VLAN at OpenBMC<br>
-<br>
-<br>
-**CAUTION: The e-mail below is from an external source. Please exercise cau=
-tion before opening attachments, clicking links, or following guidance.**<b=
-r>
-<br>
-Hi Kenny,<br>
-<br>
-You can have multiple VLAN on the same interface, I don&#39;t see we have a=
- restriction on the number of VLANs.<br>
-It is up to the system admin, How many VLANs do they need? In a typical sce=
-nario, it should not be more than a single VLAN.<br>
-<br>
-Thanks,<br>
-Ratan<br>
-<br>
-On Tue, Jun 20, 2023 at 9:39=E2=80=AFAM Kenny Wu (=E5=90=B3=E5=BB=BA=E5=AF=
-=AC) &lt;<a href=3D"mailto:KennyWu@ami.com" target=3D"_blank">KennyWu@ami.c=
-om</a>&gt; wrote:<br>
-&gt;<br>
-&gt; Hi ,<br>
-&gt;<br>
-&gt;<br>
-&gt;<br>
-&gt; We are develop OpenBMC and meet some design question need to consult. =
-I will be appreciate your responses.<br>
-&gt;<br>
-&gt;<br>
-&gt;<br>
-&gt; The VLAN behavior at OpenBMC. It support multiple VLAN. Is there are a=
-ny restricted maximum number at each service IPMI/WEB/Redfish. Or it is dec=
-ided by developer?<br>
-&gt;<br>
-&gt;<br>
-&gt;<br>
-&gt; As I know IPMI is only service one interface, VLAN or non-VLAN. Once u=
-ser enabled VLAN, the IPMI daemon will respond both ?<br>
-&gt;<br>
-&gt;<br>
-&gt;<br>
-&gt; Thanks,<br>
-&gt; KennyWu<br>
-&gt;<br>
-&gt;<br>
-&gt;<br>
-&gt; -The information contained in this message may be confidential and pro=
-prietary to American Megatrends (AMI). This communication is intended to be=
- read only by the individual or entity to whom it is addressed or by their =
-designee. If the reader of this message is not the intended recipient, you =
-are on notice that any distribution of this message, in any form, is strict=
-ly prohibited. Please promptly notify the sender by reply e-mail or by tele=
-phone at <a href=3D"tel:(770)%20246-8600" value=3D"+17702468600" target=3D"=
-_blank">770-246-8600</a>, and then delete or destroy all copies of the tran=
-smission.<br>
--The information contained in this message may be confidential and propriet=
-ary to American Megatrends (AMI). This communication is intended to be read=
- only by the individual or entity to whom it is addressed or by their desig=
-nee. If the reader of this message is not the intended recipient, you are o=
-n notice that any distribution of this message, in any form, is strictly pr=
-ohibited. Please promptly notify the sender by reply e-mail or by telephone=
- at <a href=3D"tel:(770)%20246-8600" value=3D"+17702468600" target=3D"_blan=
-k">770-246-8600</a>, and then delete or destroy all copies of the transmiss=
-ion.<br>
-</blockquote></div>
-
---00000000000099348005feadffcd--
+SGVsbG8gRWQsIA0KDQo+IFdoYXQgdHdvIHF1ZXJpZXMgYXJlIHlvdSB0ZXN0aW5nIHdpdGg/DQpU
+aGVyZSBhcmUgTWV0ZXJpY1JlcG9ydCBVUklzIA0KaHR0cDovLyR7Qk1DfS9yZWRmaXNoL3YxL1Rl
+bGVtZXRyeVNlcnZpY2UvTWV0cmljUmVwb3J0cy8NClRoZXJlIGlzIG5vIGNyeXB0byBpbnZvbHZl
+ZCwgSSBhbSB1c2luZyBIVFRQIG9ubHkuICANCg0KPiBhLiBCYWNrZW5kIGRidXMgY2FsbCB0dXJu
+YXJvdW5kIHRpbWUgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+LSA1ODQgbXMNCj4gVGhpcyBpcyBxdWl0ZSBoaWdoLiAgSGF2ZSB5b3UgbG9va2VkIGF0IHJlZHVj
+aW5nIHRoaXM/ICBUaGlzIHdvdWxkIGltcGx5IHRoYXQgeW91J3JlIGRvaW5nIGJsb2NraW5nIGNh
+bGxzIGluIHlvdXIgYmFja2VuZCBkYWVtb24uDQpUaGVyZSBpcyBubyBzaW1wbGUgd2F5IHRvIHJl
+ZHVjZSB0aGlzIGJlY2F1c2Ugd2UgaGF2ZSBhcm91bmQgMjAwMCBwcm9wZXJ0aWVzIHNwcmVhZCBh
+Y3Jvc3MgZGlmZmVyZW50IG9iamVjdHMuIFNvLCB0aGUgZGJ1cyBjYWxsIGlzIG1ha2luZyBHZXRN
+YW5hZ2VkT2JqZWN0cyB3aGljaCB3aWxsIHRyaWdnZXIgc2V2ZXJhbCBpbnRlcm5hbCBnZXQgaGFu
+ZGxlcnMuIA0KT25lIHNvbHV0aW9uIHdlIGhhdmUgdHJpZWQgaXMgdG8gcHV0IGFsbCB0aGUgbmVl
+ZGVkIGluZm8gaW4gYSBzaW5nbGUgYWdncmVnYXRlIHByb3BlcnR5IGFuZCBnZXQgdGhpcyB2aWEg
+c2luZ2xlIGdldCBwcm9wZXJ0eSBjYWxsLiBFdmVuIHdpdGggdGhhdCBhcHByb2FjaCB0aGUgZGJ1
+cyByb3VuZCB0cmlwIHRpbWUgaXMgMTAwKyBtcyBmb3IgMjAwMCBzZW5zb3IgZGF0YS4gDQpUaGUg
+dGltZSB0YWtlbiBieSBibWN3ZWIgdG8gcHJlcGFyZSB0aGUgcmVzcG9uc2Ugd2FzIG1haW5seSBp
+bXBhY3QgYnkgb3RoZXIgc2VydmljZXMgaW4gdGhlIHN5c3RlbSB3aGljaCB3ZXJlIHRha2luZyBj
+b25zaWRlcmFibGUgQ1BVIGJhbmR3aWR0aC4gDQoNCj4gRkQgcGFzc2luZyB0ZWNobmlxdWUgYmV0
+d2VlbiBiYWNrZW5kIGFuZCBibWN3ZWIgDQo+IEknbSBoYXBweSB0byBoYXZlIHRob3NlIGRpc2N1
+c3Npb25zLCBhbmQgdGhlIGRhdGEgeW91IGhhdmUgYWJvdmUgaXMgaW50ZXJlc3RpbmcsIGJ1dCBh
+bnkgc29ydCBvZiBjaGFuZ2Ugd291bGQgcmVxdWlyZSBtdWNoIGxhcmdlciBwcm9qZWN0IGJ1eS1p
+bi4NCldoYXQgd2UgaGF2ZSBsZWFybnQgZnJvbSBvdXIgZXhwZXJpbWVudCBpcyB0aGF0IHRoZXJl
+IGlzIG5vIHdheSBtYWtlIHRoaXMgc29sdXRpb24gcm9idXN0IHdpdGhvdXQgZXhwbGljaXQgbG9j
+a2luZyBtZWNoYW5pc20uIA0KSW4gb3VyIFBPQyB3ZSBoYWQgYSBiYWNrZW5kIHNlcnZpY2Ugd2hp
+Y2ggd3JpdGVzIDUwMEtCIGRhdGEgdG8gYSBmaWxlIGV2ZXJ5IDUwMG1zIGFuZCBibWN3ZWIgd291
+bGQgcmVhZCB0aGlzIGZpbGUgZmQgaW4gdGhlIHJvdXRlIGhhbmRsZXIuIFdoZW4gd2UgcnVuIHRo
+aXMgY29kZSB3aXRob3V0IGFueSBleHBsaWNpdCBsb2NraW5nIG9yIHN5bmNocm9uaXphdGlvbiwg
+d2UgcmFuIGludG8gaXNzdWVzIHJlbGF0ZWQgdG8gZGF0YSBjb25zaXN0ZW5jeS4gSXRzIGhhcmQg
+dG8gZW5zdXJlIHRoYXQgdGhlIHJlYWRlciB3b3VsZCBhbHdheXMgZ2V0IGNvcnJlY3Qgd2hvbGVz
+b21lIGRhdGEgZXZlbiBpZiB0aGlzIGlzIGRvbmUgaW4gYmxvY2sgcmVhZC93cml0ZSBtYW5uZXIu
+IA0KSWYgd2UgcHV0IHJlYWRlci93cml0ZXIgbG9ja3MsIHRoZW4gSSBhbSB0aGlua2luZyB0aGUg
+cGVyZm9ybWFuY2UgbWlnaHQgY29tZSBjbG9zZSB0byBkYnVzIElQQy4gDQoNCj4gT3B0aW1pemF0
+aW9uIGFyb3VuZCBDUFUgYm91bmQgbG9naWMgaW4gaGFuZGxlciBjb2RlIHdvdWxkIGNlcnRhaW5s
+eSBoZWxwIHRoZSBsYXRlbmN5IG9mIHRoZSBvdGhlciByZXF1ZXN0cyBwZW5kaW5nIGluIHRoZSBx
+dWV1ZS4NCj4gSXMgaXQgQ1BVIGJvdW5kLCBvciBNZW1vcnkgYmFuZHdpZHRoIGJvdW5kPyAgTW9z
+dCBvZiB0aGUgdGltZSBJJ3ZlIHNlZW4gdGhlIGxhdHRlci4gIEhvdyBkaWQgeW91IGNvbGxlY3Qg
+dGhlIG1lYXN1cmVtZW50cyBvbiBjcHUgdmVyc3VzIElPIHZlcnN1cyBtZW1vcnkgYm91bmQ/DQpB
+bGwgdGltZSB0cmFja2luZyBpcyBkb25lIHZpYSBleHBsaWNpdCBsb2dnaW5nIGluIGJtY3dlYi4g
+U28gd2UgY2FudCByZWFsbHkgdGVsbCB3aGV0aGVyIGl0cyBDUFUgT1IgbWVtb3J5IGJhbmR3aWR0
+aCBidXQgd2Uga25vdyBpZiB0aGUgQ1BVIGlzIHdhaXRpbmcgb24gSU8gam9iIG9yIGl0J3MganVz
+dCBjb21wdXRlIGxvZ2ljIHdoaWNoIGlzIHRha2luZyB0aW1lLiANCg0KDQogPiBJIHdpbGwgdHJ5
+IHRoZSBtdWx0aS10aHJlYWRlZCBzb2x1dGlvbiBwdXQgYnkgeW91IGluIHRoZSBjb21pbmcgZGF5
+cyBhbmQgc2hhcmUgdGhlIHJlc3VsdHMuDQpXaGVuIEkgdHJpZWQgdGhlIHBhdGNoLCBJIGRpZCBu
+b3Qgc2VlIGFueSBpbXByb3ZlbWVudC4gSSBhbHNvIHNhdyB0aGF0IGJtY3dlYiB3YXMgc3RpbGwg
+c2luZ2xlIHRocmVhZGVkLiBUaGVyZSB3YXMgb25seSBvbmUgZW50cnkgdW5kZXIgL3Byb2MvPGJt
+Y3dlYi1waWQ+L3Rhc2sNCkluIHRoZSBwYXRjaCB3ZSBvbmx5IHBhc3MgdGhyZWFkIGNvdW50IHBh
+cmFtZXRlciB0byBib29zdCBJTyBjb250ZXh0LiBBcyBwZXIgbXkgcmVhZGluZyB0aGlzIGRvZXMg
+bm90IGNyZWF0ZSB0aGUgdGhyZWFkcyByYXRoZXIgb25seSBzZXRzIHRoZSBjb25jdXJyZW5jeSBo
+aW50IGZvciBpb19jb250ZXh0LiANCkkgYWRkZWQgYmVsb3cgcGllY2Ugb2YgY29kZSB0byB0aGUg
+d2Vic2VydmVyX21haW4uY3BwIGZpbGUgdG8gY3JlYXRlcyBuZWVkZWQgdGhyZWFkcyBhbmQgY2Fs
+bCBpby5ydW4oKSBvbiBlYWNoIG9uZSBvZiB0aGVtLiANCg0KLi4uLi4uLg0Kdm9pZCBydW5JT1Nl
+cnZpY2UoKSB7DQogICAgIGJvb3N0Ojphc2lvOjppb19jb250ZXh0JiBpbyA9IGNyb3c6OmNvbm5l
+Y3Rpb25zOjpnZXRJb0NvbnRleHQoKTsNCiAgICAgaW8ucnVuKCk7DQp9DQouLi4uLi4uDQogICAg
+ICAgIC8vIENyZWF0ZSBhIHZlY3RvciBvZiB0aHJlYWRzDQogICAgc3RkOjp2ZWN0b3I8c3RkOjp0
+aHJlYWQ+IHRocmVhZHM7DQoNCiAgICAvLyBDcmVhdGUgYW5kIGxhdW5jaCB0aGUgdGhyZWFkcw0K
+ICAgIGZvciAodW5zaWduZWQgaW50IGkgPSAwOyBpIDwgNDsgKytpKSB7DQogICAgICAgIHRocmVh
+ZHMuZW1wbGFjZV9iYWNrKHJ1bklPU2VydmljZSk7DQogICAgfQ0KDQogICAgLy8gV2FpdCBmb3Ig
+YWxsIHRocmVhZHMgdG8gZmluaXNoDQogICAgZm9yIChhdXRvJiB0aHJlYWQgOiB0aHJlYWRzKSB7
+DQogICAgICAgIHRocmVhZC5qb2luKCk7DQogICAgfQ0KLi4uLi4uLi4uDQoNClRoaXMgc2VlbXMg
+dG8gY3JlYXRlIHRoZSBuZWVkZWQgdGhyZWFkcyB3ZSB3YW50IGFuZCBhdCB1bml0IHRlc3QgbGV2
+ZWwgaXQgd29ya2VkIGJ1dCB3aGVuIHdlIHJhbiBzdHJlc3MgdGVzdCB0byBsb29wIGZldyBVUklz
+IGluIG11bHRpcGxlIGNvbmN1cnJlbnQgY2xpZW50cyBpdHMgYnJlYWtpbmcuIA0KVGhlcmUgaXMg
+bm8gY3Jhc2ggZHVtcCBmcm9tIGJtY3dlYiBidXQgaXQganVzdCBhcHBlYXJzIHRvIGJlIGh1bmcg
+YW5kIGdvZXMgdG8gbm9uLXJlc3BvbnNpdmUgc3RhdGUuIE5lZWQgdG8gZGlnIGRlZXBlciBpZiB0
+aGVyZSBpcyBhbnkgc29ydCBvZiBkZWFkbG9ja3MgaGFwcGVuaW5nLiANCkxldCBtZSBrbm93IGlm
+IHlvdSBoYXZlIGFscmVhZHkgZm91bmQgYW55IGZpeCBmcm9tIHlvdXIgdGVzdGluZyBvciBpbiBn
+ZW5lcmFsIGhhdmUgYW55IGltbWVkaWF0ZSB0aG91Z2h0cyBvbiBmcm9tIHdoZXJlIGl0IG1pZ2h0
+IGJlIGNvbWluZy4gDQoNClRoYW5rcyANClJvaGl0IA0KDQoNCg0KLS0tLS1PcmlnaW5hbCBNZXNz
+YWdlLS0tLS0NCkZyb206IEVkIFRhbm91cyA8ZWR0YW5vdXNAZ29vZ2xlLmNvbT4gDQpTZW50OiBU
+aHVyc2RheSwgSnVuZSA4LCAyMDIzIDEwOjQ5IFBNDQpUbzogUm9oaXQgUGFpIDxyb3BhaUBudmlk
+aWEuY29tPg0KQ2M6IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZw0KU3ViamVjdDogUmU6IFByaW9y
+aXRpemluZyBVUklzIHdpdGggdGlnaHQgcGVyZm9ybWFuY2UgcmVxdWlyZW1lbnQgaW4gb3BlbkJt
+YyB3aXRoIGJtY3dlYg0KDQpFeHRlcm5hbCBlbWFpbDogVXNlIGNhdXRpb24gb3BlbmluZyBsaW5r
+cyBvciBhdHRhY2htZW50cw0KDQoNCk9uIFNhdCwgSnVuIDMsIDIwMjMgYXQgMTo0OeKAr0FNIFJv
+aGl0IFBhaSA8cm9wYWlAbnZpZGlhLmNvbT4gd3JvdGU6DQo+DQo+IEhlbGxvIEVkLA0KDQpUaGUg
+YmVsb3cgaXMgYWxsIHJlYWxseSBncmVhdCBkYXRhDQoNCj4NCj4gVGhlcm1hbCBtZXRyaWMgVVJJ
+IGhhcyBhcm91bmQgMTAwIHNlbnNvcnMgYW5kIGhhcyB0aWdodCBsYXRlbmN5IHBlcmYgcmVxdWly
+ZW1lbnQgb2YgNTAwbXMuDQo+IFN0YXRzL2NvdW50ZXIgbWV0cmljIFVSSSBoYXMgYXJvdW5kIDI1
+MDAgcHJvcGVydGllcyB0byBmZXRjaCBmcm9tIHRoZSBiYWNrZW5kIHdoaWNoIHVzZXMgdGhlIEdl
+dE1hbmFnZWRPYmplY3RzIEFQSS4NCj4gVGltZSBhbmFseXNpcyB3YXMgZG9uZSBvbiB0aGUgbGF0
+ZW5jeSBtZWFzdXJlbWVudCBvZiBzdGF0cy9jb3VudGVyIFVSSSBhcyB0aGlzIGltcGFjdHMgdGhl
+IGxhdGVuY3kgb2YgdGhlcm1hbCBtZXRyaWMgVVJJIHdpdGggdGhlIGN1cnJlbnQgYm1jd2ViIHNp
+bmdsZSB0aHJlYWRlZCBuYXR1cmUuDQoNCldoYXQgdHdvIHF1ZXJpZXMgYXJlIHlvdSB0ZXN0aW5n
+IHdpdGg/DQoNCj4NCj4NCj4NCj4gTWV0aG9kIDEgLSBPYmplY3QgTWFuZ2VyIGNhbGwgdG8gdGhl
+IGJhY2tlbmQgc2VydmljZSwgYm1jd2ViIGhhbmRsZXIgY29kZSBwcm9jZXNzZXMgdGhlIHJlc3Bv
+bnNlIGFuZCBwcmVwYXJlcyB0aGUgcmVxdWlyZWQgSlNPTiBvYmplY3RzLg0KPiBhLiBCYWNrZW5k
+IGRidXMgY2FsbCB0dXJuYXJvdW5kIHRpbWUgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgLSA1ODQgbXMNCg0KVGhpcyBpcyBxdWl0ZSBoaWdoLiAgSGF2ZSB5b3Ug
+bG9va2VkIGF0IHJlZHVjaW5nIHRoaXM/ICBUaGlzIHdvdWxkIGltcGx5IHRoYXQgeW91J3JlIGRv
+aW5nIGJsb2NraW5nIGNhbGxzIGluIHlvdXIgYmFja2VuZCBkYWVtb24uDQoNCj4gYi4gTG9naWMg
+aW4gYm1jd2ViIHJvdXRlIGhhbmRsZXIgY29kZSB0byBwcmVwYXJlIHJlc3BvbnNlICAgICAgLSAz
+NjUgbXMNCg0KVGhpcyBjb3VsZCBhbG1vc3QgY2VydGFpbmx5IGJlIHJlZHVjZWQgd2l0aCBzb21l
+IHRhcmdldGVkIHRoaW5ncy4gIFlvdSBkaWRuJ3QgYW5zd2VyIG1lIG9uIHdoZXRoZXIgeW91J3Jl
+IHVzaW5nIFRMUyBpbiB0aGlzIGV4YW1wbGUsIHNvIEknbSBnb2luZyB0byBhc3N1bWUgeW91J3Jl
+IG5vdCBmcm9tIHlvdXIgbnVtYmVycy4gIEkgd291bGQndmUgZXhwZWN0ZWQgY3J5cHRvIHRvIGJl
+IGEgc2lnbmlmaWNhbnQgcGFydCBvZiB5b3VyIHByb2ZpbGUuDQoNCj4gYy4gVG90YWwgVVJJIGxh
+dGVuY3kgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgLSAxMDE5IG1zDQoNCmEgKyBiICE9IGMuICBJcyB0
+aGUgcmVzdCB0aGUgdGltZSBzcGVudCB3cml0aW5nIHRvIHRoZSBzb2NrZXQ/ICBXaGF0IGlzIHRo
+ZSBleHRyYSB0aW1lPw0KDQo+DQo+IE1ldGhvZCAyIC0gQmFja2VuZCBwb3B1bGF0ZXMgYWxsIHRo
+ZSBuZWVkZWQgcHJvcGVydGllcyBpbiBhIHNpbmdsZSBhZ2dyZWdhdGUgcHJvcGVydHkuDQo+IGEu
+IEJhY2tlbmQgZGJ1cyBjYWxsIHR1cm5hcm91bmQgdGltZSAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAtIDE2MSBtcw0KDQpUaGlzIGlzIHN0aWxsIGhpZ2hlciB0
+aGFuIEkgd291bGQgbGlrZSB0byBzZWUsIGJ1dCBpbiB0aGUgcmVhbG0gb2Ygd2hhdCBJIHdvdWxk
+IGV4cGVjdC4NCg0KPiBiLiBMb2dpYyBpbiBibWN3ZWIgcm91dGUgaGFuZGxlciBjb2RlIHRvIHBy
+ZXBhcmUgcmVzcG9uc2UgICAgICAtIDcxICAgbXMNCg0KSSB3b3VsZCd2ZSBleHBlY3RlZCB0byBz
+ZWUgdGhpcyBpbiBzaW5nbGUgZGlnaXQgbXMgZm9yIGEgc2luZ2xlIHByb3BlcnR5LiAgQ2FuIHlv
+dSBwcm9maWxlIGhlcmUgYW5kIHNlZSB3aGF0J3MgdGFraW5nIHNvIGxvbmc/DQoNCj4gYy4gVG90
+YWwgVVJJIGxhdGVuY3kgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgLSAyOTEgbXMNCj4NCj4gTWV0aG9k
+IDMgLSBCbWN3ZWIgcmVhZHMgYWxsIHRoZSBwcm9wZXJ0aWVzIGZyb20gYSBmaWxlIGZkLiBIZXJl
+IGdvYWwgaXMgdG8gZWxpbWluYXRlIGxhdGVuY3kgYW5kIGxvYWQgY29taW5nIGJ5IHVzaW5nIGRi
+dXMgYXMgYW4gSVBDIGZvciBsYXJnZSBwYXlsb2Fkcy4NCj4gYS4gZmQgcmVhZCBjYWxsIGluIGJt
+Y3dlYiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgIC0gNjQgbXMNCg0KVGhpcyBpcyByb3VnaGx5IGVxdWl2YWxlbnQgdG8g
+dGhlIGRidXMgY2FsbCwgc28gaWYgd2UgZmlndXJlIG91dCB3aGVyZSB0aGUgYm90dGxlbmVjayBp
+cyBpbiBtZXRob2QgMUIgZnJvbSB0aGUgYWJvdmUsIHdlIGNvdWxkIHByb2JhYmx5IGdldCB0aGlz
+IGNvbXBlcmFibGUuDQoNCj4gYi4gSlNPTiBvYmplY3Rpb24gcG9wdWxhdGlvbiBmcm9tIHRoZSBy
+ZWFkIGZpbGUgY29udGVudHMgICAgICAgICAgICAgLSA5NiBtcw0KDQpUaGlzIHNlZW1zIHJlYWxs
+eSBoaWdoLg0KDQo+IGMuIFRvdGFsIFVSSSBsYXRlbmN5ICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAt
+IDI1NCBtcw0KPiBUaGUgZmlsZSBjb250ZW50cyB3ZXJlIGluIEpTT04gZm9ybWF0LiBJZiB3ZSBj
+YW4gcmVwbGFjZSB0aGlzIHdpdGggZWZmaWNpZW50IGRhdGEgc3RydWN0dXJlIHdoaWNoIGNhbiBi
+ZSB1c2VkIHdpdGggZmQgcGFzc2luZywgdGhlbiBJIHRoaW5rIHdlIGNhbiBmdXJ0aGVyIG9wdGlt
+aXplIHBvaW50IGIuDQoNCkluIE1ldGhvZCAzIHlvdSd2ZSBlc3NlbnRpYWxseSBpbnZlbnRlZCBh
+IG5ldyBpbnRlcm5hbCBPcGVuQk1DIEFQSS4gIEkgd291bGQgbG92ZSB0byBmb3N0ZXIgZGlzY3Vz
+c2lvbnMgb2YgaG93IHRvIGhhbmRsZSB0aGF0LCBidXQgd2UgbmVlZCB0byB0cmVhdCBpdCBob2xp
+c3RpY2FsbHkgaW4gdGhlIHN5c3RlbSwgYW5kIHVuZGVyc3RhbmQgaG93Og0KMS4gVGhlIHNjaGVt
+YXMgd2lsbCBiZSBtYW5hZ2VkDQoyLiBDb25jdXJyZW5jeSB3aWxsIGJlIG1hbmFnZWQNCjMuIEJs
+b2NraW5nIHdpbGwgYmUgbWFuYWdlZCAocHJlc3VtYWJseSB5b3UgZGlkIGEgYmxvY2tpbmcgZmls
+ZXN5c3RlbSByZWFkIHRvIGdldCB0aGUgZGF0YSkNCg0KSSdtIGhhcHB5IHRvIGhhdmUgdGhvc2Ug
+ZGlzY3Vzc2lvbnMsIGFuZCB0aGUgZGF0YSB5b3UgaGF2ZSBhYm92ZSBpcyBpbnRlcmVzdGluZywg
+YnV0IGFueSBzb3J0IG9mIGNoYW5nZSB3b3VsZCByZXF1aXJlIG11Y2ggbGFyZ2VyIHByb2plY3Qg
+YnV5LWluLg0KDQo+IE9wdGltaXphdGlvbiBhcm91bmQgQ1BVIGJvdW5kIGxvZ2ljIGluIGhhbmRs
+ZXIgY29kZSB3b3VsZCBjZXJ0YWlubHkgaGVscCB0aGUgbGF0ZW5jeSBvZiB0aGUgb3RoZXIgcmVx
+dWVzdHMgcGVuZGluZyBpbiB0aGUgcXVldWUuDQoNCklzIGl0IENQVSBib3VuZCBvciBNZW1vcnkg
+YmFuZHdpZHRoIGJvdW5kPyAgTW9zdCBvZiB0aGUgdGltZSBJJ3ZlIHNlZW4gdGhlIGxhdHRlci4g
+IEhvdyBkaWQgeW91IGNvbGxlY3QgdGhlIG1lYXN1cmVtZW50cyBvbiBjcHUgdmVyc3VzIElPIHZl
+cnN1cyBtZW1vcnkgYm91bmQ/DQoNCj4NCj4gSSB3aWxsIHRyeSB0aGUgbXVsdGktdGhyZWFkZWQg
+c29sdXRpb24gcHV0IGJ5IHlvdSBpbiB0aGUgY29taW5nIGRheXMgYW5kIHNoYXJlIHRoZSByZXN1
+bHRzLg0KPg0KDQpTb3VuZHMgZ29vZC4gIFRoYW5rcyBmb3IgdGhlIGlucHV0Lg0K
