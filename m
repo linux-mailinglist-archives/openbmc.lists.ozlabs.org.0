@@ -2,125 +2,159 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A3E92740E97
-	for <lists+openbmc@lfdr.de>; Wed, 28 Jun 2023 12:24:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0DBC574137B
+	for <lists+openbmc@lfdr.de>; Wed, 28 Jun 2023 16:13:58 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=K+r59U52;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=fj78o0/O;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Qrd3d3qs1z30g0
-	for <lists+openbmc@lfdr.de>; Wed, 28 Jun 2023 20:24:13 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Qrk8g6t40z30fd
+	for <lists+openbmc@lfdr.de>; Thu, 29 Jun 2023 00:13:55 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=Nvidia.com header.i=@Nvidia.com header.a=rsa-sha256 header.s=selector2 header.b=K+r59U52;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=fj78o0/O;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=nvidia.com (client-ip=2a01:111:f400:7e89::606; helo=nam10-mw2-obe.outbound.protection.outlook.com; envelope-from=ropai@nvidia.com; receiver=lists.ozlabs.org)
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on20606.outbound.protection.outlook.com [IPv6:2a01:111:f400:7e89::606])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.55.52.120; helo=mga04.intel.com; envelope-from=johnathanx.mantey@intel.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 63 seconds by postgrey-1.37 at boromir; Thu, 29 Jun 2023 00:13:22 AEST
+Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Qrd310Tytz300d
-	for <openbmc@lists.ozlabs.org>; Wed, 28 Jun 2023 20:23:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Qrk822Jkyz300d
+	for <openbmc@lists.ozlabs.org>; Thu, 29 Jun 2023 00:13:22 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1687961602; x=1719497602;
+  h=message-id:date:subject:to:references:from:in-reply-to:
+   mime-version;
+  bh=fj4Apmbm9gV13RuC6nnZkiy+Cs0V4rLKLh+o+U8TxdI=;
+  b=fj78o0/O+Ieu67xBKAcTpb6jt1E3B5Es5cUvDxPAYAnMCYhn8arTilRh
+   NXj5rZxUyUdBhTHpoUgmH6P4w9Ss58aU0ewnqoqK867xgK4Qqs3jDMX7c
+   O9usQM3zbOfpaACFNsIAM7cX2fNqqJfbrY7lVHVRbXwpk8uDyhDPk6NyR
+   OLRVjD+ExAI6vOHptVO4HRnH4fzuVcI64Xu4Rx847nY6ItbNU9u67UuxI
+   RyqeN6RmZKd91l2HMPpoGDYyt9HfQJvRcNbYz9HuikL54NrBCVgbNlP1r
+   BF/Osg/2rJ0AOWWanw4w0Gefs1A2Q2g19dZEFg9jYa+QrFpmWo2x4+xW4
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10754"; a="360706072"
+X-IronPort-AV: E=Sophos;i="6.01,165,1684825200"; 
+   d="scan'208,217";a="360706072"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Jun 2023 07:11:44 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10754"; a="1047421923"
+X-IronPort-AV: E=Sophos;i="6.01,165,1684825200"; 
+   d="scan'208,217";a="1047421923"
+Received: from fmsmsx603.amr.corp.intel.com ([10.18.126.83])
+  by fmsmga005.fm.intel.com with ESMTP; 28 Jun 2023 07:11:44 -0700
+Received: from fmsmsx602.amr.corp.intel.com (10.18.126.82) by
+ fmsmsx603.amr.corp.intel.com (10.18.126.83) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.27; Wed, 28 Jun 2023 07:11:43 -0700
+Received: from fmsedg602.ED.cps.intel.com (10.1.192.136) by
+ fmsmsx602.amr.corp.intel.com (10.18.126.82) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.27 via Frontend Transport; Wed, 28 Jun 2023 07:11:43 -0700
+Received: from NAM02-DM3-obe.outbound.protection.outlook.com (104.47.56.45) by
+ edgegateway.intel.com (192.55.55.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.27; Wed, 28 Jun 2023 07:11:43 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=iYLsdZIsRLCinnz4wGfq0KDW+ynYXjwDvCgGmM67cgj7hAUK4aaiAcio3/X7JTXjDXL1B+V7twdGg2zcntfaAkAFDG2kXFvD0gevwkfHwP0ql8MWOmb1qWF+1o9jw9Dh5ooZLXD49z9Xsx7foUI68Ce6Uge8RvOAhRtCpSh29KS+/tekadQ/EfNiTBa3M6idt6F/ewVgGMVMtyVRfn3b1EQ98gXaFMleXREWBj+vs0Afg0WPYSnqPxPgu2vqXk70VwcTzVkudll4SAaBnRUhunfIrON3xIBxgqW//Ksy1EqNRbBn87YwOSg2gH2EaQwkiiX9p3T2dn6vI6rgqKNFMA==
+ b=L1au01Ww+7BpYtEz7wdGPGQ90OeNM1P/c2T9TFj2JKKZrTrl3dvJ3+gXSLuyP4umY4c7O3OHDFyrFee5JGF7DcfeQlRkoXAehqQV/4Cms49P3rM1C9tjybsRsDNK4YJnFqmYrtS/yvdIQV32B0Hdw/MUp2D6ORFlTFUMMkKHXz05CqJ/D6B3IrcTFAR+RWfd9RhgK/ME2c3yybFfRVnOw5GohaoUHdFWwTSFDA5i74c3LXczLkzXzKWhA6tNKAmMwhlcW1a3qBXumtNWq/aw81jLvPyUfSHUdg7fbZqTouwfTAv8aqHIt9UXW9aJ7Ne7G8UC7UCk/SpcZCAzFR5K/w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2ew8GSQtiJT9OUlRCfBwluvl6/2Eq7cokrWd7MGsU5U=;
- b=CNWW9frm8/pJeUoOo/rIuhkT8nZ8MwDv0nnI0rNICXQCwF3k5atk+/S27g5/ngNflReF0f5cFs6b2y25oQ0UN0MyJ8OpuHG38kqvvk/ZCBHvbXW30Osqm3bxbG85HbVdoe2AvyiE+F//0gDcsrpZWtcEje0Y8zPPtPJMtVCTIUi/wL5jwsMe8PsK0uqpsTs5v1HClsWdCBVa/dnMxN6oqag9klkHBOKLwmXdq3/mTFrakiEncyx5qgI0+B4OEL4cdWumFlBAXvSkJBL4W+VRdN0HVIsHNe1u6Rkg3mYVjbtI++JIFdztOGZNk5syzhSldsI486WQ4jwrjdyRdUy5zA==
+ bh=AWmgWJAZt6SeDZADA8h79mg6Jd99Y/qDsuBLS7QWZC8=;
+ b=brxooVGrWOeWQ3JBUrpeiRG2i1X0pdWMNSNLQBlm/5ddxzY0sOsikJvx85NJZjKfo3g9wZOI9Ch4q/9N12rM7Pno5a5XjCWOaHusyum5g2Ci5hMsMJyPYOwJjzOpwgGlqzEjNtUAe0Q1d94zcIl1/TFO/wY4PBPwCXl5CRffxMckMiLK/OsrVBUZOo5+f0gy/OftSBvTtbHG5G0WyOXK22UR33qbN68w52dEpeghTnMDn+c9h3vLMNcB/u6kmRUkuM+too5UyQhY7fkeNnehCVjT+5oXFriI3LImMF5bNyM1kHHyggPIFe3MUAdRAQY63tvirScAKwbaXtcOYPrjJg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2ew8GSQtiJT9OUlRCfBwluvl6/2Eq7cokrWd7MGsU5U=;
- b=K+r59U52T7EOuq+DZkuFXEiLUdKgPQjPeKvCRVIPqGrRroyXjve8pBmpinWk3ceQJh/PFzTIkCAbtWqbtHLddGgSJXbAJvj3wy2rcT/tAgpzQ9XvDdkEkdm64WFXrDVvSA6xWhLJtaWqaFTpGYnrtioNjJAsLHtutsN+kVp0vvrrF9e1pHOCauqtcuz3+Bn6k8BrXBxdUrC3JjzCiq5FWp1a2J8MIhrHrTuZOGBaKjLDi8zFidn4ZmpNEK3Nu6moL1bTztPjZYV8+IlvR3p77xPLw/oOjb+9xmuUXlcMhY3yIkogZ9A0Op9v45N0Mho6e6uY2jAckiK1pFl0/qkzPg==
-Received: from LV2PR12MB6014.namprd12.prod.outlook.com (2603:10b6:408:170::18)
- by PH7PR12MB8427.namprd12.prod.outlook.com (2603:10b6:510:242::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6521.26; Wed, 28 Jun
- 2023 10:23:17 +0000
-Received: from LV2PR12MB6014.namprd12.prod.outlook.com
- ([fe80::a9f1:dab0:7a4f:d7fe]) by LV2PR12MB6014.namprd12.prod.outlook.com
- ([fe80::a9f1:dab0:7a4f:d7fe%5]) with mapi id 15.20.6544.012; Wed, 28 Jun 2023
- 10:23:17 +0000
-From: Rohit Pai <ropai@nvidia.com>
-To: Ed Tanous <edtanous@google.com>, "openbmc@lists.ozlabs.org"
-	<openbmc@lists.ozlabs.org>
-Subject: RE: IPMI Sensor Name limitation of 16 bytes
-Thread-Topic: IPMI Sensor Name limitation of 16 bytes
-Thread-Index: AdmByrjOuIQMIt8TQumDRuD60B0ugAAJCxKACe0O3EA=
-Date: Wed, 28 Jun 2023 10:23:17 +0000
-Message-ID:  <LV2PR12MB60148354AAD9D6E65F2B1419CD24A@LV2PR12MB6014.namprd12.prod.outlook.com>
-References:  <LV2PR12MB60140D575EA40854D74472F4CD719@LV2PR12MB6014.namprd12.prod.outlook.com>
- <CAH2-KxAVgJUC89mdLO4RnrQgAV-rVROrUHSDz=j-SzyVhTMKFA@mail.gmail.com>
-In-Reply-To:  <CAH2-KxAVgJUC89mdLO4RnrQgAV-rVROrUHSDz=j-SzyVhTMKFA@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: LV2PR12MB6014:EE_|PH7PR12MB8427:EE_
-x-ms-office365-filtering-correlation-id: 8b840189-804e-4090-8b94-08db77c1b08a
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:  oPIbXmw6NzHetSh/OnLU8S/L1/f5L0AEqR0D3fujxUyMy5OQsvRPiBgjJWILWvGZVqVxkWWIsgNKj5k2/cP6E3q39AGGUyvr82LM3hdqqltMHiixeHwVN21uek21MWn9YKGz6cotFve35EPkMZD4vct/Wb3sJa4b02cEkz1DjpQDfaj9W3G6jdvEy8Ivp6Qj5y5tR24edgYq4HEd+fwDYSbnRqst9cnhaGnCiGDJQiwjNJt3eoNFFsxCib0OaMhQo1OvMuQtCDoQyuYCZW7vEtxyBZneR7vXWajnqniqDwFVVEHOB4lLSQ6ly9Ctnu/HzRmN5+teAC73AJiHCKhwhrmekzrR06NAcDRbDFkgUS1L2k5lB6eGwePwOzhzvd2LH0pDlC2X18fucBq8fgud+zJoUaodbnqmGz8Xh8sAkAV+Jh4DpqBzZC6sPutBaM3BFYY6f/E35VkVtKc0yQRV66/FftFnO6Subu09E8UHsqLVg2McJbeUd47JR1SfznJtM1IFlb+MTcJeP4INdDgLhw9EeYC4sXt7UGboN0lgaj2KsONRuyQ3N/WKsq4+3BiWTIZmI872wdWxn3Ovt2Y4ZWxScGevmKrr+9ogBZvQC1p9DNx37hR1XrOiVWR3ozUX
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:LV2PR12MB6014.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(4636009)(346002)(396003)(39860400002)(136003)(376002)(366004)(451199021)(53546011)(33656002)(52536014)(122000001)(86362001)(41300700001)(76116006)(66476007)(8936002)(64756008)(9326002)(66556008)(55016003)(8676002)(316002)(38100700002)(66446008)(66946007)(5660300002)(38070700005)(478600001)(71200400001)(6506007)(9686003)(186003)(26005)(2906002)(7696005)(83380400001)(110136005);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?utf-8?B?Ty9hQ0VycUVQUXUzY0pWaHVyeGhOdGtyM3ptNjNpemhKMndsSm1ycHJKMDFD?=
- =?utf-8?B?ajFHSHJVSWxmZFRqSDBIclU4VjdvaVNHM0ZPTVJ6V2tDMjFRdjZCbmVRMm9R?=
- =?utf-8?B?WFRCa3oyUCtkS3FpRkU3WG83b2VDZzBKZUJCc2YvNm5kbkNSczFnRXlJd1Zw?=
- =?utf-8?B?K2cxUkZYckFQNHFFYWFxY2x6RG82V1RLUDgwazRsd1J4eE5WYXA1REpwMkdU?=
- =?utf-8?B?Vk1LYjJzVnpidGRoRGtFMFVFcHo4YUJGUi80SG1wMmNMeXd5U3pTaGdiZHpW?=
- =?utf-8?B?QzQ4SS92K1kyc1R1cWZabGI4Z2hUeEt5dVd3QXE5bVpldC9qUU10QUxMZW5v?=
- =?utf-8?B?UGlhdkpnZzdpdk9LNUhvRG05K2FoVEkvcE1tWEFuNjFVbzNPTjdhZDJ4Tk5j?=
- =?utf-8?B?WFpNWGliZ3U3cWhrTnp3c09lL2hZWnVmMlEveXU2RFc5YW56aCsrSXNudy9Y?=
- =?utf-8?B?TG15akU0eXdYNzVsY0JvaXNvY21QS2hDSTJaTnVKNEZPWmVpNExWMWdXUlk3?=
- =?utf-8?B?MElZMFp3WEdmbzVoa09Nc1JJdnl1V1lubU9FZktreThPK0ZQMW5HZ2ZHWWRG?=
- =?utf-8?B?eCtBUDFuMHdJRThRbUhJbjJxdGhxa2tGUHBWUUZCWE0zOXdlbE96OFM1ZFVU?=
- =?utf-8?B?SzY5cmZwa0dZWHdvdUpuZURWR3M3MU1DMWR4bG5XWWdkL0kxMEQrNTNzeU9w?=
- =?utf-8?B?T1JMeFBKdDExa3oxbFdFUVp5UWZURDNaaVRyVkdTM1BndGpNbUZ0ZkRiOTJE?=
- =?utf-8?B?a1RVRzBiM0JuQ0JyUjJCdG9uWm54ak1uZUNBcXRyb0k3VERXRGhQbnV1WSsr?=
- =?utf-8?B?WS8vMU5CVG9yVVhqZ2VkR2YwUGFaanA1UG9LQXpCcUFhbm9saENNVnExUVlE?=
- =?utf-8?B?L3FBK09LNDZuUU1BdCtlMEFST1Y4bEIvcFJYYW5nQ1RQYVZocVdKNy9TQU1Y?=
- =?utf-8?B?YzgwSy9ZMXhSaUFuUy9aSkp3eDdFakM5dHoycGhaOUdJWUxqclVYS3ZYcUxS?=
- =?utf-8?B?M3RrMkdKNnZtZERNSGRVbTBSWnFuTjhmUUkzQWFtY2h6Mk9CbTVFZi9nMW1z?=
- =?utf-8?B?Yld6NjMwME5OL3BsUEJLb2pHYWJXKzQyOEZaY3pKanpxS0JhYzhvWGpIUGY2?=
- =?utf-8?B?UFFKQ0FpNnJVYjBkNnZXczFBcW1iSWNRZElqS3VjNXgwV2hsS2NodHVDUEUr?=
- =?utf-8?B?MGhqa1k0bVdXUVVUY242d2lwL2R3UnROMEhxL052TVgwdTVMS1Z0eTlhamky?=
- =?utf-8?B?VkUyL1kyYU9sblExaVN6a2NWd1lBVEhRNzdaeHNYTlp2T2d6ZTVwVVNJejVL?=
- =?utf-8?B?TVg0RmgzSzQ3V00wK0c2UWc2YVFsc3VqN2lUMHpyVXh6bjJqb3h4KzBNMVRq?=
- =?utf-8?B?alh2cHM3WERUVW9XQlhDcTUrM1FYeWJEeTJQNE1kcGxQYXZuZGpSR0J4YVFS?=
- =?utf-8?B?a20zcVF6dXVDMTF3QnY3bVMxSnFWenlrbWlmaHJYK2xuckIyTEdEZmIwcTFW?=
- =?utf-8?B?OEZFZHV2dWdYNTFSaW1hVXhzOXBRaG9FU21OdmJqZ1FhekZMZUljeFlpLytI?=
- =?utf-8?B?TSttTGRoMFEydVprZ1NCalgzMWY0TW53T3QxOWJSdkM1b2YrNU8vbmR1NHJU?=
- =?utf-8?B?RXZXOTBJSS9ObWcvekZxV3IwZllyZWhFQ1A5N2FOeXMvU2NpTTZhQXc4ZHFQ?=
- =?utf-8?B?VnFsYzJZQW9pY1lOK3h0TkRKOXpxMjc1bTN6aFVkTnorcHpDOWs2T2RSb05s?=
- =?utf-8?B?bktrMHFQRVhSR1VJRmI4a242cnBwWTA1STU5eHlPRnRwUzZDYzRuYkNCazFl?=
- =?utf-8?B?L0s5L1krZHJmZ0NzcDhlYUJZOG1zRVJvaGtkbGpGbHl6V3VPb05MUGQvQmF6?=
- =?utf-8?B?QkJBYW9KWTJsay82c2hKYU1HbUF6TlpxYnFtYXBKWkMvYkdDVldWZXNjUDFi?=
- =?utf-8?B?N3hUUU90ZE9UQnllY2ROeGFhL3Q0c0ZmMnVNcThnYURMS2NZdTR4ODY5U3Fr?=
- =?utf-8?B?alN1VklIZTEvYjkwT1Y0UzRaTU1uZnFOQzFqSDlJRnhDRzR4eW9BZkJIdDNE?=
- =?utf-8?B?dWlaOS9YMGhJY2FyS2pSMDVTMzFIRjBVREQrOGZIekZCMUNDRXYwVHlPYzhy?=
- =?utf-8?Q?8N6A=3D?=
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from BL1PR11MB5978.namprd11.prod.outlook.com (2603:10b6:208:385::18)
+ by DM8PR11MB5687.namprd11.prod.outlook.com (2603:10b6:8:22::7) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.6521.24; Wed, 28 Jun 2023 14:11:40 +0000
+Received: from BL1PR11MB5978.namprd11.prod.outlook.com
+ ([fe80::19b7:466f:32ac:b764]) by BL1PR11MB5978.namprd11.prod.outlook.com
+ ([fe80::19b7:466f:32ac:b764%3]) with mapi id 15.20.6521.026; Wed, 28 Jun 2023
+ 14:11:40 +0000
 Content-Type: multipart/alternative;
-	boundary="_000_LV2PR12MB60148354AAD9D6E65F2B1419CD24ALV2PR12MB6014namp_"
+	boundary="------------6qnU2TGWjWqzDWtp0Qvf5Ma0"
+Message-ID: <57ae2df9-214c-ac48-f7ae-f069c83c9617@intel.com>
+Date: Wed, 28 Jun 2023 07:11:36 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: IPMI Sensor Name limitation of 16 bytes
+Content-Language: en-US
+To: Rohit Pai <ropai@nvidia.com>, Ed Tanous <edtanous@google.com>,
+	"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+References: <LV2PR12MB60140D575EA40854D74472F4CD719@LV2PR12MB6014.namprd12.prod.outlook.com>
+ <CAH2-KxAVgJUC89mdLO4RnrQgAV-rVROrUHSDz=j-SzyVhTMKFA@mail.gmail.com>
+ <LV2PR12MB60148354AAD9D6E65F2B1419CD24A@LV2PR12MB6014.namprd12.prod.outlook.com>
+From: Johnathan Mantey <johnathanx.mantey@intel.com>
+In-Reply-To: <LV2PR12MB60148354AAD9D6E65F2B1419CD24A@LV2PR12MB6014.namprd12.prod.outlook.com>
+X-ClientProxiedBy: SJ0PR03CA0285.namprd03.prod.outlook.com
+ (2603:10b6:a03:39e::20) To BL1PR11MB5978.namprd11.prod.outlook.com
+ (2603:10b6:208:385::18)
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: BL1PR11MB5978:EE_|DM8PR11MB5687:EE_
+X-MS-Office365-Filtering-Correlation-Id: e0c1bf52-99d3-4055-dcc0-08db77e197d6
+X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: MaQ5Nr/NiCc6sZ8O78aPJQMaY99KK/PHSfTlmR8NnZpDDlMxHmy9GQJ6eQ0Aw0dOuE+beGM7vd70k0b3Fp1rCwQaWumoWvXj+TjAlHl+kzq+XRjmNbno0qG2joGV1pYP9YejFB4Ex6n13+pt4JymKudFa79/TTpYRXI5gZ2neZn6+Wn+6+x2tT+SNEgVtiPyfimk/ZorDKgfQbifYEy6nYJLgtI1H+FbqKj6qtofZ/0J4VCMnHjAKhOreQKXFT4Q5FSJ8DweYjcuV8YqVD26XEvnhcSJCgoxVY4iONooTJ8v0oktxnlmb6FqytG9kbxQNLkK8tSlLppVP7blAmeiHxFGAdfFC2LKyAJej3beJ5m+7E/sub46rupzmI4Hww9ZFtmDYqB6CL3W1NVfj4tPsAGVpWjUuoV2mzzFCkrVSv37GAnChRLjastyHek6IiTMsgAuuqdLUMsfIrnH3lrJya1E8NqnVk0i5o/bBbKfefyvuDR7dOmBYtva3HxBpvOxZ/iBwgg8pseP3vFo2NtFMbgjGgNprcoJjxNzZdAxzZyFF1owK0DFUrkWo8G7hLR2b3jcR4RYKURhavSN2x+fpGhLgi2G+orHiH+GZFkChwlDaS2kSBaKLURM32ho4HVUTF9rDiowD/bTfmvN4PDBXA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR11MB5978.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(136003)(346002)(39860400002)(366004)(396003)(376002)(451199021)(6512007)(31686004)(19627235002)(26005)(66556008)(66476007)(5660300002)(86362001)(40140700001)(8936002)(41300700001)(316002)(8676002)(82960400001)(36756003)(66946007)(38100700002)(31696002)(110136005)(6506007)(53546011)(6486002)(186003)(2906002)(83380400001)(33964004)(6666004)(2616005)(478600001)(45980500001)(43740500002);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?L1YxUWVsdmhmdEk4L2I5M1JwNjdJdzZmaHdWbXdDQjhVQnVFN0RWb3BxVkxi?=
+ =?utf-8?B?bVV2aUxCYS82WTY0R0dDU3kxRE5JaHhlejE2VWdTRTgvQTR0Mzc3RkJ1UXlv?=
+ =?utf-8?B?MXJVem5rRDFyc3FTOGpPTEdJQW5HbUpGTmhWaWV6RWpOeDJVQXJ4YXE2aElZ?=
+ =?utf-8?B?ekl4ZDErTXBRN1pJQ2gvdVJ5TVQyem9BbzBBTVM4R1BIWjR4Nnp5UWE5dzZP?=
+ =?utf-8?B?NXZVemx6S0ZWK0FsYUl2ZVhwWFkvYXpRaGhrKzdwRE1EOGdwamFDTEdOOEN5?=
+ =?utf-8?B?YVJsZU53OWpnaGxEYjB5WHpLMDlZcDVDbVlEcFlLekJ2YS9uRTVYdmoyejN2?=
+ =?utf-8?B?YzRkUlB5SkZ0Vm1LQUhla0R2VklPNDc3S0JodjZhQUxlZzYzL1NoWktBQmp0?=
+ =?utf-8?B?Ty8wY1FRTHJRdUwxamgrMTVtMlpJL2VzOGh6dUpjbjRxQlRhWmRwMjlCaXpX?=
+ =?utf-8?B?SGQyUVhmUFRkSGhxWFdFVDFqY1RyQTZyVnljbWZIenhHNGI3cHIrNkh4UW1z?=
+ =?utf-8?B?ZkpISkVGMVlqMGpORXFtdHNtUjAvTlVUL1FZK05Sa1ZaU3p1dTZRSEgxbk9D?=
+ =?utf-8?B?djNRV3NIb0hkVGZmMnRWNDRJTEJad1dkTDFmWEFuc0d6bGdvR3pxdzdNS3Jx?=
+ =?utf-8?B?cG5iYjVtZXVtdE44MEVobUhmSlVMTGZRTVNESlkvOExKd240S3o5TmVTbUVn?=
+ =?utf-8?B?dThMVUhlUFNTMnhLUDdMR29ZTEd1bkVLYWZIWnlNSDNpVTNsWG9VTTRCRzlw?=
+ =?utf-8?B?MndKL0NwOGZlRXo3ZFNEWFhGRjM3eGJJQ0JFRVNsTExQTm42NlREcThjcVVZ?=
+ =?utf-8?B?Ym9lYVpEYWhqRXBkUEJBNEJzb2JsN1VaVHlkdnRKN3RjWXo2UU81NnFVSkJs?=
+ =?utf-8?B?SG84b1Y5alByZ1E5dDVObUpsQXNzemtCWm9idXJaTjljamRTbnZnNGhLcEN1?=
+ =?utf-8?B?U2xZZyswUk5BWWpRam5wRVpnT3NGNU11dFliVXQ4WEdtTDZhbkI0Rk02bWh2?=
+ =?utf-8?B?cXRmVzZoQThVdHBYSUE1WkxlVXY3bW95YjV4bmw1RW9JZUFVczNjbVoxL2xm?=
+ =?utf-8?B?alJYcTFxb3ZNL2hjc2VHcmdlQ0tXYkJNcU1XZi9PM0ZzMUdNRmNEc254UVJJ?=
+ =?utf-8?B?ZUtVTkgycHhJK3JUWUlqazdPb0F1YWlaZ3VYQnVVM1ZscHgvODJPZit6cDBq?=
+ =?utf-8?B?dnEydVdQZkNMQVJGdmJsMHZMUWxZVjBkUHB1VmVVZ2d5bHcwM1g1N1pqeE9F?=
+ =?utf-8?B?ZW9HWTFZK0habUZzMXBReTY2K2lHcHM0ZExJVkdRYTdUWkNUditxTzNDY0pP?=
+ =?utf-8?B?OWRCMjBvS2RtNzhXcFNPd0RwbFZJSGw1VXhFRFpkcUFwUm03UFNOWTYwVmhr?=
+ =?utf-8?B?NVJSUWYxVGxuRkRIT2VoR0d3NVA1N2MwY0RDNkpLMVhUMTgxRmFFTFZTNFVZ?=
+ =?utf-8?B?aHlVVHQ1anh3dnNmc0dlOU83SVhCNG5WajR3U1o2WGZ0SFUvRmdoRlRJOFNG?=
+ =?utf-8?B?VDFHdXZsRVBlWDF6NE1TcDlNUjgzeXN1QmRYL3YrZ2FTc1RSMTJkNk04UThm?=
+ =?utf-8?B?UGxvRTRUY2lyaU1LRGJGY0pPRnNmS0w5TEZQUE5xS0NHL05iRytJWlVYTFUv?=
+ =?utf-8?B?K3NBV2xHRXJmTGlGWXlnR0VHRkg0QW4rN2xHbmNJczRRaDVzU3MyU3hiZEFl?=
+ =?utf-8?B?cHRmRUJ3cUU5VEE3eG8rVEhYT0R3U095enVoQlkzb3JWV0k0cW1FTlF4dGgr?=
+ =?utf-8?B?bFBHSVJyN01PUDQ3QUl2QlFmcUFQN0cyeEFkVUhxTkVpZnpVeWdyWHZPVldu?=
+ =?utf-8?B?bTg0c1VST2pKZmVwMHA5YWtwUXpiSE1BaHlvRWw1ZTE1RHdXekJ0TGZSY3Nl?=
+ =?utf-8?B?MjFJN0dQTlF1b2JxMFlCVG5KQzdvdjUwaEFibnppL1R6MmlPVlV5bERJcE5G?=
+ =?utf-8?B?elhCK1hFYVpubjRMMkVwa21RZk92VW9FYkhvNCtkcFJjbjJDdituejdhZk1h?=
+ =?utf-8?B?Y2xIVkowWGZYdElXVGV6L3FXTDd0YWJSUExzN3BzTWdVaTZwN0lFdmdLMWU4?=
+ =?utf-8?B?dk1UWTNEeHJNU1JyR0t4VGxFVlk3U1NWc01kREkxWm9SaTJXcVUxVlpnUWRV?=
+ =?utf-8?B?a0FnTG8zcFpaMS9RM2hvYi9hcXU4QzlJWktVRVlOOFNyRktaLzQySjJwdTYr?=
+ =?utf-8?B?UUE9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: e0c1bf52-99d3-4055-dcc0-08db77e197d6
+X-MS-Exchange-CrossTenant-AuthSource: BL1PR11MB5978.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: LV2PR12MB6014.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8b840189-804e-4090-8b94-08db77c1b08a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Jun 2023 10:23:17.7096
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Jun 2023 14:11:40.3369
  (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: zsdRSs2pODPPasaNGFqb0XWBucQemyvItROq5yO6bygcJdYs2klz1TWMsQBHDi74bjw+lCazQAfIv84dc17YcQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB8427
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: PmBymRsoXeZhVjLGV+Jq/h6FbSBr/e+PzJf8Vafjk+LaYxkLsJeIwitig/hcHTRJ4gTfJX6ycC5GU6kJuohXiCZ8JZRADJi/rvwUeEYcUtI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM8PR11MB5687
+X-OriginatorOrg: intel.com
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -135,417 +169,520 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_LV2PR12MB60148354AAD9D6E65F2B1419CD24ALV2PR12MB6014namp_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+--------------6qnU2TGWjWqzDWtp0Qvf5Ma0
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
 
-SGVsbG8sDQoNCg0KDQpCZWxvdyBJIGhhdmUgdGhlIHByb3Bvc2FsIGZvciBhIHNpbXBsZSBhbGdv
-cml0aG0gd2hpY2ggc2VlbSB0byB3b3JrIGZvciB0aGUgc2Vuc29ycyBuYW1lcyB3ZSBoYXZlIGlu
-IG91ciBwbGF0Zm9ybXMuDQoNCkFueSBmZWVkYmFjayBvbiBtYWtpbmcgaXQgbW9yZSBnZW5lcmlj
-IGFuZCByZXVzYWJsZSB3b3VsZCBiZSBhcHByZWNpYXRlZC4NCg0KDQoNClN0ZXAgMTogU3BsaXQg
-dGhlIGdpdmVuIG5hbWUgaW50byBzdWIgd29yZHMgdXNpbmcgcHJlZGVmaW5lZCBkZWxpbWl0ZXIg
-c2V0LCByZW1vdmUgYWxsIGRlbGltaXRlcnMsIGFuZCBjb21iaW5lIHRoZSBzdWIgd29yZHMsIHJl
-bWVtYmVyIHRoZSBwb3NpdGlvbiBvZiB0aGUgZGVsaW1pdGVycy4gU29tZSBleGFtcGxlcyBvZiBk
-ZWxpbWl0ZXIgYXJlIF8sIHNwYWNlLCAtLCBjYW1lbENhc2UgcGF0dGVybiwgZXRjLiBDb21iaW5l
-IHRoZSB3b3JkcyB3aXRob3V0IGRlbGltaXRlcnMgYW5kIGV4aXQgaWYgdGhlIG5ldyBzdHJpbmcg
-aXMgbGVzcyB0aGFuIDE2IGNoYXJzLg0KDQpTdGVwIDI6IFN0YXJ0IGZyb20gdGhlIGZpcnN0IHN1
-YiB3b3JkIGFuZCByZXBlYXQgZm9yIGFsbCB0aGUgc3ViIHdvcmRzLg0KDQogICAgICAgICAgICAg
-ICAyLjE6IGlmIHRoZSBzdWIgd29yZCBjaGFyYWN0ZXIgbGVuZ3RoIGlzIGxlc3MgdGhhbiBhbGxv
-d2VkX21pbl9jaGFyX2xlbmd0aCB0aGVuIHNraXAgYW5kIGxlYXZlIGl0IGFzIGl0IGlzLg0KDQog
-ICAgICAgICAgICAgICAyLjI6IGVsc2UgcmVtb3ZlIGFsbCB0aGUgY2hhcmFjdGVycyBmcm9tIHRo
-ZSBzdWIgd29yZCB3aGljaCBhcHBlYXIgYWZ0ZXIgdGhlIG9mZnNldCBhbGxvd2VkX21pbl9jaGFy
-X2xlbmd0aA0KDQogICAgICAgICAgICAgICAyLjM6IFN0b3AgdGhlIGFiYnJldmlhdGlvbiBwcm9j
-ZXNzIGlmIHRoZSB0b3RhbCBsZW5ndGggb2YgdGhlIG5ldyBzdHJpbmcgaXMgbGVzcyB0aGFuIDE2
-IGNoYXJzLg0KDQpTdGVwIDM6IFN0YXJ0IGJ5IHNldHRpbmcgdGhyZXNob2xkIGFzICggYWxsb3dl
-ZF9taW5fY2hhcl9sZW5ndGggLSAxICkgYW5kIHJlcGVhdCBieSBkZWNyZWFzaW5nIHRocmVzaG9s
-ZCBieSAxIGluIGVhY2ggaXRlcmF0aW9uIHVudGlsIGl0IHJlYWNoZXMgdmFsdWUgMS4NCg0KICAg
-ICAgICAgICAgICAgMy4xOiBpZiB0aGUgc3ViIHdvcmQgY2hhcmFjdGVyIGxlbmd0aCBpcyBsZXNz
-IHRoYW4gdGhyZXNob2xkIHRoZW4gc2tpcCBhbmQgbGVhdmUgaXQgYXMgaXQgaXMuDQoNCiAgICAg
-ICAgICAgICAgIDMuMjogZWxzZSByZW1vdmUgYWxsIHRoZSBjaGFyYWN0ZXJzIGZyb20gdGhlIHN1
-YiB3b3JkIHdoaWNoIGFwcGVhciBhZnRlciB0aGUgb2Zmc2V0IHRocmVzaG9sZC4NCg0KICAgICAg
-ICAgICAgICAgMy4zOiBTdG9wIHRoZSBhYmJyZXZpYXRpb24gcHJvY2VzcyBpZiB0aGUgdG90YWwg
-bGVuZ3RoIG9mIHRoZSBuZXcgc3RyaW5nIGlzIGxlc3MgdGhhbiAxNiBjaGFycy4NCg0KU3RlcCA0
-ICAgIFJlbW92ZSBzdWIgd29yZHMgc3RhcnRpbmcgZnJvbSB0aGUgZmlyc3Qgc3ViIHdvcmQgdW50
-aWwgd2UgcmVhY2ggbGFzdCBzdWIgd29yZCBvciBpZiB0aGUgdG90YWwgbGVuZ3RoIG9mIHRoZSBu
-ZXcgc3RyaW5nIGlzIGxlc3MgdGhhbiAxNiBjaGFycy4NCg0KDQoNClNvbWUgdW5pdCB0ZXN0IGRh
-dGEgd2l0aCBhbGxvd2VkX21pbl9jaGFyX2xlbmd0aCBzZXQgdG8gdmFsdWUgNS4NCg0KDQpMZW5n
-dGgNCklucHV0IE5hbWVzDQpOZXcgTGVuZ3RoDQpTaG9ydCBOYW1lcw0KMTQNCkNQVV8wX0VuZXJn
-eV8wDQoxNA0KQ1BVXzBfRW5lcmd5XzANCjIwDQpHUFVfMF9EUkFNXzBfUG93ZXJfMA0KMTUNCkdQ
-VTBEUkFNMFBvd2VyMA0KMjANCkNQVV8wX0VEUFZpb2xhdGlvbl8wDQoxNQ0KQ1BVMEVEUFZpb2xh
-dGkwDQoyNg0KUHJvY2Vzc29yTW9kdWxlXzBfRW5lcmd5XzANCjE1DQpQcm9jTW9kdTBFbmVyZzAN
-CjIzDQpCYXNlYm9hcmRfSFNDXzBfUG93ZXJfMA0KMTUNCkJhc2ViSFNDMFBvd2VyMA0KNTANClBy
-b2Nlc3Nvck1vZHVsZV8wX01lbUNudGxfMF9QYWdlUmV0aXJlbWVudENvdW50bF8wDQoxNQ0KUE0w
-TUMwUGFSZUNvdW4wDQoNCg0KDQoNCg0KDQoNClRoYW5rcw0KDQpSb2hpdA0KDQoNCg0KLS0tLS1P
-cmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IEVkIFRhbm91cyA8ZWR0YW5vdXNAZ29vZ2xlLmNv
-bT4NClNlbnQ6IFR1ZXNkYXksIE1heSA5LCAyMDIzIDI6MjIgQU0NClRvOiBSb2hpdCBQYWkgPHJv
-cGFpQG52aWRpYS5jb20+DQpDYzogb3BlbmJtY0BsaXN0cy5vemxhYnMub3JnDQpTdWJqZWN0OiBS
-ZTogSVBNSSBTZW5zb3IgTmFtZSBsaW1pdGF0aW9uIG9mIDE2IGJ5dGVzDQoNCg0KDQpFeHRlcm5h
-bCBlbWFpbDogVXNlIGNhdXRpb24gb3BlbmluZyBsaW5rcyBvciBhdHRhY2htZW50cw0KDQoNCg0K
-DQoNCk9uIE1vbiwgTWF5IDgsIDIwMjMgYXQgMTA6NTLigK9BTSBSb2hpdCBQYWkgPHJvcGFpQG52
-aWRpYS5jb208bWFpbHRvOnJvcGFpQG52aWRpYS5jb20+PiB3cm90ZToNCg0KPg0KDQo+IFdvdWxk
-IGxpa2UgdG8gcmVjZWl2ZSBmZWVkYmFjayBhYm91dCB0aGlzIHNvbHV0aW9uIGFuZCBhbnkgYWx0
-ZXJuYXRpdmUgdGhhdCBtYXkgZXhpc3QgdG8gc29sdmUgdGhpcyBwcm9ibGVtLiBBbnkgcG9pbnRl
-cnMgb24gZXhpc3RpbmcgcGF0Y2ggYWxzbyB3b3VsZCBiZSBoZWxwZnVsLg0KDQo+DQoNCg0KDQpP
-dmVyYWxsLCBJJ20gaW4gc3VwcG9ydCBvZiB0aGlzIGZlYXR1cmUsIGFuZCBJIHRoaW5rIGl0IHdv
-dWxkIGdpdmUgdXMgYSBsb3QgbW9yZSBmbGV4aWJpbGl0eSBpbiBSZWRmaXNoIGluIHRoZSBmdXR1
-cmUuICBJdCdzIG9uZSBvZiB0aGUgZGVzaWduIHBvaW50cyB0aGF0IEkgcmVhbGx5IHdhc24ndCBo
-YXBweSB3aXRoIGluIHRoZSBvcmlnaW5hbCBzZW5zb3Igc3Vic3lzdGVtLg0KDQoNCg0KV2hpbGUg
-SSB0aGluayBtb3N0IHdvdWxkIGRpcmVjdGx5IHRha2UgdGhpcyBmZWF0dXJlLCBvbmUgdGhpbmcg
-dG8ga2VlcCBpbiBtaW5kIGlzIHRoYXQgdGhlcmUgd2VyZSBvcmdhbml6YXRpb25zIHRoYXQgaGFk
-IHRoZSByZXF1aXJlbWVudCB0byBiZSBhYmxlIHRvIG1hcCBJUE1JIG5hbWVzIHRvIFJlZGZpc2gg
-bmFtZXMgdXNpbmcgYSByZWFzb25hYmxlIGFsZ29yaXRobS4gIEhhdmluZyB0aGlzIHN1cHBvcnRl
-ZCB3b3VsZCBicmVhayB0aGF0IHJlcXVpcmVtZW50LCBidXQgSSB0aGluayB0aGF0J3Mgc29tZXRo
-aW5nIHRoYXQgYW4gaW5kaXZpZHVhbCBtYWNoaW5lIGNhbiBmaWd1cmUgb3V0IGJ5IGNvbWluZyB1
-cCB3aXRoIG5hbWVzIGxlc3MgdGhhbiAxNiBjaGFyYWN0ZXJzIGZvciBwbGF0Zm9ybXMgdGhhdCBo
-YXZlIHRoaXMgcmVxdWlyZW1lbnQuDQoNCg0KDQpPbmUgdGhpbmcgSSB3b3VsZCBhbHNvIHZlcnkg
-bXVjaCBjYXV0aW9uIGFnYWluc3QgaXMgcmVkdWNpbmcgdGhlIHBlcmZvcm1hbmNlIG9mIFNEUiBs
-aXN0aW5nIGFueSBtb3JlIHRoYW4gaXQgYWxyZWFkeSBpcy4gIEl0J3MgY3VycmVudCBwZXJmb3Jt
-YW5jZSBpcyBhdCBiYXNpY2FsbHkgdGhlIGJhcmUgbWluaW11bSBvZiB3aGVyZSBpdCBzaG91bGQg
-YmUsIHNvIGlmIG1ha2luZyB0aGlzIGNoYW5nZSByZXF1aXJlcyBhbnkgYWRkaXRpb25hbCBkYnVz
-IGNhbGxzLCB0aGF0J3MgZ29pbmcgdG8gY2F1c2Ugc29tZSBwcm9ibGVtcy4NCg0KDQoNCg0KDQpP
-bmUgdGhpbmcgSSBoYWQgYWR2b2NhdGVkIGZvciBpbiB0aGUgcGFzdCBpcyBzaW1wbHkgZG9pbmcg
-YWxnb3JpdGhtaWMgc3RyaW5nIHJlZHVjdGlvbiB1bnRpbCBpdCBmaXRzLCB1c2luZyB0aGUgbW9z
-dCBjb21tb24gdHJhbnNmb3Jtcy4NCg0KDQoNClBvd2VyIC0+IFB3cg0KDQpUZW1wZXJhdHVyZSAt
-PiBUZW1wDQoNClBvd2VyIFN1cHBseSAtPiBQU1UNCg0KDQoNClRoZXNlIGFyZSBhbGdvcml0aG1z
-IHRoYXQgaHVtYW5zIGFscmVhZHkgZG8gdG9kYXkgbWFudWFsbHkgdG8gZ2V0IHRvIHRoZSAxNiBj
-aGFyIGxlbmd0aCwgc28gaW4gdGhlb3J5IHlvdSBjb3VsZCBkbyB0aGlzIHRyYW5zZm9ybSB3aXRo
-b3V0IGFueSBjaGFuZ2VzIG5lZWRlZCB0byB0aGUgYWN0dWFsIHBsYXRmb3JtIGNvbmZpZ3MsIGFu
-ZCBpZiBzb21lb25lIHdhbnRlZCB0byByZXZlcnNlIHRoZSBhbGdvcml0aG0gbGF0ZXIgYW5kIGNv
-bWUgdXAgd2l0aCB0aGUgUmVkZmlzaCBzdHJpbmcsIHRoZXkgY291bGQuICBTb21ldGhpbmcgeW91
-IGNvdWxkIGNvbnNpZGVyLCBidXQgdGhlcmUgbWlnaHQgYmUgc2ltcGxlciBpZGVhcyB0aGF0IG1l
-ZXQgeW91ciBnb2Fscy4NCg==
+On 6/28/23 03:23, Rohit Pai wrote:
+>
+> Hello,
+>
+> Below I have the proposal for a simple algorithm which seem to work 
+> for the sensors names we have in our platforms.
+>
+> Any feedback on making it more generic and reusable would be appreciated.
+>
+I am currently in the process of a different solution. Instead of using 
+an algorithm, which is either going to come up with a very mangled 
+solution (50 char example below), or an algorithm that may mistakenly 
+generate duplicate sensor names, we're proposing adding a "ShortName" 
+entry to the JSON configuration file read by Entity Manager. Doing so 
+allows each company to decide for themselves how they want the name to 
+appear.
 
---_000_LV2PR12MB60148354AAD9D6E65F2B1419CD24ALV2PR12MB6014namp_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+For example:
+"Name": "CPU_ADC_Controller",
+"ShortName": "CPU_ADC_Ctrlr",
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6ZHQ9InV1aWQ6QzJGNDEwMTAtNjVC
-My0xMWQxLUEyOUYtMDBBQTAwQzE0ODgyIiB4bWxuczptPSJodHRwOi8vc2NoZW1hcy5taWNyb3Nv
-ZnQuY29tL29mZmljZS8yMDA0LzEyL29tbWwiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy9UUi9S
-RUMtaHRtbDQwIj4NCjxoZWFkPg0KPG1ldGEgaHR0cC1lcXVpdj0iQ29udGVudC1UeXBlIiBjb250
-ZW50PSJ0ZXh0L2h0bWw7IGNoYXJzZXQ9dXRmLTgiPg0KPG1ldGEgbmFtZT0iR2VuZXJhdG9yIiBj
-b250ZW50PSJNaWNyb3NvZnQgV29yZCAxNSAoZmlsdGVyZWQgbWVkaXVtKSI+DQo8c3R5bGU+PCEt
-LQ0KLyogRm9udCBEZWZpbml0aW9ucyAqLw0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseToiQ2Ft
-YnJpYSBNYXRoIjsNCglwYW5vc2UtMToyIDQgNSAzIDUgNCA2IDMgMiA0O30NCkBmb250LWZhY2UN
-Cgl7Zm9udC1mYW1pbHk6Q2FsaWJyaTsNCglwYW5vc2UtMToyIDE1IDUgMiAyIDIgNCAzIDIgNDt9
-DQpAZm9udC1mYWNlDQoJe2ZvbnQtZmFtaWx5OiJHb29nbGUgU2FucyBNb25vIjsNCglwYW5vc2Ut
-MTowIDAgMCAwIDAgMCAwIDAgMCAwO30NCi8qIFN0eWxlIERlZmluaXRpb25zICovDQpwLk1zb05v
-cm1hbCwgbGkuTXNvTm9ybWFsLCBkaXYuTXNvTm9ybWFsDQoJe21hcmdpbjowaW47DQoJZm9udC1z
-aXplOjExLjBwdDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjsNCgltc28tbGln
-YXR1cmVzOnN0YW5kYXJkY29udGV4dHVhbDt9DQpwLk1zb1BsYWluVGV4dCwgbGkuTXNvUGxhaW5U
-ZXh0LCBkaXYuTXNvUGxhaW5UZXh0DQoJe21zby1zdHlsZS1wcmlvcml0eTo5OTsNCgltc28tc3R5
-bGUtbGluazoiUGxhaW4gVGV4dCBDaGFyIjsNCgltYXJnaW46MGluOw0KCWZvbnQtc2l6ZToxMS4w
-cHQ7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7DQoJbXNvLWxpZ2F0dXJlczpz
-dGFuZGFyZGNvbnRleHR1YWw7fQ0Kc3Bhbi5QbGFpblRleHRDaGFyDQoJe21zby1zdHlsZS1uYW1l
-OiJQbGFpbiBUZXh0IENoYXIiOw0KCW1zby1zdHlsZS1wcmlvcml0eTo5OTsNCgltc28tc3R5bGUt
-bGluazoiUGxhaW4gVGV4dCI7DQoJZm9udC1mYW1pbHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7fQ0K
-Lk1zb0NocERlZmF1bHQNCgl7bXNvLXN0eWxlLXR5cGU6ZXhwb3J0LW9ubHk7DQoJZm9udC1mYW1p
-bHk6IkNhbGlicmkiLHNhbnMtc2VyaWY7fQ0KQHBhZ2UgV29yZFNlY3Rpb24xDQoJe3NpemU6OC41
-aW4gMTEuMGluOw0KCW1hcmdpbjoxLjBpbiAxLjBpbiAxLjBpbiAxLjBpbjt9DQpkaXYuV29yZFNl
-Y3Rpb24xDQoJe3BhZ2U6V29yZFNlY3Rpb24xO30NCi0tPjwvc3R5bGU+PCEtLVtpZiBndGUgbXNv
-IDldPjx4bWw+DQo8bzpzaGFwZWRlZmF1bHRzIHY6ZXh0PSJlZGl0IiBzcGlkbWF4PSIxMDI2IiAv
-Pg0KPC94bWw+PCFbZW5kaWZdLS0+PCEtLVtpZiBndGUgbXNvIDldPjx4bWw+DQo8bzpzaGFwZWxh
-eW91dCB2OmV4dD0iZWRpdCI+DQo8bzppZG1hcCB2OmV4dD0iZWRpdCIgZGF0YT0iMSIgLz4NCjwv
-bzpzaGFwZWxheW91dD48L3htbD48IVtlbmRpZl0tLT4NCjwvaGVhZD4NCjxib2R5IGxhbmc9IkVO
-LVVTIiBsaW5rPSIjMDU2M0MxIiB2bGluaz0iIzk1NEY3MiIgc3R5bGU9IndvcmQtd3JhcDpicmVh
-ay13b3JkIj4NCjxkaXYgY2xhc3M9IldvcmRTZWN0aW9uMSI+DQo8cCBjbGFzcz0iTXNvUGxhaW5U
-ZXh0Ij5IZWxsbywgPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij48bzpw
-PiZuYnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29QbGFpblRleHQiPkJlbG93IEkgaGF2ZSB0
-aGUgcHJvcG9zYWwgZm9yIGEgc2ltcGxlIGFsZ29yaXRobSB3aGljaCBzZWVtIHRvIHdvcmsgZm9y
-IHRoZSBzZW5zb3JzIG5hbWVzIHdlIGhhdmUgaW4gb3VyIHBsYXRmb3Jtcy4NCjxvOnA+PC9vOnA+
-PC9wPg0KPHAgY2xhc3M9Ik1zb1BsYWluVGV4dCI+QW55IGZlZWRiYWNrIG9uIG1ha2luZyBpdCBt
-b3JlIGdlbmVyaWMgYW5kIHJldXNhYmxlIHdvdWxkIGJlIGFwcHJlY2lhdGVkLg0KPG86cD48L286
-cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxw
-IGNsYXNzPSJNc29QbGFpblRleHQiPlN0ZXAgMTogU3BsaXQgdGhlIGdpdmVuIG5hbWUgaW50byBz
-dWIgd29yZHMgdXNpbmcgcHJlZGVmaW5lZCBkZWxpbWl0ZXIgc2V0LCByZW1vdmUgYWxsIGRlbGlt
-aXRlcnMsIGFuZCBjb21iaW5lIHRoZSBzdWIgd29yZHMsIHJlbWVtYmVyIHRoZSBwb3NpdGlvbiBv
-ZiB0aGUgZGVsaW1pdGVycy4gU29tZSBleGFtcGxlcyBvZiBkZWxpbWl0ZXIgYXJlIF8sIHNwYWNl
-LCAtLCBjYW1lbENhc2UgcGF0dGVybiwgZXRjLg0KIENvbWJpbmUgdGhlIHdvcmRzIHdpdGhvdXQg
-ZGVsaW1pdGVycyBhbmQgZXhpdCBpZiB0aGUgbmV3IHN0cmluZyBpcyBsZXNzIHRoYW4gMTYgY2hh
-cnMuDQo8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29QbGFpblRleHQiPlN0ZXAgMjogU3Rh
-cnQgZnJvbSB0aGUgZmlyc3Qgc3ViIHdvcmQgYW5kIHJlcGVhdCBmb3IgYWxsIHRoZSBzdWIgd29y
-ZHMuICZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb1BsYWluVGV4dCI+Jm5ic3A7
-Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IDIuMTogaWYgdGhlIHN1YiB3b3JkIGNoYXJhY3RlciBsZW5n
-dGggaXMgbGVzcyB0aGFuIGFsbG93ZWRfbWluX2NoYXJfbGVuZ3RoIHRoZW4gc2tpcCBhbmQgbGVh
-dmUgaXQgYXMgaXQgaXMuICZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb1BsYWlu
-VGV4dCI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IDIuMjogZWxzZSByZW1vdmUgYWxsIHRo
-ZSBjaGFyYWN0ZXJzIGZyb20gdGhlIHN1YiB3b3JkIHdoaWNoIGFwcGVhciBhZnRlciB0aGUgb2Zm
-c2V0IGFsbG93ZWRfbWluX2NoYXJfbGVuZ3RoPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNv
-UGxhaW5UZXh0Ij4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
-cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgMi4zOiBTdG9wIHRoZSBhYmJy
-ZXZpYXRpb24gcHJvY2VzcyBpZiB0aGUgdG90YWwgbGVuZ3RoIG9mIHRoZSBuZXcgc3RyaW5nIGlz
-IGxlc3MgdGhhbiAxNiBjaGFycy4NCjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb1BsYWlu
-VGV4dCI+U3RlcCAzOiBTdGFydCBieSBzZXR0aW5nIHRocmVzaG9sZCBhcyAoIGFsbG93ZWRfbWlu
-X2NoYXJfbGVuZ3RoIC0gMSApIGFuZCByZXBlYXQgYnkgZGVjcmVhc2luZyB0aHJlc2hvbGQgYnkg
-MSBpbiBlYWNoIGl0ZXJhdGlvbiB1bnRpbCBpdCByZWFjaGVzIHZhbHVlIDEuDQo8bzpwPjwvbzpw
-PjwvcD4NCjxwIGNsYXNzPSJNc29QbGFpblRleHQiPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
-YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
-OyAzLjE6IGlmIHRoZSBzdWIgd29yZCBjaGFyYWN0ZXIgbGVuZ3RoIGlzIGxlc3MgdGhhbiB0aHJl
-c2hvbGQgdGhlbiBza2lwIGFuZCBsZWF2ZSBpdCBhcyBpdCBpcy4mbmJzcDsNCjxvOnA+PC9vOnA+
-PC9wPg0KPHAgY2xhc3M9Ik1zb1BsYWluVGV4dCI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
-IDMuMjogZWxzZSByZW1vdmUgYWxsIHRoZSBjaGFyYWN0ZXJzIGZyb20gdGhlIHN1YiB3b3JkIHdo
-aWNoIGFwcGVhciBhZnRlciB0aGUgb2Zmc2V0IHRocmVzaG9sZC4NCjxvOnA+PC9vOnA+PC9wPg0K
-PHAgY2xhc3M9Ik1zb1BsYWluVGV4dCI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
-c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IDMuMzog
-U3RvcCB0aGUgYWJicmV2aWF0aW9uIHByb2Nlc3MgaWYgdGhlIHRvdGFsIGxlbmd0aCBvZiB0aGUg
-bmV3IHN0cmluZyBpcyBsZXNzIHRoYW4gMTYgY2hhcnMuPG86cD48L286cD48L3A+DQo8cCBjbGFz
-cz0iTXNvUGxhaW5UZXh0Ij5TdGVwIDQmbmJzcDsmbmJzcDsmbmJzcDsgUmVtb3ZlIHN1YiB3b3Jk
-cyBzdGFydGluZyBmcm9tIHRoZSBmaXJzdCBzdWIgd29yZCB1bnRpbCB3ZSByZWFjaCBsYXN0IHN1
-YiB3b3JkIG9yIGlmIHRoZSB0b3RhbCBsZW5ndGggb2YgdGhlIG5ldyBzdHJpbmcgaXMgbGVzcyB0
-aGFuIDE2IGNoYXJzLjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb1BsYWluVGV4dCI+PG86
-cD4mbmJzcDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij5Tb21lIHVuaXQgdGVz
-dCBkYXRhIHdpdGggYWxsb3dlZF9taW5fY2hhcl9sZW5ndGggc2V0IHRvIHZhbHVlIDUuDQo8bzpw
-PjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29QbGFpblRleHQiPjxvOnA+Jm5ic3A7PC9vOnA+PC9w
-Pg0KPHRhYmxlIGNsYXNzPSJNc29Ob3JtYWxUYWJsZSIgYm9yZGVyPSIwIiBjZWxsc3BhY2luZz0i
-MCIgY2VsbHBhZGRpbmc9IjAiIHdpZHRoPSIwIiBzdHlsZT0iYm9yZGVyLWNvbGxhcHNlOmNvbGxh
-cHNlIj4NCjx0Ym9keT4NCjx0ciBzdHlsZT0iaGVpZ2h0OjE1Ljc1cHQiPg0KPHRkIHZhbGlnbj0i
-Ym90dG9tIiBzdHlsZT0iYm9yZGVyOnNvbGlkICNDQ0NDQ0MgMS4wcHQ7cGFkZGluZzoxLjVwdCAy
-LjI1cHQgMS41cHQgMi4yNXB0O2hlaWdodDoxNS43NXB0Ij4NCjxwIGNsYXNzPSJNc29Ob3JtYWwi
-PjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTAuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O0FyaWFsJnF1
-b3Q7LHNhbnMtc2VyaWY7bXNvLWxpZ2F0dXJlczpub25lIj5MZW5ndGgNCjxvOnA+PC9vOnA+PC9z
-cGFuPjwvcD4NCjwvdGQ+DQo8dGQgdmFsaWduPSJib3R0b20iIHN0eWxlPSJib3JkZXI6c29saWQg
-I0NDQ0NDQyAxLjBwdDtib3JkZXItbGVmdDpub25lO3BhZGRpbmc6MS41cHQgMi4yNXB0IDEuNXB0
-IDIuMjVwdDtoZWlnaHQ6MTUuNzVwdCI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHls
-ZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTomcXVvdDtBcmlhbCZxdW90OyxzYW5zLXNl
-cmlmO21zby1saWdhdHVyZXM6bm9uZSI+SW5wdXQgTmFtZXM8bzpwPjwvbzpwPjwvc3Bhbj48L3A+
-DQo8L3RkPg0KPHRkIHZhbGlnbj0iYm90dG9tIiBzdHlsZT0iYm9yZGVyOnNvbGlkICNDQ0NDQ0Mg
-MS4wcHQ7Ym9yZGVyLWxlZnQ6bm9uZTtwYWRkaW5nOjEuNXB0IDIuMjVwdCAxLjVwdCAyLjI1cHQ7
-aGVpZ2h0OjE1Ljc1cHQiPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQt
-c2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZjttc28t
-bGlnYXR1cmVzOm5vbmUiPk5ldyBMZW5ndGgNCjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvdGQ+
-DQo8dGQgdmFsaWduPSJib3R0b20iIHN0eWxlPSJib3JkZXI6c29saWQgI0NDQ0NDQyAxLjBwdDti
-b3JkZXItbGVmdDpub25lO3BhZGRpbmc6MS41cHQgMi4yNXB0IDEuNXB0IDIuMjVwdDtoZWlnaHQ6
-MTUuNzVwdCI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEw
-LjBwdDtmb250LWZhbWlseTomcXVvdDtBcmlhbCZxdW90OyxzYW5zLXNlcmlmO21zby1saWdhdHVy
-ZXM6bm9uZSI+U2hvcnQgTmFtZXMNCjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvdGQ+DQo8L3Ry
-Pg0KPHRyIHN0eWxlPSJoZWlnaHQ6MTUuNzVwdCI+DQo8dGQgdmFsaWduPSJib3R0b20iIHN0eWxl
-PSJib3JkZXI6c29saWQgI0NDQ0NDQyAxLjBwdDtib3JkZXItdG9wOm5vbmU7cGFkZGluZzoxLjVw
-dCAyLjI1cHQgMS41cHQgMi4yNXB0O2hlaWdodDoxNS43NXB0Ij4NCjxwIGNsYXNzPSJNc29Ob3Jt
-YWwiIGFsaWduPSJyaWdodCIgc3R5bGU9InRleHQtYWxpZ246cmlnaHQiPjxzcGFuIHN0eWxlPSJm
-b250LXNpemU6MTAuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O0FyaWFsJnF1b3Q7LHNhbnMtc2VyaWY7
-bXNvLWxpZ2F0dXJlczpub25lIj4xNDxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvdGQ+DQo8dGQg
-dmFsaWduPSJib3R0b20iIHN0eWxlPSJib3JkZXItdG9wOm5vbmU7Ym9yZGVyLWxlZnQ6bm9uZTti
-b3JkZXItYm90dG9tOnNvbGlkICNDQ0NDQ0MgMS4wcHQ7Ym9yZGVyLXJpZ2h0OnNvbGlkICNDQ0ND
-Q0MgMS4wcHQ7cGFkZGluZzoxLjVwdCAyLjI1cHQgMS41cHQgMi4yNXB0O2hlaWdodDoxNS43NXB0
-Ij4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIHN0eWxlPSJmb250LXNpemU6MTAuMHB0O2Zv
-bnQtZmFtaWx5OiZxdW90O0FyaWFsJnF1b3Q7LHNhbnMtc2VyaWY7bXNvLWxpZ2F0dXJlczpub25l
-Ij5DUFVfMF9FbmVyZ3lfMDxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjwvdGQ+DQo8dGQgdmFsaWdu
-PSJib3R0b20iIHN0eWxlPSJib3JkZXItdG9wOm5vbmU7Ym9yZGVyLWxlZnQ6bm9uZTtib3JkZXIt
-Ym90dG9tOnNvbGlkICNDQ0NDQ0MgMS4wcHQ7Ym9yZGVyLXJpZ2h0OnNvbGlkICNDQ0NDQ0MgMS4w
-cHQ7YmFja2dyb3VuZDp3aGl0ZTtwYWRkaW5nOjEuNXB0IDIuMjVwdCAxLjVwdCAyLjI1cHQ7aGVp
-Z2h0OjE1Ljc1cHQiPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgYWxpZ249InJpZ2h0IiBzdHlsZT0i
-dGV4dC1hbGlnbjpyaWdodCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTo5LjBwdDtmb250LWZhbWls
-eTomcXVvdDtHb29nbGUgU2FucyBNb25vJnF1b3Q7LHNlcmlmO2NvbG9yOmJsYWNrO21zby1saWdh
-dHVyZXM6bm9uZSI+MTQ8L3NwYW4+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTo5LjBwdDtmb250LWZh
-bWlseTomcXVvdDtHb29nbGUgU2FucyBNb25vJnF1b3Q7LHNlcmlmO21zby1saWdhdHVyZXM6bm9u
-ZSI+PG86cD48L286cD48L3NwYW4+PC9wPg0KPC90ZD4NCjx0ZCB2YWxpZ249ImJvdHRvbSIgc3R5
-bGU9ImJvcmRlci10b3A6bm9uZTtib3JkZXItbGVmdDpub25lO2JvcmRlci1ib3R0b206c29saWQg
-I0NDQ0NDQyAxLjBwdDtib3JkZXItcmlnaHQ6c29saWQgI0NDQ0NDQyAxLjBwdDtwYWRkaW5nOjEu
-NXB0IDIuMjVwdCAxLjVwdCAyLjI1cHQ7aGVpZ2h0OjE1Ljc1cHQiPg0KPHAgY2xhc3M9Ik1zb05v
-cm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7QXJp
-YWwmcXVvdDssc2Fucy1zZXJpZjttc28tbGlnYXR1cmVzOm5vbmUiPkNQVV8wX0VuZXJneV8wPG86
-cD48L286cD48L3NwYW4+PC9wPg0KPC90ZD4NCjwvdHI+DQo8dHIgc3R5bGU9ImhlaWdodDoxNS43
-NXB0Ij4NCjx0ZCB2YWxpZ249ImJvdHRvbSIgc3R5bGU9ImJvcmRlcjpzb2xpZCAjQ0NDQ0NDIDEu
-MHB0O2JvcmRlci10b3A6bm9uZTtwYWRkaW5nOjEuNXB0IDIuMjVwdCAxLjVwdCAyLjI1cHQ7aGVp
-Z2h0OjE1Ljc1cHQiPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgYWxpZ249InJpZ2h0IiBzdHlsZT0i
-dGV4dC1hbGlnbjpyaWdodCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1mYW1p
-bHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZjttc28tbGlnYXR1cmVzOm5vbmUiPjIwPG86
-cD48L286cD48L3NwYW4+PC9wPg0KPC90ZD4NCjx0ZCB2YWxpZ249ImJvdHRvbSIgc3R5bGU9ImJv
-cmRlci10b3A6bm9uZTtib3JkZXItbGVmdDpub25lO2JvcmRlci1ib3R0b206c29saWQgI0NDQ0ND
-QyAxLjBwdDtib3JkZXItcmlnaHQ6c29saWQgI0NDQ0NDQyAxLjBwdDtwYWRkaW5nOjEuNXB0IDIu
-MjVwdCAxLjVwdCAyLjI1cHQ7aGVpZ2h0OjE1Ljc1cHQiPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
-PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7QXJpYWwmcXVv
-dDssc2Fucy1zZXJpZjttc28tbGlnYXR1cmVzOm5vbmUiPkdQVV8wX0RSQU1fMF9Qb3dlcl8wPG86
-cD48L286cD48L3NwYW4+PC9wPg0KPC90ZD4NCjx0ZCB2YWxpZ249ImJvdHRvbSIgc3R5bGU9ImJv
-cmRlci10b3A6bm9uZTtib3JkZXItbGVmdDpub25lO2JvcmRlci1ib3R0b206c29saWQgI0NDQ0ND
-QyAxLjBwdDtib3JkZXItcmlnaHQ6c29saWQgI0NDQ0NDQyAxLjBwdDtiYWNrZ3JvdW5kOndoaXRl
-O3BhZGRpbmc6MS41cHQgMi4yNXB0IDEuNXB0IDIuMjVwdDtoZWlnaHQ6MTUuNzVwdCI+DQo8cCBj
-bGFzcz0iTXNvTm9ybWFsIiBhbGlnbj0icmlnaHQiIHN0eWxlPSJ0ZXh0LWFsaWduOnJpZ2h0Ij48
-c3BhbiBzdHlsZT0iZm9udC1zaXplOjkuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O0dvb2dsZSBTYW5z
-IE1vbm8mcXVvdDssc2VyaWY7Y29sb3I6YmxhY2s7bXNvLWxpZ2F0dXJlczpub25lIj4xNTwvc3Bh
-bj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjkuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O0dvb2dsZSBT
-YW5zIE1vbm8mcXVvdDssc2VyaWY7bXNvLWxpZ2F0dXJlczpub25lIj48bzpwPjwvbzpwPjwvc3Bh
-bj48L3A+DQo8L3RkPg0KPHRkIHZhbGlnbj0iYm90dG9tIiBzdHlsZT0iYm9yZGVyLXRvcDpub25l
-O2JvcmRlci1sZWZ0Om5vbmU7Ym9yZGVyLWJvdHRvbTpzb2xpZCAjQ0NDQ0NDIDEuMHB0O2JvcmRl
-ci1yaWdodDpzb2xpZCAjQ0NDQ0NDIDEuMHB0O3BhZGRpbmc6MS41cHQgMi4yNXB0IDEuNXB0IDIu
-MjVwdDtoZWlnaHQ6MTUuNzVwdCI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0i
-Zm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTomcXVvdDtBcmlhbCZxdW90OyxzYW5zLXNlcmlm
-O21zby1saWdhdHVyZXM6bm9uZSI+R1BVMERSQU0wUG93ZXIwPG86cD48L286cD48L3NwYW4+PC9w
-Pg0KPC90ZD4NCjwvdHI+DQo8dHIgc3R5bGU9ImhlaWdodDoxNS43NXB0Ij4NCjx0ZCB2YWxpZ249
-ImJvdHRvbSIgc3R5bGU9ImJvcmRlcjpzb2xpZCAjQ0NDQ0NDIDEuMHB0O2JvcmRlci10b3A6bm9u
-ZTtwYWRkaW5nOjEuNXB0IDIuMjVwdCAxLjVwdCAyLjI1cHQ7aGVpZ2h0OjE1Ljc1cHQiPg0KPHAg
-Y2xhc3M9Ik1zb05vcm1hbCIgYWxpZ249InJpZ2h0IiBzdHlsZT0idGV4dC1hbGlnbjpyaWdodCI+
-PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7QXJpYWwmcXVv
-dDssc2Fucy1zZXJpZjttc28tbGlnYXR1cmVzOm5vbmUiPjIwPG86cD48L286cD48L3NwYW4+PC9w
-Pg0KPC90ZD4NCjx0ZCB2YWxpZ249ImJvdHRvbSIgc3R5bGU9ImJvcmRlci10b3A6bm9uZTtib3Jk
-ZXItbGVmdDpub25lO2JvcmRlci1ib3R0b206c29saWQgI0NDQ0NDQyAxLjBwdDtib3JkZXItcmln
-aHQ6c29saWQgI0NDQ0NDQyAxLjBwdDtwYWRkaW5nOjEuNXB0IDIuMjVwdCAxLjVwdCAyLjI1cHQ7
-aGVpZ2h0OjE1Ljc1cHQiPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQt
-c2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZjttc28t
-bGlnYXR1cmVzOm5vbmUiPkNQVV8wX0VEUFZpb2xhdGlvbl8wPG86cD48L286cD48L3NwYW4+PC9w
-Pg0KPC90ZD4NCjx0ZCB2YWxpZ249ImJvdHRvbSIgc3R5bGU9ImJvcmRlci10b3A6bm9uZTtib3Jk
-ZXItbGVmdDpub25lO2JvcmRlci1ib3R0b206c29saWQgI0NDQ0NDQyAxLjBwdDtib3JkZXItcmln
-aHQ6c29saWQgI0NDQ0NDQyAxLjBwdDtiYWNrZ3JvdW5kOndoaXRlO3BhZGRpbmc6MS41cHQgMi4y
-NXB0IDEuNXB0IDIuMjVwdDtoZWlnaHQ6MTUuNzVwdCI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBh
-bGlnbj0icmlnaHQiIHN0eWxlPSJ0ZXh0LWFsaWduOnJpZ2h0Ij48c3BhbiBzdHlsZT0iZm9udC1z
-aXplOjkuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O0dvb2dsZSBTYW5zIE1vbm8mcXVvdDssc2VyaWY7
-Y29sb3I6YmxhY2s7bXNvLWxpZ2F0dXJlczpub25lIj4xNTwvc3Bhbj48c3BhbiBzdHlsZT0iZm9u
-dC1zaXplOjkuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O0dvb2dsZSBTYW5zIE1vbm8mcXVvdDssc2Vy
-aWY7bXNvLWxpZ2F0dXJlczpub25lIj48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8L3RkPg0KPHRk
-IHZhbGlnbj0iYm90dG9tIiBzdHlsZT0iYm9yZGVyLXRvcDpub25lO2JvcmRlci1sZWZ0Om5vbmU7
-Ym9yZGVyLWJvdHRvbTpzb2xpZCAjQ0NDQ0NDIDEuMHB0O2JvcmRlci1yaWdodDpzb2xpZCAjQ0ND
-Q0NDIDEuMHB0O3BhZGRpbmc6MS41cHQgMi4yNXB0IDEuNXB0IDIuMjVwdDtoZWlnaHQ6MTUuNzVw
-dCI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtm
-b250LWZhbWlseTomcXVvdDtBcmlhbCZxdW90OyxzYW5zLXNlcmlmO21zby1saWdhdHVyZXM6bm9u
-ZSI+Q1BVMEVEUFZpb2xhdGkwPG86cD48L286cD48L3NwYW4+PC9wPg0KPC90ZD4NCjwvdHI+DQo8
-dHIgc3R5bGU9ImhlaWdodDoxNS43NXB0Ij4NCjx0ZCB2YWxpZ249ImJvdHRvbSIgc3R5bGU9ImJv
-cmRlcjpzb2xpZCAjQ0NDQ0NDIDEuMHB0O2JvcmRlci10b3A6bm9uZTtwYWRkaW5nOjEuNXB0IDIu
-MjVwdCAxLjVwdCAyLjI1cHQ7aGVpZ2h0OjE1Ljc1cHQiPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIg
-YWxpZ249InJpZ2h0IiBzdHlsZT0idGV4dC1hbGlnbjpyaWdodCI+PHNwYW4gc3R5bGU9ImZvbnQt
-c2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZjttc28t
-bGlnYXR1cmVzOm5vbmUiPjI2PG86cD48L286cD48L3NwYW4+PC9wPg0KPC90ZD4NCjx0ZCB2YWxp
-Z249ImJvdHRvbSIgc3R5bGU9ImJvcmRlci10b3A6bm9uZTtib3JkZXItbGVmdDpub25lO2JvcmRl
-ci1ib3R0b206c29saWQgI0NDQ0NDQyAxLjBwdDtib3JkZXItcmlnaHQ6c29saWQgI0NDQ0NDQyAx
-LjBwdDtwYWRkaW5nOjEuNXB0IDIuMjVwdCAxLjVwdCAyLjI1cHQ7aGVpZ2h0OjE1Ljc1cHQiPg0K
-PHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1m
-YW1pbHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZjttc28tbGlnYXR1cmVzOm5vbmUiPlBy
-b2Nlc3Nvck1vZHVsZV8wX0VuZXJneV8wPG86cD48L286cD48L3NwYW4+PC9wPg0KPC90ZD4NCjx0
-ZCB2YWxpZ249ImJvdHRvbSIgc3R5bGU9ImJvcmRlci10b3A6bm9uZTtib3JkZXItbGVmdDpub25l
-O2JvcmRlci1ib3R0b206c29saWQgI0NDQ0NDQyAxLjBwdDtib3JkZXItcmlnaHQ6c29saWQgI0ND
-Q0NDQyAxLjBwdDtiYWNrZ3JvdW5kOndoaXRlO3BhZGRpbmc6MS41cHQgMi4yNXB0IDEuNXB0IDIu
-MjVwdDtoZWlnaHQ6MTUuNzVwdCI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBhbGlnbj0icmlnaHQi
-IHN0eWxlPSJ0ZXh0LWFsaWduOnJpZ2h0Ij48c3BhbiBzdHlsZT0iZm9udC1zaXplOjkuMHB0O2Zv
-bnQtZmFtaWx5OiZxdW90O0dvb2dsZSBTYW5zIE1vbm8mcXVvdDssc2VyaWY7Y29sb3I6YmxhY2s7
-bXNvLWxpZ2F0dXJlczpub25lIj4xNTwvc3Bhbj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjkuMHB0
-O2ZvbnQtZmFtaWx5OiZxdW90O0dvb2dsZSBTYW5zIE1vbm8mcXVvdDssc2VyaWY7bXNvLWxpZ2F0
-dXJlczpub25lIj48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8L3RkPg0KPHRkIHZhbGlnbj0iYm90
-dG9tIiBzdHlsZT0iYm9yZGVyLXRvcDpub25lO2JvcmRlci1sZWZ0Om5vbmU7Ym9yZGVyLWJvdHRv
-bTpzb2xpZCAjQ0NDQ0NDIDEuMHB0O2JvcmRlci1yaWdodDpzb2xpZCAjQ0NDQ0NDIDEuMHB0O3Bh
-ZGRpbmc6MS41cHQgMi4yNXB0IDEuNXB0IDIuMjVwdDtoZWlnaHQ6MTUuNzVwdCI+DQo8cCBjbGFz
-cz0iTXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTom
-cXVvdDtBcmlhbCZxdW90OyxzYW5zLXNlcmlmO21zby1saWdhdHVyZXM6bm9uZSI+UHJvY01vZHUw
-RW5lcmcwPG86cD48L286cD48L3NwYW4+PC9wPg0KPC90ZD4NCjwvdHI+DQo8dHIgc3R5bGU9Imhl
-aWdodDoxNS43NXB0Ij4NCjx0ZCB2YWxpZ249ImJvdHRvbSIgc3R5bGU9ImJvcmRlcjpzb2xpZCAj
-Q0NDQ0NDIDEuMHB0O2JvcmRlci10b3A6bm9uZTtwYWRkaW5nOjEuNXB0IDIuMjVwdCAxLjVwdCAy
-LjI1cHQ7aGVpZ2h0OjE1Ljc1cHQiPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgYWxpZ249InJpZ2h0
-IiBzdHlsZT0idGV4dC1hbGlnbjpyaWdodCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7
-Zm9udC1mYW1pbHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZjttc28tbGlnYXR1cmVzOm5v
-bmUiPjIzPG86cD48L286cD48L3NwYW4+PC9wPg0KPC90ZD4NCjx0ZCB2YWxpZ249ImJvdHRvbSIg
-c3R5bGU9ImJvcmRlci10b3A6bm9uZTtib3JkZXItbGVmdDpub25lO2JvcmRlci1ib3R0b206c29s
-aWQgI0NDQ0NDQyAxLjBwdDtib3JkZXItcmlnaHQ6c29saWQgI0NDQ0NDQyAxLjBwdDtwYWRkaW5n
-OjEuNXB0IDIuMjVwdCAxLjVwdCAyLjI1cHQ7aGVpZ2h0OjE1Ljc1cHQiPg0KPHAgY2xhc3M9Ik1z
-b05vcm1hbCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7
-QXJpYWwmcXVvdDssc2Fucy1zZXJpZjttc28tbGlnYXR1cmVzOm5vbmUiPkJhc2Vib2FyZF9IU0Nf
-MF9Qb3dlcl8wPG86cD48L286cD48L3NwYW4+PC9wPg0KPC90ZD4NCjx0ZCB2YWxpZ249ImJvdHRv
-bSIgc3R5bGU9ImJvcmRlci10b3A6bm9uZTtib3JkZXItbGVmdDpub25lO2JvcmRlci1ib3R0b206
-c29saWQgI0NDQ0NDQyAxLjBwdDtib3JkZXItcmlnaHQ6c29saWQgI0NDQ0NDQyAxLjBwdDtiYWNr
-Z3JvdW5kOndoaXRlO3BhZGRpbmc6MS41cHQgMi4yNXB0IDEuNXB0IDIuMjVwdDtoZWlnaHQ6MTUu
-NzVwdCI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBhbGlnbj0icmlnaHQiIHN0eWxlPSJ0ZXh0LWFs
-aWduOnJpZ2h0Ij48c3BhbiBzdHlsZT0iZm9udC1zaXplOjkuMHB0O2ZvbnQtZmFtaWx5OiZxdW90
-O0dvb2dsZSBTYW5zIE1vbm8mcXVvdDssc2VyaWY7Y29sb3I6YmxhY2s7bXNvLWxpZ2F0dXJlczpu
-b25lIj4xNTwvc3Bhbj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjkuMHB0O2ZvbnQtZmFtaWx5OiZx
-dW90O0dvb2dsZSBTYW5zIE1vbm8mcXVvdDssc2VyaWY7bXNvLWxpZ2F0dXJlczpub25lIj48bzpw
-PjwvbzpwPjwvc3Bhbj48L3A+DQo8L3RkPg0KPHRkIHZhbGlnbj0iYm90dG9tIiBzdHlsZT0iYm9y
-ZGVyLXRvcDpub25lO2JvcmRlci1sZWZ0Om5vbmU7Ym9yZGVyLWJvdHRvbTpzb2xpZCAjQ0NDQ0ND
-IDEuMHB0O2JvcmRlci1yaWdodDpzb2xpZCAjQ0NDQ0NDIDEuMHB0O3BhZGRpbmc6MS41cHQgMi4y
-NXB0IDEuNXB0IDIuMjVwdDtoZWlnaHQ6MTUuNzVwdCI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48
-c3BhbiBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTomcXVvdDtBcmlhbCZxdW90
-OyxzYW5zLXNlcmlmO21zby1saWdhdHVyZXM6bm9uZSI+QmFzZWJIU0MwUG93ZXIwPG86cD48L286
-cD48L3NwYW4+PC9wPg0KPC90ZD4NCjwvdHI+DQo8dHIgc3R5bGU9ImhlaWdodDoxNS43NXB0Ij4N
-Cjx0ZCB2YWxpZ249ImJvdHRvbSIgc3R5bGU9ImJvcmRlcjpzb2xpZCAjQ0NDQ0NDIDEuMHB0O2Jv
-cmRlci10b3A6bm9uZTtwYWRkaW5nOjEuNXB0IDIuMjVwdCAxLjVwdCAyLjI1cHQ7aGVpZ2h0OjE1
-Ljc1cHQiPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgYWxpZ249InJpZ2h0IiBzdHlsZT0idGV4dC1h
-bGlnbjpyaWdodCI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6JnF1
-b3Q7QXJpYWwmcXVvdDssc2Fucy1zZXJpZjttc28tbGlnYXR1cmVzOm5vbmUiPjUwPG86cD48L286
-cD48L3NwYW4+PC9wPg0KPC90ZD4NCjx0ZCB2YWxpZ249ImJvdHRvbSIgc3R5bGU9ImJvcmRlci10
-b3A6bm9uZTtib3JkZXItbGVmdDpub25lO2JvcmRlci1ib3R0b206c29saWQgI0NDQ0NDQyAxLjBw
-dDtib3JkZXItcmlnaHQ6c29saWQgI0NDQ0NDQyAxLjBwdDtwYWRkaW5nOjEuNXB0IDIuMjVwdCAx
-LjVwdCAyLjI1cHQ7aGVpZ2h0OjE1Ljc1cHQiPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4g
-c3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7QXJpYWwmcXVvdDssc2Fu
-cy1zZXJpZjttc28tbGlnYXR1cmVzOm5vbmUiPlByb2Nlc3Nvck1vZHVsZV8wX01lbUNudGxfMF9Q
-YWdlUmV0aXJlbWVudENvdW50bF8wPG86cD48L286cD48L3NwYW4+PC9wPg0KPC90ZD4NCjx0ZCB2
-YWxpZ249ImJvdHRvbSIgc3R5bGU9ImJvcmRlci10b3A6bm9uZTtib3JkZXItbGVmdDpub25lO2Jv
-cmRlci1ib3R0b206c29saWQgI0NDQ0NDQyAxLjBwdDtib3JkZXItcmlnaHQ6c29saWQgI0NDQ0ND
-QyAxLjBwdDtiYWNrZ3JvdW5kOndoaXRlO3BhZGRpbmc6MS41cHQgMi4yNXB0IDEuNXB0IDIuMjVw
-dDtoZWlnaHQ6MTUuNzVwdCI+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBhbGlnbj0icmlnaHQiIHN0
-eWxlPSJ0ZXh0LWFsaWduOnJpZ2h0Ij48c3BhbiBzdHlsZT0iZm9udC1zaXplOjkuMHB0O2ZvbnQt
-ZmFtaWx5OiZxdW90O0dvb2dsZSBTYW5zIE1vbm8mcXVvdDssc2VyaWY7Y29sb3I6YmxhY2s7bXNv
-LWxpZ2F0dXJlczpub25lIj4xNTwvc3Bhbj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjkuMHB0O2Zv
-bnQtZmFtaWx5OiZxdW90O0dvb2dsZSBTYW5zIE1vbm8mcXVvdDssc2VyaWY7bXNvLWxpZ2F0dXJl
-czpub25lIj48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8L3RkPg0KPHRkIHZhbGlnbj0iYm90dG9t
-IiBzdHlsZT0iYm9yZGVyLXRvcDpub25lO2JvcmRlci1sZWZ0Om5vbmU7Ym9yZGVyLWJvdHRvbTpz
-b2xpZCAjQ0NDQ0NDIDEuMHB0O2JvcmRlci1yaWdodDpzb2xpZCAjQ0NDQ0NDIDEuMHB0O3BhZGRp
-bmc6MS41cHQgMi4yNXB0IDEuNXB0IDIuMjVwdDtoZWlnaHQ6MTUuNzVwdCI+DQo8cCBjbGFzcz0i
-TXNvTm9ybWFsIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTomcXVv
-dDtBcmlhbCZxdW90OyxzYW5zLXNlcmlmO21zby1saWdhdHVyZXM6bm9uZSI+UE0wTUMwUGFSZUNv
-dW4wPG86cD48L286cD48L3NwYW4+PC9wPg0KPC90ZD4NCjwvdHI+DQo8L3Rib2R5Pg0KPC90YWJs
-ZT4NCjxwIGNsYXNzPSJNc29QbGFpblRleHQiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPHAgY2xh
-c3M9Ik1zb1BsYWluVGV4dCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxh
-aW5UZXh0Ij48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29QbGFpblRleHQiPlRo
-YW5rcyA8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29QbGFpblRleHQiPlJvaGl0IDxvOnA+
-PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb1BsYWluVGV4dCI+PG86cD4mbmJzcDs8L286cD48L3A+
-DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLTxicj4N
-CkZyb206IEVkIFRhbm91cyAmbHQ7ZWR0YW5vdXNAZ29vZ2xlLmNvbSZndDsgPGJyPg0KU2VudDog
-VHVlc2RheSwgTWF5IDksIDIwMjMgMjoyMiBBTTxicj4NClRvOiBSb2hpdCBQYWkgJmx0O3JvcGFp
-QG52aWRpYS5jb20mZ3Q7PGJyPg0KQ2M6IG9wZW5ibWNAbGlzdHMub3psYWJzLm9yZzxicj4NClN1
-YmplY3Q6IFJlOiBJUE1JIFNlbnNvciBOYW1lIGxpbWl0YXRpb24gb2YgMTYgYnl0ZXM8L3A+DQo8
-cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJN
-c29QbGFpblRleHQiPkV4dGVybmFsIGVtYWlsOiBVc2UgY2F1dGlvbiBvcGVuaW5nIGxpbmtzIG9y
-IGF0dGFjaG1lbnRzPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij48bzpw
-PiZuYnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29QbGFpblRleHQiPjxvOnA+Jm5ic3A7PC9v
-OnA+PC9wPg0KPHAgY2xhc3M9Ik1zb1BsYWluVGV4dCI+T24gTW9uLCBNYXkgOCwgMjAyMyBhdCAx
-MDo1MuKAr0FNIFJvaGl0IFBhaSAmbHQ7PGEgaHJlZj0ibWFpbHRvOnJvcGFpQG52aWRpYS5jb20i
-PjxzcGFuIHN0eWxlPSJjb2xvcjp3aW5kb3d0ZXh0O3RleHQtZGVjb3JhdGlvbjpub25lIj5yb3Bh
-aUBudmlkaWEuY29tPC9zcGFuPjwvYT4mZ3Q7IHdyb3RlOjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xh
-c3M9Ik1zb1BsYWluVGV4dCI+Jmd0OzxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1z
-b1BsYWluVGV4dCI+Jmd0OyBXb3VsZCBsaWtlIHRvIHJlY2VpdmUgZmVlZGJhY2sgYWJvdXQgdGhp
-cyBzb2x1dGlvbiBhbmQgYW55IGFsdGVybmF0aXZlIHRoYXQgbWF5IGV4aXN0IHRvIHNvbHZlIHRo
-aXMgcHJvYmxlbS4gQW55IHBvaW50ZXJzIG9uIGV4aXN0aW5nIHBhdGNoIGFsc28gd291bGQgYmUg
-aGVscGZ1bC48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29QbGFpblRleHQiPiZndDs8bzpw
-PiZuYnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29QbGFpblRleHQiPjxvOnA+Jm5ic3A7PC9v
-OnA+PC9wPg0KPHAgY2xhc3M9Ik1zb1BsYWluVGV4dCI+T3ZlcmFsbCwgSSdtIGluIHN1cHBvcnQg
-b2YgdGhpcyBmZWF0dXJlLCBhbmQgSSB0aGluayBpdCB3b3VsZCBnaXZlIHVzIGEgbG90IG1vcmUg
-ZmxleGliaWxpdHkgaW4gUmVkZmlzaCBpbiB0aGUgZnV0dXJlLiZuYnNwOyBJdCdzIG9uZSBvZiB0
-aGUgZGVzaWduIHBvaW50cyB0aGF0IEkgcmVhbGx5IHdhc24ndCBoYXBweSB3aXRoIGluIHRoZSBv
-cmlnaW5hbCBzZW5zb3Igc3Vic3lzdGVtLjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb1Bs
-YWluVGV4dCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij5X
-aGlsZSBJIHRoaW5rIG1vc3Qgd291bGQgZGlyZWN0bHkgdGFrZSB0aGlzIGZlYXR1cmUsIG9uZSB0
-aGluZyB0byBrZWVwIGluIG1pbmQgaXMgdGhhdCB0aGVyZSB3ZXJlIG9yZ2FuaXphdGlvbnMgdGhh
-dCBoYWQgdGhlIHJlcXVpcmVtZW50IHRvIGJlIGFibGUgdG8gbWFwIElQTUkgbmFtZXMgdG8gUmVk
-ZmlzaCBuYW1lcyB1c2luZyBhIHJlYXNvbmFibGUgYWxnb3JpdGhtLiZuYnNwOyBIYXZpbmcgdGhp
-cyBzdXBwb3J0ZWQNCiB3b3VsZCBicmVhayB0aGF0IHJlcXVpcmVtZW50LCBidXQgSSB0aGluayB0
-aGF0J3Mgc29tZXRoaW5nIHRoYXQgYW4gaW5kaXZpZHVhbCBtYWNoaW5lIGNhbiBmaWd1cmUgb3V0
-IGJ5IGNvbWluZyB1cCB3aXRoIG5hbWVzIGxlc3MgdGhhbiAxNiBjaGFyYWN0ZXJzIGZvciBwbGF0
-Zm9ybXMgdGhhdCBoYXZlIHRoaXMgcmVxdWlyZW1lbnQuPG86cD48L286cD48L3A+DQo8cCBjbGFz
-cz0iTXNvUGxhaW5UZXh0Ij48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29QbGFp
-blRleHQiPk9uZSB0aGluZyBJIHdvdWxkIGFsc28gdmVyeSBtdWNoIGNhdXRpb24gYWdhaW5zdCBp
-cyByZWR1Y2luZyB0aGUgcGVyZm9ybWFuY2Ugb2YgU0RSIGxpc3RpbmcgYW55IG1vcmUgdGhhbiBp
-dCBhbHJlYWR5IGlzLiZuYnNwOyBJdCdzIGN1cnJlbnQgcGVyZm9ybWFuY2UgaXMgYXQgYmFzaWNh
-bGx5IHRoZSBiYXJlIG1pbmltdW0gb2Ygd2hlcmUgaXQgc2hvdWxkIGJlLCBzbyBpZiBtYWtpbmcg
-dGhpcyBjaGFuZ2UgcmVxdWlyZXMNCiBhbnkgYWRkaXRpb25hbCBkYnVzIGNhbGxzLCB0aGF0J3Mg
-Z29pbmcgdG8gY2F1c2Ugc29tZSBwcm9ibGVtcy48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJN
-c29QbGFpblRleHQiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb1BsYWluVGV4
-dCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij5PbmUgdGhp
-bmcgSSBoYWQgYWR2b2NhdGVkIGZvciBpbiB0aGUgcGFzdCBpcyBzaW1wbHkgZG9pbmcgYWxnb3Jp
-dGhtaWMgc3RyaW5nIHJlZHVjdGlvbiB1bnRpbCBpdCBmaXRzLCB1c2luZyB0aGUgbW9zdCBjb21t
-b24gdHJhbnNmb3Jtcy48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29QbGFpblRleHQiPjxv
-OnA+Jm5ic3A7PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb1BsYWluVGV4dCI+UG93ZXIgLSZndDsg
-UHdyPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij5UZW1wZXJhdHVyZSAt
-Jmd0OyBUZW1wPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij5Qb3dlciBT
-dXBwbHkgLSZndDsgUFNVPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvUGxhaW5UZXh0Ij48
-bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29QbGFpblRleHQiPlRoZXNlIGFyZSBh
-bGdvcml0aG1zIHRoYXQgaHVtYW5zIGFscmVhZHkgZG8gdG9kYXkgbWFudWFsbHkgdG8gZ2V0IHRv
-IHRoZSAxNiBjaGFyIGxlbmd0aCwgc28gaW4gdGhlb3J5IHlvdSBjb3VsZCBkbyB0aGlzIHRyYW5z
-Zm9ybSB3aXRob3V0IGFueSBjaGFuZ2VzIG5lZWRlZCB0byB0aGUgYWN0dWFsIHBsYXRmb3JtIGNv
-bmZpZ3MsIGFuZCBpZiBzb21lb25lIHdhbnRlZCB0byByZXZlcnNlIHRoZSBhbGdvcml0aG0NCiBs
-YXRlciBhbmQgY29tZSB1cCB3aXRoIHRoZSBSZWRmaXNoIHN0cmluZywgdGhleSBjb3VsZC4mbmJz
-cDsgU29tZXRoaW5nIHlvdSBjb3VsZCBjb25zaWRlciwgYnV0IHRoZXJlIG1pZ2h0IGJlIHNpbXBs
-ZXIgaWRlYXMgdGhhdCBtZWV0IHlvdXIgZ29hbHMuPG86cD48L286cD48L3A+DQo8L2Rpdj4NCjwv
-Ym9keT4NCjwvaHRtbD4NCg==
+The long example below might be represented by a human like this:
+"Name": "ProcessorModule_0_MemCntl_0_PageRetirementCountl_0",
+"ShortName": "PM0_MC0_PgRC0"
+This is 13 chars, and leaves room for regex replacement of the '0' 
+characters to allow for PM1_MC0, PM0_MC2, etc...
 
---_000_LV2PR12MB60148354AAD9D6E65F2B1419CD24ALV2PR12MB6014namp_--
+This also does away with the current solution that erases specific 
+strings, which increases the probability of a sensor name collision.
+  constexpr std::array<const char*, 7> suffixes = {
+      "_Output_Voltage", "_Input_Voltage", "_Output_Current", 
+"_Input_Current",
+      "_Output_Power",   "_Input_Power",   "_Temperature"};
+
+> Step 1: Split the given name into sub words using predefined delimiter 
+> set, remove all delimiters, and combine the sub words, remember the 
+> position of the delimiters. Some examples of delimiter are _, space, 
+> -, camelCase pattern, etc. Combine the words without delimiters and 
+> exit if the new string is less than 16 chars.
+>
+> Step 2: Start from the first sub word and repeat for all the sub words.
+>
+>                2.1: if the sub word character length is less than 
+> allowed_min_char_length then skip and leave it as it is.
+>
+>                2.2: else remove all the characters from the sub word 
+> which appear after the offset allowed_min_char_length
+>
+>                2.3: Stop the abbreviation process if the total length 
+> of the new string is less than 16 chars.
+>
+> Step 3: Start by setting threshold as ( allowed_min_char_length - 1 ) 
+> and repeat by decreasing threshold by 1 in each iteration until it 
+> reaches value 1.
+>
+>                3.1: if the sub word character length is less than 
+> threshold then skip and leave it as it is.
+>
+>                3.2: else remove all the characters from the sub word 
+> which appear after the offset threshold.
+>
+>                3.3: Stop the abbreviation process if the total length 
+> of the new string is less than 16 chars.
+>
+> Step 4    Remove sub words starting from the first sub word until we 
+> reach last sub word or if the total length of the new string is less 
+> than 16 chars.
+>
+> Some unit test data with allowed_min_char_length set to value 5.
+>
+> Length
+>
+> 	
+>
+> Input Names
+>
+> 	
+>
+> New Length
+>
+> 	
+>
+> Short Names
+>
+> 14
+>
+> 	
+>
+> CPU_0_Energy_0
+>
+> 	
+>
+> 14
+>
+> 	
+>
+> CPU_0_Energy_0
+>
+> 20
+>
+> 	
+>
+> GPU_0_DRAM_0_Power_0
+>
+> 	
+>
+> 15
+>
+> 	
+>
+> GPU0DRAM0Power0
+>
+> 20
+>
+> 	
+>
+> CPU_0_EDPViolation_0
+>
+> 	
+>
+> 15
+>
+> 	
+>
+> CPU0EDPViolati0
+>
+> 26
+>
+> 	
+>
+> ProcessorModule_0_Energy_0
+>
+> 	
+>
+> 15
+>
+> 	
+>
+> ProcModu0Energ0
+>
+> 23
+>
+> 	
+>
+> Baseboard_HSC_0_Power_0
+>
+> 	
+>
+> 15
+>
+> 	
+>
+> BasebHSC0Power0
+>
+> 50
+>
+> 	
+>
+> ProcessorModule_0_MemCntl_0_PageRetirementCountl_0
+>
+> 	
+>
+> 15
+>
+> 	
+>
+> PM0MC0PaReCoun0
+>
+> Thanks
+>
+> Rohit
+>
+-- 
+Johnathan Mantey
+Senior Software Engineer
+*azad te**chnology partners*
+Contributing to Technology Innovation since 1992
+Phone: (503) 712-6764
+Email: johnathanx.mantey@intel.com
+
+--------------6qnU2TGWjWqzDWtp0Qvf5Ma0
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+
+<html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    <div class="moz-cite-prefix">On 6/28/23 03:23, Rohit Pai wrote:<br>
+    </div>
+    <blockquote type="cite" cite="mid:LV2PR12MB60148354AAD9D6E65F2B1419CD24A@LV2PR12MB6014.namprd12.prod.outlook.com">
+      
+      <meta name="Generator" content="Microsoft Word 15 (filtered
+        medium)">
+      <style>@font-face
+	{font-family:"Cambria Math";
+	panose-1:2 4 5 3 5 4 6 3 2 4;}@font-face
+	{font-family:Calibri;
+	panose-1:2 15 5 2 2 2 4 3 2 4;}@font-face
+	{font-family:"Google Sans Mono";
+	panose-1:0 0 0 0 0 0 0 0 0 0;}p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{margin:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ligatures:standardcontextual;}p.MsoPlainText, li.MsoPlainText, div.MsoPlainText
+	{mso-style-priority:99;
+	mso-style-link:"Plain Text Char";
+	margin:0in;
+	font-size:11.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ligatures:standardcontextual;}span.PlainTextChar
+	{mso-style-name:"Plain Text Char";
+	mso-style-priority:99;
+	mso-style-link:"Plain Text";
+	font-family:"Calibri",sans-serif;}.MsoChpDefault
+	{mso-style-type:export-only;
+	font-family:"Calibri",sans-serif;}div.WordSection1
+	{page:WordSection1;}</style><!--[if gte mso 9]><xml>
+<o:shapedefaults v:ext="edit" spidmax="1026" />
+</xml><![endif]--><!--[if gte mso 9]><xml>
+<o:shapelayout v:ext="edit">
+<o:idmap v:ext="edit" data="1" />
+</o:shapelayout></xml><![endif]-->
+      <div class="WordSection1">
+        <p class="MsoPlainText">Hello, <o:p></o:p></p>
+        <p class="MsoPlainText"><o:p>&nbsp;</o:p></p>
+        <p class="MsoPlainText">Below I have the proposal for a simple
+          algorithm which seem to work for the sensors names we have in
+          our platforms.
+          <o:p></o:p></p>
+        <p class="MsoPlainText">Any feedback on making it more generic
+          and reusable would be appreciated.
+        </p>
+      </div>
+    </blockquote>
+    <p>I am currently in the process of a different solution. Instead of
+      using an algorithm, which is either going to come up with a very
+      mangled solution (50 char example below), or an algorithm that may
+      mistakenly generate duplicate sensor names, we're proposing adding
+      a &quot;ShortName&quot; entry to the JSON configuration file read by Entity
+      Manager. Doing so allows each company to decide for themselves how
+      they want the name to appear.<br>
+    </p>
+    <p>For example:<br>
+      &quot;Name&quot;: &quot;CPU_ADC_Controller&quot;,<br>
+      &quot;ShortName&quot;: &quot;CPU_ADC_Ctrlr&quot;,</p>
+    <p>The long example below might be represented by a human like this:<br>
+      &quot;Name&quot;: &quot;ProcessorModule_0_MemCntl_0_PageRetirementCountl_0&quot;,<br>
+      &quot;ShortName&quot;: &quot;PM0_MC0_PgRC0&quot;<br>
+      This is 13 chars, and leaves room for regex replacement of the '0'
+      characters to allow for PM1_MC0, PM0_MC2, etc...<br>
+      <br>
+      This also does away with the current solution that erases specific
+      strings, which increases the probability of a sensor name
+      collision.<br>
+      &nbsp;constexpr std::array&lt;const char*, 7&gt; suffixes = {<br>
+      &nbsp;&nbsp;&nbsp;&nbsp; &quot;_Output_Voltage&quot;, &quot;_Input_Voltage&quot;, &quot;_Output_Current&quot;,
+      &quot;_Input_Current&quot;,<br>
+      &nbsp;&nbsp;&nbsp;&nbsp; &quot;_Output_Power&quot;,&nbsp;&nbsp; &quot;_Input_Power&quot;,&nbsp;&nbsp; &quot;_Temperature&quot;};<br>
+    </p>
+    <blockquote type="cite" cite="mid:LV2PR12MB60148354AAD9D6E65F2B1419CD24A@LV2PR12MB6014.namprd12.prod.outlook.com">
+      <div class="WordSection1">
+        <p class="MsoPlainText"><o:p></o:p></p>
+        <p class="MsoPlainText"><o:p>&nbsp;</o:p></p>
+        <p class="MsoPlainText">Step 1: Split the given name into sub
+          words using predefined delimiter set, remove all delimiters,
+          and combine the sub words, remember the position of the
+          delimiters. Some examples of delimiter are _, space, -,
+          camelCase pattern, etc. Combine the words without delimiters
+          and exit if the new string is less than 16 chars.
+          <o:p></o:p></p>
+        <p class="MsoPlainText">Step 2: Start from the first sub word
+          and repeat for all the sub words. &nbsp;<o:p></o:p></p>
+        <p class="MsoPlainText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2.1: if the sub word
+          character length is less than allowed_min_char_length then
+          skip and leave it as it is. &nbsp;<o:p></o:p></p>
+        <p class="MsoPlainText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2.2: else remove all the
+          characters from the sub word which appear after the offset
+          allowed_min_char_length<o:p></o:p></p>
+        <p class="MsoPlainText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2.3: Stop the
+          abbreviation process if the total length of the new string is
+          less than 16 chars.
+          <o:p></o:p></p>
+        <p class="MsoPlainText">Step 3: Start by setting threshold as (
+          allowed_min_char_length - 1 ) and repeat by decreasing
+          threshold by 1 in each iteration until it reaches value 1.
+          <o:p></o:p></p>
+        <p class="MsoPlainText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3.1: if the sub word
+          character length is less than threshold then skip and leave it
+          as it is.&nbsp;
+          <o:p></o:p></p>
+        <p class="MsoPlainText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3.2: else remove all the
+          characters from the sub word which appear after the offset
+          threshold.
+          <o:p></o:p></p>
+        <p class="MsoPlainText">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3.3: Stop the
+          abbreviation process if the total length of the new string is
+          less than 16 chars.<o:p></o:p></p>
+        <p class="MsoPlainText">Step 4&nbsp;&nbsp;&nbsp; Remove sub words starting from
+          the first sub word until we reach last sub word or if the
+          total length of the new string is less than 16 chars.<o:p></o:p></p>
+        <p class="MsoPlainText"><o:p>&nbsp;</o:p></p>
+        <p class="MsoPlainText">Some unit test data with
+          allowed_min_char_length set to value 5.
+          <o:p></o:p></p>
+        <p class="MsoPlainText"><o:p>&nbsp;</o:p></p>
+        <table class="MsoNormalTable" style="border-collapse:collapse" width="0" cellspacing="0" cellpadding="0" border="0">
+          <tbody>
+            <tr style="height:15.75pt">
+              <td style="border:solid #CCCCCC 1.0pt;padding:1.5pt 2.25pt
+                1.5pt 2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">Length
+                    <o:p></o:p></span></p>
+              </td>
+              <td style="border:solid #CCCCCC
+                1.0pt;border-left:none;padding:1.5pt 2.25pt 1.5pt
+                2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">Input
+                    Names<o:p></o:p></span></p>
+              </td>
+              <td style="border:solid #CCCCCC
+                1.0pt;border-left:none;padding:1.5pt 2.25pt 1.5pt
+                2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">New
+                    Length
+                    <o:p></o:p></span></p>
+              </td>
+              <td style="border:solid #CCCCCC
+                1.0pt;border-left:none;padding:1.5pt 2.25pt 1.5pt
+                2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">Short
+                    Names
+                    <o:p></o:p></span></p>
+              </td>
+            </tr>
+            <tr style="height:15.75pt">
+              <td style="border:solid #CCCCCC
+                1.0pt;border-top:none;padding:1.5pt 2.25pt 1.5pt
+                2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal" style="text-align:right" align="right"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">14<o:p></o:p></span></p>
+              </td>
+              <td style="border-top:none;border-left:none;border-bottom:solid
+                #CCCCCC 1.0pt;border-right:solid #CCCCCC
+                1.0pt;padding:1.5pt 2.25pt 1.5pt 2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">CPU_0_Energy_0<o:p></o:p></span></p>
+              </td>
+              <td style="border-top:none;border-left:none;border-bottom:solid
+                #CCCCCC 1.0pt;border-right:solid #CCCCCC
+                1.0pt;background:white;padding:1.5pt 2.25pt 1.5pt
+                2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal" style="text-align:right" align="right"><span style="font-size:9.0pt;font-family:&quot;Google Sans
+                    Mono&quot;,serif;color:black;mso-ligatures:none">14</span><span style="font-size:9.0pt;font-family:&quot;Google Sans
+                    Mono&quot;,serif;mso-ligatures:none"><o:p></o:p></span></p>
+              </td>
+              <td style="border-top:none;border-left:none;border-bottom:solid
+                #CCCCCC 1.0pt;border-right:solid #CCCCCC
+                1.0pt;padding:1.5pt 2.25pt 1.5pt 2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">CPU_0_Energy_0<o:p></o:p></span></p>
+              </td>
+            </tr>
+            <tr style="height:15.75pt">
+              <td style="border:solid #CCCCCC
+                1.0pt;border-top:none;padding:1.5pt 2.25pt 1.5pt
+                2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal" style="text-align:right" align="right"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">20<o:p></o:p></span></p>
+              </td>
+              <td style="border-top:none;border-left:none;border-bottom:solid
+                #CCCCCC 1.0pt;border-right:solid #CCCCCC
+                1.0pt;padding:1.5pt 2.25pt 1.5pt 2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">GPU_0_DRAM_0_Power_0<o:p></o:p></span></p>
+              </td>
+              <td style="border-top:none;border-left:none;border-bottom:solid
+                #CCCCCC 1.0pt;border-right:solid #CCCCCC
+                1.0pt;background:white;padding:1.5pt 2.25pt 1.5pt
+                2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal" style="text-align:right" align="right"><span style="font-size:9.0pt;font-family:&quot;Google Sans
+                    Mono&quot;,serif;color:black;mso-ligatures:none">15</span><span style="font-size:9.0pt;font-family:&quot;Google Sans
+                    Mono&quot;,serif;mso-ligatures:none"><o:p></o:p></span></p>
+              </td>
+              <td style="border-top:none;border-left:none;border-bottom:solid
+                #CCCCCC 1.0pt;border-right:solid #CCCCCC
+                1.0pt;padding:1.5pt 2.25pt 1.5pt 2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">GPU0DRAM0Power0<o:p></o:p></span></p>
+              </td>
+            </tr>
+            <tr style="height:15.75pt">
+              <td style="border:solid #CCCCCC
+                1.0pt;border-top:none;padding:1.5pt 2.25pt 1.5pt
+                2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal" style="text-align:right" align="right"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">20<o:p></o:p></span></p>
+              </td>
+              <td style="border-top:none;border-left:none;border-bottom:solid
+                #CCCCCC 1.0pt;border-right:solid #CCCCCC
+                1.0pt;padding:1.5pt 2.25pt 1.5pt 2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">CPU_0_EDPViolation_0<o:p></o:p></span></p>
+              </td>
+              <td style="border-top:none;border-left:none;border-bottom:solid
+                #CCCCCC 1.0pt;border-right:solid #CCCCCC
+                1.0pt;background:white;padding:1.5pt 2.25pt 1.5pt
+                2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal" style="text-align:right" align="right"><span style="font-size:9.0pt;font-family:&quot;Google Sans
+                    Mono&quot;,serif;color:black;mso-ligatures:none">15</span><span style="font-size:9.0pt;font-family:&quot;Google Sans
+                    Mono&quot;,serif;mso-ligatures:none"><o:p></o:p></span></p>
+              </td>
+              <td style="border-top:none;border-left:none;border-bottom:solid
+                #CCCCCC 1.0pt;border-right:solid #CCCCCC
+                1.0pt;padding:1.5pt 2.25pt 1.5pt 2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">CPU0EDPViolati0<o:p></o:p></span></p>
+              </td>
+            </tr>
+            <tr style="height:15.75pt">
+              <td style="border:solid #CCCCCC
+                1.0pt;border-top:none;padding:1.5pt 2.25pt 1.5pt
+                2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal" style="text-align:right" align="right"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">26<o:p></o:p></span></p>
+              </td>
+              <td style="border-top:none;border-left:none;border-bottom:solid
+                #CCCCCC 1.0pt;border-right:solid #CCCCCC
+                1.0pt;padding:1.5pt 2.25pt 1.5pt 2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">ProcessorModule_0_Energy_0<o:p></o:p></span></p>
+              </td>
+              <td style="border-top:none;border-left:none;border-bottom:solid
+                #CCCCCC 1.0pt;border-right:solid #CCCCCC
+                1.0pt;background:white;padding:1.5pt 2.25pt 1.5pt
+                2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal" style="text-align:right" align="right"><span style="font-size:9.0pt;font-family:&quot;Google Sans
+                    Mono&quot;,serif;color:black;mso-ligatures:none">15</span><span style="font-size:9.0pt;font-family:&quot;Google Sans
+                    Mono&quot;,serif;mso-ligatures:none"><o:p></o:p></span></p>
+              </td>
+              <td style="border-top:none;border-left:none;border-bottom:solid
+                #CCCCCC 1.0pt;border-right:solid #CCCCCC
+                1.0pt;padding:1.5pt 2.25pt 1.5pt 2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">ProcModu0Energ0<o:p></o:p></span></p>
+              </td>
+            </tr>
+            <tr style="height:15.75pt">
+              <td style="border:solid #CCCCCC
+                1.0pt;border-top:none;padding:1.5pt 2.25pt 1.5pt
+                2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal" style="text-align:right" align="right"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">23<o:p></o:p></span></p>
+              </td>
+              <td style="border-top:none;border-left:none;border-bottom:solid
+                #CCCCCC 1.0pt;border-right:solid #CCCCCC
+                1.0pt;padding:1.5pt 2.25pt 1.5pt 2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">Baseboard_HSC_0_Power_0<o:p></o:p></span></p>
+              </td>
+              <td style="border-top:none;border-left:none;border-bottom:solid
+                #CCCCCC 1.0pt;border-right:solid #CCCCCC
+                1.0pt;background:white;padding:1.5pt 2.25pt 1.5pt
+                2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal" style="text-align:right" align="right"><span style="font-size:9.0pt;font-family:&quot;Google Sans
+                    Mono&quot;,serif;color:black;mso-ligatures:none">15</span><span style="font-size:9.0pt;font-family:&quot;Google Sans
+                    Mono&quot;,serif;mso-ligatures:none"><o:p></o:p></span></p>
+              </td>
+              <td style="border-top:none;border-left:none;border-bottom:solid
+                #CCCCCC 1.0pt;border-right:solid #CCCCCC
+                1.0pt;padding:1.5pt 2.25pt 1.5pt 2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">BasebHSC0Power0<o:p></o:p></span></p>
+              </td>
+            </tr>
+            <tr style="height:15.75pt">
+              <td style="border:solid #CCCCCC
+                1.0pt;border-top:none;padding:1.5pt 2.25pt 1.5pt
+                2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal" style="text-align:right" align="right"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">50<o:p></o:p></span></p>
+              </td>
+              <td style="border-top:none;border-left:none;border-bottom:solid
+                #CCCCCC 1.0pt;border-right:solid #CCCCCC
+                1.0pt;padding:1.5pt 2.25pt 1.5pt 2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">ProcessorModule_0_MemCntl_0_PageRetirementCountl_0<o:p></o:p></span></p>
+              </td>
+              <td style="border-top:none;border-left:none;border-bottom:solid
+                #CCCCCC 1.0pt;border-right:solid #CCCCCC
+                1.0pt;background:white;padding:1.5pt 2.25pt 1.5pt
+                2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal" style="text-align:right" align="right"><span style="font-size:9.0pt;font-family:&quot;Google Sans
+                    Mono&quot;,serif;color:black;mso-ligatures:none">15</span><span style="font-size:9.0pt;font-family:&quot;Google Sans
+                    Mono&quot;,serif;mso-ligatures:none"><o:p></o:p></span></p>
+              </td>
+              <td style="border-top:none;border-left:none;border-bottom:solid
+                #CCCCCC 1.0pt;border-right:solid #CCCCCC
+                1.0pt;padding:1.5pt 2.25pt 1.5pt 2.25pt;height:15.75pt" valign="bottom">
+                <p class="MsoNormal"><span style="font-size:10.0pt;font-family:&quot;Arial&quot;,sans-serif;mso-ligatures:none">PM0MC0PaReCoun0<o:p></o:p></span></p>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="MsoPlainText"><o:p>&nbsp;</o:p></p>
+        <p class="MsoPlainText"><o:p>&nbsp;</o:p></p>
+        <p class="MsoPlainText"><o:p>&nbsp;</o:p></p>
+        <p class="MsoPlainText">Thanks <o:p></o:p></p>
+        <p class="MsoPlainText">Rohit <o:p></o:p></p>
+        <p class="MsoPlainText"><o:p>&nbsp;</o:p></p>
+        <o:p></o:p>
+      </div>
+    </blockquote>
+    <div class="moz-signature">-- <br>
+      
+      <title></title>
+      <font color="#1F497D"><font face="Century Gothic">Johnathan Mantey<br>
+          <small>Senior Software Engineer</small><br>
+          <big><font color="#555555"><small><b>azad te</b><b>chnology
+                  partners</b></small><br>
+              <small><font color="#1F497D"><small>Contributing to
+                    Technology Innovation since 1992</small></font><small><br>
+                  <font color="#1F497D">Phone: (503) 712-6764<br>
+                    Email: <a href="mailto:johnathanx.mantey@intel.com" class="moz-txt-link-freetext">johnathanx.mantey@intel.com</a></font></small><br>
+                <br>
+              </small></font></big></font></font> </div>
+  </body>
+</html>
+
+--------------6qnU2TGWjWqzDWtp0Qvf5Ma0--
