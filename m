@@ -1,167 +1,79 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3E996746346
-	for <lists+openbmc@lfdr.de>; Mon,  3 Jul 2023 21:24:38 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id CAAEA7469DB
+	for <lists+openbmc@lfdr.de>; Tue,  4 Jul 2023 08:45:10 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=KOO+O6kr;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=ZU6YRcaN;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Qvwpr1JQ5z30hM
-	for <lists+openbmc@lfdr.de>; Tue,  4 Jul 2023 05:24:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4QwCw12tmCz3btc
+	for <lists+openbmc@lfdr.de>; Tue,  4 Jul 2023 16:45:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=KOO+O6kr;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=ZU6YRcaN;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=134.134.136.20; helo=mga02.intel.com; envelope-from=johnathanx.mantey@intel.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 64 seconds by postgrey-1.37 at boromir; Tue, 04 Jul 2023 05:24:01 AEST
-Received: from mga02.intel.com (mga02.intel.com [134.134.136.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42a; helo=mail-pf1-x42a.google.com; envelope-from=milkfafa@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Qvwp92rxHz30hG
-	for <openbmc@lists.ozlabs.org>; Tue,  4 Jul 2023 05:24:01 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1688412241; x=1719948241;
-  h=message-id:date:subject:to:references:from:in-reply-to:
-   mime-version;
-  bh=MIKn8rP+L8ACYVhmLFTLtEBpexciZoK+dHNjzeK2Hho=;
-  b=KOO+O6krXRe/SZOc/5joV+eHTS27haRTE17ZlTtswb21R2J479dN/73R
-   y2vqa0AtzpYIjqsKCWBB/acR+IOoopqT/9t++xOxr2rPaUFp9RkrkMrMj
-   QsoJ1+rIngIvCod7Vha2kTh9/UO9BnwDFhQVwtksZJhIlU1rq8J6IBEOJ
-   eKsIV0BtaUaPNFfYJEb1FYvEXvYYsq3OMosWtPE23kbF3tNty7fSa/QN+
-   5Z5f6cp2BFcXaXqDl7XC4qKdna3VpltVZCzJL0QFaGVl7MTNvF+ztKezw
-   Qrg2rUuvioMU82YOHgb/B8AyIr0pLtXD1rrN+JPp2L3kaXES9ExYfREzE
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10760"; a="352780304"
-X-IronPort-AV: E=Sophos;i="6.01,178,1684825200"; 
-   d="scan'208,217";a="352780304"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 03 Jul 2023 12:22:46 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10760"; a="831919644"
-X-IronPort-AV: E=Sophos;i="6.01,178,1684825200"; 
-   d="scan'208,217";a="831919644"
-Received: from orsmsx602.amr.corp.intel.com ([10.22.229.15])
-  by fmsmga002.fm.intel.com with ESMTP; 03 Jul 2023 12:22:46 -0700
-Received: from orsmsx611.amr.corp.intel.com (10.22.229.24) by
- ORSMSX602.amr.corp.intel.com (10.22.229.15) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.27; Mon, 3 Jul 2023 12:22:46 -0700
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX611.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.27; Mon, 3 Jul 2023 12:22:45 -0700
-Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.27 via Frontend Transport; Mon, 3 Jul 2023 12:22:45 -0700
-Received: from NAM10-BN7-obe.outbound.protection.outlook.com (104.47.70.107)
- by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.27; Mon, 3 Jul 2023 12:22:45 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=VjGE3ZQ5bHr1/Y3UhnGr59C6/wju4YHV5vClm0KFtHlCq03vRSnlDR+xr8yiu0KwRQhuzUIQnoBw+tik9sBQ/KpKXvFsz9U4dmJViZKvLLI2rd+bHun5A18m+w2T4GkskF1Tfv6FwTZiIaXGxGX7K8e9iZ9svL26Buu03takVFTRnhzVR5aUdb1mbkyZ+7PHLp/ajEIJP8fiC2TGZQ4YFFPT1le/DoUM0w9TZyBWZyb9zJD7EEL3sdfXmM+mmM/dRR++Y2pmUQUTZ1pUtUQuhSEchGJ1ommvSfl8CY+PLmJRzwS8TcatTU1PyZsHdfGK4OtCKDV7Jdbws/aVousTWQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wc6PMHOthq8WFmnynVX6G4BfXKx+mWIdr+t5YtfT3YU=;
- b=Qh0JS5pDTHX7gswO6UBj8I0d0ODnSqmQTcrMuDE9atVOeariyAzNvSLY17/eQRvOfjil/RDT64fWnEVk/w3qT4SqDYsrOprUm+JPrTizC/DneNUCdaf2/sDO3UI09lB5w9sJxcVTNj3cgX7u8XJqStleKe5eH/KfJMk5xk8e/MDb+CxP6hnIGCTHSylnxWepzO3p8Nl3YJ/HoTWLGiJvChcpwzhYQUCNIwJ0OXOdxF1kw13HZ8iK1aBNmoJ9DYawm2FLpVGh4UnvoRqW4VcxvwkcZYKhlh8kirRr1YSjaAqbCTHvR1eSdncepFFBNz8H+TPQmEPxuhDGWdAK4PYNZQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from BL1PR11MB5978.namprd11.prod.outlook.com (2603:10b6:208:385::18)
- by PH0PR11MB5877.namprd11.prod.outlook.com (2603:10b6:510:141::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6544.24; Mon, 3 Jul
- 2023 19:22:36 +0000
-Received: from BL1PR11MB5978.namprd11.prod.outlook.com
- ([fe80::19b7:466f:32ac:b764]) by BL1PR11MB5978.namprd11.prod.outlook.com
- ([fe80::19b7:466f:32ac:b764%3]) with mapi id 15.20.6544.024; Mon, 3 Jul 2023
- 19:22:36 +0000
-Content-Type: multipart/alternative;
-	boundary="------------KkhbtGMJ7CNhx041VYFvf9kK"
-Message-ID: <77638e28-e71e-6415-f827-bc644dbf0008@intel.com>
-Date: Mon, 3 Jul 2023 12:22:32 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: IPMI Sensor Name limitation of 16 bytes
-Content-Language: en-US
-To: Rohit Pai <ropai@nvidia.com>, Ed Tanous <edtanous@google.com>,
-	"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
-References: <LV2PR12MB60140D575EA40854D74472F4CD719@LV2PR12MB6014.namprd12.prod.outlook.com>
- <CAH2-KxAVgJUC89mdLO4RnrQgAV-rVROrUHSDz=j-SzyVhTMKFA@mail.gmail.com>
- <LV2PR12MB60148354AAD9D6E65F2B1419CD24A@LV2PR12MB6014.namprd12.prod.outlook.com>
- <57ae2df9-214c-ac48-f7ae-f069c83c9617@intel.com>
- <LV2PR12MB6014B1512E2965258DBB52B8CD2AA@LV2PR12MB6014.namprd12.prod.outlook.com>
-From: Johnathan Mantey <johnathanx.mantey@intel.com>
-In-Reply-To: <LV2PR12MB6014B1512E2965258DBB52B8CD2AA@LV2PR12MB6014.namprd12.prod.outlook.com>
-X-ClientProxiedBy: SJ0PR05CA0111.namprd05.prod.outlook.com
- (2603:10b6:a03:334::26) To BL1PR11MB5978.namprd11.prod.outlook.com
- (2603:10b6:208:385::18)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4QwCvN6gsmz30Jc
+	for <openbmc@lists.ozlabs.org>; Tue,  4 Jul 2023 16:44:30 +1000 (AEST)
+Received: by mail-pf1-x42a.google.com with SMTP id d2e1a72fcca58-6686c74183cso4010540b3a.1
+        for <openbmc@lists.ozlabs.org>; Mon, 03 Jul 2023 23:44:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1688453065; x=1691045065;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=rHRda6VlHAqZjQbCBx/dOTDYNBAEt9qIqkptbv6Bzrw=;
+        b=ZU6YRcaNTIKlDrkMrZoHz1yMeRmi0L2ohJ1auDdFVvIv+1qgDIl1808YuoZ5pSqiY/
+         OCgX83/VSIZklJnOlboSjyi9gfDlD7xjUN71f0H9A0NkNC2VRSSVr9tqspzGwMK8FD+T
+         OadHy5qp6m7kRVcx8IzQw51Lo3rElsHh2DNe7U1OiAG9sGnw+mjmkZxh6Ir7JFI9mF0x
+         3qOSEPj9j1GRODNDh9+nx1G44P/dQdesaE6bDwB47xMsxdB73Y7rVXGRTVJKFc7RttFY
+         H4ubWd10l1ngKh7eX8pgHlrarmGRROh+t7xqkK5WCHNI57yziS9XoHtm90tsOm3pIDA7
+         tTlg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1688453065; x=1691045065;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rHRda6VlHAqZjQbCBx/dOTDYNBAEt9qIqkptbv6Bzrw=;
+        b=GrOui/iGZerMpxUVr6JcbT2KjjNgcwSvHwtCo119PuoWgVZ5pbY+eT5A0HDiKqTPjM
+         6IxQOC7HGINm5zG/w2vRk56osToek/i0ypyyQAoCaSuQFjbnaYk/tSNRimy1ikzv2aVu
+         0AFdcQuearU+TZ5qPeKwh2nwTJClvlfD9TXviL/EtlfOIdLcS1HtqEA3SvJEsdJqFBNq
+         BMRvtyHoP+XYx+dHM/vFwdfwS7jVNmGSPsYySxI7ChGGLv+cbIrnKsN+ptNlVojLL08j
+         GHOelbsdcNQssqFzlilEhx+CKGTKDe3sY8RtKCzqvlr8e1rDl4IWbWKP3kfi4SEbMOiq
+         +xFA==
+X-Gm-Message-State: ABy/qLYvFMnPdkpU9ufbeGTqS45khQOBZrLp666ZxJbXkRRkJZWDGPZT
+	QHG4cSU/hD0Z3rXFQGxJC7Y=
+X-Google-Smtp-Source: APBJJlEk8w/Cw3YH7b0lM0hogfijBNAlnBxttkTyUSPpfbqaET0j5aT8LxXA6V/nzTmnGywqAbfq+A==
+X-Received: by 2002:a05:6a00:b8c:b0:675:667c:f261 with SMTP id g12-20020a056a000b8c00b00675667cf261mr17148456pfj.2.1688453064997;
+        Mon, 03 Jul 2023 23:44:24 -0700 (PDT)
+Received: from hcdev-d520mt2.. (60-250-192-107.hinet-ip.hinet.net. [60.250.192.107])
+        by smtp.gmail.com with ESMTPSA id u2-20020aa78382000000b00668652b020bsm14863429pfm.105.2023.07.03.23.44.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 03 Jul 2023 23:44:24 -0700 (PDT)
+From: Marvin Lin <milkfafa@gmail.com>
+To: mchehab@kernel.org,
+	hverkuil-cisco@xs4all.nl,
+	avifishman70@gmail.com,
+	tmaimon77@gmail.com,
+	tali.perry1@gmail.com,
+	venture@google.com,
+	yuenn@google.com,
+	benjaminfair@google.com,
+	robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	andrzej.p@collabora.com
+Subject: [PATCH v13 0/7] Support Nuvoton NPCM Video Capture/Encode Engine
+Date: Tue,  4 Jul 2023 14:44:05 +0800
+Message-Id: <20230704064412.2145181-1-milkfafa@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL1PR11MB5978:EE_|PH0PR11MB5877:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9bec109d-2b77-4427-257b-08db7bfadb98
-X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 7hjwleYPoppdDBRQec54PQOlYoLFLiqJEdgYojEvb4dxjJJYKfiTTx/YTJYDZhxQ8So22dCkkwRuHQ+beJm3c+m/FnIdSgUmT9Rq0SpfJP3ndGh0JWiqQFMEw/K8xwtGE+K39SDXmIWqsU3Kbo7bJK2m/PZcNfEj01+FDKbfmlWxOCsGd+fnPM2sFVdX6jwIn52j24WE9PJUMMzRY8Lx16GorgkoZn+rLbRcvRoRRW6XpyQhlcTYKQ3f3EqC6hGa47vF9AQbMyhkGIkDlPcGMoENvtRuOtOjaC8yHzcZw5SyRvyKM3qWSCwsm+Mtq6/kxDaO7yXisJ+iQhEF0wh4rnFRNFCjSkNosiBaTCV4hauw6821IyIydYBs2qtbNxcd8g5m35md4UcoTOzyjM0AXgnGzyUsUY9nxZMG1gDd/RdxIJAeH519g7pPkZwpdmIs2KllRQEj3PF1jffXkODF8Nf+3FN6ll41a0uXfFXfD+7LszN7Qz9WrJaP+ccWG5e/TS2zFNotp2TeTnpn95OerQheoph45artbBaIJU5JjyWZ/majBja3mIS9ffnA7SkeE5BShDA6FZeusArqXXOr3oOQU7p1bXhJhB7K4k672PysV8rGDe75Lw1LjkThcRx1xigD5WPNBqOt8TI/kGPunw==
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BL1PR11MB5978.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(366004)(136003)(346002)(39860400002)(376002)(396003)(451199021)(316002)(31686004)(66556008)(66946007)(186003)(86362001)(31696002)(6506007)(66476007)(6512007)(26005)(53546011)(40140700001)(82960400001)(2616005)(2906002)(33964004)(6486002)(6666004)(38100700002)(5660300002)(478600001)(8676002)(110136005)(8936002)(41300700001)(36756003)(45980500001)(43740500002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?T3VRR0xzb2FreWwrV3F2dW1HWmVQZWhsSWQ4d25Td3Y4UnpZWGFaK0ZZQ1dR?=
- =?utf-8?B?dmF6TmJOZDFEQkVpWGgvWWhJWTErY0s3dTlrbW5mbGFjeWgxNkl1N242ZTZO?=
- =?utf-8?B?N1lNeFE3UUxDWjNjYnpOVDMwRU03cjRpNXVYV1k5OWdzVTJtV2c5a25kREUy?=
- =?utf-8?B?b1ZWdHdmV09ZNjVmWFEvRFMrTDFhZE8zMmRXUDlqR2xLMXREcFI1MXp2TzVY?=
- =?utf-8?B?cHJ2NDdzUExhb01sKzBDZzZnSG5BallINC9DUnFBVWxrYThUbC9ORWR0MnVF?=
- =?utf-8?B?dk0ybmZhZ2VmZXhQOVNCWDc1aEZmdkZBR1ZndTBGU3gySjIzTk5jaGlXZ1N3?=
- =?utf-8?B?SC94TU1NN01MaDlPUHNhSlNFdTJabkNtMjMrcHhDVWhLY0lUazdZSUp3eHAr?=
- =?utf-8?B?azJpU1NMN1pGTC9tbVFUL3BMd1k0aERWdEdVRmx6NGJwLytpSTY4MUZPWjh1?=
- =?utf-8?B?U2ZCTDFLcWQ5eC9KNWJNOFZEZjZETFRhMm1wQ3BuRXRmQnhPWDZHRzRNVDUz?=
- =?utf-8?B?RUVlczZlS2tUZmVXMDZqKzhRL214NkNBWlpTSGRBTUEraTBocUw3Vy8rVFY3?=
- =?utf-8?B?OWxQTlZHRHl1QU1MT3U1YTQwL3dpWGN2cTYzVldmYkJtdkMyNXlQSy9qdk1W?=
- =?utf-8?B?dGZ0cjBXbndjZlQzdlJOWXo2amN6MERiSGs0K2pJRVVVUTdGNCtSZnNudHVq?=
- =?utf-8?B?MURjU0Ftc1E0NlI1NlNobEFrQ3M3c09BMThxSXBpQWtJRE1hY2x3S2tIc2hT?=
- =?utf-8?B?TEpsejhXTmdpOTRNRjFVYVVJOFJlcEw1OWZLcGhsZVRDVU1ZQW05SGdaM2pX?=
- =?utf-8?B?V0RyQlJsRSt2NENodnp4UlN1R1BkUFRWckNPYXh2OUZJeTM5cUczQ2lScVAr?=
- =?utf-8?B?WGtkaTN2MWl2UFVFNUFhNWJlQldPOGs1cVZEaUNuM3hzMDBraEhZR0QyMUlL?=
- =?utf-8?B?UVZaT1VSTTYyZnR0Y2d2aEsvRVdoMUE2Y21LNHFwWlZiUW91SG9iNGpEcWlk?=
- =?utf-8?B?ZG43YTQ3MWdCQ0RxQ3FqeWhGdUloaUV3UnRqaVdDOFVKd2J1akl6VXI1NW9h?=
- =?utf-8?B?aERFMys5TjJvL3kvcFhTSFRkeXdVbmFwcmZKQVk0aVp3NS9Zdk1TRWd2RCtH?=
- =?utf-8?B?WXZLR2hQNHBGRVdSbnh3VjFUcTdzYnU2U0k0R2R1SStuQWNNWGV2NjVuZlI4?=
- =?utf-8?B?RzhyZGV6cDRyQW5UTEYrTWtjTXBkNFpwTkFpRnJMbm1VQUlUTTNPRE9meEdU?=
- =?utf-8?B?MU1hMnBSRUxCWkcyS0ZsY0x2Z2c4NTZFOEN2a3VxeSttTXd2eFdDK3AyUzU0?=
- =?utf-8?B?d3p6a0g5QXVwN0l5Zll0SG5UdEZFZFRrWFZ3b0x4YlJjNjFpbXkyV083OXY0?=
- =?utf-8?B?LzBFVFByVVVkamYybkRxa0xwcWczYmIzckV4SlVUNStNNVJNdS9UeFBWTWxJ?=
- =?utf-8?B?MWI3bTFHSXdTNnN4NlFZRFpBUlRtUytxWGFKTWpHODVDL3A4VnRZTWlGTUJw?=
- =?utf-8?B?Y1FTR3VIVlhmZFM3RGovL2JOVUtvc1prbm5vT1dMWmQ1Zm41ZHFUVEx5bnRM?=
- =?utf-8?B?TEN0SDFKYWRQYkJKWFFidFFqa3U0dzJuTm5reDlNY09KUFhUVkdlRkVqc3RO?=
- =?utf-8?B?ckJOcUZHN2x4aElscy9tM2UrblBiUkMwMklaR1o3NDc0ZVYxWi9PMUMvbEFV?=
- =?utf-8?B?MlR3QWVLNGVxaWtNVE81Y1JhUXdxYkNFci91emVrbjlZSWJjN3lYZ1IyVEQ0?=
- =?utf-8?B?T0g5K2s2K2paSjBSVVowRFF2REJ6YWkyN05XbWlIS05YM1JSVEdTWG5KMC82?=
- =?utf-8?B?TzdXcFZaMGNKVEN5Z0ppdUhPU285dVo2NThRUWg4NGhmUEtZajNuNXZaOHVn?=
- =?utf-8?B?U3RlZzc3QmlwcUZyTWxRWGRvSHZ4MW9SRVBpanlhVTJLSElUL3R4djhITXVO?=
- =?utf-8?B?alZiRU5mMHdNTGswN3VkV3ZaU0N2QXRLaklQMjZjaHkzWWsvZ2hscnQ2S0tP?=
- =?utf-8?B?TWp4WHc1ZVh1amFjWGJzbTByQzlaMmNGVWVhODFETEQzbENuaHQvQVlObjAr?=
- =?utf-8?B?OWVFMFY2R2NMR0NvSnMxQXJUZXUxMmsrMjVhRXZib0RYaXR2dXN3QmJRQVhQ?=
- =?utf-8?B?UFhjalozWGRmVDlHZjhJeWo0b3BQNnFNMG82WXFYTXB0aWZBNTBTNFZOM2cw?=
- =?utf-8?B?aWc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9bec109d-2b77-4427-257b-08db7bfadb98
-X-MS-Exchange-CrossTenant-AuthSource: BL1PR11MB5978.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jul 2023 19:22:36.1085
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: BFBSguUEngN5Fbj6Dqs33HxE7elX9qyVZaHNo+6d1iCexuLKh4Y9XbaN8uEyLtBh41oa0ceDsMhBtpoQCUnnOc4/PT9erhZ/1Ys8INbG9O0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB5877
-X-OriginatorOrg: intel.com
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -173,207 +85,216 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: kwliu@nuvoton.com, Marvin Lin <milkfafa@gmail.com>, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, kflin@nuvoton.com, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---------------KkhbtGMJ7CNhx041VYFvf9kK
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
+This patch series add DTS node, dt-bindings document and drivers for Video
+Capture/Differentiation Engine (VCD) and Encoding Compression Engine (ECE)
+present on Nuvoton NPCM SoCs.
 
+As described in the datasheet NPCM750D_DS_Rev_1.0, the VCD can capture a
+frame from digital video input and compare two frames in memory, and then
+the ECE can compress the frame data into HEXTITLE format which is defined
+in Remote Framebuffer Protocol (RFC 6143, chapter 7.7.4. Hextile Encoding).
 
-On 6/30/23 02:04, Rohit Pai wrote:
->
-> Hello Johnathan,
->
-> Thanks for your reply.
->
-> >> We're proposing adding a "ShortName" entry to the JSON 
-> configuration file read by Entity Manager.
->
-> Could you please add some more detail here, how this would be consumed 
-> by ipmid ?
->
-> The sensors can be created by an application, and we were looking to 
-> do modification in one place where this conversion can happen.
->
-> Also, as per your proposal we need to know all possible names of the 
-> sensor per platform and configure it right ? We wanted to propose some 
-> auto generation algorithms where it can take up any new sensors which 
-> can get added or discovered. I agree with you on the point that auto 
-> generation algorithms can produce mangled/duplicate names.
->
-The current plan:
+The output of v4l2-compliance:
+v4l2-compliance 1.23.0-4996, 64 bits, 64-bit time_t
+v4l2-compliance SHA: 9431e4b26b48 2023-02-13 14:51:47
 
-Modify phosphor-dbus-interfaces Sensor/Value.interface.yaml to include a 
-"ShortName" string entry.
+Compliance test for npcm-video device /dev/video0:
 
-Modify EntityManager JSON input files to include a "ShortName" field. 
-The "ShortName", in my current thought process, is optional. The intent 
-is to use "Name" directly if it is already short enough to meet IPMI 
-requirements.
+Driver Info:
+        Driver name      : npcm-video
+        Card type        : NPCM Video Engine
+        Bus info         : platform:npcm-video
+        Driver version   : 6.1.12
+        Capabilities     : 0x84200001
+                Video Capture
+                Streaming
+                Extended Pix Format
+                Device Capabilities
+        Device Caps      : 0x04200001
+                Video Capture
+                Streaming
+                Extended Pix Format
 
-Modify dbus-sensor daemons to properly generate short names based upon 
-the "ShortName" string provided via D-Bus. The ShortName may need 
-adjustment if the incoming string has fields that require regex 
-modification. Once the final ShortName is computed it is stored as part 
-of the 'struct Sensor' upon which most of the dbus-sensors are derived.
+Required ioctls:
+        test VIDIOC_QUERYCAP: OK
+        test invalid ioctls: OK
 
-Modify phosphor-host-ipmid D-Bus SDR generation to use either "Name" or 
-"ShortName". This will replace the code that generates the name from the 
-D-Bus path string currently in use. The dbus-sensors code returns 
-Value.interface entries with the "Name" or the "ShortName" fully formed. 
-If the D-Bus record has a "ShortName" entry, use it directly. Otherwise 
-use the "Name" entry directly.
+Allow for multiple opens:
+        test second /dev/video0 open: OK
+        test VIDIOC_QUERYCAP: OK
+        test VIDIOC_G/S_PRIORITY: OK
+        test for unlimited opens: OK
 
-The goal of following this model is to provide each OpenBMC vendor to 
-control how sensor names are emitted. Another goal is to avoid receiving 
-a series of defect reports issued by QA stating the name of IPMI sensors 
-are suddenly significantly different that they were in prior releases of 
-OpenBMC. The proposal here mitigates this second issue.
+Debug ioctls:
+        test VIDIOC_DBG_G/S_REGISTER: OK (Not Supported)
+        test VIDIOC_LOG_STATUS: OK (Not Supported)
 
-I am currently working on a project to do away with some portions of 
-intel-ipmi-oem and migrating to phosphor-host-ipmid. I'm not certain I 
-can continue the project if a significant change in how sensors are 
-named is implemented.
+Input ioctls:
+        test VIDIOC_G/S_TUNER/ENUM_FREQ_BANDS: OK (Not Supported)
+        test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+        test VIDIOC_S_HW_FREQ_SEEK: OK (Not Supported)
+        test VIDIOC_ENUMAUDIO: OK (Not Supported)
+        test VIDIOC_G/S/ENUMINPUT: OK
+        test VIDIOC_G/S_AUDIO: OK (Not Supported)
+        Inputs: 1 Audio Inputs: 0 Tuners: 0
 
-<snip>
+Output ioctls:
+        test VIDIOC_G/S_MODULATOR: OK (Not Supported)
+        test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+        test VIDIOC_ENUMAUDOUT: OK (Not Supported)
+        test VIDIOC_G/S/ENUMOUTPUT: OK (Not Supported)
+        test VIDIOC_G/S_AUDOUT: OK (Not Supported)
+        Outputs: 0 Audio Outputs: 0 Modulators: 0
+
+Input/Output configuration ioctls:
+        test VIDIOC_ENUM/G/S/QUERY_STD: OK (Not Supported)
+        test VIDIOC_ENUM/G/S/QUERY_DV_TIMINGS: OK
+        test VIDIOC_DV_TIMINGS_CAP: OK
+        test VIDIOC_G/S_EDID: OK (Not Supported)
+
+Control ioctls (Input 0):
+        test VIDIOC_QUERY_EXT_CTRL/QUERYMENU: OK
+        test VIDIOC_QUERYCTRL: OK
+        test VIDIOC_G/S_CTRL: OK
+        test VIDIOC_G/S/TRY_EXT_CTRLS: OK
+                warn: v4l2-test-controls.cpp(1139): V4L2_CID_DV_RX_POWER_PRESENT not found for input 0
+        test VIDIOC_(UN)SUBSCRIBE_EVENT/DQEVENT: OK
+        test VIDIOC_G/S_JPEGCOMP: OK (Not Supported)
+        Standard Controls: 1 Private Controls: 2
+
+Format ioctls (Input 0):
+        test VIDIOC_ENUM_FMT/FRAMESIZES/FRAMEINTERVALS: OK
+        test VIDIOC_G/S_PARM: OK (Not Supported)
+        test VIDIOC_G_FBUF: OK (Not Supported)
+        test VIDIOC_G_FMT: OK
+        test VIDIOC_TRY_FMT: OK
+        test VIDIOC_S_FMT: OK
+        test VIDIOC_G_SLICED_VBI_CAP: OK (Not Supported)
+        test Cropping: OK (Not Supported)
+        test Composing: OK (Not Supported)
+        test Scaling: OK (Not Supported)
+
+Codec ioctls (Input 0):
+        test VIDIOC_(TRY_)ENCODER_CMD: OK (Not Supported)
+        test VIDIOC_G_ENC_INDEX: OK (Not Supported)
+        test VIDIOC_(TRY_)DECODER_CMD: OK (Not Supported)
+
+Buffer ioctls (Input 0):
+        test VIDIOC_REQBUFS/CREATE_BUFS/QUERYBUF: OK
+        test VIDIOC_EXPBUF: OK
+        test Requests: OK (Not Supported)
+
+Total for npcm-video device /dev/video0: 45, Succeeded: 45, Failed: 0, Warnings: 1
+
+Changes in v13:
+  - Modify the flow for capturing next frame
+  - Modify the behavior of resolution change interrupt
+  - Move GFXI dt-bindings document to
+    Documentation/devicetree/bindings/soc/nuvoton/nuvoton,gfxi.yaml
+
+Changes in v12:
+  - Modify the flow for detecting resolution change and raise
+    V4L2_EVENT_SOURCE_CHANGE event.
+  - Add V4L2_PIX_FMT_RGB565 format support.
+
+Changes in v11:
+  - Replace "u8/u16/u32" with "unsigned int" for generic local variables.
+  - Correct subsystem prefixes, drop redundant words in commit subject, and
+    add more information in commit message.
+
+Changes in v10:
+  - drivers/media/platform/nuvoton/npcm-video.c
+    * Let short functions to be inline function.
+    * Correct return type of some functions, and properly handle return
+      value by callers.
+    * Correct the timing of removing rect_list and the flow of FIFO overrun
+      case in irq.
+    * Adjust line breaks, indentations, and style of variable declarations.
+
+Changes in v9:
+  - Change ECE node name to "video-codec".
+  - Drop redundant "bindings for" in commit subject of patch 2/7.
+  - Refine the format of VCD/ECE dt-binding document.
+
+Changes in v8:
+  - Let VCD/ECE to be 2 separate nodes and update dt-binding documents.
+  - Move register definitions out to a local header file.
+  - Driver refinements (add error handling for memory allocation, remove
+    unnecessary condition check and introduce "goto"s to handle similar
+    error recovery paths).
+  - Correct properties and typo in GFXI dt-binding document.
+
+Changes in v7:
+  - Add uapi documents for driver-specific controls.
+  - Implement driver-specific controls for switching capture mode and
+    getting the count of compressed HEXTILE rectangles.
+  - Drop unnecessary "enum_framesizes" and "enum_frameintervals" functions.
+  - Include the output of v4l2-compliance in cover letter.
+
+Changes in v6:
+  - Support NPCM845 and add compatible "nuvoton,npcm845-video".
+  - Correct pixel format to V4L2_PIX_FMT_HEXTILE which is newly added in
+    this patch series.
+
+Changes in v5:
+  - Simplify function prefix "nuvoton_" to "npcm_".
+  - Increase VCD_BUSY_TIMEOUT_US and ECE_POLL_TIMEOUT_US to 300ms to
+    prevent polling timeout when ECC is enabled or system is busy.
+
+Changes in v4:
+  - Fix compile warning reported by kernel test robot.
+
+Changes in v3:
+  - Add video driver entry in MAINTAINERS.
+  - Change config name to CONFIG_VIDEO_NPCM_VCD_ECE.
+  - Reduce the waiting time after resetting the VCD/ECE module.
+  - Correct data types of some variables.
+
+Changes in v2:
+  - Add Hextile document and locate with vendor formats.
+
+Marvin Lin (7):
+  ARM: dts: nuvoton: Add node for NPCM VCD and ECE engine
+  media: dt-bindings: nuvoton: Add NPCM VCD and ECE engine
+  dt-bindings: soc: nuvoton: Add NPCM GFXI
+  media: v4l: Add HEXTILE compressed format
+  media: v4l2-ctrls: Add user control base for Nuvoton NPCM controls
+  media: uapi: Add controls for NPCM video driver
+  media: nuvoton: Add driver for NPCM video capture and encode engine
+
+ .../bindings/media/nuvoton,npcm-ece.yaml      |   43 +
+ .../bindings/media/nuvoton,npcm-vcd.yaml      |   72 +
+ .../bindings/soc/nuvoton/nuvoton,gfxi.yaml    |   39 +
+ .../userspace-api/media/drivers/index.rst     |    1 +
+ .../media/drivers/npcm-video.rst              |   67 +
+ .../media/v4l/pixfmt-reserved.rst             |    7 +
+ MAINTAINERS                                   |   12 +
+ .../dts/nuvoton/nuvoton-common-npcm7xx.dtsi   |   23 +
+ drivers/media/platform/Kconfig                |    1 +
+ drivers/media/platform/Makefile               |    1 +
+ drivers/media/platform/nuvoton/Kconfig        |   15 +
+ drivers/media/platform/nuvoton/Makefile       |    2 +
+ drivers/media/platform/nuvoton/npcm-regs.h    |  152 ++
+ drivers/media/platform/nuvoton/npcm-video.c   | 1843 +++++++++++++++++
+ drivers/media/v4l2-core/v4l2-ioctl.c          |    1 +
+ include/uapi/linux/npcm-video.h               |   41 +
+ include/uapi/linux/v4l2-controls.h            |    6 +
+ include/uapi/linux/videodev2.h                |    1 +
+ 18 files changed, 2327 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/media/nuvoton,npcm-ece.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/nuvoton,npcm-vcd.yaml
+ create mode 100644 Documentation/devicetree/bindings/soc/nuvoton/nuvoton,gfxi.yaml
+ create mode 100644 Documentation/userspace-api/media/drivers/npcm-video.rst
+ create mode 100644 drivers/media/platform/nuvoton/Kconfig
+ create mode 100644 drivers/media/platform/nuvoton/Makefile
+ create mode 100644 drivers/media/platform/nuvoton/npcm-regs.h
+ create mode 100644 drivers/media/platform/nuvoton/npcm-video.c
+ create mode 100644 include/uapi/linux/npcm-video.h
 
 -- 
-Johnathan Mantey
-Senior Software Engineer
-*azad te**chnology partners*
-Contributing to Technology Innovation since 1992
-Phone: (503) 712-6764
-Email: johnathanx.mantey@intel.com
+2.34.1
 
---------------KkhbtGMJ7CNhx041VYFvf9kK
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-
-<html><head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  </head>
-  <body>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 6/30/23 02:04, Rohit Pai wrote:<br>
-    </div>
-    <blockquote type="cite" cite="mid:LV2PR12MB6014B1512E2965258DBB52B8CD2AA@LV2PR12MB6014.namprd12.prod.outlook.com">
-      
-      <meta name="Generator" content="Microsoft Word 15 (filtered
-        medium)">
-      <style>@font-face
-	{font-family:"Cambria Math";
-	panose-1:2 4 5 3 5 4 6 3 2 4;}@font-face
-	{font-family:Calibri;
-	panose-1:2 15 5 2 2 2 4 3 2 4;}@font-face
-	{font-family:Verdana;
-	panose-1:2 11 6 4 3 5 4 4 2 4;}@font-face
-	{font-family:"Century Gothic";
-	panose-1:2 11 5 2 2 2 2 2 2 4;}p.MsoNormal, li.MsoNormal, div.MsoNormal
-	{margin:0in;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ligatures:standardcontextual;}a:link, span.MsoHyperlink
-	{mso-style-priority:99;
-	color:blue;
-	text-decoration:underline;}p.MsoPlainText, li.MsoPlainText, div.MsoPlainText
-	{mso-style-priority:99;
-	mso-style-link:"Plain Text Char";
-	margin:0in;
-	font-size:11.0pt;
-	font-family:"Calibri",sans-serif;
-	mso-ligatures:standardcontextual;}span.PlainTextChar
-	{mso-style-name:"Plain Text Char";
-	mso-style-priority:99;
-	mso-style-link:"Plain Text";
-	font-family:"Calibri",sans-serif;}span.EmailStyle21
-	{mso-style-type:personal-reply;
-	font-family:"Calibri",sans-serif;
-	color:windowtext;}.MsoChpDefault
-	{mso-style-type:export-only;
-	font-size:10.0pt;
-	mso-ligatures:none;}div.WordSection1
-	{page:WordSection1;}</style><!--[if gte mso 9]><xml>
-<o:shapedefaults v:ext="edit" spidmax="1026" />
-</xml><![endif]--><!--[if gte mso 9]><xml>
-<o:shapelayout v:ext="edit">
-<o:idmap v:ext="edit" data="1" />
-</o:shapelayout></xml><![endif]-->
-      <div class="WordSection1">
-        <p class="MsoNormal">Hello Johnathan, <o:p></o:p></p>
-        <p class="MsoNormal"><o:p>&nbsp;</o:p></p>
-        <p class="MsoNormal">Thanks for your reply. <o:p></o:p></p>
-        <p class="MsoNormal">&gt;&gt; We're proposing adding a
-          &quot;ShortName&quot; entry to the JSON configuration file read by
-          Entity Manager.<o:p></o:p></p>
-        <p class="MsoNormal">Could you please add some more detail here,
-          how this would be consumed by ipmid ?
-          <o:p></o:p></p>
-        <p class="MsoNormal"><o:p>&nbsp;</o:p></p>
-        <p class="MsoNormal">The sensors can be created by an
-          application, and we were looking to do modification in one
-          place where this conversion can happen.
-          <o:p></o:p></p>
-        <p class="MsoNormal">Also, as per your proposal we need to know
-          all possible names of the sensor per platform and configure it
-          right ? We wanted to propose some auto generation algorithms
-          where it can take up any new sensors which can get added or
-          discovered. I agree with you on the point that auto generation
-          algorithms can produce mangled/duplicate names.
-        </p>
-      </div>
-    </blockquote>
-    <p>The current plan:</p>
-    <p>Modify phosphor-dbus-interfaces Sensor/Value.interface.yaml to
-      include a &quot;ShortName&quot; string entry.<br>
-    </p>
-    <p>Modify EntityManager JSON input files to include a &quot;ShortName&quot;
-      field. The &quot;ShortName&quot;, in my current thought process, is
-      optional. The intent is to use &quot;Name&quot; directly if it is already
-      short enough to meet IPMI requirements.<br>
-      <br>
-      Modify dbus-sensor daemons to properly generate short names based
-      upon the &quot;ShortName&quot; string provided via D-Bus. The ShortName may
-      need adjustment if the incoming string has fields that require
-      regex modification. Once the final ShortName is computed it is
-      stored as part of the 'struct Sensor' upon which most of the
-      dbus-sensors are derived.<br>
-    </p>
-    <p>Modify phosphor-host-ipmid D-Bus SDR generation to use either
-      &quot;Name&quot; or &quot;ShortName&quot;. This will replace the code that generates
-      the name from the D-Bus path string currently in use. The
-      dbus-sensors code returns Value.interface entries with the &quot;Name&quot;
-      or the &quot;ShortName&quot; fully formed. If the D-Bus record has a
-      &quot;ShortName&quot; entry, use it directly. Otherwise use the &quot;Name&quot; entry
-      directly.</p>
-    <p>The goal of following this model is to provide each OpenBMC
-      vendor to control how sensor names are emitted. Another goal is to
-      avoid receiving a series of defect reports issued by QA stating
-      the name of IPMI sensors are suddenly significantly different that
-      they were in prior releases of OpenBMC. The proposal here
-      mitigates this second issue.</p>
-    <p>I am currently working on a project to do away with some portions
-      of intel-ipmi-oem and migrating to phosphor-host-ipmid. I'm not
-      certain I can continue the project if a significant change in how
-      sensors are named is implemented.<br>
-      <br>
-      &lt;snip&gt;<br>
-    </p>
-    -- <br>
-    <div class="moz-signature">
-      
-      <font color="#1F497D"><font face="Century Gothic">Johnathan Mantey<br>
-          <small>Senior Software Engineer</small><br>
-          <big><font color="#555555"><small><b>azad te</b><b>chnology
-                  partners</b></small><br>
-              <small><font color="#1F497D"><small>Contributing to
-                    Technology Innovation since 1992</small></font><small><br>
-                  <font color="#1F497D">Phone: (503) 712-6764<br>
-                    Email: <a href="mailto:johnathanx.mantey@intel.com" class="moz-txt-link-freetext">johnathanx.mantey@intel.com</a></font></small><br>
-                <br>
-              </small></font></big></font></font> </div>
-  </body>
-</html>
-
---------------KkhbtGMJ7CNhx041VYFvf9kK--
