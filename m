@@ -2,86 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 59A5274D4A8
-	for <lists+openbmc@lfdr.de>; Mon, 10 Jul 2023 13:36:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id EFC5B74DCA9
+	for <lists+openbmc@lfdr.de>; Mon, 10 Jul 2023 19:43:45 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=fV2ukxnm;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ZYDTxKbW;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=eL2E+07U;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4R025Q1n3Nz3bXl
-	for <lists+openbmc@lfdr.de>; Mon, 10 Jul 2023 21:36:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4R0BFC612Bz3byT
+	for <lists+openbmc@lfdr.de>; Tue, 11 Jul 2023 03:43:43 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=fV2ukxnm;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ZYDTxKbW;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=eL2E+07U;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.28; helo=out4-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 301 seconds by postgrey-1.37 at boromir; Mon, 10 Jul 2023 21:35:49 AEST
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::52c; helo=mail-pg1-x52c.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4R024k01vmz30PL
-	for <openbmc@lists.ozlabs.org>; Mon, 10 Jul 2023 21:35:49 +1000 (AEST)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.nyi.internal (Postfix) with ESMTP id 05D835C0174;
-	Mon, 10 Jul 2023 07:30:42 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Mon, 10 Jul 2023 07:30:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	fuzziesquirrel.com; h=cc:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm3; t=
-	1688988642; x=1689075042; bh=B7qxatu5gGYQT5pgrJjDspTk1USqb9wnfqe
-	aQQz+zAw=; b=fV2ukxnm5t+1mo9RfA1WSudbuoRkAnQYgMxKkNyHbDcyiKn1Ihu
-	+3GAdnroWuQVI9wfJzUy7sAq0h+r/pOZI5q7XtaXK/xyp2+2w0derKI8e+zALDkS
-	SBtqZn4exbFsIMvSwJBA7IYCW8gv+y5PJ7nUFzrsTbb/lK+lpkFCUybGed8xXBMd
-	8CbedaymN5C/TyvzvIUba8CfKKmReF1+nj7CPTbSdYsidftTQt0jklfZG2KCH5IC
-	isyqNkn8WPVANrcJIag6alAdVDQ7QZO9E3WUssiLakff5LhyVqT42UUDKYRNFEAH
-	epBmNvLmj/hwmUbdGTyO7PT1jTTmTNr0zBw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm2; t=1688988642; x=1689075042; bh=B7qxatu5gGYQT
-	5pgrJjDspTk1USqb9wnfqeaQQz+zAw=; b=ZYDTxKbW9xWoMqz/oaCVGA+DHUJ2O
-	K+l4zgYbGAquo1sFgKoGWVHAlnR+MbuG7kjBZTpvarqIvqmAI1kUQaNsL6cK42AT
-	uZ1RIpfOQE5mL0YJJB16c3vQigXPDWBaw4+YFmpjFbSRLYy3bXMAOaq9PAgdhsd9
-	G8weWR+SlzbEzjEdG5CD6QP2pLRHPh5v2Xf/CALvBWx8Nq4GHz0TRl2OUlGy9pRm
-	ztwDXw5iaxknoLf/OiogEjQXrgAVSZhJaZwEk4oOqUp+uFuBPl94WOvhOVyP82E4
-	Q/IRh84cyLqsIPsbeewY0Gp4I63v+eiYjcrdKK3pGcLhBFdFYgMbrYDPg==
-X-ME-Sender: <xms:4eurZIpGpM2monRqwIQdMaOi2oF2Ppn2NivHnXQquhGZ3vVaaRpRUg>
-    <xme:4eurZOoggCGw-jW6HAxyciKlLvBaALeQH3ZxXJJO-qjfL5WNy6WX5wVp-Pa7i_M0g
-    dXHKaqlD5VdyxnOvX0>
-X-ME-Received: <xmr:4eurZNOXOJyur4P3rESYNrZQl48VbvCJQSoHv9xmaEYKiAHGXj1uhgN2J9UUUmRA9g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrvdekgdefvdcutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecunecujfgurhepkffuhffvffgjfhgtfgggsegrtderre
-    dtreejnecuhfhrohhmpeeurhgrugcuuehishhhohhpuceosghrrggulhgvhigssehfuhii
-    iihivghsqhhuihhrrhgvlhdrtghomheqnecuggftrfgrthhtvghrnhepgfejhffhkeduie
-    eileetveeivedtgeeftdektdeftedvfeevudeutdfggffhkeeknecuvehluhhsthgvrhfu
-    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghrrggulhgvhigssehfuhiiii
-    hivghsqhhuihhrrhgvlhdrtghomh
-X-ME-Proxy: <xmx:4eurZP6i55F2IgEVZki_0gQkFmHMVNDqM95BtpX1JHmwzSl5ajUa_g>
-    <xmx:4eurZH5efP6Bnz1rHlpnadGMWXEyBbZgDd9-yaEUYx4-timKW6fkKQ>
-    <xmx:4eurZPgL6Ph9aGVDOa5FHbXKLCGt69wCf3JWrcjxdHHaYIKNVfflcA>
-    <xmx:4uurZEi8Y3CaXRt-rLuL8WshoYxcjFEjOr03sSihjRA03RaLXgpRsQ>
-Feedback-ID: i02c9470a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 10 Jul 2023 07:30:41 -0400 (EDT)
-Message-ID: <03a3c7979087fda82dba00d7fb39a843274ad646.camel@fuzziesquirrel.com>
-Subject: Re: Sing OpenBMC Individual CLA
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: Igor Kononenko <i.kononenko.e@gmail.com>, openbmc@lists.ozlabs.org
-Date: Mon, 10 Jul 2023 07:30:40 -0400
-In-Reply-To: <CAJcExQmXxn4m3Y6ZqW_tU+yESU6K+6C1Jv7XPkbm-tapk9fy1A@mail.gmail.com>
-References: 	<CAJcExQmXxn4m3Y6ZqW_tU+yESU6K+6C1Jv7XPkbm-tapk9fy1A@mail.gmail.com>
-Content-Type: multipart/alternative; boundary="=-bi6y79c++mp5/AbwtqAr"
-User-Agent: Evolution 3.48.4 
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4R0BDY67w6z3bjK
+	for <openbmc@lists.ozlabs.org>; Tue, 11 Jul 2023 03:43:08 +1000 (AEST)
+Received: by mail-pg1-x52c.google.com with SMTP id 41be03b00d2f7-55bc22375b9so2358839a12.2
+        for <openbmc@lists.ozlabs.org>; Mon, 10 Jul 2023 10:43:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1689010984; x=1691602984;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=fDAy0vVA3a+9sJex/LHHOb6x4vi+5awTJxhRIpJhfgM=;
+        b=eL2E+07U74IZq0xnbdVPQzdBSLu5MmteAAwMxGVinIep0YmICTUy7mBKdKJaZLyOXt
+         TfebaFExZB2PrYzQ0V6Xj4ve9C+ISw1uBEIc4/+GHXL44T8KJkRS3ISzbrHRAnELokR9
+         qUyrYV17+FMh83W7pYi0Sj9joDc00IWrr8mOdBb/EVECmFrDEA5CZjfwCdC1XSfWOc/h
+         FcYyttwvfZtRJl2SWUiRUailD9qR1QTmEWBhjisD0NlmvtisMq4+AvD7UtabR4rKs4Zy
+         UduUAqz0I6DNPSfJ/A9sznLx/vRrYxeU4SKjRfSlLJC+SX2t2uI+5uvfdi87tFEDv5XO
+         oUkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689010984; x=1691602984;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=fDAy0vVA3a+9sJex/LHHOb6x4vi+5awTJxhRIpJhfgM=;
+        b=aymyRXYnZYJzxQAX/U5KY/9NpupwoDFw5Qt6suYi3fyOKbgS64ZjZfNbasoao/EvPZ
+         HvcFoaeNCgN41kVCw2N6Q1tmn+iY/HXKE1SMEBmyKc2Nu9Q+biHkbKfsFolfK7xUtiwV
+         cG3iLqO9ITsaDlLTgkvfs533TNZFfMfonTw3dOd5gsi/tL9qFJwOr2yXMDP/fOaFbkkS
+         Qw/RLQDOCBZxICldwfz3Xd6WyPh0kVwv+hb7VEFWC+be6h+wam9fddN6xvzMESLc7++v
+         CJYoLVcZiKLsJCs2qzKqZbZMs/TE8sQWRllKjf4gni5ES9VUCxZl5EAAknYNSVDXLwtB
+         HewA==
+X-Gm-Message-State: ABy/qLZAnr7o1SAxkCEyV39QdyOEek71CEGHjGataqjgaZUPpbXOTGez
+	9oUxU5bgvUre+NQjF9+UIrg=
+X-Google-Smtp-Source: APBJJlF9Ambbltxhd1I/Ksl+P1TBG1QGVr5d3WoRX+eIRyqPl4cLyavb0mOyJJbQHNJfXVOaHmzF9g==
+X-Received: by 2002:a17:903:428d:b0:1b2:46ab:a9e1 with SMTP id ju13-20020a170903428d00b001b246aba9e1mr9835540plb.28.1689010983634;
+        Mon, 10 Jul 2023 10:43:03 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id t4-20020a170902e84400b001b80971609esm172820plg.152.2023.07.10.10.43.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 10 Jul 2023 10:43:02 -0700 (PDT)
+Message-ID: <1f4c500b-e706-a090-516d-992b68f44f0d@roeck-us.net>
+Date: Mon, 10 Jul 2023 10:43:01 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.11.0
+Subject: Re: [PATCH] hwmon: (peci/cputemp) Add Intel Sapphire Rapids support
+Content-Language: en-US
+To: Naresh Solanki <naresh.solanki@9elements.com>,
+ devicetree@vger.kernel.org, Jean Delvare <jdelvare@suse.com>,
+ Iwona Winiarska <iwona.winiarska@intel.com>
+References: <20230710162724.827833-1-Naresh.Solanki@9elements.com>
+From: Guenter Roeck <linux@roeck-us.net>
+In-Reply-To: <20230710162724.827833-1-Naresh.Solanki@9elements.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,48 +84,93 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-hwmon@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Patrick Rudolph <patrick.rudolph@9elements.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---=-bi6y79c++mp5/AbwtqAr
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 7/10/23 09:27, Naresh Solanki wrote:
+> From: Patrick Rudolph <patrick.rudolph@9elements.com>
+> 
+> Add support to read DTS for reading Intel Sapphire Rapids platform.
+> 
+> Signed-off-by: Patrick Rudolph <patrick.rudolph@9elements.com>
 
-On Mon, 2023-07-03 at 14:16 +0300, Igor Kononenko wrote:
-> Good day!
->=20
-> I send the signed `Individual CLA` and. Please, approve and confirm.
-> The PDF in the attachment.
+This patch touches code outside the hwmon subsystem, so I won't be able
+to apply it without Ack from a maintainer.
 
-Igor, your ICLA has been accepted, thanks.
+Guenter
 
--brad
+> ---
+>   drivers/hwmon/peci/cputemp.c | 18 ++++++++++++++++++
+>   drivers/peci/cpu.c           |  5 +++++
+>   2 files changed, 23 insertions(+)
+> 
+> diff --git a/drivers/hwmon/peci/cputemp.c b/drivers/hwmon/peci/cputemp.c
+> index e5b65a382772..a812c15948d9 100644
+> --- a/drivers/hwmon/peci/cputemp.c
+> +++ b/drivers/hwmon/peci/cputemp.c
+> @@ -363,6 +363,7 @@ static int init_core_mask(struct peci_cputemp *priv)
+>   	switch (peci_dev->info.model) {
+>   	case INTEL_FAM6_ICELAKE_X:
+>   	case INTEL_FAM6_ICELAKE_D:
+> +	case INTEL_FAM6_SAPPHIRERAPIDS_X:
+>   		ret = peci_ep_pci_local_read(peci_dev, 0, reg->bus, reg->dev,
+>   					     reg->func, reg->offset + 4, &data);
+>   		if (ret)
+> @@ -531,6 +532,13 @@ static struct resolved_cores_reg resolved_cores_reg_icx = {
+>   	.offset = 0xd0,
+>   };
+>   
+> +static struct resolved_cores_reg resolved_cores_reg_spr = {
+> +	.bus = 31,
+> +	.dev = 30,
+> +	.func = 6,
+> +	.offset = 0x80,
+> +};
+> +
+>   static const struct cpu_info cpu_hsx = {
+>   	.reg		= &resolved_cores_reg_hsx,
+>   	.min_peci_revision = 0x33,
+> @@ -549,6 +557,12 @@ static const struct cpu_info cpu_icx = {
+>   	.thermal_margin_to_millidegree = &dts_ten_dot_six_to_millidegree,
+>   };
+>   
+> +static const struct cpu_info cpu_spr = {
+> +	.reg		= &resolved_cores_reg_spr,
+> +	.min_peci_revision = 0x40,
+> +	.thermal_margin_to_millidegree = &dts_ten_dot_six_to_millidegree,
+> +};
+> +
+>   static const struct auxiliary_device_id peci_cputemp_ids[] = {
+>   	{
+>   		.name = "peci_cpu.cputemp.hsx",
+> @@ -574,6 +588,10 @@ static const struct auxiliary_device_id peci_cputemp_ids[] = {
+>   		.name = "peci_cpu.cputemp.icxd",
+>   		.driver_data = (kernel_ulong_t)&cpu_icx,
+>   	},
+> +	{
+> +		.name = "peci_cpu.cputemp.spr",
+> +		.driver_data = (kernel_ulong_t)&cpu_spr,
+> +	},
+>   	{ }
+>   };
+>   MODULE_DEVICE_TABLE(auxiliary, peci_cputemp_ids);
+> diff --git a/drivers/peci/cpu.c b/drivers/peci/cpu.c
+> index de4a7b3e5966..3668a908d259 100644
+> --- a/drivers/peci/cpu.c
+> +++ b/drivers/peci/cpu.c
+> @@ -318,6 +318,11 @@ static const struct peci_device_id peci_cpu_device_ids[] = {
+>   		.model	= INTEL_FAM6_ICELAKE_X,
+>   		.data	= "icx",
+>   	},
+> +	{ /* Sapphire Rapids Xeon */
+> +		.family	= 6,
+> +		.model	= INTEL_FAM6_SAPPHIRERAPIDS_X,
+> +		.data	= "spr",
+> +	},
+>   	{ /* Icelake Xeon D */
+>   		.family	= 6,
+>   		.model	= INTEL_FAM6_ICELAKE_D,
+> 
+> base-commit: 4dbbaf8fbdbd13adc80731b2452257857e4c2d8b
 
---=-bi6y79c++mp5/AbwtqAr
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-
-<html><head><style>pre,code,address {
-  margin: 0px;
-}
-h1,h2,h3,h4,h5,h6 {
-  margin-top: 0.2em;
-  margin-bottom: 0.2em;
-}
-ol,ul {
-  margin-top: 0em;
-  margin-bottom: 0em;
-}
-blockquote {
-  margin-top: 0em;
-  margin-bottom: 0em;
-}
-</style></head><body><div>On Mon, 2023-07-03 at 14:16 +0300, Igor Kononenko=
- wrote:</div><blockquote type=3D"cite" style=3D"margin:0 0 0 .8ex; border-l=
-eft:2px #729fcf solid;padding-left:1ex"><div dir=3D"ltr">Good day!<br><br>I=
- send the signed `Individual CLA` and. Please, approve and confirm.<br>The =
-PDF in the attachment.</div></blockquote><div><br></div><div>Igor, your ICL=
-A has been accepted, thanks.</div><div><br></div><div>-brad</div><div><span=
-></span></div></body></html>
-
---=-bi6y79c++mp5/AbwtqAr--
