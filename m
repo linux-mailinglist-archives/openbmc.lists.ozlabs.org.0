@@ -2,63 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB50874CB2C
-	for <lists+openbmc@lfdr.de>; Mon, 10 Jul 2023 06:23:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 59A5274D4A8
+	for <lists+openbmc@lfdr.de>; Mon, 10 Jul 2023 13:36:28 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=k/MmSA+G;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=fV2ukxnm;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ZYDTxKbW;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4QzrTT61CDz3bdG
-	for <lists+openbmc@lfdr.de>; Mon, 10 Jul 2023 14:23:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4R025Q1n3Nz3bXl
+	for <lists+openbmc@lfdr.de>; Mon, 10 Jul 2023 21:36:26 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=k/MmSA+G;
+	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=fV2ukxnm;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=ZYDTxKbW;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::72d; helo=mail-qk1-x72d.google.com; envelope-from=joel.stan@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.28; helo=out4-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 301 seconds by postgrey-1.37 at boromir; Mon, 10 Jul 2023 21:35:49 AEST
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4QzrSs4hwcz2ygr;
-	Mon, 10 Jul 2023 14:22:35 +1000 (AEST)
-Received: by mail-qk1-x72d.google.com with SMTP id af79cd13be357-765a4ff26cdso366554585a.0;
-        Sun, 09 Jul 2023 21:22:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jms.id.au; s=google; t=1688962952; x=1691554952;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=KdPVtuGWSeh+e/CBypa8yvniv55q4NGBxX2TleYGOls=;
-        b=k/MmSA+GB3nUSHuzTWAKdW+rACKSvV3MdhyKgDGKnyuWIjHUbMCagmypEOkZVV55Io
-         iBYxTr0uz75WTg64Y7k3kiOIOZ7IrWbZscHM1Qk1xj3ZLi5QvlB8+n0zze9JPcLVG7YY
-         /+1/D8rhY6FVGZDJyIpACRvoYHbU0e1L2lxCE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1688962952; x=1691554952;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KdPVtuGWSeh+e/CBypa8yvniv55q4NGBxX2TleYGOls=;
-        b=ImHW9DavwnQOB/BRTYz7XZv56wFB/V24X+wEMUtIdNIRIiDFdbapSzVrn9CTrjvEy+
-         TZv6E9GMExpksZ0JY2ixpNwYkvlmFOAaiDGoxh9LZDDf24V6k8Vw8uNgfIaaSIt8EGMj
-         4rGJIzBFhNZS/SNAK7MW5uz+TO4bFglfbKJMUlsiakXSLfD167dnt24U39cCiR5BR0SH
-         TDoPWnjM0qQVRNcU33F8Xnqu1YBe6zypPYjp47dfKt0kgkJ5O+Y171oCqPeljYPKoQD0
-         +V2TginA1eGdfxACy0A0f6dD2soWClU9i7yE2A1TSva4M3bsP4YxJpF8HZ50a9zqgzm7
-         v9Gg==
-X-Gm-Message-State: ABy/qLaosmMXH2HZ7+Juuuqtjk+6BGh6P35UOx98wHzSRZv4/26sUIG0
-	8WuLXOUPdJdPhZ1wKNcYGCEqOd4bAVidUe/bHjg2jMBP5hqY0Q==
-X-Google-Smtp-Source: APBJJlFPmu/OpSM3hi2YqcI2sfhcz7s1RLQ6X0BZQcnNGXKfqOg1DMVVigKZ89Mqohjn+kNP2hZxf+s2peyir5k6h7U=
-X-Received: by 2002:a05:622a:1313:b0:3fd:eca6:8aed with SMTP id
- v19-20020a05622a131300b003fdeca68aedmr13615111qtk.44.1688962952027; Sun, 09
- Jul 2023 21:22:32 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4R024k01vmz30PL
+	for <openbmc@lists.ozlabs.org>; Mon, 10 Jul 2023 21:35:49 +1000 (AEST)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.nyi.internal (Postfix) with ESMTP id 05D835C0174;
+	Mon, 10 Jul 2023 07:30:42 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute6.internal (MEProxy); Mon, 10 Jul 2023 07:30:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	fuzziesquirrel.com; h=cc:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to; s=fm3; t=
+	1688988642; x=1689075042; bh=B7qxatu5gGYQT5pgrJjDspTk1USqb9wnfqe
+	aQQz+zAw=; b=fV2ukxnm5t+1mo9RfA1WSudbuoRkAnQYgMxKkNyHbDcyiKn1Ihu
+	+3GAdnroWuQVI9wfJzUy7sAq0h+r/pOZI5q7XtaXK/xyp2+2w0derKI8e+zALDkS
+	SBtqZn4exbFsIMvSwJBA7IYCW8gv+y5PJ7nUFzrsTbb/lK+lpkFCUybGed8xXBMd
+	8CbedaymN5C/TyvzvIUba8CfKKmReF1+nj7CPTbSdYsidftTQt0jklfZG2KCH5IC
+	isyqNkn8WPVANrcJIag6alAdVDQ7QZO9E3WUssiLakff5LhyVqT42UUDKYRNFEAH
+	epBmNvLmj/hwmUbdGTyO7PT1jTTmTNr0zBw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm2; t=1688988642; x=1689075042; bh=B7qxatu5gGYQT
+	5pgrJjDspTk1USqb9wnfqeaQQz+zAw=; b=ZYDTxKbW9xWoMqz/oaCVGA+DHUJ2O
+	K+l4zgYbGAquo1sFgKoGWVHAlnR+MbuG7kjBZTpvarqIvqmAI1kUQaNsL6cK42AT
+	uZ1RIpfOQE5mL0YJJB16c3vQigXPDWBaw4+YFmpjFbSRLYy3bXMAOaq9PAgdhsd9
+	G8weWR+SlzbEzjEdG5CD6QP2pLRHPh5v2Xf/CALvBWx8Nq4GHz0TRl2OUlGy9pRm
+	ztwDXw5iaxknoLf/OiogEjQXrgAVSZhJaZwEk4oOqUp+uFuBPl94WOvhOVyP82E4
+	Q/IRh84cyLqsIPsbeewY0Gp4I63v+eiYjcrdKK3pGcLhBFdFYgMbrYDPg==
+X-ME-Sender: <xms:4eurZIpGpM2monRqwIQdMaOi2oF2Ppn2NivHnXQquhGZ3vVaaRpRUg>
+    <xme:4eurZOoggCGw-jW6HAxyciKlLvBaALeQH3ZxXJJO-qjfL5WNy6WX5wVp-Pa7i_M0g
+    dXHKaqlD5VdyxnOvX0>
+X-ME-Received: <xmr:4eurZNOXOJyur4P3rESYNrZQl48VbvCJQSoHv9xmaEYKiAHGXj1uhgN2J9UUUmRA9g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrvdekgdefvdcutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecunecujfgurhepkffuhffvffgjfhgtfgggsegrtderre
+    dtreejnecuhfhrohhmpeeurhgrugcuuehishhhohhpuceosghrrggulhgvhigssehfuhii
+    iihivghsqhhuihhrrhgvlhdrtghomheqnecuggftrfgrthhtvghrnhepgfejhffhkeduie
+    eileetveeivedtgeeftdektdeftedvfeevudeutdfggffhkeeknecuvehluhhsthgvrhfu
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghrrggulhgvhigssehfuhiiii
+    hivghsqhhuihhrrhgvlhdrtghomh
+X-ME-Proxy: <xmx:4eurZP6i55F2IgEVZki_0gQkFmHMVNDqM95BtpX1JHmwzSl5ajUa_g>
+    <xmx:4eurZH5efP6Bnz1rHlpnadGMWXEyBbZgDd9-yaEUYx4-timKW6fkKQ>
+    <xmx:4eurZPgL6Ph9aGVDOa5FHbXKLCGt69wCf3JWrcjxdHHaYIKNVfflcA>
+    <xmx:4uurZEi8Y3CaXRt-rLuL8WshoYxcjFEjOr03sSihjRA03RaLXgpRsQ>
+Feedback-ID: i02c9470a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 10 Jul 2023 07:30:41 -0400 (EDT)
+Message-ID: <03a3c7979087fda82dba00d7fb39a843274ad646.camel@fuzziesquirrel.com>
+Subject: Re: Sing OpenBMC Individual CLA
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Igor Kononenko <i.kononenko.e@gmail.com>, openbmc@lists.ozlabs.org
+Date: Mon, 10 Jul 2023 07:30:40 -0400
+In-Reply-To: <CAJcExQmXxn4m3Y6ZqW_tU+yESU6K+6C1Jv7XPkbm-tapk9fy1A@mail.gmail.com>
+References: 	<CAJcExQmXxn4m3Y6ZqW_tU+yESU6K+6C1Jv7XPkbm-tapk9fy1A@mail.gmail.com>
+Content-Type: multipart/alternative; boundary="=-bi6y79c++mp5/AbwtqAr"
+User-Agent: Evolution 3.48.4 
 MIME-Version: 1.0
-References: <20230628083735.19946-2-zev@bewilderbeest.net>
-In-Reply-To: <20230628083735.19946-2-zev@bewilderbeest.net>
-From: Joel Stanley <joel@jms.id.au>
-Date: Mon, 10 Jul 2023 04:22:18 +0000
-Message-ID: <CACPK8Xei-295TNmkjg53qXyQHwSUf3s+Sj87_o7ZEw1G0+NPpw@mail.gmail.com>
-Subject: Re: [PATCH] soc: aspeed: uart-routing: Use __sysfs_match_string
-To: Zev Weiss <zev@bewilderbeest.net>
-Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,42 +93,48 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>, Chia-Wei Wang <chiawei_wang@aspeedtech.com>, linux-kernel@vger.kernel.org, Oskar Senft <osk@google.com>, openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, 28 Jun 2023 at 08:43, Zev Weiss <zev@bewilderbeest.net> wrote:
->
-> The existing use of match_string() caused it to reject 'echo foo' due
-> to the implicitly appended newline, which was somewhat ergonomically
-> awkward and inconsistent with typical sysfs behavior.  Using the
-> __sysfs_* variant instead provides more convenient and consistent
-> linefeed-agnostic behavior.
+--=-bi6y79c++mp5/AbwtqAr
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Nice.
+On Mon, 2023-07-03 at 14:16 +0300, Igor Kononenko wrote:
+> Good day!
+>=20
+> I send the signed `Individual CLA` and. Please, approve and confirm.
+> The PDF in the attachment.
 
-Fixes: c6807970c3bc ("soc: aspeed: Add UART routing support")
-Reviewed-by: Joel Stanley <joel@jms.id.au>
+Igor, your ICLA has been accepted, thanks.
 
->
-> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-> ---
->  drivers/soc/aspeed/aspeed-uart-routing.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/soc/aspeed/aspeed-uart-routing.c b/drivers/soc/aspeed/aspeed-uart-routing.c
-> index ef8b24fd1851..59123e1f27ac 100644
-> --- a/drivers/soc/aspeed/aspeed-uart-routing.c
-> +++ b/drivers/soc/aspeed/aspeed-uart-routing.c
-> @@ -524,7 +524,7 @@ static ssize_t aspeed_uart_routing_store(struct device *dev,
->         struct aspeed_uart_routing_selector *sel = to_routing_selector(attr);
->         int val;
->
-> -       val = match_string(sel->options, -1, buf);
-> +       val = __sysfs_match_string(sel->options, -1, buf);
->         if (val < 0) {
->                 dev_err(dev, "invalid value \"%s\"\n", buf);
->                 return -EINVAL;
-> --
-> 2.40.0.5.gf6e3b97ba6d2.dirty
->
+-brad
+
+--=-bi6y79c++mp5/AbwtqAr
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+<html><head><style>pre,code,address {
+  margin: 0px;
+}
+h1,h2,h3,h4,h5,h6 {
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+}
+ol,ul {
+  margin-top: 0em;
+  margin-bottom: 0em;
+}
+blockquote {
+  margin-top: 0em;
+  margin-bottom: 0em;
+}
+</style></head><body><div>On Mon, 2023-07-03 at 14:16 +0300, Igor Kononenko=
+ wrote:</div><blockquote type=3D"cite" style=3D"margin:0 0 0 .8ex; border-l=
+eft:2px #729fcf solid;padding-left:1ex"><div dir=3D"ltr">Good day!<br><br>I=
+ send the signed `Individual CLA` and. Please, approve and confirm.<br>The =
+PDF in the attachment.</div></blockquote><div><br></div><div>Igor, your ICL=
+A has been accepted, thanks.</div><div><br></div><div>-brad</div><div><span=
+></span></div></body></html>
+
+--=-bi6y79c++mp5/AbwtqAr--
