@@ -2,82 +2,38 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 05BD174FB43
-	for <lists+openbmc@lfdr.de>; Wed, 12 Jul 2023 00:49:25 +0200 (CEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=icPcw4D1;
-	dkim-atps=neutral
+	by mail.lfdr.de (Postfix) with ESMTPS id C7965750310
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jul 2023 11:28:31 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4R0wzQ6hj4z3bx0
-	for <lists+openbmc@lfdr.de>; Wed, 12 Jul 2023 08:49:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4R1C8p13knz3c5S
+	for <lists+openbmc@lfdr.de>; Wed, 12 Jul 2023 19:28:26 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=icPcw4D1;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.vnet.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=lakshmiy@linux.vnet.ibm.com; receiver=lists.ozlabs.org)
-Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.226; helo=mail.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 87 seconds by postgrey-1.37 at boromir; Wed, 12 Jul 2023 19:28:04 AEST
+Received: from mail.aspeedtech.com (211-20-114-226.hinet-ip.hinet.net [211.20.114.226])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4R0wyr5rxXz3bTk
-	for <openbmc@lists.ozlabs.org>; Wed, 12 Jul 2023 08:48:52 +1000 (AEST)
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 36BMlnfb030463
-	for <openbmc@lists.ozlabs.org>; Tue, 11 Jul 2023 22:48:48 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=date : from : to :
- subject : message-id : content-type : content-transfer-encoding :
- mime-version; s=pp1; bh=ON6lUntqlgyjkwMyY2FNtX/I5g66UPNShzm3looDcY4=;
- b=icPcw4D16C8wkrxBeuUcufNkFKK/5brwdIcQpU1j70wz7JJRcp7ZYGUX0CEDZvbppDp+
- Hy/x07XPmDAHe7cZtvAeCkFSvqFoPtzxDblzs79/Fv4H3Vex0wjUjpLAlGIGzv727xyh
- wuye07IaXVT3pP3bvxw1PWbRhDFhyGMPwLNCm+Rp8WIv3N+Qq6eVNd4nRrPxIsw2c8bP
- 4fsnattXSCnT8d0Q4fi33tW+SaGgYbd3te+xeFqZnVDiA32XHZJ7EVI2m1e/mADB70lP
- jNY+gW9WCfKqqPtj638nR99Z0Ghb9jDLWRMOsFUMESSI9rJh07nSROJiztFKkRUifr/h nQ== 
-Received: from ppma02wdc.us.ibm.com (aa.5b.37a9.ip4.static.sl-reverse.com [169.55.91.170])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3rsg6980b9-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Tue, 11 Jul 2023 22:48:48 +0000
-Received: from pps.filterd (ppma02wdc.us.ibm.com [127.0.0.1])
-	by ppma02wdc.us.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 36BM9vwF027322
-	for <openbmc@lists.ozlabs.org>; Tue, 11 Jul 2023 22:48:47 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([9.208.129.117])
-	by ppma02wdc.us.ibm.com (PPS) with ESMTPS id 3rpye68ybs-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Tue, 11 Jul 2023 22:48:47 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com [10.39.53.229])
-	by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 36BMmktT1966676
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
-	for <openbmc@lists.ozlabs.org>; Tue, 11 Jul 2023 22:48:46 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 0EB6C58059
-	for <openbmc@lists.ozlabs.org>; Tue, 11 Jul 2023 22:48:46 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C5E6658058
-	for <openbmc@lists.ozlabs.org>; Tue, 11 Jul 2023 22:48:45 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
-	by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP
-	for <openbmc@lists.ozlabs.org>; Tue, 11 Jul 2023 22:48:45 +0000 (GMT)
-Date: Tue, 11 Jul 2023 17:48:45 -0500
-From: lakshmiy <lakshmiy@linux.vnet.ibm.com>
-To: openbmc@lists.ozlabs.org
-Subject: Implementing the Slot information in the PCIeDevice schema
-Message-ID: <02a15f1e4669516f6912a5e97a5bff32@linux.vnet.ibm.com>
-X-Sender: lakshmiy@linux.vnet.ibm.com
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: e2_H68gimmqfKQIQl7I8pS1aRpVSocsI
-X-Proofpoint-GUID: e2_H68gimmqfKQIQl7I8pS1aRpVSocsI
-Content-Transfer-Encoding: 7bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4R1C8N6nwJz3bYR;
+	Wed, 12 Jul 2023 19:28:04 +1000 (AEST)
+Received: from JammyHuang-PC.aspeed.com (192.168.2.181) by TWMBX02.aspeed.com
+ (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Wed, 12 Jul
+ 2023 17:26:09 +0800
+From: Jammy Huang <jammy_huang@aspeedtech.com>
+To: <eajames@linux.ibm.com>, <mchehab@kernel.org>, <joel@jms.id.au>,
+	<andrew@aj.id.au>, <linux-media@vger.kernel.org>, <openbmc@lists.ozlabs.org>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-aspeed@lists.ozlabs.org>,
+	<linux-kernel@vger.kernel.org>
+Subject: [PATCH] media: aspeed: Fix memory overwrite if timing is 1600x900
+Date: Wed, 12 Jul 2023 17:26:06 +0800
+Message-ID: <20230712092606.2508-1-jammy_huang@aspeedtech.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-07-11_12,2023-07-11_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 spamscore=0 malwarescore=0
- clxscore=1011 bulkscore=0 impostorscore=0 mlxscore=0 lowpriorityscore=0
- priorityscore=1501 mlxlogscore=312 suspectscore=0 adultscore=0
- phishscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2305260000 definitions=main-2307110205
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [192.168.2.181]
+X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
+ (192.168.0.24)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,20 +48,41 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Redfish has moved away from the PCIeSlots schema and instead includes 
-the PCIeSlot information within the PCIeDevice schema. This matches 
-other Redfish schemas like Dimm or Processor.
+When capturing 1600x900, system could crash when system memory usage is
+tight.
 
-The key highlights of this update include:
-1. Integration of PCIeSlot information within the PCIeDevice schema.
-        https://gerrit.openbmc.org/c/openbmc/bmcweb/+/62737
-2. Inclusion of empty PCIeSlots in the PCIeDevice list, providing a 
-comprehensive view of the PCIe infrastructure.
-        https://gerrit.openbmc.org/c/openbmc/bmcweb/+/62073
+The size of macro block captured is 8x8. Therefore, we should make sure
+the height of src-buf is 8 aligned to fix this issue.
 
-Please note that while PCIeSlots is still present in the bmcweb, it may 
-be considered for deprecation in the future as we transition to the new 
-design.
+Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
+---
+ drivers/media/platform/aspeed/aspeed-video.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Thanks,
-Lakshmi Yadlapati
+diff --git a/drivers/media/platform/aspeed/aspeed-video.c b/drivers/media/platform/aspeed/aspeed-video.c
+index 374eb7781936..14594f55a77f 100644
+--- a/drivers/media/platform/aspeed/aspeed-video.c
++++ b/drivers/media/platform/aspeed/aspeed-video.c
+@@ -1130,7 +1130,7 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
+ static void aspeed_video_set_resolution(struct aspeed_video *video)
+ {
+ 	struct v4l2_bt_timings *act = &video->active_timings;
+-	unsigned int size = act->width * act->height;
++	unsigned int size = act->width * ALIGN(act->height, 8);
+ 
+ 	/* Set capture/compression frame sizes */
+ 	aspeed_video_calc_compressed_size(video, size);
+@@ -1147,7 +1147,7 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
+ 		u32 width = ALIGN(act->width, 64);
+ 
+ 		aspeed_video_write(video, VE_CAP_WINDOW, width << 16 | act->height);
+-		size = width * act->height;
++		size = width * ALIGN(act->height, 8);
+ 	} else {
+ 		aspeed_video_write(video, VE_CAP_WINDOW,
+ 				   act->width << 16 | act->height);
+
+base-commit: 2605e80d3438c77190f55b821c6575048c68268e
+-- 
+2.25.1
+
