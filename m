@@ -2,39 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 545047516A3
-	for <lists+openbmc@lfdr.de>; Thu, 13 Jul 2023 05:13:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8E8D2751BB2
+	for <lists+openbmc@lfdr.de>; Thu, 13 Jul 2023 10:35:53 +0200 (CEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=RQoPaZBY;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4R1fnX2G1sz3bwY
-	for <lists+openbmc@lfdr.de>; Thu, 13 Jul 2023 13:13:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4R1nxg33ygz3c47
+	for <lists+openbmc@lfdr.de>; Thu, 13 Jul 2023 18:35:51 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=211.20.114.226; helo=mail.aspeedtech.com; envelope-from=jammy_huang@aspeedtech.com; receiver=lists.ozlabs.org)
-Received: from mail.aspeedtech.com (211-20-114-226.hinet-ip.hinet.net [211.20.114.226])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=RQoPaZBY;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b36; helo=mail-yb1-xb36.google.com; envelope-from=ratankgupta31@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4R1fn76J0Fz3Wtt;
-	Thu, 13 Jul 2023 13:12:55 +1000 (AEST)
-Received: from [192.168.2.181] (192.168.2.181) by TWMBX02.aspeed.com
- (192.168.0.24) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Thu, 13 Jul
- 2023 11:12:33 +0800
-Message-ID: <e9a333d2-c633-2619-33fd-dd17816b7da8@aspeedtech.com>
-Date: Thu, 13 Jul 2023 11:12:33 +0800
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4R1nx40N6zz304b
+	for <openbmc@lists.ozlabs.org>; Thu, 13 Jul 2023 18:35:17 +1000 (AEST)
+Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-c5cf26e9669so384409276.0
+        for <openbmc@lists.ozlabs.org>; Thu, 13 Jul 2023 01:35:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1689237314; x=1691829314;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=VCVcViIcc8p6hkBOLFnmj5ymUcOmzk8XlVKV/+wLel8=;
+        b=RQoPaZBYNYRPmBW3knmDIsyz1alJ5maAM6escugI9fmrSWJAHoqXcQHXtr+2/Nr/wE
+         Vdgp6l9FgR7UVCU7OPijH+U9wSutYZUEuDR6iBoaPEqDxpCAbxHHFZxNVFWrNyu56ybA
+         Tqwcr8IPY5YktMffzr1W80XTV8Ilvvyqh82cDO4jCtQVn/2nsoVnxJKza/AOUV2IZf8m
+         pgcUsjLpEhHwX4iWRRbSD2FvebL/6PmiCGQPgvEdQ+bZgpBvecZEdqY0OSBEmzmFSwn2
+         KL3UJ5VuVg5wqfVp7AfsLMZH0n/2MB2er/L40hYbcHeGsVBrtVOKgq+EfXhNB/jqeyq/
+         X0QQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689237314; x=1691829314;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VCVcViIcc8p6hkBOLFnmj5ymUcOmzk8XlVKV/+wLel8=;
+        b=Uv2TpG9exTh341BAZIemEd20HZpzmixOeMRc4qtEk/UTa3AgWq+qhuu/7kYwxkjRaP
+         vPPDGHa/x3A+vg2sDqHSy0UEEpQR4upnLqPGNOBNXrCQSWfBP7NzQBMNEhakTWz0oxqE
+         /mQYEVQuLStv8XkG7UTJUW9LYRLBSOn7mfMC5ZHozTKeqq8QGlLTrVEo8t1l3nxLlbYs
+         ebsleO6Sz7I6VpGKI9P3u/Ix74F5r12/OCOW+1ipb7Y+rHBhoUTgB/G7zfWx9MSgV+Ry
+         C0l/k9Q1Z16bDT/bbKBK0lplpm4PbKAbjXtikib7BFhOOim5f8Z0fqX725nph6yKfJoy
+         EjFg==
+X-Gm-Message-State: ABy/qLY0czSBoVYGakOO/m6Cozr4rtrD91OeJfgjz8sI+zuZKXTe8t0P
+	BrFA1DqeTQik64QKHM/OpYYRlrdW+CBaigvi8Cw=
+X-Google-Smtp-Source: APBJJlFdxYBrx8/JMXZJNKP2+4vL7+oJgdvKhVZ7pnlZrhth7w03avZqG9ug/WAYXIly7dAB8d8KbiYKieGiZVfIs+s=
+X-Received: by 2002:a25:d1c1:0:b0:c1a:b0e2:e930 with SMTP id
+ i184-20020a25d1c1000000b00c1ab0e2e930mr961170ybg.3.1689237314314; Thu, 13 Jul
+ 2023 01:35:14 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH] media: aspeed: Fix memory overwrite if timing is 1600x900
-To: Paul Menzel <pmenzel@molgen.mpg.de>
-References: <20230712092606.2508-1-jammy_huang@aspeedtech.com>
- <461f3b88-87e6-32f2-3ed8-5764a9a6e162@molgen.mpg.de>
-Content-Language: en-US
-From: Jammy Huang <jammy_huang@aspeedtech.com>
-In-Reply-To: <461f3b88-87e6-32f2-3ed8-5764a9a6e162@molgen.mpg.de>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [192.168.2.181]
-X-ClientProxiedBy: TWMBX02.aspeed.com (192.168.0.24) To TWMBX02.aspeed.com
- (192.168.0.24)
+References: <d47818d4-4167-4508-bec0-db6eee93edb0@app.fastmail.com>
+In-Reply-To: <d47818d4-4167-4508-bec0-db6eee93edb0@app.fastmail.com>
+From: Ratan Gupta <ratankgupta31@gmail.com>
+Date: Thu, 13 Jul 2023 14:05:03 +0530
+Message-ID: <CAMhqiMpTV=ZAg3NcwgdfVRMT_A5-Bb=Eh1o+a5fy7+mzL-7SEA@mail.gmail.com>
+Subject: Re: openbmc/ipmi-fru-parser: Second notification of unresponsiveness
+To: Andrew Jeffery <andrew@aj.id.au>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -46,99 +73,16 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, andrew@aj.id.au, openbmc@lists.ozlabs.org, eajames@linux.ibm.com, linux-kernel@vger.kernel.org, joel@jms.id.au, mchehab@kernel.org, linux-arm-kernel@lists.infradead.org, linux-media@vger.kernel.org
+Cc: vernon.mauery@linux.intel.com, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Paul,
+Hi Andrew,
 
+My role in ipmi-fru-parser is as a reviewer and I have not been
+reviewing the parser code since a long, I will request Vernon to
+review this.
+I will create an gerrit commit to remove my name as a reviewer from
+the ipmi-fru-parser repo.
 
-On 2023/7/12 下午 06:09, Paul Menzel wrote:
-> Dear Jammy,
->
->
-> Thank you very much for your patch.
->
-> Am 12.07.23 um 11:26 schrieb Jammy Huang:
->> When capturing 1600x900, system could crash when system memory usage is
->> tight.
->
-> Please provide part of the trace, and if you have a commend to 
-> reproduce it, please also add it. Is it documented somewhere, that it 
-> needs to be aligned?
-
-Sorry, but I didn't find trace when this issue happened.The system just 
-crash and reboot.
-
-It just takes a few minutes to reproduce this issue using the way as below,
-
-1. Use 1600x900 to display on host
-
-2. Mount ISO through 'Virtual media' on OpenBMC's web
-
-3. Run script as below on host to do sha continuously
-
-#!/bin/bash
-
-while [ [1] ];
-do
-         find /media -type f -printf '"%h/%f"\n' | xargs sha256sum
-done
-
-4. Open KVM on OpenBMC's web
-
-
-I will add above information to next patch.
-
->
->> The size of macro block captured is 8x8. Therefore, we should make sure
->> the height of src-buf is 8 aligned to fix this issue.
->>
->> Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
->> ---
->>   drivers/media/platform/aspeed/aspeed-video.c | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/drivers/media/platform/aspeed/aspeed-video.c 
->> b/drivers/media/platform/aspeed/aspeed-video.c
->> index 374eb7781936..14594f55a77f 100644
->> --- a/drivers/media/platform/aspeed/aspeed-video.c
->> +++ b/drivers/media/platform/aspeed/aspeed-video.c
->> @@ -1130,7 +1130,7 @@ static void aspeed_video_get_resolution(struct 
->> aspeed_video *video)
->>   static void aspeed_video_set_resolution(struct aspeed_video *video)
->>   {
->>       struct v4l2_bt_timings *act = &video->active_timings;
->> -    unsigned int size = act->width * act->height;
->> +    unsigned int size = act->width * ALIGN(act->height, 8);
->>         /* Set capture/compression frame sizes */
->>       aspeed_video_calc_compressed_size(video, size);
->> @@ -1147,7 +1147,7 @@ static void aspeed_video_set_resolution(struct 
->> aspeed_video *video)
->>           u32 width = ALIGN(act->width, 64);
->>             aspeed_video_write(video, VE_CAP_WINDOW, width << 16 | 
->> act->height);
->> -        size = width * act->height;
->> +        size = width * ALIGN(act->height, 8);
->
-> Maybe add a comment.
->
-> Excuse my ignorance, but as `width` is already 64 bit aligned, how 
-> does aligning the second factor make a difference for `size`? Can you 
-> give an example?
->
->>       } else {
->>           aspeed_video_write(video, VE_CAP_WINDOW,
->>                      act->width << 16 | act->height);
->>
->> base-commit: 2605e80d3438c77190f55b821c6575048c68268e
->
->
-> Kind regards,
->
-> Paul
-
--- 
-Best Regards
-Jammy
-
+Ratan
