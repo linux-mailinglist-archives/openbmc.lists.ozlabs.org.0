@@ -1,50 +1,75 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CD831751CF4
-	for <lists+openbmc@lfdr.de>; Thu, 13 Jul 2023 11:14:49 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7071E751E04
+	for <lists+openbmc@lfdr.de>; Thu, 13 Jul 2023 11:58:59 +0200 (CEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=eqzkyxfd;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4R1ppb4b77z3c7Q
-	for <lists+openbmc@lfdr.de>; Thu, 13 Jul 2023 19:14:47 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4R1qnY2NP6z3c4X
+	for <lists+openbmc@lfdr.de>; Thu, 13 Jul 2023 19:58:57 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=pengutronix.de (client-ip=2001:67c:670:201:290:27ff:fe1d:cc33; helo=metis.ext.pengutronix.de; envelope-from=ukl@pengutronix.de; receiver=lists.ozlabs.org)
-Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=eqzkyxfd;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::131; helo=mail-lf1-x131.google.com; envelope-from=fercerpav@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4R1ppC4yFbz3bYR
-	for <openbmc@lists.ozlabs.org>; Thu, 13 Jul 2023 19:14:26 +1000 (AEST)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1qJsOh-00064e-Uu; Thu, 13 Jul 2023 11:14:03 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1qJsOd-00E5Je-3M; Thu, 13 Jul 2023 11:13:59 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1qJsOc-004WHz-Ed; Thu, 13 Jul 2023 11:13:58 +0200
-Date: Thu, 13 Jul 2023 11:13:58 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Yangtao Li <frank.li@vivo.com>
-Subject: Re: [PATCH 34/58] mmc: sdhci-of-aspeed: Convert to platform remove
- callback returning void
-Message-ID: <20230713091358.p4r42rnhzje4avdj@pengutronix.de>
-References: <20230713080807.69999-1-frank.li@vivo.com>
- <20230713080807.69999-34-frank.li@vivo.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4R1qmx2Q4Wz3c1R
+	for <openbmc@lists.ozlabs.org>; Thu, 13 Jul 2023 19:58:24 +1000 (AEST)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-4f4b2bc1565so901723e87.2
+        for <openbmc@lists.ozlabs.org>; Thu, 13 Jul 2023 02:58:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1689242301; x=1691834301;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=cojSysAMXAGtnXzivDEmLEf5S6SkC06gAHJZrjzFWos=;
+        b=eqzkyxfdBiS/0GFbYznPWRyufD/z4GsnNmgmkFRC0Uih1WtmgqqUyrkxbDekFMJHT2
+         D2xdo73XnJNS9R4WvDoK1s7ORaVsP2NuEA5DdjN7KO3Sax2JW+ZHq9qR0lxqjPXi7M/w
+         4aQI6GowaRyEhRFYZKV+6cmfw64m4gwfwMTfVaASR6OaMxu2D7lu+CCZYCcP61Q8zL07
+         +L00KNGS1o6nbH7DBnPFWDe0Ra8kkeEKZY2VhfGTi4Q8FsozJkZhZJoWZJjsJSYBfVU7
+         1JRx9XUWv+wU4v2GRzqkcMaQVUO1G5fiylynRNfjoCMmnqu47Ua3KyT39MLyzP2E1m0+
+         y5oQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1689242301; x=1691834301;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cojSysAMXAGtnXzivDEmLEf5S6SkC06gAHJZrjzFWos=;
+        b=ZTldjBhDYdTPyrMRYM7hfwCfoG+ajl9YeAaKbg+CZc5k9gHvDdZNAO3ZkKSS4B+939
+         73qJGl64RGUsV8v8JPPp86Fb11WQjveB6E4auY9frjP5OZklh+uWKuo22cYm+QNVP8M+
+         EcMEL1Pa/CMD+/XDx2d1SY0L9+6Mp4eD2/HlrY04z05X1+WX+yc2P/D+IDTiYFQuVdnC
+         SB1ty9E3+YcSRg63IFFoslQH/xa6mXri5FkG0yVMobxNsbV8Jx+3nOfdBRThQufsZagZ
+         1End98KfOjqJrtSKKFsDF5Emo4qywfxWOyDRuwwGxcK4j68HgWxCjnT6tcWkX4GufAWi
+         ke5Q==
+X-Gm-Message-State: ABy/qLaX6bTtUUGqDSNYIFGdp2A46qjVGAhE5U/UDVUW00dxT0jPpv1G
+	ZM19TkWu5V1qk733h1Nn7v4=
+X-Google-Smtp-Source: APBJJlEm6+XHxZtoswu/zB4wJP8OnPnpvO9fT6LNOOeNewb14cpRxqHFRmCLYMoP2GTU0GshA1HLHQ==
+X-Received: by 2002:a05:6512:3b2a:b0:4fa:9817:c1da with SMTP id f42-20020a0565123b2a00b004fa9817c1damr1077376lfv.21.1689242300402;
+        Thu, 13 Jul 2023 02:58:20 -0700 (PDT)
+Received: from home.paul.comp (paulfertser.info. [2001:470:26:54b:226:9eff:fe70:80c2])
+        by smtp.gmail.com with ESMTPSA id i9-20020ac25d29000000b004faa82946d8sm1056932lfb.178.2023.07.13.02.58.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 13 Jul 2023 02:58:19 -0700 (PDT)
+Received: from home.paul.comp (home.paul.comp [IPv6:0:0:0:0:0:0:0:1])
+	by home.paul.comp (8.15.2/8.15.2/Debian-22) with ESMTP id 36D9wGaC030561;
+	Thu, 13 Jul 2023 12:58:17 +0300
+Received: (from paul@localhost)
+	by home.paul.comp (8.15.2/8.15.2/Submit) id 36D9wCKD030560;
+	Thu, 13 Jul 2023 12:58:12 +0300
+From: Paul Fertser <fercerpav@gmail.com>
+To: netdev@vger.kernel.org
+Subject: [PATCH] net: ftgmac100: support getting MAC address from NVMEM
+Date: Thu, 13 Jul 2023 12:57:43 +0300
+Message-Id: <20230713095743.30517-1-fercerpav@gmail.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="kadj4nzld535btjr"
-Content-Disposition: inline
-In-Reply-To: <20230713080807.69999-34-frank.li@vivo.com>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: openbmc@lists.ozlabs.org
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,80 +81,67 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ulf Hansson <ulf.hansson@linaro.org>, linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, linux-mmc@vger.kernel.org, Adrian Hunter <adrian.hunter@intel.com>, linux-kernel@vger.kernel.org, Joel Stanley <joel@jms.id.au>, linux-arm-kernel@lists.infradead.org
+Cc: Andrew Lunn <andrew@lunn.ch>, Leon Romanovsky <leon@kernel.org>, Geoff Levand <geoff@infradead.org>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Wolfram Sang <wsa+renesas@sang-engineering.com>, Eric Dumazet <edumazet@google.com>, Paul Fertser <fercerpav@gmail.com>, Tao Ren <rentao.bupt@gmail.com>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Liang He <windhl@126.com>, "David S. Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Make use of of_get_ethdev_address() to support reading MAC address not
+only from the usual DT nodes but also from an NVMEM provider (e.g. using
+a dedicated area in an FRU EEPROM).
 
---kadj4nzld535btjr
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Paul Fertser <fercerpav@gmail.com>
+---
+ drivers/net/ethernet/faraday/ftgmac100.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-On Thu, Jul 13, 2023 at 04:07:43PM +0800, Yangtao Li wrote:
-> The .remove() callback for a platform driver returns an int which makes
-> many driver authors wrongly assume it's possible to do error handling by
-> returning an error code. However the value returned is (mostly) ignored
-> and this typically results in resource leaks. To improve here there is a
-> quest to make the remove callback return void. In the first step of this
-> quest all drivers are converted to .remove_new() which already returns
-> void.
->=20
-> Trivially convert this driver from always returning zero in the remove
-> callback to the void returning variant.
->=20
-> Cc: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
-> Signed-off-by: Yangtao Li <frank.li@vivo.com>
-> ---
->  drivers/mmc/host/sdhci-of-aspeed.c | 15 +++++----------
->  1 file changed, 5 insertions(+), 10 deletions(-)
->=20
-> diff --git a/drivers/mmc/host/sdhci-of-aspeed.c b/drivers/mmc/host/sdhci-=
-of-aspeed.c
-> index 25b4073f698b..42d54532cabe 100644
-> --- a/drivers/mmc/host/sdhci-of-aspeed.c
-> +++ b/drivers/mmc/host/sdhci-of-aspeed.c
-> @@ -450,22 +450,19 @@ static int aspeed_sdhci_probe(struct platform_devic=
-e *pdev)
->  	return ret;
->  }
-> =20
-> -static int aspeed_sdhci_remove(struct platform_device *pdev)
-> +static void aspeed_sdhci_remove(struct platform_device *pdev)
->  {
->  	struct sdhci_pltfm_host *pltfm_host;
->  	struct sdhci_host *host;
-> -	int dead =3D 0;
-> =20
->  	host =3D platform_get_drvdata(pdev);
->  	pltfm_host =3D sdhci_priv(host);
-> =20
-> -	sdhci_remove_host(host, dead);
-> +	sdhci_remove_host(host, 0);
+diff --git a/drivers/net/ethernet/faraday/ftgmac100.c b/drivers/net/ethernet/faraday/ftgmac100.c
+index a03879a27b04..9135b918dd49 100644
+--- a/drivers/net/ethernet/faraday/ftgmac100.c
++++ b/drivers/net/ethernet/faraday/ftgmac100.c
+@@ -177,16 +177,20 @@ static void ftgmac100_write_mac_addr(struct ftgmac100 *priv, const u8 *mac)
+ 	iowrite32(laddr, priv->base + FTGMAC100_OFFSET_MAC_LADR);
+ }
+ 
+-static void ftgmac100_initial_mac(struct ftgmac100 *priv)
++static int ftgmac100_initial_mac(struct ftgmac100 *priv)
+ {
+ 	u8 mac[ETH_ALEN];
+ 	unsigned int m;
+ 	unsigned int l;
++	int err;
+ 
+-	if (!device_get_ethdev_address(priv->dev, priv->netdev)) {
++	err = of_get_ethdev_address(priv->dev->of_node, priv->netdev);
++	if (err == -EPROBE_DEFER)
++		return err;
++	if (!err) {
+ 		dev_info(priv->dev, "Read MAC address %pM from device tree\n",
+ 			 priv->netdev->dev_addr);
+-		return;
++		return 0;
+ 	}
+ 
+ 	m = ioread32(priv->base + FTGMAC100_OFFSET_MAC_MADR);
+@@ -207,6 +211,8 @@ static void ftgmac100_initial_mac(struct ftgmac100 *priv)
+ 		dev_info(priv->dev, "Generated random MAC address %pM\n",
+ 			 priv->netdev->dev_addr);
+ 	}
++
++	return 0;
+ }
+ 
+ static int ftgmac100_set_mac_addr(struct net_device *dev, void *p)
+@@ -1843,7 +1849,9 @@ static int ftgmac100_probe(struct platform_device *pdev)
+ 	priv->aneg_pause = true;
+ 
+ 	/* MAC address from chip or random one */
+-	ftgmac100_initial_mac(priv);
++	err = ftgmac100_initial_mac(priv);
++	if (err)
++		goto err_phy_connect;
+ 
+ 	np = pdev->dev.of_node;
+ 	if (np && (of_device_is_compatible(np, "aspeed,ast2400-mac") ||
+-- 
+2.34.1
 
-Please mention additional cleanups in the commit log (or split them into
-separate patches).
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig            |
-Industrial Linux Solutions                 | https://www.pengutronix.de/ |
-
---kadj4nzld535btjr
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmSvwFUACgkQj4D7WH0S
-/k6wiggAt93FG44I5BusUjcLCaJIc68VoaotrR0JLJCtFzMpQRD3O6i07AtzGcj0
-GTZ7/O9cLM8BXkhMCFCB2qtEF367tZSFsu7M5JfXZLxBQq705O0CLXl7XxM+O/co
-6la8+3RcyhF7DmifGiz41BBJNq+so3v/LlBbLd5BUuBFV4lWwzq2tbNZTXEzFttF
-sE+Tx0t9kkozlelYHVp+NXIp0XDGTpjgt4ROx3rGWJ/dF44n0C7YPpVmLZVM2qxe
-8tEPNxoij66WrTI+APD83psJ71CNc2J3cdDl0BuqmpL49GY1OJGxenufxVmOEjGW
-bCOH1R0Rqn1aiBByQQQ5tD+PfrRNVg==
-=b7ZI
------END PGP SIGNATURE-----
-
---kadj4nzld535btjr--
