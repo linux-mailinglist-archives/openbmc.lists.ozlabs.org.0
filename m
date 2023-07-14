@@ -1,146 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5D08C7534BB
-	for <lists+openbmc@lfdr.de>; Fri, 14 Jul 2023 10:09:52 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5202F7535D1
+	for <lists+openbmc@lfdr.de>; Fri, 14 Jul 2023 10:57:27 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector2 header.b=h5+SjfqM;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kb2C22zT;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4R2PKB1v2yz3dHr
-	for <lists+openbmc@lfdr.de>; Fri, 14 Jul 2023 18:09:50 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4R2QN51mCqz3c2c
+	for <lists+openbmc@lfdr.de>; Fri, 14 Jul 2023 18:57:25 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=aspeedtech.com header.i=@aspeedtech.com header.a=rsa-sha256 header.s=selector2 header.b=h5+SjfqM;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kb2C22zT;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aspeedtech.com (client-ip=2a01:111:f400:feae::708; helo=apc01-psa-obe.outbound.protection.outlook.com; envelope-from=ryan_chen@aspeedtech.com; receiver=lists.ozlabs.org)
-Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01on20708.outbound.protection.outlook.com [IPv6:2a01:111:f400:feae::708])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=134.134.136.31; helo=mga06.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 68 seconds by postgrey-1.37 at boromir; Fri, 14 Jul 2023 18:56:47 AEST
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4R2PJV0XPjz3c47;
-	Fri, 14 Jul 2023 18:09:12 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=DG88hEw2cvaVxWmi64TDXSN5ZUeqiKqb3XlC2zRM4LzFIXrhRjlypwcHTMr1FpYhtcmHf/wcMdYO5zKs7rJ0ynShCABxbKQn+e3hzZguo4Dcioigo8tXz7/0m2Ko1opd8hWgoubagDhixk00PNyqb3yOyK99R5U3/l1nDG1eI+iBhUJHM5r3HeZwj36C+zQ3hjCz6gFm/gZPPRMOl9lCqBV0wJfsMUftAc2RfbBayFhXGWk7qcCl8af38WZVE6qfIrACrN7a3ZefrfLfFRgJ8Eux571ciAUKKZ6TmxtbTEDfOQ298WV4zGftzIGxyEOt5OvvpnDJsYHRrBV4swq8eQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=iazv4uSTJpczaFkuRP/KgvfP6p/1pkkHor3ME4xCI0M=;
- b=EfBwgm2erXRtR+AcdO3d708fHub41DrraXr7+/iNfqkolGnQN9PaFn2upvWWMeecrnOWI/AbgdfGsfFURhh3k0aFoQkL6swzIviqwT8aQ8cV8EoiwEYNGrOvSB9eZstetNOn050m8wsVoNnl9sH0BLOR/zRFmMGupPvmb7rBnikXPpmPNFoLZoaaVrplwu1iWQ5wTZpnziDyaFWiTvQLa55pMWR2SSvdINGm0v33Heyqwq3ENBN+2pE6MehP32GPff7tBZV5sW52iy9J7PDvoJAkT4pdhEYiWx9PtBoaye8E1yibFFjp7KS9I+0W1HHUzzv114YjQP28ZabI4J1sSA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=iazv4uSTJpczaFkuRP/KgvfP6p/1pkkHor3ME4xCI0M=;
- b=h5+SjfqMywrYb83nwf4LTuiD0yXhb/FGJtgSS+HQSgsQBvxqzEi9PHZCAN5DE4SFUI8vaYkRDK9EgK3NUAVpCFA+J0ZCswmbWbVe1GsmiqLnrlTKxNZaxa7X6Pktx2ve4eZzHy+kbAe6IQ/awYw6g1YS37abpDz8wc3Ed20pgzdLVJohkhwkOV7gw1pX8I7m4xgWO0ppYfJYAQTea93+S+kMn4KFbffI3bzH3CUDEVZVaW8Z2RtaWV4cxJJcggh9iCiGot2YYNS+Chagj2LX8aG0RqU8B01wsoc4O8Nbvpg+EaX7QcV4WEm/rbhysV0NXjHjZ0QnYx0Z/E6lcUDIdQ==
-Received: from SEZPR06MB5269.apcprd06.prod.outlook.com (2603:1096:101:78::6)
- by SEZPR06MB6058.apcprd06.prod.outlook.com (2603:1096:101:e3::9) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6588.27; Fri, 14 Jul
- 2023 08:08:49 +0000
-Received: from SEZPR06MB5269.apcprd06.prod.outlook.com
- ([fe80::fa0e:6c06:7474:285c]) by SEZPR06MB5269.apcprd06.prod.outlook.com
- ([fe80::fa0e:6c06:7474:285c%5]) with mapi id 15.20.6565.028; Fri, 14 Jul 2023
- 08:08:48 +0000
-From: Ryan Chen <ryan_chen@aspeedtech.com>
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	"jk@codeconstruct.com.au" <jk@codeconstruct.com.au>, Brendan Higgins
-	<brendan.higgins@linux.dev>, Benjamin Herrenschmidt
-	<benh@kernel.crashing.org>, Joel Stanley <joel@jms.id.au>, Rob Herring
-	<robh+dt@kernel.org>, Krzysztof Kozlowski
-	<krzysztof.kozlowski+dt@linaro.org>, Andrew Jeffery <andrew@aj.id.au>,
-	Philipp Zabel <p.zabel@pengutronix.de>, Wolfram Sang <wsa@kernel.org>, Andy
- Shevchenko <andriy.shevchenko@linux.intel.com>, "linux-i2c@vger.kernel.org"
-	<linux-i2c@vger.kernel.org>, Florian Fainelli <f.fainelli@gmail.com>, Jean
- Delvare <jdelvare@suse.de>, William Zhang <william.zhang@broadcom.com>,
-	Tyrone Ting <kfting@nuvoton.com>, Tharun Kumar P
-	<tharunkumar.pasumarthi@microchip.com>, Conor Dooley
-	<conor.dooley@microchip.com>, Phil Edworthy <phil.edworthy@renesas.com>,
-	"openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>,
-	"devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-	"linux-arm-kernel@lists.infradead.org"
-	<linux-arm-kernel@lists.infradead.org>, "linux-aspeed@lists.ozlabs.org"
-	<linux-aspeed@lists.ozlabs.org>, "=linux-kernel@vger.kernel.org"
-	<=linux-kernel@vger.kernel.org>, Andi Shyti <andi.shyti@kernel.org>
-Subject: RE: [PATCH v12 2/2] i2c: aspeed: support ast2600 i2c new register
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4R2QMM1wByz3bW4;
+	Fri, 14 Jul 2023 18:56:46 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1689325008; x=1720861008;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=Xj5dRygngGRvXOR9/HOfOSF2DAIYiDvu0p/Vnw+ts44=;
+  b=kb2C22zTARAwV5ySWQ0UdIs/CEJFaznhz2tde9qQSr6FylQb1uKV8WhZ
+   EkHwFyaCnvPrnJ3VDiY1LlSZe2kZripcOETfO6IdGvojqBPg3BC83UG3c
+   hrl3OZJriKdh5pcOKaIV7fiaa5igyAMhEEivFCozbx8cxdhpjj8AbdeWZ
+   I6AqqyQ846Jnxk9xTkpB9bOCbrZuAn4Xq8cUuJZKXfbSyZRqOwtcKef8z
+   UznW80ymIZ3+/FGeDVprxxkvxVTYeaB04SdUuHpGDSwP1R/HZI0S/i/zB
+   KGvFJ2selZ+vNcML4zdqBEdjh8HdDQrRh0XiaGPbfSpVdw7zM84Cixaow
+   Q==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10770"; a="429190569"
+X-IronPort-AV: E=Sophos;i="6.01,204,1684825200"; 
+   d="scan'208";a="429190569"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Jul 2023 01:55:31 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10770"; a="896344831"
+X-IronPort-AV: E=Sophos;i="6.01,204,1684825200"; 
+   d="scan'208";a="896344831"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by orsmga005.jf.intel.com with ESMTP; 14 Jul 2023 01:55:26 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.96)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1qKEaB-002bmU-0t;
+	Fri, 14 Jul 2023 11:55:23 +0300
+Date: Fri, 14 Jul 2023 11:55:23 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Ryan Chen <ryan_chen@aspeedtech.com>
+Subject: Re: [PATCH v12 2/2] i2c: aspeed: support ast2600 i2c new register
  mode driver
-Thread-Topic: [PATCH v12 2/2] i2c: aspeed: support ast2600 i2c new register
- mode driver
-Thread-Index: AQHZtics0zDPons9tEqiPxizT4zKAq+45uuAgAAA8zA=
-Date: Fri, 14 Jul 2023 08:08:48 +0000
-Message-ID:  <SEZPR06MB5269EB586319B3333CD96010F234A@SEZPR06MB5269.apcprd06.prod.outlook.com>
+Message-ID: <ZLENe5B3gi/oNTQp@smile.fi.intel.com>
 References: <20230714074522.23827-1-ryan_chen@aspeedtech.com>
  <20230714074522.23827-3-ryan_chen@aspeedtech.com>
- <eda7789d-a603-d565-c9da-edfe9493a05d@linaro.org>
-In-Reply-To: <eda7789d-a603-d565-c9da-edfe9493a05d@linaro.org>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SEZPR06MB5269:EE_|SEZPR06MB6058:EE_
-x-ms-office365-filtering-correlation-id: 2b50e09e-d020-43d2-d91d-08db84418dbe
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:  6+FUmdvH1BuKdFX7Ze6CjxOW1XjgDBZ8gr5oEJyWdY31UiPutkUga4UYsuxg1Oy5Q0OX0PMebIqWLJczRBZ4mh3Pu7dAtWFd/1esofqsZsxQT3LgDJgbN+IYzOzEKqAnOtWwXM+cRxmPt2JF8R0XNVZbYDbXxhnUaVgiIMkBJQO0n1NEdAMxHdNXq3H4gtjA1iKrvVkP0s1Pm9RP6cVT+Y5MfRzPvP9NNSc1W9I/fRDzS3bqGrXY8O4dPILC7nm2zikMv7f3DVO0/4VCO1qwHMaWQo2cr/nEq6yp6p9IyiN6lwazw2VQz5KIL6MlLYP8AhHMySTuNU+/cb0u0an9sVYMAjCIr4i2g89QQHeWbmHBIwINb43vFf+E0pstNs8dNVHJ5dzyMXKBLdMH2PMU3Vi1CWY6WNfF18zV3zqWQQXUZnfntPwJdu47pGJtpqE086jdT5a8q2UVvEx0/nh100J6rubrB/teUVu+d1BMTQdatckSBbQ633kpBln0FPUg7EQEIwyfCsfgK89CfBeUn/4QtOMTOrvbnjewfEImYI/veJx3XmJbmfqCnLBkxgF4A6k+e4yH6orflJgGM6m8EKL2vUwq/zm85NC2FMiu6hAkxEI6Aaowidz7Sua1TsNE
-x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SEZPR06MB5269.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230028)(346002)(366004)(396003)(136003)(376002)(39850400004)(451199021)(52536014)(7416002)(76116006)(64756008)(66556008)(66946007)(66476007)(66446008)(41300700001)(316002)(2906002)(478600001)(5660300002)(8676002)(8936002)(110136005)(71200400001)(7696005)(9686003)(966005)(26005)(55016003)(53546011)(186003)(83380400001)(6506007)(33656002)(921005)(38100700002)(122000001)(86362001)(38070700005);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?utf-8?B?bnhNRDNrTmx1SkNrdUpNanhkUlNRUWtlMzFPRVRBWlZlZ3h5RHpQM3p1UkZL?=
- =?utf-8?B?ZVd4YUlJeGlpcjFVRWxQQTNkVFRSaXhDZ24wYTQ4a08wdXNwUHZpR3NkRDBM?=
- =?utf-8?B?blFUVmlOcVUvSVVhM0VMK1RKRTNqVTZUd2pTNXkxV2h5U0hXbWhnait1cVZt?=
- =?utf-8?B?UjhUNXl3OE1LTGxJWGVFZEZZWHgzb2FKa2lPL3ZZbElmK202SE1IOUNsZ01B?=
- =?utf-8?B?c2taQ09BY1pUWjhrYnZlRjV5TERmS2VqSE9nR0NLSHM4NE8rdWNkT2F6VVJX?=
- =?utf-8?B?NFVJMlVPOWpGNVRBNVhRT2tyRklpYjdobDVSVVVGbnNubkpGaklmdS9ZMmQ0?=
- =?utf-8?B?SFE4UEp1SHJ6ZWR2VVlGOXlQS1V5cno5QW8vcU5OTXFJcElrNnZLSk5GNnV4?=
- =?utf-8?B?UXUyOVpCQis4MmlVMFU4YkdEc3BKN3JobmZvbFpXWHp2cHZJbzJnVTBHTnEw?=
- =?utf-8?B?TzB2VFhSU3ZobElWSUprUnlrN09uTHlSdktpZC9EZC9xNXN3cnB3alNJb3ZV?=
- =?utf-8?B?WGNKeExLNDdMalhWVW5sVUhDejNQTlFmVGRodTA0cjlGcWRld0hlTlN1N2tB?=
- =?utf-8?B?ZWt2UDlXS1ZocGZmby9xcno1bm5zcVBhQm8wUktxRkZvUUJVLzVURGtyRFpo?=
- =?utf-8?B?NTF2dHhpcXg1UzdMMS9mRUE2N1dXWC9VVkMvVTBRTnoyWVdsRm11RGJCdGlM?=
- =?utf-8?B?T2Y5Z1pEbHdRNExUQXE5WG5VcXRxd1VUcTJzK2xURGkxQmdKdWt3L1pXM3ZZ?=
- =?utf-8?B?emRXYlYycXVyc1JyOXVBbjVKQ2dkY0RXR0M4VG40TVIrS2d1NDNxeFU1aitR?=
- =?utf-8?B?cFVMMVFDTHM3Q254bDNHbXk4aXZmVEVHcXBsdEp1R0Q1UmxhZmdHL0htZmlR?=
- =?utf-8?B?ZDZ0NHFSMXRweWcyRnBDSHNsbDlnL1RvZFhjeDhnMFJnS3NvbHpHQ1VpSlBN?=
- =?utf-8?B?enBBUzVKYVhFNDZDdWdRV0IrYUFXOW1Sa1JESE1iOTlFTjh2aUhDUzdPZEcv?=
- =?utf-8?B?TlVrR2RQQmhZMVc5WGNJUUR0c0ErbE1XUHhVZURZbGs3Y2hrRCt3aUxhVGxH?=
- =?utf-8?B?WWVXVzFQSmpLdVEyQXAwc210dzcrN0REYXlMV1BIU1FaQzdWSndmQkJ1Y1NP?=
- =?utf-8?B?SkVFRUF4NW1IZDZGdkxkV3IxUkRtK1FCWnBwYmIxLzdZcS90VU90U0lIWFBV?=
- =?utf-8?B?Um1Mb0JvWGtudGV2RWdRbHhhdVBnTXpzQXR5OVNlRGN3MmFERWZabXJhVXJl?=
- =?utf-8?B?UE1UZ1l5endMUW1Lamp4bTNKUmViVFVadXBDb1FrOFlRc0o2c001allucjV1?=
- =?utf-8?B?aDNNZW95aS9MNTF2SkR3RE9TcGVhODZBK0FtWmNBUzJOaXlrMEl5WkdjNWpm?=
- =?utf-8?B?bHAwZTAzMXNIdXBwZ3RpUU1OVnJrS0xoZEV2Z0taMFQ3OE9GMmludXM3aUNq?=
- =?utf-8?B?Mi9DUC9iLzB6blV5d0ZTNklwQ3dnWld0UjQyZEpsc0RoZ3JvUmNBVEl1aEhX?=
- =?utf-8?B?V2t2UkJuRDV4VCt1cGxOVktlTUxKUVNQeXlaRDB0MHJrMHlRUTlGcytTb3RH?=
- =?utf-8?B?TWRqU3c4NHlrK281YXkxUG1qQlk4NFFEYjJKWGRtT2swQ1d5alZhVkdVNUVI?=
- =?utf-8?B?SnZUL1pPSXNYMVIxSjdiWVhkeitPU0M3eUhqWXVEYzhlVndWcGp1bkVMRGxV?=
- =?utf-8?B?RXZvQW9CRkpCQ3JGbXlObVFRa1U3S2VsOUoxVEtkT25Rb3R0TjZkU3FsWFpP?=
- =?utf-8?B?cS9OeDU1aWduWUpqSXZIdFBPc01jV3ByUlFOdmhzZVIxMlFHQ0tJd0ZWK2pB?=
- =?utf-8?B?TGJBSzBEMWVMWlB1eXlCcW9JcjBGak1GbDJXaVNHclQ4NW45eTN2YUFSdG1Z?=
- =?utf-8?B?MlNGRVVuNU1PRENJZlM3TW00eS9wYW9GQnhzYWF3ZTQxbTFkNXFZcnVja2VX?=
- =?utf-8?B?Q0UzS3dXd2dmVDNSVllZaEg1L3kzdzdqdUlEWmRIaEhrUG9lRDlNeDcwd1Mv?=
- =?utf-8?B?QUxIVms2RDFQRkxHVW15dDBpWERXbmI2Vnk1bC9ZMU1Wd25waGluTVNqaFZR?=
- =?utf-8?B?cFZRT3owTVlFRHhPWmptN204eENXWUpLM2RWeDNMWHlsQW00TXlwR3l2VEc1?=
- =?utf-8?Q?X8S950hb8hE8YUqbhzLTiByjI?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SEZPR06MB5269.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2b50e09e-d020-43d2-d91d-08db84418dbe
-X-MS-Exchange-CrossTenant-originalarrivaltime: 14 Jul 2023 08:08:48.8468
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Omp5GARQYL2nuCdMsJBcvdKb8ymTYJuiA7iQFtXyM/MM8+yxrqyMSEAFoHXtj2x/giYLHK1C5AWgQeHd8dkqMGUREDoclkxRzek53T6nTuw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB6058
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230714074522.23827-3-ryan_chen@aspeedtech.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -152,32 +74,558 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-aspeed@lists.ozlabs.org, Brendan Higgins <brendan.higgins@linux.dev>, Conor Dooley <conor.dooley@microchip.com>, linux-i2c@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, jk@codeconstruct.com.au, Jean Delvare <jdelvare@suse.de>, Andi Shyti <andi.shyti@kernel.org>, Phil Edworthy <phil.edworthy@renesas.com>, Florian Fainelli <f.fainelli@gmail.com>, =linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, Joel Stanley <joel@jms.id.au>, devicetree@vger.kernel.org, William Zhang <william.zhang@broadcom.com>, Rob Herring <robh+dt@kernel.org>, linux-arm-kernel@lists.infradead.org, Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>, Andrew Jeffery <andrew@aj.id.au>, Wolfram Sang <wsa@kernel.org>, Tyrone Ting <kfting@nuvoton.com>, Philipp Zabel <p.zabel@pengutronix.de>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-SGVsbG8sDQoNCk9uIDE0LzA3LzIwMjMgMDk6NDUsIFJ5YW4gQ2hlbiB3cm90ZToNCj4gQWRkIGky
-YyBuZXcgcmVnaXN0ZXIgbW9kZSBkcml2ZXIgdG8gc3VwcG9ydCBBU1QyNjAwIGkyYyBuZXcgcmVn
-aXN0ZXIgDQo+IG1vZGUuIEFTVDI2MDAgaTJjIGNvbnRyb2xsZXIgaGF2ZSBsZWdhY3kgYW5kIG5l
-dyByZWdpc3RlciBtb2RlLiBUaGUgDQo+IG5ldyByZWdpc3RlciBtb2RlIGhhdmUgZ2xvYmFsIHJl
-Z2lzdGVyIHN1cHBvcnQgNCBiYXNlIGNsb2NrIGZvciBzY2wgDQo+IGNsb2NrIHNlbGVjdGlvbiwg
-YW5kIG5ldyBjbG9jayBkaXZpZGVyIG1vZGUuIFRoZSBpMmMgbmV3IHJlZ2lzdGVyIG1vZGUgDQo+
-IGhhdmUgc2VwYXJhdGUgcmVnaXN0ZXIgc2V0IHRvIGNvbnRyb2wgaTJjIG1hc3RlciBhbmQgc2xh
-dmUuDQo+IA0KPiBTaWduZWQtb2ZmLWJ5OiBSeWFuIENoZW4gPHJ5YW5fY2hlbkBhc3BlZWR0ZWNo
-LmNvbT4NCj4gLS0tDQoNCi4uLg0KDQo+ICsJcmV0ID0gZGV2bV9pMmNfYWRkX2FkYXB0ZXIoZGV2
-LCAmaTJjX2J1cy0+YWRhcCk7DQo+ICsJaWYgKHJldCkNCj4gKwkJcmV0dXJuIHJldDsNCj4gKw0K
-PiArCXJldHVybiAwOw0KPiArfQ0KPiArDQo+ICtzdGF0aWMgaW50IGFzdDI2MDBfaTJjX3JlbW92
-ZShzdHJ1Y3QgcGxhdGZvcm1fZGV2aWNlICpwZGV2KSB7DQo+ICsJc3RydWN0IGFzdDI2MDBfaTJj
-X2J1cyAqaTJjX2J1cyA9IHBsYXRmb3JtX2dldF9kcnZkYXRhKHBkZXYpOw0KPiArDQo+ICsJLyog
-RGlzYWJsZSBldmVyeXRoaW5nLiAqLw0KPiArCXdyaXRlbCgwLCBpMmNfYnVzLT5yZWdfYmFzZSAr
-IEFTVDI2MDBfSTJDQ19GVU5fQ1RSTCk7DQo+ICsJd3JpdGVsKDAsIGkyY19idXMtPnJlZ19iYXNl
-ICsgQVNUMjYwMF9JMkNNX0lFUik7DQo+ICsNCj4gKwlpMmNfZGVsX2FkYXB0ZXIoJmkyY19idXMt
-PmFkYXApOw0KDQo+IEkgaGF2ZSBkb3VidHMgdGhhdCB5b3UgdGVzdGVkIHRoaXMuIEkgdGhpbmsg
-eW91IGhhdmUgaGVyZSBkb3VibGUgZnJlZS9kZWwgb2YgdGhlIGFkYXB0ZXIuDQpTb3JyeSwgaSBj
-YW4ndCBjYXRjaCB5b3VyIHBvaW50IGZvciBkb3VibGUgZnJlZSB0aGUgYWRhcHRlci4NCkl0IHNo
-b3VsZCB1c2UgaTJjX2RlbF9hZGFwdGVyIGluIGRyaXZlciByZW1vdmUgZnVuY3Rpb24uDQpBbGwg
-dGhlIGRyaXZlciBkb2luZyB0aGlzIA0KaHR0cHM6Ly9naXRodWIuY29tL3RvcnZhbGRzL2xpbnV4
-L2Jsb2IvbWFzdGVyL2RyaXZlcnMvaTJjL2J1c3Nlcy9pMmMtbnBjbTd4eC5jI0wyMzczDQpodHRw
-czovL2dpdGh1Yi5jb20vdG9ydmFsZHMvbGludXgvYmxvYi9tYXN0ZXIvZHJpdmVycy9pMmMvYnVz
-c2VzL2kyYy1hbHRlcmEuYyNMNDczDQoNCkRvIHlvdSBtZWFuIGl0IGlzIG5vdCBuZWNlc3Nhcnk/
-IA0KDQo+ICsJZGV2bV9mcmVlX2lycSgmcGRldi0+ZGV2LCBpMmNfYnVzLT5pcnEsIGkyY19idXMp
-Ow0KPiArDQoNCg0KQmVzdCByZWdhcmRzLA0KS3J6eXN6dG9mDQoNCg==
+On Fri, Jul 14, 2023 at 03:45:22PM +0800, Ryan Chen wrote:
+> Add i2c new register mode driver to support AST2600 i2c
+> new register mode. AST2600 i2c controller have legacy and
+> new register mode. The new register mode have global register
+> support 4 base clock for scl clock selection, and new clock
+> divider mode. The i2c new register mode have separate register
+> set to control i2c master and slave.
+
+...
+
++ bits.h
+
+> +#include <linux/clk.h>
+> +#include <linux/completion.h>
+> +#include <linux/delay.h>
+> +#include <linux/dma-mapping.h>
+> +#include <linux/err.h>
+> +#include <linux/i2c.h>
+> +#include <linux/i2c-smbus.h>
+> +#include <linux/interrupt.h>
+> +#include <linux/io.h>
+> +#include <linux/module.h>
+> +#include <linux/mfd/syscon.h>
+
+> +#include <linux/of.h>
+> +#include <linux/of_device.h>
+> +#include <linux/of_irq.h>
+
+You missed property.h
+and these of*.h probably not needed at all, see below.
+
+> +#include <linux/regmap.h>
+> +#include <linux/reset.h>
+> +#include <linux/slab.h>
+> +#include <linux/string_helpers.h>
+
+...
+
+> +#define AST2600_I2CC_GET_RX_BUFF(x)			(((x) >> 8) & GENMASK(7, 0))
+
+> +#define AST2600_I2CC_GET_RX_BUF_LEN(x)		(((x) >> 24) & GENMASK(5, 0))
+
+> +#define AST2600_I2CC_GET_TX_BUF_LEN(x)		((((x) >> 8) & GENMASK(4, 0)) + 1)
+
+With right shifts it's better to have GENMASK to be applied first, it will show
+exact MSB of the bitfield.
+
+(Ditto for other cases similar to these)
+
+...
+
+> +static u32 ast2600_select_i2c_clock(struct ast2600_i2c_bus *i2c_bus)
+> +{
+> +	unsigned long base_clk[4];
+> +	int baseclk_idx;
+> +	u32 clk_div_reg;
+> +	u32 scl_low;
+> +	u32 scl_high;
+> +	int divisor;
+> +	int inc = 0;
+> +	u32 data;
+> +
+> +	regmap_read(i2c_bus->global_regs, AST2600_I2CG_CLK_DIV_CTRL, &clk_div_reg);
+> +	for (int i = 0; i < 4; i++) {
+
+See below.
+
+> +		base_clk[i] = (i2c_bus->apb_clk * 10) /
+> +		(((((clk_div_reg >> (i * 8)) & GENMASK(7, 0)) + 2) * 10) / 2);
+
+Second line is wrongly indented.
+
+> +	}
+
+> +	if ((i2c_bus->apb_clk / i2c_bus->bus_frequency) <= 32) {
+> +		baseclk_idx = 0;
+> +		divisor = DIV_ROUND_UP(i2c_bus->apb_clk, i2c_bus->bus_frequency);
+> +	} else {
+
+> +		int i;
+> +
+
+Just add to the definition block:
+
+	unsigned int i;
+
+> +		for (i = 0; i < 4; i++) {
+> +			if ((base_clk[i] / i2c_bus->bus_frequency) <= 32) {
+
+> +				baseclk_idx = i + 1;
+> +				divisor = DIV_ROUND_UP(base_clk[i], i2c_bus->bus_frequency);
+
+These two can be moved outside of the loop
+
+> +				break;
+> +			}
+
+			if ((base_clk[i] / i2c_bus->bus_frequency) <= 32)
+				break;
+
+> +		}
+> +		if (i == 4) {
+> +			baseclk_idx = 4;
+> +			divisor = DIV_ROUND_UP(base_clk[3], i2c_bus->bus_frequency);
+
+> +			while ((divisor + inc) > 32) {
+> +				inc |= divisor & 0x1;
+> +				divisor >>= 1;
+
+	unsigned long divisor;
+
+			for_each_set_bit(divisor, ...)
+
+I.o.w. think about this, maybe you can refactor with the above.
+
+> +				baseclk_idx++;
+> +			}
+> +			divisor += inc;
+
+		} else {
+			...those two lines...
+
+> +		}
+
+> +	}
+> +
+> +	divisor = min_t(int, divisor, 32);
+> +	baseclk_idx &= GENMASK(3, 0);
+
+> +	scl_low = ((divisor * 9) / 16) - 1;
+> +	scl_low = min_t(u32, scl_low, GENMASK(3, 0));
+
+(with the divisor being unsigned long) this can be rewritten as
+
+	scl_low = min(divisor * 9 / 16 - 1, GENMASK(3, 0));
+
+which improves type checking and readability.
+
+> +	scl_high = (divisor - scl_low - 2) & GENMASK(3, 0);
+> +	data = (scl_high - 1) << 20 | scl_high << 16 | scl_low << 12 | baseclk_idx;
+> +
+> +	if (i2c_bus->timeout) {
+> +		data |= AST2600_I2CC_TOUTBASECLK(AST_I2C_TIMEOUT_CLK);
+> +		data |= AST2600_I2CC_TTIMEOUT(i2c_bus->timeout);
+> +	}
+> +
+> +	return data;
+> +}
+
+...
+
+> +static u8 ast2600_i2c_recover_bus(struct ast2600_i2c_bus *i2c_bus)
+> +{
+> +	int ret = 0;
+> +	u32 ctrl;
+> +	u32 state;
+> +	int r;
+
+> +	dev_dbg(i2c_bus->dev, "%d-bus recovery bus [%x]\n", i2c_bus->adap.nr,
+> +		readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF));
+
+Why you can't reuse "state" (assigned below)?
+If not, then something like
+
+	/* ...comment that state can be changed... */
+	state = ...
+	dev_dbg(state);
+
+> +	ctrl = readl(i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> +
+> +	writel(ctrl & ~(AST2600_I2CC_MASTER_EN | AST2600_I2CC_SLAVE_EN),
+> +	       i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> +
+> +	writel(readl(i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL) | AST2600_I2CC_MASTER_EN,
+
+will it be different from ctrl value?
+
+> +	       i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> +
+> +	reinit_completion(&i2c_bus->cmd_complete);
+> +	i2c_bus->cmd_err = 0;
+> +
+> +	/* Check 0x14's SDA and SCL status */
+> +	state = readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF);
+> +	if (!(state & AST2600_I2CC_SDA_LINE_STS) && (state & AST2600_I2CC_SCL_LINE_STS)) {
+> +		writel(AST2600_I2CM_RECOVER_CMD_EN, i2c_bus->reg_base + AST2600_I2CM_CMD_STS);
+> +		r = wait_for_completion_timeout(&i2c_bus->cmd_complete, i2c_bus->adap.timeout);
+> +		if (r == 0) {
+> +			dev_dbg(i2c_bus->dev, "recovery timed out\n");
+> +			ret = -ETIMEDOUT;
+
+> +		} else {
+> +			if (i2c_bus->cmd_err) {
+
+		} else if (...) {
+
+> +				dev_dbg(i2c_bus->dev, "recovery error\n");
+> +				ret = -EPROTO;
+> +			}
+> +		}
+> +	}
+> +
+> +	dev_dbg(i2c_bus->dev, "Recovery done [%x]\n",
+> +		readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF));
+
+As above.
+
+> +	if (readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF) & AST2600_I2CC_BUS_BUSY_STS) {
+
+Two sequential reads may give you different values?
+
+> +		dev_dbg(i2c_bus->dev, "Can't recover bus [%x]\n",
+> +			readl(i2c_bus->reg_base + AST2600_I2CC_STS_AND_BUFF));
+
+Again? With this inconsistency it will be "nice" to debug.
+
+> +		ret = -EPROTO;
+> +	}
+> +
+> +	writel(ctrl, i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> +	return ret;
+> +}
+
+...
+
+> +#ifdef CONFIG_I2C_SLAVE
+
+For (at least) review purposes I recommend to split slave out to the separate
+change. This driver is 16 hundreds LoCs long...
+
+> +#endif
+
+...
+
+> +		} else if (i2c_bus->mode == BUFF_MODE) {
+> +			/* buff mode */
+> +			cmd |= AST2600_I2CM_RX_BUFF_EN;
+
+> +			if (msg->flags & I2C_M_RECV_LEN) {
+> +				dev_dbg(i2c_bus->dev, "smbus read\n");
+> +				xfer_len = 1;
+> +			} else {
+> +				if (msg->len > i2c_bus->buf_size) {
+> +					xfer_len = i2c_bus->buf_size;
+> +				} else {
+> +					xfer_len = msg->len;
+> +					if (i2c_bus->msgs_index + 1 == i2c_bus->msgs_count)
+> +						cmd |= MASTER_TRIGGER_LAST_STOP;
+> +				}
+> +			}
+
+This...
+
+> +			writel(AST2600_I2CC_SET_RX_BUF_LEN(xfer_len),
+> +			       i2c_bus->reg_base + AST2600_I2CC_BUFF_CTRL);
+> +		} else {
+
+> +			/* byte mode */
+> +			xfer_len = 1;
+> +			if (msg->flags & I2C_M_RECV_LEN) {
+> +				dev_dbg(i2c_bus->dev, "smbus read\n");
+> +			} else {
+> +				if (i2c_bus->msgs_index + 1 == i2c_bus->msgs_count) {
+> +					if (msg->len == 1)
+> +						cmd |= MASTER_TRIGGER_LAST_STOP;
+> +				}
+> +			}
+
+...and this have a lot in common, can it be deduplicated?
+
+> +		}
+
+...
+
+> +			if (msg->len > AST2600_I2C_DMA_SIZE) {
+> +				xfer_len = AST2600_I2C_DMA_SIZE;
+> +			} else {
+> +				if (i2c_bus->msgs_index + 1 == i2c_bus->msgs_count)
+> +					cmd |= AST2600_I2CM_STOP_CMD;
+> +				xfer_len = msg->len;
+> +			}
+
+See above.
+
+...
+
+> +			u8 wbuf[4];
+> +			/* buff mode */
+> +			if (msg->len > i2c_bus->buf_size) {
+> +				xfer_len = i2c_bus->buf_size;
+> +			} else {
+> +				if (i2c_bus->msgs_index + 1 == i2c_bus->msgs_count)
+> +					cmd |= AST2600_I2CM_STOP_CMD;
+> +				xfer_len = msg->len;
+> +			}
+> +			if (xfer_len) {
+> +				cmd |= AST2600_I2CM_TX_BUFF_EN | AST2600_I2CM_TX_CMD;
+> +				if (readl(i2c_bus->reg_base + AST2600_I2CS_ISR))
+> +					return -ENOMEM;
+> +				writel(AST2600_I2CC_SET_TX_BUF_LEN(xfer_len),
+> +				       i2c_bus->reg_base + AST2600_I2CC_BUFF_CTRL);
+> +				if (readl(i2c_bus->reg_base + AST2600_I2CS_ISR))
+> +					return -ENOMEM;
+> +				for (i = 0; i < xfer_len; i++) {
+> +					wbuf[i % 4] = msg->buf[i];
+> +					if (i % 4 == 3)
+
+> +						writel(*(u32 *)wbuf, i2c_bus->buf_base + i - 3);
+
+This is incorrect memory accessor.
+
+> +				}
+> +				if (--i % 4 != 3)
+> +					writel(*(u32 *)wbuf, i2c_bus->buf_base + i - (i % 4));
+
+Ditto.
+
+> +			}
+
+...
+
+> +static int ast2600_i2c_is_irq_error(u32 irq_status)
+
+This function is not boolean, so "_is_" seems misleading.
+
+This is basically error code conversion, something like
+
+ast2600_i2c_irq_err_to_errno(u32 irq_status)
+
+> +{
+> +	if (irq_status & AST2600_I2CM_ARBIT_LOSS)
+> +		return -EAGAIN;
+> +	if (irq_status & (AST2600_I2CM_SDA_DL_TO | AST2600_I2CM_SCL_LOW_TO))
+> +		return -EBUSY;
+> +	if (irq_status & (AST2600_I2CM_ABNORMAL))
+> +		return -EPROTO;
+> +
+> +	return 0;
+> +}
+
+...
+
+> +				u8 wbuf[4];
+> +
+> +				cmd |= AST2600_I2CM_TX_BUFF_EN;
+> +				xfer_len = msg->len - i2c_bus->master_xfer_cnt;
+> +				if (xfer_len > i2c_bus->buf_size) {
+> +					xfer_len = i2c_bus->buf_size;
+> +				} else {
+> +					if (i2c_bus->msgs_index + 1 == i2c_bus->msgs_count)
+> +						cmd |= AST2600_I2CM_STOP_CMD;
+> +				}
+> +				for (i = 0; i < xfer_len; i++) {
+> +					wbuf[i % 4] = msg->buf[i2c_bus->master_xfer_cnt + i];
+> +					if (i % 4 == 3)
+> +						writel(*(u32 *)wbuf, i2c_bus->buf_base + i - 3);
+> +				}
+> +				if (--i % 4 != 3)
+> +					writel(*(u32 *)wbuf, i2c_bus->buf_base + i - (i % 4));
+> +				writel(AST2600_I2CC_SET_TX_BUF_LEN(xfer_len),
+> +				       i2c_bus->reg_base + AST2600_I2CC_BUFF_CTRL);
+
+Wrong memory accessors. You should use something from asm/byteorder.h which
+includes linux/byteorder/generic.h.
+
+...
+
+> +#ifdef CONFIG_I2C_SLAVE
+> +		/* Workaround for master/slave package mode enable rx done stuck issue
+> +		 * When master go for first read (RX_DONE), slave mode will also effect
+> +		 * Then controller will send nack, not operate anymore.
+> +		 */
+
+/*
+ * Wrong style of multi-line
+ * comments. You need to fix
+ * them in the entire driver.
+ */
+
+> +		if (readl(i2c_bus->reg_base + AST2600_I2CS_CMD_STS) & AST2600_I2CS_PKT_MODE_EN) {
+> +			u32 slave_cmd = readl(i2c_bus->reg_base + AST2600_I2CS_CMD_STS);
+> +
+> +			writel(0, i2c_bus->reg_base + AST2600_I2CS_CMD_STS);
+> +			writel(slave_cmd, i2c_bus->reg_base + AST2600_I2CS_CMD_STS);
+> +		}
+> +		fallthrough;
+> +#endif
+
+...
+
+> +static int ast2600_i2c_master_irq(struct ast2600_i2c_bus *i2c_bus)
+> +{
+> +	u32 sts = readl(i2c_bus->reg_base + AST2600_I2CM_ISR);
+> +	u32 ier = readl(i2c_bus->reg_base + AST2600_I2CM_IER);
+> +	u32 ctrl = 0;
+
+Redundant assignment.
+
+> +	if (!i2c_bus->alert_enable)
+> +		sts &= ~AST2600_I2CM_SMBUS_ALT;
+> +
+> +	if (AST2600_I2CM_BUS_RECOVER_FAIL & sts) {
+> +		writel(AST2600_I2CM_BUS_RECOVER_FAIL, i2c_bus->reg_base + AST2600_I2CM_ISR);
+> +		ctrl = readl(i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> +		writel(0, i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> +		writel(ctrl, i2c_bus->reg_base + AST2600_I2CC_FUN_CTRL);
+> +		i2c_bus->cmd_err = -EPROTO;
+> +		complete(&i2c_bus->cmd_complete);
+> +		return 1;
+> +	}
+> +
+> +	if (AST2600_I2CM_BUS_RECOVER & sts) {
+> +		writel(AST2600_I2CM_BUS_RECOVER, i2c_bus->reg_base + AST2600_I2CM_ISR);
+> +		i2c_bus->cmd_err = 0;
+> +		complete(&i2c_bus->cmd_complete);
+> +		return 1;
+> +	}
+> +
+> +	if (AST2600_I2CM_SMBUS_ALT & sts) {
+> +		if (ier & AST2600_I2CM_SMBUS_ALT) {
+> +			/* Disable ALT INT */
+> +			writel(ier & ~AST2600_I2CM_SMBUS_ALT, i2c_bus->reg_base + AST2600_I2CM_IER);
+> +			i2c_handle_smbus_alert(i2c_bus->ara);
+> +			writel(AST2600_I2CM_SMBUS_ALT, i2c_bus->reg_base + AST2600_I2CM_ISR);
+> +			dev_err(i2c_bus->dev,
+> +				"ast2600_master_alert_recv bus id %d, Disable Alt, Please Imple\n",
+> +				i2c_bus->adap.nr);
+> +			return 1;
+> +		}
+> +	}
+> +
+> +	i2c_bus->cmd_err = ast2600_i2c_is_irq_error(sts);
+> +	if (i2c_bus->cmd_err) {
+> +		writel(AST2600_I2CM_PKT_DONE, i2c_bus->reg_base + AST2600_I2CM_ISR);
+> +		complete(&i2c_bus->cmd_complete);
+> +		return 1;
+> +	}
+> +
+> +	if (AST2600_I2CM_PKT_DONE & sts) {
+> +		ast2600_i2c_master_package_irq(i2c_bus, sts);
+> +		return 1;
+> +	}
+> +
+> +	return 0;
+> +}
+
+...
+
+> +	if (of_property_read_bool(pdev->dev.of_node, "multi-master"))
+> +		i2c_bus->multi_master = true;
+> +	else
+> +		fun_ctrl |= AST2600_I2CC_MULTI_MASTER_DIS;
+
+	i2c_bus->multi_master = device_property_read_bool(&pdev->dev, "multi-master");
+	if (!i2c_bus->multi_master)
+		fun_ctrl |= AST2600_I2CC_MULTI_MASTER_DIS;
+
+...
+
+> +	struct device_node *np = pdev->dev.of_node;
+
+It should use dev, but see below.
+
+> +	struct device *dev = &pdev->dev;
+> +	struct ast2600_i2c_bus *i2c_bus;
+> +	struct resource *res;
+> +	u32 global_ctrl;
+
+> +	int ret = 0;
+
+Do you need this assignment?
+
+...
+
+> +		i2c_bus->buf_base = devm_platform_ioremap_resource(pdev, 1);
+
+> +		if (!IS_ERR_OR_NULL(i2c_bus->buf_base))
+
+Why not positive check?
+
+> +			i2c_bus->buf_size = resource_size(res) / 2;
+> +		else
+> +			i2c_bus->mode = BYTE_MODE;
+> +	}
+
+...
+
+> +	ret = of_property_read_u32(dev->of_node,
+> +				   "i2c-scl-clk-low-timeout-us",
+> +				   &i2c_bus->timeout);
+
+	device_property_read_u32()
+
+> +	if (!ret)
+> +		i2c_bus->timeout /= 4096;
+
+...
+
+> +	ret = device_property_read_u32(&pdev->dev, "clock-frequency", &i2c_bus->bus_frequency);
+> +	if (ret < 0) {
+> +		dev_warn(dev, "Could not read clock-frequency property\n");
+> +		i2c_bus->bus_frequency = I2C_MAX_STANDARD_MODE_FREQ;
+> +	}
+
+Use standard API from I2C core for this.
+
+...
+
+> +	if (of_property_read_bool(dev->of_node, "smbus-alert")) {
+
+device_property_read_bool()
+
+Doesn't I2C core handle this property?
+
+> +		i2c_bus->alert_enable = true;
+> +		i2c_bus->ara = i2c_new_smbus_alert_device(&i2c_bus->adap, &i2c_bus->alert_data);
+> +		if (!i2c_bus->ara)
+> +			dev_warn(dev, "Failed to register ARA client\n");
+> +
+> +		writel(AST2600_I2CM_PKT_DONE | AST2600_I2CM_BUS_RECOVER | AST2600_I2CM_SMBUS_ALT,
+> +		       i2c_bus->reg_base + AST2600_I2CM_IER);
+> +	} else {
+> +		i2c_bus->alert_enable = false;
+> +		/* Set interrupt generation of I2C master controller */
+> +		writel(AST2600_I2CM_PKT_DONE | AST2600_I2CM_BUS_RECOVER,
+> +		       i2c_bus->reg_base + AST2600_I2CM_IER);
+> +	}
+
+...
+
+> +	devm_free_irq(&pdev->dev, i2c_bus->irq, i2c_bus);
+
+Why explicit call?
+
+...
+
+> +		dmam_free_coherent(i2c_bus->dev, I2C_SLAVE_MSG_BUF_SIZE,
+> +				   i2c_bus->slave_dma_buf, i2c_bus->slave_dma_addr);
+
+Ditto.
+
+...
+
+It looks to me like you ignored part of my comments. If so,
+I would like to know why.
+
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
