@@ -1,78 +1,96 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 21AF675938C
-	for <lists+openbmc@lfdr.de>; Wed, 19 Jul 2023 12:57:03 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5970D75938D
+	for <lists+openbmc@lfdr.de>; Wed, 19 Jul 2023 12:57:53 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=H2COhlx6;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=A5ZdXFyo;
+	dkim=fail reason="signature verification failed" (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=hVvL+OUJ;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4R5Xnj4kskz30KG
-	for <lists+openbmc@lfdr.de>; Wed, 19 Jul 2023 20:56:57 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4R5Xpl21cHz2yD6
+	for <lists+openbmc@lfdr.de>; Wed, 19 Jul 2023 20:57:51 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=H2COhlx6;
+	dkim=pass (1024-bit key; unprotected) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=A5ZdXFyo;
+	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.a=rsa-sha256 header.s=mimecast20190719 header.b=hVvL+OUJ;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::d2c; helo=mail-io1-xd2c.google.com; envelope-from=orbit.huang@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=redhat.com (client-ip=170.10.129.124; helo=us-smtp-delivery-124.mimecast.com; envelope-from=pabeni@redhat.com; receiver=lists.ozlabs.org)
+Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4R4HQv1PwVz2yDd;
-	Mon, 17 Jul 2023 19:51:18 +1000 (AEST)
-Received: by mail-io1-xd2c.google.com with SMTP id ca18e2360f4ac-77a62a84855so171844439f.1;
-        Mon, 17 Jul 2023 02:51:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1689587474; x=1692179474;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=tcwB+50WnrsP8py0GmyCczQm2hmYLGk+1hGHK9Qssd8=;
-        b=H2COhlx61z8Ns4BSCqx04DRIvFD+dsah8oj7ScwfTlakaVfK/hmNgyBgCiEZV9wn49
-         lZnRqqSMNGzqDHsfko26Tvdcjvyv5rnEfk1DNATnd1BSJBNRMonWacSi7kVjl0RESo1u
-         K2vJPh3Asy9Iwt2WYiYU6J5/xjDKA9SIkdkFtNAcGPn6mO6yZZYyINZRVUXyq+iOjAJn
-         k+T4GCyqwrVEix9sUBEblydFtWxmzvWWNa2/qj8XIVisN1vP8fOjGM1ERjz55eIobWtS
-         7JZC6SAieh+l+26E9qWgi9cRFu1ERmFGu4dU7jaNzjMO4wbyRajs1wdvfPoszrnCwNU7
-         Y6ww==
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4R4qwV59H4z2y1d
+	for <openbmc@lists.ozlabs.org>; Tue, 18 Jul 2023 17:15:21 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1689664518;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=LO/OU3eOEKbiSK+Rpa6237MBQHj5ytyRv/Karly+Uw4=;
+	b=A5ZdXFyoSxGrEJSW68BKFT3EcXOX5u6qf4sZ86vt1ZDDpuAktf7LO+aA1ZdvsISDwZvQdT
+	SVDkqbtj4Ov3TQKE9uqHEFXmyRL+qReG5/QYnKB3a8WV1945H116Y3x0rLZtBJs/NVXBcR
+	V5gsdTxyBlT5ABSunncuXkWNNVihpWk=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+	s=mimecast20190719; t=1689664519;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding:
+	 in-reply-to:in-reply-to:references:references;
+	bh=LO/OU3eOEKbiSK+Rpa6237MBQHj5ytyRv/Karly+Uw4=;
+	b=hVvL+OUJjrklHfYQaVQei2oReP+WIykeZd64HFxQbaCaGAQ6WuI/ZKwPuJpLCFpXrdynQP
+	xpRvWY9cWVGo5yOd3zkjODFcSmzJYYl5yyGpEHLxiZgSOwho1tiOfSlCimfzMl4gbS4fkA
+	SWgrQWzkWHCSSzj28PqD3YDdYuK5K1c=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-557-IXVpHWruNXC6NK9-ZwB1ZA-1; Tue, 18 Jul 2023 03:15:17 -0400
+X-MC-Unique: IXVpHWruNXC6NK9-ZwB1ZA-1
+Received: by mail-qt1-f200.google.com with SMTP id d75a77b69052e-402fa256023so9941291cf.0
+        for <openbmc@lists.ozlabs.org>; Tue, 18 Jul 2023 00:15:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1689587474; x=1692179474;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=tcwB+50WnrsP8py0GmyCczQm2hmYLGk+1hGHK9Qssd8=;
-        b=lRa9akxxUA8cQ6zoMyiODhgQ3o2t9ER0IQ0RxR6XTBa/hLi0I1MoMBq7GKKi1lByy9
-         hcayhJuvOo8CUjDThjrmN2eJKuhbL28RMD3fYjjaeB1YalDR0rooukVeXCfsKoR6B+qu
-         gnhm6wzoADaG6Rbek4zUwa3Bb87dd7OXmGfa/Yf1O/goshFoXIfT9ufuWZf7iKAcbX7W
-         egq0IAnIaluH8j8omgyZEW54ybT24qk3jInF0wWKRW4rAG9KLeC4WGE+sJpkodmGPrGx
-         4yFcdD9pnxZjMVg1Ek/A/yD3jx/Vk0DFouazz0Ho6+Hbfr/1f+90Np2ZSAG4Xaw+FWzB
-         XK3w==
-X-Gm-Message-State: ABy/qLZ1yvhJfGosYp6jZ+Ua4WCvoZa8CaEpnFR5PUbbhZAKeVyxc7JW
-	fevpGMXD9n6bLYoyE4utv0g=
-X-Google-Smtp-Source: APBJJlFdf/+zUrmvf62IEu/h0Ce8005lr+fBlUd78kDZAW2R9nniW9R9S7bI2n8dcGtTrzCuxGWMQQ==
-X-Received: by 2002:a5e:aa14:0:b0:786:4795:30c9 with SMTP id s20-20020a5eaa14000000b00786479530c9mr10485510ioe.20.1689587474435;
-        Mon, 17 Jul 2023 02:51:14 -0700 (PDT)
-Received: from JammyHuang-PC.aspeed.com ([118.99.208.177])
-        by smtp.gmail.com with ESMTPSA id g11-20020a02b70b000000b0042b3ff53458sm4376819jam.169.2023.07.17.02.51.11
+        d=1e100.net; s=20221208; t=1689664516; x=1692256516;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LO/OU3eOEKbiSK+Rpa6237MBQHj5ytyRv/Karly+Uw4=;
+        b=ghJpEcs15AT0lxaFdxLgsnROhiJXTTvgq4S/SG9IxEb3fK4c3ceHNlvVHNKR7Zm/xS
+         n/2Z/hbp7WEeQiH983etamuPxnWDTVnZw+p4sArZ9bzoT1W0gWMo00ewM10um80xJP4S
+         iLFZhNvykPmSdddLmE/84cnIexBUj4/sWIJMmUW8soHyejJxTNwX9cFZWxeLZ2/WwHta
+         qEf5XXWEmjvfdh4O+7OridLEXmIuTFfRl8ZwoGBVs4NhvSvyyR6OGO1M+8R017vMTRDD
+         V+hnQjECga3NZa0yfWUnJJt0eGye7+Ifk319D6wSm5AhexHBlutwMGI99j7EgrN05uAF
+         GblA==
+X-Gm-Message-State: ABy/qLawvx1EAL4CDM0mA6Jtar5I88Q7D4Cgtv2j1TtzTHwN/XDNuVYM
+	YgoNSsbp//c6zB5/CvlWL4htcjNQ+DeMDBtcjWavj6/X1uFFmX1fGceU8CWClSYYmdHqmhxJT9u
+	NtKxgm/yxKUUrqpS0kMQ=
+X-Received: by 2002:a05:622a:145:b0:403:b11f:29f0 with SMTP id v5-20020a05622a014500b00403b11f29f0mr12838210qtw.0.1689664516527;
+        Tue, 18 Jul 2023 00:15:16 -0700 (PDT)
+X-Google-Smtp-Source: APBJJlFCnBH5LbDKP5eqb3how4HWFYkMEEbEjoni1XoZY9ApODHPDOx/exsxIFeKjFPBf7UcYJHAUw==
+X-Received: by 2002:a05:622a:145:b0:403:b11f:29f0 with SMTP id v5-20020a05622a014500b00403b11f29f0mr12838190qtw.0.1689664516267;
+        Tue, 18 Jul 2023 00:15:16 -0700 (PDT)
+Received: from gerbillo.redhat.com (146-241-226-170.dyn.eolo.it. [146.241.226.170])
+        by smtp.gmail.com with ESMTPSA id bt6-20020ac86906000000b003f364778b2bsm482217qtb.4.2023.07.18.00.15.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 17 Jul 2023 02:51:14 -0700 (PDT)
-From: Jammy Huang <orbit.huang@gmail.com>
-X-Google-Original-From: Jammy Huang <jammy_huang@aspeedtech.com>
-To: eajames@linux.ibm.com,
-	mchehab@kernel.org,
-	joel@jms.id.au,
-	andrew@aj.id.au,
-	linux-media@vger.kernel.org,
-	openbmc@lists.ozlabs.org,
-	linux-arm-kernel@lists.infradead.org,
-	linux-aspeed@lists.ozlabs.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v2] media: aspeed: Fix memory overwrite if timing is 1600x900
-Date: Mon, 17 Jul 2023 17:51:11 +0800
-Message-Id: <20230717095111.1957-1-jammy_huang@aspeedtech.com>
-X-Mailer: git-send-email 2.25.1
+        Tue, 18 Jul 2023 00:15:15 -0700 (PDT)
+Message-ID: <6818bc7ffe07c21d415265c00b00cf32c6d2ac6f.camel@redhat.com>
+Subject: Re: [PATCH] net: ftgmac100: support getting MAC address from NVMEM
+From: Paolo Abeni <pabeni@redhat.com>
+To: Paul Fertser <fercerpav@gmail.com>, Pavan Chebbi
+ <pavan.chebbi@broadcom.com>
+Date: Tue, 18 Jul 2023 09:15:11 +0200
+In-Reply-To: <ZLDas0gsLNkzuUWR@home.paul.comp>
+References: <20230713095743.30517-1-fercerpav@gmail.com>
+	 <CALs4sv08GJXexShzkrhhW5CDSgJC0z3om5YJzy_qYRqEtvyMtg@mail.gmail.com>
+	 <ZLDas0gsLNkzuUWR@home.paul.comp>
+User-Agent: Evolution 3.46.4 (3.46.4-1.fc37)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-Mailman-Approved-At: Wed, 19 Jul 2023 20:56:29 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -85,59 +103,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jammy Huang <jammy_huang@aspeedtech.com>
+Cc: Andrew Lunn <andrew@lunn.ch>, Leon Romanovsky <leon@kernel.org>, Geoff Levand <geoff@infradead.org>, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Wolfram Sang <wsa+renesas@sang-engineering.com>, Eric Dumazet <edumazet@google.com>, Tao Ren <rentao.bupt@gmail.com>, Jakub Kicinski <kuba@kernel.org>, Liang He <windhl@126.com>, "David S. Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-When capturing 1600x900, system could crash when system memory usage is
-tight.
+On Fri, 2023-07-14 at 08:18 +0300, Paul Fertser wrote:
+> Hello Pavan,
+>=20
+> On Fri, Jul 14, 2023 at 10:14:02AM +0530, Pavan Chebbi wrote:
+> > On Thu, Jul 13, 2023 at 3:28=E2=80=AFPM Paul Fertser <fercerpav@gmail.c=
+om> wrote:
+> > > Make use of of_get_ethdev_address() to support reading MAC address no=
+t
+> > > only from the usual DT nodes but also from an NVMEM provider (e.g. us=
+ing
+> > > a dedicated area in an FRU EEPROM).
+> >=20
+> > Looks like earlier ftgmac100_probe() would move on with self generated
+> > (random) MAC addr if getting it from the device failed.
+> > Now you will fail the probe in a failure case. Is that OK?
+>=20
+> I think the previous behaviour is preserved with this patch in all the
+> cases other than of_get_ethdev_address returning -EPROBE_DEFER. Can
+> you please explain what failure case you have in mind and how the
+> probe is going to be failed in that case?
 
-The way to reproduce this issue:
-1. Use 1600x900 to display on host
-2. Mount ISO through 'Virtual media' on OpenBMC's web
-3. Run script as below on host to do sha continuously
-  #!/bin/bash
-  while [ [1] ];
-  do
-	find /media -type f -printf '"%h/%f"\n' | xargs sha256sum
-  done
-4. Open KVM on OpenBMC's web
+FTR, I agree with the above: it looks like the old behavior is
+preserved. The patch LGTM, thanks!
 
-The size of macro block captured is 8x8. Therefore, we should make sure
-the height of src-buf is 8 aligned to fix this issue.
-
-Signed-off-by: Jammy Huang <jammy_huang@aspeedtech.com>
----
- v2 changes
-  - Add how to reproduce this issue.
----
- drivers/media/platform/aspeed/aspeed-video.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/drivers/media/platform/aspeed/aspeed-video.c b/drivers/media/platform/aspeed/aspeed-video.c
-index 374eb7781936..14594f55a77f 100644
---- a/drivers/media/platform/aspeed/aspeed-video.c
-+++ b/drivers/media/platform/aspeed/aspeed-video.c
-@@ -1130,7 +1130,7 @@ static void aspeed_video_get_resolution(struct aspeed_video *video)
- static void aspeed_video_set_resolution(struct aspeed_video *video)
- {
- 	struct v4l2_bt_timings *act = &video->active_timings;
--	unsigned int size = act->width * act->height;
-+	unsigned int size = act->width * ALIGN(act->height, 8);
- 
- 	/* Set capture/compression frame sizes */
- 	aspeed_video_calc_compressed_size(video, size);
-@@ -1147,7 +1147,7 @@ static void aspeed_video_set_resolution(struct aspeed_video *video)
- 		u32 width = ALIGN(act->width, 64);
- 
- 		aspeed_video_write(video, VE_CAP_WINDOW, width << 16 | act->height);
--		size = width * act->height;
-+		size = width * ALIGN(act->height, 8);
- 	} else {
- 		aspeed_video_write(video, VE_CAP_WINDOW,
- 				   act->width << 16 | act->height);
-
-base-commit: 2605e80d3438c77190f55b821c6575048c68268e
--- 
-2.25.1
+Paolo
 
