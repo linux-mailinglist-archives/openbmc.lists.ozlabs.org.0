@@ -2,101 +2,70 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 280907600CC
-	for <lists+openbmc@lfdr.de>; Mon, 24 Jul 2023 22:58:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F7FB760E16
+	for <lists+openbmc@lfdr.de>; Tue, 25 Jul 2023 11:13:09 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm1 header.b=EQKp9cqu;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=kffKNEgD;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=Prlvhi+W;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4R8sv20RPlz308W
-	for <lists+openbmc@lfdr.de>; Tue, 25 Jul 2023 06:58:06 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4R9BC7035rz3c3y
+	for <lists+openbmc@lfdr.de>; Tue, 25 Jul 2023 19:13:07 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm1 header.b=EQKp9cqu;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=kffKNEgD;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=Prlvhi+W;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.26; helo=out2-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=lists.ozlabs.org)
-Received: from out2-smtp.messagingengine.com (out2-smtp.messagingengine.com [66.111.4.26])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1031; helo=mail-pj1-x1031.google.com; envelope-from=jim.t90615@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4R8stN0Q0Rz2yGD
-	for <openbmc@lists.ozlabs.org>; Tue, 25 Jul 2023 06:57:31 +1000 (AEST)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailout.nyi.internal (Postfix) with ESMTP id 8210A5C00A5;
-	Mon, 24 Jul 2023 16:57:26 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute2.internal (MEProxy); Mon, 24 Jul 2023 16:57:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	fuzziesquirrel.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1690232246; x=1690318646; bh=LW
-	GoKQ+4X/zi/fwEyaeTE68i2SOOW1IchzJowRVPs0w=; b=EQKp9cqu1qpKOOTs9d
-	VpFfUj4+phyi7OyaLlr8reP2sXC2kflivuEhRq2PlHWq/wF5S6z7vV7MXSkWbhfd
-	GVM9McvmlTWuyhXwrJ25ZMDIn4mrNXF9SBb7ESzqvQ6A/A8Lie8UUr9R+ki/dZR/
-	n2X0k8g7BJ8aBWZmUXRp36cmTlHN3sdbUWZyzG66TAZdb/Jn3bUtMzcRmau+PNaB
-	d5FJtYEtxK8A0odlMEqWW1VK4yNPrH3sHYLNURgXIvURYzcI2+/ADaqhYO9fMxxB
-	KWXbRccWFI42KgAForbrfDiYk/NKcA3b84Usq5qUOKpk0JWitRFKNJteYBvQ5ZGt
-	u6hQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1690232246; x=1690318646; bh=LWGoKQ+4X/zi/fwEyaeTE68i2SOOW1IchzJ
-	owRVPs0w=; b=kffKNEgDFgwqxy8JGyFa+yVz/y+Ht9eajXKmDADCRpUUHsiTUCL
-	CLT62OcupwFsmXKrGYNXnt7gOnCg7kDYY4Xh9xzGqexh37cE+kd8WNfbdoSDmyJz
-	dxyxioygNv4Tl0fljD8fQYEzAQXX9V4CZ77M0mAdS6IskN/DVAt/qIe1TOHqlw3/
-	ZiW/PWvuMWROI6iFA0TUA26rSOZx+csv+EG3/fNm89tV3a1Z0RLjAVg71ti47ALg
-	eAmPLOk6MQZBrcRJQ4vn2KMbQ0qLC943dtcY/B8zH1NOPZ/GIIO2SaTqDZ4QF88S
-	btETwo05X3tkwQuIhN1ZdH5lSOT8T84TT6Q==
-X-ME-Sender: <xms:teW-ZApS0MVt9P22czwne83WLnaxFgvM60AWtBkaIMiJNTfJEqu73g>
-    <xme:teW-ZGoGlvgNadRuGcOXu5_WUl_je84XWMozPlVFkxRS7w9OG6uZgbuETMeEkiznA
-    RAvYlPis5pKHD9GBlQ>
-X-ME-Received: <xmr:teW-ZFNPvG6Lu8xZtdWD8nRkwuNHtIlrIyapRzBiMBpzYWm2EIfRO3Gd2bC5FcX9uw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrheekgdduheefucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucenucfjughrpefkuffhvfevffgjfhgtgfgfggesth
-    hqredttderjeenucfhrhhomhepuehrrgguuceuihhshhhophcuoegsrhgrughlvgihsges
-    fhhuiiiiihgvshhquhhirhhrvghlrdgtohhmqeenucggtffrrghtthgvrhhnpeegteekud
-    efteejheevfeehkedtieefvdfhieelhfeihedvhedvtddugfeugfeiteenucevlhhushht
-    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrhgrughlvgihsgesfh
-    huiiiiihgvshhquhhirhhrvghlrdgtohhm
-X-ME-Proxy: <xmx:tuW-ZH7E2bT26GGnjmS34SVQMYhZVFZnb4eLUHLiWBcZ3_VUILwKTg>
-    <xmx:tuW-ZP6hrUvLcelDbCif8QTb_bFf39qq_9DcUBCOztZIDy-PiAZyzQ>
-    <xmx:tuW-ZHjJhlPiyfGTz6NYaN9Jz7yhSMr-1WOT71ENMDlQ8GI3FbqWCg>
-    <xmx:tuW-ZC0OqYydN2qjpYRiOc_7imWYmw1bvIo7Sg_iDMYg6pPyqcq9EQ>
-Feedback-ID: i02c9470a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 24 Jul 2023 16:57:25 -0400 (EDT)
-Message-ID: <c340ad4c1cb5efaca51a07593381daeaa9634892.camel@fuzziesquirrel.com>
-Subject: Re: FW: [OpenBMC] Please help to update new Schedule A for CLA
- member
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: "ido.almog@nuvoton.com" <ido.almog@nuvoton.com>, 
-	"openbmc@lists.ozlabs.org"
-	 <openbmc@lists.ozlabs.org>
-Date: Mon, 24 Jul 2023 16:57:24 -0400
-In-Reply-To: <TY2PR03MB4320C59678817818AF4EBA6BE602A@TY2PR03MB4320.apcprd03.prod.outlook.com>
-References: 	<JH0PR03MB8099983C2E08B5571336F705CF2EA@JH0PR03MB8099.apcprd03.prod.outlook.com>
-	 <PUZPR03MB598968C899FE99DB71C6F4B8922EA@PUZPR03MB5989.apcprd03.prod.outlook.com>
-	 <JH0PR03MB80992180E593B30FC1E71573CF2FA@JH0PR03MB8099.apcprd03.prod.outlook.com>
-	 <PUZPR03MB598963D87660375FC3CF7B91922FA@PUZPR03MB5989.apcprd03.prod.outlook.com>
-	 <SEYPR03MB80777A11D5A5E26E59C3F198CF37A@SEYPR03MB8077.apcprd03.prod.outlook.com>
-	 <PUZPR03MB59892A0FE94982BAEA70A8C49234A@PUZPR03MB5989.apcprd03.prod.outlook.com>
-	 <PUZPR03MB59895D9337D9BCC44C34403C923BA@PUZPR03MB5989.apcprd03.prod.outlook.com>
-	 <TY2PR03MB432076CE0349AE63F4F1F929E63BA@TY2PR03MB4320.apcprd03.prod.outlook.com>
-	 <SG2PR03MB43738B926FD9FF3D5C17A812AE38A@SG2PR03MB4373.apcprd03.prod.outlook.com>
-	 <JH0PR03MB80999843DE2C3CB5AC31F493CF02A@JH0PR03MB8099.apcprd03.prod.outlook.com>
-	 <TY2PR03MB4320C59678817818AF4EBA6BE602A@TY2PR03MB4320.apcprd03.prod.outlook.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4R9BBQ4Cq5z2xWc
+	for <openbmc@lists.ozlabs.org>; Tue, 25 Jul 2023 19:12:28 +1000 (AEST)
+Received: by mail-pj1-x1031.google.com with SMTP id 98e67ed59e1d1-26586e824e7so2464835a91.3
+        for <openbmc@lists.ozlabs.org>; Tue, 25 Jul 2023 02:12:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1690276345; x=1690881145;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wy4cplgUNKS/9BcirQhDIU2ZvQMme3avaAgjDUzLJFI=;
+        b=Prlvhi+W3NQigLGT4jThq88LFysqxcqnyIKmuPJdKUnzioowF3f4q/higXZowJ/hKt
+         s3cHWWSCReTLuRDyFUgab6YxWa5ptOtLDtDdrWV4hZAjCaYHaSrXOMzJi8o2jMsLCCz2
+         OUo7sayJw/xDH7y46LzpxLG8rE8BGVC0yDeONls8hZ3HW7IJaI8H3gZ/Udvizs/4fXZT
+         etx9DgZcDmoqp3iOG0NklLQJZg8PDuwJyv++3WdW+hgtQu3HbobYXlIahU9UuSON9qCn
+         z/ZD4/2VO67p6bHtAbUAnPd9EnWew4bmy/arprpFJRdccBSdb0IEAqreSGLBuhW9tR34
+         Oh9w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690276345; x=1690881145;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=wy4cplgUNKS/9BcirQhDIU2ZvQMme3avaAgjDUzLJFI=;
+        b=htzCWFTm6a8B6jnLiPOAcxhYeTAeuvCjuB2IByp1ADCRSWccBWjzdEc1SLHYlT+PFP
+         wK4zFTlYjE7DdJZPG5s++57DeqXRGVajxnQAzf41VPH86k3OB+4qRqoZ9o6Qu0H6hvPR
+         RpmgQJFR1U/M8+Q4b0UmhjID9mztP12z9Z9N19qpXM79dE+4955kf/1eiOHW2nMnmJ+M
+         6Cj2D1YSKZzL/iFvZYYz1kvxib3MA9vUl04NJjGMJihwCFpn8xPLOS7HcEQOy8KQ98Yj
+         ZoQijsCHMlVIqRKoJowWU+zXnCrZRQv9Zv7qOavAVrrJWlodqNs9+tQxtBxK35C7ahMp
+         p0Kg==
+X-Gm-Message-State: ABy/qLZIHCwMNfLPuru4Z5YOe5qY3xmOyiEptEJIqs3t0VK3zDN0g9VC
+	/kFrLqoOWnG7FGjI3dSMsZVbPVAsOtdGsNonPn0=
+X-Google-Smtp-Source: APBJJlGyXl77l7rNbCiEBT6wuO+tKE75bot9gLJIEjBVAep3CYCmhlB26HO/n36iO05IO1h9jceGOIu0ZO0UNSO8dus=
+X-Received: by 2002:a17:90a:ce83:b0:267:f893:d562 with SMTP id
+ g3-20020a17090ace8300b00267f893d562mr6667046pju.8.1690276345470; Tue, 25 Jul
+ 2023 02:12:25 -0700 (PDT)
+MIME-Version: 1.0
+References: <20230314092311.8924-1-jim.t90615@gmail.com> <20230314092311.8924-2-jim.t90615@gmail.com>
+ <519312b6-f28c-7482-21c1-d9628f0295cb@molgen.mpg.de> <CAKUZ0+FGSEgzbK6H_sHaGpP9JnvrLeBRQViqmViR1OVXoVs7vA@mail.gmail.com>
+ <45cf294e-3124-9a0d-864f-ba7c605405c0@molgen.mpg.de>
+In-Reply-To: <45cf294e-3124-9a0d-864f-ba7c605405c0@molgen.mpg.de>
+From: Jim Liu <jim.t90615@gmail.com>
+Date: Tue, 25 Jul 2023 17:12:12 +0800
+Message-ID: <CAKUZ0+GcnDNY8rmM0wi920LSCqFdMY0UCGmxqn_RMwLbdr5Jxg@mail.gmail.com>
+Subject: Re: [PATCH v5 1/3] gpio: nuvoton: Add Nuvoton NPCM sgpio driver
+To: Paul Menzel <pmenzel@molgen.mpg.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.48.4 
-MIME-Version: 1.0
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,20 +77,93 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: "KWLIU@nuvoton.com" <KWLIU@nuvoton.com>, "Eyal.Cohen@nuvoton.com" <Eyal.Cohen@nuvoton.com>, "CHLI30@nuvoton.com" <CHLI30@nuvoton.com>, "Avi.Fishman@nuvoton.com" <Avi.Fishman@nuvoton.com>
+Cc: KWLIU@nuvoton.com, devicetree@vger.kernel.org, linus.walleij@linaro.org, JJLIU0@nuvoton.com, linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, brgl@bgdev.pl
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 2023-07-24 at 05:07 +0000, ido.almog@nuvoton.com wrote:
+Hi  Paul
 
-Hi Ido
+Thanks for your reply.
 
-In the future, please send a PDF.
+> If this is paid work, using your company email address should be
+> preferred in my opinion.
 
-I see that you are not listed as a CLA manager on the existing Schedule
-A we have on file, nor this new one.  Only CLA signatories or CLA
-managers are permitted to update Schedule A.  Can you please have one of
-them send the update?
+because I can't use company email to send the patch upstream.
+So BMC NPCM all drivers always  use gmail to send the patch.
+It's the company mail security rule. I am sorry about that.
+After the V3 version I changed to gmail.
 
-Thanks,
-Brad
+
+> One byte would also fit into `unsigned int`, wouldn=E2=80=99t it?
+
+Yes, so should i change u8 ,u16, u32 to standard `unsigned int` is
+better than now?
+Could you provide more information?
+
+Best regards,
+Jim
+
+
+
+On Mon, Jul 24, 2023 at 10:44=E2=80=AFPM Paul Menzel <pmenzel@molgen.mpg.de=
+> wrote:
+>
+> Dear Jim,
+>
+>
+> Am 24.07.23 um 05:04 schrieb Jim Liu:
+>
+> > sorry for reply late.
+>
+> No problem. Thank you for your reply. Some minor comments below.
+>
+> > First, thanks for your review.
+> >
+> > the description is as below:
+> >
+> > The SGPIO module can be programmed to support from zero (none) to
+> > eight external output ports ,
+>
+> No space before the comma.
+>
+> > each with eight output pins (for a total of 64 output pins). The
+> > output ports must be serial-to-parallel devices (such as the HC595 or
+> > a faster equivalent).
+> >
+> > The SGPIO can be programmed to accept from zero to eight external
+> > input ports (IXPp), each with eight input pins, supporting a total of
+> > 64 input pins. The input ports must be parallel-to-serial devices
+> > (such as the HC165 or a faster equivalent).
+> >
+> > you can add hc595 and hc165 ic to get the serial data from BMC and
+> > send serial data to BMC.
+> > This driver can expand  extra gpio pins up to 64 input and 64 output.
+>
+> One space before =E2=80=9Cextra=E2=80=9D. Maybe:
+>
+> hc595 and c165 ic allow to transmit serial data from and to the BMC.
+> This driver can expand extra GPIO pins up to 64 inputs and 64 outputs.
+>
+> > i will use jim.t90615@gmail.com this mail to upstream this driver not
+> > company mail.
+>
+> If this is paid work, using your company email address should be
+> preferred in my opinion.
+>
+> > The driver needs to fix the length of the variables, because the reg
+> > size is one byte.
+>
+> One byte would also fit into `unsigned int`, wouldn=E2=80=99t it?
+>
+> > I will follow your suggestion to modify and upstream again. If you
+> > have any questions please let me know.
+>
+> If you could use Mozilla Thunderbird to reply easily in interleaved
+> style, that would great.
+>
+> Otherwise, I am looking forward to the next revision.
+>
+>
+> Kind regards,
+>
+> Paul
