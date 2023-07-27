@@ -2,47 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1D3B3764C9B
-	for <lists+openbmc@lfdr.de>; Thu, 27 Jul 2023 10:24:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 10BBF7650E3
+	for <lists+openbmc@lfdr.de>; Thu, 27 Jul 2023 12:21:02 +0200 (CEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=velankanigroup.com header.i=jdhanasekar@velankanigroup.com header.a=rsa-sha256 header.s=zoho header.b=cbI4eaKP;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RBP1w0GQXz3cN1
-	for <lists+openbmc@lfdr.de>; Thu, 27 Jul 2023 18:24:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RBRcW73hhz3cPF
+	for <lists+openbmc@lfdr.de>; Thu, 27 Jul 2023 20:20:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=srs0=fczb=dn=xs4all.nl=hverkuil-cisco@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (1024-bit key; unprotected) header.d=velankanigroup.com header.i=jdhanasekar@velankanigroup.com header.a=rsa-sha256 header.s=zoho header.b=cbI4eaKP;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=velankanigroup.com (client-ip=103.117.158.11; helo=sender-op-o11.zoho.in; envelope-from=jdhanasekar@velankanigroup.com; receiver=lists.ozlabs.org)
+Received: from sender-op-o11.zoho.in (sender-op-o11.zoho.in [103.117.158.11])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RBP1W3CNKz3c18
-	for <openbmc@lists.ozlabs.org>; Thu, 27 Jul 2023 18:23:59 +1000 (AEST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
-	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id CD1B261D99;
-	Thu, 27 Jul 2023 08:23:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DADD8C433C8;
-	Thu, 27 Jul 2023 08:23:52 +0000 (UTC)
-Message-ID: <d28bd991-5a28-6f0d-a8d6-64169ff7a698@xs4all.nl>
-Date: Thu, 27 Jul 2023 10:23:50 +0200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RBRbt0QZWz3cBH
+	for <openbmc@lists.ozlabs.org>; Thu, 27 Jul 2023 20:20:25 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; t=1690453208; cv=none; 
+	d=zohomail.in; s=zohoarc; 
+	b=dMu0wbldHC4a80srrDGbK8i2ajGSKA+qx2pCUZ38lKc56mQr+kbB2VqfIgS+NL5jMGOeQ2P4lyXO0i/yS6fSFpTeB1HtOK9LhymNa5Xt00UwgoBHAze8htDD+b7d6PIQ+gDKp1GQGPgKegjZKdtDtgb57MMIgglJ5ADhGKnUEoM=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.in; s=zohoarc; 
+	t=1690453208; h=Content-Type:Cc:Date:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:To; 
+	bh=u3sMifCu+n14D5aWCFbKfVVNGuf4WM6zApGEhFP/ROo=; 
+	b=JwfcXkGZ5/zi2u2t01AaRfC6ZXkXDBLNLvm28Oa2f4zfK0rXdIcb4NuVpojtw8L0aJWWxgDlqzuZfGc1GI82ZbiO4RAht01W6xRvICIPtvtUM9lesBwnWykkVyTawrXN82jc0KuYXuAeVblk7NiNlixkz6XYJG4636I15AcNkGE=
+ARC-Authentication-Results: i=1; mx.zohomail.in;
+	dkim=pass  header.i=velankanigroup.com;
+	spf=pass  smtp.mailfrom=jdhanasekar@velankanigroup.com;
+	dmarc=pass header.from=<jdhanasekar@velankanigroup.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1690453208;
+	s=zoho; d=velankanigroup.com; i=jdhanasekar@velankanigroup.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-Id:Message-Id:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Reply-To;
+	bh=u3sMifCu+n14D5aWCFbKfVVNGuf4WM6zApGEhFP/ROo=;
+	b=cbI4eaKPtxo2ZA3utalAqrgiMkO4ZYDxTI8C/cWI/mx1FRCHIH20PUpR8quiJk7T
+	+7XG4v7pXMVfqaEq5K5j4Esx7F2dYpJyWhidZS7JBZMCkrr9XtRUzzIu3SUyo3hYpqO
+	WcG7/nThzJMIAyGxfyxx4gzP5latiPc11HthNf4A=
+Received: from mail.zoho.in by mx.zoho.in
+	with SMTP id 1690453206670929.1418610872388; Thu, 27 Jul 2023 15:50:06 +0530 (IST)
+Date: Thu, 27 Jul 2023 15:50:06 +0530
+From: J Dhanasekar <jdhanasekar@velankanigroup.com>
+To: "Venkatesh, Supreeth" <Supreeth.Venkatesh@amd.com>
+Message-Id: <18996dce62b.69ab145b1143324.1441707262676750389@velankanigroup.com>
+In-Reply-To: <SN6PR12MB47523743DE974998030CB18D9603A@SN6PR12MB4752.namprd12.prod.outlook.com>
+References: <07621845-19a4-0568-be0e-f556ba40b813@amd.com>
+ <ZBmJpxTnEVVpfsz2@heinlein.taila677.ts.net>
+ <255d7c9a-ce17-bbe1-7312-990d0221cf36@amd.com>
+ <CAK7WosjjdVwNqSwkY2mxYhgAeKdwigtyLryTfJ9r6ShjfbRuCA@mail.gmail.com>
+ <65515592-8f77-1c8f-731c-165fb833344b@amd.com>
+ <CAGm54UG+S7gFkCaKJm_7PxOCDu0haZ4FWUxj716JBGVY-gaTFw@mail.gmail.com>
+ <d9f7b650-2e8b-7bd0-2125-035531ce549c@amd.com>
+ <d65937a46b6fb4f9f94edbdef44af58e@imap.linux.ibm.com>
+ <71a122a9-07a9-06a8-ee1a-dd108db63df3@amd.com>
+ <18977ff7cd7.59a883fc562150.7689391317426675156@velankanigroup.com>
+ <SN6PR12MB4752B1CEE5232F40EED441C8963FA@SN6PR12MB4752.namprd12.prod.outlook.com>
+ <18987ffeff9.35c4bda1801937.8894247920197462243@velankanigroup.com>
+ <SN6PR12MB4752E05BD406AAE121C86E9C9602A@SN6PR12MB4752.namprd12.prod.outlook.com>
+ <1898d2b2d0e.4ac15546926284.5918723584994850422@velankanigroup.com> <SN6PR12MB47523743DE974998030CB18D9603A@SN6PR12MB4752.namprd12.prod.outlook.com>
+Subject: RE: [RFC] BMC RAS Feature
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v13 7/7] media: nuvoton: Add driver for NPCM video capture
- and encode engine
-Content-Language: en-US
-To: Marvin Lin <milkfafa@gmail.com>, mchehab@kernel.org,
- avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
- venture@google.com, yuenn@google.com, benjaminfair@google.com,
- robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- andrzej.p@collabora.com
-References: <20230704064412.2145181-1-milkfafa@gmail.com>
- <20230704064412.2145181-8-milkfafa@gmail.com>
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-In-Reply-To: <20230704064412.2145181-8-milkfafa@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/alternative; 
+	boundary="----=_Part_3582874_321889682.1690453206575"
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
+X-Zoho-Virus-Status: 1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,2169 +80,1476 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: kwliu@nuvoton.com, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, kflin@nuvoton.com, linux-media@vger.kernel.org
+Cc: Lei Yu <yulei.sh@bytedance.com>, Michael Shen <gpgpgp@google.com>, openbmc <openbmc@lists.ozlabs.org>, dhruvaraj S <dhruvaraj@gmail.com>, Brad Bishop <bradleyb@fuzziesquirrel.com>, Ed Tanous <ed@tanous.net>, "Dhandapani,  Abinaya" <Abinaya.Dhandapani@amd.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Marvin,
+------=_Part_3582874_321889682.1690453206575
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Some more review comments:
+Hi Supreeth,
 
-On 04/07/2023 08:44, Marvin Lin wrote:
-> Add driver for Video Capture/Differentiation Engine (VCD) and Encoding
-> Compression Engine (ECE) present on Nuvoton NPCM SoCs. As described in
-> the datasheet NPCM750D_DS_Rev_1.0, the VCD can capture a frame from
-> digital video input and compare two frames in memory, and then the ECE
-> can compress the frame data into HEXTITLE format. This driver implements
 
-HEXTITLE -> HEXTILE
 
-> V4L2 interfaces and provides user controls to support KVM feature, also
-> tested with VNC Viewer ver.6.22.826 and openbmc/obmc-ikvm.
-> 
-> Signed-off-by: Marvin Lin <milkfafa@gmail.com>
-> ---
->  MAINTAINERS                                 |   12 +
->  drivers/media/platform/Kconfig              |    1 +
->  drivers/media/platform/Makefile             |    1 +
->  drivers/media/platform/nuvoton/Kconfig      |   15 +
->  drivers/media/platform/nuvoton/Makefile     |    2 +
->  drivers/media/platform/nuvoton/npcm-regs.h  |  152 ++
->  drivers/media/platform/nuvoton/npcm-video.c | 1843 +++++++++++++++++++
->  7 files changed, 2026 insertions(+)
->  create mode 100644 drivers/media/platform/nuvoton/Kconfig
->  create mode 100644 drivers/media/platform/nuvoton/Makefile
->  create mode 100644 drivers/media/platform/nuvoton/npcm-regs.h
->  create mode 100644 drivers/media/platform/nuvoton/npcm-video.c
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 41385f01fa98..b4d4641537f3 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2538,6 +2538,18 @@ F:	drivers/rtc/rtc-nct3018y.c
->  F:	include/dt-bindings/clock/nuvoton,npcm7xx-clock.h
->  F:	include/dt-bindings/clock/nuvoton,npcm845-clk.h
->  
-> +ARM/NUVOTON NPCM VIDEO ENGINE DRIVER
-> +M:	Joseph Liu <kwliu@nuvoton.com>
-> +M:	Marvin Lin <kflin@nuvoton.com>
-> +L:	linux-media@vger.kernel.org
-> +L:	openbmc@lists.ozlabs.org (moderated for non-subscribers)
-> +S:	Maintained
-> +F:	Documentation/devicetree/bindings/media/nuvoton,npcm-ece.yaml
-> +F:	Documentation/devicetree/bindings/media/nuvoton,npcm-vcd.yaml
-> +F:	Documentation/userspace-api/media/drivers/npcm-video.rst
-> +F:	drivers/media/platform/nuvoton/
-> +F:	include/uapi/linux/npcm-video.h
-> +
->  ARM/NUVOTON WPCM450 ARCHITECTURE
->  M:	Jonathan Neuschäfer <j.neuschaefer@gmx.net>
->  L:	openbmc@lists.ozlabs.org (moderated for non-subscribers)
-> diff --git a/drivers/media/platform/Kconfig b/drivers/media/platform/Kconfig
-> index ee579916f874..91e54215de3a 100644
-> --- a/drivers/media/platform/Kconfig
-> +++ b/drivers/media/platform/Kconfig
-> @@ -73,6 +73,7 @@ source "drivers/media/platform/intel/Kconfig"
->  source "drivers/media/platform/marvell/Kconfig"
->  source "drivers/media/platform/mediatek/Kconfig"
->  source "drivers/media/platform/microchip/Kconfig"
-> +source "drivers/media/platform/nuvoton/Kconfig"
->  source "drivers/media/platform/nvidia/Kconfig"
->  source "drivers/media/platform/nxp/Kconfig"
->  source "drivers/media/platform/qcom/Kconfig"
-> diff --git a/drivers/media/platform/Makefile b/drivers/media/platform/Makefile
-> index 5453bb868e67..3296ec1ebe16 100644
-> --- a/drivers/media/platform/Makefile
-> +++ b/drivers/media/platform/Makefile
-> @@ -16,6 +16,7 @@ obj-y += intel/
->  obj-y += marvell/
->  obj-y += mediatek/
->  obj-y += microchip/
-> +obj-y += nuvoton/
->  obj-y += nvidia/
->  obj-y += nxp/
->  obj-y += qcom/
-> diff --git a/drivers/media/platform/nuvoton/Kconfig b/drivers/media/platform/nuvoton/Kconfig
-> new file mode 100644
-> index 000000000000..1dc8fa836821
-> --- /dev/null
-> +++ b/drivers/media/platform/nuvoton/Kconfig
-> @@ -0,0 +1,15 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +
-> +comment "Nuvoton media platform drivers"
-> +
-> +config VIDEO_NPCM_VCD_ECE
-> +	tristate "Nuvoton NPCM Video Capture/Encode Engine driver"
-> +	depends on V4L_PLATFORM_DRIVERS
-> +	depends on VIDEO_DEV
-> +	select VIDEOBUF2_DMA_CONTIG
-> +	help
-> +	  Support for the Video Capture/Differentiation Engine (VCD) and
-> +	  Encoding Compression Engine (ECE) present on Nuvoton NPCM SoCs.
-> +	  The VCD can capture a frame from digital video input and compare
-> +	  two frames in memory, and then the ECE can compress the frame
-> +	  data into HEXTITLE format.
+Thanks for the info.=C2=A0
 
-Ditto.
 
-> diff --git a/drivers/media/platform/nuvoton/Makefile b/drivers/media/platform/nuvoton/Makefile
-> new file mode 100644
-> index 000000000000..74a4e3fc8555
-> --- /dev/null
-> +++ b/drivers/media/platform/nuvoton/Makefile
-> @@ -0,0 +1,2 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +obj-$(CONFIG_VIDEO_NPCM_VCD_ECE) += npcm-video.o
-> diff --git a/drivers/media/platform/nuvoton/npcm-regs.h b/drivers/media/platform/nuvoton/npcm-regs.h
-> new file mode 100644
-> index 000000000000..4a44f47f026e
-> --- /dev/null
-> +++ b/drivers/media/platform/nuvoton/npcm-regs.h
-> @@ -0,0 +1,152 @@
-> +/* SPDX-License-Identifier: GPL-2.0 */
-> +/*
-> + * Register definition header for NPCM video driver
-> + *
-> + * Copyright (C) 2022 Nuvoton Technologies
-> + */
-> +
-> +#ifndef _NPCM_REGS_H
-> +#define _NPCM_REGS_H
-> +
-> +/* VCD Registers */
-> +#define VCD_DIFF_TBL			0x0000
-> +#define VCD_FBA_ADR			0x8000
-> +#define VCD_FBB_ADR			0x8004
-> +
-> +#define VCD_FB_LP			0x8008
-> +#define  VCD_FBA_LP			GENMASK(15, 0)
-> +#define  VCD_FBB_LP			GENMASK(31, 16)
-> +
-> +#define VCD_CAP_RES			0x800c
-> +#define  VCD_CAP_RES_VERT_RES		GENMASK(10, 0)
-> +#define  VCD_CAP_RES_HOR_RES		GENMASK(26, 16)
-> +
-> +#define VCD_MODE			0x8014
-> +#define  VCD_MODE_VCDE			BIT(0)
-> +#define  VCD_MODE_CM565			BIT(1)
-> +#define  VCD_MODE_IDBC			BIT(3)
-> +#define  VCD_MODE_KVM_BW_SET		BIT(16)
-> +
-> +#define VCD_CMD				0x8018
-> +#define  VCD_CMD_GO			BIT(0)
-> +#define  VCD_CMD_RST			BIT(1)
-> +#define  VCD_CMD_OPERATION		GENMASK(6, 4)
-> +#define   VCD_CMD_OPERATION_CAPTURE	0
-> +#define   VCD_CMD_OPERATION_COMPARE	2
-> +
-> +#define	VCD_STAT			0x801c
-> +#define	 VCD_STAT_DONE			BIT(0)
-> +#define	 VCD_STAT_IFOT			BIT(2)
-> +#define	 VCD_STAT_IFOR			BIT(3)
-> +#define	 VCD_STAT_VHT_CHG		BIT(5)
-> +#define	 VCD_STAT_HAC_CHG		BIT(8)
-> +#define	 VCD_STAT_BUSY			BIT(30)
-> +#define	VCD_STAT_CLEAR			0x3fff
-> +
-> +#define VCD_INTE			0x8020
-> +#define  VCD_INTE_DONE_IE		BIT(0)
-> +#define  VCD_INTE_IFOT_IE		BIT(2)
-> +#define  VCD_INTE_IFOR_IE		BIT(3)
-> +#define  VCD_INTE_VHT_IE		BIT(5)
-> +#define  VCD_INTE_HAC_IE		BIT(8)
-> +
-> +#define VCD_RCHG			0x8028
-> +#define  VCD_RCHG_IG_CHG0		GENMASK(2, 0)
-> +#define  VCD_RCHG_TIM_PRSCL		GENMASK(12, 9)
-> +
-> +#define VCD_VER_HI_TIM			0x8044
-> +#define  VCD_VER_HI_TIME		GENMASK(23, 0)
-> +
-> +#define VCD_VER_HI_LST			0x8048
-> +#define  VCD_VER_HI_LAST		GENMASK(23, 0)
-> +
-> +#define VCD_HOR_AC_TIM			0x804c
-> +#define  VCD_HOR_AC_TIME		GENMASK(13, 0)
-> +
-> +#define VCD_HOR_AC_LST			0x8050
-> +#define  VCD_HOR_AC_LAST		GENMASK(13, 0)
-> +
-> +#define VCD_FIFO			0x805c
-> +#define  VCD_FIFO_TH			0x100350ff
-> +
-> +#define VCD_FB_SIZE			0x500000 /* support up to 1920 x 1200 */
-> +#define VCD_KVM_BW_PCLK			120000000UL
-> +#define VCD_TIMEOUT_US			300000
-> +
-> +/* ECE Registers */
-> +#define ECE_DDA_CTRL			0x0000
-> +#define  ECE_DDA_CTRL_ECEEN		BIT(0)
-> +#define  ECE_DDA_CTRL_INTEN		BIT(8)
-> +
-> +#define ECE_DDA_STS			0x0004
-> +#define  ECE_DDA_STS_CDREADY		BIT(8)
-> +#define  ECE_DDA_STS_ACDRDY		BIT(10)
-> +
-> +#define ECE_FBR_BA			0x0008
-> +#define ECE_ED_BA			0x000c
-> +#define ECE_RECT_XY			0x0010
-> +
-> +#define ECE_RECT_DIMEN			0x0014
-> +#define  ECE_RECT_DIMEN_WR		GENMASK(10, 0)
-> +#define  ECE_RECT_DIMEN_WLTR		GENMASK(14, 11)
-> +#define  ECE_RECT_DIMEN_HR		GENMASK(26, 16)
-> +#define  ECE_RECT_DIMEN_HLTR		GENMASK(30, 27)
-> +
-> +#define ECE_RESOL			0x001c
-> +#define  ECE_RESOL_FB_LP_512		0
-> +#define  ECE_RESOL_FB_LP_1024		1
-> +#define  ECE_RESOL_FB_LP_2048		2
-> +#define  ECE_RESOL_FB_LP_2560		3
-> +#define  ECE_RESOL_FB_LP_4096		4
-> +
-> +#define ECE_HEX_CTRL			0x0040
-> +#define  ECE_HEX_CTRL_ENCDIS		BIT(0)
-> +#define  ECE_HEX_CTRL_ENC_GAP		GENMASK(12, 8)
-> +
-> +#define ECE_HEX_RECT_OFFSET		0x0048
-> +#define  ECE_HEX_RECT_OFFSET_MASK	GENMASK(22, 0)
-> +
-> +#define ECE_TILE_W			16
-> +#define ECE_TILE_H			16
-> +#define ECE_POLL_TIMEOUT_US		300000
-> +
-> +/* GCR Registers */
-> +#define INTCR				0x3c
-> +#define  INTCR_GFXIFDIS			GENMASK(9, 8)
-> +#define  INTCR_DEHS			BIT(27)
-> +
-> +#define INTCR2				0x60
-> +#define  INTCR2_GIRST2			BIT(2)
-> +#define  INTCR2_GIHCRST			BIT(5)
-> +#define  INTCR2_GIVCRST			BIT(6)
-> +
-> +/* GFXI Register */
-> +#define DISPST				0x00
-> +#define  DISPST_HSCROFF			BIT(1)
-> +#define  DISPST_MGAMODE			BIT(7)
-> +
-> +#define HVCNTL				0x10
-> +#define  HVCNTL_MASK			GENMASK(7, 0)
-> +
-> +#define HVCNTH				0x14
-> +#define  HVCNTH_MASK			GENMASK(2, 0)
-> +
-> +#define VVCNTL				0x20
-> +#define  VVCNTL_MASK			GENMASK(7, 0)
-> +
-> +#define VVCNTH				0x24
-> +#define  VVCNTH_MASK			GENMASK(2, 0)
-> +
-> +#define GPLLINDIV			0x40
-> +#define  GPLLINDIV_MASK			GENMASK(5, 0)
-> +#define  GPLLINDIV_GPLLFBDV8		BIT(7)
-> +
-> +#define GPLLFBDIV			0x44
-> +#define  GPLLFBDIV_MASK			GENMASK(7, 0)
-> +
-> +#define GPLLST				0x48
-> +#define  GPLLST_PLLOTDIV1		GENMASK(2, 0)
-> +#define  GPLLST_PLLOTDIV2		GENMASK(5, 3)
-> +#define  GPLLST_GPLLFBDV109		GENMASK(7, 6)
-> +
-> +#endif /* _NPCM_REGS_H */
-> diff --git a/drivers/media/platform/nuvoton/npcm-video.c b/drivers/media/platform/nuvoton/npcm-video.c
-> new file mode 100644
-> index 000000000000..04de2b6f1149
-> --- /dev/null
-> +++ b/drivers/media/platform/nuvoton/npcm-video.c
-> @@ -0,0 +1,1843 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Driver for Video Capture/Differentiation Engine (VCD) and Encoding
-> + * Compression Engine (ECE) present on Nuvoton NPCM SoCs.
-> + *
-> + * Copyright (C) 2022 Nuvoton Technologies
-> + */
-> +
-> +#include <linux/atomic.h>
-> +#include <linux/bitfield.h>
-> +#include <linux/bitmap.h>
-> +#include <linux/clk.h>
-> +#include <linux/delay.h>
-> +#include <linux/device.h>
-> +#include <linux/dma-mapping.h>
-> +#include <linux/interrupt.h>
-> +#include <linux/jiffies.h>
-> +#include <linux/mfd/syscon.h>
-> +#include <linux/module.h>
-> +#include <linux/mutex.h>
-> +#include <linux/of.h>
-> +#include <linux/of_irq.h>
-> +#include <linux/of_platform.h>
-> +#include <linux/of_reserved_mem.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/regmap.h>
-> +#include <linux/reset.h>
-> +#include <linux/sched.h>
-> +#include <linux/spinlock.h>
-> +#include <linux/string.h>
-> +#include <linux/v4l2-controls.h>
-> +#include <linux/videodev2.h>
-> +#include <media/v4l2-ctrls.h>
-> +#include <media/v4l2-dev.h>
-> +#include <media/v4l2-device.h>
-> +#include <media/v4l2-dv-timings.h>
-> +#include <media/v4l2-event.h>
-> +#include <media/v4l2-ioctl.h>
-> +#include <media/videobuf2-dma-contig.h>
-> +#include <uapi/linux/npcm-video.h>
-> +#include "npcm-regs.h"
-> +
-> +#define DEVICE_NAME	"npcm-video"
-> +#define MAX_WIDTH	1920
-> +#define MAX_HEIGHT	1200
-> +#define MIN_WIDTH	320
-> +#define MIN_HEIGHT	240
-> +#define MIN_LP		512
-> +#define MAX_LP		4096
-> +#define RECT_W		16
-> +#define RECT_H		16
-> +#define BITMAP_SIZE	32
-> +
-> +struct npcm_video_addr {
-> +	size_t size;
-> +	dma_addr_t dma;
-> +	void *virt;
-> +};
-> +
-> +struct npcm_video_buffer {
-> +	struct vb2_v4l2_buffer vb;
-> +	struct list_head link;
-> +};
-> +
-> +#define to_npcm_video_buffer(x) \
-> +	container_of((x), struct npcm_video_buffer, vb)
-> +
-> +/*
-> + * VIDEO_STREAMING:	a flag indicating if the video has started streaming
-> + * VIDEO_CAPTURING:	a flag indicating if the VCD is capturing a frame
-> + * VIDEO_RES_CHANGING:	a flag indicating if the resolution is changing
-> + * VIDEO_STOPPED:	a flag indicating if the video has stopped streaming
-> + */
-> +enum {
-> +	VIDEO_STREAMING,
-> +	VIDEO_CAPTURING,
-> +	VIDEO_RES_CHANGING,
-> +	VIDEO_STOPPED,
-> +};
-> +
-> +struct rect_list {
-> +	struct v4l2_clip clip;
-> +	struct list_head list;
-> +};
-> +
-> +struct rect_list_info {
-> +	struct rect_list *list;
-> +	struct rect_list *first;
-> +	struct list_head *head;
-> +	unsigned int index;
-> +	unsigned int tile_perline;
-> +	unsigned int tile_perrow;
-> +	unsigned int offset_perline;
-> +	unsigned int tile_size;
-> +	unsigned int tile_cnt;
-> +};
-> +
-> +struct npcm_ece {
-> +	struct regmap *regmap;
-> +	atomic_t clients;
-> +	struct reset_control *reset;
-> +};
-> +
-> +struct npcm_video {
-> +	struct regmap *gcr_regmap;
-> +	struct regmap *gfx_regmap;
-> +	struct regmap *vcd_regmap;
-> +
-> +	struct device *dev;
-> +	struct v4l2_ctrl_handler ctrl_handler;
-> +	struct v4l2_device v4l2_dev;
-> +	struct v4l2_pix_format pix_fmt;
-> +	struct v4l2_bt_timings active_timings;
-> +	struct v4l2_bt_timings detected_timings;
-> +	unsigned int v4l2_input_status;
-> +	struct vb2_queue queue;
-> +	struct video_device vdev;
-> +	struct mutex video_lock; /* v4l2 and videobuf2 lock */
-> +
-> +	struct list_head buffers;
-> +	spinlock_t lock; /* buffer list lock */
-> +	unsigned long flags;
-> +	unsigned int sequence;
-> +
-> +	struct npcm_video_addr src;
-> +	struct reset_control *reset;
-> +	struct npcm_ece ece;
-> +
-> +	unsigned int vb_index;
-> +	unsigned int bytesperline;
-> +	unsigned int bytesperpixel;
-> +	unsigned int rect_cnt;
-> +	unsigned int num_buffers;
-> +	struct list_head *list;
-> +	unsigned int rect[VIDEO_MAX_FRAME];
-> +	unsigned int ctrl_cmd;
-> +	unsigned int op_cmd;
-> +};
-> +
-> +#define to_npcm_video(x) container_of((x), struct npcm_video, v4l2_dev)
-> +
-> +struct npcm_fmt {
-> +	unsigned int fourcc;
-> +	unsigned int bpp; /* bytes per pixel */
-> +};
-> +
-> +static const struct npcm_fmt npcm_fmt_list[] = {
-> +	{
-> +		.fourcc = V4L2_PIX_FMT_RGB565,
-> +		.bpp	= 2,
-> +	},
-> +	{
-> +		.fourcc = V4L2_PIX_FMT_HEXTILE,
-> +		.bpp	= 2,
-> +	},
-> +};
-> +
-> +#define NUM_FORMATS ARRAY_SIZE(npcm_fmt_list)
-> +
-> +static const struct v4l2_dv_timings_cap npcm_video_timings_cap = {
-> +	.type = V4L2_DV_BT_656_1120,
-> +	.bt = {
-> +		.min_width = MIN_WIDTH,
-> +		.max_width = MAX_WIDTH,
-> +		.min_height = MIN_HEIGHT,
-> +		.max_height = MAX_HEIGHT,
-> +		.min_pixelclock = 6574080, /* 640 x 480 x 24Hz */
-> +		.max_pixelclock = 138240000, /* 1920 x 1200 x 60Hz */
-> +		.standards = V4L2_DV_BT_STD_CEA861 | V4L2_DV_BT_STD_DMT |
-> +			     V4L2_DV_BT_STD_CVT | V4L2_DV_BT_STD_GTF,
-> +		.capabilities = V4L2_DV_BT_CAP_PROGRESSIVE |
-> +				V4L2_DV_BT_CAP_REDUCED_BLANKING |
-> +				V4L2_DV_BT_CAP_CUSTOM,
-> +	},
-> +};
-> +
-> +static DECLARE_BITMAP(bitmap, BITMAP_SIZE);
-> +
-> +static const struct npcm_fmt *npcm_video_find_format(struct v4l2_format *f)
-> +{
-> +	const struct npcm_fmt *fmt;
-> +	unsigned int k;
-> +
-> +	for (k = 0; k < NUM_FORMATS; k++) {
-> +		fmt = &npcm_fmt_list[k];
-> +		if (fmt->fourcc == f->fmt.pix.pixelformat)
-> +			break;
-> +	}
-> +
-> +	if (k == NUM_FORMATS)
-> +		return NULL;
-> +
-> +	return &npcm_fmt_list[k];
-> +}
-> +
-> +static void npcm_video_ece_prepend_rect_header(void *addr, u16 x, u16 y, u16 w, u16 h)
-> +{
-> +	__be16 x_pos = cpu_to_be16(x);
-> +	__be16 y_pos = cpu_to_be16(y);
-> +	__be16 width = cpu_to_be16(w);
-> +	__be16 height = cpu_to_be16(h);
-> +	__be32 encoding = cpu_to_be32(5); /* Hextile encoding */
-> +
-> +	memcpy(addr, &x_pos, 2);
-> +	memcpy(addr + 2, &y_pos, 2);
-> +	memcpy(addr + 4, &width, 2);
-> +	memcpy(addr + 6, &height, 2);
-> +	memcpy(addr + 8, &encoding, 4);
-> +}
-> +
-> +static unsigned int npcm_video_ece_get_ed_size(struct npcm_video *video,
-> +					       unsigned int offset, void *addr)
-> +{
-> +	struct regmap *ece = video->ece.regmap;
-> +	unsigned int size, gap, val;
-> +	int ret;
-> +
-> +	ret = regmap_read_poll_timeout(ece, ECE_DDA_STS, val,
-> +				       (val & ECE_DDA_STS_CDREADY), 0,
-> +				       ECE_POLL_TIMEOUT_US);
-> +
-> +	if (ret) {
-> +		dev_warn(video->dev, "Wait for ECE_DDA_STS_CDREADY timeout\n");
-> +		return 0;
-> +	}
-> +
-> +	size = readl(addr + offset);
-> +	regmap_read(ece, ECE_HEX_CTRL, &val);
-> +	gap = FIELD_GET(ECE_HEX_CTRL_ENC_GAP, val);
-> +
-> +	dev_dbg(video->dev, "offset = %u, ed_size = %u, gap = %u\n", offset,
-> +		size, gap);
-> +
-> +	return size + gap;
-> +}
-> +
-> +static void npcm_video_ece_enc_rect(struct npcm_video *video,
-> +				    unsigned int r_off_x, unsigned int r_off_y,
-> +				    unsigned int r_w, unsigned int r_h)
-> +{
-> +	struct regmap *ece = video->ece.regmap;
-> +	unsigned int rect_offset = (r_off_y * video->bytesperline) + (r_off_x * 2);
-> +	unsigned int w_size = ECE_TILE_W, h_size = ECE_TILE_H;
-> +	unsigned int temp, w_tile, h_tile;
-> +
-> +	regmap_update_bits(ece, ECE_DDA_CTRL, ECE_DDA_CTRL_ECEEN, 0);
-> +	regmap_update_bits(ece, ECE_DDA_CTRL, ECE_DDA_CTRL_ECEEN, ECE_DDA_CTRL_ECEEN);
-> +	regmap_write(ece, ECE_DDA_STS, ECE_DDA_STS_CDREADY | ECE_DDA_STS_ACDRDY);
-> +	regmap_write(ece, ECE_RECT_XY, rect_offset);
-> +
-> +	w_tile = r_w / ECE_TILE_W;
-> +	h_tile = r_h / ECE_TILE_H;
-> +
-> +	if (r_w % ECE_TILE_W) {
-> +		w_tile += 1;
-> +		w_size = r_w % ECE_TILE_W;
-> +	}
-> +	if (r_h % ECE_TILE_H || !h_tile) {
-> +		h_tile += 1;
-> +		h_size = r_h % ECE_TILE_H;
-> +	}
-> +
-> +	temp = FIELD_PREP(ECE_RECT_DIMEN_WLTR, w_size - 1) |
-> +	       FIELD_PREP(ECE_RECT_DIMEN_HLTR, h_size - 1) |
-> +	       FIELD_PREP(ECE_RECT_DIMEN_WR, w_tile - 1) |
-> +	       FIELD_PREP(ECE_RECT_DIMEN_HR, h_tile - 1);
-> +
-> +	regmap_write(ece, ECE_RECT_DIMEN, temp);
-> +}
-> +
-> +static unsigned int npcm_video_ece_read_rect_offset(struct npcm_video *video)
-> +{
-> +	struct regmap *ece = video->ece.regmap;
-> +	unsigned int offset;
-> +
-> +	regmap_read(ece, ECE_HEX_RECT_OFFSET, &offset);
-> +	return FIELD_GET(ECE_HEX_RECT_OFFSET_MASK, offset);
-> +}
-> +
-> +/*
-> + * Set the line pitch (in bytes) for the frame buffers.
-> + * Can be on of those values: 512, 1024, 2048, 2560 or 4096 bytes.
-> + */
-> +static void npcm_video_ece_set_lp(struct npcm_video *video, unsigned int pitch)
-> +{
-> +	struct regmap *ece = video->ece.regmap;
-> +	unsigned int lp;
-> +
-> +	switch (pitch) {
-> +	case 512:
-> +		lp = ECE_RESOL_FB_LP_512;
-> +		break;
-> +	case 1024:
-> +		lp = ECE_RESOL_FB_LP_1024;
-> +		break;
-> +	case 2048:
-> +		lp = ECE_RESOL_FB_LP_2048;
-> +		break;
-> +	case 2560:
-> +		lp = ECE_RESOL_FB_LP_2560;
-> +		break;
-> +	case 4096:
-> +		lp = ECE_RESOL_FB_LP_4096;
-> +		break;
-> +	default:
-> +		return;
-> +	}
-> +
-> +	regmap_write(ece, ECE_RESOL, lp);
-> +}
-> +
-> +static inline void npcm_video_ece_set_fb_addr(struct npcm_video *video,
-> +					      unsigned int buffer)
-> +{
-> +	struct regmap *ece = video->ece.regmap;
-> +
-> +	regmap_write(ece, ECE_FBR_BA, buffer);
-> +}
-> +
-> +static inline void npcm_video_ece_set_enc_dba(struct npcm_video *video,
-> +					      unsigned int addr)
-> +{
-> +	struct regmap *ece = video->ece.regmap;
-> +
-> +	regmap_write(ece, ECE_ED_BA, addr);
-> +}
-> +
-> +static inline void npcm_video_ece_clear_rect_offset(struct npcm_video *video)
-> +{
-> +	struct regmap *ece = video->ece.regmap;
-> +
-> +	regmap_write(ece, ECE_HEX_RECT_OFFSET, 0);
-> +}
-> +
-> +static void npcm_video_ece_ctrl_reset(struct npcm_video *video)
-> +{
-> +	struct regmap *ece = video->ece.regmap;
-> +
-> +	regmap_update_bits(ece, ECE_DDA_CTRL, ECE_DDA_CTRL_ECEEN, 0);
-> +	regmap_update_bits(ece, ECE_HEX_CTRL, ECE_HEX_CTRL_ENCDIS, ECE_HEX_CTRL_ENCDIS);
-> +	regmap_update_bits(ece, ECE_DDA_CTRL, ECE_DDA_CTRL_ECEEN, ECE_DDA_CTRL_ECEEN);
-> +	regmap_update_bits(ece, ECE_HEX_CTRL, ECE_HEX_CTRL_ENCDIS, 0);
-> +
-> +	npcm_video_ece_clear_rect_offset(video);
-> +}
-> +
-> +static void npcm_video_ece_ip_reset(struct npcm_video *video)
-> +{
-> +	/*
-> +	 * After resetting a module and clearing the reset bit, it should wait
-> +	 * at least 10 us before accessing the module.
-> +	 */
-> +	reset_control_assert(video->ece.reset);
-> +	usleep_range(10, 20);
-> +	reset_control_deassert(video->ece.reset);
-> +	usleep_range(10, 20);
-> +}
-> +
-> +static inline void npcm_video_ece_init(struct npcm_video *video)
-> +{
-> +	npcm_video_ece_ip_reset(video);
-> +	npcm_video_ece_ctrl_reset(video);
-> +}
-> +
-> +static void npcm_video_ece_stop(struct npcm_video *video)
-> +{
-> +	struct regmap *ece = video->ece.regmap;
-> +
-> +	regmap_update_bits(ece, ECE_DDA_CTRL, ECE_DDA_CTRL_ECEEN, 0);
-> +	regmap_update_bits(ece, ECE_DDA_CTRL, ECE_DDA_CTRL_INTEN, 0);
-> +	regmap_update_bits(ece, ECE_HEX_CTRL, ECE_HEX_CTRL_ENCDIS, ECE_HEX_CTRL_ENCDIS);
-> +	npcm_video_ece_clear_rect_offset(video);
-> +}
-> +
-> +static bool npcm_video_alloc_fb(struct npcm_video *video,
-> +				struct npcm_video_addr *addr)
-> +{
-> +	addr->virt = dma_alloc_coherent(video->dev, VCD_FB_SIZE, &addr->dma,
-> +					GFP_KERNEL);
-> +	if (!addr->virt)
-> +		return false;
-> +
-> +	addr->size = VCD_FB_SIZE;
-> +	return true;
-> +}
-> +
-> +static void npcm_video_free_fb(struct npcm_video *video,
-> +			       struct npcm_video_addr *addr)
-> +{
-> +	dma_free_coherent(video->dev, addr->size, addr->virt, addr->dma);
-> +	addr->size = 0;
-> +	addr->dma = 0ULL;
-> +	addr->virt = NULL;
-> +}
-> +
-> +static void npcm_video_free_diff_table(struct npcm_video *video)
-> +{
-> +	struct list_head *head, *pos, *nx;
-> +	struct rect_list *tmp;
-> +	unsigned int i;
-> +
-> +	for (i = 0; i < video->num_buffers; i++) {
-> +		head = &video->list[i];
-> +		list_for_each_safe(pos, nx, head) {
-> +			tmp = list_entry(pos, struct rect_list, list);
-> +			list_del(&tmp->list);
-> +			kfree(tmp);
-> +		}
-> +	}
-> +}
-> +
-> +static unsigned int npcm_video_add_rect(struct npcm_video *video,
-> +					unsigned int index,
-> +					unsigned int x, unsigned int y,
-> +					unsigned int w, unsigned int h)
-> +{
-> +	struct list_head *head = &video->list[index];
-> +	struct rect_list *list = NULL;
-> +	struct v4l2_rect *r;
-> +
-> +	list = kzalloc(sizeof(*list), GFP_KERNEL);
-> +	if (!list)
-> +		return 0;
-> +
-> +	r = &list->clip.c;
-> +	r->left = x;
-> +	r->top = y;
-> +	r->width = w;
-> +	r->height = h;
-> +
-> +	list_add_tail(&list->list, head);
-> +	return 1;
-> +}
-> +
-> +static void npcm_video_merge_rect(struct npcm_video *video,
-> +				  struct rect_list_info *info)
-> +{
-> +	struct list_head *head = info->head;
-> +	struct rect_list *list = info->list, *first = info->first;
-> +	struct v4l2_rect *r = &list->clip.c, *f = &first->clip.c;
-> +
-> +	if (!first) {
-> +		first = list;
-> +		info->first = first;
-> +		list_add_tail(&list->list, head);
-> +		video->rect_cnt++;
-> +	} else {
-> +		if ((r->left == (f->left + f->width)) && r->top == f->top) {
-> +			f->width += r->width;
-> +			kfree(list);
-> +		} else if ((r->top == (f->top + f->height)) &&
-> +			   (r->left == f->left)) {
-> +			f->height += r->height;
-> +			kfree(list);
-> +		} else if (((r->top > f->top) &&
-> +			   (r->top < (f->top + f->height))) &&
-> +			   ((r->left > f->left) &&
-> +			   (r->left < (f->left + f->width)))) {
-> +			kfree(list);
-> +		} else {
-> +			list_add_tail(&list->list, head);
-> +			video->rect_cnt++;
-> +			info->first = list;
-> +		}
-> +	}
-> +}
-> +
-> +static struct rect_list *npcm_video_new_rect(struct npcm_video *video,
-> +					     unsigned int offset,
-> +					     unsigned int index)
-> +{
-> +	struct v4l2_bt_timings *act = &video->active_timings;
-> +	struct rect_list *list = NULL;
-> +	struct v4l2_rect *r;
-> +
-> +	list = kzalloc(sizeof(*list), GFP_KERNEL);
-> +	if (!list)
-> +		return NULL;
-> +
-> +	r = &list->clip.c;
-> +
-> +	r->left = (offset << 4);
-> +	r->top = (index >> 2);
-> +	r->width = RECT_W;
-> +	r->height = RECT_H;
-> +	if ((r->left + RECT_W) > act->width)
-> +		r->width = act->width - r->left;
-> +	if ((r->top + RECT_H) > act->height)
-> +		r->height = act->height - r->top;
-> +
-> +	return list;
-> +}
-> +
-> +static int npcm_video_find_rect(struct npcm_video *video,
-> +				struct rect_list_info *info,
-> +				unsigned int offset)
-> +{
-> +	if (offset < info->tile_perline) {
-> +		info->list = npcm_video_new_rect(video, offset, info->index);
-> +		if (!info->list) {
-> +			dev_err(video->dev, "Failed to allocate rect_list\n");
-> +			return -ENOMEM;
-> +		}
-> +
-> +		npcm_video_merge_rect(video, info);
-> +	}
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_build_table(struct npcm_video *video,
-> +				  struct rect_list_info *info)
-> +{
-> +	struct regmap *vcd = video->vcd_regmap;
-> +	unsigned int j, bit, value;
-> +	int ret;
-> +
-> +	for (j = 0; j < info->offset_perline; j += 4) {
-> +		regmap_read(vcd, VCD_DIFF_TBL + (j + info->index), &value);
-> +
-> +		bitmap_from_arr32(bitmap, &value, BITMAP_SIZE);
-> +
-> +		for_each_set_bit(bit, bitmap, BITMAP_SIZE) {
-> +			ret = npcm_video_find_rect(video, info, bit + (j << 3));
-> +			if (ret)
-> +				return ret;
-> +		}
-> +	}
-> +	info->index += 64;
-> +	return info->tile_perline;
-> +}
-> +
-> +static void npcm_video_get_rect_list(struct npcm_video *video, unsigned int index)
-> +{
-> +	struct v4l2_bt_timings *act = &video->active_timings;
-> +	struct rect_list_info info;
-> +	unsigned int tile_cnt = 0, mod;
-> +	int ret = 0;
-> +
-> +	memset(&info, 0, sizeof(struct rect_list_info));
-> +	info.head = &video->list[index];
-> +
-> +	info.tile_perline = act->width >> 4;
-> +	mod = act->width % RECT_W;
-> +	if (mod != 0)
-> +		info.tile_perline += 1;
-> +
-> +	info.tile_perrow = act->height >> 4;
-> +	mod = act->height % RECT_H;
-> +	if (mod != 0)
-> +		info.tile_perrow += 1;
-> +
-> +	info.tile_size = info.tile_perrow * info.tile_perline;
-> +
-> +	info.offset_perline = info.tile_perline >> 5;
-> +	mod = info.tile_perline % 32;
-> +	if (mod != 0)
-> +		info.offset_perline += 1;
-> +
-> +	info.offset_perline *= 4;
-> +
-> +	do {
-> +		ret = npcm_video_build_table(video, &info);
-> +		if (ret < 0)
-> +			return;
-> +
-> +		tile_cnt += ret;
-> +	} while (tile_cnt < info.tile_size);
-> +}
-> +
-> +static unsigned int npcm_video_is_mga(struct npcm_video *video)
-> +{
-> +	struct regmap *gfxi = video->gfx_regmap;
-> +	unsigned int dispst;
-> +
-> +	regmap_read(gfxi, DISPST, &dispst);
-> +	return ((dispst & DISPST_MGAMODE) == DISPST_MGAMODE);
-> +}
-> +
-> +static unsigned int npcm_video_hres(struct npcm_video *video)
-> +{
-> +	struct regmap *gfxi = video->gfx_regmap;
-> +	unsigned int hvcnth, hvcntl, apb_hor_res;
-> +
-> +	regmap_read(gfxi, HVCNTH, &hvcnth);
-> +	regmap_read(gfxi, HVCNTL, &hvcntl);
-> +	apb_hor_res = (((hvcnth & HVCNTH_MASK) << 8) + (hvcntl & HVCNTL_MASK) + 1);
-> +
-> +	return apb_hor_res;
-> +}
-> +
-> +static unsigned int npcm_video_vres(struct npcm_video *video)
-> +{
-> +	struct regmap *gfxi = video->gfx_regmap;
-> +	unsigned int vvcnth, vvcntl, apb_ver_res;
-> +
-> +	regmap_read(gfxi, VVCNTH, &vvcnth);
-> +	regmap_read(gfxi, VVCNTL, &vvcntl);
-> +
-> +	apb_ver_res = (((vvcnth & VVCNTH_MASK) << 8) + (vvcntl & VVCNTL_MASK));
-> +
-> +	return apb_ver_res;
-> +}
-> +
-> +static int npcm_video_capres(struct npcm_video *video, unsigned int hor_res,
-> +			     unsigned int vert_res)
-> +{
-> +	struct regmap *vcd = video->vcd_regmap;
-> +	unsigned int res, cap_res;
-> +
-> +	if (hor_res > MAX_WIDTH || vert_res > MAX_HEIGHT)
-> +		return -EINVAL;
-> +
-> +	res = FIELD_PREP(VCD_CAP_RES_VERT_RES, vert_res) |
-> +	      FIELD_PREP(VCD_CAP_RES_HOR_RES, hor_res);
-> +
-> +	regmap_write(vcd, VCD_CAP_RES, res);
-> +	regmap_read(vcd, VCD_CAP_RES, &cap_res);
-> +
-> +	if (cap_res != res)
-> +		return -EINVAL;
-> +
-> +	return 0;
-> +}
-> +
-> +static void npcm_video_vcd_ip_reset(struct npcm_video *video)
-> +{
-> +	/*
-> +	 * After resetting a module and clearing the reset bit, it should wait
-> +	 * at least 10 us before accessing the module.
-> +	 */
-> +	reset_control_assert(video->reset);
-> +	usleep_range(10, 20);
-> +	reset_control_deassert(video->reset);
-> +	usleep_range(10, 20);
-> +}
-> +
-> +static void npcm_video_vcd_state_machine_reset(struct npcm_video *video)
-> +{
-> +	struct regmap *vcd = video->vcd_regmap;
-> +
-> +	regmap_update_bits(vcd, VCD_MODE, VCD_MODE_VCDE, 0);
-> +	regmap_update_bits(vcd, VCD_MODE, VCD_MODE_IDBC, 0);
-> +	regmap_update_bits(vcd, VCD_CMD, VCD_CMD_RST, VCD_CMD_RST);
-> +
-> +	/*
-> +	 * VCD_CMD_RST will reset VCD internal state machines and clear FIFOs,
-> +	 * it should wait at least 800 us for the reset operations completed.
-> +	 */
-> +	usleep_range(800, 1000);
-> +
-> +	regmap_write(vcd, VCD_STAT, VCD_STAT_CLEAR);
-> +	regmap_update_bits(vcd, VCD_MODE, VCD_MODE_VCDE, VCD_MODE_VCDE);
-> +	regmap_update_bits(vcd, VCD_MODE, VCD_MODE_IDBC, VCD_MODE_IDBC);
-> +}
-> +
-> +static void npcm_video_gfx_reset(struct npcm_video *video)
-> +{
-> +	struct regmap *gcr = video->gcr_regmap;
-> +
-> +	regmap_update_bits(gcr, INTCR2, INTCR2_GIRST2, INTCR2_GIRST2);
-> +	npcm_video_vcd_state_machine_reset(video);
-> +	regmap_update_bits(gcr, INTCR2, INTCR2_GIRST2, 0);
-> +}
-> +
-> +static void npcm_video_kvm_bw(struct npcm_video *video, bool set_bw)
-> +{
-> +	struct regmap *vcd = video->vcd_regmap;
-> +
-> +	if (set_bw || !npcm_video_is_mga(video))
-> +		regmap_update_bits(vcd, VCD_MODE, VCD_MODE_KVM_BW_SET,
-> +				   VCD_MODE_KVM_BW_SET);
-> +	else
-> +		regmap_update_bits(vcd, VCD_MODE, VCD_MODE_KVM_BW_SET, 0);
-> +}
-> +
-> +static unsigned int npcm_video_pclk(struct npcm_video *video)
-> +{
-> +	struct regmap *gfxi = video->gfx_regmap;
-> +	unsigned int tmp, pllfbdiv, pllinotdiv, gpllfbdiv;
-> +	unsigned int gpllfbdv109, gpllfbdv8, gpllindiv;
-> +	unsigned int gpllst_pllotdiv1, gpllst_pllotdiv2;
-> +
-> +	regmap_read(gfxi, GPLLST, &tmp);
-> +	gpllfbdv109 = FIELD_GET(GPLLST_GPLLFBDV109, tmp);
-> +	gpllst_pllotdiv1 = FIELD_GET(GPLLST_PLLOTDIV1, tmp);
-> +	gpllst_pllotdiv2 = FIELD_GET(GPLLST_PLLOTDIV2, tmp);
-> +
-> +	regmap_read(gfxi, GPLLINDIV, &tmp);
-> +	gpllfbdv8 = FIELD_GET(GPLLINDIV_GPLLFBDV8, tmp);
-> +	gpllindiv = FIELD_GET(GPLLINDIV_MASK, tmp);
-> +
-> +	regmap_read(gfxi, GPLLFBDIV, &tmp);
-> +	gpllfbdiv = FIELD_GET(GPLLFBDIV_MASK, tmp);
-> +
-> +	pllfbdiv = (512 * gpllfbdv109 + 256 * gpllfbdv8 + gpllfbdiv);
-> +	pllinotdiv = (gpllindiv * gpllst_pllotdiv1 * gpllst_pllotdiv2);
-> +	if (pllfbdiv == 0 || pllinotdiv == 0)
-> +		return 0;
-> +
-> +	return ((pllfbdiv * 25000) / pllinotdiv) * 1000;
-> +}
-> +
-> +static unsigned int npcm_video_get_bpp(struct npcm_video *video)
-> +{
-> +	const struct npcm_fmt *fmt;
-> +	unsigned int k;
-> +
-> +	for (k = 0; k < NUM_FORMATS; k++) {
-> +		fmt = &npcm_fmt_list[k];
-> +		if (fmt->fourcc == video->pix_fmt.pixelformat)
-> +			break;
-> +	}
-> +
-> +	return fmt->bpp;
-> +}
-> +
-> +/*
-> + * Pitch must be a power of 2, >= linebytes,
-> + * at least 512, and no more than 4096.
-> + */
-> +static void npcm_video_set_linepitch(struct npcm_video *video,
-> +				     unsigned int linebytes)
-> +{
-> +	struct regmap *vcd = video->vcd_regmap;
-> +	unsigned int pitch = MIN_LP;
-> +
-> +	while ((pitch < linebytes) && (pitch < MAX_LP))
-> +		pitch *= 2;
-> +
-> +	regmap_write(vcd, VCD_FB_LP, FIELD_PREP(VCD_FBA_LP, pitch) |
-> +		     FIELD_PREP(VCD_FBB_LP, pitch));
-> +}
-> +
-> +static unsigned int npcm_video_get_linepitch(struct npcm_video *video)
-> +{
-> +	struct regmap *vcd = video->vcd_regmap;
-> +	unsigned int linepitch;
-> +
-> +	regmap_read(vcd, VCD_FB_LP, &linepitch);
-> +	return FIELD_GET(VCD_FBA_LP, linepitch);
-> +}
-> +
-> +static void npcm_video_command(struct npcm_video *video, unsigned int value)
-> +{
-> +	struct regmap *vcd = video->vcd_regmap;
-> +	unsigned int cmd;
-> +
-> +	regmap_write(vcd, VCD_STAT, VCD_STAT_CLEAR);
-> +	regmap_read(vcd, VCD_CMD, &cmd);
-> +	cmd |= FIELD_PREP(VCD_CMD_OPERATION, value);
-> +
-> +	regmap_write(vcd, VCD_CMD, cmd);
-> +	regmap_update_bits(vcd, VCD_CMD, VCD_CMD_GO, VCD_CMD_GO);
-> +	video->op_cmd = value;
-> +}
-> +
-> +static void npcm_video_init_reg(struct npcm_video *video)
-> +{
-> +	struct regmap *gcr = video->gcr_regmap, *vcd = video->vcd_regmap;
-> +
-> +	/* Selects Data Enable */
-> +	regmap_update_bits(gcr, INTCR, INTCR_DEHS, 0);
-> +
-> +	/* Enable display of KVM GFX and access to memory */
-> +	regmap_update_bits(gcr, INTCR, INTCR_GFXIFDIS, 0);
-> +
-> +	/* Active Vertical/Horizontal Counters Reset */
-> +	regmap_update_bits(gcr, INTCR2, INTCR2_GIHCRST | INTCR2_GIVCRST,
-> +			   INTCR2_GIHCRST | INTCR2_GIVCRST);
-> +
-> +	/* Reset video modules */
-> +	npcm_video_vcd_ip_reset(video);
-> +	npcm_video_gfx_reset(video);
-> +
-> +	/* Set the FIFO thresholds */
-> +	regmap_write(vcd, VCD_FIFO, VCD_FIFO_TH);
-> +
-> +	/* Set RCHG timer */
-> +	regmap_write(vcd, VCD_RCHG, FIELD_PREP(VCD_RCHG_TIM_PRSCL, 0xf) |
-> +		     FIELD_PREP(VCD_RCHG_IG_CHG0, 0x3));
-> +
-> +	/* Set video mode */
-> +	regmap_write(vcd, VCD_MODE, VCD_MODE_VCDE | VCD_MODE_CM565 |
-> +		     VCD_MODE_IDBC | VCD_MODE_KVM_BW_SET);
-> +}
-> +
-> +static int npcm_video_start_frame(struct npcm_video *video)
-> +{
-> +	struct npcm_video_buffer *buf;
-> +	struct regmap *vcd = video->vcd_regmap;
-> +	unsigned long flags;
-> +	unsigned int val;
-> +	int ret;
-> +
-> +	if (video->v4l2_input_status) {
-> +		dev_dbg(video->dev, "No video signal; skip capture frame\n");
-> +		return 0;
-> +	}
-> +
-> +	ret = regmap_read_poll_timeout(vcd, VCD_STAT, val, !(val & VCD_STAT_BUSY),
-> +				       1000, VCD_TIMEOUT_US);
-> +	if (ret) {
-> +		dev_err(video->dev, "Wait for VCD_STAT_BUSY timeout\n");
-> +		return -EBUSY;
-> +	}
-> +
-> +	spin_lock_irqsave(&video->lock, flags);
-> +	buf = list_first_entry_or_null(&video->buffers,
-> +				       struct npcm_video_buffer, link);
-> +	if (!buf) {
-> +		spin_unlock_irqrestore(&video->lock, flags);
-> +		dev_dbg(video->dev, "No empty buffers; skip capture frame\n");
-> +		return 0;
-> +	}
-> +
-> +	set_bit(VIDEO_CAPTURING, &video->flags);
-> +	spin_unlock_irqrestore(&video->lock, flags);
-> +
-> +	npcm_video_vcd_state_machine_reset(video);
-> +
-> +	regmap_read(vcd, VCD_HOR_AC_TIM, &val);
-> +	regmap_update_bits(vcd, VCD_HOR_AC_LST, VCD_HOR_AC_LAST,
-> +			   FIELD_GET(VCD_HOR_AC_TIME, val));
-> +
-> +	regmap_read(vcd, VCD_VER_HI_TIM, &val);
-> +	regmap_update_bits(vcd, VCD_VER_HI_LST, VCD_VER_HI_LAST,
-> +			   FIELD_GET(VCD_VER_HI_TIME, val));
-> +
-> +	regmap_update_bits(vcd, VCD_INTE, VCD_INTE_DONE_IE | VCD_INTE_IFOT_IE |
-> +			   VCD_INTE_IFOR_IE | VCD_INTE_HAC_IE | VCD_INTE_VHT_IE,
-> +			   VCD_INTE_DONE_IE | VCD_INTE_IFOT_IE | VCD_INTE_IFOR_IE |
-> +			   VCD_INTE_HAC_IE | VCD_INTE_VHT_IE);
-> +
-> +	npcm_video_command(video, video->ctrl_cmd);
-> +
-> +	return 0;
-> +}
-> +
-> +static void npcm_video_bufs_done(struct npcm_video *video,
-> +				 enum vb2_buffer_state state)
-> +{
-> +	struct npcm_video_buffer *buf;
-> +	unsigned long flags;
-> +
-> +	spin_lock_irqsave(&video->lock, flags);
-> +	list_for_each_entry(buf, &video->buffers, link)
-> +		vb2_buffer_done(&buf->vb.vb2_buf, state);
-> +
-> +	INIT_LIST_HEAD(&video->buffers);
-> +	spin_unlock_irqrestore(&video->lock, flags);
-> +}
-> +
-> +static void npcm_video_get_diff_rect(struct npcm_video *video, unsigned int index)
-> +{
-> +	unsigned int width = video->active_timings.width;
-> +	unsigned int height = video->active_timings.height;
-> +
-> +	if (video->op_cmd != VCD_CMD_OPERATION_CAPTURE) {
-> +		video->rect_cnt = 0;
-> +		npcm_video_get_rect_list(video, index);
-> +		video->rect[index] = video->rect_cnt;
-> +	} else {
-> +		video->rect[index] = npcm_video_add_rect(video, index, 0, 0,
-> +							 width, height);
-> +	}
-> +}
-> +
-> +static void npcm_video_detect_resolution(struct npcm_video *video)
-> +{
-> +	struct v4l2_bt_timings *act = &video->active_timings;
-> +	struct v4l2_bt_timings *det = &video->detected_timings;
-> +	struct regmap *gfxi = video->gfx_regmap;
-> +	unsigned int dispst;
-> +
-> +	video->v4l2_input_status = V4L2_IN_ST_NO_SIGNAL;
-> +	det->width = npcm_video_hres(video);
-> +	det->height = npcm_video_vres(video);
-> +
-> +	if (act->width != det->width || act->height != det->height) {
-> +		dev_dbg(video->dev, "Resolution changed\n");
-> +
-> +		if (npcm_video_hres(video) > 0 && npcm_video_vres(video) > 0) {
-> +			if (test_bit(VIDEO_STREAMING, &video->flags)) {
-> +				/*
-> +				 * Wait for resolution is available,
-> +				 * and it is also captured by host.
-> +				 */
-> +				do {
-> +					mdelay(100);
-> +					regmap_read(gfxi, DISPST, &dispst);
-> +				} while (npcm_video_vres(video) < 100 ||
-> +					 npcm_video_pclk(video) == 0 ||
-> +					 (dispst & DISPST_HSCROFF));
-> +			}
-> +
-> +			det->width = npcm_video_hres(video);
-> +			det->height = npcm_video_vres(video);
-> +			det->pixelclock = npcm_video_pclk(video);
-> +		}
-> +
-> +		clear_bit(VIDEO_RES_CHANGING, &video->flags);
-> +	}
-> +
-> +	if (det->width && det->height)
-> +		video->v4l2_input_status = 0;
-> +
-> +	dev_dbg(video->dev, "Got resolution[%dx%d] -> [%dx%d], status %d\n",
-> +		act->width, act->height, det->width, det->height,
-> +		video->v4l2_input_status);
-> +}
-> +
-> +static int npcm_video_set_resolution(struct npcm_video *video,
-> +				     struct v4l2_bt_timings *timing)
-> +{
-> +	struct regmap *vcd = video->vcd_regmap;
-> +	unsigned int mode;
-> +
-> +	if (npcm_video_capres(video, timing->width, timing->height)) {
-> +		dev_err(video->dev, "Failed to set VCD_CAP_RES\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	video->bytesperpixel = npcm_video_get_bpp(video);
-> +	npcm_video_set_linepitch(video, timing->width * video->bytesperpixel);
-> +	video->bytesperline = npcm_video_get_linepitch(video);
-> +
-> +	npcm_video_kvm_bw(video, timing->pixelclock > VCD_KVM_BW_PCLK);
-> +	npcm_video_gfx_reset(video);
-> +	regmap_read(vcd, VCD_MODE, &mode);
-> +
-> +	dev_dbg(video->dev, "VCD mode = 0x%x, %s mode\n", mode,
-> +		npcm_video_is_mga(video) ? "Hi Res" : "VGA");
-> +
-> +	dev_dbg(video->dev,
-> +		"Digital mode: %d x %d x %d, pixelclock %lld, bytesperline %d\n",
-> +		timing->width, timing->height, video->bytesperpixel,
-> +		timing->pixelclock, video->bytesperline);
-> +
-> +	return 0;
-> +}
-> +
-> +static void npcm_video_start(struct npcm_video *video)
-> +{
-> +	npcm_video_init_reg(video);
-> +
-> +	if (!npcm_video_alloc_fb(video, &video->src)) {
-> +		dev_err(video->dev, "Failed to allocate VCD frame buffer\n");
-> +		return;
-> +	}
-> +
-> +	npcm_video_detect_resolution(video);
-> +	if (npcm_video_set_resolution(video, &video->detected_timings)) {
-> +		dev_err(video->dev, "Failed to set resolution\n");
-> +		return;
-> +	}
-> +	video->active_timings = video->detected_timings;
 
-Why not let npcm_video_set_resolution() set active_timings?
+-dhanasekar
 
-> +
-> +	/* Set frame buffer physical address */
-> +	regmap_write(video->vcd_regmap, VCD_FBA_ADR, video->src.dma);
-> +	regmap_write(video->vcd_regmap, VCD_FBB_ADR, video->src.dma);
-> +
-> +	video->pix_fmt.width = video->active_timings.width ?
-> +			       video->active_timings.width : MIN_WIDTH;
-> +	video->pix_fmt.height = video->active_timings.height ?
-> +				video->active_timings.height : MIN_HEIGHT;
-> +	video->pix_fmt.sizeimage = video->pix_fmt.width * video->pix_fmt.height *
-> +				   video->bytesperpixel;
-> +	video->pix_fmt.bytesperline = video->bytesperline;
 
-And also update pix_fmt? That will also simplify npcm_video_set_dv_timings().
 
-> +
-> +	if (atomic_inc_return(&video->ece.clients) == 1) {
-> +		npcm_video_ece_init(video);
-> +		npcm_video_ece_set_fb_addr(video, video->src.dma);
-> +		npcm_video_ece_set_lp(video, video->bytesperline);
-> +
-> +		dev_dbg(video->dev, "ECE open: client %d\n",
-> +			atomic_read(&video->ece.clients));
-> +	}
-> +}
-> +
-> +static void npcm_video_stop(struct npcm_video *video)
-> +{
-> +	struct regmap *vcd = video->vcd_regmap;
-> +
-> +	set_bit(VIDEO_STOPPED, &video->flags);
-> +
-> +	regmap_write(vcd, VCD_INTE, 0);
-> +	regmap_write(vcd, VCD_MODE, 0);
-> +	regmap_write(vcd, VCD_RCHG, 0);
-> +	regmap_write(vcd, VCD_STAT, VCD_STAT_CLEAR);
-> +
-> +	if (video->src.size)
-> +		npcm_video_free_fb(video, &video->src);
-> +
-> +	if (video->list)
-> +		npcm_video_free_diff_table(video);
-> +
-> +	kfree(video->list);
-> +	video->list = NULL;
-> +
-> +	video->v4l2_input_status = V4L2_IN_ST_NO_SIGNAL;
-> +	video->flags = 0;
-> +	video->ctrl_cmd = VCD_CMD_OPERATION_CAPTURE;
-> +
-> +	if (atomic_dec_return(&video->ece.clients) == 0) {
-> +		npcm_video_ece_stop(video);
-> +		dev_dbg(video->dev, "ECE close: client %d\n",
-> +			atomic_read(&video->ece.clients));
-> +	}
-> +}
-> +
-> +static unsigned int npcm_video_raw(struct npcm_video *video, int index, void *addr)
-> +{
-> +	unsigned int width = video->active_timings.width;
-> +	unsigned int height = video->active_timings.height;
-> +	unsigned int i, len, offset, bytes = 0;
-> +
-> +	video->rect[index] = npcm_video_add_rect(video, index, 0, 0, width, height);
-> +
-> +	for (i = 0; i < height; i++) {
-> +		len = width * video->bytesperpixel;
-> +		offset = i * video->bytesperline;
-> +
-> +		memcpy(addr + bytes, video->src.virt + offset, len);
-> +		bytes += len;
-> +	}
-> +
-> +	return bytes;
-> +}
-> +
-> +static unsigned int npcm_video_hextile(struct npcm_video *video, unsigned int index,
-> +				       unsigned int dma_addr, void *vaddr)
-> +{
-> +	struct rect_list *rect_list;
-> +	struct v4l2_rect *rect;
-> +	unsigned int offset, len, bytes = 0;
-> +
-> +	npcm_video_ece_ctrl_reset(video);
-> +	npcm_video_ece_clear_rect_offset(video);
-> +	npcm_video_ece_set_fb_addr(video, video->src.dma);
-> +
-> +	/* Set base address of encoded data to video buffer */
-> +	npcm_video_ece_set_enc_dba(video, dma_addr);
-> +
-> +	npcm_video_ece_set_lp(video, video->bytesperline);
-> +	npcm_video_get_diff_rect(video, index);
-> +
-> +	list_for_each_entry(rect_list, &video->list[index], list) {
-> +		rect = &rect_list->clip.c;
-> +		offset = npcm_video_ece_read_rect_offset(video);
-> +		npcm_video_ece_enc_rect(video, rect->left, rect->top,
-> +					rect->width, rect->height);
-> +
-> +		len = npcm_video_ece_get_ed_size(video, offset, vaddr);
-> +		npcm_video_ece_prepend_rect_header(vaddr + offset,
-> +						   rect->left, rect->top,
-> +						   rect->width, rect->height);
-> +		bytes += len;
-> +	}
-> +
-> +	return bytes;
-> +}
-> +
-> +static irqreturn_t npcm_video_irq(int irq, void *arg)
-> +{
-> +	struct npcm_video *video = arg;
-> +	struct regmap *vcd = video->vcd_regmap;
-> +	struct npcm_video_buffer *buf;
-> +	unsigned int index, size, status, fmt;
-> +	dma_addr_t dma_addr;
-> +	void *addr;
-> +	static const struct v4l2_event ev = {
-> +		.type = V4L2_EVENT_SOURCE_CHANGE,
-> +		.u.src_change.changes = V4L2_EVENT_SRC_CH_RESOLUTION,
-> +	};
-> +
-> +	regmap_read(vcd, VCD_STAT, &status);
-> +	dev_dbg(video->dev, "VCD irq status 0x%x\n", status);
-> +
-> +	regmap_write(vcd, VCD_STAT, VCD_STAT_CLEAR);
-> +
-> +	if (test_bit(VIDEO_STOPPED, &video->flags) ||
-> +	    !test_bit(VIDEO_STREAMING, &video->flags))
-> +		return IRQ_NONE;
-> +
-> +	if (status & VCD_STAT_DONE) {
-> +		regmap_write(vcd, VCD_INTE, 0);
-> +		spin_lock(&video->lock);
-> +		clear_bit(VIDEO_CAPTURING, &video->flags);
-> +		buf = list_first_entry_or_null(&video->buffers,
-> +					       struct npcm_video_buffer, link);
-> +		if (!buf) {
-> +			spin_unlock(&video->lock);
-> +			return IRQ_NONE;
-> +		}
-> +
-> +		addr = vb2_plane_vaddr(&buf->vb.vb2_buf, 0);
-> +		index = buf->vb.vb2_buf.index;
-> +		fmt = video->pix_fmt.pixelformat;
-> +
-> +		switch (fmt) {
-> +		case V4L2_PIX_FMT_RGB565:
-> +			size = npcm_video_raw(video, index, addr);
-> +			break;
-> +		case V4L2_PIX_FMT_HEXTILE:
-> +			dma_addr = vb2_dma_contig_plane_dma_addr(&buf->vb.vb2_buf, 0);
-> +			size = npcm_video_hextile(video, index, dma_addr, addr);
-> +			break;
-> +		default:
-> +			return IRQ_NONE;
-> +		}
-> +
-> +		vb2_set_plane_payload(&buf->vb.vb2_buf, 0, size);
-> +		buf->vb.vb2_buf.timestamp = ktime_get_ns();
-> +		buf->vb.sequence = video->sequence++;
-> +		buf->vb.field = V4L2_FIELD_NONE;
-> +
-> +		vb2_buffer_done(&buf->vb.vb2_buf, VB2_BUF_STATE_DONE);
-> +		list_del(&buf->link);
-> +		spin_unlock(&video->lock);
-> +
-> +		if (npcm_video_start_frame(video))
-> +			dev_err(video->dev, "Failed to capture next frame\n");
-> +	}
-> +
-> +	/* Resolution changed */
-> +	if (status & VCD_STAT_VHT_CHG || status & VCD_STAT_HAC_CHG) {
-> +		if (!test_bit(VIDEO_RES_CHANGING, &video->flags)) {
-> +			set_bit(VIDEO_RES_CHANGING, &video->flags);
-> +
-> +			vb2_queue_error(&video->queue);
-> +			v4l2_event_queue(&video->vdev, &ev);
-> +		}
-> +	}
-> +
-> +	if (status & VCD_STAT_IFOR || status & VCD_STAT_IFOT) {
-> +		dev_warn(video->dev, "VCD FIFO overrun or over thresholds\n");
-> +		if (npcm_video_start_frame(video))
-> +			dev_err(video->dev, "Failed to recover from FIFO overrun\n");
-> +	}
-> +
-> +	return IRQ_HANDLED;
-> +}
-> +
-> +static int npcm_video_querycap(struct file *file, void *fh,
-> +			       struct v4l2_capability *cap)
-> +{
-> +	strscpy(cap->driver, DEVICE_NAME, sizeof(cap->driver));
-> +	strscpy(cap->card, "NPCM Video Engine", sizeof(cap->card));
-> +	snprintf(cap->bus_info, sizeof(cap->bus_info), "platform:%s", DEVICE_NAME);
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_enum_format(struct file *file, void *fh,
-> +				  struct v4l2_fmtdesc *f)
-> +{
-> +	const struct npcm_fmt *fmt;
-> +
-> +	if (f->index >= NUM_FORMATS)
-> +		return -EINVAL;
-> +
-> +	fmt = &npcm_fmt_list[f->index];
-> +	f->pixelformat = fmt->fourcc;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_try_format(struct file *file, void *fh,
-> +				 struct v4l2_format *f)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +	const struct npcm_fmt *fmt;
-> +
-> +	fmt = npcm_video_find_format(f);
-> +	if (!fmt)
-> +		f->fmt.pix.pixelformat = npcm_fmt_list[0].fourcc;
-> +
-> +	f->fmt.pix.field = V4L2_FIELD_NONE;
-> +	f->fmt.pix.colorspace = V4L2_COLORSPACE_SRGB;
-> +	f->fmt.pix.quantization = V4L2_QUANTIZATION_FULL_RANGE;
-> +	f->fmt.pix.width = video->pix_fmt.width;
-> +	f->fmt.pix.height = video->pix_fmt.height;
-> +	f->fmt.pix.bytesperline = video->bytesperline;
-> +	f->fmt.pix.sizeimage = video->pix_fmt.sizeimage;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_get_format(struct file *file, void *fh,
-> +				 struct v4l2_format *f)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +
-> +	f->fmt.pix = video->pix_fmt;
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_set_format(struct file *file, void *fh,
-> +				 struct v4l2_format *f)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +	int ret;
-> +
-> +	ret = npcm_video_try_format(file, fh, f);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (vb2_is_busy(&video->queue)) {
-> +		dev_err(video->dev, "%s device busy\n", __func__);
-> +		return -EBUSY;
-> +	}
-> +
-> +	video->pix_fmt.pixelformat = f->fmt.pix.pixelformat;
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_enum_input(struct file *file, void *fh,
-> +				 struct v4l2_input *inp)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +
-> +	if (inp->index)
-> +		return -EINVAL;
-> +
-> +	strscpy(inp->name, "Host VGA capture", sizeof(inp->name));
-> +	inp->type = V4L2_INPUT_TYPE_CAMERA;
-> +	inp->capabilities = V4L2_IN_CAP_DV_TIMINGS;
-> +	inp->status = video->v4l2_input_status;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_get_input(struct file *file, void *fh, unsigned int *i)
-> +{
-> +	*i = 0;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_set_input(struct file *file, void *fh, unsigned int i)
-> +{
-> +	if (i)
-> +		return -EINVAL;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_set_dv_timings(struct file *file, void *fh,
-> +				     struct v4l2_dv_timings *timings)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +	int rc;
-> +
-> +	if (timings->bt.width == video->active_timings.width &&
-> +	    timings->bt.height == video->active_timings.height)
-> +		return 0;
-> +
-> +	if (vb2_is_busy(&video->queue)) {
-> +		dev_err(video->dev, "%s device busy\n", __func__);
-> +		return -EBUSY;
-> +	}
-> +
-> +	rc = npcm_video_set_resolution(video, &timings->bt);
-> +	if (rc)
-> +		return rc;
-> +
-> +	video->active_timings = timings->bt;
-> +	video->pix_fmt.width = timings->bt.width;
-> +	video->pix_fmt.height = timings->bt.height;
-> +	video->pix_fmt.sizeimage = timings->bt.width * timings->bt.height *
-> +				   video->bytesperpixel;
-> +	video->pix_fmt.bytesperline = video->bytesperline;
-> +	timings->type = V4L2_DV_BT_656_1120;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_get_dv_timings(struct file *file, void *fh,
-> +				     struct v4l2_dv_timings *timings)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +
-> +	timings->type = V4L2_DV_BT_656_1120;
-> +	timings->bt = video->active_timings;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_query_dv_timings(struct file *file, void *fh,
-> +				       struct v4l2_dv_timings *timings)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +
-> +	npcm_video_detect_resolution(video);
-> +	timings->type = V4L2_DV_BT_656_1120;
-> +	timings->bt = video->detected_timings;
-> +
-> +	return video->v4l2_input_status ? -ENOLINK : 0;
-> +}
-> +
-> +static int npcm_video_enum_dv_timings(struct file *file, void *fh,
-> +				      struct v4l2_enum_dv_timings *timings)
-> +{
-> +	return v4l2_enum_dv_timings_cap(timings, &npcm_video_timings_cap,
-> +					NULL, NULL);
-> +}
-> +
-> +static int npcm_video_dv_timings_cap(struct file *file, void *fh,
-> +				     struct v4l2_dv_timings_cap *cap)
-> +{
-> +	*cap = npcm_video_timings_cap;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_sub_event(struct v4l2_fh *fh,
-> +				const struct v4l2_event_subscription *sub)
-> +{
-> +	switch (sub->type) {
-> +	case V4L2_EVENT_SOURCE_CHANGE:
-> +		return v4l2_src_change_event_subscribe(fh, sub);
-> +	}
-> +
-> +	return v4l2_ctrl_subscribe_event(fh, sub);
-> +}
-> +
-> +static const struct v4l2_ioctl_ops npcm_video_ioctls = {
-> +	.vidioc_querycap = npcm_video_querycap,
-> +
-> +	.vidioc_enum_fmt_vid_cap = npcm_video_enum_format,
-> +	.vidioc_g_fmt_vid_cap = npcm_video_get_format,
-> +	.vidioc_s_fmt_vid_cap = npcm_video_set_format,
-> +	.vidioc_try_fmt_vid_cap = npcm_video_try_format,
-> +
-> +	.vidioc_reqbufs = vb2_ioctl_reqbufs,
-> +	.vidioc_querybuf = vb2_ioctl_querybuf,
-> +	.vidioc_qbuf = vb2_ioctl_qbuf,
-> +	.vidioc_expbuf = vb2_ioctl_expbuf,
-> +	.vidioc_dqbuf = vb2_ioctl_dqbuf,
-> +	.vidioc_create_bufs = vb2_ioctl_create_bufs,
-> +	.vidioc_prepare_buf = vb2_ioctl_prepare_buf,
-> +	.vidioc_streamon = vb2_ioctl_streamon,
-> +	.vidioc_streamoff = vb2_ioctl_streamoff,
-> +
-> +	.vidioc_enum_input = npcm_video_enum_input,
-> +	.vidioc_g_input = npcm_video_get_input,
-> +	.vidioc_s_input = npcm_video_set_input,
-> +
-> +	.vidioc_s_dv_timings = npcm_video_set_dv_timings,
-> +	.vidioc_g_dv_timings = npcm_video_get_dv_timings,
-> +	.vidioc_query_dv_timings = npcm_video_query_dv_timings,
-> +	.vidioc_enum_dv_timings = npcm_video_enum_dv_timings,
-> +	.vidioc_dv_timings_cap = npcm_video_dv_timings_cap,
-> +
-> +	.vidioc_subscribe_event = npcm_video_sub_event,
-> +	.vidioc_unsubscribe_event = v4l2_event_unsubscribe,
-> +};
-> +
-> +static int npcm_video_set_ctrl(struct v4l2_ctrl *ctrl)
-> +{
-> +	struct npcm_video *video = container_of(ctrl->handler, struct npcm_video,
-> +						ctrl_handler);
-> +
-> +	switch (ctrl->id) {
-> +	case V4L2_CID_NPCM_CAPTURE_MODE:
-> +		if (ctrl->val == V4L2_NPCM_CAPTURE_MODE_COMPLETE)
-> +			video->ctrl_cmd = VCD_CMD_OPERATION_CAPTURE;
-> +		else if (ctrl->val == V4L2_NPCM_CAPTURE_MODE_DIFF)
-> +			video->ctrl_cmd = VCD_CMD_OPERATION_COMPARE;
-> +		break;
-> +	default:
-> +		return -EINVAL;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_get_volatile_ctrl(struct v4l2_ctrl *ctrl)
-> +{
-> +	struct npcm_video *video = container_of(ctrl->handler, struct npcm_video,
-> +						ctrl_handler);
-> +
-> +	switch (ctrl->id) {
-> +	case V4L2_CID_NPCM_RECT_COUNT:
-> +		ctrl->val = video->rect[video->vb_index];
-> +		break;
-> +	default:
-> +		return -EINVAL;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct v4l2_ctrl_ops npcm_video_ctrl_ops = {
-> +	.s_ctrl = npcm_video_set_ctrl,
-> +	.g_volatile_ctrl = npcm_video_get_volatile_ctrl,
-> +};
-> +
-> +static const struct v4l2_ctrl_config npcm_ctrl_capture_mode = {
-> +	.ops = &npcm_video_ctrl_ops,
-> +	.id = V4L2_CID_NPCM_CAPTURE_MODE,
-> +	.name = "NPCM Video Capture Mode",
-> +	.type = V4L2_CTRL_TYPE_INTEGER,
 
-This must be of TYPE_MENU. It selects between two
-modes, so that is typically a MENU control. That way you can list
-the possible modes and get a human-readable name for each setting.
 
-> +	.min = 0,
-> +	.max = V4L2_NPCM_CAPTURE_MODE_DIFF,
-> +	.step = 1,
-> +	.def = 0,
-> +};
-> +
-> +static const struct v4l2_ctrl_config npcm_ctrl_rect_count = {
-> +	.ops = &npcm_video_ctrl_ops,
-> +	.id = V4L2_CID_NPCM_RECT_COUNT,
-> +	.name = "NPCM Compressed Hextile Rectangle Count",
-> +	.type = V4L2_CTRL_TYPE_INTEGER,
-> +	.flags = V4L2_CTRL_FLAG_VOLATILE,
-> +	.min = 0,
-> +	.max = (MAX_WIDTH / RECT_W) * (MAX_HEIGHT / RECT_H),
-> +	.step = 1,
-> +	.def = 0,
-> +};
 
-I'm wondering if this shouldn't be an INTEGER array control.
-Either dynamic or just fixed to size VIDEO_MAX_FRAME. That way
-you can set the rectangle count for each buffer index. You wouldn't
-need this to be volatile either in that case.
 
-I don't really like the way it is set up now since if userspace is
-slow in processing a frame the control might have been updated already
-for the next frame and you get the wrong value for the buffer you are
-processing.
 
-> +
-> +static int npcm_video_open(struct file *file)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +	int rc;
-> +
-> +	mutex_lock(&video->video_lock);
-> +	rc = v4l2_fh_open(file);
-> +	if (rc) {
-> +		mutex_unlock(&video->video_lock);
-> +		return rc;
-> +	}
-> +
-> +	if (v4l2_fh_is_singular_file(file))
-> +		npcm_video_start(video);
-> +
-> +	mutex_unlock(&video->video_lock);
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_release(struct file *file)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +	int rc;
-> +
-> +	mutex_lock(&video->video_lock);
-> +	if (v4l2_fh_is_singular_file(file))
-> +		npcm_video_stop(video);
-> +
-> +	rc = _vb2_fop_release(file, NULL);
-> +
-> +	mutex_unlock(&video->video_lock);
-> +	return rc;
-> +}
-> +
-> +static const struct v4l2_file_operations npcm_video_v4l2_fops = {
-> +	.owner = THIS_MODULE,
-> +	.read = vb2_fop_read,
-> +	.poll = vb2_fop_poll,
-> +	.unlocked_ioctl = video_ioctl2,
-> +	.mmap = vb2_fop_mmap,
-> +	.open = npcm_video_open,
-> +	.release = npcm_video_release,
-> +};
-> +
-> +static int npcm_video_queue_setup(struct vb2_queue *q, unsigned int *num_buffers,
-> +				  unsigned int *num_planes, unsigned int sizes[],
-> +				  struct device *alloc_devs[])
-> +{
-> +	struct npcm_video *video = vb2_get_drv_priv(q);
-> +	unsigned int i;
-> +
-> +	if (*num_planes) {
-> +		if (sizes[0] < video->pix_fmt.sizeimage)
-> +			return -EINVAL;
-> +
-> +		return 0;
-> +	}
-> +
-> +	*num_planes = 1;
-> +
-> +	if (*num_buffers > VIDEO_MAX_FRAME)
-> +		*num_buffers = VIDEO_MAX_FRAME;
 
-You can drop this test, it's done automatically by the vb2 core.
 
-> +
-> +	sizes[0] = video->pix_fmt.sizeimage;
-> +
-> +	if (video->list) {
-> +		npcm_video_free_diff_table(video);
-> +		kfree(video->list);
-> +		video->list = NULL;
-> +	}
-> +
-> +	video->list = kzalloc(sizeof(*video->list) * *num_buffers, GFP_KERNEL);
-> +	if (!video->list)
-> +		return -ENOMEM;
-> +
-> +	for (i = 0; i < *num_buffers; i++)
-> +		INIT_LIST_HEAD(&video->list[i]);
 
-This is incomplete: if VIDIOC_CREATE_BUFS is called additional buffers can be added.
-In that case this function is called with *num_planes already set and *num_buffers
-being the additional buffers you want to add. So in the 'if (*num_planes)' code
-above you need to take care of that.
+---- On Tue, 25 Jul 2023 19:32:59 +0530 Venkatesh, Supreeth <Supreeth.Venka=
+tesh@amd.com> wrote ---
 
-However, isn't it much easier to just have a fixed 'video->list[VIDEO_MAX_FRAME]' array
-rather than dynamically allocating it? It would simplify the code, and all you need to
-do here is call INIT_LIST_HEAD for all (VIDEO_MAX_FRAME) array elements.
 
-> +
-> +	video->num_buffers = *num_buffers;
 
-You can drop the num_buffers field: just use the num_buffers field of vb2_queue.
+[AMD Official Use Only - General]
 
-This code is incomplete anyway since it doesn't deal with VIDIOC_CREATE_BUFS.
-Much easier to just rely on the vb2_queue information.
 
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_buf_prepare(struct vb2_buffer *vb)
-> +{
-> +	struct npcm_video *video = vb2_get_drv_priv(vb->vb2_queue);
-> +
-> +	if (vb2_plane_size(vb, 0) < video->pix_fmt.sizeimage)
-> +		return -EINVAL;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_start_streaming(struct vb2_queue *q, unsigned int count)
-> +{
-> +	struct npcm_video *video = vb2_get_drv_priv(q);
-> +	int rc;
-> +
-> +	video->sequence = 0;
-> +	rc = npcm_video_start_frame(video);
-> +	if (rc) {
-> +		npcm_video_bufs_done(video, VB2_BUF_STATE_QUEUED);
-> +		return rc;
-> +	}
-> +
-> +	set_bit(VIDEO_STREAMING, &video->flags);
-> +	return 0;
-> +}
-> +
-> +static void npcm_video_stop_streaming(struct vb2_queue *q)
-> +{
-> +	struct npcm_video *video = vb2_get_drv_priv(q);
-> +	struct regmap *vcd = video->vcd_regmap;
-> +
-> +	clear_bit(VIDEO_STREAMING, &video->flags);
-> +	regmap_write(vcd, VCD_INTE, 0);
-> +	regmap_write(vcd, VCD_STAT, VCD_STAT_CLEAR);
-> +	npcm_video_gfx_reset(video);
-> +	npcm_video_bufs_done(video, VB2_BUF_STATE_ERROR);
-> +	video->ctrl_cmd = VCD_CMD_OPERATION_CAPTURE;
-> +}
-> +
-> +static void npcm_video_buf_queue(struct vb2_buffer *vb)
-> +{
-> +	struct npcm_video *video = vb2_get_drv_priv(vb->vb2_queue);
-> +	struct vb2_v4l2_buffer *vbuf = to_vb2_v4l2_buffer(vb);
-> +	struct npcm_video_buffer *nvb = to_npcm_video_buffer(vbuf);
-> +	unsigned long flags;
-> +	bool empty;
-> +
-> +	spin_lock_irqsave(&video->lock, flags);
-> +	empty = list_empty(&video->buffers);
-> +	list_add_tail(&nvb->link, &video->buffers);
-> +	spin_unlock_irqrestore(&video->lock, flags);
-> +
-> +	if (test_bit(VIDEO_STREAMING, &video->flags) &&
-> +	    !test_bit(VIDEO_CAPTURING, &video->flags) && empty) {
-> +		if (npcm_video_start_frame(video))
-> +			dev_err(video->dev, "Failed to capture next frame\n");
-> +	}
-> +}
-> +
-> +static void npcm_video_buf_finish(struct vb2_buffer *vb)
-> +{
-> +	struct npcm_video *video = vb2_get_drv_priv(vb->vb2_queue);
-> +	struct list_head *head, *pos, *nx;
-> +	struct rect_list *tmp;
-> +
-> +	video->vb_index = vb->index;
-> +
-> +	if (test_bit(VIDEO_STREAMING, &video->flags)) {
-> +		/* Free associated rect_list when a video buffer get dequeued */
-> +		head = &video->list[video->vb_index];
-> +		list_for_each_safe(pos, nx, head) {
-> +			tmp = list_entry(pos, struct rect_list, list);
-> +			list_del(&tmp->list);
-> +			kfree(tmp);
-> +		}
-> +	}
-> +}
-> +
-> +static const struct vb2_ops npcm_video_vb2_ops = {
-> +	.queue_setup = npcm_video_queue_setup,
-> +	.wait_prepare = vb2_ops_wait_prepare,
-> +	.wait_finish = vb2_ops_wait_finish,
-> +	.buf_prepare = npcm_video_buf_prepare,
-> +	.buf_finish = npcm_video_buf_finish,
-> +	.start_streaming = npcm_video_start_streaming,
-> +	.stop_streaming = npcm_video_stop_streaming,
-> +	.buf_queue =  npcm_video_buf_queue,
-> +};
-> +
-> +static int npcm_video_setup_video(struct npcm_video *video)
-> +{
-> +	struct v4l2_device *v4l2_dev = &video->v4l2_dev;
-> +	struct video_device *vdev = &video->vdev;
-> +	struct vb2_queue *vbq = &video->queue;
-> +	int rc;
-> +
-> +	video->pix_fmt.pixelformat = V4L2_PIX_FMT_HEXTILE;
-> +	video->pix_fmt.field = V4L2_FIELD_NONE;
-> +	video->pix_fmt.colorspace = V4L2_COLORSPACE_SRGB;
-> +	video->pix_fmt.quantization = V4L2_QUANTIZATION_FULL_RANGE;
-> +	video->v4l2_input_status = V4L2_IN_ST_NO_SIGNAL;
-> +
-> +	rc = v4l2_device_register(video->dev, v4l2_dev);
-> +	if (rc) {
-> +		dev_err(video->dev, "Failed to register v4l2 device\n");
-> +		return rc;
-> +	}
-> +
-> +	v4l2_ctrl_handler_init(&video->ctrl_handler, 2);
-> +	v4l2_ctrl_new_custom(&video->ctrl_handler, &npcm_ctrl_capture_mode, NULL);
-> +	v4l2_ctrl_new_custom(&video->ctrl_handler, &npcm_ctrl_rect_count, NULL);
-> +	if (video->ctrl_handler.error) {
-> +		dev_err(video->dev, "Failed to init controls: %d\n",
-> +			video->ctrl_handler.error);
-> +
-> +		rc = video->ctrl_handler.error;
-> +		goto rel_ctrl_handler;
-> +	}
-> +	v4l2_dev->ctrl_handler = &video->ctrl_handler;
-> +
-> +	vbq->type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
-> +	vbq->io_modes = VB2_MMAP | VB2_DMABUF;
-> +	vbq->dev = v4l2_dev->dev;
-> +	vbq->lock = &video->video_lock;
-> +	vbq->ops = &npcm_video_vb2_ops;
-> +	vbq->mem_ops = &vb2_dma_contig_memops;
-> +	vbq->drv_priv = video;
-> +	vbq->buf_struct_size = sizeof(struct npcm_video_buffer);
-> +	vbq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_MONOTONIC;
-> +	vbq->min_buffers_needed = 3;
-> +
-> +	rc = vb2_queue_init(vbq);
-> +	if (rc) {
-> +		dev_err(video->dev, "Failed to init vb2 queue\n");
-> +		goto rel_ctrl_handler;
-> +	}
-> +	vdev->queue = vbq;
-> +	vdev->fops = &npcm_video_v4l2_fops;
-> +	vdev->device_caps = V4L2_CAP_VIDEO_CAPTURE | V4L2_CAP_STREAMING;
-> +	vdev->v4l2_dev = v4l2_dev;
-> +	strscpy(vdev->name, DEVICE_NAME, sizeof(vdev->name));
-> +	vdev->vfl_type = VFL_TYPE_VIDEO;
-> +	vdev->vfl_dir = VFL_DIR_RX;
-> +	vdev->release = video_device_release_empty;
-> +	vdev->ioctl_ops = &npcm_video_ioctls;
-> +	vdev->lock = &video->video_lock;
-> +
-> +	video_set_drvdata(vdev, video);
-> +	rc = video_register_device(vdev, VFL_TYPE_VIDEO, 0);
-> +	if (rc) {
-> +		dev_err(video->dev, "Failed to register video device\n");
-> +		goto rel_vb_queue;
-> +	}
-> +
-> +	return 0;
-> +
-> +rel_vb_queue:
-> +	vb2_queue_release(vbq);
-> +rel_ctrl_handler:
-> +	v4l2_ctrl_handler_free(&video->ctrl_handler);
-> +	v4l2_device_unregister(v4l2_dev);
-> +
-> +	return rc;
-> +}
-> +
-> +static int npcm_video_init(struct npcm_video *video)
-> +{
-> +	struct device *dev = video->dev;
-> +	int irq, rc;
-> +
-> +	irq = irq_of_parse_and_map(dev->of_node, 0);
-> +	if (!irq) {
-> +		dev_err(dev, "Failed to find VCD IRQ\n");
-> +		return -ENODEV;
-> +	}
-> +
-> +	rc = devm_request_threaded_irq(dev, irq, NULL, npcm_video_irq,
-> +				       IRQF_ONESHOT, DEVICE_NAME, video);
-> +	if (rc < 0) {
-> +		dev_err(dev, "Failed to request IRQ %d\n", irq);
-> +		return rc;
-> +	}
-> +
-> +	of_reserved_mem_device_init(dev);
-> +	rc = dma_set_mask_and_coherent(dev, DMA_BIT_MASK(32));
-> +	if (rc) {
-> +		dev_err(dev, "Failed to set DMA mask\n");
-> +		of_reserved_mem_device_release(dev);
-> +	}
-> +
-> +	return rc;
-> +}
-> +
-> +static const struct regmap_config npcm_video_regmap_cfg = {
-> +	.reg_bits	= 32,
-> +	.reg_stride	= 4,
-> +	.val_bits	= 32,
-> +	.max_register	= VCD_FIFO,
-> +};
-> +
-> +static const struct regmap_config npcm_video_ece_regmap_cfg = {
-> +	.reg_bits	= 32,
-> +	.reg_stride	= 4,
-> +	.val_bits	= 32,
-> +	.max_register	= ECE_HEX_RECT_OFFSET,
-> +};
-> +
-> +static int npcm_video_probe(struct platform_device *pdev)
-> +{
-> +	struct npcm_video *video = kzalloc(sizeof(*video), GFP_KERNEL);
-> +	struct device_node *ece_node;
-> +	struct platform_device *ece_pdev;
-> +	int rc;
-> +	void __iomem *regs;
-> +
-> +	if (!video)
-> +		return -ENOMEM;
-> +
-> +	video->dev = &pdev->dev;
-> +	spin_lock_init(&video->lock);
-> +	mutex_init(&video->video_lock);
-> +	INIT_LIST_HEAD(&video->buffers);
-> +
-> +	regs = devm_platform_ioremap_resource(pdev, 0);
-> +	if (IS_ERR(regs)) {
-> +		dev_err(&pdev->dev, "Failed to parse VCD reg in DTS\n");
-> +		return PTR_ERR(regs);
-> +	}
-> +
-> +	video->vcd_regmap = devm_regmap_init_mmio(&pdev->dev, regs,
-> +						  &npcm_video_regmap_cfg);
-> +	if (IS_ERR(video->vcd_regmap)) {
-> +		dev_err(&pdev->dev, "Failed to initialize VCD regmap\n");
-> +		return PTR_ERR(video->vcd_regmap);
-> +	}
-> +
-> +	ece_node = of_parse_phandle(video->dev->of_node, "nuvoton,ece", 0);
-> +	if (IS_ERR(ece_node)) {
-> +		dev_err(&pdev->dev, "Failed to get ECE phandle in DTS\n");
-> +		return PTR_ERR(ece_node);
-> +	}
-> +
-> +	if (!of_device_is_available(ece_node)) {
-> +		dev_err(&pdev->dev, "ECE status property is disabled\n");
-> +		return -ENODEV;
-> +	}
-> +
-> +	ece_pdev = of_find_device_by_node(ece_node);
-> +	if (IS_ERR(ece_pdev)) {
-> +		dev_err(&pdev->dev, "Failed to find ECE device\n");
-> +		return PTR_ERR(ece_pdev);
-> +	}
-> +	of_node_put(ece_node);
-> +
-> +	regs = devm_platform_ioremap_resource(ece_pdev, 0);
-> +	if (IS_ERR(regs)) {
-> +		dev_err(&pdev->dev, "Failed to parse ECE reg in DTS\n");
-> +		return PTR_ERR(regs);
-> +	}
-> +
-> +	video->ece.regmap = devm_regmap_init_mmio(&pdev->dev, regs,
-> +						  &npcm_video_ece_regmap_cfg);
-> +	if (IS_ERR(video->ece.regmap)) {
-> +		dev_err(&pdev->dev, "Failed to initialize ECE regmap\n");
-> +		return PTR_ERR(video->ece.regmap);
-> +	}
-> +
-> +	video->reset = devm_reset_control_get(&pdev->dev, NULL);
-> +	if (IS_ERR(video->reset)) {
-> +		dev_err(&pdev->dev, "Failed to get VCD reset control in DTS\n");
-> +		return PTR_ERR(video->reset);
-> +	}
-> +
-> +	video->ece.reset = devm_reset_control_get(&ece_pdev->dev, NULL);
-> +	if (IS_ERR(video->ece.reset)) {
-> +		dev_err(&pdev->dev, "Failed to get ECE reset control in DTS\n");
-> +		return PTR_ERR(video->ece.reset);
-> +	}
-> +
-> +	video->gcr_regmap = syscon_regmap_lookup_by_phandle(pdev->dev.of_node,
-> +							    "nuvoton,sysgcr");
-> +	if (IS_ERR(video->gcr_regmap))
-> +		return PTR_ERR(video->gcr_regmap);
-> +
-> +	video->gfx_regmap = syscon_regmap_lookup_by_phandle(pdev->dev.of_node,
-> +							    "nuvoton,sysgfxi");
-> +	if (IS_ERR(video->gfx_regmap))
-> +		return PTR_ERR(video->gfx_regmap);
-> +
-> +	rc = npcm_video_init(video);
-> +	if (rc)
-> +		return rc;
-> +
-> +	rc = npcm_video_setup_video(video);
-> +	if (rc)
-> +		return rc;
-> +
-> +	dev_info(video->dev, "NPCM video driver probed\n");
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_remove(struct platform_device *pdev)
-> +{
-> +	struct device *dev = &pdev->dev;
-> +	struct v4l2_device *v4l2_dev = dev_get_drvdata(dev);
-> +	struct npcm_video *video = to_npcm_video(v4l2_dev);
-> +
-> +	video_unregister_device(&video->vdev);
-> +	vb2_queue_release(&video->queue);
-> +	v4l2_ctrl_handler_free(&video->ctrl_handler);
-> +	v4l2_device_unregister(v4l2_dev);
-> +	npcm_video_ece_stop(video);
-> +	of_reserved_mem_device_release(dev);
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct of_device_id npcm_video_match[] = {
-> +	{ .compatible = "nuvoton,npcm750-vcd" },
-> +	{ .compatible = "nuvoton,npcm845-vcd" },
-> +	{},
-> +};
-> +
-> +MODULE_DEVICE_TABLE(of, npcm_video_match);
-> +
-> +static struct platform_driver npcm_video_driver = {
-> +	.driver = {
-> +		.name = DEVICE_NAME,
-> +		.of_match_table = npcm_video_match,
-> +	},
-> +	.probe = npcm_video_probe,
-> +	.remove = npcm_video_remove,
-> +};
-> +
-> +module_platform_driver(npcm_video_driver);
-> +
-> +MODULE_AUTHOR("Joseph Liu <kwliu@nuvoton.com>");
-> +MODULE_AUTHOR("Marvin Lin <kflin@nuvoton.com>");
-> +MODULE_DESCRIPTION("Driver for Nuvoton NPCM Video Capture/Encode Engine");
-> +MODULE_LICENSE("GPL v2");
+Hi Dhanasekar,
 
-Regards,
+=C2=A0
 
-	Hans
+Algorithms or Steps for implementing functionalities (SOL, PostCode, ) will=
+ be same.
+
+=C2=A0
+
+Thanks,
+
+Supreeth Venkatesh
+
+System Manageability Architect=C2=A0=C2=A0|=C2=A0=C2=A0AMD
+ Server Software
+
+
+
+=C2=A0
+
+From: J Dhanasekar <mailto:jdhanasekar@velankanigroup.com>=20
+ Sent: Tuesday, July 25, 2023 8:09 AM
+ To: Venkatesh, Supreeth <mailto:Supreeth.Venkatesh@amd.com>
+ Cc: Lei Yu <mailto:yulei.sh@bytedance.com>; Michael Shen <mailto:gpgpgp@go=
+ogle.com>; openbmc <mailto:openbmc@lists.ozlabs.org>; dhruvaraj S <mailto:d=
+hruvaraj@gmail.com>; Brad Bishop <mailto:bradleyb@fuzziesquirrel.com>; Ed T=
+anous <mailto:ed@tanous.net>; Dhandapani, Abinaya <mailto:Abinaya.Dhandapan=
+i@amd.com>
+ Subject: RE: [RFC] BMC RAS Feature
+
+
+=C2=A0
+
+
+
+Caution: This message originated from an External Source. Use proper cautio=
+n when opening attachments, clicking links, or responding.
+
+
+
+
+
+
+=C2=A0
+
+=C2=A0
+
+
+Hi Supreeth,=C2=A0
+
+
+=C2=A0
+
+
+I am working on SP5 Servers too. SP5 Servers has aspeed 2600 chip and=C2=A0=
+ BMC is off the board whereas EthanolX/Daytonax has 2500 and BMC is on the =
+board.=C2=A0
+
+
+Algorithms or Steps for implementing functionalities (SOL, PostCode, PSU..)=
+ will=C2=A0=C2=A0remain the same?.=C2=A0
+
+
+=C2=A0
+
+
+Thanks,
+
+
+Dhanasekar
+
+
+=C2=A0
+
+
+
+=C2=A0
+
+
+=C2=A0
+
+
+=C2=A0
+
+
+---- On Mon, 24 Jul 2023 19:44:52 +0530 Venkatesh, Supreeth <mailto:Supreet=
+h.Venkatesh@amd.com> wrote ---
+
+
+=C2=A0
+
+
+[AMD Official Use Only - General]
+
+=C2=A0
+
+Hi Dhanasekar,
+
+=C2=A0
+
+DaytonaX and EthanolX platforms were only OpenBMC PoC with limited function=
+ality.
+
+We are in the process of upstreaming new AMD CRBs with OpenBMC which has al=
+l the functionality you mention below.
+
+Public instance of the staging/intermediary repository before upstream is h=
+ere:
+
+https://github.com/AMDESE/OpenBMC
+
+=C2=A0
+
+Thanks,
+
+Supreeth Venkatesh
+
+System Manageability Architect=C2=A0=C2=A0|=C2=A0=C2=A0AMD
+ Server Software
+
+
+
+=C2=A0
+
+From: J Dhanasekar <mailto:jdhanasekar@velankanigroup.com>=20
+ Sent: Monday, July 24, 2023 8:04 AM
+ To: Venkatesh, Supreeth <mailto:Supreeth.Venkatesh@amd.com>
+ Cc: Lei Yu <mailto:yulei.sh@bytedance.com>; Zane Shelley <mailto:zshelle@i=
+map.linux.ibm.com>; Michael Shen <mailto:gpgpgp@google.com>;
+ openbmc <mailto:openbmc@lists.ozlabs.org>; dhruvaraj S <mailto:dhruvaraj@g=
+mail.com>; Brad Bishop <mailto:bradleyb@fuzziesquirrel.com>;
+ Ed Tanous <mailto:ed@tanous.net>; Dhandapani, Abinaya <mailto:Abinaya.Dhan=
+dapani@amd.com>
+ Subject: RE: [RFC] BMC RAS Feature
+
+
+=C2=A0
+
+
+
+Caution: This message originated from an External Source. Use proper cautio=
+n when opening attachments, clicking links, or responding.
+
+
+
+
+
+
+=C2=A0
+
+Hi Supreeth,
+
+
+=C2=A0
+
+
+Thanks for the info. We hoped that Daytonax would be upstreamed. Unfortunat=
+ely, It is not available.=C2=A0
+
+
+Actually, we need to enable SOL, Post code and PSU features in Daytona.=C2=
+=A0 Will we get support for this feature enablement? or Are there any refer=
+ence=C2=A0implementation
+ available for AMD boards?.
+
+
+=C2=A0
+
+
+Thanks,
+
+
+Dhanasekar
+
+
+=C2=A0
+
+
+=C2=A0
+
+
+=C2=A0
+
+
+---- On Fri, 21 Jul 2023 19:33:41 +0530 Venkatesh, Supreeth <mailto:Supreet=
+h.Venkatesh@amd.com> wrote ---
+
+
+=C2=A0
+
+
+[AMD Official Use Only - General]
+
+=C2=A0
+
+
+Hi Dhanasekar,
+
+=C2=A0
+
+It is supported for EPYC Genoa family and beyond at this time.
+
+Daytona uses EPYC Milan family and support is not there in that.
+
+=C2=A0
+
+Thanks,
+
+Supreeth Venkatesh
+
+System Manageability Architect=C2=A0=C2=A0|=C2=A0=C2=A0AMD
+ Server Software
+
+
+
+=C2=A0
+
+From: J Dhanasekar <mailto:jdhanasekar@velankanigroup.com>=20
+ Sent: Friday, July 21, 2023 5:30 AM
+ To: Venkatesh, Supreeth <mailto:Supreeth.Venkatesh@amd.com>
+ Cc: Zane Shelley <mailto:zshelle@imap.linux.ibm.com>; Lei Yu <mailto:yulei=
+.sh@bytedance.com>; Michael Shen <mailto:gpgpgp@google.com>;
+ openbmc <mailto:openbmc@lists.ozlabs.org>; dhruvaraj S <mailto:dhruvaraj@g=
+mail.com>; Brad Bishop <mailto:bradleyb@fuzziesquirrel.com>;
+ Ed Tanous <mailto:ed@tanous.net>; Dhandapani, Abinaya <mailto:Abinaya.Dhan=
+dapani@amd.com>
+ Subject: Re: [RFC] BMC RAS Feature
+
+
+=C2=A0
+
+
+
+Caution: This message originated from an External Source. Use proper cautio=
+n when opening attachments, clicking links, or responding.
+
+
+
+
+
+
+=C2=A0
+
+Hi Supreeth Venkatesh,
+
+
+=C2=A0
+
+
+Does this RAS feature work for the Daytona Platform.=C2=A0 i have been work=
+ing in openBMC development for the Daytonax platform.=C2=A0
+
+
+If this RAS works for Daytona Platform. I will include it in my project.=C2=
+=A0
+
+
+=C2=A0
+
+
+Please provide your suggestions.=C2=A0
+
+
+=C2=A0
+
+
+Thanks,
+
+
+Dhanasekar
+
+
+=C2=A0
+
+
+=C2=A0
+
+
+
+=C2=A0
+
+
+=C2=A0
+
+
+=C2=A0
+
+
+---- On Mon, 03 Apr 2023 22:06:24 +0530 Supreeth Venkatesh <mailto:supreeth=
+.venkatesh@amd.com> wrote ---
+
+
+=C2=A0
+
+
+
+On 3/23/23 13:57, Zane Shelley wrote:
+ > Caution: This message originated from an External Source. Use proper=20
+ > caution when opening attachments, clicking links, or responding.=20
+ >=20
+ >=20
+ > On 2023-03-22 19:07, Supreeth Venkatesh wrote: =20
+ >> On 3/22/23 02:10, Lei Yu wrote:=20
+ >>> Caution: This message originated from an External Source. Use proper=
+=20
+ >>> caution when opening attachments, clicking links, or responding.=20
+ >>>=20
+ >>>=20
+ >>>>> On Tue, 21 Mar 2023 at 20:38, Supreeth Venkatesh=20
+ >>>>> <mailto:supreeth.venkatesh@amd.com> wrote:=20
+ >>>>>=20
+ >>>>>=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 On 3/21/23 05:40, Patrick Williams wrote:=
+=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 > On Tue, Mar 21, 2023 at 12:14:45AM -0500,=
+ Supreeth Venkatesh=20
+ >>>>> wrote:=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 >=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 >> #### Alternatives Considered=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 >>=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 >> In-band mechanisms using System Manageme=
+nt Mode (SMM)=20
+ >>>>> exists.=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 >>=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 >> However, out of band method to gather RA=
+S data is processor=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 specific.=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 >>=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 > How does this compare with existing imple=
+mentations in=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 > phosphor-debug-collector.=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 Thanks for your feedback. See below. =20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 > I believe there was some attempt to exten=
+d=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 > P-D-C previously to handle Intel's crashd=
+ump behavior.=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 Intel's crashdump interface uses com.intel.=
+crashdump.=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 We have implemented com.amd.crashdump based=
+ on that reference.=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 However,=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 can this be made generic?=20
+ >>>>>=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 PoC below:=20
+ >>>>>=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 busctl tree com.amd.crashdump=20
+ >>>>>=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 =E2=94=94=E2=94=80/com=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =E2=94=94=E2=94=80/com/am=
+d=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =E2=94=94=E2=
+=94=80/com/amd/crashdump=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+=E2=94=9C=E2=94=80/com/amd/crashdump/0=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+=E2=94=9C=E2=94=80/com/amd/crashdump/1=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+=E2=94=9C=E2=94=80/com/amd/crashdump/2=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+=E2=94=9C=E2=94=80/com/amd/crashdump/3=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+=E2=94=9C=E2=94=80/com/amd/crashdump/4=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+=E2=94=9C=E2=94=80/com/amd/crashdump/5=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+=E2=94=9C=E2=94=80/com/amd/crashdump/6=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+=E2=94=9C=E2=94=80/com/amd/crashdump/7=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+=E2=94=9C=E2=94=80/com/amd/crashdump/8=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =
+=E2=94=94=E2=94=80/com/amd/crashdump/9=20
+ >>>>>=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 > The repository=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 > currently handles IBM's processors, I thi=
+nk, or maybe that is=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 covered by=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 > openpower-debug-collector.=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 >=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 > In any case, I think you should look at t=
+he existing D-Bus=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 interfaces=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 > (and associated Redfish implementation) o=
+f these repositories=20
+ >>>>> and=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 > determine if you can use those approaches=
+ (or document why=20
+ >>>>> now).=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 I could not find an existing D-Bus interfac=
+e for RAS in=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 xyz/openbmc_project/.=20
+ >>>>> =C2=A0=C2=A0=C2=A0=C2=A0 It would be helpful if you could point me t=
+o it.=20
+ >>>>>=20
+ >>>>>=20
+ >>>>> There is an interface for the dumps generated from the host, which=
+=20
+ >>>>> can=20
+ >>>>> be used for these kinds of dumps=20
+ >>>>> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml=
+/xyz/openbmc_project/Dump/Entry/System.interface.yaml=20
+ >>>>>=20
+ >>>>>=20
+ >>>>> The fault log also provides similar dumps =20
+ >>>>> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml=
+/xyz/openbmc_project/Dump/Entry/FaultLog.interface.yaml=20
+ >>>>>=20
+ >>>>>=20
+ >>>> ThanksDdhruvraj. The interface looks useful for the purpose. However,=
+=20
+ >>>> the current BMCWEB implementation references =20
+ >>>> https://github.com/openbmc/bmcweb/blob/master/redfish-core/lib/log_se=
+rvices.hpp=20
+ >>>>=20
+ >>>> [com.intel.crashdump]=20
+ >>>> constexpr char const* crashdumpPath =3D "/com/intel/crashdump";=20
+ >>>>=20
+ >>>> constexpr char const* crashdumpInterface =3D "com.intel.crashdump";=
+=20
+ >>>> constexpr char const* crashdumpObject =3D "com.intel.crashdump";=20
+ >>>>=20
+ >>>> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/=
+xyz/openbmc_project/Dump/Entry/System.interface.yaml=20
+ >>>>=20
+ >>>> or=20
+ >>>> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/=
+xyz/openbmc_project/Dump/Entry/FaultLog.interface.yaml=20
+ >>>>=20
+ >>>> is it exercised in Redfish logservices? =20
+ >>> In our practice, a plugin `tools/dreport.d/plugins.d/acddump` is added=
+=20
+ >>> to copy the crashdump json file to the dump tarball.=20
+ >>> The crashdump tool (Intel or AMD) could trigger a dump after the=20
+ >>> crashdump is completed, and then we could get a dump entry containing=
+=20
+ >>> the crashdump.=20
+ >> Thanks Lei Yu for your input. We are using Redfish to retrieve the=20
+ >> CPER binary file which can then be passed through a plugin/script for=
+=20
+ >> detailed analysis.=20
+ >> In any case irrespective of whichever Dbus interface we use, we need a=
+=20
+ >> repository which will gather data from AMD processor via APML as per=20
+ >> AMD design.=20
+ >> APML=20
+ >> Spec: https://www.amd.com/system/files/TechDocs/57019-A0-PUB_3.00.zip=
+=20
+ >> Can someone please help create bmc-ras or amd-debug-collector=20
+ >> repository as there are instances of openpower-debug-collector=20
+ >> repository used for Open Power systems?=20
+ >>>=20
+ >>>=20
+ >>> --=20
+ >>> BRs,=20
+ >>> Lei YU=20
+ > I am interested in possibly standardizing some of this. IBM POWER has=20
+ > several related components. openpower-hw-diags is a service that will=20
+ > listen for the hardware interrupts via a GPIO pin. When an error is=20
+ > detected, it will use openpower-libhei to query hardware registers to=20
+ > determine what happened. Based on that information openpower-hw-diags=20
+ > will generate a PEL, which is an extended log in phosphor-logging, that=
+=20
+ > is used to tell service what to replace if necessary. Afterward,=20
+ > openpower-hw-diags will initiate openpower-debug-collector, which=20
+ > gathers a significant amount of data from the hardware for additional=20
+ > debug when necessary. I wrote openpower-libhei to be fairly agnostic. It=
+=20
+ > uses data files (currently XML, but moving to JSON) to define register=
+=20
+ > addresses and rules for isolation. openpower-hw-diags is fairly POWER=20
+ > specific, but I can see some parts can be made generic. Dhruv would have=
+=20
+ > to help with openpower-debug-collector.=20
+ Thank you. Lets collaborate in standardizing some aspects of it.=20
+ >=20
+ > Regarding creation of a new repository, I think we'll need to have some=
+=20
+ > more collaboration to determine the scope before creating it. It=20
+ > certainly sounds like we are doing similar things, but we need to=20
+ > determine if enough can be abstracted to make it worth our time.=20
+ I have put in a request here:=20
+ https://github.com/openbmc/technical-oversight-forum/issues/24=20
+ Please chime in.
+
+
+
+=C2=A0
+
+
+
+=C2=A0
+
+
+
+
+
+
+
+=C2=A0
+
+
+
+=C2=A0
+
+
+
+
+
+
+
+=C2=A0
+
+
+
+=C2=A0
+------=_Part_3582874_321889682.1690453206575
+Content-Type: multipart/related; 
+	boundary="----=_Part_3582875_650366529.1690453206594"
+
+------=_Part_3582875_650366529.1690453206594
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"><html><head>=
+<meta content=3D"text/html;charset=3DUTF-8" http-equiv=3D"Content-Type"></h=
+ead><body ><div style=3D"font-family: Verdana, Arial, Helvetica, sans-serif=
+; font-size: 10pt;"><div>Hi Supreeth,<br></div><div><br></div><div>Thanks f=
+or the info.&nbsp;<br></div><div><br></div><div>-dhanasekar</div><div><br><=
+/div><div id=3D"Zm-_Id_-Sgn" data-zbluepencil-ignore=3D"true" data-sigid=3D=
+"818525000000014003"><div><br></div></div><div><br></div><div class=3D"zmai=
+l_extra_hr" style=3D"border-top: 1px solid rgb(204, 204, 204); height: 0px;=
+ margin-top: 10px; margin-bottom: 10px; line-height: 0px;"><br></div><div c=
+lass=3D"zmail_extra" data-zbluepencil-ignore=3D"true"><div><br></div><div i=
+d=3D"Zm-_Id_-Sgn1">---- On Tue, 25 Jul 2023 19:32:59 +0530 <b>Venkatesh, Su=
+preeth &lt;Supreeth.Venkatesh@amd.com&gt;</b> wrote ---<br></div><div><br><=
+/div><blockquote id=3D"blockquote_zmail" style=3D"margin: 0px;"><div style=
+=3D"" class=3D"zm_2780300716037695690_parse_-2728473581824202017"><p style=
+=3D"margin: 5pt; font-style: normal; font-weight: normal; text-decoration: =
+none;"><span class=3D"colour" style=3D"color:rgb(0, 0, 255)"><span class=3D=
+"font" style=3D"font-family:Arial"><span class=3D"size" style=3D"font-size:=
+ 10pt; margin: 5pt; font-style: normal; font-weight: normal; text-decoratio=
+n: none;">[AMD Official Use Only - General]<br></span></span></span></p><br=
+><div><div class=3D"x_-1155238930WordSection1"><p class=3D"" style=3D"margi=
+n-top: 0px; margin-bottom: 0px;"><span class=3D"colour" style=3D"color:rgb(=
+34, 34, 34)"><span class=3D"font" style=3D"font-family:Arial, sans-serif"><=
+span class=3D"size" style=3D"font-size:12pt">Hi Dhanasekar,</span></span></=
+span><br></p><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><=
+span class=3D"colour" style=3D"color:rgb(34, 34, 34)"><span class=3D"font" =
+style=3D"font-family:Arial, sans-serif"><span class=3D"size" style=3D"font-=
+size:12pt">&nbsp;</span></span></span><br></p><p class=3D"" style=3D"margin=
+-top: 0px; margin-bottom: 0px;"><span class=3D"colour" style=3D"color:rgb(3=
+4, 34, 34)"><span class=3D"font" style=3D"font-family:Arial, sans-serif"><s=
+pan class=3D"size" style=3D"font-size:12pt">Algorithms or Steps for impleme=
+nting functionalities (SOL, PostCode, ) will be same.</span></span></span><=
+br></p><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;">&nbsp;<=
+br></p><div><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><s=
+pan class=3D"colour" style=3D"color:black"><span class=3D"font" style=3D"fo=
+nt-family:Arial, sans-serif"><span class=3D"size" style=3D"font-size:10pt">=
+Thanks,</span></span></span><br></p><p class=3D"" style=3D"margin-top: 0px;=
+ margin-bottom: 0px;"><b><span class=3D"colour" style=3D"color:black"><span=
+ class=3D"font" style=3D"font-family:Arial, sans-serif"><span class=3D"size=
+" style=3D"font-size:10pt">Supreeth Venkatesh</span></span></span></b><span=
+ class=3D"colour" style=3D"color:black"><span class=3D"font" style=3D"font-=
+family:Arial, sans-serif"><span class=3D"size" style=3D"font-size:10pt"></s=
+pan></span></span><br></p><p class=3D"" style=3D"margin-top: 0px; margin-bo=
+ttom: 0px;"><span class=3D"colour" style=3D"color:black"><span class=3D"fon=
+t" style=3D"font-family:Arial, sans-serif"><span class=3D"size" style=3D"fo=
+nt-size:9pt">System Manageability Architect&nbsp;&nbsp;|<b>&nbsp;&nbsp;AMD<=
+/b><br> Server Software</span></span></span></p><p class=3D"" style=3D"marg=
+in-top: 0px; margin-bottom: 0px;"><span class=3D"colour" style=3D"color:bla=
+ck"><span class=3D"font" style=3D"font-family:Arial, sans-serif"><img width=
+=3D"1.5625in" height=3D"0.3645in" style=3D"width: 1.5625in;height: 0.3645in=
+;" src=3D"cid:image001.png@01D9BED6.CE5EAC10"></span></span><br></p></div><=
+p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;">&nbsp;<br></p><=
+div><div style=3D"border: none;border-top: solid rgb(225,225,225) 1.0pt;pad=
+ding: 3.0pt 0.0in 0.0in 0.0in;"><p class=3D"" style=3D"margin-top: 0px; mar=
+gin-bottom: 0px;"><b>From:</b> J Dhanasekar &lt;<a href=3D"mailto:jdhanasek=
+ar@velankanigroup.com" target=3D"_blank">jdhanasekar@velankanigroup.com</a>=
+&gt; <br> <b>Sent:</b> Tuesday, July 25, 2023 8:09 AM<br> <b>To:</b> Venkat=
+esh, Supreeth &lt;<a href=3D"mailto:Supreeth.Venkatesh@amd.com" target=3D"_=
+blank">Supreeth.Venkatesh@amd.com</a>&gt;<br> <b>Cc:</b> Lei Yu &lt;<a href=
+=3D"mailto:yulei.sh@bytedance.com" target=3D"_blank">yulei.sh@bytedance.com=
+</a>&gt;; Michael Shen &lt;<a href=3D"mailto:gpgpgp@google.com" target=3D"_=
+blank">gpgpgp@google.com</a>&gt;; openbmc &lt;<a href=3D"mailto:openbmc@lis=
+ts.ozlabs.org" target=3D"_blank">openbmc@lists.ozlabs.org</a>&gt;; dhruvara=
+j S &lt;<a href=3D"mailto:dhruvaraj@gmail.com" target=3D"_blank">dhruvaraj@=
+gmail.com</a>&gt;; Brad Bishop &lt;<a href=3D"mailto:bradleyb@fuzziesquirre=
+l.com" target=3D"_blank">bradleyb@fuzziesquirrel.com</a>&gt;; Ed Tanous &lt=
+;<a href=3D"mailto:ed@tanous.net" target=3D"_blank">ed@tanous.net</a>&gt;; =
+Dhandapani, Abinaya &lt;<a href=3D"mailto:Abinaya.Dhandapani@amd.com" targe=
+t=3D"_blank">Abinaya.Dhandapani@amd.com</a>&gt;<br> <b>Subject:</b> RE: [RF=
+C] BMC RAS Feature</p></div></div><p class=3D"" style=3D"margin-top: 0px; m=
+argin-bottom: 0px;">&nbsp;<br></p><table class=3D"x_-1155238930MsoNormalTab=
+le" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" align=3D"left" width=
+=3D"100%" style=3D"width: 100.0%;"><tbody><tr><td style=3D"background: rgb(=
+255,185,0);padding: 5.0pt 2.0pt 5.0pt 2.0pt;"><br></td><td width=3D"100%" s=
+tyle=3D"width: 100.0%;background: rgb(255,248,229);padding: 5.0pt 4.0pt 5.0=
+pt 12.0pt;"><div><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px=
+;"><b><span class=3D"colour" style=3D"color:rgb(34, 34, 34)">Caution:</span=
+></b><span class=3D"colour" style=3D"color:rgb(34, 34, 34)"> This message o=
+riginated from an External Source. Use proper caution when opening attachme=
+nts, clicking links, or responding.</span><br></p></div></td></tr></tbody><=
+/table><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;">&nbsp;<=
+br></p><div><div><div><p class=3D"" style=3D"margin-top: 0px; margin-bottom=
+: 0px;"><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><spa=
+n class=3D"size" style=3D"font-size:10pt">&nbsp;</span></span><br></p></div=
+><div><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span cl=
+ass=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"size"=
+ style=3D"font-size:10pt">Hi Supreeth,&nbsp;</span></span><br></p></div><di=
+v><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=
+=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"size" st=
+yle=3D"font-size:10pt">&nbsp;</span></span><br></p></div><div><p class=3D""=
+ style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"colour" styl=
+e=3D"color:rgb(34, 34, 34)"><span class=3D"font" style=3D"font-family:Arial=
+, sans-serif"><span class=3D"size" style=3D"font-size:12pt">I am working on=
+ SP5 Servers too. SP5 Servers has aspeed 2600 chip and&nbsp; BMC is off the=
+ board whereas EthanolX/Daytonax has 2500 and BMC is on the board.&nbsp;</s=
+pan></span></span><br></p></div><div><p class=3D"" style=3D"margin-top: 0px=
+; margin-bottom: 0px;"><span class=3D"colour" style=3D"color:rgb(34, 34, 34=
+)"><span class=3D"font" style=3D"font-family:Arial, sans-serif"><span class=
+=3D"size" style=3D"font-size:12pt">Algorithms or Steps for implementing fun=
+ctionalities (SOL, PostCode, PSU..) will&nbsp;&nbsp;remain the same?.&nbsp;=
+</span></span></span><br></p></div><div><p class=3D"" style=3D"margin-top: =
+0px; margin-bottom: 0px;"><span class=3D"font" style=3D"font-family:Verdana=
+, sans-serif"><span class=3D"size" style=3D"font-size:10pt">&nbsp;</span></=
+span><br></p></div><div><p class=3D"" style=3D"margin-top: 0px; margin-bott=
+om: 0px;"><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><s=
+pan class=3D"size" style=3D"font-size:10pt">Thanks,</span></span><br></p></=
+div><div><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span=
+ class=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"si=
+ze" style=3D"font-size:10pt">Dhanasekar</span></span><br></p></div><div id=
+=3D"x_-1155238930Zm-_Id_-Sgn"><div><p class=3D"" style=3D"margin-top: 0px; =
+margin-bottom: 0px;"><span class=3D"font" style=3D"font-family:Verdana, san=
+s-serif"><span class=3D"size" style=3D"font-size:10pt">&nbsp;</span></span>=
+<br></p></div></div><div><p class=3D"" style=3D"margin-top: 0px; margin-bot=
+tom: 0px;"><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><=
+span class=3D"size" style=3D"font-size:10pt">&nbsp;</span></span><br></p></=
+div><div style=3D"border: none;border-top: solid rgb(204,204,204) 1.0pt;pad=
+ding: 0.0in 0.0in 0.0in 0.0in;margin-top: 7.5pt;margin-bottom: 7.5pt;"><p c=
+lass=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"fon=
+t" style=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"=
+font-size:10pt">&nbsp;</span></span><br></p></div><div><div><p class=3D"" s=
+tyle=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"font" style=3D=
+"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:1=
+0pt">&nbsp;</span></span><br></p></div><div id=3D"x_-1155238930Zm-_Id_-Sgn1=
+"><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=
+=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"size" st=
+yle=3D"font-size:10pt">---- On Mon, 24 Jul 2023 19:44:52 +0530 <b>Venkatesh=
+, Supreeth &lt;<a href=3D"mailto:Supreeth.Venkatesh@amd.com" target=3D"_bla=
+nk">Supreeth.Venkatesh@amd.com</a>&gt;</b> wrote ---</span></span><br></p><=
+/div><div><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><spa=
+n class=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"s=
+ize" style=3D"font-size:10pt">&nbsp;</span></span><br></p></div><blockquote=
+ id=3D"x_-1155238930blockquote_zmail" style=3D"margin: 0px;"><div><p style=
+=3D"margin-right: 5.0pt;margin-bottom: 0.0in;margin-left: 5.0pt;"><span cla=
+ss=3D"x_-1155238930size"><span class=3D"colour" style=3D"color:blue"><span =
+class=3D"font" style=3D"font-family:Arial, sans-serif"><span class=3D"size"=
+ style=3D"font-size:10pt">[AMD Official Use Only - General]</span></span></=
+span></span><span class=3D"font" style=3D"font-family:Verdana, sans-serif">=
+<span class=3D"size" style=3D"font-size:10pt"></span></span><br></p><p clas=
+s=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"font" =
+style=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"fon=
+t-size:10pt">&nbsp;</span></span><br></p><div><div><p class=3D"" style=3D"m=
+argin-top: 0px; margin-bottom: 0px;"><span class=3D"font" style=3D"font-fam=
+ily:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt">Hi D=
+hanasekar,</span></span><br></p><p class=3D"" style=3D"margin-top: 0px; mar=
+gin-bottom: 0px;"><span class=3D"font" style=3D"font-family:Verdana, sans-s=
+erif"><span class=3D"size" style=3D"font-size:10pt">&nbsp;</span></span><br=
+></p><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span cla=
+ss=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"size" =
+style=3D"font-size:10pt">DaytonaX and EthanolX platforms were only OpenBMC =
+PoC with limited functionality.</span></span><br></p><p class=3D"" style=3D=
+"margin-top: 0px; margin-bottom: 0px;"><span class=3D"font" style=3D"font-f=
+amily:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt">We=
+ are in the process of upstreaming new AMD CRBs with OpenBMC which has all =
+the functionality you mention below.</span></span><br></p><p class=3D"" sty=
+le=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"font" style=3D"f=
+ont-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10p=
+t">Public instance of the staging/intermediary repository before upstream i=
+s here:</span></span><br></p><p class=3D"" style=3D"margin-top: 0px; margin=
+-bottom: 0px;"><span class=3D"font" style=3D"font-family:Verdana, sans-seri=
+f"><span class=3D"size" style=3D"font-size:10pt"><a href=3D"https://github.=
+com/AMDESE/OpenBMC" target=3D"_blank">AMDESE/OpenBMC: OpenBMC for Genoa SP5=
+ socket platforms (github.com)</a></span></span><br></p><p class=3D"" style=
+=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"font" style=3D"fon=
+t-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt"=
+>&nbsp;</span></span><br></p><div><p class=3D"" style=3D"margin-top: 0px; m=
+argin-bottom: 0px;"><span class=3D"x_-1155238930size"><span class=3D"colour=
+" style=3D"color:black"><span class=3D"font" style=3D"font-family:Arial, sa=
+ns-serif"><span class=3D"size" style=3D"font-size:10pt">Thanks,</span></spa=
+n></span></span><span class=3D"font" style=3D"font-family:Verdana, sans-ser=
+if"><span class=3D"size" style=3D"font-size:10pt"></span></span><br></p><p =
+class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"x_=
+-1155238930size"><b><span class=3D"colour" style=3D"color:black"><span clas=
+s=3D"font" style=3D"font-family:Arial, sans-serif"><span class=3D"size" sty=
+le=3D"font-size:10pt">Supreeth Venkatesh</span></span></span></b></span><sp=
+an class=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"=
+size" style=3D"font-size:10pt"></span></span><br></p><p class=3D"" style=3D=
+"margin-top: 0px; margin-bottom: 0px;"><span class=3D"x_-1155238930size"><s=
+pan class=3D"colour" style=3D"color:black"><span class=3D"font" style=3D"fo=
+nt-family:Arial, sans-serif"><span class=3D"size" style=3D"font-size:9pt">S=
+ystem Manageability Architect&nbsp;&nbsp;|<b>&nbsp;&nbsp;AMD</b></span></sp=
+an></span></span><span class=3D"colour" style=3D"color:black"><span class=
+=3D"font" style=3D"font-family:Arial, sans-serif"><span class=3D"size" styl=
+e=3D"font-size:9pt"><br> <span class=3D"x_-1155238930size">Server Software<=
+/span></span></span></span><span class=3D"font" style=3D"font-family:Verdan=
+a, sans-serif"><span class=3D"size" style=3D"font-size:10pt"></span></span>=
+</p><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span clas=
+s=3D"colour" style=3D"color:black"><span class=3D"font" style=3D"font-famil=
+y:Arial, sans-serif"><span class=3D"size" style=3D"font-size:10pt"><img bor=
+der=3D"0" width=3D"1.5625in" height=3D"0.3645in" style=3D"width: 1.5625in;h=
+eight: 0.3645in;" src=3D"cid:image001.png@01D9BED6.CE5EAC10"></span></span>=
+</span><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span=
+ class=3D"size" style=3D"font-size:10pt"></span></span><br></p></div><p cla=
+ss=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"font"=
+ style=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"fo=
+nt-size:10pt">&nbsp;</span></span><br></p><div><div style=3D"border: none;b=
+order-top: solid rgb(225,225,225) 1.0pt;padding: 3.0pt 0.0in 0.0in 0.0in;">=
+<p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><b><span class=
+=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"size" st=
+yle=3D"font-size:10pt">From:</span></span></b><span class=3D"font" style=3D=
+"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:1=
+0pt"> J Dhanasekar &lt;<a href=3D"mailto:jdhanasekar@velankanigroup.com" ta=
+rget=3D"_blank">jdhanasekar@velankanigroup.com</a>&gt; <br> <b>Sent:</b> Mo=
+nday, July 24, 2023 8:04 AM<br> <b>To:</b> Venkatesh, Supreeth &lt;<a href=
+=3D"mailto:Supreeth.Venkatesh@amd.com" target=3D"_blank">Supreeth.Venkatesh=
+@amd.com</a>&gt;<br> <b>Cc:</b> Lei Yu &lt;<a href=3D"mailto:yulei.sh@byted=
+ance.com" target=3D"_blank">yulei.sh@bytedance.com</a>&gt;; Zane Shelley &l=
+t;<a href=3D"mailto:zshelle@imap.linux.ibm.com" target=3D"_blank">zshelle@i=
+map.linux.ibm.com</a>&gt;; Michael Shen &lt;<a href=3D"mailto:gpgpgp@google=
+.com" target=3D"_blank">gpgpgp@google.com</a>&gt;;
+ openbmc &lt;<a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">=
+openbmc@lists.ozlabs.org</a>&gt;; dhruvaraj S &lt;<a href=3D"mailto:dhruvar=
+aj@gmail.com" target=3D"_blank">dhruvaraj@gmail.com</a>&gt;; Brad Bishop &l=
+t;<a href=3D"mailto:bradleyb@fuzziesquirrel.com" target=3D"_blank">bradleyb=
+@fuzziesquirrel.com</a>&gt;;
+ Ed Tanous &lt;<a href=3D"mailto:ed@tanous.net" target=3D"_blank">ed@tanous=
+.net</a>&gt;; Dhandapani, Abinaya &lt;<a href=3D"mailto:Abinaya.Dhandapani@=
+amd.com" target=3D"_blank">Abinaya.Dhandapani@amd.com</a>&gt;<br> <b>Subjec=
+t:</b> RE: [RFC] BMC RAS Feature</span></span></p></div></div><p class=3D""=
+ style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"font" style=
+=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-siz=
+e:10pt">&nbsp;</span></span><br></p><table class=3D"x_-1155238930MsoNormalT=
+able" border=3D"0" cellspacing=3D"0" cellpadding=3D"0" align=3D"left" width=
+=3D"100%" style=3D"width: 100.0%;"><tbody><tr><td style=3D"background: rgb(=
+255,185,0);padding: 5.0pt 2.0pt 5.0pt 2.0pt;"><br></td><td width=3D"100%" s=
+tyle=3D"width: 100.0%;background: rgb(255,248,229);padding: 5.0pt 4.0pt 5.0=
+pt 12.0pt;"><div><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px=
+;"><span class=3D"x_-1155238930colour"><b><span class=3D"colour" style=3D"c=
+olor:rgb(34, 34, 34)">Caution:</span></b><span class=3D"colour" style=3D"co=
+lor:rgb(34, 34, 34)"> This message originated from an External Source. Use =
+proper caution when opening attachments, clicking links, or responding.</sp=
+an></span><br></p></div></td></tr></tbody></table><p class=3D"" style=3D"ma=
+rgin-top: 0px; margin-bottom: 0px;"><span class=3D"font" style=3D"font-fami=
+ly:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt">&nbsp=
+;</span></span><br></p><div><div><div><p class=3D"" style=3D"margin-top: 0p=
+x; margin-bottom: 0px;"><span class=3D"x_-1155238930size"><span class=3D"fo=
+nt" style=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D=
+"font-size:10pt">Hi Supreeth,</span></span></span><span class=3D"font" styl=
+e=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-si=
+ze:10pt"></span></span><br></p></div><div><p class=3D"" style=3D"margin-top=
+: 0px; margin-bottom: 0px;"><span class=3D"x_-1155238930size"><span class=
+=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"size" st=
+yle=3D"font-size:10pt">&nbsp;</span></span></span><span class=3D"font" styl=
+e=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-si=
+ze:10pt"></span></span><br></p></div><div><p class=3D"" style=3D"margin-top=
+: 0px; margin-bottom: 0px;"><span class=3D"x_-1155238930size"><span class=
+=3D"colour" style=3D"color:rgb(34, 34, 34)"><span class=3D"font" style=3D"f=
+ont-family:Arial, sans-serif"><span class=3D"size" style=3D"font-size:12pt"=
+>Thanks for the info. We hoped that Daytonax would be upstreamed. Unfortuna=
+tely, It is not available.&nbsp;</span></span></span></span><span class=3D"=
+font" style=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=
+=3D"font-size:10pt"></span></span><br></p></div><div><p class=3D"" style=3D=
+"margin-top: 0px; margin-bottom: 0px;"><span class=3D"x_-1155238930size"><s=
+pan class=3D"colour" style=3D"color:rgb(34, 34, 34)"><span class=3D"font" s=
+tyle=3D"font-family:Arial, sans-serif"><span class=3D"size" style=3D"font-s=
+ize:12pt">Actually, we need to enable SOL, Post code and PSU features in Da=
+ytona.&nbsp; Will we get support for this feature enablement? or Are there =
+any reference&nbsp;implementation
+ available for AMD boards?.</span></span></span></span><span class=3D"font"=
+ style=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"fo=
+nt-size:10pt"></span></span><br></p></div><div><p class=3D"" style=3D"margi=
+n-top: 0px; margin-bottom: 0px;"><span class=3D"x_-1155238930size"><span cl=
+ass=3D"colour" style=3D"color:rgb(34, 34, 34)"><span class=3D"font" style=
+=3D"font-family:Arial, sans-serif"><span class=3D"size" style=3D"font-size:=
+12pt">&nbsp;</span></span></span></span><span class=3D"font" style=3D"font-=
+family:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt"><=
+/span></span><br></p></div><div><p class=3D"" style=3D"margin-top: 0px; mar=
+gin-bottom: 0px;"><span class=3D"x_-1155238930size"><span class=3D"font" st=
+yle=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-=
+size:10pt">Thanks,</span></span></span><span class=3D"font" style=3D"font-f=
+amily:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt"></=
+span></span><br></p></div><div><p class=3D"" style=3D"margin-top: 0px; marg=
+in-bottom: 0px;"><span class=3D"x_-1155238930size"><span class=3D"font" sty=
+le=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-s=
+ize:10pt">Dhanasekar</span></span></span><span class=3D"font" style=3D"font=
+-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt">=
+</span></span><br></p></div><div><p class=3D"" style=3D"margin-top: 0px; ma=
+rgin-bottom: 0px;"><span class=3D"x_-1155238930size"><span class=3D"font" s=
+tyle=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font=
+-size:10pt">&nbsp;</span></span></span><span class=3D"font" style=3D"font-f=
+amily:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt"></=
+span></span><br></p></div><div style=3D"border: none;border-top: solid rgb(=
+204,204,204) 1.0pt;padding: 0.0in 0.0in 0.0in 0.0in;margin-top: 7.5pt;margi=
+n-bottom: 7.5pt;"><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0p=
+x;"><span class=3D"x_-1155238930size"><span class=3D"font" style=3D"font-fa=
+mily:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt">&nb=
+sp;</span></span></span><span class=3D"font" style=3D"font-family:Verdana, =
+sans-serif"><span class=3D"size" style=3D"font-size:10pt"></span></span><br=
+></p></div><div><div><p class=3D"" style=3D"margin-top: 0px; margin-bottom:=
+ 0px;"><span class=3D"x_-1155238930size"><span class=3D"font" style=3D"font=
+-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt">=
+&nbsp;</span></span></span><span class=3D"font" style=3D"font-family:Verdan=
+a, sans-serif"><span class=3D"size" style=3D"font-size:10pt"></span></span>=
+<br></p></div><div id=3D"x_-684518287Zm-_Id_-Sgn1"><p class=3D"" style=3D"m=
+argin-top: 0px; margin-bottom: 0px;"><span class=3D"x_-1155238930size"><spa=
+n class=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"s=
+ize" style=3D"font-size:10pt">---- On Fri, 21 Jul 2023 19:33:41 +0530 <b>Ve=
+nkatesh, Supreeth &lt;<a href=3D"mailto:Supreeth.Venkatesh@amd.com" target=
+=3D"_blank">Supreeth.Venkatesh@amd.com</a>&gt;</b> wrote ---</span></span><=
+/span><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span =
+class=3D"size" style=3D"font-size:10pt"></span></span><br></p></div><div><p=
+ class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"x=
+_-1155238930size"><span class=3D"font" style=3D"font-family:Verdana, sans-s=
+erif"><span class=3D"size" style=3D"font-size:10pt">&nbsp;</span></span></s=
+pan><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span cl=
+ass=3D"size" style=3D"font-size:10pt"></span></span><br></p></div><blockquo=
+te id=3D"x_-684518287blockquote_zmail" style=3D"margin: 0px;"><div><p style=
+=3D"margin-right: 5.0pt;margin-bottom: 0.0in;margin-left: 5.0pt;"><span cla=
+ss=3D"x_-1155238930size"><span class=3D"colour" style=3D"color:blue"><span =
+class=3D"font" style=3D"font-family:Arial, sans-serif"><span class=3D"size"=
+ style=3D"font-size:10pt">[AMD Official Use Only - General]</span></span></=
+span></span><span class=3D"font" style=3D"font-family:Verdana, sans-serif">=
+<span class=3D"size" style=3D"font-size:10pt"></span></span><br></p><div><p=
+ class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"x=
+_-1155238930size"><span class=3D"font" style=3D"font-family:Verdana, sans-s=
+erif"><span class=3D"size" style=3D"font-size:10pt">&nbsp;</span></span></s=
+pan><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span cl=
+ass=3D"size" style=3D"font-size:10pt"></span></span><br></p></div><div><div=
+><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=
+=3D"x_-1155238930size"><span class=3D"font" style=3D"font-family:Verdana, s=
+ans-serif"><span class=3D"size" style=3D"font-size:10pt">Hi Dhanasekar,</sp=
+an></span></span><span class=3D"font" style=3D"font-family:Verdana, sans-se=
+rif"><span class=3D"size" style=3D"font-size:10pt"></span></span><br></p><p=
+ class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"x=
+_-1155238930size"><span class=3D"font" style=3D"font-family:Verdana, sans-s=
+erif"><span class=3D"size" style=3D"font-size:10pt">&nbsp;</span></span></s=
+pan><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span cl=
+ass=3D"size" style=3D"font-size:10pt"></span></span><br></p><p class=3D"" s=
+tyle=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"x_-1155238930s=
+ize"><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span c=
+lass=3D"size" style=3D"font-size:10pt">It is supported for EPYC Genoa famil=
+y and beyond at this time.</span></span></span><span class=3D"font" style=
+=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-siz=
+e:10pt"></span></span><br></p><p class=3D"" style=3D"margin-top: 0px; margi=
+n-bottom: 0px;"><span class=3D"x_-1155238930size"><span class=3D"font" styl=
+e=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-si=
+ze:10pt">Daytona uses EPYC Milan family and support is not there in that.</=
+span></span></span><span class=3D"font" style=3D"font-family:Verdana, sans-=
+serif"><span class=3D"size" style=3D"font-size:10pt"></span></span><br></p>=
+<p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D=
+"x_-1155238930size"><span class=3D"font" style=3D"font-family:Verdana, sans=
+-serif"><span class=3D"size" style=3D"font-size:10pt">&nbsp;</span></span><=
+/span><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span =
+class=3D"size" style=3D"font-size:10pt"></span></span><br></p><div><p class=
+=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"x_-1155=
+238930size"><span class=3D"colour" style=3D"color:black"><span class=3D"fon=
+t" style=3D"font-family:Arial, sans-serif"><span class=3D"size" style=3D"fo=
+nt-size:10pt">Thanks,</span></span></span></span><span class=3D"font" style=
+=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-siz=
+e:10pt"></span></span><br></p><p class=3D"" style=3D"margin-top: 0px; margi=
+n-bottom: 0px;"><span class=3D"x_-1155238930size"><b><span class=3D"colour"=
+ style=3D"color:black"><span class=3D"font" style=3D"font-family:Arial, san=
+s-serif"><span class=3D"size" style=3D"font-size:10pt">Supreeth Venkatesh</=
+span></span></span></b></span><span class=3D"font" style=3D"font-family:Ver=
+dana, sans-serif"><span class=3D"size" style=3D"font-size:10pt"></span></sp=
+an><br></p><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><sp=
+an class=3D"x_-1155238930size"><span class=3D"colour" style=3D"color:black"=
+><span class=3D"font" style=3D"font-family:Arial, sans-serif"><span class=
+=3D"size" style=3D"font-size:9pt">System Manageability Architect&nbsp;&nbsp=
+;|<b>&nbsp;&nbsp;AMD</b></span></span></span></span><span class=3D"colour" =
+style=3D"color:black"><span class=3D"font" style=3D"font-family:Arial, sans=
+-serif"><span class=3D"size" style=3D"font-size:9pt"><br> <span class=3D"x_=
+-1155238930x-684518287size">Server Software</span></span></span></span><spa=
+n class=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"s=
+ize" style=3D"font-size:10pt"></span></span></p><p class=3D"" style=3D"marg=
+in-top: 0px; margin-bottom: 0px;"><span class=3D"colour" style=3D"color:bla=
+ck"><span class=3D"font" style=3D"font-family:Arial, sans-serif"><span clas=
+s=3D"size" style=3D"font-size:10pt"><img border=3D"0" width=3D"1.5625in" he=
+ight=3D"0.3645in" style=3D"width: 1.5625in;height: 0.3645in;" src=3D"cid:im=
+age001.png@01D9BED6.CE5EAC10"></span></span></span><span class=3D"font" sty=
+le=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-s=
+ize:10pt"></span></span><br></p></div><p class=3D"" style=3D"margin-top: 0p=
+x; margin-bottom: 0px;"><span class=3D"x_-1155238930size"><span class=3D"fo=
+nt" style=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D=
+"font-size:10pt">&nbsp;</span></span></span><span class=3D"font" style=3D"f=
+ont-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10p=
+t"></span></span><br></p><div><div style=3D"border: none;border-top: solid =
+rgb(225,225,225) 1.0pt;padding: 3.0pt 0.0in 0.0in 0.0in;"><p class=3D"" sty=
+le=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"x_-1155238930siz=
+e"><b><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span =
+class=3D"size" style=3D"font-size:10pt">From:</span></span></b></span><span=
+ class=3D"x_-1155238930size"><span class=3D"font" style=3D"font-family:Verd=
+ana, sans-serif"><span class=3D"size" style=3D"font-size:10pt"> J Dhanaseka=
+r &lt;<a href=3D"mailto:jdhanasekar@velankanigroup.com" target=3D"_blank">j=
+dhanasekar@velankanigroup.com</a>&gt; </span></span></span><span class=3D"f=
+ont" style=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=
+=3D"font-size:10pt"><br> <span class=3D"x_-1155238930size"><b>Sent:</b> Fri=
+day, July 21, 2023 5:30 AM</span><br> <span class=3D"x_-1155238930size"><b>=
+To:</b> Venkatesh, Supreeth &lt;<a href=3D"mailto:Supreeth.Venkatesh@amd.co=
+m" target=3D"_blank">Supreeth.Venkatesh@amd.com</a>&gt;</span><br> <span cl=
+ass=3D"x_-1155238930size"><b>Cc:</b> Zane Shelley &lt;<a href=3D"mailto:zsh=
+elle@imap.linux.ibm.com" target=3D"_blank">zshelle@imap.linux.ibm.com</a>&g=
+t;; Lei Yu &lt;<a href=3D"mailto:yulei.sh@bytedance.com" target=3D"_blank">=
+yulei.sh@bytedance.com</a>&gt;; Michael Shen &lt;<a href=3D"mailto:gpgpgp@g=
+oogle.com" target=3D"_blank">gpgpgp@google.com</a>&gt;;
+ openbmc &lt;<a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">=
+openbmc@lists.ozlabs.org</a>&gt;; dhruvaraj S &lt;<a href=3D"mailto:dhruvar=
+aj@gmail.com" target=3D"_blank">dhruvaraj@gmail.com</a>&gt;; Brad Bishop &l=
+t;<a href=3D"mailto:bradleyb@fuzziesquirrel.com" target=3D"_blank">bradleyb=
+@fuzziesquirrel.com</a>&gt;;
+ Ed Tanous &lt;<a href=3D"mailto:ed@tanous.net" target=3D"_blank">ed@tanous=
+.net</a>&gt;; Dhandapani, Abinaya &lt;<a href=3D"mailto:Abinaya.Dhandapani@=
+amd.com" target=3D"_blank">Abinaya.Dhandapani@amd.com</a>&gt;</span><br> <s=
+pan class=3D"x_-1155238930size"><b>Subject:</b> Re: [RFC] BMC RAS Feature</=
+span></span></span></p></div></div><p class=3D"" style=3D"margin-top: 0px; =
+margin-bottom: 0px;"><span class=3D"x_-1155238930size"><span class=3D"font"=
+ style=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"fo=
+nt-size:10pt">&nbsp;</span></span></span><span class=3D"font" style=3D"font=
+-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt">=
+</span></span><br></p><table class=3D"x_-1155238930MsoNormalTable" border=
+=3D"0" cellspacing=3D"0" cellpadding=3D"0" align=3D"left" width=3D"100%" st=
+yle=3D"width: 100.0%;"><tbody><tr><td style=3D"background: rgb(255,185,0);p=
+adding: 5.0pt 2.0pt 5.0pt 2.0pt;"><br></td><td width=3D"100%" style=3D"widt=
+h: 100.0%;background: rgb(255,248,229);padding: 5.0pt 4.0pt 5.0pt 12.0pt;">=
+<div><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span cla=
+ss=3D"x_-1155238930colour"><b><span class=3D"colour" style=3D"color:rgb(34,=
+ 34, 34)">Caution:</span></b><span class=3D"colour" style=3D"color:rgb(34, =
+34, 34)"> This message originated from an External Source. Use proper cauti=
+on when opening attachments, clicking links, or responding.</span></span><b=
+r></p></div></td></tr></tbody></table><p class=3D"" style=3D"margin-top: 0p=
+x; margin-bottom: 0px;"><span class=3D"x_-1155238930size"><span class=3D"fo=
+nt" style=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D=
+"font-size:10pt">&nbsp;</span></span></span><span class=3D"font" style=3D"f=
+ont-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10p=
+t"></span></span><br></p><div><div><div><p class=3D"" style=3D"margin-top: =
+0px; margin-bottom: 0px;"><span class=3D"x_-1155238930size"><span class=3D"=
+font" style=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=
+=3D"font-size:10pt">Hi Supreeth Venkatesh,</span></span></span><span class=
+=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"size" st=
+yle=3D"font-size:10pt"></span></span><br></p></div><div><p class=3D"" style=
+=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"x_-1155238930size"=
+><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=
+=3D"size" style=3D"font-size:10pt">&nbsp;</span></span></span><span class=
+=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"size" st=
+yle=3D"font-size:10pt"></span></span><br></p></div><div><p class=3D"" style=
+=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"x_-1155238930size"=
+><span class=3D"colour" style=3D"color:rgb(34, 34, 34)"><span class=3D"font=
+" style=3D"font-family:Arial, sans-serif"><span class=3D"size" style=3D"fon=
+t-size:12pt">Does this RAS feature work for the Daytona Platform.&nbsp; i h=
+ave been working in openBMC development for the Daytonax platform.&nbsp;</s=
+pan></span></span></span><span class=3D"font" style=3D"font-family:Verdana,=
+ sans-serif"><span class=3D"size" style=3D"font-size:10pt"></span></span><b=
+r></p></div><div><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px=
+;"><span class=3D"x_-1155238930size"><span class=3D"colour" style=3D"color:=
+rgb(34, 34, 34)"><span class=3D"font" style=3D"font-family:Arial, sans-seri=
+f"><span class=3D"size" style=3D"font-size:12pt">If this RAS works for Dayt=
+ona Platform. I will include it in my project.&nbsp;</span></span></span></=
+span><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span c=
+lass=3D"size" style=3D"font-size:10pt"></span></span><br></p></div><div><p =
+class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"x_=
+-1155238930size"><span class=3D"colour" style=3D"color:rgb(34, 34, 34)"><sp=
+an class=3D"font" style=3D"font-family:Arial, sans-serif"><span class=3D"si=
+ze" style=3D"font-size:12pt">&nbsp;</span></span></span></span><span class=
+=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"size" st=
+yle=3D"font-size:10pt"></span></span><br></p></div><div><p class=3D"" style=
+=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"x_-1155238930size"=
+><span class=3D"colour" style=3D"color:rgb(34, 34, 34)"><span class=3D"font=
+" style=3D"font-family:Arial, sans-serif"><span class=3D"size" style=3D"fon=
+t-size:12pt">Please provide your suggestions.&nbsp;</span></span></span></s=
+pan><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span cl=
+ass=3D"size" style=3D"font-size:10pt"></span></span><br></p></div><div><p c=
+lass=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"x_-=
+1155238930size"><span class=3D"font" style=3D"font-family:Verdana, sans-ser=
+if"><span class=3D"size" style=3D"font-size:10pt">&nbsp;</span></span></spa=
+n><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span clas=
+s=3D"size" style=3D"font-size:10pt"></span></span><br></p></div><div><p cla=
+ss=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"x_-11=
+55238930size"><span class=3D"font" style=3D"font-family:Verdana, sans-serif=
+"><span class=3D"size" style=3D"font-size:10pt">Thanks,</span></span></span=
+><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=
+=3D"size" style=3D"font-size:10pt"></span></span><br></p></div><div><p clas=
+s=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"x_-115=
+5238930size"><span class=3D"font" style=3D"font-family:Verdana, sans-serif"=
+><span class=3D"size" style=3D"font-size:10pt">Dhanasekar</span></span></sp=
+an><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span cla=
+ss=3D"size" style=3D"font-size:10pt"></span></span><br></p></div><div><p cl=
+ass=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"x_-1=
+155238930size"><span class=3D"font" style=3D"font-family:Verdana, sans-seri=
+f"><span class=3D"size" style=3D"font-size:10pt">&nbsp;</span></span></span=
+><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=
+=3D"size" style=3D"font-size:10pt"></span></span><br></p></div><div id=3D"x=
+_-204459234Zm-_Id_-Sgn"><div><p class=3D"" style=3D"margin-top: 0px; margin=
+-bottom: 0px;"><span class=3D"x_-1155238930size"><span class=3D"font" style=
+=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-siz=
+e:10pt">&nbsp;</span></span></span><span class=3D"font" style=3D"font-famil=
+y:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt"></span=
+></span><br></p></div></div><div><p class=3D"" style=3D"margin-top: 0px; ma=
+rgin-bottom: 0px;"><span class=3D"x_-1155238930size"><span class=3D"font" s=
+tyle=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font=
+-size:10pt">&nbsp;</span></span></span><span class=3D"font" style=3D"font-f=
+amily:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt"></=
+span></span><br></p></div><div style=3D"border: none;border-top: solid rgb(=
+204,204,204) 1.0pt;padding: 0.0in 0.0in 0.0in 0.0in;margin-top: 7.5pt;margi=
+n-bottom: 7.5pt;"><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0p=
+x;"><span class=3D"x_-1155238930size"><span class=3D"font" style=3D"font-fa=
+mily:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt">&nb=
+sp;</span></span></span><span class=3D"font" style=3D"font-family:Verdana, =
+sans-serif"><span class=3D"size" style=3D"font-size:10pt"></span></span><br=
+></p></div><div><div><p class=3D"" style=3D"margin-top: 0px; margin-bottom:=
+ 0px;"><span class=3D"x_-1155238930size"><span class=3D"font" style=3D"font=
+-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt">=
+&nbsp;</span></span></span><span class=3D"font" style=3D"font-family:Verdan=
+a, sans-serif"><span class=3D"size" style=3D"font-size:10pt"></span></span>=
+<br></p></div><div id=3D"x_-204459234Zm-_Id_-Sgn1"><p class=3D"" style=3D"m=
+argin-top: 0px; margin-bottom: 0px;"><span class=3D"x_-1155238930size"><spa=
+n class=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"s=
+ize" style=3D"font-size:10pt">---- On Mon, 03 Apr 2023 22:06:24 +0530 <b>Su=
+preeth Venkatesh &lt;<a href=3D"mailto:supreeth.venkatesh@amd.com" target=
+=3D"_blank">supreeth.venkatesh@amd.com</a>&gt;</b> wrote ---</span></span><=
+/span><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span =
+class=3D"size" style=3D"font-size:10pt"></span></span><br></p></div><div><p=
+ class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"x=
+_-1155238930size"><span class=3D"font" style=3D"font-family:Verdana, sans-s=
+erif"><span class=3D"size" style=3D"font-size:10pt">&nbsp;</span></span></s=
+pan><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span cl=
+ass=3D"size" style=3D"font-size:10pt"></span></span><br></p></div><blockquo=
+te id=3D"x_-204459234blockquote_zmail" style=3D"margin: 0px;"><div><p class=
+=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"font" s=
+tyle=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font=
+-size:10pt"><br><span class=3D"x_-1155238930x-684518287size">On 3/23/23 13:=
+57, Zane Shelley wrote:</span><br> <span class=3D"x_-1155238930x-684518287s=
+ize">&gt; Caution: This message originated from an External Source. Use pro=
+per </span><br> <span class=3D"x_-1155238930x-684518287size">&gt; caution w=
+hen opening attachments, clicking links, or responding. </span><br> <span c=
+lass=3D"x_-1155238930x-684518287size">&gt; </span><br> <span class=3D"x_-11=
+55238930x-684518287size">&gt; </span><br> <span class=3D"x_-1155238930x-684=
+518287size">&gt; On 2023-03-22 19:07, Supreeth Venkatesh wrote: </span> <br=
+> <span class=3D"x_-1155238930x-684518287size">&gt;&gt; On 3/22/23 02:10, L=
+ei Yu wrote: </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&=
+gt;&gt; Caution: This message originated from an External Source. Use prope=
+r </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt; cau=
+tion when opening attachments, clicking links, or responding. </span><br> <=
+span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt; </span><br> <span =
+class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt; </span><br> <span class=
+=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; On Tue, 21 Mar 2023 =
+at 20:38, Supreeth Venkatesh </span><br> <span class=3D"x_-1155238930x-6845=
+18287size">&gt;&gt;&gt;&gt;&gt; &lt;<a href=3D"mailto:supreeth.venkatesh@am=
+d.com" target=3D"_blank">supreeth.venkatesh@amd.com</a>&gt; wrote: </span><=
+br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; </spa=
+n><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; </=
+span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt;=
+ &nbsp;&nbsp;&nbsp;&nbsp; On 3/21/23 05:40, Patrick Williams wrote: </span>=
+<br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; &nbs=
+p;&nbsp;&nbsp;&nbsp; &gt; On Tue, Mar 21, 2023 at 12:14:45AM -0500, Supreet=
+h Venkatesh </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&g=
+t;&gt;&gt;&gt; wrote: </span><br> <span class=3D"x_-1155238930x-684518287si=
+ze">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; &gt; </span><br> <span cl=
+ass=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp=
+;&nbsp; &gt;&gt; #### Alternatives Considered </span><br> <span class=3D"x_=
+-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; &=
+gt;&gt; </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&g=
+t;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; &gt;&gt; In-band mechanisms using Syste=
+m Management Mode (SMM) </span><br> <span class=3D"x_-1155238930x-684518287=
+size">&gt;&gt;&gt;&gt;&gt; exists. </span><br> <span class=3D"x_-1155238930=
+x-684518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; &gt;&gt; </s=
+pan><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; =
+&nbsp;&nbsp;&nbsp;&nbsp; &gt;&gt; However, out of band method to gather RAS=
+ data is processor </span><br> <span class=3D"x_-1155238930x-684518287size"=
+>&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; specific. </span><br> <span =
+class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nb=
+sp;&nbsp; &gt;&gt; </span><br> <span class=3D"x_-1155238930x-684518287size"=
+>&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; &gt; How does this compare w=
+ith existing implementations in </span><br> <span class=3D"x_-1155238930x-6=
+84518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; &gt; phosphor-d=
+ebug-collector. </span><br> <span class=3D"x_-1155238930x-684518287size">&g=
+t;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; Thanks for your feedback. See b=
+elow. </span> <br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt=
+;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; &gt; I believe there was some attempt to=
+ extend </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&g=
+t;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; &gt; P-D-C previously to handle Intel's=
+ crashdump behavior. </span><br> <span class=3D"x_-1155238930x-684518287siz=
+e">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; Intel's crashdump interfac=
+e uses com.intel.crashdump. </span><br> <span class=3D"x_-1155238930x-68451=
+8287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; We have implemented=
+ com.amd.crashdump based on that reference. </span><br> <span class=3D"x_-1=
+155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; How=
+ever, </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;=
+&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; can this be made generic? </span><br> <sp=
+an class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; </span><br> =
+<span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nb=
+sp;&nbsp;&nbsp; PoC below: </span><br> <span class=3D"x_-1155238930x-684518=
+287size">&gt;&gt;&gt;&gt;&gt; </span><br> <span class=3D"x_-1155238930x-684=
+518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; busctl tree com.a=
+md.crashdump </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&=
+gt;&gt;&gt;&gt; </span><br> <span class=3D"x_-1155238930x-684518287size">&g=
+t;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; =E2=94=94=E2=94=80/com </span><=
+br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; &nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =E2=94=94=E2=94=80/com/amd </span><br=
+> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; =E2=94=94=E2=94=80/com/amd/=
+crashdump </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;=
+&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp; </span></span></span><span class=3D"x_-1155238930size"><span class=3D"=
+font" style=3D"font-family:Arial, sans-serif"><span class=3D"size" style=3D=
+"font-size:10pt">=E2=94=9C</span></span></span><span class=3D"x_-1155238930=
+size"><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span =
+class=3D"size" style=3D"font-size:10pt">=E2=94=80/com/amd/crashdump/0 </spa=
+n></span></span><span class=3D"font" style=3D"font-family:Verdana, sans-ser=
+if"><span class=3D"size" style=3D"font-size:10pt"><br> <span class=3D"x_-11=
+55238930x-684518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp=
+;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><span class=3D"x=
+_-1155238930size"><span class=3D"font" style=3D"font-family:Arial, sans-ser=
+if"><span class=3D"size" style=3D"font-size:10pt">=E2=94=9C</span></span></=
+span><span class=3D"x_-1155238930size"><span class=3D"font" style=3D"font-f=
+amily:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt">=
+=E2=94=80/com/amd/crashdump/1 </span></span></span><span class=3D"font" sty=
+le=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-s=
+ize:10pt"><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt=
+;&gt; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </=
+span></span></span><span class=3D"x_-1155238930size"><span class=3D"font" s=
+tyle=3D"font-family:Arial, sans-serif"><span class=3D"size" style=3D"font-s=
+ize:10pt">=E2=94=9C</span></span></span><span class=3D"x_-1155238930size"><=
+span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=
+=3D"size" style=3D"font-size:10pt">=E2=94=80/com/amd/crashdump/2 </span></s=
+pan></span><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><=
+span class=3D"size" style=3D"font-size:10pt"><br> <span class=3D"x_-1155238=
+930x-684518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><span class=3D"x_-115=
+5238930size"><span class=3D"font" style=3D"font-family:Arial, sans-serif"><=
+span class=3D"size" style=3D"font-size:10pt">=E2=94=9C</span></span></span>=
+<span class=3D"x_-1155238930size"><span class=3D"font" style=3D"font-family=
+:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt">=E2=94=
+=80/com/amd/crashdump/3 </span></span></span><span class=3D"font" style=3D"=
+font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10=
+pt"><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; =
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><=
+/span></span><span class=3D"x_-1155238930size"><span class=3D"font" style=
+=3D"font-family:Arial, sans-serif"><span class=3D"size" style=3D"font-size:=
+10pt">=E2=94=9C</span></span></span><span class=3D"x_-1155238930size"><span=
+ class=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"si=
+ze" style=3D"font-size:10pt">=E2=94=80/com/amd/crashdump/4 </span></span></=
+span><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><span c=
+lass=3D"size" style=3D"font-size:10pt"><br> <span class=3D"x_-1155238930x-6=
+84518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><span class=3D"x_-115523893=
+0size"><span class=3D"font" style=3D"font-family:Arial, sans-serif"><span c=
+lass=3D"size" style=3D"font-size:10pt">=E2=94=9C</span></span></span><span =
+class=3D"x_-1155238930size"><span class=3D"font" style=3D"font-family:Verda=
+na, sans-serif"><span class=3D"size" style=3D"font-size:10pt">=E2=94=80/com=
+/amd/crashdump/5 </span></span></span><span class=3D"font" style=3D"font-fa=
+mily:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt"><br=
+> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&=
+nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span><=
+/span><span class=3D"x_-1155238930size"><span class=3D"font" style=3D"font-=
+family:Arial, sans-serif"><span class=3D"size" style=3D"font-size:10pt">=E2=
+=94=9C</span></span></span><span class=3D"x_-1155238930size"><span class=3D=
+"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=
+=3D"font-size:10pt">=E2=94=80/com/amd/crashdump/6 </span></span></span><spa=
+n class=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"s=
+ize" style=3D"font-size:10pt"><br> <span class=3D"x_-1155238930x-684518287s=
+ize">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&=
+nbsp;&nbsp;&nbsp; </span></span></span><span class=3D"x_-1155238930size"><s=
+pan class=3D"font" style=3D"font-family:Arial, sans-serif"><span class=3D"s=
+ize" style=3D"font-size:10pt">=E2=94=9C</span></span></span><span class=3D"=
+x_-1155238930size"><span class=3D"font" style=3D"font-family:Verdana, sans-=
+serif"><span class=3D"size" style=3D"font-size:10pt">=E2=94=80/com/amd/cras=
+hdump/7 </span></span></span><span class=3D"font" style=3D"font-family:Verd=
+ana, sans-serif"><span class=3D"size" style=3D"font-size:10pt"><br> <span c=
+lass=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbs=
+p;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span></span><sp=
+an class=3D"x_-1155238930size"><span class=3D"font" style=3D"font-family:Ar=
+ial, sans-serif"><span class=3D"size" style=3D"font-size:10pt">=E2=94=9C</s=
+pan></span></span><span class=3D"x_-1155238930size"><span class=3D"font" st=
+yle=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-=
+size:10pt">=E2=94=80/com/amd/crashdump/8 </span></span></span><span class=
+=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"size" st=
+yle=3D"font-size:10pt"><br> <span class=3D"x_-1155238930x-684518287size">&g=
+t;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&n=
+bsp;&nbsp; =E2=94=94=E2=94=80/com/amd/crashdump/9 </span><br> <span class=
+=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; </span><br> <span cl=
+ass=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp=
+;&nbsp; &gt; The repository </span><br> <span class=3D"x_-1155238930x-68451=
+8287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; &gt; currently hand=
+les IBM's processors, I think, or maybe that is </span><br> <span class=3D"=
+x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp;=
+ covered by </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&g=
+t;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; &gt; openpower-debug-collector. </s=
+pan><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; =
+&nbsp;&nbsp;&nbsp;&nbsp; &gt; </span><br> <span class=3D"x_-1155238930x-684=
+518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; &gt; In any case,=
+ I think you should look at the existing D-Bus </span><br> <span class=3D"x=
+_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; =
+interfaces </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt=
+;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; &gt; (and associated Redfish impleme=
+ntation) of these repositories </span><br> <span class=3D"x_-1155238930x-68=
+4518287size">&gt;&gt;&gt;&gt;&gt; and </span><br> <span class=3D"x_-1155238=
+930x-684518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp; &gt; dete=
+rmine if you can use those approaches (or document why </span><br> <span cl=
+ass=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; now). </span><br>=
+ <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&n=
+bsp;&nbsp;&nbsp; I could not find an existing D-Bus interface for RAS in </=
+span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt;=
+ &nbsp;&nbsp;&nbsp;&nbsp; xyz/openbmc_project/. </span><br> <span class=3D"=
+x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; &nbsp;&nbsp;&nbsp;&nbsp;=
+ It would be helpful if you could point me to it. </span><br> <span class=
+=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; </span><br> <span cl=
+ass=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; </span><br> <span=
+ class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; There is an in=
+terface for the dumps generated from the host, which </span><br> <span clas=
+s=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; can </span><br> <sp=
+an class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; be used for =
+these kinds of dumps </span><br> <span class=3D"x_-1155238930x-684518287siz=
+e">&gt;&gt;&gt;&gt;&gt; <a href=3D"https://github.com/openbmc/phosphor-dbus=
+-interfaces/blob/master/yaml/xyz/openbmc_project/Dump/Entry/System.interfac=
+e.yaml" target=3D"_blank"> https://github.com/openbmc/phosphor-dbus-interfa=
+ces/blob/master/yaml/xyz/openbmc_project/Dump/Entry/System.interface.yaml</=
+a> </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt=
+;&gt; </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;=
+&gt;&gt; </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&=
+gt;&gt;&gt; The fault log also provides similar dumps </span> <br> <span cl=
+ass=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; <a href=3D"https:=
+//github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/openbmc_=
+project/Dump/Entry/FaultLog.interface.yaml" target=3D"_blank"> https://gith=
+ub.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/openbmc_projec=
+t/Dump/Entry/FaultLog.interface.yaml</a> </span><br> <span class=3D"x_-1155=
+238930x-684518287size">&gt;&gt;&gt;&gt;&gt; </span><br> <span class=3D"x_-1=
+155238930x-684518287size">&gt;&gt;&gt;&gt;&gt; </span><br> <span class=3D"x=
+_-1155238930x-684518287size">&gt;&gt;&gt;&gt; ThanksDdhruvraj. The interfac=
+e looks useful for the purpose. However, </span><br> <span class=3D"x_-1155=
+238930x-684518287size">&gt;&gt;&gt;&gt; the current BMCWEB implementation r=
+eferences </span> <br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt=
+;&gt;&gt; <a href=3D"https://github.com/openbmc/bmcweb/blob/master/redfish-=
+core/lib/log_services.hpp" target=3D"_blank"> https://github.com/openbmc/bm=
+cweb/blob/master/redfish-core/lib/log_services.hpp</a> </span><br> <span cl=
+ass=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt; </span><br> <span cla=
+ss=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt; [com.intel.crashdump] =
+</span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt; c=
+onstexpr char const* crashdumpPath =3D "/com/intel/crashdump"; </span><br> =
+<span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt; </span><br> <=
+span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt; constexpr char=
+ const* crashdumpInterface =3D "com.intel.crashdump"; </span><br> <span cla=
+ss=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt; constexpr char const* =
+crashdumpObject =3D "com.intel.crashdump"; </span><br> <span class=3D"x_-11=
+55238930x-684518287size">&gt;&gt;&gt;&gt; </span><br> <span class=3D"x_-115=
+5238930x-684518287size">&gt;&gt;&gt;&gt; <a href=3D"https://github.com/open=
+bmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/openbmc_project/Dump/Entr=
+y/System.interface.yaml" target=3D"_blank"> https://github.com/openbmc/phos=
+phor-dbus-interfaces/blob/master/yaml/xyz/openbmc_project/Dump/Entry/System=
+.interface.yaml</a> </span><br> <span class=3D"x_-1155238930x-684518287size=
+">&gt;&gt;&gt;&gt; </span><br> <span class=3D"x_-1155238930x-684518287size"=
+>&gt;&gt;&gt;&gt; or </span><br> <span class=3D"x_-1155238930x-684518287siz=
+e">&gt;&gt;&gt;&gt; <a href=3D"https://github.com/openbmc/phosphor-dbus-int=
+erfaces/blob/master/yaml/xyz/openbmc_project/Dump/Entry/FaultLog.interface.=
+yaml" target=3D"_blank"> https://github.com/openbmc/phosphor-dbus-interface=
+s/blob/master/yaml/xyz/openbmc_project/Dump/Entry/FaultLog.interface.yaml</=
+a> </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt=
+; </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;&gt;=
+ is it exercised in Redfish logservices? </span> <br> <span class=3D"x_-115=
+5238930x-684518287size">&gt;&gt;&gt; In our practice, a plugin `tools/drepo=
+rt.d/plugins.d/acddump` is added </span><br> <span class=3D"x_-1155238930x-=
+684518287size">&gt;&gt;&gt; to copy the crashdump json file to the dump tar=
+ball. </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt;=
+ The crashdump tool (Intel or AMD) could trigger a dump after the </span><b=
+r> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt; crashdump is c=
+ompleted, and then we could get a dump entry containing </span><br> <span c=
+lass=3D"x_-1155238930x-684518287size">&gt;&gt;&gt; the crashdump. </span><b=
+r> <span class=3D"x_-1155238930x-684518287size">&gt;&gt; Thanks Lei Yu for =
+your input. We are using Redfish to retrieve the </span><br> <span class=3D=
+"x_-1155238930x-684518287size">&gt;&gt; CPER binary file which can then be =
+passed through a plugin/script for </span><br> <span class=3D"x_-1155238930=
+x-684518287size">&gt;&gt; detailed analysis. </span><br> <span class=3D"x_-=
+1155238930x-684518287size">&gt;&gt; In any case irrespective of whichever D=
+bus interface we use, we need a </span><br> <span class=3D"x_-1155238930x-6=
+84518287size">&gt;&gt; repository which will gather data from AMD processor=
+ via APML as per </span><br> <span class=3D"x_-1155238930x-684518287size">&=
+gt;&gt; AMD design. </span><br> <span class=3D"x_-1155238930x-684518287size=
+">&gt;&gt; APML </span><br> <span class=3D"x_-1155238930x-684518287size">&g=
+t;&gt; Spec: <a href=3D"https://www.amd.com/system/files/TechDocs/57019-A0-=
+PUB_3.00.zip" target=3D"_blank"> https://www.amd.com/system/files/TechDocs/=
+57019-A0-PUB_3.00.zip</a> </span><br> <span class=3D"x_-1155238930x-6845182=
+87size">&gt;&gt; Can someone please help create bmc-ras or amd-debug-collec=
+tor </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt; repos=
+itory as there are instances of openpower-debug-collector </span><br> <span=
+ class=3D"x_-1155238930x-684518287size">&gt;&gt; repository used for Open P=
+ower systems? </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;=
+&gt;&gt; </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&=
+gt; </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt; -=
+- </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt; BRs=
+, </span><br> <span class=3D"x_-1155238930x-684518287size">&gt;&gt;&gt; Lei=
+ YU </span><br> <span class=3D"x_-1155238930x-684518287size">&gt; I am inte=
+rested in possibly standardizing some of this. IBM POWER has </span><br> <s=
+pan class=3D"x_-1155238930x-684518287size">&gt; several related components.=
+ openpower-hw-diags is a service that will </span><br> <span class=3D"x_-11=
+55238930x-684518287size">&gt; listen for the hardware interrupts via a GPIO=
+ pin. When an error is </span><br> <span class=3D"x_-1155238930x-684518287s=
+ize">&gt; detected, it will use openpower-libhei to query hardware register=
+s to </span><br> <span class=3D"x_-1155238930x-684518287size">&gt; determin=
+e what happened. Based on that information openpower-hw-diags </span><br> <=
+span class=3D"x_-1155238930x-684518287size">&gt; will generate a PEL, which=
+ is an extended log in phosphor-logging, that </span><br> <span class=3D"x_=
+-1155238930x-684518287size">&gt; is used to tell service what to replace if=
+ necessary. Afterward, </span><br> <span class=3D"x_-1155238930x-684518287s=
+ize">&gt; openpower-hw-diags will initiate openpower-debug-collector, which=
+ </span><br> <span class=3D"x_-1155238930x-684518287size">&gt; gathers a si=
+gnificant amount of data from the hardware for additional </span><br> <span=
+ class=3D"x_-1155238930x-684518287size">&gt; debug when necessary. I wrote =
+openpower-libhei to be fairly agnostic. It </span><br> <span class=3D"x_-11=
+55238930x-684518287size">&gt; uses data files (currently XML, but moving to=
+ JSON) to define register </span><br> <span class=3D"x_-1155238930x-6845182=
+87size">&gt; addresses and rules for isolation. openpower-hw-diags is fairl=
+y POWER </span><br> <span class=3D"x_-1155238930x-684518287size">&gt; speci=
+fic, but I can see some parts can be made generic. Dhruv would have </span>=
+<br> <span class=3D"x_-1155238930x-684518287size">&gt; to help with openpow=
+er-debug-collector. </span><br> <span class=3D"x_-1155238930x-684518287size=
+">Thank you. Lets collaborate in standardizing some aspects of it. </span><=
+br> <span class=3D"x_-1155238930x-684518287size">&gt; </span><br> <span cla=
+ss=3D"x_-1155238930x-684518287size">&gt; Regarding creation of a new reposi=
+tory, I think we'll need to have some </span><br> <span class=3D"x_-1155238=
+930x-684518287size">&gt; more collaboration to determine the scope before c=
+reating it. It </span><br> <span class=3D"x_-1155238930x-684518287size">&gt=
+; certainly sounds like we are doing similar things, but we need to </span>=
+<br> <span class=3D"x_-1155238930x-684518287size">&gt; determine if enough =
+can be abstracted to make it worth our time. </span><br> <span class=3D"x_-=
+1155238930x-684518287size">I have put in a request here: </span><br> <span =
+class=3D"x_-1155238930x-684518287size"><a href=3D"https://github.com/openbm=
+c/technical-oversight-forum/issues/24" target=3D"_blank">https://github.com=
+/openbmc/technical-oversight-forum/issues/24</a> </span><br> <span class=3D=
+"x_-1155238930x-684518287size">Please chime in.</span></span></span></p></d=
+iv></blockquote></div><div><p class=3D"" style=3D"margin-top: 0px; margin-b=
+ottom: 0px;"><span class=3D"x_-1155238930size"><span class=3D"font" style=
+=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-siz=
+e:10pt">&nbsp;</span></span></span><span class=3D"font" style=3D"font-famil=
+y:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt"></span=
+></span><br></p></div></div><p class=3D"" style=3D"margin-top: 0px; margin-=
+bottom: 0px;"><span class=3D"x_-1155238930size"><span class=3D"font" style=
+=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-siz=
+e:10pt">&nbsp;</span></span></span><span class=3D"font" style=3D"font-famil=
+y:Verdana, sans-serif"><span class=3D"size" style=3D"font-size:10pt"></span=
+></span><br></p></div></div></div></div></blockquote></div><div><p class=3D=
+"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"x_-1155238=
+930size"><span class=3D"font" style=3D"font-family:Verdana, sans-serif"><sp=
+an class=3D"size" style=3D"font-size:10pt">&nbsp;</span></span></span><span=
+ class=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"si=
+ze" style=3D"font-size:10pt"></span></span><br></p></div></div><p class=3D"=
+" style=3D"margin-top: 0px; margin-bottom: 0px;"><span class=3D"font" style=
+=3D"font-family:Verdana, sans-serif"><span class=3D"size" style=3D"font-siz=
+e:10pt">&nbsp;</span></span><br></p></div></div></div></div></blockquote></=
+div><div><p class=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;"><span=
+ class=3D"font" style=3D"font-family:Verdana, sans-serif"><span class=3D"si=
+ze" style=3D"font-size:10pt">&nbsp;</span></span><br></p></div></div><p cla=
+ss=3D"" style=3D"margin-top: 0px; margin-bottom: 0px;">&nbsp;<br></p></div>=
+</div></div></div></blockquote></div></div><br></body></html>
+------=_Part_3582875_650366529.1690453206594
+Content-Type: image/png; name=1.png
+Content-Transfer-Encoding: base64
+Content-Disposition: inline; filename=1.png
+Content-ID: <image001.png@01D9BED6.CE5EAC10>
+
+iVBORw0KGgoAAAANSUhEUgAAAJYAAAAjCAYAAAB2BvMkAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
+bWFnZVJlYWR5ccllPAAAA0xpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdp
+bj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6
+eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ1IDc5LjE2
+MzQ5OSwgMjAxOC8wOC8xMy0xNjo0MDoyMiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJo
+dHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlw
+dGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEu
+MC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVz
+b3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1N
+OkRvY3VtZW50SUQ9InhtcC5kaWQ6Njg2Njg2MTAwRDEzMTFFOTg1OEREMTQ2NTU1Qjg5RTUiIHht
+cE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6Njg2Njg2MEYwRDEzMTFFOTg1OEREMTQ2NTU1Qjg5RTUi
+IHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKE1hY2ludG9zaCkiPiA8
+eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0iYWRvYmU6ZG9jaWQ6cGhvdG9zaG9w
+OmRmOTM1NGYxLTFiODYtNDE0Zi1hYmE2LWIzZDg0OGUzYjMxYiIgc3RSZWY6ZG9jdW1lbnRJRD0i
+YWRvYmU6ZG9jaWQ6cGhvdG9zaG9wOmRmOTM1NGYxLTFiODYtNDE0Zi1hYmE2LWIzZDg0OGUzYjMx
+YiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0
+IGVuZD0iciI/Pu955OsAAApiSURBVHja7Ft9jFxVFT/vY+bNzu623bZb21LakkIF/K7VIn7sWoKl
+CoohUk3xo7FRA2lFk0YxfFTQiMYQrdEGKKgQykcgoYrEWFA+gqIVKk1qxabBQivtLu12d2d2Zt68
+967nvHdm+/bu+5o3M/LPO+nZeZ/33nfv757zO+feKkIIyCSTdouadUEmGbAyyYCVSQasTDLJgJVJ
+BqxMMmBlkkkGrEwyYGWSASuTTNoouqIoWS/8n+SM+X3w0PbNOJsVGCtXgHv+KdRfsYIQDuTyBTC6
+iiAcp6PtobqMQhfkcnkwzRo4tg2anoM6HWPdrWAjs1jTZRFqvhMFHz02AjvufwYWLpwHBRzQvKdn
+ofbxsQuoXN4AYTtA67idVoSXH2nejwtogcgWC9KWq2c4miYfRL0bdRy10qYy16P+mQ7+8uJBsBwV
+isVusNBCoJyU6/HGd3LAt6Ne0uZv3Ir6awEaWiXVBRKC4Vys8Uo8vzlnFKBaKRf0XP4uVVEuxptH
+miz/RBywrkL9kHSNOnxLwgpuQe33nd+L+lzCd9+JerVU73WoFp9/BvWimDJM1GHUf6P+DfWVBPU+
+iLoc9eY2DuSsxkFPT5drkfJGHVQPWAEuasrpuahL2wysBfSHXB15OwTVW3U99w/QcgZeWNNV7BnE
+85O1WmWTYXT9iepvchfM0ihg5RkIQUKVPZ6gguul86+gvh31nzHvLeYZ3i1dv8EHrCtQ1zXZob9B
+/Qm3P25CHES9v00DWZsktZqGvAbdnWGBYtlJ3j3ZAassV7wT1fBALS6k8enpnbk6ZxiH6rXq4pzR
+9RTib6AJcA1HAWtDxL0fJATWIdRlvnNig88zuF4NeWc26l8DQDU8lRDA6yk69JOsd6B+NebZB1BL
+qL9t54gqqorAKqDFMkHV7DRF0MSyWyDW9GJZUFeKSeu1YqrFFGej5Xq8u3fmpTU9d9i27cF83ngE
+b31imnX1yiGunpsSFUY04NsxbmqQI5pmpRd1D+r55Iule10MvPkpZyFFVmUGYI477b1sAWXLuSQB
+d3mMqcAf20XoVVWDQlc3gssCzWoeWIinbbZt3eqg9dAQpIltyCRZBxV/xwjguqbT5RlS+fTcgGXV
+RzFKrFDUWK1UyG1eoen6POEjgHRMANc0/QP45q4kwFoj+fU6R5Ca79oPUVel7N95bJXIclV918n9
+nZOyTJrJG0Mi388yCZ4hfeNNqN+NKfc5BuYX2V1EjSXN6AuigaG4HCuXz6P1SmWxhpFUD9eqE26K
+QFWiA3vBJoqAhMBwn6/XTUAO5aYZEBxWQCP34/MnLHyu4f442hvyu0PvWwoErFfkbgkD1rek80dR
+7+Pfhrwf9V2oL6UEArnIZ1Hfx+dPor67FS/DgB2SrjvMIV5A3SdZHoqOtqGOxJR9HPVHCdM3kcCi
+/FBlokRRF1ipLJYXxZXGxzxgqVoSc9VwWm6ao9jdA7ZlAQEnpJZ+BM2JhnFSVVWyuqoXYOAfKqNu
+VvumJUhDBvyjAcDaxa5rju/6rahrWwDDSg7tyX2tbgeFibj3MuqN3GY58v1ZxHsDqDvY9R+NqX9u
+rL/GAS2NjUIZgZEGWIisfsus99uOjZZCgwSEmlBh4nMjlYkyjAwfh54Zs6AX1fHyVZHWlYonIBWK
+RfeYrJ47Ocol/A1vfxCwviOdVxlUJLehft937xIOh/+VsFt+yYR4U0yQcBdHUle3ORq6LwBYqyOA
+daGPRx5tRwMIEOXSGEyUSo08VnMixGYc8WtosOu2lXSy1REkL6Pr2+4Y9o6J8rhr9Qgk8cAUOBls
+DDQ0mD13HlrKUTgxfAzsuuVeSwosisQ+H5DXKfMxherfkywDRYifTtgtBKrNTP4HQp7Zx1zpxg6E
+2a9z+D7bd21RBM/8PR8fZn5pt9oABy0WWSua8ZadaslGjwm6QlJHygo0QHfi75kKKDeRK04aWVrY
+Zlr+QTTCG0PH0I1PuBzNZ+2KcllyAzfKYaPELSZQ7+SoqiGX8+Akyc6ezb+DnLQ8J2DgGwnZ8zoA
+LJHQfX5K4pNtW6HwLNY4lMtlsJMBq6+9XaDQhL0Hu+JQE5Go2+bXXv0PFIwC8jQDrVjdb+0Oy2uL
+cod9QzrfHZDM/CbzkqKUUNyQoI1+tkgkd78vtTDOUeZ4wLPtkgWStWrkx+T83d3QIXFcjjWCVqsa
+DqypUD/IEzLtfwBFouR+ty5RmJ8nm4oIGE0HWxDfUqBqmq4Fy+dzLsdjLnagbtYGzVrtCTymemxd
+CpWXSMUuYY7hf24s4CO/BN4yzxtNfPBJjghf4/NVvuNOyecCrj0vke8wULVlqwHN8joODoX84RZL
+8Xfx1+QLzWDKe1FQRPwe341C0raqCCpVU5HAK9AIDm0i7zUTKIsmkOdRKgM539NoxVY6QryI4Jrv
+B8z1AWUvZ00i9P61TX75Ec5l0Yce6DCozmLLKss9U7lIaI5MxI6il+6I9Suqnnez7iIQq0IGl0gL
+KjeMU1x4mRGeIzQ9oagIKuJSUxfFvfQDfoeD7pC22mB4uFBVtf/isy/hbFmpqNpO3cd9Lmhx4CiC
+o0XiZncE7G8jfzoecu8yjkgLAVGif2Ha5k7PB6QRbg8Z4LnMDb8O3lrkulgrompu/olcS9BnKO7A
+aS14vwawHPxHn6Q0GXSII9gIbII2bUXcZ85ca+alJATlHx9EIH5YVdS9SPRXNIB1Q8CrX+ZoKCq/
+438vx4nVrfDmiM7pkBKcXtKZz4nct4XktTYkLLtbClggIBfWSMTOiuIvxG9d4JCKiIdO3yQ6MjPV
+PKPdC+6yjZgj3TRiApM1CJiDkGDRmSYJPreIg66n0RoPIJgrVGgP6hek5/+egMA+yf7fvy1mC7sb
++00AlhYQfITJ71CvBG+pqhU5zBPMPwF/AV4mf2eYJVEVbx9Uwmifyvt4S3Hg9Ir8XDho1eHhlOV/
+BEH2Alqy9So3XJZtCcu8TTqnSHGH73yZdP/MJtp7hnTeL8VLaRaqaTLQPq5LOXXSihxgQhxk1Wm7
+zdpATkNWBK0VzfSEKpp4NkK9Oj0yru9yfz2XPITHu/3PtFjHCgTaZrJYo+BtEfF3wgMJO5cy1u+A
+qVuca77jn6K+RbKESeURKRUwBqf3YpHEbdtxGDzHOWdGi8lxuRsVku1i2MumPwqclFz9GOofOAB6
+1m2UI0DL02Y/5FIhUaHSkTyWwnzeuZyWd5SpNV2FoNiD3nNxy7wOYJ8Q9i0ErE0tlEQZ+fUR969t
+oeztrGFyL4RvREwrBNyjMeDaw8FAkvTDbn52cgeHWXegt2cW1Ooq6HZYVKj43cszEL0GmigvS0GS
+41i3m2Z1r0voyRWrSoOID+l6/nzULTxhiinqwIkvnrDq5o8t08n2vAdwj2Uxz9SaLPMx/8nai1bB
+zL45cKpsge6RY7JIXX5XaZlV3utEBlRc166g2baFL8oTp42TuyXGKSOYtypK+v9fg5bKXfqhfRQZ
+sKabi1qnCj9v+VK4ZuM6ODU+AXmju0HeiaOd8kdZdeQ/E6VRUNV2f1p8QrQVV+hf0P6fAAMA0CcI
+PP9xuG0AAAAASUVORK5CYII=
+------=_Part_3582875_650366529.1690453206594--
+
+------=_Part_3582874_321889682.1690453206575--
+
