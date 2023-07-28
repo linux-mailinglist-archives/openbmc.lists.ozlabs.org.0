@@ -2,56 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6EAD776805A
-	for <lists+openbmc@lfdr.de>; Sat, 29 Jul 2023 17:25:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9B200768AC1
+	for <lists+openbmc@lfdr.de>; Mon, 31 Jul 2023 06:19:38 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=DXIuVi0l;
+	dkim=pass (1024-bit key; unprotected) header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=JMwOLltw;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RCpGT5rYJz3cRH
-	for <lists+openbmc@lfdr.de>; Sun, 30 Jul 2023 01:25:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RDlPg5Xtjz2ytc
+	for <lists+openbmc@lfdr.de>; Mon, 31 Jul 2023 14:19:35 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=DXIuVi0l;
+	dkim=pass (1024-bit key; unprotected) header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=JMwOLltw;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=jic23@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RCpFs54pCz2yhS
-	for <openbmc@lists.ozlabs.org>; Sun, 30 Jul 2023 01:24:33 +1000 (AEST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
-	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id 0AD1460C5A;
-	Sat, 29 Jul 2023 15:24:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E99A4C433C8;
-	Sat, 29 Jul 2023 15:24:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1690644269;
-	bh=hKEFqZwbeqN1jWVTICiTdix0xi9S3l3WhmAf3G/bhw8=;
-	h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
-	b=DXIuVi0lnqRhkPrO7HEhjVV7w4vUZJUJc2bfqFd/hImxHTjYPoqL6ZhRDsO0FVgI8
-	 9iaMs3y/WORFZZxKljp0adeX46AXj5yvUIScZr6pJywg4SOMkCJFozW3LUFZZmeAlw
-	 JPxr2UKrs9GsBiOYM3mAB7UcD3zNzMMP9XkW3Vp35NJp5B2A2TcghasOKJI0Pd4aD3
-	 mX7OvMPijg+eDcH4VpLEpNvtq+9s6cnhAUDpMXuSHNeH6gFTEZZu0cIek3Ndm8siii
-	 GnupThh7jVwcm9/dcW5OonHR2sTsjuQYFClLjf1xWwL+ed1uuSCKHVdsZ1R4zeiPVA
-	 14zpMiOH4Vgxg==
-Date: Sat, 29 Jul 2023 16:24:30 +0100
-From: Jonathan Cameron <jic23@kernel.org>
-To: Ruan Jinjie <ruanjinjie@huawei.com>
-Subject: Re: [PATCH -next] iio: adc: fix the return value handle for
- platform_get_irq()
-Message-ID: <20230729162430.4f858e08@jic23-huawei>
-In-Reply-To: <20230727131607.2897937-1-ruanjinjie@huawei.com>
-References: <20230727131607.2897937-1-ruanjinjie@huawei.com>
-X-Mailer: Claws Mail 4.1.1 (GTK 3.24.38; x86_64-pc-linux-gnu)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=126.com (client-ip=220.181.12.26; helo=m126.mail.126.com; envelope-from=lianglixuehao@126.com; receiver=lists.ozlabs.org)
+X-Greylist: delayed 940 seconds by postgrey-1.37 at boromir; Fri, 28 Jul 2023 22:40:45 AEST
+Received: from m126.mail.126.com (m126.mail.126.com [220.181.12.26])
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RC6gK6kKnz3Wts;
+	Fri, 28 Jul 2023 22:40:43 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
+	s=s110527; h=From:Subject:Date:Message-Id:MIME-Version; bh=FoxBD
+	YqOKyiWiTrz1BH4q8oi7fSeNd2Y5rKiieL1SJQ=; b=JMwOLltwUM6nZC31hnjsI
+	rFEPejxCuR+xeacnr2pk0Dqfjdc/sHXY+XFIx65nEsXGuzdhG/fyAHHV3FX1IRv3
+	WLAGSaPWpJWU933HIP7xdjU+4XrZOo3zbBo3DUdxlljDGGTtX/VRO4pgnc+KCiA9
+	mDiyjzPUUx+nqYsvCoWHZY=
+Received: from localhost.localdomain (unknown [117.136.33.150])
+	by zwqz-smtp-mta-g2-0 (Coremail) with SMTP id _____wD3_q5ys8NkgYAxBA--.37325S2;
+	Fri, 28 Jul 2023 20:24:21 +0800 (CST)
+From: Lixue Liang <lianglixuehao@126.com>
+To: brendan.higgins@linux.dev, benh@kernel.crashing.org,
+	joel@jms.id.au, "andi.shyti@kernel.organdrew"@aj.id.au
+Subject: [PATCH] i2c: aspeed: Avoid accessing freed buffers during i2c transfers.
+Date: Fri, 28 Jul 2023 12:24:16 +0000
+Message-Id: <20230728122416.17782-1-lianglixuehao@126.com>
+X-Mailer: git-send-email 2.27.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: _____wD3_q5ys8NkgYAxBA--.37325S2
+X-Coremail-Antispam: 1Uf129KBjvdXoW7Wr1DurW8WryxCr15tw13Arb_yoWDGFc_Ka
+	1kua4xJr1DJF95Cw1Fywn8ZFyF9345ur4kWw1vya4fC3WYv3s5JFyq9FZ3ArsrWFZ7GFy5
+	J3Wj9F4fAr1DGjkaLaAFLSUrUUUUjb8apTn2vfkv8UJUUUU8Yxn0WfASr-VFAUDa7-sFnT
+	9fnUUvcSsGvfC2KfnxnUUI43ZEXa7IU8H89tUUUUU==
+X-Originating-IP: [117.136.33.150]
+X-CM-SenderInfo: xold0w5ol03vxkdrqiyswou0bp/1tbi5Ry6FlpD+gIe0QABs6
+X-Mailman-Approved-At: Mon, 31 Jul 2023 14:19:07 +1000
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -63,89 +57,35 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: lars@metafoo.de, tmaimon77@gmail.com, sbranden@broadcom.com, linux-rockchip@lists.infradead.org, avifishman70@gmail.com, rjui@broadcom.com, openbmc@lists.ozlabs.org, linux-iio@vger.kernel.org, vz@mleia.com, nuno.sa@analog.com, bcm-kernel-feedback-list@broadcom.com, venture@google.com, tali.perry1@gmail.com, linux-arm-kernel@lists.infradead.org, benjaminfair@google.com
+Cc: Lixue Liang <lianglixue@greatwall.com.cn>, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, lianglixuehao@126.com, linux-i2c@vger.kernel.org, p.zabel@pengutronix.de, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 27 Jul 2023 21:16:07 +0800
-Ruan Jinjie <ruanjinjie@huawei.com> wrote:
+From: Lixue Liang <lianglixue@greatwall.com.cn>
 
-> There is no possible for platform_get_irq() to return 0
-> and the return value of platform_get_irq() is more sensible
-> to show the error reason.
-> 
-> Signed-off-by: Ruan Jinjie <ruanjinjie@huawei.com>
-Applied.
+After waiting for the transmission timeout, the I2C controller will
+continue to transmit data when the bus is idle. Clearing bus->msg will
+avoid kernel panic when accessing the freed msg->buf in
+aspeed_i2c_master_irq.
 
-Thanks,
+Signed-off-by: Lixue Liang <lianglixue@greatwall.com.cn>
+---
+ drivers/i2c/busses/i2c-aspeed.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-Jonathan
-
-> ---
->  drivers/iio/adc/bcm_iproc_adc.c | 4 ++--
->  drivers/iio/adc/lpc32xx_adc.c   | 4 ++--
->  drivers/iio/adc/npcm_adc.c      | 4 ++--
->  drivers/iio/adc/spear_adc.c     | 4 ++--
->  4 files changed, 8 insertions(+), 8 deletions(-)
-> 
-> diff --git a/drivers/iio/adc/bcm_iproc_adc.c b/drivers/iio/adc/bcm_iproc_adc.c
-> index 44e1e53ada72..0d6885413a7e 100644
-> --- a/drivers/iio/adc/bcm_iproc_adc.c
-> +++ b/drivers/iio/adc/bcm_iproc_adc.c
-> @@ -540,8 +540,8 @@ static int iproc_adc_probe(struct platform_device *pdev)
->  	}
->  
->  	adc_priv->irqno = platform_get_irq(pdev, 0);
-> -	if (adc_priv->irqno <= 0)
-> -		return -ENODEV;
-> +	if (adc_priv->irqno < 0)
-> +		return adc_priv->irqno;
->  
->  	ret = regmap_update_bits(adc_priv->regmap, IPROC_REGCTL2,
->  				IPROC_ADC_AUXIN_SCAN_ENA, 0);
-> diff --git a/drivers/iio/adc/lpc32xx_adc.c b/drivers/iio/adc/lpc32xx_adc.c
-> index 732c924a976d..e34ed7dacd89 100644
-> --- a/drivers/iio/adc/lpc32xx_adc.c
-> +++ b/drivers/iio/adc/lpc32xx_adc.c
-> @@ -176,8 +176,8 @@ static int lpc32xx_adc_probe(struct platform_device *pdev)
->  	}
->  
->  	irq = platform_get_irq(pdev, 0);
-> -	if (irq <= 0)
-> -		return -ENXIO;
-> +	if (irq < 0)
-> +		return irq;
->  
->  	retval = devm_request_irq(&pdev->dev, irq, lpc32xx_adc_isr, 0,
->  				  LPC32XXAD_NAME, st);
-> diff --git a/drivers/iio/adc/npcm_adc.c b/drivers/iio/adc/npcm_adc.c
-> index ba4cd8f49f66..3d9207c160eb 100644
-> --- a/drivers/iio/adc/npcm_adc.c
-> +++ b/drivers/iio/adc/npcm_adc.c
-> @@ -244,8 +244,8 @@ static int npcm_adc_probe(struct platform_device *pdev)
->  	info->adc_sample_hz = clk_get_rate(info->adc_clk) / ((div + 1) * 2);
->  
->  	irq = platform_get_irq(pdev, 0);
-> -	if (irq <= 0) {
-> -		ret = -EINVAL;
-> +	if (irq < 0) {
-> +		ret = irq;
->  		goto err_disable_clk;
->  	}
->  
-> diff --git a/drivers/iio/adc/spear_adc.c b/drivers/iio/adc/spear_adc.c
-> index d93e580b3dc5..ad54ef798109 100644
-> --- a/drivers/iio/adc/spear_adc.c
-> +++ b/drivers/iio/adc/spear_adc.c
-> @@ -310,8 +310,8 @@ static int spear_adc_probe(struct platform_device *pdev)
->  	}
->  
->  	irq = platform_get_irq(pdev, 0);
-> -	if (irq <= 0) {
-> -		ret = -EINVAL;
-> +	if (irq < 0) {
-> +		ret = irq;
->  		goto errout2;
->  	}
->  
+diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
+index 2e5acfeb76c8..c83057497e26 100644
+--- a/drivers/i2c/busses/i2c-aspeed.c
++++ b/drivers/i2c/busses/i2c-aspeed.c
+@@ -713,6 +713,8 @@ static int aspeed_i2c_master_xfer(struct i2c_adapter *adap,
+ 		spin_lock_irqsave(&bus->lock, flags);
+ 		if (bus->master_state == ASPEED_I2C_MASTER_PENDING)
+ 			bus->master_state = ASPEED_I2C_MASTER_INACTIVE;
++
++		bus->msgs = NULL;
+ 		spin_unlock_irqrestore(&bus->lock, flags);
+ 
+ 		return -ETIMEDOUT;
+-- 
+2.27.0
 
