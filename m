@@ -2,55 +2,73 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 19C8A76BD7D
-	for <lists+openbmc@lfdr.de>; Tue,  1 Aug 2023 21:15:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id B649076BDDA
+	for <lists+openbmc@lfdr.de>; Tue,  1 Aug 2023 21:34:48 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=ZmhBbI6q;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=PrTJXWf4;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RFlDr2C27z30XM
-	for <lists+openbmc@lfdr.de>; Wed,  2 Aug 2023 05:15:24 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RFlgB4W1nz3bX2
+	for <lists+openbmc@lfdr.de>; Wed,  2 Aug 2023 05:34:46 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=ZmhBbI6q;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=PrTJXWf4;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=sboyd@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::830; helo=mail-qt1-x830.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RFlDF1n8dz2ytX
-	for <openbmc@lists.ozlabs.org>; Wed,  2 Aug 2023 05:14:53 +1000 (AEST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
-	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id 31897616B0;
-	Tue,  1 Aug 2023 19:14:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 824A8C433C7;
-	Tue,  1 Aug 2023 19:14:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1690917290;
-	bh=RricL0NBD2SlXPu5D6K3MkV2NfI2Fl9g7qhLIB9lKzs=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=ZmhBbI6q1rH8SwBWw7Bxp58j12JA0u4tagm4I1spQ4hymiK8n+VSfZn4bnDxGQ5eZ
-	 zRTn75Ez47dqoWaZAC/USrqMPfbutYJpA39CcU3FzTLBDCEPbHVCDfqNZ5fHPNyVxi
-	 F8p1YiI9Q3oxsyXvYMH07aFZjDm0ZBXeOqRDiHtNkE4yBNMT12zQQypoQw/I2MS8CT
-	 9iVPIC5awUS2tzXak5s1SBNF9fSL0887T4zOFPmsLfd7I13Vvi5Ya20JsFXa6JB2fj
-	 XC6b1TtXp+N/aGb6yueKNPuXaAKetcrrl1D/WntkFG00YSO5xydBVrzQ6jyiDJaa1k
-	 EpxBXA8mJ1DRg==
-Message-ID: <54b4d761e5b16ffb798a89c1cea99714.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RFlfZ4WXBz2yW0
+	for <openbmc@lists.ozlabs.org>; Wed,  2 Aug 2023 05:34:13 +1000 (AEST)
+Received: by mail-qt1-x830.google.com with SMTP id d75a77b69052e-403b30c7377so34347061cf.1
+        for <openbmc@lists.ozlabs.org>; Tue, 01 Aug 2023 12:34:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1690918450; x=1691523250;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=RiXnRpgU/7pM7zmeIQ0mOj9rVRsb3P4nxXhXRggeKpk=;
+        b=PrTJXWf4ietN8wFP7fWgPQbq6Q43Xvov4u9MyTKH0wp1TINqBUg9AOygwnN8pX0/YF
+         rjEnYD1v6xTFH54mzf8PThMwT66okXcHsDQrmqiEjdWL4tQJl4fabx+75cl7rxuJ6nGE
+         CWtsOmuuQ8vjlnoLNBY3sfptVgc3L/EWtctXHi/7zK1X3hEnc146i0je9BCSkGSxqA94
+         BEK43ub2PkKHFhwN9mOJGrGSCusBPkjkdwaX3qdrD18wFBf0B4LOsYId5Z1lNgFtgx3X
+         9n1KK4EPkUkbpim12Epm4WBOpk7u/cTl1hX6LwptGNssXVTmSCgysdzLBf7OIJcK+Bok
+         AMfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1690918450; x=1691523250;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RiXnRpgU/7pM7zmeIQ0mOj9rVRsb3P4nxXhXRggeKpk=;
+        b=flaBhMNHTMjC9EXlnIqm8IHCS1vlTfZLFauljDeO2nhij79RIX0NM2PplGlo7JMRIo
+         SCASzs99TUgw3tB8s012j8Vhk320wuS1TdjJ8AJzJZxHbVnRPcq/Rzcc28WaOTTofrt6
+         o1qTBA++WmflhyZ229fSCtffLyqR4CkkvZhmeFLu1vxtafosBP8pfAfIOjo1PKPq11rE
+         1ganzUzV++n89TPBsD8fKs//B3PGzxcJpoFFpJOsUvqtD8cPvTjWkbUEy807nRUrbwoy
+         P2NiQDkEO5CFlXHZpsRTbJMlBpFis0KkJ2Ya0IGgKlusoKsI9w1/zqP40tYwlPDmXJ78
+         AtSA==
+X-Gm-Message-State: ABy/qLY71rOjM0ZXJQLX3QHEthqJ2xanzaLseGXwHp8L2rtMzVlSpGzm
+	usNssqnO7DFYAY8UCmMBXZw=
+X-Google-Smtp-Source: APBJJlHpYsXI0M8G83461WFsQdSk8VzrBmzAwiWKeqDOoNM5BFjfttvU0H4HbqPGwwsJZOZP140KdQ==
+X-Received: by 2002:ac8:5a4a:0:b0:406:9532:55ab with SMTP id o10-20020ac85a4a000000b00406953255abmr16375115qta.42.1690918449928;
+        Tue, 01 Aug 2023 12:34:09 -0700 (PDT)
+Received: from smtpclient.apple ([2601:184:200:8480:45d2:4dc4:4f7d:4655])
+        by smtp.gmail.com with ESMTPSA id i15-20020ae9ee0f000000b0076c89639526sm3548139qkg.93.2023.08.01.12.34.09
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 01 Aug 2023 12:34:09 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3696.120.41.1.3\))
+Subject: Re: OpenBMC obmc-op-control-power
+From: Andrew Geissler <geissonator@gmail.com>
+In-Reply-To: <CADz53W=bptekDoDVctBQ1TZdLcMz95YhWovn_LGRB92HsBp4Fw@mail.gmail.com>
+Date: Tue, 1 Aug 2023 15:34:08 -0400
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <ZLvyn0xq3Msk+lxF@probook>
-References: <20230428190226.1304326-1-j.neuschaefer@gmx.net> <20230428190226.1304326-3-j.neuschaefer@gmx.net> <4e0a5db18ed7d37038e67be0f1ddcb08.sboyd@kernel.org> <ZLvyn0xq3Msk+lxF@probook>
-Subject: Re: [PATCH v8 2/2] clk: wpcm450: Add Nuvoton WPCM450 clock/reset controller driver
-From: Stephen Boyd <sboyd@kernel.org>
-To: Jonathan =?utf-8?q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-Date: Tue, 01 Aug 2023 12:14:48 -0700
-User-Agent: alot/0.10
+Message-Id: <FCC6EA0D-0629-4591-8083-9E16DA8FD45B@gmail.com>
+References: <CADz53W=bptekDoDVctBQ1TZdLcMz95YhWovn_LGRB92HsBp4Fw@mail.gmail.com>
+To: Karthik Paladugula <karthik.paladugula@gmail.com>
+X-Mailer: Apple Mail (2.3696.120.41.1.3)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,37 +80,43 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tomer Maimon <tmaimon77@gmail.com>, Michael Turquette <mturquette@baylibre.com>, Tali Perry <tali.perry1@gmail.com>, linux-clk@vger.kernel.org, Benjamin Fair <benjaminfair@google.com>, openbmc@lists.ozlabs.org, Daniel Lezcano <daniel.lezcano@linaro.org>, Joel Stanley <joel@jms.id.au>, Guenter Roeck <linux@roeck-us.net>, devicetree@vger.kernel.org, linux-watchdog@vger.kernel.org, Jonathan =?utf-8?q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, Rob Herring <robh+dt@kernel.org>, Christophe JAILLET <christophe.jaillet@wanadoo.fr>, Thomas Gleixner <tglx@linutronix.de>, Wim Van Sebroeck <wim@linux-watchdog.org>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, linux-kernel@vger.kernel.org, Philipp Zabel <p.zabel@pengutronix.de>, Krzysztof Kozlowski <krzk+dt@kernel.org>
+Cc: OpenBMC List <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Quoting Jonathan Neusch=C3=A4fer (2023-07-22 08:15:43)
-> On Thu, Jul 20, 2023 at 05:02:15PM -0700, Stephen Boyd wrote:
-> > Quoting Jonathan Neusch=C3=A4fer (2023-04-28 12:02:26)
-> > > diff --git a/drivers/clk/clk-wpcm450.c b/drivers/clk/clk-wpcm450.c
-> [...]
-> > > +static unsigned long wpcm450_clk_pll_recalc_rate(struct clk_hw *hw,
-> > > +                                                unsigned long parent=
-_rate)
-> > > +{
-> > > +       struct wpcm450_clk_pll *pll =3D to_wpcm450_clk_pll(hw);
-[...]
->=20
-> > > +static const struct wpcm450_pll_data pll_data[] =3D {
-> > > +       { "pll0", { .name =3D "ref" }, REG_PLLCON0, 0 },
-> >=20
-> > This is new code, please don't use .name. Instead use .fw_name or .inde=
-x with preference to
-> > .index first and .hw if the pointer is available in this driver.
->=20
-> As far as I can see, .fw_name and .index depend on a struct device*
-> being passed to clk_hw_register, which won't be available unless I
-> actually convert the driver to a platform driver.
 
-You can call of_clk_hw_register(), but a conversion to a platform driver
-is preferred.
 
+> On Jul 31, 2023, at 4:37 PM, Karthik Paladugula =
+<karthik.paladugula@gmail.com> wrote:
 >=20
-> Not relying on .name would indeed be nice.
+> Hello Andrew!
+>=20
+> I see from the email archives found here: =
+https://lists.ozlabs.org/pipermail/openbmc/ that you proposed back in =
+November 2022 that obmc-op-control-power_git.bb be renamed to =
+phosphor-skeleton-control-power_git.bb and that it will be removed =
+eventually. I wanted to check up on that in this email and ask if you =
+might know what the situation surrounding that package is now?
 
-Cool.
+Hi Karthik, I added on the openbmc mailing list to cc as if you have the =
+question, there=E2=80=99s a good chance someone else will some day.
+
+The overall goal is to get rid of the skeleton repository. As you noted, =
+I did a bit of clean up a while (ago)[1] and at least broke out the =
+skeleton recipe to include its name. I think the only way we finally get =
+rid of skeleton is when someone  goes back to at least the systems we =
+support in CI and moves them to the phosphor-power version, or we =
+eventually remove the servers from CI that are using skeleton. I don=E2=80=
+=99t currently have any plans to do this work.
+
+If you=E2=80=99re interested in working on it, you could push up a =
+change to gerrit that removes the skeleton recipe and see what fails.
+
+Andrew
+
+[1]: =
+https://lists.ozlabs.org/pipermail/openbmc/2022-November/032457.html=20
+
+> Thank you,
+> Karthik
+
