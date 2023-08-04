@@ -1,105 +1,68 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C329C76F941
-	for <lists+openbmc@lfdr.de>; Fri,  4 Aug 2023 07:06:11 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2673F76FAA8
+	for <lists+openbmc@lfdr.de>; Fri,  4 Aug 2023 09:08:14 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256 header.s=selector1 header.b=O6VxIQe5;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=g0eVME82;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RHDFY50bdz30PJ
-	for <lists+openbmc@lfdr.de>; Fri,  4 Aug 2023 15:06:09 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RHGyN036Kz3cPS
+	for <lists+openbmc@lfdr.de>; Fri,  4 Aug 2023 17:08:12 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256 header.s=selector1 header.b=O6VxIQe5;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=g0eVME82;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=hotmail.com (client-ip=2a01:111:f400:7e83::81d; helo=nam02-dm3-obe.outbound.protection.outlook.com; envelope-from=fishbaoz@hotmail.com; receiver=lists.ozlabs.org)
-Received: from NAM02-DM3-obe.outbound.protection.outlook.com (mail-dm3nam02olkn2081d.outbound.protection.outlook.com [IPv6:2a01:111:f400:7e83::81d])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::129; helo=mail-lf1-x129.google.com; envelope-from=shakeebbk@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RHDDx2WqMz302R
-	for <openbmc@lists.ozlabs.org>; Fri,  4 Aug 2023 15:05:36 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=HERLImgidFQ8KxHRy0XnlWMM3Hw21YUNmtGdhR0mbq5cBzLtMgDMf4ZAHmYhTJMeVqe4/mS/JWAttzwUcjJHCKd7YIcnGAifLp8Swllz/mqwK4Vx/fPXb4zAzhxtNTmaG4tDDpmTsy9QuMvQn+9fNxKLnA3tuieyB6Y2y6AA5xurfwuUNVYLkge8U0YGf5lZhmeYdmMwShB40bnDaxYX9riRrDUlKsg3uVeGXcNLUqbwtnkDzN4mJpZktblHvblDuls0lBcvzwdGPnk2Dw8Z3odOSGpjExMxLh77m9vwGEF39Km9ju5kufl1aLWvK4/wBmsDq6XUw+v0wVh4lw+9pQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1ca5WWFewuh41HxlbAklqzH6Bud5ssSsljg47HaHIjc=;
- b=QC61xLitrppxqSiauRPGGhzZnHdzZXVa0mG1hRAUvklQQhjaMnF+P/vKoMimplJnkXJQ38D11oQVsUN/Y4jZRS+fwx/zjWhVZv2o2fGbVg8DcfAEJsIEvDj+IQ/9V92CZ3kARaD6glRJkODlJKU+R6vAitOAzE636WTc0nzDCDt37CWMEy7h0LNj3DLJgDjQ4eUV4P7Kq74ezqW2N47hmPGt0yJzHPpssGlxpEFDMcgFo3AT5WQHrbV44JTHou8jonyVajNADFlbJUILDRJ5VGFWKXSKudBSUSu9AmlvjmyglH73bECRX4nDJtcsfKSWRykGY6PKO+d1p09JPql6qQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1ca5WWFewuh41HxlbAklqzH6Bud5ssSsljg47HaHIjc=;
- b=O6VxIQe5mjtUnFEYq38BGPxOziCMIgeicKHbVBgJM6OFARKUf1DqZsPy0ulOxc1+n6TDR45jqWtY+Z1+7TXpW8lJRHA2sPAZmsIfEnAYOi+SE1x91aEwv310AXw3B1HZ7CFL+bFW+w94IpNlqnU3qxznxYfJ2QMQAU5+XxR7zmQdXJkqe/xouQjuGsNTxFoAkhYVH89zB+r4Om2XMZgFT9cTqPSR/wZ+QS98jzJae8WH5SoEmcHiFoiqaehobPIAfjdCmZRIpW8OLPJvleuercUrOwm61iPxpLXu1QMZ6HVHdFWvcPmTzGVHcjltxOKgglQOwYxeiQBTwmyWjFovVQ==
-Received: from DM4PR11MB6502.namprd11.prod.outlook.com (2603:10b6:8:89::7) by
- SJ2PR11MB7547.namprd11.prod.outlook.com (2603:10b6:a03:4cd::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6652.20; Fri, 4 Aug
- 2023 05:05:25 +0000
-Received: from DM4PR11MB6502.namprd11.prod.outlook.com
- ([fe80::2670:725d:11b7:3ab1]) by DM4PR11MB6502.namprd11.prod.outlook.com
- ([fe80::2670:725d:11b7:3ab1%7]) with mapi id 15.20.6631.046; Fri, 4 Aug 2023
- 05:05:25 +0000
-From: Zheng Bao <fishbaoz@hotmail.com>
-To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
-Subject: How can the fru.yaml is converted to a binary which goes into EEPROM?
-Thread-Topic: How can the fru.yaml is converted to a binary which goes into
- EEPROM?
-Thread-Index: AQHZxpBPg++/hG7mE0C7B3Td+NRlVA==
-Date: Fri, 4 Aug 2023 05:05:25 +0000
-Message-ID:  <DM4PR11MB6502BB76DEA9A44FEA5EBC3DCD09A@DM4PR11MB6502.namprd11.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-msip_labels: 
-x-tmn: [tRDlFb57dBcyqHs3d3sKS8xMU2LAN7LTYsoEMrE/+lc=]
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: DM4PR11MB6502:EE_|SJ2PR11MB7547:EE_
-x-ms-office365-filtering-correlation-id: 19595397-d0a1-474d-79e1-08db94a86a08
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:  K0scw/7KHZY9TR8F+//EL6oQO6NSGuCCIOXm2ybIdXfRo6VpmZwjU5QHlnMIN3+jPCNuOOLMRnUtxgaHKjuu0mi6uH0jG2zQh+xS8d8Ihk3BGX441KWEpNrfMqcv1e+wwC7hf1D1IA/R54vWfxr2YFcNRofnVo1duxN0jOuF1AL8mMM/uli9h/Qhqhe/Ouf0BMFBq2QAQDpTo08fEv57tS5UIpERt3vVyqgo90Ez2N/B+QA3OCH17X6qrkuTEdde2GMM3HSLbuGkyavQu+D2P+lHx0BmDWGenAJzUmHhGA76MNsW4VDPJWXD2PUSWvq1ZsjWEFU3hXcuZ9rsVad+RDibIkbAcsw0Cz4j03xdtkEVjNzUgq/cPAqdATb2N3qEhSRwrWR/ZnmfJWjtHWNhDFAMJVjy8aZbAXShJSx3S4QwmJ8nVPgspJRUIZsC4HV3ebFYRJl0hM7u42yft46OLwhdGd83dUcbY6/ur4y5JxUTq/YMy+cTDFf//8LbARcGHErBPkRzfMg4gI1RpwwcLNjg138Rx1CSS+cN/GlV1kKgsWnnmk0kKJ9A0CpeQ37PHu2KXspADjToJPHI25VP8+HP9yD8s9Eee3Bh/sGVPWk=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:  =?iso-8859-1?Q?XaSFA8fhumIEn7k70OGktwRgo9rqAR6Q/Vdm8EdaBRAU58UVMYiFJfo9ZA?=
- =?iso-8859-1?Q?fffgVChNMIl/muAgseUv6byUtarxXwQ+y+dB3EW4trEiykFEdqch7HQhF6?=
- =?iso-8859-1?Q?G28UQRKtbFq84TfdIZtT6qk20/CLBtq1OzivT3Fm28oTx3xZ1mCmq5TrUr?=
- =?iso-8859-1?Q?24nO5rmM0uZ6jDBhuB9rngJ7nn+qlUgQiTbl5TzVFHGPRP5ammwNatZwmr?=
- =?iso-8859-1?Q?Koo9FfJtYdEdVxyvY6D+t1390yF5jA/EpkGTr0aMVGZBsyIvMxrNluBnyp?=
- =?iso-8859-1?Q?YK4V0EWNbKOdcmIzZKFVQHB0cRrkiCQiMSyH2uNUDkr57267N3DzTuzuRf?=
- =?iso-8859-1?Q?PwKNuOIiiW78rg8YLuRkaVGomqHlfQlubFjwNAr/D135iWVSkHpsstlQ63?=
- =?iso-8859-1?Q?UoWmQGvlYuWRKG5/yKlyoQroC/wke0HkKuxh7Pq3kx5fCVBXRLVB3lPz0C?=
- =?iso-8859-1?Q?r3yMjhS4Z8Ggbq0P9xuHVqUmwkS7BsAbrn9+0Y9HnjH9uMV/kETilOVoEd?=
- =?iso-8859-1?Q?pDWJ9luxsTq5ZDhaP5wc7Gsr2nqmVmXZP9vPYPxGX9aJ5YfVVVNin5R5Er?=
- =?iso-8859-1?Q?sLmsG2Jq96JxXHNLOjRTilRyVrM5Sd8B3gt/EJwW9UlZVWc/rU6siZGhGo?=
- =?iso-8859-1?Q?cRCBVwEfoz80wsbbmKsc1sLfaaT4uwa42m91KoLIT2qilXVxQPvTJtn0br?=
- =?iso-8859-1?Q?uxwdbda6FUUYWdv4jONCipp2hrX0WAq7kOvxynh0oveceDM8hYT5i3Ekg7?=
- =?iso-8859-1?Q?sHhnCKtoWhy8pZ5k2rwrt+CzRlmxOk+KCXsoeX/OimCauo+EB8tIn/0O+z?=
- =?iso-8859-1?Q?xEN62PKgCS1OO6wOLlKTG7b0+KKOLXZauWJUjw5oPJjFsDjA0s5FvHsuSR?=
- =?iso-8859-1?Q?KaPC51QdAOlCiSGb9exN1QH+/DbYsnBZt/OyyfcqKOADK35KwVz3ShG4BC?=
- =?iso-8859-1?Q?smTh6UwaPZrB3PxSL8MJty6I6GB3SxoaLWZPz0Hzj5zfSoXxvDBINado9n?=
- =?iso-8859-1?Q?6hC+QQEtoakzWG2I2DFOlfVcZSJL2zTMX5VrQ2EFCC1MWrMR4zZ0H8FXif?=
- =?iso-8859-1?Q?dhEOG1uKKzPvSt+iA5OrkLqY9BELnGzqZ3r2gTTcbwEVSVe7R2wsegPADw?=
- =?iso-8859-1?Q?YDiRNgiRPIMPkF2nnxaHPy6MohtWYQLOUb0J4Czpp90QmsIn99t5GBTbUH?=
- =?iso-8859-1?Q?DtndB58JA8aevGuA+V28qI/S4VPZ40oQn8tRiG8LSXh2U4syiGqe2+JB36?=
- =?iso-8859-1?Q?5qBns7PrxdqqduTRrkzQ=3D=3D?=
-Content-Type: multipart/alternative;
-	boundary="_000_DM4PR11MB6502BB76DEA9A44FEA5EBC3DCD09ADM4PR11MB6502namp_"
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RHGxn2NM3z2ytR
+	for <openbmc@lists.ozlabs.org>; Fri,  4 Aug 2023 17:07:39 +1000 (AEST)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-4fe15bfb1adso3102548e87.0
+        for <openbmc@lists.ozlabs.org>; Fri, 04 Aug 2023 00:07:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1691132853; x=1691737653;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=JYfAbjyQkhNehNAD56dC9lp/bsjVNkAPByOVBTUB83g=;
+        b=g0eVME82+HXJUsbpTmh0wwJ+Z1Y45Y9PhChOv0rvguY+vLoub22oAyVJp89SSelJWd
+         QLGdAbfQsUr/kdb1cKiM8fRk8V2TpLuHktHyJjDZGxIMbPF0BTL3Iy4ZyWQX10sW+gXH
+         HQjVx59MzY4DaqXXo+BW7srCS+dsUT1FGwhduSJfpF14p2Ldzu6Y0qZlPyVF5ydHV0f6
+         0qy2jzBeuWUlCgGQRnI/K53lqZNky6ZUWP3IsMBKuYFYzUJMQzaMVyhfABpaTZu4erb6
+         SkQKIFMqFqIME++3IDDOxwDiinHVXMnT7y9fIpJ60IrArQ+CbMOtcKDFV7fc8JNVxvD1
+         JJCA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691132853; x=1691737653;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=JYfAbjyQkhNehNAD56dC9lp/bsjVNkAPByOVBTUB83g=;
+        b=PPXl3JJ2glDs2j6m2A9+YgcuMW26E3Y0tdYEcyRWf/Ud9tteFPkKi9aEuGVth7HGVv
+         2wFKrX+rGHA6/bql4oG19BmMySxWqoC8Dc1PKc/WPmtTrhpbyDXsf8rhy4TsrTdvSceu
+         FFScGD7ZRfaA80Otm9UDhWgmP9TqTQ1p+Zt8zTNBxF03jLtn9J5h+BmrXlxooj10ahSr
+         R8NpoxqKFM6WATP5OYzP6NU1ZALiIDJKAubY/H9fP5jl4map1Tm4at6P8G5Rbiz+IZTL
+         Spj9pVPFHASIT0lsVLyUIogCaESfpJnfK+fR9SWyeBAMfX5JkjYpkivWOwOCZ1hcsk3i
+         VCmw==
+X-Gm-Message-State: AOJu0Yxl0drdwc6hDgaaFDdOCsydWLOxuZD6z+m1OxXLXvx4g3OWRE/J
+	kZI/KO+a0KLa8Gg1MHs+zYgwNt2j+tvvnDxiQ3s=
+X-Google-Smtp-Source: AGHT+IEwAPGmPxc47KsxEB93Pje1E4SLKUr/1lnuQM0YG+aonFX7AntAwg9GuLisex9JdndOKwiS0CQa+hjaLnmRvzc=
+X-Received: by 2002:a19:5f54:0:b0:4f8:7325:bcd4 with SMTP id
+ a20-20020a195f54000000b004f87325bcd4mr612129lfj.0.1691132852626; Fri, 04 Aug
+ 2023 00:07:32 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-e8f36.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR11MB6502.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 19595397-d0a1-474d-79e1-08db94a86a08
-X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Aug 2023 05:05:25.6912
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR11MB7547
+References: <CAPY-kLVD7ONa6fkSrQ5sfAxK4UcGZSyHoMr6sb6oQPTafMT_fw@mail.gmail.com>
+ <dd842255-9ab0-6fc7-7423-c9420f97dc3c@linux.ibm.com>
+In-Reply-To: <dd842255-9ab0-6fc7-7423-c9420f97dc3c@linux.ibm.com>
+From: Shakeeb Pasha <shakeebbk@gmail.com>
+Date: Fri, 4 Aug 2023 12:37:21 +0530
+Message-ID: <CABYu0Wg29+CefRbJg0ep+H6tcO9YZ9OY8Z8vdSUCZuwXgaEEew@mail.gmail.com>
+Subject: Re: Error handling
+To: Joseph Reynolds <jrey@linux.ibm.com>
+Content-Type: multipart/alternative; boundary="000000000000f2eaca0602138c4a"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -111,77 +74,241 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: openbmc@lists.ozlabs.org, chandu chanti <chandutmba@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_DM4PR11MB6502BB76DEA9A44FEA5EBC3DCD09ADM4PR11MB6502namp_
-Content-Type: text/plain; charset="iso-8859-1"
+--000000000000f2eaca0602138c4a
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-openbmc/meta-amd/meta-ethanolx/recipes-phosphor/configuration/ethanolx-yaml=
--config/ethanolx-ipmi-fru.yaml at master =B7 openbmc/openbmc (github.com)<h=
-ttps://github.com/openbmc/openbmc/blob/master/meta-amd/meta-ethanolx/recipe=
-s-phosphor/configuration/ethanolx-yaml-config/ethanolx-ipmi-fru.yaml>
+Thanks Joseph for the response.
+>> I didn't see anyone else answer this.  Is your question about how to
+>> architect or design your D-Bus interfaces?  Is the reference the BMCWeb
+>> merely to provide context as a consumer of these D-Bus services?  I
+>> assume so.
+Question is two pronged, one we wanted to know the best way to
+propagate error from dbus to bmcweb.
+Options we tried:
+1. Have handlers of each property throw an exception if there was an error.
+But this did not work well with current bmcweb implementation(get all
+method call), as it would lead to the entire resource not getting populated
+even if we have one property failing.
+2. Implement one additional associated rc property - and do the error
+handling bmcweb by looking at that, but this doubled up the number of
+properties on dbus.
+3. Use "default values" per property data type, but this would fail for
+extreme cases like if the property is u32, and if the default value used
+was INT_MAX, then it breaks when the property could take value 0xFFFFFFFF
+as valid value.
+So the query here was to check if any preference from above options or hear
+any new approaches as well.
 
-To make the inventory defined in the yaml go to Dbus, we need to burn a fru=
-.bin into the eeprom, right?
+The second query was about how to represent this error(per property error)
+on redfish, our proposal for now is to return "NULL" for any property that
+might be failing at the backend. Any thoughts on this approach?
 
-If yes, how the binary fru.bin is generated?
+>> I don't have any special insights.  Are you looking to follow a design
+>> pattern?  Are you looking for direction from the BMCWeb maintainers?
 
-Thanks.
+Yes, we are working on a design pattern proposal and will publish it here
+for review.
+It would be great if we could get some directions/inputs from the
+maintainers as well.
 
-Zheng
+Thanks,
+Shakeeb
 
---_000_DM4PR11MB6502BB76DEA9A44FEA5EBC3DCD09ADM4PR11MB6502namp_
-Content-Type: text/html; charset="iso-8859-1"
+On Thu, Aug 3, 2023 at 10:33=E2=80=AFPM Joseph Reynolds <jrey@linux.ibm.com=
+> wrote:
+
+> On 7/20/23 2:04 AM, chandu chanti wrote:
+> > Hi Team, We are planning to handle errors from backend services in bmc
+> > web. We are considering the following approaches to implement it, but
+> > we are facing some issues. please provide your inputs. 1 . Using
+> > exceptions in our backend D-Bus service
+> > ZjQcmQRYFpfptBannerStart
+> > This Message Is From an Untrusted Sender
+> > You have not previously corresponded with this sender.
+> > Report Suspicious
+> > <
+> https://us-phishalarm-ewt.proofpoint.com/EWT/v1/PjiDSg!12-vrJJyaRL1Nus7N2=
+6ProiLa90y_FB6oawxkmvrT4YcN373bBkdTP-XPRTFLRBygswzt1TwX0wxp5Tel83pR4ZZR-wpx=
+EYJpcKudcTfq2FH6iPLN9Ep4cV_tX4$>
+>
+> >
+> > ZjQcmQRYFpfptBannerEnd
+> >
+> > Hi Team,
+> >
+> > We are planning to handle errors from backend services in bmc web. We
+> > are considering the following approaches to implement it, but we are
+> > facing some issues. please provide your inputs.
+> >
+>
+> I didn't see anyone else answer this.  Is your question about how to
+> architect or design your D-Bus interfaces?  Is the reference the BMCWeb
+> merely to provide context as a consumer of these D-Bus services?  I
+> assume so.
+>
+> I don't have any special insights.  Are you looking to follow a design
+> pattern?  Are you looking for direction from the BMCWeb maintainers?
+>
+> Joseph
+>
+> > 1 . Using exceptions in our backend D-Bus service by throwing
+> > exceptions in the D-Bus property get handlers. It works fine for the
+> > Get property method call. However, when using the Get All method call,
+> > if one property fails, an error is returned without checking the other
+> > properties. Is there a way to implement exceptions in GetAll so that
+> > even if one property fails, we can still fetch the remaining properties=
+.
+> >
+> > 2. Using default values in D-Bus properties to indicate errors. Is
+> > there a reference implementation available for setting default values
+> > for string and integer data types in bmc web, similar to the
+> > implementation of NaN (default value) for the double data type in
+> > cable.hpp.
+> >
+> > 3. Implement associated return code per property on dbus, but this
+> > would be very inefficient in terms of double the properties on dbus,
+> > something we would like to avoid
+> >
+> > Thanks
+> > Chandrasekhar T.
+> >
+>
+>
+
+--000000000000f2eaca0602138c4a
+Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<html>
-<head>
-<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
-1">
-<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
-ttom:0;} </style>
-</head>
-<body dir=3D"ltr">
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);" class=3D"elementToProof">
-<a href=3D"https://github.com/openbmc/openbmc/blob/master/meta-amd/meta-eth=
-anolx/recipes-phosphor/configuration/ethanolx-yaml-config/ethanolx-ipmi-fru=
-.yaml" class=3D"ContentPasted0">openbmc/meta-amd/meta-ethanolx/recipes-phos=
-phor/configuration/ethanolx-yaml-config/ethanolx-ipmi-fru.yaml
- at master =B7 openbmc/openbmc (github.com)</a><br>
-</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);" class=3D"elementToProof">
+<div dir=3D"ltr"><div dir=3D"ltr"><div class=3D"gmail_default" style=3D"fon=
+t-size:large">Thanks=C2=A0Joseph for the response.</div><div class=3D"gmail=
+_default" style=3D"font-size:large"><span style=3D"font-size:small">&gt;&gt=
+; I didn&#39;t see anyone else answer this.=C2=A0 Is your question about ho=
+w to</span><br style=3D"font-size:small"><span style=3D"font-size:small">&g=
+t;&gt; architect or design your D-Bus interfaces?=C2=A0 Is the reference th=
+e BMCWeb</span><br style=3D"font-size:small"><span style=3D"font-size:small=
+">&gt;&gt; merely to provide context as a consumer of these D-Bus services?=
+=C2=A0 I</span><br style=3D"font-size:small"><span style=3D"font-size:small=
+">&gt;&gt; assume so.</span><br style=3D"font-size:small">Question is two p=
+ronged, one we wanted to know the=C2=A0best way to propagate=C2=A0error fro=
+m dbus to bmcweb.</div><div class=3D"gmail_default" style=3D""><font size=
+=3D"4">Options we tried:</font></div><div class=3D"gmail_default" style=3D"=
+"><font size=3D"4">1. Have handlers of each property throw an exception if =
+there was an error. But this did not work well with current bmcweb implemen=
+tation(get all method call), as it would lead to the entire resource=C2=A0n=
+ot getting populated even if we have one property failing.</font></div><div=
+ class=3D"gmail_default" style=3D""><font size=3D"4">2. Implement one addit=
+ional associated rc property - and do the error handling bmcweb by looking =
+at that, but this doubled up the number of properties on dbus.</font></div>=
+<div class=3D"gmail_default" style=3D""><font size=3D"4">3. Use &quot;defau=
+lt values&quot; per property data type, but this would fail for extreme cas=
+es like if the property=C2=A0is u32, and if the default value used was INT_=
+MAX, then it breaks when the property could take value 0xFFFFFFFF as valid =
+value.</font></div><div class=3D"gmail_default" style=3D""><font size=3D"4"=
+>So the query here was to check if any preference from above options or hea=
+r any new approaches as well.</font></div><div class=3D"gmail_default" styl=
+e=3D""><font size=3D"4"><br></font></div><div class=3D"gmail_default" style=
+=3D""><font size=3D"4">The second query was about how to represent this err=
+or(per property error) on redfish, our proposal for now is to return &quot;=
+NULL&quot; for any property that might be failing at the backend. Any thoug=
+hts on this approach?</font></div><div class=3D"gmail_default" style=3D""><=
+font size=3D"4"><br style=3D""></font><span style=3D"font-size:small">&gt;&=
+gt; I don&#39;t have any special insights.=C2=A0 Are you looking to follow =
+a design</span><br style=3D"font-size:small"><span style=3D"font-size:small=
+">&gt;&gt; pattern?=C2=A0 Are you looking for direction from the BMCWeb mai=
+ntainers?</span><br></div><div class=3D"gmail_default" style=3D""><span sty=
+le=3D"font-size:small"><br></span></div><div class=3D"gmail_default" style=
+=3D"font-size:large">Yes, we are working on a design pattern proposal and w=
+ill publish it here for review.</div><div class=3D"gmail_default" style=3D"=
+font-size:large">It would be great if we could get some directions/inputs f=
+rom the maintainers as well.</div><div class=3D"gmail_default" style=3D"fon=
+t-size:large"><br></div><div class=3D"gmail_default" style=3D"font-size:lar=
+ge">Thanks,</div><div class=3D"gmail_default" style=3D"font-size:large">Sha=
+keeb</div></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gm=
+ail_attr">On Thu, Aug 3, 2023 at 10:33=E2=80=AFPM Joseph Reynolds &lt;<a hr=
+ef=3D"mailto:jrey@linux.ibm.com">jrey@linux.ibm.com</a>&gt; wrote:<br></div=
+><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
+-left:1px solid rgb(204,204,204);padding-left:1ex">On 7/20/23 2:04 AM, chan=
+du chanti wrote:<br>
+&gt; Hi Team, We are planning to handle errors from backend services in bmc=
+ <br>
+&gt; web. We are considering the following approaches to implement it, but =
 <br>
-</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);" class=3D"elementToProof">
-To make the inventory defined in the yaml go to Dbus, we need to burn a fru=
-.bin into the eeprom, right?</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);" class=3D"elementToProof">
+&gt; we are facing some issues. please provide your inputs. 1 .=C2=A0Using =
 <br>
-</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);" class=3D"elementToProof">
-If yes, how the binary fru.bin is generated?</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);" class=3D"elementToProof">
+&gt; exceptions in our backend D-Bus service<br>
+&gt; ZjQcmQRYFpfptBannerStart<br>
+&gt; This Message Is From an Untrusted Sender<br>
+&gt; You have not previously corresponded with this sender.<br>
+&gt; Report=C2=A0Suspicious<br>
+&gt; &lt;<a href=3D"https://us-phishalarm-ewt.proofpoint.com/EWT/v1/PjiDSg!=
+12-vrJJyaRL1Nus7N26ProiLa90y_FB6oawxkmvrT4YcN373bBkdTP-XPRTFLRBygswzt1TwX0w=
+xp5Tel83pR4ZZR-wpxEYJpcKudcTfq2FH6iPLN9Ep4cV_tX4$" rel=3D"noreferrer" targe=
+t=3D"_blank">https://us-phishalarm-ewt.proofpoint.com/EWT/v1/PjiDSg!12-vrJJ=
+yaRL1Nus7N26ProiLa90y_FB6oawxkmvrT4YcN373bBkdTP-XPRTFLRBygswzt1TwX0wxp5Tel8=
+3pR4ZZR-wpxEYJpcKudcTfq2FH6iPLN9Ep4cV_tX4$</a>&gt; <br>
+&gt;<br>
+&gt; ZjQcmQRYFpfptBannerEnd<br>
+&gt;<br>
+&gt; Hi Team,<br>
+&gt;<br>
+&gt; We are planning to handle errors from backend services in bmc web. We =
 <br>
-</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);" class=3D"elementToProof">
-Thanks.</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);" class=3D"elementToProof">
+&gt; are considering the following approaches to implement it, but we are <=
+br>
+&gt; facing some issues. please provide your inputs.<br>
+&gt;<br>
 <br>
-</div>
-<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
- color: rgb(0, 0, 0);" class=3D"elementToProof">
-Zheng</div>
-</body>
-</html>
+<span class=3D"gmail_default" style=3D"font-size:large"></span>I didn&#39;t=
+ see anyone else answer this.=C2=A0 Is your question about how to <br>
+architect or design your D-Bus interfaces?=C2=A0 Is the reference the BMCWe=
+b <br>
+merely to provide context as a consumer of these D-Bus services?=C2=A0 I <b=
+r>
+assume so.<br>
+<br>
+I don&#39;t have any special insights.=C2=A0 Are you looking to follow a de=
+sign <br>
+pattern?=C2=A0 Are you looking for direction from the BMCWeb maintainers?<b=
+r>
+<br>
+Joseph<br>
+<br>
+&gt; 1 .=C2=A0Using exceptions in our backend D-Bus service by throwing <br=
+>
+&gt; exceptions in the D-Bus property get handlers. It works fine for the <=
+br>
+&gt; Get property method call. However, when using the Get All method call,=
+ <br>
+&gt; if one property fails, an error is returned without checking the other=
+ <br>
+&gt; properties. Is there a way to implement exceptions in GetAll so that <=
+br>
+&gt; even if one property fails, we can still fetch the remaining propertie=
+s.<br>
+&gt;<br>
+&gt; 2. Using default values in D-Bus properties to indicate errors. Is <br=
+>
+&gt; there a reference implementation available for setting default values =
+<br>
+&gt; for string and integer data types in bmc web, similar to the <br>
+&gt; implementation of NaN (default value) for the double data type in <br>
+&gt; cable.hpp.<br>
+&gt;<br>
+&gt; 3. Implement associated return code per property on dbus, but this <br=
+>
+&gt; would be very inefficient in terms of double the properties on dbus, <=
+br>
+&gt; something we would like to avoid<br>
+&gt;<br>
+&gt; Thanks<br>
+&gt; Chandrasekhar T.<br>
+&gt;<br>
+<br>
+</blockquote></div></div>
 
---_000_DM4PR11MB6502BB76DEA9A44FEA5EBC3DCD09ADM4PR11MB6502namp_--
+--000000000000f2eaca0602138c4a--
