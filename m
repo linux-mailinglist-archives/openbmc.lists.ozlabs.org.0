@@ -1,94 +1,105 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C1EDC76F048
-	for <lists+openbmc@lfdr.de>; Thu,  3 Aug 2023 19:03:24 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C329C76F941
+	for <lists+openbmc@lfdr.de>; Fri,  4 Aug 2023 07:06:11 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=JKMkup5F;
+	dkim=pass (2048-bit key; unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256 header.s=selector1 header.b=O6VxIQe5;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RGwCZ4Rsdz30FW
-	for <lists+openbmc@lfdr.de>; Fri,  4 Aug 2023 03:03:22 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RHDFY50bdz30PJ
+	for <lists+openbmc@lfdr.de>; Fri,  4 Aug 2023 15:06:09 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=JKMkup5F;
+	dkim=pass (2048-bit key; unprotected) header.d=hotmail.com header.i=@hotmail.com header.a=rsa-sha256 header.s=selector1 header.b=O6VxIQe5;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=lists.ozlabs.org)
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=hotmail.com (client-ip=2a01:111:f400:7e83::81d; helo=nam02-dm3-obe.outbound.protection.outlook.com; envelope-from=fishbaoz@hotmail.com; receiver=lists.ozlabs.org)
+Received: from NAM02-DM3-obe.outbound.protection.outlook.com (mail-dm3nam02olkn2081d.outbound.protection.outlook.com [IPv6:2a01:111:f400:7e83::81d])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RGwBw1DqRz2yGn
-	for <openbmc@lists.ozlabs.org>; Fri,  4 Aug 2023 03:02:47 +1000 (AEST)
-Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 373H15bU026029
-	for <openbmc@lists.ozlabs.org>; Thu, 3 Aug 2023 17:02:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- subject : to : references : from : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=b1aCSQzVfQLslyE23O0v3DK5QlJRvoup+VagmP5YM7c=;
- b=JKMkup5FOpS2B0Zd3bWe040dAs3e25rcQmgMu7MXfyhJ+govyxG0PREosiBfMXWUHhKL
- SwKjy9JjN97Y9QkT8QSBKK+sODf/WJ4sjpxLlYu4uH0q7a6RiIgKLoBQs16E8hHhfwLp
- tzOFK7Mbk7/iIpUA5sbTx6QzEYXuDgCBdiL60SOMaoww7n1P8u7eINg1Uu3x+iHxp4L/
- PZq/wiGsNX1TxlX97Cl1P6rgvBUEd+nR8FR18BmjMFEwH7QelNlQKcSsRqrZnVu3w5Oy
- RB0/44dig5ZmplGNDQiPFtKyVjZOMd1OcuOZQz7g3sOcRefcAAW8drrJiWYjmKVEuI6Y Bw== 
-Received: from pps.reinject (localhost [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3s8g8wr1bw-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Thu, 03 Aug 2023 17:02:44 +0000
-Received: from m0353722.ppops.net (m0353722.ppops.net [127.0.0.1])
-	by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 373H2hPI000801
-	for <openbmc@lists.ozlabs.org>; Thu, 3 Aug 2023 17:02:43 GMT
-Received: from ppma11.dal12v.mail.ibm.com (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3s8g8wr1bp-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 03 Aug 2023 17:02:43 +0000
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma11.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 373F43kf014550;
-	Thu, 3 Aug 2023 17:02:43 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
-	by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 3s5ft1xj4s-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Thu, 03 Aug 2023 17:02:43 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com [10.241.53.100])
-	by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 373H2gre20840924
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Thu, 3 Aug 2023 17:02:42 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id C749758059;
-	Thu,  3 Aug 2023 17:02:42 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 7E16658057;
-	Thu,  3 Aug 2023 17:02:42 +0000 (GMT)
-Received: from [9.67.61.18] (unknown [9.67.61.18])
-	by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTPS;
-	Thu,  3 Aug 2023 17:02:42 +0000 (GMT)
-Message-ID: <dd842255-9ab0-6fc7-7423-c9420f97dc3c@linux.ibm.com>
-Date: Thu, 3 Aug 2023 12:02:41 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.11.2
-Subject: Re: Error handling
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RHDDx2WqMz302R
+	for <openbmc@lists.ozlabs.org>; Fri,  4 Aug 2023 15:05:36 +1000 (AEST)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=HERLImgidFQ8KxHRy0XnlWMM3Hw21YUNmtGdhR0mbq5cBzLtMgDMf4ZAHmYhTJMeVqe4/mS/JWAttzwUcjJHCKd7YIcnGAifLp8Swllz/mqwK4Vx/fPXb4zAzhxtNTmaG4tDDpmTsy9QuMvQn+9fNxKLnA3tuieyB6Y2y6AA5xurfwuUNVYLkge8U0YGf5lZhmeYdmMwShB40bnDaxYX9riRrDUlKsg3uVeGXcNLUqbwtnkDzN4mJpZktblHvblDuls0lBcvzwdGPnk2Dw8Z3odOSGpjExMxLh77m9vwGEF39Km9ju5kufl1aLWvK4/wBmsDq6XUw+v0wVh4lw+9pQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=1ca5WWFewuh41HxlbAklqzH6Bud5ssSsljg47HaHIjc=;
+ b=QC61xLitrppxqSiauRPGGhzZnHdzZXVa0mG1hRAUvklQQhjaMnF+P/vKoMimplJnkXJQ38D11oQVsUN/Y4jZRS+fwx/zjWhVZv2o2fGbVg8DcfAEJsIEvDj+IQ/9V92CZ3kARaD6glRJkODlJKU+R6vAitOAzE636WTc0nzDCDt37CWMEy7h0LNj3DLJgDjQ4eUV4P7Kq74ezqW2N47hmPGt0yJzHPpssGlxpEFDMcgFo3AT5WQHrbV44JTHou8jonyVajNADFlbJUILDRJ5VGFWKXSKudBSUSu9AmlvjmyglH73bECRX4nDJtcsfKSWRykGY6PKO+d1p09JPql6qQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=hotmail.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=1ca5WWFewuh41HxlbAklqzH6Bud5ssSsljg47HaHIjc=;
+ b=O6VxIQe5mjtUnFEYq38BGPxOziCMIgeicKHbVBgJM6OFARKUf1DqZsPy0ulOxc1+n6TDR45jqWtY+Z1+7TXpW8lJRHA2sPAZmsIfEnAYOi+SE1x91aEwv310AXw3B1HZ7CFL+bFW+w94IpNlqnU3qxznxYfJ2QMQAU5+XxR7zmQdXJkqe/xouQjuGsNTxFoAkhYVH89zB+r4Om2XMZgFT9cTqPSR/wZ+QS98jzJae8WH5SoEmcHiFoiqaehobPIAfjdCmZRIpW8OLPJvleuercUrOwm61iPxpLXu1QMZ6HVHdFWvcPmTzGVHcjltxOKgglQOwYxeiQBTwmyWjFovVQ==
+Received: from DM4PR11MB6502.namprd11.prod.outlook.com (2603:10b6:8:89::7) by
+ SJ2PR11MB7547.namprd11.prod.outlook.com (2603:10b6:a03:4cd::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6652.20; Fri, 4 Aug
+ 2023 05:05:25 +0000
+Received: from DM4PR11MB6502.namprd11.prod.outlook.com
+ ([fe80::2670:725d:11b7:3ab1]) by DM4PR11MB6502.namprd11.prod.outlook.com
+ ([fe80::2670:725d:11b7:3ab1%7]) with mapi id 15.20.6631.046; Fri, 4 Aug 2023
+ 05:05:25 +0000
+From: Zheng Bao <fishbaoz@hotmail.com>
+To: OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Subject: How can the fru.yaml is converted to a binary which goes into EEPROM?
+Thread-Topic: How can the fru.yaml is converted to a binary which goes into
+ EEPROM?
+Thread-Index: AQHZxpBPg++/hG7mE0C7B3Td+NRlVA==
+Date: Fri, 4 Aug 2023 05:05:25 +0000
+Message-ID:  <DM4PR11MB6502BB76DEA9A44FEA5EBC3DCD09A@DM4PR11MB6502.namprd11.prod.outlook.com>
+Accept-Language: en-US
 Content-Language: en-US
-To: chandu chanti <chandutmba@gmail.com>, openbmc@lists.ozlabs.org
-References: <CAPY-kLVD7ONa6fkSrQ5sfAxK4UcGZSyHoMr6sb6oQPTafMT_fw@mail.gmail.com>
-From: Joseph Reynolds <jrey@linux.ibm.com>
-In-Reply-To: <CAPY-kLVD7ONa6fkSrQ5sfAxK4UcGZSyHoMr6sb6oQPTafMT_fw@mail.gmail.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: ubhsoe7ov5N8WTPQnmv8MuD-Fua7Wy20
-X-Proofpoint-GUID: _useW5LfpcMej_HiDSnqQ1khnaNnjjMX
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: 
+x-tmn: [tRDlFb57dBcyqHs3d3sKS8xMU2LAN7LTYsoEMrE/+lc=]
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DM4PR11MB6502:EE_|SJ2PR11MB7547:EE_
+x-ms-office365-filtering-correlation-id: 19595397-d0a1-474d-79e1-08db94a86a08
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:  K0scw/7KHZY9TR8F+//EL6oQO6NSGuCCIOXm2ybIdXfRo6VpmZwjU5QHlnMIN3+jPCNuOOLMRnUtxgaHKjuu0mi6uH0jG2zQh+xS8d8Ihk3BGX441KWEpNrfMqcv1e+wwC7hf1D1IA/R54vWfxr2YFcNRofnVo1duxN0jOuF1AL8mMM/uli9h/Qhqhe/Ouf0BMFBq2QAQDpTo08fEv57tS5UIpERt3vVyqgo90Ez2N/B+QA3OCH17X6qrkuTEdde2GMM3HSLbuGkyavQu+D2P+lHx0BmDWGenAJzUmHhGA76MNsW4VDPJWXD2PUSWvq1ZsjWEFU3hXcuZ9rsVad+RDibIkbAcsw0Cz4j03xdtkEVjNzUgq/cPAqdATb2N3qEhSRwrWR/ZnmfJWjtHWNhDFAMJVjy8aZbAXShJSx3S4QwmJ8nVPgspJRUIZsC4HV3ebFYRJl0hM7u42yft46OLwhdGd83dUcbY6/ur4y5JxUTq/YMy+cTDFf//8LbARcGHErBPkRzfMg4gI1RpwwcLNjg138Rx1CSS+cN/GlV1kKgsWnnmk0kKJ9A0CpeQ37PHu2KXspADjToJPHI25VP8+HP9yD8s9Eee3Bh/sGVPWk=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:  =?iso-8859-1?Q?XaSFA8fhumIEn7k70OGktwRgo9rqAR6Q/Vdm8EdaBRAU58UVMYiFJfo9ZA?=
+ =?iso-8859-1?Q?fffgVChNMIl/muAgseUv6byUtarxXwQ+y+dB3EW4trEiykFEdqch7HQhF6?=
+ =?iso-8859-1?Q?G28UQRKtbFq84TfdIZtT6qk20/CLBtq1OzivT3Fm28oTx3xZ1mCmq5TrUr?=
+ =?iso-8859-1?Q?24nO5rmM0uZ6jDBhuB9rngJ7nn+qlUgQiTbl5TzVFHGPRP5ammwNatZwmr?=
+ =?iso-8859-1?Q?Koo9FfJtYdEdVxyvY6D+t1390yF5jA/EpkGTr0aMVGZBsyIvMxrNluBnyp?=
+ =?iso-8859-1?Q?YK4V0EWNbKOdcmIzZKFVQHB0cRrkiCQiMSyH2uNUDkr57267N3DzTuzuRf?=
+ =?iso-8859-1?Q?PwKNuOIiiW78rg8YLuRkaVGomqHlfQlubFjwNAr/D135iWVSkHpsstlQ63?=
+ =?iso-8859-1?Q?UoWmQGvlYuWRKG5/yKlyoQroC/wke0HkKuxh7Pq3kx5fCVBXRLVB3lPz0C?=
+ =?iso-8859-1?Q?r3yMjhS4Z8Ggbq0P9xuHVqUmwkS7BsAbrn9+0Y9HnjH9uMV/kETilOVoEd?=
+ =?iso-8859-1?Q?pDWJ9luxsTq5ZDhaP5wc7Gsr2nqmVmXZP9vPYPxGX9aJ5YfVVVNin5R5Er?=
+ =?iso-8859-1?Q?sLmsG2Jq96JxXHNLOjRTilRyVrM5Sd8B3gt/EJwW9UlZVWc/rU6siZGhGo?=
+ =?iso-8859-1?Q?cRCBVwEfoz80wsbbmKsc1sLfaaT4uwa42m91KoLIT2qilXVxQPvTJtn0br?=
+ =?iso-8859-1?Q?uxwdbda6FUUYWdv4jONCipp2hrX0WAq7kOvxynh0oveceDM8hYT5i3Ekg7?=
+ =?iso-8859-1?Q?sHhnCKtoWhy8pZ5k2rwrt+CzRlmxOk+KCXsoeX/OimCauo+EB8tIn/0O+z?=
+ =?iso-8859-1?Q?xEN62PKgCS1OO6wOLlKTG7b0+KKOLXZauWJUjw5oPJjFsDjA0s5FvHsuSR?=
+ =?iso-8859-1?Q?KaPC51QdAOlCiSGb9exN1QH+/DbYsnBZt/OyyfcqKOADK35KwVz3ShG4BC?=
+ =?iso-8859-1?Q?smTh6UwaPZrB3PxSL8MJty6I6GB3SxoaLWZPz0Hzj5zfSoXxvDBINado9n?=
+ =?iso-8859-1?Q?6hC+QQEtoakzWG2I2DFOlfVcZSJL2zTMX5VrQ2EFCC1MWrMR4zZ0H8FXif?=
+ =?iso-8859-1?Q?dhEOG1uKKzPvSt+iA5OrkLqY9BELnGzqZ3r2gTTcbwEVSVe7R2wsegPADw?=
+ =?iso-8859-1?Q?YDiRNgiRPIMPkF2nnxaHPy6MohtWYQLOUb0J4Czpp90QmsIn99t5GBTbUH?=
+ =?iso-8859-1?Q?DtndB58JA8aevGuA+V28qI/S4VPZ40oQn8tRiG8LSXh2U4syiGqe2+JB36?=
+ =?iso-8859-1?Q?5qBns7PrxdqqduTRrkzQ=3D=3D?=
+Content-Type: multipart/alternative;
+	boundary="_000_DM4PR11MB6502BB76DEA9A44FEA5EBC3DCD09ADM4PR11MB6502namp_"
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.254,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
- definitions=2023-08-03_17,2023-08-03_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 spamscore=0
- priorityscore=1501 adultscore=0 malwarescore=0 phishscore=0 mlxscore=0
- impostorscore=0 clxscore=1011 suspectscore=0 lowpriorityscore=0
- mlxlogscore=999 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2306200000 definitions=main-2308030148
+X-OriginatorOrg: sct-15-20-4755-11-msonline-outlook-e8f36.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM4PR11MB6502.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 19595397-d0a1-474d-79e1-08db94a86a08
+X-MS-Exchange-CrossTenant-originalarrivaltime: 04 Aug 2023 05:05:25.6912
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR11MB7547
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,54 +114,74 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 7/20/23 2:04 AM, chandu chanti wrote:
-> Hi Team, We are planning to handle errors from backend services in bmc 
-> web. We are considering the following approaches to implement it, but 
-> we are facing some issues. please provide your inputs. 1 . Using 
-> exceptions in our backend D-Bus service
-> ZjQcmQRYFpfptBannerStart
-> This Message Is From an Untrusted Sender
-> You have not previously corresponded with this sender.
-> Report Suspicious
-> <https://us-phishalarm-ewt.proofpoint.com/EWT/v1/PjiDSg!12-vrJJyaRL1Nus7N26ProiLa90y_FB6oawxkmvrT4YcN373bBkdTP-XPRTFLRBygswzt1TwX0wxp5Tel83pR4ZZR-wpxEYJpcKudcTfq2FH6iPLN9Ep4cV_tX4$> 
->
-> ZjQcmQRYFpfptBannerEnd
->
-> Hi Team,
->
-> We are planning to handle errors from backend services in bmc web. We 
-> are considering the following approaches to implement it, but we are 
-> facing some issues. please provide your inputs.
->
+--_000_DM4PR11MB6502BB76DEA9A44FEA5EBC3DCD09ADM4PR11MB6502namp_
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 
-I didn't see anyone else answer this.  Is your question about how to 
-architect or design your D-Bus interfaces?  Is the reference the BMCWeb 
-merely to provide context as a consumer of these D-Bus services?  I 
-assume so.
+openbmc/meta-amd/meta-ethanolx/recipes-phosphor/configuration/ethanolx-yaml=
+-config/ethanolx-ipmi-fru.yaml at master =B7 openbmc/openbmc (github.com)<h=
+ttps://github.com/openbmc/openbmc/blob/master/meta-amd/meta-ethanolx/recipe=
+s-phosphor/configuration/ethanolx-yaml-config/ethanolx-ipmi-fru.yaml>
 
-I don't have any special insights.  Are you looking to follow a design 
-pattern?  Are you looking for direction from the BMCWeb maintainers?
+To make the inventory defined in the yaml go to Dbus, we need to burn a fru=
+.bin into the eeprom, right?
 
-Joseph
+If yes, how the binary fru.bin is generated?
 
-> 1 . Using exceptions in our backend D-Bus service by throwing 
-> exceptions in the D-Bus property get handlers. It works fine for the 
-> Get property method call. However, when using the Get All method call, 
-> if one property fails, an error is returned without checking the other 
-> properties. Is there a way to implement exceptions in GetAll so that 
-> even if one property fails, we can still fetch the remaining properties.
->
-> 2. Using default values in D-Bus properties to indicate errors. Is 
-> there a reference implementation available for setting default values 
-> for string and integer data types in bmc web, similar to the 
-> implementation of NaN (default value) for the double data type in 
-> cable.hpp.
->
-> 3. Implement associated return code per property on dbus, but this 
-> would be very inefficient in terms of double the properties on dbus, 
-> something we would like to avoid
->
-> Thanks
-> Chandrasekhar T.
->
+Thanks.
 
+Zheng
+
+--_000_DM4PR11MB6502BB76DEA9A44FEA5EBC3DCD09ADM4PR11MB6502namp_
+Content-Type: text/html; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+
+<html>
+<head>
+<meta http-equiv=3D"Content-Type" content=3D"text/html; charset=3Diso-8859-=
+1">
+<style type=3D"text/css" style=3D"display:none;"> P {margin-top:0;margin-bo=
+ttom:0;} </style>
+</head>
+<body dir=3D"ltr">
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);" class=3D"elementToProof">
+<a href=3D"https://github.com/openbmc/openbmc/blob/master/meta-amd/meta-eth=
+anolx/recipes-phosphor/configuration/ethanolx-yaml-config/ethanolx-ipmi-fru=
+.yaml" class=3D"ContentPasted0">openbmc/meta-amd/meta-ethanolx/recipes-phos=
+phor/configuration/ethanolx-yaml-config/ethanolx-ipmi-fru.yaml
+ at master =B7 openbmc/openbmc (github.com)</a><br>
+</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);" class=3D"elementToProof">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);" class=3D"elementToProof">
+To make the inventory defined in the yaml go to Dbus, we need to burn a fru=
+.bin into the eeprom, right?</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);" class=3D"elementToProof">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);" class=3D"elementToProof">
+If yes, how the binary fru.bin is generated?</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);" class=3D"elementToProof">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);" class=3D"elementToProof">
+Thanks.</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);" class=3D"elementToProof">
+<br>
+</div>
+<div style=3D"font-family: Calibri, Helvetica, sans-serif; font-size: 12pt;=
+ color: rgb(0, 0, 0);" class=3D"elementToProof">
+Zheng</div>
+</body>
+</html>
+
+--_000_DM4PR11MB6502BB76DEA9A44FEA5EBC3DCD09ADM4PR11MB6502namp_--
