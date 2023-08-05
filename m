@@ -1,36 +1,56 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 85A1E76FDEA
-	for <lists+openbmc@lfdr.de>; Fri,  4 Aug 2023 11:58:26 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2E6E8770F34
+	for <lists+openbmc@lfdr.de>; Sat,  5 Aug 2023 12:10:54 +0200 (CEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=nXu7JJHL;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RHLkm38kQz3cSS
-	for <lists+openbmc@lfdr.de>; Fri,  4 Aug 2023 19:58:24 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RHyyg71ZPz3cRh
+	for <lists+openbmc@lfdr.de>; Sat,  5 Aug 2023 20:10:51 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gondor.apana.org.au (client-ip=167.179.156.38; helo=167-179-156-38.a7b39c.syd.nbn.aussiebb.net; envelope-from=herbert@gondor.apana.org.au; receiver=lists.ozlabs.org)
-X-Greylist: delayed 1288 seconds by postgrey-1.37 at boromir; Fri, 04 Aug 2023 19:58:06 AEST
-Received: from 167-179-156-38.a7b39c.syd.nbn.aussiebb.net (167-179-156-38.a7b39c.syd.nbn.aussiebb.net [167.179.156.38])
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=nXu7JJHL;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org)
+Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RHLkQ2Z3hz3012
-	for <openbmc@lists.ozlabs.org>; Fri,  4 Aug 2023 19:58:05 +1000 (AEST)
-Received: from loth.rohan.me.apana.org.au ([192.168.167.2])
-	by formenos.hmeau.com with smtp (Exim 4.94.2 #2 (Debian))
-	id 1qRrDk-003baN-9J; Fri, 04 Aug 2023 17:35:45 +0800
-Received: by loth.rohan.me.apana.org.au (sSMTP sendmail emulation); Fri, 04 Aug 2023 17:35:44 +0800
-Date: Fri, 4 Aug 2023 17:35:44 +0800
-From: Herbert Xu <herbert@gondor.apana.org.au>
-To: Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH v3] hwrng: Explicitly include correct DT includes
-Message-ID: <ZMzGcMJh6TA+V+p5@gondor.apana.org.au>
-References: <20230728134828.3224218-1-robh@kernel.org>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RHyxv6jpDz304l;
+	Sat,  5 Aug 2023 20:10:11 +1000 (AEST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	(No client certificate requested)
+	by dfw.source.kernel.org (Postfix) with ESMTPS id 277E860C41;
+	Sat,  5 Aug 2023 10:10:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37E34C433C8;
+	Sat,  5 Aug 2023 10:10:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1691230206;
+	bh=RZD/okUT8P7W5bz60THY3oriTvZX3Irx0g2o/7jpNgM=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=nXu7JJHLU9Jooam3uyoQ6e0wCkbz7xIrGiNIEzv+H/djdFeKyXyWdoZ+cS3ex/nwx
+	 Hf9os47q9i4O8rPUaHQEgCCnGE2sIREgy0TXaQFDlx0XI6OsZZ3twxM2UKb2vu8lk9
+	 VjGfrOnun6jBInNaow/vZ6xwduNClFon1dJhbxDxobyoV0jJhVMfWkTshDyLIiZXx8
+	 2JpDieuy6NeBfihyEuejwO1jTP//MyoaxMPoQ32cQNoIQeXAk9HZXylYzNVrd8TKZc
+	 kH3hOayvpvoIsew6gxod6r315LuWEQMQ0jQq40j4QCIftMqMIxr0mjwDZBTOR7cW9P
+	 a8t3p6xKC7M+g==
+Date: Sat, 5 Aug 2023 12:10:04 +0200
+From: Andi Shyti <andi.shyti@kernel.org>
+To: Lixue Liang <lianglixuehao@126.com>
+Subject: Re: [PATCH] i2c: aspeed: Avoid accessing freed buffers during i2c
+ transfers.
+Message-ID: <20230805101004.dknxj7nqrt2aes5n@intel.intel>
+References: <20230728122416.17782-1-lianglixuehao@126.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230728134828.3224218-1-robh@kernel.org>
+In-Reply-To: <20230728122416.17782-1-lianglixuehao@126.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -42,44 +62,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>, Tomer Maimon <tmaimon77@gmail.com>, Alexandre Torgue <alexandre.torgue@foss.st.com>, Tali Perry <tali.perry1@gmail.com>, linux-stm32@st-md-mailman.stormreply.com, Benjamin Fair <benjaminfair@google.com>, Florian Fainelli <florian.fainelli@broadcom.com>, Michael Ellerman <mpe@ellerman.id.au>, openbmc@lists.ozlabs.org, Christophe Leroy <christophe.leroy@csgroup.eu>, Broadcom internal kernel review list <bcm-kernel-feedback-list@broadcom.com>, devicetree@vger.kernel.org, Deepak Saxena <dsaxena@plexity.net>, Ray Jui <rjui@broadcom.com>, Nicholas Piggin <npiggin@gmail.com>, linux-rpi-kernel@lists.infradead.org, Olivia Mackall <olivia@selenic.com>, linux-arm-kernel@lists.infradead.org, Scott Branden <sbranden@broadcom.com>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, Nicolas Ferre <nicolas.ferre@microchip.com>, linux-kernel@vger.kernel.org, linux-crypto@vger.kernel.org, Maxime Coquelin <mcoquelin.stm32@g
- mail.com>, linuxppc-dev@lists.ozlabs.org, Claudiu Beznea <claudiu.beznea@microchip.com>
+Cc: Lixue Liang <lianglixue@greatwall.com.cn>, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, brendan.higgins@linux.dev, joel@jms.id.au, p.zabel@pengutronix.de, linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Jul 28, 2023 at 07:48:27AM -0600, Rob Herring wrote:
-> The DT of_device.h and of_platform.h date back to the separate
-> of_platform_bus_type before it was merged into the regular platform bus.
-> As part of that merge prepping Arm DT support 13 years ago, they
-> "temporarily" include each other. They also include platform_device.h
-> and of.h. As a result, there's a pretty much random mix of those include
-> files used throughout the tree. In order to detangle these headers and
-> replace the implicit includes with struct declarations, users need to
-> explicitly include the correct includes.
-> 
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
-> v3:
->  - Split out hw_random, ipmi and tpm
-> v2:
->  - Fix build for pic32-rng.c dropping of_match_ptr()
-> ---
->  drivers/char/hw_random/atmel-rng.c     | 2 +-
->  drivers/char/hw_random/bcm2835-rng.c   | 3 +--
->  drivers/char/hw_random/ingenic-trng.c  | 2 +-
->  drivers/char/hw_random/iproc-rng200.c  | 3 +--
->  drivers/char/hw_random/npcm-rng.c      | 3 +--
->  drivers/char/hw_random/omap-rng.c      | 2 --
->  drivers/char/hw_random/omap3-rom-rng.c | 1 -
->  drivers/char/hw_random/pasemi-rng.c    | 3 +--
->  drivers/char/hw_random/pic32-rng.c     | 5 ++---
->  drivers/char/hw_random/stm32-rng.c     | 3 ++-
->  drivers/char/hw_random/xgene-rng.c     | 5 ++---
->  drivers/char/hw_random/xiphera-trng.c  | 1 -
->  12 files changed, 12 insertions(+), 21 deletions(-)
+Hi Lixue,
 
-Patch applied.  Thanks.
--- 
-Email: Herbert Xu <herbert@gondor.apana.org.au>
-Home Page: http://gondor.apana.org.au/~herbert/
-PGP Key: http://gondor.apana.org.au/~herbert/pubkey.txt
+On Fri, Jul 28, 2023 at 12:24:16PM +0000, Lixue Liang wrote:
+> From: Lixue Liang <lianglixue@greatwall.com.cn>
+> 
+> After waiting for the transmission timeout, the I2C controller will
+> continue to transmit data when the bus is idle. Clearing bus->msg will
+> avoid kernel panic when accessing the freed msg->buf in
+> aspeed_i2c_master_irq.
+
+actually in aspeed_i2c_master_irq() you are already checking for
+!bus->msgs.
+
+What kind of panic are you referring to?
+
+Andi
+
+> Signed-off-by: Lixue Liang <lianglixue@greatwall.com.cn>
+> ---
+>  drivers/i2c/busses/i2c-aspeed.c | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
+> index 2e5acfeb76c8..c83057497e26 100644
+> --- a/drivers/i2c/busses/i2c-aspeed.c
+> +++ b/drivers/i2c/busses/i2c-aspeed.c
+> @@ -713,6 +713,8 @@ static int aspeed_i2c_master_xfer(struct i2c_adapter *adap,
+>  		spin_lock_irqsave(&bus->lock, flags);
+>  		if (bus->master_state == ASPEED_I2C_MASTER_PENDING)
+>  			bus->master_state = ASPEED_I2C_MASTER_INACTIVE;
+> +
+> +		bus->msgs = NULL;
+>  		spin_unlock_irqrestore(&bus->lock, flags);
+>  
+>  		return -ETIMEDOUT;
+> -- 
+> 2.27.0
+> 
