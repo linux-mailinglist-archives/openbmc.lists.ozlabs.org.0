@@ -1,70 +1,88 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C5EFD775E7E
-	for <lists+openbmc@lfdr.de>; Wed,  9 Aug 2023 14:08:47 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 648A47764B8
+	for <lists+openbmc@lfdr.de>; Wed,  9 Aug 2023 18:10:01 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=IwfCQoZl;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=H95hwHe9;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RLTNs4K4Mz30MY
-	for <lists+openbmc@lfdr.de>; Wed,  9 Aug 2023 22:08:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RLZlC2RkDz3bst
+	for <lists+openbmc@lfdr.de>; Thu, 10 Aug 2023 02:09:59 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=IwfCQoZl;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=H95hwHe9;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::629; helo=mail-pl1-x629.google.com; envelope-from=joel.stan@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.156.1; helo=mx0a-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=lists.ozlabs.org)
+Received: from mx0a-001b2d01.pphosted.com (mx0a-001b2d01.pphosted.com [148.163.156.1])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RLTNG1Y07z2yLV
-	for <openbmc@lists.ozlabs.org>; Wed,  9 Aug 2023 22:08:12 +1000 (AEST)
-Received: by mail-pl1-x629.google.com with SMTP id d9443c01a7336-1bbc87ded50so43670595ad.1
-        for <openbmc@lists.ozlabs.org>; Wed, 09 Aug 2023 05:08:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691582887; x=1692187687;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=I1os3mVEJ6i7cy6qnQDdxLVQDpjq3uxF25As53HuKag=;
-        b=IwfCQoZlTMny3HO8Bjo70YtmXTYB7Zw+aDWPehiAFFdp9MPHgFq1uYh2CYWcmWkyOk
-         TnlONrY+CgV5jV8o2Hw1EuuzhlPwSNkQeex7T14R4/1OqNILmSckGaslNPouBbjDwJBx
-         i6jsywu2jATIQIMeNeSdyhxM08HOEwA5E8e99bXiudeiCKXDgbibcx5rPmeO+cWF33rT
-         +nnm/yRJz+45XN266aka+rlv8G0/Fin1odyBOw/pFf/pOVAw4vAlx4xNvxu3ZJniNJSB
-         KdMvfSd+O0DrH3Wv8u6TngNFhhAz/OVyAuaZqYppuYW8NMopSjJaNcC7fGVfXB6oU+Dz
-         5Sng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691582887; x=1692187687;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:to
-         :from:sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=I1os3mVEJ6i7cy6qnQDdxLVQDpjq3uxF25As53HuKag=;
-        b=W6grsPsp/ktw4hmCcOXPQAeUSq2ZBnwkm9Gk1I421Jwmv/MzfGS3XYdTOVo8JvT5H5
-         /S4zkYYMiA5SUT5sRvePJlEGJ9wtkI8pMK0vfDPVjk6ArGWStlBdFs97rSQ/9km+4S2/
-         a7YYJDdpekFOsmsuzUkLXD9RPzL77gUxMe+oadKjHWkg+6wXg/ZyXG6DLeFF3M6X37ff
-         8WlaJR7XQexXe1vnFYTjulx9ZZR4X0hvpaUnLE/nH8QCH98miUrWRoBce6660POivUrf
-         ARqxZ5DDN0lxOprJ5p64N1CF0d241vx2LFKnsxT5j9Gl+sWDnXImqXAtJQWsiGoEuypQ
-         Y9oA==
-X-Gm-Message-State: AOJu0YwfdzoPqC+/8j3WwmG2GKB5VYLgt8tqNFIiqdEdAjiJ9kXR4srR
-	U0292NHmxds382AxGuzX1DR2s/1IfCY=
-X-Google-Smtp-Source: AGHT+IHcgIOTC7Y3xK8Txi35f/Wvfa2jQPQWfE5jmcIm8btRBpHT9JKwRhc9wwU5NJO5zYyi2VyGWw==
-X-Received: by 2002:a17:903:124c:b0:1b0:3df7:5992 with SMTP id u12-20020a170903124c00b001b03df75992mr2293560plh.32.1691582887256;
-        Wed, 09 Aug 2023 05:08:07 -0700 (PDT)
-Received: from voyager.lan ([45.124.203.19])
-        by smtp.gmail.com with ESMTPSA id t15-20020a170902b20f00b001b9cb27e07dsm10997968plr.45.2023.08.09.05.08.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 09 Aug 2023 05:08:06 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: openbmc@lists.ozlabs.org,
-	Andrew Geissler <geissonator@gmail.com>
-Subject: [PATCH u-boot v2019.04-aspeed-openbmc] ARM: dts: aspeed: Add Witherspoon (AST2500)
-Date: Wed,  9 Aug 2023 21:37:59 +0930
-Message-Id: <20230809120759.133556-1-joel@jms.id.au>
-X-Mailer: git-send-email 2.40.1
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RLZkc0dcKz2yTv
+	for <openbmc@lists.ozlabs.org>; Thu, 10 Aug 2023 02:09:27 +1000 (AEST)
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 379FlG5d015372;
+	Wed, 9 Aug 2023 16:09:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
+ subject : to : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=pp1;
+ bh=WssAi1OrFCxSeoeiiFg6gyNUPfKVd66Q7ZYs7cd+YyM=;
+ b=H95hwHe9UifH8ikCtjJLgoGOkVIlqpqDlb+cAAKlyA8l8llJpRtJa7WkSbZguZRl/La+
+ gBq4hN1ilrdv7gRJBaY4ppZ+c1bliSJQ+IxrYMg8paguKBhEn+eSr0xBjjdTLB5Mh2ci
+ gkBBVd1lRDyx59jnfYJwaGeiKWwXnWy51oexjWlv72O+Z6kY8R8wIblB0Qg2/mYxkpdh
+ MNZWaZoDcVO/rxS+u3D+MeH9OEM8wmVr/+95YK2Zg/G1MqbAmX0RhqgGKbdxc80adK7r
+ qJ/w4gxFkZvgJrUgaU/LW/MThPUefMaV7YkVLnIEc4/3a2LRPgxHaT1HnWmBrXzbsuJW fQ== 
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3scdreru7e-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 09 Aug 2023 16:09:22 +0000
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 379FnVTd000404;
+	Wed, 9 Aug 2023 16:09:21 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3sa28ksj0s-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Wed, 09 Aug 2023 16:09:21 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com [10.39.53.233])
+	by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 379G9Lq535979902
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Wed, 9 Aug 2023 16:09:21 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 0055958056;
+	Wed,  9 Aug 2023 16:09:21 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id C622758055;
+	Wed,  9 Aug 2023 16:09:20 +0000 (GMT)
+Received: from [9.61.73.158] (unknown [9.61.73.158])
+	by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Wed,  9 Aug 2023 16:09:20 +0000 (GMT)
+Message-ID: <49ae7035-dc79-0205-03f3-1f38dde2f430@linux.ibm.com>
+Date: Wed, 9 Aug 2023 11:09:20 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.12.0
+Subject: Re: [PATCH linux dev-6.1 v3 0/5] ARM: dts: aspeed: Reorganize P10 FSI
+ tree
+Content-Language: en-US
+To: Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org
+References: <20230809074921.116987-1-joel@jms.id.au>
+From: Eddie James <eajames@linux.ibm.com>
+In-Reply-To: <20230809074921.116987-1-joel@jms.id.au>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: qW6_txDjW3qnHTQhdmZlLyeoFy4HK-BN
+X-Proofpoint-ORIG-GUID: qW6_txDjW3qnHTQhdmZlLyeoFy4HK-BN
+Content-Transfer-Encoding: 7bit
+X-Proofpoint-UnRewURL: 0 URL was un-rewritten
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.591,FMLib:17.11.176.26
+ definitions=2023-08-09_13,2023-08-09_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 phishscore=0 adultscore=0
+ lowpriorityscore=0 mlxscore=0 malwarescore=0 spamscore=0 impostorscore=0
+ bulkscore=0 clxscore=1015 suspectscore=0 priorityscore=1501
+ mlxlogscore=810 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2306200000 definitions=main-2308090142
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,124 +97,37 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Witherspoon was the launch machine for the IBM Power9, containing an
-ASPEED AST2500.
 
-Notably it was the compute node for the Summit supercomputer, which
-occupied the #1 position in the top500 list.
+On 8/9/23 02:49, Joel Stanley wrote:
+> Hi Eddie,
+>
+> This is v2 of your patch[1] reworked into a few separate commits. I
+> found it hard to review the whole thing, so I split it up a bit.
+>
+> Let me know if you think it's okay.
 
-The machine used two 32MB SPI NOR for the BMC, with a SPI NOR flash
-for the host firmware, and the Broadcom BCM5719 attached via NC-SI.
 
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- arch/arm/dts/Makefile                |  1 +
- arch/arm/dts/ast2500-witherspoon.dts | 84 ++++++++++++++++++++++++++++
- 2 files changed, 85 insertions(+)
- create mode 100644 arch/arm/dts/ast2500-witherspoon.dts
+Yes, looks great, thanks!
 
-diff --git a/arch/arm/dts/Makefile b/arch/arm/dts/Makefile
-index 37675a327736..d6ba78fa4afa 100755
---- a/arch/arm/dts/Makefile
-+++ b/arch/arm/dts/Makefile
-@@ -681,6 +681,7 @@ dtb-$(CONFIG_ARCH_ASPEED) += \
- 	ast2500-evb.dtb \
- 	ast2500-genesis3.dtb \
- 	ast2500-romulus.dtb \
-+	ast2500-witherspoon.dtb \
- 	ast2600a0-evb.dtb \
- 	ast2600a1-evb.dtb \
- 	ast2600-bletchley.dtb \
-diff --git a/arch/arm/dts/ast2500-witherspoon.dts b/arch/arm/dts/ast2500-witherspoon.dts
-new file mode 100644
-index 000000000000..2bc02a14b8f9
---- /dev/null
-+++ b/arch/arm/dts/ast2500-witherspoon.dts
-@@ -0,0 +1,84 @@
-+// SPDX-License-Identifier: GPL-2.0+
-+// Copyright 2022 IBM Corp.
-+/dts-v1/;
-+
-+#include "ast2500-u-boot.dtsi"
-+
-+/ {
-+	model = "Witherspoon BMC";
-+	compatible = "ibm,witherspoon-bmc", "aspeed,ast2500";
-+
-+	memory {
-+		device_type = "memory";
-+		reg = <0x80000000 0x20000000>;
-+	};
-+
-+	chosen {
-+		stdout-path = &uart5;
-+	};
-+
-+	aliases {
-+		spi0 = &fmc;
-+		spi1 = &spi1;
-+		ethernet0 = &mac0;
-+		ethernet1 = &mac1;
-+	};
-+};
-+
-+&uart5 {
-+	u-boot,dm-pre-reloc;
-+	status = "okay";
-+};
-+
-+&sdrammc {
-+	clock-frequency = <400000000>;
-+};
-+
-+&wdt1 {
-+	u-boot,dm-pre-reloc;
-+	status = "okay";
-+};
-+
-+&wdt2 {
-+	u-boot,dm-pre-reloc;
-+	status = "okay";
-+};
-+
-+&mac0 {
-+	status = "okay";
-+
-+	phy-mode = "NC-SI";
-+	use-ncsi;
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_rmii1_default>;
-+};
-+
-+&fmc {
-+	status = "okay";
-+
-+	flash@0 {
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <2>;
-+		spi-rx-bus-width = <2>;
-+	};
-+
-+	flash@1 {
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <2>;
-+		spi-rx-bus-width = <2>;
-+	};
-+};
-+
-+&spi1 {
-+	status = "okay";
-+	flash@0 {
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&pinctrl_spi1_default>;
-+		status = "okay";
-+		spi-max-frequency = <50000000>;
-+		spi-tx-bus-width = <2>;
-+		spi-rx-bus-width = <2>;
-+	};
-+};
--- 
-2.40.1
 
+>
+> [1] https://lore.kernel.org/openbmc/20230412195017.2836161-1-eajames@linux.ibm.com
+>
+> Eddie James (2):
+>    ARM: dts: aspeed: Add P10 FSI descriptions
+>    ARM: dts: aspeed: everest: Reorganise FSI description
+>
+> Joel Stanley (3):
+>    ARM: dts: aspeed: bonnell: Reorganise FSI description
+>    ARM: dts: aspeed: rainier: Reorganise FSI description
+>    ARM: dts: aspeed: everest: Move common devices up
+>
+>   arch/arm/boot/dts/aspeed-bmc-ibm-bonnell.dts |  384 +---
+>   arch/arm/boot/dts/aspeed-bmc-ibm-everest.dts | 1837 ++++++++++--------
+>   arch/arm/boot/dts/aspeed-bmc-ibm-rainier.dts |  678 +------
+>   arch/arm/boot/dts/ibm-power10-dual.dtsi      |  380 ++++
+>   arch/arm/boot/dts/ibm-power10-quad.dtsi      | 1305 +++++++++++++
+>   5 files changed, 2782 insertions(+), 1802 deletions(-)
+>   create mode 100644 arch/arm/boot/dts/ibm-power10-dual.dtsi
+>   create mode 100644 arch/arm/boot/dts/ibm-power10-quad.dtsi
+>
