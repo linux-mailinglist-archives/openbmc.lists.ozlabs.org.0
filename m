@@ -1,79 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65C3E7774D5
-	for <lists+openbmc@lfdr.de>; Thu, 10 Aug 2023 11:44:10 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43E537776FD
+	for <lists+openbmc@lfdr.de>; Thu, 10 Aug 2023 13:29:19 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=Du/F3XNK;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=k5m5pUl5;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RM27X1qr1z3cLj
-	for <lists+openbmc@lfdr.de>; Thu, 10 Aug 2023 19:44:08 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RM4Ss15Mfz3cGw
+	for <lists+openbmc@lfdr.de>; Thu, 10 Aug 2023 21:29:17 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=Du/F3XNK;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=k5m5pUl5;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62b; helo=mail-pl1-x62b.google.com; envelope-from=mimi05633@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x62b.google.com (mail-pl1-x62b.google.com [IPv6:2607:f8b0:4864:20::62b])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b2b; helo=mail-yb1-xb2b.google.com; envelope-from=mimi05633@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-yb1-xb2b.google.com (mail-yb1-xb2b.google.com [IPv6:2607:f8b0:4864:20::b2b])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RM26v4Xpfz3bh5
-	for <openbmc@lists.ozlabs.org>; Thu, 10 Aug 2023 19:43:34 +1000 (AEST)
-Received: by mail-pl1-x62b.google.com with SMTP id d9443c01a7336-1bb84194bf3so5164235ad.3
-        for <openbmc@lists.ozlabs.org>; Thu, 10 Aug 2023 02:43:34 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RM4SD2qZgz2ygv
+	for <openbmc@lists.ozlabs.org>; Thu, 10 Aug 2023 21:28:43 +1000 (AEST)
+Received: by mail-yb1-xb2b.google.com with SMTP id 3f1490d57ef6-d3522283441so721084276.0
+        for <openbmc@lists.ozlabs.org>; Thu, 10 Aug 2023 04:28:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1691660612; x=1692265412;
-        h=references:in-reply-to:message-id:date:subject:cc:to:from:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=2ht3VL/Ute0f0NpKuJCr8WI+TjnXswoA7IO1WC8WBAU=;
-        b=Du/F3XNKyw207VcXml+AY4g3uFJ1aRsJY3WvB/ujeTunAkzJfZ6hJuiWmp4ktzf0mq
-         cU6wRhW2OijJvyigoCR8PhNMtufVeq8Nr14YOlC6tzLg1rYrAmZW7v9Xoj8T11qgNVlQ
-         un7BfkUMf3iQxUscOUPPor5fG/o2zAc+Pz+qqnCLP5Ds0/HRdL5rnvdcnc6JzM06+iw3
-         PA2xYtiux/7Yaj+EqNmTfekyWN74aJnJOveipih4yfMzBIrM78hd8863FeEq1+El/t8z
-         TGaubqXThoc9zbX4ktmEBIYJlTKSNPlSGmu4pNJ/4H1IyHtarxqun6b0Zbek67OXGgDJ
-         98qw==
+        d=gmail.com; s=20221208; t=1691666920; x=1692271720;
+        h=cc:to:subject:message-id:date:from:references:in-reply-to
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=y1DYg6PGy8Q0xvZ7xpk9Hgx8P7TGBjLV71U70DOvftw=;
+        b=k5m5pUl5GOhGN+w0S2rLA9s0B9EW67dReChYooboQUdgIB8RX/aIBmcSVRdkEYmcNl
+         dozCMeHfjLQj4vUG3T5tvkIlbVT3t77/JVvtiXYbwoPnlC9lqD28/3j1NlEcDhzPmRJW
+         chHF5yQ6k9wlthW0n5gjUwgpAMQ9IyWIIUSyU2QQ4afCrTIdKYcQqgaFaVf9vc6UFTOV
+         5p+K18TJAeCxdOqHu34z9gpT3UT2jVuop8R2UzNk4S/WRrxEXF1dlxs89ryaJPkV5HAH
+         mgXHlODeSgd9ZtQX8MROnNn6eedz6VfRj/VngvIm0qq+zn/5eWXlWoY+FI2c8gAhzrSK
+         +8Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1691660612; x=1692265412;
-        h=references:in-reply-to:message-id:date:subject:cc:to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=2ht3VL/Ute0f0NpKuJCr8WI+TjnXswoA7IO1WC8WBAU=;
-        b=fm/l/BSql8LbVlDaJhixzN0WFcjeCvrPx1xniKNW055/iX97N+xWdM0OYMtM9Z8NCG
-         P+z0Yz7o1enRuPShTdTatwWr/0PxJ29RPeQby8sCrH/YIv582M8nBgSg83iI9IkUzuc+
-         kARLY0AXc9zYaCAhoSbXGz47v2529L0j7jXLy7oMFiFGvaSjPQhyXiKkvBs3nPxpSx+G
-         H0FFdFA4KsYYNfVD1eZ95AhXdIO5uk71jbGovjloBnV244F56mo2TLsCSFPb/7vJgLYX
-         UhYA2ZzrdoYYafm0bnxX7ESAuoCiB/Vnz0MlOvPR8o6Xg6QopS854QY/ED3ZJLrTdbol
-         QG6Q==
-X-Gm-Message-State: AOJu0YxCYKluVuzW2H3A3dFV6Wru7o8DPXF2i717nwXQrZKu5wZrMCEO
-	BGKBDlbtDWB2Tu/MztvDD2A=
-X-Google-Smtp-Source: AGHT+IEvIA7YB3PfyUgRkmbr8R8VeKGCOJisl2sw+yV7WDIIhnBPkWwkd1EYKsMuvxES1eYW3blvHg==
-X-Received: by 2002:a17:902:aa0c:b0:1b8:847d:973a with SMTP id be12-20020a170902aa0c00b001b8847d973amr1486435plb.46.1691660611621;
-        Thu, 10 Aug 2023 02:43:31 -0700 (PDT)
-Received: from localhost.localdomain (60-250-192-107.hinet-ip.hinet.net. [60.250.192.107])
-        by smtp.gmail.com with ESMTPSA id bi8-20020a170902bf0800b001bba3650448sm1233665plb.258.2023.08.10.02.43.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 10 Aug 2023 02:43:31 -0700 (PDT)
-From: Mia Lin <mimi05633@gmail.com>
-To: avifishman70@gmail.com,
-	tmaimon77@gmail.com,
-	tali.perry1@gmail.com,
-	venture@google.com,
-	yuenn@google.com,
-	benjaminfair@google.com,
-	a.zummo@towertech.it,
-	alexandre.belloni@bootlin.com,
-	KWLIU@nuvoton.com,
-	JJLIU0@nuvoton.com,
-	KFLIN@nuvoton.com,
-	mylin1@nuvoton.com
-Subject: [PATCH v3 1/1] rtc: nuvoton: Compatible with NCT3015Y-R and NCT3018Y-R
-Date: Thu, 10 Aug 2023 17:43:23 +0800
-Message-Id: <20230810094323.20077-2-mimi05633@gmail.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20230810094323.20077-1-mimi05633@gmail.com>
-References: <20230810094323.20077-1-mimi05633@gmail.com>
+        d=1e100.net; s=20221208; t=1691666920; x=1692271720;
+        h=cc:to:subject:message-id:date:from:references:in-reply-to
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=y1DYg6PGy8Q0xvZ7xpk9Hgx8P7TGBjLV71U70DOvftw=;
+        b=PtVXQaahLmiBhB/W7AScWToXNaJgC+SEIXTFr5e2egT/S4zLbh7eMoxUQERjQgkJ37
+         xfoVLvxqrXRygjgPIXdik7H7sg16B216AD9gIUinX/5VVXPsUeBbmkhzZ8DvDGj+1JeS
+         TLqTUmsP7y2RkGjK3zCuOEwr/t7iyQfKX6StIzId2wEB1VgGDebkda6eUo/ICPDTmt8y
+         NqJFbivjhj9dq8npErqV0/+19FPZvSHNEz5J6liAyknRFwCYbOUUjRHLCdIRceXyZ/5G
+         clXqGvQ4IBf2eOiSMUna3cM/N6IHZADExBhCi/v/2dUj9Jm+GTbr/Zy7O0ZyPpNJOwZW
+         rQgg==
+X-Gm-Message-State: AOJu0YzTAqNeBHBT+4oGxroggpP5ruFg3wYxsgTgTDgTMhiLoUjABydT
+	jvowpC82eI16w5+TWeyiOg39y3VApCNDvBSGDoM=
+X-Google-Smtp-Source: AGHT+IE4wRFPIxx5CZ4KD1NfedYiuvrfnxSMMUjeXj5G2u4Qadexcf1u/3weF+TJ25xuVkoWeZJiKiyTCJxCzZnPDRI=
+X-Received: by 2002:a25:cbcd:0:b0:c73:e6b5:c452 with SMTP id
+ b196-20020a25cbcd000000b00c73e6b5c452mr2437073ybg.2.1691666920538; Thu, 10
+ Aug 2023 04:28:40 -0700 (PDT)
+MIME-Version: 1.0
+Received: by 2002:a05:7000:ba01:b0:4f9:9bd0:392f with HTTP; Thu, 10 Aug 2023
+ 04:28:40 -0700 (PDT)
+In-Reply-To: <202308091936514bb18c4e@mail.local>
+References: <20230809095112.2836-1-mimi05633@gmail.com> <20230809095112.2836-3-mimi05633@gmail.com>
+ <50bedd75-bcd6-d7bc-26c0-b8c00f99779a@linaro.org> <202308091936514bb18c4e@mail.local>
+From: Minying Lin <mimi05633@gmail.com>
+Date: Thu, 10 Aug 2023 19:28:40 +0800
+Message-ID: <CAL3ZnpwESk2+SM19qz4dSrRR=isdEs2zMy4c48a434e1Be0QPQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] rtc: nuvoton: Compatible with NCT3015Y-R and NCT3018Y-R
+To: Alexandre Belloni <alexandre.belloni@bootlin.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Type: multipart/alternative; boundary="000000000000e0859a06028fe58c"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,138 +77,230 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-rtc@vger.kernel.org, openbmc@lists.ozlabs.org, Mia Lin <mimi05633@gmail.com>, linux-kernel@vger.kernel.org
+Cc: "linux-rtc@vger.kernel.org" <linux-rtc@vger.kernel.org>, "a.zummo@towertech.it" <a.zummo@towertech.it>, "conor+dt@kernel.org" <conor+dt@kernel.org>, "benjaminfair@google.com" <benjaminfair@google.com>, "KWLIU@nuvoton.com" <KWLIU@nuvoton.com>, "avifishman70@gmail.com" <avifishman70@gmail.com>, "venture@google.com" <venture@google.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "JJLIU0@nuvoton.com" <JJLIU0@nuvoton.com>, "mylin1@nuvoton.com" <mylin1@nuvoton.com>, "tali.perry1@gmail.com" <tali.perry1@gmail.com>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, "robh+dt@kernel.org" <robh+dt@kernel.org>, "krzysztof.kozlowski+dt@linaro.org" <krzysztof.kozlowski+dt@linaro.org>, "KFLIN@nuvoton.com" <KFLIN@nuvoton.com>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "tmaimon77@gmail.com" <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-- In probe,
-  If part number is NCT3018Y-R, only set HF bit to 24-Hour format.
-  Else, do nothing
-- In set_time,
-  If part number is NCT3018Y-R && TWO bit is 0,
-    change TWO bit to 1, and restore TWO bit after updating time.
+--000000000000e0859a06028fe58c
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Mia Lin <mimi05633@gmail.com>
----
- drivers/rtc/rtc-nct3018y.c | 63 ++++++++++++++++++++++++++++++++------
- 1 file changed, 54 insertions(+), 9 deletions(-)
+>
+> Dear Alexandre and Krzysztof,
 
-diff --git a/drivers/rtc/rtc-nct3018y.c b/drivers/rtc/rtc-nct3018y.c
-index a4e3f924837e..bac1e3fbbbcd 100644
---- a/drivers/rtc/rtc-nct3018y.c
-+++ b/drivers/rtc/rtc-nct3018y.c
-@@ -23,6 +23,7 @@
- #define NCT3018Y_REG_CTRL	0x0A /* timer control */
- #define NCT3018Y_REG_ST		0x0B /* status */
- #define NCT3018Y_REG_CLKO	0x0C /* clock out */
-+#define NCT3018Y_REG_PART	0x21 /* part info */
- 
- #define NCT3018Y_BIT_AF		BIT(7)
- #define NCT3018Y_BIT_ST		BIT(7)
-@@ -37,6 +38,7 @@
- #define NCT3018Y_REG_BAT_MASK		0x07
- #define NCT3018Y_REG_CLKO_F_MASK	0x03 /* frequenc mask */
- #define NCT3018Y_REG_CLKO_CKE		0x80 /* clock out enabled */
-+#define NCT3018Y_REG_PART_NCT3018Y	0x02
- 
- struct nct3018y {
- 	struct rtc_device *rtc;
-@@ -52,7 +54,7 @@ static int nct3018y_set_alarm_mode(struct i2c_client *client, bool on)
- 
- 	dev_dbg(&client->dev, "%s:on:%d\n", __func__, on);
- 
--	flags =  i2c_smbus_read_byte_data(client, NCT3018Y_REG_CTRL);
-+	flags = i2c_smbus_read_byte_data(client, NCT3018Y_REG_CTRL);
- 	if (flags < 0) {
- 		dev_dbg(&client->dev,
- 			"Failed to read NCT3018Y_REG_CTRL\n");
-@@ -109,8 +111,10 @@ static int nct3018y_get_alarm_mode(struct i2c_client *client, unsigned char *ala
- 		*alarm_flag = flags & NCT3018Y_BIT_AF;
- 	}
- 
--	dev_dbg(&client->dev, "%s:alarm_enable:%x alarm_flag:%x\n",
--		__func__, *alarm_enable, *alarm_flag);
-+	if (alarm_enable && alarm_flag) {
-+		dev_dbg(&client->dev, "%s:alarm_enable:%x alarm_flag:%x\n",
-+			__func__, *alarm_enable, *alarm_flag);
-+	}
- 
- 	return 0;
- }
-@@ -178,7 +182,30 @@ static int nct3018y_rtc_set_time(struct device *dev, struct rtc_time *tm)
- {
- 	struct i2c_client *client = to_i2c_client(dev);
- 	unsigned char buf[4] = {0};
--	int err;
-+	int err, part_num, flags, restore_flags = 0;
-+
-+	part_num = i2c_smbus_read_byte_data(client, NCT3018Y_REG_PART);
-+	if (part_num < 0) {
-+		dev_dbg(&client->dev, "%s: read error\n", __func__);
-+		return part_num;
-+	}
-+
-+	flags = i2c_smbus_read_byte_data(client, NCT3018Y_REG_CTRL);
-+	if (flags < 0) {
-+		dev_dbg(&client->dev, "%s: read error\n", __func__);
-+		return flags;
-+	}
-+
-+	/* Check and set TWO bit */
-+	if ((part_num & NCT3018Y_REG_PART_NCT3018Y) && !(flags & NCT3018Y_BIT_TWO)) {
-+		restore_flags = 1;
-+		flags |= NCT3018Y_BIT_TWO;
-+		err = i2c_smbus_write_byte_data(client, NCT3018Y_REG_CTRL, flags);
-+		if (err < 0) {
-+			dev_dbg(&client->dev, "Unable to write NCT3018Y_REG_CTRL\n");
-+			return err;
-+		}
-+	}
- 
- 	buf[0] = bin2bcd(tm->tm_sec);
- 	err = i2c_smbus_write_byte_data(client, NCT3018Y_REG_SC, buf[0]);
-@@ -212,6 +239,18 @@ static int nct3018y_rtc_set_time(struct device *dev, struct rtc_time *tm)
- 		return -EIO;
- 	}
- 
-+	/* Restore TWO bit */
-+	if (restore_flags) {
-+		if (part_num & NCT3018Y_REG_PART_NCT3018Y)
-+			flags &= ~NCT3018Y_BIT_TWO;
-+
-+		err = i2c_smbus_write_byte_data(client, NCT3018Y_REG_CTRL, flags);
-+		if (err < 0) {
-+			dev_dbg(&client->dev, "Unable to write NCT3018Y_REG_CTRL\n");
-+			return err;
-+		}
-+	}
-+
- 	return err;
- }
- 
-@@ -479,11 +518,17 @@ static int nct3018y_probe(struct i2c_client *client)
- 		dev_dbg(&client->dev, "%s: NCT3018Y_BIT_TWO is set\n", __func__);
- 	}
- 
--	flags = NCT3018Y_BIT_TWO;
--	err = i2c_smbus_write_byte_data(client, NCT3018Y_REG_CTRL, flags);
--	if (err < 0) {
--		dev_dbg(&client->dev, "Unable to write NCT3018Y_REG_CTRL\n");
--		return err;
-+	flags = i2c_smbus_read_byte_data(client, NCT3018Y_REG_PART);
-+	if (flags < 0) {
-+		dev_dbg(&client->dev, "%s: read error\n", __func__);
-+		return flags;
-+	} else if (flags & NCT3018Y_REG_PART_NCT3018Y) {
-+		flags = NCT3018Y_BIT_HF;
-+		err = i2c_smbus_write_byte_data(client, NCT3018Y_REG_CTRL, flags);
-+		if (err < 0) {
-+			dev_dbg(&client->dev, "Unable to write NCT3018Y_REG_CTRL\n");
-+			return err;
-+		}
- 	}
- 
- 	flags = 0;
--- 
-2.17.1
 
+> Thank you for your comments.
+
+I will remove the comparison between DT compatible and chip data.
+
+
+
+> Best regards,
+
+Mia
+
+
+> Alexandre Belloni <alexandre.belloni@bootlin.com> =E6=96=BC 2023=E5=B9=B4=
+8=E6=9C=8810=E6=97=A5 =E6=98=9F=E6=9C=9F=E5=9B=9B=E5=AF=AB=E9=81=93=EF=BC=
+=9A
+
+On 09/08/2023 16:29:33+0200, Krzysztof Kozlowski wrote:
+
+> On 09/08/2023 11:51, Mia Lin wrote:
+
+> > - flags =3D NCT3018Y_BIT_TWO;
+
+> > - err =3D i2c_smbus_write_byte_data(client, NCT3018Y_REG_CTRL, flags);
+
+> > - if (err < 0) {
+
+> > - dev_dbg(&client->dev, "Unable to write NCT3018Y_REG_CTRL\n");
+
+> > - return err;
+
+> > + flags =3D i2c_smbus_read_byte_data(client, NCT3018Y_REG_PART);
+
+> > + if (flags < 0) {
+
+> > + dev_dbg(&client->dev, "%s: read error\n", __func__);
+
+> > + return flags;
+
+> > + } else if (flags & NCT3018Y_REG_PART_NCT3018Y) {
+
+> > + if (!(flags & data->part_number))
+
+> > + dev_warn(&client->dev, "%s: part_num=3D0x%x but
+> NCT3018Y_REG_PART=3D0x%x\n",
+
+> > + __func__, data->part_number, flags);
+
+> > + flags =3D NCT3018Y_BIT_HF;
+
+> > + err =3D i2c_smbus_write_byte_data(client, NCT3018Y_REG_CTRL, flags);
+
+> > + if (err < 0) {
+
+> > + dev_dbg(&client->dev, "Unable to write NCT3018Y_REG_CTRL\n");
+
+> > + return err;
+
+> > + }
+
+> > + } else if (flags & NCT3018Y_REG_PART_NCT3015Y) {
+
+> > + if (!(flags & data->part_number))
+
+> > + dev_warn(&client->dev, "%s: part_num=3D0x%x but
+> NCT3018Y_REG_PART=3D0x%x\n",
+
+> > + __func__, data->part_number, flags);
+
+>
+
+> I don't think this is correct. Kernel's job is not to verify the DT...
+
+> and why would it verify the device based on DT? You have here device
+
+> detection so use it directly without this dance of comparing with
+
+> compatible/match data.
+
+>
+
+
+> I fully agree here, either you trust your DT or the device ID but do not
+
+use both.
+
+
+>
+> --
+
+Alexandre Belloni, co-owner and COO, Bootlin
+
+Embedded Linux and Kernel engineering
+
+https://bootlin.com
+
+
+>
+
+--000000000000e0859a06028fe58c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1p=
+x #ccc solid;padding-left:1ex">Dear Alexandre and Krzysztof,</blockquote><b=
+lockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px =
+#ccc solid;padding-left:1ex"><br></blockquote><blockquote class=3D"gmail_qu=
+ote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex=
+">Thank you for your comments.</blockquote><blockquote class=3D"gmail_quote=
+" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">I=
+ will remove the comparison between DT compatible and chip data.</blockquot=
+e><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 =
+.8ex;border-left:1px #ccc solid;padding-left:1ex">Best regards,</blockquote=
+><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1=
+px #ccc solid;padding-left:1ex">Mia=C2=A0</blockquote><blockquote class=3D"=
+gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-=
+left:1ex"><br></blockquote><blockquote class=3D"gmail_quote" style=3D"margi=
+n:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">Alexandre Belloni=
+ &lt;<a href=3D"mailto:alexandre.belloni@bootlin.com">alexandre.belloni@boo=
+tlin.com</a>&gt; =E6=96=BC 2023=E5=B9=B48=E6=9C=8810=E6=97=A5 =E6=98=9F=E6=
+=9C=9F=E5=9B=9B=E5=AF=AB=E9=81=93=EF=BC=9A</blockquote><blockquote class=3D=
+"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding=
+-left:1ex">On 09/08/2023 16:29:33+0200, Krzysztof Kozlowski wrote:</blockqu=
+ote><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-lef=
+t:1px #ccc solid;padding-left:1ex">&gt; On 09/08/2023 11:51, Mia Lin wrote:=
+</blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;b=
+order-left:1px #ccc solid;padding-left:1ex">&gt; &gt; -   flags =3D NCT3018=
+Y_BIT_TWO;</blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0 =
+0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">&gt; &gt; -   err =3D=
+ i2c_smbus_write_byte_data(client, NCT3018Y_REG_CTRL, flags);</blockquote><=
+blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px=
+ #ccc solid;padding-left:1ex">&gt; &gt; -   if (err &lt; 0) {</blockquote><=
+blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px=
+ #ccc solid;padding-left:1ex">&gt; &gt; -           dev_dbg(&amp;client-&gt=
+;dev, &quot;Unable to write NCT3018Y_REG_CTRL\n&quot;);</blockquote><blockq=
+uote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc =
+solid;padding-left:1ex">&gt; &gt; -           return err;</blockquote><bloc=
+kquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #cc=
+c solid;padding-left:1ex">&gt; &gt; +   flags =3D i2c_smbus_read_byte_data(=
+client, NCT3018Y_REG_PART);</blockquote><blockquote class=3D"gmail_quote" s=
+tyle=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">&gt;=
+ &gt; +   if (flags &lt; 0) {</blockquote><blockquote class=3D"gmail_quote"=
+ style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">&g=
+t; &gt; +           dev_dbg(&amp;client-&gt;dev, &quot;%s: read error\n&quo=
+t;, __func__);</blockquote><blockquote class=3D"gmail_quote" style=3D"margi=
+n:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">&gt; &gt; +      =
+     return flags;</blockquote><blockquote class=3D"gmail_quote" style=3D"m=
+argin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">&gt; &gt; +  =
+ } else if (flags &amp; NCT3018Y_REG_PART_NCT3018Y) {</blockquote><blockquo=
+te class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc so=
+lid;padding-left:1ex">&gt; &gt; +           if (!(flags &amp; data-&gt;part=
+_number))</blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0 0=
+ 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">&gt; &gt; +           =
+        dev_warn(&amp;client-&gt;dev, &quot;%s: part_num=3D0x%x but NCT3018=
+Y_REG_PART=3D0x%x\n&quot;,</blockquote><blockquote class=3D"gmail_quote" st=
+yle=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">&gt; =
+&gt; +                            __func__, data-&gt;part_number, flags);</=
+blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bor=
+der-left:1px #ccc solid;padding-left:1ex">&gt; &gt; +           flags =3D N=
+CT3018Y_BIT_HF;</blockquote><blockquote class=3D"gmail_quote" style=3D"marg=
+in:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">&gt; &gt; +     =
+      err =3D i2c_smbus_write_byte_data(client, NCT3018Y_REG_CTRL, flags);<=
+/blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;bo=
+rder-left:1px #ccc solid;padding-left:1ex">&gt; &gt; +           if (err &l=
+t; 0) {</blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0=
+ .8ex;border-left:1px #ccc solid;padding-left:1ex">&gt; &gt; +             =
+      dev_dbg(&amp;client-&gt;dev, &quot;Unable to write NCT3018Y_REG_CTRL\=
+n&quot;);</blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0 0=
+ 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">&gt; &gt; +           =
+        return err;</blockquote><blockquote class=3D"gmail_quote" style=3D"=
+margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">&gt; &gt; + =
+          }</blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0=
+ 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">&gt; &gt; +   } else=
+ if (flags &amp; NCT3018Y_REG_PART_NCT3015Y) {</blockquote><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;pad=
+ding-left:1ex">&gt; &gt; +           if (!(flags &amp; data-&gt;part_number=
+))</blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex=
+;border-left:1px #ccc solid;padding-left:1ex">&gt; &gt; +                  =
+ dev_warn(&amp;client-&gt;dev, &quot;%s: part_num=3D0x%x but NCT3018Y_REG_P=
+ART=3D0x%x\n&quot;,</blockquote><blockquote class=3D"gmail_quote" style=3D"=
+margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">&gt; &gt; + =
+                           __func__, data-&gt;part_number, flags);</blockqu=
+ote><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-lef=
+t:1px #ccc solid;padding-left:1ex">&gt;</blockquote><blockquote class=3D"gm=
+ail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-le=
+ft:1ex">&gt; I don&#39;t think this is correct. Kernel&#39;s job is not to =
+verify the DT...</blockquote><blockquote class=3D"gmail_quote" style=3D"mar=
+gin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">&gt; and why wo=
+uld it verify the device based on DT? You have here device</blockquote><blo=
+ckquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #c=
+cc solid;padding-left:1ex">&gt; detection so use it directly without this d=
+ance of comparing with</blockquote><blockquote class=3D"gmail_quote" style=
+=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">&gt; com=
+patible/match data.</blockquote><blockquote class=3D"gmail_quote" style=3D"=
+margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">&gt;</blockq=
+uote><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-le=
+ft:1px #ccc solid;padding-left:1ex"><br></blockquote><blockquote class=3D"g=
+mail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-l=
+eft:1ex">I fully agree here, either you trust your DT or the device ID but =
+do not</blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 =
+.8ex;border-left:1px #ccc solid;padding-left:1ex">use both.</blockquote><bl=
+ockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #=
+ccc solid;padding-left:1ex"><br></blockquote><blockquote class=3D"gmail_quo=
+te" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"=
+><br></blockquote><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .=
+8ex;border-left:1px #ccc solid;padding-left:1ex">--</blockquote><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:1px #ccc soli=
+d;padding-left:1ex">Alexandre Belloni, co-owner and COO, Bootlin</blockquot=
+e><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border-left:=
+1px #ccc solid;padding-left:1ex">Embedded Linux and Kernel engineering</blo=
+ckquote><blockquote class=3D"gmail_quote" style=3D"margin:0 0 0 .8ex;border=
+-left:1px #ccc solid;padding-left:1ex"><a href=3D"https://bootlin.com">http=
+s://bootlin.com</a></blockquote><blockquote class=3D"gmail_quote" style=3D"=
+margin:0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex"><br></blockq=
+uote>
+
+--000000000000e0859a06028fe58c--
