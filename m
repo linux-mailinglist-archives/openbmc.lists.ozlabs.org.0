@@ -1,56 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2D3DE776F76
-	for <lists+openbmc@lfdr.de>; Thu, 10 Aug 2023 07:19:36 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 26715777144
+	for <lists+openbmc@lfdr.de>; Thu, 10 Aug 2023 09:22:46 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=DlBFBS8v;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bytedance.com header.i=@bytedance.com header.a=rsa-sha256 header.s=google header.b=cCKBkQQg;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RLwGG0Spzz3cNj
-	for <lists+openbmc@lfdr.de>; Thu, 10 Aug 2023 15:19:34 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RLz0G5tKwz30PN
+	for <lists+openbmc@lfdr.de>; Thu, 10 Aug 2023 17:22:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=126.com header.i=@126.com header.a=rsa-sha256 header.s=s110527 header.b=DlBFBS8v;
+	dkim=pass (2048-bit key; unprotected) header.d=bytedance.com header.i=@bytedance.com header.a=rsa-sha256 header.s=google header.b=cCKBkQQg;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=126.com (client-ip=220.181.15.50; helo=m1550.mail.126.com; envelope-from=lianglixuehao@126.com; receiver=lists.ozlabs.org)
-Received: from m1550.mail.126.com (m1550.mail.126.com [220.181.15.50])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RLqDF63Qxz300g;
-	Thu, 10 Aug 2023 11:32:29 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=126.com;
-	s=s110527; h=Date:From:Subject:Content-Type:MIME-Version:
-	Message-ID; bh=u/mVijGdlHPAccIJwEx/VIBLaUvHBDxJ7+T48GzQETk=; b=D
-	lBFBS8vKp/4agABX0HXayQBrpzNRdulqgGmOV0zBARWoK29KF+iVadLOiQWn/kOo
-	ZeHyGTuCZI9cGCYXpHT3n7uAoQhRV3RtypymShLKwHEKxGsIoDLEVzmpHTAou/Ll
-	8IIoPShbMK+yIBRLbx5DyHOhBI8cnE/l7AUs4RZNDs=
-Received: from lianglixuehao$126.com ( [117.136.12.166] ) by
- ajax-webmail-wmsvr50 (Coremail) ; Thu, 10 Aug 2023 09:30:52 +0800 (CST)
-X-Originating-IP: [117.136.12.166]
-Date: Thu, 10 Aug 2023 09:30:52 +0800 (CST)
-From: =?UTF-8?B?5qKB56S85a2m?= <lianglixuehao@126.com>
-To: "Eddie James" <eajames@linux.ibm.com>
-Subject: Re:Re: [PATCH] i2c: aspeed: Avoid accessing freed buffers during
- i2c transfers.
-X-Priority: 3
-X-Mailer: Coremail Webmail Server Version XT5.0.14 build 20230109(dcb5de15)
- Copyright (c) 2002-2023 www.mailtech.cn 126com
-In-Reply-To: <388f1d61-c419-a133-6266-daff1fa4cd60@linux.ibm.com>
-References: <20230728122416.17782-1-lianglixuehao@126.com>
- <CACPK8Xf6YssamEmHB5XDf8JYk+_=hnG8Yzqn4kCikseqg6rqOA@mail.gmail.com>
- <CAARXrtmZbu3aabYJkEc25rHymRHDX4=zNdecHAs3LnQ259RkPg@mail.gmail.com>
- <388f1d61-c419-a133-6266-daff1fa4cd60@linux.ibm.com>
-X-NTES-SC: AL_QuySA/qYvkgu5CGaYekZk0cQjuo+UMuwuPov249XP5k0uCrE9AErUlBGGFLT9OSTCAuLnzeQWztu7+tFd7BJQ47DqNx34F7y7ga3v/alcN9z
-Content-Type: multipart/alternative; 
-	boundary="----=_Part_13329_607406992.1691631052127"
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bytedance.com (client-ip=2607:f8b0:4864:20::42d; helo=mail-pf1-x42d.google.com; envelope-from=zhangjian.3032@bytedance.com; receiver=lists.ozlabs.org)
+Received: from mail-pf1-x42d.google.com (mail-pf1-x42d.google.com [IPv6:2607:f8b0:4864:20::42d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RLyzd1RLdz2yDh
+	for <openbmc@lists.ozlabs.org>; Thu, 10 Aug 2023 17:22:04 +1000 (AEST)
+Received: by mail-pf1-x42d.google.com with SMTP id d2e1a72fcca58-6873a30d02eso413383b3a.3
+        for <openbmc@lists.ozlabs.org>; Thu, 10 Aug 2023 00:22:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bytedance.com; s=google; t=1691652122; x=1692256922;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=oCsFa++ogn7H/UBzN64O3INdySKF0/YyEIYVfwtbNi4=;
+        b=cCKBkQQg3S66/frhBsmAlmRxovXilvClD1MVf+P/F/DowmmK8Ocu/GlQ9T4uPUxv4U
+         u12XtTQ0rXPiTyvqbb55WTf+xmwq7qnFLIuoyT5J7YPA1SzpiRY+LCiKiTxbL73hTN3X
+         pXOnqtky7JiPc0mU49MbYEH9OWr5oMrktoGi1Y6Fm7MQVTtLRkyRpvZB5AUYp7ILOAuu
+         WbmmbVpIZAiQkjMdzY89weCPT3rE+mKG3NuBf2Hizx5BMKmbrYAtF6OhvTbg98urRmp4
+         9JwvnEHzcwNDk0FeudEeL8ALFcAtKHd7IFL6MdTqicfcckmSlIdYbKK1ItGJB8uHzoLb
+         TEvg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1691652122; x=1692256922;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=oCsFa++ogn7H/UBzN64O3INdySKF0/YyEIYVfwtbNi4=;
+        b=ids6E2iNtWDabfHFw9WuxbYzoWZeQAHrqJTVwDaOjqd+1QggvAXdTL+ksVNcbCFa1I
+         v7zecqGbyZabun4RCyYbuwrX0AoTyD9EstwBVcfWoqHuhAJU92K9rfpVq978+llbyglK
+         r2wrO+trF8qSjTbXhVVCdSvmMYA1BCQmlEVPM3WLeIN+A/WjJIeX1YYhfW/N+2X/4VL+
+         dJ23XA0fIMdjyn/bKBI/K2Q2Ax3ABTC5KdLSW5Qq2+9Rm7nXFssY1SiGM2yM2SYIVeLW
+         6KI0PaIBFGXktsQdRRBrmfNQZCIN/H2+SYglO1hD+y5mbPFbhsc2hh6c6tBCJzzyZRld
+         pzIA==
+X-Gm-Message-State: AOJu0Yyd1+2tQYPdG+jUnZx9Nf7dq/a7rTx09SeafaUT3cpz5jgy4afX
+	3NZqPOfrg8eLDNZ/iHVD0y4NBQ==
+X-Google-Smtp-Source: AGHT+IEND+WgzSbKSq1IjO2/9yuM5dCUzGFWbXi0PrhVd/2hDTcBqIjIu+42sIy/hJZwuV+CdVSa7A==
+X-Received: by 2002:a05:6a20:325a:b0:134:a8a1:3bf with SMTP id hm26-20020a056a20325a00b00134a8a103bfmr1309418pzc.30.1691652122340;
+        Thu, 10 Aug 2023 00:22:02 -0700 (PDT)
+Received: from localhost ([49.7.199.210])
+        by smtp.gmail.com with ESMTPSA id c6-20020a170902c1c600b001b8a3a0c928sm880830plc.181.2023.08.10.00.22.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 10 Aug 2023 00:22:02 -0700 (PDT)
+From: Jian Zhang <zhangjian.3032@bytedance.com>
+To: brendan.higgins@linux.dev,
+	benh@kernel.crashing.org,
+	joel@jms.id.au,
+	andrew@aj.id.au
+Subject: [PATCH] i2c: aspeed: Fix i2c bus hang in slave read
+Date: Thu, 10 Aug 2023 15:21:55 +0800
+Message-Id: <20230810072155.3726352-1-zhangjian.3032@bytedance.com>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Message-ID: <1eb66406.e3a.189dd11655f.Coremail.lianglixuehao@126.com>
-X-Coremail-Locale: zh_CN
-X-CM-TRANSID: MsqowACXS1rNPdRkcvQQAA--.47919W
-X-CM-SenderInfo: xold0w5ol03vxkdrqiyswou0bp/1tbi3AXHFlpEFxbVoQACsh
-X-Coremail-Antispam: 1U5529EdanIXcx71UUUUU7vcSsGvfC2KfnxnUU==
-X-Mailman-Approved-At: Thu, 10 Aug 2023 15:15:25 +1000
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -62,146 +78,62 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Lixue Liang <lianglixue@greatwall.com.cn>, linux-aspeed@lists.ozlabs.org, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Linux Kernel Mailing List <linux-kernel@vger.kernel.org>, brendan.higgins@linux.dev, Joel Stanley <joel@jms.id.au>, p.zabel@pengutronix.de, linux-arm-kernel@lists.infradead.org, linux-i2c@vger.kernel.org
+Cc: "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>, "moderated list:ARM/ASPEED I2C DRIVER" <openbmc@lists.ozlabs.org>, yulei.sh@bytedance.com, open list <linux-kernel@vger.kernel.org>, "open list:ARM/ASPEED I2C DRIVER" <linux-i2c@vger.kernel.org>, zhangjian3032@gmail.com, "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-arm-kernel@lists.infradead.org>, xiexinnan@bytedance.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-------=_Part_13329_607406992.1691631052127
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+When the `CONFIG_I2C_SLAVE` option is enabled and the device operates
+as a slave, a situation arises where the master sends a START signal
+without the accompanying STOP signal. This action results in a
+persistent I2C bus timeout. The core issue stems from the fact that
+the i2c controller remains in a slave read state without a timeout
+mechanism. As a consequence, the bus perpetually experiences timeouts.
 
-SGkgRWRkaWUsCkkgY2FuJ3Qgc2VlIGZyb20gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvb3BlbmJt
-Yy8zNzQyMzdjYi0xY2RhLWRmMTItZWI5Zi03NDIyY2FiNTFmYzRAbGludXguYWxpYmFiYS5jb20v
-IHdoeSB0aGUgcGF0Y2ggd2FzIHJlamVjdGVkLgpjYW4geW91IHRlbGwgbWUgd2h5PyBBZnRlciBh
-bGwsIHRoaXMgcHJvYmxlbSB3aWxsIGFsd2F5cyBoYXBwZW4uCgoKVGhhbmtzLgoKCgoKCgoKCgoK
-CgoKCkF0IDIwMjMtMDgtMDIgMjE6NDE6MTYsICJFZGRpZSBKYW1lcyIgPGVhamFtZXNAbGludXgu
-aWJtLmNvbT4gd3JvdGU6Cj4KPk9uIDcvMzEvMjMgMDE6MTAsIExlaSBZVSB3cm90ZToKPj4gVGhl
-cmUgaXMgYSBzYW1lIGZpeCBpbiAKPj4gaHR0cHM64oCKLy9sb3JlLuKAimtlcm5lbC7igIpvcmcv
-b3BlbmJtYy8zNzQyMzdjYi0xY2RhLWRmMTItZWI5Zi03NDIyY2FiNTFmYzRA4oCKbGludXgu4oCK
-YWxpYmFiYS7igIpjb20vIAo+PiBPbiBNb24sIEp1bCAzMSwgMjAyMyBhdCAxMjrigIoyMSBQTSBK
-b2VsIFN0YW5sZXkgPGpvZWxA4oCKam1zLuKAimlkLuKAimF1PiAKPj4gd3JvdGU6IE9uIEZyaSwg
-MjggSnVsIDIwMjMgYXQgMTI64oCKNDAsIExpeHVlIExpYW5nIAo+PiA8bGlhbmdsaXh1ZWhhb0Di
-gIoxMjYu4oCKY29tPgo+PiBaalFjbVFSWUZwZnB0QmFubmVyU3RhcnQKPj4gVGhpcyBNZXNzYWdl
-IElzIEZyb20gYW4gVW50cnVzdGVkIFNlbmRlcgo+PiBZb3UgaGF2ZSBub3QgcHJldmlvdXNseSBj
-b3JyZXNwb25kZWQgd2l0aCB0aGlzIHNlbmRlci4KPj4gUmVwb3J0IFN1c3BpY2lvdXMKPj4gPGh0
-dHBzOi8vdXMtcGhpc2hhbGFybS1ld3QucHJvb2Zwb2ludC5jb20vRVdUL3YxL1BqaURTZyExMi12
-ckpCVEI3SFNNWWp4a0NFdnBId1Z5ZWx3MENlbkFEM1JLUmptVlZmUmlnNkR6Q2dSQmF4SGFlWXNK
-c0FUekZnTllTUkdYeTZyUU5YcG1LOVlkV1F4U2NtLTJoOXBfYmlsRHVMZVUxcjhOUzVPRWtDbmds
-MDFQOTR5JD4gCj4+Cj4+IFpqUWNtUVJZRnBmcHRCYW5uZXJFbmQKPj4gVGhlcmUgaXMgYSBzYW1l
-IGZpeCBpbiAKPj4gaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvb3BlbmJtYy8zNzQyMzdjYi0xY2Rh
-LWRmMTItZWI5Zi03NDIyY2FiNTFmYzRAbGludXguYWxpYmFiYS5jb20vCj4+Cj4+IE9uIE1vbiwg
-SnVsIDMxLCAyMDIzIGF0IDEyOjIx4oCvUE0gSm9lbCBTdGFubGV5IDxqb2VsQGptcy5pZC5hdT4g
-d3JvdGU6Cj4+Cj4+ICAgICBPbiBGcmksIDI4IEp1bCAyMDIzIGF0IDEyOjQwLCBMaXh1ZSBMaWFu
-ZyA8bGlhbmdsaXh1ZWhhb0AxMjYuY29tPgo+PiAgICAgd3JvdGU6Cj4+ICAgICA+Cj4+ICAgICA+
-IEZyb206IExpeHVlIExpYW5nIDxsaWFuZ2xpeHVlQGdyZWF0d2FsbC5jb20uY24+Cj4+ICAgICA+
-Cj4+ICAgICA+IEFmdGVyIHdhaXRpbmcgZm9yIHRoZSB0cmFuc21pc3Npb24gdGltZW91dCwgdGhl
-IEkyQyBjb250cm9sbGVyIHdpbGwKPj4gICAgID4gY29udGludWUgdG8gdHJhbnNtaXQgZGF0YSB3
-aGVuIHRoZSBidXMgaXMgaWRsZS4gQ2xlYXJpbmcKPj4gICAgIGJ1cy0+bXNnIHdpbGwKPj4gICAg
-ID4gYXZvaWQga2VybmVsIHBhbmljIHdoZW4gYWNjZXNzaW5nIHRoZSBmcmVlZCBtc2ctPmJ1ZiBp
-bgo+PiAgICAgPiBhc3BlZWRfaTJjX21hc3Rlcl9pcnEuCj4+ICAgICA+Cj4+ICAgICA+IFNpZ25l
-ZC1vZmYtYnk6IExpeHVlIExpYW5nIDxsaWFuZ2xpeHVlQGdyZWF0d2FsbC5jb20uY24+Cj4+ICAg
-ICA+IC0tLQo+PiAgICAgPiAgZHJpdmVycy9pMmMvYnVzc2VzL2kyYy1hc3BlZWQuYyB8IDIgKysK
-Pj4gICAgID4gIDEgZmlsZSBjaGFuZ2VkLCAyIGluc2VydGlvbnMoKykKPj4gICAgID4KPj4gICAg
-ID4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvaTJjL2J1c3Nlcy9pMmMtYXNwZWVkLmMKPj4gICAgIGIv
-ZHJpdmVycy9pMmMvYnVzc2VzL2kyYy1hc3BlZWQuYwo+PiAgICAgPiBpbmRleCAyZTVhY2ZlYjc2
-YzguLmM4MzA1NzQ5N2UyNiAxMDA2NDQKPj4gICAgID4gLS0tIGEvZHJpdmVycy9pMmMvYnVzc2Vz
-L2kyYy1hc3BlZWQuYwo+PiAgICAgPiArKysgYi9kcml2ZXJzL2kyYy9idXNzZXMvaTJjLWFzcGVl
-ZC5jCj4+ICAgICA+IEBAIC03MTMsNiArNzEzLDggQEAgc3RhdGljIGludCBhc3BlZWRfaTJjX21h
-c3Rlcl94ZmVyKHN0cnVjdAo+PiAgICAgaTJjX2FkYXB0ZXIgKmFkYXAsCj4+ICAgICA+ICAgICAg
-ICAgICAgICAgICBzcGluX2xvY2tfaXJxc2F2ZSgmYnVzLT5sb2NrLCBmbGFncyk7Cj4+ICAgICA+
-ICAgICAgICAgICAgICAgICBpZiAoYnVzLT5tYXN0ZXJfc3RhdGUgPT0gQVNQRUVEX0kyQ19NQVNU
-RVJfUEVORElORykKPj4gICAgID4gICAgICAgICAgICAgICAgICAgICAgICAgYnVzLT5tYXN0ZXJf
-c3RhdGUgPQo+PiAgICAgQVNQRUVEX0kyQ19NQVNURVJfSU5BQ1RJVkU7Cj4+ICAgICA+ICsKPj4g
-ICAgID4gKyAgICAgICAgICAgICAgIGJ1cy0+bXNncyA9IE5VTEw7Cj4+Cj4+ICAgICBFZGRpZSwg
-aXMgdGhpcyB0aGUgc2FtZSBpc3N1ZSB5b3Ugd2VyZSBkZWJ1Z2dpbmc/Cj4+Cj4KPlllcywgaXQg
-aXMsIGFuZCB0aGUgc2FtZSBmaXggSSBzZXR0bGVkIG9uLgo+Cj4KPj4KPj4gICAgID4gIHNwaW5f
-dW5sb2NrX2lycXJlc3RvcmUoJmJ1cy0+bG9jaywgZmxhZ3MpOwo+PiAgICAgPgo+PiAgICAgPiAg
-ICAgICAgICAgICAgICAgcmV0dXJuIC1FVElNRURPVVQ7Cj4+ICAgICA+IC0tCj4+ICAgICA+IDIu
-MjcuMAo+PiAgICAgPgo+Pgo=
-------=_Part_13329_607406992.1691631052127
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: base64
+This proposed patch addresses this problem by introducing a status
+check during i2c transmit timeouts. In the event that the controller
+is in a slave read state, the i2c controller will be reset to restore
+proper functionality and allow the I2C bus to resume normal operation.
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXYgc3R5bGU9Im1hcmdpbjogMDsiPkhpJm5ic3A7PHNwYW4g
-c3R5bGU9ImZvbnQtZmFtaWx5OiBhcmlhbDsgd2hpdGUtc3BhY2UtY29sbGFwc2U6IHByZXNlcnZl
-OyI+RWRkaWUsPC9zcGFuPjwvZGl2PjxkaXYgc3R5bGU9Im1hcmdpbjogMDsiPjxzcGFuIHN0eWxl
-PSJmb250LWZhbWlseTogYXJpYWw7IHdoaXRlLXNwYWNlLWNvbGxhcHNlOiBwcmVzZXJ2ZTsiPiAg
-PC9zcGFuPjxmb250IGZhY2U9ImFyaWFsIj48c3BhbiBzdHlsZT0id2hpdGUtc3BhY2UtY29sbGFw
-c2U6IHByZXNlcnZlOyI+SSBjYW4ndCBzZWUgZnJvbSA8L3NwYW4+PC9mb250PjxzcGFuIHN0eWxl
-PSJmb250LWZhbWlseTogYXJpYWw7IHdoaXRlLXNwYWNlLWNvbGxhcHNlOiBwcmVzZXJ2ZTsiPjxh
-IGhyZWY9Imh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL29wZW5ibWMvMzc0MjM3Y2ItMWNkYS1kZjEy
-LWViOWYtNzQyMmNhYjUxZmM0QGxpbnV4LmFsaWJhYmEuY29tLyIgX3NyYz0iaHR0cHM6Ly9sb3Jl
-Lmtlcm5lbC5vcmcvb3BlbmJtYy8zNzQyMzdjYi0xY2RhLWRmMTItZWI5Zi03NDIyY2FiNTFmYzRA
-bGludXguYWxpYmFiYS5jb20vIj5odHRwczovL2xvcmUua2VybmVsLm9yZy9vcGVuYm1jLzM3NDIz
-N2NiLTFjZGEtZGYxMi1lYjlmLTc0MjJjYWI1MWZjNEBsaW51eC5hbGliYWJhLmNvbS88L2E+IDwv
-c3Bhbj48c3BhbiBzdHlsZT0id2hpdGUtc3BhY2UtY29sbGFwc2U6IHByZXNlcnZlOyBmb250LWZh
-bWlseTogYXJpYWw7Ij4gd2h5IHRoZSBwYXRjaCB3YXMgcmVqZWN0ZWQuIDwvc3Bhbj48L2Rpdj48
-ZGl2IHN0eWxlPSJtYXJnaW46IDA7Ij48c3BhbiBzdHlsZT0id2hpdGUtc3BhY2UtY29sbGFwc2U6
-IHByZXNlcnZlOyBmb250LWZhbWlseTogYXJpYWw7Ij4gY2FuIHlvdSB0ZWxsIG1lIHdoeT8gQWZ0
-ZXIgYWxsLCB0aGlzIHByb2JsZW0gd2lsbCBhbHdheXMgaGFwcGVuLjwvc3Bhbj48L2Rpdj48ZGl2
-IHN0eWxlPSJtYXJnaW46IDA7Ij48YnI+PC9kaXY+PGRpdiBzdHlsZT0ibWFyZ2luOiAwOyI+VGhh
-bmtzLjwvZGl2PjxwIHN0eWxlPSJtYXJnaW46IDA7Ij48YnI+PC9wPjxwIHN0eWxlPSJtYXJnaW46
-IDA7Ij48YnI+PC9wPjxwIHN0eWxlPSJtYXJnaW46IDA7Ij48YnI+PC9wPjxkaXYgc3R5bGU9InBv
-c2l0aW9uOnJlbGF0aXZlO3pvb206MSI+PC9kaXY+PGRpdiBpZD0iZGl2TmV0ZWFzZU1haWxDYXJk
-Ij48L2Rpdj48cCBzdHlsZT0ibWFyZ2luOiAwOyI+PGJyPjwvcD48cHJlPjxicj5BdCAyMDIzLTA4
-LTAyIDIxOjQxOjE2LCAiRWRkaWUgSmFtZXMiICZsdDtlYWphbWVzQGxpbnV4LmlibS5jb20mZ3Q7
-IHdyb3RlOgomZ3Q7CiZndDtPbiA3LzMxLzIzIDAxOjEwLCBMZWkgWVUgd3JvdGU6CiZndDsmZ3Q7
-IFRoZXJlIGlzIGEgc2FtZSBmaXggaW4gCiZndDsmZ3Q7IGh0dHBzOuKAii8vbG9yZS7igIprZXJu
-ZWwu4oCKb3JnL29wZW5ibWMvMzc0MjM3Y2ItMWNkYS1kZjEyLWViOWYtNzQyMmNhYjUxZmM0QOKA
-imxpbnV4LuKAimFsaWJhYmEu4oCKY29tLyAKJmd0OyZndDsgT24gTW9uLCBKdWwgMzEsIDIwMjMg
-YXQgMTI64oCKMjEgUE0gSm9lbCBTdGFubGV5ICZsdDtqb2VsQOKAimptcy7igIppZC7igIphdSZn
-dDsgCiZndDsmZ3Q7IHdyb3RlOiBPbiBGcmksIDI4IEp1bCAyMDIzIGF0IDEyOuKAijQwLCBMaXh1
-ZSBMaWFuZyAKJmd0OyZndDsgJmx0O2xpYW5nbGl4dWVoYW9A4oCKMTI2LuKAimNvbSZndDsKJmd0
-OyZndDsgWmpRY21RUllGcGZwdEJhbm5lclN0YXJ0CiZndDsmZ3Q7IFRoaXMgTWVzc2FnZSBJcyBG
-cm9tIGFuIFVudHJ1c3RlZCBTZW5kZXIKJmd0OyZndDsgWW91IGhhdmUgbm90IHByZXZpb3VzbHkg
-Y29ycmVzcG9uZGVkIHdpdGggdGhpcyBzZW5kZXIuCiZndDsmZ3Q7IFJlcG9ydCZuYnNwO1N1c3Bp
-Y2lvdXMKJmd0OyZndDsgJmx0O2h0dHBzOi8vdXMtcGhpc2hhbGFybS1ld3QucHJvb2Zwb2ludC5j
-b20vRVdUL3YxL1BqaURTZyExMi12ckpCVEI3SFNNWWp4a0NFdnBId1Z5ZWx3MENlbkFEM1JLUmpt
-VlZmUmlnNkR6Q2dSQmF4SGFlWXNKc0FUekZnTllTUkdYeTZyUU5YcG1LOVlkV1F4U2NtLTJoOXBf
-YmlsRHVMZVUxcjhOUzVPRWtDbmdsMDFQOTR5JCZndDsgCiZndDsmZ3Q7CiZndDsmZ3Q7IFpqUWNt
-UVJZRnBmcHRCYW5uZXJFbmQKJmd0OyZndDsgVGhlcmUgaXMgYSBzYW1lIGZpeCBpbiAKJmd0OyZn
-dDsgaHR0cHM6Ly9sb3JlLmtlcm5lbC5vcmcvb3BlbmJtYy8zNzQyMzdjYi0xY2RhLWRmMTItZWI5
-Zi03NDIyY2FiNTFmYzRAbGludXguYWxpYmFiYS5jb20vCiZndDsmZ3Q7CiZndDsmZ3Q7IE9uIE1v
-biwgSnVsIDMxLCAyMDIzIGF0IDEyOjIx4oCvUE0gSm9lbCBTdGFubGV5ICZsdDtqb2VsQGptcy5p
-ZC5hdSZndDsgd3JvdGU6CiZndDsmZ3Q7CiZndDsmZ3Q7ICAgICBPbiBGcmksIDI4IEp1bCAyMDIz
-IGF0IDEyOjQwLCBMaXh1ZSBMaWFuZyAmbHQ7bGlhbmdsaXh1ZWhhb0AxMjYuY29tJmd0OwomZ3Q7
-Jmd0OyAgICAgd3JvdGU6CiZndDsmZ3Q7ICAgICAmZ3Q7CiZndDsmZ3Q7ICAgICAmZ3Q7IEZyb206
-IExpeHVlIExpYW5nICZsdDtsaWFuZ2xpeHVlQGdyZWF0d2FsbC5jb20uY24mZ3Q7CiZndDsmZ3Q7
-ICAgICAmZ3Q7CiZndDsmZ3Q7ICAgICAmZ3Q7IEFmdGVyIHdhaXRpbmcgZm9yIHRoZSB0cmFuc21p
-c3Npb24gdGltZW91dCwgdGhlIEkyQyBjb250cm9sbGVyIHdpbGwKJmd0OyZndDsgICAgICZndDsg
-Y29udGludWUgdG8gdHJhbnNtaXQgZGF0YSB3aGVuIHRoZSBidXMgaXMgaWRsZS4gQ2xlYXJpbmcK
-Jmd0OyZndDsgICAgIGJ1cy0mZ3Q7bXNnIHdpbGwKJmd0OyZndDsgICAgICZndDsgYXZvaWQga2Vy
-bmVsIHBhbmljIHdoZW4gYWNjZXNzaW5nIHRoZSBmcmVlZCBtc2ctJmd0O2J1ZiBpbgomZ3Q7Jmd0
-OyAgICAgJmd0OyBhc3BlZWRfaTJjX21hc3Rlcl9pcnEuCiZndDsmZ3Q7ICAgICAmZ3Q7CiZndDsm
-Z3Q7ICAgICAmZ3Q7IFNpZ25lZC1vZmYtYnk6IExpeHVlIExpYW5nICZsdDtsaWFuZ2xpeHVlQGdy
-ZWF0d2FsbC5jb20uY24mZ3Q7CiZndDsmZ3Q7ICAgICAmZ3Q7IC0tLQomZ3Q7Jmd0OyAgICAgJmd0
-OyZuYnNwOyBkcml2ZXJzL2kyYy9idXNzZXMvaTJjLWFzcGVlZC5jIHwgMiArKwomZ3Q7Jmd0OyAg
-ICAgJmd0OyZuYnNwOyAxIGZpbGUgY2hhbmdlZCwgMiBpbnNlcnRpb25zKCspCiZndDsmZ3Q7ICAg
-ICAmZ3Q7CiZndDsmZ3Q7ICAgICAmZ3Q7IGRpZmYgLS1naXQgYS9kcml2ZXJzL2kyYy9idXNzZXMv
-aTJjLWFzcGVlZC5jCiZndDsmZ3Q7ICAgICBiL2RyaXZlcnMvaTJjL2J1c3Nlcy9pMmMtYXNwZWVk
-LmMKJmd0OyZndDsgICAgICZndDsgaW5kZXggMmU1YWNmZWI3NmM4Li5jODMwNTc0OTdlMjYgMTAw
-NjQ0CiZndDsmZ3Q7ICAgICAmZ3Q7IC0tLSBhL2RyaXZlcnMvaTJjL2J1c3Nlcy9pMmMtYXNwZWVk
-LmMKJmd0OyZndDsgICAgICZndDsgKysrIGIvZHJpdmVycy9pMmMvYnVzc2VzL2kyYy1hc3BlZWQu
-YwomZ3Q7Jmd0OyAgICAgJmd0OyBAQCAtNzEzLDYgKzcxMyw4IEBAIHN0YXRpYyBpbnQgYXNwZWVk
-X2kyY19tYXN0ZXJfeGZlcihzdHJ1Y3QKJmd0OyZndDsgICAgIGkyY19hZGFwdGVyICphZGFwLAom
-Z3Q7Jmd0OyAgICAgJmd0OyZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7
-ICZuYnNwOyAmbmJzcDsgJm5ic3A7c3Bpbl9sb2NrX2lycXNhdmUoJmFtcDtidXMtJmd0O2xvY2ss
-IGZsYWdzKTsKJmd0OyZndDsgICAgICZndDsmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5i
-c3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwO2lmIChidXMtJmd0O21hc3Rlcl9zdGF0ZSA9
-PSBBU1BFRURfSTJDX01BU1RFUl9QRU5ESU5HKQomZ3Q7Jmd0OyAgICAgJmd0OyZuYnNwOyAmbmJz
-cDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNw
-OyAmbmJzcDsgJm5ic3A7ICZuYnNwO2J1cy0mZ3Q7bWFzdGVyX3N0YXRlID0KJmd0OyZndDsgICAg
-IEFTUEVFRF9JMkNfTUFTVEVSX0lOQUNUSVZFOwomZ3Q7Jmd0OyAgICAgJmd0OyArCiZndDsmZ3Q7
-ICAgICAmZ3Q7ICsmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJz
-cDsgJm5ic3A7YnVzLSZndDttc2dzID0gTlVMTDsKJmd0OyZndDsKJmd0OyZndDsgICAgIEVkZGll
-LCBpcyB0aGlzIHRoZSBzYW1lIGlzc3VlIHlvdSB3ZXJlIGRlYnVnZ2luZz8KJmd0OyZndDsKJmd0
-OwomZ3Q7WWVzLCBpdCBpcywgYW5kIHRoZSBzYW1lIGZpeCBJIHNldHRsZWQgb24uCiZndDsKJmd0
-OwomZ3Q7Jmd0OwomZ3Q7Jmd0OyAgICAgJmd0OyAmbmJzcDtzcGluX3VubG9ja19pcnFyZXN0b3Jl
-KCZhbXA7YnVzLSZndDtsb2NrLCBmbGFncyk7CiZndDsmZ3Q7ICAgICAmZ3Q7CiZndDsmZ3Q7ICAg
-ICAmZ3Q7Jm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZuYnNwOyAmbmJzcDsgJm5ic3A7ICZu
-YnNwOyAmbmJzcDtyZXR1cm4gLUVUSU1FRE9VVDsKJmd0OyZndDsgICAgICZndDsgLS0KJmd0OyZn
-dDsgICAgICZndDsgMi4yNy4wCiZndDsmZ3Q7ICAgICAmZ3Q7CiZndDsmZ3Q7CjwvcHJlPjwvZGl2
-Pg==
-------=_Part_13329_607406992.1691631052127--
+Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
+---
+ drivers/i2c/busses/i2c-aspeed.c | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
+index e76befe3f60f..1a95205fc946 100644
+--- a/drivers/i2c/busses/i2c-aspeed.c
++++ b/drivers/i2c/busses/i2c-aspeed.c
+@@ -113,6 +113,7 @@
+ 		 ASPEED_I2CD_M_RX_CMD |					       \
+ 		 ASPEED_I2CD_M_TX_CMD |					       \
+ 		 ASPEED_I2CD_M_START_CMD)
++#define ASPEED_I2CD_SLAVE_CMDS_MASK			GENMASK(31, 29)
+ 
+ /* 0x18 : I2CD Slave Device Address Register   */
+ #define ASPEED_I2CD_DEV_ADDR_MASK			GENMASK(6, 0)
+@@ -706,6 +707,22 @@ static int aspeed_i2c_master_xfer(struct i2c_adapter *adap,
+ 		     ASPEED_I2CD_BUS_BUSY_STS))
+ 			aspeed_i2c_recover_bus(bus);
+ 
++#if IS_ENABLED(CONFIG_I2C_SLAVE)
++		/*
++		 * If master timed out and bus is in slave mode.
++		 * reset the slave mode.
++		 */
++		if (readl(bus->base + ASPEED_I2C_CMD_REG) & ASPEED_I2CD_SLAVE_CMDS_MASK) {
++			spin_lock_irqsave(&bus->lock, flags);
++			u32 func_ctrl_reg_val = readl(bus->base + ASPEED_I2C_FUN_CTRL_REG);
++
++			writel(0, bus->base + ASPEED_I2C_FUN_CTRL_REG);
++			writel(func_ctrl_reg_val, bus->base + ASPEED_I2C_FUN_CTRL_REG);
++			bus->slave_state = ASPEED_I2C_SLAVE_INACTIVE;
++			spin_unlock_irqrestore(&bus->lock, flags);
++		}
++#endif
++
+ 		/*
+ 		 * If timed out and the state is still pending, drop the pending
+ 		 * master command.
+-- 
+2.30.2
 
