@@ -1,50 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4CA0477C512
-	for <lists+openbmc@lfdr.de>; Tue, 15 Aug 2023 03:25:06 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EAE8B77C5E4
+	for <lists+openbmc@lfdr.de>; Tue, 15 Aug 2023 04:33:28 +0200 (CEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=h6mXIiKE;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RPtqN1CGPz3cN7
-	for <lists+openbmc@lfdr.de>; Tue, 15 Aug 2023 11:25:04 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RPwLF4xYsz3c5b
+	for <lists+openbmc@lfdr.de>; Tue, 15 Aug 2023 12:33:25 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kunluntech.com.cn (client-ip=103.74.31.5; helo=mail-m315.qiye.163.com; envelope-from=xzcheng@kunluntech.com.cn; receiver=lists.ozlabs.org)
-X-Greylist: delayed 398 seconds by postgrey-1.37 at boromir; Tue, 15 Aug 2023 11:24:43 AEST
-Received: from mail-m315.qiye.163.com (mail-m315.qiye.163.com [103.74.31.5])
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=h6mXIiKE;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::236; helo=mail-oi1-x236.google.com; envelope-from=mimi05633@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RPtpz1x6Qz2yV9
-	for <openbmc@lists.ozlabs.org>; Tue, 15 Aug 2023 11:24:42 +1000 (AEST)
-Received: from kunluntech.com.cn (unknown [127.0.0.1])
-	by mail-m315.qiye.163.com (Hmail) with ESMTP id 1B45E20165;
-	Tue, 15 Aug 2023 09:17:52 +0800 (CST)
-Content-Type: multipart/alternative; BOUNDARY="=_Part_70661_1234941594.1692062272103"
-Message-ID: <AAgAYQDwJPZWGcUqaCYbXKpK.3.1692062272103.Hmail.xzcheng@kunluntech.com.cn>
-To: openbmc@lists.ozlabs.org
-Subject: =?UTF-8?B?a3VubHVuLWlwbWktb2VtIHN1Ym1pdCBlcnJvciBhbmQgbm8gSmVua2lzIGJ1aWxkIGFmdGVyIHB1c2hpbmcgY29kZSB0byBHZXJyaXQ=?=
-X-Priority: 3
-X-Mailer: HMail Webmail Server V2.0 Copyright (c) 2015-163.com
-X-Originating-IP: 183.242.65.67
-In-Reply-To: <mailman.3.1691978402.20370.openbmc@lists.ozlabs.org>
-References: <mailman.3.1691978402.20370.openbmc@lists.ozlabs.org>
-MIME-Version: 1.0
-Received: from xzcheng@kunluntech.com.cn( [183.242.65.67) ] by ajax-webmail ( [127.0.0.1] ) ; Tue, 15 Aug 2023 09:17:52 +0800 (GMT+08:00)
-From: Xiuzhi Cheng <xzcheng@kunluntech.com.cn>
-Date: Tue, 15 Aug 2023 09:17:52 +0800 (GMT+08:00)
-X-HM-Spam-Status: e1kfGhgUHx5ZQUtXWQgPGg8OCBgUHx5ZQUlOS1dZFg8aDwILHllBWSg2Ly
-	tZV1koWUFJQjdXWS1ZQUlXWQ8JGhUIEh9ZQVlDTEoaVhlJHkoZSx8ZGkNKQ1UZERMWGhIXJBQOD1
-	lXWRgSC1lBWUpDSFVJT0lVTU5VTUxZV1kWGg8SFR0UWUFZS1VLVUtVS1kG
-X-HM-Tid: 0a89f6bcdfea00d5kurm189b6684518
-X-HM-MType: 1
-X-HM-NTES-SC: AL0_4z5B86Wr4Tz9jdMF+bhXMXAw3CJ9xlfsUV8BCu1XcIqHeTfTnjqIlihMRA
-	01t1FYXGyOUImwtqTJlGrz3Uwu6oh9ixnYI3n9PC+RfRvwF765F0m+35GNLXmK6ZTK3r9k3Yj6sc
-	NNpIRiDq65o7NderiLNLVAk9uA1XFPPVV/pHU=
-X-HM-Sender-Digest: e1kJHlYWEh9ZQUpOTUtOS05ISEtKSzdXWQweGVlBDwkOHldZEh8eFQ9Z
-	QVlHOjocOiIqPwwxKyEsPBguCho4IhkjMAswVUhVSk1CSUtNSUlMSUNLQlUzFhoSF1UDARgTHhUc
-	OxAOFRcOFQ8eGBNVGBQWVRgVRVlXWRILWUFZSkNIVUlPSVVNTlVNTFlXWQgBWUFOSk1DN1dZFAsP
-	EhQVCFlBSzcG
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RPwKb57jRz2yVR
+	for <openbmc@lists.ozlabs.org>; Tue, 15 Aug 2023 12:32:49 +1000 (AEST)
+Received: by mail-oi1-x236.google.com with SMTP id 5614622812f47-3a741f46fadso4237015b6e.0
+        for <openbmc@lists.ozlabs.org>; Mon, 14 Aug 2023 19:32:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1692066763; x=1692671563;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/hlrmRxGLs/F9DipX5bUXix2iv7UjJrjeQCKjVDbSg4=;
+        b=h6mXIiKE0O3Y08U5/64fqjrUPBQre19/pWOepTuSEqs4CwW4mmRDAtyIHFC7Izr0mK
+         BUR2vOM2Gnd7EarkFvJ7dT+IVTrzxC5jcnViF3aXUeh2KGLeHTrWgTzk4gwAr4p8+BSO
+         Sbld71OqoQ5vIfZdwo/B+DIXc2iQITJ+QWBC4nMOYwmsu/umuUewZ8PUUL9kAcVbqEw2
+         mKQQQqnUvtCuKnWHiWjuEz1qYf21Kve0rH1T8HIrJk95PJlBnkt9Ld2WadyApYajXsrs
+         wAwOGpgu9K1jPUaMVA7tspadXg8cUh7OlmhybkLuRtyvGpotFcYmcIpkgzeUnE+nCx6x
+         yeIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692066763; x=1692671563;
+        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
+         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=/hlrmRxGLs/F9DipX5bUXix2iv7UjJrjeQCKjVDbSg4=;
+        b=bnTanFS9J8mknqvAxBgcAAQAo3/2kV4rbEiHyBYLuMpQWdvwJ4zRVG5Fghfm0xInQD
+         Q28Sz2e4pIsrvPz32vfVcScMKHd4YxyHIapu+y6BjKQPTF8yZ76w6D40XTNaOQkrephW
+         +rGuggA2loMWG7xa2itxl6gyZr3CGEhhUSsGHdjUWwW+LZT/FMLY3pog7eBpUrh/q/kl
+         LgkGu1sCLtuNtFyXMxHzQgDYrCu9h6cmv38l9J1qEMclGHWA0fb/L7gj3Xjv4Zukt0FQ
+         Md1bcKx9AyWOMvTfNRr1HHuDY3JFCvi7gRZr1zLTbaKBkuFMNS0fpQmyqi2YsTRR39Fj
+         DudA==
+X-Gm-Message-State: AOJu0YxubOf0Qq70ldtvCKhHJ0/y5cxi3xCAdLE+J8jHVYViMA+WI4xr
+	DghrL4iN8nLQ6p/kCaUCHjs=
+X-Google-Smtp-Source: AGHT+IEHLVcZrXYkf4lPLUJYIE6Kr7VuFAGnc8GiUv44goBA/vP6bdh6hOU12wVcfQ0Q/YURKf+4oA==
+X-Received: by 2002:a05:6358:418b:b0:134:ece4:1e74 with SMTP id w11-20020a056358418b00b00134ece41e74mr7753239rwc.21.1692066762816;
+        Mon, 14 Aug 2023 19:32:42 -0700 (PDT)
+Received: from smtpclient.apple ([2401:e180:88a1:80ef:f4f9:717b:5cd:3109])
+        by smtp.gmail.com with ESMTPSA id s24-20020aa78298000000b00640dbbd7830sm8857152pfm.18.2023.08.14.19.32.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 14 Aug 2023 19:32:42 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+From: Mining Lin <mimi05633@gmail.com>
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH v2 1/2] dt-bindings: rtc: nuvoton: Add DT compatible
+Date: Tue, 15 Aug 2023 10:32:30 +0800
+Message-Id: <8BF54CCD-FCCB-430A-A78E-53DC55F3C286@gmail.com>
+References: <d23de35f-8d55-4f80-a6ce-281f83fd4243@molgen.mpg.de>
+In-Reply-To: <d23de35f-8d55-4f80-a6ce-281f83fd4243@molgen.mpg.de>
+To: Paul Menzel <pmenzel@molgen.mpg.de>
+X-Mailer: iPhone Mail (20G75)
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,49 +79,61 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: bradleyb <bradleyb@fuzziesquirrel.com>
+Cc: linux-rtc@vger.kernel.org, a.zummo@towertech.it, alexandre.belloni@bootlin.com, benjaminfair@google.com, KWLIU@nuvoton.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, JJLIU0@nuvoton.com, conor+dt@kernel.org, tali.perry1@gmail.com, devicetree@vger.kernel.org, robh+dt@kernel.org, mylin1@nuvoton.com, krzysztof.kozlowski+dt@linaro.org, KFLIN@nuvoton.com, linux-kernel@vger.kernel.org, tmaimon77@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---=_Part_70661_1234941594.1692062272103
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
+Dear Paul,
 
-SGkgYnJhZCwKICAgIE15IHRlYW0gbWVtYmVyIEt1biBCYWkgKGtiYWlAa3VubHVudGVjaC5jb20u
-Y24pIHN1Ym1pdCBhIHBhdGNoIHRvIGdlcnJpdDoKaHR0cHM6Ly9nZXJyaXQub3BlbmJtYy5vcmcv
-Yy9vcGVuYm1jL2t1bmx1bi1pcG1pLW9lbS8rLzY1OTA2CiBCdXQgdGhlcmUgaXMgYSBnZXJyaXR+
-UHJvbG9nUnVsZSBFcnJvciBhbmQgIm5vIEplbmtpcyBidWlsZCBhZnRlciBwdXNoaW5nIGNvZGUg
-dG8gR2Vycml0IgoKCkkgY2FuIG5vdCBtZXJnZSBpdC4gCldoYXQgaXMgd3Jvbmcgd2l0aCBpdD8K
-CkJlc3QsClhpdXpoaQoKCi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLS0tLQoKCgoKWGl1emhpIENoZW5nCgpCTUMgRmlybXdhcmUgVGVhbQoKS3VubHVuIFRl
-Y2hub2xvZ3kgKEJlaWppbmcpIENvLiBMdGQuCgpUYWlqaSBidWlsZGluZywgTm8uMjExLCBCZWlz
-aWh1YW4gTWlkZGxlIFJvYWQsIEhhaWRpYW4gRGlzdHJpY3QsIEJlaWppbmcsQ2hpbmEuClRFTDog
-ODYxMC04OTA1NjI5MAp3d3cua3VubHVudGVjaC5jb20uY24gCgoKCgoNCg0K
---=_Part_70661_1234941594.1692062272103
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: base64
+Thank you for your comments.
+I  originally wanted to judge whether to match chip data by DT compatible, b=
+ut it does not make sense.
+Therefore, I will remove it in the v4 version.
 
-PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6MS43O2NvbG9yOiMwMDAwMDA7Zm9udC1zaXplOjE0cHg7
-Zm9udC1mYW1pbHk6QXJpYWwiPjxkaXY+SGkgYnJhZCw8L2Rpdj48ZGl2PiZuYnNwOyAmbmJzcDsg
-TXkgdGVhbSBtZW1iZXIgS3VuIEJhaSAoa2JhaUBrdW5sdW50ZWNoLmNvbS5jbikgc3VibWl0IGEg
-cGF0Y2ggdG8gZ2Vycml0OjwvZGl2PjxkaXY+aHR0cHM6Ly9nZXJyaXQub3BlbmJtYy5vcmcvYy9v
-cGVuYm1jL2t1bmx1bi1pcG1pLW9lbS8rLzY1OTA2PC9kaXY+PGRpdj4mbmJzcDtCdXQgdGhlcmUg
-aXMgYSBnZXJyaXR+UHJvbG9nUnVsZSBFcnJvciBhbmQgIm5vIEplbmtpcyBidWlsZCBhZnRlciBw
-dXNoaW5nIGNvZGUgdG8gR2Vycml0IjwvZGl2PjxkaXY+PGJyPjwvZGl2PjxkaXY+SSBjYW4gbm90
-IG1lcmdlIGl0LiZuYnNwOzwvZGl2PjxkaXY+V2hhdCBpcyB3cm9uZyB3aXRoIGl0PzwvZGl2Pjxi
-cj48ZGl2PkJlc3QsPC9kaXY+PGRpdj5YaXV6aGk8L2Rpdj48YnI+PGJyPjxkaXYgaWQ9ImR2TGV0
-dGVyQW5nbGUiPjxwPi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0t
-LS0tLS0tLTwvcD48cD48aW1nIHNyYz0iaHR0cDovL21haWwucWl5ZS4xNjMuY29tL3FpeWVpbWFn
-ZS9sb2dvLzQ2MzYxMjc5NC8xNjUzMDE1Mzc0OTQ0LnBuZyIgX3NyYz0iaHR0cDovL21haWwucWl5
-ZS4xNjMuY29tL3FpeWVpbWFnZS9sb2dvLzQ2MzYxMjc5NC8xNjUzMDE1Mzc0OTQ0LnBuZyI+PC9w
-PjxwPjxzcGFuIHN0eWxlPSJmb250LXNpemU6IDE2cHg7Zm9udC1mYW1pbHk6IOWui+S9kyI+PC9z
-cGFuPjwvcD48L2Rpdj48ZGl2ICBzdHlsZT0icG9zaXRpb246cmVsYXRpdmU7em9vbToxIj48YnI+
-PGRpdj5YaXV6aGkgQ2hlbmc8YnI+PC9kaXY+PGRpdj5CTUMgRmlybXdhcmUgVGVhbTxicj48L2Rp
-dj48ZGl2Pkt1bmx1biBUZWNobm9sb2d5IChCZWlqaW5nKSBDby4gTHRkLjxicj48L2Rpdj48ZGl2
-PlRhaWppIGJ1aWxkaW5nLCBOby4yMTEsIEJlaXNpaHVhbiBNaWRkbGUgUm9hZCwgSGFpZGlhbiBE
-aXN0cmljdCwgQmVpamluZyxDaGluYS48L2Rpdj48ZGl2PlRFTDogODYxMC08Zm9udCBzdHlsZT0i
-Zm9udC1mYW1pbHk6ICflvq7ova/pm4Xpu5EnOyBmb250LXNpemU6MTNweCI+ODkwNTYyOTA8L2Zv
-bnQ+PC9kaXY+PGEgaHJlZj0id3d3LnpkLXRlY2guY29tLmNuIiBfc3JjPSJ3d3cuemQtdGVjaC5j
-b20uY24iPnd3dy5rdW5sdW50ZWNoLmNvbS5jbjwvYT4mbmJzcDs8ZGl2IHN0eWxlPSJjbGVhcjpi
-b3RoIj48L2Rpdj48L2Rpdj48cHJlPgo8L3ByZT48L2Rpdj48YnI+
---=_Part_70661_1234941594.1692062272103--
+Thanks.
+Best regard,
+Mia
+
+> On Aug 10, 2023, at 3:55 PM, Paul Menzel <pmenzel@molgen.mpg.de> wrote:
+>=20
+> =EF=BB=BFDear Mia,
+>=20
+>=20
+> Thank you for your patch. It=E2=80=99d be great if you mentioned nct3015y i=
+n the commit message summary/title. Maybe:
+>=20
+> dt-bindings: rtc: Add compatible nct3015y to nuvoton,nct3018y
+>=20
+>> Am 09.08.23 um 11:51 schrieb Mia Lin:
+>> Add DT compatible "nuvoton,nct3015y" to select
+>=20
+> What do you mean by =E2=80=9Cto select=E2=80=9D?
+>=20
+> Also, maybe add how you tested this.
+>=20
+>> Signed-off-by: Mia Lin <mimi05633@gmail.com>
+>> ---
+>>  Documentation/devicetree/bindings/rtc/nuvoton,nct3018y.yaml | 4 +++-
+>>  1 file changed, 3 insertions(+), 1 deletion(-)
+>> diff --git a/Documentation/devicetree/bindings/rtc/nuvoton,nct3018y.yaml b=
+/Documentation/devicetree/bindings/rtc/nuvoton,nct3018y.yaml
+>> index 4f9b5604acd9..67fc60fd395c 100644
+>> --- a/Documentation/devicetree/bindings/rtc/nuvoton,nct3018y.yaml
+>> +++ b/Documentation/devicetree/bindings/rtc/nuvoton,nct3018y.yaml
+>> @@ -15,7 +15,9 @@ maintainers:
+>>    properties:
+>>    compatible:
+>> -    const: nuvoton,nct3018y
+>> +    enum:
+>> +      - nuvoton,nct3018y
+>> +      - nuvoton,nct3015y
+>=20
+> Would sorting the list be useful?
+>=20
+>>    reg:
+>>      maxItems: 1
+>=20
+>=20
+> Kind regards,
+>=20
+> Paul
