@@ -1,86 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 65EB477D1EE
-	for <lists+openbmc@lfdr.de>; Tue, 15 Aug 2023 20:36:38 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 73DCF77D7A4
+	for <lists+openbmc@lfdr.de>; Wed, 16 Aug 2023 03:26:36 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=evo6WoCk;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=USJxa+lz;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=W2BVuarH;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RQKjc16fGz3cQ4
-	for <lists+openbmc@lfdr.de>; Wed, 16 Aug 2023 04:36:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RQVpf2WT7z3cP7
+	for <lists+openbmc@lfdr.de>; Wed, 16 Aug 2023 11:26:34 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=evo6WoCk;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=USJxa+lz;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=W2BVuarH;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.28; helo=out4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
-X-Greylist: delayed 572 seconds by postgrey-1.37 at boromir; Wed, 16 Aug 2023 04:35:54 AEST
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::530; helo=mail-pg1-x530.google.com; envelope-from=mimi05633@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RQKhp1NVDz2yVY
-	for <openbmc@lists.ozlabs.org>; Wed, 16 Aug 2023 04:35:54 +1000 (AEST)
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-	by mailout.nyi.internal (Postfix) with ESMTP id 5FE2F5C010D
-	for <openbmc@lists.ozlabs.org>; Tue, 15 Aug 2023 14:26:14 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Tue, 15 Aug 2023 14:26:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:sender:subject:subject:to:to;
-	 s=fm3; t=1692123974; x=1692210374; bh=wxb+XA6XWN6AIO2bVhF8CBl34
-	iV549EEkRXg/q7mv50=; b=evo6WoCkriaTSQ9dZthAx9LazV6ZA8pCYo30PcQeu
-	6g5JhJym6nlJSEyHpca3E3R/Gbpl/o7G5ZO/bk5YaSedxAs6W2T/eCq0pr1VQVqA
-	dgCpwrY5+wuHsvjUzYjiNtAImSfIiUZV9LBSHwaS/+SVA/X8x6TWYeSDj/ik6XYx
-	jiovgUuJ2kAVTokIKDAsDjbEOiyjKZQsv7gw+gGSoQ3GpH7X1xF6F9mtmFdFxt5Y
-	glmVwdPri1tpHXV/7wXUKIKWkROFIGkYgExn0SN0j10n8A+boxzjThbRuGfF0MO+
-	u8ZVUneuxAo4FM4MOkKiZm6/O9wEEevOgrKQ4hdu2azLw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1692123974; x=1692210374; bh=wxb+XA6XWN6AIO2bVhF8CBl34iV549EEkRX
-	g/q7mv50=; b=USJxa+lz+NDNP7TzPiOmDy759wuQ8HP0wiWvpJHBHCMvJFyAYkG
-	ofpf11DplTPY35B0jY2jPnaPyuXPGKc/t+jZafcML+O0E6FR19ftwY6SnFyRt2dK
-	B977HFl9gnEKtaxniKwENPHlR5RLhA0Wj2L8Lq7LFchHIGHgd+XaOqWrUg/B9qRQ
-	sfQo2HEMG4SoTlXhcaqRlNZ16ouzv7L+f36+m9QA1dIWPlg6yVgcNWPpFBMhTtMN
-	XOqSVktWcAax0F7jWUl3D7L4s8xlrET4gfKENdBrCvPfSOHXxdYcL4ZYBELS1jsW
-	mmOUz0iyL/EcPyEkATcqjaqoAVxws0i75Rw==
-X-ME-Sender: <xms:RcPbZD-0L9undGhw713xr97OGctOyOEOjshbKPXTKssWSeTEraJAyg>
-    <xme:RcPbZPt0SkPU4LJQs4292jv0G-8LmraCZeNkOKY1cfcPew5jkVZSaQUBqVsnb8KjB
-    c7lmjPFAqQTfeFayJQ>
-X-ME-Received: <xmr:RcPbZBCpkQT0ztaW1aDJMEpsLK9qIRNKahzmTLmjtmm-Xi5nEDEHLctFk4NOEUhnhSDsel9pSfMZE43uUvqIRETDDekc6snn1Ww>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedruddtjedguddvgecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enfghrlhcuvffnffculddujedmnecujfgurhepfffhvffukfggtggusehgtderredttddv
-    necuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghksehsth
-    iftgigrdighiiiqeenucggtffrrghtthgvrhhnpeduueekueeuueegheduvdetgeevgfdv
-    iefgfeejhfdtgeevkeevlefhffeghefftdenucffohhmrghinhepghhithhhuhgsrdgtoh
-    hmpdhkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
-    mhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:RsPbZPfHjM8OX0zVrz0ttu7KJiDDiiUkS8HIRWFtk5YjaU6B0WFPXA>
-    <xmx:RsPbZIPSkKDEWWyKKyapynHKUQMJQjt7jCV_ghZhsLmQG84WCZU-xQ>
-    <xmx:RsPbZBnwdaYnBmy5gOY3JTdsn-DIM_ex70bYcXy8xZtm6CDNUVZg8A>
-    <xmx:RsPbZDYsTChlOhdiTo3teAuqbMcl7jo8RYKaXDkMlbA4k6nqIZUtNg>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <openbmc@lists.ozlabs.org>; Tue, 15 Aug 2023 14:26:13 -0400 (EDT)
-Date: Tue, 15 Aug 2023 13:26:11 -0500
-From: Patrick Williams <patrick@stwcx.xyz>
-To: OpenBMC List <openbmc@lists.ozlabs.org>
-Subject: TOF elections for 2023H2
-Message-ID: <ZNvDQ9xTbV-Ynk6T@heinlein.vulture-banana.ts.net>
-MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="Bm9KuGqXOhPjqE2W"
-Content-Disposition: inline
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RQVp21mbSz2ys2
+	for <openbmc@lists.ozlabs.org>; Wed, 16 Aug 2023 11:26:00 +1000 (AEST)
+Received: by mail-pg1-x530.google.com with SMTP id 41be03b00d2f7-56546b45f30so4642239a12.3
+        for <openbmc@lists.ozlabs.org>; Tue, 15 Aug 2023 18:26:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1692149156; x=1692753956;
+        h=message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eS73907VIaCeI53gzLLDOXrTmdR8uzZ1TgnhrmdjAfE=;
+        b=W2BVuarHi+6pbrQsl6hiKrxEXM9fXIA6Su8DOcpzFEbDu4//L9sLF6EgJaZhkvnUev
+         N+6t2NTVAFl4kSpxLw1uez5Hr9nAKkejmVBfrO9jWHRUGfWjoY/MKlNxovAqpdnq3q+F
+         Ol7+C2hR62tDDpgSDlO8yl9qHCUUEBBrVG5BkoP3jgS6hXSIOzRgzsThrOwRSzfSSr4m
+         H5i1bOOFKxV6J5Hkbz5Rz5FSTmBGa8uqXf6OdKg/L35iBDzSz4D2iMajGiyz5b1/I+TV
+         55Eh8VMUCMAHp2oRIyjIwcYbU5JwLH/Xa13gWByWSA171lnThMuEJQIsSN085rlWkHYb
+         uVIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692149156; x=1692753956;
+        h=message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eS73907VIaCeI53gzLLDOXrTmdR8uzZ1TgnhrmdjAfE=;
+        b=DBmWkDHIcqXrggDlotZT+dqevHKBTMjxoCcSqSFexOgvikctBS4qK6ryDauOEtbtqK
+         BBF5zWUxyO/OVM2OeGhlDYABhZSNlKszQL1jQOe7wWiIF9+2BBeSGgOx0iTtDf+MihHa
+         4KiiQSQt5plE3PPnF6W92Dd3+s82m6aDXUSbUoKHxj2N99u/voYD6+oPBa51N0ry4HRl
+         y8LASSbnJGFk9bAV41FRdU5FPZaNUaecVrga8kSmUi4JFcIOOS5UkTunbNGAm6pACGsx
+         HrSUdr5SSKmDnWcej/xpHdC/L1uVMhD1YJc9PEO3MZSe7a7SmOXYlbZTNYr0OmQhvsaA
+         wCpg==
+X-Gm-Message-State: AOJu0Yw7ZbM87kF47zS5K8JjEc6g1+B93zZj4nBnxKZ/ON4WH4qi+OUD
+	ztSLCwaqhVOo+ZEWoBp0hQo=
+X-Google-Smtp-Source: AGHT+IHKxroaeDsPMZSPoBDxdrhVDk2WoFodBQQXZmJfm7VKR0XuLLTGvJIobdyYW/H8EJzlkqDyDQ==
+X-Received: by 2002:a05:6a20:42a6:b0:135:110c:c6de with SMTP id o38-20020a056a2042a600b00135110cc6demr769678pzj.6.1692149155478;
+        Tue, 15 Aug 2023 18:25:55 -0700 (PDT)
+Received: from localhost.localdomain (60-250-192-107.hinet-ip.hinet.net. [60.250.192.107])
+        by smtp.gmail.com with ESMTPSA id 17-20020aa79251000000b0064d47cd116esm9895468pfp.161.2023.08.15.18.25.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 15 Aug 2023 18:25:54 -0700 (PDT)
+From: Mia Lin <mimi05633@gmail.com>
+To: avifishman70@gmail.com,
+	tmaimon77@gmail.com,
+	tali.perry1@gmail.com,
+	venture@google.com,
+	yuenn@google.com,
+	benjaminfair@google.com,
+	a.zummo@towertech.it,
+	alexandre.belloni@bootlin.com,
+	KWLIU@nuvoton.com,
+	JJLIU0@nuvoton.com,
+	KFLIN@nuvoton.com,
+	mylin1@nuvoton.com
+Subject: [PATCH v4 0/1] Compatible with NCT3015Y-R and NCT3018Y-R
+Date: Wed, 16 Aug 2023 09:25:39 +0800
+Message-Id: <20230816012540.18464-1-mimi05633@gmail.com>
+X-Mailer: git-send-email 2.17.1
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -92,70 +83,30 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-rtc@vger.kernel.org, openbmc@lists.ozlabs.org, Mia Lin <mimi05633@gmail.com>, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Changes since version 4:
+  Add an introduction bewteen NCT3015Y-R and NCT3018Y-R.
+  Restore the initial value of err in nct3018y_rtc_set_time().
+  Refine error messages to pinpoint the correct location.
 
---Bm9KuGqXOhPjqE2W
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Changes since version 3:
+  Remove the comparison between DT compatible and chip data.
 
-Hello everyone,
+Changes since version 2:
+  Add DT compatible to check the chip matches or not.
 
-Like last half[1], I have also run behind schedule in sending out the
-data for the TOF elections this half.
+Changes since version 1:
+  rtc: nuvoton: Compatible with NCT3015Y-R and NCT3018Y-R
 
-The schedule will be as follows:
+Mia Lin (1):
+  rtc: nuvoton: Compatible with NCT3015Y-R and NCT3018Y-R
 
-   * Aug 15th - Current TOF must publish a list of eligible voting
-                members.
-   * Sept 1st - Nominations (self or peer) for TOF seats must be sent to
-                the mailing list.
-   * Sept 1st - Developers disputing membership eligibility must submit
-                a pettion request to the current TOF.
-   * Sept 7th - Election Begins
-   * Sept 15th - Election concludes
-   * Sept 22nd - TOF will publish election results.
+ drivers/rtc/rtc-nct3018y.c | 122 +++++++++++++++++++++++++------------
+ 1 file changed, 83 insertions(+), 39 deletions(-)
 
-The current election roll-call is available at:
-   https://github.com/openbmc/tof-election/blob/main/2023H2/rollcall.json
+-- 
+2.17.1
 
-For this half, we have 3 seats up for election.  Currently those are
-held by Brad, Ed, and Zev.
-
-Nominations for those 3 seats may be sent to the mailing list by
-replying to this email.  Only those eligible to vote may be nominated.
-
-Disagreements with the roll-call (ie. your body of contributions are not
-reflected in our current score system) may be petitions for inclusion
-at https://github.com/openbmc/technical-oversight-forum/issues
-
-
-1. https://lore.kernel.org/openbmc/Y9hXCcmij+TRDXJ0@heinlein.taila677.ts.ne=
-t/
-
---=20
-Patrick Williams
-
---Bm9KuGqXOhPjqE2W
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmTbw0IACgkQqwNHzC0A
-wRkY2A/+Iv+b/RJn2ydfOTpGgoFzJFwnT7SRfV+lXQRDsvgqooUdJJQh7QclgqWE
-OkqtjgyXJ2S+rdFMOPeHSNzdkadMpaWSf70QEaYlT7BaQv+mqqlWG0LqNXxlh0MC
-U/k6g7Xc6xQtoGjYh6IcxSjOLxDSETSk10QCPz2TvdzjIcto5JFpN+l1dmFo4sQX
-1BNLvqdj2RNwFYD858JwlA/zLcG522iY/Q99cpDj6TpOREk0tX05Bql9R2qI0vr6
-tn2PpMBA9oY4dXkW86pE9y+BJi6wPiXKxQ3XzldIAxzdBn/mngPOIGHpV5dE1PwV
-93lDXzW/rEp/Vr/XCDegkNzGVhRNCeYPOQlnGX4qRQHLcCDtp2ZLLNLsWXEvIKty
-O08XiFuL88KEsmkEXqjXBlu28vHf94eQsgeRweywxIvX5hre7MyhSCL2qMVOrAGh
-gjP2U7g9L0HAE3Qx0pstZAmi2plVGaipvQAe9WIVRzDNFtThdcFruv7yQ44oNZ7E
-7KuFWBEl+gr20/o1HT9rFokepcGki+o7xnyVCHGKW2Ioexo3k61z+SzZgok+0StC
-Qhi28SkujznIMXVoR/BxcmyFwy1bpE7InO0igsgrmxulW2HDEaL6uMVvImJEIjP3
-mMlpiBl3Io3kPg5FpnNP25ap3HvrqlZCq7UaMKkOaSfwycFlDO4=
-=esuQ
------END PGP SIGNATURE-----
-
---Bm9KuGqXOhPjqE2W--
