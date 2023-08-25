@@ -2,51 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 7D389786C9C
-	for <lists+openbmc@lfdr.de>; Thu, 24 Aug 2023 12:14:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 76B8A788187
+	for <lists+openbmc@lfdr.de>; Fri, 25 Aug 2023 10:06:13 +0200 (CEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=bytedance.com header.i=@bytedance.com header.a=rsa-sha256 header.s=google header.b=Zht6stL2;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RWf7X2jPbz3c8v
-	for <lists+openbmc@lfdr.de>; Thu, 24 Aug 2023 20:14:00 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RXCFb1zdzz3cBV
+	for <lists+openbmc@lfdr.de>; Fri, 25 Aug 2023 18:06:11 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux-m68k.org (client-ip=195.130.132.48; helo=cantor.telenet-ops.be; envelope-from=geert@linux-m68k.org; receiver=lists.ozlabs.org)
-X-Greylist: delayed 334 seconds by postgrey-1.37 at boromir; Thu, 24 Aug 2023 20:13:38 AEST
-Received: from cantor.telenet-ops.be (cantor.telenet-ops.be [195.130.132.48])
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=bytedance.com header.i=@bytedance.com header.a=rsa-sha256 header.s=google header.b=Zht6stL2;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bytedance.com (client-ip=2001:4860:4864:20::2d; helo=mail-oa1-x2d.google.com; envelope-from=yulei.sh@bytedance.com; receiver=lists.ozlabs.org)
+Received: from mail-oa1-x2d.google.com (mail-oa1-x2d.google.com [IPv6:2001:4860:4864:20::2d])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RWf765J2pz30NN
-	for <openbmc@lists.ozlabs.org>; Thu, 24 Aug 2023 20:13:37 +1000 (AEST)
-Received: from andre.telenet-ops.be (andre.telenet-ops.be [IPv6:2a02:1800:120:4::f00:15])
-	by cantor.telenet-ops.be (Postfix) with ESMTPS id 4RWf0N675xz4x8rs
-	for <openbmc@lists.ozlabs.org>; Thu, 24 Aug 2023 12:07:48 +0200 (CEST)
-Received: from ramsan.of.borg ([IPv6:2a02:1810:ac12:ed40:3c6b:f703:5ab5:f36d])
-	by andre.telenet-ops.be with bizsmtp
-	id dN7m2A00P01sfPQ01N7m3Q; Thu, 24 Aug 2023 12:07:48 +0200
-Received: from rox.of.borg ([192.168.97.57])
-	by ramsan.of.borg with esmtp (Exim 4.95)
-	(envelope-from <geert@linux-m68k.org>)
-	id 1qZ7FY-001cxI-OT;
-	Thu, 24 Aug 2023 12:07:46 +0200
-Received: from geert by rox.of.borg with local (Exim 4.95)
-	(envelope-from <geert@linux-m68k.org>)
-	id 1qZ7Fi-000NNZ-C5;
-	Thu, 24 Aug 2023 12:07:46 +0200
-From: Geert Uytterhoeven <geert+renesas@glider.be>
-To: Avi Fishman <avifishman70@gmail.com>,
-	Tomer Maimon <tmaimon77@gmail.com>,
-	Tali Perry <tali.perry1@gmail.com>,
-	Patrick Venture <venture@google.com>,
-	Nancy Yuen <yuenn@google.com>,
-	Benjamin Fair <benjaminfair@google.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-Subject: [PATCH] pinctrl: nuvoton: Use pinconf_generic_dt_node_to_map_all()
-Date: Thu, 24 Aug 2023 12:07:44 +0200
-Message-Id: <81e9ab48f78d63153b23a163b3349b3059d2b7fc.1692871558.git.geert+renesas@glider.be>
-X-Mailer: git-send-email 2.34.1
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RXCDz6Bf8z308K
+	for <openbmc@lists.ozlabs.org>; Fri, 25 Aug 2023 18:05:38 +1000 (AEST)
+Received: by mail-oa1-x2d.google.com with SMTP id 586e51a60fabf-1cca7cf6e01so410195fac.0
+        for <openbmc@lists.ozlabs.org>; Fri, 25 Aug 2023 01:05:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=bytedance.com; s=google; t=1692950730; x=1693555530;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6t8GeqLweusrncq/PiPnYokKSRsES+U9OdCdlJvDVFc=;
+        b=Zht6stL2KoYvTmDoPdT6rZEE0Cpohxw21Dd13S75HrHhBM6KcaXqia0lJWsq3l+Cxy
+         TPF107pAc94S7vHAwiFkhr/1T17IR269DOO+hWP0947kgpf5m4gdyei3X0kQd741YvXD
+         030jR6stowan6Q+LGTfHm21A35myoCMDcZrDv1LOXHI8agAVKVPm1/pu7sEhOgCYZcij
+         2DxuRkSX/h6yiTE5PToAPv69B2/ZrRSxj9qxxaXAd44BKbYbF8VeeFZOGBH1q0qpleV/
+         9K8ndziK4WeaqX/tTUwl+y9S52/7OproqA2056r3dM0/wsP1ubNEMvY5FJ24jqUquQvS
+         jANw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1692950730; x=1693555530;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6t8GeqLweusrncq/PiPnYokKSRsES+U9OdCdlJvDVFc=;
+        b=beTineoDA7d1cKJ/VYpzdBoxtN5mM/XU+jS7DEH9WzHBu9Em3Jsjq4jLM+0UZboUgk
+         C0Aai5FNQSAadPaaXDLnf2HIfLk9R0Y5M/+37/qLPpRr9KS2HE+UiwUy0f+xVu1aw7fq
+         H/2G7ZkP90JyqW0BvQCvZwkowrLUGl4FZ64UM11n4awchT1aRiFk/vNC0b4RMVg+Mz+E
+         0065MnKBVAPAG7ZO/te+AB91n4KfA5biA92c29ci2sOi84vqFCe8EGrOivKhwdx1ASnb
+         0NBrEoGQvMRQ+EuWwXk4kloQCOQ5y2tnws313oPCqIHHkaqrOrgXmpOHJekm1AEoYisO
+         KrIg==
+X-Gm-Message-State: AOJu0YzYEygZkJPTm/Ad5tRyKtwJsZpY0uTHWKpFZkl56DlBbKeDjBQo
+	krIBnuOohzsU9yt3tgxDX+Hwj8vVgl9afzWFGcRPhEkffnC1pxtD
+X-Google-Smtp-Source: AGHT+IHzEx3andsKP2hyITocLj395VgZWUbILJiRoxOXXAoHO8b2cmEWV/pLiSHesMX4bLinM/Yi0v00pH5b7VSjRyg=
+X-Received: by 2002:a05:6870:ac27:b0:1bf:54b9:800 with SMTP id
+ kw39-20020a056870ac2700b001bf54b90800mr2300897oab.59.1692950729711; Fri, 25
+ Aug 2023 01:05:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <ZFLepbxKKXVGAwRB@heinlein.vulture-banana.ts.net>
+ <CAGm54UF=8EWwzC0ZONoYFjHV2RagGyNocX3Ob-ftaYACpG9n9Q@mail.gmail.com> <ZFgMJz51IVKzo5IJ@heinlein.vulture-banana.ts.net>
+In-Reply-To: <ZFgMJz51IVKzo5IJ@heinlein.vulture-banana.ts.net>
+From: Lei Yu <yulei.sh@bytedance.com>
+Date: Fri, 25 Aug 2023 16:05:12 +0800
+Message-ID: <CAGm54UHd5ukn_-n83Ud0RAZeLj_O+CxjXx74F8tKJyRj2j0s+Q@mail.gmail.com>
+Subject: Re: sdbusplus updates (client-bindings and namespace)
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,85 +76,55 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-gpio@vger.kernel.org, openbmc@lists.ozlabs.org, Geert Uytterhoeven <geert+renesas@glider.be>
+Cc: OpenBMC List <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Use the pinconf_generic_dt_node_to_map_all() helper instead of
-open-coding the same operation, to avoid having to provide custom
-pinctrl_ops.dt_node_to_map() callbacks.
+On Mon, May 8, 2023 at 4:38=E2=80=AFAM Patrick Williams <patrick@stwcx.xyz>=
+ wrote:
+>
+> On Fri, May 05, 2023 at 05:09:53PM +0800, Lei Yu wrote:
+> > On Thu, May 4, 2023 at 6:23=E2=80=AFAM Patrick Williams <patrick@stwcx.=
+xyz> wrote:
+>
+> > >     Interface: xyz.openbmc_project.Object.Enable
+> > >     Old Class: sdbusplus::xyz::openbmc_project::Object::server::Enabl=
+e
+> > >     New Class: sdbusplus::server::xyz::openbmc_project::object::Enabl=
+e
+> > >     Client Class: sdbusplus::client::xyz::openbmc_project::object::En=
+able
+> >
+> > The previous class was using `Object` but now with the new namespace
+> > it becomes `object`, is it intended about the upper-case `O` becoming
+> > the lower-case `o`?
+> > If yes, why the `Enable` still kept the upper-case `E`?
+> > Do we have a rule that all the strings other than the last part should
+> > be lower-case?
+>
+> Yes, this was intentional.
+>
+> The older namespace code did not apply an explicit style to the
+> namespace or server but just used the portions of the interface name.
+> We happen to name interfaces in UpperCamelCase.  With the `server` near
+> the end, there was no name-identifier collision between:
+>
+>     * ...Foo -> ...::server::Foo
+>     * ...Foo.Create -> ...::Foo::server::Create
+>
+> By putting the `server` near the beginning you end up with:
+>
+>     * ...Foo -> server::...::Foo
+>     * ...Foo.Create -> server::...::Foo::Create
+>
 
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
----
-This does sacrifice a debug print in the process. Does anyone care?
----
- drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c | 15 +--------------
- drivers/pinctrl/nuvoton/pinctrl-wpcm450.c | 12 +-----------
- 2 files changed, 2 insertions(+), 25 deletions(-)
+It's noticed that the `error.hpp` is kept and still uses the namespace like
+`sdbusplus::xyz::openbmc_project::State::Host::Error::BMCNotReady`, instead=
+ of
+`sdbusplus::error::xyz::openbmc_project::state::host::BMCNotReady`.
 
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-index 843ffcd968774774..8bdd0124e2eb9467 100644
---- a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
-@@ -1588,19 +1588,6 @@ static int npcm7xx_get_group_pins(struct pinctrl_dev *pctldev,
- 	return 0;
- }
- 
--static int npcm7xx_dt_node_to_map(struct pinctrl_dev *pctldev,
--				  struct device_node *np_config,
--				  struct pinctrl_map **map,
--				  u32 *num_maps)
--{
--	struct npcm7xx_pinctrl *npcm = pinctrl_dev_get_drvdata(pctldev);
--
--	dev_dbg(npcm->dev, "dt_node_to_map: %s\n", np_config->name);
--	return pinconf_generic_dt_node_to_map(pctldev, np_config,
--					      map, num_maps,
--					      PIN_MAP_TYPE_INVALID);
--}
--
- static void npcm7xx_dt_free_map(struct pinctrl_dev *pctldev,
- 				struct pinctrl_map *map, u32 num_maps)
- {
-@@ -1612,7 +1599,7 @@ static const struct pinctrl_ops npcm7xx_pinctrl_ops = {
- 	.get_group_name = npcm7xx_get_group_name,
- 	.get_group_pins = npcm7xx_get_group_pins,
- 	.pin_dbg_show = npcm7xx_pin_dbg_show,
--	.dt_node_to_map = npcm7xx_dt_node_to_map,
-+	.dt_node_to_map = pinconf_generic_dt_node_to_map_all,
- 	.dt_free_map = npcm7xx_dt_free_map,
- };
- 
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-index 2d1c1652cfd9d373..6e88ef1ed020fa88 100644
---- a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-@@ -858,16 +858,6 @@ static int wpcm450_get_group_pins(struct pinctrl_dev *pctldev,
- 	return 0;
- }
- 
--static int wpcm450_dt_node_to_map(struct pinctrl_dev *pctldev,
--				  struct device_node *np_config,
--				  struct pinctrl_map **map,
--				  u32 *num_maps)
--{
--	return pinconf_generic_dt_node_to_map(pctldev, np_config,
--					      map, num_maps,
--					      PIN_MAP_TYPE_INVALID);
--}
--
- static void wpcm450_dt_free_map(struct pinctrl_dev *pctldev,
- 				struct pinctrl_map *map, u32 num_maps)
- {
-@@ -878,7 +868,7 @@ static const struct pinctrl_ops wpcm450_pinctrl_ops = {
- 	.get_groups_count = wpcm450_get_groups_count,
- 	.get_group_name = wpcm450_get_group_name,
- 	.get_group_pins = wpcm450_get_group_pins,
--	.dt_node_to_map = wpcm450_dt_node_to_map,
-+	.dt_node_to_map = pinconf_generic_dt_node_to_map_all,
- 	.dt_free_map = wpcm450_dt_free_map,
- };
- 
--- 
-2.34.1
+Should we change the error namespace as well to keep consistency?
 
+--=20
+BRs,
+Lei YU
