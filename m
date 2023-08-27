@@ -1,70 +1,72 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DDD88789FF8
-	for <lists+openbmc@lfdr.de>; Sun, 27 Aug 2023 17:31:40 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id F243378A108
+	for <lists+openbmc@lfdr.de>; Sun, 27 Aug 2023 20:35:52 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=AEPXDMd6;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=bT9Qwe9z;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RYd2f06s8z3bt0
-	for <lists+openbmc@lfdr.de>; Mon, 28 Aug 2023 01:31:38 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RYj7433nYz3bWH
+	for <lists+openbmc@lfdr.de>; Mon, 28 Aug 2023 04:35:44 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=AEPXDMd6;
+	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=bT9Qwe9z;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22f; helo=mail-lj1-x22f.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.17.21; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=lists.ozlabs.org)
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RYd230jVsz2yDM
-	for <openbmc@lists.ozlabs.org>; Mon, 28 Aug 2023 01:31:06 +1000 (AEST)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2b9d07a8d84so35249601fa.3
-        for <openbmc@lists.ozlabs.org>; Sun, 27 Aug 2023 08:31:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20221208; t=1693150262; x=1693755062;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=5hyLyH0mDfFi9IsH9oag3TfSy1UdIPJs5zbsS8pbums=;
-        b=AEPXDMd65P5w9MhuYTMXNw/oNh1MH+G3kvUYmhSNKjYQ6PPs/uak9/dvRsscbxKz1d
-         wq+Pzk2vT3zCAUW01km2yt2FeqVjpXEjxB86/PRFh4yXicGJUuKlD8+QcH3Kkh7k244C
-         nu/y5AmrkbrQU304zW0ELTvnKCtpQsQwhfjL/hJ72n5/OSkRErJPURaO8G0NOwrM13Qi
-         cOtRqomWqZ5cgBHN1Gg693C37w7lg6MOOPXuWm4TZiCLdK4SpKqWI/8oqTgAN67G5sgs
-         UjgFz6U6160lBnlVtwGIppBsQZDV5ft4XHDbBincOGdIvCMVRmRPN8Kz+6HLrXAR8ERy
-         6CRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693150262; x=1693755062;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5hyLyH0mDfFi9IsH9oag3TfSy1UdIPJs5zbsS8pbums=;
-        b=bmtIaYhU7bFOQt+HXDCJ/df2ljkbduKSojmkzq/odGDhBpH8+mJKCUoMPHkAEBZax+
-         klqKyEgb6M6ORrMV2T+tczOuiehv5SvMahJdXyaWYGg/4puLaC/lg3iv0Xq75C0cRibz
-         6I8s9N5z8vrRWj0SwmXm4+/KPxKJjjKtT9icVPHj+oT9+1PPPamvtiPjedF9a5foVN5x
-         qiCYZhGSxhQD1ukXY9H1JsF85OeC/WBSaK/cA0B3g00Z/y6jfNpNM1n826lvWYDgM4Ki
-         zk+tsagZred4LlQwDRByaS/fW4sXpiZbHLbRxNhBWxlY7bX4tOm3hukubX5mw+vxdf3L
-         tu2A==
-X-Gm-Message-State: AOJu0YzrHSdCdFa+JF/io54OFvVQ9dRNT+1L0vvwtef2prTIgdv9B75L
-	RLOTX0wLwoFytapOoKKTf374W93oAnQOTI26aR0=
-X-Google-Smtp-Source: AGHT+IF6eeXSWjOmnwZg2jdWMWE1Ex1wqBTTysga0NQqKbYF8K8PfP948uHtG9/R94LZTmUbc5D2S+UonoeAAfteX0E=
-X-Received: by 2002:a2e:b5d9:0:b0:2bc:fce1:54d3 with SMTP id
- g25-20020a2eb5d9000000b002bcfce154d3mr2932915ljn.41.1693150261834; Sun, 27
- Aug 2023 08:31:01 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RYj6N62L7z2yVR
+	for <openbmc@lists.ozlabs.org>; Mon, 28 Aug 2023 04:35:06 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+ s=s31663417; t=1693161292; x=1693766092; i=j.neuschaefer@gmx.net;
+ bh=q8qOp91ajXQ5N9ULNRPI1Tf3vxfmBnNWKVwv/CAFwbU=;
+ h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=bT9Qwe9znZshjBzKoP6gFMMsuEf/XRxWfeVJQ6+jGDwaW3n3jaheQGDaL+ht5j/xi11o9BI
+ 25bIHEoXISX/LAGKcYt6Oi7ZkzcNvEOMRkQ7g9ckjsqfalMvEtkc+13dlKa3icfVGviZX9vyd
+ /OpRubhl2mTKVIWO8xJbTCIFB+vHQ08aRHg6Z6BKwKaZCwv/di7mYMcY2uZbunOd3qEI6iaZT
+ 2bz2rT2sjPBUCoCAR0dxZG6v3xBUOI1nen645K82l+mswoR9L11e8iJtgaL/v8gkhgxnlAp65
+ HpFO8VDoK0TNUqQWZiHfMMllTH8xuN9QdxMN4X7wX/ztukIH3V/Q==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from probook ([94.218.119.195]) by mail.gmx.net (mrgmx105
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mjj87-1ppDDL1N5X-00lFl5; Sun, 27
+ Aug 2023 20:34:52 +0200
+Date: Sun, 27 Aug 2023 20:34:50 +0200
+From: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: Geert Uytterhoeven <geert+renesas@glider.be>
+Subject: Re: [PATCH] pinctrl: nuvoton: Use
+ pinconf_generic_dt_node_to_map_all()
+Message-ID: <ZOuXSiR9UXtK/SlV@probook>
+References: <81e9ab48f78d63153b23a163b3349b3059d2b7fc.1692871558.git.geert+renesas@glider.be>
 MIME-Version: 1.0
-References: <20230809185722.248787-1-tmaimon77@gmail.com> <20230809185722.248787-2-tmaimon77@gmail.com>
- <20230821170941.GA1915730-robh@kernel.org> <CAP6Zq1i+P8Jh2_G9gJMdtCKcVF6m9vkWAP5rJXBCJ1aNfc2Bvw@mail.gmail.com>
- <53987f0f-dfda-3572-1545-755072328be4@linaro.org>
-In-Reply-To: <53987f0f-dfda-3572-1545-755072328be4@linaro.org>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Sun, 27 Aug 2023 18:30:50 +0300
-Message-ID: <CAP6Zq1gcWHXUL=uuzkYkJ6VWwoS-9G_aEK2HizfAWr6oZZdzWQ@mail.gmail.com>
-Subject: Re: [PATCH RESEND v5 1/2] dt-binding: pinctrl: Add NPCM8XX pinctrl
- and GPIO documentation
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="PKD5bpRMmb7VTSB6"
+Content-Disposition: inline
+In-Reply-To: <81e9ab48f78d63153b23a163b3349b3059d2b7fc.1692871558.git.geert+renesas@glider.be>
+X-Provags-ID: V03:K1:d69BVgB5H7PHo2Zzpeu8DcinnvOHZzwUjVWSbNyYaTjPZFIWKXe
+ OqCRYybb2WMPXES3yefN69c7p6Ig5sFxY0eEdLYYHA5z7y9Io8iRwKhmKtKpRbU66hdOvcb
+ hOrRc+C8jdaI2VkhVUW7MERYrLuo7I9+7mJMdgTWw7rttXWyhFNLlFWnd2KQWiKJKc9GiD4
+ nLxGyMhvBKcaIRmfBygQA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:TVBqo0FURwM=;7uqFbybbjp0ufF2BlEVJyHc/UaE
+ WUcyuC/drBe4Cham4ettxNH0mZ3M5fmZwmvtIcHNz6xxdFa0KAXDfevl6QzviQd4T1P6DbU1D
+ X6fayN64nJ/M/c5CMspM5x3pjjcSiNzU2iyetikyEXc+ORSm+Ns4/BsZGOnt30KCwEJICbtAE
+ MMo11v18njURik1sm2LtdHkOEb0Ep9kuPopPQIF0S0FEDcPuvUI5m+whOJhb0K7htzyBCZjvn
+ SWB/id3EgNv9aqgzzGEv/B30CgMp4s4CYijkQfsb5l2Er9IZbS7kyXhuBB2jl7U0PcVWAEt3y
+ VsPmppNM79RCtXqd6IgrZWjSLFEigKVHSvht6VC4JnhH7huURdSSps6S06khY6PHNhPtMqJyR
+ 843kzSNXd+my9TBhue5OKUwS5D9TdKCIKwEsS+RDg50LhXHRlVPEVjdrd4qhkYnwH/S2EF4Kw
+ dsmRmTP1md9iQzOnNLmRSSgww0MUH9lEilDC8f01jqYa8udSbxnTM6mWtl/8eKD3RTN/mcIeI
+ xDlSqV1RDS0AnEvNgzL8OdUDTCcAgU9sC6Sv/lEX0yAmw6VMozehuXPcjaZBEXbRSh23CnMVB
+ l+Mlp5YfRJgDFkYzvEGJDFNFN1r7covaTfH6UDVpT+b1MkVVSTYyulAypYJObrtvKN7gd21Rp
+ PeF7PnKC4ziXBL/2DKFFJQQ/8KBy+9S3nT02SxZ4ZeNPEmGtchqT1KAWKfEXpzwmrNAWQxMKJ
+ qE8aabZ0ulzMjGlBv9bKVmORMUWhRg/Q35TVQuZO1Ri5pgBrd+pwqAFZphMEZUsDzkaVSXatf
+ aQuEHtj4q+nYvOZr8EYSWMsWNEti8N+kSo4AOvIYVMS8YvkuG+cDzQ2TpQXdtvxtq2Xy9p+eJ
+ A5IPrnGq7eCTltToexuK6YKnBjiHZ9x3/e0V8u/I8aSoo+M/WwP+BXZ0a7g100mx+ZWu3w47q
+ rXCCLR/K771Og6ba6DRS7BDQK8s=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,58 +78,120 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Rob Herring <robh@kernel.org>, conor+dt@kernel.org, benjaminfair@google.com, linux-gpio@vger.kernel.org, avifishman70@gmail.com, venture@google.com, linus.walleij@linaro.org, j.neuschaefer@gmx.net, tali.perry1@gmail.com, devicetree@vger.kernel.org, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
+Cc: Benjamin Fair <benjaminfair@google.com>, linux-gpio@vger.kernel.org, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, Linus Walleij <linus.walleij@linaro.org>, Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, Tali Perry <tali.perry1@gmail.com>, openbmc@lists.ozlabs.org, Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Krzysztof,
 
-Thanks for your comment
+--PKD5bpRMmb7VTSB6
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On Sun, 27 Aug 2023 at 14:13, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
->
-> On 27/08/2023 11:44, Tomer Maimon wrote:
-> >>> +      pinctrl: pinctrl@f0800260 {
-> >>> +        compatible = "nuvoton,npcm845-pinctrl";
-> >>> +        ranges = <0x0 0x0 0xf0010000 0x8000>;
-> >>> +        #address-cells = <1>;
-> >>> +        #size-cells = <1>;
-> >>> +        nuvoton,sysgcr = <&gcr>;
-> >>> +
-> >>> +        gpio0: gpio@f0010000 {
-> >>
-> >> unit-address should be 0.
-> >>
-> >> Otherwise,
-> > The unit-address is correct f0010000
->
-> Then how does it pass W=1 builds? How unit address can be f0010000 but
-> reg is 0? Really...
-Maybe because the ranges are ranges = <0x0 0x0 0xf0010000 0x8000>?
-I didn't get any warning regarding the unit-address
-bash-4.2$ make ARCH=arm64 dt_binding_check W=1
-DT_SCHEMA_FILES=Documentation/devicetree/bindings/pinctrl/nuvoton,npcm845-pinctrl.yaml
-  DTEX    Documentation/devicetree/bindings/pinctrl/nuvoton,npcm845-pinctrl.example.dts
-  DTC_CHK Documentation/devicetree/bindings/pinctrl/nuvoton,npcm845-pinctrl.example.dtb
-bash-4.2$ dt-mk-schema -V
-2023.7
->
-> >>
-> >> Reviewed-by: Rob Herring <robh@kernel.org>
-> >>
-> >>> +          gpio-controller;
-> >>> +          #gpio-cells = <2>;
-> >>> +          reg = <0x0 0xB0>;
-> >
-> > Thanks,
-> >
-> > Tomer
->
-> Best regards,
-> Krzysztof
->
+On Thu, Aug 24, 2023 at 12:07:44PM +0200, Geert Uytterhoeven wrote:
+> Use the pinconf_generic_dt_node_to_map_all() helper instead of
+> open-coding the same operation, to avoid having to provide custom
+> pinctrl_ops.dt_node_to_map() callbacks.
+>=20
+> Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+> ---
+> This does sacrifice a debug print in the process. Does anyone care?
+> ---
+>  drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c | 15 +--------------
+>  drivers/pinctrl/nuvoton/pinctrl-wpcm450.c | 12 +-----------
+>  2 files changed, 2 insertions(+), 25 deletions(-)
+>=20
+> diff --git a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c b/drivers/pinctrl/=
+nuvoton/pinctrl-npcm7xx.c
+> index 843ffcd968774774..8bdd0124e2eb9467 100644
+> --- a/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
+> +++ b/drivers/pinctrl/nuvoton/pinctrl-npcm7xx.c
+> @@ -1588,19 +1588,6 @@ static int npcm7xx_get_group_pins(struct pinctrl_d=
+ev *pctldev,
+>  	return 0;
+>  }
+> =20
+> -static int npcm7xx_dt_node_to_map(struct pinctrl_dev *pctldev,
+> -				  struct device_node *np_config,
+> -				  struct pinctrl_map **map,
+> -				  u32 *num_maps)
+> -{
+> -	struct npcm7xx_pinctrl *npcm =3D pinctrl_dev_get_drvdata(pctldev);
+> -
+> -	dev_dbg(npcm->dev, "dt_node_to_map: %s\n", np_config->name);
+> -	return pinconf_generic_dt_node_to_map(pctldev, np_config,
+> -					      map, num_maps,
+> -					      PIN_MAP_TYPE_INVALID);
+> -}
+> -
+>  static void npcm7xx_dt_free_map(struct pinctrl_dev *pctldev,
+>  				struct pinctrl_map *map, u32 num_maps)
+>  {
+> @@ -1612,7 +1599,7 @@ static const struct pinctrl_ops npcm7xx_pinctrl_ops=
+ =3D {
+>  	.get_group_name =3D npcm7xx_get_group_name,
+>  	.get_group_pins =3D npcm7xx_get_group_pins,
+>  	.pin_dbg_show =3D npcm7xx_pin_dbg_show,
+> -	.dt_node_to_map =3D npcm7xx_dt_node_to_map,
+> +	.dt_node_to_map =3D pinconf_generic_dt_node_to_map_all,
+>  	.dt_free_map =3D npcm7xx_dt_free_map,
+>  };
+> =20
+> diff --git a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c b/drivers/pinctrl/=
+nuvoton/pinctrl-wpcm450.c
+> index 2d1c1652cfd9d373..6e88ef1ed020fa88 100644
+> --- a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
+> +++ b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
+> @@ -858,16 +858,6 @@ static int wpcm450_get_group_pins(struct pinctrl_dev=
+ *pctldev,
+>  	return 0;
+>  }
+> =20
+> -static int wpcm450_dt_node_to_map(struct pinctrl_dev *pctldev,
+> -				  struct device_node *np_config,
+> -				  struct pinctrl_map **map,
+> -				  u32 *num_maps)
+> -{
+> -	return pinconf_generic_dt_node_to_map(pctldev, np_config,
+> -					      map, num_maps,
+> -					      PIN_MAP_TYPE_INVALID);
+> -}
+> -
+>  static void wpcm450_dt_free_map(struct pinctrl_dev *pctldev,
+>  				struct pinctrl_map *map, u32 num_maps)
+>  {
+> @@ -878,7 +868,7 @@ static const struct pinctrl_ops wpcm450_pinctrl_ops =
+=3D {
+>  	.get_groups_count =3D wpcm450_get_groups_count,
+>  	.get_group_name =3D wpcm450_get_group_name,
+>  	.get_group_pins =3D wpcm450_get_group_pins,
+> -	.dt_node_to_map =3D wpcm450_dt_node_to_map,
+> +	.dt_node_to_map =3D pinconf_generic_dt_node_to_map_all,
+>  	.dt_free_map =3D wpcm450_dt_free_map,
 
-Best regards,
+Reviewed-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
 
-Tomer
+
+Thanks!
+
+--PKD5bpRMmb7VTSB6
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmTrlyoACgkQCDBEmo7z
+X9uPSQ//XIKtTViuLh2vSpypCuSDz9Q8K2Uy6R09VxFYXaj/h6XqNMZX36pdn2Q4
+5dOej4HHqSG4mB553yK03wtglRJi3fx3NTmrjgU+TxynKCkX1EEJRe+F1vbnlods
+DMd7sy7QnKz4vqepI02GG25qhBY1WmnpotdeBCq6yY9QyOroco2wnmIUq3VWxFJI
+rL2TMns//8+ZKnPsb/L2xh96xlwtyItCIRMzMZv+SDiy69vYxUolLnLgFP1G/mii
++qgLq6epM1c+4u2rKxxsN2JUsH4rWL5xnmcU/R6xoxsrgdMFDCItRVcMFdRadHf4
+6ikYPGnLO0oyKpaUdc5fmXvUF9PrtEAyEDThsAoI7CBFYrcCQzYygJDuTeZGIGWk
+TPGviT7HrQtf02QM5CaSTwu8F670T7OiL6hbAp1V2U/klH+mRF7u9lEi7aBpGi8r
+HlKYLfq+fztiyjNJd0z2Qgzc4T0rmePB6rKRS3MjHg0Wvt800fJff2gttNU5JR45
+PuzXKBq2nwhUlod0rPnI1U+UbPufkUfl4bNF4lkfIOCKvEjtR41lzi2yTbJeoDPW
+rQ8yn/djNBK4/cqFStHmvghTeQuWmzQYeScaG2HFLvRVz5rQfbcBe/p3ctHooML+
+vVaUnjw2Nfis0Q1UdSp9Q2350Oa3VW+buCbAtbJFtXgdMA7f2/Y=
+=UZto
+-----END PGP SIGNATURE-----
+
+--PKD5bpRMmb7VTSB6--
