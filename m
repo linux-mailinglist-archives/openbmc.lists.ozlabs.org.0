@@ -2,87 +2,67 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9766778B8BB
-	for <lists+openbmc@lfdr.de>; Mon, 28 Aug 2023 21:57:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D0E0C78C624
+	for <lists+openbmc@lfdr.de>; Tue, 29 Aug 2023 15:36:29 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=NgKttGzI;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=WGqZ0C1c;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RZLtS31kvz30Pn
-	for <lists+openbmc@lfdr.de>; Tue, 29 Aug 2023 05:57:04 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RZpNq4wLtz3bhk
+	for <lists+openbmc@lfdr.de>; Tue, 29 Aug 2023 23:36:27 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=NgKttGzI;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=WGqZ0C1c;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=jrey@linux.ibm.com; receiver=lists.ozlabs.org)
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b31; helo=mail-yb1-xb31.google.com; envelope-from=mimi05633@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-yb1-xb31.google.com (mail-yb1-xb31.google.com [IPv6:2607:f8b0:4864:20::b31])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RZLsq6vW9z2yhR
-	for <openbmc@lists.ozlabs.org>; Tue, 29 Aug 2023 05:56:31 +1000 (AEST)
-Received: from pps.filterd (m0353724.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 37SJdgaQ006747
-	for <openbmc@lists.ozlabs.org>; Mon, 28 Aug 2023 19:56:27 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=message-id : date :
- subject : from : to : references : in-reply-to : content-type :
- content-transfer-encoding : mime-version; s=pp1;
- bh=CpWd0bsfbUZYO3fWXcUKsCt0kiP8gH6YO6wjv12GfEk=;
- b=NgKttGzIv0KoQOVFlZo5jqH3kad6ucad3GMfJGCWaEx35W+enb02Vf8Kmy5b40paeurG
- Zxt1ogDbK17XNjJrC5Y6aKctYBEdWjilj4dLc9kxpLeozMo3lWm9/H4LaRe0bXGOai5v
- VZSJ5f11B9K+mBzeLNgzoHt+GJyXwrzSsngtZ3Pqbr3phXi4rRWcgbmJ81JwmZXYTqvs
- TnpNn3V/tjiMN0MeFzLCXe9JzWdVZLD8OVIIPObSJUHVgnblwn2/0kYEhc9w9ae3aFpm
- gdtVPSsJimKfpcB9bFk7YjzogcvKz2hgLu4EMwdgay/RPEKPqKy1bNvfAMyFi/IykTF1 wg== 
-Received: from ppma21.wdc07v.mail.ibm.com (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3sr8q7f73t-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Mon, 28 Aug 2023 19:56:27 +0000
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
-	by ppma21.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 37SHrPOB014392
-	for <openbmc@lists.ozlabs.org>; Mon, 28 Aug 2023 19:56:26 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
-	by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3sqvqmwvnt-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
-	for <openbmc@lists.ozlabs.org>; Mon, 28 Aug 2023 19:56:26 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com [10.39.53.229])
-	by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 37SJuQ2t62587166
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
-	for <openbmc@lists.ozlabs.org>; Mon, 28 Aug 2023 19:56:26 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 32BD35805C
-	for <openbmc@lists.ozlabs.org>; Mon, 28 Aug 2023 19:56:26 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id E3D6258058
-	for <openbmc@lists.ozlabs.org>; Mon, 28 Aug 2023 19:56:25 +0000 (GMT)
-Received: from [9.67.179.227] (unknown [9.67.179.227])
-	by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTPS
-	for <openbmc@lists.ozlabs.org>; Mon, 28 Aug 2023 19:56:25 +0000 (GMT)
-Message-ID: <8c81e300-93f1-018c-4236-caf20e9c8552@linux.ibm.com>
-Date: Mon, 28 Aug 2023 14:56:24 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
- Gecko/20100101 Thunderbird/102.13.0
-Subject: Re: Security Working Group meeting - regular meetings discontinued
-From: Joseph Reynolds <jrey@linux.ibm.com>
-To: openbmc <openbmc@lists.ozlabs.org>
-References: <c002db20-f047-b4aa-1137-a9cc96048706@linux.ibm.com>
- <32926d01-780e-f958-1980-175c2a4d3bd3@linux.ibm.com>
-Content-Language: en-US
-In-Reply-To: <32926d01-780e-f958-1980-175c2a4d3bd3@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: kTbUzmzL9Fhkx4-nChtOxoOSBYwRHmu9
-X-Proofpoint-ORIG-GUID: kTbUzmzL9Fhkx4-nChtOxoOSBYwRHmu9
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-UnRewURL: 0 URL was un-rewritten
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RZpNB09YJz2yD4
+	for <openbmc@lists.ozlabs.org>; Tue, 29 Aug 2023 23:35:52 +1000 (AEST)
+Received: by mail-yb1-xb31.google.com with SMTP id 3f1490d57ef6-d7b91422da8so111752276.2
+        for <openbmc@lists.ozlabs.org>; Tue, 29 Aug 2023 06:35:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20221208; t=1693316147; x=1693920947;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=FySCLtmssZxHCg9EUepM4PCzbY3XuGLa1DBQc9bILa0=;
+        b=WGqZ0C1cSspklaa2AHFXZmyBdkGEjleiRQ5es33rUljIfdsnkrYDOF5PFytgI4F5b5
+         pyky/oDKzYcoFZ91ZhgqoW1RQeo0Ojzbsg5AObKGVbr5znJ61VTHAO1rnANjujb78Jz1
+         aNdTLgvqm684RRkHbskV+Un6UwndbFcEwGFVK5yAemRQQ6WVRITATFkDRWizNi0GClVN
+         Dy/mfybWrfChFAXWEkAOF/6UaejxTZD/MC4sQ/BGGrKV8xwl10QY9f9p7VUyVtqOJDgL
+         9mX0yr7G9iUqTh0MSSbNSaM5YZjYYv6dQh3TXLd4k7kDytUVTprJ6NXscw4xkpLZcm2q
+         cdig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1693316147; x=1693920947;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=FySCLtmssZxHCg9EUepM4PCzbY3XuGLa1DBQc9bILa0=;
+        b=PaRS9HV9pU4RJkt5V+ua5KL8E7X5ZRgLfZmgaPJla+Nf21ADHT6r04E/rGbE/v1NeA
+         DpDztU1uicCl1YU41q9bi5MXk2dKdaiqSbv8yD7soSr/KDZTXN6nyUsfz54qiftN7vW1
+         hCaVyTp721DeR9vAA5h/k1bV/ppvbmD7pHY9somPhHUDqjERymIsFCcS9W4oT5B6p7xg
+         H80Nkj0h/bxqw7kNbyYRvP2EDFSenkFRd2zwKuFFUZBj8ftJEMjmZajT6ruKC80jPakt
+         OADGU2/aZyUfGWP7nZTg8Orq38AKDL3dMus6EHq6MP4MMVu4YqiJSDkWZPWhVXwlm4HY
+         swZg==
+X-Gm-Message-State: AOJu0YwBUO9/5CKNIWlCtOYWNUOcDTIYcGeqh+rZ+X/VjvAXkfKlaseG
+	sAlt4HkQvEl06V9Zu+ZBTdbif4/wvdgjAoPoLoU=
+X-Google-Smtp-Source: AGHT+IGbt4WVop9TYpHxvXOa//aHUSI/dQiJUyCSLyHZEBQaIl5ZT/0y1HZNHApCj6ixUhyJalEHAjARp97SIUXYRzY=
+X-Received: by 2002:a25:aad3:0:b0:d7a:f041:15a4 with SMTP id
+ t77-20020a25aad3000000b00d7af04115a4mr7781442ybi.0.1693316147482; Tue, 29 Aug
+ 2023 06:35:47 -0700 (PDT)
 MIME-Version: 1.0
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
- definitions=2023-08-28_17,2023-08-28_04,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 impostorscore=0 adultscore=0
- mlxlogscore=999 suspectscore=0 bulkscore=0 spamscore=0 malwarescore=0
- priorityscore=1501 lowpriorityscore=0 phishscore=0 mlxscore=0
- clxscore=1015 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2308100000 definitions=main-2308280170
+References: <20230816012540.18464-1-mimi05633@gmail.com> <20230816012540.18464-2-mimi05633@gmail.com>
+ <2023082322124382cfd168@mail.local>
+In-Reply-To: <2023082322124382cfd168@mail.local>
+From: Minying Lin <mimi05633@gmail.com>
+Date: Tue, 29 Aug 2023 21:35:36 +0800
+Message-ID: <CAL3ZnpxEuOQtpaqA7KLBr285JvTDJrcT+ZGYyjy7Bi-sVs5yVA@mail.gmail.com>
+Subject: [PATCH v4 1/1] rtc: nuvoton: Compatible with NCT3015Y-R and NCT3018Y-R
+To: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Content-Type: multipart/alternative; boundary="0000000000007693ea06040fe37f"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,107 +74,246 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: "linux-rtc@vger.kernel.org" <linux-rtc@vger.kernel.org>, "a.zummo@towertech.it" <a.zummo@towertech.it>, "mylin1@nuvoton.com" <mylin1@nuvoton.com>, "benjaminfair@google.com" <benjaminfair@google.com>, "KWLIU@nuvoton.com" <KWLIU@nuvoton.com>, "avifishman70@gmail.com" <avifishman70@gmail.com>, "venture@google.com" <venture@google.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, "JJLIU0@nuvoton.com" <JJLIU0@nuvoton.com>, "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>, "tali.perry1@gmail.com" <tali.perry1@gmail.com>, "KFLIN@nuvoton.com" <KFLIN@nuvoton.com>, "tmaimon77@gmail.com" <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-OpenBMC community,
+--0000000000007693ea06040fe37f
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-I am discontinuing the OpenBMC Security Working Group meetings. About a 
-year ago, these meetings moved to Discord voice and project's open 
-security work moved to the Discord security channel. As intended, the 
-content of the voice meeting has significantly reduced as the discussion 
-increased in the Discord security channel.  Attendance and topics have 
-fallen to zero.  So it is time to discontinue having regular meetings.  
-Thanks to everyone who helped move the project forward during this time!
+Dear Alexandre,
 
-As a direct consequence, the meeting agenda and minutes will no longer 
-be appended:
-https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI
-Instead of this wiki, please use the Discord OpenBMC security channel 
-for this discussion.
+Thanks for your comments.
+The replies are as follow.
 
-To discuss OpenBMC security topics on Discord.
-- first join Discord via https://discord.gg/69Km47zH98
-- then go to the Discord OpenBMC server: 
-https://discord.com/channels/775381525260664832
-- and browse to the #security channel - or any other appropriate channel.
+Thanks.
+Best regard,
+Mia
 
-Also feel free to email questions to the community.
+Alexandre Belloni <alexandre.belloni@bootlin.com> =E6=96=BC 2023=E5=B9=B48=
+=E6=9C=8824=E6=97=A5 =E6=98=9F=E6=9C=9F=E5=9B=9B=E5=AF=AB=E9=81=93=EF=BC=9A
 
-If you need to talk to someone so you can move forward, please use the 
-regular security channel to schedule a call on the Discord OpenBMC 
-Security voice channel.  (NOTE: This is a voice channel, different from 
-the regular security channel.) See Discord > OpenBMC > Voice channels > 
-Security ~ 
-https://discord.com/channels/775381525260664832/1002376534377635860
-^^ Typically used only for discussion about the voice channel itself.
+> Hello,
+>
+> On 16/08/2023 09:25:40+0800, Mia Lin wrote:
+> > -     dev_dbg(&client->dev, "%s:alarm_enable:%x alarm_flag:%x\n",
+> > -             __func__, *alarm_enable, *alarm_flag);
+> > +     if (alarm_enable && alarm_flag)
+>
+> I don't really see the point of conditionally displaying this debug
+> message.
+>
+[Mia] I will remove it.
 
-Note the OpenBMC project's security wiki is here:
-https://github.com/openbmc/openbmc/wiki/Security-working-group
-I don't have any plans to change this wiki, and I wish for the security 
-assurance work it outlines to continue.
+>
+> > +             dev_dbg(&client->dev, "%s: alarm_enable=3D%x,
+> alarm_flag=3D%x.\n",
+> > +                     __func__, *alarm_enable, *alarm_flag);
+> >
+> >       return 0;
+> >  }
+> > @@ -123,17 +124,17 @@ static irqreturn_t nct3018y_irq(int irq, void
+> *dev_id)
+> >       unsigned char alarm_flag;
+> >       unsigned char alarm_enable;
+> >
+> > -     dev_dbg(&client->dev, "%s:irq:%d\n", __func__, irq);
+> > +     dev_dbg(&client->dev, "%s: irq=3D%d.\n", __func__, irq);
+>
+> You have many of those changes where you only add a space, I feel like
+> this is a matter of taste and this makes it more difficult than
+> necessary to read your patch.
+>
+ [Mia] Sorry for the ambiguity. I will remove those unnecessary changes.
 
+>
+> >       err =3D nct3018y_get_alarm_mode(nct3018y->client, &alarm_enable,
+> &alarm_flag);
+> >       if (err)
+> >               return IRQ_NONE;
+> >
+> >       if (alarm_flag) {
+> > -             dev_dbg(&client->dev, "%s:alarm flag:%x\n",
+> > +             dev_dbg(&client->dev, "%s: alarm flag=3D%x.\n",
+> >                       __func__, alarm_flag);
+> >               rtc_update_irq(nct3018y->rtc, 1, RTC_IRQF | RTC_AF);
+> >               nct3018y_set_alarm_mode(nct3018y->client, 0);
+> > -             dev_dbg(&client->dev, "%s:IRQ_HANDLED\n", __func__);
+> > +             dev_dbg(&client->dev, "%s: IRQ_HANDLED.\n", __func__);
+> >               return IRQ_HANDLED;
+> >       }
+> >
+> > @@ -155,7 +156,7 @@ static int nct3018y_rtc_read_time(struct device
+> *dev, struct rtc_time *tm)
+> >               return err;
+> >
+> >       if (!buf[0]) {
+> > -             dev_dbg(&client->dev, " voltage <=3D1.7, date/time is not
+> reliable.\n");
+> > +             dev_dbg(&client->dev, "%s: voltage <=3D1.7, date/time is =
+not
+> reliable.\n", __func__);
+> >               return -EINVAL;
+> >       }
+> >
+> > @@ -178,26 +179,50 @@ static int nct3018y_rtc_set_time(struct device
+> *dev, struct rtc_time *tm)
+> >  {
+> >       struct i2c_client *client =3D to_i2c_client(dev);
+> >       unsigned char buf[4] =3D {0};
+> > -     int err;
+> > +     int err, part_num, flags;
+> > +     int restore_flags =3D 0;
+> > +
+> > +     part_num =3D i2c_smbus_read_byte_data(client, NCT3018Y_REG_PART);
+>
+> Do you really have to check the part number every time you set the time?
+> I don't expect it to change once read in probe.
+>
+[Mia] Due to the 3018Y's topology, we need to set the TWO bit first to
+obtain the write time capability, but the 3015Y does not have this problem.
+Therefore, we use part number & TWO bit to determine whether we need to set
+the TWO bit first before set time.
 
-To *privately* report a security vulnerability to the project (or think 
-you want to ask about reporting such as vulnerability), please do not 
-use public channels.  Instead follow the process here:
-https://github.com/openbmc/docs/blob/master/security/how-to-report-a-security-vulnerability.md
+>
+> > +     if (part_num < 0) {
+> > +             dev_dbg(&client->dev, "%s: Failed to read part info
+> reg.\n", __func__);
+> > +             return part_num;
+> > +     }
+> > +
+>
+> --
+> Alexandre Belloni, co-owner and COO, Bootlin
+> Embedded Linux and Kernel engineering
+> https://bootlin.com
+>
 
-Yours truly,
-Joseph Reynolds
+--0000000000007693ea06040fe37f
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
+<div dir=3D"ltr"><div dir=3D"ltr">Dear Alexandre,<div><br></div><div>Thanks=
+ for your comments.</div><div>The replies are as follow.</div><div><br></di=
+v><div>Thanks.</div><div>Best regard,</div><div>Mia<br><br>Alexandre Bellon=
+i &lt;<a href=3D"mailto:alexandre.belloni@bootlin.com" target=3D"_blank">al=
+exandre.belloni@bootlin.com</a>&gt; =E6=96=BC 2023=E5=B9=B48=E6=9C=8824=E6=
+=97=A5 =E6=98=9F=E6=9C=9F=E5=9B=9B=E5=AF=AB=E9=81=93=EF=BC=9A<br><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
+olid rgb(204,204,204);padding-left:1ex">Hello,<br>
+<br>
+On 16/08/2023 09:25:40+0800, Mia Lin wrote:<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0dev_dbg(&amp;client-&gt;dev, &quot;%s:alarm_enabl=
+e:%x alarm_flag:%x\n&quot;,<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0__func__, *alarm_enab=
+le, *alarm_flag);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0if (alarm_enable &amp;&amp; alarm_flag)<br>
+<br>
+I don&#39;t really see the point of conditionally displaying this debug<br>
+message.<br></blockquote><div>[Mia] I will remove it.=C2=A0</div><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
+olid rgb(204,204,204);padding-left:1ex">
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0dev_dbg(&amp;client-&=
+gt;dev, &quot;%s: alarm_enable=3D%x, alarm_flag=3D%x.\n&quot;,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0__func__, *alarm_enable, *alarm_flag);<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0return 0;<br>
+&gt;=C2=A0 }<br>
+&gt; @@ -123,17 +124,17 @@ static irqreturn_t nct3018y_irq(int irq, void *d=
+ev_id)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0unsigned char alarm_flag;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0unsigned char alarm_enable;<br>
+&gt;=C2=A0 <br>
+&gt; -=C2=A0 =C2=A0 =C2=A0dev_dbg(&amp;client-&gt;dev, &quot;%s:irq:%d\n&qu=
+ot;, __func__, irq);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0dev_dbg(&amp;client-&gt;dev, &quot;%s: irq=3D%d.\=
+n&quot;, __func__, irq);<br>
+<br>
+You have many of those changes where you only add a space, I feel like<br>
+this is a matter of taste and this makes it more difficult than<br>
+necessary to read your patch.<br></blockquote><div>=C2=A0[Mia] Sorry for th=
+e ambiguity. I will remove those unnecessary changes.</div><blockquote clas=
+s=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid r=
+gb(204,204,204);padding-left:1ex">
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0err =3D nct3018y_get_alarm_mode(nct3018y-&gt=
+;client, &amp;alarm_enable, &amp;alarm_flag);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0if (err)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return IRQ_NONE;=
+<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0if (alarm_flag) {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0dev_dbg(&amp;client-&=
+gt;dev, &quot;%s:alarm flag:%x\n&quot;,<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0dev_dbg(&amp;client-&=
+gt;dev, &quot;%s: alarm flag=3D%x.\n&quot;,<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0__func__, alarm_flag);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0rtc_update_irq(n=
+ct3018y-&gt;rtc, 1, RTC_IRQF | RTC_AF);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0nct3018y_set_ala=
+rm_mode(nct3018y-&gt;client, 0);<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0dev_dbg(&amp;client-&=
+gt;dev, &quot;%s:IRQ_HANDLED\n&quot;, __func__);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0dev_dbg(&amp;client-&=
+gt;dev, &quot;%s: IRQ_HANDLED.\n&quot;, __func__);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return IRQ_HANDL=
+ED;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt;=C2=A0 <br>
+&gt; @@ -155,7 +156,7 @@ static int nct3018y_rtc_read_time(struct device *d=
+ev, struct rtc_time *tm)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return err;<br>
+&gt;=C2=A0 <br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0if (!buf[0]) {<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0dev_dbg(&amp;client-&=
+gt;dev, &quot; voltage &lt;=3D1.7, date/time is not reliable.\n&quot;);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0dev_dbg(&amp;client-&=
+gt;dev, &quot;%s: voltage &lt;=3D1.7, date/time is not reliable.\n&quot;, _=
+_func__);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return -EINVAL;<=
+br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+&gt;=C2=A0 <br>
+&gt; @@ -178,26 +179,50 @@ static int nct3018y_rtc_set_time(struct device *=
+dev, struct rtc_time *tm)<br>
+&gt;=C2=A0 {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0struct i2c_client *client =3D to_i2c_client(=
+dev);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0unsigned char buf[4] =3D {0};<br>
+&gt; -=C2=A0 =C2=A0 =C2=A0int err;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0int err, part_num, flags;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0int restore_flags =3D 0;<br>
+&gt; +<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0part_num =3D i2c_smbus_read_byte_data(client, NCT=
+3018Y_REG_PART);<br>
+<br>
+Do you really have to check the part number every time you set the time?<br=
+>
+I don&#39;t expect it to change once read in probe.<br></blockquote>[Mia] D=
+ue to the 3018Y&#39;s topology, we need to set the TWO bit first to obtain =
+the write time capability, but the 3015Y does not have this problem.<br><di=
+v>Therefore, we use part number &amp; TWO bit to determine whether we need =
+to set the TWO bit first before set time.=C2=A0</div><blockquote class=3D"g=
+mail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204=
+,204,204);padding-left:1ex">
+<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0if (part_num &lt; 0) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0dev_dbg(&amp;client-&=
+gt;dev, &quot;%s: Failed to read part info reg.\n&quot;, __func__);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return part_num;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0}<br>
+&gt; +<br>
+<br>
+-- <br>
+Alexandre Belloni, co-owner and COO, Bootlin<br>
+Embedded Linux and Kernel engineering<br>
+<a href=3D"https://bootlin.com" target=3D"_blank">https://bootlin.com</a><b=
+r>
+</blockquote></div>
+</div></div>
 
-On 8/17/22 3:26 PM, Joseph Reynolds wrote:
-> OpenBMC community members,
->
-> Please update your calendar.
->
-> The OpenBMC Security Working Group meeting call is moving to the 
-> Discord OpenBMC Security voice channel.
-> - Effective for the next scheduled meeting on August 31, 2022 and all 
-> future meetings (every other week).
-> - New access is via Discord > OpenBMC > Voice channels > Security -- 
-> https://discord.com/channels/775381525260664832/1002376534377635860
-> - Permanent project link: 
-> https://github.com/openbmc/openbmc/wiki/Security-working-group
-> - Attendees agreed to this change today: see the 2022-08-17 notes in 
-> https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI
->
-> Threre are no other changes.  We'll continue to use Google Docs for 
-> the meeting modules.
->
-> I plan to start the old Webex meeting to help any stragglers get to 
-> the new venue.
->
-> -Joseph
->
->
-> -------- Forwarded Message --------
-> Subject:     Re: Security Working Group meeting - Wednesday August 17
-> Date:     Wed, 17 Aug 2022 15:11:46 -0500
-> From:     Joseph Reynolds <jrey@linux.ibm.com>
-> To:     openbmc <openbmc@lists.ozlabs.org>
->
->
->
-> On 8/16/22 10:07 PM, Joseph Reynolds wrote:
->> This is a reminder of the OpenBMC Security Working Group meeting 
->> scheduled for this Wednesday August 17 at 10:00am PDT.
->>
->> We'll discuss the following items on the agenda 
->> <https://docs.google.com/document/d/1b7x9BaxsfcukQDqbvZsU2ehMq4xoJRQvLxxsDUWmAOI>, 
->> and anything else that comes up:
->
-> ...snip...
->
-> 0 Move the next meeting access to Discord?  Discord > OpenBMC > Voice 
-> channels >  Security ~ 
-> https://discord.com/channels/775381525260664832/1002376534377635860 
-> <https://discord.com/channels/775381525260664832/1002376534377635860>
->
-> Yes, agreed.
->
-> The next meeting planned for 2022-08-31 will be on discord.
->
-> ...snip...
-
+--0000000000007693ea06040fe37f--
