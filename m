@@ -2,47 +2,84 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6936D78D4B4
-	for <lists+openbmc@lfdr.de>; Wed, 30 Aug 2023 11:42:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D4BB78DEAF
+	for <lists+openbmc@lfdr.de>; Wed, 30 Aug 2023 21:53:25 +0200 (CEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=JSqGrPY3;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=RmdgiiXj;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RbK8r20hpz3bwp
-	for <lists+openbmc@lfdr.de>; Wed, 30 Aug 2023 19:42:52 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RbZjH1rLzz3c1L
+	for <lists+openbmc@lfdr.de>; Thu, 31 Aug 2023 05:53:23 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=srs0=7pne=ep=xs4all.nl=hverkuil-cisco@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RbK8V0VLtz2yVn
-	for <openbmc@lists.ozlabs.org>; Wed, 30 Aug 2023 19:42:33 +1000 (AEST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=JSqGrPY3;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=RmdgiiXj;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.21; helo=wout5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id 00C7662843;
-	Wed, 30 Aug 2023 09:42:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3490FC433C8;
-	Wed, 30 Aug 2023 09:42:26 +0000 (UTC)
-Message-ID: <0c91f68d-d172-bd14-9115-b6977ad2d01f@xs4all.nl>
-Date: Wed, 30 Aug 2023 11:42:24 +0200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RbZhf2c2dz2xdn
+	for <openbmc@lists.ozlabs.org>; Thu, 31 Aug 2023 05:52:49 +1000 (AEST)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.west.internal (Postfix) with ESMTP id AAABC32001C6
+	for <openbmc@lists.ozlabs.org>; Wed, 30 Aug 2023 15:52:47 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute1.internal (MEProxy); Wed, 30 Aug 2023 15:52:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:sender:subject:subject:to:to;
+	 s=fm3; t=1693425167; x=1693511567; bh=4COJzTLAOG5LPvc2qTo1Y/EQj
+	ADrzima7bNVmm0/seI=; b=JSqGrPY3hAXqZGiYyEZrejQDtHaGYRaO/shJlHugH
+	XxSKcJVX30uB8qI5T16nW8SkpaCrpCWRYa0IU/qYVnWdVIwvTdcJ3/iCqVKT7Tf1
+	g/GG0WJVx5DXhvl835bo82HIeir6hnWtOxXrKfmaiqCn4AbTgnaNKlvVVkYR/d9w
+	NCNdxnHxiWLhy2DXzpZJ6YUwVLDy1HgO8X1182vaKjQmWd/vCX8qwWJt3XyBqIru
+	VKgxBAQFNUQ6Rbx25SKYCYecYaYU6tR+w9V5aZ2pQtueOf2jlRFULMS+axb28GZw
+	WMU/zhaDYZjenDgPCJVU0WRaGK59pLo0yrFeBj7rJiLDQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:sender:subject:subject:to:to:x-me-proxy
+	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1693425167; x=1693511567; bh=4COJzTLAOG5LPvc2qTo1Y/EQjADrzima7bN
+	Vmm0/seI=; b=RmdgiiXjvPuwWcgk9DOVPlpTcZArt5qixdqyQtYv/OKr2yAlOEe
+	u0k0D9odKIhCwr0ifaQpQyIJeKiT0rv8O18tIyCJ6jD6pu10MwQIpVaK3eirbDLX
+	F9s7KoXPuAH1Ic9Zr5iAMDrIPl9PUmOsfa4LOvGgVjC4jkEfPJB2bDjYvSH9k39h
+	SM1IrVubY98wTM5d0U0mEbTYX1cjzHw3TVuc5rHYkBLODU4pGo66+cCEXIuLOmA4
+	fieVm81vL9Y5f/LX5QvK4+NqywLpfTeqEg8WFOgZRzCMYYW1TAvxX/CXd+Mko0zc
+	j5sFK2BjDCAgyeUzUpI/+HhZNot0yTvc1ig==
+X-ME-Sender: <xms:Dp7vZAIX8TV7j-ZV68BvX3B78aMkWSJiUSC1RceOOSoy7xkP0cvBGA>
+    <xme:Dp7vZAK0IMzbk2050M_nVH9mQC-3utXiWL8MTA6L-9wtGKQj9Hh6LVgFr1dfFZ39v
+    HTlQvD1WFTWe6EQf14>
+X-ME-Received: <xmr:Dp7vZAvJ3vB1UAu9VcF1XTvVrOeLx9alrXKjAq48fkv0CvzfTvQI2xZRLETyFPm3zUrE5DxP4ywMUK49ow6m4Hob90kKrJZY26w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudefkedgudeghecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enogfuuhhsphgvtghtffhomhgrihhnucdlgeelmdenfghrlhcuvffnffculddvfedmnecu
+    jfgurhepfffhvffukfggtggusehgtderredttddvnecuhfhrohhmpefrrghtrhhitghkuc
+    ghihhllhhirghmshcuoehprghtrhhitghksehsthiftgigrdighiiiqeenucggtffrrght
+    thgvrhhnpeegteeiveegteevveeiveeifeefudeileekgfelfeekheefheeutddvgfetgf
+    elueenucffohhmrghinhepghhoohhglhgvrdgtohhmnecuvehluhhsthgvrhfuihiivgep
+    tdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:Dp7vZNbngtwASBBKKqhHQzOqALbJE8shWczKsy58QOmC-1X633l0Bw>
+    <xmx:Dp7vZHa-kgneV1kcyIKFAIy2u4Gvw_VDHxzNPVJvsypsI1enyG06fA>
+    <xmx:Dp7vZJC4R1TAboNz36M7CzCZ_7lNozJntP67OkPvLVl5t1lE1zBppQ>
+    <xmx:D57vZB2lElIVKUKSqjuQpfja1bbORxHOte_jRmig92t3fY9zle8qww>
+Feedback-ID: i68a1478a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <openbmc@lists.ozlabs.org>; Wed, 30 Aug 2023 15:52:46 -0400 (EDT)
+Date: Wed, 30 Aug 2023 14:52:44 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: OpenBMC List <openbmc@lists.ozlabs.org>
+Subject: OpenBMC Developers Conference - Oct 13th, 2023
+Message-ID: <ZO-eDB4m3fHMMt_b@heinlein.vulture-banana.ts.net>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v14 7/7] media: nuvoton: Add driver for NPCM video capture
- and encode engine
-Content-Language: en-US, nl
-To: Marvin Lin <milkfafa@gmail.com>, mchehab@kernel.org,
- avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
- venture@google.com, yuenn@google.com, benjaminfair@google.com,
- robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- andrzej.p@collabora.com
-References: <20230828091859.3889817-1-milkfafa@gmail.com>
- <20230828091859.3889817-8-milkfafa@gmail.com>
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-In-Reply-To: <20230828091859.3889817-8-milkfafa@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="tTiP3gE8d2A8VaBW"
+Content-Disposition: inline
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,344 +91,65 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: kwliu@nuvoton.com, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, kflin@nuvoton.com, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Marvin,
 
-A few minor change requests, and a question w.r.t. the V4L2_CID_NPCM_RECT_COUNT
-control:
+--tTiP3gE8d2A8VaBW
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 28/08/2023 11:18, Marvin Lin wrote:
-> Add driver for Video Capture/Differentiation Engine (VCD) and Encoding
-> Compression Engine (ECE) present on Nuvoton NPCM SoCs. As described in
-> the datasheet NPCM750D_DS_Rev_1.0, the VCD can capture a frame from
-> digital video input and compare two frames in memory, and then the ECE
-> can compress the frame data into HEXTILE format. This driver implements
-> V4L2 interfaces and provides user controls to support KVM feature, also
-> tested with VNC Viewer ver.6.22.826 and openbmc/obmc-ikvm.
-> 
-> Signed-off-by: Marvin Lin <milkfafa@gmail.com>
-> ---
->  MAINTAINERS                                 |   12 +
->  drivers/media/platform/Kconfig              |    1 +
->  drivers/media/platform/Makefile             |    1 +
->  drivers/media/platform/nuvoton/Kconfig      |   15 +
->  drivers/media/platform/nuvoton/Makefile     |    2 +
->  drivers/media/platform/nuvoton/npcm-regs.h  |  152 ++
->  drivers/media/platform/nuvoton/npcm-video.c | 1840 +++++++++++++++++++
->  7 files changed, 2023 insertions(+)
->  create mode 100644 drivers/media/platform/nuvoton/Kconfig
->  create mode 100644 drivers/media/platform/nuvoton/Makefile
->  create mode 100644 drivers/media/platform/nuvoton/npcm-regs.h
->  create mode 100644 drivers/media/platform/nuvoton/npcm-video.c
-> 
+Hello Developers,
 
-<snip>
+I'm pleased to announce that we will be holding an OpenBMC Developers
+conference this year in conjunction with OSFC and hosted by HPE.  The
+event will take place on Oct 13th, 2023 from 9am to 4pm in San Jose, CA.
 
-> +static int npcm_video_querycap(struct file *file, void *fh,
-> +			       struct v4l2_capability *cap)
-> +{
-> +	strscpy(cap->driver, DEVICE_NAME, sizeof(cap->driver));
-> +	strscpy(cap->card, "NPCM Video Engine", sizeof(cap->card));
-> +	snprintf(cap->bus_info, sizeof(cap->bus_info), "platform:%s", DEVICE_NAME);
+This event will be free and attendance at OSFC is not required (but
+encouraged since there are a number of OpenBMC-oriented talks at OSFC).
+As the name implies, this event is intended to be attended by active
+developers foremost and if the event facility fills up, we will give
+priority to active developers.
 
-You can drop this last line, it is already filled in by the V4L2 core for
-platform devices.
+The format of the event is yet to be determined, but I'm expected we
+will have many face-to-face discussions on design and development topics
+which have been difficult to get consensus and forward-momentum on
+through our normal discussion forums (mailing list, Discord, design
+proposals, etc.).
 
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_enum_format(struct file *file, void *fh,
-> +				  struct v4l2_fmtdesc *f)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +	const struct npcm_fmt *fmt;
-> +
-> +	if (f->index >= NUM_FORMATS)
-> +		return -EINVAL;
-> +
-> +	fmt = &npcm_fmt_list[f->index];
-> +	if (fmt->fourcc == V4L2_PIX_FMT_HEXTILE && !video->ece.enable)
-> +		return -EINVAL;
-> +
-> +	f->pixelformat = fmt->fourcc;
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_try_format(struct file *file, void *fh,
-> +				 struct v4l2_format *f)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +	const struct npcm_fmt *fmt;
-> +
-> +	fmt = npcm_video_find_format(f);
-> +
-> +	/* If format not found or HEXTILE not supported, use RGB565 as default */
-> +	if (!fmt || (fmt->fourcc == V4L2_PIX_FMT_HEXTILE && !video->ece.enable))
-> +		f->fmt.pix.pixelformat = npcm_fmt_list[0].fourcc;
-> +
-> +	f->fmt.pix.field = V4L2_FIELD_NONE;
-> +	f->fmt.pix.colorspace = V4L2_COLORSPACE_SRGB;
-> +	f->fmt.pix.quantization = V4L2_QUANTIZATION_FULL_RANGE;
-> +	f->fmt.pix.width = video->pix_fmt.width;
-> +	f->fmt.pix.height = video->pix_fmt.height;
-> +	f->fmt.pix.bytesperline = video->bytesperline;
-> +	f->fmt.pix.sizeimage = video->pix_fmt.sizeimage;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_get_format(struct file *file, void *fh,
-> +				 struct v4l2_format *f)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +
-> +	f->fmt.pix = video->pix_fmt;
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_set_format(struct file *file, void *fh,
-> +				 struct v4l2_format *f)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +	int ret;
-> +
-> +	ret = npcm_video_try_format(file, fh, f);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (vb2_is_busy(&video->queue)) {
-> +		dev_err(video->dev, "%s device busy\n", __func__);
-> +		return -EBUSY;
-> +	}
-> +
-> +	video->pix_fmt.pixelformat = f->fmt.pix.pixelformat;
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_enum_input(struct file *file, void *fh,
-> +				 struct v4l2_input *inp)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +
-> +	if (inp->index)
-> +		return -EINVAL;
-> +
-> +	strscpy(inp->name, "Host VGA capture", sizeof(inp->name));
-> +	inp->type = V4L2_INPUT_TYPE_CAMERA;
-> +	inp->capabilities = V4L2_IN_CAP_DV_TIMINGS;
-> +	inp->status = video->v4l2_input_status;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_get_input(struct file *file, void *fh, unsigned int *i)
-> +{
-> +	*i = 0;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_set_input(struct file *file, void *fh, unsigned int i)
-> +{
-> +	if (i)
-> +		return -EINVAL;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_set_dv_timings(struct file *file, void *fh,
-> +				     struct v4l2_dv_timings *timings)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +	int rc;
-> +
-> +	if (timings->bt.width == video->active_timings.width &&
-> +	    timings->bt.height == video->active_timings.height)
-> +		return 0;
-> +
-> +	if (vb2_is_busy(&video->queue)) {
-> +		dev_err(video->dev, "%s device busy\n", __func__);
-> +		return -EBUSY;
-> +	}
-> +
-> +	rc = npcm_video_set_resolution(video, &timings->bt);
-> +	if (rc)
-> +		return rc;
-> +
-> +	timings->type = V4L2_DV_BT_656_1120;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_get_dv_timings(struct file *file, void *fh,
-> +				     struct v4l2_dv_timings *timings)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +
-> +	timings->type = V4L2_DV_BT_656_1120;
-> +	timings->bt = video->active_timings;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_query_dv_timings(struct file *file, void *fh,
-> +				       struct v4l2_dv_timings *timings)
-> +{
-> +	struct npcm_video *video = video_drvdata(file);
-> +
-> +	npcm_video_detect_resolution(video);
-> +	timings->type = V4L2_DV_BT_656_1120;
-> +	timings->bt = video->detected_timings;
-> +
-> +	return video->v4l2_input_status ? -ENOLINK : 0;
-> +}
-> +
-> +static int npcm_video_enum_dv_timings(struct file *file, void *fh,
-> +				      struct v4l2_enum_dv_timings *timings)
-> +{
-> +	return v4l2_enum_dv_timings_cap(timings, &npcm_video_timings_cap,
-> +					NULL, NULL);
-> +}
-> +
-> +static int npcm_video_dv_timings_cap(struct file *file, void *fh,
-> +				     struct v4l2_dv_timings_cap *cap)
-> +{
-> +	*cap = npcm_video_timings_cap;
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_sub_event(struct v4l2_fh *fh,
-> +				const struct v4l2_event_subscription *sub)
-> +{
-> +	switch (sub->type) {
-> +	case V4L2_EVENT_SOURCE_CHANGE:
-> +		return v4l2_src_change_event_subscribe(fh, sub);
-> +	}
-> +
-> +	return v4l2_ctrl_subscribe_event(fh, sub);
-> +}
-> +
-> +static const struct v4l2_ioctl_ops npcm_video_ioctls = {
-> +	.vidioc_querycap = npcm_video_querycap,
-> +
-> +	.vidioc_enum_fmt_vid_cap = npcm_video_enum_format,
-> +	.vidioc_g_fmt_vid_cap = npcm_video_get_format,
-> +	.vidioc_s_fmt_vid_cap = npcm_video_set_format,
-> +	.vidioc_try_fmt_vid_cap = npcm_video_try_format,
-> +
-> +	.vidioc_reqbufs = vb2_ioctl_reqbufs,
-> +	.vidioc_querybuf = vb2_ioctl_querybuf,
-> +	.vidioc_qbuf = vb2_ioctl_qbuf,
-> +	.vidioc_expbuf = vb2_ioctl_expbuf,
-> +	.vidioc_dqbuf = vb2_ioctl_dqbuf,
-> +	.vidioc_create_bufs = vb2_ioctl_create_bufs,
-> +	.vidioc_prepare_buf = vb2_ioctl_prepare_buf,
-> +	.vidioc_streamon = vb2_ioctl_streamon,
-> +	.vidioc_streamoff = vb2_ioctl_streamoff,
-> +
-> +	.vidioc_enum_input = npcm_video_enum_input,
-> +	.vidioc_g_input = npcm_video_get_input,
-> +	.vidioc_s_input = npcm_video_set_input,
-> +
-> +	.vidioc_s_dv_timings = npcm_video_set_dv_timings,
-> +	.vidioc_g_dv_timings = npcm_video_get_dv_timings,
-> +	.vidioc_query_dv_timings = npcm_video_query_dv_timings,
-> +	.vidioc_enum_dv_timings = npcm_video_enum_dv_timings,
-> +	.vidioc_dv_timings_cap = npcm_video_dv_timings_cap,
-> +
-> +	.vidioc_subscribe_event = npcm_video_sub_event,
-> +	.vidioc_unsubscribe_event = v4l2_event_unsubscribe,
-> +};
-> +
-> +static int npcm_video_set_ctrl(struct v4l2_ctrl *ctrl)
-> +{
-> +	struct npcm_video *video = container_of(ctrl->handler, struct npcm_video,
-> +						ctrl_handler);
-> +
-> +	switch (ctrl->id) {
-> +	case V4L2_CID_NPCM_CAPTURE_MODE:
-> +		if (ctrl->val == V4L2_NPCM_CAPTURE_MODE_COMPLETE)
-> +			video->ctrl_cmd = VCD_CMD_OPERATION_CAPTURE;
-> +		else if (ctrl->val == V4L2_NPCM_CAPTURE_MODE_DIFF)
-> +			video->ctrl_cmd = VCD_CMD_OPERATION_COMPARE;
-> +		break;
-> +	default:
-> +		return -EINVAL;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_video_get_volatile_ctrl(struct v4l2_ctrl *ctrl)
-> +{
-> +	struct npcm_video *video = container_of(ctrl->handler, struct npcm_video,
-> +						ctrl_handler);
-> +
-> +	switch (ctrl->id) {
-> +	case V4L2_CID_NPCM_RECT_COUNT:
-> +		ctrl->val = video->rect[video->vb_index];
-> +		break;
-> +	default:
-> +		return -EINVAL;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct v4l2_ctrl_ops npcm_video_ctrl_ops = {
-> +	.s_ctrl = npcm_video_set_ctrl,
-> +	.g_volatile_ctrl = npcm_video_get_volatile_ctrl,
-> +};
-> +
-> +static const char * const npcm_ctrl_capture_mode_menu[] = {
-> +	"COMPLETE mode",
-> +	"DIFF mode",
 
-Hmm, I would drop the 'mode' bit, since it is already obvious that
-these are the modes.
+To reserve your spot at the event, please fill out the form at:
+    https://docs.google.com/forms/d/e/1FAIpQLScqIU-JGIZIrrgbDpkjLjaXi4QgV_s=
+eQ9LL9Ps1DNpxyUMgLQ/viewform?usp=3Dsf_link
 
-> +	NULL,
-> +};
-> +
-> +static const struct v4l2_ctrl_config npcm_ctrl_capture_mode = {
-> +	.ops = &npcm_video_ctrl_ops,
-> +	.id = V4L2_CID_NPCM_CAPTURE_MODE,
-> +	.name = "NPCM Video Capture Mode",
-> +	.type = V4L2_CTRL_TYPE_MENU,
-> +	.min = 0,
-> +	.max = V4L2_NPCM_CAPTURE_MODE_DIFF,
-> +	.def = 0,
-> +	.qmenu = npcm_ctrl_capture_mode_menu,
-> +};
-> +
-> +static const struct v4l2_ctrl_config npcm_ctrl_rect_count = {
-> +	.ops = &npcm_video_ctrl_ops,
-> +	.id = V4L2_CID_NPCM_RECT_COUNT,
-> +	.name = "NPCM Compressed Hextile Rectangle Count",
-> +	.type = V4L2_CTRL_TYPE_INTEGER,
-> +	.flags = V4L2_CTRL_FLAG_VOLATILE,
-> +	.min = 0,
-> +	.max = (MAX_WIDTH / RECT_W) * (MAX_HEIGHT / RECT_H),
-> +	.step = 1,
-> +	.def = 0,
-> +};
+Responses are required by Sept 30th, 2023.
 
-Just to confirm: you decided against using an integer array control?
+[[Some of the information is personal but required by site security.  The
+  data will only be shared with me and necessary HPE employees.  Feel
+  free to send me an email or Discord message if you have concerns.]]
 
-There is a real danger that if userspace isn't reading this control
-quickly enough (i.e. before the next frame arrives at the driver), then
-the control's value is that of that next frame instead of the current
-frame.
+--=20
+Patrick Williams
 
-It doesn't feel robust to me.
+--tTiP3gE8d2A8VaBW
+Content-Type: application/pgp-signature; name="signature.asc"
 
-<snip>
+-----BEGIN PGP SIGNATURE-----
 
-Regards,
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmTvngoACgkQqwNHzC0A
+wRnPMxAAly0MRt5UA+nq0KIB+sXDefreeVHhtOEDF7U91jWFuo/w2fUGywNXRZku
+pT9ewekmoxmqo6xSya2V/2FIQF+UVVoNm0qrANFHGupQvTXziKAjs2Iqi7WLb/bM
+eBABbfPxJFvuF/tOUjVAB/JEEX3VCNVqEPLaGNXi2j/BK1fvChuYZGVxEjWRRvqi
+hJr12DngjUZ96HYCRzPyYuc+IGQeDXmQ731RBvUsWYORrMJLOvxOYLefve08hOgy
+qFOkWNPPgSI0kfExWNGl4zJIKlQS6dBKTJSMtR3q9p3FLcMG4YBKjIxlFzTec2+B
+zNUzS/bc7+Iau7J2sQPe/ZLkzOvY0NtNHMnAVVfHsnj4rMzyaff9aFcFqG/vksou
+sRbZnt4+pEJHHRNHgANC5sJWWznF5w6n5Kwltvlz3ew70zldTHiFqknz8g+zvME0
+NXsr2kORDVkJKDm0pDS5TkMPnBZTQl9mLg/Rpm1lzuhMEw4KegQgMkmuaz0d9ILo
+gpnOLlr1rTP3z/eCYMSxTbGTRSb/+oJvojwKH+EBLlkTQoTxE25/N4BljOd+AiPG
+Q/XKy6K+bIKiCTJjWd0Qu9n3zY0Jse8b6/g8qljJHgz0GxmBYIzD2IX/wnD2hN2t
+e6q7kVkanDIFdYn1e9fIp0dVLp9cN6KPOVGfHQkSSJljpAPRhvo=
+=ddli
+-----END PGP SIGNATURE-----
 
-	Hans
+--tTiP3gE8d2A8VaBW--
