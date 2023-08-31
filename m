@@ -2,45 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8E78478EF41
-	for <lists+openbmc@lfdr.de>; Thu, 31 Aug 2023 16:06:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 47A3C78EF90
+	for <lists+openbmc@lfdr.de>; Thu, 31 Aug 2023 16:26:59 +0200 (CEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=QSL+K/1H;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Rc2ys3Hnvz3c8W
-	for <lists+openbmc@lfdr.de>; Fri,  1 Sep 2023 00:06:45 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Rc3Q90bsxz3by8
+	for <lists+openbmc@lfdr.de>; Fri,  1 Sep 2023 00:26:57 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=srs0=acj6=eq=xs4all.nl=hverkuil-cisco@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=QSL+K/1H;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=134.134.136.126; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rc2yV5dzfz30RV
-	for <openbmc@lists.ozlabs.org>; Fri,  1 Sep 2023 00:06:26 +1000 (AEST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
-	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id B2A8F6233B;
-	Thu, 31 Aug 2023 14:06:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00BEBC433C7;
-	Thu, 31 Aug 2023 14:06:19 +0000 (UTC)
-Message-ID: <ecc13f10-82b9-f99b-8ebf-ff505d65fe2e@xs4all.nl>
-Date: Thu, 31 Aug 2023 16:06:18 +0200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rc3PP393hz2ykV;
+	Fri,  1 Sep 2023 00:26:15 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1693491978; x=1725027978;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=7paPh2mF9Wy7OEwJY1d2GalGy2y7dQanY+hUyqVQRaU=;
+  b=QSL+K/1HCqcFFmk7aRz8sDfVdwAb5Fd6F6TLBInXaPkQaomghdPPdDON
+   sk5mBtwsJsXxA4Y1u3Au1k1Vfk0IX8J0JrJKagtSWMFwnzAH0XuY3HZmk
+   R3C/snX0DlmMwyjnQ/LRWn6uMqJp/7X8XLtJxmMf6WZEtxgWxDb93nMx0
+   g/EHk9fol1ZARVcecYCFy+5Wh+uP8GLqTfv3K5Lv+pYMOWuTvSlwFxnMl
+   YWEgcb6GgJ+IYJ3ETgDzmE49qj2EVuWIj5ZURyPsIcfcVn00zXQHYNP4O
+   NZ4sOS/CjiEh6zBGv+lU4hulxLjXc5trfztMwycsDbP3njxkxkyHzemRG
+   A==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10819"; a="360978695"
+X-IronPort-AV: E=Sophos;i="6.02,217,1688454000"; 
+   d="scan'208";a="360978695"
+Received: from orsmga003.jf.intel.com ([10.7.209.27])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2023 07:18:39 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10819"; a="689370098"
+X-IronPort-AV: E=Sophos;i="6.02,217,1688454000"; 
+   d="scan'208";a="689370098"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by orsmga003.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Aug 2023 07:18:31 -0700
+Received: from andy by smile.fi.intel.com with local (Exim 4.96)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1qbiV9-005PI8-0Q;
+	Thu, 31 Aug 2023 17:18:27 +0300
+Date: Thu, 31 Aug 2023 17:18:26 +0300
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Ryan Chen <ryan_chen@aspeedtech.com>
+Subject: Re: [PATCH v12 2/2] i2c: aspeed: support ast2600 i2c new register
+ mode driver
+Message-ID: <ZPChMrsKrOQppY1F@smile.fi.intel.com>
+References: <20230714074522.23827-1-ryan_chen@aspeedtech.com>
+ <20230714074522.23827-3-ryan_chen@aspeedtech.com>
+ <ZLENe5B3gi/oNTQp@smile.fi.intel.com>
+ <SEZPR06MB5269A43F801EF04F39461174F2E5A@SEZPR06MB5269.apcprd06.prod.outlook.com>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.12.0
-Subject: Re: [PATCH v14 7/7] media: nuvoton: Add driver for NPCM video capture
- and encode engine
-Content-Language: en-US, nl
-To: Kun-Fa Lin <milkfafa@gmail.com>
-References: <20230828091859.3889817-1-milkfafa@gmail.com>
- <20230828091859.3889817-8-milkfafa@gmail.com>
- <0c91f68d-d172-bd14-9115-b6977ad2d01f@xs4all.nl>
- <CADnNmFqVbRWs5Uf_tJdrM0AopF_CmSHYwBK8-+1go_K6Hefkcw@mail.gmail.com>
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-In-Reply-To: <CADnNmFqVbRWs5Uf_tJdrM0AopF_CmSHYwBK8-+1go_K6Hefkcw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <SEZPR06MB5269A43F801EF04F39461174F2E5A@SEZPR06MB5269.apcprd06.prod.outlook.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -52,99 +75,74 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, tmaimon77@gmail.com, kwliu@nuvoton.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, linux-media@vger.kernel.org, tali.perry1@gmail.com, andrzej.p@collabora.com, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, mchehab@kernel.org, kflin@nuvoton.com, linux-kernel@vger.kernel.org, benjaminfair@google.com
+Cc: "linux-aspeed@lists.ozlabs.org" <linux-aspeed@lists.ozlabs.org>, Brendan Higgins <brendan.higgins@linux.dev>, Conor Dooley <conor.dooley@microchip.com>, "linux-i2c@vger.kernel.org" <linux-i2c@vger.kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, "jk@codeconstruct.com.au" <jk@codeconstruct.com.au>, Jean Delvare <jdelvare@suse.de>, Andi Shyti <andi.shyti@kernel.org>, Phil Edworthy <phil.edworthy@renesas.com>, Florian Fainelli <f.fainelli@gmail.com>, "=linux-kernel@vger.kernel.org" <=linux-kernel@vger.kernel.org>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>, Joel Stanley <joel@jms.id.au>, "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>, William Zhang <william.zhang@broadcom.com>, Rob Herring <robh+dt@kernel.org>, "linux-arm-kernel@lists.infradead.org" <linux-arm-kernel@lists.infradead.org>, Tharun Kumar P <tharunkumar.pasumarthi@microchip.com>, Andrew Jeffery <andrew@aj.id.au>, Wolfram Sang <wsa@kernel.org>, Tyrone Ting <kfting@nuvoton.com>, 
+ Philipp Zabel <p.zabel@pengutronix.de>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 31/08/2023 14:42, Kun-Fa Lin wrote:
-> Hi Hans,
+On Thu, Aug 31, 2023 at 06:04:30AM +0000, Ryan Chen wrote:
+> > On Fri, Jul 14, 2023 at 03:45:22PM +0800, Ryan Chen wrote:
+
+Stop overquoting! Remove the context you are not answering to.
+
+...
+
+> > > +				if (--i % 4 != 3)
+> > > +					writel(*(u32 *)wbuf, i2c_bus->buf_base + i - (i % 4));
+> > > +				writel(AST2600_I2CC_SET_TX_BUF_LEN(xfer_len),
+> > > +				       i2c_bus->reg_base + AST2600_I2CC_BUFF_CTRL);
+> > 
+> > Wrong memory accessors. You should use something from asm/byteorder.h
+> > which includes linux/byteorder/generic.h.
+> > 
 > 
-> Thanks for the review.
+> Are you preferring add comment to explain more by following?
+> 				/*
+> 				 * The controller's buffer register supports dword writes only.
+> 				 * Therefore, write dwords to the buffer register in a 4-byte aligned,
+> 				 * and write the remaining unaligned data at the end.
+> 				 */
+
+This does not explain endianess bug (or feature) it has.
+You are using CPU side byteorder for the aligned data.
+This is not okay, on top of the code looking ugly and
+prone to errors. Note, that somebody may refer to your
+code, once accepted, in educational purposes, but since
+the code is not good written, it makes a false positive
+impression that this is the right thing to do in the similar
+case elsewhere.
+
+Please, fix this.
+
+> 				for (i = 0; i < xfer_len; i++) {
+> 					wbuf[i % 4] = msg->buf[i2c_bus->master_xfer_cnt + i];
+> 					/* accumulating 4 bytes of data, write as a Dword to the buffer register */
+> 					if (i % 4 == 3)
+> 						writel(*(u32 *)wbuf, i2c_bus->buf_base + i - 3);
+> 				}
+> 				/* less than 4 bytes of remaining data, write the remaining part as a Dword */
+> 				if (--i % 4 != 3)
+> 					writel(*(u32 *)wbuf, i2c_bus->buf_base + i - (i % 4));
+> 				writel(AST2600_I2CC_SET_TX_BUF_LEN(xfer_len),
+> 				       i2c_bus->reg_base + AST2600_I2CC_BUFF_CTRL);
 > 
->>> +     snprintf(cap->bus_info, sizeof(cap->bus_info), "platform:%s", DEVICE_NAME);
->>
->> You can drop this last line, it is already filled in by the V4L2 core for
->> platform devices.
+> Or more columns (use get_unaligned_le32(wbuf); ) by following.
 > 
->>> +static const char * const npcm_ctrl_capture_mode_menu[] = {
->>> +     "COMPLETE mode",
->>> +     "DIFF mode",
->>
->> Hmm, I would drop the 'mode' bit, since it is already obvious that
->> these are the modes.
+> 	for (i = 0; i < xfer_len; i++) {
+> 		wbuf[i % 4] = msg->buf[i2c_bus->master_xfer_cnt + i];
+> 		if (i % 4 == 3) {
+> 			wbuf_dword = get_unaligned_le32(wbuf);
+> 			writel(wbuf_dword, i2c_bus->buf_base + i - 3);
+> 		}
+> 	}
 > 
-> OK. Will drop them in the next version.
-> 
->>> +static const struct v4l2_ctrl_config npcm_ctrl_rect_count = {
->>> +     .ops = &npcm_video_ctrl_ops,
->>> +     .id = V4L2_CID_NPCM_RECT_COUNT,
->>> +     .name = "NPCM Compressed Hextile Rectangle Count",
->>> +     .type = V4L2_CTRL_TYPE_INTEGER,
->>> +     .flags = V4L2_CTRL_FLAG_VOLATILE,
->>> +     .min = 0,
->>> +     .max = (MAX_WIDTH / RECT_W) * (MAX_HEIGHT / RECT_H),
->>> +     .step = 1,
->>> +     .def = 0,
->>> +};
->>
->> Just to confirm: you decided against using an integer array control?
->>
->> There is a real danger that if userspace isn't reading this control
->> quickly enough (i.e. before the next frame arrives at the driver), then
->> the control's value is that of that next frame instead of the current
->> frame.
->>
->> It doesn't feel robust to me.
-> 
-> Actually the driver will store the frames and counts for each buffer
-> index till userspace dequeues them.
-> 
-> Ex. assume that driver has captured 3 frames:
-> - 1st capture (buffer index = 0):
->      video->list[0] => store the list of HEXTILE rects for the 1st frame
->      video->rect[0] => store the rect count of video->list[0]
-> - 2nd capture (buffer index = 1):
->      video->list[1] => store the list of HEXTILE rects for the 2nd frame
->      video->rect[1] => store the rect count of video->list[1]
-> - 3rd capture (buffer index = 2):
->      video->list[2] => store the list of HEXTILE rects for the 3rd frame
->      video->rect[2] => store the rect count of video->list[2]
-> 
-> When userspace dequeues the 1st buffer (video->list[0]), it needs to
-> know the count of HEXTILE rectangles in the buffer,
-> so after dequeuing the buffer it will call this control to get the
-> rect count (video->rect[0]). And when a buffer is dequeued,
-> npcm_video_buf_finish() will be called, in which the buffer index (in
-> this example, buffer index = 0) will be stored to video->vb_index.
-> Then when userspace calls this control, npcm_video_get_volatile_ctrl()
-> will return the rect count of vb_index = 0.
-> In this way, I think userspace is always reading the correct control's
-> value even if userspace is slow.
-> Does it make sense to you or is there anything I missed?
+> 	if (--i % 4 != 3) {
+> 		wbuf_dword = get_unaligned_le32(wbuf);
+> 		writel(wbuf_dword, i2c_bus->buf_base + i - (i % 4));
+> 	}
 
-Ah, I don't think I have ever seen anyone use buf_finish in that way!
+-- 
+With Best Regards,
+Andy Shevchenko
 
-Very inventive, and perfectly legal. Actually a very nice idea!
 
-So, with that in mind there are still some things that need to change.
-
-First of all, you can drop the 'VOLATILE' flag from the control, instead
-just call v4l2_ctrl_s_ctrl() from buf_finish() to update the control.
-And in stop_streaming the control value should probably be set to 0.
-
-The use of volatile for a control is a last resort, and in this case it
-is not volatile at all.
-
-Secondly, this behavior has to be documented: in buf_finish add a comment
-along the lines of: "This callback is called when the buffer is dequeued,
-so update this control with the number of rectangles."
-
-And where the control is defined, refer to buf_finish to explain where it
-is set.
-
-Finally the user-facing documentation has to be updated (npcm-video.rst)
-to explain this behavior.
-
-Regards,
-
-	Hans
