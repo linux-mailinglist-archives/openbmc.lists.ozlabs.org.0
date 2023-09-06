@@ -1,53 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8501E793E4A
-	for <lists+openbmc@lfdr.de>; Wed,  6 Sep 2023 16:02:11 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5E76E794217
+	for <lists+openbmc@lfdr.de>; Wed,  6 Sep 2023 19:37:57 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=gm1 header.b=R+wgsfOV;
+	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20230601.gappssmtp.com header.i=@tanous-net.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=BA7+d9o6;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RgkZj0slLz3bTj
-	for <lists+openbmc@lfdr.de>; Thu,  7 Sep 2023 00:02:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RgqMl11JWz3bxH
+	for <lists+openbmc@lfdr.de>; Thu,  7 Sep 2023 03:37:55 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=bootlin.com header.i=@bootlin.com header.a=rsa-sha256 header.s=gm1 header.b=R+wgsfOV;
+	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20230601.gappssmtp.com header.i=@tanous-net.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=BA7+d9o6;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bootlin.com (client-ip=217.70.183.196; helo=relay4-d.mail.gandi.net; envelope-from=alexandre.belloni@bootlin.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 113178 seconds by postgrey-1.37 at boromir; Thu, 07 Sep 2023 00:01:33 AEST
-Received: from relay4-d.mail.gandi.net (relay4-d.mail.gandi.net [217.70.183.196])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=tanous.net (client-ip=2a00:1450:4864:20::435; helo=mail-wr1-x435.google.com; envelope-from=ed@tanous.net; receiver=lists.ozlabs.org)
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RgkZ52WThz2xm6
-	for <openbmc@lists.ozlabs.org>; Thu,  7 Sep 2023 00:01:30 +1000 (AEST)
-Received: by mail.gandi.net (Postfix) with ESMTPSA id 64C85E0014;
-	Wed,  6 Sep 2023 14:01:24 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bootlin.com; s=gm1;
-	t=1694008886;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=/Cc3GDyhTJkNnRyDhyOHbwZd++EIJkpgVHFot9WD1+s=;
-	b=R+wgsfOVdpCFKot7c1YUEADgmYoIQ5/WhpjKIOe4kdT91hMjPded5ljT30TGF1L07Lv016
-	yYGyZlJt8zlfWFWju4AA5RuLB2RR0riAlJMGtB00OOUgr4lB6xpjxcmRY0R9k+wVb9wuvS
-	4o8MBGd9hdZra+NgmUC3ThYFm7L80D4E8fogwPbAHC5wtKdlGfvU/DKJklONQFx2EsN99s
-	mGDeeh/nDAlZxfNVAgne3rtD55H1l4hv0S1bwx/5ZcCrEc45LJadW2DMJSguM6giJ6Vxot
-	AyFJZXCIzVFCzvFKJNgoQwFICvDSffmtNGSnsbi2tFRwnr48NosQxI9qBskj5Q==
-Date: Wed, 6 Sep 2023 16:01:23 +0200
-From: Alexandre Belloni <alexandre.belloni@bootlin.com>
-To: Mining Lin <mimi05633@gmail.com>
-Subject: Re: [PATCH v5 1/1] rtc: nuvoton: Compatible with NCT3015Y-R and
- NCT3018Y-R
-Message-ID: <20230906140123dd8ffac4@mail.local>
-References: <202309050635059ecd17a2@mail.local>
- <D6734DA5-839E-40A6-9085-F25BB8D70022@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RgqM51rCmz2xq6
+	for <openbmc@lists.ozlabs.org>; Thu,  7 Sep 2023 03:37:19 +1000 (AEST)
+Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-31f615afa52so139360f8f.3
+        for <openbmc@lists.ozlabs.org>; Wed, 06 Sep 2023 10:37:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=tanous-net.20230601.gappssmtp.com; s=20230601; t=1694021832; x=1694626632; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=am+DHwYAqLuuz3mCSGGosMmWJN0E+rT8lLeaqvC8Zts=;
+        b=BA7+d9o644gE8bFf6kJed9/aSkjqPa2kCxs9MT68QhHq/lGlAZudxak45n3VW/R0Nq
+         lr0ZqS0eBWhYPjExBiGgclnqiVx+LtTVE7fFVNR1eS7l5LeiL6wybKUFQuYSTCmabplW
+         Q5xofSMKoOQdcmZGb1BDEUdVeC+T+rZ8aVd880mfAHlepynqfmhOdyV6mV/u4z3JfR+2
+         vdmZopAdPuUzpPATLCJF2k9ZscqjTqfsLuuonVq73kMXghDK4y+0DfRudd8eZ02TNKkT
+         xH9O5uVJky/+/z5u+i1ks4hoEzthrI7lpzLuRYAY2xc4ApFgUYt/vAqXVzVBRW0vPFNX
+         B5/Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20221208; t=1694021832; x=1694626632;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=am+DHwYAqLuuz3mCSGGosMmWJN0E+rT8lLeaqvC8Zts=;
+        b=NVwlbhYZHDZXVPLWQnWwMEFxioE4qa3/aiQjD+J0MyfiG5hXQq2qBvw5uBOQmcTJbc
+         rUeuzM6sQEFt6TaFBpcKW1Gns4SyGfshxiaW8MR40ikLAEsvaGDa1Ry+SQ8F2koq0hCG
+         oLGr/aXyih3FAFwLtryOyC6bOBWTWXQl1/s4a2NKN7sLfjgdMFdC17cxMhEt2VngWKuz
+         TWN1g3ukD+8XC2XwEveTq1NDDVLTMvNtuUNNGusMtYaKayl+sC8sWpwEVzsW0fn8yV3u
+         LEgfYnSkefVxiYQcabqUuIOM783DdExcAd+WSxSMAwLQc20e2soZLTo8YeACGEmzvaAa
+         QtLg==
+X-Gm-Message-State: AOJu0YxzgqRjkZmJ8b2OeZ8bbGnbkOfGNhSoN8SEwBKHj6+Uiv9ggGrN
+	DwGWKspFow5uCjfo81Y5qeaLicKqOUUoNqP5W4iwCNq8OFg6ZTqfPd8=
+X-Google-Smtp-Source: AGHT+IGlgR052FPDJhluju4DvrPHqLtk8N6BcewzbictFG9Lk/5J6SBPl8nGP6YWnqzn0PhDd31+80S/PSX5Sjf8bP4=
+X-Received: by 2002:a5d:6e88:0:b0:317:6edb:6138 with SMTP id
+ k8-20020a5d6e88000000b003176edb6138mr2684238wrz.62.1694021831358; Wed, 06 Sep
+ 2023 10:37:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <D6734DA5-839E-40A6-9085-F25BB8D70022@gmail.com>
-X-GND-Sasl: alexandre.belloni@bootlin.com
+References: <ZNvDQ9xTbV-Ynk6T@heinlein.vulture-banana.ts.net>
+In-Reply-To: <ZNvDQ9xTbV-Ynk6T@heinlein.vulture-banana.ts.net>
+From: Ed Tanous <ed@tanous.net>
+Date: Wed, 6 Sep 2023 10:37:00 -0700
+Message-ID: <CACWQX83zYgLvHNjS=uJ2nwNL46NMZ5HoFk1r3Dp=Gqu3r5tF3g@mail.gmail.com>
+Subject: Re: TOF elections for 2023H2
+To: Patrick Williams <patrick@stwcx.xyz>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,30 +75,51 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-rtc@vger.kernel.org, a.zummo@towertech.it, mylin1@nuvoton.com, benjaminfair@google.com, KWLIU@nuvoton.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, JJLIU0@nuvoton.com, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, KFLIN@nuvoton.com, tmaimon77@gmail.com
+Cc: OpenBMC List <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 06/09/2023 09:19:29+0800, Mining Lin wrote:
-> >> static int nct3018y_set_alarm_mode(struct i2c_client *client, bool on)
-> >> {
-> >>    int err, flags;
-> >> @@ -55,7 +59,7 @@ static int nct3018y_set_alarm_mode(struct i2c_client *client, bool on)
-> >>    flags =  i2c_smbus_read_byte_data(client, NCT3018Y_REG_CTRL);
-> >>    if (flags < 0) {
-> >>        dev_dbg(&client->dev,
-> >> -            "Failed to read NCT3018Y_REG_CTRL\n");
-> >> +            "%s: Failed to read ctrl reg.\n", __func__);
-> > 
-> > If you really insist on this change, what about:
-> > 
-> > #define pr_fmt(fmt) "%s: " fmt, __func__
-> [Mia] Do you mean to replace dev_dbg with pr_debug? If yes, for consistency, I'm going to refine all messages via pr_debug. Thank you for your suggestion.
+On Tue, Aug 15, 2023 at 11:37=E2=80=AFAM Patrick Williams <patrick@stwcx.xy=
+z> wrote:
+>
+> Hello everyone,
+>
+> Like last half[1], I have also run behind schedule in sending out the
+> data for the TOF elections this half.
+>
+> The schedule will be as follows:
+>
+>    * Aug 15th - Current TOF must publish a list of eligible voting
+>                 members.
+>    * Sept 1st - Nominations (self or peer) for TOF seats must be sent to
+>                 the mailing list.
+>    * Sept 1st - Developers disputing membership eligibility must submit
+>                 a pettion request to the current TOF.
+>    * Sept 7th - Election Begins
+>    * Sept 15th - Election concludes
+>    * Sept 22nd - TOF will publish election results.
+>
+> The current election roll-call is available at:
+>    https://github.com/openbmc/tof-election/blob/main/2023H2/rollcall.json
+>
+> For this half, we have 3 seats up for election.  Currently those are
+> held by Brad, Ed, and Zev.
+>
+> Nominations for those 3 seats may be sent to the mailing list by
+> replying to this email.  Only those eligible to vote may be nominated.
 
-No, I mean that instead of adding __func__ to all the messages just
-define pr_fmt, this should achieve what you want.
+In the absence of someone volunteering to do it (and therefore not
+having a quorum) I can sit on the TOF again for another term, just
+know that my time will be limited.
 
--- 
-Alexandre Belloni, co-owner and COO, Bootlin
-Embedded Linux and Kernel engineering
-https://bootlin.com
+>
+> Disagreements with the roll-call (ie. your body of contributions are not
+> reflected in our current score system) may be petitions for inclusion
+> at https://github.com/openbmc/technical-oversight-forum/issues
+>
+>
+> 1. https://lore.kernel.org/openbmc/Y9hXCcmij+TRDXJ0@heinlein.taila677.ts.=
+net/
+>
+> --
+> Patrick Williams
