@@ -2,68 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5E76E794217
-	for <lists+openbmc@lfdr.de>; Wed,  6 Sep 2023 19:37:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 4EB887942F3
+	for <lists+openbmc@lfdr.de>; Wed,  6 Sep 2023 20:18:40 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20230601.gappssmtp.com header.i=@tanous-net.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=BA7+d9o6;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=fHsyfgWq;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RgqMl11JWz3bxH
-	for <lists+openbmc@lfdr.de>; Thu,  7 Sep 2023 03:37:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RgrGk0LRxz3bNm
+	for <lists+openbmc@lfdr.de>; Thu,  7 Sep 2023 04:18:38 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20230601.gappssmtp.com header.i=@tanous-net.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=BA7+d9o6;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20221208 header.b=fHsyfgWq;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=tanous.net (client-ip=2a00:1450:4864:20::435; helo=mail-wr1-x435.google.com; envelope-from=ed@tanous.net; receiver=lists.ozlabs.org)
-Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::132; helo=mail-lf1-x132.google.com; envelope-from=sushilkdubey@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RgqM51rCmz2xq6
-	for <openbmc@lists.ozlabs.org>; Thu,  7 Sep 2023 03:37:19 +1000 (AEST)
-Received: by mail-wr1-x435.google.com with SMTP id ffacd0b85a97d-31f615afa52so139360f8f.3
-        for <openbmc@lists.ozlabs.org>; Wed, 06 Sep 2023 10:37:19 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RgrG52f5bz2xdp
+	for <openbmc@lists.ozlabs.org>; Thu,  7 Sep 2023 04:18:03 +1000 (AEST)
+Received: by mail-lf1-x132.google.com with SMTP id 2adb3069b0e04-500b66f8b27so94560e87.3
+        for <openbmc@lists.ozlabs.org>; Wed, 06 Sep 2023 11:18:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tanous-net.20230601.gappssmtp.com; s=20230601; t=1694021832; x=1694626632; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=am+DHwYAqLuuz3mCSGGosMmWJN0E+rT8lLeaqvC8Zts=;
-        b=BA7+d9o644gE8bFf6kJed9/aSkjqPa2kCxs9MT68QhHq/lGlAZudxak45n3VW/R0Nq
-         lr0ZqS0eBWhYPjExBiGgclnqiVx+LtTVE7fFVNR1eS7l5LeiL6wybKUFQuYSTCmabplW
-         Q5xofSMKoOQdcmZGb1BDEUdVeC+T+rZ8aVd880mfAHlepynqfmhOdyV6mV/u4z3JfR+2
-         vdmZopAdPuUzpPATLCJF2k9ZscqjTqfsLuuonVq73kMXghDK4y+0DfRudd8eZ02TNKkT
-         xH9O5uVJky/+/z5u+i1ks4hoEzthrI7lpzLuRYAY2xc4ApFgUYt/vAqXVzVBRW0vPFNX
-         B5/Q==
+        d=gmail.com; s=20221208; t=1694024279; x=1694629079; darn=lists.ozlabs.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=0d0FkVBbs9fxdLztJ2h7Yfy/UDgez0TysxU3Jtv8u+Q=;
+        b=fHsyfgWqR2ECd7v+/zHGSH4fvAciTxyP1xfd8JCThWEAc6H+8kuIBVveu5iN5jX+XN
+         9OkU9LsBZ9EV4Uic23JS6XjDdRyy5TRFzznDMILT7Ty9NFR46Pmg8w3Ofb93PMKu97tA
+         iwWkD+W23nRhq6MHi0uWrsMxJsGR+HKgv2t2EiqpoQ3hnjfeQ2zMJvmJQBTRwJ8Ubi+N
+         WBVnzcqnlkX4B6Jh+V9fzhWgr5v9OPGT8daF7mvL3yTHEw/umDCGPbVVZR+K/3p4S5ef
+         0i0uXdbjUdulc8bJ7u+5m4bR5meNN6BZnz/nXUyrVt0x397kPm6Fo8e9/N+MeYaH4Azf
+         umfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1694021832; x=1694626632;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=am+DHwYAqLuuz3mCSGGosMmWJN0E+rT8lLeaqvC8Zts=;
-        b=NVwlbhYZHDZXVPLWQnWwMEFxioE4qa3/aiQjD+J0MyfiG5hXQq2qBvw5uBOQmcTJbc
-         rUeuzM6sQEFt6TaFBpcKW1Gns4SyGfshxiaW8MR40ikLAEsvaGDa1Ry+SQ8F2koq0hCG
-         oLGr/aXyih3FAFwLtryOyC6bOBWTWXQl1/s4a2NKN7sLfjgdMFdC17cxMhEt2VngWKuz
-         TWN1g3ukD+8XC2XwEveTq1NDDVLTMvNtuUNNGusMtYaKayl+sC8sWpwEVzsW0fn8yV3u
-         LEgfYnSkefVxiYQcabqUuIOM783DdExcAd+WSxSMAwLQc20e2soZLTo8YeACGEmzvaAa
-         QtLg==
-X-Gm-Message-State: AOJu0YxzgqRjkZmJ8b2OeZ8bbGnbkOfGNhSoN8SEwBKHj6+Uiv9ggGrN
-	DwGWKspFow5uCjfo81Y5qeaLicKqOUUoNqP5W4iwCNq8OFg6ZTqfPd8=
-X-Google-Smtp-Source: AGHT+IGlgR052FPDJhluju4DvrPHqLtk8N6BcewzbictFG9Lk/5J6SBPl8nGP6YWnqzn0PhDd31+80S/PSX5Sjf8bP4=
-X-Received: by 2002:a5d:6e88:0:b0:317:6edb:6138 with SMTP id
- k8-20020a5d6e88000000b003176edb6138mr2684238wrz.62.1694021831358; Wed, 06 Sep
- 2023 10:37:11 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1694024279; x=1694629079;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=0d0FkVBbs9fxdLztJ2h7Yfy/UDgez0TysxU3Jtv8u+Q=;
+        b=FcKyvsOCPPgDUdCFC+myRrhoL0PVcK1SZHKdRGhLzwRvOUCJkEh1/9k/7V4prEeJ+r
+         h2+AeP9UMIyJ7raCTqHGy/iSLU2dmJU4wFfyE4zWA78sy97sh/1Lor7hkidN6aqPGb03
+         nE+9iWPMehJFlY9Lk6RuMdpFcxa0gKpsvSrFmi2emtG8AMMWWAp0uyp7gShjB1mMBxXc
+         7VRn6QCCwO0ytpQLgWsUjwlX/LuP4hH1bWrrjpgTMU3kJaAcJX/tFEGJygmc4yzJMqvN
+         ZEom4+kj1Rzw2vcnvlNJta8YvLN8yKtwTT76ueEgVsniys9OtIQucLWhRdt58UKnrnZL
+         jQyQ==
+X-Gm-Message-State: AOJu0YyTAAd6/yxbP36PuCQsf07Qd1dCRNQQaILZpVXvln8G1LWAg/J6
+	3yp1ywa48sdtwkfq6tw2kqTZt216YTcF103noR/GBaaRxqzXMg==
+X-Google-Smtp-Source: AGHT+IHoApjYaBGDeYqpEZT4OhjLYzAWdigild+HOq/qkxKf0DthMIHHgifazWL8qI6framBF1IxcJ9IfwyUHDvwA4Q=
+X-Received: by 2002:a05:6512:706:b0:500:9b7d:ee3c with SMTP id
+ b6-20020a056512070600b005009b7dee3cmr2914825lfs.7.1694024278673; Wed, 06 Sep
+ 2023 11:17:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <ZNvDQ9xTbV-Ynk6T@heinlein.vulture-banana.ts.net>
-In-Reply-To: <ZNvDQ9xTbV-Ynk6T@heinlein.vulture-banana.ts.net>
-From: Ed Tanous <ed@tanous.net>
-Date: Wed, 6 Sep 2023 10:37:00 -0700
-Message-ID: <CACWQX83zYgLvHNjS=uJ2nwNL46NMZ5HoFk1r3Dp=Gqu3r5tF3g@mail.gmail.com>
-Subject: Re: TOF elections for 2023H2
-To: Patrick Williams <patrick@stwcx.xyz>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+From: Sushil Dubey <sushilkdubey@gmail.com>
+Date: Wed, 6 Sep 2023 23:47:47 +0530
+Message-ID: <CAMyVXekf3n2f5nB+dF+5Kv6Pr715utC_KiGgA=upP6S+PdWYQg@mail.gmail.com>
+Subject: USBNet issue on AST2600 :Linux upstream sync from 5.15 5to 6.1.15
+To: openbmc@lists.ozlabs.org
+Content-Type: multipart/alternative; boundary="0000000000005f0ee90604b4c357"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,51 +70,57 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: OpenBMC List <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Aug 15, 2023 at 11:37=E2=80=AFAM Patrick Williams <patrick@stwcx.xy=
-z> wrote:
->
-> Hello everyone,
->
-> Like last half[1], I have also run behind schedule in sending out the
-> data for the TOF elections this half.
->
-> The schedule will be as follows:
->
->    * Aug 15th - Current TOF must publish a list of eligible voting
->                 members.
->    * Sept 1st - Nominations (self or peer) for TOF seats must be sent to
->                 the mailing list.
->    * Sept 1st - Developers disputing membership eligibility must submit
->                 a pettion request to the current TOF.
->    * Sept 7th - Election Begins
->    * Sept 15th - Election concludes
->    * Sept 22nd - TOF will publish election results.
->
-> The current election roll-call is available at:
->    https://github.com/openbmc/tof-election/blob/main/2023H2/rollcall.json
->
-> For this half, we have 3 seats up for election.  Currently those are
-> held by Brad, Ed, and Zev.
->
-> Nominations for those 3 seats may be sent to the mailing list by
-> replying to this email.  Only those eligible to vote may be nominated.
+--0000000000005f0ee90604b4c357
+Content-Type: text/plain; charset="UTF-8"
 
-In the absence of someone volunteering to do it (and therefore not
-having a quorum) I can sit on the TOF again for another term, just
-know that my time will be limited.
+While doing upsteam sync of linux kernel, I am hitting an issue with USBNet
+link up.Though USB0 interface created, ping not successful with link
+partner(Host Controller)
 
->
-> Disagreements with the roll-call (ie. your body of contributions are not
-> reflected in our current score system) may be petitions for inclusion
-> at https://github.com/openbmc/technical-oversight-forum/issues
->
->
-> 1. https://lore.kernel.org/openbmc/Y9hXCcmij+TRDXJ0@heinlein.taila677.ts.=
-net/
->
-> --
-> Patrick Williams
+On the same setup, with 5.15 kernel, USBNet is all functional however with
+6.15 with latest ASPEED UDC driver and G_ether, USBnet is not functional
+and I found that
+
+6.1.15 gadget driver selects platform-1e6a0000.usb-vhub which should be
+platform-1e6a2000.udc.
+
+Please let me know if any of you have encountered this issue with
+6.1.15(v6.1.15).
+
+
+Regards
+
+Sushil Kumar Dubey
+
+--0000000000005f0ee90604b4c357
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><p style=3D"margin:0in;font-size:11pt;font-family:Calibri,=
+sans-serif">While doing
+upsteam sync of linux kernel, I am hitting an issue with USBNet link up.Tho=
+ugh USB0 interface created, ping not successful with link partner(Host Cont=
+roller)</p><p style=3D"margin:0in;font-size:11pt;font-family:Calibri,sans-s=
+erif"><span style=3D"font-size:11pt">On the same
+setup, with 5.15 kernel, USBNet is all functional however with 6.15 with la=
+test ASPEED UDC driver and G_ether, USBnet is not functional and I found th=
+at=C2=A0=C2=A0</span><br></p><p class=3D"MsoNormal" style=3D"margin:0in;fon=
+t-size:11pt;font-family:Calibri,sans-serif">6.1.15 gadget driver selects <s=
+pan style=3D"background:yellow">platform-1e6a0000.usb-vhub</span>=C2=A0<spa=
+n style=3D"font-size:11pt">which should be </span><span style=3D"font-size:=
+11pt;background:yellow">platform-1e6a2000.udc</span><span style=3D"font-siz=
+e:11pt">.=C2=A0=C2=A0</span></p><p class=3D"MsoNormal" style=3D"margin:0in;=
+font-size:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size:11p=
+t">Please let me know if any of you have encountered this issue with 6.1.15=
+(v6.1.15).=C2=A0</span></p><p class=3D"MsoNormal" style=3D"margin:0in;font-=
+size:11pt;font-family:Calibri,sans-serif"><span style=3D"font-size:11pt"><b=
+r></span></p><p class=3D"MsoNormal" style=3D"margin:0in;font-size:11pt;font=
+-family:Calibri,sans-serif"><span style=3D"font-size:11pt">Regards</span></=
+p><p class=3D"MsoNormal" style=3D"margin:0in;font-size:11pt;font-family:Cal=
+ibri,sans-serif"><span style=3D"font-size:11pt">Sushil Kumar Dubey</span></=
+p></div>
+
+--0000000000005f0ee90604b4c357--
