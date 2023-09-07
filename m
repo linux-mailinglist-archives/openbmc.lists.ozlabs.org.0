@@ -1,67 +1,165 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5BDB2797D06
-	for <lists+openbmc@lfdr.de>; Thu,  7 Sep 2023 21:55:37 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 7BCEF797D60
+	for <lists+openbmc@lfdr.de>; Thu,  7 Sep 2023 22:28:03 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20221208 header.b=mMtoDpgc;
+	dkim=pass (2048-bit key; unprotected) header.d=dell.com header.i=@dell.com header.a=rsa-sha256 header.s=smtpout1 header.b=lLXdieGl;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RhVN711Bpz3c5K
-	for <lists+openbmc@lfdr.de>; Fri,  8 Sep 2023 05:55:35 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RhW5Y2jNjz2xbC
+	for <lists+openbmc@lfdr.de>; Fri,  8 Sep 2023 06:28:01 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20221208 header.b=mMtoDpgc;
+	dkim=pass (2048-bit key; unprotected) header.d=dell.com header.i=@dell.com header.a=rsa-sha256 header.s=smtpout1 header.b=lLXdieGl;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::334; helo=mail-wm1-x334.google.com; envelope-from=wak@google.com; receiver=lists.ozlabs.org)
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=dell.com (client-ip=148.163.137.20; helo=mx0b-00154904.pphosted.com; envelope-from=prvs=1614288be3=dipinder_chhabra@dell.com; receiver=lists.ozlabs.org)
+Received: from mx0b-00154904.pphosted.com (mx0b-00154904.pphosted.com [148.163.137.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RhVMX3cbXz2xbC
-	for <openbmc@lists.ozlabs.org>; Fri,  8 Sep 2023 05:55:04 +1000 (AEST)
-Received: by mail-wm1-x334.google.com with SMTP id 5b1f17b1804b1-401d2e11dacso16626285e9.0
-        for <openbmc@lists.ozlabs.org>; Thu, 07 Sep 2023 12:55:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20221208; t=1694116501; x=1694721301; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=jHSU/6s33gWn99g+yvQ7roETPEpQgWMK9GvLVGzJjuM=;
-        b=mMtoDpgcvJg4q6eKPQOeLJEjS7OysKI4kD25iNSTUqbAmNh1wAbHNrEJZqNBExtEeu
-         NElmgSWWF/qtiuB1M+mU0N/viUJRo+y4nUxNJR20QcVHsYlOG2TJDqiGaMMawgf9bcJk
-         XrjC6C13rlZztL0e6ENwPeVNppdksaqKLbjxRec12tEyQq0BrlL9XHwgbAMCDkPTcNkt
-         FKpr0IAwAKtA3zfB8GjhfnD2bkUtI4L62r/FpEJtxodK9Js1kf2LderEdlrmNb1aTOUZ
-         uZLk/g9yt0dh7epF9GsWhnX2jGYQi8Ahkao8UYCpGGNeq7rlx8K/3oLlXMA2RxUL9OqB
-         ghzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694116501; x=1694721301;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=jHSU/6s33gWn99g+yvQ7roETPEpQgWMK9GvLVGzJjuM=;
-        b=sDZnhCI0N8uGqZvzVXBc6aK3hZZUHrOrwMsZbagS3eq1su7bz+nTCXQJ+wIF7yVIhh
-         LnBqK5y0g8Q55+21wGpNjQrFgEOk3udyqpS65na/d5A0xWwhZZkwkQM3XDEsHnnCR68L
-         ILTLQMxtkZkz1xyrRSwxHos+OLNkfipC2D0V+F5Vz4/tS1fosJDVPzihoMo3BUPrOlC0
-         oK4D88jrjjVq6LIskhGAoZJE1aUL96SgeEEO/9bdZgsLClhquSKO/4NogGz7u0ym7SN6
-         csvmUH5t8L6qyJCAP+854EnoOnmX1xMxdTJ7bwyainvKIRSovdvvZRh+CMR4LbaQHzbb
-         54RA==
-X-Gm-Message-State: AOJu0YzqimDdJWt1Tne12N5B+00YgrmpdOb4Ks+6Xicok69VLdrVj4TV
-	koPituG6tJ2IXAfEjC62txZRa/sB4OITeJisFUymXzPpKCMv9kxaFLU=
-X-Google-Smtp-Source: AGHT+IGQQJiB5d12Gy70IvPFM/rwGIIWdinqxigfiCtm7lX1S4Y/HDIgQRUyBNGFQs4ezUFyTYA6MvjmFSnciqzDiVA=
-X-Received: by 2002:a5d:540e:0:b0:319:55f9:d50d with SMTP id
- g14-20020a5d540e000000b0031955f9d50dmr250084wrv.33.1694116500756; Thu, 07 Sep
- 2023 12:55:00 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RhW4v4rfjz2yjD
+	for <openbmc@lists.ozlabs.org>; Fri,  8 Sep 2023 06:27:26 +1000 (AEST)
+Received: from pps.filterd (m0170398.ppops.net [127.0.0.1])
+	by mx0b-00154904.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 387HHAZD020601;
+	Thu, 7 Sep 2023 16:27:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=dell.com; h=from : to : cc :
+ subject : date : message-id : references : in-reply-to : content-type :
+ mime-version; s=smtpout1; bh=xqAkupkAvTmIRsu/wg6CAY9soN+zVm/6E+bKdATP3qw=;
+ b=lLXdieGl6VfeUpDzcq/h6G4PG4nDtCuWdeYsvZYodhFEFPy2cjd3QY61eJfdYg9QMPpz
+ TWyJkHuS86eiexSm0GBGqAoZoZSN2G+L8QIOTjl2A2OyKnCWmPYpvauEjomJG9t/cnu7
+ awHUzOPdIhgyYoBx8VTcflbdRpjNCID4rkLlgiijOzuo00GeRt3p5U2ZjWBhh8vpgipX
+ lds+7yQZkFVv6WNArRn0Z2P77W2cDUHxosevy5ziiGXfiAJu8nj2mjoU/Cq6Lt5+NGz6
+ AJ4Nuogk8sDZhCiuSXc8/y+bkPuE1YsM2n2VTk1arG9pwOywnAVwEFQFPXDIxI0bhk2C zA== 
+Received: from mx0b-00154901.pphosted.com (mx0b-00154901.pphosted.com [67.231.157.37])
+	by mx0b-00154904.pphosted.com (PPS) with ESMTPS id 3sv099jyha-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Thu, 07 Sep 2023 16:27:21 -0400
+Received: from pps.filterd (m0144103.ppops.net [127.0.0.1])
+	by mx0b-00154901.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 387JBjou016138;
+	Thu, 7 Sep 2023 16:27:21 -0400
+Received: from nam10-bn7-obe.outbound.protection.outlook.com (mail-bn7nam10lp2103.outbound.protection.outlook.com [104.47.70.103])
+	by mx0b-00154901.pphosted.com (PPS) with ESMTPS id 3syat7h1jf-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 07 Sep 2023 16:27:20 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=NJvFlRayePbQMSlVl4gFHmj32fD35lDRXfP6es7zrSAh6aUspJg8wtd9CsiaB4U/HvpaYVEIUrsu6kGIpWN0pXobVW8iuiK0AyfYKciu1UmwwepSWvoZ8u0WZwawCgrx++XZT8g3V6u1Kfuw3+xfNYzLVSpcU2NHtBoXqnpaj30xFUyar6yLbg0Qi+Binv3iU40fS+eKkNw/KVwjCVWG2oGUJYS4Yl/PunNG6snwPEQP8fm3ffgg5T/w4h68RJ22CBeqb1WLayuqGIzrt1whVm0TwM8JyMRFGN6e659TAiPJ9FVBbwWsNOSNNaEhkDgCyWemiGT1pzc1bQyRRuj7GQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=xqAkupkAvTmIRsu/wg6CAY9soN+zVm/6E+bKdATP3qw=;
+ b=ft/0NxWgtBY0+yp1xv/Z/xSwb5YDvCgWt6fqGpc5uSFagGDwxrhvXgvcNjx0wk2Jif8t8FHj/67g+/e4sXK0aWZJHrYdgq7LPCpg4POL91x6CfOXxDM82vpebyAimI8LEG6IjNXmzWLcvLnvzyZaQN2LRu+OwwVOLAT0JgihUrWtFSbNHA7d5l2IK0+vXfRsdxm4tGfTQK0F5XwCrIozpESnmN3jepSXnBNCFaofHpDF+c1o2TvLGR4dGeGpPIYFZqMq/KpLimdU236CVIGqC/SjgbDoHZKymqtAH88trUaxmERqScYk2L/Jk1gRPSy5mhYZN3xhyhm2rYqoVscKLA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=dell.com; dmarc=pass action=none header.from=dell.com;
+ dkim=pass header.d=dell.com; arc=none
+Received: from DM6PR19MB4107.namprd19.prod.outlook.com (2603:10b6:5:246::19)
+ by DS7PR19MB5807.namprd19.prod.outlook.com (2603:10b6:8:7a::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6745.23; Thu, 7 Sep
+ 2023 20:27:16 +0000
+Received: from DM6PR19MB4107.namprd19.prod.outlook.com
+ ([fe80::dd02:ff37:16f4:19f8]) by DM6PR19MB4107.namprd19.prod.outlook.com
+ ([fe80::dd02:ff37:16f4:19f8%7]) with mapi id 15.20.6745.034; Thu, 7 Sep 2023
+ 20:27:15 +0000
+From: "Chhabra, DipinderSingh" <Dipinder.Chhabra@dell.com>
+To: William Kennington <wak@google.com>
+Subject: RE: phosphor-network terminated due to SIGBUS
+Thread-Topic: phosphor-network terminated due to SIGBUS
+Thread-Index: Adnht6WAT7ylFYbIREqfzKnKE6/eLwADYHmAAAEXTNA=
+Date: Thu, 7 Sep 2023 20:27:15 +0000
+Message-ID:  <DM6PR19MB4107E37A673818B071DA99DA91EEA@DM6PR19MB4107.namprd19.prod.outlook.com>
+References:  <DM6PR19MB4107DD5C47856396755CD0FC91EEA@DM6PR19MB4107.namprd19.prod.outlook.com>
+ <CAPnigKnigkAFn6RgE59xv488Wdw-T_0G-6i+tAk2_uLjBms+pA@mail.gmail.com>
+In-Reply-To:  <CAPnigKnigkAFn6RgE59xv488Wdw-T_0G-6i+tAk2_uLjBms+pA@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+msip_labels: MSIP_Label_73dd1fcc-24d7-4f55-9dc2-c1518f171327_Enabled=true;
+ MSIP_Label_73dd1fcc-24d7-4f55-9dc2-c1518f171327_SetDate=2023-09-07T20:27:15Z;
+ MSIP_Label_73dd1fcc-24d7-4f55-9dc2-c1518f171327_Method=Standard;
+ MSIP_Label_73dd1fcc-24d7-4f55-9dc2-c1518f171327_Name=No Protection (Label
+ Only) - Internal Use;
+ MSIP_Label_73dd1fcc-24d7-4f55-9dc2-c1518f171327_SiteId=945c199a-83a2-4e80-9f8c-5a91be5752dd;
+ MSIP_Label_73dd1fcc-24d7-4f55-9dc2-c1518f171327_ActionId=3257b175-c103-4da0-9698-6fdc21e02503;
+ MSIP_Label_73dd1fcc-24d7-4f55-9dc2-c1518f171327_ContentBits=2
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: DM6PR19MB4107:EE_|DS7PR19MB5807:EE_
+x-ms-office365-filtering-correlation-id: 6819ecee-7da5-495f-08d9-08dbafe0d386
+x-exotenant: 2khUwGVqB6N9v58KS13ncyUmMJd8q4
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info:  JycYBOBqaYTD0X130hF9C1DJbvPZ18G7HhiZ8PmsrcxG6AYaE/RDsPLPw916O/KAsyRxKMuCIn04kBHJmHTLOjEnyZhcOSj9h4213U9Po5oBYlV4PYDZ4Uby+WRZ0/hqwWqA+Nk2OePV01NCmUajQ62K16f7ehZpARqLUvbgNXj/f+2uafyUCIy56VT6j9p3aTE86i7UlyGBKDq9QOMRXSCutnNX2eFUTduFgj3S9WlEvXckngw+7HryvxwnCTA46JabTHcheVRLQQVwzYQhVTTk0qpmu0MV8yfO5akfEkdPB5nxgKX+9YgHRtyHpsZXK/TglKTF2zQ9ibYl9R7mMOurOca/MiWCUdmZ3z/nwQtmTzW0QYdmvUNy2e4HaeqaNtLdVbmNgXHFwXDi9eZusmST4tAjOCM64l34QHBpEisWQAtTocniNhdanPPqpmdhIWAYO4TxhRlsRtt7klWpsejpsTmNo6PB2nK/hHc3HUgMnu+FZ8v6gT/xYUp3ftyIR4gM7MLAi1a1WO9y+gTQbBHY9+QHS2eJRqui0U62Rl7vqvizsrgh0plbcGpe9AAKR7KFvyrlcjJqUDC6ImFnqC1prm/fQd55zODbTXwjBKhTPFMAy6jlKQQO9E4jfE4A
+x-forefront-antispam-report:  CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:DM6PR19MB4107.namprd19.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230031)(366004)(376002)(136003)(39860400002)(396003)(346002)(186009)(451199024)(1800799009)(52536014)(82960400001)(9686003)(6506007)(7696005)(71200400001)(38100700002)(33656002)(86362001)(55016003)(122000001)(26005)(38070700005)(2906002)(478600001)(4326008)(83380400001)(64756008)(53546011)(5660300002)(8676002)(76116006)(8936002)(41300700001)(66556008)(66476007)(6916009)(66446008)(316002)(66946007)(786003);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:  =?utf-8?B?WGN3ejg1amNRNjA2UDNkb1l4YytCb3ZVazh1a29hWmxRSXZ3MlBHMFF1N0Rr?=
+ =?utf-8?B?eHlybjUxMUVaT1E4citsNUgyQUllRmVxRTN0V1N5K01LYW1qOU9ONmFGaHlH?=
+ =?utf-8?B?aW56Vk5jS01RdERaZndZUlhhbGFuL3hramgybVVRYjBLaUxjVVQvYnJZZUl6?=
+ =?utf-8?B?aHNxWHhhTDZkalQ5bnBHand6cHE0VnRpNW5KVnYvcmFNc2Z3aFZDR21NaWlP?=
+ =?utf-8?B?Q1hxNnpYRVBoeGJ4cU9VQkZxWjNWOHE3azM4UnpRdkttT1FDQWprZDlhdUZr?=
+ =?utf-8?B?TWo0K0VBbC9melZHUC9VM2VIcEh1Uk5tVFl0bU1XelhOdkM1VlNWQ2VNTllR?=
+ =?utf-8?B?akhNR1JvVEpFS2NxWHdFTFFWVEVJQ2N6blBPam5GMGJwa1NxTnkyT3BQSXhu?=
+ =?utf-8?B?RllYYUVqTFlmeGxpR2tyKzNrbDRXRTU4NTZYTlFkZXRkNjJEOUVtNENYQmhl?=
+ =?utf-8?B?TDRxdExpcXg2MGNPTEdBd1lldjJ0Y0ZVQnV1ekxQNDlRZ3ZWSG95L1JXcmha?=
+ =?utf-8?B?bVFyUFJsNXpjU2FUYUxxazVxRkFvMFA2ZjJ4MVdkM20xZE9ZL0d2dCsvNytV?=
+ =?utf-8?B?RHZCQWo2Wm9HcGZidGtER1R5RG9zMW8yOURHNFprd0NVTHNYU3dIckdEWTB4?=
+ =?utf-8?B?ekxYeFlmeXZjamNvM3ArbXNkRzVQYTdid21VUVlSdjB5Q3J6MFN4ZVBpeDRU?=
+ =?utf-8?B?ZWxpc0UvTGprNGNXdS9LcStOa0x2TWF1SWM2U1k1NWw4STBRRFYxb0VhMjNY?=
+ =?utf-8?B?VUtONmVTUGJDcmJsY0tUdDdWVmFlbDArMlBmMnJsaFRFSmQvbXliQUlTN2Mz?=
+ =?utf-8?B?ZC96b1p2dE9VQStoRjREQXJzUGFyYmdlZXJPazYwK0wxSkFoaDJoYytXYnpm?=
+ =?utf-8?B?WWxpN21qMWJpcW9PTytEQ05ZTEZmcnpWN0FkZS9JMHlpRFIwUm1rTnN2ODRr?=
+ =?utf-8?B?Z2MxYURmNGFrbWZwV0ppWldaYy95MHZQTGYxSDQvSDR6aGVmejY0TGVRRVBP?=
+ =?utf-8?B?dEpFZmNSTEsxMCtxT25ZL0JUeEFjS2k4ZXV3MjFNT1Zud2JsQWpSMGlYSUtl?=
+ =?utf-8?B?THpBK3IrajFBL0IxSW5iZ1BZZHBXcE5vYWJjZjkyVlY5SUFBZFRTTWdGVkFx?=
+ =?utf-8?B?eDUyMnFKZU84THFHck0vTk5IQVYyT3VvaTBZbFcvTEFVNU5WbHlSMWVlUHFz?=
+ =?utf-8?B?c1ZEZ2wwNnI3SjllQ0g3dHJFdVZzMVlhR0NsczdpR255eldTek1UT0FGQ1A4?=
+ =?utf-8?B?U1ZYWHdaYjlFVDFBU1N3T3RFTnlzOVFCZ0MwQWdoT3pjYXVjYlRhL2FWeTZk?=
+ =?utf-8?B?MjIvUzZ3Rko0RDNWNDVsSGRiR2dlMVNob08weXZpbDdtTHZWVGxmVmtqa2Fy?=
+ =?utf-8?B?bWIwZXRKNTY4YU1BZ0pSeXZGcG1pN2lHYnh6cXZJSzhlNlVBd1JCTVIvVXhO?=
+ =?utf-8?B?Y2JiTVhDNE9xaW81S0w0VGdKNDBtamsvOXpSa2p1ZEhNdTVmcVVvVUlFMmpR?=
+ =?utf-8?B?WGVGWTB6R0NlbXVXcVBkN0lZOEtTcEg5V3ZtNzhFRVRTY1ZMR1J4ZzNSUGdY?=
+ =?utf-8?B?SzdjeDdoMVhSR0NIZ0h6aEZCZG1yZnBGSEFXdU9jeGRoOUtYTHMzSFJwSllt?=
+ =?utf-8?B?NmdHcVZIcUROVjZCVlpML0xRZUdRL1dOcFhXTG5XeGFxZTlsS1h2K2xTck1W?=
+ =?utf-8?B?ZUZnamdXVUF5citDU2FaeXBjeFY1d2VHVkw5Vm9NcDk2R2pzOXVNTXo5bHFH?=
+ =?utf-8?B?WFZyZ0ZyMWkyNVZqR3pzRmJHdllLOSsxTHllSUt2Smpaa01SOUNvcHJ3YmdK?=
+ =?utf-8?B?dlJEQ1lzSUphcWg0TnlpeTRSeEtBNGZ2bEZwa2FkNlJQeXRhR25iMk1kM1Nh?=
+ =?utf-8?B?Y0xvTFEwSHkxUnZvMlNZY0RMWEwzUGFEMCtSb1dtZEJ3NW1UVExiODEzTzE4?=
+ =?utf-8?B?UGJtR2p5aHhEVG9MNExJR1VhOCtCRld0MjNWN1N2N20xdnlpeXVuRVNYRjJh?=
+ =?utf-8?B?SzZlMWZZbUVPcVNoaC95bGhvM3NFR0c2Sk9qOUwrTEFFLzdSTmUyN0M3NEhl?=
+ =?utf-8?B?R1RxeFo1TThobnQxQm9rT3IydkhGZVNTVFQ1a2xBbGl3Q0c5OEFKeUVVTTZB?=
+ =?utf-8?B?cFJYdW03ZWJmSlMzWkptbWd0NHc4WDNLZHNCOEFydEsvdGJxbGIrTG9XZDJq?=
+ =?utf-8?B?Z0E9PQ==?=
+Content-Type: multipart/alternative;
+	boundary="_000_DM6PR19MB4107E37A673818B071DA99DA91EEADM6PR19MB4107namp_"
 MIME-Version: 1.0
-References: <DM6PR19MB4107DD5C47856396755CD0FC91EEA@DM6PR19MB4107.namprd19.prod.outlook.com>
-In-Reply-To: <DM6PR19MB4107DD5C47856396755CD0FC91EEA@DM6PR19MB4107.namprd19.prod.outlook.com>
-From: William Kennington <wak@google.com>
-Date: Thu, 7 Sep 2023 12:54:47 -0700
-Message-ID: <CAPnigKnigkAFn6RgE59xv488Wdw-T_0G-6i+tAk2_uLjBms+pA@mail.gmail.com>
-Subject: Re: phosphor-network terminated due to SIGBUS
-To: "Chhabra, DipinderSingh" <Dipinder.Chhabra@dell.com>
-Content-Type: multipart/alternative; boundary="0000000000003d43ea0604ca3c44"
+X-OriginatorOrg: Dell.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: DM6PR19MB4107.namprd19.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6819ecee-7da5-495f-08d9-08dbafe0d386
+X-MS-Exchange-CrossTenant-originalarrivaltime: 07 Sep 2023 20:27:15.9235
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 945c199a-83a2-4e80-9f8c-5a91be5752dd
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: yJ6qiNTdPVPIWXprge11rfOnGwQ68S62OdR5OxY2NT30sqsZNxCAa22WRjH0NR/PiGAi2iTjq74sKMxEexttl54AjrvfAQ0nppNiEUAKcEE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR19MB5807
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.957,Hydra:6.0.601,FMLib:17.11.176.26
+ definitions=2023-09-07_13,2023-09-05_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 suspectscore=0
+ mlxlogscore=999 clxscore=1011 spamscore=0 impostorscore=0
+ priorityscore=1501 lowpriorityscore=0 phishscore=0 adultscore=0
+ bulkscore=0 mlxscore=0 malwarescore=0 classifier=spam adjust=0 reason=mlx
+ scancount=1 engine=8.12.0-2308100000 definitions=main-2309070181
+X-Proofpoint-GUID: sRSvcG5MCxVd5C3ROGBF2RCuGSKVErci
+X-Proofpoint-ORIG-GUID: sRSvcG5MCxVd5C3ROGBF2RCuGSKVErci
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 malwarescore=0
+ mlxlogscore=999 adultscore=0 spamscore=0 impostorscore=0 bulkscore=0
+ phishscore=0 priorityscore=1501 mlxscore=0 clxscore=1011
+ lowpriorityscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2308100000 definitions=main-2309070181
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,284 +175,291 @@ Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---0000000000003d43ea0604ca3c44
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+--_000_DM6PR19MB4107E37A673818B071DA99DA91EEADM6PR19MB4107namp_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Do you happen to be using aarch64?
+WWVzLg0KDQpGcm9tOiBXaWxsaWFtIEtlbm5pbmd0b24gPHdha0Bnb29nbGUuY29tPg0KU2VudDog
+VGh1cnNkYXksIFNlcHRlbWJlciA3LCAyMDIzIDI6NTUgUE0NClRvOiBDaGhhYnJhLCBEaXBpbmRl
+clNpbmdoIDxEaXBpbmRlcl9DaGhhYnJhQERlbGwuY29tPg0KQ2M6IG9wZW5ibWNAbGlzdHMub3ps
+YWJzLm9yZw0KU3ViamVjdDogUmU6IHBob3NwaG9yLW5ldHdvcmsgdGVybWluYXRlZCBkdWUgdG8g
+U0lHQlVTDQoNCg0KW0VYVEVSTkFMIEVNQUlMXQ0KRG8geW91IGhhcHBlbiB0byBiZSB1c2luZyBh
+YXJjaDY0Pw0KDQpPbiBUaHUsIFNlcCA3LCAyMDIzIGF0IDEyOjUy4oCvUE0gQ2hoYWJyYSwgRGlw
+aW5kZXJTaW5naCA8RGlwaW5kZXIuQ2hoYWJyYUBkZWxsLmNvbTxtYWlsdG86RGlwaW5kZXIuQ2ho
+YWJyYUBkZWxsLmNvbT4+IHdyb3RlOg0KSGkgVGhlcmUNCg0KUmVjZW50bHkgd2UgdXBkYXRlZCBv
+dXIgT3BlbkJNQyBkaXN0cm8gdG8gdGFnIDIuMTQuMCAocGhvc3Bob3ItbmV0d29yayBTUkNSRVYg
+Zjc4YTQxNWUxNTRiYWMyNzRlMWQwN2NlODEyOGM2OWU5ZDFjZDcxMCkuDQoNClNpbmNlIHRoZW4g
+d2UgYXJlIHNlZWluZyB0aGF0IHRoZSBwaG9zcGhvci1uZXR3b3JrIHNlcnZpY2UgY3Jhc2hlcyBh
+ZnRlciBjb25maWd1cmF0aW9uIGNoYW5nZSBkdWUgdG8gU0lHQlVTLg0KDQoNClNlcCAwNyAwOTo1
+MTo0NSBibWMgcGhvc3Bob3ItbmV0d29yay1tYW5hZ2VyWzYyN106IFdyb3RlIG5ldHdvcmtkIGZp
+bGU6IC9ldGMvc3lzdGVtZC9uZXR3b3JrLzAwLWJtYy1lbmQxLm5ldHdvcmsNCg0KU2VwIDA3IDA5
+OjUxOjQ1IGJtYyBwaG9zcGhvci1uZXR3b3JrLW1hbmFnZXJbNjI3XTogV3JvdGUgbmV0d29ya2Qg
+ZmlsZTogL2V0Yy9zeXN0ZW1kL25ldHdvcmsvMDAtYm1jLWVuZDAubmV0d29yaw0KDQpTZXAgMDcg
+MDk6NTE6NDkgYm1jIHN5c3RlbWRbMV06IHh5ei5vcGVuYm1jX3Byb2plY3QuTmV0d29yay5zZXJ2
+aWNlOiBNYWluIHByb2Nlc3MgZXhpdGVkLCBjb2RlPWR1bXBlZCwgc3RhdHVzPTcvQlVTDQoNClNl
+cCAwNyAwOTo1MTo0OSBibWMgc3lzdGVtZFsxXTogeHl6Lm9wZW5ibWNfcHJvamVjdC5OZXR3b3Jr
+LnNlcnZpY2U6IEZhaWxlZCB3aXRoIHJlc3VsdCAnY29yZS1kdW1wJy4NCg0KU2VwIDA3IDA5OjUx
+OjQ5IGJtYyBzeXN0ZW1kWzFdOiB4eXoub3BlbmJtY19wcm9qZWN0Lk5ldHdvcmsuc2VydmljZTog
+Q29uc3VtZWQgMS4zNjVzIENQVSB0aW1lLg0KDQpTZXAgMDcgMDk6NTE6NTAgYm1jIHN5c3RlbWRb
+MV06IHh5ei5vcGVuYm1jX3Byb2plY3QuTmV0d29yay5zZXJ2aWNlOiBTY2hlZHVsZWQgcmVzdGFy
+dCBqb2IsIHJlc3RhcnQgY291bnRlciBpcyBhdCAxLg0KDQpTZXAgMDcgMDk6NTE6NTAgYm1jIHN5
+c3RlbWRbMV06IFN0b3BwZWQgUGhvc3Bob3IgTmV0d29yayBNYW5hZ2VyLg0KDQpTZXAgMDcgMDk6
+NTE6NTAgYm1jIHN5c3RlbWRbMV06IHh5ei5vcGVuYm1jX3Byb2plY3QuTmV0d29yay5zZXJ2aWNl
+OiBDb25zdW1lZCAxLjM2NXMgQ1BVIHRpbWUuDQoNClNlcCAwNyAwOTo1MTo1MCBibWMgc3lzdGVt
+ZFsxXTogU3RhcnRpbmcgUGhvc3Bob3IgTmV0d29yayBNYW5hZ2VyLi4uDQoNCkJhc2VkIG9uIG15
+IGRlYnVnZ2luZywgSSBjYW4gY29uZmlybSB0aGF0IHRoZSB0aW1lciBnZXRzIHNjaGVkdWxlZCBj
+b3JyZWN0bHkgYWZ0ZXIgdGhlIGNvbmZpZyB3cml0ZSBhbmQgdGhlIHJlZ2lzdGVyZWQgY2FsbCBi
+YWNrIGRvZXMgZ2V0IGludm9rZWQuIFRoZSBjcmFzaCBoYXBwZW5zIGR1ZSB0byB0aGUgYmVsb3cg
+ZGJ1cyBjYWxsIGluIG5ldHdvcmtfbWFuYWdlci5jcHAuDQoNCiAgICAgICAgdHJ5DQogICAgICAg
+IHsNCiAgICAgICAgICAgIGJ1cy5nZXQoKQ0KICAgICAgICAgICAgICAgIC5uZXdfbWV0aG9kX2Nh
+bGwoIm9yZy5mcmVlZGVza3RvcC5uZXR3b3JrMSIsDQogICAgICAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAiL29yZy9mcmVlZGVza3RvcC9uZXR3b3JrMSIsDQogICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAib3JnLmZyZWVkZXNrdG9wLm5ldHdvcmsxLk1hbmFnZXIiLCAiUmVsb2Fk
+IikNCiAgICAgICAgICAgICAgICAuY2FsbCgpOw0KICAgICAgICAgICAgbGcyOjppbmZvKCJSZWxv
+YWRlZCBzeXN0ZW1kLW5ldHdvcmtkIik7DQogICAgICAgIH0NCg0KSSBoYXZlIGxvb2tlZCBpbnRv
+IGFueSBmaXhlcyB0byB0aGlzIGluIHRoZSBsYXRlciBjb21taXRzIGJ1dCBkbyBub3QgZmluZCBh
+bnkuDQoNCkkgYWxzbyB0cmllZCB0byBjaGFuZ2UgaXQgdG8gY2FsbF9ub3JlcGx5IGJ1dCB0aGF0
+IGRvZXMgbm90IGhlbHAgYW5kIGdldCB0aGUgc2FtZSBCVVMgZXJyb3IuDQoNCg0KICAgICAgICB0
+cnkNCg0KICAgICAgICB7DQoNCiAgICAgICAgICAgIGxnMjo6aW5mbygiVHJ5IHN5c3RlbWQtbmV0
+d29ya2QgcmVsb2FkLi4uIik7DQoNCiAgICAgICAgICAgIGF1dG8gbWV0aG9kID0gYnVzLmdldCgp
+Lm5ld19tZXRob2RfY2FsbChORVRXT1JLRF9CVVNOQU1FLCBORVRXT1JLRF9QQVRILA0KDQogICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICBORVRXT1JLRF9JTlRFUkZBQ0UsICJSZWxvYWQi
+KTsNCg0KICAgICAgICAgICAgYnVzLmdldCgpLmNhbGxfbm9yZXBseShtZXRob2QpOw0KDQogICAg
+ICAgICAgICBsZzI6OmluZm8oIlJlbG9hZGVkIHN5c3RlbWQtbmV0d29ya2QiKTsNCg0KICAgICAg
+ICB9DQoNCldoZW4gSSBtYW51YWxseSBpbnZva2UgdGhpcyBmcm9tIHRoZSBzaGVsbCB0aGF0IHNl
+ZW1zIHRvIGdvIGZpbmUuDQoNCg0Kcm9vdEBibWM6fiMgYnVzY3RsIGNhbGwgb3JnLmZyZWVkZXNr
+dG9wLm5ldHdvcmsxIC9vcmcvZnJlZWRlc2t0b3AvbmV0d29yazEgb3JnLmZyZWVkZXNrdG9wLm5l
+dHdvcmsxLk1hbmFnZXIgUmVsb2FkDQoNCnJvb3RAYm1jOn4jIGVjaG8gJD8NCg0KMA0KDQpBbnlv
+bmUgZWxzZSBzZWVpbmcgdGhpcyBpc3N1ZSB3aXRoIHBob3NwaG9yLW5ldHdvcmsgb3IgYW55IGlk
+ZWEgd2h5IHRoaXMgY291bGQgYmUgaGFwcGVuaW5nPw0KDQpUaGFua3MNCkRpcA0KDQoNCkludGVy
+bmFsIFVzZSAtIENvbmZpZGVudGlhbA0KDQoNCkludGVybmFsIFVzZSAtIENvbmZpZGVudGlhbA0K
 
-On Thu, Sep 7, 2023 at 12:52=E2=80=AFPM Chhabra, DipinderSingh <
-Dipinder.Chhabra@dell.com> wrote:
+--_000_DM6PR19MB4107E37A673818B071DA99DA91EEADM6PR19MB4107namp_
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-> Hi There
->
->
->
-> Recently we updated our OpenBMC distro to tag 2.14.0 (phosphor-network
-> SRCREV f78a415e154bac274e1d07ce8128c69e9d1cd710).
->
->
->
-> Since then we are seeing that the phosphor-network service crashes after
-> configuration change due to SIGBUS.
->
->
->
-> Sep 07 09:51:45 bmc phosphor-network-manager[627]: Wrote networkd file: /=
-etc/systemd/network/00-bmc-end1.network
->
-> Sep 07 09:51:45 bmc phosphor-network-manager[627]: Wrote networkd file: /=
-etc/systemd/network/00-bmc-end0.network
->
-> Sep 07 09:51:49 bmc systemd[1]: xyz.openbmc_project.Network.service: Main=
- process exited, code=3Ddumped, status=3D7/BUS
->
-> Sep 07 09:51:49 bmc systemd[1]: xyz.openbmc_project.Network.service: Fail=
-ed with result 'core-dump'.
->
-> Sep 07 09:51:49 bmc systemd[1]: xyz.openbmc_project.Network.service: Cons=
-umed 1.365s CPU time.
->
-> Sep 07 09:51:50 bmc systemd[1]: xyz.openbmc_project.Network.service: Sche=
-duled restart job, restart counter is at 1.
->
-> Sep 07 09:51:50 bmc systemd[1]: Stopped Phosphor Network Manager.
->
-> Sep 07 09:51:50 bmc systemd[1]: xyz.openbmc_project.Network.service: Cons=
-umed 1.365s CPU time.
->
-> Sep 07 09:51:50 bmc systemd[1]: Starting Phosphor Network Manager...
->
->
->
-> Based on my debugging, I can confirm that the timer gets scheduled
-> correctly after the config write and the registered call back does get
-> invoked. The crash happens due to the below dbus call in
-> network_manager.cpp.
->
->
->
->         try
->
->         {
->
->             bus.get()
->
->                 .new_method_call("org.freedesktop.network1",
->
->                                  "/org/freedesktop/network1",
->
->                                  "org.freedesktop.network1.Manager",
-> "Reload")
->
->                 .call();
->
->             lg2::info("Reloaded systemd-networkd");
->
->         }
->
->
->
-> I have looked into any fixes to this in the later commits but do not find
-> any.
->
->
->
-> I also tried to change it to call_noreply but that does not help and get
-> the same BUS error.
->
->
->
->         try
->
->         {
->
->             lg2::info("Try systemd-networkd reload...");
->
->             auto method =3D bus.get().new_method_call(NETWORKD_BUSNAME, N=
-ETWORKD_PATH,
->
->                                  NETWORKD_INTERFACE, "Reload");
->
->             bus.get().call_noreply(method);
->
->             lg2::info("Reloaded systemd-networkd");
->
->         }
->
->
->
-> When I manually invoke this from the shell that seems to go fine.
->
->
->
-> root@bmc:~# busctl call org.freedesktop.network1 /org/freedesktop/network=
-1 org.freedesktop.network1.Manager Reload
->
-> root@bmc:~# echo $?
->
-> 0
->
->
->
-> Anyone else seeing this issue with phosphor-network or any idea why this
-> could be happening?
->
->
->
-> Thanks
->
-> Dip
->
-> Internal Use - Confidential
->
+PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
+bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
+YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
+cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
+Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
+ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
+PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
+IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1m
+YWNlDQoJe2ZvbnQtZmFtaWx5OkRlbmdYaWFuOw0KCXBhbm9zZS0xOjIgMSA2IDAgMyAxIDEgMSAx
+IDE7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZhbWlseTpDYWxpYnJpOw0KCXBhbm9zZS0xOjIgMTUg
+NSAyIDIgMiA0IDMgMiA0O30NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6IlxARGVuZ1hpYW4i
+Ow0KCXBhbm9zZS0xOjIgMSA2IDAgMyAxIDEgMSAxIDE7fQ0KQGZvbnQtZmFjZQ0KCXtmb250LWZh
+bWlseTpDb25zb2xhczsNCglwYW5vc2UtMToyIDExIDYgOSAyIDIgNCAzIDIgNDt9DQovKiBTdHls
+ZSBEZWZpbml0aW9ucyAqLw0KcC5Nc29Ob3JtYWwsIGxpLk1zb05vcm1hbCwgZGl2Lk1zb05vcm1h
+bA0KCXttYXJnaW46MGluOw0KCWZvbnQtc2l6ZToxMS4wcHQ7DQoJZm9udC1mYW1pbHk6IkNhbGli
+cmkiLHNhbnMtc2VyaWY7fQ0KYTpsaW5rLCBzcGFuLk1zb0h5cGVybGluaw0KCXttc28tc3R5bGUt
+cHJpb3JpdHk6OTk7DQoJY29sb3I6Ymx1ZTsNCgl0ZXh0LWRlY29yYXRpb246dW5kZXJsaW5lO30N
+CnByZQ0KCXttc28tc3R5bGUtcHJpb3JpdHk6OTk7DQoJbXNvLXN0eWxlLWxpbms6IkhUTUwgUHJl
+Zm9ybWF0dGVkIENoYXIiOw0KCW1hcmdpbjowaW47DQoJZm9udC1zaXplOjEwLjBwdDsNCglmb250
+LWZhbWlseToiQ291cmllciBOZXciO30NCnNwYW4uSFRNTFByZWZvcm1hdHRlZENoYXINCgl7bXNv
+LXN0eWxlLW5hbWU6IkhUTUwgUHJlZm9ybWF0dGVkIENoYXIiOw0KCW1zby1zdHlsZS1wcmlvcml0
+eTo5OTsNCgltc28tc3R5bGUtbGluazoiSFRNTCBQcmVmb3JtYXR0ZWQiOw0KCWZvbnQtZmFtaWx5
+OkNvbnNvbGFzO30NCnNwYW4uRW1haWxTdHlsZTIwDQoJe21zby1zdHlsZS10eXBlOnBlcnNvbmFs
+LXJlcGx5Ow0KCWZvbnQtZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmOw0KCWNvbG9yOndpbmRv
+d3RleHQ7fQ0KcC5tc2lwZm9vdGVyOTAyNDUyODksIGxpLm1zaXBmb290ZXI5MDI0NTI4OSwgZGl2
+Lm1zaXBmb290ZXI5MDI0NTI4OQ0KCXttc28tc3R5bGUtbmFtZTptc2lwZm9vdGVyOTAyNDUyODk7
+DQoJbXNvLW1hcmdpbi10b3AtYWx0OmF1dG87DQoJbWFyZ2luLXJpZ2h0OjBpbjsNCgltc28tbWFy
+Z2luLWJvdHRvbS1hbHQ6YXV0bzsNCgltYXJnaW4tbGVmdDowaW47DQoJZm9udC1zaXplOjExLjBw
+dDsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjt9DQouTXNvQ2hwRGVmYXVsdA0K
+CXttc28tc3R5bGUtdHlwZTpleHBvcnQtb25seTsNCglmb250LXNpemU6MTAuMHB0O30NCkBwYWdl
+IFdvcmRTZWN0aW9uMQ0KCXtzaXplOjguNWluIDExLjBpbjsNCgltYXJnaW46MS4waW4gMS4waW4g
+MS4waW4gMS4waW47fQ0KZGl2LldvcmRTZWN0aW9uMQ0KCXtwYWdlOldvcmRTZWN0aW9uMTt9DQot
+LT48L3N0eWxlPjwhLS1baWYgZ3RlIG1zbyA5XT48eG1sPg0KPG86c2hhcGVkZWZhdWx0cyB2OmV4
+dD0iZWRpdCIgc3BpZG1heD0iMTAyNiIgLz4NCjwveG1sPjwhW2VuZGlmXS0tPjwhLS1baWYgZ3Rl
+IG1zbyA5XT48eG1sPg0KPG86c2hhcGVsYXlvdXQgdjpleHQ9ImVkaXQiPg0KPG86aWRtYXAgdjpl
+eHQ9ImVkaXQiIGRhdGE9IjEiIC8+DQo8L286c2hhcGVsYXlvdXQ+PC94bWw+PCFbZW5kaWZdLS0+
+DQo8L2hlYWQ+DQo8Ym9keSBsYW5nPSJFTi1VUyIgbGluaz0iYmx1ZSIgdmxpbms9InB1cnBsZSIg
+c3R5bGU9IndvcmQtd3JhcDpicmVhay13b3JkIj4NCjxkaXYgY2xhc3M9IldvcmRTZWN0aW9uMSI+
+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj5ZZXMuPG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNv
+Tm9ybWFsIj48bzpwPiZuYnNwOzwvbzpwPjwvcD4NCjxkaXYgc3R5bGU9ImJvcmRlcjpub25lO2Jv
+cmRlci10b3A6c29saWQgI0UxRTFFMSAxLjBwdDtwYWRkaW5nOjMuMHB0IDBpbiAwaW4gMGluIj4N
+CjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxiPkZyb206PC9iPiBXaWxsaWFtIEtlbm5pbmd0b24gJmx0
+O3dha0Bnb29nbGUuY29tJmd0OyA8YnI+DQo8Yj5TZW50OjwvYj4gVGh1cnNkYXksIFNlcHRlbWJl
+ciA3LCAyMDIzIDI6NTUgUE08YnI+DQo8Yj5Ubzo8L2I+IENoaGFicmEsIERpcGluZGVyU2luZ2gg
+Jmx0O0RpcGluZGVyX0NoaGFicmFARGVsbC5jb20mZ3Q7PGJyPg0KPGI+Q2M6PC9iPiBvcGVuYm1j
+QGxpc3RzLm96bGFicy5vcmc8YnI+DQo8Yj5TdWJqZWN0OjwvYj4gUmU6IHBob3NwaG9yLW5ldHdv
+cmsgdGVybWluYXRlZCBkdWUgdG8gU0lHQlVTPG86cD48L286cD48L3A+DQo8L2Rpdj4NCjxwIGNs
+YXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9vOnA+PC9wPg0KPGRpdj4NCjxwPjxzcGFuIHN0
+eWxlPSJjb2xvcjojQ0UxMTI2Ij5bRVhURVJOQUwgRU1BSUxdIDxvOnA+PC9vOnA+PC9zcGFuPjwv
+cD4NCjwvZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPkRvIHlvdSBoYXBwZW4gdG8g
+YmUgdXNpbmcgYWFyY2g2ND88bzpwPjwvbzpwPjwvcD4NCjwvZGl2Pg0KPHAgY2xhc3M9Ik1zb05v
+cm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8ZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29O
+b3JtYWwiPk9uIFRodSwgU2VwIDcsIDIwMjMgYXQgMTI6NTLigK9QTSBDaGhhYnJhLCBEaXBpbmRl
+clNpbmdoICZsdDs8YSBocmVmPSJtYWlsdG86RGlwaW5kZXIuQ2hoYWJyYUBkZWxsLmNvbSI+RGlw
+aW5kZXIuQ2hoYWJyYUBkZWxsLmNvbTwvYT4mZ3Q7IHdyb3RlOjxvOnA+PC9vOnA+PC9wPg0KPC9k
+aXY+DQo8YmxvY2txdW90ZSBzdHlsZT0iYm9yZGVyOm5vbmU7Ym9yZGVyLWxlZnQ6c29saWQgI0ND
+Q0NDQyAxLjBwdDtwYWRkaW5nOjBpbiAwaW4gMGluIDYuMHB0O21hcmdpbi1sZWZ0OjQuOHB0O21h
+cmdpbi10b3A6NS4wcHQ7bWFyZ2luLXJpZ2h0OjBpbjttYXJnaW4tYm90dG9tOjUuMHB0Ij4NCjxk
+aXY+DQo8ZGl2Pg0KPGRpdj4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2lu
+LXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+SGkgVGhlcmU8bzpwPjwv
+bzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6
+YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8
+cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1h
+cmdpbi1ib3R0b20tYWx0OmF1dG8iPlJlY2VudGx5IHdlIHVwZGF0ZWQgb3VyIE9wZW5CTUMgZGlz
+dHJvIHRvIHRhZyAyLjE0LjAgKHBob3NwaG9yLW5ldHdvcmsgU1JDUkVWIGY3OGE0MTVlMTU0YmFj
+Mjc0ZTFkMDdjZTgxMjhjNjllOWQxY2Q3MTApLjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1z
+b05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9t
+LWFsdDphdXRvIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0
+eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+
+U2luY2UgdGhlbiB3ZSBhcmUgc2VlaW5nIHRoYXQgdGhlIHBob3NwaG9yLW5ldHdvcmsgc2Vydmlj
+ZSBjcmFzaGVzIGFmdGVyIGNvbmZpZ3VyYXRpb24gY2hhbmdlIGR1ZSB0byBTSUdCVVMuPG86cD48
+L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0
+OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0K
+PHByZT48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPlNlcCAwNyAwOTo1MTo0NSBibWMgcGhvc3Bo
+b3ItbmV0d29yay1tYW5hZ2VyWzYyN106IFdyb3RlIG5ldHdvcmtkIGZpbGU6IC9ldGMvc3lzdGVt
+ZC9uZXR3b3JrLzAwLWJtYy1lbmQxLm5ldHdvcms8L3NwYW4+PG86cD48L286cD48L3ByZT4NCjxw
+cmU+PHNwYW4gc3R5bGU9ImNvbG9yOmJsYWNrIj5TZXAgMDcgMDk6NTE6NDUgYm1jIHBob3NwaG9y
+LW5ldHdvcmstbWFuYWdlcls2MjddOiBXcm90ZSBuZXR3b3JrZCBmaWxlOiAvZXRjL3N5c3RlbWQv
+bmV0d29yay8wMC1ibWMtZW5kMC5uZXR3b3JrPC9zcGFuPjxvOnA+PC9vOnA+PC9wcmU+DQo8cHJl
+PjxzcGFuIHN0eWxlPSJjb2xvcjpibGFjayI+U2VwIDA3IDA5OjUxOjQ5IGJtYyBzeXN0ZW1kWzFd
+OiB4eXoub3BlbmJtY19wcm9qZWN0Lk5ldHdvcmsuc2VydmljZTogTWFpbiBwcm9jZXNzIGV4aXRl
+ZCwgY29kZT1kdW1wZWQsIHN0YXR1cz03L0JVUzwvc3Bhbj48bzpwPjwvbzpwPjwvcHJlPg0KPHBy
+ZT48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPlNlcCAwNyAwOTo1MTo0OSBibWMgc3lzdGVtZFsx
+XTogeHl6Lm9wZW5ibWNfcHJvamVjdC5OZXR3b3JrLnNlcnZpY2U6IEZhaWxlZCB3aXRoIHJlc3Vs
+dCAnY29yZS1kdW1wJy48L3NwYW4+PG86cD48L286cD48L3ByZT4NCjxwcmU+PHNwYW4gc3R5bGU9
+ImNvbG9yOmJsYWNrIj5TZXAgMDcgMDk6NTE6NDkgYm1jIHN5c3RlbWRbMV06IHh5ei5vcGVuYm1j
+X3Byb2plY3QuTmV0d29yay5zZXJ2aWNlOiBDb25zdW1lZCAxLjM2NXMgQ1BVIHRpbWUuPC9zcGFu
+PjxvOnA+PC9vOnA+PC9wcmU+DQo8cHJlPjxzcGFuIHN0eWxlPSJjb2xvcjpibGFjayI+U2VwIDA3
+IDA5OjUxOjUwIGJtYyBzeXN0ZW1kWzFdOiB4eXoub3BlbmJtY19wcm9qZWN0Lk5ldHdvcmsuc2Vy
+dmljZTogU2NoZWR1bGVkIHJlc3RhcnQgam9iLCByZXN0YXJ0IGNvdW50ZXIgaXMgYXQgMS48L3Nw
+YW4+PG86cD48L286cD48L3ByZT4NCjxwcmU+PHNwYW4gc3R5bGU9ImNvbG9yOmJsYWNrIj5TZXAg
+MDcgMDk6NTE6NTAgYm1jIHN5c3RlbWRbMV06IFN0b3BwZWQgUGhvc3Bob3IgTmV0d29yayBNYW5h
+Z2VyLjwvc3Bhbj48bzpwPjwvbzpwPjwvcHJlPg0KPHByZT48c3BhbiBzdHlsZT0iY29sb3I6Ymxh
+Y2siPlNlcCAwNyAwOTo1MTo1MCBibWMgc3lzdGVtZFsxXTogeHl6Lm9wZW5ibWNfcHJvamVjdC5O
+ZXR3b3JrLnNlcnZpY2U6IENvbnN1bWVkIDEuMzY1cyBDUFUgdGltZS48L3NwYW4+PG86cD48L286
+cD48L3ByZT4NCjxwcmU+PHNwYW4gc3R5bGU9ImNvbG9yOmJsYWNrIj5TZXAgMDcgMDk6NTE6NTAg
+Ym1jIHN5c3RlbWRbMV06IFN0YXJ0aW5nIFBob3NwaG9yIE5ldHdvcmsgTWFuYWdlci4uLjwvc3Bh
+bj48bzpwPjwvbzpwPjwvcHJlPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJn
+aW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj4mbmJzcDs8bzpwPjwv
+bzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6
+YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+QmFzZWQgb24gbXkgZGVidWdnaW5nLCBJ
+IGNhbiBjb25maXJtIHRoYXQgdGhlIHRpbWVyIGdldHMgc2NoZWR1bGVkIGNvcnJlY3RseSBhZnRl
+ciB0aGUgY29uZmlnIHdyaXRlIGFuZCB0aGUgcmVnaXN0ZXJlZCBjYWxsIGJhY2sgZG9lcyBnZXQg
+aW52b2tlZC4gVGhlIGNyYXNoIGhhcHBlbnMgZHVlIHRvIHRoZSBiZWxvdw0KIGRidXMgY2FsbCBp
+biBuZXR3b3JrX21hbmFnZXIuY3BwLjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1h
+bCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDph
+dXRvIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJt
+c28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+PHNwYW4g
+c3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7Q291cmllciBOZXcmcXVv
+dDsiPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyB0cnk8L3NwYW4+
+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10
+b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPjxzcGFuIHN0eWxlPSJmb250
+LXNpemU6MTAuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O0NvdXJpZXIgTmV3JnF1b3Q7Ij4mbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgezwvc3Bhbj48bzpwPjwvbzpwPjwv
+cD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bztt
+c28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZToxMC4wcHQ7
+Zm9udC1mYW1pbHk6JnF1b3Q7Q291cmllciBOZXcmcXVvdDsiPiZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBidXMuZ2V0KCk8
+L3NwYW4+PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1h
+cmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPjxzcGFuIHN0eWxl
+PSJmb250LXNpemU6MTAuMHB0O2ZvbnQtZmFtaWx5OiZxdW90O0NvdXJpZXIgTmV3JnF1b3Q7Ij4m
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJz
+cDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgLm5ld19tZXRob2RfY2FsbCgmcXVvdDtv
+cmcuZnJlZWRlc2t0b3AubmV0d29yazEmcXVvdDssPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAg
+Y2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJn
+aW4tYm90dG9tLWFsdDphdXRvIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZh
+bWlseTomcXVvdDtDb3VyaWVyIE5ldyZxdW90OyI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7ICZxdW90
+Oy9vcmcvZnJlZWRlc2t0b3AvbmV0d29yazEmcXVvdDssPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0K
+PHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1t
+YXJnaW4tYm90dG9tLWFsdDphdXRvIj48c3BhbiBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250
+LWZhbWlseTomcXVvdDtDb3VyaWVyIE5ldyZxdW90OyI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7ICZx
+dW90O29yZy5mcmVlZGVza3RvcC5uZXR3b3JrMS5NYW5hZ2VyJnF1b3Q7LCAmcXVvdDtSZWxvYWQm
+cXVvdDspPC9zcGFuPjxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9
+Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj48c3Bh
+biBzdHlsZT0iZm9udC1zaXplOjEwLjBwdDtmb250LWZhbWlseTomcXVvdDtDb3VyaWVyIE5ldyZx
+dW90OyI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7DQo8c3BhbiBzdHlsZT0iY29s
+b3I6YmxhY2s7YmFja2dyb3VuZDp5ZWxsb3ciPi5jYWxsKCk7PC9zcGFuPjwvc3Bhbj48bzpwPjwv
+bzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6
+YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+PHNwYW4gc3R5bGU9ImZvbnQtc2l6ZTox
+MC4wcHQ7Zm9udC1mYW1pbHk6JnF1b3Q7Q291cmllciBOZXcmcXVvdDsiPiZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBsZzI6
+OmluZm8oJnF1b3Q7UmVsb2FkZWQgc3lzdGVtZC1uZXR3b3JrZCZxdW90Oyk7PC9zcGFuPjxvOnA+
+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFs
+dDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRvIj48c3BhbiBzdHlsZT0iZm9udC1zaXpl
+OjEwLjBwdDtmb250LWZhbWlseTomcXVvdDtDb3VyaWVyIE5ldyZxdW90OyI+Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IH08L3NwYW4+PG86cD48L286cD48L3A+DQo8
+cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1h
+cmdpbi1ib3R0b20tYWx0OmF1dG8iPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1z
+b05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9t
+LWFsdDphdXRvIj5JIGhhdmUgbG9va2VkIGludG8gYW55IGZpeGVzIHRvIHRoaXMgaW4gdGhlIGxh
+dGVyIGNvbW1pdHMgYnV0IGRvIG5vdCBmaW5kIGFueS48bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNz
+PSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJv
+dHRvbS1hbHQ6YXV0byI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFs
+IiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1
+dG8iPkkgYWxzbyB0cmllZCB0byBjaGFuZ2UgaXQgdG8gY2FsbF9ub3JlcGx5IGJ1dCB0aGF0IGRv
+ZXMgbm90IGhlbHAgYW5kIGdldCB0aGUgc2FtZSBCVVMgZXJyb3IuPG86cD48L286cD48L3A+DQo8
+cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1h
+cmdpbi1ib3R0b20tYWx0OmF1dG8iPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0KPHByZT48c3BhbiBz
+dHlsZT0iY29sb3I6YmxhY2siPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyB0cnk8L3NwYW4+PG86cD48L286cD48L3ByZT4NCjxwcmU+PHNwYW4gc3R5bGU9ImNvbG9y
+OmJsYWNrIj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgezwvc3Bh
+bj48bzpwPjwvbzpwPjwvcHJlPg0KPHByZT48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPiZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyBsZzI6OmluZm8oJnF1b3Q7VHJ5IHN5c3RlbWQtbmV0d29ya2QgcmVsb2FkLi4uJnF1b3Q7
+KTs8L3NwYW4+PG86cD48L286cD48L3ByZT4NCjxwcmU+PHNwYW4gc3R5bGU9ImNvbG9yOmJsYWNr
+Ij4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsgYXV0byBtZXRob2QgPSBidXMuZ2V0KCkubmV3X21ldGhvZF9jYWxsKE5FVFdP
+UktEX0JVU05BTUUsIE5FVFdPUktEX1BBVEgsPC9zcGFuPjxvOnA+PC9vOnA+PC9wcmU+DQo8cHJl
+PjxzcGFuIHN0eWxlPSJjb2xvcjpibGFjayI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7
+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7IE5FVFdPUktE
+X0lOVEVSRkFDRSwgJnF1b3Q7UmVsb2FkJnF1b3Q7KTs8L3NwYW4+PG86cD48L286cD48L3ByZT4N
+CjxwcmU+PHNwYW4gc3R5bGU9ImNvbG9yOmJsYWNrIj4mbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsm
+bmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgYnVzLmdldCgpLmNhbGxf
+bm9yZXBseShtZXRob2QpOzwvc3Bhbj48bzpwPjwvbzpwPjwvcHJlPg0KPHByZT48c3BhbiBzdHls
+ZT0iY29sb3I6YmxhY2siPiZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyBsZzI6OmluZm8oJnF1b3Q7UmVsb2FkZWQgc3lzdGVt
+ZC1uZXR3b3JrZCZxdW90Oyk7PC9zcGFuPjxvOnA+PC9vOnA+PC9wcmU+DQo8cHJlPjxzcGFuIHN0
+eWxlPSJjb2xvcjpibGFjayI+Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5ic3A7Jm5i
+c3A7IH08L3NwYW4+PG86cD48L286cD48L3ByZT4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxl
+PSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+Jm5i
+c3A7PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdp
+bi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPldoZW4gSSBtYW51YWxs
+eSBpbnZva2UgdGhpcyBmcm9tIHRoZSBzaGVsbCB0aGF0IHNlZW1zIHRvIGdvIGZpbmUuPG86cD48
+L286cD48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0
+OmF1dG87bXNvLW1hcmdpbi1ib3R0b20tYWx0OmF1dG8iPiZuYnNwOzxvOnA+PC9vOnA+PC9wPg0K
+PHByZT48c3BhbiBzdHlsZT0iY29sb3I6YmxhY2siPnJvb3RAYm1jOn4jIGJ1c2N0bCBjYWxsIG9y
+Zy5mcmVlZGVza3RvcC5uZXR3b3JrMSAvb3JnL2ZyZWVkZXNrdG9wL25ldHdvcmsxIG9yZy5mcmVl
+ZGVza3RvcC5uZXR3b3JrMS5NYW5hZ2VyIFJlbG9hZCZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNw
+OyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZuYnNwOyZu
+YnNwOyA8L3NwYW4+PG86cD48L286cD48L3ByZT4NCjxwcmU+PHNwYW4gc3R5bGU9ImNvbG9yOmJs
+YWNrIj5yb290QGJtYzp+IyBlY2hvICQ/PC9zcGFuPjxvOnA+PC9vOnA+PC9wcmU+DQo8cHJlPjxz
+cGFuIHN0eWxlPSJjb2xvcjpibGFjayI+MDwvc3Bhbj48bzpwPjwvbzpwPjwvcHJlPg0KPHAgY2xh
+c3M9Ik1zb05vcm1hbCIgc3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4t
+Ym90dG9tLWFsdDphdXRvIj4mbmJzcDs8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3Jt
+YWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28tbWFyZ2luLWJvdHRvbS1hbHQ6
+YXV0byI+QW55b25lIGVsc2Ugc2VlaW5nIHRoaXMgaXNzdWUgd2l0aCBwaG9zcGhvci1uZXR3b3Jr
+IG9yIGFueSBpZGVhIHdoeSB0aGlzIGNvdWxkIGJlIGhhcHBlbmluZz88bzpwPjwvbzpwPjwvcD4N
+CjxwIGNsYXNzPSJNc29Ob3JtYWwiIHN0eWxlPSJtc28tbWFyZ2luLXRvcC1hbHQ6YXV0bzttc28t
+bWFyZ2luLWJvdHRvbS1hbHQ6YXV0byI+Jm5ic3A7PG86cD48L286cD48L3A+DQo8cCBjbGFzcz0i
+TXNvTm9ybWFsIiBzdHlsZT0ibXNvLW1hcmdpbi10b3AtYWx0OmF1dG87bXNvLW1hcmdpbi1ib3R0
+b20tYWx0OmF1dG8iPlRoYW5rczxvOnA+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCIg
+c3R5bGU9Im1zby1tYXJnaW4tdG9wLWFsdDphdXRvO21zby1tYXJnaW4tYm90dG9tLWFsdDphdXRv
+Ij5EaXA8bzpwPjwvbzpwPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxvOnA+Jm5ic3A7PC9v
+OnA+PC9wPg0KPHAgc3R5bGU9Im1hcmdpbjowaW4iPjxzcGFuIHN0eWxlPSJmb250LXNpemU6Ny4w
+cHQ7Y29sb3I6IzczNzM3MyI+SW50ZXJuYWwgVXNlIC0gQ29uZmlkZW50aWFsPC9zcGFuPjxvOnA+
+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PG86cD4mbmJzcDs8L286cD48L3A+DQo8
+cCBjbGFzcz0ibXNpcGZvb3RlcjkwMjQ1Mjg5IiBzdHlsZT0ibWFyZ2luOjBpbiI+PHNwYW4gc3R5
+bGU9ImZvbnQtc2l6ZTo3LjBwdDtjb2xvcjojNzM3MzczIj5JbnRlcm5hbCBVc2UgLSBDb25maWRl
+bnRpYWw8L3NwYW4+PG86cD48L286cD48L3A+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9kaXY+DQo8L2Js
+b2NrcXVvdGU+DQo8L2Rpdj4NCjwvZGl2Pg0KPC9ib2R5Pg0KPC9odG1sPg0K
 
---0000000000003d43ea0604ca3c44
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Do you happen to be using aarch64?</div><br><div class=3D"=
-gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Sep 7, 2023 at 1=
-2:52=E2=80=AFPM Chhabra, DipinderSingh &lt;<a href=3D"mailto:Dipinder.Chhab=
-ra@dell.com">Dipinder.Chhabra@dell.com</a>&gt; wrote:<br></div><blockquote =
-class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
-id rgb(204,204,204);padding-left:1ex"><div class=3D"msg7272394838860437669"=
->
-
-
-
-
-
-<div lang=3D"EN-US" style=3D"overflow-wrap: break-word;">
-<div class=3D"m_7272394838860437669WordSection1">
-<p class=3D"MsoNormal">Hi There<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">Recently we updated our OpenBMC distro to tag 2.14.0=
- (phosphor-network SRCREV f78a415e154bac274e1d07ce8128c69e9d1cd710).<u></u>=
-<u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">Since then we are seeing that the phosphor-network s=
-ervice crashes after configuration change due to SIGBUS.<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<pre><span style=3D"color:black">Sep 07 09:51:45 bmc phosphor-network-manag=
-er[627]: Wrote networkd file: /etc/systemd/network/00-bmc-end1.network<u></=
-u><u></u></span></pre>
-<pre><span style=3D"color:black">Sep 07 09:51:45 bmc phosphor-network-manag=
-er[627]: Wrote networkd file: /etc/systemd/network/00-bmc-end0.network<u></=
-u><u></u></span></pre>
-<pre><span style=3D"color:black">Sep 07 09:51:49 bmc systemd[1]: xyz.openbm=
-c_project.Network.service: Main process exited, code=3Ddumped, status=3D7/B=
-US<u></u><u></u></span></pre>
-<pre><span style=3D"color:black">Sep 07 09:51:49 bmc systemd[1]: xyz.openbm=
-c_project.Network.service: Failed with result &#39;core-dump&#39;.<u></u><u=
-></u></span></pre>
-<pre><span style=3D"color:black">Sep 07 09:51:49 bmc systemd[1]: xyz.openbm=
-c_project.Network.service: Consumed 1.365s CPU time.<u></u><u></u></span></=
-pre>
-<pre><span style=3D"color:black">Sep 07 09:51:50 bmc systemd[1]: xyz.openbm=
-c_project.Network.service: Scheduled restart job, restart counter is at 1.<=
-u></u><u></u></span></pre>
-<pre><span style=3D"color:black">Sep 07 09:51:50 bmc systemd[1]: Stopped Ph=
-osphor Network Manager.<u></u><u></u></span></pre>
-<pre><span style=3D"color:black">Sep 07 09:51:50 bmc systemd[1]: xyz.openbm=
-c_project.Network.service: Consumed 1.365s CPU time.<u></u><u></u></span></=
-pre>
-<pre><span style=3D"color:black">Sep 07 09:51:50 bmc systemd[1]: Starting P=
-hosphor Network Manager...<u></u><u></u></span></pre>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">Based on my debugging, I can confirm that the timer =
-gets scheduled correctly after the config write and the registered call bac=
-k does get invoked. The crash happens due to the below dbus call in network=
-_manager.cpp.<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Cour=
-ier New&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 try<u></u><u></u>=
-</span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Cour=
-ier New&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 {<u></u><u></u></=
-span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Cour=
-ier New&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 bus.get()<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Cour=
-ier New&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .new_method_call(&quot;org.freedesktop.netwo=
-rk1&quot;,<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Cour=
-ier New&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &quot;/org/freede=
-sktop/network1&quot;,<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Cour=
-ier New&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &quot;org.freedes=
-ktop.network1.Manager&quot;, &quot;Reload&quot;)<u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Cour=
-ier New&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
-<span style=3D"background:yellow">.call();</span><u></u><u></u></span></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Cour=
-ier New&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0 lg2::info(&quot;Reloaded systemd-networkd&quot;);<u></u><u></u></spa=
-n></p>
-<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Cour=
-ier New&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }<u></u><u></u></=
-span></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">I have looked into any fixes to this in the later co=
-mmits but do not find any.<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">I also tried to change it to call_noreply but that d=
-oes not help and get the same BUS error.<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- try<u></u><u></u></span></pre>
-<pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- {<u></u><u></u></span></pre>
-<pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 lg2::info(&quot;Try systemd-networkd reload...&quo=
-t;);<u></u><u></u></span></pre>
-<pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 auto method =3D bus.get().new_method_call(NETWORKD=
-_BUSNAME, NETWORKD_PATH,<u></u><u></u></span></pre>
-<pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- NETWORKD_INTERFACE, &quot;Reload&quot;);<u></u><u></u></span></pre>
-<pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 bus.get().call_noreply(method);<u></u><u></u></spa=
-n></pre>
-<pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0 lg2::info(&quot;Reloaded systemd-networkd&quot;);<=
-u></u><u></u></span></pre>
-<pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
- }<u></u><u></u></span></pre>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">When I manually invoke this from the shell that seem=
-s to go fine.<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<pre><span style=3D"color:black">root@bmc:~# busctl call org.freedesktop.ne=
-twork1 /org/freedesktop/network1 org.freedesktop.network1.Manager Reload=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 <u></u><u></u></span></pre>
-<pre><span style=3D"color:black">root@bmc:~# echo $?<u></u><u></u></span></=
-pre>
-<pre><span style=3D"color:black">0<u></u><u></u></span></pre>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">Anyone else seeing this issue with phosphor-network =
-or any idea why this could be happening?<u></u><u></u></p>
-<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
-<p class=3D"MsoNormal">Thanks<u></u><u></u></p>
-<p class=3D"MsoNormal">Dip<u></u><u></u></p>
-<br>
-<p align=3D"Left" style=3D"margin:0px"><span style=3D"font-size:7pt;font-fa=
-mily:Calibri;color:rgb(115,115,115)">Internal Use - Confidential</span></p>
-</div>
-</div>
-
-</div></blockquote></div>
-
---0000000000003d43ea0604ca3c44--
+--_000_DM6PR19MB4107E37A673818B071DA99DA91EEADM6PR19MB4107namp_--
