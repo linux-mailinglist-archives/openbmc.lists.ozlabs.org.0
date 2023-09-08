@@ -2,69 +2,69 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B72FA798C45
-	for <lists+openbmc@lfdr.de>; Fri,  8 Sep 2023 20:10:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 96381799118
+	for <lists+openbmc@lfdr.de>; Fri,  8 Sep 2023 22:39:17 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20230601.gappssmtp.com header.i=@tanous-net.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=Dc/osrec;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20221208 header.b=12n5S/ef;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Rj4093yxpz3c8V
-	for <lists+openbmc@lfdr.de>; Sat,  9 Sep 2023 04:10:17 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Rj7Hz6CLMz3cGK
+	for <lists+openbmc@lfdr.de>; Sat,  9 Sep 2023 06:39:11 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=tanous-net.20230601.gappssmtp.com header.i=@tanous-net.20230601.gappssmtp.com header.a=rsa-sha256 header.s=20230601 header.b=Dc/osrec;
+	dkim=pass (2048-bit key; unprotected) header.d=google.com header.i=@google.com header.a=rsa-sha256 header.s=20221208 header.b=12n5S/ef;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=tanous.net (client-ip=2a00:1450:4864:20::32e; helo=mail-wm1-x32e.google.com; envelope-from=ed@tanous.net; receiver=lists.ozlabs.org)
-Received: from mail-wm1-x32e.google.com (mail-wm1-x32e.google.com [IPv6:2a00:1450:4864:20::32e])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=google.com (client-ip=2a00:1450:4864:20::12a; helo=mail-lf1-x12a.google.com; envelope-from=wak@google.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rj3zX1wKTz3c4t
-	for <openbmc@lists.ozlabs.org>; Sat,  9 Sep 2023 04:09:42 +1000 (AEST)
-Received: by mail-wm1-x32e.google.com with SMTP id 5b1f17b1804b1-401da71b7faso27442095e9.2
-        for <openbmc@lists.ozlabs.org>; Fri, 08 Sep 2023 11:09:42 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rj7HM4JQ0z3c24
+	for <openbmc@lists.ozlabs.org>; Sat,  9 Sep 2023 06:38:38 +1000 (AEST)
+Received: by mail-lf1-x12a.google.com with SMTP id 2adb3069b0e04-502a7e1bdc7so284559e87.0
+        for <openbmc@lists.ozlabs.org>; Fri, 08 Sep 2023 13:38:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=tanous-net.20230601.gappssmtp.com; s=20230601; t=1694196575; x=1694801375; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6bgEzGiwkKWBx+y30xyO2l8JcwxwxFSYdaRt+6eaH0M=;
-        b=Dc/osrecILRPy6vbOQ6r2q0jJv+YOFyit2lrrQ52bVLdoZe5mlji/2B2q3DS5rdUqW
-         8VuQ0XVJFotuyMVXaHTmDevmaJxsXhsZLNSG4dEElpI3kKgjBF0FmlA3Xd1n7X68ueQW
-         M25LelkJ2m0+3+gMMBKhIuMimy2HRVCS20qGswVhwoY8Ot9refbmlz0ZoM+EfVMjVtKY
-         9guxF/2r2xOEDtvQ7va8yxroogCK18fpmIgNrZJxur36aF1+mEQjaZZm7gRX0tPyrsR9
-         JtwJ4fC+LzwZ7Xo36vosQINdjoItBNUHEtWXNtD0TIhcyRnZ+1z/LNWqaEbSmUVrcsQV
-         Jv1g==
+        d=google.com; s=20221208; t=1694205510; x=1694810310; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=4mgIqTnIDfMTvjD9aOwhDbVRewBZtSG/zGxT5zKF+iI=;
+        b=12n5S/efNNoHJx6ifkKuCA82X8OkARNzrUeBBehlBMjTxiaNg911WHN2hbqZsUjvi7
+         6uUXzsVZjINPojUhiCf+fS6JYqWH3XtbjPai+jHeFblFjvnxOXeVjwR+V7By+oTlorKd
+         cDVYslB5ZhGnPXSN6FoKrAI1wlvT9ac+VTHerBUzcrJld/iczTtPYEm6mP7QQFiLwuNM
+         AxYQowOms/3EYUTZQ/CYGQCjZK7p/YvT9ULZQZ7uMSmGy3MHfVOvkkdzwN2iD0enA7Hs
+         FoXVmR3HVWO5xF0rVZVLC2pW6tG8J++lQJ3pchSQJh71oxN336E1EHCt5PpUxJENZxK/
+         ejFg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1694196575; x=1694801375;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6bgEzGiwkKWBx+y30xyO2l8JcwxwxFSYdaRt+6eaH0M=;
-        b=Gxy1YNfxcavw76cw6S3MvImwGVRolVMP31s+88/7mYXCxOg87l9yCCOxeelko2CIfB
-         YrJNlomKrpumRBLBZIdetqnkunnj/s/NLmPxHqhYUslPr53xnNwu8zDvNAzj8vdos3nw
-         DEuu5pd8fAYSORurjowIJvtAnzLrAOE0+YyC/x3OWQBCdPe6QbdVjJpAt3kSu6XOtnPg
-         y/vDkcOd5aRAsu8O97DxYHwxJEu8rxn64wbeSpROioZx2HH/er8ie170EWtjTqZIPY/p
-         BfmxLTTe5CFAseMzKan5Rkh1QXxTRriru4qxYTY0QitODz3idPVF0UJJsZBN31aD2ajv
-         CfNw==
-X-Gm-Message-State: AOJu0YwfkYqlOuEujYrH6JSEy7DZNJ75Of7f7aLB2sdsRgYtS8NbUz4C
-	a1/0uoQrDJlh6g3Ykacm6+YDtl4W9mHSTOldKYQE/A==
-X-Google-Smtp-Source: AGHT+IHIzPuMOIhY1mOUsyzZ3Y1HW/TkBSGTRl1xoGaqok6uFXVrpfmtuT7StwZJhrniKxWNLElhEPTMqbLy9wlehk8=
-X-Received: by 2002:adf:fd4d:0:b0:319:67da:ed68 with SMTP id
- h13-20020adffd4d000000b0031967daed68mr2807022wrs.7.1694196575429; Fri, 08 Sep
- 2023 11:09:35 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1694205510; x=1694810310;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4mgIqTnIDfMTvjD9aOwhDbVRewBZtSG/zGxT5zKF+iI=;
+        b=otIK+YBdODU1TbGmuOW4wMOaIARwaT5CX15CWez/wI9RirevZ2+LklNd/UT+KfmUyk
+         YfaW9/YIH0k8ktWhBMgN4w4P6mL4ITDbKXFrkgxNGXywau1il8pIXE4G/1W5i5iFZj3s
+         4kfykN0uRC4Ivg09QA1F53KkVaurd0rQYv1fIMAZqOfPXAClJuAS32se+9uQ/Pi6pLIB
+         Byzj/bLV6/tfc1owxmiEKrDDzljSuFsIXV8auC383Ja/yQttzJPSOY78lFbYsdtlmn/L
+         NnvT/kEYDFu/+QGOgyGuBxpV2Xo51MihH6i719e/Qt4DcO4CvfJySAMcwu+zb3EUo5rf
+         6CdQ==
+X-Gm-Message-State: AOJu0YwO+K1BkE/8IyJ59iYnyK4EvnxhC0aEXM7ox98u1+NVbC1HeUoq
+	6yuxsE6hI/z3NQ9TP2qJVer4NhbdPJtDBEESO9xv0SEa6HbJIPvRhk7o5A==
+X-Google-Smtp-Source: AGHT+IEWmKPF2YQZ8mw4SWv0G14kagLCQkSOoZnbG9TrTS8JFtIxG5gogQUp2OOc5G9qffeU99f1dCH/M5IbR/gRrT4=
+X-Received: by 2002:ac2:5a45:0:b0:500:dc8d:c344 with SMTP id
+ r5-20020ac25a45000000b00500dc8dc344mr2452675lfn.48.1694205509983; Fri, 08 Sep
+ 2023 13:38:29 -0700 (PDT)
 MIME-Version: 1.0
-References: <LV2PR12MB601437AEF8603C553E64CB9CCDEEA@LV2PR12MB6014.namprd12.prod.outlook.com>
- <CAH2-KxBomVGsp1hTjiyzz_Fh5adwQW_Tp+3o2B-w-0aqxguBAQ@mail.gmail.com> <LV2PR12MB60145489EE90BFE702A93E15CDEDA@LV2PR12MB6014.namprd12.prod.outlook.com>
-In-Reply-To: <LV2PR12MB60145489EE90BFE702A93E15CDEDA@LV2PR12MB6014.namprd12.prod.outlook.com>
-From: Ed Tanous <ed@tanous.net>
-Date: Fri, 8 Sep 2023 11:09:24 -0700
-Message-ID: <CACWQX80cX-Q=UJOwXTGYMuDNKFUthXv1YAhax72dZUKFjaYL0Q@mail.gmail.com>
-Subject: Re: bmcweb multi-threaded solution
-To: Rohit Pai <ropai@nvidia.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+References: <DM6PR19MB4107DD5C47856396755CD0FC91EEA@DM6PR19MB4107.namprd19.prod.outlook.com>
+ <CAPnigKnigkAFn6RgE59xv488Wdw-T_0G-6i+tAk2_uLjBms+pA@mail.gmail.com>
+ <DM6PR19MB4107E37A673818B071DA99DA91EEA@DM6PR19MB4107.namprd19.prod.outlook.com>
+ <CAPnigK=YHGX33zZoCxYNmWPYovcQF_mG8OAo4m4LzBheqiNYYA@mail.gmail.com> <DM6PR19MB4107F212B9FBF355A184927191EDA@DM6PR19MB4107.namprd19.prod.outlook.com>
+In-Reply-To: <DM6PR19MB4107F212B9FBF355A184927191EDA@DM6PR19MB4107.namprd19.prod.outlook.com>
+From: William Kennington <wak@google.com>
+Date: Fri, 8 Sep 2023 13:38:17 -0700
+Message-ID: <CAPnigKkKr5E-taGuEsJFXnQusk8w7ZmUuuV5nXuUjoyJU=NC3Q@mail.gmail.com>
+Subject: Re: phosphor-network terminated due to SIGBUS
+To: "Chhabra, DipinderSingh" <Dipinder.Chhabra@dell.com>
+Content-Type: multipart/alternative; boundary="0000000000009a22430604def50d"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,362 +76,472 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ed Tanous <edtanous@google.com>, "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
+Cc: "openbmc@lists.ozlabs.org" <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Sep 8, 2023 at 5:57=E2=80=AFAM Rohit Pai <ropai@nvidia.com> wrote:
->
-> Hello Ed,
->
-> Sharing the code snippets for the two approaches we have tested.
->
-> 1. Original Patch + Thread Pool
->
-> webserver_main.cpp ------------------------------------------------------=
----------------------------------------------------------------------------=
--
->
-> void runIOService()
-> {
->     BMCWEB_LOG_INFO << "Starting ASIO worker thread";
->     boost::asio::io_context& io =3D crow::connections::getIoContext();
->     io.run();
->     BMCWEB_LOG_INFO << "Exiting ASIO worker thread";
-> }
->
-> static int run()
-> {
->     .......
->     app.run();
->
->     // Create a vector of threads
->     std::vector<std::thread> threads;
->
->     //Create and launch the threads
->     // 2 threads would be created for AST2600
->     for (unsigned int i =3D 0; i < boost::thread::hardware_concurrency();=
- ++i)
->     {
->         threads.emplace_back(runIOService);
->     }
->
->     // Wait for all threads to finish
->     for (auto& thread : threads) {
->         thread.join();
->     }
->
->     return 0;
-> }
->
-> With this approach we are facing the issue of dbus connections being shar=
-ed between threads issue which I have explained previously.
->
->
->
-> 2. Original Patch + Dedicate thread for special MRD URIs
->
-> webserver_main.cpp ------------------------------------------------------=
----------------------------------------------------------------------------=
--
->
-> void runIOService()
-> {
->     BMCWEB_LOG_INFO << "Starting ASIO worker thread";
->     boost::asio::io_context& io =3D crow::connections::getNextIoContext()=
-;
->     io.run();
->     BMCWEB_LOG_INFO << "Exiting ASIO worker thread";
-> }
->
-> static int run()
-> {
->     crow::Logger::setLogLevel(
->         static_cast<crow::LogLevel>(bmcwebLogLevel));
->
->     boost::asio::io_context& io =3D crow::connections::getIoContext();
->     App app(io);
->     // Create a work object to prevent ioContext.run() from returning imm=
-ediately
->     auto work =3D make_work_guard(crow::connections::getNextIoContext());
-> .....................
->     app.run();
->
->     // Create a vector of threads
->     std::vector<std::thread> threads;
->
->     //Create and launch the threads
->    // Test code with one MRD handler thread
->     for (unsigned int i =3D 0; i < 1; ++i)
->     {
->         threads.emplace_back(runIOService);
->     }
->     io.run();
->     work.reset();
->     // Wait for all threads to finish
->     for (auto& thread : threads) {
->         thread.join();
->     }
-> }
->
-> dbus_singleton.cpp-------------------------------------------------------=
----------------------------------------------------------------------------=
--
->
-> boost::asio::io_context& getNextIoContext()
-> {
->     int threadCount =3D 4;
->     static boost::asio::io_context io(threadCount);
->     return io;
-> }
->
-> dbus_singleton.hpp-------------------------------------------------------=
----------------------------------------------------------------------------=
--
-> boost::asio::io_context& getNextIoContext();
->
->
-> Platform Specific MRD URI handling
-> metric_report.hpp--------------------------------------------------------=
----------------------------------------------------------------------------=
--
->
-> inline void
->     getPlatforMetrics(const crow::Request& req, const std::shared_ptr<bmc=
-web::AsyncResp>& asyncResp,
->                       const std::string& metricId,
->                       const uint64_t& requestTimestamp =3D 0)
-> {
->             boost::asio::post(
->                 crow::connections::getNextIoContext(), [req, asyncResp]()=
- {
->
->                     nlohmann::json& resArray =3D
->                         asyncResp->res.jsonValue["MetricValues"];
->
->
->              // Test code which populates 5K objects for the response
->                    // In our actual implementation code we read this data=
- from shared memory based backend API
->               nlohmann::json thisMetric =3D nlohmann::json::object();
->                     for (int i=3D0; i < 5000; i++) {
->                         thisMetric["MetricValue"] =3D 0;
->                         thisMetric["MetricProperty"] =3D "/redfish/v1/Fab=
-rics/System_0/XYZ ";
->                         thisMetric["Timestamp"] =3D "2020-03-27T16:50:58.=
-516+00:00";
->                         resArray.push_back(thisMetric);
->                     }
->
->                     boost::asio::post(*req.ioService, [asyncResp](){
->                         messages::success(asyncResp->res);
->                     });
->                 });
-> }
->
-> This code works well for some period but has stability issues.
-> I was not sure if cross posting asio jobs between context is stable or no=
-t hence I wanted to test it with just simple boost::asio code.
-> I created this defect https://github.com/chriskohlhoff/asio/issues/1352 a=
-s I was able to repro the issue with boost::asio code which is present in t=
-he bug description.
->
+--0000000000009a22430604def50d
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Please submit patches to gerrit, mark them WIP, and make sure they
-build.  What you wrote above won't build due to logging changes made a
-while ago on mainline, so it's not very helpful.  With that said, if
-the above is the only code you wrote, you're missing multi-threading
-locks in quite a few places, which is likely why your code is crashing
-but let's discuss that on gerrit, where we can talk line by line in
-the diff.
+It should be fixed now :)
+https://gerrit.openbmc.org/c/openbmc/phosphor-networkd/+/66533
 
+On Thu, Sep 7, 2023 at 6:24=E2=80=AFPM Chhabra, DipinderSingh <
+Dipinder.Chhabra@dell.com> wrote:
+
+> Something to do with the callback in the timer context. As a temporary
+> workaround, I have removed the inline implementation of reloadConfigs and
+> moved the completed block of code inside reload.setCallback directly insi=
+de
+> reloadConfigs (including reloadPreHooks, actual dbus call and
+> reloadPostHooks). This works pretty good and no more SIGBUS.
+>
+>
+>
+> Depending upon the scenario this will cause multiple Reload calls to
+> systemd-networkd (unlike the timer case where it be always be a single
+> call) but I guess it may be ok in the interim.
+>
+>
+>
+> Will continue investigating further from my end too.
+>
+>
 >
 > Thanks
-> Rohit PAI
 >
-> -----Original Message-----
-> From: Ed Tanous <edtanous@google.com>
-> Sent: Friday, September 8, 2023 1:20 AM
-> To: Rohit Pai <ropai@nvidia.com>
-> Cc: openbmc@lists.ozlabs.org
-> Subject: Re: bmcweb multi-threaded solution
->
-> External email: Use caution opening links or attachments
+> Dipinder
 >
 >
-> On Thu, Sep 7, 2023 at 2:36=E2=80=AFAM Rohit Pai <ropai@nvidia.com> wrote=
-:
-> >
-> > Hello All,
-> >
-> >
-> >
-> > This previous thread captures the motive behind our interest in chasing=
- multi-threaded solution for bmcweb.
-> >
-> > Thanks to Ed for putting up this initial patch.
-> > https://gerrit.openbmc.org/c/openbmc/bmcweb/+/63710
-> >
-> >
-> >
-> > We have been testing this patch in the recent times and I wanted to put=
- a summary of our observations.
-> >
-> >
-> >
-> > The original patch was not creating any explicit threads and we did not=
- find boost::asio creating them for us.
-> >
-> > So as per this article from boost I modified the patch to create a thre=
-ad pool and share the same IO context among all threads.
-> >
-> > When I tested this change, I found two problems.
-> >
-> > Sharing same IO context between multiple threads does not work.
-> >
-> > I have logged this issue  https://github.com/chriskohlhoff/asio/issues/=
-1353  in boost::asio git hub page with sample code to reproduce the issue.
-> >
-> > It would be great if someone else test this sample code and share the r=
-esults based on their platform.
-> >
-> > Sharing dbus connection across threads is not safe:
-> >
-> > when we share same IO context between multiple threads, it=E2=80=99s po=
-ssible that the async job posted by one thread, can be picked up by some ot=
-her thread.
-> >
-> > If thread1 makes crow::connections::systemBus().async_method_call then =
-the response lambda can get executed in thead2=E2=80=99s context.
-> >
-> > When thread2 is trying to read from the dbus connection, thread1 can ma=
-ke a new request on the same bus connection as part of handling another URI=
- request.
-> >
-> > Sdbus is not thread safe when connection object is shared between multi=
-ple threads which can perform read/write operations.
-> >
-> >
-> >
-> > IO Context per thread.
-> >
-> > Since sharing IO context was not working I took the second approach men=
-tioned in this article which is to dedicate IO context per threads.
-> >
-> > Major design challenge with this approach is to decide which jobs must =
-be executed in which IO context.
-> >
-> > I started with dedicating one thread/IO context to manage all the incom=
-ing requests and handling responses back to the clients.
-> >
-> > I dedicated another thread/IO context to only manage aggregate URIs whi=
-ch have 1K+ sensors response (MRDs) to populate and does not have tighter l=
-atency requirements.
-> >
-> > Our goal is to have faster response on the power/thermal URIs which is =
-served by the main thread and is not blocked by huge response handling requ=
-ired by aggregate URIs which is managed by the secondary thread.
-> >
-> > From our previous performance experiments, we had found that JSON respo=
-nse preparation for 5K+ sensors was taking around 250 to 300ms in bmcweb du=
-ring which power/thermals URIs were blocked.
-> >
-> >
-> >
-> >      =E2=94=8C=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=90          =E2=94=8C=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=90
-> >
-> >      =E2=94=82MainThread=E2=94=82          =E2=94=82MRD_Handler_Thread=
-=E2=94=82
-> >
-> >      =E2=94=94=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=AC=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=98          =E2=94=94=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=AC=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=98
-> >
-> >                 =E2=94=82   asio::post(request)        =E2=94=82
-> >
-> >                 =E2=94=82 =E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80>
-> >
-> >                 =E2=94=82                                            =
-=E2=94=82
-> >
-> >                 =E2=94=82   asio::post(response)     =E2=94=82
-> >
-> >                 =E2=94=82 <=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80
-> >
-> >      =E2=94=8C=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=B4=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=90          =E2=94=8C=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=B4=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=90
-> >
-> >      =E2=94=82MainThread=E2=94=82          =E2=94=82MRD_Handler_Thread=
-=E2=94=82
-> >
-> >      =E2=94=94=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=98          =E2=94=94=E2=94=80=E2=
-=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=
-=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=E2=94=80=
-=E2=94=98
-> >
-> >
-> >
-> > Based on the URI main thread decides to continue to process the request=
- or offload it to the MRD handler thread.
-> >
-> > The response received from the MRD thread is returned to the client by =
-the main thread.
-> >
-> >                The performance results with the solution are great. We =
-see almost 50% improvement in the performance of power/thermal URIs.
-> >
-> >                Here is performance is measured based on worst case late=
-ncy seen on power thermal URIs when there are concurrent clients accessing =
-power/thermal + MRD URIs.
-> >
-> >
-> >
-> >                However, this solution seems to have some stability issu=
-es in the overnight long run tests.
-> >
-> > The crash is seen around boost:post APIs in multi-threading context. I
-> > have logged a different bug in boost::asio to demonstrate this
-> > problem. https://github.com/chriskohlhoff/asio/issues/1352
-> >
-> > I will follow up to check if boost can help us with this fix.
-> >
-> >
-> >
-> > What I am looking for
-> >
-> > Does anyone have any different proposal for sharing IO context between =
-threads which can work our bmc platform?
-> > Feedback on handling dbus connection between multiple threads in the co=
-ntext of bmcweb?
-> > Is this a good model to dedicate threads based on the use case as we ar=
-e not able to make IO sharing between threads work well?
-> > Any better way to Post asio jobs across threads and make it stable?
-> >
-> >
 >
-> The above is great, but if you don't post the code you're using, it's rea=
-lly difficult to provide any input.  Your stability issues could be simply =
-due to missing locks, or unintended multi-threaded sharing, but it's hard t=
-o know without being able to look at the code you're using.
-> I would highly recommend building your binary with thread sanitizer.
+> *From:* William Kennington <wak@google.com>
+> *Sent:* Thursday, September 7, 2023 5:07 PM
+> *To:* Chhabra, DipinderSingh <Dipinder_Chhabra@Dell.com>
+> *Cc:* openbmc@lists.ozlabs.org
+> *Subject:* Re: phosphor-network terminated due to SIGBUS
 >
-> >
-> > Thanks
-> >
-> > Rohit PAI
-> >
-> >
+>
+>
+> [EXTERNAL EMAIL]
+>
+> We are investigating the same issue on our side, I'm trying some other
+> tests to figure out why the references aren't working as expected.
+>
+>
+>
+> On Thu, Sep 7, 2023 at 1:27=E2=80=AFPM Chhabra, DipinderSingh <
+> Dipinder.Chhabra@dell.com> wrote:
+>
+> Yes.
+>
+>
+>
+> *From:* William Kennington <wak@google.com>
+> *Sent:* Thursday, September 7, 2023 2:55 PM
+> *To:* Chhabra, DipinderSingh <Dipinder_Chhabra@Dell.com>
+> *Cc:* openbmc@lists.ozlabs.org
+> *Subject:* Re: phosphor-network terminated due to SIGBUS
+>
+>
+>
+> [EXTERNAL EMAIL]
+>
+> Do you happen to be using aarch64?
+>
+>
+>
+> On Thu, Sep 7, 2023 at 12:52=E2=80=AFPM Chhabra, DipinderSingh <
+> Dipinder.Chhabra@dell.com> wrote:
+>
+> Hi There
+>
+>
+>
+> Recently we updated our OpenBMC distro to tag 2.14.0 (phosphor-network
+> SRCREV f78a415e154bac274e1d07ce8128c69e9d1cd710).
+>
+>
+>
+> Since then we are seeing that the phosphor-network service crashes after
+> configuration change due to SIGBUS.
+>
+>
+>
+> Sep 07 09:51:45 bmc phosphor-network-manager[627]: Wrote networkd file: /=
+etc/systemd/network/00-bmc-end1.network
+>
+> Sep 07 09:51:45 bmc phosphor-network-manager[627]: Wrote networkd file: /=
+etc/systemd/network/00-bmc-end0.network
+>
+> Sep 07 09:51:49 bmc systemd[1]: xyz.openbmc_project.Network.service: Main=
+ process exited, code=3Ddumped, status=3D7/BUS
+>
+> Sep 07 09:51:49 bmc systemd[1]: xyz.openbmc_project.Network.service: Fail=
+ed with result 'core-dump'.
+>
+> Sep 07 09:51:49 bmc systemd[1]: xyz.openbmc_project.Network.service: Cons=
+umed 1.365s CPU time.
+>
+> Sep 07 09:51:50 bmc systemd[1]: xyz.openbmc_project.Network.service: Sche=
+duled restart job, restart counter is at 1.
+>
+> Sep 07 09:51:50 bmc systemd[1]: Stopped Phosphor Network Manager.
+>
+> Sep 07 09:51:50 bmc systemd[1]: xyz.openbmc_project.Network.service: Cons=
+umed 1.365s CPU time.
+>
+> Sep 07 09:51:50 bmc systemd[1]: Starting Phosphor Network Manager...
+>
+>
+>
+> Based on my debugging, I can confirm that the timer gets scheduled
+> correctly after the config write and the registered call back does get
+> invoked. The crash happens due to the below dbus call in
+> network_manager.cpp.
+>
+>
+>
+>         try
+>
+>         {
+>
+>             bus.get()
+>
+>                 .new_method_call("org.freedesktop.network1",
+>
+>                                  "/org/freedesktop/network1",
+>
+>                                  "org.freedesktop.network1.Manager",
+> "Reload")
+>
+>                 .call();
+>
+>             lg2::info("Reloaded systemd-networkd");
+>
+>         }
+>
+>
+>
+> I have looked into any fixes to this in the later commits but do not find
+> any.
+>
+>
+>
+> I also tried to change it to call_noreply but that does not help and get
+> the same BUS error.
+>
+>
+>
+>         try
+>
+>         {
+>
+>             lg2::info("Try systemd-networkd reload...");
+>
+>             auto method =3D bus.get().new_method_call(NETWORKD_BUSNAME, N=
+ETWORKD_PATH,
+>
+>                                  NETWORKD_INTERFACE, "Reload");
+>
+>             bus.get().call_noreply(method);
+>
+>             lg2::info("Reloaded systemd-networkd");
+>
+>         }
+>
+>
+>
+> When I manually invoke this from the shell that seems to go fine.
+>
+>
+>
+> root@bmc:~# busctl call org.freedesktop.network1 /org/freedesktop/network=
+1 org.freedesktop.network1.Manager Reload
+>
+> root@bmc:~# echo $?
+>
+> 0
+>
+>
+>
+> Anyone else seeing this issue with phosphor-network or any idea why this
+> could be happening?
+>
+>
+>
+> Thanks
+>
+> Dip
+>
+>
+>
+> Internal Use - Confidential
+>
+>
+>
+> Internal Use - Confidential
+>
+>
+>
+> Internal Use - Confidential
+>
+>
+
+--0000000000009a22430604def50d
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">It should be fixed now :)=C2=A0<a href=3D"https://gerrit.o=
+penbmc.org/c/openbmc/phosphor-networkd/+/66533">https://gerrit.openbmc.org/=
+c/openbmc/phosphor-networkd/+/66533</a></div><br><div class=3D"gmail_quote"=
+><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Sep 7, 2023 at 6:24=E2=80=AF=
+PM Chhabra, DipinderSingh &lt;<a href=3D"mailto:Dipinder.Chhabra@dell.com">=
+Dipinder.Chhabra@dell.com</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
+4,204);padding-left:1ex"><div class=3D"msg5398798417703686960">
+
+
+
+
+
+<div lang=3D"EN-US" style=3D"overflow-wrap: break-word;">
+<div class=3D"m_5398798417703686960WordSection1">
+<p class=3D"MsoNormal">Something to do with the callback in the timer conte=
+xt. As a temporary workaround, I have removed the inline implementation of =
+reloadConfigs and moved the completed block of code inside reload.setCallba=
+ck directly inside reloadConfigs (including
+ reloadPreHooks, actual dbus call and reloadPostHooks). This works pretty g=
+ood and no more SIGBUS.<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">Depending upon the scenario this will cause multiple=
+ Reload calls to systemd-networkd (unlike the timer case where it be always=
+ be a single call) but I guess it may be ok in the interim.<u></u><u></u></=
+p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">Will continue investigating further from my end too.=
+<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"MsoNormal">Thanks<u></u><u></u></p>
+<p class=3D"MsoNormal">Dipinder<u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<div style=3D"border-right:none;border-bottom:none;border-left:none;border-=
+top:1pt solid rgb(225,225,225);padding:3pt 0in 0in">
+<p class=3D"MsoNormal"><b>From:</b> William Kennington &lt;<a href=3D"mailt=
+o:wak@google.com" target=3D"_blank">wak@google.com</a>&gt; <br>
+<b>Sent:</b> Thursday, September 7, 2023 5:07 PM<br>
+<b>To:</b> Chhabra, DipinderSingh &lt;Dipinder_Chhabra@Dell.com&gt;<br>
+<b>Cc:</b> <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">op=
+enbmc@lists.ozlabs.org</a><br>
+<b>Subject:</b> Re: phosphor-network terminated due to SIGBUS<u></u><u></u>=
+</p>
+</div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<div>
+<p><span style=3D"color:rgb(206,17,38)">[EXTERNAL EMAIL] <u></u><u></u></sp=
+an></p>
+</div>
+<div>
+<p class=3D"MsoNormal">We are investigating the same issue on our side, I&#=
+39;m trying some other tests to figure out why the references aren&#39;t wo=
+rking as expected.<u></u><u></u></p>
+</div>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<div>
+<div>
+<p class=3D"MsoNormal">On Thu, Sep 7, 2023 at 1:27=E2=80=AFPM Chhabra, Dipi=
+nderSingh &lt;<a href=3D"mailto:Dipinder.Chhabra@dell.com" target=3D"_blank=
+">Dipinder.Chhabra@dell.com</a>&gt; wrote:<u></u><u></u></p>
+</div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0in 0in 0in 6pt;margin:5pt 0i=
+n 5pt 4.8pt">
+<div>
+<div>
+<div>
+<p class=3D"MsoNormal">Yes.<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
+<div style=3D"border-right:none;border-bottom:none;border-left:none;border-=
+top:1pt solid rgb(225,225,225);padding:3pt 0in 0in">
+<p class=3D"MsoNormal"><b>From:</b> William Kennington &lt;<a href=3D"mailt=
+o:wak@google.com" target=3D"_blank">wak@google.com</a>&gt;
+<br>
+<b>Sent:</b> Thursday, September 7, 2023 2:55 PM<br>
+<b>To:</b> Chhabra, DipinderSingh &lt;<a href=3D"mailto:Dipinder_Chhabra@De=
+ll.com" target=3D"_blank">Dipinder_Chhabra@Dell.com</a>&gt;<br>
+<b>Cc:</b> <a href=3D"mailto:openbmc@lists.ozlabs.org" target=3D"_blank">op=
+enbmc@lists.ozlabs.org</a><br>
+<b>Subject:</b> Re: phosphor-network terminated due to SIGBUS<u></u><u></u>=
+</p>
+</div>
+<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
+<div>
+<p><span style=3D"color:rgb(206,17,38)">[EXTERNAL EMAIL] </span><u></u><u><=
+/u></p>
+</div>
+<div>
+<p class=3D"MsoNormal">Do you happen to be using aarch64?<u></u><u></u></p>
+</div>
+<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
+<div>
+<div>
+<p class=3D"MsoNormal">On Thu, Sep 7, 2023 at 12:52=E2=80=AFPM Chhabra, Dip=
+inderSingh &lt;<a href=3D"mailto:Dipinder.Chhabra@dell.com" target=3D"_blan=
+k">Dipinder.Chhabra@dell.com</a>&gt; wrote:<u></u><u></u></p>
+</div>
+<blockquote style=3D"border-top:none;border-right:none;border-bottom:none;b=
+order-left:1pt solid rgb(204,204,204);padding:0in 0in 0in 6pt;margin:5pt 0i=
+n 5pt 4.8pt">
+<div>
+<div>
+<div>
+<p class=3D"MsoNormal">Hi There<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
+<p class=3D"MsoNormal">Recently we updated our OpenBMC distro to tag 2.14.0=
+ (phosphor-network SRCREV f78a415e154bac274e1d07ce8128c69e9d1cd710).<u></u>=
+<u></u></p>
+<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
+<p class=3D"MsoNormal">Since then we are seeing that the phosphor-network s=
+ervice crashes after configuration change due to SIGBUS.<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
+<pre><span style=3D"color:black">Sep 07 09:51:45 bmc phosphor-network-manag=
+er[627]: Wrote networkd file: /etc/systemd/network/00-bmc-end1.network</spa=
+n><u></u><u></u></pre>
+<pre><span style=3D"color:black">Sep 07 09:51:45 bmc phosphor-network-manag=
+er[627]: Wrote networkd file: /etc/systemd/network/00-bmc-end0.network</spa=
+n><u></u><u></u></pre>
+<pre><span style=3D"color:black">Sep 07 09:51:49 bmc systemd[1]: xyz.openbm=
+c_project.Network.service: Main process exited, code=3Ddumped, status=3D7/B=
+US</span><u></u><u></u></pre>
+<pre><span style=3D"color:black">Sep 07 09:51:49 bmc systemd[1]: xyz.openbm=
+c_project.Network.service: Failed with result &#39;core-dump&#39;.</span><u=
+></u><u></u></pre>
+<pre><span style=3D"color:black">Sep 07 09:51:49 bmc systemd[1]: xyz.openbm=
+c_project.Network.service: Consumed 1.365s CPU time.</span><u></u><u></u></=
+pre>
+<pre><span style=3D"color:black">Sep 07 09:51:50 bmc systemd[1]: xyz.openbm=
+c_project.Network.service: Scheduled restart job, restart counter is at 1.<=
+/span><u></u><u></u></pre>
+<pre><span style=3D"color:black">Sep 07 09:51:50 bmc systemd[1]: Stopped Ph=
+osphor Network Manager.</span><u></u><u></u></pre>
+<pre><span style=3D"color:black">Sep 07 09:51:50 bmc systemd[1]: xyz.openbm=
+c_project.Network.service: Consumed 1.365s CPU time.</span><u></u><u></u></=
+pre>
+<pre><span style=3D"color:black">Sep 07 09:51:50 bmc systemd[1]: Starting P=
+hosphor Network Manager...</span><u></u><u></u></pre>
+<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
+<p class=3D"MsoNormal">Based on my debugging, I can confirm that the timer =
+gets scheduled correctly after the config write and the registered call bac=
+k does get invoked. The crash happens due to the below
+ dbus call in network_manager.cpp.<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Cour=
+ier New&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 try</span><u></u>=
+<u></u></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Cour=
+ier New&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 {</span><u></u><u=
+></u></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Cour=
+ier New&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 bus.get()</span><u></u><u></u></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Cour=
+ier New&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 .new_method_call(&quot;org.freedesktop.netwo=
+rk1&quot;,</span><u></u><u></u></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Cour=
+ier New&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &quot;/org/freede=
+sktop/network1&quot;,</span><u></u><u></u></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Cour=
+ier New&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 &quot;org.freedes=
+ktop.network1.Manager&quot;, &quot;Reload&quot;)</span><u></u><u></u></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Cour=
+ier New&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0
+<span style=3D"color:black;background:yellow">.call();</span></span><u></u>=
+<u></u></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Cour=
+ier New&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0 lg2::info(&quot;Reloaded systemd-networkd&quot;);</span><u></u><u></=
+u></p>
+<p class=3D"MsoNormal"><span style=3D"font-size:10pt;font-family:&quot;Cour=
+ier New&quot;">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }</span><u></u><u=
+></u></p>
+<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
+<p class=3D"MsoNormal">I have looked into any fixes to this in the later co=
+mmits but do not find any.<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
+<p class=3D"MsoNormal">I also tried to change it to call_noreply but that d=
+oes not help and get the same BUS error.<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
+<pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ try</span><u></u><u></u></pre>
+<pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ {</span><u></u><u></u></pre>
+<pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 lg2::info(&quot;Try systemd-networkd reload...&quo=
+t;);</span><u></u><u></u></pre>
+<pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 auto method =3D bus.get().new_method_call(NETWORKD=
+_BUSNAME, NETWORKD_PATH,</span><u></u><u></u></pre>
+<pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ NETWORKD_INTERFACE, &quot;Reload&quot;);</span><u></u><u></u></pre>
+<pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 bus.get().call_noreply(method);</span><u></u><u></=
+u></pre>
+<pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0 lg2::info(&quot;Reloaded systemd-networkd&quot;);<=
+/span><u></u><u></u></pre>
+<pre><span style=3D"color:black">=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+ }</span><u></u><u></u></pre>
+<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
+<p class=3D"MsoNormal">When I manually invoke this from the shell that seem=
+s to go fine.<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
+<pre><span style=3D"color:black">root@bmc:~# busctl call org.freedesktop.ne=
+twork1 /org/freedesktop/network1 org.freedesktop.network1.Manager Reload=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 </span><u></u><u></u></pre>
+<pre><span style=3D"color:black">root@bmc:~# echo $?</span><u></u><u></u></=
+pre>
+<pre><span style=3D"color:black">0</span><u></u><u></u></pre>
+<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
+<p class=3D"MsoNormal">Anyone else seeing this issue with phosphor-network =
+or any idea why this could be happening?<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
+<p class=3D"MsoNormal">Thanks<u></u><u></u></p>
+<p class=3D"MsoNormal">Dip<u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
+<p style=3D"margin:0in"><span style=3D"font-size:7pt;color:rgb(115,115,115)=
+">Internal Use - Confidential</span><u></u><u></u></p>
+<p class=3D"MsoNormal">=C2=A0<u></u><u></u></p>
+<p class=3D"m_5398798417703686960m-3000132491391917046msipfooter90245289" s=
+tyle=3D"margin:0in"><span style=3D"font-size:7pt;color:rgb(115,115,115)">In=
+ternal Use - Confidential</span><u></u><u></u></p>
+<p class=3D"MsoNormal"><u></u>=C2=A0<u></u></p>
+<p class=3D"m_5398798417703686960msipfooter90245289" style=3D"margin:0in"><=
+span style=3D"font-size:7pt;color:rgb(115,115,115)">Internal Use - Confiden=
+tial</span><u></u><u></u></p>
+</div>
+</div>
+</div>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+</blockquote>
+</div>
+</div>
+</div>
+
+</div></blockquote></div>
+
+--0000000000009a22430604def50d--
