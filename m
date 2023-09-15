@@ -2,87 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8C5A37A19DE
-	for <lists+openbmc@lfdr.de>; Fri, 15 Sep 2023 11:03:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 6D1E37A19E5
+	for <lists+openbmc@lfdr.de>; Fri, 15 Sep 2023 11:05:02 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=KC2wUU5z;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=I+TJrGhI;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=sKgQg+UR;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=bYtgi4XD;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Rn7Wz3Pk2z3cGq
-	for <lists+openbmc@lfdr.de>; Fri, 15 Sep 2023 19:03:27 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Rn7Ym2PVkz3cHS
+	for <lists+openbmc@lfdr.de>; Fri, 15 Sep 2023 19:05:00 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=KC2wUU5z;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=I+TJrGhI;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=sKgQg+UR;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=bYtgi4XD;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.21; helo=wout5-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
 Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rn7WH3K8Rz3c2D
-	for <openbmc@lists.ozlabs.org>; Fri, 15 Sep 2023 19:02:50 +1000 (AEST)
-Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
-	by mailout.west.internal (Postfix) with ESMTP id 887D732009A6;
-	Fri, 15 Sep 2023 05:02:46 -0400 (EDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rn7Y95Z41z30h5
+	for <openbmc@lists.ozlabs.org>; Fri, 15 Sep 2023 19:04:29 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.west.internal (Postfix) with ESMTP id E17F03200984
+	for <openbmc@lists.ozlabs.org>; Fri, 15 Sep 2023 05:04:27 -0400 (EDT)
 Received: from mailfrontend2 ([10.202.2.163])
-  by compute1.internal (MEProxy); Fri, 15 Sep 2023 05:02:46 -0400
+  by compute4.internal (MEProxy); Fri, 15 Sep 2023 05:04:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm1; t=1694768565; x=1694854965; bh=ip
-	pNPN4BEySQ8BIKnJv0m6oOhHBPoOtvA46IgWMxU7k=; b=KC2wUU5zMEyQu++xQV
-	/uRckIwzo0ZdpVwp9PvGc0CFQm20SxijbBK5NzzifIe3v41ZHOLRVUsyZICPDh/h
-	EboJSYotg/zLkCfzBnNBpgidBhM3RRyNhJwJZJLfWWMtmxI3+8AtZEZpTnNZsy6P
-	6RzEiXaVpH0FF3OTrmJeVEja9VbVAgSYPQI65/KcZJryxRBQsouBFS90+iWx/Bue
-	ILsRoC80jqi++RMW6BfhvWAmKMGNeb9nDLGVextvaWmTc5Nn3MYwYY+1OehbQFOt
-	R+619PbbTYxEITIDTI6Mu9B//CP5SqP/GVAn1SfdnFGzNmEWwH0+W94vMvkt2NE8
-	F7PA==
+	:subject:subject:to:to; s=fm1; t=1694768667; x=1694855067; bh=iS
+	pTaT16kXFbXUSUAAHvIXleR33fckqOiypQot/23Wc=; b=sKgQg+URTBPaRvfhyk
+	sLQURa+4wb6xFkGpyKSIJDXOSIP8KMRPLqKVH9NBOfJPD7OTGQEm6IgMdtAs5lnq
+	XDzwQ1JKCXCNwNHciVAlYKSvWx5COTt+m1ZcjREr5sMRKXeFHX01PrwKt58D6QgW
+	v+lIC7mERPBV3j2y/m820N7lzAcmRjLDhXSg//3fhcYbYUBr8v7aZKXUjp31Uwsa
+	hs7S7G3950LzcdyAEPf2WREoCzJ9hqhgTOzsRCnC5yfZwMcA7yj9DzIbzqLIERdT
+	hJ8qQ696JDD+iB6kAg6rIJloML9FPvgTZDmjDMWAWg04n694xodRJ2eoYq0Vtdro
+	OEVQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	messagingengine.com; h=cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm2; t=1694768565; x=1694854965; bh=ippNPN4BEySQ8
-	BIKnJv0m6oOhHBPoOtvA46IgWMxU7k=; b=I+TJrGhI55HJ5u2mRvNIqkdnsu/aG
-	3EN/RhqZQAd2Qv5MPHYfeiPHyL4r+OpIVz8VzFf3hd5E1pZMeT0pR2GRLs4yokSJ
-	mDE+XWojJk7BhwdvOIsXc4m8+Qzt1Dz6vTXIjhr/+EnzGhB8ep8EIu69WbtTRAph
-	MviSvBLQoN9WGWaAOivTpGqAxa6+Db9C9TvNHl9BZLM5g4gjSLbrVy7nCpcjs7Op
-	aTZCMh1PoIxM67Lw6NTa1VYXJ7MubJoo5Se+i0JuJG/ny0BSkbKWeR02dWS+gTBp
-	orD7uHo4F2ai/1xE7lX7tLdWZ0UCPl1exgIAH/K60xbrmTqUQHLW/SdEQ==
-X-ME-Sender: <xms:tR0EZaeXLgS0355ipfd35wv_CyrTjuqtyO1f6jvza6TtQ2y_AwTLwQ>
-    <xme:tR0EZUO4AIzn6iYEOj7wxdPT30Ehcsp4zfYcoF5wGE8mn6eJlIjLOwvbXZbKK77lw
-    Inu11O6qO-4omfPWEE>
-X-ME-Received: <xmr:tR0EZbj-_jDzNloRG4QG-3hQWasbB6XoGpS8cXsf9WXjfKC5ioXpUra9ziQeFLaQbM411czbe3dkZLNMK5xyRKQJZCFxpuHSdII>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudejvddgtdelucetufdoteggodetrfdotf
+	:x-sasl-enc; s=fm2; t=1694768667; x=1694855067; bh=iSpTaT16kXFbX
+	USUAAHvIXleR33fckqOiypQot/23Wc=; b=bYtgi4XDS613QvFG9wJkl9HqYNjDt
+	IbBkArXOPg6jsykOq+pSALZk0dAlwoYdEaqlZsVYGDbDpXXfoeONYjZskVsDN+TT
+	NF2pI9mR+40MqBqpMOCT0izj+GJdTIX/Ke3LZltni862UwS6kIffVY1EH7Msdt+j
+	XEk/hbZyzb1z9p04/+I0G+T6mTTbitdHDqQr/VPyBvKZcNEPd4GCoMRah73PFp0O
+	losP+3stV5UTLtqjtMaj/8+mWWuWHeza5hB7dN3ZAIQNSLfmgyRHm7wvM1fAHPfh
+	HYcDEMA7es+byG9JGHfGQUGpdGdY7s0x4WCCVAWjhONqvJEL+9P+6/XDQ==
+X-ME-Sender: <xms:Gx4EZUIgE8UsSL1QPRPzv7ePtFW-8GvCUitKeIKr_P6ZwZSMXv1klA>
+    <xme:Gx4EZUIk7lh9hkevTdeqCc0EWizfAvoTkDp0dpLNPTPKJrbzDFFIvW1cTIoh7MIoX
+    AYjkUL5nL1Lmijp_ck>
+X-ME-Received: <xmr:Gx4EZUsUMXL0Dsr0NWSwo7MWpCaYcNLacl3abmkauuU1pByTIf1Jisdl0z-mXbBVOtk1yM45AF114hrb3ecByIbqGHpq8i8o1fo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudejvddguddtucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlvdefmdenucfjughrpeffhf
-    fvvefukfhfgggtuggjsehgtderredttdejnecuhfhrohhmpefrrghtrhhitghkucghihhl
-    lhhirghmshcuoehprghtrhhitghksehsthiftgigrdighiiiqeenucggtffrrghtthgvrh
-    hnpeefkefhueeihfevudefgfeihedtjedvveeiteeljeeihfdtffehkeeffedvjeefheen
-    ucffohhmrghinhepphgrshhtvggsihhnrdgtohhmnecuvehluhhsthgvrhfuihiivgeptd
-    enucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:tR0EZX8w75twBVWiJ_bD1YJ0zulrzJkpHoJeT1xsqJYx5WlJBxO9sA>
-    <xmx:tR0EZWuEwV20lB-4eYHU59zmDb0vdUs93VJ0i9PzuOG4nSG1cYjsNA>
-    <xmx:tR0EZeEf6CWX4nFUP4102sDdZeT-aq3cmu_lGpoVvLRgJ326fqmsnQ>
-    <xmx:tR0EZc06-PGKXn9ilBiIGUm8j04tbwOoG-FE88PboekMbxNguVEG7w>
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvuffkfhggtggujgesghdtreertddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+    htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeehheefffegkeevhedthffgudfh
+    geefgfdthefhkedtleffveekgfeuffehtdeinecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:Gx4EZRZyKLu25di7pXZlyeeTDVACvu9wzzQqzbaVXeJWEr4xlP2eQQ>
+    <xmx:Gx4EZbYbRIOhWC2Pq7cuZG5N74h2Lx9Wgd650VvbS-PRubCFD7MphA>
+    <xmx:Gx4EZdDsk_XUXYuQt5M-IH6694XjxkPAetAyecjCz0FJNvYqEcLteA>
+    <xmx:Gx4EZV3dhQryAlxvzueahpHDVMMHxAP8fy_gGlwsO-OIOxmtwmb1Ng>
 Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 15 Sep 2023 05:02:45 -0400 (EDT)
-Date: Fri, 15 Sep 2023 04:02:43 -0500
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <openbmc@lists.ozlabs.org>; Fri, 15 Sep 2023 05:04:26 -0400 (EDT)
+Date: Fri, 15 Sep 2023 04:04:25 -0500
 From: Patrick Williams <patrick@stwcx.xyz>
-To: =?utf-8?Q?=C5=81ukasz_Przenios=C5=82o?= <bremenpl@gmail.com>
-Subject: Re: Support: OpenBMC build failed at bmcweb (commit:
- 029f4aada38f4b041b5a171c2e112a267cee3b7f)
-Message-ID: <ZQQds-_zQE4Ffo_u@heinlein.vulture-banana.ts.net>
-References: <em80cca595-c4f5-47ec-a958-83a5c16e45c2@02cbb70a.com>
+To: OpenBMC List <openbmc@lists.ozlabs.org>
+Subject: Re: TOF elections for 2023H2
+Message-ID: <ZQQeGWiNrup7CFuQ@heinlein.vulture-banana.ts.net>
+References: <ZNvDQ9xTbV-Ynk6T@heinlein.vulture-banana.ts.net>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="qSL6R8hwOO6s9Hf1"
+	protocol="application/pgp-signature"; boundary="IK8Oz0vyVHh9IhRZ"
 Content-Disposition: inline
-In-Reply-To: <em80cca595-c4f5-47ec-a958-83a5c16e45c2@02cbb70a.com>
+In-Reply-To: <ZNvDQ9xTbV-Ynk6T@heinlein.vulture-banana.ts.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,108 +93,42 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---qSL6R8hwOO6s9Hf1
-Content-Type: text/plain; charset=utf-8
+--IK8Oz0vyVHh9IhRZ
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, Sep 15, 2023 at 08:09:08AM +0000, =C5=81ukasz Przenios=C5=82o wrote:
-> Hello,
-> I am trying to build OpenBMC on an Ubuntu VM:
->=20
-> lukasz@ce-lp:~/ce/openbmc/build/evb-ast2600$ uname -a
-> Linux ce-lp 6.2.0-32-generic #32-Ubuntu SMP PREEMPT_DYNAMIC Mon Aug 14=20
-> 10:03:50 UTC 2023 x86_64 x86_64 x86_64 GNU/Linux
->=20
-> I have 16 total cores and 20 GB of RAM assigned to this VM. My target is=
-=20
-> evb-ast2600. My build fails at bmcweb:
->=20
-> | {standard input}: Assembler messages:
-> | {standard input}:8616216: Warning: end of file in string; '"' inserted
-> | arm-openbmc-linux-gnueabi-g++: fatal error: Killed signal terminated=20
-> program cc1plus
-> | compilation terminated.
-> | ninja: build stopped: subcommand failed.
-> | INFO: autodetecting backend as ninja
-> | INFO: calculating backend command to run:=20
-> /home/lukasz/ce/openbmc/build/evb-ast2600/tmp/work/armv7ahf-vfpv4d16-open=
-bmc-linux-gnueabi/bmcweb/1.0+gitAUTOINC+e1bf8bb6a8/recipe-sysroot-native/us=
-r/bin/ninja=20
-> -j 16 -v
-> | WARNING: exit code 1 from a shell command.
-> ERROR: Task=20
-> (/home/lukasz/ce/openbmc/meta-phosphor/recipes-phosphor/interfaces/bmcweb=
-_git.bb:do_compile)=20
-> failed with exit code '1'
-> NOTE: Tasks Summary: Attempted 5292 tasks of which 704 didn't need to be=
-=20
-> rerun and 1 failed.
->=20
-> Summary: 1 task failed:
->   =20
-> /home/lukasz/ce/openbmc/meta-phosphor/recipes-phosphor/interfaces/bmcweb_=
-git.bb:do_compile
-> Summary: There were 2 WARNING messages.
-> Summary: There was 1 ERROR message, returning a non-zero exit code.
->=20
-> Here is the complete output: https://pastebin.com/yGRDT477
->=20
-> My gcc version:
->=20
-> lukasz@ce-lp:~/ce/openbmc/build/evb-ast2600$ gcc --version
-> gcc (Ubuntu 12.3.0-1ubuntu1~23.04) 12.3.0
->=20
-> Before building I have installed all necessary packages via:
->=20
-> sudo apt install git python3-distutils gcc g++ make file wget gawk=20
-> diffstat bzip2 cpio chrpath zstd lz4 bzip2
->=20
-> I cannot figure out what I am missing. I would appreciate all help and=20
-> support, thank you!
->=20
-> --
-> =C5=81ukasz Przenios=C5=82o
+On Tue, Aug 15, 2023 at 01:26:11PM -0500, Patrick Williams wrote:
+>    * Sept 15th - Election concludes
 
-Two thoughts:
-
-1. You should be using GCC-13 for our repositories now.
-
-2. The symptoms of unexpected EOF from the assembler are generally an
-   indication that another GCC process failed due to the kernel OOM
-   killer.  You said you have 20GB of RAM, which is decent, but the
-   ratio of cores to RAM is barely above 1GB.  You might want to use
-   `ninja -j6` to limit the number of parallel jobs that Ninja kicks
-   off.
-
-(At this point you should probably `ninja clean` before retrying).
+Since there were only 3 nominations recieved for 3 seats, the new TOF
+members will be: Andrew G., Ed, and Zev.
 
 --=20
 Patrick Williams
 
---qSL6R8hwOO6s9Hf1
+--IK8Oz0vyVHh9IhRZ
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmUEHbIACgkQqwNHzC0A
-wRmOzw/+KEh2AFKbzJh3XdJhaH+j+MA6SuETm67+6aRTz+taHXzfn6RDy034skKr
-RqNavZnkvoB9uEcQhKchn0DaTWpYDv7gu5IS0l+rscxeUJlZc5pzha1ghLbdDMiE
-hkTiFcZlp6Q+/FZcGaPpRj7q0mznBRNb9olkOAvS1z11Crtje5PKxhhFqr6k/B86
-0LiPrK5hT26pmothdi/vuz3SzWxoK7w2WbBqtjaDH1jIO+3OVtvOzTuDTxCnlu6i
-5A7oJKH8I8ZauZJmrJ7OMd3kO0hBL+vdWi7kw5N1NovfVaSv2ZDXagGWP0XFUb+x
-oh8/QVJOjfMPa2JsKST9OYx5rGnN/9HtHjc5nnjBucuvusc/T0MUcJGnL3h9AECG
-IikEpsZWcAsoFi3nJI5Fk7HaGQxBLmzpvRQ+e/QVndX6GEvYjxI6WxWKqGuXiHaz
-YSb3uSC8S7rclLuuUNU5pgNJxv6kURoGFlKyA+pWGOc8NS6ZlhSP1qMVWd7IznzF
-sRiIEgRlP7JKfUAoT51hiBFETDTyCRQ2neT84z3/j09qotuxZ3ioyJvLLfYTsP3Y
-A0TqLqDOoU432jBfSnZ+uFttndt9GWd1TNQmlxc3PbsJ11z26jIF/bPg/Ohmz8ji
-PsvrdryQBxH/xITvzm/ektWBGkhlKkBpIEP4XmJtNCUxvgyTprc=
-=rhPJ
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmUEHhkACgkQqwNHzC0A
+wRkiIQ/9HwEe0b16mDGeIz/KBzAKOvBTj/8pdv4Ke5m6Gpqjq4ZboV+D4QqZfDrI
+073WLak/frkB37FNO/fj34FCr4OwLdr44Bsld1q5DWSTIBFzkvNzTXXB7w/fhIKd
++p+buZtywIXhXwhoTKwSWBx8qM9phJKdl7moXD5i6RMC26h/B7AFOC5wmO4jWrIg
+fb9y4iQ6rAMG2/ar6Klx1BDUYLAjt24iC3xHcUeqaDcRnrRT2TCX6ryaJK3IiqT5
+ZpmGZd2HsMEmgb9YPO49Q2K5P2Rp9DjIg7kV5UxrDJeDGg8X9BueLCCuCIudYpSU
+LvUBnZ9J1NKUKwNHg6daE94KRXGXi6Ryfl5f6N+0+QbPIOthfDcQHiY3Wt+8aYTK
+1IF+RdAhuBr9YuVAc9gSjsGAp6yDvK3lCPV/kwGGRxEnTnf73eN/LKO28cNPEZ7d
+62w0S8ctlajY5lnuZrrTAcSP3omMn4Gv5E7ImG0r7BRXsZiMDhG0Voz8J7hB+4zs
++rU4rGUKUPgaAau2mMDLS7Gky86LJoslKhObzP0B5BQphQ2S4uksGnkXNHyD4ups
+Fbf8LoxCTKtHLu9SrnK0Wr5TpGFfY8b9gZb41Vtqatcw95dTxgikPMgTwpuw5jdb
+Qu7cvse06YAeGk32/WQHoGxx897FOkmfruWejKuvF44EXxC43j0=
+=2a0h
 -----END PGP SIGNATURE-----
 
---qSL6R8hwOO6s9Hf1--
+--IK8Oz0vyVHh9IhRZ--
