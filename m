@@ -1,52 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 217DF7A5029
-	for <lists+openbmc@lfdr.de>; Mon, 18 Sep 2023 19:00:40 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 01C7C7A593F
+	for <lists+openbmc@lfdr.de>; Tue, 19 Sep 2023 07:15:46 +0200 (CEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=FFCHMAR7;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Rq9z971zKz3c8D
-	for <lists+openbmc@lfdr.de>; Tue, 19 Sep 2023 03:00:37 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RqVHK653wz3c3H
+	for <lists+openbmc@lfdr.de>; Tue, 19 Sep 2023 15:15:41 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized) smtp.mailfrom=nuvoton.com (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tomer.maimon@nuvoton.com; receiver=lists.ozlabs.org)
-Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=FFCHMAR7;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22f; helo=mail-lj1-x22f.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rq9yl0cmCz3c1R
-	for <openbmc@lists.ozlabs.org>; Tue, 19 Sep 2023 03:00:13 +1000 (AEST)
-Received: from NTILML01.nuvoton.com (212.199.177.18.static.012.net.il [212.199.177.18])
-	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 38IH06US011069
-	for <openbmc@lists.ozlabs.org>; Mon, 18 Sep 2023 20:00:06 +0300
-Received: from NTHCML01B.nuvoton.com (10.1.8.178) by NTILML01.nuvoton.com
- (10.190.1.46) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Mon, 18 Sep
- 2023 20:00:05 +0300
-Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTHCML01B.nuvoton.com
- (10.1.8.178) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Tue, 19 Sep
- 2023 01:00:03 +0800
-Received: from taln60.nuvoton.co.il (10.191.1.180) by NTHCCAS01.nuvoton.com
- (10.1.8.28) with Microsoft SMTP Server id 15.1.2375.34 via Frontend
- Transport; Tue, 19 Sep 2023 01:00:03 +0800
-Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
-	id DEC7D64741; Mon, 18 Sep 2023 20:00:02 +0300 (IDT)
-From: Tomer Maimon <tmaimon77@gmail.com>
-To: <peter.chen@kernel.org>, <gregkh@linuxfoundation.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <xu.yang_2@nxp.com>, <peng.fan@nxp.com>, <avifishman70@gmail.com>,
-        <tali.perry1@gmail.com>, <joel@jms.id.au>, <venture@google.com>,
-        <yuenn@google.com>, <benjaminfair@google.com>, <j.neuschaefer@gmx.net>
-Subject: [PATCH v1 2/2] usb: chipidea: Add support for NPCM
-Date: Mon, 18 Sep 2023 19:59:58 +0300
-Message-ID: <20230918165958.2659-3-tmaimon77@gmail.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20230918165958.2659-1-tmaimon77@gmail.com>
-References: <20230918165958.2659-1-tmaimon77@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RqVGl0cc1z2yV3
+	for <openbmc@lists.ozlabs.org>; Tue, 19 Sep 2023 15:15:09 +1000 (AEST)
+Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2c00e1d4c08so25974321fa.3
+        for <openbmc@lists.ozlabs.org>; Mon, 18 Sep 2023 22:15:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695100505; x=1695705305; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=glQJiHiiQFXDprtTfi+FevimcPzsz0WU/CYVveuM5As=;
+        b=FFCHMAR7A8qIyEifkQphVYwyGXGL8lS1xHFkbyS6Supomfvglv/XnoBIq8QLu6Z/kI
+         gZqsc4MWoRp/VRiFClq1ETnRrMlf2qp/RTtggz8bPpN3/3kiKozBGJi2X9y54eyGMk1o
+         t1jx+ilEKsWa1j+ICpcyVFz+0l8Tgm0+QludHwfnsORJz5FcI1X0h1qp9npjuue4T16F
+         RTzxAItz6XdEQP+Tz+x1Irsv0Cpcz7nQ0HVg6333574eMjlr5WTeq8UXgEicJduPqafs
+         vwClmzH7uSfYHnZ6x5gEmScjfwlalaLvF4kmULvtf0x710wbKkLBzOub4I7N1m/O6m5d
+         jJJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695100505; x=1695705305;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=glQJiHiiQFXDprtTfi+FevimcPzsz0WU/CYVveuM5As=;
+        b=RKBDMlk5RQ1Mk+0gm5yL/fYPNYaTve27uDzQt6i2h1bLBJpm5xL64EBOQsjs3n0/4T
+         PC46iiQMBOV0aTelll+bS2tBF2KmOm7oz41EoT/0WTZOsmJb+HWSH9N22w2VKwTfoon+
+         fjbnzkgyCA/W0m38WU3ACgYSi4fALIQ1q3oUagTWMbs8QHnyIHTrfvzNtwvJ3ClPBKzZ
+         jQZiYAJrsdXLjEMBW1YGXyVHY0Xp37hhAIIQOuwv0e9kMmMtrBmE7IRrPymjSrdYsrrj
+         yHUY5ckVKjz9v6lVl7mCFAz5eTa7TMu6NRAkDtJQfcK8DpGj1aFnSoIGiT1mSu7TKBU4
+         pKAA==
+X-Gm-Message-State: AOJu0YwYWd7uXdmjZizRJCtMFLPqhn887PgVstWKEI15EVFoMlFTE/Em
+	uur1G1QmY91uNgNhGKukwFKmvOv6l+5D7w4mcEg=
+X-Google-Smtp-Source: AGHT+IEAH5kMAHAiTI5BtK+SJ3ujWEh5t5l0gqQHNUIbKLbzTbe83gQLNCM8UXCjLdKRdYq1Er8M9KFyhKgprmA8GKY=
+X-Received: by 2002:a2e:9791:0:b0:2bd:1cd0:603f with SMTP id
+ y17-20020a2e9791000000b002bd1cd0603fmr8591041lji.45.1695100504861; Mon, 18
+ Sep 2023 22:15:04 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NotSetDelaration: True
+References: <20230918165958.2659-1-tmaimon77@gmail.com> <20230918165958.2659-2-tmaimon77@gmail.com>
+ <b7a337f2-a810-d14c-e7cd-15e33a9ecb5d@linaro.org>
+In-Reply-To: <b7a337f2-a810-d14c-e7cd-15e33a9ecb5d@linaro.org>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Tue, 19 Sep 2023 08:14:53 +0300
+Message-ID: <CAP6Zq1gSJYsNUuD-bexFW_1VpAUuF_WZkicNzZms6hVdo9LnMQ@mail.gmail.com>
+Subject: Re: [PATCH v1 1/2] dt-binding: usb: ci-hdrc-usb2: document Nuvoton
+ NPCM supprt
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,181 +75,82 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>
+Cc: devicetree@vger.kernel.org, peng.fan@nxp.com, linux-usb@vger.kernel.org, benjaminfair@google.com, avifishman70@gmail.com, gregkh@linuxfoundation.org, peter.chen@kernel.org, xu.yang_2@nxp.com, j.neuschaefer@gmx.net, tali.perry1@gmail.com, robh+dt@kernel.org, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, venture@google.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add Nuvoton NPCM BMC SoCs support to USB ChipIdea driver.
-NPCM SoC include ChipIdea IP block that used for USB device controller
-mode.
+Hi Krzysztof
 
-Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
----
- drivers/usb/chipidea/Kconfig        |   4 +
- drivers/usb/chipidea/Makefile       |   1 +
- drivers/usb/chipidea/ci_hdrc_npcm.c | 126 ++++++++++++++++++++++++++++
- 3 files changed, 131 insertions(+)
- create mode 100644 drivers/usb/chipidea/ci_hdrc_npcm.c
+Thanks for you comment
 
-diff --git a/drivers/usb/chipidea/Kconfig b/drivers/usb/chipidea/Kconfig
-index c815824a0b2d..bab45bc62361 100644
---- a/drivers/usb/chipidea/Kconfig
-+++ b/drivers/usb/chipidea/Kconfig
-@@ -43,6 +43,10 @@ config USB_CHIPIDEA_MSM
- 	tristate "Enable MSM hsusb glue driver" if EXPERT
- 	default USB_CHIPIDEA
- 
-+config USB_CHIPIDEA_NPCM
-+	tristate "Enable NPCM hsusb glue driver" if EXPERT
-+	default USB_CHIPIDEA
-+
- config USB_CHIPIDEA_IMX
- 	tristate "Enable i.MX USB glue driver" if EXPERT
- 	depends on OF
-diff --git a/drivers/usb/chipidea/Makefile b/drivers/usb/chipidea/Makefile
-index 71afeab97e83..718cb24603dd 100644
---- a/drivers/usb/chipidea/Makefile
-+++ b/drivers/usb/chipidea/Makefile
-@@ -13,6 +13,7 @@ ci_hdrc-$(CONFIG_USB_OTG_FSM)		+= otg_fsm.o
- 
- obj-$(CONFIG_USB_CHIPIDEA_GENERIC)	+= ci_hdrc_usb2.o
- obj-$(CONFIG_USB_CHIPIDEA_MSM)		+= ci_hdrc_msm.o
-+obj-$(CONFIG_USB_CHIPIDEA_NPCM)		+= ci_hdrc_npcm.o
- obj-$(CONFIG_USB_CHIPIDEA_PCI)		+= ci_hdrc_pci.o
- obj-$(CONFIG_USB_CHIPIDEA_IMX)		+= usbmisc_imx.o ci_hdrc_imx.o
- obj-$(CONFIG_USB_CHIPIDEA_TEGRA)	+= ci_hdrc_tegra.o
-diff --git a/drivers/usb/chipidea/ci_hdrc_npcm.c b/drivers/usb/chipidea/ci_hdrc_npcm.c
-new file mode 100644
-index 000000000000..8214a4d1e418
---- /dev/null
-+++ b/drivers/usb/chipidea/ci_hdrc_npcm.c
-@@ -0,0 +1,126 @@
-+// SPDX-License-Identifier: GPL-2.0
-+// Copyright (c) 2023 Nuvoton Technology corporation.
-+
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+#include <linux/pm_runtime.h>
-+#include <linux/usb/chipidea.h>
-+#include <linux/clk.h>
-+#include <linux/mfd/syscon.h>
-+#include <linux/regmap.h>
-+#include <linux/io.h>
-+#include <linux/reset-controller.h>
-+#include <linux/of.h>
-+
-+#include "ci.h"
-+
-+struct npcm_udc_data {
-+	struct platform_device	*ci;
-+	struct clk		*core_clk;
-+	struct ci_hdrc_platform_data pdata;
-+};
-+
-+static int npcm_udc_notify_event(struct ci_hdrc *ci, unsigned event)
-+{
-+	struct device *dev = ci->dev->parent;
-+
-+	switch (event) {
-+	case CI_HDRC_CONTROLLER_RESET_EVENT:
-+		/* clear all mode bits */
-+		hw_write(ci, OP_USBMODE, 0xffffffff, 0x0);
-+		break;
-+	default:
-+		dev_dbg(dev, "unknown ci_hdrc event\n");
-+		break;
-+	}
-+
-+	return 0;
-+}
-+
-+static int npcm_udc_probe(struct platform_device *pdev)
-+{
-+	int ret;
-+	unsigned int args[3];
-+	struct regmap *gcr_regmap;
-+	struct npcm_udc_data *ci;
-+	struct platform_device *plat_ci;
-+	struct device *dev = &pdev->dev;
-+	struct device_node *np = dev->of_node;
-+
-+	ci = devm_kzalloc(&pdev->dev, sizeof(*ci), GFP_KERNEL);
-+	if (!ci)
-+		return -ENOMEM;
-+	platform_set_drvdata(pdev, ci);
-+
-+	ci->core_clk = devm_clk_get_optional(dev, NULL);
-+	if (IS_ERR(ci->core_clk))
-+		return PTR_ERR(ci->core_clk);
-+
-+	ret = clk_prepare_enable(ci->core_clk);
-+	if (ret) {
-+		dev_err(dev, "failed to enable the clock: %d\n", ret);
-+		return ret;
-+	}
-+
-+	ci->pdata.name = dev_name(dev);
-+	ci->pdata.capoffset = DEF_CAPOFFSET;
-+	ci->pdata.flags	= CI_HDRC_REQUIRES_ALIGNED_DMA |
-+		CI_HDRC_FORCE_VBUS_ACTIVE_ALWAYS;
-+	ci->pdata.phy_mode = USBPHY_INTERFACE_MODE_UTMI;
-+	ci->pdata.notify_event = npcm_udc_notify_event;
-+
-+	gcr_regmap = syscon_regmap_lookup_by_phandle_args(np, "nuvoton,sysgcr",
-+							  3, args);
-+	if (!IS_ERR(gcr_regmap))
-+		regmap_update_bits(gcr_regmap, args[0], args[1], args[2]);
-+
-+	plat_ci = ci_hdrc_add_device(dev, pdev->resource, pdev->num_resources,
-+				     &ci->pdata);
-+	if (IS_ERR(plat_ci)) {
-+		ret = PTR_ERR(plat_ci);
-+		dev_err(dev, "failed to register HDRC NPCM device: %d\n", ret);
-+		goto clk_err;
-+	}
-+
-+	pm_runtime_no_callbacks(dev);
-+	pm_runtime_enable(dev);
-+
-+	return 0;
-+
-+clk_err:
-+	clk_disable_unprepare(ci->core_clk);
-+	return ret;
-+}
-+
-+static int npcm_udc_remove(struct platform_device *pdev)
-+{
-+	struct npcm_udc_data *ci = platform_get_drvdata(pdev);
-+
-+	pm_runtime_disable(&pdev->dev);
-+	ci_hdrc_remove_device(ci->ci);
-+	clk_disable_unprepare(ci->core_clk);
-+
-+	return 0;
-+}
-+
-+static const struct of_device_id npcm_udc_dt_match[] = {
-+	{ .compatible = "nuvoton,npcm-udc", },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, npcm_udc_dt_match);
-+
-+static struct platform_driver npcm_udc_driver = {
-+	.probe = npcm_udc_probe,
-+	.remove = npcm_udc_remove,
-+	.driver = {
-+		.name = "npcm_udc",
-+		.of_match_table = npcm_udc_dt_match,
-+	},
-+};
-+
-+module_platform_driver(npcm_udc_driver);
-+
-+MODULE_DESCRIPTION("NPCM USB device controller driver");
-+MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
-+MODULE_ALIAS("platform:npcm-udc");
-+MODULE_LICENSE("GPL v2");
--- 
-2.33.0
+On Mon, 18 Sept 2023 at 23:18, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
+>
+> On 18/09/2023 18:59, Tomer Maimon wrote:
+> > Nuvoton NPCM BMC SoCs use ChipIdea silicon IP for the USB device controller.
+> >
+> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+>
+> Please use subject prefixes matching the subsystem. You can get them for
+> example with `git log --oneline -- DIRECTORY_OR_FILE` on the directory
+> your patch is touching. It's dt-bindings.
+O.K. Thanks
+>
+>
+> > ---
+> >  .../devicetree/bindings/usb/ci-hdrc-usb2.yaml    | 16 ++++++++++++++++
+> >  1 file changed, 16 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml b/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
+> > index 1394557517b1..9de4dfe004d1 100644
+> > --- a/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
+> > +++ b/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
+> > @@ -16,6 +16,7 @@ properties:
+> >        - enum:
+> >            - chipidea,usb2
+> >            - lsi,zevio-usb
+> > +          - nuvoton,npcm-udc
+>
+> You need SoC specific compatible.
+O.K. Thanks,
+>
+> >            - nvidia,tegra20-ehci
+> >            - nvidia,tegra20-udc
+> >            - nvidia,tegra30-ehci
+> > @@ -325,6 +326,20 @@ properties:
+> >      type: boolean
+> >      deprecated: true
+> >
+> > +  nuvoton,sysgcr:
+> > +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> > +    items:
+> > +      - items:
+> > +          - description: phandle to syscon that configures usb phy mux.
+> > +          - description: offset of usb phy mux selection.
+> > +          - description: mask usb phy mux selection.
+> > +          - description: value usb phy mux selection.
+> > +    description:
+> > +      A phandle to syscon with three arguments that configure usb phy mux.
+> > +      The argument one is the offset of usb phy mux selection, the argument two
+> > +      is the mask usb phy mux selection, the argument three is the mask usb phy
+> > +      mux selection.
+>
+> Sorry, you miss phy driver. Don't use syscon instead of proper hardware
+> devices.
+Sorry the role of nuvoton,sysgcr property is to handle a mux between
+the different devices and not the handle the phy itself, handle the
+mux done in the GCR.
+Should we move the nuvoton,sysgcr description to another place in the
+ci-hdrc-usb2.yaml
+or
+Should we use a different driver to handle the mux and call it from
+the ci-hdrc-npcm driver, If yes which driver should we use?
+>
+>
+> Best regards,
+> Krzysztof
+>
 
+Best regards,
+
+Tomer
