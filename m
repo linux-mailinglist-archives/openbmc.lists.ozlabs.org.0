@@ -1,51 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4BE9F7A6A95
-	for <lists+openbmc@lfdr.de>; Tue, 19 Sep 2023 20:20:09 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 82A597A6C6A
+	for <lists+openbmc@lfdr.de>; Tue, 19 Sep 2023 22:44:33 +0200 (CEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=BZX8jo7Q;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RqqhP5vVFz3bw8
-	for <lists+openbmc@lfdr.de>; Wed, 20 Sep 2023 04:20:05 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Rqtv33lSsz3c5c
+	for <lists+openbmc@lfdr.de>; Wed, 20 Sep 2023 06:44:31 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=pengutronix.de (client-ip=2a0a:edc0:2:b01:1d::104; helo=metis.whiteo.stw.pengutronix.de; envelope-from=ukl@pengutronix.de; receiver=lists.ozlabs.org)
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=BZX8jo7Q;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.15.18; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=lists.ozlabs.org)
+X-Greylist: delayed 316 seconds by postgrey-1.37 at boromir; Wed, 20 Sep 2023 06:43:59 AEST
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rqqh44dzVz2ysB
-	for <openbmc@lists.ozlabs.org>; Wed, 20 Sep 2023 04:19:48 +1000 (AEST)
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1qier9-0006UC-Tr; Tue, 19 Sep 2023 19:49:51 +0200
-Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1qier8-007VWX-V4; Tue, 19 Sep 2023 19:49:50 +0200
-Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1qier8-0034Xb-Ls; Tue, 19 Sep 2023 19:49:50 +0200
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-To: Jonathan Cameron <jic23@kernel.org>
-Subject: [PATCH 17/49] iio: adc: npcm: Convert to platform remove callback returning void
-Date: Tue, 19 Sep 2023 19:48:59 +0200
-Message-Id: <20230919174931.1417681-18-u.kleine-koenig@pengutronix.de>
-X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230919174931.1417681-1-u.kleine-koenig@pengutronix.de>
-References: <20230919174931.1417681-1-u.kleine-koenig@pengutronix.de>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RqttR6w9Qz2xdp
+	for <openbmc@lists.ozlabs.org>; Wed, 20 Sep 2023 06:43:59 +1000 (AEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net; s=s31663417;
+ t=1695156236; x=1695761036; i=j.neuschaefer@gmx.net;
+ bh=kybDOh6D3XxyjaCVBL1N0978TW3OGvof2IUbAcUyp3w=;
+ h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+ b=BZX8jo7QvDztNbFbOet4uX/lH8I4kDBBZythdzwrdhl8c/y2u+wRybarjthq/myk3fAGT1y/DcH
+ Hj2SZeb2nP70VObnjvOnKcrmQesUA2chXP58uPOMziPT/nIUCnePQi8T2jQZgeeFG82/7jplN66Ma
+ 0TpDw98YzNWzXT8tUAlW28SsQ0MS7OBmAouKmj5uvcoFwFcb+HGYzTFHcbZwzQ97JFUadEvo112Im
+ RtObSk+7MQWEYoz1yqbGvOfrIk0fW0GrvW/uOwI19F/8YgdNvOeTkxaemP6P8H+C2yHUicrPnzshC
+ ocuvWjuUXBS4CXMkAAg7VfAvsPilGtyOfqdg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from probook ([89.0.47.152]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MDhlV-1qsLzJ474p-00AqrU; Tue, 19
+ Sep 2023 22:38:19 +0200
+Date: Tue, 19 Sep 2023 22:38:17 +0200
+From: =?utf-8?Q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+To: Geert Uytterhoeven <geert@linux-m68k.org>
+Subject: Re: [PATCH v4 1/2] soc: nuvoton: Add a menu for Nuvoton SoC drivers
+Message-ID: <ZQoGuR6+7tJdjL6V@probook>
+References: <20230814173757.1747439-1-j.neuschaefer@gmx.net>
+ <CAMuHMdWTU8tN1QNrAT-BWgdrgzvJRvV6a30GcDAFq3qmF1CWag@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1792; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=+d0cPaCaU/WWOivdiqsSJ1LmcZHrlbSQQORSLo9taac=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlCd8C0+5IHUbxwzaDaql4FpQ2zC697FU7r8PAe Oe0cJ1pks2JATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZQnfAgAKCRCPgPtYfRL+ TucuB/43f+LaPNEq2ODcy0dMxc0mi/ZVMNbCKNl2MDI3snKQ0NySoWGKDxfQWZD7ej0G6aAeEo5 6uE/b3/yhIHgRLdgh8dEeJ+0InePdpmiBIxJ9NV4LCEfZJJQGbHwy9/ERxpnHqk/YqFn74z9AJE 0X51IRodV0Rhg18McM5I3uGZ1t0sG1XfAyamvcj3FbgCZdrogZ00li6+s8g1jecVveLf+R0PdXi e6uxg4ta6peqOpNQb6jnPjEwPNatOABCNqcDpijg3ZkdHCC5VW4ytceQ8PE3Fq4BGFGe7DnqQJ3 eX9FTxSubMzIjgLCaIUGn4uMzBHNaDIuSD6CHXCtr518FhCJ
-X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: openbmc@lists.ozlabs.org
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="i29JFbL/BmvFTG8c"
+Content-Disposition: inline
+In-Reply-To: <CAMuHMdWTU8tN1QNrAT-BWgdrgzvJRvV6a30GcDAFq3qmF1CWag@mail.gmail.com>
+X-Provags-ID: V03:K1:mHpdvxoTSe4sfNwZN7x8qDj8Q1Rpc+ZxRf+bNcMA/1nJUXQRQhH
+ DLuC2Uk/VbJ5FRljHJHhwTdYxmkTIxZeL7WPCEe9ccPPTclbRwizYIXuZWqxmil14huW4XT
+ 6lYEmdLv4XQpIk6A4vlqrALpTh2LzBSl9Ko5+b/n1GQNMN/c2aLnLVwedD0zp+YanWkE/4y
+ vtSL+BEgxbI28puDHRZ9g==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:PBJFr88qEqk=;G9DAXW7p6u94VN0c5qHjk2dnGBU
+ huMhUYIdDj0CoPARyATH12bumMFgVGJjKK5JFqzGPZ6PlFVi/N4oqZw17IGAIVewS0roFamkm
+ ZCnEjOrexpwW3SYpW7vlIp/uP0EXoatS1slYWauF9lez+s4XIC11qn/nBgHzKMpkhFclbXb0M
+ 9KonmgmnjawdA/RLCoRctCvVVBg+rQo2q1czQ/xERwGKYQJI55yzVlBn0KRjqsVk+EAACkdIz
+ PJt9fNdYFl8BzusENmPTtnxea7iotH1EgAl4n79KmFkujBunZ69U8IPDUz3yowOn2nbSVXCSk
+ fBmxQrIe2B4+fZpxEG24CJ7ygTLi5NnYGsEKJRtmI+9q/PXvBAXvdPCAnzRoRKCcU1ge3JmqP
+ 2NDGZC2D8FR7LMB5XW4Jkt0zhS8QULBL2yrgJi6IZtZzzTNpmZpzxIWFg+5fTsbrnzH2IPYnJ
+ UFu1F41/hw6G367jABeZXcmn7V1Yu2q5U4sJy3XVxArSox0VZv7jmWt7Z4mKgVvxCgNZAQM9X
+ XlgeoDXLJ9jZFi78dkOxcZitWUs0mUv3a7frxagqXJdhiFUdm6Ik5shJGVYgc7i5dPYmv5nWq
+ 3EKD87G4iyWD2GcCFs5CvQiXR60XyYRPXz+MIODJzvlmofHdmnPp/sJYpvRK7Fz7/GCdKjT6y
+ m520uOltl+Q2q7uQshYVQHAWwmGreW8lF8xfI503aAryMit8LtmUVE3QFB1+5y7EEcEfBQX+s
+ 0NUbuVlte5yyUL+ewZEk0hFTkAQJ0CJ/GiRhW1xm5flK75AGgT0arpX4aTEV4kIHqwPER2rIy
+ Q1s472OsdWxM/ccJucziYXx+eNKN5oLW5uf/l85o2sTWsd33Snm0rWIeOl+ytzxnY1IdbmMWt
+ hsLh79fFa+Of8Jetf3C9qI5QPsVvgBqWY5wvY7p1quP1r5nnUEHYi6VuTkfsz4Jnnth13j7sD
+ jGJF3w3N3GyTtaRKRswfS1cIU3Y=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -57,55 +79,65 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Lars-Peter Clausen <lars@metafoo.de>, Benjamin Fair <benjaminfair@google.com>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org, linux-iio@vger.kernel.org, Tali Perry <tali.perry1@gmail.com>, kernel@pengutronix.de, Tomer Maimon <tmaimon77@gmail.com>
+Cc: Paul Menzel <pmenzel@molgen.mpg.de>, Geert Uytterhoeven <geert+renesas@glider.be>, Arnd Bergmann <arnd@arndb.de>, openbmc@lists.ozlabs.org, Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, linux-kernel@vger.kernel.org, Joel Stanley <joel@jms.id.au>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The .remove() callback for a platform driver returns an int which makes
-many driver authors wrongly assume it's possible to do error handling by
-returning an error code. However the value returned is ignored (apart
-from emitting a warning) and this typically results in resource leaks.
-To improve here there is a quest to make the remove callback return
-void. In the first step of this quest all drivers are converted to
-.remove_new() which already returns void. Eventually after all drivers
-are converted, .remove_new() will be renamed to .remove().
 
-Trivially convert this driver from always returning zero in the remove
-callback to the void returning variant.
+--i29JFbL/BmvFTG8c
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
----
- drivers/iio/adc/npcm_adc.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+On Tue, Sep 19, 2023 at 01:37:01PM +0200, Geert Uytterhoeven wrote:
+> Hi Jonathan,
+>=20
+> On Mon, Aug 14, 2023 at 7:38=E2=80=AFPM Jonathan Neusch=C3=A4fer
+> <j.neuschaefer@gmx.net> wrote:
+> > Add a menu "Nuvoton SoC drivers" to make it easier to add other Nuvoton
+> > SoC drivers later on and to prevent asking about the Nuvoton WPCM450 SoC
+> > driver when configuring a kernel without support for Nuvoton SoCs.
+> >
+> > Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
+> > Closes: https://lore.kernel.org/lkml/CAMuHMdWo5vHCeE6BeSHrUy12uT7_wFhW-=
+VbQmQ5u+4Q8c7-wYQ@mail.gmail.com/
+> > Fixes: 7dbb4a38bff3 ("soc: nuvoton: Add SoC info driver for WPCM450")
+> > Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+> > Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+> > ---
+> > v4:
+> > - Add Geert's tag
+> > - Fix commit reference
+> > - Change Link tag to Closes
+>=20
+> Any plans to move this patch and patch 2/2 forward?
+> Thanks!
 
-diff --git a/drivers/iio/adc/npcm_adc.c b/drivers/iio/adc/npcm_adc.c
-index 3d9207c160eb..3a55465951e7 100644
---- a/drivers/iio/adc/npcm_adc.c
-+++ b/drivers/iio/adc/npcm_adc.c
-@@ -320,7 +320,7 @@ static int npcm_adc_probe(struct platform_device *pdev)
- 	return ret;
- }
- 
--static int npcm_adc_remove(struct platform_device *pdev)
-+static void npcm_adc_remove(struct platform_device *pdev)
- {
- 	struct iio_dev *indio_dev = platform_get_drvdata(pdev);
- 	struct npcm_adc *info = iio_priv(indio_dev);
-@@ -333,13 +333,11 @@ static int npcm_adc_remove(struct platform_device *pdev)
- 	if (!IS_ERR(info->vref))
- 		regulator_disable(info->vref);
- 	clk_disable_unprepare(info->adc_clk);
--
--	return 0;
- }
- 
- static struct platform_driver npcm_adc_driver = {
- 	.probe		= npcm_adc_probe,
--	.remove		= npcm_adc_remove,
-+	.remove_new	= npcm_adc_remove,
- 	.driver		= {
- 		.name	= "npcm_adc",
- 		.of_match_table = npcm_adc_match,
--- 
-2.40.1
+I've been distracted by other projects, but I still want to move this
+patchset forward. I will hopefully get around to it by the end of this week.
 
+
+Thanks for the reminder,
+Jonathan
+
+--i29JFbL/BmvFTG8c
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmUKBpgACgkQCDBEmo7z
+X9sGzQ//ZkXxXybWZnRwlpKSd3MQwxRRN26sQI7V8DFusqq8yA6dzJMzv0dYbNNT
+BR0Z0CI6927jNBgAVBOrgE8laRCd2dk8gBgRfi7lEbEoG/+srPguxmZw5QoQgooL
+xc/j+/xfPsCCJ/+HVkLImqVcx+MBB/L85FOGJ5WjQsjTHqjWuKiGM22oagIsk5Jm
+tL0rafhiNLQH0UP8R8qBCdloSZW7KBKrQDZt1dxRkuq7F6To9yZ2pjm6bnwjVR9I
+PuSu9EIgk+IcQ1pxk3mhrPzeixskooYFRY6GxNqHtIWfmBQI+aKA3QtA17p0r6Fn
+MV2iwJlHa6dT3kqtdC12I/NLJJ4J37tF6iAHkLNAVO0pgGJH6ZprS0nDjNHL49o/
+6VZvtirz1EWDlFx3EMVFXLinuhMP7WBVflVb5UIXeAxASHaDpvNzysyKXDzyIx3g
+Al/mLyrrmscH5kVJn1/iI3lqckHoqbLYWL9pHDS3anmmq/FzxiUKFZ1gq+NO76+3
+QNaMet0woYr62Z2So45bwxgDqsIMe13OiPEhNIcnARTJKLboemKQz3/mbK6YLdro
+G9HH8eYM2OVXsRtmC85vIc3SVIHk9nUuzWzRFQnKTFzx4RmbPQyEoXz/wuDnpUuT
+loA7prm/wNLHQp/bcjcT4rll0xQWkQKqDVSYyT3Q8zAEzfPnIxM=
+=4UcE
+-----END PGP SIGNATURE-----
+
+--i29JFbL/BmvFTG8c--
