@@ -1,61 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C3AEC7A616E
-	for <lists+openbmc@lfdr.de>; Tue, 19 Sep 2023 13:37:39 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 89FF67A6535
+	for <lists+openbmc@lfdr.de>; Tue, 19 Sep 2023 15:32:50 +0200 (CEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=b5JUHTuV;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Rqfm15Qrpz3ck9
-	for <lists+openbmc@lfdr.de>; Tue, 19 Sep 2023 21:37:37 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RqjJr4zJ5z3c92
+	for <lists+openbmc@lfdr.de>; Tue, 19 Sep 2023 23:32:44 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.128.173; helo=mail-yw1-f173.google.com; envelope-from=geert.uytterhoeven@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=b5JUHTuV;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::233; helo=mail-lj1-x233.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rqflf2xzPz3cJl
-	for <openbmc@lists.ozlabs.org>; Tue, 19 Sep 2023 21:37:17 +1000 (AEST)
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-59bf1dde73fso52097957b3.3
-        for <openbmc@lists.ozlabs.org>; Tue, 19 Sep 2023 04:37:17 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RqjJG0byDz2yV3
+	for <openbmc@lists.ozlabs.org>; Tue, 19 Sep 2023 23:32:12 +1000 (AEST)
+Received: by mail-lj1-x233.google.com with SMTP id 38308e7fff4ca-2b95d5ee18dso94271581fa.1
+        for <openbmc@lists.ozlabs.org>; Tue, 19 Sep 2023 06:32:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695130328; x=1695735128; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=WwVxMLRoTi4jmpcZHwksJ5/u+vVpQogOzA/iWOhcTMI=;
+        b=b5JUHTuVk1qAsRhQVHxLzgDBdFwqD8dSyfzK5p6N8NpSg7wrdVe9q0eoM89PDm82Fg
+         6Q4eZqlV6TClkZgcGflCvbPyqkhaz6/28FrpVZ/I90c3ffIcQ5HMCcNaH3moaDy+5ODl
+         IZsjsoM7uTB0gvHfuCtcB5TTOYisp2NX6DtcqRHfz5vao0fJ8ztH+LFKJLUrIe4N6Nuh
+         lvC3Tf1t55OChLlkW54quGGhrFa2Hqdb/RMdazqZ3WwbD9vtyuLqdRPQr2qhkJnRGPK3
+         gcqhwXY2v9Uk7xEPmOKxjDZHhmaOHL+WJwjRIZk0GEvp2PqjDPy0W44vgy1+EShsX9mG
+         dRgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695123434; x=1695728234;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=GqfdyP+EpBuCdn7wZEzEun0x9+Aw4VCooDZ7mf8oPiw=;
-        b=btXsSY35ZKmwPfxajbqy+U2wysr3PI8LYmMN00eB13tiILKOvNXVb4SQpn2b3CiLbc
-         v4ZC3+fZC2EQSq78yq+XVlkz2mrNcu9xnXeKpthhg2DgSrLzNs2kAHw9DlyMCIMZj+ew
-         ImBTb2kmer9BQA56uqIHQ4Q4ikRcgzmbrQ7v2+HvWLIjwCXUvBeTKZvIdAD00YnCvlIS
-         u1qQnKcCbggRmxqKsKT2mlbhwOJFExf9jZqYWWn/dF8ONrlAYA4hSiYAYyqwvT9vBmB0
-         LSZFfo9DML4cISpGPFmEkTkAFpYm48OgZEMQlVOrLp7eb/jBL0iTIVGdSU34TfcDTPvu
-         Y9KQ==
-X-Gm-Message-State: AOJu0YxJZ9diOialoBAVYFGk8gHXExMna7incSl0bLwJA90IQ+loLQeK
-	Sy2q1nNMc/Al9qSMd616lfivdUsq549Btg==
-X-Google-Smtp-Source: AGHT+IF97CMCnGMTaIAeVrPMz4DyKYlR5MReeGC+N+ORCoGS3Mt47D0Jnuk3qRApJh6m7Gypor5kmw==
-X-Received: by 2002:a81:8202:0:b0:59b:8da4:dc2 with SMTP id s2-20020a818202000000b0059b8da40dc2mr11886260ywf.48.1695123434024;
-        Tue, 19 Sep 2023 04:37:14 -0700 (PDT)
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com. [209.85.128.177])
-        by smtp.gmail.com with ESMTPSA id j20-20020a819214000000b00598d67585d7sm3145883ywg.117.2023.09.19.04.37.13
-        for <openbmc@lists.ozlabs.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 19 Sep 2023 04:37:13 -0700 (PDT)
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-59c04237bf2so47762657b3.0
-        for <openbmc@lists.ozlabs.org>; Tue, 19 Sep 2023 04:37:13 -0700 (PDT)
-X-Received: by 2002:a0d:d0c1:0:b0:571:11ea:b2dd with SMTP id
- s184-20020a0dd0c1000000b0057111eab2ddmr12291738ywd.32.1695123433030; Tue, 19
- Sep 2023 04:37:13 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1695130328; x=1695735128;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WwVxMLRoTi4jmpcZHwksJ5/u+vVpQogOzA/iWOhcTMI=;
+        b=oaSQCATN9IBNBx9kCAZyVFCcq7vtJkja/luVDQfpY4EGWY2mAFeC7fwBbAOYWwWuoA
+         B/7sAp5iyrkJJ8ie0x1MY3m+yPouUOvlyHivzNZbC1WgXOiyiSbBp0t+j9MT/JCWlnwm
+         rXNq/mQDDIv7ccrhrz4JPtdxjr76vowhf4UETaIs9Oeyg3KLuWnUe8lVG/bCqNkt9FXh
+         u7OVRTUEAIIui2QmIyaGJDHz+8ik1ZfhQoXZxSxNtqbYSPzFlSRr/r9Ppeh6hCleU+aX
+         Zblsu8eXTicXSBoOnhoCGPp7raJcuBKmazFSR50zymJKV/lGFKnURH7XIW0XZuAStAQL
+         UudA==
+X-Gm-Message-State: AOJu0YwxROgCqxagaKWlvKEAb89bLCjE4Vx/bPTGEzvYQfYoD/LuhlP9
+	ukDmfIwnFdEBulmtmYonJtwyvKdXaselPza/8iw=
+X-Google-Smtp-Source: AGHT+IFsPbd3Z94I5V4mZLsZ0dcHcT44w/wtHVfCTyguyHRWhbnJq6iM8o/Htimw94qJ7HPxPLBgx9cHBwiGaoMkjBc=
+X-Received: by 2002:a05:651c:1a1f:b0:2c0:2a6e:7869 with SMTP id
+ by31-20020a05651c1a1f00b002c02a6e7869mr1667667ljb.44.1695130327566; Tue, 19
+ Sep 2023 06:32:07 -0700 (PDT)
 MIME-Version: 1.0
-References: <20230814173757.1747439-1-j.neuschaefer@gmx.net>
-In-Reply-To: <20230814173757.1747439-1-j.neuschaefer@gmx.net>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Tue, 19 Sep 2023 13:37:01 +0200
-X-Gmail-Original-Message-ID: <CAMuHMdWTU8tN1QNrAT-BWgdrgzvJRvV6a30GcDAFq3qmF1CWag@mail.gmail.com>
-Message-ID: <CAMuHMdWTU8tN1QNrAT-BWgdrgzvJRvV6a30GcDAFq3qmF1CWag@mail.gmail.com>
-Subject: Re: [PATCH v4 1/2] soc: nuvoton: Add a menu for Nuvoton SoC drivers
-To: =?UTF-8?Q?Jonathan_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+References: <20230918165958.2659-1-tmaimon77@gmail.com> <20230918165958.2659-2-tmaimon77@gmail.com>
+ <b7a337f2-a810-d14c-e7cd-15e33a9ecb5d@linaro.org> <CAP6Zq1gSJYsNUuD-bexFW_1VpAUuF_WZkicNzZms6hVdo9LnMQ@mail.gmail.com>
+ <e0d42d13-b307-9915-97c8-948261b39ce1@linaro.org>
+In-Reply-To: <e0d42d13-b307-9915-97c8-948261b39ce1@linaro.org>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Tue, 19 Sep 2023 16:31:56 +0300
+Message-ID: <CAP6Zq1g0=-h0PFg2a8bqao+XjdNHoxGMdYSRRPAnfY_6WdemAw@mail.gmail.com>
+Subject: Re: [PATCH v1 1/2] dt-binding: usb: ci-hdrc-usb2: document Nuvoton
+ NPCM supprt
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -67,43 +76,53 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Paul Menzel <pmenzel@molgen.mpg.de>, Arnd Bergmann <arnd@arndb.de>, Geert Uytterhoeven <geert+renesas@glider.be>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Joel Stanley <joel@jms.id.au>
+Cc: devicetree@vger.kernel.org, peng.fan@nxp.com, linux-usb@vger.kernel.org, benjaminfair@google.com, avifishman70@gmail.com, gregkh@linuxfoundation.org, peter.chen@kernel.org, xu.yang_2@nxp.com, j.neuschaefer@gmx.net, tali.perry1@gmail.com, robh+dt@kernel.org, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, venture@google.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Jonathan,
-
-On Mon, Aug 14, 2023 at 7:38=E2=80=AFPM Jonathan Neusch=C3=A4fer
-<j.neuschaefer@gmx.net> wrote:
-> Add a menu "Nuvoton SoC drivers" to make it easier to add other Nuvoton
-> SoC drivers later on and to prevent asking about the Nuvoton WPCM450 SoC
-> driver when configuring a kernel without support for Nuvoton SoCs.
+On Tue, 19 Sept 2023 at 15:39, Krzysztof Kozlowski
+<krzysztof.kozlowski@linaro.org> wrote:
 >
-> Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-> Closes: https://lore.kernel.org/lkml/CAMuHMdWo5vHCeE6BeSHrUy12uT7_wFhW-Vb=
-QmQ5u+4Q8c7-wYQ@mail.gmail.com/
-> Fixes: 7dbb4a38bff3 ("soc: nuvoton: Add SoC info driver for WPCM450")
-> Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-> Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-> ---
-> v4:
-> - Add Geert's tag
-> - Fix commit reference
-> - Change Link tag to Closes
+> On 19/09/2023 07:14, Tomer Maimon wrote:
+> >>>            - nvidia,tegra20-ehci
+> >>>            - nvidia,tegra20-udc
+> >>>            - nvidia,tegra30-ehci
+> >>> @@ -325,6 +326,20 @@ properties:
+> >>>      type: boolean
+> >>>      deprecated: true
+> >>>
+> >>> +  nuvoton,sysgcr:
+> >>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
+> >>> +    items:
+> >>> +      - items:
+> >>> +          - description: phandle to syscon that configures usb phy mux.
+> >>> +          - description: offset of usb phy mux selection.
+> >>> +          - description: mask usb phy mux selection.
+> >>> +          - description: value usb phy mux selection.
+> >>> +    description:
+> >>> +      A phandle to syscon with three arguments that configure usb phy mux.
+> >>> +      The argument one is the offset of usb phy mux selection, the argument two
+> >>> +      is the mask usb phy mux selection, the argument three is the mask usb phy
+> >>> +      mux selection.
+> >>
+> >> Sorry, you miss phy driver. Don't use syscon instead of proper hardware
+> >> devices.
+> > Sorry the role of nuvoton,sysgcr property is to handle a mux between
+> > the different devices and not the handle the phy itself, handle the
+> > mux done in the GCR.
+> > Should we move the nuvoton,sysgcr description to another place in the
+> > ci-hdrc-usb2.yaml
+> > or
+> > Should we use a different driver to handle the mux and call it from
+> > the ci-hdrc-npcm driver, If yes which driver should we use?
+>
+> What is an "usb phy mux"?
+We have USB phy that could be connected to USB host (different driver)
+or it can be connected to the UDC driver(ChipIdea)
+> Best regards,
+> Krzysztof
+>
 
-Any plans to move this patch and patch 2/2 forward?
-Thanks!
+Best regards,
 
-Gr{oetje,eeting}s,
-
-                        Geert
-
---=20
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
-.org
-
-In personal conversations with technical people, I call myself a hacker. Bu=
-t
-when I'm talking to journalists I just say "programmer" or something like t=
-hat.
-                                -- Linus Torvalds
+Tomer
