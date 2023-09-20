@@ -2,72 +2,78 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82A597A6C6A
-	for <lists+openbmc@lfdr.de>; Tue, 19 Sep 2023 22:44:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D76557A7078
+	for <lists+openbmc@lfdr.de>; Wed, 20 Sep 2023 04:29:22 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=BZX8jo7Q;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=jUhaXSeQ;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Rqtv33lSsz3c5c
-	for <lists+openbmc@lfdr.de>; Wed, 20 Sep 2023 06:44:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Rr2Xv2MM3z3c5V
+	for <lists+openbmc@lfdr.de>; Wed, 20 Sep 2023 12:29:19 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=BZX8jo7Q;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=jUhaXSeQ;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.15.18; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=lists.ozlabs.org)
-X-Greylist: delayed 316 seconds by postgrey-1.37 at boromir; Wed, 20 Sep 2023 06:43:59 AEST
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::435; helo=mail-pf1-x435.google.com; envelope-from=milkfafa@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RqttR6w9Qz2xdp
-	for <openbmc@lists.ozlabs.org>; Wed, 20 Sep 2023 06:43:59 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net; s=s31663417;
- t=1695156236; x=1695761036; i=j.neuschaefer@gmx.net;
- bh=kybDOh6D3XxyjaCVBL1N0978TW3OGvof2IUbAcUyp3w=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=BZX8jo7QvDztNbFbOet4uX/lH8I4kDBBZythdzwrdhl8c/y2u+wRybarjthq/myk3fAGT1y/DcH
- Hj2SZeb2nP70VObnjvOnKcrmQesUA2chXP58uPOMziPT/nIUCnePQi8T2jQZgeeFG82/7jplN66Ma
- 0TpDw98YzNWzXT8tUAlW28SsQ0MS7OBmAouKmj5uvcoFwFcb+HGYzTFHcbZwzQ97JFUadEvo112Im
- RtObSk+7MQWEYoz1yqbGvOfrIk0fW0GrvW/uOwI19F/8YgdNvOeTkxaemP6P8H+C2yHUicrPnzshC
- ocuvWjuUXBS4CXMkAAg7VfAvsPilGtyOfqdg==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from probook ([89.0.47.152]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MDhlV-1qsLzJ474p-00AqrU; Tue, 19
- Sep 2023 22:38:19 +0200
-Date: Tue, 19 Sep 2023 22:38:17 +0200
-From: =?utf-8?Q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Geert Uytterhoeven <geert@linux-m68k.org>
-Subject: Re: [PATCH v4 1/2] soc: nuvoton: Add a menu for Nuvoton SoC drivers
-Message-ID: <ZQoGuR6+7tJdjL6V@probook>
-References: <20230814173757.1747439-1-j.neuschaefer@gmx.net>
- <CAMuHMdWTU8tN1QNrAT-BWgdrgzvJRvV6a30GcDAFq3qmF1CWag@mail.gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rr2XG5jDfz303l
+	for <openbmc@lists.ozlabs.org>; Wed, 20 Sep 2023 12:28:45 +1000 (AEST)
+Received: by mail-pf1-x435.google.com with SMTP id d2e1a72fcca58-690bc3f82a7so1828675b3a.0
+        for <openbmc@lists.ozlabs.org>; Tue, 19 Sep 2023 19:28:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695176921; x=1695781721; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=VfzrZwHFhCid05Dh4cuoZwqnMh3jue5FZMC0tshYFgs=;
+        b=jUhaXSeQCAllSYecageGwYuuL4SYg/7ufPkFgS3sZrsFFCjw1PwEMnIwSDxvfA1ETx
+         x5UPMDxFcD5hHc45KqVqu78Lx1jVDYGTMNtJGtG0lSrAqs2gn3vjGmvZz2G+ZA0fg1xu
+         s8y1E2vFFa+xpENvtGoENiHs4eV8ljijwqneLFrmabKoToBbx2+BvH2/Nj+kNFShsP6k
+         Gej4uOxNgQH0rFmeUUiLNaN/8jVkk66rb0i+CyGqOZduaZOe5ul1cURwrJ7noDPB0HBL
+         o2uc6ababFSNlE7Mk5aT2dC2AY1T5resAfXbDHqxkAREiK7W7qsrfxkVNt18IwfxAWLj
+         1Z5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695176921; x=1695781721;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VfzrZwHFhCid05Dh4cuoZwqnMh3jue5FZMC0tshYFgs=;
+        b=uoIoapv3HVVkaDH2RrsJjIyFvj4cgQiMYlyTuT6qQ0fsQhB3a9NdhnFTZ8JyaUUK8l
+         AfciFDxpwLVYNCg77nev6JayxNKEkRajLR2RumqYam0coCZg5A4sAtlvYVlGjm1c6MZi
+         pitJH/ox8Pz3F75Az09drCAqgYkpYq7qdg1eJad83276GmRJHJVS8OaOv4y+rRJsDd5O
+         a0CngO9E6lKnc7xTk6GYPRoQa7scLBUNgU43godylvcC9oKbunWMnFdLcK4VSyTa93C5
+         rhtU0Lar5oj6JKAlPyimOMSn+PN4PFluz4Cokzp3Jq07m8YaX024ga78q9nt7Aj5GzIF
+         V04w==
+X-Gm-Message-State: AOJu0Yz0P3THoMAucKcq12RI4Lgi38YOohkg1jWpB4Ksyy8EtTqh1Ybx
+	yVjbH8XxLJVLrHvWO7L6aCQ=
+X-Google-Smtp-Source: AGHT+IHsiJb0fC73yoiY8bzXP7vKeDQwDZb7m4fTMvKi3+K3yXz1jBn5VBLizhJMzRXVG6WE0NfKSw==
+X-Received: by 2002:a05:6a20:552a:b0:14d:6309:fc92 with SMTP id ko42-20020a056a20552a00b0014d6309fc92mr1120474pzb.46.1695176920911;
+        Tue, 19 Sep 2023 19:28:40 -0700 (PDT)
+Received: from hcdev-d520mt2.. (60-250-192-107.hinet-ip.hinet.net. [60.250.192.107])
+        by smtp.gmail.com with ESMTPSA id n9-20020a170903110900b001bc930d4517sm10610009plh.42.2023.09.19.19.28.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 19 Sep 2023 19:28:40 -0700 (PDT)
+From: Marvin Lin <milkfafa@gmail.com>
+To: mchehab@kernel.org,
+	hverkuil-cisco@xs4all.nl,
+	avifishman70@gmail.com,
+	tmaimon77@gmail.com,
+	tali.perry1@gmail.com,
+	venture@google.com,
+	yuenn@google.com,
+	benjaminfair@google.com,
+	robh+dt@kernel.org,
+	krzysztof.kozlowski+dt@linaro.org,
+	andrzej.p@collabora.com
+Subject: [PATCH v15 0/7] Support Nuvoton NPCM Video Capture/Encode Engine
+Date: Wed, 20 Sep 2023 10:28:05 +0800
+Message-Id: <20230920022812.601800-1-milkfafa@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="i29JFbL/BmvFTG8c"
-Content-Disposition: inline
-In-Reply-To: <CAMuHMdWTU8tN1QNrAT-BWgdrgzvJRvV6a30GcDAFq3qmF1CWag@mail.gmail.com>
-X-Provags-ID: V03:K1:mHpdvxoTSe4sfNwZN7x8qDj8Q1Rpc+ZxRf+bNcMA/1nJUXQRQhH
- DLuC2Uk/VbJ5FRljHJHhwTdYxmkTIxZeL7WPCEe9ccPPTclbRwizYIXuZWqxmil14huW4XT
- 6lYEmdLv4XQpIk6A4vlqrALpTh2LzBSl9Ko5+b/n1GQNMN/c2aLnLVwedD0zp+YanWkE/4y
- vtSL+BEgxbI28puDHRZ9g==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:PBJFr88qEqk=;G9DAXW7p6u94VN0c5qHjk2dnGBU
- huMhUYIdDj0CoPARyATH12bumMFgVGJjKK5JFqzGPZ6PlFVi/N4oqZw17IGAIVewS0roFamkm
- ZCnEjOrexpwW3SYpW7vlIp/uP0EXoatS1slYWauF9lez+s4XIC11qn/nBgHzKMpkhFclbXb0M
- 9KonmgmnjawdA/RLCoRctCvVVBg+rQo2q1czQ/xERwGKYQJI55yzVlBn0KRjqsVk+EAACkdIz
- PJt9fNdYFl8BzusENmPTtnxea7iotH1EgAl4n79KmFkujBunZ69U8IPDUz3yowOn2nbSVXCSk
- fBmxQrIe2B4+fZpxEG24CJ7ygTLi5NnYGsEKJRtmI+9q/PXvBAXvdPCAnzRoRKCcU1ge3JmqP
- 2NDGZC2D8FR7LMB5XW4Jkt0zhS8QULBL2yrgJi6IZtZzzTNpmZpzxIWFg+5fTsbrnzH2IPYnJ
- UFu1F41/hw6G367jABeZXcmn7V1Yu2q5U4sJy3XVxArSox0VZv7jmWt7Z4mKgVvxCgNZAQM9X
- XlgeoDXLJ9jZFi78dkOxcZitWUs0mUv3a7frxagqXJdhiFUdm6Ik5shJGVYgc7i5dPYmv5nWq
- 3EKD87G4iyWD2GcCFs5CvQiXR60XyYRPXz+MIODJzvlmofHdmnPp/sJYpvRK7Fz7/GCdKjT6y
- m520uOltl+Q2q7uQshYVQHAWwmGreW8lF8xfI503aAryMit8LtmUVE3QFB1+5y7EEcEfBQX+s
- 0NUbuVlte5yyUL+ewZEk0hFTkAQJ0CJ/GiRhW1xm5flK75AGgT0arpX4aTEV4kIHqwPER2rIy
- Q1s472OsdWxM/ccJucziYXx+eNKN5oLW5uf/l85o2sTWsd33Snm0rWIeOl+ytzxnY1IdbmMWt
- hsLh79fFa+Of8Jetf3C9qI5QPsVvgBqWY5wvY7p1quP1r5nnUEHYi6VuTkfsz4Jnnth13j7sD
- jGJF3w3N3GyTtaRKRswfS1cIU3Y=
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,65 +85,227 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Paul Menzel <pmenzel@molgen.mpg.de>, Geert Uytterhoeven <geert+renesas@glider.be>, Arnd Bergmann <arnd@arndb.de>, openbmc@lists.ozlabs.org, Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, linux-kernel@vger.kernel.org, Joel Stanley <joel@jms.id.au>
+Cc: kwliu@nuvoton.com, Marvin Lin <milkfafa@gmail.com>, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, kflin@nuvoton.com, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This patch series add DTS node, dt-bindings document and drivers for Video
+Capture/Differentiation Engine (VCD) and Encoding Compression Engine (ECE)
+present on Nuvoton NPCM SoCs.
 
---i29JFbL/BmvFTG8c
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+As described in the datasheet NPCM750D_DS_Rev_1.0, the VCD can capture a
+frame from digital video input and compare two frames in memory, and then
+the ECE can compress the frame data into HEXTILE format which is defined
+in Remote Framebuffer Protocol (RFC 6143, chapter 7.7.4. Hextile Encoding).
 
-On Tue, Sep 19, 2023 at 01:37:01PM +0200, Geert Uytterhoeven wrote:
-> Hi Jonathan,
->=20
-> On Mon, Aug 14, 2023 at 7:38=E2=80=AFPM Jonathan Neusch=C3=A4fer
-> <j.neuschaefer@gmx.net> wrote:
-> > Add a menu "Nuvoton SoC drivers" to make it easier to add other Nuvoton
-> > SoC drivers later on and to prevent asking about the Nuvoton WPCM450 SoC
-> > driver when configuring a kernel without support for Nuvoton SoCs.
-> >
-> > Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-> > Closes: https://lore.kernel.org/lkml/CAMuHMdWo5vHCeE6BeSHrUy12uT7_wFhW-=
-VbQmQ5u+4Q8c7-wYQ@mail.gmail.com/
-> > Fixes: 7dbb4a38bff3 ("soc: nuvoton: Add SoC info driver for WPCM450")
-> > Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-> > Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-> > ---
-> > v4:
-> > - Add Geert's tag
-> > - Fix commit reference
-> > - Change Link tag to Closes
->=20
-> Any plans to move this patch and patch 2/2 forward?
-> Thanks!
+The output of v4l2-compliance:
+v4l2-compliance 1.23.0-4996, 64 bits, 64-bit time_t
+v4l2-compliance SHA: 9431e4b26b48 2023-02-13 14:51:47
 
-I've been distracted by other projects, but I still want to move this
-patchset forward. I will hopefully get around to it by the end of this week.
+Compliance test for npcm-video device /dev/video0:
 
+Driver Info:
+        Driver name      : npcm-video
+        Card type        : NPCM Video Engine
+        Bus info         : platform:npcm-video
+        Driver version   : 6.1.12
+        Capabilities     : 0x84200001
+                Video Capture
+                Streaming
+                Extended Pix Format
+                Device Capabilities
+        Device Caps      : 0x04200001
+                Video Capture
+                Streaming
+                Extended Pix Format
 
-Thanks for the reminder,
-Jonathan
+Required ioctls:
+        test VIDIOC_QUERYCAP: OK
+        test invalid ioctls: OK
 
---i29JFbL/BmvFTG8c
-Content-Type: application/pgp-signature; name="signature.asc"
+Allow for multiple opens:
+        test second /dev/video0 open: OK
+        test VIDIOC_QUERYCAP: OK
+        test VIDIOC_G/S_PRIORITY: OK
+        test for unlimited opens: OK
 
------BEGIN PGP SIGNATURE-----
+Debug ioctls:
+        test VIDIOC_DBG_G/S_REGISTER: OK (Not Supported)
+        test VIDIOC_LOG_STATUS: OK (Not Supported)
 
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmUKBpgACgkQCDBEmo7z
-X9sGzQ//ZkXxXybWZnRwlpKSd3MQwxRRN26sQI7V8DFusqq8yA6dzJMzv0dYbNNT
-BR0Z0CI6927jNBgAVBOrgE8laRCd2dk8gBgRfi7lEbEoG/+srPguxmZw5QoQgooL
-xc/j+/xfPsCCJ/+HVkLImqVcx+MBB/L85FOGJ5WjQsjTHqjWuKiGM22oagIsk5Jm
-tL0rafhiNLQH0UP8R8qBCdloSZW7KBKrQDZt1dxRkuq7F6To9yZ2pjm6bnwjVR9I
-PuSu9EIgk+IcQ1pxk3mhrPzeixskooYFRY6GxNqHtIWfmBQI+aKA3QtA17p0r6Fn
-MV2iwJlHa6dT3kqtdC12I/NLJJ4J37tF6iAHkLNAVO0pgGJH6ZprS0nDjNHL49o/
-6VZvtirz1EWDlFx3EMVFXLinuhMP7WBVflVb5UIXeAxASHaDpvNzysyKXDzyIx3g
-Al/mLyrrmscH5kVJn1/iI3lqckHoqbLYWL9pHDS3anmmq/FzxiUKFZ1gq+NO76+3
-QNaMet0woYr62Z2So45bwxgDqsIMe13OiPEhNIcnARTJKLboemKQz3/mbK6YLdro
-G9HH8eYM2OVXsRtmC85vIc3SVIHk9nUuzWzRFQnKTFzx4RmbPQyEoXz/wuDnpUuT
-loA7prm/wNLHQp/bcjcT4rll0xQWkQKqDVSYyT3Q8zAEzfPnIxM=
-=4UcE
------END PGP SIGNATURE-----
+Input ioctls:
+        test VIDIOC_G/S_TUNER/ENUM_FREQ_BANDS: OK (Not Supported)
+        test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+        test VIDIOC_S_HW_FREQ_SEEK: OK (Not Supported)
+        test VIDIOC_ENUMAUDIO: OK (Not Supported)
+        test VIDIOC_G/S/ENUMINPUT: OK
+        test VIDIOC_G/S_AUDIO: OK (Not Supported)
+        Inputs: 1 Audio Inputs: 0 Tuners: 0
 
---i29JFbL/BmvFTG8c--
+Output ioctls:
+        test VIDIOC_G/S_MODULATOR: OK (Not Supported)
+        test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
+        test VIDIOC_ENUMAUDOUT: OK (Not Supported)
+        test VIDIOC_G/S/ENUMOUTPUT: OK (Not Supported)
+        test VIDIOC_G/S_AUDOUT: OK (Not Supported)
+        Outputs: 0 Audio Outputs: 0 Modulators: 0
+
+Input/Output configuration ioctls:
+        test VIDIOC_ENUM/G/S/QUERY_STD: OK (Not Supported)
+        test VIDIOC_ENUM/G/S/QUERY_DV_TIMINGS: OK
+        test VIDIOC_DV_TIMINGS_CAP: OK
+        test VIDIOC_G/S_EDID: OK (Not Supported)
+
+Control ioctls (Input 0):
+        test VIDIOC_QUERY_EXT_CTRL/QUERYMENU: OK
+        test VIDIOC_QUERYCTRL: OK
+        test VIDIOC_G/S_CTRL: OK
+        test VIDIOC_G/S/TRY_EXT_CTRLS: OK
+                warn: v4l2-test-controls.cpp(1139): V4L2_CID_DV_RX_POWER_PRESENT not found for input 0
+        test VIDIOC_(UN)SUBSCRIBE_EVENT/DQEVENT: OK
+        test VIDIOC_G/S_JPEGCOMP: OK (Not Supported)
+        Standard Controls: 1 Private Controls: 2
+
+Format ioctls (Input 0):
+        test VIDIOC_ENUM_FMT/FRAMESIZES/FRAMEINTERVALS: OK
+        test VIDIOC_G/S_PARM: OK (Not Supported)
+        test VIDIOC_G_FBUF: OK (Not Supported)
+        test VIDIOC_G_FMT: OK
+        test VIDIOC_TRY_FMT: OK
+        test VIDIOC_S_FMT: OK
+        test VIDIOC_G_SLICED_VBI_CAP: OK (Not Supported)
+        test Cropping: OK (Not Supported)
+        test Composing: OK (Not Supported)
+        test Scaling: OK (Not Supported)
+
+Codec ioctls (Input 0):
+        test VIDIOC_(TRY_)ENCODER_CMD: OK (Not Supported)
+        test VIDIOC_G_ENC_INDEX: OK (Not Supported)
+        test VIDIOC_(TRY_)DECODER_CMD: OK (Not Supported)
+
+Buffer ioctls (Input 0):
+        test VIDIOC_REQBUFS/CREATE_BUFS/QUERYBUF: OK
+        test VIDIOC_EXPBUF: OK
+        test Requests: OK (Not Supported)
+
+Total for npcm-video device /dev/video0: 45, Succeeded: 45, Failed: 0, Warnings: 1
+
+Changes in v15:
+  - Drop VOLATILE flag from V4L2_CID_NPCM_RECT_COUNT control and update
+    value by v4l2_ctrl_s_ctrl.
+  - Add more explanations in comment/document for V4L2_CID_NPCM_RECT_COUNT.
+
+Changes in v14:
+  - Modify the flow of setting resolution and queue setup
+  - Correct the control type (TYPE_MENU) of selecting between two modes.
+  - Let ECE could be optional (only supports PIX_FMT_RGB565 if ECE is not
+    enabled in DT).
+
+Changes in v13:
+  - Modify the flow for capturing next frame
+  - Modify the behavior of resolution change interrupt
+  - Move GFXI dt-bindings document to
+    Documentation/devicetree/bindings/soc/nuvoton/nuvoton,gfxi.yaml
+
+Changes in v12:
+  - Modify the flow for detecting resolution change and raise
+    V4L2_EVENT_SOURCE_CHANGE event.
+  - Add V4L2_PIX_FMT_RGB565 format support.
+
+Changes in v11:
+  - Replace "u8/u16/u32" with "unsigned int" for generic local variables.
+  - Correct subsystem prefixes, drop redundant words in commit subject, and
+    add more information in commit message.
+
+Changes in v10:
+  - drivers/media/platform/nuvoton/npcm-video.c
+    * Let short functions to be inline function.
+    * Correct return type of some functions, and properly handle return
+      value by callers.
+    * Correct the timing of removing rect_list and the flow of FIFO overrun
+      case in irq.
+    * Adjust line breaks, indentations, and style of variable declarations.
+
+Changes in v9:
+  - Change ECE node name to "video-codec".
+  - Drop redundant "bindings for" in commit subject of patch 2/7.
+  - Refine the format of VCD/ECE dt-binding document.
+
+Changes in v8:
+  - Let VCD/ECE to be 2 separate nodes and update dt-binding documents.
+  - Move register definitions out to a local header file.
+  - Driver refinements (add error handling for memory allocation, remove
+    unnecessary condition check and introduce "goto"s to handle similar
+    error recovery paths).
+  - Correct properties and typo in GFXI dt-binding document.
+
+Changes in v7:
+  - Add uapi documents for driver-specific controls.
+  - Implement driver-specific controls for switching capture mode and
+    getting the count of compressed HEXTILE rectangles.
+  - Drop unnecessary "enum_framesizes" and "enum_frameintervals" functions.
+  - Include the output of v4l2-compliance in cover letter.
+
+Changes in v6:
+  - Support NPCM845 and add compatible "nuvoton,npcm845-video".
+  - Correct pixel format to V4L2_PIX_FMT_HEXTILE which is newly added in
+    this patch series.
+
+Changes in v5:
+  - Simplify function prefix "nuvoton_" to "npcm_".
+  - Increase VCD_BUSY_TIMEOUT_US and ECE_POLL_TIMEOUT_US to 300ms to
+    prevent polling timeout when ECC is enabled or system is busy.
+
+Changes in v4:
+  - Fix compile warning reported by kernel test robot.
+
+Changes in v3:
+  - Add video driver entry in MAINTAINERS.
+  - Change config name to CONFIG_VIDEO_NPCM_VCD_ECE.
+  - Reduce the waiting time after resetting the VCD/ECE module.
+  - Correct data types of some variables.
+
+Changes in v2:
+  - Add Hextile document and locate with vendor formats.
+
+Marvin Lin (7):
+  ARM: dts: nuvoton: Add node for NPCM VCD and ECE engine
+  media: dt-bindings: nuvoton: Add NPCM VCD and ECE engine
+  dt-bindings: soc: nuvoton: Add NPCM GFXI
+  media: v4l: Add HEXTILE compressed format
+  media: v4l2-ctrls: Add user control base for Nuvoton NPCM controls
+  media: uapi: Add controls for NPCM video driver
+  media: nuvoton: Add driver for NPCM video capture and encoding engine
+
+ .../bindings/media/nuvoton,npcm-ece.yaml      |   43 +
+ .../bindings/media/nuvoton,npcm-vcd.yaml      |   72 +
+ .../bindings/soc/nuvoton/nuvoton,gfxi.yaml    |   39 +
+ .../userspace-api/media/drivers/index.rst     |    1 +
+ .../media/drivers/npcm-video.rst              |   66 +
+ .../media/v4l/pixfmt-reserved.rst             |    7 +
+ MAINTAINERS                                   |   12 +
+ .../dts/nuvoton/nuvoton-common-npcm7xx.dtsi   |   23 +
+ drivers/media/platform/Kconfig                |    1 +
+ drivers/media/platform/Makefile               |    1 +
+ drivers/media/platform/nuvoton/Kconfig        |   15 +
+ drivers/media/platform/nuvoton/Makefile       |    2 +
+ drivers/media/platform/nuvoton/npcm-regs.h    |  152 ++
+ drivers/media/platform/nuvoton/npcm-video.c   | 1830 +++++++++++++++++
+ drivers/media/v4l2-core/v4l2-ioctl.c          |    1 +
+ include/uapi/linux/npcm-video.h               |   41 +
+ include/uapi/linux/v4l2-controls.h            |    6 +
+ include/uapi/linux/videodev2.h                |    1 +
+ 18 files changed, 2313 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/media/nuvoton,npcm-ece.yaml
+ create mode 100644 Documentation/devicetree/bindings/media/nuvoton,npcm-vcd.yaml
+ create mode 100644 Documentation/devicetree/bindings/soc/nuvoton/nuvoton,gfxi.yaml
+ create mode 100644 Documentation/userspace-api/media/drivers/npcm-video.rst
+ create mode 100644 drivers/media/platform/nuvoton/Kconfig
+ create mode 100644 drivers/media/platform/nuvoton/Makefile
+ create mode 100644 drivers/media/platform/nuvoton/npcm-regs.h
+ create mode 100644 drivers/media/platform/nuvoton/npcm-video.c
+ create mode 100644 include/uapi/linux/npcm-video.h
+
+-- 
+2.34.1
+
