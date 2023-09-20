@@ -1,71 +1,47 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A4D37A76F1
-	for <lists+openbmc@lfdr.de>; Wed, 20 Sep 2023 11:12:38 +0200 (CEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Q8M4jEyF;
-	dkim-atps=neutral
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5BDFF7A88B2
+	for <lists+openbmc@lfdr.de>; Wed, 20 Sep 2023 17:43:25 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RrCVD40N9z3cHF
-	for <lists+openbmc@lfdr.de>; Wed, 20 Sep 2023 19:12:36 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RrN971fRsz3cNv
+	for <lists+openbmc@lfdr.de>; Thu, 21 Sep 2023 01:43:23 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Q8M4jEyF;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22f; helo=mail-lj1-x22f.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.73.55; helo=sin.source.kernel.org; envelope-from=srs0=ud8i=fe=xs4all.nl=hverkuil-cisco@kernel.org; receiver=lists.ozlabs.org)
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RrCTc0NY9z3c89
-	for <openbmc@lists.ozlabs.org>; Wed, 20 Sep 2023 19:12:02 +1000 (AEST)
-Received: by mail-lj1-x22f.google.com with SMTP id 38308e7fff4ca-2c022ce8114so30946051fa.1
-        for <openbmc@lists.ozlabs.org>; Wed, 20 Sep 2023 02:12:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695201114; x=1695805914; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=p1x4ulOTEjSOQ+Fhe0wwtsVsIHWMLD1pUZs5tuTFtbg=;
-        b=Q8M4jEyFHuhLFYKLcdhydGeS0rDmBvtQmYLjFmw6qlQ7YZw9B4ZJSlqCNSBE4n5EUJ
-         lfjd1FVOAkCs6p+VQcXDOZvyupwF30SYvHHuFKnJ/M9NpzCBTIkrHhYZXYvje1Hsgdhh
-         8pL27ypxiisbYadcOaAlAz0qkFjHGTo8s9NtssnV2tx3TEKkaTxAhFK78GAAi5faXToy
-         ncgAD8MrtQuwUZQojjmsNycz7OzMmCQX7Bo17Sfa2H1hN3yNX6FNJVh6UnKKmjXoWlSn
-         n6jZmAG0SPU+H5vfhz1ZgZiG8jbiNunOfb1NFBc/rg19O49tp18YMWNryPJhfYjqzsd9
-         KKKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695201114; x=1695805914;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=p1x4ulOTEjSOQ+Fhe0wwtsVsIHWMLD1pUZs5tuTFtbg=;
-        b=SdttxLUridyTQFfqE/eTt5QAtrE5vAFXQJQp9m17KWMbfNtYDiraJ45GuvJdu+E0h+
-         /1fSOqZxMEg+dOjotF/a3q+g2D2TatP4v9PqF7f2bumZ3NDvXN4o0klk8hB0qJt/Z70S
-         LTPm1OBMQzVdyUfTCTPKP7dyTNpiu9xJmlxKaUenMBrHMGF1H84UAX/upKoDsQuAb3ky
-         m+uH6++HEbfVwatq6hDeLJI2BjjnS3c0bqQIxeg/8whDjPGOHy/kOZt71Xicz1T2+UqH
-         wMd+KuXNrZrCLhmwLszISFE7dsOlsc1YOK3M2GvRXAQCSaoTpnX5ObiBUHR6VBl2Wf/u
-         0LmA==
-X-Gm-Message-State: AOJu0YxRUrtltEFXPWLnWznXhrCFHYoYfMX0y+DMVLhyx+8C07G3swf4
-	TYyYqh7lYInLijfV1x7GpCQ54YTKEFCVkGJUIFk=
-X-Google-Smtp-Source: AGHT+IFlh2NMaNjIOP8F/dYh1vzEh1bzqCv3IbyFy9N9OxrC9YilV6QuzTIVZeKPc31ouZElzHmBQXyCZ6wUhyRpZKo=
-X-Received: by 2002:a2e:9b86:0:b0:2bf:fb49:6619 with SMTP id
- z6-20020a2e9b86000000b002bffb496619mr1513872lji.23.1695201114215; Wed, 20 Sep
- 2023 02:11:54 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RrN8l4cFrz3c53
+	for <openbmc@lists.ozlabs.org>; Thu, 21 Sep 2023 01:43:03 +1000 (AEST)
+Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	(No client certificate requested)
+	by sin.source.kernel.org (Postfix) with ESMTPS id F3174CE1170;
+	Wed, 20 Sep 2023 15:43:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE46DC433C8;
+	Wed, 20 Sep 2023 15:42:56 +0000 (UTC)
+Message-ID: <b8f8876e-d712-4ffb-b082-b8e02363ec33@xs4all.nl>
+Date: Wed, 20 Sep 2023 17:42:55 +0200
 MIME-Version: 1.0
-References: <20230918165958.2659-1-tmaimon77@gmail.com> <20230918165958.2659-2-tmaimon77@gmail.com>
- <b7a337f2-a810-d14c-e7cd-15e33a9ecb5d@linaro.org> <CAP6Zq1gSJYsNUuD-bexFW_1VpAUuF_WZkicNzZms6hVdo9LnMQ@mail.gmail.com>
- <e0d42d13-b307-9915-97c8-948261b39ce1@linaro.org> <CAP6Zq1g0=-h0PFg2a8bqao+XjdNHoxGMdYSRRPAnfY_6WdemAw@mail.gmail.com>
- <20230919162837.GA4051010-robh@kernel.org>
-In-Reply-To: <20230919162837.GA4051010-robh@kernel.org>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Wed, 20 Sep 2023 12:11:42 +0300
-Message-ID: <CAP6Zq1hJPPAtKw8auC22wViHGQHTi0SufPJoBiqYtGWomnNUYQ@mail.gmail.com>
-Subject: Re: [PATCH v1 1/2] dt-binding: usb: ci-hdrc-usb2: document Nuvoton
- NPCM supprt
-To: Rob Herring <robh@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v15 7/7] media: nuvoton: Add driver for NPCM video capture
+ and encoding engine
+Content-Language: en-US, nl
+To: Marvin Lin <milkfafa@gmail.com>, mchehab@kernel.org,
+ avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
+ venture@google.com, yuenn@google.com, benjaminfair@google.com,
+ robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+ andrzej.p@collabora.com
+References: <20230920022812.601800-1-milkfafa@gmail.com>
+ <20230920022812.601800-8-milkfafa@gmail.com>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+In-Reply-To: <20230920022812.601800-8-milkfafa@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,58 +53,115 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, peng.fan@nxp.com, linux-usb@vger.kernel.org, benjaminfair@google.com, avifishman70@gmail.com, gregkh@linuxfoundation.org, peter.chen@kernel.org, xu.yang_2@nxp.com, j.neuschaefer@gmx.net, tali.perry1@gmail.com, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, venture@google.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
+Cc: kwliu@nuvoton.com, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, kflin@nuvoton.com, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Thanks Rob,
+On 20/09/2023 04:28, Marvin Lin wrote:
+> Add driver for Video Capture/Differentiation Engine (VCD) and Encoding
+> Compression Engine (ECE) present on Nuvoton NPCM SoCs. As described in
+> the datasheet NPCM750D_DS_Rev_1.0, the VCD can capture frames from
+> digital video input and compare two frames in memory, and then the ECE
+> can compress the frame data into HEXTILE format. This driver implements
+> V4L2 interfaces and provides user controls to support KVM feature, also
+> tested with VNC Viewer ver.6.22.826 and openbmc/obmc-ikvm.
+> 
+> Signed-off-by: Marvin Lin <milkfafa@gmail.com>
 
-I will check drivers/usb/roles
+I'm getting two sparse warnings:
 
-On Tue, 19 Sept 2023 at 19:28, Rob Herring <robh@kernel.org> wrote:
->
-> On Tue, Sep 19, 2023 at 04:31:56PM +0300, Tomer Maimon wrote:
-> > On Tue, 19 Sept 2023 at 15:39, Krzysztof Kozlowski
-> > <krzysztof.kozlowski@linaro.org> wrote:
-> > >
-> > > On 19/09/2023 07:14, Tomer Maimon wrote:
-> > > >>>            - nvidia,tegra20-ehci
-> > > >>>            - nvidia,tegra20-udc
-> > > >>>            - nvidia,tegra30-ehci
-> > > >>> @@ -325,6 +326,20 @@ properties:
-> > > >>>      type: boolean
-> > > >>>      deprecated: true
-> > > >>>
-> > > >>> +  nuvoton,sysgcr:
-> > > >>> +    $ref: /schemas/types.yaml#/definitions/phandle-array
-> > > >>> +    items:
-> > > >>> +      - items:
-> > > >>> +          - description: phandle to syscon that configures usb phy mux.
-> > > >>> +          - description: offset of usb phy mux selection.
-> > > >>> +          - description: mask usb phy mux selection.
-> > > >>> +          - description: value usb phy mux selection.
-> > > >>> +    description:
-> > > >>> +      A phandle to syscon with three arguments that configure usb phy mux.
-> > > >>> +      The argument one is the offset of usb phy mux selection, the argument two
-> > > >>> +      is the mask usb phy mux selection, the argument three is the mask usb phy
-> > > >>> +      mux selection.
-> > > >>
-> > > >> Sorry, you miss phy driver. Don't use syscon instead of proper hardware
-> > > >> devices.
-> > > > Sorry the role of nuvoton,sysgcr property is to handle a mux between
-> > > > the different devices and not the handle the phy itself, handle the
-> > > > mux done in the GCR.
-> > > > Should we move the nuvoton,sysgcr description to another place in the
-> > > > ci-hdrc-usb2.yaml
-> > > > or
-> > > > Should we use a different driver to handle the mux and call it from
-> > > > the ci-hdrc-npcm driver, If yes which driver should we use?
-> > >
-> > > What is an "usb phy mux"?
-> > We have USB phy that could be connected to USB host (different driver)
-> > or it can be connected to the UDC driver(ChipIdea)
->
-> Isn't that just role switching? There is a driver framework for that in
-> drivers/usb/roles/. Though it doesn't seem widely used yet.
->
-> Rob
+drivers/media/platform/nuvoton/npcm-video.c:227:27: warning: incorrect type in argument 1 (different address spaces)
+drivers/media/platform/nuvoton/npcm-video.c:227:27:    expected void const volatile [noderef] __iomem *addr
+drivers/media/platform/nuvoton/npcm-video.c:227:27:    got void *
+drivers/media/platform/nuvoton/npcm-video.c:1050:20: warning: context imbalance in 'npcm_video_irq' - different lock contexts for basic block
+
+That last one is a missing unlock:
+
+> +static irqreturn_t npcm_video_irq(int irq, void *arg)
+> +{
+> +	struct npcm_video *video = arg;
+> +	struct regmap *vcd = video->vcd_regmap;
+> +	struct npcm_video_buffer *buf;
+> +	unsigned int index, size, status, fmt;
+> +	dma_addr_t dma_addr;
+> +	void *addr;
+> +	static const struct v4l2_event ev = {
+> +		.type = V4L2_EVENT_SOURCE_CHANGE,
+> +		.u.src_change.changes = V4L2_EVENT_SRC_CH_RESOLUTION,
+> +	};
+> +
+> +	regmap_read(vcd, VCD_STAT, &status);
+> +	dev_dbg(video->dev, "VCD irq status 0x%x\n", status);
+> +
+> +	regmap_write(vcd, VCD_STAT, VCD_STAT_CLEAR);
+> +
+> +	if (test_bit(VIDEO_STOPPED, &video->flags) ||
+> +	    !test_bit(VIDEO_STREAMING, &video->flags))
+> +		return IRQ_NONE;
+> +
+> +	if (status & VCD_STAT_DONE) {
+> +		regmap_write(vcd, VCD_INTE, 0);
+> +		spin_lock(&video->lock);
+> +		clear_bit(VIDEO_CAPTURING, &video->flags);
+> +		buf = list_first_entry_or_null(&video->buffers,
+> +					       struct npcm_video_buffer, link);
+> +		if (!buf) {
+> +			spin_unlock(&video->lock);
+> +			return IRQ_NONE;
+> +		}
+> +
+> +		addr = vb2_plane_vaddr(&buf->vb.vb2_buf, 0);
+> +		index = buf->vb.vb2_buf.index;
+> +		fmt = video->pix_fmt.pixelformat;
+> +
+> +		switch (fmt) {
+> +		case V4L2_PIX_FMT_RGB565:
+> +			size = npcm_video_raw(video, index, addr);
+> +			break;
+> +		case V4L2_PIX_FMT_HEXTILE:
+> +			dma_addr = vb2_dma_contig_plane_dma_addr(&buf->vb.vb2_buf, 0);
+> +			size = npcm_video_hextile(video, index, dma_addr, addr);
+> +			break;
+> +		default:
+
+Missing unlock here.
+
+> +			return IRQ_NONE;
+> +		}
+> +
+> +		vb2_set_plane_payload(&buf->vb.vb2_buf, 0, size);
+> +		buf->vb.vb2_buf.timestamp = ktime_get_ns();
+> +		buf->vb.sequence = video->sequence++;
+> +		buf->vb.field = V4L2_FIELD_NONE;
+> +
+> +		vb2_buffer_done(&buf->vb.vb2_buf, VB2_BUF_STATE_DONE);
+> +		list_del(&buf->link);
+> +		spin_unlock(&video->lock);
+> +
+> +		if (npcm_video_start_frame(video))
+> +			dev_err(video->dev, "Failed to capture next frame\n");
+> +	}
+> +
+> +	/* Resolution changed */
+> +	if (status & VCD_STAT_VHT_CHG || status & VCD_STAT_HAC_CHG) {
+> +		if (!test_bit(VIDEO_RES_CHANGING, &video->flags)) {
+> +			set_bit(VIDEO_RES_CHANGING, &video->flags);
+> +
+> +			vb2_queue_error(&video->queue);
+> +			v4l2_event_queue(&video->vdev, &ev);
+> +		}
+> +	}
+> +
+> +	if (status & VCD_STAT_IFOR || status & VCD_STAT_IFOT) {
+> +		dev_warn(video->dev, "VCD FIFO overrun or over thresholds\n");
+> +		if (npcm_video_start_frame(video))
+> +			dev_err(video->dev, "Failed to recover from FIFO overrun\n");
+> +	}
+> +
+> +	return IRQ_HANDLED;
+> +}
+
+Regards,
+
+	Hans
+
