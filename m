@@ -1,62 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8DFBB7A7086
-	for <lists+openbmc@lfdr.de>; Wed, 20 Sep 2023 04:32:09 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 05C6C7A7091
+	for <lists+openbmc@lfdr.de>; Wed, 20 Sep 2023 04:33:31 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=FCiM75aw;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=X2PtEu84;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Rr2c72lsKz3cFq
-	for <lists+openbmc@lfdr.de>; Wed, 20 Sep 2023 12:32:07 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Rr2dh6RV9z3cRX
+	for <lists+openbmc@lfdr.de>; Wed, 20 Sep 2023 12:33:28 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=FCiM75aw;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=X2PtEu84;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::431; helo=mail-pf1-x431.google.com; envelope-from=milkfafa@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::632; helo=mail-pl1-x632.google.com; envelope-from=milkfafa@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rr2XP22Qyz3c28
-	for <openbmc@lists.ozlabs.org>; Wed, 20 Sep 2023 12:28:53 +1000 (AEST)
-Received: by mail-pf1-x431.google.com with SMTP id d2e1a72fcca58-68bed2c786eso5519613b3a.0
-        for <openbmc@lists.ozlabs.org>; Tue, 19 Sep 2023 19:28:52 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rr2XS14T8z3c7n
+	for <openbmc@lists.ozlabs.org>; Wed, 20 Sep 2023 12:28:56 +1000 (AEST)
+Received: by mail-pl1-x632.google.com with SMTP id d9443c01a7336-1c44c0f9138so31468625ad.2
+        for <openbmc@lists.ozlabs.org>; Tue, 19 Sep 2023 19:28:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695176930; x=1695781730; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1695176934; x=1695781734; darn=lists.ozlabs.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6OHbfvvmaSbzlb/vBLJ9aFEGcvRSExJ6vAXO7h1XWQ4=;
-        b=FCiM75awRYL0n5nG/UJYinNQzT2klWBRPQ/3vCBm56VvxQPLf0Yoz1CG34+riah7qp
-         pBrCgSQA4OIxVWkhMQMyL96/R5HIWR8CNVvzwtobM4FZZWdeV5xdpdEsPuv2OGqE9PXj
-         G/1ZWyxeDeu3qQF6HlWvREdMBNmlsh30nhH2RDtLIIPhlodvpjvG9KTFtQQAm8VPRNJH
-         ZdaUPoNq14ZNmtRGZno8fjGgm3klHVteyfmGtZ8URkqqm8nJJDw8xD05BM4M3ZzNOUz9
-         mhrOrTVa71FDjFeKqrVel1UmbEb+1AvgDv3SpaZDQNDjrtDtnRgCkRJDEW0AkCeO5r0L
-         vIvw==
+        bh=MwbtYXnybBb97SoCFL69GICK++fjeLJoanazsQv4oQE=;
+        b=X2PtEu84xN1Idl0rAw9MxXeb9CX6YhGpdy9MSAIR9z9nYfV1dqxg/Q8SYYyl2GpD57
+         y1rPo7V/2NSKrgx8G988MqXQSy+fMhXmE1JV+EDFIKvJrzGteZIIEnWCiJQShNvVtdpT
+         ap54Y6USGhZcJE99lifn858gI8qtLjsbLWS3PYbU7nTnKqEKyyhh+Qc89nrblGnC9k72
+         PRL8WMbLXOLhcAVL7hN69ezxXXA/zNr0Deoruy0Y2ivBSbBy6wUXVIM6urAQKtHGEMuh
+         QtWsK0nSIo+NS4DFLmvrERHusVlm3wI7gDsvnrATsnXyPgOawyDPfC0j/imO9D4UnChC
+         G+gg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695176930; x=1695781730;
+        d=1e100.net; s=20230601; t=1695176934; x=1695781734;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6OHbfvvmaSbzlb/vBLJ9aFEGcvRSExJ6vAXO7h1XWQ4=;
-        b=nAzp/Omn+htjg42XJ2pAphOLaavKuwWVtPcUXORRmQMbOedtPsEuGAg2RcPMBsaprs
-         AD5Il60tEKiFEp+XpV6XxWxklT562KXoUtFqQKMxO1csiQDtwJ1XJXvgM98lbAMplFIU
-         N2xh1gJyBuKbXtlfHClOHUTSc79+jTaOT7yZF15gj2wrP/a3Au3HLZr2t0HPhnCX02mB
-         EQayvBJAtlyu22Y91ftBeHg6jI5757qGmRRaG0552KSW+Ure9KNRk2oii8KoeSz/eBbI
-         ft5Ob6+4f1uxDSWuhIlknorEjiOd3QVuHKBYVTg3AGWFu1mxGPZk2BcQQG3aqJN8WDNo
-         EhRQ==
-X-Gm-Message-State: AOJu0YzJuJCYMACga32KXW02ceNWMb/CeocVdT14kPj2cezPqLuajHDm
-	pGjgao7h131G81j5n59Ipmk=
-X-Google-Smtp-Source: AGHT+IFu/hzNGWz3qYAI+ycJkN0IMj5h7i2a3Pa9ZIOED17OWLzc/SnORoVfn2f/S86c3VKqPWBxoQ==
-X-Received: by 2002:a05:6a20:8421:b0:15a:836:7239 with SMTP id c33-20020a056a20842100b0015a08367239mr1708600pzd.11.1695176930559;
-        Tue, 19 Sep 2023 19:28:50 -0700 (PDT)
+        bh=MwbtYXnybBb97SoCFL69GICK++fjeLJoanazsQv4oQE=;
+        b=h1ITdFN/DheC3f7hcfTztouZM5uZa2/pdDUG5YablkLOkli48pF68oRKE7DO6tKMKP
+         MeQ9btfjrlUHOfJgbTg33vcjfEvAio9LcwSNd/WlR3Yn8Fpoear/GiL9jSSVrUmNT4hj
+         UsctOTgH2E8kcKyyPtrqsxs8egGQ+qS+PddZUmxBMLD6VLHPpLtjQMOAN2ciq8jJJ6FS
+         N7NSCoB5yMjhZvMWz0JDPIgW0vZ8pNptOhETUSXN8L5lY0NbZ0M7G/yjk9c/qkYItNB/
+         URRKDti/fVpQegxvQw7EBjE+Zb5F6EkpWiwOQkqJdbFODD3dCEb1AQ0/BSARedae3gP8
+         msrw==
+X-Gm-Message-State: AOJu0YyoLfvLUCZyq/sC4bkAeCzpLDnQSg2Tqkp2m2KhYCBRaSujbuPP
+	iswNN7FrFbnppznoXGS2CyU=
+X-Google-Smtp-Source: AGHT+IEzh5+tcQah+SlJ9h6z0FmZq28gRgfSagly08dVU65t3hBNj2CfItm/lAY64//E+dRPiVoDmA==
+X-Received: by 2002:a17:902:7585:b0:1b9:e972:134d with SMTP id j5-20020a170902758500b001b9e972134dmr1047711pll.3.1695176933784;
+        Tue, 19 Sep 2023 19:28:53 -0700 (PDT)
 Received: from hcdev-d520mt2.. (60-250-192-107.hinet-ip.hinet.net. [60.250.192.107])
-        by smtp.gmail.com with ESMTPSA id n9-20020a170903110900b001bc930d4517sm10610009plh.42.2023.09.19.19.28.47
+        by smtp.gmail.com with ESMTPSA id n9-20020a170903110900b001bc930d4517sm10610009plh.42.2023.09.19.19.28.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 19 Sep 2023 19:28:50 -0700 (PDT)
+        Tue, 19 Sep 2023 19:28:53 -0700 (PDT)
 From: Marvin Lin <milkfafa@gmail.com>
 To: mchehab@kernel.org,
 	hverkuil-cisco@xs4all.nl,
@@ -69,9 +69,9 @@ To: mchehab@kernel.org,
 	robh+dt@kernel.org,
 	krzysztof.kozlowski+dt@linaro.org,
 	andrzej.p@collabora.com
-Subject: [PATCH v15 3/7] dt-bindings: soc: nuvoton: Add NPCM GFXI
-Date: Wed, 20 Sep 2023 10:28:08 +0800
-Message-Id: <20230920022812.601800-4-milkfafa@gmail.com>
+Subject: [PATCH v15 4/7] media: v4l: Add HEXTILE compressed format
+Date: Wed, 20 Sep 2023 10:28:09 +0800
+Message-Id: <20230920022812.601800-5-milkfafa@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20230920022812.601800-1-milkfafa@gmail.com>
 References: <20230920022812.601800-1-milkfafa@gmail.com>
@@ -88,65 +88,64 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: kwliu@nuvoton.com, Marvin Lin <milkfafa@gmail.com>, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, kflin@nuvoton.com, linux-media@vger.kernel.org
+Cc: kwliu@nuvoton.com, Marvin Lin <milkfafa@gmail.com>, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Nicolas Dufresne <nicolas.dufresne@collabora.com>, kflin@nuvoton.com, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add dt-bindings document for Graphics Core Information (GFXI) node. It
-is used by NPCM video driver to retrieve Graphics core information.
+Add HEXTILE compressed format which is defined in Remote Framebuffer
+Protocol (RFC 6143, chapter 7.7.4 Hextile Encoding) and is used by
+Encoding Compression Engine (ECE) present on Nuvoton NPCM SoCs.
 
 Signed-off-by: Marvin Lin <milkfafa@gmail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Nicolas Dufresne <nicolas.dufresne@collabora.com>
 ---
- .../bindings/soc/nuvoton/nuvoton,gfxi.yaml    | 39 +++++++++++++++++++
- 1 file changed, 39 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/soc/nuvoton/nuvoton,gfxi.yaml
+ Documentation/userspace-api/media/v4l/pixfmt-reserved.rst | 7 +++++++
+ drivers/media/v4l2-core/v4l2-ioctl.c                      | 1 +
+ include/uapi/linux/videodev2.h                            | 1 +
+ 3 files changed, 9 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/soc/nuvoton/nuvoton,gfxi.yaml b/Documentation/devicetree/bindings/soc/nuvoton/nuvoton,gfxi.yaml
-new file mode 100644
-index 000000000000..0222a43977ab
---- /dev/null
-+++ b/Documentation/devicetree/bindings/soc/nuvoton/nuvoton,gfxi.yaml
-@@ -0,0 +1,39 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/soc/nuvoton/nuvoton,gfxi.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
+index 296ad2025e8d..886ba7b08d6b 100644
+--- a/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
++++ b/Documentation/userspace-api/media/v4l/pixfmt-reserved.rst
+@@ -288,6 +288,13 @@ please make a proposal on the linux-media mailing list.
+       - 'MT2110R'
+       - This format is two-planar 10-Bit raster mode and having similitude with
+         ``V4L2_PIX_FMT_MM21`` in term of alignment and tiling. Used for AVC.
++    * .. _V4L2-PIX-FMT-HEXTILE:
 +
-+title: Graphics Core Information block in Nuvoton SoCs
-+
-+maintainers:
-+  - Joseph Liu <kwliu@nuvoton.com>
-+  - Marvin Lin <kflin@nuvoton.com>
-+
-+description:
-+  The Graphics Core Information (GFXI) are a block of registers in Nuvoton SoCs
-+  that analyzes Graphics core behavior and provides information in registers.
-+
-+properties:
-+  compatible:
-+    items:
-+      - enum:
-+          - nuvoton,npcm750-gfxi
-+          - nuvoton,npcm845-gfxi
-+      - const: syscon
-+
-+  reg:
-+    maxItems: 1
-+
-+required:
-+  - compatible
-+  - reg
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    gfxi: gfxi@e000 {
-+      compatible = "nuvoton,npcm750-gfxi", "syscon";
-+      reg = <0xe000 0x100>;
-+    };
++      - ``V4L2_PIX_FMT_HEXTILE``
++      - 'HXTL'
++      - Compressed format used by Nuvoton NPCM video driver. This format is
++        defined in Remote Framebuffer Protocol (RFC 6143, chapter 7.7.4 Hextile
++        Encoding).
+ .. raw:: latex
+ 
+     \normalsize
+diff --git a/drivers/media/v4l2-core/v4l2-ioctl.c b/drivers/media/v4l2-core/v4l2-ioctl.c
+index f4d9d6279094..9b1de54ce379 100644
+--- a/drivers/media/v4l2-core/v4l2-ioctl.c
++++ b/drivers/media/v4l2-core/v4l2-ioctl.c
+@@ -1510,6 +1510,7 @@ static void v4l_fill_fmtdesc(struct v4l2_fmtdesc *fmt)
+ 		case V4L2_PIX_FMT_AV1_FRAME:	descr = "AV1 Frame"; break;
+ 		case V4L2_PIX_FMT_MT2110T:	descr = "Mediatek 10bit Tile Mode"; break;
+ 		case V4L2_PIX_FMT_MT2110R:	descr = "Mediatek 10bit Raster Mode"; break;
++		case V4L2_PIX_FMT_HEXTILE:	descr = "Hextile Compressed Format"; break;
+ 		default:
+ 			if (fmt->description[0])
+ 				return;
+diff --git a/include/uapi/linux/videodev2.h b/include/uapi/linux/videodev2.h
+index 78260e5d9985..c3d4e490ce7c 100644
+--- a/include/uapi/linux/videodev2.h
++++ b/include/uapi/linux/videodev2.h
+@@ -804,6 +804,7 @@ struct v4l2_pix_format {
+ #define V4L2_PIX_FMT_QC08C    v4l2_fourcc('Q', '0', '8', 'C') /* Qualcomm 8-bit compressed */
+ #define V4L2_PIX_FMT_QC10C    v4l2_fourcc('Q', '1', '0', 'C') /* Qualcomm 10-bit compressed */
+ #define V4L2_PIX_FMT_AJPG     v4l2_fourcc('A', 'J', 'P', 'G') /* Aspeed JPEG */
++#define V4L2_PIX_FMT_HEXTILE  v4l2_fourcc('H', 'X', 'T', 'L') /* Hextile compressed */
+ 
+ /* 10bit raw packed, 32 bytes for every 25 pixels, last LSB 6 bits unused */
+ #define V4L2_PIX_FMT_IPU3_SBGGR10	v4l2_fourcc('i', 'p', '3', 'b') /* IPU3 packed 10-bit BGGR bayer */
 -- 
 2.34.1
 
