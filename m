@@ -2,46 +2,93 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5BDFF7A88B2
-	for <lists+openbmc@lfdr.de>; Wed, 20 Sep 2023 17:43:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E6F867A8CDA
+	for <lists+openbmc@lfdr.de>; Wed, 20 Sep 2023 21:29:23 +0200 (CEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=s/eetGNI;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=DYp188xk;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RrN971fRsz3cNv
-	for <lists+openbmc@lfdr.de>; Thu, 21 Sep 2023 01:43:23 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RrT9s5Hc1z3cJ0
+	for <lists+openbmc@lfdr.de>; Thu, 21 Sep 2023 05:29:21 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.73.55; helo=sin.source.kernel.org; envelope-from=srs0=ud8i=fe=xs4all.nl=hverkuil-cisco@kernel.org; receiver=lists.ozlabs.org)
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=s/eetGNI;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=DYp188xk;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.27; helo=out3-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=lists.ozlabs.org)
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RrN8l4cFrz3c53
-	for <openbmc@lists.ozlabs.org>; Thu, 21 Sep 2023 01:43:03 +1000 (AEST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
-	(No client certificate requested)
-	by sin.source.kernel.org (Postfix) with ESMTPS id F3174CE1170;
-	Wed, 20 Sep 2023 15:43:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE46DC433C8;
-	Wed, 20 Sep 2023 15:42:56 +0000 (UTC)
-Message-ID: <b8f8876e-d712-4ffb-b082-b8e02363ec33@xs4all.nl>
-Date: Wed, 20 Sep 2023 17:42:55 +0200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RrT8W5M2Fz3cJN
+	for <openbmc@lists.ozlabs.org>; Thu, 21 Sep 2023 05:28:11 +1000 (AEST)
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+	by mailout.nyi.internal (Postfix) with ESMTP id D7B7D5C015E
+	for <openbmc@lists.ozlabs.org>; Wed, 20 Sep 2023 15:28:09 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute4.internal (MEProxy); Wed, 20 Sep 2023 15:28:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	fuzziesquirrel.com; h=cc:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:resent-date:resent-from:resent-message-id
+	:resent-to:sender:subject:subject:to:to; s=fm3; t=1695238089; x=
+	1695324489; bh=KjunuL370BAnd7gjcVIIY601W7kpKQPcTcCc5D+V1UE=; b=s
+	/eetGNIOPgwLcfJwDzes2Ttz7rDFPVcOskAyKGrd2fackWvk3/iZvd59KDYF2c7q
+	sLia2ormcmWfMqSF91kQaTxhVNt9YIqYpgpxY9OmFl1djedybfgPnEb9nwQrR2dS
+	zLqfXCNb6ssoMl5ifIKLbTJdjkyJXQIf3o+xDg5BZis5aFLzfBGHEo9DM7Cvz3+T
+	s3VL64ODWg1NY8KtVmXuy2GpXnUAEA32vHzNTUFdd4uB/vonW/JBb7B8Xl09rvj6
+	HSI94btv6saR01+ZHejhHyMm5llUQ003wA/W45fmoG4sgQy04PwXI5+eRtzOGcqj
+	gmaA3Go4clPWleX9fZC6A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:resent-date
+	:resent-from:resent-message-id:resent-to:sender:subject:subject
+	:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc;
+	 s=fm2; t=1695238089; x=1695324489; bh=KjunuL370BAnd7gjcVIIY601W
+	7kpKQPcTcCc5D+V1UE=; b=DYp188xkFgxRj9zuaCrR/5l0DLJE0uvCYWDZTo39d
+	yBvffrENJD/fYSvfaVA67vkFiDhtSheEOM+TYn6RC2PLjOA4xxbh9JuFNwxWfR5N
+	k8Kg0OcdTS78wFPqopy8krvUgJBKAqUSM3CHPO5KT4SqtTIl6OUC7I2G84QVZQlh
+	ERgJML58ReYwmCZ01Bbj7JioKY1HJQVhQYOLUycoYo8Yt1SN1WfhtMQwCGsvZ4fv
+	Dsa71hZpUfhLKL8yH9h9YZxW1UwAnFTX6JtDc1NpaftrhnNr2Zc9sog1ON7xPGnE
+	YIeu3UwIpBCaBo9a+57xwJ9IZs8+0cO49T2qvXFFNfrNQ==
+X-ME-Sender: <xms:yUcLZfO7OaCNTcGi_ElkNyCHulBAKblXURJjuwl6oscdEN_pgOah9g>
+    <xme:yUcLZZ90a12vGnArJtf77A3T3fPvCBjS2yBt6W_Vt8gA6VQNAPtSMwLccd_U09bYq
+    PpCoG4XhMsR3flSXL0>
+X-ME-Received: <xmr:yUcLZeTZe60_0H7LSQoz7pT9-sCz6ffEU3VyYefO8b3n4OJu9zwMDMSp_n6QZ7WOfCNHO8uyaDlOXggKMI2woMkgR3-c8vtEalG4bOgo6xD_vQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudekfedgudeflecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpeffhffvuffkfhggtggujgesthdtsfdttddtvdenucfhrhhomhepuehrrggu
+    uceuihhshhhophcuoegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrdgtoh
+    hmqeenucggtffrrghtthgvrhhnpeeljedvledtjeelkeehvdeludekvefhgefhieevtdel
+    hfdtffejteevvdfhiefhgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmh
+    grihhlfhhrohhmpegsrhgrughlvgihsgesfhhuiiiiihgvshhquhhirhhrvghlrdgtohhm
+X-ME-Proxy: <xmx:yUcLZTsKkv4Qki9GIWgyk9QTOXKzOHIM2goHaBgeUH1DCsbgvubNcg>
+    <xmx:yUcLZXchB26Y6p-SleJt8Ha2STqgVPPZhZJeE7Wk6K8JdJpQt-HOQg>
+    <xmx:yUcLZf3FtM3G3aK_3e34aKF1Qoo5viMmvNikwxK4p87nJwRdmJzI6A>
+    <xmx:yUcLZVr8B9QJ5mrKG-ko9S_66kqSNsTRw2FLU1ROJhZoy-xNeAhjmw>
+Feedback-ID: i02c9470a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <openbmc@lists.ozlabs.org>; Wed, 20 Sep 2023 15:28:09 -0400 (EDT)
+Resent-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+Resent-Date: Wed, 20 Sep 2023 15:28:07 -0400
+Resent-Message-ID: <sm4zydradstbugcdot7s3hrj2b2ifvai2rsmiij3w6hyz3thu3@fl2jvew4rtzz>
+Resent-To: openbmc@lists.ozlabs.org
+Date: Wed, 20 Sep 2023 13:27:54 -0400
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Patrick Williams <patrick@stwcx.xyz>
+Subject: Re: Towards less magic strings.
+Message-ID: <r23a3loyqtas6tor7to4xlemskvv2w536uv7naw6yqdmtfszeq@csexjlaqkzlh>
+References: <ZQKp6bcE3rvXsTIF@heinlein.vulture-banana.ts.net>
+ <89fe1392f0a35c6c2ed14d222d2d324730dc4b44.camel@fuzziesquirrel.com>
+ <ZQQgkQyF9nK8H_pt@heinlein.vulture-banana.ts.net>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v15 7/7] media: nuvoton: Add driver for NPCM video capture
- and encoding engine
-Content-Language: en-US, nl
-To: Marvin Lin <milkfafa@gmail.com>, mchehab@kernel.org,
- avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
- venture@google.com, yuenn@google.com, benjaminfair@google.com,
- robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- andrzej.p@collabora.com
-References: <20230920022812.601800-1-milkfafa@gmail.com>
- <20230920022812.601800-8-milkfafa@gmail.com>
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-In-Reply-To: <20230920022812.601800-8-milkfafa@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <ZQQgkQyF9nK8H_pt@heinlein.vulture-banana.ts.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -53,115 +100,50 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: kwliu@nuvoton.com, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, kflin@nuvoton.com, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 20/09/2023 04:28, Marvin Lin wrote:
-> Add driver for Video Capture/Differentiation Engine (VCD) and Encoding
-> Compression Engine (ECE) present on Nuvoton NPCM SoCs. As described in
-> the datasheet NPCM750D_DS_Rev_1.0, the VCD can capture frames from
-> digital video input and compare two frames in memory, and then the ECE
-> can compress the frame data into HEXTILE format. This driver implements
-> V4L2 interfaces and provides user controls to support KVM feature, also
-> tested with VNC Viewer ver.6.22.826 and openbmc/obmc-ikvm.
-> 
-> Signed-off-by: Marvin Lin <milkfafa@gmail.com>
+On Fri, Sep 15, 2023 at 04:14:57AM -0500, Patrick Williams wrote:
+>On Thu, Sep 14, 2023 at 10:33:10AM -0400, Brad Bishop wrote:
+>> On Thu, 2023-09-14 at 01:36 -0500, Patrick Williams wrote:
+>> >
+>> > ## Service Names
+>> >
+>> > I think it should be rare that you need a hard-coded service name in
+>> > your code, since typically you'll want to do some kind of mapper
+>>
+>> I would actually propose the opposite - we should use mapper lookups as
+>> a last resort and prefer hard-coded service names.  Mapper lookups add
+>> latency, and require developers to have OpenBMC specific domain
+>> knowledge to do something that should otherwise be simple and well
+>> documented.  Mapper indirection also prevents the use of dbus
+>> activation, which drastically simplifies service dependencies.
+>
+>I do like dbus activation when we can and do think it would be
+>beneficial to transition to it where appropriate.  I don't think
+>anything I've added would get in the way (except possibly that
+>opinionated statement you quoted here).
 
-I'm getting two sparse warnings:
+I'm glad you agree and I'm glad the work you have done doesn't make that 
+harder.
 
-drivers/media/platform/nuvoton/npcm-video.c:227:27: warning: incorrect type in argument 1 (different address spaces)
-drivers/media/platform/nuvoton/npcm-video.c:227:27:    expected void const volatile [noderef] __iomem *addr
-drivers/media/platform/nuvoton/npcm-video.c:227:27:    got void *
-drivers/media/platform/nuvoton/npcm-video.c:1050:20: warning: context imbalance in 'npcm_video_irq' - different lock contexts for basic block
+>You can certainly document
+>service name(s) in the YAML with the support I've added.
+>
+>I'm not positive how we get to what you're proposing from where we are at
+>though.  There are a good number of dbus interfaces that are anticipated
+>to exist in multiple daemons.  Sensors, inventory, software versions.  I
+>don't know how "interfaces should live in a single process" meshes with
+>support for PLDM, Redfish aggregation, and multi-host designs.
 
-That last one is a missing unlock:
+I don't think they need to mesh.  All I am suggesting is that our best 
+practices be:
 
-> +static irqreturn_t npcm_video_irq(int irq, void *arg)
-> +{
-> +	struct npcm_video *video = arg;
-> +	struct regmap *vcd = video->vcd_regmap;
-> +	struct npcm_video_buffer *buf;
-> +	unsigned int index, size, status, fmt;
-> +	dma_addr_t dma_addr;
-> +	void *addr;
-> +	static const struct v4l2_event ev = {
-> +		.type = V4L2_EVENT_SOURCE_CHANGE,
-> +		.u.src_change.changes = V4L2_EVENT_SRC_CH_RESOLUTION,
-> +	};
-> +
-> +	regmap_read(vcd, VCD_STAT, &status);
-> +	dev_dbg(video->dev, "VCD irq status 0x%x\n", status);
-> +
-> +	regmap_write(vcd, VCD_STAT, VCD_STAT_CLEAR);
-> +
-> +	if (test_bit(VIDEO_STOPPED, &video->flags) ||
-> +	    !test_bit(VIDEO_STREAMING, &video->flags))
-> +		return IRQ_NONE;
-> +
-> +	if (status & VCD_STAT_DONE) {
-> +		regmap_write(vcd, VCD_INTE, 0);
-> +		spin_lock(&video->lock);
-> +		clear_bit(VIDEO_CAPTURING, &video->flags);
-> +		buf = list_first_entry_or_null(&video->buffers,
-> +					       struct npcm_video_buffer, link);
-> +		if (!buf) {
-> +			spin_unlock(&video->lock);
-> +			return IRQ_NONE;
-> +		}
-> +
-> +		addr = vb2_plane_vaddr(&buf->vb.vb2_buf, 0);
-> +		index = buf->vb.vb2_buf.index;
-> +		fmt = video->pix_fmt.pixelformat;
-> +
-> +		switch (fmt) {
-> +		case V4L2_PIX_FMT_RGB565:
-> +			size = npcm_video_raw(video, index, addr);
-> +			break;
-> +		case V4L2_PIX_FMT_HEXTILE:
-> +			dma_addr = vb2_dma_contig_plane_dma_addr(&buf->vb.vb2_buf, 0);
-> +			size = npcm_video_hextile(video, index, dma_addr, addr);
-> +			break;
-> +		default:
+1 - prefer a hardcoded name until...
+2 - multiple names become necessary because of some other part of the 
+   architecture.
 
-Missing unlock here.
+Perhaps my word choice of "last-resort" was too opinionated as well.
 
-> +			return IRQ_NONE;
-> +		}
-> +
-> +		vb2_set_plane_payload(&buf->vb.vb2_buf, 0, size);
-> +		buf->vb.vb2_buf.timestamp = ktime_get_ns();
-> +		buf->vb.sequence = video->sequence++;
-> +		buf->vb.field = V4L2_FIELD_NONE;
-> +
-> +		vb2_buffer_done(&buf->vb.vb2_buf, VB2_BUF_STATE_DONE);
-> +		list_del(&buf->link);
-> +		spin_unlock(&video->lock);
-> +
-> +		if (npcm_video_start_frame(video))
-> +			dev_err(video->dev, "Failed to capture next frame\n");
-> +	}
-> +
-> +	/* Resolution changed */
-> +	if (status & VCD_STAT_VHT_CHG || status & VCD_STAT_HAC_CHG) {
-> +		if (!test_bit(VIDEO_RES_CHANGING, &video->flags)) {
-> +			set_bit(VIDEO_RES_CHANGING, &video->flags);
-> +
-> +			vb2_queue_error(&video->queue);
-> +			v4l2_event_queue(&video->vdev, &ev);
-> +		}
-> +	}
-> +
-> +	if (status & VCD_STAT_IFOR || status & VCD_STAT_IFOT) {
-> +		dev_warn(video->dev, "VCD FIFO overrun or over thresholds\n");
-> +		if (npcm_video_start_frame(video))
-> +			dev_err(video->dev, "Failed to recover from FIFO overrun\n");
-> +	}
-> +
-> +	return IRQ_HANDLED;
-> +}
-
-Regards,
-
-	Hans
-
+Thanks,
+Brad
