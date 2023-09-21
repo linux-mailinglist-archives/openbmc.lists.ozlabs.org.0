@@ -2,68 +2,87 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4A1FC7A94B8
-	for <lists+openbmc@lfdr.de>; Thu, 21 Sep 2023 15:24:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 155707A9598
+	for <lists+openbmc@lfdr.de>; Thu, 21 Sep 2023 17:39:50 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=h8AVvC38;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=hecvMABj;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=bmfgYPvS;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Rrx2v1fHTz3cGJ
-	for <lists+openbmc@lfdr.de>; Thu, 21 Sep 2023 23:24:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Rs02W6svzz3cPT
+	for <lists+openbmc@lfdr.de>; Fri, 22 Sep 2023 01:39:47 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=h8AVvC38;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=hecvMABj;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=bmfgYPvS;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e36; helo=mail-vs1-xe36.google.com; envelope-from=milkfafa@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-vs1-xe36.google.com (mail-vs1-xe36.google.com [IPv6:2607:f8b0:4864:20::e36])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.28; helo=out4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rrx2J462Xz3c1H
-	for <openbmc@lists.ozlabs.org>; Thu, 21 Sep 2023 23:24:23 +1000 (AEST)
-Received: by mail-vs1-xe36.google.com with SMTP id ada2fe7eead31-4526d872941so519432137.1
-        for <openbmc@lists.ozlabs.org>; Thu, 21 Sep 2023 06:24:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1695302660; x=1695907460; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=2QMJzQRVdpXl092C0YB+p9u+FvBSdDJvGwaFoHe9mXs=;
-        b=h8AVvC38w8ExX28tKQITRHeqyA1QO8XIcK4bto8pRDAnnhfhfBpgpGQr1zk0LpLxZC
-         XKy3BE1EUki41RTmYu1+ns8dK70ez+Gk8hctq9AHW1zZgIwIwWrq8pUuWopMMjrEaGYd
-         yTVIivVnlGFOt1IqJkXChh2m0/YKzvomtYa4pWsuBRzKgPo2MqmQXUI97PrLQT4VuShI
-         svFalbVzf1u/yaORedswd5hvMNn0rY7ElHre9bUSkPAHq1Sg7Zb56RLoX1CULOsSAmhS
-         qUgwdUYuY3hRta/WmYyIkIDw5MFuVD+3Hsj8j+OvH9CkWdGqtOLX5LGuabQ3mujKuQ0i
-         fIKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1695302660; x=1695907460;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2QMJzQRVdpXl092C0YB+p9u+FvBSdDJvGwaFoHe9mXs=;
-        b=pWBSoHJ3h1m8oVQPgK8HAHONKigCFSJf8NuPZhGAUuMiRqSlswrGJgFyX8rmmfD2K8
-         U1L2hYw3VtjWJfbz80ksbg9RMLTCNohPzpySYhQYpQHpm1PGIkUEygaTKCP2/rWTFuUx
-         hs5MmupAyu5BISytrPgb/4r5vwYHxb2KkopVkJQIZ9xD2x6Oz2l9oS5I7JNwJtRDB/ni
-         64hoCDsuL5tg2kj9nr9MxbiQBX2HC29g5ripAdpYccCKuw/T5A1jNXx0Vsme8YAT9Tpu
-         SyAa4GFLTzhjBGKqBQpfR4OEXcglrPO/YKrAdLNLH3eJFMRHj363J9bnoHoNe6BwfUzY
-         8chQ==
-X-Gm-Message-State: AOJu0Yyh1eG8jbD+BrQ6LuzqZ8gXxzt9PCDnzzrPYwlZk0KE0a6pzAgx
-	EcC5L5ezsT2/pdEY69XJlYTJEOsGcIVwBYnLE98=
-X-Google-Smtp-Source: AGHT+IEQIBnn00pB2IJpNVNOufGxL6gAIwGGykOexSbWRjQHbZV1E1O5Pn75njZHId7nUUnh90Ubb2uF3bofkKYX24k=
-X-Received: by 2002:a67:e2d7:0:b0:451:64e:4645 with SMTP id
- i23-20020a67e2d7000000b00451064e4645mr5954736vsm.12.1695302660371; Thu, 21
- Sep 2023 06:24:20 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rs01q0NxLz3cBs
+	for <openbmc@lists.ozlabs.org>; Fri, 22 Sep 2023 01:39:09 +1000 (AEST)
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
+	by mailout.nyi.internal (Postfix) with ESMTP id 145705C01DD;
+	Thu, 21 Sep 2023 11:39:06 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute2.internal (MEProxy); Thu, 21 Sep 2023 11:39:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm1; t=1695310746; x=1695397146; bh=QJ
+	PncY590BystE38vBasDOe4OnggXJa7neDi2jvf4Oc=; b=hecvMABjQhLwpNOv47
+	J+iR/VvKGjuzLTjVJ7TnWU+xr989TS5L89RLQA50WiS+REqWtQ36fiOEqc4lCm6F
+	uLsX3C31huL4p4TriCTCMkGUA58lKl/ynPQQZbruWIXwLU09bqX8lcIGyOB160Fl
+	oERzVHpMDNs5+X/lman88rFdmjJRkeJxmVVDpzXNSNebeN9K/YoM2S+vo35VRKKg
+	yQ6Voi/MLJQfhj/p2XMw6fKxm/1yQkEp1ge0mGja0dZD5o2uKj01FhoLbdBwD0sk
+	OurWWmtTPw0TvasPfUJlvNd/veuoJCL2VEY5GRa6F1x+vYfqEJDUgm+4Gk/M87IX
+	zukQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm2; t=1695310746; x=1695397146; bh=QJPncY590Byst
+	E38vBasDOe4OnggXJa7neDi2jvf4Oc=; b=bmfgYPvSzdwvFYC9hU8C9wEwlbY4H
+	c4CeoodJUF5sjfSZZZazkN/7zbrmz9MgQvCq1BYiswO6uy3rjTfhA6/GD1ODeoW4
+	+qqCJJCbXq01AA7WvSqijrMhUhm1h1aQsRvgUI5QezWOAVOoRX9vEAWe2nAFWRg4
+	P+qo2iV6bZ8mDy06p3CB78/3IqAjviKETurMKh38huF4yjBSe3JgLpK1fywlJvOc
+	RRZg0zbpHawimc0Nj9n3MrdXhXDTq1p1x2tBntsDbocVdTzNjVlXnejMg1j+4U2N
+	UWKW5pvVdLocpJGgpcgU5bwdB0+wkQ6tgknKyhMiQTBPxvz0duhnvF08A==
+X-ME-Sender: <xms:mWMMZXmTkdaC5qp2FMcRWzFPuLzyfJZWj8ycocJENuVzxnf1xCIXUA>
+    <xme:mWMMZa2c_E_l1iqfYKk3V2ynf7TsCSD71mYxk-Zu4iuagq_H2bcqb8HRl8sw2mJr_
+    8ecbVZvwkOJlwONf_I>
+X-ME-Received: <xmr:mWMMZdp7LnAPEjiN3O50VFyfdLKWRzU-Jvj__Zk0KNrp-mh5bZyaY8WRi7gtzo6HZ2i24fuqnBIDGIlXayq7d7nOBHVu2o1gEn0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudekiedgledtucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    gfrhhlucfvnfffucdludejmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredt
+    tddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
+    hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeekieefgefgvedvudduheevgedv
+    gedtgeffheejjeekkefgieefhfekueeujeegteenucffohhmrghinhepohhpvghnsghmtg
+    drohhrghdpghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepphgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:mWMMZfkD7AThXM2tRA5vash_2JQt3iThNUsy1tlo_pU-Apr3M1eTdQ>
+    <xmx:mWMMZV0r3_eyAtrMbGnI-g33zJOIrwk_DSA-ABgsaCSr7Vbp2rn36A>
+    <xmx:mWMMZeugnSsdme7tlNJWaVs6_K8TJ6z7fBtcq9kFj_Um8gXUCaCVMw>
+    <xmx:mmMMZS96uck2l5PxwClz17rsQvqfpYcq9ZQMLzlC9ZImN88gJNuxEQ>
+Feedback-ID: i68a1478a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 21 Sep 2023 11:39:05 -0400 (EDT)
+Date: Thu, 21 Sep 2023 10:39:02 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: dhruvaraj S <dhruvaraj@gmail.com>
+Subject: Re: Proposal: Removing redundant EpochTime interface from dump entry
+Message-ID: <ZQxjlifIOo96FJj9@heinlein.vulture-banana.ts.net>
+References: <CAK7WosgDEJN8gaLu+mC3W1xKAysdZY_pHTz46vqTpun69G0hfA@mail.gmail.com>
 MIME-Version: 1.0
-References: <20230920022812.601800-1-milkfafa@gmail.com> <20230920022812.601800-8-milkfafa@gmail.com>
- <fb74f6b8-3139-4652-b36a-1de396d0ca23@xs4all.nl>
-In-Reply-To: <fb74f6b8-3139-4652-b36a-1de396d0ca23@xs4all.nl>
-From: Kun-Fa Lin <milkfafa@gmail.com>
-Date: Thu, 21 Sep 2023 21:24:09 +0800
-Message-ID: <CADnNmFp9meVx5MMbCcvjSQaMv12K7j=_kB_ajJi5GoYEWegZcg@mail.gmail.com>
-Subject: Re: [PATCH v15 7/7] media: nuvoton: Add driver for NPCM video capture
- and encoding engine
-To: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="BDwDLZvMXW1BuzSi"
+Content-Disposition: inline
+In-Reply-To: <CAK7WosgDEJN8gaLu+mC3W1xKAysdZY_pHTz46vqTpun69G0hfA@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,31 +94,74 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, tmaimon77@gmail.com, kwliu@nuvoton.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, linux-media@vger.kernel.org, tali.perry1@gmail.com, andrzej.p@collabora.com, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, mchehab@kernel.org, kflin@nuvoton.com, linux-kernel@vger.kernel.org, benjaminfair@google.com
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Hans,
 
-Thanks for your review.
+--BDwDLZvMXW1BuzSi
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> > +static const struct v4l2_ctrl_config npcm_ctrl_rect_count = {
-> > +     .id = V4L2_CID_NPCM_RECT_COUNT,
-> > +     .name = "NPCM Compressed Hextile Rectangle Count",
->
-> This name is too long, it should be max 31 characters. Dropping the "Compressed " part
-> might be best, I think that word isn't needed.
->
-> > +     .type = V4L2_CTRL_TYPE_INTEGER,
-> > +     .min = 0,
-> > +     .max = (MAX_WIDTH / RECT_W) * (MAX_HEIGHT / RECT_H),
-> > +     .step = 1,
-> > +     .def = 0,
-> > +};
->
-> With this fixed, and the sparse warnings fixed, it should be ready for merging.
+On Thu, Sep 21, 2023 at 08:52:15AM +0530, dhruvaraj S wrote:
+> Hi,
+>=20
+> In the current implementation, objects implementing the dump entry
+> interface implement both xyz.openbmc_project.Common.Progress (for dump
+> creation start time, end time, and status) and
+> xyz.openbmc_project.Time.Epoch (for dump creation time, which is
+> effectively the end time). This leads to a redundancy in specifying
+> the dump creation end time.
+>=20
+> My proposed change updates the documentation of the interface,
+> removing the reference to xyz.openbmc_project.Time.Epoch and adding a
+> reference to xyz.openbmc_project.Common.Progress. This is to remove
+> the need for updating the creation time in multiple locations.
+>=20
+> You can review the change here:
+> https://gerrit.openbmc.org/c/openbmc/phosphor-dbus-interfaces/+/66680
+>=20
+> Please note that this change will have an impact on any applications
+> that are currently reading the dump creation time from the EpochTime
+> interface. These applications will need to be updated to read the
+> creation time from the xyz.openbmc_project.Common.Progress interface
+> instead.
+> Link to the interface
+> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/=
+openbmc_project/Common/Progress.interface.yaml
+>=20
+> I would appreciate it if you could take a look at the change and
+> provide any feedback you have.
+>=20
 
-OK. Will fix them in the next version.
+It looks like the potential concern would be with bmcweb.  There appears
+to maybe be some common code related to LogServices that expects all
+logs to have the Time.EpochTime interface.  Are you going to add
+alternative code there to look at the Common.Progress interface instead?
+Is this acceptable to the bmcweb side?
 
-Regards,
-Marvin
+--=20
+Patrick Williams
+
+--BDwDLZvMXW1BuzSi
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmUMY5UACgkQqwNHzC0A
+wRmQMxAAgsnfj47mqNHbyT2XRL6MOFO6gX119w+kgqk/E6jLmQbBiB/+uhQLT453
+09xHn4LX2WkrXPFNjN6i+63GR6epVpkuJH9pFtVmyrIhVSpEqyjfZvcSqtVbHg+x
+LSa0XKa2YxaY3qZACQ8Lvp2mFgFOkJmOkes8fnpV6k8CDfHV80VoLIkHdFTUIFK8
+gUEjuV6zwk6bYiyr0HgLXQBCklrKyH21ieIx9rPwGCSkSmQTz9JFiOfgTeESX93p
+67iFjfqnnHxS9cl9727dnomPAqJg6WoEYdzJw24tHYvLP4HM/JG3ssPKCY167WNu
+d51copmgvY+gp+oGeztjHoTZCbgIvpbCfkKy7P9X4vnYDEp3RINjlg2iSurs9NAc
+4oA3/a6L9ND6Nc/doZMOT06Q5a0rBqj3nUUjjJeqy9w4bpubHiQJJjvA4d0nbeMf
+Iv9QcxX1eb/NDRqcP96/3ywGtiqCoRqjbrPaIlukszdUO2DobndYguO7Ie0YoJIo
+ps2cJ6wo9+ZrmEvrlQQuo6YrftNPh39MTWcv+qLsie0CxFf8NVpviCSt/oBAbxDX
+D307lWmFzXzC589FOlAkAPl70c/1JMrgTFV8BZsOu7HWnKDtHvq5LxUc9CscMFJc
+T4gKXkbigtPPsKTkOmJfNqWiCJaEiuYkPmVSSzbCnlnAXUXjTTk=
+=Z9AB
+-----END PGP SIGNATURE-----
+
+--BDwDLZvMXW1BuzSi--
