@@ -2,96 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 18B377A8CC7
-	for <lists+openbmc@lfdr.de>; Wed, 20 Sep 2023 21:28:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 307BB7A9147
+	for <lists+openbmc@lfdr.de>; Thu, 21 Sep 2023 05:23:09 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=btJGaUpJ;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=BkLHPtzp;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=dkAT1uuz;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RrT8p3Hkqz3cLV
-	for <lists+openbmc@lfdr.de>; Thu, 21 Sep 2023 05:28:26 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RrghR5m1Sz3c4r
+	for <lists+openbmc@lfdr.de>; Thu, 21 Sep 2023 13:23:03 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=btJGaUpJ;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=BkLHPtzp;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=dkAT1uuz;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.27; helo=out3-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=lists.ozlabs.org)
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::632; helo=mail-ej1-x632.google.com; envelope-from=dhruvaraj@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RrT8733W0z2ytV
-	for <openbmc@lists.ozlabs.org>; Thu, 21 Sep 2023 05:27:50 +1000 (AEST)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.nyi.internal (Postfix) with ESMTP id E6A515C0164
-	for <openbmc@lists.ozlabs.org>; Wed, 20 Sep 2023 15:27:46 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute5.internal (MEProxy); Wed, 20 Sep 2023 15:27:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	fuzziesquirrel.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:resent-date
-	:resent-from:resent-message-id:resent-to:sender:subject:subject
-	:to:to; s=fm3; t=1695238066; x=1695324466; bh=OEUqgykOcU7FjrN5JI
-	kqcPLYueTfIv8Ghd/anXbwQ0w=; b=btJGaUpJ5Byl13fChTDsoXSeZasUbvGb+f
-	pcZh9f7HYLDk40PPi0z+HrO0aMh72D6/Qw7Ay88dt8O2a8cemRMzIJbiKNrSFGFm
-	+tzV0EHnBGU5EVyyaQX2LoWRjC35lFuVI3aW9+QFGUl/typMiY2TjoRuN0L424mz
-	yUT6j9qePkfskgd8caxuELrT5zGwGVPYOTeq3yRFkeNiQjc8hxK2ZPktmo/2Al5n
-	aMiqTi919zrXuow6UByDMw4a+3SdXk4OXJug8XbazCHYPSB8UCCDgA26QQvNSk8L
-	LiQE7hPyIERT6xOrgzadHHJdyd1WYKOCY8HssmGcZ74uRwgRGHOg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:resent-date:resent-from:resent-message-id:resent-to
-	:sender:subject:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm2; t=1695238066; x=1695324466; bh=O
-	EUqgykOcU7FjrN5JIkqcPLYueTfIv8Ghd/anXbwQ0w=; b=BkLHPtzpkUW4b70UZ
-	XFaRdk/F8iy8zCRA1sKaI4Fr9PzKqTHfrguyQaZu6w9GyPhZDWStUxHt5PdB0mI7
-	ZfFEkoIt90mIg+8bzCFLG8FCKClwi85jY1ZBM3SrEfuSJtyTS8BlZAbKgLrudvAl
-	vcwNbWPojdim+Lwv4AQakVpKSKpVh2OJumoPyA3TEe+uaELRbiF36TZCL79OWbRp
-	qFxix7Fa/eEUBqys30sh5nA7AbotHFbqb/N/3iNILtIFW1ljPkrfXVgFJjY4FUci
-	DltDIQDLcmh+ZzdvCJuU0NP8lIAO3Ft8uv0Flt3GxaLT3TrxCUi7hWbb6e3axTmP
-	Uo0YQ==
-X-ME-Sender: <xms:skcLZXkmet0KzBfPjLLDQpjy_wBdtDuwKM4fbU1tmpOghb4SweO4pA>
-    <xme:skcLZa0zFbkzQ8hvLHnSBKxBLci4XKePIBFwa9G1nhshWXEppshVe2m1jKcokGU9E
-    9z5mVMfBhtUoW2-J1Q>
-X-ME-Received: <xmr:skcLZdrGUHuw7ypm_J_UGzkNYSK02G0hoF7AvoPtxfZRX67_gAolGyXmEBmGSNbQ-oFwx7LwVvTCprEKkRwq-MRAnAgTu_kZeb9cPsOMYPnrhQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudekfedgudeflecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvuffkfhggtggugfgjsehtkefstddttddunecuhfhrohhmpeeurhgr
-    ugcuuehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtg
-    homheqnecuggftrfgrthhtvghrnhepkeehvdekgfeijefhfeffvdetgeeiledtfffhvdet
-    vdeuiefhgeduudeujefhudefnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlh
-    hushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpegsrhgrughlvgih
-    sgesfhhuiiiiihgvshhquhhirhhrvghlrdgtohhm
-X-ME-Proxy: <xmx:skcLZfny57V30fsENDFUwrHffHyh6Uzcju23xI5mPWYmYBeivQPUJQ>
-    <xmx:skcLZV3u3f88Fqj1sg_fqc9T2FAs7YsTvVC4VjqqB--In4mLv7hVpQ>
-    <xmx:skcLZeunSDqADBBwjU3j9pCf2-m_Lf12V_R8pfiOcthO0bjKj8woUQ>
-    <xmx:skcLZShPmWGuDQFHT-Nk1vAgc5d2Erlo_sbb_pLsYVat1xYVXXMj4Q>
-Feedback-ID: i02c9470a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <openbmc@lists.ozlabs.org>; Wed, 20 Sep 2023 15:27:46 -0400 (EDT)
-Resent-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-Resent-Date: Wed, 20 Sep 2023 15:27:45 -0400
-Resent-Message-ID: <43ddybus4hb3oc3lek5ccysylk3txm6cxsnegwuqk6462qhp5e@n3kdmrhoeduw>
-Resent-To: openbmc@lists.ozlabs.org
-Date: Wed, 20 Sep 2023 15:27:04 -0400
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: Patrick Williams <patrick@stwcx.xyz>
-Subject: Re: Towards less magic strings.
-Message-ID: <sf6heopbdkrvxjeehuz5qaykdx3lg6bmbqusw7u677pia7sucz@jha5vfrslwln>
-References: <ZQKp6bcE3rvXsTIF@heinlein.vulture-banana.ts.net>
- <aaecc12856e6ba3ef92e6927bb1ad7360281098d.camel@fuzziesquirrel.com>
- <ZQQiAqjj--miyo_v@heinlein.vulture-banana.ts.net>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rrggt1RN8z2yq2
+	for <openbmc@lists.ozlabs.org>; Thu, 21 Sep 2023 13:22:32 +1000 (AEST)
+Received: by mail-ej1-x632.google.com with SMTP id a640c23a62f3a-99de884ad25so48979666b.3
+        for <openbmc@lists.ozlabs.org>; Wed, 20 Sep 2023 20:22:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695266548; x=1695871348; darn=lists.ozlabs.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=/uiVtIk6yhDVMsDn5if0ArVRUhUITcOhJewBVyWPQ5M=;
+        b=dkAT1uuzCtiT2B/g4LKmXgM0TCLYDqur4yWRMglXnJujMiZSMnkWxhe5dGE+dRlgiD
+         buGpBJbNIAHgq7ltcSF01z4lC10/xNIy4ZQ4D22lSgJVL8KWjCAOs1iSahuZb8y5i/OM
+         stoMN+00d5y4qOni+OZyPyePGfrD6oqyRpItDJSl4XVgzWrntOPx5baEZU1p9N1SuJh1
+         NqRv49J0ZIkFqzatn+TS9qCh++CyuxSwaYHDdK14AU7epHqJjoxnNapPRmJNVvmNuA7v
+         brQF2gVKpigSMNE8jv7LgF6lKf3QO9i7yhFNh7VNVEsbJQlbUzaWy9Kt6ZA0LufxSFnA
+         YRYQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695266548; x=1695871348;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=/uiVtIk6yhDVMsDn5if0ArVRUhUITcOhJewBVyWPQ5M=;
+        b=OPBL0MnrcEUkgbbmMJNthJz1Z2PVV/I/VhQA/EUOn1Dn/IhDl1/cmb9KnrtZo2+YHd
+         BLJacZm48KzGB1PlIBUricu1Br1G0BtfRqTw+ur+3tl0iVRcnGHKS+k6Tuu3fW0E/j+J
+         dvBAuFFqCYLykBj7IqE5Rd8OfaKRXyr5kgbNWd9Kq+Cpk9LfhOQM4+uJcZrOT0WjgHKl
+         OzVz0AnjYPvgl/7ep3CcCVNz2IyF7ZahQLcPMIEOys01KlS9mQpHzDlO8C+yASOkYV/V
+         1McrVaahY54Zvhcv0bZEwkiFimeiRQNDWP1EY1xZeCa7Pg2RgdvfnKnjpudFg4h4IJnA
+         GJmg==
+X-Gm-Message-State: AOJu0YzjHM0wP7fKAJQBizyP8S2Vp/XtSkf9SmYhm5p4GeqfM7TosQLR
+	+l6O7902um6oSF1C+LS6YmRYzU8V7MAVn4TFEpvQkakNtssjLQ==
+X-Google-Smtp-Source: AGHT+IFmwoUuzX8FtqrZFPdu3Ys0LuJYeKZSE7VjIry/+lDSLzvezJE8H65vd3X8dIVcoJbjUSBI4ohxMN4UJI+qcJg=
+X-Received: by 2002:a17:906:3044:b0:9a5:c54f:da1c with SMTP id
+ d4-20020a170906304400b009a5c54fda1cmr4007618ejd.47.1695266548200; Wed, 20 Sep
+ 2023 20:22:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1; format=flowed
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZQQiAqjj--miyo_v@heinlein.vulture-banana.ts.net>
+From: dhruvaraj S <dhruvaraj@gmail.com>
+Date: Thu, 21 Sep 2023 08:52:15 +0530
+Message-ID: <CAK7WosgDEJN8gaLu+mC3W1xKAysdZY_pHTz46vqTpun69G0hfA@mail.gmail.com>
+Subject: Proposal: Removing redundant EpochTime interface from dump entry
+To: openbmc <openbmc@lists.ozlabs.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -106,39 +73,38 @@ List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Sep 15, 2023 at 04:21:06AM -0500, Patrick Williams wrote:
->On Thu, Sep 14, 2023 at 10:26:37AM -0400, Brad Bishop wrote:
->> On Thu, 2023-09-14 at 01:36 -0500, Patrick Williams wrote:
->> > When I look at these, the vast majority of them falls into 1 of 4
->> > different reasons:
->> >     - A well-known service name.
->> >     - A well-known path (or path prefix).
->> >     - An interface name.
->
->As a concrete example of what I'd like to see improved is this verbiage
->embedded in the YAML description:
->
->    https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/openbmc_project/Sensor/Value.interface.yaml#L3
->
->> In my mind these are not magic strings.  These are parts of an API.  We
->> don't get annoyed by having to hardcode c++ function names when we call
->> them - why do we get annoyed by having to hardcode DBus names?
->
->They may be parts of the API, but we document the API in PDI, agreed?
+Hi,
 
-Agree for the most part.  Some interfaces aren't documented there, for 
-one reason or another.
+In the current implementation, objects implementing the dump entry
+interface implement both xyz.openbmc_project.Common.Progress (for dump
+creation start time, end time, and status) and
+xyz.openbmc_project.Time.Epoch (for dump creation time, which is
+effectively the end time). This leads to a redundancy in specifying
+the dump creation end time.
 
->
->The big difference between C++ function names is that the compiler tells
->us when we messed those up (and your editor can do completion on them if
->you've set it up).  With these strings, we're relying on humans and
->runtime-detection to ensure we've got it correct.
+My proposed change updates the documentation of the interface,
+removing the reference to xyz.openbmc_project.Time.Epoch and adding a
+reference to xyz.openbmc_project.Common.Progress. This is to remove
+the need for updating the creation time in multiple locations.
 
-Yeah makes sense.  The build time assurances are usually nice (although 
-I have been in situations where I did not want every component to fail 
-to build just because of a D-Bus interface change).
+You can review the change here:
+https://gerrit.openbmc.org/c/openbmc/phosphor-dbus-interfaces/+/66680
 
->Often we get it
->wrong.  It has also been challenging to refactor dbus interfaces, again,
->because we don't get compile-time assurance of correctness.
+Please note that this change will have an impact on any applications
+that are currently reading the dump creation time from the EpochTime
+interface. These applications will need to be updated to read the
+creation time from the xyz.openbmc_project.Common.Progress interface
+instead.
+Link to the interface
+https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/openbmc_project/Common/Progress.interface.yaml
+
+I would appreciate it if you could take a look at the change and
+provide any feedback you have.
+
+Thanks,
+Dhruvaraj Subhashchandran
+
+
+-- 
+--------------
+Dhruvaraj S
