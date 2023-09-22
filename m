@@ -2,94 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B50B27AA880
-	for <lists+openbmc@lfdr.de>; Fri, 22 Sep 2023 07:46:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 006AE7AA8C5
+	for <lists+openbmc@lfdr.de>; Fri, 22 Sep 2023 08:09:03 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=wiwynn.com header.i=@wiwynn.com header.a=rsa-sha256 header.s=selector2 header.b=163JumE5;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=eQSomDyC;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RsLqX4X41z3cRv
-	for <lists+openbmc@lfdr.de>; Fri, 22 Sep 2023 15:46:32 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RsMKS6MdXz3ck8
+	for <lists+openbmc@lfdr.de>; Fri, 22 Sep 2023 16:09:00 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=wiwynn.com header.i=@wiwynn.com header.a=rsa-sha256 header.s=selector2 header.b=163JumE5;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=eQSomDyC;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=wiwynn.com (client-ip=2a01:111:f400:feab::60c; helo=apc01-sg2-obe.outbound.protection.outlook.com; envelope-from=delphine_cc_chiu@wiwynn.com; receiver=lists.ozlabs.org)
-Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sgaapc01on2060c.outbound.protection.outlook.com [IPv6:2a01:111:f400:feab::60c])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::630; helo=mail-ej1-x630.google.com; envelope-from=joel.stan@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RsLnr4F83z3bhc
-	for <openbmc@lists.ozlabs.org>; Fri, 22 Sep 2023 15:45:03 +1000 (AEST)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BkEzDM+kcrMQ3xz/jel+E6aMaA2E0Ur464/f/r+S/9tRSzFbzgnilqAjXpC9XFEaN8cWnJRZGRsmX1/cKKGs3arIZKxweBw71LYeplAI0YeacBdWmBNx2agX4yQznVJVjQVNV1Sy1HBeheT3V5rMUHBjla7CubusC6QeypXIHVC37CQ2l9VMApfVbxxlTH/VZsJPpd1m5mQtFt0Y1Pz+1KvCe+nKwtPI1GHe2ghO+V4OsGw9/XDGf6YGlSnrhUMsP53wdY49zU2Ipe7ZA+wnI8dZ2lkyUB9e00wic82/GRje70LMtoq2bZ58YiMu4VeQNEJ+GpxTphZyEKXRf3RKVw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8DZbGLgqA4BHcX2fx8BDDzei0UV8YcTldOoyvCpe7lk=;
- b=Y9YYTv3uP0QUcK7QBULeImXVgBCTYGc+rBNTL7Kth0n2XJL3tsCFc+LCmPeSmsqiA22x0rHvvZi+QQeTFIeZLuqeEEmruMlCydSc5S7cF0/ZJY+suGpaZ7gomOSs210tYfNp0HN5O78QfZ4XorQyccOmgwN1tXjImB+4iLknzzWopJCb30d1Ea+COCXKrkePril5UgK6u3RTy8mei2RFgBet3fzZMncd1bZ8qsm6tZQVKcddMwJv7oUyArHxbnBUNpj8yy99zNmPWogCgZxpjlPnVmRoFX8sDHXyaTTelog+IYhWWFO37WGACqNvEyCVwIkqUS7T3kWUGmqH065U5A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 211.20.1.79) smtp.rcpttodomain=jms.id.au smtp.mailfrom=wiwynn.com; dmarc=fail
- (p=quarantine sp=quarantine pct=100) action=quarantine
- header.from=wiwynn.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wiwynn.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8DZbGLgqA4BHcX2fx8BDDzei0UV8YcTldOoyvCpe7lk=;
- b=163JumE5CslQ2UWAEXWTpKFd1Vm1mtPhPPT0bW0nrvmYbXaH60yQ9rP7Q9R9YbPt893GEA2im0SqnB56u4hK399CeRCC3uZfdTvgLYnEHMzZM43DWhAKPttMIUiQuCXBig9CiOV76hHshTwd2J0yTWT7RnEX0/L2Fis2S3mLCjzXKOW9cysBMQdQdlbNHNV2n4Ixyw3tciP0O7JrUNa3+KLgbPYJFTtImpG7/Rj78gc2WdhOprYfdkkUf7MQzAzVUq1k3fyBtb+yH6yM6iVtU/c6N+lzwcd+fgScvudZPa3aZ51/3At/ef4pULLGTLhnnAXUCJotSfX0uQCXKVQ8Dg==
-Received: from PS2PR02CA0066.apcprd02.prod.outlook.com (2603:1096:300:5a::30)
- by TYZPR04MB5759.apcprd04.prod.outlook.com (2603:1096:400:1fc::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6792.28; Fri, 22 Sep
- 2023 05:44:41 +0000
-Received: from HK2PEPF00006FB5.apcprd02.prod.outlook.com
- (2603:1096:300:5a:cafe::4b) by PS2PR02CA0066.outlook.office365.com
- (2603:1096:300:5a::30) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6792.32 via Frontend
- Transport; Fri, 22 Sep 2023 05:44:40 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 211.20.1.79)
- smtp.mailfrom=wiwynn.com; dkim=none (message not signed)
- header.d=none;dmarc=fail action=quarantine header.from=wiwynn.com;
-Received-SPF: Fail (protection.outlook.com: domain of wiwynn.com does not
- designate 211.20.1.79 as permitted sender) receiver=protection.outlook.com;
- client-ip=211.20.1.79; helo=localhost.localdomain;
-Received: from localhost.localdomain (211.20.1.79) by
- HK2PEPF00006FB5.mail.protection.outlook.com (10.167.8.11) with Microsoft SMTP
- Server id 15.20.6792.20 via Frontend Transport; Fri, 22 Sep 2023 05:44:40
- +0000
-From: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
-To: joel@jms.id.au,
-	openbmc@lists.ozlabs.org,
-	patrick@stwcx.xyz
-Subject: [PATCH linux dev-6.1 v3 1/1] ARM: dts: aspeed: yosemite4: Add i2c-mux/eeprom devices
-Date: Fri, 22 Sep 2023 13:44:35 +0800
-Message-Id: <20230922054435.4143122-2-Delphine_CC_Chiu@wiwynn.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230922054435.4143122-1-Delphine_CC_Chiu@wiwynn.com>
-References: <20230922054435.4143122-1-Delphine_CC_Chiu@wiwynn.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RsMJt3WJqz3bd6
+	for <openbmc@lists.ozlabs.org>; Fri, 22 Sep 2023 16:08:29 +1000 (AEST)
+Received: by mail-ej1-x630.google.com with SMTP id a640c23a62f3a-9adcb89b48bso213303666b.2
+        for <openbmc@lists.ozlabs.org>; Thu, 21 Sep 2023 23:08:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=jms.id.au; s=google; t=1695362904; x=1695967704; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=3ehP2y9sSARQViq4dc4KH5Orc7A36Z7hzUihJTbc2K8=;
+        b=eQSomDyClnXwkehoG4AwuVj38XKj54qzW+VftZI9Cb5LWb7vK6Z/tLA4UCy5QidoCi
+         7RaEzQ1MiNT7Z/xoebTlgD2s1uBgCZFnn2twuOqP4HliYX0QQKyAGZ6sESLDsPe5hCFX
+         hzjCp2wP94rGiv372Zj2Q6DiLd65cBFFnfeUc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695362904; x=1695967704;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3ehP2y9sSARQViq4dc4KH5Orc7A36Z7hzUihJTbc2K8=;
+        b=XanNtvdc+HUSjOmli0HSgyQ3Ac5cRJcs0lSz/Aekm2Fv7poB3k14ghQmrgL2xn+J8K
+         emn88FzSRHU7rHBrVaeGyd3Om+/J3pbyPZntEdeVxOlKh7v1PcsJZuKngPx4NfTtZRTc
+         kzhCzCSBV11ktSt+XGp2CEJ8odRDWsCy8kS9R3HADaPaBcv/zt/Vg3MRzv9Gigez4HGr
+         l4rfXELGIeDMRw//2ckgJzFPh1oigSRTBdWj5sgs6PvH4PxmyYz+Jku17KnSA2SuIlRU
+         pQFoszQ0H2cUk1/3ihAOKAlHSt0Ti3Lj6SylO8Y1MKhNJAB5hruojWRyLr1O/MjTSHRm
+         GxZw==
+X-Gm-Message-State: AOJu0YxyE8CHiFUNmXSpgdhWW+sWi9LfD/YQADRL/TI9i1urLoIEF2SO
+	uHOL0sfzmfHZXbJwayUD68ikrn0dEkoY6pdKFy8=
+X-Google-Smtp-Source: AGHT+IHtlPb79rluFXfsZMIso1MlC8TfWO0i/46tYmIOaj6omgHJILRDrd56w9v4rPnjAlwrOuWxklh8H2rfD7yQl7M=
+X-Received: by 2002:a17:906:3091:b0:9a9:d448:a666 with SMTP id
+ 17-20020a170906309100b009a9d448a666mr6001734ejv.76.1695362903545; Thu, 21 Sep
+ 2023 23:08:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: HK2PEPF00006FB5:EE_|TYZPR04MB5759:EE_
-Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: ace72718-32f6-42e0-fdc9-08dbbb2f0406
-X-MS-Exchange-AtpMessageProperties: SA
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	slYVQJsDo+GwG/0y5Mmrls/IqEhB+cU9D6Kqj2d9Q4AQkqO9p7QOO65uQDq1nsylcRDqDE3DbTxX37BL6IJo15C0kAGU9FT7sIzlYgehCQ/E/9drZdiFmYVBlefzHGDTHnXunbjh7ae89/V6KCrGr0Ed47QFBSUI2p7gpceVMkj9H46Ei/k56bgK15PLdBN+97liVdI0erq0/Ek+3TeJ/Xgrj0232MBFxK5unl4fZ32mMAsN40EjGqNcZ/F7sG9w01Zy5a0ymDO6RzbGeGO+dc9q8CRseRfc/Chwd1hL0gvUrENK2fOvDHSG2s2cmfzy64zsKMnqUys/7p3eoff0aGnoXaUHfJOtnXU7o+bFRBSAIISqZVNO+KEmcfOEj4puxXOj8je5jQ5VrMBxj4cWGIWYX4eF89B+okyXIRROBShwbbMfDI4F5QL4/Iijlug7mjVuAM8XDdR7LpEeDjdChdXLPr3XP84TMJEG58FaTp/RaNrpEt0fWufzdm2r9wxOrsUFBEQnVS2CCJMXS7dglSkbPLPjELVCnbtRvMlul2TTogLUVbkp4BeFMH33FW1ByQhlU4NY/gZ79i4Z5XJh2NQI6Ak3ZFDP8J8baeJqAnmoCbRjDWyvtDeva30dLu+Vh8E57fJ7jurTLxNXFfyB4B6wDcPk+n4kSbMiCNtoccja2fF1Ek/VFmhblYlWZCmeqL0CUEJlzw/ucOP5Li5H/VdDnUY1wrkUh0tU/JYo00iCxaTtBtVHgVTu5RltmHju
-X-Forefront-Antispam-Report: 	CIP:211.20.1.79;CTRY:TW;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:localhost.localdomain;PTR:211-20-1-79.hinet-ip.hinet.net;CAT:NONE;SFS:(13230031)(6069001)(4636009)(346002)(136003)(376002)(39850400004)(396003)(230921699003)(451199024)(82310400011)(1800799009)(186009)(36840700001)(46966006)(36860700001)(956004)(107886003)(26005)(2616005)(1076003)(47076005)(83380400001)(9316004)(40480700001)(336012)(70206006)(4326008)(70586007)(36736006)(8936002)(316002)(2906002)(41300700001)(6512007)(478600001)(86362001)(6486002)(36756003)(5660300002)(6506007)(6666004)(356005)(8676002)(30864003)(81166007)(82740400003);DIR:OUT;SFP:1101;
-X-OriginatorOrg: wiwynn.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 22 Sep 2023 05:44:40.7543
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ace72718-32f6-42e0-fdc9-08dbbb2f0406
-X-MS-Exchange-CrossTenant-Id: da6e0628-fc83-4caf-9dd2-73061cbab167
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=da6e0628-fc83-4caf-9dd2-73061cbab167;Ip=[211.20.1.79];Helo=[localhost.localdomain]
-X-MS-Exchange-CrossTenant-AuthSource: 	HK2PEPF00006FB5.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR04MB5759
+References: <20230919061041.124415-1-tmaimon77@gmail.com> <20230919061041.124415-2-tmaimon77@gmail.com>
+In-Reply-To: <20230919061041.124415-2-tmaimon77@gmail.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Fri, 22 Sep 2023 06:08:11 +0000
+Message-ID: <CACPK8XdRuD__67eAUK2DPN-unObCBs64S2rewdD1fyzLfT1Yxg@mail.gmail.com>
+Subject: Re: [PATCH v19 1/1] clk: npcm8xx: add clock controller
+To: Tomer Maimon <tmaimon77@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -101,1160 +70,633 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
+Cc: benjaminfair@google.com, sboyd@kernel.org, venture@google.com, mturquette@baylibre.com, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, avifishman70@gmail.com, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Revise Yosemite 4 devicetree for i2c-mux and eeprom,
-also the following changes:
-- Enable adc 15, tpm, wdt2
-- Change spi-tx/rx-bus-width to duo mode
-- Add device mp5023, pmbus for Flex power module
-- Change ina230 to ina233, pca9846 to pca9546
-- Set adc128d818 and max31790 config
-- Add jtag1 and gpio0 config
+On Tue, 19 Sept 2023 at 06:11, Tomer Maimon <tmaimon77@gmail.com> wrote:
+>
+> Nuvoton Arbel BMC NPCM8XX contains an integrated clock controller which
+> generates and supplies clocks to all modules within the BMC.
+>
+> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 
-Signed-off-by: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
----
-Changelog:
- v3 - Enable adc 15, tpm, wdt2
-    - Change spi-tx/rx-bus-width to duo mode
-    - Add device mp5023, pmbus for Flex power module
-    - Change ina230 to ina233, pca9846 to pca9546
-    - Set adc128d818 and max31790 config
-    - Add jtag1 and gpio0 config
-    - Seperate binding dosument to corresponding driver patches
- v2 - Add devicetree config for ina233 and max31790
-    - Add binding documents for ina233 and max31790
- v1 - Add gpio and eeprom devices
-	  - Add spi-gpio config for tpmdev
-	  - Remove temperature-sensor 11-004a and 11-004b
-	  - Change power-sensor ina230 to ina233
-	  - Revise adc128d818 config for adc mode
-	  - Add vendor prefix for max31790 and remove redundant config
----
- .../dts/aspeed-bmc-facebook-yosemite4.dts     | 895 ++++++++++++++++--
- 1 file changed, 842 insertions(+), 53 deletions(-)
+Acked-by: Joel Stanley <joel@jms.id.au>
 
-diff --git a/arch/arm/boot/dts/aspeed-bmc-facebook-yosemite4.dts b/arch/arm/boot/dts/aspeed-bmc-facebook-yosemite4.dts
-index 1ef3ff849ec1..894ee25c2654 100644
---- a/arch/arm/boot/dts/aspeed-bmc-facebook-yosemite4.dts
-+++ b/arch/arm/boot/dts/aspeed-bmc-facebook-yosemite4.dts
-@@ -17,6 +17,25 @@ aliases {
- 		serial6 = &uart7;
- 		serial7 = &uart8;
- 		serial8 = &uart9;
-+
-+		i2c16 = &imux16;
-+		i2c17 = &imux17;
-+		i2c18 = &imux18;
-+		i2c19 = &imux19;
-+		i2c20 = &imux20;
-+		i2c21 = &imux21;
-+		i2c22 = &imux22;
-+		i2c23 = &imux23;
-+		i2c24 = &imux24;
-+		i2c25 = &imux25;
-+		i2c26 = &imux26;
-+		i2c27 = &imux27;
-+		i2c28 = &imux28;
-+		i2c29 = &imux29;
-+		i2c30 = &imux30;
-+		i2c31 = &imux31;
-+		i2c32 = &imux32;
-+		i2c33 = &imux33;
- 	};
- 
- 	chosen {
-@@ -32,7 +51,26 @@ iio-hwmon {
- 		compatible = "iio-hwmon";
- 		io-channels = <&adc0 0>, <&adc0 1>, <&adc0 2>, <&adc0 3>,
- 				<&adc0 4>, <&adc0 5>, <&adc0 6>, <&adc0 7>,
--				<&adc1 0>, <&adc1 1>;
-+				<&adc1 0>, <&adc1 1>, <&adc1 7>;
-+	};
-+
-+	spi_gpio: spi-gpio {
-+		status = "okay";
-+		compatible = "spi-gpio";
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		gpio-sck = <&gpio0 ASPEED_GPIO(X, 3) GPIO_ACTIVE_HIGH>;
-+		gpio-mosi = <&gpio0 ASPEED_GPIO(X, 4) GPIO_ACTIVE_HIGH>;
-+		gpio-miso = <&gpio0 ASPEED_GPIO(X, 5) GPIO_ACTIVE_HIGH>;
-+		num-chipselects = <1>;
-+		cs-gpios = <&gpio0 ASPEED_GPIO(X, 0) GPIO_ACTIVE_LOW>;
-+
-+		tpmdev@0 {
-+			compatible = "tcg,tpm_tis-spi";
-+			spi-max-frequency = <33000000>;
-+			reg = <0>;
-+		};
- 	};
- };
- 
-@@ -83,6 +121,13 @@ &wdt1 {
- 	aspeed,ext-pulse-duration = <256>;
- };
- 
-+&wdt2 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_wdtrst2_default>;
-+	aspeed,reset-type = "system";
-+};
-+
- &mac2 {
- 	status = "okay";
- 	pinctrl-names = "default";
-@@ -105,7 +150,8 @@ flash@0 {
- 		status = "okay";
- 		m25p,fast-read;
- 		label = "bmc";
--		spi-rx-bus-width = <4>;
-+		spi-tx-bus-width = <2>;
-+		spi-rx-bus-width = <2>;
- 		spi-max-frequency = <50000000>;
- #include "openbmc-flash-layout-128.dtsi"
- 	};
-@@ -113,7 +159,8 @@ flash@1 {
- 		status = "okay";
- 		m25p,fast-read;
- 		label = "bmc2";
--		spi-rx-bus-width = <4>;
-+		spi-tx-bus-width = <2>;
-+		spi-rx-bus-width = <2>;
- 		spi-max-frequency = <50000000>;
- 	};
- };
-@@ -262,6 +309,218 @@ i2c-mux@70 {
- 		idle-state = <0>;
- 		i2c-mux-idle-disconnect;
- 		reg = <0x70>;
-+
-+		imux16: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+			gpio@20 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x20>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@21 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x21>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@22 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x22>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@23 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x23>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@49 {
-+				compatible = "nxp,pca9537";
-+				reg = <0x49>;
-+			};
-+
-+			eeprom@50 {
-+				compatible = "atmel,24c128";
-+				reg = <0x50>;
-+			};
-+
-+			eeprom@51 {
-+				compatible = "atmel,24c128";
-+				reg = <0x51>;
-+			};
-+
-+			eeprom@54 {
-+				compatible = "atmel,24c128";
-+				reg = <0x54>;
-+			};
-+		};
-+
-+		imux17: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+			gpio@20 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x20>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@21 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x21>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@22 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x22>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@23 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x23>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@49 {
-+				compatible = "nxp,pca9537";
-+				reg = <0x49>;
-+			};
-+
-+			eeprom@50 {
-+				compatible = "atmel,24c128";
-+				reg = <0x50>;
-+			};
-+
-+			eeprom@51 {
-+				compatible = "atmel,24c128";
-+				reg = <0x51>;
-+			};
-+
-+			eeprom@54 {
-+				compatible = "atmel,24c128";
-+				reg = <0x54>;
-+			};
-+		};
-+
-+		imux18: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+			gpio@20 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x20>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@21 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x21>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@22 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x22>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@23 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x23>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@49 {
-+				compatible = "nxp,pca9537";
-+				reg = <0x49>;
-+			};
-+
-+			eeprom@50 {
-+				compatible = "atmel,24c128";
-+				reg = <0x50>;
-+			};
-+
-+			eeprom@51 {
-+				compatible = "atmel,24c128";
-+				reg = <0x51>;
-+			};
-+
-+			eeprom@54 {
-+				compatible = "atmel,24c128";
-+				reg = <0x54>;
-+			};
-+		};
-+
-+		imux19: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+			gpio@20 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x20>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@21 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x21>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@22 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x22>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@23 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x23>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@49 {
-+				compatible = "nxp,pca9537";
-+				reg = <0x49>;
-+			};
-+
-+			eeprom@50 {
-+				compatible = "atmel,24c128";
-+				reg = <0x50>;
-+			};
-+
-+			eeprom@51 {
-+				compatible = "atmel,24c128";
-+				reg = <0x51>;
-+			};
-+
-+			eeprom@54 {
-+				compatible = "atmel,24c128";
-+				reg = <0x54>;
-+			};
-+		};
- 	};
- };
- 
-@@ -273,23 +532,287 @@ i2c-mux@71 {
- 		idle-state = <0>;
- 		i2c-mux-idle-disconnect;
- 		reg = <0x71>;
-+
-+		imux20: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+			gpio@20 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x20>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@21 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x21>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@22 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x22>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@23 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x23>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@49 {
-+				compatible = "nxp,pca9537";
-+				reg = <0x49>;
-+			};
-+
-+			eeprom@50 {
-+				compatible = "atmel,24c128";
-+				reg = <0x50>;
-+			};
-+
-+			eeprom@51 {
-+				compatible = "atmel,24c128";
-+				reg = <0x51>;
-+			};
-+
-+			eeprom@54 {
-+				compatible = "atmel,24c128";
-+				reg = <0x54>;
-+			};
-+		};
-+
-+		imux21: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+			gpio@20 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x20>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@21 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x21>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@22 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x22>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@23 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x23>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@49 {
-+				compatible = "nxp,pca9537";
-+				reg = <0x49>;
-+			};
-+
-+			eeprom@50 {
-+				compatible = "atmel,24c128";
-+				reg = <0x50>;
-+			};
-+
-+			eeprom@51 {
-+				compatible = "atmel,24c128";
-+				reg = <0x51>;
-+			};
-+
-+			eeprom@54 {
-+				compatible = "atmel,24c128";
-+				reg = <0x54>;
-+			};
-+		};
-+
-+		imux22: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+			gpio@20 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x20>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@21 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x21>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@22 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x22>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@23 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x23>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@49 {
-+				compatible = "nxp,pca9537";
-+				reg = <0x49>;
-+			};
-+
-+			eeprom@50 {
-+				compatible = "atmel,24c128";
-+				reg = <0x50>;
-+			};
-+
-+			eeprom@51 {
-+				compatible = "atmel,24c128";
-+				reg = <0x51>;
-+			};
-+
-+			eeprom@54 {
-+				compatible = "atmel,24c128";
-+				reg = <0x54>;
-+			};
-+		};
-+
-+		imux23: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+			gpio@20 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x20>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@21 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x21>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@22 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x22>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@23 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x23>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@49 {
-+				compatible = "nxp,pca9537";
-+				reg = <0x49>;
-+			};
-+
-+			eeprom@50 {
-+				compatible = "atmel,24c128";
-+				reg = <0x50>;
-+			};
-+
-+			eeprom@51 {
-+				compatible = "atmel,24c128";
-+				reg = <0x51>;
-+			};
-+
-+			eeprom@54 {
-+				compatible = "atmel,24c128";
-+				reg = <0x54>;
-+			};
-+		};
- 	};
- };
- 
- &i2c10 {
- 	status = "okay";
- 	bus-frequency = <400000>;
-+	i2c-mux@74 {
-+		compatible = "nxp,pca9544";
-+		idle-state = <0>;
-+		i2c-mux-idle-disconnect;
-+		reg = <0x74>;
-+
-+		imux28: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		imux29: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+			gpio@20 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x20>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@21 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x21>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@22 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x22>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@23 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x23>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+
-+			gpio@24 {
-+				compatible = "nxp,pca9506";
-+				reg = <0x24>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
-+			};
-+		};
-+	};
- };
- 
- &i2c11 {
- 	status = "okay";
- 	power-sensor@10 {
--		compatible = "adi, adm1272";
-+		compatible = "adi,adm1272";
- 		reg = <0x10>;
- 	};
- 
- 	power-sensor@12 {
--		compatible = "adi, adm1272";
-+		compatible = "adi,adm1272";
- 		reg = <0x12>;
- 	};
- 
-@@ -321,6 +844,11 @@ gpio@23 {
- 		#gpio-cells = <2>;
- 	};
- 
-+	power-sensor@40 {
-+		compatible = "mps,mp5023";
-+		reg = <0x40>;
-+	};
-+
- 	temperature-sensor@48 {
- 		compatible = "ti,tmp75";
- 		reg = <0x48>;
-@@ -331,20 +859,30 @@ temperature-sensor@49 {
- 		reg = <0x49>;
- 	};
- 
--	temperature-sensor@4a {
--		compatible = "ti,tmp75";
--		reg = <0x4a>;
--	};
--
--	temperature-sensor@4b {
--		compatible = "ti,tmp75";
--		reg = <0x4b>;
--	};
--
- 	eeprom@54 {
- 		compatible = "atmel,24c256";
- 		reg = <0x54>;
- 	};
-+
-+	power-sensor@62 {
-+		compatible = "pmbus";
-+		reg = <0x62>;
-+	};
-+
-+	power-sensor@63 {
-+		compatible = "pmbus";
-+		reg = <0x63>;
-+	};
-+
-+	power-sensor@66 {
-+		compatible = "pmbus";
-+		reg = <0x66>;
-+	};
-+
-+	power-sensor@68 {
-+		compatible = "pmbus";
-+		reg = <0x68>;
-+	};
- };
- 
- &i2c12 {
-@@ -361,6 +899,11 @@ eeprom@50 {
- 		reg = <0x50>;
- 	};
- 
-+	eeprom@54 {
-+		compatible = "atmel,24c64";
-+		reg = <0x54>;
-+	};
-+
- 	rtc@6f {
- 		compatible = "nuvoton,nct3018y";
- 		reg = <0x6f>;
-@@ -370,6 +913,33 @@ rtc@6f {
- &i2c13 {
- 	status = "okay";
- 	bus-frequency = <400000>;
-+	gpio@20 {
-+		compatible = "nxp,pca9506";
-+		reg = <0x20>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+	};
-+
-+	gpio@21 {
-+		compatible = "nxp,pca9506";
-+		reg = <0x21>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+	};
-+
-+	gpio@22 {
-+		compatible = "nxp,pca9506";
-+		reg = <0x22>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+	};
-+
-+	gpio@23 {
-+		compatible = "nxp,pca9506";
-+		reg = <0x23>;
-+		gpio-controller;
-+		#gpio-cells = <2>;
-+	};
- };
- 
- &i2c14 {
-@@ -378,44 +948,54 @@ &i2c14 {
- 	adc@1d {
- 		compatible = "ti,adc128d818";
- 		reg = <0x1d>;
--		ti,mode = /bits/ 8 <2>;
-+		ti,mode = /bits/ 8 <1>;
- 	};
- 
- 	adc@35 {
- 		compatible = "ti,adc128d818";
- 		reg = <0x35>;
--		ti,mode = /bits/ 8 <2>;
-+		ti,mode = /bits/ 8 <1>;
- 	};
- 
- 	adc@37 {
- 		compatible = "ti,adc128d818";
- 		reg = <0x37>;
--		ti,mode = /bits/ 8 <2>;
-+		ti,mode = /bits/ 8 <1>;
- 	};
- 
- 	power-sensor@40 {
--		compatible = "ti,ina230";
-+		compatible = "ti,ina233";
- 		reg = <0x40>;
-+		resistor-calibration = /bits/ 16 <0x0a00>;
-+		current-lsb= /bits/ 16 <0x0001>;
- 	};
- 
- 	power-sensor@41 {
--		compatible = "ti,ina230";
-+		compatible = "ti,ina233";
- 		reg = <0x41>;
-+		resistor-calibration = /bits/ 16 <0x0a00>;
-+		current-lsb= /bits/ 16 <0x0001>;
- 	};
- 
- 	power-sensor@42 {
--		compatible = "ti,ina230";
-+		compatible = "ti,ina233";
- 		reg = <0x42>;
-+		resistor-calibration = /bits/ 16 <0x0a00>;
-+		current-lsb= /bits/ 16 <0x0001>;
- 	};
- 
- 	power-sensor@43 {
--		compatible = "ti,ina230";
-+		compatible = "ti,ina233";
- 		reg = <0x43>;
-+		resistor-calibration = /bits/ 16 <0x0a00>;
-+		current-lsb= /bits/ 16 <0x0001>;
- 	};
- 
- 	power-sensor@44 {
--		compatible = "ti,ina230";
-+		compatible = "ti,ina233";
- 		reg = <0x44>;
-+		resistor-calibration = /bits/ 16 <0x0a00>;
-+		current-lsb= /bits/ 16 <0x0001>;
- 	};
- 
- 	temperature-sensor@4e {
-@@ -433,16 +1013,14 @@ eeprom@51 {
- 		reg = <0x51>;
- 	};
- 
--	i2c-mux@71 {
--		compatible = "nxp,pca9846";
-+	i2c-mux@74 {
-+		compatible = "nxp,pca9546";
- 		#address-cells = <1>;
- 		#size-cells = <0>;
--
--		idle-state = <0>;
- 		i2c-mux-idle-disconnect;
--		reg = <0x71>;
-+		reg = <0x74>;
- 
--		i2c@0 {
-+		imux30: i2c@0 {
- 			#address-cells = <1>;
- 			#size-cells = <0>;
- 			reg = <0>;
-@@ -450,26 +1028,26 @@ i2c@0 {
- 			adc@1f {
- 				compatible = "ti,adc128d818";
- 				reg = <0x1f>;
--				ti,mode = /bits/ 8 <2>;
-+				ti,mode = /bits/ 8 <1>;
- 			};
- 
- 			pwm@20{
--				compatible = "max31790";
-+				compatible = "maxim,max31790";
-+				pwm-as-tach = <4 5>;
- 				reg = <0x20>;
--				#address-cells = <1>;
--				#size-cells = <0>;
- 			};
- 
- 			gpio@22{
- 				compatible = "ti,tca6424";
- 				reg = <0x22>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
- 			};
- 
--			pwm@23{
--				compatible = "max31790";
--				reg = <0x23>;
--				#address-cells = <1>;
--				#size-cells = <0>;
-+			pwm@2f{
-+				compatible = "maxim,max31790";
-+				pwm-as-tach = <4 5>;
-+				reg = <0x2f>;
- 			};
- 
- 			adc@33 {
-@@ -492,34 +1070,34 @@ gpio@61 {
- 			};
- 		};
- 
--		i2c@1 {
-+		imux31: i2c@1 {
- 			#address-cells = <1>;
- 			#size-cells = <0>;
--			reg = <0>;
-+			reg = <1>;
- 
- 			adc@1f {
- 				compatible = "ti,adc128d818";
- 				reg = <0x1f>;
--				ti,mode = /bits/ 8 <2>;
-+				ti,mode = /bits/ 8 <1>;
- 			};
- 
- 			pwm@20{
--				compatible = "max31790";
-+				compatible = "maxim,max31790";
-+				pwm-as-tach = <4 5>;
- 				reg = <0x20>;
--				#address-cells = <1>;
--				#size-cells = <0>;
- 			};
- 
- 			gpio@22{
- 				compatible = "ti,tca6424";
- 				reg = <0x22>;
-+				gpio-controller;
-+				#gpio-cells = <2>;
- 			};
- 
--			pwm@23{
--				compatible = "max31790";
--				reg = <0x23>;
--				#address-cells = <1>;
--				#size-cells = <0>;
-+			pwm@2f{
-+				compatible = "maxim,max31790";
-+				pwm-as-tach = <4 5>;
-+				reg = <0x2f>;
- 			};
- 
- 			adc@33 {
-@@ -552,7 +1130,7 @@ i2c-mux@73 {
- 		i2c-mux-idle-disconnect;
- 		reg = <0x73>;
- 
--		i2c@0 {
-+		imux32: i2c@0 {
- 			#address-cells = <1>;
- 			#size-cells = <0>;
- 			reg = <0>;
-@@ -563,10 +1141,10 @@ adc@35 {
- 			};
- 		};
- 
--		i2c@1 {
-+		imux33: i2c@1 {
- 			#address-cells = <1>;
- 			#size-cells = <0>;
--			reg = <0>;
-+			reg = <1>;
- 
- 			adc@35 {
- 				compatible = "maxim,max11617";
-@@ -592,6 +1170,30 @@ i2c-mux@72 {
- 		idle-state = <0>;
- 		i2c-mux-idle-disconnect;
- 		reg = <0x72>;
-+
-+		imux24: i2c@0 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <0>;
-+		};
-+
-+		imux25: i2c@1 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <1>;
-+		};
-+
-+		imux26: i2c@2 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <2>;
-+		};
-+
-+		imux27: i2c@3 {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			reg = <3>;
-+		};
- 	};
- };
- 
-@@ -607,7 +1209,8 @@ &pinctrl_adc4_default &pinctrl_adc5_default
- &adc1 {
- 	ref_voltage = <2500>;
- 	status = "okay";
--	pinctrl-0 = <&pinctrl_adc8_default &pinctrl_adc9_default>;
-+	pinctrl-0 = <&pinctrl_adc8_default &pinctrl_adc9_default
-+	    &pinctrl_adc15_default>;
- };
- 
- 
-@@ -622,3 +1225,189 @@ &ehci1 {
- &uhci {
- 	status = "okay";
- };
-+
-+&jtag1 {
-+	status = "okay";
-+};
-+
-+&sgpiom0 {
-+	status = "okay";
-+	ngpios = <128>;
-+	bus-frequency = <48000>;
-+};
-+
-+&gpio0 {
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&pinctrl_gpiu2_default &pinctrl_gpiu3_default
-+		     &pinctrl_gpiu4_default &pinctrl_gpiu5_default
-+		     &pinctrl_gpiu6_default>;
-+	gpio-line-names =
-+	/*A0-A7*/       "","","","","","","","",
-+	/*B0-B7*/       "FLT_HSC_SERVER_SLOT8_N","AC_ON_OFF_BTN_CPLD_SLOT5_N",
-+			"PWRGD_SLOT1_STBY","PWRGD_SLOT2_STBY",
-+			"PWRGD_SLOT3_STBY","PWRGD_SLOT4_STBY","","",
-+	/*C0-C7*/       "PRSNT_NIC3_N","","","","FM_NIC0_WAKE_N",
-+			"FM_NIC1_WAKE_N","","RST_PCIE_SLOT2_N",
-+	/*D0-D7*/       "","","","","","","","",
-+	/*E0-E7*/       "PRSNT_NIC1_N","PRSNT_NIC2_N","","RST_PCIE_SLOT1_N",
-+			"","","","",
-+	/*F0-F7*/       "FM_RESBTN_SLOT1_BMC_N","FM_RESBTN_SLOT2_BMC_N",
-+			"FM_RESBTN_SLOT3_BMC_N","FM_RESBTN_SLOT4_BMC_N",
-+			"PRSNT_SB_SLOT1_N","PRSNT_SB_SLOT2_N",
-+			"PRSNT_SB_SLOT3_N","PRSNT_SB_SLOT4_N",
-+	/*G0-G7*/       "","","","","","","","",
-+	/*H0-H7*/       "","","","","","","","",
-+	/*I0-I7*/       "","","","","","ALT_MEDUSA_ADC_N",
-+			"ALT_SMB_BMC_CPLD2_N",
-+			"INT_SPIDER_ADC_R_N",
-+	/*J0-J7*/       "","","","","","","","",
-+	/*K0-K7*/       "","","","","","","","",
-+	/*L0-L7*/       "","","","","","","ALT_MEDUSA_P12V_EFUSE_N","",
-+	/*M0-M7*/       "EN_NIC0_POWER_BMC_R","EN_NIC1_POWER_BMC_R",
-+			"INT_MEDUSA_IOEXP_TEMP_N","FLT_P12V_NIC0_N",
-+			"INT_SMB_BMC_SLOT1_4_BMC_N",
-+			"AC_ON_OFF_BTN_CPLD_SLOT6_N","","",
-+	/*N0-N7*/       "FLT_HSC_SERVER_SLOT1_N","FLT_HSC_SERVER_SLOT2_N",
-+			"FLT_HSC_SERVER_SLOT3_N","FLT_HSC_SERVER_SLOT4_N",
-+			"FM_BMC_READY_R2","FLT_P12V_STBY_BMC_N","","",
-+	/*O0-O7*/       "AC_ON_OFF_BTN_CPLD_SLOT8_N","RST_SMB_NIC1_R_N",
-+			"RST_SMB_NIC2_R_N","RST_SMB_NIC3_R_N",
-+			"FLT_P3V3_NIC2_N","FLT_P3V3_NIC3_N",
-+			"","",
-+	/*P0-P7*/       "ALT_SMB_BMC_CPLD1_N","'BTN_BMC_R2_N",
-+			"EN_P3V_BAT_SCALED_R","PWRGD_P5V_USB_BMC",
-+			"FM_BMC_RTCRST_R","RST_USB_HUB_R_N",
-+			"FLAG_P5V_USB_BMC_N","",
-+	/*Q0-Q7*/       "AC_ON_OFF_BTN_CPLD_SLOT1_N","AC_ON_OFF_BTN_CPLD_SLOT2_N",
-+			"AC_ON_OFF_BTN_CPLD_SLOT3_N","AC_ON_OFF_BTN_CPLD_SLOT4_N",
-+			"PRSNT_SB_SLOT5_N","PRSNT_SB_SLOT6_N",
-+			"PRSNT_SB_SLOT7_N","PRSNT_SB_SLOT8_N",
-+	/*R0-R7*/       "AC_ON_OFF_BTN_CPLD_SLOT7_N","INT_SMB_BMC_SLOT5_8_BMC_N",
-+			"FM_PWRBRK_NIC_BMC_R2","RST_PCIE_SLOT4_N",
-+			"RST_PCIE_SLOT5_N","RST_PCIE_SLOT6_N",
-+			"RST_PCIE_SLOT7_N","RST_PCIE_SLOT8_N",
-+	/*S0-S7*/       "FM_NIC2_WAKE_N","FM_NIC3_WAKE_N",
-+			"EN_NIC3_POWER_BMC_R","SEL_BMC_JTAG_MUX_R",
-+			"","ALT_P12V_AUX_N","FAST_PROCHOT_N",
-+			"SPI_WP_DISABLE_STATUS_R_N",
-+	/*T0-T7*/       "","","","","","","","",
-+	/*U0-U7*/       "","","FLT_P3V3_NIC1_N","FLT_P12V_NIC1_N",
-+			"FLT_P12V_NIC2_N","FLT_P12V_NIC3_N",
-+			"FLT_P3V3_NIC0_N","",
-+	/*V0-V7*/       "FM_RESBTN_SLOT5_BMC_N","FM_RESBTN_SLOT6_BMC_N",
-+			"FM_RESBTN_SLOT7_BMC_N","FM_RESBTN_SLOT8_BMC_N",
-+			"","","","",
-+	/*W0-W7*/       "PRSNT_TPM_BMC_N","PRSNT_OCP_DEBUG_BMC_N","ALT_TEMP_BMC_N","ALT_RTC_BMC_N",
-+			"","","","",
-+	/*X0-X7*/       "","LT_HSC_SERVER_SLOT6_N","FLT_HSC_SERVER_SLOT7_N","","","",
-+			"PWRGD_SLOT5_STBY","PWRGD_SLOT6_STBY",
-+	/*Y0-Y7*/       "","","SPI_LOCK_REQ_BMC_N","PWRGD_SLOT7_STBY","","","EN_NIC2_POWER_BMC_R","",
-+	/*Z0-Z7*/       "EN_P5V_USB_CPLD_R","'FLT_HSC_SERVER_SLOT5_N",
-+			"PWRGD_SLOT8_STBY","","","","","";
-+
-+	pin_gpio_b4 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(B, 4) GPIO_ACTIVE_HIGH>;
-+		input;
-+	};
-+	pin_gpio_b5 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(B, 5) GPIO_ACTIVE_HIGH>;
-+		input;
-+	};
-+	pin_gpio_f0 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(F, 0) GPIO_ACTIVE_LOW>;
-+		input;
-+	};
-+	pin_gpio_f1 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(F, 1) GPIO_ACTIVE_LOW>;
-+		input;
-+	};
-+	pin_gpio_f2 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(F, 2) GPIO_ACTIVE_LOW>;
-+		input;
-+		};
-+	pin_gpio_f3 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(F, 3) GPIO_ACTIVE_LOW>;
-+		input;
-+	};
-+	pin_gpio_f4 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(F, 4) GPIO_ACTIVE_LOW>;
-+		input;
-+	};
-+	pin_gpio_f5 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(F, 5) GPIO_ACTIVE_LOW>;
-+		input;
-+	};
-+	pin_gpio_f6 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(F, 6) GPIO_ACTIVE_LOW>;
-+		input;
-+	};
-+	pin_gpio_f7 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(F, 7) GPIO_ACTIVE_LOW>;
-+		input;
-+	};
-+	pin_gpio_l6 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(L, 6) GPIO_ACTIVE_LOW>;
-+		input;
-+	};
-+	pin_gpio_l7 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(L, 7) GPIO_ACTIVE_LOW>;
-+		input;
-+	};
-+	pin_gpio_s0 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(S, 0) GPIO_ACTIVE_LOW>;
-+		input;
-+	};
-+	pin_gpio_s1 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(S, 1) GPIO_ACTIVE_LOW>;
-+		input;
-+	};
-+	pin_gpio_w0 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(W, 0) GPIO_ACTIVE_LOW>;
-+		input;
-+	};
-+	pin_gpio_w1 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(W, 1) GPIO_ACTIVE_LOW>;
-+		input;
-+	};
-+	pin_gpio_w2 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(W, 2) GPIO_ACTIVE_LOW>;
-+		input;
-+	};
-+	pin_gpio_w3 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(W, 3) GPIO_ACTIVE_LOW>;
-+		input;
-+	};
-+	pin_gpio_z3 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(Z, 3) GPIO_ACTIVE_LOW>;
-+		input;
-+	};
-+	pin_gpio_z4 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(Z, 4) GPIO_ACTIVE_LOW>;
-+		input;
-+	};
-+	pin_gpio_z5 {
-+		gpio-hog;
-+		gpios = <ASPEED_GPIO(Z, 5) GPIO_ACTIVE_LOW>;
-+		input;
-+	};
-+};
--- 
-2.25.1
+I am not a clk reviewer, but this looks similar enough to other clk
+drivers that I think it could be merged, and further improvements made
+in the tree.
 
+
+> ---
+>  drivers/clk/Kconfig       |   8 +
+>  drivers/clk/Makefile      |   1 +
+>  drivers/clk/clk-npcm8xx.c | 565 ++++++++++++++++++++++++++++++++++++++
+>  3 files changed, 574 insertions(+)
+>  create mode 100644 drivers/clk/clk-npcm8xx.c
+>
+> diff --git a/drivers/clk/Kconfig b/drivers/clk/Kconfig
+> index c30099866174..9bc5f2dfc7e2 100644
+> --- a/drivers/clk/Kconfig
+> +++ b/drivers/clk/Kconfig
+> @@ -325,6 +325,14 @@ config COMMON_CLK_LOCHNAGAR
+>           This driver supports the clocking features of the Cirrus Logic
+>           Lochnagar audio development board.
+>
+> +config COMMON_CLK_NPCM8XX
+> +       tristate "Clock driver for the NPCM8XX SoC Family"
+> +       depends on ARCH_NPCM || COMPILE_TEST
+> +       help
+> +         This driver supports the clocks on the Nuvoton BMC NPCM8XX SoC Family,
+> +         all the clocks are initialized by the bootloader, so this driver
+> +         allows only reading of current settings directly from the hardware.
+> +
+>  config COMMON_CLK_LOONGSON2
+>         bool "Clock driver for Loongson-2 SoC"
+>         depends on LOONGARCH || COMPILE_TEST
+> diff --git a/drivers/clk/Makefile b/drivers/clk/Makefile
+> index 18969cbd4bb1..e2cbc6cceb8c 100644
+> --- a/drivers/clk/Makefile
+> +++ b/drivers/clk/Makefile
+> @@ -51,6 +51,7 @@ obj-$(CONFIG_ARCH_MILBEAUT_M10V)      += clk-milbeaut.o
+>  obj-$(CONFIG_ARCH_MOXART)              += clk-moxart.o
+>  obj-$(CONFIG_ARCH_NOMADIK)             += clk-nomadik.o
+>  obj-$(CONFIG_ARCH_NPCM7XX)             += clk-npcm7xx.o
+> +obj-$(CONFIG_COMMON_CLK_NPCM8XX)       += clk-npcm8xx.o
+>  obj-$(CONFIG_ARCH_NSPIRE)              += clk-nspire.o
+>  obj-$(CONFIG_COMMON_CLK_PALMAS)                += clk-palmas.o
+>  obj-$(CONFIG_CLK_LS1028A_PLLDIG)       += clk-plldig.o
+> diff --git a/drivers/clk/clk-npcm8xx.c b/drivers/clk/clk-npcm8xx.c
+> new file mode 100644
+> index 000000000000..16c50aa9cb65
+> --- /dev/null
+> +++ b/drivers/clk/clk-npcm8xx.c
+> @@ -0,0 +1,565 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Nuvoton NPCM8xx Clock Generator
+> + * All the clocks are initialized by the bootloader, so this driver allows only
+> + * reading of current settings directly from the hardware.
+> + *
+> + * Copyright (C) 2020 Nuvoton Technologies
+> + * Author: Tomer Maimon <tomer.maimon@nuvoton.com>
+> + */
+> +
+> +#include <linux/bitfield.h>
+> +#include <linux/clk-provider.h>
+> +#include <linux/err.h>
+> +#include <linux/io.h>
+> +#include <linux/kernel.h>
+> +#include <linux/module.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/slab.h>
+> +
+> +#include <dt-bindings/clock/nuvoton,npcm845-clk.h>
+> +
+> +/* npcm8xx clock registers*/
+> +#define NPCM8XX_CLKSEL         0x04
+> +#define NPCM8XX_CLKDIV1                0x08
+> +#define NPCM8XX_CLKDIV2                0x2C
+> +#define NPCM8XX_CLKDIV3                0x58
+> +#define NPCM8XX_CLKDIV4                0x7C
+> +#define NPCM8XX_PLLCON0                0x0C
+> +#define NPCM8XX_PLLCON1                0x10
+> +#define NPCM8XX_PLLCON2                0x54
+> +#define NPCM8XX_PLLCONG                0x60
+> +#define NPCM8XX_THRTL_CNT      0xC0
+> +
+> +#define PLLCON_LOKI    BIT(31)
+> +#define PLLCON_LOKS    BIT(30)
+> +#define PLLCON_FBDV    GENMASK(27, 16)
+> +#define PLLCON_OTDV2   GENMASK(15, 13)
+> +#define PLLCON_PWDEN   BIT(12)
+> +#define PLLCON_OTDV1   GENMASK(10, 8)
+> +#define PLLCON_INDV    GENMASK(5, 0)
+> +
+> +struct npcm8xx_clk_pll {
+> +       void __iomem    *pllcon;
+> +       unsigned int    id;
+> +       const char      *name;
+> +       unsigned long   flags;
+> +       struct clk_hw   hw;
+> +};
+> +
+> +#define to_npcm8xx_clk_pll(_hw) container_of(_hw, struct npcm8xx_clk_pll, hw)
+> +
+> +struct npcm8xx_pll_data {
+> +       const char *name;
+> +       struct clk_parent_data parent;
+> +       unsigned int reg;
+> +       unsigned long flags;
+> +       struct clk_hw hw;
+> +};
+> +
+> +struct npcm8xx_clk_div_data {
+> +       u32 reg;
+> +       u8 shift;
+> +       u8 width;
+> +       const char *name;
+> +       const struct clk_parent_data parent_data;
+> +       u8 clk_divider_flags;
+> +       unsigned long flags;
+> +       int onecell_idx;
+> +};
+> +
+> +struct npcm8xx_clk_mux_data {
+> +       u8 shift;
+> +       u32 mask;
+> +       const u32 *table;
+> +       const char *name;
+> +       const struct clk_parent_data *parent_data;
+> +       u8 num_parents;
+> +       unsigned long flags;
+> +       struct clk_hw hw;
+> +};
+> +
+> +/* external clock definition */
+> +#define NPCM8XX_CLK_S_REFCLK   "refclk"
+> +
+> +/* pll definition */
+> +#define NPCM8XX_CLK_S_PLL0     "pll0"
+> +#define NPCM8XX_CLK_S_PLL1     "pll1"
+> +#define NPCM8XX_CLK_S_PLL2     "pll2"
+> +#define NPCM8XX_CLK_S_PLL_GFX  "pll_gfx"
+> +
+> +/* early divider definition */
+> +#define NPCM8XX_CLK_S_PLL2_DIV2                "pll2_div2"
+> +#define NPCM8XX_CLK_S_PLL_GFX_DIV2     "pll_gfx_div2"
+> +#define NPCM8XX_CLK_S_PLL1_DIV2                "pll1_div2"
+> +
+> +/* mux definition */
+> +#define NPCM8XX_CLK_S_CPU_MUX     "cpu_mux"
+> +#define NPCM8XX_CLK_S_PIX_MUX     "gfx_pixel_mux"
+> +#define NPCM8XX_CLK_S_SD_MUX      "sd_mux"
+> +#define NPCM8XX_CLK_S_UART_MUX    "uart_mux"
+> +#define NPCM8XX_CLK_S_SU_MUX      "serial_usb_mux"
+> +#define NPCM8XX_CLK_S_MC_MUX      "mc_mux"
+> +#define NPCM8XX_CLK_S_ADC_MUX     "adc_mux"
+> +#define NPCM8XX_CLK_S_GFX_MUX     "gfx_mux"
+> +#define NPCM8XX_CLK_S_CLKOUT_MUX  "clkout_mux"
+> +#define NPCM8XX_CLK_S_GFXM_MUX    "gfxm_mux"
+> +#define NPCM8XX_CLK_S_DVC_MUX     "dvc_mux"
+> +#define NPCM8XX_CLK_S_RG_MUX     "rg_mux"
+> +#define NPCM8XX_CLK_S_RCP_MUX    "rcp_mux"
+> +
+> +/* div definition */
+> +#define NPCM8XX_CLK_S_MC          "mc"
+> +#define NPCM8XX_CLK_S_AXI         "axi"
+> +#define NPCM8XX_CLK_S_AHB         "ahb"
+> +#define NPCM8XX_CLK_S_SPI0        "spi0"
+> +#define NPCM8XX_CLK_S_SPI1        "spi1"
+> +#define NPCM8XX_CLK_S_SPI3        "spi3"
+> +#define NPCM8XX_CLK_S_SPIX        "spix"
+> +#define NPCM8XX_CLK_S_APB1        "apb1"
+> +#define NPCM8XX_CLK_S_APB2        "apb2"
+> +#define NPCM8XX_CLK_S_APB3        "apb3"
+> +#define NPCM8XX_CLK_S_APB4        "apb4"
+> +#define NPCM8XX_CLK_S_APB5        "apb5"
+> +#define NPCM8XX_CLK_S_APB19       "apb19"
+> +#define NPCM8XX_CLK_S_TOCK        "tock"
+> +#define NPCM8XX_CLK_S_CLKOUT      "clkout"
+> +#define NPCM8XX_CLK_S_PRE_ADC     "pre adc"
+> +#define NPCM8XX_CLK_S_UART        "uart"
+> +#define NPCM8XX_CLK_S_UART2       "uart2"
+> +#define NPCM8XX_CLK_S_TIMER       "timer"
+> +#define NPCM8XX_CLK_S_MMC         "mmc"
+> +#define NPCM8XX_CLK_S_SDHC        "sdhc"
+> +#define NPCM8XX_CLK_S_ADC         "adc"
+> +#define NPCM8XX_CLK_S_GFX         "gfx0_gfx1_mem"
+> +#define NPCM8XX_CLK_S_USBIF       "serial_usbif"
+> +#define NPCM8XX_CLK_S_USB_HOST    "usb_host"
+> +#define NPCM8XX_CLK_S_USB_BRIDGE  "usb_bridge"
+> +#define NPCM8XX_CLK_S_PCI         "pci"
+> +#define NPCM8XX_CLK_S_TH          "th"
+> +#define NPCM8XX_CLK_S_ATB         "atb"
+> +#define NPCM8XX_CLK_S_PRE_CLK     "pre_clk"
+> +#define NPCM8XX_CLK_S_RG         "rg"
+> +#define NPCM8XX_CLK_S_RCP        "rcp"
+> +
+> +static struct clk_hw hw_pll1_div2, hw_pll2_div2, hw_gfx_div2, hw_pre_clk;
+> +static struct npcm8xx_pll_data npcm8xx_pll_clks[] = {
+> +       { NPCM8XX_CLK_S_PLL0, { .name = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCON0, 0 },
+> +       { NPCM8XX_CLK_S_PLL1, { .name = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCON1, 0 },
+> +       { NPCM8XX_CLK_S_PLL2, { .name = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCON2, 0 },
+> +       { NPCM8XX_CLK_S_PLL_GFX, { .name = NPCM8XX_CLK_S_REFCLK }, NPCM8XX_PLLCONG, 0 },
+> +};
+> +
+> +static const u32 cpuck_mux_table[] = { 0, 1, 2, 7 };
+> +static const struct clk_parent_data cpuck_mux_parents[] = {
+> +       { .hw = &npcm8xx_pll_clks[0].hw },
+> +       { .hw = &npcm8xx_pll_clks[1].hw },
+> +       { .index = 0 },
+> +       { .hw = &npcm8xx_pll_clks[2].hw }
+> +};
+> +
+> +static const u32 pixcksel_mux_table[] = { 0, 2 };
+> +static const struct clk_parent_data pixcksel_mux_parents[] = {
+> +       { .hw = &npcm8xx_pll_clks[3].hw },
+> +       { .index = 0 }
+> +};
+> +
+> +static const u32 default_mux_table[] = { 0, 1, 2, 3 };
+> +static const struct clk_parent_data default_mux_parents[] = {
+> +       { .hw = &npcm8xx_pll_clks[0].hw },
+> +       { .hw = &npcm8xx_pll_clks[1].hw },
+> +       { .index = 0 },
+> +       { .hw = &hw_pll2_div2 }
+> +};
+> +
+> +static const u32 sucksel_mux_table[] = { 2, 3 };
+> +static const struct clk_parent_data sucksel_mux_parents[] = {
+> +       { .index = 0 },
+> +       { .hw = &hw_pll2_div2 }
+> +};
+> +
+> +static const u32 mccksel_mux_table[] = { 0, 2 };
+> +static const struct clk_parent_data mccksel_mux_parents[] = {
+> +       { .hw = &hw_pll1_div2 },
+> +       { .index = 0 }
+> +};
+> +
+> +static const u32 clkoutsel_mux_table[] = { 0, 1, 2, 3, 4 };
+> +static const struct clk_parent_data clkoutsel_mux_parents[] = {
+> +       { .hw = &npcm8xx_pll_clks[0].hw },
+> +       { .hw = &npcm8xx_pll_clks[1].hw },
+> +       { .index = 0 },
+> +       { .hw = &hw_gfx_div2 },
+> +       { .hw = &hw_pll2_div2 }
+> +};
+> +
+> +static const u32 gfxmsel_mux_table[] = { 2, 3 };
+> +static const struct clk_parent_data gfxmsel_mux_parents[] = {
+> +       { .index = 0 },
+> +       { .hw = &npcm8xx_pll_clks[2].hw }
+> +};
+> +
+> +static const u32 dvcssel_mux_table[] = { 2, 3 };
+> +static const struct clk_parent_data dvcssel_mux_parents[] = {
+> +       { .index = 0 },
+> +       { .hw = &npcm8xx_pll_clks[2].hw }
+> +};
+> +
+> +static const u32 default3_mux_table[] = { 0, 1, 2 };
+> +static const struct clk_parent_data default3_mux_parents[] = {
+> +       { .hw = &npcm8xx_pll_clks[0].hw },
+> +       { .hw = &npcm8xx_pll_clks[1].hw },
+> +       { .index = 0 }
+> +};
+> +
+> +static struct npcm8xx_clk_mux_data npcm8xx_muxes[] = {
+> +       { 0, 3, cpuck_mux_table, NPCM8XX_CLK_S_CPU_MUX, cpuck_mux_parents,
+> +               ARRAY_SIZE(cpuck_mux_parents), CLK_IS_CRITICAL },
+> +       { 4, 2, pixcksel_mux_table, NPCM8XX_CLK_S_PIX_MUX, pixcksel_mux_parents,
+> +               ARRAY_SIZE(pixcksel_mux_parents), 0 },
+> +       { 6, 2, default_mux_table, NPCM8XX_CLK_S_SD_MUX, default_mux_parents,
+> +               ARRAY_SIZE(default_mux_parents), 0 },
+> +       { 8, 2, default_mux_table, NPCM8XX_CLK_S_UART_MUX, default_mux_parents,
+> +               ARRAY_SIZE(default_mux_parents), 0 },
+> +       { 10, 2, sucksel_mux_table, NPCM8XX_CLK_S_SU_MUX, sucksel_mux_parents,
+> +               ARRAY_SIZE(sucksel_mux_parents), 0 },
+> +       { 12, 2, mccksel_mux_table, NPCM8XX_CLK_S_MC_MUX, mccksel_mux_parents,
+> +               ARRAY_SIZE(mccksel_mux_parents), 0 },
+> +       { 14, 2, default_mux_table, NPCM8XX_CLK_S_ADC_MUX, default_mux_parents,
+> +               ARRAY_SIZE(default_mux_parents), 0 },
+> +       { 16, 2, default_mux_table, NPCM8XX_CLK_S_GFX_MUX, default_mux_parents,
+> +               ARRAY_SIZE(default_mux_parents), 0 },
+> +       { 18, 3, clkoutsel_mux_table, NPCM8XX_CLK_S_CLKOUT_MUX, clkoutsel_mux_parents,
+> +               ARRAY_SIZE(clkoutsel_mux_parents), 0 },
+> +       { 21, 2, gfxmsel_mux_table, NPCM8XX_CLK_S_GFXM_MUX, gfxmsel_mux_parents,
+> +               ARRAY_SIZE(gfxmsel_mux_parents), 0 },
+> +       { 23, 2, dvcssel_mux_table, NPCM8XX_CLK_S_DVC_MUX, dvcssel_mux_parents,
+> +               ARRAY_SIZE(dvcssel_mux_parents), 0 },
+> +       { 25, 2, default3_mux_table, NPCM8XX_CLK_S_RG_MUX, default3_mux_parents,
+> +               ARRAY_SIZE(default3_mux_parents), 0 },
+> +       { 27, 2, default3_mux_table, NPCM8XX_CLK_S_RCP_MUX, default3_mux_parents,
+> +               ARRAY_SIZE(default3_mux_parents), 0 },
+> +};
+> +
+> +/* configurable dividers: */
+> +static const struct npcm8xx_clk_div_data npcm8xx_divs[] = {
+> +       { NPCM8XX_CLKDIV1, 28, 3, NPCM8XX_CLK_S_ADC,
+> +       { .name = NPCM8XX_CLK_S_PRE_ADC, .index = -1 },
+> +       CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_ADC },
+> +       { NPCM8XX_CLKDIV1, 26, 2, NPCM8XX_CLK_S_AHB, { .hw = &hw_pre_clk },
+> +       CLK_DIVIDER_READ_ONLY, CLK_IS_CRITICAL, NPCM8XX_CLK_AHB },
+> +       { NPCM8XX_CLKDIV1, 21, 5, NPCM8XX_CLK_S_PRE_ADC,
+> +       { .hw = &npcm8xx_muxes[6].hw }, CLK_DIVIDER_READ_ONLY, 0, -1 },
+> +       { NPCM8XX_CLKDIV1, 16, 5, NPCM8XX_CLK_S_UART,
+> +       { .hw = &npcm8xx_muxes[3].hw }, 0, 0, NPCM8XX_CLK_UART },
+> +       { NPCM8XX_CLKDIV1, 11, 5, NPCM8XX_CLK_S_MMC,
+> +       { .hw = &npcm8xx_muxes[2].hw }, CLK_DIVIDER_READ_ONLY, 0,
+> +       NPCM8XX_CLK_MMC },
+> +       { NPCM8XX_CLKDIV1, 6, 5, NPCM8XX_CLK_S_SPI3,
+> +       { .fw_name = NPCM8XX_CLK_S_AHB, .name = NPCM8XX_CLK_S_AHB }, 0, 0,
+> +       NPCM8XX_CLK_SPI3 },
+> +       { NPCM8XX_CLKDIV1, 2, 4, NPCM8XX_CLK_S_PCI,
+> +       { .hw = &npcm8xx_muxes[7].hw }, CLK_DIVIDER_READ_ONLY, 0,
+> +       NPCM8XX_CLK_PCI },
+> +
+> +       { NPCM8XX_CLKDIV2, 30, 2, NPCM8XX_CLK_S_APB4,
+> +       { .fw_name = NPCM8XX_CLK_S_AHB, .name = NPCM8XX_CLK_S_AHB },
+> +       CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB4 },
+> +       { NPCM8XX_CLKDIV2, 28, 2, NPCM8XX_CLK_S_APB3,
+> +       { .fw_name = NPCM8XX_CLK_S_AHB, .name = NPCM8XX_CLK_S_AHB },
+> +       CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB3 },
+> +       { NPCM8XX_CLKDIV2, 26, 2, NPCM8XX_CLK_S_APB2,
+> +       { .fw_name = NPCM8XX_CLK_S_AHB, .name = NPCM8XX_CLK_S_AHB },
+> +       CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB2 },
+> +       { NPCM8XX_CLKDIV2, 24, 2, NPCM8XX_CLK_S_APB1,
+> +       { .fw_name = NPCM8XX_CLK_S_AHB, .name = NPCM8XX_CLK_S_AHB },
+> +       CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB1 },
+> +       { NPCM8XX_CLKDIV2, 22, 2, NPCM8XX_CLK_S_APB5,
+> +       { .fw_name = NPCM8XX_CLK_S_AHB, .name = NPCM8XX_CLK_S_AHB },
+> +       CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_APB5 },
+> +       { NPCM8XX_CLKDIV2, 16, 5, NPCM8XX_CLK_S_CLKOUT,
+> +       { .hw = &npcm8xx_muxes[8].hw }, CLK_DIVIDER_READ_ONLY, 0,
+> +       NPCM8XX_CLK_CLKOUT },
+> +       { NPCM8XX_CLKDIV2, 13, 3, NPCM8XX_CLK_S_GFX,
+> +       { .hw = &npcm8xx_muxes[7].hw }, CLK_DIVIDER_READ_ONLY, 0,
+> +       NPCM8XX_CLK_GFX },
+> +       { NPCM8XX_CLKDIV2, 8, 5, NPCM8XX_CLK_S_USB_BRIDGE,
+> +       { .hw = &npcm8xx_muxes[4].hw }, CLK_DIVIDER_READ_ONLY, 0,
+> +       NPCM8XX_CLK_SU },
+> +       { NPCM8XX_CLKDIV2, 4, 4, NPCM8XX_CLK_S_USB_HOST,
+> +       { .hw = &npcm8xx_muxes[4].hw }, CLK_DIVIDER_READ_ONLY, 0,
+> +       NPCM8XX_CLK_SU48 },
+> +       { NPCM8XX_CLKDIV2, 0, 4, NPCM8XX_CLK_S_SDHC,
+> +       { .hw = &npcm8xx_muxes[2].hw }, CLK_DIVIDER_READ_ONLY, 0,
+> +       NPCM8XX_CLK_SDHC },
+> +
+> +       { NPCM8XX_CLKDIV3, 16, 8, NPCM8XX_CLK_S_SPI1,
+> +       { .fw_name = NPCM8XX_CLK_S_AHB, .name = NPCM8XX_CLK_S_AHB },
+> +       CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SPI1 },
+> +       { NPCM8XX_CLKDIV3, 11, 5, NPCM8XX_CLK_S_UART2,
+> +       { .hw = &npcm8xx_muxes[3].hw }, CLK_DIVIDER_READ_ONLY, 0,
+> +       NPCM8XX_CLK_UART2 },
+> +       { NPCM8XX_CLKDIV3, 6, 5, NPCM8XX_CLK_S_SPI0,
+> +       { .fw_name = NPCM8XX_CLK_S_AHB, .name = NPCM8XX_CLK_S_AHB },
+> +       CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SPI0 },
+> +       { NPCM8XX_CLKDIV3, 1, 5, NPCM8XX_CLK_S_SPIX,
+> +       { .fw_name = NPCM8XX_CLK_S_AHB, .name = NPCM8XX_CLK_S_AHB },
+> +       CLK_DIVIDER_READ_ONLY, 0, NPCM8XX_CLK_SPIX },
+> +
+> +       { NPCM8XX_CLKDIV4, 28, 4, NPCM8XX_CLK_S_RG,
+> +       { .hw = &npcm8xx_muxes[11].hw }, CLK_DIVIDER_READ_ONLY, 0,
+> +       NPCM8XX_CLK_RG },
+> +       { NPCM8XX_CLKDIV4, 12, 4, NPCM8XX_CLK_S_RCP,
+> +       { .hw = &npcm8xx_muxes[12].hw }, CLK_DIVIDER_READ_ONLY, 0,
+> +       NPCM8XX_CLK_RCP },
+> +
+> +       { NPCM8XX_THRTL_CNT, 0, 2, NPCM8XX_CLK_S_TH,
+> +       { .hw = &npcm8xx_muxes[0].hw },
+> +       CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_TH },
+> +};
+> +
+> +static unsigned long npcm8xx_clk_pll_recalc_rate(struct clk_hw *hw,
+> +                                                unsigned long parent_rate)
+> +{
+> +       struct npcm8xx_clk_pll *pll = to_npcm8xx_clk_pll(hw);
+> +       unsigned long fbdv, indv, otdv1, otdv2;
+> +       unsigned int val;
+> +       u64 ret;
+> +
+> +       if (parent_rate == 0) {
+> +               pr_debug("%s: parent rate is zero\n", __func__);
+> +               return 0;
+> +       }
+> +
+> +       val = readl_relaxed(pll->pllcon);
+> +
+> +       indv = FIELD_GET(PLLCON_INDV, val);
+> +       fbdv = FIELD_GET(PLLCON_FBDV, val);
+> +       otdv1 = FIELD_GET(PLLCON_OTDV1, val);
+> +       otdv2 = FIELD_GET(PLLCON_OTDV2, val);
+> +
+> +       ret = (u64)parent_rate * fbdv;
+> +       do_div(ret, indv * otdv1 * otdv2);
+> +
+> +       return ret;
+> +}
+> +
+> +static const struct clk_ops npcm8xx_clk_pll_ops = {
+> +       .recalc_rate = npcm8xx_clk_pll_recalc_rate,
+> +};
+> +
+> +static struct clk_hw *
+> +npcm8xx_clk_register_pll(struct device *dev, void __iomem *pllcon,
+> +                        const char *name, const struct clk_parent_data *parent,
+> +                        unsigned long flags)
+> +{
+> +       struct npcm8xx_clk_pll *pll;
+> +       struct clk_init_data init = {};
+> +       int ret;
+> +
+> +       pll = devm_kzalloc(dev, sizeof(*pll), GFP_KERNEL);
+> +       if (!pll)
+> +               return ERR_PTR(-ENOMEM);
+> +
+> +       init.name = name;
+> +       init.ops = &npcm8xx_clk_pll_ops;
+> +       init.parent_data = parent;
+> +       init.num_parents = 1;
+> +       init.flags = flags;
+> +
+> +       pll->pllcon = pllcon;
+> +       pll->hw.init = &init;
+> +
+> +       ret = devm_clk_hw_register(dev, &pll->hw);
+> +       if (ret) {
+> +               kfree(pll);
+> +               return ERR_PTR(ret);
+> +       }
+> +
+> +       return &pll->hw;
+> +}
+> +
+> +static DEFINE_SPINLOCK(npcm8xx_clk_lock);
+> +
+> +static int npcm8xx_clk_probe(struct platform_device *pdev)
+> +{
+> +       struct clk_hw_onecell_data *npcm8xx_clk_data;
+> +       struct device *dev = &pdev->dev;
+> +       void __iomem *clk_base;
+> +       struct resource *res;
+> +       struct clk_hw *hw;
+> +       unsigned int i;
+> +       int err;
+> +
+> +       npcm8xx_clk_data = devm_kzalloc(dev, struct_size(npcm8xx_clk_data, hws,
+> +                                                        NPCM8XX_NUM_CLOCKS),
+> +                                       GFP_KERNEL);
+> +       if (!npcm8xx_clk_data)
+> +               return -ENOMEM;
+> +
+> +       res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +       clk_base = devm_ioremap(dev, res->start, resource_size(res));
+> +       if (!clk_base) {
+> +               dev_err(&pdev->dev, "Failed to remap I/O memory\n");
+> +               return -ENOMEM;
+> +       }
+> +
+> +       npcm8xx_clk_data->num = NPCM8XX_NUM_CLOCKS;
+> +
+> +       for (i = 0; i < NPCM8XX_NUM_CLOCKS; i++)
+> +               npcm8xx_clk_data->hws[i] = ERR_PTR(-EPROBE_DEFER);
+> +
+> +       /* Register plls */
+> +       for (i = 0; i < ARRAY_SIZE(npcm8xx_pll_clks); i++) {
+> +               struct npcm8xx_pll_data *pll_clk = &npcm8xx_pll_clks[i];
+> +
+> +               hw = npcm8xx_clk_register_pll(dev, clk_base + pll_clk->reg,
+> +                                             pll_clk->name, &pll_clk->parent,
+> +                                             pll_clk->flags);
+> +               if (IS_ERR(hw)) {
+> +                       dev_err(dev, "npcm8xx_clk: Can't register pll\n");
+> +                       return PTR_ERR(hw);
+> +               }
+> +               pll_clk->hw = *hw;
+> +       }
+> +
+> +       /* Register fixed dividers */
+> +       hw = devm_clk_hw_register_fixed_factor(dev, NPCM8XX_CLK_S_PLL1_DIV2,
+> +                                              NPCM8XX_CLK_S_PLL1, 0, 1, 2);
+> +       if (IS_ERR(hw)) {
+> +               dev_err(dev, "npcm8xx_clk: Can't register fixed div\n");
+> +               return PTR_ERR(hw);
+> +       }
+> +       hw_pll1_div2 = *hw;
+> +
+> +       hw = devm_clk_hw_register_fixed_factor(dev, NPCM8XX_CLK_S_PLL2_DIV2,
+> +                                              NPCM8XX_CLK_S_PLL2, 0, 1, 2);
+> +       if (IS_ERR(hw)) {
+> +               dev_err(dev, "npcm8xx_clk: Can't register pll2 div2\n");
+> +               return PTR_ERR(hw);
+> +       }
+> +       hw_pll2_div2 = *hw;
+> +
+> +       hw = devm_clk_hw_register_fixed_factor(dev, NPCM8XX_CLK_S_PLL_GFX_DIV2,
+> +                                              NPCM8XX_CLK_S_PLL_GFX, 0, 1, 2);
+> +       if (IS_ERR(hw)) {
+> +               dev_err(dev, "npcm8xx_clk: Can't register gfx div2\n");
+> +               return PTR_ERR(hw);
+> +       }
+> +       hw_gfx_div2 = *hw;
+> +
+> +       /* Register muxes */
+> +       for (i = 0; i < ARRAY_SIZE(npcm8xx_muxes); i++) {
+> +               struct npcm8xx_clk_mux_data *mux_data = &npcm8xx_muxes[i];
+> +
+> +               hw = devm_clk_hw_register_mux_parent_data_table(dev,
+> +                                                               mux_data->name,
+> +                                                               mux_data->parent_data,
+> +                                                               mux_data->num_parents,
+> +                                                               mux_data->flags,
+> +                                                               clk_base + NPCM8XX_CLKSEL,
+> +                                                               mux_data->shift,
+> +                                                               mux_data->mask,
+> +                                                               0,
+> +                                                               mux_data->table,
+> +                                                               &npcm8xx_clk_lock);
+> +               if (IS_ERR(hw)) {
+> +                       dev_err(dev, "npcm8xx_clk: Can't register mux\n");
+> +                       return PTR_ERR(hw);
+> +               }
+> +               mux_data->hw = *hw;
+> +       }
+> +
+> +       hw = devm_clk_hw_register_fixed_factor(dev, NPCM8XX_CLK_S_PRE_CLK,
+> +                                              NPCM8XX_CLK_S_CPU_MUX, 0, 1, 2);
+> +       if (IS_ERR(hw)) {
+> +               dev_err(dev, "npcm8xx_clk: Can't register pre clk div2\n");
+> +               return PTR_ERR(hw);
+> +       }
+> +       hw_pre_clk = *hw;
+> +
+> +       hw = devm_clk_hw_register_fixed_factor(dev, NPCM8XX_CLK_S_AXI,
+> +                                              NPCM8XX_CLK_S_TH, 0, 1, 2);
+> +       if (IS_ERR(hw)) {
+> +               dev_err(dev, "npcm8xx_clk: Can't register axi div2\n");
+> +               return PTR_ERR(hw);
+> +       }
+> +       npcm8xx_clk_data->hws[NPCM8XX_CLK_AXI] = hw;
+> +
+> +       hw = devm_clk_hw_register_fixed_factor(dev, NPCM8XX_CLK_S_ATB,
+> +                                              NPCM8XX_CLK_S_AXI, 0, 1, 2);
+> +       if (IS_ERR(hw)) {
+> +               dev_err(dev, "npcm8xx_clk: Can't register atb div2\n");
+> +               return PTR_ERR(hw);
+> +       }
+> +       npcm8xx_clk_data->hws[NPCM8XX_CLK_ATB] = hw;
+> +
+> +       /* Register clock dividers specified in npcm8xx_divs */
+> +       for (i = 0; i < ARRAY_SIZE(npcm8xx_divs); i++) {
+> +               const struct npcm8xx_clk_div_data *div_data = &npcm8xx_divs[i];
+> +
+> +               hw = clk_hw_register_divider_parent_data(dev, div_data->name,
+> +                                                        &div_data->parent_data,
+> +                                                        div_data->flags,
+> +                                                        clk_base + div_data->reg,
+> +                                                        div_data->shift,
+> +                                                        div_data->width,
+> +                                                        div_data->clk_divider_flags,
+> +                                                        &npcm8xx_clk_lock);
+> +               if (IS_ERR(hw)) {
+> +                       dev_err(dev, "npcm8xx_clk: Can't register div table\n");
+> +                       goto err_div_clk;
+> +               }
+> +
+> +               if (div_data->onecell_idx >= 0)
+> +                       npcm8xx_clk_data->hws[div_data->onecell_idx] = hw;
+> +       }
+> +
+> +       err = devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get,
+> +                                         npcm8xx_clk_data);
+> +       if (err) {
+> +               dev_err(dev, "unable to add clk provider\n");
+> +               hw = ERR_PTR(err);
+> +               goto err_div_clk;
+> +       }
+> +
+> +       return err;
+> +
+> +err_div_clk:
+> +       while (i--)
+> +               if (npcm8xx_divs[i].onecell_idx >= 0)
+> +                       clk_hw_unregister_divider(npcm8xx_clk_data->hws[npcm8xx_divs[i].onecell_idx]);
+> +
+> +       return PTR_ERR(hw);
+> +}
+> +
+> +static const struct of_device_id npcm8xx_clk_dt_ids[] = {
+> +       { .compatible = "nuvoton,npcm845-clk", },
+> +       { }
+> +};
+> +MODULE_DEVICE_TABLE(of, npcm8xx_clk_dt_ids);
+> +
+> +static struct platform_driver npcm8xx_clk_driver = {
+> +       .probe  = npcm8xx_clk_probe,
+> +       .driver = {
+> +               .name = "npcm8xx_clk",
+> +               .of_match_table = npcm8xx_clk_dt_ids,
+> +       },
+> +};
+> +
+> +static int __init npcm8xx_clk_driver_init(void)
+> +{
+> +       return platform_driver_register(&npcm8xx_clk_driver);
+> +}
+> +arch_initcall(npcm8xx_clk_driver_init);
+> +
+> +static void __exit npcm8xx_clk_exit(void)
+> +{
+> +       platform_driver_unregister(&npcm8xx_clk_driver);
+> +}
+> +module_exit(npcm8xx_clk_exit);
+> +
+> +MODULE_DESCRIPTION("Clock driver for Nuvoton NPCM8XX BMC SoC");
+> +MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
+> +MODULE_LICENSE("GPL v2");
+> +
+> --
+> 2.33.0
+>
