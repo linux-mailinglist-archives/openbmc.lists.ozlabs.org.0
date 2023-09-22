@@ -1,60 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8FDC87AAFD7
-	for <lists+openbmc@lfdr.de>; Fri, 22 Sep 2023 12:45:22 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4BA607AB107
+	for <lists+openbmc@lfdr.de>; Fri, 22 Sep 2023 13:38:46 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=UGHTXYEs;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=PCTV6F5i;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RsTSJ2Rwvz3djW
-	for <lists+openbmc@lfdr.de>; Fri, 22 Sep 2023 20:45:20 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RsVdw1LFnz3dDr
+	for <lists+openbmc@lfdr.de>; Fri, 22 Sep 2023 21:38:44 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=UGHTXYEs;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=PCTV6F5i;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=lists.ozlabs.org)
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [IPv6:2605:2700:0:5::4713:9cab])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::e36; helo=mail-vs1-xe36.google.com; envelope-from=milkfafa@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-vs1-xe36.google.com (mail-vs1-xe36.google.com [IPv6:2607:f8b0:4864:20::e36])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RsTPT70nnz3cmB;
-	Fri, 22 Sep 2023 20:42:53 +1000 (AEST)
-Received: from hatter.bewilderbeest.net (unknown [IPv6:2602:61:7e5d:5300::2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: zev)
-	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 81BE0E07;
-	Fri, 22 Sep 2023 03:42:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
-	s=thorn; t=1695379371;
-	bh=JYm8BcM9/KAma3UN/bNDkHDqNyw66K9b6awe2AtcQjo=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UGHTXYEs8gbpqvzfMndMgkQ9wWOq1AhrAGJjzFZ0nswSX1vxNIOrQqDM1Vb9BQAV7
-	 MTKYrynqAphAyL8XxfMfG3k+QtGytjBuU0AiBw0KNvJKlAjG7JsJo0yPKTRaqTinIp
-	 735t2vjgusXhwz8uTOUzCTZzv+jdsLrYmOpUo9BI=
-From: Zev Weiss <zev@bewilderbeest.net>
-To: Andrew Jeffery <andrew@aj.id.au>,
-	Guenter Roeck <linux@roeck-us.net>,
-	Joel Stanley <joel@jms.id.au>,
-	"Milton D. Miller II" <mdmii@outlook.com>,
-	Wim Van Sebroeck <wim@linux-watchdog.org>,
-	linux-arm-kernel@lists.infradead.org,
-	linux-aspeed@lists.ozlabs.org,
-	linux-kernel@vger.kernel.org,
-	linux-watchdog@vger.kernel.org,
-	openbmc@lists.ozlabs.org
-Subject: [PATCH 2/2] watchdog: aspeed: Add support for aspeed,reset-mask DT property
-Date: Fri, 22 Sep 2023 03:42:34 -0700
-Message-ID: <20230922104231.1434-6-zev@bewilderbeest.net>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20230922104231.1434-4-zev@bewilderbeest.net>
-References: <20230922104231.1434-4-zev@bewilderbeest.net>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RsVdL449Rz3ckG
+	for <openbmc@lists.ozlabs.org>; Fri, 22 Sep 2023 21:38:13 +1000 (AEST)
+Received: by mail-vs1-xe36.google.com with SMTP id ada2fe7eead31-45270220069so909935137.3
+        for <openbmc@lists.ozlabs.org>; Fri, 22 Sep 2023 04:38:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695382690; x=1695987490; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=vUgX4U1nDqbgagySgU1QRculQUZhCufDpVd955ye1oU=;
+        b=PCTV6F5icD1sk9+irpb0wf+cBRAKCQsIbRddRlTDZ/cY+HMKcr6ziUM0G1bUwF5RnW
+         N4KrsHvTjRh6Rmj9EgeKOT1ns25Dcpmg6ywez0AEUFX28fd1MBGzhYynWCv30MvZ0CcH
+         4Mb3xsloqZD3fzrrGr39xrui1pQJJ4OUXFzQasyWGJhABoXbGUGuD+6bgb9VdjagbVlY
+         pmcCd2MBlVsPO9bNwDl1OW/EGuuUvHT25iJZb56JCDQ/xCjIlNAcagPuyjFbi1gc8+wD
+         bHhOfSD+tbwP/3pE9xu+biWJAFkQnQG6Ug5TlL7Lf5HioRsfQWuR+84h8cc8PTHlkhgf
+         e5aw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695382690; x=1695987490;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=vUgX4U1nDqbgagySgU1QRculQUZhCufDpVd955ye1oU=;
+        b=I6S00uTz/7sDO4/PCjROL/dzeClwsp9d7JcwihHQzfz/im3YkFI9Zaq9HHlFXY/GRK
+         ydoMKTGGSbdVIi9QRuUbTyOcw9ldpUbAVg0hiO+3PXCWUDaWYytFRlQYHVe/0IXO7mxN
+         uHFl60aCubKeG1QgUp/X+dRSsk8l2gC4hM9rRF+VggVGZt+UDMqaspO8Yk9WfAg73aGZ
+         1tCd7+Zm8YgbfXTT9osv41nR8DsPngBox+2OsbqHaenoQNflk2Adw32RIcso46W40r3E
+         xtkhgt43fkEUI76C6V3uvV39lPLaNIT/ihdNrx4OjTjKjLrjnisFJIiY796D5ucyc4xC
+         7A8g==
+X-Gm-Message-State: AOJu0YxzD6gyzLZ7YT/IKfcrQU676KiWmj5IJ3vZ8SqQv13cgrYoAXQ8
+	hV0QE0r8I+hI0hvPosPXO0yPZJZzhvdO0Q3KEXk=
+X-Google-Smtp-Source: AGHT+IGIqGChB6cFXllrHUdzdpIdQVOVkFS2UF0Y14Lbfg8SJ76iH1CyhIQdNFhrHSC5b81fr8ojrgimHPbvL8Dfj8c=
+X-Received: by 2002:a05:6102:7ae:b0:452:8452:8a90 with SMTP id
+ x14-20020a05610207ae00b0045284528a90mr8260920vsg.0.1695382689830; Fri, 22 Sep
+ 2023 04:38:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230922062405.2571850-1-milkfafa@gmail.com> <86729293-ad37-4f2e-bff7-c49d166e02df@xs4all.nl>
+In-Reply-To: <86729293-ad37-4f2e-bff7-c49d166e02df@xs4all.nl>
+From: Kun-Fa Lin <milkfafa@gmail.com>
+Date: Fri, 22 Sep 2023 19:38:01 +0800
+Message-ID: <CADnNmFoXBA7mbs2zNFWOCYaP1TheS50E9vTdSH3uhjea=RuALQ@mail.gmail.com>
+Subject: Re: [PATCH v16 0/7] Support Nuvoton NPCM Video Capture/Encode Engine
+To: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,56 +73,13 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ivan Mikhaylov <i.mikhaylov@yadro.com>, Eddie James <eajames@linux.ibm.com>, =?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>, Zev Weiss <zev@bewilderbeest.net>
+Cc: devicetree@vger.kernel.org, tmaimon77@gmail.com, kwliu@nuvoton.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, linux-media@vger.kernel.org, tali.perry1@gmail.com, andrzej.p@collabora.com, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, mchehab@kernel.org, kflin@nuvoton.com, linux-kernel@vger.kernel.org, benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This property allows the device-tree to specify how the Aspeed
-watchdog timer's reset mask register(s) should be set, so that
-peripherals can be individually exempted from (or opted in to) being
-reset when the watchdog timer expires.
+Hi Hans,
 
-Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
----
- drivers/watchdog/aspeed_wdt.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+Thank you so much for your review and time.
 
-diff --git a/drivers/watchdog/aspeed_wdt.c b/drivers/watchdog/aspeed_wdt.c
-index b72a858bbac7..b4773a6aaf8c 100644
---- a/drivers/watchdog/aspeed_wdt.c
-+++ b/drivers/watchdog/aspeed_wdt.c
-@@ -79,6 +79,8 @@ MODULE_DEVICE_TABLE(of, aspeed_wdt_of_table);
- #define   WDT_TIMEOUT_STATUS_BOOT_SECONDARY	BIT(1)
- #define WDT_CLEAR_TIMEOUT_STATUS	0x14
- #define   WDT_CLEAR_TIMEOUT_AND_BOOT_CODE_SELECTION	BIT(0)
-+#define WDT_RESET_MASK1		0x1c
-+#define WDT_RESET_MASK2		0x20
- 
- /*
-  * WDT_RESET_WIDTH controls the characteristics of the external pulse (if
-@@ -402,6 +404,8 @@ static int aspeed_wdt_probe(struct platform_device *pdev)
- 
- 	if ((of_device_is_compatible(np, "aspeed,ast2500-wdt")) ||
- 		(of_device_is_compatible(np, "aspeed,ast2600-wdt"))) {
-+		u32 reset_mask[2];
-+		size_t nrstmask = of_device_is_compatible(np, "aspeed,ast2600-wdt") ? 2 : 1;
- 		u32 reg = readl(wdt->base + WDT_RESET_WIDTH);
- 
- 		reg &= wdt->cfg->ext_pulse_width_mask;
-@@ -419,6 +423,13 @@ static int aspeed_wdt_probe(struct platform_device *pdev)
- 			reg |= WDT_OPEN_DRAIN_MAGIC;
- 
- 		writel(reg, wdt->base + WDT_RESET_WIDTH);
-+
-+		ret = of_property_read_u32_array(np, "aspeed,reset-mask", reset_mask, nrstmask);
-+		if (!ret) {
-+			writel(reset_mask[0], wdt->base + WDT_RESET_MASK1);
-+			if (nrstmask > 1)
-+				writel(reset_mask[1], wdt->base + WDT_RESET_MASK2);
-+		}
- 	}
- 
- 	if (!of_property_read_u32(np, "aspeed,ext-pulse-duration", &duration)) {
--- 
-2.40.0.5.gf6e3b97ba6d2.dirty
-
+Regards,
+Marvin
