@@ -2,44 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C716A7AAA7F
-	for <lists+openbmc@lfdr.de>; Fri, 22 Sep 2023 09:42:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 517007AAD78
+	for <lists+openbmc@lfdr.de>; Fri, 22 Sep 2023 11:09:04 +0200 (CEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Q7dJvNFt;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RsPPb5KjMz3dtR
-	for <lists+openbmc@lfdr.de>; Fri, 22 Sep 2023 17:42:43 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RsRKB1crbz3f5l
+	for <lists+openbmc@lfdr.de>; Fri, 22 Sep 2023 19:09:02 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=srs0=9eyf=fg=xs4all.nl=hverkuil-cisco@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Q7dJvNFt;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22a; helo=mail-lj1-x22a.google.com; envelope-from=dhruvaraj@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RsPPC53dbz3clW
-	for <openbmc@lists.ozlabs.org>; Fri, 22 Sep 2023 17:42:23 +1000 (AEST)
-Received: from smtp.kernel.org (relay.kernel.org [52.25.139.140])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
-	(No client certificate requested)
-	by dfw.source.kernel.org (Postfix) with ESMTPS id 53CDF620F9;
-	Fri, 22 Sep 2023 07:42:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89EB6C43395;
-	Fri, 22 Sep 2023 07:42:16 +0000 (UTC)
-Message-ID: <86729293-ad37-4f2e-bff7-c49d166e02df@xs4all.nl>
-Date: Fri, 22 Sep 2023 09:42:15 +0200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RsRJY3RhXz3cBr
+	for <openbmc@lists.ozlabs.org>; Fri, 22 Sep 2023 19:08:28 +1000 (AEST)
+Received: by mail-lj1-x22a.google.com with SMTP id 38308e7fff4ca-2bffa8578feso31567511fa.2
+        for <openbmc@lists.ozlabs.org>; Fri, 22 Sep 2023 02:08:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695373702; x=1695978502; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=0f5wOwsKDYJmkpGTnRLro8rKHQw5rbhOmFlRzVsrq+8=;
+        b=Q7dJvNFtLpAbq8Cjn/wPoN2Q85IjWMb2MWZafRmh8sNVbzRlLSAWFqSOaDscGXJSiR
+         sIewBMsBxCbpxoAwrBectB941bRWM07+7PbJZ5RxIMecoechDGnXZCZXz9kNFL/l+sDO
+         mzmr1DybRoxJ+gbQSkU9uds7lDM/Vt/SMNgyjozvo9vPgZVvLNxY8FF+G7XnaTwXHVVO
+         1o9j3oRyEIVyZ09JCswhx+NYjBZHkJDFh+Uzqr27JqH/7xAHTHYIqvYigcKPaJx++pjP
+         5HTiXhO83wdXiROnnDSvR/TgiZp7gD2EyipY3TXlEtX/AkgMEDYisYz/2y5yv8ZjhisR
+         1QBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695373702; x=1695978502;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=0f5wOwsKDYJmkpGTnRLro8rKHQw5rbhOmFlRzVsrq+8=;
+        b=pukCPLNJ6CKx2HiCJgrXzb7sIGdetMq5AlDRifc6zeYvrRJJWmDxiM63WrJ7VZ0fOL
+         hD92LB2loQYtMKNG+K3W39JgDkVegWGIBDTctWUb94Ku3A+Ys5ZnGiZQEI9LFcfKcEIc
+         rqn3bfNsqM0+hw42YVTW0JgUoDScQktV09mt2QQU1vt04O1l2sYDaWLs1HrOVBzM3s1o
+         /oqFjh+QhLy8faQo0oUxAyiP+QnoJEE4lhTi9Xn76Gz+r5txF6ldv3s5FdOhdeDcr7Q8
+         +EjZ/ulqG8hI6z82BZJw7OihrTXG+l2tkl0xxYJgzHiyNMPJ6FRNhqqd9YeoisVGIJZ9
+         XACQ==
+X-Gm-Message-State: AOJu0YwA9iXneNCxcXc1PQYXKCx8HD66mSoT3UN+Gd7xsr7VXO8b7nsN
+	9vgS5JfTzDBHlz2b0VwB8cd9PX2+6Q4g3ELI8NDEQbwmQUY=
+X-Google-Smtp-Source: AGHT+IHWakN7qdNbpzaLW46bo2JSizDK8z2XWinkTaCCkIKIX0m287lGXfC1Ryquks2rFhVubXrZjKyDXJWElT2Tmbo=
+X-Received: by 2002:a2e:7410:0:b0:2c0:17bc:124e with SMTP id
+ p16-20020a2e7410000000b002c017bc124emr7228025ljc.38.1695373701017; Fri, 22
+ Sep 2023 02:08:21 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v16 0/7] Support Nuvoton NPCM Video Capture/Encode Engine
-Content-Language: en-US, nl
-To: Marvin Lin <milkfafa@gmail.com>, mchehab@kernel.org,
- avifishman70@gmail.com, tmaimon77@gmail.com, tali.perry1@gmail.com,
- venture@google.com, yuenn@google.com, benjaminfair@google.com,
- robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
- andrzej.p@collabora.com
-References: <20230922062405.2571850-1-milkfafa@gmail.com>
-From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-In-Reply-To: <20230922062405.2571850-1-milkfafa@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+References: <CAK7WosgDEJN8gaLu+mC3W1xKAysdZY_pHTz46vqTpun69G0hfA@mail.gmail.com>
+ <ZQxjlifIOo96FJj9@heinlein.vulture-banana.ts.net> <CAK7Wosg0ffdvnEfok0EaRQym+EGbi8R+MXf_nVC9yXiEfozjNg@mail.gmail.com>
+ <CACWQX80G4MQ7DKO40+uxQKTGW-CyffbUASGYmb_0y4=vanp+jw@mail.gmail.com>
+ <CAK7WosjzxY_MK1ukg7GPZGkuK6JW-CShmjjX0Z34x_WdH5_tpw@mail.gmail.com>
+ <CACWQX82=RCt2xOy5jhZhiawLyONUFYdx8jw75q5T4B_kHnXtdA@mail.gmail.com>
+ <CAK7Wosg6YpJtR-A3gT0yTguJHtbXxt4e5LjCjWLMySPTjGgv2g@mail.gmail.com> <CACWQX83jRWNf6AtJnzDbOFH8h3nK9ZL8XzUkAB5Gd_Gw4u-6dA@mail.gmail.com>
+In-Reply-To: <CACWQX83jRWNf6AtJnzDbOFH8h3nK9ZL8XzUkAB5Gd_Gw4u-6dA@mail.gmail.com>
+From: dhruvaraj S <dhruvaraj@gmail.com>
+Date: Fri, 22 Sep 2023 14:38:07 +0530
+Message-ID: <CAK7WoshO4ZRv_2DGEQaHFWgsHr-LyRPLrQXO=BMFR+hNV_acGQ@mail.gmail.com>
+Subject: Re: Proposal: Removing redundant EpochTime interface from dump entry
+To: Ed Tanous <ed@tanous.net>
+Content-Type: multipart/alternative; boundary="00000000000035f7cd0605eef36a"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -51,242 +78,616 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: kwliu@nuvoton.com, devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, kflin@nuvoton.com, linux-media@vger.kernel.org
+Cc: openbmc <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Marvin,
+--00000000000035f7cd0605eef36a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Thank you for all your work! I have pushed these patches to our staging branch
-and they should appear in kernel 6.8.
+On Fri, 22 Sept 2023 at 01:19, Ed Tanous <ed@tanous.net> wrote:
+>
+> On Thu, Sep 21, 2023 at 11:59=E2=80=AFAM dhruvaraj S <dhruvaraj@gmail.com=
+> wrote:
+> >
+> > On Thu, 21 Sept 2023 at 23:22, Ed Tanous <ed@tanous.net> wrote:
+> > >
+> > > On Thu, Sep 21, 2023 at 10:47=E2=80=AFAM dhruvaraj S <dhruvaraj@gmail=
+.com>
+wrote:
+> > > >
+> > > > On Thu, 21 Sept 2023 at 22:59, Ed Tanous <ed@tanous.net> wrote:
+> > > > >
+> > > > > On Thu, Sep 21, 2023 at 8:44=E2=80=AFAM dhruvaraj S <dhruvaraj@gm=
+ail.com>
+wrote:
+> > > > > >
+> > > > > > On Thu, 21 Sept 2023 at 21:09, Patrick Williams <
+patrick@stwcx.xyz> wrote:
+> > > > > > >
+> > > > > > > On Thu, Sep 21, 2023 at 08:52:15AM +0530, dhruvaraj S wrote:
+> > > > > > > > Hi,
+> > > > > > > >
+> > > > > > > > In the current implementation, objects implementing the
+dump entry
+> > > > > > > > interface implement both
+xyz.openbmc_project.Common.Progress (for dump
+> > > > > > > > creation start time, end time, and status) and
+> > > > > > > > xyz.openbmc_project.Time.Epoch (for dump creation time,
+which is
+> > > > > > > > effectively the end time). This leads to a redundancy in
+specifying
+> > > > > > > > the dump creation end time.
+> > > > >
+> > > > > Don't the two interfaces describe different things?  Time.Epoch
+> > > > > represents when the event occurred, not when the recording of tha=
+t
+> > > > > event was complete, Common.progress represents when the
+> > > > > logging/processing of that event was complete.  In a lot of on-bm=
+c
+> > > > > scenarios, they're going to be similar if not the same, but in th=
+e
+> > > > > case of something like a remote processor flagging an error,
+they're
+> > > > > going to be different.  An error might not be completely processe=
+d
+> > > > > until minutes later.
+> > > > The progress interface contains both the start time and completed
+> > > > time, the start time
+> > >
+> > > That's the time that the dump started.  The dump could've been
+> > > triggered by something that happened before it started, because of
+> > > scheduling or resources.  To be more clear, the timeline goes
+> > > something like:
+> > >
+> > > Some hardware failure happens -> Time.Epoch
+> > > Dump creation starts -> Common.Progress.Start
+> > > Dump creation completes -> Common.Progress.End
+> > >
+> > > If the dumps are manually triggered, and there is no queuing time,
+> > > yes, steps 1 and 2 will likely report the same value (which is the
+> > > common case), but that doesn't mean they're the same in all cases.
+> >
+> > Based on the documentation
+> >
+https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/op=
+enbmc_project/Dump/Entry.interface.yaml
+> > TimeEpoch is dump creation time, which is assumed as the time when the
+> > final packaging
+> > is completed.
+> > The current implementation for BMC dump is like,
+> > - Dump requested, an entry created with status set as InProgress and
+> > Start Time is recorded
+> > - Once the packaging is completed, the Status is changed to Completed,
+> > Completed Time and TimeEpoch are set to the same value.
+> >
+> > But I agree some implementations can have the Time.Epoch set to the
+start time,
+> > which may be close to the hardware or software failure in the system.
+> > I think it is fine to keep TimeEpoch also to set the failure time, but
+> > there can be a PEL
+> > logged in such cases, and the failure time can be available from that
+right?
+>
+> Lets see what it actually saves us in terms of code and patchsets to
+> do this simplification (even if it's just a couple daemons that are
+> representative), and continue from there.  Unless I'm mistaken, this
+> is going to change on the order of 10 lines of code diff in the
+> daemons for this simplification, which is fine, but without seeing the
+> patches, it's hard to assess impact to actual use cases, and whether
+> those lines of diff are worth reworking and retesting everything.
 
-Note that dts patches do not go through the media subsystem, so whoever is in
-charge of that will have to pick that one up.
+Proposed changes to phosphor-debug-collector and bmcweb:
 
-Regards,
+Although the number of lines of code changed is small, as you mentioned,
+this change will remove the duplication of information in two places and th=
+e
+dependency on an additional interface.
 
-	Hans
+Links to the Gerrit changes:
 
-On 22/09/2023 08:23, Marvin Lin wrote:
-> This patch series add DTS node, dt-bindings document and drivers for Video
-> Capture/Differentiation Engine (VCD) and Encoding Compression Engine (ECE)
-> present on Nuvoton NPCM SoCs.
-> 
-> As described in the datasheet NPCM750D_DS_Rev_1.0, the VCD can capture a
-> frame from digital video input and compare two frames in memory, and then
-> the ECE can compress the frame data into HEXTILE format which is defined
-> in Remote Framebuffer Protocol (RFC 6143, chapter 7.7.4. Hextile Encoding).
-> 
-> The output of v4l2-compliance:
-> v4l2-compliance 1.23.0-4996, 64 bits, 64-bit time_t
-> v4l2-compliance SHA: 9431e4b26b48 2023-02-13 14:51:47
-> 
-> Compliance test for npcm-video device /dev/video0:
-> 
-> Driver Info:
->         Driver name      : npcm-video
->         Card type        : NPCM Video Engine
->         Bus info         : platform:npcm-video
->         Driver version   : 6.1.12
->         Capabilities     : 0x84200001
->                 Video Capture
->                 Streaming
->                 Extended Pix Format
->                 Device Capabilities
->         Device Caps      : 0x04200001
->                 Video Capture
->                 Streaming
->                 Extended Pix Format
-> 
-> Required ioctls:
->         test VIDIOC_QUERYCAP: OK
->         test invalid ioctls: OK
-> 
-> Allow for multiple opens:
->         test second /dev/video0 open: OK
->         test VIDIOC_QUERYCAP: OK
->         test VIDIOC_G/S_PRIORITY: OK
->         test for unlimited opens: OK
-> 
-> Debug ioctls:
->         test VIDIOC_DBG_G/S_REGISTER: OK (Not Supported)
->         test VIDIOC_LOG_STATUS: OK (Not Supported)
-> 
-> Input ioctls:
->         test VIDIOC_G/S_TUNER/ENUM_FREQ_BANDS: OK (Not Supported)
->         test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
->         test VIDIOC_S_HW_FREQ_SEEK: OK (Not Supported)
->         test VIDIOC_ENUMAUDIO: OK (Not Supported)
->         test VIDIOC_G/S/ENUMINPUT: OK
->         test VIDIOC_G/S_AUDIO: OK (Not Supported)
->         Inputs: 1 Audio Inputs: 0 Tuners: 0
-> 
-> Output ioctls:
->         test VIDIOC_G/S_MODULATOR: OK (Not Supported)
->         test VIDIOC_G/S_FREQUENCY: OK (Not Supported)
->         test VIDIOC_ENUMAUDOUT: OK (Not Supported)
->         test VIDIOC_G/S/ENUMOUTPUT: OK (Not Supported)
->         test VIDIOC_G/S_AUDOUT: OK (Not Supported)
->         Outputs: 0 Audio Outputs: 0 Modulators: 0
-> 
-> Input/Output configuration ioctls:
->         test VIDIOC_ENUM/G/S/QUERY_STD: OK (Not Supported)
->         test VIDIOC_ENUM/G/S/QUERY_DV_TIMINGS: OK
->         test VIDIOC_DV_TIMINGS_CAP: OK
->         test VIDIOC_G/S_EDID: OK (Not Supported)
-> 
-> Control ioctls (Input 0):
->         test VIDIOC_QUERY_EXT_CTRL/QUERYMENU: OK
->         test VIDIOC_QUERYCTRL: OK
->         test VIDIOC_G/S_CTRL: OK
->         test VIDIOC_G/S/TRY_EXT_CTRLS: OK
->                 warn: v4l2-test-controls.cpp(1139): V4L2_CID_DV_RX_POWER_PRESENT not found for input 0
->         test VIDIOC_(UN)SUBSCRIBE_EVENT/DQEVENT: OK
->         test VIDIOC_G/S_JPEGCOMP: OK (Not Supported)
->         Standard Controls: 1 Private Controls: 2
-> 
-> Format ioctls (Input 0):
->         test VIDIOC_ENUM_FMT/FRAMESIZES/FRAMEINTERVALS: OK
->         test VIDIOC_G/S_PARM: OK (Not Supported)
->         test VIDIOC_G_FBUF: OK (Not Supported)
->         test VIDIOC_G_FMT: OK
->         test VIDIOC_TRY_FMT: OK
->         test VIDIOC_S_FMT: OK
->         test VIDIOC_G_SLICED_VBI_CAP: OK (Not Supported)
->         test Cropping: OK (Not Supported)
->         test Composing: OK (Not Supported)
->         test Scaling: OK (Not Supported)
-> 
-> Codec ioctls (Input 0):
->         test VIDIOC_(TRY_)ENCODER_CMD: OK (Not Supported)
->         test VIDIOC_G_ENC_INDEX: OK (Not Supported)
->         test VIDIOC_(TRY_)DECODER_CMD: OK (Not Supported)
-> 
-> Buffer ioctls (Input 0):
->         test VIDIOC_REQBUFS/CREATE_BUFS/QUERYBUF: OK
->         test VIDIOC_EXPBUF: OK
->         test Requests: OK (Not Supported)
-> 
-> Total for npcm-video device /dev/video0: 45, Succeeded: 45, Failed: 0, Warnings: 1
-> 
-> Changes in v16:
->   - Fix sparse warnings.
->   - Shorten V4L2_CID_NPCM_RECT_COUNT control name.
-> 
-> Changes in v15:
->   - Drop VOLATILE flag from V4L2_CID_NPCM_RECT_COUNT control and update
->     value by v4l2_ctrl_s_ctrl.
->   - Add more explanations in comment/document for V4L2_CID_NPCM_RECT_COUNT.
-> 
-> Changes in v14:
->   - Modify the flow of setting resolution and queue setup
->   - Correct the control type (TYPE_MENU) of selecting between two modes.
->   - Let ECE could be optional (only supports PIX_FMT_RGB565 if ECE is not
->     enabled in DT).
-> 
-> Changes in v13:
->   - Modify the flow for capturing next frame
->   - Modify the behavior of resolution change interrupt
->   - Move GFXI dt-bindings document to
->     Documentation/devicetree/bindings/soc/nuvoton/nuvoton,gfxi.yaml
-> 
-> Changes in v12:
->   - Modify the flow for detecting resolution change and raise
->     V4L2_EVENT_SOURCE_CHANGE event.
->   - Add V4L2_PIX_FMT_RGB565 format support.
-> 
-> Changes in v11:
->   - Replace "u8/u16/u32" with "unsigned int" for generic local variables.
->   - Correct subsystem prefixes, drop redundant words in commit subject, and
->     add more information in commit message.
-> 
-> Changes in v10:
->   - drivers/media/platform/nuvoton/npcm-video.c
->     * Let short functions to be inline function.
->     * Correct return type of some functions, and properly handle return
->       value by callers.
->     * Correct the timing of removing rect_list and the flow of FIFO overrun
->       case in irq.
->     * Adjust line breaks, indentations, and style of variable declarations.
-> 
-> Changes in v9:
->   - Change ECE node name to "video-codec".
->   - Drop redundant "bindings for" in commit subject of patch 2/7.
->   - Refine the format of VCD/ECE dt-binding document.
-> 
-> Changes in v8:
->   - Let VCD/ECE to be 2 separate nodes and update dt-binding documents.
->   - Move register definitions out to a local header file.
->   - Driver refinements (add error handling for memory allocation, remove
->     unnecessary condition check and introduce "goto"s to handle similar
->     error recovery paths).
->   - Correct properties and typo in GFXI dt-binding document.
-> 
-> Changes in v7:
->   - Add uapi documents for driver-specific controls.
->   - Implement driver-specific controls for switching capture mode and
->     getting the count of compressed HEXTILE rectangles.
->   - Drop unnecessary "enum_framesizes" and "enum_frameintervals" functions.
->   - Include the output of v4l2-compliance in cover letter.
-> 
-> Changes in v6:
->   - Support NPCM845 and add compatible "nuvoton,npcm845-video".
->   - Correct pixel format to V4L2_PIX_FMT_HEXTILE which is newly added in
->     this patch series.
-> 
-> Changes in v5:
->   - Simplify function prefix "nuvoton_" to "npcm_".
->   - Increase VCD_BUSY_TIMEOUT_US and ECE_POLL_TIMEOUT_US to 300ms to
->     prevent polling timeout when ECC is enabled or system is busy.
-> 
-> Changes in v4:
->   - Fix compile warning reported by kernel test robot.
-> 
-> Changes in v3:
->   - Add video driver entry in MAINTAINERS.
->   - Change config name to CONFIG_VIDEO_NPCM_VCD_ECE.
->   - Reduce the waiting time after resetting the VCD/ECE module.
->   - Correct data types of some variables.
-> 
-> Changes in v2:
->   - Add Hextile document and locate with vendor formats.
-> 
-> Marvin Lin (7):
->   ARM: dts: nuvoton: Add node for NPCM VCD and ECE engine
->   media: dt-bindings: nuvoton: Add NPCM VCD and ECE engine
->   dt-bindings: soc: nuvoton: Add NPCM GFXI
->   media: v4l: Add HEXTILE compressed format
->   media: v4l2-ctrls: Add user control base for Nuvoton NPCM controls
->   media: uapi: Add controls for NPCM video driver
->   media: nuvoton: Add driver for NPCM video capture and encoding engine
-> 
->  .../bindings/media/nuvoton,npcm-ece.yaml      |   43 +
->  .../bindings/media/nuvoton,npcm-vcd.yaml      |   72 +
->  .../bindings/soc/nuvoton/nuvoton,gfxi.yaml    |   39 +
->  .../userspace-api/media/drivers/index.rst     |    1 +
->  .../media/drivers/npcm-video.rst              |   66 +
->  .../media/v4l/pixfmt-reserved.rst             |    7 +
->  MAINTAINERS                                   |   12 +
->  .../dts/nuvoton/nuvoton-common-npcm7xx.dtsi   |   23 +
->  drivers/media/platform/Kconfig                |    1 +
->  drivers/media/platform/Makefile               |    1 +
->  drivers/media/platform/nuvoton/Kconfig        |   15 +
->  drivers/media/platform/nuvoton/Makefile       |    2 +
->  drivers/media/platform/nuvoton/npcm-regs.h    |  152 ++
->  drivers/media/platform/nuvoton/npcm-video.c   | 1831 +++++++++++++++++
->  drivers/media/v4l2-core/v4l2-ioctl.c          |    1 +
->  include/uapi/linux/npcm-video.h               |   41 +
->  include/uapi/linux/v4l2-controls.h            |    6 +
->  include/uapi/linux/videodev2.h                |    1 +
->  18 files changed, 2314 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/media/nuvoton,npcm-ece.yaml
->  create mode 100644 Documentation/devicetree/bindings/media/nuvoton,npcm-vcd.yaml
->  create mode 100644 Documentation/devicetree/bindings/soc/nuvoton/nuvoton,gfxi.yaml
->  create mode 100644 Documentation/userspace-api/media/drivers/npcm-video.rst
->  create mode 100644 drivers/media/platform/nuvoton/Kconfig
->  create mode 100644 drivers/media/platform/nuvoton/Makefile
->  create mode 100644 drivers/media/platform/nuvoton/npcm-regs.h
->  create mode 100644 drivers/media/platform/nuvoton/npcm-video.c
->  create mode 100644 include/uapi/linux/npcm-video.h
-> 
+bmcweb: https://gerrit.openbmc.org/c/openbmc/bmcweb/+/66732
+Phosphor-debug-collector:
+https://gerrit.openbmc.org/c/openbmc/phosphor-debug-collector/+/66606
 
+
+On Fri, 22 Sept 2023 at 01:19, Ed Tanous <ed@tanous.net> wrote:
+
+> On Thu, Sep 21, 2023 at 11:59=E2=80=AFAM dhruvaraj S <dhruvaraj@gmail.com=
+> wrote:
+> >
+> > On Thu, 21 Sept 2023 at 23:22, Ed Tanous <ed@tanous.net> wrote:
+> > >
+> > > On Thu, Sep 21, 2023 at 10:47=E2=80=AFAM dhruvaraj S <dhruvaraj@gmail=
+.com>
+> wrote:
+> > > >
+> > > > On Thu, 21 Sept 2023 at 22:59, Ed Tanous <ed@tanous.net> wrote:
+> > > > >
+> > > > > On Thu, Sep 21, 2023 at 8:44=E2=80=AFAM dhruvaraj S <dhruvaraj@gm=
+ail.com>
+> wrote:
+> > > > > >
+> > > > > > On Thu, 21 Sept 2023 at 21:09, Patrick Williams <
+> patrick@stwcx.xyz> wrote:
+> > > > > > >
+> > > > > > > On Thu, Sep 21, 2023 at 08:52:15AM +0530, dhruvaraj S wrote:
+> > > > > > > > Hi,
+> > > > > > > >
+> > > > > > > > In the current implementation, objects implementing the dum=
+p
+> entry
+> > > > > > > > interface implement both xyz.openbmc_project.Common.Progres=
+s
+> (for dump
+> > > > > > > > creation start time, end time, and status) and
+> > > > > > > > xyz.openbmc_project.Time.Epoch (for dump creation time,
+> which is
+> > > > > > > > effectively the end time). This leads to a redundancy in
+> specifying
+> > > > > > > > the dump creation end time.
+> > > > >
+> > > > > Don't the two interfaces describe different things?  Time.Epoch
+> > > > > represents when the event occurred, not when the recording of tha=
+t
+> > > > > event was complete, Common.progress represents when the
+> > > > > logging/processing of that event was complete.  In a lot of on-bm=
+c
+> > > > > scenarios, they're going to be similar if not the same, but in th=
+e
+> > > > > case of something like a remote processor flagging an error,
+> they're
+> > > > > going to be different.  An error might not be completely processe=
+d
+> > > > > until minutes later.
+> > > > The progress interface contains both the start time and completed
+> > > > time, the start time
+> > >
+> > > That's the time that the dump started.  The dump could've been
+> > > triggered by something that happened before it started, because of
+> > > scheduling or resources.  To be more clear, the timeline goes
+> > > something like:
+> > >
+> > > Some hardware failure happens -> Time.Epoch
+> > > Dump creation starts -> Common.Progress.Start
+> > > Dump creation completes -> Common.Progress.End
+> > >
+> > > If the dumps are manually triggered, and there is no queuing time,
+> > > yes, steps 1 and 2 will likely report the same value (which is the
+> > > common case), but that doesn't mean they're the same in all cases.
+> >
+> > Based on the documentation
+> >
+> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/=
+openbmc_project/Dump/Entry.interface.yaml
+> > TimeEpoch is dump creation time, which is assumed as the time when the
+> > final packaging
+> > is completed.
+> > The current implementation for BMC dump is like,
+> > - Dump requested, an entry created with status set as InProgress and
+> > Start Time is recorded
+> > - Once the packaging is completed, the Status is changed to Completed,
+> > Completed Time and TimeEpoch are set to the same value.
+> >
+> > But I agree some implementations can have the Time.Epoch set to the
+> start time,
+> > which may be close to the hardware or software failure in the system.
+> > I think it is fine to keep TimeEpoch also to set the failure time, but
+> > there can be a PEL
+> > logged in such cases, and the failure time can be available from that
+> right?
+>
+> Lets see what it actually saves us in terms of code and patchsets to
+> do this simplification (even if it's just a couple daemons that are
+> representative), and continue from there.  Unless I'm mistaken, this
+> is going to change on the order of 10 lines of code diff in the
+> daemons for this simplification, which is fine, but without seeing the
+> patches, it's hard to assess impact to actual use cases, and whether
+> those lines of diff are worth reworking and retesting everything.
+>
+>
+> >
+> > >
+> > > > is set when the request comes and completed time once the dump
+> package
+> > > > is completed, EpochTime is also set when the packaging is completed=
+,
+> so both
+> > > > are representing the same value now.
+> > > >
+> > > > >
+> > > > > FWIW, in terms of complexity reduction on DBus, I think there's a
+> lot
+> > > > > more impactful places to start for a lot less effort, but if this
+> is
+> > > > > something you really want to chase to conclusion, and it reduces
+> the
+> > > > > code complexity (measured by a net-negative diff patchset to
+> OpenBMC)
+> > > > > and you're willing to test all the scenarios, feel free to
+> continue to
+> > > > > chase it down.
+> > > > >
+> > > > > > > >
+> > > > > > > > My proposed change updates the documentation of the
+> interface,
+> > > > > > > > removing the reference to xyz.openbmc_project.Time.Epoch an=
+d
+> adding a
+> > > > > > > > reference to xyz.openbmc_project.Common.Progress. This is t=
+o
+> remove
+> > > > > > > > the need for updating the creation time in multiple
+> locations.
+> > > > > > > >
+> > > > > > > > You can review the change here:
+> > > > > > > >
+> https://gerrit.openbmc.org/c/openbmc/phosphor-dbus-interfaces/+/66680
+> > > > > > > >
+> > > > > > > > Please note that this change will have an impact on any
+> applications
+> > > > > > > > that are currently reading the dump creation time from the
+> EpochTime
+> > > > > > > > interface. These applications will need to be updated to
+> read the
+> > > > > > > > creation time from the xyz.openbmc_project.Common.Progress
+> interface
+> > > > > > > > instead.
+> > > > > > > > Link to the interface
+> > > > > > > >
+> https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/=
+openbmc_project/Common/Progress.interface.yaml
+> > > > > > > >
+> > > > > > > > I would appreciate it if you could take a look at the chang=
+e
+> and
+> > > > > > > > provide any feedback you have.
+> > > > > > > >
+> > > > > > >
+> > > > > > > It looks like the potential concern would be with bmcweb.
+> There appears
+> > > > > > > to maybe be some common code related to LogServices that
+> expects all
+> > > > > > > logs to have the Time.EpochTime interface.  Are you going to
+> add
+> > > > > > > alternative code there to look at the Common.Progress
+> interface instead?
+> > > > > > > Is this acceptable to the bmcweb side?
+> > > > > >
+> > > > > > Common.Progress interface is already implemented in dump entry
+> and
+> > > > > > bmcweb reads that
+> > > > > > for the status of the dump, now that needs to be extended to
+> read the
+> > > > > > CompletedTime also.
+> > > > > > >
+> > > > > > > --
+> > > > > > > Patrick Williams
+> > > > > >
+> > > > > >
+> > > > > >
+> > > > > > --
+> > > > > > --------------
+> > > > > > Dhruvaraj S
+> > > >
+> > > >
+> > > >
+> > > > --
+> > > > --------------
+> > > > Dhruvaraj S
+> >
+> >
+> >
+> > --
+> > --------------
+> > Dhruvaraj S
+>
+
+
+--=20
+--------------
+Dhruvaraj S
+
+--00000000000035f7cd0605eef36a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><br><br>On Fri, 22 Sept 2023 at 01:19, Ed Tanous &lt;<a hr=
+ef=3D"mailto:ed@tanous.net">ed@tanous.net</a>&gt; wrote:<br>&gt;<br>&gt; On=
+ Thu, Sep 21, 2023 at 11:59=E2=80=AFAM dhruvaraj S &lt;<a href=3D"mailto:dh=
+ruvaraj@gmail.com">dhruvaraj@gmail.com</a>&gt; wrote:<br>&gt; &gt;<br>&gt; =
+&gt; On Thu, 21 Sept 2023 at 23:22, Ed Tanous &lt;<a href=3D"mailto:ed@tano=
+us.net">ed@tanous.net</a>&gt; wrote:<br>&gt; &gt; &gt;<br>&gt; &gt; &gt; On=
+ Thu, Sep 21, 2023 at 10:47=E2=80=AFAM dhruvaraj S &lt;<a href=3D"mailto:dh=
+ruvaraj@gmail.com">dhruvaraj@gmail.com</a>&gt; wrote:<br>&gt; &gt; &gt; &gt=
+;<br>&gt; &gt; &gt; &gt; On Thu, 21 Sept 2023 at 22:59, Ed Tanous &lt;<a hr=
+ef=3D"mailto:ed@tanous.net">ed@tanous.net</a>&gt; wrote:<br>&gt; &gt; &gt; =
+&gt; &gt;<br>&gt; &gt; &gt; &gt; &gt; On Thu, Sep 21, 2023 at 8:44=E2=80=AF=
+AM dhruvaraj S &lt;<a href=3D"mailto:dhruvaraj@gmail.com">dhruvaraj@gmail.c=
+om</a>&gt; wrote:<br>&gt; &gt; &gt; &gt; &gt; &gt;<br>&gt; &gt; &gt; &gt; &=
+gt; &gt; On Thu, 21 Sept 2023 at 21:09, Patrick Williams &lt;<a href=3D"mai=
+lto:patrick@stwcx.xyz">patrick@stwcx.xyz</a>&gt; wrote:<br>&gt; &gt; &gt; &=
+gt; &gt; &gt; &gt;<br>&gt; &gt; &gt; &gt; &gt; &gt; &gt; On Thu, Sep 21, 20=
+23 at 08:52:15AM +0530, dhruvaraj S wrote:<br>&gt; &gt; &gt; &gt; &gt; &gt;=
+ &gt; &gt; Hi,<br>&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt;<br>&gt; &gt; &gt;=
+ &gt; &gt; &gt; &gt; &gt; In the current implementation, objects implementi=
+ng the dump entry<br>&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; interface impl=
+ement both xyz.openbmc_project.Common.Progress (for dump<br>&gt; &gt; &gt; =
+&gt; &gt; &gt; &gt; &gt; creation start time, end time, and status) and<br>=
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; xyz.openbmc_project.Time.Epoch (for=
+ dump creation time, which is<br>&gt; &gt; &gt; &gt; &gt; &gt; &gt; &gt; ef=
+fectively the end time). This leads to a redundancy in specifying<br>&gt; &=
+gt; &gt; &gt; &gt; &gt; &gt; &gt; the dump creation end time.<br>&gt; &gt; =
+&gt; &gt; &gt;<br>&gt; &gt; &gt; &gt; &gt; Don&#39;t the two interfaces des=
+cribe different things?=C2=A0 Time.Epoch<br>&gt; &gt; &gt; &gt; &gt; repres=
+ents when the event occurred, not when the recording of that<br>&gt; &gt; &=
+gt; &gt; &gt; event was complete, Common.progress represents when the<br>&g=
+t; &gt; &gt; &gt; &gt; logging/processing of that event was complete.=C2=A0=
+ In a lot of on-bmc<br>&gt; &gt; &gt; &gt; &gt; scenarios, they&#39;re goin=
+g to be similar if not the same, but in the<br>&gt; &gt; &gt; &gt; &gt; cas=
+e of something like a remote processor flagging an error, they&#39;re<br>&g=
+t; &gt; &gt; &gt; &gt; going to be different.=C2=A0 An error might not be c=
+ompletely processed<br>&gt; &gt; &gt; &gt; &gt; until minutes later.<br>&gt=
+; &gt; &gt; &gt; The progress interface contains both the start time and co=
+mpleted<br>&gt; &gt; &gt; &gt; time, the start time<br>&gt; &gt; &gt;<br>&g=
+t; &gt; &gt; That&#39;s the time that the dump started.=C2=A0 The dump coul=
+d&#39;ve been<br>&gt; &gt; &gt; triggered by something that happened before=
+ it started, because of<br>&gt; &gt; &gt; scheduling or resources.=C2=A0 To=
+ be more clear, the timeline goes<br>&gt; &gt; &gt; something like:<br>&gt;=
+ &gt; &gt;<br>&gt; &gt; &gt; Some hardware failure happens -&gt; Time.Epoch=
+<br>&gt; &gt; &gt; Dump creation starts -&gt; Common.Progress.Start<br>&gt;=
+ &gt; &gt; Dump creation completes -&gt; Common.Progress.End<br>&gt; &gt; &=
+gt;<br>&gt; &gt; &gt; If the dumps are manually triggered, and there is no =
+queuing time,<br>&gt; &gt; &gt; yes, steps 1 and 2 will likely report the s=
+ame value (which is the<br>&gt; &gt; &gt; common case), but that doesn&#39;=
+t mean they&#39;re the same in all cases.<br>&gt; &gt;<br>&gt; &gt; Based o=
+n the documentation<br>&gt; &gt; <a href=3D"https://github.com/openbmc/phos=
+phor-dbus-interfaces/blob/master/yaml/xyz/openbmc_project/Dump/Entry.interf=
+ace.yaml">https://github.com/openbmc/phosphor-dbus-interfaces/blob/master/y=
+aml/xyz/openbmc_project/Dump/Entry.interface.yaml</a><br>&gt; &gt; TimeEpoc=
+h is dump creation time, which is assumed as the time when the<br>&gt; &gt;=
+ final packaging<br>&gt; &gt; is completed.<br>&gt; &gt; The current implem=
+entation for BMC dump is like,<br>&gt; &gt; - Dump requested, an entry crea=
+ted with status set as InProgress and<br>&gt; &gt; Start Time is recorded<b=
+r>&gt; &gt; - Once the packaging is completed, the Status is changed to Com=
+pleted,<br>&gt; &gt; Completed Time and TimeEpoch are set to the same value=
+.<br>&gt; &gt;<br>&gt; &gt; But I agree some implementations can have the T=
+ime.Epoch set to the start time,<br>&gt; &gt; which may be close to the har=
+dware or software failure in the system.<br>&gt; &gt; I think it is fine to=
+ keep TimeEpoch also to set the failure time, but<br>&gt; &gt; there can be=
+ a PEL<br>&gt; &gt; logged in such cases, and the failure time can be avail=
+able from that right?<br>&gt;<br>&gt; Lets see what it actually saves us in=
+ terms of code and patchsets to<br>&gt; do this simplification (even if it&=
+#39;s just a couple daemons that are<br>&gt; representative), and continue =
+from there.=C2=A0 Unless I&#39;m mistaken, this<br>&gt; is going to change =
+on the order of 10 lines of code diff in the<br>&gt; daemons for this simpl=
+ification, which is fine, but without seeing the<br>&gt; patches, it&#39;s =
+hard to assess impact to actual use cases, and whether<br>&gt; those lines =
+of diff are worth reworking and retesting everything.<br><br>Proposed chang=
+es to phosphor-debug-collector and bmcweb:<br><br>Although the number of li=
+nes of code changed is small, as you mentioned,<br>this change will remove =
+the duplication of information in two places and the<br>dependency on an ad=
+ditional interface.<br><br>Links to the Gerrit changes:<br><br>bmcweb: <a h=
+ref=3D"https://gerrit.openbmc.org/c/openbmc/bmcweb/+/66732">https://gerrit.=
+openbmc.org/c/openbmc/bmcweb/+/66732</a><br>Phosphor-debug-collector: <a hr=
+ef=3D"https://gerrit.openbmc.org/c/openbmc/phosphor-debug-collector/+/66606=
+">https://gerrit.openbmc.org/c/openbmc/phosphor-debug-collector/+/66606</a>=
+</div><br><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_at=
+tr">On Fri, 22 Sept 2023 at 01:19, Ed Tanous &lt;<a href=3D"mailto:ed@tanou=
+s.net">ed@tanous.net</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quo=
+te" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204=
+);padding-left:1ex">On Thu, Sep 21, 2023 at 11:59=E2=80=AFAM dhruvaraj S &l=
+t;<a href=3D"mailto:dhruvaraj@gmail.com" target=3D"_blank">dhruvaraj@gmail.=
+com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; On Thu, 21 Sept 2023 at 23:22, Ed Tanous &lt;<a href=3D"mailto:ed@tano=
+us.net" target=3D"_blank">ed@tanous.net</a>&gt; wrote:<br>
+&gt; &gt;<br>
+&gt; &gt; On Thu, Sep 21, 2023 at 10:47=E2=80=AFAM dhruvaraj S &lt;<a href=
+=3D"mailto:dhruvaraj@gmail.com" target=3D"_blank">dhruvaraj@gmail.com</a>&g=
+t; wrote:<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; On Thu, 21 Sept 2023 at 22:59, Ed Tanous &lt;<a href=3D"mail=
+to:ed@tanous.net" target=3D"_blank">ed@tanous.net</a>&gt; wrote:<br>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; On Thu, Sep 21, 2023 at 8:44=E2=80=AFAM dhruvaraj S &lt=
+;<a href=3D"mailto:dhruvaraj@gmail.com" target=3D"_blank">dhruvaraj@gmail.c=
+om</a>&gt; wrote:<br>
+&gt; &gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; &gt; On Thu, 21 Sept 2023 at 21:09, Patrick Williams &l=
+t;<a href=3D"mailto:patrick@stwcx.xyz" target=3D"_blank">patrick@stwcx.xyz<=
+/a>&gt; wrote:<br>
+&gt; &gt; &gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; &gt; &gt; On Thu, Sep 21, 2023 at 08:52:15AM +0530, dhr=
+uvaraj S wrote:<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; Hi,<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; In the current implementation, objects i=
+mplementing the dump entry<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; interface implement both xyz.openbmc_pro=
+ject.Common.Progress (for dump<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; creation start time, end time, and statu=
+s) and<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; xyz.openbmc_project.Time.Epoch (for dump=
+ creation time, which is<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; effectively the end time). This leads to=
+ a redundancy in specifying<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; the dump creation end time.<br>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; Don&#39;t the two interfaces describe different things?=
+=C2=A0 Time.Epoch<br>
+&gt; &gt; &gt; &gt; represents when the event occurred, not when the record=
+ing of that<br>
+&gt; &gt; &gt; &gt; event was complete, Common.progress represents when the=
+<br>
+&gt; &gt; &gt; &gt; logging/processing of that event was complete.=C2=A0 In=
+ a lot of on-bmc<br>
+&gt; &gt; &gt; &gt; scenarios, they&#39;re going to be similar if not the s=
+ame, but in the<br>
+&gt; &gt; &gt; &gt; case of something like a remote processor flagging an e=
+rror, they&#39;re<br>
+&gt; &gt; &gt; &gt; going to be different.=C2=A0 An error might not be comp=
+letely processed<br>
+&gt; &gt; &gt; &gt; until minutes later.<br>
+&gt; &gt; &gt; The progress interface contains both the start time and comp=
+leted<br>
+&gt; &gt; &gt; time, the start time<br>
+&gt; &gt;<br>
+&gt; &gt; That&#39;s the time that the dump started.=C2=A0 The dump could&#=
+39;ve been<br>
+&gt; &gt; triggered by something that happened before it started, because o=
+f<br>
+&gt; &gt; scheduling or resources.=C2=A0 To be more clear, the timeline goe=
+s<br>
+&gt; &gt; something like:<br>
+&gt; &gt;<br>
+&gt; &gt; Some hardware failure happens -&gt; Time.Epoch<br>
+&gt; &gt; Dump creation starts -&gt; Common.Progress.Start<br>
+&gt; &gt; Dump creation completes -&gt; Common.Progress.End<br>
+&gt; &gt;<br>
+&gt; &gt; If the dumps are manually triggered, and there is no queuing time=
+,<br>
+&gt; &gt; yes, steps 1 and 2 will likely report the same value (which is th=
+e<br>
+&gt; &gt; common case), but that doesn&#39;t mean they&#39;re the same in a=
+ll cases.<br>
+&gt;<br>
+&gt; Based on the documentation<br>
+&gt; <a href=3D"https://github.com/openbmc/phosphor-dbus-interfaces/blob/ma=
+ster/yaml/xyz/openbmc_project/Dump/Entry.interface.yaml" rel=3D"noreferrer"=
+ target=3D"_blank">https://github.com/openbmc/phosphor-dbus-interfaces/blob=
+/master/yaml/xyz/openbmc_project/Dump/Entry.interface.yaml</a><br>
+&gt; TimeEpoch is dump creation time, which is assumed as the time when the=
+<br>
+&gt; final packaging<br>
+&gt; is completed.<br>
+&gt; The current implementation for BMC dump is like,<br>
+&gt; - Dump requested, an entry created with status set as InProgress and<b=
+r>
+&gt; Start Time is recorded<br>
+&gt; - Once the packaging is completed, the Status is changed to Completed,=
+<br>
+&gt; Completed Time and TimeEpoch are set to the same value.<br>
+&gt;<br>
+&gt; But I agree some implementations can have the Time.Epoch set to the st=
+art time,<br>
+&gt; which may be close to the hardware or software failure in the system.<=
+br>
+&gt; I think it is fine to keep TimeEpoch also to set the failure time, but=
+<br>
+&gt; there can be a PEL<br>
+&gt; logged in such cases, and the failure time can be available from that =
+right?<br>
+<br>
+Lets see what it actually saves us in terms of code and patchsets to<br>
+do this simplification (even if it&#39;s just a couple daemons that are<br>
+representative), and continue from there.=C2=A0 Unless I&#39;m mistaken, th=
+is<br>
+is going to change on the order of 10 lines of code diff in the<br>
+daemons for this simplification, which is fine, but without seeing the<br>
+patches, it&#39;s hard to assess impact to actual use cases, and whether<br=
+>
+those lines of diff are worth reworking and retesting everything.<br>
+<br>
+<br>
+&gt;<br>
+&gt; &gt;<br>
+&gt; &gt; &gt; is set when the request comes and completed time once the du=
+mp package<br>
+&gt; &gt; &gt; is completed, EpochTime is also set when the packaging is co=
+mpleted, so both<br>
+&gt; &gt; &gt; are representing the same value now.<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; FWIW, in terms of complexity reduction on DBus, I think=
+ there&#39;s a lot<br>
+&gt; &gt; &gt; &gt; more impactful places to start for a lot less effort, b=
+ut if this is<br>
+&gt; &gt; &gt; &gt; something you really want to chase to conclusion, and i=
+t reduces the<br>
+&gt; &gt; &gt; &gt; code complexity (measured by a net-negative diff patchs=
+et to OpenBMC)<br>
+&gt; &gt; &gt; &gt; and you&#39;re willing to test all the scenarios, feel =
+free to continue to<br>
+&gt; &gt; &gt; &gt; chase it down.<br>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; My proposed change updates the documenta=
+tion of the interface,<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; removing the reference to xyz.openbmc_pr=
+oject.Time.Epoch and adding a<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; reference to xyz.openbmc_project.Common.=
+Progress. This is to remove<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; the need for updating the creation time =
+in multiple locations.<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; You can review the change here:<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; <a href=3D"https://gerrit.openbmc.org/c/=
+openbmc/phosphor-dbus-interfaces/+/66680" rel=3D"noreferrer" target=3D"_bla=
+nk">https://gerrit.openbmc.org/c/openbmc/phosphor-dbus-interfaces/+/66680</=
+a><br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; Please note that this change will have a=
+n impact on any applications<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; that are currently reading the dump crea=
+tion time from the EpochTime<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; interface. These applications will need =
+to be updated to read the<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; creation time from the xyz.openbmc_proje=
+ct.Common.Progress interface<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; instead.<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; Link to the interface<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; <a href=3D"https://github.com/openbmc/ph=
+osphor-dbus-interfaces/blob/master/yaml/xyz/openbmc_project/Common/Progress=
+.interface.yaml" rel=3D"noreferrer" target=3D"_blank">https://github.com/op=
+enbmc/phosphor-dbus-interfaces/blob/master/yaml/xyz/openbmc_project/Common/=
+Progress.interface.yaml</a><br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; I would appreciate it if you could take =
+a look at the change and<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt; provide any feedback you have.<br>
+&gt; &gt; &gt; &gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; &gt; &gt; It looks like the potential concern would be =
+with bmcweb.=C2=A0 There appears<br>
+&gt; &gt; &gt; &gt; &gt; &gt; to maybe be some common code related to LogSe=
+rvices that expects all<br>
+&gt; &gt; &gt; &gt; &gt; &gt; logs to have the Time.EpochTime interface.=C2=
+=A0 Are you going to add<br>
+&gt; &gt; &gt; &gt; &gt; &gt; alternative code there to look at the Common.=
+Progress interface instead?<br>
+&gt; &gt; &gt; &gt; &gt; &gt; Is this acceptable to the bmcweb side?<br>
+&gt; &gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; &gt; Common.Progress interface is already implemented i=
+n dump entry and<br>
+&gt; &gt; &gt; &gt; &gt; bmcweb reads that<br>
+&gt; &gt; &gt; &gt; &gt; for the status of the dump, now that needs to be e=
+xtended to read the<br>
+&gt; &gt; &gt; &gt; &gt; CompletedTime also.<br>
+&gt; &gt; &gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; &gt; &gt; --<br>
+&gt; &gt; &gt; &gt; &gt; &gt; Patrick Williams<br>
+&gt; &gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; &gt; --<br>
+&gt; &gt; &gt; &gt; &gt; --------------<br>
+&gt; &gt; &gt; &gt; &gt; Dhruvaraj S<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; --<br>
+&gt; &gt; &gt; --------------<br>
+&gt; &gt; &gt; Dhruvaraj S<br>
+&gt;<br>
+&gt;<br>
+&gt;<br>
+&gt; --<br>
+&gt; --------------<br>
+&gt; Dhruvaraj S<br>
+</blockquote></div><br clear=3D"all"><div><br></div><span class=3D"gmail_si=
+gnature_prefix">-- </span><br><div dir=3D"ltr" class=3D"gmail_signature">--=
+------------<br>Dhruvaraj S</div>
+
+--00000000000035f7cd0605eef36a--
