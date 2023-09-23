@@ -2,60 +2,60 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 2E09A7AC5AD
-	for <lists+openbmc@lfdr.de>; Sun, 24 Sep 2023 00:19:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 3A29C7AC5D4
+	for <lists+openbmc@lfdr.de>; Sun, 24 Sep 2023 01:12:00 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=YFwcsODx;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=mmA5IV1Y;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RtNp622Pzz3cGc
-	for <lists+openbmc@lfdr.de>; Sun, 24 Sep 2023 08:18:54 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RtPzL0zlLz3cHN
+	for <lists+openbmc@lfdr.de>; Sun, 24 Sep 2023 09:11:58 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=YFwcsODx;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=mmA5IV1Y;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=134.134.136.126; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.126])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.55.52.136; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.136])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RtNnW1qVqz300q
-	for <openbmc@lists.ozlabs.org>; Sun, 24 Sep 2023 08:18:19 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RtPyh509bz30Db
+	for <openbmc@lists.ozlabs.org>; Sun, 24 Sep 2023 09:11:21 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1695507503; x=1727043503;
+  t=1695510685; x=1727046685;
   h=date:from:to:cc:subject:message-id:references:
    mime-version:in-reply-to;
-  bh=UuDxwhfPF7O8T115b2FKrlhmBbJyLggQ2u1hq9AMO8g=;
-  b=YFwcsODxKC71kmdAMw2OhWPooKuFHdYFpMSzrXatm2dsTBG3dw676RzQ
-   OzEw3RQdY+Kgz5Da6lyhbepJ68po3xeDwNuRNBdhPttFV20OAOKAvwQrb
-   bxZTJUN0N7eWpLt8IRpJn3wM1c2LmBk+qNRgvrOQ93Z/6iGIGEfmIZVfm
-   u0miOZaKy+YcmxSnlov5dIFZ01to2V45fqgeoe+o06JcltkvPd+0t+1Hm
-   gp/8DqgcEDQ3FxRUfZ9ZhrbWzqo4Jflspkb597ohm6xIRVb4yeMhpZsCE
-   xhuhmaKJekfQz4xxZNWPNoXFJeeIVdbYJ4OHNvNdtTNcBF6yWJIHK/h+R
+  bh=iP6hYCKOBexc8AVWr4kAh1Iv4qVnYnMqC7Y/Tlnd+yk=;
+  b=mmA5IV1YtK7s+OCNuQBdnj60luOg8uoMbymKsVJ10L57OllkyjAL5ULJ
+   f8QCKhDwk4eEr+/qY2B8otPTQfApB2/UyjEluBvRCs7LevWKCKhokyevr
+   cITnZVlKK7nvsxCzLbLrsvmtk5MYIzjPK9gvgMQ1xPm/1By6zssHdj4S5
+   bW5M1ZSF8QqbSCMSad51BgK3C+ZftvCrTKmrHjFBaCh02BqdTzg7MIiz5
+   MdH1Tz3+Yu8cIRu5e72rr1jk9d0g82bfQixDrOyZHD+/3WcTJ0IHgO9PD
+   Oh3UJe7lFoR64gdVtG4Wx4lGi9lit9BwFg1Sen02zsdwdjsyeataCgKky
    g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10842"; a="366122679"
+X-IronPort-AV: E=McAfee;i="6600,9927,10842"; a="360453159"
 X-IronPort-AV: E=Sophos;i="6.03,171,1694761200"; 
-   d="scan'208";a="366122679"
-Received: from orsmga004.jf.intel.com ([10.7.209.38])
-  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2023 15:18:13 -0700
+   d="scan'208";a="360453159"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 23 Sep 2023 16:11:15 -0700
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10842"; a="871643176"
+X-IronPort-AV: E=McAfee;i="6600,9927,10842"; a="1078790376"
 X-IronPort-AV: E=Sophos;i="6.03,171,1694761200"; 
-   d="scan'208";a="871643176"
+   d="scan'208";a="1078790376"
 Received: from lkp-server02.sh.intel.com (HELO 493f6c7fed5d) ([10.239.97.151])
-  by orsmga004.jf.intel.com with ESMTP; 23 Sep 2023 15:18:07 -0700
+  by fmsmga005.fm.intel.com with ESMTP; 23 Sep 2023 16:11:10 -0700
 Received: from kbuild by 493f6c7fed5d with local (Exim 4.96)
 	(envelope-from <lkp@intel.com>)
-	id 1qkAwu-0002uy-2f;
-	Sat, 23 Sep 2023 22:18:04 +0000
-Date: Sun, 24 Sep 2023 06:17:54 +0800
+	id 1qkBmF-0002yn-3B;
+	Sat, 23 Sep 2023 23:11:08 +0000
+Date: Sun, 24 Sep 2023 07:11:06 +0800
 From: kernel test robot <lkp@intel.com>
 To: Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>,
 	linux-clk@vger.kernel.org, openbmc@lists.ozlabs.org
 Subject: Re: [PATCH v9 3/3] clk: wpcm450: Add Nuvoton WPCM450 clock/reset
  controller driver
-Message-ID: <202309240553.3BXO3Rd6-lkp@intel.com>
+Message-ID: <202309240640.6iNEdfCX-lkp@intel.com>
 References: <20230923143438.1895461-4-j.neuschaefer@gmx.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -91,20 +91,20 @@ url:    https://github.com/intel-lab-lkp/linux/commits/Jonathan-Neusch-fer/dt-bi
 base:   https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git clk-next
 patch link:    https://lore.kernel.org/r/20230923143438.1895461-4-j.neuschaefer%40gmx.net
 patch subject: [PATCH v9 3/3] clk: wpcm450: Add Nuvoton WPCM450 clock/reset controller driver
-config: loongarch-randconfig-002-20230924 (https://download.01.org/0day-ci/archive/20230924/202309240553.3BXO3Rd6-lkp@intel.com/config)
-compiler: loongarch64-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20230924/202309240553.3BXO3Rd6-lkp@intel.com/reproduce)
+config: nios2-randconfig-002-20230924 (https://download.01.org/0day-ci/archive/20230924/202309240640.6iNEdfCX-lkp@intel.com/config)
+compiler: nios2-linux-gcc (GCC) 13.2.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20230924/202309240640.6iNEdfCX-lkp@intel.com/reproduce)
 
 If you fix the issue in a separate patch/commit (i.e. not just a new version of
 the same patch/commit), kindly add following tags
 | Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202309240553.3BXO3Rd6-lkp@intel.com/
+| Closes: https://lore.kernel.org/oe-kbuild-all/202309240640.6iNEdfCX-lkp@intel.com/
 
 All errors (new ones prefixed by >>):
 
-   loongarch64-linux-ld: drivers/clk/nuvoton/clk-wpcm450.o: in function `.L40':
->> clk-wpcm450.c:(.init.text+0x508): undefined reference to `reset_simple_ops'
->> loongarch64-linux-ld: clk-wpcm450.c:(.init.text+0x50c): undefined reference to `reset_simple_ops'
+   nios2-linux-ld: drivers/clk/nuvoton/clk-wpcm450.o: in function `wpcm450_clk_init':
+   clk-wpcm450.c:(.init.text+0x384): undefined reference to `reset_simple_ops'
+>> nios2-linux-ld: clk-wpcm450.c:(.init.text+0x388): undefined reference to `reset_simple_ops'
 
 -- 
 0-DAY CI Kernel Test Service
