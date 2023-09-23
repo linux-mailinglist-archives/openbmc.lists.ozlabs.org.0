@@ -2,70 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id BFE277AC220
-	for <lists+openbmc@lfdr.de>; Sat, 23 Sep 2023 14:54:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 20ACB7AC245
+	for <lists+openbmc@lfdr.de>; Sat, 23 Sep 2023 15:32:21 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=l/YZ0AtI;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=CIA+S3FR;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Rt8Gm4qZlz3cHS
-	for <lists+openbmc@lfdr.de>; Sat, 23 Sep 2023 22:54:24 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Rt96V6zTwz3cRC
+	for <lists+openbmc@lfdr.de>; Sat, 23 Sep 2023 23:32:18 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=l/YZ0AtI;
+	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=CIA+S3FR;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.17.21; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=lists.ozlabs.org)
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.15.19; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=lists.ozlabs.org)
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.19])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rt8F52PB3z3c2V
-	for <openbmc@lists.ozlabs.org>; Sat, 23 Sep 2023 22:52:55 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rt95t51tXz3bxL
+	for <openbmc@lists.ozlabs.org>; Sat, 23 Sep 2023 23:31:44 +1000 (AEST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net; s=s31663417;
- t=1695473553; x=1696078353; i=j.neuschaefer@gmx.net;
- bh=I7aIv/vlyeo+vl/9kemBxv5Kp8uK897scWG8qKqLOLw=;
- h=X-UI-Sender-Class:From:To:Cc:Subject:Date:In-Reply-To:References;
- b=l/YZ0AtI9q4HikU2nhGwSRPmgsrsgRRQpvVJYVKyEr/glxZBtDstmfQaSiiJMmjOs/RxNLid+4R
- VKtJyn36u1vM5v6bIBxQugIKpMf8rD76+eIcRvjmOT9TvheqiTPOXZnwCfGjK/3yjlM7zw/Vr9HmC
- 8Ugu8NaCTJA+eT98w6JWWcHn1shTuzCu+a8l1d6eshXwXgbVpy2vNE6hSvdiZf/QIdkBG8MXjwwmM
- iW/KKr2zcay7HjhhcgRpWDaqDUBmikAgUIEI9/yRno98S3Pexw05Gx95F7ws7xEU4Tf+14/hLcjro
- 2/Wo6mv2v6go96E1cWliK+W7VokBw2jtLb1Q==
+ t=1695475890; x=1696080690; i=j.neuschaefer@gmx.net;
+ bh=3aoYsFvHdLQ1zTsKyLP0oEuWvOgGBDuRqueX4hDnnJE=;
+ h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+ b=CIA+S3FR+thMZ7uH+pgX/pEw5WBsU34+4I+QtbASDckhCHPBr1qUqsQGZ6SdXmyyNFhOWYF794y
+ XvSA3rT0EiKl0niyMD+BytOQt9bJYDbByGF9wb/PwAFP4rD20NHq91dJ02hpLtNC5SLtNK2xJS+ok
+ WIjCGI9lCOg0G9iHdfTaio3NdhuTUlD4LVrDLKf04EFj+j30lpHUqSfNSDCo0HqU1qH8F+Q5sFmql
+ 24ueQdk2hW8wvmwFWzbExbBZ2ccMI0NvmyuxrAykSMexV5oENlP3AhMDpTmOoXb8mIzGjw4iCKXXe
+ rXoemMreUq7kRTOYk//ko1IaKYJvkeTNrt1w==
 X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from probook ([89.0.47.152]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MysRu-1reSBv1hbu-00vxeN; Sat, 23
- Sep 2023 14:52:33 +0200
+Received: from probook ([89.0.47.152]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MuUj2-1ra5Lv40zS-00rVKM; Sat, 23
+ Sep 2023 15:31:30 +0200
 From: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: linux-kernel@vger.kernel.org
-Subject: [PATCH v5 2/2] soc: nuvoton: Add "select REGMAP" to WPCM450 SoC driver
-Date: Sat, 23 Sep 2023 14:52:27 +0200
-Message-Id: <20230923125228.1770991-2-j.neuschaefer@gmx.net>
+To: linux-clk@vger.kernel.org
+Subject: [PATCH] clk: npcm7xx: Fix incorrect kfree
+Date: Sat, 23 Sep 2023 15:31:27 +0200
+Message-Id: <20230923133127.1815621-1-j.neuschaefer@gmx.net>
 X-Mailer: git-send-email 2.40.1
-In-Reply-To: <20230923125228.1770991-1-j.neuschaefer@gmx.net>
-References: <20230923125228.1770991-1-j.neuschaefer@gmx.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:k21NPkH4GANoX6/PdO1KSlxDu/mRSbml4Y4eFZwDlynA73UEvlL
- smPNP1PsOhXy9JDEw+TAKHCvltOHJZwz2AD+EwIUwOHvyC6YPHcDpvlneFDJadW8vL7El3q
- 9zOc7Hlv8+LgGLBJF8BZBjt84G/abTL+j7QMchcoejbD+5zHG+ws0rN3i49tFFrvvhni7RK
- rhh5pOQpq0aLipbz10wMA==
+X-Provags-ID: V03:K1:MzXEya1jWvyFn/iWbjLkP5u7vhVmzdkIDybc1OE3k9SmipH+0Sc
+ B+2k77sBUvNBti61dTU9cnvAhlknCVcwf/ax8fVb9gp2TD9o3V1t4r0Z81vxk2h6QOSIFhg
+ EDPuuxp+UvRfydLNtXIGveCAZTVRCoZWywDsdLjLteaHDsVjQdU/4qznli2Ti8ap/5FxfUo
+ 5Fd1tckxUgzZLNFjP17Jw==
 X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:/KmbPWIkQ9s=;lnD8gZztCTxRiPb+VBt0bAXlU8E
- p+i3NoKQj3TDRb5CCibeHiCCLZuzo7buNINP4XtgDUo+V8Q9qa+k0SSKZyp2l1rXm3jHq7rTC
- o71MLIFLnCEMTzQhCNqRP4wViiVNNMwGOgK6uIGstlQmJUS8lUTwSyt7g2JcBJHioX/Ssp2+Z
- M9HhgK5Rwr8xnUhThlhqulh/3TXYn1O2lDOYpI5xoxLEYF71Ok/h5PaCja3WQb/l0lvvB94JH
- VwNbB28zk3gPxi0Ft9scX69kRZzKUZlSrMAsFnnJUBLsQ6TBm7BYrW0YHST2NKOb+ge/eWvu7
- 6qSIdOTb7nkBbLlHhWdXYd2bOpmZdTUTN+d3Ezwlb8jDoKQNV2NVkCDlyszMUeyzMkTn0EKwB
- wuh68QqISbDQ0gUUiYt+ycBeQxj959kTISLM8jVO+W5tzucOnxJCoHq9eeYaugqmi2gclc9OJ
- IFP3xgDT7wReznl8EnPlPcFQVzUc+ykx+l1YdFJRxgDLGHS8kg2HESx+jgwG4F9cAkUXLDpu5
- 7RR/vF5mWdmyMFyN1YBT6XDjEsDE5YL2XltYk7iesJHeZlKQURaI07ivkaUk5ykV/y5B78051
- vU6AV7XNtbfzrSPX07C6NBi6dHWTnEGRyySGueV6IsX/X+Gtj0jLhREDHe9WUuleMmlMfpSdz
- eoCUE+wu1xIyo8x9oZK1xAjVObwZNdzwDrKSQ5coXR4PSu5+/Y8GPzo7BJzFwEFdNj8wQTSmc
- X6JvIn2tlcQO+b82unwNGQLOUQQ2zuy74rC+mtsG9e+BweM7JhI8yKbAsklMrR+tPcWLZJ0gv
- WMme3qf1g7uNXdFo3JjOhDsRw6xuVmaGmH7AbGTYVKu0eqD/qXA9845drRIJDNTqg4PEXGpAo
- gn+G2aH5MkVlKt3VIx+b1LigZzrd175TXAXeDEjspUd9mv3GLxUcQKQP/gQ044HabgD6vhJcW
- Ovo7TQ==
+UI-OutboundReport: notjunk:1;M01:P0:zS98FUfADP8=;roxmjkJ5q3Zw6CKrMQ9ERd4TwhY
+ GAFK3mF0uukB7e1ZsfiwObPW+ZaZAsYxIkmOIRFewdrUQsZspz/8QFWfZhXnNYpazItnyQz9C
+ xajb+sm/R6JYLy9w6AlDmzupFayK+cDLnApAeOCxqpcNoXE5KOkm3Q/2AuEuJn/3FC3kgKvfS
+ H+eNKrFU03zomPo6YcALUIed6QWFmEQ/D5E6s+KERYYqK9CV4PZrPxTgcys+M5DClQxSSvb9m
+ AYNhWSxteNc4a/TMAcR4f48OHuP9YLaGhMIIxM8VPqgzpTP+5moF2V+TOmuLY06UT+d4Z/4Fd
+ xJw5q6wK1XdaeaMLLpFy+NQ4cwT6gcRZbD59LYF2sxWqxuw4i/gih19X1tU2r0DTeeE0Rnn6B
+ fGbUNfxeb3kEN74fThNfGr1svOyqqV7m0d9sF/XLTJoslztiaiCIa9CgyZoXEXd5GK90sGKFU
+ MkXPdUmTE7xyad5oUG65bPV5IKLIJzaGdmAkDXXzPMH7hkEIVDMXBkv4oE6Xd9HAzfOAkwKE7
+ atxbPEm+HD3+YyTpE5/LrVePP6oe2lBwhjRj0/RPb/PICwzcYaVD9Ds9je6IrCane8pdJd00d
+ hnBgxg4IgQl51Bkn17t0lJqJiRblATYWfBpQUQnGyEmad17UKd2u4jVZ3ql89FhQZoHkJia+3
+ ulP+UCGLGQLaSCShYWevtujTQf5mpa3JB6k2M5HRZfhPwyZ1YiqsLcSVAlGjbiZJdDb6Ijw1C
+ kjcthnZXNqieZbnZcbKPsq5fyGhmiQ73TVMpCIoekBFSWwy47n47HPIA0p9A8rPMm2gxQeFnH
+ eslkQGRkt0+bdsOU/RyRWgkg7NMP5tWmzInQbgqFdQ5HOU+pUhVvwnzM+28SKbZWkNJPCJRIF
+ mhYc2fVZkUa1KgMo9x7pIV0fstemB0z6rc7rVIrarg5zxbHc/rrTfwvMCE6v0lAty//xUuOIE
+ iyx/MNF0WSzZsZzd56ll8Yecj+4=
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -77,53 +75,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Paul Menzel <pmenzel@molgen.mpg.de>, Arnd Bergmann <arnd@arndb.de>, Geert Uytterhoeven <geert+renesas@glider.be>, openbmc@lists.ozlabs.org, =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, Geert Uytterhoeven <geert@linux-m68k.org>, Joel Stanley <joel@jms.id.au>
+Cc: Tomer Maimon <tmaimon77@gmail.com>, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, Michael Turquette <mturquette@baylibre.com>, =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>, Tali Perry <tali.perry1@gmail.com>, Stephen Boyd <sboyd@kernel.org>, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Benjamin Fair <benjaminfair@google.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Select CONFIG_REGMAP from CONFIG_WPCM450_SOC, because the driver relies
-on regmap to work.
+The corresponding allocation is:
 
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Closes: https://lore.kernel.org/lkml/CAMuHMdWo5vHCeE6BeSHrUy12uT7_wFhW-VbQ=
-mQ5u+4Q8c7-wYQ@mail.gmail.com/
-Fixes: 7dbb4a38bff3 ("soc: nuvoton: Add SoC info driver for WPCM450")
+> npcm7xx_clk_data =3D kzalloc(struct_size(npcm7xx_clk_data, hws,
+> 			     NPCM7XX_NUM_CLOCKS), GFP_KERNEL);
+
+... so, kfree should be applied to npcm7xx_clk_data, not
+npcm7xx_clk_data->hws.
+
 Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 =2D--
-v5:
-- Rebase on v6.6-rc2
+ drivers/clk/clk-npcm7xx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-v4:
-- Add Geert's R-b tag
-- Fix commit reference
-- Change Link tag to Closes
+diff --git a/drivers/clk/clk-npcm7xx.c b/drivers/clk/clk-npcm7xx.c
+index e319cfa51a8a3..030186def9c69 100644
+=2D-- a/drivers/clk/clk-npcm7xx.c
++++ b/drivers/clk/clk-npcm7xx.c
+@@ -510,7 +510,7 @@ static void __init npcm7xx_clk_init(struct device_node=
+ *clk_np)
+ 	return;
 
-v3:
-- Split the commit into two
-- Reword the commit messages a bit
-
-v2:
-- https://lore.kernel.org/lkml/20230212215234.2608565-1-j.neuschaefer@gmx.=
-net/
-- Commit message improvements, as suggested by Geert Uytterhoeven.
-- Add Link after Reviewed-by, as checkpatch.pl now suggests
-=2D--
- drivers/soc/nuvoton/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/drivers/soc/nuvoton/Kconfig b/drivers/soc/nuvoton/Kconfig
-index 853392c8a9151..2167d3d739d84 100644
-=2D-- a/drivers/soc/nuvoton/Kconfig
-+++ b/drivers/soc/nuvoton/Kconfig
-@@ -6,6 +6,7 @@ config WPCM450_SOC
- 	tristate "Nuvoton WPCM450 SoC driver"
- 	default y if ARCH_WPCM450
- 	select SOC_BUS
-+	select REGMAP
- 	help
- 	  Say Y here to compile the SoC information driver for Nuvoton
- 	  WPCM450 SoCs.
+ npcm7xx_init_fail:
+-	kfree(npcm7xx_clk_data->hws);
++	kfree(npcm7xx_clk_data);
+ npcm7xx_init_np_err:
+ 	iounmap(clk_base);
+ npcm7xx_init_error:
 =2D-
 2.40.1
 
