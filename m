@@ -2,72 +2,96 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 227137AC710
-	for <lists+openbmc@lfdr.de>; Sun, 24 Sep 2023 09:53:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id D39957ACE79
+	for <lists+openbmc@lfdr.de>; Mon, 25 Sep 2023 04:52:06 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=YpFDgI6h;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm1 header.b=RcK132xu;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=b6SNUx6Z;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RtdY70Tcfz3c5f
-	for <lists+openbmc@lfdr.de>; Sun, 24 Sep 2023 17:53:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Rv6pr5Ytfz3dd7
+	for <lists+openbmc@lfdr.de>; Mon, 25 Sep 2023 12:52:04 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=gmx.net header.i=j.neuschaefer@gmx.net header.a=rsa-sha256 header.s=s31663417 header.b=YpFDgI6h;
+	dkim=pass (2048-bit key; unprotected) header.d=aj.id.au header.i=@aj.id.au header.a=rsa-sha256 header.s=fm1 header.b=RcK132xu;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=b6SNUx6Z;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmx.net (client-ip=212.227.17.21; helo=mout.gmx.net; envelope-from=j.neuschaefer@gmx.net; receiver=lists.ozlabs.org)
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.21])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=aj.id.au (client-ip=64.147.123.21; helo=wout5-smtp.messagingengine.com; envelope-from=andrew@aj.id.au; receiver=lists.ozlabs.org)
+X-Greylist: delayed 461 seconds by postgrey-1.37 at boromir; Mon, 25 Sep 2023 12:50:53 AEST
+Received: from wout5-smtp.messagingengine.com (wout5-smtp.messagingengine.com [64.147.123.21])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RtdXV3t8dz2yst
-	for <openbmc@lists.ozlabs.org>; Sun, 24 Sep 2023 17:52:56 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net; s=s31663417;
- t=1695541918; x=1696146718; i=j.neuschaefer@gmx.net;
- bh=l762rpL78XJX6kJZnEmaPG5CMPXGEcWFqwe5ttBK0r8=;
- h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
- b=YpFDgI6h/z+QyCVPCCDi/zKyUeTBlS/nGbSI2K7R99GYwz2fPg1iegitN57/RyxtXCqQLSI/RM5
- kwpBTkRtqLmCwMAhRby29OwfHxllkI0YWYUAJKpC5l4jpqTUKQYQ5uGhMiBtcqTyfswZUEwXuGh1H
- +olWxxZVRZHEExoSX2nZKJgOW1ao5BB0x3zHjHWrhrIKStFLe/9583O/Ibhb3iiquWvqMwomv0RUn
- F4RgVsxPJX51Xs/64s5LdPuVAsN4xZhrZeSZMHVBdD1EGS30PRaQB+bNILyN9Ia27apmZcrSNdQAa
- w+8WSf08umwiLn6NuFDg0yajl3RrXxvFDO5w==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from probook ([89.0.47.152]) by mail.gmx.net (mrgmx105
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1MaJ3t-1rDfAJ29Yb-00WCWT; Sun, 24
- Sep 2023 09:51:58 +0200
-Date: Sun, 24 Sep 2023 09:51:55 +0200
-From: =?utf-8?Q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-To: Jonathan =?utf-8?Q?Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-Subject: Re: [PATCH v9 3/3] clk: wpcm450: Add Nuvoton WPCM450 clock/reset
- controller driver
-Message-ID: <ZQ/qm2QH0kbz+2Vx@probook>
-References: <20230923143438.1895461-1-j.neuschaefer@gmx.net>
- <20230923143438.1895461-4-j.neuschaefer@gmx.net>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rv6nT6WXWz3dCY
+	for <openbmc@lists.ozlabs.org>; Mon, 25 Sep 2023 12:50:53 +1000 (AEST)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.west.internal (Postfix) with ESMTP id 707CF32009E2;
+	Sun, 24 Sep 2023 22:43:07 -0400 (EDT)
+Received: from imap50 ([10.202.2.100])
+  by compute6.internal (MEProxy); Sun, 24 Sep 2023 22:43:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aj.id.au; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm1; t=1695609786; x=1695696186; bh=Uq
+	jDrarA+shRfC8ltMwHAr+TUFm7nNOSDNsd970tbLw=; b=RcK132xuzObTUxcJHj
+	mtGTHR8mL/CpJNmGrJByJFEQZ0Ifrln/vtjoUSEnPyumebLrZsOfpBz4CVzrqXL1
+	JSqtLwbn9Vuy/bwrvU/0/nvMvzQstLMrASo0YKkjPTq6+FOuFoGcDvnYcdMnRbdg
+	lnrGVRU/tp1sXO/kaUi2aGs0+v0REVCggPushe5k+id/VEH7trEfsBrzhgYqPN0t
+	Auov+5t7haL4VvAX+DOn0RmsOc7+QpVKrKIIoWsK9BvFvsIkkyWnjvhW3Klpcqmc
+	G9LnsUrwU/XHTCMG4clVWZOPq4h2cSdzN9Nq28nCdRQdBmKtCPhzKNcRs9QIWO6l
+	mncw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm2; t=1695609786; x=1695696186; bh=UqjDrarA+shRf
+	C8ltMwHAr+TUFm7nNOSDNsd970tbLw=; b=b6SNUx6Zq9Bd/AlDRQxfxa630kKvx
+	wi3BsWPfm5OPxf+tK4hoafLUs+Hm71TpohijG9w+4AMtciNcPsROigv54FJMtlYl
+	046taGoiYYhNFg6GB6+frndhQggqUAexQoBmphd723CQ8AXZo4rz/YugZgBUxm9L
+	Q7P/1blq1Sqe31CIFsmS+a7baWPGCLajU61eeYRvX1li/Z//jAQ9ICipnqdY0L3P
+	34AbfD7nPTIJTCHcYvkF31u6HjGl2mMNLugkUKAtQckeKlGeQPGgThhiprveLibp
+	LHeie6Fhu9NHRWYinzta/snfiCzdcvBSvC3/rcx4iyVU7EM38svgFsAGQ==
+X-ME-Sender: <xms:ufMQZQwYYayUQhLi9Yn5f6270PhrGkYiwtYO0LTrkFg4Mi33iTSvHA>
+    <xme:ufMQZUQh-Ht4wo777KGBlXOBfb2JiandNG948u4Bot5c3OfScfGyyGRATqYD1deNM
+    kcMZXenB9fy580rFA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedviedrudelfedgieefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepofgfggfkjghffffhvfevufgtsehttdertderredtnecuhfhrohhmpedftehn
+    ughrvgifucflvghffhgvrhihfdcuoegrnhgurhgvfiesrghjrdhiugdrrghuqeenucggtf
+    frrghtthgvrhhnpeekvdekjeekgfejudffteetgeejkeetteduvedtffdtledutdfhheev
+    feetkeeiteenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpegrnhgurhgvfiesrghjrdhiugdrrghu
+X-ME-Proxy: <xmx:ufMQZSWamVBQ5SZlQlh3m3x79FXuTIZhC5gNJp3Tu51JsN9assMxtg>
+    <xmx:ufMQZehL48Yik-Qnd78EfYrN4SB0svmrgKI2NRDygVd3tQgD0RgMgw>
+    <xmx:ufMQZSCGHUtY1vZi9RxmRbNEEg35P5GKxtAat6WqB8c1q6e_ykR4ag>
+    <xmx:uvMQZaZc87wi0MoakXrq8nH4hs4cWEHOUTKF-JPKC0f8FuT9yDIb_A>
+Feedback-ID: idfb84289:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id B7A451700090; Sun, 24 Sep 2023 22:43:05 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-761-gece9e40c48-fm-20230913.001-gece9e40c
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="pBFYjzjBf1TpgkI2"
-Content-Disposition: inline
-In-Reply-To: <20230923143438.1895461-4-j.neuschaefer@gmx.net>
-X-Provags-ID: V03:K1:UrCyJY5yKXyKetG4NIlBC/9FZ3CNGXjUHb2ZVmhgA1GCm6ilD0x
- IxDyp6S6rVpCvSXbwgO9GrzOBV4sKQ/OAaAi4d57UW1+JkUn+bFtPrtTxwtKlH22rg8YP0N
- vc+GVX+XTmM1BegsDCVctoZKP2iE4YIZdV5j2Plg5K22Pzd2vV2qc0pwvwrZvX63bRNBK+I
- J4AXUWaEv6fDZ0NS4eNnA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:8FTVNRtf2kg=;UaoUthIli/bLoGv10ARCskyds6F
- Ykp1XreM4CWzIAbcbGdJZqoaJq+aKfSH5To3wb248/JLJda8zu90HsGGJqzcdTjLlg4v8wc5a
- vjM2Tw8QTNTTWEwCB0lubvDQJK4DcmpSrhiCTr85bjsD0W5NOiPtFE3RpFyAfERyy0Zn4BOXN
- fVWqOBxr7zFRO96M1iTlaC5DDLhsr5bJ4RmbO1FJ9TFpQrpbp5kZrHxRhTLy6gOAvIZVzYLNp
- PIn1bvM8oNqHPjrxCN80SxLKaqdZ+LU1c06oC1B1alApiTVAP8eMzD5//MOTkEcrxWxG2vk7v
- UYxvb4XKGqt9hf9mKKFV4wE/VrH2MGzOFWtOOGRxCP7lvzbs/DGp5E4Fck4ZELSHHpdusljqg
- ENa7k8opDEuNt9R7GIsDH8U1lFN9TK0Qe/JToM1Y5f6cqVEIcrTlLmo+OF6jQOemWrfynWYqB
- 9VymakxI1+4cpcLfZ5TghB3Ztd8vjQcevEjLj3er+lkl9CYns2uSPbhsFC9nmsxQant1OmAUZ
- iONnAGoIhb/D5fMIfacelzBSrl8BLpDFA/DAKRJiHd4a4S4WFFVtjVX0rDNTGRIS20ALEyctd
- ZwOSiZqJplTIMBnBv774X3z4s9x9L3CvGOjSDNEimhbmXE2TaRW8odTvq2czuteU+9I/bAY0G
- stO6PuvjwbQjFLsUzskpIUG3kDnNLFP91AE5DHXNRQuuwYMmhbaSlnlItREbkMu5VDLoo4PBo
- kBR1VqIhBG8LQooUPnH1Qc/t/MXEiph1i59aL6tKE6yjvnfFJvdZ+n0LEawFDu7BIi3TLkJSG
- yypBLalJeLKeT/6S/Ono8+BeHmrCDOWIYzMS0A4JdsT0kUVGf2EwpefknMnNxoeNcbBUIKUQK
- ZN9EeaC4fk2tzXlgdNom9+6B68wONyRcaVrYmG2V0/ytx3sijXgrYk82EhbYhZyMQq6LZ1z/B
- b1+hpw==
+Message-Id: <6df088a6-75ab-42f2-ba39-3f155714ed2d@app.fastmail.com>
+In-Reply-To: <20230922104231.1434-5-zev@bewilderbeest.net>
+References: <20230922104231.1434-4-zev@bewilderbeest.net>
+ <20230922104231.1434-5-zev@bewilderbeest.net>
+Date: Mon, 25 Sep 2023 12:12:45 +0930
+From: "Andrew Jeffery" <andrew@aj.id.au>
+To: "Zev Weiss" <zev@bewilderbeest.net>, "Conor Dooley" <conor+dt@kernel.org>,
+ "Guenter Roeck" <linux@roeck-us.net>, "Joel Stanley" <joel@jms.id.au>,
+ "Krzysztof Kozlowski" <krzysztof.kozlowski+dt@linaro.org>,
+ "Milton D. Miller II" <mdmii@outlook.com>,
+ "Rob Herring" <robh+dt@kernel.org>,
+ "Wim Van Sebroeck" <wim@linux-watchdog.org>, devicetree@vger.kernel.org,
+ linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org,
+ linux-kernel@vger.kernel.org, linux-watchdog@vger.kernel.org,
+ openbmc@lists.ozlabs.org
+Subject: Re: [PATCH 1/2] dt-bindings: watchdog: aspeed-wdt: Add aspeed,reset-mask
+ property
+Content-Type: text/plain
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,75 +103,174 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Tomer Maimon <tmaimon77@gmail.com>, Michael Turquette <mturquette@baylibre.com>, Jacky Huang <ychuang3@nuvoton.com>, Tali Perry <tali.perry1@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, linux-clk@vger.kernel.org, Benjamin Fair <benjaminfair@google.com>, openbmc@lists.ozlabs.org, Daniel Lezcano <daniel.lezcano@linaro.org>, Joel Stanley <joel@jms.id.au>, Guenter Roeck <linux@roeck-us.net>, devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, linux-watchdog@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>, Rob Herring <robh+dt@kernel.org>, Christophe JAILLET <christophe.jaillet@wanadoo.fr>, Thomas Gleixner <tglx@linutronix.de>, Wim Van Sebroeck <wim@linux-watchdog.org>, Stephen Boyd <sboyd@kernel.org>, Patrick Venture <venture@google.com>, linux-kernel@vger.kernel.org, Avi Fishman <avifishman70@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, Philipp Zabel <p.zabel@pengutronix.de>
+Cc: Ivan Mikhaylov <i.mikhaylov@yadro.com>, Eddie James <eajames@linux.ibm.com>, =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---pBFYjzjBf1TpgkI2
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Sat, Sep 23, 2023 at 04:34:38PM +0200, Jonathan Neusch=C3=A4fer wrote:
-> This driver implements the following features w.r.t. the clock and reset
-> controller in the WPCM450 SoC:
->=20
-> - It calculates the rates for all clocks managed by the clock controller
-> - It leaves the clock tree mostly unchanged, except that it enables/
->   disables clock gates based on usage.
-> - It exposes the reset lines managed by the controller using the
->   Generic Reset Controller subsystem
->=20
-> NOTE: If the driver and the corresponding devicetree node are present,
->       the driver will disable "unused" clocks. This is problem until
->       the clock relations are properly declared in the devicetree (in a
->       later patch). Until then, the clk_ignore_unused kernel parameter
->       can be used as a workaround.
->=20
-> Signed-off-by: Jonathan Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-> Reviewed-by: Joel Stanley <joel@jms.id.au>
+On Fri, 22 Sep 2023, at 20:12, Zev Weiss wrote:
+> This property configures the Aspeed watchdog timer's reset mask, which
+> controls which peripherals are reset when the watchdog timer expires.
+> Some platforms require that certain devices be left untouched across a
+> reboot; aspeed,reset-mask can now be used to express such constraints.
+>
+> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
 > ---
-[...]
-> +config CLK_WPCM450
-> +	bool "Nuvoton WPCM450 clock/reset controller support"
-> +	default y
-> +	help
-> +	  Build the clock and reset controller driver for the WPCM450 SoC.
+>  .../bindings/watchdog/aspeed-wdt.txt          | 18 +++-
+>  include/dt-bindings/watchdog/aspeed-wdt.h     | 92 +++++++++++++++++++
+>  2 files changed, 109 insertions(+), 1 deletion(-)
+>  create mode 100644 include/dt-bindings/watchdog/aspeed-wdt.h
+>
+> diff --git a/Documentation/devicetree/bindings/watchdog/aspeed-wdt.txt 
+> b/Documentation/devicetree/bindings/watchdog/aspeed-wdt.txt
+> index a8197632d6d2..3208adb3e52e 100644
+> --- a/Documentation/devicetree/bindings/watchdog/aspeed-wdt.txt
+> +++ b/Documentation/devicetree/bindings/watchdog/aspeed-wdt.txt
+> @@ -47,7 +47,15 @@ Optional properties for AST2500-compatible watchdogs:
+>  			   is configured as push-pull, then set the pulse
+>  			   polarity to active-high. The default is active-low.
+> 
+> -Example:
+> +Optional properties for AST2500- and AST2600-compatible watchdogs:
+> + - aspeed,reset-mask: A bitmask indicating which peripherals will be reset if
+> +		      the watchdog timer expires.  On AST2500 this should be a
+> +		      single word defined using the AST2500_WDT_RESET_* macros;
+> +		      on AST2600 this should be a two-word array with the first
+> +		      word defined using the AST2600_WDT_RESET1_* macros and the
+> +		      second word defined using the AST2600_WDT_RESET2_* macros.
 > +
-[...]
->  config RESET_SIMPLE
->  	bool "Simple Reset Controller Driver" if COMPILE_TEST || EXPERT
-> -	default ARCH_ASPEED || ARCH_BCMBCA || ARCH_BITMAIN || ARCH_REALTEK || A=
-RCH_STM32 || (ARCH_INTEL_SOCFPGA && ARM64) || ARCH_SUNXI || ARC
-> +	default ARCH_ASPEED || ARCH_BCMBCA || ARCH_BITMAIN || ARCH_REALTEK || A=
-RCH_STM32 || (ARCH_INTEL_SOCFPGA && ARM64) || ARCH_SUNXI || ARC || ARCH_WPC=
-M450
+> +Examples:
+> 
+>  	wdt1: watchdog@1e785000 {
+>  		compatible = "aspeed,ast2400-wdt";
+> @@ -55,3 +63,11 @@ Example:
+>  		aspeed,reset-type = "system";
+>  		aspeed,external-signal;
+>  	};
+> +
+> +	#include <dt-bindings/watchdog/aspeed-wdt.h>
+> +	wdt2: watchdog@1e785040 {
+> +		compatible = "aspeed,ast2600-wdt";
+> +		reg = <0x1e785040 0x40>;
+> +		aspeed,reset-mask = <AST2600_WDT_RESET1_DEFAULT
+> +				     (AST2600_WDT_RESET2_DEFAULT & ~AST2600_WDT_RESET2_LPC)>;
+> +	};
 
-Considering the build bot failures and the fragility of adding tons of
-platforms to this "default" line, I think I'll just select RESET_CONTROLLER
-and RESET_SIMPLE from CLK_WPCM450.
+Rob has acked your current approach already, but I do wonder about an alternative that aligns more with the clock/reset/interrupt properties. Essentially, define a new generic watchdog property that is specified on the controllers to be reset by the watchdog (or even on just the watchdog node itself, emulating what you've proposed here):
 
-Jonathan
+watchdog-resets = <phandle index>;
 
---pBFYjzjBf1TpgkI2
-Content-Type: application/pgp-signature; name="signature.asc"
+The phandle links to the watchdog of interest, and the index specifies the controller associated with the configuration. It might even be useful to do:
 
------BEGIN PGP SIGNATURE-----
+watchdog-resets = <phandle index enable>;
 
-iQIzBAABCgAdFiEEvHAHGBBjQPVy+qvDCDBEmo7zX9sFAmUP6m4ACgkQCDBEmo7z
-X9s7NA/+Kb7kcTcnrZ5q9OcEGS0N4Gl5A8Zn58D+GlGntd/3PFbp4EIq+wZJKrrh
-eiIuAP6NToGOQbEBfFFBcUU+4qloCorKoQcWeY5rgoBLntU2Lyj9BTk4Mcj3YhH9
-Lm11A3S0QJQqkYmbHZD6xgAYKA+oP9bMQJd6gz2y7o8dAiXYGP1uNuRI7c58ArKD
-EmBQ3HaGiT2vwxuK0Gg1cc8EsCC1ygaKTf2B5tr/jopZb0sc21fA6cWb++iDVipk
-chYyGTroDuUI8ClBOUzAvVDK2/AMps85WPqCndf2WAva6z6BT3EnJp8O6biguSrw
-lf/yHeMBeIuHFOfD1ZNdEw7cpH9wQGn4adIuLGjIt10a5Bi9tVIX1eCKIJs1JGn6
-AkRFgkw6/SYvEdF1q28x3oxLIsFFy2N1rJ1troUUaNUFTC0pyzC7S96tf/uva3fg
-nLb/+X1qO0WSHIQQ9D4C+CuQ//KfRvWflX0cFY7H60MO+LaD0cNc3tmVrJpCb32B
-Io/2VV2p0OfuSPaRd8dVgGSHfXpC3ncZOUGnSMGfSyrbLyRlq2VtsRrROD1kqOoW
-amLSqiskO9amsmn3IXzbD9Hd/ytUwy4zXpk6R/TaK4X9GMJ1fA0g8sx7CH2KafV4
-gunw8+m8zQMM53M/IaymQqYdEIISme1PsyiJA/9Et6bih2IL5sI=
-=Dm6m
------END PGP SIGNATURE-----
+"enable" could provide explicit control over whether somethings should be reset or not (as a way to prevent reset if the controller targeted by the provided index would otherwise be reset in accordance with the default reset value in the watchdog controller).
 
---pBFYjzjBf1TpgkI2--
+The macros from the dt-bindings header can then use macros to name the indexes rather than define a mask tied to the register layout. The index may still in some way represent the mask position. This has the benefit of hiding the issue of one vs two configuration registers between the AST2500 and AST2600 while also allowing other controllers to exploit the binding (Nuvoton BMCs? Though maybe it's generalising too early?).
+
+It'd probably need a new function exported from the watchdog subsystem for the drivers to call through, though I don't think that's too much of a hurdle?
+
+Andrew
+
+> diff --git a/include/dt-bindings/watchdog/aspeed-wdt.h 
+> b/include/dt-bindings/watchdog/aspeed-wdt.h
+> new file mode 100644
+> index 000000000000..7ae6d84b2bd9
+> --- /dev/null
+> +++ b/include/dt-bindings/watchdog/aspeed-wdt.h
+> @@ -0,0 +1,92 @@
+> +/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
+> +
+> +#ifndef DT_BINDINGS_ASPEED_WDT_H
+> +#define DT_BINDINGS_ASPEED_WDT_H
+> +
+> +#define AST2500_WDT_RESET_CPU		(1 << 0)
+> +#define AST2500_WDT_RESET_COPROC	(1 << 1)
+> +#define AST2500_WDT_RESET_SDRAM		(1 << 2)
+> +#define AST2500_WDT_RESET_AHB		(1 << 3)
+> +#define AST2500_WDT_RESET_I2C		(1 << 4)
+> +#define AST2500_WDT_RESET_MAC0		(1 << 5)
+> +#define AST2500_WDT_RESET_MAC1		(1 << 6)
+> +#define AST2500_WDT_RESET_GRAPHICS	(1 << 7)
+> +#define AST2500_WDT_RESET_USB2_HOST_HUB	(1 << 8)
+> +#define AST2500_WDT_RESET_USB_HOST	(1 << 9)
+> +#define AST2500_WDT_RESET_HID_EHCI	(1 << 10)
+> +#define AST2500_WDT_RESET_VIDEO		(1 << 11)
+> +#define AST2500_WDT_RESET_HAC		(1 << 12)
+> +#define AST2500_WDT_RESET_LPC		(1 << 13)
+> +#define AST2500_WDT_RESET_SDIO		(1 << 14)
+> +#define AST2500_WDT_RESET_MIC		(1 << 15)
+> +#define AST2500_WDT_RESET_CRT		(1 << 16)
+> +#define AST2500_WDT_RESET_PWM		(1 << 17)
+> +#define AST2500_WDT_RESET_PECI		(1 << 18)
+> +#define AST2500_WDT_RESET_JTAG		(1 << 19)
+> +#define AST2500_WDT_RESET_ADC		(1 << 20)
+> +#define AST2500_WDT_RESET_GPIO		(1 << 21)
+> +#define AST2500_WDT_RESET_MCTP		(1 << 22)
+> +#define AST2500_WDT_RESET_XDMA		(1 << 23)
+> +#define AST2500_WDT_RESET_SPI		(1 << 24)
+> +#define AST2500_WDT_RESET_SOC_MISC	(1 << 25)
+> +
+> +#define AST2500_WDT_RESET_DEFAULT 0x023ffff3
+> +
+> +#define AST2600_WDT_RESET1_CPU		(1 << 0)
+> +#define AST2600_WDT_RESET1_SDRAM	(1 << 1)
+> +#define AST2600_WDT_RESET1_AHB		(1 << 2)
+> +#define AST2600_WDT_RESET1_SLI		(1 << 3)
+> +#define AST2600_WDT_RESET1_SOC_MISC0	(1 << 4)
+> +#define AST2600_WDT_RESET1_COPROC	(1 << 5)
+> +#define AST2600_WDT_RESET1_USB_A	(1 << 6)
+> +#define AST2600_WDT_RESET1_USB_B	(1 << 7)
+> +#define AST2600_WDT_RESET1_UHCI		(1 << 8)
+> +#define AST2600_WDT_RESET1_GRAPHICS	(1 << 9)
+> +#define AST2600_WDT_RESET1_CRT		(1 << 10)
+> +#define AST2600_WDT_RESET1_VIDEO	(1 << 11)
+> +#define AST2600_WDT_RESET1_HAC		(1 << 12)
+> +#define AST2600_WDT_RESET1_DP		(1 << 13)
+> +#define AST2600_WDT_RESET1_DP_MCU	(1 << 14)
+> +#define AST2600_WDT_RESET1_GP_MCU	(1 << 15)
+> +#define AST2600_WDT_RESET1_MAC0		(1 << 16)
+> +#define AST2600_WDT_RESET1_MAC1		(1 << 17)
+> +#define AST2600_WDT_RESET1_SDIO0	(1 << 18)
+> +#define AST2600_WDT_RESET1_JTAG0	(1 << 19)
+> +#define AST2600_WDT_RESET1_MCTP0	(1 << 20)
+> +#define AST2600_WDT_RESET1_MCTP1	(1 << 21)
+> +#define AST2600_WDT_RESET1_XDMA0	(1 << 22)
+> +#define AST2600_WDT_RESET1_XDMA1	(1 << 23)
+> +#define AST2600_WDT_RESET1_GPIO0	(1 << 24)
+> +#define AST2600_WDT_RESET1_RVAS		(1 << 25)
+> +
+> +#define AST2600_WDT_RESET1_DEFAULT 0x030f1ff1
+> +
+> +#define AST2600_WDT_RESET2_CPU		(1 << 0)
+> +#define AST2600_WDT_RESET2_SPI		(1 << 1)
+> +#define AST2600_WDT_RESET2_AHB2		(1 << 2)
+> +#define AST2600_WDT_RESET2_SLI2		(1 << 3)
+> +#define AST2600_WDT_RESET2_SOC_MISC1	(1 << 4)
+> +#define AST2600_WDT_RESET2_MAC2		(1 << 5)
+> +#define AST2600_WDT_RESET2_MAC3		(1 << 6)
+> +#define AST2600_WDT_RESET2_SDIO1	(1 << 7)
+> +#define AST2600_WDT_RESET2_JTAG1	(1 << 8)
+> +#define AST2600_WDT_RESET2_GPIO1	(1 << 9)
+> +#define AST2600_WDT_RESET2_MDIO		(1 << 10)
+> +#define AST2600_WDT_RESET2_LPC		(1 << 11)
+> +#define AST2600_WDT_RESET2_PECI		(1 << 12)
+> +#define AST2600_WDT_RESET2_PWM		(1 << 13)
+> +#define AST2600_WDT_RESET2_ADC		(1 << 14)
+> +#define AST2600_WDT_RESET2_FSI		(1 << 15)
+> +#define AST2600_WDT_RESET2_I2C		(1 << 16)
+> +#define AST2600_WDT_RESET2_I3C_GLOBAL	(1 << 17)
+> +#define AST2600_WDT_RESET2_I3C0		(1 << 18)
+> +#define AST2600_WDT_RESET2_I3C1		(1 << 19)
+> +#define AST2600_WDT_RESET2_I3C2		(1 << 20)
+> +#define AST2600_WDT_RESET2_I3C3		(1 << 21)
+> +#define AST2600_WDT_RESET2_I3C4		(1 << 22)
+> +#define AST2600_WDT_RESET2_I3C5		(1 << 23)
+> +#define AST2600_WDT_RESET2_ESPI		(1 << 26)
+> +
+> +#define AST2600_WDT_RESET2_DEFAULT 0x03fffff1
+> +
+> +#endif
+> -- 
+> 2.40.0.5.gf6e3b97ba6d2.dirty
