@@ -1,54 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 396E37AE341
-	for <lists+openbmc@lfdr.de>; Tue, 26 Sep 2023 03:17:33 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B1F3A7AEF2B
+	for <lists+openbmc@lfdr.de>; Tue, 26 Sep 2023 17:05:07 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=LapCsNJv;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=e6Jv1KGi;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RvhgH0cQlz3c82
-	for <lists+openbmc@lfdr.de>; Tue, 26 Sep 2023 11:17:31 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Rw3293zbjz3cPR
+	for <lists+openbmc@lfdr.de>; Wed, 27 Sep 2023 01:05:05 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=LapCsNJv;
+	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=e6Jv1KGi;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
-Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2607:f8b0:4864:20::1130; helo=mail-yw1-x1130.google.com; envelope-from=ulf.hansson@linaro.org; receiver=lists.ozlabs.org)
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rvhfd3nnNz3bhk;
-	Tue, 26 Sep 2023 11:16:57 +1000 (AEST)
-Received: from [192.168.68.112] (ppp118-210-175-231.adl-adc-lon-bras34.tpg.internode.on.net [118.210.175.231])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 1045A20174;
-	Tue, 26 Sep 2023 09:16:54 +0800 (AWST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rw31Y0GMnz3cGC
+	for <openbmc@lists.ozlabs.org>; Wed, 27 Sep 2023 01:04:31 +1000 (AEST)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-59c0d329a8bso110062297b3.1
+        for <openbmc@lists.ozlabs.org>; Tue, 26 Sep 2023 08:04:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1695691016;
-	bh=pI7CpauyPvWTw3RXV9voYlIonvIp7u1XGUeBxrYew7g=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=LapCsNJvU8+qScB5n4biG3vEM+WDKp0NrKLUDi3zSteIjhq43dKWIg650C95eErt1
-	 gAjj1edkYNy9IHoaKcqsVOC0jJGkoCSdPKWNBiTqyL36niTsbGGdX+UjeioZcwlCGj
-	 K0IMXNtOZeWtdPN3rTh2yGWRWa4Bv0podRoG79SPlGOicsxsCWTIq84U9en+HZk/wB
-	 kUNSSo4k0rAwMXbbyPx/YQovhQLMcslmAz4YOzIVKryzPp3b5FB3trUZI0etkTchXo
-	 mt9pfCJNdn/P7a+oFKICIqzUcwg6dVvchxyMqYeFuR5ICN38DeW0bU1itBG0hQCWsS
-	 WfS/UYg9t3/EQ==
-Message-ID: <e3c4013eca1b7cb6edd6724be37e2ec86fc408dd.camel@codeconstruct.com.au>
-Subject: Re: [PATCH] pinctrl: pinctrl-aspeed-g6: Add more settings for
- USB2AHP function
-From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: Linus Walleij <linus.walleij@linaro.org>, Joe Wang
- <joe_wang@aspeedtech.com>
-Date: Tue, 26 Sep 2023 10:46:54 +0930
-In-Reply-To: <CACRpkdaZb+V-Zx_Uw9MCqRqE+N-0gd__xEFV3BTpkG7icU9W+A@mail.gmail.com>
-References: <20230920103332.274151-1-joe_wang@aspeedtech.com>
-	 <CACRpkdaZb+V-Zx_Uw9MCqRqE+N-0gd__xEFV3BTpkG7icU9W+A@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+        d=linaro.org; s=google; t=1695740668; x=1696345468; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=XkQznAxnykGoHMZeYaAftpnWpVTscvRnJk62iXg78HM=;
+        b=e6Jv1KGiWG20LFROOSgy509dBFWDd7fR/ECAPkBzyHiZW3B21CPbWgL8hiI2LlWOX7
+         Gj1QdkS40Qq5RGe5OTocO0gRCWL5K5liFPLdWhiXXqjpaSItfiYPFFpLMEhtgyz/qsK9
+         G5g4YFMM7/lTwXzICcnEf6rwJ+d7iQNF2pEbZoG6ueKK+vqchEEuqHNJPpi2Qv2MlE+T
+         13EdRM97+ynLaZvaOnBikKoCGHXHpRNf9oqsw12/SIcv8tKtfRX14C7MZydazAfkgNjn
+         pn3GCIGMVEepTHtgQrel9KUiesiHxC/HRijq53aj6Ey0tIJUbAfghaSqIdyl8Hz9hmB8
+         8f5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695740668; x=1696345468;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XkQznAxnykGoHMZeYaAftpnWpVTscvRnJk62iXg78HM=;
+        b=G8gDZpDeD5sTgK3GyxY+zfIAEI0y/ShL7ueMl6+ms2ksmxh0TwV62VeObes0F+geVv
+         VxOsiCa0dF0evP7bkOYUYoUGa2NuusoZeXhJCcE/zCXUSHmBfmws+dyvm644oe6JOwkK
+         AJS/8F6L3JHIhrY1dqhQeGlMbeAhpsiC5ex0UFotGht/CMDAPNXz4Wc07gEQUSqTIvxD
+         kvxuDmjp2fH/LSGs7h1r3OTcm6UjlaVXyhBj62CkMdXKRXbSpBT+hSux1LNXlCbHDQS5
+         kGoQKICyfASYH4NBcuEM42LwNgSphWry8eCgU22n5eqNRT2Vpm65tusiEXYyqB4YNw9C
+         Du4Q==
+X-Gm-Message-State: AOJu0YyGbAi2NgKByaHZcj3dM5rMpbJQa92EGeh1HY0QMEKSVuR6jTXA
+	4udbCAvxM5OtZBCmxKIYawYka8daU9oaPzTDCOrj3g==
+X-Google-Smtp-Source: AGHT+IGROsfk06tbY4aJKZhfnAsRPVgtpSRAqvTPi3Sls9eZA1D2bKhA+BHNmXVH+vsas51sqXcQAJy04/XqDr1WP1M=
+X-Received: by 2002:a25:b11c:0:b0:d81:a0c5:f275 with SMTP id
+ g28-20020a25b11c000000b00d81a0c5f275mr9271834ybj.15.1695740668497; Tue, 26
+ Sep 2023 08:04:28 -0700 (PDT)
 MIME-Version: 1.0
+References: <20230925030647.40283-1-andrew@codeconstruct.com.au>
+In-Reply-To: <20230925030647.40283-1-andrew@codeconstruct.com.au>
+From: Ulf Hansson <ulf.hansson@linaro.org>
+Date: Tue, 26 Sep 2023 17:03:52 +0200
+Message-ID: <CAPDyKFrFxYxSTa=z2VnCk4m_d-wEgd17wBokzyNCCRLtSUnFKw@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: aspeed: Update Andrew's email address
+To: Andrew Jeffery <andrew@codeconstruct.com.au>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,23 +73,63 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, andrew@aj.id.au, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, joel@jms.id.au, linux-arm-kernel@lists.infradead.org
+Cc: linux-aspeed@lists.ozlabs.org, andrew@aj.id.au, openbmc@lists.ozlabs.org, linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, 2023-09-25 at 15:15 +0200, Linus Walleij wrote:
-> On Wed, Sep 20, 2023 at 12:33=E2=80=AFPM Joe Wang <joe_wang@aspeedtech.co=
-m> wrote:
->=20
-> > AST2600 USB2AHP (USB PortA: PCIe EHCI to PHY) function needs to set the
-> > register SCUC20[16]. Set it to enable the PCIe EHCI device on PCIe bus.
-> > Besides, also add USB2AHP signal expressions into pin declarations.
-> >=20
-> > Signed-off-by: Joe Wang <joe_wang@aspeedtech.com>
->=20
-> Patch applied!
+On Mon, 25 Sept 2023 at 05:07, Andrew Jeffery
+<andrew@codeconstruct.com.au> wrote:
+>
+> I've changed employers, have company email that deals with patch-based
+> workflows without too much of a headache, and am trying to steer some
+> content out of my personal mail.
+>
+> Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 
-Thanks. I hope to improve my review responsiveness for Aspeed patches
-over recent times.
+I guess it doesn't really matter what tree this gets funneled through,
+so I decided to pick this up via my mmc tree.
 
-Andrew
+So, applied for next, thanks!
+
+Kind regards
+Uffe
+
+
+> ---
+>  MAINTAINERS | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index b19995690904..1965cee433b0 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1963,7 +1963,7 @@ F:        drivers/irqchip/irq-aspeed-i2c-ic.c
+>
+>  ARM/ASPEED MACHINE SUPPORT
+>  M:     Joel Stanley <joel@jms.id.au>
+> -R:     Andrew Jeffery <andrew@aj.id.au>
+> +R:     Andrew Jeffery <andrew@codeconstruct.com.au>
+>  L:     linux-arm-kernel@lists.infradead.org (moderated for non-subscribers)
+>  L:     linux-aspeed@lists.ozlabs.org (moderated for non-subscribers)
+>  S:     Supported
+> @@ -3058,7 +3058,7 @@ F:        Documentation/devicetree/bindings/peci/peci-aspeed.yaml
+>  F:     drivers/peci/controller/peci-aspeed.c
+>
+>  ASPEED PINCTRL DRIVERS
+> -M:     Andrew Jeffery <andrew@aj.id.au>
+> +M:     Andrew Jeffery <andrew@codeconstruct.com.au>
+>  L:     linux-aspeed@lists.ozlabs.org (moderated for non-subscribers)
+>  L:     openbmc@lists.ozlabs.org (moderated for non-subscribers)
+>  L:     linux-gpio@vger.kernel.org
+> @@ -3075,7 +3075,7 @@ F:        drivers/irqchip/irq-aspeed-scu-ic.c
+>  F:     include/dt-bindings/interrupt-controller/aspeed-scu-ic.h
+>
+>  ASPEED SD/MMC DRIVER
+> -M:     Andrew Jeffery <andrew@aj.id.au>
+> +M:     Andrew Jeffery <andrew@codeconstruct.com.au>
+>  L:     linux-aspeed@lists.ozlabs.org (moderated for non-subscribers)
+>  L:     openbmc@lists.ozlabs.org (moderated for non-subscribers)
+>  L:     linux-mmc@vger.kernel.org
+> --
+> 2.39.2
+>
