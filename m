@@ -2,51 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 07D127AF6B3
-	for <lists+openbmc@lfdr.de>; Wed, 27 Sep 2023 01:22:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 09C9E7AF825
+	for <lists+openbmc@lfdr.de>; Wed, 27 Sep 2023 04:32:19 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=Nc1pzZmu;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=efbjJ+b3;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RwG4c6ZCPz3cDT
-	for <lists+openbmc@lfdr.de>; Wed, 27 Sep 2023 09:22:56 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RwLH46gYYz3cBQ
+	for <lists+openbmc@lfdr.de>; Wed, 27 Sep 2023 12:32:16 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=Nc1pzZmu;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=efbjJ+b3;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
-Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::52a; helo=mail-ed1-x52a.google.com; envelope-from=joel.stan@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RwG3w4hmmz300f;
-	Wed, 27 Sep 2023 09:22:20 +1000 (AEST)
-Received: from [192.168.68.112] (ppp118-210-175-231.adl-adc-lon-bras34.tpg.internode.on.net [118.210.175.231])
-	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 6B2562017B;
-	Wed, 27 Sep 2023 07:22:14 +0800 (AWST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RwLGW07dyz2yW6
+	for <openbmc@lists.ozlabs.org>; Wed, 27 Sep 2023 12:31:45 +1000 (AEST)
+Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-5344d996bedso4501235a12.3
+        for <openbmc@lists.ozlabs.org>; Tue, 26 Sep 2023 19:31:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-	d=codeconstruct.com.au; s=2022a; t=1695770536;
-	bh=3xy3oYvGG7Rgvu7rXIPqMIaHFUEefO32BL/5JeivFsM=;
-	h=Subject:From:To:Cc:Date:In-Reply-To:References;
-	b=Nc1pzZmuL8BIfPa9WmVMAMK3q2oPyV6epmFy5ihSOS5smQ+L7+AvhVpWriHV8/ZLh
-	 uwSAqCUSfyLQ0xjfIj+vnu82oGAWij+2M3B2+zL1W/seZW/cqQHT6ST4I1+8hPC4XX
-	 Mdh6X04rt5eSwtTilUak5akhIQdszckz7bT2nTcbGco+CTlM1GBDShPol1EvR0ujCT
-	 tQY6fR69A9K80khCkl/Sl/e02bi+59zFMnyMllUCSmiNtqNSPEiNicMBTjSPerc4Xa
-	 erf4KHlO8DG2rj61hMoz2nnTmU3GdAci354zUOMDSndkpfgRveeh5GE7MUA2FWxBsd
-	 I3MhVR3d7j5tg==
-Message-ID: <7a7d5a7f19fc793f157508fec7fbc09ca8c4cc4b.camel@codeconstruct.com.au>
-Subject: Re: [PATCH] MAINTAINERS: aspeed: Update Andrew's email address
-From: Andrew Jeffery <andrew@codeconstruct.com.au>
-To: Ulf Hansson <ulf.hansson@linaro.org>
-Date: Wed, 27 Sep 2023 08:52:09 +0930
-In-Reply-To: <CAPDyKFrFxYxSTa=z2VnCk4m_d-wEgd17wBokzyNCCRLtSUnFKw@mail.gmail.com>
-References: <20230925030647.40283-1-andrew@codeconstruct.com.au>
-	 <CAPDyKFrFxYxSTa=z2VnCk4m_d-wEgd17wBokzyNCCRLtSUnFKw@mail.gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.46.4-2 
+        d=jms.id.au; s=google; t=1695781901; x=1696386701; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=l7BMpSow5RxK+NKCBKV8MoxCToyI+Agt5TevrDCohaQ=;
+        b=efbjJ+b3nIMTKE3AFdFrQ8K02cGwN8TQ+itt5Yth2OHLzd1IX/ux5vuBlZbUO2lDBN
+         df1xYdb28tgWEPhaY3EBOXSBC706eRL30MJAnoTgIwLh6XDEjGuRpJL1fNvsuoXsUJ5y
+         HorpC7G5X7BQr2zD4cEAipZnLyeGznoy0UQi8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695781901; x=1696386701;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=l7BMpSow5RxK+NKCBKV8MoxCToyI+Agt5TevrDCohaQ=;
+        b=Z2WVSseRvr+1nw+JEfIvTisCMbMNJkFXPoW3gY1RuzPpiHdZHYIDiQwbnrRvRzhmzN
+         5dBmd+Eo4dpR+ZaIGfQvbv8GUFhinmgWno1VLz6F82zhB/+LaC0S/uYwVZSEz6dXyJzk
+         b8jWdEd2/Kar02LwbpS2ztsNApzCWpVf7LRhiKfAAKNVWQRiZtdLMNqUslf+u6mFfD34
+         4UMCIafqeMoVjyyfPOQJ95gEkCIidHTp0OxqsYYuOVSQ5UTjnDt/alsKZJcfvE8dtwKJ
+         f3Aw02S2lYGWpu7cAo0a6JLgSvv4NqluttvmKIXKKesTuFUXbYalQYP/738zM9YjuYjv
+         fG2A==
+X-Gm-Message-State: AOJu0Yz1hMbAaQ3bKJsu5G4m61GnN5SzkJU32fsbGB/SRfasS+xjeMXF
+	ssGrrvKHIOWVA0oCC9cfSuV8qWxwLRtnzTrv5Mk=
+X-Google-Smtp-Source: AGHT+IGcJnI5SfK2KB1D2sEpF8rVe+yd6/QBYurx2BX8LOwGgrWdN6euUKLbVuYUX81NBDSOEHjWThcpkauByr/105I=
+X-Received: by 2002:a17:906:1b:b0:9ae:6355:5ef4 with SMTP id
+ 27-20020a170906001b00b009ae63555ef4mr445585eja.3.1695781901154; Tue, 26 Sep
+ 2023 19:31:41 -0700 (PDT)
 MIME-Version: 1.0
+References: <20230920055514.1668839-1-Delphine_CC_Chiu@wiwynn.com>
+In-Reply-To: <20230920055514.1668839-1-Delphine_CC_Chiu@wiwynn.com>
+From: Joel Stanley <joel@jms.id.au>
+Date: Wed, 27 Sep 2023 02:31:30 +0000
+Message-ID: <CACPK8XftkY0ZAXoXJuhVVA_MRz-hAd=TSosVLuJW-Zf6qzPxDw@mail.gmail.com>
+Subject: Re: [PATCH linux dev-6.1 v2 0/2] hwmon: ina233: add ina233 support
+To: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,81 +70,41 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, andrew@aj.id.au, openbmc@lists.ozlabs.org, linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, joel@jms.id.au
+Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, 2023-09-26 at 17:03 +0200, Ulf Hansson wrote:
-> On Mon, 25 Sept 2023 at 05:07, Andrew Jeffery
-> <andrew@codeconstruct.com.au> wrote:
-> >=20
-> > I've changed employers, have company email that deals with patch-based
-> > workflows without too much of a headache, and am trying to steer some
-> > content out of my personal mail.
-> >=20
-> > Signed-off-by: Andrew Jeffery <andrew@codeconstruct.com.au>
->=20
-> I guess it doesn't really matter what tree this gets funneled through,
-> so I decided to pick this up via my mmc tree.
->=20
-> So, applied for next, thanks!
+On Wed, 20 Sept 2023 at 05:55, Delphine CC Chiu
+<Delphine_CC_Chiu@wiwynn.com> wrote:
+>
+> Support ina233 driver with binding documents for Meta Yosemite V4 using
 
-Ah, thanks for being so prompt! However, Joel has sent a PR to Arnd
-with the patch:
+We've moved to the 6.5 tree now. I would prefer we stopped development
+on the 6.1 tree.
 
-https://lore.kernel.org/all/CACPK8Xc+D=3DYBc2Dhk-6-gOuvKN0xGgZYNop6oJVa=3DV=
-NgaEYOHw@mail.gmail.com/
+You have some upstream review comments on these. If you could address
+those, then I'll backport your new version to the 6.5 tree.
 
-I thought I'd left a note under the fold asking Joel to do that so
-people knew how it would get into the tree, but that clearly isn't the
-case. Sorry about that, I must have rolled the patch off again after I
-put the note into the original.
+Does that sound reasonable?
 
-Andrew
-
->=20
-> Kind regards
-> Uffe
->=20
->=20
-> > ---
-> >  MAINTAINERS | 6 +++---
-> >  1 file changed, 3 insertions(+), 3 deletions(-)
-> >=20
-> > diff --git a/MAINTAINERS b/MAINTAINERS
-> > index b19995690904..1965cee433b0 100644
-> > --- a/MAINTAINERS
-> > +++ b/MAINTAINERS
-> > @@ -1963,7 +1963,7 @@ F:        drivers/irqchip/irq-aspeed-i2c-ic.c
-> >=20
-> >  ARM/ASPEED MACHINE SUPPORT
-> >  M:     Joel Stanley <joel@jms.id.au>
-> > -R:     Andrew Jeffery <andrew@aj.id.au>
-> > +R:     Andrew Jeffery <andrew@codeconstruct.com.au>
-> >  L:     linux-arm-kernel@lists.infradead.org (moderated for non-subscri=
-bers)
-> >  L:     linux-aspeed@lists.ozlabs.org (moderated for non-subscribers)
-> >  S:     Supported
-> > @@ -3058,7 +3058,7 @@ F:        Documentation/devicetree/bindings/peci/=
-peci-aspeed.yaml
-> >  F:     drivers/peci/controller/peci-aspeed.c
-> >=20
-> >  ASPEED PINCTRL DRIVERS
-> > -M:     Andrew Jeffery <andrew@aj.id.au>
-> > +M:     Andrew Jeffery <andrew@codeconstruct.com.au>
-> >  L:     linux-aspeed@lists.ozlabs.org (moderated for non-subscribers)
-> >  L:     openbmc@lists.ozlabs.org (moderated for non-subscribers)
-> >  L:     linux-gpio@vger.kernel.org
-> > @@ -3075,7 +3075,7 @@ F:        drivers/irqchip/irq-aspeed-scu-ic.c
-> >  F:     include/dt-bindings/interrupt-controller/aspeed-scu-ic.h
-> >=20
-> >  ASPEED SD/MMC DRIVER
-> > -M:     Andrew Jeffery <andrew@aj.id.au>
-> > +M:     Andrew Jeffery <andrew@codeconstruct.com.au>
-> >  L:     linux-aspeed@lists.ozlabs.org (moderated for non-subscribers)
-> >  L:     openbmc@lists.ozlabs.org (moderated for non-subscribers)
-> >  L:     linux-mmc@vger.kernel.org
-> > --
-> > 2.39.2
-> >=20
-
+>
+> Changelog:
+>  v2 - Revise Makefile typo
+>  v1 - Add ina233 driver and binding document
+>
+> Delphine CC Chiu (2):
+>   dt-bindings: hwmon: add INA233 binding documents
+>   hwmon: Add support for ina233
+>
+>  .../devicetree/bindings/hwmon/ina233.txt      | 27 ++++++
+>  MAINTAINERS                                   |  6 ++
+>  drivers/hwmon/pmbus/Kconfig                   |  9 ++
+>  drivers/hwmon/pmbus/Makefile                  |  1 +
+>  drivers/hwmon/pmbus/ina233.c                  | 89 +++++++++++++++++++
+>  5 files changed, 132 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/hwmon/ina233.txt
+>  create mode 100644 drivers/hwmon/pmbus/ina233.c
+>
+> --
+> 2.25.1
+>
