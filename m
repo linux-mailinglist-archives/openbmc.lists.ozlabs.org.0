@@ -2,53 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 065F57B1CE6
-	for <lists+openbmc@lfdr.de>; Thu, 28 Sep 2023 14:48:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id E8CA67B1C85
+	for <lists+openbmc@lfdr.de>; Thu, 28 Sep 2023 14:34:23 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=NMXSWKEl;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=IcBNUsXc;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RxCw06R6kz2yq4
-	for <lists+openbmc@lfdr.de>; Thu, 28 Sep 2023 22:48:48 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RxCbK61c4z3cc8
+	for <lists+openbmc@lfdr.de>; Thu, 28 Sep 2023 22:34:21 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=NMXSWKEl;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=IcBNUsXc;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4641:c500::1; helo=dfw.source.kernel.org; envelope-from=peter.chen@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [IPv6:2604:1380:4641:c500::1])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12c; helo=mail-lf1-x12c.google.com; envelope-from=aladyshev22@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rx84b3KVnz2xpm
-	for <openbmc@lists.ozlabs.org>; Thu, 28 Sep 2023 19:55:59 +1000 (AEST)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id 1F4EF6104A;
-	Thu, 28 Sep 2023 09:55:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21997C433C8;
-	Thu, 28 Sep 2023 09:55:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1695894956;
-	bh=+DSkHuvZmTOScbwhjWVKRNlUFglCaEELGK+8EY7Tp/I=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=NMXSWKElxk6xfVfY06vGjZCgODlqRzzee6ia03JW8afHrGDE771oQpZ3dPJehOEpH
-	 OQejT+hMGdVDQRswZqSOuzET/BZgEYVLIPBjPveFZh1PxSwsS5rt8eEOsduy/vQONM
-	 x5zAIKHBA6PpMj7zieC72VqN9I8Bmdlc0rEozi6tW9BN7iXDtmwU5I4xim7dAptRbX
-	 OTbtbLZMwG0yy6Qx80iiHFfeobSHARVHw3MEEiC0aKYLJKwPBOdQkYY/ZUtRZK864h
-	 HdJLTbIDJ9fg1yG3+e5b/vaZmxKHEnvdfnWwk0AxdKJeB6Xq41dIay69zk6PUw3M/w
-	 hqTmjwuJcMDow==
-Date: Thu, 28 Sep 2023 17:55:44 +0800
-From: Peter Chen <peter.chen@kernel.org>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH v2 3/3] usb: chipidea: Add support for NPCM
-Message-ID: <20230928095544.GB2081690@nchen-desktop>
-References: <20230927095509.267029-1-tmaimon77@gmail.com>
- <20230927095509.267029-4-tmaimon77@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4RxCWB68WPz30MY;
+	Thu, 28 Sep 2023 22:30:45 +1000 (AEST)
+Received: by mail-lf1-x12c.google.com with SMTP id 2adb3069b0e04-50435a9f800so19774715e87.2;
+        Thu, 28 Sep 2023 05:30:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1695904236; x=1696509036; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Gm1ISeW+idItfKS/eOu6/qm0WSJn6LCWGU5CplrSsM=;
+        b=IcBNUsXcWxtNN+Y60nx0en7RGIKEgULIxJIodGDhmTUXCLvEAU+0PuNRvzwKTUi8sn
+         3cHLUlVQAwNZqiyB0JHuTtkvuBnqrrK4wXXpXWYCVXKHlL86h1OxiAXwE6W+SHu4nWNR
+         GA8HDJoLuJ+BUqCcnOgJThhECt2BmkE6ZOISq1rzONW9Pp4J5FsaYgdwbw0OsjzBegRF
+         Io29/3Ei2O3YHCbX9s5Z3FKUQ4bg2da632bfZM763eyP660Fyr6AuykFDNJM60GpAmL/
+         Gy4waqZv3Q8IJs+2PNK9MmeVHLrXkNh6IRxcfj5plc2dcA14ugqtY18RTK0u0ZEAaVR5
+         GdTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1695904236; x=1696509036;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=1Gm1ISeW+idItfKS/eOu6/qm0WSJn6LCWGU5CplrSsM=;
+        b=gyOvTJQ9MS9ybs/O+vZfzzWKrI/k2rLua080ok3Q3EIn1kc7icgl6WhI5TIoKP8xeb
+         yPZMoFNsCAEndJKQXy3ak7wPpxPwjiCEweFNdXQgHfTRE1jV3AQemUB6+/AuoXHOsv9M
+         3JLQ/c7sg29bweN9A6DZVPYYOr+jlZ9rzeSQEedQ6O53r8r5JdEcGaWcSsd9779mhwAe
+         M3HjF6M6CWAQBjqPxtQPpirRijMelm7+v7whalT0wl+/JRl2oi+Oz/i+GbuHBi+hhne3
+         /HSYUjYpX2m145m4CALKz1eshXDfILbf/8CHvxZb1SM2PemxmpuSRQ/NVy6seW+ixQXK
+         RwJQ==
+X-Gm-Message-State: AOJu0YzMvH7msYQ0Uvhi7LNJr+Mdzd5l6GSS2PYubep+7GU4GeHClYYJ
+	YodlkGZ9aJncN5rL8iW5XQs=
+X-Google-Smtp-Source: AGHT+IELWBzD5+DshFb82aU+91c6MxU621XWEWP2vB5rQd9UYeEMJrPISaje63D4gQs+E+MgoEPD8w==
+X-Received: by 2002:a2e:2c16:0:b0:2bf:ff17:811e with SMTP id s22-20020a2e2c16000000b002bfff17811emr1044718ljs.14.1695904235857;
+        Thu, 28 Sep 2023 05:30:35 -0700 (PDT)
+Received: from PC10319.67 ([82.97.198.254])
+        by smtp.googlemail.com with ESMTPSA id x6-20020a2e9c86000000b002ba045496d0sm3588724lji.125.2023.09.28.05.30.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 28 Sep 2023 05:30:35 -0700 (PDT)
+From: Konstantin Aladyshev <aladyshev22@gmail.com>
+To: 
+Subject: [PATCH 0/3] Add MCTP-over-KCS transport binding
+Date: Thu, 28 Sep 2023 15:30:06 +0300
+Message-Id: <20230928123009.2913-1-aladyshev22@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230927095509.267029-4-tmaimon77@gmail.com>
-X-Mailman-Approved-At: Thu, 28 Sep 2023 22:44:44 +1000
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,182 +75,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, peng.fan@nxp.com, linux-usb@vger.kernel.org, benjaminfair@google.com, avifishman70@gmail.com, gregkh@linuxfoundation.org, openbmc@lists.ozlabs.org, xu.yang_2@nxp.com, j.neuschaefer@gmx.net, tali.perry1@gmail.com, robh+dt@kernel.org, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, venture@google.com, linux-kernel@vger.kernel.org
+Cc: tmaimon77@gmail.com, linux-aspeed@lists.ozlabs.org, tali.perry1@gmail.com, edumazet@google.com, jk@codeconstruct.com.au, matt@codeconstruct.com.au, benjaminfair@google.com, openbmc@lists.ozlabs.org, joel@jms.id.au, kuba@kernel.org, pabeni@redhat.com, minyard@acm.org, aladyshev22@gmail.com, openipmi-developer@lists.sourceforge.net, linux-arm-kernel@lists.infradead.org, andrew@aj.id.au, venture@google.com, linux-kernel@vger.kernel.org, avifishman70@gmail.com, netdev@vger.kernel.org, davem@davemloft.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 23-09-27 12:55:09, Tomer Maimon wrote:
-> Add Nuvoton NPCM BMC SoCs support to USB ChipIdea driver.
-> NPCM SoC include ChipIdea IP block that used for USB device controller
-> mode.
-> 
-> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+This change adds a MCTP KCS transport binding, as defined by the DMTF
+specificiation DSP0254 - "MCTP KCS Transport Binding".
+A MCTP protocol network device is created for each KCS channel found in
+the system.
+The interrupt code for the KCS state machine is based on the current
+IPMI KCS driver.
+Since the KCS subsystem code is now used both in IPMI and MCTP drivers
+the separate patchsets move KCS subsystem includes to a common folder.
 
-Acked-by: Peter Chen <peter.chen@kernel.org>
+Tested:
+PLDM communication between the HOST and BMC was tested with both
+components implemented via open-source software:
+- The HOST (UEFI firmware) part was based one the edk2 [1] and
+edk2-platforms [2] code,
+- The BMC part was based on the openbmc [3] distribution.
 
-Peter
-> ---
->  drivers/usb/chipidea/Kconfig        |   4 +
->  drivers/usb/chipidea/Makefile       |   1 +
->  drivers/usb/chipidea/ci_hdrc_npcm.c | 117 ++++++++++++++++++++++++++++
->  3 files changed, 122 insertions(+)
->  create mode 100644 drivers/usb/chipidea/ci_hdrc_npcm.c
-> 
-> diff --git a/drivers/usb/chipidea/Kconfig b/drivers/usb/chipidea/Kconfig
-> index c815824a0b2d..bab45bc62361 100644
-> --- a/drivers/usb/chipidea/Kconfig
-> +++ b/drivers/usb/chipidea/Kconfig
-> @@ -43,6 +43,10 @@ config USB_CHIPIDEA_MSM
->  	tristate "Enable MSM hsusb glue driver" if EXPERT
->  	default USB_CHIPIDEA
->  
-> +config USB_CHIPIDEA_NPCM
-> +	tristate "Enable NPCM hsusb glue driver" if EXPERT
-> +	default USB_CHIPIDEA
-> +
->  config USB_CHIPIDEA_IMX
->  	tristate "Enable i.MX USB glue driver" if EXPERT
->  	depends on OF
-> diff --git a/drivers/usb/chipidea/Makefile b/drivers/usb/chipidea/Makefile
-> index 71afeab97e83..718cb24603dd 100644
-> --- a/drivers/usb/chipidea/Makefile
-> +++ b/drivers/usb/chipidea/Makefile
-> @@ -13,6 +13,7 @@ ci_hdrc-$(CONFIG_USB_OTG_FSM)		+= otg_fsm.o
->  
->  obj-$(CONFIG_USB_CHIPIDEA_GENERIC)	+= ci_hdrc_usb2.o
->  obj-$(CONFIG_USB_CHIPIDEA_MSM)		+= ci_hdrc_msm.o
-> +obj-$(CONFIG_USB_CHIPIDEA_NPCM)		+= ci_hdrc_npcm.o
->  obj-$(CONFIG_USB_CHIPIDEA_PCI)		+= ci_hdrc_pci.o
->  obj-$(CONFIG_USB_CHIPIDEA_IMX)		+= usbmisc_imx.o ci_hdrc_imx.o
->  obj-$(CONFIG_USB_CHIPIDEA_TEGRA)	+= ci_hdrc_tegra.o
-> diff --git a/drivers/usb/chipidea/ci_hdrc_npcm.c b/drivers/usb/chipidea/ci_hdrc_npcm.c
-> new file mode 100644
-> index 000000000000..4169855e7940
-> --- /dev/null
-> +++ b/drivers/usb/chipidea/ci_hdrc_npcm.c
-> @@ -0,0 +1,117 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +// Copyright (c) 2023 Nuvoton Technology corporation.
-> +
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/pm_runtime.h>
-> +#include <linux/usb/chipidea.h>
-> +#include <linux/clk.h>
-> +#include <linux/io.h>
-> +#include <linux/reset-controller.h>
-> +#include <linux/of.h>
-> +
-> +#include "ci.h"
-> +
-> +struct npcm_udc_data {
-> +	struct platform_device	*ci;
-> +	struct clk		*core_clk;
-> +	struct ci_hdrc_platform_data pdata;
-> +};
-> +
-> +static int npcm_udc_notify_event(struct ci_hdrc *ci, unsigned event)
-> +{
-> +	struct device *dev = ci->dev->parent;
-> +
-> +	switch (event) {
-> +	case CI_HDRC_CONTROLLER_RESET_EVENT:
-> +		/* clear all mode bits */
-> +		hw_write(ci, OP_USBMODE, 0xffffffff, 0x0);
-> +		break;
-> +	default:
-> +		dev_dbg(dev, "unknown ci_hdrc event\n");
-> +		break;
-> +	}
-> +
-> +	return 0;
-> +}
-> +
-> +static int npcm_udc_probe(struct platform_device *pdev)
-> +{
-> +	int ret;
-> +	struct npcm_udc_data *ci;
-> +	struct platform_device *plat_ci;
-> +	struct device *dev = &pdev->dev;
-> +
-> +	ci = devm_kzalloc(&pdev->dev, sizeof(*ci), GFP_KERNEL);
-> +	if (!ci)
-> +		return -ENOMEM;
-> +	platform_set_drvdata(pdev, ci);
-> +
-> +	ci->core_clk = devm_clk_get_optional(dev, NULL);
-> +	if (IS_ERR(ci->core_clk))
-> +		return PTR_ERR(ci->core_clk);
-> +
-> +	ret = clk_prepare_enable(ci->core_clk);
-> +	if (ret) {
-> +		dev_err(dev, "failed to enable the clock: %d\n", ret);
-> +		return ret;
-> +	}
-> +
-> +	ci->pdata.name = dev_name(dev);
-> +	ci->pdata.capoffset = DEF_CAPOFFSET;
-> +	ci->pdata.flags	= CI_HDRC_REQUIRES_ALIGNED_DMA |
-> +		CI_HDRC_FORCE_VBUS_ACTIVE_ALWAYS;
-> +	ci->pdata.phy_mode = USBPHY_INTERFACE_MODE_UTMI;
-> +	ci->pdata.notify_event = npcm_udc_notify_event;
-> +
-> +	plat_ci = ci_hdrc_add_device(dev, pdev->resource, pdev->num_resources,
-> +				     &ci->pdata);
-> +	if (IS_ERR(plat_ci)) {
-> +		ret = PTR_ERR(plat_ci);
-> +		dev_err(dev, "failed to register HDRC NPCM device: %d\n", ret);
-> +		goto clk_err;
-> +	}
-> +
-> +	pm_runtime_no_callbacks(dev);
-> +	pm_runtime_enable(dev);
-> +
-> +	return 0;
-> +
-> +clk_err:
-> +	clk_disable_unprepare(ci->core_clk);
-> +	return ret;
-> +}
-> +
-> +static int npcm_udc_remove(struct platform_device *pdev)
-> +{
-> +	struct npcm_udc_data *ci = platform_get_drvdata(pdev);
-> +
-> +	pm_runtime_disable(&pdev->dev);
-> +	ci_hdrc_remove_device(ci->ci);
-> +	clk_disable_unprepare(ci->core_clk);
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct of_device_id npcm_udc_dt_match[] = {
-> +	{ .compatible = "nuvoton,npcm750-udc", },
-> +	{ .compatible = "nuvoton,npcm845-udc", },
-> +	{ }
-> +};
-> +MODULE_DEVICE_TABLE(of, npcm_udc_dt_match);
-> +
-> +static struct platform_driver npcm_udc_driver = {
-> +	.probe = npcm_udc_probe,
-> +	.remove = npcm_udc_remove,
-> +	.driver = {
-> +		.name = "npcm_udc",
-> +		.of_match_table = npcm_udc_dt_match,
-> +	},
-> +};
-> +
-> +module_platform_driver(npcm_udc_driver);
-> +
-> +MODULE_DESCRIPTION("NPCM USB device controller driver");
-> +MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
-> +MODULE_ALIAS("platform:npcm-udc");
-> +MODULE_LICENSE("GPL v2");
-> -- 
-> 2.33.0
-> 
+The testing process and all the necessary utilities are described in
+the [4] repository.
+
+[1]: https://github.com/tianocore/edk2
+[2]: https://github.com/tianocore/edk2-platforms
+[3]: https://github.com/openbmc/openbmc
+[4]: https://github.com/Kostr/PLDM
+
+Konstantin Aladyshev (3):
+  ipmi: Move KCS headers to common include folder
+  ipmi: Create header with KCS interface defines
+  mctp: Add MCTP-over-KCS transport binding
+
+ drivers/char/ipmi/kcs_bmc.c                   |   8 +-
+ drivers/char/ipmi/kcs_bmc_aspeed.c            |   3 +-
+ drivers/char/ipmi/kcs_bmc_cdev_ipmi.c         |  73 +-
+ drivers/char/ipmi/kcs_bmc_npcm7xx.c           |   2 +-
+ drivers/char/ipmi/kcs_bmc_serio.c             |   2 +-
+ drivers/net/mctp/Kconfig                      |   8 +
+ drivers/net/mctp/Makefile                     |   1 +
+ drivers/net/mctp/mctp-kcs.c                   | 624 ++++++++++++++++++
+ include/linux/ipmi_kcs.h                      |  80 +++
+ .../char/ipmi => include/linux}/kcs_bmc.h     |   0
+ .../ipmi => include/linux}/kcs_bmc_client.h   |   3 +-
+ .../ipmi => include/linux}/kcs_bmc_device.h   |   3 +-
+ 12 files changed, 723 insertions(+), 84 deletions(-)
+ create mode 100644 drivers/net/mctp/mctp-kcs.c
+ create mode 100644 include/linux/ipmi_kcs.h
+ rename {drivers/char/ipmi => include/linux}/kcs_bmc.h (100%)
+ rename {drivers/char/ipmi => include/linux}/kcs_bmc_client.h (97%)
+ rename {drivers/char/ipmi => include/linux}/kcs_bmc_device.h (96%)
 
 -- 
+2.25.1
 
-Thanks,
-Peter Chen
