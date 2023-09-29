@@ -2,63 +2,63 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 15D3B7B289C
-	for <lists+openbmc@lfdr.de>; Fri, 29 Sep 2023 00:59:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id F3A2F7B2D23
+	for <lists+openbmc@lfdr.de>; Fri, 29 Sep 2023 09:40:25 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=K3lAOylf;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EEV1O/Or;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RxTSf70Kqz3c5c
-	for <lists+openbmc@lfdr.de>; Fri, 29 Sep 2023 08:59:30 +1000 (AEST)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Rxj1g6Lfvz3dDN
+	for <lists+openbmc@lfdr.de>; Fri, 29 Sep 2023 17:40:23 +1000 (AEST)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=K3lAOylf;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=EEV1O/Or;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.55.52.151; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.73.55; helo=sin.source.kernel.org; envelope-from=wsa@kernel.org; receiver=lists.ozlabs.org)
+Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RxTRw5rh4z3c3g;
-	Fri, 29 Sep 2023 08:58:49 +1000 (AEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1695941933; x=1727477933;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=UbGttFfuP6lw+hHb/xkwIGlEdNBxv5J2I9w5oq0PHfc=;
-  b=K3lAOylf+FG712RfmqYD0YNVtsofM3XkWud/yFBncGNGOFM+8owLW6vW
-   LZl//5VihP+/8MB5BoBH70eCh+fE3NJjU7l4PmJLZ1Hdwe4Z4Y9SeU9/M
-   25N4LSIaW+lgxTphDOmtp+zipMvT/RsGvyHwxcQ8HNe4WLp+5Kpp8Rse3
-   Nm6UXfX+8ouJSN9OaWz9bfAC243Pcac5/IVgiosl5ZS00Yyzpb5DHatj0
-   w7T1jo6HvUnMSB9OClT+Qma7r+YJiFmLjNUHhQE9H9pD8gi2us9fDc0WK
-   Qq66+EgdgBTQByOG7hjWnG3DpXbOybUIWGTXMaFLkmHyqJTfuKhflBz2W
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10847"; a="362443604"
-X-IronPort-AV: E=Sophos;i="6.03,185,1694761200"; 
-   d="scan'208";a="362443604"
-Received: from orsmga005.jf.intel.com ([10.7.209.41])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Sep 2023 15:58:44 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10847"; a="923423965"
-X-IronPort-AV: E=Sophos;i="6.03,185,1694761200"; 
-   d="scan'208";a="923423965"
-Received: from lkp-server02.sh.intel.com (HELO c3b01524d57c) ([10.239.97.151])
-  by orsmga005.jf.intel.com with ESMTP; 28 Sep 2023 15:58:38 -0700
-Received: from kbuild by c3b01524d57c with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1qlzxs-00026Y-0x;
-	Thu, 28 Sep 2023 22:58:36 +0000
-Date: Fri, 29 Sep 2023 06:58:15 +0800
-From: kernel test robot <lkp@intel.com>
-To: Konstantin Aladyshev <aladyshev22@gmail.com>
-Subject: Re: [PATCH 3/3] mctp: Add MCTP-over-KCS transport binding
-Message-ID: <202309290613.qxRTI9f7-lkp@intel.com>
-References: <20230928123009.2913-4-aladyshev22@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rxj0w4cpdz3cnP;
+	Fri, 29 Sep 2023 17:39:44 +1000 (AEST)
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+	by sin.source.kernel.org (Postfix) with ESMTP id A0DDFCE224E;
+	Fri, 29 Sep 2023 07:39:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 527F2C433C8;
+	Fri, 29 Sep 2023 07:39:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1695973180;
+	bh=yAYLz3ukdJtNvf42OO+RRKZ3YtBH+Khh5W18AjODGKs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=EEV1O/OrowYxwsT7xTRih0qWIX7q1hjm5Ayp0pZO2vP6t9NZEYYSn2dIQZjBhoMyZ
+	 YR49YoxePkb2gTXXgMb9TzBuAX6wuNqtQXG1Ye1TyTwuHU695VfqN97JaLxmBFmPBt
+	 RtWcF3OkpBUAkeMc0TxS4r/iQBQSTD1cC61qFiXVg1d2ONNtYhZ5BeANSPE4/btAux
+	 TVQCkjxUVDkfDThiGACVsn9i2umC77hcIrAWiuaIaZ8LYm1ZUd67fUVWIiIIm3lZj+
+	 Uv7JhPU9Pp0RP15drIFjgKE4x2m8UhG2pKklx1E2DHGSZvG2bGG4RiCYjdHOuhDeLK
+	 y8m6T9k/g4V+w==
+Date: Fri, 29 Sep 2023 09:39:37 +0200
+From: Wolfram Sang <wsa@kernel.org>
+To: Jian Zhang <zhangjian.3032@bytedance.com>
+Subject: Re: [PATCH v2] i2c: aspeed: Fix i2c bus hang in slave read
+Message-ID: <ZRZ/ObZmntMLw2r+@ninjato>
+Mail-Followup-To: Wolfram Sang <wsa@kernel.org>,
+	Jian Zhang <zhangjian.3032@bytedance.com>,
+	brendan.higgins@linux.dev, benh@kernel.crashing.org, joel@jms.id.au,
+	andrew@aj.id.au, zhangjian3032@gmail.com, yulei.sh@bytedance.com,
+	xiexinnan@bytedance.com, Andi Shyti <andi.shyti@kernel.org>,
+	Tommy Huang <tommy_huang@aspeedtech.com>,
+	"open list:ARM/ASPEED I2C DRIVER" <linux-i2c@vger.kernel.org>,
+	"moderated list:ARM/ASPEED I2C DRIVER" <openbmc@lists.ozlabs.org>,
+	"moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-arm-kernel@lists.infradead.org>,
+	"moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>,
+	open list <linux-kernel@vger.kernel.org>
+References: <20230927154244.3774670-1-zhangjian.3032@bytedance.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="+myms6uqEERuj8CP"
 Content-Disposition: inline
-In-Reply-To: <20230928123009.2913-4-aladyshev22@gmail.com>
+In-Reply-To: <20230927154244.3774670-1-zhangjian.3032@bytedance.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,110 +70,53 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: tmaimon77@gmail.com, linux-aspeed@lists.ozlabs.org, tali.perry1@gmail.com, edumazet@google.com, jk@codeconstruct.com.au, matt@codeconstruct.com.au, benjaminfair@google.com, openbmc@lists.ozlabs.org, joel@jms.id.au, kuba@kernel.org, pabeni@redhat.com, minyard@acm.org, aladyshev22@gmail.com, oe-kbuild-all@lists.linux.dev, openipmi-developer@lists.sourceforge.net, linux-arm-kernel@lists.infradead.org, andrew@aj.id.au, venture@google.com, linux-kernel@vger.kernel.org, avifishman70@gmail.com, netdev@vger.kernel.org, davem@davemloft.net
+Cc: Andi Shyti <andi.shyti@kernel.org>, "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-aspeed@lists.ozlabs.org>, andrew@aj.id.au, "moderated list:ARM/ASPEED I2C DRIVER" <openbmc@lists.ozlabs.org>, yulei.sh@bytedance.com, open list <linux-kernel@vger.kernel.org>, Tommy Huang <tommy_huang@aspeedtech.com>, "open list:ARM/ASPEED I2C DRIVER" <linux-i2c@vger.kernel.org>, brendan.higgins@linux.dev, joel@jms.id.au, zhangjian3032@gmail.com, "moderated list:ARM/ASPEED MACHINE SUPPORT" <linux-arm-kernel@lists.infradead.org>, xiexinnan@bytedance.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Konstantin,
 
-kernel test robot noticed the following build warnings:
+--+myms6uqEERuj8CP
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-[auto build test WARNING on cminyard-ipmi/for-next]
-[also build test WARNING on linus/master v6.6-rc3 next-20230928]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+On Wed, Sep 27, 2023 at 11:42:43PM +0800, Jian Zhang wrote:
+> When the `CONFIG_I2C_SLAVE` option is enabled and the device operates
+> as a slave, a situation arises where the master sends a START signal
+> without the accompanying STOP signal. This action results in a
+> persistent I2C bus timeout. The core issue stems from the fact that
+> the i2c controller remains in a slave read state without a timeout
+> mechanism. As a consequence, the bus perpetually experiences timeouts.
+>=20
+> In this case, the i2c bus will be reset, but the slave_state reset is
+> missing.
+>=20
+> Fixes: fee465150b45 ("i2c: aspeed: Reset the i2c controller when timeout =
+occurs")
+> Signed-off-by: Jian Zhang <zhangjian.3032@bytedance.com>
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Konstantin-Aladyshev/ipmi-Move-KCS-headers-to-common-include-folder/20230928-203248
-base:   https://github.com/cminyard/linux-ipmi for-next
-patch link:    https://lore.kernel.org/r/20230928123009.2913-4-aladyshev22%40gmail.com
-patch subject: [PATCH 3/3] mctp: Add MCTP-over-KCS transport binding
-config: sparc-allyesconfig (https://download.01.org/0day-ci/archive/20230929/202309290613.qxRTI9f7-lkp@intel.com/config)
-compiler: sparc64-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20230929/202309290613.qxRTI9f7-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202309290613.qxRTI9f7-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   In file included from include/linux/device.h:15,
-                    from include/linux/dma-mapping.h:8,
-                    from include/linux/skbuff.h:28,
-                    from include/linux/if_arp.h:22,
-                    from drivers/net/mctp/mctp-kcs.c:16:
-   drivers/net/mctp/mctp-kcs.c: In function 'mctp_kcs_validate_data':
->> drivers/net/mctp/mctp-kcs.c:121:25: warning: format '%x' expects argument of type 'unsigned int', but argument 5 has type 'long unsigned int' [-Wformat=]
-     121 |                         "%s: KCS binding header error! len = 0x%02x, but should be 0x%02x",
-         |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-   include/linux/dev_printk.h:110:30: note: in definition of macro 'dev_printk_index_wrap'
-     110 |                 _p_func(dev, fmt, ##__VA_ARGS__);                       \
-         |                              ^~~
-   include/linux/dev_printk.h:144:56: note: in expansion of macro 'dev_fmt'
-     144 |         dev_printk_index_wrap(_dev_err, KERN_ERR, dev, dev_fmt(fmt), ##__VA_ARGS__)
-         |                                                        ^~~~~~~
-   drivers/net/mctp/mctp-kcs.c:120:17: note: in expansion of macro 'dev_err'
-     120 |                 dev_err(mkcs->client.dev->dev,
-         |                 ^~~~~~~
-   drivers/net/mctp/mctp-kcs.c:121:89: note: format string is defined here
-     121 |                         "%s: KCS binding header error! len = 0x%02x, but should be 0x%02x",
-         |                                                                                      ~~~^
-         |                                                                                         |
-         |                                                                                         unsigned int
-         |                                                                                      %02lx
+Somebody wants to add tags here? I think it should go to my pull request
+this week.
 
 
-vim +121 drivers/net/mctp/mctp-kcs.c
+--+myms6uqEERuj8CP
+Content-Type: application/pgp-signature; name="signature.asc"
 
-    95	
-    96	static int mctp_kcs_validate_data(struct mctp_kcs *mkcs,
-    97					  struct mctp_kcs_header *hdr, int len)
-    98	{
-    99		struct net_device *ndev = mkcs->netdev;
-   100		struct mctp_kcs_trailer *tlr;
-   101		u8 pec;
-   102	
-   103		if (hdr->netfn_lun != MCTP_KCS_NETFN_LUN) {
-   104			dev_err(mkcs->client.dev->dev,
-   105				"%s: KCS binding header error! netfn_lun = 0x%02x, but should be 0x%02x",
-   106				__func__, hdr->netfn_lun, MCTP_KCS_NETFN_LUN);
-   107			ndev->stats.rx_dropped++;
-   108			return -EINVAL;
-   109		}
-   110		if (hdr->defining_body != DEFINING_BODY_DMTF_PRE_OS_WORKING_GROUP) {
-   111			dev_err(mkcs->client.dev->dev,
-   112				"%s: KCS binding header error! defining_body = 0x%02x, but should be 0x%02x",
-   113				__func__, hdr->defining_body,
-   114				DEFINING_BODY_DMTF_PRE_OS_WORKING_GROUP);
-   115			ndev->stats.rx_dropped++;
-   116			return -EINVAL;
-   117		}
-   118		if (hdr->len != (len - sizeof(struct mctp_kcs_header) -
-   119				 sizeof(struct mctp_kcs_trailer))) {
-   120			dev_err(mkcs->client.dev->dev,
- > 121				"%s: KCS binding header error! len = 0x%02x, but should be 0x%02x",
-   122				__func__, hdr->len,
-   123				(len - sizeof(struct mctp_kcs_header) -
-   124				 sizeof(struct mctp_kcs_trailer)));
-   125			ndev->stats.rx_length_errors++;
-   126			return -EINVAL;
-   127		}
-   128	
-   129		pec = generate_pec((u8 *)(hdr + 1), hdr->len);
-   130		tlr = (struct mctp_kcs_trailer *)((u8 *)(hdr + 1) + hdr->len);
-   131		if (pec != tlr->pec) {
-   132			dev_err(mkcs->client.dev->dev,
-   133				"%s: PEC error! Packet value=0x%02x, calculated value=0x%02x",
-   134				__func__, tlr->pec, pec);
-   135			ndev->stats.rx_crc_errors++;
-   136			return -EINVAL;
-   137		}
-   138		return 0;
-   139	}
-   140	
+-----BEGIN PGP SIGNATURE-----
 
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmUWfzkACgkQFA3kzBSg
+KbaStw/+P9lKIzk5K+HPzW686R3QSD4c9L86eK6C7qSbz3dR8WCLARees+FPn7KK
+SLQxjQzUToKNe8bfW9QnSs65v0koPIADF83FOloDj9+0R3+mbsqVohFn7wcPM5t4
+NtAzODYxDYOCQP84m25UZC5A+G7zDXxqHM0gE5Y+cbptMCaSVyzRK4/1gBIeuos/
+H++dJ0wJ86ozY69MUjCNA0lQPGooZKiuZ81F9NaGRx6yxHO0aKI6ZLkLHpZ/c2G1
+mNbtgy2zR1UbahtKUHmfwmT8XuCOOlpTVCnMfjXl1BaElI4unm3F52ZvaHg375eq
+7IDpAO5QC4LNEQEmDE90OgvLa3eS4SvEkHeZ4wgr/iTiBicMrqEYATxka4mnjdfV
+EyDQIIWgMMaZqpsf0ngjN978y32byRy+IiN47aY2Cn7IeXJxruZ76Cqj6T9Pq4bb
+Zeqe/xs5Zt2B2wRsxD/fLSbls6gxHRR8yn0mBZD4XgcCxxsxllP5yQ0pukP13v8F
+WPHGoob7CewyIijzwuI64R0I1dkBRecC7WkD2eRnzL0o33N7ct3VY62qgFX2xmIS
+AG39798UYyZ/Mecx/hp4/mMnOhXgcPPyYgbmqu9+MGNEG03eHsGumshUOxQIRSnI
+d9q4OxxEDFTj3/tEMhEtYDkwKnIwEkAnvKYQGmhfYMZOUXFGBII=
+=00HN
+-----END PGP SIGNATURE-----
+
+--+myms6uqEERuj8CP--
