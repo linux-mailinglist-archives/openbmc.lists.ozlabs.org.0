@@ -1,70 +1,46 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 858A67B5A17
-	for <lists+openbmc@lfdr.de>; Mon,  2 Oct 2023 20:32:17 +0200 (CEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=ZykUW/gy;
-	dkim-atps=neutral
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 40F2E7B5A78
+	for <lists+openbmc@lfdr.de>; Mon,  2 Oct 2023 20:50:29 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4RzqLR2VWSz3vXq
-	for <lists+openbmc@lfdr.de>; Tue,  3 Oct 2023 05:32:15 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4RzqlR1RSsz3cKV
+	for <lists+openbmc@lfdr.de>; Tue,  3 Oct 2023 05:50:27 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=ZykUW/gy;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c35; helo=mail-oo1-xc35.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized) smtp.mailfrom=nuvoton.com (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tomer.maimon@nuvoton.com; receiver=lists.ozlabs.org)
+Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4RzqKs4G8mz3c50
-	for <openbmc@lists.ozlabs.org>; Tue,  3 Oct 2023 05:31:45 +1100 (AEDT)
-Received: by mail-oo1-xc35.google.com with SMTP id 006d021491bc7-57b9231e91dso27275eaf.2
-        for <openbmc@lists.ozlabs.org>; Mon, 02 Oct 2023 11:31:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696271502; x=1696876302; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pKjHs7tNvXYJ3E6TMRogj11ZeQDv6+I8lDqqMDt8DKk=;
-        b=ZykUW/gyt2P3tnTKVgf1mwzgCkBVGsN8Ks3YSEYg3xVHQvPVgZ/VmPUwvRLO4YCWl1
-         4VjlbEwdhBp3fHCC5SbXihdJVqTCPblimZM8fwrcVUGESBS4sBNYkYLqYkkBqlDjM9/T
-         vxDAUTBGiZ8RkboK4grmI/pLMGbwCYfA2i1iJHSKr/oRQ4y4VSPTU9CIOl5Hd22xeJxK
-         IBqTRkOGz/hFDogokPjlkLgI70QSLYO9mphrR2lNmel9CaSWdbDwtcv+hVc7W4ZGoqWU
-         pvEj6ThDNpRQQIdv8ks0dDzHrz6JSxOP0gLmYK2uc7H+9AdmRFrd4l0lXUeefuuPNTuh
-         W9aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696271502; x=1696876302;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pKjHs7tNvXYJ3E6TMRogj11ZeQDv6+I8lDqqMDt8DKk=;
-        b=wqXgFwdMGm5xWl7Vr8fHE7ooFlWY0PN9fvfsvc+kxNtuV52TX1M29ScA/9L+836z+K
-         XchiEPbj5miAsQuLmcs2lrPbcc4m3022VHYjUEjwukq+02lJXhZGrAdrZ0+1iXNqbl4g
-         UJcwks6W5ehMb7IF0paACo6DjSS/PfY+9yA04OGi14hHe/PEDTYXJ5clz41rCfORojKP
-         CZNw/wHyr9Q8zJAnA6gfEphoUp8WEsJ3dyggCCJjSZg6/80nDz+biWr7ZRWLaDwtdZHi
-         PAS2mOwLdudu/fKfuVNdHF6EBAAjhZW7MKMTLNRgZdjRH6y2PmfuQ6tnouxs7H09lAes
-         RsEA==
-X-Gm-Message-State: AOJu0Ywk8w6ltKiO2S/TWrn8W+xHE3ji3XX2ve79h0Cu+Hr5Gz7aGbp4
-	0hiMxLhRfpDhTxY3GaOLtQl36EafvsQCpHDf1mI=
-X-Google-Smtp-Source: AGHT+IFqSa/RifbLkRi+5SY1jP5NREDCl6ac0ljNJ8cNo5HNK2jj/w6Q2763mLH7m8OXtFSKFFJYqmZgMSSvJyfU/0s=
-X-Received: by 2002:a05:6820:295:b0:57b:e345:43ad with SMTP id
- q21-20020a056820029500b0057be34543admr11373706ood.4.1696271502251; Mon, 02
- Oct 2023 11:31:42 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Rzqjt1WrRz3cH4
+	for <openbmc@lists.ozlabs.org>; Tue,  3 Oct 2023 05:49:03 +1100 (AEDT)
+Received: from NTILML01.nuvoton.com (212.199.177.18.static.012.net.il [212.199.177.18])
+	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 392Imuvn021044
+	for <openbmc@lists.ozlabs.org>; Mon, 2 Oct 2023 21:48:56 +0300
+Received: from NTHCML01A.nuvoton.com (10.1.8.177) by NTILML01.nuvoton.com
+ (10.190.1.46) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Mon, 2 Oct
+ 2023 21:48:55 +0300
+Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTHCML01A.nuvoton.com
+ (10.1.8.177) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Tue, 3 Oct
+ 2023 02:48:53 +0800
+Received: from taln60.nuvoton.co.il (10.191.1.180) by NTHCCAS01.nuvoton.com
+ (10.1.8.28) with Microsoft SMTP Server id 15.1.2375.34 via Frontend
+ Transport; Tue, 3 Oct 2023 02:48:53 +0800
+Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
+	id 719756473F; Mon,  2 Oct 2023 21:48:52 +0300 (IDT)
+From: Tomer Maimon <tmaimon77@gmail.com>
+To: <openbmc@lists.ozlabs.org>
+Subject: [PATCH linux dev-6.5 v1 0/2] MMC: add NPCM SDHCI driver support
+Date: Mon, 2 Oct 2023 21:48:47 +0300
+Message-ID: <20231002184849.119225-1-tmaimon77@gmail.com>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-References: <20231002175052.112406-1-tmaimon77@gmail.com> <20231002175052.112406-3-tmaimon77@gmail.com>
- <CAHp75Vd701sE-pkTWYi=PsOpVoBa-fbOm91P3bGLruCn5U1KXA@mail.gmail.com> <CAP6Zq1jM3=D5PBp1z7=K6LRNJaZe3rEPutXm_xxo7p2Z60sWmQ@mail.gmail.com>
-In-Reply-To: <CAP6Zq1jM3=D5PBp1z7=K6LRNJaZe3rEPutXm_xxo7p2Z60sWmQ@mail.gmail.com>
-From: Andy Shevchenko <andy.shevchenko@gmail.com>
-Date: Mon, 2 Oct 2023 21:31:06 +0300
-Message-ID: <CAHp75VczCMaA0Kd7Lhr6PXG_kJJ5iFqe3WdX+v7xJMjdi0KdgA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] mmc: sdhci-npcm: Add NPCM SDHCI driver
-To: Tomer Maimon <tmaimon77@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-NotSetDelaration: True
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -76,24 +52,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, ulf.hansson@linaro.org, benjaminfair@google.com, arnd@arndb.de, krakoczy@antmicro.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, briannorris@chromium.org, linux-mmc@vger.kernel.org, adrian.hunter@intel.com, tali.perry1@gmail.com, gsomlo@gmail.com, joel@jms.id.au, davidgow@google.com, skhan@linuxfoundation.org, linux-kernel@vger.kernel.org, pbrobinson@gmail.com
+Cc: Joel Stanley <joel@jms.id.au>, Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Mon, Oct 2, 2023 at 9:29=E2=80=AFPM Tomer Maimon <tmaimon77@gmail.com> w=
-rote:
-> On Mon, 2 Oct 2023 at 21:22, Andy Shevchenko <andy.shevchenko@gmail.com> =
-wrote:
-> > On Mon, Oct 2, 2023 at 8:51=E2=80=AFPM Tomer Maimon <tmaimon77@gmail.co=
-m> wrote:
+This patch set adds SDHCI support for the Nuvoton NPCM Baseboard
+Management Controller (BMC).
 
-...
+The NPCM SDHCI driver tested on NPCM750 and NPCM845 EVB.
 
-> > + mod_devicetable.h
-> why?
+Tomer Maimon (2):
+  dt-bindings: mmc: npcm,sdhci: Document NPCM SDHCI controller
+  mmc: sdhci-npcm: Add NPCM SDHCI driver
 
-of_device_id is defined there.
+ .../devicetree/bindings/mmc/npcm,sdhci.yaml   | 45 +++++++++
+ drivers/mmc/host/Kconfig                      |  8 ++
+ drivers/mmc/host/Makefile                     |  1 +
+ drivers/mmc/host/sdhci-npcm.c                 | 96 +++++++++++++++++++
+ 4 files changed, 150 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/mmc/npcm,sdhci.yaml
+ create mode 100644 drivers/mmc/host/sdhci-npcm.c
 
---=20
-With Best Regards,
-Andy Shevchenko
+-- 
+2.33.0
+
