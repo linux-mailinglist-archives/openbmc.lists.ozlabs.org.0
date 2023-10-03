@@ -1,45 +1,45 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 69E687B6718
-	for <lists+openbmc@lfdr.de>; Tue,  3 Oct 2023 13:03:14 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 937B47B6709
+	for <lists+openbmc@lfdr.de>; Tue,  3 Oct 2023 13:02:14 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4S0FKr2bXdz3f0P
-	for <lists+openbmc@lfdr.de>; Tue,  3 Oct 2023 22:03:12 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4S0FJh3VM1z3cG5
+	for <lists+openbmc@lfdr.de>; Tue,  3 Oct 2023 22:02:12 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized) smtp.mailfrom=nuvoton.com (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tomer.maimon@nuvoton.com; receiver=lists.ozlabs.org)
 Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4S0FJF1Tp8z3c5S
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4S0FJF1WRfz3c7q
 	for <openbmc@lists.ozlabs.org>; Tue,  3 Oct 2023 22:01:46 +1100 (AEDT)
 Received: from NTILML01.nuvoton.com (212.199.177.18.static.012.net.il [212.199.177.18])
-	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 393B1dZ6008645
+	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 393B1dXe008651
 	for <openbmc@lists.ozlabs.org>; Tue, 3 Oct 2023 14:01:39 +0300
-Received: from NTHCCAS04.nuvoton.com (10.1.8.29) by NTILML01.nuvoton.com
+Received: from NTHCCAS02.nuvoton.com (10.1.9.121) by NTILML01.nuvoton.com
  (10.190.1.46) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256) id 15.1.2176.14; Tue, 3 Oct
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Tue, 3 Oct
  2023 14:01:38 +0300
-Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTHCCAS04.nuvoton.com
- (10.1.8.29) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2176.14; Tue, 3
- Oct 2023 19:01:36 +0800
+Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTHCCAS02.nuvoton.com
+ (10.1.9.121) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Tue, 3 Oct
+ 2023 19:01:36 +0800
 Received: from taln60.nuvoton.co.il (10.191.1.180) by NTHCCAS01.nuvoton.com
  (10.1.8.28) with Microsoft SMTP Server id 15.1.2375.34 via Frontend
- Transport; Tue, 3 Oct 2023 19:01:35 +0800
+ Transport; Tue, 3 Oct 2023 19:01:36 +0800
 Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
-	id 1773D64741; Tue,  3 Oct 2023 14:01:35 +0300 (IDT)
+	id A1FC164742; Tue,  3 Oct 2023 14:01:35 +0300 (IDT)
 From: Tomer Maimon <tmaimon77@gmail.com>
 To: <peter.chen@kernel.org>, <gregkh@linuxfoundation.org>,
         <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
         <xu.yang_2@nxp.com>, <peng.fan@nxp.com>, <avifishman70@gmail.com>,
         <tali.perry1@gmail.com>, <joel@jms.id.au>, <venture@google.com>,
         <yuenn@google.com>, <benjaminfair@google.com>, <j.neuschaefer@gmx.net>
-Subject: [PATCH v4 1/3] usb: chipidea: add CI_HDRC_FORCE_VBUS_ACTIVE_ALWAYS flag
-Date: Tue, 3 Oct 2023 14:01:28 +0300
-Message-ID: <20231003110130.229711-2-tmaimon77@gmail.com>
+Subject: [PATCH v4 2/3] dt-bindings: usb: ci-hdrc-usb2: add npcm750 and npcm845 compatible
+Date: Tue, 3 Oct 2023 14:01:29 +0300
+Message-ID: <20231003110130.229711-3-tmaimon77@gmail.com>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20231003110130.229711-1-tmaimon77@gmail.com>
 References: <20231003110130.229711-1-tmaimon77@gmail.com>
@@ -62,46 +62,35 @@ Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-usb@vger.kernel.
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Adding CI_HDRC_FORCE_VBUS_ACTIVE_ALWAYS flag to modify the vbus_active
-parameter to active in case the ChipIdea USB IP role is device-only and
-there is no otgsc register.
+Add a compatible string for Nuvoton BMC NPCM750 and Nuvoton BMC NPCM845.
 
 Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
 ---
- drivers/usb/chipidea/otg.c   | 5 ++++-
- include/linux/usb/chipidea.h | 1 +
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/usb/chipidea/otg.c b/drivers/usb/chipidea/otg.c
-index f5490f2a5b6b..647e98f4e351 100644
---- a/drivers/usb/chipidea/otg.c
-+++ b/drivers/usb/chipidea/otg.c
-@@ -130,8 +130,11 @@ enum ci_role ci_otg_role(struct ci_hdrc *ci)
- 
- void ci_handle_vbus_change(struct ci_hdrc *ci)
- {
--	if (!ci->is_otg)
-+	if (!ci->is_otg) {
-+		if (ci->platdata->flags & CI_HDRC_FORCE_VBUS_ACTIVE_ALWAYS)
-+			usb_gadget_vbus_connect(&ci->gadget);
- 		return;
-+	}
- 
- 	if (hw_read_otgsc(ci, OTGSC_BSV) && !ci->vbus_active)
- 		usb_gadget_vbus_connect(&ci->gadget);
-diff --git a/include/linux/usb/chipidea.h b/include/linux/usb/chipidea.h
-index 0b4f2d5faa08..5a7f96684ea2 100644
---- a/include/linux/usb/chipidea.h
-+++ b/include/linux/usb/chipidea.h
-@@ -64,6 +64,7 @@ struct ci_hdrc_platform_data {
- #define CI_HDRC_PMQOS			BIT(15)
- #define CI_HDRC_PHY_VBUS_CONTROL	BIT(16)
- #define CI_HDRC_HAS_PORTSC_PEC_MISSED	BIT(17)
-+#define CI_HDRC_FORCE_VBUS_ACTIVE_ALWAYS	BIT(18)
- 	enum usb_dr_mode	dr_mode;
- #define CI_HDRC_CONTROLLER_RESET_EVENT		0
- #define CI_HDRC_CONTROLLER_STOPPED_EVENT	1
+diff --git a/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml b/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
+index 1394557517b1..a9e173432002 100644
+--- a/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
++++ b/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
+@@ -16,6 +16,8 @@ properties:
+       - enum:
+           - chipidea,usb2
+           - lsi,zevio-usb
++          - nuvoton,npcm750-udc
++          - nuvoton,npcm845-udc
+           - nvidia,tegra20-ehci
+           - nvidia,tegra20-udc
+           - nvidia,tegra30-ehci
+@@ -388,6 +390,8 @@ allOf:
+             enum:
+               - chipidea,usb2
+               - lsi,zevio-usb
++              - nuvoton,npcm750-udc
++              - nuvoton,npcm845-udc
+               - nvidia,tegra20-udc
+               - nvidia,tegra30-udc
+               - nvidia,tegra114-udc
 -- 
 2.33.0
 
