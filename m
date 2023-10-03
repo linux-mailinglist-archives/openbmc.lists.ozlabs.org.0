@@ -1,68 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 95A177B656D
-	for <lists+openbmc@lfdr.de>; Tue,  3 Oct 2023 11:24:39 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id ED50B7B66C3
+	for <lists+openbmc@lfdr.de>; Tue,  3 Oct 2023 12:50:57 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=TXHll3L0;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=V516OOTX;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4S0C852z4Zz3cb8
-	for <lists+openbmc@lfdr.de>; Tue,  3 Oct 2023 20:24:37 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4S0F3g5w0tz3cBV
+	for <lists+openbmc@lfdr.de>; Tue,  3 Oct 2023 21:50:55 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=TXHll3L0;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=V516OOTX;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::234; helo=mail-lj1-x234.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c2e; helo=mail-oo1-xc2e.google.com; envelope-from=andy.shevchenko@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4S0C7S2YmVz3bq4
-	for <openbmc@lists.ozlabs.org>; Tue,  3 Oct 2023 20:24:02 +1100 (AEDT)
-Received: by mail-lj1-x234.google.com with SMTP id 38308e7fff4ca-2b9d07a8d84so8191461fa.3
-        for <openbmc@lists.ozlabs.org>; Tue, 03 Oct 2023 02:24:02 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4S0F3215mkz3c1Q
+	for <openbmc@lists.ozlabs.org>; Tue,  3 Oct 2023 21:50:20 +1100 (AEDT)
+Received: by mail-oo1-xc2e.google.com with SMTP id 006d021491bc7-57e4459aa29so363395eaf.0
+        for <openbmc@lists.ozlabs.org>; Tue, 03 Oct 2023 03:50:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696325038; x=1696929838; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=o02q/FIkDaGrgLqoN/Aj/vG1/YJOsTbj5fKhJBGnD2E=;
-        b=TXHll3L0lYHeHrYG5Hd/J4zsKDU5P/xhL2XRgKFVOVZm1y1FeczsijFfuS0qLwQ0Z4
-         gxFiD1tyk5lioKOIst/rWc8QbMI51nGDToLXhWrG2qPjGtEKltyzg96FO1hELB6oEfQI
-         LEhZVEoBLqh6otkWVg7gCSlBuj/+EFIiLDaJg7hbdsUip+SyYT1tAt4SZ0DWM1XJ3inA
-         1CpUKSkK+DvLxlt7ci3r+8oU+8qDzi2zYaHAt0FoGRfGYhQv31lyY55AGiphtHNhYhMx
-         46700D1kkU7YXGQdy2uXzfEkt4ewklcDDstR5WIJCqeqYxW/JIf2ba1V8FKy15ZkJzvA
-         44rw==
+        d=gmail.com; s=20230601; t=1696330216; x=1696935016; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=C/3GVTu0afK2EM7EWOS3wgoT181o6D5pcbv78as8HE0=;
+        b=V516OOTXyYduwXvpzCiO7UwxTt96vMQubNkXwl3ApUYs/Og3cn3yJJeyRVaIE9QqA/
+         7RfO7IHak8prcmASNC8liitTUyzBjwTSYf0CeDd+IMtjto2QLJty/+/NxzzSQb1MBVUl
+         Yonq9IVwGbyvISJV+zcCnZipM0ao6+F6RmP/IA0ERWFhag16ZQ9G2FZQG5XIy+gIT+gh
+         0Rc1WjGkMQ4dkf4C/2TFizMeSebM66/pJZ2Aevf8qYerhrjTVZ3GBa8tNynhE4V9AXWU
+         w6KMkdfHFlRHPS7pCCIeLW2/zTVlZgDNzgyh+fgckxceP6rSu+AVLNDsInSit7AETqZn
+         V/LQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696325038; x=1696929838;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=o02q/FIkDaGrgLqoN/Aj/vG1/YJOsTbj5fKhJBGnD2E=;
-        b=G54sbDlUmgdzRHCa2p7JsshU0elp56zW91nm/bIj8e3WR8iHom6qWjcu8Nj//AGuEa
-         An/HvY3Gx5Yh4Vm08xL+0f/CP+MmEPg/hdHjZU/AxjeCkZ/XhAaXTBBi8wKP4UWBy7ia
-         QCwET8VY/O0tlu1L2TOV1H5oHecUItnYtuJ0AVIKnn5Gd2eOI5db82smBMh01DjUmTSW
-         k1cT3PuRXzOJJ83T8HEghGpAeBItpk4QO1CuxNCSOlfb08vQk99WSo9hEx1acRw9g3Ob
-         FGg+eP8hmd/NDv0oiJu8hAqBQEkWumTSqOeoWAirMxJdbQNDy01tsEeaRBTpniEJ4E5G
-         VoSg==
-X-Gm-Message-State: AOJu0Yw73XbWHIWHM4Pe+1BOJN7sbetTYiWPQojAZtBO7mq8u0Jhk4Mc
-	ctdigeIgqr+0Pv15SCs8AW9/vRnBc6qOsz3icZ4=
-X-Google-Smtp-Source: AGHT+IG3BDQNI/pILbidS9xryMvAbSkn6Y/6bkHT63bOwqPMoRRoTSL7+zz03ry1Fl2f/uI9CfxqrOri93gbzoU0eQc=
-X-Received: by 2002:a2e:9b04:0:b0:2bd:e3e:1a23 with SMTP id
- u4-20020a2e9b04000000b002bd0e3e1a23mr10574736lji.45.1696325038173; Tue, 03
- Oct 2023 02:23:58 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1696330216; x=1696935016;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=C/3GVTu0afK2EM7EWOS3wgoT181o6D5pcbv78as8HE0=;
+        b=kZFV0HMvxaLTbObNrhYV9CGf/jnhKc8GjYSNrDiGywUqWajo3oc/jRAlbrHGRMZL7a
+         oouHB0I1w45DEUmfvBL/gkll4LVrNsKZ1DMRzXPLO7qhHI2CoBCgk7Jg/joapHeh3eWM
+         CWeTPpPDWYdrAwcWARVyuPMRxqbx5zT7u64UBTNXHlZxIu5s4NUxXc546xgzKg2M9owE
+         gNx/4f2jEhsRtBdEpuJ1EmNcLNKoAPmjCksXQbiAPkVcFfIRpCHyWBqCfXh9HqrkyDLC
+         /rxytY7Fs0OilS/U9UDjHNs7nadZU76sIVsBbD9Hm+5nLTBZAQxcNnNpj5BD+lFF1NES
+         sl0g==
+X-Gm-Message-State: AOJu0YzDG0T4Cf9nZqG7yg9KM5ScZXy8bpQdwsCCMVJuy5c/qZWFsEAh
+	0FGPCkLX8FepDvuL+4aOo6TW9Gt9xmVsOELUbP4=
+X-Google-Smtp-Source: AGHT+IGjvqSlP6GSpZt/GEk0OxELQYGIOGpISg+QgFtTkQ4ofCPdetgEL+fwI8pU6PjrCiy+Yiy/kvCap1plQHY20rE=
+X-Received: by 2002:a4a:bc94:0:b0:576:bbf6:8a8e with SMTP id
+ m20-20020a4abc94000000b00576bbf68a8emr1237644oop.2.1696330216245; Tue, 03 Oct
+ 2023 03:50:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20231002161350.64229-1-tmaimon77@gmail.com> <2023100323-reunite-upfront-8922@gregkh>
- <CAP6Zq1jHzRP1Ytzk8YXyR8ppAP=ZoPvPkYvC2yMRfTt5140zqw@mail.gmail.com> <0298e4a7-0f40-41d6-82f3-327d2fe493cc@linaro.org>
-In-Reply-To: <0298e4a7-0f40-41d6-82f3-327d2fe493cc@linaro.org>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Tue, 3 Oct 2023 12:23:46 +0300
-Message-ID: <CAP6Zq1ghiUhecvtC7gpKtbP11QTU8Js0wCk_sTFqjUf=d6KK1A@mail.gmail.com>
-Subject: Re: [PATCH RESEND v3 0/3] usb: ChipIdea: add Nuvoton NPCM UDC support
-To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+References: <20231002200610.129799-1-tmaimon77@gmail.com> <20231002200610.129799-3-tmaimon77@gmail.com>
+In-Reply-To: <20231002200610.129799-3-tmaimon77@gmail.com>
+From: Andy Shevchenko <andy.shevchenko@gmail.com>
+Date: Tue, 3 Oct 2023 13:49:40 +0300
+Message-ID: <CAHp75VdjB6wqeezL_UotQj-65HKb83wYh4hfA=PPiooRN0QX8Q@mail.gmail.com>
+Subject: Re: [PATCH v5 2/2] mmc: sdhci-npcm: Add NPCM SDHCI driver
+To: Tomer Maimon <tmaimon77@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -74,35 +75,33 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, peng.fan@nxp.com, linux-usb@vger.kernel.org, benjaminfair@google.com, avifishman70@gmail.com, Greg KH <gregkh@linuxfoundation.org>, peter.chen@kernel.org, xu.yang_2@nxp.com, j.neuschaefer@gmx.net, tali.perry1@gmail.com, robh+dt@kernel.org, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, venture@google.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
+Cc: devicetree@vger.kernel.org, ulf.hansson@linaro.org, benjaminfair@google.com, arnd@arndb.de, krakoczy@antmicro.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, briannorris@chromium.org, linux-mmc@vger.kernel.org, adrian.hunter@intel.com, tali.perry1@gmail.com, gsomlo@gmail.com, joel@jms.id.au, davidgow@google.com, skhan@linuxfoundation.org, linux-kernel@vger.kernel.org, pbrobinson@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Krzysztof,
-
-Appreciate your clarifications
-
-Thanks,
-
-Tomer
-
-On Tue, 3 Oct 2023 at 11:32, Krzysztof Kozlowski
-<krzysztof.kozlowski@linaro.org> wrote:
+On Mon, Oct 2, 2023 at 11:06=E2=80=AFPM Tomer Maimon <tmaimon77@gmail.com> =
+wrote:
 >
-> On 03/10/2023 08:56, Tomer Maimon wrote:
-> > Hi Greg,
-> >
-> > Forgot to add in Acked-by: Peter Chen <peter.chen@kernel.org> in V3,
-> > Resend the patch set with the Ack.
-> >
-> > Should I do it differently?
->
-> If it is RESEND after some time (min. 2 weeks), then it is fine. If you
-> added tags or changed something, make a new version. If you resend for
-> any other reason (assuming resend is valid), please mention shortly why
-> do you resend (e.g. "My company email servers maybe blocked it, so
-> resending without changes").
->
-> Best regards,
-> Krzysztof
->
+> Add Nuvoton NPCM BMC sdhci-pltfm controller driver.
+
+FWIW,
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+
+...
+
+> +static const struct of_device_id npcm_sdhci_of_match[] =3D {
+> +       { .compatible =3D "nuvoton,npcm750-sdhci", .data =3D &npcm7xx_sdh=
+ci_pdata, },
+> +       { .compatible =3D "nuvoton,npcm845-sdhci", .data =3D &npcm8xx_sdh=
+ci_pdata, },
+
+Only in case when you need a new version, you may remove the inner
+trailing commas,
+no  need to do this right now.
+
+> +       { }
+> +};
+
+--=20
+With Best Regards,
+Andy Shevchenko
