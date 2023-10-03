@@ -1,52 +1,67 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id AD0977B671D
-	for <lists+openbmc@lfdr.de>; Tue,  3 Oct 2023 13:03:43 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id EC77E7B6872
+	for <lists+openbmc@lfdr.de>; Tue,  3 Oct 2023 14:03:19 +0200 (CEST)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=a+Kx0Dg3;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4S0FLP3vB4z3chF
-	for <lists+openbmc@lfdr.de>; Tue,  3 Oct 2023 22:03:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4S0Gg92TZYz3cCh
+	for <lists+openbmc@lfdr.de>; Tue,  3 Oct 2023 23:03:17 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized) smtp.mailfrom=nuvoton.com (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tomer.maimon@nuvoton.com; receiver=lists.ozlabs.org)
-Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=a+Kx0Dg3;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::934; helo=mail-ua1-x934.google.com; envelope-from=milkfafa@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ua1-x934.google.com (mail-ua1-x934.google.com [IPv6:2607:f8b0:4864:20::934])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4S0FJF0xC3z3c1B
-	for <openbmc@lists.ozlabs.org>; Tue,  3 Oct 2023 22:01:45 +1100 (AEDT)
-Received: from NTILML01.nuvoton.com (212.199.177.18.static.012.net.il [212.199.177.18])
-	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 393B1dlH008648
-	for <openbmc@lists.ozlabs.org>; Tue, 3 Oct 2023 14:01:39 +0300
-Received: from NTHCML01A.nuvoton.com (10.1.8.177) by NTILML01.nuvoton.com
- (10.190.1.56) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Tue, 3 Oct
- 2023 14:01:38 +0300
-Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTHCML01A.nuvoton.com
- (10.1.8.177) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Tue, 3 Oct
- 2023 19:01:37 +0800
-Received: from taln60.nuvoton.co.il (10.191.1.180) by NTHCCAS01.nuvoton.com
- (10.1.8.28) with Microsoft SMTP Server id 15.1.2375.34 via Frontend
- Transport; Tue, 3 Oct 2023 19:01:36 +0800
-Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
-	id 24ED664740; Tue,  3 Oct 2023 14:01:36 +0300 (IDT)
-From: Tomer Maimon <tmaimon77@gmail.com>
-To: <peter.chen@kernel.org>, <gregkh@linuxfoundation.org>,
-        <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
-        <xu.yang_2@nxp.com>, <peng.fan@nxp.com>, <avifishman70@gmail.com>,
-        <tali.perry1@gmail.com>, <joel@jms.id.au>, <venture@google.com>,
-        <yuenn@google.com>, <benjaminfair@google.com>, <j.neuschaefer@gmx.net>
-Subject: [PATCH v4 3/3] usb: chipidea: Add support for NPCM
-Date: Tue, 3 Oct 2023 14:01:30 +0300
-Message-ID: <20231003110130.229711-4-tmaimon77@gmail.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20231003110130.229711-1-tmaimon77@gmail.com>
-References: <20231003110130.229711-1-tmaimon77@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4S0Gfb090gz3c3D
+	for <openbmc@lists.ozlabs.org>; Tue,  3 Oct 2023 23:02:45 +1100 (AEDT)
+Received: by mail-ua1-x934.google.com with SMTP id a1e0cc1a2514c-7b0a569e2f5so365736241.3
+        for <openbmc@lists.ozlabs.org>; Tue, 03 Oct 2023 05:02:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1696334562; x=1696939362; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=Hd+Lx4aRlWvSHrfg7WOKO3naulywUKZrNYQIafJkcZY=;
+        b=a+Kx0Dg3Zm6YIFiwa/CnWGJ4Fn8BI98TvJUOMquhOLUebP07+sHMZLGQYK2HW2vH1L
+         dOsVgqJ27LfQwFJbZg006wmKgHzJLaMkQM5/ie3IlA3lX0vIHp2nhj6sXkRpR6HPj1pn
+         Qzb3w1tvw2ImsHxbKfszQo+qQmqsSvhcHKIpTqeopHo3pXv3LW7Y4wKjQppkrguatLhl
+         +CSKlEZ2EBQ3lqw9SnSf8lPzD0184yHaEos1wdTEfu4QQEsjVFGSbwiexHPdci8x3vCn
+         g4jjGha1eu0HFnhsoTQgsjpZH8wsIzNVHSZ7N+ipjM3LchqWaCQ85VT/gvUOhSNXtNmH
+         gW5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1696334562; x=1696939362;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Hd+Lx4aRlWvSHrfg7WOKO3naulywUKZrNYQIafJkcZY=;
+        b=wNez+ZzMTM2+gaVp9uAp2JNY0HbQ+J1oBNeAjGDzGFbqL9YHyZPBYyLx8PxWh300lO
+         2uXvY1LVONjVp18kqtDF/N7TupMSCuqu1PIRWAecywMxZ7wpXYmJGkVymMOim+OXXgOr
+         w52/7xt7JNxWNN0zLA1AeVE/1m7oUpK+OMmLfjyggJwzE1zZYdlKUmqWRvIn+LdlTZN8
+         Pu8EDzYTJAaUguTThLpT387zLjUo0VaBo12OY6GgDU3Wv4HuYAlpQvYetsPLMA6wX3ik
+         umdHyIZ+FoRn79qd5tFTpcWEaU8s3NPIeVNXHVDlYE3k9CisVQhQuUjNr18y3csO6HP3
+         ie5g==
+X-Gm-Message-State: AOJu0YxeGWH0/D6Ux31VrYQuHtgQhx5ZioVj7dcu6NtXCmyuVujErZ6C
+	2SzudW5T9ygz8n9OifF8q290YUkSjMmbryhULRA=
+X-Google-Smtp-Source: AGHT+IGOT9AKk8fOpDGE1BJjc5REY867ya8oL5vBldAPtRvtWYbriuyP4mFkPCks4+SF+1iN1hdnmk3qgxyz6muVB34=
+X-Received: by 2002:a1f:d8c4:0:b0:490:e790:a15b with SMTP id
+ p187-20020a1fd8c4000000b00490e790a15bmr11034494vkg.10.1696334561880; Tue, 03
+ Oct 2023 05:02:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NotSetDelaration: True
+References: <3134a802-75fe-49f3-bcd6-06addc2ffaf5@moroto.mountain>
+In-Reply-To: <3134a802-75fe-49f3-bcd6-06addc2ffaf5@moroto.mountain>
+From: Kun-Fa Lin <milkfafa@gmail.com>
+Date: Tue, 3 Oct 2023 20:02:33 +0800
+Message-ID: <CADnNmFrOeGxUL1U9eJngKpMpoVVZXN4Owxxo9Ee18tEYxZ6FhQ@mail.gmail.com>
+Subject: Re: [PATCH] media: nuvoton: npcm-video: Fix IS_ERR() vs NULL bug
+To: Dan Carpenter <dan.carpenter@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,170 +73,45 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>
+Cc: Joseph Liu <kwliu@nuvoton.com>, openbmc@lists.ozlabs.org, kernel-janitors@vger.kernel.org, Hans Verkuil <hverkuil-cisco@xs4all.nl>, Mauro Carvalho Chehab <mchehab@kernel.org>, Marvin Lin <kflin@nuvoton.com>, linux-media@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add Nuvoton NPCM BMC SoCs support to USB ChipIdea driver.
-NPCM SoC include ChipIdea IP block that used for USB device controller
-mode.
+Hi Dan,
 
-Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
----
- drivers/usb/chipidea/Kconfig        |   4 +
- drivers/usb/chipidea/Makefile       |   1 +
- drivers/usb/chipidea/ci_hdrc_npcm.c | 114 ++++++++++++++++++++++++++++
- 3 files changed, 119 insertions(+)
- create mode 100644 drivers/usb/chipidea/ci_hdrc_npcm.c
+Thanks for the patch.
 
-diff --git a/drivers/usb/chipidea/Kconfig b/drivers/usb/chipidea/Kconfig
-index c815824a0b2d..bab45bc62361 100644
---- a/drivers/usb/chipidea/Kconfig
-+++ b/drivers/usb/chipidea/Kconfig
-@@ -43,6 +43,10 @@ config USB_CHIPIDEA_MSM
- 	tristate "Enable MSM hsusb glue driver" if EXPERT
- 	default USB_CHIPIDEA
- 
-+config USB_CHIPIDEA_NPCM
-+	tristate "Enable NPCM hsusb glue driver" if EXPERT
-+	default USB_CHIPIDEA
-+
- config USB_CHIPIDEA_IMX
- 	tristate "Enable i.MX USB glue driver" if EXPERT
- 	depends on OF
-diff --git a/drivers/usb/chipidea/Makefile b/drivers/usb/chipidea/Makefile
-index 71afeab97e83..718cb24603dd 100644
---- a/drivers/usb/chipidea/Makefile
-+++ b/drivers/usb/chipidea/Makefile
-@@ -13,6 +13,7 @@ ci_hdrc-$(CONFIG_USB_OTG_FSM)		+= otg_fsm.o
- 
- obj-$(CONFIG_USB_CHIPIDEA_GENERIC)	+= ci_hdrc_usb2.o
- obj-$(CONFIG_USB_CHIPIDEA_MSM)		+= ci_hdrc_msm.o
-+obj-$(CONFIG_USB_CHIPIDEA_NPCM)		+= ci_hdrc_npcm.o
- obj-$(CONFIG_USB_CHIPIDEA_PCI)		+= ci_hdrc_pci.o
- obj-$(CONFIG_USB_CHIPIDEA_IMX)		+= usbmisc_imx.o ci_hdrc_imx.o
- obj-$(CONFIG_USB_CHIPIDEA_TEGRA)	+= ci_hdrc_tegra.o
-diff --git a/drivers/usb/chipidea/ci_hdrc_npcm.c b/drivers/usb/chipidea/ci_hdrc_npcm.c
-new file mode 100644
-index 000000000000..37b64a3dbd96
---- /dev/null
-+++ b/drivers/usb/chipidea/ci_hdrc_npcm.c
-@@ -0,0 +1,114 @@
-+// SPDX-License-Identifier: GPL-2.0
-+// Copyright (c) 2023 Nuvoton Technology corporation.
-+
-+#include <linux/module.h>
-+#include <linux/platform_device.h>
-+#include <linux/pm_runtime.h>
-+#include <linux/usb/chipidea.h>
-+#include <linux/clk.h>
-+#include <linux/io.h>
-+#include <linux/reset-controller.h>
-+#include <linux/of.h>
-+
-+#include "ci.h"
-+
-+struct npcm_udc_data {
-+	struct platform_device	*ci;
-+	struct clk		*core_clk;
-+	struct ci_hdrc_platform_data pdata;
-+};
-+
-+static int npcm_udc_notify_event(struct ci_hdrc *ci, unsigned event)
-+{
-+	struct device *dev = ci->dev->parent;
-+
-+	switch (event) {
-+	case CI_HDRC_CONTROLLER_RESET_EVENT:
-+		/* clear all mode bits */
-+		hw_write(ci, OP_USBMODE, 0xffffffff, 0x0);
-+		break;
-+	default:
-+		dev_dbg(dev, "unknown ci_hdrc event\n");
-+		break;
-+	}
-+
-+	return 0;
-+}
-+
-+static int npcm_udc_probe(struct platform_device *pdev)
-+{
-+	int ret;
-+	struct npcm_udc_data *ci;
-+	struct platform_device *plat_ci;
-+	struct device *dev = &pdev->dev;
-+
-+	ci = devm_kzalloc(&pdev->dev, sizeof(*ci), GFP_KERNEL);
-+	if (!ci)
-+		return -ENOMEM;
-+	platform_set_drvdata(pdev, ci);
-+
-+	ci->core_clk = devm_clk_get_optional(dev, NULL);
-+	if (IS_ERR(ci->core_clk))
-+		return PTR_ERR(ci->core_clk);
-+
-+	ret = clk_prepare_enable(ci->core_clk);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "failed to enable the clock: %d\n", ret);
-+
-+	ci->pdata.name = dev_name(dev);
-+	ci->pdata.capoffset = DEF_CAPOFFSET;
-+	ci->pdata.flags	= CI_HDRC_REQUIRES_ALIGNED_DMA |
-+		CI_HDRC_FORCE_VBUS_ACTIVE_ALWAYS;
-+	ci->pdata.phy_mode = USBPHY_INTERFACE_MODE_UTMI;
-+	ci->pdata.notify_event = npcm_udc_notify_event;
-+
-+	plat_ci = ci_hdrc_add_device(dev, pdev->resource, pdev->num_resources,
-+				     &ci->pdata);
-+	if (IS_ERR(plat_ci)) {
-+		ret = PTR_ERR(plat_ci);
-+		dev_err(dev, "failed to register HDRC NPCM device: %d\n", ret);
-+		goto clk_err;
-+	}
-+
-+	pm_runtime_no_callbacks(dev);
-+	pm_runtime_enable(dev);
-+
-+	return 0;
-+
-+clk_err:
-+	clk_disable_unprepare(ci->core_clk);
-+	return ret;
-+}
-+
-+static int npcm_udc_remove(struct platform_device *pdev)
-+{
-+	struct npcm_udc_data *ci = platform_get_drvdata(pdev);
-+
-+	pm_runtime_disable(&pdev->dev);
-+	ci_hdrc_remove_device(ci->ci);
-+	clk_disable_unprepare(ci->core_clk);
-+
-+	return 0;
-+}
-+
-+static const struct of_device_id npcm_udc_dt_match[] = {
-+	{ .compatible = "nuvoton,npcm750-udc", },
-+	{ .compatible = "nuvoton,npcm845-udc", },
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(of, npcm_udc_dt_match);
-+
-+static struct platform_driver npcm_udc_driver = {
-+	.probe = npcm_udc_probe,
-+	.remove = npcm_udc_remove,
-+	.driver = {
-+		.name = "npcm_udc",
-+		.of_match_table = npcm_udc_dt_match,
-+	},
-+};
-+
-+module_platform_driver(npcm_udc_driver);
-+
-+MODULE_DESCRIPTION("NPCM USB device controller driver");
-+MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
-+MODULE_LICENSE("GPL v2");
--- 
-2.33.0
+> The of_parse_phandle() function returns NULL on error.  It never returns
+> error pointers.  Update the check accordingly.
 
+Commit message contains some redundant whitespaces.
+
+>
+> Fixes: 70721089985c ("media: nuvoton: Add driver for NPCM video capture and encoding engine")
+> Signed-off-by: Dan Carpenter <dan.carpenter@linaro.org>
+> ---
+>  drivers/media/platform/nuvoton/npcm-video.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/media/platform/nuvoton/npcm-video.c b/drivers/media/platform/nuvoton/npcm-video.c
+> index ac8d73b794d3..b9e6782f59b4 100644
+> --- a/drivers/media/platform/nuvoton/npcm-video.c
+> +++ b/drivers/media/platform/nuvoton/npcm-video.c
+> @@ -1660,9 +1660,9 @@ static int npcm_video_ece_init(struct npcm_video *video)
+>         void __iomem *regs;
+>
+>         ece_node = of_parse_phandle(video->dev->of_node, "nuvoton,ece", 0);
+> -       if (IS_ERR(ece_node)) {
+> +       if (!ece_node) {
+>                 dev_err(dev, "Failed to get ECE phandle in DTS\n");
+> -               return PTR_ERR(ece_node);
+> +               return -ENODEV;
+>         }
+>
+>         video->ece.enable = of_device_is_available(ece_node);
+
+Others,
+Reviewed-by: Marvin Lin <milkfafa@gmail.com>
+
+Regards,
+Marvin
