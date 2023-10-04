@@ -2,51 +2,51 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 538207B7882
-	for <lists+openbmc@lfdr.de>; Wed,  4 Oct 2023 09:17:20 +0200 (CEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=hadfSUMf;
-	dkim-atps=neutral
+	by mail.lfdr.de (Postfix) with ESMTPS id 28AB97B806D
+	for <lists+openbmc@lfdr.de>; Wed,  4 Oct 2023 15:14:01 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4S0mGj6Qydz3cHN
-	for <lists+openbmc@lfdr.de>; Wed,  4 Oct 2023 18:17:17 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4S0wBH0K4Kz3cDg
+	for <lists+openbmc@lfdr.de>; Thu,  5 Oct 2023 00:13:59 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=hadfSUMf;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=lists.ozlabs.org)
-Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [71.19.156.171])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=pengutronix.de (client-ip=2a0a:edc0:2:b01:1d::104; helo=metis.whiteo.stw.pengutronix.de; envelope-from=ukl@pengutronix.de; receiver=lists.ozlabs.org)
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4S0mG61Jsxz30P0;
-	Wed,  4 Oct 2023 18:16:46 +1100 (AEDT)
-Received: from hatter.bewilderbeest.net (unknown [IPv6:2602:61:7e5d:5300::2])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: zev)
-	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id DAF71DD9;
-	Wed,  4 Oct 2023 00:16:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
-	s=thorn; t=1696403803;
-	bh=yFCKItcXGPE1Q+oFb43qALwVs7ooi/Pj1fioqFcF6gw=;
-	h=From:To:Cc:Subject:Date:From;
-	b=hadfSUMfsGJ2vkIP/x8ARWUdzgF/1O22W2p3kl7aFETYKCgQYjqWYD8dd+u5IMAAb
-	 QwIJfiO2YOrAUYq9LkkngRKjaINpWN+x9ECkRf7URPtuomY/zTeiNAxm2O2wvooZcE
-	 b7E7qQkbbCzfQW+29dD3HVZmiKypiBPXXo7HwIbY=
-From: Zev Weiss <zev@bewilderbeest.net>
-To: Andrew Jeffery <andrew@codeconstruct.com.au>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Joel Stanley <joel@jms.id.au>,
-	linux-aspeed@lists.ozlabs.org
-Subject: [PATCH] pinctrl: aspeed: Allow changing hardware strap defaults
-Date: Wed,  4 Oct 2023 00:16:06 -0700
-Message-ID: <20231004071605.21323-2-zev@bewilderbeest.net>
-X-Mailer: git-send-email 2.42.0
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4S0w9s22zPz2yDt
+	for <openbmc@lists.ozlabs.org>; Thu,  5 Oct 2023 00:13:35 +1100 (AEDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qo1gc-000752-RQ; Wed, 04 Oct 2023 15:13:10 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qo1gc-00B2hg-DD; Wed, 04 Oct 2023 15:13:10 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1qo1gc-008zCo-3P; Wed, 04 Oct 2023 15:13:10 +0200
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: Borislav Petkov <bp@alien8.de>,
+	Tony Luck <tony.luck@intel.com>
+Subject: [PATCH 11/21] EDAC/npcm: Convert to platform remove callback returning void
+Date: Wed,  4 Oct 2023 15:12:44 +0200
+Message-Id: <20231004131254.2673842-12-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.40.1
+In-Reply-To: <20231004131254.2673842-1-u.kleine-koenig@pengutronix.de>
+References: <20231004131254.2673842-1-u.kleine-koenig@pengutronix.de>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1923; i=u.kleine-koenig@pengutronix.de; h=from:subject; bh=9elwnacy4hC51ienj2Z+Us36weEmvKfpBXTgQQ+HOVA=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBlHWSoRSWmM+3hSszD29TcULhrXY9FdJYJ6VvqT 9fuIDTZMdeJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZR1kqAAKCRCPgPtYfRL+ TnWHB/9mCD0nPuvxj1FdGxP1d161RTZjGuin2+lSXOh0ky5nwM0cbu0UPdlq6hWl/CIHXnbLhgE QMcUeiyA/ERmTe3O8AQgNmtMpCQGa+U6a2mtrHv3Y6+rsMV0E5vikf+EK44zTPWKa6L8OqUcQCG mhhhzfQ5NjWY5Ry9OdrbmRIOmNPi+xedSWOiuNrT8Un7d/ilQgU7hqHvSQ2ConDzSdf2U8HzKd0 cNs7uqpIF6LYJSM93kZXE2s+Um7Ku4v43Lk4BKenPlUd3KcT4CQs0fZGzFWAE6goC4MBip0Gios 6mXWpdWwMTiamaNfOkPS91hVkNV9YIsIIfBgL3kUafA/iKwn
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
 Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: openbmc@lists.ozlabs.org
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,107 +58,59 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-gpio@vger.kernel.org, openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org, Zev Weiss <zev@bewilderbeest.net>, linux-kernel@vger.kernel.org
+Cc: Stanley Chu <yschu@nuvoton.com>, Robert Richter <rric@kernel.org>, Benjamin Fair <benjaminfair@google.com>, linux-edac@vger.kernel.org, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, openbmc@lists.ozlabs.org, Tali Perry <tali.perry1@gmail.com>, James Morse <james.morse@arm.com>, kernel@pengutronix.de, Mauro Carvalho Chehab <mchehab@kernel.org>, Marvin Lin <kflin@nuvoton.com>, Tomer Maimon <tmaimon77@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Previously we've generally assumed that the defaults in the hardware
-strapping register are in fact appropriate for the system and thus
-have avoided making any changes to its contents (with the exception of
-the bits controlling the GPIO passthrough feature).
+The .remove() callback for a platform driver returns an int which makes
+many driver authors wrongly assume it's possible to do error handling by
+returning an error code. However the value returned is ignored (apart
+from emitting a warning) and this typically results in resource leaks.
 
-Unfortunately, on some platforms corrections from software are
-required as the hardware strapping is simply incorrect for the system
-(such as the SPI1 interface being configured for passthrough mode when
-master mode is in fact the only useful configuration for it).  We thus
-remove the checks preventing changes to the strap register so that the
-pinctrl subsystem can be used for such corrections.
+To improve here there is a quest to make the remove callback return
+void. In the first step of this quest all drivers are converted to
+.remove_new(), which already returns void. Eventually after all drivers
+are converted, .remove_new() will be renamed to .remove().
 
-Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+Trivially convert this driver from always returning zero in the remove
+callback to the void returning variant.
+
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 ---
- drivers/pinctrl/aspeed/pinctrl-aspeed-g4.c | 21 ---------------------
- drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c | 21 ---------------------
- drivers/pinctrl/aspeed/pinmux-aspeed.h     |  3 ---
- 3 files changed, 45 deletions(-)
+ drivers/edac/npcm_edac.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g4.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g4.c
-index bfed0e274643..7ecfe3e4280e 100644
---- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g4.c
-+++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g4.c
-@@ -2556,27 +2556,6 @@ static int aspeed_g4_sig_expr_set(struct aspeed_pinmux_data *ctx,
- 		if (!ctx->maps[desc->ip])
- 			return -ENODEV;
+diff --git a/drivers/edac/npcm_edac.c b/drivers/edac/npcm_edac.c
+index 6d15c1550263..2e2133b784e9 100644
+--- a/drivers/edac/npcm_edac.c
++++ b/drivers/edac/npcm_edac.c
+@@ -410,7 +410,7 @@ static int edac_probe(struct platform_device *pdev)
+ 	return rc;
+ }
  
--		/*
--		 * Strap registers are configured in hardware or by early-boot
--		 * firmware. Treat them as read-only despite that we can write
--		 * them. This may mean that certain functions cannot be
--		 * deconfigured and is the reason we re-evaluate after writing
--		 * all descriptor bits.
--		 *
--		 * Port D and port E GPIO loopback modes are the only exception
--		 * as those are commonly used with front-panel buttons to allow
--		 * normal operation of the host when the BMC is powered off or
--		 * fails to boot. Once the BMC has booted, the loopback mode
--		 * must be disabled for the BMC to control host power-on and
--		 * reset.
--		 */
--		if (desc->ip == ASPEED_IP_SCU && desc->reg == HW_STRAP1 &&
--		    !(desc->mask & (BIT(21) | BIT(22))))
--			continue;
+-static int edac_remove(struct platform_device *pdev)
++static void edac_remove(struct platform_device *pdev)
+ {
+ 	struct mem_ctl_info *mci = platform_get_drvdata(pdev);
+ 	struct priv_data *priv = mci->pvt_info;
+@@ -426,8 +426,6 @@ static int edac_remove(struct platform_device *pdev)
+ 	regmap_write(npcm_regmap, pdata->ctl_int_mask_master,
+ 		     pdata->int_mask_master_global_mask);
+ 	regmap_update_bits(npcm_regmap, pdata->ctl_ecc_en, pdata->ecc_en_mask, 0);
 -
--		if (desc->ip == ASPEED_IP_SCU && desc->reg == HW_STRAP2)
--			continue;
--
- 		ret = regmap_update_bits(ctx->maps[desc->ip], desc->reg,
- 					 desc->mask, val);
+-	return 0;
+ }
  
-diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
-index 4c0d26606b6c..3e57e76c2eb7 100644
---- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
-+++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
-@@ -2735,27 +2735,6 @@ static int aspeed_g5_sig_expr_set(struct aspeed_pinmux_data *ctx,
- 			return PTR_ERR(map);
- 		}
+ static const struct npcm_platform_data npcm750_edac = {
+@@ -533,7 +531,7 @@ static struct platform_driver npcm_edac_driver = {
+ 		.of_match_table = npcm_edac_of_match,
+ 	},
+ 	.probe = edac_probe,
+-	.remove = edac_remove,
++	.remove_new = edac_remove,
+ };
  
--		/*
--		 * Strap registers are configured in hardware or by early-boot
--		 * firmware. Treat them as read-only despite that we can write
--		 * them. This may mean that certain functions cannot be
--		 * deconfigured and is the reason we re-evaluate after writing
--		 * all descriptor bits.
--		 *
--		 * Port D and port E GPIO loopback modes are the only exception
--		 * as those are commonly used with front-panel buttons to allow
--		 * normal operation of the host when the BMC is powered off or
--		 * fails to boot. Once the BMC has booted, the loopback mode
--		 * must be disabled for the BMC to control host power-on and
--		 * reset.
--		 */
--		if (desc->ip == ASPEED_IP_SCU && desc->reg == HW_STRAP1 &&
--		    !(desc->mask & (BIT(21) | BIT(22))))
--			continue;
--
--		if (desc->ip == ASPEED_IP_SCU && desc->reg == HW_STRAP2)
--			continue;
--
- 		/* On AST2500, Set bits in SCU70 are cleared from SCU7C */
- 		if (desc->ip == ASPEED_IP_SCU && desc->reg == HW_STRAP1) {
- 			u32 value = ~val & desc->mask;
-diff --git a/drivers/pinctrl/aspeed/pinmux-aspeed.h b/drivers/pinctrl/aspeed/pinmux-aspeed.h
-index aaa78a613196..e9068acd5879 100644
---- a/drivers/pinctrl/aspeed/pinmux-aspeed.h
-+++ b/drivers/pinctrl/aspeed/pinmux-aspeed.h
-@@ -16,9 +16,6 @@
-  * bits. Some difficulty arises as the pin's function bit masks for each
-  * priority level are frequently not the same (i.e. cannot just flip a bit to
-  * change from a high to low priority signal), or even in the same register.
-- * Further, not all signals can be unmuxed, as some expressions depend on
-- * values in the hardware strapping register (which may be treated as
-- * read-only).
-  *
-  * SoC Multi-function Pin Expression Examples
-  * ------------------------------------------
+ module_platform_driver(npcm_edac_driver);
 -- 
-2.42.0
+2.40.1
 
