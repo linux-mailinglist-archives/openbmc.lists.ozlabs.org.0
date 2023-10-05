@@ -1,52 +1,52 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id CC9D97B99EE
-	for <lists+openbmc@lfdr.de>; Thu,  5 Oct 2023 04:28:23 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1579E7B9A27
+	for <lists+openbmc@lfdr.de>; Thu,  5 Oct 2023 05:09:42 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=L1KlwZ52;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=cN/CuYrP;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4S1Fps64ZMz3cc6
-	for <lists+openbmc@lfdr.de>; Thu,  5 Oct 2023 13:28:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4S1GkX0hNRz3cc0
+	for <lists+openbmc@lfdr.de>; Thu,  5 Oct 2023 14:09:40 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=L1KlwZ52;
+	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=cN/CuYrP;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=lists.ozlabs.org)
 Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [IPv6:2605:2700:0:5::4713:9cab])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4S1FpB0rzvz30hj;
-	Thu,  5 Oct 2023 13:27:46 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4S1Gjs57YQz30NN;
+	Thu,  5 Oct 2023 14:09:05 +1100 (AEDT)
 Received: from hatter.bewilderbeest.net (unknown [IPv6:2602:61:7e5d:5300::2])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: zev)
-	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id D9693224;
-	Wed,  4 Oct 2023 19:27:39 -0700 (PDT)
+	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 5DDAE224;
+	Wed,  4 Oct 2023 20:09:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
-	s=thorn; t=1696472860;
-	bh=k9dGTvabPa4GHbKIwp8xZ0TDgZ+c9lWcoPsXISUj8rA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=L1KlwZ52gZzhy2d3kHVfD1Q7MkBdDApGOs7f6Eo1djfLQHkejGftyk4aDockPrk89
-	 V1c6wwzaWJMZHoMq+tC1CYW5lOmhsDqfwqdfqQ+YjhVn/h8ejsAMn8fXRlwUldqvlk
-	 mVWzAUBgGn6rCjEtYjl7zGMmpmmypNAJOhqQMyK4=
-Date: Wed, 4 Oct 2023 19:27:38 -0700
+	s=thorn; t=1696475343;
+	bh=jhW/GPSan/u14E5ed+1vqJkRblZ4OlBm+NkX/QKFAVY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=cN/CuYrP1UDn3bJhJ7G8Di0ztdAFDtjbcP3bpeecFQ01bwwnxIertZ5eLxUFNqXwM
+	 EYBalbsSMgxxMG9pzSsl6yFMqFmgE78XfOVuOXBnROZCnmGLevKW5pVOuw1ZNIOcc5
+	 Jci94/J1+ZzoQ3UXA0Vr5K5D4v++GqR6G8ZB2fYc=
 From: Zev Weiss <zev@bewilderbeest.net>
-To: Andrew Jeffery <andrew@codeconstruct.com.au>
-Subject: Re: [PATCH] pinctrl: aspeed: Allow changing hardware strap defaults
-Message-ID: <f9b5694a-5859-4999-bb2d-0e6a79b35c95@hatter.bewilderbeest.net>
-References: <20231004071605.21323-2-zev@bewilderbeest.net>
- <e5f0a67e05cf477bdb4ec6efd9c554f4aaa2cf8b.camel@codeconstruct.com.au>
+To: Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Joel Stanley <joel@jms.id.au>,
+	linux-aspeed@lists.ozlabs.org
+Subject: [PATCH v2] pinctrl: aspeed: Allow changing SPI mode from hardware strap defaults
+Date: Wed,  4 Oct 2023 20:08:50 -0700
+Message-ID: <20231005030849.11352-2-zev@bewilderbeest.net>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <e5f0a67e05cf477bdb4ec6efd9c554f4aaa2cf8b.camel@codeconstruct.com.au>
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -58,41 +58,95 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, Linus Walleij <linus.walleij@linaro.org>, linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org, Joel Stanley <joel@jms.id.au>, openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org
+Cc: linux-gpio@vger.kernel.org, openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org, Zev Weiss <zev@bewilderbeest.net>, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Wed, Oct 04, 2023 at 06:17:50PM PDT, Andrew Jeffery wrote:
->On Wed, 2023-10-04 at 00:16 -0700, Zev Weiss wrote:
->> Previously we've generally assumed that the defaults in the hardware
->> strapping register are in fact appropriate for the system and thus
->> have avoided making any changes to its contents (with the exception of
->> the bits controlling the GPIO passthrough feature).
->>
->> Unfortunately, on some platforms corrections from software are
->> required as the hardware strapping is simply incorrect for the system
->> (such as the SPI1 interface being configured for passthrough mode when
->> master mode is in fact the only useful configuration for it).  We thus
->> remove the checks preventing changes to the strap register so that the
->> pinctrl subsystem can be used for such corrections.
->
->So the strapping for the SPI1 configuration seems to be prone to
->(copy/paste?) mistakes. Is there evidence that motivates dropping all
->the protection instead of poking a hole for SPI1 like we did for the
->passthrough GPIOs?
->
->I'm still a little attached to the policy that software should be
->beholden to the strapping, and to try to mitigate software mistakes
->given the smattering of bits required to drive the Aspeed pinmux.
->
+Some platforms unfortunately have their SPI mode selection bits
+strapped incorrectly (such as being configured for passthrough mode
+when master mode is in fact the only useful configuration for it) and
+thus require correction in software.  Add the SPI mode bits to the
+GPIO passthrough bits as the exceptions to the read-only rule for the
+hardware strap register so that the pinctrl subsystem can be used for
+such corrections.
 
-I have no idea what else might be lurking out there so I took a broader 
-(perhaps overly heavy-handed) approach, but the SPI1 mode bits are the 
-only ones I've personally encountered being strapped wrong, so sure, I'd 
-be fine with just extending the "hole-punch" a bit to add those bits.  
-I'll send a v2 doing that shortly.
+Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
+---
 
+Changes since v1 [1]:
+ - Refined to an additional per-bit exception instead of allowing
+   arbitrary strap register alterations [Andrew]
 
-Thanks,
-Zev
+[1] https://lore.kernel.org/lkml/20231004071605.21323-2-zev@bewilderbeest.net/
+
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g4.c | 19 ++++++++++++-------
+ drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c | 19 ++++++++++++-------
+ 2 files changed, 24 insertions(+), 14 deletions(-)
+
+diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g4.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g4.c
+index bfed0e274643..774f8d05142f 100644
+--- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g4.c
++++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g4.c
+@@ -2563,15 +2563,20 @@ static int aspeed_g4_sig_expr_set(struct aspeed_pinmux_data *ctx,
+ 		 * deconfigured and is the reason we re-evaluate after writing
+ 		 * all descriptor bits.
+ 		 *
+-		 * Port D and port E GPIO loopback modes are the only exception
+-		 * as those are commonly used with front-panel buttons to allow
+-		 * normal operation of the host when the BMC is powered off or
+-		 * fails to boot. Once the BMC has booted, the loopback mode
+-		 * must be disabled for the BMC to control host power-on and
+-		 * reset.
++		 * We make two exceptions to the read-only rule:
++		 *
++		 * - The passthrough mode of GPIO ports D and E are commonly
++		 *   used with front-panel buttons to allow normal operation
++		 *   of the host if the BMC is powered off or fails to boot.
++		 *   Once the BMC has booted, the loopback mode must be
++		 *   disabled for the BMC to control host power-on and reset.
++		 *
++		 * - The operating mode of the SPI1 interface is simply
++		 *   strapped incorrectly on some systems and requires a
++		 *   software fixup, which we allow to be done via pinctrl.
+ 		 */
+ 		if (desc->ip == ASPEED_IP_SCU && desc->reg == HW_STRAP1 &&
+-		    !(desc->mask & (BIT(21) | BIT(22))))
++		    !(desc->mask & (BIT(22) | BIT(21) | BIT(13) | BIT(12))))
+ 			continue;
+ 
+ 		if (desc->ip == ASPEED_IP_SCU && desc->reg == HW_STRAP2)
+diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c b/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
+index 4c0d26606b6c..5bb8fd0d1e41 100644
+--- a/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
++++ b/drivers/pinctrl/aspeed/pinctrl-aspeed-g5.c
+@@ -2742,15 +2742,20 @@ static int aspeed_g5_sig_expr_set(struct aspeed_pinmux_data *ctx,
+ 		 * deconfigured and is the reason we re-evaluate after writing
+ 		 * all descriptor bits.
+ 		 *
+-		 * Port D and port E GPIO loopback modes are the only exception
+-		 * as those are commonly used with front-panel buttons to allow
+-		 * normal operation of the host when the BMC is powered off or
+-		 * fails to boot. Once the BMC has booted, the loopback mode
+-		 * must be disabled for the BMC to control host power-on and
+-		 * reset.
++		 * We make two exceptions to the read-only rule:
++		 *
++		 * - The passthrough mode of GPIO ports D and E are commonly
++		 *   used with front-panel buttons to allow normal operation
++		 *   of the host if the BMC is powered off or fails to boot.
++		 *   Once the BMC has booted, the loopback mode must be
++		 *   disabled for the BMC to control host power-on and reset.
++		 *
++		 * - The operating mode of the SPI1 interface is simply
++		 *   strapped incorrectly on some systems and requires a
++		 *   software fixup, which we allow to be done via pinctrl.
+ 		 */
+ 		if (desc->ip == ASPEED_IP_SCU && desc->reg == HW_STRAP1 &&
+-		    !(desc->mask & (BIT(21) | BIT(22))))
++		    !(desc->mask & (BIT(22) | BIT(21) | BIT(13) | BIT(12))))
+ 			continue;
+ 
+ 		if (desc->ip == ASPEED_IP_SCU && desc->reg == HW_STRAP2)
+-- 
+2.42.0
 
