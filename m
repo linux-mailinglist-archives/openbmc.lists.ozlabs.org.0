@@ -2,26 +2,26 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D82717BAA20
-	for <lists+openbmc@lfdr.de>; Thu,  5 Oct 2023 21:27:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DEE167BAA19
+	for <lists+openbmc@lfdr.de>; Thu,  5 Oct 2023 21:26:15 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4S1hQd6fRMz3cgJ
-	for <lists+openbmc@lfdr.de>; Fri,  6 Oct 2023 06:27:21 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4S1hPK5N34z3cdM
+	for <lists+openbmc@lfdr.de>; Fri,  6 Oct 2023 06:26:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org; spf=fail (SPF fail - not authorized) smtp.mailfrom=nuvoton.com (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tomer.maimon@nuvoton.com; receiver=lists.ozlabs.org)
 Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4S1hNt0Jcgz3cPN
-	for <openbmc@lists.ozlabs.org>; Fri,  6 Oct 2023 06:25:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4S1hNs6Fmpz3cC3
+	for <openbmc@lists.ozlabs.org>; Fri,  6 Oct 2023 06:25:46 +1100 (AEDT)
 Received: from NTILML01.nuvoton.com (212.199.177.18.static.012.net.il [212.199.177.18])
-	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 395JPZQe011773
-	for <openbmc@lists.ozlabs.org>; Thu, 5 Oct 2023 22:25:35 +0300
+	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 395JPaJL011776
+	for <openbmc@lists.ozlabs.org>; Thu, 5 Oct 2023 22:25:36 +0300
 Received: from NTHCML01A.nuvoton.com (10.1.8.177) by NTILML01.nuvoton.com
  (10.190.1.46) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Thu, 5 Oct
- 2023 22:25:34 +0300
+ 2023 22:25:35 +0300
 Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTHCML01A.nuvoton.com
  (10.1.8.177) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Fri, 6 Oct
@@ -30,16 +30,16 @@ Received: from taln60.nuvoton.co.il (10.191.1.180) by NTHCCAS01.nuvoton.com
  (10.1.8.28) with Microsoft SMTP Server id 15.1.2375.34 via Frontend
  Transport; Fri, 6 Oct 2023 03:25:32 +0800
 Received: by taln60.nuvoton.co.il (Postfix, from userid 10070)
-	id 74E7C63A27; Thu,  5 Oct 2023 22:25:31 +0300 (IDT)
+	id D36B063A28; Thu,  5 Oct 2023 22:25:31 +0300 (IDT)
 From: Tomer Maimon <tmaimon77@gmail.com>
 To: <peter.chen@kernel.org>, <gregkh@linuxfoundation.org>,
         <robh+dt@kernel.org>, <krzysztof.kozlowski+dt@linaro.org>,
         <xu.yang_2@nxp.com>, <peng.fan@nxp.com>, <avifishman70@gmail.com>,
         <tali.perry1@gmail.com>, <joel@jms.id.au>, <venture@google.com>,
         <yuenn@google.com>, <benjaminfair@google.com>, <j.neuschaefer@gmx.net>
-Subject: [PATCH v5 1/3] usb: chipidea: add CI_HDRC_FORCE_VBUS_ACTIVE_ALWAYS flag
-Date: Thu, 5 Oct 2023 22:25:27 +0300
-Message-ID: <20231005192529.162785-2-tmaimon77@gmail.com>
+Subject: [PATCH v5 2/3] dt-bindings: usb: ci-hdrc-usb2: add npcm750 and npcm845 compatible
+Date: Thu, 5 Oct 2023 22:25:28 +0300
+Message-ID: <20231005192529.162785-3-tmaimon77@gmail.com>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20231005192529.162785-1-tmaimon77@gmail.com>
 References: <20231005192529.162785-1-tmaimon77@gmail.com>
@@ -62,46 +62,45 @@ Cc: devicetree@vger.kernel.org, openbmc@lists.ozlabs.org, linux-usb@vger.kernel.
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Adding CI_HDRC_FORCE_VBUS_ACTIVE_ALWAYS flag to modify the vbus_active
-parameter to active in case the ChipIdea USB IP role is device-only and
-there is no otgsc register.
+Add a compatible string for Nuvoton BMC NPCM750 and Nuvoton BMC NPCM845.
 
 Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-Acked-by: Peter Chen <peter.chen@kernel.org>
 ---
- drivers/usb/chipidea/otg.c   | 5 ++++-
- include/linux/usb/chipidea.h | 1 +
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/drivers/usb/chipidea/otg.c b/drivers/usb/chipidea/otg.c
-index f5490f2a5b6b..647e98f4e351 100644
---- a/drivers/usb/chipidea/otg.c
-+++ b/drivers/usb/chipidea/otg.c
-@@ -130,8 +130,11 @@ enum ci_role ci_otg_role(struct ci_hdrc *ci)
+diff --git a/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml b/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
+index 1394557517b1..57780f8340ea 100644
+--- a/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
++++ b/Documentation/devicetree/bindings/usb/ci-hdrc-usb2.yaml
+@@ -16,6 +16,7 @@ properties:
+       - enum:
+           - chipidea,usb2
+           - lsi,zevio-usb
++          - nuvoton,npcm750-udc
+           - nvidia,tegra20-ehci
+           - nvidia,tegra20-udc
+           - nvidia,tegra30-ehci
+@@ -66,6 +67,10 @@ properties:
+       - items:
+           - const: xlnx,zynq-usb-2.20a
+           - const: chipidea,usb2
++      - items:
++          - enum:
++              - nuvoton,npcm845-udc
++          - const: nuvoton,npcm750-udc
  
- void ci_handle_vbus_change(struct ci_hdrc *ci)
- {
--	if (!ci->is_otg)
-+	if (!ci->is_otg) {
-+		if (ci->platdata->flags & CI_HDRC_FORCE_VBUS_ACTIVE_ALWAYS)
-+			usb_gadget_vbus_connect(&ci->gadget);
- 		return;
-+	}
- 
- 	if (hw_read_otgsc(ci, OTGSC_BSV) && !ci->vbus_active)
- 		usb_gadget_vbus_connect(&ci->gadget);
-diff --git a/include/linux/usb/chipidea.h b/include/linux/usb/chipidea.h
-index 0b4f2d5faa08..5a7f96684ea2 100644
---- a/include/linux/usb/chipidea.h
-+++ b/include/linux/usb/chipidea.h
-@@ -64,6 +64,7 @@ struct ci_hdrc_platform_data {
- #define CI_HDRC_PMQOS			BIT(15)
- #define CI_HDRC_PHY_VBUS_CONTROL	BIT(16)
- #define CI_HDRC_HAS_PORTSC_PEC_MISSED	BIT(17)
-+#define CI_HDRC_FORCE_VBUS_ACTIVE_ALWAYS	BIT(18)
- 	enum usb_dr_mode	dr_mode;
- #define CI_HDRC_CONTROLLER_RESET_EVENT		0
- #define CI_HDRC_CONTROLLER_STOPPED_EVENT	1
+   reg:
+     minItems: 1
+@@ -388,6 +393,8 @@ allOf:
+             enum:
+               - chipidea,usb2
+               - lsi,zevio-usb
++              - nuvoton,npcm750-udc
++              - nuvoton,npcm845-udc
+               - nvidia,tegra20-udc
+               - nvidia,tegra30-udc
+               - nvidia,tegra114-udc
 -- 
 2.33.0
 
