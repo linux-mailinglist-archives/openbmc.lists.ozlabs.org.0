@@ -2,82 +2,92 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 6C07C7BBDD3
-	for <lists+openbmc@lfdr.de>; Fri,  6 Oct 2023 19:32:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 585A07BBE11
+	for <lists+openbmc@lfdr.de>; Fri,  6 Oct 2023 19:55:55 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Od3i+dAg;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=Wngdtah6;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=G1FhAeV1;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4S2FqL1lzLz3vXk
-	for <lists+openbmc@lfdr.de>; Sat,  7 Oct 2023 04:32:14 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4S2GLd1Qnwz3cc6
+	for <lists+openbmc@lfdr.de>; Sat,  7 Oct 2023 04:55:53 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=Od3i+dAg;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=Wngdtah6;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=G1FhAeV1;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=lists.ozlabs.org)
-Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.28; helo=out4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
+Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4S2Fkd4y1Vz3ccQ
-	for <openbmc@lists.ozlabs.org>; Sat,  7 Oct 2023 04:28:09 +1100 (AEDT)
-Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
-	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 396HFXlq020397;
-	Fri, 6 Oct 2023 17:28:05 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : cc : subject
- : date : message-id : in-reply-to : references : mime-version :
- content-transfer-encoding; s=pp1;
- bh=Gw7SapJbBnev5CVrafLrnLawyQHVga3X1Mb9OQ1LMbo=;
- b=Od3i+dAgDSRGK5GJdsRvV4/F2/GSRQT9iiyGIdZk999UVNmEodATowL1LOpSHRRwY2Mh
- qApUIVpYUXgOf+MB01uNlo7zELNNPtPGJuNfww3b2qy/GNO8DxX50akdh03ronZCBlMO
- +E8FBk5kdqc2Vu+3S5MONtrcrek8aHGa/aEHmqdaALjf2+E0b5iJIbn8Tfe6q+KFRJZu
- TPwETeWSKbVtQkt7nA+OjmBEJRvs+HeN1giuB5L1ZWxAaQG1BPd53DlcH63BTNS38G1O
- N/3Wqhxi7OMyXiLZ+k/y7aJ9KuqKoWLjiB6ELOmGDgA2NrPXFcR0omc31RgTOPxBmjei CA== 
-Received: from ppma12.dal12v.mail.ibm.com (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
-	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3tjpftrd65-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 06 Oct 2023 17:28:04 +0000
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
-	by ppma12.dal12v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 396Gw8dX005868;
-	Fri, 6 Oct 2023 17:28:04 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
-	by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 3tex0uasc4-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-	Fri, 06 Oct 2023 17:28:04 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com [10.39.53.229])
-	by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 396HS0u524511136
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
-	Fri, 6 Oct 2023 17:28:01 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 97D6C58059;
-	Fri,  6 Oct 2023 17:28:00 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
-	by IMSVA (Postfix) with ESMTP id 5055958058;
-	Fri,  6 Oct 2023 17:28:00 +0000 (GMT)
-Received: from slate16.aus.stglabs.ibm.com (unknown [9.61.60.170])
-	by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
-	Fri,  6 Oct 2023 17:28:00 +0000 (GMT)
-From: Eddie James <eajames@linux.ibm.com>
-To: openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-6.5 4/4] ARM: dts: aspeed: Rainier 4U: Delete fan dual-tach properties
-Date: Fri,  6 Oct 2023 12:27:35 -0500
-Message-Id: <20231006172735.420566-5-eajames@linux.ibm.com>
-X-Mailer: git-send-email 2.39.3
-In-Reply-To: <20231006172735.420566-1-eajames@linux.ibm.com>
-References: <20231006172735.420566-1-eajames@linux.ibm.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4S2GL03nxgz3cPS
+	for <openbmc@lists.ozlabs.org>; Sat,  7 Oct 2023 04:55:20 +1100 (AEDT)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailout.nyi.internal (Postfix) with ESMTP id 542B45C02D1;
+	Fri,  6 Oct 2023 13:55:18 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute7.internal (MEProxy); Fri, 06 Oct 2023 13:55:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm1; t=1696614918; x=1696701318; bh=AN
+	i6+t9JVaCnC5PA9SzoKu5clPpkI/IZZxcUQfvmShE=; b=Wngdtah60JkpJ1+b9R
+	7c4wpsgr0v+5ZQyE25j6VUpD7vUFEZERuETy7s7b0ggdxhQnREsgMGBQwRZhc0bs
+	CReW2ejg21G4z4YkNBwDumURXAouaeR89cMV0QuJpGiRi8dMlCCiOdOx5rRUKaGb
+	SZxTKgRJTy6ekiGEvU5OFmIZknFayIioDuLhD0twHK4wKG9TrMd7XC9d+FbxJ133
+	JLHSbMvU8zo4aYXGqZuR4z+hq3JPtVS/gmttjso1TZbmg/1MQfQzb4qq+QnbTaD2
+	SYtKuO2b5qz7Et9BL5SHPYkJEgCtPMBCxwDwGC+v0+VZk8elA+DjXjOps5xvDV4l
+	VuBA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm2; t=1696614918; x=1696701318; bh=ANi6+t9JVaCnC
+	5PA9SzoKu5clPpkI/IZZxcUQfvmShE=; b=G1FhAeV1aBwycmMi4QQmKmnv27XxI
+	vmoEFww3ReGhkpU/cVUgoUsvKisQB0q8/U+LPeGgs9IDqaAnHzsYg3bW4qJp57n6
+	ibF6MFa9JbuOgmdMGA/ph81ZYBpsa0p3jb55fplrSautIRsFve+nY10NMAA8li3S
+	B1BefoxCHJOpesCoRRv/8HCKulIQQTiLIOKtK0aebSyMNq0zxRaz4fksQUHr3JNw
+	3j66CUmjlnfQKorbHUONfy5NKVA+CkrKZO/1Lo52Q7ZbijgN4g15tP2Er5pKH+9d
+	jn1+yxgUHG2Dq8NeB0KHDu911oyPbicLcD2f6gsjmLFC90fJRX1JWRhYQ==
+X-ME-Sender: <xms:BUogZXxcTigJ0P070ZqMGmKwmfMqmVRnDzSRNqPwBOBzjyF5CksR9w>
+    <xme:BUogZfTkuqL_5P4NZJn9dWDrI4ToRL7AgRzDlcWCHH711F1yiryogYYdxr9wwlXh0
+    oR2M3k-wmSeJYqEZZQ>
+X-ME-Received: <xmr:BUogZRUMl9NG_8kFKJZ0dm8heUTcZoMIjwSi0dlc5q09A-TVsjECWRDwWNspYXbLOudKYgbAainO9n49mpfrQ91U4in3V7dMhR0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrgeeigdduudeiucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    gfrhhlucfvnfffucdlfeehmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredt
+    tddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
+    hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeehfeejheeftdejiedvfeekffeh
+    ledukeduleelffekgfdtleduledvtdegtdehkeenucevlhhushhtvghrufhiiigvpedtne
+    curfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrhhitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:BUogZRhvamqdvD8ESTfjgMkZzVKCNb2A4uqY5BqCfnVtYHnAV1ZuUg>
+    <xmx:BUogZZChhGXrcXkBb5a8bsLU_YK-F6a7yW5w-tIKcOE1SWr-06n7Ug>
+    <xmx:BUogZaLGRrSUaHWpq3NsdQC7D0_CMGE46KZrhNcfwN7mToE4ZM4b_Q>
+    <xmx:BkogZc40el9NIzQPjGBY4St3k_EH3fPOUcNYFhj5JjlFNOdIWXpCuw>
+Feedback-ID: i68a1478a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Oct 2023 13:55:17 -0400 (EDT)
+Date: Fri, 6 Oct 2023 12:55:15 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Sunitha Harish <sunithaharish04@gmail.com>
+Subject: Re: D-bus model proposal for pay for access features -
+ LicenseService at OpenBMC
+Message-ID: <ZSBKA2D8Euw2DMjU@heinlein.vulture-banana.ts.net>
+References: <CAMhqiMoFAHcUk0nO_xoOubcZqF_dPDFweqsttTULRJK38o1Ung@mail.gmail.com>
+ <CACWQX83=CG_H8YUvEYj4BpDWFPoYkVLdpxo6n9V5LneTeeM7Bw@mail.gmail.com>
+ <20210504233843.hvuvmebaznanqnlv@thinkpad.fuzziesquirrel.com>
+ <YJLXlNyk/c8IVf9e@heinlein>
+ <0af0324d-c8a1-4ce8-80c3-f8f846cc930f@gmail.com>
+ <ZR_9p11_v5wQAOKB@heinlein.vulture-banana.ts.net>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: QNEf3b5r3BHjlAYO4d8nyCi-KBnaGik5
-X-Proofpoint-GUID: QNEf3b5r3BHjlAYO4d8nyCi-KBnaGik5
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
- definitions=2023-10-06_13,2023-10-06_01,2023-05-22_02
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1015
- malwarescore=0 mlxscore=0 spamscore=0 impostorscore=0 suspectscore=0
- priorityscore=1501 adultscore=0 phishscore=0 lowpriorityscore=0
- mlxlogscore=719 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2309180000 definitions=main-2310060130
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="9y2T7Iw0T/KHMGxo"
+Content-Disposition: inline
+In-Reply-To: <ZR_9p11_v5wQAOKB@heinlein.vulture-banana.ts.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -89,51 +99,68 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Eddie James <eajames@linux.ibm.com>, joel@jms.id.au
+Cc: raviteja28031990@gmail.com, Ratan Gupta <ratankgupta31@gmail.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>, Brad Bishop <bradleyb@fuzziesquirrel.com>, abhilash.kollam@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The fans in the 4U chassis do not have dual tachometers, so remove those
-properties in the device tree.
 
-Signed-off-by: Eddie James <eajames@linux.ibm.com>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- .../dts/aspeed/aspeed-bmc-ibm-rainier-4u.dts  | 24 +++++++++++++++++++
- 1 file changed, 24 insertions(+)
+--9y2T7Iw0T/KHMGxo
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-rainier-4u.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-rainier-4u.dts
-index 342546a3c0f5..24283cc3d486 100644
---- a/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-rainier-4u.dts
-+++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-ibm-rainier-4u.dts
-@@ -19,3 +19,27 @@ power-supply@6b {
- 		reg = <0x6b>;
- 	};
- };
-+
-+&fan0 {
-+	/delete-property/ maxim,fan-dual-tach;
-+};
-+
-+&fan1 {
-+	/delete-property/ maxim,fan-dual-tach;
-+};
-+
-+&fan2 {
-+	/delete-property/ maxim,fan-dual-tach;
-+};
-+
-+&fan3 {
-+	/delete-property/ maxim,fan-dual-tach;
-+};
-+
-+&fan4 {
-+	/delete-property/ maxim,fan-dual-tach;
-+};
-+
-+&fan5 {
-+	/delete-property/ maxim,fan-dual-tach;
-+};
--- 
-2.39.3
+On Fri, Oct 06, 2023 at 07:29:27AM -0500, Patrick Williams wrote:
 
+> So you're going to add some custom PLDM commands to offload this to your
+> host firmware.  How is this helpful to the rest of the community?
+> Again, why do I want to take on the maintenance risk and legal risk
+> associated with this feature?  Why would anyone else in the community?
+
+I had someone ask me offline if this mean that only features that have
+applicability to more than one community member would be acceptable.
+This was not my intention by saying this.  I was speaking specifically
+about *this* feature.
+
+Originally this proposal was that the license server would be a way that
+multiple parties could collaborate on it.  Moving it to a custom PLDM
+command set diminishes that.
+
+My overall point is that this proposal is, as currently presented and in
+my opinion, a net-negative for the project.
+
+In a very general sense, as long as a contribution is going to be
+maintained, the contribution follows our processes, and the contribution
+isn't considered a bad idea for a variety of maintainer-determined
+reasons*, we should be accepting of features that might only be
+applicable to one party.  It isn't the wide-spread applicability, or lack
+there of, that is an issue.
+
+(*) I'm leaving a lot of wiggle room in that statement because I don't
+    want someone to interpret this to mean "Patrick says any code we're
+    going to maintain should be acceptable".  It is entirely reasonable
+    for maintainers to say: this is not a direction we want to go. =20
+
+--=20
+Patrick Williams
+
+--9y2T7Iw0T/KHMGxo
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmUgSgEACgkQqwNHzC0A
+wRmN1w/+LJvg7JblL3xnwp3lhvZjNpPWkpW6jcc8U/pIJQwD5F/oxg3vRkz6vZtd
+1z9sj3ldtrkmmWq19MUB4BhGpCDIHv8rdnomVu7dH9c6+zptCocE/b3xRifARw0f
+vDISl9pDlECLNnNt8u8U35mc3RViONgOmK0FaGEMwLwhTwBvsWzR0yEbTNXddyhy
+FCLhF4bkFe5/2mupKEjJXM4yWEGj4i7ZhzzzRm6/9VZuqxO1JdpCK9n+RbfATYSc
+Opg7gJ+2CCCSPVvHW93O9sAvMKqQ0usxE3c7AZICKdCduOZDC6n0Fhd1V+A5hrQi
+gQkadGRAF/ikeD1wTGssBfCQJbhh4ByjV8uH6ZP0nHHFZIHQ0dENPmTMDhlH3Jv6
+Vo6eob2gN9Q3RnTwm41TWyq3Mgh0hDQZRMztX9qGUKaglZl919xbVp6bzCFRGwS+
+DgYTwzTnAhQv8gBv2TlBy3GPR3zzOZX2PxIm3Awu/yC/EXtK7tWUoTnLN3RRUxbc
+poP8kUeX5c+sw3Y4VtZn4yPUXRrILT13AOE+R330ejMOOqugO59XT2MD/LzIlTgt
+GokqrznpqduOlHsh7BH+q2QXMGqwD210Zv3r1mKAAA6B/9z3Yagc4Libp+IvMUFc
+3j1KWGlZFs5PWcn2VznCP1GzxX8aHXmdTPdkhmfYzSZOP0ZTuVU=
+=9NQA
+-----END PGP SIGNATURE-----
+
+--9y2T7Iw0T/KHMGxo--
