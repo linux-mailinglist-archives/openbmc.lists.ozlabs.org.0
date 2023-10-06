@@ -1,96 +1,80 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id B3B337BBD8E
-	for <lists+openbmc@lfdr.de>; Fri,  6 Oct 2023 19:18:32 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 8A3FE7BBDBE
+	for <lists+openbmc@lfdr.de>; Fri,  6 Oct 2023 19:29:33 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=XjNt/p8u;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=aBcZc0EQ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qLg7uVXz;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4S2FWV45Xqz3dDJ
-	for <lists+openbmc@lfdr.de>; Sat,  7 Oct 2023 04:18:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4S2FmB5gjRz3dwr
+	for <lists+openbmc@lfdr.de>; Sat,  7 Oct 2023 04:29:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=XjNt/p8u;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=aBcZc0EQ;
+	dkim=pass (2048-bit key; unprotected) header.d=ibm.com header.i=@ibm.com header.a=rsa-sha256 header.s=pp1 header.b=qLg7uVXz;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.28; helo=out4-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=lists.ozlabs.org)
-Received: from out4-smtp.messagingengine.com (out4-smtp.messagingengine.com [66.111.4.28])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linux.ibm.com (client-ip=148.163.158.5; helo=mx0b-001b2d01.pphosted.com; envelope-from=eajames@linux.ibm.com; receiver=lists.ozlabs.org)
+Received: from mx0b-001b2d01.pphosted.com (mx0b-001b2d01.pphosted.com [148.163.158.5])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4S2FVq6MqDz3bvB
-	for <openbmc@lists.ozlabs.org>; Sat,  7 Oct 2023 04:17:55 +1100 (AEDT)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.nyi.internal (Postfix) with ESMTP id AD3FA5C01D4;
-	Fri,  6 Oct 2023 13:17:50 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Fri, 06 Oct 2023 13:17:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	fuzziesquirrel.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1696612670; x=1696699070; bh=/9
-	D/At6vvnv4ytkaV/NThvy76qY/nY4JAPWF5Y9zFd8=; b=XjNt/p8u6oiJXAlX8E
-	T/SHmGZK+Q/o3ujnw67GVPFsDFSCvj1tJHuvrhZngEBD8UEhnVmHdtmi1F/P/hfv
-	ww21w38xy3DS/2gTCOjYm7Nko2MCJStSTBfL7K6j9Y8W33y+Y5of1A6GdIUv1omO
-	2KRlQieeTNrHcwJ/R3IH4P0ybQ3hcLhv/kIv4oyww7u+gAlZz9WzObSkJtSkeYh0
-	nmt9bk+FfLsf7QaOd+MlBXtH4en3IDJMXruO60AbuErAu8BMFCPyLfRcL98mli4X
-	R/s74PwHolQ0fYn9YevCnmM/ch3iP6PLeuRwVRTKXeLILhCx5yPwpDqlN90cz7WB
-	91SQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to:x-me-proxy
-	:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1696612670; x=1696699070; bh=/9D/At6vvnv4ytkaV/NThvy76qY/nY4JAPW
-	F5Y9zFd8=; b=aBcZc0EQwyO/9Iv2UZq61GLy3ZxbeTDUzwzuIdvJ/dkdtwB9I5Q
-	YWPQ8On40BxLsVc00L0QMxlECNxEY11Hb1y4FkWtAnnjolDX/guYJfi+XOexcNID
-	Xbp6FF61Z/UER7GNaw8GTmCZrJH3rM8WH7W9PCdOCqNJgX/CLFpzsaHd/NndJT31
-	luzfFHE/ighWiNvoALrE+/hbWEGEyJoLdATv4IT5DIyLZYPgu++PsX7glbRonsEm
-	FN/StClPyZJR2y4VoAxe9+KUoMJKvhXgCYGUNjntbiGAZu6ER5+14ldQrhK69DhN
-	CfY6wMs2Kdzx2+Va3ISUB7oI9d0kDrUP4DQ==
-X-ME-Sender: <xms:PkEgZcTUlk17cE1jlUyLvrKL4cTyw1EnDi3M7kWw2ZMQaDn1ahrcCw>
-    <xme:PkEgZZzLBvHUu6rbe3rVVHP0tUSFPYZTCQRPPc6ZzitkM4RJ4xt74Le8c3kvnJs6s
-    Bj7PkXk5fn4i6pCY7M>
-X-ME-Received: <xmr:PkEgZZ0xA65kgAismAmX3dakUWuXSTkhv7fMk6Ag93875k1-vA2_tYYlHMbChEzJWJGNebVDCGFV1cZQhn9WEaO4UFHVuQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrgeeigddutdelucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggugfgjsehtkefstddttdejnecuhfhrohhmpeeurhgr
-    ugcuuehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtg
-    homheqnecuggftrfgrthhtvghrnhepgeegfeejtedtvddtffdvhfeifffhhffgfeefffdv
-    ieeiudevveehjeetfedugeejnecuffhomhgrihhnpehophgvnhgsmhgtrdhorhhgnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepsghrrggulhgv
-    higssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
-X-ME-Proxy: <xmx:PkEgZQCajh37iT1V2JA9I12VsaDVwBLa_E0GVVkpJV2XVHHaLketug>
-    <xmx:PkEgZVhWV-ioze4Cfy1W2k1o7H20dVQ_MrhXNY0BkrEgIHYY4GD8uA>
-    <xmx:PkEgZcpvyc6LnhEbocUmuXvH0vSLaqv2hMxlNj60j79p-A5WDzQRzQ>
-    <xmx:PkEgZTbrAi_jj__kkKueKCu8DRn8ZZHrqYGwlwnMVyfLLlofRAICGA>
-Feedback-ID: i02c9470a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 6 Oct 2023 13:17:49 -0400 (EDT)
-Date: Fri, 6 Oct 2023 13:17:46 -0400
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: Patrick Williams <patrick@stwcx.xyz>
-Subject: Re: D-bus model proposal for pay for access features -
- LicenseService at OpenBMC
-Message-ID: <ub2mniaycgyvj6ujfwytknyvhrscnjgoewxjtvpgq37znlxszf@yzvbxgnre4iy>
-References: <CAMhqiMoFAHcUk0nO_xoOubcZqF_dPDFweqsttTULRJK38o1Ung@mail.gmail.com>
- <CACWQX83=CG_H8YUvEYj4BpDWFPoYkVLdpxo6n9V5LneTeeM7Bw@mail.gmail.com>
- <20210504233843.hvuvmebaznanqnlv@thinkpad.fuzziesquirrel.com>
- <YJLXlNyk/c8IVf9e@heinlein>
- <0af0324d-c8a1-4ce8-80c3-f8f846cc930f@gmail.com>
- <ZR_9p11_v5wQAOKB@heinlein.vulture-banana.ts.net>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4S2FkX3RyNz3cV4
+	for <openbmc@lists.ozlabs.org>; Sat,  7 Oct 2023 04:28:04 +1100 (AEDT)
+Received: from pps.filterd (m0353722.ppops.net [127.0.0.1])
+	by mx0a-001b2d01.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 396HFVmL020340;
+	Fri, 6 Oct 2023 17:27:57 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=from : to : cc : subject
+ : date : message-id : mime-version : content-transfer-encoding; s=pp1;
+ bh=bUySupIf1ysIUbgasg030TXoLPUwpM9OdZsPlvNVz7U=;
+ b=qLg7uVXz1XtaYSdWuNZuG9VKGc1xn6HNR7qtApG+2ripDL/ofS8ohsQbhgfcAaeii2SO
+ RZAtp+XJ/wCs0tYEEvigdvlRPSBaFOOIYRqO7eHW8heTQuKiwj8WELTOY2zfboScIwgP
+ ufK8n/s89hDur0OXcckPqz30KB0DM0L4DE9Uxv1nYVNesOgEqiwzyR3R1d6kZJfsZr5n
+ PY5xFagmCpFehfABUVMNr/5ToI7s3Qb3UQgzPDvbJkvurtPNV/58DP4m2p33A4lj86dI
+ uACuOx6edOcQ4w1/5Muiyn8KHiBH7zLrNGkTEYWQhioAPAu6xqw2cNvwTIIgClVIqviX GQ== 
+Received: from ppma23.wdc07v.mail.ibm.com (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+	by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 3tjpftrd11-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 06 Oct 2023 17:27:57 +0000
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+	by ppma23.wdc07v.mail.ibm.com (8.17.1.19/8.17.1.19) with ESMTP id 396GxgK4007512;
+	Fri, 6 Oct 2023 17:27:56 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+	by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 3teygn2c3t-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Fri, 06 Oct 2023 17:27:56 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com [10.39.53.229])
+	by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id 396HRt1v11338158
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Fri, 6 Oct 2023 17:27:55 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id B4FBE5805C;
+	Fri,  6 Oct 2023 17:27:55 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+	by IMSVA (Postfix) with ESMTP id 6D39F5805B;
+	Fri,  6 Oct 2023 17:27:55 +0000 (GMT)
+Received: from slate16.aus.stglabs.ibm.com (unknown [9.61.60.170])
+	by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+	Fri,  6 Oct 2023 17:27:55 +0000 (GMT)
+From: Eddie James <eajames@linux.ibm.com>
+To: openbmc@lists.ozlabs.org
+Subject: [PATCH linux dev-6.5 0/4] ARM: dts: aspeed: p10bmc: Add fan controller properties
+Date: Fri,  6 Oct 2023 12:27:31 -0500
+Message-Id: <20231006172735.420566-1-eajames@linux.ibm.com>
+X-Mailer: git-send-email 2.39.3
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ZR_9p11_v5wQAOKB@heinlein.vulture-banana.ts.net>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 2Ymv5fULHzo4gNxz-Ui0xd108BCMHp1O
+X-Proofpoint-GUID: 2Ymv5fULHzo4gNxz-Ui0xd108BCMHp1O
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.267,Aquarius:18.0.980,Hydra:6.0.619,FMLib:17.11.176.26
+ definitions=2023-10-06_13,2023-10-06_01,2023-05-22_02
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 bulkscore=0 clxscore=1011
+ malwarescore=0 mlxscore=0 spamscore=0 impostorscore=0 suspectscore=0
+ priorityscore=1501 adultscore=0 phishscore=0 lowpriorityscore=0
+ mlxlogscore=566 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2309180000 definitions=main-2310060130
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,34 +86,25 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: raviteja28031990@gmail.com, Ratan Gupta <ratankgupta31@gmail.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>, Sunitha Harish <sunithaharish04@gmail.com>, abhilash.kollam@gmail.com
+Cc: Eddie James <eajames@linux.ibm.com>, joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Oct 06, 2023 at 07:29:27AM -0500, Patrick Williams wrote:
->On Fri, Oct 06, 2023 at 10:21:01AM +0530, Sunitha Harish wrote:
->> Hi Patrick,
->>
->> Re-starting this discussion with the design that is being worked at
->> License Manager: Add license manager design (Ibd6c6f35) · Gerrit Code
->> Review (openbmc.org) <https://gerrit.openbmc.org/c/openbmc/docs/+/64710>.
->
->I've already written enough on this topic.  You've not added much in
->terms of what I've already written, so I'm not sure what more you want
->me to say.
+Now that the max31785 driver can parse the relevant properties, update
+the device trees with the necessary properties.
 
-I just want to say that OEMs have many, many happy customers that gladly 
-pay for unlocking things.  They just don't typically hang out here 🙂.  
-I just bought a BMC license key the other day for my ~8 year old 
-Supermicro x10slh-f.  For what it is worth.  I know a lot of people have 
-a problem with charging for security fixes but this is bigger than just 
-that.
+Eddie James (4):
+  ARM: dts: aspeed: Rainier: Add fan controller properties
+  ARM: dts: aspeed: Everest: Add fan controller properties
+  ARM: dts: aspeed: Bonnell: Add fan controller properties
+  ARM: dts: aspeed: Rainier 4U: Delete fan dual-tach properties
 
-The legal/DMCA concerns are interesting.  I do wonder if the concerns 
-could be generalized to all the code, though, and not just a license 
-service.  Licensing features may not be in every OpenBMC users business 
-model, but doesn't every business have just as much incentive to go 
-after developers for public disclosure of -anything- that could impact 
-its business?  What makes the DMCA applicable to a license service only, 
-and not, for example, any old security vulnerability in foocorp-ipmi-oem 
-or foocorp-misc?
+ .../dts/aspeed/aspeed-bmc-ibm-bonnell.dts     | 14 +++++++
+ .../dts/aspeed/aspeed-bmc-ibm-everest.dts     | 28 +++++++++++++
+ .../dts/aspeed/aspeed-bmc-ibm-rainier-4u.dts  | 24 +++++++++++
+ .../dts/aspeed/aspeed-bmc-ibm-rainier.dts     | 42 +++++++++++++++++++
+ 4 files changed, 108 insertions(+)
+
+-- 
+2.39.3
+
