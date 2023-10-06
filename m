@@ -2,79 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 99EFD7BB0F1
-	for <lists+openbmc@lfdr.de>; Fri,  6 Oct 2023 06:51:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 30B137BB4B7
+	for <lists+openbmc@lfdr.de>; Fri,  6 Oct 2023 12:03:20 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Xdt/xcsV;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Bnb3AfHe;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4S1wxt3JdFz3cmk
-	for <lists+openbmc@lfdr.de>; Fri,  6 Oct 2023 15:51:46 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4S23sK64SMz3cjv
+	for <lists+openbmc@lfdr.de>; Fri,  6 Oct 2023 21:03:17 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Xdt/xcsV;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Bnb3AfHe;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::233; helo=mail-oi1-x233.google.com; envelope-from=sunithaharish04@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::133; helo=mail-lf1-x133.google.com; envelope-from=aladyshev22@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4S1wxF412Qz3c53
-	for <openbmc@lists.ozlabs.org>; Fri,  6 Oct 2023 15:51:11 +1100 (AEDT)
-Received: by mail-oi1-x233.google.com with SMTP id 5614622812f47-3add37de892so1077736b6e.1
-        for <openbmc@lists.ozlabs.org>; Thu, 05 Oct 2023 21:51:11 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4S23rR3BdVz3cB1;
+	Fri,  6 Oct 2023 21:02:30 +1100 (AEDT)
+Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-50435a9f800so2536775e87.2;
+        Fri, 06 Oct 2023 03:02:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1696567869; x=1697172669; darn=lists.ozlabs.org;
-        h=in-reply-to:from:references:cc:to:content-language:subject
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1696586545; x=1697191345; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=n3hFrBur7/qSeuucQhcaPa9df3bcoKj/0DABjnUThnw=;
-        b=Xdt/xcsVAEweqYGDdQJ70fb9lhnBwQFIPp6s4H61gE+Iu5ButcQIlpBfCzUZBWDYr6
-         VoP2ebmMpVeIrFk1ckDX6F3vdFxv7XDqtcekGcVUvmCkScuqCGSXWU9BYhjv6BVhnE4C
-         H8N3EJPw91ji/bKUyRD6OQglAKmpAGsRmoKAxhQONGqQiMkQcdleWq6kmAL2HgqF++oa
-         JvQ1Fe2dnd30CgmvODMndZZwvRc+8Q+7ODrOnbv9Op99MawRfoY4Fchez26FNIcQOrOZ
-         pfiNQGwYUnUSTlmM0Gvfxn1SHhgudZR8w4P/2UKWEIjG6SwkYOZrB+5zoEACr7EOT4Oa
-         rWsw==
+        bh=RVXNJRwMbWYP8lDR8Zj4lIcabRVrbtGn1/jxj2HPxxU=;
+        b=Bnb3AfHeVAEVTtLmHgQIcXa015T4kso3ijjR4qcxzpmjtiEPK1l07ZyCkfMKonogf2
+         oKRhFJDeMzmyovzr5YBUXwEk3A6xH66m2bD67ZkZVndUqkY+TRkQsc0ZJtdl5VA7n4ve
+         qBMfHLPLsfxbNuorKO+eoWrGAKtC9/c18YQGVjuuLq3/1/jrXme8ADGxTgTc/5O4kii6
+         xOkCYuP4k3VrkOrqK9NV9c5fJJL31h1tR7Z3R50l3gOPm9bi/vAsBs6d8OUWcXnaEyp5
+         WcH99ArvO39FrQ8ph8wxD1E3Y4S1l3P2hWA2ZDyPpM3YJlsnBMzGJoXKkdHXsjaGGZQz
+         f8dA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696567869; x=1697172669;
-        h=in-reply-to:from:references:cc:to:content-language:subject
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=n3hFrBur7/qSeuucQhcaPa9df3bcoKj/0DABjnUThnw=;
-        b=VQFMwInmy53dt7UpiuskcKIWgm2nl3rQW817fCnKjo2NC4JU7sDGEQLfv2cKQC37oe
-         x/t0Jv4kqhF5jD8ySlusfmJ4XuGG/kCiqSEoEQVJg1UXjVitITXkyPWVhcuDOno2iKqE
-         xXvzGs8KyaP0R23jsnvGvyEmyAS0XCBe9x8Dyp7n6D2tU+SVky5P2/7cqNUeN4OBKHH3
-         eFIaV8y/Qp+HUS71MlDxs1SVa8U45+ENI4NnOLjhiN/MLog0pJt4BHc5xG6gYDXC4AVR
-         hG1oZoU1RI1vBRRFcqB0qBHhclfF9jCxdn4EJVBn6mNVsZuE70jkNKn5sLTwSlZjk+tj
-         B3WQ==
-X-Gm-Message-State: AOJu0YyX5RBDGkZPbVJFYznOE8VWOFbloMU7siiuhpk8eaqtTdisZJu5
-	wsbolfaDa/IOyetsWtEdbxI=
-X-Google-Smtp-Source: AGHT+IFiGlBOjViRcj3f49vGV1/SoBMfHyjJNJ966iiW3ZIrqfdq4Wzcum2xPh2GoRAHw9WTrILluw==
-X-Received: by 2002:a05:6808:16a4:b0:3a4:8140:97e8 with SMTP id bb36-20020a05680816a400b003a4814097e8mr8893359oib.14.1696567868587;
-        Thu, 05 Oct 2023 21:51:08 -0700 (PDT)
-Received: from ?IPV6:2620:1f7:3d44:7c4b::32:3cc? ([2620:1f7:3d44:7c4b::32:3cc])
-        by smtp.gmail.com with ESMTPSA id a9-20020a63bd09000000b005891f3af36asm2347072pgf.87.2023.10.05.21.51.05
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Oct 2023 21:51:08 -0700 (PDT)
-Content-Type: multipart/alternative;
- boundary="------------RxlJmJ9R29eS2MKyN0zqNHnc"
-Message-ID: <0af0324d-c8a1-4ce8-80c3-f8f846cc930f@gmail.com>
-Date: Fri, 6 Oct 2023 10:21:01 +0530
+        d=1e100.net; s=20230601; t=1696586545; x=1697191345;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=RVXNJRwMbWYP8lDR8Zj4lIcabRVrbtGn1/jxj2HPxxU=;
+        b=MyiZXoHXajRnVj3Qejl2YZgUbFc76EgqllC3lE8yM6BPxIogwAPPsKusajfp2k6De+
+         IIFAVjiqNGhgOBQNEWWyNfel6ce3NoVB8V50n1IIxW5IErBRyt91pb4X+XnSm6O7vxuL
+         ltBc/Xa06txfRL7f+q+xAYWh7ouqysG05IN0SCCRfFUhrrwdzxMNJmfkGhoTBOvkCtWS
+         fyONxiIQq6frb35cHg90N04AKFMtbaGu6lHv/uWqbcCfT+0F5IjyT3Lj+fF3aJdJWB65
+         kKGcaZg2i4JWunJnBH8385yBoqmfch2qUlzSS8ceM5Vb+6qOPYIYgncx8r0AJJsLMx1X
+         HibA==
+X-Gm-Message-State: AOJu0YzMbzavcLHO3az/Hhb+/tZk1tr8YFAM1dfOkprq2wWh0LAJiQIp
+	5mqBohRkQciAoU74JpK15TE=
+X-Google-Smtp-Source: AGHT+IFgt8T3d6HC5kca86Qe4AfC5Dh9+bl8Ckl8nQQz81jWsyLiU6BCZMxiDVhAZE7coqmluHUPjQ==
+X-Received: by 2002:a05:6512:308e:b0:503:2642:435e with SMTP id z14-20020a056512308e00b005032642435emr7934101lfd.66.1696586544474;
+        Fri, 06 Oct 2023 03:02:24 -0700 (PDT)
+Received: from PC10319.67 ([82.97.198.254])
+        by smtp.googlemail.com with ESMTPSA id x12-20020a2e9dcc000000b002bcedacd726sm713674ljj.25.2023.10.06.03.02.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 06 Oct 2023 03:02:24 -0700 (PDT)
+From: Konstantin Aladyshev <aladyshev22@gmail.com>
+To: 
+Subject: [PATCH v4 3/3] mctp: Add MCTP-over-KCS transport binding
+Date: Fri,  6 Oct 2023 13:02:14 +0300
+Message-Id: <20231006100214.396-4-aladyshev22@gmail.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20231006100214.396-1-aladyshev22@gmail.com>
+References: <20231006100214.396-1-aladyshev22@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: D-bus model proposal for pay for access features - LicenseService
- at OpenBMC
-Content-Language: en-US
-To: Patrick Williams <patrick@stwcx.xyz>,
- Brad Bishop <bradleyb@fuzziesquirrel.com>, abhilash.kollam@gmail.com,
- raviteja28031990@gmail.com
-References: <CAMhqiMoFAHcUk0nO_xoOubcZqF_dPDFweqsttTULRJK38o1Ung@mail.gmail.com>
- <CACWQX83=CG_H8YUvEYj4BpDWFPoYkVLdpxo6n9V5LneTeeM7Bw@mail.gmail.com>
- <20210504233843.hvuvmebaznanqnlv@thinkpad.fuzziesquirrel.com>
- <YJLXlNyk/c8IVf9e@heinlein>
-From: Sunitha Harish <sunithaharish04@gmail.com>
-In-Reply-To: <YJLXlNyk/c8IVf9e@heinlein>
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,633 +78,652 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Ratan Gupta <ratankgupta31@gmail.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>
+Cc: tmaimon77@gmail.com, linux-aspeed@lists.ozlabs.org, tali.perry1@gmail.com, edumazet@google.com, jk@codeconstruct.com.au, matt@codeconstruct.com.au, benjaminfair@google.com, openbmc@lists.ozlabs.org, joel@jms.id.au, kuba@kernel.org, pabeni@redhat.com, minyard@acm.org, aladyshev22@gmail.com, openipmi-developer@lists.sourceforge.net, linux-arm-kernel@lists.infradead.org, andrew@aj.id.au, venture@google.com, linux-kernel@vger.kernel.org, avifishman70@gmail.com, netdev@vger.kernel.org, davem@davemloft.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This is a multi-part message in MIME format.
---------------RxlJmJ9R29eS2MKyN0zqNHnc
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+This change adds a MCTP KCS transport binding, as defined by the DMTF
+specificiation DSP0254 - "MCTP KCS Transport Binding".
+A MCTP protocol network device is created for each KCS channel found in
+the system.
+The interrupt code for the KCS state machine is based on the current
+IPMI KCS driver.
 
-Hi Patrick,
+Signed-off-by: Konstantin Aladyshev <aladyshev22@gmail.com>
+---
+ drivers/net/mctp/Kconfig    |   8 +
+ drivers/net/mctp/Makefile   |   1 +
+ drivers/net/mctp/mctp-kcs.c | 594 ++++++++++++++++++++++++++++++++++++
+ 3 files changed, 603 insertions(+)
+ create mode 100644 drivers/net/mctp/mctp-kcs.c
 
-Re-starting this discussion with the design that is being worked at 
-License Manager: Add license manager design (Ibd6c6f35) · Gerrit Code 
-Review (openbmc.org) <https://gerrit.openbmc.org/c/openbmc/docs/+/64710>.
+diff --git a/drivers/net/mctp/Kconfig b/drivers/net/mctp/Kconfig
+index dc71657d9184..a37f7ba947c0 100644
+--- a/drivers/net/mctp/Kconfig
++++ b/drivers/net/mctp/Kconfig
+@@ -33,6 +33,14 @@ config MCTP_TRANSPORT_I2C
+ 	  from DMTF specification DSP0237. A MCTP protocol network device is
+ 	  created for each I2C bus that has been assigned a mctp-i2c device.
+ 
++config MCTP_TRANSPORT_KCS
++	tristate "MCTP KCS transport"
++	depends on IPMI_KCS_BMC
++	help
++	  Provides a driver to access MCTP devices over KCS transport, from
++	  DMTF specification DSP0254. A MCTP protocol network device is
++	  created for each KCS channel found in the system.
++
+ endmenu
+ 
+ endif
+diff --git a/drivers/net/mctp/Makefile b/drivers/net/mctp/Makefile
+index 1ca3e6028f77..885339a40f22 100644
+--- a/drivers/net/mctp/Makefile
++++ b/drivers/net/mctp/Makefile
+@@ -1,2 +1,3 @@
+ obj-$(CONFIG_MCTP_SERIAL) += mctp-serial.o
+ obj-$(CONFIG_MCTP_TRANSPORT_I2C) += mctp-i2c.o
++obj-$(CONFIG_MCTP_TRANSPORT_KCS) += mctp-kcs.o
+diff --git a/drivers/net/mctp/mctp-kcs.c b/drivers/net/mctp/mctp-kcs.c
+new file mode 100644
+index 000000000000..2ea2ab00c188
+--- /dev/null
++++ b/drivers/net/mctp/mctp-kcs.c
+@@ -0,0 +1,594 @@
++// SPDX-License-Identifier: GPL-2.0
++/*
++ * Management Component Transport Protocol (MCTP) KCS transport binding.
++ * This driver is an implementation of the DMTF specificiation
++ * "DSP0254 - Management Component Transport Protocol (MCTP) KCS Transport
++ * Binding", available at:
++ *
++ * https://www.dmtf.org/sites/default/files/standards/documents/DSP0254_1.0.0.pdf
++ *
++ * This driver provides DSP0254-type MCTP-over-KCS transport using a Linux
++ * KCS client subsystem.
++ *
++ * Copyright (c) 2023 Konstantin Aladyshev <aladyshev22@gmail.com>
++ */
++
++#include <linux/i2c.h>
++#include <linux/if_arp.h>
++#include <linux/ipmi_kcs.h>
++#include <linux/kcs_bmc_client.h>
++#include <linux/mctp.h>
++#include <linux/module.h>
++#include <linux/mutex.h>
++#include <linux/netdevice.h>
++#include <net/mctp.h>
++#include <net/mctpdevice.h>
++#include <net/pkt_sched.h>
++
++#define MCTP_KCS_MTU 64
++#define KCS_MSG_BUFSIZ 1000
++
++struct mctp_kcs {
++	struct list_head entry;
++
++	/* protects rx & tx state machines */
++	spinlock_t lock;
++
++	struct kcs_bmc_client client;
++	struct net_device *netdev;
++
++	enum kcs_ipmi_phases phase;
++	enum kcs_ipmi_errors error;
++
++	int data_in_idx;
++	u8 *data_in;
++
++	int data_out_idx;
++	int data_out_len;
++	u8 *data_out;
++
++	struct work_struct rx_work;
++};
++
++struct mctp_kcs_header {
++	u8 netfn_lun;
++	u8 defining_body;
++	u8 len;
++} __packed;
++
++struct mctp_kcs_trailer {
++	u8 pec;
++} __packed;
++
++#define MCTP_KCS_NETFN_LUN 0xb0
++#define DEFINING_BODY_DMTF_PRE_OS_WORKING_GROUP 0x01
++
++static int mctp_kcs_validate_data(struct mctp_kcs *mkcs,
++				  struct mctp_kcs_header *hdr, int len)
++{
++	struct net_device *ndev = mkcs->netdev;
++	struct mctp_kcs_trailer *tlr;
++	u8 pec;
++
++	if (hdr->netfn_lun != MCTP_KCS_NETFN_LUN) {
++		dev_err(mkcs->client.dev->dev,
++			"%s: KCS binding header error! netfn_lun = 0x%02x, but should be 0x%02x",
++			__func__, hdr->netfn_lun, MCTP_KCS_NETFN_LUN);
++		ndev->stats.rx_dropped++;
++		return -EINVAL;
++	}
++	if (hdr->defining_body != DEFINING_BODY_DMTF_PRE_OS_WORKING_GROUP) {
++		dev_err(mkcs->client.dev->dev,
++			"%s: KCS binding header error! defining_body = 0x%02x, but should be 0x%02x",
++			__func__, hdr->defining_body,
++			DEFINING_BODY_DMTF_PRE_OS_WORKING_GROUP);
++		ndev->stats.rx_dropped++;
++		return -EINVAL;
++	}
++	if (hdr->len != (u8)(len - sizeof(struct mctp_kcs_header) -
++			     sizeof(struct mctp_kcs_trailer))) {
++		dev_err(mkcs->client.dev->dev,
++			"%s: KCS binding header error! len = 0x%02x, but should be 0x%02x",
++			__func__, hdr->len,
++			(u8)(len - sizeof(struct mctp_kcs_header) -
++			     sizeof(struct mctp_kcs_trailer)));
++		ndev->stats.rx_length_errors++;
++		return -EINVAL;
++	}
++
++	pec = i2c_smbus_pec(0, (u8 *)(hdr + 1), hdr->len);
++	tlr = (struct mctp_kcs_trailer *)((u8 *)(hdr + 1) + hdr->len);
++	if (pec != tlr->pec) {
++		dev_err(mkcs->client.dev->dev,
++			"%s: PEC error! Packet value=0x%02x, calculated value=0x%02x",
++			__func__, tlr->pec, pec);
++		ndev->stats.rx_crc_errors++;
++		return -EINVAL;
++	}
++	return 0;
++}
++
++static void mctp_kcs_rx_work(struct work_struct *work)
++{
++	struct mctp_kcs *mkcs = container_of(work, struct mctp_kcs, rx_work);
++	struct mctp_skb_cb *cb;
++	struct sk_buff *skb;
++	unsigned long flags;
++	int rc;
++	int i;
++	struct mctp_kcs_header *kcs_header;
++	int data_len;
++	int data_in_idx;
++
++	spin_lock_irqsave(&mkcs->lock, flags);
++	for (i = 0; i < (mkcs->data_in_idx); i++)
++		dev_dbg(mkcs->client.dev->dev, "%s: data_in[%d]=0x%02x",
++			__func__, i, mkcs->data_in[i]);
++
++	data_len = mkcs->data_in_idx - sizeof(struct mctp_kcs_header) -
++		   sizeof(struct mctp_kcs_trailer);
++	if (mkcs->phase != KCS_PHASE_WRITE_DONE) {
++		dev_err(mkcs->client.dev->dev,
++			"%s: error! Wrong KCS stage at the end of data read (phase=%d)",
++			__func__, mkcs->phase);
++		mkcs->netdev->stats.rx_dropped++;
++		goto unlock_irq;
++	}
++
++	mkcs->phase = KCS_PHASE_WAIT_READ;
++	data_in_idx = mkcs->data_in_idx;
++	mkcs->data_in_idx = 0;
++
++	skb = netdev_alloc_skb(mkcs->netdev, data_len);
++	if (!skb) {
++		mkcs->netdev->stats.rx_dropped++;
++		goto unlock_irq;
++	}
++
++	kcs_header = (struct mctp_kcs_header *)mkcs->data_in;
++	rc = mctp_kcs_validate_data(mkcs, kcs_header, data_in_idx);
++	if (rc) {
++		dev_err(mkcs->client.dev->dev,
++			"%s: error! Binding validation failed", __func__);
++		dev_kfree_skb(skb);
++		goto unlock_irq;
++	}
++
++	skb->protocol = htons(ETH_P_MCTP);
++	skb_put_data(skb, mkcs->data_in + sizeof(struct mctp_kcs_header),
++		     data_len);
++	skb_reset_network_header(skb);
++
++	cb = __mctp_cb(skb);
++	cb->halen = 0;
++
++	netif_rx(skb);
++	mkcs->netdev->stats.rx_packets++;
++	mkcs->netdev->stats.rx_bytes += data_len;
++
++unlock_irq:
++	spin_unlock_irqrestore(&mkcs->lock, flags);
++}
++
++static netdev_tx_t mctp_kcs_start_xmit(struct sk_buff *skb,
++				       struct net_device *ndev)
++{
++	struct mctp_kcs_header *kcs_header;
++	unsigned long flags;
++	int i;
++	struct mctp_kcs *mkcs = netdev_priv(ndev);
++
++	if (skb->len > MCTP_KCS_MTU) {
++		dev_err(&ndev->dev, "%s: error! skb len is bigger than MTU",
++			__func__);
++		ndev->stats.tx_dropped++;
++		goto out;
++	}
++
++	spin_lock_irqsave(&mkcs->lock, flags);
++	if (mkcs->phase != KCS_PHASE_WAIT_READ) {
++		dev_err(&ndev->dev,
++			"%s: error! Wrong KCS stage at the start of data write (phase=%d)",
++			__func__, mkcs->phase);
++		dev_kfree_skb(skb);
++		spin_unlock_irqrestore(&mkcs->lock, flags);
++		return NETDEV_TX_BUSY;
++	}
++
++	netif_stop_queue(ndev);
++	mkcs->phase = KCS_PHASE_READ;
++	kcs_header = (struct mctp_kcs_header *)mkcs->data_out;
++	kcs_header->netfn_lun = MCTP_KCS_NETFN_LUN;
++	kcs_header->defining_body = DEFINING_BODY_DMTF_PRE_OS_WORKING_GROUP;
++	kcs_header->len = skb->len;
++	skb_copy_bits(skb, 0, kcs_header + 1, skb->len);
++	mkcs->data_out[sizeof(struct mctp_kcs_header) + skb->len] =
++		i2c_smbus_pec(0, (u8 *)(kcs_header + 1), skb->len);
++	mkcs->data_out_idx = 1;
++	mkcs->data_out_len = skb->len + sizeof(struct mctp_kcs_header) +
++			     sizeof(struct mctp_kcs_trailer);
++
++	for (i = 0; i < (mkcs->data_out_len); i++)
++		dev_dbg(&ndev->dev, "%s: data_out[%d]=0x%02x", __func__, i,
++			mkcs->data_out[i]);
++
++	// Write first data byte to initialize transmission
++	kcs_bmc_write_data(mkcs->client.dev, mkcs->data_out[0]);
++
++	spin_unlock_irqrestore(&mkcs->lock, flags);
++out:
++	dev_kfree_skb(skb);
++	return NETDEV_TX_OK;
++}
++
++static void set_state(struct mctp_kcs *mkcs, u8 state)
++{
++	dev_dbg(mkcs->client.dev->dev, "%s: state=0x%02x", __func__, state);
++	kcs_bmc_update_status(mkcs->client.dev, KCS_STATUS_STATE_MASK,
++			      KCS_STATUS_STATE(state));
++}
++
++static int mctp_kcs_ndo_open(struct net_device *ndev)
++{
++	struct mctp_kcs *mkcs;
++
++	mkcs = netdev_priv(ndev);
++	dev_info(&ndev->dev, "Open MCTP over KCS channel %d",
++		 mkcs->client.dev->channel);
++	return kcs_bmc_enable_device(mkcs->client.dev, &mkcs->client);
++}
++
++static int mctp_kcs_ndo_stop(struct net_device *ndev)
++{
++	struct mctp_kcs *mkcs;
++
++	mkcs = netdev_priv(ndev);
++	dev_info(&ndev->dev, "Stop MCTP over KCS channel %d",
++		 mkcs->client.dev->channel);
++	mkcs->data_in_idx = 0;
++	mkcs->data_out_idx = 0;
++	mkcs->data_out_len = 0;
++	mkcs->phase = KCS_PHASE_IDLE;
++	set_state(mkcs, IDLE_STATE);
++	kcs_bmc_disable_device(mkcs->client.dev, &mkcs->client);
++	return 0;
++}
++
++static const struct net_device_ops mctp_kcs_netdev_ops = {
++	.ndo_start_xmit = mctp_kcs_start_xmit,
++	.ndo_open = mctp_kcs_ndo_open,
++	.ndo_stop = mctp_kcs_ndo_stop,
++};
++
++static void mctp_kcs_setup(struct net_device *ndev)
++{
++	ndev->type = ARPHRD_MCTP;
++
++	/* we limit at the fixed MTU, which is also the MCTP-standard
++	 * baseline MTU, so is also our minimum
++	 */
++	ndev->mtu = MCTP_KCS_MTU;
++	ndev->max_mtu = MCTP_KCS_MTU;
++	ndev->min_mtu = MCTP_KCS_MTU;
++
++	ndev->hard_header_len = 0;
++	ndev->addr_len = 0;
++	ndev->tx_queue_len = DEFAULT_TX_QUEUE_LEN;
++	ndev->flags = IFF_NOARP;
++	ndev->netdev_ops = &mctp_kcs_netdev_ops;
++	ndev->needs_free_netdev = true;
++}
++
++static void kcs_bmc_ipmi_force_abort(struct mctp_kcs *mkcs)
++{
++	dev_err(mkcs->client.dev->dev,
++		"Error! Force abort on KCS communication");
++	set_state(mkcs, ERROR_STATE);
++	kcs_bmc_read_data(mkcs->client.dev);
++	kcs_bmc_write_data(mkcs->client.dev, KCS_ZERO_DATA);
++	mkcs->phase = KCS_PHASE_ERROR;
++	mkcs->data_in_idx = 0;
++}
++
++static void kcs_bmc_ipmi_handle_data(struct mctp_kcs *mkcs)
++{
++	u8 data;
++	struct kcs_bmc_device *kcs_bmc = mkcs->client.dev;
++
++	switch (mkcs->phase) {
++	case KCS_PHASE_WRITE_START:
++		dev_dbg(kcs_bmc->dev, "%s: KCS_PHASE_WRITE_START", __func__);
++		mkcs->phase = KCS_PHASE_WRITE_DATA;
++		fallthrough;
++
++	case KCS_PHASE_WRITE_DATA:
++		dev_dbg(kcs_bmc->dev, "%s: KCS_PHASE_WRITE_DATA", __func__);
++		if (mkcs->data_in_idx < KCS_MSG_BUFSIZ) {
++			set_state(mkcs, WRITE_STATE);
++			kcs_bmc_write_data(kcs_bmc, KCS_ZERO_DATA);
++			mkcs->data_in[mkcs->data_in_idx++] =
++				kcs_bmc_read_data(kcs_bmc);
++			dev_dbg(kcs_bmc->dev,
++				"%s: KCS_PHASE_WRITE_DATA: data_in[%d]=0x%02x",
++				__func__, mkcs->data_in_idx - 1,
++				mkcs->data_in[mkcs->data_in_idx - 1]);
++		} else {
++			kcs_bmc_ipmi_force_abort(mkcs);
++			mkcs->error = KCS_LENGTH_ERROR;
++		}
++		break;
++
++	case KCS_PHASE_WRITE_END_CMD:
++		dev_dbg(kcs_bmc->dev, "%s: KCS_PHASE_WRITE_END_CMD", __func__);
++		if (mkcs->data_in_idx < KCS_MSG_BUFSIZ) {
++			set_state(mkcs, READ_STATE);
++			mkcs->data_in[mkcs->data_in_idx++] =
++				kcs_bmc_read_data(kcs_bmc);
++			dev_dbg(kcs_bmc->dev,
++				"%s: KCS_PHASE_WRITE_END_CMD: data_in[%d]=0x%02x",
++				__func__, mkcs->data_in_idx - 1,
++				mkcs->data_in[mkcs->data_in_idx - 1]);
++			mkcs->phase = KCS_PHASE_WRITE_DONE;
++			schedule_work(&mkcs->rx_work);
++		} else {
++			kcs_bmc_ipmi_force_abort(mkcs);
++			mkcs->error = KCS_LENGTH_ERROR;
++		}
++		break;
++
++	case KCS_PHASE_READ:
++		dev_dbg(kcs_bmc->dev,
++			"%s: KCS_PHASE_READ, data_out_idx=%d, data_out_len=%d",
++			__func__, mkcs->data_out_idx, mkcs->data_out_len);
++		if (mkcs->data_out_idx == mkcs->data_out_len)
++			set_state(mkcs, IDLE_STATE);
++
++		data = kcs_bmc_read_data(kcs_bmc);
++		if (data != KCS_CMD_READ_BYTE) {
++			dev_dbg(kcs_bmc->dev,
++				"%s: error! data is not equal to KCS_CMD_READ_BYTE",
++				__func__);
++			set_state(mkcs, ERROR_STATE);
++			kcs_bmc_write_data(kcs_bmc, KCS_ZERO_DATA);
++			break;
++		}
++
++		if (mkcs->data_out_idx == mkcs->data_out_len) {
++			kcs_bmc_write_data(kcs_bmc, KCS_ZERO_DATA);
++			mkcs->netdev->stats.tx_bytes += mkcs->data_out_len;
++			mkcs->netdev->stats.tx_packets++;
++			mkcs->phase = KCS_PHASE_IDLE;
++			if (netif_queue_stopped(mkcs->netdev))
++				netif_start_queue(mkcs->netdev);
++			break;
++		}
++
++		dev_dbg(kcs_bmc->dev, "%s: KCS_PHASE_READ: data_out[%d]=0x%02x",
++			__func__, mkcs->data_out_idx,
++			mkcs->data_out[mkcs->data_out_idx]);
++		kcs_bmc_write_data(kcs_bmc,
++				   mkcs->data_out[mkcs->data_out_idx++]);
++		break;
++
++	case KCS_PHASE_ABORT_ERROR1:
++		dev_dbg(kcs_bmc->dev, "%s: KCS_PHASE_ABORT_ERROR1", __func__);
++		set_state(mkcs, READ_STATE);
++		kcs_bmc_read_data(kcs_bmc);
++		kcs_bmc_write_data(kcs_bmc, mkcs->error);
++		mkcs->phase = KCS_PHASE_ABORT_ERROR2;
++		break;
++
++	case KCS_PHASE_ABORT_ERROR2:
++		dev_dbg(kcs_bmc->dev, "%s: KCS_PHASE_ABORT_ERROR2", __func__);
++		set_state(mkcs, IDLE_STATE);
++		kcs_bmc_read_data(kcs_bmc);
++		kcs_bmc_write_data(kcs_bmc, KCS_ZERO_DATA);
++		mkcs->phase = KCS_PHASE_IDLE;
++		break;
++
++	default:
++		dev_dbg(kcs_bmc->dev, "%s: unknown KCS phase", __func__);
++		kcs_bmc_ipmi_force_abort(mkcs);
++		break;
++	}
++}
++
++static void kcs_bmc_ipmi_handle_cmd(struct mctp_kcs *mkcs)
++{
++	struct kcs_bmc_device *kcs_bmc = mkcs->client.dev;
++
++	set_state(mkcs, WRITE_STATE);
++	kcs_bmc_write_data(kcs_bmc, KCS_ZERO_DATA);
++
++	switch (kcs_bmc_read_data(kcs_bmc)) {
++	case KCS_CMD_WRITE_START:
++		dev_dbg(kcs_bmc->dev, "%s: KCS_CMD_WRITE_START", __func__);
++		mkcs->phase = KCS_PHASE_WRITE_START;
++		mkcs->error = KCS_NO_ERROR;
++		mkcs->data_in_idx = 0;
++		break;
++
++	case KCS_CMD_WRITE_END:
++		dev_dbg(kcs_bmc->dev, "%s: KCS_CMD_WRITE_END", __func__);
++		if (mkcs->phase != KCS_PHASE_WRITE_DATA) {
++			kcs_bmc_ipmi_force_abort(mkcs);
++			break;
++		}
++		mkcs->phase = KCS_PHASE_WRITE_END_CMD;
++		break;
++
++	case KCS_CMD_GET_STATUS_ABORT:
++		dev_dbg(kcs_bmc->dev, "%s: KCS_CMD_GET_STATUS_ABORT", __func__);
++		if (mkcs->error == KCS_NO_ERROR)
++			mkcs->error = KCS_ABORTED_BY_COMMAND;
++
++		mkcs->phase = KCS_PHASE_ABORT_ERROR1;
++		mkcs->data_in_idx = 0;
++		break;
++
++	default:
++		dev_dbg(kcs_bmc->dev, "%s: unknown KCS command", __func__);
++		kcs_bmc_ipmi_force_abort(mkcs);
++		mkcs->error = KCS_ILLEGAL_CONTROL_CODE;
++		break;
++	}
++}
++
++static struct mctp_kcs *client_to_mctp_kcs(struct kcs_bmc_client *client)
++{
++	return container_of(client, struct mctp_kcs, client);
++}
++
++static irqreturn_t kcs_bmc_mctp_event(struct kcs_bmc_client *client)
++{
++	struct mctp_kcs *mkcs;
++	u8 status;
++	int ret;
++
++	mkcs = client_to_mctp_kcs(client);
++	if (!mkcs) {
++		dev_err(client->dev->dev,
++			"%s: error! can't find mctp_kcs from KCS client",
++			__func__);
++		return IRQ_NONE;
++	}
++
++	spin_lock(&mkcs->lock);
++
++	status = kcs_bmc_read_status(client->dev);
++	if (status & KCS_STATUS_IBF) {
++		if (status & KCS_STATUS_CMD_DAT)
++			kcs_bmc_ipmi_handle_cmd(mkcs);
++		else
++			kcs_bmc_ipmi_handle_data(mkcs);
++
++		ret = IRQ_HANDLED;
++	} else {
++		ret = IRQ_NONE;
++	}
++
++	spin_unlock(&mkcs->lock);
++
++	return ret;
++}
++
++static const struct kcs_bmc_client_ops kcs_bmc_mctp_client_ops = {
++	.event = kcs_bmc_mctp_event,
++};
++
++static DEFINE_SPINLOCK(kcs_bmc_mctp_instances_lock);
++static LIST_HEAD(kcs_bmc_mctp_instances);
++
++static int kcs_bmc_mctp_add_device(struct kcs_bmc_device *kcs_bmc)
++{
++	struct mctp_kcs *mkcs;
++	struct net_device *ndev;
++	char name[32];
++	int rc;
++
++	snprintf(name, sizeof(name), "mctpkcs%d", kcs_bmc->channel);
++
++	ndev = alloc_netdev(sizeof(*mkcs), name, NET_NAME_ENUM, mctp_kcs_setup);
++	if (!ndev) {
++		dev_err_probe(kcs_bmc->dev, -ENOMEM,
++			      "alloc_netdev failed for KCS channel %d\n",
++			      kcs_bmc->channel);
++		return -ENOMEM;
++	}
++
++	mkcs = netdev_priv(ndev);
++	mkcs->netdev = ndev;
++	mkcs->client.dev = kcs_bmc;
++	mkcs->client.ops = &kcs_bmc_mctp_client_ops;
++	mkcs->data_in = devm_kmalloc(kcs_bmc->dev, KCS_MSG_BUFSIZ, GFP_KERNEL);
++	if (!mkcs->data_in) {
++		dev_err_probe(
++			kcs_bmc->dev, -ENOMEM,
++			"failed to allocate data_in buffer for KCS channel %d\n",
++			kcs_bmc->channel);
++		rc = -ENOMEM;
++		goto free_netdev;
++	}
++	mkcs->data_out = devm_kmalloc(kcs_bmc->dev, KCS_MSG_BUFSIZ, GFP_KERNEL);
++	if (!mkcs->data_out) {
++		dev_err_probe(
++			kcs_bmc->dev, -ENOMEM,
++			"failed to allocate data_out buffer for KCS channel %d\n",
++			kcs_bmc->channel);
++		rc = -ENOMEM;
++		goto free_netdev;
++	}
++
++	INIT_WORK(&mkcs->rx_work, mctp_kcs_rx_work);
++
++	rc = register_netdev(ndev);
++	if (rc)
++		goto free_netdev;
++
++	spin_lock_irq(&kcs_bmc_mctp_instances_lock);
++	list_add(&mkcs->entry, &kcs_bmc_mctp_instances);
++	spin_unlock_irq(&kcs_bmc_mctp_instances_lock);
++
++	dev_info(kcs_bmc->dev, "Add MCTP client for the KCS channel %d",
++		 kcs_bmc->channel);
++	return 0;
++
++free_netdev:
++	free_netdev(ndev);
++
++	return rc;
++}
++
++static int kcs_bmc_mctp_remove_device(struct kcs_bmc_device *kcs_bmc)
++{
++	struct mctp_kcs *mkcs = NULL, *pos;
++
++	dev_info(kcs_bmc->dev, "Remove MCTP client for the KCS channel %d",
++		 kcs_bmc->channel);
++	spin_lock_irq(&kcs_bmc_mctp_instances_lock);
++	list_for_each_entry(pos, &kcs_bmc_mctp_instances, entry) {
++		if (pos->client.dev == kcs_bmc) {
++			mkcs = pos;
++			list_del(&pos->entry);
++			break;
++		}
++	}
++	spin_unlock_irq(&kcs_bmc_mctp_instances_lock);
++
++	if (!mkcs)
++		return -ENODEV;
++
++	unregister_netdev(mkcs->netdev);
++	free_netdev(mkcs->netdev);
++	kcs_bmc_disable_device(kcs_bmc, &mkcs->client);
++	devm_kfree(kcs_bmc->dev, mkcs->data_out);
++	devm_kfree(kcs_bmc->dev, mkcs->data_in);
++	return 0;
++}
++
++static const struct kcs_bmc_driver_ops kcs_bmc_mctp_driver_ops = {
++	.add_device = kcs_bmc_mctp_add_device,
++	.remove_device = kcs_bmc_mctp_remove_device,
++};
++
++static struct kcs_bmc_driver kcs_bmc_mctp_driver = {
++	.ops = &kcs_bmc_mctp_driver_ops,
++};
++
++static int __init mctp_kcs_init(void)
++{
++	kcs_bmc_register_driver(&kcs_bmc_mctp_driver);
++	return 0;
++}
++
++static void __exit mctp_kcs_exit(void)
++{
++	kcs_bmc_unregister_driver(&kcs_bmc_mctp_driver);
++}
++
++module_init(mctp_kcs_init);
++module_exit(mctp_kcs_exit);
++
++MODULE_LICENSE("GPL");
++MODULE_AUTHOR("Konstantin Aladyshev <aladyshev22@gmail.com>");
++MODULE_DESCRIPTION("MCTP KCS transport");
+-- 
+2.25.1
 
-I agree with your concern about using this feature for letting the BMC 
-software or resources licensed. We should reduce the scope of this 
-design to exclude this from controlling the driver updates on the BMC.
-
-But as we have the DMTF approved redfish schema for the LicenseService, 
-we would like to bring this into the OpenBMC. We can use this License 
-Manager as a pass through application at BMC. With this application and 
-interfaces, user can upload the license for the hardware parts and for 
-the installation of any OS on top of the firmware. There will be no 
-validation of the License at the BMC scope. All 
-validation/interpretation of the License will be at the hypervisor or 
-the operating system level.
-
-We are looking for views from you and the community.
-
-Thanks & Regards,
-Sunitha
-
-On 05-05-2021 23:06, Patrick Williams wrote:
-> Brad,
->
-> I've reshuffled some of the quotes around because it makes more sense
-> with the points I'd like to make.  I've tried to add color to what I
-> think the OCP perspective would be.
->
-> Typical disclosure: these are my thoughts, not my employer.  I am not
-> a lawyer.  Blah blah blah.
->
-> On Tue, May 04, 2021 at 07:38:43PM -0400, Brad Bishop wrote:
->> On Tue, May 04, 2021 at 10:02:19AM -0700, Ed Tanous wrote:
->>> How does this affect our standing in things like OCP open system
->>> firmware groups?
->> I wouldn't expect this to affect our standing in OCP in any way.
->>
->>> Does this OpenBMC systems that enable this feature
->>> ineligible?
->> Do you mean to ask, do systems that configure OpenBMC with something
->> like this enabled make them ineligible for some kind of OCP compliance?
->> Probably, but isn't that a problem for those configuring OpenBMC in that
->> way?  I would say if you are looking for OCP compliance, don't use this
->> feature.
-> I'm glad things were broken out this way because both of these questions
-> need to be resolved.
->
-> I agree that the presence of this feature, or any feature which isn't a
-> violation of widely accepted ethical guidelines[1], should not on its
-> own affect our standing in or usage by other communities.  But, it can
-> certainly affect their opinion of us, which can diminish our standing.
->
-> The other question is: would OCP accept the usage of this feature in an
-> OCP Accepted / Inspired[2] system?  I strongly suspect the answer here
-> is no.  It isn't just this feature, but this feature coupled with the
-> code signing, which is what would cause the denial of certification.
->
-> OCP machines are expected to be owned by the entity that purchased it
-> and not the manufacturer.  To quote from an OCP website[3]:
->
->      Open system firmware is an open development project, the goal of which
->      is to allow OCP owners to "own their firmware" -- to move the point of
->      control of firmware to the system owner. Owners must be able to change
->      firmware and share it -- including any binary components -- with other
->      owners. Starting in March, 2021, OCP badging for servers will require
->      that systems support OSF.
->
-> Compliance with this statement would render any firmware-based license
-> enforcement moot.  (Note that this above OCP statement is in reference
-> to OSF, the UEFI implementation, but I think the intention is reflected
-> elsewhere in BMC expectations.)
->
-> This is very important to both OCP and Facebook for the obvious reasons
-> that it allows us to enhance the server firmware to suit our own
-> purposes but also the non-obvious reason that it reduces the
-> environmental impact of our business[7].  If ownership of the firmware
-> is a one-way door (either us or the OEM/ODM), it means there are more
-> components which have to be scrapped when the servers are decommisioned.
-> If we can transfer ownership, in a secure manner, those parts are then
-> able to be reused and/or repurposed.  ITRenew is one company I am aware
-> of facilitates this kind of reuse[8]; they are a platinum member of OCP
-> and Sri hangs out on the OpenBMC Discord.
->
->>> Assuming you did this, wouldn't anyone be able to simply
->>> recompile the code with the license checks disabled, load it on the
->>> system
->> In our system design, the BMC is not doing the actual license
->> verification.  It is only a proxy, providing an interface to a user
->> interface application.
->>
->> Further, we don't allow BMC code to be loaded that isn't signed by IBM,
->> so unless I'm really missing something I don't think this can happen
->> even, if the validation was being done on the BMC.
-> This feature was originally presented to us as being used to activate
-> "unlicensed" hardware or enforce license agreements with your OS.
-> While I think that is a lousy business model, that is between you and
-> your customers.
->
-> But, IBM (and other OEMs[4]) also uses this feature to prevent people
-> from applying IBM-signed firmware updates to their own machines,
-> unless they have a current maintenance contract.  So when we have a
-> CVE in some software package used by OpenBMC not only can a machine
-> owner not compile their own fix for their own machine but they can't
-> even apply the fix already compiled by IBM unless they cough up
-> additional money.  This behavior is why I used the phrase "openly
-> hostile to your customers."
->
-> IBM calls this entitlement to install firmware updates an "Update
-> Access Key"[5].  The referenced website describes how the machine
-> will only accept firmware updates if the UAK is not expired, how the
-> original UAK aligns with the system warranty, and how you can get
-> additional ones after this point (expiring every 180 days) if you
-> have an "IBM hardware maintenance service agreement".
->
-> This behavior, and not the hardware licensing, is a big motivating
-> factor in why I said "I have no interest in providing any assistance on
-> this feature" and do not feel the project should support it either.
-> You might say "well, we'll just keep this part of the code private
-> then", and it would likely be pretty trivial to privately hold a few
-> patches to phosphor-bmc-code-mgmt to do the UAK work once you have
-> the rest of the framework in place.  The triviality of it is partially
-> why I don't even want the framework in place.  This feature provides no
-> benefit to anyone except <<insert OEM>>'s [bad] business model and provides
-> no benefit to users or this community (and I'll posit later it actually
-> harms this community).
->
->>> if we're now supporting firmware locking down systems?
->> Don't we already lock down systems with things like secure or verified
->> boot?  Can you help me understand lock down better?
-> Yes, we support secure / verified boot, even on OCP servers.  But the
-> OCP model is that the machine owner owns the machine, not the ODM/OEM.
-> The other model, which is what you're doing, is only advantageous to
-> you (and is deterimental to everyone else).  This isn't a matter of lack
-> of technical capability because IBM's own security research team provided
-> a whitepaper to OCP on best practices for providing transfering ownership
-> of the device firmware to the machine owner[6].
->
->> I'm pretty certain this is something many server OEMs do and will
->> continue to do.  So let me ask you what is better?  A single place for
->> those with the common use case to collaborate, or a bunch of one-offs,
->> likely full of bugs and security problems.
-> If I had to make a choice between supporting code that is a net-negative
-> to the community or letting you make a buggy implementation of a bad
-> feature... letting you make a buggy implementation is a double-win to
-> me because if you fail in implementing this it means [various people with
-> an ability to reverse-engineer] it can **help** users by giving them a
-> way around your terrible firmware update lockout.
->
->>> 2. This is harmful to the intent of OpenBMC and open source firmware
->>> as a whole, and shouldn't be supported in any capacity in the OpenBMC
->>> codebase.
->> If you don't mind I would like to hear more about the intent of OpenBMC,
->> and how any of this harms those intents.
->>> How would open firmware principals be retained
->> Can you elaborate on these principles?  I'm curious.  I may even
->> document the answers :-)
-> I've badgered enough on the firmware update side of this, which is
-> the primary hinderance to "open firmware principles" I see.
->
-> On Discord I said that I didn't think this feature is in the "spirit of
-> open source software" and I think Ed's statement here is along those
-> lines, but I realize there is a lot of potential perspective encapsulated
-> in that one phrase so let me try to unpack it.
->
-> Corporate attachment to the Open Source / Free Software movement has
-> often been around the collaboration (and thus deduplication of effort)
-> side of it, but that is an outcome and not a principle of open source.
-> To me the draw has always been about freedom to read, debug and modify
-> the source.  It is immensely frustrating to me when I have to use non-free
-> software and I find a bug: you have no visibility into what is going
-> wrong and you have no possibility of fixing it!  As the GNU/FSF often
-> states it: "'free software' is a matter of liberty, not price... you
-> should think of 'free' as in 'free speech' and not as in 'free beer'.[9]"
->
-> Again I bring up firmware update, but the emergence of GPLv3 (and
-> similar licenses) was instigated in response to the the Tivoization
-> of consumer devices[10].
->
-> [ Side question: are you sure your statement that "only IBM signed
->    firmware can run on our machines" doesn't violate the terms of the
->    GPLv3, which is used by a good number of packages used in OpenBMC? ]
->
-> We often have people show up to the project with some 5 year old server
-> they bought off eBay asking "how do I get OpenBMC to run on this?"
-> Which is a worse answer?:
->      1. Well, we don't currently support it specifically but we support
->         <XYZ> which is based on the same reference design.  With a little
->         bit of reverse engineering, or the schematics from the
->         manufacturer, you could probably create a port.
->
->      2. Yeah, we completely support that machine, but unfortunately the
->         manufacturer locked down the system in a way so that you can
->         compile all the code but the machine won't recognize it.  And if
->         I told you how to bypass that, the manufacturer could sue me for
->         violating the DMCA[11] because the same bug that allows you to
->         bypass their signing is still present on their current systems.
->
-> IBM does great work on this project and having upstream machine support
-> is good.  But, there is a big part of me that would much rather answer
-> #1 than #2 because of the implications from a Software Freedom
-> perspective.
->
->>> and something
->>> that, if done wrong, could be very harmful to the goals of the
->>> project.
->> Can you elaborate on the goals of the project that would be harmed?
-> I hinted at the DMCA above.  The inclusion of this feature by the project
-> pushes DMCA risk onto me, a developer on this project, from IBM.
->
-> A long time ago now, I did an internship at IBM and at the time someone
-> had figured out how to circumvent exactly this feature on Power3/Power4
-> AS/400 servers and was contacting IBM customers to sell them black-market
-> activation keys (my cubical happened to share a wall with one of the
-> inventors of the hardware used at the time to confirm the activation
-> keys so I got to hear plenty of details on this).  The DMCA was new at
-> the time and first applied for protecting from DVD copyright, but I have
-> no doubt that if this situation happened today IBM would leverage the
-> DMCA to stop this rather quickly (and honestly, rightly so).
->
-> The problem is that the DMCA has also been leveraged for cases which are
-> not a direct theft-of-service[12].  I am not saying that IBM will, and I
-> can't expect you to get a committment on that, but you are pushing the
-> risk onto me, the other developers here, and the project as a whole.
->
-> What am I even talking about, you're probably wondering?  Since IBM is
-> using this feature to protect your intellectual property (AIX licenses,
-> firmware update lockout, etc.) everything about it falls under the
-> purview of the DMCA.  If I find a bug in your open source implementation
-> and report it in a public forum, you could issue a DMCA take-down
-> request.  If I review a code change and conceive of a way it might be
-> used to circumvent your implementation, and I bring it to your
-> attention, you could issue a DMCA take-down request.  If someone comes
-> to us with a 5 year old server and we figure out how to bypass your
-> security lockout so they can flash on the Github version of OpenBMC, you
-> could issue a DMCA take-down request.  If I do a presentation on
-> debugging with dbus and it turns out someone figures out how to use that
-> information to circumvent your licensing feature on the SSH interface,
-> you could issue a DMCA take-down request.
->
-> These might sound absurd or you might think "IBM would never do that."
-> How do I and the other developers here know?  You're asking us to take
-> on that risk.  And why should I?  I want to stay as far away from
-> anything related to your licensing feature as I possibly can.  It does
-> nothing good for your customers, it does nothing good for this project,
-> and it puts me, a developer, at potential legal risk.
->
-> While you might have a little bit of code that you're sharing, that
-> maybe other companies can leverage, you are also giving us baggage
-> that reduces our collaboration.  Now, anytime I'm even close to this
-> code, I have to think about not only the technical but now legal
-> ramifications of what I'm doing.  That means, I'm quite likely going to
-> have to just say "do whatever you want and leave me out of it" anytime
-> this code comes up in reviews or discussions.
->
-> -- References --
->
-> 1.https://www.acm.org/code-of-ethics
-> 2.https://www.opencompute.org/products#ocp-accepted-inspired-modal
-> 3.https://www.opencompute.org/projects/open-system-firmware
-> 4.https://www.zdnet.com/article/hp-to-begin-charging-for-firmware-updates-and-service-packs-for-servers/
-> 5.https://www.ibm.com/support/pages/management-power8-and-later-update-access-keys#q45
-> 6.https://www.opencompute.org/documents/ibm-white-paper-ownership-and-control-of-firmware-in-open-compute-project-devices
-> 7.https://www.theguardian.com/technology/2021/apr/16/facebook-says-it-has-reached-net-zero-emissions
-> 8.https://www.itrenew.com/resources/the-tco-of-ocp/
-> 9.https://www.gnu.org/philosophy/free-sw.en.html
-> 10.https://en.wikipedia.org/wiki/Tivoization
-> 11.https://en.wikipedia.org/wiki/Digital_Millennium_Copyright_Act
-> 12.https://www.eff.org/wp/unintended-consequences-16-years-under-dmca
->
---------------RxlJmJ9R29eS2MKyN0zqNHnc
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p>Hi Patrick,</p>
-    <p>Re-starting this discussion with the design that is being worked
-      at <a href="https://gerrit.openbmc.org/c/openbmc/docs/+/64710">License
-        Manager: Add license manager design (Ibd6c6f35) · Gerrit Code
-        Review (openbmc.org)</a>.</p>
-    <p>I agree with your concern about using this feature for letting
-      the BMC software or resources licensed. We should reduce the scope
-      of this design to exclude this from controlling the driver updates
-      on the BMC.<br>
-    </p>
-    <p>But as we have the DMTF approved redfish schema for the
-      LicenseService, we would like to bring this into the OpenBMC. We
-      can use this License Manager as a pass through application at BMC.
-      With this application and interfaces, user can upload the license
-      for the hardware parts and for the installation of any OS on top
-      of the firmware. There will be no validation of the License at the
-      BMC scope. All validation/interpretation of the License will be at
-      the hypervisor or the operating system level. <br>
-    </p>
-    <p>We are looking for views from you and the community.<br>
-    </p>
-    <p>Thanks &amp; Regards,<br>
-      Sunitha<br>
-    </p>
-    <div class="moz-cite-prefix">On 05-05-2021 23:06, Patrick Williams
-      wrote:<br>
-    </div>
-    <blockquote type="cite" cite="mid:YJLXlNyk%2Fc8IVf9e@heinlein">
-      <pre class="moz-quote-pre" wrap="">Brad,
-
-I've reshuffled some of the quotes around because it makes more sense
-with the points I'd like to make.  I've tried to add color to what I
-think the OCP perspective would be.
-
-Typical disclosure: these are my thoughts, not my employer.  I am not
-a lawyer.  Blah blah blah.
-
-On Tue, May 04, 2021 at 07:38:43PM -0400, Brad Bishop wrote:
-</pre>
-      <blockquote type="cite">
-        <pre class="moz-quote-pre" wrap="">On Tue, May 04, 2021 at 10:02:19AM -0700, Ed Tanous wrote:
-</pre>
-        <blockquote type="cite">
-          <pre class="moz-quote-pre" wrap="">How does this affect our standing in things like OCP open system
-firmware groups?  
-</pre>
-        </blockquote>
-        <pre class="moz-quote-pre" wrap="">I wouldn't expect this to affect our standing in OCP in any way.
-
-</pre>
-        <blockquote type="cite">
-          <pre class="moz-quote-pre" wrap="">Does this OpenBMC systems that enable this feature
-ineligible?
-</pre>
-        </blockquote>
-        <pre class="moz-quote-pre" wrap="">Do you mean to ask, do systems that configure OpenBMC with something 
-like this enabled make them ineligible for some kind of OCP compliance?  
-Probably, but isn't that a problem for those configuring OpenBMC in that 
-way?  I would say if you are looking for OCP compliance, don't use this 
-feature.
-</pre>
-      </blockquote>
-      <pre class="moz-quote-pre" wrap="">
-I'm glad things were broken out this way because both of these questions
-need to be resolved.
-
-I agree that the presence of this feature, or any feature which isn't a
-violation of widely accepted ethical guidelines[1], should not on its
-own affect our standing in or usage by other communities.  But, it can
-certainly affect their opinion of us, which can diminish our standing.
-
-The other question is: would OCP accept the usage of this feature in an
-OCP Accepted / Inspired[2] system?  I strongly suspect the answer here
-is no.  It isn't just this feature, but this feature coupled with the
-code signing, which is what would cause the denial of certification.
-
-OCP machines are expected to be owned by the entity that purchased it
-and not the manufacturer.  To quote from an OCP website[3]:
-
-    Open system firmware is an open development project, the goal of which
-    is to allow OCP owners to "own their firmware" -- to move the point of
-    control of firmware to the system owner. Owners must be able to change
-    firmware and share it -- including any binary components -- with other
-    owners. Starting in March, 2021, OCP badging for servers will require
-    that systems support OSF.
-
-Compliance with this statement would render any firmware-based license
-enforcement moot.  (Note that this above OCP statement is in reference
-to OSF, the UEFI implementation, but I think the intention is reflected
-elsewhere in BMC expectations.)
-
-This is very important to both OCP and Facebook for the obvious reasons
-that it allows us to enhance the server firmware to suit our own
-purposes but also the non-obvious reason that it reduces the
-environmental impact of our business[7].  If ownership of the firmware
-is a one-way door (either us or the OEM/ODM), it means there are more
-components which have to be scrapped when the servers are decommisioned.
-If we can transfer ownership, in a secure manner, those parts are then
-able to be reused and/or repurposed.  ITRenew is one company I am aware
-of facilitates this kind of reuse[8]; they are a platinum member of OCP
-and Sri hangs out on the OpenBMC Discord.
-
-</pre>
-      <blockquote type="cite">
-        <blockquote type="cite">
-          <pre class="moz-quote-pre" wrap="">Assuming you did this, wouldn't anyone be able to simply
-recompile the code with the license checks disabled, load it on the
-system
-</pre>
-        </blockquote>
-        <pre class="moz-quote-pre" wrap="">In our system design, the BMC is not doing the actual license 
-verification.  It is only a proxy, providing an interface to a user 
-interface application.
-
-Further, we don't allow BMC code to be loaded that isn't signed by IBM, 
-so unless I'm really missing something I don't think this can happen 
-even, if the validation was being done on the BMC.
-</pre>
-      </blockquote>
-      <pre class="moz-quote-pre" wrap="">
-This feature was originally presented to us as being used to activate
-"unlicensed" hardware or enforce license agreements with your OS.
-While I think that is a lousy business model, that is between you and
-your customers.
-
-But, IBM (and other OEMs[4]) also uses this feature to prevent people
-from applying IBM-signed firmware updates to their own machines,
-unless they have a current maintenance contract.  So when we have a
-CVE in some software package used by OpenBMC not only can a machine
-owner not compile their own fix for their own machine but they can't
-even apply the fix already compiled by IBM unless they cough up
-additional money.  This behavior is why I used the phrase "openly
-hostile to your customers."
-
-IBM calls this entitlement to install firmware updates an "Update
-Access Key"[5].  The referenced website describes how the machine
-will only accept firmware updates if the UAK is not expired, how the
-original UAK aligns with the system warranty, and how you can get
-additional ones after this point (expiring every 180 days) if you
-have an "IBM hardware maintenance service agreement".
-
-This behavior, and not the hardware licensing, is a big motivating
-factor in why I said "I have no interest in providing any assistance on
-this feature" and do not feel the project should support it either.
-You might say "well, we'll just keep this part of the code private
-then", and it would likely be pretty trivial to privately hold a few
-patches to phosphor-bmc-code-mgmt to do the UAK work once you have
-the rest of the framework in place.  The triviality of it is partially
-why I don't even want the framework in place.  This feature provides no
-benefit to anyone except &lt;&lt;insert OEM&gt;&gt;'s [bad] business model and provides
-no benefit to users or this community (and I'll posit later it actually
-harms this community).
-
-</pre>
-      <blockquote type="cite">
-        <blockquote type="cite">
-          <pre class="moz-quote-pre" wrap="">if we're now supporting firmware locking down systems?
-</pre>
-        </blockquote>
-        <pre class="moz-quote-pre" wrap="">Don't we already lock down systems with things like secure or verified 
-boot?  Can you help me understand lock down better?
-</pre>
-      </blockquote>
-      <pre class="moz-quote-pre" wrap="">
-Yes, we support secure / verified boot, even on OCP servers.  But the
-OCP model is that the machine owner owns the machine, not the ODM/OEM.
-The other model, which is what you're doing, is only advantageous to
-you (and is deterimental to everyone else).  This isn't a matter of lack 
-of technical capability because IBM's own security research team provided
-a whitepaper to OCP on best practices for providing transfering ownership
-of the device firmware to the machine owner[6].
-
-</pre>
-      <blockquote type="cite">
-        <pre class="moz-quote-pre" wrap="">I'm pretty certain this is something many server OEMs do and will 
-continue to do.  So let me ask you what is better?  A single place for 
-those with the common use case to collaborate, or a bunch of one-offs, 
-likely full of bugs and security problems.
-</pre>
-      </blockquote>
-      <pre class="moz-quote-pre" wrap="">
-If I had to make a choice between supporting code that is a net-negative
-to the community or letting you make a buggy implementation of a bad
-feature... letting you make a buggy implementation is a double-win to
-me because if you fail in implementing this it means [various people with
-an ability to reverse-engineer] it can **help** users by giving them a
-way around your terrible firmware update lockout.  
-
-</pre>
-      <blockquote type="cite">
-        <blockquote type="cite">
-          <pre class="moz-quote-pre" wrap="">2. This is harmful to the intent of OpenBMC and open source firmware
-as a whole, and shouldn't be supported in any capacity in the OpenBMC
-codebase.
-</pre>
-        </blockquote>
-        <pre class="moz-quote-pre" wrap="">If you don't mind I would like to hear more about the intent of OpenBMC,
-and how any of this harms those intents.
-</pre>
-      </blockquote>
-      <pre class="moz-quote-pre" wrap="">
-</pre>
-      <blockquote type="cite">
-        <blockquote type="cite">
-          <pre class="moz-quote-pre" wrap="">How would open firmware principals be retained 
-</pre>
-        </blockquote>
-        <pre class="moz-quote-pre" wrap="">Can you elaborate on these principles?  I'm curious.  I may even 
-document the answers :-)
-</pre>
-      </blockquote>
-      <pre class="moz-quote-pre" wrap="">
-I've badgered enough on the firmware update side of this, which is
-the primary hinderance to "open firmware principles" I see.
-
-On Discord I said that I didn't think this feature is in the "spirit of
-open source software" and I think Ed's statement here is along those
-lines, but I realize there is a lot of potential perspective encapsulated
-in that one phrase so let me try to unpack it.
-
-Corporate attachment to the Open Source / Free Software movement has
-often been around the collaboration (and thus deduplication of effort)
-side of it, but that is an outcome and not a principle of open source.
-To me the draw has always been about freedom to read, debug and modify
-the source.  It is immensely frustrating to me when I have to use non-free
-software and I find a bug: you have no visibility into what is going
-wrong and you have no possibility of fixing it!  As the GNU/FSF often
-states it: "'free software' is a matter of liberty, not price... you
-should think of 'free' as in 'free speech' and not as in 'free beer'.[9]"
-
-Again I bring up firmware update, but the emergence of GPLv3 (and
-similar licenses) was instigated in response to the the Tivoization
-of consumer devices[10].
-
-[ Side question: are you sure your statement that "only IBM signed
-  firmware can run on our machines" doesn't violate the terms of the
-  GPLv3, which is used by a good number of packages used in OpenBMC? ]
-
-We often have people show up to the project with some 5 year old server
-they bought off eBay asking "how do I get OpenBMC to run on this?"
-Which is a worse answer?:
-    1. Well, we don't currently support it specifically but we support
-       &lt;XYZ&gt; which is based on the same reference design.  With a little
-       bit of reverse engineering, or the schematics from the
-       manufacturer, you could probably create a port.
-
-    2. Yeah, we completely support that machine, but unfortunately the
-       manufacturer locked down the system in a way so that you can
-       compile all the code but the machine won't recognize it.  And if
-       I told you how to bypass that, the manufacturer could sue me for
-       violating the DMCA[11] because the same bug that allows you to
-       bypass their signing is still present on their current systems.
-
-IBM does great work on this project and having upstream machine support
-is good.  But, there is a big part of me that would much rather answer
-#1 than #2 because of the implications from a Software Freedom
-perspective.
-
-</pre>
-      <blockquote type="cite">
-        <blockquote type="cite">
-          <pre class="moz-quote-pre" wrap="">and something
-that, if done wrong, could be very harmful to the goals of the
-project.
-</pre>
-        </blockquote>
-        <pre class="moz-quote-pre" wrap="">Can you elaborate on the goals of the project that would be harmed?
-</pre>
-      </blockquote>
-      <pre class="moz-quote-pre" wrap="">
-I hinted at the DMCA above.  The inclusion of this feature by the project
-pushes DMCA risk onto me, a developer on this project, from IBM.
-
-A long time ago now, I did an internship at IBM and at the time someone
-had figured out how to circumvent exactly this feature on Power3/Power4
-AS/400 servers and was contacting IBM customers to sell them black-market
-activation keys (my cubical happened to share a wall with one of the
-inventors of the hardware used at the time to confirm the activation
-keys so I got to hear plenty of details on this).  The DMCA was new at
-the time and first applied for protecting from DVD copyright, but I have
-no doubt that if this situation happened today IBM would leverage the
-DMCA to stop this rather quickly (and honestly, rightly so).
-
-The problem is that the DMCA has also been leveraged for cases which are
-not a direct theft-of-service[12].  I am not saying that IBM will, and I
-can't expect you to get a committment on that, but you are pushing the
-risk onto me, the other developers here, and the project as a whole.
-
-What am I even talking about, you're probably wondering?  Since IBM is
-using this feature to protect your intellectual property (AIX licenses,
-firmware update lockout, etc.) everything about it falls under the
-purview of the DMCA.  If I find a bug in your open source implementation
-and report it in a public forum, you could issue a DMCA take-down
-request.  If I review a code change and conceive of a way it might be
-used to circumvent your implementation, and I bring it to your
-attention, you could issue a DMCA take-down request.  If someone comes
-to us with a 5 year old server and we figure out how to bypass your
-security lockout so they can flash on the Github version of OpenBMC, you
-could issue a DMCA take-down request.  If I do a presentation on
-debugging with dbus and it turns out someone figures out how to use that
-information to circumvent your licensing feature on the SSH interface,
-you could issue a DMCA take-down request.
-
-These might sound absurd or you might think "IBM would never do that."
-How do I and the other developers here know?  You're asking us to take
-on that risk.  And why should I?  I want to stay as far away from
-anything related to your licensing feature as I possibly can.  It does
-nothing good for your customers, it does nothing good for this project,
-and it puts me, a developer, at potential legal risk.
-
-While you might have a little bit of code that you're sharing, that
-maybe other companies can leverage, you are also giving us baggage
-that reduces our collaboration.  Now, anytime I'm even close to this
-code, I have to think about not only the technical but now legal
-ramifications of what I'm doing.  That means, I'm quite likely going to
-have to just say "do whatever you want and leave me out of it" anytime
-this code comes up in reviews or discussions.
-
--- References --
-
-1. <a class="moz-txt-link-freetext" href="https://www.acm.org/code-of-ethics">https://www.acm.org/code-of-ethics</a>
-2. <a class="moz-txt-link-freetext" href="https://www.opencompute.org/products#ocp-accepted-inspired-modal">https://www.opencompute.org/products#ocp-accepted-inspired-modal</a>
-3. <a class="moz-txt-link-freetext" href="https://www.opencompute.org/projects/open-system-firmware">https://www.opencompute.org/projects/open-system-firmware</a>
-4. <a class="moz-txt-link-freetext" href="https://www.zdnet.com/article/hp-to-begin-charging-for-firmware-updates-and-service-packs-for-servers/">https://www.zdnet.com/article/hp-to-begin-charging-for-firmware-updates-and-service-packs-for-servers/</a>
-5. <a class="moz-txt-link-freetext" href="https://www.ibm.com/support/pages/management-power8-and-later-update-access-keys#q45">https://www.ibm.com/support/pages/management-power8-and-later-update-access-keys#q45</a>
-6. <a class="moz-txt-link-freetext" href="https://www.opencompute.org/documents/ibm-white-paper-ownership-and-control-of-firmware-in-open-compute-project-devices">https://www.opencompute.org/documents/ibm-white-paper-ownership-and-control-of-firmware-in-open-compute-project-devices</a>
-7. <a class="moz-txt-link-freetext" href="https://www.theguardian.com/technology/2021/apr/16/facebook-says-it-has-reached-net-zero-emissions">https://www.theguardian.com/technology/2021/apr/16/facebook-says-it-has-reached-net-zero-emissions</a>
-8. <a class="moz-txt-link-freetext" href="https://www.itrenew.com/resources/the-tco-of-ocp/">https://www.itrenew.com/resources/the-tco-of-ocp/</a>
-9. <a class="moz-txt-link-freetext" href="https://www.gnu.org/philosophy/free-sw.en.html">https://www.gnu.org/philosophy/free-sw.en.html</a>
-10. <a class="moz-txt-link-freetext" href="https://en.wikipedia.org/wiki/Tivoization">https://en.wikipedia.org/wiki/Tivoization</a>
-11. <a class="moz-txt-link-freetext" href="https://en.wikipedia.org/wiki/Digital_Millennium_Copyright_Act">https://en.wikipedia.org/wiki/Digital_Millennium_Copyright_Act</a>
-12. <a class="moz-txt-link-freetext" href="https://www.eff.org/wp/unintended-consequences-16-years-under-dmca">https://www.eff.org/wp/unintended-consequences-16-years-under-dmca</a>
-
-</pre>
-    </blockquote>
-  </body>
-</html>
-
---------------RxlJmJ9R29eS2MKyN0zqNHnc--
