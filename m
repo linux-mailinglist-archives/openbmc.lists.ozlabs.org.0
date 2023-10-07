@@ -2,52 +2,87 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3029F7BC31F
-	for <lists+openbmc@lfdr.de>; Sat,  7 Oct 2023 01:51:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id DFB637BC334
+	for <lists+openbmc@lfdr.de>; Sat,  7 Oct 2023 02:02:40 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=cf8rmM8k;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=L193nu1z;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=nfe7g0Vq;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4S2QDV0G4Lz3vXy
-	for <lists+openbmc@lfdr.de>; Sat,  7 Oct 2023 10:51:06 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4S2QTp5jyhz3dmy
+	for <lists+openbmc@lfdr.de>; Sat,  7 Oct 2023 11:02:38 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=cf8rmM8k;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm1 header.b=L193nu1z;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=nfe7g0Vq;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.73.55; helo=sin.source.kernel.org; envelope-from=sboyd@kernel.org; receiver=lists.ozlabs.org)
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.20; helo=wout4-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
+Received: from wout4-smtp.messagingengine.com (wout4-smtp.messagingengine.com [64.147.123.20])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4S2QCt0fwLz3dDT
-	for <openbmc@lists.ozlabs.org>; Sat,  7 Oct 2023 10:50:34 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sin.source.kernel.org (Postfix) with ESMTP id 8BE2ACE28C2;
-	Fri,  6 Oct 2023 23:50:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C294AC433C7;
-	Fri,  6 Oct 2023 23:50:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1696636230;
-	bh=Gr8NIy25jma5858InK0zSBJrzPSCMCjYQVnqkTHw2Ls=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=cf8rmM8kOwHed/fJq5mUa78PdLQJMfB6sVSDtHUHa0g/+fzucMGBeTEyoUqKAWLwG
-	 t2XTq+qWqJeOhiVwjkMbN3V6j8/GJYM5ya2KgSCLzsSBBwymHzDMFskkP7fK3G2fl+
-	 n6VPW/w1qIyS+8MDs19LKYCAW/H2ZYJIiRaUo885k2wPQ4A7uIEoNha8E42qTVw4o9
-	 mnW9ahoyXKu25iMUKbI9I6uecCcDYXXmKWXbWsSKtzmIRRfY/AbnKeXHyfc1UrT+fW
-	 H4DtIa3nld7kAGuCH/73LI2cS98ufhEQpnQc5qE7EwiqUch+VKfD10uh+dqfCaIvEQ
-	 zpKaO+xHhsB6w==
-Message-ID: <7d529b2b9a16f238f533f1c03b4261b2.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4S2QT51Mc6z3dDT
+	for <openbmc@lists.ozlabs.org>; Sat,  7 Oct 2023 11:02:00 +1100 (AEDT)
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+	by mailout.west.internal (Postfix) with ESMTP id 174433200BC2;
+	Fri,  6 Oct 2023 20:01:56 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Fri, 06 Oct 2023 20:01:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm1; t=1696636915; x=1696723315; bh=vc
+	Jhvt7X+hb7yl3bxAZnRLlDV0NJxdZrJcV89WJK+uA=; b=L193nu1zfrM2+cFAEc
+	jXy6KssDwBBwEGqgxThESsc4PCr3ajfGRrz7gE7X7nbnYvFx0xizuqBcgHh+pXUp
+	mJRhf0nqztV6g24FJs+ucb1OLuyp2+UjfojDcuoYQpXurNnjKL9oLm7oXj4Fgwoq
+	ERsAQqVuJsf9r4Hdr1QIFAntypVRkzw/ucsbhUPVmOzd7iixNYRe77NA+oek7BHA
+	DrIqJyBDUt2UX0RqH7bcZOyBtk5uoRtamG9j+OrZVbhb7wDfa3GGLLLVtd+iNSHX
+	S/3H3oNEm3a39R38FEXkY6G6xd/Z6eLLRGPzDjAagkSYcVye3kYRqpMgqUWs7pDO
+	aySw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm2; t=1696636915; x=1696723315; bh=vcJhvt7X+hb7y
+	l3bxAZnRLlDV0NJxdZrJcV89WJK+uA=; b=nfe7g0Vq4cO4aPoolVFBMFgg5cofh
+	6rkewhWCGLRCG+JImOC05JpF/ZEyoMTYdmbO64L/VeOBhBatzHaH3TS+MC0Qwzm3
+	d1Wl5GdETZn/NfhREJk+7hcMycMu5rVchMItnilUt+S/nJpxkar4DQxuMOyTCHuL
+	v2/PmvIwWo7KknN9fEQ7ZduWOpEvHebg3oKqB/3/NaDXDn0Lp2Rk19u0LjiQXeM0
+	b8Efn7x+Nqn5+JvtMn2TbWa6VNSuwNNRqEc41lC9LR7vRK7zCeWqoxceamGiZGar
+	I5kMzMXViywJAK2sskOuMwmkzC5rUgu0xpeunPHdstRmCxmGV3H/o97+A==
+X-ME-Sender: <xms:858gZU5NI_L1aefZu2CX3tcH0aunyiDLgOkt2ceZDODGp5kkLCRMlA>
+    <xme:858gZV4aWgDC0iJ6xkfsc5hqrJMxyvu0AtG8obWiyDymUCuzG8tUQeRrEWbIOWqf5
+    WA97hl77vR3ZnRU-Xg>
+X-ME-Received: <xmr:858gZTcGFuRQUJk6cj4FpgjzLb-Mtt6u8yMChvAegy5Yf6ViS_vWg62IZzA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrgeejgddvkecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenfg
+    hrlhcuvffnffculddvfedmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuhghilhhlihgrmhhsuceophgrthhrihgtkhessh
+    htfigtgidrgiihiieqnecuggftrfgrthhtvghrnhepgeeiveeuudefvdegteelkeekhfej
+    gfeiieelhfdtgedvheekffekuddvhfffhfehnecuffhomhgrihhnpehophgvnhgsmhgtrd
+    horhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
+    phgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:858gZZJ7jZjwV-E9rPJhBzSeFVIfqUXLzX1-4fLUrtGakbn9Wm_nfA>
+    <xmx:858gZYKNHtQkqY6xaQ7gQ-8UPo7K2wziWYmUtlMZoemRJNTPjSmd0Q>
+    <xmx:858gZayo43RhH-Bn5MYPLbuFlgb0Jb39v77SMWO5S0Wl3ud83q4jxA>
+    <xmx:858gZSwT80sFiJNZ97KZAQ5zlP3jTtN9GxlruFXPDd-Ynr7bKEE8Eg>
+Feedback-ID: i68a1478a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 6 Oct 2023 20:01:55 -0400 (EDT)
+Date: Fri, 6 Oct 2023 19:01:53 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
+To: Andrew Geissler <geissonator@gmail.com>
+Subject: Re: webui by default in openbmc images
+Message-ID: <ZSCf8TmHugWS9dKs@heinlein.vulture-banana.ts.net>
+References: <CALLMt=pST5nX76byef6S4rsskMRD3xvF5gAVqhr2eRefcRa-qA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20230928224051.160851-1-tmaimon77@gmail.com>
-References: <20230928224051.160851-1-tmaimon77@gmail.com>
-Subject: Re: [PATCH v20] clk: npcm8xx: add clock controller
-From: Stephen Boyd <sboyd@kernel.org>
-To: Tomer Maimon <tmaimon77@gmail.com>, avifishman70@gmail.com, benjaminfair@google.com, joel@jms.id.au, mturquette@baylibre.com, tali.perry1@gmail.com, venture@google.com, yuenn@google.com
-Date: Fri, 06 Oct 2023 16:50:28 -0700
-User-Agent: alot/0.10
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="Xttd7smYSf27kSed"
+Content-Disposition: inline
+In-Reply-To: <CALLMt=pST5nX76byef6S4rsskMRD3xvF5gAVqhr2eRefcRa-qA@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,84 +94,77 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, Tomer Maimon <tmaimon77@gmail.com>, linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: OpenBMC Maillist <openbmc@lists.ozlabs.org>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Quoting Tomer Maimon (2023-09-28 15:40:51)
-> diff --git a/drivers/clk/clk-npcm8xx.c b/drivers/clk/clk-npcm8xx.c
-> new file mode 100644
-> index 000000000000..e575a8676ca3
-> --- /dev/null
-> +++ b/drivers/clk/clk-npcm8xx.c
-> @@ -0,0 +1,547 @@
-> +// SPDX-License-Identifier: GPL-2.0
-> +/*
-[...]
-> +
-> +/* configurable dividers: */
-> +static const struct npcm8xx_clk_div_data npcm8xx_divs[] =3D {
-> +       { NPCM8XX_CLKDIV1, 28, 3, NPCM8XX_CLK_S_ADC,
-> +       { .name =3D NPCM8XX_CLK_S_PRE_ADC, .index =3D -1 },
-> +       CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK_=
-ADC },
 
-Please format this some other way. I assume one line means one clk, but
-here it is actually three lines. Perhaps something like this?
+--Xttd7smYSf27kSed
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> +       {
-> +		NPCM8XX_CLKDIV1, 28, 3, NPCM8XX_CLK_S_ADC,
-> +       	{ .name =3D NPCM8XX_CLK_S_PRE_ADC, .index =3D -1 },
-> +       	CLK_DIVIDER_READ_ONLY | CLK_DIVIDER_POWER_OF_TWO, 0, NPCM8XX_CLK=
-_ADC
-> +	  },
+On Thu, Sep 21, 2023 at 11:56:50AM -0500, Andrew Geissler wrote:
+> Greetings,
+>=20
+> I was adding a new system recently and wanted to add the webui into
+> it. Doing a quick search[1]
+> showed a lot of people adding it in via a RDEPENDS on some other
+> unrelated feature.
+>=20
+> It felt like something that deserved its own openbmc feature and
+> should be in our images by default.
+> The following commit does just that:
+>   https://gerrit.openbmc.org/c/openbmc/openbmc/+/66675
+>=20
 
-Please stop using the .name member of struct clk_parent_data. That
-member is only there to support drivers that are migrating from a
-binding that didn't specify the parents of clks that are outside of the
-clk controller with the clocks property in their DT node. I see that the
-dts exists upstream, but luckily we don't have a driver merged, so we're
-free to change the binding to specify clks external to the node. The
-.fw_name member will match a 'clock-names' element for the registering
-driver's node. The .index member will match the index in the 'clocks'
-property. Neither of those properties exist in the nuvoton,npcm845-clk
-DT binding, so neither of those members shall be present. This means
-that either the binding needs to be updated, or the clk_parent_data
-structure should be replaced with clk_hw pointers to describe parents.
-I'm going to guess that there aren't any external clk parents, so to
-keep things simple this driver should change to use direct clk_hw
-pointers to describe topology.
+The way this was attempted in the above commit does exempt webui-vue from=
+=20
+the image by default but it still ends up as a build-time dependency.
+This prevents the images from being built in a disconnected mode, which
+is one of the primary reasons that people have previously not wanted it
+in by default.
 
-> +       { NPCM8XX_CLKDIV1, 26, 2, NPCM8XX_CLK_S_AHB, { .hw =3D &hw_pre_cl=
-k },
-> +       CLK_DIVIDER_READ_ONLY, CLK_IS_CRITICAL, NPCM8XX_CLK_AHB },
-> +       { NPCM8XX_CLKDIV1, 21, 5, NPCM8XX_CLK_S_PRE_ADC,
-> +       { .hw =3D &npcm8xx_muxes[6].hw }, CLK_DIVIDER_READ_ONLY, 0, -1 },
-> +       { NPCM8XX_CLKDIV1, 16, 5, NPCM8XX_CLK_S_UART,
-> +       { .hw =3D &npcm8xx_muxes[3].hw }, 0, 0, NPCM8XX_CLK_UART },
-> +       { NPCM8XX_CLKDIV1, 11, 5, NPCM8XX_CLK_S_MMC,
-> +       { .hw =3D &npcm8xx_muxes[2].hw }, CLK_DIVIDER_READ_ONLY, 0,
-> +       NPCM8XX_CLK_MMC },
-> +       { NPCM8XX_CLKDIV1, 6, 5, NPCM8XX_CLK_S_SPI3,
-> +       { .fw_name =3D NPCM8XX_CLK_S_AHB, .name =3D NPCM8XX_CLK_S_AHB }, =
-0, 0,
-> +       NPCM8XX_CLK_SPI3 },
-> +       { NPCM8XX_CLKDIV1, 2, 4, NPCM8XX_CLK_S_PCI,
-> +       { .hw =3D &npcm8xx_muxes[7].hw }, CLK_DIVIDER_READ_ONLY, 0,
-> +       NPCM8XX_CLK_PCI },
+I've given this another attempt.
 
-BTW, I looked at the dts file upstream (nuvoton-common-npcm8xx.dtsi).
-The reset and clock controller start at the same address, which can only
-mean that they're actually the same device. The two nodes should be
-combined into one node and one driver should match that compatible so
-that one IO mapping is made for the entire clock and reset contoller
-register space. If you want, that driver can make two auxiliary device
-drivers for the reset and clk parts of the io space and then those two
-drivers can reside in drivers/reset and drivers/clk. I don't know where
-the driver goes that matches the compatible node though, probably in
-drivers/soc. This allows us to properly model the logical components
-that make up the device in hardware (clks and resets) while also
-allowing any device specific things for that entire register space to
-live in the soc driver. For example, if some power domain needs to be
-enabled to access that register space it would be attached to the soc
-driver.
+- Enable webui-vue by default everywhere:
+    - https://gerrit.openbmc.org/c/openbmc/openbmc/+/66954
+- Add a DISTRO_FEATURE that allows people to opt-out:
+    - https://gerrit.openbmc.org/c/openbmc/openbmc/+/66950/1
+- Opt-out meta-facebook and meta-google:
+    - https://gerrit.openbmc.org/c/openbmc/openbmc/+/66951/1
+    - https://gerrit.openbmc.org/c/openbmc/openbmc/+/66952/1
+- A bunch of clean ups:
+    - https://gerrit.openbmc.org/c/openbmc/openbmc/+/66955/1
+    - https://gerrit.openbmc.org/c/openbmc/openbmc/+/66956/1
+    - https://gerrit.openbmc.org/c/openbmc/openbmc/+/66957/1
+    - https://gerrit.openbmc.org/c/openbmc/openbmc/+/66958/1
+
+If I've missed anyone that really wants to opt-out of webui, you can
+either let me know or make a trivial change to mimic the two
+(meta-facebook and meta-google) I've referenced above.
+
+--=20
+Patrick Williams
+
+--Xttd7smYSf27kSed
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmUgn+8ACgkQqwNHzC0A
+wRnq3RAAmyeiMHGZ0K+xDVP0GuOlIUMKchZRrvdhTB7oS3E0I5ob4D4utm7qpD6B
+thzCI681uH5XkuMjjGDOrSekbLWGCbm/zVzIemirptXXQ8Tfr1jO28sPDlfHfKI2
+Awan00Fh44flUFrybEa0RyAZF/S/X8j6eJZOpYVu6ZExWzVrKZsmb+zP2WmLafyp
+F4hcWFgUXJdjzXpZ2zu3wd6X97JFnshg38C0T2EzM09noaxSZiZ0S/bbNsGDmxhs
+sGTR4A8+ZJFojYNMymQnhAZfE/8Z5hptlAzxUnCx6YSXdJX9t7SC+EjVzT8cGh4R
+XF9ok6N+W3uktl5aRKpSerRQ4vpZkGKcmAC89rCScccZwMRwHhO5tTckN3Sp9Qlw
+OPeLsPnI8G7XoYrEP+UcnUusrQkViU3sonknAIi0aFn5CZfR6v4JyMYWD8Szxncw
+S7Vhei0FVGtcxYtgb+2P6DKQI2mA9pyX80QIhRHQRnGRr1gAxpJfX2d+MLZbHzFu
+GoCNnpRfW//yOnYb7aGA3xx4q79Gz1ra9NoIwv7g5Sildy9VLs/DDavFgDC0Tc4L
+eOTTCN9RxqVhct0WIysdYIjotuduVCV3whx6Fa3NJ8lnUnLnW7ZfmjWDKowJVDlN
+kBvfmJHa/YPFqA/9z6qxkTP47+2L1hnMlLWoD1swh1DTAg0oRQY=
+=ttbc
+-----END PGP SIGNATURE-----
+
+--Xttd7smYSf27kSed--
