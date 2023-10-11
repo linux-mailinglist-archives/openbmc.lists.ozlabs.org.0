@@ -2,61 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 184577C477D
-	for <lists+openbmc@lfdr.de>; Wed, 11 Oct 2023 03:52:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 05AD57C4784
+	for <lists+openbmc@lfdr.de>; Wed, 11 Oct 2023 03:53:14 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=AHp2CgcQ;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=SiPtBJg4;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4S4wkM6C0Vz3vZB
-	for <lists+openbmc@lfdr.de>; Wed, 11 Oct 2023 12:52:11 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4S4wlW5LShz3cQP
+	for <lists+openbmc@lfdr.de>; Wed, 11 Oct 2023 12:53:11 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=AHp2CgcQ;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=SiPtBJg4;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62b; helo=mail-ej1-x62b.google.com; envelope-from=joel.stan@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::635; helo=mail-ej1-x635.google.com; envelope-from=joel.stan@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4S4wjR5l5Bz3vYJ;
-	Wed, 11 Oct 2023 12:51:23 +1100 (AEDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-9b1ebc80d0aso1067774166b.0;
-        Tue, 10 Oct 2023 18:51:23 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4S4wkB4kw9z3vYs;
+	Wed, 11 Oct 2023 12:52:02 +1100 (AEDT)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-9b27bc8b65eso1054693866b.0;
+        Tue, 10 Oct 2023 18:52:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jms.id.au; s=google; t=1696989081; x=1697593881; darn=lists.ozlabs.org;
+        d=jms.id.au; s=google; t=1696989118; x=1697593918; darn=lists.ozlabs.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=dvEek/wu0ornX7TSQqFw+K8z0hBkSwQuqkpR0z0uE5k=;
-        b=AHp2CgcQaRXNLRIZ+cQIDTk33mCo0tlNDXbLz9qVpfrWDlS+AW6YLYix4lVYaJ+p0B
-         4HDxvZVmWIijpAVcvij4vCmkC1Qs4DEbyCTppXp7AjjSAFhgnbFIYkL4atmnIBXj2teN
-         BzNP//Iz/vDt14/Z7VODiL2FFqk/JLpbwb1Cw=
+        bh=k8jpVbTN8e1NFVPlrUmh8i2J9AzNXH5X36L3cIHXeoE=;
+        b=SiPtBJg4Vlug7TXdQNYCkYNvtJIfwCjc+ZH87ymmPMp15XQ93neCJOKEHXQvZhAY7x
+         Is3cbDKxkRQ5wHs14FgsJio/lO5UpyeCvkEyc1EIVCpFO4JebBjwYLSR8Hols0IdmM+K
+         5Or6h67OuJijQIoG5V5lxvAmrHd+ADsZXIDkk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696989081; x=1697593881;
+        d=1e100.net; s=20230601; t=1696989118; x=1697593918;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=dvEek/wu0ornX7TSQqFw+K8z0hBkSwQuqkpR0z0uE5k=;
-        b=uZXJ9ltuXF3jiOBvK/EamnrBpG4gZKx9AuheYBbVaLYrSi5y0M6yO5A4knxYTfCkXH
-         6KFXcX5niSvSNSPZSrx6dyxw+8mxXWmHkAwMvPpb5jv2WjbXhNAd4hPe3bTwCm+xVh4z
-         TsN4Hd/Om1ugaHNr16V0Ditr3vcyFvBU/iecJjXFe6AMDo/aDaSD/Jz+X5Iq2D1A8xi2
-         7kbQPYRqlfgRIJLH9JuW7BKqsMan/calLqdyo8t/Z4bk1D7Q32Nv4zYmUjc8iLRS9NnF
-         WKbCaYPquvkW3MbJG1qY4GnKoRhwGjzY1Mr8K2pbMBb8V8nyneEMQlkfw2/NXFChMRFB
-         EkMw==
-X-Gm-Message-State: AOJu0YwJLWr3JuMs2W5Tbst2LnxJpg0iqyyK9DstTtrWcO9w0rJrrS0v
-	WW7h0mO8qvzFe+lsNGfhSOcdtnnSfXjEMVE9ODs=
-X-Google-Smtp-Source: AGHT+IEJHgu6jOvC4sfayzAJpsh/xcXdz7gNPlaBSSuCWsWCemoWp8C2Kriej5Qo+yGFOjuOzBt2CEssbvsu5fd04Ok=
-X-Received: by 2002:a17:907:762d:b0:9ba:4163:1807 with SMTP id
- jy13-20020a170907762d00b009ba41631807mr1896364ejc.2.1696989080445; Tue, 10
- Oct 2023 18:51:20 -0700 (PDT)
+        bh=k8jpVbTN8e1NFVPlrUmh8i2J9AzNXH5X36L3cIHXeoE=;
+        b=XYndcOep+nbWcbdSBZC7mVT3RJapuENY/7Gmf2FGx+pwSMcUmWdf7TwAFp7W2RpZ0n
+         2JzNNQn2g9ZrbJWbO6gN9VXMUQrw3sfHYlMmJutdvhKle4B52g5ficPXqUlUntwYi1KP
+         2YIFSf7rnOiPvHcrTcEH1/pHWzXBUdDs/mbF2nfLS/RtWSgrtT6c13IvR7rSqiEAoQdT
+         OU3GdXK6S5+vFIUwV2In2tg9xHQTeOZWcyJGt0oJ6DuENuuS7PDEuZibvwQfXPMJF55o
+         uE/bzzsIb1xd1DiRU1Uhy6vCmvYGgkZtozHZyGT/ocJsJPIID2Dsg9njIBepHBZt9/Ea
+         KyHQ==
+X-Gm-Message-State: AOJu0YwzzEXY45tfElNhCwc0CqL9LbGZZnH3a5eeCxnnHWTX0kqKwCDw
+	322/KEX/k5OZSt1MLqjktzR5pm7YIq6ix3iPxqFE33d3woU=
+X-Google-Smtp-Source: AGHT+IFCx+g9JHWDoLnMcozkiubkyTMt0hDKy7+W4kFVGz/dfkDSi66nrCqbpAmZXiZUa1jA01VOuaFCFh5GmHP1+8M=
+X-Received: by 2002:a17:906:220f:b0:9a4:88af:b82 with SMTP id
+ s15-20020a170906220f00b009a488af0b82mr15091743ejs.77.1696989118416; Tue, 10
+ Oct 2023 18:51:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <20231005035525.19036-1-chanh@os.amperecomputing.com> <20231005035525.19036-6-chanh@os.amperecomputing.com>
-In-Reply-To: <20231005035525.19036-6-chanh@os.amperecomputing.com>
+References: <20231005035525.19036-1-chanh@os.amperecomputing.com> <20231005035525.19036-7-chanh@os.amperecomputing.com>
+In-Reply-To: <20231005035525.19036-7-chanh@os.amperecomputing.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 11 Oct 2023 12:21:09 +1030
-Message-ID: <CACPK8Xcs_4G0nSeKm2+hjSrp=SBb1MJrCob+EQ1emfVOijSOjw@mail.gmail.com>
-Subject: Re: [PATCH 5/7] ARM: dts: aspeed: mtmitchell: Add inlet temperature sensor
+Date: Wed, 11 Oct 2023 12:21:47 +1030
+Message-ID: <CACPK8Xfbh=jM0QRNYTQ-rjsyugzhoPxxMg+-1C+5g+uNtir+nw@mail.gmail.com>
+Subject: Re: [PATCH 6/7] ARM: dts: aspeed: mtmitchell: Remove redundant ADC configurations
 To: Chanh Nguyen <chanh@os.amperecomputing.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -76,33 +76,44 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On Thu, 5 Oct 2023 at 14:26, Chanh Nguyen <chanh@os.amperecomputing.com> wrote:
 >
-> Add the inlet temperature at address 0x48, which is connected
-> via BMC I2C8.
+> Mt.Mitchell DVT and later hardware do not use adc1. It only uses
+> adc0 with channels 0, 1 and 2. This commit removes redundant ADC
+> configurations.
 >
 > Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
 
 Reviewed-by: Joel Stanley <joel@jms.id.au>
 
 > ---
->  arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtmitchell.dts | 5 +++++
->  1 file changed, 5 insertions(+)
+>  .../dts/aspeed/aspeed-bmc-ampere-mtmitchell.dts   | 15 +--------------
+>  1 file changed, 1 insertion(+), 14 deletions(-)
 >
 > diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtmitchell.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtmitchell.dts
-> index 88693c2b2dbe..c676172f0dbf 100644
+> index c676172f0dbf..eb8d5e367276 100644
 > --- a/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtmitchell.dts
 > +++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtmitchell.dts
-> @@ -510,6 +510,11 @@
->  &i2c8 {
->         status = "okay";
+> @@ -564,20 +564,7 @@
 >
-> +       temperature-sensor@48 {
-> +               compatible = "ti,tmp112";
-> +               reg = <0x48>;
-> +       };
-> +
->         gpio@77 {
->                 compatible = "nxp,pca9539";
->                 reg = <0x77>;
+>         pinctrl-names = "default";
+>         pinctrl-0 = <&pinctrl_adc0_default &pinctrl_adc1_default
+> -               &pinctrl_adc2_default &pinctrl_adc3_default
+> -               &pinctrl_adc4_default &pinctrl_adc5_default
+> -               &pinctrl_adc6_default &pinctrl_adc7_default>;
+> -};
+> -
+> -&adc1 {
+> -       ref_voltage = <2500>;
+> -       status = "okay";
+> -
+> -       pinctrl-names = "default";
+> -       pinctrl-0 = <&pinctrl_adc8_default &pinctrl_adc9_default
+> -               &pinctrl_adc10_default &pinctrl_adc11_default
+> -               &pinctrl_adc12_default &pinctrl_adc13_default
+> -               &pinctrl_adc14_default &pinctrl_adc15_default>;
+> +               &pinctrl_adc2_default>;
+>  };
+>
+>  &vhub {
 > --
 > 2.17.1
 >
