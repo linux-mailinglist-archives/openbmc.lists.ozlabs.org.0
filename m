@@ -1,62 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id BDFBA7C4778
-	for <lists+openbmc@lfdr.de>; Wed, 11 Oct 2023 03:50:54 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 184577C477D
+	for <lists+openbmc@lfdr.de>; Wed, 11 Oct 2023 03:52:14 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=VRYoQMYn;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=AHp2CgcQ;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4S4whr4W12z3vXH
-	for <lists+openbmc@lfdr.de>; Wed, 11 Oct 2023 12:50:52 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4S4wkM6C0Vz3vZB
+	for <lists+openbmc@lfdr.de>; Wed, 11 Oct 2023 12:52:11 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=VRYoQMYn;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=AHp2CgcQ;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62b; helo=mail-ej1-x62b.google.com; envelope-from=joel.stan@gmail.com; receiver=lists.ozlabs.org)
 Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4S4wgr0tQcz3dhk;
-	Wed, 11 Oct 2023 12:50:00 +1100 (AEDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-9b29186e20aso1072006366b.2;
-        Tue, 10 Oct 2023 18:49:59 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4S4wjR5l5Bz3vYJ;
+	Wed, 11 Oct 2023 12:51:23 +1100 (AEDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-9b1ebc80d0aso1067774166b.0;
+        Tue, 10 Oct 2023 18:51:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jms.id.au; s=google; t=1696988996; x=1697593796; darn=lists.ozlabs.org;
+        d=jms.id.au; s=google; t=1696989081; x=1697593881; darn=lists.ozlabs.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=LO/vJrNP2TpMz42rqukb2IJJCeqp32FfF1/7XGzp3yw=;
-        b=VRYoQMYnQ43kvZq0I5lpCAeqfboT1qLrLvWoVgiHypIpxCWPFNF9/ROH7VeaySR3Br
-         QEBw2caqYa5st37GF8Fr36yPVRC7vxiNt4izkuq5vOME66LcP+QGZkexB5oYbCkKZ5am
-         Z/LRnw/pakWd9R2UESBIY7w17t8+NSlECgyrs=
+        bh=dvEek/wu0ornX7TSQqFw+K8z0hBkSwQuqkpR0z0uE5k=;
+        b=AHp2CgcQaRXNLRIZ+cQIDTk33mCo0tlNDXbLz9qVpfrWDlS+AW6YLYix4lVYaJ+p0B
+         4HDxvZVmWIijpAVcvij4vCmkC1Qs4DEbyCTppXp7AjjSAFhgnbFIYkL4atmnIBXj2teN
+         BzNP//Iz/vDt14/Z7VODiL2FFqk/JLpbwb1Cw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696988996; x=1697593796;
+        d=1e100.net; s=20230601; t=1696989081; x=1697593881;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=LO/vJrNP2TpMz42rqukb2IJJCeqp32FfF1/7XGzp3yw=;
-        b=c0yiuQUZuV/IZfptE6IVTCCFDzkJm9NTovgtlH82+wFsAXSOvancs1puFrTNXEm8Bd
-         89y3WJLwNrQBXKB5q3FIRSEMLQ8TUqX4NQ/SJrGpGyQ5DVg3+B/NS8+dBZ8D28cPogYw
-         SaXqxOYM4YknNyHKB/gvja9K6/WT5Yg43/mXeP8o8gFdSWtlzE0indG21R2+A8YIglTd
-         EJQUN7vRHp04oOyQ6dZ8DpqrZHdZc11WuKu7I4o6ySsQCGFF7WuC8kAHQYw29KfAnitI
-         +k5PLRPziW+oZOR7qpKTg3ruVMZ/qC0CAcxurSUkTc2J/xBh7nTfQzTWvE4W4Ujdzm4k
-         KMfQ==
-X-Gm-Message-State: AOJu0YxA8ta8RM3Tu+E6Bkc4SCB/SkHzOKDm83TVXUk+xY/njbMwDkDj
-	257KS8m8yC4pvTsx96TV3styzDbsRjN2ctT9U1Y=
-X-Google-Smtp-Source: AGHT+IENtIO4uRrRVxLj+GzOepLQkLMK0qxFFO24siVqSmqpcrcJ7ieHXx0nNMhyFPDGj+jIXrGioxzcX3zlg33/eMo=
-X-Received: by 2002:a17:906:3f04:b0:9ae:5568:b6a8 with SMTP id
- c4-20020a1709063f0400b009ae5568b6a8mr19965720ejj.10.1696988995731; Tue, 10
- Oct 2023 18:49:55 -0700 (PDT)
+        bh=dvEek/wu0ornX7TSQqFw+K8z0hBkSwQuqkpR0z0uE5k=;
+        b=uZXJ9ltuXF3jiOBvK/EamnrBpG4gZKx9AuheYBbVaLYrSi5y0M6yO5A4knxYTfCkXH
+         6KFXcX5niSvSNSPZSrx6dyxw+8mxXWmHkAwMvPpb5jv2WjbXhNAd4hPe3bTwCm+xVh4z
+         TsN4Hd/Om1ugaHNr16V0Ditr3vcyFvBU/iecJjXFe6AMDo/aDaSD/Jz+X5Iq2D1A8xi2
+         7kbQPYRqlfgRIJLH9JuW7BKqsMan/calLqdyo8t/Z4bk1D7Q32Nv4zYmUjc8iLRS9NnF
+         WKbCaYPquvkW3MbJG1qY4GnKoRhwGjzY1Mr8K2pbMBb8V8nyneEMQlkfw2/NXFChMRFB
+         EkMw==
+X-Gm-Message-State: AOJu0YwJLWr3JuMs2W5Tbst2LnxJpg0iqyyK9DstTtrWcO9w0rJrrS0v
+	WW7h0mO8qvzFe+lsNGfhSOcdtnnSfXjEMVE9ODs=
+X-Google-Smtp-Source: AGHT+IEJHgu6jOvC4sfayzAJpsh/xcXdz7gNPlaBSSuCWsWCemoWp8C2Kriej5Qo+yGFOjuOzBt2CEssbvsu5fd04Ok=
+X-Received: by 2002:a17:907:762d:b0:9ba:4163:1807 with SMTP id
+ jy13-20020a170907762d00b009ba41631807mr1896364ejc.2.1696989080445; Tue, 10
+ Oct 2023 18:51:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <20231005035525.19036-1-chanh@os.amperecomputing.com> <20231005035525.19036-4-chanh@os.amperecomputing.com>
-In-Reply-To: <20231005035525.19036-4-chanh@os.amperecomputing.com>
+References: <20231005035525.19036-1-chanh@os.amperecomputing.com> <20231005035525.19036-6-chanh@os.amperecomputing.com>
+In-Reply-To: <20231005035525.19036-6-chanh@os.amperecomputing.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 11 Oct 2023 12:19:44 +1030
-Message-ID: <CACPK8Xcby1Oy0ksP9GQjUi8TNg77bw+HJMqgVujM6dABvT_ViA@mail.gmail.com>
-Subject: Re: [PATCH 3/7] ARM: dts: aspeed: mtjade: Add the gpio-hog
+Date: Wed, 11 Oct 2023 12:21:09 +1030
+Message-ID: <CACPK8Xcs_4G0nSeKm2+hjSrp=SBb1MJrCob+EQ1emfVOijSOjw@mail.gmail.com>
+Subject: Re: [PATCH 5/7] ARM: dts: aspeed: mtmitchell: Add inlet temperature sensor
 To: Chanh Nguyen <chanh@os.amperecomputing.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -76,46 +76,33 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On Thu, 5 Oct 2023 at 14:26, Chanh Nguyen <chanh@os.amperecomputing.com> wrote:
 >
-> Add the GPIOR5 as a gpio-hog with output high so that can
-> power the OCP card once the BMC booting.
->
-> Add the GPIOAC5 as a gpio-hog with output high to notice
-> the BMC state.
+> Add the inlet temperature at address 0x48, which is connected
+> via BMC I2C8.
 >
 > Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
-
-Could be two patches as it does two different things, but not worth
-re-spinning just for that.
 
 Reviewed-by: Joel Stanley <joel@jms.id.au>
 
 > ---
->  .../boot/dts/aspeed/aspeed-bmc-ampere-mtjade.dts   | 14 ++++++++++++++
->  1 file changed, 14 insertions(+)
+>  arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtmitchell.dts | 5 +++++
+>  1 file changed, 5 insertions(+)
 >
-> diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtjade.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtjade.dts
-> index c87be433bdd0..8ab5f301f926 100644
-> --- a/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtjade.dts
-> +++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtjade.dts
-> @@ -805,4 +805,18 @@
->                 output-high;
->                 line-name = "i2c4-o-en";
->         };
-> +
-> +       ocp-aux-pwren-hog {
-> +               gpio-hog;
-> +               gpios = <ASPEED_GPIO(R, 3) GPIO_ACTIVE_HIGH>;
-> +               output-high;
-> +               line-name = "ocp-aux-pwren";
+> diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtmitchell.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtmitchell.dts
+> index 88693c2b2dbe..c676172f0dbf 100644
+> --- a/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtmitchell.dts
+> +++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtmitchell.dts
+> @@ -510,6 +510,11 @@
+>  &i2c8 {
+>         status = "okay";
+>
+> +       temperature-sensor@48 {
+> +               compatible = "ti,tmp112";
+> +               reg = <0x48>;
 > +       };
 > +
-> +       bmc-ready {
-> +               gpio-hog;
-> +               gpios = <ASPEED_GPIO(AC, 5) GPIO_ACTIVE_HIGH>;
-> +               output-high;
-> +               line-name = "bmc-ready";
-> +       };
->  };
+>         gpio@77 {
+>                 compatible = "nxp,pca9539";
+>                 reg = <0x77>;
 > --
 > 2.17.1
 >
