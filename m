@@ -1,63 +1,64 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EDBB67C4D35
-	for <lists+openbmc@lfdr.de>; Wed, 11 Oct 2023 10:32:40 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 23E167C4E95
+	for <lists+openbmc@lfdr.de>; Wed, 11 Oct 2023 11:27:22 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=A7rc4gam;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=IC60PAN/;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4S55cQ5YHMz3cQ7
-	for <lists+openbmc@lfdr.de>; Wed, 11 Oct 2023 19:32:38 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4S56qW6TN3z3c5L
+	for <lists+openbmc@lfdr.de>; Wed, 11 Oct 2023 20:27:19 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=A7rc4gam;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=IC60PAN/;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62b; helo=mail-ej1-x62b.google.com; envelope-from=joel.stan@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::635; helo=mail-ej1-x635.google.com; envelope-from=joel.stan@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4S55bm5jyqz2yW2;
-	Wed, 11 Oct 2023 19:32:03 +1100 (AEDT)
-Received: by mail-ej1-x62b.google.com with SMTP id a640c23a62f3a-9b96c3b4be4so1104374766b.1;
-        Wed, 11 Oct 2023 01:32:03 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4S56px0jyBz3bpd;
+	Wed, 11 Oct 2023 20:26:47 +1100 (AEDT)
+Received: by mail-ej1-x635.google.com with SMTP id a640c23a62f3a-9a6190af24aso1146599766b.0;
+        Wed, 11 Oct 2023 02:26:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jms.id.au; s=google; t=1697013121; x=1697617921; darn=lists.ozlabs.org;
+        d=jms.id.au; s=google; t=1697016404; x=1697621204; darn=lists.ozlabs.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=qIaZVRAI+DjRQ6RtkRDpXSpOk0GxsoNaCYn+DGwB1ho=;
-        b=A7rc4gam25KLsecmcK2aIfWMhpkj0JcnpcDiaSvQAW5oeIyTyfXWyL1m7edpcxQfV6
-         /EFtEYykZNwfB1pQCe58Rpo/fk4Vlm5lVd4H9qGiSXyFUhZskIff7FKApQSshgMk8ktJ
-         pEouIXfQX7r0ai/EWDdq4qm+39kZMYJ69Bqlg=
+        bh=+gXxCxi6vp030i+agdceTeSycONQUjyDJd68wM+eSmw=;
+        b=IC60PAN/WtfPm3Qtb1fuHX+9IdQhk9qm4fxOfN/g+8Y3Syrl+1zAjgCAyvY+mSJr3/
+         FQnBnONHp1eTsZfIlk8AEHeqNnEe3qhBscEF/OIajescoQhhBv1EgFHNnKK49IL50Bt8
+         mAzDEzPwUFyP5PDrJxd+UMOisodXU4glux0wQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697013121; x=1697617921;
+        d=1e100.net; s=20230601; t=1697016404; x=1697621204;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=qIaZVRAI+DjRQ6RtkRDpXSpOk0GxsoNaCYn+DGwB1ho=;
-        b=HIajFfWnl7+CKC8MBtx6KFISSvYjfrn568fooElaPQNZb9LmXJ7qM54SEEUsoW6UBe
-         Mzdx8htvhXWzx+vRC/49C9dX0FGeLkGARhrwrtWwogJIjPlTLK5L4XORj2bQmkjMmsZk
-         YVv6r0532rUur3V0F7VhJA9ef5PY3+a1bTcHb9vLg3W0ssSC1ayRouLjn18ftGoZiGLk
-         1c9SgPa0C6InRD9Cf2/jLTDKu5AltMeFZ81FCyC9LBMDupITcYZOmFZ4zA+ONIbIjJyL
-         YwCtBFlGJAHhOV2nTuaVo/2cbRw3q6dXeUkV/udDUVtgllDWEQ0khrpbcdSdhDfVuNeZ
-         c8vQ==
-X-Gm-Message-State: AOJu0YyPmtuqJ8EgZWVQTYtG0/vZ4/ChOwFm3F6ErGBav6r5PsHzxKjR
-	f679ljiMP5GgU7AvU5EJCHg3nieIN95v7DmUekk=
-X-Google-Smtp-Source: AGHT+IEaktyNzbJKL4tDSSV2zr0hGoNDOpPJDTfcpmFWKu45gT5I05ODaiOG7w6mqPsi4F00Ud9+kIKb6hszgyGInHU=
-X-Received: by 2002:a17:906:55:b0:9ae:68bf:bec with SMTP id
- 21-20020a170906005500b009ae68bf0becmr19406519ejg.75.1697013120493; Wed, 11
- Oct 2023 01:32:00 -0700 (PDT)
+        bh=+gXxCxi6vp030i+agdceTeSycONQUjyDJd68wM+eSmw=;
+        b=D8ybBF5M9Vt5efUcOCE4GPexoVsRQurubC6KMFJglw0mRS+vZ7qJG15cAAfagSBDcd
+         6cjuP5XHCRRhZQt+NMWhd/FpWLLsThMWXOEJGJLIKx5Tsbgc4kVpKa0Y2+r6vCqPBcsn
+         bORYWBCB9E967jOFPQ/fFTPjQOJn3P1SaW9bl2PtXrp6wPgLjUBiXE3N1C2qw5cxsYKp
+         UKniUQl5espubXKeUt3Pe0mgEVROH0qYrJ0tdNIYIR/3M8ynL7C/wsEH/t+E2uF6PHgX
+         jHqQ87xPxnwBn4wZMG7igEPsOq8Ys6y135jbWXYkHiyQxYTAUXdLNTUVuZFWFVj4KwWp
+         o7+Q==
+X-Gm-Message-State: AOJu0Yz9VUI4cNVLw59Oso+hP4tYncx9fKgyrWqLU+kE689bEYH7EyTx
+	kl7Beslic+z5Dm2lsOju6KZhS/SoiP7BcmvHS+c=
+X-Google-Smtp-Source: AGHT+IHApwH+q9IPC29LKXoGHb2xdanm+kml7BeaRr/3PjuQ3NKQJoVq6Zhgzq28/yAtLmjZHjvfQbxoOnsjY+1Rl5M=
+X-Received: by 2002:a17:907:7817:b0:9ad:e17c:464e with SMTP id
+ la23-20020a170907781700b009ade17c464emr17132987ejc.68.1697016403957; Wed, 11
+ Oct 2023 02:26:43 -0700 (PDT)
 MIME-Version: 1.0
-References: <20231005035525.19036-1-chanh@os.amperecomputing.com>
-In-Reply-To: <20231005035525.19036-1-chanh@os.amperecomputing.com>
+References: <20230922104231.1434-4-zev@bewilderbeest.net> <20230922104231.1434-6-zev@bewilderbeest.net>
+In-Reply-To: <20230922104231.1434-6-zev@bewilderbeest.net>
 From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 11 Oct 2023 19:01:48 +1030
-Message-ID: <CACPK8Xeo+7hTmfYR-eR9H4teUFqs5vOcSRm_VvDoVOqP4D6+NQ@mail.gmail.com>
-Subject: Re: [PATCH 0/7] Update the device tree for Ampere's BMC platform
-To: Chanh Nguyen <chanh@os.amperecomputing.com>
+Date: Wed, 11 Oct 2023 19:56:32 +1030
+Message-ID: <CACPK8Xe5UEDt+ko_FtF-fi1TZDNZeZMtzaU_ZBxt6CO+UHJEpg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] watchdog: aspeed: Add support for aspeed,reset-mask
+ DT property
+To: Zev Weiss <zev@bewilderbeest.net>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -70,40 +71,71 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, linux-arm-kernel@lists.infradead.org
+Cc: Wim Van Sebroeck <wim@linux-watchdog.org>, linux-watchdog@vger.kernel.org, linux-aspeed@lists.ozlabs.org, Andrew Jeffery <andrew@aj.id.au>, openbmc@lists.ozlabs.org, Eddie James <eajames@linux.ibm.com>, linux-kernel@vger.kernel.org, =?UTF-8?Q?Thomas_Wei=C3=9Fschuh?= <linux@weissschuh.net>, linux-arm-kernel@lists.infradead.org, Ivan Mikhaylov <i.mikhaylov@yadro.com>, "Milton D. Miller II" <mdmii@outlook.com>, Guenter Roeck <linux@roeck-us.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Thu, 5 Oct 2023 at 14:26, Chanh Nguyen <chanh@os.amperecomputing.com> wrote:
+On Fri, 22 Sept 2023 at 20:12, Zev Weiss <zev@bewilderbeest.net> wrote:
 >
-> Updates the device tree to support some features on Ampere's
-> Mt.Mitchell BMC and Ampere's Mt.Jade BMC.
+> This property allows the device-tree to specify how the Aspeed
+> watchdog timer's reset mask register(s) should be set, so that
+> peripherals can be individually exempted from (or opted in to) being
+> reset when the watchdog timer expires.
 >
-> Chanh Nguyen (7):
->   ARM: dts: aspeed: mtjade, mtmitchell: Update gpio-line-names
->   ARM: dts: aspeed: mtjade, mtmitchell: Add new gpio-line-names
->   ARM: dts: aspeed: mtjade: Add the gpio-hog
->   ARM: dts: aspeed: mtmitchell: Add LEDs
->   ARM: dts: aspeed: mtmitchell: Add inlet temperature sensor
->   ARM: dts: aspeed: mtmitchell: Remove redundant ADC configurations
->   ARM: dts: aspeed: mtmitchell: Add I2C NVMe alias port
+> Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
 
-I'll merge all patches except patch 4. Please resend that on its own
-once you've added names.
+Reviewed-by: Joel Stanley <joel@jms.id.au>
 
-We should consider creating openbmc documenatiton on recommended LED
-names. Would you be able to help with that?
+A note below.
 
-Cheers,
-
-Joel
-
-
+> ---
+>  drivers/watchdog/aspeed_wdt.c | 11 +++++++++++
+>  1 file changed, 11 insertions(+)
 >
->  .../dts/aspeed/aspeed-bmc-ampere-mtjade.dts   |  66 ++--
->  .../aspeed/aspeed-bmc-ampere-mtmitchell.dts   | 315 ++++++++++++++++--
->  2 files changed, 334 insertions(+), 47 deletions(-)
+> diff --git a/drivers/watchdog/aspeed_wdt.c b/drivers/watchdog/aspeed_wdt.c
+> index b72a858bbac7..b4773a6aaf8c 100644
+> --- a/drivers/watchdog/aspeed_wdt.c
+> +++ b/drivers/watchdog/aspeed_wdt.c
+> @@ -79,6 +79,8 @@ MODULE_DEVICE_TABLE(of, aspeed_wdt_of_table);
+>  #define   WDT_TIMEOUT_STATUS_BOOT_SECONDARY    BIT(1)
+>  #define WDT_CLEAR_TIMEOUT_STATUS       0x14
+>  #define   WDT_CLEAR_TIMEOUT_AND_BOOT_CODE_SELECTION    BIT(0)
+> +#define WDT_RESET_MASK1                0x1c
+> +#define WDT_RESET_MASK2                0x20
 >
+>  /*
+>   * WDT_RESET_WIDTH controls the characteristics of the external pulse (if
+> @@ -402,6 +404,8 @@ static int aspeed_wdt_probe(struct platform_device *pdev)
+>
+>         if ((of_device_is_compatible(np, "aspeed,ast2500-wdt")) ||
+>                 (of_device_is_compatible(np, "aspeed,ast2600-wdt"))) {
+> +               u32 reset_mask[2];
+> +               size_t nrstmask = of_device_is_compatible(np, "aspeed,ast2600-wdt") ? 2 : 1;
+>                 u32 reg = readl(wdt->base + WDT_RESET_WIDTH);
+>
+>                 reg &= wdt->cfg->ext_pulse_width_mask;
+> @@ -419,6 +423,13 @@ static int aspeed_wdt_probe(struct platform_device *pdev)
+>                         reg |= WDT_OPEN_DRAIN_MAGIC;
+>
+>                 writel(reg, wdt->base + WDT_RESET_WIDTH);
+> +
+> +               ret = of_property_read_u32_array(np, "aspeed,reset-mask", reset_mask, nrstmask);
+> +               if (!ret) {
+> +                       writel(reset_mask[0], wdt->base + WDT_RESET_MASK1);
+> +                       if (nrstmask > 1)
+> +                               writel(reset_mask[1], wdt->base + WDT_RESET_MASK2);
+> +               }
+
+This will do funky things if someone is careless enough to put the
+property in an ast2400 device tree.
+
+The ast2700 has four reset mask registers. Not really your problem at
+this point, but we might need to move to a per-soc callback in the
+platform data or similar.
+
+>         }
+>
+>         if (!of_property_read_u32(np, "aspeed,ext-pulse-duration", &duration)) {
 > --
-> 2.17.1
+> 2.40.0.5.gf6e3b97ba6d2.dirty
 >
