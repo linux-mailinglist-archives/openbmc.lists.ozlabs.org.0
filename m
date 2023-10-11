@@ -1,62 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 10F847C476E
-	for <lists+openbmc@lfdr.de>; Wed, 11 Oct 2023 03:48:58 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 345577C4774
+	for <lists+openbmc@lfdr.de>; Wed, 11 Oct 2023 03:49:56 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Nu2Gx9t2;
+	dkim=fail reason="signature verification failed" (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Tc3iDCYD;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4S4wfb6bp8z3cVd
-	for <lists+openbmc@lfdr.de>; Wed, 11 Oct 2023 12:48:55 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4S4wgj6v7Sz3cQr
+	for <lists+openbmc@lfdr.de>; Wed, 11 Oct 2023 12:49:53 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Nu2Gx9t2;
+	dkim=pass (1024-bit key; secure) header.d=jms.id.au header.i=@jms.id.au header.a=rsa-sha256 header.s=google header.b=Tc3iDCYD;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::52e; helo=mail-ed1-x52e.google.com; envelope-from=joel.stan@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::52a; helo=mail-ed1-x52a.google.com; envelope-from=joel.stan@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4S4wdr5Ysgz3cNN;
-	Wed, 11 Oct 2023 12:48:16 +1100 (AEDT)
-Received: by mail-ed1-x52e.google.com with SMTP id 4fb4d7f45d1cf-538575a38ffso10292456a12.1;
-        Tue, 10 Oct 2023 18:48:16 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4S4wfg6DS3z3cMH;
+	Wed, 11 Oct 2023 12:48:59 +1100 (AEDT)
+Received: by mail-ed1-x52a.google.com with SMTP id 4fb4d7f45d1cf-53636f98538so10875979a12.1;
+        Tue, 10 Oct 2023 18:48:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=jms.id.au; s=google; t=1696988893; x=1697593693; darn=lists.ozlabs.org;
+        d=jms.id.au; s=google; t=1696988935; x=1697593735; darn=lists.ozlabs.org;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=igjlN4dO3JjcdB2G4ww8hAUFD7DZ0Fw5neZs9pJmc38=;
-        b=Nu2Gx9t2D5b5wmx689NURbsEvMEdfltmwSmteIBuRcy8HG3fp+9Eo+DHwai3tz4YBx
-         U52WV2PguhpRl3+t+Ldz5/mqyDQkMW8zrXxchjx5Qiq5OMK2pspOg5gXvwzZFcO1nSSy
-         XuH+dpKrlSO04N9griuaKfrcHp9MghdNVCMUs=
+        bh=6blQLn2I3D+7E4kfx/VjBl3FG3wnWcWQYJiYRJd/c58=;
+        b=Tc3iDCYDN2z/Q/v/LhSvDagxnjCw5PLiXMg51USNCaT4xsiZisJGB7M7IDQdzDNoTX
+         JAszZtuwsh8/gmfmRwfuubhXo8CqxPdmj/ryFN9eCyFrqQdFIqXAvLZaUGXfNnSOsuaR
+         QopXGtjrRIRpCFO9edhd9S35xnOS1kBx6kcKo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1696988893; x=1697593693;
+        d=1e100.net; s=20230601; t=1696988935; x=1697593735;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=igjlN4dO3JjcdB2G4ww8hAUFD7DZ0Fw5neZs9pJmc38=;
-        b=vih7ZT+gFYoDFSW8h9FtxtrKxKrxsdsT5oCLznNuag97OqPrt+d11bQFcLvAfDnSAV
-         acyUTE/pmhkMmPUvfpTi+PseKVcg3qDAHAlFeTfwfPti7vpK4kBctcatsSH4wbqeewni
-         02oav+LFLsDeTW6vf6dAogdVUG7Li9/e57GXBPcdRnDqZLAEn7jvUp294K9hqcHRTPgv
-         AbfgWQkgOaE8+d5Q/uiTpzYPTM4TYokndOVMS7fxpLAfQ4EapuNBnjc03n/vjWSmFU5T
-         Wkctg5W3BNzTqgLyveRrvYWfztsY8DLkZCpewew0Y+vXJ8yQ8xyknSrVkh1vC3BKwLHb
-         yDMw==
-X-Gm-Message-State: AOJu0YxwOg4lgLDryqJJOIWbfLiFlFZcCQhHSQS+lmcxOn9GkbsiSXMC
-	ummYv4Q9YkEPK3HwIfTUAE7mSPuXYVs5IWGVD0M=
-X-Google-Smtp-Source: AGHT+IEuuMqEy3USpJDXR0kSSSQMnE9Vm8JFze2cJqxGftCWpvdSX0K+UCUFBZu0kfb7wHhQh1dEjjpMVzNhVPs+EdA=
-X-Received: by 2002:a17:907:7890:b0:9ae:711d:7e03 with SMTP id
- ku16-20020a170907789000b009ae711d7e03mr17862404ejc.15.1696988892477; Tue, 10
- Oct 2023 18:48:12 -0700 (PDT)
+        bh=6blQLn2I3D+7E4kfx/VjBl3FG3wnWcWQYJiYRJd/c58=;
+        b=YnLaY+bzCBFUJE1WtCaChB3eQulHsghJS1sLY5n4AaUn8sW8EOAY8Rur3HthR6GpjD
+         fpn/tx6iVxUd5FvRF6S1yHrUGSOEua1vDTnipeVM92HsZ/3+On1+kTZMEwACdEqjTHUN
+         UENm+UwROcbrOo3VfVFhZ6+fm9Sh8Rj+PKEdEVKxTsKRdzrjSstbvs45+qm8eHNtwGEi
+         C76yIRz7X5pvuI83RgRFbG7FVpRdEhNf9K8jsaK5LMXRXl9pHVeprKeLloIvFsA+9voZ
+         oYVSnDjM7tGuQ8y013Qg63mmW383kTf+yyde/jzqQlr+bEGA5dUfOyWZ9Mj16tppuvBY
+         pLTg==
+X-Gm-Message-State: AOJu0YwsL5Z8f9AfG1ZiMMATIDetJf6IQsiIU06yNXXBWW+3hwPq1QYe
+	l2Sy4XLL/fGDt5r782eUXehwU/ZsZwqucEK2HPM=
+X-Google-Smtp-Source: AGHT+IG7b/tITQaSOSHGVjLPS11JqPX4ZYJdmpfkrJEDokNKEjsIU/5znXvrSPXzCXj1BdyVDXUgsUUTnAEqW9oJgGI=
+X-Received: by 2002:a17:906:10da:b0:9a9:e393:8bcd with SMTP id
+ v26-20020a17090610da00b009a9e3938bcdmr16813208ejv.5.1696988935659; Tue, 10
+ Oct 2023 18:48:55 -0700 (PDT)
 MIME-Version: 1.0
-References: <20231005035525.19036-1-chanh@os.amperecomputing.com> <20231005035525.19036-2-chanh@os.amperecomputing.com>
-In-Reply-To: <20231005035525.19036-2-chanh@os.amperecomputing.com>
+References: <20231005035525.19036-1-chanh@os.amperecomputing.com> <20231005035525.19036-3-chanh@os.amperecomputing.com>
+In-Reply-To: <20231005035525.19036-3-chanh@os.amperecomputing.com>
 From: Joel Stanley <joel@jms.id.au>
-Date: Wed, 11 Oct 2023 12:18:01 +1030
-Message-ID: <CACPK8XdpUpg0vDG7UwO-o=dYD-88evizSUb-yKm9qdUP2rjzdg@mail.gmail.com>
-Subject: Re: [PATCH 1/7] ARM: dts: aspeed: mtjade, mtmitchell: Update gpio-line-names
+Date: Wed, 11 Oct 2023 12:18:44 +1030
+Message-ID: <CACPK8XcPb_o+vVvZVeF0nqo+-4apS1TjY6o5sFPF7F24KR6ERw@mail.gmail.com>
+Subject: Re: [PATCH 2/7] ARM: dts: aspeed: mtjade, mtmitchell: Add new gpio-line-names
 To: Chanh Nguyen <chanh@os.amperecomputing.com>
 Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -76,118 +76,152 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On Thu, 5 Oct 2023 at 14:26, Chanh Nguyen <chanh@os.amperecomputing.com> wrote:
 >
-> Update GPIO line-name to follow naming convention specified at
-> github.com/openbmc/docs/blob/master/designs/device-tree-gpio-naming.md
+> Add new gpio-line-names from the Mt.Jade and Mt.Mitchell
+> HW schematic.
+>
+> Mt.Jade
+>   GPIOB5: presence-cpu0
+>   GPIOF0: ps0-pgood
+>   GPIOF1: ps1-pgood
+>   GPIOG2: host0-shd-ack-n
+>   GPIOH0: uart1-mode1
+>   GPIOH1: uart2-mode1
+>   GPIOH2: uart3-mode1
+>   GPIOH3: uart4-mode1
+>   GPIOH7: i2c6-reset-n
+>   GPIOH3: host0-reboot-ack-n
+>   GPIOM4: s0-i2c9-alert-n
+>   GPIOM5: s1-i2c9-alert-n
+>   GPIOQ6: led-identify
+>   GPIOS0: s0-vr-hot-n
+>   GPIOS1: s1-vr-hot-n
+>   GPIOS5: vr-pmbus-sel-n
+>   GPIOY3: bmc-vga-en-n
+>   GPIOZ3: s0-rtc-lock
+>   GPIOAC2: spi0-program-sel
+>   GPIOAC3: spi0-backup-sel
+>
+> Mt.Mitchell:
+>   GPIOC3: bmc-debug-mode
+>   GPIOE1: eth-phy-int-n
+>   GPIOH0: jtag-program-sel
+>   GPIOH1: fpga-program-b
+>   GPIOW3: s1-pcp-pgood
 >
 > Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
+
+I didn't check that you had the assignments correct, but the structure
+looks good.
 
 Reviewed-by: Joel Stanley <joel@jms.id.au>
 
 > ---
 >  .../dts/aspeed/aspeed-bmc-ampere-mtjade.dts   | 42 +++++++++----------
->  .../aspeed/aspeed-bmc-ampere-mtmitchell.dts   |  6 +--
->  2 files changed, 24 insertions(+), 24 deletions(-)
+>  .../aspeed/aspeed-bmc-ampere-mtmitchell.dts   |  9 ++--
+>  2 files changed, 26 insertions(+), 25 deletions(-)
 >
 > diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtjade.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtjade.dts
-> index 0a51d2e32fab..e57efcc8522a 100644
+> index e57efcc8522a..c87be433bdd0 100644
 > --- a/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtjade.dts
 > +++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtjade.dts
-> @@ -760,30 +760,30 @@
->
->  &gpio {
+> @@ -762,42 +762,42 @@
 >         gpio-line-names =
-> -       /*A0-A7*/       "","","","S0_BMC_SPECIAL_BOOT","","","","",
-> -       /*B0-B7*/       "BMC_SELECT_EEPROM","","","",
-> -                       "POWER_BUTTON","","","",
-> +       /*A0-A7*/       "","","","host0-special-boot","","","","",
-> +       /*B0-B7*/       "i2c-backup-sel","","","",
-> +                       "power-button","","","",
+>         /*A0-A7*/       "","","","host0-special-boot","","","","",
+>         /*B0-B7*/       "i2c-backup-sel","","","",
+> -                       "power-button","","","",
+> +                       "power-button","presence-cpu0","","",
 >         /*C0-C7*/       "","","","","","","","",
 >         /*D0-D7*/       "","","","","","","","",
 >         /*E0-E7*/       "","","","","","","","",
-> -       /*F0-F7*/       "","","BMC_SYS_PSON_L","S0_DDR_SAVE","PGOOD",
-> -                       "S1_DDR_SAVE","","",
-> -       /*G0-G7*/       "host0-ready","SHD_REQ_L","","S0_OVERTEMP_L","","",
-> +       /*F0-F7*/       "","","power-chassis-control","s0-ddr-save","power-chassis-good",
-> +                       "s1-ddr-save","","",
-> +       /*G0-G7*/       "host0-ready","host0-shd-req-n","","s0-overtemp-n","","",
->                         "","",
-> -       /*H0-H7*/       "","","","","PSU1_VIN_GOOD","PSU2_VIN_GOOD","","",
-> -       /*I0-I7*/       "PSU1_PRESENT","PSU2_PRESENT","S1_BMC_SPECIAL_BOOT",
-> -                       "","","","","",
-> -       /*J0-J7*/       "S0_HIGHTEMP_L","S0_FAULT_L","S0_SCP_AUTH_FAIL_L","",
-> +       /*H0-H7*/       "","","","","ps0-vin-good","ps1-vin-good","","",
-> +       /*I0-I7*/       "presence-ps0","presence-ps1","s1-special-boot",
-> +                               "","","","","",
-> +       /*J0-J7*/       "s0-hightemp-n","s0-fault-alert","s0-sys-auth-failure-n","",
->                         "","","","",
+> -       /*F0-F7*/       "","","power-chassis-control","s0-ddr-save","power-chassis-good",
+> -                       "s1-ddr-save","","",
+> -       /*G0-G7*/       "host0-ready","host0-shd-req-n","","s0-overtemp-n","","",
+> -                       "","",
+> -       /*H0-H7*/       "","","","","ps0-vin-good","ps1-vin-good","","",
+> -       /*I0-I7*/       "presence-ps0","presence-ps1","s1-special-boot",
+> -                               "","","","","",
+> -       /*J0-J7*/       "s0-hightemp-n","s0-fault-alert","s0-sys-auth-failure-n","",
+> -                       "","","","",
+> +       /*F0-F7*/       "ps0-pgood","ps1-pgood","power-chassis-control","s0-ddr-save",
+> +                       "power-chassis-good", "s1-ddr-save","","",
+> +       /*G0-G7*/       "host0-ready","host0-shd-req-n","host0-shd-ack-n",
+> +                       "s0-overtemp-n","","","","",
+> +       /*H0-H7*/       "uart1-mode1","uart2-mode1","uart3-mode1","uart4-mode1",
+> +                       "ps0-vin-good","ps1-vin-good","","i2c6-reset-n",
+> +       /*I0-I7*/       "presence-ps0","presence-ps1","s1-special-boot","","","","","",
+> +       /*J0-J7*/       "s0-hightemp-n","s0-fault-alert","s0-sys-auth-failure-n",
+> +                       "host0-reboot-ack-n","","","","",
 >         /*K0-K7*/       "","","","","","","","",
-> -       /*L0-L7*/       "","","","BMC_SYSRESET_L","SPI_AUTH_FAIL_L","","","",
-> +       /*L0-L7*/       "","","","host0-sysreset-n","s0-spi-auth-fail-n","","","",
->         /*M0-M7*/       "","","","","","","","",
+>         /*L0-L7*/       "","","","host0-sysreset-n","s0-spi-auth-fail-n","","","",
+> -       /*M0-M7*/       "","","","","","","","",
+> +       /*M0-M7*/       "","","","","s0-i2c9-alert-n","s1-i2c9-alert-n","","",
 >         /*N0-N7*/       "","","","","","","","",
 >         /*O0-O7*/       "","","","","","","","",
 >         /*P0-P7*/       "","","","","","","","",
-> -       /*Q0-Q7*/       "","","","","","UID_BUTTON","","",
-> -       /*R0-R7*/       "","","BMC_EXT_HIGHTEMP_L","OCP_AUX_PWREN",
-> -                       "OCP_MAIN_PWREN","RESET_BUTTON","","",
-> +       /*Q0-Q7*/       "","","","","","identify-button","","",
-> +       /*R0-R7*/       "","","ext-hightemp-n","",
-> +                       "ocp-main-pwren","reset-button","","",
->         /*S0-S7*/       "","","","","rtc-battery-voltage-read-enable","","","",
+> -       /*Q0-Q7*/       "","","","","","identify-button","","",
+> -       /*R0-R7*/       "","","ext-hightemp-n","",
+> -                       "ocp-main-pwren","reset-button","","",
+> -       /*S0-S7*/       "","","","","rtc-battery-voltage-read-enable","","","",
+> +       /*Q0-Q7*/       "","","","","","identify-button","led-identify","",
+> +       /*R0-R7*/       "","","ext-hightemp-n","","ocp-main-pwren","reset-button","","",
+> +       /*S0-S7*/       "s0-vr-hot-n","s1-vr-hot-n","","",
+> +                       "rtc-battery-voltage-read-enable","vr-pmbus-sel-n","","",
 >         /*T0-T7*/       "","","","","","","","",
 >         /*U0-U7*/       "","","","","","","","",
-> @@ -791,18 +791,18 @@
+>         /*V0-V7*/       "","","","","","","","",
 >         /*W0-W7*/       "","","","","","","","",
 >         /*X0-X7*/       "","","","","","","","",
->         /*Y0-Y7*/       "","","","","","","","",
-> -       /*Z0-Z7*/       "S0_BMC_PLIMIT","S1_FAULT_L","S1_FW_BOOT_OK","","",
-> -                       "S1_SCP_AUTH_FAIL_L","S1_OVERTEMP_L","",
-> +       /*Z0-Z7*/       "s0-plimit","s1-fault-alert","s1-fw-boot-ok","","",
-> +                       "s1-sys-auth-failure-n","s1-overtemp-n","",
+> -       /*Y0-Y7*/       "","","","","","","","",
+> -       /*Z0-Z7*/       "s0-plimit","s1-fault-alert","s1-fw-boot-ok","","",
+> +       /*Y0-Y7*/       "","","","bmc-vga-en-n","","","","",
+> +       /*Z0-Z7*/       "s0-plimit","s1-fault-alert","s1-fw-boot-ok","s0-rtc-lock","",
+>                         "s1-sys-auth-failure-n","s1-overtemp-n","",
 >         /*AA0-AA7*/     "","","","","","","","",
-> -       /*AB0-AB7*/     "S1_HIGHTEMP_L","S1_BMC_PLIMIT","S0_BMC_DDR_ADDR",
-> -                       "S1_BMC_DDR_ADR","","","","",
-> -       /*AC0-AC7*/     "SYS_PWR_GD","","","","","BMC_READY","SLAVE_PRESENT_L",
-> -                       "BMC_OCP_PG";
-> +       /*AB0-AB7*/     "s1-hightemp-n","s1-plimit","s0-ddr-addr",
-> +                       "s1-ddr-addr","","","","",
-> +       /*AC0-AC7*/     "sys-pwr-gd","","","","","","presence-cpu1",
-> +                       "ocp-pgood";
+> -       /*AB0-AB7*/     "s1-hightemp-n","s1-plimit","s0-ddr-addr",
+> -                       "s1-ddr-addr","","","","",
+> -       /*AC0-AC7*/     "sys-pwr-gd","","","","","","presence-cpu1",
+> -                       "ocp-pgood";
+> +       /*AB0-AB7*/     "s1-hightemp-n","s1-plimit","s0-ddr-addr","s1-ddr-addr","","",
+> +                       "","",
+> +       /*AC0-AC7*/     "sys-pwr-gd","","spi0-program-sel","spi0-backup-sel","bmc-ok",
+> +                       "","presence-cpu1","ocp-pgood";
 >
 >         i2c4-o-en-hog {
 >                 gpio-hog;
->                 gpios = <ASPEED_GPIO(Y, 2) GPIO_ACTIVE_HIGH>;
->                 output-high;
-> -               line-name = "BMC_I2C4_O_EN";
-> +               line-name = "i2c4-o-en";
->         };
->  };
 > diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtmitchell.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtmitchell.dts
-> index 0715cb9ab30c..2f571b43106d 100644
+> index 2f571b43106d..b7c4f7cfad07 100644
 > --- a/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtmitchell.dts
 > +++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-ampere-mtmitchell.dts
-> @@ -599,17 +599,17 @@
->         /*Q0-Q7*/       "","","","","","","","",
->         /*R0-R7*/       "","","","","","","","",
->         /*S0-S7*/       "","","identify-button","led-identify",
-> -                       "s1-ddr-save","spi-nor-access","sys-pgood","presence-cpu1",
-> +                       "s1-ddr-save","spi-nor-access","host0-ready","presence-cpu1",
->         /*T0-T7*/       "","","","","","","","",
->         /*U0-U7*/       "","","","","","","","",
+> @@ -575,16 +575,17 @@
+>         gpio-line-names =
+>         /*A0-A7*/       "","","","","","i2c2-reset-n","i2c6-reset-n","i2c4-reset-n",
+>         /*B0-B7*/       "","","","","host0-sysreset-n","host0-pmin-n","","",
+> -       /*C0-C7*/       "s0-vrd-fault-n","s1-vrd-fault-n","","",
+> +       /*C0-C7*/       "s0-vrd-fault-n","s1-vrd-fault-n","bmc-debug-mode","",
+>                         "irq-n","","vrd-sel","spd-sel",
+>         /*D0-D7*/       "presence-ps0","presence-ps1","hsc-12vmain-alt2-n","ext-high-temp-n",
+>                         "","bmc-ncsi-txen","","",
+> -       /*E0-E7*/       "","","clk50m-bmc-ncsi","","","","","",
+> +       /*E0-E7*/       "","eth-phy-int-n","clk50m-bmc-ncsi","","","","","",
+>         /*F0-F7*/       "s0-pcp-oc-warn-n","s1-pcp-oc-warn-n","power-chassis-control",
+>                         "cpu-bios-recover","s0-heartbeat","hs-csout-prochot",
+>                         "s0-vr-hot-n","s1-vr-hot-n",
+>         /*G0-G7*/       "","","hsc-12vmain-alt1-n","","","","","",
+> -       /*H0-H7*/       "","","wd-disable-n","power-chassis-good","","","","",
+> +       /*H0-H7*/       "jtag-program-sel","fpga-program-b","wd-disable-n",
+> +                       "power-chassis-good","","","","",
+>         /*I0-I7*/       "","","","","","adc-sw","power-button","rtc-battery-voltage-read-enable",
+>         /*J0-J7*/       "","","","","","","","",
+>         /*K0-K7*/       "","","","","","","","",
+> @@ -605,7 +606,7 @@
 >         /*V0-V7*/       "s0-hightemp-n","s0-fault-alert","s0-sys-auth-failure-n",
-> -                       "host0-reboot-ack-n","host0-ready","host0-shd-req-n",
-> +                       "host0-reboot-ack-n","s0-fw-boot-ok","host0-shd-req-n",
+>                         "host0-reboot-ack-n","s0-fw-boot-ok","host0-shd-req-n",
 >                         "host0-shd-ack-n","s0-overtemp-n",
->         /*W0-W7*/       "","ocp-main-pwren","ocp-pgood","",
+> -       /*W0-W7*/       "","ocp-main-pwren","ocp-pgood","",
+> +       /*W0-W7*/       "ocp-aux-pwren","ocp-main-pwren","ocp-pgood","s1-pcp-pgood",
 >                         "bmc-ok","bmc-ready","spi0-program-sel","spi0-backup-sel",
 >         /*X0-X7*/       "i2c-backup-sel","s1-fault-alert","s1-fw-boot-ok",
 >                         "s1-hightemp-n","s0-spi-auth-fail-n","s1-sys-auth-failure-n",
-> -                       "s1-overtemp-n","s1-spi-auth-fail-n",
-> +                       "s1-overtemp-n","cpld-s1-spi-auth-fail-n",
->         /*Y0-Y7*/       "","","","","","","","host0-special-boot",
->         /*Z0-Z7*/       "reset-button","ps0-pgood","ps1-pgood","","","","","";
->
 > --
 > 2.17.1
 >
