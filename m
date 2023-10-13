@@ -1,102 +1,96 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A72497C86E8
-	for <lists+openbmc@lfdr.de>; Fri, 13 Oct 2023 15:33:11 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 4AB0A7C8984
+	for <lists+openbmc@lfdr.de>; Fri, 13 Oct 2023 18:04:04 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=doqk1/Yi;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=jhb+Y+xp;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=TFdMt56A;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4S6SBF3WVJz3vch
-	for <lists+openbmc@lfdr.de>; Sat, 14 Oct 2023 00:33:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4S6WXL1jPnz3cPN
+	for <lists+openbmc@lfdr.de>; Sat, 14 Oct 2023 03:04:02 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=doqk1/Yi;
+	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=jhb+Y+xp;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=TFdMt56A;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:40e1:4800::1; helo=sin.source.kernel.org; envelope-from=krzk@kernel.org; receiver=lists.ozlabs.org)
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.27; helo=out3-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=lists.ozlabs.org)
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4S6S9f4rQqz3cCS
-	for <openbmc@lists.ozlabs.org>; Sat, 14 Oct 2023 00:32:38 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sin.source.kernel.org (Postfix) with ESMTP id 63FAFCE313C;
-	Fri, 13 Oct 2023 13:32:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81C89C433C8;
-	Fri, 13 Oct 2023 13:32:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1697203954;
-	bh=r8b96SLh8F5P3eXfJlwjoFjNajNgFAzxCO7YlLe7PZU=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=doqk1/YiXciLYGr0CtyD0OGEtzq1v/Pq+ALTZugSWV9io5lxRSNxcpDkMg8vqSl28
-	 pAr2rRF/Ft2svHn3Yhw7O9uXbJHrHKXRlcmqPKvaegtgbg7XK/KPYvxFdvfB5+pAKl
-	 fOV82wesZn2uXR06tDK2BuKnQ0d3AjKPbA04qODOObBHnBLeZniYRIw7hv04PDQOU1
-	 bMb2jNuibVfe7+s3ip9Xcfp4dOMNjWF6UqztJCMAr3H9CtLl+K1LhunYMekeVtz8lk
-	 DIOpctJohX+F0TF5Xaq/g8sRDQseV0CMwh6wp87J7/4iSGVANEq37b4oZxDqggtik2
-	 7jvrea4YLAz2A==
-Message-ID: <7598fcfa-7047-434d-be03-41cb2bb46ecb@kernel.org>
-Date: Fri, 13 Oct 2023 15:32:26 +0200
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4S6WWh3NTLz2ygZ
+	for <openbmc@lists.ozlabs.org>; Sat, 14 Oct 2023 03:03:27 +1100 (AEDT)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailout.nyi.internal (Postfix) with ESMTP id E34575C03DD;
+	Fri, 13 Oct 2023 12:03:24 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute7.internal (MEProxy); Fri, 13 Oct 2023 12:03:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	fuzziesquirrel.com; h=cc:cc:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:sender:subject:subject:to:to; s=fm3; t=
+	1697213004; x=1697299404; bh=oJhbWVjuevzNlXP1QCzW5zS0y0z90f7UBj1
+	wafMNBlE=; b=jhb+Y+xp2fdjIMoIjH3Ve4WFGyN+NI1TUqjLL5KqoMsr/0UspYS
+	Z9KaDM1cfKIPqaFt82ON1BJVK3M366CahrobcNkwal8kEBgVH44dQYjHs8TxnVwC
+	szL2ZvLTagzOXz9GFpb/0wQDdwOCjyfA5N3gxNeFN+beLSUah8XHqyZ4U6GyCNnu
+	NH2WOO0z09dZvZ95yLFIdN90SnW/1bEmPz99MAnIkFE0OgkYLpZCdTm5fJavM+Z+
+	yhrvzhORBiEp89ZHF4imzbFX0YWNZfO7iPe1rBpFZmggrt6D0rFFplMbbeepdWFz
+	6FXmoCQYlp4YDs8gRj9p3T5E0Ie8pl4T+EA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm2; t=1697213004; x=1697299404; bh=oJhbWVjuevzNl
+	XP1QCzW5zS0y0z90f7UBj1wafMNBlE=; b=TFdMt56AO17FLqmgsyr2Pr6oZrmVD
+	/NJjQTNfbutvz4tQOWTVgi+ELA7BWH44OZyCZhCXH2f4igy26SmWn60ScMZ0EIIz
+	qsoOXfW+MWuBi0mVdpfq4aTNSxemT3JvKwY1930tiIQH6f8rTSzkzU/7hzvg1Cd/
+	0IXbscI75Mm492MeWE90ZJ9Qc//NxUGRIjlzDt7MPfEK2evZq8sLP+0uOHONeyjV
+	BKPPrkPsP5MlL+ttpVz0diffCe7v95YI6BInvy9IBx17jsPcQfphpClC5l00x3z8
+	njImLHLNfXsVrYrMPCsvUiOhedAnzifYGzn1eKQkwY4s/0mUH8UzoRbXA==
+X-ME-Sender: <xms:TGopZZUwmxTGVdECqqYxb5fJfQTwHzYqAajWSAkZ0ysaWf3DONo2Bw>
+    <xme:TGopZZmpC3tIF_DgHCx-awOoVbWoMgtBcMdDQTkZXJTqOs9UtigVqf09MbldXB0qS
+    rjJfZK_h3MGDYDYX5I>
+X-ME-Received: <xmr:TGopZVYEw9yqho-6FvazgxH0aW5JmW-hyCNpOYaq4zTOOMvZVPgP2l33CzZwb4JcNStFLPDMVl_zFrzKQiG8BueCTVjqxg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrieefgdejfecutefuodetggdotefrodftvf
+    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
+    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
+    fjughrpeffhffvvefukfhfgggtuggjsehttdfstddttddvnecuhfhrohhmpeeurhgrugcu
+    uehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
+    eqnecuggftrfgrthhtvghrnhepkefhgedtfeevvdffheevgfefueevkeevueeghedufeff
+    feffgefhgfeiveelgeeunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
+    hilhhfrhhomhepsghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
+X-ME-Proxy: <xmx:TGopZcWIGQ3iEj9_1ckID6LtadS9aqK4_xMw4n_T4fHNYhs9drVIQg>
+    <xmx:TGopZTn-n6z-oMBqffEoEqlwFbZTJL8rKmsGtJTVgbdjICskFP65Pg>
+    <xmx:TGopZZcQ-YnRgVTgEI-W1Ppfq91Gr922l_Cn3HWoJ4mHUS6okoVP2w>
+    <xmx:TGopZRbluQCeDTN_UHqNEf9Wkfp7PFK2uOPxgylS3wY7yxpWCAxmLw>
+Feedback-ID: i02c9470a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 13 Oct 2023 12:03:23 -0400 (EDT)
+Date: Fri, 13 Oct 2023 12:03:20 -0400
+From: Brad Bishop <bradleyb@fuzziesquirrel.com>
+To: Andrew Jeffery <andrew@codeconstruct.com.au>
+Subject: Re: D-bus model proposal for pay for access features -
+ LicenseService at OpenBMC
+Message-ID: <nsa67efkmr5y7v66ox4zcmrqz6h6jewbw47qarad4t32ubnaoh@ayzfcex6kpre>
+References: <CAMhqiMoFAHcUk0nO_xoOubcZqF_dPDFweqsttTULRJK38o1Ung@mail.gmail.com>
+ <CACWQX83=CG_H8YUvEYj4BpDWFPoYkVLdpxo6n9V5LneTeeM7Bw@mail.gmail.com>
+ <20210504233843.hvuvmebaznanqnlv@thinkpad.fuzziesquirrel.com>
+ <YJLXlNyk/c8IVf9e@heinlein>
+ <0af0324d-c8a1-4ce8-80c3-f8f846cc930f@gmail.com>
+ <ZR_9p11_v5wQAOKB@heinlein.vulture-banana.ts.net>
+ <ub2mniaycgyvj6ujfwytknyvhrscnjgoewxjtvpgq37znlxszf@yzvbxgnre4iy>
+ <2736a0cbaf79f00617a8e55a962eea505ac7a7ab.camel@codeconstruct.com.au>
+ <dr2sdq6xt52ieidkgdit56uew5bgo2tedlk5e4uee3tobcez3x@t3mhaemftllv>
+ <0a4277122b61695d802c25d089533d1bdefe64a8.camel@codeconstruct.com.au>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 2/3] dt-bindings: usb: ci-hdrc-usb2: add npcm750 and
- npcm845 compatible
-To: Tomer Maimon <tmaimon77@gmail.com>, peter.chen@kernel.org,
- gregkh@linuxfoundation.org, avifishman70@gmail.com, tali.perry1@gmail.com,
- joel@jms.id.au, venture@google.com, yuenn@google.com,
- benjaminfair@google.com, j.neuschaefer@gmx.net
-References: <20231012230057.3365626-1-tmaimon77@gmail.com>
- <20231012230057.3365626-3-tmaimon77@gmail.com>
-Content-Language: en-US
-From: Krzysztof Kozlowski <krzk@kernel.org>
-Autocrypt: addr=krzk@kernel.org; keydata=
- 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 fv0=
-In-Reply-To: <20231012230057.3365626-3-tmaimon77@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <0a4277122b61695d802c25d089533d1bdefe64a8.camel@codeconstruct.com.au>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,28 +102,57 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc: raviteja28031990@gmail.com, Ratan Gupta <ratankgupta31@gmail.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>, Sunitha Harish <sunithaharish04@gmail.com>, abhilash.kollam@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 13/10/2023 01:00, Tomer Maimon wrote:
-> Add a compatible string for Nuvoton BMC NPCM750 and Nuvoton BMC NPCM845.
-> 
-> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-> ---
+On Fri, Oct 13, 2023 at 05:04:23PM +1030, Andrew Jeffery wrote:
+>On Fri, 2023-10-13 at 00:13 -0400, Brad Bishop wrote:
+>> On Fri, Oct 13, 2023 at 12:32:09PM +1030, Andrew Jeffery wrote:
+>>
+>> > I think for this
+>> > to go anywhere it has to be demonstrated that there's a group of people
+>> > needing a solution
+>>
+>> Isn't this self-evident from the schema being adopted by the DMTF?
+>
+>My comment was more in the context of OpenBMC and less in the context
+>of the DMTF. Standards that the DMTF produce are more broadly
+>applicable than to OpenBMC, so not all interested parties pushing it in
+>the DMTF are going to be parties willing to do the social legwork to
+>gain acceptance for and to maintain an implementation in OpenBMC.
 
-Please use scripts/get_maintainers.pl to get a list of necessary people
-and lists to CC. It might happen, that command when run on an older
-kernel, gives you outdated entries. Therefore please be sure you base
-your patches on recent Linux kernel.
+Makes sense.
 
-You missed at least devicetree list (maybe more), so this won't be
-tested by automated tooling. Performing review on untested code might be
-a waste of time, thus I will skip this patch entirely till you follow
-the process allowing the patch to be tested.
+>> > and some collective interest in maintaining one. If
+>> > we can't get multiple parties to collaborate on a design then I don't
+>> > see a reason for trying to maintain it upstream.
+>>
+>> How many parties collaborated on getting FSI into Linux?   How many
+>> parties are collaborating on <foocorp>-misc or <platform>-misc?  Are
+>> those different somehow?
+>
+>How do FSI, <foocorp>-misc or <platform>-misc run afoul of common open
+>source beliefs and values? 
 
-Please kindly resend and include all necessary To/Cc entries.
+Obviously they don't.  I asked this only in response to the comment 
+about a lack of collaboration from multiple parties as rationale for 
+exluding something.  It sounds like that is a red-herring.
 
-Best regards,
-Krzysztof
+>I'm asking for a higher bar to establish whether a license server
+>implementation that constrains user freedoms is something the OpenBMC
+>community significantly values. Satisfying that (in my mind) requires a
+>diverse set of community members come forward and demonstrate that
+>they're willing to collaborate on design and maintenance, as a proxy
+>for value.
 
+Fair enough.
+
+>However, there is an escape hatch for project social issues. For
+>example interested parties might choose to collaborate on the license
+>manager implementation outside of the OpenBMC org, and package it
+>through Yocto or OpenEmbedded.
+
+I've been thinking along similar lines lately and I like this idea.  For 
+a license server and even in general I think less centralized control 
+and less tightly coupled software would be a good direction to take.
