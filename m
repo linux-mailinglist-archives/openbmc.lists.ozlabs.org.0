@@ -2,95 +2,68 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 4AB0A7C8984
-	for <lists+openbmc@lfdr.de>; Fri, 13 Oct 2023 18:04:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 9D1A77C95F2
+	for <lists+openbmc@lfdr.de>; Sat, 14 Oct 2023 20:30:05 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=jhb+Y+xp;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=TFdMt56A;
+	dkim=pass (2048-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-04 header.b=IPwsqCzY;
+	dkim=pass (2048-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-03 header.b=fXtxC4KD;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4S6WXL1jPnz3cPN
-	for <lists+openbmc@lfdr.de>; Sat, 14 Oct 2023 03:04:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4S7BkL3hKBz3cNV
+	for <lists+openbmc@lfdr.de>; Sun, 15 Oct 2023 05:30:02 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=fuzziesquirrel.com header.i=@fuzziesquirrel.com header.a=rsa-sha256 header.s=fm3 header.b=jhb+Y+xp;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm2 header.b=TFdMt56A;
+	dkim=pass (2048-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-04 header.b=IPwsqCzY;
+	dkim=pass (2048-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-03 header.b=fXtxC4KD;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=fuzziesquirrel.com (client-ip=66.111.4.27; helo=out3-smtp.messagingengine.com; envelope-from=bradleyb@fuzziesquirrel.com; receiver=lists.ozlabs.org)
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=yadro.com (client-ip=89.207.88.248; helo=mta-04.yadro.com; envelope-from=a.amelkin@yadro.com; receiver=lists.ozlabs.org)
+Received: from mta-04.yadro.com (mta-04.yadro.com [89.207.88.248])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4S6WWh3NTLz2ygZ
-	for <openbmc@lists.ozlabs.org>; Sat, 14 Oct 2023 03:03:27 +1100 (AEDT)
-Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
-	by mailout.nyi.internal (Postfix) with ESMTP id E34575C03DD;
-	Fri, 13 Oct 2023 12:03:24 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute7.internal (MEProxy); Fri, 13 Oct 2023 12:03:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	fuzziesquirrel.com; h=cc:cc:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:sender:subject:subject:to:to; s=fm3; t=
-	1697213004; x=1697299404; bh=oJhbWVjuevzNlXP1QCzW5zS0y0z90f7UBj1
-	wafMNBlE=; b=jhb+Y+xp2fdjIMoIjH3Ve4WFGyN+NI1TUqjLL5KqoMsr/0UspYS
-	Z9KaDM1cfKIPqaFt82ON1BJVK3M366CahrobcNkwal8kEBgVH44dQYjHs8TxnVwC
-	szL2ZvLTagzOXz9GFpb/0wQDdwOCjyfA5N3gxNeFN+beLSUah8XHqyZ4U6GyCNnu
-	NH2WOO0z09dZvZ95yLFIdN90SnW/1bEmPz99MAnIkFE0OgkYLpZCdTm5fJavM+Z+
-	yhrvzhORBiEp89ZHF4imzbFX0YWNZfO7iPe1rBpFZmggrt6D0rFFplMbbeepdWFz
-	6FXmoCQYlp4YDs8gRj9p3T5E0Ie8pl4T+EA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm2; t=1697213004; x=1697299404; bh=oJhbWVjuevzNl
-	XP1QCzW5zS0y0z90f7UBj1wafMNBlE=; b=TFdMt56AO17FLqmgsyr2Pr6oZrmVD
-	/NJjQTNfbutvz4tQOWTVgi+ELA7BWH44OZyCZhCXH2f4igy26SmWn60ScMZ0EIIz
-	qsoOXfW+MWuBi0mVdpfq4aTNSxemT3JvKwY1930tiIQH6f8rTSzkzU/7hzvg1Cd/
-	0IXbscI75Mm492MeWE90ZJ9Qc//NxUGRIjlzDt7MPfEK2evZq8sLP+0uOHONeyjV
-	BKPPrkPsP5MlL+ttpVz0diffCe7v95YI6BInvy9IBx17jsPcQfphpClC5l00x3z8
-	njImLHLNfXsVrYrMPCsvUiOhedAnzifYGzn1eKQkwY4s/0mUH8UzoRbXA==
-X-ME-Sender: <xms:TGopZZUwmxTGVdECqqYxb5fJfQTwHzYqAajWSAkZ0ysaWf3DONo2Bw>
-    <xme:TGopZZmpC3tIF_DgHCx-awOoVbWoMgtBcMdDQTkZXJTqOs9UtigVqf09MbldXB0qS
-    rjJfZK_h3MGDYDYX5I>
-X-ME-Received: <xmr:TGopZVYEw9yqho-6FvazgxH0aW5JmW-hyCNpOYaq4zTOOMvZVPgP2l33CzZwb4JcNStFLPDMVl_zFrzKQiG8BueCTVjqxg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrieefgdejfecutefuodetggdotefrodftvf
-    curfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfghnecu
-    uegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenuc
-    fjughrpeffhffvvefukfhfgggtuggjsehttdfstddttddvnecuhfhrohhmpeeurhgrugcu
-    uehishhhohhpuceosghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
-    eqnecuggftrfgrthhtvghrnhepkefhgedtfeevvdffheevgfefueevkeevueeghedufeff
-    feffgefhgfeiveelgeeunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrg
-    hilhhfrhhomhepsghrrggulhgvhigssehfuhiiiihivghsqhhuihhrrhgvlhdrtghomh
-X-ME-Proxy: <xmx:TGopZcWIGQ3iEj9_1ckID6LtadS9aqK4_xMw4n_T4fHNYhs9drVIQg>
-    <xmx:TGopZTn-n6z-oMBqffEoEqlwFbZTJL8rKmsGtJTVgbdjICskFP65Pg>
-    <xmx:TGopZZcQ-YnRgVTgEI-W1Ppfq91Gr922l_Cn3HWoJ4mHUS6okoVP2w>
-    <xmx:TGopZRbluQCeDTN_UHqNEf9Wkfp7PFK2uOPxgylS3wY7yxpWCAxmLw>
-Feedback-ID: i02c9470a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Oct 2023 12:03:23 -0400 (EDT)
-Date: Fri, 13 Oct 2023 12:03:20 -0400
-From: Brad Bishop <bradleyb@fuzziesquirrel.com>
-To: Andrew Jeffery <andrew@codeconstruct.com.au>
-Subject: Re: D-bus model proposal for pay for access features -
- LicenseService at OpenBMC
-Message-ID: <nsa67efkmr5y7v66ox4zcmrqz6h6jewbw47qarad4t32ubnaoh@ayzfcex6kpre>
-References: <CAMhqiMoFAHcUk0nO_xoOubcZqF_dPDFweqsttTULRJK38o1Ung@mail.gmail.com>
- <CACWQX83=CG_H8YUvEYj4BpDWFPoYkVLdpxo6n9V5LneTeeM7Bw@mail.gmail.com>
- <20210504233843.hvuvmebaznanqnlv@thinkpad.fuzziesquirrel.com>
- <YJLXlNyk/c8IVf9e@heinlein>
- <0af0324d-c8a1-4ce8-80c3-f8f846cc930f@gmail.com>
- <ZR_9p11_v5wQAOKB@heinlein.vulture-banana.ts.net>
- <ub2mniaycgyvj6ujfwytknyvhrscnjgoewxjtvpgq37znlxszf@yzvbxgnre4iy>
- <2736a0cbaf79f00617a8e55a962eea505ac7a7ab.camel@codeconstruct.com.au>
- <dr2sdq6xt52ieidkgdit56uew5bgo2tedlk5e4uee3tobcez3x@t3mhaemftllv>
- <0a4277122b61695d802c25d089533d1bdefe64a8.camel@codeconstruct.com.au>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4S7Bjf209yz2yVh
+	for <openbmc@lists.ozlabs.org>; Sun, 15 Oct 2023 05:29:22 +1100 (AEDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 616ACC0003
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-04;
+	t=1697308154; bh=KOJL2dflXOZ/Fb5aTK5R3EXDYJYrxEutUmp5QrPgeUU=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:From;
+	b=IPwsqCzYBHL++2vjCGObolTVs3yNwWbrgSlVDq5QSz/OSIncq9kw8mtU+0sGzCOoF
+	 m2JHUFsn61AGqnTjoXqH8/SnM09/uv2h3cXqtQK1/4OhGNhQk4/RX/bm/G+JuUVDKk
+	 XN7G97Au2u52YLbJKH3vWs7GAJ+cKRwNksCZ1cb6ktjzvffVjQCBdO9yoBs97js1lU
+	 KDYECKdi+46ukoa7GbcIIjF1QuPLHNAhTFo+C88Q0verP3JkJP1ZOJH4x/ygymJW2C
+	 1ulF10fE5iNtQVOFQYSrMcIZTg0NTMhcKqNQ/Yh9dJJYFPwS4LKESEQUZ3oNsyQyoX
+	 Vy14gWx/Z7vAA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-03;
+	t=1697308154; bh=KOJL2dflXOZ/Fb5aTK5R3EXDYJYrxEutUmp5QrPgeUU=;
+	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:From;
+	b=fXtxC4KDDBmxjDy5YAlbvtWQGbUiHZguK1DWGIJq4EN8/9zSnhEYemFwZqc2+fbGo
+	 fxUdhsDW6D2gDUEOgZf40wO4eAo0isPPqfIGZ8TfqlxiiXO+3PeXC8X9XjuC9VQM6/
+	 geTPL/6Oh4B5n6lLDKOfStqAmXapSStIVPddCp2vcrI2u2Qr9Q2KulNdWn7z5oj+8V
+	 rq5Riy+Q5M67xBTz1GxqfsR7HG7nZyHzhij8TzTciXEfmUmbVAtzjPCZb8XMaR53VA
+	 xJLprx2HXjAp6rtHHEBj8wyYkAJN1cKjHOseBGDts+sThEE6R02BVl4v0MbjlaNfHM
+	 aR3h5GMuG8y6Q==
+From: Alexander Amelkin <a.amelkin@yadro.com>
+To: Sunitha Harish <sunithaharish04@gmail.com>, raviteja bailapudi
+	<raviteja28031990@gmail.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
+	Ratan Gupta <ratankgupta31@gmail.com>, "wak@google.com" <wak@google.com>,
+	"johnathanx.mantey@intel.com" <johnathanx.mantey@intel.com>,
+	"fercerpav@gmail.com" <fercerpav@gmail.com>
+Subject: RE: Add network RoutingPolicyRules at OpenBMC Networkd
+Thread-Topic: Add network RoutingPolicyRules at OpenBMC Networkd
+Thread-Index: AQHZ/By8CtQHi6iqxEScwZ27lWemxrBHYbFQgAAjGYCAAhknwA==
+Date: Sat, 14 Oct 2023 18:29:13 +0000
+Message-ID: <1c6a93eade954bfc8c90a186ef903b51@yadro.com>
+References: <CAM4DKZnvnb=XMvxVhrfE13vvb+braB6J2TOhKMRxm+T09u88Fg@mail.gmail.com>
+ <c0dc4e1ff3904a9c8f34c951611d3992@yadro.com>
+ <92860b17-b8b7-411d-a622-7952fd0660dd@gmail.com>
+In-Reply-To: <92860b17-b8b7-411d-a622-7952fd0660dd@gmail.com>
+Accept-Language: ru-RU, en-US
+Content-Language: ru-RU
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+Content-Type: multipart/alternative;
+	boundary="_000_1c6a93eade954bfc8c90a186ef903b51yadrocom_"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
-Content-Disposition: inline
-In-Reply-To: <0a4277122b61695d802c25d089533d1bdefe64a8.camel@codeconstruct.com.au>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,57 +75,113 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: raviteja28031990@gmail.com, Ratan Gupta <ratankgupta31@gmail.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>, Ed Tanous <ed@tanous.net>, Sunitha Harish <sunithaharish04@gmail.com>, abhilash.kollam@gmail.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Oct 13, 2023 at 05:04:23PM +1030, Andrew Jeffery wrote:
->On Fri, 2023-10-13 at 00:13 -0400, Brad Bishop wrote:
->> On Fri, Oct 13, 2023 at 12:32:09PM +1030, Andrew Jeffery wrote:
->>
->> > I think for this
->> > to go anywhere it has to be demonstrated that there's a group of people
->> > needing a solution
->>
->> Isn't this self-evident from the schema being adopted by the DMTF?
->
->My comment was more in the context of OpenBMC and less in the context
->of the DMTF. Standards that the DMTF produce are more broadly
->applicable than to OpenBMC, so not all interested parties pushing it in
->the DMTF are going to be parties willing to do the social legwork to
->gain acceptance for and to maintain an implementation in OpenBMC.
+--_000_1c6a93eade954bfc8c90a186ef903b51yadrocom_
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Makes sense.
+SGkgU3VuaXRoYSENCg0KPj4gSSBhbHNvIGJlbGlldmUgdGhhdCBpbiBwcm9kdWN0aW9uIGVudmly
+b25tZW50cyB0aGUgQk1DIHNoYWxsIG5vdCBiZSBjb25uZWN0ZWQgdG8gdGhlIHNhbWUgbmV0d29y
+ayBzZWdtZW50IHVzaW5nIG11bHRpcGxlIGludGVyZmFjZXMuDQo+PiBJZiB0aGF0IGlzIG5lZWRl
+ZCBmb3IgZmFpbG92ZXIsIHRoZW4gd2Ugc2hvdWxkIHRoaW5rIGFib3V0IGFkZGluZyB0aGUgYnJp
+ZGdpbmcgYW5kIGJvbmRpbmcgc3VwcG9ydCBpbnN0ZWFkDQo+IERvIHlvdSBoYXZlIG1vcmUgZGV0
+YWlscyBvbiB0aGlzIHBsZWFzZT8NCg0KU3VyZS4gSG9uZXN0bHksIEkgaGF2ZW7igJl0IGRlYWx0
+IHdpdGggZWl0aGVyIHRlY2huaXF1ZSBmb3IgcXVpdGUgbWFueSB5ZWFycyBub3csIGFuZCB3aGVu
+IEkgaGFkLCBteSBleHBlcmllbmNlIHdhcyBmYXIgZnJvbSBiZWluZyB2YXN0LCBidXQgSSBzdGls
+bCByZW1lbWJlciB0aG9zZSB0aGluZ3MgZG8gZXhpc3QuDQpTbyBoZXJlIGFyZSBzb21lIHJlc291
+cmNlcyB0aGF0IEkgZm91bmQgdGhhdCBsb29rIHJlbGV2YW50Og0KDQpodHRwczovL2RldmVsb3Bl
+cnMucmVkaGF0LmNvbS9hcnRpY2xlcy8yMDIyLzA0LzA2L2ludHJvZHVjdGlvbi1saW51eC1icmlk
+Z2luZy1jb21tYW5kcy1hbmQtZmVhdHVyZXMNCmh0dHBzOi8vd3d3LmxlYXJuaXRndWlkZS5uZXQv
+MjAxNS8wNy93aGF0LWlzLWJvbmRpbmctaG93LXRvLWNvbmZpZ3VyZS5odG1sDQoNCj4+IFAuUy4g
+SSBhbHNvIGJlbGlldmUgdGhhdCBpdCBpcyBWRVJZIHdyb25nIHRoYXQgd2Ugc3RpbGwgYWxsb3cg
+c2V0dGluZyBwZXItaW50ZXJmYWNlIGdhdGV3YXlzIGFzIEJNQyBpcyBub3QgYSByb3V0ZXIgZGV2
+aWNlIGFuZCBkb2VzbuKAmXQgKGFuZCBzaG91bGRu4oCZdCkgYWxsb3cgZm9yIGNvbmZpZ3VyaW5n
+IHBvbGljeSByb3V0aW5nIG9yIGFueSByb3V0aW5nIHdoYXRzb2V2ZXIuDQoNCj4gSSBiZWxpZXZl
+IHRoaXMgd2FzIGRvbmUgcHVycG9zZWZ1bGx5IHNvbWUgeWVhcnMgYWdvLiBAUmF2aSBwbGVhc2Ug
+c2hhcmUgdGhlIGRldGFpbHMgaWYgeW91IGhhdmUgdGhlIGhpc3RvcnkuDQpJIHlvdSBjYW4gcHJv
+dmlkZSBhbnkgcmF0aW9uYWxlIGZvciB0aGF0LCBJ4oCZZCBiZSBncmF0ZWZ1bC4gV2XigJl2ZSBi
+ZWVuIGhhdmluZyBhbGwgc29ydHMgb2YgdHJvdWJsZSBkdWUgdG8gdGhhdCBmb3IgcXVpdGUgYSBs
+b25nIHRpbWUuDQoNCldCUiwgQWxleGFuZGVyLg0K
 
->> > and some collective interest in maintaining one. If
->> > we can't get multiple parties to collaborate on a design then I don't
->> > see a reason for trying to maintain it upstream.
->>
->> How many parties collaborated on getting FSI into Linux?   How many
->> parties are collaborating on <foocorp>-misc or <platform>-misc?  Are
->> those different somehow?
->
->How do FSI, <foocorp>-misc or <platform>-misc run afoul of common open
->source beliefs and values? 
+--_000_1c6a93eade954bfc8c90a186ef903b51yadrocom_
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: base64
 
-Obviously they don't.  I asked this only in response to the comment 
-about a lack of collaboration from multiple parties as rationale for 
-exluding something.  It sounds like that is a red-herring.
+PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
+bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
+YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
+cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
+VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
+Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
+ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
+PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
+IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1m
+YWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAy
+IDQ7fQ0KLyogU3R5bGUgRGVmaW5pdGlvbnMgKi8NCnAuTXNvTm9ybWFsLCBsaS5Nc29Ob3JtYWws
+IGRpdi5Nc29Ob3JtYWwNCgl7bWFyZ2luOjBjbTsNCglmb250LXNpemU6MTEuMHB0Ow0KCWZvbnQt
+ZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmO30NCmE6bGluaywgc3Bhbi5Nc29IeXBlcmxpbmsN
+Cgl7bXNvLXN0eWxlLXByaW9yaXR5Ojk5Ow0KCWNvbG9yOmJsdWU7DQoJdGV4dC1kZWNvcmF0aW9u
+OnVuZGVybGluZTt9DQpzcGFuLkVtYWlsU3R5bGUyMA0KCXttc28tc3R5bGUtdHlwZTpwZXJzb25h
+bC1yZXBseTsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjsNCgljb2xvcjp3aW5k
+b3d0ZXh0O30NCi5Nc29DaHBEZWZhdWx0DQoJe21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5Ow0K
+CWZvbnQtc2l6ZToxMC4wcHQ7fQ0KQHBhZ2UgV29yZFNlY3Rpb24xDQoJe3NpemU6NjEyLjBwdCA3
+OTIuMHB0Ow0KCW1hcmdpbjoyLjBjbSA0Mi41cHQgMi4wY20gMy4wY207fQ0KZGl2LldvcmRTZWN0
+aW9uMQ0KCXtwYWdlOldvcmRTZWN0aW9uMTt9DQotLT48L3N0eWxlPjwhLS1baWYgZ3RlIG1zbyA5
+XT48eG1sPg0KPG86c2hhcGVkZWZhdWx0cyB2OmV4dD0iZWRpdCIgc3BpZG1heD0iMTAyNiIgLz4N
+CjwveG1sPjwhW2VuZGlmXS0tPjwhLS1baWYgZ3RlIG1zbyA5XT48eG1sPg0KPG86c2hhcGVsYXlv
+dXQgdjpleHQ9ImVkaXQiPg0KPG86aWRtYXAgdjpleHQ9ImVkaXQiIGRhdGE9IjEiIC8+DQo8L286
+c2hhcGVsYXlvdXQ+PC94bWw+PCFbZW5kaWZdLS0+DQo8L2hlYWQ+DQo8Ym9keSBsYW5nPSJSVSIg
+bGluaz0iYmx1ZSIgdmxpbms9InB1cnBsZSIgc3R5bGU9IndvcmQtd3JhcDpicmVhay13b3JkIj4N
+CjxkaXYgY2xhc3M9IldvcmRTZWN0aW9uMSI+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
+PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJtc28tZmFyZWFzdC1sYW5ndWFnZTpFTi1VUyI+SGkg
+U3VuaXRoYSE8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3Bh
+biBsYW5nPSJFTi1VUyIgc3R5bGU9Im1zby1mYXJlYXN0LWxhbmd1YWdlOkVOLVVTIj48bzpwPiZu
+YnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJF
+Ti1VUyIgc3R5bGU9Im1zby1mYXJlYXN0LWxhbmd1YWdlOkVOLVVTIj4mZ3Q7Jmd0OyBJIGFsc28g
+YmVsaWV2ZSB0aGF0IGluIHByb2R1Y3Rpb24gZW52aXJvbm1lbnRzIHRoZSBCTUMgc2hhbGwgbm90
+IGJlIGNvbm5lY3RlZCB0byB0aGUgc2FtZSBuZXR3b3JrIHNlZ21lbnQgdXNpbmcgbXVsdGlwbGUg
+aW50ZXJmYWNlcy48L3NwYW4+PHNwYW4gbGFuZz0iRU4tVVMiPjxvOnA+PC9vOnA+PC9zcGFuPjwv
+cD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0ibXNvLWZh
+cmVhc3QtbGFuZ3VhZ2U6RU4tVVMiPiZndDsmZ3Q7IElmIHRoYXQgaXMgbmVlZGVkIGZvciBmYWls
+b3ZlciwgdGhlbiB3ZSBzaG91bGQgdGhpbmsgYWJvdXQgYWRkaW5nIHRoZSBicmlkZ2luZyBhbmQg
+Ym9uZGluZyBzdXBwb3J0IGluc3RlYWQ8L3NwYW4+PHNwYW4gbGFuZz0iRU4tVVMiPjxvOnA+PC9v
+OnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj4m
+Z3Q7IERvIHlvdSBoYXZlIG1vcmUgZGV0YWlscyBvbiB0aGlzIHBsZWFzZT8NCjxicj4NCjxicj4N
+CjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9
+IkVOLVVTIj5TdXJlLiBIb25lc3RseSwgSSBoYXZlbuKAmXQgZGVhbHQgd2l0aCBlaXRoZXIgdGVj
+aG5pcXVlIGZvciBxdWl0ZSBtYW55IHllYXJzIG5vdywgYW5kIHdoZW4gSSBoYWQsIG15IGV4cGVy
+aWVuY2Ugd2FzIGZhciBmcm9tIGJlaW5nIHZhc3QsIGJ1dCBJIHN0aWxsIHJlbWVtYmVyIHRob3Nl
+IHRoaW5ncyBkbyBleGlzdC48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9y
+bWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+U28gaGVyZSBhcmUgc29tZSByZXNvdXJjZXMgdGhhdCBJ
+IGZvdW5kIHRoYXQgbG9vayByZWxldmFudDo8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFz
+cz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+
+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPjxhIGhyZWY9Imh0
+dHBzOi8vZGV2ZWxvcGVycy5yZWRoYXQuY29tL2FydGljbGVzLzIwMjIvMDQvMDYvaW50cm9kdWN0
+aW9uLWxpbnV4LWJyaWRnaW5nLWNvbW1hbmRzLWFuZC1mZWF0dXJlcyI+aHR0cHM6Ly9kZXZlbG9w
+ZXJzLnJlZGhhdC5jb20vYXJ0aWNsZXMvMjAyMi8wNC8wNi9pbnRyb2R1Y3Rpb24tbGludXgtYnJp
+ZGdpbmctY29tbWFuZHMtYW5kLWZlYXR1cmVzPC9hPjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxw
+IGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj48YSBocmVmPSJodHRwczovL3d3
+dy5sZWFybml0Z3VpZGUubmV0LzIwMTUvMDcvd2hhdC1pcy1ib25kaW5nLWhvdy10by1jb25maWd1
+cmUuaHRtbCI+aHR0cHM6Ly93d3cubGVhcm5pdGd1aWRlLm5ldC8yMDE1LzA3L3doYXQtaXMtYm9u
+ZGluZy1ob3ctdG8tY29uZmlndXJlLmh0bWw8L2E+PG86cD48L286cD48L3NwYW4+PC9wPg0KPHAg
+Y2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPjxvOnA+Jm5ic3A7PC9vOnA+PC9z
+cGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0i
+bXNvLWZhcmVhc3QtbGFuZ3VhZ2U6RU4tVVMiPiZndDsmZ3Q7IFAuUy4gSSBhbHNvIGJlbGlldmUg
+dGhhdCBpdCBpcyBWRVJZIHdyb25nIHRoYXQgd2Ugc3RpbGwgYWxsb3cgc2V0dGluZyBwZXItaW50
+ZXJmYWNlIGdhdGV3YXlzIGFzIEJNQyBpcyBub3QgYSByb3V0ZXIgZGV2aWNlIGFuZCBkb2VzbuKA
+mXQgKGFuZCBzaG91bGRu4oCZdCkgYWxsb3cgZm9yIGNvbmZpZ3VyaW5nIHBvbGljeQ0KIHJvdXRp
+bmcgb3IgYW55IHJvdXRpbmcgd2hhdHNvZXZlci48L3NwYW4+PHNwYW4gbGFuZz0iRU4tVVMiPjxv
+OnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwPjxzcGFuIGxhbmc9IkVOLVVTIj4mZ3Q7IEkgYmVsaWV2
+ZSB0aGlzIHdhcyBkb25lIHB1cnBvc2VmdWxseSBzb21lIHllYXJzIGFnby4gPC9zcGFuPg0KQFJh
+dmkgcGxlYXNlIHNoYXJlIHRoZSBkZXRhaWxzIGlmIHlvdSBoYXZlIHRoZSBoaXN0b3J5LjxvOnA+
+PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPkkgeW91
+IGNhbiBwcm92aWRlIGFueSByYXRpb25hbGUgZm9yIHRoYXQsIEnigJlkIGJlIGdyYXRlZnVsLiBX
+ZeKAmXZlIGJlZW4gaGF2aW5nIGFsbCBzb3J0cyBvZiB0cm91YmxlIGR1ZSB0byB0aGF0IGZvciBx
+dWl0ZSBhIGxvbmcgdGltZS48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9y
+bWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPHAg
+Y2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPldCUiwgQWxleGFuZGVyLjxvOnA+
+PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPC9kaXY+DQo8L2JvZHk+DQo8L2h0bWw+DQo=
 
->I'm asking for a higher bar to establish whether a license server
->implementation that constrains user freedoms is something the OpenBMC
->community significantly values. Satisfying that (in my mind) requires a
->diverse set of community members come forward and demonstrate that
->they're willing to collaborate on design and maintenance, as a proxy
->for value.
-
-Fair enough.
-
->However, there is an escape hatch for project social issues. For
->example interested parties might choose to collaborate on the license
->manager implementation outside of the OpenBMC org, and package it
->through Yocto or OpenEmbedded.
-
-I've been thinking along similar lines lately and I like this idea.  For 
-a license server and even in general I think less centralized control 
-and less tightly coupled software would be a good direction to take.
+--_000_1c6a93eade954bfc8c90a186ef903b51yadrocom_--
