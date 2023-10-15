@@ -1,69 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9D1A77C95F2
-	for <lists+openbmc@lfdr.de>; Sat, 14 Oct 2023 20:30:05 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5FACA7C986B
+	for <lists+openbmc@lfdr.de>; Sun, 15 Oct 2023 11:01:40 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-04 header.b=IPwsqCzY;
-	dkim=pass (2048-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-03 header.b=fXtxC4KD;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=BUGN3LWY;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4S7BkL3hKBz3cNV
-	for <lists+openbmc@lfdr.de>; Sun, 15 Oct 2023 05:30:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4S7Z3z1vFyz3cCG
+	for <lists+openbmc@lfdr.de>; Sun, 15 Oct 2023 20:01:35 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-04 header.b=IPwsqCzY;
-	dkim=pass (2048-bit key; unprotected) header.d=yadro.com header.i=@yadro.com header.a=rsa-sha256 header.s=mta-03 header.b=fXtxC4KD;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=BUGN3LWY;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=yadro.com (client-ip=89.207.88.248; helo=mta-04.yadro.com; envelope-from=a.amelkin@yadro.com; receiver=lists.ozlabs.org)
-Received: from mta-04.yadro.com (mta-04.yadro.com [89.207.88.248])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22d; helo=mail-lj1-x22d.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4S7Bjf209yz2yVh
-	for <openbmc@lists.ozlabs.org>; Sun, 15 Oct 2023 05:29:22 +1100 (AEDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mta-04.yadro.com 616ACC0003
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-04;
-	t=1697308154; bh=KOJL2dflXOZ/Fb5aTK5R3EXDYJYrxEutUmp5QrPgeUU=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:From;
-	b=IPwsqCzYBHL++2vjCGObolTVs3yNwWbrgSlVDq5QSz/OSIncq9kw8mtU+0sGzCOoF
-	 m2JHUFsn61AGqnTjoXqH8/SnM09/uv2h3cXqtQK1/4OhGNhQk4/RX/bm/G+JuUVDKk
-	 XN7G97Au2u52YLbJKH3vWs7GAJ+cKRwNksCZ1cb6ktjzvffVjQCBdO9yoBs97js1lU
-	 KDYECKdi+46ukoa7GbcIIjF1QuPLHNAhTFo+C88Q0verP3JkJP1ZOJH4x/ygymJW2C
-	 1ulF10fE5iNtQVOFQYSrMcIZTg0NTMhcKqNQ/Yh9dJJYFPwS4LKESEQUZ3oNsyQyoX
-	 Vy14gWx/Z7vAA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yadro.com; s=mta-03;
-	t=1697308154; bh=KOJL2dflXOZ/Fb5aTK5R3EXDYJYrxEutUmp5QrPgeUU=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:From;
-	b=fXtxC4KDDBmxjDy5YAlbvtWQGbUiHZguK1DWGIJq4EN8/9zSnhEYemFwZqc2+fbGo
-	 fxUdhsDW6D2gDUEOgZf40wO4eAo0isPPqfIGZ8TfqlxiiXO+3PeXC8X9XjuC9VQM6/
-	 geTPL/6Oh4B5n6lLDKOfStqAmXapSStIVPddCp2vcrI2u2Qr9Q2KulNdWn7z5oj+8V
-	 rq5Riy+Q5M67xBTz1GxqfsR7HG7nZyHzhij8TzTciXEfmUmbVAtzjPCZb8XMaR53VA
-	 xJLprx2HXjAp6rtHHEBj8wyYkAJN1cKjHOseBGDts+sThEE6R02BVl4v0MbjlaNfHM
-	 aR3h5GMuG8y6Q==
-From: Alexander Amelkin <a.amelkin@yadro.com>
-To: Sunitha Harish <sunithaharish04@gmail.com>, raviteja bailapudi
-	<raviteja28031990@gmail.com>, OpenBMC Maillist <openbmc@lists.ozlabs.org>,
-	Ratan Gupta <ratankgupta31@gmail.com>, "wak@google.com" <wak@google.com>,
-	"johnathanx.mantey@intel.com" <johnathanx.mantey@intel.com>,
-	"fercerpav@gmail.com" <fercerpav@gmail.com>
-Subject: RE: Add network RoutingPolicyRules at OpenBMC Networkd
-Thread-Topic: Add network RoutingPolicyRules at OpenBMC Networkd
-Thread-Index: AQHZ/By8CtQHi6iqxEScwZ27lWemxrBHYbFQgAAjGYCAAhknwA==
-Date: Sat, 14 Oct 2023 18:29:13 +0000
-Message-ID: <1c6a93eade954bfc8c90a186ef903b51@yadro.com>
-References: <CAM4DKZnvnb=XMvxVhrfE13vvb+braB6J2TOhKMRxm+T09u88Fg@mail.gmail.com>
- <c0dc4e1ff3904a9c8f34c951611d3992@yadro.com>
- <92860b17-b8b7-411d-a622-7952fd0660dd@gmail.com>
-In-Reply-To: <92860b17-b8b7-411d-a622-7952fd0660dd@gmail.com>
-Accept-Language: ru-RU, en-US
-Content-Language: ru-RU
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Content-Type: multipart/alternative;
-	boundary="_000_1c6a93eade954bfc8c90a186ef903b51yadrocom_"
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4S7Z3K3gcqz2ydN
+	for <openbmc@lists.ozlabs.org>; Sun, 15 Oct 2023 20:00:59 +1100 (AEDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2bfed7c4e6dso42447491fa.1
+        for <openbmc@lists.ozlabs.org>; Sun, 15 Oct 2023 02:00:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1697360453; x=1697965253; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=sUKXBDAU7yRvgkxOo63NtcyklMaDwxQR1L1y1/Du95g=;
+        b=BUGN3LWYrWIxLsoZjvNlMJwsiS8jkwXY7DOn0NpMbj55gW8FVA3gjc2omGVjjQZK3y
+         N8GrvXUQVugWGNuHAg5jJseF9AzngU1gLxbeRYbyQVzrv+QZKEutgz4ZPzsv1iwQ0T2Z
+         ywDBZi6YwyV4bXia3JrWkF8VXIUC0roN+8dYmRoykaeTTKamcSNuyaNxDF4okLRHWLUz
+         teVr3V+CYSw1CGARYwa2ICtGCCBFcohMBsNs/x5bJ6ySIhPyN1ZLw4OuzLoDDhmni4yQ
+         6b3J4/7SPa0YHfW1gQ5HB+qY3/qAuflrDXL4HjzoxxOYZ5s/ut5S8qi+j2sxbapbMNY3
+         Z48w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1697360453; x=1697965253;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=sUKXBDAU7yRvgkxOo63NtcyklMaDwxQR1L1y1/Du95g=;
+        b=EwDKrBTar5pdDvQE2y32my2Q2hvlIki0JHq1uRV/JNEk8qWSuG+k0sS0I59cmMflBP
+         nGlixpN1yMLJultPnFQ+5ywQT+xsfX01bv0wbZHAqv4r6JNVNaj1C8Vpi5drSJNwXIGu
+         1EpHPQ50UEgkNkkMa69drgmxGyXQpwGZkYMlLIX43iUjmB3ykxTwiBSiMVHGW7CYPK6E
+         ybslq3qfg6WOQfFcC58ZPtHD5wjnuHG94cDJbguR9sVD9XhPW+rpn7dDu/vCtqYZMBAS
+         yoF/W0yakv3crxDbemD+pU0PDO8zWrvTwWp6ZYzcInQG1e7iULFlrquiSw1BQOnBZWzO
+         9JrQ==
+X-Gm-Message-State: AOJu0YyDePV+agGTzK9ShE4xRNIfd3BJJ6iqH0sSJvOOY7uPnFlR0teK
+	v7q4nNNetZSHcTFGi+5pYR4METxWgVufs37i1pQ=
+X-Google-Smtp-Source: AGHT+IEeRq5SP6mqrb0AloTKLb9pI1Hmn2zRyq5heXljQOw5f+hV25tMCL00qCO52s4kDz7hA9KXi+cggZZEr6EGgvE=
+X-Received: by 2002:a2e:2413:0:b0:2bf:fd6c:ddfc with SMTP id
+ k19-20020a2e2413000000b002bffd6cddfcmr24524661ljk.45.1697360452663; Sun, 15
+ Oct 2023 02:00:52 -0700 (PDT)
 MIME-Version: 1.0
+References: <20231012230057.3365626-1-tmaimon77@gmail.com> <20231012230057.3365626-3-tmaimon77@gmail.com>
+ <7598fcfa-7047-434d-be03-41cb2bb46ecb@kernel.org>
+In-Reply-To: <7598fcfa-7047-434d-be03-41cb2bb46ecb@kernel.org>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Sun, 15 Oct 2023 12:00:41 +0300
+Message-ID: <CAP6Zq1iOyGfYAEQ+psK9Xz-QYXc4Poo6sJhUsNH3m80HmE7v2w@mail.gmail.com>
+Subject: Re: [PATCH v6 2/3] dt-bindings: usb: ci-hdrc-usb2: add npcm750 and
+ npcm845 compatible
+To: Krzysztof Kozlowski <krzk@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,113 +75,44 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: benjaminfair@google.com, avifishman70@gmail.com, gregkh@linuxfoundation.org, peter.chen@kernel.org, linux-usb@vger.kernel.org, j.neuschaefer@gmx.net, tali.perry1@gmail.com, joel@jms.id.au, venture@google.com, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
---_000_1c6a93eade954bfc8c90a186ef903b51yadrocom_
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+Hi Krzysztof,
 
-SGkgU3VuaXRoYSENCg0KPj4gSSBhbHNvIGJlbGlldmUgdGhhdCBpbiBwcm9kdWN0aW9uIGVudmly
-b25tZW50cyB0aGUgQk1DIHNoYWxsIG5vdCBiZSBjb25uZWN0ZWQgdG8gdGhlIHNhbWUgbmV0d29y
-ayBzZWdtZW50IHVzaW5nIG11bHRpcGxlIGludGVyZmFjZXMuDQo+PiBJZiB0aGF0IGlzIG5lZWRl
-ZCBmb3IgZmFpbG92ZXIsIHRoZW4gd2Ugc2hvdWxkIHRoaW5rIGFib3V0IGFkZGluZyB0aGUgYnJp
-ZGdpbmcgYW5kIGJvbmRpbmcgc3VwcG9ydCBpbnN0ZWFkDQo+IERvIHlvdSBoYXZlIG1vcmUgZGV0
-YWlscyBvbiB0aGlzIHBsZWFzZT8NCg0KU3VyZS4gSG9uZXN0bHksIEkgaGF2ZW7igJl0IGRlYWx0
-IHdpdGggZWl0aGVyIHRlY2huaXF1ZSBmb3IgcXVpdGUgbWFueSB5ZWFycyBub3csIGFuZCB3aGVu
-IEkgaGFkLCBteSBleHBlcmllbmNlIHdhcyBmYXIgZnJvbSBiZWluZyB2YXN0LCBidXQgSSBzdGls
-bCByZW1lbWJlciB0aG9zZSB0aGluZ3MgZG8gZXhpc3QuDQpTbyBoZXJlIGFyZSBzb21lIHJlc291
-cmNlcyB0aGF0IEkgZm91bmQgdGhhdCBsb29rIHJlbGV2YW50Og0KDQpodHRwczovL2RldmVsb3Bl
-cnMucmVkaGF0LmNvbS9hcnRpY2xlcy8yMDIyLzA0LzA2L2ludHJvZHVjdGlvbi1saW51eC1icmlk
-Z2luZy1jb21tYW5kcy1hbmQtZmVhdHVyZXMNCmh0dHBzOi8vd3d3LmxlYXJuaXRndWlkZS5uZXQv
-MjAxNS8wNy93aGF0LWlzLWJvbmRpbmctaG93LXRvLWNvbmZpZ3VyZS5odG1sDQoNCj4+IFAuUy4g
-SSBhbHNvIGJlbGlldmUgdGhhdCBpdCBpcyBWRVJZIHdyb25nIHRoYXQgd2Ugc3RpbGwgYWxsb3cg
-c2V0dGluZyBwZXItaW50ZXJmYWNlIGdhdGV3YXlzIGFzIEJNQyBpcyBub3QgYSByb3V0ZXIgZGV2
-aWNlIGFuZCBkb2VzbuKAmXQgKGFuZCBzaG91bGRu4oCZdCkgYWxsb3cgZm9yIGNvbmZpZ3VyaW5n
-IHBvbGljeSByb3V0aW5nIG9yIGFueSByb3V0aW5nIHdoYXRzb2V2ZXIuDQoNCj4gSSBiZWxpZXZl
-IHRoaXMgd2FzIGRvbmUgcHVycG9zZWZ1bGx5IHNvbWUgeWVhcnMgYWdvLiBAUmF2aSBwbGVhc2Ug
-c2hhcmUgdGhlIGRldGFpbHMgaWYgeW91IGhhdmUgdGhlIGhpc3RvcnkuDQpJIHlvdSBjYW4gcHJv
-dmlkZSBhbnkgcmF0aW9uYWxlIGZvciB0aGF0LCBJ4oCZZCBiZSBncmF0ZWZ1bC4gV2XigJl2ZSBi
-ZWVuIGhhdmluZyBhbGwgc29ydHMgb2YgdHJvdWJsZSBkdWUgdG8gdGhhdCBmb3IgcXVpdGUgYSBs
-b25nIHRpbWUuDQoNCldCUiwgQWxleGFuZGVyLg0K
+Thanks a lot for your comments, I really appreciate it!
 
---_000_1c6a93eade954bfc8c90a186ef903b51yadrocom_
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: base64
+I will run scripts/get_maintainers.pl to the latest kernel.
 
-PGh0bWwgeG1sbnM6dj0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp2bWwiIHhtbG5zOm89InVy
-bjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZSIgeG1sbnM6dz0idXJuOnNjaGVt
-YXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCIgeG1sbnM6bT0iaHR0cDovL3NjaGVtYXMubWlj
-cm9zb2Z0LmNvbS9vZmZpY2UvMjAwNC8xMi9vbW1sIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcv
-VFIvUkVDLWh0bWw0MCI+DQo8aGVhZD4NCjxtZXRhIGh0dHAtZXF1aXY9IkNvbnRlbnQtVHlwZSIg
-Y29udGVudD0idGV4dC9odG1sOyBjaGFyc2V0PXV0Zi04Ij4NCjxtZXRhIG5hbWU9IkdlbmVyYXRv
-ciIgY29udGVudD0iTWljcm9zb2Z0IFdvcmQgMTUgKGZpbHRlcmVkIG1lZGl1bSkiPg0KPHN0eWxl
-PjwhLS0NCi8qIEZvbnQgRGVmaW5pdGlvbnMgKi8NCkBmb250LWZhY2UNCgl7Zm9udC1mYW1pbHk6
-IkNhbWJyaWEgTWF0aCI7DQoJcGFub3NlLTE6MiA0IDUgMyA1IDQgNiAzIDIgNDt9DQpAZm9udC1m
-YWNlDQoJe2ZvbnQtZmFtaWx5OkNhbGlicmk7DQoJcGFub3NlLTE6MiAxNSA1IDIgMiAyIDQgMyAy
-IDQ7fQ0KLyogU3R5bGUgRGVmaW5pdGlvbnMgKi8NCnAuTXNvTm9ybWFsLCBsaS5Nc29Ob3JtYWws
-IGRpdi5Nc29Ob3JtYWwNCgl7bWFyZ2luOjBjbTsNCglmb250LXNpemU6MTEuMHB0Ow0KCWZvbnQt
-ZmFtaWx5OiJDYWxpYnJpIixzYW5zLXNlcmlmO30NCmE6bGluaywgc3Bhbi5Nc29IeXBlcmxpbmsN
-Cgl7bXNvLXN0eWxlLXByaW9yaXR5Ojk5Ow0KCWNvbG9yOmJsdWU7DQoJdGV4dC1kZWNvcmF0aW9u
-OnVuZGVybGluZTt9DQpzcGFuLkVtYWlsU3R5bGUyMA0KCXttc28tc3R5bGUtdHlwZTpwZXJzb25h
-bC1yZXBseTsNCglmb250LWZhbWlseToiQ2FsaWJyaSIsc2Fucy1zZXJpZjsNCgljb2xvcjp3aW5k
-b3d0ZXh0O30NCi5Nc29DaHBEZWZhdWx0DQoJe21zby1zdHlsZS10eXBlOmV4cG9ydC1vbmx5Ow0K
-CWZvbnQtc2l6ZToxMC4wcHQ7fQ0KQHBhZ2UgV29yZFNlY3Rpb24xDQoJe3NpemU6NjEyLjBwdCA3
-OTIuMHB0Ow0KCW1hcmdpbjoyLjBjbSA0Mi41cHQgMi4wY20gMy4wY207fQ0KZGl2LldvcmRTZWN0
-aW9uMQ0KCXtwYWdlOldvcmRTZWN0aW9uMTt9DQotLT48L3N0eWxlPjwhLS1baWYgZ3RlIG1zbyA5
-XT48eG1sPg0KPG86c2hhcGVkZWZhdWx0cyB2OmV4dD0iZWRpdCIgc3BpZG1heD0iMTAyNiIgLz4N
-CjwveG1sPjwhW2VuZGlmXS0tPjwhLS1baWYgZ3RlIG1zbyA5XT48eG1sPg0KPG86c2hhcGVsYXlv
-dXQgdjpleHQ9ImVkaXQiPg0KPG86aWRtYXAgdjpleHQ9ImVkaXQiIGRhdGE9IjEiIC8+DQo8L286
-c2hhcGVsYXlvdXQ+PC94bWw+PCFbZW5kaWZdLS0+DQo8L2hlYWQ+DQo8Ym9keSBsYW5nPSJSVSIg
-bGluaz0iYmx1ZSIgdmxpbms9InB1cnBsZSIgc3R5bGU9IndvcmQtd3JhcDpicmVhay13b3JkIj4N
-CjxkaXYgY2xhc3M9IldvcmRTZWN0aW9uMSI+DQo8ZGl2Pg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+
-PHNwYW4gbGFuZz0iRU4tVVMiIHN0eWxlPSJtc28tZmFyZWFzdC1sYW5ndWFnZTpFTi1VUyI+SGkg
-U3VuaXRoYSE8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3Bh
-biBsYW5nPSJFTi1VUyIgc3R5bGU9Im1zby1mYXJlYXN0LWxhbmd1YWdlOkVOLVVTIj48bzpwPiZu
-YnNwOzwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJF
-Ti1VUyIgc3R5bGU9Im1zby1mYXJlYXN0LWxhbmd1YWdlOkVOLVVTIj4mZ3Q7Jmd0OyBJIGFsc28g
-YmVsaWV2ZSB0aGF0IGluIHByb2R1Y3Rpb24gZW52aXJvbm1lbnRzIHRoZSBCTUMgc2hhbGwgbm90
-IGJlIGNvbm5lY3RlZCB0byB0aGUgc2FtZSBuZXR3b3JrIHNlZ21lbnQgdXNpbmcgbXVsdGlwbGUg
-aW50ZXJmYWNlcy48L3NwYW4+PHNwYW4gbGFuZz0iRU4tVVMiPjxvOnA+PC9vOnA+PC9zcGFuPjwv
-cD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0ibXNvLWZh
-cmVhc3QtbGFuZ3VhZ2U6RU4tVVMiPiZndDsmZ3Q7IElmIHRoYXQgaXMgbmVlZGVkIGZvciBmYWls
-b3ZlciwgdGhlbiB3ZSBzaG91bGQgdGhpbmsgYWJvdXQgYWRkaW5nIHRoZSBicmlkZ2luZyBhbmQg
-Ym9uZGluZyBzdXBwb3J0IGluc3RlYWQ8L3NwYW4+PHNwYW4gbGFuZz0iRU4tVVMiPjxvOnA+PC9v
-OnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj4m
-Z3Q7IERvIHlvdSBoYXZlIG1vcmUgZGV0YWlscyBvbiB0aGlzIHBsZWFzZT8NCjxicj4NCjxicj4N
-CjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9
-IkVOLVVTIj5TdXJlLiBIb25lc3RseSwgSSBoYXZlbuKAmXQgZGVhbHQgd2l0aCBlaXRoZXIgdGVj
-aG5pcXVlIGZvciBxdWl0ZSBtYW55IHllYXJzIG5vdywgYW5kIHdoZW4gSSBoYWQsIG15IGV4cGVy
-aWVuY2Ugd2FzIGZhciBmcm9tIGJlaW5nIHZhc3QsIGJ1dCBJIHN0aWxsIHJlbWVtYmVyIHRob3Nl
-IHRoaW5ncyBkbyBleGlzdC48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9y
-bWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+U28gaGVyZSBhcmUgc29tZSByZXNvdXJjZXMgdGhhdCBJ
-IGZvdW5kIHRoYXQgbG9vayByZWxldmFudDo8bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFz
-cz0iTXNvTm9ybWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+
-PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPjxhIGhyZWY9Imh0
-dHBzOi8vZGV2ZWxvcGVycy5yZWRoYXQuY29tL2FydGljbGVzLzIwMjIvMDQvMDYvaW50cm9kdWN0
-aW9uLWxpbnV4LWJyaWRnaW5nLWNvbW1hbmRzLWFuZC1mZWF0dXJlcyI+aHR0cHM6Ly9kZXZlbG9w
-ZXJzLnJlZGhhdC5jb20vYXJ0aWNsZXMvMjAyMi8wNC8wNi9pbnRyb2R1Y3Rpb24tbGludXgtYnJp
-ZGdpbmctY29tbWFuZHMtYW5kLWZlYXR1cmVzPC9hPjxvOnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxw
-IGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIj48YSBocmVmPSJodHRwczovL3d3
-dy5sZWFybml0Z3VpZGUubmV0LzIwMTUvMDcvd2hhdC1pcy1ib25kaW5nLWhvdy10by1jb25maWd1
-cmUuaHRtbCI+aHR0cHM6Ly93d3cubGVhcm5pdGd1aWRlLm5ldC8yMDE1LzA3L3doYXQtaXMtYm9u
-ZGluZy1ob3ctdG8tY29uZmlndXJlLmh0bWw8L2E+PG86cD48L286cD48L3NwYW4+PC9wPg0KPHAg
-Y2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPjxvOnA+Jm5ic3A7PC9vOnA+PC9z
-cGFuPjwvcD4NCjxwIGNsYXNzPSJNc29Ob3JtYWwiPjxzcGFuIGxhbmc9IkVOLVVTIiBzdHlsZT0i
-bXNvLWZhcmVhc3QtbGFuZ3VhZ2U6RU4tVVMiPiZndDsmZ3Q7IFAuUy4gSSBhbHNvIGJlbGlldmUg
-dGhhdCBpdCBpcyBWRVJZIHdyb25nIHRoYXQgd2Ugc3RpbGwgYWxsb3cgc2V0dGluZyBwZXItaW50
-ZXJmYWNlIGdhdGV3YXlzIGFzIEJNQyBpcyBub3QgYSByb3V0ZXIgZGV2aWNlIGFuZCBkb2VzbuKA
-mXQgKGFuZCBzaG91bGRu4oCZdCkgYWxsb3cgZm9yIGNvbmZpZ3VyaW5nIHBvbGljeQ0KIHJvdXRp
-bmcgb3IgYW55IHJvdXRpbmcgd2hhdHNvZXZlci48L3NwYW4+PHNwYW4gbGFuZz0iRU4tVVMiPjxv
-OnA+PC9vOnA+PC9zcGFuPjwvcD4NCjxwPjxzcGFuIGxhbmc9IkVOLVVTIj4mZ3Q7IEkgYmVsaWV2
-ZSB0aGlzIHdhcyBkb25lIHB1cnBvc2VmdWxseSBzb21lIHllYXJzIGFnby4gPC9zcGFuPg0KQFJh
-dmkgcGxlYXNlIHNoYXJlIHRoZSBkZXRhaWxzIGlmIHlvdSBoYXZlIHRoZSBoaXN0b3J5LjxvOnA+
-PC9vOnA+PC9wPg0KPHAgY2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPkkgeW91
-IGNhbiBwcm92aWRlIGFueSByYXRpb25hbGUgZm9yIHRoYXQsIEnigJlkIGJlIGdyYXRlZnVsLiBX
-ZeKAmXZlIGJlZW4gaGF2aW5nIGFsbCBzb3J0cyBvZiB0cm91YmxlIGR1ZSB0byB0aGF0IGZvciBx
-dWl0ZSBhIGxvbmcgdGltZS48bzpwPjwvbzpwPjwvc3Bhbj48L3A+DQo8cCBjbGFzcz0iTXNvTm9y
-bWFsIj48c3BhbiBsYW5nPSJFTi1VUyI+PG86cD4mbmJzcDs8L286cD48L3NwYW4+PC9wPg0KPHAg
-Y2xhc3M9Ik1zb05vcm1hbCI+PHNwYW4gbGFuZz0iRU4tVVMiPldCUiwgQWxleGFuZGVyLjxvOnA+
-PC9vOnA+PC9zcGFuPjwvcD4NCjwvZGl2Pg0KPC9kaXY+DQo8L2JvZHk+DQo8L2h0bWw+DQo=
+After running scripts/get_maintainers.pl do I need to send the
+patchset with resend on V6 or do I need to send V7 with the new
+maintainers list
 
---_000_1c6a93eade954bfc8c90a186ef903b51yadrocom_--
+Thanks,
+
+Tomer
+
+On Fri, 13 Oct 2023 at 16:32, Krzysztof Kozlowski <krzk@kernel.org> wrote:
+>
+> On 13/10/2023 01:00, Tomer Maimon wrote:
+> > Add a compatible string for Nuvoton BMC NPCM750 and Nuvoton BMC NPCM845.
+> >
+> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> > ---
+>
+> Please use scripts/get_maintainers.pl to get a list of necessary people
+> and lists to CC. It might happen, that command when run on an older
+> kernel, gives you outdated entries. Therefore please be sure you base
+> your patches on recent Linux kernel.
+>
+> You missed at least devicetree list (maybe more), so this won't be
+> tested by automated tooling. Performing review on untested code might be
+> a waste of time, thus I will skip this patch entirely till you follow
+> the process allowing the patch to be tested.
+>
+> Please kindly resend and include all necessary To/Cc entries.
+>
+> Best regards,
+> Krzysztof
+>
