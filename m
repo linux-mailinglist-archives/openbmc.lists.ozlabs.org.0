@@ -1,69 +1,70 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 5FACA7C986B
-	for <lists+openbmc@lfdr.de>; Sun, 15 Oct 2023 11:01:40 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0FFF57C9A47
+	for <lists+openbmc@lfdr.de>; Sun, 15 Oct 2023 19:22:47 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=BUGN3LWY;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=fJeciLLb;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4S7Z3z1vFyz3cCG
-	for <lists+openbmc@lfdr.de>; Sun, 15 Oct 2023 20:01:35 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4S7nBD74YFz3cBZ
+	for <lists+openbmc@lfdr.de>; Mon, 16 Oct 2023 04:22:44 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=BUGN3LWY;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=fJeciLLb;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22d; helo=mail-lj1-x22d.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::229; helo=mail-lj1-x229.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4S7Z3K3gcqz2ydN
-	for <openbmc@lists.ozlabs.org>; Sun, 15 Oct 2023 20:00:59 +1100 (AEDT)
-Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2bfed7c4e6dso42447491fa.1
-        for <openbmc@lists.ozlabs.org>; Sun, 15 Oct 2023 02:00:59 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4S7n9d0MTnz307y
+	for <openbmc@lists.ozlabs.org>; Mon, 16 Oct 2023 04:22:11 +1100 (AEDT)
+Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2c4fdf94666so35705591fa.2
+        for <openbmc@lists.ozlabs.org>; Sun, 15 Oct 2023 10:22:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1697360453; x=1697965253; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=sUKXBDAU7yRvgkxOo63NtcyklMaDwxQR1L1y1/Du95g=;
-        b=BUGN3LWYrWIxLsoZjvNlMJwsiS8jkwXY7DOn0NpMbj55gW8FVA3gjc2omGVjjQZK3y
-         N8GrvXUQVugWGNuHAg5jJseF9AzngU1gLxbeRYbyQVzrv+QZKEutgz4ZPzsv1iwQ0T2Z
-         ywDBZi6YwyV4bXia3JrWkF8VXIUC0roN+8dYmRoykaeTTKamcSNuyaNxDF4okLRHWLUz
-         teVr3V+CYSw1CGARYwa2ICtGCCBFcohMBsNs/x5bJ6ySIhPyN1ZLw4OuzLoDDhmni4yQ
-         6b3J4/7SPa0YHfW1gQ5HB+qY3/qAuflrDXL4HjzoxxOYZ5s/ut5S8qi+j2sxbapbMNY3
-         Z48w==
+        d=gmail.com; s=20230601; t=1697390523; x=1697995323; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5KkduH/ZQuhYuwGTaVnTAfxaGqMb6uJiQI/XtTEMqE4=;
+        b=fJeciLLb6rAgQD1+vW79Guv4hf6SGzGSaGi91IKgxx1jdHZM0xErIctz/2UmUOt9R8
+         vMT/espX+e82VNzN4DHHg9Vq72FZ2//DL5gDR8i+cfgIUlueDItHpU6Dppv0poKgTdKX
+         f8audqcvnI6OO8vbQ+0GqQtaOHLL6pP99KX54tD6x7QMOSQkxTvgwTaAJVNiyEjuKZPx
+         ht53rQpw0vRyvrDTxw/5yPA/JO3F9NFWmCBd3FeXNoJlebj0M/SWlA/sqSuxFy854PS4
+         0XobMcFdWJGjKfF+Gfz1YOJdxUC8nc5YgFybW9gPttfVvBpYiElAbMNtBkKEo1blsZU1
+         MWYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1697360453; x=1697965253;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=sUKXBDAU7yRvgkxOo63NtcyklMaDwxQR1L1y1/Du95g=;
-        b=EwDKrBTar5pdDvQE2y32my2Q2hvlIki0JHq1uRV/JNEk8qWSuG+k0sS0I59cmMflBP
-         nGlixpN1yMLJultPnFQ+5ywQT+xsfX01bv0wbZHAqv4r6JNVNaj1C8Vpi5drSJNwXIGu
-         1EpHPQ50UEgkNkkMa69drgmxGyXQpwGZkYMlLIX43iUjmB3ykxTwiBSiMVHGW7CYPK6E
-         ybslq3qfg6WOQfFcC58ZPtHD5wjnuHG94cDJbguR9sVD9XhPW+rpn7dDu/vCtqYZMBAS
-         yoF/W0yakv3crxDbemD+pU0PDO8zWrvTwWp6ZYzcInQG1e7iULFlrquiSw1BQOnBZWzO
-         9JrQ==
-X-Gm-Message-State: AOJu0YyDePV+agGTzK9ShE4xRNIfd3BJJ6iqH0sSJvOOY7uPnFlR0teK
-	v7q4nNNetZSHcTFGi+5pYR4METxWgVufs37i1pQ=
-X-Google-Smtp-Source: AGHT+IEeRq5SP6mqrb0AloTKLb9pI1Hmn2zRyq5heXljQOw5f+hV25tMCL00qCO52s4kDz7hA9KXi+cggZZEr6EGgvE=
-X-Received: by 2002:a2e:2413:0:b0:2bf:fd6c:ddfc with SMTP id
- k19-20020a2e2413000000b002bffd6cddfcmr24524661ljk.45.1697360452663; Sun, 15
- Oct 2023 02:00:52 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1697390523; x=1697995323;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5KkduH/ZQuhYuwGTaVnTAfxaGqMb6uJiQI/XtTEMqE4=;
+        b=pBRQ0RqzoWMsbAo7bBswsIh5tpn/5CEly39AmQb2JXAqsDyBeWmObSwoQMHu9xb2Va
+         WpZgwHGLp19TqfgzX7fMg9DpNtVeNF5RWXbiDIaXIruxW8LwiDbPKCYJrSid7LJ4Puvi
+         mQgqn6u5GNJTOw+iAUyG9WsTO+wqVXHbdAAeqDTWZx1xJeV+57qARyltvzglk/m4YjTv
+         WfpCGIlpssMHXVFavBtMzgPAcp++z+YJJK0vDZne/HGwTpbQn1Dpl4bQyK34cVL8DQ3Y
+         ERwlKpJOnGkE+2dmqs+ruRgzsK7XOH0jmeiHceoUJVso4zTlzL776t2uPssRzCvwJb53
+         tFBw==
+X-Gm-Message-State: AOJu0YwAXodScjEeeJqeM9ncV34dPFRzV2cZnbqBplX720lf7GvH//CN
+	pNgcw2CK6pFr+WeMnH70KaYSwU+FXcUlQa/opsE=
+X-Google-Smtp-Source: AGHT+IE+B5mf8etTcynZmQWKI3zC4RXIloC3dzspmE6UY9SFz6DoDrzTJ/Auqc3A3EKOjZTrJE9pN116bJxSgdXowoA=
+X-Received: by 2002:a2e:a596:0:b0:2c5:fde:e457 with SMTP id
+ m22-20020a2ea596000000b002c50fdee457mr4314039ljp.3.1697390522995; Sun, 15 Oct
+ 2023 10:22:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <20231012230057.3365626-1-tmaimon77@gmail.com> <20231012230057.3365626-3-tmaimon77@gmail.com>
- <7598fcfa-7047-434d-be03-41cb2bb46ecb@kernel.org>
-In-Reply-To: <7598fcfa-7047-434d-be03-41cb2bb46ecb@kernel.org>
+References: <20231012230057.3365626-1-tmaimon77@gmail.com> <20231012230057.3365626-4-tmaimon77@gmail.com>
+ <7add0297-709f-4836-832f-f8fbd412eca5@molgen.mpg.de>
+In-Reply-To: <7add0297-709f-4836-832f-f8fbd412eca5@molgen.mpg.de>
 From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Sun, 15 Oct 2023 12:00:41 +0300
-Message-ID: <CAP6Zq1iOyGfYAEQ+psK9Xz-QYXc4Poo6sJhUsNH3m80HmE7v2w@mail.gmail.com>
-Subject: Re: [PATCH v6 2/3] dt-bindings: usb: ci-hdrc-usb2: add npcm750 and
- npcm845 compatible
-To: Krzysztof Kozlowski <krzk@kernel.org>
+Date: Sun, 15 Oct 2023 20:21:51 +0300
+Message-ID: <CAP6Zq1g0eT0X5UvQ6Zok=JdOb2WOJ89qFW2MtUQh_z737F7F1A@mail.gmail.com>
+Subject: Re: [PATCH v6 3/3] usb: chipidea: Add support for NPCM
+To: Paul Menzel <pmenzel@molgen.mpg.de>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,40 +80,212 @@ Cc: benjaminfair@google.com, avifishman70@gmail.com, gregkh@linuxfoundation.org,
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Krzysztof,
+Hi Paul,
 
-Thanks a lot for your comments, I really appreciate it!
+Thanks for your comments
 
-I will run scripts/get_maintainers.pl to the latest kernel.
+On Fri, 13 Oct 2023 at 16:18, Paul Menzel <pmenzel@molgen.mpg.de> wrote:
+>
+> Dear Tomer,
+>
+>
+> Thank you for your patch.
+>
+> Am 13.10.23 um 01:00 schrieb Tomer Maimon:
+> > Add Nuvoton NPCM BMC SoCs support to USB ChipIdea driver.
+> > NPCM SoC include ChipIdea IP block that used for USB device controller
+>
+> include*s*
+> =E2=80=9Cthat *is* used=E2=80=9D or just =E2=80=9C=E2=80=A6 used for=E2=
+=80=9D
+Will do
+>
+> > mode.
+>
+> Please add a line, how you tested this patch.
+I don't recall "how you tested the patch" done in the commit message,
+I can add it in the cover letter
+>
+> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> > Acked-by: Peter Chen <peter.chen@kernel.org>
+> > ---
+> >   drivers/usb/chipidea/Kconfig        |   4 +
+> >   drivers/usb/chipidea/Makefile       |   1 +
+> >   drivers/usb/chipidea/ci_hdrc_npcm.c | 114 +++++++++++++++++++++++++++=
++
+> >   3 files changed, 119 insertions(+)
+> >   create mode 100644 drivers/usb/chipidea/ci_hdrc_npcm.c
+> >
+> > diff --git a/drivers/usb/chipidea/Kconfig b/drivers/usb/chipidea/Kconfi=
+g
+> > index c815824a0b2d..bab45bc62361 100644
+> > --- a/drivers/usb/chipidea/Kconfig
+> > +++ b/drivers/usb/chipidea/Kconfig
+> > @@ -43,6 +43,10 @@ config USB_CHIPIDEA_MSM
+> >       tristate "Enable MSM hsusb glue driver" if EXPERT
+> >       default USB_CHIPIDEA
+> >
+> > +config USB_CHIPIDEA_NPCM
+> > +     tristate "Enable NPCM hsusb glue driver" if EXPERT
+> > +     default USB_CHIPIDEA
+> > +
+> >   config USB_CHIPIDEA_IMX
+> >       tristate "Enable i.MX USB glue driver" if EXPERT
+> >       depends on OF
+> > diff --git a/drivers/usb/chipidea/Makefile b/drivers/usb/chipidea/Makef=
+ile
+> > index 71afeab97e83..718cb24603dd 100644
+> > --- a/drivers/usb/chipidea/Makefile
+> > +++ b/drivers/usb/chipidea/Makefile
+> > @@ -13,6 +13,7 @@ ci_hdrc-$(CONFIG_USB_OTG_FSM)               +=3D otg_=
+fsm.o
+> >
+> >   obj-$(CONFIG_USB_CHIPIDEA_GENERIC)  +=3D ci_hdrc_usb2.o
+> >   obj-$(CONFIG_USB_CHIPIDEA_MSM)              +=3D ci_hdrc_msm.o
+> > +obj-$(CONFIG_USB_CHIPIDEA_NPCM)              +=3D ci_hdrc_npcm.o
+> >   obj-$(CONFIG_USB_CHIPIDEA_PCI)              +=3D ci_hdrc_pci.o
+> >   obj-$(CONFIG_USB_CHIPIDEA_IMX)              +=3D usbmisc_imx.o ci_hdr=
+c_imx.o
+> >   obj-$(CONFIG_USB_CHIPIDEA_TEGRA)    +=3D ci_hdrc_tegra.o
+> > diff --git a/drivers/usb/chipidea/ci_hdrc_npcm.c b/drivers/usb/chipidea=
+/ci_hdrc_npcm.c
+> > new file mode 100644
+> > index 000000000000..37b64a3dbd96
+> > --- /dev/null
+> > +++ b/drivers/usb/chipidea/ci_hdrc_npcm.c
+> > @@ -0,0 +1,114 @@
+> > +// SPDX-License-Identifier: GPL-2.0
+> > +// Copyright (c) 2023 Nuvoton Technology corporation.
+> > +
+> > +#include <linux/module.h>
+> > +#include <linux/platform_device.h>
+> > +#include <linux/pm_runtime.h>
+> > +#include <linux/usb/chipidea.h>
+> > +#include <linux/clk.h>
+> > +#include <linux/io.h>
+> > +#include <linux/reset-controller.h>
+> > +#include <linux/of.h>
+> > +
+> > +#include "ci.h"
+> > +
+> > +struct npcm_udc_data {
+> > +     struct platform_device  *ci;
+> > +     struct clk              *core_clk;
+> > +     struct ci_hdrc_platform_data pdata;
+> > +};
+> > +
+> > +static int npcm_udc_notify_event(struct ci_hdrc *ci, unsigned event)
+> > +{
+> > +     struct device *dev =3D ci->dev->parent;
+> > +
+> > +     switch (event) {
+> > +     case CI_HDRC_CONTROLLER_RESET_EVENT:
+> > +             /* clear all mode bits */
+> > +             hw_write(ci, OP_USBMODE, 0xffffffff, 0x0);
+> > +             break;
+> > +     default:
+> > +             dev_dbg(dev, "unknown ci_hdrc event\n");
+>
+> Please print it out.
+Do you mean instead dev_dbg to use dev_info? in that case, each event
+that didnt handled will cause a print.
+>
+> > +             break;
+> > +     }
+> > +
+> > +     return 0;
+> > +}
+> > +
+> > +static int npcm_udc_probe(struct platform_device *pdev)
+> > +{
+> > +     int ret;
+> > +     struct npcm_udc_data *ci;
+> > +     struct platform_device *plat_ci;
+> > +     struct device *dev =3D &pdev->dev;
+> > +
+> > +     ci =3D devm_kzalloc(&pdev->dev, sizeof(*ci), GFP_KERNEL);
+> > +     if (!ci)
+> > +             return -ENOMEM;
+> > +     platform_set_drvdata(pdev, ci);
+> > +
+> > +     ci->core_clk =3D devm_clk_get_optional(dev, NULL);
+> > +     if (IS_ERR(ci->core_clk))
+> > +             return PTR_ERR(ci->core_clk);
+> > +
+> > +     ret =3D clk_prepare_enable(ci->core_clk);
+> > +     if (ret)
+> > +             return dev_err_probe(dev, ret, "failed to enable the cloc=
+k: %d\n", ret);
+> > +
+> > +     ci->pdata.name =3D dev_name(dev);
+> > +     ci->pdata.capoffset =3D DEF_CAPOFFSET;
+> > +     ci->pdata.flags =3D CI_HDRC_REQUIRES_ALIGNED_DMA |
+> > +             CI_HDRC_FORCE_VBUS_ACTIVE_ALWAYS;
+> > +     ci->pdata.phy_mode =3D USBPHY_INTERFACE_MODE_UTMI;
+> > +     ci->pdata.notify_event =3D npcm_udc_notify_event;
+> > +
+> > +     plat_ci =3D ci_hdrc_add_device(dev, pdev->resource, pdev->num_res=
+ources,
+> > +                                  &ci->pdata);
+> > +     if (IS_ERR(plat_ci)) {
+> > +             ret =3D PTR_ERR(plat_ci);
+> > +             dev_err(dev, "failed to register HDRC NPCM device: %d\n",=
+ ret);
+> > +             goto clk_err;
+> > +     }
+> > +
+> > +     pm_runtime_no_callbacks(dev);
+> > +     pm_runtime_enable(dev);
+> > +
+> > +     return 0;
+> > +
+> > +clk_err:
+> > +     clk_disable_unprepare(ci->core_clk);
+> > +     return ret;
+> > +}
+> > +
+> > +static int npcm_udc_remove(struct platform_device *pdev)
+> > +{
+> > +     struct npcm_udc_data *ci =3D platform_get_drvdata(pdev);
+> > +
+> > +     pm_runtime_disable(&pdev->dev);
+> > +     ci_hdrc_remove_device(ci->ci);
+> > +     clk_disable_unprepare(ci->core_clk);
+> > +
+> > +     return 0;
+> > +}
+> > +
+> > +static const struct of_device_id npcm_udc_dt_match[] =3D {
+> > +     { .compatible =3D "nuvoton,npcm750-udc", },
+> > +     { .compatible =3D "nuvoton,npcm845-udc", },
+> > +     { }
+> > +};
+> > +MODULE_DEVICE_TABLE(of, npcm_udc_dt_match);
+> > +
+> > +static struct platform_driver npcm_udc_driver =3D {
+> > +     .probe =3D npcm_udc_probe,
+> > +     .remove =3D npcm_udc_remove,
+> > +     .driver =3D {
+> > +             .name =3D "npcm_udc",
+> > +             .of_match_table =3D npcm_udc_dt_match,
+> > +     },
+> > +};
+> > +
+> > +module_platform_driver(npcm_udc_driver);
+> > +
+> > +MODULE_DESCRIPTION("NPCM USB device controller driver");
+> > +MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
+>
+> Should that address also be recorded as the patch author?
+I prefer to use this e-mail since this is my main e-mail.
+>
+> > +MODULE_LICENSE("GPL v2");
+>
+>
+> Kind regards,
+>
+> Paul
 
-After running scripts/get_maintainers.pl do I need to send the
-patchset with resend on V6 or do I need to send V7 with the new
-maintainers list
-
-Thanks,
+Best regards,
 
 Tomer
-
-On Fri, 13 Oct 2023 at 16:32, Krzysztof Kozlowski <krzk@kernel.org> wrote:
->
-> On 13/10/2023 01:00, Tomer Maimon wrote:
-> > Add a compatible string for Nuvoton BMC NPCM750 and Nuvoton BMC NPCM845.
-> >
-> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-> > ---
->
-> Please use scripts/get_maintainers.pl to get a list of necessary people
-> and lists to CC. It might happen, that command when run on an older
-> kernel, gives you outdated entries. Therefore please be sure you base
-> your patches on recent Linux kernel.
->
-> You missed at least devicetree list (maybe more), so this won't be
-> tested by automated tooling. Performing review on untested code might be
-> a waste of time, thus I will skip this patch entirely till you follow
-> the process allowing the patch to be tested.
->
-> Please kindly resend and include all necessary To/Cc entries.
->
-> Best regards,
-> Krzysztof
->
