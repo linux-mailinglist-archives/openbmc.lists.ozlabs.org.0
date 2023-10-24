@@ -2,66 +2,56 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 98EB87D5832
-	for <lists+openbmc@lfdr.de>; Tue, 24 Oct 2023 18:26:21 +0200 (CEST)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=O1kGVwe/;
-	dkim-atps=neutral
+	by mail.lfdr.de (Postfix) with ESMTPS id 763C07D5CE2
+	for <lists+openbmc@lfdr.de>; Tue, 24 Oct 2023 23:05:33 +0200 (CEST)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SFHVz3czLz3dRR
-	for <lists+openbmc@lfdr.de>; Wed, 25 Oct 2023 03:26:19 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SFPj73qfcz3cPN
+	for <lists+openbmc@lfdr.de>; Wed, 25 Oct 2023 08:05:31 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=O1kGVwe/;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.55.52.43; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 64 seconds by postgrey-1.37 at boromir; Wed, 25 Oct 2023 03:25:13 AEDT
-Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.161.51; helo=mail-oo1-f51.google.com; envelope-from=robherring2@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-oo1-f51.google.com (mail-oo1-f51.google.com [209.85.161.51])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SFHTj36F1z3dV6
-	for <openbmc@lists.ozlabs.org>; Wed, 25 Oct 2023 03:25:13 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1698164713; x=1729700713;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=+n1qPH4vrHP2kR+bbs48XwN/8n1d9jlcd6QnuD/dU0Y=;
-  b=O1kGVwe/zlRJuLGWXz/trXRFrlc9vTAbl63h+awrbh8CSEzba7Bp71e3
-   8jg0jDWMEnOpoYmFWJNJhxKl8/ePXXHddPaWfMnMNLOgQ3vxdE69/Ul5j
-   9EVOvT159slNJQJWEdPZQ6qN3recr4GxD3vLmb9HHKzJdMaNujKJpA2zn
-   tNF8bPSgIj3PFR8A9L/EeGAMxmEVbWeybApXhZy1rVpyQguN0be99xKui
-   bFcstW8VhI/ChdkrHYSVAzdL+E7j3f+yX8iubjFFc1ZqLeOLhf7QqGnBz
-   e5aysSdD/nP38Io4neXc6vUaNTFJGqRZv9xegxDdakfna99RqknAkCdDB
-   g==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10873"; a="473334676"
-X-IronPort-AV: E=Sophos;i="6.03,248,1694761200"; 
-   d="scan'208";a="473334676"
-Received: from orsmga003.jf.intel.com ([10.7.209.27])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Oct 2023 09:17:16 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10873"; a="708369080"
-X-IronPort-AV: E=Sophos;i="6.03,248,1694761200"; 
-   d="scan'208";a="708369080"
-Received: from lkp-server01.sh.intel.com (HELO 8917679a5d3e) ([10.239.97.150])
-  by orsmga003.jf.intel.com with ESMTP; 24 Oct 2023 09:17:10 -0700
-Received: from kbuild by 8917679a5d3e with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1qvK5b-00081l-2w;
-	Tue, 24 Oct 2023 16:17:07 +0000
-Date: Wed, 25 Oct 2023 00:16:18 +0800
-From: kernel test robot <lkp@intel.com>
-To: Jim Liu <jim.t90615@gmail.com>, JJLIU0@nuvoton.com,
-	linus.walleij@linaro.org, krzysztof.kozlowski+dt@linaro.org,
-	brgl@bgdev.pl
-Subject: Re: [PATCH v6 3/3] gpio: nuvoton: Add Nuvoton NPCM sgpio driver
-Message-ID: <202310250031.1SKs6CHt-lkp@intel.com>
-References: <20231024090631.3359592-4-jim.t90615@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SFPhp4ZgHz2xgw
+	for <openbmc@lists.ozlabs.org>; Wed, 25 Oct 2023 08:05:12 +1100 (AEDT)
+Received: by mail-oo1-f51.google.com with SMTP id 006d021491bc7-5842ea6f4d5so2712079eaf.2
+        for <openbmc@lists.ozlabs.org>; Tue, 24 Oct 2023 14:05:12 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1698181508; x=1698786308;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=I9Jm9ApzQsIzZy9Gg4QWmLADDrD7P3P/rQ+FPHDJPLY=;
+        b=Dvwhulm5M0qNNaqvvv3dqL6clscvlX2SeziJlJ3fgBgPZFJS60IWB2RlcuhhboJ++t
+         DjZKNuOqOY57XLlvSkrDPWYj0fv3wQCEq6GMK9kyCEzR8S61oChXqzcrJz7q/ja7TGiy
+         iG1y5vlQree9UEXx8LNP9k02CYPN4IdAGe7S8zOn4tbZ5ZC2yIvxc7tfL6/JdwmiiCRl
+         IIweBTpcjhE8zbzaTaHbKo01GEjPhPCItsV79ImkoyG3ytoWn+Ukrcl9mIOQHKR/QwcT
+         XdiJ95Z924/ve/Zw6HFV3u3k1HuDZTjV89f7fAfGy6hHXSym7ezKlWqH49QspU/pCvHW
+         /isQ==
+X-Gm-Message-State: AOJu0YxlMYWqG7y/RnscU22MGhKgOgJgeO5GURFc9QS7lEzW3hAlnfbu
+	8XvfXY1qwtmPEopXd4PdRIrw3BMe0Q==
+X-Google-Smtp-Source: AGHT+IF7Nx137HVm0cdS3eQV3tQRM+AfGLBpEp3+amIbNonfpHoo43OeYB/YL3TfKLtWBudotEAICg==
+X-Received: by 2002:a4a:da54:0:b0:571:28d5:2c71 with SMTP id f20-20020a4ada54000000b0057128d52c71mr12909779oou.2.1698181508427;
+        Tue, 24 Oct 2023 14:05:08 -0700 (PDT)
+Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
+        by smtp.gmail.com with ESMTPSA id e22-20020a4a5516000000b0057e54da7201sm2178503oob.35.2023.10.24.14.05.07
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Oct 2023 14:05:07 -0700 (PDT)
+Received: (nullmailer pid 591081 invoked by uid 1000);
+	Tue, 24 Oct 2023 21:05:06 -0000
+Date: Tue, 24 Oct 2023 16:05:06 -0500
+From: Rob Herring <robh@kernel.org>
+To: Jim Liu <jim.t90615@gmail.com>
+Subject: Re: [PATCH v6 1/3] dt-bindings: gpio: add NPCM sgpio driver bindings
+Message-ID: <169818150576.590864.5480268670179831271.robh@kernel.org>
+References: <20231024090631.3359592-1-jim.t90615@gmail.com>
+ <20231024090631.3359592-2-jim.t90615@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231024090631.3359592-4-jim.t90615@gmail.com>
+In-Reply-To: <20231024090631.3359592-2-jim.t90615@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,73 +63,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org, devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, oe-kbuild-all@lists.linux.dev
+Cc: devicetree@vger.kernel.org, linus.walleij@linaro.org, JJLIU0@nuvoton.com, linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org, krzysztof.kozlowski+dt@linaro.org, brgl@bgdev.pl
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Jim,
 
-kernel test robot noticed the following build warnings:
+On Tue, 24 Oct 2023 17:06:29 +0800, Jim Liu wrote:
+> Add dt-bindings document for the Nuvoton NPCM7xx sgpio driver
+> 
+> Signed-off-by: Jim Liu <jim.t90615@gmail.com>
+> ---
+> Changes for v6:
+>    - Drop quotes for $ref
+>    - Add and drop '|' for description
+>    - Add space after 'exposed.'
+>    - remove status
+> Changes for v5:
+>    - remove bus bus-frequency
+>    - modify in/out description
+> Changes for v4:
+>    - modify in/out property
+>    - modify bus-frequency property
+> Changes for v3:
+>    - modify description
+>    - modify in/out property name
+> Changes for v2:
+>    - modify description
+> ---
+>  .../bindings/gpio/nuvoton,sgpio.yaml          | 86 +++++++++++++++++++
+>  1 file changed, 86 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/gpio/nuvoton,sgpio.yaml
+> 
 
-[auto build test WARNING on brgl/gpio/for-next]
-[also build test WARNING on robh/for-next linus/master v6.6-rc7 next-20231024]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
+Reviewed-by: Rob Herring <robh@kernel.org>
 
-url:    https://github.com/intel-lab-lkp/linux/commits/Jim-Liu/dt-bindings-gpio-add-NPCM-sgpio-driver-bindings/20231024-170835
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/brgl/linux.git gpio/for-next
-patch link:    https://lore.kernel.org/r/20231024090631.3359592-4-jim.t90615%40gmail.com
-patch subject: [PATCH v6 3/3] gpio: nuvoton: Add Nuvoton NPCM sgpio driver
-config: sparc-allyesconfig (https://download.01.org/0day-ci/archive/20231025/202310250031.1SKs6CHt-lkp@intel.com/config)
-compiler: sparc64-linux-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231025/202310250031.1SKs6CHt-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202310250031.1SKs6CHt-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
-   drivers/gpio/gpio-npcm-sgpio.c: In function 'bank_reg':
->> drivers/gpio/gpio-npcm-sgpio.c:150:24: warning: returning 'int' from a function with return type 'void *' makes pointer from integer without a cast [-Wint-conversion]
-     150 |                 return -EINVAL;
-         |                        ^
-   drivers/gpio/gpio-npcm-sgpio.c: In function 'npcm_sgpio_setup_irqs':
->> drivers/gpio/gpio-npcm-sgpio.c:506:19: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
-     506 |         irq->chip = &sgpio_irq_chip;
-         |                   ^
-   drivers/gpio/gpio-npcm-sgpio.c: In function 'npcm_sgpio_probe':
->> drivers/gpio/gpio-npcm-sgpio.c:559:36: warning: unused variable 'sgpio_freq' [-Wunused-variable]
-     559 |         u32 nin_gpios, nout_gpios, sgpio_freq;
-         |                                    ^~~~~~~~~~
-
-
-vim +150 drivers/gpio/gpio-npcm-sgpio.c
-
-   133	
-   134	static void __iomem *bank_reg(struct npcm_sgpio *gpio,
-   135				      const struct npcm_sgpio_bank *bank,
-   136					const enum npcm_sgpio_reg reg)
-   137	{
-   138		switch (reg) {
-   139		case READ_DATA:
-   140			return gpio->base + bank->rdata_reg;
-   141		case WRITE_DATA:
-   142			return gpio->base + bank->wdata_reg;
-   143		case EVENT_CFG:
-   144			return gpio->base + bank->event_config;
-   145		case EVENT_STS:
-   146			return gpio->base + bank->event_status;
-   147		default:
-   148			/* actually if code runs to here, it's an error case */
-   149			WARN(true, "Getting here is an error condition");
- > 150			return -EINVAL;
-   151		}
-   152	}
-   153	
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
