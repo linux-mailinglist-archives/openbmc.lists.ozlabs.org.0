@@ -2,72 +2,72 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 894E87D7475
-	for <lists+openbmc@lfdr.de>; Wed, 25 Oct 2023 21:37:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTPS id 33A697D74CD
+	for <lists+openbmc@lfdr.de>; Wed, 25 Oct 2023 21:52:00 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=UbImyIgI;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=YE09ggDj;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SFzj53CkFz3cP3
-	for <lists+openbmc@lfdr.de>; Thu, 26 Oct 2023 06:37:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SG01p0h5Lz3c5m
+	for <lists+openbmc@lfdr.de>; Thu, 26 Oct 2023 06:51:58 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=UbImyIgI;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=YE09ggDj;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::42f; helo=mail-pf1-x42f.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pf1-x42f.google.com (mail-pf1-x42f.google.com [IPv6:2607:f8b0:4864:20::42f])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::634; helo=mail-pl1-x634.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SFzhV4LRYz3c2K
-	for <openbmc@lists.ozlabs.org>; Thu, 26 Oct 2023 06:36:57 +1100 (AEDT)
-Received: by mail-pf1-x42f.google.com with SMTP id d2e1a72fcca58-6b1ef786b7fso80539b3a.3
-        for <openbmc@lists.ozlabs.org>; Wed, 25 Oct 2023 12:36:57 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SG01F0f6Dz2xFk
+	for <openbmc@lists.ozlabs.org>; Thu, 26 Oct 2023 06:51:28 +1100 (AEDT)
+Received: by mail-pl1-x634.google.com with SMTP id d9443c01a7336-1ca816f868fso498995ad.1
+        for <openbmc@lists.ozlabs.org>; Wed, 25 Oct 2023 12:51:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698262613; x=1698867413; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1698263485; x=1698868285; darn=lists.ozlabs.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=TGbMnAcQD9MpNg1isUp8Xn3wZuZoLOEwvnOJV3Zib1c=;
-        b=UbImyIgIPm7SjXb9zi9jBs3XVDEp42njs7Z6LnvFXyWut3b9/kum2s7QpjbQHKPP81
-         ZE0epsyzE8PlESKCprXZTakV/v5t3OKp0C96o0OzTB67SOaMy2Zgoc7ip8mZbmhYUlt+
-         swxfR5UZCJV1oEHZTuknhDy9NiZEXjeCGfjptC5MXVk7zJ91AlHjDpx81zSNuhd+KdEp
-         lJTdk9K0jIibB5Y9jwqWXh36OIyKr4HU/0ltxRjVlVmNetC2/SEpGYG63+hJsGeIKTad
-         rfQk8l4lWt1EaxtSpsWvJjVnrbQKfMiZHKt6/NMVY6ZB74/5c1PTuTJHQ9UiMCYXuLMI
-         KR6w==
+        bh=h4skl6LAxzxt7vvn+d14s3SbonWxrdRSyIZcTgX8V9s=;
+        b=YE09ggDjygVukE8qlwDYAOoAaxovUuiK08jDj/a+qAN7Q2M6srJQ4DUhALGVEnLWR1
+         biLrRpq7Ld8dTMgrIcNYjhFvYSWeCdpk/GHhlEJgYnSpo4Wl/tUms/v9UzfY9DxHu1ck
+         XHxkx6pECfR4zhErWDdZYQJxOo/FQQVCRYMarIsu+qUxEx3FVAZCbCRIT6HueqZh4/vK
+         Yh64afMoGOHdH1BQiYCgRBCo5yUWFaUiVMdyl7QI0KNFosdD30+Z6M/i/lyDzHfkdn4t
+         2cTrsJrg1pKwMZZEK8a27KGDgGEIVdai8oNiyidRHxOWoQuXO3fpk5ngoafBx+iqOStN
+         4yFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698262613; x=1698867413;
+        d=1e100.net; s=20230601; t=1698263485; x=1698868285;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=TGbMnAcQD9MpNg1isUp8Xn3wZuZoLOEwvnOJV3Zib1c=;
-        b=sBrGnnSadlnU9dngozMpGjWwbKYzLdz5nx4X1ZkrIzXOIzqagjx84ye8ecfZMLZHJP
-         ln2sKxUaB6j3uTNIjFGXffvvlmuxGGrHk8fm42cUt+Uhzdi0Q2uT/PFxxBH3HKncFuSh
-         4UlSb8QjjeJ+cozcsAQpLWpXGNQ6r+6Jq+BRpT0XKA2pFFJa5DuY7Yo72Tr+j3JsfXy+
-         uZHCwGHpFrjJjz7F+trjv7z8KQ8HD18BCA1H9qoQVtlUe0O2OwnyUhHLoW3zRDy171m8
-         d4YBH5QNrX88++KCmrLbsp91I6hxw8jW55ZdlQVfA8W6cpOGpkQ2kESIB5EcurFbQWc2
-         DVjA==
-X-Gm-Message-State: AOJu0YwwHDhAq4p6bzSIILVWEs0ci9LxSq4hI7V2F9Q1htnkaIHBil+v
-	p3MinUYqU1F68DupglcxNws=
-X-Google-Smtp-Source: AGHT+IFDdIs+VkhqOZmhmb39SGTaiCH9s23YjOt7r0Pg9uoy33BcIMUwPDCXdR+5BIBpQO0/ZEH7AQ==
-X-Received: by 2002:a05:6a00:1a4f:b0:6bc:e7f8:821e with SMTP id h15-20020a056a001a4f00b006bce7f8821emr19565769pfv.10.1698262612844;
-        Wed, 25 Oct 2023 12:36:52 -0700 (PDT)
+        bh=h4skl6LAxzxt7vvn+d14s3SbonWxrdRSyIZcTgX8V9s=;
+        b=X+5/V8DIb5ufz0pmMIgmEar3hNlKs1ycojWYAVkHOEqwj1W8EzXJ7mH1zG1DlIo+dX
+         CFZQaKGKWqfE0EuaMsTk0IIl04nYkMg6V1wadBk7HusvJzRM0/VWfW9tl7O0Rkjj8c6+
+         6yMEmx/vjeE88iWaHDUeZKUm3iVvzxaZE42lfI4i2V7DXRYFjWVT5lUoU69Q33cTsmBH
+         4jh1ehWUxwg95EFBkEsWSN8ZI+5eBXzIAKiTtlq6vn0iIhLnuZ88gqHTp7DpZoXMkw6Z
+         iT6SD2jP8QnnE/02aD77w3b4m0p8W0qQaWRYC4hPUk1rVmM4YrCz0nWd7ZzcDOGg5Yos
+         fKRw==
+X-Gm-Message-State: AOJu0YxYU3e6nU1+zx7bbg/+6/1AsvGnyJXCtZWMhqPuOIwzzVAuD8/3
+	xy3/BKiJ89FPWh+QemY/RWY=
+X-Google-Smtp-Source: AGHT+IEeGv7fktEXpQ/O/MesYIOBZcw6uM5pcpXwIZxBVFgZ+J989QZQ6+nQqAFQLQaccsuE5j0a0w==
+X-Received: by 2002:a17:902:e54e:b0:1ca:2cd0:2410 with SMTP id n14-20020a170902e54e00b001ca2cd02410mr17925448plf.53.1698263485168;
+        Wed, 25 Oct 2023 12:51:25 -0700 (PDT)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id g5-20020aa79f05000000b006be055ab117sm9980413pfr.92.2023.10.25.12.36.52
+        by smtp.gmail.com with ESMTPSA id v8-20020a170902b7c800b001c41e1e9ca7sm9468064plz.215.2023.10.25.12.51.24
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Oct 2023 12:36:52 -0700 (PDT)
-Date: Wed, 25 Oct 2023 12:36:51 -0700
+        Wed, 25 Oct 2023 12:51:24 -0700 (PDT)
+Date: Wed, 25 Oct 2023 12:51:23 -0700
 From: Guenter Roeck <linux@roeck-us.net>
-To: Su Hui <suhui@nfschina.com>
-Subject: Re: [PATCH] hwmon: npcm750-pwm: add an error code check in
- npcm7xx_en_pwm_fan
-Message-ID: <5036fed5-ff29-4d9b-a31a-1676a8e4f051@roeck-us.net>
-References: <20231020085518.198477-1-suhui@nfschina.com>
+To: Tomer Maimon <tmaimon77@gmail.com>
+Subject: Re: [PATCH v2 2/2] hwmon: npcm750-pwm-fan: Add NPCM8xx support
+Message-ID: <3c2a48d0-454a-4d40-ae8d-ff346d55d99d@roeck-us.net>
+References: <20231018181925.1826042-1-tmaimon77@gmail.com>
+ <20231018181925.1826042-3-tmaimon77@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231020085518.198477-1-suhui@nfschina.com>
+In-Reply-To: <20231018181925.1826042-3-tmaimon77@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,17 +79,314 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, linux-pwm@vger.kernel.org, jdelvare@suse.com, benjaminfair@google.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org, tali.perry1@gmail.com, thierry.reding@gmail.com, u.kleine-koenig@pengutronix.de, tmaimon77@gmail.com
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, jdelvare@suse.com, benjaminfair@google.com, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, j.neuschaefer@gmx.net, tali.perry1@gmail.com, robh+dt@kernel.org, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, linux-kernel@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Fri, Oct 20, 2023 at 04:55:19PM +0800, Su Hui wrote:
-> npcm7xx_pwm_config_set() can return '-ENODEV' for failed. So check
-> the value of 'ret' after calling npcm7xx_pwm_config_set().
+On Wed, Oct 18, 2023 at 09:19:25PM +0300, Tomer Maimon wrote:
+> Adding Pulse Width Modulation (PWM) and fan tacho NPCM8xx support to
+> NPCM PWM and fan tacho driver.
+> NPCM8xx uses a different number of PWM devices.
 > 
-> Signed-off-by: Su Hui <suhui@nfschina.com>
+> As part of adding NPCM8XX support:
+> - Add NPCM8xx specific compatible string.
+> - Add data to handle architecture-specific PWM and fan tacho parameters.
+> 
+> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> ---
+>  drivers/hwmon/npcm750-pwm-fan.c | 161 +++++++++++++++++++++++++++-----
+>  1 file changed, 136 insertions(+), 25 deletions(-)
+> 
+> diff --git a/drivers/hwmon/npcm750-pwm-fan.c b/drivers/hwmon/npcm750-pwm-fan.c
+> index 10ed3f4335d4..324de4482e71 100644
+> --- a/drivers/hwmon/npcm750-pwm-fan.c
+> +++ b/drivers/hwmon/npcm750-pwm-fan.c
+> @@ -45,11 +45,6 @@
+>  #define NPCM7XX_PWM_CTRL_CH2_EN_BIT		BIT(12)
+>  #define NPCM7XX_PWM_CTRL_CH3_EN_BIT		BIT(16)
+>  
+> -/* Define the maximum PWM channel number */
+> -#define NPCM7XX_PWM_MAX_CHN_NUM			8
+> -#define NPCM7XX_PWM_MAX_CHN_NUM_IN_A_MODULE	4
+> -#define NPCM7XX_PWM_MAX_MODULES                 2
+> -
+>  /* Define the Counter Register, value = 100 for match 100% */
+>  #define NPCM7XX_PWM_COUNTER_DEFAULT_NUM		255
+>  #define NPCM7XX_PWM_CMR_DEFAULT_NUM		255
+> @@ -138,11 +133,9 @@
+>  #define NPCM7XX_FAN_TCPCFG_CPASEL	BIT(0)
+>  
+>  /* FAN General Definition */
+> -/* Define the maximum FAN channel number */
+> -#define NPCM7XX_FAN_MAX_MODULE			8
+> +/* Define the PWM and FAN in a module */
+> +#define NPCM7XX_PWM_MAX_CHN_NUM_IN_A_MODULE	4
+>  #define NPCM7XX_FAN_MAX_CHN_NUM_IN_A_MODULE	2
+> -#define NPCM7XX_FAN_MAX_CHN_NUM			16
+> -
+>  /*
+>   * Get Fan Tach Timeout (base on clock 214843.75Hz, 1 cnt = 4.654us)
+>   * Timeout 94ms ~= 0x5000
+> @@ -171,6 +164,15 @@
+>  #define FAN_PREPARE_TO_GET_FIRST_CAPTURE	0x01
+>  #define FAN_ENOUGH_SAMPLE			0x02
+>  
+> +struct npcm_hwmon_info {
+> +	u32 pwm_max_modules;
+> +	u32 pwm_max_ch;
+> +	u32 fan_max_modules;
+> +	u32 fan_max_ch;
+> +	const struct hwmon_chip_info *hinfo;
+> +	const char *name;
+> +};
+> +
+>  struct npcm7xx_fan_dev {
+>  	u8 fan_st_flg;
+>  	u8 fan_pls_per_rev;
+> @@ -195,15 +197,16 @@ struct npcm7xx_pwm_fan_data {
+>  	unsigned long fan_clk_freq;
+>  	struct clk *pwm_clk;
+>  	struct clk *fan_clk;
+> -	struct mutex pwm_lock[NPCM7XX_PWM_MAX_MODULES];
+> -	spinlock_t fan_lock[NPCM7XX_FAN_MAX_MODULE];
+> -	int fan_irq[NPCM7XX_FAN_MAX_MODULE];
+> -	bool pwm_present[NPCM7XX_PWM_MAX_CHN_NUM];
+> -	bool fan_present[NPCM7XX_FAN_MAX_CHN_NUM];
 
-Applied.
+I do not see the point of making this dynamic.
+Sure, there is an additional pwm channel on NPCM8xx,
+so just add another entry and handle (enable/disable)
+the additional channel with the is_visible function.
+As written there is a lot of churn, and I am sure the code is
+much larger than it was just to save a single pwm entry.
 
-Thanks,
-Guenter
+> +	struct mutex *pwm_lock;
+> +	spinlock_t *fan_lock;
+> +	int *fan_irq;
+> +	bool *pwm_present;
+> +	bool *fan_present;
+>  	u32 input_clk_freq;
+>  	struct timer_list fan_timer;
+> -	struct npcm7xx_fan_dev fan_dev[NPCM7XX_FAN_MAX_CHN_NUM];
+> -	struct npcm7xx_cooling_device *cdev[NPCM7XX_PWM_MAX_CHN_NUM];
+> +	struct npcm7xx_fan_dev *fan_dev;
+> +	struct npcm7xx_cooling_device **cdev;
+> +	const struct npcm_hwmon_info *info;
+>  	u8 fan_select;
+>  };
+>  
+> @@ -333,7 +336,7 @@ static void npcm7xx_fan_polling(struct timer_list *t)
+>  	 * Polling two module per one round,
+>  	 * FAN01 & FAN89 / FAN23 & FAN1011 / FAN45 & FAN1213 / FAN67 & FAN1415
+>  	 */
+> -	for (i = data->fan_select; i < NPCM7XX_FAN_MAX_MODULE;
+> +	for (i = data->fan_select; i < data->info->fan_max_modules;
+>  	      i = i + 4) {
+>  		/* clear the flag and reset the counter (TCNT) */
+>  		iowrite8(NPCM7XX_FAN_TICLR_CLEAR_ALL,
+> @@ -659,6 +662,40 @@ static const struct hwmon_channel_info * const npcm7xx_info[] = {
+>  	NULL
+>  };
+>  
+> +static const struct hwmon_channel_info * const npcm8xx_info[] = {
+> +	HWMON_CHANNEL_INFO(pwm,
+> +			   HWMON_PWM_INPUT,
+> +			   HWMON_PWM_INPUT,
+> +			   HWMON_PWM_INPUT,
+> +			   HWMON_PWM_INPUT,
+> +			   HWMON_PWM_INPUT,
+> +			   HWMON_PWM_INPUT,
+> +			   HWMON_PWM_INPUT,
+> +			   HWMON_PWM_INPUT,
+> +			   HWMON_PWM_INPUT,
+> +			   HWMON_PWM_INPUT,
+> +			   HWMON_PWM_INPUT,
+> +			   HWMON_PWM_INPUT),
+> +	HWMON_CHANNEL_INFO(fan,
+> +			   HWMON_F_INPUT,
+> +			   HWMON_F_INPUT,
+> +			   HWMON_F_INPUT,
+> +			   HWMON_F_INPUT,
+> +			   HWMON_F_INPUT,
+> +			   HWMON_F_INPUT,
+> +			   HWMON_F_INPUT,
+> +			   HWMON_F_INPUT,
+> +			   HWMON_F_INPUT,
+> +			   HWMON_F_INPUT,
+> +			   HWMON_F_INPUT,
+> +			   HWMON_F_INPUT,
+> +			   HWMON_F_INPUT,
+> +			   HWMON_F_INPUT,
+> +			   HWMON_F_INPUT,
+> +			   HWMON_F_INPUT),
+> +	NULL
+> +};
+
+This should be handled with the is_visible() function, not with separate
+data structures.
+
+> +
+>  static const struct hwmon_ops npcm7xx_hwmon_ops = {
+>  	.is_visible = npcm7xx_is_visible,
+>  	.read = npcm7xx_read,
+> @@ -670,6 +707,29 @@ static const struct hwmon_chip_info npcm7xx_chip_info = {
+>  	.info = npcm7xx_info,
+>  };
+>  
+> +static const struct hwmon_chip_info npcm8xx_chip_info = {
+> +	.ops = &npcm7xx_hwmon_ops,
+> +	.info = npcm8xx_info,
+> +};
+> +
+> +static const struct npcm_hwmon_info npxm7xx_hwmon_info = {
+> +	.pwm_max_modules = 2,
+> +	.pwm_max_ch = NPCM7XX_PWM_MAX_CHN_NUM_IN_A_MODULE * 2,
+> +	.fan_max_modules = 8,
+> +	.fan_max_ch = NPCM7XX_FAN_MAX_CHN_NUM_IN_A_MODULE * 8,
+> +	.hinfo = &npcm7xx_chip_info,
+> +	.name = "npcm7xx_pwm_fan",
+> +};
+> +
+> +static const struct npcm_hwmon_info npxm8xx_hwmon_info = {
+> +	.pwm_max_modules = 3,
+> +	.pwm_max_ch = NPCM7XX_PWM_MAX_CHN_NUM_IN_A_MODULE * 3,
+> +	.fan_max_modules = 8,
+> +	.fan_max_ch = NPCM7XX_FAN_MAX_CHN_NUM_IN_A_MODULE * 8,
+
+fan_max_modules and fan_max_ch do not change across chips, and
+pwm_max_ch is always NPCM7XX_PWM_MAX_CHN_NUM_IN_A_MODULE times
+the number of channels. This can all be dropped. Again, the only
+real difference is the number of pwm channels, and that can be
+handled in the _is_visible() function.
+
+> +	.hinfo = &npcm8xx_chip_info,
+> +	.name = "npcm8xx_pwm_fan",
+> +};
+> +
+>  static u32 npcm7xx_pwm_init(struct npcm7xx_pwm_fan_data *data)
+>  {
+>  	int m, ch;
+> @@ -693,7 +753,7 @@ static u32 npcm7xx_pwm_init(struct npcm7xx_pwm_fan_data *data)
+>  	/* Setting PWM Prescale Register value register to both modules */
+>  	prescale_val |= (prescale_val << NPCM7XX_PWM_PRESCALE_SHIFT_CH01);
+>  
+> -	for (m = 0; m < NPCM7XX_PWM_MAX_MODULES  ; m++) {
+> +	for (m = 0; m < data->info->pwm_max_modules  ; m++) {
+>  		iowrite32(prescale_val, NPCM7XX_PWM_REG_PR(data->pwm_base, m));
+>  		iowrite32(NPCM7XX_PWM_PRESCALE2_DEFAULT,
+>  			  NPCM7XX_PWM_REG_CSR(data->pwm_base, m));
+> @@ -716,7 +776,7 @@ static void npcm7xx_fan_init(struct npcm7xx_pwm_fan_data *data)
+>  	int i;
+>  	u32 apb_clk_freq;
+>  
+> -	for (md = 0; md < NPCM7XX_FAN_MAX_MODULE; md++) {
+> +	for (md = 0; md < data->info->fan_max_modules; md++) {
+>  		/* stop FAN0~7 clock */
+>  		iowrite8(NPCM7XX_FAN_TCKC_CLKX_NONE,
+>  			 NPCM7XX_FAN_REG_TCKC(data->fan_base, md));
+> @@ -905,6 +965,49 @@ static int npcm7xx_en_pwm_fan(struct device *dev,
+>  	return 0;
+>  }
+>  
+> +static int npcm_pwm_fan_alloc_data(struct device *dev,
+> +				   struct npcm7xx_pwm_fan_data *data)
+> +{
+> +	data->pwm_lock = devm_kcalloc(dev, data->info->pwm_max_modules,
+> +				      sizeof(*data->pwm_lock), GFP_KERNEL);
+> +	if (!data->pwm_lock)
+> +		return -ENOMEM;
+> +
+> +	data->fan_lock = devm_kcalloc(dev, data->info->fan_max_modules,
+> +				      sizeof(*data->fan_lock), GFP_KERNEL);
+> +	if (!data->fan_lock)
+> +		return -ENOMEM;
+> +
+> +	data->fan_irq = devm_kcalloc(dev, data->info->fan_max_modules,
+> +				     sizeof(*data->fan_irq), GFP_KERNEL);
+> +	if (!data->fan_irq)
+> +		return -ENOMEM;
+> +
+> +	data->pwm_present = devm_kcalloc(dev, data->info->pwm_max_ch,
+> +					 sizeof(*data->pwm_present),
+> +					 GFP_KERNEL);
+> +	if (!data->pwm_present)
+> +		return -ENOMEM;
+> +
+> +	data->fan_present = devm_kcalloc(dev, data->info->fan_max_ch,
+> +					 sizeof(*data->fan_present),
+> +					 GFP_KERNEL);
+> +	if (!data->fan_present)
+> +		return -ENOMEM;
+> +
+> +	data->fan_dev = devm_kcalloc(dev, data->info->fan_max_ch,
+> +				     sizeof(*data->fan_dev), GFP_KERNEL);
+> +	if (!data->fan_dev)
+> +		return -ENOMEM;
+> +
+> +	data->cdev = devm_kcalloc(dev, data->info->pwm_max_ch,
+> +				  sizeof(*data->cdev), GFP_KERNEL);
+> +	if (!data->cdev)
+> +		return -ENOMEM;
+> +
+> +	return 0;
+> +}
+> +
+>  static int npcm7xx_pwm_fan_probe(struct platform_device *pdev)
+>  {
+>  	struct device *dev = &pdev->dev;
+> @@ -923,6 +1026,13 @@ static int npcm7xx_pwm_fan_probe(struct platform_device *pdev)
+>  	if (!data)
+>  		return -ENOMEM;
+>  
+> +	data->info = device_get_match_data(dev);
+> +	if (!data->info)
+> +		return -EINVAL;
+> +
+> +	if (npcm_pwm_fan_alloc_data(dev, data))
+> +		return -ENOMEM;
+> +
+>  	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "pwm");
+>  	if (!res) {
+>  		dev_err(dev, "pwm resource not found\n");
+> @@ -960,10 +1070,10 @@ static int npcm7xx_pwm_fan_probe(struct platform_device *pdev)
+>  	output_freq = npcm7xx_pwm_init(data);
+>  	npcm7xx_fan_init(data);
+>  
+> -	for (cnt = 0; cnt < NPCM7XX_PWM_MAX_MODULES  ; cnt++)
+> +	for (cnt = 0; cnt < data->info->pwm_max_modules  ; cnt++)
+>  		mutex_init(&data->pwm_lock[cnt]);
+>  
+> -	for (i = 0; i < NPCM7XX_FAN_MAX_MODULE; i++) {
+> +	for (i = 0; i < data->info->fan_max_modules; i++) {
+>  		spin_lock_init(&data->fan_lock[i]);
+>  
+>  		data->fan_irq[i] = platform_get_irq(pdev, i);
+> @@ -988,15 +1098,15 @@ static int npcm7xx_pwm_fan_probe(struct platform_device *pdev)
+>  		}
+>  	}
+>  
+> -	hwmon = devm_hwmon_device_register_with_info(dev, "npcm7xx_pwm_fan",
+> -						     data, &npcm7xx_chip_info,
+> +	hwmon = devm_hwmon_device_register_with_info(dev, data->info->name,
+> +						     data, data->info->hinfo,
+>  						     NULL);
+>  	if (IS_ERR(hwmon)) {
+>  		dev_err(dev, "unable to register hwmon device\n");
+>  		return PTR_ERR(hwmon);
+>  	}
+>  
+> -	for (i = 0; i < NPCM7XX_FAN_MAX_CHN_NUM; i++) {
+> +	for (i = 0; i < data->info->fan_max_ch; i++) {
+>  		if (data->fan_present[i]) {
+>  			/* fan timer initialization */
+>  			data->fan_timer.expires = jiffies +
+> @@ -1015,7 +1125,8 @@ static int npcm7xx_pwm_fan_probe(struct platform_device *pdev)
+>  }
+>  
+>  static const struct of_device_id of_pwm_fan_match_table[] = {
+> -	{ .compatible = "nuvoton,npcm750-pwm-fan", },
+> +	{ .compatible = "nuvoton,npcm750-pwm-fan", .data = &npxm7xx_hwmon_info},
+> +	{ .compatible = "nuvoton,npcm845-pwm-fan", .data = &npxm8xx_hwmon_info},
+>  	{},
+>  };
+>  MODULE_DEVICE_TABLE(of, of_pwm_fan_match_table);
