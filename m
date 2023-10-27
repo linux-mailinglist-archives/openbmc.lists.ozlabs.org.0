@@ -1,67 +1,59 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 08DBE7D83B5
-	for <lists+openbmc@lfdr.de>; Thu, 26 Oct 2023 15:38:21 +0200 (CEST)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 2C0657D95E3
+	for <lists+openbmc@lfdr.de>; Fri, 27 Oct 2023 13:01:31 +0200 (CEST)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=A0MT2IpG;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=gvYXJhSf;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SGRh41yl5z3cFh
-	for <lists+openbmc@lfdr.de>; Fri, 27 Oct 2023 00:38:12 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SH08n0QhVz3cTc
+	for <lists+openbmc@lfdr.de>; Fri, 27 Oct 2023 22:01:29 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=A0MT2IpG;
+	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=gvYXJhSf;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=134.134.136.24; helo=mgamail.intel.com; envelope-from=jason.m.bills@linux.intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.24])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=lists.ozlabs.org)
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [IPv6:2605:2700:0:5::4713:9cab])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SGRgR2rk7z307V
-	for <openbmc@lists.ozlabs.org>; Fri, 27 Oct 2023 00:37:37 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1698327459; x=1729863459;
-  h=message-id:date:mime-version:subject:to:references:from:
-   in-reply-to:content-transfer-encoding;
-  bh=U8lg42r5XkqHFJwzwR0twtzOLFFNbdRViboMf6PlKkI=;
-  b=A0MT2IpG3KoaltLYVJXyYHmTLpbzDITFkCpC62nOL9q4kFA8jt/S8jP0
-   8Mb89CouN3oC5W4DTUkpqx+r6wGciBI/v5SzRCDfHZlE9QFXVvf/Hdkqp
-   gS6Djp22n/Ki3LjsNjBNi2mJu+11o9rWBf/fzYPn7/lLpKWnXBHDsNYzm
-   EOBzaAiW+JJAZwVmPh/g761QPeyfHgFEK5WAN5sQ3F6bFhcmyj3j85U8o
-   WV/y/Jsf52TgY/xEYkumWV82UFDAmpnV4HecKsrpXL7oud2xhRm8oGN1W
-   AXleB7YJEfpjKDSwfS9k89iTv49y8EYWTvQ4B/KAHwpiKAnpG+i3q5zbM
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10875"; a="390412861"
-X-IronPort-AV: E=Sophos;i="6.03,253,1694761200"; 
-   d="scan'208";a="390412861"
-Received: from fmsmga002.fm.intel.com ([10.253.24.26])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Oct 2023 06:37:34 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10875"; a="875950654"
-X-IronPort-AV: E=Sophos;i="6.03,253,1694761200"; 
-   d="scan'208";a="875950654"
-Received: from linux.intel.com ([10.54.29.200])
-  by fmsmga002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Oct 2023 06:37:34 -0700
-Received: from [10.209.190.26] (rcllano-mobl.amr.corp.intel.com [10.209.190.26])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SH0882qWQz3cBs;
+	Fri, 27 Oct 2023 22:00:56 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (unknown [IPv6:2602:61:7e5d:5300::2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
-	by linux.intel.com (Postfix) with ESMTPS id B937D580AFF
-	for <openbmc@lists.ozlabs.org>; Thu, 26 Oct 2023 06:37:33 -0700 (PDT)
-Message-ID: <8bc433dd-7ba0-4870-b3e0-7163d3c3d64d@linux.intel.com>
-Date: Thu, 26 Oct 2023 07:37:32 -0600
+	(Authenticated sender: zev)
+	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 1871F912;
+	Fri, 27 Oct 2023 04:00:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+	s=thorn; t=1698404449;
+	bh=46CI2348zLuWGtq6JcTrLbZwqAqPdJ4oLHt47Q46BLU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=gvYXJhSfFqFnNUZNLH6mGrPgpLf5hM+XUJqMFmDnq4vz+FXeaqBzpT57FN/cpXgC6
+	 CW0MDbyUQXnYZEFiyKVzv0eIeg3oCh6m/ZuFuBgDa+vkhfXYyWgxybN42GIr5s4sz1
+	 kcR5PICg9oa5uPjczQH5kX3MM7VI8FE5gyfcbPko=
+Date: Fri, 27 Oct 2023 04:00:47 -0700
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Andrew Jeffery <andrew@aj.id.au>, Conor Dooley <conor+dt@kernel.org>,
+	Guenter Roeck <linux@roeck-us.net>, Joel Stanley <joel@jms.id.au>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	"Milton D. Miller II" <mdmii@outlook.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Wim Van Sebroeck <wim@linux-watchdog.org>,
+	devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+	linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+	linux-watchdog@vger.kernel.org, openbmc@lists.ozlabs.org
+Subject: Re: [PATCH 0/2] watchdog: aspeed: Add aspeed,reset-mask property
+Message-ID: <5db80b63-65da-407c-a019-048dea8c1a89@hatter.bewilderbeest.net>
+References: <20230922104231.1434-4-zev@bewilderbeest.net>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: async_method_call_timed issue ?
-To: openbmc@lists.ozlabs.org
-References: <PAXPR02MB768042EFA62F196C0BE43B52E4D6A@PAXPR02MB7680.eurprd02.prod.outlook.com>
-Content-Language: en-US
-From: "Bills, Jason M" <jason.m.bills@linux.intel.com>
-In-Reply-To: <PAXPR02MB768042EFA62F196C0BE43B52E4D6A@PAXPR02MB7680.eurprd02.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <20230922104231.1434-4-zev@bewilderbeest.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -73,59 +65,47 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: Ivan Mikhaylov <i.mikhaylov@yadro.com>, Eddie James <eajames@linux.ibm.com>, Thomas =?iso-8859-1?Q?Wei=DFschuh?= <linux@weissschuh.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+On Fri, Sep 22, 2023 at 03:42:32AM PDT, Zev Weiss wrote:
+>Hello,
+>
+>These patches add a new aspeed,reset-mask DT property for the Aspeed
+>watchdog timer, which specifies exactly which peripherals should be
+>reset by the watchdog timer.
+>
+>This series is a replacement for a patch I sent earlier [0], though
+>using an entirely different (DT-based) approach and hence not exactly
+>a v2.
+>
+>I've tested these patches on ast2500 hardware and a qemu ast2600
+>model; test results on actual ast2600 hardware would be welcome.
+>
+>
+>Thanks,
+>Zev
+>
+>
+>[0] https://lore.kernel.org/linux-watchdog/20230922013542.29136-2-zev@bewilderbeest.net/
+>
+>Zev Weiss (2):
+>  dt-bindings: watchdog: aspeed-wdt: Add aspeed,reset-mask property
+>  watchdog: aspeed: Add support for aspeed,reset-mask DT property
+>
+> .../bindings/watchdog/aspeed-wdt.txt          | 18 +++-
+> drivers/watchdog/aspeed_wdt.c                 | 11 +++
+> include/dt-bindings/watchdog/aspeed-wdt.h     | 92 +++++++++++++++++++
+> 3 files changed, 120 insertions(+), 1 deletion(-)
+> create mode 100644 include/dt-bindings/watchdog/aspeed-wdt.h
+>
+
+Ping...Guenter, if we stick with the simpler approach in this version of 
+the patches (which I'm fine with and seems to have passed muster with 
+Rob & Joel) does this look okay as is?
 
 
-On 10/17/2023 4:29 AM, Francine Sauvage wrote:
-> Hi @ all,
-> 
-> I cannot figure out how to change bmcweb dbus method call timeout with 
-> async_method_call_timed ?
+Thanks,
+Zev
 
-Not sure if you solved this one already.
-
-> 
-> My bmcweb version is old, but I guess I missed something, like http 
-> connection timeout? socket timeout ? web server timeout ? Adaptator 
-> timeout ?
-> 
-> I tried to implement it with a 4mn timeout.
-> 
-> But I always get an internal server error after about 25 seconds:
-
-It sounds like you're hitting the D-Bus internal timeout which is around 
-25 seconds.  As far as I understand, if you make a D-Bus method call, 
-and the receiver doesn't respond within about 25 seconds, D-Bus will 
-time out and return an error to the caller.
-
-> 
-> Response:
-> 
-> Implementation – callback is never reached.
-> 
-> busctl call is OK with timeout option, I mean, my service is able to 
-> take care of timeout :
-> 
-> *Any idea or suggestion ?*
-> 
-> *Kind Regards,*
-> 
-> Francine Sauvage
-> Team Leader – BDS-RD-PFM
-> M: +33 (1) 6 21 43 11 21
-> Av. Jean Jaurès BP68 – 78340 LES CLAYES-SOUS-BOIS – France
-> eviden.com <https://eviden.com/>
-> LinkedIn icon 
-> <https://www.linkedin.com/in/francine-sauvage-consultant>Twitter icon 
-> <https://twitter.com/EvidenLive>Instagram icon 
-> <https://www.instagram.com/evidenlive>YouTube icon 
-> <https://www.youtube.com/@EvidenLive><https://github.com/frsauvage>
-> 
-> Eviden logo
-> 
-> 	
-> 
-> an atos business
-> 
