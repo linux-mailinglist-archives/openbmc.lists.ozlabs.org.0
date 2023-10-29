@@ -1,55 +1,55 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E6A1E7DAF8F
-	for <lists+openbmc@lfdr.de>; Mon, 30 Oct 2023 00:00:04 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id EFEF07DAFE9
+	for <lists+openbmc@lfdr.de>; Mon, 30 Oct 2023 00:00:59 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=RZPl7Gbc;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=KIOvPMyK;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SJX0y5cpZz3c56
-	for <lists+openbmc@lfdr.de>; Mon, 30 Oct 2023 10:00:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SJX215clZz3bdG
+	for <lists+openbmc@lfdr.de>; Mon, 30 Oct 2023 10:00:57 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=RZPl7Gbc;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=KIOvPMyK;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=139.178.84.217; helo=dfw.source.kernel.org; envelope-from=sashal@kernel.org; receiver=lists.ozlabs.org)
-Received: from dfw.source.kernel.org (dfw.source.kernel.org [139.178.84.217])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:4601:e00::1; helo=ams.source.kernel.org; envelope-from=sashal@kernel.org; receiver=lists.ozlabs.org)
+Received: from ams.source.kernel.org (ams.source.kernel.org [IPv6:2604:1380:4601:e00::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SJX0P6Mfsz2xFn
-	for <openbmc@lists.ozlabs.org>; Mon, 30 Oct 2023 09:59:33 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SJX1N1gNYz2xQB
+	for <openbmc@lists.ozlabs.org>; Mon, 30 Oct 2023 10:00:24 +1100 (AEDT)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by dfw.source.kernel.org (Postfix) with ESMTP id 0F36E60EE6;
-	Sun, 29 Oct 2023 22:59:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3D5CC4160E;
-	Sun, 29 Oct 2023 22:59:30 +0000 (UTC)
+	by ams.source.kernel.org (Postfix) with ESMTP id 1E3BAB80707;
+	Sun, 29 Oct 2023 23:00:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59EF8C433B6;
+	Sun, 29 Oct 2023 23:00:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1698620371;
+	s=k20201202; t=1698620419;
 	bh=sBDIHq+0hLK1ueiIEOPxcxCoKOrigSC15i7yeQqHbo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RZPl7Gbc5RFgtYjKYK7t8ZRH/HqqSLpYnOsm2qtmeHmgku4FNK/OPpj5x5NKRGKD8
-	 3t6eAlASpvbo7ZmAFYf89JNL7m9d779kYk49sRb9mEVFLUf9FTb6gq2J+bpsrRmP8Q
-	 LSl/v/3EppO8PhHYwuDUkDPV3xZ0SnJ1mMgyyiWXe98GDUdHmx86WtovwVUxaVNRi0
-	 YEy3rPjgjx1DRu6zOrWTszjzcOr2TfpeG1VZjTmo6E+LuJ5MCG/PBYGea6ESVW6BIk
-	 f+2iYSkKlsb6SD/oG2z27V+ciQmJQ7VYUnXjd4h+uqyKNm3EOms+q0e43RU87Gxc8E
-	 d/YbRQ4sF1Ijw==
+	b=KIOvPMyKTkh+R5mNr6crBeE1GgccIFYdqCtxVLkO2MRejGJeP7pLSVZCusvRiZhiE
+	 61siRO3T7g1n91loD+0qKSzNToWjJO5mkFzUMMz2Oqd752B2d324ynVd9vuUqxhXLP
+	 yEiaXcbj7tgaSSkAL3TdqP0LcPYFUnqBgdgfJ/95crN9w9agPf+jndOQfqfY7sIenG
+	 YgiTJ/scaioiQfbGZHOfWww6ad9FgvuxcsH5Rn9pLyAoL9XY9f9w+7bUBNJdfNJTht
+	 YEMil3wbp/Egb8elxt46ckT5XruZbZqr/TAjXHPA8Y+BlTh3UzN73Mt4kgvi63jsBh
+	 ZDw2aeAjp6uBQ==
 From: Sasha Levin <sashal@kernel.org>
 To: linux-kernel@vger.kernel.org,
 	stable@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.15 11/28] spi: npcm-fiu: Fix UMA reads when dummy.nbytes == 0
-Date: Sun, 29 Oct 2023 18:58:46 -0400
-Message-ID: <20231029225916.791798-11-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 02/16] spi: npcm-fiu: Fix UMA reads when dummy.nbytes == 0
+Date: Sun, 29 Oct 2023 18:59:48 -0400
+Message-ID: <20231029230014.792490-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20231029225916.791798-1-sashal@kernel.org>
-References: <20231029225916.791798-1-sashal@kernel.org>
+In-Reply-To: <20231029230014.792490-1-sashal@kernel.org>
+References: <20231029230014.792490-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
-X-stable-base: Linux 5.15.137
+X-stable-base: Linux 5.10.199
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
