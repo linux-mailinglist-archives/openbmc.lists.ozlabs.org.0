@@ -2,64 +2,64 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 190707DBCFD
-	for <lists+openbmc@lfdr.de>; Mon, 30 Oct 2023 16:55:47 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 606977DBD05
+	for <lists+openbmc@lfdr.de>; Mon, 30 Oct 2023 16:57:42 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=kFIW59hv;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=LKfkG4H4;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SJyXx07txz3cPS
-	for <lists+openbmc@lfdr.de>; Tue, 31 Oct 2023 02:55:45 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SJyb82529z3c5Y
+	for <lists+openbmc@lfdr.de>; Tue, 31 Oct 2023 02:57:40 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=kFIW59hv;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=LKfkG4H4;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::112d; helo=mail-yw1-x112d.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-yw1-x112d.google.com (mail-yw1-x112d.google.com [IPv6:2607:f8b0:4864:20::112d])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1130; helo=mail-yw1-x1130.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-yw1-x1130.google.com (mail-yw1-x1130.google.com [IPv6:2607:f8b0:4864:20::1130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SJyXH52vCz3c2G
-	for <openbmc@lists.ozlabs.org>; Tue, 31 Oct 2023 02:55:09 +1100 (AEDT)
-Received: by mail-yw1-x112d.google.com with SMTP id 00721157ae682-5a7a80a96dbso48697277b3.0
-        for <openbmc@lists.ozlabs.org>; Mon, 30 Oct 2023 08:55:09 -0700 (PDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SJyZZ6fMVz3bsP
+	for <openbmc@lists.ozlabs.org>; Tue, 31 Oct 2023 02:57:10 +1100 (AEDT)
+Received: by mail-yw1-x1130.google.com with SMTP id 00721157ae682-5a8ada42c2aso43377297b3.3
+        for <openbmc@lists.ozlabs.org>; Mon, 30 Oct 2023 08:57:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698681304; x=1699286104; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1698681427; x=1699286227; darn=lists.ozlabs.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=+KcnCc8OcVrtkUDLFPg4rco6LW+HzyCGBYMev1xsRt4=;
-        b=kFIW59hvsKntk7YztrgXPbxibAuR6m9eg78FfIMcz88+EBvAPHKu0MfPF2YkdP2Ybh
-         GRmwn0q3BlTqf1M9AFe2HyUzroh5uKDhHmRQf86t1CRHF2OSOIRxN/FJPBKGUico9HLv
-         +DXpEGhDipnheFqAOe0nJFanL6LVVNU+vgASceuPoeSanvz4lUYs5wnOr7A6Rj4qIcQt
-         RUv3dmfjkZLmAeyBPmK1zTI1c8x15uOeD8TDGqGibL0aHuXjh17b84rCNPCG6UWtplBQ
-         N3g6nE3Hp9dNEuIqSSR0YT3P1Bf6FZZSYC7Mw4MlN9lSAAteXsD3QFC9rRAZfu24TXFv
-         crFg==
+        bh=KqEcy/FTVRmCJO3mUkkOypdWB4g67w6pVbljP7u/u5I=;
+        b=LKfkG4H4+YucIdrrCU/nR760/2C04oIYPM/TRaiymg+KRvzgfslfDRT0pwUyzASCLL
+         vvyjTthhcB8gimT+qHeXwRfQrMAVKpUInFXrmM0FRSm16QlQC180OC5XNz9pIBu5gEk1
+         WsDjhzmp24gMquMNa/y6ZhD+l+LLL2/6b6u2yK0brjqEWauZ/1Y6RMgBQBcI7r6lVub+
+         9hkrzXkWoOUoygnYxDtLCTykyhPNdO9FumD3dYm4lJq+Q0u9Qx5PxDLde2lbP5CNT4Z1
+         FcCCTOH383DsrqVafVBFy1CJx5XCDfVfinIOh1S/qLMKCnylRMBJUHEz2+HfYGB1x7jD
+         E/WA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698681304; x=1699286104;
+        d=1e100.net; s=20230601; t=1698681427; x=1699286227;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :sender:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=+KcnCc8OcVrtkUDLFPg4rco6LW+HzyCGBYMev1xsRt4=;
-        b=q5aR3IWkSX2cUn2caAhh+vY1KBz3Rg7VdRxYE79JlEJci2kujJMIHXvz5OzytOqNTc
-         bgz5ctzV0DbOZDFneVySCGAmllbPIsW5JppX6GamxcKZGFJuFBJETwtX+rLNrHaETqBM
-         KmraFkYk5yLkjEDzAo8KG9a27Dwh+lBosgyr/ZljQXIKZfqQvGGPjDM5g+NvL5aBTys3
-         Qj00WXMktj2LY4+ZLv6LJVRizwEz/tIrvgd2VUHsOM1QHtlsqdmVBE9ONVPw8JCScj6J
-         Odtc/ZYe61MuuG8kEj9S5uEriNZdwSVpcPIQ7EEPEfsn7q5jYr1Z9LfYt0yEda17SBQ6
-         ZvSw==
-X-Gm-Message-State: AOJu0YwlNI4o8mJUTfkxbnbSqUDdklMZOFVCuaFyh91UdtAie4DKzCAK
-	Ujdipu09/kU9LF9fPx5qtFE=
-X-Google-Smtp-Source: AGHT+IHBSPXTALfopHoDL4pTBC6D9dJHqB3uVWSE3r4JgfLA2bdGKLKZfPtqduKW6A3+k7KChrakfQ==
-X-Received: by 2002:a25:e907:0:b0:d9a:b844:a16 with SMTP id n7-20020a25e907000000b00d9ab8440a16mr15870ybd.16.1698681304276;
-        Mon, 30 Oct 2023 08:55:04 -0700 (PDT)
+        bh=KqEcy/FTVRmCJO3mUkkOypdWB4g67w6pVbljP7u/u5I=;
+        b=ecyiSmMnmShQ8k5nTpr9mHpqvLZi4035OyiFCEh53b3tJNhrxA6udXkzoppyyvs82n
+         Pf5cl5mvgvGCEda+TAQkya8wGKXc/A/99TOxbdIXzb9ZQxlfcQf2nRcAJcix0sN0S3+T
+         11v1Yxk1iB1UqVa8r3tkQRAyDNUm1ZUwXgSFF33WnhMldHBjEHzB5tCKFjLhPs8jgUq3
+         9pyDTBRDPNyJiFPLDSRBxj2TS+c7xX1/FHCkL9UZ6LIkaQ3FatpfK3wYKIQFkIyn7veG
+         62mkr7YnvWcQ5zyVSX8oB3zkvhFnmJYT+cRuYZotqLj8wuAtci35esl4N2Cc6FNo9rYj
+         XP3g==
+X-Gm-Message-State: AOJu0Yz2up30Knu9K59PIZAn96pjze9sGwmM2bRYy/xwmc1gAIrTp3WN
+	aJaRHpKe8YM4tXOYNyxo1lA=
+X-Google-Smtp-Source: AGHT+IE18mGvNltF9lPxIh0N14wvvI4rgbcA8hodrL95HNfCOEiENG8Zx5cNXYPF5TplfgOoHdtVtA==
+X-Received: by 2002:a81:5756:0:b0:5a7:a817:be43 with SMTP id l83-20020a815756000000b005a7a817be43mr10483325ywb.6.1698681427282;
+        Mon, 30 Oct 2023 08:57:07 -0700 (PDT)
 Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id p136-20020a25748e000000b00d9cce349877sm4030001ybc.16.2023.10.30.08.55.02
+        by smtp.gmail.com with ESMTPSA id c190-20020a814ec7000000b005a7bbd713ddsm4423113ywb.108.2023.10.30.08.57.05
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Oct 2023 08:55:03 -0700 (PDT)
-Message-ID: <db548513-84e6-491a-97de-511b6481cbd8@roeck-us.net>
-Date: Mon, 30 Oct 2023 08:55:01 -0700
+        Mon, 30 Oct 2023 08:57:06 -0700 (PDT)
+Message-ID: <e3de2c1f-3a05-4ffc-a50e-0b5522cf7740@roeck-us.net>
+Date: Mon, 30 Oct 2023 08:57:04 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 1/1] hwmon: npcm750-pwm-fan: Add NPCM8xx support
@@ -140,9 +140,60 @@ On 10/30/23 08:01, Tomer Maimon wrote:
 > As part of adding NPCM8XX support:
 > - Add NPCM8xx specific compatible string.
 > - Add data to handle architecture-specific PWM and fan tacho parameters.
-                                                  ^^^^^^^^^^^^^
+> 
+> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+> ---
+>   drivers/hwmon/npcm750-pwm-fan.c | 34 +++++++++++++++++++++++++++++----
+>   1 file changed, 30 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/hwmon/npcm750-pwm-fan.c b/drivers/hwmon/npcm750-pwm-fan.c
+> index 10ed3f4335d4..765b08fa0396 100644
+> --- a/drivers/hwmon/npcm750-pwm-fan.c
+> +++ b/drivers/hwmon/npcm750-pwm-fan.c
+> @@ -46,9 +46,9 @@
+>   #define NPCM7XX_PWM_CTRL_CH3_EN_BIT		BIT(16)
+>   
+>   /* Define the maximum PWM channel number */
+> -#define NPCM7XX_PWM_MAX_CHN_NUM			8
+> +#define NPCM7XX_PWM_MAX_CHN_NUM			12
+>   #define NPCM7XX_PWM_MAX_CHN_NUM_IN_A_MODULE	4
+> -#define NPCM7XX_PWM_MAX_MODULES                 2
+> +#define NPCM7XX_PWM_MAX_MODULES                 3
+>   
+>   /* Define the Counter Register, value = 100 for match 100% */
+>   #define NPCM7XX_PWM_COUNTER_DEFAULT_NUM		255
+> @@ -171,6 +171,10 @@
+>   #define FAN_PREPARE_TO_GET_FIRST_CAPTURE	0x01
+>   #define FAN_ENOUGH_SAMPLE			0x02
+>   
+> +struct npcm_hwmon_info {
+> +	u32 pwm_max_channel;
+> +};
+> +
+>   struct npcm7xx_fan_dev {
+>   	u8 fan_st_flg;
+>   	u8 fan_pls_per_rev;
+> @@ -204,6 +208,7 @@ struct npcm7xx_pwm_fan_data {
+>   	struct timer_list fan_timer;
+>   	struct npcm7xx_fan_dev fan_dev[NPCM7XX_FAN_MAX_CHN_NUM];
+>   	struct npcm7xx_cooling_device *cdev[NPCM7XX_PWM_MAX_CHN_NUM];
+> +	const struct npcm_hwmon_info *info;
+>   	u8 fan_select;
+>   };
+>   
+> @@ -619,9 +624,13 @@ static umode_t npcm7xx_is_visible(const void *data,
+>   				  enum hwmon_sensor_types type,
+>   				  u32 attr, int channel)
+>   {
+> +	const struct npcm7xx_pwm_fan_data *hwmon_data = data;
+> +
+>   	switch (type) {
+>   	case hwmon_pwm:
+> -		return npcm7xx_pwm_is_visible(data, attr, channel);
+> +		if (channel < hwmon_data->info->pwm_max_channel)
+> +			return npcm7xx_pwm_is_visible(data, attr, channel);
 
-I don't see any fan related changes in the patch. What am I missing ?
+I would have expected this check to be handled in npcm7xx_pwm_is_visible().
 
 Guenter
 
