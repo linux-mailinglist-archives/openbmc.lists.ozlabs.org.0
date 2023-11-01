@@ -2,73 +2,86 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id DB3D47DE16A
-	for <lists+openbmc@lfdr.de>; Wed,  1 Nov 2023 14:20:44 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0E4387DE260
+	for <lists+openbmc@lfdr.de>; Wed,  1 Nov 2023 15:28:29 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=cZfaJ6h1;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=dVljCipO;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=E2mYtmhp;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SL7165DBlz3cTX
-	for <lists+openbmc@lfdr.de>; Thu,  2 Nov 2023 00:20:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SL8WG6YhTz3cGY
+	for <lists+openbmc@lfdr.de>; Thu,  2 Nov 2023 01:28:26 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=cZfaJ6h1;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm2 header.b=dVljCipO;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm3 header.b=E2mYtmhp;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::c31; helo=mail-oo1-xc31.google.com; envelope-from=geissonator@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.27; helo=out3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SL70T3Nf0z2yPq
-	for <openbmc@lists.ozlabs.org>; Thu,  2 Nov 2023 00:20:07 +1100 (AEDT)
-Received: by mail-oo1-xc31.google.com with SMTP id 006d021491bc7-58706a0309dso1584736eaf.1
-        for <openbmc@lists.ozlabs.org>; Wed, 01 Nov 2023 06:20:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1698844804; x=1699449604; darn=lists.ozlabs.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=v+B+yuY4UTn4DdFgX5Heu5b2+m6kVe3mignRrdXUtTE=;
-        b=cZfaJ6h1Vru9wbbrMYLdIMOZqQ9qMntDdPuxAh8x62t+cBTDM4mc6wyMrHHu8XUNdX
-         Dxymi9MHDogHPqAoby7OxzLH1ScfbvwD4YgkctTIH7XqigJqwdwigxS351HyaiWKigmF
-         V5I8f5vbuq5qcR+uBO3zNzPZtT+GsYD/8Cd1BpF/GT37cnUBdh77QqCy7umqumzPZ07Y
-         ED8B/umJNNIklewqto9z6pbgYtI3aHon42Uil1ESHFlRkj3UwLorfzb/MRL8f8c6/BPi
-         RN8UrEn2cBaFC0M98mim3EriY8ddnt9Cek7wDwhzPFNJ7/lyTNkIHAWULvgIruBLT1TR
-         co9Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1698844804; x=1699449604;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=v+B+yuY4UTn4DdFgX5Heu5b2+m6kVe3mignRrdXUtTE=;
-        b=jI/UiI99YkabTydc6/eMfn7W3sNoU0cKc1cZHzPKfFhduk6M+/EpU+EXctNW8AwRTm
-         2qYwO+znhTJSuyVOsfKqT1yJIDmpnupM5AWPt8IMQSGalw25EmOsLp5t635GG+w4/3m1
-         njpfouxfv6KAlB7U10m3VnQs63ZeICF4AqaVFWOtAbDiBtyR8SvDDSei3GVZckvVjoEy
-         MdEx7m5ZhFYgEXLZqwYu2qfXPi70x7lF/czdbded3QreCluj4/ZW8rVNjUT88hviiVH2
-         BtKcOCzwOydjjNily7Mb7mui7pdIsEmHdhJNCaWtLW3W78rwmcZzpJXQkyomnS7wEkvs
-         kNgA==
-X-Gm-Message-State: AOJu0YyIJLsl5MqadyEYiaTA/LuoABvq4pcyOzasdzZ8QQt0tUP18SO6
-	eiC6NC1rDozQ2UgXvy2aFzysad5VyGpS1g==
-X-Google-Smtp-Source: AGHT+IHeDSh73ZiRSCL4MOrmBve8Uvv6KfhTdkcFf6uNcAxyCabdy3KKYVhvSTIst42M/hivXv9vmQ==
-X-Received: by 2002:a4a:a649:0:b0:582:c8b4:d9df with SMTP id j9-20020a4aa649000000b00582c8b4d9dfmr15119889oom.1.1698844803768;
-        Wed, 01 Nov 2023 06:20:03 -0700 (PDT)
-Received: from smtpclient.apple ([2806:2f0:96c0:f980:555f:396b:b761:1c4d])
-        by smtp.gmail.com with ESMTPSA id f62-20020a4a5841000000b0057aef3cab33sm632792oob.21.2023.11.01.06.20.02
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 01 Nov 2023 06:20:03 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3731.700.6\))
-Subject: Re: Documentation/Guidance in order to support another hardware
-From: Andrew Geissler <geissonator@gmail.com>
-In-Reply-To: <PH0PR11MB564243302F521949E3D0477086A0A@PH0PR11MB5642.namprd11.prod.outlook.com>
-Date: Wed, 1 Nov 2023 07:19:50 -0600
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <445D6672-5358-494E-9163-5B4F91148971@gmail.com>
-References: <PH0PR11MB564243302F521949E3D0477086A0A@PH0PR11MB5642.namprd11.prod.outlook.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SL8VZ4GKLz3c2G
+	for <openbmc@lists.ozlabs.org>; Thu,  2 Nov 2023 01:27:49 +1100 (AEDT)
+Received: from compute7.internal (compute7.nyi.internal [10.202.2.48])
+	by mailout.nyi.internal (Postfix) with ESMTP id 80CD45C0242;
+	Wed,  1 Nov 2023 10:27:45 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute7.internal (MEProxy); Wed, 01 Nov 2023 10:27:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:sender
+	:subject:subject:to:to; s=fm2; t=1698848865; x=1698935265; bh=ie
+	E4A4dM9Ln3wZ4qo/z+2SO2gK8hH+Ptvpz42RRoiHY=; b=dVljCipO6PK7PAt3+s
+	yMKbQddM8uqhFH/XT0Do4xKjY6o6uYAQEiw3t5t638Au3RzuNWWpEkkNClHcyg3l
+	W8UBuitx/tR78+93WHHWBSnzIo1PHlXcMkF3FMY8zxCtxW6i2Yv8zTflC4+LnUcG
+	VoJeYNlKtC0X77D8kkHM8+XTpotzYXPI1oQtKSnecItS7/RXe9/myFOjfEqy+wjX
+	RChhO8sMFwvO2ZRRACps7kkMOY/nAWw6/Oq5Y1VgB2270J6alKk7AClyPa/ZtW2i
+	FHX6wZtnhFQtrmfkrl6oDo5JssGyO5aJs3zqG2Cc8bV7810yaPyau/IexIOlF+Vn
+	UPPQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
+	:x-sasl-enc; s=fm3; t=1698848865; x=1698935265; bh=ieE4A4dM9Ln3w
+	Z4qo/z+2SO2gK8hH+Ptvpz42RRoiHY=; b=E2mYtmhpl5WPQ59nvi4L/2TYVja9z
+	hLxOedL+t5CECiEl9khVyH6WNJIJ39nVE3Pa+l0Pn98OXh9mCXz/EynrSsazDv3e
+	NpSQmOszwYIUrOY9/LUtYPWah4xmZtKMpwfVLp1Cw7vSRkc80FueqOVT7Hc/9Sgf
+	Hq8Uz7FUsW9cXSyI5KGSEyaz7WP+k7QPlSXwv0n5XhAwdgwlf31xNGUQFwFWanvI
+	udQbltmwHV92Z01WcLAcRZyjuIEYQWImHKX1SGMLHG6vOPVi0mLqwlZqnCemDkEy
+	yP7zVFDyZ5hZYVKgVu/84P9VQpW+CNWpQP+yw85rIHsPOWydoZVMDtcCA==
+X-ME-Sender: <xms:YGBCZWWuMxZBuM5xUdJ23D4nkRDC_YGbKahnVa7Fw6l-LaNmNyNJsA>
+    <xme:YGBCZSkbwoXs_shgzOVPAhGoTkQcSFl0v2SM8ibZlgv49ZhT3k7YR5MGDP9AcFP6b
+    jQkGWDb2xCL_c1PCIA>
+X-ME-Received: <xmr:YGBCZaa-OOeEI-C05KbuCw603mE2747lkUsp5SNxOgLfhFhfhnOnOrOesnT2mWDhROH16IZTCg_2ouULkXae7TegvkU_eYQHuEM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedruddtgedgieefucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlvdefmdenucfjughrpeffhf
+    fvvefukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpefrrghtrhhitghkucghihhl
+    lhhirghmshcuoehprghtrhhitghksehsthiftgigrdighiiiqeenucggtffrrghtthgvrh
+    hnpeehfeejheeftdejiedvfeekffehledukeduleelffekgfdtleduledvtdegtdehkeen
+    ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehprghtrh
+    hitghksehsthiftgigrdighiii
+X-ME-Proxy: <xmx:YGBCZdW8XWhhf1q5LM9OXXWVgZkdejEPVdZmuQowkPIUcj0GbeJIYw>
+    <xmx:YGBCZQmJMK48lJF5bheMc5jSAuSjWYJ5u2z1_gekJbFCBPiki29UIg>
+    <xmx:YGBCZScL-2jIruNiTXHy1bDmHCUkFudTwb7qVoMXYRIzjIG7ojAXbQ>
+    <xmx:YWBCZXvKBN2rBZy-MRMGhfVHIL0n6iW-6MSDdzf9cCAV0F3gVEGJSA>
+Feedback-ID: i68a1478a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 1 Nov 2023 10:27:44 -0400 (EDT)
+Date: Wed, 1 Nov 2023 09:27:42 -0500
+From: Patrick Williams <patrick@stwcx.xyz>
 To: Hakim.Cherif@microchip.com
-X-Mailer: Apple Mail (2.3731.700.6)
+Subject: Re: Documentation/Guidance in order to support another hardware
+Message-ID: <ZUJgXhNhtxNHG7-4@heinlein.vulture-banana.ts.net>
+References: <PH0PR11MB564243302F521949E3D0477086A0A@PH0PR11MB5642.namprd11.prod.outlook.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="llRpy1Z+/SKV9JXF"
+Content-Disposition: inline
+In-Reply-To: <PH0PR11MB564243302F521949E3D0477086A0A@PH0PR11MB5642.namprd11.prod.outlook.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -85,70 +98,61 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
+--llRpy1Z+/SKV9JXF
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On Oct 31, 2023, at 4:40 AM, <Hakim.Cherif@microchip.com> =
-<Hakim.Cherif@microchip.com> wrote:
+On Tue, Oct 31, 2023 at 10:40:59AM +0000, Hakim.Cherif@microchip.com wrote:
+> I am evaluating how to make OpenBMC support one of our custom hardware.
 >=20
-> Hi OpenBMC team,
+> I am completely new to OpenBMC and I struggle doing this.
 >=20
-> My name is Hakim and I work at Microchip Technology Inc in the 32-bits =
-microprocessors division.
->=20
-> I am evaluating how to make OpenBMC support one of our custom =
-hardware.=20
+> Would you have any documentation ? Any guidance about how to do so ?
 
+It isn't obvious what you're trying to accomplish.  Some possibilities:
 
-Hi Hakim, great to see another company with interest in OpenBMC.
+1. You have an alternative to Aspeed AST2600 you want to propose as a
+   BMC SOC.
 
->=20
-> I am completely new to OpenBMC and I struggle doing this.=20
->=20
-> Would you have any documentation ? Any guidance about how to do so ?=20=
+2. You have an alternative to a host processor you want the BMC to
+   manage.
 
+3. You have a new system design based on an already supported SOC and
+   host-processor.
 
+If you are trying to do (1), you should look at meta-aspeed and
+meta-nuvoton for examples.  You'll likely want to create a new EVB
+reference in meta-evb.
 
-I would start with =
-https://github.com/openbmc/docs/tree/master/development to get a feel =
-for
-how to setup a dev environment and how to build an existing system. =
-There is a lot of other
-useful documentation to be found in openbmc/docs as well.
+If you are trying to do (2), we'll need to understand what custom
+recipes you're trying to propose.  There generally isn't a lot of
+chip-specific support that we put into openbmc recipes.
 
-OpenBMC also has a YouTube channel out at =
-https://www.youtube.com/channel/UC7uaW4PyzmougoMPgh7taOw=20
+If you are trying to do (3), you should find lots of existing systems to
+follow as a pattern.
 
-I find it easiest to just look at recent examples of people adding new =
-systems to get a
-feel or what needs to be changed to add a new system. Here are a couple =
-of examples.
+--=20
+Patrick Williams
 
-https://gerrit.openbmc.org/q/yosemite4=20
-https://gerrit.openbmc.org/q/sbp1=20
+--llRpy1Z+/SKV9JXF
+Content-Type: application/pgp-signature; name="signature.asc"
 
->=20
-> To give you more details, we already have our own meta-layer that is =
-meta-atmel :=20
->=20
-> https://github.com/linux4sam/meta-atmel/tree/kirkstone
+-----BEGIN PGP SIGNATURE-----
 
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmVCYFwACgkQqwNHzC0A
+wRmdtA/+N6xN2JCRB0uC0IqnIAyP94lsjT0uCigQYtBsIBWLzQEokSLmxehORlrQ
+M8ubqqri/QpbWyIIfv7HYHsTn3NdwBuxZ4fO9JD5dsFIN+SBXmnufvtKFBalE1DF
+AtmQKVMfB3bar8h3Ft6ybAwmbxGF0oVTqLKf+TWzQLPkNaTd3jCWjUmyRjb2ekD2
+5L3rXxUNeVPsrYB0fMj2YtIpthO3w7nc5DyhAVOqdyu8WNmNnXfAumpkSAVse1ju
+HDhSPK8no4nLClVX/K/cRcHQfRYW3naNYK+ptDwjxW9B3YSE1A6cclXr6iNI6l3l
+/mvOHBdQBuj5aGrXtoVKqPQTmC3mBbC3QL7XDGpIqQbQrUN08DTGZe8HTOH4XIDh
+vy5BjcjJJQXIo29kRoM0mffBO3ehL863lWopUpMltmxRDi+4VIptheLYKAnfFuDT
+6fJiX+C1YdgfuDP5Ac6cimbNEo4wPCoMYi2QI6WlrfyUcMrzI5YvQbG/D9g0nH5v
+UXfOql7i3NMXJxXnampmLYlFCmTz/g9W7z1I0/FYeo4lWp09DZa2+I81v4X7o0hx
+fqgHgHWdpTJwTZflA7wj9+JoQConRgPzGo6wM2ypqkJU8PLjBBB3Jr8qH/LTbULw
+YvlumR0ZUTm6e7iAJc3lyoj61ugC/Ubzt9WNGDblR60s6ua3e6o=
+=EzhC
+-----END PGP SIGNATURE-----
 
-I=E2=80=99m not sure what we=E2=80=99d do here. We run some scripts =
-periodically to import other meta layers
-Like meta-openembedded, poky, meta-arm, =E2=80=A6 so in theory we could =
-add this too but
-It may be better for you to just create what you need directly in =
-openbmc under a new=20
-meta-microchip directory.
-
->=20
-> I tried to add the recipe-phosphor from meta-phosphor in it. But I =
-guess that there should be some customization to do here.=20
->=20
-> Any help is welcome here,
-
-
-Our discord channel is also very active if you run into questions
-https://discord.gg/69Km47zH98
-
-- Andrew
-
+--llRpy1Z+/SKV9JXF--
