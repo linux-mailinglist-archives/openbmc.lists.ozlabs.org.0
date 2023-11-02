@@ -2,32 +2,32 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 82F267DEB83
-	for <lists+openbmc@lfdr.de>; Thu,  2 Nov 2023 04:40:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C9C6D7DEB8A
+	for <lists+openbmc@lfdr.de>; Thu,  2 Nov 2023 04:42:43 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=wiwynn.com header.i=@wiwynn.com header.a=rsa-sha256 header.s=selector2 header.b=DPbRSFgV;
+	dkim=pass (2048-bit key; unprotected) header.d=wiwynn.com header.i=@wiwynn.com header.a=rsa-sha256 header.s=selector2 header.b=fKkm4vfT;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SLV4d5BYkz3cRH
-	for <lists+openbmc@lfdr.de>; Thu,  2 Nov 2023 14:40:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SLV7j55nZz3cVk
+	for <lists+openbmc@lfdr.de>; Thu,  2 Nov 2023 14:42:41 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=wiwynn.com header.i=@wiwynn.com header.a=rsa-sha256 header.s=selector2 header.b=DPbRSFgV;
+	dkim=pass (2048-bit key; unprotected) header.d=wiwynn.com header.i=@wiwynn.com header.a=rsa-sha256 header.s=selector2 header.b=fKkm4vfT;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=wiwynn.com (client-ip=2a01:111:f400:feab::60f; helo=apc01-sg2-obe.outbound.protection.outlook.com; envelope-from=delphine_cc_chiu@wiwynn.com; receiver=lists.ozlabs.org)
-Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sgaapc01on2060f.outbound.protection.outlook.com [IPv6:2a01:111:f400:feab::60f])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=wiwynn.com (client-ip=2a01:111:f400:feae::62a; helo=apc01-psa-obe.outbound.protection.outlook.com; envelope-from=delphine_cc_chiu@wiwynn.com; receiver=lists.ozlabs.org)
+Received: from APC01-PSA-obe.outbound.protection.outlook.com (mail-psaapc01on2062a.outbound.protection.outlook.com [IPv6:2a01:111:f400:feae::62a])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SLV4058tZz3c5k
-	for <openbmc@lists.ozlabs.org>; Thu,  2 Nov 2023 14:39:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SLV436yhDz3c5k
+	for <openbmc@lists.ozlabs.org>; Thu,  2 Nov 2023 14:39:31 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=HBhh7OHz24rZohpSSyJywWZVoJ1Tz4BPs3kWWZzprlFqWInzTGEmwRwLa+XWQu4s/BNajlf7nrsqpHJVpev05mueU+ZMBiu7ek1t/MF4tfUXaiL4NQWBkqduCV9NWe+GmrE8prJtzhE4iAOGAJr7FOVqGyreGaEbsWY+sMIcFfxfWY9qIz4FbkSYZyGKPbaJgb5+l8hGKUicCaYSHE4muVbY2hDA2LXoz7RdRRU6jtabivu62+JrLY1hJT3TSyLCuNYusRQ5Oxj0Xet+HvYGKhrOd1+FupbR2D7dUMRNLoGGQOB2WY6B0Zv4dLgxOy/MgtX9Z2TOz9YTLsd6VSQ5WQ==
+ b=lPU7hRPxFYWHlyIT3tCNMWUBHwpNZD6PGSPZP+cJciMEuwxEJyhEEaah2M1AsuCAcW8i625qC0hJJoMkFUnQean1IEa9OvnV4W1JEgMlaXI+DQyS8GsyFuRE+L/fCRX87p+olyfaA/qp/pjUHL5nmwTW2falwGCaSDrKSIkJiYNlw9dBq3p3hxN6FAoYVpgcCnYm7ZcXztCjTY5+AvahkYtF77pxAMvw1BNGUqWUJD9yYei+3IAZSI+x1OOQY7oqTxd2L+p2Qaac5gI8SLcDnUexHk5+2/kAerA11VwojtHz6DVCOouFnil7u3+MojdDysXRwBtiq0CdAsM3DTUlXA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=b3+nhEz0BGiSo+PrI5whvo96dvD84gF4JIDuBmsQrVU=;
- b=YajCY6hVUkRb333DABeFGsLa6XfphM3T3VJyLMMttqZOl8mT9y/23sS28uJMHgXeKfjl00OLDUBj3tdbrg9s3R8s2sSnDGinNb1DSV+bljrgilWcskuaQTvPipXVz7UAOfieHhOsWLQ1G6R2GkQla192aFn9F13KJE1j6vjBRICHjHSSSosTMruj1UeuY7j+NJkYkyyMh3N7MMFmNnHKos2FYQqHlQtWXQIGYQ6gPsjzjme9hVsvpWJI5G4TnhTfB8JFTwt/Iw7F54To/5+I+VETnmQUwJf1oS6x4SJL41qg1tdTA/ZpTzeLwGV2qYOAXqm/4uD75pJBnb2wgtKJxQ==
+ bh=y5A+YGxARtmjO8LaEC8NMjLhxNaKIJpF8nCOyDvjQDU=;
+ b=W2KrVgDgDI9Kayx2Llx4No2JiezKMRZCuRAI/ZxWMD7ffulrhRu2rrsuDto53kuJxCEBq67g8E6eMxu/rvkjtGX/HhIoziZeQpLZpjr5csdLxa+Asd1z2/xs8fCXSKPdlTsDXmUDWR5h0rEU+lg/n7ZRPf2MWqCqkO2+LaSm3HSFJGeGE8kPZA4kSbTOG3gSj2ph2HYcjkO7wE3SvumSODjnT4DSkmnxHv3pLrNEXdlh3MgMKwOAWh2UOzo63mhrq9PgecTvUWnXBwGCD3n1729pzYbIVrDr26EelPQZZeLayLMM0XQqoBnP4yXD3q6h+Zv+p/B/oFhBSHAuV4Gieg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
  211.20.1.79) smtp.rcpttodomain=stwcx.xyz smtp.mailfrom=wiwynn.com; dmarc=fail
  (p=quarantine sp=quarantine pct=100) action=quarantine
@@ -35,18 +35,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wiwynn.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=b3+nhEz0BGiSo+PrI5whvo96dvD84gF4JIDuBmsQrVU=;
- b=DPbRSFgVLywu1p0hxUwxkye6CqIxo7ir79LKDujcgItpSLKkJCp1ygLFFWa4TjsXJcRV9UDR4aRQl84v7ZMF8geyob5dSjU8VVqLVF2yi49S2akAfdYBzqOC2ow3w/cZVGKljmF95pbFGkyfToqguoMrARwrHOk8ZfwYEQoe52e1jAoehZIA1iRHzgF/wvZjBqflK5sZLnB1tx/4oOrHaDb5Aacp5aCPAVjq/B+RgVs/Y7q9dElu7yiSjwux7VxmufLtjpMKU3zoXSzDNq8Z36HVPwJq0psjttKUiSYZgKv+84L3Tmp0Prv9Teo7Ta567bWaLjECJCMSQErK2kYrmw==
-Received: from PS2PR01CA0070.apcprd01.prod.exchangelabs.com
- (2603:1096:300:57::34) by SI2PR04MB6098.apcprd04.prod.outlook.com
- (2603:1096:4:1f9::11) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6954.21; Thu, 2 Nov
- 2023 03:39:09 +0000
+ bh=y5A+YGxARtmjO8LaEC8NMjLhxNaKIJpF8nCOyDvjQDU=;
+ b=fKkm4vfTCdkiCJEFU4EJ5BBES4vWXEux2A4Z6FFup05XgZTZy5N7WNQC0cqjfBBrRDPJ03rpm7VMTGkN7R19zouzykVzjPvwTc5vkWNsth3DUC2vTfiUJ09W3ixOSOd23u5zW7Fcy2G6p9LG8l8sXzbnQ/0gffHj6bigPKUZZM4XTIhZxB87Tf2UX8/MATunWt3uWx55I+j/792saJCHDeUYBpg+g6Dha5RqFmTSLODqvXeImpg8THbTydmhs5AeZPEQCo4W0rOUOnqFdjh+JhfbVaV41kqH09bMD7YD9sDG+B6koWZt4P4Uj32qWg0WoJxrtUHrngSdR07SyQvB1w==
+Received: from PS2PR01CA0061.apcprd01.prod.exchangelabs.com
+ (2603:1096:300:57::25) by TYZPR04MB6713.apcprd04.prod.outlook.com
+ (2603:1096:400:335::5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6954.19; Thu, 2 Nov
+ 2023 03:39:11 +0000
 Received: from HK2PEPF00006FB1.apcprd02.prod.outlook.com
- (2603:1096:300:57:cafe::8a) by PS2PR01CA0070.outlook.office365.com
- (2603:1096:300:57::34) with Microsoft SMTP Server (version=TLS1_2,
+ (2603:1096:300:57:cafe::fe) by PS2PR01CA0061.outlook.office365.com
+ (2603:1096:300:57::25) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6954.19 via Frontend
- Transport; Thu, 2 Nov 2023 03:39:08 +0000
+ Transport; Thu, 2 Nov 2023 03:39:11 +0000
 X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 211.20.1.79)
  smtp.mailfrom=wiwynn.com; dkim=none (message not signed)
  header.d=none;dmarc=fail action=quarantine header.from=wiwynn.com;
@@ -55,41 +55,41 @@ Received-SPF: Fail (protection.outlook.com: domain of wiwynn.com does not
  client-ip=211.20.1.79; helo=localhost.localdomain;
 Received: from localhost.localdomain (211.20.1.79) by
  HK2PEPF00006FB1.mail.protection.outlook.com (10.167.8.7) with Microsoft SMTP
- Server id 15.20.6838.22 via Frontend Transport; Thu, 2 Nov 2023 03:39:08
+ Server id 15.20.6838.22 via Frontend Transport; Thu, 2 Nov 2023 03:39:10
  +0000
 From: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
 To: patrick@stwcx.xyz,
 	joel@jms.id.au,
 	openbmc@lists.ozlabs.org
-Subject: [PATCH linux dev-6.5 v4 2/3] dt-bindings: hwmon: add MAX31790
-Date: Thu,  2 Nov 2023 11:39:01 +0800
-Message-Id: <20231102033902.3884466-3-Delphine_CC_Chiu@wiwynn.com>
+Subject: [PATCH linux dev-6.5 v4 3/3] hwmon: max31790: add fanN_enable for all fans
+Date: Thu,  2 Nov 2023 11:39:02 +0800
+Message-Id: <20231102033902.3884466-4-Delphine_CC_Chiu@wiwynn.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20231102033902.3884466-1-Delphine_CC_Chiu@wiwynn.com>
 References: <20231102033902.3884466-1-Delphine_CC_Chiu@wiwynn.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=y
 Content-Transfer-Encoding: 8bit
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: HK2PEPF00006FB1:EE_|SI2PR04MB6098:EE_
-X-MS-Office365-Filtering-Correlation-Id: ed8aa1cd-7075-473f-795a-08dbdb554538
+X-MS-TrafficTypeDiagnostic: HK2PEPF00006FB1:EE_|TYZPR04MB6713:EE_
+Content-Type: text/plain
+X-MS-Office365-Filtering-Correlation-Id: 229b84e9-7811-47c9-5339-08dbdb5546d7
 X-MS-Exchange-AtpMessageProperties: SA
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	3QoENkzXl6397Zghk9BtmBUtENOu8uMNpQnISmW24sfNXr2yLNYvQauQ1eos8cKqqAlo/sPqkrGfBR0m8YZ4BAT4LUInNNqlvK1tLseNnv9MnI/f0Oxa4JcKmOGIV+E+/1ZjO1RkTN3KShTOoxAh5CvI4JBki7HAiVtkM1NZ2gUIfEPEQxmPhSwMJYyQWkC8sJpwg+afw5C2ORnXGmlNHjXFwSApZlPk/lnsX/hjvuYYKW5tQ4RILnC7vJeDeY7zT6NO0JmSrwiWETmkyGvVy00YLu1K/nclVaf9NQ3IHL/bcLL32bv9ziwpiVNOJPtPj/QNiwZ/xyaAFBOkq4XJy+7s9+ci4gcu/G8zdLvyxo89ysj1/7rJoN7sU5JQV464keI59O0b8EaUABr6seKZS/HIeIxyg4zwpJ5QJP1cOiMxnkzkKl/OIm7bwMuS0fgKG/qOKPC9ufgeQGsA214fcbibtl05r3Ei2YjtMHt1mEIULU8Lv6qGYULoc5Aj+B+V2PsEHzxC6BYVBDe+PX6fjEbuY0idOV+O4LpaBrC9oiA5SE4/cQgQcxeRQo7z1d1O7LyR21FPUEod8rAExfGUplP7eLDVeZY0knYEtFtcgLjRcAkZdBHgazsUUMNjvje2ir6fMTaT4CvKbG9CERZPV2MOayvFxE9qJ9ei115B0MuPUjSVOld62Yqd8tVVj2jLqKXQCZ0mfwKCAyBl60jn1EF9fH2GlR2gZNG+PVVwWt8=
-X-Forefront-Antispam-Report: 	CIP:211.20.1.79;CTRY:TW;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:localhost.localdomain;PTR:211-20-1-79.hinet-ip.hinet.net;CAT:NONE;SFS:(13230031)(6069001)(4636009)(346002)(396003)(376002)(39860400002)(136003)(230273577357003)(230173577357003)(82310400011)(1800799009)(451199024)(64100799003)(186009)(36840700001)(46966006)(5660300002)(8676002)(8936002)(4326008)(107886003)(36736006)(70586007)(70206006)(41300700001)(316002)(966005)(6486002)(478600001)(2906002)(6666004)(40480700001)(6506007)(36860700001)(2616005)(47076005)(356005)(81166007)(36756003)(956004)(1076003)(6512007)(82740400003)(336012)(9316004)(26005)(86362001);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: 	o78S5e2O9xf3VEv+OoGQ9ndY0GB5KiDZeMy/a2yaZCzdcB8AJy+FuzgER1t3PnV75UiixzKGxn9bVeyWasl7+Wd7SnYexQitKIcZq54PISJr52oe6DQNxmx2DHX6/Smd7EIzJ1p78vny8Xd6U0MsoYU7yya/lmWvIHlbJcf7oiDo/AZ38BzyVwLcWJtM/drrgbHK1+M3juq4Azuy7rg5HljWw3MTvCiN1+sYRjcAwvJfLXka/IrVTIz4wasIcGaMla3IkVU+4ina/2PDcnjNfiTnj6nriIMEKl4u/vPLO+5AwB0BFRzvO+MqeAm0rjsA2EKLW39+HBdyYd3WEaFhB1uwAL6+zGFyQbW2DGhzTUui0Un0FSLZKr6ycSmxPnXEhjTDqWoKIjv7pSi0Q3cILTq0Ez7A9Ts82bULewvaUY+hxkc1hbltxXug3LNJaOmH9KxjQryiYo7h3tb6yDFlVrRD1JeoNcadw9HMbKUBe/V+SoU+sMIavv3r5gsEHkQ6Jk7F+qszyU2AKF96omLQKPvUyAIK9eaCR8zGmAVnSRXfyKHhCNJjPLvOcCcVWZ4dmY87Sdx911JAtCuVYNw7uPMVBvhM1ywz26NmdmooCjRKnLaiy2ilF1hi5JXTLMiB4ZbuHIlDMXjNY1O8gqHHV4hMbDoK14NVhuyMe3oOEtzS4xgk5i6u+lU9aQByywVXPB5FjscyuPcng9QBAhkkSQ==
+X-Forefront-Antispam-Report: 	CIP:211.20.1.79;CTRY:TW;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:localhost.localdomain;PTR:211-20-1-79.hinet-ip.hinet.net;CAT:NONE;SFS:(13230031)(6069001)(4636009)(136003)(39850400004)(396003)(376002)(346002)(186009)(82310400011)(64100799003)(1800799009)(451199024)(36840700001)(46966006)(956004)(4326008)(47076005)(2616005)(83380400001)(70586007)(316002)(336012)(356005)(26005)(81166007)(5660300002)(70206006)(36860700001)(36736006)(8676002)(6506007)(6486002)(8936002)(107886003)(2906002)(6512007)(6666004)(478600001)(41300700001)(82740400003)(9316004)(36756003)(86362001)(1076003)(40480700001);DIR:OUT;SFP:1101;
 X-OriginatorOrg: wiwynn.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Nov 2023 03:39:08.1995
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Nov 2023 03:39:10.9339
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: ed8aa1cd-7075-473f-795a-08dbdb554538
+X-MS-Exchange-CrossTenant-Network-Message-Id: 229b84e9-7811-47c9-5339-08dbdb5546d7
 X-MS-Exchange-CrossTenant-Id: da6e0628-fc83-4caf-9dd2-73061cbab167
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=da6e0628-fc83-4caf-9dd2-73061cbab167;Ip=[211.20.1.79];Helo=[localhost.localdomain]
 X-MS-Exchange-CrossTenant-AuthSource: 	HK2PEPF00006FB1.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SI2PR04MB6098
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR04MB6713
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,133 +105,132 @@ Cc: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add dt-bindings for the MAXIM MAX31790.
+The fanN_enable will be set in dbus-sensors service according to the
+index of TACH that filled in the configuration of entity-manager.
+Add fanN_enable for all fans to prevent dbus-sensors service
+couldn't find the corresponding fanN_enable for fanN_input.
 
 Signed-off-by: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
 ---
 Changelog:
-v4 - No change.
-v3 - Use 'sensor-type' in 'channel' node to config pwm as tach.
-   - Changed the status in MAINTAINERS to 'Maintained'.
-v2 - Add dt-bindings for the MAXIM MAX31790.
+v4 - Add fanN_enable for all fans.
 ---
- .../bindings/hwmon/maxim,max31790.yaml        | 89 +++++++++++++++++++
- MAINTAINERS                                   |  6 ++
- 2 files changed, 95 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/hwmon/maxim,max31790.yaml
+ Documentation/hwmon/max31790.rst |  2 +-
+ drivers/hwmon/max31790.c         | 57 +++++++++++++++++---------------
+ 2 files changed, 32 insertions(+), 27 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/hwmon/maxim,max31790.yaml b/Documentation/devicetree/bindings/hwmon/maxim,max31790.yaml
-new file mode 100644
-index 000000000000..7f717ab4caac
---- /dev/null
-+++ b/Documentation/devicetree/bindings/hwmon/maxim,max31790.yaml
-@@ -0,0 +1,89 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+
-+$id: http://devicetree.org/schemas/hwmon/maxim,max31790.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
-+
-+title: Maxim max31790
-+
-+maintainers:
-+  - Delphine CC Chiu  <Delphine_CC_Chiu@wiwynn.com>
-+
-+description: |
-+  The MAX31790 controls the speeds of up to six fans using
-+  six independent PWM outputs. The desired fan speeds (or PWM duty cycles)
-+  are written through the I2C	interface.
-+  The outputs drive “4-wire” fans directly, or can be used to modulate
-+  the fan’s power terminals using an external pass transistor.
-+
-+  Datasheets:
-+    https://datasheets.maximintegrated.com/en/ds/MAX31790.pdf
-+
-+additionalProperties: false
-+
-+properties:
-+  compatible:
-+    enum:
-+      - maxim,max31790
-+
-+  reg:
-+    maxItems: 1
-+
-+  "#address-cells":
-+    const: 1
-+
-+  "#size-cells":
-+    const: 0
-+
-+patternProperties:
-+  "^channel@[1-6]$":
-+    type: object
-+
-+    additionalProperties: false
-+
-+    properties:
-+      reg:
-+        items:
-+          - enum: [1, 2, 3, 4, 5, 6]
-+
-+      # There are 6 PWM output channel in MAX31790 that allows to be configured
-+      # as a TACH input by setting the Fan Configuration register.
-+      # The default setting will be PWM output.
-+      sensor-type:
-+        items:
-+          - enum:
-+            - PWM
-+            - TACH
-+
-+    required:
-+      - reg
-+
-+required:
-+  - compatible
-+  - reg
-+
-+examples:
-+  - |
-+    i2c {
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+
-+        pwm@20 {
-+            compatible = "maxim,max31790";
-+            reg = <0x20>;
-+
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+
-+            channel@3 {
-+                reg = <3>;
-+                sensor-type = "TACH";
-+            };
-+
-+            channel@6 {
-+                reg = <6>;
-+                sensor-type = "TACH";
-+            };
-+        };
-+    };
-diff --git a/MAINTAINERS b/MAINTAINERS
-index f9cc9f25799f..b0c86d70b034 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1360,6 +1360,12 @@ F:	Documentation/devicetree/bindings/hwmon/adi,max31760.yaml
- F:	Documentation/hwmon/max31760.rst
- F:	drivers/hwmon/max31760.c
+diff --git a/Documentation/hwmon/max31790.rst b/Documentation/hwmon/max31790.rst
+index 33c5c7330efc..510d5691b18b 100644
+--- a/Documentation/hwmon/max31790.rst
++++ b/Documentation/hwmon/max31790.rst
+@@ -38,7 +38,7 @@ Sysfs entries
+ fan[1-12]_input    RO  fan tachometer speed in RPM
+ fan[1-12]_fault    RO  fan experienced fault
+ fan[1-6]_target    RW  desired fan speed in RPM
+-fan[1-6]_enable    RW  enable or disable the tachometer input
++fan[1-12]_enable   RW  enable or disable the tachometer input
+ pwm[1-6]_enable    RW  regulator mode, 0=disabled (duty cycle=0%), 1=manual mode, 2=rpm mode
+ pwm[1-6]           RW  read: current pwm duty cycle,
+                        write: target pwm duty cycle (0-255)
+diff --git a/drivers/hwmon/max31790.c b/drivers/hwmon/max31790.c
+index 378ff32c7c1e..fa31e108c7ce 100644
+--- a/drivers/hwmon/max31790.c
++++ b/drivers/hwmon/max31790.c
+@@ -203,7 +203,8 @@ static int max31790_read_fan(struct device *dev, u32 attr, int channel,
+ 		mutex_unlock(&data->update_lock);
+ 		return 0;
+ 	case hwmon_fan_enable:
+-		*val = !!(data->fan_config[channel] & MAX31790_FAN_CFG_TACH_INPUT_EN);
++		*val = !!(data->fan_config[channel % NR_CHANNEL] &
++			  MAX31790_FAN_CFG_TACH_INPUT_EN);
+ 		return 0;
+ 	default:
+ 		return -EOPNOTSUPP;
+@@ -242,12 +243,12 @@ static int max31790_write_fan(struct device *dev, u32 attr, int channel,
  
-+ANALOG DEVICES INC MAX31790 DRIVER
-+M:	Delphine CC Chiu  <Delphine_CC_Chiu@wiwynn.com>
-+S:	Maintained
-+F:	Documentation/devicetree/bindings/hwmon/maxim,max31790.yaml
-+F:	drivers/hwmon/max31790.c
-+
- ANALOGBITS PLL LIBRARIES
- M:	Paul Walmsley <paul.walmsley@sifive.com>
- S:	Supported
+ 		data->target_count[channel] = target_count << 5;
+ 
+-		err = i2c_smbus_write_word_swapped(client,
+-					MAX31790_REG_TARGET_COUNT(channel),
+-					data->target_count[channel]);
++		err = i2c_smbus_write_word_swapped(
++			client, MAX31790_REG_TARGET_COUNT(channel),
++			data->target_count[channel]);
+ 		break;
+ 	case hwmon_fan_enable:
+-		fan_config = data->fan_config[channel];
++		fan_config = data->fan_config[channel % NR_CHANNEL];
+ 		if (val == 0) {
+ 			fan_config &= ~MAX31790_FAN_CFG_TACH_INPUT_EN;
+ 		} else if (val == 1) {
+@@ -256,11 +257,14 @@ static int max31790_write_fan(struct device *dev, u32 attr, int channel,
+ 			err = -EINVAL;
+ 			break;
+ 		}
+-		if (fan_config != data->fan_config[channel]) {
+-			err = i2c_smbus_write_byte_data(client, MAX31790_REG_FAN_CONFIG(channel),
+-							fan_config);
++		if (fan_config != data->fan_config[channel % NR_CHANNEL]) {
++			err = i2c_smbus_write_byte_data(
++				client,
++				MAX31790_REG_FAN_CONFIG(channel % NR_CHANNEL),
++				fan_config);
+ 			if (!err)
+-				data->fan_config[channel] = fan_config;
++				data->fan_config[channel % NR_CHANNEL] =
++					fan_config;
+ 		}
+ 		break;
+ 	default:
+@@ -291,7 +295,8 @@ static umode_t max31790_fan_is_visible(const void *_data, u32 attr, int channel)
+ 			return 0644;
+ 		return 0;
+ 	case hwmon_fan_enable:
+-		if (channel < NR_CHANNEL)
++		if (channel < NR_CHANNEL ||
++		    (fan_config & MAX31790_FAN_CFG_TACH_INPUT))
+ 			return 0644;
+ 		return 0;
+ 	default:
+@@ -445,22 +450,22 @@ static umode_t max31790_is_visible(const void *data,
+ 	}
+ }
+ 
+-static const struct hwmon_channel_info * const max31790_info[] = {
+-	HWMON_CHANNEL_INFO(fan,
+-			   HWMON_F_INPUT | HWMON_F_TARGET | HWMON_F_FAULT | HWMON_F_ENABLE,
+-			   HWMON_F_INPUT | HWMON_F_TARGET | HWMON_F_FAULT | HWMON_F_ENABLE,
+-			   HWMON_F_INPUT | HWMON_F_TARGET | HWMON_F_FAULT | HWMON_F_ENABLE,
+-			   HWMON_F_INPUT | HWMON_F_TARGET | HWMON_F_FAULT | HWMON_F_ENABLE,
+-			   HWMON_F_INPUT | HWMON_F_TARGET | HWMON_F_FAULT | HWMON_F_ENABLE,
+-			   HWMON_F_INPUT | HWMON_F_TARGET | HWMON_F_FAULT | HWMON_F_ENABLE,
+-			   HWMON_F_INPUT | HWMON_F_FAULT,
+-			   HWMON_F_INPUT | HWMON_F_FAULT,
+-			   HWMON_F_INPUT | HWMON_F_FAULT,
+-			   HWMON_F_INPUT | HWMON_F_FAULT,
+-			   HWMON_F_INPUT | HWMON_F_FAULT,
+-			   HWMON_F_INPUT | HWMON_F_FAULT),
+-	HWMON_CHANNEL_INFO(pwm,
+-			   HWMON_PWM_INPUT | HWMON_PWM_ENABLE,
++static const struct hwmon_channel_info *const max31790_info[] = {
++	HWMON_CHANNEL_INFO(
++		fan,
++		HWMON_F_INPUT | HWMON_F_TARGET | HWMON_F_FAULT | HWMON_F_ENABLE,
++		HWMON_F_INPUT | HWMON_F_TARGET | HWMON_F_FAULT | HWMON_F_ENABLE,
++		HWMON_F_INPUT | HWMON_F_TARGET | HWMON_F_FAULT | HWMON_F_ENABLE,
++		HWMON_F_INPUT | HWMON_F_TARGET | HWMON_F_FAULT | HWMON_F_ENABLE,
++		HWMON_F_INPUT | HWMON_F_TARGET | HWMON_F_FAULT | HWMON_F_ENABLE,
++		HWMON_F_INPUT | HWMON_F_TARGET | HWMON_F_FAULT | HWMON_F_ENABLE,
++		HWMON_F_INPUT | HWMON_F_FAULT | HWMON_F_ENABLE,
++		HWMON_F_INPUT | HWMON_F_FAULT | HWMON_F_ENABLE,
++		HWMON_F_INPUT | HWMON_F_FAULT | HWMON_F_ENABLE,
++		HWMON_F_INPUT | HWMON_F_FAULT | HWMON_F_ENABLE,
++		HWMON_F_INPUT | HWMON_F_FAULT | HWMON_F_ENABLE,
++		HWMON_F_INPUT | HWMON_F_FAULT | HWMON_F_ENABLE),
++	HWMON_CHANNEL_INFO(pwm, HWMON_PWM_INPUT | HWMON_PWM_ENABLE,
+ 			   HWMON_PWM_INPUT | HWMON_PWM_ENABLE,
+ 			   HWMON_PWM_INPUT | HWMON_PWM_ENABLE,
+ 			   HWMON_PWM_INPUT | HWMON_PWM_ENABLE,
 -- 
 2.25.1
 
