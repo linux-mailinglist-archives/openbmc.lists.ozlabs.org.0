@@ -2,46 +2,46 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 440F27E75CA
-	for <lists+openbmc@lfdr.de>; Fri, 10 Nov 2023 01:17:33 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8EA667E75DD
+	for <lists+openbmc@lfdr.de>; Fri, 10 Nov 2023 01:19:16 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=i4zIy2RJ;
+	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=GwVpqZfb;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SRKCC0P6Dz2xFm
-	for <lists+openbmc@lfdr.de>; Fri, 10 Nov 2023 11:17:27 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SRKFG3ShQz3cVM
+	for <lists+openbmc@lfdr.de>; Fri, 10 Nov 2023 11:19:14 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=i4zIy2RJ;
+	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=GwVpqZfb;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=2605:2700:0:5::4713:9cab; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=lists.ozlabs.org)
 Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [IPv6:2605:2700:0:5::4713:9cab])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SRKBb6sblz2xFm
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SRKBb6xJqz2yts
 	for <openbmc@lists.ozlabs.org>; Fri, 10 Nov 2023 11:16:55 +1100 (AEDT)
 Received: from hatter.bewilderbeest.net (unknown [IPv6:2602:61:7e5d:5300::2])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: zev)
-	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 42DF54256;
+	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id 6E0B14272;
 	Thu,  9 Nov 2023 16:16:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
 	s=thorn; t=1699575409;
-	bh=Ltscq+tzdPiMbcpZ/4735rSiWHuvTxXOt46ZGz9PrzM=;
+	bh=pU6UE+Qk2zX40oDS9XVXtRtwwYioZf7z91p1xBGiaSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i4zIy2RJ03ysJsw4O0qMCFgDSj/IOFDKC8bM9CDEIEaLbozhTEKxKWMMqM5Xd34X9
-	 PO57jkSbM6fcn+m4YJeEF84PmkBk23G6mWcl11436AvejmxF1G3CIPUkgCWfJh1vu8
-	 7RwnLCvWwz2vUAsJoXILZXTCPJLl72OST4Gxbdkk=
+	b=GwVpqZfbuExTanPTlQhfMJJz9y3tUA1R17tG9TBiNRICBnncwgrTW/FCangI3GzuJ
+	 K0jkZYNKIiius3N4m52TGzaltZMNSq7H8fFnTyFFDXsvXky4ufk165/aN6R7hcGYnD
+	 5jO6u6kDHxQwAo9e1RNLfUQ5Z61KaB13HpTvfPfo=
 From: Zev Weiss <zev@bewilderbeest.net>
 To: Joel Stanley <joel@jms.id.au>,
 	Andrew Jeffery <andrew@codeconstruct.com.au>
-Subject: [PATCH linux dev-6.5 1/2] dt-bindings: watchdog: aspeed-wdt: Add aspeed,reset-mask property
-Date: Thu,  9 Nov 2023 16:16:36 -0800
-Message-ID: <20231110001634.6638-5-zev@bewilderbeest.net>
+Subject: [PATCH linux dev-6.5 2/2] watchdog: aspeed: Add support for aspeed,reset-mask DT property
+Date: Thu,  9 Nov 2023 16:16:37 -0800
+Message-ID: <20231110001634.6638-6-zev@bewilderbeest.net>
 X-Mailer: git-send-email 2.42.0
 In-Reply-To: <20231110001634.6638-4-zev@bewilderbeest.net>
 References: <20231110001634.6638-4-zev@bewilderbeest.net>
@@ -62,155 +62,58 @@ Cc: openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-This property configures the Aspeed watchdog timer's reset mask, which
-controls which peripherals are reset when the watchdog timer expires.
-Some platforms require that certain devices be left untouched across a
-reboot; aspeed,reset-mask can now be used to express such constraints.
+This property allows the device-tree to specify how the Aspeed
+watchdog timer's reset mask register(s) should be set, so that
+peripherals can be individually exempted from (or opted in to) being
+reset when the watchdog timer expires.
 
 Signed-off-by: Zev Weiss <zev@bewilderbeest.net>
-Reviewed-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Joel Stanley <joel@jms.id.au>
 Reviewed-by: Guenter Roeck <linux@roeck-us.net>
-Link: https://lore.kernel.org/r/20230922104231.1434-5-zev@bewilderbeest.net
+Link: https://lore.kernel.org/r/20230922104231.1434-6-zev@bewilderbeest.net
 Signed-off-by: Guenter Roeck <linux@roeck-us.net>
 Signed-off-by: Wim Van Sebroeck <wim@linux-watchdog.org>
-(cherry picked from commit 9931be2cfca35be7040f35a272a7b82b31ec1c71)
+(cherry picked from commit 6a6c7b006e5cd55cce0fc4e7be0e7bb3a94b064b)
 ---
- .../bindings/watchdog/aspeed-wdt.txt          | 18 +++-
- include/dt-bindings/watchdog/aspeed-wdt.h     | 92 +++++++++++++++++++
- 2 files changed, 109 insertions(+), 1 deletion(-)
- create mode 100644 include/dt-bindings/watchdog/aspeed-wdt.h
+ drivers/watchdog/aspeed_wdt.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/watchdog/aspeed-wdt.txt b/Documentation/devicetree/bindings/watchdog/aspeed-wdt.txt
-index a8197632d6d2..3208adb3e52e 100644
---- a/Documentation/devicetree/bindings/watchdog/aspeed-wdt.txt
-+++ b/Documentation/devicetree/bindings/watchdog/aspeed-wdt.txt
-@@ -47,7 +47,15 @@ Optional properties for AST2500-compatible watchdogs:
- 			   is configured as push-pull, then set the pulse
- 			   polarity to active-high. The default is active-low.
+diff --git a/drivers/watchdog/aspeed_wdt.c b/drivers/watchdog/aspeed_wdt.c
+index b72a858bbac7..b4773a6aaf8c 100644
+--- a/drivers/watchdog/aspeed_wdt.c
++++ b/drivers/watchdog/aspeed_wdt.c
+@@ -79,6 +79,8 @@ MODULE_DEVICE_TABLE(of, aspeed_wdt_of_table);
+ #define   WDT_TIMEOUT_STATUS_BOOT_SECONDARY	BIT(1)
+ #define WDT_CLEAR_TIMEOUT_STATUS	0x14
+ #define   WDT_CLEAR_TIMEOUT_AND_BOOT_CODE_SELECTION	BIT(0)
++#define WDT_RESET_MASK1		0x1c
++#define WDT_RESET_MASK2		0x20
  
--Example:
-+Optional properties for AST2500- and AST2600-compatible watchdogs:
-+ - aspeed,reset-mask: A bitmask indicating which peripherals will be reset if
-+		      the watchdog timer expires.  On AST2500 this should be a
-+		      single word defined using the AST2500_WDT_RESET_* macros;
-+		      on AST2600 this should be a two-word array with the first
-+		      word defined using the AST2600_WDT_RESET1_* macros and the
-+		      second word defined using the AST2600_WDT_RESET2_* macros.
-+
-+Examples:
+ /*
+  * WDT_RESET_WIDTH controls the characteristics of the external pulse (if
+@@ -402,6 +404,8 @@ static int aspeed_wdt_probe(struct platform_device *pdev)
  
- 	wdt1: watchdog@1e785000 {
- 		compatible = "aspeed,ast2400-wdt";
-@@ -55,3 +63,11 @@ Example:
- 		aspeed,reset-type = "system";
- 		aspeed,external-signal;
- 	};
+ 	if ((of_device_is_compatible(np, "aspeed,ast2500-wdt")) ||
+ 		(of_device_is_compatible(np, "aspeed,ast2600-wdt"))) {
++		u32 reset_mask[2];
++		size_t nrstmask = of_device_is_compatible(np, "aspeed,ast2600-wdt") ? 2 : 1;
+ 		u32 reg = readl(wdt->base + WDT_RESET_WIDTH);
+ 
+ 		reg &= wdt->cfg->ext_pulse_width_mask;
+@@ -419,6 +423,13 @@ static int aspeed_wdt_probe(struct platform_device *pdev)
+ 			reg |= WDT_OPEN_DRAIN_MAGIC;
+ 
+ 		writel(reg, wdt->base + WDT_RESET_WIDTH);
 +
-+	#include <dt-bindings/watchdog/aspeed-wdt.h>
-+	wdt2: watchdog@1e785040 {
-+		compatible = "aspeed,ast2600-wdt";
-+		reg = <0x1e785040 0x40>;
-+		aspeed,reset-mask = <AST2600_WDT_RESET1_DEFAULT
-+				     (AST2600_WDT_RESET2_DEFAULT & ~AST2600_WDT_RESET2_LPC)>;
-+	};
-diff --git a/include/dt-bindings/watchdog/aspeed-wdt.h b/include/dt-bindings/watchdog/aspeed-wdt.h
-new file mode 100644
-index 000000000000..7ae6d84b2bd9
---- /dev/null
-+++ b/include/dt-bindings/watchdog/aspeed-wdt.h
-@@ -0,0 +1,92 @@
-+/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
-+
-+#ifndef DT_BINDINGS_ASPEED_WDT_H
-+#define DT_BINDINGS_ASPEED_WDT_H
-+
-+#define AST2500_WDT_RESET_CPU		(1 << 0)
-+#define AST2500_WDT_RESET_COPROC	(1 << 1)
-+#define AST2500_WDT_RESET_SDRAM		(1 << 2)
-+#define AST2500_WDT_RESET_AHB		(1 << 3)
-+#define AST2500_WDT_RESET_I2C		(1 << 4)
-+#define AST2500_WDT_RESET_MAC0		(1 << 5)
-+#define AST2500_WDT_RESET_MAC1		(1 << 6)
-+#define AST2500_WDT_RESET_GRAPHICS	(1 << 7)
-+#define AST2500_WDT_RESET_USB2_HOST_HUB	(1 << 8)
-+#define AST2500_WDT_RESET_USB_HOST	(1 << 9)
-+#define AST2500_WDT_RESET_HID_EHCI	(1 << 10)
-+#define AST2500_WDT_RESET_VIDEO		(1 << 11)
-+#define AST2500_WDT_RESET_HAC		(1 << 12)
-+#define AST2500_WDT_RESET_LPC		(1 << 13)
-+#define AST2500_WDT_RESET_SDIO		(1 << 14)
-+#define AST2500_WDT_RESET_MIC		(1 << 15)
-+#define AST2500_WDT_RESET_CRT		(1 << 16)
-+#define AST2500_WDT_RESET_PWM		(1 << 17)
-+#define AST2500_WDT_RESET_PECI		(1 << 18)
-+#define AST2500_WDT_RESET_JTAG		(1 << 19)
-+#define AST2500_WDT_RESET_ADC		(1 << 20)
-+#define AST2500_WDT_RESET_GPIO		(1 << 21)
-+#define AST2500_WDT_RESET_MCTP		(1 << 22)
-+#define AST2500_WDT_RESET_XDMA		(1 << 23)
-+#define AST2500_WDT_RESET_SPI		(1 << 24)
-+#define AST2500_WDT_RESET_SOC_MISC	(1 << 25)
-+
-+#define AST2500_WDT_RESET_DEFAULT 0x023ffff3
-+
-+#define AST2600_WDT_RESET1_CPU		(1 << 0)
-+#define AST2600_WDT_RESET1_SDRAM	(1 << 1)
-+#define AST2600_WDT_RESET1_AHB		(1 << 2)
-+#define AST2600_WDT_RESET1_SLI		(1 << 3)
-+#define AST2600_WDT_RESET1_SOC_MISC0	(1 << 4)
-+#define AST2600_WDT_RESET1_COPROC	(1 << 5)
-+#define AST2600_WDT_RESET1_USB_A	(1 << 6)
-+#define AST2600_WDT_RESET1_USB_B	(1 << 7)
-+#define AST2600_WDT_RESET1_UHCI		(1 << 8)
-+#define AST2600_WDT_RESET1_GRAPHICS	(1 << 9)
-+#define AST2600_WDT_RESET1_CRT		(1 << 10)
-+#define AST2600_WDT_RESET1_VIDEO	(1 << 11)
-+#define AST2600_WDT_RESET1_HAC		(1 << 12)
-+#define AST2600_WDT_RESET1_DP		(1 << 13)
-+#define AST2600_WDT_RESET1_DP_MCU	(1 << 14)
-+#define AST2600_WDT_RESET1_GP_MCU	(1 << 15)
-+#define AST2600_WDT_RESET1_MAC0		(1 << 16)
-+#define AST2600_WDT_RESET1_MAC1		(1 << 17)
-+#define AST2600_WDT_RESET1_SDIO0	(1 << 18)
-+#define AST2600_WDT_RESET1_JTAG0	(1 << 19)
-+#define AST2600_WDT_RESET1_MCTP0	(1 << 20)
-+#define AST2600_WDT_RESET1_MCTP1	(1 << 21)
-+#define AST2600_WDT_RESET1_XDMA0	(1 << 22)
-+#define AST2600_WDT_RESET1_XDMA1	(1 << 23)
-+#define AST2600_WDT_RESET1_GPIO0	(1 << 24)
-+#define AST2600_WDT_RESET1_RVAS		(1 << 25)
-+
-+#define AST2600_WDT_RESET1_DEFAULT 0x030f1ff1
-+
-+#define AST2600_WDT_RESET2_CPU		(1 << 0)
-+#define AST2600_WDT_RESET2_SPI		(1 << 1)
-+#define AST2600_WDT_RESET2_AHB2		(1 << 2)
-+#define AST2600_WDT_RESET2_SLI2		(1 << 3)
-+#define AST2600_WDT_RESET2_SOC_MISC1	(1 << 4)
-+#define AST2600_WDT_RESET2_MAC2		(1 << 5)
-+#define AST2600_WDT_RESET2_MAC3		(1 << 6)
-+#define AST2600_WDT_RESET2_SDIO1	(1 << 7)
-+#define AST2600_WDT_RESET2_JTAG1	(1 << 8)
-+#define AST2600_WDT_RESET2_GPIO1	(1 << 9)
-+#define AST2600_WDT_RESET2_MDIO		(1 << 10)
-+#define AST2600_WDT_RESET2_LPC		(1 << 11)
-+#define AST2600_WDT_RESET2_PECI		(1 << 12)
-+#define AST2600_WDT_RESET2_PWM		(1 << 13)
-+#define AST2600_WDT_RESET2_ADC		(1 << 14)
-+#define AST2600_WDT_RESET2_FSI		(1 << 15)
-+#define AST2600_WDT_RESET2_I2C		(1 << 16)
-+#define AST2600_WDT_RESET2_I3C_GLOBAL	(1 << 17)
-+#define AST2600_WDT_RESET2_I3C0		(1 << 18)
-+#define AST2600_WDT_RESET2_I3C1		(1 << 19)
-+#define AST2600_WDT_RESET2_I3C2		(1 << 20)
-+#define AST2600_WDT_RESET2_I3C3		(1 << 21)
-+#define AST2600_WDT_RESET2_I3C4		(1 << 22)
-+#define AST2600_WDT_RESET2_I3C5		(1 << 23)
-+#define AST2600_WDT_RESET2_ESPI		(1 << 26)
-+
-+#define AST2600_WDT_RESET2_DEFAULT 0x03fffff1
-+
-+#endif
++		ret = of_property_read_u32_array(np, "aspeed,reset-mask", reset_mask, nrstmask);
++		if (!ret) {
++			writel(reset_mask[0], wdt->base + WDT_RESET_MASK1);
++			if (nrstmask > 1)
++				writel(reset_mask[1], wdt->base + WDT_RESET_MASK2);
++		}
+ 	}
+ 
+ 	if (!of_property_read_u32(np, "aspeed,ext-pulse-duration", &duration)) {
 -- 
 2.42.0
 
