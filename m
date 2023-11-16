@@ -1,54 +1,56 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 56C647ED4E9
-	for <lists+openbmc@lfdr.de>; Wed, 15 Nov 2023 21:59:34 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 9A3397ED9A8
+	for <lists+openbmc@lfdr.de>; Thu, 16 Nov 2023 03:40:05 +0100 (CET)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=Ncnoulht;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SVwX02RqYz3cb7
-	for <lists+openbmc@lfdr.de>; Thu, 16 Nov 2023 07:59:28 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SW44z3kjRz3cWC
+	for <lists+openbmc@lfdr.de>; Thu, 16 Nov 2023 13:40:03 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=209.85.167.176; helo=mail-oi1-f176.google.com; envelope-from=robherring2@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-oi1-f176.google.com (mail-oi1-f176.google.com [209.85.167.176])
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (1024-bit key; unprotected) header.d=bewilderbeest.net header.i=@bewilderbeest.net header.a=rsa-sha256 header.s=thorn header.b=Ncnoulht;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=bewilderbeest.net (client-ip=71.19.156.171; helo=thorn.bewilderbeest.net; envelope-from=zev@bewilderbeest.net; receiver=lists.ozlabs.org)
+X-Greylist: delayed 141113 seconds by postgrey-1.37 at boromir; Thu, 16 Nov 2023 13:39:27 AEDT
+Received: from thorn.bewilderbeest.net (thorn.bewilderbeest.net [71.19.156.171])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SVwWf4BjMz3c8r
-	for <openbmc@lists.ozlabs.org>; Thu, 16 Nov 2023 07:59:08 +1100 (AEDT)
-Received: by mail-oi1-f176.google.com with SMTP id 5614622812f47-3b2e72fe47fso63614b6e.1
-        for <openbmc@lists.ozlabs.org>; Wed, 15 Nov 2023 12:59:08 -0800 (PST)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700081945; x=1700686745;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rWue5MGrIGXtdwa0DXl26EeYVBaPfv4b8agF9tN7BTk=;
-        b=Kai2kmsPVM2A9V9vOwGoejnYlDnCGApnzMkX9aPKOjkbJDRcvRwFspaBDV0fz+WnPG
-         WuN60iIU/LedQdt0xeBFNog+oBPS0BlODxmkseHl7DZVSegJ9dJymm0k0fidsjfv1Deq
-         KkrEHsjBKL73jf2Z1Wim+ZcmOLLKraaRy6KfMisbaeHHLLKHFYYRR/Jc9ksQ79bxZfho
-         kzqzOZMnYOXhnwP5vKo9frfL/NOyK6q1sSzCpXqJtaqvQI1l5ksmeLmD0E8lLSg+9hpb
-         wbkxT4jnJS9/rpXMsFDEKWUlf1gG7lDGti/QduGH7+ONumoyEvXLZs2VBfsiSyaH6MxM
-         bytQ==
-X-Gm-Message-State: AOJu0YxWxKQN4AxfOkOlJXsU42/jIAjERBb7oOsXt9fXz7ekFk2hAi1d
-	6Q4j64/9E3Romytkh1ryjw==
-X-Google-Smtp-Source: AGHT+IFuVEdngiswllHpeBpLA6ZHJAf8BU1GB6j5HsXZXn+UNlYH2/CSecjlOqxQWtnfpSG25qCQ2A==
-X-Received: by 2002:a05:6808:4193:b0:3b6:cb02:533b with SMTP id dj19-20020a056808419300b003b6cb02533bmr13975007oib.44.1700081945112;
-        Wed, 15 Nov 2023 12:59:05 -0800 (PST)
-Received: from herring.priv (66-90-144-107.dyn.grandenetworks.net. [66.90.144.107])
-        by smtp.gmail.com with ESMTPSA id a9-20020a05680804c900b003b29c2f50f0sm1588527oie.18.2023.11.15.12.59.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Nov 2023 12:59:04 -0800 (PST)
-Received: (nullmailer pid 3732930 invoked by uid 1000);
-	Wed, 15 Nov 2023 20:59:01 -0000
-From: Rob Herring <robh@kernel.org>
-To: Avi Fishman <avifishman70@gmail.com>, Tomer Maimon <tmaimon77@gmail.com>, Tali Perry <tali.perry1@gmail.com>, Patrick Venture <venture@google.com>, Nancy Yuen <yuenn@google.com>, Benjamin Fair <benjaminfair@google.com>, Philipp Zabel <p.zabel@pengutronix.de>, Patrice Chotard <patrice.chotard@foss.st.com>
-Subject: [RESEND PATCH] reset: Use device_get_match_data()
-Date: Wed, 15 Nov 2023 14:58:48 -0600
-Message-ID: <20231115205848.3732609-1-robh@kernel.org>
-X-Mailer: git-send-email 2.42.0
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SW44H4yr4z2yV3;
+	Thu, 16 Nov 2023 13:39:27 +1100 (AEDT)
+Received: from hatter.bewilderbeest.net (unknown [IPv6:2602:61:7e5d:5300::2])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: zev)
+	by thorn.bewilderbeest.net (Postfix) with ESMTPSA id C667442AF;
+	Wed, 15 Nov 2023 18:39:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=bewilderbeest.net;
+	s=thorn; t=1700102363;
+	bh=4q1q7lhezpq/0nWCFgR7MsiQUEeQlSbd2dM5jhV/qog=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=NcnoulhtqbhUn5EZOFj7D+/JbKkpUwqvwcZxEHvD6aC/mZ341nKINT4OE0Eixip+T
+	 xZZNg47oC1rErtlZogQ5oequAzUi4qRH86nRuOsULxM+SxfE/sAaz6W88cBOxU9qzN
+	 iWBacofijjfo1Idm+DA2u1CNr2a6U9pT77cZ0KlA=
+Date: Wed, 15 Nov 2023 18:39:21 -0800
+From: Zev Weiss <zev@bewilderbeest.net>
+To: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Subject: Re: [PATCH 2/2] ARM: dts: aspeed: Add ASRock E3C256D4I BMC
+Message-ID: <1e1c1493-d3f5-4c96-b85f-158d720b2ab5@hatter.bewilderbeest.net>
+References: <20231114112722.28506-4-zev@bewilderbeest.net>
+ <20231114112722.28506-6-zev@bewilderbeest.net>
+ <cde26249-1d47-496f-b198-a0c4c02bed5c@linaro.org>
+ <e766e663-0985-4a2e-8023-26ad0228157d@hatter.bewilderbeest.net>
+ <863a0fe2-c258-47d9-8563-6f12bb55b4ad@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <863a0fe2-c258-47d9-8563-6f12bb55b4ad@linaro.org>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,80 +62,58 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Cc: devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>, Joel Stanley <joel@jms.id.au>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Use preferred device_get_match_data() instead of of_match_device() to
-get the driver match data. With this, adjust the includes to explicitly
-include the correct headers.
+On Wed, Nov 15, 2023 at 04:13:29AM PST, Krzysztof Kozlowski wrote:
+>On 14/11/2023 23:37, Zev Weiss wrote:
+>
+>>
+>>>> +	};
+>>>> +
+>>>> +	memory@80000000 {
+>>>> +		reg = <0x80000000 0x20000000>;
+>>>> +	};
+>>>> +
+>>>> +	leds {
+>>>> +		compatible = "gpio-leds";
+>>>> +
+>>>> +		heartbeat {
+>>>
+>>> It does not look like you tested the DTS against bindings. Please run
+>>> `make dtbs_check W=1` (see
+>>> Documentation/devicetree/bindings/writing-schema.rst or
+>>> https://www.linaro.org/blog/tips-and-tricks-for-validating-devicetree-sources-with-the-devicetree-schema/
+>>> for instructions).
+>
+>The node names are clearly wrong and you got output. It's easy to spot
+>if your patch worked in the first place:
+>
+> fatal error: dt-bindings/watchdog/aspeed-wdt.h: No such file or directory
+>
 
-Signed-off-by: Rob Herring <robh@kernel.org>
----
- drivers/reset/reset-npcm.c       |  5 ++---
- drivers/reset/sti/reset-syscfg.c | 11 ++++++-----
- 2 files changed, 8 insertions(+), 8 deletions(-)
+The patch series was based on Linus's tree at the time I sent it; that 
+file was added in commit 9931be2cfca3 ("dt-bindings: watchdog: 
+aspeed-wdt: Add aspeed,reset-mask property"), which was included in the 
+6.7-rc1 tag, FWIW.
 
-diff --git a/drivers/reset/reset-npcm.c b/drivers/reset/reset-npcm.c
-index f6c4f854f2be..8935ef95a2d1 100644
---- a/drivers/reset/reset-npcm.c
-+++ b/drivers/reset/reset-npcm.c
-@@ -6,8 +6,8 @@
- #include <linux/io.h>
- #include <linux/init.h>
- #include <linux/of.h>
--#include <linux/of_device.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/reboot.h>
- #include <linux/reset-controller.h>
- #include <linux/spinlock.h>
-@@ -351,8 +351,7 @@ static int npcm_usb_reset(struct platform_device *pdev, struct npcm_rc_data *rc)
- 		}
- 	}
- 
--	rc->info = (const struct npcm_reset_info *)
--			of_match_device(dev->driver->of_match_table, dev)->data;
-+	rc->info = device_get_match_data(dev);
- 	switch (rc->info->bmc_id) {
- 	case BMC_NPCM7XX:
- 		npcm_usb_reset_npcm7xx(rc);
-diff --git a/drivers/reset/sti/reset-syscfg.c b/drivers/reset/sti/reset-syscfg.c
-index c1ba04f6f155..2324060b747c 100644
---- a/drivers/reset/sti/reset-syscfg.c
-+++ b/drivers/reset/sti/reset-syscfg.c
-@@ -7,10 +7,11 @@
-  */
- #include <linux/kernel.h>
- #include <linux/platform_device.h>
-+#include <linux/property.h>
- #include <linux/module.h>
- #include <linux/err.h>
- #include <linux/types.h>
--#include <linux/of_device.h>
-+#include <linux/of.h>
- #include <linux/regmap.h>
- #include <linux/mfd/syscon.h>
- 
-@@ -183,14 +184,14 @@ static int syscfg_reset_controller_register(struct device *dev,
- int syscfg_reset_probe(struct platform_device *pdev)
- {
- 	struct device *dev = pdev ? &pdev->dev : NULL;
--	const struct of_device_id *match;
-+	const void *data;
- 
- 	if (!dev || !dev->driver)
- 		return -ENODEV;
- 
--	match = of_match_device(dev->driver->of_match_table, dev);
--	if (!match || !match->data)
-+	data = device_get_match_data(&pdev->dev);
-+	if (!data)
- 		return -EINVAL;
- 
--	return syscfg_reset_controller_register(dev, match->data);
-+	return syscfg_reset_controller_register(dev, data);
- }
--- 
-2.42.0
+After some debugging I discovered that the reason I wasn't getting any 
+output from dtbs_check was that I had neglected to specify ARCH=arm when 
+invoking it, and when that defaulted to x86 it silently did a whole 
+bunch of nothing.  It might be nice if something emitted some sort of 
+warning when invoked with nonsensical parameters (especially if I've 
+explicitly specified a dtstree=... argument pointing to arch/arm/...), 
+but oh well.
+
+After re-running it with ARCH=arm, it produced a fairly voluminous spew 
+of output, though after combing through it all as best I can tell only 
+one or two lines of it actually pertain to the .dts in question itself 
+(the vast majority being from a .dtsi it #includes).  I've fixed the one 
+remaining issue it reported (missing #address-cells and #size-cells on 
+the FRU eeprom node) and will post a v2 in the next few days (and 
+likewise on the spc621d8hm3 series).
+
+
+Zev
 
