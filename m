@@ -2,49 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 44EC07F3415
-	for <lists+openbmc@lfdr.de>; Tue, 21 Nov 2023 17:42:37 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 8F3247F35BB
+	for <lists+openbmc@lfdr.de>; Tue, 21 Nov 2023 19:12:34 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256 header.s=20171124 header.b=bl/aQJrf;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=BHbydk5b;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SZVXq1FsLz3cmV
-	for <lists+openbmc@lfdr.de>; Wed, 22 Nov 2023 03:42:35 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SZXXY3DH0z3cb6
+	for <lists+openbmc@lfdr.de>; Wed, 22 Nov 2023 05:12:29 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256 header.s=20171124 header.b=bl/aQJrf;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=BHbydk5b;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=lunn.ch (client-ip=156.67.10.101; helo=vps0.lunn.ch; envelope-from=andrew@lunn.ch; receiver=lists.ozlabs.org)
-X-Greylist: delayed 2432 seconds by postgrey-1.37 at boromir; Wed, 22 Nov 2023 03:42:01 AEDT
-Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.198.163.7; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SZVX90M6hz2xQF
-	for <openbmc@lists.ozlabs.org>; Wed, 22 Nov 2023 03:42:00 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-	bh=aZVSbYQtEsrPqaqCsxCo31rNgSiygRJ3cLDc3knYFXU=; b=bl/aQJrfTUHDANhv3Dm5Ml7ZlX
-	okOdikl4AvtMqEPCYzdztmNsTVsVk54SMW+rRWhtfEdvZIL45Bq24Hiq59b/Sdqw/RhiBP96bZzgr
-	A4kORTZ2Boqv7A76JCAy1UhWdqd0PYSbFYBy8O1c0KYzzbRX6IJRtyCjZZPIY4IshspA=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-	(envelope-from <andrew@lunn.ch>)
-	id 1r5TBF-000m1v-SN; Tue, 21 Nov 2023 17:00:53 +0100
-Date: Tue, 21 Nov 2023 17:00:53 +0100
-From: Andrew Lunn <andrew@lunn.ch>
-To: Tomer Maimon <tmaimon77@gmail.com>
-Subject: Re: [PATCH v1 2/2] net: stmmac: Add NPCM support
-Message-ID: <6aeb28f5-04c2-4723-9da2-d168025c307c@lunn.ch>
-References: <20231121151733.2015384-1-tmaimon77@gmail.com>
- <20231121151733.2015384-3-tmaimon77@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SZXWw0qq7z3cT7
+	for <openbmc@lists.ozlabs.org>; Wed, 22 Nov 2023 05:11:53 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1700590316; x=1732126316;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=6gNaIiHSkGOx3pUPJYXxwWlzVU2Zgy4WYJYQocOPIYw=;
+  b=BHbydk5bA76M9uzR90JZ/o3lrgYjZI/AGNL11x3/uE3a26FnGmBMj/kx
+   1D+wSw14M0iWz+YiJewent6r49BBHnqVUr6ypfk2WrDaN8zKl32JXVNql
+   pE2vh6dUGhCFIA/zHV8u4Y632MuDFj9JvSvXf+CwGvPSuGUtpXUpt1sz/
+   xXg2SglQRVI4ZRb0MXCadJt60iKfnVNoB76io/g/+hCh4W0Oo1vGBFfnS
+   V3Tj1E83w3kyk0GflVAuDOcfOqofVz4qvnAPYXLGcXnz7TIfa5hMfkSFy
+   9EI6GF41RDFwcy3OtHlaMzuD0qbFYQjS0tdoHlipzmTU1XsZmZrI5nKHq
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10901"; a="13443306"
+X-IronPort-AV: E=Sophos;i="6.04,216,1695711600"; 
+   d="scan'208";a="13443306"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Nov 2023 10:11:45 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10901"; a="1013992261"
+X-IronPort-AV: E=Sophos;i="6.04,216,1695711600"; 
+   d="scan'208";a="1013992261"
+Received: from smile.fi.intel.com ([10.237.72.54])
+  by fmsmga006.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Nov 2023 10:11:42 -0800
+Received: from andy by smile.fi.intel.com with local (Exim 4.97)
+	(envelope-from <andriy.shevchenko@linux.intel.com>)
+	id 1r5VDo-0000000Fsrj-1UCn;
+	Tue, 21 Nov 2023 20:11:40 +0200
+Date: Tue, 21 Nov 2023 20:11:39 +0200
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v1 1/1] pinctrl: nuvoton: Convert to use struct pingroup
+ and PINCTRL_PINGROUP()
+Message-ID: <ZVzy227f3cIiTmtE@smile.fi.intel.com>
+References: <20231120194802.1675239-1-andriy.shevchenko@linux.intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231121151733.2015384-3-tmaimon77@gmail.com>
+In-Reply-To: <20231120194802.1675239-1-andriy.shevchenko@linux.intel.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -56,29 +73,21 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: alexandre.torgue@foss.st.com, tali.perry1@gmail.com, edumazet@google.com, krzysztof.kozlowski+dt@linaro.org, linux-stm32@st-md-mailman.stormreply.com, benjaminfair@google.com, openbmc@lists.ozlabs.org, joabreu@synopsys.com, joel@jms.id.au, devicetree@vger.kernel.org, j.neuschaefer@gmx.net, robh+dt@kernel.org, peppe.cavallaro@st.com, linux-arm-kernel@lists.infradead.org, avifishman70@gmail.com, venture@google.com, linux-kernel@vger.kernel.org, mcoquelin.stm32@gmail.com, netdev@vger.kernel.org, davem@davemloft.net
+Cc: Linus Walleij <linus.walleij@linaro.org>, Jonathan =?iso-8859-1?Q?Neusch=E4fer?= <j.neuschaefer@gmx.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-> +void npcm_dwmac_pcs_init(struct npcm_dwmac *dwmac, struct device *dev,
-> +			 struct plat_stmmacenet_data *plat_dat)
-> +{
-> +	u16 val;
-> +
-> +	iowrite16((u16)(SR_MII_CTRL >> 9), dwmac->reg + IND_AC_BA_REG);
-> +	val = ioread16(dwmac->reg + PCS_SR_MII_CTRL_REG);
-> +	val |= PCS_RST;
-> +	iowrite16(val, dwmac->reg + PCS_SR_MII_CTRL_REG);
-> +
-> +	while (val & PCS_RST)
-> +		val = ioread16(dwmac->reg + PCS_SR_MII_CTRL_REG);
-> +
-> +	val &= ~(PCS_AN_ENABLE);
-> +	iowrite16(val, dwmac->reg + PCS_SR_MII_CTRL_REG);
-> +}
+On Mon, Nov 20, 2023 at 09:48:02PM +0200, Andy Shevchenko wrote:
+> The pin control header provides struct pingroup and PINCTRL_PINGROUP() macro.
+> Utilize them instead of open coded variants in the driver.
 
-Is this a licensed PCS implementation? Or home grown? If its been
-licensed from somebody, it maybe should live in driver/net/pcs, so
-others can reuse it when they license the same core.
+Linus, I dunno if you are going to apply this sooner (assuming Jonathan is okay
+with the change), but I have a bigger pending series where this will be a
+prerequisite. So, when I will be ready and if it's not being applied (yet),
+I'll include it into the bigger series as well.
 
-       Andrew
+-- 
+With Best Regards,
+Andy Shevchenko
+
+
