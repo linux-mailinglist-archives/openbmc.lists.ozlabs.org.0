@@ -1,54 +1,44 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id A81E87F32C3
-	for <lists+openbmc@lfdr.de>; Tue, 21 Nov 2023 16:53:26 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 44EC07F3415
+	for <lists+openbmc@lfdr.de>; Tue, 21 Nov 2023 17:42:37 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256 header.s=pandora-2019 header.b=zQcVP1tj;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256 header.s=20171124 header.b=bl/aQJrf;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SZTS442Tnz3d8t
-	for <lists+openbmc@lfdr.de>; Wed, 22 Nov 2023 02:53:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SZVXq1FsLz3cmV
+	for <lists+openbmc@lfdr.de>; Wed, 22 Nov 2023 03:42:35 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256 header.s=pandora-2019 header.b=zQcVP1tj;
+	dkim=pass (1024-bit key; unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256 header.s=20171124 header.b=bl/aQJrf;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=armlinux.org.uk (client-ip=2001:4d48:ad52:32c8:5054:ff:fe00:142; helo=pandora.armlinux.org.uk; envelope-from=linux+openbmc=lists.ozlabs.org@armlinux.org.uk; receiver=lists.ozlabs.org)
-X-Greylist: delayed 429 seconds by postgrey-1.37 at boromir; Wed, 22 Nov 2023 02:52:51 AEDT
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=lunn.ch (client-ip=156.67.10.101; helo=vps0.lunn.ch; envelope-from=andrew@lunn.ch; receiver=lists.ozlabs.org)
+X-Greylist: delayed 2432 seconds by postgrey-1.37 at boromir; Wed, 22 Nov 2023 03:42:01 AEDT
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SZTRR1Sp7z3cR4
-	for <openbmc@lists.ozlabs.org>; Wed, 22 Nov 2023 02:52:51 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=t92OZKOw/jrPAQGH9Id5OLcQ57oFZcBBd4j/l0YdMEI=; b=zQcVP1tj2x+6QgwU5DhcqEIUQY
-	buB/Vaulv/SCpMKjnIBt8ycB21gewTRNGaJirCKmo8W5ZByxhufVBsmGFcptOxIMiosfPQc9fzMVY
-	u/btbit81Q8tJPUj1IFDpT1pt7YvkyELqTVNGQRt0lSGBoA42juDjYsO+mx4J6ExZrevfjoZbD4Li
-	DTooEckGVI2tSQaSJATq6Z6LXxs4ELmvwPX3id6aKyZIXTLbg/DsHp5zp1hJ5/NSP8aFvrZY/ip/X
-	Q2y/T1+duxQsEClo+Sz/zjTseQ1sMP/RsF3P+clz05QsscjBfFhFymXfje9SaWdu4vZYZbsAScJdL
-	7juCgNPw==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:59934)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1r5Sw6-0007Qc-0N;
-	Tue, 21 Nov 2023 15:45:14 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1r5Sw3-0004In-UY; Tue, 21 Nov 2023 15:45:11 +0000
-Date: Tue, 21 Nov 2023 15:45:11 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SZVX90M6hz2xQF
+	for <openbmc@lists.ozlabs.org>; Wed, 22 Nov 2023 03:42:00 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=aZVSbYQtEsrPqaqCsxCo31rNgSiygRJ3cLDc3knYFXU=; b=bl/aQJrfTUHDANhv3Dm5Ml7ZlX
+	okOdikl4AvtMqEPCYzdztmNsTVsVk54SMW+rRWhtfEdvZIL45Bq24Hiq59b/Sdqw/RhiBP96bZzgr
+	A4kORTZ2Boqv7A76JCAy1UhWdqd0PYSbFYBy8O1c0KYzzbRX6IJRtyCjZZPIY4IshspA=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1r5TBF-000m1v-SN; Tue, 21 Nov 2023 17:00:53 +0100
+Date: Tue, 21 Nov 2023 17:00:53 +0100
+From: Andrew Lunn <andrew@lunn.ch>
 To: Tomer Maimon <tmaimon77@gmail.com>
 Subject: Re: [PATCH v1 2/2] net: stmmac: Add NPCM support
-Message-ID: <ZVzQh9ykusyknGgP@shell.armlinux.org.uk>
+Message-ID: <6aeb28f5-04c2-4723-9da2-d168025c307c@lunn.ch>
 References: <20231121151733.2015384-1-tmaimon77@gmail.com>
  <20231121151733.2015384-3-tmaimon77@gmail.com>
 MIME-Version: 1.0
@@ -70,34 +60,6 @@ Cc: alexandre.torgue@foss.st.com, tali.perry1@gmail.com, edumazet@google.com, kr
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Nov 21, 2023 at 05:17:33PM +0200, Tomer Maimon wrote:
-> Add Nuvoton NPCM BMC SoCs support to STMMAC dwmac driver.
-> 
-> And modify MAINTAINERS to add a new F: entry for this driver.
-> 
-> Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
-
-A few comments on this...
-
-> +#define IND_AC_BA_REG		0x1FE
-> +#define SR_MII_CTRL		0x3E0000
-> +
-> +#define PCS_SR_MII_CTRL_REG	0x0
-> +#define PCS_SPEED_SELECT6	BIT(6)
-> +#define PCS_AN_ENABLE		BIT(12)
-> +#define PCS_SPEED_SELECT13	BIT(13)
-> +#define PCS_RST			BIT(15)
-
-include/uapi/linux/mii.h:
-
-#define BMCR_SPEED1000          0x0040  /* MSB of Speed (1000)         */
-#define BMCR_ANENABLE           0x1000  /* Enable auto negotiation     */
-#define BMCR_SPEED100           0x2000  /* Select 100Mbps              */
-#define BMCR_RESET              0x8000  /* Reset to default state      */
-
-Look familiar? Maybe use the standard definitions for a standardised
-register?
-
 > +void npcm_dwmac_pcs_init(struct npcm_dwmac *dwmac, struct device *dev,
 > +			 struct plat_stmmacenet_data *plat_dat)
 > +{
@@ -110,23 +72,13 @@ register?
 > +
 > +	while (val & PCS_RST)
 > +		val = ioread16(dwmac->reg + PCS_SR_MII_CTRL_REG);
-
-What if the PCS never clears its reset bit? Maybe use
-read_poll_timeout() ?
-
 > +
 > +	val &= ~(PCS_AN_ENABLE);
 > +	iowrite16(val, dwmac->reg + PCS_SR_MII_CTRL_REG);
 > +}
 
-Also, maybe it's time to require new stmmac platform support to start
-making use of the phylink PCS support rather than continuing to code its
-own?
+Is this a licensed PCS implementation? Or home grown? If its been
+licensed from somebody, it maybe should live in driver/net/pcs, so
+others can reuse it when they license the same core.
 
-I notice, however, that you always disable inband signalling - please
-explain why. Also, what protocol does the PCS use when communicating
-with the PHY?
-
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+       Andrew
