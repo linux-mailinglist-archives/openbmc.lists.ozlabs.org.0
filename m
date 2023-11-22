@@ -1,72 +1,71 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id A02497F3D00
-	for <lists+openbmc@lfdr.de>; Wed, 22 Nov 2023 05:47:32 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 1F7697F3E3F
+	for <lists+openbmc@lfdr.de>; Wed, 22 Nov 2023 07:36:19 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=dpQjSDGw;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=iXVm3RCQ;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SZpdG49C8z3dGx
-	for <lists+openbmc@lfdr.de>; Wed, 22 Nov 2023 15:47:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SZs2j1KGNz3dBt
+	for <lists+openbmc@lfdr.de>; Wed, 22 Nov 2023 17:36:13 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=dpQjSDGw;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=iXVm3RCQ;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=192.198.163.8; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
-X-Greylist: delayed 65 seconds by postgrey-1.37 at boromir; Wed, 22 Nov 2023 15:46:57 AEDT
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.8])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62d; helo=mail-pl1-x62d.google.com; envelope-from=potin.lai.pt@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SZpcd5Bb0z3cTM
-	for <openbmc@lists.ozlabs.org>; Wed, 22 Nov 2023 15:46:57 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1700628418; x=1732164418;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=HLMmaO5eRFcQjJshfZEl2KySYxKXTveeGm/s8aORDZk=;
-  b=dpQjSDGw/2BMmOKWqXBjQ8gApr8Z44mowC9+9fV1w80R/2luYmlWE3hR
-   0O6HUwYmrpSgRiQsiqHRtD4iVDZwx6kikpq384eHoJ5mb2LKhDBIwuz/z
-   dsW8sIIu5TMRFDVaE7wVXpDaxsB8CjQih55pzG+d4lDeORQWEdekDVaBH
-   JEkv4n3jbTEnB8NxVIB0XSYQ2BQVLQRtHNR6at3HkWgsyAXqtExaAEC/1
-   zuE69hkFcPhmyoIpQayyiP1eSd/+WI5dVoz9giPKZhw+aX9rqJOmX21ao
-   E4jW6mRE9ynXoWKMgpprP4O/ZQwzrJV+HRMW9ECNeJwYNk6omMr+pTW5l
-   A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10901"; a="5116616"
-X-IronPort-AV: E=Sophos;i="6.04,217,1695711600"; 
-   d="scan'208";a="5116616"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 Nov 2023 20:45:47 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10901"; a="801780556"
-X-IronPort-AV: E=Sophos;i="6.04,217,1695711600"; 
-   d="scan'208";a="801780556"
-Received: from lkp-server02.sh.intel.com (HELO b8de5498638e) ([10.239.97.151])
-  by orsmga001.jf.intel.com with ESMTP; 21 Nov 2023 20:45:40 -0800
-Received: from kbuild by b8de5498638e with local (Exim 4.96)
-	(envelope-from <lkp@intel.com>)
-	id 1r5f7K-0008f4-1R;
-	Wed, 22 Nov 2023 04:45:38 +0000
-Date: Wed, 22 Nov 2023 12:45:02 +0800
-From: kernel test robot <lkp@intel.com>
-To: Tomer Maimon <tmaimon77@gmail.com>, davem@davemloft.net,
-	edumazet@google.com, robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, alexandre.torgue@foss.st.com,
-	peppe.cavallaro@st.com, joabreu@synopsys.com,
-	mcoquelin.stm32@gmail.com, avifishman70@gmail.com,
-	tali.perry1@gmail.com, joel@jms.id.au, andrew@codeconstruct.com.au,
-	venture@google.com, yuenn@google.com, benjaminfair@google.com,
-	j.neuschaefer@gmx.net
-Subject: Re: [PATCH v1 2/2] net: stmmac: Add NPCM support
-Message-ID: <202311221228.eaAlsztJ-lkp@intel.com>
-References: <20231121151733.2015384-3-tmaimon77@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SZs135n4Vz3cCh
+	for <openbmc@lists.ozlabs.org>; Wed, 22 Nov 2023 17:34:47 +1100 (AEDT)
+Received: by mail-pl1-x62d.google.com with SMTP id d9443c01a7336-1cf52e5e07eso3986895ad.0
+        for <openbmc@lists.ozlabs.org>; Tue, 21 Nov 2023 22:34:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1700634879; x=1701239679; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=C2Hf0WGMDXuTlMd6ayziR5b897aMIPHYGGKJpai0lqY=;
+        b=iXVm3RCQCuyvxaU6TPx92pa4aMbTS3C2hIf7sQMY0xTz+ztQ4f8dXf642NZMA3G3J0
+         /Wo693pzh/zqVzO3OnUuzUcPtJVcCqcEeRQIdYvAMXkU4dNocoJDf7X3Kr7Jzcl2FQmT
+         aCn8FfFg1akIZUEnxXJ8guVzSjBBvm99OBXrT2r4rV3b5x21khquuD6xCdDvYE9NqQKn
+         ZenUk03SQOWLeaebmlX8I9DPZmZzbtJUbPDNo4ESt7qEK2uzAAwUagypc89z364sOejc
+         EOol7QDwfbY/9R1DXe0Me+8rs/eMuv9WOiL4FpTlph77mEmFrYEL+MuLFm5YRycSFU1l
+         ZZyQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1700634879; x=1701239679;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=C2Hf0WGMDXuTlMd6ayziR5b897aMIPHYGGKJpai0lqY=;
+        b=DS6EUPP6SybS2laIYBYKnTWThS/qJOUkWr6bDGcCKg7F8Om/4lNTvTFd0isUd+Coqt
+         duqJbSLQ6P9SYnldYGfZcDU3CTr2B9TyZJKTL+nTvgC4DKBbo6zcnQiXUVBL9UcllDdA
+         BJHuLTFabc7i/S1K2RG4vKg2ljVND9xIs2VSoegmuQG2ivIIGbm/Sj1t3jCTok19UiJr
+         +Jwr5M2ivb15yHTfFGr+4kBEHL4wG2zUlGSiw5vlaCDeZZyPnIDkmzkiFQaefu1VEQtF
+         8kkfIi7kK4BGFWY2nCADDSQpiiGJqMlFr91Pdaj7G+tZb/fS482tcDmMIOOwO8aU9+ZP
+         glPw==
+X-Gm-Message-State: AOJu0YwqjeByjCfCqUcqiiqfWEetqmfGK4gM/wHRX3klxFMikmNAPWCW
+	//X41jZmWxwwwQoXQmNUoTcdrVqq5+s=
+X-Google-Smtp-Source: AGHT+IHvHgp2jEZOgcfGVQmlIS6XpvPXIrW4chOK/c05pxkAIuDWtF9o6dT1D+03RMPJ7JjTFQ0pxQ==
+X-Received: by 2002:a17:903:188:b0:1ce:b83f:bd0c with SMTP id z8-20020a170903018800b001ceb83fbd0cmr7857473plg.7.1700634879337;
+        Tue, 21 Nov 2023 22:34:39 -0800 (PST)
+Received: from localhost.localdomain (1-34-21-66.hinet-ip.hinet.net. [1.34.21.66])
+        by smtp.gmail.com with ESMTPSA id s11-20020a170902ea0b00b001cf76664db6sm962714plg.309.2023.11.21.22.34.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Nov 2023 22:34:38 -0800 (PST)
+From: Potin Lai <potin.lai.pt@gmail.com>
+X-Google-Original-From: Potin Lai <potin.lai@quantatw.com>
+To: openbmc@lists.ozlabs.org,
+	joel@jms.id.au
+Subject: [PATCH linux dev-6.5 0/2] hwmon: (pmbus) MPS mp5990 hsc controller
+Date: Wed, 22 Nov 2023 14:32:26 +0800
+Message-Id: <20231122063228.4037027-1-potin.lai@quantatw.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231121151733.2015384-3-tmaimon77@gmail.com>
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,61 +77,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, Tomer Maimon <tmaimon77@gmail.com>, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, oe-kbuild-all@lists.linux.dev, linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org
+Cc: peter.yin@quantatw.com, Peter Yin <peteryin.openbmc@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Tomer,
+Add MPS mp5990 hot-swap controller.
+Link: https://lore.kernel.org/all/20231113155008.2147090-1-peteryin.openbmc@gmail.com/
 
-kernel test robot noticed the following build warnings:
+Peter Yin (2):
+  dt-bindings: hwmon: Add mps mp5990 driver bindings
+  hwmon: (pmbus) Add support for MPS Multi-phase mp5990
 
-[auto build test WARNING on robh/for-next]
-[also build test WARNING on net-next/main net/main linus/master v6.7-rc2 next-20231121]
-[If your patch is applied to the wrong git tree, kindly drop us a note.
-And when submitting patch, we suggest to use '--base' as documented in
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/Tomer-Maimon/dt-bindings-net-Add-support-NPCM-dwmac/20231121-231908
-base:   https://git.kernel.org/pub/scm/linux/kernel/git/robh/linux.git for-next
-patch link:    https://lore.kernel.org/r/20231121151733.2015384-3-tmaimon77%40gmail.com
-patch subject: [PATCH v1 2/2] net: stmmac: Add NPCM support
-config: arc-allmodconfig (https://download.01.org/0day-ci/archive/20231122/202311221228.eaAlsztJ-lkp@intel.com/config)
-compiler: arceb-elf-gcc (GCC) 13.2.0
-reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231122/202311221228.eaAlsztJ-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Closes: https://lore.kernel.org/oe-kbuild-all/202311221228.eaAlsztJ-lkp@intel.com/
-
-All warnings (new ones prefixed by >>):
-
->> drivers/net/ethernet/stmicro/stmmac/dwmac-npcm.c:53:6: warning: no previous prototype for 'npcm_dwmac_pcs_init' [-Wmissing-prototypes]
-      53 | void npcm_dwmac_pcs_init(struct npcm_dwmac *dwmac, struct device *dev,
-         |      ^~~~~~~~~~~~~~~~~~~
-
-
-vim +/npcm_dwmac_pcs_init +53 drivers/net/ethernet/stmicro/stmmac/dwmac-npcm.c
-
-    52	
-  > 53	void npcm_dwmac_pcs_init(struct npcm_dwmac *dwmac, struct device *dev,
-    54				 struct plat_stmmacenet_data *plat_dat)
-    55	{
-    56		u16 val;
-    57	
-    58		iowrite16((u16)(SR_MII_CTRL >> 9), dwmac->reg + IND_AC_BA_REG);
-    59		val = ioread16(dwmac->reg + PCS_SR_MII_CTRL_REG);
-    60		val |= PCS_RST;
-    61		iowrite16(val, dwmac->reg + PCS_SR_MII_CTRL_REG);
-    62	
-    63		while (val & PCS_RST)
-    64			val = ioread16(dwmac->reg + PCS_SR_MII_CTRL_REG);
-    65	
-    66		val &= ~(PCS_AN_ENABLE);
-    67		iowrite16(val, dwmac->reg + PCS_SR_MII_CTRL_REG);
-    68	}
-    69	
+ .../devicetree/bindings/trivial-devices.yaml  |   2 +
+ Documentation/hwmon/index.rst                 |   1 +
+ Documentation/hwmon/mp5990.rst                |  84 +++++++++
+ drivers/hwmon/pmbus/Kconfig                   |   9 +
+ drivers/hwmon/pmbus/Makefile                  |   1 +
+ drivers/hwmon/pmbus/mp5990.c                  | 177 ++++++++++++++++++
+ 6 files changed, 274 insertions(+)
+ create mode 100644 Documentation/hwmon/mp5990.rst
+ create mode 100644 drivers/hwmon/pmbus/mp5990.c
 
 -- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
+2.31.1
+
