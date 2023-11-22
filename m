@@ -2,73 +2,66 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C42067F3E36
-	for <lists+openbmc@lfdr.de>; Wed, 22 Nov 2023 07:35:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 062C57F4E47
+	for <lists+openbmc@lfdr.de>; Wed, 22 Nov 2023 18:24:17 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=NLJPnEbW;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Jry1DxbP;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SZs1h58vFz3ckQ
-	for <lists+openbmc@lfdr.de>; Wed, 22 Nov 2023 17:35:20 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Sb7QQ6VG8z3dBj
+	for <lists+openbmc@lfdr.de>; Thu, 23 Nov 2023 04:24:14 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=NLJPnEbW;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=Jry1DxbP;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::429; helo=mail-pf1-x429.google.com; envelope-from=potin.lai.pt@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pf1-x429.google.com (mail-pf1-x429.google.com [IPv6:2607:f8b0:4864:20::429])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b2a; helo=mail-yb1-xb2a.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-yb1-xb2a.google.com (mail-yb1-xb2a.google.com [IPv6:2607:f8b0:4864:20::b2a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SZs126rD9z3cCh
-	for <openbmc@lists.ozlabs.org>; Wed, 22 Nov 2023 17:34:45 +1100 (AEDT)
-Received: by mail-pf1-x429.google.com with SMTP id d2e1a72fcca58-6cb4d366248so3196692b3a.0
-        for <openbmc@lists.ozlabs.org>; Tue, 21 Nov 2023 22:34:45 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sb7Pr5q1wz30K6
+	for <openbmc@lists.ozlabs.org>; Thu, 23 Nov 2023 04:23:43 +1100 (AEDT)
+Received: by mail-yb1-xb2a.google.com with SMTP id 3f1490d57ef6-db406b5ceddso30214276.0
+        for <openbmc@lists.ozlabs.org>; Wed, 22 Nov 2023 09:23:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700634882; x=1701239682; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HRJsK/wyEkgX8WzdbpvbVaZWN+Ud3wIJUdGw9y8eTWU=;
-        b=NLJPnEbWl1mFNCimVEsMyU3plnkGt5pHNW6mvzB82VsAbpMhOG5GowqQQ9auKj0tpv
-         yl6wRoJGrcPuyTyXE9Mu0veT/VzMnCt4TMmIhrrxPx5RbaXUTiWIKT7eygEg8H4pANLf
-         gHMDoZTevF3ToEstw5V/F8srbTYxyAQv4N+v7x1Do29M2/GR4nE7TT0OPof9S6qSZRac
-         WF7cPi8+w3uzpRAoEc8j2LSMHQA/2GDq3Ws1Bu9o9ZDJeGvUb/claFkeBXkGS5jqKM9W
-         LGwjw4VEkEvoeBgQtIYDbfvRk2YzmWzmsF9+UMcKcSmeAdK38lGLI973C6WxeOYI8c7U
-         5PfA==
+        d=gmail.com; s=20230601; t=1700673820; x=1701278620; darn=lists.ozlabs.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=NynfojDHOku/gIHF0Vtvo3+Mk/LM+8uGwtlY48AR6MM=;
+        b=Jry1DxbPH/pTkV9Lf9wg8we0KQ/udy5+dyne0z76MSleLoRWykFU01bUrsocMlo3tJ
+         hy491U3mwJp9OwqnMWbNTJKZ8uCcPs2E3MbgPoPmMVxhNnPhatBdnggf3OVVuAC7IOJm
+         K77cm/m/ETTj9t/nOW1ZAneAxUM1kJbUaB1CUEnM/l470tyZzSfdCIO8Y6wEHZEqEiVS
+         DBANjTWt2gUJEs+lhmwZPZDg0MHo1d36+r4HrXuPoWD4B93GVeysl7zV70szvlq3UQv/
+         c7RXchsTYVqtOaNyIVcLYkn5+JJ+ISE3Tzx4ms+quVUKHY4q+yU80Rgp90dDzXOCQ/tK
+         nRWw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700634882; x=1701239682;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HRJsK/wyEkgX8WzdbpvbVaZWN+Ud3wIJUdGw9y8eTWU=;
-        b=rgHSbjIDlYo/BVjFoXkv+9jl919eaRDLVd6pZMG/VsOVrVifMvpCPrOBtaUIxGao2z
-         nELKethZ0942J6YY+TquLgjPgvPwfE6q/aNWAHstcxZv+6dwz8qPsQppqj/k9uucgWxV
-         kXDjF4uLcPuWgsUQGIIL67u4x4N90zII0V2t0UQTZY8GJ9wn7YQ1X88yusJoZ98f6hIs
-         p2t7hIzrcPekqVe0CsK1sS9zwVWdQsUZnDOjSLNh1yUoY0Iyke514dYZ8gBdNUGrAI1N
-         1K16SUgSR2azBOSqakYMiu9Mi5Sr3ED0LpikXqDlDLafnFkcEXaujTnROBxu+UGrntC9
-         +q4w==
-X-Gm-Message-State: AOJu0YzX4VQE3ZUdw8utAnKHwy6Jbp8/6j4ybQV2leqOuQ/D7Qgo7tyi
-	h4Z7bL+ygPlIZRa/mjdzfkI5tN7p1KY=
-X-Google-Smtp-Source: AGHT+IFwVjoINz+B2dtCZQDge45UFIiU54vXBvT+s4DSsK+ZMvAzjbGY2PK8CCsAPV8p88ahAAPJvw==
-X-Received: by 2002:a05:6a20:3ca3:b0:172:6771:d766 with SMTP id b35-20020a056a203ca300b001726771d766mr1436096pzj.51.1700634882541;
-        Tue, 21 Nov 2023 22:34:42 -0800 (PST)
-Received: from localhost.localdomain (1-34-21-66.hinet-ip.hinet.net. [1.34.21.66])
-        by smtp.gmail.com with ESMTPSA id s11-20020a170902ea0b00b001cf76664db6sm962714plg.309.2023.11.21.22.34.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Nov 2023 22:34:42 -0800 (PST)
-From: Potin Lai <potin.lai.pt@gmail.com>
-X-Google-Original-From: Potin Lai <potin.lai@quantatw.com>
-To: openbmc@lists.ozlabs.org,
-	joel@jms.id.au
-Subject: [PATCH linux dev-6.5 2/2] hwmon: (pmbus) Add support for MPS Multi-phase mp5990
-Date: Wed, 22 Nov 2023 14:32:28 +0800
-Message-Id: <20231122063228.4037027-3-potin.lai@quantatw.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20231122063228.4037027-1-potin.lai@quantatw.com>
-References: <20231122063228.4037027-1-potin.lai@quantatw.com>
+        d=1e100.net; s=20230601; t=1700673820; x=1701278620;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=NynfojDHOku/gIHF0Vtvo3+Mk/LM+8uGwtlY48AR6MM=;
+        b=CXU5A+mZNXyTF4brm0+beqk62rY6umJQfPOPiM5oT5973/BGFMSRDuxNYFvdcHkUYu
+         JkeZ8aKGNXWg28n6/vX/yAmx+t7JK3YQlfK353jJoGDi5THW5jskJB8KgLVkSfLLdt+B
+         OqMZNyaf+apqwmRYU+MflI8Sy+XbfxIr3/a7HMFKDkcGgLfE9gZDH190PBfwsQQCgfMo
+         Bmu7Nd7Mhwp0KvL68Pp6PoesHPCTQkV1Fu0J5ycRl7EnFg4fReWxUm/w7njAVu38MdFe
+         cVM9xMfT9pKAIR8aeA6jyVx2TXhn1y1HVsZO6FPxal1G/tj9YgsSeB6ccuOPmP8AUxNZ
+         skag==
+X-Gm-Message-State: AOJu0YzOlLSWcRivPRMAwFyvPwSoUpjAaaL6HvL83cEFYSu8KIquOMm7
+	eGGq5068CShoFGJ8NSchlHaMiEDrpimOGiqgn8E=
+X-Google-Smtp-Source: AGHT+IHOpI5xPVk6Sar76TK2xFochhgo10/ziA9WnAM3iYe0K/JG8b7nGUI7tLK1eOpbXeUs9Wl63rjUYOi5f2szQMQ=
+X-Received: by 2002:a5b:1cb:0:b0:d91:fdb:afd4 with SMTP id f11-20020a5b01cb000000b00d910fdbafd4mr2751108ybp.16.1700673819823;
+ Wed, 22 Nov 2023 09:23:39 -0800 (PST)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20231121151733.2015384-1-tmaimon77@gmail.com> <20231121151733.2015384-3-tmaimon77@gmail.com>
+ <ZVzQh9ykusyknGgP@shell.armlinux.org.uk>
+In-Reply-To: <ZVzQh9ykusyknGgP@shell.armlinux.org.uk>
+From: Tomer Maimon <tmaimon77@gmail.com>
+Date: Wed, 22 Nov 2023 19:23:28 +0200
+Message-ID: <CAP6Zq1gzAhp9BZNX1MOozUfQc82Vi_S==on5_nOfVfpvtgnN2g@mail.gmail.com>
+Subject: Re: [PATCH v1 2/2] net: stmmac: Add NPCM support
+To: "Russell King (Oracle)" <linux@armlinux.org.uk>
+Content-Type: text/plain; charset="UTF-8"
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,343 +73,85 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: peter.yin@quantatw.com, Peter Yin <peteryin.openbmc@gmail.com>
+Cc: alexandre.torgue@foss.st.com, tali.perry1@gmail.com, edumazet@google.com, krzysztof.kozlowski+dt@linaro.org, linux-stm32@st-md-mailman.stormreply.com, benjaminfair@google.com, openbmc@lists.ozlabs.org, joabreu@synopsys.com, joel@jms.id.au, devicetree@vger.kernel.org, j.neuschaefer@gmx.net, robh+dt@kernel.org, peppe.cavallaro@st.com, linux-arm-kernel@lists.infradead.org, avifishman70@gmail.com, venture@google.com, linux-kernel@vger.kernel.org, mcoquelin.stm32@gmail.com, netdev@vger.kernel.org, davem@davemloft.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-From: Peter Yin <peteryin.openbmc@gmail.com>
+Hi Russell,
 
-Add support for mp5990 device from Monolithic Power Systems, Inc. (MPS)
-vendor. This is a Hot-Swap Controller.
+Thanks for your comments.
 
-Signed-off-by: Peter Yin <peteryin.openbmc@gmail.com>
----
- Documentation/hwmon/index.rst  |   1 +
- Documentation/hwmon/mp5990.rst |  84 ++++++++++++++++
- drivers/hwmon/pmbus/Kconfig    |   9 ++
- drivers/hwmon/pmbus/Makefile   |   1 +
- drivers/hwmon/pmbus/mp5990.c   | 177 +++++++++++++++++++++++++++++++++
- 5 files changed, 272 insertions(+)
- create mode 100644 Documentation/hwmon/mp5990.rst
- create mode 100644 drivers/hwmon/pmbus/mp5990.c
+On Tue, 21 Nov 2023 at 17:45, Russell King (Oracle)
+<linux@armlinux.org.uk> wrote:
+>
+> On Tue, Nov 21, 2023 at 05:17:33PM +0200, Tomer Maimon wrote:
+> > Add Nuvoton NPCM BMC SoCs support to STMMAC dwmac driver.
+> >
+> > And modify MAINTAINERS to add a new F: entry for this driver.
+> >
+> > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
+>
+> A few comments on this...
+>
+> > +#define IND_AC_BA_REG                0x1FE
+> > +#define SR_MII_CTRL          0x3E0000
+> > +
+> > +#define PCS_SR_MII_CTRL_REG  0x0
+> > +#define PCS_SPEED_SELECT6    BIT(6)
+> > +#define PCS_AN_ENABLE                BIT(12)
+> > +#define PCS_SPEED_SELECT13   BIT(13)
+> > +#define PCS_RST                      BIT(15)
+>
+> include/uapi/linux/mii.h:
+>
+> #define BMCR_SPEED1000          0x0040  /* MSB of Speed (1000)         */
+> #define BMCR_ANENABLE           0x1000  /* Enable auto negotiation     */
+> #define BMCR_SPEED100           0x2000  /* Select 100Mbps              */
+> #define BMCR_RESET              0x8000  /* Reset to default state      */
+>
+> Look familiar? Maybe use the standard definitions for a standardised
+> register?
+>
+> > +void npcm_dwmac_pcs_init(struct npcm_dwmac *dwmac, struct device *dev,
+> > +                      struct plat_stmmacenet_data *plat_dat)
+> > +{
+> > +     u16 val;
+> > +
+> > +     iowrite16((u16)(SR_MII_CTRL >> 9), dwmac->reg + IND_AC_BA_REG);
+> > +     val = ioread16(dwmac->reg + PCS_SR_MII_CTRL_REG);
+> > +     val |= PCS_RST;
+> > +     iowrite16(val, dwmac->reg + PCS_SR_MII_CTRL_REG);
+> > +
+> > +     while (val & PCS_RST)
+> > +             val = ioread16(dwmac->reg + PCS_SR_MII_CTRL_REG);
+>
+> What if the PCS never clears its reset bit? Maybe use
+> read_poll_timeout() ?
+>
+> > +
+> > +     val &= ~(PCS_AN_ENABLE);
+> > +     iowrite16(val, dwmac->reg + PCS_SR_MII_CTRL_REG);
+> > +}
+>
+> Also, maybe it's time to require new stmmac platform support to start
+> making use of the phylink PCS support rather than continuing to code its
+> own?
+>
+> I notice, however, that you always disable inband signalling - please
+> explain why. Also, what protocol does the PCS use when communicating
+> with the PHY?
+With disable inband signalling you mean disable auto negotiation? if
+yes it is because the PCS sgmii is connected to the external phy AN
+and is not working between the PCS and external phy.
+accessing the PCS registers is indirect. The top 13 bits (bits 21-9)
+of the offset have to be written to Indirect Access Base register
+bits 12:0 before indirectly accessing the target register with the
+offset of the bottom 9 bits (8:0) of the offset
+>
+> --
+> RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+> FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
 
-diff --git a/Documentation/hwmon/index.rst b/Documentation/hwmon/index.rst
-index 75b869ff6c53e..1247244b8b4c1 100644
---- a/Documentation/hwmon/index.rst
-+++ b/Documentation/hwmon/index.rst
-@@ -158,6 +158,7 @@ Hardware Monitoring Kernel Drivers
-    mp2888
-    mp2975
-    mp5023
-+   mp5990
-    nct6683
-    nct6775
-    nct7802
-diff --git a/Documentation/hwmon/mp5990.rst b/Documentation/hwmon/mp5990.rst
-new file mode 100644
-index 0000000000000..6f2f0c099d449
---- /dev/null
-+++ b/Documentation/hwmon/mp5990.rst
-@@ -0,0 +1,84 @@
-+.. SPDX-License-Identifier: GPL-2.0
-+
-+Kernel driver mp5990
-+====================
-+
-+Supported chips:
-+
-+  * MPS MP5990
-+
-+    Prefix: 'mp5990'
-+
-+  * Datasheet
-+
-+    Publicly available at the MPS website : https://www.monolithicpower.com/en/mp5990.html
-+
-+Author:
-+
-+	Peter Yin <peteryin.openbmc@gmail.com>
-+
-+Description
-+-----------
-+
-+This driver implements support for Monolithic Power Systems, Inc. (MPS)
-+MP5990 Hot-Swap Controller.
-+
-+Device compliant with:
-+
-+- PMBus rev 1.3 interface.
-+
-+Device supports direct and linear format for reading input voltage,
-+output voltage, output current, input power and temperature.
-+
-+The driver exports the following attributes via the 'sysfs' files
-+for input voltage:
-+
-+**in1_input**
-+
-+**in1_label**
-+
-+**in1_max**
-+
-+**in1_max_alarm**
-+
-+**in1_min**
-+
-+**in1_min_alarm**
-+
-+The driver provides the following attributes for output voltage:
-+
-+**in2_input**
-+
-+**in2_label**
-+
-+**in2_alarm**
-+
-+The driver provides the following attributes for output current:
-+
-+**curr1_input**
-+
-+**curr1_label**
-+
-+**curr1_alarm**
-+
-+**curr1_max**
-+
-+The driver provides the following attributes for input power:
-+
-+**power1_input**
-+
-+**power1_label**
-+
-+**power1_alarm**
-+
-+The driver provides the following attributes for temperature:
-+
-+**temp1_input**
-+
-+**temp1_max**
-+
-+**temp1_max_alarm**
-+
-+**temp1_crit**
-+
-+**temp1_crit_alarm**
-diff --git a/drivers/hwmon/pmbus/Kconfig b/drivers/hwmon/pmbus/Kconfig
-index 2b43326b602b9..20391bdde16a9 100644
---- a/drivers/hwmon/pmbus/Kconfig
-+++ b/drivers/hwmon/pmbus/Kconfig
-@@ -335,6 +335,15 @@ config SENSORS_MP5023
- 	  This driver can also be built as a module. If so, the module will
- 	  be called mp5023.
- 
-+config SENSORS_MP5990
-+	tristate "MPS MP5990"
-+	help
-+	  If you say yes here you get hardware monitoring support for MPS
-+	  MP5990.
-+
-+	  This driver can also be built as a module. If so, the module will
-+	  be called mp5990.
-+
- config SENSORS_MPQ7932_REGULATOR
- 	bool "Regulator support for MPQ7932"
- 	depends on SENSORS_MPQ7932 && REGULATOR
-diff --git a/drivers/hwmon/pmbus/Makefile b/drivers/hwmon/pmbus/Makefile
-index 94e28f6d6a618..eea38c77ed1db 100644
---- a/drivers/hwmon/pmbus/Makefile
-+++ b/drivers/hwmon/pmbus/Makefile
-@@ -36,6 +36,7 @@ obj-$(CONFIG_SENSORS_MAX8688)	+= max8688.o
- obj-$(CONFIG_SENSORS_MP2888)	+= mp2888.o
- obj-$(CONFIG_SENSORS_MP2975)	+= mp2975.o
- obj-$(CONFIG_SENSORS_MP5023)	+= mp5023.o
-+obj-$(CONFIG_SENSORS_MP5990)	+= mp5990.o
- obj-$(CONFIG_SENSORS_MPQ7932)	+= mpq7932.o
- obj-$(CONFIG_SENSORS_PLI1209BC)	+= pli1209bc.o
- obj-$(CONFIG_SENSORS_PM6764TR)	+= pm6764tr.o
-diff --git a/drivers/hwmon/pmbus/mp5990.c b/drivers/hwmon/pmbus/mp5990.c
-new file mode 100644
-index 0000000000000..2d721b6acfb87
---- /dev/null
-+++ b/drivers/hwmon/pmbus/mp5990.c
-@@ -0,0 +1,177 @@
-+// SPDX-License-Identifier: GPL-2.0-or-later
-+/*
-+ * Driver for MPS MP5990 Hot-Swap Controller
-+ */
-+
-+#include <linux/i2c.h>
-+#include <linux/module.h>
-+#include <linux/of_device.h>
-+#include "pmbus.h"
-+
-+#define MP5990_EFUSE_CFG	(0xC4)
-+#define MP5990_VOUT_FORMAT	BIT(9)
-+
-+struct mp5990_data {
-+	struct pmbus_driver_info info;
-+	u8 vout_mode;
-+	u8 vout_linear_exponent;
-+};
-+
-+#define to_mp5990_data(x)  container_of(x, struct mp5990_data, info)
-+
-+static int mp5990_read_byte_data(struct i2c_client *client, int page, int reg)
-+{
-+	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
-+	struct mp5990_data *data = to_mp5990_data(info);
-+
-+	switch (reg) {
-+	case PMBUS_VOUT_MODE:
-+		if (data->vout_mode == linear) {
-+			/*
-+			 * The VOUT format is linear11, not linear16.
-+			 * We should enforce the VOUT in linear mode and
-+			 * return exponent value.
-+			 */
-+			return data->vout_linear_exponent;
-+		}
-+
-+		/*
-+		 * The datasheet does not support the VOUT command,
-+		 * but the device responds with a default value of 0x17.
-+		 * In the standard, 0x17 represents linear mode. However,
-+		 * Therefore, we should enforce the VOUT in the direct format
-+		 * when format use default direct mode.
-+		 */
-+		return PB_VOUT_MODE_DIRECT;
-+
-+	default:
-+		return -ENODATA;
-+	}
-+}
-+
-+static int mp5990_read_word_data(struct i2c_client *client, int page,
-+				 int phase, int reg)
-+{
-+	const struct pmbus_driver_info *info = pmbus_get_driver_info(client);
-+	struct mp5990_data *data = to_mp5990_data(info);
-+	int ret;
-+	s32 mantissa;
-+
-+	switch (reg) {
-+	case PMBUS_READ_VOUT:
-+		ret = pmbus_read_word_data(client, page, phase, reg);
-+		if (ret < 0)
-+			return ret;
-+		/*
-+		 * Because the VOUT mode is linear11 and not linear16,
-+		 * we disregard bits[15:11] and report based on the VOUT mode.
-+		 */
-+		if (data->vout_mode == linear) {
-+			mantissa = ((s16)((ret & 0x7ff) << 5)) >> 5;
-+			ret = mantissa;
-+		}
-+		break;
-+	default:
-+		return -ENODATA;
-+	}
-+
-+	return ret;
-+}
-+
-+static struct pmbus_driver_info mp5990_info = {
-+	.pages = 1,
-+	.format[PSC_VOLTAGE_IN] = direct,
-+	.format[PSC_VOLTAGE_OUT] = direct,
-+	.format[PSC_CURRENT_OUT] = direct,
-+	.format[PSC_POWER] = direct,
-+	.format[PSC_TEMPERATURE] = direct,
-+	.m[PSC_VOLTAGE_IN] = 32,
-+	.b[PSC_VOLTAGE_IN] = 0,
-+	.R[PSC_VOLTAGE_IN] = 0,
-+	.m[PSC_VOLTAGE_OUT] = 32,
-+	.b[PSC_VOLTAGE_OUT] = 0,
-+	.R[PSC_VOLTAGE_OUT] = 0,
-+	.m[PSC_CURRENT_OUT] = 16,
-+	.b[PSC_CURRENT_OUT] = 0,
-+	.R[PSC_CURRENT_OUT] = 0,
-+	.m[PSC_POWER] = 1,
-+	.b[PSC_POWER] = 0,
-+	.R[PSC_POWER] = 0,
-+	.m[PSC_TEMPERATURE] = 1,
-+	.b[PSC_TEMPERATURE] = 0,
-+	.R[PSC_TEMPERATURE] = 0,
-+	.func[0] =
-+		PMBUS_HAVE_VIN | PMBUS_HAVE_VOUT | PMBUS_HAVE_PIN |
-+		PMBUS_HAVE_TEMP | PMBUS_HAVE_IOUT |
-+		PMBUS_HAVE_STATUS_INPUT | PMBUS_HAVE_STATUS_TEMP,
-+	.read_byte_data = mp5990_read_byte_data,
-+	.read_word_data = mp5990_read_word_data,
-+};
-+
-+static int mp5990_probe(struct i2c_client *client)
-+{
-+	struct pmbus_driver_info *info;
-+	struct mp5990_data *data;
-+	int ret;
-+
-+	data = devm_kzalloc(&client->dev, sizeof(struct mp5990_data),
-+			    GFP_KERNEL);
-+	if (!data)
-+		return -ENOMEM;
-+
-+	memcpy(&data->info, &mp5990_info, sizeof(*info));
-+	info = &data->info;
-+
-+	/* Read Vout Config */
-+	ret = i2c_smbus_read_word_data(client, MP5990_EFUSE_CFG);
-+	if (ret < 0) {
-+		dev_err(&client->dev, "Can't get vout mode.");
-+		return ret;
-+	}
-+
-+	/*
-+	 * EFUSE_CFG (0xC4) bit9=1 is linear mode, bit=0 is direct mode.
-+	 */
-+	if (ret & MP5990_VOUT_FORMAT) {
-+		data->vout_mode = linear;
-+		data->info.format[PSC_VOLTAGE_IN] = linear;
-+		data->info.format[PSC_VOLTAGE_OUT] = linear;
-+		data->info.format[PSC_CURRENT_OUT] = linear;
-+		data->info.format[PSC_POWER] = linear;
-+		ret = i2c_smbus_read_word_data(client, PMBUS_READ_VOUT);
-+		if (ret < 0) {
-+			dev_err(&client->dev, "Can't get vout exponent.");
-+			return ret;
-+		}
-+		data->vout_linear_exponent = (u8)((ret >> 11) & 0x1f);
-+	} else {
-+		data->vout_mode = direct;
-+	}
-+	return pmbus_do_probe(client, info);
-+}
-+
-+static const struct of_device_id mp5990_of_match[] = {
-+	{ .compatible = "mps,mp5990" },
-+	{}
-+};
-+
-+static const struct i2c_device_id mp5990_id[] = {
-+	{"mp5990", 0},
-+	{ }
-+};
-+MODULE_DEVICE_TABLE(i2c, mp5990_id);
-+
-+static struct i2c_driver mp5990_driver = {
-+	.driver = {
-+		   .name = "mp5990",
-+		   .of_match_table = mp5990_of_match,
-+	},
-+	.probe = mp5990_probe,
-+	.id_table = mp5990_id,
-+};
-+module_i2c_driver(mp5990_driver);
-+
-+MODULE_AUTHOR("Peter Yin <peter.yin@quantatw.com>");
-+MODULE_DESCRIPTION("PMBus driver for MP5990 HSC");
-+MODULE_LICENSE("GPL");
-+MODULE_IMPORT_NS(PMBUS);
--- 
-2.31.1
+Thanks,
 
+Tomer
