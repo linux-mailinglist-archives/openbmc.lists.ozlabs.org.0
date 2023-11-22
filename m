@@ -2,68 +2,71 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1F7697F3E3F
-	for <lists+openbmc@lfdr.de>; Wed, 22 Nov 2023 07:36:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id C99BF7F3E42
+	for <lists+openbmc@lfdr.de>; Wed, 22 Nov 2023 07:37:08 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=iXVm3RCQ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=cu29SReD;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SZs2j1KGNz3dBt
-	for <lists+openbmc@lfdr.de>; Wed, 22 Nov 2023 17:36:13 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SZs3k53dzz3cb6
+	for <lists+openbmc@lfdr.de>; Wed, 22 Nov 2023 17:37:06 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=iXVm3RCQ;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=cu29SReD;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::62d; helo=mail-pl1-x62d.google.com; envelope-from=potin.lai.pt@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::434; helo=mail-pf1-x434.google.com; envelope-from=potin.lai.pt@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pf1-x434.google.com (mail-pf1-x434.google.com [IPv6:2607:f8b0:4864:20::434])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SZs135n4Vz3cCh
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SZs136nJGz3cZm
 	for <openbmc@lists.ozlabs.org>; Wed, 22 Nov 2023 17:34:47 +1100 (AEDT)
-Received: by mail-pl1-x62d.google.com with SMTP id d9443c01a7336-1cf52e5e07eso3986895ad.0
+Received: by mail-pf1-x434.google.com with SMTP id d2e1a72fcca58-6c4cf0aea06so6068390b3a.0
         for <openbmc@lists.ozlabs.org>; Tue, 21 Nov 2023 22:34:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700634879; x=1701239679; darn=lists.ozlabs.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=C2Hf0WGMDXuTlMd6ayziR5b897aMIPHYGGKJpai0lqY=;
-        b=iXVm3RCQCuyvxaU6TPx92pa4aMbTS3C2hIf7sQMY0xTz+ztQ4f8dXf642NZMA3G3J0
-         /Wo693pzh/zqVzO3OnUuzUcPtJVcCqcEeRQIdYvAMXkU4dNocoJDf7X3Kr7Jzcl2FQmT
-         aCn8FfFg1akIZUEnxXJ8guVzSjBBvm99OBXrT2r4rV3b5x21khquuD6xCdDvYE9NqQKn
-         ZenUk03SQOWLeaebmlX8I9DPZmZzbtJUbPDNo4ESt7qEK2uzAAwUagypc89z364sOejc
-         EOol7QDwfbY/9R1DXe0Me+8rs/eMuv9WOiL4FpTlph77mEmFrYEL+MuLFm5YRycSFU1l
-         ZZyQ==
+        d=gmail.com; s=20230601; t=1700634881; x=1701239681; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WQdtIod8/WEOmGQN/sVRQT/vfmPbkQZq79mNkPK2+YI=;
+        b=cu29SReD7DQCC4pqTG9/15ttPJ8HnPi/WRE7O6A9m9ODLYJ+8MlfJH+RrJ0XONWckO
+         3Giyn4e5cBJkp5IkR1WGs7aAmuKRVP1uSPmx3oZ+VlSGlwaM7YDvJj6QI4MrzuAu68+t
+         /Vk8idFpFxEaxD7lEiJDRXsArVV65CtOZDMWPhZzgl8zTjybn7JhZkiucyUWe0CE9bA1
+         YcpHamgkozKXvVloYngEKA146bLNqDUt0dHn02qGLvx+LQWel63pfG4LG/HYK4G514vj
+         Vv79kXaupOmPRqpUngZowHMd/oqQkVGtox3HcHqcYrbD25CRdCnp4TKP1f7UeDFxr+tp
+         WAPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700634879; x=1701239679;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=C2Hf0WGMDXuTlMd6ayziR5b897aMIPHYGGKJpai0lqY=;
-        b=DS6EUPP6SybS2laIYBYKnTWThS/qJOUkWr6bDGcCKg7F8Om/4lNTvTFd0isUd+Coqt
-         duqJbSLQ6P9SYnldYGfZcDU3CTr2B9TyZJKTL+nTvgC4DKBbo6zcnQiXUVBL9UcllDdA
-         BJHuLTFabc7i/S1K2RG4vKg2ljVND9xIs2VSoegmuQG2ivIIGbm/Sj1t3jCTok19UiJr
-         +Jwr5M2ivb15yHTfFGr+4kBEHL4wG2zUlGSiw5vlaCDeZZyPnIDkmzkiFQaefu1VEQtF
-         8kkfIi7kK4BGFWY2nCADDSQpiiGJqMlFr91Pdaj7G+tZb/fS482tcDmMIOOwO8aU9+ZP
-         glPw==
-X-Gm-Message-State: AOJu0YwqjeByjCfCqUcqiiqfWEetqmfGK4gM/wHRX3klxFMikmNAPWCW
-	//X41jZmWxwwwQoXQmNUoTcdrVqq5+s=
-X-Google-Smtp-Source: AGHT+IHvHgp2jEZOgcfGVQmlIS6XpvPXIrW4chOK/c05pxkAIuDWtF9o6dT1D+03RMPJ7JjTFQ0pxQ==
-X-Received: by 2002:a17:903:188:b0:1ce:b83f:bd0c with SMTP id z8-20020a170903018800b001ceb83fbd0cmr7857473plg.7.1700634879337;
-        Tue, 21 Nov 2023 22:34:39 -0800 (PST)
+        d=1e100.net; s=20230601; t=1700634881; x=1701239681;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WQdtIod8/WEOmGQN/sVRQT/vfmPbkQZq79mNkPK2+YI=;
+        b=LnMbTzYsPFK7nN+LqqMI/Yhskb5RZ/K9oqK+q5bkgu6qYimHQauDFS1/UEEryJPSA0
+         eybr2ib2f9z/N4otpp2lVbExHLJqJgR5P4pegZSvituJl4+Oh/l6QzNYHGVGnaD82I+O
+         ZwDinrv2lbyQuWjB+meTPutmQRwaVTE+6JGkn0vEMKsZRhCAz+odytLQ4aA52TEynfw1
+         SjKZaYmelt8LtBwU5o5Z22+aZHfCpEHlG/2+6Jo62iKvi1vmVeIiyFuBv7CSwhOFxByJ
+         XNPXQTyIGtqNRUlxJMMZ00k8QsjjLJ4OVVD9exgCFDNIt6q8WV8M2k7VN8vwYL6jDO2X
+         QLrQ==
+X-Gm-Message-State: AOJu0YwWStIG+1oeS2ll0Ektxcbh6CIAvPUsRxHsGZ6Em4UckuaavOxT
+	J2HCH0s+ZQvx/qKxjhzEN5ekidRYUVA=
+X-Google-Smtp-Source: AGHT+IGZVYgozPRYcqurzU2/qeN7aDY8CqvDkgvY3400HkWGnXczu3Uro1g/d7Bo5vrM1RHlCkpnLw==
+X-Received: by 2002:a05:6a20:1604:b0:187:e2ad:9946 with SMTP id l4-20020a056a20160400b00187e2ad9946mr1366196pzj.54.1700634880946;
+        Tue, 21 Nov 2023 22:34:40 -0800 (PST)
 Received: from localhost.localdomain (1-34-21-66.hinet-ip.hinet.net. [1.34.21.66])
-        by smtp.gmail.com with ESMTPSA id s11-20020a170902ea0b00b001cf76664db6sm962714plg.309.2023.11.21.22.34.37
+        by smtp.gmail.com with ESMTPSA id s11-20020a170902ea0b00b001cf76664db6sm962714plg.309.2023.11.21.22.34.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Nov 2023 22:34:38 -0800 (PST)
+        Tue, 21 Nov 2023 22:34:40 -0800 (PST)
 From: Potin Lai <potin.lai.pt@gmail.com>
 X-Google-Original-From: Potin Lai <potin.lai@quantatw.com>
 To: openbmc@lists.ozlabs.org,
 	joel@jms.id.au
-Subject: [PATCH linux dev-6.5 0/2] hwmon: (pmbus) MPS mp5990 hsc controller
-Date: Wed, 22 Nov 2023 14:32:26 +0800
-Message-Id: <20231122063228.4037027-1-potin.lai@quantatw.com>
+Subject: [PATCH linux dev-6.5 1/2] dt-bindings: hwmon: Add mps mp5990 driver bindings
+Date: Wed, 22 Nov 2023 14:32:27 +0800
+Message-Id: <20231122063228.4037027-2-potin.lai@quantatw.com>
 X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20231122063228.4037027-1-potin.lai@quantatw.com>
+References: <20231122063228.4037027-1-potin.lai@quantatw.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -81,23 +84,29 @@ Cc: peter.yin@quantatw.com, Peter Yin <peteryin.openbmc@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add MPS mp5990 hot-swap controller.
-Link: https://lore.kernel.org/all/20231113155008.2147090-1-peteryin.openbmc@gmail.com/
+From: Peter Yin <peteryin.openbmc@gmail.com>
 
-Peter Yin (2):
-  dt-bindings: hwmon: Add mps mp5990 driver bindings
-  hwmon: (pmbus) Add support for MPS Multi-phase mp5990
+Add a device tree bindings for mp5990 device.
 
- .../devicetree/bindings/trivial-devices.yaml  |   2 +
- Documentation/hwmon/index.rst                 |   1 +
- Documentation/hwmon/mp5990.rst                |  84 +++++++++
- drivers/hwmon/pmbus/Kconfig                   |   9 +
- drivers/hwmon/pmbus/Makefile                  |   1 +
- drivers/hwmon/pmbus/mp5990.c                  | 177 ++++++++++++++++++
- 6 files changed, 274 insertions(+)
- create mode 100644 Documentation/hwmon/mp5990.rst
- create mode 100644 drivers/hwmon/pmbus/mp5990.c
+Signed-off-by: Peter Yin <peteryin.openbmc@gmail.com>
+Acked-by: Conor Dooley <conor.dooley@microchip.com>
+---
+ Documentation/devicetree/bindings/trivial-devices.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
 
+diff --git a/Documentation/devicetree/bindings/trivial-devices.yaml b/Documentation/devicetree/bindings/trivial-devices.yaml
+index 7680c8a9b4ade..eb83ab4c02ee1 100644
+--- a/Documentation/devicetree/bindings/trivial-devices.yaml
++++ b/Documentation/devicetree/bindings/trivial-devices.yaml
+@@ -123,6 +123,8 @@ properties:
+           - mps,mp2888
+             # Monolithic Power Systems Inc. multi-phase controller mp2975
+           - mps,mp2975
++            # Monolithic Power Systems Inc. multi-phase hot-swap controller mp5990
++          - mps,mp5990
+             # Honeywell Humidicon HIH-6130 humidity/temperature sensor
+           - honeywell,hi6130
+             # IBM Common Form Factor Power Supply Versions (all versions)
 -- 
 2.31.1
 
