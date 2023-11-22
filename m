@@ -1,68 +1,51 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id DE4AC7F4EBE
-	for <lists+openbmc@lfdr.de>; Wed, 22 Nov 2023 18:51:46 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 187AA7F4FDE
+	for <lists+openbmc@lfdr.de>; Wed, 22 Nov 2023 19:46:06 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=PfS7pJZI;
+	dkim=fail reason="signature verification failed" (1024-bit key; unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256 header.s=20171124 header.b=p702r9em;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Sb82827cXz3cW1
-	for <lists+openbmc@lfdr.de>; Thu, 23 Nov 2023 04:51:44 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Sb9Dm138Kz3dJs
+	for <lists+openbmc@lfdr.de>; Thu, 23 Nov 2023 05:46:00 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=PfS7pJZI;
+	dkim=pass (1024-bit key; unprotected) header.d=lunn.ch header.i=@lunn.ch header.a=rsa-sha256 header.s=20171124 header.b=p702r9em;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::1136; helo=mail-yw1-x1136.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-yw1-x1136.google.com (mail-yw1-x1136.google.com [IPv6:2607:f8b0:4864:20::1136])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=lunn.ch (client-ip=156.67.10.101; helo=vps0.lunn.ch; envelope-from=andrew@lunn.ch; receiver=lists.ozlabs.org)
+Received: from vps0.lunn.ch (vps0.lunn.ch [156.67.10.101])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sb81Y68YBz2xHK
-	for <openbmc@lists.ozlabs.org>; Thu, 23 Nov 2023 04:51:11 +1100 (AEDT)
-Received: by mail-yw1-x1136.google.com with SMTP id 00721157ae682-5c8c26cf056so161167b3.1
-        for <openbmc@lists.ozlabs.org>; Wed, 22 Nov 2023 09:51:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1700675469; x=1701280269; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=TxnpKs2F+HZNYkXf/Y5BgrPY0hki8e46Z6NdLZXo0Do=;
-        b=PfS7pJZI9+cRG7WI11AiTWxIA0XdjAsSZPL1xVpz7vpiYkWRFTSAwXAAlTDpXXRwKA
-         XwQLNZ2W86Cu2KK4Z4jSljj5b5UVYKaocACX46EZVUiUsLCFEEaPukW7Uq+XJnieuRns
-         VPVsvsfMzBnCQtkITJWh8L1D9r+Obz2Id0sU7I6/xcym+Xl9s6ADJizGaXY1MOK39mq9
-         pxpZprnICBdqrSNInJVK295mlohNaV9pIlsNDmK8N8MyP9372m2+6+eLZl0NRFNeSK6B
-         Smq2mRagiTvaG0GNyYuG0BzuXj25AIhvGZaw+ZKVwS/BGEI6tg6EISJUNdAfGHa3vPzV
-         J2fg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1700675469; x=1701280269;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TxnpKs2F+HZNYkXf/Y5BgrPY0hki8e46Z6NdLZXo0Do=;
-        b=P0VON1Zck+OSFammYIt7xZhoO9220zQ35NqMrDXlJfpC3YIr8Gu/DUwCJWKE2CA8dK
-         XITH1NBqLwpemWSuKLw4pwKynHSuZFrUt6La38KJi5nc8vqwlwIEXlvAUip60owNoYJ3
-         /DZyfJg3N0PvAbdk1S06u4d9dWX6rppObsD+P2uUVkZO3fWKzs7OzJndDKUdL+9KsG7B
-         Jb0fpGtwUvDUcPfypcAX36Bel6WoU1hfbtOYPti1k38w8kUguYYqqbdGTLdMwk3SAcMy
-         rUXLnTtXNvqoI0gudzhgn8dBsEXXaPQiLp6GiWWwFda6/rNwEqjNGXr84PV+RzE7wvO5
-         QwUw==
-X-Gm-Message-State: AOJu0YzM2RLZs9U8HnLLMvaE+mngv1oPXpydLsUDD6VJiSD18cfNhoQs
-	FCAr8PHYc/S7PxH+4SgBWF324dtN93RcKZ+XETs=
-X-Google-Smtp-Source: AGHT+IFVH/BFWt02BJRt89HCYBEkZm6l8N7OMZmIj2n4mUUQxZeU4z4Xe9RaA6X/2NVtoKOkfpeHPoOXYUDC9+dm0Xc=
-X-Received: by 2002:a81:9404:0:b0:58c:b8b4:2785 with SMTP id
- l4-20020a819404000000b0058cb8b42785mr3671430ywg.45.1700675468737; Wed, 22 Nov
- 2023 09:51:08 -0800 (PST)
-MIME-Version: 1.0
-References: <20231121151733.2015384-1-tmaimon77@gmail.com> <20231121151733.2015384-3-tmaimon77@gmail.com>
- <6aeb28f5-04c2-4723-9da2-d168025c307c@lunn.ch>
-In-Reply-To: <6aeb28f5-04c2-4723-9da2-d168025c307c@lunn.ch>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Wed, 22 Nov 2023 19:50:57 +0200
-Message-ID: <CAP6Zq1j0kyrg+uxkXH-HYqHz0Z4NwWRUGzprius=BPC9+WfKFQ@mail.gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sb9DB5HBJz3d97
+	for <openbmc@lists.ozlabs.org>; Thu, 23 Nov 2023 05:45:29 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+	s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+	References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+	Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+	Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+	bh=y1fBGTaRbSsoTo5doogPTMVmvkDbZKH9bppQF/sgZqE=; b=p702r9emhkbRvBPO7sN3lEkiso
+	/rQFsZ6XCANykAc95fAd27zoV5bytiHkSvzmB691lItmkNeldjgv/Ra/V+XaDFG1s0YVy8iLLUJBy
+	2/8q9JbfiTYx3FuHTMgNAHpa18lX4BM8lLM6QbpZS6V7U2hFtWIq2TTc2wDZPtvkhJbU=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+	(envelope-from <andrew@lunn.ch>)
+	id 1r5sDs-000uBk-Dl; Wed, 22 Nov 2023 19:45:16 +0100
+Date: Wed, 22 Nov 2023 19:45:16 +0100
+From: Andrew Lunn <andrew@lunn.ch>
+To: Tomer Maimon <tmaimon77@gmail.com>
 Subject: Re: [PATCH v1 2/2] net: stmmac: Add NPCM support
-To: Andrew Lunn <andrew@lunn.ch>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <9ad42fef-b210-496a-aafc-eb2a7416c4df@lunn.ch>
+References: <20231121151733.2015384-1-tmaimon77@gmail.com>
+ <20231121151733.2015384-3-tmaimon77@gmail.com>
+ <6aeb28f5-04c2-4723-9da2-d168025c307c@lunn.ch>
+ <CAP6Zq1j0kyrg+uxkXH-HYqHz0Z4NwWRUGzprius=BPC9+WfKFQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAP6Zq1j0kyrg+uxkXH-HYqHz0Z4NwWRUGzprius=BPC9+WfKFQ@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -78,39 +61,46 @@ Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, benjaminfair@googl
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Andrew,
+On Wed, Nov 22, 2023 at 07:50:57PM +0200, Tomer Maimon wrote:
+> Hi Andrew,
+> 
+> Thanks for your comments
+> 
+> On Tue, 21 Nov 2023 at 18:42, Andrew Lunn <andrew@lunn.ch> wrote:
+> >
+> > > +void npcm_dwmac_pcs_init(struct npcm_dwmac *dwmac, struct device *dev,
+> > > +                      struct plat_stmmacenet_data *plat_dat)
+> > > +{
+> > > +     u16 val;
+> > > +
+> > > +     iowrite16((u16)(SR_MII_CTRL >> 9), dwmac->reg + IND_AC_BA_REG);
+> > > +     val = ioread16(dwmac->reg + PCS_SR_MII_CTRL_REG);
+> > > +     val |= PCS_RST;
+> > > +     iowrite16(val, dwmac->reg + PCS_SR_MII_CTRL_REG);
+> > > +
+> > > +     while (val & PCS_RST)
+> > > +             val = ioread16(dwmac->reg + PCS_SR_MII_CTRL_REG);
+> > > +
+> > > +     val &= ~(PCS_AN_ENABLE);
+> > > +     iowrite16(val, dwmac->reg + PCS_SR_MII_CTRL_REG);
+> > > +}
+> >
+> > Is this a licensed PCS implementation? Or home grown? If its been
+> > licensed from somebody, it maybe should live in driver/net/pcs, so
+> > others can reuse it when they license the same core.
 
-Thanks for your comments
+> we are using DWC PCS, I don't see support for DWC PCS and I am not
+> sure it is supposed to be supported at /drivers/net/pcs
 
-On Tue, 21 Nov 2023 at 18:42, Andrew Lunn <andrew@lunn.ch> wrote:
->
-> > +void npcm_dwmac_pcs_init(struct npcm_dwmac *dwmac, struct device *dev,
-> > +                      struct plat_stmmacenet_data *plat_dat)
-> > +{
-> > +     u16 val;
-> > +
-> > +     iowrite16((u16)(SR_MII_CTRL >> 9), dwmac->reg + IND_AC_BA_REG);
-> > +     val = ioread16(dwmac->reg + PCS_SR_MII_CTRL_REG);
-> > +     val |= PCS_RST;
-> > +     iowrite16(val, dwmac->reg + PCS_SR_MII_CTRL_REG);
-> > +
-> > +     while (val & PCS_RST)
-> > +             val = ioread16(dwmac->reg + PCS_SR_MII_CTRL_REG);
-> > +
-> > +     val &= ~(PCS_AN_ENABLE);
-> > +     iowrite16(val, dwmac->reg + PCS_SR_MII_CTRL_REG);
-> > +}
->
-> Is this a licensed PCS implementation? Or home grown? If its been
-> licensed from somebody, it maybe should live in driver/net/pcs, so
-> others can reuse it when they license the same core.
-we are using DWC PCS, I don't see support for DWC PCS and I am not
-sure it is supposed to be supported at /drivers/net/pcs
-I do see a patch set to support DWC PCS but I don't think it answers my needs
-https://patchwork.ozlabs.org/project/netdev/patch/1559674736-2190-3-git-send-email-weifeng.voon@intel.com/
->
->        Andrew
+I've not followed the naming used by Synopsys. Is DWC PCS the same as
+XPCS? Does Synopsys have multiple PCS implementations?
 
-Thanks,
+> I do see a patch set to support DWC PCS but I don't think it answers my needs
+> https://patchwork.ozlabs.org/project/netdev/patch/1559674736-2190-3-git-send-email-weifeng.voon@intel.com/
 
-Tomer
+I _think_ this patch eventually got turned into
+driver/net/pcs/pcs-xpcs.c
+
+What exactly does it not do for you?
+
+     Andrew
