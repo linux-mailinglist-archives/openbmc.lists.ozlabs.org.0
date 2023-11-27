@@ -2,68 +2,60 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 639717FA446
-	for <lists+openbmc@lfdr.de>; Mon, 27 Nov 2023 16:20:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A7F0D7FA570
+	for <lists+openbmc@lfdr.de>; Mon, 27 Nov 2023 16:59:30 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=fOMCYZNQ;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256 header.s=pandora-2019 header.b=KeHHAhdK;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Sf8Qp66bCz3cYV
-	for <lists+openbmc@lfdr.de>; Tue, 28 Nov 2023 02:20:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Sf9JJ0xdyz3cYN
+	for <lists+openbmc@lfdr.de>; Tue, 28 Nov 2023 02:59:28 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=fOMCYZNQ;
+	dkim=pass (2048-bit key; secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256 header.s=pandora-2019 header.b=KeHHAhdK;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::b36; helo=mail-yb1-xb36.google.com; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=armlinux.org.uk (client-ip=2001:4d48:ad52:32c8:5054:ff:fe00:142; helo=pandora.armlinux.org.uk; envelope-from=linux+openbmc=lists.ozlabs.org@armlinux.org.uk; receiver=lists.ozlabs.org)
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sf8QD3LL6z2yN3
-	for <openbmc@lists.ozlabs.org>; Tue, 28 Nov 2023 02:19:30 +1100 (AEDT)
-Received: by mail-yb1-xb36.google.com with SMTP id 3f1490d57ef6-d9b9adaf291so3988565276.1
-        for <openbmc@lists.ozlabs.org>; Mon, 27 Nov 2023 07:19:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701098367; x=1701703167; darn=lists.ozlabs.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=VIKMvlIRYtS1WvbUoM+vWJ1z9I2GYsx2bfxFTfmC+TQ=;
-        b=fOMCYZNQweBgyJc2OSeFNbBNHkoZ9VeZd0/8BML/0lHB95IIDeSetASrn2rBqevfjA
-         bAlJw49WgGoITd1x0nN+VRDBV0v1yuyxEh4ElY/xO60SbHaL2ezSUmByUJ/Jq5tvpNSK
-         yYc6fJdA/Yf9Fg/J+lLoLFJRHYbDmr7x1j4Pf8SDkls6bzkNzDTZfv9KvAWJjC841UiI
-         2tTCaPPTz5/O/h8+QV0lOkXkU0AozfcqcmKTm7IGpoth0mxlh0Sg0iF3RHG28ha55u5h
-         /LOqXtjmntxH92/qfWKoSKj212vYJMpiBpKU+/hNpkMhQQC99/JIOJuSOUFN0RUmrjsF
-         d/ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701098367; x=1701703167;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=VIKMvlIRYtS1WvbUoM+vWJ1z9I2GYsx2bfxFTfmC+TQ=;
-        b=b3qjTk3zf2RZYPLTfO8tMe05Cm8jOX/1DafiyOqSVa+dcZ1QuOlfjrDru5Uxtf4j0i
-         82b8SsqRrjXnKXQi7vVVGvXPsZny8/Ygfm0zjiqBb6RJYg+tJXzL/d/NRY3sZBatyWOz
-         Dvr8irqbcgvnB2u69O0I7r1O9ouR54NjfMpVPIoGYWHBVYeipg/jHlMBU621BzYO+WzF
-         KlD2v9oYH/joRntP2A449AEpAdt7O9e16JW5L1Dq1eMbB957hUV3vdPnJ+Z4CrI9/SNl
-         HB8jfOPeBCP7WdMVShaNmp52bZP8dRBS+3KkWtr2Wt5GG8BXmdTexhrZ4DKXoK7b3Vwo
-         gNKg==
-X-Gm-Message-State: AOJu0Yxh2ef1DkPtM7oZPAc045qldVOqKJJeK2+WJzevlUao1zVD18Dk
-	UNrOf0hsq1L0DjnABqumAwMJC+SBH6jkkBPmDCY=
-X-Google-Smtp-Source: AGHT+IE/rFqsV0KKN1gYLmgiErQUf25fY8S0FvfOygtZwLf5Ah7JOJcfJbDXf3oSBTUYCLBu/J8CZ1DTNOo/phyIfOI=
-X-Received: by 2002:a25:4b02:0:b0:db0:23d8:780 with SMTP id
- y2-20020a254b02000000b00db023d80780mr9466434yba.60.1701098366826; Mon, 27 Nov
- 2023 07:19:26 -0800 (PST)
-MIME-Version: 1.0
-References: <20231121151733.2015384-1-tmaimon77@gmail.com> <20231121151733.2015384-3-tmaimon77@gmail.com>
- <6aeb28f5-04c2-4723-9da2-d168025c307c@lunn.ch> <CAP6Zq1j0kyrg+uxkXH-HYqHz0Z4NwWRUGzprius=BPC9+WfKFQ@mail.gmail.com>
- <9ad42fef-b210-496a-aafc-eb2a7416c4df@lunn.ch> <CAP6Zq1jw9uLP_FQGR8=p3Y2NTP6XcNtzkJQ0dm3+xVNE1SpsVg@mail.gmail.com>
-In-Reply-To: <CAP6Zq1jw9uLP_FQGR8=p3Y2NTP6XcNtzkJQ0dm3+xVNE1SpsVg@mail.gmail.com>
-From: Tomer Maimon <tmaimon77@gmail.com>
-Date: Mon, 27 Nov 2023 17:19:15 +0200
-Message-ID: <CAP6Zq1ijfMSPjk1vPwDM2B+r_vAH3DShhSu_jr8xJyUkTQY89w@mail.gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sf9Hg6TYdz3cCl
+	for <openbmc@lists.ozlabs.org>; Tue, 28 Nov 2023 02:58:50 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=/x+K0NohDOju58WZmfchmXWiIvrloK7WVCcvOl3plTM=; b=KeHHAhdKhbHXQbBQZBTXeU04DU
+	2L+5oNvqRgW8p15KQLGI0HmNhiXLoWa5eRi5tfOJ1NilEdyoU36JZrDuqefdREEd1/zmYwR4NPec2
+	EYj2j7Z5FNoym+r68w6KCUcBEKxTO0Hza9OHNOlnKvT+iiSCbL0G55/9m23FQlDIAnk6pHyzFpqtm
+	apTNcHm5ZXA4YYnRjKvK4nDV5nQTPhCpxZEeexKOIeY5zLbxdkUY0k3/fdCjH5S6RgKA9SteH31Qo
+	YFhm20KUKy6/Tna/RJSXxJ1mEmWCJ2JOoY+qFhrRl/l6TXcoW2lwwyJTW0MEquJqX+hREB/YB0YOM
+	vmDgHwzA==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:49996)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1r7e04-00068P-2v;
+	Mon, 27 Nov 2023 15:58:20 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1r7e03-00022H-C0; Mon, 27 Nov 2023 15:58:19 +0000
+Date: Mon, 27 Nov 2023 15:58:19 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Tomer Maimon <tmaimon77@gmail.com>
 Subject: Re: [PATCH v1 2/2] net: stmmac: Add NPCM support
-To: Andrew Lunn <andrew@lunn.ch>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <ZWS8m66LrrRQpbLO@shell.armlinux.org.uk>
+References: <20231121151733.2015384-1-tmaimon77@gmail.com>
+ <20231121151733.2015384-3-tmaimon77@gmail.com>
+ <ZVzQh9ykusyknGgP@shell.armlinux.org.uk>
+ <CAP6Zq1gzAhp9BZNX1MOozUfQc82Vi_S==on5_nOfVfpvtgnN2g@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAP6Zq1gzAhp9BZNX1MOozUfQc82Vi_S==on5_nOfVfpvtgnN2g@mail.gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -75,86 +67,119 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: devicetree@vger.kernel.org, linux-kernel@vger.kernel.org, benjaminfair@google.com, davem@davemloft.net, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, alexandre.torgue@foss.st.com, robh+dt@kernel.org, tali.perry1@gmail.com, mcoquelin.stm32@gmail.com, edumazet@google.com, joabreu@synopsys.com, joel@jms.id.au, krzysztof.kozlowski+dt@linaro.org, peppe.cavallaro@st.com, j.neuschaefer@gmx.net, netdev@vger.kernel.org, linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org
+Cc: alexandre.torgue@foss.st.com, tali.perry1@gmail.com, edumazet@google.com, krzysztof.kozlowski+dt@linaro.org, linux-stm32@st-md-mailman.stormreply.com, benjaminfair@google.com, openbmc@lists.ozlabs.org, joabreu@synopsys.com, joel@jms.id.au, devicetree@vger.kernel.org, j.neuschaefer@gmx.net, robh+dt@kernel.org, peppe.cavallaro@st.com, linux-arm-kernel@lists.infradead.org, avifishman70@gmail.com, venture@google.com, linux-kernel@vger.kernel.org, mcoquelin.stm32@gmail.com, netdev@vger.kernel.org, davem@davemloft.net
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Andrew,
-
-I took a look at the xpcs driver and the stmmac driver and it doesn't
-cover NPCM use.
-
-in the NPCM case the stmmac ID=0x37 therefore the driver is linked to DWMAC1000
-https://elixir.bootlin.com/linux/v6.7-rc2/source/drivers/net/ethernet/stmicro/stmmac/hwif.c#L139
-
-to enable the xpcs, the stmmac should support xgmac or gmac4 and in
-the NPCM is support only gmac.
-https://elixir.bootlin.com/linux/v6.7-rc2/source/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c#L555
-https://elixir.bootlin.com/linux/v6.7-rc2/source/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c#L573
-
-and the most important thing is that the XPCS is handled through an
-indirect register access and not through MDIO. the MDIO is connected
-to the external PHY and not to the XPCS.
-
-In that case, I think the best way to handle the XPCS is through the
-NPCM glue layer, what do you think?
-
-Thanks,
-
-Tomer
-
-On Thu, 23 Nov 2023 at 15:50, Tomer Maimon <tmaimon77@gmail.com> wrote:
->
-> Hi Andrew,
->
-> On Wed, 22 Nov 2023 at 20:45, Andrew Lunn <andrew@lunn.ch> wrote:
+On Wed, Nov 22, 2023 at 07:23:28PM +0200, Tomer Maimon wrote:
+> Hi Russell,
+> 
+> Thanks for your comments.
+> 
+> On Tue, 21 Nov 2023 at 17:45, Russell King (Oracle)
+> <linux@armlinux.org.uk> wrote:
 > >
-> > On Wed, Nov 22, 2023 at 07:50:57PM +0200, Tomer Maimon wrote:
-> > > Hi Andrew,
+> > On Tue, Nov 21, 2023 at 05:17:33PM +0200, Tomer Maimon wrote:
+> > > Add Nuvoton NPCM BMC SoCs support to STMMAC dwmac driver.
 > > >
-> > > Thanks for your comments
+> > > And modify MAINTAINERS to add a new F: entry for this driver.
 > > >
-> > > On Tue, 21 Nov 2023 at 18:42, Andrew Lunn <andrew@lunn.ch> wrote:
-> > > >
-> > > > > +void npcm_dwmac_pcs_init(struct npcm_dwmac *dwmac, struct device *dev,
-> > > > > +                      struct plat_stmmacenet_data *plat_dat)
-> > > > > +{
-> > > > > +     u16 val;
-> > > > > +
-> > > > > +     iowrite16((u16)(SR_MII_CTRL >> 9), dwmac->reg + IND_AC_BA_REG);
-> > > > > +     val = ioread16(dwmac->reg + PCS_SR_MII_CTRL_REG);
-> > > > > +     val |= PCS_RST;
-> > > > > +     iowrite16(val, dwmac->reg + PCS_SR_MII_CTRL_REG);
-> > > > > +
-> > > > > +     while (val & PCS_RST)
-> > > > > +             val = ioread16(dwmac->reg + PCS_SR_MII_CTRL_REG);
-> > > > > +
-> > > > > +     val &= ~(PCS_AN_ENABLE);
-> > > > > +     iowrite16(val, dwmac->reg + PCS_SR_MII_CTRL_REG);
-> > > > > +}
-> > > >
-> > > > Is this a licensed PCS implementation? Or home grown? If its been
-> > > > licensed from somebody, it maybe should live in driver/net/pcs, so
-> > > > others can reuse it when they license the same core.
+> > > Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
 > >
-> > > we are using DWC PCS, I don't see support for DWC PCS and I am not
-> > > sure it is supposed to be supported at /drivers/net/pcs
+> > A few comments on this...
 > >
-> > I've not followed the naming used by Synopsys. Is DWC PCS the same as
-> > XPCS? Does Synopsys have multiple PCS implementations?
+> > > +#define IND_AC_BA_REG                0x1FE
+> > > +#define SR_MII_CTRL          0x3E0000
+> > > +
+> > > +#define PCS_SR_MII_CTRL_REG  0x0
+> > > +#define PCS_SPEED_SELECT6    BIT(6)
+> > > +#define PCS_AN_ENABLE                BIT(12)
+> > > +#define PCS_SPEED_SELECT13   BIT(13)
+> > > +#define PCS_RST                      BIT(15)
 > >
-> > > I do see a patch set to support DWC PCS but I don't think it answers my needs
-> > > https://patchwork.ozlabs.org/project/netdev/patch/1559674736-2190-3-git-send-email-weifeng.voon@intel.com/
+> > include/uapi/linux/mii.h:
 > >
-> > I _think_ this patch eventually got turned into
-> > driver/net/pcs/pcs-xpcs.c
+> > #define BMCR_SPEED1000          0x0040  /* MSB of Speed (1000)         */
+> > #define BMCR_ANENABLE           0x1000  /* Enable auto negotiation     */
+> > #define BMCR_SPEED100           0x2000  /* Select 100Mbps              */
+> > #define BMCR_RESET              0x8000  /* Reset to default state      */
 > >
-> > What exactly does it not do for you?
-> Thanks for pointing me to Synopsys (DWC) PCS in pcs-xpcs.c I need to
-> check if the driver follows all our SGMII needs
+> > Look familiar? Maybe use the standard definitions for a standardised
+> > register?
 > >
-> >      Andrew
->
-> Best regards,
->
-> Tomer
+> > > +void npcm_dwmac_pcs_init(struct npcm_dwmac *dwmac, struct device *dev,
+> > > +                      struct plat_stmmacenet_data *plat_dat)
+> > > +{
+> > > +     u16 val;
+> > > +
+> > > +     iowrite16((u16)(SR_MII_CTRL >> 9), dwmac->reg + IND_AC_BA_REG);
+> > > +     val = ioread16(dwmac->reg + PCS_SR_MII_CTRL_REG);
+> > > +     val |= PCS_RST;
+> > > +     iowrite16(val, dwmac->reg + PCS_SR_MII_CTRL_REG);
+> > > +
+> > > +     while (val & PCS_RST)
+> > > +             val = ioread16(dwmac->reg + PCS_SR_MII_CTRL_REG);
+> >
+> > What if the PCS never clears its reset bit? Maybe use
+> > read_poll_timeout() ?
+> >
+> > > +
+> > > +     val &= ~(PCS_AN_ENABLE);
+> > > +     iowrite16(val, dwmac->reg + PCS_SR_MII_CTRL_REG);
+> > > +}
+> >
+> > Also, maybe it's time to require new stmmac platform support to start
+> > making use of the phylink PCS support rather than continuing to code its
+> > own?
+> >
+> > I notice, however, that you always disable inband signalling - please
+> > explain why. Also, what protocol does the PCS use when communicating
+> > with the PHY?
+> With disable inband signalling you mean disable auto negotiation?
+
+Over a SGMII, 1000base-X, USXGMII etc link, there is an inband
+signalling method. Whether it is "auto negotiation" depends on your
+point of view.
+
+With 1000base-X, it is "auto negotiation" because the two link partners
+advertise their abilities, and resolve the operational link parameters.
+In essence, there is a negotiation between both ends.
+
+In the case of e.g. Cisco SGMII, "auto negotiation" is a total misnomer.
+There is no "negotiation". The SGMII PHY side re-purposes the 1000base-X
+inband 16-bit control word to inform the MAC about the negotiated
+speed and duplex settings, and the MAC can only say "yes thank you for
+that" back to the PHY. There is no "and this is what I'm doing" to it.
+So there's no "negotiation" in SGMII.
+
+So, I prefer using "inband signalling" because that more accurately
+describes both of these situations, whereas "auto negotiation" does
+not.
+
+Note also that whenever I see "SGMII", that means Cisco's SGMII,
+which is 1000base-X modified by Cisco, and doesn't include the IEEE
+802.3 1000base-X.
+
+> if
+> yes it is because the PCS sgmii is connected to the external phy AN
+> and is not working between the PCS and external phy.
+
+What if the external PHY wants to use Cisco SGMII inband signalling?
+
+> accessing the PCS registers is indirect. The top 13 bits (bits 21-9)
+> of the offset have to be written to Indirect Access Base register
+> bits 12:0 before indirectly accessing the target register with the
+> offset of the bottom 9 bits (8:0) of the offset
+
+I'm not sure how this connects with my email. I asked what protocol
+is used between the PCS and PHY, and I _think_ you've said that it's
+Cisco SGMII.
+
+Please give details of which PHY is being used - I'd like to know
+more about why the inband signalling isn't being used.
+
+Thanks.
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
