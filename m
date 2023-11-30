@@ -1,33 +1,33 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B8CF7FE963
-	for <lists+openbmc@lfdr.de>; Thu, 30 Nov 2023 07:55:05 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C673A7FE967
+	for <lists+openbmc@lfdr.de>; Thu, 30 Nov 2023 07:56:25 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=mzu6n7gN;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=RSSOOOIu;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Sgn4k3vGhz3bwJ
-	for <lists+openbmc@lfdr.de>; Thu, 30 Nov 2023 17:55:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Sgn6H20qxz3d9Y
+	for <lists+openbmc@lfdr.de>; Thu, 30 Nov 2023 17:56:23 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=mzu6n7gN;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=RSSOOOIu;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7eab::70f; helo=nam11-co1-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=lists.ozlabs.org)
-Received: from NAM11-CO1-obe.outbound.protection.outlook.com (mail-co1nam11on2070f.outbound.protection.outlook.com [IPv6:2a01:111:f400:7eab::70f])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7eb2::709; helo=nam02-bn1-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=lists.ozlabs.org)
+Received: from NAM02-BN1-obe.outbound.protection.outlook.com (mail-bn1nam02on20709.outbound.protection.outlook.com [IPv6:2a01:111:f400:7eb2::709])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sgn2x22zGz3c8c;
-	Thu, 30 Nov 2023 17:53:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sgn3K2Fwpz2yQL;
+	Thu, 30 Nov 2023 17:53:48 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=L+pUeJM2dNmJPFjg8QJ1PX7wVj3EAttqFgdWmCs0we2OehYqiqdoCquECqZGf9Kzp5a96g4vsRJbNA+N4sAVLsAXpELh0+zB2G6fxNvWQIEa/SiYFbfS1hS7gXC3+WIYybXOFKUHhC8YZGxSLq2kEH/xQ6EXLEfjKIMQnG1DaeMsN/LQHijAx6fpAvo6kV+2uB1BGhqDlNT1+bMFgDcCV6KLXpiR+4FMXbi0qGZhlTI7r2cJA5F7VQVHCF7iSgJCk+f+xCr/dROs463YEdzCfsWHtLYlSJBgiAO+5B/kDHhBd7SvrX3gBdwZBq+QD+YvYzMq0rfOrcLjcWWyDE3nCQ==
+ b=ZboDBgDocarYd8kjzoEglGh+qpBrzFvFS0YFZ4I3Tx+oOrHhZVz9hsWsVP24Axq7oNjXnDxn6/Q5Ac1mq0CzPuM3OF8ZC9h+UF2cT0PqBp8yrL71HFPQGJ7xfu1GE3tPQTZMzpYxBXe3Uid6UW2ezP9CbgiK9M6Zcdm/46VAYaHtmvz1EIzDi70JjTma674Cz7WcJTQuxEM3fUQUhY9Ja85hStPzzwKw5IK8sJYt5HZOH7aHHfWbde02yDiBG65IpAe2MtKQ3A0csoNqFkD2r1zIzGKilhsuX/Sf4LxucPInHzQIwuKvXo0YauhtcTIyHnKN59t2ypqfoDPzlwpNuA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=gN3Vg7sqqYha5Ok54lam6jBvNYZWHYvrYAx8qSe1Vlw=;
- b=aj+NFiaYx34ZLt4RoIiEb1zhVy4z8RTge88fHXUQ3pF0qxGZ7XK2DvHFdOozQxHa/F5XuG5Nj38uUQ4P/urJd2riRrEY6zW0+rUk1cKr6W611Sj22YMrQN8N9M3Vl1JpZcm1NVvas/LP+Oy+sWZ4LKK0FkyMVgHFjnYGA1AjA87KPYgyS7sHiGyQVFkfzPCddKT343kpfdoRxSVXUO4347anosxwegi0AkkFwRQk/Zz693vKPQeEHafhIKfsUhwyOzKYIyysZaeZeD6wfLlcyHgibl/vlOeCxPOIysghLMkF1ZdX0Wl3N1QAn9Cuf2blxHlp+3pejnKxTXMj8bwhhw==
+ bh=QstX0oUovXITfXSNz2qRU0uKNbgkVM9/YaMS2McO0Tk=;
+ b=M8viMY4V0kEbCyh6KZ51FtgLAtFzmT7qSJZUCyKjMfqbvKgUu/ZAWxopfjvQV+Yp5RK/ZJZ7tSY8unQJ/z6ecleutRPmR00oHk+0pmPeQFyhVkRtw1o4f4iNOxCcFRVkEjaoA/kbYV+wROtFj0lX4UsPnSt7ujvsdPVMLrTT/S3r/hmfN2/ApWyxG7eDPCwHIzn/hWNQO6olB853Ts1MRvmoUN7Tfholz3y4FIQCtiR/LiiuBESS65dQZIW4ux69r6YPQKU6uTbSeLfdLMWlWJNHdmIaA8U/m+bdF+WpQZscD1ePY5JxvIBVQqKwG3nDTI0OTji91krZszNmbONfuw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
  header.from=os.amperecomputing.com; dkim=pass
@@ -35,102 +35,94 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=os.amperecomputing.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=gN3Vg7sqqYha5Ok54lam6jBvNYZWHYvrYAx8qSe1Vlw=;
- b=mzu6n7gNvyY6Oi0ryNTsBva8jpb1mwz9cZYUY16SGHrVT4334/PURHuGkLaY9irP+A7XQNJhuCev+2tPebcrmahGndtMQmfHtTBjPFsUp7vBsUjDKlL22goCvxadPXYECQ9kIeqHTU+3N1eRuxxA83u1lZqcL05T2SdIplk2YAw=
+ bh=QstX0oUovXITfXSNz2qRU0uKNbgkVM9/YaMS2McO0Tk=;
+ b=RSSOOOIuxjqfOPbDRiPpPx04lZy+5P2nbhp7BoPPUzEYZ4AgFfpfOTBE41Id0slslrKGjPEGZdKFeIjRZ9qz4B84YEuwAq/CwFa7JtApa0Yo7p9Zr9CZa9zrt7qS3ndOx/eUqhAr0VZCHtNsuCTr8/fqlerldSN798lBdzQBm10=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
 Received: from SN4PR01MB7455.prod.exchangelabs.com (2603:10b6:806:202::11) by
- CO1PR01MB6615.prod.exchangelabs.com (2603:10b6:303:f4::14) with Microsoft
+ CH0PR01MB6953.prod.exchangelabs.com (2603:10b6:610:106::13) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7046.24; Thu, 30 Nov 2023 06:53:13 +0000
+ 15.20.7046.23; Thu, 30 Nov 2023 06:53:28 +0000
 Received: from SN4PR01MB7455.prod.exchangelabs.com
  ([fe80::5682:1d84:171a:1d68]) by SN4PR01MB7455.prod.exchangelabs.com
  ([fe80::5682:1d84:171a:1d68%3]) with mapi id 15.20.7025.022; Thu, 30 Nov 2023
- 06:53:13 +0000
-Message-ID: <4c11086e-6f56-4614-9ba0-9b6e2439bce3@os.amperecomputing.com>
-Date: Thu, 30 Nov 2023 13:53:07 +0700
+ 06:53:27 +0000
+Message-ID: <9ec9b363-0e70-496e-9083-6382a579a0bf@os.amperecomputing.com>
+Date: Thu, 30 Nov 2023 13:53:22 +0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 RESEND 2/2] i2c: aspeed: Acknowledge Tx done with and
- without ACK irq late
+Subject: Re: [PATCH v2 RESEND 1/2] i2c: aspeed: Fix unhandled Tx done with NAK
 Content-Language: en-CA
-To: Andrew Jeffery <andrew@codeconstruct.com.au>,
- Brendan Higgins <brendan.higgins@linux.dev>,
- Benjamin Herrenschmidt <benh@kernel.crashing.org>,
- Joel Stanley <joel@jms.id.au>, Andi Shyti <andi.shyti@kernel.org>,
- Wolfram Sang <wsa@kernel.org>, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
- Guenter Roeck <linux@roeck-us.net>, linux-i2c@vger.kernel.org,
- openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
- linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org
+To: Andi Shyti <andi.shyti@kernel.org>
 References: <20231128075236.2724038-1-quan@os.amperecomputing.com>
- <20231128075236.2724038-3-quan@os.amperecomputing.com>
- <2186c3b9ac92f03c68e8a2dd9fda871f80a6d664.camel@codeconstruct.com.au>
- <66dcea57-db0b-4686-9eaf-746db637f31c@os.amperecomputing.com>
- <cb6043dfa13a269eb287a38521dc1b7722a237cc.camel@codeconstruct.com.au>
+ <20231128075236.2724038-2-quan@os.amperecomputing.com>
+ <20231129003542.jfhhotebweb3uwyb@zenone.zhora.eu>
+ <3f37c359-1c71-421f-b7d9-054696735adc@os.amperecomputing.com>
+ <20231129212552.3uy7oqm5fz5h2m6b@zenone.zhora.eu>
 From: Quan Nguyen <quan@os.amperecomputing.com>
-In-Reply-To: <cb6043dfa13a269eb287a38521dc1b7722a237cc.camel@codeconstruct.com.au>
+In-Reply-To: <20231129212552.3uy7oqm5fz5h2m6b@zenone.zhora.eu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-ClientProxiedBy: SI1PR02CA0049.apcprd02.prod.outlook.com
  (2603:1096:4:1f5::18) To SN4PR01MB7455.prod.exchangelabs.com
  (2603:10b6:806:202::11)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN4PR01MB7455:EE_|CO1PR01MB6615:EE_
-X-MS-Office365-Filtering-Correlation-Id: daebd0ab-eef6-4cdd-48bd-08dbf17105b1
+X-MS-TrafficTypeDiagnostic: SN4PR01MB7455:EE_|CH0PR01MB6953:EE_
+X-MS-Office365-Filtering-Correlation-Id: 38c66bf3-f305-4516-c85e-08dbf1710e5b
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	AejLUR37rafB5NCDNtL34MeULHgIJ5Xmxd2ro5iGPhGm5PFkdrDO77u/kL2ZDvHIog9dz6S2tLt/9Wqe5yIeYiUs/Meg6RXkegqOXYZKcdalYTLp2R3KhbUAEitItN8FNK2HXZksdkY+z5MWn9fdRAeIQSsrSB0wYrIzrR0HyueAenOOMU/VB+PXtNIFwSwi0v+YvUYYciAhMqYhAb0yrNHnc8nE2MDAohT0TpYXRzbbdw5dGr3fkABU4VRjyERk5BdjVE4LRkDQBX2MOqY7iitb+42dzWrQGbx+xhXKPifvTS6uX7qmA8HgJPvwJ9z3zEUDUjPkM/Xj5oAfgxGKN/uNAzYspePp9TxfP44xMBlytEaYN6goa7YHl118mFL5s81Vf2+qfwrQo/I+5e2R4f6NauNS1QIoU4nE92ioup6CHcNQTru5CaeBh6aC8likTdc8qgqNb7dsIlLC6pjK5e5Yvm1aGLt6vgGUu5C4XwUlnYyfcGDVKkAl7iDkomG1W4FcSn2HfMBtUDRGNQaQdMsTMirZcQFL9RVihXcdbfhzKfU3cfFM7AhhBbNIt+WOi3cfeXKMaCg3SXjk9xMcOCs/Wg3LdgEbpe9X3lO5Owh4vM1bOguDzr50UkuOar8tCo2j6rTCHXeEZHqNcrcJ0HXb7BJddXoqKMV/L4bAsJ+cx2mTa6k9Lhc7W2t40sNE
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR01MB7455.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(396003)(346002)(39850400004)(366004)(136003)(230922051799003)(186009)(1800799012)(64100799003)(451199024)(316002)(66556008)(66946007)(66476007)(54906003)(110136005)(6486002)(478600001)(6666004)(7416002)(5660300002)(921008)(41300700001)(2906002)(4001150100001)(31696002)(4326008)(8676002)(8936002)(86362001)(83380400001)(2616005)(38100700002)(26005)(107886003)(31686004)(53546011)(6506007)(6512007)(202311291699003)(43740500002);DIR:OUT;SFP:1102;
+X-Microsoft-Antispam-Message-Info: 	jjlMxQwTKfhjVk/t6IlWRoV6BPysqrkJ3m+kl82KY3M1QRltfKcZbWSCup0QAgM07DOJGQ0YKBNNaIrkg35MVzckwysDB+SqT8Zamdg8kNrbKSELXmEN3OPuY3A3ogY0Rw3EXhpMJROxSttkkCcpiRh/eWpGiz52i3gvV/jg5DFQrakmUpa939KW7tU3UcPd0nUx/3OUQdormB2W6hZXqbfbeqQS/4yWbs931DoiwdsQP18nxMNYOg0aWAis9rzgqeIHvjnvW1lbKz/6IEkjfxvW/xpQwqueDBtn20kWPFECDnFMJEVhFXsD1s0KxfbYKOEDkPru2OpsB2ueYw/qlqMrEjIXGhmhajLqECXVvrahe8MaEWENRswMc4/Vjv9iHNGRNsG1lUbKHbp2Ull54YYmceykMusCY7ArhsvsXI2A6oBxh7aFfc21F1kgg0G0XLp4IJI9HYth+5SfHd4Wecch05OOFkWvu9CcOTDWmuY6jz5ojNA/nT8tUDuVv89GGk+SD6PgF+V9+L+Yls6t6jDOx9OWIe5JePoYsbeFMVfVPJqjifGzkVIbnvUvV6EbMqYbs8w5aRkiM2OP4iz7JXX20FuUemSfc5Y96Pag+4RXjqSV/qLPoJeJbM4WKDDj+o9KoEGD6UPbx6ghkH5qOA==
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR01MB7455.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230031)(39850400004)(376002)(346002)(396003)(366004)(136003)(230922051799003)(1800799012)(186009)(64100799003)(451199024)(41300700001)(66946007)(66556008)(66476007)(54906003)(6916009)(31696002)(83380400001)(31686004)(4326008)(38100700002)(8676002)(478600001)(6486002)(966005)(2906002)(7416002)(5660300002)(316002)(8936002)(86362001)(202311291699003)(6666004)(6512007)(53546011)(6506007)(2616005)(107886003)(26005)(43740500002);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?b3JOS0FBZDd6TWVOcWFFeXZ5Z1J4T2ltdTUzamJmaXc2a2pVcVNoSHIyems0?=
- =?utf-8?B?SDJRV1RVb0Q5bTdrd0lVZ214MFJOa0lOQUx2UVdZS2p6Sy9QVXJnYStoRFI4?=
- =?utf-8?B?NlpUVTNaaTFyaUxhajZ5RjRoUE5EKzc0cktQck14VGkxVEFUQ0k2T0tZSmlY?=
- =?utf-8?B?UEF0akhiWC8rQlg0Y084NTQ2T1pGcXduZUZWdUdqd2pVK2YrdkxZdUxERzl2?=
- =?utf-8?B?dFJBZjREYkdRM2ltZHJoei8vSXdSQUhjR0VaWUpOcVdTZDZoblg3aU04a2xu?=
- =?utf-8?B?S0RVVkMxNkhBUlVzcFU5aUlZK01WTE5qaHpnSklmY0RCVXppV3dvZ203VjhX?=
- =?utf-8?B?ZzlVd2hQdDRUcDQzb3NSRk00SDViREo0Z2pUSWk5RUFMMUgrRGZ2VlltOUVr?=
- =?utf-8?B?REZ5LzYxVzlSc1pWUjRUQ1NGblBNL2NJN0Z2YTZjS2NINDNubzRiNzUzVm5U?=
- =?utf-8?B?SSttUWozTGpzZ3BlZWt1d0g2dXJkWExzSVNnWEdBNkFqejl1Z3VOWjNzNWNK?=
- =?utf-8?B?cWRXdjZVL0IyWGpmTzdNSjRnUU4vVGxxN056KzlISks2VTlKTXN6NlM0L1Qx?=
- =?utf-8?B?cjl2TXp5UkwrUUYreEgyczJwR1RJR2F4Nko4V1RwaVYxNFdpY05TWFRsejZH?=
- =?utf-8?B?M3lWbE5ycE1vTnc2U3drMmR5REkrblFsT2s1VTZaMGhNeFE5SytYY09MYUNp?=
- =?utf-8?B?emlVaUZPcGNrK2hpZy8xN2toYmVRVHVwbGs0N0JhMjVONkoyK1QvNTlta2xk?=
- =?utf-8?B?S1J4UmJ6K2U4RjRhTFZCbmxhc0xOeENTUVYxUi9sd21vbGVwVXVSUnNTb2hM?=
- =?utf-8?B?dUNkSXVXV1I5R0JGSTRBVmhQVGNyZUlua2txMW9rUlhObEtTYWNhdEthbnF2?=
- =?utf-8?B?eEpUeHMrM2tSV1ZxUlpVcUdPNnZUb28xcURpY3lQQWx5SGtIY2p6aUNUWUU3?=
- =?utf-8?B?VnVrT2ZzczZPTTU5Kzl6MGRoSll1M3lqRkQzZkNpT1pEbFVTQjhaNWNMY2JT?=
- =?utf-8?B?TXRTcnZ2VFZmZndPZmx2a0FqN2dEaXlYMFUxUm5pSjJaUnZlL0Q5ME5LWEM2?=
- =?utf-8?B?Nkg3SjRudHBydFREQU92RHgwK01IYnNoa280YzNndmI1eHlDdUtMQWtlZzFj?=
- =?utf-8?B?cXdWUkxRV1BiMlg0UUVZd0xVVlBkZmFSZGpNckNoM2psL3NtSkd0MVpQOVlv?=
- =?utf-8?B?SVNBQWhtMHZjU1BFS3NlRGh6N3M4SEpnU1dvRlhsS1VUS0JhaWppSHVvOWRi?=
- =?utf-8?B?WlZad3o5ZDhxVUhtUzUzY2hzcnI1dVV0MTlIM2NHL1lKK2RSLzhyTEo3VElV?=
- =?utf-8?B?WGVpcUYxQWVIUG1MWCtXcGpMQkpYak5ESVp0TEliWnBteVVIa2JmVzRnQSsy?=
- =?utf-8?B?TmhBZ1h5RXVNeE9sWkRab1ltQVV0bGYrT3ZxQjlzUmxtMUllQVBYL2lZVTJO?=
- =?utf-8?B?MnJUNDd0L05xNnM1bGZkbkxVZS9KUm5KOWZJVmtyd2NxeG0yTEp4Y2NVWUNZ?=
- =?utf-8?B?R0pZYk80WDVWZWhrSkJXeVRJNWI1djVDcVZsd2lBYWVXM28zd1ArOWJZdVZI?=
- =?utf-8?B?SVZYWFp4Y3FuVDJYa3AyV050NHZ2b3RQdkx4MmFqSFUvdTEwN0tvNDh3Z1B2?=
- =?utf-8?B?dHllSEd5NDBVVXVyU3l5YlNMdmZkVllsWEhiRkg5UnJrSEtHS0g1eCsvRzdT?=
- =?utf-8?B?Rzc4UlhXL21XLy96NDlncFg5SUY1SDZRcTdjVmR0N1dxVUZtK0w1dmROTHJ4?=
- =?utf-8?B?bnUyQkJ4TDNrRldrR3dnTU1zczQrcVgycFBKemV6TGlRWGlLc3B4a0hKUFhu?=
- =?utf-8?B?Sllna2JmR3Z4WC9hNVNmOHBkUkxmM1N0T2s5R2twVUhMdmZQWmxSVkJvb1hF?=
- =?utf-8?B?UUFYWlFvVDJIWGVaUmI4OHpzUlJpVm5uOTBMQmhNejRlTXpCSkkzZU1oa3g4?=
- =?utf-8?B?VU51R0poNGt5MlFLbXZZUUM0RCtSaDN5MXVHV25nTlhIc1VFbUFIc3QwSFZL?=
- =?utf-8?B?YVZJUk1xRWpVQzNaenN3bTdLTnNpZGo4UUo4RnhnTjliTzFJN2tUbXRldkRl?=
- =?utf-8?B?eSt2WUFNSTJPT3FySFR4cFN1aXRsRklDc1crRmlQN2ltU2IyQmtwZXQ5NC9j?=
- =?utf-8?B?aWtWaEw0bElGVDdoQ3ltMDM3UmY1MXZkbDVKeFJCZlJTSDNaaFJIdy9qeE1L?=
- =?utf-8?Q?YFH8yvXpGSyl8LoRSYPzX8I=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?S0M2Syt6dmVjMnp2RTY4MjJJM21UZWNiK280cGlHZ0dGK3ZpWDkybUI0UE5u?=
+ =?utf-8?B?NzJ1c0MzZmk3TXdUZ1BSQXFRK2UwWndVdFJxVTlNa0xqTzErVFdGdXdXNE1O?=
+ =?utf-8?B?T1dBak8wc2xadTAweTBDamRIS1dqWENGYlJrQU1ZZktrUUR3UUdLL3p0dE54?=
+ =?utf-8?B?aFhNRlBuWDZsdndRdXdieUxXeGdPdkQvQUdPakg4NldIaUtWbVR5Y1paaTA0?=
+ =?utf-8?B?QTVOS1JycDB1OHA1Y2p1T0NnSkNETVZ5d01PWWNNdlpVZlpBdk0wanNwVjR4?=
+ =?utf-8?B?citoQngzR21FdmpNMm94Q3BSOWhoL1EyZlhXaWIyWVF4azNyd2tQSHN1enNo?=
+ =?utf-8?B?WmZHRjRmSDdTZFlTTFVlWlhqNFl3cmozNU5JQWJZQi9aVzh2ZnNwcXlvdm0r?=
+ =?utf-8?B?bDhZOE1DdDd3L0liY2pDQzIvdFUyZ2xJUHlockFuUU5XU3h6ZEVYSEcvV0dZ?=
+ =?utf-8?B?Q2JuQm1mSE1MaUtacmNMUXhUZUg5NnhHWFpqOEhJU2pram1FQVp6WGtJRXd2?=
+ =?utf-8?B?U244N0NZQWR3Q2VhdVFoWU9TdUtVMnQyc3F4dnBka1h3cGtYNTQ3ZFR2ZnBV?=
+ =?utf-8?B?TEM3M3o3UStsd1ZueFpwbmZMZ1VGQkdmdzlpWDFjaDF6cWRINFVFT2gzemhk?=
+ =?utf-8?B?M2Rzd0U4Y3NxcC9TblZqQ2lUWWRqVnRLZ2JMQlgvWEE3dFRoM0gyMHZ2MENE?=
+ =?utf-8?B?Z0RlbkRXYVBGdXRCTzZPNlo0T0o1OGpmcXN5VmVCNHJNOHJKRHoxYUp5ckth?=
+ =?utf-8?B?RXpMcjcvRlJ6TTVsc05mSFQrT0syZVdxNXYvWTNnaEhqODdNUzVqUTdvRTBY?=
+ =?utf-8?B?bXNqRElUQWZTY0JRRUdybjJRclNhdEo3TEo4UEZOY21meG85eU1zWlpneWRr?=
+ =?utf-8?B?VXBuRFFzdkhTNEpvNy9SL3Nvc1p1bWlhSlU3N1JoaXVLem84K0pUMmtoUFE2?=
+ =?utf-8?B?SWxibkZIdURpUzlMY2pRR3R2Q1lZWC9wODhXSGpEZmI5T2FwTWs5Yk0vNnJw?=
+ =?utf-8?B?VXBaWXNyU3NrVTY5K2xnRXNnOGo4ckpRYmFSVFZqOG5ERnM0eDVmbmZQWVpE?=
+ =?utf-8?B?VGlZbkVJdEM2R0xIYWp3YlFFUm9ZNGRwd0hFaEdaVTZWTlhxZklYbEsxTVd6?=
+ =?utf-8?B?TTIrUXI5R3VYeUx5LyswU0F3YWthUElwYzhUZE5vdmRSdDR1WnBGcG5SWlBk?=
+ =?utf-8?B?ZE9aUXlNb2hYaVZhakt4TWpCWllYZzk3MUtCQ0hoSHRkVnQ3OVEzVWJSSm53?=
+ =?utf-8?B?a3JiTEZOQlVtZFI1dGZSdjA1V01GRE9BNERSZjJrVTVTeG5BTlRLNWo5QUlj?=
+ =?utf-8?B?WG5LWERaWHhlTGtnb0pqNE9IVnVxQnZ5TDFJK2ZreGd4TG9DMEEweVRUVGdN?=
+ =?utf-8?B?QTdtQnRzT0ROVktLSEIrWURrSC9QWEJOSVpxZFVyOUVnUTVhb1FwOTlPeGpa?=
+ =?utf-8?B?QjllZzBsaVhaWVoyTlhvaDBpWW01WXhSZldWVG1nd1M1QndDM01HaEdHZE80?=
+ =?utf-8?B?dk5Fb0VHZ1BGWEpOaGpnY3N1a3dYaHIvejZqeFNFV3RFWFcxRk5CYWdYRXFY?=
+ =?utf-8?B?enhzWGRNelNETFV3NzhLZXNKOXRLbGFFbXR5NWlDenZFbWpDN2ExbkxjNThY?=
+ =?utf-8?B?T0JzcmMwaVpRNWZKeldnQWZlb0R0MzRibjRUSm5ZY2VRSHdzZkswdUpRMkxY?=
+ =?utf-8?B?WlZhVjZBVHNWb0VBL3dwQzBrYXpBMUgzaUUva3JlUVJ2NW5Mc0U5ME9QRm11?=
+ =?utf-8?B?ZGd1TnBuOHRxMTdHZGZGWFY3WmIvZ3hYN3Z5Z2I4aG9uMHNkTEIvZ0NOYUsv?=
+ =?utf-8?B?RmxCbjNDTHRBVmxhaFIwaG0vU0dTbk5vVW8xV0VjOWZsbXlmNTg2TGJKMXdT?=
+ =?utf-8?B?ZElFeUg0Ujk3WkxDRHF2dnR1Y2VPRlBsWTZLQjZudlNkQ09meGRzODRNYjhp?=
+ =?utf-8?B?TTV4OFFKNjBISjZrTW0xQzJnaDZ2QlU4djdIN2pIN3p6bWxEL240eGpXc0ph?=
+ =?utf-8?B?WERieSt3ZnRXeFoxYzUyMXJIQUtFSWxXbWIxVXJKRkJWZmQ5L2E4Smd4UlhT?=
+ =?utf-8?B?a1ZXVHQ4dnR0WUpFVzV4ZFVpdkNRYlpJbGZxeGNGSFRQeDRFR3dKdVpDTE5t?=
+ =?utf-8?B?RXBkcFQxMEVFYXUwaUhCeTZwVVR3TldpNlpJWmV4Z0FWTWpnVjZjWVpnc08r?=
+ =?utf-8?Q?uvf25l+VytdStmCi+dL5ods=3D?=
 X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: daebd0ab-eef6-4cdd-48bd-08dbf17105b1
+X-MS-Exchange-CrossTenant-Network-Message-Id: 38c66bf3-f305-4516-c85e-08dbf1710e5b
 X-MS-Exchange-CrossTenant-AuthSource: SN4PR01MB7455.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Nov 2023 06:53:13.3405
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Nov 2023 06:53:27.9022
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: qRcO+HxGQlvD6osUBiY4Nc94HtsNolSPG668dGGZW1nq21F6JDwPWaZxkerTvokk5Jf9mkN0kQV6Gs9NHixTUCGqcQ6BP+gJ/cMCfpd9MRM=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR01MB6615
+X-MS-Exchange-CrossTenant-UserPrincipalName: CCpFRDp+ZcgfmPH0Dq914T4AXqdI6Iz+MHhbAEWKGzIc7ZY/cldIampIk1tux/QD/SONwmDKp+qlY1V5TtONkOi0MOTUjFVvyIBZP85jejk=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH0PR01MB6953
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -142,116 +134,116 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Cosmo Chou <chou.cosmo@gmail.com>, Open Source Submission <patches@amperecomputing.com>, "Thang Q . Nguyen" <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>
+Cc: linux-arm-kernel@lists.infradead.org, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, "Thang Q . Nguyen" <thang@os.amperecomputing.com>, linux-kernel@vger.kernel.org, Phong Vo <phong@os.amperecomputing.com>, Wolfram Sang <wsa@kernel.org>, Brendan Higgins <brendan.higgins@linux.dev>, Joel Stanley <joel@jms.id.au>, Cosmo Chou <chou.cosmo@gmail.com>, Open Source Submission <patches@amperecomputing.com>, Guenter Roeck <linux@roeck-us.net>, linux-i2c@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On 30/11/2023 05:44, Andrew Jeffery wrote:
-> On Wed, 2023-11-29 at 16:02 +0700, Quan Nguyen wrote:
->>
->> On 29/11/2023 07:33, Andrew Jeffery wrote:
->>> On Tue, 2023-11-28 at 14:52 +0700, Quan Nguyen wrote:
+On 30/11/2023 04:25, Andi Shyti wrote:
+> Hi Quan,
+> 
+>> On 29/11/2023 07:35, Andi Shyti wrote:
+>>> Hi Quan,
+>>>
+>>> On Tue, Nov 28, 2023 at 02:52:35PM +0700, Quan Nguyen wrote:
+>>>> Under normal conditions, after the last byte is sent by the Slave, the
+>>>> TX_NAK interrupt is raised.  However, it is also observed that
+>>>> sometimes the Master issues the next transaction too quickly while the
+>>>> Slave IRQ handler is not yet invoked and the TX_NAK interrupt for the
+>>>> last byte of the previous READ_PROCESSED state has not been ack’ed.
+>>>> This TX_NAK interrupt is then raised together with SLAVE_MATCH interrupt
+>>>> and RX_DONE interrupt of the next coming transaction from Master. The
+>>>> Slave IRQ handler currently handles the SLAVE_MATCH and RX_DONE, but
+>>>> ignores the TX_NAK, causing complaints such as
+>>>> "aspeed-i2c-bus 1e78a040.i2c-bus: irq handled != irq. Expected
+>>>> 0x00000086, but was 0x00000084"
+>>>>
+>>>> This commit adds code to handle this case by emitting a SLAVE_STOP event
+>>>> for the TX_NAK before processing the RX_DONE for the coming transaction
+>>>> from the Master.
+>>>>
+>>>> Fixes: f9eb91350bb2 ("i2c: aspeed: added slave support for Aspeed I2C driver")
+>>>> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+>>>> ---
+>>>> v2:
+>>>>     + Split to separate series [Joel]
+>>>>     + Added the Fixes line [Joel]
+>>>>     + Revised commit message [Quan]
+>>>>
+>>>> v1:
+>>>>     + First introduced in
+>>>> https://lore.kernel.org/all/20210519074934.20712-1-quan@os.amperecomputing.com/
+>>>> ---
+>>>>    drivers/i2c/busses/i2c-aspeed.c | 5 +++++
+>>>>    1 file changed, 5 insertions(+)
+>>>>
 >>>> diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
->>>> index 79476b46285b..3231f430e335 100644
+>>>> index 28e2a5fc4528..79476b46285b 100644
 >>>> --- a/drivers/i2c/busses/i2c-aspeed.c
 >>>> +++ b/drivers/i2c/busses/i2c-aspeed.c
->>>> @@ -611,8 +611,9 @@ static irqreturn_t aspeed_i2c_bus_irq(int irq, void *dev_id)
->>>>    
->>>>    	spin_lock(&bus->lock);
->>>>    	irq_received = readl(bus->base + ASPEED_I2C_INTR_STS_REG);
->>>> -	/* Ack all interrupts except for Rx done */
->>>> -	writel(irq_received & ~ASPEED_I2CD_INTR_RX_DONE,
->>>> +	/* Ack all interrupts except for Rx done and Tx done with/without ACK */
+>>>> @@ -253,6 +253,11 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
+>>>>    	/* Slave was requested, restart state machine. */
+>>>>    	if (irq_status & ASPEED_I2CD_INTR_SLAVE_MATCH) {
+>>>> +		if (irq_status & ASPEED_I2CD_INTR_TX_NAK &&
+>>>> +		    bus->slave_state == ASPEED_I2C_SLAVE_READ_PROCESSED) {
+>>>> +			irq_handled |= ASPEED_I2CD_INTR_TX_NAK;
+>>>> +			i2c_slave_event(slave, I2C_SLAVE_STOP, &value);
+>>>> +		}
 >>>
->>> I'm not a huge fan of this comment, it just says what the code does. It
->>> would be much better to explain *why* the code does what it does.
+>>> this is a duplicate of a later "if (...)" satement. What is the
+>>> need for having them both?
 >>>
->>> I realise describing what the code does was already the gist of the
->>> comment and that you're just updating it to match the change to the
->>> code, but that's my entire problem with it. We'd be better off deleting
->>> it if we're not going to explain why the masking is necessary.
->>>
+>> Thanks Andi for the review.
 >>
->> Thanks for the comment Andrew.
+>> I assumed the if statement you mentioned is here in [1]. If so, then that is
+>> not duplicate.
 >>
->> I would prefer to delete it.
+>> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/i2c/busses/i2c-aspeed.c?h=v6.7-rc3#n287
 >>
->> But if to put some comment, how about:
 >>
->> /* Early ack INTR_RX_DONE, INTR_TX_[ACK|NAK] would indicate HW to start
->> receiving/sending new data and may cause a race condition as irq handler
->> not yet to handle these irqs but being acked. Let ack them late in the
->> end of irq handler when those are truly processed */
+>> The if statement is to process the case when Slave sending data to Master
+>> but being NAK, the I2C_SLAVE_STOP event will emit later in switch-case
+>> statement. But it is only for the case INTR_TX_NAK without INTR_SLAVE_MATCH.
+>>
+>> The new code is for the case of INTR_TX_NAK with INTR_SLAVE_MATCH. What it
+>> does is to detect if there is a mix of INTR_TX_NAK of previous i2c
+>> transaction and the start of new i2c transaction, indicate by
+>> INTR_SLAVE_MATCH which is only raised when Slave found its address matched
+>> on the first byte it received. If so, the new code will try to emit the
+>> I2C_SLAVE_STOP first to complete the previous transaction and process the
+>> rest as a new request.
+>>
+>> So if this was the case (with INTR_SLAVE_MATCH), the INTR_RX_DONE should
+>> always raise with INTR_SLAVE_MATCH because Slave did receive the data which
+>> matched with its Slave address. And this will be translated into either
+>> I2C_SLAVE_[READ|WRITE]_REQUESTED and that make the if statement you
+>> mentioned [1] evaluate to false and skip.
+>>
+>> So, in short, the new code is trying to handle the case of INTR_TX_NAK with
+>> INTR_SLAVE_MATCH first before let the rest process as normal.
 > 
-> Please update the patch with this comment. It at least goes some way to
-> explain why.
+> yes, I saw that, but wasn't it easier to do something like this:
 > 
-
-Yes, will do in next version.
-
->>
->>>> +	writel(irq_received &
->>>> +	       ~(ASPEED_I2CD_INTR_RX_DONE | ASPEED_I2CD_INTR_TX_ACK | ASPEED_I2CD_INTR_TX_NAK),
->>>>    	       bus->base + ASPEED_I2C_INTR_STS_REG);
->>>>    	readl(bus->base + ASPEED_I2C_INTR_STS_REG);
->>>>    	irq_received &= ASPEED_I2CD_INTR_RECV_MASK;
->>>> @@ -657,12 +658,12 @@ static irqreturn_t aspeed_i2c_bus_irq(int irq, void *dev_id)
->>>>    			"irq handled != irq. expected 0x%08x, but was 0x%08x\n",
->>>>    			irq_received, irq_handled);
->>>>    
->>>> -	/* Ack Rx done */
->>>> -	if (irq_received & ASPEED_I2CD_INTR_RX_DONE) {
->>>> -		writel(ASPEED_I2CD_INTR_RX_DONE,
->>>> -		       bus->base + ASPEED_I2C_INTR_STS_REG);
->>>> -		readl(bus->base + ASPEED_I2C_INTR_STS_REG);
->>>> -	}
->>>> +	/* Ack Rx done and Tx done with/without ACK */
->>>> +	writel(irq_received &
->>>> +	       (ASPEED_I2CD_INTR_RX_DONE | ASPEED_I2CD_INTR_TX_ACK | ASPEED_I2CD_INTR_TX_NAK),
->>>> +	       bus->base + ASPEED_I2C_INTR_STS_REG);
->>>> +	readl(bus->base + ASPEED_I2C_INTR_STS_REG);
->>>
->>> I'm not sure why the write was conditional, but I'm not sure that
->>> making it unconditional is valid either? Why the change? Why not add
->>> the extra interrupt bits to the condition in addition to the value mask
->>> for the write?
->>>
->>
->> In original code, only INTR_RX_DONE was acked late. So the check
->> (irq_received & ASPEED_I2CD_INTR_RX_DONE) is need and that help to save
->> one write() then read() if there was no such irq.
->>
->> In the new code, there is no such check and the drawback is that there
->> always be one write() and one read() for all cases, include the case
->> where there is no irq at all, ie writing 0 into ASPEED_I2C_INTR_STS_REG.
->>
->> And yes, your concern maybe right, we can not say of writing 0 into
->> ASPEED_I2C_INTR_STS_REG is good or not.
->>
->> I checked back my debug log and seeing that irq always come with at
->> least one of INTR_RX_DONE BIT(2), INTR_TX_ACK BIT(0), INTR_TX_NAK BIT(1)
->> raised. So it seems like the case of writing 0 into
->> ASPEED_I2C_INTR_STS_REG is indeed rarely to happen.
->>
->> Do you think we should change it to:
->>
->> if (irq_received & (INTR_RX_DONE | INTR_TX_ACK | INTR_TX_NAK)) {
->> 	writel( irq_received & (INTR_RX_DONE| INTR_TX_ACK| INTR_TX_NAK),
->> 		bus->base + ASPEED_I2C_INTR_STS_REG);
->> 	readl(bus->base + ASPEED_I2C_INTR_STS_REG);
->> }
+> 	if (irq_status & ASPEED_I2CD_INTR_TX_NAK &&
+> 	    bus->slave_state == ASPEED_I2C_SLAVE_READ_PROCESSED) {
+> 		irq_handled |= ASPEED_I2CD_INTR_TX_NAK;
+> 		bus->slave_state = ASPEED_I2C_SLAVE_STOP;
 > 
-> This is less different from the existing strategy and doesn't require
-> any explanation beyond what you're already trying to achieve in the
-> patch, so I think you should switch to this approach.
+> 		if (irq_status & ASPEED_I2CD_INTR_SLAVE_MATCH)
+> 			i2c_slave_event(slave, I2C_SLAVE_STOP, &value);
 > 
-> If someone wants to work out why it was done conditionally and argue
-> for its removal then they can do that separately.
+> 	}
+> 
+> But I see that Andrew has done some similar comment, also for
+> patch 2. You can answer both in the same mail, not to duplicate
+> the answer :-)
+> 
+> We can wait for him to reply.
 > 
 
-I agree, will update in next version.
+I think Andrew's idea to handle the STOP conditions prior is much 
+better. Will test and post the next version ASAP.
 
-Thanks
+Thanks a lot for the review
 - Quan
