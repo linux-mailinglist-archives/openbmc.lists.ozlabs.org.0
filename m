@@ -1,135 +1,80 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 23960800A0E
-	for <lists+openbmc@lfdr.de>; Fri,  1 Dec 2023 12:48:51 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 43525801011
+	for <lists+openbmc@lfdr.de>; Fri,  1 Dec 2023 17:26:05 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=iJI/UJEk;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=heLVNrLS;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4ShWYD4lNdz3cVM
-	for <lists+openbmc@lfdr.de>; Fri,  1 Dec 2023 22:48:48 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Shdj65KG1z3dH1
+	for <lists+openbmc@lfdr.de>; Sat,  2 Dec 2023 03:26:02 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=iJI/UJEk;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=heLVNrLS;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7eae::700; helo=nam11-bn8-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=lists.ozlabs.org)
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on20700.outbound.protection.outlook.com [IPv6:2a01:111:f400:7eae::700])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::131; helo=mail-lf1-x131.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4ShWXd1n5Xz3bPM
-	for <openbmc@lists.ozlabs.org>; Fri,  1 Dec 2023 22:48:14 +1100 (AEDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=VeaqnCuawHplK7r4lJ67O147qJ7qkh00mxWY/ft2B8Yg6Dlx5uo9j8bA9Zjjb3sIDa5urZL+WaVF3xDAlKZ+6MivaFj3ubVLBb6eQ3TT+JPH71nuP0hDH+6Ogl10jvgJAUuMNK3ZnrssRZHw7wLT1N2ECVEz6sVpq06U4JzBhg+BThS+8n/EHLLmLe3cYipKUhxP2H2WXuYIkKMcUtAFaEfHAaEvkUHL/ovgABllVno93Fany7yO9dQTK08La9u2zZzSigpcuumc9smzS9/lsCUC7/T8id+7QOcoUqK0fiTseSaYYhx5hQjvFFhceooj/9T9x+uKx6C9Dvfy1QNMIA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=lFr1jpKsgFiQb1zKGpJYGDRzzvvwmikdActxjMcxcWY=;
- b=b+1SyEyVISKkwgvE3AkA71QXQ7AICiVB/3d6klvWDht92oJKoTQm4yTsgw3QLSWYWGOc31rONhqdb5gApoZSKn7zVjKBZRucYSvq83pXkil+0Acp42GmtGWVpmxZxzvQ4vj+BMrclbKJ8G/Bo/IUzUUYj7UjilKeRbfryWl8Cb7wQCrkoa6ElK9HukLianQ8Cdjorbq8DEccGoOBqTEewoVf6Wje5gYK/65jCDun4uJ3GKmgu3PnuDtR3JiJEdUmqQ6Ks6NB8qxbmx6902nGf0qtcpHFt1m07LQ5/3oAYUIF70IY6Eidv4zQQ4zHV0tcH5uqyiedZmRBE1g5Twvquw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
- header.from=os.amperecomputing.com; dkim=pass
- header.d=os.amperecomputing.com; arc=none
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4ShdhV4m9mz3cZt
+	for <openbmc@lists.ozlabs.org>; Sat,  2 Dec 2023 03:25:30 +1100 (AEDT)
+Received: by mail-lf1-x131.google.com with SMTP id 2adb3069b0e04-50bc743c7f7so3188907e87.3
+        for <openbmc@lists.ozlabs.org>; Fri, 01 Dec 2023 08:25:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=os.amperecomputing.com; s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=lFr1jpKsgFiQb1zKGpJYGDRzzvvwmikdActxjMcxcWY=;
- b=iJI/UJEkndR4EeSmd3h1mC5L4NzpDA5kd67sLxeRQEUpX0bppyaDrI+OzjpgtQHyFY7maMnuhUEhhC1uKse1T9g2NP4zFHy58ZiegtgEVWGJffogwuJ/XcO5jpZmnROB390PQyd2c2VAXhdbzxssQZBjwEoC28ENpBUSkDzI498=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
-Received: from SN4PR01MB7455.prod.exchangelabs.com (2603:10b6:806:202::11) by
- DS0PR01MB7963.prod.exchangelabs.com (2603:10b6:8:14d::12) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7046.24; Fri, 1 Dec 2023 11:47:41 +0000
-Received: from SN4PR01MB7455.prod.exchangelabs.com
- ([fe80::5682:1d84:171a:1d68]) by SN4PR01MB7455.prod.exchangelabs.com
- ([fe80::5682:1d84:171a:1d68%3]) with mapi id 15.20.7025.022; Fri, 1 Dec 2023
- 11:47:40 +0000
-Message-ID: <a1cd2239-d8b7-412e-bca6-ebcf3a19ed65@os.amperecomputing.com>
-Date: Fri, 1 Dec 2023 18:47:30 +0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mctp i2c: Requeue the packet when arbitration is lost
-Content-Language: en-CA
-To: Jeremy Kerr <jk@codeconstruct.com.au>,
- Matt Johnston <matt@codeconstruct.com.au>,
- "David S . Miller" <davem@davemloft.net>, Eric Dumazet
- <edumazet@google.com>, Jakub Kicinski <kuba@kernel.org>,
- Paolo Abeni <pabeni@redhat.com>, netdev@vger.kernel.org,
- linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org,
- Open Source Submission <patches@amperecomputing.com>
-References: <20231130075247.3078931-1-quan@os.amperecomputing.com>
- <473048522551f1cae5273eb4cd31b732d6e33e53.camel@codeconstruct.com.au>
- <706506b7-a89c-4dfc-b233-be7822eb056e@os.amperecomputing.com>
- <852eaa7b5040124049e51ceba2d13a5799cb6748.camel@codeconstruct.com.au>
- <3e8b18e6-673c-4ee6-a56b-08641c605efc@os.amperecomputing.com>
- <10491ca5819563f98e2f4414836fd4da0c84c753.camel@codeconstruct.com.au>
-From: Quan Nguyen <quan@os.amperecomputing.com>
-In-Reply-To: <10491ca5819563f98e2f4414836fd4da0c84c753.camel@codeconstruct.com.au>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: CH2PR19CA0020.namprd19.prod.outlook.com
- (2603:10b6:610:4d::30) To SN4PR01MB7455.prod.exchangelabs.com
- (2603:10b6:806:202::11)
+        d=gmail.com; s=20230601; t=1701447923; x=1702052723; darn=lists.ozlabs.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=1Fe9LinVeEIS31sVu9a8Ip9icgC4gCnScZC9xWW4pX4=;
+        b=heLVNrLSZZG61x/TSyqrlSWhsvfBRHaiXiwu6cLA3f2M4J1qyJGWQu2nVs8LrdaGNs
+         89A67LjY3iDskv+22WRM1hcndeh1vOwzKffCm8zH+I0Tvz8tOb1fWR/m4G/LugYi+tmL
+         udHK6XOVHzEQmQUOKekwtHLworVF0x/RhVD/kzfEhg1qjjwsC7T3bG/h8kh2QdEuD9zk
+         0z8/4FOOohciL0Z8wrNOpd+MGhEfaw0GdpHfccnEoBfDNroqY3phh4A8KSSdrGZnO1NM
+         zVLbkrLhmUO0tau5Lmgw8QduiiPWs6YHh9e4ylgbg4fTUpFwTknZv62z/we1lN7qhQAv
+         OaCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701447923; x=1702052723;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1Fe9LinVeEIS31sVu9a8Ip9icgC4gCnScZC9xWW4pX4=;
+        b=cgNSwqfpw4PiMUrdLtbk9it6ANiOU34Gejrjy2STF51Bta2YfuhUEceCMCgvkmekPk
+         ACkHWvChdlji/cRz2Ge3T/pgLJjvH/63HaZgQkAouuHaLSWPPxjtzj8xUZlUmBKx+uto
+         SafvV57HpQN+rke2gxjzDHYqWZ09BgSH977KcfaaJBEFTlkJOcqCznjhC8/s7lXTzumn
+         wcfIjiOzXcaPAL8gI+KiR1o65rdLaMAqOte3GpmgIyGheYdi8VHsuEPHdTq2lBZqTXnk
+         YFOoge0oUTXLhXBabosmbZZK7fBSlEPpp6sgXLnVe2Nd9L0zDTl7ebDvo195eqAZHe3l
+         k9oA==
+X-Gm-Message-State: AOJu0YxvCqcmD/uHasPgzyqjiL04weXYJvWMhSCT1FLJ9kTQNVa8XP1K
+	llh4YK5YsA9eisNP932xkck=
+X-Google-Smtp-Source: AGHT+IED2w+hujxue7bm9bOGpjjCdvrKzr90/3i7E5Xd7uj7qqmqvOaSeS01ayw0GAygOWScKCMiaA==
+X-Received: by 2002:a05:6512:280b:b0:50b:d764:64c0 with SMTP id cf11-20020a056512280b00b0050bd76464c0mr1188134lfb.117.1701447922712;
+        Fri, 01 Dec 2023 08:25:22 -0800 (PST)
+Received: from mobilestation ([178.176.56.174])
+        by smtp.gmail.com with ESMTPSA id i15-20020a056512340f00b0050bc303f3cbsm232121lfr.173.2023.12.01.08.25.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Dec 2023 08:25:22 -0800 (PST)
+Date: Fri, 1 Dec 2023 19:25:19 +0300
+From: Serge Semin <fancer.lancer@gmail.com>
+To: Maxime Chevallier <maxime.chevallier@bootlin.com>
+Subject: Re: [Linux-stm32] [PATCH v1 2/2] net: stmmac: Add NPCM support
+Message-ID: <dfbwvsvefbkj6lodj5nmj2up32vnai32u3qk667mpfjytvmp4z@uvny7nhaykzi>
+References: <6aeb28f5-04c2-4723-9da2-d168025c307c@lunn.ch>
+ <CAP6Zq1j0kyrg+uxkXH-HYqHz0Z4NwWRUGzprius=BPC9+WfKFQ@mail.gmail.com>
+ <9ad42fef-b210-496a-aafc-eb2a7416c4df@lunn.ch>
+ <CAP6Zq1jw9uLP_FQGR8=p3Y2NTP6XcNtzkJQ0dm3+xVNE1SpsVg@mail.gmail.com>
+ <CAP6Zq1ijfMSPjk1vPwDM2B+r_vAH3DShhSu_jr8xJyUkTQY89w@mail.gmail.com>
+ <a551aefa-777d-4fd3-b1a5-086dc3e62646@lunn.ch>
+ <CAP6Zq1jVO5y3ySeGNE5-=XWV6Djay5MhGxXCZb9y91q=EA71Vg@mail.gmail.com>
+ <25d0c091-3dce-4d62-a112-c82106809c65@lunn.ch>
+ <xvy2coamb6cl3wcbkl32f6w7kksoxfocyd63t7k7bz4pne2gyx@lktivhqovy7p>
+ <20231130213441.032a661c@device.home>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SN4PR01MB7455:EE_|DS0PR01MB7963:EE_
-X-MS-Office365-Filtering-Correlation-Id: eeda1e2c-faf2-42c6-8794-08dbf263529e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	QWx/55LmHFAWeayHCgtaXcqAazKtSNJNzXlbGJQ+iD5dhhKtMjDoQZKUaM60NNh7k+GTIZzl55PK54exGHKiwJtJsZJ86AoNyowintALffN9zHY0b5pivjzOioLbWIOKalWPziPf0s31eQEjDbG1KYkTzBoaoq7/C5Eg6zQgx5gusWqPNfJglWdN+R834LsFSb1oeRASiGTMiDHqYp9GbZJ1FDgz/OU6hN6YA+xCJSAyojq/kg5RvGGRBcvNBRo6pY37L44skyLqoftNCq3CS4pHw2mwMjUpCTvrtO2iQPg5WZ1vLmQOPfVtfoe1DCRe7nBdaoKlWUjeqqc2+0nKLRqWS9sggCqsoNVqm6XW3fJXC6aMmoixsai1qjKCqcVPOjYkcxegl6OjUrt3d+RCvuYWhFy5vsNO8btX4TTu5pVPqo6JGTmTKG19wEKgTC5HPR7cezCVdW/6BoIj43q3fyyXNy5MfWzyXAK8hPVYaoHcxF3rVmR66ZKQH9U+s0s4qgFUVavrUe9MwdMW+NBlf10nYtkIiYCj7LO1dC8PIQF7oykn2oOVak6lu15F9Xskngc9DW5UDbF8eOBnXBIX76gw5SSXhFgDrqJg+VGY3d+bqSF3bPQzdbgGQS9k9p6C
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR01MB7455.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230031)(136003)(366004)(346002)(396003)(376002)(39850400004)(230922051799003)(451199024)(186009)(64100799003)(1800799012)(31686004)(6666004)(107886003)(6512007)(26005)(2616005)(38100700002)(86362001)(31696002)(921008)(5660300002)(2906002)(41300700001)(6506007)(53546011)(478600001)(4326008)(8676002)(66946007)(316002)(66476007)(66556008)(54906003)(8936002)(6486002)(110136005)(966005)(43740500002);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?WUF0TnBjSURmcUVYNENoNEhRYXBoNkVDQ1VOYUd5TGZYVnZTM0t5MUtBQmdJ?=
- =?utf-8?B?aWRVVXBacEhEU29oWllOYm9CcnMzWHgwZVc3WCtFcnhVdmlIUitseFpPUEl3?=
- =?utf-8?B?Y0RXa0JBT0RWLzB3c1J5QW1tOUZpOUFRVmxZL0pyVG9GVjNEU3Y1K0dzbjNQ?=
- =?utf-8?B?QkFwV2FJL01MSmtScWlKRmE3aVQ2NnQrbjIwNmd1alRLUkQ0MGw4UW0rckF6?=
- =?utf-8?B?Ym9wNjN6SE14TEtSdG56aGJDZ1kxMkRiOW4xUklzVTlXVWUrQVVjZHpVNGFV?=
- =?utf-8?B?UHNVcEZBaWt6WnBEOGMzOGdLRFcwN20veGNCUzA0eFpScTZkNEdjTWhFdTdI?=
- =?utf-8?B?VndKcjNWUE1kbFVzcFRQcFNma1ZxTElYTENHZnNhYzhCM2NTN3c2eG8zZndi?=
- =?utf-8?B?emZ3Y0wySThZUzYvWmRrc2RQNStGcDgxNE1zRlhjR0lVZk96Q2k5M3dNVllI?=
- =?utf-8?B?VUJ5Nm1jRWo0TXlPWWF5YlVhNjYxYjBRdnZDZHlCZjZhelpOTmZpdFN6Qlo3?=
- =?utf-8?B?Ry9FVm84WE5iNU1EMUlvczJCWDE0MHZVQzcrNzEwc2xpdC9FK0xiUVZuOUZr?=
- =?utf-8?B?QlNXTEEvdGx0bDI0eEJGMTB6OURNVXI5T1dkdURYTWMyVEhndnlnR2c5YUlV?=
- =?utf-8?B?Rks5Qlh3NFJ3dTg5OHhGUTFJOW15RjhhVkYyNmZFSUk5SUx6Vnk4M0E2Y1VW?=
- =?utf-8?B?UTFKTS9CaUpoTFZBcXBRWjNlazVGTUgrTFpnem56MGNZSjR1d1RrZHNZaGsw?=
- =?utf-8?B?TTZKK3oyTHVhWVZlemg5bWlpUzN2Q24rYUJlc1BFTXlFT3NSck5WRjZjbzVo?=
- =?utf-8?B?UUhCdC95T25oK1N4UnNsSmpXRUJtakg1cU9Idy9NVHFSd0VKTmM5b0UrSWxQ?=
- =?utf-8?B?a1RyeG5RVjRXYktvYjhVVjNHR25MNURrNXY2QUd1ckpHckpQRVA2MWFRQ0wx?=
- =?utf-8?B?MVYzZ1paenBKOVlldVlvU3RGNk5OT0JaWlpHN1grZzlyVFZCZUJKWWxSYlZi?=
- =?utf-8?B?YkZOVnBLRkU1U1hhMzFlMDVxZDZlZ3BKQ2t3K0tkZ0hyb1cwdTl0MExlM2Fi?=
- =?utf-8?B?Sm56YkhsQ1RnWlBIV3JlcElIZTVweWtwcnhnY3dmQjdZcjVNZ0EzOHRNWmls?=
- =?utf-8?B?RjJUSjZvNzRoeTZHU1oramtGTEFTMGZCeXkwRnlSeWFXRStWaVlVcFRJcFB3?=
- =?utf-8?B?M0dqZUREWlB0L2tYTTBvdmFXbC9laGpxZm5uQnlQSGpjK2JKdjhpYlEyZm9y?=
- =?utf-8?B?cys3USthaXBqYkZVa0NWRnVoaGxzRzlTdzJxY0t6RnFkNlQ0eS9kM21sSHF5?=
- =?utf-8?B?WExrRUNtNHJhZUlyWXRlVC95aldoZjdhR3F4cTdPcjhZZHRPMTVBVDVTa0lw?=
- =?utf-8?B?OFVlZ29WT2JMU1FjSGJVSnVvYkFEVCs4L2d0WUIwazRZdU54U1NJYzJWL2tx?=
- =?utf-8?B?RWpXanJPejRQNG9BODNjMFNsZWwyNkVzRlhrdzRaZ2JEZnFnS2RET3lUVFpL?=
- =?utf-8?B?T1MvbC9mQ0N0eGI1aTRDR21NOXk2azdMZFIrRUc2NzlrY3Q3STlRWFZhbkJa?=
- =?utf-8?B?djBvV3o0Y0RYTXNLSU5pNlA1eTg3VFk5YUhGUUFnMWxJdW9QN29rMjVEMjJs?=
- =?utf-8?B?WWtSaTh6T2Y4Y2tnTTFCQjdJZ3A0bmRabFZJRllvQ2ZUUEFJNFNBdEtEQzBt?=
- =?utf-8?B?b0ZWSWVicGZ6SWR0dVhXYzhFMnluVnpBSzRoS0pDNDNPK1FlK0NvNXdIbzFL?=
- =?utf-8?B?MEViQ2ZKTWthcmhaVWhGczh0aDFmUm9RL2FlK0lvL05Oc1JTUU1WK2dQL1dw?=
- =?utf-8?B?ZlpPdE1ud1dDR3NzVDhZbWJWbmQ2QXFlMGxISWg1amo0Y3pDS3dYNUthbmVo?=
- =?utf-8?B?cE5JQWF0dzNKcmpHN0ZnV205ZlJTTzlESFl2d1Q5RVM3a0xxODd1R0lRVU9q?=
- =?utf-8?B?cTRmcDRVRUVBcENBRkZRTlpjTEpNb0NuRVBDYWt2ZHM2b0hObXMxN1dEOG04?=
- =?utf-8?B?a3ZVZVRKQ0docTVmT0loM1dmSURmZVR4L1pmbmVLWTFpS1lwTFlyRFZzUm9z?=
- =?utf-8?B?bnZIbWpmY0UyejNDM3JURWFvZVc4TTgrWFNyRENMQUEzU1dCUlZmNzBvcnJi?=
- =?utf-8?B?WS9DcXBYbkJ6RTB0Uk96VCtuK1U2b0xOdTZmMHBQUlVTYXJBR3BOSnpERWZK?=
- =?utf-8?Q?fbylirROov361hSgWNHxPTI=3D?=
-X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: eeda1e2c-faf2-42c6-8794-08dbf263529e
-X-MS-Exchange-CrossTenant-AuthSource: SN4PR01MB7455.prod.exchangelabs.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 01 Dec 2023 11:47:40.7068
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: OW4vKbk21x9ANkTXErXCKvx7cAgSgBkuh9FfzdXz0eHr0Ck1CEUAE5ob1TFG0rxhEfifRKSAFioJxZcZS4UtuMvE/VjjLX9QS1hprnrmRlk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR01MB7963
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20231130213441.032a661c@device.home>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -141,40 +86,67 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Dung Cao <dung@os.amperecomputing.com>, Thang Nguyen <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>
+Cc: Andrew Lunn <andrew@lunn.ch>, Tomer Maimon <tmaimon77@gmail.com>, krzysztof.kozlowski+dt@linaro.org, devicetree@vger.kernel.org, avifishman70@gmail.com, venture@google.com, openbmc@lists.ozlabs.org, linux-stm32@st-md-mailman.stormreply.com, linux-kernel@vger.kernel.org, joabreu@synopsys.com, tali.perry1@gmail.com, edumazet@google.com, robh+dt@kernel.org, joel@jms.id.au, mcoquelin.stm32@gmail.com, j.neuschaefer@gmx.net, peppe.cavallaro@st.com, netdev@vger.kernel.org, davem@davemloft.net, linux-arm-kernel@lists.infradead.org, benjaminfair@google.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+Hi Maxime
 
-
-On 01/12/2023 15:38, Jeremy Kerr wrote:
-> Hi Quan,
+On Thu, Nov 30, 2023 at 09:34:41PM +0100, Maxime Chevallier wrote:
+> Hello,
 > 
->> As per [1], __i2c_transfer() will retry for adap->retries times
->> consecutively (without any wait) within the amount of time specified
->> by adap->timeout.
->>
->> So as per my observation, once it loses the arbitration, the next
->> retry is most likely still lost as another controller who win the
->> arbitration may still be using the bus.
+> On Thu, 30 Nov 2023 22:59:32 +0300
+> Serge Semin <fancer.lancer@gmail.com> wrote:
 > 
-> In general (and specifically with your hardware setup), the controller
-> should be waiting for a bus-idle state before attempting the
-> retransmission. You may well hit another arbitration loss after that,
-> but it won't be from the same bus activity.
+> > On Thu, Nov 30, 2023 at 06:26:13PM +0100, Andrew Lunn wrote:
+> > > > I will check with the xpcs maintainer how can we add indirect access
+> > > > to the xpcs module.  
+> > > 
+> > > https://elixir.bootlin.com/linux/latest/source/drivers/net/ethernet/stmicro/stmmac/dwmac-socfpga.c#L449
+> > > 
+> > > It creates a regmap for the memory range. On top of that it creates an
+> > > MDIO bus. You can then access the PCS in the normal way.  
+> > 
+> > Actually Synopsys DW XPCS can be synthesized with two types of the CSR
+> > interfaces:
+> > 1. MDIO: device looks as a normal MDIO device. This option is currently
+> >    supported by the STMMAC MDIO driver.
+> > 2. MCI/APB3: device MMD CSRs are directly (all CSRs are visible) or
+> >    indirectly (paged-base access) accessible over the system memory bus.
+> > 
+> > In addition to the above XPCS device can be equipped with separate
+> > clock sources (at least to feed the MCI or APB3 interface) and may
+> > have dedicated IRQ line to signal various events like link
+> > establishing, failures, etc. From that perspective XPCS in both cases
+> > looks as a normal platform device for which would be better to have a
+> > special DT-node defined with all those resources supplied. Then the
+> > XPCS DT-node could be passed to the DW MAC DT-node via the already
+> > standardized "pcs-handle" DT-property.
 > 
 
-Yes, that is the correct behaviour and I think that is why 
-__i2c_transfer() return -EAGAIN when arbitration loss.
+> To my understanding, this should work, there's another PCS that works
+> this way : 
+> https://elixir.bootlin.com/linux/v6.7-rc3/source/drivers/net/pcs/pcs-rzn1-miic.c
 
-One example I could find in kernel tree is here [a], and, it seems not 
-to totally rely on the retry mechanism implemented in i2c core.
+It is similar to that, but since DW XPCS can reside on the normal MDIO
+bus and in the system memory I took a liberty to implement the DW XPCS
+MCI/APB3 interface support in the framework of the MDIO subsystem,
+especially seeing Synopsys call them just "Management Interfaces", the
+MMD CSRs can be indirectly accessible and since potentially there can
+be more than one XPCS device on the same MCI/APB3 bus.
 
-[a] 
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/video/fbdev/omap2/omapfb/displays/connector-dvi.c#n157
+> 
+> Are you still able to use the mdio-regmap glue that Andrew mentioned,
+> to avoid the duplication between the mdio and mmio register accesses ?
 
-Anyway, it's been great to discuss on this topic. To answer your 
-questions I did have to dig around and have learn a lot. :-)
+Andrew cited the glue code using the Lynx PCS driver. In my case it's
+DW XPCS driver. In anycase my patchset is designed in a way so not to
+break (hopefully) the current DW XPCS driver users (STMMAC Eth for
+sure, WangSun XGBE, SJA1105 DSA). So it will be still possible to create a
+dedicated MDIO bus (using mdio-regmap API too) with the XPCS device
+being detectable on it.
 
-My sincere thanks to you,
-- Quan
+-Serge(y)
+
+> 
+> Maxime
