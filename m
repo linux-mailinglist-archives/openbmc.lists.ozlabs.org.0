@@ -1,84 +1,69 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 3835A8037F3
-	for <lists+openbmc@lfdr.de>; Mon,  4 Dec 2023 15:59:39 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id D1C84803964
+	for <lists+openbmc@lfdr.de>; Mon,  4 Dec 2023 17:01:32 +0100 (CET)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=KF8BnPrk;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SkRf051Scz3cYN
-	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 01:59:36 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SkT1Q2DBHz3ccF
+	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 03:01:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.73.55; helo=sin.source.kernel.org; envelope-from=srs0=wm/b=hp=xs4all.nl=hverkuil@kernel.org; receiver=lists.ozlabs.org)
-Received: from sin.source.kernel.org (sin.source.kernel.org [145.40.73.55])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=KF8BnPrk;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.55.52.120; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
+Received: from mgamail.intel.com (mgamail.intel.com [192.55.52.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SkRdc0FS1z3cQT;
-	Tue,  5 Dec 2023 01:59:15 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sin.source.kernel.org (Postfix) with ESMTP id 7C7A6CE1138;
-	Mon,  4 Dec 2023 14:59:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62FB8C433C7;
-	Mon,  4 Dec 2023 14:59:04 +0000 (UTC)
-Message-ID: <e920d35c-dd2f-48f6-aad8-5c7dd4a4987d@xs4all.nl>
-Date: Mon, 4 Dec 2023 15:59:02 +0100
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SkT0m55NNz2yDD
+	for <openbmc@lists.ozlabs.org>; Tue,  5 Dec 2023 03:00:54 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1701705656; x=1733241656;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=goDby2BKVdPOi8LfllK5RKnXl6OkHzWAfmtHBKbAvNU=;
+  b=KF8BnPrkFeLKm5d2iGb5dBYx13ERQbvPZtMirGnZdlH8+0i6wBv7vaC/
+   qHi3vIbbleZMcGwzMUfRqAg0xgdjhd46xMr1o0OoJ4FoWUroZgpOPfxS3
+   SZW+s4f7/ZAMiB3ETCGiZo/zaVGXsdrbOpW+uaI3dWavvmBbolGWbPS1e
+   cICTCNOScVF/2xVak/hu6q42gIBcLb/uOTMXX5W3dqkSNjmkxTO1Myjxg
+   gMXSeTn9hCSuV0O6RVrEGhEjqKoch8jFDssSwuCWzdQ7WAeKD927+z1df
+   DTYXjkBjB63uyb/P4fSCPRdFSpoyKtmSR1G52woJjp4w8At+5d4Jel+nw
+   w==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="392626609"
+X-IronPort-AV: E=Sophos;i="6.04,250,1695711600"; 
+   d="scan'208";a="392626609"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2023 08:00:47 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="836625915"
+X-IronPort-AV: E=Sophos;i="6.04,250,1695711600"; 
+   d="scan'208";a="836625915"
+Received: from black.fi.intel.com ([10.237.72.28])
+  by fmsmga008.fm.intel.com with ESMTP; 04 Dec 2023 08:00:44 -0800
+Received: by black.fi.intel.com (Postfix, from userid 1003)
+	id E6219368; Mon,  4 Dec 2023 18:00:42 +0200 (EET)
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+To: Linus Walleij <linus.walleij@linaro.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Claudiu Beznea <claudiu.beznea.uj@bp.renesas.com>,
+	linux-gpio@vger.kernel.org,
+	linux-kernel@vger.kernel.org,
+	openbmc@lists.ozlabs.org,
+	linux-renesas-soc@vger.kernel.org
+Subject: [PATCH v1 0/5] pinctrl: Use struct pingroup and PINCTRL_PINGROUP()
+Date: Mon,  4 Dec 2023 17:56:31 +0200
+Message-ID: <20231204160033.1872569-1-andriy.shevchenko@linux.intel.com>
+X-Mailer: git-send-email 2.43.0.rc1.1.gbec44491f096
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 25/36] media: aspeed: Fix misuse of min_buffers_needed
- field
-Content-Language: en-US, nl
-To: Benjamin Gaignard <benjamin.gaignard@collabora.com>, mchehab@kernel.org,
- tfiga@chromium.org, m.szyprowski@samsung.com, matt.ranostay@konsulko.com
-References: <20231204132323.22811-1-benjamin.gaignard@collabora.com>
- <20231204132323.22811-26-benjamin.gaignard@collabora.com>
-From: Hans Verkuil <hverkuil@xs4all.nl>
-Autocrypt: addr=hverkuil@xs4all.nl; keydata=
- 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
-In-Reply-To: <20231204132323.22811-26-benjamin.gaignard@collabora.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -90,50 +75,37 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, linux-staging@lists.linux.dev, Eddie James <eajames@linux.ibm.com>, linux-kernel@vger.kernel.org, Joel Stanley <joel@jms.id.au>, kernel@collabora.com, linux-media@vger.kernel.org
+Cc: Lakshmi Sowjanya D <lakshmi.sowjanya.d@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On 04/12/2023 14:23, Benjamin Gaignard wrote:
-> 'min_buffers_needed' is suppose to be used to indicate the number
-> of buffers needed by DMA engine to start streaming.
-> aspeed doesn't use DMA engine and just want to specify
-> the minimum number of buffers to allocate when calling VIDIOC_REQBUFS.
-> That 'min_reqbufs_allocation' field purpose so use it.
-> 
-> Signed-off-by: Benjamin Gaignard <benjamin.gaignard@collabora.com>
-> Reviewed-by: Eddie James <eajames@linux.ibm.com>
-> CC: Joel Stanley <joel@jms.id.au> (supporter:ARM/ASPEED MACHINE SUPPORT)
-> CC: Andrew Jeffery <andrew@codeconstruct.com.au> (reviewer:ARM/ASPEED MACHINE SUPPORT)
-> CC: openbmc@lists.ozlabs.org (moderated list:ASPEED VIDEO ENGINE DRIVER)
-> CC: linux-aspeed@lists.ozlabs.org (moderated list:ARM/ASPEED MACHINE SUPPORT)
-> ---
->  drivers/media/platform/aspeed/aspeed-video.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/media/platform/aspeed/aspeed-video.c b/drivers/media/platform/aspeed/aspeed-video.c
-> index d08aa7f73d4f..c28b10808cda 100644
-> --- a/drivers/media/platform/aspeed/aspeed-video.c
-> +++ b/drivers/media/platform/aspeed/aspeed-video.c
-> @@ -2034,7 +2034,7 @@ static int aspeed_video_setup_video(struct aspeed_video *video)
->  	vbq->drv_priv = video;
->  	vbq->buf_struct_size = sizeof(struct aspeed_video_buffer);
->  	vbq->timestamp_flags = V4L2_BUF_FLAG_TIMESTAMP_MONOTONIC;
-> -	vbq->min_buffers_needed = ASPEED_VIDEO_V4L2_MIN_BUF_REQ;
-> +	vbq->min_reqbufs_allocation = ASPEED_VIDEO_V4L2_MIN_BUF_REQ;
+This is an excerpt from v4 of the "pinctrl: Convert struct group_desc
+to use struct pingroup" [1]. The series has been compiled with GCC 8
+for ARM64 besides x86_64 GCC 13 and LLVM 16.
 
-Looking at the start_streaming code I think min_buffers_needed should be 1, since
-otherwise start_streaming would return -EPROTO.
+Changelog to the mother series [1]:
+- added a new patch against Renesas code, so no warnings will be seen
 
-But clearly the intent is also that 3 buffers minimum are allocated.
+Link: https://lore.kernel.org/r/20231129161459.1002323-1-andriy.shevchenko@linux.intel.com [1]
 
-So in this case both fields should be set.
+Andy Shevchenko (5):
+  pinctrl: renesas: Mark local variable with const in ->set_mux()
+  pinctrl: core: Make pins const unsigned int pointer in struct
+    group_desc
+  pinctrl: equilibrium: Convert to use struct pingroup
+  pinctrl: keembay: Convert to use struct pingroup
+  pinctrl: nuvoton: Convert to use struct pingroup and
+    PINCTRL_PINGROUP()
 
-Regards,
+ drivers/pinctrl/core.c                    |  2 +-
+ drivers/pinctrl/core.h                    |  4 ++--
+ drivers/pinctrl/nuvoton/pinctrl-wpcm450.c |  9 ++++----
+ drivers/pinctrl/pinctrl-equilibrium.c     | 26 +++++++++++------------
+ drivers/pinctrl/pinctrl-keembay.c         |  4 ++--
+ drivers/pinctrl/renesas/pinctrl-rzg2l.c   |  2 +-
+ drivers/pinctrl/renesas/pinctrl-rzv2m.c   |  2 +-
+ 7 files changed, 24 insertions(+), 25 deletions(-)
 
-	Hans
-
->  
->  	rc = vb2_queue_init(vbq);
->  	if (rc) {
+-- 
+2.43.0.rc1.1.gbec44491f096
 
