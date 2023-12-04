@@ -1,52 +1,52 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id F0644803978
-	for <lists+openbmc@lfdr.de>; Mon,  4 Dec 2023 17:03:55 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id C791F803995
+	for <lists+openbmc@lfdr.de>; Mon,  4 Dec 2023 17:05:17 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=TmLNfVgU;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=MxfaLNbl;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SkT493CQ1z3cbw
-	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 03:03:53 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SkT5l1pQrz3dBb
+	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 03:05:15 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=TmLNfVgU;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=MxfaLNbl;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=198.175.65.12; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
 Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SkT2Z6lZ1z2yDD
-	for <openbmc@lists.ozlabs.org>; Tue,  5 Dec 2023 03:02:30 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SkT2c0dp6z2yps
+	for <openbmc@lists.ozlabs.org>; Tue,  5 Dec 2023 03:02:31 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701705751; x=1733241751;
+  t=1701705753; x=1733241753;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=I3BxyR7sGYM/0yoNVJh1VwzK7MSxRwGnKpjvhvZzSkE=;
-  b=TmLNfVgUCggvV/iUTkA4HbG4hJUHD23X3yIsp9YIRWlf0iRc5yyQcAYU
-   JtAqfeT4mH8rXMr3uZK8R3acP64yTcFeS/rmZoxjNkFnERpfEdRhI5aY1
-   OK3/xCno4g5M8gER0CoOWE2tM0De5aS0fAi+3ooex19hUawPL9Mp5+69F
-   T033fJV/chpNca17256xXX8rPGaTWQzcL1hFNLtEy0pST4JgkkNyKhDKO
-   2F0bu+RkfoMWUQf2eKCJkMBuafLhMSg0xR6Z6wesgjdfOL5JSe5BAreIZ
-   ddfohU1sUPbRj8YubHmxq13zUaM7q/ybFXBcOoDhOmKBgP7LHjvl+bUj3
+  bh=GcznTEzkYh7381dOAmLl/g2Ovk3HvI9vfBlGPtxsvN8=;
+  b=MxfaLNblezN7JIxn0nG61g0ncAqrxhpdgotIt7tIk2u636ElSTPgzQ+Y
+   q8cuaXAru0sF/7X4UeyXXQP/zLFEy1WA8KLfOJXwu1Z0mi8NtIHg3EoO5
+   vrH9UjXx6nduxRdapNWt+0dCMV9WV33MZPw9DrbNKC4sBxZjmR9nkvTki
+   gvnShsRHJ9xvtW75vxM2ResmPzuRvNQx94sBw7dMivt9Qkkd1ksJl2iUd
+   uA1J6ENPaKxK72ZBfgwddr0OJT36R2aAvYvJfm4E/SflyrwzLC8klRUqA
+   4tc7nJqp+hbkOaFjABaNtvxIgrKzeh0HuRKC/jpLtu1jh4MZ2g09Cbo0K
    Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="807868"
+X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="807875"
 X-IronPort-AV: E=Sophos;i="6.04,250,1695711600"; 
-   d="scan'208";a="807868"
+   d="scan'208";a="807875"
 Received: from fmsmga007.fm.intel.com ([10.253.24.52])
   by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2023 08:00:48 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="774297196"
+X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="774297204"
 X-IronPort-AV: E=Sophos;i="6.04,250,1695711600"; 
-   d="scan'208";a="774297196"
+   d="scan'208";a="774297204"
 Received: from black.fi.intel.com ([10.237.72.28])
   by fmsmga007.fm.intel.com with ESMTP; 04 Dec 2023 08:00:44 -0800
 Received: by black.fi.intel.com (Postfix, from userid 1003)
-	id 12746881; Mon,  4 Dec 2023 18:00:43 +0200 (EET)
+	id 1DF2FA02; Mon,  4 Dec 2023 18:00:43 +0200 (EET)
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Linus Walleij <linus.walleij@linaro.org>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
@@ -57,9 +57,9 @@ To: Linus Walleij <linus.walleij@linaro.org>,
 	linux-kernel@vger.kernel.org,
 	openbmc@lists.ozlabs.org,
 	linux-renesas-soc@vger.kernel.org
-Subject: [PATCH v1 2/5] pinctrl: core: Make pins const unsigned int pointer in struct group_desc
-Date: Mon,  4 Dec 2023 17:56:33 +0200
-Message-ID: <20231204160033.1872569-3-andriy.shevchenko@linux.intel.com>
+Subject: [PATCH v1 3/5] pinctrl: equilibrium: Convert to use struct pingroup
+Date: Mon,  4 Dec 2023 17:56:34 +0200
+Message-ID: <20231204160033.1872569-4-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.43.0.rc1.1.gbec44491f096
 In-Reply-To: <20231204160033.1872569-1-andriy.shevchenko@linux.intel.com>
 References: <20231204160033.1872569-1-andriy.shevchenko@linux.intel.com>
@@ -80,52 +80,89 @@ Cc: Lakshmi Sowjanya D <lakshmi.sowjanya.d@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-It's unclear why it's not a const unsigned int pointer from day 1.
-Make the pins member const unsigned int pointer in struct group_desc.
-Update necessary APIs.
+The pin control header provides struct pingroup.
+Utilize it instead of open coded variants in the driver.
 
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
- drivers/pinctrl/core.c | 2 +-
- drivers/pinctrl/core.h | 4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/pinctrl/pinctrl-equilibrium.c | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/drivers/pinctrl/core.c b/drivers/pinctrl/core.c
-index 12daf0bb091e..6380e1fa6509 100644
---- a/drivers/pinctrl/core.c
-+++ b/drivers/pinctrl/core.c
-@@ -640,7 +640,7 @@ static int pinctrl_generic_group_name_to_selector(struct pinctrl_dev *pctldev,
-  * Note that the caller must take care of locking.
-  */
- int pinctrl_generic_add_group(struct pinctrl_dev *pctldev, const char *name,
--			      int *pins, int num_pins, void *data)
-+			      const unsigned int *pins, int num_pins, void *data)
- {
- 	struct group_desc *group;
- 	int selector, error;
-diff --git a/drivers/pinctrl/core.h b/drivers/pinctrl/core.h
-index 8b59dd72e4ff..8ef4b536bca5 100644
---- a/drivers/pinctrl/core.h
-+++ b/drivers/pinctrl/core.h
-@@ -203,7 +203,7 @@ struct pinctrl_maps {
-  */
- struct group_desc {
- 	const char *name;
--	int *pins;
-+	const unsigned int *pins;
- 	int num_pins;
- 	void *data;
- };
-@@ -222,7 +222,7 @@ struct group_desc *pinctrl_generic_get_group(struct pinctrl_dev *pctldev,
- 					     unsigned int group_selector);
+diff --git a/drivers/pinctrl/pinctrl-equilibrium.c b/drivers/pinctrl/pinctrl-equilibrium.c
+index fd59cfdeefac..4ebae516d1b1 100644
+--- a/drivers/pinctrl/pinctrl-equilibrium.c
++++ b/drivers/pinctrl/pinctrl-equilibrium.c
+@@ -705,7 +705,7 @@ static int eqbr_build_groups(struct eqbr_pinctrl_drv_data *drvdata)
+ 	struct device *dev = drvdata->dev;
+ 	struct device_node *node = dev->of_node;
+ 	unsigned int *pins, *pinmux, pin_id, pinmux_id;
+-	struct group_desc group;
++	struct pingroup group, *grp = &group;
+ 	struct device_node *np;
+ 	struct property *prop;
+ 	int j, err;
+@@ -721,49 +721,49 @@ static int eqbr_build_groups(struct eqbr_pinctrl_drv_data *drvdata)
+ 			of_node_put(np);
+ 			return err;
+ 		}
+-		group.num_pins = err;
+-		group.name = prop->value;
+-		pins = devm_kcalloc(dev, group.num_pins, sizeof(*pins), GFP_KERNEL);
++		grp->npins = err;
++		grp->name = prop->value;
++		pins = devm_kcalloc(dev, grp->npins, sizeof(*pins), GFP_KERNEL);
+ 		if (!pins) {
+ 			of_node_put(np);
+ 			return -ENOMEM;
+ 		}
+-		group.pins = pins;
++		grp->pins = pins;
  
- int pinctrl_generic_add_group(struct pinctrl_dev *pctldev, const char *name,
--			      int *gpins, int ngpins, void *data);
-+			      const unsigned int *pins, int num_pins, void *data);
+-		pinmux = devm_kcalloc(dev, group.num_pins, sizeof(*pinmux), GFP_KERNEL);
++		pinmux = devm_kcalloc(dev, grp->npins, sizeof(*pinmux), GFP_KERNEL);
+ 		if (!pinmux) {
+ 			of_node_put(np);
+ 			return -ENOMEM;
+ 		}
  
- int pinctrl_generic_remove_group(struct pinctrl_dev *pctldev,
- 				 unsigned int group_selector);
+-		for (j = 0; j < group.num_pins; j++) {
++		for (j = 0; j < grp->npins; j++) {
+ 			if (of_property_read_u32_index(np, "pins", j, &pin_id)) {
+ 				dev_err(dev, "Group %s: Read intel pins id failed\n",
+-					group.name);
++					grp->name);
+ 				of_node_put(np);
+ 				return -EINVAL;
+ 			}
+ 			if (pin_id >= drvdata->pctl_desc.npins) {
+ 				dev_err(dev, "Group %s: Invalid pin ID, idx: %d, pin %u\n",
+-					group.name, j, pin_id);
++					grp->name, j, pin_id);
+ 				of_node_put(np);
+ 				return -EINVAL;
+ 			}
+ 			pins[j] = pin_id;
+ 			if (of_property_read_u32_index(np, "pinmux", j, &pinmux_id)) {
+ 				dev_err(dev, "Group %s: Read intel pinmux id failed\n",
+-					group.name);
++					grp->name);
+ 				of_node_put(np);
+ 				return -EINVAL;
+ 			}
+ 			pinmux[j] = pinmux_id;
+ 		}
+ 
+-		err = pinctrl_generic_add_group(drvdata->pctl_dev, group.name,
+-						group.pins, group.num_pins,
++		err = pinctrl_generic_add_group(drvdata->pctl_dev,
++						grp->name, grp->pins, grp->npins,
+ 						pinmux);
+ 		if (err < 0) {
+-			dev_err(dev, "Failed to register group %s\n", group.name);
++			dev_err(dev, "Failed to register group %s\n", grp->name);
+ 			of_node_put(np);
+ 			return err;
+ 		}
 -- 
 2.43.0.rc1.1.gbec44491f096
 
