@@ -2,51 +2,51 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id EB56280399D
-	for <lists+openbmc@lfdr.de>; Mon,  4 Dec 2023 17:06:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id B560A8039AD
+	for <lists+openbmc@lfdr.de>; Mon,  4 Dec 2023 17:08:35 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=OvCBZjbl;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kYBvfM1q;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SkT6n2tBTz3dKG
-	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 03:06:09 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SkT9Y1Gf6z3cWB
+	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 03:08:33 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=OvCBZjbl;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=kYBvfM1q;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=198.175.65.12; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=198.175.65.11; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SkT2d2MlNz3cVS
-	for <openbmc@lists.ozlabs.org>; Tue,  5 Dec 2023 03:02:32 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SkT8z2xy5z3bw9
+	for <openbmc@lists.ozlabs.org>; Tue,  5 Dec 2023 03:08:02 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1701705754; x=1733241754;
+  t=1701706084; x=1733242084;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=mX8nkFa+pUFM3JtjtNpLHJ2j2h/kDkAZjOuxZ+/LWq0=;
-  b=OvCBZjblzlRAMmYTQ23o5+XMmOmDBT10mSGC2aMg3HB3a0AjJMOlM3Qk
-   Z0hIsHPg4Ka0Y0+Yt3BTFrcY7HiNGK+CiIeEIJ+BT+B0qL4erivLGf2Vu
-   VHK7oOG9k18BCJBKLlpahqoEDAG/hQL1j6PgknXbh2fODrQqxbVdCWrRL
-   9NdgAJ1EUutSs298Uhd/bZnbstphJ0imKr8gGqXjmRB2hSh8hWzAMaFst
-   /+w8pcl4Z5dfSe8WWiuIS4fmPvjpKLvVFUiPaMUaB+xkgO5o/QJ1RrVol
-   ZdAw86i1jqwCfuaGbRlLZRQ5eMJOJLLEu9pjNCCC12V1CAYswlm7lvebR
+  bh=CyMweha2ZvuLisSoPmNJvwBvM8UVF+24ES7V+e13w7A=;
+  b=kYBvfM1qo1RDhbXD4vQl/Otd6KNsQuTjlFW4UQ1oXFNxfsq0RVhZH4wI
+   DJqNFXErwnxt+BHlgsAr+LgniaZ8rMQjQWfhsu8p/dmekLQyGGkdDGiYz
+   eG8BE9FMOIKu1s6DpxRwFlh2IjP9qlmvmlTFFQ41d3V13ce3SSlugYiVD
+   TZdJmGrbsyV/x/A0CX5ziiLNjh5kTjkXnkJMSqxG2ke/jqIIY4p5IFi6j
+   A/0tocNeWUFPoIeGga32fgvFYeUoWjPuzhZkPgVF+2i1DC55lR6clHl3K
+   6UXuZEJwdbOAxD8dXV5SdAFGrLtlfOqzYGgGtvwQ0Zpr9MDp0PEPqo3/C
    A==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="807880"
+X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="632529"
 X-IronPort-AV: E=Sophos;i="6.04,250,1695711600"; 
-   d="scan'208";a="807880"
-Received: from fmsmga007.fm.intel.com ([10.253.24.52])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2023 08:00:48 -0800
+   d="scan'208";a="632529"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 04 Dec 2023 08:08:01 -0800
 X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="774297203"
+X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="861422786"
 X-IronPort-AV: E=Sophos;i="6.04,250,1695711600"; 
-   d="scan'208";a="774297203"
+   d="scan'208";a="861422786"
 Received: from black.fi.intel.com ([10.237.72.28])
-  by fmsmga007.fm.intel.com with ESMTP; 04 Dec 2023 08:00:44 -0800
+  by FMSMGA003.fm.intel.com with ESMTP; 04 Dec 2023 08:07:57 -0800
 Received: by black.fi.intel.com (Postfix, from userid 1003)
-	id 2D122A5F; Mon,  4 Dec 2023 18:00:43 +0200 (EET)
+	id 3C299A7D; Mon,  4 Dec 2023 18:00:43 +0200 (EET)
 From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 To: Linus Walleij <linus.walleij@linaro.org>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
@@ -57,13 +57,14 @@ To: Linus Walleij <linus.walleij@linaro.org>,
 	linux-kernel@vger.kernel.org,
 	openbmc@lists.ozlabs.org,
 	linux-renesas-soc@vger.kernel.org
-Subject: [PATCH v1 4/5] pinctrl: keembay: Convert to use struct pingroup
-Date: Mon,  4 Dec 2023 17:56:35 +0200
-Message-ID: <20231204160033.1872569-5-andriy.shevchenko@linux.intel.com>
+Subject: [PATCH v1 5/5] pinctrl: nuvoton: Convert to use struct pingroup and PINCTRL_PINGROUP()
+Date: Mon,  4 Dec 2023 17:56:36 +0200
+Message-ID: <20231204160033.1872569-6-andriy.shevchenko@linux.intel.com>
 X-Mailer: git-send-email 2.43.0.rc1.1.gbec44491f096
 In-Reply-To: <20231204160033.1872569-1-andriy.shevchenko@linux.intel.com>
 References: <20231204160033.1872569-1-andriy.shevchenko@linux.intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -80,36 +81,49 @@ Cc: Lakshmi Sowjanya D <lakshmi.sowjanya.d@intel.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-The pin control header provides struct pingroup.
-Utilize it instead of open coded variants in the driver.
+The pin control header provides struct pingroup and PINCTRL_PINGROUP() macro.
+Utilize them instead of open coded variants in the driver.
 
+Reviewed-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
 Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 ---
- drivers/pinctrl/pinctrl-keembay.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pinctrl/nuvoton/pinctrl-wpcm450.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-keembay.c b/drivers/pinctrl/pinctrl-keembay.c
-index 152c35bce8ec..87d328853ae4 100644
---- a/drivers/pinctrl/pinctrl-keembay.c
-+++ b/drivers/pinctrl/pinctrl-keembay.c
-@@ -1517,7 +1517,7 @@ static int keembay_gpiochip_probe(struct keembay_pinctrl *kpc,
+diff --git a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
+index 0cff44b07b29..4589900244c7 100644
+--- a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
++++ b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
+@@ -474,9 +474,8 @@ enum {
+ #undef WPCM450_GRP
+ };
  
- static int keembay_build_groups(struct keembay_pinctrl *kpc)
+-static struct group_desc wpcm450_groups[] = {
+-#define WPCM450_GRP(x) { .name = #x, .pins = x ## _pins, \
+-			.num_pins = ARRAY_SIZE(x ## _pins) }
++static struct pingroup wpcm450_groups[] = {
++#define WPCM450_GRP(x) PINCTRL_PINGROUP(#x, x ## _pins, ARRAY_SIZE(x ## _pins))
+ 	WPCM450_GRPS
+ #undef WPCM450_GRP
+ };
+@@ -852,7 +851,7 @@ static int wpcm450_get_group_pins(struct pinctrl_dev *pctldev,
+ 				  const unsigned int **pins,
+ 				  unsigned int *npins)
  {
--	struct group_desc *grp;
-+	struct pingroup *grp;
- 	unsigned int i;
+-	*npins = wpcm450_groups[selector].num_pins;
++	*npins = wpcm450_groups[selector].npins;
+ 	*pins  = wpcm450_groups[selector].pins;
  
- 	kpc->ngroups = kpc->npins;
-@@ -1528,7 +1528,7 @@ static int keembay_build_groups(struct keembay_pinctrl *kpc)
- 	/* Each pin is categorised as one group */
- 	for (i = 0; i < kpc->ngroups; i++) {
- 		const struct pinctrl_pin_desc *pdesc = keembay_pins + i;
--		struct group_desc *kmb_grp = grp + i;
-+		struct pingroup *kmb_grp = grp + i;
+ 	return 0;
+@@ -901,7 +900,7 @@ static int wpcm450_pinmux_set_mux(struct pinctrl_dev *pctldev,
+ 	struct wpcm450_pinctrl *pctrl = pinctrl_dev_get_drvdata(pctldev);
  
- 		kmb_grp->name = pdesc->name;
- 		kmb_grp->pins = (int *)&pdesc->number;
+ 	wpcm450_setfunc(pctrl->gcr_regmap, wpcm450_groups[group].pins,
+-			wpcm450_groups[group].num_pins, function);
++			wpcm450_groups[group].npins, function);
+ 
+ 	return 0;
+ }
 -- 
 2.43.0.rc1.1.gbec44491f096
 
