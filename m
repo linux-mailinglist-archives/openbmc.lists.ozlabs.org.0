@@ -1,72 +1,73 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id C31E6802BDF
-	for <lists+openbmc@lfdr.de>; Mon,  4 Dec 2023 08:05:43 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6A626802BE4
+	for <lists+openbmc@lfdr.de>; Mon,  4 Dec 2023 08:07:17 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=j3g7GEss;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=HG5C9V4c;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SkF7371Bvz3cRt
-	for <lists+openbmc@lfdr.de>; Mon,  4 Dec 2023 18:05:35 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SkF8y6SzNz3cR4
+	for <lists+openbmc@lfdr.de>; Mon,  4 Dec 2023 18:07:14 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=j3g7GEss;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=HG5C9V4c;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::631; helo=mail-pl1-x631.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::636; helo=mail-pl1-x636.google.com; envelope-from=groeck7@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SkF6S4zm6z3c5P
-	for <openbmc@lists.ozlabs.org>; Mon,  4 Dec 2023 18:05:02 +1100 (AEDT)
-Received: by mail-pl1-x631.google.com with SMTP id d9443c01a7336-1d05212a7c5so11690125ad.0
-        for <openbmc@lists.ozlabs.org>; Sun, 03 Dec 2023 23:05:02 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SkF8L6nSLz3c3x
+	for <openbmc@lists.ozlabs.org>; Mon,  4 Dec 2023 18:06:42 +1100 (AEDT)
+Received: by mail-pl1-x636.google.com with SMTP id d9443c01a7336-1d011cdf562so12669835ad.2
+        for <openbmc@lists.ozlabs.org>; Sun, 03 Dec 2023 23:06:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701673496; x=1702278296; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1701673600; x=1702278400; darn=lists.ozlabs.org;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=N1vpjPPczaDWxidWWEbF4RZb6CCdsDsvJw92nhMFM8Y=;
-        b=j3g7GEssDYZi7s9NfgfAivrrcaQe9ZUABpKTVSM+D0cOKv5a9kpy9VckRfYFoyBkNQ
-         jtADFUkn6u6P3ym9kisgSIj8lX4Qm+F89dErdBwJGcH6W2rCOCwafbZq6m6LET3qdII/
-         3kEenmKmlcVVuOeYPtFTwUvlCkI7clZpffZeHOJbcvsHe/Y1szZK+dOBLU70EcX3Cza5
-         l9nRICdTejx/Ckllf8It/PvrQIrSNPLpErRUwtbRomiUj0ucOG1xkd2YDJYnm7KgIUW9
-         6Ftft7sALtYokV58/q81QfWHoiVXfQHuJEJoErIZD4Ohny85hcCeQsxG2McMNPaJXhT3
-         9B9A==
+        bh=+njrNhnp33Oxlc6sSwRjQua/dB3fSaUcGOxq5KaU0Jo=;
+        b=HG5C9V4cz0ofE/++bRpFQixa9/wW9LymbNC0xvZJH2FJSuUbv530wYJZMyRJrmyEyA
+         vKDGuwMFIJ4Y8Ai8I7rQ640mGaXVJEcVIvcn+cUzXs1Fxi0+VjZcHwZitUl50srg6UT2
+         c9d5ocTWOj9hAj0aEV07F11SrvSHoWyRnkY1SHDhVjCSJ+HoEZ6JRIb/PIfkt9icE2ft
+         qyCwOh8tV2ejzJVZ/6J2dEJsqfrkg47/oBMitcUnLBW9p7Rupn+o9tYkuaEb7Z3ag17+
+         Hd6T9j/1cu1YabzzLnITQ4Av3hfcspxA8uDHN3bt23j7/EFytNJ96B90y2+vMgVh6yX6
+         MJhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701673496; x=1702278296;
+        d=1e100.net; s=20230601; t=1701673600; x=1702278400;
         h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
          :to:content-language:subject:user-agent:mime-version:date:message-id
          :sender:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=N1vpjPPczaDWxidWWEbF4RZb6CCdsDsvJw92nhMFM8Y=;
-        b=BXRhkiJJrJgmhI8OuQjmh7FPTga7/LsVrTfVz9BIsRXZm5ILKtorTLbqj+LvR2KOpy
-         gce5v4rMX2iAmBbhVZb8BHH/7Dm7ejlT3Q3zjkBNWCZPCV1BzTMkVzD78FHuvmDedHV3
-         HfU0+YyNVBdMFkpCZ7aTaJdbR1IhckWz6rlobvgULKqMcsfKrp7vah8tA73Cxx1j26oC
-         RiKooa/CL7h4mzJGYkJ0rHjNj6q2aw9wh/HNPafQiygrjD0QWWzzdLUdAUkp6UtBoyqT
-         Qt57hiwZc9RJYtWogukFPoq0271bIO87KRg8iycOs+MWiw1o2k4K2KZl1emwoahpEgAV
-         PXZw==
-X-Gm-Message-State: AOJu0YxmyJD4V5GNYe2QnnfBpqmlDRXXVYnBB/+6b3G8ybQX5vyXasNw
-	MULEKctQVnfKxXUx4ta3vjI=
-X-Google-Smtp-Source: AGHT+IFGQ1tOXEmLAVKqsR7L9UDk4NEuOYXIcXkAIqxH4/1OI0J79Nsp8GNhIOISl/dF3LevXvviSA==
-X-Received: by 2002:a17:902:9302:b0:1d0:91a0:a29 with SMTP id bc2-20020a170902930200b001d091a00a29mr594579plb.6.1701673496136;
-        Sun, 03 Dec 2023 23:04:56 -0800 (PST)
+        bh=+njrNhnp33Oxlc6sSwRjQua/dB3fSaUcGOxq5KaU0Jo=;
+        b=aDeJuBX7PwiP0ZXV8eTqUHgeCArSe5Wj97QsEDBz3gJ8uIurSjLR7K5RLiKc00fANg
+         tYH8b2kILESNXyNuQZ59gUTkn/LWTwgMGuCweBLdaL4XZ05giOUspm9X+d6F1pGCiDF3
+         w9urSA4FfadDreJO/C7G6zkqy/Nvr+R7ylzp35CDqEfg1myzPoKiQPPlrcitwyTnP3JV
+         poPsZmkA/1HGrn88S2Hipm8D/IwABjrVgN+wEYz6zOFsN3t0gp26OPkc0DEoT/ZlkG/q
+         ERqOzC24oQNxYNdcjUZscEPE27+sEHpiv07cV50CKXyCRTdYyFSV636nz/yJXMQ3h1Jw
+         G48Q==
+X-Gm-Message-State: AOJu0YypRTiZvb6NUEtzb/UmHgSkAP1bPG+XY5vq4zh0aRQ2FDBVtUnB
+	gWL73nhv92l8brlKUJYjFH0=
+X-Google-Smtp-Source: AGHT+IFCeUBMRQ8Cy4jZFln0eUrC9xLqsdy28RaYRFDbCENqD1XkZlpWrNzfgtzrlwIcdSqw7/jzmQ==
+X-Received: by 2002:a17:902:da89:b0:1d0:5137:488a with SMTP id j9-20020a170902da8900b001d05137488amr5226648plx.31.1701673599768;
+        Sun, 03 Dec 2023 23:06:39 -0800 (PST)
 Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id u5-20020a170902e5c500b001c62e3e1286sm7679347plf.166.2023.12.03.23.04.54
+        by smtp.gmail.com with ESMTPSA id l17-20020a170902eb1100b001d060d6cde0sm5009033plb.162.2023.12.03.23.06.38
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 03 Dec 2023 23:04:55 -0800 (PST)
-Message-ID: <4d978188-b924-4f43-a619-fb5307828440@roeck-us.net>
-Date: Sun, 3 Dec 2023 23:04:53 -0800
+        Sun, 03 Dec 2023 23:06:39 -0800 (PST)
+Message-ID: <87c11991-8f74-4f71-972e-373ffa1fddb1@roeck-us.net>
+Date: Sun, 3 Dec 2023 23:06:37 -0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 0/2] hwmon: Driver for Nuvoton NCT736X
+Subject: Re: [PATCH v1 2/2] hwmon: Driver for Nuvoton NCT736X
 Content-Language: en-US
 To: baneric926@gmail.com, jdelvare@suse.com, robh+dt@kernel.org,
  krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org, corbet@lwn.net
 References: <20231204055650.788388-1-kcfeng0@nuvoton.com>
+ <20231204055650.788388-3-kcfeng0@nuvoton.com>
 From: Guenter Roeck <linux@roeck-us.net>
 Autocrypt: addr=linux@roeck-us.net; keydata=
  xsFNBE6H1WcBEACu6jIcw5kZ5dGeJ7E7B2uweQR/4FGxH10/H1O1+ApmcQ9i87XdZQiB9cpN
@@ -111,7 +112,7 @@ Autocrypt: addr=linux@roeck-us.net; keydata=
  WkRwrSuCn7UG+qVWZeKEsFKFOkynOs3pVbcbq1pxbhk3TRWCGRU5JolI4ohy/7JV1TVbjiDI
  HP/aVnm6NC8of26P40Pg8EdAhajZnHHjA7FrJXsy3cyIGqvg9os4rNkUWmrCfLLsZDHD8FnU
  mDW4+i+XlNFUPUYMrIKi9joBhu18ssf5i5Q=
-In-Reply-To: <20231204055650.788388-1-kcfeng0@nuvoton.com>
+In-Reply-To: <20231204055650.788388-3-kcfeng0@nuvoton.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 X-BeenThere: openbmc@lists.ozlabs.org
@@ -130,15 +131,21 @@ Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 On 12/3/23 21:56, baneric926@gmail.com wrote:
-> From: Ban Feng <baneric926@gmail.com>
+> From: Ban Feng <kcfeng0@nuvoton.com>
 > 
 > NCT736X is an I2C based hardware monitoring chip from Nuvoton.
 > 
+> Signed-off-by: Ban Feng <kcfeng0@nuvoton.com>
+> ---
+[ ... ]
 
-No, it isn't. Such a chip does not exist. The chips are apparently
-NCT7362Y and NCT7363Y. No wildcards in filenames, variables, etc.,
-please. Pick one name (nct7362y) instead and reference both chips
-where appropriate.
+> +	hwmon_dev = devm_hwmon_device_register_with_groups(dev,
+> +							   client->name,
+> +							   data, data->groups);
+
+Please resubmit using devm_hwmon_device_register_with_info().
+Drivers using deprecated APIs will not be accepted.
 
 Guenter
+
 
