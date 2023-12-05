@@ -1,74 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id C62C780532B
-	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 12:40:03 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C1E6880535D
+	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 12:49:05 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=BipFjU+2;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=EOUEaOjW;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Skz9F29xvz3cZr
-	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 22:40:01 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SkzMg29F4z3cb1
+	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 22:49:03 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=BipFjU+2;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=EOUEaOjW;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::133; helo=mail-lf1-x133.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::130; helo=mail-lf1-x130.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Skz8d2v31z30gH
-	for <openbmc@lists.ozlabs.org>; Tue,  5 Dec 2023 22:39:28 +1100 (AEDT)
-Received: by mail-lf1-x133.google.com with SMTP id 2adb3069b0e04-50bffb64178so1499260e87.2
-        for <openbmc@lists.ozlabs.org>; Tue, 05 Dec 2023 03:39:28 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SkzM52b8pz3cQg
+	for <openbmc@lists.ozlabs.org>; Tue,  5 Dec 2023 22:48:31 +1100 (AEDT)
+Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-50bf8843a6fso1921803e87.0
+        for <openbmc@lists.ozlabs.org>; Tue, 05 Dec 2023 03:48:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701776365; x=1702381165; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1701776908; x=1702381708; darn=lists.ozlabs.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=y6buYNz993iCGb+jfBAh+xTF839hKLJuyBWYlwBk8YQ=;
-        b=BipFjU+2RU+ih0S92cPsG9LbXOi4C6xGh1bP/qgfkLeGfZ01MZ1JqkF3LaEXUcvoMZ
-         geLWE80hnhgagVoD+bCwbHFJn41grzhLXGjOLVal7oNTtHGoKnC8rqBz3uUZgmCCaTYw
-         rAr0opH/wfI3mlMUFVCrUIlGiECsnZS39sJ4iP8qfEkc43VBjswCcRDA5vbtXYKt5gwy
-         6rvQAs6Mxy5VTM8mHfYrssrjMYdzGkePNSftAZlMv4/yz9JXt//GGXSIebUtXZOP9FOu
-         R8Q2i/uqCapwrEgpHDsz4X8M9hPf0+nzzAnJU8sqJaW89W57VKwTCUiv8OwXjswiY9mr
-         3Xiw==
+        bh=iMgwW6vx/jK9Cw7fgT+rzd5j+aMjeAnF9YT/yUvZ84M=;
+        b=EOUEaOjWZR+EqCtoOdQOLQ/J956sWjZrWneVG69H7Vrjr23bJYRRzVSPk79hk3BijY
+         Abhb8ZxGEg5xrCM/b0OEOgH06rHa6qI8PW1dpA9yVeP2OdhuJevBpE8maw5gH5PnOyAR
+         ibYRRM/u0/MxtKwKJALPoYoqwU2/ONkg9npzSBta5npcn93JQcUfahr7/KKBD/7i3eCv
+         tW60LdqWRk25E/RPtCI50ToOrLIQUAuzqAj4BIIIPdtmbsMXnRosqc3p6TR7A9BLzizA
+         E/pBMuRLdw7TV+hmsfH0vrDm2TJU0rMoyqDW6q6pRFImRPembNMO1phrKtc8HSiWygbQ
+         YArA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701776365; x=1702381165;
+        d=1e100.net; s=20230601; t=1701776908; x=1702381708;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=y6buYNz993iCGb+jfBAh+xTF839hKLJuyBWYlwBk8YQ=;
-        b=UJxHQCWAvCRmQaB/OAFKeEKKSlnOhXxD76lk1sIz/QFf7JFR0vLU52T93rR4v7eL5i
-         zxee+2spVXxpPvGUNxO6AjlQqDhsQtJ7jLXB8IfSPk7/eA6gyonus5Q2NlbzW55ZrYsk
-         yPeysW1nAK8Bw2rjdiOuJsJl7cwUzy2UHJgjSA4SyMJD0Uk6njAG6GEVaugQq1qflcf/
-         ATVoZMRwCdhZIPiUB1lkhAauP8UbdL7uWxIWsfozBSrNgLK1QWccTMIYZhKRWnIiztC8
-         Eqo45zn5PD2rs8GUfPO9D2w6YV3b56/IinHtkn+OswXAU+ibjuAy/rDU4rmkRI8GkmZy
-         vOUA==
-X-Gm-Message-State: AOJu0YxDc3zBPN5CPNMPItbOv5MC3+PXlC3eak+3swNCdz0/xwSK4f0E
-	M+iJoWct+bau/uGQa/b5HVo=
-X-Google-Smtp-Source: AGHT+IHdLSTpHvIGV+soo8O6/Z+FCsJYVpGnEa7erjBtlciJpMf8bljF17p1tFZGlBWyR34QMQeAZQ==
-X-Received: by 2002:a05:6512:3d8e:b0:50b:e637:b319 with SMTP id k14-20020a0565123d8e00b0050be637b319mr2982528lfv.14.1701776364975;
-        Tue, 05 Dec 2023 03:39:24 -0800 (PST)
+        bh=iMgwW6vx/jK9Cw7fgT+rzd5j+aMjeAnF9YT/yUvZ84M=;
+        b=VspbSlhA9saOX+VhAgW+wX3Do8AuXalEUD5g7DoUeFQcYpYFBYig3jbJbOwHp4yFN1
+         0jj6BBqKgYbMxZzpXuzDkMaSFAv0xSB/ur0ij9h3tW3tMz8IrqvM0Mp4cUcxAhGpzHuG
+         FDg/LHkK2uYEXfw1YOnC4I0qxH5fbtQ7Gh4/5adnAu2ldS/ei6J8hqsya4vpLlTImxuP
+         AXdslO0jv3tY94VR6jU/zVGsdNjQkywe37vOQjIoVdMLAibXwd1VJCyQVXRke7GFBS1H
+         MWy3rwJR5CflpdW7otu3kk/V9QF2+k1NzVUwNXMmza6mMSc5ZEHuBKI6QmDaUXOVZFfO
+         3EVQ==
+X-Gm-Message-State: AOJu0YwW5nsiqWlKIPZMPNp4rp449267uVI74QfN4/0KDin5mEMViCq+
+	BaYZwf6JVXduzzZ4+qDhr84=
+X-Google-Smtp-Source: AGHT+IE4QS2OUuOuA8w6IIfWCOOlZexYeQ2PWBcGw2WPfl/X1e0YgNE9s7aTbsrFGohK/qiG1pBTFg==
+X-Received: by 2002:a05:6512:230a:b0:50b:e92c:de18 with SMTP id o10-20020a056512230a00b0050be92cde18mr925702lfu.22.1701776907951;
+        Tue, 05 Dec 2023 03:48:27 -0800 (PST)
 Received: from mobilestation ([178.176.56.174])
-        by smtp.gmail.com with ESMTPSA id o5-20020ac24bc5000000b0050c017fffe4sm210928lfq.122.2023.12.05.03.39.23
+        by smtp.gmail.com with ESMTPSA id q13-20020a19430d000000b0050be813bf9dsm1000150lfa.183.2023.12.05.03.48.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Dec 2023 03:39:24 -0800 (PST)
-Date: Tue, 5 Dec 2023 14:39:22 +0300
+        Tue, 05 Dec 2023 03:48:27 -0800 (PST)
+Date: Tue, 5 Dec 2023 14:48:25 +0300
 From: Serge Semin <fancer.lancer@gmail.com>
-To: Vladimir Oltean <olteanv@gmail.com>
-Subject: Re: [PATCH net-next 01/16] net: pcs: xpcs: Drop sentinel entry from
- 2500basex ifaces list
-Message-ID: <xuwdtvep7iiqhptiraldr56us5zmgoripzo3kzy3ntrtlf2rxe@5a5qyqfrt2t3>
+To: "Russell King (Oracle)" <linux@armlinux.org.uk>
+Subject: Re: [PATCH net-next 05/16] net: pcs: xpcs: Move native device ID
+ macro to linux/pcs/pcs-xpcs.h
+Message-ID: <syr55e2c7izap6fc2yzmz6gyzcybmmxe3dyjoxencb2tylss2p@tpu2pfh33ked>
 References: <20231205103559.9605-1-fancer.lancer@gmail.com>
- <20231205103559.9605-2-fancer.lancer@gmail.com>
- <20231205112429.bp6lpvj4klrfrrim@skbuf>
+ <20231205103559.9605-6-fancer.lancer@gmail.com>
+ <ZW7/TrtSols1igy/@shell.armlinux.org.uk>
+ <bas6l42vk2zzrwo22ss7fuganf4ekvhtvkb32duydjise7ui3o@o4f3rbcpokur>
+ <ZW8ICvzwIHJhoV9U@shell.armlinux.org.uk>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231205112429.bp6lpvj4klrfrrim@skbuf>
+In-Reply-To: <ZW8ICvzwIHJhoV9U@shell.armlinux.org.uk>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -80,37 +82,71 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jose Abreu <Jose.Abreu@synopsys.com>, Andrew Lunn <andrew@lunn.ch>, Conor Dooley <conor+dt@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Tomer Maimon <tmaimon77@gmail.com>, devicetree@vger.kernel.org, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, Alexandre Torgue <alexandre.torgue@foss.st.com>, Rob Herring <robh+dt@kernel.org>, Russell King <linux@armlinux.org.uk>, Eric Dumazet <edumazet@google.com>, Jose Abreu <joabreu@synopsys.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Jakub Kicinski <kuba@kernel.org>, Maxime Chevallier <maxime.chevallier@bootlin.com>, "David S. Miller" <davem@davemloft.net>, linux-kernel@vger.kernel.org, Heiner Kallweit <hkallweit1@gmail.com>
+Cc: Jose Abreu <Jose.Abreu@synopsys.com>, Andrew Lunn <andrew@lunn.ch>, Conor Dooley <conor+dt@kernel.org>, Tomer Maimon <tmaimon77@gmail.com>, devicetree@vger.kernel.org, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, Alexandre Torgue <alexandre.torgue@foss.st.com>, Rob Herring <robh+dt@kernel.org>, Maxime Chevallier <maxime.chevallier@bootlin.com>, Eric Dumazet <edumazet@google.com>, Jose Abreu <joabreu@synopsys.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, "David S. Miller" <davem@davemloft.net>, linux-kernel@vger.kernel.org, Heiner Kallweit <hkallweit1@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Dec 05, 2023 at 01:24:29PM +0200, Vladimir Oltean wrote:
-> On Tue, Dec 05, 2023 at 01:35:22PM +0300, Serge Semin wrote:
-> > There are currently two methods (xpcs_find_compat() and
-> > xpcs_get_interfaces()) defined in the driver which loop over the available
-> > interfaces. All of them rely on the xpcs_compat.num_interfaces field value
-> > to get the number of interfaces. That field is initialized with the
-> > ARRAY_SIZE(xpcs_*_interfaces) macro function call. Thus the interface
-> > arrays are supposed to be filled with actual interface IDs and there is no
-> > need in the dummy terminating ID placed at the end of the arrays. Let's
-> > drop the redundant PHY_INTERFACE_MODE_MAX entry from the
-> > xpcs_2500basex_interfaces list and the redundant
-> > PHY_INTERFACE_MODE_MAX-based conditional statement from the
-> > xpcs_get_interfaces() method then.
-> 
-> It would help the readability of the commit message if you would split
-> it into multiple paragraphs.
-
-Yeah, creating sometimes overcomplicated log messages is my eternal
-problem.) Ok. I'll split it up.
-
-> 
+On Tue, Dec 05, 2023 at 11:22:50AM +0000, Russell King (Oracle) wrote:
+> On Tue, Dec 05, 2023 at 02:14:34PM +0300, Serge Semin wrote:
+> > On Tue, Dec 05, 2023 at 10:45:34AM +0000, Russell King (Oracle) wrote:
+> > > On Tue, Dec 05, 2023 at 01:35:26PM +0300, Serge Semin wrote:
+> > > > Generic MDIO-device driver will support setting a custom device ID for the
+> > > > particular MDIO-device.
+> > > 
+> > > Why future tense? I don't see anything later in this patch set adding
+> > > this.
 > > 
-> > Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
-> > ---
+> > After the next patch is applied
+> > [PATCH net-next 10/16] net: pcs: xpcs: Add generic DW XPCS MDIO-device support
+> > the DW XPCS driver _will_ support setting custom IDs based on the
+> > platform data and the DT compatibles.
 > 
-> Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-Thanks.
+> What is confusing is that the sentence makes it sound like it's some
+> generic driver that can be used for any PCS, whereas in reality it is
+> _this_ XPCS driver which is not generic.
+> 
+> "This driver will support setting a custom device ID in a future patch."
+> or explicitly state the summary line of the patch concerned so one can
+> refer to it. Future references are difficult to find whether they're in
+> email and especially once they're merged into git.
+
+Ok. I'll convert the patch log to be less confusing. As I already said
+to Vladimir writing sometimes overcomplicated messages my eternal
+problem.
+
+> 
+> > It can be used for instance to
+> > fix the already available SJ1105 and SJ1110 MDIO bus implementations,
+> > so instead of substituting the XPCS IDs on the PHYSID CSR reads the
+> > driver could just pass the device ID and PMA ID via the device
+> > platform data.
+> > 
+> > If my patch log text looks unclear anyway, just say so. I'll change it
+> > accordingly. I guess it would be enough to say that moving is required
+> > just to collect all the IDs in a single place.
+> 
+
+> You need to adjust your attitude - I did exactly that. There was
+> something which I didn't understand, so I raised the issue. Sorry
+> for spotting a problem, but do you always get arsey when a reviewer
+> picks up on something wrong? If that's your attitude, then for this
+> entire series: NAK.
+
+I'm sorry if what I wrote sounded like I was arsey. I didn't mean it
+at all, really. By this sentence:
+
+> I guess it would be enough to say that moving is required
+> just to collect all the IDs in a single place.
+
+I meant that _I_ should have just stated in the log message that
+moving was required to collect all the IDs in a single place. The
+rest of the text was redundant and caused confusion what you pointed
+out to.
 
 -Serge(y)
+
+> 
+> -- 
+> RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+> FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
