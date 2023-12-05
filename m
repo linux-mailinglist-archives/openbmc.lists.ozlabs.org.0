@@ -1,62 +1,62 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 1B5FF805112
-	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 11:47:22 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id A8C7D80511F
+	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 11:48:40 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=jRXoqEZi;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=MPZSrwUA;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Sky0R3v7fz3cT9
-	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 21:47:19 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Sky1y0xjFz3dBw
+	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 21:48:38 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=jRXoqEZi;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=MPZSrwUA;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12d; helo=mail-lf1-x12d.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12f; helo=mail-lf1-x12f.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Skxlw35ZSz3cVN
-	for <openbmc@lists.ozlabs.org>; Tue,  5 Dec 2023 21:36:28 +1100 (AEDT)
-Received: by mail-lf1-x12d.google.com with SMTP id 2adb3069b0e04-50bee606265so3004982e87.2
-        for <openbmc@lists.ozlabs.org>; Tue, 05 Dec 2023 02:36:28 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Skxly3rLBz3cF1
+	for <openbmc@lists.ozlabs.org>; Tue,  5 Dec 2023 21:36:30 +1100 (AEDT)
+Received: by mail-lf1-x12f.google.com with SMTP id 2adb3069b0e04-50bce78f145so6567894e87.0
+        for <openbmc@lists.ozlabs.org>; Tue, 05 Dec 2023 02:36:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701772584; x=1702377384; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1701772586; x=1702377386; darn=lists.ozlabs.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7hpm9CJMW8yeGqWkPdTKA3BPaZ3J6DVLqALQqXWpKSU=;
-        b=jRXoqEZif6JTLKLB/3Hq4e6SCXWW6YgMBDYcvUbU8MZwiVJ1iyo53yMrswD9pCQBXd
-         6LDfs/TVPbHZW+wKUYPL3QgRjtxru9LyIc32tWtQs/R5ECKsP3iwAgy6k9SxKyT5J9PE
-         Kqn/jnYPfI0/DHtJMSxowgMpioaSVTa+eCRznpsQjvrCNupWoNxxw4xHuegZhJ2fNRPp
-         wFt3uyJzD83R1L96VQ+TLTFR7UNHnME2JCZLNecKFMN73cEE75IFJwVUP/37ThNMcrth
-         3bcgqlaaZkrsOl4NW7CuwgVj3JDq61UJbMlU5HiKdIiFH9eEBtA66bd4bOTp8UnFRDUm
-         6BVA==
+        bh=9/W7bRr2FIytmHTP+ve4vRfpj/k8/yIBrLP2P8LnNEk=;
+        b=MPZSrwUAIgfKZEbxJet/hBOkEyL2IV9lFhMRKjpnXZ9zkWpU/2giy/8bRRup40nc2J
+         h8HMFelWVzE3xJiagYCOkhRKadXmFXsTARCl2eRH2c4YJUAbVS3ZLAlUfDJtNyteZNMO
+         95bQujStC62znRE7O2gtRP1eNgHhEBL7rKQUWwtRPqVf9S3RuShy0+sLeNXsy4R/XePM
+         p/wN8vnz8BhGFTST8IseAhLjwgVPkLOXRGZu+Ej+yCn1gTXBDzXmj3+9ebtN3CyUg9TH
+         j9k88HFv2L5Amze4KKSKsQnXrav3JvH/WxRK02PRFeQKvXaG/j05cfAaho3eYa1cyoaB
+         5fMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701772584; x=1702377384;
+        d=1e100.net; s=20230601; t=1701772586; x=1702377386;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7hpm9CJMW8yeGqWkPdTKA3BPaZ3J6DVLqALQqXWpKSU=;
-        b=E3NMq0gJMmRRBhRvQQ4QBRMc+F50NUukpseClORXNgvhT/UwmsAf9zt1EB6wUSPcdn
-         YtrrEvXgw9MwiR9SAdHmrUmfoQudBOGr63FcjS9k9gmvS5TaxRdZOmzISLpXKXX6eus2
-         Fvr2mYQubnPZ3TfPrYE5plOFfCugWTOxaNKVnWn4onGAK+5fhhCkgcGRl0i35x5EQUHW
-         6JW/RgJo9evmkycq1vN2q/GOpuk1XK4J4CzUPZwsB+luW5g3f6n+hWzhI8Ae85MfAljS
-         FpZERhglR9xprpSrzJvmEOuxXxNackQKFQzl6fFXk0J2uLGm6sIsiwqv182o3NVScXxB
-         d2fQ==
-X-Gm-Message-State: AOJu0YxuaaghPHKw8bNmPapRtc/pYTuxtBEWmenG59kp/lSjLscczK07
-	wvAWstbJnjeKfmQvDEH1S4kNgl2wpPlTSg==
-X-Google-Smtp-Source: AGHT+IHUCyh6fTgOz+IpheRuxzuTVvMVIazUtogkrsNd/ECy8uXTfUSwsV4TsLItWinwQ4JF0eHc9g==
-X-Received: by 2002:a05:6512:3e16:b0:50b:f39d:5204 with SMTP id i22-20020a0565123e1600b0050bf39d5204mr2173050lfv.44.1701772584488;
-        Tue, 05 Dec 2023 02:36:24 -0800 (PST)
+        bh=9/W7bRr2FIytmHTP+ve4vRfpj/k8/yIBrLP2P8LnNEk=;
+        b=D64M2Laj4kW1VQVWZNpUzzsRgk5AagZh4BhgF75ZBv069QQRoCVSPpY3HE1BCZWjXA
+         B3I31zYKz2CfU2KeGJjDY/4iTXlFiLmsuDoKCCN0P8cOO1OXwgWiv0I8jYhaSMPXxfR2
+         wGNBsCUiulASES+KYIqDSd16AxmtAgEf2YAKwUhAX3CCCJE8SWn51EnFxuc3m09OAw5F
+         DhzHlgjn/wGK1I3WJh26sV+VqtOsPKdsB8SBXNCfPDrVGv19UguanvPJoa1EbA3cEu5I
+         gZ859cjqkA+6h9qiX3rqZB/LdlcmiAIJi9fhNr/abX94ODiUoo/N5ZiPHUNJNEviDXEi
+         tD0w==
+X-Gm-Message-State: AOJu0YwBtEgxhaR3ecHG2H4kQuD4xpMwDgoiPZvukDYHvD3KQ2GtIzzT
+	9gxOMD3+tE/F0ilLU8fQV7E=
+X-Google-Smtp-Source: AGHT+IES81scnB9OAc2hliG1AqfHqUzn12268APbl0b9mr/HfSY9+lceF3Al8CkH/xAT+wtxcOc+8g==
+X-Received: by 2002:a19:3848:0:b0:50c:4e7:87b8 with SMTP id d8-20020a193848000000b0050c04e787b8mr175943lfj.23.1701772586273;
+        Tue, 05 Dec 2023 02:36:26 -0800 (PST)
 Received: from localhost ([178.176.56.174])
-        by smtp.gmail.com with ESMTPSA id d5-20020a0565123d0500b0050bfbc471b0sm442106lfv.18.2023.12.05.02.36.23
+        by smtp.gmail.com with ESMTPSA id v8-20020ac25928000000b0050bf7a9c4adsm567335lfi.225.2023.12.05.02.36.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Dec 2023 02:36:24 -0800 (PST)
+        Tue, 05 Dec 2023 02:36:25 -0800 (PST)
 From: Serge Semin <fancer.lancer@gmail.com>
 To: Andrew Lunn <andrew@lunn.ch>,
 	Heiner Kallweit <hkallweit1@gmail.com>,
@@ -72,10 +72,11 @@ To: Andrew Lunn <andrew@lunn.ch>,
 	"David S. Miller" <davem@davemloft.net>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH net-next 12/16] net: pcs: xpcs: Add xpcs_create_bynode() method
-Date: Tue,  5 Dec 2023 13:35:33 +0300
-Message-ID: <20231205103559.9605-13-fancer.lancer@gmail.com>
+	Paolo Abeni <pabeni@redhat.com>,
+	Maxime Coquelin <mcoquelin.stm32@gmail.com>
+Subject: [PATCH net-next 13/16] net: stmmac: intel: Register generic MDIO device
+Date: Tue,  5 Dec 2023 13:35:34 +0300
+Message-ID: <20231205103559.9605-14-fancer.lancer@gmail.com>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231205103559.9605-1-fancer.lancer@gmail.com>
 References: <20231205103559.9605-1-fancer.lancer@gmail.com>
@@ -92,94 +93,85 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Serge Semin <fancer.lancer@gmail.com>, devicetree@vger.kernel.org
+Cc: devicetree@vger.kernel.org, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, Serge Semin <fancer.lancer@gmail.com>, linux-stm32@st-md-mailman.stormreply.com, linux-arm-kernel@lists.infradead.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-It's now possible to have the DW XPCS device defined as a standard
-platform device for instance in the platform DT-file. Although it's
-pointless unless there is a way to have the device found by the client
-drivers (STMMAC/DW *MAC, NXP SJA1105 Eth Switch, etc). Provide such
-ability by means of the xpcs_create_bynode() method. It needs to be
-supplied with the device fwnode which is equipped with the "pcs-handle"
-property pointing to the DW XPCS fw-node (in this regards it looks similar
-to the phylink interface). That node will be then used to find the
-MDIO-device instance in order to create the DW XPCS descriptor.
+The DW XPCS driver has been updated to being bindable with the respective
+MDIO device registered during the MDIO bus probe procedure. As an example
+of using that feature let's convert the Intel mGBE low-level driver to
+registering the MDIO-device board info. Thus the registered DW XPCS device
+will be a subject of the fine-tunings performed during the MDIO-device
+probe procedures.
 
 Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
 ---
- drivers/net/pcs/pcs-xpcs.c   | 26 ++++++++++++++++++++++++++
- include/linux/pcs/pcs-xpcs.h |  3 +++
- 2 files changed, 29 insertions(+)
+ .../net/ethernet/stmicro/stmmac/dwmac-intel.c | 31 ++++++++++++++++++-
+ 1 file changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/pcs/pcs-xpcs.c b/drivers/net/pcs/pcs-xpcs.c
-index e376e255f1d3..c3336895a124 100644
---- a/drivers/net/pcs/pcs-xpcs.c
-+++ b/drivers/net/pcs/pcs-xpcs.c
-@@ -9,9 +9,11 @@
- #include <linux/clk.h>
- #include <linux/delay.h>
- #include <linux/device.h>
-+#include <linux/fwnode.h>
- #include <linux/mdio.h>
- #include <linux/module.h>
- #include <linux/pcs/pcs-xpcs.h>
-+#include <linux/phy.h>
- #include <linux/phylink.h>
- #include <linux/property.h>
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
+index 60283543ffc8..7642c11abc59 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-intel.c
+@@ -4,6 +4,7 @@
  
-@@ -1511,6 +1513,30 @@ static struct dw_xpcs *xpcs_create(struct mdio_device *mdiodev,
- 	return ERR_PTR(ret);
+ #include <linux/clk-provider.h>
+ #include <linux/pci.h>
++#include <linux/phy.h>
+ #include <linux/dmi.h>
+ #include "dwmac-intel.h"
+ #include "dwmac4.h"
+@@ -585,6 +586,28 @@ static int intel_mgbe_common_data(struct pci_dev *pdev,
+ 	/* Intel mgbe SGMII interface uses pcs-xcps */
+ 	if (plat->phy_interface == PHY_INTERFACE_MODE_SGMII ||
+ 	    plat->phy_interface == PHY_INTERFACE_MODE_1000BASEX) {
++		struct mdio_board_info *xpcs_info;
++
++		xpcs_info = devm_kzalloc(&pdev->dev,
++					 sizeof(*xpcs_info) + MII_BUS_ID_SIZE,
++					 GFP_KERNEL);
++		if (!xpcs_info) {
++			ret = -ENOMEM;
++			goto err_alloc_info;
++		}
++
++		xpcs_info->bus_id = (void *)xpcs_info + sizeof(*xpcs_info);
++		snprintf((char *)xpcs_info->bus_id, MII_BUS_ID_SIZE,
++			 "stmmac-%x", plat->bus_id);
++
++		snprintf(xpcs_info->modalias, MDIO_NAME_SIZE, "dwxpcs");
++
++		xpcs_info->mdio_addr = INTEL_MGBE_XPCS_ADDR;
++
++		ret = mdiobus_register_board_info(xpcs_info, 1);
++		if (ret)
++			goto err_alloc_info;
++
+ 		plat->mdio_bus_data->has_xpcs = true;
+ 		plat->mdio_bus_data->xpcs_an_inband = true;
+ 	}
+@@ -600,7 +623,7 @@ static int intel_mgbe_common_data(struct pci_dev *pdev,
+ 		fwnode_handle_put(fixed_node);
+ 	}
+ 
+-	/* Ensure mdio bus scan skips intel serdes and pcs-xpcs */
++	/* Ensure mdio bus PHY-scan skips intel serdes and pcs-xpcs */
+ 	plat->mdio_bus_data->phy_mask = 1 << INTEL_MGBE_ADHOC_ADDR;
+ 	plat->mdio_bus_data->phy_mask |= 1 << INTEL_MGBE_XPCS_ADDR;
+ 
+@@ -618,6 +641,12 @@ static int intel_mgbe_common_data(struct pci_dev *pdev,
+ 	plat->msi_tx_base_vec = 1;
+ 
+ 	return 0;
++
++err_alloc_info:
++	clk_disable_unprepare(clk);
++	clk_unregister_fixed_rate(clk);
++
++	return ret;
  }
  
-+struct dw_xpcs *xpcs_create_bynode(const struct fwnode_handle *fwnode,
-+				   phy_interface_t interface)
-+{
-+	struct fwnode_handle *pcs_node;
-+	struct mdio_device *mdiodev;
-+	struct dw_xpcs *xpcs;
-+
-+	pcs_node = fwnode_find_reference(fwnode, "pcs-handle", 0);
-+	if (IS_ERR(pcs_node))
-+		return ERR_CAST(pcs_node);
-+
-+	mdiodev = fwnode_mdio_find_device(pcs_node);
-+	fwnode_handle_put(pcs_node);
-+	if (!mdiodev)
-+		return ERR_PTR(-ENODEV);
-+
-+	xpcs = xpcs_create(mdiodev, interface);
-+	if (IS_ERR(xpcs))
-+		mdio_device_put(mdiodev);
-+
-+	return xpcs;
-+}
-+EXPORT_SYMBOL_GPL(xpcs_create_bynode);
-+
- struct dw_xpcs *xpcs_create_byaddr(struct mii_bus *bus, int addr,
- 				   phy_interface_t interface)
- {
-diff --git a/include/linux/pcs/pcs-xpcs.h b/include/linux/pcs/pcs-xpcs.h
-index b11bbb5e820a..2981dcdf65d4 100644
---- a/include/linux/pcs/pcs-xpcs.h
-+++ b/include/linux/pcs/pcs-xpcs.h
-@@ -8,6 +8,7 @@
- #define __LINUX_PCS_XPCS_H
- 
- #include <linux/clk.h>
-+#include <linux/fwnode.h>
- #include <linux/mdio.h>
- #include <linux/phy.h>
- #include <linux/phylink.h>
-@@ -73,6 +74,8 @@ int xpcs_do_config(struct dw_xpcs *xpcs, phy_interface_t interface,
- void xpcs_get_interfaces(struct dw_xpcs *xpcs, unsigned long *interfaces);
- int xpcs_config_eee(struct dw_xpcs *xpcs, int mult_fact_100ns,
- 		    int enable);
-+struct dw_xpcs *xpcs_create_bynode(const struct fwnode_handle *fwnode,
-+				   phy_interface_t interface);
- struct dw_xpcs *xpcs_create_byaddr(struct mii_bus *bus, int addr,
- 				   phy_interface_t interface);
- void xpcs_destroy(struct dw_xpcs *xpcs);
+ static int ehl_common_data(struct pci_dev *pdev,
 -- 
 2.42.1
 
