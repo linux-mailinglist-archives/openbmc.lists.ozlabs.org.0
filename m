@@ -2,72 +2,75 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 219E08052B1
-	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 12:25:11 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1FAE08052D3
+	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 12:28:33 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=gLgAndXk;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=MajNU0o6;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Skyr44jG2z3cYN
-	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 22:25:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Skyvy4T9wz3cTs
+	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 22:28:30 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=gLgAndXk;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=MajNU0o6;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::235; helo=mail-lj1-x235.google.com; envelope-from=olteanv@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::129; helo=mail-lf1-x129.google.com; envelope-from=olteanv@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SkyqT1yZtz3cRp
-	for <openbmc@lists.ozlabs.org>; Tue,  5 Dec 2023 22:24:36 +1100 (AEDT)
-Received: by mail-lj1-x235.google.com with SMTP id 38308e7fff4ca-2ca00dffc23so28948801fa.2
-        for <openbmc@lists.ozlabs.org>; Tue, 05 Dec 2023 03:24:36 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SkyvP62Y3z30gH
+	for <openbmc@lists.ozlabs.org>; Tue,  5 Dec 2023 22:28:01 +1100 (AEDT)
+Received: by mail-lf1-x129.google.com with SMTP id 2adb3069b0e04-50bf32c0140so2690365e87.1
+        for <openbmc@lists.ozlabs.org>; Tue, 05 Dec 2023 03:28:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701775472; x=1702380272; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1701775678; x=1702380478; darn=lists.ozlabs.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=zQQyxGUKk4pbCHDpcs6JlELv+pOGJjJC9lYpip2lfKM=;
-        b=gLgAndXkEuHx0gfFe8ZqYlNqWqAMgO5cY5kO15IVK4SSvFDo6UYxryqAmdd9/zoEjp
-         CYodcwI1orhft2Xevf/VyzaagJ+wqKUXqn6CICsLictNZ5j74za2MnGi5ddsfhDaPyZc
-         AtHO5Fvp04K893EPdFDfm/6tEe4Dz4B11n77WbncyQP80JcmjQfDRIoLy/sVXZcl+8a6
-         AKaZVeePlAe++fB2mguEcg9dmENGEITobrlexJ38xf+sHUpIOJ9VSjUriWiTWtcPBsiN
-         cP2VJmjt+BdpSnLZI/Senik13r/eBAm6s5zipSfTW8E8xd4S2qa8RH3bkyp4/iKPFDkp
-         uRdw==
+        bh=/v7mvN9deEkGkoO3uLhdgRvmngCCOUew4NWi2nI998Y=;
+        b=MajNU0o6jZ05e0i8xPByXVFLaeKxMvIBGc8EYOGRpRGTJWDwATbWq4NuV7vyXLUckF
+         eaw+8UQcDWlei3ak4G4LJGwLR/U4ePPMbaxl2CGXgPKPc0k8+216bAX7DPIyHIK2pwLX
+         wYs/mi5H8SpyhkCfxRez2qg9NMKT8khdZR+1zWwMCzUIM1/YZXPO3o/70fWdCBWhZjJ+
+         kvTD3bfDNLYBd4y5R34MbODNCYFd6tVLnTEl/tLiqYnGk4StNZ3+461KIS7BTKm2Iv3B
+         yvXUZ7Cl4bfEuiala346jbjauVgf+u49aMTe+29XB5bsWjWCsxtxQsvq8/bWyshX3RaA
+         xicw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701775472; x=1702380272;
+        d=1e100.net; s=20230601; t=1701775678; x=1702380478;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zQQyxGUKk4pbCHDpcs6JlELv+pOGJjJC9lYpip2lfKM=;
-        b=NBhIB9bQwb06k1LanaUIPlu/6o10xGaYk7T3J9AG0UCEcD7Znza5V+/gQwVEdQ9Yvi
-         HNKBGYawQwg03nSa7KBXmwWBHBukecvgkYka8mStHliphIHSL7C4k5qHNWTo2+cB5/EN
-         d5VXPU7Y2rggtKuZvwRuricrOW5fvRTkKjT5uETnFyz3qKLmqnEBHU5vHrQUou5qxeWj
-         QuSsecrltvdyA9YylaIBrJgS4g+UjfBV2kSOVuDu6OSkDtYJT3eSMUsRKTG6OywYklUc
-         FS3091J0ZOVQDE/XkSqB5rP+t/TuR+QyAUstLuOPnVpvNmL88BfZVd5wKU2oNkgPNn0V
-         N4Fg==
-X-Gm-Message-State: AOJu0Yw4X2L+Bd6Hm0FkDfZ2MRdW2iWshlaBtHTeKETBqvFbJruzjnKM
-	0vOP6kKoBVyuq56varPzilE=
-X-Google-Smtp-Source: AGHT+IEMbJi9JfgwJmbW7rz+XhmNZMSh11Xumx4Y4u6mllkJx9Vg0PTHAe8th3MAn+PEuygze2apvA==
-X-Received: by 2002:a2e:9284:0:b0:2c9:cf94:94bc with SMTP id d4-20020a2e9284000000b002c9cf9494bcmr3021288ljh.33.1701775471899;
-        Tue, 05 Dec 2023 03:24:31 -0800 (PST)
+        bh=/v7mvN9deEkGkoO3uLhdgRvmngCCOUew4NWi2nI998Y=;
+        b=h3n+NO3hM3eaa6ns/8Ood96gr775vKukxTegJNGZdoOKiSwyRwUC6uDA9DEtuQMC3r
+         V1K4syF7ju2q3aCvDy6P9vdCeRjcIBvq4YiiYH8VzI36GEcnWAwKm8tolaeLHKNHvlUN
+         oHLDFSAcSyO1JYNz+RdHbYrLpz1v/MUVBQPg89d/tWLroTk1T8yISi0Rg1iMB/IXGqAl
+         NUT3Y9jgP9GeEChdKwRqpnjQdhiLVDdC2AMLLsJij2i79KnJxta+dC+ccuPnM1Y5k0qX
+         hhssslBoGIU0IMP9+mDa9GHuaDsUrhDY5pAxT2KXb2g+AdsQHqrHP/OY4RG417YCtcRv
+         R/Tg==
+X-Gm-Message-State: AOJu0YxzyXUIFBQGx3bqdZgfI0SB2DfxMM0/j3Q33YE0aCJ6gz2QkHUb
+	btlQ4Q2Ht8LczNZ/JDOhQJU=
+X-Google-Smtp-Source: AGHT+IFe2lA1Mf/Iiur7xxZp+MD/kz1MnNPCSfxB6taRVzZdr7Y41r+BOmqbXfAuO7Wa25P9mapKFw==
+X-Received: by 2002:a05:6512:239e:b0:50b:c30b:813a with SMTP id c30-20020a056512239e00b0050bc30b813amr4383751lfv.53.1701775678111;
+        Tue, 05 Dec 2023 03:27:58 -0800 (PST)
 Received: from skbuf ([188.27.185.68])
-        by smtp.gmail.com with ESMTPSA id x12-20020a170906298c00b00a1cbb055575sm412662eje.180.2023.12.05.03.24.30
+        by smtp.gmail.com with ESMTPSA id cf6-20020a170906b2c600b00a1937153bddsm5951892ejb.20.2023.12.05.03.27.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Dec 2023 03:24:31 -0800 (PST)
-Date: Tue, 5 Dec 2023 13:24:29 +0200
+        Tue, 05 Dec 2023 03:27:57 -0800 (PST)
+Date: Tue, 5 Dec 2023 13:27:55 +0200
 From: Vladimir Oltean <olteanv@gmail.com>
 To: Serge Semin <fancer.lancer@gmail.com>
-Subject: Re: [PATCH net-next 01/16] net: pcs: xpcs: Drop sentinel entry from
- 2500basex ifaces list
-Message-ID: <20231205112429.bp6lpvj4klrfrrim@skbuf>
+Subject: Re: [PATCH net-next 05/16] net: pcs: xpcs: Move native device ID
+ macro to linux/pcs/pcs-xpcs.h
+Message-ID: <20231205112755.3am2mazwireflpkq@skbuf>
 References: <20231205103559.9605-1-fancer.lancer@gmail.com>
- <20231205103559.9605-2-fancer.lancer@gmail.com>
+ <20231205103559.9605-1-fancer.lancer@gmail.com>
+ <20231205103559.9605-6-fancer.lancer@gmail.com>
+ <20231205103559.9605-6-fancer.lancer@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231205103559.9605-2-fancer.lancer@gmail.com>
+In-Reply-To: <20231205103559.9605-6-fancer.lancer@gmail.com>
+ <20231205103559.9605-6-fancer.lancer@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -83,24 +86,8 @@ Cc: Jose Abreu <Jose.Abreu@synopsys.com>, Andrew Lunn <andrew@lunn.ch>, Conor Do
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Dec 05, 2023 at 01:35:22PM +0300, Serge Semin wrote:
-> There are currently two methods (xpcs_find_compat() and
-> xpcs_get_interfaces()) defined in the driver which loop over the available
-> interfaces. All of them rely on the xpcs_compat.num_interfaces field value
-> to get the number of interfaces. That field is initialized with the
-> ARRAY_SIZE(xpcs_*_interfaces) macro function call. Thus the interface
-> arrays are supposed to be filled with actual interface IDs and there is no
-> need in the dummy terminating ID placed at the end of the arrays. Let's
-> drop the redundant PHY_INTERFACE_MODE_MAX entry from the
-> xpcs_2500basex_interfaces list and the redundant
-> PHY_INTERFACE_MODE_MAX-based conditional statement from the
-> xpcs_get_interfaces() method then.
+On Tue, Dec 05, 2023 at 01:35:26PM +0300, Serge Semin wrote:
+> In addition to that having all supported DW XPCS device IDs defined in
+> a sinle place will improve the code maintainability and readability.
 
-It would help the readability of the commit message if you would split
-it into multiple paragraphs.
-
-> 
-> Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
-> ---
-
-Reviewed-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+single
