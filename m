@@ -2,75 +2,74 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 125FC80538A
-	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 12:53:19 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 1E3C2805406
+	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 13:24:00 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=UIf5u+xV;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=UYMHE4IP;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SkzSX3Zv0z3cZx
-	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 22:53:16 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Sl07x4RwJz3cbQ
+	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 23:23:57 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=UIf5u+xV;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=UYMHE4IP;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62e; helo=mail-ej1-x62e.google.com; envelope-from=olteanv@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-ej1-x62e.google.com (mail-ej1-x62e.google.com [IPv6:2a00:1450:4864:20::62e])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::62f; helo=mail-ej1-x62f.google.com; envelope-from=olteanv@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SkzRx14frz3cNt
-	for <openbmc@lists.ozlabs.org>; Tue,  5 Dec 2023 22:52:44 +1100 (AEDT)
-Received: by mail-ej1-x62e.google.com with SMTP id a640c23a62f3a-a1975fe7befso601336166b.2
-        for <openbmc@lists.ozlabs.org>; Tue, 05 Dec 2023 03:52:44 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sl07J6KG6z30h0
+	for <openbmc@lists.ozlabs.org>; Tue,  5 Dec 2023 23:23:23 +1100 (AEDT)
+Received: by mail-ej1-x62f.google.com with SMTP id a640c23a62f3a-a1c7d8f89a5so67225266b.2
+        for <openbmc@lists.ozlabs.org>; Tue, 05 Dec 2023 04:23:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701777157; x=1702381957; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1701778999; x=1702383799; darn=lists.ozlabs.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=yQnio+BjHch7uekOs0EbRaR6+xPg48w0mlLLI/zKaaU=;
-        b=UIf5u+xV/MZTGxK3hQG0PmHuNhHxtSZ7w7EAUEQ3RilfG7rx9BHC6kMER2ljI5II8U
-         YWUQhJ4ysxA0xYorIgxZDNJtI+LyPDchZAGYBSCq9KV4L9jLXTuXTiBiaJsECXLzyWkf
-         XQ+ULm9HYQhIu1zC/CIo57nuZ/UBqRTP8sDmUZ7ozYLrTEae0zmgA0eLNUgKzta+j8SZ
-         DnmV+JfDSmAD7JeX8AuoV+px8bUHJ8rGaiaawyEMRdyCHXXHueiNfuS3QmlmumD7uhXI
-         ipD0ioe7Y0NxP+GZo6bC8JiJaoCG7t/EFF0jUTjWPjah+h9AaJHsbTglPYztTcCtdFIg
-         mSRQ==
+        bh=AMhBj0PFcNsp7ddu4+x1EUxsSq8BTDuggzzUZ8nA8Vo=;
+        b=UYMHE4IPRlJkT7L7Mm6n+lFAbfQbMcHiclVhvqnqTWUvVfs9L+A13aKo2rjiPHlYNh
+         TJe7uJ2pxoccLf6mIlyvBMttoezWVP3IGILH7APQwgkXybWhuNilQRroyn+Xu57U/RBT
+         1/GKDTPjtDrGfurh9inQ4vHVumS5zoIFf36byjoW3iJr5z4/bQulbLPlJpLlA76+rfAK
+         zlDCMYJgA1SACIpdWMxkBbXI6MsQU03PCqnvpI/YJlSzpyLko2wtum3bPxEffrx+vYzy
+         62/73ueYsSs8gCjkPZug3QbqtF1KIG9QuLAdOit1DWj5BDxv1KUgbty9/8lPfhGa4DJ/
+         shxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701777157; x=1702381957;
+        d=1e100.net; s=20230601; t=1701778999; x=1702383799;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yQnio+BjHch7uekOs0EbRaR6+xPg48w0mlLLI/zKaaU=;
-        b=e150WPKoTlIaHOVfDBB+JLTQbWXYlGUxRlGXNuRQJsb6rZ+0HbrUVWnWuo9GOq/VRG
-         5lE1J0LQQ4CiOt3MeVOkdInqixo+6qDJX2zeEGOv1kI+Osvk3H+nD0bTkGbDP2U5szjM
-         tpIs7paGp4RsV1o3tm6vSAm/bg9WOJMSsGNXWtSAjSiNSLMqho/EHN/pqeF1zaIXoNu+
-         wp78Kyt9HfgAaCXfkOk19Kfqg6Lh7icgHoGwOCRxFt/1EzyMGNlVrC3+FG6IPTLrQpxS
-         cdIqwlbYOEwp897JSq8+D59g5GkU1+rz6YB5OzLd9i7mjx2heuV3mVLUg+rTvN3XabDY
-         opJA==
-X-Gm-Message-State: AOJu0YzNqb0Q5WXoxpYI7z2jqIdu6iqJ+R7jZuawDLxup6QGOZEOMwsL
-	MtWxK6h3auHCWm5ZVq+kErE=
-X-Google-Smtp-Source: AGHT+IFbcUHHGMa0y7mPKTyHnJVqbuoOrcBU5Fgp7HSueg3Asjnj4OKHJ4FateR0JcHkUAKp1ewXJQ==
-X-Received: by 2002:a17:907:8c8:b0:a0e:d93a:3202 with SMTP id zu8-20020a17090708c800b00a0ed93a3202mr323045ejb.4.1701777157222;
-        Tue, 05 Dec 2023 03:52:37 -0800 (PST)
+        bh=AMhBj0PFcNsp7ddu4+x1EUxsSq8BTDuggzzUZ8nA8Vo=;
+        b=bSmPUM7mZHurz6ScJ5XJ2kM/Vmi4XiS0Q3W4HPZ1PZ6LEq68yLLPTtfMPgEG6eXDO1
+         tS9UNHCSnj40uUbkLrZTTZatDM+NBcC/gElv3xJk84iSHmqpE7CMJp9DyjS1D48LLrkj
+         8WhmGqPSUE9RIgYJeXG+UJ+YvMMFNqdpjQW9JzvIAu02ovPRMOjsN1pYQB8iFrAwXlIz
+         NkqTETKJv0PunQcZ0U/dxNuSYcqaxaYerNyIvpzA+2iGiVMl8OjgWctd+nvhRTXod3fh
+         gV5g3NZFSzJkiXz8VvTAj1nDKFQ15jnRsi1iQbV9ZVV1R46mXHghy1+ooYXJiuHxZSza
+         PYRQ==
+X-Gm-Message-State: AOJu0Yy0oA+VdBUo7CtbSU7a8D5t/I3aBUFpaIlxY28DhgnEiN/YJDYx
+	iZpWNFHULMj781wyugdfRqs=
+X-Google-Smtp-Source: AGHT+IHXa16mYQRzXdXsaQ0F8tsGp0lBaqOkdzuQ8VVSVqrPVczhzIUkL1oJDasQLcddWAUvhLTuAA==
+X-Received: by 2002:a17:906:3f5c:b0:a19:a1ba:da6a with SMTP id f28-20020a1709063f5c00b00a19a1bada6amr3859595ejj.145.1701778998985;
+        Tue, 05 Dec 2023 04:23:18 -0800 (PST)
 Received: from skbuf ([188.27.185.68])
-        by smtp.gmail.com with ESMTPSA id x12-20020a170906298c00b00a1cbb055575sm451602eje.180.2023.12.05.03.52.35
+        by smtp.gmail.com with ESMTPSA id k11-20020a170906128b00b009ff8f199f21sm6726467ejb.19.2023.12.05.04.23.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Dec 2023 03:52:37 -0800 (PST)
-Date: Tue, 5 Dec 2023 13:52:34 +0200
+        Tue, 05 Dec 2023 04:23:18 -0800 (PST)
+Date: Tue, 5 Dec 2023 14:23:16 +0200
 From: Vladimir Oltean <olteanv@gmail.com>
 To: Serge Semin <fancer.lancer@gmail.com>
-Subject: Re: [PATCH net-next 06/16] net: pcs: xpcs: Avoid creating dummy XPCS
- MDIO device
-Message-ID: <20231205115234.7ntjvymurot5nnak@skbuf>
+Subject: Re: [PATCH net-next 10/16] net: pcs: xpcs: Add generic DW XPCS
+ MDIO-device support
+Message-ID: <20231205122316.ihhpklv222f5giz3@skbuf>
 References: <20231205103559.9605-1-fancer.lancer@gmail.com>
- <20231205103559.9605-1-fancer.lancer@gmail.com>
- <20231205103559.9605-7-fancer.lancer@gmail.com>
- <20231205103559.9605-7-fancer.lancer@gmail.com>
+ <20231205103559.9605-11-fancer.lancer@gmail.com>
+ <20231205111351.xjjuwpbf7kwg3vuh@skbuf>
+ <uivunnjv5vi3w3fkc5w2f4lem5bingrgajgjfsu2ih7fuhz6hd@3naeubr5spak>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231205103559.9605-7-fancer.lancer@gmail.com>
- <20231205103559.9605-7-fancer.lancer@gmail.com>
+In-Reply-To: <uivunnjv5vi3w3fkc5w2f4lem5bingrgajgjfsu2ih7fuhz6hd@3naeubr5spak>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -86,43 +85,31 @@ Cc: Jose Abreu <Jose.Abreu@synopsys.com>, Andrew Lunn <andrew@lunn.ch>, Conor Do
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Dec 05, 2023 at 01:35:27PM +0300, Serge Semin wrote:
-> If the DW XPCS MDIO devices are either left unmasked for being auto-probed
-> or explicitly registered in the MDIO subsystem by means of the
-> mdiobus_register_board_info() method
+On Tue, Dec 05, 2023 at 02:35:46PM +0300, Serge Semin wrote:
+> Omg, thank you very much for testing the series straight away and
+> sorry for the immediate trouble it caused. I'll need some more time
+> for investigation. I'll get back to this topic a bit later on this
+> week.
 
-mdiobus_register_board_info() has exactly one caller, and that is
-dsa_loop. I don't understand the relevance of it w.r.t. Synopsys XPCS.
-I'm reading the patches in order from the beginning.
+Don't worry, I got suspicious when I was CCed to review only a one-line
+change in patch 11/16. It's never about that one line, is it?)
 
-> there is no point in creating the dummy MDIO device instance in order
+Anyway, the NULL dev->p is a symptom of device_add() not having been
+called, most likely from mdio_device_register().
 
-Why dummy? There's nothing dummy about the mdio_device. It's how the PCS
-code accesses the hardware.
+I'll be honest and say that I still don't quite understand what you're
+trying to achieve. You're trying to bind the hardcoded mdio_devices
+created by xpcs_create() to a driver? That was attempted a while ago by
+Sean Anderson with the Lynx PCS. Are you aware of the fact that even in
+the good case in which binding the driver actually works, the user can
+then come along and unbind it from the PCS device, and phylink isn't
+prepared to handle that, so it will crash the kernel upon the next
+phylink_pcs call?
 
-> to get the DW XPCS handler since the MDIO core subsystem will create
-> the device during the MDIO bus registration procedure.
+The pcs-rzn1-miic.c driver puts a device_link to the MAC to at least
+tear down the whole thing when the PCS is unbound, which is saner than
+crashing the kernel. I don't see the equivalent protection mechanism here?
 
-It won't, though? Unless someone is using mdiobus_register_board_info()
-possibly, but who does that?
-
-> All what needs to be done is to just reuse the MDIO-device instance
-> available in the mii_bus.mdio_map array (using some getter for it
-> would look better though). It shall prevent the XPCS devices been
-> accessed over several MDIO-device instances.
-> 
-> Note since the MDIO-device instance might be retrieved from the MDIO-bus
-> map array its reference counter shall be increased. If the MDIO-device
-> instance is created in the xpcs_create_mdiodev() method its reference
-> counter will be already increased. So there is no point in toggling the
-> reference counter in the xpcs_create() function. Just drop it from there.
-> 
-> Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
-> ---
-
-Sorry, because the commit log lost me at the "context presentation" stage,
-I failed to understand the "what"s and the "why"s.
-
-Are you basically trying to add xpcs support on top of an mdio_device
-where the mdio_device_create() call was made externally to the xpcs code,
-through mdiobus_register_board_info() and mdiobus_setup_mdiodev_from_board_info()?
+Can't the xpcs continue to live without a bound driver? Having a
+compatible string in the OF description is perfectly fine though,
+and should absolutely not preclude that.
