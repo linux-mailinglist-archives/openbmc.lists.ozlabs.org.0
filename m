@@ -1,60 +1,66 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 673EA805144
-	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 11:54:25 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 56BFB80518A
+	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 12:06:03 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256 header.s=pandora-2019 header.b=duogcorQ;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=nfmQU4Ad;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Sky8Z6Gv4z3cTh
-	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 21:54:22 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SkyQ05lR5z3cQg
+	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 22:06:00 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256 header.s=pandora-2019 header.b=duogcorQ;
+	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=nfmQU4Ad;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=armlinux.org.uk (client-ip=2001:4d48:ad52:32c8:5054:ff:fe00:142; helo=pandora.armlinux.org.uk; envelope-from=linux+openbmc=lists.ozlabs.org@armlinux.org.uk; receiver=lists.ozlabs.org)
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=intel.com (client-ip=134.134.136.31; helo=mgamail.intel.com; envelope-from=lkp@intel.com; receiver=lists.ozlabs.org)
+Received: from mgamail.intel.com (mgamail.intel.com [134.134.136.31])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sky3W4KqQz3cW3
-	for <openbmc@lists.ozlabs.org>; Tue,  5 Dec 2023 21:49:59 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=Upnjb/CtjXa7Ifq7kmJI62+mAm9o5YlGesjj/UWinbA=; b=duogcorQ4P8zl3J8qpazL8Dgj0
-	gHnjMJldEDLL/hRu89DsHHSe3nLkNLmgqQrqgETe/jTgORfz66dwyn/MNnL9AXKCZiLgwWoUm9bDA
-	e2WdwdhsAXEi+bDtljNF7S+HBTPUb8khY0RpR427YJ3T/hQ/jGBeCl41qzTZcYl/1M96s6k8XVpvq
-	gnmWfAp0NmIzWX5pau2JVLlDP03b/KePZYtrhMeCc8MWjV0kwFS9a7WFL+W1+s7mYPqE+eP83rDXo
-	R4WqtqGhans10+bH8ntaaXL/pWeqN458OXnYwsNGpce4IYqQI1nRXFPflwNsXLyZFy5ETN5ITCgxY
-	CHgwHrXA==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:60944)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1rASzq-0006ds-1N;
-	Tue, 05 Dec 2023 10:49:46 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1rASzr-0001e3-Hy; Tue, 05 Dec 2023 10:49:47 +0000
-Date: Tue, 5 Dec 2023 10:49:47 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Serge Semin <fancer.lancer@gmail.com>
-Subject: Re: [PATCH net-next 06/16] net: pcs: xpcs: Avoid creating dummy XPCS
- MDIO device
-Message-ID: <ZW8ASzkC9IFFlxkV@shell.armlinux.org.uk>
-References: <20231205103559.9605-1-fancer.lancer@gmail.com>
- <20231205103559.9605-7-fancer.lancer@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SkyPR2rxvz2xQJ
+	for <openbmc@lists.ozlabs.org>; Tue,  5 Dec 2023 22:05:29 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1701774331; x=1733310331;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=vxtWDeGzVM4kvy0di8LLvjYNsy4xYn3TtHE94cFFtoI=;
+  b=nfmQU4AdJJoH9RR22bz7E4mL4Tp1K4P01nsh6u51qsgaYBArNHCp91JZ
+   +qCS33IXYH0Ld+47Swuo0SnlqWc6FlC0z9xUMrzquYcnuhi+Dd29W88OS
+   yShwKgfyuh5mdde1lSL6OFYdiYSTiD5dV1HqJ3G1E3OJFlRvea/D/SIPf
+   HGfti5vylKzOiUdfdNVGUx1uiEyvAiEZwxalx4BKIVlz5dx9v8T///NJJ
+   gX9+0oH1/rn7SxEqDPqfBOyQpRLTfz/WFXF+jAaXbDiu2dc2Mgz/MXKv8
+   eWQUK/TW/tRgIzudbrSQQqqu5PAzFwNix/8VaEWatfghv7Ugcna3Dvg+S
+   g==;
+X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="458199427"
+X-IronPort-AV: E=Sophos;i="6.04,251,1695711600"; 
+   d="scan'208";a="458199427"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Dec 2023 03:05:24 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6600,9927,10914"; a="861708559"
+X-IronPort-AV: E=Sophos;i="6.04,251,1695711600"; 
+   d="scan'208";a="861708559"
+Received: from lkp-server02.sh.intel.com (HELO b07ab15da5fe) ([10.239.97.151])
+  by FMSMGA003.fm.intel.com with ESMTP; 05 Dec 2023 03:05:20 -0800
+Received: from kbuild by b07ab15da5fe with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1rATEp-0008pW-0o;
+	Tue, 05 Dec 2023 11:05:16 +0000
+Date: Tue, 5 Dec 2023 19:04:30 +0800
+From: kernel test robot <lkp@intel.com>
+To: baneric926@gmail.com, jdelvare@suse.com, linux@roeck-us.net,
+	robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org,
+	conor+dt@kernel.org, corbet@lwn.net
+Subject: Re: [PATCH v1 2/2] hwmon: Driver for Nuvoton NCT736X
+Message-ID: <202312051854.qBIoJW1N-lkp@intel.com>
+References: <20231204055650.788388-3-kcfeng0@nuvoton.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231205103559.9605-7-fancer.lancer@gmail.com>
+In-Reply-To: <20231204055650.788388-3-kcfeng0@nuvoton.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,44 +72,144 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jose Abreu <Jose.Abreu@synopsys.com>, Andrew Lunn <andrew@lunn.ch>, Conor Dooley <conor+dt@kernel.org>, Tomer Maimon <tmaimon77@gmail.com>, devicetree@vger.kernel.org, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, Alexandre Torgue <alexandre.torgue@foss.st.com>, Rob Herring <robh+dt@kernel.org>, Maxime Chevallier <maxime.chevallier@bootlin.com>, Eric Dumazet <edumazet@google.com>, Jose Abreu <joabreu@synopsys.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, "David S. Miller" <davem@davemloft.net>, linux-kernel@vger.kernel.org, Heiner Kallweit <hkallweit1@gmail.com>
+Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, kcfeng0@nuvoton.com, linux-doc@vger.kernel.org, openbmc@lists.ozlabs.org, llvm@lists.linux.dev, linux-kernel@vger.kernel.org, DELPHINE_CHIU@wiwynn.com, oe-kbuild-all@lists.linux.dev, kwliu@nuvoton.com
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Dec 05, 2023 at 01:35:27PM +0300, Serge Semin wrote:
-> If the DW XPCS MDIO devices are either left unmasked for being auto-probed
-> or explicitly registered in the MDIO subsystem by means of the
-> mdiobus_register_board_info() method there is no point in creating the
-> dummy MDIO device instance in order to get the DW XPCS handler since the
-> MDIO core subsystem will create the device during the MDIO bus
-> registration procedure.
+Hi,
 
-Please reword this overly long sentence.
+kernel test robot noticed the following build warnings:
 
-If they're left unmasked, what prevents them being created as PHY
-devices?
+[auto build test WARNING on linus/master]
+[also build test WARNING on v6.7-rc4 next-20231205]
+[cannot apply to groeck-staging/hwmon-next]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
 
-> @@ -1437,19 +1435,21 @@ struct dw_xpcs *xpcs_create_mdiodev(struct mii_bus *bus, int addr,
->  	struct mdio_device *mdiodev;
->  	struct dw_xpcs *xpcs;
->  
-> -	mdiodev = mdio_device_create(bus, addr);
-> -	if (IS_ERR(mdiodev))
-> -		return ERR_CAST(mdiodev);
-> +	if (addr >= PHY_MAX_ADDR)
-> +		return ERR_PTR(-EINVAL);
->  
-> -	xpcs = xpcs_create(mdiodev, interface);
-> +	if (mdiobus_is_registered_device(bus, addr)) {
-> +		mdiodev = bus->mdio_map[addr];
-> +		mdio_device_get(mdiodev);
+url:    https://github.com/intel-lab-lkp/linux/commits/baneric926-gmail-com/dt-bindings-hwmon-Add-nct736x-bindings/20231204-135942
+base:   linus/master
+patch link:    https://lore.kernel.org/r/20231204055650.788388-3-kcfeng0%40nuvoton.com
+patch subject: [PATCH v1 2/2] hwmon: Driver for Nuvoton NCT736X
+config: i386-allmodconfig (https://download.01.org/0day-ci/archive/20231205/202312051854.qBIoJW1N-lkp@intel.com/config)
+compiler: clang version 16.0.4 (https://github.com/llvm/llvm-project.git ae42196bc493ffe877a7e3dff8be32035dea4d07)
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20231205/202312051854.qBIoJW1N-lkp@intel.com/reproduce)
 
-No, this makes no sense now. This function is called
-xpcs_create_mdiodev() - note the "create_mdiodev" part. If it's getting
-the mdiodev from what is already there then it isn't creating it, so
-it's no longer doing what it says in its function name. If you want to
-add this functionality, create a new function to do it.
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202312051854.qBIoJW1N-lkp@intel.com/
+
+All warnings (new ones prefixed by >>):
+
+>> drivers/hwmon/nct736x.c:352:5: warning: variable 'gpio14_17' is uninitialized when used here [-Wuninitialized]
+                                   gpio14_17 |= FANIN_SEL(i);
+                                   ^~~~~~~~~
+   drivers/hwmon/nct736x.c:339:46: note: initialize the variable 'gpio14_17' to silence this warning
+           u8 i, gpio0_3, gpio4_7, gpio10_13, gpio14_17;
+                                                       ^
+                                                        = '\0'
+>> drivers/hwmon/nct736x.c:347:5: warning: variable 'gpio10_13' is uninitialized when used here [-Wuninitialized]
+                                   gpio10_13 |= FANIN_SEL(i);
+                                   ^~~~~~~~~
+   drivers/hwmon/nct736x.c:339:35: note: initialize the variable 'gpio10_13' to silence this warning
+           u8 i, gpio0_3, gpio4_7, gpio10_13, gpio14_17;
+                                            ^
+                                             = '\0'
+>> drivers/hwmon/nct736x.c:350:5: warning: variable 'gpio4_7' is uninitialized when used here [-Wuninitialized]
+                                   gpio4_7 |= PWM_SEL(i);
+                                   ^~~~~~~
+   drivers/hwmon/nct736x.c:339:24: note: initialize the variable 'gpio4_7' to silence this warning
+           u8 i, gpio0_3, gpio4_7, gpio10_13, gpio14_17;
+                                 ^
+                                  = '\0'
+>> drivers/hwmon/nct736x.c:345:5: warning: variable 'gpio0_3' is uninitialized when used here [-Wuninitialized]
+                                   gpio0_3 |= PWM_SEL(i);
+                                   ^~~~~~~
+   drivers/hwmon/nct736x.c:339:15: note: initialize the variable 'gpio0_3' to silence this warning
+           u8 i, gpio0_3, gpio4_7, gpio10_13, gpio14_17;
+                        ^
+                         = '\0'
+   4 warnings generated.
+
+
+vim +/gpio14_17 +352 drivers/hwmon/nct736x.c
+
+   334	
+   335	static int nct736x_init_chip(struct i2c_client *client,
+   336				     u32 pwm_mask, u32 fanin_mask, u32 wdt_cfg)
+   337	{
+   338		const struct i2c_device_id *id = i2c_match_id(nct736x_id, client);
+   339		u8 i, gpio0_3, gpio4_7, gpio10_13, gpio14_17;
+   340		int ret;
+   341	
+   342		for (i = 0; i < NCT736X_PWM_COUNT; i++) {
+   343			if (i < 4) {
+   344				if (pwm_mask & BIT_CHECK(i))
+ > 345					gpio0_3 |= PWM_SEL(i);
+   346				if (fanin_mask & BIT_CHECK(i))
+ > 347					gpio10_13 |= FANIN_SEL(i);
+   348			} else if (i < 8) {
+   349				if (pwm_mask & BIT_CHECK(i))
+ > 350					gpio4_7 |= PWM_SEL(i);
+   351				if (fanin_mask & BIT_CHECK(i))
+ > 352					gpio14_17 |= FANIN_SEL(i);
+   353			} else if (i < 12) {
+   354				if (pwm_mask & BIT_CHECK(i))
+   355					gpio10_13 |= PWM_SEL(i);
+   356				if (fanin_mask & BIT_CHECK(i))
+   357					gpio0_3 |= FANIN_SEL(i);
+   358			} else {
+   359				if (pwm_mask & BIT_CHECK(i))
+   360					gpio14_17 |= PWM_SEL(i);
+   361				if (fanin_mask & BIT_CHECK(i))
+   362					gpio4_7 |= FANIN_SEL(i);
+   363			}
+   364		}
+   365	
+   366		/* Pin Function Configuration */
+   367		ret = nct736x_write_reg(client, NCT736X_REG_GPIO_0_3, gpio0_3);
+   368		if (ret < 0)
+   369			return ret;
+   370		ret = nct736x_write_reg(client, NCT736X_REG_GPIO_4_7, gpio4_7);
+   371		if (ret < 0)
+   372			return ret;
+   373		ret = nct736x_write_reg(client, NCT736X_REG_GPIO_10_13, gpio10_13);
+   374		if (ret < 0)
+   375			return ret;
+   376		ret = nct736x_write_reg(client, NCT736X_REG_GPIO_14_17, gpio14_17);
+   377		if (ret < 0)
+   378			return ret;
+   379	
+   380		/* PWM and FANIN Monitoring Enable */
+   381		ret = nct736x_write_reg(client, NCT736X_REG_PWMEN_0_7,
+   382					pwm_mask & 0xff);
+   383		if (ret < 0)
+   384			return ret;
+   385		ret = nct736x_write_reg(client,
+   386					NCT736X_REG_PWMEN_8_15, (pwm_mask >> 8) & 0xff);
+   387		if (ret < 0)
+   388			return ret;
+   389		ret = nct736x_write_reg(client, NCT736X_REG_FANINEN_0_7,
+   390					fanin_mask & 0xff);
+   391		if (ret < 0)
+   392			return ret;
+   393		ret = nct736x_write_reg(client, NCT736X_REG_FANINEN_8_15,
+   394					(fanin_mask >> 8) & 0xff);
+   395		if (ret < 0)
+   396			return ret;
+   397	
+   398		/* Watchdog Timer Configuration */
+   399		if (wdt_cfg != 0xff && id->driver_data == nct7363) {
+   400			ret = nct736x_write_reg(client, NCT7363_REG_WDT, wdt_cfg);
+   401			if (ret < 0)
+   402				return ret;
+   403		}
+   404	
+   405		return 0;
+   406	}
+   407	
 
 -- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
