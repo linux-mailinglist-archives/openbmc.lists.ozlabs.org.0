@@ -2,61 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 17828805121
-	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 11:49:34 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id D369580512B
+	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 11:50:52 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=T51VdFYe;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=gOoaBZwU;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Sky2z3y2zz3dB7
-	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 21:49:31 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Sky4V2Nczz2yLr
+	for <lists+openbmc@lfdr.de>; Tue,  5 Dec 2023 21:50:50 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=T51VdFYe;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=gOoaBZwU;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::135; helo=mail-lf1-x135.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::136; helo=mail-lf1-x136.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Skxm03qzrz3cTF
-	for <openbmc@lists.ozlabs.org>; Tue,  5 Dec 2023 21:36:32 +1100 (AEDT)
-Received: by mail-lf1-x135.google.com with SMTP id 2adb3069b0e04-50be10acaf9so3449264e87.1
-        for <openbmc@lists.ozlabs.org>; Tue, 05 Dec 2023 02:36:32 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Skxm25n4Bz3cYh
+	for <openbmc@lists.ozlabs.org>; Tue,  5 Dec 2023 21:36:34 +1100 (AEDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-50bf3efe2cbso2548866e87.2
+        for <openbmc@lists.ozlabs.org>; Tue, 05 Dec 2023 02:36:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1701772588; x=1702377388; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1701772590; x=1702377390; darn=lists.ozlabs.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=eSce1rQ1um+oY77DdZG8yrBJ6NEyKdJwNZU1ix0Nv7k=;
-        b=T51VdFYeYBn/aQ4ziWm36XqRQQ6nrPpjqPv6qCNMKJ1GMB1OMjM6bGf/zYjloFGmZ4
-         GFxKlELPZDtE/i7Wsal6rtq6ePiADlTWTYBCA2T0j7Gthy0zXCCIVT5xP/2kjMMrPp0B
-         dIqNCYHmFeMAg8ITl6ObDHzs8/QkQk+BavwNyjHpcWSjhQSPDpJQJ233J4HUl2h24sCp
-         kwxYA8o1aeHKxaFNiF5s/andkvT5S72pgjIRhLtk9E0R+vcvnwq4eW8Vg2CdPeVrM4Ix
-         UBjP8eZE/K4zrGkaJ6VYvRtnQxtKvRyc9YUwvAYCRCtKoceHJ2veSpCZ3t/kOCr4EJqK
-         22FA==
+        bh=KnWeBpfqtvqCDqeZAExTorADExkavt7pqbm3ec9WO1c=;
+        b=gOoaBZwUvHEbShvsM+gQLlqzCb30Dqg1XQG8mDwf5SRn+0zGDuMJ84eRCScHUVzu1h
+         cL96m9QrybNu3xvT0LsZ4TFhrbayxpcV+4UQpnuA0WT2op6K5Jh7fv5B4Q4sHp1P4bIm
+         3XeaZgkMZqNged7SGERTTDk+Sl2dWfOT6DD2f8PCTaAEO3YoChEL0uLO7/kCpTA3k85i
+         Ndfb9WpqUaDnLAFT52inbNlq4FJGkh5iu5IWbRL01KeG8nFhEOCjJvXcyzV7urD3YpCI
+         NhTXKFNkFsGh5IOM5TFagzfBjdlCR8VvyZEIkRQo3IjO+hP9ZrFPfAOyMPBTtRTyplme
+         cdTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701772588; x=1702377388;
+        d=1e100.net; s=20230601; t=1701772590; x=1702377390;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=eSce1rQ1um+oY77DdZG8yrBJ6NEyKdJwNZU1ix0Nv7k=;
-        b=uhan+N4u0j380k8mS6UuUX7p5PNV2uee83XMxmf4BmkbGXJVB9PlSQsI25GkOjJAo/
-         bEpdOSn4nEZM8hIzr2DRkZ32MMTgO1dVaTryVkt5dn5uM9+JQGsdhk+0JpHGYRpnVKw6
-         ss/BT3T8Q0RngLfOLzYIYGcvxcw2Cx74Qhd05uH9uOLKxL5kZXAGpboNfoNsi6Iu81/d
-         dR3959x2QnHRxtpeTk90dLpNKhepg+liKxPuOxPYfASGgpbcMaXYgl5otAhpn711Y/vZ
-         4Pv800yQ5FlUqfiNaYEQXceeMyHfZ+pZNpZND6seR0e6dVZrNf59xBpGU/MNrk2nIAQk
-         RPFw==
-X-Gm-Message-State: AOJu0YwrkMf3blXyi5b/z75/ToBdeueyj5qcyh9V2hadoRdmqo1cYyJZ
-	pAmkE3qZ5qQAQ3db4MNxjD8=
-X-Google-Smtp-Source: AGHT+IHCPdpPY0zKceA3SRi5ga/xIyMFSxmCiObH9MLWtgGsZTqmrUo8sVBhomQ2MmR96xpeV6v2vw==
-X-Received: by 2002:a05:6512:2809:b0:50b:f0a9:1e3e with SMTP id cf9-20020a056512280900b0050bf0a91e3emr834935lfb.3.1701772588437;
-        Tue, 05 Dec 2023 02:36:28 -0800 (PST)
+        bh=KnWeBpfqtvqCDqeZAExTorADExkavt7pqbm3ec9WO1c=;
+        b=tZxh4UzVRX+5v6VCMvLKQj01LsNlNy2Z39j92rqgACdAuHURlRiEw87mpQ939QCwAX
+         vRU5Ercy4mO/hekYTj1WD8EAEbdM8V13dEcIv6PNkgi0z3S28Lf0eKBs/mwaA1w3ki1y
+         1QtkiZvu1XGNxpEbii5/wws/73lpjdchQXXwHwBDn9Zw9Iy1rnWQKv49Fo25I8df7foj
+         fdeKY0gL1T8oVEufvwBmHFnNcPGIW89N/OURuBeM3ccZJkdTMfYFddyJo+py3AlI05Ii
+         qraSY0bfp9LyP7imHmgp6QfrbiICMe+XCQszQ6vhylkeBOa5yf58ildzr7w9mXpbdmYz
+         XAyw==
+X-Gm-Message-State: AOJu0YxCCSkL3KHmcB9P/Mqfx4X2OdHO6aInaTrXcbyRhQaDWeWFgLN8
+	fsguqhLpYaWbVAkP4nbINyQ=
+X-Google-Smtp-Source: AGHT+IFCUWZhdYHhKb8nG0l8H2uVfvXP7CMp59To4aI5jWsBTPXwOd7IoX4cD7Nlfspv3sfeyfBb1A==
+X-Received: by 2002:ac2:5f43:0:b0:50b:ccc1:201e with SMTP id 3-20020ac25f43000000b0050bccc1201emr1469322lfz.0.1701772590456;
+        Tue, 05 Dec 2023 02:36:30 -0800 (PST)
 Received: from localhost ([178.176.56.174])
-        by smtp.gmail.com with ESMTPSA id x3-20020a056512046300b0050c0215a806sm185275lfd.83.2023.12.05.02.36.27
+        by smtp.gmail.com with ESMTPSA id d19-20020a196b13000000b0050bf365e8c8sm679554lfa.63.2023.12.05.02.36.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Dec 2023 02:36:27 -0800 (PST)
+        Tue, 05 Dec 2023 02:36:30 -0800 (PST)
 From: Serge Semin <fancer.lancer@gmail.com>
 To: Andrew Lunn <andrew@lunn.ch>,
 	Heiner Kallweit <hkallweit1@gmail.com>,
@@ -74,9 +74,9 @@ To: Andrew Lunn <andrew@lunn.ch>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Maxime Coquelin <mcoquelin.stm32@gmail.com>
-Subject: [PATCH net-next 14/16] net: stmmac: Pass netdev to XPCS setup function
-Date: Tue,  5 Dec 2023 13:35:35 +0300
-Message-ID: <20231205103559.9605-15-fancer.lancer@gmail.com>
+Subject: [PATCH net-next 15/16] net: stmmac: Add dedicated XPCS cleanup method
+Date: Tue,  5 Dec 2023 13:35:36 +0300
+Message-ID: <20231205103559.9605-16-fancer.lancer@gmail.com>
 X-Mailer: git-send-email 2.42.1
 In-Reply-To: <20231205103559.9605-1-fancer.lancer@gmail.com>
 References: <20231205103559.9605-1-fancer.lancer@gmail.com>
@@ -97,79 +97,96 @@ Cc: devicetree@vger.kernel.org, netdev@vger.kernel.org, openbmc@lists.ozlabs.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-It's possible to have the XPCS device accessible over a dedicated
-management interface which makes the XPCS device available over the MMIO
-space. In that case the management interface will be registered as a
-separate MDIO bus and the DW xGMAC device will be equipped with the
-"pcs-handle" property pointing to the XPCS device instead of
-auto-detecting it on the internal MDIO bus. In such configurations the SMA
-interface (embedded into the DW xGMAC MDIO interface) might be absent.
-Thus passing the MII bus interface handler to the stmmac_xpcs_setup()
-method won't let us reach the externally supplied XPCS device especially
-if the SMA bus isn't configured. Let's fix it by converting the
-stmmac_xpcs_setup(struct mii_bus *bus) prototype to
-stmmac_xpcs_setup(struct net_device *ndev).
+Currently the XPCS handler destruction is performed in the
+stmmac_mdio_unregister() method. It doesn't look well because the handler
+isn't originally created in the corresponding protagonist
+stmmac_mdio_unregister(), but in the stmmac_xpcs_setup() function. In
+order to have a bit more coherent MDIO and XPCS setup/cleanup procedures
+let's move the DW XPCS destruction to the dedicated stmmac_xpcs_clean()
+method.
 
-Note this is a preparation patch before adding the support of the XPCS
-devices specified via the "pcs-handle" property.
+Note besides of that this change is a preparation to adding the PCS device
+supplied by means of the "pcs-handle" property. It's required since DW
+XPCS IP-core can be synthesized embedded into the chip with directly
+accessible CSRs. In that case the SMA interface can be absent so no
+corresponding MDIO bus will be registered.
 
 Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac.h      | 2 +-
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 2 +-
- drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c | 5 ++---
- 3 files changed, 4 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac.h      |  1 +
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c |  6 +++++-
+ drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c | 14 +++++++++++---
+ 3 files changed, 17 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac.h b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-index cd7a9768de5f..d8a1c84880c5 100644
+index d8a1c84880c5..1709de519813 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac.h
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac.h
-@@ -343,7 +343,7 @@ enum stmmac_state {
- int stmmac_mdio_unregister(struct net_device *ndev);
+@@ -344,6 +344,7 @@ int stmmac_mdio_unregister(struct net_device *ndev);
  int stmmac_mdio_register(struct net_device *ndev);
  int stmmac_mdio_reset(struct mii_bus *mii);
--int stmmac_xpcs_setup(struct mii_bus *mii);
-+int stmmac_xpcs_setup(struct net_device *ndev);
+ int stmmac_xpcs_setup(struct net_device *ndev);
++void stmmac_xpcs_clean(struct net_device *ndev);
  void stmmac_set_ethtool_ops(struct net_device *netdev);
  
  int stmmac_init_tstamp_counter(struct stmmac_priv *priv, u32 systime_flags);
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 3e50fd53a617..c3641db00f96 100644
+index c3641db00f96..379552240ac9 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -7605,7 +7605,7 @@ int stmmac_dvr_probe(struct device *device,
- 		priv->plat->speed_mode_2500(ndev, priv->plat->bsp_priv);
+@@ -7639,8 +7639,9 @@ int stmmac_dvr_probe(struct device *device,
  
- 	if (priv->plat->mdio_bus_data && priv->plat->mdio_bus_data->has_xpcs) {
--		ret = stmmac_xpcs_setup(priv->mii);
-+		ret = stmmac_xpcs_setup(ndev);
- 		if (ret)
- 			goto error_xpcs_setup;
- 	}
+ error_netdev_register:
+ 	phylink_destroy(priv->phylink);
+-error_xpcs_setup:
+ error_phy_setup:
++	stmmac_xpcs_clean(ndev);
++error_xpcs_setup:
+ 	if (priv->hw->pcs != STMMAC_PCS_TBI &&
+ 	    priv->hw->pcs != STMMAC_PCS_RTBI)
+ 		stmmac_mdio_unregister(ndev);
+@@ -7682,6 +7683,9 @@ void stmmac_dvr_remove(struct device *dev)
+ 	if (priv->plat->stmmac_rst)
+ 		reset_control_assert(priv->plat->stmmac_rst);
+ 	reset_control_assert(priv->plat->stmmac_ahb_rst);
++
++	stmmac_xpcs_clean(ndev);
++
+ 	if (priv->hw->pcs != STMMAC_PCS_TBI &&
+ 	    priv->hw->pcs != STMMAC_PCS_RTBI)
+ 		stmmac_mdio_unregister(ndev);
 diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
-index aa75e4f1e212..e6133510e28d 100644
+index e6133510e28d..101fa50c3c96 100644
 --- a/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
 +++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_mdio.c
-@@ -495,9 +495,8 @@ int stmmac_mdio_reset(struct mii_bus *bus)
+@@ -522,6 +522,17 @@ int stmmac_xpcs_setup(struct net_device *ndev)
  	return 0;
  }
  
--int stmmac_xpcs_setup(struct mii_bus *bus)
-+int stmmac_xpcs_setup(struct net_device *ndev)
- {
--	struct net_device *ndev = bus->priv;
- 	struct stmmac_priv *priv;
- 	struct dw_xpcs *xpcs;
- 	int mode, addr;
-@@ -507,7 +506,7 @@ int stmmac_xpcs_setup(struct mii_bus *bus)
++void stmmac_xpcs_clean(struct net_device *ndev)
++{
++	struct stmmac_priv *priv = netdev_priv(ndev);
++
++	if (!priv->hw->xpcs)
++		return;
++
++	xpcs_destroy(priv->hw->xpcs);
++	priv->hw->xpcs = NULL;
++}
++
+ /**
+  * stmmac_mdio_register
+  * @ndev: net device structure
+@@ -674,9 +685,6 @@ int stmmac_mdio_unregister(struct net_device *ndev)
+ 	if (!priv->mii)
+ 		return 0;
  
- 	/* Try to probe the XPCS by scanning all addresses. */
- 	for (addr = 0; addr < PHY_MAX_ADDR; addr++) {
--		xpcs = xpcs_create_byaddr(bus, addr, mode);
-+		xpcs = xpcs_create_byaddr(priv->mii, addr, mode);
- 		if (IS_ERR(xpcs))
- 			continue;
- 
+-	if (priv->hw->xpcs)
+-		xpcs_destroy(priv->hw->xpcs);
+-
+ 	mdiobus_unregister(priv->mii);
+ 	priv->mii->priv = NULL;
+ 	mdiobus_free(priv->mii);
 -- 
 2.42.1
 
