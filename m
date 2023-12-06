@@ -1,87 +1,76 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B1C6D8063D1
-	for <lists+openbmc@lfdr.de>; Wed,  6 Dec 2023 02:01:14 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 5A27680645A
+	for <lists+openbmc@lfdr.de>; Wed,  6 Dec 2023 02:46:54 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=E6yMlCiH;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=XWVCbVuM;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=EkyJTNyX;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SlJxh1MYCz3cWW
-	for <lists+openbmc@lfdr.de>; Wed,  6 Dec 2023 12:01:12 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SlKyM681yz3cfB
+	for <lists+openbmc@lfdr.de>; Wed,  6 Dec 2023 12:46:51 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=E6yMlCiH;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=XWVCbVuM;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=EkyJTNyX;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.24; helo=wout1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
-Received: from wout1-smtp.messagingengine.com (wout1-smtp.messagingengine.com [64.147.123.24])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2607:f8b0:4864:20::52a; helo=mail-pg1-x52a.google.com; envelope-from=jim.t90615@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-pg1-x52a.google.com (mail-pg1-x52a.google.com [IPv6:2607:f8b0:4864:20::52a])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SlJwv1tNSz3bws
-	for <openbmc@lists.ozlabs.org>; Wed,  6 Dec 2023 12:00:30 +1100 (AEDT)
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-	by mailout.west.internal (Postfix) with ESMTP id 9D0433200035
-	for <openbmc@lists.ozlabs.org>; Tue,  5 Dec 2023 20:00:27 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Tue, 05 Dec 2023 20:00:27 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1701824427; x=1701910827; bh=qw
-	69oJdY8n4B7J/PL85EKbDZjeF9lTF+l0Lpi2L9Xfo=; b=E6yMlCiHVHomX3ub3G
-	qP2FpHzYDfbBnn8qnnJEWoZtIJpv88vxYQiu8S+L174fIhPJ0Tpt9oaGaiJrpNBg
-	amstJVchrw8g12ZSK4MdMXPi915L/9ZyDSHbT9GkILz035yoEtDyxLnZvybEWR73
-	vO0SuTp5MvV4JsDajL6av+1w4IK8x+R38yZMXPNKrUEj9KxbxGKTkHWlmgItE7bB
-	1DD95k2HKfEWsFC6h9rN1SRYF1rKMMjJRBqkwz+s3D/z1l4qpcws/w0gBWVjl3J5
-	b6j+hP+XNYvnc18ZH5YdbYU3ocMeJZyeOJ4Nz1zX38ukoYvOx11mqQlIA9IPRJPV
-	3+Cw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1701824427; x=1701910827; bh=qw69oJdY8n4B7
-	J/PL85EKbDZjeF9lTF+l0Lpi2L9Xfo=; b=XWVCbVuMBFn5dT51BNwj26/9tMFId
-	Ixl+X1UUx/hPtvHCp96dW8tcRfigchOOWJKh91s+G9TG2L4en/hJmBKXskSPWkby
-	QXkM4quWuB7k96OVCR1n0b/ocZKjQUlL5UWnYs4u/1StpXkN7Eo71ogBXe9K19Np
-	CBB++K30P+V836dSx/nCsdL34K5Y9IIPqHOPOSlrhex3vJmlbHTgjiAhwAwHThlc
-	dZNCdUVw5Ije4/ym9sMnDcUBWGzlFqVYtDgxDct8GquAQggSI7wWkcDVx/37Zhs8
-	BshLfw6t+f0yGpVlyl8qd0+9+q1V5GRFahw9QhdpPftpSb18/UDZSlAYg==
-X-ME-Sender: <xms:qsdvZbp_odQthcIFBSqrxEZW_b01IBezvsnK0sgWCFBF4N3K5cR2UQ>
-    <xme:qsdvZVqa8vToO3nLrMpOLuayudi-bMZz5Dm6LTxYuMuXa3ZZ19JevC7DMhRIxCFYH
-    643d9BNdHImDZNXkB8>
-X-ME-Received: <xmr:qsdvZYPsUJC8PG2a5B9pAbhLa9PYlj6pLbPSsu_HVjwXfLp72NEryOQtQkmdk93jmHo5Nly-stgC6fUedVC-Jmkh26h3WA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudejledgfedtucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffucdlfeehmdenucfjughrpeffhf
-    fvuffkfhggtggujgesghdtreertddtvdenucfhrhhomheprfgrthhrihgtkhcuhghilhhl
-    ihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecuggftrfgrthhtvghrnh
-    epgeehheefffegkeevhedthffgudfhgeefgfdthefhkedtleffveekgfeuffehtdeinecu
-    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrthhrih
-    gtkhesshhtfigtgidrgiihii
-X-ME-Proxy: <xmx:qsdvZe7RmQ42_Q5jAOOSgZmt_M3guWjpYmlPgsDeISwH9N7I1UHO-g>
-    <xmx:qsdvZa76xZEoZwRdowDE9bo4E1CQXiOMzrCPGB8uzBwTF9ts7pcWdQ>
-    <xmx:qsdvZWis0m1whqnQq4hACXgY5ABiqTLSIYd4_KWo6U7hmilVxqNMcg>
-    <xmx:q8dvZXX-6eVoBzuTaYtHDLutNBHzBUE2X5Jdvg4_RnpLJ5eGugg2aQ>
-Feedback-ID: i68a1478a:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <openbmc@lists.ozlabs.org>; Tue, 5 Dec 2023 20:00:26 -0500 (EST)
-Date: Tue, 5 Dec 2023 19:00:25 -0600
-From: Patrick Williams <patrick@stwcx.xyz>
-To: openbmc@lists.ozlabs.org
-Subject: Re: [PATCH dev-5.6 1/3] net/ncsi: Simplify Kconfig/dts control flow
-Message-ID: <ZW_HqYQADoCeFvYc@heinlein.vulture-banana.ts.net>
-References: <20231205234843.4013767-1-patrick@stwcx.xyz>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SlKxk2R0rz2yVb
+	for <openbmc@lists.ozlabs.org>; Wed,  6 Dec 2023 12:46:16 +1100 (AEDT)
+Received: by mail-pg1-x52a.google.com with SMTP id 41be03b00d2f7-5bdb0be3591so4001357a12.2
+        for <openbmc@lists.ozlabs.org>; Tue, 05 Dec 2023 17:46:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1701827171; x=1702431971; darn=lists.ozlabs.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=AqnaYhpCrvu4j/R7wQBWuZ3sMmDCeUlCefM7DEmKBhI=;
+        b=EkyJTNyX+Hmq1h0I5Ib+5yCTmuzAqyeEkEx+Xh0uQ3mCv/29au2u7LwMkcqLtY+34p
+         s/7EQVeV/J5yIGQMMMXmgfT5ERQc3NP0TUK/w3OsfYpZ/2o/Txm6d6HwStLcL06LdrTE
+         Id+XKJP5GbpNegp7aCnV495iGqBy1gO4i6Q4k4fOA54dMQHI6G7BminmjnDAmlTgX50K
+         h9lalrEhFx7zzddxT9bnej6DiDIQnublGx9U0pqRMrO0ZZxoWDKXgC0PpQ6UZBgEsUOV
+         6II9uvAgrUvH++80OEHC32WQRQ8vMF3deU3Rc5aflXYdmrGOEknJCfRLVOnaXJGcisML
+         UkYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1701827171; x=1702431971;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=AqnaYhpCrvu4j/R7wQBWuZ3sMmDCeUlCefM7DEmKBhI=;
+        b=Gvi5hAG5TgAM/NJ7rjLbhBwTEc97FDBFGP1GyhSiRvX5Ukaa5r18Ft/YhEE+8a9qH4
+         tF7nsEEMm4ArtgJ9w65CtpvczvKKTcIq0uR/AeC0j+PwW5j+NeRlPX7ZTz8PrMr4xe3f
+         LgcHLBVgRcAq2U9mQLzCqTXxihe/kOjFLpioJ/hieAnrd6zDaQXtmuE/VlPTdk0wLAbr
+         m4BEe9KDvXimpJG7VKA39L2En48CbN03fbWTqxvr1JKd1i8lpIk95UhfeclxaeNkT/zv
+         heOxc1XqhBHPU7zRH+TmbML+FDbdV81sFtxD7Bl6Cwlg8PeqO2JooH4fKoP8QJoMqKLP
+         wBgQ==
+X-Gm-Message-State: AOJu0YwgbpTNj0C6iK+f4AtL8ecYctUGmqkR/7WFQNNq7IQdmjzhz3tX
+	OWtLQw1tQeGufJTF/DI3uVA=
+X-Google-Smtp-Source: AGHT+IE4OEO6AuDf+OS54EW0+E56+iiZ+R9SGm3qCf4t5dLhN0MKFbtRXY+ezoGotQNnhg6g1OocqQ==
+X-Received: by 2002:a05:6a20:7484:b0:18f:97c:8a1c with SMTP id p4-20020a056a20748400b0018f097c8a1cmr145930pzd.71.1701827170873;
+        Tue, 05 Dec 2023 17:46:10 -0800 (PST)
+Received: from localhost.localdomain ([112.78.94.69])
+        by smtp.gmail.com with ESMTPSA id g24-20020aa78758000000b006ce781f6f85sm1250956pfo.43.2023.12.05.17.46.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Dec 2023 17:46:10 -0800 (PST)
+From: Jim Liu <jim.t90615@gmail.com>
+To: JJLIU0@nuvoton.com,
+	krzysztof.kozlowski+dt@linaro.org,
+	linus.walleij@linaro.org,
+	andy@kernel.org,
+	robh+dt@kernel.org,
+	conor+dt@kernel.org,
+	KWLIU@nuvoton.com,
+	jim.t90615@gmail.com
+Subject: [PATCH v8 0/3] Add Nuvoton NPCM SGPIO feature
+Date: Wed,  6 Dec 2023 09:45:27 +0800
+Message-Id: <20231206014530.1600151-1-jim.t90615@gmail.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="fecJhlc5oECGkGHq"
-Content-Disposition: inline
-In-Reply-To: <20231205234843.4013767-1-patrick@stwcx.xyz>
+Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -93,43 +82,32 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
+Cc: linux-gpio@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
+This SGPIO controller is for NUVOTON NPCM7xx and NPCM8xx SoC.
+Nuvoton NPCM SGPIO module is combine serial to parallel IC (HC595)
+and parallel to serial IC (HC165), and use APB3 clock to control it.
+This interface has 4 pins  (D_out , D_in, S_CLK, LDSH).
+NPCM7xx/NPCM8xx have two sgpio module each module can support up
+to 64 output pins,and up to 64 input pin, the pin is only for GPI or GPO.
+GPIO pins have sequential, First half is GPO and second half is GPI.
 
---fecJhlc5oECGkGHq
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Jim Liu (3):
+  dt-bindings: gpio: add NPCM sgpio driver bindings
+  arm: dts: nuvoton: npcm: Add sgpio feature
+  gpio: nuvoton: Add Nuvoton NPCM sgpio driver
 
-On Tue, Dec 05, 2023 at 05:48:41PM -0600, Patrick Williams wrote:
-> (cherry picked from commit c797ce168930ce3d62a9b7fc4d7040963ee6a01e)
+ .../bindings/gpio/nuvoton,sgpio.yaml          |  86 +++
+ .../dts/nuvoton/nuvoton-common-npcm7xx.dtsi   |  24 +
+ drivers/gpio/Kconfig                          |   7 +
+ drivers/gpio/Makefile                         |   1 +
+ drivers/gpio/gpio-npcm-sgpio.c                | 637 ++++++++++++++++++
+ 5 files changed, 755 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/gpio/nuvoton,sgpio.yaml
+ create mode 100644 drivers/gpio/gpio-npcm-sgpio.c
 
-These patches were cherry-picked from the net-next tree and thus are
-tentatively going into the 6.8 tree.  I've applied them onto our 6.5
-tree, but they should apply cleanly to 6.6 also.
+-- 
+2.25.1
 
---=20
-Patrick Williams
-
---fecJhlc5oECGkGHq
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmVvx6cACgkQqwNHzC0A
-wRmJbRAAmN56zFO3/Qcqj116ELd85rr71SydHu7HJrv58MxJqn+nfajNeJZn8Rt/
-ZYbeXng/zeG1/gWrfADP/wiK7IF/OQCu4iqtQ3IUSwpkNfQDVZ10GEzlM9ythyYD
-9KADvnHhibH8Ts1pjIUpYMNwPv8e+6p/+LVLiOtM+4jGe64kuaREwORhLyPc9JLP
-qF7GxQqM1hPdQ1AeDfIwdH98kqmkezuSh5deuNb0IzcUsvNDJwUvuy5CXbFPcGIg
-rUOKKAFVrN9cEYQSlv/kKo5w56HsAQBi5c4Y7CGwrbc0FUdDRjrB4gxcDylIjHfB
-dbSaK08tkYCrrzl03aY7FYM+1/p+tePwI/Jel0Fm5VELuUlRiEs849D1QOfrmx1e
-JsQHus3/+poLZ046ozk9WhWKDMJJxJjcsWbweCDPzqpIQw0dvLbWwRXi+NZjgSmI
-z7U2PR9cHPc15tK7NPbcWDJvsDMYMbKEwT8pB1NJwHoanV91gK+jZRfXonOPvLQo
-+mivICPIzgG2On3wnZ8gw9s+VYTUFwqmO/5L4sxjYZqaFyNvZwewGlHxuqYTyTHf
-xMHSNZoLMtgr1MU096+qvbHekq7ZxRa9vccq8dNZtuX/BuALwQm64bZfmVHGO/qF
-OG709FgQow4JlsIHk8/mxwl3koF8d95ePyBcu/Y726uUosWA5os=
-=IYT2
------END PGP SIGNATURE-----
-
---fecJhlc5oECGkGHq--
