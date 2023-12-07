@@ -2,72 +2,76 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 9A450808048
-	for <lists+openbmc@lfdr.de>; Thu,  7 Dec 2023 06:41:53 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 169A9808220
+	for <lists+openbmc@lfdr.de>; Thu,  7 Dec 2023 08:44:49 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=EihVrWtI;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=GjepkSIK;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Sm3721dZLz3ccN
-	for <lists+openbmc@lfdr.de>; Thu,  7 Dec 2023 16:41:50 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Sm5rs3mKvz3cZ5
+	for <lists+openbmc@lfdr.de>; Thu,  7 Dec 2023 18:44:45 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=linaro.org header.i=@linaro.org header.a=rsa-sha256 header.s=google header.b=EihVrWtI;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=GjepkSIK;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=linaro.org (client-ip=2a00:1450:4864:20::331; helo=mail-wm1-x331.google.com; envelope-from=dan.carpenter@linaro.org; receiver=lists.ozlabs.org)
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::136; helo=mail-lf1-x136.google.com; envelope-from=fr0st61te@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sm36Q3PB0z2yN8
-	for <openbmc@lists.ozlabs.org>; Thu,  7 Dec 2023 16:41:16 +1100 (AEDT)
-Received: by mail-wm1-x331.google.com with SMTP id 5b1f17b1804b1-40c09f5a7cfso6867565e9.0
-        for <openbmc@lists.ozlabs.org>; Wed, 06 Dec 2023 21:41:16 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sm5rD3VXdz3cPf
+	for <openbmc@lists.ozlabs.org>; Thu,  7 Dec 2023 18:44:10 +1100 (AEDT)
+Received: by mail-lf1-x136.google.com with SMTP id 2adb3069b0e04-50bf8843a6fso381828e87.0
+        for <openbmc@lists.ozlabs.org>; Wed, 06 Dec 2023 23:44:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1701927672; x=1702532472; darn=lists.ozlabs.org;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=q7rmf1L5KTUW/E5oPwtLwfXb9Vg7b5uQANioC1qAwJQ=;
-        b=EihVrWtI41zAviidPH1TMSqK8q7TtexniCvCIOOeYuPo8uEeFQyRM9H8l5h06Y6Zo+
-         r7jMR7ncQFOflsMjdMqZblotuxiQccNFY0Rx+Z0Kb9oN5CQixuIl0D61naieC58PT14A
-         AoDf+14GvtT3FwZ6ku3+t/6YwlXwEnC/gS77m69CN0gwzDn3YpaLOFxE1kneNnhmbppM
-         KhlaHkmccpqwRJCqbaRl5wYZyQnQoG7TMpMZfbyaiw4Olf5fQ1lANFTqdehO1TUjZeBV
-         wo7LPcWLZEXVeWRdUOMg7Z5vp9QEb82mCsiiGf3+L59zY6VDsZCGCSj6V5962EH2SmiQ
-         BG5w==
+        d=gmail.com; s=20230601; t=1701935046; x=1702539846; darn=lists.ozlabs.org;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=IjZmDAUOKG/f79lP7jC0T8rFfaPzDNaVuWtSEPjGuGI=;
+        b=GjepkSIKruB9Nf5V/YafhDiAAUdDBfO9FlSNU8KbS6iFKyv91P4anEoKavLNqU8A9P
+         iHHGW97RyVdLENz13CZStltGiJbs0gz//b94EJlGFboMGhsXDbcQmIjHAKfsS5dewank
+         BV3ZYZThyFdcMOniSOo2OV6fQN/HIc5ZV5ezwUZpUOgptq8QuSy52qulk94KoONgkOTN
+         C33dDY1jPiSk3uoFvoXIXNr9dyKp7t/NKo+PJOZmibA32YY0ph4M795RnkprbfzCCftP
+         7QrDovXEoDSsQH1iIEhCx4ZojZE0TVsdM++jsZD8bQQjgiPvC1WAy2a6qKqRPsleymnQ
+         NAoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1701927672; x=1702532472;
-        h=in-reply-to:content-disposition:mime-version:message-id:subject:cc
-         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=q7rmf1L5KTUW/E5oPwtLwfXb9Vg7b5uQANioC1qAwJQ=;
-        b=ho4BmIQBCZTEy/eEm4r1Z2QqrrRLMJ4SQgko/Vt7DE1LTqwe9nbdC8/vU5DhkjpS5J
-         hF/PBu4RET1ddxLreZly5rNzza9o9+uf081GI1JbEmqfWa5tE/1Z1G0WDzFtbWlsDBGT
-         A31DSLJIHFA58BTvQQZdGtkL0RSJajEoL134+X7nKQEmXLO3U4XFqTxA/t7th4uibx/x
-         b1vPYpYE3XSqbYmEgZXr/ZuwR2N9DmQR4V6upWAWsOeOkaPlqjW6Z2CjOICrjAYC+rY3
-         FK9g54/jGsl201r+xDUfijdLPA2zAAV6Qk1zuCZO4Ot/1TqhL0qrIzNOt0bNrQe8vtJD
-         uiCw==
-X-Gm-Message-State: AOJu0YxZepg5TO3PzFSrMkHdB30CtF97Bi2Cgyk8nR+8r3HRKZjy+OC6
-	TMmS2l+LXCTUoeZbKEMAnBr7Kg==
-X-Google-Smtp-Source: AGHT+IFcYPRJ0wHa3HawHgZzyaOQdVMjkxX4/+Q/hkkoscjHk6GLpxarpmJZAW4lnnUanfaDDUCLLg==
-X-Received: by 2002:a7b:cb95:0:b0:40b:5e59:ea01 with SMTP id m21-20020a7bcb95000000b0040b5e59ea01mr1260067wmi.160.1701927672414;
-        Wed, 06 Dec 2023 21:41:12 -0800 (PST)
-Received: from localhost ([102.36.222.112])
-        by smtp.gmail.com with ESMTPSA id je16-20020a05600c1f9000b00405442edc69sm702928wmb.14.2023.12.06.21.41.11
+        d=1e100.net; s=20230601; t=1701935046; x=1702539846;
+        h=mime-version:user-agent:content-transfer-encoding:references
+         :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=IjZmDAUOKG/f79lP7jC0T8rFfaPzDNaVuWtSEPjGuGI=;
+        b=oSWswMzARdUUXLD5cxuLWz3sz/nN50uGtfJx6ZxJFbP727vKrxVidp487SXt69POIi
+         t947H0dP1siY+JqBC9Nzz4mXR1qheuxhP4RJdzu1yYIjwLEv4j4kwHOARtLlvGQz2I4l
+         GldGVPyXf1552vmr/RJHznzkvqwiASbagZy2VwTLmvgs542bbv1JpNEOGIvkYRGA9Bqq
+         3dKGsb0wpanZNnmNA1QCjHZC4nqe3GHZaheYGFFbB7AHxfdHnc5n9C4Foz9NQ5KEclyq
+         VdMGhCVUiK6yScsxzjM+YwpD/oCkAmFMoZtMpq8OoMaBVv03zOY3AxND+5u5cqga6nnj
+         J+Lg==
+X-Gm-Message-State: AOJu0YzYhK15TgBHDqvzUMY8YGzKx5AE37dRRTLOHf1vXDPrqqmjg0Ga
+	qNbJWHrqEHzsJNJ1bhwkoDI=
+X-Google-Smtp-Source: AGHT+IF4BqxphVDa+E+QgZGIFyUi5+lJShaXoIemBoPV3C9gg8IVjWRWbfgHIOu5JG8bVhZh0sYHBA==
+X-Received: by 2002:a05:6512:10ca:b0:50b:fd3c:5dab with SMTP id k10-20020a05651210ca00b0050bfd3c5dabmr1433869lfg.27.1701935046155;
+        Wed, 06 Dec 2023 23:44:06 -0800 (PST)
+Received: from [192.168.1.161] ([81.200.16.167])
+        by smtp.gmail.com with ESMTPSA id d22-20020a056512369600b005009c4ba3f0sm99608lfs.72.2023.12.06.23.44.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Dec 2023 21:41:12 -0800 (PST)
-Date: Thu, 7 Dec 2023 08:41:09 +0300
-From: Dan Carpenter <dan.carpenter@linaro.org>
-To: oe-kbuild@lists.linux.dev, baneric926@gmail.com, jdelvare@suse.com,
-	linux@roeck-us.net, robh+dt@kernel.org,
-	krzysztof.kozlowski+dt@linaro.org, conor+dt@kernel.org,
-	corbet@lwn.net
-Subject: Re: [PATCH v1 2/2] hwmon: Driver for Nuvoton NCT736X
-Message-ID: <a62c8f0f-db3d-41da-b2a8-a064f0feba32@suswa.mountain>
+        Wed, 06 Dec 2023 23:44:05 -0800 (PST)
+Message-ID: <e735c41f9eb2985a46fa63fb0d0b477513a227f0.camel@gmail.com>
+Subject: Re: [PATCH dev-5.6 3/3] net/ncsi: Add NC-SI 1.2 Get MC MAC Address
+ command
+From: Ivan Mikhaylov <fr0st61te@gmail.com>
+To: Patrick Williams <patrick@stwcx.xyz>
+Date: Thu, 07 Dec 2023 10:44:05 +0300
+In-Reply-To: <ZXFHdtNDvBshKQap@heinlein.vulture-banana.ts.net>
+References: <20231205234843.4013767-1-patrick@stwcx.xyz>
+	 <20231205234843.4013767-3-patrick@stwcx.xyz>
+	 <6abc879a2c29cc8b8044c5c483bff5a01750695b.camel@gmail.com>
+	 <ZXFHdtNDvBshKQap@heinlein.vulture-banana.ts.net>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.50.2 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231204055650.788388-3-kcfeng0@nuvoton.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -79,95 +83,36 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-hwmon@vger.kernel.org, devicetree@vger.kernel.org, kcfeng0@nuvoton.com, lkp@intel.com, linux-doc@vger.kernel.org, openbmc@lists.ozlabs.org, linux-kernel@vger.kernel.org, DELPHINE_CHIU@wiwynn.com, oe-kbuild-all@lists.linux.dev, kwliu@nuvoton.com
+Cc: openbmc@lists.ozlabs.org, Peter Delevoryas <peter@pjd.dev>, "David S.
+	Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi,
+On Wed, 2023-12-06 at 22:17 -0600, Patrick Williams wrote:
+> On Thu, Dec 07, 2023 at 12:23:38AM +0300, Ivan Mikhaylov wrote:
+> >=20
+> >=20
+> > Patrick, I've the fix about ndo_set_mac_address not so long in the
+> > past
+> > https://lore.kernel.org/all/20230828101151.684010399@linuxfoundation.or=
+g/
+> >=20
+> > ndo_set_mac_address do not notify network layer about mac change.
+>=20
+> Hello Ivan,
+>=20
+> I think you're suggesting there is a bug in the code that was applied
+> to
+> net-next here?=C2=A0 If so, we'll need to get a fix into net-next.=C2=A0 =
+These
+> commits are just a backport request to the OpenBMC tree of the code
+> that
+> was already applied to net-next.
+>=20
 
-kernel test robot noticed the following build warnings:
+Patrick, yes, there is a bug, I'll write to the thread today/tomorrow
+with that commit about that problem. Need to think how to make a fix
+for this problem, reverting and make it right until it in net-next or
+fix above that commit.
 
-https://git-scm.com/docs/git-format-patch#_base_tree_information]
-
-url:    https://github.com/intel-lab-lkp/linux/commits/baneric926-gmail-com/dt-bindings-hwmon-Add-nct736x-bindings/20231204-135942
-base:   linus/master
-patch link:    https://lore.kernel.org/r/20231204055650.788388-3-kcfeng0%40nuvoton.com
-patch subject: [PATCH v1 2/2] hwmon: Driver for Nuvoton NCT736X
-config: m68k-randconfig-r071-20231207 (https://download.01.org/0day-ci/archive/20231207/202312071152.Kfcw1KlD-lkp@intel.com/config)
-compiler: m68k-linux-gcc (GCC) 13.2.0
-reproduce: (https://download.01.org/0day-ci/archive/20231207/202312071152.Kfcw1KlD-lkp@intel.com/reproduce)
-
-If you fix the issue in a separate patch/commit (i.e. not just a new version of
-the same patch/commit), kindly add following tags
-| Reported-by: kernel test robot <lkp@intel.com>
-| Reported-by: Dan Carpenter <dan.carpenter@linaro.org>
-| Closes: https://lore.kernel.org/r/202312071152.Kfcw1KlD-lkp@intel.com/
-
-smatch warnings:
-drivers/hwmon/nct736x.c:367 nct736x_init_chip() error: uninitialized symbol 'gpio0_3'.
-drivers/hwmon/nct736x.c:370 nct736x_init_chip() error: uninitialized symbol 'gpio4_7'.
-drivers/hwmon/nct736x.c:373 nct736x_init_chip() error: uninitialized symbol 'gpio10_13'.
-drivers/hwmon/nct736x.c:376 nct736x_init_chip() error: uninitialized symbol 'gpio14_17'.
-
-vim +/gpio0_3 +367 drivers/hwmon/nct736x.c
-
-16e62bcf3c9b93 Ban Feng 2023-12-04  335  static int nct736x_init_chip(struct i2c_client *client,
-16e62bcf3c9b93 Ban Feng 2023-12-04  336  			     u32 pwm_mask, u32 fanin_mask, u32 wdt_cfg)
-16e62bcf3c9b93 Ban Feng 2023-12-04  337  {
-16e62bcf3c9b93 Ban Feng 2023-12-04  338  	const struct i2c_device_id *id = i2c_match_id(nct736x_id, client);
-16e62bcf3c9b93 Ban Feng 2023-12-04  339  	u8 i, gpio0_3, gpio4_7, gpio10_13, gpio14_17;
-16e62bcf3c9b93 Ban Feng 2023-12-04  340  	int ret;
-16e62bcf3c9b93 Ban Feng 2023-12-04  341  
-16e62bcf3c9b93 Ban Feng 2023-12-04  342  	for (i = 0; i < NCT736X_PWM_COUNT; i++) {
-16e62bcf3c9b93 Ban Feng 2023-12-04  343  		if (i < 4) {
-16e62bcf3c9b93 Ban Feng 2023-12-04  344  			if (pwm_mask & BIT_CHECK(i))
-16e62bcf3c9b93 Ban Feng 2023-12-04  345  				gpio0_3 |= PWM_SEL(i);
-
-This doesn't work.  gpio0_3 needs to be initialized to zero before we
-can turn on individual bits.
-
-16e62bcf3c9b93 Ban Feng 2023-12-04  346  			if (fanin_mask & BIT_CHECK(i))
-16e62bcf3c9b93 Ban Feng 2023-12-04  347  				gpio10_13 |= FANIN_SEL(i);
-
-Etc...
-
-16e62bcf3c9b93 Ban Feng 2023-12-04  348  		} else if (i < 8) {
-16e62bcf3c9b93 Ban Feng 2023-12-04  349  			if (pwm_mask & BIT_CHECK(i))
-16e62bcf3c9b93 Ban Feng 2023-12-04  350  				gpio4_7 |= PWM_SEL(i);
-16e62bcf3c9b93 Ban Feng 2023-12-04  351  			if (fanin_mask & BIT_CHECK(i))
-16e62bcf3c9b93 Ban Feng 2023-12-04  352  				gpio14_17 |= FANIN_SEL(i);
-16e62bcf3c9b93 Ban Feng 2023-12-04  353  		} else if (i < 12) {
-16e62bcf3c9b93 Ban Feng 2023-12-04  354  			if (pwm_mask & BIT_CHECK(i))
-16e62bcf3c9b93 Ban Feng 2023-12-04  355  				gpio10_13 |= PWM_SEL(i);
-16e62bcf3c9b93 Ban Feng 2023-12-04  356  			if (fanin_mask & BIT_CHECK(i))
-16e62bcf3c9b93 Ban Feng 2023-12-04  357  				gpio0_3 |= FANIN_SEL(i);
-16e62bcf3c9b93 Ban Feng 2023-12-04  358  		} else {
-16e62bcf3c9b93 Ban Feng 2023-12-04  359  			if (pwm_mask & BIT_CHECK(i))
-16e62bcf3c9b93 Ban Feng 2023-12-04  360  				gpio14_17 |= PWM_SEL(i);
-16e62bcf3c9b93 Ban Feng 2023-12-04  361  			if (fanin_mask & BIT_CHECK(i))
-16e62bcf3c9b93 Ban Feng 2023-12-04  362  				gpio4_7 |= FANIN_SEL(i);
-16e62bcf3c9b93 Ban Feng 2023-12-04  363  		}
-16e62bcf3c9b93 Ban Feng 2023-12-04  364  	}
-16e62bcf3c9b93 Ban Feng 2023-12-04  365  
-16e62bcf3c9b93 Ban Feng 2023-12-04  366  	/* Pin Function Configuration */
-16e62bcf3c9b93 Ban Feng 2023-12-04 @367  	ret = nct736x_write_reg(client, NCT736X_REG_GPIO_0_3, gpio0_3);
-                                                                                                      ^^^^^^^
-
-16e62bcf3c9b93 Ban Feng 2023-12-04  368  	if (ret < 0)
-16e62bcf3c9b93 Ban Feng 2023-12-04  369  		return ret;
-16e62bcf3c9b93 Ban Feng 2023-12-04 @370  	ret = nct736x_write_reg(client, NCT736X_REG_GPIO_4_7, gpio4_7);
-16e62bcf3c9b93 Ban Feng 2023-12-04  371  	if (ret < 0)
-16e62bcf3c9b93 Ban Feng 2023-12-04  372  		return ret;
-16e62bcf3c9b93 Ban Feng 2023-12-04 @373  	ret = nct736x_write_reg(client, NCT736X_REG_GPIO_10_13, gpio10_13);
-16e62bcf3c9b93 Ban Feng 2023-12-04  374  	if (ret < 0)
-16e62bcf3c9b93 Ban Feng 2023-12-04  375  		return ret;
-16e62bcf3c9b93 Ban Feng 2023-12-04 @376  	ret = nct736x_write_reg(client, NCT736X_REG_GPIO_14_17, gpio14_17);
-16e62bcf3c9b93 Ban Feng 2023-12-04  377  	if (ret < 0)
-16e62bcf3c9b93 Ban Feng 2023-12-04  378  		return ret;
-16e62bcf3c9b93 Ban Feng 2023-12-04  379  
-16e62bcf3c9b93 Ban Feng 2023-12-04  380  	/* PWM and FANIN Monitoring Enable */
-
--- 
-0-DAY CI Kernel Test Service
-https://github.com/intel/lkp-tests/wiki
-
+Thanks.
