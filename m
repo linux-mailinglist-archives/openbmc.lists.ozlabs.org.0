@@ -1,88 +1,91 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 20EFE807F7C
-	for <lists+openbmc@lfdr.de>; Thu,  7 Dec 2023 05:17:13 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id DD375807F80
+	for <lists+openbmc@lfdr.de>; Thu,  7 Dec 2023 05:18:33 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=bxJKMdnz;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=xcJDd9mY;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=IVWT+MYr;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=gQ3eOqmr;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Sm1FL4VLMz3cVX
-	for <lists+openbmc@lfdr.de>; Thu,  7 Dec 2023 15:17:10 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Sm1Gv2ds8z2ydN
+	for <lists+openbmc@lfdr.de>; Thu,  7 Dec 2023 15:18:31 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=bxJKMdnz;
-	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=xcJDd9mY;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=IVWT+MYr;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=gQ3eOqmr;
 	dkim-atps=neutral
 Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=66.111.4.25; helo=out1-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
 Received: from out1-smtp.messagingengine.com (out1-smtp.messagingengine.com [66.111.4.25])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sm1Df2w63z2yps
-	for <openbmc@lists.ozlabs.org>; Thu,  7 Dec 2023 15:16:33 +1100 (AEDT)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.nyi.internal (Postfix) with ESMTP id 6D4C05C014E;
-	Wed,  6 Dec 2023 23:16:27 -0500 (EST)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute6.internal (MEProxy); Wed, 06 Dec 2023 23:16:27 -0500
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sm1GL4D5kz2yG9
+	for <openbmc@lists.ozlabs.org>; Thu,  7 Dec 2023 15:18:02 +1100 (AEDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.nyi.internal (Postfix) with ESMTP id AF7B05C0227;
+	Wed,  6 Dec 2023 23:18:00 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Wed, 06 Dec 2023 23:18:00 -0500
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm3; t=1701922587; x=1702008987; bh=8Z
-	KTl/atlH4EYLRz68pTwmSqQpN6m+pmJRTzXUR9ifY=; b=bxJKMdnz1NsymCOlFW
-	+joV7oQ18kjQJTR/Ehc2w2Sa/obWKPh8BVupyREzwaHze8VgTB/AjK46sMEg80nv
-	GplKalBKUgtZRObaeZ2apdkIgIGzhBo70/UuJkDHw8A5wydoWLebfX1s7yp5rBF/
-	Nu5fuw/y42pV9C1LqsmCfp/D0T0vMzSAbIZBbcuO9zXMBAlaNg8YHyzDBi5gJgzK
-	4Ku2gFiOrWqrazZv9MOpHkhSd5VwVU2Yzs6+CD2gumsQkxBSjOHLvGLR9gumK7w6
-	ujUhuRM3lvjIcq/oW3SSEBgKctC6AxDWRUCNiUr6lPmnrmUIuZmkZzEHCvp5WdK2
-	3HDQ==
+	:subject:subject:to:to; s=fm3; t=1701922680; x=1702009080; bh=tz
+	AMRSdJRDyI7757cQC8eQRpjI82DQVnr8QpIuCLT7g=; b=IVWT+MYrTpKDF8PDBN
+	x3p9nfr2eaqvWkA6wdR6WHHM+OiHaNGNYh2byY8LJ4BtPfl5UjWS44m1DpClDZ66
+	H6RWpLya2Pxf0e17yptqRarw6ek7uMkgblCwiSgxgBB1MsLFb3SJKmeq38xqQGTk
+	PmzAQoerWqNDFq0xMcT/mssX45ylPKeegQEMYADWCiINIozQay9ETYyjaS++AVFl
+	c+phtRpItmH912oRtTWV8Gc6Tnnq9/C60Nkvo4MaqSl5JftctE3I/2GMcRHd95Fy
+	dIltxRDTJBe3JuzZYLk9fwFzzoJbQ791su9F9ZyuKDcx6Qf0iBfkjKW69IxqVSU8
+	Ptag==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:sender:subject
 	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1701922587; x=1702008987; bh=8ZKTl/atlH4EY
-	LRz68pTwmSqQpN6m+pmJRTzXUR9ifY=; b=xcJDd9mYWWWFrOR6EHv1DDkCff4fO
-	VISXKYgpdL5Hs/9ZZal8t5FikPqpipLQ9Qh1O7SWIrk+FE5HV7hLKbJa3qKFgWyf
-	4FdvZOXsgvLKNw5I3dPle2taLxn5o+p0v7XpExbwIbaaKHnHqmnAeEBRMG4yrriD
-	4bGdQ73cN7lltAluwGLNfN/TGsw3ErWawqJ4Jf/r7yE4SjO7SUdc7+fiY2/QLkuE
-	WV358gSNl/D+sq36UBVjw92J4rdxS1S9RLjylgZsWI6UT395y1ycRRfixRPYKqY7
-	TTXt4evAG9fgPJjJ693M65eLrkqtdzp+2Jhn87bdNk3pR7mYevKf3brSw==
-X-ME-Sender: <xms:G0dxZWTOp6NCtW6_CTg9-DoHOo4LMekF9Mad2NiYXG_zhgegjjTciA>
-    <xme:G0dxZbzUBraNrJTU_p2ANZ7_SqgT4Nsv_Tx66OfPaf4QBiuRoiFbKW-bCIUZ9Z61H
-    emE7xrcWo0oWfnmB6A>
-X-ME-Received: <xmr:G0dxZT3UucAGb8Dzb4wYmSF3Q6pH4f6kU-EZLMDCHkXDiumK875dScnTzynR66m8lIuzW_lFyhnndZKd1U8jmhleQdgt3g>
+	:x-sasl-enc; s=fm1; t=1701922680; x=1702009080; bh=tzAMRSdJRDyI7
+	757cQC8eQRpjI82DQVnr8QpIuCLT7g=; b=gQ3eOqmr1DFzHEie8cermidMsbALy
+	ZncDvfTCvGH7krEilVYJjr6S3G4/OJfzXHCp8jul8Yzci4ZphrJ+rCfu6CtJUOG0
+	l6oXR1Nhj0ze2xl3WnLbw6hyIU0q6Zohx4WS6CWe2SZAdBvIM193RbqTWKhzuPkG
+	Fd04GCG0yZkYGFLVk82A987o3rt/fl3+uza5jKR7ir7nwbnB6U+d13kxXdYXttb5
+	kEexrNU8HpfO1igeDBvo1m1zPo0BKYZjIx3nbNtqgEvXldO+PRvwAMXd2rJiK8e1
+	64xprHkhAosSFNKzViJ+IbFpHhvC2fkrHVlHqou63sDE7B5i+DwtGjuxQ==
+X-ME-Sender: <xms:eEdxZeLCAKQC82r8ZG1FJ73gDdT30ckxtKELjfsGmVkvqmdtNiruzA>
+    <xme:eEdxZWIiuG-Dvt6sGdDlPjFboJN9WqOBqgXRM0Bqo7hqfPXNVhDmEkOgjZQWOWcSn
+    ogddrScKSFrolCRGN4>
+X-ME-Received: <xmr:eEdxZesHA6b5z6knWnmMT-LW-XGUaarEKwuv7j6WRzNli6O1ioCK69T58e5o8ziVgGjKCoAGIlHo70nKjgESkBCIB5TR-A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudekuddgieejucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    gfrhhlucfvnfffucdlvdefmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtderredt
+    gfrhhlucfvnfffucdlvdefmdenucfjughrpeffhffvvefukfhfgggtuggjsehgtdorredt
     tddvnecuhfhrohhmpefrrghtrhhitghkucghihhllhhirghmshcuoehprghtrhhitghkse
-    hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpeegieevuedufedvgeetleekkefh
-    jefgieeilefhtdegvdehkeffkeduvdfhfffhheenucffohhmrghinhepohhpvghnsghmtg
-    drohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
-    pehprghtrhhitghksehsthiftgigrdighiii
-X-ME-Proxy: <xmx:G0dxZSCY7dYBAH8Xdcuj9hmnOW2_MkmcqdvSS-W8zZv1A_wuas7kzg>
-    <xmx:G0dxZfhJmjMl2q-nyO8whjuYdLszf3TqutBQ3cGKmlMc6cAvn7yKbg>
-    <xmx:G0dxZerqrFg2ymLMM3-QkR27KQkq8BgwIv3GhUsXemo4puRl4g7_EQ>
-    <xmx:G0dxZXaHEz7x73YXGVosCAY5shJFJUMu8B6JPAyHbDQ-6PHEPGExtA>
+    hsthiftgigrdighiiiqeenucggtffrrghtthgvrhhnpefghfeiveeuueefvdffieehteeg
+    iefhfefgjedtgeeugefhlefhhfdujeeugfdtheenucffohhmrghinhepkhgvrhhnvghlrd
+    horhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhep
+    phgrthhrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:eEdxZTbt7sOIdtWBhAeLYPFWenW-wuGy5mUBSFR2FRFpFka9O4jD3g>
+    <xmx:eEdxZVZI5dOniSiVaeavf6yCXl59T9hZDNt5sOqn4_HTzO4Ea1wO0A>
+    <xmx:eEdxZfCsy_u63qtA3c3q2nqj-D9QKw-k8CfvtYUPt9cla6GIoPpETg>
+    <xmx:eEdxZUnKtFOWaTFqfdbSGd26GfDMssOTL27i0BA2x7XOWm_ASNjHew>
 Feedback-ID: i68a1478a:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 6 Dec 2023 23:16:26 -0500 (EST)
-Date: Wed, 6 Dec 2023 22:16:25 -0600
+ 6 Dec 2023 23:18:00 -0500 (EST)
+Date: Wed, 6 Dec 2023 22:17:58 -0600
 From: Patrick Williams <patrick@stwcx.xyz>
-To: Joel Stanley <joel@jms.id.au>
-Subject: Re: OpenBMC Linux 6.6
-Message-ID: <ZXFHGagfYsg3eQm2@heinlein.vulture-banana.ts.net>
-References: <CACPK8Xfgwf58Usn0FSWYigD2HbwNKh4DTLX+HLE36HbMC7D1JQ@mail.gmail.com>
+To: Ivan Mikhaylov <fr0st61te@gmail.com>
+Subject: Re: [PATCH dev-5.6 3/3] net/ncsi: Add NC-SI 1.2 Get MC MAC Address
+ command
+Message-ID: <ZXFHdtNDvBshKQap@heinlein.vulture-banana.ts.net>
+References: <20231205234843.4013767-1-patrick@stwcx.xyz>
+ <20231205234843.4013767-3-patrick@stwcx.xyz>
+ <6abc879a2c29cc8b8044c5c483bff5a01750695b.camel@gmail.com>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="9ZbROcgfmdwBPfos"
+	protocol="application/pgp-signature"; boundary="ef4hkHwei1Ye8UGY"
 Content-Disposition: inline
-In-Reply-To: <CACPK8Xfgwf58Usn0FSWYigD2HbwNKh4DTLX+HLE36HbMC7D1JQ@mail.gmail.com>
+In-Reply-To: <6abc879a2c29cc8b8044c5c483bff5a01750695b.camel@gmail.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -94,49 +97,52 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andrew Jeffery <andrew@aj.id.au>, OpenBMC Maillist <openbmc@lists.ozlabs.org>
+Cc: openbmc@lists.ozlabs.org, Peter Delevoryas <peter@pjd.dev>, "David S. Miller" <davem@davemloft.net>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
---9ZbROcgfmdwBPfos
+--ef4hkHwei1Ye8UGY
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Dec 06, 2023 at 05:29:59PM +1030, Joel Stanley wrote:
-> Hot on the heels of the last bump, here is the latest kernel base for
-> the aspeed machines.
+On Thu, Dec 07, 2023 at 12:23:38AM +0300, Ivan Mikhaylov wrote:
 >=20
->   https://gerrit.openbmc.org/c/openbmc/openbmc/+/67772
 >=20
-> If you're able to test, please comment on gerrit and give the change a +1.
+> Patrick, I've the fix about ndo_set_mac_address not so long in the past
+> https://lore.kernel.org/all/20230828101151.684010399@linuxfoundation.org/
+>=20
+> ndo_set_mac_address do not notify network layer about mac change.
 
-What is the tentative timeline for merging this?  I'd like to try it out
-on a few of our platforms but it'll probably be Friday before I get
-around to that.
+Hello Ivan,
+
+I think you're suggesting there is a bug in the code that was applied to
+net-next here?  If so, we'll need to get a fix into net-next.  These
+commits are just a backport request to the OpenBMC tree of the code that
+was already applied to net-next.
 
 --=20
 Patrick Williams
 
---9ZbROcgfmdwBPfos
+--ef4hkHwei1Ye8UGY
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmVxRxcACgkQqwNHzC0A
-wRlibBAAhq5kXU4kph3sjuPjodHYLIpUXnHWswltzqqIEDGpPsFF/aN9Cmz7uY0O
-JrBqwUAkP0Tg6jxJpMwoTQ/FdljEaVE7FSfB4FclfmCEfSKKJ4Xnp4QJ9RVMvngI
-elhSTwc6w8LFK+LsOFIW1fzIoVRawuL1UPByoJGZQ/mkylcNe7nBrtTEjcrh+m/e
-F0fascKLBgKCBTn4lWW9wFgPXxDAG+MtFSQrwfWkvKax+fDgnFvdnc0tfTtrLiem
-t7GcbsIMIfqo0Tm5lPCx9qBv01B0en1Yb55cdCeXbYatc5KDkYEQus18Whg0FaBb
-nKST803px/HNDSH30YVbpRrJ8oIT9puN19d9cM2NiPy7JIxDKmx+EkbgW4Z5HZGk
-O8ptazVe315RB5oNDRd2Mvf5hw/WWKlKSsCFA2M4/jhzriULXWOWbOgmZ4d8L+o2
-zTJi5Jd8lZo8ED1+rDMBwVj7vmxK+PeQNofkVrRNcYvQLBDkGlmX2qamZKtS7l3B
-kW90I+CPF/9AB63YIncz2XQ41Z5EOkhJ61uo6FvUVi5lh2++RbKnITrEGUGsjSdJ
-HG196CDWQ9hZXM4vs3BDgcSoNfV7EWfvoq0iUDdf77BjFGXye3GVbsZNPUTnZa/4
-T/12816H4Q297wSS2OIpa/hYAzr3ALJenuUDZBFlW/Ufs8Capc4=
-=Hj1h
+iQIzBAABCAAdFiEEBGD9ii4LE9cNbqJBqwNHzC0AwRkFAmVxR3YACgkQqwNHzC0A
+wRkBFQ//XIj04vNMH+n84zJMHdGDPkGzNRH4UtovqLVT2SjVvIobRJrf+tWNLQ29
+qF2BH3ikgiy8qw5Dg+Yrp03XdyFmgJUXdgcr99lHKGk+9cHTpatcucj3ygp7W/Qr
+V73amardyCXDzqLNO4EYb9m3rGVtFV1WRWBG7mp2xX8r+FqYtkpRfB2y4ULVcryG
+7TI3N72D+1MRHHno5q27wacvDdDRTzdmx9FkQTDpXy+O3P8yCIB0BgG2GTXh4AUK
+ssJAiptxRBjORxyuYprTFrdAZV4jj6HWlViAuRtB1lVNs537IWR/r33KRJv9ztIX
+LRg9UZMI05EyqzZ3hEx7rh9jc4CgZ0PhKIe1ST/DzNsihDZUgj7ns1/LTehqwKwi
+fFxhL2KfW163y+YFrmgYcn8mezU6w1dafcHMx5uXc534DG2zSGJgy4McuQq7ybvY
+h9RzN/8Kr8d7NoFltmlFQLzS0BfmmzQfEqYWGtlpUvb3KhXD9zRsIjINKbjSo4of
+lTgkAZtgeuiGdKIi5zibZrRMCkP6nPFZd9GY3w/dfzV1hKItL78wvxW20mbwDb58
+wJisntDCM78vzLlqnAG/+GrzCmXGWI2uV8EgAiUqcMHwmHLLV0FXksNKMvFdU6ib
+Ck1iXPPyD6avIOaHcweht0xd0bqXgr1By2kOIw1VGOqY3zq08NY=
+=T/JT
 -----END PGP SIGNATURE-----
 
---9ZbROcgfmdwBPfos--
+--ef4hkHwei1Ye8UGY--
