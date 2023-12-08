@@ -1,76 +1,78 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id B945C80A529
-	for <lists+openbmc@lfdr.de>; Fri,  8 Dec 2023 15:12:01 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id 0213680A839
+	for <lists+openbmc@lfdr.de>; Fri,  8 Dec 2023 17:08:30 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=dfJALZui;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=YPboo54B;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SmtPC1cShz3cfQ
-	for <lists+openbmc@lfdr.de>; Sat,  9 Dec 2023 01:11:59 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Smwzb3gHkz3dBc
+	for <lists+openbmc@lfdr.de>; Sat,  9 Dec 2023 03:08:27 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=dfJALZui;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=YPboo54B;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::130; helo=mail-lf1-x130.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22c; helo=mail-lj1-x22c.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SmtNb5ymZz3cW2
-	for <openbmc@lists.ozlabs.org>; Sat,  9 Dec 2023 01:11:27 +1100 (AEDT)
-Received: by mail-lf1-x130.google.com with SMTP id 2adb3069b0e04-50be10acaf9so2017046e87.1
-        for <openbmc@lists.ozlabs.org>; Fri, 08 Dec 2023 06:11:27 -0800 (PST)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Smwyy4qZnz3cR3
+	for <openbmc@lists.ozlabs.org>; Sat,  9 Dec 2023 03:07:52 +1100 (AEDT)
+Received: by mail-lj1-x22c.google.com with SMTP id 38308e7fff4ca-2c9f413d6b2so27234231fa.1
+        for <openbmc@lists.ozlabs.org>; Fri, 08 Dec 2023 08:07:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702044684; x=1702649484; darn=lists.ozlabs.org;
+        d=gmail.com; s=20230601; t=1702051665; x=1702656465; darn=lists.ozlabs.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ofk5EFlKJHCqg0e0b4hwUj6ByVii3nlBz86s3UMME0U=;
-        b=dfJALZuiS3kAvRhF4EP02MCTz/D3bk4+vr073Gq8TrrEbIgX96rfVz2mc69qdon+ZX
-         0pj0omp25IWLLH9zfsdd01kuKQT5FjN/kHjnbBducNcrgft2caUGVk5ZPHzYnY8/MEsW
-         2D+jORckIypsY/pAXqYbCjegNhz3AlOXPsftOty9AuURkk58HhazS5tkZNpKgaXx4do+
-         RTPCSUbluILezVhWHjhbR9DEZccG6/twDIhifUwWNZ/BRoFWzMRYfVTdZZn8mrjVMVY3
-         B9+SV36lXOBa2Oq/cvraDtek4IJuZ88zwI2N8EIcYCYUMOno97c5LjMBrhV68JYspgww
-         RM/A==
+        bh=CfiPX6OGNhZRjUiwvlyjSmKemrJqXvraxcvBV131SRo=;
+        b=YPboo54Bwmv+A9/5d2+pcTfd7kA7xFciFBMXCp2hiJOT5z3q/j6ve1FEF6wQ06xav2
+         MKHGH3ms4b3eA9UGWC8bnRyoy9Wc+4USbfKivB94da2AyGqjJn1ClyJ7Ze5+EEoo9Oj+
+         MsIv6+Z2Yl3VY8CP+ec32U7pBKchzH+ATz0aG5q411GTVUINoih23wH2DbtHlrfmJ3k5
+         6VQKEsYuS4P4y9cMp6WSnMGAFg9/NU/wTQuEK/P1ZgxXFYJ/zHG6/t53NMuyEtGiOANW
+         t7jZu1zatEOlriHkE6A5dhkgDgJ1x05x6YcAMrVSoExBlUybaDbtr6cphV+QqzDBWwlT
+         HopA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702044684; x=1702649484;
+        d=1e100.net; s=20230601; t=1702051665; x=1702656465;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Ofk5EFlKJHCqg0e0b4hwUj6ByVii3nlBz86s3UMME0U=;
-        b=u920LqpjU2/9K6BcNQ/H6S1EnHUQCSHIljzaSCvZvjJezlRbblZDmJXIFysgfLkpS2
-         tOu2NRStp5lgIoOmn1Fxgpnpeq4CZBoh3n3hCnA6zoNXN/+QmS9D+UtCnofuHkpa3U7k
-         lNF8RLKafJ1OKhm4eQt+fXss69d3bFlYB4bV7CO1hvpojFcMeM2EA1we5lXuI9nkAaq2
-         5KxFN3PjmkPLIKLcy8to2dJQRyh85vYbwX7xr7jBERDoYK8Ojxp1GPXGF9soZPMOZ82P
-         W98kCEGgSyKkrBFKLCjGkwgsXtAgvE3RcXmi6WBCQC9dOIOKIWklKZbR/v+bw+mIvbmJ
-         JgJA==
-X-Gm-Message-State: AOJu0YzKb1iacd18jWxu5phBL7pMuDOkQami0U+0VKGHGVaOQF/xSZIG
-	WSUg+zhYyGuRO5ELxKi/+b0=
-X-Google-Smtp-Source: AGHT+IHQoKexKqSk3g1ukd9drV99fhdVEIs2x55bN7mQBgSXsFoh7P9MpUi5tw0wGeY3is7raDfp6A==
-X-Received: by 2002:a05:6512:3c96:b0:50b:c50c:dbc4 with SMTP id h22-20020a0565123c9600b0050bc50cdbc4mr189960lfv.0.1702044683891;
-        Fri, 08 Dec 2023 06:11:23 -0800 (PST)
+        bh=CfiPX6OGNhZRjUiwvlyjSmKemrJqXvraxcvBV131SRo=;
+        b=EZ0dbtuhmzZmnSr9E/e6FSg1YlCVfaM0DhDProe387nqG7jXYX1tqux2heRtFP8jpN
+         zWVBQcQcQvmhRCdQb7JKd46Q+J8zIyulgx2aHRVh+lgTJvKFnaSK2kX9GkLORPJpNkGJ
+         G47PAyautkcTDj1PYTQvy/0Yz0rclW5utHAozviM2S65IytwM5JOwFXZ2oLw459FM5b7
+         At73dDIzz7OypIHpE/wfAOfYaizuWYzC/uYyuu7PSNyb4aBWsqspsHbUCZDn7mPg7d4d
+         CZ8+6UUx4axm9bcWtvd+2dtG8t6OdWIz/ozp6E4VWHASyOzXbl2hSpoPXfHzmsFb1gRy
+         27wg==
+X-Gm-Message-State: AOJu0YwWwrr10OlElcKbRkJtOSslWC+dxPHTZfMNq43gm+/FpnGeefNx
+	vMfK6CQPoYs4vjREpWoP13M=
+X-Google-Smtp-Source: AGHT+IFERSjKkWw7VFG+TyMdjyfFLR1k0hpAoCtE644pZT7QRiW7cMROY1NVAgannUhObcH9HyaFkw==
+X-Received: by 2002:a2e:3008:0:b0:2ca:a3d:dcda with SMTP id w8-20020a2e3008000000b002ca0a3ddcdamr41271ljw.57.1702051665318;
+        Fri, 08 Dec 2023 08:07:45 -0800 (PST)
 Received: from mobilestation ([178.176.56.174])
-        by smtp.gmail.com with ESMTPSA id k4-20020a05651210c400b0050bef21a012sm226400lfg.191.2023.12.08.06.11.22
+        by smtp.gmail.com with ESMTPSA id w2-20020a05651c102200b002ca0e0c837asm259858ljm.100.2023.12.08.08.07.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Dec 2023 06:11:23 -0800 (PST)
-Date: Fri, 8 Dec 2023 17:11:20 +0300
+        Fri, 08 Dec 2023 08:07:44 -0800 (PST)
+Date: Fri, 8 Dec 2023 19:07:42 +0300
 From: Serge Semin <fancer.lancer@gmail.com>
-To: Vladimir Oltean <olteanv@gmail.com>
-Subject: Re: [PATCH net-next 10/16] net: pcs: xpcs: Add generic DW XPCS
- MDIO-device support
-Message-ID: <nflj4ajgx3byqhwna2eslldwulbbafmcwba4dwgxo65o5c7pmj@zbgqt2zje4ix>
+To: Andrew Lunn <andrew@lunn.ch>
+Subject: Re: [PATCH net-next 09/16] net: mdio: Add Synopsys DW XPCS
+ management interface support
+Message-ID: <vj3pxanxczwehchksvfeba6g4i3uusbcdy5afixrug64tvlpad@jxtjxite644q>
 References: <20231205103559.9605-1-fancer.lancer@gmail.com>
- <20231205103559.9605-11-fancer.lancer@gmail.com>
- <20231205111351.xjjuwpbf7kwg3vuh@skbuf>
- <uivunnjv5vi3w3fkc5w2f4lem5bingrgajgjfsu2ih7fuhz6hd@3naeubr5spak>
- <20231205122316.ihhpklv222f5giz3@skbuf>
+ <20231205103559.9605-10-fancer.lancer@gmail.com>
+ <20231205133205.3309ab91@device.home>
+ <cv6oo27tqbfst3jrgtkg7bcxmeshadtzoomn2xgnzh2arz4nwy@wq5k7oygto6n>
+ <15e6857a-b1d1-465a-945e-6f31edac62fb@lunn.ch>
+ <jqwhgthwxfge6y4nv5mdnojqu76m4pi2mt2x6kwqiuqntcwj67@mewh42eey5ny>
+ <19ebc244-6d79-4e12-8ac4-fcf046106a07@lunn.ch>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231205122316.ihhpklv222f5giz3@skbuf>
+In-Reply-To: <19ebc244-6d79-4e12-8ac4-fcf046106a07@lunn.ch>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -82,189 +84,88 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jose Abreu <Jose.Abreu@synopsys.com>, Andrew Lunn <andrew@lunn.ch>, Conor Dooley <conor+dt@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Tomer Maimon <tmaimon77@gmail.com>, devicetree@vger.kernel.org, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, Alexandre Torgue <alexandre.torgue@foss.st.com>, Rob Herring <robh+dt@kernel.org>, Russell King <linux@armlinux.org.uk>, Eric Dumazet <edumazet@google.com>, Jose Abreu <joabreu@synopsys.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Jakub Kicinski <kuba@kernel.org>, Maxime Chevallier <maxime.chevallier@bootlin.com>, "David S. Miller" <davem@davemloft.net>, linux-kernel@vger.kernel.org, Heiner Kallweit <hkallweit1@gmail.com>
+Cc: Jose Abreu <Jose.Abreu@synopsys.com>, devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Paolo Abeni <pabeni@redhat.com>, Tomer Maimon <tmaimon77@gmail.com>, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, Alexandre Torgue <alexandre.torgue@foss.st.com>, Rob Herring <robh+dt@kernel.org>, Russell King <linux@armlinux.org.uk>, Eric Dumazet <edumazet@google.com>, Jose Abreu <joabreu@synopsys.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Jakub Kicinski <kuba@kernel.org>, Maxime Chevallier <maxime.chevallier@bootlin.com>, "David S. Miller" <davem@davemloft.net>, linux-kernel@vger.kernel.org, Heiner Kallweit <hkallweit1@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Vladimir
-
-On Tue, Dec 05, 2023 at 02:23:16PM +0200, Vladimir Oltean wrote:
-> On Tue, Dec 05, 2023 at 02:35:46PM +0300, Serge Semin wrote:
-> > Omg, thank you very much for testing the series straight away and
-> > sorry for the immediate trouble it caused. I'll need some more time
-> > for investigation. I'll get back to this topic a bit later on this
-> > week.
+On Thu, Dec 07, 2023 at 03:54:08PM +0100, Andrew Lunn wrote:
+> On Thu, Dec 07, 2023 at 04:35:47PM +0300, Serge Semin wrote:
+> > Hi Andrew
+> > 
+> > On Wed, Dec 06, 2023 at 06:01:30PM +0100, Andrew Lunn wrote:
+> > > > > You shouldn't use inline in C files, only in headers.
+> > > > 
+> > > > Could you please clarify why? I failed to find such requirement in the
+> > > > coding style doc. Moreover there are multiple examples of using the
+> > > > static-inline-ers in the C files in the kernel including the net/mdio
+> > > > subsystem.
+> > > 
+> > 
+> > > The compiler does a better job at deciding what to inline than we
+> > > humans do. If you can show the compiler is doing it wrong, then we
+> > > might accept them.
+> > 
+> > In general I would have agreed with you especially if the methods were
+> > heavier than what they are:
+> > static inline ptrdiff_t dw_xpcs_mmio_addr_format(int dev, int reg)
+> > {               
+> >         return FIELD_PREP(0x1f0000, dev) | FIELD_PREP(0xffff, reg);
+> > }               
+> >         
+> > static inline u16 dw_xpcs_mmio_addr_page(ptrdiff_t csr)
+> > {       
+> >         return FIELD_GET(0x1fff00, csr);
+> > }       
+> > 
+> > static inline ptrdiff_t dw_xpcs_mmio_addr_offset(ptrdiff_t csr)
+> > {
+> >         return FIELD_GET(0xff, csr);
+> > }
+> > 
+> > > But in general, netdev does not like inline in .C
+> > > file.
+> > 
+> > I see. I'll do as you say if you don't change your mind after my
+> > reasoning below.
+> > 
+> > > Also, nothing in MDIO is hot path, it spends a lot of time
+> > > waiting for a slow bus. So inline is likely to just bloat the code for
+> > > no gain.
+> > 
+> > I would have been absolutely with you in this matter, if we were talking
+> > about a normal MDIO bus. In this case the devices are accessed over
+> > the system IO-memory. So the bus isn't that slow.
 > 
-> Don't worry, I got suspicious when I was CCed to review only a one-line
-> change in patch 11/16. It's never about that one line, is it?)
 
-Right. I should have added you to the list of recipients of the entire
-series since the patchset changes more than that. The bug you caught
-brightly highlights my mistake. I'll make sure you are in the list.
-I'll add Jiawen and Mengyuan there too since the driver under their
-maintenance is also affected. Hopefully they'll get to test the series
-too.
-
+> O.K, so its not slow. But how often is it used? PHYs tend to get
+> polled once a second if interrupts are not used. But is the PCS also
+> polled at the same time? Does this optimisation make a noticeable
+> difference at once per second? Do you have a requirement that the
+> system boots very very fast, and this optimisation makes a difference
+> when there is heavier activity on the PCS at boot? Is the saving
+> noticeable, when auto-neg takes a little over 1 second.
 > 
-> Anyway, the NULL dev->p is a symptom of device_add() not having been
-> called, most likely from mdio_device_register().
+> The best way to make your case is show real world requirements and
+> benchmark results.
 
-Absolutely right. I thought that mdio_device_create() having the
-device_initialize() method called was enough for the device_attach()
-function being happy. It turns out it wasn't and I missed that the
-device_private instance is allocated only on the device registration.
-So I'll need to call mdio_device_register() after all, if I get to
-preserve the current design of the solution.
-
-> 
-> I'll be honest and say that I still don't quite understand what you're
-> trying to achieve. You're trying to bind the hardcoded mdio_devices
-> created by xpcs_create() to a driver? 
-
-My idea was to reuse the mdio_device which has already been created
-either by means of the MDIO-bus OF-subnode or by means of the MDIO-bus
-board_info infrastructure (can be utilized in the SJA1105 or Wangxun
-Tx GBE). The xpcs_create() method then either probes the device on the MDIO
-bus and gets ID from there, or just uses the custom IDs based on the
-OF compatible match table or on the platform_data. If no MDIO-device
-was created my patchset is supposed to preserve the previous
-semantics: create MDIO-device, probe the device on the MDIO-bus, get
-device IDs from there. See the next patch for more details:
-https://lore.kernel.org/netdev/20231205103559.9605-11-fancer.lancer@gmail.com/
-
-> That was attempted a while ago by
-> Sean Anderson with the Lynx PCS. Are you aware of the fact that even in
-> the good case in which binding the driver actually works, the user can
-> then come along and unbind it from the PCS device, and phylink isn't
-> prepared to handle that, so it will crash the kernel upon the next
-> phylink_pcs call?
-
-To be honest I didn't consider the driver bind/unbind option. But my
-case a bit different. DW XPCS MDIO-device is supposed to be created
-automatically by means of the DW XPCS MI driver from the DT-nodes
-hierarchy like this:
-mdio@1f05d000 {
-	compatible = "snps,dw-xpcs-mi";
-	reg = <0 0x1f05d000 0 0x1000>;
-
-	xgmac_pcs: ethernet-pcs@0 {
-		compatible = "snps,dw-xpcs";
-		reg = <0>;
-	};
-};
-The platform-device is created for the mdio@1f05d000 node for which
-the DW XPCS MI driver is loaded, which calls the
-devm_of_mdiobus_register() in the probe() method which registers the
-MDIO-bus and then creates the MDIO-device from the ethernet-pcs@0
-node. The DW XPCS MDIO-device driver is attached to that MDIO-device
-then. In such model the PCS can be supplied to the DW *MAC via the
-"pcs-handle = &xgmac_pcs" property.
-
-Regarding the current semantics it's preserved in the framework of the
-xpcs_create_byaddr() method (former xpcs_create_mdiodev()) by means of
-the next code snippet:
-        if (mdiobus_is_registered_device(bus, addr)) {
-                mdiodev = bus->mdio_map[addr];
-                mdio_device_get(mdiodev);
-        } else {
-                mdiodev = mdio_device_create(bus, addr);
-                if (IS_ERR(mdiodev))
-                        return ERR_CAST(mdiodev);
-        }
-Device can be automatically created if before registering the MDIO-bus
-the xpcs_create_byaddr() caller registered the MDIO-device board info
-by means of the mdiobus_register_board_info() method. In addition to
-that it's now possible to supply some custom data (custom device IDs
-in my implementation) to the XPCS driver by means of the
-mdio_board_info.platform_data field. See the next patch for
-reference:
-https://lore.kernel.org/netdev/20231205103559.9605-14-fancer.lancer@gmail.com
-
-So what the difference with the Lynx PCS is that in my case the
-MDIO-device is created automatically as a result of the DW XPCS MI
-MDIO-bus registration. Additionally I implemented the MDIO-device
-creation based on the MDIO-board-info, thus there won't be need in the
-calling mdio_device_create() on each xpcs_create_mdiodev() invocation.
-The later part isn't that important in the framework of this
-conversation, but just so you be aware.
-
-Regarding the driver bind/unbind. As I said I didn't actually consider
-that option. On the other hand my DW XPCS MDIO-device driver doesn't
-do actual probe() or remove(). The only implemented thing is the
-of_device_id table, which is used to assign PCS and PMA IDs if
-required based on the DT compatible property. So I can easily drop any
-MDIO device-driver part and parse the of_device_id table right in the
-xpcs_create_bynode(). From that perspective my implementation won't
-differ much from the Lynx PCS design. The only difference will be is
-the way the MDIO-bus is created and registered. In case of Lynx PCS
-the bus is created by the MAC-driver itself. In my case DW XPCS MI is
-currently created in the framework of the separate platform driver. Do
-you think it would be better to follow the Lynx design pattern in
-order to get rid from the possibility of the DW XPCS MI driver being
-unbound behind the STMMAC+XPCS couple back?
-
-In this case the Dw MAC DT-node hierarchy would look like this:
-
-xgmac: ethernet@1f054000 {
-	compatible = "snps,dwxgmac";
-	reg = <0 0x1f054000 0 0x4000>;
-	reg-names = "stmmaceth";
-	ranges;
-
-	...
-
-	pcs-handle = &xgmac_pcs;
-
-	// DW XPCS MI to access the DW XPCS attached to the device
-	mdio@1f05d000 {
-		compatible = "snps,dwmac-mi";
-		reg = <0 0x1f05d000 0 0x1000>;
-
-		xgmac_pcs: ethernet-pcs@0 {
-			compatible = "snps,dw-xpcs";
-			reg = <0>;
-		};
-	};
-
-	// Normal MDIO-bus to access external PHYs (it's also called
-	// as SMA - Station Management Agent - by Synopsys)
-	mdio {
-		compatible = "snps,dwmac-mdio";
-		#address-cells = <1>;
-		#size-cells = <0>;
-	};
-};
-
-I actually thought to use that hardware description pattern instead,
-but after some meditation around that I decided that having the DW
-XPCS device defined separately from the DW MAC node seemed better at
-least from the code separation point of view. Now I think that it
-wasn't the best decision. DW XPCS is always attached to the DW XGMAC
-controller. So it would be more correct having it defined as a
-sub-node. It would also helped to avoid the platform device driver
-bind/unbind problem.
-
-What do you think? Should I re-design my patchset to be supporting the
-design above? (After having conversion with you I am more inclined to
-do that now than to stick with the currently implemented solution.)
-
-> 
-> The pcs-rzn1-miic.c driver puts a device_link to the MAC to at least
-> tear down the whole thing when the PCS is unbound, which is saner than
-> crashing the kernel. I don't see the equivalent protection mechanism here?
-
-You are right. I don't have any equivalent protection here. Thanks for
-suggesting a solution.
-
-> 
-> Can't the xpcs continue to live without a bound driver? Having a
-> compatible string in the OF description is perfectly fine though,
-> and should absolutely not preclude that.
-
-As I explained above Dw XPCS device can live without a bound driver
-because the DW XPCS MDIO-driver doesn't do much but merely gets to be
-bound based on the of_device_id table. In my case the problem is in
-the DW XPCS MI driver which indeed can be detached. Please see my
-long-read text above.
+You do know how to well define your point.) Polling is what currently
+implemented in the XPCS driver indeed. So in this case such small
+optimization won't be even noticeable. Although theoretically the
+IO-access could be performed on the fast paths, in the IRQ context,
+but it could be relevant only if the DW XPCS device had the IRQ
+feature activated on the particular platform and the DW XPCS driver
+supported it. But seeing the driver currently doesn't support it and
+the DW XPCS could be also found on the DW MAC SMA MDIO bus
+(non-memory-mapped case), always handling IRQ in the hardware IRQ
+context would be wrong. Splitting up the handlers would be
+over-complication for indeed doubtful reason, since inlining those
+methods won't gain significant performance even in that case. And of
+course I don't have such strict requirements as you say. So I'll drop
+the inline keywords then. Thank you very much for having kept
+discussing the topic in order to fully clarify it for me, even though
+the issue could have seemed unimportant to spend time for.
 
 -Serge(y)
+
+> 
+> 	  Andrew
