@@ -2,53 +2,53 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id CA2D880B63B
-	for <lists+openbmc@lfdr.de>; Sat,  9 Dec 2023 21:29:04 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0361480B655
+	for <lists+openbmc@lfdr.de>; Sat,  9 Dec 2023 21:45:44 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=PzxK6iBL;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=O/4uchdK;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Snfjp2Q2Zz3cFw
-	for <lists+openbmc@lfdr.de>; Sun, 10 Dec 2023 07:29:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Sng513QkNz3cMH
+	for <lists+openbmc@lfdr.de>; Sun, 10 Dec 2023 07:45:41 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=PzxK6iBL;
+	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=O/4uchdK;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=145.40.68.75; helo=ams.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org)
-Received: from ams.source.kernel.org (ams.source.kernel.org [145.40.68.75])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:40e1:4800::1; helo=sin.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org)
+Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Snfj5019Hz3bWH;
-	Sun, 10 Dec 2023 07:28:24 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sng4P5Qmgz3bTt;
+	Sun, 10 Dec 2023 07:45:09 +1100 (AEDT)
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by ams.source.kernel.org (Postfix) with ESMTP id D2207B803F3;
-	Sat,  9 Dec 2023 20:28:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC43C433C8;
-	Sat,  9 Dec 2023 20:28:17 +0000 (UTC)
+	by sin.source.kernel.org (Postfix) with ESMTP id 869B3CE01BA;
+	Sat,  9 Dec 2023 20:45:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D95C433C8;
+	Sat,  9 Dec 2023 20:45:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702153698;
-	bh=rslBYi0BViswbTgH93m6HMfXVxguyYBllIpDJEbGmY8=;
+	s=k20201202; t=1702154702;
+	bh=+7qwKc+g6O9nPYHObVhq00UWcOt2oMbcUuD1ls3YUTY=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=PzxK6iBLgBu0UDJZ5PDebxoB2/rmQ9/0kO+w7tV/H/fCrrgYe1Ag+jo+7XrTon596
-	 Xsp75wGvG91ldzPwNe8XC7BF0M9Y2ac27ZkjPozdeC1grIQVQpwclyg1xKHLz72rLb
-	 OsPDi4flg4Dd63wZh5kOfS8Hq5E6alekoMGJZ9Aef2WzfqRR9z0UKQs+8RaDIveLQk
-	 qpgSShjeZl0a8hNMDdE/JjmyzBVyuT0Hi57k2ngyCzbwI7H6+Gy/NMq3Rj7/L/gfus
-	 +SGuJ3Zzg5VxmI1npvnQAXlTvzFq29Slgi/3xfK3hESpslB0u3TUsk3A1D/z9AeddD
-	 ZPQ5WavzE6mFg==
-Date: Sat, 9 Dec 2023 21:28:10 +0100
+	b=O/4uchdKtwypNWRTa301WpvfdXEMmFakt5eog88JUDkRhczMX02e3rBBWNEwlx6jg
+	 PxtES+X9BVhyAsugIobcqBW8v+Y+EUd1b46dg2QTmBNxvZcHYXf5CrmyWPsJUbK+J6
+	 inuDB4VU2hVdI8Zvgc+Rh9hR0GrAcXt0Jq2mxUubAy7rzs0aWFKylmRRpgmQliSB14
+	 yZNL8vhb+wq9yb7WJeyTEJVfFYEZ0bF0Kup+mBXqrErjRnHSe3d9IblX19xyWi2r/k
+	 XnxKG81bLPX5jty4mlhRlHrV28YTlmPt/PHuy8Y26qhk5OKchvN6Lpk6cWZH6TZDTi
+	 BUZNlNoGDhOxw==
+Date: Sat, 9 Dec 2023 21:44:55 +0100
 From: Andi Shyti <andi.shyti@kernel.org>
 To: Quan Nguyen <quan@os.amperecomputing.com>
-Subject: Re: [PATCH v3 1/2] i2c: aspeed: Handle the coalesced stop conditions
- with the start conditions.
-Message-ID: <20231209202810.r7kkz2hlaonyibha@zenone.zhora.eu>
+Subject: Re: [PATCH v3 2/2] i2c: aspeed: Acknowledge Tx done with and without
+ ACK irq late
+Message-ID: <20231209204455.jxize3muvx7hhpos@zenone.zhora.eu>
 References: <20231208033142.1673232-1-quan@os.amperecomputing.com>
- <20231208033142.1673232-2-quan@os.amperecomputing.com>
+ <20231208033142.1673232-3-quan@os.amperecomputing.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231208033142.1673232-2-quan@os.amperecomputing.com>
+In-Reply-To: <20231208033142.1673232-3-quan@os.amperecomputing.com>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -66,19 +66,30 @@ Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 Hi Quan,
 
-On Fri, Dec 08, 2023 at 10:31:41AM +0700, Quan Nguyen wrote:
-> Some masters may drive the transfers with low enough latency between
-> the nak/stop phase of the current command and the start/address phase
-> of the following command that the interrupts are coalesced by the
-> time we process them.
-> Handle the stop conditions before processing SLAVE_MATCH to fix the
-> complaints that sometimes occur below.
-> 
-> "aspeed-i2c-bus 1e78a040.i2c-bus: irq handled != irq. Expected
-> 0x00000086, but was 0x00000084"
-> 
-> Fixes: f9eb91350bb2 ("i2c: aspeed: added slave support for Aspeed I2C driver")
-> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+[...]
+
+> -	/* Ack all interrupts except for Rx done */
+> -	writel(irq_received & ~ASPEED_I2CD_INTR_RX_DONE,
+> -	       bus->base + ASPEED_I2C_INTR_STS_REG);
+> +
+> +	/*
+> +	 * Early acking of INTR_RX_DONE and INTR_TX_[ACK|NAK] would indicate HW to
+> +	 * start receiving or sending new data, and this may cause a race condition
+> +	 * as the irq handler has not yet handled these irqs but is being acked.
+> +	 * Let's ack them late at the end of the irq handler when those are truly processed.
+> +	 */
+> +	irq_ack_last = ASPEED_I2CD_INTR_RX_DONE | ASPEED_I2CD_INTR_TX_ACK | ASPEED_I2CD_INTR_TX_NAK;
+> +	writel(irq_received & ~irq_ack_last, bus->base + ASPEED_I2C_INTR_STS_REG);
+
+I like Andrews suggestion of having irq_ack_last as a define that
+is already negated, instead of negating it in the writel, which
+makes it a bit difficult to read.
+
+Besides, ack_last, as a name is not very meaningful, I'd rather
+call it irq_ack_rx_tx (or something similar).
+
+But I'm not going to block it for this, up to you if you want to
+send a new version.
 
 Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
 
