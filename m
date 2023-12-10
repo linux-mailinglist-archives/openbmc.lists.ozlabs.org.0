@@ -2,53 +2,50 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id 0361480B655
-	for <lists+openbmc@lfdr.de>; Sat,  9 Dec 2023 21:45:44 +0100 (CET)
-Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=O/4uchdK;
-	dkim-atps=neutral
+	by mail.lfdr.de (Postfix) with ESMTPS id 1AF6780DF5B
+	for <lists+openbmc@lfdr.de>; Tue, 12 Dec 2023 00:18:02 +0100 (CET)
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Sng513QkNz3cMH
-	for <lists+openbmc@lfdr.de>; Sun, 10 Dec 2023 07:45:41 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SpyMq4kqmz3c3H
+	for <lists+openbmc@lfdr.de>; Tue, 12 Dec 2023 10:17:59 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20201202 header.b=O/4uchdK;
-	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=kernel.org (client-ip=2604:1380:40e1:4800::1; helo=sin.source.kernel.org; envelope-from=andi.shyti@kernel.org; receiver=lists.ozlabs.org)
-Received: from sin.source.kernel.org (sin.source.kernel.org [IPv6:2604:1380:40e1:4800::1])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=pengutronix.de (client-ip=2a0a:edc0:2:b01:1d::104; helo=metis.whiteo.stw.pengutronix.de; envelope-from=ukl@pengutronix.de; receiver=lists.ozlabs.org)
+Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [IPv6:2a0a:edc0:2:b01:1d::104])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sng4P5Qmgz3bTt;
-	Sun, 10 Dec 2023 07:45:09 +1100 (AEDT)
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
-	by sin.source.kernel.org (Postfix) with ESMTP id 869B3CE01BA;
-	Sat,  9 Dec 2023 20:45:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84D95C433C8;
-	Sat,  9 Dec 2023 20:45:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1702154702;
-	bh=+7qwKc+g6O9nPYHObVhq00UWcOt2oMbcUuD1ls3YUTY=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=O/4uchdKtwypNWRTa301WpvfdXEMmFakt5eog88JUDkRhczMX02e3rBBWNEwlx6jg
-	 PxtES+X9BVhyAsugIobcqBW8v+Y+EUd1b46dg2QTmBNxvZcHYXf5CrmyWPsJUbK+J6
-	 inuDB4VU2hVdI8Zvgc+Rh9hR0GrAcXt0Jq2mxUubAy7rzs0aWFKylmRRpgmQliSB14
-	 yZNL8vhb+wq9yb7WJeyTEJVfFYEZ0bF0Kup+mBXqrErjRnHSe3d9IblX19xyWi2r/k
-	 XnxKG81bLPX5jty4mlhRlHrV28YTlmPt/PHuy8Y26qhk5OKchvN6Lpk6cWZH6TZDTi
-	 BUZNlNoGDhOxw==
-Date: Sat, 9 Dec 2023 21:44:55 +0100
-From: Andi Shyti <andi.shyti@kernel.org>
-To: Quan Nguyen <quan@os.amperecomputing.com>
-Subject: Re: [PATCH v3 2/2] i2c: aspeed: Acknowledge Tx done with and without
- ACK irq late
-Message-ID: <20231209204455.jxize3muvx7hhpos@zenone.zhora.eu>
-References: <20231208033142.1673232-1-quan@os.amperecomputing.com>
- <20231208033142.1673232-3-quan@os.amperecomputing.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SpJzY1CDXz3cSJ
+	for <openbmc@lists.ozlabs.org>; Mon, 11 Dec 2023 09:13:13 +1100 (AEDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rCS2a-0006OU-5i; Sun, 10 Dec 2023 23:12:48 +0100
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rCS2S-00ExXo-CA; Sun, 10 Dec 2023 23:12:40 +0100
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.94.2)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1rCS2S-000RVl-1s; Sun, 10 Dec 2023 23:12:40 +0100
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
+To: Olivia Mackall <olivia@selenic.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>
+Subject: [PATCH 00/12] hwrng: Convert to platform remove callback returning 
+Date: Sun, 10 Dec 2023 23:12:15 +0100
+Message-ID: <cover.1702245873.git.u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.42.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20231208033142.1673232-3-quan@os.amperecomputing.com>
+Content-Type: text/plain; charset=UTF-8
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2074; i=u.kleine-koenig@pengutronix.de; h=from:subject:message-id; bh=aN2uTP9pET0YKd8ErrSoTK5vjrK84yOnSnlqPftwp5U=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBldje/IGRTw6Qp6aopoOZNEu5aabfn86EmYir5f 1EWoJBaSb6JATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCZXY3vwAKCRCPgPtYfRL+ TiWpB/0QkgCxo9rWPPZuG0mV+7+gEk/GZc38dQ5EFWJhV8Stqce7VjU2EH4481MoRPnL/0AXAPH XiiR4C7gz2B/1olwgpo6lWRPxtxXYx6Sd3+aWvOsfgqAW/q4OjcKyEk3xg48rrbtLvf1xoWFo7y 0fw9lVR0RmrbvnjwaTKkcDngwN7dAD8Qflw7z7gflMyrKN0MFgRgzwvvbuD5RqWmP2ZVOJM4GRh 0k+qapzlIcA2ElXaxL07bXhanFkd0Mdw38vbHTh4dy8RCryXCfaxbiWkCskcDwfQzZ0FlwQLcQS Fb2Sj2N3HmsMlw8S8d8sC9OF1ybvnjz5+54B3FySEScCa9Gv
+X-Developer-Key: i=u.kleine-koenig@pengutronix.de; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: openbmc@lists.ozlabs.org
+X-Mailman-Approved-At: Tue, 12 Dec 2023 10:16:50 +1100
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -60,38 +57,56 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-arm-kernel@lists.infradead.org, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, "Thang Q . Nguyen" <thang@os.amperecomputing.com>, linux-kernel@vger.kernel.org, Phong Vo <phong@os.amperecomputing.com>, Wolfram Sang <wsa@kernel.org>, Brendan Higgins <brendan.higgins@linux.dev>, Joel Stanley <joel@jms.id.au>, Cosmo Chou <chou.cosmo@gmail.com>, Open Source Submission <patches@amperecomputing.com>, Guenter Roeck <linux@roeck-us.net>, linux-i2c@vger.kernel.org
+Cc: Alexandre Belloni <alexandre.belloni@bootlin.com>, Tomer Maimon <tmaimon77@gmail.com>, Martin Kaiser <martin@kaiser.cx>, Alexandre Torgue <alexandre.torgue@foss.st.com>, Claudiu Beznea <claudiu.beznea@tuxon.dev>, Alim Akhtar <alim.akhtar@samsung.com>, linux-stm32@st-md-mailman.stormreply.com, Rob Herring <robh@kernel.org>, linux-samsung-soc@vger.kernel.org, Benjamin Fair <benjaminfair@google.com>, openbmc@lists.ozlabs.org, Hadar Gat <hadar.gat@arm.com>, Deepak Saxena <dsaxena@plexity.net>, kernel@pengutronix.de, Yangtao Li <frank.li@vivo.com>, Yu Zhe <yuzhe@nfschina.com>, Andrei Coardos <aboutphysycs@gmail.com>, =?utf-8?q?=C5=81ukasz_Stelmach?= <l.stelmach@samsung.com>, Tali Perry <tali.perry1@gmail.com>, Alexandru Ardelean <alex@shruggie.ro>, linux-arm-kernel@lists.infradead.org, Avi Fishman <avifishman70@gmail.com>, Patrick Venture <venture@google.com>, Nicolas Ferre <nicolas.ferre@microchip.com>, Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>, linux-crypto@vger.kernel.or
+ g, Maxime Coquelin <mcoquelin.stm32@gmail.com>, Gatien Chevallier <gatien.chevallier@foss.st.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Hi Quan,
+Hello,
 
-[...]
+this series converts all hwrng platform drivers to use .remove_new.
+See commit 5c5a7680e67b ("platform: Provide a remove callback that
+returns no value") for details and the eventual goal.
 
-> -	/* Ack all interrupts except for Rx done */
-> -	writel(irq_received & ~ASPEED_I2CD_INTR_RX_DONE,
-> -	       bus->base + ASPEED_I2C_INTR_STS_REG);
-> +
-> +	/*
-> +	 * Early acking of INTR_RX_DONE and INTR_TX_[ACK|NAK] would indicate HW to
-> +	 * start receiving or sending new data, and this may cause a race condition
-> +	 * as the irq handler has not yet handled these irqs but is being acked.
-> +	 * Let's ack them late at the end of the irq handler when those are truly processed.
-> +	 */
-> +	irq_ack_last = ASPEED_I2CD_INTR_RX_DONE | ASPEED_I2CD_INTR_TX_ACK | ASPEED_I2CD_INTR_TX_NAK;
-> +	writel(irq_received & ~irq_ack_last, bus->base + ASPEED_I2C_INTR_STS_REG);
+All driver conversions are trivial as all their remove callbacks return
+0 (as good drivers should do).
 
-I like Andrews suggestion of having irq_ack_last as a define that
-is already negated, instead of negating it in the writel, which
-makes it a bit difficult to read.
+All patches are pairwise independant. These patches should go in via the
+usual hwrng tree. It's merge window material.
 
-Besides, ack_last, as a name is not very meaningful, I'd rather
-call it irq_ack_rx_tx (or something similar).
+Best regards
+Uwe
 
-But I'm not going to block it for this, up to you if you want to
-send a new version.
+Uwe Kleine-König (12):
+  hwrng: atmel - Convert to platform remove callback returning void
+  hwrng: cctrng - Convert to platform remove callback returning void
+  hwrng: exynos - Convert to platform remove callback returning void
+  hwrng: ingenic - Convert to platform remove callback returning void
+  hwrng: ks-sa - Convert to platform remove callback returning void
+  hwrng: mxc - Convert to platform remove callback returning void
+  hwrng: n2 - Convert to platform remove callback returning void
+  hwrng: npcm - Convert to platform remove callback returning void
+  hwrng: omap - Convert to platform remove callback returning void
+  hwrng: stm32 - Convert to platform remove callback returning void
+  hwrng: timeriomem - Convert to platform remove callback returning void
+  hwrng: xgene - Convert to platform remove callback returning void
 
-Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+ drivers/char/hw_random/atmel-rng.c      | 6 ++----
+ drivers/char/hw_random/cctrng.c         | 6 ++----
+ drivers/char/hw_random/exynos-trng.c    | 6 ++----
+ drivers/char/hw_random/ingenic-rng.c    | 6 ++----
+ drivers/char/hw_random/ks-sa-rng.c      | 6 ++----
+ drivers/char/hw_random/mxc-rnga.c       | 6 ++----
+ drivers/char/hw_random/n2-drv.c         | 6 ++----
+ drivers/char/hw_random/npcm-rng.c       | 6 ++----
+ drivers/char/hw_random/omap-rng.c       | 6 ++----
+ drivers/char/hw_random/stm32-rng.c      | 6 ++----
+ drivers/char/hw_random/timeriomem-rng.c | 6 ++----
+ drivers/char/hw_random/xgene-rng.c      | 6 ++----
+ 12 files changed, 24 insertions(+), 48 deletions(-)
 
-Thanks,
-Andi
+
+base-commit: bc63de6e6ba0b16652c5fb4b9c9916b9e7ca1f23
+-- 
+2.42.0
+
