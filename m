@@ -2,63 +2,59 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 8B6E580CFD9
-	for <lists+openbmc@lfdr.de>; Mon, 11 Dec 2023 16:43:26 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 0D76280DF36
+	for <lists+openbmc@lfdr.de>; Tue, 12 Dec 2023 00:04:02 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=ECpcKh4n;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=Vnl11pNq;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SpmHH6d2gz30Yb
-	for <lists+openbmc@lfdr.de>; Tue, 12 Dec 2023 02:43:23 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Spy3d4pVJz3bvJ
+	for <lists+openbmc@lfdr.de>; Tue, 12 Dec 2023 10:03:57 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=ECpcKh4n;
+	dkim=pass (2048-bit key; unprotected) header.d=codeconstruct.com.au header.i=@codeconstruct.com.au header.a=rsa-sha256 header.s=2022a header.b=Vnl11pNq;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=linux.intel.com (client-ip=192.198.163.9; helo=mgamail.intel.com; envelope-from=andriy.shevchenko@linux.intel.com; receiver=lists.ozlabs.org)
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=codeconstruct.com.au (client-ip=203.29.241.158; helo=codeconstruct.com.au; envelope-from=andrew@codeconstruct.com.au; receiver=lists.ozlabs.org)
+Received: from codeconstruct.com.au (pi.codeconstruct.com.au [203.29.241.158])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SpmGj2YLFz30NY
-	for <openbmc@lists.ozlabs.org>; Tue, 12 Dec 2023 02:42:51 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1702309373; x=1733845373;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=4AuaSAqga/dVILmnPhrkc9jm8ft7ImJB/u3/MqEmVeU=;
-  b=ECpcKh4nOZibJx4MgGBBSatoWs+hNQ0e2JoJ9vNEdDi0gPw2yHDK0KfF
-   q4Cs8vPl8OulYoWF0tl312lQIYjJTQb4MXWcXK1pArilakIu3KlBr/ne1
-   jhSXsJdLKqudTPosxTw+ruizoAoVpInyFhFkdroPtPUQNmj2CHLutxVi6
-   d41PJglW7WHuK7cl/3L146p7P6TVdmyZeUukFDKGTg/pJzTjJ1pzf5PXO
-   HpfoS2mdZqktkjXofG+Gv1Bntnx8WZbvC5ebUofp4LY48yEoejBL9yzGl
-   YT32SzMTQrF1dGXARS9FV5FzuBA0KbzYWGer3LghiKZcnu4U1RMAtox9R
-   Q==;
-X-IronPort-AV: E=McAfee;i="6600,9927,10921"; a="1535071"
-X-IronPort-AV: E=Sophos;i="6.04,268,1695711600"; 
-   d="scan'208";a="1535071"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Dec 2023 07:42:47 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10921"; a="1104506746"
-X-IronPort-AV: E=Sophos;i="6.04,268,1695711600"; 
-   d="scan'208";a="1104506746"
-Received: from black.fi.intel.com ([10.237.72.28])
-  by fmsmga005.fm.intel.com with ESMTP; 11 Dec 2023 07:42:45 -0800
-Received: by black.fi.intel.com (Postfix, from userid 1003)
-	id 2C1D039B; Mon, 11 Dec 2023 17:42:44 +0200 (EET)
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-To: =?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	openbmc@lists.ozlabs.org,
-	linux-gpio@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH v1 1/1] pinctrl: nuvoton: Constify wpcm450_groups
-Date: Mon, 11 Dec 2023 17:42:39 +0200
-Message-ID: <20231211154239.4190429-1-andriy.shevchenko@linux.intel.com>
-X-Mailer: git-send-email 2.43.0.rc1.1.gbec44491f096
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Spy315QPqz30NY;
+	Tue, 12 Dec 2023 10:03:25 +1100 (AEDT)
+Received: from [192.168.68.112] (ppp118-210-187-191.adl-adc-lon-bras34.tpg.internode.on.net [118.210.187.191])
+	by mail.codeconstruct.com.au (Postfix) with ESMTPSA id 75C2D20174;
+	Tue, 12 Dec 2023 07:03:19 +0800 (AWST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+	d=codeconstruct.com.au; s=2022a; t=1702335803;
+	bh=BOVT2lTKGgH9egB5ByYC/KQvKf3dxJNOB5Sb9X1V3lg=;
+	h=Subject:From:To:Cc:Date:In-Reply-To:References;
+	b=Vnl11pNqVaknKLnoVhbGozubdZ3eJ4ffOiKTxDa26vO/mQUcqUYexWAARoXmKxdD/
+	 nhHAa1AmZYc/pabTKHy2uiaQ+rJrMt10YqOK77Y1Hizly5J2mOGPo7DQBV/RLaNf7C
+	 4sG2/Gnul41zLgwugtK1sdHce9K/dlOtqKrYTfbGtVuULSb1yuLNMHzT7TQbGz1UfY
+	 ANTYBE2CQGNT5eZT4MlMtV2Z+0zDGaK8/DNuP+RB3lrWfNZUum4oyV8T2qxoY68hp5
+	 r7dkn6iItEL74lMi5z3IXwI9ooQxqbwZZlJWXT1AUqQR4LDbMXbUmKO0KhSPSt/TXL
+	 aFcs377ED979Q==
+Message-ID: <2eab42cde34723a195e7a0287db08b25f8388a3b.camel@codeconstruct.com.au>
+Subject: Re: [PATCH v4 2/2] i2c: aspeed: Acknowledge Tx done with and
+ without ACK irq late
+From: Andrew Jeffery <andrew@codeconstruct.com.au>
+To: Quan Nguyen <quan@os.amperecomputing.com>, Brendan Higgins
+ <brendan.higgins@linux.dev>, Benjamin Herrenschmidt
+ <benh@kernel.crashing.org>,  Joel Stanley <joel@jms.id.au>, Andi Shyti
+ <andi.shyti@kernel.org>, Wolfram Sang <wsa@kernel.org>, Jae Hyun Yoo
+ <jae.hyun.yoo@linux.intel.com>, Guenter Roeck <linux@roeck-us.net>, 
+ linux-i2c@vger.kernel.org, openbmc@lists.ozlabs.org, 
+ linux-arm-kernel@lists.infradead.org, linux-aspeed@lists.ozlabs.org, 
+ linux-kernel@vger.kernel.org
+Date: Tue, 12 Dec 2023 09:33:17 +1030
+In-Reply-To: <20231211102217.2436294-3-quan@os.amperecomputing.com>
+References: <20231211102217.2436294-1-quan@os.amperecomputing.com>
+	 <20231211102217.2436294-3-quan@os.amperecomputing.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.46.4-2 
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -70,30 +66,28 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Cc: Cosmo Chou <chou.cosmo@gmail.com>, Open Source Submission <patches@amperecomputing.com>, "Thang Q . Nguyen" <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-There is no modifications are assumed for wpcm450_groups. Constify it.
+On Mon, 2023-12-11 at 17:22 +0700, Quan Nguyen wrote:
+> Commit 2be6b47211e1 ("i2c: aspeed: Acknowledge most interrupts early in
+> interrupt handler") acknowledges most interrupts early before the slave
+> irq handler is executed, except for the "Receive Done Interrupt status"
+> which is acknowledged late in the interrupt.
+> However, it has been observed that the early acknowledgment of "Transmit
+> Done Interrupt Status" (with ACK or NACK) often causes the interrupt to
+> be raised in READ REQUEST state, that shows the
+> "Unexpected ACK on read request." complaint messages.
+>=20
+> Assuming that the "Transmit Done" interrupt should only be acknowledged
+> once it is truly processed, this commit fixes that issue by acknowledging
+> interrupts for both ACK and NACK cases late in the interrupt handler.
+>=20
+> Fixes: 2be6b47211e1 ("i2c: aspeed: Acknowledge most interrupts early in i=
+nterrupt handler")
+> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
----
- drivers/pinctrl/nuvoton/pinctrl-wpcm450.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 
-diff --git a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-index 4589900244c7..cdad4ef11a2f 100644
---- a/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-+++ b/drivers/pinctrl/nuvoton/pinctrl-wpcm450.c
-@@ -474,7 +474,7 @@ enum {
- #undef WPCM450_GRP
- };
- 
--static struct pingroup wpcm450_groups[] = {
-+static const struct pingroup wpcm450_groups[] = {
- #define WPCM450_GRP(x) PINCTRL_PINGROUP(#x, x ## _pins, ARRAY_SIZE(x ## _pins))
- 	WPCM450_GRPS
- #undef WPCM450_GRP
--- 
-2.43.0.rc1.1.gbec44491f096
-
+Thanks Quan!
