@@ -1,33 +1,33 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D4FD880BFC1
-	for <lists+openbmc@lfdr.de>; Mon, 11 Dec 2023 04:16:20 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id 6CDC080BFC4
+	for <lists+openbmc@lfdr.de>; Mon, 11 Dec 2023 04:17:11 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=wiwynn.com header.i=@wiwynn.com header.a=rsa-sha256 header.s=selector2 header.b=4ZnH5PiD;
+	dkim=pass (2048-bit key; unprotected) header.d=wiwynn.com header.i=@wiwynn.com header.a=rsa-sha256 header.s=selector2 header.b=qVqAY32v;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SpRjG2Dqjz3byl
-	for <lists+openbmc@lfdr.de>; Mon, 11 Dec 2023 14:16:18 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SpRkD6QhLz3cYb
+	for <lists+openbmc@lfdr.de>; Mon, 11 Dec 2023 14:17:08 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=wiwynn.com header.i=@wiwynn.com header.a=rsa-sha256 header.s=selector2 header.b=4ZnH5PiD;
+	dkim=pass (2048-bit key; unprotected) header.d=wiwynn.com header.i=@wiwynn.com header.a=rsa-sha256 header.s=selector2 header.b=qVqAY32v;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=wiwynn.com (client-ip=2a01:111:f400:feab::625; helo=apc01-sg2-obe.outbound.protection.outlook.com; envelope-from=delphine_cc_chiu@wiwynn.com; receiver=lists.ozlabs.org)
-Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sgaapc01on20625.outbound.protection.outlook.com [IPv6:2a01:111:f400:feab::625])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=wiwynn.com (client-ip=2a01:111:f400:feab::61c; helo=apc01-sg2-obe.outbound.protection.outlook.com; envelope-from=delphine_cc_chiu@wiwynn.com; receiver=lists.ozlabs.org)
+Received: from APC01-SG2-obe.outbound.protection.outlook.com (mail-sgaapc01on2061c.outbound.protection.outlook.com [IPv6:2a01:111:f400:feab::61c])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SpRff2fhpz2yG9
-	for <openbmc@lists.ozlabs.org>; Mon, 11 Dec 2023 14:14:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SpRfl70qyz2yMJ
+	for <openbmc@lists.ozlabs.org>; Mon, 11 Dec 2023 14:14:07 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=l8FhHG3s4DgnifB1YrO8qUJi6iuGfP/am6ZLq7g4oewswRdH5EMZATxngfzC5syVL7vMpAZmmxWCh9/C7xU1xWGTZ0o1N2cVXaFo+66Pj6fU2UaNLwdh3/JAOK2hSVUjGhu8cz3qeq/LGv15+4dihuwP16VGctRLYJWG/t8IPqO6iZyiKUkSDw/OmaUYCtqY3Tlrx+YE+2mvXA0Hj39Gn+c979kqXzGWv5JbrGT4rjxXbH4+MS5In8LUWEzEOyChB0vtEFda1F4JMpNdbDZtWxTlXHHV/rNRC/Tb3hicfoBO+FrYzc6tgq8E6IeLUO5gHxZIcygPbR5mBPstTglK+Q==
+ b=AO+BKIHP44lszoXw8hVZ05svnibFKB/fqEdmZDFOmCy2sVB0BrCGw4xILoTVY97widDlzNR6xq0rIXk1uko+tQW7EchZfQe2SrSVkmx5/jkudP5Xr+1pqVuPfpQ7eBjrDphFd3B6yxAP263h0jvDybY4aoBCAyHg78YF6LlnGztONtBGodihFtm33DBhfL/3WfXVfZBPSRxBSjEgKsXE83OmpxjmBvlivOfclPbnCy78dP+uhMayWQouMBl+m0jjO17p9SmPRPr3Fpr+NX1l/cJZif76ejlE116PZDve0CxKaGgtoyjp3h5Mrp6eSQtYUMwxgKYYEDKf+LxJjYJ6MA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hTdra8Q6Ty+kafVG+eRTSPVcdelb5hg9red0Vwq21ms=;
- b=O62TVN4dLiCZwmo/SGG7WQMWQGA1J8sSjBqNpXGzS1p+yvFq/81TJxcz5uAB0gbXC0jCjRVGqCnufYE/EGhyrwtjHy9ntpekFAfN8sZI4uuiN312YQJVWEzpezxewI+tQYrftRUT+kF0Xq2S5ptGCgCkJuDexA0BFYmeJ6DBoo1TYXbZ0PmHZU4/fIZ3jg6TBr3JJFg0g5EnvXzEQHEHTTzKaehyeQwdMPne115uvW1ykcy44uo4ZZ8xBO+DvpupWhWfQAZoiWBA8zlS8HysVLIDJM4RUY3nu9UXaHn2vEvAlJGIRpHBfcS0F4zez2XTLnr7mEUcEQwZGRDc/BYgYQ==
+ bh=9POU9qli8Y0G3IvdZsP/n3F+xvU76du76ssEtkRE+ao=;
+ b=nxHSkB98zGZLPukc3yoVehm+/KSquagUYEdnonJkT1EP2+Xs6Ay+Jh6lYQPCOySErsuYn3cRUsrK5+6pvz8bQBdipJasamB+qGzWZ+0yaD6TCxe52yJIFP0JT++eVsFQosNuhC1W9FzIv+yrY+N6RjmnMR5nMVLmIqtNj0K8+CTztCSNibEzQFXaFsPwtRjUWA+O/z3qVae3uGxOJlxQnwPiVKu7flA8TkPunbqBSfwA07owLOmDv0IqtUNgewv0CtliVvgrLb48CYK7YnOB0pLji2B2/cOTfA4sfQgdXp+36ndgIlm0X65MAnFB2HkbzHXTHhRQmIgb1XuGQucRkw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
  211.20.1.79) smtp.rcpttodomain=stwcx.xyz smtp.mailfrom=wiwynn.com; dmarc=fail
  (p=quarantine sp=quarantine pct=100) action=quarantine
@@ -35,17 +35,18 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wiwynn.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hTdra8Q6Ty+kafVG+eRTSPVcdelb5hg9red0Vwq21ms=;
- b=4ZnH5PiDggLkrGNJkQL/ivfCsSEKBUa4OHUkGqnWAdrWNURDCSADY9JDkJt2Ra5CplqcaY6LMxrUIkznomDvaEqZjSAki3GUnaUWPc3JYwjUmWOyRUdFH7wJzO7jo2NPwccQihxQcry1YTJS+wZrRObLopeesHRQ8+9Go9vmsz4pTc08+qgktjAkhdUqQ1cybac+rOrVo21ALuas7dZ3mB5LANgEc8ytFABG2yvUEL/ls3TFTuB8Ks/sHSWCJIF4+9McpYTy3xe6y6Efc1+ov40i8+lTkqo42ZjO6OiEp6b6gM/NMgpMlyuGrP37lg5b6pi1PBPJb8tuIKPwTlRKJQ==
-Received: from SG2P153CA0024.APCP153.PROD.OUTLOOK.COM (2603:1096:4:c7::11) by
- TYZPR04MB8019.apcprd04.prod.outlook.com (2603:1096:405:ba::14) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7068.32; Mon, 11 Dec 2023 03:13:44 +0000
+ bh=9POU9qli8Y0G3IvdZsP/n3F+xvU76du76ssEtkRE+ao=;
+ b=qVqAY32vKw67VHKHN6ic1p6H17EExX9tXPmfuSilkJIbysVQKCwZSq3fbKeEK7Q6c79MtgjfI9GjE79YLLjEVhBpPzdzgcr3xRsLtTuiakldX5/P17Kc5vbKINDNo/kz2dzYaViZVtWEXM8bflgS7LMqkTPtdIs0Y0pCrHdTvsM39NtaAsVVLW2STqJHzLRl9JGjbdPbEbZQvOmmW3oOjwow/kplYqKNIIpqyFxo8SMMsTV3wwgs57U1Ul1zOQMtwVUzGtiAp3IY1f5PThg7P5LppmKRNvCh9c4sy0HEMg0vZQSfeDptiAkPlvpTMMeUmTaSXBR2TjrN3pYPrUzZ/g==
+Received: from SG2P153CA0025.APCP153.PROD.OUTLOOK.COM (2603:1096:4:c7::12) by
+ SEZPR04MB7949.apcprd04.prod.outlook.com (2603:1096:101:238::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7068.32; Mon, 11 Dec
+ 2023 03:13:45 +0000
 Received: from SG1PEPF000082E7.apcprd02.prod.outlook.com
- (2603:1096:4:c7:cafe::8d) by SG2P153CA0024.outlook.office365.com
- (2603:1096:4:c7::11) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7113.4 via Frontend
- Transport; Mon, 11 Dec 2023 03:13:44 +0000
+ (2603:1096:4:c7:cafe::d) by SG2P153CA0025.outlook.office365.com
+ (2603:1096:4:c7::12) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7113.3 via Frontend
+ Transport; Mon, 11 Dec 2023 03:13:45 +0000
 X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 211.20.1.79)
  smtp.mailfrom=wiwynn.com; dkim=none (message not signed)
  header.d=none;dmarc=fail action=quarantine header.from=wiwynn.com;
@@ -55,14 +56,14 @@ Received-SPF: Fail (protection.outlook.com: domain of wiwynn.com does not
 Received: from localhost.localdomain (211.20.1.79) by
  SG1PEPF000082E7.mail.protection.outlook.com (10.167.240.10) with Microsoft
  SMTP Server id 15.20.7091.18 via Frontend Transport; Mon, 11 Dec 2023
- 03:13:43 +0000
+ 03:13:45 +0000
 From: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
 To: patrick@stwcx.xyz,
 	openbmc@lists.ozlabs.org,
 	joel@jms.id.au
-Subject: [PATCH linux dev-6.6 v1 02/14] ARM: dts: aspeed: yosemite4: Enable adc15
-Date: Mon, 11 Dec 2023 11:13:25 +0800
-Message-Id: <20231211031337.4165619-3-Delphine_CC_Chiu@wiwynn.com>
+Subject: [PATCH linux dev-6.6 v1 03/14] ARM: dts: aspeed: yosemite4: Enable spi-gpio setting
+Date: Mon, 11 Dec 2023 11:13:26 +0800
+Message-Id: <20231211031337.4165619-4-Delphine_CC_Chiu@wiwynn.com>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20231211031337.4165619-1-Delphine_CC_Chiu@wiwynn.com>
 References: <20231211031337.4165619-1-Delphine_CC_Chiu@wiwynn.com>
@@ -70,24 +71,24 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-EOPAttributedMessage: 0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SG1PEPF000082E7:EE_|TYZPR04MB8019:EE_
+X-MS-TrafficTypeDiagnostic: SG1PEPF000082E7:EE_|SEZPR04MB7949:EE_
 Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: e3659d9c-5078-4aa8-2ef7-08dbf9f72ee3
+X-MS-Office365-Filtering-Correlation-Id: 010a5859-82f1-4182-d657-08dbf9f72fcc
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	Pzo/ATLU0VsaxQe40cLhFyBBjtmxvFbMaGSx16ArVKtvObsG0CeXQvgls3b52S0ytLgfGMirjZXm3E5sCCuEqXDtJFMkTTQ1Aend2gsLS3Q0ycYcOn9FOqsVXVh5wbdbWVpa2hZVps6xDsdDnSkTT5O14Jf7DtNs4rXRJ2oeoSzpY/ePOzQuMgbIQxB4A+x3RnCDf5qMqURe3muRXej+tCBpM2XqHW46Nl5jSuQ6gQ8sTsx0O7ZHyB2uRGNol+A4xsGwFVmA2K5zmmcW/Yd9eXCI8jm62SGKGQ6yCJwLuOjzdwNg/RtLi0PeX/NX7LNBhAYkunuAnnEeDAQVE49i8aRIXjwJPVIX7TzVYfm1xsg10D7HE1v25+qjhWIleVT+F2Zpuc52gZVvFFY9PGHJC0HBK2U/rViVUiuDwXYynW+S0GL8siugTuAuMPvIfo+rf1klJgCd2g/7zxyQJKUM1nkAvr9B2MllA5xaU1LEaUI+MVsdLI3G7m21LJQMOIjHvwUwyBaScqvn8ZrzsM4zpQ4jGX5sIMICuT/1slfdHFTyFAjsq3VmkxykexSAWN2nF0wyCgZ8X4xQbz+F+RHaBY0pQp/5/IHGS4eFdI6P83sw658ZWFKwN8kU1cqGJ02tmTxqeeaIWFnrzvCinE/6npacdDrT6Mlm7K+NIgLKKmYIQ9ves0AQ4VfM9BG8VrKrYlqwV3SheMijsvMZjl8tOQ==
-X-Forefront-Antispam-Report: 	CIP:211.20.1.79;CTRY:TW;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:localhost.localdomain;PTR:211-20-1-79.hinet-ip.hinet.net;CAT:NONE;SFS:(13230031)(6069001)(4636009)(346002)(39850400004)(376002)(136003)(396003)(230922051799003)(186009)(64100799003)(1800799012)(82310400011)(451199024)(46966006)(36840700001)(1076003)(26005)(107886003)(956004)(2616005)(336012)(6506007)(6666004)(6512007)(36860700001)(83380400001)(47076005)(5660300002)(41300700001)(2906002)(4326008)(478600001)(9316004)(6486002)(8676002)(8936002)(70206006)(70586007)(316002)(36736006)(82740400003)(81166007)(86362001)(356005)(36756003)(40480700001);DIR:OUT;SFP:1101;
+X-Microsoft-Antispam-Message-Info: 	h/QyiOm4J7hiOcP5yCQvyJP3pkcr+IabtPJJbavxHUq1cZzyoj691vkqPur7ms4nUggijgnWeoY87QM6gEmpDqi3p0ZwLvqcsXtD58EW3lQP9k/ERfSCO3tz/m6K6D4IDybTymD0r7s78GP/s9EI+IYDQWQrsAKdbicYged9LW7hdlhJe37EamMw7wih6zRW/HJnGZZmK2lOgmc7ujKRPSeNdNa5KE1sqZBMXw77h8qhQ86npqZCIp88OWcTl/CBoT90bzgZJ9Y7+wZpRvk++b82KJA8OmzelsLGWMxjHFCIsYhoyArsLd2sxYByyngxXFtNTTKEyWNIeNJHxS9Ez9JOFSEXCNd1JHibxWYZCR5mBPssfvVTqi/yH72gUKdwApmO/SLrUecI+JTydvcAIv9juN93HnqwZHt4AxBEUvFWLtKHv2mX/y5MW5n26wvmi/Yy389mv9w+VivE7G8poKZ+MiDFMa+Zg7jrmjzni5M+LFEP2Bo4YIyLJnXw5cSvMx1C893g4z8sHdwLwNDaGk2D3CuAtYgwip27NEk7SIYPNwWNNlXqKTq3nyA/4IH7F0xpAfyelC5plgMXZuBYlag/cXrR5wDbqZuoFg4qMFzqB3NZW/3cF2yeI/5afXs3vb6VltMO+FRKR0OMLW/tAE5ekrgwHB7Ob16Y7Uyh69TgF9eJNUYcQ2k6atRH6tsP4OHi9rDnRrl2HPdUKcuDKQ==
+X-Forefront-Antispam-Report: 	CIP:211.20.1.79;CTRY:TW;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:localhost.localdomain;PTR:211-20-1-79.hinet-ip.hinet.net;CAT:NONE;SFS:(13230031)(6069001)(4636009)(136003)(39850400004)(396003)(376002)(346002)(230922051799003)(451199024)(186009)(82310400011)(1800799012)(64100799003)(36840700001)(46966006)(36756003)(6506007)(478600001)(2906002)(6666004)(1076003)(26005)(336012)(6512007)(956004)(2616005)(107886003)(6486002)(4326008)(8936002)(8676002)(5660300002)(9316004)(70206006)(70586007)(36736006)(316002)(82740400003)(81166007)(40480700001)(356005)(86362001)(47076005)(41300700001)(36860700001);DIR:OUT;SFP:1101;
 X-OriginatorOrg: wiwynn.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Dec 2023 03:13:43.8967
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Dec 2023 03:13:45.4280
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: e3659d9c-5078-4aa8-2ef7-08dbf9f72ee3
+X-MS-Exchange-CrossTenant-Network-Message-Id: 010a5859-82f1-4182-d657-08dbf9f72fcc
 X-MS-Exchange-CrossTenant-Id: da6e0628-fc83-4caf-9dd2-73061cbab167
 X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=da6e0628-fc83-4caf-9dd2-73061cbab167;Ip=[211.20.1.79];Helo=[localhost.localdomain]
 X-MS-Exchange-CrossTenant-AuthSource: 	SG1PEPF000082E7.apcprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Anonymous
 X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR04MB8019
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR04MB7949
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,39 +104,42 @@ Cc: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Enable Yosemite 4 adc15 config
+enable spi-gpio setting for spi flash
 
 Signed-off-by: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
 ---
- arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ .../aspeed/aspeed-bmc-facebook-yosemite4.dts   | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
 
 diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts
-index a5b4585e81e6..c32736fbaf70 100644
+index c32736fbaf70..0449a7e36ff6 100644
 --- a/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts
 +++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts
-@@ -51,7 +51,7 @@ iio-hwmon {
- 		compatible = "iio-hwmon";
- 		io-channels = <&adc0 0>, <&adc0 1>, <&adc0 2>, <&adc0 3>,
+@@ -53,6 +53,24 @@ iio-hwmon {
  				<&adc0 4>, <&adc0 5>, <&adc0 6>, <&adc0 7>,
--				<&adc1 0>, <&adc1 1>;
-+				<&adc1 0>, <&adc1 1>, <&adc1 7>;
+ 				<&adc1 0>, <&adc1 1>, <&adc1 7>;
  	};
++
++	spi_gpio: spi-gpio {
++		compatible = "spi-gpio";
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		gpio-sck = <&gpio0 ASPEED_GPIO(X, 3) GPIO_ACTIVE_HIGH>;
++		gpio-mosi = <&gpio0 ASPEED_GPIO(X, 4) GPIO_ACTIVE_HIGH>;
++		gpio-miso = <&gpio0 ASPEED_GPIO(X, 5) GPIO_ACTIVE_HIGH>;
++		num-chipselects = <1>;
++		cs-gpios = <&gpio0 ASPEED_GPIO(X, 0) GPIO_ACTIVE_LOW>;
++
++		tpmdev@0 {
++			compatible = "tcg,tpm_tis-spi";
++			spi-max-frequency = <33000000>;
++			reg = <0>;
++		};
++	};
  };
  
-@@ -920,10 +920,10 @@ &pinctrl_adc4_default &pinctrl_adc5_default
- &adc1 {
- 	ref_voltage = <2500>;
- 	status = "okay";
--	pinctrl-0 = <&pinctrl_adc8_default &pinctrl_adc9_default>;
-+	pinctrl-0 = <&pinctrl_adc8_default &pinctrl_adc9_default
-+	    &pinctrl_adc15_default>;
- };
- 
--
- &ehci0 {
- 	status = "okay";
- };
+ &uart1 {
 -- 
 2.25.1
 
