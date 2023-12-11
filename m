@@ -1,93 +1,123 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 67BE180C12C
-	for <lists+openbmc@lfdr.de>; Mon, 11 Dec 2023 07:12:11 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id C67BF80C650
+	for <lists+openbmc@lfdr.de>; Mon, 11 Dec 2023 11:23:46 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=wiwynn.com header.i=@wiwynn.com header.a=rsa-sha256 header.s=selector2 header.b=M/ynM/Ii;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=G+RnZEIi;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SpWc86JX5z3w3G
-	for <lists+openbmc@lfdr.de>; Mon, 11 Dec 2023 17:12:08 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SpdBS20MKz30g5
+	for <lists+openbmc@lfdr.de>; Mon, 11 Dec 2023 21:23:44 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=wiwynn.com header.i=@wiwynn.com header.a=rsa-sha256 header.s=selector2 header.b=M/ynM/Ii;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=G+RnZEIi;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=wiwynn.com (client-ip=2a01:111:f403:2011::601; helo=apc01-tyz-obe.outbound.protection.outlook.com; envelope-from=delphine_cc_chiu@wiwynn.com; receiver=lists.ozlabs.org)
-Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01on20601.outbound.protection.outlook.com [IPv6:2a01:111:f403:2011::601])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:7eae::700; helo=nam11-bn8-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=lists.ozlabs.org)
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (mail-bn8nam11on20700.outbound.protection.outlook.com [IPv6:2a01:111:f400:7eae::700])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SpWJP4pbCz3bqD
-	for <openbmc@lists.ozlabs.org>; Mon, 11 Dec 2023 16:58:29 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Spd9h4746z30NY;
+	Mon, 11 Dec 2023 21:23:02 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=EyKMgVZRtI+/hgettBVO5YbKsEeOll1DlFQGyH3pM15tVZVE2bGzZGvd+nJmY5q2XUQ/Zfa3D86nb5QElegSmIVNaF5OTqEn/NMrc78FeLdGai3pnoqwWs6PHP7X1OJpRhYxmeebBowZaMb07D7gur5WPjuc4JIg52EdOBqqonkK4Qg4Kkg9q3sDQNpd5bWDkCTwu2IOgU8IbQOZiPO/bgnGPzsBZ9ZJJxr8UfeQwfJ17n3ukXybye+uRiNZhOyba+gc5Bl2I8X1pT8gbftStEPAjCmJJ6MxXiepvwSYQV7uaF+FTSp09hiT4xew9w54kr4xVLBYSt2+3GVvtliEnQ==
+ b=Sg4Rsou7wwcdZUWNR0ZD6ReRnhemirOOKRRvfVfa7WiNRrD27+RPj4RG2LDsX9kFeFOtMZTW/FhLoxSabsvFgOHtRejL455cyzb18+Dq70P7z/h3xYhmsBZhzt+QMvCoAPx4AU0kcIdS3e+LMjdml4Wqe8JGC3tN86VOaAW63Gm/OpWQBZ7ZHPyFXY+aLWhuQQeIlU7f/R6HvWuD1aJW61LbEx5gp7X15vzTWkZ/7nouHN/EFEmlp3E8PDPySeEwWxcU7POmKLFIrgztZ5qRaxVUyQrfE6wdj7CilRes8oVsrPO8V/8HW8PGOG50aEirAY3QccXHn2cPHVQxup8kwA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ZMJpX1dgtX7BDF5rFZk1s18qD/6HVo1vuUG1hyWe+AA=;
- b=MuzMUaK6KMutXYW8qFpeIUg9CoswM4ZyReLcVhif2Uy843NTz67j3SiM3m8N7iHmILOiHFlguLVlAGpaeH9h5+ONLgX577gYiUg/VqpWqpZzH6XfAiKy7rv2abY80x/mSnQR6QT3VLgbyPuG2q2pWVDWaeCyLlHCpGFxMDKSVa1wVzIftAqK5hvuQwnUze9C57DMOwV1ayNHzqQfgcVSrA5Bib73RS7ZZDBNe/7ay8rr3WQ9QY7jgZnco4i4DcwPnqX/8wvy+5d0+oPj+2ha7itrXXvr7ptdqdeixwA4NCZc2hU2MlPr/v9in5EAiOTLuCcEpKeTlPYbLiR2zJhvng==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=fail (sender ip is
- 211.20.1.79) smtp.rcpttodomain=stwcx.xyz smtp.mailfrom=wiwynn.com; dmarc=fail
- (p=quarantine sp=quarantine pct=100) action=quarantine
- header.from=wiwynn.com; dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wiwynn.com;
- s=selector2;
+ bh=wkNVu8BCBYHj+9GrrTL1RInEeIlIgrqTWkAajkbyTKs=;
+ b=FjUR3gWzGBsP87X/WWZOcNpzHlALi52sb+5p+zjmeohonFFfscwwX/3uVD4gYa6MvXW9ms4e+o0M4ftpx3Sde/EBJiJwCYPaC1nUaylZGwVw/zOGEzCk7qavdkHdv+WRHm/BWntk+tY9gdqHvV6VRzXRaJNmU0kl+rpdo2mn8Rc4/q0mZ+YQzUccF7Q1HocfSbrOaZOTNwWtTYfsLN3jwiigY/5FVAK6dWt1vHf7OeztcESDS1d/oYQZ7Y4YfN3od3CYkZ1VtkxcB3FFmFcs+nw3r6EnBEE4ML05COaccWm8MdwD4YDEP78Xs1NAyIEUBQ6T7dfKx76fSjZpOCMbOA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
+ header.from=os.amperecomputing.com; dkim=pass
+ header.d=os.amperecomputing.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=os.amperecomputing.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ZMJpX1dgtX7BDF5rFZk1s18qD/6HVo1vuUG1hyWe+AA=;
- b=M/ynM/Ii+zX0YfLX+sqyD3IHaWbjbIjmeCQ2f7glUcqGMaFbw7o4GfQ+YiS11AjZuImpsxqmc8mGtq+pHh7c81dJbRmvNj4M8RHUBYtZ6BL6PKrNxj1tAfYQKG2a69/5Lg4exeRHw2tJso1+mKTWBIcygg9rl9l6cOUf4g8N760cK0po8buMljwlHDHTBsLPuWOFui+2stPgdYVGdkXxnoZJB/Yve8tAj8KFt0ig6l+1BKbK3v1PZMPzdP4fjPY7kHINiOudN3DQFw3HF/T7K50IT48T6BpdqR2VJBbQvwWKgFum7VUacre4VGuU3fKc8tU0enN8XeaXE/NVnWc7Zg==
-Received: from SG2PR06CA0234.apcprd06.prod.outlook.com (2603:1096:4:ac::18) by
- PUZPR04MB6216.apcprd04.prod.outlook.com (2603:1096:301:ed::6) with Microsoft
+ bh=wkNVu8BCBYHj+9GrrTL1RInEeIlIgrqTWkAajkbyTKs=;
+ b=G+RnZEIiJQQtHCP9OQA79+b12wuh6dWV4gSvLOuqIgvk7VoWKgh/x1qZl9tX7xm9rL4YroDl9NhoQ+kubRhNQy0GQXZEclGL1KmBzA/vif5ACylxucvXkUTtnQgBZikEiTS9Oai3R2gB5wV+e9FWY22N/90sgqRWdQSUAYrRvhE=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
+Received: from SN4PR01MB7455.prod.exchangelabs.com (2603:10b6:806:202::11) by
+ CO1PR01MB6568.prod.exchangelabs.com (2603:10b6:303:f9::19) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7068.29; Mon, 11 Dec 2023 05:58:07 +0000
-Received: from SG1PEPF000082E7.apcprd02.prod.outlook.com
- (2603:1096:4:ac:cafe::54) by SG2PR06CA0234.outlook.office365.com
- (2603:1096:4:ac::18) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.7068.32 via Frontend
- Transport; Mon, 11 Dec 2023 05:58:06 +0000
-X-MS-Exchange-Authentication-Results: spf=fail (sender IP is 211.20.1.79)
- smtp.mailfrom=wiwynn.com; dkim=none (message not signed)
- header.d=none;dmarc=fail action=quarantine header.from=wiwynn.com;
-Received-SPF: Fail (protection.outlook.com: domain of wiwynn.com does not
- designate 211.20.1.79 as permitted sender) receiver=protection.outlook.com;
- client-ip=211.20.1.79; helo=localhost.localdomain;
-Received: from localhost.localdomain (211.20.1.79) by
- SG1PEPF000082E7.mail.protection.outlook.com (10.167.240.10) with Microsoft
- SMTP Server id 15.20.7091.18 via Frontend Transport; Mon, 11 Dec 2023
- 05:58:06 +0000
-From: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
-To: patrick@stwcx.xyz,
+ 15.20.7068.33; Mon, 11 Dec 2023 10:22:39 +0000
+Received: from SN4PR01MB7455.prod.exchangelabs.com
+ ([fe80::5682:1d84:171a:1d68]) by SN4PR01MB7455.prod.exchangelabs.com
+ ([fe80::5682:1d84:171a:1d68%3]) with mapi id 15.20.7068.031; Mon, 11 Dec 2023
+ 10:22:39 +0000
+From: Quan Nguyen <quan@os.amperecomputing.com>
+To: Brendan Higgins <brendan.higgins@linux.dev>,
+	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+	Joel Stanley <joel@jms.id.au>,
+	Andi Shyti <andi.shyti@kernel.org>,
+	Andrew Jeffery <andrew@codeconstruct.com.au>,
+	Wolfram Sang <wsa@kernel.org>,
+	Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
+	Guenter Roeck <linux@roeck-us.net>,
+	linux-i2c@vger.kernel.org,
 	openbmc@lists.ozlabs.org,
-	joel@jms.id.au
-Subject: [PATCH v2 linux dev-6.6 14/14] ARM: dts: aspeed: yosemite4: Revise gpio name
-Date: Mon, 11 Dec 2023 13:57:38 +0800
-Message-Id: <20231211055738.215773-15-Delphine_CC_Chiu@wiwynn.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20231211055738.215773-1-Delphine_CC_Chiu@wiwynn.com>
-References: <20231211055738.215773-1-Delphine_CC_Chiu@wiwynn.com>
-MIME-Version: 1.0
+	linux-arm-kernel@lists.infradead.org,
+	linux-aspeed@lists.ozlabs.org,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH v4 0/2] i2c: aspeed: Late ack Tx done irqs and handle coalesced start with stop conditions
+Date: Mon, 11 Dec 2023 17:22:15 +0700
+Message-Id: <20231211102217.2436294-1-quan@os.amperecomputing.com>
+X-Mailer: git-send-email 2.35.1
 Content-Transfer-Encoding: 8bit
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SG1PEPF000082E7:EE_|PUZPR04MB6216:EE_
 Content-Type: text/plain
-X-MS-Office365-Filtering-Correlation-Id: 2651999c-4269-41ff-16c0-08dbfa0e258b
+X-ClientProxiedBy: SG2P153CA0007.APCP153.PROD.OUTLOOK.COM (2603:1096::17) To
+ SN4PR01MB7455.prod.exchangelabs.com (2603:10b6:806:202::11)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SN4PR01MB7455:EE_|CO1PR01MB6568:EE_
+X-MS-Office365-Filtering-Correlation-Id: 800de197-143e-4aec-65a9-08dbfa3319b9
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	l+rQfbsBB/mK+WUPNk/JopJgHxwJRWX0lr429ldF0kHBTHbAsrT4jfx6mm1lh6y4KiseM1dH0su6VMK07PkElT4h8813gJHkjiFCHSQ3i1wM7v9Nst7ZOuw/INKRhnj5oYLJPXrFUf+Vj0tPgtdHMVwtWq+VLJQGlLHs0i2HgHlLRjKkJDRCMG5By01I2rD/qvt6CG0UzzI85C21FgN2dSmP0Ii1M6YKAwK/XhBP9ngFTg+AWXzGNqkI4CNiGIW0gVoukv6pAoqBQn7H33qbyazG12IV01SvhU+/I7LLhu/Xu3HkzfO07TQsoe1Nda8OmwJos5vkPl1KjIG3Lp53hysZPjaE48CQAqG0CTpWNUOPGzCrtQ+nUYhzeBkcXFx6vg1G0jXQ56z2zh5YeLUEfTY/RclvupZ7DHaI+U3qKfriBvGtMtNyFvDYPjMOsdMscDy82R9g6stIgtw/oGDQ1xTDa/LkAOOP3H5kMt6ZgFfLf6hgPLKMcBHZ2tHQ0r2G5g492X8r/raTC7e0+ize8TEBDTcy71+MnxH3TdGaGTlWnbvh9TfyszIdNexOdVqR0ZD/ehHQdSeC0XbDP8V5USlBFLRqZhpKoee8kF7XklX7oDNyVN62HlN1lA9+NtpHvng+kirlkG1dXRUDDGFjYSYNiuA2bzsNrrudcAOQLda7BYoobEcX9JEiJY2LWc0Ci/t3LxvdSowgkgrbEC8p/w==
-X-Forefront-Antispam-Report: 	CIP:211.20.1.79;CTRY:TW;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:localhost.localdomain;PTR:211-20-1-79.hinet-ip.hinet.net;CAT:NONE;SFS:(13230031)(6069001)(4636009)(376002)(396003)(136003)(346002)(39850400004)(230922051799003)(451199024)(64100799003)(82310400011)(186009)(1800799012)(36840700001)(46966006)(336012)(956004)(2616005)(26005)(36736006)(6506007)(107886003)(6512007)(1076003)(36860700001)(83380400001)(47076005)(4326008)(5660300002)(8936002)(41300700001)(316002)(2906002)(478600001)(8676002)(6486002)(6666004)(86362001)(70586007)(36756003)(9316004)(82740400003)(81166007)(356005)(40480700001)(70206006);DIR:OUT;SFP:1101;
-X-OriginatorOrg: wiwynn.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Dec 2023 05:58:06.6446
+X-Microsoft-Antispam-Message-Info: 	tY8UcZfQqGnOvz8i4bzN9Dh4Lmj1GVS+2ok8YWjTFCiB+nBPJtbn9nDpi2AYHb2iRUmnAJbRBRw8z8mo0P53wa7G3WzVOPkRvnQI3l+6Y0OMk9GSWV0rr6WSKw7Hh1syzHHZwCcljwTOKxbhkfK4R1JXq2HW3srm0bHyk2dnj4ak6a7c1lyDlz6V5FIYBAhC55EYdLnMiNZZqXmHimoYwtc069Bug1UcTqRiY1MtZekUj546VpomfqZtIqFGTHStMJ4cs3wnnrIW/sbrBtM5VQNcHZ0uKTVHGmtti8idkOur4ng1XhEkllfMPHHzjVvM6FaARub4f356w2hS3+MMWEa8wCbqkeqmTo3vVByFRAfYzUHcpRS7UwsdADVUKbftd/rjfC21bOvxIpLSQOqgCTmRG6XVfeqTJnDchJtLtB2NEMMvJQsw+y0NRjyT1s94YgN6Kv7kAOXmQkTsVxwbvDWoumlkmKF/XTDYOEVxlESEAJArrzSR7SFJ/y3hvXCoWClLt5sjt6xn7wmdaBR6nAKyxwOT9MJwqHI5H5ORnY2swdDOvmHfSjfyvrFIEVUe9MGDySOVdeFRywKbT7h4ZmZPhcHZhwWHjlPacvU6LgKeGJ1puktLQkc9v49Yum8Zl5Vfsgorf2vJFjvIAvUImg+Z6C3est8C9OpIjSL6OX4=
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR01MB7455.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230031)(376002)(39850400004)(136003)(396003)(346002)(366004)(230922051799003)(451199024)(1800799012)(186009)(64100799003)(1076003)(26005)(107886003)(2616005)(6506007)(6512007)(6666004)(52116002)(83380400001)(5660300002)(7416002)(41300700001)(2906002)(4326008)(478600001)(966005)(6486002)(8676002)(8936002)(66946007)(110136005)(66556008)(316002)(66476007)(54906003)(86362001)(38100700002)(38350700005)(921008);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?us-ascii?Q?dLVzhlg/mHw+f5A3uVvyr2rrRSrcn1B0ErXVcJLgSm4ZmUyockQxMkfBG//D?=
+ =?us-ascii?Q?cspHlK9w8DCqLDNMuC5Wr3MplgrWKWGcesrcQuAmaetNtHd6+ln/fuNos8qr?=
+ =?us-ascii?Q?soe4HGWhKZEUPCvglGhfKeD+SbgYF5t8y8SB36hhCP5Zz1SNJ8YL7Qr7z6G0?=
+ =?us-ascii?Q?G5IH6PFZWauGE/XZkfd1UpXf2qhiQNN19NHIp6yJLfCAJj3dm/QPuBfKi1BJ?=
+ =?us-ascii?Q?nlUGneqWLHld2jMvpBGd4ahJ9qgfjNtoAA++lUC5BjzxJwUHK9UZkvqpFNTV?=
+ =?us-ascii?Q?EeGv5g6RGw5Egk6LPmbBZ6qDg9ffhHueNX7j01wYq38Hvh6U/LB9uHCW+92+?=
+ =?us-ascii?Q?mtiAQ2Q4aB6VaRWPUcP85uDVhx0crh6LuNk7+fN1M/9RyBpBieRPNa5JrHIW?=
+ =?us-ascii?Q?O/WHs6gixoUl7SwbBivKOwmTt+AW+KnBIVbpRQolghhVe8TsSpsYQklZD79f?=
+ =?us-ascii?Q?AXcFz/31H3NWttITWCqvBQQoRl2FPWxcftoAi573bCfKFsYvDZemFc2EJVia?=
+ =?us-ascii?Q?1xoCpJSl+0BOLVDwaocffKxHRtd9u5l0JzrsR+rpyV6v4TTBktZMgP2YtAy8?=
+ =?us-ascii?Q?XJG0oJu71/QXiINLtX4CJMet4PTr90RqFjjrODG/L2wQPel8QOeR9FRcoP+4?=
+ =?us-ascii?Q?VP6v6Nmj0bKFSKBaWKVLJ9wrYD8/3ONk+IwW0dhsol+fewFWGiTHYAhWUw+I?=
+ =?us-ascii?Q?7TMQZJzyOqd7Pr7PEbRqrZk7tjRQYvjGDHcM1esI3xDiAu6Acj3deOypw1ay?=
+ =?us-ascii?Q?xcou6LATJro/JYAcx92bdqlKFnLat85pnYEYuxnZvCPaxGhcwg0zLDwLJqOd?=
+ =?us-ascii?Q?v28mFHcHTgOmDW0BzxIER7QJ7axFcX7ChAH5olpqjqlhTApmWwdhoJNeTN+r?=
+ =?us-ascii?Q?A5dFRTFN3yOdnoERP2ER2sXbxdQMs/v2vACIzIcfM3OqrPBeHnV2SizYWTw3?=
+ =?us-ascii?Q?0t8yHlA4V9UjfVwIzAO+HEp8C/DNc6CTfj3vvUxHNcBbRnSRXcQ2r41OYF0h?=
+ =?us-ascii?Q?44ZIJdSX6+arcg72d1F9SQK3cc5CC7d6cNrP9nVDrM70TuYuxNlsONqL6Fg/?=
+ =?us-ascii?Q?vuDB9/YUMhT1Ecs+TMCS8/SXvxWBgq+sfna2KdzaBncSXAp0qfFGDVAjxVGe?=
+ =?us-ascii?Q?eunSbtBepia5G67koAur9RQo+tyzdiQOAc+pIu3mvlGDOubE0oLkgdGc64rd?=
+ =?us-ascii?Q?byJP/Rrjh/ryjLr3oHchTz6CWdCC7Es28aR8d/Esuo4Vy1P/hXHT67cSlnoo?=
+ =?us-ascii?Q?khGmqrC8sMeiQ+bGsuNZ7Nm03+7e/9bmZ1gXW4u2LlgVsdkS+48WqdfzbgGg?=
+ =?us-ascii?Q?E2gHpm/YEvu4UFOVDjud8LBryAlIQPx41fe24uRXpDTotGp45bGOHKC46gB/?=
+ =?us-ascii?Q?/EW1qdCpScHfMn5Eo6iYuEOf9jzGp1LyRp2Yxn30VMldPudAKittkCzzOJ4I?=
+ =?us-ascii?Q?Qr2/HIfCZe+4+e6gvK4OHLlm3Cf3RRPNh28KiEhbLYV9VvI4yswhyjsJNqzw?=
+ =?us-ascii?Q?ajYmI0xcfbiM1TaqBb+0hWN0fVaDRk2H/wtOar6+AbAxXtwQBbGLGwMMgvUW?=
+ =?us-ascii?Q?K9iibTNfL8RNo7/gevzs6Eh3DyfxOk2YifPjIGWLGI5gg5ZajcVCASmIwLTo?=
+ =?us-ascii?Q?1m7+xh9jrZ4xvMCzMFScvbc=3D?=
+X-OriginatorOrg: os.amperecomputing.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 800de197-143e-4aec-65a9-08dbfa3319b9
+X-MS-Exchange-CrossTenant-AuthSource: SN4PR01MB7455.prod.exchangelabs.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Dec 2023 10:22:38.9219
  (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2651999c-4269-41ff-16c0-08dbfa0e258b
-X-MS-Exchange-CrossTenant-Id: da6e0628-fc83-4caf-9dd2-73061cbab167
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=da6e0628-fc83-4caf-9dd2-73061cbab167;Ip=[211.20.1.79];Helo=[localhost.localdomain]
-X-MS-Exchange-CrossTenant-AuthSource: 	SG1PEPF000082E7.apcprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PUZPR04MB6216
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: m2MEKC3BKOotvQ+Q0T+nxfOw1CndocZXpznfOpeFVsuKqkYkxOaZdwjqanGAeD0ks2drovNtvQHyaPEwk1t7ODSGnTqJI+cKXOnoL80xSYI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR01MB6568
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -99,68 +129,53 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
+Cc: Cosmo Chou <chou.cosmo@gmail.com>, Open Source Submission <patches@amperecomputing.com>, "Thang Q . Nguyen" <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>, Quan Nguyen <quan@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Revise gpio name for EVT schematic changes
+This series consists of two patches to handle the below issues observed
+when testing with slave mode:
+  + The coalesced stop condition with the start conditions
+  + Early ack'ed of Tx done (ACK and NAK) causing "Unexpected Ack on
+  read request".
 
-Signed-off-by: Delphine CC Chiu <Delphine_CC_Chiu@wiwynn.com>
----
-Changelog:
-  - v2
-    - Correct patch for revising gpio name
-  - v1
-    - Add patch for revising gpio name
----
- .../dts/aspeed/aspeed-bmc-facebook-yosemite4.dts   | 14 ++++++--------
- 1 file changed, 6 insertions(+), 8 deletions(-)
+This series was verified with ast2500 and ast2600.
 
-diff --git a/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts b/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts
-index fdc33bffd467..15a3bdcfc861 100644
---- a/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts
-+++ b/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-yosemite4.dts
-@@ -1414,7 +1414,7 @@ &pinctrl_gpiu4_default &pinctrl_gpiu5_default
- 	/*B0-B7*/       "FLT_HSC_SERVER_SLOT8_N","AC_ON_OFF_BTN_CPLD_SLOT5_N",
- 			"PWRGD_SLOT1_STBY","PWRGD_SLOT2_STBY",
- 			"PWRGD_SLOT3_STBY","PWRGD_SLOT4_STBY","","",
--	/*C0-C7*/       "PRSNT_NIC3_N","","","","FM_NIC0_WAKE_N",
-+	/*C0-C7*/       "","","","","FM_NIC0_WAKE_N",
- 			"FM_NIC1_WAKE_N","","RST_PCIE_SLOT2_N",
- 	/*D0-D7*/       "","","","","","","","",
- 	/*E0-E7*/       "PRSNT_NIC1_N","PRSNT_NIC2_N","","RST_PCIE_SLOT1_N",
-@@ -1432,16 +1432,15 @@ &pinctrl_gpiu4_default &pinctrl_gpiu5_default
- 	/*K0-K7*/       "","","","","","","","",
- 	/*L0-L7*/       "","","","","","","ALT_MEDUSA_P12V_EFUSE_N","",
- 	/*M0-M7*/       "EN_NIC0_POWER_BMC_R","EN_NIC1_POWER_BMC_R",
--			"INT_MEDUSA_IOEXP_TEMP_N","FLT_P12V_NIC0_N",
-+			"INT_MEDUSA_IOEXP_TEMP_N","PRSNT_NIC3_N",
- 			"INT_SMB_BMC_SLOT1_4_BMC_N",
- 			"AC_ON_OFF_BTN_CPLD_SLOT6_N","","",
- 	/*N0-N7*/       "FLT_HSC_SERVER_SLOT1_N","FLT_HSC_SERVER_SLOT2_N",
- 			"FLT_HSC_SERVER_SLOT3_N","FLT_HSC_SERVER_SLOT4_N",
--			"FM_BMC_READY_R2","FLT_P12V_STBY_BMC_N","","",
-+			"FM_BMC_READY_R2","RST_SMB_NIC0_R_N","","",
- 	/*O0-O7*/       "AC_ON_OFF_BTN_CPLD_SLOT8_N","RST_SMB_NIC1_R_N",
- 			"RST_SMB_NIC2_R_N","RST_SMB_NIC3_R_N",
--			"FLT_P3V3_NIC2_N","FLT_P3V3_NIC3_N",
--			"","",
-+			"","","","",
- 	/*P0-P7*/       "ALT_SMB_BMC_CPLD1_N","'BTN_BMC_R2_N",
- 			"EN_P3V_BAT_SCALED_R","PWRGD_P5V_USB_BMC",
- 			"FM_BMC_RTCRST_R","RST_USB_HUB_R_N",
-@@ -1459,9 +1458,8 @@ &pinctrl_gpiu4_default &pinctrl_gpiu5_default
- 			"","ALT_P12V_AUX_N","FAST_PROCHOT_N",
- 			"SPI_WP_DISABLE_STATUS_R_N",
- 	/*T0-T7*/       "","","","","","","","",
--	/*U0-U7*/       "","","FLT_P3V3_NIC1_N","FLT_P12V_NIC1_N",
--			"FLT_P12V_NIC2_N","FLT_P12V_NIC3_N",
--			"FLT_P3V3_NIC0_N","",
-+	/*U0-U7*/       "","","RST_PCIE_SLOT3_N","",
-+			"","PRSNT_NIC0_N","","",
- 	/*V0-V7*/       "FM_RESBTN_SLOT5_BMC_N","FM_RESBTN_SLOT6_BMC_N",
- 			"FM_RESBTN_SLOT7_BMC_N","FM_RESBTN_SLOT8_BMC_N",
- 			"","","","",
+The prior discussion could be found at:
+https://lore.kernel.org/all/20231208033142.1673232-1-quan@os.amperecomputing.com/
+
+v4:
+  + Switch to use define macro instead of variable             [Andrew]
+  + Make the early ack conditionally to avoid unnecessary
+writel()/readl()                                                 [Quan]
+  + Add an extra empty line before the comment in patch 1      [Andrew]
+
+v3:
+  + Fix the unconditional write when ack the irqs              [Andrew]
+  + Handle the coalesced stop condition with the
+start conditions                                               [Andrew]
+  + Refactor the code to enhance code readability                [Quan]
+  + Revised commit message                                       [Quan]
+
+v2:
+  + Split these patches to separate series                       [Joel]
+  + Added the Fixes lines                                        [Joel]
+  + Fixed multiline comment                                      [Joel]
+  + Refactor irq clearing code                          [Joel, Guenter]
+  + Revised commit message                                 [Joel, Quan]
+
+v1:
+  + These patches are first introduced from this disscusstion
+https://lore.kernel.org/all/20210519074934.20712-1-quan@os.amperecomputing.com/
+
+Quan Nguyen (2):
+  i2c: aspeed: Handle the coalesced stop conditions with the start
+    conditions.
+  i2c: aspeed: Acknowledge Tx done with and without ACK irq late
+
+ drivers/i2c/busses/i2c-aspeed.c | 75 +++++++++++++++++++++++----------
+ 1 file changed, 52 insertions(+), 23 deletions(-)
+
 -- 
-2.25.1
+2.35.1
 
