@@ -2,32 +2,32 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 25EC880C04D
-	for <lists+openbmc@lfdr.de>; Mon, 11 Dec 2023 05:09:22 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id A9E3B80C051
+	for <lists+openbmc@lfdr.de>; Mon, 11 Dec 2023 05:10:42 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=bgcLN+Qd;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=sSmTozzP;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SpStR4PQGz3vYY
-	for <lists+openbmc@lfdr.de>; Mon, 11 Dec 2023 15:09:19 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SpSw00yb5z3vcV
+	for <lists+openbmc@lfdr.de>; Mon, 11 Dec 2023 15:10:40 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=bgcLN+Qd;
+	dkim=pass (1024-bit key; unprotected) header.d=os.amperecomputing.com header.i=@os.amperecomputing.com header.a=rsa-sha256 header.s=selector2 header.b=sSmTozzP;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:fe59::723; helo=nam12-dm6-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=lists.ozlabs.org)
-Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on20723.outbound.protection.outlook.com [IPv6:2a01:111:f400:fe59::723])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=os.amperecomputing.com (client-ip=2a01:111:f400:fe59::710; helo=nam12-dm6-obe.outbound.protection.outlook.com; envelope-from=quan@os.amperecomputing.com; receiver=lists.ozlabs.org)
+Received: from NAM12-DM6-obe.outbound.protection.outlook.com (mail-dm6nam12on20710.outbound.protection.outlook.com [IPv6:2a01:111:f400:fe59::710])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SpSqf4FXCz30gs;
-	Mon, 11 Dec 2023 15:06:54 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SpStW3sLlz3bmy;
+	Mon, 11 Dec 2023 15:09:23 +1100 (AEDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=UxkDfQoq8bPOl2LOM8g8IWoR9fwy80r9x3j2IEaCAg5CFBU7rtqV9fhe9ssOmcq9PfnvI5pFr3aAYFHOJgKb52LZ2BfxGJ8SdVQJqX4OqL/mnBHzviIO3ruLPztS3TXAlYiZqHNHr7AR6kdBq6J+Msrj2JnNdPuScR+OiPJvYgg0lHPigGotQemM4fiuYC19dIguNtxLVivKs6oZ0cyI+blRIt5KBQEcQ2SN2Uy6A9h+1POxfpSFFFDr3So7Ejj3p0mpA9KbSRAld7vJ9E5IZ8jUZVpj1kiUJRLyX+fxcWM/gHltkXvTC/mLWdg8KOmbH1Ow26tfAF4BegdxExKUXA==
+ b=WerzbFX1P4No0qNpMr2ZeIH+PPt0oMMdQR+dGHZYhjK6mYtvSd7onEZ63/Yn3GnjT86Py8mZ8uTKJlxYSReXfzCld0Q0y8HMr+0XZPvh2wWY1WPZDQNBCd6v1/ttaK/4OG8KD620TIiJOroEFpzNySNSelYQHFKDlP90t8IbeMipJRaOZm3u+QGfNWJPo8JcGkfPGs+j2rNWt9A05/Jn2pqXoP15DsuW2yyJ6U56PZtlelHT2TL6yp+lXvhMcyKMafF7cEwjrccOtoDNT8ua4wbSkJcaMw3tX7Hs9xW0ZFKEaREqqnUvZd5wwHM/5/4i5xRIT8yhhb8L26HV6yclRg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector9901;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=b9PZ8wLdI/tjCZz3SSEumfZLJ8UAhLIqL6Kpcg65CFM=;
- b=gCJ07dhR/9VZRmB5PcH/ypqzr7hY5dFDWhRcLz72ulS0dxLneOfdQr60qH3kDwOAvGKOlvvivy1PMHX9VXl5em2W0kMOYPzODESbf/XnkRxh0woyQ+ocxNJdJqzqm18OmDAq6BISvL1S57GMAZ/5eSYY+3iP4JafwkQmdTaPU5/vccjOeISbvrbQi1p5rhZbfRj18C4S/4Byn/qsimpYdKg1YxwdvM4dzurcvW+o7t3NOqbQurtY74axrgmrBaQHoVx3NARxJnfnSA+iYRT0gPOD+yoYSwfPEjjX/R3ERYDSzLf79LRJ5Z14goS3keyg0jeWKJq6BEcc2cQhegtHDg==
+ bh=r5lwL2o5gQzDdQLlj7xI/AzAXitXF9gphRtqEM0UIGQ=;
+ b=SPz7QxTeUb8e/cMkMkNO053KnlrzqQjQxnt6HK5KuTBHdUn+kL1SBWynKa3ZkIdl/w/y4Ld6TFZ8jJN5xVju6IOzNGezaMOQRh+4TZ9OAmDxKdn7wdX9cEQv2TkCE9bCqbZv8oC1DkH0Z161psbSlLsjftRQmEZ09AhO+xA0dp0MPGeagu9TUNQgobZbOmlxlib2c8QYIQ6Wxp1LTIeSNT9l7/Hv0NOfqFg29rp0zsyM+/W1D8x9zXP0G8GM6YNmtU5sqeZtBfqODAwh/t5amslAVaTmsev7/WmfT7jrW+a5G/ldW55oCNnA3wA2kpz2RpwrWA2ObDCAkXDndBIyxA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=os.amperecomputing.com; dmarc=pass action=none
  header.from=os.amperecomputing.com; dkim=pass
@@ -35,92 +35,99 @@ ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=os.amperecomputing.com; s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=b9PZ8wLdI/tjCZz3SSEumfZLJ8UAhLIqL6Kpcg65CFM=;
- b=bgcLN+QdSfDPMUdcqTLSEDvhBXC8e2FG0AyVd3sWIXvnAbin9VpocBDGb+3UBLtk7z2R68yRJyKjAZ6shRRZ3xyabrynU6eP6g54e8AfgHR7UmngFas94K2SMlZBGI5TKGzrMNzjecWJ6fpgvWAfoHDADuHrfxb9M/rgIGST+HM=
+ bh=r5lwL2o5gQzDdQLlj7xI/AzAXitXF9gphRtqEM0UIGQ=;
+ b=sSmTozzPMsNoE/IFv2xtvITZZTpLuV+O/GBUPLsN9iiwmYQo2GzEch972CPJBgI77MgJTcCw3NhJDTVgQHVy050uJp58eGyHnAe0Jw27w7c0DCVpnA7lZa8RDOJ8I7bsqlQv6VBz8JJFEPTMACcwfG+C07imcJ6X4MpOMWYQbiY=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=os.amperecomputing.com;
 Received: from SN4PR01MB7455.prod.exchangelabs.com (2603:10b6:806:202::11) by
  PH7PR01MB7821.prod.exchangelabs.com (2603:10b6:510:1d9::5) with Microsoft
  SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.7068.32; Mon, 11 Dec 2023 04:06:52 +0000
+ 15.20.7068.32; Mon, 11 Dec 2023 04:09:05 +0000
 Received: from SN4PR01MB7455.prod.exchangelabs.com
  ([fe80::5682:1d84:171a:1d68]) by SN4PR01MB7455.prod.exchangelabs.com
  ([fe80::5682:1d84:171a:1d68%3]) with mapi id 15.20.7068.031; Mon, 11 Dec 2023
- 04:06:51 +0000
-Message-ID: <8822a211-678f-49e5-8e6b-50b46dfc61b3@os.amperecomputing.com>
-Date: Mon, 11 Dec 2023 11:06:45 +0700
+ 04:09:04 +0000
+Message-ID: <43c99449-8a4b-4db5-8b1e-bc7ae920db76@os.amperecomputing.com>
+Date: Mon, 11 Dec 2023 11:08:52 +0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] i2c: aspeed: Acknowledge Tx done with and without
- ACK irq late
+Subject: Re: [PATCH v3 1/2] i2c: aspeed: Handle the coalesced stop conditions
+ with the start conditions.
 Content-Language: en-CA
-To: Andi Shyti <andi.shyti@kernel.org>
+To: Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Brendan Higgins <brendan.higgins@linux.dev>,
+ Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+ Joel Stanley <joel@jms.id.au>, Andi Shyti <andi.shyti@kernel.org>,
+ Wolfram Sang <wsa@kernel.org>, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>,
+ Guenter Roeck <linux@roeck-us.net>, linux-i2c@vger.kernel.org,
+ openbmc@lists.ozlabs.org, linux-arm-kernel@lists.infradead.org,
+ linux-aspeed@lists.ozlabs.org, linux-kernel@vger.kernel.org
 References: <20231208033142.1673232-1-quan@os.amperecomputing.com>
- <20231208033142.1673232-3-quan@os.amperecomputing.com>
- <20231209204455.jxize3muvx7hhpos@zenone.zhora.eu>
+ <20231208033142.1673232-2-quan@os.amperecomputing.com>
+ <79ce9162faeb113ecb13efeb58d95f8a71e1a060.camel@codeconstruct.com.au>
 From: Quan Nguyen <quan@os.amperecomputing.com>
-In-Reply-To: <20231209204455.jxize3muvx7hhpos@zenone.zhora.eu>
+In-Reply-To: <79ce9162faeb113ecb13efeb58d95f8a71e1a060.camel@codeconstruct.com.au>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: CH0P221CA0022.NAMP221.PROD.OUTLOOK.COM
- (2603:10b6:610:11c::22) To SN4PR01MB7455.prod.exchangelabs.com
+X-ClientProxiedBy: CH0PR03CA0307.namprd03.prod.outlook.com
+ (2603:10b6:610:118::8) To SN4PR01MB7455.prod.exchangelabs.com
  (2603:10b6:806:202::11)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: SN4PR01MB7455:EE_|PH7PR01MB7821:EE_
-X-MS-Office365-Filtering-Correlation-Id: 60100480-8bac-4dbf-ecea-08dbf9fe9aca
+X-MS-Office365-Filtering-Correlation-Id: 82ef1e47-897c-46eb-4f9a-08dbf9fee9f7
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: 	zLq2XrWTGEtZO38X6CxnWuJgSUuobT3DF8K7ft+EgCGA3kCg4vdeXgTXvW4yMcDwKrpMXg1k/e0EawGlfmBxs8jrswrpSkeJMu4d5l4JqeVX8FH74HMF/gBrWdQ3LiggxZZG0ZVGVMKCeqm+Zl7XQzJrzZxJygFHPdT1B+OgfX5rEsqRe3/1o8sTDVWPEUzcxPcy14Dlrmfr5uGwP/KUWznWXRWDbPpfWq+bls5inJ2OqDFUPo5pDkN4wTzktefwKCGmY3vRNKrZdCXDQ993nAc1CkW67LXePkrnsyI2Tr75D12X6ihVsibteOqU9PWWcYEzOnYvO4WiSoI7oaEbQgQvYAaCScmVYTvDTNuABqoAKdDfT8XuBt8EhRGh7qUwIxUDG1IxUmpWjXk44Ap+adV40xQiteip1xleVhV1Iixj5FCON0L3PisYkZtognI+/vy5lHFYcLo4nRyhdsXvZQAV4R03Bryy9z29pHIKXW6wVADKiVhu5AHy/HV0XUcCM/cNHUbs9g51YnYao5anwmvM5n0qj1A8p4AzFfeupGAtKiDTVFLByKXZuaVPuBkvEezLMfdMV+j78iAXDV1wXl793YYMt7Wne3vYbsfiZK+A9CoSExMYbhiS4Fai6dnO
-X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR01MB7455.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230031)(366004)(396003)(136003)(376002)(39850400004)(346002)(230922051799003)(451199024)(64100799003)(1800799012)(186009)(6512007)(6506007)(53546011)(5660300002)(26005)(2616005)(107886003)(7416002)(6916009)(54906003)(66476007)(66556008)(66946007)(6486002)(2906002)(83380400001)(31686004)(41300700001)(478600001)(86362001)(8676002)(8936002)(4326008)(31696002)(316002)(38100700002)(6666004)(43740500002);DIR:OUT;SFP:1102;
+X-Microsoft-Antispam-Message-Info: 	ZFTIY/AwYLZgHmI1omXYrxmO04kyWTrVIkeCXvK+uaW+PrqvTWVygvxUXNlD6otCyQaCRA7mjoZ6iyU0UBO+Lu6pPaZCnG1rTAKLgCqY5O73yiASoSUoXxFloQWQBXqFdPb5NjJ/6hF6MQSF1YjmTbvTViu+dr1o2stWfw1s4WvCnuKvgEfNMBUA2TJ9Wz6bBfrTXwOy19AUCfaCU5cJ99m/SL7FqMrPJUEocqdPitV8ggG51GS+VZrK/o6mXICJNSGE15vGDQAp/JNNFJZ3Fti1QqyINmkZ80Kc1fdBupDubnaIo3ldhfeKHQPI3hiTMc7GzS3XkYrO98A5kaqw03zhYJNoXcLuDDDpNdAy6h7//14aS5ucZ+5Fk/LPq12MyY8cHIpjFO2ZEG069ZU+AtV9Rg3lLu/aAhxcz77Y0tTis2zDlSAoV64egbL4c8pTQrt4W/3Ij6xql1fy/XkhxiQxiXQ3OhTA7eInqQO8MIQYz8HyHjorF4aLl7JqzmXffFxpHErEswzFCR56EErFR6boMsdw2y/tsF7qXZPH1Z4hAJFLn0ZYraizRXVBt+U5GjyUTqnOIY+Rg0mgbvWMwcgwwysUM7AI8Y3ZY4j+JuXmAAzSM5ZqOJx9q8ZFFwVg
+X-Forefront-Antispam-Report: 	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SN4PR01MB7455.prod.exchangelabs.com;PTR:;CAT:NONE;SFS:(13230031)(366004)(396003)(136003)(376002)(39850400004)(346002)(230922051799003)(451199024)(64100799003)(1800799012)(186009)(6512007)(6506007)(53546011)(5660300002)(26005)(2616005)(107886003)(7416002)(54906003)(66476007)(66556008)(66946007)(6486002)(966005)(2906002)(83380400001)(31686004)(921008)(41300700001)(478600001)(86362001)(8676002)(8936002)(4326008)(31696002)(110136005)(316002)(38100700002)(6666004)(43740500002);DIR:OUT;SFP:1102;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?UGtYbEIrVjE1MVZhQ0s0dHRTejhnck8rOVNhdWg4aGVNdzRVVDk2TjhKM2Z3?=
- =?utf-8?B?ZFIveW5UTUNORVpuQTQ4ZHNXMGJWK09GNERRUE41NTFSeHdLQS8wbzhSNUFG?=
- =?utf-8?B?U1dscUFDcmlNKzdqSTRPYjNLSkRXR1VKRFlqcXlwUWFBdi9qWmhtUGVEM3dN?=
- =?utf-8?B?NkJrUWZSME5Da0k2cXJzcXlWQlc2ZFdFT0NCR0tXN3lBTU1EVTJoNVpZeEN0?=
- =?utf-8?B?c2NDSEcyZGpTMnR1dzg5RU4rU1ArbTBUWUtkWCtwMUxDMENSd0J0dXRnbWlJ?=
- =?utf-8?B?c01IOGt3NTRoZkN5RHQ1aGQ4dGlFWkgrbjZxY3NYZTdJTjhLZTJ2SFFGOWVG?=
- =?utf-8?B?bHN4ZDRTV2gxeHJqTm1YREdsZG5xMDdOS2thallZeUFUWGU0N0tDbVJrSXYy?=
- =?utf-8?B?VWZIRm1rbmJpZFJwRHBhUW9KaEl1bVFsN1F1a1A5UkRDblVLQ3h1TDRYeTNo?=
- =?utf-8?B?eHR3a2VGdmhjem9GUW11KzRNeW9ZYTdhT0t0WDZVajhMU0s5K1RPQjA2Mzcv?=
- =?utf-8?B?OGZKTkIwNkxCME96VVZWZU1UWjhVR1JqM3VQS0I5MHVFODRKRm9ZWkIzb0Jn?=
- =?utf-8?B?YmtSb2ZzREdlbjdMeDVoRlBseGQxY1lJTTRKbFBUbDFTWlNyMkVHTlhiWFhI?=
- =?utf-8?B?Tlk5WjdyRUVSME1SNzZ0K09BZFZxU21LOENoTHRSTHBnZEg2WnVUaFZDRmVp?=
- =?utf-8?B?TFBCSUlSeWtHU1FIUnNwaEQxL2RFeW12ZWdHbTMyUE02Q2QxdjZuWXF2TlQ3?=
- =?utf-8?B?TXZuaGE2MzZSbkN3YzA2UEpoQURlZ2FxeEFaZk9adlFyNDY4dWNlS1dnY2VR?=
- =?utf-8?B?QUFWWlFheTRQbmpGcXhpN2JGVzF1b1BDRUJGNHpmRmZkOTFNbEN3QWdJQTBo?=
- =?utf-8?B?anhmSHhZVVNlc01YNWYvcy9sZTRFMTNwVENYQWthVXBFSVJyd2czTzNtTDd2?=
- =?utf-8?B?ZEdMTDQ0SkJCMEk3Z1VhaHl6MHdqOVFpdElBeHpoMm1IL2huRHozQjdkL2lu?=
- =?utf-8?B?Ny9uUW55aUU0S3pxM09qMFZoSytJMkQzd2lyampZajJkSGR1M1U5K3Btc2x4?=
- =?utf-8?B?SmsxWnRHTjRwd24zN04zQ0l0NnVXNCtpKzZIUWFBTHg5NG1SejVEc0VteTRx?=
- =?utf-8?B?dzhVZGlwS29vWUJ4S25CS0VvU2c1R05rV2wrN1BJQlNxUVp2K0JCQ1c0YXpp?=
- =?utf-8?B?ZmZ6NXhnWm9lYVR4VGpRLzM3ZGNQSVh1SWx1dmdnbU5OVnlDaGhsUHdvYjh4?=
- =?utf-8?B?Z2NieUdGaUxLVFdlaUU5d3JyWWlWa3VsaVRZQmtaNTdrRkNOV1lFWHJCWXpZ?=
- =?utf-8?B?bUg1UmdEenNlSDlHck9SUDVPWXBsL1lNUURsYXoyMG01aStFVTB1L0Z6c09q?=
- =?utf-8?B?ekZKemNNZDlITFFaUG0zcVhyOCs5a2ZmTW9xaFhCMjNCc1pTczFsTk9Fblo3?=
- =?utf-8?B?eDI2UHVRY3lUZ29WSGlYN1ltanNGSlJlUVhtdXNHaFI3TkY2bkVwcWJaamxp?=
- =?utf-8?B?RGJUUjNDYXJ3ZFJYWFp5S1dlK3d4TVQ5bjlDMzFlT3BOeEJyd0NkZEplQnVI?=
- =?utf-8?B?cXJJOURrYXF3b0hQUHBnUVdUR1ZYRXI5cks2d1Bpb1NhUDJXakVIVjMvNFd4?=
- =?utf-8?B?eUVEbWdod3VLUXo5TGRzN0lJUGo0SkFFa21BSy83S25GM1BZM3hVd0VTVGc4?=
- =?utf-8?B?cXp3WnB1WDViNEN1dE9lV1IvMWM2RzVJcnJjRjF5WU9YQTM3ODU2WGl2THZW?=
- =?utf-8?B?clB1L2dUSXFoWEdya1FPUVVZaW9xcXhubmZTK2NnUzdsTUphQitkbFpFM0tB?=
- =?utf-8?B?aDNseVlPa0FCaTRHVFJwbzJsN1pnNGgzTFFmdmdtb3RSbWs5SzUvNG95ZXI3?=
- =?utf-8?B?WGxraGJ6N0F0NFY3OE0rS1pYSkFyNEdGZU5mV2hGRnFPcUZneUV6U0NCb0ls?=
- =?utf-8?B?MFYxMXduVnlyT2xSN0VoaENnc3hPZ01ESTdiczAwaTliSnVsejBDRGRKYU1x?=
- =?utf-8?B?MUJwSW1pL3EvTWQ3elBYTUg1R3hWd29HSVA4bWcwVUo4UnlmY2VTdUZlYmJL?=
- =?utf-8?B?MTV1R2ZHeFFIaHRSVnUxeVR3Z25NdlYwcHJwTzAzd2NrL0Y1QnRsMGVieXIz?=
- =?utf-8?B?YitKSVVzMFllR1V0b2MxZ21abWFXdUxKM0JXdzVlMkx3MUxxaDdVMHFqM3lJ?=
- =?utf-8?Q?KHvCfwAbU3a32V/5UsDqdD8=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: 	=?utf-8?B?MW53TDdEUGpQbE9IRVg4VDI1cVlERVBZZVhTNmVuN2NKTzY0T0FPYXgxcDd1?=
+ =?utf-8?B?L2tCMENRYzhQMDRLWGF4N3FiaVVDZ1JwTFR4SnVERWwxL2hDbUl4SGtXNXJY?=
+ =?utf-8?B?eFJya09SK3ZPVHVwZVpHU3IzSy9hdDBXN0RZWmxzVmxyYjBvYXlqSnYwemxi?=
+ =?utf-8?B?azJTQk5IT1dVUlh6a1kzcmlWazJXOHhncnpqQ3FDQmVKQStSU1pCdmZBZ2w4?=
+ =?utf-8?B?N0VJN0pnMkdVNUUvekh1OURFVEIyVyt1OGJyZnBZUFUvaFpwZWNQQW9rc3NC?=
+ =?utf-8?B?ZFFHNEYyUXE4ejZjeGZtU1FIQWJVRVhncysvYkU1RTR2WmYrUUtNNEU4U2NN?=
+ =?utf-8?B?SGhhNW53K05STSswYTVBcVN4aDdudDhDMU9EWldlWEdmdFl2N1psTHZ6eGRs?=
+ =?utf-8?B?R1I5aDFaazVRUHZJeTRtbEJUWThIb210UDF3NTg5SG9YT050WS9VYkJ5WFdI?=
+ =?utf-8?B?amhHMnQ4MGZNS2l1dWRmSnZEcFFzb1dvSnpIdWdmM1F6NU5BbVJPTUw0WHc3?=
+ =?utf-8?B?bkl4b0J0dm1ObEVjNi96QnBKcFRZYnVWcm9tbGQyQjVtMDFnaUdLMHk0VXpJ?=
+ =?utf-8?B?Z3JwTHE0OTl2NHlNYk9PN1l1a1hlWDJCVjZLUHhTYml2MDE3bml5elQxNGht?=
+ =?utf-8?B?M1FCMWwyYW9JMytjYXYxa05wdWhOMzRuQm8vd1JmcGdVaHp6Q0JLREgrM2dB?=
+ =?utf-8?B?K2M2QStPNW54UzVlb1U0UHMwNnhoL011VFYxRXFHNEFOZHFZNElqanM5dWFJ?=
+ =?utf-8?B?TFNzT1BuMkJOdnhkSCt2T1dzc25KRXpFQ1lCVzJhbmtqVmp2QW1UTmlzeUJL?=
+ =?utf-8?B?Tzl4Ym00SVAvZ3dwTzlsWm80UlBRNVNmblJIQVh0UHN3dTF0RFFMd0drcFBS?=
+ =?utf-8?B?UXVvdE1RVlZjaGFlbmVNWngzVlg4TnRIWndlY1pOTy9JNDRKKzUydUF4RDEv?=
+ =?utf-8?B?d3c5RHdVQ3lQUjExd3UvbVdJekFwVVcvMUlGVHYvZWhJaE5uNU9SemVDdmh6?=
+ =?utf-8?B?TzBxUjB1ODF4a29YdTJ5LzZMOGZKSFBMem56aXplK3VvNnRFMGdvMWNsZGlN?=
+ =?utf-8?B?Q0ZmaDRJOGx0UVdVVFNYdFR6N0tySENPam0zcHlHbGhRQ1dYSkFMS2hMTHk4?=
+ =?utf-8?B?dk1BQXJERDMrdjRxOFk4Y2pmYTVIaWFGTVpieklCSkhIUEh1NGpUWm1DcnQ3?=
+ =?utf-8?B?T3RuSmVnUzRVY3A1UnlCeGt3QzQ2bVBidnFqK1ZWbXFGQUF6SlJBU0xGTE5R?=
+ =?utf-8?B?V0ZPbDBnOStUaXdVSnNjUGdvRzFxYlJPMzh0YnZCWUNqWGNvdDFFcUMybWxz?=
+ =?utf-8?B?dWhtRU5vNGpxa1MwS3lSU25VZ3F3Y0dxdjJXRTZZcElmY21rR0JydEdWbEJl?=
+ =?utf-8?B?bnVITVpWM3ZJVFMzQ1dJTUtHNkxXQ0p4NE5PbXh4U1UxeERSQ0xxaDRFYzUy?=
+ =?utf-8?B?N0xJeldMYmJxZlN3M0VWeEdrNDVYdHBpWjlwV0NnSUd2MEJUdXBhY1l5UVVI?=
+ =?utf-8?B?TWFabnZOdkx5TGh1MzFyRnlOY1p0ZU05WDJsck02eWIzbnY1K1JaMW5DNUJz?=
+ =?utf-8?B?QVkvSG5QdjMwWEQ0WEpYQ05vMGVRVllnL2poM00zVzUxVXQ2SjR6RXpKRldU?=
+ =?utf-8?B?N0IxTjRHNi93UndQdTBDcVJQZnMxdUdCcm5zbVRuUDhrdUk5dGdnR0d1VjIw?=
+ =?utf-8?B?SDhpQ1krdW03QkFqM2V1K1ZQUUR2TmVBZWF1L1E2a2RhWjg3UlA3Z1dwY1lB?=
+ =?utf-8?B?eGFHemoxUDFyQ3Q3TDBFRitGeDA0NDhpbjdZMTc1RDFUWjFvY3B0bzBCU0dJ?=
+ =?utf-8?B?U05UZW9CbU5MOGR4SlFkOGp4UWIvMnVCWEl2NlFxNmNablYxQVdzNS9kRlFj?=
+ =?utf-8?B?RWhmcFk1WHFLeEk1TWJBcHdDd05oUnRoMzhlZHNpcWZoK1F3dktmak91cUlD?=
+ =?utf-8?B?blNITGEzMGJoczc1ZEdtWWtJNHB5d2FqaTdkbWhaTHUySHR6M0dWa1huaFFS?=
+ =?utf-8?B?bWV2SUVLdEFaYXQ4S1lxQUN5V3ZRcllOYUlUdXI2c09oTzd2R3l3WUsxY2Yy?=
+ =?utf-8?B?d3R5ZWlGQy82WDk1VXUzQ2JwTzUrM0FvNTdDVTdPQ3prc2hIVWZQNG1WUDdP?=
+ =?utf-8?B?TkxRZmZLQTIvenljdXpDemdKUkxMY1F4S0xZVUpEdzM2ZFVPNWlqM2dqZm02?=
+ =?utf-8?Q?A8WVQ9QdXcDGjin1k7gnI1U=3D?=
 X-OriginatorOrg: os.amperecomputing.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 60100480-8bac-4dbf-ecea-08dbf9fe9aca
+X-MS-Exchange-CrossTenant-Network-Message-Id: 82ef1e47-897c-46eb-4f9a-08dbf9fee9f7
 X-MS-Exchange-CrossTenant-AuthSource: SN4PR01MB7455.prod.exchangelabs.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Dec 2023 04:06:51.8837
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Dec 2023 04:09:04.7167
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3bc2b170-fd94-476d-b0ce-4229bdc904a7
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: nlGCZmGEW7+CN54hVieLI3Hr5t4zqOvk+qNR0K5FtG49ig1eXdNVlvWKzqH2nZvzU+fCL976A0epgfu/Ler1icknDY7XkNhAWFVDe5FCFzc=
+X-MS-Exchange-CrossTenant-UserPrincipalName: HpvyiMmHLT3NruOPdaRuYpgmh51jmVyA3C+uFWaYBVn2KY2ZYlN+s3FX2DY4uOFKcdRosQfYRk87WT6jbyQTnIYSp3X8WrstMcOAVMBsPP4=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR01MB7821
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
@@ -133,72 +140,91 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-arm-kernel@lists.infradead.org, Jae Hyun Yoo <jae.hyun.yoo@linux.intel.com>, linux-aspeed@lists.ozlabs.org, openbmc@lists.ozlabs.org, "Thang Q . Nguyen" <thang@os.amperecomputing.com>, linux-kernel@vger.kernel.org, Phong Vo <phong@os.amperecomputing.com>, Wolfram Sang <wsa@kernel.org>, Brendan Higgins <brendan.higgins@linux.dev>, Joel Stanley <joel@jms.id.au>, Cosmo Chou <chou.cosmo@gmail.com>, Open Source Submission <patches@amperecomputing.com>, Guenter Roeck <linux@roeck-us.net>, linux-i2c@vger.kernel.org
+Cc: Cosmo Chou <chou.cosmo@gmail.com>, Open Source Submission <patches@amperecomputing.com>, "Thang Q . Nguyen" <thang@os.amperecomputing.com>, Phong Vo <phong@os.amperecomputing.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
 
 
-On 10/12/2023 03:44, Andi Shyti wrote:
-> Hi Quan,
-> 
-> [...]
-> 
->> -	/* Ack all interrupts except for Rx done */
->> -	writel(irq_received & ~ASPEED_I2CD_INTR_RX_DONE,
->> -	       bus->base + ASPEED_I2C_INTR_STS_REG);
->> +
+On 08/12/2023 10:56, Andrew Jeffery wrote:
+> On Fri, 2023-12-08 at 10:31 +0700, Quan Nguyen wrote:
+>> Some masters may drive the transfers with low enough latency between
+>> the nak/stop phase of the current command and the start/address phase
+>> of the following command that the interrupts are coalesced by the
+>> time we process them.
+>> Handle the stop conditions before processing SLAVE_MATCH to fix the
+>> complaints that sometimes occur below.
+>>
+>> "aspeed-i2c-bus 1e78a040.i2c-bus: irq handled != irq. Expected
+>> 0x00000086, but was 0x00000084"
+>>
+>> Fixes: f9eb91350bb2 ("i2c: aspeed: added slave support for Aspeed I2C driver")
+>> Signed-off-by: Quan Nguyen <quan@os.amperecomputing.com>
+>> ---
+>> v3:
+>>    + Change to handle the coalesced stop condition with the start
+>> conditions                                                            [Andrew]
+>>    + Revised commit message                                              [Quan]
+>>
+>> v2:
+>>    + Split to separate series                                            [Joel]
+>>    + Added the Fixes line                                                [Joel]
+>>    + Revised commit message                                              [Quan]
+>>
+>> v1:
+>>    + First introduced in
+>> https://lore.kernel.org/all/20210519074934.20712-1-quan@os.amperecomputing.com/
+>> ---
+>>   drivers/i2c/busses/i2c-aspeed.c | 47 ++++++++++++++++++++++-----------
+>>   1 file changed, 31 insertions(+), 16 deletions(-)
+>>
+>> diff --git a/drivers/i2c/busses/i2c-aspeed.c b/drivers/i2c/busses/i2c-aspeed.c
+>> index 28e2a5fc4528..1c2a4f4c4e1b 100644
+>> --- a/drivers/i2c/busses/i2c-aspeed.c
+>> +++ b/drivers/i2c/busses/i2c-aspeed.c
+>> @@ -249,18 +249,45 @@ static u32 aspeed_i2c_slave_irq(struct aspeed_i2c_bus *bus, u32 irq_status)
+>>   	if (!slave)
+>>   		return 0;
+>>   
+>> -	command = readl(bus->base + ASPEED_I2C_CMD_REG);
 >> +	/*
->> +	 * Early acking of INTR_RX_DONE and INTR_TX_[ACK|NAK] would indicate HW to
->> +	 * start receiving or sending new data, and this may cause a race condition
->> +	 * as the irq handler has not yet handled these irqs but is being acked.
->> +	 * Let's ack them late at the end of the irq handler when those are truly processed.
+>> +	 * Handle stop conditions early, prior to SLAVE_MATCH. Some masters may drive
+>> +	 * transfers with low enough latency between the nak/stop phase of the current
+>> +	 * command and the start/address phase of the following command that the
+>> +	 * interrupts are coalesced by the time we process them.
 >> +	 */
->> +	irq_ack_last = ASPEED_I2CD_INTR_RX_DONE | ASPEED_I2CD_INTR_TX_ACK | ASPEED_I2CD_INTR_TX_NAK;
->> +	writel(irq_received & ~irq_ack_last, bus->base + ASPEED_I2C_INTR_STS_REG);
+>> +	if (irq_status & ASPEED_I2CD_INTR_NORMAL_STOP) {
+>> +		irq_handled |= ASPEED_I2CD_INTR_NORMAL_STOP;
+>> +		bus->slave_state = ASPEED_I2C_SLAVE_STOP;
+>> +	}
+>>   
+>> -	/* Slave was requested, restart state machine. */
+>> +	if (irq_status & ASPEED_I2CD_INTR_TX_NAK &&
+>> +	    bus->slave_state == ASPEED_I2C_SLAVE_READ_PROCESSED) {
+>> +		irq_handled |= ASPEED_I2CD_INTR_TX_NAK;
+>> +		bus->slave_state = ASPEED_I2C_SLAVE_STOP;
+>> +	}
+>> +
+>> +	/* Propagate any stop conditions to the slave implementation. */
+>> +	if (bus->slave_state == ASPEED_I2C_SLAVE_STOP) {
+>> +		i2c_slave_event(slave, I2C_SLAVE_STOP, &value);
+>> +		bus->slave_state = ASPEED_I2C_SLAVE_INACTIVE;
+>> +	}
+>> +	/*
 > 
-> I like Andrews suggestion of having irq_ack_last as a define that
-> is already negated, instead of negating it in the writel, which
-> makes it a bit difficult to read.
+> If there's a reason to do a v4 then an extra empty line above the
+> comment would be nice. But let's not get hung up on that if everyone
+> else is happy.
 > 
-
-Yes, but the it still need to negate again when do the write to late ack 
-them later in the end of irq handler. So I'll keep the define as below 
-in my v4:
-
-+#define ASPEED_I2CD_INTR_ACK_RX_TX	    \
-+		(ASPEED_I2CD_INTR_RX_DONE | \
-+		 ASPEED_I2CD_INTR_TX_ACK |  \
-+		 ASPEED_I2CD_INTR_TX_NAK)
-
-The early ack will look like this:
-
-+		writel(irq_received & ~ASPEED_I2CD_INTR_ACK_RX_TX,
-+		       bus->base + ASPEED_I2C_INTR_STS_REG);
-+		readl(bus->base + ASPEED_I2C_INTR_STS_REG);
-
-And the late ack:
-
--	/* Ack Rx done */
--	if (irq_received & ASPEED_I2CD_INTR_RX_DONE) {
--		writel(ASPEED_I2CD_INTR_RX_DONE,
-+	if (irq_received & ASPEED_I2CD_INTR_ACK_RX_TX) {
-+		writel(irq_received & ASPEED_I2CD_INTR_ACK_RX_TX,
-  		       bus->base + ASPEED_I2C_INTR_STS_REG);
-  		readl(bus->base + ASPEED_I2C_INTR_STS_REG);
-  	}
-
-> Besides, ack_last, as a name is not very meaningful, I'd rather
-> call it irq_ack_rx_tx (or something similar).
+> Thanks for the fixes!
 > 
-> But I'm not going to block it for this, up to you if you want to
-> send a new version.
-> 
-> Reviewed-by: Andi Shyti <andi.shyti@kernel.org>
+> Reviewed-by: Andrew Jeffery <andrew@codeconstruct.com.au>
 > 
 
-Thanks, Andi for the comments.
+Thanks Andrew,
 
-I will send out v4 to address those.
+I'll add your Reviewed-by in my v4 with that extra empty lime before the 
+comment.
 
+Thanks for the review
 - Quan
