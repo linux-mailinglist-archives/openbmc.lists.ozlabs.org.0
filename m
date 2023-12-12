@@ -1,63 +1,86 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
-	by mail.lfdr.de (Postfix) with ESMTPS id E01E480F606
-	for <lists+openbmc@lfdr.de>; Tue, 12 Dec 2023 20:07:52 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
+	by mail.lfdr.de (Postfix) with ESMTPS id AD6E780F94A
+	for <lists+openbmc@lfdr.de>; Tue, 12 Dec 2023 22:26:51 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256 header.s=pandora-2019 header.b=vMLMHfKu;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=WHE1LrPx;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=ZALAVFOT;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SqSmk2lcwz3cCh
-	for <lists+openbmc@lfdr.de>; Wed, 13 Dec 2023 06:07:50 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SqWs515zGz3cSM
+	for <lists+openbmc@lfdr.de>; Wed, 13 Dec 2023 08:26:49 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256 header.s=pandora-2019 header.b=vMLMHfKu;
+	dkim=pass (2048-bit key; unprotected) header.d=stwcx.xyz header.i=@stwcx.xyz header.a=rsa-sha256 header.s=fm3 header.b=WHE1LrPx;
+	dkim=pass (2048-bit key; unprotected) header.d=messagingengine.com header.i=@messagingengine.com header.a=rsa-sha256 header.s=fm1 header.b=ZALAVFOT;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=armlinux.org.uk (client-ip=2001:4d48:ad52:32c8:5054:ff:fe00:142; helo=pandora.armlinux.org.uk; envelope-from=linux+openbmc=lists.ozlabs.org@armlinux.org.uk; receiver=lists.ozlabs.org)
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=stwcx.xyz (client-ip=64.147.123.19; helo=wout3-smtp.messagingengine.com; envelope-from=patrick@stwcx.xyz; receiver=lists.ozlabs.org)
+Received: from wout3-smtp.messagingengine.com (wout3-smtp.messagingengine.com [64.147.123.19])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SqSm23V3pz3c1T
-	for <openbmc@lists.ozlabs.org>; Wed, 13 Dec 2023 06:07:10 +1100 (AEDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=WDyfD09PAON4LZuIakiggNErHuklPdxdPhsExRCINO0=; b=vMLMHfKuWjpOeCgqj+OLSIbKsG
-	WCGncmPzax+s7ErnI8PlwoAcxDgi7JafMKVhEz++U+ZVQ0XP+ohiULCrVXD/1dsSQSk5yjcm0zHBK
-	XJSYcF2axTnD1zNtKD5UhlW9zlwLRjW3JYr1H0mjXegUeu0pkeLE3MwLfePZ5fVAWlL23Am0I3PL5
-	NT+gIKBnCPzCh8jjkzWC4o0487W4InM+Or5UWQfd6BDMvNIV9pIIIE1jc+pWQizWWt+hHLFeDOT09
-	rdDi0N33mI6WDlJ+FmCYpG7ErF4HC1LSmRNgAAZM97w65nNqWkVz7kUwz5Y9zFE6ftvqJdadzd2vK
-	vwdMQbbQ==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:35082)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1rD85g-0007Hq-0s;
-	Tue, 12 Dec 2023 19:06:48 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1rD85e-0000gA-UH; Tue, 12 Dec 2023 19:06:46 +0000
-Date: Tue, 12 Dec 2023 19:06:46 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Serge Semin <fancer.lancer@gmail.com>
-Subject: Re: [PATCH net-next 06/16] net: pcs: xpcs: Avoid creating dummy XPCS
- MDIO device
-Message-ID: <ZXivRofyIpvmfOyR@shell.armlinux.org.uk>
-References: <20231205103559.9605-1-fancer.lancer@gmail.com>
- <20231205103559.9605-7-fancer.lancer@gmail.com>
- <ZW8pxM3RvyHJTwqH@shell.armlinux.org.uk>
- <ZW85iBGAAf5RAsN1@shell.armlinux.org.uk>
- <kagwzutwnbpiyc7mmtq7ka3vhffw4fejuti5vepnla74rocruh@tryn6lxhwbjz>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SqWrQ17PTz30Np
+	for <openbmc@lists.ozlabs.org>; Wed, 13 Dec 2023 08:26:12 +1100 (AEDT)
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+	by mailout.west.internal (Postfix) with ESMTP id BEA423200BC5;
+	Tue, 12 Dec 2023 16:26:06 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Tue, 12 Dec 2023 16:26:06 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stwcx.xyz; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1702416366; x=1702502766; bh=sSjdHmzFkJ
+	HMntNe3VnS1LhRCtKo8QqUyWAhXCZ70P0=; b=WHE1LrPxW/c8rB7vEZM04GO8ip
+	5VHrTmH2EiuzMtpXi7qK9BjH/yXJ/BnnZzBa27ERwWfjNJi8pPSZ6RaHD13SD6V+
+	4J/XoPBmGyiVUPbN+2zX3v3l6VDiyOJfgYn5nT3qLOAqoQB32pBtCziufVBaPH2Y
+	8771hbBxGdnpIrkR/ufUQx1xU3QzVEFouPT93JtzXrLWcamYKhR1fuT7jQ5xtDKL
+	iUFb4VaWsYc7YQmp5M5LvlAlIWALtX522k5Dd0BWDWAYOMTTuf9vK6UolxT/j3tV
+	gPa0RGQh7mkFnJUKjE7xeFPLCcSV32aH1QrXV+IemzsNiID1VcnCn7PsNaQA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1702416366; x=1702502766; bh=sSjdHmzFkJHMntNe3VnS1LhRCtKo
+	8QqUyWAhXCZ70P0=; b=ZALAVFOT8V9l0RR7qnrNk6F2hxjLrtUESIUurcE6THSA
+	9fmIEGOsicjxGlHgesaFVwHKsw700LnGCveDE3v47Y9o1GaLoc1rctCKtYTc5Epy
+	M63aLuY3M3NHpIaefxUdVqu37ylFH5tAjJ9EkDLHVW1LbhDYKCTvAFML3Ib9B1/k
+	7Q4XPrdraHLupRAlVETeJcNN/zCBySpCetTJHgXF1zspH6Yk6sNGZX22g13hn9SV
+	G0Eop9vSJPuNlhHCcfdmeqPG1EZ9kiL7EgPLhbQfWUbqLdWBBT4bBvzWP5GkJHNU
+	yDInIAlSmWEuq5xBrpA9imoS5YFCuG3E8MpAQOnTBQ==
+X-ME-Sender: <xms:7c94ZaZDzlyY1pev1KPioF2qwKEDY5yrNBWLiCm6a_HqcR7HbltFlA>
+    <xme:7c94ZdYNmG2Cr6cZF885glHShTnh6puvmRyfsMX59abrykm3dMdDcsABZ3-5ydXNo
+    gaDiZGWnvP4tDzzcoU>
+X-ME-Received: <xmr:7c94ZU-A1JLtmg6VEOOebYSjj_Wdi1cApuXbB9Bc-TMrLEEwm1fqKphraPMmmf88pkGTtZa_fJ9qPmCXQFVd1VPUAuH5TQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvkedrudelgedgudeghecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecufghrlhcuvffnffculdefhedmnecujfgurhepff
+    fhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuhghi
+    lhhlihgrmhhsuceophgrthhrihgtkhesshhtfigtgidrgiihiieqnecuggftrfgrthhtvg
+    hrnhepueefheeuhfdvkeevueegtdelheevteduleduffeuledutdejvdfghfettdetvefg
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphgrth
+    hrihgtkhesshhtfigtgidrgiihii
+X-ME-Proxy: <xmx:7c94ZcoHeX_10ufp_vfouJFsAnkn_ogLVEv64uPC7IjJBAVgdDjeBA>
+    <xmx:7c94ZVqRA5p6j1MkY6dJq-oeB6go2e6hhJU3XB1377wWfEwGVe4u3Q>
+    <xmx:7c94ZaRb-lPtsUUMRccqIPPGGuTWoRbV7sLuoIR0SVaqHMWZmPbIAQ>
+    <xmx:7s94ZUS4za0w9W-o_5zc2-rEkQDEaR8K6EofwLlLxxg9cHgX_vNj-A>
+Feedback-ID: i68a1478a:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 12 Dec 2023 16:26:05 -0500 (EST)
+Date: Tue, 12 Dec 2023 15:26:04 -0600
+From: Patrick Williams <patrick@stwcx.xyz>
+To: openbmc@lists.ozlabs.org
+Subject: Re: [PATCH dev-5.6 1/3] net/ncsi: Simplify Kconfig/dts control flow
+Message-ID: <ZXjP7D8bqdjfNre_@heinlein.vulture-banana.ts.net>
+References: <20231205234843.4013767-1-patrick@stwcx.xyz>
+ <ZW_HqYQADoCeFvYc@heinlein.vulture-banana.ts.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <kagwzutwnbpiyc7mmtq7ka3vhffw4fejuti5vepnla74rocruh@tryn6lxhwbjz>
+In-Reply-To: <ZW_HqYQADoCeFvYc@heinlein.vulture-banana.ts.net>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -69,75 +92,27 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: Jose Abreu <Jose.Abreu@synopsys.com>, Andrew Lunn <andrew@lunn.ch>, Conor Dooley <conor+dt@kernel.org>, Tomer Maimon <tmaimon77@gmail.com>, devicetree@vger.kernel.org, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, Alexandre Torgue <alexandre.torgue@foss.st.com>, Rob Herring <robh+dt@kernel.org>, Maxime Chevallier <maxime.chevallier@bootlin.com>, Eric Dumazet <edumazet@google.com>, Jose Abreu <joabreu@synopsys.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, "David S. Miller" <davem@davemloft.net>, linux-kernel@vger.kernel.org, Heiner Kallweit <hkallweit1@gmail.com>
+Cc: joel@jms.id.au
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Dec 12, 2023 at 06:26:16PM +0300, Serge Semin wrote:
-> I would have used in the first place if it was externally visible, but
-> it's defined as static. Do you suggest to make it global or ...
+Joel,
 
-That would be one option - I didn't make it visible when I introduced it
-beacuse there were no users for it.
+I realized I used "5.6" as the prefix on these when I meant "6.6".  Can
+these be picked up as is or do you need me to resent?
 
-> > At some point, we should implement
-> > mdiobus_get_mdiodev() which also deals with the refcount.
+On Tue, Dec 05, 2023 at 07:00:25PM -0600, Patrick Williams wrote:
+> On Tue, Dec 05, 2023 at 05:48:41PM -0600, Patrick Williams wrote:
+> > (cherry picked from commit c797ce168930ce3d62a9b7fc4d7040963ee6a01e)
 > 
-> ... create mdiobus_get_mdiodev() instead?
+> These patches were cherry-picked from the net-next tree and thus are
+> tentatively going into the 6.8 tree.  I've applied them onto our 6.5
+> tree, but they should apply cleanly to 6.6 also.
 > 
-> * Note in the commit message I mentioned that having a getter would be
-> * better than directly touching the mii_bus instance guts.
+> -- 
+> Patrick Williams
 
-What I'm thinking is:
 
-/**
- * mdiobus_get_mdiodev() - get a mdiodev for the specified bus
- * @bus: mii_bus to get mdio device from
- * @addr: mdio address of mdio device
- *
- * Return the struct mdio_device attached to the MII bus @bus at MDIO
- * address @addr. On success, the refcount on the device will be
- * increased, which must be dropped using mdio_device_put(), and the
- * mdio device returned. Otherwise, returns NULL.
- */
-struct mdio_device *mdiobus_get_mdiodev(struct mii_bus *bus, int addr)
-{
-	struct mdio_device *mdiodev;
-
-	mdiodev = mdiobus_find_device(bus, addr);
-	if (mdiodev)
-		get_device(&mdiodev->dev);
-	return mdiodev;
-}
-EXPORT_SYMBOL(mdiobus_get_mdiodev);
-
-should do it, and will hold a reference on the mdiodev structure (which
-won't be freed) and also on the mii_bus (since this device is a child
-of the bus device, the parent can't be released until the child has
-been, so struct mii_bus should at least stay around.)
-
-What would help the "the bus driver has been unbound" situation is if
-we took the mdio_lock on the bus, and then set the {read,write}{,_c45}
-functions to dummy stubs when the bus is being unregistered which then
-return e.g. -ENXIO. That will probably make unbinding/unloading all
-MDIO bus drivers safe from kernel oops, although phylib will spit out
-a non-useful backtrace if it tries an access. I don't think there's
-much which can be done about that - I did propose a patch to change
-that behaviour but apparently folk like having it!
-
-It isn't perfect - it's racy, but then accessing mdio_map[] is
-inherently racy due to no locking with mdiobus_.*register_device().
-At least if we have everyone using a proper getter function rather
-than directly fiddling with bus->mdio_map[]. We only have one driver
-that accesses it directly at the moment (mscc_ptp):
-
-                dev = phydev->mdio.bus->mdio_map[vsc8531->ts_base_addr];
-                phydev = container_of(dev, struct phy_device, mdio);
-
-                return phydev->priv;
-
-and that should really be using mdiobus_get_phy().
 
 -- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+Patrick Williams
