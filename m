@@ -2,52 +2,77 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id DD7A180E915
-	for <lists+openbmc@lfdr.de>; Tue, 12 Dec 2023 11:27:28 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id DF14580EE22
+	for <lists+openbmc@lfdr.de>; Tue, 12 Dec 2023 14:53:01 +0100 (CET)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=dtTH9ehf;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SqFDG2zDnz3dLT
-	for <lists+openbmc@lfdr.de>; Tue, 12 Dec 2023 21:27:26 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SqKnR2tXKz3bsS
+	for <lists+openbmc@lfdr.de>; Wed, 13 Dec 2023 00:52:59 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=softfail (domain owner discourages use of this host) smtp.mailfrom=gmail.com (client-ip=212.199.177.27; helo=herzl.nuvoton.co.il; envelope-from=tmaimon77@gmail.com; receiver=lists.ozlabs.org)
-Received: from herzl.nuvoton.co.il (unknown [212.199.177.27])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=dtTH9ehf;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::12e; helo=mail-lf1-x12e.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4SqFBR2YYqz3c13
-	for <openbmc@lists.ozlabs.org>; Tue, 12 Dec 2023 21:25:50 +1100 (AEDT)
-Received: from NTILML01.nuvoton.com (212.199.177.18.static.012.net.il [212.199.177.18])
-	by herzl.nuvoton.co.il (8.13.8/8.13.8) with ESMTP id 3BCA7DwW005577
-	for <openbmc@lists.ozlabs.org>; Tue, 12 Dec 2023 12:07:13 +0200
-Received: from NTHCCAS02.nuvoton.com (10.1.9.121) by NTILML01.nuvoton.com
- (10.190.1.46) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Tue, 12 Dec
- 2023 12:07:12 +0200
-Received: from NTHCCAS01.nuvoton.com (10.1.8.28) by NTHCCAS02.nuvoton.com
- (10.1.9.121) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.14; Tue, 12 Dec
- 2023 18:07:10 +0800
-Received: from taln58.nuvoton.co.il (10.191.1.178) by NTHCCAS01.nuvoton.com
- (10.1.8.28) with Microsoft SMTP Server id 15.1.2375.34 via Frontend
- Transport; Tue, 12 Dec 2023 18:07:09 +0800
-Received: from taln60.nuvoton.co.il (taln60 [10.191.1.180])
-	by taln58.nuvoton.co.il (Postfix) with ESMTP id 307205F5D9;
-	Tue, 12 Dec 2023 12:07:09 +0200 (IST)
-From: Tomer Maimon <tmaimon77@gmail.com>
-To: <arnd@arndb.de>, <pmenzel@molgen.mpg.de>, <robh+dt@kernel.org>,
-        <krzysztof.kozlowski+dt@linaro.org>, <conor+dt@kernel.org>,
-        <avifishman70@gmail.com>, <tali.perry1@gmail.com>, <joel@jms.id.au>,
-        <venture@google.com>, <yuenn@google.com>, <benjaminfair@google.com>,
-        <j.neuschaefer@gmx.net>
-Subject: [PATCH v2 3/3] soc: nuvoton: add NPCM BPC driver
-Date: Tue, 12 Dec 2023 12:07:03 +0200
-Message-ID: <20231212100703.3374555-4-tmaimon77@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20231212100703.3374555-1-tmaimon77@gmail.com>
-References: <20231212100703.3374555-1-tmaimon77@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4SqKms1Q7Nz30fF
+	for <openbmc@lists.ozlabs.org>; Wed, 13 Dec 2023 00:52:27 +1100 (AEDT)
+Received: by mail-lf1-x12e.google.com with SMTP id 2adb3069b0e04-50bf4f97752so7323619e87.1
+        for <openbmc@lists.ozlabs.org>; Tue, 12 Dec 2023 05:52:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1702389140; x=1702993940; darn=lists.ozlabs.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=cFnllcfa91c1zJc4Gntywu/a8dFRpUHFeO6CvIvFtu4=;
+        b=dtTH9ehf05oGsXb0QVvqV80TOAiBV4Zwh5rtWH0VBXSruDcuLACeJnab2jJKivMuC3
+         rBuHThGG1kZWH++Nrn/gapidRD9TUVo6G3NKLk4via79wUy2TgqWLRig8yY+h8NFrXcS
+         AgjQUxwvRhJZQi8NFhMsZLmo/bv8wCNUaaFF8Oz39YBoxvu2D7tUfDlDVETH5humkWqu
+         AAau2XwacP4pGr5bDqJjFBMbV0ZY9ZcTvEtr9x+UbZA810ZjcXPRpO/442eXVltm55lV
+         zv1mU6js7D3/spwDvgmcAqiHOlA6BPiBfFLnJMjEWni2j9kw2WdzJ3bTQaJftT3wi2Kt
+         AgeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702389140; x=1702993940;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=cFnllcfa91c1zJc4Gntywu/a8dFRpUHFeO6CvIvFtu4=;
+        b=jJQlF6CruXOlY3XK7WN55AKB+BC9w7aMWBtVOuwlI8fX0QnLj678TGy6avoH4NRmsh
+         4kx2uXB44M4BGCObsCIyJQLsUWccRxWlRhnw7CS/IAxZlqA53gXM3OVqkHfHJB0KXrIN
+         WU0oOBFw2EKKwrOxPTSZY7dYRF47timbRo7jYyKknikmYLccOl4oQtJofwdE/BK4kt7j
+         gaJiR0GXPYNYozFv2YZxFOaWbInvvqspLPlD7WyTR9TT++DzGF+AOZCBrnWhpQr7g1vl
+         3YgrahxyBYxIaco3aODZvg6urkK/Sz8yet3ilKZ1/Vyw3BG689GY1eKMdtAQlAd5sczY
+         MGQw==
+X-Gm-Message-State: AOJu0Yw0xQBNjlwylwG1qC9kBt4U5Apce3LWXgOv63gKieQICtzrvUNR
+	9FZ892QeN//Gf1AR6QHTgD8=
+X-Google-Smtp-Source: AGHT+IHQrUXSxuBn29LhUoJX1ePcDGg56snRNXblvB5VLnQAdFUNh09t5mpngpSLdnTnZAS3jpzzfw==
+X-Received: by 2002:a05:6512:3b8d:b0:50c:c8b8:669a with SMTP id g13-20020a0565123b8d00b0050cc8b8669amr3958930lfv.92.1702389139829;
+        Tue, 12 Dec 2023 05:52:19 -0800 (PST)
+Received: from mobilestation ([178.176.56.174])
+        by smtp.gmail.com with ESMTPSA id g4-20020a0565123b8400b0050bfb2a5661sm1363163lfv.103.2023.12.12.05.52.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 12 Dec 2023 05:52:19 -0800 (PST)
+Date: Tue, 12 Dec 2023 16:52:15 +0300
+From: Serge Semin <fancer.lancer@gmail.com>
+To: Andrew Lunn <andrew@lunn.ch>, 
+	"Russell King (Oracle)" <linux@armlinux.org.uk>
+Subject: Re: [PATCH net-next 06/16] net: pcs: xpcs: Avoid creating dummy XPCS
+ MDIO device
+Message-ID: <na6krkoco7pmsl62dfuj2xlrvpsnod74ptpfyy6gv7dzwmowga@mzsiknjian2i>
+References: <20231205103559.9605-1-fancer.lancer@gmail.com>
+ <20231205103559.9605-7-fancer.lancer@gmail.com>
+ <ZW8ASzkC9IFFlxkV@shell.armlinux.org.uk>
+ <rgp33mm4spbpm5tmgxurkhy4is3lz3z62rz64rni2pygteyrit@zwflw2ejdkn7>
+ <e1806c15-757e-4af0-a8be-075aa77918c2@lunn.ch>
+ <ZW840qQMbVRto442@shell.armlinux.org.uk>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-NotSetDelaration: True
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ZW840qQMbVRto442@shell.armlinux.org.uk>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -59,445 +84,111 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: linux-gpio@vger.kernel.org, openbmc@lists.ozlabs.org, Tomer Maimon <tmaimon77@gmail.com>, linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Cc: Jose Abreu <Jose.Abreu@synopsys.com>, devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Tomer Maimon <tmaimon77@gmail.com>, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, Alexandre Torgue <alexandre.torgue@foss.st.com>, Rob Herring <robh+dt@kernel.org>, Maxime Chevallier <maxime.chevallier@bootlin.com>, Eric Dumazet <edumazet@google.com>, Jose Abreu <joabreu@synopsys.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, "David S. Miller" <davem@davemloft.net>, linux-kernel@vger.kernel.org, Heiner Kallweit <hkallweit1@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-Add Nuvoton BMC NPCM BIOS post code (BPC) driver.
+Hi Andrew, Russell
 
-The NPCM BPC monitoring two configurable I/O address written by the host
-on the bus.
+Sorry for the delay with response. I had to refresh my understanding
+of the series since it was created sometime ago and I already managed
+to forget some of its aspects (particularly regarding the MDIO-bus
+PHY-mask semantics).
 
-Signed-off-by: Tomer Maimon <tmaimon77@gmail.com>
----
- drivers/soc/nuvoton/Kconfig    |   9 +
- drivers/soc/nuvoton/Makefile   |   1 +
- drivers/soc/nuvoton/npcm-bpc.c | 388 +++++++++++++++++++++++++++++++++
- 3 files changed, 398 insertions(+)
- create mode 100644 drivers/soc/nuvoton/npcm-bpc.c
+On Tue, Dec 05, 2023 at 02:50:58PM +0000, Russell King (Oracle) wrote:
+> On Tue, Dec 05, 2023 at 02:52:24PM +0100, Andrew Lunn wrote:
+> > On Tue, Dec 05, 2023 at 02:31:41PM +0300, Serge Semin wrote:
+> > > On Tue, Dec 05, 2023 at 10:49:47AM +0000, Russell King (Oracle) wrote:
+> > > > On Tue, Dec 05, 2023 at 01:35:27PM +0300, Serge Semin wrote:
+> > > > > If the DW XPCS MDIO devices are either left unmasked for being auto-probed
+> > > > > or explicitly registered in the MDIO subsystem by means of the
+> > > > > mdiobus_register_board_info() method there is no point in creating the
+> > > > > dummy MDIO device instance in order to get the DW XPCS handler since the
+> > > > > MDIO core subsystem will create the device during the MDIO bus
+> > > > > registration procedure.
+> > > > 
+> > > 
+> > > > Please reword this overly long sentence.
+> > > 
+> > > Ok.
+> > > 
+> > > > 
+> > > > If they're left unmasked, what prevents them being created as PHY
+> > > > devices?
+> > > 
+> > > Not sure I fully get what you meant. If they are left unmasked the
+> > > MDIO-device descriptor will be created by the MDIO subsystem anyway.
+> > > What the point in creating another one?
+> > 
 
-diff --git a/drivers/soc/nuvoton/Kconfig b/drivers/soc/nuvoton/Kconfig
-index d5102f5f0c28..ebd162633942 100644
---- a/drivers/soc/nuvoton/Kconfig
-+++ b/drivers/soc/nuvoton/Kconfig
-@@ -2,6 +2,15 @@
- 
- menu "NUVOTON SoC drivers"
- 
-+config NPCM_BPC
-+	tristate "NPCM BIOS Post Code support"
-+	depends on (ARCH_NPCM || COMPILE_TEST)
-+	help
-+	  Provides NPCM driver to control the BIOS Post Code
-+	  interface which allows the BMC to monitor and save
-+	  the data written by the host to an arbitrary I/O port,
-+	  the BPC is connected to the host thourgh LPC or eSPI bus.
-+
- config WPCM450_SOC
- 	tristate "Nuvoton WPCM450 SoC driver"
- 	default y if ARCH_WPCM450
-diff --git a/drivers/soc/nuvoton/Makefile b/drivers/soc/nuvoton/Makefile
-index e30317b4e829..c6c96079c6e9 100644
---- a/drivers/soc/nuvoton/Makefile
-+++ b/drivers/soc/nuvoton/Makefile
-@@ -1,2 +1,3 @@
- # SPDX-License-Identifier: GPL-2.0-only
-+obj-$(CONFIG_NPCM_BPC)		+= npcm-bpc.o
- obj-$(CONFIG_WPCM450_SOC)	+= wpcm450-soc.o
-diff --git a/drivers/soc/nuvoton/npcm-bpc.c b/drivers/soc/nuvoton/npcm-bpc.c
-new file mode 100644
-index 000000000000..149b05f0ac77
---- /dev/null
-+++ b/drivers/soc/nuvoton/npcm-bpc.c
-@@ -0,0 +1,388 @@
-+// SPDX-License-Identifier: GPL-2.0
-+// Copyright (c) 2020 Nuvoton Technology corporation.
-+
-+#include <linux/fs.h>
-+#include <linux/bitops.h>
-+#include <linux/interrupt.h>
-+#include <linux/kfifo.h>
-+#include <linux/mfd/syscon.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/platform_device.h>
-+#include <linux/regmap.h>
-+#include <linux/miscdevice.h>
-+#include <linux/poll.h>
-+
-+#define DEVICE_NAME	"npcm-bpc"
-+
-+#define NUM_BPC_CHANNELS	2
-+#define DW_PAD_SIZE		3
-+
-+/* BIOS POST Code FIFO Registers */
-+#define NPCM_BPCFA2L_REG	0x2 //BIOS POST Code FIFO Address 2 LSB
-+#define NPCM_BPCFA2M_REG	0x4 //BIOS POST Code FIFO Address 2 MSB
-+#define NPCM_BPCFEN_REG		0x6 //BIOS POST Code FIFO Enable
-+#define NPCM_BPCFSTAT_REG	0x8 //BIOS POST Code FIFO Status
-+#define NPCM_BPCFDATA_REG	0xA //BIOS POST Code FIFO Data
-+#define NPCM_BPCFMSTAT_REG	0xC //BIOS POST Code FIFO Miscellaneous Status
-+#define NPCM_BPCFA1L_REG	0x10 //BIOS POST Code FIFO Address 1 LSB
-+#define NPCM_BPCFA1M_REG	0x12 //BIOS POST Code FIFO Address 1 MSB
-+
-+/* BIOS register data */
-+#define FIFO_IOADDR1_ENABLE	0x80
-+#define FIFO_IOADDR2_ENABLE	0x40
-+
-+/* BPC interface package and structure definition */
-+#define BPC_KFIFO_SIZE		0x400
-+
-+/* BPC register data */
-+#define FIFO_DATA_VALID		0x80
-+#define FIFO_OVERFLOW		0x20
-+#define FIFO_READY_INT_ENABLE	0x8
-+#define FIFO_DWCAPTURE		0x4
-+#define FIFO_ADDR_DECODE	0x1
-+
-+/* Host Reset */
-+#define HOST_RESET_INT_ENABLE	0x10
-+#define HOST_RESET_CHANGED	0x40
-+
-+struct npcm_bpc_channel {
-+	struct npcm_bpc	*data;
-+	struct kfifo		fifo;
-+	wait_queue_head_t	wq;
-+	bool			host_reset;
-+	struct miscdevice	miscdev;
-+};
-+
-+struct npcm_bpc {
-+	void __iomem		*base;
-+	struct device		*dev;
-+	int			irq;
-+	bool			en_dwcap;
-+	struct npcm_bpc_channel	ch[NUM_BPC_CHANNELS];
-+};
-+
-+static struct npcm_bpc_channel *npcm_file_to_ch(struct file *file)
-+{
-+	return container_of(file->private_data, struct npcm_bpc_channel,
-+			    miscdev);
-+}
-+
-+static ssize_t npcm_bpc_read(struct file *file, char __user *buffer,
-+			     size_t count, loff_t *ppos)
-+{
-+	struct npcm_bpc_channel *chan = npcm_file_to_ch(file);
-+	struct npcm_bpc *bpc = chan->data;
-+	unsigned int copied;
-+	int cond_size = 1;
-+	int ret = 0;
-+
-+	if (bpc->en_dwcap)
-+		cond_size = 3;
-+
-+	if (kfifo_len(&chan->fifo) < cond_size) {
-+		if (file->f_flags & O_NONBLOCK)
-+			return -EAGAIN;
-+
-+		ret = wait_event_interruptible
-+			(chan->wq, kfifo_len(&chan->fifo) > cond_size);
-+		if (ret == -ERESTARTSYS)
-+			return -EINTR;
-+	}
-+
-+	ret = kfifo_to_user(&chan->fifo, buffer, count, &copied);
-+
-+	return ret ? ret : copied;
-+}
-+
-+static __poll_t npcm_bpc_poll(struct file *file, struct poll_table_struct *pt)
-+{
-+	struct npcm_bpc_channel *chan = npcm_file_to_ch(file);
-+	__poll_t mask = 0;
-+
-+	poll_wait(file, &chan->wq, pt);
-+	if (!kfifo_is_empty(&chan->fifo))
-+		mask |= POLLIN;
-+
-+	if (chan->host_reset) {
-+		mask |= POLLHUP;
-+		chan->host_reset = false;
-+	}
-+
-+	return mask;
-+}
-+
-+static const struct file_operations npcm_bpc_fops = {
-+	.owner		= THIS_MODULE,
-+	.read		= npcm_bpc_read,
-+	.poll		= npcm_bpc_poll,
-+	.llseek		= noop_llseek,
-+};
-+
-+static irqreturn_t npcm_bpc_irq(int irq, void *arg)
-+{
-+	struct npcm_bpc *bpc = arg;
-+	u8 fifo_st, host_st, data;
-+	bool isr_flag = false;
-+	u8 last_addr_bit = 0;
-+	u8 padzero[3] = {0};
-+	u8 addr_index = 0;
-+
-+	fifo_st = ioread8(bpc->base + NPCM_BPCFSTAT_REG);
-+	while (FIFO_DATA_VALID & fifo_st) {
-+		 /* If dwcapture enabled only channel 0 (FIFO 0) used */
-+		if (!bpc->en_dwcap)
-+			addr_index = fifo_st & FIFO_ADDR_DECODE;
-+		else
-+			last_addr_bit = fifo_st & FIFO_ADDR_DECODE;
-+
-+		/* Read data from FIFO to clear interrupt */
-+		data = ioread8(bpc->base + NPCM_BPCFDATA_REG);
-+		if (kfifo_is_full(&bpc->ch[addr_index].fifo))
-+			kfifo_skip(&bpc->ch[addr_index].fifo);
-+		kfifo_put(&bpc->ch[addr_index].fifo, data);
-+		if (fifo_st & FIFO_OVERFLOW)
-+			dev_warn(bpc->dev, "BIOS Post Codes FIFO Overflow\n");
-+
-+		fifo_st = ioread8(bpc->base + NPCM_BPCFSTAT_REG);
-+		if (bpc->en_dwcap && last_addr_bit) {
-+			if ((fifo_st & FIFO_ADDR_DECODE) ||
-+			    ((FIFO_DATA_VALID & fifo_st) == 0)) {
-+				while (kfifo_avail(&bpc->ch[addr_index].fifo) < DW_PAD_SIZE)
-+					kfifo_skip(&bpc->ch[addr_index].fifo);
-+				kfifo_in(&bpc->ch[addr_index].fifo,
-+					 padzero, DW_PAD_SIZE);
-+			}
-+		}
-+		isr_flag = true;
-+	}
-+
-+	host_st = ioread8(bpc->base + NPCM_BPCFMSTAT_REG);
-+	if (host_st & HOST_RESET_CHANGED) {
-+		iowrite8(HOST_RESET_CHANGED,
-+			 bpc->base + NPCM_BPCFMSTAT_REG);
-+		bpc->ch[addr_index].host_reset = true;
-+		isr_flag = true;
-+	}
-+
-+	if (isr_flag) {
-+		wake_up_interruptible(&bpc->ch[addr_index].wq);
-+		return IRQ_HANDLED;
-+	}
-+
-+	return IRQ_NONE;
-+}
-+
-+static int npcm_bpc_config_irq(struct npcm_bpc *bpc,
-+			       struct platform_device *pdev)
-+{
-+	struct device *dev = &pdev->dev;
-+	int rc;
-+
-+	bpc->irq = platform_get_irq(pdev, 0);
-+	if (bpc->irq < 0) {
-+		dev_err(dev, "get IRQ failed\n");
-+		return bpc->irq;
-+	}
-+
-+	rc = devm_request_irq(dev, bpc->irq,
-+			      npcm_bpc_irq, IRQF_SHARED,
-+			      DEVICE_NAME, bpc);
-+	if (rc < 0) {
-+		dev_warn(dev, "Unable to request IRQ %d\n", bpc->irq);
-+		return rc;
-+	}
-+
-+	return 0;
-+}
-+
-+static int npcm_enable_bpc(struct npcm_bpc *bpc, struct device *dev,
-+			   int channel, u16 host_port)
-+{
-+	u8 addr_en, reg_en;
-+	int err;
-+
-+	init_waitqueue_head(&bpc->ch[channel].wq);
-+
-+	err = kfifo_alloc(&bpc->ch[channel].fifo, BPC_KFIFO_SIZE,
-+			  GFP_KERNEL);
-+	if (err)
-+		return err;
-+
-+	bpc->ch[channel].miscdev.minor = MISC_DYNAMIC_MINOR;
-+	bpc->ch[channel].miscdev.name =
-+		devm_kasprintf(dev, GFP_KERNEL, "%s%d", DEVICE_NAME, channel);
-+	bpc->ch[channel].miscdev.fops = &npcm_bpc_fops;
-+	bpc->ch[channel].miscdev.parent = dev;
-+	err = misc_register(&bpc->ch[channel].miscdev);
-+	if (err)
-+		return err;
-+
-+	bpc->ch[channel].data = bpc;
-+	bpc->ch[channel].host_reset = false;
-+
-+	/* Enable host snoop channel at requested port */
-+	switch (channel) {
-+	case 0:
-+		addr_en = FIFO_IOADDR1_ENABLE;
-+		iowrite8((u8)host_port & 0xFF,
-+			 bpc->base + NPCM_BPCFA1L_REG);
-+		iowrite8((u8)(host_port >> 8),
-+			 bpc->base + NPCM_BPCFA1M_REG);
-+		break;
-+	case 1:
-+		addr_en = FIFO_IOADDR2_ENABLE;
-+		iowrite8((u8)host_port & 0xFF,
-+			 bpc->base + NPCM_BPCFA2L_REG);
-+		iowrite8((u8)(host_port >> 8),
-+			 bpc->base + NPCM_BPCFA2M_REG);
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
-+	if (bpc->en_dwcap)
-+		addr_en = FIFO_DWCAPTURE;
-+
-+	/*
-+	 * Enable FIFO Ready Interrupt, FIFO Capture of I/O addr,
-+	 * and Host Reset
-+	 */
-+	reg_en = ioread8(bpc->base + NPCM_BPCFEN_REG);
-+	iowrite8(reg_en | addr_en | FIFO_READY_INT_ENABLE |
-+		 HOST_RESET_INT_ENABLE, bpc->base + NPCM_BPCFEN_REG);
-+
-+	return 0;
-+}
-+
-+static void npcm_disable_bpc(struct npcm_bpc *bpc, int channel)
-+{
-+	u8 reg_en;
-+
-+	switch (channel) {
-+	case 0:
-+		reg_en = ioread8(bpc->base + NPCM_BPCFEN_REG);
-+		if (bpc->en_dwcap)
-+			iowrite8(reg_en & ~FIFO_DWCAPTURE,
-+				 bpc->base + NPCM_BPCFEN_REG);
-+		else
-+			iowrite8(reg_en & ~FIFO_IOADDR1_ENABLE,
-+				 bpc->base + NPCM_BPCFEN_REG);
-+		break;
-+	case 1:
-+		reg_en = ioread8(bpc->base + NPCM_BPCFEN_REG);
-+		iowrite8(reg_en & ~FIFO_IOADDR2_ENABLE,
-+			 bpc->base + NPCM_BPCFEN_REG);
-+		break;
-+	default:
-+		return;
-+	}
-+
-+	if (!(reg_en & (FIFO_IOADDR1_ENABLE | FIFO_IOADDR2_ENABLE)))
-+		iowrite8(reg_en &
-+			 ~(FIFO_READY_INT_ENABLE | HOST_RESET_INT_ENABLE),
-+			 bpc->base + NPCM_BPCFEN_REG);
-+
-+	kfifo_free(&bpc->ch[channel].fifo);
-+	misc_deregister(&bpc->ch[channel].miscdev);
-+}
-+
-+static int npcm_bpc_probe(struct platform_device *pdev)
-+{
-+	struct npcm_bpc *bpc;
-+	struct device *dev;
-+	u32 port;
-+	int err;
-+
-+	dev = &pdev->dev;
-+
-+	bpc = devm_kzalloc(dev, sizeof(*bpc), GFP_KERNEL);
-+	if (!bpc)
-+		return -ENOMEM;
-+
-+	bpc->base = devm_platform_ioremap_resource(pdev, 0);
-+	if (IS_ERR(bpc->base))
-+		return PTR_ERR(bpc->base);
-+
-+	dev_set_drvdata(&pdev->dev, bpc);
-+
-+	err = of_property_read_u32_index(dev->of_node, "nuvoton,monitor-ports",
-+					 0, &port);
-+	if (err) {
-+		dev_err(dev, "no monitor ports configured\n");
-+		return -ENODEV;
-+	}
-+
-+	bpc->en_dwcap =
-+		of_property_read_bool(dev->of_node, "nuvoton,bpc-en-dwcapture");
-+
-+	bpc->dev = dev;
-+
-+	err = npcm_bpc_config_irq(bpc, pdev);
-+	if (err)
-+		return err;
-+
-+	err = npcm_enable_bpc(bpc, dev, 0, port);
-+	if (err) {
-+		dev_err(dev, "Enable BIOS post code I/O port 0 failed\n");
-+		return err;
-+	}
-+
-+	/*
-+	 * Configuration of second BPC channel port is optional
-+	 * Double-Word Capture ignoring address 2
-+	 */
-+	if (!bpc->en_dwcap) {
-+		if (of_property_read_u32_index(dev->of_node,
-+					       "nuvoton,monitor-ports", 1,
-+					       &port) == 0) {
-+			err = npcm_enable_bpc(bpc, dev, 1, port);
-+			if (err) {
-+				dev_err(dev, "Enable BIOS post code I/O port 1 failed, disable I/O port 0\n");
-+				npcm_disable_bpc(bpc, 0);
-+				return err;
-+			}
-+		}
-+	}
-+
-+	pr_info("NPCM BIOS Post Code probe\n");
-+
-+	return err;
-+}
-+
-+static int npcm_bpc_remove(struct platform_device *pdev)
-+{
-+	struct npcm_bpc *bpc = dev_get_drvdata(&pdev->dev);
-+	u8 reg_en;
-+
-+	reg_en = ioread8(bpc->base + NPCM_BPCFEN_REG);
-+
-+	if (reg_en & FIFO_IOADDR1_ENABLE)
-+		npcm_disable_bpc(bpc, 0);
-+	if (reg_en & FIFO_IOADDR2_ENABLE)
-+		npcm_disable_bpc(bpc, 1);
-+
-+	return 0;
-+}
-+
-+static const struct of_device_id npcm_bpc_match[] = {
-+	{ .compatible = "nuvoton,npcm750-bpc" },
-+	{ .compatible = "nuvoton,npcm845-bpc" },
-+	{ },
-+};
-+
-+static struct platform_driver npcm_bpc_driver = {
-+	.driver = {
-+		.name		= DEVICE_NAME,
-+		.of_match_table = npcm_bpc_match,
-+	},
-+	.probe = npcm_bpc_probe,
-+	.remove = npcm_bpc_remove,
-+};
-+
-+module_platform_driver(npcm_bpc_driver);
-+
-+MODULE_DEVICE_TABLE(of, npcm_bpc_match);
-+MODULE_LICENSE("GPL");
-+MODULE_AUTHOR("Tomer Maimon <tomer.maimon@nuvoton.com>");
-+MODULE_DESCRIPTION("NPCM BIOS post code monitoring device driver");
--- 
-2.34.1
+> > Saying what Russell said, in a different way:
+> > 
+> > /*
+> >  * Return true if the child node is for a phy. It must either:
+> >  * o Compatible string of "ethernet-phy-idX.X"
+> >  * o Compatible string of "ethernet-phy-ieee802.3-c45"
+> >  * o Compatible string of "ethernet-phy-ieee802.3-c22"
+> >  * o In the white list above (and issue a warning)
+> >  * o No compatibility string
+> >  *
+> >  * A device which is not a phy is expected to have a compatible string
+> >  * indicating what sort of device it is.
+> >  */
+> > bool of_mdiobus_child_is_phy(struct device_node *child)
+> > 
+> > So when walking the bus, if a node is found which fits these criteria,
+> > its assumed to be a PHY. 
+> > 
+> > Anything on the MDIO bus which is not a PHY needs to use a compatible.
+> 
+> Right. I'd actually forgotten about the firmware-based walking, and
+> was thinking more of the non-firmware bus scanning as the commit
+> message was talking about being _unmasked_ and the only mask we have
+> is bus->phy_mask.
 
+Back then when I was working on the series and up until last week I
+had thought that having a device unmasked in mii_bus->phy_mask was a
+correct way to do for _any_ device including our DW XPCS (which BTW
+looks like a normal C45 PHY and if synthesized with a PMA attached
+could be passed to be handled by the PHY subsystem). Can't remember
+why exactly I came to that thought, but likely it was due to finding
+out examples of having mii_bus->phy_mask uninitialized in some of the
+PCS use-cases, like in drivers/net/dsa/ocelot/felix_vsc9959.c (but in
+case of DW XPCS the mask is always set indeed). Anyway obviously I was
+wrong and PHY-device is supposed to be created only if a device is
+actual PHY and handled by the PHY subsystem drivers. So the correct
+ways to create PHY MDIO-devices are:
+
+1. Call mdiobus_register() with PHY-addresses unmasked
+2. Call of_mdiobus_register() for a DT-node with sub-nodes for which
+of_mdiobus_child_is_phy() returns true.
+
+and the correct ways to create non-PHY MDIO-devices are:
+
+1. Call mdiobus_register() with non-PHY-addresses masked and have
+those non-PHY device registered by mdiobus_register_board_info()
+beforehand.
+2. Call of_mdiobus_register() with DT sub-nodes having specific
+compatible string (based on the of_mdiobus_child_is_phy() semantics).
+
+Only in case of having a non-PHY device registered it's allowed to
+use it in in non-PHY MDIO driver, like PCS, etc. Right?
+
+Please correct me if I am wrong or miss something.
+
+> 
+> It seems to me that this is yet another case of a really confusing
+> commit message making review harder than it needs to be.
+
+From the perspective described above the patch log is indeed partly
+wrong. Sorry about that. I shouldn't have mentioned the mask at all
+but instead just listed two use-cases of creating the non-PHY
+MDIO-devices. I'll fix that in v2.
+
+-Serge(y)
+
+> 
+> -- 
+> RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+> FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+> 
