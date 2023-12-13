@@ -2,76 +2,61 @@ Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
 Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id 06B7781181B
-	for <lists+openbmc@lfdr.de>; Wed, 13 Dec 2023 16:48:05 +0100 (CET)
+	by mail.lfdr.de (Postfix) with ESMTPS id 07CC381198F
+	for <lists+openbmc@lfdr.de>; Wed, 13 Dec 2023 17:33:19 +0100 (CET)
 Authentication-Results: lists.ozlabs.org;
-	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=cIfWWacl;
+	dkim=fail reason="signature verification failed" (2048-bit key; secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256 header.s=pandora-2019 header.b=F9FacYpA;
 	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4Sr0Hk4vRfz3c2C
-	for <lists+openbmc@lfdr.de>; Thu, 14 Dec 2023 02:48:02 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4Sr1Hw53cbz3c55
+	for <lists+openbmc@lfdr.de>; Thu, 14 Dec 2023 03:33:16 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
 Authentication-Results: lists.ozlabs.org;
-	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=cIfWWacl;
+	dkim=pass (2048-bit key; secure) header.d=armlinux.org.uk header.i=@armlinux.org.uk header.a=rsa-sha256 header.s=pandora-2019 header.b=F9FacYpA;
 	dkim-atps=neutral
-Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::229; helo=mail-lj1-x229.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
+Authentication-Results: lists.ozlabs.org; spf=none (no SPF record) smtp.mailfrom=armlinux.org.uk (client-ip=2001:4d48:ad52:32c8:5054:ff:fe00:142; helo=pandora.armlinux.org.uk; envelope-from=linux+openbmc=lists.ozlabs.org@armlinux.org.uk; receiver=lists.ozlabs.org)
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [IPv6:2001:4d48:ad52:32c8:5054:ff:fe00:142])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	 key-exchange ECDHE (prime256v1) server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sr0H50Zmsz3brC
-	for <openbmc@lists.ozlabs.org>; Thu, 14 Dec 2023 02:47:27 +1100 (AEDT)
-Received: by mail-lj1-x229.google.com with SMTP id 38308e7fff4ca-2cb20c82a79so76047951fa.3
-        for <openbmc@lists.ozlabs.org>; Wed, 13 Dec 2023 07:47:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1702482443; x=1703087243; darn=lists.ozlabs.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EhvWEh807oUIcSem4VDgk6dTPM+cYeOF5hlufV89DoI=;
-        b=cIfWWaclBpImgn2Gj52kL5XClstXjvFt/O+ZBBvJlbHUyWgJgNLSP0BDNHSnQ5HgKr
-         Aap565to2hQMYgkX9Hsah9v2imeFVSzX39wtKyf0F8p/J+TwFeX+iDcwqvgvm8bR+ZCw
-         4WZwRr873MAAc2KV0ockNsWx2xGGipvuCuuuw1XPBu4NwwGdoms+eLZb9jOl7KTC4AfB
-         p1EHNSny+ey/g7zD5leucVQI+INev5m0Zu+yJpEUYJWK7grLFvV5tnI18lLDq44K4dzI
-         duSWki+AvCgHxTvWp0mppzUcGlx+XwdKKavC7p60HDILmh5lWSu3+a62DhurhrQhrNwW
-         +enQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1702482443; x=1703087243;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EhvWEh807oUIcSem4VDgk6dTPM+cYeOF5hlufV89DoI=;
-        b=Tf4EKVRcA+CSp76Q9hwXVSjG1ydResizDaoJi6YR6AXfZJxyH4AExjhWJR7E41Qo9d
-         QDBtrc1nGiWNJAMvVeqktdZIRVTMw64zGYn18l+tWJ0pNUacq0+n4hwKOv3/azMBuClf
-         N0eEXTb+Cg/OkotdKvjNhM1qGNh8vryEbaOgOacoQrZq/z05jp4m6vvpfDE02yjImz8V
-         EZvQ/Juyv50VjVGHmjd2nRUi2RwK1b/2cxJrl6qA+AClXVM2jxBfsCqpuqnQz6ghplX2
-         DxRLGjSqcM8UNTKFdx3Yuc99DACGECSg4eUEMcaZqCWr/WVC2rKy0xGHlViNZ+Q1tzcH
-         Ub6A==
-X-Gm-Message-State: AOJu0YyXf30uH6qfhdAAYA17oV/f9iWEBflXEGigcd2jh7CZJJmlq29u
-	r6hCbQ2IqK1U0VZvEdIVKb8=
-X-Google-Smtp-Source: AGHT+IHfEac18zoY0gBPJcbuOObR91TUzD3b56b0y+7kI2XbIcuwhPK2c/DDUaHKl+amw8uRZizW/A==
-X-Received: by 2002:a2e:a103:0:b0:2cc:1dc8:4e96 with SMTP id s3-20020a2ea103000000b002cc1dc84e96mr4567741ljl.24.1702482442739;
-        Wed, 13 Dec 2023 07:47:22 -0800 (PST)
-Received: from mobilestation ([178.176.56.174])
-        by smtp.gmail.com with ESMTPSA id p8-20020a2e8048000000b002ca026f777fsm1867436ljg.48.2023.12.13.07.47.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Dec 2023 07:47:22 -0800 (PST)
-Date: Wed, 13 Dec 2023 18:47:19 +0300
-From: Serge Semin <fancer.lancer@gmail.com>
-To: "Russell King (Oracle)" <linux@armlinux.org.uk>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sr1HM6BwHz2xPb
+	for <openbmc@lists.ozlabs.org>; Thu, 14 Dec 2023 03:32:46 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=N/E28jRK/viDvwysZ67eINh1B/xnv1AANrAAo+m468A=; b=F9FacYpAvC8VBP83kNMIpHTuVL
+	StsEhcooImqRL0oa7xdnDBllK6KkpkYTk4gTnuRIertAdiNTHp46DxpNDNkPXUyY+qmdUNEk+D1SA
+	Y6EeaRQWlHQl0ztEkl4ENZhDEj2QYIJeIWfrxOu0/3+b4418i6lBBlF44tHLDS/PHuAaewGCrZFZO
+	e/l1KFXkDC9rYxkwhe7qw3Vq8NOoXmrGZmZZxGEaWXG7UPAXtkBRH71zg7IecLdbT96sUJqvLbBTh
+	bSZIRZgFS8fOdfUo0i+S0ewDHQU3lMDUgcCJ3dOOtUMa5WJS93cn8lz7MuT+uBAgeA26m9zUfusQ+
+	Q5lacQ0Q==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:59474)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.96)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1rDS9o-0000HK-1N;
+	Wed, 13 Dec 2023 16:32:24 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1rDS9l-0001eT-VG; Wed, 13 Dec 2023 16:32:21 +0000
+Date: Wed, 13 Dec 2023 16:32:21 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Serge Semin <fancer.lancer@gmail.com>
 Subject: Re: [PATCH net-next 06/16] net: pcs: xpcs: Avoid creating dummy XPCS
  MDIO device
-Message-ID: <eeyhdczfpgxwxbtljjc7tkjwi64avqkn2h7tehh56xq6pss3x3@7cun56p633o4>
+Message-ID: <ZXnclVEz10K2XD2+@shell.armlinux.org.uk>
 References: <20231205103559.9605-1-fancer.lancer@gmail.com>
  <20231205103559.9605-7-fancer.lancer@gmail.com>
  <ZW8pxM3RvyHJTwqH@shell.armlinux.org.uk>
- <ZW85iBGAAf5RAsN1@shell.armlinux.org.uk>
- <kagwzutwnbpiyc7mmtq7ka3vhffw4fejuti5vepnla74rocruh@tryn6lxhwbjz>
- <ZXivRofyIpvmfOyR@shell.armlinux.org.uk>
+ <gbkgtb4yp3cwyw7xcuhmkdl3io2wlia2gska2xmjbwjvhigpz3@w52b6tdyugqo>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <ZXivRofyIpvmfOyR@shell.armlinux.org.uk>
+In-Reply-To: <gbkgtb4yp3cwyw7xcuhmkdl3io2wlia2gska2xmjbwjvhigpz3@w52b6tdyugqo>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -87,85 +72,69 @@ Cc: Jose Abreu <Jose.Abreu@synopsys.com>, Andrew Lunn <andrew@lunn.ch>, Conor Do
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Dec 12, 2023 at 07:06:46PM +0000, Russell King (Oracle) wrote:
-> On Tue, Dec 12, 2023 at 06:26:16PM +0300, Serge Semin wrote:
-> > I would have used in the first place if it was externally visible, but
-> > it's defined as static. Do you suggest to make it global or ...
+On Wed, Dec 13, 2023 at 03:01:45AM +0300, Serge Semin wrote:
+> On Tue, Dec 05, 2023 at 01:46:44PM +0000, Russell King (Oracle) wrote:
+> > xpcs_create_mdiodev() as it originally stood creates the mdiodev from
+> > the bus/address, and then passes that to xpcs_create(). Once
+> > xpcs_create() has finished its work (irrespective of whether it was
+> > successful or not) we're done with the mdiodev in this function, so
+> > the reference is _always_ put.
 > 
-> That would be one option - I didn't make it visible when I introduced it
-> beacuse there were no users for it.
-> 
-> > > At some point, we should implement
-> > > mdiobus_get_mdiodev() which also deals with the refcount.
-> > 
-> > ... create mdiobus_get_mdiodev() instead?
-> > 
-> > * Note in the commit message I mentioned that having a getter would be
-> > * better than directly touching the mii_bus instance guts.
-> 
-> What I'm thinking is:
-> 
-> /**
->  * mdiobus_get_mdiodev() - get a mdiodev for the specified bus
->  * @bus: mii_bus to get mdio device from
->  * @addr: mdio address of mdio device
->  *
->  * Return the struct mdio_device attached to the MII bus @bus at MDIO
->  * address @addr. On success, the refcount on the device will be
->  * increased, which must be dropped using mdio_device_put(), and the
->  * mdio device returned. Otherwise, returns NULL.
->  */
-> struct mdio_device *mdiobus_get_mdiodev(struct mii_bus *bus, int addr)
-> {
-> 	struct mdio_device *mdiodev;
-> 
-> 	mdiodev = mdiobus_find_device(bus, addr);
-> 	if (mdiodev)
-> 		get_device(&mdiodev->dev);
-> 	return mdiodev;
-> }
-> EXPORT_SYMBOL(mdiobus_get_mdiodev);
-> 
-> should do it, and will hold a reference on the mdiodev structure (which
-> won't be freed) and also on the mii_bus (since this device is a child
-> of the bus device, the parent can't be released until the child has
-> been, so struct mii_bus should at least stay around.)
+> You say that it's required to manage the refcounting twice: when we
+> get the reference from some external place and internally when the
+> reference is stored in the XPCS descriptor. What's the point in such
+> redundancy with the internal ref-counting if we know that the pointer
+> can be safely stored and utilized afterwards? Better maintainability?
+> Is it due to having the object retrieval and storing implemented in
+> different functions?
 
-Right. That's exactly what had in mind. Thanks for suggesting a
-ready-to-apply solution. I'll add it to the series as a separate patch
-if we decide to keep the proposed in this patch change.  See my
-question in the next message:
-https://lore.kernel.org/netdev/wnptneaxxe2tq2rf7ac6a72xtyluyggughvmtxbbg5qto64mpa@7gchl5e4qllu/
+The point is that the error handling gets simpler:
+- One can see in xpcs_create_mdiodev() that the reference taken by
+  mdio_device_create() is always dropped if that function was
+  successful, irrespective of whether xpcs_create() was successful.
 
-> 
-> What would help the "the bus driver has been unbound" situation is if
-> we took the mdio_lock on the bus, and then set the {read,write}{,_c45}
-> functions to dummy stubs when the bus is being unregistered which then
-> return e.g. -ENXIO. That will probably make unbinding/unloading all
-> MDIO bus drivers safe from kernel oops, although phylib will spit out
-> a non-useful backtrace if it tries an access. I don't think there's
-> much which can be done about that - I did propose a patch to change
-> that behaviour but apparently folk like having it!
-> 
-> It isn't perfect - it's racy, but then accessing mdio_map[] is
-> inherently racy due to no locking with mdiobus_.*register_device().
-> At least if we have everyone using a proper getter function rather
-> than directly fiddling with bus->mdio_map[]. We only have one driver
-> that accesses it directly at the moment (mscc_ptp):
-> 
->                 dev = phydev->mdio.bus->mdio_map[vsc8531->ts_base_addr];
->                 phydev = container_of(dev, struct phy_device, mdio);
-> 
->                 return phydev->priv;
-> 
-> and that should really be using mdiobus_get_phy().
+- xpcs_create() is responsible for managing the refcount on the mdiodev
+  that is passed to it - and if it's successful, it needs to increment
+  the refcount, or leave it in the same state as it was on entry if
+  failing.
 
-Regarding the driver bind/unbind. I guess the maintainers just forget
-about that problem. Do you think it's worth reminding them about it? 
+This avoids complexities in error paths, which are notorious for things
+being forgotten - since with this, each of these functions is resposible
+for managing its refcount.
 
--Serge(y)
+It's a different style of refcount management, one I think more people
+should adopt.
 
-> 
-> -- 
-> RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-> FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
+> While at it if you happen to know an answer could you please also
+> clarify the next question. None of the ordinary
+> platform/PCI/USB/hwmon/etc drivers I've been working with managed
+> refcounting on storing a passed to probe() device pointer in the
+> private driver data. Is it wrong not doing that?
+
+If we wanted to do refcounting strictly, then every time a new
+pointer to a data structure is created, we should be taking a refcount
+on it, and each time that pointer is destroyed, we should be putting
+the refcount. That is what refcounting is all about.
+
+However, there are circumstances where this can be done lazily, and
+for drivers we would prefer driver authors not to end up with
+refcount errors where they've forgotten to put something.
+
+In the specific case of drivers, we have a well defined lifetime for
+a device bound to a driver. We guarantee that the struct device will
+not go away if a driver is bound to the device, until such time that
+the driver's .remove method has been called. Thus, we guarantee that
+the device driver will be notified of the struct device going away
+before it has been freed. This frees the driver author from having
+to worry about the refcount of the struct device.
+
+As soon as we start doing stuff that is outside of that model, then
+objects that are refcounted need to be dealt with, and I much prefer
+the "strict" refcounting implementation such as the one I added to
+xpcs, because IMHO it's much easier to see that the flow is obviously
+correct - even if it does need a comment to describe why we always
+do a put.
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 80Mbps down 10Mbps up. Decent connectivity at last!
