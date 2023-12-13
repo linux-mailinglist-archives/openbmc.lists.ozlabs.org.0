@@ -1,48 +1,77 @@
 Return-Path: <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 X-Original-To: lists+openbmc@lfdr.de
 Delivered-To: lists+openbmc@lfdr.de
-Received: from lists.ozlabs.org (lists.ozlabs.org [IPv6:2404:9400:2:0:216:3eff:fee1:b9f1])
-	by mail.lfdr.de (Postfix) with ESMTPS id D77158116C3
-	for <lists+openbmc@lfdr.de>; Wed, 13 Dec 2023 16:29:44 +0100 (CET)
+Received: from lists.ozlabs.org (lists.ozlabs.org [112.213.38.117])
+	by mail.lfdr.de (Postfix) with ESMTPS id B077C8116AF
+	for <lists+openbmc@lfdr.de>; Wed, 13 Dec 2023 16:28:47 +0100 (CET)
+Authentication-Results: lists.ozlabs.org;
+	dkim=fail reason="signature verification failed" (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=jCY8bioD;
+	dkim-atps=neutral
 Received: from boromir.ozlabs.org (localhost [IPv6:::1])
-	by lists.ozlabs.org (Postfix) with ESMTP id 4SqztZ4WmQz3cSq
-	for <lists+openbmc@lfdr.de>; Thu, 14 Dec 2023 02:29:42 +1100 (AEDT)
+	by lists.ozlabs.org (Postfix) with ESMTP id 4SqzsK13zmz3c4D
+	for <lists+openbmc@lfdr.de>; Thu, 14 Dec 2023 02:28:37 +1100 (AEDT)
 X-Original-To: openbmc@lists.ozlabs.org
 Delivered-To: openbmc@lists.ozlabs.org
-Authentication-Results: lists.ozlabs.org; spf=softfail (domain owner discourages use of this host) smtp.mailfrom=kernel.org (client-ip=198.175.65.9; helo=mgamail.intel.com; envelope-from=andy@kernel.org; receiver=lists.ozlabs.org)
-X-Greylist: delayed 64 seconds by postgrey-1.37 at boromir; Thu, 14 Dec 2023 02:28:17 AEDT
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Authentication-Results: lists.ozlabs.org;
+	dkim=pass (2048-bit key; unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20230601 header.b=jCY8bioD;
+	dkim-atps=neutral
+Authentication-Results: lists.ozlabs.org; spf=pass (sender SPF authorized) smtp.mailfrom=gmail.com (client-ip=2a00:1450:4864:20::22d; helo=mail-lj1-x22d.google.com; envelope-from=fancer.lancer@gmail.com; receiver=lists.ozlabs.org)
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
 	(No client certificate requested)
-	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sqzry00Hgz3cQ7
-	for <openbmc@lists.ozlabs.org>; Thu, 14 Dec 2023 02:28:17 +1100 (AEDT)
-X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="13676033"
-X-IronPort-AV: E=Sophos;i="6.04,273,1695711600"; 
-   d="scan'208";a="13676033"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2023 07:27:09 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6600,9927,10923"; a="767249590"
-X-IronPort-AV: E=Sophos;i="6.04,273,1695711600"; 
-   d="scan'208";a="767249590"
-Received: from smile.fi.intel.com ([10.237.72.54])
-  by orsmga007.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 13 Dec 2023 07:27:06 -0800
-Received: from andy by smile.fi.intel.com with local (Exim 4.97)
-	(envelope-from <andy@kernel.org>)
-	id 1rDR8Y-00000005Yh1-36Wm;
-	Wed, 13 Dec 2023 17:27:02 +0200
-Date: Wed, 13 Dec 2023 17:27:02 +0200
-From: Andy Shevchenko <andy@kernel.org>
-To: Jim Liu <jim.t90615@gmail.com>
-Subject: Re: [PATCH v9 3/3] gpio: nuvoton: Add Nuvoton NPCM sgpio driver
-Message-ID: <ZXnNRoGmeibdRAwq@smile.fi.intel.com>
-References: <20231212065147.3475413-1-jim.t90615@gmail.com>
- <20231212065147.3475413-4-jim.t90615@gmail.com>
+	by lists.ozlabs.org (Postfix) with ESMTPS id 4Sqzrj6QVgz2xSl
+	for <openbmc@lists.ozlabs.org>; Thu, 14 Dec 2023 02:28:03 +1100 (AEDT)
+Received: by mail-lj1-x22d.google.com with SMTP id 38308e7fff4ca-2ca208940b3so89647911fa.1
+        for <openbmc@lists.ozlabs.org>; Wed, 13 Dec 2023 07:28:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1702481278; x=1703086078; darn=lists.ozlabs.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=vcu9z/fG3mvtC4sTQWKLDyPuKX4cPyylkV7syb1LtxQ=;
+        b=jCY8bioD3XgLcFzzGBB8H0zCUdc0F0VlyJGIeWZzWZ9ShCiJT5ok0P8wuWb0LeE33L
+         psU/+4wp0YtaGtTLu3FlHOgqOT5ZqSp2/Q/k4plPDIo/zLw7uUJYJXTQlJHOZuUXTl9Y
+         tEYJQLgKJLeuPfj7WEDXd3o7sooD0qCdNCim75WCiaDjXGVmUqbJJjXPVPRfhLBkJfF3
+         ToA0hocumnxe3Z1k/3LLyouyeYliVaUWgce7RKJb1cPWwkn4l+4Mo8YHYvfpwcpCbqPc
+         SYCtFjQhJ+s1j26GKPVS62qTlKzpEDm618dA85cC/HBftlM5ff2Vkeu6JerLVtS0GlSc
+         /s7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1702481278; x=1703086078;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vcu9z/fG3mvtC4sTQWKLDyPuKX4cPyylkV7syb1LtxQ=;
+        b=lFLyItO0NuR4+1i74dWYwpbTv+VBFHUmkgEpBLp4dEoi3yklW7JIUTEoQ/RzHTBWaL
+         nK6rLeWe1L4IS4Ujai5fHXD/2B/FUShalCQe9+UXMgSieYmgspfe4vSWkplBzwtYU/bI
+         fy5EgsDcR78d55eEjDnqbp4eKI1FK6UH5VFedxmTVFMNJbuFQGWoiUJolSrHcHHZAndS
+         VGmc4JGFRm/4OZXcMfJMkm7b0qFHalfk66qTQqXkRIr0AACzlw/wSJHQpfV66zRkc273
+         HCcV8wduUesJ94fYs7117HLIo0/tTl5y1F0vz7jxSJfH8enlwJiuJeXEldzLQURtnM/C
+         c1VA==
+X-Gm-Message-State: AOJu0Yy4Yx5wyC+CQ2V5kw/yHNzDlGciX/J1XZzgp2UklFPqq6D/RpE9
+	fL2YF/XHK81xul28s2++ufI=
+X-Google-Smtp-Source: AGHT+IG20zIu9IgmaWg0JorODZUkVG4iYfjNdT8CuX3p2RzEFn907upn4oVLIeVdXst9pwUU1EXyig==
+X-Received: by 2002:a19:5e1d:0:b0:50b:d9fc:7bca with SMTP id s29-20020a195e1d000000b0050bd9fc7bcamr3438591lfb.134.1702481277255;
+        Wed, 13 Dec 2023 07:27:57 -0800 (PST)
+Received: from mobilestation ([178.176.56.174])
+        by smtp.gmail.com with ESMTPSA id i23-20020ac25237000000b0050e02507a0csm729096lfl.221.2023.12.13.07.27.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Dec 2023 07:27:56 -0800 (PST)
+Date: Wed, 13 Dec 2023 18:27:53 +0300
+From: Serge Semin <fancer.lancer@gmail.com>
+To: Vladimir Oltean <olteanv@gmail.com>, Andrew Lunn <andrew@lunn.ch>, 
+	Russell King <linux@armlinux.org.uk>
+Subject: Re: [PATCH net-next 06/16] net: pcs: xpcs: Avoid creating dummy XPCS
+ MDIO device
+Message-ID: <wnptneaxxe2tq2rf7ac6a72xtyluyggughvmtxbbg5qto64mpa@7gchl5e4qllu>
+References: <20231205103559.9605-1-fancer.lancer@gmail.com>
+ <20231205103559.9605-1-fancer.lancer@gmail.com>
+ <20231205103559.9605-7-fancer.lancer@gmail.com>
+ <20231205103559.9605-7-fancer.lancer@gmail.com>
+ <20231205115234.7ntjvymurot5nnak@skbuf>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20231212065147.3475413-4-jim.t90615@gmail.com>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+In-Reply-To: <20231205115234.7ntjvymurot5nnak@skbuf>
 X-BeenThere: openbmc@lists.ozlabs.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -54,462 +83,139 @@ List-Post: <mailto:openbmc@lists.ozlabs.org>
 List-Help: <mailto:openbmc-request@lists.ozlabs.org?subject=help>
 List-Subscribe: <https://lists.ozlabs.org/listinfo/openbmc>,
  <mailto:openbmc-request@lists.ozlabs.org?subject=subscribe>
-Cc: KWLIU@nuvoton.com, conor+dt@kernel.org, devicetree@vger.kernel.org, linus.walleij@linaro.org, JJLIU0@nuvoton.com, linux-kernel@vger.kernel.org, openbmc@lists.ozlabs.org, linux-gpio@vger.kernel.org, robh+dt@kernel.org, krzysztof.kozlowski+dt@linaro.org, brgl@bgdev.pl
+Cc: Jose Abreu <Jose.Abreu@synopsys.com>, devicetree@vger.kernel.org, Conor Dooley <conor+dt@kernel.org>, Tomer Maimon <tmaimon77@gmail.com>, netdev@vger.kernel.org, openbmc@lists.ozlabs.org, Alexandre Torgue <alexandre.torgue@foss.st.com>, Rob Herring <robh+dt@kernel.org>, Maxime Chevallier <maxime.chevallier@bootlin.com>, Eric Dumazet <edumazet@google.com>, Jose Abreu <joabreu@synopsys.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, Jakub Kicinski <kuba@kernel.org>, Paolo Abeni <pabeni@redhat.com>, "David S. Miller" <davem@davemloft.net>, linux-kernel@vger.kernel.org, Heiner Kallweit <hkallweit1@gmail.com>
 Errors-To: openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org
 Sender: "openbmc" <openbmc-bounces+lists+openbmc=lfdr.de@lists.ozlabs.org>
 
-On Tue, Dec 12, 2023 at 02:51:47PM +0800, Jim Liu wrote:
-> Add Nuvoton BMC NPCM7xx/NPCM8xx sgpio driver support.
-> Nuvoton NPCM SGPIO module is combine serial to parallel IC (HC595)
-> and parallel to serial IC (HC165), and use APB3 clock to control it.
-> This interface has 4 pins  (D_out , D_in, S_CLK, LDSH).
-> BMC can use this driver to increase 64 GPI pins and 64 GPO pins to use.
-
-...
-
-> +#include <linux/bitfield.h>
-> +#include <linux/clk.h>
-> +#include <linux/gpio/driver.h>
-> +#include <linux/hashtable.h>
-> +#include <linux/init.h>
-> +#include <linux/io.h>
-
-> +#include <linux/kernel.h>
-
-Is this a proxy to some other headers like array_size.h? Please use respective
-headers directly.
-
-> +#include <linux/module.h>
-> +#include <linux/platform_device.h>
-> +#include <linux/spinlock.h>
-> +#include <linux/string.h>
-
-...
-
-> +#define NPCM_CLK_MHZ	8000000
-
-HZ_PER_MHZ from units.h?
-
-...
-
-> +struct npcm_sgpio {
-> +	struct gpio_chip chip;
-> +	struct clk *pclk;
-> +	struct irq_chip intc;
-> +	raw_spinlock_t lock;	/*protect event config*/
-
-Missing spaces.
-
-> +	void __iomem *base;
-> +	int irq;
-> +	u8 nin_sgpio;
-> +	u8 nout_sgpio;
-> +	u8 in_port;
-> +	u8 out_port;
-> +	u8 int_type[MAX_NR_HW_SGPIO];
-> +};
-
-...
-
-> +	{
-> +		.wdata_reg = 0x07,
-> +		.rdata_reg = 0x0f,
-> +		.event_config = 0x1e,
-> +		.event_status = 0x27,
-> +	},
-> +
-
-Redundant blank line.
-
-...
-
-> +static void __iomem *bank_reg(struct npcm_sgpio *gpio,
-> +			      const struct npcm_sgpio_bank *bank,
-> +			      const enum npcm_sgpio_reg reg)
-> +{
-> +	switch (reg) {
-> +	case READ_DATA:
-> +		return gpio->base + bank->rdata_reg;
-> +	case WRITE_DATA:
-> +		return gpio->base + bank->wdata_reg;
-> +	case EVENT_CFG:
-> +		return gpio->base + bank->event_config;
-> +	case EVENT_STS:
-> +		return gpio->base + bank->event_status;
-> +	default:
-> +		/* actually if code runs to here, it's an error case */
-> +		dev_WARN(gpio->chip.parent, "Getting here is an error condition");
-
-...then return an error here.
-
-> +	}
-> +	return 0;
-
-See above.
-
-> +}
-
-> +static void irqd_to_npcm_sgpio_data(struct irq_data *d,
-
-Respect namespace, here it's better to have npcm_sgpio_irqd_to_data().
-
-> +				    struct npcm_sgpio **gpio,
-> +				    const struct npcm_sgpio_bank **bank,
-> +				    u8 *bit, unsigned int *offset)
-
-...
-
-> +static int npcm_sgpio_init_port(struct npcm_sgpio *gpio)
-> +{
-> +	u8 in_port, out_port, set_port, reg;
-> +
-> +	in_port = GPIO_BANK(gpio->nin_sgpio);
-> +	if (GPIO_BIT(gpio->nin_sgpio) > 0)
-> +		in_port += 1;
-
-This is strange... So, you are telling that offsets start from 1 and not 0?
-
-> +	out_port = GPIO_BANK(gpio->nout_sgpio);
-> +	if (GPIO_BIT(gpio->nout_sgpio) > 0)
-> +		out_port += 1;
-
-Ditto.
-
-...
-
-> +	set_port = ((out_port & NPCM_IOXCFG2_PORT) << 4) | (in_port & NPCM_IOXCFG2_PORT);
-
-Outer parentheses are redundant.
-
-...
-
-> +static int npcm_sgpio_dir_out(struct gpio_chip *gc, unsigned int offset, int val)
-> +{
-> +	gc->set(gc, offset, val);
-> +
-> +	return 0;
-
-> +
-
-Redundant blank line.
-
-> +}
-> +
-> +static int npcm_sgpio_get_direction(struct gpio_chip *gc, unsigned int offset)
-> +{
-> +	struct npcm_sgpio *gpio = gpiochip_get_data(gc);
-
-> +	if (offset > gpio->chip.ngpio)
-> +		return -EINVAL;
-
-Why do you need this check?
-
-> +	if (offset < gpio->nout_sgpio)
-> +		return GPIO_LINE_DIRECTION_OUT;
-> +
-> +	return GPIO_LINE_DIRECTION_IN;
-> +}
-
-...
-
-> +static void npcm_sgpio_set(struct gpio_chip *gc, unsigned int offset, int val)
-> +{
-> +	struct npcm_sgpio *gpio = gpiochip_get_data(gc);
-> +	const struct  npcm_sgpio_bank *bank = offset_to_bank(offset);
-> +	void __iomem *addr;
-> +	u8 reg = 0;
-> +
-> +	addr = bank_reg(gpio, bank, WRITE_DATA);
-> +	reg = ioread8(addr);
-> +
-> +	if (val)
-> +		reg |= (val << GPIO_BIT(offset));
-
-...and if val is not 1?..
-
-> +	else
-> +		reg &= ~(1 << GPIO_BIT(offset));
-
-In both cases use BIT().
-
-> +	iowrite8(reg, addr);
-> +}
-
-...
-
-> +	dir = npcm_sgpio_get_direction(gc, offset);
-> +	if (dir == 0) {
-> +		bank = offset_to_bank(offset);
-> +
-> +		addr = bank_reg(gpio, bank, WRITE_DATA);
-> +		reg = ioread8(addr);
-> +		reg = !!(reg & GPIO_BIT(offset));
-> +	} else {
-> +		offset -= gpio->nout_sgpio;
-> +		bank = offset_to_bank(offset);
-> +
-> +		addr = bank_reg(gpio, bank, READ_DATA);
-> +		reg = ioread8(addr);
-> +		reg = !!(reg & GPIO_BIT(offset));
-> +	}
-
-Instead of conditional(s) use arithmetics. You can get all these directly
-from the properly formed calculations.
-
-...
-
-> +static void npcm_sgpio_setup_enable(struct npcm_sgpio *gpio, bool enable)
-> +{
-
-> +	u8 reg = 0;
-Redundant assignment.
-
-> +	reg = ioread8(gpio->base + NPCM_IOXCTS);
-
-> +	reg = reg & ~NPCM_IOXCTS_RD_MODE;
-> +	reg = reg | NPCM_IOXCTS_RD_MODE_PERIODIC;
-
-Combine them.
-
-> +	if (enable) {
-> +		reg |= NPCM_IOXCTS_IOXIF_EN;
-> +		iowrite8(reg, gpio->base + NPCM_IOXCTS);
-> +	} else {
-> +		reg &= ~NPCM_IOXCTS_IOXIF_EN;
-> +		iowrite8(reg, gpio->base + NPCM_IOXCTS);
-> +	}
-> +}
-
-...
-
-> +static int npcm_sgpio_setup_clk(struct npcm_sgpio *gpio,
-> +				const struct npcm_clk_cfg *clk_cfg)
-> +{
-> +	unsigned long apb_freq;
-> +	u32 val;
-> +	u8 tmp;
-> +	int i;
-> +
-> +	apb_freq = clk_get_rate(gpio->pclk);
-> +	tmp = ioread8(gpio->base + NPCM_IOXCFG1) & ~NPCM_IOXCFG1_SFT_CLK;
-> +
-> +	for (i = 0; i < clk_cfg->cfg_opt; i++) {
-> +		val = apb_freq / clk_cfg->sft_clk[i];
-> +		if ((NPCM_CLK_MHZ < val) && (i != 0) ) {
-> +			iowrite8(clk_cfg->clk_sel[i-1] | tmp, gpio->base + NPCM_IOXCFG1);
-> +			return 0;
-> +		} else if (i == (clk_cfg->cfg_opt-1) && (NPCM_CLK_MHZ > val)) {
-> +			iowrite8(clk_cfg->clk_sel[i] | tmp, gpio->base + NPCM_IOXCFG1);
-> +			return 0;
-> +		}
-
-These i == / i != checks probably due to wrong operator be chosen. Consider using
-while-loop, or do-while. I believe it will make code better.
-
-> +	}
-> +
-> +	return -EINVAL;
-> +}
-
-...
-
-> +static void npcm_sgpio_irq_init_valid_mask(struct gpio_chip *gc,
-> +					   unsigned long *valid_mask, unsigned int ngpios)
-> +{
-> +	struct npcm_sgpio *gpio = gpiochip_get_data(gc);
-
-> +	int n = gpio->nin_sgpio;
-
-Why do you need this variable, what for?
-
-> +	/* input GPIOs in the high range */
-> +	bitmap_set(valid_mask, gpio->nout_sgpio, n);
-> +	bitmap_clear(valid_mask, 0, gpio->nout_sgpio);
-> +}
-
-...
-
-> +	raw_spin_lock_irqsave(&gpio->lock, flags);
-
-Don't you need to use spin lock in the other APIs? It seem whole driver works by luck.
-
-> +	npcm_sgpio_setup_enable(gpio, false);
-> +
-> +	reg = ioread16(addr);
-> +	if (set) {
-> +		reg &= ~(NPCM_IXOEVCFG_MASK << (bit * 2));
-> +	} else {
-> +		type = gpio->int_type[offset];
-> +		reg |= (type << (bit * 2));
-
-At least the calculations can be done outside of the lock.
-
-> +	}
-> +
-> +	iowrite16(reg, addr);
-> +
-> +	npcm_sgpio_setup_enable(gpio, true);
-> +
-> +	addr = bank_reg(gpio, bank, EVENT_STS);
-> +	reg = ioread8(addr);
-> +	reg |= BIT(bit);
-> +	iowrite8(reg, addr);
-> +
-> +	raw_spin_unlock_irqrestore(&gpio->lock, flags);
-
-...
-
-> +	switch (type & IRQ_TYPE_SENSE_MASK) {
-> +	case IRQ_TYPE_EDGE_BOTH:
-> +		val = NPCM_IXOEVCFG_BOTH;
-> +		handler = handle_edge_irq;
-> +		break;
-> +	case IRQ_TYPE_EDGE_RISING:
-> +		val = NPCM_IXOEVCFG_RISING;
-> +		handler = handle_edge_irq;
-> +		break;
-> +	case IRQ_TYPE_EDGE_FALLING:
-> +		val = NPCM_IXOEVCFG_FALLING;
-> +		handler = handle_edge_irq;
-> +		break;
-> +	case IRQ_TYPE_LEVEL_HIGH:
-> +		val = NPCM_IXOEVCFG_RISING;
-> +		handler = handle_level_irq;
-> +		break;
-> +	case IRQ_TYPE_LEVEL_LOW:
-> +		val = NPCM_IXOEVCFG_FALLING;
-> +		handler = handle_level_irq;
-> +		break;
-> +	default:
-> +		return -EINVAL;
-> +	}
-
-You can split the handler setup and make this function less by 5 LoCs or so.
-
-See, for example, gpio-tangier.c.
-
-...
-
-> +	for (i = 0; i < ARRAY_SIZE(npcm_sgpio_banks); i++) {
-> +		const struct npcm_sgpio_bank *bank = &npcm_sgpio_banks[i];
-> +
-> +		reg = ioread8(bank_reg(gpio, bank, EVENT_STS));
-> +		for_each_set_bit(j, &reg, 8) {
-> +			girq = irq_find_mapping(gc->irq.domain, i * 8 + gpio->nout_sgpio + j);
-> +			generic_handle_irq(girq);
-
-generic_handle_domain_irq()
-
-> +		}
-> +	}
-
-...
-
-> +static int npcm_sgpio_setup_irqs(struct npcm_sgpio *gpio,
-> +				 struct platform_device *pdev)
-> +{
-> +	int rc, i;
-> +	struct gpio_irq_chip *irq;
-> +
-> +	rc = platform_get_irq(pdev, 0);
-> +	if (rc < 0)
-> +		return rc;
-> +
-> +	gpio->irq = rc;
-> +
-> +	npcm_sgpio_setup_enable(gpio, false);
-> +
-> +	/* Disable IRQ and clear Interrupt status registers for all SGPIO Pins. */
-> +	for (i = 0; i < ARRAY_SIZE(npcm_sgpio_banks); i++) {
-> +		const struct npcm_sgpio_bank *bank = &npcm_sgpio_banks[i];
-
-> +		iowrite16(0x0000, bank_reg(gpio, bank, EVENT_CFG));
-
-0 is enough.
-
-> +		iowrite8(0xff, bank_reg(gpio, bank, EVENT_STS));
-
-GENMASK() ?
-
-> +	}
-> +
-> +	irq = &gpio->chip.irq;
-> +	gpio_irq_chip_set_chip(irq, &sgpio_irq_chip);
-> +	irq->init_valid_mask = npcm_sgpio_irq_init_valid_mask;
-> +	irq->handler = handle_bad_irq;
-> +	irq->default_type = IRQ_TYPE_NONE;
-> +	irq->parent_handler = npcm_sgpio_irq_handler;
-> +	irq->parent_handler_data = gpio;
-> +	irq->parents = &gpio->irq;
-> +	irq->num_parents = 1;
-> +
-> +	return 0;
-> +}
-
-...
-
-> +static struct npcm_clk_cfg npcm750_sgpio_pdata = {
-> +	.sft_clk = npcm750_SFT_CLK,
-> +	.clk_sel = npcm750_CLK_SEL,
-> +	.cfg_opt = 6,
-
-Define this magic and use it in the above arrays as the capacity.
-
-> +};
-> +
-> +static const struct npcm_clk_cfg npcm845_sgpio_pdata = {
-> +	.sft_clk = npcm845_SFT_CLK,
-> +	.clk_sel = npcm845_CLK_SEL,
-
-> +	.cfg_opt = 5,
-
-Ditto.
-
-> +};
-
-...
-
-> +static const struct of_device_id npcm_sgpio_of_table[] = {
-> +	{ .compatible = "nuvoton,npcm750-sgpio", .data = &npcm750_sgpio_pdata, },
-> +	{ .compatible = "nuvoton,npcm845-sgpio", .data = &npcm845_sgpio_pdata, },
-> +	{}
-> +};
-> +MODULE_DEVICE_TABLE(of, npcm_sgpio_of_table);
-
-Move this closer to its user below.
-
-...
-
-> +	if (gpio->nin_sgpio > MAX_NR_HW_SGPIO || gpio->nout_sgpio > MAX_NR_HW_SGPIO) {
-> +		dev_err(&pdev->dev, "Number of GPIOs exceeds the maximum of %d: input: %d output: %d\n",
-> +			MAX_NR_HW_SGPIO, nin_gpios, nout_gpios);
-> +		return -EINVAL;
-
-		return dev_err_probe(...);
-
-> +	}
-> +
-> +	gpio->pclk = devm_clk_get(&pdev->dev, NULL);
-> +	if (IS_ERR(gpio->pclk)) {
-> +		dev_err(&pdev->dev, "Could not get pclk\n");
-> +		return PTR_ERR(gpio->pclk);
-
-Ditto.
-
-> +	}
-
-...
-
-> +	rc = devm_gpiochip_add_data(&pdev->dev, &gpio->chip, gpio);
-> +	if (rc < 0)
-
-Here and in the other cases, why ' < 0'? Does it have positive value
-to be returned in some cases?
-
-> +		return rc;
-
--- 
-With Best Regards,
-Andy Shevchenko
-
-
+Hi Vladimir,
+
+On Tue, Dec 05, 2023 at 01:52:34PM +0200, Vladimir Oltean wrote:
+> On Tue, Dec 05, 2023 at 01:35:27PM +0300, Serge Semin wrote:
+> > If the DW XPCS MDIO devices are either left unmasked for being auto-probed
+> > or explicitly registered in the MDIO subsystem by means of the
+> > mdiobus_register_board_info() method
+> 
+
+> mdiobus_register_board_info() has exactly one caller, and that is
+> dsa_loop. I don't understand the relevance of it w.r.t. Synopsys XPCS.
+> I'm reading the patches in order from the beginning.
+
+Well, one user of the DW XPCS driver is updated in this series in the
+framework of the patch:
+[PATCH net-next 13/16] net: stmmac: intel: Register generic MDIO device
+https://lore.kernel.org/netdev/20231205103559.9605-14-fancer.lancer@gmail.com/
+
+I can convert of them (it's sja1105 and wangxun txgbe) and then just
+drop the MDIO-device creation part from xpcs_create_mdiodev(). As I
+also described in another emails thread below this patch I used to
+think that unmasking non-PHY device is also appropriate to get the
+MDIO-device instance. I was wrong in that matter obviously.
+
+Anyway I just realized that my solution of using
+mdiobus_register_board_info() is a bit clumsy. Moreover the patch 13
+(see the link above) shouldn't have the mdio_board_info instance
+allocation (it can be defined on stack) and most importantly is wrong
+in using the device-managed resources for it. The problem is that
+mdiobus_register_board_info() registers an MDIO-device once for entire
+system lifetime. It isn't that suitable for the hot-swappable devices
+and for drivers bind/unbind cases. Since there is no
+mdio_board_info-deregistration method, at the simplest case the no
+longer used board-info descriptors might be left registered if a
+device or driver are unloaded. That's why the device-managed
+allocation is harmful in such scenario. At the very least I'll need to
+convert the allocations to being non-managed.
+
+> 
+> > there is no point in creating the dummy MDIO device instance in order
+> 
+
+> Why dummy? There's nothing dummy about the mdio_device. It's how the PCS
+> code accesses the hardware.
+
+I call it 'dummy' because no actual device is registered (though
+'redundant' or similar definition might sound more appropriate). The
+entire structure is used as a communication layer between the XPCS
+driver and MDIO device, where the device address is the only info
+needed. Basically nothing prevents us from converting the current DW
+XPCS driver to using the mdiobus_c45_read()/mdiobus_c45_write()
+methods. Though in that case I wouldn't be able to easily add the
+fwnode-based MDIO-devices support.
+
+> 
+> > to get the DW XPCS handler since the MDIO core subsystem will create
+> > the device during the MDIO bus registration procedure.
+> 
+
+> It won't, though? Unless someone is using mdiobus_register_board_info()
+> possibly, but who does that?
+
+As I said above I wrongly assumed that unmasking non-PHY device was
+ok. But mdiobus_register_board_info() could be used for that as I (a
+bit clumsy) demonstrated in the patch 13.
+
+> 
+> > All what needs to be done is to just reuse the MDIO-device instance
+> > available in the mii_bus.mdio_map array (using some getter for it
+> > would look better though). It shall prevent the XPCS devices been
+> > accessed over several MDIO-device instances.
+> > 
+> > Note since the MDIO-device instance might be retrieved from the MDIO-bus
+> > map array its reference counter shall be increased. If the MDIO-device
+> > instance is created in the xpcs_create_mdiodev() method its reference
+> > counter will be already increased. So there is no point in toggling the
+> > reference counter in the xpcs_create() function. Just drop it from there.
+> > 
+> > Signed-off-by: Serge Semin <fancer.lancer@gmail.com>
+> > ---
+> 
+
+> Sorry, because the commit log lost me at the "context presentation" stage,
+> I failed to understand the "what"s and the "why"s.
+> 
+> Are you basically trying to add xpcs support on top of an mdio_device
+> where the mdio_device_create() call was made externally to the xpcs code,
+> through mdiobus_register_board_info() and mdiobus_setup_mdiodev_from_board_info()?
+
+Basically yes, but there is more of it. The main idea is to convert
+the XPCS driver to using the already created non-PHY MDIO-devices
+instead of manually creating a 'dummy'/'redundant' one. From my point
+of view there are several reasons of doing so:
+
+1. mdiobus_register_board_info() provides a way to assign the device
+platform data to being registered afterwards device. Thus we can pass
+some custom data to the XPCS-device driver (whether it's just an
+xpcs_create_*() call or a fully functional MDIO-device driver
+registered by the mdio_driver_register() method). For instance it can
+be utilized to drop the fake PHYSIDs implementation from
+drivers/net/dsa/sja1105/sja1105_mdio.c .
+
+2. The MDIO-devices actually registered on the MDIO-bus will be
+visible in sysfs with for instance useful IO statistics provided by
+the MDIO-bus. Potentially (if it is required) at some point we'll be
+able to convert the DW XPCS driver to being true MDIO-device driver
+(bindable to the DW XPCS device) with less efforts.
+
+3. Having an MDIO-device registered that way would make the DW XPCS
+IO-device implementation unified after the fwnode-based XPCS
+descriptor creation support is added in one of the subsequent patches.
+
+So based on the listed above I've got a question. Do you think all of
+that is worth to be implemented? Andrew, Russell?
+
+I am asking because the patchset advance depends on your answers. If
+you do I'll need to fix the problem described in my first message,
+implement some new mdiobus_register_board_info()-like but
+MDIO-bus-specific interface function (so MDIO-device infos would be
+attached to the allocated MDIO-bus and then used to register the
+respective MDIO-devices on the MDIO-bus registration), then convert
+the sja1105 and wangxun txgbe drivers to using it. If you don't I'll
+get back the xpcs_create_mdiodev() implementation and just provide a
+fwnode-based version of one.
+
+Note we already settled that converting DW XPCS driver to being normal
+MDIO-device driver is prone to errors at this stage due to a
+possibility to have the driver unbindable from user-space. I'll just
+move the DT-compatibles check to the xpcs_create_fwnode() method and
+drop the rest of the MDIO-device-driver-specific things.
+
+-Serge(y)
